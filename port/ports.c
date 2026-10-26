@@ -28,6 +28,7 @@ uint32_t port_in(ctx_t *c, unsigned port, int size)
     else if ((port >= 0x388 && port <= 0x38B)) v = opl_in(port);
     else if (sound_port_in(port, &v)) {}
     else v = 0xFF;
+    if (stats_on) stats_port(port, 0);
     TRACE("in  %03x -> %02x\n", port, v & 0xFF);
     if (size == 2) return v | 0xFF00;
     if (size == 4) return v | 0xFFFFFF00u;
@@ -42,6 +43,7 @@ void port_out(ctx_t *c, unsigned port, uint32_t val, int size)
         for (i = 0; i < size; i++) port_out(c, port + i, (val >> (8 * i)) & 0xFF, 1);
         return;
     }
+    if (stats_on) stats_port(port, 1);
     TRACE("out %03x <- %02x\n", port, val);
     if ((port >= 0x3C0 && port <= 0x3DF) || (port >= 0x1CE && port <= 0x1CF)) { video_port_out(port, val); return; }
     if (port == 0x60 || port == 0x64 || port == 0x201) { input_port_out(port, val); return; }

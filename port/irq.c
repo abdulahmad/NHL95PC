@@ -5,6 +5,11 @@
 #include "host.h"
 
 static volatile uint32_t pending;               /* bit n: IRQ n is raised (0-15) */
+/* Timer ticks that came while the game could not take one (inside host code, in a long trap, with interrupts off) are kept and
+ * delivered one after another, like a PIC that is serviced late; the game's clock (tickcount) counts every one. A real PIC would
+ * merge ticks too, but only after a much longer stall, so the queue is limited to half a second at 100 Hz. */
+#define MAX_TICKS_QUEUED 50
+static volatile int ticks_queued;
 static volatile uint32_t pic_mask = 0xFFFC;     /* bit n set: IRQ n masked; the BIOS leaves the timer and keyboard on */
 static int pic_icw[2], pic_icw_left[2];
 volatile int vif = 1;                   /* the game's interrupt flag (cli / sti) */
@@ -59,8 +64,12 @@ int irq_try_deliver(ctx_t *c)
     if (!irq_deliverable()) return 0;
     irq = __builtin_ctz(pending & ~pic_mask);
     vec = irq < 8 ? 8 + irq : 0x70 + irq - 8;
-    __sync_fetch_and_and(&pending, ~(1u << irq));
+    if (irq != 0 || __sync_sub_and_fetch(&ticks_queued, 1) <= 0) {
+        if (irq == 0) ticks_queued = 0;
+        __sync_fetch_and_and(&pending, ~(1u << irq));
+    }
     if (!pm_vec[vec].off) return 0;
+    if (stats_on) stats_irq(irq, 1);
     if (irq > 1) TRACE("irq %d -> vector %02x\n", irq, vec);
     sp = (uint32_t *)R(c, ESP) - 4;
     sp[0] = (uint32_t)irq_return_stub;
@@ -77,6 +86,8 @@ int irq_try_deliver(ctx_t *c)
 /* any thread */
 void irq_raise(int irq)
 {
+    if (stats_on) stats_irq(irq, 0);
+    if (irq == 0 && ticks_queued < MAX_TICKS_QUEUED) __sync_fetch_and_add(&ticks_queued, 1);
     __sync_fetch_and_or(&pending, 1u << irq);
 }
 

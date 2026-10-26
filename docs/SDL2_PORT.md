@@ -57,6 +57,7 @@ cd /path/to/NHL95/game/files        # the directory with NHL.CFG, ALLFILES.TXT a
 ```
 
 The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1` logs every interrupt and port access;
+`NHL95_STATS=1` prints every 2 s how many traps (int, in, out, cli, sti, pushf, popf) the game made by opcode, port and int 21h function, the time spent in them, the game thread's user and kernel CPU time, `video_present` timing and the game's tick rate against the PIT rate; `NHL95_KEYS="ms:Key[/hold] ..."` presses keys at given times (SDL key names);
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
 

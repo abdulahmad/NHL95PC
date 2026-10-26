@@ -207,6 +207,7 @@ static void dump_frame(int w, int h)
 
 void video_present(void)
 {
+    int64_t t0 = stats_on ? plat_now_ns() : 0;
     int w, h, x, y;
     uint32_t pal[256];
     if (!ren) return;
@@ -235,4 +236,5 @@ void video_present(void)
     SDL_RenderClear(ren);
     SDL_RenderCopy(ren, tex, 0, 0);
     SDL_RenderPresent(ren);
+    if (stats_on) stats_present_ns(plat_now_ns() - t0);
 }

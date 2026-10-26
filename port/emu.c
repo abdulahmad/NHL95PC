@@ -181,7 +181,22 @@ int emulate_low_memory(ctx_t *c, uint8_t *ip)
     return 1;
 }
 
+static int emulate_one(ctx_t *c, uint8_t *ip);
+
 int emulate_privileged(ctx_t *c, uint8_t *ip)
+{
+    int64_t t0 = 0, r;
+    const uint8_t *p = ip;
+    if (!stats_on) return emulate_one(c, ip);
+    while (*p == 0x66 || *p == 0xF3 || *p == 0xF2) p++;
+    stats_op(*p);
+    t0 = plat_now_ns();
+    r = emulate_one(c, ip);
+    stats_trap_ns(plat_now_ns() - t0);
+    return (int)r;
+}
+
+static int emulate_one(ctx_t *c, uint8_t *ip)
 {
     int o16 = 0, rep = 0, n = 0;
     uint8_t op;

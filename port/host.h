@@ -55,6 +55,18 @@ void plat_install_traps(void);                         /* int, in, out, cli, sti
 void plat_start_game(void);                            /* start the game thread */
 void plat_kick_game(void);                             /* let the game thread take a pending interrupt */
 void plat_trace_game(void);                            /* NHL95_TRACE: print where the game thread is */
+void plat_thread_times(uint64_t *user_ns, uint64_t *kernel_ns);   /* NHL95_STATS: CPU time of the game thread */
+
+/* NHL95_STATS (stats.c) */
+extern int stats_on;
+void stats_init(void);
+void stats_op(unsigned op);
+void stats_port(unsigned port, int out);
+void stats_int(unsigned vec, unsigned ah);
+void stats_irq(int irq, int taken);
+void stats_trap_ns(int64_t ns);
+void stats_present_ns(int64_t ns);
+void stats_report(void);                               /* main thread, about every 2 s */
 int64_t plat_now_ns(void);
 void plat_sleep_ms(int ms);
 

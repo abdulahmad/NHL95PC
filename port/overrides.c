@@ -2,7 +2,39 @@
 #include "host.h"
 #include <string.h>
 
-extern char __hook387[], __unhook387[], sub_9D352[], sub_8DF70[], sub_B3E98[], sub_B3ED8[], sub_B3F50[];
+extern char __hook387[], __unhook387[], sub_9D352[], sub_8DF70[], sub_B3E98[], sub_B3ED8[], sub_B3F50[], __delay_init_[], __delay_[];
+extern uint32_t dword_F24CC;
+
+/* The Watcom delay(): __delay_init_ counts how many int 21h / 2Ch (get time) calls fit in one second, __delay_(ms) makes that many
+ * per millisecond. Every one of them is a trap here (about 4 us on Windows): two seconds of start-up spent faulting, and the timer
+ * interrupt starved meanwhile. The count is only used by __delay_, so the host sets it without measuring and sleeps for the time. */
+#ifdef _WIN32
+#define SYM(s) "_" s
+#else
+#define SYM(s) s
+#endif
+
+void host_delay_init(void)
+{
+    dword_F24CC = 1000000;
+}
+
+void host_delay(unsigned ms)
+{
+    int64_t end = plat_now_ns() + (int64_t)ms * 1000000;
+    while (plat_now_ns() < end) plat_sleep_ms(1);
+}
+
+/* both keep every register, like the originals */
+__attribute__((naked)) static void delay_init_entry(void)
+{
+    __asm__ volatile("pushal\n\tcall " SYM("host_delay_init") "\n\tpopal\n\tret");
+}
+
+__attribute__((naked)) static void delay_entry(void)
+{
+    __asm__ volatile("pushal\n\tpush %eax\n\tcall " SYM("host_delay") "\n\tadd $4, %esp\n\tpopal\n\tret");
+}
 extern uint32_t dword_D305C, dword_D3060;
 extern uint8_t byte_D3064, byte_D3068;
 extern uint8_t byte_D4B9C, byte_D51DC;
@@ -86,5 +118,7 @@ void install_overrides(void)
     patch_jmp(sub_8DF70, video_fill_vesa_tables);      /* the VESA probe (the game ran an external program for it) */
     stub_zero(sub_B3E98);       /* save the text mode and the BIOS data area */
     stub_zero(sub_B3ED8);       /* restore them */
+    patch_jmp(__delay_init_, delay_init_entry);
+    patch_jmp(__delay_, delay_entry);
     install_flag_traps();
 }

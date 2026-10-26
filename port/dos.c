@@ -389,6 +389,7 @@ static void backtrace_hint(ctx_t *c)
 int dos_int(ctx_t *c, int vec)
 {
     int ok = 0;
+    if (stats_on) stats_int(vec, (R(c, EAX) >> 8) & 0xFF);
     TRACE("int %02xh ax=%04x bx=%08x cx=%08x dx=%08x eip=%08x\n", vec, (unsigned)AX(c), (unsigned)R(c, EBX),
           (unsigned)R(c, ECX), (unsigned)R(c, EDX), (unsigned)R(c, EIP));
     if (vec == 0x21) ok = int21(c);

@@ -133,6 +133,15 @@ void plat_kick_game(void)
     pthread_kill(game_thread, SIGUSR1);
 }
 
+void plat_thread_times(uint64_t *user_ns, uint64_t *kernel_ns)
+{
+    clockid_t id;
+    struct timespec ts;
+    if (pthread_getcpuclockid(game_thread, &id) || clock_gettime(id, &ts)) return;
+    *user_ns = (uint64_t)ts.tv_sec * 1000000000 + ts.tv_nsec;      /* user and kernel together */
+    *kernel_ns = 0;
+}
+
 void plat_trace_game(void)
 {
 }

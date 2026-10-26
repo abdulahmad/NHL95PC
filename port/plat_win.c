@@ -159,6 +159,14 @@ void plat_trace_game(void)
             s[0], s[1], s[2], s[3], s[4], s[5]);
 }
 
+void plat_thread_times(uint64_t *user_ns, uint64_t *kernel_ns)
+{
+    FILETIME create, exit_t, kernel, user;
+    if (!game_handle || !GetThreadTimes(game_handle, &create, &exit_t, &kernel, &user)) return;
+    *user_ns = (((uint64_t)user.dwHighDateTime << 32) | user.dwLowDateTime) * 100;
+    *kernel_ns = (((uint64_t)kernel.dwHighDateTime << 32) | kernel.dwLowDateTime) * 100;
+}
+
 int64_t plat_now_ns(void)
 {
     static LARGE_INTEGER freq;
@@ -168,7 +176,26 @@ int64_t plat_now_ns(void)
     return (int64_t)((double)t.QuadPart * 1e9 / (double)freq.QuadPart);
 }
 
+/* A high-resolution waitable timer (Windows 10 1803 and later) wakes up when asked, also when the process is not in the foreground,
+ * where Sleep and SDL_Delay round up to the 15.6 ms system tick. */
+#ifndef CREATE_WAITABLE_TIMER_HIGH_RESOLUTION
+#define CREATE_WAITABLE_TIMER_HIGH_RESOLUTION 0x2
+#endif
+
 void plat_sleep_ms(int ms)
 {
+    static __thread HANDLE timer;
+    static __thread int tried;
+    LARGE_INTEGER due;
+    if (!tried) {
+        typedef HANDLE (WINAPI *create_fn)(LPSECURITY_ATTRIBUTES, LPCWSTR, DWORD, DWORD);
+        create_fn create = (create_fn)GetProcAddress(GetModuleHandleA("kernel32.dll"), "CreateWaitableTimerExW");
+        tried = 1;
+        if (create) timer = create(0, 0, CREATE_WAITABLE_TIMER_HIGH_RESOLUTION, TIMER_ALL_ACCESS);
+    }
+    if (timer) {
+        due.QuadPart = -(int64_t)ms * 10000;
+        if (SetWaitableTimer(timer, &due, 0, 0, 0, 0)) { WaitForSingleObject(timer, INFINITE); return; }
+    }
     SDL_Delay(ms);
 }

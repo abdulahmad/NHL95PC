@@ -35,6 +35,7 @@ int main(int argc, char **argv)
     int64_t next_tick, next_frame;
     g_argc = argc; g_argv = argv;
     trace_on = getenv("NHL95_TRACE") != 0;
+    stats_init();
     SDL_SetMainReady();
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0) { fprintf(stderr, "SDL_Init: %s\n", SDL_GetError()); return 1; }
     video_init();
@@ -51,13 +52,16 @@ int main(int argc, char **argv)
         int64_t now = plat_now_ns();
         input_poll();
         if (now >= next_frame) { video_present(); next_frame = now + 16666667; }
-        if (now >= next_tick) {
+        /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
+         * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
+        while (now >= next_tick) {
             irq_raise(0);
             next_tick += 1000000000LL / irq_pit_hz();
-            if (now - next_tick > 200000000) next_tick = now;
+            if (now - next_tick > 200000000) { next_tick = now; break; }
         }
         audio_pump();
         irq_poll();
+        stats_report();
         plat_sleep_ms(1);
     }
     return 0;
