@@ -5380,6 +5380,7 @@ LoadTeamRoster,,freshstat skaterbytes i scores 42,,ga
 LoadTeamRoster,,teamfirst p skater branch freshstat scores 43,,ga
 LoadTeamRoster,,teamfirst p skater copyblock freshstat scores 43. Baseline savings: hoisted team * 1092 t218 and i * 39 t219 each 30 (EDI and memory),,ga
 LoadTeamRoster,,reversing skater jersey operands changes their order but exchanges those allocations. No new ESCALATE find. Both make and make CBUILD=0 MATCH. Function unmarked,,ga
+ReassignCtlPlayer,,shapes listed in docs/UNSURE.md (not itemized),,ga
 LeagueTeamSelect,,sprite size built in four statements using size throughout = 210,,ga
 LeagueTeamSelect,,"name ternary non-Anaheim case first, matching EXE block layout = 64",,ga
 LeagueTeamSelect,,ClearInputQueue duplicated in success and cancel arms after restoring grid = 50,,ga
