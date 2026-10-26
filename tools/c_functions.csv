@@ -641,7 +641,7 @@ doplayeracc,5E16D,855,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/do
 goalieacc,5F8B2,216,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/goalieacc.c,matched,,
 noturn0,5F98A,377,043_5E16D_engine_skating,src/c/043_5E16D_engine_skating/noturn0.c,matched,,
 SaveGameState,5FB03,2831,044_5FB03_game_state_saveload,src/c/044_5FB03_game_state_saveload/SaveGameState.c,matched,,
-LoadGameState,60612,3760,044_5FB03_game_state_saveload,src/c/044_5FB03_game_state_saveload/SaveGameState.c,nonmatching,same size; fh in memory and the unpack pointer in esi (EXE ebp / ebx): 527 lines of one swap; see docs/UNSURE.md,size 17/33
+LoadGameState,60612,3760,044_5FB03_game_state_saveload,src/c/044_5FB03_game_state_saveload/SaveGameState.c,nonmatching,same size; fh in memory and the unpack pointer in esi (EXE ebp / ebx): 527 lines of one swap; see docs/UNSURE.md,size 22/28
 AddPenalty,62CF9,135,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AddPenalty.c,matched,,
 AddPenalty2,62D80,290,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AddPenalty2.c,matched,,
 AppendGSumRecord,61A8A,251,045_614C2_scoring_penalty_text,src/c/045_614C2_scoring_penalty_text/AppendGSumRecord.c,matched,,
@@ -715,7 +715,7 @@ LoadTeamPPV,66497,278,046_644A8_engine_display,src/c/046_644A8_engine_display/ch
 DrawTextOverlay,665AD,2093,046_644A8_engine_display,src/c/046_644A8_engine_display/checkwindow.c,matched,"same size, 132 differing lines: stack short slots; see docs/UNSURE.md",
 UpdateTextOverlay,66E06,476,046_644A8_engine_display,src/c/046_644A8_engine_display/checkwindow.c,matched,,
 DrawCallBanner,66FE2,518,046_644A8_engine_display,src/c/046_644A8_engine_display/checkwindow.c,matched,,
-updatereplay,675D6,810,046_644A8_engine_display,src/c/046_644A8_engine_display/updatereplay.c,nonmatching,"draft: 810 vs 812, 198/216 instructions; register choices. See UNSURE.",register 12/21
+updatereplay,675D6,810,046_644A8_engine_display,src/c/046_644A8_engine_display/updatereplay.c,nonmatching,"draft: 810 vs 812, 198/216 instructions; register choices. See UNSURE.",register 7/17
 DebugMonitor,688A4,1495,047_688A4_debug_dump,src/c/047_688A4_debug_dump/DebugMonitor.c,matched,,
 DumpStatsLog,68E7B,1211,047_688A4_debug_dump,src/c/047_688A4_debug_dump/DebugMonitor.c,matched,,
 StartHL2,69336,3325,048_69336_game_frame,src/c/048_69336_game_frame/StartHL2.c,matched,"draft (own file): 3322 vs 3325, 145 lines (parameter homing, SortCords loop registers). See docs/UNSURE.md.",
