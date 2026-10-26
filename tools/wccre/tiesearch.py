@@ -43,18 +43,23 @@ def compile_ir(src, func, obj):
     ok, out, emu = emucc.compile_c(src, obj, cc.src_flags(src), setup=setup)
     d = holder.get('d')
     if not ok or not d or not d.dumps: return False, {}
-    passes = {}
-    for k, p, blocks in d.dumps:
-        sig = {}
-        line = 0
-        for b in blocks:
-            for r in b['rows']:
-                if r['line']: line = r['line']
-                if r['res'] and TEMP.match(r['res']) and r['res'] not in sig:
-                    ops = ','.join('_' if (o and TEMP.match(o)) else (o or '-') for o in r['ops'])
-                    sig[r['res']] = 'L%d %s %s' % (line, irdump.opname(r['op']), ops)
-        passes[k] = [sig.get(c['label'], c['label']) if TEMP.match(c['label']) else c['label'] for c in p['confs']]
-    return True, passes
+    return True, dict((k, pass_signatures(p, blocks)) for k, p, blocks in d.dumps)
+
+
+def pass_signatures(p, blocks):
+    """a pass's conflicts in allocation order, each temporary named by its defining instruction (line, opcode,
+    operands), which survives edits that renumber the temporaries. Two temporaries with the same instruction
+    (JoystickCalScreen's two `cnv [0+t53]u2` on L59) are told apart by ` #2`, ` #3` in definition order."""
+    sig, line, seen = {}, 0, {}
+    for b in blocks:
+        for r in b['rows']:
+            if r['line']: line = r['line']
+            if r['res'] and TEMP.match(r['res']) and r['res'] not in sig:
+                ops = ','.join('_' if (o and TEMP.match(o)) else (o or '-') for o in r['ops'])
+                s = 'L%d %s %s' % (line, irdump.opname(r['op']), ops)
+                seen[s] = seen.get(s, 0) + 1
+                sig[r['res']] = s if seen[s] == 1 else '%s #%d' % (s, seen[s])
+    return [sig.get(c['label'], c['label']) if TEMP.match(c['label']) else c['label'] for c in p['confs']]
 
 
 def changed_labels(src, func, plan, work):
