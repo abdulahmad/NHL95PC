@@ -104,7 +104,7 @@ built", with each conflict's origin):
 
 * **The names walk** (+57A5B, returns to +57A8C) goes through the temporary names list (+7E778, newest name
   first) and gives a conflict to every name flagged as used in more than one block (+18 bit 1) at that point.
-  These end up at the **back** of the list, oldest first: the parameters in order, then the locals, then the
+  These end up at the **back** of the list, oldest first: the parameters in order, then the locals (in reverse declaration order), then the
   code generator temporaries by id. "Used in more than one block" is judged on the IR when the walk runs, so a
   temporary that is local in the final IR (POInitSchedule's t49, t78) can still be here.
 * **The live-information walk** (calls `NameConflict` +50136, returning to +500F1 inside +500DE) goes through
@@ -119,6 +119,25 @@ So a tie between two temporaries of one block follows where their last uses are 
 operand order there moves them, and a temporary added or removed anywhere shifts every later position (the Shell
 sort's gaps depend on the length). tieorder.py's explanation now prints each conflict's origin (block and line)
 and also tries every temporary at another place inside its own block's part of the list.
+
+### What source edits do to the list (StaticEck's Fable run, 2026-10-26)
+
+Measured with `irdump.py --pass 0` on code-neutral variants and a replay of the sort
+(docs/board/2026-10-26-1815-staticeck.md). These are the levers for a tie target (`tieorder.py`'s minimal target,
+`tieinverse.py`'s list of changes that would work):
+
+* **Names-walk order:** the parameters in declaration order (register order for register calls), then the locals
+  in **reverse** declaration order, then the multi-block temporaries. Renames, `register`, extra late uses, loop
+  forms and where a local is first set change nothing.
+* **Re-listing:** a name gets a new id (later in the list) at its first 16-bit alias use in code order
+  (NetCollide's gx and ux at the first `HIWORD(p->Xpos) = gx + ux`); names never used as 16 bits keep their ids.
+* **A narrower type adds a conversion conflict without code** where the code already needs only the low byte.
+  JoystickCalScreen matched this way (#247): the abort test's stick value in an `unsigned char` local adds one
+  conflict before the puck size product and flips the tied pair. `char shift` in the signature adds one in each
+  block that shifts (and the second undoes the first).
+* **A single-block named local** used once or twice just takes a temporary's place (same list).
+* **A named local set in two blocks** (NetCollide's `ay = ABS(uy)`) becomes a copy conflict plus a stack slot:
+  not a way to reorder ternary temporaries.
 
 ### The tie order a draft needs (tools/wccre/tieorder.py)
 
