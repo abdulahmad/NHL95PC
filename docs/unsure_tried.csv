@@ -5361,3 +5361,32 @@ LoadTeamRoster,,freshstat skaterbytes i scores 42,,ga
 LoadTeamRoster,,teamfirst p skater branch freshstat scores 43,,ga
 LoadTeamRoster,,teamfirst p skater copyblock freshstat scores 43. Baseline savings: hoisted team * 1092 t218 and i * 39 t219 each 30 (EDI and memory),,ga
 LoadTeamRoster,,reversing skater jersey operands changes their order but exchanges those allocations. No new ESCALATE find. Both make and make CBUILD=0 MATCH. Function unmarked,,ga
+LeagueTeamSelect,,sprite size built in four statements using size throughout = 210,,ga
+LeagueTeamSelect,,"name ternary non-Anaheim case first, matching EXE block layout = 64",,ga
+LeagueTeamSelect,,ClearInputQueue duplicated in success and cancel arms after restoring grid = 50,,ga
+LeagueTeamSelect,,Pal20 resource handle separated from old pick to remove existing dead-variable reuse = 50,,ga
+LeagueTeamSelect,,"block-local rowbytes and rows, explicit EXE read/add order, product height first = 328",,ga
+LeagueTeamSelect,,size holds padded row bytes then height-first product = 333,,ga
+LeagueTeamSelect,,sprite-size product and header addition separate = 330,,ga
+LeagueTeamSelect,,"selected menu entry pointer reused in action checks, callback, submenu metadata and origins = 462",,ga
+LeagueTeamSelect,,first Norm address computed before call argument loads in a scoped selected pointer = 46 (rejected: address arithmetic moved before EXE argument loads),,ga
+LeagueTeamSelect,,"current pick pointer reused through grid selection and modal dialog branch, separate next-pick store after cur increment = 876",,ga
+LeagueTeamSelect,,"current pick pointer scoped to remove-team branch, reused for dialogs, updates and restore = 194",,ga
+LeagueTeamSelect,,"old pick declared in hit branch, leaving original v solely as Pal20 handle = 105",,ga
+LeagueTeamSelect,,two-human selection prefix increment cur = 50,,ga
+LeagueTeamSelect,,two-human selection cur += 1 = 50,,ga
+LeagueTeamSelect,,"first dropdown-close loop saves background once and uses it for test, restore and free = 214",,ga
+LeagueTeamSelect,,name append as if/else with normal team first = 73,,ga
+LeagueTeamSelect,,name append as if/else with Anaheim first = 68,,ga
+LeagueTeamSelect,,remove redundant boolean ternary from grid visibility condition = 424,,ga
+LeagueTeamSelect,,separate success redraw test after state update / cancel restore so ClearInputQueue keeps its own tail = 438,,ga
+LeagueTeamSelect,,"ordinary local (teams,n,x,y) controller declaration and call, no custom parm order",,ga
+LeagueTeamSelect,,preserves x EBX/y ECX ABI and split Pal20 handle = 48,,ga
+LeagueTeamSelect,,"fresh compile of permuter best: old pick v before size, separate Pal20 handle = 47",,ga
+LeagueTeamSelect,,permuter declaration order plus ordinary controller x/y declaration and call = 45,,ga
+LeagueTeamSelect,,"permute 5 min, 641 compiled in 305 s, best 47 (+3) by swapdecl:size:v on separate-palbank source",,ga
+LeagueTeamSelect,,confirmed fresh,,ga
+LeagueTeamSelect,,generated invalid multiline-condition candidates were skipped,,ga
+LeagueTeamSelect,,log /home/mhopkins/tmp/u/np/permlog_ts_LeagueTeamSelect.csv,,ga
+LeagueTeamSelect,,"final: separate palbank + v declared before size + ordinary x/y controller ABI = 45 (+3), fresh GA",,ga
+LeagueTeamSelect,,no ESCALATE find,,ga
