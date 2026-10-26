@@ -170,9 +170,9 @@ static void script_poll(void)
  * own range). To make the game's pointer sit under the host's, the motion events only remember where the host's pointer is in the window
  * (win_x, win_y); the next function 0Bh reports the mickeys the game needs to get its pointer (mousex, mousey, read from its memory)
  * from where it is to there. The host's pointer is hidden only while it is over the 4:3 picture of the active window and the game is
- * drawing a pointer of its own (the glove and the replay pointers, which the game gives a mouse range smaller than the screen by the pointer's size; the green one in play with the mouse chosen as a controller);
+ * drawing a pointer of its own (the glove and the replay pointers: the game's menu input is installed, inputinstalled; the green one in play with the mouse chosen as a controller);
  * otherwise, in the bars, outside the window or while the window is not active, it shows. In fullscreen it stays on the picture. */
-extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028;
+extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028, inputinstalled;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
 static volatile int win_x, win_y, win_moved;
 
@@ -182,11 +182,12 @@ static void cursor_update(void)
     int active = SDL_GetKeyboardFocus() != 0, fs = video_is_fullscreen(), mw, mh, vx, vy, vw, vh, px, py, over, drawn, hide;
     video_mode_size(&mw, &mh);
     video_view(&vx, &vy, &vw, &vh);
-    drawn = dword_D2FF4 < mw || dword_D2FF8 < mh || (mw == 320 && (pad1dev == 1 || pad2dev == 1));
+    drawn = inputinstalled || (mw == 320 && (pad1dev == 1 || pad2dev == 1));
     video_confine_mouse(active && (fs || (mw == 320 && drawn)));   /* in play with the mouse as controller it may not leave the picture */
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
     hide = over && drawn;
+    { static int was = -1; if (drawn != was) TRACE("game pointer %d\n", drawn); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
 
