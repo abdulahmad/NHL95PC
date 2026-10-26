@@ -10,17 +10,17 @@
    (PBnum), camx (byte), camy and crowdlevel (words), the ten rink objects' frames as nibbles and the twenty
    object bytes of word_DEE94. When the buffer (9600h bytes from replaystart) is full it wraps (sflags bit 4). On
    the other tick only the sound effect is carried over (replaysfx). No arguments, no result.
-   DRAFT (10.0 GA, 22 differing, same size): a volatile lo gives the original stack byte and frame (a
-   function-local volatile, ESCALATE before any mark: without it 29, size +11); the x term written first in the
-   packing (`x | y << 10 | ...`) gives the EXE's loads (y copied into ecx and shifted, each later term in ebx and
-   or-ed into ecx). Left: the tick - 2 goes through edi in the EXE (here ecx, so edi is not
-   saved and the frame is push 18h, not 1Ch), and the nibble loop builds 2i + 1 in two leas through eax (EXE one
-   `lea ebx, [ecx+ecx+1]` from i in ecx). See docs/UNSURE.md. */
+   DRAFT (10.0 GA, 11 differing, 809 vs 810 bytes): a shared pair index (i + i), used by both nibble
+   reads, makes the plain lo byte spill to the EXE's stack slot without volatile. The packing loop matches.
+   Left: the tick - 2 uses ecx instead of the EXE's edi, so edi is not saved and the frame is push 18h, not
+   1Ch. The nibble loop doubles i in ecx then adds 1 with a lea, instead of the EXE's single
+   lea ebx, [ecx+ecx+1], and its high-nibble index uses pair * 12 instead of i * 3 * 8.
+   See docs/UNSURE.md. */
 void updatereplay(void)
 {
     Player *p;
     short i;
-    volatile unsigned char lo;
+    unsigned char lo;
 
     if (gmode & 0x10) return;
     if (++replaytick < 2) {
@@ -60,8 +60,10 @@ void updatereplay(void)
     *(short *)recbpr = crowdlevel;
     recbpr += 2;
     for (i = 0; i < 0xA; i++) {
-        lo = byte_DEE97[(i + i + 1) * 12] & 0xF;
-        *recbpr++ = lo | (byte_DEE97[i * 3 * 8] & 0xF) << 4;
+        int pair;
+        pair = i + i;
+        lo = byte_DEE97[(pair + 1) * 12] & 0xF;
+        *recbpr++ = lo | (byte_DEE97[pair * 12] & 0xF) << 4;
     }
     for (i = 0; i < 0x14; i++) *recbpr++ = ((unsigned char *)word_DEE94)[i * 12];
     if (replaystart + 0x9600 <= recbpr) {
