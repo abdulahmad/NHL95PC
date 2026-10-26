@@ -4544,3 +4544,23 @@ EditTextField,,"on the ins version: block-scoped c (7), block-scoped i per loop 
 EditTextField,,"targetsearch 30 min (1685 candidates, none meets the tie). Goto-free grid on the 36 draft's handlers (poll x dispatch, each as for (;;) / while (1) / do-while alike): if/else poll arms with the blink as the if (key) else (47, +2)","47, +2",ga
 EditTextField,,"the blink after an if (key) handler block (74, +14), `if (sub_B3D64()) key = 0; else idle` (68-106)",68-106,ga
 EditTextField,,"a rotated `for (; !(key = PollKey()); )` poll (41, +4)","41, +4",ga
+checkcheck,,adopted targetsearch facing subtraction/mask split plus hit-strength if/else: 8 (+3 bytes),+3 bytes,ga
+checkcheck,,SetSPA call in each branch without v: 19,,ga
+checkcheck,,v scoped to checking branch: 15,,ga
+checkcheck,,random sample in fresh short roll with comma: 24,,ga
+checkcheck,,random sample assigned to related strength rel with comma: 24,,ga
+checkcheck,,int v full dword load then separate >>= 16: 29,,ga
+checkcheck,,v scoped to loop body: 15,,ga
+checkcheck,,SPA as short-array element [rel + 1]: 46,,ga
+checkcheck,,SPA as dereferenced short pointer plus 1: 46,,ga
+checkcheck,,"hit-strength arithmetic split into -=, +=, >>=, -=: 44",,ga
+checkcheck,,branched SetSPA with short-array SPA: 30,,ga
+checkcheck,,separate block-local hit strength: 12,,ga
+checkcheck,,separate function-local hit strength: 26,,ga
+checkcheck,,constant SetSPA branch and table branch retaining v: 12,,ga
+checkcheck,,guarded sample statement and separate resisted decision: 34,,ga
+checkcheck,,int SPA local combined with module-local SetSPA int argument: 62,,ga
+checkcheck,,"permute 5 min --jobs 4: stopped after 513 candidates in 157 s, best 8 size +0 only with signed char v, rejected because 0xED7 truncates (natural 8 size +3 retained)",natural 8 size +3 retained,ga
+checkcheck,,baseline first_pick 29 vs permute 31,,ga
+checkcheck,,final both 8. Permute generated HIWORD rvalue compile errors and out-of-range warnings in rejected candidates,,ga
+checkcheck,,no blocking tool failure. No ESCALATE find,,ga
