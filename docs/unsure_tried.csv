@@ -4588,3 +4588,23 @@ updatereplay,,p 263 EAX and i 175 DX unchanged. No new ESCALATE find. Tool issue
 updatereplay,,rerun with PATH fixed succeeded. Permute rejected malformed generated loop/declaration candidates (E1077/E1018 and cascades),E1077/E1018 and cascades,ga
 updatereplay,,"plus E1010 type mismatches, and continued. Fresh standalone GA compile confirmed 11 differing. Both make and make CBUILD=0 end MATCH. Committed 55ec767ba1ca48aef570f448a4fd290824a4a92d (C file only, function unmarked)",,ga
 updatereplay,,no push,,ga
+checkcheck,,adopted targetsearch facing subtraction/mask split plus hit-strength if/else: 8 (+3 bytes),+3 bytes,ga
+checkcheck,,SetSPA call in each branch without v: 19,,ga
+checkcheck,,v scoped to checking branch: 15,,ga
+checkcheck,,random sample in fresh short roll with comma: 24,,ga
+checkcheck,,random sample assigned to related strength rel with comma: 24,,ga
+checkcheck,,int v full dword load then separate >>= 16: 29,,ga
+checkcheck,,v scoped to loop body: 15,,ga
+checkcheck,,SPA as short-array element [rel + 1]: 46,,ga
+checkcheck,,SPA as dereferenced short pointer plus 1: 46,,ga
+checkcheck,,"hit-strength arithmetic split into -=, +=, >>=, -=: 44",,ga
+checkcheck,,branched SetSPA with short-array SPA: 30,,ga
+checkcheck,,separate block-local hit strength: 12,,ga
+checkcheck,,separate function-local hit strength: 26,,ga
+checkcheck,,constant SetSPA branch and table branch retaining v: 12,,ga
+checkcheck,,guarded sample statement and separate resisted decision: 34,,ga
+checkcheck,,int SPA local combined with module-local SetSPA int argument: 62,,ga
+checkcheck,,"permute 5 min --jobs 4: stopped after 513 candidates in 157 s, best 8 size +0 only with signed char v, rejected because 0xED7 truncates (natural 8 size +3 retained)",natural 8 size +3 retained,ga
+checkcheck,,baseline first_pick 29 vs permute 31,,ga
+checkcheck,,final both 8. Permute generated HIWORD rvalue compile errors and out-of-range warnings in rejected candidates,,ga
+checkcheck,,no blocking tool failure. No ESCALATE find,,ga
