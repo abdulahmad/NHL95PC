@@ -38,12 +38,15 @@ static float vol_table[4096];
 static float pan_left[16], pan_right[16];
 static int initialised;
 static int64_t last_wave_irq_ns;           /* when a voice last raised its wave interrupt */
+static uint32_t voice_writes[NVOICES];     /* NHL95_TRACE: voice register writes per voice */
 
 /* Timing facts of the stream, appended to nhl95-audio.log every 10 s while the card is being used (see gus_diag_flush). The game's
  * driver refills one half of a 2 KB ring when the other half has been played; a refill that comes later than the half takes to
  * play (23 ms) replays old music. */
 static struct {
     uint32_t refills, lat[10], overlap, underrun_frames, stalls;
+    uint32_t n_starts, n_ramps, n_wave_irq, n_vol_irq;       /* native voices (2 and up) */
+    int n_max_run;
     double lat_max_ms, gap_max_ms;
 } dg;
 
@@ -110,9 +113,11 @@ static void gf1_reset(void)
 static void write_reg(int reg, uint16_t d)
 {
     struct voice *vo = &v[cur_voice];
+    if (reg < 0x10) voice_writes[cur_voice]++;
     if (trace_on && reg < 0x10 && cur_voice < 2) TRACE("gus: %.3f v%d reg %02x = %04x\n", plat_now_ns() / 1e9, cur_voice, reg, d);
     switch (reg) {
     case 0x00: vo->wave_ctrl = (d >> 8) & 0x7F; vo->running_wave = !(vo->wave_ctrl & 3);
+        if (cur_voice >= 2 && !(vo->wave_ctrl & 3)) dg.n_starts++;
         vo->wave_irq = (d >> 8) & 0x80 ? 1 : 0;     /* bit 7 is the interrupt: written clear it acknowledges it, written set it raises it */
         check_irq(); break;
     case 0x01: vo->fc = d; break;
@@ -128,6 +133,7 @@ static void write_reg(int reg, uint16_t d)
     case 0x0B: vo->cur = (vo->cur & 0xFFFF0000) | d; break;
     case 0x0C: vo->pan = (d >> 8) & 15; break;
     case 0x0D: vo->vol_ctrl = (d >> 8) & 0x7F; vo->running_vol = !(vo->vol_ctrl & 3); vo->ramp_counter = 0;
+        if (cur_voice >= 2 && !(vo->vol_ctrl & 3)) dg.n_ramps++;
         vo->vol_irq = (d >> 8) & 0x80 ? 1 : 0;      /* the same for the volume ramp */
         check_irq(); break;
     case 0x0E: active_voices = ((d >> 8) & 0x3F) + 1; if (active_voices < 14) active_voices = 14; if (active_voices > 32) active_voices = 32; break;
@@ -255,7 +261,7 @@ static void step_voice(struct voice *vo, int *l, int *r)
                     if (vo->vol_ctrl & 0x10) vo->vol_ctrl ^= 0x40;
                     else vo->vol = up ? lo : hi;
                 } else { vo->vol_ctrl |= 1; vo->running_vol = 0; vo->vol = up ? hi : lo; }
-                if (vo->vol_ctrl & 0x20) vo->vol_irq = 1;
+                if (vo->vol_ctrl & 0x20) { vo->vol_irq = 1; if (vo >= &v[2]) dg.n_vol_irq++; }
             }
         }
     }
@@ -280,13 +286,13 @@ static void step_voice(struct voice *vo, int *l, int *r)
                 if (vo->wave_ctrl & 0x10) { vo->wave_ctrl |= 0x40; vo->cur = vo->end - (vo->cur - vo->end); }
                 else vo->cur = vo->start + (vo->cur - vo->end);
             } else { vo->wave_ctrl |= 1; vo->running_wave = 0; vo->cur = vo->end; }
-            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); }
+            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); if (vo >= &v[2]) dg.n_wave_irq++; }
         } else if (backward && (int32_t)vo->cur <= (int32_t)vo->start) {
             if (vo->wave_ctrl & 8) {
                 if (vo->wave_ctrl & 0x10) { vo->wave_ctrl &= ~0x40; vo->cur = vo->start + (vo->start - vo->cur); }
                 else vo->cur = vo->end - (vo->start - vo->cur);
             } else { vo->wave_ctrl |= 1; vo->running_wave = 0; vo->cur = vo->start; }
-            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); }
+            if (vo->wave_ctrl & 0x20) { vo->wave_irq = 1; last_wave_irq_ns = plat_now_ns(); if (vo >= &v[2]) dg.n_wave_irq++; }
         }
     }
 }
@@ -299,6 +305,12 @@ static void gus_report(void)            /* NHL95_TRACE: what the voices are doin
         struct voice *vo = &v[j];
         if (!(vo->wave_ctrl & 3) && n < 12)
             n += sprintf(line + strlen(line), " [v%d fc=%04x vol=%04x pan=%d cur=%07x end=%07x ctl=%02x]", j, vo->fc, vo->vol, vo->pan, vo->cur, vo->end, vo->wave_ctrl) > 0;
+    }
+    {
+        char w[300] = "";
+        int k;
+        for (k = 0; k < NVOICES; k++) if (voice_writes[k]) sprintf(w + strlen(w), " v%d:%u", k, voice_writes[k]);
+        fprintf(stderr, "gus: register writes so far:%s\n", w);
     }
     fprintf(stderr, "gus: active voices %d, running:%s\n", active_voices, line[0] ? line : " none");
 }
@@ -341,6 +353,11 @@ static void gus_pump_locked(void)
         gfifo_head++;
         check_irq();
     }
+    {                                                           /* how many native voices are running now */
+        int run = 0;
+        for (j = 2; j < NVOICES; j++) if (!(v[j].wave_ctrl & 3)) run++;
+        if (run > dg.n_max_run) dg.n_max_run = run;
+    }
 }
 
 static void gus_diag_flush(void)
@@ -350,6 +367,9 @@ static void gus_diag_flush(void)
     if (!last) last = now;
     if (now - last < 10000000000LL) return;
     last = now;
+    if (dg.n_starts || dg.n_ramps || dg.n_wave_irq || dg.n_vol_irq)
+        audio_log("GUS native voices (2 and up), last 10 s: %u started, %u volume ramps started, %u wave end interrupts, %u volume ramp end interrupts, most running at once %d",
+                  dg.n_starts, dg.n_ramps, dg.n_wave_irq, dg.n_vol_irq, dg.n_max_run);
     if (dg.refills) {
         audio_log("GUS stream, last 10 s: %u refills; refill delay after the interrupt (ms, 4 ms steps, 40+ last): %u %u %u %u %u %u %u %u %u %u, max %.1f; "
                   "refills while the half was still playing: %u; samples missing in the queue: %u; longest gap between pumps %.1f ms, gaps over 30 ms: %u",

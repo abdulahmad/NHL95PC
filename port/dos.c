@@ -339,6 +339,16 @@ static int int21(ctx_t *c)
         else flags = (AL(c) & 3) == 0 ? O_RDONLY : (AL(c) & 3) == 1 ? O_WRONLY : O_RDWR;
         fd = open(path, flags | O_BINARY, 0666);
         TRACE("open %s -> %d\n", path, fd);
+        {                                               /* nhl95-audio.log: the music, instrument and sound files the game uses */
+            const char *dot = strrchr(path, '.');
+            static int n_open_logged;
+            if (dot && n_open_logged < 300 && (!strcasecmp(dot, ".KMS") || !strcasecmp(dot, ".CFG") || !strcasecmp(dot, ".PAT") ||
+                !strcasecmp(dot, ".SCN") || !strcasecmp(dot, ".TIM") || !strcasecmp(dot, ".DIG") || !strcasecmp(dot, ".PPV") ||
+                !strcasecmp(dot, ".IFF") || !strcasecmp(dot, ".MID") || !strcasecmp(dot, ".INI"))) {
+                n_open_logged++;
+                audio_log("open %s (%s)", path, fd < 0 ? "not found" : "ok");
+            }
+        }
         if (fd < 0) dos_error(c, errno); else { R(c, EAX) = (uint32_t)fd; SET_CF(c, 0); }   /* DOS/4GW returns the handle zero-extended in EAX */
         return 1;
     }
