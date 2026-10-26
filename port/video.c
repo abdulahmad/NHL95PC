@@ -26,13 +26,42 @@ static int use_gl;                              /* the OpenGL path (video_gl.c) 
 int vgl_init(SDL_Window *win);
 void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh);
 void vgl_quit(void);
+void vgl_set_vsync(int on);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
 static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
 { (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
 static void vgl_quit(void) {}
+static void vgl_set_vsync(int on) { (void)on; }
 #endif
 static uint32_t argb[1280 * 1024];
+
+/* How often the window is drawn (keys 1 and 2: 60 Hz, 3: 70 Hz, 4: vsync on or off) and what the window title reports: how many frames were
+ * drawn and how many of them were different images, per second. */
+static int present_hz = 60, vsync_on = 1;
+static char base_title[96] = "NHL Hockey 95";
+static int shown, changed;
+static int64_t title_at;
+
+int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
+
+static void title_refresh(void)
+{
+    char t[256];
+    snprintf(t, sizeof t, "%s | drawing %d Hz, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off]", base_title, present_hz,
+             vsync_on ? "on" : "off", shown, changed);
+    if (win) SDL_SetWindowTitle(win, t);
+}
+
+void video_pacing_key(int n)
+{
+    if (n == 1) { present_hz = 60; vsync_on = 1; }
+    else if (n == 2) present_hz = 60;
+    else if (n == 3) present_hz = 70;
+    else if (n == 4) vsync_on = !vsync_on;
+    if (use_gl) vgl_set_vsync(vsync_on);
+    title_refresh();
+}
 
 static struct { int mode, w, h; } modes[] = {
     { 0x100, 640, 400 }, { 0x101, 640, 480 }, { 0x103, 800, 600 }, { 0x105, 1024, 768 }, { 0x107, 1280, 1024 }, { 0x13, 320, 200 }
@@ -296,13 +325,21 @@ void video_present(void)
         tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, w, h);
         tex_w = w; tex_h = h;
     }
-    if (stats_on) {                             /* NHL95_STATS: how many different images the game puts on the screen per second */
+    {                                           /* how many different images the game puts on the screen per second (NHL95_STATS and the title) */
         static uint32_t last_hash;
+        static int n_shown, n_changed;
         uint32_t hash = 0;
         int i;
+        int64_t now = plat_now_ns();
         for (i = 0; i < w * h; i += 5) hash = hash * 31 + argb[i];
-        stats_screen(hash != last_hash, w, h);
+        if (stats_on) stats_screen(hash != last_hash, w, h);
+        n_shown++; if (hash != last_hash) n_changed++;
         last_hash = hash;
+        if (now - title_at >= 1000000000LL) {
+            shown = (int)(n_shown * 1000000000LL / (now - title_at)); changed = (int)(n_changed * 1000000000LL / (now - title_at));
+            n_shown = n_changed = 0; title_at = now;
+            title_refresh();
+        }
     }
     dump_frame(w, h);
     {
@@ -326,5 +363,6 @@ void video_present(void)
 
 void video_set_title(const char *title)
 {
-    if (win) SDL_SetWindowTitle(win, title);
+    snprintf(base_title, sizeof base_title, "%s", title);
+    title_refresh();
 }

@@ -103,6 +103,8 @@ void video_view(int *vx, int *vy, int *vw, int *vh);   /* where the 4:3 picture 
 void video_mode_size(int *w, int *h);                  /* the game's current screen size: 640x480 (menus) or 320x200 (play) */
 void video_game_to_window(int gx, int gy, int *wx, int *wy);
 void video_confine_mouse(int on);                      /* fullscreen: the host pointer stays on the 4:3 picture */
+void video_pacing_key(int n);                          /* keys 1..4: how often the window is drawn, vsync */
+int64_t video_present_ns(void);
 void video_toggle_fullscreen(void);                    /* Alt+Enter */
 int video_is_fullscreen(void);
 void video_present(void);              /* main thread */

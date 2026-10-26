@@ -106,7 +106,7 @@ int vgl_init(SDL_Window *win)
     u_pre = p_glGetUniformLocation(prog, "pre");
     u_mode = p_glGetUniformLocation(prog, "mode");
     glGenTextures(1, &tex);
-    SDL_GL_SetSwapInterval(getenv("NHL95_NOVSYNC") ? 0 : 1);
+    SDL_GL_SetSwapInterval(1);
     if (f && !strcmp(f, "nearest")) filter_mode = 0;
     else if (f && !strcmp(f, "linear")) filter_mode = 1;
     return 1;
@@ -165,6 +165,8 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     }
     SDL_GL_SwapWindow(win);
 }
+
+void vgl_set_vsync(int on) { SDL_GL_SetSwapInterval(on ? 1 : 0); }
 
 void vgl_quit(void)
 {

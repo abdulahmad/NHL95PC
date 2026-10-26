@@ -228,9 +228,16 @@ void input_poll(void)
                 if (!e.key.repeat) audio_capture_toggle();
                 break;
             }
+            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_4 && !(e.key.keysym.mod & (KMOD_CTRL | KMOD_ALT))) {
+                if (!e.key.repeat) video_pacing_key(e.key.keysym.scancode - SDL_SCANCODE_1 + 1);       /* 1..4: drawing rate and vsync */
+                break;
+            }
             if (!e.key.repeat) key_event(e.key.keysym.scancode, 1);
             break;
-        case SDL_KEYUP: key_event(e.key.keysym.scancode, 0); break;
+        case SDL_KEYUP:
+            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_4) break;
+            key_event(e.key.keysym.scancode, 0);
+            break;
         case SDL_MOUSEMOTION: {
             int gx, gy;
             video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);

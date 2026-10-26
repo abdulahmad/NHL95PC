@@ -48,13 +48,11 @@ int main(int argc, char **argv)
     if (getenv("NHL95_CRASHTEST")) { volatile int *p = 0; *p = 1; }      /* checks that a crash is reported */
     plat_start_game();
 
-    int64_t present_ns = 16666667;
     next_tick = next_frame = plat_now_ns();
-    if (getenv("NHL95_PRESENT_HZ") && atoi(getenv("NHL95_PRESENT_HZ")) > 0) present_ns = 1000000000LL / atoi(getenv("NHL95_PRESENT_HZ"));   /* a test aid */
     for (;;) {
         int64_t now = plat_now_ns();
         input_poll();
-        if (now >= next_frame) { video_present(); next_frame = now + present_ns; }
+        if (now >= next_frame) { video_present(); next_frame = now + video_present_ns(); }
         /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
         while (now >= next_tick) {
