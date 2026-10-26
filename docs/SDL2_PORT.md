@@ -63,21 +63,36 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
 
-## State (2026-10-25, Windows, native)
+## State (2026-10-26, Windows, native)
 
-Runs with the real game data (`NHL95_CD` names the folder with the CD's files; the installed game folder is the current directory). Works:
-start-up, the intro (Pioneer, EA, the title movie), the front end with the menu bar driven by the keyboard (arrow keys move the pointer, Return
-clicks), File > New Exhibition Game up to the scouting report, and the attract-mode demo game. Sound: no sound, PC speaker, AdLib, Sound Blaster
-(the intro plays its digital sound from the star fade-in), MT-32 (Munt; the original MT-32 ROMs in `NHL95_MT32_ROMS`) and Gravis UltraSound
-all get through the intro to the title. Not yet checked: playing a game with the keyboard, joystick, Linux (the Windows work was not built
-there), listening quality of MT-32 and GUS (checked through recordings only), fullscreen and scaling options.
+Runs with the real game data (the installed game folder, or a copy of it with the CD's files, is the current directory; `NHL95_CD` names a
+separate folder with the CD's files). Works: start-up, the intro (Pioneer, EA, the title movie), the front end with the menu bar driven by the
+keyboard (arrow keys move the pointer, Return clicks), File > New Exhibition Game, starting and playing a game, the attract-mode demo. Sound,
+all checked by listening on the author's machine: no sound, PC speaker, AdLib, Sound Blaster, MT-32 (Munt) and Gravis UltraSound (the American
+anthem plays correctly). Not yet checked: keyboard play in detail, joystick, Linux (the Windows work was not built there; the Linux data layout
+probably has the same zero-filled-section problem as the Windows one had), fullscreen and scaling options.
+
+Files the program looks for beyond the game folder (so that it runs "raw", with nothing set): the game's files in the folder above the game
+folder and in the folder of the program and above it (the Gravis patches `C:\ULTRASND\MIDI`, which the game opens as `./ULTRASND/MIDI/HOMEORG.PAT`),
+and the MT-32 ROMs (`MT32_CONTROL.ROM`, `MT32_PCM.ROM`) in `NHL95_MT32_ROMS`, the game folder, a `roms` folder next to the program, or the folders
+above (a message box says so when they are missing).
 
 Windows specifics found on the way: DOS memory 0x10000-0xFFFFF is part of the image (linked at 0x10000, section `.lowmem`), reads below 0x10000
 are redone on a buffer, `pushf`/`popf` of the game are `int3` (flagops.h) so that the game's interrupt flag (not the CPU's) is kept, the host
-data is read-only (`NHL95_NOROPROTECT=1` to switch that off), and a timer tick the game could not take is queued.
+data is read-only (`NHL95_NOROPROTECT=1` to switch that off), a timer tick the game could not take is queued, and the game's data segment is one
+contiguous block in the original order (zero-filled sections are folded into `.data`).
 
-Debugging: `NHL95_TRACE=1`, `NHL95_STATS=1` (traps, ticks, `video_present` timing), `NHL95_KEYS`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py`
-maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last exception handler.
+Sound emulation notes: the Sound Blaster and the GUS run by the clock (`sb_pump`, `gus_pump`), not by the audio device's callbacks, because the
+game's drivers read the playback position and take interrupts from it; in the game the GUS is used twice: voices 0 and 1 are a ring buffer for the
+game's own mixer (digital sound, speech), and the other voices play the organ patch natively for the anthem (the music driver releases a note by a
+volume ramp and frees the voice when the ramp-end interrupt arrives, so the ramp speed matters: the ramp step is 16 register units per rate
+unit, as in DOSBox). The interrupt-queue semantics of GF1 register 8Fh and the voice-control acknowledge are modelled.
+
+Debugging: `NHL95_TRACE=1`, `NHL95_STATS=1` (traps, ticks, `video_present` timing), `NHL95_KEYS="ms:Key ms:@x,y ms:@click"` (scripted input),
+`NHL95_DUMP`, `NHL95_WAV`; `port/where.py` maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last
+exception handler. Without any setting, the program appends to `nhl95-audio.log` next to it while a sound card is in use (refill and interrupt
+timing, slow DOS calls, the music files the game opens, native GUS voice activity), and **Ctrl+F11** records the mixed sound to
+`nhl95-capture-N.wav` (the window title says so): that is how sound problems on a machine are diagnosed without a debugger.
 
 Not done: joystick (SDL game controller instead of port 201h), digital audio in MT-32 mode (the game plays only music there), fullscreen and
 scaling options.
