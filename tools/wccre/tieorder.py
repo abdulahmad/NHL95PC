@@ -18,6 +18,9 @@ until the score stops improving or the time is up.
 The report says:
   * the baseline score and the best forced score (0 means: a tie order exists that gives the EXE bytes; the
     source is otherwise right, and the fix is whatever natural change gives the allocator that order)
+  * the minimal target: after a byte match, the fewest "a before b" pairs of the forced order that still give it
+    (usually one: JoystickCalScreen needs only t55 before t54 of the 17 pairs its order flips); saved with the
+    order, and targetsearch.py / tiesearch.py aim at these pairs only
   * per changed run: the baseline order and the forced order (variable names, tN for code generator
     temporaries), and the register each conflict gets before and after
   * the instructions whose code changes (offsets in the function), to find the tN in the C source
@@ -338,6 +341,43 @@ def explain_print(hits, before, lab, show, origins=None):
     if len(hits) > show: print('    ... %d more' % (len(hits) - show))
 
 
+def order_from(n, cons):
+    """the order of 0..n-1 closest to the sorted one (smallest index first) in which every (a, b) of cons has a
+    before b"""
+    after = {}; need = [0] * n
+    for a, b in cons:
+        after.setdefault(a, []).append(b); need[b] += 1
+    out, ready = [], [i for i in range(n) if not need[i]]
+    while ready:
+        ready.sort(); i = ready.pop(0); out.append(i)
+        for b in after.get(i, ()):
+            need[b] -= 1
+            if not need[b]: ready.append(b)
+    return out
+
+
+def minimal_pairs(plan, score):
+    """the fewest "a before b" constraints (pass, a, b: indices in the sorted list) that still give a byte match.
+    A forced order fixes a whole run, but usually one or two of its flips matter (JoystickCalScreen: of the 17 pairs
+    the order flips, only t55 before t54); the searches aim at these. score(plan) -> differing count."""
+    flips = []
+    for k, order in sorted(plan.items()):
+        pos = {i: q for q, i in enumerate(order)}
+        flips += [(k, b, a) for a in range(len(order)) for b in range(a + 1, len(order)) if pos[b] < pos[a]]
+    sizes = {k: len(v) for k, v in plan.items()}
+
+    def plan_of(cons):
+        return {k: order_from(n, [(a, b) for kk, a, b in cons if kk == k]) for k, n in sizes.items()}
+
+    for c in flips:                      # one pair is usually enough
+        if score(plan_of([c])) == 0: return [c], plan_of([c])
+    cur = list(flips)
+    for c in list(flips):                # else drop the flips that are not needed, one at a time
+        trial = [x for x in cur if x != c]
+        if score(plan_of(trial)) == 0: cur = trial
+    return cur, plan_of(cur)
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__.split('\n')[0])
     ap.add_argument('src'); ap.add_argument('func')
@@ -438,12 +478,29 @@ def main():
     if a.cross and best[0] > 0:
         cross_search(a, src, func, work, passes0, best_plan, best, t0)
     if best[0] == 0 and best[2]: complete = True     # a byte match ends the search: nothing left to find
+    pairs = c.get('pairs') if cached else None
+    if best[0] == 0 and best[2] and pairs is None:
+        memo = {}
+
+        def differing(pl):
+            key = tuple((k, tuple(v)) for k, v in sorted(pl.items()))
+            if key not in memo:
+                obj = os.path.join(work, 'm.obj')
+                ok, out, d = compile_forced(src, func, pl, obj)
+                try: memo[key] = permute.score(src, obj, func, src)[0] if ok and not d.mismatch else 9999
+                except (SystemExit, Exception): memo[key] = 9999
+            return memo[key]
+        pairs, best_plan = minimal_pairs(best_plan, differing)
+        n += len(memo)
+    if pairs:
+        print('minimal target: %s' % '; '.join('%s before %s (pass %d)' % (
+            label(passes0[k]['confs'][a]), label(passes0[k]['confs'][b]), k) for k, a, b in pairs))
     if complete or best[0] < base[0]:
         # an incomplete search still saves an order that improves (targetsearch.py / tiesearch.py read it); only a
         # complete one is reused to skip the search
         os.makedirs(os.path.dirname(cache), exist_ok=True)
         json.dump(dict(sha1=h, best=list(best), plan={str(k): v for k, v in best_plan.items()}, complete=complete,
-                       names=sorted(edit_names)), open(cache, 'w'))
+                       names=sorted(edit_names), pairs=pairs), open(cache, 'w'))
     print('result: %d -> %d differing after %d forced orders in %.0f s%s' % (
         base[0], best[0], n, time.time() - t0, ' (a tie order gives the EXE bytes)' if best[0] == 0 and best[2] else ''))
     if best_plan == {k: list(range(len(passes0[k]['confs']))) for k in runs}:
