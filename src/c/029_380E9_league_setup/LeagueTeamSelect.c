@@ -22,22 +22,23 @@ typedef struct Hdr17 { char c[17]; } Hdr17;
 typedef struct Str19 { char c[19]; } Str19;
 
 int BuildStandingsGrid(int fd, unsigned char (*order)[7]);
-void ChooseLeagueController(unsigned char *teams, int n, int y, int x);
-#pragma aux ChooseLeagueController parm [eax] [edx] [ecx] [ebx];
+void ChooseLeagueController(unsigned char *teams, int n, int x, int y);
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
 int sub_8F98F(char *path);  /* music library: load a song */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song */
 
-/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,893 vs 5,888 bytes, 50
+/* DRAFT (first pass from Ghidra; the menu loop follows MainDeskLoop's draft): 5,891 vs 5,888 bytes, 45
    differing under 10.0 GA. Every call is in place and the frame size matches. Found under GA: the dropdown
    close loops' position reset as two stores (`pos[i][0] = 0; pos[i][1] = 0;`; the chained form shifts every
    slot), the arrays declared menus, bg, nitems, the origin ternaries as `depth != 1 ? x2 : x1`, and the
    address-taken scalars declared among the arrays as below: they have no register conflict, so their slots
    follow their declaration order through Watcom's size sort (docs/WCC_INTERNALS.md "Stack slots"); this order
    gives the EXE's h, item, level, w, my, mx, oldmy, oldmx, hit, fh upward from 220h. The last branch's
-   DrawMenuItemNorm reads the item back as sel[level] (the EXE reloads it there). Left: the sprite-size
-   product's registers (L165), the bg[i] register in the FreeMemBlock loop, the two ClearInputQueue tails
-   merged, and the first select copy: the EXE keeps item in eax from the sel[level] store and jumps into the
+   DrawMenuItemNorm reads the item back as sel[level] (the EXE reloads it there). Giving the Pal20 handle
+   its own local removes dead-variable reuse; declaring the old pick v before size gives the EXE's sprite-size
+   product registers without reversing the factors. The controller call uses the ordinary x, y argument order
+   (x in ebx, y in ecx), which also gives the EXE's address-load order. Left: the bg[i] register in the
+   FreeMemBlock loop, the two ClearInputQueue tails merged, and the first select copy: the EXE keeps item in eax from the sel[level] store and jumps into the
    last copy's call; C reloads item and keeps its own call. */
 /* LeagueTeamSelect (38B4F, PC only): the league setup team grid. Set the text state and the identity colour
    remap, then build the 4 x 7 grid of team numbers by division: the default order (divisionteams) for a new
@@ -99,8 +100,9 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
     int bits;
     int r;
     int k;
+    int v;  /* the old pick */
     int size;
-    int v;  /* the Pal20 bank, then the old pick */
+    int palbank;
     unsigned char *pal;
     unsigned char *e;
     unsigned char *copy;
@@ -174,9 +176,9 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
             if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
         }
         MakePath(path, fileoncd[0x1AD] == 1 ? (char *)cddriveptr : 0, (char *)str_Tspal, 0);
-        v = sub_8E83C(path, 0);
-        FadePalStep(0, (unsigned char *)sub_B30B4(v, (char *)str_Pal20) + 0x10, 0x10);
-        FreeMemBlock(v);
+        palbank = sub_8E83C(path, 0);
+        FadePalStep(0, (unsigned char *)sub_B30B4(palbank, (char *)str_Pal20) + 0x10, 0x10);
+        FreeMemBlock(palbank);
         sub_B2DCA(&hit, &oldmx, &oldmy);
         mx = oldmx;
         my = oldmy;
@@ -417,7 +419,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         *humans = n;
         FreeMemBlock(ptr);
         if (picks[cur] >= 0 && !(mode & 8)) {
-            if (mode & 1) ChooseLeagueController(copy, *humans, (int)&oldmy, (int)&oldmx);
+            if (mode & 1) ChooseLeagueController(copy, *humans, (int)&oldmx, (int)&oldmy);
             AskExportToFloppy(copy, teams, mode, *humans);
             memcpy(teams, copy, 0x30C);
         }
