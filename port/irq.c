@@ -61,6 +61,7 @@ int irq_try_deliver(ctx_t *c)
     vec = irq < 8 ? 8 + irq : 0x70 + irq - 8;
     __sync_fetch_and_and(&pending, ~(1u << irq));
     if (!pm_vec[vec].off) return 0;
+    if (irq > 1) TRACE("irq %d -> vector %02x\n", irq, vec);
     sp = (uint32_t *)R(c, ESP) - 4;
     sp[0] = (uint32_t)irq_return_stub;
     sp[1] = R(c, CS) & 0xFFFF;

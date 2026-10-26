@@ -126,7 +126,9 @@ void plat_start_game(void)
  * a system call) is its context changed. Not when it is at an instruction that traps: it may be on its way into the exception
  * handler, which has (or will take) a copy of the context, so a change here would be lost or would reach the handler as a
  * fault at the interrupt handler's first instruction. Nor when it is where the exception handler let it continue: it may still be
- * in NtContinue, which would overwrite the change. The exception handler delivers the interrupt instead. */
+ * in NtContinue, which would overwrite the change. Nor just after an int3 (a pushf / popf of the game): Windows reports a
+ * breakpoint with the address after the instruction, and the handler has not emulated it yet. The exception handler delivers the
+ * interrupt instead. */
 void plat_kick_game(void)
 {
     CONTEXT c;
@@ -135,7 +137,7 @@ void plat_kick_game(void)
     memset(&c, 0, sizeof c);
     c.ContextFlags = CONTEXT_CONTROL | CONTEXT_INTEGER | CONTEXT_SEGMENTS;
     /* nothing in here may take a lock: the game thread may hold one (the C library's, the heap's) */
-    if (GetThreadContext(game_handle, &c) && IN_GAME_CODE(c.Eip) && c.Eip != resume_eip && !traps((uint8_t *)c.Eip) &&
+    if (GetThreadContext(game_handle, &c) && IN_GAME_CODE(c.Eip) && c.Eip != resume_eip && !traps((uint8_t *)c.Eip) && ((uint8_t *)c.Eip)[-1] != 0xCC &&
         !accesses_low_memory(&c, (uint8_t *)c.Eip) && irq_try_deliver(&c))
         SetThreadContext(game_handle, &c);
     ResumeThread(game_handle);
