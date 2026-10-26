@@ -12,13 +12,13 @@ int sub_B39D0(void);
 
 typedef struct { char b[17]; } Hdr17;                  /* the shape header the puck background copies */
 
-/* DRAFT: 713 vs 713, 11 differing (GA). pal and state are plain arrays and bank / shape / cur
- a struct whose address is never taken, so the bank stays in esi for the two side calls
- (merged by Watcom) and the puck shape in esi for the 17-byte header copy (a struct copy: movsd x4,
- movsb). The puck shape reuses the shape
- slot; the button exit does not clear the mask. The two draws index with s.cur and prev is
- set after them (the EXE reloads s.cur into esi after sub_91370). Left: the puck size factors
- load into eax then [esi+4] (EXE edx then [eax+4]); see docs/UNSURE.md.
+/* MATCH (10.0 GA). pal and state are plain arrays and bank / shape / cur a struct whose address is never
+ taken, so the bank stays in esi for the two side calls (merged by Watcom) and the puck shape in esi for the
+ 17-byte header copy (a struct copy: movsd x4, movsb). The puck shape reuses the shape slot; the button exit
+ does not clear the mask. The two draws index with s.cur and prev is set after them (the EXE reloads s.cur
+ into esi after sub_91370). The abort test reads the stick's byte of the pad word into an unsigned char
+ (buttons): the conversion is one more register conflict before the puck size product, which puts the width
+ read in edx and the height read in eax (with an int local, or the test on the expression, they swap).
  JoystickCalScreen: calibrate one stick. mask is the joyenablemask bit, shift selects that
  stick in the pad word, and side picks the right-hand art when it is not 0. The title is the
  caller's string; this screen does not print it. A button already held aborts and clears the
@@ -35,6 +35,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     } s;
     unsigned char *back;
     int prev;
+    unsigned char buttons;
 
     (void)title;
     joycalactive = 1;
@@ -42,7 +43,8 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     if (side) sub_B387E();
     else sub_B384E();
     sub_8E9C0(0, 0);
-    if (((sub_B3464() >> shift) & 0x30) == 0) {
+    buttons = sub_B3464() >> shift;
+    if ((buttons & 0x30) == 0) {
         sub_8E9E8(state);
         sub_8EA18((int)unk_D45D8);
         sub_B4BA8();

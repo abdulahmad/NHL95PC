@@ -27,6 +27,10 @@ global JoystickCalScreen, CalLeftJoystick, CalRightJoystick, GetInputEvent, Clea
 global InputRemove, EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextAlt
 global DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, InputPollTick, PollMouseEvent, PollJoystickEvent, PollKeyboardEvent, MenuCentralRegistry
 global BuildFreeAgentList, BuildTeamRosterList, LoadLeagueDbsMem, unk13_6BF3D
+; C: src/c/050_6B093_joystick_calibration/JoystickCalScreen.c
+%ifdef CBUILD
+%include "c/050_6B093_joystick_calibration/JoystickCalScreen.inc"
+%else
 JoystickCalScreen:
 push dword 368h	; 6B093
 call __CHK	; 6B098
@@ -226,6 +230,7 @@ pop ebp	; 6B358
 pop edi	; 6B359
 pop esi	; 6B35A
 ret	; 6B35B
+%endif ; C
 ; C: src/c/050_6B093_joystick_calibration/CalLeftJoystick.c
 %ifdef CBUILD
 %include "c/050_6B093_joystick_calibration/CalLeftJoystick.inc"
