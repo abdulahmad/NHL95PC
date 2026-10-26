@@ -1,6 +1,7 @@
 /* Keyboard (port 60h and IRQ 1), mouse and joystick ports. SDL key events become XT scan codes in a queue; the game's own
  * keyboard handler (vector 9) reads them from port 60h exactly like it did from the keyboard controller. */
 #include "host.h"
+#include "audio.h"
 #include <SDL.h>
 
 #define QSIZE 256
@@ -158,7 +159,13 @@ void input_poll(void)
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT: quit_requested = 1; break;
-        case SDL_KEYDOWN: if (!e.key.repeat) key_event(e.key.keysym.scancode, 1); break;
+        case SDL_KEYDOWN:
+            if (e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
+                if (!e.key.repeat) audio_capture_toggle();
+                break;
+            }
+            if (!e.key.repeat) key_event(e.key.keysym.scancode, 1);
+            break;
         case SDL_KEYUP: key_event(e.key.keysym.scancode, 0); break;
         case SDL_MOUSEMOTION: {
             int gx, gy;

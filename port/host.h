@@ -97,6 +97,7 @@ int video_int10(ctx_t *c);
 uint32_t video_port_in(unsigned port);
 int video_port_out(unsigned port, uint32_t val);
 void video_init(void);
+void video_set_title(const char *title);
 void video_present(void);              /* main thread */
 void video_fill_vesa_tables(void);
 void video_window_to_game(int wx, int wy, int *gx, int *gy);

@@ -2,6 +2,7 @@
  * ports (base+0..3, base+8/9) go to the OPL in sound_ports.c. */
 #include "host.h"
 #include "audio.h"
+#include <math.h>
 
 static int base = 0x220, irq = 7, dma = 1, version = 0x0302;
 static uint8_t outbuf[64];
@@ -174,6 +175,11 @@ static void sb_pump_locked(void)
             }
         }
         cur_l = l; cur_r = r;
+        if (trace_on) {                                 /* NHL95_TRACE: the loudness of every 512 samples, to compare with the GUS stream */
+            static double sq; static int cnt;
+            sq += (double)l * l;
+            if (++cnt == 512) { fprintf(stderr, "sb: block rms %.0f\n", sqrt(sq / 512)); sq = 0; cnt = 0; }
+        }
         fifo_push(l, r);
         if (!paused && remaining <= 0) {
             raise_irq();

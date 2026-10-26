@@ -25,7 +25,10 @@ void install_flag_traps(void)
     int i, n = 0;
     for (i = 0; i < NFLAGOPS; i++) {
         uint8_t *p = GAME_ADDR(flagops[i].addr);
-        if (p[0] != first[flagops[i].kind] || (flagops[i].kind >= 2 && p[1] != (flagops[i].kind == 2 ? 0x9C : 0x9D))) continue;
+        if (p[0] != first[flagops[i].kind] || (flagops[i].kind >= 2 && p[1] != (flagops[i].kind == 2 ? 0x9C : 0x9D))) {
+            fprintf(stderr, "pushf/popf at %05x (kind %d) is %02x %02x, not patched\n", (unsigned)flagops[i].addr, flagops[i].kind, p[0], p[1]);
+            continue;
+        }
         p[0] = 0xCC;
         n++;
     }

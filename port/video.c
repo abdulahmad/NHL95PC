@@ -238,3 +238,8 @@ void video_present(void)
     SDL_RenderPresent(ren);
     if (stats_on) stats_present_ns(plat_now_ns() - t0);
 }
+
+void video_set_title(const char *title)
+{
+    if (win) SDL_SetWindowTitle(win, title);
+}

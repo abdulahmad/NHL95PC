@@ -1,5 +1,6 @@
 /* DOS, BIOS and DPMI services (software interrupts). The game runs as a flat 32-bit program like it did under DOS/4GW. */
 #include "host.h"
+#include "audio.h"
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
@@ -408,7 +409,20 @@ int dos_int(ctx_t *c, int vec)
     if (stats_on) stats_int(vec, (R(c, EAX) >> 8) & 0xFF);
     TRACE("int %02xh ax=%04x bx=%08x cx=%08x dx=%08x eip=%08x\n", vec, (unsigned)AX(c), (unsigned)R(c, EBX),
           (unsigned)R(c, ECX), (unsigned)R(c, EDX), (unsigned)R(c, EIP));
-    if (vec == 0x21) ok = int21(c);
+    if (vec == 0x21) {
+        /* A DOS call that takes long (a file open scanned by a virus checker, a big read) cannot be interrupted here, and the sound
+         * interrupt that is due meanwhile is late (the music then repeats a piece): it is noted in nhl95-audio.log. */
+        static int logged;
+        int ah = (R(c, EAX) >> 8) & 0xFF;
+        int64_t t0 = plat_now_ns(), took;
+        ok = int21(c);
+        took = plat_now_ns() - t0;
+        if (took > 3000000LL && logged < 60) {
+            logged++;
+            audio_log("slow DOS call: int 21h ah=%02x (%s) took %.1f ms", ah, ah == 0x3D ? "open" : ah == 0x3F ? "read" : ah == 0x42 ? "seek" : ah == 0x3E ? "close" :
+                      ah == 0x4E || ah == 0x4F ? "find file" : ah == 0x2C ? "time" : "other", took / 1e6);
+        }
+    }
     else if (vec == 0x31) ok = int31(c);
     else if (vec == 0x10) ok = video_int10(c);
     else if (vec == 0x33) ok = input_mouse(c);

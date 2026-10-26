@@ -37,7 +37,15 @@ static int cur_l, cur_r, prev_l, prev_r;
 static float vol_table[4096];
 static float pan_left[16], pan_right[16];
 static int initialised;
-static int64_t last_wave_irq_ns;           /* NHL95_TRACE: when a voice last raised its wave interrupt */
+static int64_t last_wave_irq_ns;           /* when a voice last raised its wave interrupt */
+
+/* Timing facts of the stream, appended to nhl95-audio.log every 10 s while the card is being used (see gus_diag_flush). The game's
+ * driver refills one half of a 2 KB ring when the other half has been played; a refill that comes later than the half takes to
+ * play (23 ms) replays old music. */
+static struct {
+    uint32_t refills, lat[10], overlap, underrun_frames, stalls;
+    double lat_max_ms, gap_max_ms;
+} dg;
 
 static uint32_t addr_for(const struct voice *vo, uint32_t a)
 {
@@ -142,6 +150,14 @@ static void write_reg(int reg, uint16_t d)
             dma_advance(ch, n);
             dma_tc = 1;
             if (dma_ctrl & 0x20) { dma_irq = 1; check_irq(); }
+            if (n == 1024) {                            /* a refill of the stream: how late after the interrupt, was the half still being played? */
+                int j, playing = -1, b;
+                double lat = (plat_now_ns() - last_wave_irq_ns) / 1e6;
+                for (j = 0; j < NVOICES; j++)
+                    if (!(v[j].wave_ctrl & 3)) { uint32_t pa = addr_for(&v[j], v[j].cur); if (pa >= dest && pa < dest + n) playing = j; }
+                b = (int)(lat / 4); if (b > 9) b = 9; if (b < 0) b = 0;
+                dg.refills++; dg.lat[b]++; if (playing >= 0) dg.overlap++; if (lat > dg.lat_max_ms) dg.lat_max_ms = lat;
+            }
             if (trace_on) {                             /* how late was the refill, and was the half still being played? */
                 int j, playing = -1;
                 for (j = 0; j < NVOICES; j++)
@@ -304,6 +320,8 @@ static void gus_pump_locked(void)
     double due;
     int n, i, j;
     gpump_last_ns = now;
+    if (dt / 1e6 > dg.gap_max_ms) dg.gap_max_ms = dt / 1e6;
+    if (dt > 30000000LL) dg.stalls++;                           /* nobody pumped the card for 30 ms */
     timers_update();
     if (dt > 100000000LL) dt = 100000000LL;                     /* after a long stall: do not play it all at once */
     due = gpump_acc + dt * (617400.0 / active_voices) / 1e9;
@@ -325,11 +343,28 @@ static void gus_pump_locked(void)
     }
 }
 
+static void gus_diag_flush(void)
+{
+    static int64_t last;
+    int64_t now = plat_now_ns();
+    if (!last) last = now;
+    if (now - last < 10000000000LL) return;
+    last = now;
+    if (dg.refills) {
+        audio_log("GUS stream, last 10 s: %u refills; refill delay after the interrupt (ms, 4 ms steps, 40+ last): %u %u %u %u %u %u %u %u %u %u, max %.1f; "
+                  "refills while the half was still playing: %u; samples missing in the queue: %u; longest gap between pumps %.1f ms, gaps over 30 ms: %u",
+                  dg.refills, dg.lat[0], dg.lat[1], dg.lat[2], dg.lat[3], dg.lat[4], dg.lat[5], dg.lat[6], dg.lat[7], dg.lat[8], dg.lat[9],
+                  dg.lat_max_ms, dg.overlap, dg.underrun_frames, dg.gap_max_ms, dg.stalls);
+        memset(&dg, 0, sizeof dg);
+    }
+}
+
 void gus_pump(void)                     /* any thread; takes the audio lock */
 {
     if (!initialised) return;
     audio_lock();
     gus_pump_locked();
+    gus_diag_flush();
     audio_unlock();
 }
 
@@ -347,7 +382,7 @@ static void gus_render(int32_t *out, int frames, int rate)
             native_phase -= 1.0;
             prev_l = cur_l; prev_r = cur_r;
             if (gfifo_tail != gfifo_head) { cur_l = gfifo_l[gfifo_tail % GFIFO]; cur_r = gfifo_r[gfifo_tail % GFIFO]; gfifo_tail++; }
-            /* an empty queue repeats the last sample */
+            else if (dg.refills) dg.underrun_frames++;  /* an empty queue repeats the last sample (the pump did not keep up) */
         }
         t = native_phase;                       /* the part of the native sample period since the last one was taken: ramp from the previous */
         out[2 * i] += (int32_t)(prev_l + (cur_l - prev_l) * t);          /* sample to this one (one sample of delay) */

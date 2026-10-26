@@ -2,6 +2,7 @@
  * that was mixed to a WAV file (16-bit stereo), which is how the sound code is tested without speakers. */
 #include "host.h"
 #include "audio.h"
+#include <stdarg.h>
 
 #define MAX_SOURCES 8
 #define CHUNK 1024
@@ -34,6 +35,57 @@ static void wav_header(void)
     fwrite("data", 1, 4, wav); fwrite(&wav_bytes, 4, 1, wav);
 }
 
+/* Where the program writes its own files (the diagnostics log and the captures): next to the program, or the current folder. */
+static void out_path(char *buf, size_t n, const char *name)
+{
+    const char *base = SDL_GetBasePath();
+    snprintf(buf, n, "%s%s", base ? base : "", name);
+}
+
+/* nhl95-audio.log: timing facts about the sound emulation, appended, for finding out what goes wrong on a machine that cannot be
+ * attached to a debugger. */
+void audio_log(const char *fmt, ...)
+{
+    char path[1100];
+    FILE *f;
+    va_list ap;
+    static int64_t t0;
+    if (!t0) t0 = plat_now_ns();
+    out_path(path, sizeof path, "nhl95-audio.log");
+    f = fopen(path, "a");
+    if (!f) f = fopen("nhl95-audio.log", "a");
+    if (!f) return;
+    fprintf(f, "[%7.1f s] ", (plat_now_ns() - t0) / 1e9);
+    va_start(ap, fmt);
+    vfprintf(f, fmt, ap);
+    va_end(ap);
+    fputc('\n', f);
+    fclose(f);
+}
+
+/* Ctrl+F11: start or stop recording what is mixed to nhl95-capture-N.wav (16-bit stereo) */
+void audio_capture_toggle(void)
+{
+    static int n;
+    char path[1100], name[64];
+    audio_lock();
+    if (wav) {
+        wav_header();
+        fclose(wav);
+        wav = 0;
+        audio_log("capture stopped (%u bytes)", wav_bytes);
+        video_set_title("NHL Hockey 95 - capture saved");
+    } else {
+        snprintf(name, sizeof name, "nhl95-capture-%d.wav", ++n);
+        out_path(path, sizeof path, name);
+        wav_bytes = 0;
+        wav = fopen(path, "wb");
+        if (wav) { wav_header(); audio_log("capture started: %s", path); video_set_title("NHL Hockey 95 - RECORDING (Ctrl+F11 stops)"); }
+        else audio_log("cannot create %s", path);
+    }
+    audio_unlock();
+}
+
 /* mix `frames` stereo frames into out (interleaved int16) */
 static void mix(int16_t *out, int frames)
 {
@@ -48,7 +100,9 @@ static void mix(int16_t *out, int frames)
             int32_t v = acc[i];
             out[i] = v > 32767 ? 32767 : v < -32768 ? -32768 : (int16_t)v;
         }
+        SDL_LockMutex(mutex);
         if (wav) { fwrite(out, 4, n, wav); wav_bytes += n * 4; wav_header(); fseek(wav, 0, SEEK_END); }
+        SDL_UnlockMutex(mutex);
         out += n * 2;
         frames -= n;
     }
