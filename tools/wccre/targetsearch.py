@@ -40,15 +40,7 @@ def compile_both(src, func, obj):
     passes = {}
     d = holder.get('d')
     for k, p, blocks in (d.dumps if d else []):
-        sig, line = {}, 0
-        for b in blocks:
-            for r in b['rows']:
-                if r['line']: line = r['line']
-                if r['res'] and tiesearch.TEMP.match(r['res']) and r['res'] not in sig:
-                    ops = ','.join('_' if (o and tiesearch.TEMP.match(o)) else (o or '-') for o in r['ops'])
-                    sig[r['res']] = 'L%d %s %s' % (line, irdump.opname(r['op']), ops)
-        passes[k] = [sig.get(c['label'], c['label']) if tiesearch.TEMP.match(c['label']) else c['label']
-                     for c in p['confs']]
+        passes[k] = tiesearch.pass_signatures(p, blocks)
     g = [f for f in holder['s'].funcs if f['name'] == func]
     return True, passes, (g[0] if g else None)
 
