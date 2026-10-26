@@ -12,6 +12,40 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 |---|---|---|
 | EditTextField | StaticEck's Claude (lane 2) | 2026-10-26 |
 
+**StaticEck's Claude (lane 2, Fable run)** to Abdul, Mark, 2026-10-26 18:15 UTC (`docs/board/2026-10-26-1815-staticeck.md`)
+
+> Fable run done: JoystickCalScreen matched (#247, 11 -> 0: the abort test's stick byte in an unsigned char local,
+> whose conversion is one more conflict before the puck size product). NetCollide, POInitSchedule, PenGoalStuff and
+> EditTextField stay (22 / 6 / 19 / 7): every code-neutral shape I could think of left their conflict lists as they
+> were; the rows in docs/draft_history.csv list what each pair would need and what was tried.
+>
+> What the probes taught about the conflict list (irdump --pass 0 on each variant, 2 s a compile, plus a replay of
+> the sort; scripts in my session only):
+> * The names-walk part is the front-end names by id: the parameters in declaration order (their register order
+>   for register calls), then the locals in reverse declaration order, then the multi-block temporaries. Renames,
+>   register, extra late uses, loop forms and where a local is first set change nothing.
+> * A name is re-listed (a new id, later in the list) at its first 16-bit alias use in code order (NetCollide:
+>   gx and ux at the first `HIWORD(p->Xpos) = gx + ux`, then uy and gy; the ternary temporaries feeding 16-bit
+>   stores too). dx and dy, never used as 16 bits, keep their old ids.
+> * A narrower type adds a conversion conflict with no code when the code only needs the low byte: `char shift`
+>   in JoystickCalScreen's signature adds one in both blocks that shift (the loop one undoes it); the unsigned
+>   char local for the abort test adds exactly one. A single-block named local used once or twice otherwise just
+>   takes a temporary's place (POInitSchedule's day used for the store and the test: same list).
+> * Named locals defined in two blocks (NetCollide's ay = ABS(uy)) become a copy conflict plus a slot, so they
+>   are not a way to re-order ternary temporaries.
+
+**StaticEck's Claude (lane 2, Fable run)** to Abdul, Mark, 2026-10-26 17:41 UTC (`docs/board/2026-10-26-1741-staticeck.md`)
+
+> Fable run (docs/FABLE_RUN.md), first draft: JoystickCalScreen matches (11 -> 0, PR to follow). The edit is the
+> abort test's stick byte in an unsigned char local (`buttons = sub_B3464() >> shift; if ((buttons & 0x30) == 0)`):
+> the byte conversion is one more conflict in the block before the puck size product, created just after the
+> call result, and that alone puts the height read first (t55 before t54). An int local there changes nothing
+> (the same list), `char shift` in the signature adds the conversion in both blocks (the loop one undoes it).
+> How I found it: probes of code-neutral declaration shapes (parameter types, register, renames, loop forms,
+> pointer-typed members), each checked with irdump --pass 0 and a replay of the sort; the parameters' conflicts
+> are created in a fixed reverse-declaration batch after the locals whatever their uses, and the locals' batch
+> order did not follow first use either. NetCollide is next.
+
 **Abdul's Claude (lane T)** to StaticEck, 2026-10-26 16:37 UTC (`docs/board/2026-10-26-1637-abdul.md`)
 
 > PickAwardWinners: tieorder ran 25 minutes on the current draft (333 forced orders) and found no tie order that
@@ -65,25 +99,7 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 > drop those loads and put the copy before ovlseq. So the 20 come from a pass after the picks (the one that drops
 > or moves these loads), which no tool hooks yet. Rotation edits won't help here.
 
-**Abdul's Claude (lane T)** to StaticEck, Mark, 2026-10-26 03:30 UTC (`docs/board/2026-10-26-0330-abdul.md`)
-
-> Answer to the late-register question (CreateNewLeague, likely ResetGameVars too): those registers are picked
-> after allocation by a round-robin (byte AL AH DL DH BL BH CL CH; dword EAX EDX EBX ECX ESI EDI EBP). It takes
-> the next free register after the last late pick, and the position carries over through the whole file, so
-> earlier functions in the same file and earlier constant stores move it. `python3 tools/wccre/latepick.py
-> <file>` lists every late pick in order. CreateNewLeague L125 gets BL because the previous byte pick left the
-> rotation at DH; the EXE's DH needs one byte pick fewer before it (or the original module's earlier functions in
-> the file). Details: docs/WCC_INTERNALS.md, "Late register picks". TreeSeriesWinner's -od homes: next.
-
-**Abdul's Claude (lane T)** to StaticEck, 2026-10-26 03:15 UTC (`docs/board/2026-10-26-0315-abdul.md`)
-
-> TreeSeriesWinner (-od): the first block's seven 4-byte names keep their creation order through the size sort
-> (it is the identity here), so the slots are the creation order. The EXE needs: t4 (the return temporary), i,
-> home, away, then the parameters in register order s (eax), same (ebx), round (edx). Ours creates away, i, home
-> (declaration order), then t4, then same, round, s (reverse signature order). Locals: declare i, home, away.
-> What makes the compiler create t4 first and the parameters in register order is still open (lane T).
-
-7 older message(s) in `docs/board/`.
+9 older message(s) in `docs/board/`.
 
 ## Lane 1 — Mhopkinsinc (Mark)
 
@@ -199,18 +215,6 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 These files are in lane 1 by segment. Mhopkinsinc made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
-### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
-
-- EditTextField 110->106 (2026-10-24, Mhopkinsinc, GA) : the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
-- EditTextField 106->71 (2026-10-24, Mhopkinsinc, GA) : the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
-- EditTextField 71->62 (2026-10-24, Mhopkinsinc, GA) (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -
-- EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
-- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
-- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
-- EditTextField 36->36 (2026-10-25, StaticEck2026, GA) goto-free loops on the current draft: flat for (;;) with the poll first and the late arms as the chain's last else (107, +16), inner idle while (105, +22), inner while ((key = PollKey()) || !sub_B3D64()) (132, +13); ESCALATE: the draft keeps four gotos, dead i for the letter value and the dead parameter x for the insert state
-- EditTextField 36->0 (2026-10-25, StaticEck2026, GA) goto-free: poll as inner while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle } plus early if (!key) { blink; continue; } (30, +3; all 4 gotos gone), letter filter on key instead of the dead i (0, EXE bytes, commit b04f5a2); ESCALATE: dead parameter x holds the insert state (dead-variable reuse), not marked; grid of other goto-free poll / dispatch shapes 41-133
-- EditTextField 0->7 (2026-10-25, StaticEck2026, GA) own int ins instead of x (7: x / w tie at savings 3, w takes EBP), committed as the natural draft; tieorder 10 min: the x / w swap gives 0; targetsearch 30 min 1685 candidates, none meets it; block-scoped c / i, !c spellings, idle / poll / incdec / compare spellings 7-35
-
 ### `src/c/037_4842A_engine_player_logic/assgoalie.c`
 
 assgoalie is in this file (score 13, size 9/12) and comes with it.
@@ -283,6 +287,7 @@ NetCollide — register 7/7, owner StaticEck2026
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t21 (|ux|) before t20 (|uy|); sort replay forced: ~50 single edits give 0, all a named variable (dy / dx / dir / p) created at another point or without dir, no temporary add / drop (32-35); 36 single declaration moves 22-37; ux / uy split into >>= 2: ux 40, uy 40, both 32; three-step /= split: ux 36, uy 78, both 69; ux = dx << 8 then / dist >> 2 both 75; dx <<= 8 in place 98; gy before dx 62; dist assigned in the test 22; 0x18 <= dist 22
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (100 orders): pass 0 savings-3 run: sorted t63 t20 t52 dx t36 t29 t49 t46 t38 t21 t17 dy t60 t19, needed t21 t20 t52 dx t36 t29 t49 t46 t38 t63 t17 dy t60 t19 (t20 EDX -> ECX, t21 ECX -> EDX)
 - NetCollide 22->22 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-3 run needs t21 (the |ux| of L230, defined in B12 / B13, used in B14) ahead of t63 (L268 index shl); no single added, dropped or moved conflict gives it (two or more changes)
+- NetCollide 22->22 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t21 (|ux|) before t20 (|uy|) in the pass-0 savings-3 run (forced: 0). A pair-only replay of the sort lists what would do it: drop t12 / t14 (the Xpos / Ypos >> 16 temps), t16-t19 (the shift / div temps of L228-229), t60-t63 (the second post block's facedir index temps) or any of p / dir / t3 / dx / dy / t11 / t13 / t15; add a savings-2 global just older than dx or t13, a savings-2 temp between t16 and t17, or a savings 3+ temp just after t65 (B44); re-list t20 later (after gx) or t21 earlier. Probes (irdump pass 0, same 702 bytes unless noted): the names-walk segment is the front-end names by id (p, dir, t3, dx, dy, t11-t21; locals get ids in reverse declaration order, so reversing the declarations swaps only dx / dy) followed by the names re-listed at their first 16-bit alias use in code order (gx, ux at +0CB; t24 +0DC; uy, gy +102; the gy > 0 ternary temps t38, t52 feeding 16-bit stores); renames and late extra uses change nothing; gx / gy ternary folded into the dx / dy expression (same list); named ABS locals ay / ax at four declaration places (ay becomes one more copy conflict in ECX plus a slot, 18 lines off); the x-flip bool in a named local (no list change); dx = p->Xpos >> 16; dx -= gx (13, slots); comparison sides swapped (|ux| computed first in code, 10). No natural edit found; left at 22
 
 ### `src/c/040_53294_engine_physics_ai/checkgoal.c`
 
@@ -432,6 +437,7 @@ POInitSchedule — register 3/3, owner StaticEck2026
 - POInitSchedule 6->6 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (182 orders): pass 0 savings-30 run: sorted t51 t80 t10 t116 t16 t84 t114 t8 t34 t55 t7, needed t51 t80 t8 t116 t16 t84 t114 t10 t34 t55 t7 (t10 EAX -> EDX, t8 EDX -> EAX, t7 EAX -> EDX)
 - POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py focused on L94-120 (30 min, 669 candidates): best 10 (all register-only), 7 of 9 swaps left; the explanation: t10 (po + i * 4) must sit just older than t7 or t8 just older than t10 in B2 (L94), i.e. the teams[i] address last used after the po[i] one
 - POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: the L94 copy as `*((int *)po + i) = teams[i]`, `((int *)po)[i] = *(teams + i)`, `*(int *)(po + i * 4) = teams[i]`, and L97 as `g[6 * i] = 4`, `*(g + i * 6) = 4`: all 6 (the IR does not change: the store's address is always the last reference). Nothing kept.
+- POInitSchedule 6->6 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t8 (teams + i * 4) before t10 (po + i * 4) in the pass-0 savings-30 run (forced: 0). Pair-only sort replay: dropping any one temporary from the date loops on (29 of them) works, as does one more temporary anywhere in the first date loop's day chain or the seed copy (any savings), a savings-20 / 30 global just newer than i, or t10 below 30 / t8 above 30 in savings. The known tie-breaker match (sched + day) replayed: sched is one more single-block name after the seed loop, day one fewer temporary in the second date loop. Probes (irdump pass 0, all the same 445 bytes, same list): the day as `+ 0x10 + 1` / `+ 0x11 - 1`, `2 * (i % 7)`, `(i % 7 << 1)`, `0x11 + 2 * (i % 7)` (the front end folds them all); a day local used twice (store and rollover test) as unsigned char / char in the first, the second or both loops (it only takes the byte conversion temporary's place; as an int the store comes from al, 10). No natural edit found; left at 6
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -456,6 +462,20 @@ SkaterStatsCard — size 2/3, owner Mhopkinsinc
 - SkaterStatsCard 7->7 (2026-10-25, StaticEck2026, GA) lseek ternary as if / else (25-35), hand label as one ternary call (19 / v form 10), pct ternary (same IR), EMB MakePath if / else (14), combinations (14-42)
 - SkaterStatsCard 7->7 (2026-10-25, abdulahmad, GA) lane T: the v form without rating (9, +3; tieorder with conflict origins: 0 when one more conflict sits next to the lookup address t386 among the L185 temporaries). L185 as 5 * (x + 5), (5 + x) * 5, [3 + i], (off_C6A99 + 3)[i], *(t.attrp + ...): 9; v = x + 5; v *= 5 (15); v = x; v += 5; v *= 5 (25); v short / unsigned short with or without the call cast, inline in the call (17-18); v = x * 5 + 25 (8, size 0): the lookup gets edx as in the EXE, only the arithmetic differs (lea ecx, [esi+19h]). Nothing kept.
 - SkaterStatsCard 7->7 (2026-10-25, abdulahmad, GA) lane T: targetsearch.py (new tool) on the v form without rating (9; tieorder target: the L185 lookup address ahead of 6 other savings-30 temporaries, plus 2 slots): 1200 natural candidates in 45 min, best 9, all 7 targets unmet. Nothing kept.
+
+### `src/c/023_2FDD1_misc_dialogs/EditTextField.c`
+
+EditTextField — size 4/7, owner Mhopkinsinc
+- EditTextField 110->106 (2026-10-24, Mhopkinsinc, GA) : the End-key scan as a top-tested `editpos = 0; while (buf[editpos]) editpos++;` (the EXE's loop shape)
+- EditTextField 106->71 (2026-10-24, Mhopkinsinc, GA) : the poll placed after the cursor handlers and the Backspace / typing blocks after the blink path
+- EditTextField 71->62 (2026-10-24, Mhopkinsinc, GA) (two commits; now 4 bytes long, was +29): each key arm ends in its own `DrawEditCursor(flags); goto poll;` (Watcom merges the tails into the EXE's shared ones, and the direct jumps raise the insert flag's savings 41 -
+- EditTextField 62->36 (2026-10-24, Mhopkinsinc, GA) (21 gotos -> 4)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) ESCALATE: (unsigned short)timeout in the blink-path timeout test 25 (size +2; cmp word vs EXE cmp dword, an extra temporary fixes the SetTickDeadline / key-chain registers); End loop increment as += 1 / = +1 / ++x / braces / != 0 (36), for loop (39); timeout test spellings nested if / != 0 (36), == 1 (40), > 0 (37); editcuron = c == 0 / ternary (36); casts on TickDeadlinePassed / !c / c / End loop / editpos = 0 / DrawEditCursor flags / 4F00 and 4700 compares (36-43); regsolve no prediction; one permute run (577 candidates)
+- EditTextField 36->36 (2026-10-24, Mhopkinsinc, GA) unsigned char c 38; short c 38; editcuron = c ^ 1 40; 1 - c 41; (key = PollKey()) == 0 36; no key = 0 store 24 (9 bytes short, key chain then exact, shift moves to the cursor arms); sub_B3D64() == 0 36; separate editcurw / editcuron stores 36 / 38; x = 0 first 38; editpos = x = 0 39; Enter / Esc breaks as one || 36
+- EditTextField 36->36 (2026-10-25, StaticEck2026, GA) goto-free loops on the current draft: flat for (;;) with the poll first and the late arms as the chain's last else (107, +16), inner idle while (105, +22), inner while ((key = PollKey()) || !sub_B3D64()) (132, +13); ESCALATE: the draft keeps four gotos, dead i for the letter value and the dead parameter x for the insert state
+- EditTextField 36->0 (2026-10-25, StaticEck2026, GA) goto-free: poll as inner while (!(key = PollKey())) { if (sub_B3D64()) { key = 0; break; } idle } plus early if (!key) { blink; continue; } (30, +3; all 4 gotos gone), letter filter on key instead of the dead i (0, EXE bytes, commit b04f5a2); ESCALATE: dead parameter x holds the insert state (dead-variable reuse), not marked; grid of other goto-free poll / dispatch shapes 41-133
+- EditTextField 0->7 (2026-10-25, StaticEck2026, GA) own int ins instead of x (7: x / w tie at savings 3, w takes EBP), committed as the natural draft; tieorder 10 min: the x / w swap gives 0; targetsearch 30 min 1685 candidates, none meets it; block-scoped c / i, !c spellings, idle / poll / incdec / compare spellings 7-35
+- EditTextField 7->7 (2026-10-26, StaticEck2026, GA) Fable run: the pair x before w (both register parameters stored once, savings 3). Parameters are created in declaration order, which is also their register order (w EBX, x ECX), so no declaration reaches it; the pair-only replay wants w below 3 or x above 3 in savings, a savings-0 or 3 conflict at one of 14 places (between buf and maxlen, maxlen and w, after timeout / ins / key, or in B3 / B25 / B35 / B36 / B52 / B56 / B60 / B65 / B69), or any conflict between w and x (a used parameter there would move x to the stack). No code-neutral edit found; left at 7
 
 ### `src/c/023_2FDD1_misc_dialogs/ListDialog.c`
 
@@ -586,18 +606,6 @@ doshot — register 33/43, owner StaticEck2026
 - doshot 47->45 (2026-10-24, StaticEck2026, GA) (`dopass.c`). `*puckvx = dx * (passspeed * 59) / (f = dist);` puts the EXE's `movsx ebp
 - doshot 45->45 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (dist / e / t only through savings bumps); sp / r / dist / z / q / e / f / gy each moved to every declaration position (82 orders, best 45)
 - doshot 45->45 (2026-10-24, Mhopkinsinc, GA) clean-shape search for the f reuse / t copy: q from r directly (109, frame changes); randomd0(r + r) without t (65); separate int k for the r copy, 4 declaration positions (84-90), also without t (61-99)
-
-### `src/c/050_6B093_joystick_calibration/JoystickCalScreen.c`
-
-JoystickCalScreen — register 4/4, owner StaticEck2026
-- JoystickCalScreen 17->17 (2026-10-24, StaticEck2026, GA) .
-- JoystickCalScreen 17->11 (2026-10-24, StaticEck2026, GA) the draws index with s.cur and prev = s.cur after them (EXE reloads s.cur into esi), size now exact; left the size product: factor orders / casts / reads 10-11, puck int local 11
-- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) header copy as a struct copy instead of the inline #pragma aux (same code); loop compare / test / ternary spellings (11-36); the factor temporaries tie at savings 2
-- JoystickCalScreen 11->11 (2026-10-24, StaticEck2026, GA) pairsim: t55 before t54 needs one more early conflict or one fewer later one; ten natural spellings left the conflict count at 34 (all 11)
-- JoystickCalScreen 11->11 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t55 before t54 (any order with it gives 0); sort replay: without t45 / t66 / t68 or one more savings-3 conflict before t54 / t56 / t59 / t42 / t37 each force 0; back+prev / prev / back / all locals in the if block 11, five declaration orders of s / back / prev 11, scalars first 11, s.cur split >>= 12 (+7), assignment in the 0x30 test 11, sub_B39D0() != 0 11, (unsigned) shift 12, sizeof(Hdr17) 11
-- JoystickCalScreen 11->11 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (92 orders): pass 0 savings-2 run: sorted t95 t67 t99 t54 t20 t57 t93 t91 t56 t55, needed t55 t67 t99 t54 t20 t57 t93 t91 t56 t95 (t54 EAX -> EDX, t55 EDX -> EAX)
-- JoystickCalScreen 11->11 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-2 run needs t55 (the u16 read multiplied at L59) ahead of t95 (lea pal at L51); no single added, dropped or moved conflict gives it (two or more changes)
-- JoystickCalScreen 11->11 (2026-10-26, abdulahmad, GA) lane T vertical slice: tieorder minimal target = only t55 (cnv of shape[3]) before t54 (cnv of shape[2]) in the savings-2 run gives the EXE bytes (forced, confirmed); the sort replay (slotdump.shell_sort) reproduces the compiler order exactly; dropping any of 17 conflicts or adding one almost anywhere from L59 back to L45 gives that order in the replay. Tried by hand: size as an int local n (13), block-scoped n (13), the product in a local (13), w / h short locals (12), the size through s.cur (33), side ternary for the shape (36), memcpy source in a local (11), product h * w (10), 0x11 + w * h (11), 0x11 + h * w (10). targetsearch 40 min on the old 9-swap target: 1055 candidates, 11. Nothing kept.
 
 ### `src/c/052_6D2F8_create_player/SetRosterTeamMenus.c`
 
@@ -740,6 +748,7 @@ PenGoalStuff — register 2/4, owner StaticEck2026
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) after tieorder: needed t65 (row offset n * 27h) before t79 (jersey byte), no single edit gives it (replay forced 18-32); single-use m removed (19, same code; not committed: InProgress.c is now an escalation); other_side removed: side == 0 ? 28, !side ? 28, side > 0 ? hm : aw 32, side != 0 ? 31 (all +4); n reuse (three roles) still in the draft
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (90 orders): pass 0 savings-3 run: sorted t8 t79 t10 t67 t80 t75 t65 t62, needed t8 t65 t10 t67 t80 t75 t79 t62 (t75 EDX -> ESI)
 - PenGoalStuff 19->19 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py (focused, 30 min, 584 candidates): best 19, 1 of 2 swaps left. tieorder explanation with conflict origins: t65 (n * 0x27 at L334, reused at L336) must sit in the list as if its last use were at L334 (just older than t98); spellings of L334 / L336 that keep the reuse change nothing (19): (ot->tmroster + 5)[n * 0x27], 5 + n * 0x27, 0x27 * n at L334 / L336 / both, (&ot->tmroster[n * 0x27])[5]
+- PenGoalStuff 19->19 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t75 (the jersey address t74 + t65) before t79 (its byte read, a names-walk global) in the pass-0 savings-3 run (forced: 0). Pair-only sort replay: it would take one more conflict of any savings in the shift loop (L338) or just older than t79 / t77 / t38 / t37 / t23 / t14 / t12 among the front-end globals, t79 below 3 or t75 / t65 above 3 in savings, or dropping any of 38 conflicts (m among them: lane 1 found the m-less draft keeps the same list elsewhere). Not edited: the draft already carries the n reuse and the single-use m (escalations), so a byte match could not be marked; left at 19
 InProgress — register 70/83, owner StaticEck2026
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) for (;;) loop with continue / break instead of goto again / goto signal (88, byte-identical, committed: gotos removed); without the volatile 87 (hoisted into cx); word_CBC44[0] via a local array extern 87; declsearch --conflicts 24 orders no pen / pnum fix; slotdump: pnum count >= 20 (now 8) or pen 7 (now 44) gives the EXE slots; regsolve no prediction; volatile in vars.h not done (9 other files)
