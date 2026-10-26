@@ -102,6 +102,7 @@ void video_present(void);              /* main thread */
 void video_fill_vesa_tables(void);
 void video_window_to_game(int wx, int wy, int *gx, int *gy);
 /* input (input.c) */
+void input_init(void);                 /* game controllers and the test stick */
 void input_poll(void);                 /* main thread: SDL events */
 uint32_t input_port_in(unsigned port);
 int input_port_out(unsigned port, uint32_t val);

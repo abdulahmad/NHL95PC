@@ -94,8 +94,13 @@ exception handler. Without any setting, the program appends to `nhl95-audio.log`
 timing, slow DOS calls, the music files the game opens, native GUS voice activity), and **Ctrl+F11** records the mixed sound to
 `nhl95-capture-N.wav` (the window title says so): that is how sound problems on a machine are diagnosed without a debugger.
 
-Not done: joystick (SDL game controller instead of port 201h), digital audio in MT-32 mode (the game plays only music there), fullscreen and
-scaling options.
+Joystick: the PC game port (201h) is emulated from the first two SDL game controllers or joysticks found (stick A and B; left stick or
+direction pad, A/X and B/Y as the two buttons). The game then shows its own calibration screen once (move the puck to all corners, back to the
+centre, press a button; any key ignores the stick). Axis timing is a number of port reads, not time. `NHL95_NOJOY=1` turns it off;
+`NHL95_JOY="x,y,b1,b2"` and `ms:@joy=x,y,b1,b2` in `NHL95_KEYS` fake a stick for tests. Checked here with the fake stick (calibration, menu
+pointer), not with a real pad.
+
+Not done: digital audio in MT-32 mode (the game plays only music there), fullscreen and scaling options.
 
 ## Next steps (in the order asked for)
 

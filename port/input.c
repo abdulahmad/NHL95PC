@@ -95,7 +95,10 @@ static void key_event(SDL_Scancode s, int down)
 /* NHL95_KEYS="ms:Key[/hold] ...": presses keys at given times after start (SDL key names, hold in ms, default 100), for testing
  * without a display, e.g. NHL95_KEYS="9000:Return 12000:Down 12500:Return 20000:Up/2000". "ms:@x,y" puts the mouse at x,y (game screen
  * pixels) and "ms:@click[/hold]" presses the left button. */
-static struct { int64_t at; SDL_Scancode key; int down; int kind, x, y; } script[256];     /* kind 0: key, 1: move the mouse, 2: left button */
+static void joy_scan(void);
+static void joy_update(void);
+static void joy_set_test(int x, int y, int b1, int b2);
+static struct { int64_t at; SDL_Scancode key; int down; int kind, x, y, b1, b2; } script[256];     /* kind 0: key, 1: move the mouse, 2: left button, 3: stick A */
 static int script_n, script_pos;
 
 static void script_load(void)
@@ -111,6 +114,14 @@ static void script_load(void)
         if (*s == '/') { hold = strtol(s + 1, (char **)&s, 10); }
         SDL_Scancode k;
         int mx, my;
+        if (!strncmp(name, "@joy=", 5)) {                 /* "@joy=x,y,b1,b2": stick A at x,y percent with the buttons b1, b2 (0 or 1) */
+            int jx, jy, jb1, jb2;
+            if (sscanf(name + 5, "%d,%d,%d,%d", &jx, &jy, &jb1, &jb2) == 4) {
+                script[script_n].at = at * 1000000LL; script[script_n].kind = 3; script[script_n].x = jx; script[script_n].y = jy;
+                script[script_n].b1 = jb1; script[script_n++].b2 = jb2;
+            } else fprintf(stderr, "NHL95_KEYS: bad %s\n", name);
+            continue;
+        }
         if (name[0] == '@') {                           /* "@x,y": the mouse goes there (game screen pixels); "@click": the left button */
             if (sscanf(name, "@%d,%d", &mx, &my) == 2) {
                 script[script_n].at = at * 1000000LL; script[script_n].kind = 1; script[script_n].x = mx; script[script_n++].y = my;
@@ -140,6 +151,9 @@ static void script_poll(void)
             mickey_x += script[script_pos].x - mouse_x; mickey_y += script[script_pos].y - mouse_y;
             mouse_x = script[script_pos].x; mouse_y = script[script_pos].y;
             TRACE("NHL95_KEYS: mouse %d,%d\n", mouse_x, mouse_y);
+        } else if (script[script_pos].kind == 3) {
+            joy_set_test(script[script_pos].x, script[script_pos].y, script[script_pos].b1, script[script_pos].b2);
+            TRACE("NHL95_KEYS: stick %d,%d buttons %d %d\n", script[script_pos].x, script[script_pos].y, script[script_pos].b1, script[script_pos].b2);
         } else if (script[script_pos].kind == 2) {
             if (script[script_pos].down) mouse_buttons |= 1; else mouse_buttons &= ~1;
             TRACE("NHL95_KEYS: left button %s\n", script[script_pos].down ? "down" : "up");
@@ -156,9 +170,13 @@ void input_poll(void)
 {
     SDL_Event e;
     script_poll();
+    joy_update();
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT: quit_requested = 1; break;
+        case SDL_JOYDEVICEADDED: case SDL_JOYDEVICEREMOVED: case SDL_CONTROLLERDEVICEADDED: case SDL_CONTROLLERDEVICEREMOVED:
+            if (!getenv("NHL95_JOY")) joy_scan();
+            break;
         case SDL_KEYDOWN:
             if (e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
                 if (!e.key.repeat) audio_capture_toggle();
@@ -184,6 +202,114 @@ void input_poll(void)
     if (quit_requested) host_exit(0);
 }
 
+/* ---- joystick: the PC game port (201h) ----
+ * Writing to the port starts one-shot timers; an axis bit (0 and 1: stick A, x and y; 2 and 3: stick B) stays set for a time that grows with
+ * the stick's position, and the game counts how long (`in al, dx` in a loop, interrupts off); here the time is a number of reads. The buttons are active-low bits 4 and 5
+ * (stick A) and 6 and 7 (stick B). The first game controller (or joystick) SDL finds is stick A, the second one stick B. A stick that is
+ * not there reads as 1 on all of its bits (the axes never time out), which is how the game finds out that it is missing. */
+#define JOY_MIN_READS 20                        /* an axis at its left / top end stays set for 20 reads of the port after the write, at the other end */
+#define JOY_SPAN_READS 200                      /* for 220, in the middle 120: counted in reads, not in time, so the game's calibration does not depend on the speed of the host */
+static struct { int present, x, y, b1, b2; SDL_GameController *gc; SDL_Joystick *js; } joy[2];     /* x, y: -1000 to 1000 */
+static int joy_reads;                           /* reads of the port since the last write */
+
+static int axis_value(int raw)                  /* SDL axis (-32768..32767) to -1000..1000 with a dead zone */
+{
+    int v = raw * 1000 / 32767, a = v < 0 ? -v : v;
+    if (a < 120) return 0;
+    a = (a - 120) * 1000 / 880;
+    if (a > 1000) a = 1000;
+    return v < 0 ? -a : a;
+}
+
+static void joy_close_all(void)
+{
+    int i;
+    for (i = 0; i < 2; i++) {
+        if (joy[i].gc) SDL_GameControllerClose(joy[i].gc);
+        if (joy[i].js) SDL_JoystickClose(joy[i].js);
+        memset(&joy[i], 0, sizeof joy[i]);
+    }
+}
+
+static void joy_scan(void)                      /* at start and when a device is plugged in or removed */
+{
+    int n = SDL_NumJoysticks(), i, k = 0;
+    joy_close_all();
+    if (getenv("NHL95_NOJOY")) return;                          /* some PCs list odd devices as joysticks */
+    for (i = 0; i < n && k < 2; i++) {
+        if (SDL_IsGameController(i)) joy[k].gc = SDL_GameControllerOpen(i);
+        else joy[k].js = SDL_JoystickOpen(i);
+        if (joy[k].gc || joy[k].js) {
+            joy[k].present = 1;
+            fprintf(stderr, "joystick %c: %s\n", 'A' + k, joy[k].gc ? SDL_GameControllerName(joy[k].gc) : SDL_JoystickName(joy[k].js));
+            k++;
+        }
+    }
+}
+
+static void joy_update(void)                    /* main thread, every pass of the loop */
+{
+    int i;
+    for (i = 0; i < 2; i++) {
+        int x = 0, y = 0, b1 = 0, b2 = 0;
+        if (joy[i].gc) {
+            SDL_GameController *g = joy[i].gc;
+            x = axis_value(SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX));
+            y = axis_value(SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTY));
+            if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_LEFT)) x = -1000;
+            if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) x = 1000;
+            if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_UP)) y = -1000;
+            if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) y = 1000;
+            b1 = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X);
+            b2 = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y);
+        } else if (joy[i].js) {
+            SDL_Joystick *j = joy[i].js;
+            Uint8 hat = SDL_JoystickNumHats(j) ? SDL_JoystickGetHat(j, 0) : 0;
+            if (SDL_JoystickNumAxes(j) > 1) { x = axis_value(SDL_JoystickGetAxis(j, 0)); y = axis_value(SDL_JoystickGetAxis(j, 1)); }
+            if (hat & SDL_HAT_LEFT) x = -1000;
+            if (hat & SDL_HAT_RIGHT) x = 1000;
+            if (hat & SDL_HAT_UP) y = -1000;
+            if (hat & SDL_HAT_DOWN) y = 1000;
+            b1 = SDL_JoystickNumButtons(j) > 0 && (SDL_JoystickGetButton(j, 0) || (SDL_JoystickNumButtons(j) > 2 && SDL_JoystickGetButton(j, 2)));
+            b2 = SDL_JoystickNumButtons(j) > 1 && (SDL_JoystickGetButton(j, 1) || (SDL_JoystickNumButtons(j) > 3 && SDL_JoystickGetButton(j, 3)));
+        } else continue;
+        joy[i].x = x; joy[i].y = y; joy[i].b1 = b1; joy[i].b2 = b2;
+    }
+}
+
+static uint32_t joy_read(void)
+{
+    int n = ++joy_reads;
+    uint32_t v = 0xFF;
+    int i;
+    for (i = 0; i < 2; i++) {
+        int sh = i * 2;
+        if (!joy[i].present) continue;
+        if (n > JOY_MIN_READS + (joy[i].x + 1000) * JOY_SPAN_READS / 2000) v &= ~(1u << sh);
+        if (n > JOY_MIN_READS + (joy[i].y + 1000) * JOY_SPAN_READS / 2000) v &= ~(2u << sh);
+        if (joy[i].b1) v &= ~(0x10u << sh);
+        if (joy[i].b2) v &= ~(0x20u << sh);
+    }
+    return v;
+}
+
+/* NHL95_JOY="x,y,b1,b2" (percent, then 0 or 1) makes stick A present with that fixed position and buttons, for testing without a pad;
+ * the key script has the same as "ms:@joy x,y,b1,b2". */
+static void joy_set_test(int x, int y, int b1, int b2)
+{
+    joy[0].present = 1;
+    joy[0].x = x * 10; joy[0].y = y * 10; joy[0].b1 = b1; joy[0].b2 = b2;
+    joy[0].gc = 0; joy[0].js = 0;
+}
+
+void input_init(void)
+{
+    const char *e = getenv("NHL95_JOY");
+    int x, y, b1, b2;
+    joy_scan();
+    if (e && sscanf(e, "%d,%d,%d,%d", &x, &y, &b1, &b2) == 4) joy_set_test(x, y, b1, b2);
+}
+
 uint32_t input_port_in(unsigned port)
 {
     switch (port) {
@@ -191,14 +317,15 @@ uint32_t input_port_in(unsigned port)
         if (qhead != qtail) { last_scan = queue[qhead]; qhead = (qhead + 1) % QSIZE; if (qhead != qtail) irq_raise(1); }
         return last_scan;
     case 0x64: return qhead != qtail ? 1 : 0;
-    case 0x201: return 0xFF;                    /* no joystick: no button, axes never time out */
+    case 0x201: return joy_read();
     }
     return 0xFF;
 }
 
 int input_port_out(unsigned port, uint32_t val)
 {
-    (void)port; (void)val;
+    (void)val;
+    if (port == 0x201) joy_reads = 0;                           /* starts the one-shot timers of the axes */
     return 1;
 }
 
