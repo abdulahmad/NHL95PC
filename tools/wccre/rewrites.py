@@ -13,8 +13,12 @@ change exactly that, on simple assignment statements (`lhs = expr;`, `lhs op= ex
   recompute w = E; ... x = ... w ...;   ->  x = ... (E) ...;    (one read at a time)
   alias     a = b = E; ... a ...        ->  ... b ...           (one read at a time, either way round)
   commute   a op b -> b op a for + * & | ^ inside a right side (permute's commute does not reach every operand)
+  narrow    if ((E & 0x30) == 0)       ->  b = E; if ((b & 0x30) == 0)   (b a new unsigned char / short local,
+            declared last; or an int local narrowed when every read is a small mask test)
+  alias16   a 16-bit store (HIWORD(...) = ..., a short lhs) moved past independent statements of its straight run
 
-All of them keep the computed values (no new variable, no cast, no signature change: AGENTS.md); the compiler
+All of them keep the computed values (no cast, no copy of a value already held, no signature change: AGENTS.md;
+narrow's local is a new typed value, not a copy); the compiler
 decides whether the code changes. Each yields (description, new text) like permute.py's transforms, so
 targetsearch.py scores them with the rest.
 
@@ -436,8 +440,116 @@ def r_commute(lines, b0, b1, lt):
                 n += 1
 
 
+# ---- the edits StaticEck's Fable run found (docs/WCC_INTERNALS.md, "What source edits do to the list") ---------
+
+COND = re.compile(r'^(\s*)if\s*\((.*)\)\s*(\{?)\s*$')
+INT_DECL = re.compile(r'^(\s+)int\s+([A-Za-z_]\w*)\s*;(\s*/\*.*\*/)?\s*$')
+CONST = re.compile(r'(0[xX][0-9A-Fa-f]+|\d+)[uUlL]*$')
+LHS16 = re.compile(r'^(HIWORD|LOWORD)\s*\(|^\*\s*\(\s*(unsigned\s+)?short\s*\*\s*\)|^\(\s*\(\s*(unsigned\s+)?short\s*\*\s*\)|\.w$')
+
+
+def mask_tests(e):
+    """(path of E, E, mask) for every `E & MASK` of e with a constant mask that fits a byte or a word and an E
+    that is more than a name (a call, a shift, a sum)"""
+    for path, n in subtrees(e):
+        if n[0] != 'bin' or n[1] != '&': continue
+        for i, j in ((2, 3), (3, 2)):
+            c = unpar(n[j]); x = unpar(n[i])
+            if c[0] == 'atom' and CONST.match(c[1]):
+                v = int(c[1].rstrip('uUlL'), 0)
+                if 0 < v <= 0xFFFF and x[0] != 'atom': yield path + (i,), x, v
+                break
+
+
+def fresh_name(lines, b0, b1, base):
+    used = set(re.findall(r'\b[A-Za-z_]\w*\b', '\n'.join(lines[b0 - 1:b1 + 1])))
+    for cand in [base] + ['%s%d' % (base, i) for i in range(2, 10)]:
+        if cand not in used: return cand
+
+
+def mask_reads_only(lines, b0, b1, v):
+    """the largest mask when every read of local v is a `v & MASK` test (or `MASK & v`), else None"""
+    big = 0; reads = 0
+    for k in range(b0 + 1, b1):
+        s = permute.strip(lines[k])
+        for m in re.finditer(r'(?<![\w.>])%s\b' % re.escape(v), s):
+            after = s[m.end():].lstrip(); before = s[:m.start()].rstrip()
+            if re.match(r'=(?!=)', after) or re.match(r'(\+|-|\*|&|\||\^|<<|>>)=', after): return None   # written
+            if re.match(r'(\+\+|--)', after) or before.endswith('++') or before.endswith('--'): return None
+            if re.match(r'&\s*%s' % CONST.pattern.rstrip('$'), after):
+                big = max(big, int(re.match(r'&\s*((?:0[xX][0-9A-Fa-f]+|\d+))', after).group(1), 0)); reads += 1
+            elif re.search(r'(0[xX][0-9A-Fa-f]+|\d+)[uUlL]*\s*&\s*$', before):
+                big = max(big, int(re.search(r'(0[xX][0-9A-Fa-f]+|\d+)[uUlL]*\s*&\s*$', before).group(1), 0)); reads += 1
+            elif INT_DECL.match(lines[k]) and INT_DECL.match(lines[k]).group(2) == v:
+                continue
+            else:
+                return None
+    return big if reads and big <= 0xFFFF else None
+
+
+def r_narrow(lines, b0, b1, lt):
+    """a value tested with a small mask, `(E & 0x30) == 0` / `E & 0x30` / `!(E & 0x30)` with E more than a name:
+    E stored first in a new unsigned char (mask up to 0xFF, else unsigned short) local declared last, the test on
+    the local (JoystickCalScreen #247: the conversion is one more register conflict before the tie). Also an
+    existing int local narrowed to unsigned char / unsigned short when every read of it is such a mask test."""
+    units = permute.decl_units(lines, b0, b1)
+    if not units: return
+    d = units[-1][1]
+    for k in range(d + 1, b1):
+        m = COND.match(permute.strip(lines[k]).rstrip())
+        if not m: continue
+        ind, cond, brace = m.groups()
+        try:
+            e = parse(cond, lt)
+        except (ValueError, IndexError):
+            continue
+        for path, x, v in mask_tests(e):
+            name = fresh_name(lines, b0, b1, 'b')
+            if not name: continue
+            typ = 'unsigned char' if v <= 0xFF else 'unsigned short'
+            new = replace(e, path, ('atom', name))
+            L = lines[:d + 1] + ['    %s %s;' % (typ, name)] + lines[d + 1:k] + \
+                ['%s%s = %s;' % (ind, name, show(x)), '%sif (%s)%s' % (ind, show(new), ' {' if brace else '')] + lines[k + 1:]
+            yield 'narrow:%d:%s' % (k - b0, typ.split()[-1]), L
+    for u in units:
+        m = INT_DECL.match(lines[u[0]])
+        if not m or u[0] != u[1]: continue
+        v = m.group(2)
+        big = mask_reads_only(lines, b0, b1, v)
+        if big is None: continue
+        typ = 'unsigned char' if big <= 0xFF else 'unsigned short'
+        L = list(lines); L[u[0]] = '%s%s %s;%s' % (m.group(1), typ, v, m.group(3) or '')
+        yield 'narrow:%s:%s' % (v, typ.split()[-1]), L
+
+
+def r_alias16(lines, b0, b1, lt):
+    """a simple statement that stores 16 bits (HIWORD(...) = ..., a short lhs, .w) moved earlier or later past the
+    independent simple statements of its straight run (no shared names, no calls crossed): a name's first 16-bit
+    use in code order decides where the names walk re-lists it"""
+    for k in range(b0 + 1, b1):
+        st = statement(lines[k], lt)
+        if not st or not LHS16.search(st[1]) or has_effect(st[3]): continue
+        try:
+            lhs = parse(st[1], lt)
+        except (ValueError, IndexError):
+            continue
+        rk = names(st[3]) | names(lhs); wk = writes_of(lines[k]) | {st[1]}
+        for seq, step in ((straight(lines, k, b1, -1), -1), (straight(lines, k, b1, 1), 1)):
+            for j in seq:
+                o = statement(lines[j], lt)
+                if not o or has_effect(o[3]): break
+                try:
+                    olhs = parse(o[1], lt)
+                except (ValueError, IndexError):
+                    break
+                rj = names(o[3]) | names(olhs); wj = writes_of(lines[j]) | {o[1]}
+                if (wk & (rj | wj)) or (wj & rk) or o[1] == st[1]: break
+                L = list(lines); s = L.pop(k); L.insert(j, s)
+                yield 'alias16:%d:%+d' % (k - b0, j - k), L
+
+
 REWRITES = [('merge', r_merge), ('commute', r_commute), ('split', r_split), ('assoc', r_assoc), ('reuse', r_reuse),
-            ('recompute', r_recompute), ('alias', r_alias)]
+            ('recompute', r_recompute), ('alias', r_alias), ('narrow', r_narrow), ('alias16', r_alias16)]
 
 
 DECL_ONE = re.compile(r'^\s+(?:(?:unsigned|signed|const)\s+)*[A-Za-z_]\w*\s+\**\s*([A-Za-z_]\w*)\s*;\s*(/\*.*\*/)?\s*$')
@@ -449,9 +561,10 @@ def drop_dead(lines, b0, b1, lt):
     changed = True
     while changed:
         changed = False
+        single = set(u[0] for u in permute.decl_units(lines, b0, b1) if u[0] == u[1])
         for d in range(b0 + 1, b1):
             m = DECL_ONE.match(lines[d])
-            if not m or permute.strip(lines[d]).strip().split()[0] in permute.KEYWORDS: continue
+            if not m or d not in single or permute.strip(lines[d]).strip().split()[0] in permute.KEYWORDS: continue
             v = m.group(1)
             refs = [k for k in range(b0 + 1, b1) if k != d and re.search(r'(?<![\w.>])%s\b' % v, permute.strip(lines[k]))]
             if re.search(r'&\s*%s\b' % v, '\n'.join(lines[b0:b1 + 1])): continue
