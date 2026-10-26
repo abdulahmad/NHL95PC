@@ -4544,6 +4544,25 @@ EditTextField,,"on the ins version: block-scoped c (7), block-scoped i per loop 
 EditTextField,,"targetsearch 30 min (1685 candidates, none meets the tie). Goto-free grid on the 36 draft's handlers (poll x dispatch, each as for (;;) / while (1) / do-while alike): if/else poll arms with the blink as the if (key) else (47, +2)","47, +2",ga
 EditTextField,,"the blink after an if (key) handler block (74, +14), `if (sub_B3D64()) key = 0; else idle` (68-106)",68-106,ga
 EditTextField,,"a rotated `for (; !(key = PollKey()); )` poll (41, +4)","41, +4",ga
+ReplaySaveHilight,,"w unsigned product: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"size and header initialization block scoped w and n: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"one team save result scoped separately: 42 differing, size distance 7",,ga
+ReplaySaveHilight,,"cache dimensions for both size and header stores: 87 differing, size distance 1",,ga
+ReplaySaveHilight,,"cache sprite pointer for dimensions and header copy: 62 differing, size distance 4",,ga
+ReplaySaveHilight,,"cache row product across bevel drawing calls: 96 differing, size distance 72",,ga
+ReplaySaveHilight,,"allocation buffer as API integer handle: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"allocation buffer as generic void pointer: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"allocation buffer as header pointer: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"size declared and initialized in allocation block after product: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"one team wait shared after error block: 41 differing, size distance 1",,ga
+ReplaySaveHilight,,"dialog wait shared after error block: 38 differing, size distance 0",,ga
+ReplaySaveHilight,,"permute 5 min jobs 4: 449 logged candidates, best 29",,ga
+ReplaySaveHilight,,"lower scores require non-equivalent narrowing of gadgetptry in sub_91370(pointerspr, gadgetptrx, gadgetptry) (unsigned char / short), rejected",,ga
+ReplaySaveHilight,,full per-candidate scores in /home/mhopkins/tmp/u/np/permlog_ts_ReplaySaveHilight.csv,,ga
+ReplaySaveHilight,,summary: no match after 449 compiled candidates in 255 s,,ga
+ReplaySaveHilight,,"best 29 aligned differing, size distance 2 (fresh compiled 1651 bytes, EXE 1653",,ga
+ReplaySaveHilight,,"first_pick 27). No improvement committed. ESCALATE: unsupported (short)gadgetptry in sub_91370 after the bevel reaches 29 differing, size -2",,ga
+ReplaySaveHilight,,"narrows the coordinate, not accepted. Patch: /home/mhopkins/tmp/u/np/ts_ReplaySaveHilight_ReplaySaveHilight_escalate.diff",,ga
 updatereplay,,plain byte accumulator: 33 differing (size delta -11),size delta -11,ga
 updatereplay,,plain byte accumulator scoped in nibble loop: 33 differing (size delta -11),size delta -11,ga
 updatereplay,,plain unsigned short accumulator: 24 differing (size delta -5),size delta -5,ga
