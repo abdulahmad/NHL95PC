@@ -4544,3 +4544,47 @@ EditTextField,,"on the ins version: block-scoped c (7), block-scoped i per loop 
 EditTextField,,"targetsearch 30 min (1685 candidates, none meets the tie). Goto-free grid on the 36 draft's handlers (poll x dispatch, each as for (;;) / while (1) / do-while alike): if/else poll arms with the blink as the if (key) else (47, +2)","47, +2",ga
 EditTextField,,"the blink after an if (key) handler block (74, +14), `if (sub_B3D64()) key = 0; else idle` (68-106)",68-106,ga
 EditTextField,,"a rotated `for (; !(key = PollKey()); )` poll (41, +4)","41, +4",ga
+updatereplay,,plain byte accumulator: 33 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte accumulator scoped in nibble loop: 33 differing (size delta -11),size delta -11,ga
+updatereplay,,plain unsigned short accumulator: 24 differing (size delta -5),size delta -5,ga
+updatereplay,,plain unsigned int accumulator: 23 differing (size delta -3),size delta -3,ga
+updatereplay,,plain byte and shared int byte offset: 32 differing (size delta -24),size delta -24,ga
+updatereplay,,plain byte and shared int pair index: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte and shared short byte offset: 38 differing (size delta -32),size delta -32,ga
+updatereplay,,plain byte and shared short pair index: 13 differing (size delta +1),size delta +1,ga
+updatereplay,,plain byte with shared odd int pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd unsigned int pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd short pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd unsigned short pair index: 23 differing (size delta +4),size delta +4,ga
+updatereplay,,plain byte shared int pair with high multiply split: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared unsigned pair: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair initialized in declaration: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte and pair scoped in nibble loop: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte accumulator with shared int pair: 22 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared int widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared unsigned int widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared short widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared unsigned short widened index: 29 differing (size delta -9),size delta -9,ga
+updatereplay,,plain byte shared pair assigned as multiply: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair assigned as shift: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair split double: 29 differing (size delta -10),size delta -10,ga
+updatereplay,,plain byte shared pair split self double: 29 differing (size delta -10),size delta -10,ga
+updatereplay,,plain byte shared pair high as shift: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,plain byte shared pair function scope after Player *p;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair function scope after short i;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair function scope after unsigned char lo;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,shared pair raw byte load then mask: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,shared pair raw byte load then mask scoped: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,plain byte raw load then mask without pair: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,shared object pointer offset i * 24: 29 differing (size delta -27),size delta -27,ga
+updatereplay,,shared object pointer offset i * 3 * 8: 29 differing (size delta -27),size delta -27,ga
+updatereplay,,shared object pointer offset (i + i) * 12: 33 differing (size delta -22),size delta -22,ga
+updatereplay,,shared odd object byte offset (i + i + 1) * 12: 33 differing (size delta -19),size delta -19,ga
+updatereplay,,shared odd object byte offset i * 24 + 12: 29 differing (size delta -22),size delta -22,ga
+updatereplay,,shared pair high index (pair * 3) * 4: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,shared pair high index (pair << 2) + (pair << 3): 28 differing (size delta -12),size delta -12,ga
+updatereplay,,"permute.py --minutes 5 --jobs 4 on clean shared-pair draft: no match after 321 compiled candidates in 99 s, best 11 (absolute size mismatch 1), permlog_ts_updatereplay.csv logs every transform and score. A shared int pair index read twice raises pair to savings 30 ECX and leaves plain lo (savings 20) in memory at the EXE byte, removing the old volatile",,ga
+updatereplay,,p 263 EAX and i 175 DX unchanged. No new ESCALATE find. Tool issues: initial countsolve -d1 compile lacked ~/.local/bin in PATH,,ga
+updatereplay,,rerun with PATH fixed succeeded. Permute rejected malformed generated loop/declaration candidates (E1077/E1018 and cascades),E1077/E1018 and cascades,ga
+updatereplay,,"plus E1010 type mismatches, and continued. Fresh standalone GA compile confirmed 11 differing. Both make and make CBUILD=0 end MATCH. Committed 55ec767ba1ca48aef570f448a4fd290824a4a92d (C file only, function unmarked)",,ga
+updatereplay,,no push,,ga
