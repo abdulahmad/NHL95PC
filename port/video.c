@@ -205,9 +205,17 @@ void video_game_to_window(int gx, int gy, int *wx, int *wy)
     *wy = vy + gy * vh / mode_h;
 }
 
-void video_warp_mouse(int wx, int wy)
+/* fullscreen: keep the host's pointer on the 4:3 picture (and let it go again in a window) */
+void video_confine_mouse(int on)
 {
-    if (win) SDL_WarpMouseInWindow(win, wx, wy);
+    static int was, px, py, pw, ph;
+    int vx, vy, vw, vh;
+    if (!win) return;
+    video_view(&vx, &vy, &vw, &vh);
+    if (on == was && (!on || (vx == px && vy == py && vw == pw && vh == ph))) return;
+    was = on; px = vx; py = vy; pw = vw; ph = vh;
+    if (on) { SDL_Rect r = { vx, vy, vw, vh }; SDL_SetWindowMouseRect(win, &r); }
+    else SDL_SetWindowMouseRect(win, NULL);
 }
 
 /* Alt+Enter: borderless fullscreen at the desktop's resolution and back */
