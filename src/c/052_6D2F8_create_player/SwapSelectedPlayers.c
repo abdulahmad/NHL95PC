@@ -18,12 +18,12 @@ void FixJerseyNumber(int side, int i);
    jersey numbers (FixJerseyNumber) and clear (64h) every line slot (+BCh, 30h bytes) of either team that held
    the moved player. Then mark the database dirty and reload and redraw both lists. mode: the menu argument, not
    used; x, y: where the message box goes.
-   DRAFT (GA): 853 vs 861 bytes, 48 differing (the reuse draft: 859 bytes, 48). nb, ga, gb declared in that
-   order give the EXE's count registers (edx, ebp, eax). The swap loop's second list index is its own int ib (the
-   older draft reused the dead a for it, also 48 but ESCALATE: dead-variable reuse); b declared before a and the
-   two zeros as separate stores (`a = 0; b = 0;`) keep 48 with ib (`b = a = 0` 51, `a = b = 0` 50). Left: a / b
-   tie at savings 61 and take edx / ecx (EXE a in eax), the first `nb != s.na` loads s.na into esi (EXE compares
-   memory) and makes a zero from it, and the key-number swaps index EAF7C scaled (EXE `ecx = slot * 4`). See
+   DRAFT (GA): 853 vs 861 bytes, 44 differing (was 48). Explicit roster byte offsets, with ia scoped to
+   the swap loop and the second index read directly into offb, put the two index loads in the EXE's order.
+   nb, ga, gb still give the EXE's count registers (edx, ebp, eax). Left: a / b tie at savings 61, with a in
+   edx rather than eax; the first nb != s.na loads s.na into esi instead of comparing memory, and the
+   key-number swaps still use scaled addressing where the EXE copies and shifts the slot index.
+   Reusing dead a for offa scores 29 but is ESCALATE; the saved patch is not part of this draft. See
    docs/UNSURE.md. */
 void SwapSelectedPlayers(int *mode, int *x, int *y)
 {
@@ -41,8 +41,8 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
     int ga;
     int gb;
     int i;
-    int ia;
-    int ib;
+    int offa;
+    int offb;
     int j;
     int b;
     int a;
@@ -86,6 +86,8 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
     }
     s.na += ga;
     for (i = 0; i < s.na; i++) {
+        int ia;
+
         p = KeyDbPtr(((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]]);
         q = KeyDbPtr(((int *)(dword_EAF7C + 0x4C))[s.slotb[i]]);
         *p ^= *q;
@@ -95,13 +97,14 @@ void SwapSelectedPlayers(int *mode, int *x, int *y)
         ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]] ^= ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]];
         ((int *)(rosterteamrec[0] + 0x4C))[s.slota[i]] ^= ((int *)(dword_EAF7C + 0x4C))[s.slotb[i]];
         ia = s.idxa[i];
-        ib = s.idxb[i];
-        rosterslot[ia * 27] ^= byte_EAC86[ib * 27];
-        byte_EAC86[ib * 27] ^= rosterslot[ia * 27];
-        rosterslot[ia * 27] ^= byte_EAC86[ib * 27];
-        s.tmp = *(RosterEnt *)(rosterlist + ia * 27);
-        *(RosterEnt *)(rosterlist + ia * 27) = *(RosterEnt *)(unk_EAC84 + ib * 27);
-        *(RosterEnt *)(unk_EAC84 + ib * 27) = s.tmp;
+        offa = ia * 27;
+        offb = s.idxb[i] * 27;
+        rosterslot[offa] ^= byte_EAC86[offb];
+        byte_EAC86[offb] ^= rosterslot[offa];
+        rosterslot[offa] ^= byte_EAC86[offb];
+        s.tmp = *(RosterEnt *)(rosterlist + offa);
+        *(RosterEnt *)(rosterlist + offa) = *(RosterEnt *)(unk_EAC84 + offb);
+        *(RosterEnt *)(unk_EAC84 + offb) = s.tmp;
         FixJerseyNumber(0, ia);
         FixJerseyNumber(1, s.idxb[i]);
         p = (unsigned char *)rosterteamrec[0] + 0xBC;

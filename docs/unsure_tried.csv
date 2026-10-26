@@ -4608,6 +4608,414 @@ checkcheck,,"permute 5 min --jobs 4: stopped after 513 candidates in 157 s, best
 checkcheck,,baseline first_pick 29 vs permute 31,,ga
 checkcheck,,final both 8. Permute generated HIWORD rvalue compile errors and out-of-range warnings in rejected candidates,,ga
 checkcheck,,no blocking tool failure. No ESCALATE find,,ga
+SwapSelectedPlayers,,idxa_postincrement: 48,,ga
+SwapSelectedPlayers,,idxb_postincrement: 48,,ga
+SwapSelectedPlayers,,both_index_postincrement: 48,,ga
+SwapSelectedPlayers,,initialize_a_at_declaration: 64,,ga
+SwapSelectedPlayers,,initialize_b_at_declaration: 56,,ga
+SwapSelectedPlayers,,initialize_both_at_declaration: 73,,ga
+SwapSelectedPlayers,,roster_offset_a: 47,,ga
+SwapSelectedPlayers,,roster_offset_b: 62,,ga
+SwapSelectedPlayers,,roster_offset_both: 44,,ga
+SwapSelectedPlayers,,second_index_read_in_slot_xors_then_save_for_copy: 47,,ga
+SwapSelectedPlayers,,selection_counters_initialized_in_for: 50,,ga
+SwapSelectedPlayers,,offsets_inline_second_index: 47,,ga
+SwapSelectedPlayers,,inline_second_index_all: 62,,ga
+SwapSelectedPlayers,,first_offset_inline_second_index: 65,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_block_scope: 47,,ga
+SwapSelectedPlayers,,roster_entry_pointers: 45,,ga
+SwapSelectedPlayers,,offsets_reuse_second_index_for_jersey: 64,,ga
+SwapSelectedPlayers,,selection_shared_row_offset: 69,,ga
+SwapSelectedPlayers,,first_offset_delayed_second_index: 47,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_split_first_product: 47,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_split_both_products: 50,,ga
+SwapSelectedPlayers,,The both-offsets hand draft scoring 44 kept ib solely to seed offb and was rejected,,ga
+SwapSelectedPlayers,,"removing ib scores 47 until ia is scoped to the swap loop (natural 44). Roster entry pointers score 45 but fold rosterslot/byte_EAC86 into list-base+2, contrary to naming rules, and were rejected. first_offset_delayed_second_index was identical to roster_offset_a and reused its cached 47 result",,ga
+SwapSelectedPlayers,,"ESCALATE: dead a reused as roster offset offa, score 29 (859 vs 861), rejected and saved in ts_SwapSelectedPlayers_SwapSelectedPlayers_escalate.diff",,ga
+SwapSelectedPlayers,,Committed natural form: offa = ia * 27,,ga
+SwapSelectedPlayers,,offb = s.idxb[i] * 27,,ga
+SwapSelectedPlayers,,reused in the slot and 27-byte record swaps,,ga
+SwapSelectedPlayers,,ia declared inside the swap loop. Both offsets have multiple real reads,,ga
+SwapSelectedPlayers,,ia also supplies FixJerseyNumber. Fresh uncached DOSBox GA compile confirmed 44,,ga
+SwapSelectedPlayers,,permute candidates: base: 47,,ga
+SwapSelectedPlayers,,scope:ia@0: 44,,ga
+SwapSelectedPlayers,,commute:68:+: 47,,ga
+SwapSelectedPlayers,,incdec:47:forpre: 47,,ga
+SwapSelectedPlayers,,loop:31:ifdo: 47,,ga
+SwapSelectedPlayers,,opassign:59:0:split: 47,,ga
+SwapSelectedPlayers,,cast:53:2:short: 47,,ga
+SwapSelectedPlayers,,swap:67:16: 47,,ga
+SwapSelectedPlayers,,reuse:offb:gb: 86,,ga
+SwapSelectedPlayers,,tempadd:75:rhs: compile failed,,ga
+SwapSelectedPlayers,,type:nb:signed_char: 68,,ga
+SwapSelectedPlayers,,swapstmt:24: 51,,ga
+SwapSelectedPlayers,,forchain:47:merge: 48,,ga
+SwapSelectedPlayers,,zero:33:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:b:a: 44,,ga
+SwapSelectedPlayers,,movedecl:ga:4: 47,,ga
+SwapSelectedPlayers,,chain:25:mergeba: 47,,ga
+SwapSelectedPlayers,,scope:offa@0: 44,,ga
+SwapSelectedPlayers,,commute:67:+: 47,,ga
+SwapSelectedPlayers,,incdec:27:forpre: 47,,ga
+SwapSelectedPlayers,,loop:60:gototop: 51,,ga
+SwapSelectedPlayers,,opassign:73:0:split: 47,,ga
+SwapSelectedPlayers,,cast:85:1:int: 59,,ga
+SwapSelectedPlayers,,swap:60:0: 47,,ga
+SwapSelectedPlayers,,reuse:offa:a: 29,,ga
+SwapSelectedPlayers,,tempadd:66:+: 55,,ga
+SwapSelectedPlayers,,type:na:unsigned_short: 111,,ga
+SwapSelectedPlayers,,swapstmt:77: 74,,ga
+SwapSelectedPlayers,,forchain:27:merge: 48,,ga
+SwapSelectedPlayers,,zero:29:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:s:nb: 47,,ga
+SwapSelectedPlayers,,movedecl:offa:9: 55,,ga
+SwapSelectedPlayers,,chain:45:mergeab: 46,,ga
+SwapSelectedPlayers,,scope:q@0: 47,,ga
+SwapSelectedPlayers,,incdec:81:forpre: 47,,ga
+SwapSelectedPlayers,,loop:31:gototop: 59,,ga
+SwapSelectedPlayers,,opassign:74:0:split: 47,,ga
+SwapSelectedPlayers,,cast:60:1:unsigned_char: 55,,ga
+SwapSelectedPlayers,,swap:61:8: 47,,ga
+SwapSelectedPlayers,,reuse:offa:ga: 53,,ga
+SwapSelectedPlayers,,tempadd:68:+: 56,,ga
+SwapSelectedPlayers,,type:i:unsigned_short: 126,,ga
+SwapSelectedPlayers,,swapstmt:45: 46,,ga
+SwapSelectedPlayers,,zero:32:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:offb:j: 55,,ga
+SwapSelectedPlayers,,movedecl:b:4: 55,,ga
+SwapSelectedPlayers,,chain:25:mergeab: 49,,ga
+SwapSelectedPlayers,,scope:p@0: 44,,ga
+SwapSelectedPlayers,,commute:35:!=: 48,,ga
+SwapSelectedPlayers,,incdec:51:op1: 47,,ga
+SwapSelectedPlayers,,loop:47:gototop: 51,,ga
+SwapSelectedPlayers,,opassign:72:0:split: 47,,ga
+SwapSelectedPlayers,,cast:62:14:char: 58,,ga
+SwapSelectedPlayers,,swap:37:1: 47,,ga
+SwapSelectedPlayers,,reuse:a:gb: 56,,ga
+SwapSelectedPlayers,,tempadd:67:+: 56,,ga
+SwapSelectedPlayers,,type:nb:char: 70,,ga
+SwapSelectedPlayers,,swapstmt:70: 62,,ga
+SwapSelectedPlayers,,zero:28:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:gb:i: 47,,ga
+SwapSelectedPlayers,,movedecl:offb:5: 47,,ga
+SwapSelectedPlayers,,chain:24:split2: 47,,ga
+SwapSelectedPlayers,,scope:j@0: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:36:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:a:gb: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:75:+: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ga:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:10:unsigned_short: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:71:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:80:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:70:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:signed_char: 93,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:b:a: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:78: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:60:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:24:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:48:rhs: 49,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:i:8: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:70:2:short: 55,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:65:0:split: 69,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:84:0: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:gb:short: 32,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:s:nb: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:67: 61,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:38:!=: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:b:gb: 75,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:24:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:32:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:61:+: 37,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ia:8: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:68:2:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:66:0:split: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:66:16: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:pad:unsigned_short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:j:b: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:76: 72,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:gb: 65,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:44:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:j@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:31:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:65:+: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ga:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:55:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:79:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:i:unsigned: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:ga:gb: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:74: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:61:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:ga:unsigned_char: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:46:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:27:2:char: 67,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:30:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:j@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:23:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:75:+: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:67:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:j:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:74: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:65:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:gb:unsigned_char: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:30:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:60:9:short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:31:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:ia:gb: 65,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:50:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:24:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:59:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:q:6: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:24: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:a:p: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:ia:unsigned_short: 45,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:37:2:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:b:nb: 71,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:73:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:nb:8: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:67: 61,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:i:ia: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:offb:char: 70,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:26:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:81:7:unsigned_short: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:26:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:44:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:67:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:65:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:65:0:split: 69,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:j:11: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:48:4:short: 135,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:72:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:65:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:p@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:a:p: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:b:short: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ia:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:30:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:ga: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:69:*: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:44: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:30:1:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:73:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:67:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:nb:ga: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:char: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:27:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:26:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:gb: 48,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:65:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:23: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:44:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:5:unsigned_char: 46,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:81:0: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:ia:offb: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:unsigned_short: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:b:0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:76:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:83:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:b:nb: 71,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:69: 40,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:52:3:unsigned_char: 42,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:37:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:offb:signed_char: 70,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:1: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:66:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:nb: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:37:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:60:8:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:82:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:i:ia: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:unsigned_char: 93,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:b:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:66:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:55:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:ifdo: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:61:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:86: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:gb:unsigned_short: 34,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:46:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:32:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:66:16: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:60:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:j:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:39:4:unsigned_char: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:50:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:44: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:ia:nb: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:46:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:pad:unsigned_short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:26:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:34:!=: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:a:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:66:16:unsigned_short: 53,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:65:+: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:offb:gb: 48,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:83:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:24:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:na:short: 91,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:gb:i: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:30:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:37:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:i:7: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:66:6:unsigned_short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:66:0:split: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:23: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:55:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:44:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:b:short: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:nb:ga: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:36:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:j:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:67:18:unsigned_short: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:p@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:69: 40,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:66:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:23:split2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:34:!=: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:short: 97,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:59:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:67:+: 45,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:46:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:b: 53,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:64: 57,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:53:5:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:b:unsigned_char: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:ifdo: 37,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:nb:3: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:gb:i: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:ga: 73,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:24: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:73:6:char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:36:!=: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:unsigned_char: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:7: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:53:rhs: 57,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:nb: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:65: 42,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:4:unsigned_short: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:34:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ia:signed_char: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:gotobot: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:69:*: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:73: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:60:4:char: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:66:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:j:unsigned_short: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:p:6: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:74:rhs: compile failed,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:75: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:46:1:short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:pad:short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:a:0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:41:11:short: 58,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:unsigned: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:11: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:67:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:4:char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:signed_char: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:3: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:3:unsigned_short: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:unsigned_char: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:ifdo: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:10: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:13:unsigned_char: 49,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:unsigned: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:do: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:10: 29. Both make and make CBUILD=0 MATCH. Expected speculative permute type-mismatch candidate diagnostics only,,ga
+SwapSelectedPlayers,,no blocking tool problem,,ga
 LoadGameState,,"skater row repeated quotient 24+1: 37 differing, size +0",,ga
 LoadGameState,,"skater row explicit 4-1 then 8+1: 39 differing, size +0",,ga
 LoadGameState,,"skater row 16+8+1: 40 differing, size +0",,ga
