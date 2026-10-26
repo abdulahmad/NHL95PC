@@ -2,6 +2,7 @@
  * from the memory a channel points at; dma_next_byte / dma_advance step the channel like the controller would, and the address and
  * count the game reads back follow the playback. Memory below 1 MB is mapped at the same address, so a physical address is a pointer. */
 #include "host.h"
+#include "audio.h"
 
 struct dma_chan {
     uint32_t base_addr, cur_addr;      /* in units of the channel (bytes, or words for channels 4-7) */
@@ -30,6 +31,7 @@ uint32_t dma_in(unsigned port)
         reg = ctl ? ((port - 0xC0) >> 1) : port;
         ch = (ctl ? 4 : 0) + (reg >> 1);
         c = &chan[ch];
+        if (!flip[ctl]) sb_pump();      /* the position the game reads is the one of this moment (not on the high byte: it would tear) */
         v = (reg & 1) ? c->cur_count : c->cur_addr;
         v = flip[ctl] ? (v >> 8) & 0xFF : v & 0xFF;
         flip[ctl] ^= 1;

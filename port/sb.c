@@ -20,7 +20,10 @@ static uint8_t test_reg;
 static int direct_level = 128;
 static uint8_t mixer_idx, mixer[256];
 static double acc;
-static int prev_l, prev_r, cur_l, cur_r;
+static int64_t pump_last_ns;              /* the clock of the DMA pump (sb_pump), and the fraction of a sample it owes */
+static double pump_acc;
+static int prev_l, prev_r, cur_l, cur_r;      /* cur: the last sample taken from the DMA channel; prev, out: the output side */
+static int out_l, out_r;
 
 static void mixer_reset(void)
 {
@@ -91,6 +94,7 @@ static void start_block(int len_minus_one, int auto_init, int high)
     paused = 0;
     silence = 0;
     acc = 1.0;
+    pump_last_ns = plat_now_ns(); pump_acc = 0;                  /* the clock starts with the block */
     TRACE("sb: start %s%s block %d rate %.0f%s dma%d\n", auto_init ? "auto-init " : "single ", high ? "high-speed" : "", len_minus_one + 1,
           sample_rate(), stereo() ? " stereo" : "", dma);
 }
@@ -107,7 +111,7 @@ static void run_command(int c)
     case 0x40: time_constant = d[0]; break;
     case 0x41: case 0x42: { double r = (d[0] << 8) | d[1]; time_constant = (int)(256 - 1000000.0 / (r ? r : 1)); if (time_constant < 0) time_constant = 0; break; }
     case 0x48: block_size = d[0] | (d[1] << 8); break;
-    case 0x80: remaining = (d[0] | (d[1] << 8)) + 1; silence = 1; active = 1; autoinit = 0; acc = 1.0; break;
+    case 0x80: remaining = (d[0] | (d[1] << 8)) + 1; silence = 1; active = 1; autoinit = 0; acc = 1.0; pump_last_ns = plat_now_ns(); pump_acc = 0; break;
     case 0xD0: paused = 1; break;
     case 0xD4: paused = 0; break;
     case 0xDA: case 0xD9: autoinit = 0; break;
@@ -125,11 +129,74 @@ static void run_command(int c)
     }
 }
 
+/* Playback is paced by the clock, not by the audio device: the DMA position the game's driver reads back (it decides when to refill
+ * its buffer from it) has to move smoothly, like on the card, and the audio device asks for samples in bursts of 20 ms or more.
+ * sb_pump takes the samples that are due by the time of day from the DMA channel (raising the block interrupts) into a queue;
+ * sb_render only resamples the queue to the output. sb_pump runs with the audio lock held: from the mixer, from the main loop and
+ * when the game reads the DMA position. */
+#define FIFO_SIZE 8192
+static int16_t fifo_l[FIFO_SIZE], fifo_r[FIFO_SIZE];
+static uint32_t fifo_head, fifo_tail;           /* tail: next to read */
+
+static void fifo_push(int l, int r)
+{
+    if (fifo_head - fifo_tail >= FIFO_SIZE) fifo_tail++;              /* full: the oldest is dropped */
+    fifo_l[fifo_head % FIFO_SIZE] = (int16_t)l;
+    fifo_r[fifo_head % FIFO_SIZE] = (int16_t)r;
+    fifo_head++;
+}
+
+static void sb_pump_locked(void)
+{
+    int64_t now = plat_now_ns(), dt = now - pump_last_ns;
+    double due;
+    int n, i;
+    pump_last_ns = now;
+    if (!active) { pump_acc = 0; return; }
+    if (dt > 100000000LL) dt = 100000000LL;                       /* after a long stall: do not play it all at once */
+    due = pump_acc + dt * sample_rate() / 1e9;
+    n = (int)due;
+    pump_acc = due - n;
+    for (i = 0; i < n && active; i++) {
+        int l = cur_l, r = cur_r;
+        if (paused) { l = r = 0; }
+        else if (silence) { l = r = 0; remaining--; }
+        else if (dma_masked(dma)) { /* the card has nothing to play: hold the last sample */ }
+        else {
+            uint8_t *p = (uint8_t *)dma_address(dma);
+            l = (p[0] - 128) << 8; r = l;
+            dma_advance(dma, 1);
+            remaining--;
+            if (stereo() && remaining > 0) {
+                r = (*(uint8_t *)dma_address(dma) - 128) << 8;
+                dma_advance(dma, 1);
+                remaining--;
+            }
+        }
+        cur_l = l; cur_r = r;
+        fifo_push(l, r);
+        if (!paused && remaining <= 0) {
+            raise_irq();
+            if (autoinit && !silence) remaining = (int64_t)block_size + 1;
+            else { active = 0; silence = 0; }
+        }
+    }
+}
+
+void sb_pump(void)                      /* any thread; takes the audio lock */
+{
+    if (!active) return;
+    audio_lock();
+    sb_pump_locked();
+    audio_unlock();
+}
+
 static void sb_render(int32_t *out, int frames, int rate)
 {
     int i;
     double step;
-    if (!active) {
+    sb_pump_locked();
+    if (!active && fifo_head == fifo_tail) {
         if (speaker_on && direct_level != 128) {            /* direct DAC writes: hold the last value */
             int32_t v = (direct_level - 128) << 6;
             for (i = 0; i < frames; i++) { out[2 * i] += v; out[2 * i + 1] += v; }
@@ -139,35 +206,16 @@ static void sb_render(int32_t *out, int frames, int rate)
     step = sample_rate() / rate;
     for (i = 0; i < frames; i++) {
         double t;
-        while (active && acc >= 1.0) {
+        while (acc >= 1.0) {
             acc -= 1.0;
-            prev_l = cur_l; prev_r = cur_r;
-            if (paused) { cur_l = cur_r = 0; break; }
-            if (silence) { cur_l = cur_r = 0; remaining--; }
-            else if (dma_masked(dma)) { break; }
-            else {
-                uint8_t *p = (uint8_t *)dma_address(dma);
-                int l = (p[0] - 128) << 8, r = l;
-                dma_advance(dma, 1);
-                remaining--;
-                if (stereo() && remaining > 0) {
-                    r = (*(uint8_t *)dma_address(dma) - 128) << 8;
-                    dma_advance(dma, 1);
-                    remaining--;
-                }
-                cur_l = l; cur_r = r;
-            }
-            if (remaining <= 0) {
-                raise_irq();
-                if (autoinit && !silence) remaining = (int64_t)block_size + 1;
-                else { active = 0; silence = 0; }
-            }
+            prev_l = out_l; prev_r = out_r;
+            if (fifo_tail != fifo_head) { out_l = fifo_l[fifo_tail % FIFO_SIZE]; out_r = fifo_r[fifo_tail % FIFO_SIZE]; fifo_tail++; }
+            /* an empty queue repeats the last sample */
         }
-        t = acc >= 1.0 ? 1.0 : acc;
-        t = 1.0 - t;
+        t = 1.0 - acc;
         if (speaker_on) {
-            out[2 * i] += (int32_t)(prev_l + (cur_l - prev_l) * t);
-            out[2 * i + 1] += (int32_t)(prev_r + (cur_r - prev_r) * t);
+            out[2 * i] += (int32_t)(prev_l + (out_l - prev_l) * t);
+            out[2 * i + 1] += (int32_t)(prev_r + (out_r - prev_r) * t);
         }
         acc += step;
     }

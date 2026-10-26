@@ -31,6 +31,7 @@ void opl_out(unsigned port, uint32_t val);
 void sb_init(int base, int irq, int dma, int version);
 uint32_t sb_in(unsigned port);
 void sb_out(unsigned port, uint32_t val);
+void sb_pump(void);                    /* take the samples that are due from the DMA channel (any thread) */
 int sb_base(void);
 
 void mpu_init(int base);

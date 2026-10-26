@@ -59,6 +59,7 @@ int main(int argc, char **argv)
             next_tick += 1000000000LL / irq_pit_hz();
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }
+        sb_pump();
         audio_pump();
         irq_poll();
         stats_report();
