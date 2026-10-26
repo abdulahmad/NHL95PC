@@ -204,6 +204,8 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 - avdgoal 155->155 (2026-10-24, StaticEck2026, GA) declsearch reaches at most 5 of its 9 EXE slots
 - avdgoal 155->155 (2026-10-24, StaticEck2026, GA) goalie index as the dword at +F8h >> 16 with int g (232, declsearch 222; short g 190): matches the EXE's load but g takes edx
 - avdgoal 155->155 (2026-10-24, Mhopkinsinc, GA) regdump: int g (dword >> 16 load) ties yb at savings 10 and takes EDX, yb EBX (236); EXE yb EDX and g memory, so g must score below the margin temps; short g as committed: g 10 memory; read the EXE switch entry (ps loaded into ecx, copied to ebx) and the case 0 layout, regsolve on int g (232, only savings edits predicted); m if / else (222); tight without ? 1 : 0 (155); tight if / else (189); 0x2C + (tight ? -8 : 0) (155); yl before yb (159); slotdump --count ty=6..10 (no EXE map)
+- avdgoal 155->155 (2026-10-26, StaticEck2026, GA) block pass on the pt == 0 and case 0 stores: the EXE builds every `regd0.w = m + 0x2C` as `mov eax, 0x2c / add eax, esi` and shares one store (the pt == 0 tight site, the g-branch else, both case 0 sites) and folds in place (`add esi, 0x2c / mov si`) only at the ABS(px) site; ours folds in place at the tight and case 0 sites (m dead there) and so cannot share. Tried: the stores as `0x2C + m` at the tight site (197; it gives the EXE's form there but moves the first difference to +35), in the pt == 0 block (202), in case 0 (178), both (207), everywhere (207: the switch cases lose their hoisted m + 0x2C); short m (272). A structural score (registers and frame offsets normalized) says the committed draft is 141 off, the int g with the dword load 135 (its g compares become dword and let the g branches share code as the EXE), so the int g is right in shape and wrong only in registers (g EDX, EXE memory below the switch's hoisted EBX / ECX temporaries): tieorder on that form is the next step. Nothing kept
+- avdgoal 155->155 (2026-10-26, StaticEck2026, GA) tieorder --minutes 20 on the int g form (TMGOALIE as the dword at +F8h >> 16, 232): 232 -> 226 after 317 forced orders, no tie order; g's register against the EXE's memory slot is not a savings tie. Draft unchanged
 
 ## Lane 2 — StaticEck2026 (StaticEck)
 
@@ -211,7 +213,7 @@ Segments 038-066. Work every draft in these files; do not take a file from the o
 
 | C file | Function | Score | Cause |
 |---|---|---:|---|
-| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 60 | slot 52/60 |
+| src/c/064_86696_season_playoffs/PlayoffTreeMenu.c | PlayoffTreeMenu | 52 | slot 52/52 |
 
 ## Offered to StaticEck2026
 
