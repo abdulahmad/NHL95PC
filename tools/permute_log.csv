@@ -435892,3 +435892,644 @@ date,func,file,transform,sha1,score,sizediff,match,first,cc
 2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > cmpflip:21,9087aa048ffe7d2d,48,2,0,56,ga
 2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > commute:37:+,b51466ad845bdf74,45,1,0,56,ga
 2026-10-25,LoadTeamRoster,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,commute:66:+ > mulshift:8:11:shl > mulshift:26:10:mul > mulshift:70:17:mul > movedecl:i:4,1927422d2848278d,72,1,0,56,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,base,f6b7fec97b7157d8,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:195:mergeba,3d089989e2583ffa,560,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:v:17,fc970059cb67714b,239,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:146:ne0,f4506bf952f80bd4,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:w:size,658b09525a8bb8ec,218,8,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:100:2:short,43e00cb57202723b,51,8,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:level:unsigned_char,252ffada1c61bbde,545,36,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:297:gototop,55b66e88365bf93a,54,11,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:327:!=,06090ce02e21291f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cmpflip:356,57fcb73b3adf9528,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:329:op1,713acb6e17222fc1,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,ifswap:101,7106d4dcc01af218,55,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:258:rhs,92cbd8ca76b6888c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,forchain:297:merge,3379e13745823d55,51,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:274:2,90399647da44ab92,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:272,dfc1808ac4b494ed,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,temp:size:inline,f77bc38af71b60d0,190,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:r:4:after,fb85f2ef6a28e63e,374,36,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,ternary:210:if,be5f0e898330961d,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,mulshift:213:10:shl,325023bb9b7da466,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:bank:art,f5072363b2c54ed7,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:195:mergeab,4d9ef6e5ddd67531,558,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:r:3,cd7fbd579026d690,239,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:353:eq0,40f48024d23462ae,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:my:fh,18a1e4f323bbd565,476,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:347:2:unsigned_short,709f6c6f3e35b0de,185,36,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:k:unsigned,c390c58d5dd58fd9,52,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:127:goto,1073141c56df9804,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:142:==,21d0ceee047423c0,63,2,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cmpflip:262,3b99b9c95ef671e3,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:273:op1,b3860e79be19c45d,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:144:-,6a52751d163f47c7,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:274:4,d53a70a83325fbb0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:216,db2eaf9d1b5dab5e,58,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:oldmx:1:after,714b3f81bfbe499c,348,55,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,ternary:101:q,0442e00fc111e5a6,233,2,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,mulshift:103:7:mul,0a550dbade938411,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:item:oldmx,07ad16eeae817949,75,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:194:mergeba,216939a3c1d82b88,560,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:art:17,8e93eabec82f8a54,192,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:63:eq0,01ea3f7a1c97d55b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:v:h,fe7e7f0a1b9b1a06,514,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:190:10:char,96c2e0813ac58c89,569,22,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:my:unsigned_char,58ed057cfd4d902f,523,6,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:308:goto,98a2f7d07b7571be,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:262:&,fc3f9fe9fd3d713f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cmpflip:248,00afeae6c54bdd3c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:206:pre,a13ca315b695e444,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:210:rhs,3ea50f0aa206d362,176,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:272:3,065ef7a56338da9e,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:237,856cab72a225bbf3,55,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:r:6:last,3f22990f5cd9ef4b,332,53,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,ternary:209:if,e978dcc2b2a95a01,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:grid:hit,357528d672191e2b,182,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:148:split,8f9407f6970202a4,200,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:v:32,9e960ec2952116c2,85,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:231:bool,1f6362650e57e144,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:w:fh,481c259faf9265cb,399,7,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:333:2:char,1426d219f9feb805,52,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:bank:signed_char,333e177ff8efbe7e,387,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:297:do,3fded35705a4e9d6,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:210:!=,c680f7e05fb99539,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cmpflip:163,770457b31ee20258,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre,c21711cc7670760b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:135:-,79ae4dcbbfcf8c30,167,29,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > commute:306:!=,27954fae626c004d,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:353:eq0,6c4dc242f16f4f90,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > tempadd:185:-,ef213b816eb0569f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > reuse:my:fh,6d22e5d2a63c4828,476,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > ternary:101:q,03f2a260e3d42f2c,233,2,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > movedecl:mx:8,b6fe9c25db87c8f5,151,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > mulshift:103:7:mul,467d662910748ea9,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapdecl:pal:e,ef14990b13fe32f6,101,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swap:274:2,0228712c85518f87,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > forchain:297:merge,e719cf7df5c25623,51,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cmpflip:248,0c68e033039d32e0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > incdec:206:pre,7cc978ef56e6a58e,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > chain:123:mergeab,d5f960c14954616b,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > ifswap:101,c2a15235da16d506,55,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > type:art:unsigned_char,765a618df6a2a046,319,35,0,53,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cast:349:2:char,64b1eaa08e20edbd,200,37,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > loop:297:ifdo,fb673373dfe1f164,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > split:depth:2:after,084c0a2e698d7061,327,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapstmt:97,f13b9a410b831e0e,57,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > temp:size:inline,30616fd159d0d3c9,190,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > commute:164:&,573d3d187f5e033f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0,6730c9758fdc313f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > tempadd:176:-,e3c8f87f03a8337b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > reuse:h:size,cd07a42b304d0d2e,265,8,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > ternary:209:if,9916c8a3f7f3f0c4,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > movedecl:done:40,b5e186a342d4d08f,234,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > mulshift:213:10:shl,6c453f8afe6ea8c0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapdecl:oldmy:menus,3b41398980dad817,80,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swap:286:4,a76ea6ed917542b3,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cmpflip:262,2c20b63a091a829f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > incdec:233:forpre,00be8dd6b61205a2,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > chain:195:mergeba,399532dc2728a1c9,560,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > type:fh:unsigned,6b626a188e54f18c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cast:157:2:unsigned_short,9f35ed49d513f2f6,52,8,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > loop:233:do,ad4aba36aca503f6,66,8,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > split:depth:3:after,26c4dfdabad82fb4,58,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapstmt:106,653b94200388f19f,58,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > commute:307:!=,dc640d2a1b09d9a5,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:234:ne0,c9d245cc83bcbffe,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > tempadd:209:rhs,5796175cd6f8da93,189,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > reuse:bank:fh,96a0dbf0a2c571c7,388,7,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > ternary:210:if,331a4c486616ba9d,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > movedecl:bits:42,2ac952fdb1a72c97,234,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapdecl:textstate:path,607ac992d632382b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swap:275:3,f93922ac6d13d5f8,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cmpflip:341,5baf984201edba6a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > incdec:257:op1,10593ad6ca40a117,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > chain:123:mergeba,a64c1e98a1e93138,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > type:mx:unsigned_short,a53acb9050e9f554,400,25,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cast:331:6:unsigned_char,6012b1a67a8d9eaf,90,25,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > loop:233:gotobot,a7fcc14b2187e174,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > split:oldmy:1:last,d0f0ec4f519092bd,330,71,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapstmt:172,9ec99d015e4162e7,54,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > commute:356:&,d8e13b4284c67fd0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:231:bool,d1ee2fd6ada69d8e,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > tempadd:347:-,2485aaa1677ab38f,238,32,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > reuse:v:c42,f12f11c7c026143a,326,1,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > movedecl:bits:10,5ea0d9b1e7ef75ab,195,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swapdecl:palbank:pal,dadec784d79c2465,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > swap:287:3,25071430294456be,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > cmpflip:163,334263985f11376b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > incdec:273:op1,d0ca409a8fad15e1,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > chain:148:split2,42760fd37d7277f4,374,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > type:fh:char,a9e28fcb4ad5c6d9,382,7,0,21,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > zero:231:bool,6cced52604d7339c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > loop:233:do,d998e806940e2158,66,8,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > commute:101:==,130fe4f30abe440a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > chain:191:mergeba,b05e6b0ed4a4010a,561,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > temp:size:inline,866a5208286fd3b2,190,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cast:141:4:int,e46593baf22c5ffe,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > type:cur:char,027e729e46ce95eb,491,80,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > incdec:257:op1,2c518fa8dae297bd,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swap:60:0,0c070d6dd37721d6,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > forchain:297:merge,07873d004d7c4fb5,51,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > ternary:101:q,123fd2fbf5519e7e,233,2,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > movedecl:w:8,4bdb55fcc4e17db1,142,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cmpflip:248,df113486315366a0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > reuse:r:item,9b8b0694980eb762,433,72,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:135:-,3ff28e73bf9b01a9,167,29,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > split:depth:3:last,90405cf9ab525138,58,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > mulshift:213:10:shl,8b390c6a1716863b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > ifswap:101,d80850c62297504e,55,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapdecl:e:copy,2ef5110a534f027a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapstmt:267,857db64e95b81b67,58,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > zero:234:ne0,1427e2cc40ef718b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > loop:297:do,27173951ff9f904c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > commute:353:==,269b9c2a0a00ac92,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > chain:194:mergeba,e284fba3b7fa6b13,560,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cast:333:7:int,bc86cc5ce4b081c9,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > type:my:short,41f503b5f0e161e9,567,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > incdec:52:forpre,37fa9d8ed126eb15,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swap:275:3,08397e169054b62b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > ternary:210:if,ca9f062f994fc34c,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > movedecl:cur:11,ebd6bfd3263012b5,195,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cmpflip:356,f8a901c1189af8a0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > reuse:w:size,9ab55433890df257,218,8,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs,5514dcec512ab956,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > split:oldmx:1:last,1c641bfdcf9c3092,328,57,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > mulshift:103:7:mul,56222e741e4d7918,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapdecl:mx:bank,61e368a8faa41baa,145,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapstmt:98,be36a1d8036d41f9,54,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > zero:63:eq0,af8219526742f096,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > loop:365:do,dbb1aa783885e991,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > commute:298:==,3e59742db0256c8c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > chain:241:mergeab,39e2b29f66e5b96c,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cast:111:2:int,052c84bcc6e15991,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > type:level:unsigned_short,b9d1f99fcf569782,545,47,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > incdec:257:pre,5b04a2a3b9f5a36b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swap:330:2,e37d603ab70fa880,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > ternary:209:if,0be0090c02572758,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > movedecl:e:10,ce231f204e058b41,188,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cmpflip:262,43ff0576fab1f8b6,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > reuse:bits:palbank,42666afad36a5e2e,211,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:348:-,a9d88440aaa927f2,204,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > split:r:4:after,27fe267ce9684575,374,36,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapdecl:hit:sel,16a0803177bbf8eb,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swapstmt:148,3a1c5861b4eb8bb5,56,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > zero:141:ne0,1ea65c17152da48a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > loop:365:gototop,9ca982a560516201,93,1,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > commute:165:&,a6d4c4ee306f8c83,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > chain:195:mergeab,006bd03b74a920d6,558,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cast:132:2:int,3504eb4e23c1455a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > type:done:unsigned,ca79a97c7907cdc4,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > incdec:365:forpre,7e495b3e1192ca37,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > swap:295:5,7c2bb0d2e1c7b6af,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > movedecl:copy:23,cdbf9ca6bea8a59c,85,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > cmpflip:163,4aab31b36ab086e2,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > reuse:v:c42,9d89363a0bc0017c,326,1,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > commute:258:==,7b0e388b49213c16,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > tempadd:136:-,6e1fe35360f56608,166,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > incdec:331:op1,6e3f5444b2db6a21,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > forchain:299:merge,f1d8f223c923a420,51,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > zero:110:not,84eda7d450a037f2,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > ternary:211:if,9ed768f96dd34ff3,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > type:oldmy:unsigned_char,946bb52c7272251d,498,52,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapdecl:pos:pw2,fe967450dc2afdfc,158,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > loop:189:do,ce32be762f6e327e,75,15,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > mulshift:215:10:shl,d402a129b7df5dc3,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swap:108:6,60e48095076e42fa,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > temp:_t0:inline,e2de56d1614803c9,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > split:mx:1:last,cb06e9ca7867d017,326,50,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > movedecl:pal:19,3b3f0e90eb9b4146,178,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > ifswap:103,ffc4e9605ddfbf8e,55,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > chain:197:mergeba,51c2727362998e7e,560,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapstmt:124,301276cf5cc079ea,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cast:351:3:unsigned_char,89a3ab9e94581ebf,226,9,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cmpflip:358,e1a070e1a72b5649,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > reuse:palbank:fh,bb2ae263404239d7,63,16,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > commute:352:==,73f4c5c1589f2206,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > tempadd:232:-,944ed260140563dc,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > incdec:235:forpre,15c8d67c5f5f2b2f,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > zero:365:eq0,dfba346cf063fa57,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > ternary:103:q,38478c6c57a4cfba,233,2,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > type:oldmx:unsigned_char,40b8a5380279b8ff,501,61,0,21,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapdecl:level:item,9a2fc8fd94d5de58,70,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > loop:147:gototop,f1fcdc13d9deab9f,56,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > mulshift:105:7:mul,823186dbe5827a42,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swap:330:3,deb325e8a118832c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > temp:size:inline,6b7e2dee9cf76b90,190,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > split:r:6:last,55a43178093ce90f,332,53,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > movedecl:mx:0,d7aa800ac1de0396,219,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > chain:243:mergeba,d0a9c0d11908196b,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapstmt:243,6f6a7d7991a8506c,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cast:196:3:unsigned_char,a2b360786f3d7a25,466,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cmpflip:264,308004349b0e08c1,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > reuse:v:_t0,6655097ba7a1cb8b,101,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > commute:358:&,d587dc362fe7495a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > tempadd:224:-,a83d632147ee5510,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > incdec:53:forpre,18d4acfb826c7e96,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > zero:143:ne0,644a23a5d643a4aa,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > ternary:212:if,6468618867f8f0d9,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > type:c42:short,e0889a5f8c5d51f0,382,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapdecl:c40:c42,e0be8c691b298129,78,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > loop:294:while1,4adea56e329bbb9d,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swap:316:3,bf8d9f4071ee674c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > split:r:3:last,f04418c190ec71be,96,29,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > movedecl:v:15,86060e923ef785f7,237,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > chain:125:mergeab,b356d9fb0d24ca3b,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapstmt:210,89586ccfdbba5b41,663,32,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cast:213:2:unsigned_short,fa3198e959fcfff8,485,13,0,21,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > cmpflip:165,626a0664428fd552,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > reuse:size:_t0,0926392bac9f147c,284,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > commute:314:!=,289a5c0001c20b6a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > tempadd:349:-,a1af7f1d8bdbc416,238,32,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > incdec:259:pre,92bccb73b6770c21,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > zero:352:eq0,3e94b62374cbd8c9,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > type:art:unsigned,755618400ecb8ab3,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swapdecl:pw1:oldmy,a5145b7c745d7862,143,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > loop:189:gotobot,79430b0113ab794a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > swap:105:2,4dc7d3e6617d9baf,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > split:r:1:after,65f0578536258020,51,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:145:forpre > zero:129:ne0 > tempadd:94:rhs > movedecl:oldmy:2,262925e96d1ea484,189,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:268:+,0e9ef1918057a7ad,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cmpflip:341,ebc970a1f5a34a5c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:sel:pos,1cbef2419b3457a9,100,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:187:gototop,bb539cb98eb8dae6,58,8,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:252:5,ee70b0728eaa67d7,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:r:char,769a9c9d6400769f,212,1,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:189:ne0,f4b1a923c1d5a063,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:155,6406f99873b37126,137,27,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:n:3,87a9f8cd5954dbf0,186,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:284:2:int,8201c2800cd1a03c,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:r:6:after,8be35b77dcc07f5d,358,55,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:241:mergeab,2436e841d75948b7,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:257:op1,e278b7d549beff28,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:113:==,6ee49f87e2f593c8,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:mx:fh,01df5bbfd190e6d8,481,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:134:-,c6e8d1f25aaaf417,166,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:path:grid,457dfac454672a48,182,5,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:233:gototop,154225c0efdf4954,56,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:76:4,1a9b77c1f1b14df1,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:done:unsigned,df974dca55af8210,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:108:not,01767e749f6a5edc,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:117,9b29d599092a0fc1,54,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:cur:40,e6fdc39ec73f4e6d,234,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:208:9:char,29fa0b4e00170d9b,230,14,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:mx:1:last,d58e362589081ebe,326,50,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:148:split3,014e26985270296e,374,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:52:forpre,0fa356fa84545e90,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:256:==,c1b2c1f6668c8dc4,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:v:item,2caf10459f71b00d,310,8,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:347:-,faa6baec9b573197,238,32,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:oldmx:h,e6571403579558b9,68,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:365:while,c1541e8129da6bcf,93,1,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:295:5,c96b63c90ad220bf,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:n:signed_char,333a15dc949c7b1c,248,37,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:350:eq0,66e5503aabb47873,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:56,9a7615491d7407a7,57,5,0,207,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:level:28,9f154815db203227,209,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:70:1:short,ed9afd7ed53c13dc,153,6,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:r:5:after,ddc09a8188766528,53,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:236:mergeba,3ff672696d013c11,304,6,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:187:forpre,ca9755c3ec0678d1,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:306:!=,e774fd82103c4824,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:h:fh,bb5c92ba622a5eba,403,7,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:209:rhs,d56577421e8995a2,189,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:pw1:oldmy,2bd195f52fae614c,143,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:365:do,b2aa30063e23ecf6,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:103:5,3b502196e7434e9a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:done:unsigned_char,0bd06ef1abd76445,246,18,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:234:ne0,e6df79d99be95484,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:97,0fdccd1d808c447b,57,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,movedecl:depth:19,677c3b45310466ed,168,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,cast:144:4:short,99624b8b08c2ed36,478,12,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,split:done:3:after,7b88370365dd9db7,223,73,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,chain:123:mergeba,3a72e9d302b7c49a,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,incdec:273:pre,0467985836a28177,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,commute:307:!=,6d2979f1d09b8749,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,reuse:palbank:fh,e0c4f35e18dd6ca0,63,16,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,tempadd:222:-,5bd58527baaf4c2d,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v,cc8a3e0a136efda9,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,loop:297:ifdo,9dab57d7ca3d6bf0,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swap:252:9,97fd0e61e527f670,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,type:c42:short,9d9bc85550d69f89,382,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,zero:256:eq0,22cd7e274923ea01,50,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapstmt:152,5cac5c47aca4372b,54,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:k:short,4bf572e6fce708c7,164,27,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:120:-,881e8b304bc4213e,191,14,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > ternary:101:q,42e9c095373bf240,225,4,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > forchain:297:merge,da9d714cceb2a239,48,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > ifswap:101,47af7f1cab5d0588,52,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:208,07edf94019d753a7,708,32,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:item:39,22d4e2077211a46b,228,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:101:==,cbd65e23ed0e229a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:depth:3:last,1e6db0cc6fe605c6,55,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:281:1:unsigned_short,26f26977634c801d,88,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:bg:nitems,9ae4262df763531a,81,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > mulshift:103:7:mul,ee7297f2eab1c340,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:295:5,e824a572e0dd1264,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cmpflip:356,4e263aca14cf6ff9,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:141:ne0,4fec5a0db2938837,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:r:level,125e338bf2db0a27,328,72,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:241:mergeba,98e3dec5ab4ccc53,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:257:pre,b7befa127f67bdda,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto,de167d96b24d6073,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:bits:unsigned_char,892d407424957dc2,212,3,0,53,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:347:-,09a3843bc852fcd4,255,32,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > ternary:209:if,a144d366611fa9c4,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:122,68d5e2a4aee0cb4a,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:art:41,4a873f65f7e59d0b,97,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:363:==,747b6016d9be2535,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:depth:1:last,6fe157aed7d08bf9,334,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:70:3:unsigned_char,9071f8ac9609c88f,49,2,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:hit:sel,3bf4a506f8df210d,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > mulshift:213:10:shl,91898f8904f248b3,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:103:5,a0634a2936e2b912,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cmpflip:262,201c05712be4af3a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:129:ne0,cc5d5aaff723a52e,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:r:palbank,affccd60496f2858,72,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:148:split3,31aa09b530ca2bda,374,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:365:forpre,f70fb9df8d1e9535,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:365:do,fb3f750e076a2217,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:palbank:short,624e54bf20c19982,206,8,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:134:-,6d6b3bc856725ff1,191,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > ternary:210:if,77ec1beb8d8e7ca8,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:48,eeb947c722c517b0,51,3,0,75,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:done:1,98a52467172a5b97,183,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:247:==,56e17cc403cdb004,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:r:3:last,45a50964bb6a9998,93,27,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:325:5:unsigned_short,ff70ae543eb3e273,75,2,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:textstate:path,6f28b4f4edf53ed5,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:366:3,cf2dc6368daf8fcd,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cmpflip:248,7b4416269d2e2112,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:234:ne0,092b09c5e18a2e28,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:done:fh,51ee7f0494a72611,298,7,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:195:mergeab,3e778526ff7f28fb,561,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:187:forpre,d85c2efcfcb9b287,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:187:do,959f1118f13341cd,72,13,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:size:unsigned_short,027f382725289763,336,10,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:155:rhs,98b26d2de2c3ed6b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:267,8216f65d372da1d4,55,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:size:15,d72020297d655a42,240,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:247:==,34cdb7e9a509aff2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:r:3:after,b288102592cd8bde,93,27,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:209:12:short,dad93fabd02d9288,49,6,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:depth:cur,910d5d5d7f2f3b78,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:60:0,1a9e0f67f1c20fbc,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cmpflip:163,f069706b5c797029,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:146:ne0,770709d29ee38cad,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:r:hit,2ed73d943cf3051d,328,72,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:h:33,c3d6cd0f688a956d,212,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > temp:size:inline,12101e24b6f76424,190,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapstmt:329,bdd86db003b1f9c9,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > zero:350:eq0,5157898bebe0d39c,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cmpflip:163,e6b2e4891f29cb51,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swap:274:2,e543e9b8b9c54812,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > tempadd:94:rhs,d78dfe88d9634450,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > ifswap:101,0a8192e73b14be35,52,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > mulshift:213:10:shl,246a2240ffe4de98,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > reuse:done:palbank,5a3217250d54f388,97,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > chain:191:mergeba,2856b45397e52c8e,564,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > commute:306:!=,a271e21124fdeee8,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > ternary:209:if,7c9a84ea279f68a8,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > incdec:273:pre,076d8a7d80dd37af,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > split:oldmx:1:after,d634513b59f256d7,360,55,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cast:87:1:int,cb3ea630f8ee0b34,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > forchain:297:merge,5aa3cdca3422b841,48,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > loop:187:do,9f0fc33d5b672743,72,13,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > type:c40:short,5f5d77592ecf2b92,239,40,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapdecl:sel:pos,f1372ca2a68d547a,97,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33,a1f3174658e62d29,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapstmt:219,94cec74ef2a0778f,187,24,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > zero:129:ne0,36f95856e64f305f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cmpflip:341,9e1bff1001bd27e1,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swap:330:3,4fee5af4f081ddc9,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > tempadd:209:rhs,f7ec8c7f15acd7de,222,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > mulshift:103:7:mul,283eab34d0eae428,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > reuse:v:item,843c5a56eda0cb43,310,8,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > chain:195:mergeab,4fd97c648fe673c8,561,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > commute:101:==,16eaca678eac9b26,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > ternary:210:if,9e272f55a9baaf11,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > incdec:257:op1,0d0492e186a8ec4b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > split:mx:1:last,be87e423113842be,347,50,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cast:83:6:unsigned_short,c47bbc6fcfcd5883,215,15,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > loop:365:gototop,06a2a28e4bd92309,90,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > type:r:signed_char,7efd8c15be33a572,235,1,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapdecl:path:grid,2bcbd81cd5aeeda1,179,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:my:19,9d6c2614a722cfc0,156,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapstmt:155,1bd04bb3852baa83,134,25,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > zero:353:eq0,f42d941e6431d392,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cmpflip:262,fadfdc4323d02bcd,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swap:115:3,cd35eb400025d7a6,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > tempadd:176:-,2a750815524c2afc,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > reuse:v:w,8ab5d3483a59a712,360,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > chain:194:mergeba,2c82f52547a8d74c,563,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > commute:325:!=,f923151de877394a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > ternary:101:q,af18785dec87faea,225,4,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > incdec:297:forpre,316938a3184c3b57,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > split:r:6:last,c7cd8a61b81e3af2,332,53,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cast:275:2:short,d7a10573ba8b609c,456,48,0,21,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > loop:187:while,64d39699442e02e8,55,6,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > type:n:signed_char,e88dc75689771dfd,245,35,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapdecl:hit:sel,d00f9f585be211fb,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:size:42,0c0bf2512bf61ac2,284,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swapstmt:96,69f369b0fed09019,60,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > zero:189:ne0,19d6b503c0f3b3ff,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > cmpflip:356,55335540eac4880b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > swap:275:5,34bd929a4319b960,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > tempadd:144:-,8f388b08c26f4f3a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > reuse:done:fh,51b9486bf7953003,298,7,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > chain:148:split3,be13b6acbe4495ea,374,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > commute:317:!=,99976cb92a1a69d6,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > incdec:273:op1,f92fdc71c46802aa,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > split:r:5:after,34e94b70f703e51c,50,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > incdec:257:pre,d9cf4bdf2829929b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > ternary:101:q,aeb924fce5987417,225,4,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > reuse:art:fh,49103d503477efb9,332,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapstmt:148,b7bdfca892746edd,53,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > tempadd:176:-,8f0b9bce7d2eee0b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > zero:256:eq0,ba1e6f354be95b6f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > mulshift:103:7:mul,5424dc906fc05d5d,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > temp:size:inline,bf93476f5cdb1129,180,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > movedecl:level:3,f867941327adcecf,176,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > type:k:unsigned,7073ea4be07db89e,49,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cast:111:3:short,628659ef4e906a90,49,6,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:272:3,016020a32c9637ea,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > chain:236:mergeab,1def396f548d188c,311,8,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > ifswap:101,ff7b36081d0c7374,52,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapdecl:nitems:level,e24585d0ad061f43,80,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > loop:308:goto,74c4083dbb0480f9,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > commute:162:==,d439249ffc8a3b88,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > forchain:297:merge,c30a4de5eed2e8f7,48,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > split:r:5:last,238321c9106b7aa4,50,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cmpflip:248,72f0d42a2d7c61e1,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > incdec:297:forpre,8c5365a18a020e0a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > ternary:209:if,3dbc55ce4b22bd67,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > reuse:h:palbank,43afba4d181cf1a0,215,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapstmt:329,812841bd4ad460b9,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > tempadd:347:-,a6e9bdfd831b5ce5,255,32,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > zero:146:ne0,31f332aff8caa1a2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > mulshift:213:10:shl,4a99bd052a9e978f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > movedecl:bank:19,bc9be84ae9c54316,125,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > type:done:short,5849d4bd180bd161,236,24,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cast:134:4:unsigned_char,5a5eb4026ffba902,502,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:287:2,8317866e15d7536d,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > chain:241:mergeab,124857810bb4cd1b,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapdecl:pw2:pw1,dbc5e82795b2d17f,54,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > loop:187:gotobot,5624ab63a6c1d17c,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > commute:163:&,fedd5b00a1c1b03a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > split:r:2:last,a6b31b3ce70ede0c,343,49,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cmpflip:262,9c0b09e5de384a43,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > incdec:329:op1,6bb37c6140cd6cbe,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > ternary:210:if,77a3911b9011c46a,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > reuse:r:c41,747b79ec6d4dcf10,323,72,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapstmt:218,14ace886cd4f9088,63,18,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > tempadd:348:-,d4cd3ad8a42ed543,227,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > zero:141:ne0,09f025ebc69d05fe,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > movedecl:fh:1,cb323c5167728875,173,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > type:err:unsigned,6bc1e1879b9a6eb6,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cast:115:7:unsigned_short,527284ba9713ad3e,275,26,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4,1c5ad94097e1268a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > chain:191:mergeab,90250e6ce768ae6c,779,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapdecl:bank:art,522ae30abea0debd,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > loop:297:ifdo,dca5bf5f91fa7696,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > commute:55:&,7c0c2756dfe47563,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > split:depth:2:last,0a9051339691781b,327,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cmpflip:341,9cddebe7c5a24ba6,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > incdec:233:forpre,92a677fdd5ff38d7,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > reuse:r:w,0635a42cb91f2245,403,60,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapstmt:215,705a7e20fdbaa8d6,55,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > tempadd:121:-,5147900fa44c4483,178,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > zero:353:eq0,7308ad442f2ae8a3,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > movedecl:r:41,0986d7adfabbe05a,97,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > type:err:unsigned_short,c5e9944c8490c9eb,248,12,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > cast:295:2:unsigned_char,9f2d073ea1e2fbe6,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:330:6,e5939f667ab44de9,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > chain:148:split3,42b9727d6b42113c,327,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swapdecl:r:err,d402c098228acf77,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > tempadd:120:-,03c5f05725843c53,178,14,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > chain:148:split2,cb7fe622c8b7d09a,327,4,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > loop:233:do,d4041b1bb11f747f,63,6,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > type:level:unsigned_short,f1007a2c2c4cc479,559,47,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > mulshift:103:7:mul,9997e63cd840f3f7,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > split:r:5:last,ea6a5f1b3a8976ac,50,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cmpflip:356,44de86fb7af12d63,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > reuse:w:size,d452652a3e9cdf22,221,8,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > movedecl:h:26,79682e7a1164b2b5,212,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cast:281:9:char,378886f0fc929821,199,6,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swap:314:6,9f7711b810c54a3d,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > forchain:297:merge,45e87fe351bb26c4,48,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > ternary:101:q,cbf00d0f8c0f55f8,225,4,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > incdec:145:forpre,7fef0381a2947f27,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapdecl:w:fh,7936f53c61c8124b,53,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapstmt:135,e4d997dcb39f5046,57,48,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > ifswap:101,e03cfdd2f43fd9df,52,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > temp:size:inline,a5081488785a7a02,180,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > commute:84:&,352a173d4ddb04d7,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > zero:63:eq0,bea116c6f8067f6c,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > tempadd:135:-,b12f202b7131eec2,192,29,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > chain:194:mergeba,84da410e9e45151c,779,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > loop:292:goto,e7dc8f7703f906fc,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > type:depth:short,a9a25b948697b1f4,440,29,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > mulshift:213:10:shl,3fb9a43e8da1a687,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > split:r:4:last,f0bde8a4a310edba,348,34,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cmpflip:163,b90cf2f44b111392,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > reuse:v:h,bff4c865ace384f6,514,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > movedecl:w:29,0ae9147b5aa8552e,186,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cast:219:3:unsigned_short,07a17a518c5c1040,256,28,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swap:63:10,0c694736d9202108,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > ternary:210:if,d545e128ad21285b,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > incdec:273:pre,08198bbb1b86d855,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapdecl:k:v,d833020142244210,60,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapstmt:172,80232030adad434d,51,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > commute:163:&,89da3deeb4d2f9f4,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > zero:189:ne0,168ab423ced184cc,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > tempadd:268:+,f86b59c3cbec2660,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > chain:148:split,b8737ae94658690a,209,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > loop:292:while1,efde319f615cfb04,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > type:k:signed_char,0a5309c2ec22016b,185,67,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > split:oldmx:1:after,3eba5345458cddbd,341,57,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cmpflip:341,5ad87cfa3b7f965b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > reuse:h:bits,0748df5276a1891c,406,17,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > movedecl:h:5,6079fac3e0aa4e51,152,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cast:199:2:unsigned_char,7935e032ed6a5230,250,12,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swap:70:0,e5fe733af093ee5c,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > ternary:209:if,6b99898e49e8d774,,,,,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > incdec:297:forpre,0e7d4c982ba981ff,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapdecl:art:done,86ac0f86eab841c2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swapstmt:148,5a063be22d563353,53,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > commute:327:!=,2f345cd9c8afd95f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > zero:129:ne0,b2f13e3b26b4cce6,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > tempadd:258:rhs,f302a5d4888f552a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > chain:195:mergeba,1eae1fb3f351a322,779,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > loop:187:gotobot,b4a28a742d91c9fb,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > type:hit:short,a0112ca438199185,468,26,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > split:done:1:after,06f24a12b5ffe51c,67,2,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cmpflip:262,1c947824e5c508a2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > reuse:my:size,02091af31b1e0d22,478,10,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > movedecl:err:31,f97328815069314f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > cast:285:2:int,bc708ddef61a5e41,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > swap:213:9,76158909e2c839da,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:goto > movedecl:r:33 > swap:109:4 > incdec:329:op1,893f86ae917d8a9b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:w:1,20826e107c51bd75,242,3,0,258,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:145:forpre,efe3f21ee171e94f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:cur:unsigned_char,ac45c2f16fdcd62f,458,77,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:187:1:short,13497db3b0907a8d,784,26,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:pw2:pw1,1abb0ae02774578e,54,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:365:gotobot,3773d9f1c1ea094d,57,1,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:144:-,a5de881bbc0d1ff3,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:212:2,05cc76f11ffdecee,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:191:mergeba,4a217caf6656ba4b,564,13,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:354,547932f8062b5d32,53,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:done:palbank,6bb198e959f31385,97,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:108:not,3c91ac5cb98c93a2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:r:5:after,ae533fb24907f714,50,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:294:!=,9bb8c0f4ebf78b51,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cmpflip:341,aa317d31e60241d4,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:n:10,f1497c5941b86fc9,135,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:273:op1,095736da0987634b,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:k:signed_char,b37c1899ea97add1,185,67,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:330:9:unsigned_char,c4ccb6e84a2dd271,252,24,0,53,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:cur:i,60a7de9328712195,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:127:while1,a913cd352752889a,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:209:rhs,efebccc5eeb66afb,222,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:115:3,d7ebfb97c5a2d400,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:148:split,739d9b97d7ed0b26,200,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:242,cfe35dace425d61e,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:v:w,109d35f4482742a8,360,15,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:231:bool,2dafbdcd3b436262,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:depth:2:after,7433bcd1183190d1,353,5,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:262:&,9f964612bd0e41ae,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:i:42,274373f1b60d8229,97,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:273:pre,369777eb9f70f7d1,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:mx:short,682e2af7e7296f7c,428,16,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:350:3:int,95d8735305c86414,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:h:mx,0ae0df5c2f744afd,77,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:292:goto,bfcc60ec23aa21c3,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:207:rhs,5a22ba69894fac56,442,2,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:330:2,bd0dcd53719017cb,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:236:mergeab,02202d8c25ab14a9,311,8,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:237,39fd9b81ac38daca,52,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:bits:palbank,22915d53f46a8b0c,72,7,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:363:eq0,2cbf3988307d32d8,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:r:2:after,ee71100890fc9921,377,51,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:298:!=,e0a22f7d6d083d23,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:bits:14,31164dbdc056db55,229,5,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:233:forpre,f84e7d9ab1b7a47f,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:oldmy:unsigned,09fef43bad20db29,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:275:6:char,f48dc221a0c88f2b,83,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:menus:my,44e5c3eb7f161f8e,119,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:145:ifdo,97a7a3473fd22e56,70,21,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:348:-,efb24610a72505ee,227,9,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swap:331:6,dd32d170b558e6d2,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > chain:241:mergeab,d2f13ad1c9f2a9f2,49,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapstmt:301,ce6a4848b29bed54,95,26,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > reuse:v:fh,4a9f87ca18ee642d,310,8,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > zero:63:eq0,b49633ed04d8ac11,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > split:oldmx:1:after,c0db435bf3d4151d,360,55,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > commute:210:!=,2e38813787a423fe,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > movedecl:c40:36,aa5f2ca46998d74f,94,7,0,42,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > incdec:329:pre,381f54b603562dfd,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > type:my:short,4779055e225d2f94,546,11,0,0,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > cast:356:8:unsigned_char,73c835912ace9154,69,5,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > swapdecl:pos:pw2,aaf94006dae5a059,155,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > loop:292:while1,7676e022ca7d8449,47,3,0,318,ga
+2026-10-25,LeagueTeamSelect,src/c/029_380E9_league_setup/LeagueTeamSelect.c,swapdecl:size:v > tempadd:349:-,0c9af6b457b171c0,226,9,0,42,ga
