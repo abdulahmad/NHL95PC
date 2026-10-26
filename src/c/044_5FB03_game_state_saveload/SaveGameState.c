@@ -238,11 +238,11 @@ typedef struct LRinkObj {
 } LRinkObj;
 typedef struct { int d[2]; } Rec8;
 
-/* DRAFT (10.0 GA, 37 differing, same size): id an int, the five globals the EXE stores as dwords
-   (word_DEF84 / word_DEF88 / word_CC10C / penshotfox / penshotfoy) written through int casts, the stats records
-   copied with `*q++` (Rec16) and `*r++` (a separate Rec6 pointer for the goalie records), penhome declared before
-   penaway: fh is in ebp and the record pointer in memory as in the EXE. Left: one-slot register-cycle shifts
-   (the photo-bit mask, the object frame index, the skater row temporary); see docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 30 differing, 6 bytes short): the signed high byte of ts is read as ts >> 8.
+   This keeps the frame step signed without a byte-pointer cast and gives the EXE's photo-bit registers
+   (the savings-40 load/or temporary now sorts ahead of the skater quotient). The file handle and stats
+   record pointers retain their EXE locations. Left: the object frame base/step load order and the skater
+   row calculation/registers (add esi, eax instead of lea esi, [eax + ebx]); see docs/UNSURE.md. */
 /* LoadGameState (60612, PC only; ends in SaveGameState_popx): read back what SaveGameState wrote to the open
    saved-game file fh (each read failing is fatal: str_ErrLoadGame, the first str_ErrSaveGame): the controller
    sides, the 17 sort objects, both team structures and line tables, the three 80h-byte blocks of packed words
@@ -419,7 +419,7 @@ int LoadGameState(int fh)
             o->y = word_CCEF8[++id];
             o->base = word_CCEF8[++id];
             o->first = byte_CCE00[o->base];
-            o->frame = byte_CCE00[o->base + ((signed char *)&o->ts)[1]];
+            o->frame = byte_CCE00[o->base + (o->ts >> 8)];
         }
     }
     ovlseq = *p++;

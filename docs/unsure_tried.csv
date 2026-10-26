@@ -4563,3 +4563,820 @@ ReplaySaveHilight,,summary: no match after 449 compiled candidates in 255 s,,ga
 ReplaySaveHilight,,"best 29 aligned differing, size distance 2 (fresh compiled 1651 bytes, EXE 1653",,ga
 ReplaySaveHilight,,"first_pick 27). No improvement committed. ESCALATE: unsupported (short)gadgetptry in sub_91370 after the bevel reaches 29 differing, size -2",,ga
 ReplaySaveHilight,,"narrows the coordinate, not accepted. Patch: /home/mhopkins/tmp/u/np/ts_ReplaySaveHilight_ReplaySaveHilight_escalate.diff",,ga
+updatereplay,,plain byte accumulator: 33 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte accumulator scoped in nibble loop: 33 differing (size delta -11),size delta -11,ga
+updatereplay,,plain unsigned short accumulator: 24 differing (size delta -5),size delta -5,ga
+updatereplay,,plain unsigned int accumulator: 23 differing (size delta -3),size delta -3,ga
+updatereplay,,plain byte and shared int byte offset: 32 differing (size delta -24),size delta -24,ga
+updatereplay,,plain byte and shared int pair index: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte and shared short byte offset: 38 differing (size delta -32),size delta -32,ga
+updatereplay,,plain byte and shared short pair index: 13 differing (size delta +1),size delta +1,ga
+updatereplay,,plain byte with shared odd int pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd unsigned int pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd short pair index: 23 differing (size delta +2),size delta +2,ga
+updatereplay,,plain byte with shared odd unsigned short pair index: 23 differing (size delta +4),size delta +4,ga
+updatereplay,,plain byte shared int pair with high multiply split: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared unsigned pair: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair initialized in declaration: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte and pair scoped in nibble loop: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte accumulator with shared int pair: 22 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared int widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared unsigned int widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared short widened index: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,plain byte and shared unsigned short widened index: 29 differing (size delta -9),size delta -9,ga
+updatereplay,,plain byte shared pair assigned as multiply: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair assigned as shift: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair split double: 29 differing (size delta -10),size delta -10,ga
+updatereplay,,plain byte shared pair split self double: 29 differing (size delta -10),size delta -10,ga
+updatereplay,,plain byte shared pair high as shift: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,plain byte shared pair function scope after Player *p;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair function scope after short i;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,plain byte shared pair function scope after unsigned char lo;: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,shared pair raw byte load then mask: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,shared pair raw byte load then mask scoped: 21 differing (size delta -12),size delta -12,ga
+updatereplay,,plain byte raw load then mask without pair: 29 differing (size delta -11),size delta -11,ga
+updatereplay,,shared object pointer offset i * 24: 29 differing (size delta -27),size delta -27,ga
+updatereplay,,shared object pointer offset i * 3 * 8: 29 differing (size delta -27),size delta -27,ga
+updatereplay,,shared object pointer offset (i + i) * 12: 33 differing (size delta -22),size delta -22,ga
+updatereplay,,shared odd object byte offset (i + i + 1) * 12: 33 differing (size delta -19),size delta -19,ga
+updatereplay,,shared odd object byte offset i * 24 + 12: 29 differing (size delta -22),size delta -22,ga
+updatereplay,,shared pair high index (pair * 3) * 4: 11 differing (size delta -1),size delta -1,ga
+updatereplay,,shared pair high index (pair << 2) + (pair << 3): 28 differing (size delta -12),size delta -12,ga
+updatereplay,,"permute.py --minutes 5 --jobs 4 on clean shared-pair draft: no match after 321 compiled candidates in 99 s, best 11 (absolute size mismatch 1), permlog_ts_updatereplay.csv logs every transform and score. A shared int pair index read twice raises pair to savings 30 ECX and leaves plain lo (savings 20) in memory at the EXE byte, removing the old volatile",,ga
+updatereplay,,p 263 EAX and i 175 DX unchanged. No new ESCALATE find. Tool issues: initial countsolve -d1 compile lacked ~/.local/bin in PATH,,ga
+updatereplay,,rerun with PATH fixed succeeded. Permute rejected malformed generated loop/declaration candidates (E1077/E1018 and cascades),E1077/E1018 and cascades,ga
+updatereplay,,"plus E1010 type mismatches, and continued. Fresh standalone GA compile confirmed 11 differing. Both make and make CBUILD=0 end MATCH. Committed 55ec767ba1ca48aef570f448a4fd290824a4a92d (C file only, function unmarked)",,ga
+updatereplay,,no push,,ga
+checkcheck,,adopted targetsearch facing subtraction/mask split plus hit-strength if/else: 8 (+3 bytes),+3 bytes,ga
+checkcheck,,SetSPA call in each branch without v: 19,,ga
+checkcheck,,v scoped to checking branch: 15,,ga
+checkcheck,,random sample in fresh short roll with comma: 24,,ga
+checkcheck,,random sample assigned to related strength rel with comma: 24,,ga
+checkcheck,,int v full dword load then separate >>= 16: 29,,ga
+checkcheck,,v scoped to loop body: 15,,ga
+checkcheck,,SPA as short-array element [rel + 1]: 46,,ga
+checkcheck,,SPA as dereferenced short pointer plus 1: 46,,ga
+checkcheck,,"hit-strength arithmetic split into -=, +=, >>=, -=: 44",,ga
+checkcheck,,branched SetSPA with short-array SPA: 30,,ga
+checkcheck,,separate block-local hit strength: 12,,ga
+checkcheck,,separate function-local hit strength: 26,,ga
+checkcheck,,constant SetSPA branch and table branch retaining v: 12,,ga
+checkcheck,,guarded sample statement and separate resisted decision: 34,,ga
+checkcheck,,int SPA local combined with module-local SetSPA int argument: 62,,ga
+checkcheck,,"permute 5 min --jobs 4: stopped after 513 candidates in 157 s, best 8 size +0 only with signed char v, rejected because 0xED7 truncates (natural 8 size +3 retained)",natural 8 size +3 retained,ga
+checkcheck,,baseline first_pick 29 vs permute 31,,ga
+checkcheck,,final both 8. Permute generated HIWORD rvalue compile errors and out-of-range warnings in rejected candidates,,ga
+checkcheck,,no blocking tool failure. No ESCALATE find,,ga
+SwapSelectedPlayers,,idxa_postincrement: 48,,ga
+SwapSelectedPlayers,,idxb_postincrement: 48,,ga
+SwapSelectedPlayers,,both_index_postincrement: 48,,ga
+SwapSelectedPlayers,,initialize_a_at_declaration: 64,,ga
+SwapSelectedPlayers,,initialize_b_at_declaration: 56,,ga
+SwapSelectedPlayers,,initialize_both_at_declaration: 73,,ga
+SwapSelectedPlayers,,roster_offset_a: 47,,ga
+SwapSelectedPlayers,,roster_offset_b: 62,,ga
+SwapSelectedPlayers,,roster_offset_both: 44,,ga
+SwapSelectedPlayers,,second_index_read_in_slot_xors_then_save_for_copy: 47,,ga
+SwapSelectedPlayers,,selection_counters_initialized_in_for: 50,,ga
+SwapSelectedPlayers,,offsets_inline_second_index: 47,,ga
+SwapSelectedPlayers,,inline_second_index_all: 62,,ga
+SwapSelectedPlayers,,first_offset_inline_second_index: 65,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_block_scope: 47,,ga
+SwapSelectedPlayers,,roster_entry_pointers: 45,,ga
+SwapSelectedPlayers,,offsets_reuse_second_index_for_jersey: 64,,ga
+SwapSelectedPlayers,,selection_shared_row_offset: 69,,ga
+SwapSelectedPlayers,,first_offset_delayed_second_index: 47,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_split_first_product: 47,,ga
+SwapSelectedPlayers,,offsets_inline_second_index_split_both_products: 50,,ga
+SwapSelectedPlayers,,The both-offsets hand draft scoring 44 kept ib solely to seed offb and was rejected,,ga
+SwapSelectedPlayers,,"removing ib scores 47 until ia is scoped to the swap loop (natural 44). Roster entry pointers score 45 but fold rosterslot/byte_EAC86 into list-base+2, contrary to naming rules, and were rejected. first_offset_delayed_second_index was identical to roster_offset_a and reused its cached 47 result",,ga
+SwapSelectedPlayers,,"ESCALATE: dead a reused as roster offset offa, score 29 (859 vs 861), rejected and saved in ts_SwapSelectedPlayers_SwapSelectedPlayers_escalate.diff",,ga
+SwapSelectedPlayers,,Committed natural form: offa = ia * 27,,ga
+SwapSelectedPlayers,,offb = s.idxb[i] * 27,,ga
+SwapSelectedPlayers,,reused in the slot and 27-byte record swaps,,ga
+SwapSelectedPlayers,,ia declared inside the swap loop. Both offsets have multiple real reads,,ga
+SwapSelectedPlayers,,ia also supplies FixJerseyNumber. Fresh uncached DOSBox GA compile confirmed 44,,ga
+SwapSelectedPlayers,,permute candidates: base: 47,,ga
+SwapSelectedPlayers,,scope:ia@0: 44,,ga
+SwapSelectedPlayers,,commute:68:+: 47,,ga
+SwapSelectedPlayers,,incdec:47:forpre: 47,,ga
+SwapSelectedPlayers,,loop:31:ifdo: 47,,ga
+SwapSelectedPlayers,,opassign:59:0:split: 47,,ga
+SwapSelectedPlayers,,cast:53:2:short: 47,,ga
+SwapSelectedPlayers,,swap:67:16: 47,,ga
+SwapSelectedPlayers,,reuse:offb:gb: 86,,ga
+SwapSelectedPlayers,,tempadd:75:rhs: compile failed,,ga
+SwapSelectedPlayers,,type:nb:signed_char: 68,,ga
+SwapSelectedPlayers,,swapstmt:24: 51,,ga
+SwapSelectedPlayers,,forchain:47:merge: 48,,ga
+SwapSelectedPlayers,,zero:33:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:b:a: 44,,ga
+SwapSelectedPlayers,,movedecl:ga:4: 47,,ga
+SwapSelectedPlayers,,chain:25:mergeba: 47,,ga
+SwapSelectedPlayers,,scope:offa@0: 44,,ga
+SwapSelectedPlayers,,commute:67:+: 47,,ga
+SwapSelectedPlayers,,incdec:27:forpre: 47,,ga
+SwapSelectedPlayers,,loop:60:gototop: 51,,ga
+SwapSelectedPlayers,,opassign:73:0:split: 47,,ga
+SwapSelectedPlayers,,cast:85:1:int: 59,,ga
+SwapSelectedPlayers,,swap:60:0: 47,,ga
+SwapSelectedPlayers,,reuse:offa:a: 29,,ga
+SwapSelectedPlayers,,tempadd:66:+: 55,,ga
+SwapSelectedPlayers,,type:na:unsigned_short: 111,,ga
+SwapSelectedPlayers,,swapstmt:77: 74,,ga
+SwapSelectedPlayers,,forchain:27:merge: 48,,ga
+SwapSelectedPlayers,,zero:29:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:s:nb: 47,,ga
+SwapSelectedPlayers,,movedecl:offa:9: 55,,ga
+SwapSelectedPlayers,,chain:45:mergeab: 46,,ga
+SwapSelectedPlayers,,scope:q@0: 47,,ga
+SwapSelectedPlayers,,incdec:81:forpre: 47,,ga
+SwapSelectedPlayers,,loop:31:gototop: 59,,ga
+SwapSelectedPlayers,,opassign:74:0:split: 47,,ga
+SwapSelectedPlayers,,cast:60:1:unsigned_char: 55,,ga
+SwapSelectedPlayers,,swap:61:8: 47,,ga
+SwapSelectedPlayers,,reuse:offa:ga: 53,,ga
+SwapSelectedPlayers,,tempadd:68:+: 56,,ga
+SwapSelectedPlayers,,type:i:unsigned_short: 126,,ga
+SwapSelectedPlayers,,swapstmt:45: 46,,ga
+SwapSelectedPlayers,,zero:32:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:offb:j: 55,,ga
+SwapSelectedPlayers,,movedecl:b:4: 55,,ga
+SwapSelectedPlayers,,chain:25:mergeab: 49,,ga
+SwapSelectedPlayers,,scope:p@0: 44,,ga
+SwapSelectedPlayers,,commute:35:!=: 48,,ga
+SwapSelectedPlayers,,incdec:51:op1: 47,,ga
+SwapSelectedPlayers,,loop:47:gototop: 51,,ga
+SwapSelectedPlayers,,opassign:72:0:split: 47,,ga
+SwapSelectedPlayers,,cast:62:14:char: 58,,ga
+SwapSelectedPlayers,,swap:37:1: 47,,ga
+SwapSelectedPlayers,,reuse:a:gb: 56,,ga
+SwapSelectedPlayers,,tempadd:67:+: 56,,ga
+SwapSelectedPlayers,,type:nb:char: 70,,ga
+SwapSelectedPlayers,,swapstmt:70: 62,,ga
+SwapSelectedPlayers,,zero:28:ne0: 47,,ga
+SwapSelectedPlayers,,swapdecl:gb:i: 47,,ga
+SwapSelectedPlayers,,movedecl:offb:5: 47,,ga
+SwapSelectedPlayers,,chain:24:split2: 47,,ga
+SwapSelectedPlayers,,scope:j@0: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:36:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:a:gb: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:75:+: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ga:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:10:unsigned_short: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:71:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:80:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:70:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:signed_char: 93,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:b:a: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:78: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:60:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:24:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:48:rhs: 49,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:i:8: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:70:2:short: 55,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:65:0:split: 69,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:84:0: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:gb:short: 32,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:s:nb: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:67: 61,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:38:!=: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:b:gb: 75,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:24:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:32:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:61:+: 37,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ia:8: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:68:2:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:66:0:split: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:66:16: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:pad:unsigned_short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:j:b: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:76: 72,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:gb: 65,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:44:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:j@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:31:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:65:+: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ga:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:55:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:79:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:i:unsigned: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:ga:gb: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:74: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:61:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:ga:unsigned_char: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:46:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:27:2:char: 67,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:30:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:j@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:23:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:75:+: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:67:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:j:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:74: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:65:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:gb:unsigned_char: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:30:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:60:9:short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:31:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:ia:gb: 65,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:50:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:24:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:59:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:q:6: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:24: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:a:p: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:ia:unsigned_short: 45,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:37:2:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:b:nb: 71,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:73:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:nb:8: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:67: 61,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapdecl:i:ia: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > type:offb:char: 70,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > loop:26:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > cast:81:7:unsigned_short: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > incdec:26:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > chain:44:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > tempadd:67:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swap:65:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > opassign:65:0:split: 69,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > movedecl:j:11: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:65:10:unsigned_char > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:48:4:short: 135,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:72:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:65:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > scope:p@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:a:p: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:b:short: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:ia:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:30:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:ga: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:69:*: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:44: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:30:1:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:73:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:67:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:nb:ga: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:char: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > zero:27:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:26:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:gb: 48,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:65:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:23: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:44:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:5:unsigned_char: 46,,ga
+SwapSelectedPlayers,,reuse:offa:a > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:81:0: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:ia:offb: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:unsigned_short: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:b:0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:76:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:83:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:b:nb: 71,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:69: 40,,ga
+SwapSelectedPlayers,,reuse:offa:a > chain:23:split2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:52:3:unsigned_char: 42,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:37:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:offb:signed_char: 70,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:1: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:66:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:nb: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:37:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:60:8:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:82:2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:i:ia: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:unsigned_char: 93,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:b:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:66:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:55:op1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:ifdo: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:61:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:86: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:gb:unsigned_short: 34,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:p:q: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > forchain:26:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:46:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:32:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:66:16: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:60:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:j:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:39:4:unsigned_char: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:50:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:offb@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > split:a:1:after: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:44: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:ia:nb: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:46:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:23:split3: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:pad:unsigned_short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > forchain:46:merge: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:26:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:47:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:34:!=: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:a:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:66:16:unsigned_short: 53,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:67:0:split: 35,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:ia@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > split:a:1:last: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:66: 44,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:65:+: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:offb:gb: 48,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:83:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:24:mergeba: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:na:short: 91,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:gb:i: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:30:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:52:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:37:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > commute:67:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:i:7: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:66:6:unsigned_short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:66:0:split: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:q@0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:23: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:a:nb: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:55:pre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:44:mergeab: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > type:b:short: 59,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapdecl:nb:ga: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > zero:28:ne0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swap:36:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > movedecl:j:2: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > cast:67:18:unsigned_short: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > opassign:58:0:split: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > scope:p@0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > swapstmt:69: 40,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > tempadd:66:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > reuse:ia:b: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > incdec:59:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:50:op1 > chain:23:split2: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:34:!=: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:short: 97,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:4: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:59:0: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:67:+: 45,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:offb:j: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > incdec:46:forpre: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:b: 53,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:64: 57,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:53:5:int: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:74:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:b:unsigned_char: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:ifdo: 37,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:nb:3: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swap:34:1: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapdecl:gb:i: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:offb:ga: 73,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:24: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:73:6:char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:36:!=: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:unsigned_char: 38,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:7: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:53:rhs: 57,,ga
+SwapSelectedPlayers,,reuse:offa:a > reuse:ia:nb: 76,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:65: 42,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:4:unsigned_short: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:34:!=: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ia:signed_char: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:gotobot: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:5: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:69:*: 52,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:73: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:60:4:char: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > commute:66:+: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:j:unsigned_short: 43,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:gotobot: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:p:6: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:74:rhs: compile failed,,ga
+SwapSelectedPlayers,,reuse:offa:a > swapstmt:75: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:46:1:short: 31,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:pad:short: 82,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:30:while: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:a:0: 41,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:60:+: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:41:11:short: 58,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:na:unsigned: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:do: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:11: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > tempadd:67:+: 30,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:4:char: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:signed_char: 36,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:46:gototop: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:q:3: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:71:3:unsigned_short: 60,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:ga:unsigned_char: 98,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:26:ifdo: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:j:10: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > cast:67:13:unsigned_char: 49,,ga
+SwapSelectedPlayers,,reuse:offa:a > type:nb:unsigned: 29,,ga
+SwapSelectedPlayers,,reuse:offa:a > loop:59:do: 33,,ga
+SwapSelectedPlayers,,reuse:offa:a > movedecl:offb:10: 29. Both make and make CBUILD=0 MATCH. Expected speculative permute type-mismatch candidate diagnostics only,,ga
+SwapSelectedPlayers,,no blocking tool problem,,ga
+LoadGameState,,"skater row repeated quotient 24+1: 37 differing, size +0",,ga
+LoadGameState,,"skater row explicit 4-1 then 8+1: 39 differing, size +0",,ga
+LoadGameState,,"skater row 16+8+1: 40 differing, size +0",,ga
+LoadGameState,,"skater row right-associated 1+24: 37 differing, size +0",,ga
+LoadGameState,,"skater row factored 25 left: 37 differing, size -1",,ga
+LoadGameState,,"skater row left shift result: 31 differing, size -3",,ga
+LoadGameState,,"skater row explicit 32-8+1: 40 differing, size +0",,ga
+LoadGameState,,"rink locals scoped o: 37 differing, size -1",,ga
+LoadGameState,,"rink locals scoped id: 37 differing, size -1",,ga
+LoadGameState,,"rink locals scoped o,id: 41 differing, size -1",,ga
+LoadGameState,,"player pointer scoped to setup loop: 37 differing, size -1",,ga
+LoadGameState,,"rink advance id read: 37 differing, size -1",,ga
+LoadGameState,,"rink postincrement table index: 37 differing, size -1",,ga
+LoadGameState,,"rink nonmutating table index: 43 differing, size -6",,ga
+LoadGameState,,"frame step via signed word shift: 30 differing, size -6",,ga
+LoadGameState,,"rink id times three via plus twice: 41 differing, size +0",,ga
+LoadGameState,,"rink id times three reversed factor: 37 differing, size -1",,ga
+LoadGameState,,"rink id times three via shift add: 41 differing, size +0",,ga
+LoadGameState,,"player flags named and used twice: 36 differing, size +0",,ga
+LoadGameState,,"photo mask uses stored id index: 37 differing, size -1",,ga
+LoadGameState,,"photo mask uses stored id remainder: 37 differing, size -1",,ga
+LoadGameState,,"skater shift plus signed word frame step: 67 differing, size -11",,ga
+LoadGameState,,"row 24+1 plus word frame step: 37 differing, size +0",,ga
+LoadGameState,,"row 24+1 plus player flags: 40 differing, size +0",,ga
+LoadGameState,,"row shift plus player flags: 46 differing, size +0",,ga
+LoadGameState,,"word frame step plus player flags: 82 differing, size -8",,ga
+LoadGameState,,"row 24+1 plus word frame step plus player flags: 37 differing, size +0",,ga
+LoadGameState,,"row shift plus word frame step plus player flags: 70 differing, size -10",,ga
+LoadGameState,,"skater row 3 shifted plus quotient: 32 differing, size -2",,ga
+LoadGameState,,"skater row quotient plus 3 shifted: 32 differing, size -2",,ga
+LoadGameState,,"permute 5 min: no improvement after 257 compiled candidates in 301 s, best 30 differing, size -6",,ga
+LoadGameState,,every mechanical candidate and score follows (none retained): mulshift:212:8:add=91 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,opassign:243:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:201:while1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,split:i:1:after=187 (size difference magnitude 175),size difference magnitude 175,ga
+LoadGameState,,ternary:267:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,rettype:short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:213:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:p:0=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapdecl:p:q=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,paramtype:0:unsigned_char=188 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,commute:253:+=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapstmt:250=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:16:6:char=92 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,incdec:17:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cmpflip:204=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:267:rhs=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:n:unsigned_char=108 (size difference magnitude 10),size difference magnitude 10,ga
+LoadGameState,,zero:202:not=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:271:mergeba=49 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,mulshift:212:15:shl=85 (size difference magnitude 7),size difference magnitude 7,ga
+LoadGameState,,opassign:157:0:split=118 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,split:i:1:last=187 (size difference magnitude 175),size difference magnitude 175,ga
+LoadGameState,,ternary:266:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,rettype:unsigned_short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:210:0=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:n:0=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapdecl:n:i=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,paramtype:0:signed_char=188 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,commute:266:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapstmt:259=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:212:5:char=59 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,incdec:88:pre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cmpflip:160=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:165:rhs=105 (size difference magnitude 4),size difference magnitude 4,ga
+LoadGameState,,type:n:unsigned_short=109 (size difference magnitude 7),size difference magnitude 7,ga
+LoadGameState,,chain:231:split3=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,mulshift:212:9:add=44 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,opassign:77:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:gotobot=149 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,rettype:unsigned_char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:18:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:r:4=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapdecl:penaway:n=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,paramtype:0:unsigned=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,commute:267:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapstmt:150=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:239:2:short=31 (size difference magnitude 3),size difference magnitude 3,ga
+LoadGameState,,incdec:143:op1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:264:rhs=57 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,type:i:unsigned_short=253 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,chain:120:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,mulshift:16:7:mul=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,opassign:209:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:gototop=163 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,rettype:char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:154:4=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:r:3=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapdecl:penhome:penaway=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,paramtype:0:unsigned_short=194 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,commute:213:===30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapstmt:231=37 (size difference magnitude 10),size difference magnitude 10,ga
+LoadGameState,,cast:212:17:int=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,incdec:35:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > opassign:157:0:split=118 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > cast:266:5:int=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > cmpflip:204=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > mulshift:212:15:add=101 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,loop:262:ifdo > ternary:267:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,loop:262:ifdo > chain:200:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > paramtype:0:signed_char=188 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > commute:213:===30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > incdec:24:op1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > zero:202:not=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:r:4=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swapdecl:buf:penhome=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > rettype:char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > split:i:2:after=213 (size difference magnitude 280),size difference magnitude 280,ga
+LoadGameState,,loop:262:ifdo > loop:277:gototop=38 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,loop:262:ifdo > swapstmt:253=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swap:239:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > tempadd:93:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > type:n:unsigned_char=108 (size difference magnitude 10),size difference magnitude 10,ga
+LoadGameState,,loop:262:ifdo > opassign:243:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > cast:239:4:short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > cmpflip:160=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > mulshift:212:8:add=91 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,loop:262:ifdo > ternary:268:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,loop:262:ifdo > chain:120:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > paramtype:0:unsigned_short=194 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > commute:268:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > incdec:146:pre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swapdecl:penhome:penaway=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > rettype:unsigned_char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > split:i:1:after=163 (size difference magnitude 62),size difference magnitude 62,ga
+LoadGameState,,loop:262:ifdo > loop:277:while=38 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,loop:262:ifdo > swapstmt:259=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swap:16:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > tempadd:97:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > type:id:signed_char=104 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > opassign:209:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > cast:263:1:unsigned_short=32 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > cmpflip:275=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > mulshift:18:7:mul=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > chain:163:mergeba=80 (size difference magnitude 18),size difference magnitude 18,ga
+LoadGameState,,loop:262:ifdo > paramtype:0:short=196 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > commute:253:+=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > incdec:24:pre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:r:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swapdecl:q:r=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > rettype:short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > split:i:2:last=213 (size difference magnitude 280),size difference magnitude 280,ga
+LoadGameState,,loop:262:ifdo > loop:201:while1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swapstmt:261=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swap:213:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > tempadd:63:rhs=96 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > type:id:unsigned_short=126 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > opassign:77:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > cast:35:5:unsigned_short=79 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,loop:262:ifdo > cmpflip:263=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > mulshift:212:16:add=49 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > chain:200:split3=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > paramtype:0:unsigned=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > commute:267:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > incdec:82:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:n:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > swapdecl:i:p=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > incdec:82:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > paramtype:0:unsigned=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > commute:253:+=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > rettype:char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > type:id:signed_char=109 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapstmt:22=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapdecl:n:p=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cmpflip:204=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > split:i:1:last=163 (size difference magnitude 62),size difference magnitude 62,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > tempadd:127:rhs=92 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > chain:120:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > loop:153:while=151 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > zero:202:not=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > opassign:243:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cast:197:2:char=158 (size difference magnitude 33),size difference magnitude 33,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swap:239:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > mulshift:212:9:add=44 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > ternary:267:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > movedecl:i:6=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > incdec:24:pre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > paramtype:0:char=190 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > commute:267:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > rettype:short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > type:id:short=125 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapstmt:83=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapdecl:buf:i=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cmpflip:275=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > split:i:1:after=163 (size difference magnitude 62),size difference magnitude 62,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > tempadd:159:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > chain:231:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > loop:153:gotobot=146 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > opassign:209:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cast:16:10:unsigned_char=85 (size difference magnitude 4),size difference magnitude 4,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swap:18:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > mulshift:212:8:add=100 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > ternary:268:if=33 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > movedecl:q:3=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > incdec:158:op1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > paramtype:0:unsigned_short=194 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > commute:213:===30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > rettype:unsigned_short=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > type:i:short=241 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapstmt:243=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapdecl:q:r=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cmpflip:160=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > split:i:2:after=213 (size difference magnitude 280),size difference magnitude 280,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > tempadd:97:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > chain:272:mergeab=79 (size difference magnitude 18),size difference magnitude 18,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > loop:153:gototop=151 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > opassign:77:0:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cast:157:6:int=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swap:213:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > mulshift:16:7:mul=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > movedecl:n:6=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > incdec:277:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > paramtype:0:unsigned_char=190 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > commute:268:&=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > rettype:unsigned_char=31 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > type:n:unsigned_short=118 (size difference magnitude 7),size difference magnitude 7,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapstmt:253=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > swapdecl:i:penhome=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > cmpflip:263=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > split:i:2:last=213 (size difference magnitude 280),size difference magnitude 280,ga
+LoadGameState,,loop:262:ifdo > movedecl:i:1 > tempadd:165:rhs=105 (size difference magnitude 4),size difference magnitude 4,ga
+LoadGameState,,cast:157:8:unsigned_char=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:r:2=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:231:split2=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:212:9=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:n:char=108 (size difference magnitude 10),size difference magnitude 10,ga
+LoadGameState,,paramtype:0:short=196 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,mulshift:212:15:add=101 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,loop:275:ifdo=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swapdecl:buf:penhome=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,incdec:275:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:89:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,swapstmt:246=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:272:4:int=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:r:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:200:split2=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:212:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:id:char=106 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,paramtype:0:char=188 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,mulshift:265:5:add=43 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:153:while=142 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,swapdecl:i:p=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,incdec:146:pre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:52:rhs=96 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,swapstmt:147=34 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:264:5:int=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,movedecl:i:2=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:163:mergeba=80 (size difference magnitude 18),size difference magnitude 18,ga
+LoadGameState,,swap:212:4=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:n:signed_char=108 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,mulshift:212:8:shl=84 (size difference magnitude 7),size difference magnitude 7,ga
+LoadGameState,,loop:262:while=163 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,swapdecl:q:r=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,incdec:82:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:134:rhs=102 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,swapstmt:257=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:262:1:unsigned_char=148 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,movedecl:p:2=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:271:mergeab=79 (size difference magnitude 18),size difference magnitude 18,ga
+LoadGameState,,swap:166:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:n:short=109 (size difference magnitude 7),size difference magnitude 7,ga
+LoadGameState,,mulshift:18:7:mul=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:262:do=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,incdec:212:forpre=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:268:rhs=42 (size difference magnitude 4),size difference magnitude 4,ga
+LoadGameState,,swapstmt:247=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:15:1:unsigned_char=71 (size difference magnitude 5),size difference magnitude 5,ga
+LoadGameState,,movedecl:i:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:231:split=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,swap:239:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:id:signed_char=104 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,mulshift:212:16:add=49 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,loop:275:while=38 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,incdec:158:op1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,tempadd:129:rhs=92 (size difference magnitude 9),size difference magnitude 9,ga
+LoadGameState,,swapstmt:253=32 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,cast:166:9:short=54 (size difference magnitude 1),size difference magnitude 1,ga
+LoadGameState,,movedecl:n:1=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,chain:163:mergeab=82 (size difference magnitude 18),size difference magnitude 18,ga
+LoadGameState,,swap:16:5=30 (size difference magnitude 6),size difference magnitude 6,ga
+LoadGameState,,type:i:unsigned_char=260 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,mulshift:264:5:add=84 (size difference magnitude 0),size difference magnitude 0,ga
+LoadGameState,,loop:275:gotobot=35 (size difference magnitude 2),size difference magnitude 2,ga
+LoadGameState,,incdec:146:op1=30 (size difference magnitude 6). Retained only o->ts >> 8 for the signed high byte,,ga
+LoadGameState,,exhaustive 65536-value equivalence check passed. Final fresh DOSBox score 30,,ga
+LoadGameState,,make and make CBUILD=0 both MATCH. No ESCALATE find. No tool failure,,ga
+LoadGameState,,existing W113 pointer warnings at unrelated mode-state calls,,ga
+LoadTeamRoster,,stats int local scores 61,,ga
+LoadTeamRoster,,stats ushort local scores 76,,ga
+LoadTeamRoster,,stats int scoped scores 61,,ga
+LoadTeamRoster,,stats ushort scoped scores 76,,ga
+LoadTeamRoster,,stats scoped zero local scores 61,,ga
+LoadTeamRoster,,stats field readback scores 92,,ga
+LoadTeamRoster,,stats pointer gline scores 87,,ga
+LoadTeamRoster,,stats pointer stat scores 117,,ga
+LoadTeamRoster,,stats pointer gline jersey teamfirst scores 100,,ga
+LoadTeamRoster,,stats pointer stat jersey teamfirst scores 128,,ga
+LoadTeamRoster,,goalie index scaled scores 48,,ga
+LoadTeamRoster,,goalie index nested scores 48,,ga
+LoadTeamRoster,,goalie bytes grouped scores 45,,ga
+LoadTeamRoster,,goalie base intaddr scores 46,,ga
+LoadTeamRoster,,goalie base intaddr index scores 46,,ga
+LoadTeamRoster,,scope line scores 51,,ga
+LoadTeamRoster,,scope gline scores 65,,ga
+LoadTeamRoster,,scope both scores 62,,ga
+LoadTeamRoster,,stats and goalie scoped scores 65,,ga
+LoadTeamRoster,,goalie bytes teamfirst scores 46,,ga
+LoadTeamRoster,,goalie bytes chain i scores 45,,ga
+LoadTeamRoster,,goalie bytes chain team scores 46,,ga
+LoadTeamRoster,,goalie bytes i2 scores 45,,ga
+LoadTeamRoster,,goalie bytes team i2 scores 46,,ga
+LoadTeamRoster,,goalie bytes i nested scores 45,,ga
+LoadTeamRoster,,goalie bytes offset first scores 45,,ga
+LoadTeamRoster,,goaliebytes jersey both scores 58,,ga
+LoadTeamRoster,,goaliebytes jersey first scores 58,,ga
+LoadTeamRoster,,goaliebytes jersey second scores 45,,ga
+LoadTeamRoster,,inline lineup skater scores 95,,ga
+LoadTeamRoster,,inline lineup goalie scores 77,,ga
+LoadTeamRoster,,inline lineup both scores 83,,ga
+LoadTeamRoster,,narrowstats goaliebytes scores 75,,ga
+LoadTeamRoster,,shared lineup baseline scores 86,,ga
+LoadTeamRoster,,comma zero baseline scores 46,,ga
+LoadTeamRoster,,zero readback baseline scores 65,,ga
+LoadTeamRoster,,shared lineup goaliebytes scores 89,,ga
+LoadTeamRoster,,comma zero goaliebytes scores 45,,ga
+LoadTeamRoster,,zero readback goaliebytes scores 64,,ga
+LoadTeamRoster,,teamfirst freshstat scores 43,,ga
+LoadTeamRoster,,teamfirst scopedstat scores 43,,ga
+LoadTeamRoster,,teamfirst scopedskaterline scores 63,,ga
+LoadTeamRoster,,teamfirst scopedgoalieline scores 47,,ga
+LoadTeamRoster,,teamfirst sharedline scores 73,,ga
+LoadTeamRoster,,teamfirst season stat scores 58,,ga
+LoadTeamRoster,,teamfirst p skater branch scores 54,,ga
+LoadTeamRoster,,teamfirst p skater copyblock scores 54,,ga
+LoadTeamRoster,,teamfirst p goalie branch scores 79,,ga
+LoadTeamRoster,,teamfirst p goalie copyblock scores 79,,ga
+LoadTeamRoster,,teamfirst p both branch scores 79,,ga
+LoadTeamRoster,,teamfirst p both copyblock scores 79,,ga
+LoadTeamRoster,,freshstat skaterbytes team scores 43,,ga
+LoadTeamRoster,,freshstat skaterbytes i scores 42,,ga
+LoadTeamRoster,,teamfirst p skater branch freshstat scores 43,,ga
+LoadTeamRoster,,teamfirst p skater copyblock freshstat scores 43. Baseline savings: hoisted team * 1092 t218 and i * 39 t219 each 30 (EDI and memory),,ga
+LoadTeamRoster,,reversing skater jersey operands changes their order but exchanges those allocations. No new ESCALATE find. Both make and make CBUILD=0 MATCH. Function unmarked,,ga

@@ -106,6 +106,15 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 
 These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain attempts on a draft in the file. Take the whole file. The history is the GA rows so far; do not repeat a shape listed there.
 
+### `src/c/040_53294_engine_physics_ai/checkcheck.c`
+
+- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) v (30) is one of about 40 tied conflicts. Permute's 29 needs no-op casts
+- checkcheck 32->32 (2026-10-24, abdulahmad, GA) LA do-not-retry shape int dir scores 46, size +3. Not kept.
+- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) goto-free form (same object, committed); checking compare flipped (34), penalty ternary (31, +3)
+- checkcheck 32->31 (2026-10-24, Mhopkinsinc, GA) penalty as randomd0(2) != 0 ? 0xC : 0xB 31 (+3, the and eax, 0FFh site now matches; committed); (... ? 1 : 0) + 0xB forms 34 (+3; penalty and boarding inc edx match, vtoa dy temp moves to bx); AddPenalty(Player *, int) per-module 71; with SetSPA int 71; SetSPA int alone 32; boarding facing test < 3 32, q + 1 - p 33, q - (p - 1) 32, 2 >= 31; regsolve on the ? 1 : 0 form votes 0/2
+- checkcheck 31->31 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order improves on the baseline (52 orders): the differences are not in a tie
+- checkcheck 31->8 (2026-10-25, Mhopkinsinc, GA) tieorder 10 min: 31 -> 31 after 0 forced orders (cached; default excludes long tie runs); targetsearch 30 min: 499 candidates, best 8 differing (5 other), 0 unmet of 2 slot targets; countsolve: not run, both stack slots already correct; changed-source tieorder default: stopped after stage 1, 8 -> 8 in 10 orders; changed-source tieorder --max-run 64 5 min: 8 -> 8 after 116 forced orders, inconclusive; adopted targetsearch facing subtraction/mask split plus hit-strength if/else: 8 (+3 bytes); SetSPA call in each branch without v: 19; v scoped to checking branch: 15; random sample in fresh short roll with comma: 24; random sample assigned to related strength rel with comma: 24; int v full dword load then separate >>= 16: 29; v scoped to loop body: 15; SPA as short-array element [rel + 1]: 46; SPA as dereferenced short pointer plus 1: 46; hit-strength arithmetic split into -=, +=, >>=, -=: 44; branched SetSPA with short-array SPA: 30; separate block-local hit strength: 12; separate function-local hit strength: 26; constant SetSPA branch and table branch retaining v: 12; guarded sample statement and separate resisted decision: 34; int SPA local combined with module-local SetSPA int argument: 62; permute 5 min --jobs 4: stopped after 513 candidates in 157 s, best 8 size +0 only with signed char v, rejected because 0xED7 truncates (natural 8 size +3 retained); baseline first_pick 29 vs permute 31; final both 8
+
 ### `src/c/056_7A13A_settings_dialogs/MenuP1ControlsInGame.c`
 
 - ReassignCtlPlayer 10->10 (2026-10-24, StaticEck2026, GA) the EXE's counter is a `short`. With it the draft scores 14
@@ -129,14 +138,6 @@ These files are in lane 2 by segment. StaticEck2026 made two consecutive no-gain
 - updatereplay 22->22 (2026-10-24, StaticEck2026, GA) tick - 2 is temporary t89 (savings 2, last picks); += -2, a short / int tick local (29-32), five nibble index spellings (22-24)
 - updatereplay 22->22 (2026-10-24, StaticEck2026, GA) (short) packing casts dropped (no-op, same code); volatile lo flagged (ESCALATE before a mark: 29 without); loop inits, recbpr / sfx spellings (22-35)
 - updatereplay 22->22 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order found in 20 minutes (467 orders, inconclusive)
-
-### `src/c/040_53294_engine_physics_ai/checkcheck.c`
-
-- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) v (30) is one of about 40 tied conflicts. Permute's 29 needs no-op casts
-- checkcheck 32->32 (2026-10-24, abdulahmad, GA) LA do-not-retry shape int dir scores 46, size +3. Not kept.
-- checkcheck 32->32 (2026-10-24, StaticEck2026, GA) goto-free form (same object, committed); checking compare flipped (34), penalty ternary (31, +3)
-- checkcheck 32->31 (2026-10-24, Mhopkinsinc, GA) penalty as randomd0(2) != 0 ? 0xC : 0xB 31 (+3, the and eax, 0FFh site now matches; committed); (... ? 1 : 0) + 0xB forms 34 (+3; penalty and boarding inc edx match, vtoa dy temp moves to bx); AddPenalty(Player *, int) per-module 71; with SetSPA int 71; SetSPA int alone 32; boarding facing test < 3 32, q + 1 - p 33, q - (p - 1) 32, 2 >= 31; regsolve on the ? 1 : 0 form votes 0/2
-- checkcheck 31->31 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order improves on the baseline (52 orders): the differences are not in a tie
 
 ### `src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c`
 
