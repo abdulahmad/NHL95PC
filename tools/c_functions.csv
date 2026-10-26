@@ -129,7 +129,7 @@ SportsDesk,1935D,4567,010_18D7F_frontend_desk,src/c/010_18D7F_frontend_desk/Spor
 ClearPanelPenalties,1CBD8,101,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ClearPanelPenalties.c,matched,matched: found by tools/permute.py (the two -1 stores as one chained assignment).,
 InitGameSummary,1BEFD,434,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/InitGameSummary.c,matched,,
 LoadGameTeams,1BBCC,817,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadGameTeams.c,matched,,
-LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 17/22
+LoadTeamRoster,1C3F6,1041,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/LoadTeamRoster.c,nonmatching,"926 vs 1041. Frame is sub esp,0F4h (cookie 134h); the team index is eax at esp+11Ch. team*186 is add esi,esi where the original shifts the *744 byte offset with shl eax,3. Do not retry explicit shift statements for that index.",size 10/17
 MakeGSummaryPath,1C807,75,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/MakeGSummaryPath.c,matched,,
 OpenPlayerDBs,1C26C,394,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/OpenPlayerDBs.c,matched,,
 ReadPlayerRecs,1C0AF,445,013_1BBCC_key_team_db,src/c/013_1BBCC_key_team_db/ReadPlayerRecs.c,matched,,
@@ -790,7 +790,7 @@ LoadRosterList LoadBothRosterLists,6DE7E,136,052_6D2F8_create_player,src/c/052_6
 RunEditRosters,6CC20,731,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShellSortBytes.c,context,compile context; matched in src/c/051_6C2F9_database_save/RunEditRosters.c,
 ShowDBError,6ED39,86,052_6D2F8_create_player,src/c/052_6D2F8_create_player/ShowDBError.c,matched,,
 SplitPlayerName,6F159,323,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SplitPlayerName.c,matched,"same 323. stop/first/last match at esp+0/+4/+8 as one struct. Name is in edi (original ecx), so the copy count stays in ebx (original edx). Do not retry an aux that forces ecx.",
-SwapSelectedPlayers,71333,861,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,nonmatching,,register 21/35
+SwapSelectedPlayers,71333,861,052_6D2F8_create_player,src/c/052_6D2F8_create_player/SwapSelectedPlayers.c,nonmatching,,register 21/31
 DbDialogHitTest,72A5C,82,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DbDialogHitTest.c,matched,,
 DrawDbDialogButtons,72605,464,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/DrawDbDialogButtons.c,matched,,
 InputDialog,71F0C,1010,053_71F0C_database_dialogs,src/c/053_71F0C_database_dialogs/InputDialog.c,matched,,
