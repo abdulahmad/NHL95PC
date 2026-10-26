@@ -1,5 +1,5 @@
 /* Season playoffs: the playoff tree screen's menu loop. */
-/* DRAFT: 2,688 bytes as the EXE, 60 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
+/* DRAFT: 2,688 bytes as the EXE, 52 differing under 10.0 GA; see docs/UNSURE.md. Plain locals instead of the
    frame struct (a store into one of the struct's arrays made Watcom reload the others and every member after
    each call; the EXE keeps the pointer block in ebp and &menus[level][item] in eax). The submenu path draws the
    two items through `i = depth` and counts depth up after the second DrawMenuItemNorm (as RunMenu; the EXE
@@ -9,12 +9,11 @@
    the two select-item paths draw &menus[level][sel[level]] after the store (the EXE reloads sel[level]). The
    close-all loop resets pos[i] chained and bg[i], menus[i], nitems[i] as three stores (i then outranks i * 4 and
    takes esi as in the EXE; the cross-jumps come back). The declaration order is tools/wccre/declsearch.py
-   --conflicts' with ptr moved before sel (tools/wccre/tieorder.py: depth's two index temporaries then tie the
-   EXE's way, `inc esi`). Left: the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree, w and the
-   depth * 8 temporary (the EXE upward from 9Ch: item, level, my, mx, depth * 8, ptr, oldmx, depth, h, w, slot2,
-   slot, tree, oldmy), and the two select-item paths' DrawMenuItemNorm address (each has the other's registers:
-   the EXE's first path `esi = sel << 5 / edx = menus / add esi, edx`, its last `ecx = sel << 5 / esi = menus /
-   add esi, ecx`). */
+   --conflicts' with ptr declared after oldmy (tools/wccre/targetsearch.py: depth's two index temporaries tie
+   the EXE's way, `inc esi`, and the two select-item paths' DrawMenuItemNorm addresses take the EXE's
+   registers). Left: only the scalar slots of depth, oldmx, oldmy, ptr, slot, slot2, tree, w and the depth * 8
+   temporary (the EXE upward from 9Ch: item, level, my, mx, depth * 8, ptr, oldmx, depth, h, w, slot2, slot,
+   tree, oldmy); tools/wccre/countsolve.py finds no single use count that moves them. */
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
 #define MenuHitTest MenuHitTest_decl
 #define POHiliteSlot POHiliteSlot_decl
@@ -54,6 +53,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     int w;
     int bg[4];
     int oldmy;
+    int ptr;
     int mx;
     int size;
     int tree;
@@ -63,7 +63,6 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     char path[0x20];
     int level;
     int slot;
-    int ptr;
     int sel[4];
     int pos[4][2];
     int item;
