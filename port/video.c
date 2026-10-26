@@ -231,6 +231,14 @@ void video_present(void)
         tex_w = w; tex_h = h;
         SDL_RenderSetLogicalSize(ren, w, w == 320 ? 240 : h);   /* 320x200 modes had non-square pixels */
     }
+    if (stats_on) {                             /* NHL95_STATS: how many different images the game puts on the screen per second */
+        static uint32_t last_hash;
+        uint32_t hash = 0;
+        int i;
+        for (i = 0; i < w * h; i += 5) hash = hash * 31 + argb[i];
+        stats_screen(hash != last_hash, w, h);
+        last_hash = hash;
+    }
     dump_frame(w, h);
     SDL_UpdateTexture(tex, 0, argb, w * 4);
     SDL_RenderClear(ren);

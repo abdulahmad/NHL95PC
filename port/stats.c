@@ -16,6 +16,9 @@ void stats_port(unsigned port, int out) { if (port < NPORT) (out ? c_out : c_in)
 void stats_int(unsigned vec, unsigned ah) { c_int[vec & 255]++; if (vec == 0x21) c_ah[ah & 255]++; }
 void stats_irq(int irq, int taken) { if (irq < 16) (taken ? c_irq_taken : c_irq_raised)[irq]++; }
 void stats_trap_ns(int64_t ns) { trap_ns += ns; n_traps++; }
+static volatile uint32_t screens_changed;
+static volatile int screen_w, screen_h;
+void stats_screen(int changed, int w, int h) { screens_changed += changed; screen_w = w; screen_h = h; }
 void stats_present_ns(int64_t ns) { vp_ns += ns; vp_n++; if ((uint64_t)ns > vp_max_ns) vp_max_ns = ns; }
 
 static void top(const char *what, volatile uint32_t *cur, uint32_t *prev, int n, const char *fmt)
@@ -40,7 +43,7 @@ void stats_report(void)
 {
     static int64_t last;
     static uint64_t p_trap_ns, p_vp_ns, p_user, p_kernel;
-    static uint32_t p_traps, p_vp_n, p_ticks, p_raised[16], p_taken[16];
+    static uint32_t p_traps, p_vp_n, p_ticks, p_raised[16], p_taken[16], p_screens;
     extern uint32_t tickcount;
     uint64_t user = 0, kernel = 0;
     int64_t now = plat_now_ns();
@@ -57,6 +60,8 @@ void stats_report(void)
             vp_n != p_vp_n ? (double)(vp_ns - p_vp_ns) / (vp_n - p_vp_n) / 1e6 : 0.0, (double)vp_max_ns / 1e6,
             (unsigned)((ticks - p_ticks) / 2), irq_pit_hz(), (unsigned)(raised / 2), (unsigned)(taken / 2));
     p_traps = t; p_trap_ns = trap_ns; p_vp_ns = vp_ns; p_vp_n = vp_n; p_user = user; p_kernel = kernel; p_ticks = ticks; vp_max_ns = 0;
+    fprintf(stderr, "  screen: %dx%d, %u different images/s\n", screen_w, screen_h, (unsigned)((screens_changed - p_screens) / 2));
+    p_screens = screens_changed;
     top("opcode", c_op, p_op, 256, "%02x");
     top("in port", c_in, p_in, NPORT, "%03x");
     top("out port", c_out, p_out, NPORT, "%03x");

@@ -66,6 +66,7 @@ void stats_int(unsigned vec, unsigned ah);
 void stats_irq(int irq, int taken);
 void stats_trap_ns(int64_t ns);
 void stats_present_ns(int64_t ns);
+void stats_screen(int changed, int w, int h);          /* a presented image: did it differ from the previous one */
 void stats_report(void);                               /* main thread, about every 2 s */
 int64_t plat_now_ns(void);
 void plat_sleep_ms(int ms);
