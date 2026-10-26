@@ -31,6 +31,7 @@ void opl_out(unsigned port, uint32_t val);
 void sb_init(int base, int irq, int dma, int version);
 uint32_t sb_in(unsigned port);
 void sb_out(unsigned port, uint32_t val);
+int mpu_roms_missing(void);            /* main thread: true once when the MT-32 was selected but its ROMs were not found */
 void sb_pump(void);                    /* take the samples that are due from the DMA channel (any thread) */
 int sb_base(void);
 
@@ -40,6 +41,7 @@ void mpu_out(unsigned port, uint32_t val);
 
 void gus_init(int base, int irq1, int irq2, int dma1, int dma2);
 uint32_t gus_in(unsigned port);
+void gus_pump(void);                   /* step the card for the time that has passed (any thread) */
 void gus_out(unsigned port, uint32_t val);
 int gus_base(void);
 

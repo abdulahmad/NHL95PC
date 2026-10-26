@@ -131,13 +131,15 @@ static void write_reg(int reg, uint16_t d)
             if (n > DRAM_SIZE) n = DRAM_SIZE;
             for (i = 0; i < n && dest + i < DRAM_SIZE; i++) {
                 uint8_t b = src[i];
-                if (dma_ctrl & 0x80) b ^= 0x80;         /* unsigned data to signed */
+                /* unsigned data to signed: invert the sign bit of each sample, which for 16-bit data (bit 6) is the top bit of the high
+                 * (odd) byte only */
+                if ((dma_ctrl & 0x80) && (!(dma_ctrl & 0x40) || ((dest + i) & 1))) b ^= 0x80;
                 dram[dest + i] = b;
             }
             dma_advance(ch, n);
             dma_tc = 1;
             if (dma_ctrl & 0x20) { dma_irq = 1; check_irq(); }
-            TRACE("gus: dma %u bytes to %05x\n", n, dest);
+            TRACE("gus: dma %u bytes to %05x control %02x\n", n, dest, dma_ctrl);
         }
         break;
     case 0x42: dma_start = d; break;
@@ -259,28 +261,82 @@ static void step_voice(struct voice *vo, int *l, int *r)
     }
 }
 
+static void gus_report(void)            /* NHL95_TRACE: what the voices are doing, once a second */
+{
+    int j, n = 0;
+    char line[600] = "";
+    for (j = 0; j < NVOICES; j++) {
+        struct voice *vo = &v[j];
+        if (!(vo->wave_ctrl & 3) && n < 12)
+            n += sprintf(line + strlen(line), " [v%d fc=%04x vol=%04x pan=%d cur=%07x end=%07x ctl=%02x]", j, vo->fc, vo->vol, vo->pan, vo->cur, vo->end, vo->wave_ctrl) > 0;
+    }
+    fprintf(stderr, "gus: active voices %d, running:%s\n", active_voices, line[0] ? line : " none");
+}
+
+/* The card runs by the clock, not by the audio device: its timers, voice end and volume ramp interrupts are what the game's music
+ * driver paces itself with, and the audio device asks for samples in bursts of 20 ms or more, which made them (and so the tempo)
+ * arrive in lumps. gus_pump_locked steps the voices for the time that has passed and queues the output samples (at the card's own
+ * rate, 617400 / voices Hz); gus_render only resamples the queue. It runs with the audio lock held: from the mixer, from the main
+ * loop (gus_pump) and when the game reads a GUS port. */
+#define GFIFO 4096
+static int16_t gfifo_l[GFIFO], gfifo_r[GFIFO];
+static uint32_t gfifo_head, gfifo_tail;
+static int64_t gpump_last_ns;
+static double gpump_acc;
+
+static void gus_pump_locked(void)
+{
+    int64_t now = plat_now_ns(), dt = now - gpump_last_ns;
+    double due;
+    int n, i, j;
+    gpump_last_ns = now;
+    timers_update();
+    if (dt > 100000000LL) dt = 100000000LL;                     /* after a long stall: do not play it all at once */
+    due = gpump_acc + dt * (617400.0 / active_voices) / 1e9;
+    n = (int)due;
+    gpump_acc = due - n;
+    for (i = 0; i < n; i++) {
+        int sl = 0, sr = 0;
+        for (j = 0; j < active_voices; j++) {
+            int l, r;
+            step_voice(&v[j], &l, &r);
+            sl += l; sr += r;
+        }
+        if (gfifo_head - gfifo_tail >= GFIFO) gfifo_tail++;       /* full: the oldest is dropped */
+        gfifo_l[gfifo_head % GFIFO] = (int16_t)(sl / 2);
+        gfifo_r[gfifo_head % GFIFO] = (int16_t)(sr / 2);
+        gfifo_head++;
+        check_irq();
+    }
+}
+
+void gus_pump(void)                     /* any thread; takes the audio lock */
+{
+    if (!initialised) return;
+    audio_lock();
+    gus_pump_locked();
+    audio_unlock();
+}
+
 static void gus_render(int32_t *out, int frames, int rate)
 {
     double native = 617400.0 / active_voices;
+    static int report_frames;
     int i;
+    if (trace_on && (report_frames += frames) >= rate) { report_frames = 0; gus_report(); }
+    gus_pump_locked();
     for (i = 0; i < frames; i++) {
         double t;
         native_phase += native / rate;
         while (native_phase >= 1.0) {
-            int j, sl = 0, sr = 0;
             native_phase -= 1.0;
             prev_l = cur_l; prev_r = cur_r;
-            for (j = 0; j < active_voices; j++) {
-                int l, r;
-                step_voice(&v[j], &l, &r);
-                sl += l; sr += r;
-            }
-            cur_l = sl / 2; cur_r = sr / 2;
-            check_irq();
+            if (gfifo_tail != gfifo_head) { cur_l = gfifo_l[gfifo_tail % GFIFO]; cur_r = gfifo_r[gfifo_tail % GFIFO]; gfifo_tail++; }
+            /* an empty queue repeats the last sample */
         }
-        t = native_phase;                       /* just crossed a native sample: interpolate back toward the previous one */
-        out[2 * i] += (int32_t)(cur_l + (prev_l - cur_l) * t);
-        out[2 * i + 1] += (int32_t)(cur_r + (prev_r - cur_r) * t);
+        t = native_phase;                       /* the part of the native sample period since the last one was taken: ramp from the previous */
+        out[2 * i] += (int32_t)(prev_l + (cur_l - prev_l) * t);          /* sample to this one (one sample of delay) */
+        out[2 * i + 1] += (int32_t)(prev_r + (cur_r - prev_r) * t);
     }
 }
 
@@ -292,6 +348,7 @@ void gus_init(int b, int i1, int i2, int d1, int d2)
     for (i = 0; i < 4096; i++) vol_table[i] = (float)((256 + (i & 255)) * (double)(1u << (i >> 8)) / 16777216.0);
     for (i = 0; i < NVOICES; i++) voice_reset(&v[i]);
     audio_add_source(gus_render);
+    gpump_last_ns = plat_now_ns();
     initialised = 1;
 }
 
@@ -302,12 +359,12 @@ uint32_t gus_in(unsigned port)
     uint32_t r = 0xFF;
     audio_lock();
     switch (port - base) {
-    case 0x006: r = irq_status(); break;
-    case 0x008: timers_update(); r = tmr_status; break;
+    case 0x006: gus_pump_locked(); r = irq_status(); break;
+    case 0x008: gus_pump_locked(); r = tmr_status; break;
     case 0x00A: r = tmr_cmd_reg; break;           /* reads back what was written to base+8: the card detection of the GF1 SDK relies on it */
     case 0x102: r = cur_voice; break;
     case 0x103: r = reg_select; break;
-    case 0x104: reg_data = read_reg(reg_select); r = reg_data & 0xFF; break;
+    case 0x104: if (reg_select >= 0x80) gus_pump_locked(); reg_data = read_reg(reg_select); r = reg_data & 0xFF; break;
     case 0x105: r = read_reg(reg_select) >> 8; break;
     case 0x107: r = dram[dram_addr & (DRAM_SIZE - 1)]; break;
     }

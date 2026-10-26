@@ -40,21 +40,57 @@ static int add_roms_from(const char *dir)
     return n;
 }
 
+static volatile int roms_missing;                 /* set when the MT-32 was selected but no ROM images were found */
+
+int mpu_roms_missing(void)                        /* main thread: true once, so that it can tell the user */
+{
+    int r = roms_missing == 1;
+    if (r) roms_missing = 2;
+    return r;
+}
+
 static void synth_open(void)
 {
-    const char *dirs[] = { getenv("NHL95_MT32_ROMS"), getenv("NHL95_ROOT"), ".", "./roms", "./ROMS", "/usr/share/mt32-rom-data",
-                           "/usr/local/share/mt32-rom-data", 0 };
-    int i;
+    char exe_roms[1100], exe_up[1100], game_up[1100];
+    const char *exe = SDL_GetBasePath();
+    const char *root = getenv("NHL95_ROOT");
+    const char *dirs[12];
+    int i, nd = 0;
+    snprintf(exe_roms, sizeof exe_roms, "%sroms", exe ? exe : "./");
+    snprintf(exe_up, sizeof exe_up, "%s..", exe ? exe : "./");
+    snprintf(game_up, sizeof game_up, "%s/..", root ? root : ".");
+    dirs[nd++] = getenv("NHL95_MT32_ROMS");
+    dirs[nd++] = root;
+    dirs[nd++] = ".";
+    dirs[nd++] = "./roms";
+    dirs[nd++] = "./ROMS";
+    dirs[nd++] = exe;                             /* next to the program, and in a roms folder there */
+    dirs[nd++] = exe_roms;
+    dirs[nd++] = game_up;
+    dirs[nd++] = exe_up;
+    dirs[nd++] = "/usr/share/mt32-rom-data";
+    dirs[nd++] = "/usr/local/share/mt32-rom-data";
+    dirs[nd] = 0;
     { mt32emu_report_handler_i rh; memset(&rh, 0, sizeof rh); synth = mt32emu_create_context(rh, 0); }
     mt32emu_set_stereo_output_samplerate(synth, audio_rate());
-    for (i = 0; dirs[i]; i++) add_roms_from(dirs[i]);
+    for (i = 0; i < nd; i++) {
+        int found;
+        if (!dirs[i]) continue;                      /* an unset environment variable */
+        found = add_roms_from(dirs[i]);              /* not inside TRACE: its arguments are only evaluated when tracing */
+        TRACE("MT-32: %s: %d ROM images\n", dirs[i], found);
+    }
     if (mt32emu_open_synth(synth) == MT32EMU_RC_OK) {
         synth_ok = 1;
         TRACE("MT-32: synth open\n");
     } else {
+        roms_missing = 1;
         fprintf(stderr, "MT-32: no usable ROM images found (MT32_CONTROL.ROM and MT32_PCM.ROM); set NHL95_MT32_ROMS to their folder\n");
     }
 }
+#endif
+
+#ifndef HAVE_MUNT
+int mpu_roms_missing(void) { return 0; }
 #endif
 
 static void mpu_render(int32_t *out, int frames, int rate)

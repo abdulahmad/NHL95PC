@@ -60,6 +60,12 @@ int main(int argc, char **argv)
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }
         sb_pump();
+        gus_pump();
+        if (mpu_roms_missing())
+            SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, "NHL Hockey 95",
+                "The MT-32 is selected, but its ROM images were not found, so there will be no sound.\n\n"
+                "Put MT32_CONTROL.ROM and MT32_PCM.ROM in a folder named roms next to the program (or in the game folder), "
+                "or set NHL95_MT32_ROMS to the folder that has them.", 0);
         audio_pump();
         irq_poll();
         stats_report();

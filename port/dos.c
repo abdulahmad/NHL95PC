@@ -95,6 +95,21 @@ static int host_path(const char *dos, char *out, size_t n)
         resolve_in(cd, dos, alt, sizeof alt);
         if (!stat(alt, &st)) snprintf(out, n, "%s", alt);
     }
+    /* Still not there: the game also reads files that DOS found through the PATH or an environment variable (the Gravis patches in
+     * C:\ULTRASND\MIDI, named by ULTRADIR) and that sit next to the game folder, not in it. Look in the folder above the game folder,
+     * in the folder of the program and above it; the first that has the file wins. A file that is to be created is not affected. */
+    if (stat(out, &st)) {
+        char base[1100], alt[1100];
+        const char *exe = SDL_GetBasePath();
+        int k;
+        for (k = 0; k < 3; k++) {
+            if (k == 0) snprintf(base, sizeof base, "%s/..", root());
+            else if (k == 1) snprintf(base, sizeof base, "%s", exe ? exe : ".");
+            else snprintf(base, sizeof base, "%s/..", exe ? exe : ".");
+            resolve_in(base, dos, alt, sizeof alt);
+            if (!stat(alt, &st)) { snprintf(out, n, "%s", alt); TRACE("found %s\n", alt); break; }
+        }
+    }
     return 0;
 }
 

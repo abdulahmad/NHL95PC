@@ -212,8 +212,8 @@ static void sb_render(int32_t *out, int frames, int rate)
             if (fifo_tail != fifo_head) { out_l = fifo_l[fifo_tail % FIFO_SIZE]; out_r = fifo_r[fifo_tail % FIFO_SIZE]; fifo_tail++; }
             /* an empty queue repeats the last sample */
         }
-        t = 1.0 - acc;
-        if (speaker_on) {
+        t = acc > 1.0 ? 1.0 : acc;              /* the part of the sample period since the last sample was taken: ramp from the previous one */
+        if (speaker_on) {                       /* to this one (one sample of delay), not back toward the previous */
             out[2 * i] += (int32_t)(prev_l + (out_l - prev_l) * t);
             out[2 * i + 1] += (int32_t)(prev_r + (out_r - prev_r) * t);
         }
