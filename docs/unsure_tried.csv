@@ -4544,6 +4544,25 @@ EditTextField,,"on the ins version: block-scoped c (7), block-scoped i per loop 
 EditTextField,,"targetsearch 30 min (1685 candidates, none meets the tie). Goto-free grid on the 36 draft's handlers (poll x dispatch, each as for (;;) / while (1) / do-while alike): if/else poll arms with the blink as the if (key) else (47, +2)","47, +2",ga
 EditTextField,,"the blink after an if (key) handler block (74, +14), `if (sub_B3D64()) key = 0; else idle` (68-106)",68-106,ga
 EditTextField,,"a rotated `for (; !(key = PollKey()); )` poll (41, +4)","41, +4",ga
+ReplaySaveHilight,,"w unsigned product: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"size and header initialization block scoped w and n: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"one team save result scoped separately: 42 differing, size distance 7",,ga
+ReplaySaveHilight,,"cache dimensions for both size and header stores: 87 differing, size distance 1",,ga
+ReplaySaveHilight,,"cache sprite pointer for dimensions and header copy: 62 differing, size distance 4",,ga
+ReplaySaveHilight,,"cache row product across bevel drawing calls: 96 differing, size distance 72",,ga
+ReplaySaveHilight,,"allocation buffer as API integer handle: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"allocation buffer as generic void pointer: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"allocation buffer as header pointer: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"size declared and initialized in allocation block after product: 34 differing, size distance 0",,ga
+ReplaySaveHilight,,"one team wait shared after error block: 41 differing, size distance 1",,ga
+ReplaySaveHilight,,"dialog wait shared after error block: 38 differing, size distance 0",,ga
+ReplaySaveHilight,,"permute 5 min jobs 4: 449 logged candidates, best 29",,ga
+ReplaySaveHilight,,"lower scores require non-equivalent narrowing of gadgetptry in sub_91370(pointerspr, gadgetptrx, gadgetptry) (unsigned char / short), rejected",,ga
+ReplaySaveHilight,,full per-candidate scores in /home/mhopkins/tmp/u/np/permlog_ts_ReplaySaveHilight.csv,,ga
+ReplaySaveHilight,,summary: no match after 449 compiled candidates in 255 s,,ga
+ReplaySaveHilight,,"best 29 aligned differing, size distance 2 (fresh compiled 1651 bytes, EXE 1653",,ga
+ReplaySaveHilight,,"first_pick 27). No improvement committed. ESCALATE: unsupported (short)gadgetptry in sub_91370 after the bevel reaches 29 differing, size -2",,ga
+ReplaySaveHilight,,"narrows the coordinate, not accepted. Patch: /home/mhopkins/tmp/u/np/ts_ReplaySaveHilight_ReplaySaveHilight_escalate.diff",,ga
 updatereplay,,plain byte accumulator: 33 differing (size delta -11),size delta -11,ga
 updatereplay,,plain byte accumulator scoped in nibble loop: 33 differing (size delta -11),size delta -11,ga
 updatereplay,,plain unsigned short accumulator: 24 differing (size delta -5),size delta -5,ga
@@ -5361,3 +5380,33 @@ LoadTeamRoster,,freshstat skaterbytes i scores 42,,ga
 LoadTeamRoster,,teamfirst p skater branch freshstat scores 43,,ga
 LoadTeamRoster,,teamfirst p skater copyblock freshstat scores 43. Baseline savings: hoisted team * 1092 t218 and i * 39 t219 each 30 (EDI and memory),,ga
 LoadTeamRoster,,reversing skater jersey operands changes their order but exchanges those allocations. No new ESCALATE find. Both make and make CBUILD=0 MATCH. Function unmarked,,ga
+ReassignCtlPlayer,,shapes listed in docs/UNSURE.md (not itemized),,ga
+LeagueTeamSelect,,sprite size built in four statements using size throughout = 210,,ga
+LeagueTeamSelect,,"name ternary non-Anaheim case first, matching EXE block layout = 64",,ga
+LeagueTeamSelect,,ClearInputQueue duplicated in success and cancel arms after restoring grid = 50,,ga
+LeagueTeamSelect,,Pal20 resource handle separated from old pick to remove existing dead-variable reuse = 50,,ga
+LeagueTeamSelect,,"block-local rowbytes and rows, explicit EXE read/add order, product height first = 328",,ga
+LeagueTeamSelect,,size holds padded row bytes then height-first product = 333,,ga
+LeagueTeamSelect,,sprite-size product and header addition separate = 330,,ga
+LeagueTeamSelect,,"selected menu entry pointer reused in action checks, callback, submenu metadata and origins = 462",,ga
+LeagueTeamSelect,,first Norm address computed before call argument loads in a scoped selected pointer = 46 (rejected: address arithmetic moved before EXE argument loads),,ga
+LeagueTeamSelect,,"current pick pointer reused through grid selection and modal dialog branch, separate next-pick store after cur increment = 876",,ga
+LeagueTeamSelect,,"current pick pointer scoped to remove-team branch, reused for dialogs, updates and restore = 194",,ga
+LeagueTeamSelect,,"old pick declared in hit branch, leaving original v solely as Pal20 handle = 105",,ga
+LeagueTeamSelect,,two-human selection prefix increment cur = 50,,ga
+LeagueTeamSelect,,two-human selection cur += 1 = 50,,ga
+LeagueTeamSelect,,"first dropdown-close loop saves background once and uses it for test, restore and free = 214",,ga
+LeagueTeamSelect,,name append as if/else with normal team first = 73,,ga
+LeagueTeamSelect,,name append as if/else with Anaheim first = 68,,ga
+LeagueTeamSelect,,remove redundant boolean ternary from grid visibility condition = 424,,ga
+LeagueTeamSelect,,separate success redraw test after state update / cancel restore so ClearInputQueue keeps its own tail = 438,,ga
+LeagueTeamSelect,,"ordinary local (teams,n,x,y) controller declaration and call, no custom parm order",,ga
+LeagueTeamSelect,,preserves x EBX/y ECX ABI and split Pal20 handle = 48,,ga
+LeagueTeamSelect,,"fresh compile of permuter best: old pick v before size, separate Pal20 handle = 47",,ga
+LeagueTeamSelect,,permuter declaration order plus ordinary controller x/y declaration and call = 45,,ga
+LeagueTeamSelect,,"permute 5 min, 641 compiled in 305 s, best 47 (+3) by swapdecl:size:v on separate-palbank source",,ga
+LeagueTeamSelect,,confirmed fresh,,ga
+LeagueTeamSelect,,generated invalid multiline-condition candidates were skipped,,ga
+LeagueTeamSelect,,log /home/mhopkins/tmp/u/np/permlog_ts_LeagueTeamSelect.csv,,ga
+LeagueTeamSelect,,"final: separate palbank + v declared before size + ordinary x/y controller ABI = 45 (+3), fresh GA",,ga
+LeagueTeamSelect,,no ESCALATE find,,ga
