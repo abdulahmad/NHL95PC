@@ -252,7 +252,10 @@ static void step_voice(struct voice *vo, int *l, int *r)
         if (++vo->ramp_counter >= period) {
             int inc = vo->ramp_rate & 63;
             int up = !(vo->vol_ctrl & 0x40);
-            int32_t nv = vo->vol + (up ? inc : -inc) * 1;
+            /* The rate is added in steps of the 12-bit volume index (the register holds it in the top 12 of 16 bits), so in register
+             * units the step is 16 times the rate value; adding it to the whole register made the envelopes 16 times too slow (the
+             * release of a note never finished and the voice was never freed: the anthem's notes sustained and later ones had no voice). */
+            int32_t nv = vo->vol + (up ? inc : -inc) * 16;
             int lo = vo->ramp_start << 8, hi = vo->ramp_end << 8;
             vo->ramp_counter = 0;
             vo->vol = nv < 0 ? 0 : nv > 0xFFFF ? 0xFFFF : nv;
