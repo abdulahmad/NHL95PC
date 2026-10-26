@@ -83,6 +83,9 @@ def target_pairs(src, func, work):
         print('note: tieorder found no tie order that gives the EXE bytes (best %s); searching toward its best' % c.get('best'))
     plan = {int(k): v for k, v in c['plan'].items()}
     ok, passes = compile_ir(src, func, os.path.join(work, 'base.obj'))
+    if c.get('pairs'):
+        # tieorder's minimal target: only the constraints the byte match needs
+        return [(passes[k][a], passes[k][b], k) for k, a, b in c['pairs'] if k in passes and max(a, b) < len(passes[k])]
     labels = labels_of(src, func, work)
     changed = changed_labels(src, func, plan, work)
     pairs = []
