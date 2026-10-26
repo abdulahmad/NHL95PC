@@ -268,6 +268,28 @@ more or less, one inside or outside a loop, or a tie broken the other way). Vali
   so the target is the order, not that count.
 * TitleScreen (committed draft, 3): every local already in its EXE slot (the remaining differences are not slots).
 
+## Late register picks (tools/wccre/latepick.py)
+
+Some registers are chosen after both allocation passes, so regdump / irdump / tieorder never see them: a step at
++613C8 turns constants into registers (a byte store of 0 becomes `xor dh, dh` / `mov [x], dh`; a constant operand
+becomes a register load) and asks +612FE for the register. That picker is a round-robin, not a liveness choice:
+per size it has a fixed list and a saved position (+7F5D4 byte, +7F5D8 word, +7F5D0 dword), and it takes the next
+register after the last one it picked that is not busy at the instruction (the instruction's live set +08 or-ed
+with what it clobbers, +2C -> +0C).
+
+  byte   AL AH DL DH BL BH CL CH
+  word   AX DX BX CX SI DI
+  dword  EAX EDX EBX ECX ESI EDI EBP
+
+The position starts at the head of each list once per compile and is never reset, so the first late byte pick of
+a file is AH, and every later pick depends on all the earlier late picks of the same size: in the function and
+in every function compiled before it in the same file. It also advances for constants whose conversion is tried
+and then undone. So a draft compiled alone starts the rotation where the original module did not, and a late
+register moves by changing how many late picks of that size come before it, not by rewriting its statement.
+`python3 tools/wccre/latepick.py FILE.c [--func F]` lists every late pick in compile order (line, size, where the
+rotation stood, busy registers, register picked). CreateNewLeague (2026-10-26): L125's zero gets BL because the
+previous byte pick left the rotation at DH; the EXE's DH needs the rotation one step earlier there.
+
 ## The compiler state: one field the compiler never sets
 
 wcc386 can compile the same source differently after other programs in the same DOSBox session, and after
