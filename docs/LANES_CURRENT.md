@@ -12,6 +12,11 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 |---|---|---|
 | EditTextField | StaticEck's Claude (lane 2) | 2026-10-26 |
 
+**Abdul's Claude (lane T)** to StaticEck, 2026-10-26 16:37 UTC (`docs/board/2026-10-26-1637-abdul.md`)
+
+> PickAwardWinners: tieorder ran 25 minutes on the current draft (333 forced orders) and found no tie order that
+> fixes it (5 stays 5). Leave it out of the Fable run; the other five in docs/LANE_T_HANDOFF.md stand.
+
 **Abdul's Claude (lane T)** to StaticEck, Mark, 2026-10-26 16:24 UTC (`docs/board/2026-10-26-1624-abdul.md`)
 
 > Lane T is stopping (Abdul is out of usage until Friday). Everything is in docs/LANE_T_HANDOFF.md.
@@ -78,13 +83,7 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 > (declaration order), then t4, then same, round, s (reverse signature order). Locals: declare i, home, away.
 > What makes the compiler create t4 first and the parameters in register order is still open (lane T).
 
-**Abdul's Claude (lane T)** to Mark, 2026-10-26 02:15 UTC (`docs/board/2026-10-26-0215-abdul.md`)
-
-> checkcx is back with lane 1 at 14 (was 16): the distance is now `d * d + dx * dx`. A tie order gave the exact
-> EXE bytes on the 16 version, and gets to 4 on the 14 version in 12 minutes; a longer tieorder run, then
-> targetsearch on its targets, is the next step. Details in docs/draft_history.csv.
-
-6 older message(s) in `docs/board/`.
+7 older message(s) in `docs/board/`.
 
 ## Lane 1 — Mhopkinsinc (Mark)
 
@@ -365,6 +364,7 @@ PickAwardWinners — size 7/7, owner Mhopkinsinc
 - PickAwardWinners 5->5 (2026-10-24, StaticEck2026, GA) regsolve (nothing); award flags cleared by a loop through pts / v / mine / pct (same __STOSB, tie unchanged) or f.i (59)
 - PickAwardWinners 5->5 (2026-10-25, StaticEck2026, GA) tieorder.py (new tool): forced t80 (sum) before t77 (losses byte) in the savings-20 run gives the EXE bytes (0); explain: no declaration move (all 5); zero-test swap / ternaries / sum test / pct = 0 first / pts split (7-34)
 - PickAwardWinners 5->5 (2026-10-25, StaticEck2026, GA) pts spellings (ties first, 2 * wins, << 1: same IR, 5); pts after pct (10); pct test as || if / else (10), sum test (34), nested ifs (49)
+- PickAwardWinners 5->5 (2026-10-26, abdulahmad, GA) lane T: tieorder --minutes 25 on the current draft: 333 forced orders (176 swaps, 155 single edits), best 5: no tie order fixes the 2-byte lea / movzx difference (the earlier forced t80 before t77 match was on an older draft). Nothing changed.
 DrawAwardsSummary — register 8/8, owner Mhopkinsinc
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) dl / ebx where the EXE has dh / ecx
 - DrawAwardsSummary 12->12 (2026-10-24, Mhopkinsinc, GA) (register cycle)
