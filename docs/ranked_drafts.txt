@@ -24,7 +24,6 @@
 9 2 CopyHumanTeamDBs src/c/033_40183_trades/CopyHumanTeamDBs.c
 10 0 SeriesLength src/c/034_41B80_schedule/SeriesLength.c
 10 0 changeplayer src/c/042_59D9A_engine_core/changeplayer.c
-11 0 JoystickCalScreen src/c/050_6B093_joystick_calibration/JoystickCalScreen.c
 11 0 OpenSpeechBank src/c/061_83459_speech/OpenSpeechBank.c
 11 0 wallcoll src/c/040_53294_engine_physics_ai/dopass.c
 11 1 updatereplay src/c/046_644A8_engine_display/updatereplay.c
