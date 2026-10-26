@@ -178,6 +178,10 @@ void input_poll(void)
             if (!getenv("NHL95_JOY")) joy_scan();
             break;
         case SDL_KEYDOWN:
+            if (e.key.keysym.scancode == SDL_SCANCODE_RETURN && (e.key.keysym.mod & KMOD_ALT)) {    /* Alt+Enter: fullscreen */
+                if (!e.key.repeat) video_toggle_fullscreen();
+                break;
+            }
             if (e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
                 if (!e.key.repeat) audio_capture_toggle();
                 break;

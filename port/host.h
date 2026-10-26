@@ -99,6 +99,9 @@ uint32_t video_port_in(unsigned port);
 int video_port_out(unsigned port, uint32_t val);
 void video_init(void);
 void video_set_title(const char *title);
+void video_view(int *vx, int *vy, int *vw, int *vh);   /* where the 4:3 picture is in the window (window coordinates) */
+void video_toggle_fullscreen(void);                    /* Alt+Enter */
+int video_is_fullscreen(void);
 void video_present(void);              /* main thread */
 void video_fill_vesa_tables(void);
 void video_window_to_game(int wx, int wy, int *gx, int *gy);

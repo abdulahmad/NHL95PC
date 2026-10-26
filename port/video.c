@@ -21,6 +21,17 @@ static SDL_Window *win;
 static SDL_Renderer *ren;
 static SDL_Texture *tex;
 static int tex_w, tex_h;
+static int use_gl;                              /* the OpenGL path (video_gl.c) instead of SDL's renderer */
+#ifdef HAVE_GL
+int vgl_init(SDL_Window *win);
+void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh);
+void vgl_quit(void);
+#else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
+static int vgl_init(SDL_Window *win) { (void)win; return 0; }
+static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
+{ (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
+static void vgl_quit(void) {}
+#endif
 static uint32_t argb[1280 * 1024];
 
 static struct { int mode, w, h; } modes[] = {
@@ -160,23 +171,54 @@ void video_fill_vesa_tables(void)
 }
 
 /* window position to game screen position (the window is scaled and letter-boxed) */
+/* Where the picture sits in the window, in window coordinates: the largest 4:3 rectangle, centred (both the 640x480 screens and the
+ * 320x200 ones, whose pixels were not square, fill a 4:3 screen). */
+void video_view(int *vx, int *vy, int *vw, int *vh)
+{
+    int ww = 640, wh = 480, w, h;
+    if (win) SDL_GetWindowSize(win, &ww, &wh);
+    w = ww; h = ww * 3 / 4;
+    if (h > wh) { h = wh; w = wh * 4 / 3; }
+    *vw = w; *vh = h; *vx = (ww - w) / 2; *vy = (wh - h) / 2;
+}
+
 void video_window_to_game(int wx, int wy, int *gx, int *gy)
 {
-    float lx = wx, ly = wy;
-    if (ren) SDL_RenderWindowToLogical(ren, wx, wy, &lx, &ly);
-    *gx = (int)lx; *gy = (int)(mode_w == 320 ? ly * 200 / 240 : ly);
+    int vx, vy, vw, vh;
+    video_view(&vx, &vy, &vw, &vh);
+    *gx = vw > 0 ? (wx - vx) * mode_w / vw : 0;
+    *gy = vh > 0 ? (wy - vy) * mode_h / vh : 0;
     if (*gx < 0) *gx = 0;
     if (*gy < 0) *gy = 0;
     if (*gx >= mode_w) *gx = mode_w - 1;
     if (*gy >= mode_h) *gy = mode_h - 1;
 }
 
+/* Alt+Enter: borderless fullscreen at the desktop's resolution and back */
+static int fullscreen;
+void video_toggle_fullscreen(void)
+{
+    if (!win) return;
+    fullscreen = !fullscreen;
+    SDL_SetWindowFullscreen(win, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+}
+
+int video_is_fullscreen(void) { return fullscreen; }
+
 /* ---- the main thread: window and presentation ---- */
 void video_init(void)
 {
     lock = SDL_CreateMutex();
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-    win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_RESIZABLE);
+    if (!getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
+        win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+        if (win && vgl_init(win)) { use_gl = 1; return; }
+        fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
+        vgl_quit();
+        if (win) SDL_DestroyWindow(win);
+        win = 0;
+    }
+    win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_RESIZABLE);
     if (!win) { fprintf(stderr, "SDL window: %s\n", SDL_GetError()); exit(1); }
     ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!ren) ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
@@ -210,7 +252,7 @@ void video_present(void)
     int64_t t0 = stats_on ? plat_now_ns() : 0;
     int w, h, x, y;
     uint32_t pal[256];
-    if (!ren) return;
+    if (!ren && !use_gl) return;
     SDL_LockMutex(lock);
     window_save();
     w = mode_w; h = mode_h;
@@ -225,11 +267,10 @@ void video_present(void)
     }
     resize_pending = resize_pending && (w != tex_w || h != tex_h);
     SDL_UnlockMutex(lock);
-    if (w != tex_w || h != tex_h) {
+    if (!use_gl && (w != tex_w || h != tex_h)) {
         if (tex) SDL_DestroyTexture(tex);
         tex = SDL_CreateTexture(ren, SDL_PIXELFORMAT_ARGB8888, SDL_TEXTUREACCESS_STREAMING, w, h);
         tex_w = w; tex_h = h;
-        SDL_RenderSetLogicalSize(ren, w, w == 320 ? 240 : h);   /* 320x200 modes had non-square pixels */
     }
     if (stats_on) {                             /* NHL95_STATS: how many different images the game puts on the screen per second */
         static uint32_t last_hash;
@@ -240,10 +281,22 @@ void video_present(void)
         last_hash = hash;
     }
     dump_frame(w, h);
-    SDL_UpdateTexture(tex, 0, argb, w * 4);
-    SDL_RenderClear(ren);
-    SDL_RenderCopy(ren, tex, 0, 0);
-    SDL_RenderPresent(ren);
+    {
+        int vx, vy, vw, vh;
+        video_view(&vx, &vy, &vw, &vh);
+        if (use_gl) {                           /* the view in drawable pixels, origin at the bottom left */
+            int ww, wh, dw, dh;
+            SDL_GetWindowSize(win, &ww, &wh);
+            SDL_GL_GetDrawableSize(win, &dw, &dh);
+            vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
+        } else {
+            SDL_Rect dst = { vx, vy, vw, vh };
+            SDL_UpdateTexture(tex, 0, argb, w * 4);
+            SDL_RenderClear(ren);
+            SDL_RenderCopy(ren, tex, 0, &dst);
+            SDL_RenderPresent(ren);
+        }
+    }
     if (stats_on) stats_present_ns(plat_now_ns() - t0);
 }
 
