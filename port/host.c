@@ -30,6 +30,8 @@ void game_args(int *argc, char ***argv)
     *argv = g_argv;
 }
 
+extern volatile int intro_skip;
+
 int main(int argc, char **argv)
 {
     int64_t next_tick, next_frame;
@@ -63,7 +65,7 @@ int main(int argc, char **argv)
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
         while (now >= next_tick) {
             irq_raise(0);
-            next_tick += 1000000000LL / irq_pit_hz();
+            next_tick += 1000000000LL / irq_pit_hz() / (intro_skip ? 20 : 1);        /* skipping the splash screens: the game's clock runs fast */
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }
         sb_pump();

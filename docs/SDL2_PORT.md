@@ -158,13 +158,18 @@ How the host knows (`cursor_update` in `port/input.c`):
 * Lo-res play with the mouse: `pad1dev` or `pad2dev` is 1 (the mouse), `curperiod` is not -1 (a game is running) and `dword_CCC9C`, which
   the game sets while it is paused or replaying, is 0. The pointer is then confined with `SDL_SetWindowMouseRect`.
 
-### MT-32 with digital effects
+### MT-32 with digital sound (not finished)
 
-The original game treats the MT-32 like an AdLib: no digital sound. `SetSoundDevice` sets up two sound drivers for each device, the music driver (2 FM,
-4 MT-32, 5 Ultrasound) and a second, digital one (3 Sound Blaster, 6 Ultrasound), and the engine's effect code already plays digital effects for the
-MT-32 (it tests `sounddev` with 2Ah, which includes 8), but the MT-32 branch sets the second driver to none. The CD also has `MT32SBDA.SCN`, a scene
-file for the pair. `mt32_digital` in `port/overrides.c` patches that branch when the game starts (the code is checked first): the scene is
-`MT32SBDA`, the second driver is 3 (the Sound Blaster's digital driver) and `byte_D2439` is 1, as in the Sound Blaster branch. `sounddev` stays 8, so the
-music is still the MT-32's (`MT*.KMS` songs, MIDI to the emulated MPU-401) and the effects come from the emulated Sound Blaster. `src/` is not
-touched. `NHL95_MT32_NODIGITAL=1` turns it off. Not included: the digitized music of the intro and the title (it is part of the Sound Blaster and
-Ultrasound modes, `musicon`).
+The original game treats the MT-32 like an AdLib: only MIDI. Its other devices have a second, digital sound driver (`SetSoundDevice`: music driver 2 FM,
+4 MT-32, 5 Ultrasound; digital driver 3 Sound Blaster, 6 Ultrasound) and `musicon`, which lets the rest of the game play digital music, speech and
+effects. `mt32_digital` in `port/overrides.c` (off unless `NHL95_MT32_DIGITAL=1`) patches the MT-32 branch at start-up (the code is checked first) to set up
+the Sound Blaster's digital driver as well, with a scene file it makes (`MT32DIGI.SCN`: the MT-32 patch map and the digital timbres) and `musicon`.
+`sounddev` stays 8, so the MT*.KMS songs stay the MT-32's. State: the digital music of the splash and title screens, the speech and the effects play;
+the game crashes at the national anthem, and the MIDI notes are silent with the digital timbre table loaded (`NHL95_MT32_TIMS` picks the tables).
+
+### Skipping the splash screens
+
+A key or a mouse button pressed before the front end skips the pioneer and EA Sports screens and the title screen (`intro_skip`, `port/input.c`):
+the game's waits are cut to nothing (`SetTickDeadline` and `WaitTicks` in `port/overrides.c`), its clock, the retrace and the sound devices run fast,
+the digital music is reported finished, and F12 (nothing in the game uses it) is pressed now and then for the title screen's "any key". It ends when
+the menus ask for input. The loading picture (`ShowLoadingScreen`) is not shown; `NHL95_LOADSCREEN=1` brings it back.

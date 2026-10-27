@@ -147,6 +147,8 @@ static void fifo_push(int l, int r)
     fifo_head++;
 }
 
+extern volatile int intro_skip;
+
 static void sb_pump_locked(void)
 {
     int64_t now = plat_now_ns(), dt = now - pump_last_ns;
@@ -155,7 +157,7 @@ static void sb_pump_locked(void)
     pump_last_ns = now;
     if (!active) { pump_acc = 0; return; }
     if (dt > 100000000LL) dt = 100000000LL;                       /* after a long stall: do not play it all at once */
-    due = pump_acc + dt * sample_rate() / 1e9;
+    due = pump_acc + dt * sample_rate() * (intro_skip ? 40 : 1) / 1e9;        /* skipping the splash screens: the music is over sooner */
     n = (int)due;
     pump_acc = due - n;
     for (i = 0; i < n && active; i++) {

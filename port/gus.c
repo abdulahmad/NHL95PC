@@ -329,6 +329,8 @@ static uint32_t gfifo_head, gfifo_tail;
 static int64_t gpump_last_ns;
 static double gpump_acc;
 
+extern volatile int intro_skip;
+
 static void gus_pump_locked(void)
 {
     int64_t now = plat_now_ns(), dt = now - gpump_last_ns;
@@ -339,7 +341,7 @@ static void gus_pump_locked(void)
     if (dt > 30000000LL) dg.stalls++;                           /* nobody pumped the card for 30 ms */
     timers_update();
     if (dt > 100000000LL) dt = 100000000LL;                     /* after a long stall: do not play it all at once */
-    due = gpump_acc + dt * (617400.0 / active_voices) / 1e9;
+    due = gpump_acc + dt * (617400.0 / active_voices) * (intro_skip ? 40 : 1) / 1e9;
     n = (int)due;
     gpump_acc = due - n;
     for (i = 0; i < n; i++) {

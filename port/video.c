@@ -566,6 +566,8 @@ static void set_mode(int mode, int clear)
 }
 
 /* ---- ports ---- */
+extern volatile int intro_skip;
+
 uint32_t video_port_in(unsigned port)
 {
     switch (port) {
@@ -576,7 +578,7 @@ uint32_t video_port_in(unsigned port)
         return v;
     }
     case 0x3DA:                                 /* input status 1: vertical retrace for the first part of each 70 Hz frame */
-        return ((plat_now_ns() % 14285714) < 1200000) ? 9 : 0;
+        return (((intro_skip ? plat_now_ns() * 40 : plat_now_ns()) % 14285714) < 1200000) ? 9 : 0;        /* skipping the splash screens: the fades run fast too */
     }
     return 0xFF;
 }

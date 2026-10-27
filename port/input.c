@@ -142,6 +142,8 @@ static void script_load(void)
         }
 }
 
+static void intro_skip_start(void);
+
 static void script_poll(void)
 {
     static int64_t start;
@@ -160,7 +162,7 @@ static void script_poll(void)
         } else {
             TRACE("NHL95_KEYS: %s %s\n", SDL_GetScancodeName(script[script_pos].key), script[script_pos].down ? "down" : "up");
             if (script[script_pos].key == SDL_SCANCODE_GRAVE) { if (script[script_pos].down) video_command(CMD_STATS); }
-            else key_event(script[script_pos].key, script[script_pos].down);
+            else { key_event(script[script_pos].key, script[script_pos].down); if (script[script_pos].down) intro_skip_start(); }
         }
         script_pos++;
     }
@@ -182,6 +184,37 @@ static void script_poll(void)
 extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028, inputinstalled, curperiod, dword_CCC9C;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
 static volatile int win_x, win_y, win_moved;
+
+/* Any key or mouse button before the front end skips the pioneer and EA Sports screens and the title screen (see overrides.c): the waits are cut to
+ * nothing, and F12, which nothing in the game uses, is pressed now and then for the title screen's "any key". It ends when the menus ask for input. */
+extern volatile int intro_skip;
+static int64_t skip_start, skip_next;
+
+static void intro_skip_poll(void)
+{
+    static int down;
+    int64_t now = plat_now_ns();
+    if (!intro_skip) return;
+    if (game_pointer_ns() || now - skip_start > 15000000000LL) {         /* the front end is reached (or the time is up) */
+        intro_skip = 0; audio_muted = 0; TRACE("intro skip ends: menu pointer %d\n", game_pointer_ns() != 0);
+        if (down) { key_event(SDL_SCANCODE_F12, 0); down = 0; }
+        return;
+    }
+    if (now >= skip_next) {
+        down = !down;
+        key_event(SDL_SCANCODE_F12, down);
+        skip_next = now + 100000000LL;                                   /* every 0.1 s */
+    }
+}
+
+static void intro_skip_start(void)
+{
+    if (intro_skip || game_pointer_ns()) return;
+    intro_skip = 1;
+    audio_muted = 1;                            /* the sound of the splash screens, sped up, is not worth hearing */
+    skip_start = plat_now_ns();
+    skip_next = skip_start + 300000000LL;
+}
 
 static void cursor_update(void)
 {
@@ -224,6 +257,7 @@ void input_poll(void)
     script_poll();
     joy_update();
     cursor_update();
+    intro_skip_poll();
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
         case SDL_QUIT: quit_requested = 1; break;
@@ -243,7 +277,7 @@ void input_poll(void)
                 if (!e.key.repeat) video_command(CMD_STATS);
                 break;
             }
-            if (!e.key.repeat) key_event(e.key.keysym.scancode, 1);
+            if (!e.key.repeat) { key_event(e.key.keysym.scancode, 1); intro_skip_start(); }
             break;
         case SDL_KEYUP:
             if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE) break;
@@ -259,7 +293,7 @@ void input_poll(void)
         }
         case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: {
             int bit = e.button.button == SDL_BUTTON_LEFT ? 1 : e.button.button == SDL_BUTTON_RIGHT ? 2 : e.button.button == SDL_BUTTON_MIDDLE ? 4 : 0;
-            if (e.type == SDL_MOUSEBUTTONDOWN) mouse_buttons |= bit; else mouse_buttons &= ~bit;
+            if (e.type == SDL_MOUSEBUTTONDOWN) { mouse_buttons |= bit; intro_skip_start(); } else mouse_buttons &= ~bit;
             break;
         }
         }
