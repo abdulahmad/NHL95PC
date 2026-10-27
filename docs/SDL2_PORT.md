@@ -157,3 +157,14 @@ How the host knows (`cursor_update` in `port/input.c`):
   or runs `EventToPointer`.
 * Lo-res play with the mouse: `pad1dev` or `pad2dev` is 1 (the mouse), `curperiod` is not -1 (a game is running) and `dword_CCC9C`, which
   the game sets while it is paused or replaying, is 0. The pointer is then confined with `SDL_SetWindowMouseRect`.
+
+### MT-32 with digital effects
+
+The original game treats the MT-32 like an AdLib: no digital sound. `SetSoundDevice` sets up two sound drivers for each device, the music driver (2 FM,
+4 MT-32, 5 Ultrasound) and a second, digital one (3 Sound Blaster, 6 Ultrasound), and the engine's effect code already plays digital effects for the
+MT-32 (it tests `sounddev` with 2Ah, which includes 8), but the MT-32 branch sets the second driver to none. The CD also has `MT32SBDA.SCN`, a scene
+file for the pair. `mt32_digital` in `port/overrides.c` patches that branch when the game starts (the code is checked first): the scene is
+`MT32SBDA`, the second driver is 3 (the Sound Blaster's digital driver) and `byte_D2439` is 1, as in the Sound Blaster branch. `sounddev` stays 8, so the
+music is still the MT-32's (`MT*.KMS` songs, MIDI to the emulated MPU-401) and the effects come from the emulated Sound Blaster. `src/` is not
+touched. `NHL95_MT32_NODIGITAL=1` turns it off. Not included: the digitized music of the intro and the title (it is part of the Sound Blaster and
+Ultrasound modes, `musicon`).

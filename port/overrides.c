@@ -107,6 +107,36 @@ __attribute__((naked)) static void setenvp_entry(void)
 #endif
 
 
+/* MT-32 music with the Sound Blaster's digital effects.
+ * The game sets up two sound drivers for each device (SetSoundDevice): the music driver (id 2 FM, 4 MT-32, 5 Ultrasound) and a second, digital
+ * one (3 Sound Blaster, 6 Ultrasound). Its sound code already plays digital effects for the MT-32 (the test of sounddev with 2Ah includes
+ * 8), and the CD has a scene file for the pair (MT32SBDA.SCN), but the MT-32 branch sets the second driver to none (-1). This puts the
+ * Sound Blaster's digital driver in as the second one, as that branch of the Sound Blaster does: the scene is MT32SBDA, the second driver 3
+ * and the flag byte_D2439 1. The music stays the MT-32's (sounddev stays 8, so it plays the MT*.KMS songs). NHL95_MT32_NODIGITAL=1 turns it off.
+ * The three instructions are checked first. */
+static char mt32_scene[] = "MT32SBDA";
+
+static void mt32_digital(void)
+{
+    uint8_t *p = (uint8_t *)sub_10000 + (0x82EEC - 0x10000);       /* mov edx, str_MT322 */
+    uint8_t *q = (uint8_t *)sub_10000 + (0x82F12 - 0x10000);       /* mov dword [dword_D242B], -1 */
+    uint8_t *r = (uint8_t *)sub_10000 + (0x82F1C - 0x10000);       /* xor dh, dh / mov byte [byte_D2439], dh */
+    uint32_t v;
+    uint8_t code[8];
+    if (getenv("NHL95_MT32_NODIGITAL")) return;
+    memcpy(&v, q + 6, 4);
+    if (p[0] != 0xBA || q[0] != 0xC7 || q[1] != 0x05 || v != 0xFFFFFFFFu || r[0] != 0x30 || r[1] != 0xF6 || r[2] != 0x88 || r[3] != 0x35) {
+        fprintf(stderr, "MT-32 digital effects: the game's code is not as expected, not patched\n");
+        return;
+    }
+    v = (uint32_t)(uintptr_t)mt32_scene;
+    patch_bytes(p + 1, &v, 4);
+    v = 3;
+    patch_bytes(q + 6, &v, 4);
+    code[0] = 0xC6; code[1] = 0x05; memcpy(code + 2, r + 4, 4); code[6] = 0x01; code[7] = 0x90;      /* mov byte [byte_D2439], 1 / nop */
+    patch_bytes(r, code, 8);
+}
+
 void install_overrides(void)
 {
 #ifdef _WIN32
@@ -121,5 +151,6 @@ void install_overrides(void)
     stub_zero(sub_B3ED8);       /* restore them */
     patch_jmp(__delay_init_, delay_init_entry);
     patch_jmp(__delay_, delay_entry);
+    mt32_digital();
     install_flag_traps();
 }
