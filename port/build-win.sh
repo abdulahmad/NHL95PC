@@ -66,4 +66,5 @@ $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_C
     build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
     -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"
+rm -rf "$OUT/mister" && cp -r port/mister "$OUT/mister"       # the MiSTer filter files the "MiSTer filters" menus list
 echo "built $OUT/hockey-win32.exe (run it in the game's folder, or set NHL95_ROOT)"
