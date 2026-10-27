@@ -388,6 +388,20 @@ int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
 int video_pointer_mode(void) { return ptr_mode; }
 
+/* does the current setting of this kind of screen equal what the preset sets? (the menu marks the presets that do) */
+int video_mister_preset_active(int cls, const char *rel)
+{
+    char save[sizeof mcfg[0]];
+    int same;
+    memcpy(save, &mcfg[cls], sizeof save);
+    apply_preset(cls, rel);
+    same = !strcmp(mcfg[cls].horiz, ((typeof(mcfg[0]) *)save)->horiz) && !strcmp(mcfg[cls].vert, ((typeof(mcfg[0]) *)save)->vert) &&
+           !strcmp(mcfg[cls].gamma, ((typeof(mcfg[0]) *)save)->gamma) && !strcmp(mcfg[cls].mask, ((typeof(mcfg[0]) *)save)->mask) &&
+           mcfg[cls].mask_scale == ((typeof(mcfg[0]) *)save)->mask_scale;
+    memcpy(&mcfg[cls], save, sizeof save);
+    return same;
+}
+
 /* any change to the MiSTer filters turns the MiSTer look on for that kind of screen (with auto crop, as for any look with scanlines) */
 static void mister_on(int cls)
 {

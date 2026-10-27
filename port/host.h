@@ -128,6 +128,7 @@ static inline int menu_client_size(int *w, int *h) { (void)w; (void)h; return 0;
 int video_vrr(void);
 void video_mister_pick(int cls, int kind, const char *rel);  /* a MiSTer look file chosen from the menu, for the menus (cls 0) or the game (1): 0 horizontal filter, 1 vertical filter, 2 gamma, 3 shadow mask, 4 preset */
 const char *video_mister_path(int cls, int kind);
+int video_mister_preset_active(int cls, const char *rel);
 int video_pointer_mode(void);                          /* 0 automatic, 1 always show, 2 always hide the Windows pointer */
 int64_t game_pointer_ns(void);                        /* when the game last ran its menu pointer code (emu.c), 0 if never */
 int video_changed(void);

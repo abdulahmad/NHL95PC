@@ -210,7 +210,7 @@ void menu_sync(void)
         static unsigned char pc[MAX_POPS];
         memset(pc, 0, sizeof pc);
         for (i = 0; i < nmfile; i++)
-            if (mfile[i].kind < 4 && !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind))) {
+            if (mfile[i].kind < 4 ? !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind)) : video_mister_preset_active(mfile[i].cls, mfile[i].rel)) {
                 int p;
                 for (p = mfile[i].pop; p >= 0; p = pops[p].up) pc[p] = 1;
             }
@@ -222,7 +222,7 @@ void menu_sync(void)
         }
     }
     for (i = 0; i < nmfile; i++)
-        CheckMenuItem(bar, CMD_MFILE + i, MF_BYCOMMAND | (mfile[i].kind < 4 && !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind)) ? MF_CHECKED : MF_UNCHECKED));
+        CheckMenuItem(bar, CMD_MFILE + i, MF_BYCOMMAND | ((mfile[i].kind < 4 ? !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind)) : video_mister_preset_active(mfile[i].cls, mfile[i].rel)) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_HIRES, NHIRES_ITEMS);
     radio(CMD_LORES, NLORES_ITEMS);
     radio(CMD_VSCALE_HI, 4);
