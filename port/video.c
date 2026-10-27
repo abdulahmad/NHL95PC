@@ -49,18 +49,23 @@ int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
 
 /* the window is drawn when the game's screen has changed, not on a timer (key 6): a variable refresh rate monitor then shows each new
- * image as it comes. Looks at about every third pixel of the frame and at the palette. */
+ * image as it comes. Looks at every third pixel and at the palette, every 2 ms (after saving the VGA window, where a mode 13h picture is). */
+static void window_save(void);
+
 int video_changed(void)
 {
     static uint32_t last;
+    static int64_t at;
     uint32_t hash = 0;
-    size_t i, n = (size_t)mode_w * mode_h, step = n > 100000 ? 3 : 1;
-    int y;
-    for (y = 0; y < mode_h; y++) {
-        const uint8_t *src = vram + (size_t)(y + disp_y) * mode_w + disp_x;
-        for (i = y & 1; i < (size_t)mode_w; i += step) hash = hash * 31 + src[i];
-    }
-    for (i = 0; i < 256 * 3; i++) hash = hash * 31 + dac[i / 3][i % 3];
+    size_t i, n = (size_t)mode_w * mode_h;
+    int64_t now = plat_now_ns();
+    if (now - at < 2000000) return 0;           /* the game is writing this memory: look at it sparingly */
+    at = now;
+    SDL_LockMutex(lock);
+    window_save();                              /* a mode 13h screen lives in the window until it is saved to vram */
+    for (i = (size_t)disp_y * mode_w + disp_x; i < (size_t)disp_y * mode_w + disp_x + n; i += 3) hash = hash * 31 + vram[i];
+    for (i = 0; i < 256 * 3; i += 7) hash = hash * 31 + dac[i / 3][i % 3];
+    SDL_UnlockMutex(lock);
     if (hash == last) return 0;
     last = hash;
     return 1;
