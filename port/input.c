@@ -190,13 +190,17 @@ static volatile int win_x, win_y, win_moved;
 extern volatile int intro_skip;
 static int64_t skip_start, skip_next;
 
+static int skipping;
+
 static void intro_skip_poll(void)
 {
     static int down;
     int64_t now = plat_now_ns();
-    if (!intro_skip) return;
-    if (game_pointer_ns() || now - skip_start > 15000000000LL) {         /* the front end is reached (or the time is up) */
-        intro_skip = 0; audio_muted = 0; TRACE("intro skip ends: menu pointer %d\n", game_pointer_ns() != 0);
+    if (!skipping) return;
+    if (game_pointer_ns() || now - skip_start > 15000000000LL) intro_skip = 0;      /* the front end is reached (or the time is up) */
+    if (!intro_skip) {                           /* the screen that was skipped is over (the game says so: overrides.c, emu.c) */
+        skipping = 0;
+        audio_muted = 0;
         if (down) { key_event(SDL_SCANCODE_F12, 0); down = 0; }
         return;
     }
@@ -209,7 +213,8 @@ static void intro_skip_poll(void)
 
 static void intro_skip_start(void)
 {
-    if (intro_skip || game_pointer_ns()) return;
+    if (skipping || game_pointer_ns()) return;
+    skipping = 1;
     intro_skip = 1;
     audio_muted = 1;                            /* the sound of the splash screens, sped up, is not worth hearing */
     skip_start = plat_now_ns();

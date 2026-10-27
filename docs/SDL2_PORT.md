@@ -169,7 +169,7 @@ the game crashes at the national anthem, and the MIDI notes are silent with the 
 
 ### Skipping the splash screens
 
-A key or a mouse button pressed before the front end skips the pioneer and EA Sports screens and the title screen (`intro_skip`, `port/input.c`):
+A key or a mouse button pressed before the front end skips the screen that is showing: the pioneer screens, the EA Sports screen or the title screen, one at a time (`intro_skip`, `port/input.c`; the skip of a screen ends when the game starts the next one, which `port/emu.c` sees at `InitSpeechSlots` and `TitleScreen`):
 the game's waits are cut to nothing (`SetTickDeadline` and `WaitTicks` in `port/overrides.c`), its clock, the retrace and the sound devices run fast,
 the digital music is reported finished, and F12 (nothing in the game uses it) is pressed now and then for the title screen's "any key". It ends when
 the menus ask for input. The loading picture (`ShowLoadingScreen`) is not shown; `NHL95_LOADSCREEN=1` brings it back.
