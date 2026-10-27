@@ -110,6 +110,11 @@ static void add_mister_menu(HMENU parent, int cls)
     HMENU m, k;
     int i, mi, ki;
     m = pop_sub(parent, "MiSTer filters", 1, cls, &mi);
+    if (cls == 1) {                                 /* the game screens: single scan or double scan */
+        item(m, CMD_MKHZ, "Monitor - 15kHz (single scan - TV standard)");
+        item(m, CMD_MKHZ + 1, "Monitor - 31kHz (double scan - VGA standard)");
+        line(m);
+    }
     k = pop_sub(m, names[4], 0, cls, &ki);
     add_files(k, roots[4], cls, 4, 0, ki);
     line(m);
@@ -164,8 +169,10 @@ void menu_init(void *sdl_window)
     item(m, CMD_POINTER + 2, "Windows pointer: always hide");
     m = sub(bar, "Menus (hi-res)");
     for (i = 0; i < NHIRES_ITEMS; i++) {
+        if (i == NHIRES_ITEMS - 1) continue;        /* the custom look goes at the bottom of the first group */
         if (i == 4 || i == 7 || i == 9) line(m);
         item(m, CMD_HIRES + i, hires[i]);
+        if (i == 3) item(m, CMD_HIRES + NHIRES_ITEMS - 1, hires[NHIRES_ITEMS - 1]);
     }
     line(m);
     add_mister_menu(m, 0);
@@ -173,8 +180,10 @@ void menu_init(void *sdl_window)
     for (i = 0; i < 4; i++) item(m, CMD_VSCALE_HI + i, heights[i]);
     m = sub(bar, "Gameplay (lo-res)");
     for (i = 0; i < NLORES_ITEMS; i++) {
+        if (i == NLORES_ITEMS - 1) continue;        /* the custom look goes at the bottom of the first group */
         if (i == 4 || i == 10 || i == 14) line(m);
         item(m, CMD_LORES + i, lores[i]);
+        if (i == 3) item(m, CMD_LORES + NLORES_ITEMS - 1, lores[NLORES_ITEMS - 1]);
     }
     line(m);
     add_mister_menu(m, 1);
@@ -202,6 +211,7 @@ void menu_sync(void)
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_POINTER, 3);
+    radio(CMD_MKHZ, 2);
     radio(CMD_MBRIGHT_HI, 9);
     radio(CMD_MBRIGHT_LO, 9);
     radio(CMD_MSCALE_HI, 4);

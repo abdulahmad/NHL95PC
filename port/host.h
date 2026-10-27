@@ -107,7 +107,7 @@ void video_game_to_window(int gx, int gy, int *wx, int *wy);
 void video_confine_mouse(int on);                      /* fullscreen: the host pointer stays on the 4:3 picture */
 void video_pacing_key(int n);                          /* keys 1..4: how often the window is drawn, vsync */
 int64_t video_present_ns(void);
-enum { CMD_REFRESH_60 = 100, CMD_REFRESH_70, CMD_REFRESH_VRR, CMD_VSYNC, CMD_STATS, CMD_HIRES = 200, CMD_LORES = 300, CMD_VSCALE_HI = 400, CMD_VSCALE_LO = 410, CMD_POINTER = 500, CMD_MBRIGHT_HI = 600, CMD_MRESET_HI = 610, CMD_MBRIGHT_LO = 620, CMD_MRESET_LO = 611, CMD_MSCALE_HI = 640, CMD_MSCALE_LO = 650, CMD_MFILE = 1000 };
+enum { CMD_REFRESH_60 = 100, CMD_REFRESH_70, CMD_REFRESH_VRR, CMD_VSYNC, CMD_STATS, CMD_HIRES = 200, CMD_LORES = 300, CMD_VSCALE_HI = 400, CMD_VSCALE_LO = 410, CMD_POINTER = 500, CMD_MBRIGHT_HI = 600, CMD_MRESET_HI = 610, CMD_MBRIGHT_LO = 620, CMD_MRESET_LO = 611, CMD_MSCALE_HI = 640, CMD_MSCALE_LO = 650, CMD_MKHZ = 660, CMD_MFILE = 1000 };
 #define NHIRES_ITEMS 11
 #define NLORES_ITEMS 16   /* the menu commands */
 void video_command(int id);
