@@ -32,14 +32,12 @@ static HMENU sub(HMENU parent, const char *text)
 static const char *hires[NHIRES_ITEMS] = {
     "1X - Standard", "2X - 1080p Sharp", "3X - 1440p Sharp", "4X - 4K Sharp",
     "CRT Monitor - light scanlines", "CRT Monitor - medium scanlines", "CRT Monitor - strong scanlines",
-    "CRT Monitor - soft (Lottes style)", "CRT Monitor - soft + aperture grille", "CRT Monitor - MiSTer filters (see the MiSTer menu)", "CRT Monitor - custom (scanlines, gamma, mask)" };
+    "CRT Monitor - soft (Lottes style)", "CRT Monitor - soft + aperture grille", "CRT Monitor - MiSTer filters (see the MiSTer submenu)", "CRT Monitor - custom (scanlines, gamma, mask)" };
 static const char *lores[NLORES_ITEMS] = {
     "3X - Standard", "5X - 1080p Sharp", "7X - 1440p Sharp", "11X - 4K Sharp",
-    "CRT TV - light scanlines", "CRT TV - medium scanlines", "CRT TV - strong scanlines",
-    "CRT Monitor (line doubled) - light scanlines", "CRT Monitor (line doubled) - medium scanlines", "CRT Monitor (line doubled) - strong scanlines",
-    "CRT TV - soft (Lottes style)", "CRT TV - soft + aperture grille",
-    "CRT Monitor (line doubled) - soft (Lottes style)", "CRT Monitor (line doubled) - soft + aperture grille",
-    "CRT - MiSTer filters (see the MiSTer menu)", "CRT - custom (scanlines, gamma, mask)" };
+    "CRT - light scanlines", "CRT - medium scanlines", "CRT - strong scanlines",
+    "CRT - soft (Lottes style)", "CRT - soft + aperture grille",
+    "CRT - MiSTer filters (see the MiSTer submenu)", "CRT - custom (scanlines, gamma, mask)" };
 /* The files of the MiSTer look, as menus of the folders found under mister\Filters, mister\Gamma and mister\Shadow_Masks (the folders of the
  * MiSTer SD card): every .txt file is an item, every folder a submenu. */
 #define MAX_FILES 9000
@@ -110,11 +108,6 @@ static void add_mister_menu(HMENU parent, int cls)
     HMENU m, k;
     int i, mi, ki;
     m = pop_sub(parent, "MiSTer filters", 1, cls, &mi);
-    if (cls == 1) {                                 /* the game screens: single scan or double scan */
-        item(m, CMD_MKHZ, "Monitor - 15kHz (single scan - TV standard)");
-        item(m, CMD_MKHZ + 1, "Monitor - 31kHz (double scan - VGA standard)");
-        line(m);
-    }
     k = pop_sub(m, names[4], 0, cls, &ki);
     add_files(k, roots[4], cls, 4, 0, ki);
     line(m);
@@ -168,25 +161,28 @@ void menu_init(void *sdl_window)
     item(m, CMD_POINTER + 1, "Windows pointer: always show");
     item(m, CMD_POINTER + 2, "Windows pointer: always hide");
     m = sub(bar, "Menus (hi-res)");
-    for (i = 0; i < NHIRES_ITEMS; i++) {
-        if (i == NHIRES_ITEMS - 1) continue;        /* the custom look goes at the bottom of the first group */
-        if (i == 4 || i == 7 || i == 9) line(m);
-        item(m, CMD_HIRES + i, hires[i]);
-        if (i == 3) item(m, CMD_HIRES + NHIRES_ITEMS - 1, hires[NHIRES_ITEMS - 1]);
-    }
+    for (i = 0; i < 4; i++) item(m, CMD_HIRES + i, hires[i]);
     line(m);
+    for (i = 4; i < 7; i++) item(m, CMD_HIRES + i, hires[i]);
+    line(m);
+    item(m, CMD_HIRES + 7, hires[7]); item(m, CMD_HIRES + 8, hires[8]); item(m, CMD_HIRES + 10, hires[10]);       /* soft looks, then the custom look */
+    line(m);
+    item(m, CMD_HIRES + 9, hires[9]);                  /* the MiSTer look and its filters together */
     add_mister_menu(m, 0);
     line(m);
     for (i = 0; i < 4; i++) item(m, CMD_VSCALE_HI + i, heights[i]);
     m = sub(bar, "Gameplay (lo-res)");
-    for (i = 0; i < NLORES_ITEMS; i++) {
-        if (i == NLORES_ITEMS - 1) continue;        /* the custom look goes at the bottom of the first group */
-        if (i == 4 || i == 10 || i == 14) line(m);
-        item(m, CMD_LORES + i, lores[i]);
-        if (i == 3) item(m, CMD_LORES + NLORES_ITEMS - 1, lores[NLORES_ITEMS - 1]);
-    }
+    for (i = 0; i < 4; i++) item(m, CMD_LORES + i, lores[i]);
     line(m);
+    for (i = 4; i < 7; i++) item(m, CMD_LORES + i, lores[i]);
+    line(m);
+    item(m, CMD_LORES + 7, lores[7]); item(m, CMD_LORES + 8, lores[8]); item(m, CMD_LORES + 10, lores[10]);
+    line(m);
+    item(m, CMD_LORES + 9, lores[9]);
     add_mister_menu(m, 1);
+    line(m);
+    item(m, CMD_MKHZ, "Monitor - 15kHz (single scan - TV standard)");           /* for every CRT look above, not the plain scales */
+    item(m, CMD_MKHZ + 1, "Monitor - 31kHz (double scan - VGA standard)");
     line(m);
     for (i = 0; i < 4; i++) item(m, CMD_VSCALE_LO + i, heights[i]);
     old_proc = (WNDPROC)SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LONG_PTR)menu_proc);
@@ -225,7 +221,7 @@ void menu_sync(void)
                 for (p = mfile[i].pop; p >= 0; p = pops[p].up) pc[p] = 1;
             }
         for (i = 0; i < npops; i++) {
-            if (pops[i].flag == 1) pc[i] = (unsigned char)video_command_checked(pops[i].cls ? CMD_LORES + 14 : CMD_HIRES + 9);
+            if (pops[i].flag == 1) pc[i] = (unsigned char)video_command_checked(pops[i].cls ? CMD_LORES + 9 : CMD_HIRES + 9);
             if (pops[i].flag == 2) pc[i] = 1;
             if (pops[i].up < 0 && pops[i].flag != 1) pc[i] = 0;       /* the choices at the top of the MiSTer menu always have a mark inside: none shown */
             CheckMenuItem(pops[i].parent, pops[i].pos, MF_BYPOSITION | (pc[i] ? MF_CHECKED : MF_UNCHECKED));

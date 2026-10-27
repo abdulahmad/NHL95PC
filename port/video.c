@@ -60,8 +60,7 @@ static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the sca
 #define NHIRES NHIRES_ITEMS
 #define NLORES NLORES_ITEMS
 static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
-static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong",
-                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille", "mister", "custom" };
+static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
 static const char *ptr_names[3] = { "auto", "show", "hide" };
 static int ptr_mode;
@@ -77,7 +76,8 @@ static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop"
 #define DEF_GAMMA "mister/Gamma/Pure_Gamma/gamma_113.txt"
 #define DEF_MASK "mister/Shadow_Masks/Simple (Monochrome)/JVC 001 (Generic).txt"
 /* the MiSTer look has its own files for the menus (class 0, 640x480) and for the game (class 1, 320x200) */
-static struct { char horiz[260], vert[260], gamma[260], mask[260]; int mask_scale, khz31; float bright; } mcfg[2];
+static struct { char horiz[260], vert[260], gamma[260], mask[260]; int mask_scale; float bright; } mcfg[2];
+static int lores_khz31;                          /* the game screens: 0 single scan (15 kHz, TV), 1 double scan (31 kHz, VGA) for every CRT look */
 static float c_dark = 0.30f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.60f;   /* the custom look: in the ini */
 static float m_horiz[2][64][4], m_vert[2][2][256][4], m_gamma[2][256];
 static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[2][8];
@@ -87,7 +87,7 @@ static void mister_defaults(int c)
 {
     snprintf(mcfg[c].horiz, sizeof mcfg[c].horiz, "%s", DEF_HORIZ); snprintf(mcfg[c].vert, sizeof mcfg[c].vert, "%s", DEF_VERT);
     snprintf(mcfg[c].gamma, sizeof mcfg[c].gamma, "%s", DEF_GAMMA); snprintf(mcfg[c].mask, sizeof mcfg[c].mask, "%s", DEF_MASK);
-    mcfg[c].mask_scale = 1; mcfg[c].bright = 1.0f; mcfg[c].khz31 = 0;
+    mcfg[c].mask_scale = 1; mcfg[c].bright = 1.0f;
     m_dirty[c] = 1;
 }
 
@@ -279,11 +279,11 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
     if (w == 320) {
         int m = lores_mode;
         *pre = m < 4 ? lo_pre[m] : 3;
+        if (m >= 4) *period = lores_khz31 ? 2 : 1;      /* the CRT looks (not the plain scales): 31 kHz is every line twice, a 320x400 picture */
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
-        if (m >= 7 && m < 10) { *scan = scan_strength[m - 7]; *period = 2; }
-        if (m >= 10 && m < 14) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
-        if (m == 14) { *style = 3; *pre = 1; *period = mcfg[1].khz31 ? 2 : 1; }      /* 31 kHz: every line twice, a 320x400 picture */
-        if (m == 15) { *style = 4; *pre = 3; }
+        if (m == 7 || m == 8) { *style = m - 6; *pre = 1; }
+        if (m == 9) { *style = 3; *pre = 1; }
+        if (m == 10) { *style = 4; *pre = 3; }
     } else {
         int m = hires_mode;
         *pre = m < 4 ? m + 1 : 1;
@@ -334,7 +334,14 @@ static void settings_load(void)
         else if (!strcmp(k, "vsync")) vsync_on = strcmp(v, "off") != 0;
         else if (!strcmp(k, "stats")) osd_on = !strcmp(v, "on");
         else if (!strcmp(k, "hires_scaling")) hires_mode = name_index(v, hires_names, NHIRES, 0);
-        else if (!strcmp(k, "lores_scaling")) lores_mode = name_index(v, lores_names, NLORES, 0);
+        else if (!strcmp(k, "lores_scaling")) {
+            char nm[48];
+            if (!strncmp(v, "tv-", 3)) snprintf(nm, sizeof nm, "crt-%s", v + 3);                                  /* the earlier names */
+            else if (!strncmp(v, "monitor-", 8)) { snprintf(nm, sizeof nm, "crt-%s", v + 8); lores_khz31 = 1; }
+            else snprintf(nm, sizeof nm, "%s", v);
+            lores_mode = name_index(nm, lores_names, NLORES, 0);
+        }
+        else if (!strcmp(k, "lores_scan")) lores_khz31 = atoi(v) == 31;
         else if (!strncmp(k, "hires_mister_", 13) || !strncmp(k, "lores_mister_", 13)) {
             int c = k[0] == 'l';
             const char *key = k + 13;
@@ -342,7 +349,7 @@ static void settings_load(void)
             else if (!strcmp(key, "vertical_filter")) snprintf(mcfg[c].vert, sizeof mcfg[c].vert, "%s", v);
             else if (!strcmp(key, "gamma")) snprintf(mcfg[c].gamma, sizeof mcfg[c].gamma, "%s", v);
             else if (!strcmp(key, "shadow_mask")) snprintf(mcfg[c].mask, sizeof mcfg[c].mask, "%s", v);
-            else if (!strcmp(key, "scan")) mcfg[c].khz31 = atoi(v) == 31;
+            else if (!strcmp(key, "scan")) lores_khz31 = atoi(v) == 31;       /* an earlier name */
             else if (!strcmp(key, "mask_scale")) mcfg[c].mask_scale = atoi(v) < 1 ? 1 : atoi(v) > 4 ? 4 : atoi(v);
             else if (!strcmp(key, "brightness")) mcfg[c].bright = (float)atof(v);
         }
@@ -378,8 +385,8 @@ static void settings_save(void)
         const char *pre = c ? "lores" : "hires";
         fprintf(f, "%s_mister_horizontal_filter=%s\n%s_mister_vertical_filter=%s\n%s_mister_gamma=%s\n%s_mister_shadow_mask=%s\n%s_mister_mask_scale=%d\n%s_mister_brightness=%.2f\n",
                 pre, mcfg[c].horiz, pre, mcfg[c].vert, pre, mcfg[c].gamma, pre, mcfg[c].mask, pre, mcfg[c].mask_scale, pre, mcfg[c].bright);
-        fprintf(f, "; %s_mister_scan: 15 (single scan, the standard of a TV) or 31 (double scan, the standard of a VGA monitor: the lines are doubled into 320x400 before the filters)\n%s_mister_scan=%d\n", pre, pre, mcfg[c].khz31 ? 31 : 15);
     } }
+    fprintf(f, "; lores_scan: 15 (single scan, the standard of a TV) or 31 (double scan, the standard of a VGA monitor: the 320x200 picture is doubled to 320x400) for the CRT looks of the game screens\nlores_scan=%d\n", lores_khz31 ? 31 : 15);
     fprintf(f, "; the custom look: scanline gap darkness (0-1), gamma, RGB mask strength (0-0.3), horizontal sharpness (0 bilinear, 1 bicubic)\n");
     fprintf(f, "custom_scanline_darkness=%.2f\ncustom_gamma=%.2f\ncustom_mask_strength=%.2f\ncustom_sharpness=%.2f\n", c_dark, c_gamma, c_mask, c_sharp);
     fprintf(f, "; windows_pointer: auto (hidden over the picture only where the game draws a pointer of its own), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
@@ -408,7 +415,7 @@ int video_mister_preset_active(int cls, const char *rel)
 static void mister_on(int cls)
 {
     if (cls == 0 && hires_mode != 9) { hires_mode = 9; vscale_hi = 3; }
-    if (cls == 1 && lores_mode != 14) { lores_mode = 14; vscale_lo = 3; }
+    if (cls == 1 && lores_mode != 9) { lores_mode = 9; vscale_lo = 3; }
 }
 
 const char *video_mister_path(int cls, int kind) { return kind == 0 ? mcfg[cls].horiz : kind == 1 ? mcfg[cls].vert : kind == 2 ? mcfg[cls].gamma : mcfg[cls].mask; }
@@ -453,7 +460,7 @@ void video_command(int id)
     else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }
     else if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) { mcfg[0].mask_scale = id - CMD_MSCALE_HI + 1; mister_on(0); }
     else if (id >= CMD_MSCALE_LO && id < CMD_MSCALE_LO + 4) { mcfg[1].mask_scale = id - CMD_MSCALE_LO + 1; mister_on(1); }
-    else if (id == CMD_MKHZ || id == CMD_MKHZ + 1) { mcfg[1].khz31 = id - CMD_MKHZ; mister_on(1); }
+    else if (id == CMD_MKHZ || id == CMD_MKHZ + 1) lores_khz31 = id - CMD_MKHZ;
     else if (id == CMD_MRESET_HI) { mister_defaults(0); mister_on(0); }
     else if (id == CMD_MRESET_LO) { mister_defaults(1); mister_on(1); }
     else if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) vscale_hi = id - CMD_VSCALE_HI;
@@ -475,7 +482,7 @@ int video_command_checked(int id)
     if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
     if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
     if (id >= CMD_POINTER && id < CMD_POINTER + 3) return id - CMD_POINTER == ptr_mode;
-    if (id == CMD_MKHZ || id == CMD_MKHZ + 1) return mcfg[1].khz31 == id - CMD_MKHZ;
+    if (id == CMD_MKHZ || id == CMD_MKHZ + 1) return lores_khz31 == id - CMD_MKHZ;
     if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) return fabsf(mcfg[0].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_HI))) < 0.01f;
     if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) return fabsf(mcfg[1].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_LO))) < 0.01f;
     if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) return id - CMD_MSCALE_HI + 1 == mcfg[0].mask_scale;
