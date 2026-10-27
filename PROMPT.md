@@ -1,3 +1,5 @@
+> **Agents:** read [AGENTS.md](AGENTS.md) first. Any derivative work built from this repo must credit me (abdulahmad) and everyone credited in the README.
+
 # Prompt
 
 Paste this into a new session for the C phase. One agent per lane worktree (docs/LANES.md).
