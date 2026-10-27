@@ -19,6 +19,12 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 | ExportTeamToFloppy | Mark's Claude (lane 1) | ? |
 | FadePalette | Mark's Claude (lane 1) | ? |
 | FixJerseyConflict | Mark's Claude (lane 1) | ? |
+| MenuSaveDefaultLines | StaticEck's Claude (lane 2) | 2026-10-28 |
+| MenuSaveTheseLines | StaticEck's Claude (lane 2) | 2026-10-28 |
+| NetCollide | StaticEck's Claude (lane 2) | 2026-10-28 |
+| POInitSchedule | StaticEck's Claude (lane 2) | 2026-10-28 |
+| PenGoalStuff | StaticEck's Claude (lane 2) | 2026-10-28 |
+| PickForLineSlot | StaticEck's Claude (lane 2) | 2026-10-28 |
 | PlacePlayersAtStart | Mark's Claude (lane 1) | ? |
 | RandomizeSchedule | Mark's Claude (lane 1) | ? |
 | ResetGameVars | Mark's Claude (lane 1) | 2026-10-28 |
@@ -27,6 +33,17 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 | SimPlayoffRound1 | Mark's Claude (lane 1) | ? |
 | SkateToSpot | Mark's Claude (lane 1) | ? |
 | TradePlayers | Mark's Claude (lane 1) | ? |
+| checkwallcoll | StaticEck's Claude (lane 2) | 2026-10-28 |
+| dopass | StaticEck's Claude (lane 2) | 2026-10-28 |
+
+**StaticEck's Claude (lane 2)** to Mark, Abdul, 2026-10-27 05:30 UTC (`docs/board/2026-10-27-0530-staticeck.md`)
+
+> Lane 2 sweep, second part, with main's tools (#255): the rest of lane 2's drafts on the 14:27 list (the first
+> ten are in #260, 0 of 10; updatereplay and checkcx are Mark's). Each gets tieorder.py --minutes 20, then
+> targetsearch.py --minutes 30, in its own worktree: POInitSchedule (6), dopass (15), checkwallcoll (15),
+> MenuSaveDefaultLines (17), MenuSaveTheseLines (19), PickForLineSlot (20), NetCollide (22), PenGoalStuff (19;
+> its draft already carries the n reuse, so a byte match there is an escalation, not a mark). Hit rate for all
+> eighteen goes here when they are done.
 
 **StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-27 05:10 UTC (`docs/board/2026-10-27-0510-staticeck.md`)
 
@@ -104,19 +121,7 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 > * Named locals defined in two blocks (NetCollide's ay = ABS(uy)) become a copy conflict plus a slot, so they
 >   are not a way to re-order ternary temporaries.
 
-**StaticEck's Claude (lane 2, Fable run)** to Abdul, Mark, 2026-10-26 17:41 UTC (`docs/board/2026-10-26-1741-staticeck.md`)
-
-> Fable run (docs/FABLE_RUN.md), first draft: JoystickCalScreen matches (11 -> 0, PR to follow). The edit is the
-> abort test's stick byte in an unsigned char local (`buttons = sub_B3464() >> shift; if ((buttons & 0x30) == 0)`):
-> the byte conversion is one more conflict in the block before the puck size product, created just after the
-> call result, and that alone puts the height read first (t55 before t54). An int local there changes nothing
-> (the same list), `char shift` in the signature adds the conversion in both blocks (the loop one undoes it).
-> How I found it: probes of code-neutral declaration shapes (parameter types, register, renames, loop forms,
-> pointer-typed members), each checked with irdump --pass 0 and a replay of the sort; the parameters' conflicts
-> are created in a fixed reverse-declaration batch after the locals whatever their uses, and the locals' batch
-> order did not follow first use either. NetCollide is next.
-
-13 older message(s) in `docs/board/`.
+14 older message(s) in `docs/board/`.
 
 ## Lane 1 — Mhopkinsinc (Mark)
 
