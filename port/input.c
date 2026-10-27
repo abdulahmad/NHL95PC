@@ -239,6 +239,7 @@ void input_poll(void)
             if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_6) break;
             key_event(e.key.keysym.scancode, 0);
             break;
+        case SDL_SYSWMEVENT: menu_event(e.syswm.msg); break;      /* the window's menu (Windows) */
         case SDL_MOUSEMOTION: {
             int gx, gy;
             video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);

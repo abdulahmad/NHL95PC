@@ -105,6 +105,20 @@ void video_game_to_window(int gx, int gy, int *wx, int *wy);
 void video_confine_mouse(int on);                      /* fullscreen: the host pointer stays on the 4:3 picture */
 void video_pacing_key(int n);                          /* keys 1..4: how often the window is drawn, vsync */
 int64_t video_present_ns(void);
+enum { CMD_REFRESH_60 = 100, CMD_REFRESH_70, CMD_REFRESH_VRR, CMD_VSYNC, CMD_STATS, CMD_HIRES = 200, CMD_LORES = 300 };   /* the menu commands */
+void video_command(int id);
+int video_command_checked(int id);
+#ifdef _WIN32
+void menu_init(void *sdl_window);                      /* menu_win.c: the window's menu bar */
+void menu_sync(void);
+void menu_show(int on);
+void menu_event(void *syswm_msg);
+#else
+static inline void menu_init(void *w) { (void)w; }
+static inline void menu_sync(void) {}
+static inline void menu_show(int on) { (void)on; }
+static inline void menu_event(void *m) { (void)m; }
+#endif
 int video_vrr(void);                                   /* key 6: draw when the screen changes (for variable refresh rate monitors) */
 int video_changed(void);
 void video_toggle_fullscreen(void);                    /* Alt+Enter */

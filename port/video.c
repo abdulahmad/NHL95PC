@@ -27,6 +27,7 @@ int vgl_init(SDL_Window *win);
 void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh);
 void vgl_quit(void);
 void vgl_set_vsync(int on);
+void vgl_set_look(int pre, float scan, int period);
 void vgl_osd_set(const char *l1, const char *l2);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
@@ -34,19 +35,134 @@ static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx
 { (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
 static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
+static void vgl_set_look(int pre, float scan, int period) { (void)pre; (void)scan; (void)period; }
 static void vgl_osd_set(const char *l1, const char *l2) { (void)l1; (void)l2; }
 #endif
 static uint32_t argb[1280 * 1024];
 
-/* How often the window is drawn (keys 1 and 2: 60 Hz, 3: 70 Hz, 4: vsync on or off, 5: the numbers on the picture) and what the window title reports: how many frames were
- * drawn and how many of them were different images, per second. */
+/* ---- the settings: how often the window is drawn, vsync, the numbers on the picture, and how the picture is scaled ----
+ * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program and changed from the window's menu or the keys 1-6. */
 static int present_hz = 60, vsync_on = 1, osd_on, vrr_on;
-static char base_title[96] = "NHL Hockey 95";
-static int shown, changed;
-static int64_t title_at;
+static void title_refresh(void);
+static int hires_mode, lores_mode;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
+#define NHIRES 7
+#define NLORES 10
+static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong" };
+static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong" };
+static const float scan_strength[3] = { 0.30f, 0.55f, 0.80f };
+
+/* the integer scale taken before the window's bicubic scaling, the strength of the scanlines and how many there are per source line */
+static void look(int w, int *pre, float *scan, int *period)
+{
+    static const int lo_pre[4] = { 3, 5, 7, 11 };
+    *scan = 0; *period = 1;
+    if (w == 320) {
+        int m = lores_mode;
+        *pre = m < 4 ? lo_pre[m] : 3;
+        if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
+        if (m >= 7) { *scan = scan_strength[m - 7]; *period = 2; }
+    } else {
+        int m = hires_mode;
+        *pre = m < 4 ? m + 1 : 1;
+        if (m >= 4) *scan = scan_strength[m - 4];
+    }
+}
+
+#ifdef _WIN32
+#define INI_NAME "hockey-win32.ini"
+#else
+#define INI_NAME "hockey-linux.ini"
+#endif
+
+static void ini_path(char *out, size_t n)
+{
+    char *base = SDL_GetBasePath();
+    snprintf(out, n, "%s%s", base ? base : "", INI_NAME);
+    SDL_free(base);
+}
+
+static int name_index(const char *v, const char **names, int n, int def)
+{
+    int i;
+    for (i = 0; i < n; i++) if (!strcmp(v, names[i])) return i;
+    return def;
+}
+
+static void settings_load(void)
+{
+    char path[1024], line[256];
+    FILE *f;
+    ini_path(path, sizeof path);
+    f = fopen(path, "r");
+    if (!f) return;
+    while (fgets(line, sizeof line, f)) {
+        char *k = line, *v = strchr(line, '='), *e;
+        if (!v || line[0] == ';' || line[0] == '[') continue;
+        *v++ = 0;
+        while (*k == ' ') k++;
+        for (e = k + strlen(k); e > k && e[-1] == ' '; ) *--e = 0;
+        while (*v == ' ') v++;
+        for (e = v + strlen(v); e > v && (e[-1] == ' ' || e[-1] == '\n' || e[-1] == '\r'); ) *--e = 0;
+        if (!strcmp(k, "refresh")) { if (!strcmp(v, "70")) present_hz = 70, vrr_on = 0; else if (!strcmp(v, "vrr")) vrr_on = 1; else present_hz = 60, vrr_on = 0; }
+        else if (!strcmp(k, "vsync")) vsync_on = strcmp(v, "off") != 0;
+        else if (!strcmp(k, "stats")) osd_on = !strcmp(v, "on");
+        else if (!strcmp(k, "hires_scaling")) hires_mode = name_index(v, hires_names, NHIRES, 0);
+        else if (!strcmp(k, "lores_scaling")) lores_mode = name_index(v, lores_names, NLORES, 0);
+    }
+    fclose(f);
+}
+
+static void settings_save(void)
+{
+    char path[1024];
+    FILE *f;
+    ini_path(path, sizeof path);
+    f = fopen(path, "w");
+    if (!f) return;
+    fprintf(f, "; NHL Hockey 95 (SDL2 port) settings. Changed from the window menu; edit them here too.\n[video]\n");
+    fprintf(f, "; refresh: 60, 70 or vrr (draw whenever the game's picture changes, for variable refresh rate monitors)\nrefresh=%s\n", vrr_on ? "vrr" : present_hz == 70 ? "70" : "60");
+    fprintf(f, "; vsync: on or off\nvsync=%s\n", vsync_on ? "on" : "off");
+    fprintf(f, "; stats: on or off (frames per second, CPU and GPU use, in the top right corner)\nstats=%s\n", osd_on ? "on" : "off");
+    fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong\nhires_scaling=%s\n", hires_names[hires_mode]);
+    fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong\nlores_scaling=%s\n", lores_names[lores_mode]);
+    fclose(f);
+}
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
+
+/* the menu commands (host.h) and the keys 1-6 */
+void video_command(int id)
+{
+    if (id == CMD_REFRESH_60) { present_hz = 60; vrr_on = 0; }
+    else if (id == CMD_REFRESH_70) { present_hz = 70; vrr_on = 0; }
+    else if (id == CMD_REFRESH_VRR) { vrr_on = 1; vsync_on = 0; }
+    else if (id == CMD_VSYNC) vsync_on = !vsync_on;
+    else if (id == CMD_STATS) osd_on = !osd_on;
+    else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) hires_mode = id - CMD_HIRES;
+    else if (id >= CMD_LORES && id < CMD_LORES + NLORES) lores_mode = id - CMD_LORES;
+    else return;
+    if (use_gl) vgl_set_vsync(vsync_on);
+    settings_save();
+    menu_sync();
+    title_refresh();
+}
+
+int video_command_checked(int id)
+{
+    if (id == CMD_REFRESH_60) return !vrr_on && present_hz == 60;
+    if (id == CMD_REFRESH_70) return !vrr_on && present_hz == 70;
+    if (id == CMD_REFRESH_VRR) return vrr_on;
+    if (id == CMD_VSYNC) return vsync_on;
+    if (id == CMD_STATS) return osd_on;
+    if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
+    if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
+    return 0;
+}
+
+static char base_title[96] = "NHL Hockey 95";
+static int shown, changed;
+static int64_t title_at;
 
 /* the window is drawn when the game's screen has changed, not on a timer (key 6): a variable refresh rate monitor then shows each new
  * image as it comes. Looks at every third pixel and at the palette, every 2 ms (after saving the VGA window, where a mode 13h picture is). */
@@ -90,14 +206,9 @@ static void title_refresh(void)
 
 void video_pacing_key(int n)
 {
-    if (n == 1) { present_hz = 60; vsync_on = 1; vrr_on = 0; }
-    else if (n == 2) { present_hz = 60; vrr_on = 0; }
-    else if (n == 3) { present_hz = 70; vrr_on = 0; }
-    else if (n == 6) { vrr_on = 1; vsync_on = 0; }
-    else if (n == 4) vsync_on = !vsync_on;
-    else if (n == 5) osd_on = !osd_on;
-    if (use_gl) vgl_set_vsync(vsync_on);
-    title_refresh();
+    static const int ids[7] = { 0, CMD_REFRESH_60, CMD_REFRESH_60, CMD_REFRESH_70, CMD_VSYNC, CMD_STATS, CMD_REFRESH_VRR };
+    if (n == 1 && !vsync_on) video_command(CMD_VSYNC);
+    if (n >= 1 && n <= 6) video_command(ids[n]);
 }
 
 static struct { int mode, w, h; } modes[] = {
@@ -291,6 +402,7 @@ void video_toggle_fullscreen(void)
     if (!win) return;
     fullscreen = !fullscreen;
     SDL_SetWindowFullscreen(win, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
+    menu_show(!fullscreen);
 }
 
 int video_is_fullscreen(void) { return fullscreen; }
@@ -299,10 +411,11 @@ int video_is_fullscreen(void) { return fullscreen; }
 void video_init(void)
 {
     lock = SDL_CreateMutex();
+    settings_load();
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     if (!getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
         win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-        if (win && vgl_init(win)) { use_gl = 1; return; }
+        if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); return; }
         fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
         vgl_quit();
         if (win) SDL_DestroyWindow(win);
@@ -386,6 +499,7 @@ void video_present(void)
             int ww, wh, dw, dh;
             SDL_GetWindowSize(win, &ww, &wh);
             SDL_GL_GetDrawableSize(win, &dw, &dh);
+            { int pre, period; float scan; look(w, &pre, &scan, &period); vgl_set_look(pre, scan, period); }
             vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {
             SDL_Rect dst = { vx, vy, vw, vh };
