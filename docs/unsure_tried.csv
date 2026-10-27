@@ -5410,3 +5410,5 @@ LeagueTeamSelect,,generated invalid multiline-condition candidates were skipped,
 LeagueTeamSelect,,log /home/mhopkins/tmp/u/np/permlog_ts_LeagueTeamSelect.csv,,ga
 LeagueTeamSelect,,"final: separate palbank + v declared before size + ordinary x/y controller ABI = 45 (+3), fresh GA",,ga
 LeagueTeamSelect,,no ESCALATE find,,ga
+checkwallcoll,,"for that: `lim = 0 - lim` (same code), `regd4.w = 0x40; regd4.w -= xlim;` (25)",25,ga
+checkwallcoll,,"the negations inside the compares (23), `lim = -radius; lim += K` (21)",21,ga
