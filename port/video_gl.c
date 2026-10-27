@@ -26,7 +26,8 @@ static PFNGLACTIVETEXTUREPROC p_glActiveTexture;
 
 static SDL_GLContext ctx;
 static GLuint prog, tex;
-static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style, u_th, u_tv, u_tg, u_tm, u_masksize;
+static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style, u_th, u_tv, u_tg, u_tm, u_masksize, u_cdark, u_cgamma, u_cmask, u_csharp, u_bright;
+static float c_dark = 0.3f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.6f, m_bright = 1.0f;
 static GLuint t_h, t_v, t_g, t_m;
 static int have_tables, mask_w = 1, mask_h = 1;
 static int look_pre = 1, look_period = 1, look_style, tgt_w, tgt_h;
@@ -54,6 +55,11 @@ static const char *fs_src =
     "uniform sampler2D tg;\n"
     "uniform sampler2D tm;\n"
     "uniform vec2 masksize;\n"
+    "uniform float cdark;\n"
+    "uniform float cgamma;\n"
+    "uniform float cmask;\n"
+    "uniform float csharp;\n"
+    "uniform float bright;\n"
     "uniform float period;\n"
     "varying vec2 uv;\n"
     "vec4 fetch(vec2 v) {\n"
@@ -103,6 +109,24 @@ static const char *fs_src =
     "  return srcpx(ix - 1.0, y) * w.x + srcpx(ix, y) * w.y + srcpx(ix + 1.0, y) * w.z + srcpx(ix + 2.0, y) * w.w;\n"
     "}\n"
     "void main() {\n"
+    "  if (style > 3.5) {\n"
+    "    vec2 p = uv * srcsize * pre - 0.5;\n"
+    "    vec2 i = floor(p);\n"
+    "    vec2 f = p - i;\n"
+    "    float f2 = f.x * f.x, f3 = f2 * f.x;\n"
+    "    vec4 wc = vec4(-0.5 * f3 + f2 - 0.5 * f.x, 1.5 * f3 - 2.5 * f2 + 1.0, -1.5 * f3 + 2.0 * f2 + 0.5 * f.x, 0.5 * f3 - 0.5 * f2);\n"
+    "    vec4 wx = mix(vec4(0.0, 1.0 - f.x, f.x, 0.0), wc, csharp);\n"
+    "    float sy = uv.y * srcsize.y;\n"
+    "    vec4 c = row(vec2(i.x, floor(sy) * pre), 0.0, wx);\n"
+    "    float d = min(abs(fract(sy) - center) * 2.0, 1.0);\n"
+    "    vec3 col = c.rgb * (1.0 - cdark * pow(d, 1.5));\n"
+    "    col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / cgamma));\n"
+    "    float k = mod(floor(gl_FragCoord.x) + mod(floor(gl_FragCoord.y), 2.0), 3.0);\n"
+    "    vec3 m = vec3(1.0 - cmask);\n"
+    "    if (k < 0.5) m.r = 1.0 + 2.0 * cmask; else if (k < 1.5) m.g = 1.0 + 2.0 * cmask; else m.b = 1.0 + 2.0 * cmask;\n"
+    "    gl_FragColor = vec4(clamp(col * m, 0.0, 1.0), 1.0);\n"
+    "    return;\n"
+    "  }\n"
     "  if (style > 2.5) {\n"
     "    vec2 p = uv * srcsize - 0.5;\n"
     "    vec2 i = floor(p);\n"
@@ -117,7 +141,7 @@ static const char *fs_src =
     "    vec4 w = mix(wd, wb, clamp(lum, 0.0, 1.0));\n"
     "    vec3 col = clamp(r0 * w.x + r1 * w.y + r2 * w.z + r3 * w.w, 0.0, 1.0);\n"
     "    col = vec3(texture2D(tg, vec2((floor(col.r * 255.0) + 0.5) / 256.0, 0.5)).r, texture2D(tg, vec2((floor(col.g * 255.0) + 0.5) / 256.0, 0.5)).r, texture2D(tg, vec2((floor(col.b * 255.0) + 0.5) / 256.0, 0.5)).r) * 2.0;\n"
-    "    col *= texture2D(tm, gl_FragCoord.xy / masksize).rgb * 2.0;\n"
+    "    col *= bright * texture2D(tm, gl_FragCoord.xy / masksize).rgb * 2.0;\n"
     "    gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);\n"
     "    return;\n"
     "  }\n"
@@ -195,6 +219,11 @@ int vgl_init(SDL_Window *win)
     u_tg = p_glGetUniformLocation(prog, "tg");
     u_tm = p_glGetUniformLocation(prog, "tm");
     u_masksize = p_glGetUniformLocation(prog, "masksize");
+    u_cdark = p_glGetUniformLocation(prog, "cdark");
+    u_cgamma = p_glGetUniformLocation(prog, "cgamma");
+    u_cmask = p_glGetUniformLocation(prog, "cmask");
+    u_csharp = p_glGetUniformLocation(prog, "csharp");
+    u_bright = p_glGetUniformLocation(prog, "bright");
     u_period = p_glGetUniformLocation(prog, "period");
     glGenTextures(1, &tex);
     SDL_GL_SetSwapInterval(1);
@@ -301,6 +330,11 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     p_glUniform1f(u_gain, look_gain);
     p_glUniform1f(u_center, look_center);
     p_glUniform1f(u_style, (float)look_style);
+    p_glUniform1f(u_cdark, c_dark);
+    p_glUniform1f(u_cgamma, c_gamma);
+    p_glUniform1f(u_cmask, c_mask);
+    p_glUniform1f(u_csharp, c_sharp);
+    p_glUniform1f(u_bright, m_bright);
     if (look_style == 3 && have_tables) {         /* the MiSTer look's tables, on texture units 1-4 */
         p_glUniform1i(u_th, 1); p_glUniform1i(u_tv, 2); p_glUniform1i(u_tg, 3); p_glUniform1i(u_tm, 4);
         p_glUniform2f(u_masksize, (float)mask_w, (float)mask_h);
@@ -380,6 +414,11 @@ void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], co
     glBindTexture(GL_TEXTURE_2D, 0);
     have_tables = 1;
 }
+
+/* the custom look: how much the gaps between scanlines are darkened, the output gamma, the strength of the RGB mask, the sharpness of the
+ * horizontal filter (0 bilinear, 1 bicubic); and the brightness of the MiSTer look */
+void vgl_set_custom(float dark, float gamma, float mask, float sharp) { c_dark = dark; c_gamma = gamma; c_mask = mask; c_sharp = sharp; }
+void vgl_set_bright(float b) { m_bright = b; }
 
 /* the shadow mask tile: w x h cells of red, green, blue factors */
 void vgl_mister_mask(const float *rgb, int w, int h)

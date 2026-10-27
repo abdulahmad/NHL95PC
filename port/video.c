@@ -33,6 +33,8 @@ void vgl_set_look(int pre, float sigma, float gain, float center, int period, in
 void vgl_set_target(int w, int h);
 void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256]);
 void vgl_mister_mask(const float *rgb, int w, int h);
+void vgl_set_custom(float dark, float gamma, float mask, float sharp);
+void vgl_set_bright(float b);
 void vgl_osd_set(const char *l1, const char *l2, const char *l3);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
@@ -44,6 +46,8 @@ static void vgl_set_look(int pre, float sigma, float gain, float center, int per
 static void vgl_set_target(int w, int h) { (void)w; (void)h; }
 static void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256]) { (void)horiz; (void)vert; (void)gamma; }
 static void vgl_mister_mask(const float *rgb, int w, int h) { (void)rgb; (void)w; (void)h; }
+static void vgl_set_custom(float dark, float gamma, float mask, float sharp) { (void)dark; (void)gamma; (void)mask; (void)sharp; }
+static void vgl_set_bright(float b) { (void)b; }
 static void vgl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
 static uint32_t argb[1280 * 1024];
@@ -55,9 +59,9 @@ static void title_refresh(void);
 static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
 #define NHIRES NHIRES_ITEMS
 #define NLORES NLORES_ITEMS
-static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister" };
+static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister", "custom" };
 static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong",
-                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille", "mister" };
+                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille", "mister", "custom" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
 static const char *ptr_names[3] = { "auto", "show", "hide" };
 static int ptr_mode;
@@ -68,8 +72,13 @@ static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop"
  * 4 taps, for dark and for bright pixels), a gamma curve (256 values) and a shadow mask (cells of 3 hex digits: colour, intensity on, intensity off,
  * with a pattern for each output resolution). The paths are in the ini, relative to the program's folder (the files come from the MiSTer's
  * filters, gamma and Shadow_Masks folders). A file that is missing is replaced by a plain stand-in. */
-static char m_horiz_path[260] = "mister/GS_Sharpness_060.txt", m_vert_path[260] = "mister/SLA_Dk_030_Br_070.txt";
-static char m_gamma_path[260] = "mister/gamma_113.txt", m_mask_path[260] = "mister/JVC 001 (Generic).txt";
+#define DEF_HORIZ "mister/Filters/Upscaling - Recommended/GS_Sharpness_060.txt"
+#define DEF_VERT "mister/Filters/Scanlines - Adaptive/SLA_Dk_030_Br_070.txt"
+#define DEF_GAMMA "mister/Gamma/Pure_Gamma/gamma_113.txt"
+#define DEF_MASK "mister/Shadow_Masks/Simple (Monochrome)/JVC 001 (Generic).txt"
+static char m_horiz_path[260] = DEF_HORIZ, m_vert_path[260] = DEF_VERT;
+static float c_dark = 0.30f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.60f, m_bright = 1.0f;   /* the custom look, and the brightness of the MiSTer look: in the ini */
+static char m_gamma_path[260] = DEF_GAMMA, m_mask_path[260] = DEF_MASK;
 static float m_horiz[64][4], m_vert[2][256][4], m_gamma[256];
 static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[8];
 static int m_nmasks, m_loaded, m_mask_for = -1;
@@ -165,11 +174,13 @@ static void mister_load(void)
     float v[2 * 256 * 4 + 16];
     int n, ad, tb, i, p, k;
     m_loaded = 1;
-    n = read_numbers(m_horiz_path, v, 64 * 4, &ad, &tb);
-    if (n == 64 * 4) {
+    n = read_numbers(m_horiz_path, v, 2 * 256 * 4, &ad, &tb);
+    if (n == 64 * 4 || n == 256 * 4 || n == 2 * 256 * 4) {      /* 64 or 256 phases (the first set of an adaptive file) */
+        int phases = n == 64 * 4 ? 64 : 256;
         for (p = 0; p < 64; p++) {
-            float sum = v[p * 4] + v[p * 4 + 1] + v[p * 4 + 2] + v[p * 4 + 3];
-            for (k = 0; k < 4; k++) m_horiz[p][k] = sum > 0 ? v[p * 4 + k] / sum : 0;
+            const float *r = v + (size_t)(p * phases / 64) * 4;
+            float sum = r[0] + r[1] + r[2] + r[3];
+            for (k = 0; k < 4; k++) m_horiz[p][k] = sum > 0 ? r[k] / sum : 0;
         }
     } else {                                     /* a Gaussian, sigma 0.42 pixels: what GS_Sharpness_060 is */
         for (p = 0; p < 64; p++) {
@@ -179,11 +190,12 @@ static void mister_load(void)
         }
     }
     n = read_numbers(m_vert_path, v, 2 * 256 * 4, &ad, &tb);
-    if (n == 2 * 256 * 4 || n == 256 * 4) {
+    if (n == 2 * 256 * 4 || n == 256 * 4 || n == 64 * 4) {      /* adaptive (dark and bright sets), one set of 256 phases, or one of 64 */
         float div = tb ? 256.0f : 128.0f;
+        int phases = n == 64 * 4 ? 64 : 256;
         for (i = 0; i < 2; i++)
             for (p = 0; p < 256; p++)
-                for (k = 0; k < 4; k++) m_vert[i][p][k] = v[((n == 256 * 4 ? 0 : i) * 256 + p) * 4 + k] / div;
+                for (k = 0; k < 4; k++) m_vert[i][p][k] = v[(((n == 2 * 256 * 4 ? i : 0) * 256) + p * phases / 256) * 4 + k] / div;
     } else {                                     /* stand-ins: a beam over the two nearest lines, deeper gaps for dark pixels */
         for (i = 0; i < 2; i++)
             for (p = 0; p < 256; p++) {
@@ -226,12 +238,14 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
         if (m >= 7 && m < 10) { *scan = scan_strength[m - 7]; *period = 2; }
         if (m >= 10 && m < 14) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
         if (m == 14) { *style = 3; *pre = 1; }
+        if (m == 15) { *style = 4; *pre = 3; }
     } else {
         int m = hires_mode;
         *pre = m < 4 ? m + 1 : 1;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m >= 7 && m < 9) *style = 1 + (m - 7);
         if (m == 9) *style = 3;
+        if (m == 10) *style = 4;
     }
 }
 
@@ -279,6 +293,11 @@ static void settings_load(void)
         else if (!strcmp(k, "mister_vertical_filter")) snprintf(m_vert_path, sizeof m_vert_path, "%s", v);
         else if (!strcmp(k, "mister_gamma")) snprintf(m_gamma_path, sizeof m_gamma_path, "%s", v);
         else if (!strcmp(k, "mister_shadow_mask")) snprintf(m_mask_path, sizeof m_mask_path, "%s", v);
+        else if (!strcmp(k, "mister_brightness")) m_bright = (float)atof(v);
+        else if (!strcmp(k, "custom_scanline_darkness")) c_dark = (float)atof(v);
+        else if (!strcmp(k, "custom_gamma")) c_gamma = (float)atof(v);
+        else if (!strcmp(k, "custom_mask_strength")) c_mask = (float)atof(v);
+        else if (!strcmp(k, "custom_sharpness")) c_sharp = (float)atof(v);
         else if (!strcmp(k, "windows_pointer")) ptr_mode = name_index(v, ptr_names, 3, 0);
         else if (!strcmp(k, "hires_picture_height")) vscale_hi = name_index(v, vscale_names, 4, 0);
         else if (!strcmp(k, "lores_picture_height")) vscale_lo = name_index(v, vscale_names, 4, 0);
@@ -301,7 +320,10 @@ static void settings_save(void)
     fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong, tv-soft, tv-soft-grille, monitor-soft, monitor-soft-grille\nlores_scaling=%s\n", lores_names[lores_mode]);
     fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
     fprintf(f, "; the MiSTer look uses the MiSTer scaler's own files (from the filters, gamma and Shadow_Masks folders of its SD card), as paths relative to this folder.\n");
+    fprintf(f, "; the first part of each MiSTer path is the folder of the MiSTer SD card it came from (Filters, Gamma, Shadow_Masks), kept in a mister folder here\n");
     fprintf(f, "mister_horizontal_filter=%s\nmister_vertical_filter=%s\nmister_gamma=%s\nmister_shadow_mask=%s\n", m_horiz_path, m_vert_path, m_gamma_path, m_mask_path);
+    fprintf(f, "; mister_brightness multiplies the MiSTer look (1.0 is the files' own); the custom look: scanline gap darkness (0-1), gamma, RGB mask strength (0-0.3), horizontal sharpness (0 bilinear, 1 bicubic)\nmister_brightness=%.2f\n", m_bright);
+    fprintf(f, "custom_scanline_darkness=%.2f\ncustom_gamma=%.2f\ncustom_mask_strength=%.2f\ncustom_sharpness=%.2f\n", c_dark, c_gamma, c_mask, c_sharp);
     fprintf(f, "; windows_pointer: auto (hidden over the picture only where the game draws a pointer of its own), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
     fclose(f);
 }
@@ -309,6 +331,18 @@ static void settings_save(void)
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
 int video_pointer_mode(void) { return ptr_mode; }
+
+const char *video_mister_path(int kind) { return kind == 0 ? m_horiz_path : kind == 1 ? m_vert_path : kind == 2 ? m_gamma_path : m_mask_path; }
+
+/* a file of the MiSTer look chosen from the menu; it is loaded when the picture is next drawn */
+void video_mister_pick(int kind, const char *rel)
+{
+    char *dst = kind == 0 ? m_horiz_path : kind == 1 ? m_vert_path : kind == 2 ? m_gamma_path : m_mask_path;
+    snprintf(dst, 260, "%s", rel);
+    m_loaded = 0; m_mask_for = -1;
+    settings_save();
+    menu_sync();
+}
 
 /* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
  * and the gain keeps the average brightness. center is the brightest position within the source line (0..1). */
@@ -335,6 +369,12 @@ void video_command(int id)
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) hires_mode = id - CMD_HIRES;
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) lores_mode = id - CMD_LORES;
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
+    else if (id >= CMD_MBRIGHT && id < CMD_MBRIGHT + 5) m_bright = 0.7f + 0.1f * (id - CMD_MBRIGHT);
+    else if (id == CMD_MRESET) {
+        snprintf(m_horiz_path, sizeof m_horiz_path, "%s", DEF_HORIZ); snprintf(m_vert_path, sizeof m_vert_path, "%s", DEF_VERT);
+        snprintf(m_gamma_path, sizeof m_gamma_path, "%s", DEF_GAMMA); snprintf(m_mask_path, sizeof m_mask_path, "%s", DEF_MASK);
+        m_bright = 1.0f; m_loaded = 0; m_mask_for = -1;
+    }
     else if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) vscale_hi = id - CMD_VSCALE_HI;
     else if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) vscale_lo = id - CMD_VSCALE_LO;
     else return;
@@ -354,6 +394,7 @@ int video_command_checked(int id)
     if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
     if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
     if (id >= CMD_POINTER && id < CMD_POINTER + 3) return id - CMD_POINTER == ptr_mode;
+    if (id >= CMD_MBRIGHT && id < CMD_MBRIGHT + 5) return fabsf(m_bright - (0.7f + 0.1f * (id - CMD_MBRIGHT))) < 0.01f;
     if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) return id - CMD_VSCALE_HI == vscale_hi;
     if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) return id - CMD_VSCALE_LO == vscale_lo;
     return 0;
@@ -729,6 +770,8 @@ void video_present(void)
                 vgl_set_target(dw, dh);
                 vgl_set_look(pre, scan, gain, center, period, style);
                 if (style == 3) { if (!m_loaded) mister_load(); mister_mask_for(wh); }
+                vgl_set_custom(c_dark, c_gamma, c_mask, c_sharp);
+                vgl_set_bright(m_bright);
             }
             vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {
