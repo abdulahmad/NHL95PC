@@ -453,8 +453,8 @@ void video_command(int id)
     else if (id == CMD_REFRESH_VRR) { vrr_on = 1; vsync_on = 0; }
     else if (id == CMD_VSYNC) vsync_on = !vsync_on;
     else if (id == CMD_STATS) osd_on = !osd_on;
-    else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) { hires_mode = id - CMD_HIRES; if (hires_mode >= 4) vscale_hi = 3; }     /* a look with scanlines: auto crop */
-    else if (id >= CMD_LORES && id < CMD_LORES + NLORES) { lores_mode = id - CMD_LORES; if (lores_mode >= 4) vscale_lo = 3; }
+    else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) { hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 ? 3 : 0; }     /* a look with scanlines: auto crop; a plain scale (1X-11X): fit the window */
+    else if (id >= CMD_LORES && id < CMD_LORES + NLORES) { lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 ? 3 : 0; }
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
     else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
     else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }

@@ -150,9 +150,9 @@ In fullscreen the Windows pointer is always kept on the 4:3 picture, and hidden 
 
 How the host knows (`cursor_update` in `port/input.c`):
 
-* Hi-res glove: the menus call `EventToPointer` every time round their loop. Its first instruction is replaced by an int3 (`port/emu.c`)
-  that notes the time, so "the game ran its menu pointer code in the last 0.3 s" means a glove is on the screen. The splash screens and the
-  loading screens never run it.
+* Hi-res glove: the menus ask for an input event (`GetInputEvent`) every time round their loop, even when there is none, and move the pointer (`EventToPointer`)
+  when there is one. The first instruction of both is replaced by an int3 (`port/emu.c`) that notes the time, so "the game asked for input in the
+  last 0.3 s" means a menu with a glove is on the screen, moving the mouse or not. The splash screens and the loading screens never ask.
 * Lo-res replay and other menus: the game gives the mouse driver a range other than the whole screen (the pointer's size is taken off it),
   or runs `EventToPointer`.
 * Lo-res play with the mouse: `pad1dev` or `pad2dev` is 1 (the mouse), `curperiod` is not -1 (a game is running) and `dword_CCC9C`, which
