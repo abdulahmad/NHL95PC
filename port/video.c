@@ -2,6 +2,7 @@
  * like it did on a banked SVGA card. The host keeps the whole frame buffer in vram[], saves and loads the window when the bank
  * changes, and the main thread turns vram[] into an SDL texture a few dozen times a second. */
 #include "host.h"
+#include "bindings.h"
 #include <ctype.h>
 #include <math.h>
 #include <SDL.h>
@@ -364,6 +365,7 @@ static void settings_load(void)
     fclose(f);
 }
 
+void settings_save_all(void);
 static void settings_save(void)
 {
     char path[1024];
@@ -390,8 +392,11 @@ static void settings_save(void)
     fprintf(f, "; the custom look: scanline gap darkness (0-1), gamma, RGB mask strength (0-0.3), horizontal sharpness (0 bilinear, 1 bicubic)\n");
     fprintf(f, "custom_scanline_darkness=%.2f\ncustom_gamma=%.2f\ncustom_mask_strength=%.2f\ncustom_sharpness=%.2f\n", c_dark, c_gamma, c_mask, c_sharp);
     fprintf(f, "; windows_pointer: auto (hidden over the picture only where the game draws a pointer of its own), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
+    bindings_save(f);
     fclose(f);
 }
+
+void settings_save_all(void) { settings_save(); }
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }

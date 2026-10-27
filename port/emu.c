@@ -24,7 +24,7 @@ static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
 #define PTR_HOOK 0x6B4BBu
 #define SPEECH_HOOK 0x83459u                     /* InitSpeechSlots: the start of the EA Sports screen, so the end of the pioneer screens */
 #define TITLE_HOOK 0x1609Fu                      /* TitleScreen: the end of the EA Sports screen */
-extern volatile int intro_skip;
+extern volatile int intro_skip, intro_title;
 #define INPUT_HOOK 0x6B391u                      /* GetInputEvent: the menus ask for an event every time round their loop, even when there is none */
 static volatile int64_t ptr_hook_ns;
 int64_t game_pointer_ns(void) { return ptr_hook_ns; }
@@ -72,6 +72,7 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
         uint32_t at = (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000;
         if (at == SPEECH_HOOK || at == TITLE_HOOK) {         /* a screen of the splash sequence begins: a skip of the one before ends */
             intro_skip = 0;
+            if (at == TITLE_HOOK) intro_title = 1;
             R(c, ESP) -= 4;
             *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
             return 5;

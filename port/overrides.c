@@ -180,6 +180,7 @@ static void mt32_digital(void)
  * key or a mouse button is pressed before the front end has been reached) every wait is 0 ticks long, so they run through at once, and the title
  * screen, which ends when a key is pressed, gets one from input.c. Both routines are small, so they are replaced whole. */
 volatile int intro_skip;
+volatile int intro_title;                        /* the title screen has begun: a click no longer starts a skip of the splash screens */
 
 __attribute__((naked)) static void set_deadline_entry(void)         /* SetTickDeadline(ticks): tickdeadline = tickcount + ticks */
 {

@@ -2,6 +2,7 @@
  * keyboard handler (vector 9) reads them from port 60h exactly like it did from the keyboard controller. */
 #include "host.h"
 #include "audio.h"
+#include "bindings.h"
 #include <SDL.h>
 
 #define QSIZE 256
@@ -83,13 +84,26 @@ static void push_byte(uint8_t b)
     qtail = next;
 }
 
-static void key_event(SDL_Scancode s, int down)
+static void key_xt(int xt, int down)
 {
-    int xt = xt_scancode(s);
     if (!xt) return;
     if (xt & 0x100) push_byte(0xE0);
     push_byte((xt & 0x7F) | (down ? 0 : 0x80));
     irq_raise(1);
+}
+
+static void key_event(SDL_Scancode s, int down) { key_xt(xt_scancode(s), down); }
+
+extern int32_t curperiod;                       /* -1 when no game is on */
+
+/* a key of the keyboard: during a game the bindings (bindings.c) may send other keys of the game for it */
+static void key_physical(SDL_Scancode s, int down)
+{
+    int xt = xt_scancode(s), out[4], n, i;
+    if (!xt) return;
+    n = curperiod != -1 ? bindings_kb(xt, out) : -1;
+    if (n < 0) { key_xt(xt, down); return; }
+    for (i = 0; i < n; i++) key_xt(out[i], down);
 }
 
 /* NHL95_KEYS="ms:Key[/hold] ...": presses keys at given times after start (SDL key names, hold in ms, default 100), for testing
@@ -183,6 +197,7 @@ static void script_poll(void)
  * where it is always kept on the picture. */
 extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028, inputinstalled, curperiod, dword_CCC9C;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
+extern uint32_t ctl1dev, ctl2dev, ctl1side, ctl2side;        /* the game's controllers: the device (2 Joystick One, 4 Joystick Two, 8 keyboard, 1 mouse) and the side (0 home) */
 static volatile int win_x, win_y, win_moved;
 
 /* Any key or mouse button before the front end skips the pioneer and EA Sports screens and the title screen (see overrides.c): the waits are cut to
@@ -211,9 +226,11 @@ static void intro_skip_poll(void)
     }
 }
 
+extern volatile int intro_title;
+
 static void intro_skip_start(void)
 {
-    if (skipping || game_pointer_ns()) return;
+    if (skipping || intro_title || game_pointer_ns()) return;       /* the title screen has its own skip */
     skipping = 1;
     intro_skip = 1;
     audio_muted = 1;                            /* the sound of the splash screens, sped up, is not worth hearing */
@@ -282,11 +299,11 @@ void input_poll(void)
                 if (!e.key.repeat) video_command(CMD_STATS);
                 break;
             }
-            if (!e.key.repeat) { key_event(e.key.keysym.scancode, 1); intro_skip_start(); }
+            if (!e.key.repeat) { key_physical(e.key.keysym.scancode, 1); intro_skip_start(); }
             break;
         case SDL_KEYUP:
             if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE) break;
-            key_event(e.key.keysym.scancode, 0);
+            key_physical(e.key.keysym.scancode, 0);
             break;
         case SDL_SYSWMEVENT: menu_event(e.syswm.msg); break;      /* the window's menu (Windows) */
         case SDL_MOUSEMOTION: {
@@ -297,8 +314,12 @@ void input_poll(void)
             break;
         }
         case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: {
-            int bit = e.button.button == SDL_BUTTON_LEFT ? 1 : e.button.button == SDL_BUTTON_RIGHT ? 2 : e.button.button == SDL_BUTTON_MIDDLE ? 4 : 0;
-            if (e.type == SDL_MOUSEBUTTONDOWN) { mouse_buttons |= bit; intro_skip_start(); } else mouse_buttons &= ~bit;
+            static unsigned char mdown[8];
+            int btn = e.button.button;
+            if (btn >= 1 && btn <= 5) mdown[btn] = e.type == SDL_MOUSEBUTTONDOWN;
+            if (curperiod != -1) mouse_buttons = bindings_mouse(mdown);      /* during a game: the bindings */
+            else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
+            if (e.type == SDL_MOUSEBUTTONDOWN) intro_skip_start();
             break;
         }
         }
@@ -315,6 +336,12 @@ void input_poll(void)
 #define JOY_SPAN_READS 200                      /* for 220, in the middle 120: counted in reads, not in time, so the game's calibration does not depend on the speed of the host */
 static struct { int present, x, y, b1, b2; SDL_GameController *gc; SDL_Joystick *js; } joy[2];     /* x, y: -1000 to 1000 */
 static int joy_reads;                           /* reads of the port since the last write */
+
+static int pad_button(SDL_GameController *g, int id)       /* a controller button of the bindings: 0-14 buttons, 20 and 21 the triggers */
+{
+    if (id <= 14) return SDL_GameControllerGetButton(g, (SDL_GameControllerButton)id);
+    return SDL_GameControllerGetAxis(g, id == 20 ? SDL_CONTROLLER_AXIS_TRIGGERLEFT : SDL_CONTROLLER_AXIS_TRIGGERRIGHT) > 16000;
+}
 
 static int axis_value(int raw)                  /* SDL axis (-32768..32767) to -1000..1000 with a dead zone */
 {
@@ -364,8 +391,25 @@ static void joy_update(void)                    /* main thread, every pass of th
             if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) x = 1000;
             if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_UP)) y = -1000;
             if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) y = 1000;
-            b1 = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X);
-            b2 = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y);
+            {
+                int pv = bind.joy[i][ACT_PASS], sv = bind.joy[i][ACT_SHOOT], hv = bind.joy[i][ACT_HOLD], a, p, sh, h;
+                p = pv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X)) : pv >= 2 ? pad_button(g, PAD_ID(pv)) : 0;
+                sh = sv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y)) : sv >= 2 ? pad_button(g, PAD_ID(sv)) : 0;
+                h = hv >= 2 ? pad_button(g, PAD_ID(hv)) : 0;                   /* its own button: both of the game's buttons at once */
+                b1 = p || h; b2 = sh || h;
+                for (a = ACT_NUMBERS; a < NACT; a++) {                         /* the other keys of the game, from the controller */
+                    static unsigned char was[2][NACT];
+                    int v = bind.joy[i][a], now = v >= 2 && pad_button(g, PAD_ID(v)) && curperiod != -1, key = act_default_key(a);
+                    if (now != was[i][a]) {
+                        if (a >= ACT_HOME1 && a <= ACT_HOME4) {                /* the lines of the team this controller plays: home (side 0) or away */
+                            int dev = i == 0 ? 2 : 4, side = ctl1dev == (uint32_t)dev ? ctl1side : ctl2dev == (uint32_t)dev ? ctl2side : 0;
+                            if (side) key = act_default_key(ACT_AWAY1 + a - ACT_HOME1);
+                        }
+                        key_xt(key, now);
+                        was[i][a] = (unsigned char)now;
+                    }
+                }
+            }
         } else if (joy[i].js) {
             SDL_Joystick *j = joy[i].js;
             Uint8 hat = SDL_JoystickNumHats(j) ? SDL_JoystickGetHat(j, 0) : 0;
@@ -410,6 +454,7 @@ void input_init(void)
 {
     const char *e = getenv("NHL95_JOY");
     int x, y, b1, b2;
+    bindings_load();
     joy_scan();
     if (e && sscanf(e, "%d,%d,%d,%d", &x, &y, &b1, &b2) == 4) joy_set_test(x, y, b1, b2);
 }

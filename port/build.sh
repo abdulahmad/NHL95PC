@@ -9,7 +9,7 @@ sh port/fetch-deps.sh || exit 1
 CXX="g++ -m32" sh port/munt-build.sh build/munt-linux "" || exit 1
 rm -f build/hockey-linux
 O=$(find build/obj0 -name '*.o' | sort)
-gcc -m32 -no-pie -g -O1 -Wall -Wno-format-truncation -o build/hockey-linux port/host.c port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c \
+gcc -m32 -no-pie -g -O1 -Wall -Wno-format-truncation -o build/hockey-linux port/host.c port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/bindings.c port/input.c \
   port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c port/soundtest.c -lm port/third_party/nuked-opl3/opl3.c \
   -DHAVE_MUNT -Ibuild/munt-linux/inc -Iport/third_party/munt/mt32emu/src port/cstart.c port/overrides.c port/plat_linux.c $O $(pkg-config --cflags --libs sdl2) build/munt-linux/libmt32emu.a -lstdc++ -lm -lpthread 2>&1 \
   | grep -v "warning: \(relocation\|creating\)\|GNU-stack\|NOTE: This"

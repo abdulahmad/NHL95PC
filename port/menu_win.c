@@ -3,6 +3,7 @@
  * the clicks on. While the menu is open Windows runs its own loop in the main thread, so the game is paused (no timer ticks) until it closes. */
 #include "host.h"
 #include "audio.h"
+#include "bindings.h"
 #include <SDL.h>
 #include <SDL_syswm.h>
 
@@ -160,6 +161,8 @@ void menu_init(void *sdl_window)
     item(m, CMD_POINTER, "Windows pointer: automatic");
     item(m, CMD_POINTER + 1, "Windows pointer: always show");
     item(m, CMD_POINTER + 2, "Windows pointer: always hide");
+    line(m);
+    item(m, CMD_INPUT, "Input bindings...");
     m = sub(bar, "Menus (hi-res)");
     for (i = 0; i < 4; i++) item(m, CMD_HIRES + i, hires[i]);
     line(m);
@@ -258,7 +261,9 @@ void menu_event(void *syswm_msg)
     SDL_SysWMmsg *m = (SDL_SysWMmsg *)syswm_msg;
     if (m->subsystem == SDL_SYSWM_WINDOWS && m->msg.win.msg == WM_COMMAND && HIWORD(m->msg.win.wParam) == 0) {
         int id = LOWORD(m->msg.win.wParam);
-        if (id >= CMD_MFILE && id < CMD_MFILE + nmfile) video_mister_pick(mfile[id - CMD_MFILE].cls, mfile[id - CMD_MFILE].kind, mfile[id - CMD_MFILE].rel);
+        if (getenv("NHL95_MENUTRACE")) fprintf(stderr, "menu command %d\n", id);
+        if (id == CMD_INPUT) bindings_dialog_open(hwnd);
+        else if (id >= CMD_MFILE && id < CMD_MFILE + nmfile) video_mister_pick(mfile[id - CMD_MFILE].cls, mfile[id - CMD_MFILE].kind, mfile[id - CMD_MFILE].rel);
         else if (id >= CMD_REFRESH_60) video_command(id);
     }
 }
