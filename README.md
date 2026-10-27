@@ -1,5 +1,7 @@
 # NHL 95 PC
 
+> **Making a mod, hack, port or other derivative work from this repo? You must credit me (abdulahmad) and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
+
 > **Work in progress:** this decompilation is unfinished and unpolished, and is being actively worked on. Expect labels, file layout and docs to change.
 
 ## 🚧 Current Status
@@ -122,7 +124,18 @@ The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**
 
 This project is AI-assisted. The work is directed by a strict ruleset and curated by hand, with the aim of producing correctly labelled and commented code that matches the spirit of what the original source code would have been. We can't guarantee it's perfect, and ultimately this will always be a work in progress. If you see something that needs fixing, raise an issue, or even better, raise a PR.
 
-## Credits
+## Credits and derivative works
+
+This project is the result of my work (abdulahmad) and the work of the people credited below. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
+
+- Put the credit in your repo's README, near the top and not buried in a footer, and in the notes of every release you publish, including any text file shipped inside a release archive.
+- Name me (abdulahmad) and link to this repository.
+- Name everyone credited here: chaos, StaticEck and McMarkis (Mhopkinsinc).
+- If you only use part of this repo (docs, a tool, labels, a file format description), the credit still applies.
+- If you are unsure, over-credit.
+
+Credit is the condition for using this work. Please do not release a derivative without it.
+
 
 Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
 
