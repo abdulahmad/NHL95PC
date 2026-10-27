@@ -45,3 +45,9 @@ looks) needs an OpenGL or Direct3D path with a shader.
 
 `nhl95-audio.log` (next to the exe) and Ctrl+F11 (records the mixed sound to `nhl95-capture-N.wav`) work without any setting; `NHL95_TRACE`,
 `NHL95_STATS`, `NHL95_KEYS`, `NHL95_DUMP`, `NHL95_WAV` are described in `docs/SDL2_PORT.md`.
+
+## Sound delay (2026-10-26)
+
+Sound effects (a slapshot, for one) are heard 5-10 frames after the animation. DOSBox-X plays them with the same delay, so it comes from the game's
+own sound driver (it mixes well ahead of the play position), not from the port. The port's audio buffer is 512 frames (11.6 ms, `NHL95_AUDIO_FRAMES`).
+`NHL95_SB_LEAD_MS` plays the Sound Blaster buffer ahead of the driver's position, as an experiment; it is off by default.
