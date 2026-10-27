@@ -25,7 +25,8 @@ static PFNGLUNIFORM2FPROC p_glUniform2f;
 
 static SDL_GLContext ctx;
 static GLuint prog, tex;
-static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style;
+static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style, u_mdark, u_mgamma, u_mmask, u_msharp;
+static float m_dark = 0.3f, m_gamma = 1.13f, m_mask = 0.12f, m_sharp = 0.6f;
 static int look_pre = 1, look_period = 1, look_style, tgt_w, tgt_h;
 static float look_scan, look_gain = 1, look_center = 0.5f;
 static int tex_w, tex_h, filter_mode = 2;
@@ -46,6 +47,10 @@ static const char *fs_src =
     "uniform float gain;\n"
     "uniform float center;\n"
     "uniform float style;\n"
+    "uniform float mdark;\n"
+    "uniform float mgamma;\n"
+    "uniform float mmask;\n"
+    "uniform float msharp;\n"
     "uniform float period;\n"
     "varying vec2 uv;\n"
     "vec4 fetch(vec2 v) {\n"
@@ -90,6 +95,24 @@ static const char *fs_src =
     "  return m;\n"
     "}\n"
     "void main() {\n"
+    "  if (style > 2.5) {\n"
+    "    vec2 p = uv * srcsize * pre - 0.5;\n"
+    "    vec2 i = floor(p);\n"
+    "    vec2 f = p - i;\n"
+    "    float f2 = f.x * f.x, f3 = f2 * f.x;\n"
+    "    vec4 wc = vec4(-0.5 * f3 + f2 - 0.5 * f.x, 1.5 * f3 - 2.5 * f2 + 1.0, -1.5 * f3 + 2.0 * f2 + 0.5 * f.x, 0.5 * f3 - 0.5 * f2);\n"
+    "    vec4 wx = mix(vec4(0.0, 1.0 - f.x, f.x, 0.0), wc, msharp);\n"
+    "    float sy = uv.y * srcsize.y;\n"
+    "    vec4 c = row(vec2(i.x, floor(sy) * pre), 0.0, wx);\n"
+    "    float d = min(abs(fract(sy) - center) * 2.0, 1.0);\n"
+    "    vec3 col = c.rgb * (1.0 - mdark * pow(d, 1.5));\n"
+    "    col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / mgamma));\n"
+    "    float k = mod(floor(gl_FragCoord.x) + mod(floor(gl_FragCoord.y), 2.0), 3.0);\n"
+    "    vec3 m = vec3(1.0 - mmask);\n"
+    "    if (k < 0.5) m.r = 1.0 + 2.0 * mmask; else if (k < 1.5) m.g = 1.0 + 2.0 * mmask; else m.b = 1.0 + 2.0 * mmask;\n"
+    "    gl_FragColor = vec4(clamp(col * m, 0.0, 1.0), 1.0);\n"
+    "    return;\n"
+    "  }\n"
     "  if (style > 0.5) {\n"
     "    vec2 pos = uv;\n"
     "    vec3 col = horz3(pos, -1.0) * scanw(pos, -1.0) + horz3(pos, 0.0) * scanw(pos, 0.0) + horz3(pos, 1.0) * scanw(pos, 1.0);\n"
@@ -159,6 +182,10 @@ int vgl_init(SDL_Window *win)
     u_gain = p_glGetUniformLocation(prog, "gain");
     u_center = p_glGetUniformLocation(prog, "center");
     u_style = p_glGetUniformLocation(prog, "style");
+    u_mdark = p_glGetUniformLocation(prog, "mdark");
+    u_mgamma = p_glGetUniformLocation(prog, "mgamma");
+    u_mmask = p_glGetUniformLocation(prog, "mmask");
+    u_msharp = p_glGetUniformLocation(prog, "msharp");
     u_period = p_glGetUniformLocation(prog, "period");
     glGenTextures(1, &tex);
     SDL_GL_SetSwapInterval(1);
@@ -265,6 +292,10 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     p_glUniform1f(u_gain, look_gain);
     p_glUniform1f(u_center, look_center);
     p_glUniform1f(u_style, (float)look_style);
+    p_glUniform1f(u_mdark, m_dark);
+    p_glUniform1f(u_mgamma, m_gamma);
+    p_glUniform1f(u_mmask, m_mask);
+    p_glUniform1f(u_msharp, m_sharp);
     p_glUniform1f(u_period, (float)look_period);
     p_glUniform1i(u_mode, filter_mode);
     glEnable(GL_TEXTURE_2D);
@@ -302,6 +333,10 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
  * none, and the gain that keeps the brightness) and how many there are per source line. With scanlines the vertical scaling is nearest-neighbour: a
  * source line is never blended with its neighbours, only darkened between the scanlines. */
 void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style) { look_pre = pre; look_scan = sigma; look_gain = gain; look_center = center; look_period = period; look_style = style; }
+
+/* the MiSTer style look: how much the gaps between scanlines are darkened, the output gamma, the strength of the RGB mask, and how sharp
+ * the horizontal filter is (0 bilinear, 1 bicubic) */
+void vgl_set_mister(float dark, float gamma, float mask, float sharp) { m_dark = dark; m_gamma = gamma; m_mask = mask; m_sharp = sharp; }
 
 /* the size of the surface drawn into (the window's client area), when the window's own idea of it is not to be trusted */
 void vgl_set_target(int w, int h) { tgt_w = w; tgt_h = h; }

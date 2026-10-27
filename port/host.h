@@ -108,8 +108,8 @@ void video_confine_mouse(int on);                      /* fullscreen: the host p
 void video_pacing_key(int n);                          /* keys 1..4: how often the window is drawn, vsync */
 int64_t video_present_ns(void);
 enum { CMD_REFRESH_60 = 100, CMD_REFRESH_70, CMD_REFRESH_VRR, CMD_VSYNC, CMD_STATS, CMD_HIRES = 200, CMD_LORES = 300, CMD_VSCALE_HI = 400, CMD_VSCALE_LO = 410 };
-#define NHIRES_ITEMS 9
-#define NLORES_ITEMS 14   /* the menu commands */
+#define NHIRES_ITEMS 10
+#define NLORES_ITEMS 15   /* the menu commands */
 void video_command(int id);
 int video_command_checked(int id);
 #ifdef _WIN32

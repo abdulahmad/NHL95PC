@@ -30,6 +30,7 @@ void vgl_quit(void);
 void vgl_set_vsync(int on);
 void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style);
 void vgl_set_target(int w, int h);
+void vgl_set_mister(float dark, float gamma, float mask, float sharp);
 void vgl_osd_set(const char *l1, const char *l2, const char *l3);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
@@ -39,6 +40,7 @@ static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
 static void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style) { (void)pre; (void)sigma; (void)gain; (void)center; (void)period; (void)style; }
 static void vgl_set_target(int w, int h) { (void)w; (void)h; }
+static void vgl_set_mister(float dark, float gamma, float mask, float sharp) { (void)dark; (void)gamma; (void)mask; (void)sharp; }
 static void vgl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
 static uint32_t argb[1280 * 1024];
@@ -50,10 +52,11 @@ static void title_refresh(void);
 static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
 #define NHIRES NHIRES_ITEMS
 #define NLORES NLORES_ITEMS
-static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille" };
+static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille", "mister" };
 static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong",
-                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille" };
+                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille", "mister" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
+static float mister_dark = 0.30f, mister_gamma = 1.13f, mister_mask = 0.12f, mister_sharp = 0.60f;   /* the MiSTer look, tuned in the ini */
 static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop" };
 
 /* The integer scale taken before the window's bicubic scaling, the width of the scanlines (0: none), how many scanlines there are per source line,
@@ -68,12 +71,14 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
         *pre = m < 4 ? lo_pre[m] : 3;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m >= 7 && m < 10) { *scan = scan_strength[m - 7]; *period = 2; }
-        if (m >= 10) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
+        if (m >= 10 && m < 14) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
+        if (m == 14) { *style = 3; *pre = 3; }
     } else {
         int m = hires_mode;
         *pre = m < 4 ? m + 1 : 1;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
-        if (m >= 7) *style = 1 + (m - 7);
+        if (m >= 7 && m < 9) *style = 1 + (m - 7);
+        if (m == 9) *style = 3;
     }
 }
 
@@ -117,6 +122,10 @@ static void settings_load(void)
         else if (!strcmp(k, "stats")) osd_on = !strcmp(v, "on");
         else if (!strcmp(k, "hires_scaling")) hires_mode = name_index(v, hires_names, NHIRES, 0);
         else if (!strcmp(k, "lores_scaling")) lores_mode = name_index(v, lores_names, NLORES, 0);
+        else if (!strcmp(k, "mister_scanline_darkness")) mister_dark = (float)atof(v);
+        else if (!strcmp(k, "mister_gamma")) mister_gamma = (float)atof(v);
+        else if (!strcmp(k, "mister_mask_strength")) mister_mask = (float)atof(v);
+        else if (!strcmp(k, "mister_sharpness")) mister_sharp = (float)atof(v);
         else if (!strcmp(k, "hires_picture_height")) vscale_hi = name_index(v, vscale_names, 4, 0);
         else if (!strcmp(k, "lores_picture_height")) vscale_lo = name_index(v, vscale_names, 4, 0);
     }
@@ -137,6 +146,8 @@ static void settings_save(void)
     fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong, crt-soft, crt-soft-grille\nhires_scaling=%s\n", hires_names[hires_mode]);
     fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong, tv-soft, tv-soft-grille, monitor-soft, monitor-soft-grille\nlores_scaling=%s\n", lores_names[lores_mode]);
     fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
+    fprintf(f, "; the MiSTer style look (after the Video Processing settings of the MiSTer scaler): how much the gaps between scanlines are darkened (0-1),\n; the output gamma, the strength of the RGB shadow mask (0-0.3) and the sharpness of the horizontal filter (0 bilinear, 1 bicubic)\n");
+    fprintf(f, "mister_scanline_darkness=%.2f\nmister_gamma=%.2f\nmister_mask_strength=%.2f\nmister_sharpness=%.2f\n", mister_dark, mister_gamma, mister_mask, mister_sharp);
     fclose(f);
 }
 
@@ -454,8 +465,9 @@ void video_toggle_fullscreen(void)
 {
     if (!win) return;
     fullscreen = !fullscreen;
+    if (!fullscreen) menu_show(1);              /* the menu bar goes back before the window does, so that the window is sized with it */
     SDL_SetWindowFullscreen(win, fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
-    menu_show(!fullscreen);
+    if (fullscreen) menu_show(0);
 }
 
 int video_is_fullscreen(void) { return fullscreen; }
@@ -468,7 +480,7 @@ void video_init(void)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     if (!getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
         win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, getenv("NHL95_WINDOW_W") ? atoi(getenv("NHL95_WINDOW_W")) : 960, getenv("NHL95_WINDOW_H") ? atoi(getenv("NHL95_WINDOW_H")) : 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-        if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); return; }
+        if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); if (getenv("NHL95_MAXIMIZE")) SDL_MaximizeWindow(win); return; }
         fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
         vgl_quit();
         if (win) SDL_DestroyWindow(win);
@@ -553,6 +565,7 @@ void video_present(void)
             int ww, wh, dw, dh;
             client_size(&ww, &wh);
             dw = ww; dh = wh;
+            if (getenv("NHL95_SIZES")) { static int n; if (++n % 60 == 0) { int a, b, c, d; SDL_GetWindowSize(win, &a, &b); SDL_GL_GetDrawableSize(win, &c, &d); fprintf(stderr, "sizes: client %dx%d, SDL window %dx%d, GL drawable %dx%d\n", ww, wh, a, b, c, d); } }
             {
                 int pre, period, style, unit, rows;
                 float scan, center, gain;
@@ -562,6 +575,7 @@ void video_present(void)
                 scan_rows(scan, rows, &center, &gain);
                 vgl_set_target(dw, dh);
                 vgl_set_look(pre, scan, gain, center, period, style);
+                vgl_set_mister(mister_dark, mister_gamma, mister_mask, mister_sharp);
             }
             vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {

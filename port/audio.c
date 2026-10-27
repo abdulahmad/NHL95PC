@@ -107,7 +107,7 @@ static void mix(int16_t *out, int frames)
         SDL_UnlockMutex(mutex);
         for (i = 0; i < n * 2; i++) {
             int32_t v = acc[i];
-            out[i] = v > 32767 ? 32767 : v < -32768 ? -32768 : (int16_t)v;
+            out[i] = audio_muted ? 0 : v > 32767 ? 32767 : v < -32768 ? -32768 : (int16_t)v;
         }
         SDL_LockMutex(mutex);
         if (wav) { fwrite(out, 4, n, wav); wav_bytes += n * 4; wav_header(); fseek(wav, 0, SEEK_END); }
@@ -116,6 +116,8 @@ static void mix(int16_t *out, int frames)
         frames -= n;
     }
 }
+
+volatile int audio_muted;                        /* set while a window menu is open (menu_win.c) */
 
 static void SDLCALL callback(void *user, Uint8 *stream, int len)
 {

@@ -19,6 +19,7 @@ void audio_unlock(void);
 void audio_pump(void);                 /* main thread: runs the mixer when there is no audio device */
 int audio_rate(void);
 void audio_log(const char *fmt, ...);   /* append a line to nhl95-audio.log next to the program */
+extern volatile int audio_muted;       /* silence the output while a window menu is open */
 int audio_debug(void);                 /* NHL95_AUDIO_DEBUG: the log and the Ctrl+F11 recording are on */
 void audio_capture_toggle(void);        /* Ctrl+F11: record the mixed sound to nhl95-capture-N.wav */
 
