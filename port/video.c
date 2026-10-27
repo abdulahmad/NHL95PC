@@ -40,33 +40,55 @@ static uint32_t argb[1280 * 1024];
 
 /* How often the window is drawn (keys 1 and 2: 60 Hz, 3: 70 Hz, 4: vsync on or off, 5: the numbers on the picture) and what the window title reports: how many frames were
  * drawn and how many of them were different images, per second. */
-static int present_hz = 60, vsync_on = 1, osd_on;
+static int present_hz = 60, vsync_on = 1, osd_on, vrr_on;
 static char base_title[96] = "NHL Hockey 95";
 static int shown, changed;
 static int64_t title_at;
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
+int video_vrr(void) { return vrr_on; }
+
+/* the window is drawn when the game's screen has changed, not on a timer (key 6): a variable refresh rate monitor then shows each new
+ * image as it comes. Looks at about every third pixel of the frame and at the palette. */
+int video_changed(void)
+{
+    static uint32_t last;
+    uint32_t hash = 0;
+    size_t i, n = (size_t)mode_w * mode_h, step = n > 100000 ? 3 : 1;
+    int y;
+    for (y = 0; y < mode_h; y++) {
+        const uint8_t *src = vram + (size_t)(y + disp_y) * mode_w + disp_x;
+        for (i = y & 1; i < (size_t)mode_w; i += step) hash = hash * 31 + src[i];
+    }
+    for (i = 0; i < 256 * 3; i++) hash = hash * 31 + dac[i / 3][i % 3];
+    if (hash == last) return 0;
+    last = hash;
+    return 1;
+}
 
 static void title_refresh(void)
 {
-    char t[256];
-    snprintf(t, sizeof t, "%s | drawing %d Hz, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off, 5: on-screen display]", base_title, present_hz,
+    char t[256], hzbuf[24];
+    if (vrr_on) snprintf(hzbuf, sizeof hzbuf, "on each new image"); else snprintf(hzbuf, sizeof hzbuf, "%d Hz", present_hz);
+    snprintf(t, sizeof t, "%s | drawing %s, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off, 5: on-screen display, 6: VRR]", base_title, hzbuf,
              vsync_on ? "on" : "off", shown, changed);
     if (getenv("NHL95_TITLELOG")) fprintf(stderr, "title: %s\n", t);
     if (win) SDL_SetWindowTitle(win, t);
     if (use_gl) {                               /* key 5: the same numbers on the picture */
         char l1[32], l2[32];
         snprintf(l1, sizeof l1, "FPS %d  NEW %d", shown, changed);
-        snprintf(l2, sizeof l2, "%dHZ VSYNC %s", present_hz, vsync_on ? "ON" : "OFF");
+        if (vrr_on) snprintf(l2, sizeof l2, "VRR VSYNC %s", vsync_on ? "ON" : "OFF");
+        else snprintf(l2, sizeof l2, "%dHZ VSYNC %s", present_hz, vsync_on ? "ON" : "OFF");
         vgl_osd_set(osd_on ? l1 : NULL, l2);
     }
 }
 
 void video_pacing_key(int n)
 {
-    if (n == 1) { present_hz = 60; vsync_on = 1; }
-    else if (n == 2) present_hz = 60;
-    else if (n == 3) present_hz = 70;
+    if (n == 1) { present_hz = 60; vsync_on = 1; vrr_on = 0; }
+    else if (n == 2) { present_hz = 60; vrr_on = 0; }
+    else if (n == 3) { present_hz = 70; vrr_on = 0; }
+    else if (n == 6) { vrr_on = 1; vsync_on = 0; }
     else if (n == 4) vsync_on = !vsync_on;
     else if (n == 5) osd_on = !osd_on;
     if (use_gl) vgl_set_vsync(vsync_on);

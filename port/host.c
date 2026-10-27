@@ -52,7 +52,9 @@ int main(int argc, char **argv)
     for (;;) {
         int64_t now = plat_now_ns();
         input_poll();
-        if (now >= next_frame) {                  /* on schedule, not "a period after this one": late frames do not lower the rate */
+        if (video_vrr()) {                      /* key 6: when the game's screen has changed (and now and then for the pointer and the window) */
+            if (video_changed() || now >= next_frame) { video_present(); next_frame = now + 100000000LL; }
+        } else if (now >= next_frame) {           /* on schedule, not "a period after this one": late frames do not lower the rate */
             video_present();
             next_frame += video_present_ns();
             if (now - next_frame > 100000000) next_frame = now;

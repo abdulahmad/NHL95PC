@@ -105,6 +105,8 @@ void video_game_to_window(int gx, int gy, int *wx, int *wy);
 void video_confine_mouse(int on);                      /* fullscreen: the host pointer stays on the 4:3 picture */
 void video_pacing_key(int n);                          /* keys 1..4: how often the window is drawn, vsync */
 int64_t video_present_ns(void);
+int video_vrr(void);                                   /* key 6: draw when the screen changes (for variable refresh rate monitors) */
+int video_changed(void);
 void video_toggle_fullscreen(void);                    /* Alt+Enter */
 int video_is_fullscreen(void);
 void video_present(void);              /* main thread */

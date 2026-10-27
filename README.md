@@ -53,7 +53,7 @@ The branch `sdl2-port` runs the game's own code natively, with the DOS, BIOS, so
   bicubic (Catmull-Rom) filter to any window size; the 640x480 menus are filtered directly. The picture is always 4:3, centred.
   `NHL95_FILTER=nearest|linear|cubic` changes the filter, `NHL95_NOGL=1` uses SDL's renderer. **Alt+Enter** switches between the window
   and borderless fullscreen. Keys **1-4** (top row) set how often the window is drawn (1: 60 Hz with vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on or off)
-  and key **5** shows or hides an on-screen display of the drawn frames and the new images per second; the window title shows the same numbers.
+  key **6** draws a frame whenever the game puts a new image on screen instead of on a timer (for G-Sync/FreeSync monitors; best in fullscreen), and key **5** shows or hides an on-screen display of the drawn frames and the new images per second; the window title shows the same numbers.
 * **Mouse**: the game's pointer is the only one shown while the Windows pointer is inside the active window; outside it, the Windows pointer
   shows again. In play, with the mouse chosen as a controller, the mouse is captured so it cannot leave the window. In fullscreen the Windows
   pointer is hidden and the game's pointer stays on the 4:3 picture.

@@ -159,7 +159,7 @@ static void script_poll(void)
             TRACE("NHL95_KEYS: left button %s\n", script[script_pos].down ? "down" : "up");
         } else {
             TRACE("NHL95_KEYS: %s %s\n", SDL_GetScancodeName(script[script_pos].key), script[script_pos].down ? "down" : "up");
-            if (script[script_pos].key >= SDL_SCANCODE_1 && script[script_pos].key <= SDL_SCANCODE_5) { if (script[script_pos].down) video_pacing_key(script[script_pos].key - SDL_SCANCODE_1 + 1); }
+            if (script[script_pos].key >= SDL_SCANCODE_1 && script[script_pos].key <= SDL_SCANCODE_6) { if (script[script_pos].down) video_pacing_key(script[script_pos].key - SDL_SCANCODE_1 + 1); }
             else key_event(script[script_pos].key, script[script_pos].down);
         }
         script_pos++;
@@ -229,14 +229,14 @@ void input_poll(void)
                 if (!e.key.repeat) audio_capture_toggle();
                 break;
             }
-            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_5 && !(e.key.keysym.mod & (KMOD_CTRL | KMOD_ALT))) {
+            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_6 && !(e.key.keysym.mod & (KMOD_CTRL | KMOD_ALT))) {
                 if (!e.key.repeat) video_pacing_key(e.key.keysym.scancode - SDL_SCANCODE_1 + 1);       /* 1..4: drawing rate and vsync */
                 break;
             }
             if (!e.key.repeat) key_event(e.key.keysym.scancode, 1);
             break;
         case SDL_KEYUP:
-            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_5) break;
+            if (e.key.keysym.scancode >= SDL_SCANCODE_1 && e.key.keysym.scancode <= SDL_SCANCODE_6) break;
             key_event(e.key.keysym.scancode, 0);
             break;
         case SDL_MOUSEMOTION: {
