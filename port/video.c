@@ -533,13 +533,6 @@ static void title_refresh(void)
     }
 }
 
-void video_pacing_key(int n)
-{
-    static const int ids[7] = { 0, CMD_REFRESH_60, CMD_REFRESH_60, CMD_REFRESH_70, CMD_VSYNC, CMD_STATS, CMD_REFRESH_VRR };
-    if (n == 1 && !vsync_on) video_command(CMD_VSYNC);
-    if (n >= 1 && n <= 6) video_command(ids[n]);
-}
-
 static struct { int mode, w, h; } modes[] = {
     { 0x100, 640, 400 }, { 0x101, 640, 480 }, { 0x103, 800, 600 }, { 0x105, 1024, 768 }, { 0x107, 1280, 1024 }, { 0x13, 320, 200 }
 };
