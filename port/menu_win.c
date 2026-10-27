@@ -59,6 +59,10 @@ void menu_init(void *sdl_window)
     line(m);
     item(m, CMD_VSYNC, "V-Sync");
     item(m, CMD_STATS, "Stats display");
+    line(m);
+    item(m, CMD_POINTER, "Windows pointer: automatic");
+    item(m, CMD_POINTER + 1, "Windows pointer: always show");
+    item(m, CMD_POINTER + 2, "Windows pointer: always hide");
     m = sub(bar, "Menus (hi-res)");
     for (i = 0; i < NHIRES_ITEMS; i++) {
         if (i == 4 || i == 7 || i == 9) line(m);
@@ -93,6 +97,7 @@ void menu_sync(void)
     radio(CMD_REFRESH_60, 3);
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
+    radio(CMD_POINTER, 3);
     radio(CMD_HIRES, NHIRES_ITEMS);
     radio(CMD_LORES, NLORES_ITEMS);
     radio(CMD_VSCALE_HI, 4);

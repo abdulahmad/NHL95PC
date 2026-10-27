@@ -2,6 +2,7 @@
  * like it did on a banked SVGA card. The host keeps the whole frame buffer in vram[], saves and loads the window when the bank
  * changes, and the main thread turns vram[] into an SDL texture a few dozen times a second. */
 #include "host.h"
+#include <ctype.h>
 #include <math.h>
 #include <SDL.h>
 
@@ -30,7 +31,8 @@ void vgl_quit(void);
 void vgl_set_vsync(int on);
 void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style);
 void vgl_set_target(int w, int h);
-void vgl_set_mister(float dark, float gamma, float mask, float sharp);
+void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256]);
+void vgl_mister_mask(const float *rgb, int w, int h);
 void vgl_osd_set(const char *l1, const char *l2, const char *l3);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
@@ -40,7 +42,8 @@ static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
 static void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style) { (void)pre; (void)sigma; (void)gain; (void)center; (void)period; (void)style; }
 static void vgl_set_target(int w, int h) { (void)w; (void)h; }
-static void vgl_set_mister(float dark, float gamma, float mask, float sharp) { (void)dark; (void)gamma; (void)mask; (void)sharp; }
+static void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256]) { (void)horiz; (void)vert; (void)gamma; }
+static void vgl_mister_mask(const float *rgb, int w, int h) { (void)rgb; (void)w; (void)h; }
 static void vgl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
 static uint32_t argb[1280 * 1024];
@@ -56,8 +59,158 @@ static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", 
 static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong",
                                            "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille", "mister" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
-static float mister_dark = 0.30f, mister_gamma = 1.13f, mister_mask = 0.12f, mister_sharp = 0.60f;   /* the MiSTer look, tuned in the ini */
+static const char *ptr_names[3] = { "auto", "show", "hide" };
+static int ptr_mode;
 static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop" };
+
+/* ---- the MiSTer look ----
+ * It uses the scaler's own files, as on the MiSTer: a horizontal filter (64 phases of 4 taps), an adaptive vertical (scanline) filter (256 phases of
+ * 4 taps, for dark and for bright pixels), a gamma curve (256 values) and a shadow mask (cells of 3 hex digits: colour, intensity on, intensity off,
+ * with a pattern for each output resolution). The paths are in the ini, relative to the program's folder (the files come from the MiSTer's
+ * filters, gamma and Shadow_Masks folders). A file that is missing is replaced by a plain stand-in. */
+static char m_horiz_path[260] = "mister/GS_Sharpness_060.txt", m_vert_path[260] = "mister/SLA_Dk_030_Br_070.txt";
+static char m_gamma_path[260] = "mister/gamma_113.txt", m_mask_path[260] = "mister/JVC 001 (Generic).txt";
+static float m_horiz[64][4], m_vert[2][256][4], m_gamma[256];
+static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[8];
+static int m_nmasks, m_loaded, m_mask_for = -1;
+
+static FILE *open_rel(const char *path)
+{
+    char full[1100];
+    FILE *f;
+    char *base = SDL_GetBasePath();
+    if (path[0] == '/' || (path[0] && path[1] == ':')) snprintf(full, sizeof full, "%s", path);
+    else snprintf(full, sizeof full, "%s%s", base ? base : "", path);
+    SDL_free(base);
+    f = fopen(full, "r");
+    if (!f) f = fopen(path, "r");
+    return f;
+}
+
+/* the numbers of a coefficient file (lines starting with # are comments; the words 10bit and adaptive set flags) */
+static int read_numbers(const char *path, float *vals, int max, int *adaptive, int *tenbit)
+{
+    char line[512];
+    int n = 0;
+    FILE *f = open_rel(path);
+    if (!f) return 0;
+    *adaptive = *tenbit = 0;
+    while (fgets(line, sizeof line, f)) {
+        char *q = line;
+        while (*q == ' ' || *q == '\t') q++;
+        if (*q == '#' || *q == '\n' || *q == '\r' || !*q) continue;
+        if (isalpha((unsigned char)*q)) { if (!strncmp(q, "adaptive", 8)) *adaptive = 1; if (!strncmp(q, "10bit", 5)) *tenbit = 1; continue; }
+        while (*q) {
+            char *e;
+            long v;
+            while (*q && *q != '-' && !isdigit((unsigned char)*q)) q++;
+            if (!*q) break;
+            v = strtol(q, &e, 10);
+            if (e == q) break;
+            if (n < max) vals[n++] = (float)v;
+            q = e;
+        }
+    }
+    fclose(f);
+    return n;
+}
+
+static void load_mask(const char *path)
+{
+    char line[512];
+    int res = 0, w = 0, h = 0, y = 0, want = 0;
+    FILE *f = open_rel(path);
+    m_nmasks = 0;
+    if (f) {
+        while (fgets(line, sizeof line, f) && m_nmasks < 8) {
+            char *q = line;
+            while (*q == ' ' || *q == '\t') q++;
+            if (*q == '#' || *q == '\n' || *q == '\r' || !*q) continue;
+            if (!strncmp(q, "Resolution=", 11)) { res = atoi(q + 11); want = 0; continue; }
+            if (!strncmp(q, "v2", 2)) { want = 1; continue; }
+            if (want == 1) {                     /* the size of the pattern */
+                if (sscanf(q, "%d,%d", &w, &h) != 2 || w < 1 || h < 1 || w > 16 || h > 16) { want = 0; continue; }
+                m_masks[m_nmasks].res = res; m_masks[m_nmasks].w = w; m_masks[m_nmasks].h = h;
+                y = 0; want = 2;
+                continue;
+            }
+            if (want == 2) {                     /* a row of cells: colour (0-7: bit 1 blue, 2 green, 4 red), intensity on, intensity off */
+                int x;
+                for (x = 0; x < w; x++) {
+                    unsigned c = 0, on = 0, off = 0;
+                    int ch;
+                    if (sscanf(q, "%1x%1x%1x", &c, &on, &off) != 3) break;
+                    for (ch = 0; ch < 3; ch++) {
+                        int bit = ch == 0 ? 4 : ch == 1 ? 2 : 1;
+                        m_masks[m_nmasks].rgb[(y * w + x) * 3 + ch] = (c & bit) ? 1.0f + on / 16.0f : off / 16.0f;
+                    }
+                    q = strchr(q, ',');
+                    if (!q) { x++; break; }
+                    q++;
+                }
+                if (++y == h) { m_nmasks++; want = 0; }
+            }
+        }
+        fclose(f);
+    }
+    if (!m_nmasks) {                             /* no mask file: none */
+        m_masks[0].res = 0; m_masks[0].w = m_masks[0].h = 1;
+        m_masks[0].rgb[0] = m_masks[0].rgb[1] = m_masks[0].rgb[2] = 1.0f;
+        m_nmasks = 1;
+    }
+}
+
+static void mister_load(void)
+{
+    float v[2 * 256 * 4 + 16];
+    int n, ad, tb, i, p, k;
+    m_loaded = 1;
+    n = read_numbers(m_horiz_path, v, 64 * 4, &ad, &tb);
+    if (n == 64 * 4) {
+        for (p = 0; p < 64; p++) {
+            float sum = v[p * 4] + v[p * 4 + 1] + v[p * 4 + 2] + v[p * 4 + 3];
+            for (k = 0; k < 4; k++) m_horiz[p][k] = sum > 0 ? v[p * 4 + k] / sum : 0;
+        }
+    } else {                                     /* a Gaussian, sigma 0.42 pixels: what GS_Sharpness_060 is */
+        for (p = 0; p < 64; p++) {
+            float sum = 0;
+            for (k = 0; k < 4; k++) { float d = (k - 1) - p / 64.0f; m_horiz[p][k] = expf(-d * d / (2 * 0.42f * 0.42f)); sum += m_horiz[p][k]; }
+            for (k = 0; k < 4; k++) m_horiz[p][k] /= sum;
+        }
+    }
+    n = read_numbers(m_vert_path, v, 2 * 256 * 4, &ad, &tb);
+    if (n == 2 * 256 * 4 || n == 256 * 4) {
+        float div = tb ? 256.0f : 128.0f;
+        for (i = 0; i < 2; i++)
+            for (p = 0; p < 256; p++)
+                for (k = 0; k < 4; k++) m_vert[i][p][k] = v[((n == 256 * 4 ? 0 : i) * 256 + p) * 4 + k] / div;
+    } else {                                     /* stand-ins: a beam over the two nearest lines, deeper gaps for dark pixels */
+        for (i = 0; i < 2; i++)
+            for (p = 0; p < 256; p++) {
+                float f = p / 256.0f, s = i ? 0.457f : 0.337f, a = i ? 0.97f : 1.1f;
+                m_vert[i][p][0] = m_vert[i][p][3] = 0;
+                m_vert[i][p][1] = a * expf(-powf(f / s, 1.5f));
+                m_vert[i][p][2] = a * expf(-powf((1 - f) / s, 1.5f));
+            }
+    }
+    n = read_numbers(m_gamma_path, v, 256, &ad, &tb);
+    if (n == 256) for (i = 0; i < 256; i++) m_gamma[i] = v[i] / 255.0f;
+    else for (i = 0; i < 256; i++) m_gamma[i] = powf(i / 255.0f, 2.5f / 2.2f);
+    load_mask(m_mask_path);
+    vgl_mister_tables((const float (*)[4])m_horiz, (const float (*)[256][4])m_vert, m_gamma);
+}
+
+/* the mask pattern for this output height: the largest resolution that is not above it */
+static void mister_mask_for(int height)
+{
+    int i, best = 0;
+    if (height == m_mask_for) return;
+    m_mask_for = height;
+    for (i = 0; i < m_nmasks; i++) if (m_masks[i].res <= height && m_masks[i].res >= m_masks[best].res) best = i;
+    vgl_mister_mask(m_masks[best].rgb, m_masks[best].w, m_masks[best].h);
+}
+
+
 
 /* The integer scale taken before the window's bicubic scaling, the width of the scanlines (0: none), how many scanlines there are per source line,
  * and the look: 0 the plain scaling or the scanline filter above, 1 a soft CRT (a Gaussian beam over the neighbouring lines and pixels, blended
@@ -72,7 +225,7 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m >= 7 && m < 10) { *scan = scan_strength[m - 7]; *period = 2; }
         if (m >= 10 && m < 14) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
-        if (m == 14) { *style = 3; *pre = 3; }
+        if (m == 14) { *style = 3; *pre = 1; }
     } else {
         int m = hires_mode;
         *pre = m < 4 ? m + 1 : 1;
@@ -122,10 +275,11 @@ static void settings_load(void)
         else if (!strcmp(k, "stats")) osd_on = !strcmp(v, "on");
         else if (!strcmp(k, "hires_scaling")) hires_mode = name_index(v, hires_names, NHIRES, 0);
         else if (!strcmp(k, "lores_scaling")) lores_mode = name_index(v, lores_names, NLORES, 0);
-        else if (!strcmp(k, "mister_scanline_darkness")) mister_dark = (float)atof(v);
-        else if (!strcmp(k, "mister_gamma")) mister_gamma = (float)atof(v);
-        else if (!strcmp(k, "mister_mask_strength")) mister_mask = (float)atof(v);
-        else if (!strcmp(k, "mister_sharpness")) mister_sharp = (float)atof(v);
+        else if (!strcmp(k, "mister_horizontal_filter")) snprintf(m_horiz_path, sizeof m_horiz_path, "%s", v);
+        else if (!strcmp(k, "mister_vertical_filter")) snprintf(m_vert_path, sizeof m_vert_path, "%s", v);
+        else if (!strcmp(k, "mister_gamma")) snprintf(m_gamma_path, sizeof m_gamma_path, "%s", v);
+        else if (!strcmp(k, "mister_shadow_mask")) snprintf(m_mask_path, sizeof m_mask_path, "%s", v);
+        else if (!strcmp(k, "windows_pointer")) ptr_mode = name_index(v, ptr_names, 3, 0);
         else if (!strcmp(k, "hires_picture_height")) vscale_hi = name_index(v, vscale_names, 4, 0);
         else if (!strcmp(k, "lores_picture_height")) vscale_lo = name_index(v, vscale_names, 4, 0);
     }
@@ -146,13 +300,15 @@ static void settings_save(void)
     fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong, crt-soft, crt-soft-grille\nhires_scaling=%s\n", hires_names[hires_mode]);
     fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong, tv-soft, tv-soft-grille, monitor-soft, monitor-soft-grille\nlores_scaling=%s\n", lores_names[lores_mode]);
     fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
-    fprintf(f, "; the MiSTer style look (after the Video Processing settings of the MiSTer scaler): how much the gaps between scanlines are darkened (0-1),\n; the output gamma, the strength of the RGB shadow mask (0-0.3) and the sharpness of the horizontal filter (0 bilinear, 1 bicubic)\n");
-    fprintf(f, "mister_scanline_darkness=%.2f\nmister_gamma=%.2f\nmister_mask_strength=%.2f\nmister_sharpness=%.2f\n", mister_dark, mister_gamma, mister_mask, mister_sharp);
+    fprintf(f, "; the MiSTer look uses the MiSTer scaler's own files (from the filters, gamma and Shadow_Masks folders of its SD card), as paths relative to this folder.\n");
+    fprintf(f, "mister_horizontal_filter=%s\nmister_vertical_filter=%s\nmister_gamma=%s\nmister_shadow_mask=%s\n", m_horiz_path, m_vert_path, m_gamma_path, m_mask_path);
+    fprintf(f, "; windows_pointer: auto (hidden over the picture only where the game draws a pointer of its own), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
     fclose(f);
 }
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
+int video_pointer_mode(void) { return ptr_mode; }
 
 /* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
  * and the gain keeps the average brightness. center is the brightest position within the source line (0..1). */
@@ -178,6 +334,7 @@ void video_command(int id)
     else if (id == CMD_STATS) osd_on = !osd_on;
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) hires_mode = id - CMD_HIRES;
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) lores_mode = id - CMD_LORES;
+    else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
     else if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) vscale_hi = id - CMD_VSCALE_HI;
     else if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) vscale_lo = id - CMD_VSCALE_LO;
     else return;
@@ -196,6 +353,7 @@ int video_command_checked(int id)
     if (id == CMD_STATS) return osd_on;
     if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
     if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
+    if (id >= CMD_POINTER && id < CMD_POINTER + 3) return id - CMD_POINTER == ptr_mode;
     if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) return id - CMD_VSCALE_HI == vscale_hi;
     if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) return id - CMD_VSCALE_LO == vscale_lo;
     return 0;
@@ -230,12 +388,7 @@ int video_changed(void)
 
 static void title_refresh(void)
 {
-    char t[256], hzbuf[24];
-    if (vrr_on) snprintf(hzbuf, sizeof hzbuf, "on each new image"); else snprintf(hzbuf, sizeof hzbuf, "%d Hz", present_hz);
-    snprintf(t, sizeof t, "%s | drawing %s, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off, 5: on-screen display, 6: VRR]", base_title, hzbuf,
-             vsync_on ? "on" : "off", shown, changed);
-    if (getenv("NHL95_TITLELOG")) fprintf(stderr, "title: %s\n", t);
-    if (win) SDL_SetWindowTitle(win, t);
+    if (win) SDL_SetWindowTitle(win, base_title);
     if (use_gl) {                               /* key 5: the same numbers on the picture */
         char l1[32], l2[32], l3[32];
         snprintf(l1, sizeof l1, "FPS %d  NEW %d", shown, changed);
@@ -575,7 +728,7 @@ void video_present(void)
                 scan_rows(scan, rows, &center, &gain);
                 vgl_set_target(dw, dh);
                 vgl_set_look(pre, scan, gain, center, period, style);
-                vgl_set_mister(mister_dark, mister_gamma, mister_mask, mister_sharp);
+                if (style == 3) { if (!m_loaded) mister_load(); mister_mask_for(wh); }
             }
             vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {

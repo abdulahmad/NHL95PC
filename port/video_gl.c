@@ -22,11 +22,13 @@ static PFNGLGETUNIFORMLOCATIONPROC p_glGetUniformLocation;
 static PFNGLUNIFORM1IPROC p_glUniform1i;
 static PFNGLUNIFORM1FPROC p_glUniform1f;
 static PFNGLUNIFORM2FPROC p_glUniform2f;
+static PFNGLACTIVETEXTUREPROC p_glActiveTexture;
 
 static SDL_GLContext ctx;
 static GLuint prog, tex;
-static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style, u_mdark, u_mgamma, u_mmask, u_msharp;
-static float m_dark = 0.3f, m_gamma = 1.13f, m_mask = 0.12f, m_sharp = 0.6f;
+static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period, u_style, u_th, u_tv, u_tg, u_tm, u_masksize;
+static GLuint t_h, t_v, t_g, t_m;
+static int have_tables, mask_w = 1, mask_h = 1;
 static int look_pre = 1, look_period = 1, look_style, tgt_w, tgt_h;
 static float look_scan, look_gain = 1, look_center = 0.5f;
 static int tex_w, tex_h, filter_mode = 2;
@@ -47,10 +49,11 @@ static const char *fs_src =
     "uniform float gain;\n"
     "uniform float center;\n"
     "uniform float style;\n"
-    "uniform float mdark;\n"
-    "uniform float mgamma;\n"
-    "uniform float mmask;\n"
-    "uniform float msharp;\n"
+    "uniform sampler2D th;\n"
+    "uniform sampler2D tv;\n"
+    "uniform sampler2D tg;\n"
+    "uniform sampler2D tm;\n"
+    "uniform vec2 masksize;\n"
     "uniform float period;\n"
     "varying vec2 uv;\n"
     "vec4 fetch(vec2 v) {\n"
@@ -94,23 +97,28 @@ static const char *fs_src =
     "  if (x < 0.3333) m.r = 1.4; else if (x < 0.6666) m.g = 1.4; else m.b = 1.4;\n"
     "  return m;\n"
     "}\n"
+    "vec3 srcpx(float x, float y) { return texture2D(tex, (vec2(clamp(x, 0.0, srcsize.x - 1.0), clamp(y, 0.0, srcsize.y - 1.0)) + 0.5) / srcsize).rgb; }\n"
+    "vec3 hrow(float ix, float fx, float y) {\n"
+    "  vec4 w = texture2D(th, vec2((floor(fx * 64.0) + 0.5) / 64.0, 0.5)) * 2.0;\n"
+    "  return srcpx(ix - 1.0, y) * w.x + srcpx(ix, y) * w.y + srcpx(ix + 1.0, y) * w.z + srcpx(ix + 2.0, y) * w.w;\n"
+    "}\n"
     "void main() {\n"
     "  if (style > 2.5) {\n"
-    "    vec2 p = uv * srcsize * pre - 0.5;\n"
+    "    vec2 p = uv * srcsize - 0.5;\n"
     "    vec2 i = floor(p);\n"
     "    vec2 f = p - i;\n"
-    "    float f2 = f.x * f.x, f3 = f2 * f.x;\n"
-    "    vec4 wc = vec4(-0.5 * f3 + f2 - 0.5 * f.x, 1.5 * f3 - 2.5 * f2 + 1.0, -1.5 * f3 + 2.0 * f2 + 0.5 * f.x, 0.5 * f3 - 0.5 * f2);\n"
-    "    vec4 wx = mix(vec4(0.0, 1.0 - f.x, f.x, 0.0), wc, msharp);\n"
-    "    float sy = uv.y * srcsize.y;\n"
-    "    vec4 c = row(vec2(i.x, floor(sy) * pre), 0.0, wx);\n"
-    "    float d = min(abs(fract(sy) - center) * 2.0, 1.0);\n"
-    "    vec3 col = c.rgb * (1.0 - mdark * pow(d, 1.5));\n"
-    "    col = pow(clamp(col, 0.0, 1.0), vec3(1.0 / mgamma));\n"
-    "    float k = mod(floor(gl_FragCoord.x) + mod(floor(gl_FragCoord.y), 2.0), 3.0);\n"
-    "    vec3 m = vec3(1.0 - mmask);\n"
-    "    if (k < 0.5) m.r = 1.0 + 2.0 * mmask; else if (k < 1.5) m.g = 1.0 + 2.0 * mmask; else m.b = 1.0 + 2.0 * mmask;\n"
-    "    gl_FragColor = vec4(clamp(col * m, 0.0, 1.0), 1.0);\n"
+    "    float py = uv.y * srcsize.y - 0.5 + (0.5 - center);\n"
+    "    float iy = floor(py);\n"
+    "    float fy = py - iy;\n"
+    "    vec4 wd = texture2D(tv, vec2((floor(fy * 256.0) + 0.5) / 256.0, 0.25)) * 2.0;\n"
+    "    vec4 wb = texture2D(tv, vec2((floor(fy * 256.0) + 0.5) / 256.0, 0.75)) * 2.0;\n"
+    "    vec3 r0 = hrow(i.x, f.x, iy - 1.0), r1 = hrow(i.x, f.x, iy), r2 = hrow(i.x, f.x, iy + 1.0), r3 = hrow(i.x, f.x, iy + 2.0);\n"
+    "    float lum = dot(mix(r1, r2, fy), vec3(0.299, 0.587, 0.114));\n"
+    "    vec4 w = mix(wd, wb, clamp(lum, 0.0, 1.0));\n"
+    "    vec3 col = clamp(r0 * w.x + r1 * w.y + r2 * w.z + r3 * w.w, 0.0, 1.0);\n"
+    "    col = vec3(texture2D(tg, vec2((floor(col.r * 255.0) + 0.5) / 256.0, 0.5)).r, texture2D(tg, vec2((floor(col.g * 255.0) + 0.5) / 256.0, 0.5)).r, texture2D(tg, vec2((floor(col.b * 255.0) + 0.5) / 256.0, 0.5)).r) * 2.0;\n"
+    "    col *= texture2D(tm, gl_FragCoord.xy / masksize).rgb * 2.0;\n"
+    "    gl_FragColor = vec4(clamp(col, 0.0, 1.0), 1.0);\n"
     "    return;\n"
     "  }\n"
     "  if (style > 0.5) {\n"
@@ -164,7 +172,7 @@ int vgl_init(SDL_Window *win)
     if (!ctx) return 0;
     LOAD(glCreateShader); LOAD(glShaderSource); LOAD(glCompileShader); LOAD(glGetShaderiv); LOAD(glGetShaderInfoLog);
     LOAD(glCreateProgram); LOAD(glAttachShader); LOAD(glLinkProgram); LOAD(glGetProgramiv); LOAD(glUseProgram);
-    LOAD(glGetUniformLocation); LOAD(glUniform1i); LOAD(glUniform1f); LOAD(glUniform2f);
+    LOAD(glGetUniformLocation); LOAD(glUniform1i); LOAD(glUniform1f); LOAD(glUniform2f); LOAD(glActiveTexture);
     vs = compile(GL_VERTEX_SHADER, vs_src);
     fs = compile(GL_FRAGMENT_SHADER, fs_src);
     if (!vs || !fs) return 0;
@@ -182,10 +190,11 @@ int vgl_init(SDL_Window *win)
     u_gain = p_glGetUniformLocation(prog, "gain");
     u_center = p_glGetUniformLocation(prog, "center");
     u_style = p_glGetUniformLocation(prog, "style");
-    u_mdark = p_glGetUniformLocation(prog, "mdark");
-    u_mgamma = p_glGetUniformLocation(prog, "mgamma");
-    u_mmask = p_glGetUniformLocation(prog, "mmask");
-    u_msharp = p_glGetUniformLocation(prog, "msharp");
+    u_th = p_glGetUniformLocation(prog, "th");
+    u_tv = p_glGetUniformLocation(prog, "tv");
+    u_tg = p_glGetUniformLocation(prog, "tg");
+    u_tm = p_glGetUniformLocation(prog, "tm");
+    u_masksize = p_glGetUniformLocation(prog, "masksize");
     u_period = p_glGetUniformLocation(prog, "period");
     glGenTextures(1, &tex);
     SDL_GL_SetSwapInterval(1);
@@ -292,10 +301,15 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     p_glUniform1f(u_gain, look_gain);
     p_glUniform1f(u_center, look_center);
     p_glUniform1f(u_style, (float)look_style);
-    p_glUniform1f(u_mdark, m_dark);
-    p_glUniform1f(u_mgamma, m_gamma);
-    p_glUniform1f(u_mmask, m_mask);
-    p_glUniform1f(u_msharp, m_sharp);
+    if (look_style == 3 && have_tables) {         /* the MiSTer look's tables, on texture units 1-4 */
+        p_glUniform1i(u_th, 1); p_glUniform1i(u_tv, 2); p_glUniform1i(u_tg, 3); p_glUniform1i(u_tm, 4);
+        p_glUniform2f(u_masksize, (float)mask_w, (float)mask_h);
+        p_glActiveTexture(0x84C1); glBindTexture(GL_TEXTURE_2D, t_h);
+        p_glActiveTexture(0x84C2); glBindTexture(GL_TEXTURE_2D, t_v);
+        p_glActiveTexture(0x84C3); glBindTexture(GL_TEXTURE_2D, t_g);
+        p_glActiveTexture(0x84C4); glBindTexture(GL_TEXTURE_2D, t_m);
+        p_glActiveTexture(0x84C0);
+    }
     p_glUniform1f(u_period, (float)look_period);
     p_glUniform1i(u_mode, filter_mode);
     glEnable(GL_TEXTURE_2D);
@@ -334,9 +348,51 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
  * source line is never blended with its neighbours, only darkened between the scanlines. */
 void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style) { look_pre = pre; look_scan = sigma; look_gain = gain; look_center = center; look_period = period; look_style = style; }
 
-/* the MiSTer style look: how much the gaps between scanlines are darkened, the output gamma, the strength of the RGB mask, and how sharp
- * the horizontal filter is (0 bilinear, 1 bicubic) */
-void vgl_set_mister(float dark, float gamma, float mask, float sharp) { m_dark = dark; m_gamma = gamma; m_mask = mask; m_sharp = sharp; }
+/* The tables of the MiSTer look, in 16 bits per value (a value is stored as v / 2): the horizontal filter (64 phases of 4 taps), the vertical filter
+ * (256 phases of 4 taps, a set for dark and one for bright pixels), and the gamma curve (256 values). */
+static void upload16(GLuint *t, int w, int h, const float *f, int comps, int wrap)
+{
+    uint16_t *d = malloc((size_t)w * h * 4 * sizeof *d);
+    int i, c;
+    if (!d) return;
+    for (i = 0; i < w * h; i++)
+        for (c = 0; c < 4; c++) {
+            float v = c < comps ? f[i * comps + c] : (c == 3 ? 2.0f : 0.0f);
+            if (comps == 1 && c < 3) v = f[i];
+            v = v / 2 * 65535 + 0.5f;
+            d[i * 4 + c] = (uint16_t)(v < 0 ? 0 : v > 65535 ? 65535 : v);
+        }
+    if (!*t) glGenTextures(1, t);
+    glBindTexture(GL_TEXTURE_2D, *t);
+    glTexImage2D(GL_TEXTURE_2D, 0, 0x805B /* GL_RGBA16 */, w, h, 0, GL_RGBA, GL_UNSIGNED_SHORT, d);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrap ? GL_REPEAT : 0x812F);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrap ? GL_REPEAT : 0x812F);
+    free(d);
+}
+
+void vgl_mister_tables(const float horiz[64][4], const float vert[2][256][4], const float gamma[256])
+{
+    upload16(&t_h, 64, 1, &horiz[0][0], 4, 0);
+    upload16(&t_v, 256, 2, &vert[0][0][0], 4, 0);
+    upload16(&t_g, 256, 1, gamma, 1, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    have_tables = 1;
+}
+
+/* the shadow mask tile: w x h cells of red, green, blue factors */
+void vgl_mister_mask(const float *rgb, int w, int h)
+{
+    float *f = malloc((size_t)w * h * 4 * sizeof *f);
+    int i;
+    if (!f) return;
+    for (i = 0; i < w * h; i++) { f[i * 4] = rgb[i * 3]; f[i * 4 + 1] = rgb[i * 3 + 1]; f[i * 4 + 2] = rgb[i * 3 + 2]; f[i * 4 + 3] = 2.0f; }
+    upload16(&t_m, w, h, f, 4, 1);
+    glBindTexture(GL_TEXTURE_2D, 0);
+    free(f);
+    mask_w = w; mask_h = h;
+}
 
 /* the size of the surface drawn into (the window's client area), when the window's own idea of it is not to be trusted */
 void vgl_set_target(int w, int h) { tgt_w = w; tgt_h = h; }
