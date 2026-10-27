@@ -126,7 +126,11 @@ This project is AI-assisted. The work is directed by a strict ruleset and curate
 
 ## Credits and derivative works
 
-This project is the result of my work (abdulahmad) and the work of the people credited below. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
+Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
+
+The SDL2 port's MiSTer look (the `mister` folder of filters, gamma curves, shadow masks and presets, and the file formats it reads) comes from the **MiSTer FPGA project**: the scaler's filter files are from [Filters_MiSTer](https://github.com/MiSTer-devel/Filters_MiSTer) (including the adaptive scanline filters by Soltan_G42 and Tonurics), the shadow masks from [ShadowMasks_MiSTer](https://github.com/MiSTer-devel/ShadowMasks_MiSTer) (the JVC masks are by TrashUncle) and the presets from [Presets_MiSTer](https://github.com/MiSTer-devel/Presets_MiSTer). The MiSTer project is GPL-3.0; those files are included unchanged in [port/mister](port/mister) with their credits and links. The soft CRT looks follow the shader by Timothy Lottes, and the Munt library plays the MT-32 sound ([Munt](https://github.com/munt/munt)); the OPL emulation is Nuked-OPL3.
+
+This project is the result of my work (abdulahmad) and the work of the people credited above. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
 
 - Put the credit in your repo's README, near the top and not buried in a footer, and in the notes of every release you publish, including any text file shipped inside a release archive.
 - Name me (abdulahmad) and link to this repository.
@@ -135,8 +139,3 @@ This project is the result of my work (abdulahmad) and the work of the people cr
 - If you are unsure, over-credit.
 
 Credit is the condition for using this work. Please do not release a derivative without it.
-
-
-Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
-
-The SDL2 port's MiSTer look (the `mister` folder of filters, gamma curves, shadow masks and presets, and the file formats it reads) comes from the **MiSTer FPGA project**: the scaler's filter files are from [Filters_MiSTer](https://github.com/MiSTer-devel/Filters_MiSTer) (including the adaptive scanline filters by Soltan_G42 and Tonurics), the shadow masks from [ShadowMasks_MiSTer](https://github.com/MiSTer-devel/ShadowMasks_MiSTer) (the JVC masks are by TrashUncle) and the presets from [Presets_MiSTer](https://github.com/MiSTer-devel/Presets_MiSTer). The MiSTer project is GPL-3.0; those files are included unchanged in [port/mister](port/mister) with their credits and links. The soft CRT looks follow the shader by Timothy Lottes, and the Munt library plays the MT-32 sound ([Munt](https://github.com/munt/munt)); the OPL emulation is Nuked-OPL3.
