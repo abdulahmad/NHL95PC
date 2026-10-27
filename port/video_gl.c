@@ -112,6 +112,74 @@ int vgl_init(SDL_Window *win)
     return 1;
 }
 
+
+/* ---- the on-screen display: two lines of text in the top left corner, drawn over the picture at the window's own resolution ----
+ * A 5x7 font of just the characters the lines use. */
+static const struct { char c; unsigned char r[7]; } font[] = {
+    { '0', { 0x0E, 0x11, 0x13, 0x15, 0x19, 0x11, 0x0E } }, { '1', { 0x04, 0x0C, 0x04, 0x04, 0x04, 0x04, 0x0E } },
+    { '2', { 0x0E, 0x11, 0x01, 0x02, 0x04, 0x08, 0x1F } }, { '3', { 0x1E, 0x01, 0x01, 0x0E, 0x01, 0x01, 0x1E } },
+    { '4', { 0x02, 0x06, 0x0A, 0x12, 0x1F, 0x02, 0x02 } }, { '5', { 0x1F, 0x10, 0x1E, 0x01, 0x01, 0x11, 0x0E } },
+    { '6', { 0x06, 0x08, 0x10, 0x1E, 0x11, 0x11, 0x0E } }, { '7', { 0x1F, 0x01, 0x02, 0x04, 0x08, 0x08, 0x08 } },
+    { '8', { 0x0E, 0x11, 0x11, 0x0E, 0x11, 0x11, 0x0E } }, { '9', { 0x0E, 0x11, 0x11, 0x0F, 0x01, 0x02, 0x0C } },
+    { 'C', { 0x0E, 0x11, 0x10, 0x10, 0x10, 0x11, 0x0E } }, { 'E', { 0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x1F } },
+    { 'F', { 0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x10 } }, { 'H', { 0x11, 0x11, 0x11, 0x1F, 0x11, 0x11, 0x11 } },
+    { 'N', { 0x11, 0x19, 0x15, 0x13, 0x11, 0x11, 0x11 } }, { 'O', { 0x0E, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E } },
+    { 'P', { 0x1E, 0x11, 0x11, 0x1E, 0x10, 0x10, 0x10 } }, { 'S', { 0x0F, 0x10, 0x10, 0x0E, 0x01, 0x01, 0x1E } },
+    { 'V', { 0x11, 0x11, 0x11, 0x11, 0x11, 0x0A, 0x04 } }, { 'W', { 0x11, 0x11, 0x11, 0x15, 0x15, 0x15, 0x0A } },
+    { 'Y', { 0x11, 0x11, 0x0A, 0x04, 0x04, 0x04, 0x04 } }, { 'Z', { 0x1F, 0x01, 0x02, 0x04, 0x08, 0x10, 0x1F } },
+};
+
+static GLuint osd_tex;
+static int osd_w, osd_h, osd_fresh;
+static uint32_t osd_pix[96 * 18];
+
+/* the text of the display (NULL: none) */
+void vgl_osd_set(const char *l1, const char *l2)
+{
+    const char *line[2] = { l1, l2 };
+    int i, k, x, y;
+    if (!l1) { osd_w = 0; return; }
+    osd_w = 96; osd_h = 2 * 8 + 2;
+    for (i = 0; i < osd_w * osd_h; i++) osd_pix[i] = 0xC0000000u;
+    for (i = 0; i < 2; i++)
+        for (k = 0; line[i][k] && k < 15; k++) {
+            unsigned j;
+            for (j = 0; j < sizeof font / sizeof font[0]; j++) {
+                if (font[j].c != line[i][k]) continue;
+                for (y = 0; y < 7; y++)
+                    for (x = 0; x < 5; x++)
+                        if (font[j].r[y] >> (4 - x) & 1) osd_pix[(1 + i * 8 + y) * osd_w + 1 + k * 6 + x] = 0xFFFFFF40u;
+            }
+        }
+    osd_fresh = 1;
+}
+
+static void osd_draw(int dw, int dh)
+{
+    int s = dh / 270 < 2 ? 2 : dh / 270;
+    float x1 = -1.0f + 2.0f * osd_w * s / dw, y1 = 1.0f - 2.0f * osd_h * s / dh;
+    if (!osd_w) return;
+    if (!osd_tex) glGenTextures(1, &osd_tex);
+    glBindTexture(GL_TEXTURE_2D, osd_tex);
+    if (osd_fresh) {
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, osd_w, osd_h, 0, 0x80E1 /* GL_BGRA */, GL_UNSIGNED_BYTE, osd_pix);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        osd_fresh = 0;
+    }
+    glViewport(0, 0, dw, dh);
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glColor4f(1, 1, 1, 1);
+    glBegin(GL_QUADS);
+    glTexCoord2f(0, 1); glVertex2f(-1, y1);
+    glTexCoord2f(1, 1); glVertex2f(x1, y1);
+    glTexCoord2f(1, 0); glVertex2f(x1, 1);
+    glTexCoord2f(0, 0); glVertex2f(-1, 1);
+    glEnd();
+    glDisable(GL_BLEND);
+}
+
 /* draw the frame (w x h ARGB pixels) into the part of the window given in drawable pixels */
 void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
 {
@@ -144,6 +212,7 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     glTexCoord2f(0, 0); glVertex2f(-1, 1);
     glEnd();
     p_glUseProgram(0);
+    osd_draw(dw, dh);
     {                                           /* NHL95_SHOT=file.ppm and NHL95_SHOT_AT=seconds: save what the window shows (a test aid) */
         const char *path = getenv("NHL95_SHOT"), *at = getenv("NHL95_SHOT_AT");
         static int done;

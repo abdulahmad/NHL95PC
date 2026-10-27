@@ -27,18 +27,20 @@ int vgl_init(SDL_Window *win);
 void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh);
 void vgl_quit(void);
 void vgl_set_vsync(int on);
+void vgl_osd_set(const char *l1, const char *l2);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
 static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
 { (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
 static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
+static void vgl_osd_set(const char *l1, const char *l2) { (void)l1; (void)l2; }
 #endif
 static uint32_t argb[1280 * 1024];
 
-/* How often the window is drawn (keys 1 and 2: 60 Hz, 3: 70 Hz, 4: vsync on or off) and what the window title reports: how many frames were
+/* How often the window is drawn (keys 1 and 2: 60 Hz, 3: 70 Hz, 4: vsync on or off, 5: the numbers on the picture) and what the window title reports: how many frames were
  * drawn and how many of them were different images, per second. */
-static int present_hz = 60, vsync_on = 1;
+static int present_hz = 60, vsync_on = 1, osd_on;
 static char base_title[96] = "NHL Hockey 95";
 static int shown, changed;
 static int64_t title_at;
@@ -48,9 +50,16 @@ int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 static void title_refresh(void)
 {
     char t[256];
-    snprintf(t, sizeof t, "%s | drawing %d Hz, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off]", base_title, present_hz,
+    snprintf(t, sizeof t, "%s | drawing %d Hz, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off, 5: on-screen display]", base_title, present_hz,
              vsync_on ? "on" : "off", shown, changed);
+    TRACE("title: %s\n", t);
     if (win) SDL_SetWindowTitle(win, t);
+    if (use_gl) {                               /* key 5: the same numbers on the picture */
+        char l1[32], l2[32];
+        snprintf(l1, sizeof l1, "FPS %d  NEW %d", shown, changed);
+        snprintf(l2, sizeof l2, "%dHZ VSYNC %s", present_hz, vsync_on ? "ON" : "OFF");
+        vgl_osd_set(osd_on ? l1 : NULL, l2);
+    }
 }
 
 void video_pacing_key(int n)
@@ -59,6 +68,7 @@ void video_pacing_key(int n)
     else if (n == 2) present_hz = 60;
     else if (n == 3) present_hz = 70;
     else if (n == 4) vsync_on = !vsync_on;
+    else if (n == 5) osd_on = !osd_on;
     if (use_gl) vgl_set_vsync(vsync_on);
     title_refresh();
 }
