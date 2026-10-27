@@ -116,6 +116,7 @@ static int read_numbers(const char *path, float *vals, int max, int *adaptive, i
         char *q = line;
         while (*q == ' ' || *q == '\t') q++;
         if (*q == '#' || *q == '\n' || *q == '\r' || !*q) continue;
+        if (!strncmp(q, "10bit", 5)) { *tenbit = 1; continue; }       /* (it starts with a digit: not a number) */
         if (isalpha((unsigned char)*q)) { if (!strncmp(q, "adaptive", 8)) *adaptive = 1; if (!strncmp(q, "10bit", 5)) *tenbit = 1; continue; }
         while (*q) {
             char *e;
@@ -432,8 +433,8 @@ void video_command(int id)
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) { hires_mode = id - CMD_HIRES; if (hires_mode >= 4) vscale_hi = 3; }     /* a look with scanlines: auto crop */
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) { lores_mode = id - CMD_LORES; if (lores_mode >= 4) vscale_lo = 3; }
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
-    else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 5) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
-    else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 5) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }
+    else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
+    else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }
     else if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) { mcfg[0].mask_scale = id - CMD_MSCALE_HI + 1; mister_on(0); }
     else if (id >= CMD_MSCALE_LO && id < CMD_MSCALE_LO + 4) { mcfg[1].mask_scale = id - CMD_MSCALE_LO + 1; mister_on(1); }
     else if (id == CMD_MRESET_HI) { mister_defaults(0); mister_on(0); }
@@ -457,8 +458,8 @@ int video_command_checked(int id)
     if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
     if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
     if (id >= CMD_POINTER && id < CMD_POINTER + 3) return id - CMD_POINTER == ptr_mode;
-    if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 5) return fabsf(mcfg[0].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_HI))) < 0.01f;
-    if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 5) return fabsf(mcfg[1].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_LO))) < 0.01f;
+    if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) return fabsf(mcfg[0].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_HI))) < 0.01f;
+    if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) return fabsf(mcfg[1].bright - (0.7f + 0.1f * (id - CMD_MBRIGHT_LO))) < 0.01f;
     if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) return id - CMD_MSCALE_HI + 1 == mcfg[0].mask_scale;
     if (id >= CMD_MSCALE_LO && id < CMD_MSCALE_LO + 4) return id - CMD_MSCALE_LO + 1 == mcfg[1].mask_scale;
     if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) return id - CMD_VSCALE_HI == vscale_hi;

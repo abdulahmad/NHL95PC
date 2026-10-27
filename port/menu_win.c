@@ -130,7 +130,7 @@ static void add_mister_menu(HMENU parent, int cls)
         item(k, (cls ? CMD_MSCALE_LO : CMD_MSCALE_HI) + i, t);
     }
     k = pop_sub(m, "Brightness", 2, cls, &ki);
-    for (i = 0; i < 5; i++) {
+    for (i = 0; i < 9; i++) {
         char t[16];
         snprintf(t, sizeof t, "%d%%", 70 + 10 * i);
         item(k, (cls ? CMD_MBRIGHT_LO : CMD_MBRIGHT_HI) + i, t);
@@ -202,8 +202,8 @@ void menu_sync(void)
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_POINTER, 3);
-    radio(CMD_MBRIGHT_HI, 5);
-    radio(CMD_MBRIGHT_LO, 5);
+    radio(CMD_MBRIGHT_HI, 9);
+    radio(CMD_MBRIGHT_LO, 9);
     radio(CMD_MSCALE_HI, 4);
     radio(CMD_MSCALE_LO, 4);
     {
@@ -217,6 +217,7 @@ void menu_sync(void)
         for (i = 0; i < npops; i++) {
             if (pops[i].flag == 1) pc[i] = (unsigned char)video_command_checked(pops[i].cls ? CMD_LORES + 14 : CMD_HIRES + 9);
             if (pops[i].flag == 2) pc[i] = 1;
+            if (pops[i].up < 0 && pops[i].flag != 1) pc[i] = 0;       /* the choices at the top of the MiSTer menu always have a mark inside: none shown */
             CheckMenuItem(pops[i].parent, pops[i].pos, MF_BYPOSITION | (pc[i] ? MF_CHECKED : MF_UNCHECKED));
         }
     }
