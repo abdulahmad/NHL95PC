@@ -183,11 +183,15 @@ static void cursor_update(void)
     int active = SDL_GetKeyboardFocus() != 0, fs = video_is_fullscreen(), mw, mh, vx, vy, vw, vh, px, py, over, drawn, hide;
     video_mode_size(&mw, &mh);
     video_view(&vx, &vy, &vw, &vh);
-    drawn = dword_D2FEC != 0 || dword_D2FF0 != 0 || dword_D2FF4 != mw || dword_D2FF8 != mh || (mw == 320 && (pad1dev == 1 || pad2dev == 1));
+    {                                           /* the menus run EventToPointer all the time; in play the pad setting and a clipped mouse range tell */
+        int64_t hk = game_pointer_ns();
+        drawn = (hk && plat_now_ns() - hk < 300000000LL) ||
+                (mw == 320 && (pad1dev == 1 || pad2dev == 1 || dword_D2FEC != 0 || dword_D2FF0 != 0 || dword_D2FF4 != mw || dword_D2FF8 != mh));
+    }
     video_confine_mouse(active && (fs || (mw == 320 && drawn)));   /* in play with the mouse as controller it may not leave the picture */
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
-    hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
+    hide = over && drawn;
     { static int was = -1; if (drawn != was) TRACE("game pointer %d\n", drawn); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
@@ -225,7 +229,7 @@ void input_poll(void)
                 if (!e.key.repeat) video_toggle_fullscreen();
                 break;
             }
-            if (e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
+            if (audio_debug() && e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
                 if (!e.key.repeat) audio_capture_toggle();
                 break;
             }

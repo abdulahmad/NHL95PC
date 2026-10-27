@@ -50,4 +50,4 @@ looks) needs an OpenGL or Direct3D path with a shader.
 
 Sound effects (a slapshot, for one) are heard 5-10 frames after the animation. DOSBox-X plays them with the same delay, so it comes from the game's
 own sound driver (it mixes well ahead of the play position), not from the port. The port's audio buffer is 512 frames (11.6 ms, `NHL95_AUDIO_FRAMES`).
-`NHL95_SB_LEAD_MS` plays the Sound Blaster buffer ahead of the driver's position, as an experiment; it is off by default.
+The sound log and the Ctrl+F11 recording are off unless `NHL95_AUDIO_DEBUG` is set.

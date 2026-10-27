@@ -28,7 +28,8 @@ int vgl_init(SDL_Window *win);
 void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh);
 void vgl_quit(void);
 void vgl_set_vsync(int on);
-void vgl_set_look(int pre, float sigma, float gain, float center, int period);
+void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style);
+void vgl_set_target(int w, int h);
 void vgl_osd_set(const char *l1, const char *l2, const char *l3);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
@@ -36,7 +37,8 @@ static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx
 { (void)win; (void)argb; (void)w; (void)h; (void)vx; (void)vy; (void)vw; (void)vh; }
 static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
-static void vgl_set_look(int pre, float sigma, float gain, float center, int period) { (void)pre; (void)sigma; (void)gain; (void)center; (void)period; }
+static void vgl_set_look(int pre, float sigma, float gain, float center, int period, int style) { (void)pre; (void)sigma; (void)gain; (void)center; (void)period; (void)style; }
+static void vgl_set_target(int w, int h) { (void)w; (void)h; }
 static void vgl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
 static uint32_t argb[1280 * 1024];
@@ -45,29 +47,33 @@ static uint32_t argb[1280 * 1024];
  * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program and changed from the window's menu or the keys 1-6. */
 static int present_hz = 60, vsync_on = 1, osd_on, vrr_on;
 static void title_refresh(void);
-static int hires_mode, lores_mode, vscale_mode, ptr_mode;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
-#define NHIRES 7
-#define NLORES 10
-static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong" };
-static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong" };
+static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
+#define NHIRES NHIRES_ITEMS
+#define NLORES NLORES_ITEMS
+static const char *hires_names[NHIRES] = { "1x", "2x", "3x", "4x", "crt-light", "crt-medium", "crt-strong", "crt-soft", "crt-soft-grille" };
+static const char *lores_names[NLORES] = { "3x", "5x", "7x", "11x", "tv-light", "tv-medium", "tv-strong", "monitor-light", "monitor-medium", "monitor-strong",
+                                           "tv-soft", "tv-soft-grille", "monitor-soft", "monitor-soft-grille" };
 static const float scan_strength[3] = { 0.80f, 0.60f, 0.45f };   /* the sigma of the scanline profile: the smaller, the darker the gaps */
-static const char *vscale_names[3] = { "fit", "integer", "overscan" };
-static const char *ptr_names[3] = { "auto", "show", "hide" };
+static const char *vscale_names[4] = { "fit", "integer", "overscan", "auto-crop" };
 
-/* the integer scale taken before the window's bicubic scaling, the strength of the scanlines and how many there are per source line */
-static void look(int w, int *pre, float *scan, int *period)
+/* The integer scale taken before the window's bicubic scaling, the width of the scanlines (0: none), how many scanlines there are per source line,
+ * and the look: 0 the plain scaling or the scanline filter above, 1 a soft CRT (a Gaussian beam over the neighbouring lines and pixels, blended
+ * in linear light, after Timothy Lottes' CRT shader), 2 the same with an aperture grille mask. */
+static void look(int w, int *pre, float *scan, int *period, int *style)
 {
     static const int lo_pre[4] = { 3, 5, 7, 11 };
-    *scan = 0; *period = 1;
+    *scan = 0; *period = 1; *style = 0;
     if (w == 320) {
         int m = lores_mode;
         *pre = m < 4 ? lo_pre[m] : 3;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
-        if (m >= 7) { *scan = scan_strength[m - 7]; *period = 2; }
+        if (m >= 7 && m < 10) { *scan = scan_strength[m - 7]; *period = 2; }
+        if (m >= 10) { *style = 1 + (m - 10) % 2; *period = m >= 12 ? 2 : 1; *pre = 1; }
     } else {
         int m = hires_mode;
         *pre = m < 4 ? m + 1 : 1;
-        if (m >= 4) *scan = scan_strength[m - 4];
+        if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
+        if (m >= 7) *style = 1 + (m - 7);
     }
 }
 
@@ -111,8 +117,8 @@ static void settings_load(void)
         else if (!strcmp(k, "stats")) osd_on = !strcmp(v, "on");
         else if (!strcmp(k, "hires_scaling")) hires_mode = name_index(v, hires_names, NHIRES, 0);
         else if (!strcmp(k, "lores_scaling")) lores_mode = name_index(v, lores_names, NLORES, 0);
-        else if (!strcmp(k, "picture_height")) vscale_mode = name_index(v, vscale_names, 3, 0);
-        else if (!strcmp(k, "windows_pointer")) ptr_mode = name_index(v, ptr_names, 3, 0);
+        else if (!strcmp(k, "hires_picture_height")) vscale_hi = name_index(v, vscale_names, 4, 0);
+        else if (!strcmp(k, "lores_picture_height")) vscale_lo = name_index(v, vscale_names, 4, 0);
     }
     fclose(f);
 }
@@ -128,16 +134,14 @@ static void settings_save(void)
     fprintf(f, "; refresh: 60, 70 or vrr (draw whenever the game's picture changes, for variable refresh rate monitors)\nrefresh=%s\n", vrr_on ? "vrr" : present_hz == 70 ? "70" : "60");
     fprintf(f, "; vsync: on or off\nvsync=%s\n", vsync_on ? "on" : "off");
     fprintf(f, "; stats: on or off (frames per second, CPU and GPU use, in the top right corner)\nstats=%s\n", osd_on ? "on" : "off");
-    fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong\nhires_scaling=%s\n", hires_names[hires_mode]);
-    fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong\nlores_scaling=%s\n", lores_names[lores_mode]);
-    fprintf(f, "; picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines) or overscan (the next multiple up, a little cut off)\npicture_height=%s\n", vscale_names[vscale_mode]);
-    fprintf(f, "; windows_pointer: auto (hidden only where the game draws a pointer), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
+    fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong, crt-soft, crt-soft-grille\nhires_scaling=%s\n", hires_names[hires_mode]);
+    fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong, tv-soft, tv-soft-grille, monitor-soft, monitor-soft-grille\nlores_scaling=%s\n", lores_names[lores_mode]);
+    fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
     fclose(f);
 }
 
 int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
-int video_pointer_mode(void) { return ptr_mode; }
 
 /* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
  * and the gain keeps the average brightness. center is the brightest position within the source line (0..1). */
@@ -163,8 +167,8 @@ void video_command(int id)
     else if (id == CMD_STATS) osd_on = !osd_on;
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) hires_mode = id - CMD_HIRES;
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) lores_mode = id - CMD_LORES;
-    else if (id >= CMD_VSCALE && id < CMD_VSCALE + 3) vscale_mode = id - CMD_VSCALE;
-    else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
+    else if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) vscale_hi = id - CMD_VSCALE_HI;
+    else if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) vscale_lo = id - CMD_VSCALE_LO;
     else return;
     if (use_gl) vgl_set_vsync(vsync_on);
     settings_save();
@@ -181,8 +185,8 @@ int video_command_checked(int id)
     if (id == CMD_STATS) return osd_on;
     if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) return id - CMD_HIRES == hires_mode;
     if (id >= CMD_LORES && id < CMD_LORES + NLORES) return id - CMD_LORES == lores_mode;
-    if (id >= CMD_VSCALE && id < CMD_VSCALE + 3) return id - CMD_VSCALE == vscale_mode;
-    if (id >= CMD_POINTER && id < CMD_POINTER + 3) return id - CMD_POINTER == ptr_mode;
+    if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) return id - CMD_VSCALE_HI == vscale_hi;
+    if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) return id - CMD_VSCALE_LO == vscale_lo;
     return 0;
 }
 
@@ -378,20 +382,31 @@ void video_fill_vesa_tables(void)
 /* window position to game screen position (the window is scaled and letter-boxed) */
 /* Where the picture sits in the window, in window coordinates: the largest 4:3 rectangle, centred (both the 640x480 screens and the
  * 320x200 ones, whose pixels were not square, fill a 4:3 screen). */
+/* the window's client area: Windows' own figure when there is one (SDL's can be stale after the menu bar changes or the window is maximized) */
+static void client_size(int *w, int *h)
+{
+    if (!menu_client_size(w, h) && win) SDL_GetWindowSize(win, w, h);
+}
+
 void video_view(int *vx, int *vy, int *vw, int *vh)
 {
-    int ww = 640, wh = 480, w, h;
-    if (win) SDL_GetWindowSize(win, &ww, &wh);
+    int ww = 640, wh = 480, w, h, vs = mode_w == 320 ? vscale_lo : vscale_hi;
+    if (win) client_size(&ww, &wh);
     w = ww; h = ww * 3 / 4;
     if (h > wh) { h = wh; w = wh * 4 / 3; }
-    if (vscale_mode) {                          /* a whole number of window rows for each source line (or scanline), so that the lines are even */
-        int pre, period, unit, k;
+    if (vs) {                                   /* a whole number of window rows for each source line (or scanline), so that the lines are even */
+        int pre, period, style, unit, kf, kc, k;
         float scan;
-        look(mode_w, &pre, &scan, &period);
+        look(mode_w, &pre, &scan, &period, &style);
         unit = mode_h * (period == 2 ? 2 : 1);
-        k = vscale_mode == 2 ? (wh + unit - 1) / unit : wh / unit;
-        if (vscale_mode == 1) while (k > 1 && k * unit * 4 / 3 > ww) k--;
-        if (k < 1) k = 1;
+        kf = wh / unit;
+        if (kf < 1) kf = 1;
+        while (kf > 1 && kf * unit * 4 / 3 > ww) kf--;
+        kc = (wh + unit - 1) / unit;
+        if (kc < kf) kc = kf;
+        if (vs == 1) k = kf;
+        else if (vs == 2) k = kc;
+        else k = (kc * unit - wh <= (mode_w == 320 ? 6 : 10)) ? kc : kf;       /* auto crop */
         h = k * unit; w = h * 4 / 3;
     }
     *vw = w; *vh = h; *vx = (ww - w) / 2; *vy = (wh - h) / 2;
@@ -536,16 +551,17 @@ void video_present(void)
         video_view(&vx, &vy, &vw, &vh);
         if (use_gl) {                           /* the view in drawable pixels, origin at the bottom left */
             int ww, wh, dw, dh;
-            SDL_GetWindowSize(win, &ww, &wh);
-            SDL_GL_GetDrawableSize(win, &dw, &dh);
+            client_size(&ww, &wh);
+            dw = ww; dh = wh;
             {
-                int pre, period, unit = h * 1, rows;
+                int pre, period, style, unit, rows;
                 float scan, center, gain;
-                look(w, &pre, &scan, &period);
+                look(w, &pre, &scan, &period, &style);
                 unit = h * (period == 2 ? 2 : 1);
                 rows = (vh * dh / wh + unit / 2) / unit;
                 scan_rows(scan, rows, &center, &gain);
-                vgl_set_look(pre, scan, gain, center, period);
+                vgl_set_target(dw, dh);
+                vgl_set_look(pre, scan, gain, center, period, style);
             }
             vgl_draw(win, argb, w, h, vx * dw / ww, (wh - vy - vh) * dh / wh, vw * dw / ww, vh * dh / wh);
         } else {

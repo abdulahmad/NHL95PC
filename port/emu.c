@@ -19,6 +19,12 @@ static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
 #define NFLAGOPS (int)(sizeof flagops / sizeof *flagops)
 #define GAME_ADDR(orig) ((uint8_t *)sub_10000 + ((orig) - 0x10000))
 
+/* EventToPointer (0x6B4BB), which every menu of the game calls each time round its loop to move the pointer: how the host knows that the game is
+ * drawing a pointer of its own. Its first instruction, push dword 1Ch, becomes an int3 that notes the time and is emulated. */
+#define PTR_HOOK 0x6B4BBu
+static volatile int64_t ptr_hook_ns;
+int64_t game_pointer_ns(void) { return ptr_hook_ns; }
+
 void install_flag_traps(void)
 {
     static const uint8_t first[4] = { 0x9C, 0x9D, 0x66, 0x66 };
@@ -33,6 +39,7 @@ void install_flag_traps(void)
         n++;
     }
     if (n != NFLAGOPS) fprintf(stderr, "pushf/popf: %d of %d found in the code\n", n, NFLAGOPS);
+    { uint8_t *p = GAME_ADDR(PTR_HOOK); if (p[0] == 0x68 && p[1] == 0x1C) p[0] = 0xCC; else fprintf(stderr, "EventToPointer is %02x %02x, not hooked\n", p[0], p[1]); }
 }
 
 /* the instruction an int3 at ip replaced, or -1 */
@@ -52,7 +59,14 @@ static int flagop_kind(const uint8_t *ip)
 
 static int emulate_flagop(ctx_t *c, uint8_t *ip)
 {
-    int kind = flagop_kind(ip);
+    int kind;
+    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PTR_HOOK) {            /* push dword 1Ch */
+        ptr_hook_ns = plat_now_ns();
+        R(c, ESP) -= 4;
+        *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
+        return 5;
+    }
+    kind = flagop_kind(ip);
     uint32_t efl = R(c, EFL), v;
     switch (kind) {
     case 0:

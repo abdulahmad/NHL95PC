@@ -42,14 +42,23 @@ static void out_path(char *buf, size_t n, const char *name)
     snprintf(buf, n, "%s%s", base ? base : "", name);
 }
 
-/* nhl95-audio.log: timing facts about the sound emulation, appended, for finding out what goes wrong on a machine that cannot be
- * attached to a debugger. */
+/* The sound diagnostics (the log and the Ctrl+F11 recording) are for finding out what goes wrong on a machine that cannot be attached to a
+ * debugger, and are off unless NHL95_AUDIO_DEBUG is set. */
+int audio_debug(void)
+{
+    static int on = -1;
+    if (on < 0) on = getenv("NHL95_AUDIO_DEBUG") != NULL;
+    return on;
+}
+
+/* nhl95-audio.log: timing facts about the sound emulation, appended. */
 void audio_log(const char *fmt, ...)
 {
     char path[1100];
     FILE *f;
     va_list ap;
     static int64_t t0;
+    if (!audio_debug()) return;
     if (!t0) t0 = plat_now_ns();
     out_path(path, sizeof path, "nhl95-audio.log");
     f = fopen(path, "a");

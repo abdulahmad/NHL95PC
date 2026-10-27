@@ -1,6 +1,6 @@
-/* The window's menu bar (Windows): the refresh rate, vsync, the stats display and the scaling of the menus (640x480) and of the game
- * (320x200). The choices live in video.c (video_command); this file only builds the menu, shows the marks and passes the clicks on.
- * While the menu is open Windows runs its own loop in the main thread, so the game is paused (no timer ticks) until it closes. */
+/* The window's menu bar (Windows): the refresh rate, vsync, the stats display and, for the menus (640x480) and the game (320x200) each, the
+ * scaling and the picture height. The choices live in video.c (video_command); this file only builds the menu, shows the marks and passes
+ * the clicks on. While the menu is open Windows runs its own loop in the main thread, so the game is paused (no timer ticks) until it closes. */
 #include "host.h"
 #include <SDL.h>
 #include <SDL_syswm.h>
@@ -9,6 +9,7 @@ static HWND hwnd;
 static HMENU bar;
 
 static void item(HMENU m, int id, const char *text) { AppendMenuA(m, MF_STRING, (UINT_PTR)id, text); }
+static void line(HMENU m) { AppendMenuA(m, MF_SEPARATOR, 0, NULL); }
 
 static HMENU sub(HMENU parent, const char *text)
 {
@@ -17,17 +18,24 @@ static HMENU sub(HMENU parent, const char *text)
     return m;
 }
 
+static const char *hires[NHIRES_ITEMS] = {
+    "1X - Standard", "2X - 1080p Sharp", "3X - 1440p Sharp", "4X - 4K Sharp",
+    "CRT Monitor - light scanlines", "CRT Monitor - medium scanlines", "CRT Monitor - strong scanlines",
+    "CRT Monitor - soft (Lottes style)", "CRT Monitor - soft + aperture grille" };
+static const char *lores[NLORES_ITEMS] = {
+    "3X - Standard", "5X - 1080p Sharp", "7X - 1440p Sharp", "11X - 4K Sharp",
+    "CRT TV - light scanlines", "CRT TV - medium scanlines", "CRT TV - strong scanlines",
+    "CRT Monitor (line doubled) - light scanlines", "CRT Monitor (line doubled) - medium scanlines", "CRT Monitor (line doubled) - strong scanlines",
+    "CRT TV - soft (Lottes style)", "CRT TV - soft + aperture grille",
+    "CRT Monitor (line doubled) - soft (Lottes style)", "CRT Monitor (line doubled) - soft + aperture grille" };
+static const char *heights[4] = { "Picture height: fit the window", "Picture height: integer (even lines)", "Picture height: integer +1x overscan",
+                                  "Picture height: auto crop (+1x when little is cut off)" };
+
 void menu_init(void *sdl_window)
 {
     SDL_SysWMinfo info;
     HMENU m;
     int i;
-    static const char *hires[] = { "1X - Standard", "2X - 1080p Sharp", "3X - 1440p Sharp", "4X - 4K Sharp",
-                                   "CRT Monitor - light scanlines", "CRT Monitor - medium scanlines", "CRT Monitor - strong scanlines" };
-    static const char *lores[] = { "3X - Standard", "5X - 1080p Sharp", "7X - 1440p Sharp", "11X - 4K Sharp",
-                                   "CRT TV - light scanlines", "CRT TV - medium scanlines", "CRT TV - strong scanlines",
-                                   "CRT Monitor (line doubled) - light scanlines", "CRT Monitor (line doubled) - medium scanlines",
-                                   "CRT Monitor (line doubled) - strong scanlines" };
     SDL_VERSION(&info.version);
     if (!SDL_GetWindowWMInfo((SDL_Window *)sdl_window, &info)) return;
     hwnd = info.info.win.window;
@@ -36,49 +44,46 @@ void menu_init(void *sdl_window)
     item(m, CMD_REFRESH_60, "60 Hz");
     item(m, CMD_REFRESH_70, "70 Hz");
     item(m, CMD_REFRESH_VRR, "VRR (draw each new image)");
-    AppendMenuA(m, MF_SEPARATOR, 0, NULL);
+    line(m);
     item(m, CMD_VSYNC, "V-Sync");
     item(m, CMD_STATS, "Stats display");
-    AppendMenuA(m, MF_SEPARATOR, 0, NULL);
-    item(m, CMD_VSCALE, "Picture height: fit the window");
-    item(m, CMD_VSCALE + 1, "Picture height: integer (even lines)");
-    item(m, CMD_VSCALE + 2, "Picture height: integer +1x overscan");
-    AppendMenuA(m, MF_SEPARATOR, 0, NULL);
-    item(m, CMD_POINTER, "Windows pointer: automatic");
-    item(m, CMD_POINTER + 1, "Windows pointer: always show");
-    item(m, CMD_POINTER + 2, "Windows pointer: always hide");
     m = sub(bar, "Menus (hi-res)");
-    for (i = 0; i < 7; i++) {
-        if (i == 4) AppendMenuA(m, MF_SEPARATOR, 0, NULL);
+    for (i = 0; i < NHIRES_ITEMS; i++) {
+        if (i == 4 || i == 7) line(m);
         item(m, CMD_HIRES + i, hires[i]);
     }
+    line(m);
+    for (i = 0; i < 4; i++) item(m, CMD_VSCALE_HI + i, heights[i]);
     m = sub(bar, "Gameplay (lo-res)");
-    for (i = 0; i < 10; i++) {
-        if (i == 4) AppendMenuA(m, MF_SEPARATOR, 0, NULL);
+    for (i = 0; i < NLORES_ITEMS; i++) {
+        if (i == 4 || i == 10) line(m);
         item(m, CMD_LORES + i, lores[i]);
     }
+    line(m);
+    for (i = 0; i < 4; i++) item(m, CMD_VSCALE_LO + i, heights[i]);
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
     SetMenu(hwnd, bar);
     menu_sync();
 }
 
+static void radio(int first, int n)
+{
+    int i;
+    for (i = 0; i < n; i++)
+        if (video_command_checked(first + i)) CheckMenuRadioItem(bar, first, first + n - 1, first + i, MF_BYCOMMAND);
+}
+
 /* the marks follow the settings */
 void menu_sync(void)
 {
-    int i;
     if (!bar) return;
-    for (i = CMD_REFRESH_60; i <= CMD_REFRESH_VRR; i++)
-        if (video_command_checked(i)) CheckMenuRadioItem(bar, CMD_REFRESH_60, CMD_REFRESH_VRR, i, MF_BYCOMMAND);
+    radio(CMD_REFRESH_60, 3);
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
-    for (i = 0; i < 3; i++) {
-        if (video_command_checked(CMD_VSCALE + i)) CheckMenuRadioItem(bar, CMD_VSCALE, CMD_VSCALE + 2, CMD_VSCALE + i, MF_BYCOMMAND);
-        if (video_command_checked(CMD_POINTER + i)) CheckMenuRadioItem(bar, CMD_POINTER, CMD_POINTER + 2, CMD_POINTER + i, MF_BYCOMMAND);
-    }
-    for (i = 0; i < 7; i++)
-        if (video_command_checked(CMD_HIRES + i)) CheckMenuRadioItem(bar, CMD_HIRES, CMD_HIRES + 6, CMD_HIRES + i, MF_BYCOMMAND);
-    for (i = 0; i < 10; i++)
-        if (video_command_checked(CMD_LORES + i)) CheckMenuRadioItem(bar, CMD_LORES, CMD_LORES + 9, CMD_LORES + i, MF_BYCOMMAND);
+    radio(CMD_HIRES, NHIRES_ITEMS);
+    radio(CMD_LORES, NLORES_ITEMS);
+    radio(CMD_VSCALE_HI, 4);
+    radio(CMD_VSCALE_LO, 4);
 }
 
 /* the bar is shown in a window and hidden in fullscreen */
@@ -87,6 +92,16 @@ void menu_show(int on)
     if (!hwnd) return;
     SetMenu(hwnd, on ? bar : NULL);
     DrawMenuBar(hwnd);
+}
+
+/* The size of the window's client area as Windows has it now. SDL's own idea of the window size is not always up to date after the menu
+ * bar is shown or hidden or the window is maximized, which moved the picture down. */
+int menu_client_size(int *w, int *h)
+{
+    RECT r;
+    if (!hwnd || !GetClientRect(hwnd, &r) || r.right <= 0 || r.bottom <= 0) return 0;
+    *w = r.right; *h = r.bottom;
+    return 1;
 }
 
 void menu_event(void *syswm_msg)
