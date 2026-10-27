@@ -68,7 +68,7 @@ static void add_files(HMENU parent, const char *rel, int cls, int kind, int dept
                 add_files(sm, child, cls, kind, depth + 1);
                 if (GetMenuItemCount(sm) > 0) AppendMenuA(parent, MF_POPUP, (UINT_PTR)sm, fd.cFileName);
                 else DestroyMenu(sm);
-            } else if (pass == 1 && !(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && len > 4 && !_stricmp(fd.cFileName + len - 4, ".txt") && nmfile < MAX_FILES) {
+            } else if (pass == 1 && !(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && len > 4 && !_stricmp(fd.cFileName + len - 4, kind == 4 ? ".ini" : ".txt") && nmfile < MAX_FILES) {
                 char label[300];
                 snprintf(label, sizeof label, "%.*s", (int)len - 4, fd.cFileName);
                 mfile[nmfile].cls = cls; mfile[nmfile].kind = kind;
