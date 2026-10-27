@@ -1,10 +1,11 @@
 /* Engine physics AI: wall collision. */
-/* DRAFT (10.0 GA, 15 differing, 482 vs 481): short limits preserve the EXE's narrowed radius loads.
-   The distance is kept in regd3.w, and selecting net 12 or 13 with a ternary keeps the 0Ch addition
-   before the index shift, as in the EXE (three bytes closer than the additive-boolean index).
-   Left: x's home and ylim swap stack slots ([esp] / [esp+8]). The net offset is built in edx instead
-   of eax: an extra mov edx, eax precedes the mask, and the SortCords base is added as an immediate
-   instead of mov edx, SortCords / add edx, eax. See docs/UNSURE.md. */
+/* DRAFT (10.0 GA, 10 differing, 480 vs 481): short limits preserve the EXE's narrowed radius loads; each limit
+   is set and then reduced by its radius (`xlim = 0xA0; xlim -= wcradiusx;`, tools/wccre/targetsearch.py), which
+   also builds the goal-mouth net offset in eax with the SortCords base loaded into edx, as the EXE. The distance
+   is kept in regd3.w, and selecting net 12 or 13 with a ternary keeps the 0Ch addition before the index shift.
+   Left: only x's home and ylim swap stack slots ([esp] / [esp+8], the byte of size). countsolve: xlim and ylim
+   each at a use count of 8 (x 7) give all three EXE slots; no spelling found that adds those references without
+   changing the code. See docs/UNSURE.md. */
 #include "nhl95.h"
 
 #define W(v) (*(int *)((char *)&(v) - 2) >> 16)
@@ -20,8 +21,10 @@ void checkwallcoll(Player *p, short x, short y)
     short ylim;
     short ry0;
 
-    xlim = 0xA0 - wcradiusx;
-    ylim = 0x108 - wcradiusy;
+    xlim = 0xA0;
+    xlim -= wcradiusx;
+    ylim = 0x108;
+    ylim -= wcradiusy;
     regd4.w = 0x40 - xlim;
     ry0 = word_E03B8 = 0x40 - ylim;
     if (y <= word_E03B8 || y >= (word_E03B8 = -word_E03B8)) {
