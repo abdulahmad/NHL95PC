@@ -54,6 +54,18 @@ static const char *root(void)
 }
 
 /* Resolve a DOS path below base: drop the drive, turn backslashes into slashes, match each name ignoring case. */
+/* DOS ignores the padding spaces the game leaves in names (the Los Angeles arena is "LA " and its rink file "LA .til": DOS opens LA.TIL, and so do
+ * New Jersey, San Jose and Tampa Bay, "NJ ", "SJ ", "TB "): drop them before the dot and at the end of a name. */
+static void strip_pad(char *s)
+{
+    char *dot = strrchr(s, '.'), *e;
+    if (dot) {
+        for (e = dot; e > s && e[-1] == ' '; ) e--;
+        memmove(e, dot, strlen(dot) + 1);
+    }
+    for (e = s + strlen(s); e > s && e[-1] == ' '; ) *--e = 0;
+}
+
 static void resolve_in(const char *base, const char *dos, char *out, size_t n)
 {
     char tmp[512], cur[1024];
@@ -70,6 +82,7 @@ static void resolve_in(const char *base, const char *dos, char *out, size_t n)
         struct dirent *e;
         char next[1024];
         int found = 0;
+        strip_pad(tok);
         if (!strcmp(tok, ".")) continue;
         if (!strcmp(tok, "..")) { strncat(cur, "/..", sizeof cur - strlen(cur) - 1); continue; }
         d = opendir(cur);
