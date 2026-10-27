@@ -157,3 +157,6 @@ void plat_sleep_ms(int ms)
 {
     usleep(ms * 1000);
 }
+
+int plat_cpu_percent(void) { return -1; }
+int plat_gpu_percent(void) { return -1; }

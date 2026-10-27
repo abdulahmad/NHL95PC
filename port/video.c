@@ -28,7 +28,7 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
 void vgl_quit(void);
 void vgl_set_vsync(int on);
 void vgl_set_look(int pre, float scan, int period);
-void vgl_osd_set(const char *l1, const char *l2);
+void vgl_osd_set(const char *l1, const char *l2, const char *l3);
 #else                                           /* the Linux build has no OpenGL path yet: SDL's renderer only */
 static int vgl_init(SDL_Window *win) { (void)win; return 0; }
 static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int vy, int vw, int vh)
@@ -36,7 +36,7 @@ static void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx
 static void vgl_quit(void) {}
 static void vgl_set_vsync(int on) { (void)on; }
 static void vgl_set_look(int pre, float scan, int period) { (void)pre; (void)scan; (void)period; }
-static void vgl_osd_set(const char *l1, const char *l2) { (void)l1; (void)l2; }
+static void vgl_osd_set(const char *l1, const char *l2, const char *l3) { (void)l1; (void)l2; (void)l3; }
 #endif
 static uint32_t argb[1280 * 1024];
 
@@ -161,7 +161,7 @@ int video_command_checked(int id)
 }
 
 static char base_title[96] = "NHL Hockey 95";
-static int shown, changed;
+static int shown, changed, cpu_pct = -1, gpu_pct = -1;
 static int64_t title_at;
 
 /* the window is drawn when the game's screen has changed, not on a timer (key 6): a variable refresh rate monitor then shows each new
@@ -196,11 +196,13 @@ static void title_refresh(void)
     if (getenv("NHL95_TITLELOG")) fprintf(stderr, "title: %s\n", t);
     if (win) SDL_SetWindowTitle(win, t);
     if (use_gl) {                               /* key 5: the same numbers on the picture */
-        char l1[32], l2[32];
+        char l1[32], l2[32], l3[32];
         snprintf(l1, sizeof l1, "FPS %d  NEW %d", shown, changed);
         if (vrr_on) snprintf(l2, sizeof l2, "VRR VSYNC %s", vsync_on ? "ON" : "OFF");
         else snprintf(l2, sizeof l2, "%dHZ VSYNC %s", present_hz, vsync_on ? "ON" : "OFF");
-        vgl_osd_set(osd_on ? l1 : NULL, l2);
+        if (cpu_pct < 0) snprintf(l3, sizeof l3, "CPU --"); else snprintf(l3, sizeof l3, "CPU %d%%", cpu_pct);
+        if (gpu_pct >= 0) snprintf(l3 + strlen(l3), sizeof l3 - strlen(l3), " GPU %d%%", gpu_pct); else snprintf(l3 + strlen(l3), sizeof l3 - strlen(l3), " GPU --");
+        vgl_osd_set(osd_on ? l1 : NULL, l2, l3);
     }
 }
 
@@ -488,6 +490,7 @@ void video_present(void)
         if (now - title_at >= 1000000000LL) {
             shown = (int)(n_shown * 1000000000LL / (now - title_at)); changed = (int)(n_changed * 1000000000LL / (now - title_at));
             n_shown = n_changed = 0; title_at = now;
+            cpu_pct = plat_cpu_percent(); gpu_pct = plat_gpu_percent();
             title_refresh();
         }
     }

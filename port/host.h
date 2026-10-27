@@ -69,6 +69,8 @@ void stats_present_ns(int64_t ns);
 void stats_screen(int changed, int w, int h);          /* a presented image: did it differ from the previous one */
 void stats_report(void);                               /* main thread, about every 2 s */
 int64_t plat_now_ns(void);
+int plat_cpu_percent(void);                            /* this program's share of all the CPUs since the last call, or -1 */
+int plat_gpu_percent(void);                            /* this program's 3D engine use of the GPU since the last call, or -1 */
 void plat_sleep_ms(int ms);
 
 /* privileged instructions the game executes (emu.c) */

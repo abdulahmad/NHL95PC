@@ -121,7 +121,7 @@ int vgl_init(SDL_Window *win)
 }
 
 
-/* ---- the on-screen display: two lines of text in the top left corner, drawn over the picture at the window's own resolution ----
+/* ---- the on-screen display: three lines of text in the top right corner, drawn over the picture at the window's own resolution ----
  * A 5x7 font of just the characters the lines use. */
 static const struct { char c; unsigned char r[7]; } font[] = {
     { '0', { 0x0E, 0x11, 0x13, 0x15, 0x19, 0x11, 0x0E } }, { '1', { 0x04, 0x0C, 0x04, 0x04, 0x04, 0x04, 0x0E } },
@@ -133,6 +133,8 @@ static const struct { char c; unsigned char r[7]; } font[] = {
     { 'F', { 0x1F, 0x10, 0x10, 0x1E, 0x10, 0x10, 0x10 } }, { 'H', { 0x11, 0x11, 0x11, 0x1F, 0x11, 0x11, 0x11 } },
     { 'N', { 0x11, 0x19, 0x15, 0x13, 0x11, 0x11, 0x11 } }, { 'O', { 0x0E, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E } },
     { 'R', { 0x1E, 0x11, 0x11, 0x1E, 0x14, 0x12, 0x11 } },
+    { 'U', { 0x11, 0x11, 0x11, 0x11, 0x11, 0x11, 0x0E } }, { 'G', { 0x0E, 0x11, 0x10, 0x17, 0x11, 0x11, 0x0F } },
+    { '%', { 0x18, 0x19, 0x02, 0x04, 0x08, 0x13, 0x03 } }, { '-', { 0x00, 0x00, 0x00, 0x1F, 0x00, 0x00, 0x00 } },
     { 'P', { 0x1E, 0x11, 0x11, 0x1E, 0x10, 0x10, 0x10 } }, { 'S', { 0x0F, 0x10, 0x10, 0x0E, 0x01, 0x01, 0x1E } },
     { 'V', { 0x11, 0x11, 0x11, 0x11, 0x11, 0x0A, 0x04 } }, { 'W', { 0x11, 0x11, 0x11, 0x15, 0x15, 0x15, 0x0A } },
     { 'Y', { 0x11, 0x11, 0x0A, 0x04, 0x04, 0x04, 0x04 } }, { 'Z', { 0x1F, 0x01, 0x02, 0x04, 0x08, 0x10, 0x1F } },
@@ -140,17 +142,17 @@ static const struct { char c; unsigned char r[7]; } font[] = {
 
 static GLuint osd_tex;
 static int osd_w, osd_h, osd_fresh;
-static uint32_t osd_pix[96 * 18];
+static uint32_t osd_pix[96 * 26];
 
 /* the text of the display (NULL: none) */
-void vgl_osd_set(const char *l1, const char *l2)
+void vgl_osd_set(const char *l1, const char *l2, const char *l3)
 {
-    const char *line[2] = { l1, l2 };
+    const char *line[3] = { l1, l2, l3 };
     int i, k, x, y;
     if (!l1) { osd_w = 0; return; }
-    osd_w = 96; osd_h = 2 * 8 + 2;
+    osd_w = 96; osd_h = 3 * 8 + 2;
     for (i = 0; i < osd_w * osd_h; i++) osd_pix[i] = 0xC0000000u;
-    for (i = 0; i < 2; i++)
+    for (i = 0; i < 3; i++)
         for (k = 0; line[i][k] && k < 15; k++) {
             unsigned j;
             for (j = 0; j < sizeof font / sizeof font[0]; j++) {
@@ -166,7 +168,7 @@ void vgl_osd_set(const char *l1, const char *l2)
 static void osd_draw(int dw, int dh)
 {
     int s = dh / 270 < 2 ? 2 : dh / 270;
-    float x1 = -1.0f + 2.0f * osd_w * s / dw, y1 = 1.0f - 2.0f * osd_h * s / dh;
+    float x0 = 1.0f - 2.0f * osd_w * s / dw, y1 = 1.0f - 2.0f * osd_h * s / dh;
     if (!osd_w) return;
     if (!osd_tex) glGenTextures(1, &osd_tex);
     glBindTexture(GL_TEXTURE_2D, osd_tex);
@@ -181,10 +183,10 @@ static void osd_draw(int dw, int dh)
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     glColor4f(1, 1, 1, 1);
     glBegin(GL_QUADS);
-    glTexCoord2f(0, 1); glVertex2f(-1, y1);
-    glTexCoord2f(1, 1); glVertex2f(x1, y1);
-    glTexCoord2f(1, 0); glVertex2f(x1, 1);
-    glTexCoord2f(0, 0); glVertex2f(-1, 1);
+    glTexCoord2f(0, 1); glVertex2f(x0, y1);
+    glTexCoord2f(1, 1); glVertex2f(1, y1);
+    glTexCoord2f(1, 0); glVertex2f(1, 1);
+    glTexCoord2f(0, 0); glVertex2f(x0, 1);
     glEnd();
     glDisable(GL_BLEND);
 }
