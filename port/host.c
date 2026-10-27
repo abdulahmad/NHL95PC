@@ -52,7 +52,11 @@ int main(int argc, char **argv)
     for (;;) {
         int64_t now = plat_now_ns();
         input_poll();
-        if (now >= next_frame) { video_present(); next_frame = now + video_present_ns(); }
+        if (now >= next_frame) {                  /* on schedule, not "a period after this one": late frames do not lower the rate */
+            video_present();
+            next_frame += video_present_ns();
+            if (now - next_frame > 100000000) next_frame = now;
+        }
         /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
         while (now >= next_tick) {

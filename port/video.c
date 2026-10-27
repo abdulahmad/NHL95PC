@@ -52,7 +52,7 @@ static void title_refresh(void)
     char t[256];
     snprintf(t, sizeof t, "%s | drawing %d Hz, vsync %s | %d drawn/s, %d new images/s  [keys 1: 60 Hz + vsync, 2: 60 Hz, 3: 70 Hz, 4: vsync on/off, 5: on-screen display]", base_title, present_hz,
              vsync_on ? "on" : "off", shown, changed);
-    TRACE("title: %s\n", t);
+    if (getenv("NHL95_TITLELOG")) fprintf(stderr, "title: %s\n", t);
     if (win) SDL_SetWindowTitle(win, t);
     if (use_gl) {                               /* key 5: the same numbers on the picture */
         char l1[32], l2[32];
