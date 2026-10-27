@@ -42,11 +42,11 @@ static const char *lores[NLORES_ITEMS] = {
     "CRT - MiSTer filters (see the MiSTer menu)", "CRT - custom (scanlines, gamma, mask)" };
 /* The files of the MiSTer look, as menus of the folders found under mister\Filters, mister\Gamma and mister\Shadow_Masks (the folders of the
  * MiSTer SD card): every .txt file is an item, every folder a submenu. */
-#define MAX_FILES 4000
-static struct { int kind; char rel[300]; } mfile[MAX_FILES];
+#define MAX_FILES 9000
+static struct { int cls, kind; char rel[300]; } mfile[MAX_FILES];
 static int nmfile;
 
-static void add_files(HMENU parent, const char *rel, int kind, int depth)
+static void add_files(HMENU parent, const char *rel, int cls, int kind, int depth)
 {
     char dir[1100], pat[1200], *base = SDL_GetBasePath();
     WIN32_FIND_DATAA fd;
@@ -65,13 +65,13 @@ static void add_files(HMENU parent, const char *rel, int kind, int depth)
             snprintf(child, sizeof child, "%s/%s", rel, fd.cFileName);
             if (pass == 0 && (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && depth < 4) {
                 HMENU sm = CreatePopupMenu();
-                add_files(sm, child, kind, depth + 1);
+                add_files(sm, child, cls, kind, depth + 1);
                 if (GetMenuItemCount(sm) > 0) AppendMenuA(parent, MF_POPUP, (UINT_PTR)sm, fd.cFileName);
                 else DestroyMenu(sm);
             } else if (pass == 1 && !(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && len > 4 && !_stricmp(fd.cFileName + len - 4, ".txt") && nmfile < MAX_FILES) {
                 char label[300];
                 snprintf(label, sizeof label, "%.*s", (int)len - 4, fd.cFileName);
-                mfile[nmfile].kind = kind;
+                mfile[nmfile].cls = cls; mfile[nmfile].kind = kind;
                 snprintf(mfile[nmfile].rel, sizeof mfile[nmfile].rel, "%s", child);
                 AppendMenuA(parent, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), label);
                 nmfile++;
@@ -81,30 +81,45 @@ static void add_files(HMENU parent, const char *rel, int kind, int depth)
     }
 }
 
-static void add_mister_menu(void)
+static void add_mister_menu(HMENU parent, int cls)
 {
-    static const char *names[4] = { "Horizontal filter", "Vertical filter (scanlines)", "Gamma", "Shadow mask" };
-    static const char *roots[4] = { "mister/Filters", "mister/Filters", "mister/Gamma", "mister/Shadow_Masks" };
-    HMENU m = sub(bar, "MiSTer"), k, b;
+    static const char *names[5] = { "Horizontal filter", "Vertical filter (scanlines)", "Gamma", "Shadow mask", "Presets" };
+    static const char *roots[5] = { "mister/Filters", "mister/Filters", "mister/Gamma", "mister/Shadow_Masks", "mister/Presets" };
+    HMENU m = sub(parent, "MiSTer filters"), k;
     int i;
+    k = sub(m, names[4]);
+    add_files(k, roots[4], cls, 4, 0);
+    line(m);
     for (i = 0; i < 4; i++) {
         k = sub(m, names[i]);
         if (i == 3) {                               /* no mask */
-            mfile[nmfile].kind = 3;
+            mfile[nmfile].cls = cls; mfile[nmfile].kind = 3;
             mfile[nmfile].rel[0] = 0;
             AppendMenuA(k, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), "None");
             nmfile++;
         }
-        add_files(k, roots[i], i, 0);
+        if (i == 2) {                               /* no gamma */
+            mfile[nmfile].cls = cls; mfile[nmfile].kind = 2;
+            mfile[nmfile].rel[0] = 0;
+            AppendMenuA(k, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), "None");
+            nmfile++;
+        }
+        add_files(k, roots[i], cls, i, 0);
     }
-    b = sub(m, "Brightness");
+    k = sub(m, "Shadow mask scale");
+    for (i = 0; i < 4; i++) {
+        char t[16];
+        snprintf(t, sizeof t, "%dx", i + 1);
+        item(k, (cls ? CMD_MSCALE_LO : CMD_MSCALE_HI) + i, t);
+    }
+    k = sub(m, "Brightness");
     for (i = 0; i < 5; i++) {
         char t[16];
         snprintf(t, sizeof t, "%d%%", 70 + 10 * i);
-        item(b, CMD_MBRIGHT + i, t);
+        item(k, (cls ? CMD_MBRIGHT_LO : CMD_MBRIGHT_HI) + i, t);
     }
     line(m);
-    item(m, CMD_MRESET, "Reset the MiSTer settings");
+    item(m, cls ? CMD_MRESET_LO : CMD_MRESET_HI, "Reset the MiSTer filters");
 }
 
 static const char *heights[4] = { "Picture height: fit the window", "Picture height: integer (even lines)", "Picture height: integer +1x overscan",
@@ -136,6 +151,8 @@ void menu_init(void *sdl_window)
         item(m, CMD_HIRES + i, hires[i]);
     }
     line(m);
+    add_mister_menu(m, 0);
+    line(m);
     for (i = 0; i < 4; i++) item(m, CMD_VSCALE_HI + i, heights[i]);
     m = sub(bar, "Gameplay (lo-res)");
     for (i = 0; i < NLORES_ITEMS; i++) {
@@ -143,9 +160,10 @@ void menu_init(void *sdl_window)
         item(m, CMD_LORES + i, lores[i]);
     }
     line(m);
+    add_mister_menu(m, 1);
+    line(m);
     for (i = 0; i < 4; i++) item(m, CMD_VSCALE_LO + i, heights[i]);
     old_proc = (WNDPROC)SetWindowLongPtrW(hwnd, GWLP_WNDPROC, (LONG_PTR)menu_proc);
-    add_mister_menu();
     SDL_EventState(SDL_SYSWMEVENT, SDL_ENABLE);
     SetMenu(hwnd, bar);
     menu_sync();
@@ -167,9 +185,12 @@ void menu_sync(void)
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_POINTER, 3);
-    radio(CMD_MBRIGHT, 5);
+    radio(CMD_MBRIGHT_HI, 5);
+    radio(CMD_MBRIGHT_LO, 5);
+    radio(CMD_MSCALE_HI, 4);
+    radio(CMD_MSCALE_LO, 4);
     for (i = 0; i < nmfile; i++)
-        CheckMenuItem(bar, CMD_MFILE + i, MF_BYCOMMAND | (!strcmp(mfile[i].rel, video_mister_path(mfile[i].kind)) ? MF_CHECKED : MF_UNCHECKED));
+        CheckMenuItem(bar, CMD_MFILE + i, MF_BYCOMMAND | (mfile[i].kind < 4 && !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind)) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_HIRES, NHIRES_ITEMS);
     radio(CMD_LORES, NLORES_ITEMS);
     radio(CMD_VSCALE_HI, 4);
@@ -199,7 +220,7 @@ void menu_event(void *syswm_msg)
     SDL_SysWMmsg *m = (SDL_SysWMmsg *)syswm_msg;
     if (m->subsystem == SDL_SYSWM_WINDOWS && m->msg.win.msg == WM_COMMAND && HIWORD(m->msg.win.wParam) == 0) {
         int id = LOWORD(m->msg.win.wParam);
-        if (id >= CMD_MFILE && id < CMD_MFILE + nmfile) video_mister_pick(mfile[id - CMD_MFILE].kind, mfile[id - CMD_MFILE].rel);
+        if (id >= CMD_MFILE && id < CMD_MFILE + nmfile) video_mister_pick(mfile[id - CMD_MFILE].cls, mfile[id - CMD_MFILE].kind, mfile[id - CMD_MFILE].rel);
         else if (id >= CMD_REFRESH_60) video_command(id);
     }
 }
