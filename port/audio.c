@@ -120,9 +120,12 @@ void audio_init(void)
     const char *w = getenv("NHL95_WAV");
     mutex = SDL_CreateMutex();
     memset(&want, 0, sizeof want);
-    want.freq = 44100; want.format = AUDIO_S16SYS; want.channels = 2; want.samples = 1024; want.callback = callback;
+    want.freq = 44100; want.format = AUDIO_S16SYS; want.channels = 2; want.samples = getenv("NHL95_AUDIO_FRAMES") ? atoi(getenv("NHL95_AUDIO_FRAMES")) : 512; want.callback = callback;
     dev = SDL_OpenAudioDevice(0, 0, &want, &have, 0);
-    if (dev) { out_rate = have.freq; SDL_PauseAudioDevice(dev, 0); }
+    if (dev) {
+        out_rate = have.freq; SDL_PauseAudioDevice(dev, 0);
+        audio_log("audio device: %d Hz, buffer %d frames (%.1f ms)", have.freq, have.samples, 1000.0 * have.samples / have.freq);
+    }
     else fprintf(stderr, "no audio device (%s): sound is mixed but not played\n", SDL_GetError());
     if (w) { wav = fopen(w, "wb"); if (wav) wav_header(); }
     pump_last = plat_now_ns();
