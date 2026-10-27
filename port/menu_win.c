@@ -43,10 +43,16 @@ static const char *lores[NLORES_ITEMS] = {
 /* The files of the MiSTer look, as menus of the folders found under mister\Filters, mister\Gamma and mister\Shadow_Masks (the folders of the
  * MiSTer SD card): every .txt file is an item, every folder a submenu. */
 #define MAX_FILES 9000
-static struct { int cls, kind; char rel[300]; } mfile[MAX_FILES];
+static struct { int cls, kind, pop; char rel[300]; } mfile[MAX_FILES];
 static int nmfile;
 
-static void add_files(HMENU parent, const char *rel, int cls, int kind, int depth)
+/* The submenus, so that the marks can be followed down from the top: a submenu is checked when the item chosen is somewhere inside it. flag 1
+ * is the MiSTer filters submenu itself (checked when the MiSTer look is on) and 2 a submenu of choices that always has one. */
+#define MAX_POPS 4000
+static struct { HMENU parent; UINT pos; int up, flag, cls; } pops[MAX_POPS];
+static int npops;
+
+static void add_files(HMENU parent, const char *rel, int cls, int kind, int depth, int up)
 {
     char dir[1100], pat[1200], *base = SDL_GetBasePath();
     WIN32_FIND_DATAA fd;
@@ -65,13 +71,19 @@ static void add_files(HMENU parent, const char *rel, int cls, int kind, int dept
             snprintf(child, sizeof child, "%s/%s", rel, fd.cFileName);
             if (pass == 0 && (fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && depth < 4) {
                 HMENU sm = CreatePopupMenu();
-                add_files(sm, child, cls, kind, depth + 1);
-                if (GetMenuItemCount(sm) > 0) AppendMenuA(parent, MF_POPUP, (UINT_PTR)sm, fd.cFileName);
-                else DestroyMenu(sm);
+                int idx = npops < MAX_POPS ? npops++ : -1;
+                add_files(sm, child, cls, kind, depth + 1, idx);
+                if (GetMenuItemCount(sm) > 0) {
+                    if (idx >= 0) { pops[idx].parent = parent; pops[idx].pos = GetMenuItemCount(parent); pops[idx].up = up; pops[idx].flag = 0; pops[idx].cls = cls; }
+                    AppendMenuA(parent, MF_POPUP, (UINT_PTR)sm, fd.cFileName);
+                } else {
+                    DestroyMenu(sm);
+                    if (idx >= 0) npops = idx;
+                }
             } else if (pass == 1 && !(fd.dwFileAttributes & FILE_ATTRIBUTE_DIRECTORY) && len > 4 && !_stricmp(fd.cFileName + len - 4, kind == 4 ? ".ini" : ".txt") && nmfile < MAX_FILES) {
                 char label[300];
                 snprintf(label, sizeof label, "%.*s", (int)len - 4, fd.cFileName);
-                mfile[nmfile].cls = cls; mfile[nmfile].kind = kind;
+                mfile[nmfile].cls = cls; mfile[nmfile].kind = kind; mfile[nmfile].pop = up;
                 snprintf(mfile[nmfile].rel, sizeof mfile[nmfile].rel, "%s", child);
                 AppendMenuA(parent, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), label);
                 nmfile++;
@@ -81,38 +93,43 @@ static void add_files(HMENU parent, const char *rel, int cls, int kind, int dept
     }
 }
 
+/* a submenu of the MiSTer menu, known to the marks */
+static HMENU pop_sub(HMENU parent, const char *text, int flag, int cls, int *idx)
+{
+    HMENU m = CreatePopupMenu();
+    *idx = npops < MAX_POPS ? npops++ : -1;
+    if (*idx >= 0) { pops[*idx].parent = parent; pops[*idx].pos = GetMenuItemCount(parent); pops[*idx].up = -1; pops[*idx].flag = flag; pops[*idx].cls = cls; }
+    AppendMenuA(parent, MF_POPUP, (UINT_PTR)m, text);
+    return m;
+}
+
 static void add_mister_menu(HMENU parent, int cls)
 {
     static const char *names[5] = { "Horizontal filter", "Vertical filter (scanlines)", "Gamma", "Shadow mask", "Presets" };
     static const char *roots[5] = { "mister/Filters", "mister/Filters", "mister/Gamma", "mister/Shadow_Masks", "mister/Presets" };
-    HMENU m = sub(parent, "MiSTer filters"), k;
-    int i;
-    k = sub(m, names[4]);
-    add_files(k, roots[4], cls, 4, 0);
+    HMENU m, k;
+    int i, mi, ki;
+    m = pop_sub(parent, "MiSTer filters", 1, cls, &mi);
+    k = pop_sub(m, names[4], 0, cls, &ki);
+    add_files(k, roots[4], cls, 4, 0, ki);
     line(m);
     for (i = 0; i < 4; i++) {
-        k = sub(m, names[i]);
-        if (i == 3) {                               /* no mask */
-            mfile[nmfile].cls = cls; mfile[nmfile].kind = 3;
+        k = pop_sub(m, names[i], 0, cls, &ki);
+        if (i == 3 || i == 2) {                     /* no mask, no gamma */
+            mfile[nmfile].cls = cls; mfile[nmfile].kind = i; mfile[nmfile].pop = ki;
             mfile[nmfile].rel[0] = 0;
             AppendMenuA(k, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), "None");
             nmfile++;
         }
-        if (i == 2) {                               /* no gamma */
-            mfile[nmfile].cls = cls; mfile[nmfile].kind = 2;
-            mfile[nmfile].rel[0] = 0;
-            AppendMenuA(k, MF_STRING, (UINT_PTR)(CMD_MFILE + nmfile), "None");
-            nmfile++;
-        }
-        add_files(k, roots[i], cls, i, 0);
+        add_files(k, roots[i], cls, i, 0, ki);
     }
-    k = sub(m, "Shadow mask scale");
+    k = pop_sub(m, "Shadow mask scale", 2, cls, &ki);
     for (i = 0; i < 4; i++) {
         char t[16];
         snprintf(t, sizeof t, "%dx", i + 1);
         item(k, (cls ? CMD_MSCALE_LO : CMD_MSCALE_HI) + i, t);
     }
-    k = sub(m, "Brightness");
+    k = pop_sub(m, "Brightness", 2, cls, &ki);
     for (i = 0; i < 5; i++) {
         char t[16];
         snprintf(t, sizeof t, "%d%%", 70 + 10 * i);
@@ -189,6 +206,20 @@ void menu_sync(void)
     radio(CMD_MBRIGHT_LO, 5);
     radio(CMD_MSCALE_HI, 4);
     radio(CMD_MSCALE_LO, 4);
+    {
+        static unsigned char pc[MAX_POPS];
+        memset(pc, 0, sizeof pc);
+        for (i = 0; i < nmfile; i++)
+            if (mfile[i].kind < 4 && !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind))) {
+                int p;
+                for (p = mfile[i].pop; p >= 0; p = pops[p].up) pc[p] = 1;
+            }
+        for (i = 0; i < npops; i++) {
+            if (pops[i].flag == 1) pc[i] = (unsigned char)video_command_checked(pops[i].cls ? CMD_LORES + 14 : CMD_HIRES + 9);
+            if (pops[i].flag == 2) pc[i] = 1;
+            CheckMenuItem(pops[i].parent, pops[i].pos, MF_BYPOSITION | (pc[i] ? MF_CHECKED : MF_UNCHECKED));
+        }
+    }
     for (i = 0; i < nmfile; i++)
         CheckMenuItem(bar, CMD_MFILE + i, MF_BYCOMMAND | (mfile[i].kind < 4 && !strcmp(mfile[i].rel, video_mister_path(mfile[i].cls, mfile[i].kind)) ? MF_CHECKED : MF_UNCHECKED));
     radio(CMD_HIRES, NHIRES_ITEMS);

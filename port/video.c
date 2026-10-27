@@ -387,6 +387,13 @@ int64_t video_present_ns(void) { return 1000000000LL / present_hz; }
 int video_vrr(void) { return vrr_on; }
 int video_pointer_mode(void) { return ptr_mode; }
 
+/* any change to the MiSTer filters turns the MiSTer look on for that kind of screen (with auto crop, as for any look with scanlines) */
+static void mister_on(int cls)
+{
+    if (cls == 0 && hires_mode != 9) { hires_mode = 9; vscale_hi = 3; }
+    if (cls == 1 && lores_mode != 14) { lores_mode = 14; vscale_lo = 3; }
+}
+
 const char *video_mister_path(int cls, int kind) { return kind == 0 ? mcfg[cls].horiz : kind == 1 ? mcfg[cls].vert : kind == 2 ? mcfg[cls].gamma : mcfg[cls].mask; }
 
 /* a file of the MiSTer look chosen from the menu; it is loaded when the picture is next drawn */
@@ -395,6 +402,7 @@ void video_mister_pick(int cls, int kind, const char *rel)
     if (kind == 4) apply_preset(cls, rel);
     else snprintf(kind == 0 ? mcfg[cls].horiz : kind == 1 ? mcfg[cls].vert : kind == 2 ? mcfg[cls].gamma : mcfg[cls].mask, 260, "%s", rel);
     m_dirty[cls] = 1;
+    mister_on(cls);
     settings_save();
     menu_sync();
 }
@@ -424,12 +432,12 @@ void video_command(int id)
     else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) { hires_mode = id - CMD_HIRES; if (hires_mode >= 4) vscale_hi = 3; }     /* a look with scanlines: auto crop */
     else if (id >= CMD_LORES && id < CMD_LORES + NLORES) { lores_mode = id - CMD_LORES; if (lores_mode >= 4) vscale_lo = 3; }
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
-    else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 5) mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI);
-    else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 5) mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO);
-    else if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) mcfg[0].mask_scale = id - CMD_MSCALE_HI + 1;
-    else if (id >= CMD_MSCALE_LO && id < CMD_MSCALE_LO + 4) mcfg[1].mask_scale = id - CMD_MSCALE_LO + 1;
-    else if (id == CMD_MRESET_HI) mister_defaults(0);
-    else if (id == CMD_MRESET_LO) mister_defaults(1);
+    else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 5) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
+    else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 5) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }
+    else if (id >= CMD_MSCALE_HI && id < CMD_MSCALE_HI + 4) { mcfg[0].mask_scale = id - CMD_MSCALE_HI + 1; mister_on(0); }
+    else if (id >= CMD_MSCALE_LO && id < CMD_MSCALE_LO + 4) { mcfg[1].mask_scale = id - CMD_MSCALE_LO + 1; mister_on(1); }
+    else if (id == CMD_MRESET_HI) { mister_defaults(0); mister_on(0); }
+    else if (id == CMD_MRESET_LO) { mister_defaults(1); mister_on(1); }
     else if (id >= CMD_VSCALE_HI && id < CMD_VSCALE_HI + 4) vscale_hi = id - CMD_VSCALE_HI;
     else if (id >= CMD_VSCALE_LO && id < CMD_VSCALE_LO + 4) vscale_lo = id - CMD_VSCALE_LO;
     else return;
