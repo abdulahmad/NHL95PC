@@ -19,12 +19,6 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 | ExportTeamToFloppy | Mark's Claude (lane 1) | ? |
 | FadePalette | Mark's Claude (lane 1) | ? |
 | FixJerseyConflict | Mark's Claude (lane 1) | ? |
-| MenuSaveDefaultLines | StaticEck's Claude (lane 2) | 2026-10-28 |
-| MenuSaveTheseLines | StaticEck's Claude (lane 2) | 2026-10-28 |
-| NetCollide | StaticEck's Claude (lane 2) | 2026-10-28 |
-| POInitSchedule | StaticEck's Claude (lane 2) | 2026-10-28 |
-| PenGoalStuff | StaticEck's Claude (lane 2) | 2026-10-28 |
-| PickForLineSlot | StaticEck's Claude (lane 2) | 2026-10-28 |
 | PlacePlayersAtStart | Mark's Claude (lane 1) | ? |
 | RandomizeSchedule | Mark's Claude (lane 1) | ? |
 | ResetGameVars | Mark's Claude (lane 1) | 2026-10-28 |
@@ -33,8 +27,30 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 | SimPlayoffRound1 | Mark's Claude (lane 1) | ? |
 | SkateToSpot | Mark's Claude (lane 1) | ? |
 | TradePlayers | Mark's Claude (lane 1) | ? |
-| checkwallcoll | StaticEck's Claude (lane 2) | 2026-10-28 |
-| dopass | StaticEck's Claude (lane 2) | 2026-10-28 |
+
+**StaticEck's Claude (lane 2)** to Abdul, Mark, 2026-10-27 12:25 UTC (`docs/board/2026-10-27-1225-staticeck.md`)
+
+> Lane 2's share of the sweep is done (18 drafts, main's tools with the #255 rewrites, tieorder --minutes 20 then
+> targetsearch --minutes 30 each, rows in docs/draft_history.csv): 0 matches, 1 improvement.
+>
+> * checkwallcoll 15 -> 10 (#264): targetsearch split both wall limits into a set and a -=
+>   (`xlim = 0xA0; xlim -= wcradiusx;`), which builds the goal-mouth net offset as the EXE. Only x's and ylim's
+>   stack slots are left; countsolve wants xlim and ylim at use count 8 against x's 7, and no spelling I tried
+>   adds those references without changing the code.
+> * The three one-pair targets are still unmet with the new rewrites: POInitSchedule (t8 before t10), NetCollide
+>   (t21 before t20), PenGoalStuff (t75 before t79). tieorder forces each to 0 in 1-2 minutes; targetsearch ran
+>   630-790 candidates each without producing the pair.
+> * The other fourteen (checkob, SelectHilight, checkplcoll, ReassignCtlPlayer, wallcoll, ShowRosterStats,
+>   MenuGameShowPlayerStats, changeplayer, PassLaneChk, FillDressedSlots, dopass, MenuSaveDefaultLines,
+>   MenuSaveTheseLines, PickForLineSlot): not ties (checkob, checkplcoll, dopass), inconclusive tieorders in 20
+>   minutes (SelectHilight, ReassignCtlPlayer, ShowRosterStats, MenuGameShowPlayerStats, FillDressedSlots,
+>   PickForLineSlot), or partial orders no edit reaches (changeplayer 10 -> 7, PassLaneChk 12 -> 9,
+>   MenuSaveDefaultLines 17 -> 11, MenuSaveTheseLines 19 -> 13, wallcoll).
+>
+> So on this list the rewrites helped the slot side once (a split that changed use counts) and the tie side not
+> at all. Leads if someone continues: tieorder --minutes 60 on the six inconclusive drafts, and Mark's #256
+> extras (declaration moves ranked by a replay of the sort, for targets between two temporaries) on the three
+> one-pair targets, since all three pairs are temporaries of one statement.
 
 **StaticEck's Claude (lane 2)** to Mark, Abdul, 2026-10-27 05:30 UTC (`docs/board/2026-10-27-0530-staticeck.md`)
 
@@ -99,29 +115,7 @@ Messages and claims from `docs/board/` (how to post: docs/board/README.md). Do n
 > the order of first 16-bit uses), check it finds #247 on the old JoystickCalScreen draft, then rerun the sweep
 > of the ~36 small register / slot drafts with tieorder's minimal targets. Report the hit rate here after 10.
 
-**StaticEck's Claude (lane 2, Fable run)** to Abdul, Mark, 2026-10-26 18:15 UTC (`docs/board/2026-10-26-1815-staticeck.md`)
-
-> Fable run done: JoystickCalScreen matched (#247, 11 -> 0: the abort test's stick byte in an unsigned char local,
-> whose conversion is one more conflict before the puck size product). NetCollide, POInitSchedule, PenGoalStuff and
-> EditTextField stay (22 / 6 / 19 / 7): every code-neutral shape I could think of left their conflict lists as they
-> were; the rows in docs/draft_history.csv list what each pair would need and what was tried.
->
-> What the probes taught about the conflict list (irdump --pass 0 on each variant, 2 s a compile, plus a replay of
-> the sort; scripts in my session only):
-> * The names-walk part is the front-end names by id: the parameters in declaration order (their register order
->   for register calls), then the locals in reverse declaration order, then the multi-block temporaries. Renames,
->   register, extra late uses, loop forms and where a local is first set change nothing.
-> * A name is re-listed (a new id, later in the list) at its first 16-bit alias use in code order (NetCollide:
->   gx and ux at the first `HIWORD(p->Xpos) = gx + ux`, then uy and gy; the ternary temporaries feeding 16-bit
->   stores too). dx and dy, never used as 16 bits, keep their old ids.
-> * A narrower type adds a conversion conflict with no code when the code only needs the low byte: `char shift`
->   in JoystickCalScreen's signature adds one in both blocks that shift (the loop one undoes it); the unsigned
->   char local for the abort test adds exactly one. A single-block named local used once or twice otherwise just
->   takes a temporary's place (POInitSchedule's day used for the store and the test: same list).
-> * Named locals defined in two blocks (NetCollide's ay = ABS(uy)) become a copy conflict plus a slot, so they
->   are not a way to re-order ternary temporaries.
-
-14 older message(s) in `docs/board/`.
+15 older message(s) in `docs/board/`.
 
 ## Lane 1 — Mhopkinsinc (Mark)
 
@@ -314,6 +308,7 @@ NetCollide — register 7/7, owner StaticEck2026
 - NetCollide 22->22 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (100 orders): pass 0 savings-3 run: sorted t63 t20 t52 dx t36 t29 t49 t46 t38 t21 t17 dy t60 t19, needed t21 t20 t52 dx t36 t29 t49 t46 t38 t63 t17 dy t60 t19 (t20 EDX -> ECX, t21 ECX -> EDX)
 - NetCollide 22->22 (2026-10-25, abdulahmad, GA) lane T: tieorder explanation with conflict origins: the savings-3 run needs t21 (the |ux| of L230, defined in B12 / B13, used in B14) ahead of t63 (L268 index shl); no single added, dropped or moved conflict gives it (two or more changes)
 - NetCollide 22->22 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t21 (|ux|) before t20 (|uy|) in the pass-0 savings-3 run (forced: 0). A pair-only replay of the sort lists what would do it: drop t12 / t14 (the Xpos / Ypos >> 16 temps), t16-t19 (the shift / div temps of L228-229), t60-t63 (the second post block's facedir index temps) or any of p / dir / t3 / dx / dy / t11 / t13 / t15; add a savings-2 global just older than dx or t13, a savings-2 temp between t16 and t17, or a savings 3+ temp just after t65 (B44); re-list t20 later (after gx) or t21 earlier. Probes (irdump pass 0, same 702 bytes unless noted): the names-walk segment is the front-end names by id (p, dir, t3, dx, dy, t11-t21; locals get ids in reverse declaration order, so reversing the declarations swaps only dx / dy) followed by the names re-listed at their first 16-bit alias use in code order (gx, ux at +0CB; t24 +0DC; uy, gy +102; the gy > 0 ternary temps t38, t52 feeding 16-bit stores); renames and late extra uses change nothing; gx / gy ternary folded into the dx / dy expression (same list); named ABS locals ay / ax at four declaration places (ay becomes one more copy conflict in ECX plus a slot, 18 lines off); the x-flip bool in a named local (no list change); dx = p->Xpos >> 16; dx -= gx (13, slots); comparison sides swapped (|ux| computed first in code, 10). No natural edit found; left at 22
+- NetCollide 22->22 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: minimal target t21 before t20 again (forced 0 in 67 s); targetsearch --minutes 30: 635 candidates, best 22 (0 other, the pair unmet): narrow / alias16 / declorder do not reach it. Unchanged
 
 ### `src/c/040_53294_engine_physics_ai/checkgoal.c`
 
@@ -465,6 +460,7 @@ POInitSchedule — register 3/3, owner StaticEck2026
 - POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py focused on L94-120 (30 min, 669 candidates): best 10 (all register-only), 7 of 9 swaps left; the explanation: t10 (po + i * 4) must sit just older than t7 or t8 just older than t10 in B2 (L94), i.e. the teams[i] address last used after the po[i] one
 - POInitSchedule 6->6 (2026-10-25, abdulahmad, GA) lane T: the L94 copy as `*((int *)po + i) = teams[i]`, `((int *)po)[i] = *(teams + i)`, `*(int *)(po + i * 4) = teams[i]`, and L97 as `g[6 * i] = 4`, `*(g + i * 6) = 4`: all 6 (the IR does not change: the store's address is always the last reference). Nothing kept.
 - POInitSchedule 6->6 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t8 (teams + i * 4) before t10 (po + i * 4) in the pass-0 savings-30 run (forced: 0). Pair-only sort replay: dropping any one temporary from the date loops on (29 of them) works, as does one more temporary anywhere in the first date loop's day chain or the seed copy (any savings), a savings-20 / 30 global just newer than i, or t10 below 30 / t8 above 30 in savings. The known tie-breaker match (sched + day) replayed: sched is one more single-block name after the seed loop, day one fewer temporary in the second date loop. Probes (irdump pass 0, all the same 445 bytes, same list): the day as `+ 0x10 + 1` / `+ 0x11 - 1`, `2 * (i % 7)`, `(i % 7 << 1)`, `0x11 + 2 * (i % 7)` (the front end folds them all); a day local used twice (store and rollover test) as unsigned char / char in the first, the second or both loops (it only takes the byte conversion temporary's place; as an int the store comes from al, 10). No natural edit found; left at 6
+- POInitSchedule 6->6 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites (#255): tieorder --minutes 20: minimal target t8 before t10 again (forced 0 in 69 s); targetsearch --minutes 30: 793 candidates, best 6 (0 other, the pair unmet). Unchanged
 
 ### `src/c/001_10010_main_startup/FadePalette.c`
 
@@ -626,6 +622,7 @@ dopass — register 6/13, owner StaticEck2026
 - dopass 17->17 (2026-10-24, StaticEck2026, GA) the 10000h ternary takes distance_score's register.
 - dopass 17->17 (2026-10-24, Mhopkinsinc, GA) regdump / regsolve (only a dx savings bump); sum orders with the ternary: dx*dx + (dy*dy + T) (27), T + dy*dy + dx*dx (26), dy*dy + T + dx*dx (26), dx*dx + T + dy*dy (27), T + (dx*dx + dy*dy) (17); exit needs checkob.c (not moved)
 - dopass 17->15 (2026-10-24, Mhopkinsinc, GA) distance_score copy dropped (17, committed); s.t = (!d ? 0 : 0x10000) + (dx * dx + dy * dy) (15, committed); other sum orders without the copy 17-25; ternary spellings on the new order 15-17; no dx / dy reuse in the no-target branch (51-85); products into s.t with the copy (34); puckvz as short * / unsigned char * (15); decl orders dy/dx (15), d first (39), target last (18); regsolve: single savings bumps only
+- dopass 15->15 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: 15 -> 15 after 336 forced orders (not a tie); targetsearch --minutes 30: 715 candidates, best 36 (2 other). Unchanged
 shotdiradj — register 15/22, owner StaticEck2026
 - shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) cross as a plain local moves the frame.
 - shotdiradj 23->23 (2026-10-24, StaticEck2026, GA) five spellings of the `dist = 1` store.
@@ -758,10 +755,12 @@ MenuSaveDefaultLines — register 11/13, owner StaticEck2026
 - MenuSaveDefaultLines 17->17 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted); permute.py non-cast families: no candidates in this file
 - MenuSaveDefaultLines 17->17 (2026-10-24, Mhopkinsinc, GA) regdump (r 2 ECX: only the third-lseek piece left, t 3 EDX); third-lseek test nested if 17, side == 0 / != 0 17, r != t * 0x2E8 53 (probe), read / third lseek / write assigned in the condition 17 each, third lseek and write both 17, t as file position for the second lseek 17 / both lseeks 27 / ternary 23
 - MenuSaveDefaultLines 17->17 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 11 (316 orders): pass 0 savings-5 run: sorted t108 t115 t119 t65 t129 t117, needed t117 t115 t119 t65 t129 t108 (t65 EDX -> EBX, t117 EBX -> EDX)
+- MenuSaveDefaultLines 17->17 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: best forced order 11 after 489 orders (no tie order gives 0); targetsearch --minutes 30 toward it: 715 candidates, best 17 (2 other, 6 unmet). Unchanged
 MenuSaveTheseLines — register 11/13, owner StaticEck2026
 - MenuSaveTheseLines 19->19 (2026-10-24, StaticEck2026, GA) regsolve (0/1 votes, nothing predicted)
 - MenuSaveTheseLines 19->19 (2026-10-24, Mhopkinsinc, GA) regdump (same r / t savings as MenuSaveDefaultLines); 120 declaration orders of i/j/fh/r/t all 19; t as file position for the second lseek 19 / both lseeks 27 / ternary 30
 - MenuSaveTheseLines 19->19 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 13 (295 orders): pass 0 savings-5 run: sorted t120 t103 t114 t60 t112 t110, needed t112 t103 t114 t60 t120 t110 (t60 EDX -> EBX, t112 EBX -> EDX)
+- MenuSaveTheseLines 19->19 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: best forced order 13 after 473 orders (no tie order gives 0); targetsearch --minutes 30 toward it: 681 candidates, best 19 (2 other, 5 unmet). Unchanged
 
 ### `src/c/045_614C2_scoring_penalty_text/InProgress.c`
 
@@ -774,6 +773,7 @@ PenGoalStuff — register 2/4, owner StaticEck2026
 - PenGoalStuff 19->19 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: a tie order gives the EXE bytes (90 orders): pass 0 savings-3 run: sorted t8 t79 t10 t67 t80 t75 t65 t62, needed t8 t65 t10 t67 t80 t75 t79 t62 (t75 EDX -> ESI)
 - PenGoalStuff 19->19 (2026-10-25, abdulahmad, GA) lane T: tiesearch.py (focused, 30 min, 584 candidates): best 19, 1 of 2 swaps left. tieorder explanation with conflict origins: t65 (n * 0x27 at L334, reused at L336) must sit in the list as if its last use were at L334 (just older than t98); spellings of L334 / L336 that keep the reuse change nothing (19): (ot->tmroster + 5)[n * 0x27], 5 + n * 0x27, 0x27 * n at L334 / L336 / both, (&ot->tmroster[n * 0x27])[5]
 - PenGoalStuff 19->19 (2026-10-26, StaticEck2026, GA) Fable run: tieorder --minutes 20 confirms the minimal target t75 (the jersey address t74 + t65) before t79 (its byte read, a names-walk global) in the pass-0 savings-3 run (forced: 0). Pair-only sort replay: it would take one more conflict of any savings in the shift loop (L338) or just older than t79 / t77 / t38 / t37 / t23 / t14 / t12 among the front-end globals, t79 below 3 or t75 / t65 above 3 in savings, or dropping any of 38 conflicts (m among them: lane 1 found the m-less draft keeps the same list elsewhere). Not edited: the draft already carries the n reuse and the single-use m (escalations), so a byte match could not be marked; left at 19
+- PenGoalStuff 19->19 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: minimal target t75 before t79 again (forced 0 in 92 s); targetsearch --minutes 30: 630 candidates, best 19 (2 other, the pair unmet). Unchanged (and the draft's n reuse would block a mark)
 InProgress — register 70/83, owner StaticEck2026
 - InProgress 88->88 (2026-10-24, StaticEck2026, GA) register picks after +102.
 - InProgress 88->88 (2026-10-24, Mhopkinsinc, GA) for (;;) loop with continue / break instead of goto again / goto signal (88, byte-identical, committed: gotos removed); without the volatile 87 (hoisted into cx); word_CBC44[0] via a local array extern 87; declsearch --conflicts 24 orders no pen / pnum fix; slotdump: pnum count >= 20 (now 8) or pen 7 (now 44) gives the EXE slots; regsolve no prediction; volatile in vars.h not done (9 other files)
@@ -814,6 +814,7 @@ PickForLineSlot — register 7/13, owner StaticEck2026
 - PickForLineSlot 20->20 (2026-10-24, StaticEck2026, GA) regsolve (0/0, nothing predicted)
 - PickForLineSlot 20->20 (2026-10-24, Mhopkinsinc, GA) regsolve (nothing predicted); slotdump --count start=2/4/5 gives the EXE slots, pos 5-9 and counts of i/p/tab/list/side/slot do not; start = i = X 68, start = X; i = X 20, start as second-scan iterator 74, second scan as for 78, int start 66, unsigned start 66, signed char start 23, C2 list as &X[side*25] 20, D test order swapped 24, D list test swapped 24, D result in condition 20
 - PickForLineSlot 20->20 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: no tie order found in 20 minutes (369 orders, inconclusive)
+- PickForLineSlot 20->20 (2026-10-27, StaticEck2026, GA) sweep with main's rewrites: tieorder --minutes 20: 20 -> 20 after 612 forced orders (inconclusive); targetsearch --minutes 30: 867 candidates, best 20 (0 other, 2 unmet). Unchanged
 
 ### `src/c/054_737AA_line_editor_rosters/ShowRosterStats.c`
 
