@@ -55,6 +55,7 @@ int dma_is_autoinit(int ch);
 uint32_t dma_address(int ch);
 uint32_t dma_remaining(int ch);
 uint32_t dma_advance(int ch, uint32_t n);
+uint8_t *dma_peek(int ch, uint32_t ahead);
 uint32_t pic_in(unsigned port);
 void pic_out(unsigned port, uint32_t val);
 #endif

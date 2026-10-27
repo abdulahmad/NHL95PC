@@ -111,3 +111,14 @@ uint32_t dma_advance(int ch, uint32_t n)
     (void)unit;
     return done;
 }
+
+/* The byte `ahead` units after the one the channel is about to transfer, wrapping inside an auto-initialized buffer (a test aid for the
+ * Sound Blaster's NHL95_SB_LEAD_MS); the current byte when the channel is not auto-initialized or the buffer is shorter than that. */
+uint8_t *dma_peek(int ch, uint32_t ahead)
+{
+    struct dma_chan *c = &chan[ch];
+    uint32_t size = (uint32_t)c->base_count + 1, off = (c->cur_addr - c->base_addr) & 0xFFFF;
+    if (ch >= 4 || !(c->mode & 0x10) || ahead >= size) return (uint8_t *)dma_address(ch);
+    off = (off + ahead) % size;
+    return (uint8_t *)(((uint32_t)c->page << 16) | ((c->base_addr + off) & 0xFFFF));
+}

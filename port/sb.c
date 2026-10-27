@@ -147,6 +147,15 @@ static void fifo_push(int l, int r)
     fifo_head++;
 }
 
+/* NHL95_SB_LEAD_MS=n (a test aid): play the buffer n ms ahead of the position the game's driver is told. The driver keeps its mixed
+ * samples a good while ahead of that position, and a sound it starts is heard only when the position reaches it. */
+static uint32_t lead_bytes(void)
+{
+    static int ms = -1;
+    if (ms < 0) ms = getenv("NHL95_SB_LEAD_MS") ? atoi(getenv("NHL95_SB_LEAD_MS")) : 0;
+    return (uint32_t)(ms * sample_rate() / 1000.0) * (stereo() ? 2 : 1);
+}
+
 static void sb_pump_locked(void)
 {
     int64_t now = plat_now_ns(), dt = now - pump_last_ns;
@@ -164,12 +173,12 @@ static void sb_pump_locked(void)
         else if (silence) { l = r = 0; remaining--; }
         else if (dma_masked(dma)) { /* the card has nothing to play: hold the last sample */ }
         else {
-            uint8_t *p = (uint8_t *)dma_address(dma);
+            uint8_t *p = dma_peek(dma, lead_bytes());
             l = (p[0] - 128) << 8; r = l;
             dma_advance(dma, 1);
             remaining--;
             if (stereo() && remaining > 0) {
-                r = (*(uint8_t *)dma_address(dma) - 128) << 8;
+                r = (*dma_peek(dma, lead_bytes() + 1) - 128) << 8;
                 dma_advance(dma, 1);
                 remaining--;
             }
