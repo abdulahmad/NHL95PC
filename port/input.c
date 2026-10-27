@@ -166,33 +166,39 @@ static void script_poll(void)
     }
 }
 
-/* ---- the host's mouse pointer ----
+/* ---- the host's mouse pointer (docs/SDL2_PORT.md, "Mouse behaviour") ----
  * The game moves its pointer by the mouse driver's mickeys (int 33h function 0Bh: x by half a mickey, y by a whole one, clamped to its
  * own range). To make the game's pointer sit under the host's, the motion events only remember where the host's pointer is in the window
  * (win_x, win_y); the next function 0Bh reports the mickeys the game needs to get its pointer (mousex, mousey, read from its memory)
- * from where it is to there. The host's pointer is hidden only while it is over the 4:3 picture of the active window and the game is
- * drawing a pointer of its own (the glove and the replay pointers, which the game gives a mouse range other than the whole screen (the pointer's size is taken off it, or a panel); the green one in play with the mouse chosen as a controller);
- * otherwise, in the bars, outside the window or while the window is not active, it shows. In fullscreen it stays on the picture. */
-extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028, inputinstalled;
+ * from where it is to there.
+ *
+ * The host's pointer is hidden while it is over the 4:3 picture of the active window and the game is drawing a pointer of its own:
+ *   hi-res screens: the hockey glove, which the menus move by running EventToPointer (emu.c notes when); no other hi-res screen has one;
+ *   lo-res screens: the glove of the replay (and of the other menus there: a mouse range other than the whole screen, or EventToPointer),
+ *                   and the green pointer of play when a player has the mouse as a control device (pad1dev, pad2dev).
+ * Otherwise it shows. It may leave the picture and the window, except in play with the mouse as a control device (the game is running:
+ * curperiod is not -1, and dword_CCC9C, set while it is paused or replaying, is 0), where it is kept on the picture, and in fullscreen,
+ * where it is always kept on the picture. */
+extern int32_t mousex, mousey, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D3028, inputinstalled, curperiod, dword_CCC9C;
 extern uint8_t pad1dev, pad2dev;                /* 1 is the mouse */
 static volatile int win_x, win_y, win_moved;
 
 static void cursor_update(void)
 {
     static int hidden = -1;
-    int active = SDL_GetKeyboardFocus() != 0, fs = video_is_fullscreen(), mw, mh, vx, vy, vw, vh, px, py, over, drawn, hide;
+    int active = SDL_GetKeyboardFocus() != 0, fs = video_is_fullscreen(), mw, mh, vx, vy, vw, vh, px, py, over, drawn, hide, play_mouse;
+    int64_t hk = game_pointer_ns();
+    int mouse_pad = pad1dev == 1 || pad2dev == 1;
     video_mode_size(&mw, &mh);
     video_view(&vx, &vy, &vw, &vh);
-    {                                           /* the menus run EventToPointer all the time; in play the pad setting and a clipped mouse range tell */
-        int64_t hk = game_pointer_ns();
-        drawn = (hk && plat_now_ns() - hk < 300000000LL) ||
-                (mw == 320 && (pad1dev == 1 || pad2dev == 1 || dword_D2FEC != 0 || dword_D2FF0 != 0 || dword_D2FF4 != mw || dword_D2FF8 != mh));
-    }
-    video_confine_mouse(active && (fs || (mw == 320 && drawn)));   /* in play with the mouse as controller it may not leave the picture */
+    play_mouse = mw == 320 && mouse_pad && curperiod != -1 && dword_CCC9C == 0;
+    drawn = (hk && plat_now_ns() - hk < 300000000LL) ||
+            (mw == 320 && (mouse_pad || dword_D2FEC != 0 || dword_D2FF0 != 0 || dword_D2FF4 != mw || dword_D2FF8 != mh));
+    video_confine_mouse(active && (fs || play_mouse));
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
     hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
-    { static int was = -1; if (drawn != was) TRACE("game pointer %d\n", drawn); was = drawn; }
+    { static int was = -1; if (drawn != was) TRACE("game pointer %d (play with the mouse %d)\n", drawn, play_mouse); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
 

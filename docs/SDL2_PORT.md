@@ -131,3 +131,29 @@ MPU-401, Gravis UltraSound) run unchanged and the device you pick in the game's 
 * `NHL95_WAV=file.wav` records the mix. `NHL95_SOUNDTEST=1` drives AdLib, Sound Blaster and the GUS through their ports and exits,
   printing PASS/FAIL (useful without the game's data files).
 * Not yet verified against the game itself (the data files aren't in the repository): in particular the GUS and MT-32 paths.
+
+## Mouse behaviour
+
+The game draws its own pointers (the hockey glove in the menus and the replay, a green pointer in play when a player has the mouse as a control
+device), so the Windows pointer is hidden where the game draws one and shown elsewhere. The game's pointer follows the Windows pointer exactly:
+the host works out the mouse movement the game's mouse routine needs to put its pointer under the Windows one (`port/input.c`).
+
+| Screen | Windows pointer | May leave the 4:3 picture and the window |
+|---|---|---|
+| Hi-res (640x480) with the hockey glove | hidden while over the 4:3 picture and the window has focus | yes |
+| Hi-res without the glove (splash screens, loading, Tonight's Lineup, ...) | always shown | yes |
+| Lo-res (320x200): replay | hidden while over the 4:3 picture and the window has focus | yes |
+| Lo-res: gameplay, either player has the mouse as a control device | hidden while the window has focus | no: kept on the 4:3 picture |
+
+In fullscreen the Windows pointer is always kept on the 4:3 picture, and hidden wherever the rules above hide it. The Windows pointer menu
+(Display) can force it always shown or always hidden.
+
+How the host knows (`cursor_update` in `port/input.c`):
+
+* Hi-res glove: the menus call `EventToPointer` every time round their loop. Its first instruction is replaced by an int3 (`port/emu.c`)
+  that notes the time, so "the game ran its menu pointer code in the last 0.3 s" means a glove is on the screen. The splash screens and the
+  loading screens never run it.
+* Lo-res replay and other menus: the game gives the mouse driver a range other than the whole screen (the pointer's size is taken off it),
+  or runs `EventToPointer`.
+* Lo-res play with the mouse: `pad1dev` or `pad2dev` is 1 (the mouse), `curperiod` is not -1 (a game is running) and `dword_CCC9C`, which
+  the game sets while it is paused or replaying, is 0. The pointer is then confined with `SDL_SetWindowMouseRect`.
