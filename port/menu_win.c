@@ -150,6 +150,8 @@ void menu_init(void *sdl_window)
     if (!SDL_GetWindowWMInfo((SDL_Window *)sdl_window, &info)) return;
     hwnd = info.info.win.window;
     bar = CreateMenu();
+    m = sub(bar, "Options");
+    item(m, CMD_INPUT, "Input bindings...");
     m = sub(bar, "Display");
     item(m, CMD_REFRESH_60, "60 Hz");
     item(m, CMD_REFRESH_70, "70 Hz");
@@ -161,8 +163,6 @@ void menu_init(void *sdl_window)
     item(m, CMD_POINTER, "Windows pointer: automatic");
     item(m, CMD_POINTER + 1, "Windows pointer: always show");
     item(m, CMD_POINTER + 2, "Windows pointer: always hide");
-    line(m);
-    item(m, CMD_INPUT, "Input bindings...");
     m = sub(bar, "Menus (hi-res)");
     for (i = 0; i < 4; i++) item(m, CMD_HIRES + i, hires[i]);
     line(m);

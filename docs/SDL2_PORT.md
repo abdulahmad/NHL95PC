@@ -160,7 +160,7 @@ How the host knows (`cursor_update` in `port/input.c`):
 
 ### Input bindings
 
-Display > Input bindings... (`port/bindings.c`, `port/bindings_win.c`). Keys are stored as XT scan codes (0x100 added for the extended ones), mouse buttons as SDL numbers, controller buttons as the SDL button plus 2. A key bound to an action sends the game's own key for it; the game's default key of a rebound action stops working. The window is painted by hand (flat dark panel, draggable title bar) and modal: it runs its own message loop in the main thread, so the game stays paused and muted until Apply or Cancel. Hold / change line sends Alt+Space (the Genesis A button). The remap is only on while a game is on (`curperiod != -1`), so menus and text fields keep the normal keys. `NHL95_MENUTRACE=1` prints menu commands and window creation to stderr.
+Options > Input bindings... (`port/bindings.c`, `port/bindings_win.c`). Keys are stored as XT scan codes (0x100 added for the extended ones), mouse buttons as SDL numbers, controller buttons as the SDL button plus 2. A key bound to an action sends the game's own key for it; the game's default key of a rebound action stops working. The window is painted by hand (flat dark panel, draggable title bar) and modal: it runs its own message loop in the main thread, so the game stays paused and muted until Apply or Cancel. Hold / change line sends Alt+Space (the Genesis A button). The remap is only on while a game is on (`curperiod != -1`), so menus and text fields keep the normal keys. `NHL95_MENUTRACE=1` prints menu commands and window creation to stderr.
 
 ### MT-32 with digital sound (not finished)
 
