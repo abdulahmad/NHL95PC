@@ -39,6 +39,14 @@ void menu_init(void *sdl_window)
     AppendMenuA(m, MF_SEPARATOR, 0, NULL);
     item(m, CMD_VSYNC, "V-Sync");
     item(m, CMD_STATS, "Stats display");
+    AppendMenuA(m, MF_SEPARATOR, 0, NULL);
+    item(m, CMD_VSCALE, "Picture height: fit the window");
+    item(m, CMD_VSCALE + 1, "Picture height: integer (even lines)");
+    item(m, CMD_VSCALE + 2, "Picture height: integer +1x overscan");
+    AppendMenuA(m, MF_SEPARATOR, 0, NULL);
+    item(m, CMD_POINTER, "Windows pointer: automatic");
+    item(m, CMD_POINTER + 1, "Windows pointer: always show");
+    item(m, CMD_POINTER + 2, "Windows pointer: always hide");
     m = sub(bar, "Menus (hi-res)");
     for (i = 0; i < 7; i++) {
         if (i == 4) AppendMenuA(m, MF_SEPARATOR, 0, NULL);
@@ -63,6 +71,10 @@ void menu_sync(void)
         if (video_command_checked(i)) CheckMenuRadioItem(bar, CMD_REFRESH_60, CMD_REFRESH_VRR, i, MF_BYCOMMAND);
     CheckMenuItem(bar, CMD_VSYNC, MF_BYCOMMAND | (video_command_checked(CMD_VSYNC) ? MF_CHECKED : MF_UNCHECKED));
     CheckMenuItem(bar, CMD_STATS, MF_BYCOMMAND | (video_command_checked(CMD_STATS) ? MF_CHECKED : MF_UNCHECKED));
+    for (i = 0; i < 3; i++) {
+        if (video_command_checked(CMD_VSCALE + i)) CheckMenuRadioItem(bar, CMD_VSCALE, CMD_VSCALE + 2, CMD_VSCALE + i, MF_BYCOMMAND);
+        if (video_command_checked(CMD_POINTER + i)) CheckMenuRadioItem(bar, CMD_POINTER, CMD_POINTER + 2, CMD_POINTER + i, MF_BYCOMMAND);
+    }
     for (i = 0; i < 7; i++)
         if (video_command_checked(CMD_HIRES + i)) CheckMenuRadioItem(bar, CMD_HIRES, CMD_HIRES + 6, CMD_HIRES + i, MF_BYCOMMAND);
     for (i = 0; i < 10; i++)

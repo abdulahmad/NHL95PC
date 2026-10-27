@@ -25,9 +25,9 @@ static PFNGLUNIFORM2FPROC p_glUniform2f;
 
 static SDL_GLContext ctx;
 static GLuint prog, tex;
-static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_period;
+static GLint u_tex, u_size, u_pre, u_mode, u_scan, u_gain, u_center, u_period;
 static int look_pre = 1, look_period = 1;
-static float look_scan;
+static float look_scan, look_gain = 1, look_center = 0.5f;
 static int tex_w, tex_h, filter_mode = 2;
 
 static const char *vs_src =
@@ -43,6 +43,8 @@ static const char *fs_src =
     "uniform float pre;\n"
     "uniform int mode;\n"
     "uniform float scan;\n"
+    "uniform float gain;\n"
+    "uniform float center;\n"
     "uniform float period;\n"
     "varying vec2 uv;\n"
     "vec4 fetch(vec2 v) {\n"
@@ -63,9 +65,15 @@ static const char *fs_src =
     "  vec2 i = floor(p);\n"
     "  vec2 f = p - i;\n"
     "  vec4 wx = weights(f.x), wy = weights(f.y);\n"
-    "  vec4 c = row(i, -1.0, wx) * wy.x + row(i, 0.0, wx) * wy.y + row(i, 1.0, wx) * wy.z + row(i, 2.0, wx) * wy.w;\n"
-    "  float prof = pow(max(sin(3.14159265 * fract(uv.y * srcsize.y * period)), 0.0), 0.8);\n"
-    "  c.rgb *= (1.0 - scan * (1.0 - prof)) / (1.0 - 0.28 * scan);\n"
+    "  vec4 c;\n"
+    "  if (scan > 0.0) {\n"
+    "    float sy = uv.y * srcsize.y;\n"
+    "    c = row(vec2(i.x, floor(sy) * pre), 0.0, wx);\n"
+    "    float d = (fract(sy * period) - center) / scan;\n"
+    "    c.rgb *= exp(-d * d) * gain;\n"
+    "  } else {\n"
+    "    c = row(i, -1.0, wx) * wy.x + row(i, 0.0, wx) * wy.y + row(i, 1.0, wx) * wy.z + row(i, 2.0, wx) * wy.w;\n"
+    "  }\n"
     "  gl_FragColor = vec4(clamp(c.rgb, 0.0, 1.0), 1.0);\n"
     "}\n";
 
@@ -112,6 +120,8 @@ int vgl_init(SDL_Window *win)
     u_pre = p_glGetUniformLocation(prog, "pre");
     u_mode = p_glGetUniformLocation(prog, "mode");
     u_scan = p_glGetUniformLocation(prog, "scan");
+    u_gain = p_glGetUniformLocation(prog, "gain");
+    u_center = p_glGetUniformLocation(prog, "center");
     u_period = p_glGetUniformLocation(prog, "period");
     glGenTextures(1, &tex);
     SDL_GL_SetSwapInterval(1);
@@ -215,6 +225,8 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     p_glUniform2f(u_size, (float)w, (float)h);
     p_glUniform1f(u_pre, (float)look_pre);
     p_glUniform1f(u_scan, look_scan);
+    p_glUniform1f(u_gain, look_gain);
+    p_glUniform1f(u_center, look_center);
     p_glUniform1f(u_period, (float)look_period);
     p_glUniform1i(u_mode, filter_mode);
     glEnable(GL_TEXTURE_2D);
@@ -248,8 +260,10 @@ void vgl_draw(SDL_Window *win, const uint32_t *argb, int w, int h, int vx, int v
     SDL_GL_SwapWindow(win);
 }
 
-/* the integer scale taken first, the strength of the scanlines and their number per source line */
-void vgl_set_look(int pre, float scan, int period) { look_pre = pre; look_scan = scan; look_period = period; }
+/* the integer scale taken first for the sharp horizontal scaling; the width of the scanlines (a Gaussian profile: its sigma in source lines, 0 for
+ * none, and the gain that keeps the brightness) and how many there are per source line. With scanlines the vertical scaling is nearest-neighbour: a
+ * source line is never blended with its neighbours, only darkened between the scanlines. */
+void vgl_set_look(int pre, float sigma, float gain, float center, int period) { look_pre = pre; look_scan = sigma; look_gain = gain; look_center = center; look_period = period; }
 
 void vgl_set_vsync(int on) { SDL_GL_SetSwapInterval(on ? 1 : 0); }
 

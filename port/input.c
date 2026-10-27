@@ -187,7 +187,7 @@ static void cursor_update(void)
     video_confine_mouse(active && (fs || (mw == 320 && drawn)));   /* in play with the mouse as controller it may not leave the picture */
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
-    hide = over && drawn;
+    hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
     { static int was = -1; if (drawn != was) TRACE("game pointer %d\n", drawn); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
