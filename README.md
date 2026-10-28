@@ -107,6 +107,8 @@ This project is AI-assisted. The work is directed by a strict ruleset and curate
 
 Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
 
+And thank you to the [original developers of the game](https://www.mobygames.com/game/265/nhl-95/credits/dos/).
+
 This project is the result of my work and the work of the people credited above. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
 
 - Put the credit in your repo's README, near the top and not buried in a footer, and in the notes of every release you publish, including any text file shipped inside a release archive.
