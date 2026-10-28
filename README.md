@@ -1,6 +1,6 @@
 # NHL 95 PC
 
-> **Making a mod, hack, port or other derivative work from this repo? You must credit me (abdulahmad) and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
+> **Making a mod, hack, port or other derivative work from this repo? You must credit me and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
 
 > **Work in progress:** this decompilation is unfinished and unpolished, and is being actively worked on. Expect labels, file layout and docs to change.
 
@@ -107,10 +107,10 @@ This project is AI-assisted. The work is directed by a strict ruleset and curate
 
 Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
 
-This project is the result of my work (abdulahmad) and the work of the people credited above. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
+This project is the result of my work and the work of the people credited above. If you build anything from it, including mods, ROM or EXE hacks, ports, released forks, tools, or any other derivative work, you must credit us:
 
 - Put the credit in your repo's README, near the top and not buried in a footer, and in the notes of every release you publish, including any text file shipped inside a release archive.
-- Name me (abdulahmad) and link to this repository.
+- Name me and link to this repository.
 - Name everyone credited here: chaos, StaticEck and McMarkis (Mhopkinsinc).
 - If you only use part of this repo (docs, a tool, labels, a file format description), the credit still applies.
 - If you are unsure, over-credit.
