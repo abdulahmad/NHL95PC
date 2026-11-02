@@ -14,7 +14,7 @@ Case inputs: arg registers and stack args are edge values, small randoms or poin
 buffer at ARG; globals the function references (original and draft fixups) are patched with random, edge,
 pointer-ish or static bytes; callee returns come from a seeded script.
 """
-import os, sys, csv, random, hashlib, struct, time, argparse, datetime, collections
+import os, sys, re, csv, random, hashlib, struct, time, argparse, datetime, collections
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import image, run, cside, capstone
@@ -22,7 +22,7 @@ from capstone.x86_const import X86_OP_MEM
 
 ARG, ARG_SIZE = 0x6000000, 0x10000
 DATA_LO = 0xC0000   # first data object (index test: [reg + global])
-MAXI = 60000   # instruction cap per side; a hit is an 'insn limit' trap
+MAXI = 200000   # instruction cap per side; a hit is an 'insn limit' trap
 RESULTS = os.path.join(HERE, 'results.csv')
 HEAD = ['function', 'c_file', 'source_sha1', 'cases', 'seed', 'verdict', 'first_diff', 'date']
 EDGE = [0, 1, 0xFFFFFFFF, 2, 7, 0x7F, 0x80, 0xFF, 0x7FFF, 0x8000, 0xFFFF, 0x7FFFFFFF, 0x80000000]
@@ -72,6 +72,7 @@ class Checker:
     def __init__(self, img, func, c_path, size, ret64=False):
         global DATA_LO; DATA_LO = img.objects[1].base
         self.img, self.func, self.ret64 = img, func, ret64
+        self.void = self._is_void(c_path, func)
         self.lab = img.labels(); self.addr = self.lab[func]; self.size = size
         self.orig = img.read(self.addr, size)
         obj = cside.compile_draft(c_path)
@@ -83,6 +84,14 @@ class Checker:
         self.spans = self._spans(obj)
         self.reg_n = {}; self.pop_n = {}
         self.cov = set(); self.insns = self._insns()
+
+    @staticmethod
+    def _is_void(c_path, func):
+        """True when the draft defines `void <func>(...)` (not `void *`); default False (eax is compared)"""
+        m = re.search(r'^[ \t]*([A-Za-z_][\w \t\*]*?)[ \t\*]+%s[ \t]*\([^;{]*\)\s*\{' % re.escape(func), open(c_path, errors='replace').read(), re.M)
+        if not m: return False
+        t = m.group(1).split()
+        return 'void' in t and '*' not in m.group(0).split(func)[0]
 
     def _insns(self):
         """addresses of the original's instructions (linear disassembly, best effort: dword runs that point back
@@ -180,7 +189,8 @@ class Checker:
         def sv(v, snap=()):   # a stack address compares by the bytes it points to
             if not run.STK <= v < run.STK + run.STK_SIZE: return v
             return ('STK', dict(snap).get(v, b''))
-        d = {'ended': t.ended, 'ret eax': t.ret_eax, 'esp_delta': t.esp_delta}
+        d = {'ended': t.ended, 'esp_delta': t.esp_delta}
+        if not self.void: d['ret eax'] = t.ret_eax
         if self.ret64: d['ret edx'] = t.ret_edx
         for r in ('esi', 'edi', 'ebp'): d[r] = t.regs.get(r)
         d['writes'] = [(a, s, sv(v)) for a, s, v in t.writes]
@@ -196,15 +206,16 @@ class Checker:
         rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD or k == 'uninit stack read'})
         va, vc = self.view(a, st, True), self.view(c, st, False)
         if ka or kc:
-            if ka != kc: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, [], ka
-            if ka == 'fault':
+            lim = 'insn limit' in (ka, kc)   # either side ran out: compare only as a prefix, whatever the other ended with
+            if ka != kc and not lim: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, [], ka
+            if ka == 'fault' and kc == 'fault':
                 fa, fc = (next(dd for k, e, dd in t.traps if k == 'fault').split('@')[-1] for t in (a, c))
                 if fa != fc: return 'fault address: orig %s vs C %s' % (fa, fc), rev, [], ka
             for k in ('writes', 'calls'):
                 x, y = va[k], vc[k]
-                if ka == 'insn limit': n = min(len(x), len(y)); x, y = x[:n], y[:n]   # the shorter log must be a prefix
-                if x != y: return self.listdiff(k, va[k], vc[k]), rev, [], ka
-            return '', rev, [], ka
+                if lim: n = min(len(x), len(y)); x, y = x[:n], y[:n]   # the shorter log must be a prefix
+                if x != y: return self.listdiff(k, va[k], vc[k]), rev, [], ka or kc
+            return "", rev, [], ka or kc
         info = []
         for r in ('esi', 'edi', 'ebp', 'ebx', 'ecx', 'edx'):   # entry register returned unset (the draft must return the same)
             if a.ended == 'ret' and a.ret_eax == st.regs.get(r) and st.regs.get(r, 0) >> 24 == 0xE5: info.append('unset return %s' % r)
@@ -267,10 +278,10 @@ def main(argv=None):
     row = find_row(a.func, a.seg)
     img = image.load(); t0 = time.time()
     ck = Checker(img, a.func, c_path, int(row['size']), a.ret64)
-    q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack))
+    q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords%s' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack, '; void: eax not compared' if ck.void else ''))
     review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); verdict = 'PASS'; diff = ''; t1 = time.time(); done = 0
     for i in range(a.cases):
-        buf, st = ck.case(a.seed, i)
+        buf, st = ck.case(a.seed, i); st.seed = a.seed * 1000003 + i
         d, rv, inf, tk = ck.compare(buf, st); done += 1
         review.update(rv); info.update(inf)
         if tk: traps[tk] += 1

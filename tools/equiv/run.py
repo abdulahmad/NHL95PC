@@ -13,11 +13,11 @@ call must pop N bytes after the return address. N is read from the callee's own 
 within 4096 bytes (every ret of a Watcom function pops the same N)); State.pops {target: N} overrides it. Register args are eax, edx, ebx, ecx, then the stack.
 The callee may clobber eax (and edx for 64-bit results); every other register is left alone by the stub.
 """
-import os, sys, struct
+import os, sys, struct, random
 from dataclasses import dataclass, field
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import image
-from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_HOOK_CODE, UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE, UC_HOOK_MEM_UNMAPPED, UC_PROT_ALL
+from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_HOOK_CODE, UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE, UC_HOOK_MEM_UNMAPPED, UC_PROT_ALL, UC_MEM_READ_UNMAPPED, UC_MEM_WRITE_UNMAPPED
 from unicorn.x86_const import *
 import capstone
 
@@ -25,6 +25,7 @@ REGS = ('eax', 'ebx', 'ecx', 'edx', 'esi', 'edi', 'ebp')
 UREG = {r: globals()['UC_X86_REG_' + r.upper()] for r in REGS + ('esp', 'eip', 'eflags')}
 STK, STK_SIZE, ENTRY_OFF = 0x7F00000, 0x40000, 0x20000   # stack region; entry esp sits mid-region
 SENT = 0x7E00000                                        # sentinel return address (page holds hlt)
+LAZY_MAX = 256                                          # lazily mapped pages per run, then faults as before
 PAT = 0xA5                                              # stack fill, so uninitialised reads are deterministic
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
 _BAD = {'in', 'out', 'ins', 'outs', 'insb', 'insw', 'insd', 'outsb', 'outsw', 'outsd', 'int', 'int3', 'into', 'hlt'}
@@ -36,6 +37,7 @@ class State:
     patches: dict = field(default_factory=dict)  # {lin: bytes} on top of the loaded image
     script: object = None                        # f(k, target) or list; value is eax or (eax, edx)
     pops: dict = field(default_factory=dict)     # {callee: stack bytes it pops}, overrides the image scan
+    seed: int = 0                                # case seed; lazily mapped pages are filled from (seed, page) only
     argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
 
 @dataclass
@@ -117,14 +119,14 @@ def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
         eax, edx = script(k, a)
         rg = tuple(u.reg_read(UREG[r]) for r in ('eax', 'edx', 'ebx', 'ecx')); sa = tuple(u32(esp + 4 + 4 * i) for i in range(4))
         nr, np_ = st.argsof(a) if st.argsof else (0, 0)
-        ptrs = []   # stack addresses passed as args: log the 16 bytes they point to, then write 4 seeded bytes there
+        ptrs = []   # stack addresses passed as args: log the 16 bytes they point to, then write 16 seeded bytes there
         for v in rg[:nr] + sa[:np_]:
             if STK <= v <= STK + STK_SIZE - 16 and v not in ptrs: ptrs.append(v)
         snap = tuple((p, bytes(u.mem_read(p, 16))) for p in ptrs)
         tr.calls.append((a,) + rg + (sa, snap))
         for j, p in enumerate(ptrs):
-            u.mem_write(p, struct.pack('<I', (eax, edx, eax ^ edx, eax + edx)[j % 4] & 0xFFFFFFFF))
-            if ih(p) and p + 4 <= esp0: written.update(range(p, p + 4))
+            u.mem_write(p, b''.join(struct.pack('<I', (x + j) & 0xFFFFFFFF) for x in (eax, edx, eax ^ edx, eax + edx)))
+            if ih(p): written.update(range(p, min(p + 16, esp0)))
         u.reg_write(UREG['eax'], eax & 0xFFFFFFFF); u.reg_write(UREG['edx'], edx & 0xFFFFFFFF)
         if inext(top):   # call: callee pops return address and its own stack args
             n = st.pops.get(a)
@@ -145,7 +147,21 @@ def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
             if bad and u.reg_read(UREG['esp']) <= a:
                 trap('uninit stack read', u.reg_read(UREG['eip']), '%#x+%d' % (a, sz))
     fa = []
-    def unmapped(u, t, a, sz, val, ud): fa.append(a); return False
+    fixed = [(addr & ~0xFFF, (addr + len(b) + 0xFFF) & ~0xFFF) for addr, b in code] + [(STK, STK + STK_SIZE), (SENT, SENT + 0x1000)]
+    fixed += [(o.base & ~0xFFF, (o.base + o.size + 0xFFF) & ~0xFFF) for o in img.objects]
+    lazy = []
+    def unmapped(u, t, a, sz, val, ud):
+        # lazy seeded memory: an unmapped data read or write maps the 4 KB page, filled from (seed, page) only
+        if t in (UC_MEM_READ_UNMAPPED, UC_MEM_WRITE_UNMAPPED):
+            pages = sorted({a & ~0xFFF, (a + max(sz, 1) - 1) & ~0xFFF})
+            if all(p >= 0x1000 and not any(lo <= p < hi for lo, hi in fixed) for p in pages):
+                new = [p for p in pages if p not in lazy]
+                if len(lazy) + len(new) <= LAZY_MAX:
+                    for p in new:
+                        uc.mem_map(p, 0x1000, UC_PROT_ALL)
+                        uc.mem_write(p, random.Random(((st.seed & 0xFFFFFFFF) << 32) | p).randbytes(0x1000)); lazy.append(p)
+                    return True
+        fa.append(a); return False
     uc.hook_add(UC_HOOK_MEM_UNMAPPED, unmapped)
     uc.hook_add(UC_HOOK_CODE, code_hook); uc.hook_add(UC_HOOK_MEM_WRITE, write_hook); uc.hook_add(UC_HOOK_MEM_READ, read_hook)
     try:

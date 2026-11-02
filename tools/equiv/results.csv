@@ -4,3 +4,16 @@ GetMemListHead,src/c/001_10010_main_startup/GetMemListHead.c,0d03d8aa79c7cc39a17
 ResetInputSampling,src/c/001_10010_main_startup/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,2000,1,PASS,,2026-11-02
 SeriesLength,src/c/034_41B80_schedule/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,2000,1,PASS,unset return esi x149,2026-11-02
 FadePalette,src/c/001_10010_main_startup/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,2000,1,PASS,,2026-11-02
+DrawRinkEndArt,src/c/001_10010_main_startup/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,600,1,PASS,,2026-11-02
+ResetInputSampling,src/c/001_10010_main_startup/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,600,1,PASS,,2026-11-02
+DrawListItems,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,2000,1,FAIL,"calls[0]: orig (0x302b9,0x4b409fad,0x600a559,0x60000a6,0x6006b95,0x6000000,0x6000000,0x7f,0x7) vs C (0x90d20) (lens 8332/7227)",2026-11-02
+DrawListItem,src/c/023_2FDD1_misc_dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,2000,1,PASS,,2026-11-02
+checkplcoll,src/c/040_53294_engine_physics_ai/checkplcoll.c,97f1c6cbc4fecaeef7e5ce1ba41fbc93903221a3,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 72%, uncovered 0x58d7e-0x58dbe",2026-11-02
+SelectRosterTeam,src/c/051_6C2F9_database_save/RunEditRosters.c,0a883e95688082c74f853cbbab1106dd5228e6c4,2000,1,FAIL,trap kind: orig none vs C fault,2026-11-02
+SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,2000,1,FAIL,"calls[3]: orig (0x452c5,0xa5a5a5a5,0x2,0x6f4c0,0x6000018) vs C (0x452c5,0xa5a5a5a5,0x2,0x2a05895a,0x6000018) (lens 1160/1160)",2026-11-02
+SetRosterTeamMenus,src/c/052_6D2F8_create_player/SetRosterTeamMenus.c,cc00877ba07f76eb72b97017421c43738a460d03,2000,1,NEEDS-REVIEW,"coverage 84%, uncovered 0x718c6-0x718ec",2026-11-02
+PassLaneChk,src/c/040_53294_engine_physics_ai/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,2000,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x54c99-0x54d55",2026-11-02
+shotdiradj,src/c/040_53294_engine_physics_ai/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,2000,1,FAIL,esp_delta: orig -0x1c vs C 0x0,2026-11-02
+changeplayer,src/c/042_59D9A_engine_core/changeplayer.c,d78ae323ec31a9d753149c52bb88ecc1f17962c3,2000,1,NEEDS-REVIEW,trap review: uninit stack read x1586,2026-11-02
+TreeSeriesWinner,src/c/019_2970A_league_schedule/TreeSeriesWinner.c,0b19adcb9d2cb5f94aa9319bb2f4b32d6a6a0daf,2000,1,PASS,,2026-11-02
+SimPlayoffRound1,src/c/034_41B80_schedule/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,5,1,FAIL,"calls[3]: orig (0x452c5,0xa5a5a5a5,0x2,0x6f4c0,0x6000018) vs C (0x452c5,0xa5a5a5a5,0x2,0x2a05895a,0x6000018) (lens 1160/1160)",2026-11-02
