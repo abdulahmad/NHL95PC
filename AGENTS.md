@@ -34,6 +34,7 @@ Applies to work on the functional-equivalence track ([docs/FUNCTIONAL_PLAN.md](d
 * Advisor (top-tier model) only at three moments: before a plan or step locks, after the same failure twice on one function, before a step is called done.
 * Model tiers: cheap for mechanical work (running checks, logging, docs), mid for code, advisor as above. Each step in FUNCTIONAL_PLAN.md names its tier. Escalate one tier at a time; no fast variants.
 * Learning edge: every confirmed cause (a C idiom that changes behaviour, a harness blind spot) becomes one line in `docs/RULES.md` in the same PR.
+* Keep the way back to MATCH open ([docs/FUNCTIONAL_PLAN.md](docs/FUNCTIONAL_PLAN.md#keeping-the-way-back-to-match-open)): never delete asm or a draft's diff notes; record the `cdiff.py` score before and after every functional fix in `docs/draft_history.csv`.
 * One step per session, small PR, stop for Abdul's approval before the next step.
 
 Credits: see [README.md](README.md).

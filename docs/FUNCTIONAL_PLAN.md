@@ -114,6 +114,24 @@ Each step: goal, model, what "done" means. Rough size is for one session.
 Whole-game replay (record inputs, compare state every frame against retail) comes after step 11 and is shared
 with the ports and netplay work; it is not part of finishing the decompilation.
 
+## Keeping the way back to MATCH open
+
+FUNCTIONAL is a resting state, not a dead end. Everything needed to resume byte-matching later stays in the repo:
+
+* **The original asm never goes away.** A FUNCTIONAL draft stays unmarked, so its block in `src/cseg01/*.asm` is
+  still the code `make` builds and the exact reference `tools/cdiff.py` diffs against.
+* **The draft stays the closest known shape.** A functional fix changes only what behaves differently. Before and
+  after it, run `python3 tools/cdiff.py` on the file and record both scores in `docs/draft_history.csv`, with what
+  changed. A fix that makes the byte score worse says so in the row and in the draft's comment.
+* **The diff notes stay.** The draft's `DRAFT:` comment, its `tools/c_functions.csv` notes and cause, its
+  `docs/UNSURE.md` entry and its history rows are kept and updated, never deleted, when it passes.
+* **The proof stays.** `tools/equiv/results.csv` keeps the source hash each verdict was for, so a later edit that
+  moves a draft toward a match is re-checked automatically (the hash no longer matches, so it no longer counts).
+
+To resume matching a FUNCTIONAL function: read its `DRAFT:` comment, its `docs/UNSURE.md` entry and its
+`docs/draft_history.csv` rows, then follow the normal workflow in `docs/C_MATCHING.md` (`cdiff.py`, `permute.py`,
+`tools/wccre`). When it matches, `cc.py mark` it as usual: it moves from FUNCTIONAL to matched by itself.
+
 ## Risks
 
 * Random inputs miss paths that only real game state reaches: steps 9 and the advisor review cover this.
