@@ -7,6 +7,19 @@ Everything a new person or agent needs to pick this project up. Read this file, 
 section 3. Lane agents do not edit those counts, `C_PROGRESS.md`, `tools/c_functions.csv`,
 `docs/ranked_drafts.txt` or `docs/LANES_CURRENT.md`. Session diary: [docs/SESSION_LOG.md](docs/SESSION_LOG.md).
 
+## Two tracks, two handoffs
+
+| Track | Goal | Handoff |
+|---|---|---|
+| **Decompilation** (byte-exact) | C that compiles to the original bytes; `cc.py mark` puts it in the build | this file, [docs/C_MATCHING.md](docs/C_MATCHING.md) |
+| **Function matching** (functional) | a draft proven to behave like the original asm (`tools/equiv/check.py` PASS); the asm stays in the build | [docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md) |
+
+* A function-matched draft stays open for decompilation: its asm, draft, `DRAFT:` notes, UNSURE entry and history
+  rows are all kept, so byte-matching can resume at any time.
+* Decompiling a function takes it out of the function-matched pool by itself: `tools/c_progress.py` counts a
+  function as function-matched only while its status is `nonmatching`, so once it is marked (matched) it counts
+  only as decompiled. A PASS also stops counting when the draft's source changes (the check is tied to its hash).
+
 ## 1. Setup from scratch
 
 **The retail EXE (committed).** `HOCKEY.EXE` at the repo root is the retail binary: 1,179,067 bytes,

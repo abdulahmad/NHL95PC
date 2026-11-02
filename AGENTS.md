@@ -27,6 +27,7 @@ Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMEN
 
 Applies to work on the functional-equivalence track ([docs/FUNCTIONAL_PLAN.md](docs/FUNCTIONAL_PLAN.md)). The byte-matching rules above still hold. FUNCTIONAL drafts stay unmarked so `make` keeps the asm.
 
+* Two tracks: decompilation (byte-exact, [HANDOFF.md](HANDOFF.md)) and function matching ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md)). A function-matched draft can still be decompiled; once it matches it leaves the function-matched pool.
 * Read [docs/RULES.md](docs/RULES.md) before each unit.
 * One unit = one function (its draft C file). A worker edits only that C file and that function's rows in `tools/equiv/results.csv`, `docs/UNSURE.md` and `docs/draft_history.csv`.
 * A function is FUNCTIONAL only when `tools/equiv/check.py` passes. Model confidence never counts.
