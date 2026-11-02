@@ -82,6 +82,8 @@ class Checker:
         self.saved = saved_regs(self.orig, self.addr)
         self.nstack = run._pop_bytes(img, self.addr) // 4
         self.spans = self._spans(obj)
+        po = cside._parse(obj['path'], set(self.lab))['pubs']; self.pubs = sorted((o, n) for n, o in po.items()); self.tlen = self.ext[1] - self.ext[0]
+        self.fns = None; self.codeptr = False
         self.reg_n = {}; self.pop_n = {}
         self.cov = set(); self.insns = self._insns(); self.reads = set()
         # one Uc per side for the whole run; run.Runner restores it between cases
@@ -222,16 +224,36 @@ class Checker:
         if target not in self.pop_n: self.pop_n[target] = run._pop_bytes(self.img, target) // 4
         return self.pop_n[target]
 
+    def _funcs(self):
+        if self.fns is None:
+            self.fns = sorted((int(r['address'], 16), int(r['size']), r['function']) for r in cside._csv_rows())
+        return self.fns
+
+    def codeval(self, v, orig):
+        """a code address compares as an EXE address; a C-side scratch address first maps to the EXE label of the public
+        function holding it, plus the offset; inside a function (not its entry) it renders as ('CODE', function)"""
+        if not orig and self.ext[0] <= v < self.ext[0] + self.tlen:
+            off = v - self.ext[0]; p = [x for x in self.pubs if x[0] <= off]
+            if not p or p[-1][1] not in self.lab: return v
+            v = self.lab[p[-1][1]] + off - p[-1][0]
+        c0 = self.img.objects[0]
+        if not c0.base <= v < c0.base + c0.size: return v
+        import bisect
+        f = self._funcs(); k = bisect.bisect_right(f, (v, 1 << 30, '')) - 1
+        if k < 0 or v >= f[k][0] + f[k][1] or v == f[k][0]: return v
+        self.codeptr = True
+        return ('CODE', f[k][2])
+
     def view(self, t, init, orig):
         """comparable form of a trace -> dict field -> value"""
         def sv(v, snap=()):   # a stack address compares by the bytes it points to; a sibling function's placed address by its EXE label
             if not orig: v = self.alias.get(v, self.addr if v == self.entry else v)
-            if not run.STK <= v < run.STK + run.STK_SIZE: return v
+            if not run.STK <= v < run.STK + run.STK_SIZE: return self.codeval(v, orig)
             return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'esp_delta': t.esp_delta}
-        if not self.void: d['ret eax'] = t.ret_eax
-        if self.ret64: d['ret edx'] = t.ret_edx
-        for r in ('esi', 'edi', 'ebp'): d[r] = t.regs.get(r)
+        if not self.void: d['ret eax'] = sv(t.ret_eax)
+        if self.ret64: d['ret edx'] = sv(t.ret_edx)
+        for r in ('esi', 'edi', 'ebp'): d[r] = sv(t.regs.get(r))
         d['writes'] = [(a, s, sv(v)) for a, s, v in t.writes]
         d['calls'] = [(c[0],) + tuple(sv(x, c[6]) for x in c[1:1 + self.nreg(c[0])]) + tuple(sv(x, c[6]) for x in c[5][:self.npop(c[0])])
                       for c in t.calls]
@@ -239,12 +261,12 @@ class Checker:
 
     def compare(self, buf, st):
         """-> (diff or '', review notes [str], info notes [str], trap kind or '')"""
-        a = self.go(buf, st, True); c = self.go(buf, st, False)
+        self.codeptr = False; a = self.go(buf, st, True); c = self.go(buf, st, False)
         stop = lambda t: next((k for k, e, dd in t.traps if k not in run.SOFT), '')
         ka, kc = stop(a), stop(c)
         rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD or k == 'uninit stack read'})
         va, vc = self.view(a, st, True), self.view(c, st, False)
-        np_ = ['null page'] if any(k == 'null page' for k, e, dd in a.traps + c.traps) else []   # info only
+        np_ = (['code pointer compared by function'] if self.codeptr else []) + ['null page'] * any(k == 'null page' for k, e, dd in a.traps + c.traps)
         if ka or kc:
             lim = 'insn limit' in (ka, kc)   # either side ran out: compare only as a prefix, whatever the other ended with
             if ka != kc and not lim: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, np_, ka
@@ -261,7 +283,7 @@ class Checker:
             if a.ended == 'ret' and a.ret_eax == st.regs.get(r) and st.regs.get(r, 0) >> 24 == 0xE5: info.append('unset return %s' % r)
         for r in ('ebx', 'ecx', 'edx'):
             if r in self.saved or a.regs.get(r) == st.regs.get(r, 0):
-                va[r], vc[r] = a.regs.get(r), c.regs.get(r)
+                va[r], vc[r] = (('STK', b'') if run.STK <= x.regs.get(r) < run.STK + run.STK_SIZE else self.codeval(x.regs.get(r), o) for x, o in ((a, True), (c, False)))
         for k in va:
             if va[k] != vc[k]:
                 if isinstance(va[k], list): return self.listdiff(k, va[k], vc[k]), rev, info, ''
@@ -318,7 +340,8 @@ def main(argv=None):
                 print('cached PASS %s (%s, %s)' % (a.func, r['cases'], r['date'])); return 0
     row = find_row(a.func, a.seg)
     img = image.load(); t0 = time.time()
-    ck = Checker(img, a.func, c_path, int(row['size']), a.ret64)
+    la = img.labels()[a.func]; ca = int(row['address'], 16)
+    ck = Checker(img, a.func, c_path, int(row['size']) + (ca - la if 0 < ca - la < 0x100 else 0), a.ret64)   # label sits before the csv address (db bytes / entry piece): extent starts at the label
     q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords%s' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack, '; void: eax not compared' if ck.void else ''))
     review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); verdict = 'PASS'; diff = ''; t1 = time.time(); done = 0
     corpus = []; nseed = a.cases; total = a.cases + a.cases // 2; cov_seeded = None; seeding = True; i = 0
@@ -342,7 +365,10 @@ def main(argv=None):
         if a.budget and time.time() - t1 > a.budget and not d: break
         if d:
             verdict = 'FAIL'; diff = d
-            print('FAIL %s: %s\n  %s' % (a.func, label, d))
+            b = ck.orig[:10]; n = 2 if b[0] == 0x6A else 5 if b[0] == 0x68 else 0
+            if not (n and b[n] == 0xE8 and (ck.addr + n + 5 + struct.unpack_from('<i', b, n + 1)[0]) & 0xFFFFFFFF == ck.lab['__CHK']):
+                verdict = 'NEEDS-REVIEW'; diff = 'entry is not a C prologue; ' + d
+            print('%s %s: %s\n  %s' % (verdict, a.func, label, d))
             print('  entry regs: ' + ' '.join('%s=%#x' % (r, v) for r, v in st.regs.items()))
             print('  stack args: ' + ' '.join('%#x' % v for v in st.args[:ck.nstack]))
             break
