@@ -18,7 +18,8 @@ int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
 
 /* DRAFT: same size (1,228 bytes); the frame advance and the backward loop take other registers, see
    docs/UNSURE.md (the short fx gives the EXE's sound loads). Owner of the ReplayStep_popx tail
-   (DrawRinkSideObjects). */
+   (DrawRinkSideObjects). Functional fix: the camera stores are `camx = word_E9FB0 = ...` and `camy = word_E9FB2 = ...`
+   (the EXE stores word_E9FB0 / word_E9FB2 first); byte score unchanged (cdiff --all 153 lines). */
 /* ReplayStep (67900, PC only): move the replay n frames (80h bytes each) forward or back, wrapping in the
    9600h-byte buffer when it has wrapped (sflags sfwrap) and stopping at its ends (n becomes -1); going forward
    with sound, play each passed frame's two sound effects (bytes 58h / 59h, FFh none). Then unpack the frame:
@@ -116,8 +117,8 @@ short ReplayStep(short n, short sound)
     RB(regd0) = *replayplay++;
     byte_E9FAE = RB(regd0) & 0xF;
     byte_E9FAF = (RSB(regd0) >> 4) & 0xF;
-    word_E9FB0 = camx = *(signed char *)replayplay++;
-    word_E9FB2 = camy = *(short *)replayplay;
+    camx = word_E9FB0 = *(signed char *)replayplay++;
+    camy = word_E9FB2 = *(short *)replayplay;
     replayplay += 2;
     crowdlevel = *(short *)replayplay;
     replayplay += 2;
