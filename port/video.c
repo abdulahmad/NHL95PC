@@ -704,7 +704,7 @@ void video_view(int *vx, int *vy, int *vw, int *vh)
         if (kc < kf) kc = kf;
         if (vs == 1) k = kf;
         else if (vs == 2) k = kc;
-        else k = (kc * unit - wh <= (mode_w == 320 ? 6 : 10)) ? kc : kf;       /* auto crop */
+        else k = (kc * unit - wh <= (mode_w == 320 ? 6 : 10) * kc * (unit / mode_h)) ? kc : kf;       /* auto crop: at most 6 or 10 of the game's own lines cut off */
         h = k * unit; w = h * 4 / 3;
     }
     *vw = w; *vh = h; *vx = (ww - w) / 2; *vy = (wh - h) / 2;
