@@ -13,11 +13,19 @@ static WNDPROC old_proc;
 
 /* While a menu is open, or the window is being dragged or sized, Windows runs its own loop in the main thread: the game stops, and the sound
  * would repeat what it last had. It is muted for as long. */
+/* Sizing the window also runs that loop, so the main loop does not draw until the mouse button is let go. Each size change while it runs is
+ * drawn here instead, so the picture follows the scaling rules (picture height, auto crop) as the window is sized, not only at the end. */
+static int sizing, drawing;
 static LRESULT CALLBACK menu_proc(HWND h, UINT msg, WPARAM wp, LPARAM lp)
 {
+    LRESULT r;
     if (msg == WM_ENTERMENULOOP || msg == WM_ENTERSIZEMOVE) audio_muted = 1;
     else if (msg == WM_EXITMENULOOP || msg == WM_EXITSIZEMOVE) audio_muted = 0;
-    return CallWindowProcW(old_proc, h, msg, wp, lp);
+    if (msg == WM_ENTERSIZEMOVE) sizing = 1;
+    else if (msg == WM_EXITSIZEMOVE) sizing = 0;
+    r = CallWindowProcW(old_proc, h, msg, wp, lp);
+    if (sizing && !drawing && (msg == WM_SIZE || msg == WM_PAINT)) { drawing = 1; video_present(); drawing = 0; }
+    return r;
 }
 
 static void item(HMENU m, int id, const char *text) { AppendMenuA(m, MF_STRING, (UINT_PTR)id, text); }

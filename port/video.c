@@ -379,7 +379,7 @@ static void settings_save(void)
     fprintf(f, "; stats: on or off (frames per second, CPU and GPU use, in the top right corner)\nstats=%s\n", osd_on ? "on" : "off");
     fprintf(f, "; hires_scaling (the 640x480 menus): 1x, 2x, 3x, 4x, crt-light, crt-medium, crt-strong, crt-soft, crt-soft-grille\nhires_scaling=%s\n", hires_names[hires_mode]);
     fprintf(f, "; lores_scaling (the 320x200 game): 3x, 5x, 7x, 11x, tv-light, tv-medium, tv-strong, monitor-light, monitor-medium, monitor-strong, tv-soft, tv-soft-grille, monitor-soft, monitor-soft-grille\nlores_scaling=%s\n", lores_names[lores_mode]);
-    fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
+    fprintf(f, "; hires_picture_height and lores_picture_height: fit (the window), integer (the biggest whole multiple of the source lines that fits: even scanlines),\n; overscan (the next multiple up, a little cut off) or auto-crop (the next multiple up when 10 (menus) or 6 (game) window rows or fewer are cut off, else integer;\n; overscan and auto-crop never cut off columns: when the next multiple up is wider than the window they use integer)\nhires_picture_height=%s\nlores_picture_height=%s\n", vscale_names[vscale_hi], vscale_names[vscale_lo]);
     fprintf(f, "; the MiSTer look uses the MiSTer scaler's own files (from the filters, gamma and Shadow_Masks folders of its SD card), as paths relative to this folder.\n");
     fprintf(f, "; the MiSTer look has its own files for the menus (hires_) and the game (lores_): paths relative to this folder, starting with the folder of the MiSTer SD card they come from\n");
     fprintf(f, "; (Filters, Gamma, Shadow_Masks; empty gamma or shadow mask: none), the mask scale (1-4) and the brightness (1.0 is the files' own)\n");
@@ -700,6 +700,7 @@ void video_view(int *vx, int *vy, int *vw, int *vh)
         if (kf < 1) kf = 1;
         while (kf > 1 && kf * unit * 4 / 3 > ww) kf--;
         kc = (wh + unit - 1) / unit;
+        if (kc * unit * 4 / 3 > ww) kc = kf;          /* the rows may be cropped a little (overscan, auto crop), the columns never: too wide is one multiple down */
         if (kc < kf) kc = kf;
         if (vs == 1) k = kf;
         else if (vs == 2) k = kc;
