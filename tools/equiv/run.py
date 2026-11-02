@@ -180,7 +180,7 @@ class Runner:
         freshr = []; codew = []
         c0 = img.objects[0]; codew.append((c0.base, c0.base + c0.size))   # data writes here end the case ('code write')
         for addr, b in code:
-            lo = addr & ~0xFFF; hi = (addr + len(b) + 0xFFF) & ~0xFFF
+            lo = addr & ~0xFFF; hi = ((addr + len(b) + 0xFFF) & ~0xFFF) + 0x1000   # one spare page: an insn near the end must not straddle unmapped memory
             uc.mem_map(lo, hi - lo, UC_PROT_ALL); uc.mem_write(addr, b); fixed.append((lo, hi))
             if addr in fresh: freshr.append((lo, hi))
             else: codew.append((lo, hi))
@@ -211,8 +211,10 @@ class Runner:
         def mnem(u, a):
             m0 = seen.get(a)
             if m0 is None:
-                try: m0 = next(_md.disasm(bytes(u.mem_read(a, 15)), a)).mnemonic
-                except Exception: m0 = '(bad)'
+                m0 = '(bad)'
+                for n in (15, 8, 4, 2, 1):   # near the end of a mapped region a 15-byte read can fault
+                    try: m0 = next(_md.disasm(bytes(u.mem_read(a, n)), a)).mnemonic; break
+                    except Exception: pass
                 seen[a] = m0
             return m0
         def fin(u):

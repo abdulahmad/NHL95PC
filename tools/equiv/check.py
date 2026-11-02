@@ -63,10 +63,11 @@ def first_use(code, addr, to_ret=False):
     return use
 
 def saved_regs(code, addr):
-    s = set()
+    pu, po = set(), set()   # saved = pushed AND popped (a lone push is an argument or a parameter home)
     for i in _md.disasm(code, addr):
-        if i.mnemonic in ('push', 'pop') and i.op_str in FAMOF: s.add(FAMOF[i.op_str])
-    return s
+        if i.mnemonic == 'push' and i.op_str in FAMOF: pu.add(FAMOF[i.op_str])
+        if i.mnemonic == 'pop' and i.op_str in FAMOF: po.add(FAMOF[i.op_str])
+    return pu & po
 
 class Checker:
     def __init__(self, img, func, c_path, size, ret64=False):
@@ -267,7 +268,9 @@ class Checker:
         if self.ext[0] <= v < self.ext[0] + self.tlen:
             off = v - self.ext[0]; p = [x for x in self.pubs if x[0] <= off]
             if not p or p[-1][1] not in self.lab: return v
-            v = self.lab[p[-1][1]] + off - p[-1][0]
+            if off != p[-1][0]:   # inside a placed function: by function only (a longer draft must not spill into the next label)
+                self.codeptr = True; return ('CODE', p[-1][1])
+            v = self.lab[p[-1][1]]
         c0 = self.img.objects[0]
         if not c0.base <= v < c0.base + c0.size: return v
         import bisect
