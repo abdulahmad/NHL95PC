@@ -70,8 +70,25 @@ def _pop_bytes(img, target):
         addr = nxt
     return 0
 
-def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
+_FUNCS = None
+def is_func_entry(img, a):
+    """a known function address (tools/c_functions.csv) or a `push N / call __CHK` prologue"""
+    global _FUNCS
+    if _FUNCS is None:
+        import csv
+        p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'c_functions.csv')
+        _FUNCS = {int(r['address'], 16) for r in csv.DictReader(open(p))}
+    if a in _FUNCS: return True
+    try: b = img.read(a, 10)
+    except ValueError: return False
+    n = 2 if b[0] == 0x6A else 5 if b[0] == 0x68 else 0
+    return bool(n) and b[n] == 0xE8 and (a + n + 5 + struct.unpack_from('<i', b, n + 1)[0]) & 0xFFFFFFFF == img.labels()['__CHK']
+
+def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None, alias=None):
+    """alias {C-side function entry: EXE label address}: a call to another public function of the placed object is
+    stubbed and logged as a call to the label address (jumps inside the object still run inline)"""
     st = state or State()
+    alias = alias or {}
     ext = [tuple(extent)] if extent and isinstance(extent[0], int) else [tuple(e) for e in extent]
     inext = lambda a: any(s <= a < e for s, e in ext)
     chk = img.labels()['__CHK']
@@ -97,11 +114,20 @@ def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
         v = s(k, target) if callable(s) else ((s[k % len(s)] if s else 0))
         return (v, 0) if isinstance(v, int) else (v[0], v[1])
 
+    prev = ['']; follow = [False]   # mnemonic of the previous insn; True while running a shared epilogue outside the extent
     def code_hook(u, a, sz, ud):
         esp = u.reg_read(UREG['esp'])
         if esp < lowest[0]: lowest[0] = esp
         if a == SENT: stop(); return
-        if inext(a):
+        pm = prev[0]
+        m0 = seen.get(a)
+        if m0 is None:
+            try: m0 = next(_md.disasm(bytes(u.mem_read(a, 15)), a)).mnemonic
+            except Exception: m0 = '(bad)'
+            seen[a] = m0
+        prev[0] = m0
+        if a in alias and a != entry and pm == 'call': a = alias[a]   # same-object callee: stub it like an EXE callee
+        elif inext(a):
             if cov is not None: cov.add(a)
             m = seen.get(a)
             if m is None:
@@ -111,6 +137,8 @@ def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
             if m in _BAD or m == '(bad)':
                 trap('invalid insn' if m == '(bad)' else m, a, m); stop()
             return
+        elif (pm.startswith('j') or follow[0]) and pm != 'call' and not is_func_entry(img, a) and a != chk:
+            follow[0] = True; return   # jmp to a shared epilogue: keep running there until its ret
         # execution left the extent: a call (return address on top is inside extent) or a tail jmp
         top = u32(esp)
         if a == chk:   # no-op stub: drop the 4-byte argument

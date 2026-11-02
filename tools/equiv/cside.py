@@ -5,11 +5,11 @@
   entry, extent, code = place(img, obj, 'F')      # run.run(img, entry, extent, state, code=code)
 
 place() copies the whole _TEXT of the object to the scratch base and resolves every fixup the way the asm build does:
-a name that is a public of the object itself -> scratch base + offset; any other name -> its img.labels() address
+a name that is a public of the object itself -> scratch base + offset (run.run(alias=aliases(...)) stubs a CALL to it as the EXE label); any other name -> its img.labels() address
 (functions and data; cobj.asm_name undoes the Watcom decoration, so SetSPA_ -> SetSPA, _gameclock -> gameclock);
 'TEXT' (switch tables) -> scratch base + addend. abs32 stores the address; rel32 stores target - (site + 4).
-The extent is the whole placed _TEXT, not just the function: a shared tail or a second function of the same file
-runs on the C side, and a call to another function of the file stays inside. Calls to EXE labels leave the extent
+The extent is the whole placed _TEXT, not just the function: a shared tail of the file runs on the C side. A CALL to
+another public function of the file is stubbed and logged as that function's EXE label (aliases()). Calls to EXE labels leave the extent
 and hit run.py's stubs on both sides, so callee logs are comparable.
 Unsupported for now: objects with CONST/_DATA/_BSS bytes (string literals, statics); cobj refuses them."""
 import os, sys, struct, dataclasses
@@ -55,6 +55,11 @@ def place(img, obj, func, base=BASE):
         v = dest if f['kind'] == 'abs32' else dest - (base + f['off'] + 4)
         text[f['off']:f['off'] + 4] = struct.pack('<I', v & 0xFFFFFFFF)
     return base + r['pubs'][func], (base, base + len(text)), [(base, bytes(text))]
+
+def aliases(img, obj, func, base=BASE):
+    """{placed entry of every OTHER public of the object: its EXE label address} for run.run(alias=...)"""
+    lab = img.labels(); r = _parse(obj['path'], set(lab)) if obj.get('path') else obj
+    return {base + o: lab[n] for n, o in r['pubs'].items() if n != func and n in lab}
 
 def _csv_rows():
     import csv

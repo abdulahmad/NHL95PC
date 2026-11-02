@@ -77,7 +77,7 @@ class Checker:
         self.orig = img.read(self.addr, size)
         obj = cside.compile_draft(c_path)
         self.entry, self.ext, self.code = cside.place(img, obj, func)
-        self.code = list(self.code)
+        self.code = list(self.code); self.alias = cside.aliases(img, obj, func)
         self.use = first_use(self.orig, self.addr)
         self.saved = saved_regs(self.orig, self.addr)
         self.nstack = run._pop_bytes(img, self.addr) // 4
@@ -167,7 +167,7 @@ class Checker:
         code = [(ARG, buf)] + ([] if orig else self.code)
         st.argsof = lambda t: (self.nreg(t), self.npop(t))
         if orig: t = run.run(self.img, self.addr, (self.addr, self.addr + self.size), st, max_insns=MAXI, code=code, cov=self.cov)
-        else: t = run.run(self.img, self.entry, self.ext, st, max_insns=MAXI, code=code)
+        else: t = run.run(self.img, self.entry, self.ext, st, max_insns=MAXI, code=code, alias=self.alias)
         return cside._norm(t, self.addr if orig else self.entry)
 
     def nreg(self, target):
@@ -186,7 +186,8 @@ class Checker:
 
     def view(self, t, init, orig):
         """comparable form of a trace -> dict field -> value"""
-        def sv(v, snap=()):   # a stack address compares by the bytes it points to
+        def sv(v, snap=()):   # a stack address compares by the bytes it points to; a sibling function's placed address by its EXE label
+            if not orig: v = self.alias.get(v, self.addr if v == self.entry else v)
             if not run.STK <= v < run.STK + run.STK_SIZE: return v
             return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'esp_delta': t.esp_delta}
