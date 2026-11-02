@@ -250,3 +250,10 @@ ReplaySaveHilight,src/c/057_7DC8B_gadgets_replay/ReplaySaveHilight.c,56a7bbf2447
 MenuSaveTheseLines,src/c/055_78346_team_select/MenuSaveDefaultLines.c,ed9b375549762521cda1936c4a5ec9a7822cc51c,3000,1,FAIL,esp_delta: orig -0x320 vs C 0x18,2026-11-02
 MenuSaveTheseLines,src/c/055_78346_team_select/MenuSaveDefaultLines.c,ed9b375549762521cda1936c4a5ec9a7822cc51c,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x864; code pointer compared by function x8, null page x243",2026-11-02
 MenuSaveDefaultLines,src/c/055_78346_team_select/MenuSaveDefaultLines.c,ed9b375549762521cda1936c4a5ec9a7822cc51c,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x917; code pointer compared by function x7, null page x325",2026-11-02
+SelectRosterTeam,src/c/051_6C2F9_database_save/RunEditRosters.c,0a883e95688082c74f853cbbab1106dd5228e6c4,3000,1,FAIL,"writes[0]: orig (0xd079f,0x1,0x2e) vs C (0xd079f,0x1,0x0) (lens 7/7)",2026-11-02
+setplayer,src/c/042_59D9A_engine_core/changeplayer.c,d78ae323ec31a9d753149c52bb88ecc1f17962c3,3000,1,FAIL,"writes[21]: orig (0x6007f44,0x1,0x60) vs C (0x6007f44,0x1,0xd8) (lens 26/26)",2026-11-02
+puckfaceoff2,src/c/039_50AFE_engine_assign_faceoff/puckfaceoff.c,594b0ad4feb3f07576ea15b83603a6cea56d8427,3000,1,FAIL,"writes[29]: orig (0xcbc44,0x2,0x80) vs C (0xcbc44,0x2,0x0) (lens 75/75)",2026-11-02
+CalendarScreen,src/c/027_33FFD_calendar/CalendarScreen.c,1e0a4c555fa55759c620318fff1233b53ef10602,3000,1,FAIL,"writes[10]: orig (0xc8992,0x4,0x0) vs C (0xc65c0,0x4,0x20016) (lens 16/16)",2026-11-02
+CalendarScreen,src/c/027_33FFD_calendar/CalendarScreen.c,a38bd05ab0c4b154791f7b1edc0e395849dddc8b,3000,1,FAIL,edx: orig 0x0 vs C 0x67ce,2026-11-02
+CalendarScreen,src/c/027_33FFD_calendar/CalendarScreen.c,a38bd05ab0c4b154791f7b1edc0e395849dddc8b,3000,1,FAIL,edx: orig 0x0 vs C 0x67ce,2026-11-02
+ResetGameVars,src/c/004_13320_asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02

@@ -38,7 +38,8 @@ void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play
    first (k % 7 kept in ebx, `mov ecx, 7` for k / 7, then k % 7 * 4 in esi) where ours divides again
    for y1; the event pointer copied into two registers; the
    DrawMenuItemNorm tail shared from another branch. The (int) compare of day with monthdays reloads day as
-   the EXE does. */
+   the EXE does. Functional fix: the exit clears calendarshapes before it restores teamstatscb (the EXE's store
+   order); 300 -> 299 differing by cdiff --all. */
 /* CalendarScreen (34821, PC only): the season calendar of a league team. Fade out (stopping the music), show the
    loading screen, point the stats callbacks at the calendar screens and load the CALENDAR art and the CALLOGO
    crests (one per team, crestnames). Read today's schedule index from the league's SCHEDULE file, then the
@@ -426,9 +427,9 @@ int CalendarScreen(char *dir, char *ext, int team)
     }
     FreeMemBlock(ptr);
     FreeMemBlock(logos);
-    teamstatscb = (int)GameTeamStatsScreen;
     FreeMemBlock(calendarshapes);
     calendarshapes = 0;
+    teamstatscb = (int)GameTeamStatsScreen;
     skaterstatscb = (int)GameSkaterStatsScreen;
     goaliestatscb = (int)GameGoalieStatsScreen;
     standingscb = (int)GameStandingsScreen;
