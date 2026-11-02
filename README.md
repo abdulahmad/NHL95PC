@@ -7,7 +7,12 @@
 ## 🚧 Current Status
 
 - McMarkis is working on the C decompilation.
-- <!-- nhl95-readme-count:start -->977 of 1084 functions matched.<!-- nhl95-readme-count:end -->
+- Decompilation status:
+
+  | Status | Meaning | Functions |
+  |---|---|---|
+  | Bit-perfect match | C that compiles to the original bytes; it is in the build | <!-- nhl95-readme-count:start -->977 of 1084 functions matched.<!-- nhl95-readme-count:end --> |
+  | Functional match | a C draft proven to behave like the original asm ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md)); the asm stays in the build until it is bit-perfect | <!-- nhl95-readme-functional:start -->25<!-- nhl95-readme-functional:end --> more |
 - Names come from 93G first, then 94G.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).

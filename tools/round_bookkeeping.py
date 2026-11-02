@@ -5,7 +5,7 @@
 
 Runs tools/c_progress.py, tools/draft_causes.py and tools/rank_drafts.py (the ranked list is
 docs/ranked_drafts.txt). Updates the counts between the nhl95-* marker comments in README.md and
-HANDOFF.md. Applies docs/pending_renames.txt with tools/rename_symbol.py --batch when it has any
+HANDOFF.md (README: bit-perfect matched and functionally matched). Applies docs/pending_renames.txt with tools/rename_symbol.py --batch when it has any
 rename lines, then leaves only the header, and regenerates the progress files again. Writes
 docs/LANES_CURRENT.md with tools/deal_lanes.py. Runs `make` before scoring the drafts. Does not commit. The progress workflow runs
 `make fullcheck` after this.
@@ -42,7 +42,8 @@ def counts():
     if not m:
         sys.exit('round_bookkeeping: cannot read the counts from C_PROGRESS.md')
     matched, total, pct, drafts = m.group(1), m.group(2), m.group(3), m.group(4)
-    return matched, total, pct, drafts
+    f = re.search(r'(\d+) of them proven functionally equivalent', text)
+    return matched, total, pct, drafts, (f.group(1) if f else '0')
 
 
 def replace_marker(path, name, value):
@@ -57,14 +58,15 @@ def replace_marker(path, name, value):
 
 
 def update_numbers():
-    matched, total, pct, drafts = counts()
+    matched, total, pct, drafts, functional = counts()
     replace_marker(os.path.join(ROOT, 'README.md'), 'nhl95-readme-count',
                    '%s of %s functions matched.' % (matched, total))
+    replace_marker(os.path.join(ROOT, 'README.md'), 'nhl95-readme-functional', functional)
     replace_marker(os.path.join(ROOT, 'HANDOFF.md'), 'nhl95-handoff-matched',
                    '%s / %s' % (format(int(matched), ','), format(int(total), ',')))
     replace_marker(os.path.join(ROOT, 'HANDOFF.md'), 'nhl95-handoff-pct', pct + '%')
     replace_marker(os.path.join(ROOT, 'HANDOFF.md'), 'nhl95-handoff-drafts', drafts)
-    print('counts: %s / %s (%s%%), %s drafts' % (matched, total, pct, drafts))
+    print('counts: %s / %s (%s%%), %s drafts, %s functionally matched' % (matched, total, pct, drafts, functional))
 
 
 def progress(jobs):
