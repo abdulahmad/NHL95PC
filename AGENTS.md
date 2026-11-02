@@ -23,6 +23,19 @@ Standing rules for work on this repo. Details: [HANDOFF.md](HANDOFF.md), [SEGMEN
 * **Names:** 93G when the body matches, else 94G, else a name from behaviour. NHL95Genesis is a loose reference only, not a naming source. Team abbreviations follow 95PC's own spellings (e.g. TB, OTT).
 * Never commit listings, `ref/`, `build/`, objects or generated `.inc` fragments. The retail `HOCKEY.EXE` and the Watcom files under `tools/watcom/` (10.0 GA in `dosga/`, the 10.0 LA fallback in `dosla/` with `w10a/`) are committed on purpose.
 
+## Functional track
+
+Applies to work on the functional-equivalence track ([docs/FUNCTIONAL_PLAN.md](docs/FUNCTIONAL_PLAN.md)). The byte-matching rules above still hold. FUNCTIONAL drafts stay unmarked so `make` keeps the asm.
+
+* Read [docs/RULES.md](docs/RULES.md) before each unit.
+* One unit = one function (its draft C file). A worker edits only that C file and that function's rows in `tools/equiv/results.csv`, `docs/UNSURE.md` and `docs/draft_history.csv`.
+* A function is FUNCTIONAL only when `tools/equiv/check.py` passes. Model confidence never counts.
+* A FAIL sends back only that function, never the batch. At most 3 fix attempts, then park it in `docs/UNSURE.md` with the first diff.
+* Advisor (top-tier model) only at three moments: before a plan or step locks, after the same failure twice on one function, before a step is called done.
+* Model tiers: cheap for mechanical work (running checks, logging, docs), mid for code, advisor as above. Each step in FUNCTIONAL_PLAN.md names its tier. Escalate one tier at a time; no fast variants.
+* Learning edge: every confirmed cause (a C idiom that changes behaviour, a harness blind spot) becomes one line in `docs/RULES.md` in the same PR.
+* One step per session, small PR, stop for Abdul's approval before the next step.
+
 Credits: see [README.md](README.md).
 
 ## For AI agents: derivative work and credit
