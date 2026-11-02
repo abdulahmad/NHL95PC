@@ -53,7 +53,7 @@ class Trace:
 
 WARN = []   # warnings for the run header (pop counts that needed a fallback)
 _POP = {}
-_PROTOS = None; _SSIZE = None
+_PROTOS = None; _SSIZE = None; _PRET = {}; _R64 = {}
 INC = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'src', 'c', 'include')
 
 def protos():
@@ -65,6 +65,7 @@ def protos():
         for m in re.finditer(r'([A-Za-z_][\w \t\*]*?)\b([A-Za-z_]\w*)\s*\(([^()]*)\)\s*;', txt):
             ps = [x.strip() for x in m.group(3).split(',')]
             _PROTOS[m.group(2)] = [] if ps in ([''], ['void']) else ps
+            _PRET[m.group(2)] = m.group(1)
     return _PROTOS
 
 def struct_sizes():
@@ -87,6 +88,16 @@ def struct_sizes():
 def proto_of(img, target):
     inv = [n for n, a in img.labels().items() if a == target]
     return next((protos()[n] for n in inv if n in protos()), None)
+
+def returns64(img, target):
+    """True when protos.h gives the callee at `target` a `long long` / `__int64` return (the stub then sets edx too;
+    every other callee preserves edx)"""
+    if target not in _R64:
+        protos(); r = False
+        for n, a in img.labels().items():
+            if a == target and n in _PRET and ('long long' in _PRET[n] or '__int64' in _PRET[n]): r = True
+        _R64[target] = r
+    return _R64[target]
 
 def ptr_size(img, target, pos):
     """bytes to compare behind a stack pointer passed as argument `pos` (0-3 registers, then stack dwords) to the
@@ -166,11 +177,13 @@ class Runner:
         chk = img.labels()['__CHK']
         uc = Uc(UC_ARCH_X86, UC_MODE_32); img.map_into(uc)
         fixed = [(o.base & ~0xFFF, (o.base + o.size + 0xFFF) & ~0xFFF) for o in img.objects]
-        freshr = []
+        freshr = []; codew = []
+        c0 = img.objects[0]; codew.append((c0.base, c0.base + c0.size))   # data writes here end the case ('code write')
         for addr, b in code:
             lo = addr & ~0xFFF; hi = (addr + len(b) + 0xFFF) & ~0xFFF
             uc.mem_map(lo, hi - lo, UC_PROT_ALL); uc.mem_write(addr, b); fixed.append((lo, hi))
             if addr in fresh: freshr.append((lo, hi))
+            else: codew.append((lo, hi))
         uc.mem_map(STK, STK_SIZE, UC_PROT_ALL); uc.mem_write(STK, bytes([PAT]) * STK_SIZE)
         uc.mem_map(SENT, 0x1000, UC_PROT_ALL); uc.mem_write(SENT, b'\xf4')
         fixed += [(STK, STK + STK_SIZE), (SENT, SENT + 0x1000)]
@@ -243,7 +256,8 @@ class Runner:
                 base = (eax, edx, eax ^ edx, eax + edx)
                 put(p, b''.join(struct.pack('<I', (base[i % 4] + j + i // 4) & 0xFFFFFFFF) for i in range((n + 3) // 4))[:n])
                 if ih(p): written.update(range(p, min(p + n, esp0)))
-            u.reg_write(UREG['eax'], eax & 0xFFFFFFFF); u.reg_write(UREG['edx'], edx & 0xFFFFFFFF)
+            u.reg_write(UREG['eax'], eax & 0xFFFFFFFF)   # Watcom callees keep every register but eax (and edx for a 64-bit result)
+            if returns64(img, a): u.reg_write(UREG['edx'], edx & 0xFFFFFFFF)
             if inext(top):   # call: callee pops return address and its own stack args
                 n = cur.pops.get(a)
                 if n is None: n = _pop_bytes(img, a)
@@ -252,6 +266,8 @@ class Runner:
                 tr.esp_delta = esp - esp0 - 4; tr.ended = 'ret'; fin(u); stop()
 
         def write_hook(u, t, a, sz, val, ud):
+            if any(lo <= a < hi for lo, hi in codew):
+                touch(a, sz); trap('code write', u.reg_read(UREG['eip']), '%#x' % a); stop(); return
             p = a & ~0xFFF
             if p not in saved and p not in lazyset: touch(a, sz)
             elif (a + sz - 1) & ~0xFFF != p: touch(a, sz)

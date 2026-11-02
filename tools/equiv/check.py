@@ -80,6 +80,7 @@ class Checker:
         self.code = list(self.code); self.alias = cside.aliases(img, obj, func)
         self.use = first_use(self.orig, self.addr)
         self.saved = saved_regs(self.orig, self.addr)
+        self.cmp_regs = self._cmp_regs()
         self.nstack = run._pop_bytes(img, self.addr) // 4
         self.spans = self._spans(obj)
         po = cside._parse(obj['path'], set(self.lab))['pubs']; self.pubs = sorted((o, n) for n, o in po.items()); self.tlen = self.ext[1] - self.ext[0]
@@ -88,7 +89,7 @@ class Checker:
         self.cov = set(); self.insns = self._insns(); self.reads = set()
         # one Uc per side for the whole run; run.Runner restores it between cases
         zero = bytes(ARG_SIZE)
-        self.rorig = run.Runner(img, self.addr, (self.addr, self.addr + self.size), [(ARG, zero)], None, MAXI, self.cov,
+        self.rorig = run.Runner(img, self.addr, (self.addr, self.addr + self.size), [(ARG, zero)] + self.code, None, MAXI, self.cov,
                                 fresh=(ARG,), watch=(ARG, ARG + ARG_SIZE), reads=self.reads)
         self.rc = run.Runner(img, self.entry, self.ext, [(ARG, zero)] + self.code, self.alias, MAXI, None, fresh=(ARG,))
 
@@ -99,6 +100,37 @@ class Checker:
         if not m: return False
         t = m.group(1).split()
         return 'void' in t and '*' not in m.group(0).split(func)[0]
+
+    def _cmp_regs(self):
+        """registers compared at exit, decided once from the original's code: ebx/ecx/edx when the original saves them
+        (push/pop) or never writes them in its extent (shared epilogues it jumps to included); esi/edi/ebp always, with a
+        warning when the original writes one without saving it"""
+        lo, hi = self.addr, self.addr + self.size; wr = set(); seen = set(); work = [lo]
+        while work:
+            a = work.pop()
+            while a not in seen:
+                seen.add(a)
+                code = b''
+                for k in (15, 8, 4, 2, 1):
+                    try: code = self.img.read(a, k); break
+                    except ValueError: pass
+                i = next(_md.disasm(code, a), None)
+                if i is None: break
+                if i.mnemonic not in ('push', 'pop'):
+                    for rr in i.regs_access()[1]:
+                        r = FAMOF.get(i.reg_name(rr))
+                        if r: wr.add(r)
+                if i.mnemonic.startswith('ret') or i.mnemonic in ('hlt', 'ud2'): break
+                if (i.mnemonic == 'jmp' or i.mnemonic.startswith('j') or i.mnemonic.startswith('loop')) and i.op_str.startswith('0x'):
+                    t = int(i.op_str, 16)
+                    if lo <= t < hi or (i.mnemonic == 'jmp' and not run.is_func_entry(self.img, t)): work.append(t)
+                    if i.mnemonic == 'jmp': break
+                elif i.mnemonic == 'jmp': break
+                a += i.size
+        out = {r for r in ('ebx', 'ecx', 'edx') if r in self.saved or r not in wr}
+        for r in ('esi', 'edi', 'ebp'):
+            if r in wr and r not in self.saved: run.WARN.append('original writes %s without saving it' % r)
+        return out
 
     def _insns(self):
         """addresses of the original's instructions (linear disassembly, best effort: dword runs that point back
@@ -232,7 +264,7 @@ class Checker:
     def codeval(self, v, orig):
         """a code address compares as an EXE address; a C-side scratch address first maps to the EXE label of the public
         function holding it, plus the offset; inside a function (not its entry) it renders as ('CODE', function)"""
-        if not orig and self.ext[0] <= v < self.ext[0] + self.tlen:
+        if self.ext[0] <= v < self.ext[0] + self.tlen:
             off = v - self.ext[0]; p = [x for x in self.pubs if x[0] <= off]
             if not p or p[-1][1] not in self.lab: return v
             v = self.lab[p[-1][1]] + off - p[-1][0]
@@ -247,7 +279,7 @@ class Checker:
     def view(self, t, init, orig):
         """comparable form of a trace -> dict field -> value"""
         def sv(v, snap=()):   # a stack address compares by the bytes it points to; a sibling function's placed address by its EXE label
-            if not orig: v = self.alias.get(v, self.addr if v == self.entry else v)
+            if not orig: v = self.alias.get(v, self.addr if v == self.entry else v)   # (orig side: scratch bytes read as data map in codeval)
             if not run.STK <= v < run.STK + run.STK_SIZE: return self.codeval(v, orig)
             return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'esp_delta': t.esp_delta}
@@ -266,9 +298,10 @@ class Checker:
         ka, kc = stop(a), stop(c)
         rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD or k == 'uninit stack read'})
         va, vc = self.view(a, st, True), self.view(c, st, False)
-        np_ = (['code pointer compared by function'] if self.codeptr else []) + ['null page'] * any(k == 'null page' for k, e, dd in a.traps + c.traps)
+        cw = ka == kc == 'code write'
+        np_ = (['code pointer compared by function'] if self.codeptr else []) + ['null page'] * any(k == 'null page' for k, e, dd in a.traps + c.traps) + ['code write'] * cw
         if ka or kc:
-            lim = 'insn limit' in (ka, kc)   # either side ran out: compare only as a prefix, whatever the other ended with
+            lim = 'insn limit' in (ka, kc) or cw   # either side ran out: compare only as a prefix, whatever the other ended with
             if ka != kc and not lim: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, np_, ka
             if ka == 'fault' and kc == 'fault':
                 fa, fc = (next(dd for k, e, dd in t.traps if k == 'fault').split('@')[-1] for t in (a, c))
@@ -282,7 +315,7 @@ class Checker:
         for r in ('esi', 'edi', 'ebp', 'ebx', 'ecx', 'edx'):   # entry register returned unset (the draft must return the same)
             if a.ended == 'ret' and a.ret_eax == st.regs.get(r) and st.regs.get(r, 0) >> 24 == 0xE5: info.append('unset return %s' % r)
         for r in ('ebx', 'ecx', 'edx'):
-            if r in self.saved or a.regs.get(r) == st.regs.get(r, 0):
+            if r in self.cmp_regs:
                 va[r], vc[r] = (('STK', b'') if run.STK <= x.regs.get(r) < run.STK + run.STK_SIZE else self.codeval(x.regs.get(r), o) for x, o in ((a, True), (c, False)))
         for k in va:
             if va[k] != vc[k]:
@@ -382,7 +415,8 @@ def main(argv=None):
     if verdict == 'PASS':
         why = []
         if review: why.append('trap review: ' + fmtc(review))
-        if nt * 2 > done: why.append('mostly trapped')
+        if traps['code write'] * 4 > done: why.append('inputs write into code')
+        elif nt * 2 > done: why.append('mostly trapped')
         if share < 0.85: why.append('coverage %.0f%%, uncovered %s' % (100 * share, ' '.join('%#x-%#x' % r for r in miss)))
         if done < min(500, total): why.append('only %d cases in the time budget' % done)
         if why: verdict = 'NEEDS-REVIEW'
