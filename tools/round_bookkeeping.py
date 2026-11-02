@@ -59,9 +59,12 @@ def replace_marker(path, name, value):
 
 def update_numbers():
     matched, total, pct, drafts, functional = counts()
-    replace_marker(os.path.join(ROOT, 'README.md'), 'nhl95-readme-count',
-                   '%s of %s functions matched.' % (matched, total))
-    replace_marker(os.path.join(ROOT, 'README.md'), 'nhl95-readme-functional', functional)
+    readme = os.path.join(ROOT, 'README.md')
+    replace_marker(readme, 'nhl95-readme-count', '%s of %s functions are a bit-perfect match.' % (matched, total))
+    replace_marker(readme, 'nhl95-readme-functional', '%s of %d remaining functions are confirmed to be a functional match.'
+                   % (functional, int(total) - int(matched)))
+    replace_marker(readme, 'nhl95-readme-functional-total', '%d of %s functions are a functional match.'
+                   % (int(matched) + int(functional), total))
     replace_marker(os.path.join(ROOT, 'HANDOFF.md'), 'nhl95-handoff-matched',
                    '%s / %s' % (format(int(matched), ','), format(int(total), ',')))
     replace_marker(os.path.join(ROOT, 'HANDOFF.md'), 'nhl95-handoff-pct', pct + '%')
