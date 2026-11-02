@@ -1,7 +1,20 @@
-# Functional track: handoff (paused 2026-11-02)
+# Function matching (functional track): handoff (paused 2026-11-02)
 
 Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the "Functional track" section of
 [AGENTS.md](../AGENTS.md). Works the same from Claude Code or Cursor.
+
+## Two tracks, two handoffs
+
+| Track | Goal | Handoff |
+|---|---|---|
+| **Decompilation** (byte-exact) | C that compiles to the original bytes; `cc.py mark` puts it in the build | [HANDOFF.md](../HANDOFF.md), [C_MATCHING.md](C_MATCHING.md) |
+| **Function matching** (functional) | a draft proven to behave like the original asm (`tools/equiv/check.py` PASS); the asm stays in the build | this file |
+
+* A function-matched draft stays open for decompilation: its asm, draft, `DRAFT:` notes, UNSURE entry and history
+  rows are all kept, so byte-matching can resume at any time.
+* Decompiling a function takes it out of the function-matched pool by itself: `tools/c_progress.py` counts a
+  function as function-matched only while its status is `nonmatching`, so once it is marked (matched) it counts
+  only as decompiled. A PASS also stops counting when the draft's source changes (the check is tied to its hash).
 
 ## Where it stands
 
