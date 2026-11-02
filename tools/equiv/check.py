@@ -82,6 +82,21 @@ class Checker:
         self.nstack = run._pop_bytes(img, self.addr) // 4
         self.spans = self._spans(obj)
         self.reg_n = {}; self.pop_n = {}
+        self.cov = set(); self.insns = self._insns()
+
+    def _insns(self):
+        """addresses of the original's instructions (linear disassembly, best effort: dword runs that point back
+        into the extent are treated as jump-table data and skipped, undecodable bytes are stepped over)"""
+        lo, hi = self.addr, self.addr + self.size; code = self.orig; out = []; off = 0
+        inx = lambda o: o + 4 <= len(code) and lo <= struct.unpack_from('<I', code, o)[0] < hi
+        while off < len(code):
+            if inx(off) and inx(off + 4):
+                while inx(off): off += 4
+                continue
+            i = next(_md.disasm(code[off:off + 15], lo + off), None)
+            if i is None: off += 1; continue
+            out.append(i.address); off += i.size
+        return out
 
     def _spans(self, obj):
         """data ranges to patch: from each referenced data address to the next label, 4..256 bytes"""
@@ -141,7 +156,8 @@ class Checker:
     # ---- one side
     def go(self, buf, st, orig):
         code = [(ARG, buf)] + ([] if orig else self.code)
-        if orig: t = run.run(self.img, self.addr, (self.addr, self.addr + self.size), st, max_insns=MAXI, code=code)
+        st.argsof = lambda t: (self.nreg(t), self.npop(t))
+        if orig: t = run.run(self.img, self.addr, (self.addr, self.addr + self.size), st, max_insns=MAXI, code=code, cov=self.cov)
         else: t = run.run(self.img, self.entry, self.ext, st, max_insns=MAXI, code=code)
         return cside._norm(t, self.addr if orig else self.entry)
 
@@ -161,35 +177,58 @@ class Checker:
 
     def view(self, t, init, orig):
         """comparable form of a trace -> dict field -> value"""
-        sv = lambda v: 'STK' if run.STK <= v < run.STK + run.STK_SIZE else v
+        def sv(v, snap=()):   # a stack address compares by the bytes it points to
+            if not run.STK <= v < run.STK + run.STK_SIZE: return v
+            return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'ret eax': t.ret_eax, 'esp_delta': t.esp_delta}
         if self.ret64: d['ret edx'] = t.ret_edx
         for r in ('esi', 'edi', 'ebp'): d[r] = t.regs.get(r)
         d['writes'] = [(a, s, sv(v)) for a, s, v in t.writes]
-        d['calls'] = [(c[0],) + tuple(sv(x) for x in c[1:1 + self.nreg(c[0])]) + tuple(sv(x) for x in c[5][:self.npop(c[0])])
+        d['calls'] = [(c[0],) + tuple(sv(x, c[6]) for x in c[1:1 + self.nreg(c[0])]) + tuple(sv(x, c[6]) for x in c[5][:self.npop(c[0])])
                       for c in t.calls]
         return d
 
     def compare(self, buf, st):
-        """-> (diff or '', review notes [str])"""
-        a = self.go(buf, st, True)
-        notes = [k for k, e, dd in a.traps]
-        if a.ended == 'trap': return '', notes   # original stopped on a trap: cannot compare further
-        c = self.go(buf, st, False)
-        for r in ('esi', 'edi', 'ebp', 'ebx', 'ecx', 'edx'):   # entry register returned unset
-            if a.ended == 'ret' and a.ret_eax == st.regs.get(r) and st.regs.get(r, 0) >> 24 == 0xE5: notes.append('returns entry %s' % r)
-        if c.traps and not a.traps: return 'traps only in C: %s' % c.traps[:2], notes
+        """-> (diff or '', review notes [str], info notes [str], trap kind or '')"""
+        a = self.go(buf, st, True); c = self.go(buf, st, False)
+        stop = lambda t: next((k for k, e, dd in t.traps if k != 'uninit stack read'), '')
+        ka, kc = stop(a), stop(c)
+        rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD or k == 'uninit stack read'})
         va, vc = self.view(a, st, True), self.view(c, st, False)
+        if ka or kc:
+            if ka != kc: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, [], ka
+            if ka == 'fault':
+                fa, fc = (next(dd for k, e, dd in t.traps if k == 'fault').split('@')[-1] for t in (a, c))
+                if fa != fc: return 'fault address: orig %s vs C %s' % (fa, fc), rev, [], ka
+            for k in ('writes', 'calls'):
+                x, y = va[k], vc[k]
+                if ka == 'insn limit': n = min(len(x), len(y)); x, y = x[:n], y[:n]   # the shorter log must be a prefix
+                if x != y: return self.listdiff(k, va[k], vc[k]), rev, [], ka
+            return '', rev, [], ka
+        info = []
+        for r in ('esi', 'edi', 'ebp', 'ebx', 'ecx', 'edx'):   # entry register returned unset (the draft must return the same)
+            if a.ended == 'ret' and a.ret_eax == st.regs.get(r) and st.regs.get(r, 0) >> 24 == 0xE5: info.append('unset return %s' % r)
         for r in ('ebx', 'ecx', 'edx'):
             if r in self.saved or a.regs.get(r) == st.regs.get(r, 0):
                 va[r], vc[r] = a.regs.get(r), c.regs.get(r)
         for k in va:
             if va[k] != vc[k]:
-                if isinstance(va[k], list):
-                    n = next((j for j in range(max(len(va[k]), len(vc[k]))) if j >= len(va[k]) or j >= len(vc[k]) or va[k][j] != vc[k][j]), 0)
-                    return '%s[%d]: orig %s vs C %s (lens %d/%d)' % (k, n, fmt(va[k][n:n + 1]), fmt(vc[k][n:n + 1]), len(va[k]), len(vc[k])), notes
-                return '%s: orig %s vs C %s' % (k, hx(va[k]), hx(vc[k])), notes
-        return '', notes
+                if isinstance(va[k], list): return self.listdiff(k, va[k], vc[k]), rev, [], ''
+                return '%s: orig %s vs C %s' % (k, hx(va[k]), hx(vc[k])), rev, [], ''
+        return '', rev, info, ''
+
+    def listdiff(self, k, x, y):
+        n = next((j for j in range(max(len(x), len(y))) if j >= len(x) or j >= len(y) or x[j] != y[j]), 0)
+        return '%s[%d]: orig %s vs C %s (lens %d/%d)' % (k, n, fmt(x[n:n + 1]), fmt(y[n:n + 1]), len(x), len(y))
+
+    def coverage(self):
+        """-> (share, up to 5 largest uncovered (lo, hi) ranges)"""
+        miss = [x for x in self.insns if x not in self.cov]; rngs = []; pos = {x: k for k, x in enumerate(self.insns)}
+        for x in miss:
+            if rngs and pos[x] == rngs[-1][2] + 1: rngs[-1][1] = x; rngs[-1][2] = pos[x]
+            else: rngs.append([x, x, pos[x]])
+        rngs = sorted(sorted(rngs, key=lambda r: pos[r[0]] - r[2])[:5], key=lambda r: r[0])   # 5 largest, by address
+        return 1 - len(miss) / max(len(self.insns), 1), [(r[0], r[1]) for r in rngs]
 
 def hx(v): return hex(v) if isinstance(v, int) else str(v)
 def fmt(l): return ' '.join('(%s)' % ','.join(hx(x) for x in e) for e in l) or '(none)'
@@ -229,21 +268,32 @@ def main(argv=None):
     img = image.load(); t0 = time.time()
     ck = Checker(img, a.func, c_path, int(row['size']), a.ret64)
     q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack))
-    notes = collections.Counter(); verdict = 'PASS'; diff = ''; t1 = time.time(); done = 0
+    review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); verdict = 'PASS'; diff = ''; t1 = time.time(); done = 0
     for i in range(a.cases):
         buf, st = ck.case(a.seed, i)
-        d, nt = ck.compare(buf, st); done += 1
-        notes.update(nt)
+        d, rv, inf, tk = ck.compare(buf, st); done += 1
+        review.update(rv); info.update(inf)
+        if tk: traps[tk] += 1
         if d:
             verdict = 'FAIL'; diff = d
             print('FAIL %s: case %d (seed %d, --seed %d)\n  %s' % (a.func, i, a.seed * 1000003 + i, a.seed, d))
-            ex = buf and st
             print('  entry regs: ' + ' '.join('%s=%#x' % (r, v) for r, v in st.regs.items()))
             print('  stack args: ' + ' '.join('%#x' % v for v in st.args[:ck.nstack]))
             break
-    if verdict == 'PASS' and notes: verdict = 'NEEDS-REVIEW'; diff = ', '.join('%s x%d' % kv for kv in sorted(notes.items()))
+    share, miss = ck.coverage(); nt = sum(traps.values())
+    fmtc = lambda c: ', '.join('%s x%d' % kv for kv in sorted(c.items()))
+    q('coverage %.1f%% (%d/%d insns executed)%s' % (100 * share, len(ck.insns) - round((1 - share) * len(ck.insns)), len(ck.insns),
+      '; uncovered ' + ' '.join('%#x-%#x' % r for r in miss) if miss else ''))
+    q('traps: %d/%d cases%s' % (nt, done, ' (' + fmtc(traps) + ')' if nt else ''))
+    if verdict == 'PASS':
+        why = []
+        if review: why.append('trap review: ' + fmtc(review))
+        if nt * 2 > done: why.append('mostly trapped')
+        if share < 0.85: why.append('coverage %.0f%%, uncovered %s' % (100 * share, ' '.join('%#x-%#x' % r for r in miss)))
+        if why: verdict = 'NEEDS-REVIEW'
+        diff = '; '.join(why + ([fmtc(info)] if info else []))
     dt = time.time() - t1
-    print('%s %s: %d cases in %.1fs (%.1f ms/case)%s' % (verdict, a.func, done, dt, 1000 * dt / max(done, 1), ' ' + diff if diff and verdict != 'FAIL' else ''))
+    print('%s %s: %d cases in %.1fs (%.1f ms/case)%s' % (verdict, a.func, done, dt, 1000 * dt / max(done, 1), ' ' + diff if diff and verdict != "FAIL" else ""))
     if real: log({'function': a.func, 'c_file': rel, 'source_sha1': sha, 'cases': a.cases, 'seed': a.seed, 'verdict': verdict,
                   'first_diff': diff[:200], 'date': datetime.date.today().isoformat()})
     else: q('(file outside src/c: not logged)')

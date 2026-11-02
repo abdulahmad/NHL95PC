@@ -17,7 +17,7 @@ import os, sys, struct
 from dataclasses import dataclass, field
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import image
-from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_HOOK_CODE, UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE, UC_PROT_ALL
+from unicorn import Uc, UcError, UC_ARCH_X86, UC_MODE_32, UC_HOOK_CODE, UC_HOOK_MEM_READ, UC_HOOK_MEM_WRITE, UC_HOOK_MEM_UNMAPPED, UC_PROT_ALL
 from unicorn.x86_const import *
 import capstone
 
@@ -36,6 +36,7 @@ class State:
     patches: dict = field(default_factory=dict)  # {lin: bytes} on top of the loaded image
     script: object = None                        # f(k, target) or list; value is eax or (eax, edx)
     pops: dict = field(default_factory=dict)     # {callee: stack bytes it pops}, overrides the image scan
+    argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
 
 @dataclass
 class Trace:
@@ -44,7 +45,7 @@ class Trace:
     regs: dict = field(default_factory=dict)
     esp_delta: int = 0                           # bytes popped above the return address (`ret N`)
     writes: list = field(default_factory=list)   # (addr, size, value), outside the function's frame
-    calls: list = field(default_factory=list)    # (target, eax, edx, ebx, ecx, (4 stack dwords))
+    calls: list = field(default_factory=list)    # (target, eax, edx, ebx, ecx, (4 stack dwords), ((stack ptr, 16 bytes at call time), ...))
     traps: list = field(default_factory=list)    # (kind, eip, detail)
     ended: str = ''                              # 'ret' | 'trap'
 
@@ -67,7 +68,7 @@ def _pop_bytes(img, target):
         addr = nxt
     return 0
 
-def run(img, entry, extent, state=None, max_insns=200000, code=()):
+def run(img, entry, extent, state=None, max_insns=200000, code=(), cov=None):
     st = state or State()
     ext = [tuple(extent)] if extent and isinstance(extent[0], int) else [tuple(e) for e in extent]
     inext = lambda a: any(s <= a < e for s, e in ext)
@@ -99,6 +100,7 @@ def run(img, entry, extent, state=None, max_insns=200000, code=()):
         if esp < lowest[0]: lowest[0] = esp
         if a == SENT: stop(); return
         if inext(a):
+            if cov is not None: cov.add(a)
             m = seen.get(a)
             if m is None:
                 try: m = next(_md.disasm(bytes(u.mem_read(a, 15)), a)).mnemonic
@@ -113,8 +115,16 @@ def run(img, entry, extent, state=None, max_insns=200000, code=()):
             u.reg_write(UREG['eip'], top); u.reg_write(UREG['esp'], esp + 8); return
         k = nstub[0]; nstub[0] += 1
         eax, edx = script(k, a)
-        tr.calls.append((a, u.reg_read(UREG['eax']), u.reg_read(UREG['edx']), u.reg_read(UREG['ebx']),
-                         u.reg_read(UREG['ecx']), tuple(u32(esp + 4 + 4 * i) for i in range(4))))
+        rg = tuple(u.reg_read(UREG[r]) for r in ('eax', 'edx', 'ebx', 'ecx')); sa = tuple(u32(esp + 4 + 4 * i) for i in range(4))
+        nr, np_ = st.argsof(a) if st.argsof else (0, 0)
+        ptrs = []   # stack addresses passed as args: log the 16 bytes they point to, then write 4 seeded bytes there
+        for v in rg[:nr] + sa[:np_]:
+            if STK <= v <= STK + STK_SIZE - 16 and v not in ptrs: ptrs.append(v)
+        snap = tuple((p, bytes(u.mem_read(p, 16))) for p in ptrs)
+        tr.calls.append((a,) + rg + (sa, snap))
+        for j, p in enumerate(ptrs):
+            u.mem_write(p, struct.pack('<I', (eax, edx, eax ^ edx, eax + edx)[j % 4] & 0xFFFFFFFF))
+            if ih(p) and p + 4 <= esp0: written.update(range(p, p + 4))
         u.reg_write(UREG['eax'], eax & 0xFFFFFFFF); u.reg_write(UREG['edx'], edx & 0xFFFFFFFF)
         if inext(top):   # call: callee pops return address and its own stack args
             n = st.pops.get(a)
@@ -134,21 +144,24 @@ def run(img, entry, extent, state=None, max_insns=200000, code=()):
             bad = [x for x in range(a, a + sz) if x not in written]
             if bad and u.reg_read(UREG['esp']) <= a:
                 trap('uninit stack read', u.reg_read(UREG['eip']), '%#x+%d' % (a, sz))
+    fa = []
+    def unmapped(u, t, a, sz, val, ud): fa.append(a); return False
+    uc.hook_add(UC_HOOK_MEM_UNMAPPED, unmapped)
     uc.hook_add(UC_HOOK_CODE, code_hook); uc.hook_add(UC_HOOK_MEM_WRITE, write_hook); uc.hook_add(UC_HOOK_MEM_READ, read_hook)
     try:
         uc.emu_start(entry, 0xFFFFFFFF, count=max_insns)
     except UcError as e:
-        trap('invalid insn' if 'INSN' in str(e) else 'fault', uc.reg_read(UREG['eip']), str(e)); done[0] = True
+        trap('invalid insn' if 'INSN' in str(e) else 'fault', uc.reg_read(UREG['eip']), str(e) + (' @%#x' % fa[-1] if fa else '')); done[0] = True
     eip, esp = uc.reg_read(UREG['eip']), uc.reg_read(UREG['esp'])
     if not tr.ended:
         fin(uc)
-        if eip == SENT and esp >= esp0 + 4 and not tr.traps:
+        if eip == SENT and esp >= esp0 + 4 and all(t[0] == 'uninit stack read' for t in tr.traps):
             tr.ended = 'ret'; tr.esp_delta = esp - esp0 - 4
         else:
             if not done[0]: trap('insn limit', eip, str(max_insns))
             tr.ended = 'trap'
-            if not tr.traps: trap('no return', eip, 'esp=%#x' % esp)
-    elif tr.traps: tr.ended = 'trap'
+            if all(t[0] == 'uninit stack read' for t in tr.traps): trap('no return', eip, 'esp=%#x' % esp)
+    elif any(t[0] != 'uninit stack read' for t in tr.traps): tr.ended = 'trap'
     return tr
 
 def _selftest():
