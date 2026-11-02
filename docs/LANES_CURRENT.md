@@ -125,7 +125,7 @@ Segments 001-037. Work every draft in these files; do not take a file from the o
 |---|---|---:|---|
 | src/c/013_1BBCC_key_team_db/LoadTeamRoster.c | LoadTeamRoster | 42 | size 10/17 |
 | src/c/029_380E9_league_setup/LeagueTeamSelect.c | LeagueTeamSelect | 45 | size 29/47 |
-| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 220 | register 118/221 |
+| src/c/027_33FFD_calendar/CalendarScreen.c | CalendarScreen | 222 | register 122/224 |
 
 ## Offered to Mhopkinsinc
 
@@ -975,11 +975,12 @@ SetupStatsSourceMenu — register 39/51, owner Mhopkinsinc
 
 ### `src/c/046_644A8_engine_display/ReplayStep.c`
 
-ReplayStep — register 21/36, owner StaticEck2026
+ReplayStep — register 21/32, owner StaticEck2026
 - ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) read
 - ReplayStep 46->46 (2026-10-24, StaticEck2026, GA) the frame advance goes through ebp in the EXE; every remaining shape is already listed in UNSURE.
 - ReplayStep 46->46 (2026-10-24, Mhopkinsinc, GA) sound test replayplay != last 46; nested if (sound) { if (last != replayplay) } 46; recbpr == replayplay 51; regsolve only last / start +100 bumps
 - ReplayStep 46->46 (2026-10-24, Mhopkinsinc, GA) tieorder.py --minutes 20: the best tie order gives 37 (308 orders): pass 0 savings-30 run: sorted t15 t25 t84 t42 t48 t28 t92 t22 t11 t31 t36 t50 t16 t40 t18 t13, needed t16 t25 t84 t42 t48 t28 t92 t22 t11 t31 t36 t50 t15 t40 t18 t13 (t11 EAX -> EDX, t16 EAX -> EDX); real-compiled declaration moves: best 46 (declare fx before keys)
+- ReplayStep 153->153 (2026-11-02, claude, GA) functional fix: the camera stores swap the chain order (camx = word_E9FB0 = ...; camy = word_E9FB2 = ...) so word_E9FB0 / word_E9FB2 are stored before camx / camy as in the EXE; behaviour only (independent stores are compared in order). Score is the differing-line count of cdiff.py --all, unchanged. Equiv: writes[471] fixed, PASS (752 cases in the 300 s budget)
 DrawRinkSideObjects — register 54/64, owner StaticEck2026
 - DrawRinkSideObjects 118->118 (2026-10-24, StaticEck2026, GA) register cycle from the edge clamps on.
 - DrawRinkSideObjects 118->118 (2026-10-24, Mhopkinsinc, GA) marker index in its own short j 173 (+5), declared first 194 (+11); clamp 0x140 - vy - 0xA8 132 (+10); regsolve no prediction; note: f holds frame / index / edge flags (dead-variable reuse already in the draft)
