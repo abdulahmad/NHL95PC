@@ -145,7 +145,8 @@ the host works out the mouse movement the game's mouse routine needs to put its 
 | Lo-res (320x200): replay | hidden while over the 4:3 picture and the window has focus | yes |
 | Lo-res: gameplay, either player has the mouse as a control device | hidden while the window has focus | no: kept on the 4:3 picture |
 
-In fullscreen the Windows pointer is always kept on the 4:3 picture, and hidden wherever the rules above hide it. The Windows pointer menu
+In fullscreen the Windows pointer is always kept on the 4:3 picture, hidden wherever the rules above hide it, and always hidden during a
+game (from the face-off to the end, the pause and the replay too), whatever the control devices. The Windows pointer menu
 (Display) can force it always shown or always hidden.
 
 How the host knows (`cursor_update` in `port/input.c`):

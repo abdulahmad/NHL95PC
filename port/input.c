@@ -253,6 +253,7 @@ static void cursor_update(void)
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
     hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
+    if (video_pointer_mode() == 0 && active && fs && curperiod != -1) hide = 1;    /* automatic: always hidden during a game in fullscreen */
     { static int was = -1; if (drawn != was) TRACE("game pointer %d (play with the mouse %d)\n", drawn, play_mouse); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
