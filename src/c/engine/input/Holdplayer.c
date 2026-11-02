@@ -1,10 +1,10 @@
 /* Engine input: hold button. */
 #include "nhl95.h"
 
-/* holdplayer: hold button for player p: set pflags bit 5; with no impact target: an opponent
+/* Holdplayer: hold button for player p: set pflags bit 5; with no impact target: an opponent
  in reach gets a hold (SPA 873h), else a block-shot dive when one is possible; otherwise check the
  impact target SortCords[impactp] (Acheck). */
-void holdplayer(Player *p)
+void Holdplayer(Player *p)
 {
     p->pflags |= 0x20;
     if (!p->impact) {

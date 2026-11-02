@@ -221,7 +221,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
             FadePalette(1, savepal, 0x10);
             joysampling = joysampling_save;
         }
-        CrowdNoiseUpdate((short)j);
+        Crowd_Noise((short)j);
         hudhundstep = hudhundaccum / 0x18;
         hudhundaccum %= 0x18;
         if (exitgame && !(gameclock | clockticks[0]))
@@ -241,9 +241,9 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
             joysampling = joysampling_save;
         }
         if (escrequest) break;
-        Readjoy1();
+        ReadJoy1();
         if (regd1.w & 0x10 || regd1.w & 0x20) break;
-        Readjoy2();
+        ReadJoy2();
         if (regd1.w & 0x10 || regd1.w & 0x20) break;
     }
     joysampling = 0;

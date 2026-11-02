@@ -12,7 +12,7 @@ extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
 extern dword_E0244, dword_E9A9E, forcepldata, gmode, FreeMemBlock, puckx, pucky, puckc
 extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
 extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
-extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, StopDigiSample
+extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, ReadJoy1, ReadJoy2, Crowd_Noise, CrowdFadeOut, StopDigiSample
 extern PaHighlightIntro, PaOpenBank, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
 extern FlushGSumQueue, ClearPenaltyBuffer, LoadTeamPalette, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
 extern MusicChanReset2, sub_8F633, sub_8FFB0, TicksSinceLastCall, awlinetab, hmlinetab, savepal, gamepal
@@ -545,7 +545,7 @@ sar eax, 10h	; 69B96
 mov dword [joysampling], eax	; 69B99
 .22:
 movsx eax, si	; 69B9E
-call CrowdNoiseUpdate	; 69BA1
+call Crowd_Noise	; 69BA1
 mov edx, dword [hudhundaccum]	; 69BA6
 mov ebx, 18h	; 69BAC
 mov eax, edx	; 69BB1
@@ -616,13 +616,13 @@ mov dword [joysampling], eax	; 69CA3
 .25:
 cmp dword [escrequest], byte 0	; 69CA8
 jne short .26	; 69CAF
-call Readjoy1	; 69CB1
+call ReadJoy1	; 69CB1
 mov dl, byte [regd1]	; 69CB6
 test dl, 10h	; 69CBC
 jne short .26	; 69CBF
 test dl, 20h	; 69CC1
 jne short .26	; 69CC4
-call Readjoy2	; 69CC6
+call ReadJoy2	; 69CC6
 mov bl, byte [regd1]	; 69CCB
 test bl, 10h	; 69CD1
 jne short .26	; 69CD4

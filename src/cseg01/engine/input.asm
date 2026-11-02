@@ -16,11 +16,11 @@ extern regd1, joysampling_save, lj2, lj1
 global Acheck, doinput
 global CanBlockShot_ret6, CanBlockShot_ret5
 global Readjoy_tail, joyq_pop, joyq_flush, joyq_peek, lineinput
-global faceoffinput, CanBlockShot, OppInReach, holdplayer, lcselect, getlchoice, lcfound, Readjoy1
-global Readjoy2, CenterMouse
+global faceoffinput, CanBlockShot, OppInReach, Holdplayer, lcselect, getlchoice, lcfound, ReadJoy1
+global ReadJoy2, CenterMouse
 ; Input queue. The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
 ; into joyqueue (50 records of 3 bytes) while joysampling is set. The main loop takes the
-; frame's record with joyq_peek (-> joyrec, read by Readjoy1/Readjoy2) and drops it with joyq_pop.
+; frame's record with joyq_peek (-> joyrec, read by ReadJoy1/ReadJoy2) and drops it with joyq_pop.
 ; C: src/c/engine/input/joyq_pop.c
 %ifdef CBUILD
 %include "c/engine/input/joyq_pop.inc"
@@ -301,7 +301,7 @@ ret	; 4FFED
 ; CanBlockShot: may this player dive to block a shot? Shooter = puck carrier, or
 ; shotplayer if the puck is loose and heading at his goal; shooter must be in a shooting SPA, the
 ; player between him and the puck, facing him, and closer than the puck. Returns 0, or the dive
-; direction+1 (0Ah = straight), direction also in [esi+4Ah]; holdplayer passes it to BlockShotDive.
+; direction+1 (0Ah = straight), direction also in [esi+4Ah]; Holdplayer passes it to BlockShotDive.
 CanBlockShot:
 push dword 34h	; 4FFEE
 call __CHK	; 4FFF3
@@ -658,13 +658,13 @@ jl short OppInReach.loop	; 503C4
 xor eax, eax	; 503C6
 jmp near CanBlockShot_ret6	; 503C8
 %endif ; C
-; holdplayer: (A button, not the puck carrier) with two PC checks first:
+; Holdplayer: (A button, not the puck carrier) with two PC checks first:
 ; OppInReach -> hold anim 873h; CanBlockShot -> dive (BlockShotDive); else Acheck on SortCords[impactp].
-; C: src/c/engine/input/holdplayer.c
+; C: src/c/engine/input/Holdplayer.c
 %ifdef CBUILD
-%include "c/engine/input/holdplayer.inc"
+%include "c/engine/input/Holdplayer.inc"
 %else
-holdplayer:
+Holdplayer:
 push dword 0Ch	; 503CD
 call __CHK	; 503D2
 push ebx	; 503D7
@@ -785,12 +785,12 @@ pop ecx	; 504D7
 pop ebx	; 504D8
 ret	; 504D9
 %endif ; C
-; doinput: from.0 on (the PC reads the pads in Readjoy1/2 and calls this per
+; doinput: from.0 on (the PC reads the pads in ReadJoy1/2 and calls this per
 ; controlled player; regd0 dpad, regd1 new presses, regd2 changes, regd3 held; bit 4 B, 5 C, 6 A):
 ; PC line change request -> lcselect; faceoff -> faceoffinput; pf2lcm -> lineinput; pfjoycon
 ; pfalock: B -> changeplayer, else the PC one-timer switch of control to passplayer
 ; puck carrier (.pc1): passmode ShotMode B setpassmode A SetLCmode C SetShotMode skate
-; other (.notpc): A holdplayer, B changeplayer, C burst, else skate.
+; other (.notpc): A Holdplayer, B changeplayer, C burst, else skate.
 ; C: src/c/engine/input/doinput.c
 %ifdef CBUILD
 %include "c/engine/input/doinput.inc"
@@ -1057,7 +1057,7 @@ mov al, byte [regd1]	; 50804
 test al, 40h	; 50809
 je short .12	; 5080B
 mov eax, ebx	; 5080D
-call holdplayer	; 5080F
+call Holdplayer	; 5080F
 pop edi	; 50814
 pop esi	; 50815
 pop ecx	; 50816
@@ -1224,12 +1224,12 @@ pop ecx	; 50A02
 pop ebx	; 50A03
 ret	; 50A04
 %endif ; C
-; Readjoy1 Readjoy2 = Readjoy1/2, reading byte 0 1 of joyrec instead of the pad.
-; C: src/c/engine/input/Readjoy1.c
+; ReadJoy1 ReadJoy2 = ReadJoy1/2, reading byte 0 1 of joyrec instead of the pad.
+; C: src/c/engine/input/ReadJoy1.c
 %ifdef CBUILD
-%include "c/engine/input/Readjoy1.inc"
+%include "c/engine/input/ReadJoy1.inc"
 %else
-Readjoy1:
+ReadJoy1:
 push dword 10h	; 50A05
 call __CHK	; 50A0A
 push ebx	; 50A0F
@@ -1267,11 +1267,11 @@ pop ecx	; 50A81
 pop ebx	; 50A82
 ret	; 50A83
 %endif ; C
-; C: src/c/engine/input/Readjoy1.c (Readjoy2)
+; C: src/c/engine/input/ReadJoy1.c (ReadJoy2)
 %ifdef CBUILD
-%include "c/engine/input/Readjoy1.Readjoy2.inc"
+%include "c/engine/input/ReadJoy1.ReadJoy2.inc"
 %else
-Readjoy2:
+ReadJoy2:
 push dword 10h	; 50A84
 call __CHK	; 50A89
 push ebx	; 50A8E

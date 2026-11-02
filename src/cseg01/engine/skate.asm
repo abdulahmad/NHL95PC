@@ -8,7 +8,7 @@ extern doplayeracc_ftab, MaxSpeed, puckvx, gmode
 extern puckx, pucky, puckvy, puckc, randomd0, vecdist, imul32, SortCords
 extern vtoa, regd4, xc1, yc1, refsignal, dirtab_y, regd2, regd3
 extern regd0, regd1
-global StopNA, doplayeracc, dostop, goalieacc
+global stopna, doplayeracc, dostop, goalieacc
 global EvadePlayers_popedi
 global noturn0, playeracc, skateto, skatetopuck, EvadePlayers, EvadePlayers_popebp, EvadePC
 global EvadePC_x, avdgoal_box, avdgoal, avdgoal_jt
@@ -1901,7 +1901,7 @@ je near avdgoal.33	; 5F738
 mov esp, ebp	; 5F73E
 jmp near EvadePlayers_popebp	; 5F740
 ; dostop: player stops. eax = player. |Xvel| or |Yvel| > 1000h: stop animation (SPAstop, sets pf2aip)
-; or SPAglide when skating backwards; then StopNA.
+; or SPAglide when skating backwards; then stopna.
 ; C: src/c/engine/skate/EvadePlayers.c (dostop)
 %ifdef CBUILD
 %include "c/engine/skate/EvadePlayers.dostop.inc"
@@ -1986,18 +1986,18 @@ mov eax, ebx	; 5F819
 call SetSPA	; 5F81B
 .na:
 mov eax, ebx	; 5F820
-call StopNA	; 5F822	; stop with no anim
+call stopna	; 5F822	; stop with no anim
 pop edx	; 5F827
 pop ebx	; 5F828
 ret	; 5F829
 %endif ; C
-; StopNA: slow player by a step on each axis, no animation change. eax = player.
+; stopna: slow player by a step on each axis, no animation change. eax = player.
 ; PC step 200+legstr (goalie 200+3*legstr); (150).
-; C: src/c/engine/skate/EvadePlayers.c (StopNA)
+; C: src/c/engine/skate/EvadePlayers.c (stopna)
 %ifdef CBUILD
-%include "c/engine/skate/EvadePlayers.StopNA.inc"
+%include "c/engine/skate/EvadePlayers.stopna.inc"
 %else
-StopNA:
+stopna:
 push dword 18h	; 5F82A
 call __CHK	; 5F82F
 push ebx	; 5F834
@@ -2076,7 +2076,7 @@ sar edx, 10h	; 5F8DA
 or eax, edx	; 5F8DD
 je short .cgl	; 5F8DF
 mov eax, ebx	; 5F8E1
-call StopNA	; 5F8E3	; StopNA
+call stopna	; 5F8E3	; stopna
 pop ecx	; 5F8E8
 pop ebx	; 5F8E9
 ret	; 5F8EA

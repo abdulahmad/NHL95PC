@@ -4,7 +4,7 @@
 /* asspenshooter: the penalty shot skater. Leave (assexit) without the puck or with
  pflags bit 3; not while flag 20h; in a stoppage stand (SPA 289h, nopuck 60) and StopIfFree. A new assignment (bit
  1): temp1 0, steering byte +29h 0 +28h 8, path point 0, a random temp3 (0-3) and a path from his y (mirrored by
- end; StartShotPath). Past the path end (sopathend < 0): when not facing the path direction, shoot now and then
+ end; StartShootoutPath). Past the path end (sopathend < 0): when not facing the path direction, shoot now and then
  (1 in 4 when turned 3 or more steps, else 1 in 32): pass direction 2-3 (+3 on the left side, pspathside), shot
  timer 20, aimed at the goal (vtoa to x 0, y +-E8h), SPA DD3h for a hit type (Findhittype) else E2Bh, animate,
  SPAcnt 2 and shoot (doshot). Else move to the next path point when past it, and skate to the path point. */
@@ -36,7 +36,7 @@ void asspenshooter(Player *p)
         ((signed char *)p)[0x28] = 8;
         sopathpoint = 0;
         p->temp3 = randomd0(4);
-        StartShotPath(p, y);
+        StartShootoutPath(p, y);
     }
     if (sopathend < 0) {
         y = p->facedir - pspathdir;

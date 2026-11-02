@@ -13,7 +13,7 @@ extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, SetTickDeadline, WaitTickDead
 global sndcb_addesp8_x
 global PlayCrowdSample_ret
 global nullsub_5
-global sfx, SndLoadFile, SndLoadFile2, CrowdNoiseUpdate, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
+global sfx, SndLoadFile, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
 global StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PaOneMinuteLeft, PaSpeechBusy, PaGoal, PaPlayerNumber
 global PaPenalty, PaPenaltyShot, PaTonightIntro, PaScoringPeriod, PaNhlIntro, PaGoodnight, PaLineups, PaElseNhl
 global PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
@@ -46,11 +46,11 @@ push edx	; 594C5
 call sub_8E908	; 594C6
 jmp short sndcb_addesp8_x	; 594CB
 %endif ; C
-; C: src/c/engine/sound/CrowdNoiseUpdate.c
+; C: src/c/engine/sound/Crowd_Noise.c
 %ifdef CBUILD
-%include "c/engine/sound/CrowdNoiseUpdate.inc"
+%include "c/engine/sound/Crowd_Noise.inc"
 %else
-CrowdNoiseUpdate:
+Crowd_Noise:
 push dword 14h	; 594CD
 call __CHK	; 594D2
 push ebx	; 594D7
@@ -338,7 +338,7 @@ xor edi, edi	; 59837
 mov word [crowdlevel], di	; 59839
 .2:
 mov eax, 2	; 59840
-call CrowdNoiseUpdate	; 59845
+call Crowd_Noise	; 59845
 call WaitTickDeadline	; 5984A
 jmp short CrowdFadeOut.1	; 5984F
 .3:

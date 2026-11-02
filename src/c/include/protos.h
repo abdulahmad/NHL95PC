@@ -38,7 +38,7 @@ void Acheck(struct Player *p, struct Player *q);           /* 4FFAE */
 void SetLCmode(struct Player *p);                         /* 4D9FC */
 void assdopen(struct Player *p);                          /* 4AFFB */
 short TryAddPlayerToList(struct Team *t, short pl, short slot); /* 5BB9E */
-void defaultsprites2(void);                                 /* 5BA89 */
+void defaultsprites_0(void);                                 /* 5BA89 */
 void ResetBench(void);                                     /* 5DF86 */
 void setpersonel(struct Team *t);                          /* 5BEF4 */
 void StartPer(void);                                       /* 5C010 */
@@ -79,7 +79,7 @@ void playeracc(struct Player *p, short dir);               /* 5EDAD */
 void goalieacc(struct Player *p, short dir);               /* 5F8B2 */
 void EvadePlayers(struct Player *p);                      /* 5E4C4 */
 void dostop(struct Player *p);                            /* 5F745 */
-void StopNA(struct Player *p);                            /* 5F82A (asm) */
+void stopna(struct Player *p);                            /* 5F82A (asm) */
 /* engine/penalty */
 void updatePPTeamTime(void);                              /* 63B57 */
 void ClearPenaltyBuffer(void);                            /* 63D3C */
@@ -236,7 +236,7 @@ void sub_8F7AE(int h, int fade);  /* sound library: free sample (fade: release c
 int ClearInputQueue(void);  /* 6B3D7 */
 int ResetInputSampling(void);  /* 1145F */
 void NormalizeDressFlags(void);  /* 65B48 */
-void CheckAndReleasePlayer(Team *t, short i);  /* 639F9 */
+void updatepentime_ut_chk(Team *t, short i);  /* 639F9 */
 void sfx(int n);  /* 59884 */
 void ReadCString(char *s, int fh);  /* 8385F */
 unsigned _dos_read(int fh, void __far *buf, unsigned n, unsigned *got);  /* Watcom CRT _dos_read_ */
@@ -355,12 +355,12 @@ int BuildTradeRoster(char *dir, int team, unsigned char *list, unsigned char *re
 int strcmp(const char *a, const char *b);  /* Watcom CRT strcmp_ */
 int ComparePlayerEntry(unsigned char *a, unsigned char *b);  /* 6D78B */
 int GameRosterCmp(unsigned char *a, unsigned char *b);  /* 76A93 */
-void holdplayer(Player *p);  /* 503CD */
+void Holdplayer(Player *p);  /* 503CD */
 int OppInReach(Player *p);
 int NetCollide(Player *p, int dir);  /* 5601D: the SPA (FallDown keeps it in a short) */
 void lineinput(Player *p);  /* 4FD8E */
 void asspassrec(Player *p);  /* 50F3F */
-void PassRecOneTimer(Player *p);  /* 50B55 */
+void assonetimer(Player *p);  /* 50B55 */
 void RequestLineChange(Player *p);  /* 4D938 */
 void CountPuckThreat(Player *p);  /* 4C632 */
 void asswingd(Player *p);  /* 4A1A6 */
@@ -376,7 +376,7 @@ int DrawFileDlgList(struct FileList *l);  /* 2C46B */
 int POCreateSchedule(int *teams, char *dir);  /* 8721F */
 void SetFullPalette(unsigned char *pal);  /* 11550 */
 void PlayGame(int *fh);  /* 11D09 */
-void ProcessPenaltyList(Team *tm);  /* 63A37 */
+void updatepentime_ut(Team *tm);  /* 63A37 */
 void ExportDbs(void);  /* 3D108 */
 void LoadGameTeams(int mode);  /* 1BBCC */
 void SetPenaltyStrength(void);  /* 510A9 */
@@ -422,7 +422,7 @@ void AskLeftRight(unsigned char *left, char *prompt);  /* 6FBE8 */
 char InputDialog(int *lines, int n, char *buf, int len, int a, int b, int c, int d, int e);
 void releasepl(Team *tm, short pl);  /* 6392A */
 void setplayer(Player *p, int pl);
-void puckIChk(void);  /* 56E52 */
+void PuckIChk(void);  /* 56E52 */
 int DiskSpaceShort(int drive, int *kb);  /* 14825 */
 void DrawTradeRow(int side);  /* 3E7B3 */
 int __cdecl sub_93170(int x, int y, char *fmt, ...);  /* graphics library: printf at x y */
@@ -552,7 +552,7 @@ int StatsMenuTeamPenalties(void);  /* 18265 */
 int StatsMenuStandings(void);  /* 17DFC */
 void assstanley(Player *p);  /* 4A832 */
 void PeriodOver(void);  /* 5DEA6 */
-void IntermissionStart(void);
+void PeriodOver_sp(void);
 int DeleteFiles(char *dir, char *name, char *ext);  /* 14368 */
 unsigned unknown_libname_2(void *ft);  /* Watcom CRT _dos_findnext */
 void DeleteDir(char *dir);  /* 14442 */
@@ -583,7 +583,7 @@ void MergeTeamRecDelta(unsigned char *old, unsigned char *cur, unsigned char *ds
 int LoadLeagueGameRef(int fh);  /* 41B80 */
 short checkagr(Player *p);  /* 5369F */
 void assepen(Player *p);  /* 4B02D */
-void StartShotPath(Player *p, int dist);  /* 4F9EF */
+void StartShootoutPath(Player *p, int dist);  /* 4F9EF */
 void Bcheck(Player *a, Player *b);  /* 56A54 */
 void FallDown(Player *p, Player *by);
 void periodicevents(void);  /* 5C302 */
@@ -853,8 +853,8 @@ int ListHitTest(int mx, int my, int left, int top, int w, int n);  /* 3023E */
 void forcepldata(Team *t);  /* 5E0DD */
 int PostInjuryEvent(unsigned char a, unsigned char b, unsigned char c, unsigned char d, unsigned char e, int f, int g);  /* 62764 */
 void BuildEventLines(void);  /* 61E99 */
-short Readjoy1(void);  /* 50A05 */
-short Readjoy2(void);  /* 50A84 */
+short ReadJoy1(void);  /* 50A05 */
+short ReadJoy2(void);  /* 50A84 */
 void QueueDeferredCall(void (*fn)(int, int, int, int, int, int, int), int a, int b, int c, int d, int e, int f, int g);  /* 619C8 */
 void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark);  /* 2FE49 */
 void DrawGadgetButton(int n);  /* 7E067 */

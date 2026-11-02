@@ -2,7 +2,7 @@
 #define RunDemoGame RunDemoGame_decl
 #define LoadRockMusic LoadRockMusic_decl
 #define ReloadGameGfx ReloadGameGfx_decl
-#define GameLoop GameLoop_decl
+#define Gameloop GameLoop_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8F13B sub_8F13B_decl
 #define TitleScreen TitleScreen_decl
@@ -33,7 +33,7 @@
 #undef RunDemoGame
 #undef LoadRockMusic
 #undef ReloadGameGfx
-#undef GameLoop
+#undef Gameloop
 #undef sub_8F98F
 #undef sub_8F13B
 #undef TitleScreen
@@ -97,7 +97,7 @@ void srand(unsigned seed);                     /* Watcom CRT srand_ */
 int RunDemoGame(void);
 void LoadRockMusic(void);
 void ReloadGameGfx(void);
-void GameLoop(void);
+void Gameloop(void);
 int sub_8F98F(char *path);  /* sound library: load a song */
 int sub_8F13B(char *path);  /* sound library: load a digitized sample */
 
@@ -180,7 +180,7 @@ int RunDemoGame(void)
     home = *(int *)((char *)&HomeTeam - 2) >> 16;
     DrawHudPanel(home, vis, one, one);
     joyq_flush();
-    GameLoop();
+    Gameloop();
     SetScreenSize(0x280, 0x1E0);
     PerTimeTab[0] = 0x12C;
     demomode = 0;

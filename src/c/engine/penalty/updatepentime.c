@@ -3,7 +3,7 @@
 
 /* updatepentime: clear sflags3 bit 6 (a second went by); while the clock runs and
  no penalty shot is on, count Penaltytimer down; when it passes 0 set bit 6, add 24 frames back and do the
- once-a-second work: chkatop, updatePPTeamTime and both teams' ProcessPenaltyList. */
+ once-a-second work: chkatop, updatePPTeamTime and both teams' updatepentime_ut. */
 void updatepentime(void)
 {
     sflags3 &= 0xBF;
@@ -14,7 +14,7 @@ void updatepentime(void)
         Penaltytimer += 24;
         chkatop();
         updatePPTeamTime();
-        ProcessPenaltyList(&hmtmstruct);
-        ProcessPenaltyList(&awtmstruct);
+        updatepentime_ut(&hmtmstruct);
+        updatepentime_ut(&awtmstruct);
     }
 }

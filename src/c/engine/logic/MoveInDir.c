@@ -13,7 +13,7 @@ void MoveInDir(Player *p, short dir)
     dir &= 0xF;
     if (dir > 7) {
         if (dir == 9 && (p->Xvel | p->Yvel)) {
-            StopNA(p);
+            stopna(p);
             return;
         }
         if (!(p->pflags2 & 2)) SetSPA(p, 0x289);

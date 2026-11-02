@@ -8,7 +8,7 @@
    in a shooting SPA. p must be between the puck and his goal (y), facing the shooter, and nearer the goalie
    (SortCords 12 + side) than the puck is; outside line change mode (pflags bit 3) not straight sideways and
    80h+ deep and within 64h of the middle. Result: 0, or the dive direction + 1 (0Ah straight), the direction
-   also in the word at +4Ah (holdplayer passes it to BlockShotDive).
+   also in the word at +4Ah (Holdplayer passes it to BlockShotDive).
    DRAFT (10.0 GA, 76 -> 60 differing): the same-team test written `(*puckc < 6) == (p->SCnum < 6)` gives the
    EXE's `cmp eax, edx` / `xor eax, edx` return; the |pucky| range test computed once; the last test inverted
    so the shared `return 0` sits at the bottom (every early exit jumps there, as in the EXE); `(int)puckcross[]`
@@ -158,9 +158,9 @@ void lineinput(Player *p)
 /* asspassrec (50F3F; 93G logic93 asspassrec, "assignment for catching pass", asstab 13h; segment 039, ends in
    CanBlockShot_ret5): not while animation-locked; with the clock stopped leave the assignment (assexit,
    StopIfFree, onetimerflag 0). Count the high byte of temp1 down. A joystick player waits for the one-timer
-   (PassRecOneTimer). On a new assignment (pfna): pflags bit 0 on, temp2 8, and when the puck is loose and p's team
+   (assonetimer). On a new assignment (pfna): pflags bit 0 on, temp2 8, and when the puck is loose and p's team
    (regd0 = pfteam + 1) has no human controller, OneTimerChk may arm the one-timer (onetimerflag). An armed
-   one-timer clears bits 4 and 6 of the new presses (regd1) and goes to PassRecOneTimer. Otherwise, while the puck
+   one-timer clears bits 4 and 6 of the new presses (regd1) and goes to assonetimer. Otherwise, while the puck
    is loose, skate to it (skatetopuck) when it is slow (both velocities under 168h), and keep waiting until the
    counter passes -5; then (or once someone has the puck) leave the assignment, and a pass to p's own number is
    completed (PassCompleted), else passplayer is cleared. p: the receiver. No result. */
@@ -177,7 +177,7 @@ void asspassrec(Player *p)
     ((signed char *)&p->temp1)[1]--;
     if (p->pflags & pfjoy) {
 one:
-        PassRecOneTimer(p);
+        assonetimer(p);
         return;
     }
     if (p->pflags & pfna) {
@@ -205,7 +205,7 @@ one:
     if (*puckc >= 0) passplayer = -1;
 }
 
-/* PassRecOneTimer (50B55, PC only; segment 039, ends in CanBlockShot_ret5): the one-timer of a pass receiver
+/* assonetimer (50B55, PC only; segment 039, ends in CanBlockShot_ret5): the one-timer of a pass receiver
    (asspassrec). Once someone has the puck or the wait (the high byte of temp1) is past -19h: a pass to p is
    completed (PassCompleted), passplayer cleared, the assignment left (pflags bit 0 off, assexit, onetimerflag 0).
    Else, armed (onetimerflag): in the one-timer wind-up (SPA DD3h / E2Bh) a press of button 4 or 6 (regd1) early in
@@ -220,7 +220,7 @@ one:
    assigned. Left: the mirrored blade x is negated in esi (EXE ecx), the blade y distance is 16-bit memory ops
    (EXE loads the three words and adds / subtracts in 32 bits, then cwde) and the aim y narrows t before the
    ternary (EXE after it); see docs/UNSURE.md. */
-void PassRecOneTimer(Player *p)
+void assonetimer(Player *p)
 {
     int t;
     int d;

@@ -11,10 +11,10 @@ void sub_8FD84(int card, int voice, int vol);
 void sub_8FE1C(int card, int voice, int what);
 void sub_8FDE5(int card, int voice, int what);
 
-/* CrowdNoiseUpdate: with sound effects and a crowd device (sounddev & 2Ah), ease crowdsmooth toward
+/* Crowd_Noise: with sound effects and a crowd device (sounddev & 2Ah), ease crowdsmooth toward
  crowdlevel by at most n*30, map that to voice 8 and voice 7, and start or silence those voices.
  n is a signed step. */
-void CrowdNoiseUpdate(int n)
+void Crowd_Noise(int n)
 {
     int step;
     int v;

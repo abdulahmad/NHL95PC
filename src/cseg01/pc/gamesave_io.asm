@@ -14,7 +14,7 @@ extern off_C526F, off_C5273, teamabbrevs, leaguedbnames, replaystart, camx_m2
 extern off_CBED0, strcat_, strcpy_, SetScreenSize, ResetInputSampling, RunGameFrames, FadePalette, LoadGameGfx
 extern SetupGame, MakePath, FileOpenRead, FileClose, ReadKeyRec, ReadSeasonRec, ReadTeamRec, UpdateHudPanel
 extern DrawHudPanel, LoadCupFinalSeries, PostGameDesk, SportsDesk, sub_1B982, MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu
-extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, CrowdNoiseUpdate
+extern LoadRink, SetRinkScroll, ReadGoalieSeasonRec, ReadTeamNames, FadeOutPalCycle, StartThreeStars, joyq_flush, Crowd_Noise
 extern CrowdFadeOut, CrowdNoiseReset, StopDigiSample, PlayCrowdSample, PaPreloadClips, DrawRinkOverlays, PeriodOver, LoadGameState
 extern RunDeferredCalls, FlushGSumQueue, BuildDefaultLines, SetupTeamLines, NormalizeDressFlags, LoadTeamPalette, sub_6ADA7, sub_6AF52
 extern sub_6AF97, sub_6B008, LoadRockMusic, SpeechStopQueue, MusicChanReset, SelectScreenBM, sub_8E8A0, sub_8EA18
@@ -25,8 +25,8 @@ extern gsp, gameclock, word_CBC44, exitgame, gameover, fadeinpending, ovlseq, sc
 extern lcrequest, joysampling_save
 global assinsert, assreplace
 global PickAwardWinners_x
-global GameLoop, PlayGame, ReplayIsEmpty, PickAwardWinners
-GameLoop:
+global Gameloop, PlayGame, ReplayIsEmpty, PickAwardWinners
+Gameloop:
 push dword 48h	; 1167B
 call __CHK	; 11680
 push ebx	; 11685
@@ -146,7 +146,7 @@ sar eax, 10h	; 1182F
 mov dword [joysampling], eax	; 11832
 .7:
 movsx eax, si	; 11837
-call CrowdNoiseUpdate	; 1183A
+call Crowd_Noise	; 1183A
 cmp dword [penshotlive], byte 0	; 1183F
 je short .8	; 11846
 xor edi, edi	; 11848
@@ -356,7 +356,7 @@ push edi	; 11B79
 call sub_90354	; 11B7A
 add esp, byte 4	; 11B7F
 cmp esi, eax	; 11B82
-jl short GameLoop.20	; 11B84
+jl short Gameloop.20	; 11B84
 .22:
 mov eax, dword [joysampling_save-2]	; 11B86
 sar eax, 10h	; 11B8B
@@ -364,7 +364,7 @@ mov dword [joysampling], eax	; 11B8E
 call joyq_flush	; 11B93
 .23:
 cmp dword [deferpending], byte 0	; 11B98
-je near GameLoop.2	; 11B9F
+je near Gameloop.2	; 11B9F
 mov ax, word [joysampling]	; 11BA5
 mov word [joysampling_save], ax	; 11BAB
 xor edx, edx	; 11BB1
@@ -375,7 +375,7 @@ mov eax, dword [joysampling_save-2]	; 11BC4
 sar eax, 10h	; 11BC9
 mov dword [joysampling], eax	; 11BCC
 call joyq_flush	; 11BD1
-jmp near GameLoop.2	; 11BD6
+jmp near Gameloop.2	; 11BD6
 .24:
 xor esi, esi	; 11BDB
 mov dword [joysampling], esi	; 11BDD
@@ -434,7 +434,7 @@ xor ebx, ebx	; 11CC3
 mov dword [frameaccum], ebx	; 11CC5
 mov dword [hudhundaccum], edx	; 11CCB
 call joyq_flush	; 11CD1
-jmp near GameLoop.1	; 11CD6
+jmp near Gameloop.1	; 11CD6
 .29:
 xor ebx, ebx	; 11CDB
 mov dword [joysampling], ebx	; 11CDD
@@ -615,7 +615,7 @@ xor ebx, ebx	; 11F74
 mov dword [introskipped], ebx	; 11F76
 mov dword [gameresult], ebx	; 11F7C
 call joyq_flush	; 11F82
-call GameLoop	; 11F87
+call Gameloop	; 11F87
 call ResetGoalieMenu	; 11F8C
 cmp dword [gamemode], byte 0	; 11F91
 je short .15	; 11F98

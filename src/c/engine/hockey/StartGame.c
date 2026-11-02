@@ -1,5 +1,5 @@
 /* StartGame: role: reset the game state for a new game (cleargamevars,
- clearteams), set the game state gsp to 0, restoreteams, then start the first period (IntermissionStart). */
+ clearteams), set the game state gsp to 0, restoreteams, then start the first period (PeriodOver_sp). */
 #include "nhl95.h"
 
 void StartGame(void)
@@ -8,5 +8,5 @@ void StartGame(void)
     clearteams();
     gsp = 0;
     restoreteams();
-    IntermissionStart();
+    PeriodOver_sp();
 }

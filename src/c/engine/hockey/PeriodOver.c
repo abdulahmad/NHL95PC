@@ -24,5 +24,5 @@ void PeriodOver(void)
             if (regd0.w) gsp = 4;
         }
     }
-    IntermissionStart();
+    PeriodOver_sp();
 }

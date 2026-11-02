@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_4842A progbits alloc exec nowrite align=1
 extern AddPenalty, AddPenalty2, DoGameFrame, Findhittype, GetHot, PBnum, SetSPA, SetShotMode, word_C90D8, word_DB08A, word_DC244, word_DF644, word_E0394, word_E9AB0
-extern Setplass, ShotMode, StopNA, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
+extern Setplass, ShotMode, stopna, __CHK, str_EASports, str_StarFmt, assinsert, assreplace
 extern sflags, gmode2, byte_CC9E4, byte_CC9E7, byte_CCA95, musicon, byte_DACB3
 extern byte_DAEA7, hmroster, hmrosterjersey, byte_DF87F, doorpflags, byte_DFFE2, textline1, textline2
 extern textline3, textline4, textline5, PenBuf, iflags, icingPlayer, byte_E9AC8
@@ -22,7 +22,7 @@ extern seqtimer, puckvx, gmode, goalieacc, FreeMemBlock, PreGameIntro_popebp, Pr
 extern teamabbrevs, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
-extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, puckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
+extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, PuckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, SetBoxDoorObject, FormatPlayerName, PostGoalEvent, ChkScorerMilestone, QueueGoalieNote, ShotLaneOpen, EndPenaltyShot
 extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
@@ -53,7 +53,7 @@ global assshoot_ret
 global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
-global StartShotPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
+global StartShootoutPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
 global StopIfFree, GoalieToPuckVec, AdjustFacingDirection, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global CrowdOnStoppage, NextPathPoint
 ; C: src/c/engine/logic/assintrostand.c
@@ -1255,7 +1255,7 @@ sar edx, 10h	; 49298
 or eax, edx	; 4929B
 je short .2	; 4929D
 mov eax, ebx	; 4929F
-call StopNA	; 492A1
+call stopna	; 492A1
 pop ebx	; 492A6
 ret	; 492A7
 .2:
@@ -4465,7 +4465,7 @@ cmp ax, 7	; 4B978
 jle near .148	; 4B97C
 .28:
 mov eax, esi	; 4B982
-call StopNA	; 4B984
+call stopna	; 4B984
 jmp near assgoalie_popebp	; 4B989
 .29:
 xor edx, edx	; 4B98E
@@ -6933,7 +6933,7 @@ mov word [byte ebx+Xvel], ax	; 4D760
 mov ax, word [byte edx+Yvel]	; 4D764
 mov word [byte ebx+Yvel], ax	; 4D768
 .2:
-call puckIChk	; 4D76C
+call PuckIChk	; 4D76C
 mov eax, ebx	; 4D771
 call ChkOffsides	; 4D773
 mov eax, ebx	; 4D778
@@ -9712,11 +9712,11 @@ inc dword [sopathpoint]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
 %endif ; C
-; C: src/c/engine/logic/StartShotPath.c
+; C: src/c/engine/logic/StartShootoutPath.c
 %ifdef CBUILD
-%include "c/engine/logic/StartShotPath.inc"
+%include "c/engine/logic/StartShootoutPath.inc"
 %else
-StartShotPath:
+StartShootoutPath:
 push dword 0Ch	; 4F9EF
 call __CHK	; 4F9F4
 push ebx	; 4F9F9
@@ -9861,7 +9861,7 @@ call randomd0	; 4FB84
 mov word [byte ebx+temp3], ax	; 4FB89
 mov edx, ecx	; 4FB8D
 mov eax, ebx	; 4FB8F
-call StartShotPath	; 4FB91
+call StartShootoutPath	; 4FB91
 .5:
 mov esi, dword [sopathend]	; 4FB96
 test esi, esi	; 4FB9C

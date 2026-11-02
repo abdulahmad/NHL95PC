@@ -1,6 +1,6 @@
-/* Skating (engine/skate): EvadePlayers... StopNA in address order, as one source file because
+/* Skating (engine/skate): EvadePlayers... stopna in address order, as one source file because
  later functions end in an earlier one's pop/ret tail (multi-block file, see tools/cc.py): skatetopuck ends in
- EvadePC_x, avdgoal in EvadePlayers_popebp, StopNA in EvadePlayers_popedi (which copy of the pops survives needs
+ EvadePC_x, avdgoal in EvadePlayers_popebp, stopna in EvadePlayers_popedi (which copy of the pops survives needs
  every function between them here). The one that does not match yet (avdgoal) is
  compiled for the layout but not spliced. vtoa is declared with an int result in this file: as short,
  skatetopuck's registers and most of EvadePlayers' differ. */
@@ -510,15 +510,15 @@ void dostop(Player *p)
         }
         SetSPA(p, spa);
     }
-    StopNA(p);                  /* stop with no anim */
+    stopna(p);                  /* stop with no anim */
 }
 
-/* StopNA: (stopna): slow player p by one step on each axis, with no animation
+/* stopna: (stopna): slow player p by one step on each axis, with no animation
  change. The step is 200 + legstr; a velocity that would cross
  zero is clamped to 0.
  Its tail is EvadePlayers' pop/ret (jmp EvadePlayers_popedi): wcc386 merges identical function tails inside
- one source file, so StopNA lives in this file, after the functions between them. */
-void StopNA(Player *p)
+ one source file, so stopna lives in this file, after the functions between them. */
+void stopna(Player *p)
 {
     int str = p->legstr;
     int step = str + 200;               /* step 200+legstr */

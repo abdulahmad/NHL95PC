@@ -2,7 +2,7 @@
    assrefsignal, assrefgoalpa). */
 /* DRAFT: assgoalie 13 differing under 10.0 GA. The int vecdist result and the short incremented depth
    give the EXE's EDX result copy and increment; the skate / stop exits written in place in both blocks
-   (`if (regd2.w > 7) StopNA(p); else playeracc(p, regd2.w);`, cross-jumped by Watcom) and the post target
+   (`if (regd2.w > 7) stopna(p); else playeracc(p, regd2.w);`, cross-jumped by Watcom) and the post target
    repeated in the far-side block replace three gotos, and the other exits to move are if / else nesting.
    ay declared after pc gives the EXE's carrier-side widening (`mov edx, eax` / `and edx, 0FFh`), and the
    save-stance offsets written `*puckx + (*puckvx >> 10) - ...` its puckvy pointer in eax.
@@ -42,7 +42,7 @@ void ChkScorerMilestone(void);  /* 62807 */
    the angle: face the puck, move toward the point on the line from the puck through the net (the shot speed and
    ShotLaneOpen pick the depth), or to the post the puck will cross (puckcross), with the save stances for a puck
    coming at him (dword_CCA5A by side and height, the crowd up) and a stop for a wraparound (assinsert 0Fh). Skate
-   there (playeracc) or stop (StopNA). p: the goalie. No result. */
+   there (playeracc) or stop (stopna). p: the goalie. No result. */
 void assgoalie(Player *p)
 {
     Player *q;
@@ -97,7 +97,7 @@ void assgoalie(Player *p)
         if (p->pflags2 & 2) return;
         if (--p->temp1 >= 0) {
             regd2.w = ((signed char *)p)[0x28];
-            if (regd2.w > 7) StopNA(p);
+            if (regd2.w > 7) stopna(p);
             else playeracc(p, regd2.w);
             return;
         }
@@ -294,7 +294,7 @@ move:
         if (ABS(regd0.w) < k && ABS(regd1.w) < k) regd0.w = regd1.w = 0;
     }
     regd2.w = ((signed char *)p)[0x28] = vtoa(regd0.w, regd1.w);
-    if (regd2.w > 7) StopNA(p);
+    if (regd2.w > 7) stopna(p);
     else playeracc(p, regd2.w);
 }
 

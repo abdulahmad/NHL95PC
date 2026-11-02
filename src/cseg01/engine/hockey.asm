@@ -22,7 +22,7 @@ extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
 extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
 extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
 extern lastplayer, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern DrawPanelScore, DrawPanelLine, IsCupClinched, Readjoy1, Readjoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
+extern DrawPanelScore, DrawPanelLine, IsCupClinched, ReadJoy1, ReadJoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
 extern PlayCrowdSample, PaOneMinuteLeft, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects, PenaltyManager, UpdatePowerPlayFlags, ClearPenaltyBuffer
 extern PenGoalStuff, EndPenaltyShot, DrawTextOverlay, DrawCallBanner, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
 extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
@@ -47,10 +47,10 @@ global calcpuckcross_ret6, calcpuckcross_ret5
 global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
 global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, calcpuckcross
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
-global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites2, TryAddPlayerToList, SetPlList
+global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList
 global StartPer, RestBench, updatecrowdf, periodicevents, LockScroll, cleargamevars, DrawRinkOverlays, setupice
 global clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission
-global IntermissionStart, PeriodOver, StartGame, forceteams, updateanim, updateplayers
+global PeriodOver_sp, PeriodOver, StartGame, forceteams, updateanim, updateplayers
 ; C: src/c/engine/hockey/SetSPA.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetSPA.inc"
@@ -2525,11 +2525,11 @@ pop ecx	; 5BA86
 pop ebx	; 5BA87
 ret	; 5BA88
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (defaultsprites2)
+; C: src/c/engine/hockey/calcpuckcross.c (defaultsprites_0)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.defaultsprites2.inc"
+%include "c/engine/hockey/calcpuckcross.defaultsprites_0.inc"
 %else
-defaultsprites2:
+defaultsprites_0:
 push dword 18h	; 5BA89
 call __CHK	; 5BA8E
 push ebx	; 5BA93
@@ -2600,7 +2600,7 @@ add edi, byte 2	; 5BB50
 add eax, 80h	; 5BB53
 inc ebx	; 5BB58
 cmp bx, byte 11h	; 5BB59
-jne near defaultsprites2.1	; 5BB5D
+jne near defaultsprites_0.1	; 5BB5D
 mov word [SortCords+836h], 2	; 5BB63
 mov ebx, 0FFFFFFFFh	; 5BB6C
 mov word [word_E0036], bx	; 5BB71
@@ -3669,13 +3669,13 @@ mov ax, word [byte esi+SCnum]	; 5C89E
 mov word [word_E03A0], ax	; 5C8A2
 cmp ax, word [c1playernum]	; 5C8A8
 jne short .36	; 5C8AF
-call Readjoy1	; 5C8B1
+call ReadJoy1	; 5C8B1
 xor edx, edx	; 5C8B6
 jmp short .37	; 5C8B8
 .36:
 cmp ax, word [c2playernum]	; 5C8BA
 jne short .38	; 5C8C1
-call Readjoy2	; 5C8C3
+call ReadJoy2	; 5C8C3
 mov edx, 2	; 5C8C8
 .37:
 mov eax, esi	; 5C8CD
@@ -4925,7 +4925,7 @@ and byte [sflags], 0FEh	; 5D803
 xor edx, edx	; 5D80A
 mov word [camx], dx	; 5D80C
 mov word [camy], dx	; 5D813
-call defaultsprites2	; 5D81A
+call defaultsprites_0	; 5D81A
 test byte [gmode], 2	; 5D81F
 je short .3	; 5D826
 mov eax, SortCords	; 5D828
@@ -5428,12 +5428,12 @@ pop edx	; 5DE6D
 pop ebx	; 5DE6E
 ret	; 5DE6F
 %endif ; C
-; IntermissionStart: gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
-; C: src/c/engine/hockey/IntermissionStart.c
+; PeriodOver_sp: gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
+; C: src/c/engine/hockey/PeriodOver_sp.c
 %ifdef CBUILD
-%include "c/engine/hockey/IntermissionStart.inc"
+%include "c/engine/hockey/PeriodOver_sp.inc"
 %else
-IntermissionStart:
+PeriodOver_sp:
 push dword 4	; 5DE70
 call __CHK	; 5DE75
 cmp word [gsp], byte 4	; 5DE7A
@@ -5447,7 +5447,7 @@ call StartPer	; 5DE9C
 jmp near SetPenaltyStrength	; 5DEA1
 %endif ; C
 ; PeriodOver: Line change box reset, gsp+1, gmdir flips; after the 3rd period:
-; overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then IntermissionStart.
+; overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then PeriodOver_sp.
 ; C: src/c/engine/hockey/PeriodOver.c
 %ifdef CBUILD
 %include "c/engine/hockey/PeriodOver.inc"
@@ -5501,7 +5501,7 @@ mov word [regd0], ax	; 5DF6B
 je short .3	; 5DF71
 mov word [gsp], 4	; 5DF73
 .3:
-call IntermissionStart	; 5DF7C
+call PeriodOver_sp	; 5DF7C
 pop edi	; 5DF81
 pop edx	; 5DF82
 pop ecx	; 5DF83
@@ -5618,7 +5618,7 @@ pop ecx	; 5E083
 pop ebx	; 5E084
 ret	; 5E085
 %endif ; C
-; StartGame: role. cleargamevars, clearteams, gsp = 0, restoreteams, IntermissionStart.
+; StartGame: role. cleargamevars, clearteams, gsp = 0, restoreteams, PeriodOver_sp.
 ; C: src/c/engine/hockey/StartGame.c
 %ifdef CBUILD
 %include "c/engine/hockey/StartGame.inc"
@@ -5632,7 +5632,7 @@ call clearteams	; 5E096
 xor edx, edx	; 5E09B
 mov word [gsp], dx	; 5E09D
 call restoreteams	; 5E0A4
-call IntermissionStart	; 5E0A9
+call PeriodOver_sp	; 5E0A9
 pop edx	; 5E0AE
 ret	; 5E0AF
 %endif ; C

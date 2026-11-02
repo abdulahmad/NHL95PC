@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* goalieacc: goalie gets acc. in direction dir. p = goalie.
- dir 8+ means no direction: 9 stops him if he is still moving (StopNA), otherwise he takes the ready stance
+ dir 8+ means no direction: 9 stops him if he is still moving (stopna), otherwise he takes the ready stance
  (SPAgready) unless an animation is in progress. Else facedir turns one step toward dir, SPAgskate, playeracc.
  PC: when the clock runs, he has no puck and his assignment is assgoalietopuck, he turns toward the
  puck direction (puckdir) instead. */
@@ -11,7 +11,7 @@ void goalieacc(Player *p, short dir)
     dir &= 0x0F;
     if (dir > 7) {
         if (dir == 9 && (p->Xvel | p->Yvel)) {
-            StopNA(p);
+            stopna(p);
             return;
         }
         if (!(p->pflags2 & pf2aip)) SetSPA(p, SPAgready);

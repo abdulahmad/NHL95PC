@@ -41,7 +41,7 @@ global chkprogress_x
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects
 global QueueDeferredCall, RunDeferredCalls, AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, FormatPlayerName
 global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote, GameTimeStamp
-global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, CheckAndReleasePlayer, ProcessPenaltyList
+global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut
 global updatePPTeamTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
 global ShotLaneOpen, QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
 ; C: src/c/engine/penalty/SetRinkObject.c
@@ -3134,11 +3134,11 @@ inc word [byte eax+tmATOP]	; 639F3
 pop edx	; 639F7
 ret	; 639F8
 %endif ; C
-; C: src/c/engine/penalty/CheckAndReleasePlayer.c
+; C: src/c/engine/penalty/updatepentime_ut_chk.c
 %ifdef CBUILD
-%include "c/engine/penalty/CheckAndReleasePlayer.inc"
+%include "c/engine/penalty/updatepentime_ut_chk.inc"
 %else
-CheckAndReleasePlayer:
+updatepentime_ut_chk:
 push dword 0Ch	; 639F9
 call __CHK	; 639FE
 push ebx	; 63A03
@@ -3163,11 +3163,11 @@ pop ecx	; 63A34
 pop ebx	; 63A35
 ret	; 63A36
 %endif ; C
-; C: src/c/engine/penalty/InProgress.c (ProcessPenaltyList)
+; C: src/c/engine/penalty/InProgress.c (updatepentime_ut)
 %ifdef CBUILD
-%include "c/engine/penalty/InProgress.ProcessPenaltyList.inc"
+%include "c/engine/penalty/InProgress.updatepentime_ut.inc"
 %else
-ProcessPenaltyList:
+updatepentime_ut:
 push dword 1Ch	; 63A37
 call __CHK	; 63A3C
 push ebx	; 63A41
@@ -3225,14 +3225,14 @@ mov byte [dword ecx+eax+0B5h], dl	; 63AE8
 test dl, dl	; 63AEF
 jl short .3	; 63AF1
 inc word [regd2]	; 63AF3
-jmp short ProcessPenaltyList.2	; 63AFA
+jmp short updatepentime_ut.2	; 63AFA
 .3:
 dec ebx	; 63AFC
 .4:
 inc ebx	; 63AFD
 .5:
 cmp bx, byte 1Ch	; 63AFE
-jl near ProcessPenaltyList.1	; 63B02
+jl near updatepentime_ut.1	; 63B02
 .6:
 mov di, word [regd1]	; 63B08
 cmp di, byte 1	; 63B0F
@@ -3245,7 +3245,7 @@ jne short .8	; 63B1E
 mov edx, dword [byte esp-03h]	; 63B20
 sar edx, 18h	; 63B24
 mov eax, ecx	; 63B27
-call CheckAndReleasePlayer	; 63B29
+call updatepentime_ut_chk	; 63B29
 mov edx, dword [byte esp-02h]	; 63B2E
 jmp short .9	; 63B32
 .8:
@@ -3257,7 +3257,7 @@ mov edx, dword [byte esp-02h]	; 63B41
 .9:
 sar edx, 18h	; 63B45
 mov eax, ecx	; 63B48
-call CheckAndReleasePlayer	; 63B4A
+call updatepentime_ut_chk	; 63B4A
 .10:
 add esp, byte 4	; 63B4F
 jmp near InProgress_popx	; 63B52
@@ -3310,9 +3310,9 @@ add word [Penaltytimer], byte 18h	; 63BD0
 call chkatop	; 63BD8
 call updatePPTeamTime	; 63BDD
 mov eax, hmtmstruct	; 63BE2
-call ProcessPenaltyList	; 63BE7
+call updatepentime_ut	; 63BE7
 mov eax, awtmstruct	; 63BEC
-call ProcessPenaltyList	; 63BF1
+call updatepentime_ut	; 63BF1
 .x:
 pop edx	; 63BF6
 ret	; 63BF7

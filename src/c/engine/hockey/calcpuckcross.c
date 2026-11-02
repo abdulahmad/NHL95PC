@@ -251,12 +251,12 @@ void reenergizeteam(Team *t)
     }
 }
 
-/* defaultsprites2: the 17 default sort objects: ClearSortCords, then for each object i from ds2list (9 words each:
+/* defaultsprites_0: the 17 default sort objects: ClearSortCords, then for each object i from ds2list (9 words each:
  x, y, z, frame, attribute word, radiusx, radiusy, asslist[0] byte, pflags byte; the PC has no crsize column):
  SCnum = i, pnum = newpos = newpnum = -1, the integer words of Xpos/Ypos/Zpos, frame, ATTRWORD, radii, first
  assignment, pflags; tmptr optmptr from pfteam; temp5 = 0; OOlist[i] = i, OOlistpos[i] = i. Then the
  referee (SCref): facedir 2, position -1, weight 7, legstr legspd 0Fh; RefStep = -1; SprSort. */
-void defaultsprites2(void)
+void defaultsprites_0(void)
 {
     Player *p;
     short *src;
@@ -598,10 +598,10 @@ void updateplayers(void)
         }
         word_E03A0 = p->SCnum;
         if (p->SCnum == c1playernum[0]) {
-            Readjoy1();
+            ReadJoy1();
             doinput(p, 0);
         } else if (p->SCnum == c2playernum[0]) {
-            Readjoy2();
+            ReadJoy2();
             doinput(p, 2);
         }
         a = p->asslist[p->assnum];

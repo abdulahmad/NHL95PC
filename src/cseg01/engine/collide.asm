@@ -33,7 +33,7 @@ global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
 global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, GetLowestPen
 global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
-global NetCollide, puckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
+global NetCollide, PuckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ; C: src/c/engine/collide/ToFixed.c
 %ifdef CBUILD
 %include "c/engine/collide/ToFixed.inc"
@@ -5001,13 +5001,13 @@ pop ecx	; 56E4F
 pop ebx	; 56E50
 ret	; 56E51
 %endif ; C
-; puckIChk: (icing). iflags bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; loose puck past the goal
+; PuckIChk: (icing). iflags bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; loose puck past the goal
 ; line: |puckx| > 2Ch sets ifcgl (icing), else clears ifok.
-; C: src/c/engine/collide/puckIChk.c
+; C: src/c/engine/collide/PuckIChk.c
 %ifdef CBUILD
-%include "c/engine/collide/puckIChk.inc"
+%include "c/engine/collide/PuckIChk.inc"
 %else
-puckIChk:
+PuckIChk:
 push dword 8	; 56E52
 call __CHK	; 56E57
 push ebx	; 56E5C

@@ -1,10 +1,10 @@
 /* Engine physics AI: icing. */
 #include "nhl95.h"
 
-/* puckIChk: icing check while the icing watch (iflags bit 2) is on and no icing yet (bit 0): once the loose
+/* PuckIChk: icing check while the icing watch (iflags bit 2) is on and no icing yet (bit 0): once the loose
  puck crosses the goal line of the end in iflags bit 1 (y beyond -/+E8h), icing (bit 0) if it is wide of the
  net (|x| > 2Ch), else the watch ends. */
-void puckIChk(void)
+void PuckIChk(void)
 {
     int a;
 

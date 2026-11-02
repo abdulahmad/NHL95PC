@@ -15,7 +15,7 @@ extern void ReadHotKeys(); /* 10AC6 */
 extern void ReadSkipKeys(); /* 10C7F */
 extern void SampleInputTick(); /* 10DCD */
 extern void HandleHotKey_ret(); /* 113E9 */
-extern void GameLoop(); /* 1167B */
+extern void Gameloop(); /* 1167B */
 extern void PickAwardWinners(); /* 1205D */
 extern void PickAwardWinners_x(); /* 12842 */
 extern void ShowAwardScreens(); /* 12849 */
@@ -447,7 +447,7 @@ extern void shotdiradj(); /* 57A98 */
 extern void checkwallcoll(); /* 582C9 */
 extern void wallcoll(); /* 587D3 */
 extern void sndcb_addesp8_x(); /* 594AC */
-extern void CrowdNoiseUpdate(); /* 594CD */
+extern void Crowd_Noise(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
 extern void nullsub_5(); /* 59BFB */
 extern void SprSort_loop(); /* 59DBB */

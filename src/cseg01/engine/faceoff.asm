@@ -25,7 +25,7 @@ extern puckstruct, sortobj15
 extern fofdata2, word_E0392, word_E0394, word_E0396
 extern word_E0398, word_E039A, regd2, regd0, regd1, joysampling_save, word_E9AAE, PerTimeTotal
 extern lty
-global asstakeposition, assleavebox, assbenchwait, assrefpenshot, asspsclear, PassRecOneTimer, asspassrec, check4bench
+global asstakeposition, assleavebox, assbenchwait, assrefpenshot, asspsclear, assonetimer, asspassrec, check4bench
 global TakePlayerFromBox_ret6, TakePlayerFromBox_ret5
 global puckfaceoff, puckfaceoff2, PassCompleted, OneTimerChk, SetPenaltyStrength, TakePlayerFromBox
 global PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace
@@ -59,7 +59,7 @@ pop edx	; 50B52
 pop ebx	; 50B53
 ret	; 50B54
 %endif ; C
-PassRecOneTimer:
+assonetimer:
 push dword 18h	; 50B55
 call __CHK	; 50B5A
 push ebx	; 50B5F
@@ -380,7 +380,7 @@ pop ebx	; 50F3D
 ret	; 50F3E
 %endif ; C
 ; asspassrec: (asstab 13h, catching a pass). skatetopuck toward the pass; PC adds the
-; one-timer (PassRecOneTimer, OneTimerChk) and the pass statistics (PassCompleted).
+; one-timer (assonetimer, OneTimerChk) and the pass statistics (PassCompleted).
 ; C: src/c/engine/input/CanBlockShot.c (asspassrec)
 %ifdef CBUILD
 %include "c/engine/input/CanBlockShot.asspassrec.inc"
@@ -412,7 +412,7 @@ test cl, 8	; 50F84
 je short .3	; 50F87
 .2:
 mov eax, edx	; 50F89
-call PassRecOneTimer	; 50F8B
+call assonetimer	; 50F8B
 jmp near CanBlockShot_ret5	; 50F90
 .3:
 test cl, 2	; 50F95

@@ -6,7 +6,7 @@
 short lcselect(Player *p, int n);
 
 /* doinput (504DA, 93G logic93 doinput): handle the pad for controlled player p (ctl: the controller, for
- changeplayer). The pads were read by Readjoy1 / Readjoy2: regd0 is the d-pad direction, regd1 the new presses
+ changeplayer). The pads were read by ReadJoy1 / ReadJoy2: regd0 is the d-pad direction, regd1 the new presses
  (bit 4 B, 5 C, 6 A). Nothing while a penalty shot is set up or live and the clock is stopped. A line change
  request of p's team (lcrequest) goes to lcselect (unless a penalty shot is live; with both pads on one team only
  for controller 1's player; while the clock is stopped only in line change mode), clearing the blink / box when
@@ -18,7 +18,7 @@ short lcselect(Player *p, int n);
  (and not pflags2 bit 2), control moves to him (restorepl for the right pad) for a one-timer (onetimerflag).
  The puck carrier: checkob, then passmode / ShotMode while those modes are on, B setpassmode, A SetLCmode (no
  live penalty shot), C SetShotMode (not the goalie, who also stops while an animation runs), else skate. Others:
- A holdplayer, B changeplayer; the pass receiver C burst (and the one-timer direction / B / skate as above);
+ A Holdplayer, B changeplayer; the pass receiver C burst (and the one-timer direction / B / skate as above);
  else the same switch to the receiver, C burst, or skate (doplayeracc in the d-pad direction). No result. */
 void doinput(Player *p, short ctl)
 {
@@ -100,7 +100,7 @@ void doinput(Player *p, short ctl)
     }
     if (dword_CCC9C) return;
     if (regd1.w & 0x40) {
-        holdplayer(p);
+        Holdplayer(p);
         return;
     }
     if (regd1.w & 0x10) {

@@ -182,12 +182,12 @@ void chkprogress(void)
 }
 
 
-/* ProcessPenaltyList (63A37, PC only; ends in InProgress_popx): once a second, count down the penalties of team
+/* updatepentime_ut (63A37, PC only; ends in InProgress_popx): once a second, count down the penalties of team
    tm's players in the box (tmpbox, ended by a negative byte): only the first two (regd1 from 2) serve time; a
    player whose minutes (tmpdst, low 14 bits) run out is back on the bench (roster status 7, tmpdst bit 14
    cleared) and the box list shifts down over him. Then the first one or two of them (by how many served) may be
-   released onto the ice (CheckAndReleasePlayer). tm: the team. No result. */
-void ProcessPenaltyList(Team *tm)
+   released onto the ice (updatepentime_ut_chk). tm: the team. No result. */
+void updatepentime_ut(Team *tm)
 {
     signed char out[4];
     short n;
@@ -211,11 +211,11 @@ void ProcessPenaltyList(Team *tm)
         }
         i--;
     }
-    if (regd1.w == 1) CheckAndReleasePlayer(tm, out[0]);
+    if (regd1.w == 1) updatepentime_ut_chk(tm, out[0]);
     else if (regd1.w == 0) {
-        CheckAndReleasePlayer(tm, out[0]);
-        CheckAndReleasePlayer(tm, out[1]);
-    } else if (regd1.w == -1) CheckAndReleasePlayer(tm, out[1]);
+        updatepentime_ut_chk(tm, out[0]);
+        updatepentime_ut_chk(tm, out[1]);
+    } else if (regd1.w == -1) updatepentime_ut_chk(tm, out[1]);
 }
 
 /* PenaltyManager (63BF8; 93G penalty93 PenaltyManager): the penalty work of a frame: the penalty times

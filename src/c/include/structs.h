@@ -8,14 +8,14 @@
 typedef struct Player {
     int Xpos;                    /* 000h */
     int Ypos;                    /* 004h */
-    int Zpos;                    /* 008h; defaultsprites2 writes the integer word at +0Ah from the zcord column, as it writes Xpos+2 Ypos+2 from xcord ycord */
+    int Zpos;                    /* 008h; defaultsprites_0 writes the integer word at +0Ah from the zcord column, as it writes Xpos+2 Ypos+2 from xcord ycord */
     short Xvel;                  /* 00Ch */
     short Yvel;                  /* 00Eh */
     short Zvel;                  /* 010h; puckbody clears the puck's word at +10h */
     short frame;                 /* 012h (alice frame number); GetHot reads word [x+12h] as the hot spot frame; assdopen sets it to -1 */
-    short impactp;               /* 014h; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] sar 10h).w impactp(a3),d0 asl #7 */
+    short impactp;               /* 014h; Holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] sar 10h).w impactp(a3),d0 asl #7 */
     short limpact;               /* 016h 93G limpact (last impact value): updateplayers copies impact here each frame */
-    short impact;                /* 018h; holdplayer and Acheck: cmp word [x+18h],0 */
+    short impact;                /* 018h; Holdplayer and Acheck: cmp word [x+18h],0 */
     short position;              /* 01Ah */
     short assnum;                /* 01Ch */
     signed char asslist[8];      /* 01Eh; byte array indexed by assnum: avdgoal/goalieacc cmp byte [reg+assnum+asslist] */
@@ -44,10 +44,10 @@ typedef struct Player {
     unsigned char pad_50[0x2];
     signed char puckdir;         /* 052h none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it */
     signed char passlane;        /* 053h none; chk4pass stores the PassLaneChk result here; dopass passes only when it is set; setplayer and ScatterPass clear it */
-    signed char attrlo;          /* 054h low byte; low byte of the attribute word: defaultsprites2 writes word [x+54h] from the.list att column; its high byte is attribute (55h), */
+    signed char attrlo;          /* 054h low byte; low byte of the attribute word: defaultsprites_0 writes word [x+54h] from the.list att column; its high byte is attribute (55h), */
     signed char attribute;       /* 055h; doplayeracc.s1 and noturn0.nostop: test byte [reg+55h],8 */
     unsigned char weight;        /* 056h; playeracc: byte >>3 subtracted from 32.b weight(a3),d2 lsr #3 */
-    unsigned char legstr;        /* 057h; playeracc: added to the accel factor (twice for the goalie); StopNA step 200+legstr */
+    unsigned char legstr;        /* 057h; playeracc: added to the accel factor (twice for the goalie); stopna step 200+legstr */
     unsigned char legspd;        /* 058h; playeracc: times the energy level for the MaxSpeed index.b legspd(a3),d2 mulu d0,d2 */
     unsigned char aioff;         /* 059h; inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the aioff */
     unsigned char aidef;         /* 05Ah; inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record with the aidef */
@@ -62,8 +62,8 @@ typedef struct Player {
     unsigned char pad_63[0x1];
     unsigned char checking;      /* 064h (no equate); inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster rec */
     unsigned char handed;        /* 065h; inc offset - 11h, the shift of the whole weight..endurance block; PC setplayer fills it from the roster record; setplayer clears a */
-    short radiusx;               /* 066h; defaultsprites2 writes word [x+66h] from the radx column */
-    short radiusy;               /* 068h; defaultsprites2 writes word [x+68h] from the rady column */
+    short radiusx;               /* 066h; defaultsprites_0 writes word [x+66h] from the radx column */
+    short radiusy;               /* 068h; defaultsprites_0 writes word [x+68h] from the rady column */
     short SCnum;                 /* 06Ah */
     struct Team * tmptr;         /* 06Ch none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it */
     struct Team * optmptr;       /* 070h none; pointer to the other team's structure: lcselect and getlchoice compare its tmap with tmptr's */
@@ -162,7 +162,7 @@ typedef struct Team {
     unsigned char pad_45[0x1];
     short tmpde[28];             /* 046h (energy word per roster player, 1000h = full); burst subtracts 0CCh from [tmptr+pnum*2+46h]; reenergizeteam refills 1000h */
     short tmpdst[28];            /* 07Eh (-2 bench -1 ice 0+ box): word per roster player: -2 bench, -1 on ice (setplayer, forcepldata), >0 penalty box time; restoreteams sets all */
-    signed char tmpbox[36];      /* 0B6h (penalty box list: roster indexes, ends with a negative byte): ProcessPenaltyList walks it and shifts it down */
+    signed char tmpbox[36];      /* 0B6h (penalty box list: roster indexes, ends with a negative byte): updatepentime_ut walks it and shifts it down */
     unsigned char * tmlines;     /* 0DAh none; pointer to the team's line table (clearteams: home hmlinetab, away awlinetab); getlinee and setpersonel read it */
     unsigned char pad_DE[0x8];
     short * tmplstats;           /* 0E6h pointer to skater stats, 10h bytes per roster player 0-18h (words g, a, pen, +/-, ppg, shg, eng, sht): DumpStatsLog */

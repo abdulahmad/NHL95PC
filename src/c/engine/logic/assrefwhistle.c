@@ -356,7 +356,7 @@ void CountPuckThreat(Player *p)
    the puck's normal assignment. Count down the two line-crossing timers (puckcross) and every 5 ticks
    recompute them (temp1, calcpuckcross). A carried puck is pulled a quarter of the way toward its carrier's hot
    spot (a2touchpuck, GetHot into regd0 / regd1) and takes his velocity. Then the ice / offside / two-line checks
-   (puckIChk, ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck resets temp2 (78h) and the
+   (PuckIChk, ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck resets temp2 (78h) and the
    penalty-shot send count (psendcount); a loose one on a live penalty shot moving back toward the shooter's
    own end (puckvy by penshotteam and the gmode bit 1 rink flip) for 1Eh ticks ends the shot (EndPenaltyShot). A
    puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with dword_DF652 /
@@ -383,7 +383,7 @@ void pucknorm_body(Player *p)
         p->Xvel = c->Xvel;
         p->Yvel = c->Yvel;
     }
-    puckIChk();
+    PuckIChk();
     ChkOffsides(p);
     MarkTwoLinePlayers(p);
     if (!(gmode & 1)) {

@@ -12,11 +12,11 @@
 #define sub_6B008 sub_6B008_decl
 #define sub_6AF52 sub_6AF52_decl
 #define DrawRinkOverlays DrawRinkOverlays_decl
-#define CrowdNoiseUpdate CrowdNoiseUpdate_decl
+#define Crowd_Noise CrowdNoiseUpdate_decl
 #define UpdateHudPanel UpdateHudPanel_decl
 #define sub_6ADA7 sub_6ADA7_decl
 #define StartThreeStars StartThreeStars_decl
-#define GameLoop GameLoop_decl
+#define Gameloop GameLoop_decl
 #include "nhl95.h"
 #undef sub_90354
 #undef sub_9035C
@@ -25,11 +25,11 @@
 #undef sub_6B008
 #undef sub_6AF52
 #undef DrawRinkOverlays
-#undef CrowdNoiseUpdate
+#undef Crowd_Noise
 #undef UpdateHudPanel
 #undef sub_6ADA7
 #undef StartThreeStars
-#undef GameLoop
+#undef Gameloop
 
 int __cdecl sub_90354(int bank);
 int __cdecl sub_9035C(int bank, int n);
@@ -38,12 +38,12 @@ void sub_6AF97(int x, int y);
 void sub_6B008(void);
 void sub_6AF52(int x, int y, int x2, int y2);
 void DrawRinkOverlays(short x, short y);
-void CrowdNoiseUpdate(short n);
+void Crowd_Noise(short n);
 void UpdateHudPanel(void);
 void sub_6ADA7(void);
 void StartThreeStars(void);
 
-/* GameLoop (1167B, PC only): run the game until it ends. Each pass (joystick sampling on) while the period
+/* Gameloop (1167B, PC only): run the game until it ends. Each pass (joystick sampling on) while the period
    runs: turn the input ticks into frames (6 per tick, in tenths through frameaccum) and run them, scroll the
    rink view after the camera (clamped to 0..40h / 0..1A8h), draw the rink and its overlays, fade in after a
    desk visit, update the crowd noise and the HUD clock (hundredths; at the period end the clock's own time),
@@ -53,7 +53,7 @@ void StartThreeStars(void);
    PeriodOver (result 2 ends) and, if the game goes on, redraw the HUD for the next period, centre the mouse
    and reset the period state. When the game is over: the three stars, the post-game desk and result 1. Then
    sub_1B982. No arguments, no result. */
-void GameLoop(void)
+void Gameloop(void)
 {
     char path[0x20];
     int n;
@@ -89,7 +89,7 @@ void GameLoop(void)
                 FlushGSumQueue();
                 joysampling = joysampling_save;
             }
-            CrowdNoiseUpdate(n);
+            Crowd_Noise(n);
             if (penshotlive) {
                 hudhundstep = 0;
             } else {

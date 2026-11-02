@@ -11,7 +11,7 @@ extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5
 extern demoteammode, cont2team, HomeTeam, dword_CC0EC, introskipped, cddriveptr, mousebtns, linesprites
 extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
 extern FreeMemBlock, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
-extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
+extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, Gameloop, ReloadGameGfx, SetupDemoGame
 extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, DemoSetupStub, LoadRink, SeriesLength
 extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, PaPreloadClips, GetPeriodTime, LoadTeamPalette, InputInstall, InputRemove
 extern LoadRockMusic, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
@@ -1324,7 +1324,7 @@ mov ecx, ebp	; 15FA2
 mov ebx, ebp	; 15FA4
 call DrawHudPanel	; 15FA6
 call joyq_flush	; 15FAB
-call GameLoop	; 15FB0
+call Gameloop	; 15FB0
 mov edx, 1E0h	; 15FB5
 mov eax, 280h	; 15FBA
 call SetScreenSize	; 15FBF

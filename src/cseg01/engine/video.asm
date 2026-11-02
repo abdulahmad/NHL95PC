@@ -19,7 +19,7 @@ extern dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9
 extern dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, dword_ED74C, fputchar, gmode
 extern FreeMemBlock, replaystart, puckz, puckc, camx_m2, off_CBED0, off_CC01D, off_CD498
 extern off_CD4A0, bannerstrs, setpersonel, sfx, sprintf_, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern MakePath, DrawSprite, CrowdNoiseUpdate, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
+extern MakePath, DrawSprite, Crowd_Noise, CrowdNoiseOff, sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8E9C0, sub_8EA18, sub_90354, sub_90D20, sub_90EC0, sub_91964, sub_93540, sub_B30B4
 extern sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80, awlinetab, unk_DACA0, hmlinetab, SortCords
 extern unk_E9CEC, unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE
@@ -4730,7 +4730,7 @@ je short .34	; 67D6C
 mov eax, dword [byte esp+044h]	; 67D6E
 add eax, eax	; 67D72
 cwde	; 67D74
-call CrowdNoiseUpdate	; 67D75
+call Crowd_Noise	; 67D75
 jmp short .35	; 67D7A
 .34:
 call CrowdNoiseOff	; 67D7C

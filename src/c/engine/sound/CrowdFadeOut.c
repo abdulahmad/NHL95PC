@@ -14,7 +14,7 @@ void CrowdFadeOut(void)
             SetTickDeadline(1);
             crowdlevel -= 50;
             if (crowdlevel < 0) crowdlevel = 0;
-            CrowdNoiseUpdate(2);
+            Crowd_Noise(2);
             WaitTickDeadline();
         }
         CrowdNoiseOff();

@@ -1,8 +1,8 @@
 /* Engine core: between periods. */
 #include "nhl95.h"
 
-/* IntermissionStart: gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength. */
-void IntermissionStart(void)
+/* PeriodOver_sp: gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength. */
+void PeriodOver_sp(void)
 {
     if (gsp == 4) {
         GameOver();

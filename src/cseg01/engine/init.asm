@@ -9,7 +9,7 @@ extern introskipped, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, view
 extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
 extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, FreeMemBlock, puckc, camx_m2, randomd0
 extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
-extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
+extern LoadScreenPalTick, joyq_flush, ReadJoy1, ReadJoy2, Crowd_Noise, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
 extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, SpeechStopQueue, SelectScreenBM, RemoveTimerCallback, sub_8FFB0, TicksSinceLastCall, SetTickDeadline, WaitTickDeadline
 extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
@@ -419,10 +419,10 @@ sar eax, 10h	; 481EC
 mov dword [joysampling], eax	; 481EF
 .3:
 movsx eax, si	; 481F4
-call CrowdNoiseUpdate	; 481F7
+call Crowd_Noise	; 481F7
 cmp dword [escrequest], byte 0	; 481FC
 jne short PreGameIntro_end	; 48203
-call Readjoy1	; 48205
+call ReadJoy1	; 48205
 mov ah, byte [regd1]	; 4820A
 test ah, 10h	; 48210
 jne short .4	; 48213
@@ -433,7 +433,7 @@ mov dword [introskipped], 1	; 4821A
 mov word [fadeinpending], 1	; 48224
 jmp short PreGameIntro_end	; 4822D
 .5:
-call Readjoy2	; 4822F
+call ReadJoy2	; 4822F
 mov dh, byte [regd1]	; 48234
 test dh, 10h	; 4823A
 jne short PreGameIntro_frameloop.4	; 4823D

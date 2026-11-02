@@ -125,7 +125,7 @@ void SetFullPalette(unsigned char *pal)
    rebuilds the lines and goalie menu and, unless the game was being left (exitgame -1), shows the sports desk
    (result 2: back), then returns to the rink: screen 140h x C8h, the mouse, the HUD panel, an overlay's PPV art
    (loaded once into dword_E0244, its frames into dword_DEF8C) and the play-by-play clips. Then run the game
-   (GameLoop); a league game that ended (gamemode, result 1) clears gameopts bit 15 and deletes the league's
+   (Gameloop); a league game that ended (gamemode, result 1) clears gameopts bit 15 and deletes the league's
    GAME.SAV. Back to the 280h x 1E0h desk screen. fh: the saved-game file handle (-1 for a new game).
    No result. */
 void PlayGame(int *fh)
@@ -188,7 +188,7 @@ void PlayGame(int *fh)
 play:
     gameresult = introskipped = 0;
     joyq_flush();
-    GameLoop();
+    Gameloop();
     ResetGoalieMenu();
     if (gamemode && gameresult == 1) {
         ((unsigned char *)&gameopts)[1] &= 0x7F;

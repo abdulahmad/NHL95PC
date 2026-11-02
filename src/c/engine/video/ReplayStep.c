@@ -1,16 +1,16 @@
 /* Engine display: stepping the replay. */
 #define ReplayStep ReplayStep_decl
 #define replayplay replayplay_decl
-#define CrowdNoiseUpdate CrowdNoiseUpdate_decl
+#define Crowd_Noise CrowdNoiseUpdate_decl
 #define sub_B340B sub_B340B_decl
 #include "nhl95.h"
 #undef sub_B340B
 #undef ReplayStep
 #undef replayplay
-#undef CrowdNoiseUpdate
+#undef Crowd_Noise
 
 extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
-void CrowdNoiseUpdate(short step);
+void Crowd_Noise(short step);
 int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
 
 #define RB(r) (*(unsigned char *)&(r))
@@ -132,7 +132,7 @@ short ReplayStep(short n, short sound)
         if (regd0.w == 0xFF) regd0.w = -1;
         word_E9FB4[i] = regd0.w;
     }
-    if (sound && replayplay != recbpr) CrowdNoiseUpdate(n0 * 2);
+    if (sound && replayplay != recbpr) Crowd_Noise(n0 * 2);
     else CrowdNoiseOff();
     replayplay -= 0x80;
     for (i = 0; i < 0x11; i++) {

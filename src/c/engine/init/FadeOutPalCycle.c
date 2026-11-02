@@ -236,15 +236,15 @@ int ThreeStarsLoop(void)
             fadeinpending = 0;
             joysampling = joysampling_save;
         }
-        CrowdNoiseUpdate(n);
+        Crowd_Noise(n);
         if (escrequest) break;
-        Readjoy1();
+        ReadJoy1();
         if (*(unsigned char *)&regd1 & 0x10 || *(unsigned char *)&regd1 & 0x20) {
             introskipped = 1;
             fadeinpending = 1;
             break;
         }
-        Readjoy2();
+        ReadJoy2();
         if (*(unsigned char *)&regd1 & 0x10 || *(unsigned char *)&regd1 & 0x20) {
             introskipped = 1;
             fadeinpending = 1;
