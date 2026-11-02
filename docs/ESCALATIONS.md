@@ -1,12 +1,12 @@
 # Escalations
 
-Structural drafts for Abdul (lane T). Lane agents do not mark these, and they do not turn one into
+Structural drafts for Abdul. Agents do not mark these, and they do not turn one into
 hand-asm. A recommended ruling is a proposal. The function stays as it is until Abdul decides.
 
 The shapes AGENTS.md calls ESCALATE (a `goto`, a no-op cast, a file-local `volatile`, dead-variable
 reuse, a wrong return type) are in this list when a current draft depends on one. An ordinary
-register or slot miss is not an escalation: it stays with the owner in
-[LANES_CURRENT.md](LANES_CURRENT.md).
+register or slot miss is not an escalation: it stays in
+[WORK_QUEUE.md](WORK_QUEUE.md).
 
 ## DrawListItems, waiting on DrawListItem
 

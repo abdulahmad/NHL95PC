@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""round_bookkeeping.py - regenerate the progress files the lane agents do not edit.
+"""round_bookkeeping.py - regenerate the progress files agents do not edit by hand.
 
   python3 tools/round_bookkeeping.py [--jobs N]
 
@@ -7,7 +7,7 @@ Runs tools/c_progress.py, tools/draft_causes.py and tools/rank_drafts.py (the ra
 docs/ranked_drafts.txt). Updates the counts between the nhl95-* marker comments in README.md and
 HANDOFF.md (README: bit-perfect matched and functionally matched). Applies docs/pending_renames.txt with tools/rename_symbol.py --batch when it has any
 rename lines, then leaves only the header, and regenerates the progress files again. Writes
-docs/LANES_CURRENT.md with tools/deal_lanes.py. Runs `make` before scoring the drafts. Does not commit. The progress workflow runs
+docs/WORK_QUEUE.md with tools/work_queue.py. Runs `make` before scoring the drafts. Does not commit. The progress workflow runs
 `make fullcheck` after this.
 """
 import argparse, os, re, subprocess, sys
@@ -15,7 +15,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 RENAMES = os.path.join(ROOT, 'docs/pending_renames.txt')
 HEADER = """# Renames for the next progress run. One rename per line, in the tools/rename_symbol.py --batch format:
 #   OLD NEW [{key=value,...}] evidence text
-# A line starting with # is a comment. Lane PRs append lines here and do not rename in the tree.
+# A line starting with # is a comment. PRs append lines here and do not rename in the tree.
 # The progress workflow applies this file and then leaves only this header.
 """
 
@@ -95,7 +95,7 @@ def main():
         progress(a.jobs)
     elif not os.path.exists(RENAMES):
         open(RENAMES, 'w').write(HEADER)
-    run([sys.executable, 'tools/deal_lanes.py'])
+    run([sys.executable, 'tools/work_queue.py'])
 
 
 if __name__ == '__main__':

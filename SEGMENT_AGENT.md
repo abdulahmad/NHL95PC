@@ -23,21 +23,21 @@ The segment boundaries come from `segmap95pc.json` (`tools/segdef.py`, `EXE_SEGM
   - `EXE_SEGMAP95PC.md` and `segmap95pc.json`: the segment notes and Genesis counterparts.
   - `tools/struct_fieldmap.csv`: player structure fields.
   - `tools/global_map.csv`: globals. The seeded rows are weak alignments (`aligned 2/3 accesses ...`), not proof. When the code shows a seeded name is wrong, rename it and say why in the evidence (engine_skating: `gameclock` C9080 was the pointer to the puck's Xvel, `wcradiusy` E03B4 was the d4 static).
-- Style source, in order: the matching routine in https://github.com/abdulahmad/NHLPA93Genesis, then https://github.com/abdulahmad/NHL94Genesis. NHL95Genesis is a loose reference only, not a naming source (see Lineage).
+- Style source, in order: the matching routine in https://github.com/abdulahmad/NHL94Genesis, then https://github.com/abdulahmad/NHL94SNES, then https://github.com/abdulahmad/NHL95Genesis for 95 features (see Lineage).
 - A local checkout of the three Genesis repos works the same as the GitHub pages; search it with `rg` (for example `rg -n '^skateto' src/logic93_*.asm`).
 - Docs: `docs/ASM_BUILD.md` covers the source tree, the encoding rules and the linker. `BUILD_NOTES.md` covers the compiler fingerprint and fixups. `docs/SKATING_AND_RINK.md` covers skating physics compared with 93G.
 
 ## Lineage
 
 How the PC code relates to the Genesis games:
-- NHL 94 PC was ported from NHLPA 93 Genesis, plus some NHL 94 Genesis additions and a new menu system.
-- NHL 95 PC is NHL 94 PC plus NHL 94 and 95 Genesis additions: season mode, trades and create player (Genesis `season95`, `trade95`, `create95`).
-- The game engine's C code mostly follows 93G, routine for routine. Look there first.
-  - Use 94G for one-timers, breakaways, the extra assignment slots (asstab slots 30 and up) and `doinput_ispc`.
-  - NHL95Genesis is only loosely related (a loose reference, not a naming source). Name 95PC-only code (season, trades, create player, front end) from what it does (strings, callers, data it touches).
+- NHL 94 PC is a hybrid of 94G with 93S/94S, plus a new menu system.
+- NHL 95 PC is a hybrid of 94G/94S and 95G: the 94 engine plus season mode, trades and create player (Genesis `season95`, `trade95`, `create95`).
+- The game engine's C code follows 93G/94G routine for routine (the two agree on almost all shared names). Name from 94G.
+  - Code the PC shares with SNES 94 takes the 94S name when 94G has none.
+  - 95 features (season, trades, create player, awards) take the 95G name when the body or role matches; otherwise name them from what they do (strings, callers, data they touch).
 - The front end (menus, desk screens, file dialogs, configuration) is PC-new. Genesis only matches by role (`stats94` screens, `optsetup94`, `menu94`). Name those routines from what they do.
 
-Name preference: the current 93G name when the body is the same routine, else the current 94G name, else a name from what it does. Do not take names from 95G (not 95G for now). Match on the body (calls, constants, structure fields, branch shape). If a 95PC label already uses that name for a different routine, rename that label too. Team abbreviation labels use the spelling in 95PC's own team data and on-screen text (OTT, TB, ANA, and the rest of that table). NYIslanders and NYRangers stay the long names for the two New York teams.
+Name preference (since 2 Nov 2026): the current 94G name when the body is the same routine (93G and 94G agree on almost all shared names), else the 94S name for code shared with SNES 94, else the 95G name for 95 features (season, trade, create player, awards, the 95 menus), else a name from what it does (DOS-only jobs). Match on the body (calls, constants, structure fields, branch shape). If a 95PC label already uses that name for a different routine, rename that label too. Team abbreviation labels use the spelling in 95PC's own team data and on-screen text (OTT, TB, ANA, and the rest of that table). NYIslanders and NYRangers stay the long names for the two New York teams.
 
 ## Build
 

@@ -1,11 +1,19 @@
 # Handoff: NHL 95 PC rebuild
 
+## Now
+
+- Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 95PC is on `claude/project-thread-ggw7zu`.
+- Branch: `claude/project-thread-ggw7zu`
+- Last check: 2026-11-02 `make fullcheck`, MATCH in both builds
+- Next: step F2b of the plan (C and asm folders named after the 95G modules); C matching takes files from the top of docs/WORK_QUEUE.md
+- Open PRs: none
+
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
 [docs/C_MATCHING.md](docs/C_MATCHING.md) (C workflow and compiler learnings) and
-[docs/LANES.md](docs/LANES.md). The progress workflow refreshes the counts between the marker comments in
-section 3. Lane agents do not edit those counts, `C_PROGRESS.md`, `tools/c_functions.csv`,
-`docs/ranked_drafts.txt` or `docs/LANES_CURRENT.md`. Session diary: [docs/SESSION_LOG.md](docs/SESSION_LOG.md).
+[docs/WORK_QUEUE.md](docs/WORK_QUEUE.md) (what to take next). The progress workflow refreshes the counts between the marker comments in
+section 3. Do not edit those counts, `C_PROGRESS.md`, `tools/c_functions.csv`,
+`docs/ranked_drafts.txt` or `docs/WORK_QUEUE.md` by hand. The two-lane rounds of October are in [docs/archive/](docs/archive/README.md). Session diary: [docs/SESSION_LOG.md](docs/SESSION_LOG.md).
 
 ## Two tracks, two handoffs
 
@@ -238,12 +246,12 @@ Parked: LoadShapeByTag, POPickConfTeams, BlitClipRect, SetCoachMode, FadeOutPalC
   changes go in their own commits. Never force-push.
 * Do not change bytes; do not run `tools/gen_src.py`; do not edit `src/segments.txt` or section lines. Adding a
   label (no byte change) is fine.
-* Names: asm labels, `structs.inc` fields; **93G** when the body matches, else **94G**, else a name from
-  behaviour. NHL95Genesis is a loose reference only, not a naming source. Renames need evidence (write it in
+* Names: asm labels, `structs.inc` fields; the order is in AGENTS.md (94G when the body matches, then 94S,
+  then 95G for 95 features, then 95PC's own name for DOS jobs). Renames need evidence (write it in
   the comment / `struct_fieldmap.csv`).
 * Keep comments: every C function gets a comment (address, Genesis routine or PC only, what it does, arguments,
   result) and carries the asm comments over.
-* Lane agents follow AGENTS.md and docs/LANES.md. Before a draft, read `docs/LANES_CURRENT.md`, the draft's `docs/draft_history.csv` rows and its UNSURE entry. Append a history row; put renames in `docs/pending_renames.txt`; do not edit the generated progress files or the counts between the nhl95 markers. The progress workflow updates those after fullcheck on main.
+* Follow AGENTS.md. Before a draft, read its row in `docs/WORK_QUEUE.md`, the draft's `docs/draft_history.csv` rows and its UNSURE entry. Append a history row; put renames in `docs/pending_renames.txt`; do not edit the generated progress files or the counts between the nhl95 markers. The progress workflow updates those after fullcheck on main.
 
 ## 6. Gotchas and learnings
 

@@ -6,11 +6,11 @@
 
 ## 🚧 Current Status
 
-- McMarkis is working on the C decompilation.
+- Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
 - <!-- nhl95-readme-functional:start -->25 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
   - <!-- nhl95-readme-functional-total:start -->1002 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
-- Names come from 93G first, then 94G.
+- Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
 
@@ -96,7 +96,7 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 
 ## Segment naming (queue finished)
 
-The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**. Leftover work there is auto/data names only. [PROMPT.md](PROMPT.md) has the C-matching prompt. Tools:
+The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**. Leftover work there is auto/data names only. The first C-phase prompt is in [docs/archive/](docs/archive/README.md). Tools:
 * `tools/rename_symbol.py` renames a symbol across `src/`, rebuilds (must MATCH) and records the name in the maps.
 * `tools/auto_names.py` lists what is still unnamed in a segment.
 * `tools/update_symbols.py` regenerates `src/inc/symbols.inc`.

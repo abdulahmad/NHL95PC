@@ -2,6 +2,26 @@
 
 This file is the learning edge of the repo. It holds one line per confirmed lesson: a C idiom that changes behaviour, a harness blind spot, or a process fact that was checked. Add lines in this format, newest last: `- YYYY-MM-DD <function or area>: <rule>. (<PR or evidence>)`. Read it before every unit. Any tool (Claude or Cursor) adds to it, in the same PR as the fix that confirmed the lesson.
 
+## Who decides what (all games)
+
+| Category | Decided by |
+|---|---|
+| Name of a routine several games share | the earliest game that has it (92G is the root); a fix goes to the earliest repo first, then down the lineage |
+| Name of a feature new in year N | that year's Genesis game (94G for 94S and 94PC, 95G for 95S and 95PC) |
+| Name of a platform-only job | the earlier repo on that platform (93S for 94S, 94PC for 95PC), else what the code does |
+| Same name, different job | the earlier meaning keeps the name |
+| Top folder or file | the same-year Genesis file |
+| RAM order | the merged order (92G, 93G, 94G, 93S, 94S, then 95G, 96G) |
+| Data, assets, banks | the earlier repo on the same platform |
+| Order inside a file | ROM order (the report re-sorts for display) |
+| History | `docs/name_map.csv` only, never source comments |
+
+## This repo
+
+- Names, in order: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features (season, trade, create player, awards, the 95 menus); 95PC's own name for DOS-only jobs.
+- Files: alignment of the C and asm folders to the 95G modules (`src/c/{engine,front,pc,lib}/<module>`, link order in `segments.txt`) is step F2b of the shared plan. Until it lands, the `NNN_ADDR_topic` folders stay.
+- One owner (Abdul). No lanes, claims or board; the lane-round files are in docs/archive/.
+
 ## Functional track
 
 - 2026-11-02 SeriesLength: when the original returns an unset local (whatever a register held on entry), the entry registers carry unique tags so it shows. If the draft returns the same tag in every such case it behaves the same: PASS with the note kept in `first_diff`. If not, FAIL. (step 5 pilot, step 6 review)
