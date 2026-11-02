@@ -19,6 +19,7 @@ SHA-1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`. `.gitignore` keeps `*.lst`, `F
 * DOSBox (`apt install dosbox`): the DOS Watcom compiler runs in it headless (`SDL_VIDEODRIVER=dummy`).
 * Optional, for `tools/wccre` (the compiler in a CPU emulator: `regdump.py`, `state_scan.py`; not needed for
   `make`): Python package `unicorn` (`pip install unicorn`; tested with 2.1.4). See [docs/WCC_INTERNALS.md](docs/WCC_INTERNALS.md).
+* `unicorn` is also used by `tools/equiv` (functional-equivalence harness; `tools/equiv/image.py --selftest`).
 
 **Watcom (committed under `tools/watcom/`).** The files needed for C matching are in the repo: 10.0 GA (the
 default, `WATCOM_VER=ga`) and the 10.0 LA fallback (`make WATCOM_VER=la`; BUILD_NOTES.md section 2).
