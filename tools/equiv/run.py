@@ -49,12 +49,22 @@ class Trace:
     ended: str = ''                              # 'ret' | 'trap'
 
 def _pop_bytes(img, target):
-    code = b''
-    for n in (4096, 1024, 256, 16):   # largest window that stays inside one object
-        try: code = img.read(target, n); break
-        except ValueError: pass
-    for i in _md.disasm(code, target):
-        if i.mnemonic == 'ret': return int(i.op_str, 0) if i.op_str else 0
+    """N of the callee's `ret N`. Follows an unconditional jmp that leaves the function (target below it or over
+    0x800 bytes past it: a shared epilogue), since the next `ret` in memory may belong to another function."""
+    addr = target
+    for _ in range(6):
+        code = b''
+        for n in (4096, 1024, 256, 16):   # largest window that stays inside one object
+            try: code = img.read(addr, n); break
+            except ValueError: pass
+        nxt = None
+        for i in _md.disasm(code, addr):
+            if i.mnemonic == 'ret': return int(i.op_str, 0) if i.op_str else 0
+            if i.mnemonic == 'jmp' and i.op_str.startswith('0x'):
+                t = int(i.op_str, 16)
+                if t < target or t > target + 0x800: nxt = t; break
+        if nxt is None: return 0
+        addr = nxt
     return 0
 
 def run(img, entry, extent, state=None, max_insns=200000, code=()):

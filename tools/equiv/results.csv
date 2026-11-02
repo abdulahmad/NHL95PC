@@ -1,0 +1,6 @@
+function,c_file,source_sha1,cases,seed,verdict,first_diff,date
+DrawRinkEndArt,src/c/001_10010_main_startup/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,2000,1,PASS,,2026-11-02
+GetMemListHead,src/c/001_10010_main_startup/GetMemListHead.c,0d03d8aa79c7cc39a17caed610d1ecd0be16629e,2000,1,PASS,,2026-11-02
+ResetInputSampling,src/c/001_10010_main_startup/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,2000,1,PASS,,2026-11-02
+SeriesLength,src/c/034_41B80_schedule/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,2000,1,NEEDS-REVIEW,returns entry esi x149,2026-11-02
+FadePalette,src/c/001_10010_main_startup/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,2000,1,NEEDS-REVIEW,"fault x66, insn limit x685",2026-11-02
