@@ -9,7 +9,7 @@ gmode,C90BB,"Stop4Pen (63543): 93G bset #gmclock,(gmode).w <-> test/or byte_C90B
 ltx,E9AC6,"aligned 2/2 accesses in Stop4Pen, a2touchpuck"
 lastplayer,C90A2,dopass and doshot store the carrier SCnum here; 95 writes lastplayer
 puckvz,C9090,"aligned 3/5 accesses in dopass, doshot, passtoa0"
-shotsets,CCC60,"data table byte match (words->le16, input94.asm, 18 elems)"
+shotsets,CCC60,"data table byte match (words->le16, logic94.asm, 18 elems)"
 threat,C90AA,"aligned 2/3 accesses in assgoalie, chk4pass"
 wcradiusx,C909C,"aligned 2/3 accesses in checkgoal, checkwallcoll"
 regd4,E03B4,"Watcom static for the ported 68k d4: doplayeracc turn rate $300-speed (min $180) times ftab, noturn0 2/6 (93G moveq #2,d4 / addq #4,d4); was wcradiusy in the seed global_map (2/3 weak alignment)"

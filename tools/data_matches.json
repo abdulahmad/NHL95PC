@@ -38,7 +38,7 @@
  {
   "game": "94G",
   "name": "shotsets",
-  "file": "input94.asm",
+  "file": "logic94.asm",
   "dtype": "w",
   "n": 18,
   "encoding": "words->le16",
@@ -50,7 +50,7 @@
  {
   "game": "94G",
   "name": "vtoa",
-  "file": "checks94.asm",
+  "file": "logic94.asm",
   "dtype": "b",
   "n": 15,
   "encoding": "bytes",

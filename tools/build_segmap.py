@@ -175,10 +175,10 @@ dsegs.append(dict(obj=2, start=STACKLOW, end=DE, module='watcom_stack', group='w
     desc='stack (0x3008 bytes): bottom unk_F7B88 referenced by Watcom cstart (start+1B9); top = LE initial ESP 2:0003AB90', conf='high', nhl94=''))
 # named data counterparts (evidence-based)
 DATA94 = [
- (0xC1B40, 'PenaltyList (data94) names', 'penalty name strings Roughing..Holding.. match 94 PenaltyList text'),
+ (0xC1B40, 'PenaltyList (setup94) names', 'penalty name strings Roughing..Holding.. match 94 PenaltyList text'),
  (0xC5951, 'Credits / CreditsList (teamdata94)', 'shared credit names (Jim Simmons, Scott Orr, Chip Lange, Steve Babineau)'),
  (0xC053C, 'teamdata94 team city names', 'all 26 team cities incl. ANAHEIM/FLORIDA (94 teams)'),
- (0xC9161, 'asstab (93G hockey93_11 / 94G data94)', 'player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions'),
+ (0xC9161, 'asstab (93G hockey93_11 / 94G setup94)', 'player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions'),
  (0xC9100, 'StanleyCupTimer (93G ram93) = RNGseed (94G ram94)', 'seed used by randomd0 port (LCG E62D/BB40)'),
 ]
 

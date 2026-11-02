@@ -7,7 +7,7 @@ rows = list(csv.DictReader(open('name_map_94.csv')))
 G93 = {'engine_init': '93G hockey93_01 Begin/init (role)', 'engine_player_logic': '93G logic93_2..5 assignments (asstab slots) + 94G onetimer/breakaway/goalie additions',
        'engine_physics_ai': '93G hockey93_05 puck collisions / logic93 (role)', 'engine_sound_iface': '93G sound93 / middle93_1 sfx triggers (role)',
        'engine_core': '93G hockey93_02 updateplayers (asstab dispatch); logic93_5 SetSPA/GetHot',
-       'engine_input': '94G input94 doinput_ispc / 93G logic93_1 doinput (role)', 'engine_assign_faceoff': '93G logic93_4 puckfaceoff/puckfaceoff2/asspassrec, logic93_1 check4bench; 94G onetimer94 assonetimer',
+       'engine_input': '94G logic94 doinput_ispc / 93G logic93_1 doinput (role)', 'engine_assign_faceoff': '93G logic93_4 puckfaceoff/puckfaceoff2/asspassrec, logic93_1 check4bench; 94G onetimer94 assonetimer',
        'engine_skating': '93G logic93_5 movement block (doplayeracc, goalieacc, noturn0, playeracc, dostop, StopNA, skateto, skatetopuck)', 'scoring_penalty_text': '93G penalty93 / stats93 (role)',
        'engine_display': '93G video93 (role)', 'asm_helpers': '93G middle93_1 randomd0, logic93_5 vtoa', 'main_startup': '93G hockey93_01 Begin (role only)',
        'game_state_saveload': '', 'game_frame': '93G hockey93_02 main loop (role, unverified)', 'debug_dump': ''}
@@ -132,7 +132,7 @@ for t in ['Front-end module boundaries (0x10010-0x47C31, 0x6B093-0x8BAAF) follow
           'asstab slots 1-35 beyond the trivial stubs are low confidence (order inherited from 93G/94G, bodies rewritten in C); slots 20/21 (93G assfight/assfwatch) look repurposed; slots 36-46 have no Genesis counterpart.',
           'Is 95 PC fighting present? 93G has real assfight code, 94G stubs it; PC slot 20 (49460) is 344 bytes.',
           'EA library sub-boundaries inside ea_gfx/ea_misc/ea_debug are medium; no EA .MAP file was available to confirm object names.',
-          'Segment revision leftovers: assreplace/assinsert (11FF4/12011, logic93_5 roles) sit inside front-end gamesave_io between 11D09 and 12034, so their object is shared with front-end code (not moved); the input/assign split points 4FCE8 (vs 4F99B, shotdiradj = 94G input94) and 50AFE are medium; SetSPA could equally be the last routine of the sound-wrapper object; the 614C2-61D48 part of scoring_penalty_text and the 644A8-65CA8 start of engine_display are still cluster guesses; sroot B3D94 and trig B49C0-B4AA4 are EA math routines inside ea_fileio/video_bios_vga ranges (library sub-boundary not split).',
+          'Segment revision leftovers: assreplace/assinsert (11FF4/12011, logic93_5 roles) sit inside front-end gamesave_io between 11D09 and 12034, so their object is shared with front-end code (not moved); the input/assign split points 4FCE8 (vs 4F99B, shotdiradj = 94G logic94) and 50AFE are medium; SetSPA could equally be the last routine of the sound-wrapper object; the 614C2-61D48 part of scoring_penalty_text and the 644A8-65CA8 start of engine_display are still cluster guesses; sroot B3D94 and trig B49C0-B4AA4 are EA math routines inside ea_fileio/video_bios_vga ranges (library sub-boundary not split).',
           'dseg02 ownership is by majority referencing group; shared tables near group boundaries (marked "also ...") are low confidence.',
           'The 239 FLIRT-collapsed functions have no body in the .lst; a bit-perfect rebuild needs them re-disassembled (or linked from the same Watcom 9.x/10.0 clib version).']:
     P('* ' + t)

@@ -1,7 +1,7 @@
 /* Engine player logic: going to the bench. */
 #include "nhl95.h"
 
-/* assbench (4B12C; 93G logic93 / 94G assign94 assbench "player a3 should go to bench", PC version): not while
+/* assbench (4B12C; 93G logic93 / 94G logic94 assbench "player a3 should go to bench", PC version): not while
    locked (pflags bit 5). Seated (temp1 64h): hide him (frame -1), mark him on the bench in the team's tmpdst and
    roster (when not in the box), take the new position (newpos, when newpnum and newpos agree on goalie / skater),
    set up his assignments (Setplass; during a stoppage insert 27h) and bring the new player newpnum on

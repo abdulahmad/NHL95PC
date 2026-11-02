@@ -73,9 +73,9 @@ M = {}  # addr -> (proposed, conf, evidence, method, source_game)
 SEM = json.load(open('tools/sem_matches.json'))['matches']
 for k, v in SEM.items():
     M[int(k, 16)] = (v['name'], v['conf'], v['evidence'], v['method'], v['src'])
-DATA = [(0xC9161, 'asstab', 'data94.asm', 'medium', 'code-pointer table (47 dseg->cseg fixups) dispatched by updateplayers; slots 0-$1C = 93G asstab (content-verified), slots $1D-$2E are PC-own assignments (94G $1D-$23 names fail content check)', '93G', 'hockey93_11.asm'),
+DATA = [(0xC9161, 'asstab', 'setup94.asm', 'medium', 'code-pointer table (47 dseg->cseg fixups) dispatched by updateplayers; slots 0-$1C = 93G asstab (content-verified), slots $1D-$2E are PC-own assignments (94G $1D-$23 names fail content check)', '93G', 'hockey93_11.asm'),
         (0xC9100, 'StanleyCupTimer (RNG seed)', 'ram94.asm (RNGseed)', 'medium', 'seed of the randomd0 LCG port; 93G names the seed StanleyCupTimer, 94G RNGseed', '93G', 'ram93.asm'),
-        (0xC1B40, 'PenaltyList', 'data94.asm', 'medium', 'penalty name strings in Genesis order (+ .pen file table D273E)', '93G', 'hockey93_11.asm'),
+        (0xC1B40, 'PenaltyList', 'setup94.asm', 'medium', 'penalty name strings in Genesis order (+ .pen file table D273E)', '93G', 'hockey93_11.asm'),
         (0xC5951, 'CreditsList', 'teamdata94.asm', 'high', 'credit names Chip Lange / Steve Babineau exist only in 94G (93G Credits lacks them)', '94G', 'teamdata94.asm'),
         (0xC053C, 'TeamList city names', 'teamdata94.asm', 'medium', 'team city string table incl. ANAHEIM/FLORIDA (26-team 94G list; 93G TeamList has 24)', '94G', 'teamdata94.asm'),
         (0xC020C, 'awards names (95G awards95 role)', '', 'low', 'award name strings (Conn Smythe ...) - same role as 95G awards95 table; PC text/case differs', '95G', 'awards95')]

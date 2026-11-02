@@ -2,7 +2,7 @@
 """rename_symbol.py - rename one label or equate consistently across src/, rebuild, and record the name.
 
   python3 tools/rename_symbol.py OLD NEW [--evidence TEXT] [--source-game 93G] [--source-file logic93_5.asm]
-                                 [--file94 checks94.asm] [--other-names TEXT] [--confidence high] [--method manual-trace]
+                                 [--file94 logic94.asm] [--other-names TEXT] [--confidence high] [--method manual-trace]
                                  [--no-record] [--no-build] [--dry-run]
   python3 tools/rename_symbol.py --batch renames.txt [same options]
         one rename per line: OLD NEW [{key=value,...}] [evidence text ...]; a line starting with '#' is a comment.

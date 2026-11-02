@@ -858,7 +858,7 @@
    "group": "engine",
    "desc": "player assignment logic: targets of the asstab-like table at C9161 (36 of 47 entries follow the 93G asstab order (29) + 94G additions (7))",
    "conf": "medium",
-   "nhl94": "assign94 / checks94 / onetimer94",
+   "nhl94": "logic94 / logic94 / onetimer94",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 620158,
    "file_end": 651068,
@@ -866,7 +866,7 @@
    "size": 30910,
    "n_funcs": 67,
    "nhl94_data": [],
-   "genesis": "36 routines matched (93G logic93_2.asm x12, 93G logic93_3.asm x7, 93G logic93_4.asm x6, 93G logic93_5.asm x6) ; 93G logic93_2..5 assignments (asstab slots) + 94G onetimer/breakaway/goalie additions ; 94G: assign94 / checks94 / onetimer94",
+   "genesis": "36 routines matched (93G logic93_2.asm x12, 93G logic93_3.asm x7, 93G logic93_4.asm x6, 93G logic93_5.asm x6) ; 93G logic93_2..5 assignments (asstab slots) + 94G onetimer/breakaway/goalie additions ; 94G: logic94 / logic94 / onetimer94",
    "genesis_matches": 36
   },
   {
@@ -877,7 +877,7 @@
    "group": "engine",
    "desc": "controller input: input ring buffer (g_inputBufferOffset1/2/3, 50-entry table D8B80), per-frame pad latch from pollMenuInputAndDispatch (50A05/50A84), doinput_ispc (504DA) and its line-change/pass/shot helpers (4FD8E-50434), mouse hook 50ADE",
    "conf": "medium",
-   "nhl94": "94G input94 doinput_ispc / 93G logic93_1 doinput (role)",
+   "nhl94": "94G logic94 doinput_ispc / 93G logic93_1 doinput (role)",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 651068,
    "file_end": 654674,
@@ -885,7 +885,7 @@
    "size": 3606,
    "n_funcs": 16,
    "nhl94_data": [],
-   "genesis": "2 routines matched (93G logic93_1.asm x1, 94G input94.asm x1) ; 94G input94 doinput_ispc / 93G logic93_1 doinput (role) ; 94G: 94G input94 doinput_ispc / 93G logic93_1 doinput (role)",
+   "genesis": "2 routines matched (93G logic93_1.asm x1, 94G logic94.asm x1) ; 94G logic94 doinput_ispc / 93G logic93_1 doinput (role) ; 94G: 94G logic94 doinput_ispc / 93G logic93_1 doinput (role)",
    "genesis_matches": 2
   },
   {
@@ -915,7 +915,7 @@
    "group": "engine",
    "desc": "checking / passing / shooting / puck & wall collision physics (burst 532BD, check4check, checkcheck, dopass, passtoa0, FallDown, puckstick/puckglue/puckgoalie, doshot, checkcoll..checkcx), faceoff goalie helpers CPgoalie..593F5",
    "conf": "medium",
-   "nhl94": "checks94 / collide94",
+   "nhl94": "logic94 / collide94",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 664808,
    "file_end": 689895,
@@ -923,7 +923,7 @@
    "size": 25087,
    "n_funcs": 60,
    "nhl94_data": [],
-   "genesis": "37 routines matched (93G logic93_1.asm x10, 93G hockey93_03.asm x9, 93G hockey93_04.asm x7, 93G hockey93_05.asm x5) ; 93G hockey93_05 puck collisions / logic93 (role) ; 94G: checks94 / collide94",
+   "genesis": "37 routines matched (93G logic93_1.asm x10, 93G hockey93_03.asm x9, 93G hockey93_04.asm x7, 93G hockey93_05.asm x5) ; 93G hockey93_05 puck collisions / logic93 (role) ; 94G: logic94 / collide94",
    "genesis_matches": 37
   },
   {
@@ -953,7 +953,7 @@
    "group": "engine",
    "desc": "engine core: SetSPA (59D9A), GetHot, setpersonel, DoGameFrame, per-player update (5C40F updateplayers, updateanim), bench/line resets, forcepldata",
    "conf": "medium",
-   "nhl94": "hockey94 / checks94 / collide94",
+   "nhl94": "hockey94 / logic94 / collide94",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 692206,
    "file_end": 709569,
@@ -961,7 +961,7 @@
    "size": 17363,
    "n_funcs": 57,
    "nhl94_data": [],
-   "genesis": "13 routines matched (93G hockey93_05.asm x4, 93G logic93_5.asm x2, 93G hockey93_02.asm x2, 93G penalty93_2.asm x2) ; 93G hockey93_02 updateplayers (asstab dispatch); logic93_5 SetSPA/GetHot ; 94G: hockey94 / checks94 / collide94",
+   "genesis": "13 routines matched (93G hockey93_05.asm x4, 93G logic93_5.asm x2, 93G hockey93_02.asm x2, 93G penalty93_2.asm x2) ; 93G hockey93_02 updateplayers (asstab dispatch); logic93_5 SetSPA/GetHot ; 94G: hockey94 / logic94 / collide94",
    "genesis_matches": 13
   },
   {
@@ -1029,7 +1029,7 @@
    "group": "engine",
    "desc": "in-game display / overlays: ticker/message 64614-65B48, setInjuryType, checkwindow, .PPV/rink palettes (HOMEPALS), updatereplay + replay helpers",
    "conf": "low",
-   "nhl94": "display94 (role only)",
+   "nhl94": "video94 (role only)",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 734972,
    "file_end": 752376,
@@ -1037,7 +1037,7 @@
    "size": 17404,
    "n_funcs": 29,
    "nhl94_data": [],
-   "genesis": "3 routines matched (93G hockey93_02.asm x2, 93G hockey93_03.asm x1) ; 93G video93 (role) ; 94G: display94 (role only)",
+   "genesis": "3 routines matched (93G hockey93_02.asm x2, 93G hockey93_03.asm x1) ; 93G video93 (role) ; 94G: video94 (role only)",
    "genesis_matches": 3
   },
   {
@@ -1372,7 +1372,7 @@
    "group": "season95",
    "desc": "season / playoff tree, schedule.db, Stanley Cup screens",
    "conf": "medium",
-   "nhl94": "NEW in 95 (Genesis season95) / data94 playoff tree (role)",
+   "nhl94": "NEW in 95 (Genesis season95) / setup94 playoff tree (role)",
    "lineage": "95G role only; PC-original code (no 95G strings shared except award names)",
    "nhl95g_role": "95G season95 / awards95 (role)",
    "file_start": 874730,
@@ -1411,7 +1411,7 @@
    "group": "engine",
    "desc": "hand-written asm helpers: MVI player, VGA mode setup (8C290), randomd0, vtoa",
    "conf": "high",
-   "nhl94": "video94 randomd0, checks94 vtoa",
+   "nhl94": "middle94 randomd0, logic94 vtoa",
    "lineage": "93G via 94 PC (+94G additions)",
    "file_start": 897327,
    "file_end": 900000,
@@ -1419,7 +1419,7 @@
    "size": 2673,
    "n_funcs": 13,
    "nhl94_data": [],
-   "genesis": "2 routines matched (93G middle93_1.asm x1, 93G logic93_5.asm x1) ; 93G middle93_1 randomd0, logic93_5 vtoa ; 94G: video94 randomd0, checks94 vtoa",
+   "genesis": "2 routines matched (93G middle93_1.asm x1, 93G logic93_5.asm x1) ; 93G middle93_1 randomd0, logic93_5 vtoa ; 94G: middle94 randomd0, logic94 vtoa",
    "genesis_matches": 2
   },
   {
@@ -4033,7 +4033,7 @@
    "size": 3148,
    "n_funcs": 0,
    "nhl94_data": [
-    "PenaltyList (data94) names: penalty name strings Roughing..Holding.. match 94 PenaltyList text"
+    "PenaltyList (setup94) names: penalty name strings Roughing..Holding.. match 94 PenaltyList text"
    ]
   },
   {
@@ -4530,7 +4530,7 @@
    "size": 11864,
    "n_funcs": 0,
    "nhl94_data": [
-    "asstab (93G hockey93_11 / 94G data94): player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions",
+    "asstab (93G hockey93_11 / 94G setup94): player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions",
     "StanleyCupTimer (93G ram93) = RNGseed (94G ram94): seed used by randomd0 port (LCG E62D/BB40)"
    ]
   },
@@ -5728,7 +5728,7 @@
  "data_counterparts_94": [
   {
    "addr": "C1B40",
-   "name": "PenaltyList (data94) names",
+   "name": "PenaltyList (setup94) names",
    "evidence": "penalty name strings Roughing..Holding.. match 94 PenaltyList text"
   },
   {
@@ -5743,7 +5743,7 @@
   },
   {
    "addr": "C9161",
-   "name": "asstab (93G hockey93_11 / 94G data94)",
+   "name": "asstab (93G hockey93_11 / 94G setup94)",
    "evidence": "player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions"
   },
   {

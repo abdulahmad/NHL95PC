@@ -1,7 +1,7 @@
 /* Engine player logic: referee whistles, signals and drops. */
 #include "nhl95.h"
 
-/* assdefd (49E3A; 94G assign94 assdefd, PC version; ends in ass_popx): the defenceman's defensive assignment.
+/* assdefd (49E3A; 94G logic94 assdefd, PC version; ends in ass_popx): the defenceman's defensive assignment.
    Not while locked (pflags bit 5), at the bench (check4bench) or joystick controlled (bit 3); with the clock
    stopped (gmode bit 0) just stop (StopIfFree). A new assignment (bit 1) clears temp1 and sets temp2 8. Every aidef
    ticks (the high byte of temp1): when the puck (its y plus the forward part of its y velocity / 40h, toward
@@ -88,7 +88,7 @@ void assdefd(Player *p)
     check4check(p);
 }
 
-/* asswingd (4A1A6; 94G assign94 asswingd, PC version; ends in ass_popx, owner of asswingd_skate0 /
+/* asswingd (4A1A6; 94G logic94 asswingd, PC version; ends in ass_popx, owner of asswingd_skate0 /
    asswingd_skateto): the winger's defensive assignment. Not while locked (pflags bit 5), at the bench
    (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (StopIfFree). A new
    assignment (bit 1) clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the
@@ -142,7 +142,7 @@ void asswingd(Player *p)
     skateto(p, 0);
 }
 
-/* asswingo (4A343; 94G assign94 asswingo, PC version; ends in asswingd_skateto): the winger's offensive
+/* asswingo (4A343; 94G logic94 asswingo, PC version; ends in asswingd_skateto): the winger's offensive
    assignment. Not while locked (pflags bit 5), at the bench (check4bench) or joystick controlled (bit 3); with the
    clock stopped (gmode bit 0) just stop (StopIfFree). A new assignment (bit 1) sets the high byte of temp5 to -1,
    clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the defensive winger
@@ -204,7 +204,7 @@ void asswingo(Player *p)
     skateto(p, (void (*)(Player *))EvadePC);
 }
 
-/* asscentero (4A65C; 94G assign94 asscentero, PC version; ends in ass_popx / asswingo_evade): the centre's
+/* asscentero (4A65C; 94G logic94 asscentero, PC version; ends in ass_popx / asswingo_evade): the centre's
    offensive assignment, asswingo without the wing side. Not while locked (pflags bit 5), at the bench
    (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (StopIfFree). A
    new assignment (bit 1) sets the high byte of temp5 to -1, clears temp1 and sets temp2 8. Every aioff ticks (the
@@ -258,7 +258,7 @@ void asscentero(Player *p)
     skateto(p, (void (*)(Player *))EvadePC);
 }
 
-/* asspenalty (4ADAB; 94G assign94 asspenalty "player a3 goes to the penalty box", PC version; ends in ass_popx /
+/* asspenalty (4ADAB; 94G logic94 asspenalty "player a3 goes to the penalty box", PC version; ends in ass_popx /
    asswingd_skate0): not while locked (pflags bit 5). A new assignment (bit 1) marks him unavailable (pflags2 bit
    2), takes a human controller off him (changeplayer: controller 0 for c1playernum, else 2) and picks his seat in
    his team's box (x A0h, y 3 + the number already there (PBnum, at most 2) times -11 / 11 by team, pflags bit 6).
@@ -439,7 +439,7 @@ void RequestLineChange(Player *p)
     else dword_C585C = 0;
 }
 
-/* Endfaceoff (4DA7B; 93G logic93 / 94G checks94 Endfaceoff "drop the puck: pick the faceoff winner and send the
+/* Endfaceoff (4DA7B; 93G logic93 / 94G logic94 Endfaceoff "drop the puck: pick the faceoff winner and send the
    puck off", PC version; ends in ass_popx): stop the sample, play sfx ABh, end the faceoff (gmode2 bits 0 and 2,
    the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds (regd2) are 10h less the first centre's
    faceoff stance (byte_CCA95 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
