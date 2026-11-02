@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tiesearch.py - search natural source edits toward the register tie order a draft needs.
 
-  python3 tools/wccre/tiesearch.py src/c/<seg>/<File>.c FUNC [--minutes 60] [--seed N] [--write-match]
+  python3 tools/wccre/tiesearch.py src/c/<module>/<File>.c FUNC [--minutes 60] [--seed N] [--write-match]
 
 tieorder.py finds the order of tied conflicts that gives the EXE bytes (its result, cached in build/tieorder/).
 Reaching it usually takes two or three source edits, and each one alone rarely changes the byte score, so

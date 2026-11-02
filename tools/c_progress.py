@@ -3,7 +3,7 @@
 
   python3 tools/c_progress.py            rewrites tools/c_functions.csv and C_PROGRESS.md
 
-Status of each src/c/<seg>/<Func>.c:
+Status of each src/c/<module>/<Func>.c:
   matched      the asm block is wrapped in %ifdef CBUILD / %include (cc.py mark): `make` builds it from C and the
                sha1 check proves it byte-identical
   nonmatching  a C file without the marker (work in progress or does not match yet); say why in the notes column
@@ -43,8 +43,8 @@ def is_functional(name, c_file, eq):
 
 # Library segments (SEGMENT_AGENT.md "Libraries"): Watcom CRT, DOS/4GW glue, EACSNDF, sound/video drivers, EA libraries,
 # CMV player / CD stream / zone manager. They stay asm: not in the C queue, not in the denominator.
-LIB = re.compile(r'^\d+_[0-9A-F]+_(watcom_|clib_|dos4gw_|ea_|eacsndf|snd_|vesa_|vga_blitters|video_bios_vga|input_keyboard|'
-                 r'input_mouse|input_joystick_misc|cmv_player|cdstream|zonemgr)')
+# Since the module layout (docs/module_map.csv) they are the lib/ modules.
+LIB = re.compile(r'^lib/')
 
 def is_lib(stem):
     return bool(LIB.match(stem))
@@ -85,7 +85,7 @@ def main():
             key = r['c_file'] if os.path.splitext(os.path.basename(r['c_file']))[0] == f0 else '%s:%s' % (r['c_file'], f0)
             notes[key] = r['notes']; causes[key] = r.get('cause') or ''
     rows = []
-    for src in sorted(glob.glob(os.path.join(ROOT, 'src/c/*/*.c'))):
+    for src in sorted(glob.glob(os.path.join(ROOT, 'src/c/**/*.c'), recursive=True)):
         stem, fil, asm, inc = cc.c_paths(src)
         rel = os.path.relpath(src, ROOT)
         body = re.sub(r'/\*.*?\*/', '', open(src).read(), flags=re.S)
@@ -125,8 +125,8 @@ def main():
         w = csv.DictWriter(f, fieldnames=['function', 'address', 'size', 'segment', 'c_file', 'status', 'notes', 'cause'])
         w.writeheader(); w.writerows(rows)
     segs = {}; libs = {}; chk = {}              # segment -> __CHK function count; game segment -> {label: address}
-    for asm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))):
-        st = os.path.basename(asm)[:-4]; fs = c_functions(asm)
+    for asm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+        st = os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'); fs = c_functions(asm)
         if not fs: continue
         if is_lib(st): libs[st] = len(fs)
         else: segs[st] = len(fs); chk[st] = fs

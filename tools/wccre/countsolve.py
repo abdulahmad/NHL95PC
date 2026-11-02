@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """countsolve.py - which use counts give a draft's locals the EXE's stack slots.
 
-  python3 tools/wccre/countsolve.py src/c/<seg>/<File>.c FUNC [--pairs 8] [--confirm 3]
+  python3 tools/wccre/countsolve.py src/c/<module>/<File>.c FUNC [--pairs 8] [--confirm 3]
 
 The stack slots of the names in memory follow the use-count sort (descending loop-weighted reference count, ties
 in an unstable order) and then the size sort (docs/WCC_INTERNALS.md, "Stack slots"). declsearch.py searches the

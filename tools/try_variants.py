@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """try_variants.py - score hand-written variants of a C file in one batch.
 
-  python3 tools/try_variants.py src/c/<seg>/<File>.c FUNC VARFILE
+  python3 tools/try_variants.py src/c/<module>/<File>.c FUNC VARFILE
 
 VARFILE holds variants, each starting with a line '=== name', then OLD / '---' / NEW blocks (exact text
 replacements; several per variant, separated by '+++' lines). All variants compile in one batch and each prints

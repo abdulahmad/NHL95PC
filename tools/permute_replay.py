@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """permute_replay.py - replay a tools/permute.py transform chain and write the result.
 
-  python3 tools/permute_replay.py src/c/<seg>/<File>.c FUNC "desc > desc + desc > ..." OUT.c
+  python3 tools/permute_replay.py src/c/<module>/<File>.c FUNC "desc > desc + desc > ..." OUT.c
 
 The chain is the transform column of tools/permute_log.csv or a summary line (steps joined by ' > ', two
 transforms of one step by ' + '). Each step must be one of the current text's candidates."""

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """irdump.py - the code generator's instructions of a function, as register allocation sees them.
 
-  python3 tools/wccre/irdump.py src/c/<seg>/<File>.c FUNC [--pass N] [--raw]
+  python3 tools/wccre/irdump.py src/c/<module>/<File>.c FUNC [--pass N] [--raw]
 
 Compiles the file in the emulator (tools/wccre) and, when AssignConflicts has sorted FUNC's conflicts (+569B4,
 the hook regdump.py uses), walks the blocks and their instructions and prints them, one per line:

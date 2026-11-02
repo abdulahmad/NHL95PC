@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """C side of the functional-equivalence harness (FUNCTIONAL_PLAN.md, "How the check works" item 3).
 
-  obj = compile_draft('src/c/<seg>/<F>.c')        # cc.py compile path, cached by source hash in build/equiv/
+  obj = compile_draft('src/c/<module>/<F>.c')        # cc.py compile path, cached by source hash in build/equiv/
   entry, extent, code = place(img, obj, 'F')      # run.run(img, entry, extent, state, code=code)
 
 place() copies the whole _TEXT of the object to the scratch base and resolves every fixup the way the asm build does:

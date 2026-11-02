@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """permute_decls.py - try the declaration orders of a C function's locals and score each one against the EXE.
 
-  python3 tools/permute_decls.py src/c/<seg>/<File>.c FUNC [--addr HEX] [--names a,b,c] [--max N] [--jobs N]
+  python3 tools/permute_decls.py src/c/<module>/<File>.c FUNC [--addr HEX] [--names a,b,c] [--max N] [--jobs N]
 
 Watcom picks registers and stack slots partly by the order the locals are declared in, so a draft that differs
 from the EXE only in register picks or slot order can sometimes be matched by reordering its declarations

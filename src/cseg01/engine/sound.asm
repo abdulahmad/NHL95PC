@@ -1,0 +1,874 @@
+; Crowd noise and digitized samples during play, and the calls into the
+; announcer.
+bits 32
+%include "hockey.inc"
+section s_59493 progbits alloc exec nowrite align=1
+extern __CHK, musicon, byte_D2439, gameopts, sounddev, lastsfx, digihandle
+extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, rockteamcues
+extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, SpeechBusy, MusicChanReset
+extern SayNhlIntro, SayGoodnight, SayLineups, SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayScoringPeriod, SayTonightIntro
+extern SayPlayoffTonight, SayPenalty, SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank, PreloadAnnouncerClips
+extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
+extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, SetTickDeadline, WaitTickDeadline, crowdlevel
+global sndcb_addesp8_x
+global PlayCrowdSample_ret
+global nullsub_5
+global sfx, SndLoadFile, SndLoadFile2, CrowdNoiseUpdate, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
+global StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PaOneMinuteLeft, PaSpeechBusy, PaGoal, PaPlayerNumber
+global PaPenalty, PaPenaltyShot, PaTonightIntro, PaScoringPeriod, PaNhlIntro, PaGoodnight, PaLineups, PaElseNhl
+global PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
+; C: src/c/engine/sound/SndLoadFile.c
+%ifdef CBUILD
+%include "c/engine/sound/SndLoadFile.inc"
+%else
+SndLoadFile:
+push dword 14h	; 59493
+call __CHK	; 59498
+push ebx	; 5949D
+push ecx	; 5949E
+mov ebx, dword [dword_CCC94]	; 5949F
+push ebx	; 594A5
+push edx	; 594A6
+call sub_8E8B8	; 594A7
+sndcb_addesp8_x:
+add esp, byte 8	; 594AC
+pop ecx	; 594AF
+pop ebx	; 594B0
+ret	; 594B1
+SndLoadFile2:
+push dword 14h	; 594B2
+call __CHK	; 594B7
+push ebx	; 594BC
+push ecx	; 594BD
+mov ebx, dword [dword_CCC94]	; 594BE
+push ebx	; 594C4
+push edx	; 594C5
+call sub_8E908	; 594C6
+jmp short sndcb_addesp8_x	; 594CB
+%endif ; C
+; C: src/c/engine/sound/CrowdNoiseUpdate.c
+%ifdef CBUILD
+%include "c/engine/sound/CrowdNoiseUpdate.inc"
+%else
+CrowdNoiseUpdate:
+push dword 14h	; 594CD
+call __CHK	; 594D2
+push ebx	; 594D7
+push ecx	; 594D8
+push edx	; 594D9
+push esi	; 594DA
+test byte [gameopts], 80h	; 594DB
+je near .x	; 594E2
+test byte [sounddev], 2Ah	; 594E8
+je near .x	; 594EF
+cwde	; 594F5
+mov esi, eax	; 594F6
+shl esi, 4	; 594F8
+sub esi, eax	; 594FB
+add esi, esi	; 594FD
+mov ecx, dword [crowdlevel-2]	; 594FF
+sar ecx, 10h	; 59505
+sub ecx, dword [crowdsmooth]	; 59508
+test ecx, ecx	; 5950E
+jge short .1	; 59510
+mov eax, ecx	; 59512
+neg eax	; 59514
+jmp short .2	; 59516
+.1:
+mov eax, ecx	; 59518
+.2:
+cmp eax, esi	; 5951A
+jle short .4	; 5951C
+test ecx, ecx	; 5951E
+jge short .3	; 59520
+neg esi	; 59522
+.3:
+add dword [crowdsmooth], esi	; 59524
+jmp short .5	; 5952A
+.4:
+mov eax, dword [crowdlevel-2]	; 5952C
+sar eax, 10h	; 59531
+mov dword [crowdsmooth], eax	; 59534
+.5:
+mov ecx, dword [crowdsmooth]	; 59539
+cmp ecx, 200h	; 5953F
+jge short .6	; 59545
+xor ecx, ecx	; 59547
+jmp short .8	; 59549
+.6:
+cmp ecx, 390h	; 5954B
+jge short .7	; 59551
+lea edx, [dword ecx-0200h]	; 59553
+mov ebx, 0Ah	; 59559
+mov eax, edx	; 5955E
+sar edx, 1Fh	; 59560
+idiv ebx	; 59563
+mov ecx, eax	; 59565
+test byte [sounddev], 8	; 59567
+je short .8	; 5956E
+lea ecx, [byte eax+020h]	; 59570
+jmp short .8	; 59573
+.7:
+lea eax, [dword ecx-0390h]	; 59575
+sar eax, 2	; 5957B
+lea ecx, [byte eax+028h]	; 5957E
+test byte [sounddev], 8	; 59581
+je short .8	; 59588
+add ecx, byte 20h	; 5958A
+.8:
+cmp ecx, byte 7Fh	; 5958D
+jle short .9	; 59590
+mov ecx, 7Fh	; 59592
+.9:
+mov ebx, 0Ch	; 59597
+mov eax, dword [crowdsmooth]	; 5959C
+mov edx, eax	; 595A1
+sar edx, 1Fh	; 595A3
+idiv ebx	; 595A6
+lea esi, [byte eax+0Ah]	; 595A8
+test byte [sounddev], 8	; 595AB
+je short .10	; 595B2
+add esi, byte 32h	; 595B4
+.10:
+cmp esi, byte 7Fh	; 595B7
+jle short .11	; 595BA
+mov esi, 7Fh	; 595BC
+.11:
+cmp esi, byte 0Ah	; 595C1
+jge short .12	; 595C4
+mov esi, 0Ah	; 595C6
+.12:
+cmp dword [crowdvol8], byte 0	; 595CB
+jle short .13	; 595D2
+test ecx, ecx	; 595D4
+jne short .13	; 595D6
+xor eax, eax	; 595D8
+mov al, byte [byte_D2439]	; 595DA
+xor ebx, ebx	; 595DF
+mov edx, 8	; 595E1
+call sub_8FDB2	; 595E6
+xor eax, eax	; 595EB
+mov al, byte [byte_D2439]	; 595ED
+mov ebx, 24h	; 595F2
+mov edx, 8	; 595F7
+call sub_8FE4F	; 595FC
+jmp short .14	; 59601
+.13:
+cmp dword [crowdvol8], byte 0	; 59603
+jne short .14	; 5960A
+test ecx, ecx	; 5960C
+jle short .14	; 5960E
+xor eax, eax	; 59610
+mov al, byte [byte_D2439]	; 59612
+mov ebx, 7Dh	; 59617
+mov edx, 8	; 5961C
+call sub_8FD84	; 59621
+xor eax, eax	; 59626
+mov al, byte [byte_D2439]	; 59628
+mov ebx, 24h	; 5962D
+mov edx, 8	; 59632
+call sub_8FE1C	; 59637
+xor eax, eax	; 5963C
+mov al, byte [byte_D2439]	; 5963E
+mov ebx, 40h	; 59643
+mov edx, 8	; 59648
+call sub_8FDE5	; 5964D
+.14:
+test ecx, ecx	; 59652
+jle short .18	; 59654
+xor eax, eax	; 59656
+mov al, byte [byte_D2439]	; 59658
+mov ebx, ecx	; 5965D
+mov edx, 8	; 5965F
+call sub_8FDB2	; 59664
+cmp ecx, byte 7Fh	; 59669
+jge short .15	; 5966C
+cmp dword [crowdvol8], byte 7Fh	; 5966E
+jl short .18	; 59675
+.15:
+cmp ecx, byte 7Fh	; 59677
+jl short .16	; 5967A
+mov eax, 6	; 5967C
+call randomd0	; 59681
+cwde	; 59686
+jmp short .17	; 59687
+.16:
+xor eax, eax	; 59689
+.17:
+mov ebx, 40h	; 5968B
+sub ebx, eax	; 59690
+xor eax, eax	; 59692
+mov al, byte [byte_D2439]	; 59694
+mov edx, 8	; 59699
+call sub_8FDE5	; 5969E
+.18:
+mov dword [crowdvol8], ecx	; 596A3
+cmp dword [crowdvol7], byte 0	; 596A9
+jne short .19	; 596B0
+test esi, esi	; 596B2
+jle short .19	; 596B4
+xor eax, eax	; 596B6
+mov al, byte [byte_D2439]	; 596B8
+mov ebx, 7Eh	; 596BD
+mov edx, 7	; 596C2
+call sub_8FD84	; 596C7
+xor eax, eax	; 596CC
+mov al, byte [byte_D2439]	; 596CE
+mov ebx, 24h	; 596D3
+mov edx, 7	; 596D8
+call sub_8FE1C	; 596DD
+.19:
+xor eax, eax	; 596E2
+mov al, byte [byte_D2439]	; 596E4
+mov ebx, esi	; 596E9
+mov edx, 7	; 596EB
+call sub_8FDB2	; 596F0
+mov ebx, 3	; 596F5
+mov eax, esi	; 596FA
+mov edx, esi	; 596FC
+sar edx, 1Fh	; 596FE
+idiv ebx	; 59701
+lea ebx, [byte eax+020h]	; 59703
+test byte [sounddev], 8	; 59706
+je short .20	; 5970D
+mov eax, 32h	; 5970F
+jmp short .21	; 59714
+.20:
+xor eax, eax	; 59716
+.21:
+add eax, byte 0Ah	; 59718
+cmp esi, eax	; 5971B
+jne short .22	; 5971D
+mov eax, 6	; 5971F
+call randomd0	; 59724
+cwde	; 59729
+add ebx, eax	; 5972A
+.22:
+xor eax, eax	; 5972C
+mov al, byte [byte_D2439]	; 5972E
+mov edx, 7	; 59733
+call sub_8FDE5	; 59738
+mov dword [crowdvol7], esi	; 5973D
+.x:
+pop esi	; 59743
+pop edx	; 59744
+pop ecx	; 59745
+pop ebx	; 59746
+ret	; 59747
+%endif ; C
+; C: src/c/engine/sound/CrowdNoiseOff.c
+%ifdef CBUILD
+%include "c/engine/sound/CrowdNoiseOff.inc"
+%else
+CrowdNoiseOff:
+push dword 10h	; 59748
+call __CHK	; 5974D
+push ebx	; 59752
+push edx	; 59753
+push esi	; 59754
+test byte [gameopts], 80h	; 59755
+je near .x	; 5975C
+test byte [sounddev], 2Ah	; 59762
+je short .x	; 59769
+cmp dword [crowdvol8], byte 0	; 5976B
+jle short .1	; 59772
+xor eax, eax	; 59774
+mov al, byte [byte_D2439]	; 59776
+xor ebx, ebx	; 5977B
+mov edx, 8	; 5977D
+call sub_8FDB2	; 59782
+xor eax, eax	; 59787
+mov al, byte [byte_D2439]	; 59789
+mov ebx, 24h	; 5978E
+mov edx, 8	; 59793
+call sub_8FE4F	; 59798
+xor ebx, ebx	; 5979D
+mov dword [crowdvol8], ebx	; 5979F
+.1:
+cmp dword [crowdvol7], byte 0	; 597A5
+jle short .x	; 597AC
+xor eax, eax	; 597AE
+mov al, byte [byte_D2439]	; 597B0
+xor ebx, ebx	; 597B5
+mov edx, 7	; 597B7
+call sub_8FDB2	; 597BC
+xor eax, eax	; 597C1
+mov al, byte [byte_D2439]	; 597C3
+mov ebx, 24h	; 597C8
+mov edx, 7	; 597CD
+call sub_8FE4F	; 597D2
+xor esi, esi	; 597D7
+mov dword [crowdvol7], esi	; 597D9
+.x:
+pop esi	; 597DF
+pop edx	; 597E0
+pop ebx	; 597E1
+ret	; 597E2
+%endif ; C
+; C: src/c/engine/sound/CrowdFadeOut.c
+%ifdef CBUILD
+%include "c/engine/sound/CrowdFadeOut.inc"
+%else
+CrowdFadeOut:
+push dword 1Ch	; 597E3
+call __CHK	; 597E8
+push ebx	; 597ED
+push ecx	; 597EE
+push edx	; 597EF
+push esi	; 597F0
+push edi	; 597F1
+mov esi, dword [crowdlevel-2]	; 597F2
+sar esi, 10h	; 597F8
+test byte [gameopts], 80h	; 597FB
+je short .x	; 59802
+test byte [sounddev], 2Ah	; 59804
+je short .x	; 5980B
+.1:
+cmp word [crowdlevel], byte 0	; 5980D
+jle short .3	; 59815
+push byte 1	; 59817
+call SetTickDeadline	; 59819
+add esp, byte 4	; 5981E
+mov bx, word [crowdlevel]	; 59821
+sub ebx, byte 32h	; 59828
+mov word [crowdlevel], bx	; 5982B
+test bx, bx	; 59832
+jge short .2	; 59835
+xor edi, edi	; 59837
+mov word [crowdlevel], di	; 59839
+.2:
+mov eax, 2	; 59840
+call CrowdNoiseUpdate	; 59845
+call WaitTickDeadline	; 5984A
+jmp short CrowdFadeOut.1	; 5984F
+.3:
+call CrowdNoiseOff	; 59851
+mov word [crowdlevel], si	; 59856
+.x:
+pop edi	; 5985D
+pop esi	; 5985E
+pop edx	; 5985F
+pop ecx	; 59860
+pop ebx	; 59861
+ret	; 59862
+%endif ; C
+; C: src/c/engine/sound/CrowdNoiseReset.c
+%ifdef CBUILD
+%include "c/engine/sound/CrowdNoiseReset.inc"
+%else
+CrowdNoiseReset:
+push dword 8	; 59863
+call __CHK	; 59868
+push edx	; 5986D
+xor edx, edx	; 5986E
+mov dword [crowdsmooth], edx	; 59870
+mov dword [crowdvol8], edx	; 59876
+mov dword [crowdvol7], edx	; 5987C
+pop edx	; 59882
+ret	; 59883
+%endif ; C
+; C: src/c/engine/sound/sfx.c
+%ifdef CBUILD
+%include "c/engine/sound/sfx.inc"
+%else
+sfx:
+push dword 0Ch	; 59884
+call __CHK	; 59889
+push ecx	; 5988E
+push edx	; 5988F
+mov edx, eax	; 59890
+mov word [lastsfx], ax	; 59892
+call PaSpeechBusy	; 59898
+test eax, eax	; 5989D
+je short .1	; 5989F
+cmp edx, 9Ch	; 598A1
+jne near .x	; 598A7
+test byte [gmode], 10h	; 598AD
+je short .1	; 598B4
+cmp dword [dword_CCC98], byte 0	; 598B6
+je near .x	; 598BD
+.1:
+mov ecx, dword [sounddev]	; 598C3
+cmp ecx, byte 8	; 598C9
+je short .2	; 598CC
+cmp ecx, byte 4	; 598CE
+jne short .3	; 598D1
+.2:
+cmp edx, 0A0h	; 598D3
+je near .x	; 598D9
+cmp edx, 0A1h	; 598DF
+je short .x	; 598E5
+.3:
+cmp edx, byte 7Dh	; 598E7
+jne short .4	; 598EA
+add word [crowdlevel], 1F4h	; 598EC
+pop edx	; 598F5
+pop ecx	; 598F6
+ret	; 598F7
+.4:
+cmp dword [sounddev], byte 4	; 598F8
+jne short .5	; 598FF
+cmp edx, 0AAh	; 59901
+jne short .5	; 59907
+mov edx, dword [dword_D2427]	; 59909
+mov eax, dword [dword_ED7A4]	; 5990F
+call sub_8F270	; 59914
+pop edx	; 59919
+pop ecx	; 5991A
+ret	; 5991B
+.5:
+cmp edx, 90h	; 5991C
+jne short .7	; 59922
+cmp dword [sounddev], byte 4	; 59924
+jne short .6	; 5992B
+xor eax, eax	; 5992D
+mov ax, dx	; 5992F
+call sub_8F61D	; 59932
+.6:
+inc edx	; 59937
+.7:
+xor eax, eax	; 59938
+mov ax, dx	; 5993A
+call sub_8F61D	; 5993D
+.x:
+pop edx	; 59942
+pop ecx	; 59943
+ret	; 59944
+%endif ; C
+; C: src/c/engine/sound/FreeDigiSample.c
+%ifdef CBUILD
+%include "c/engine/sound/FreeDigiSample.inc"
+%else
+FreeDigiSample:
+push dword 0Ch	; 59945
+call __CHK	; 5994A
+push ebx	; 5994F
+push edx	; 59950
+mov edx, eax	; 59951
+mov ebx, dword [digihandle]	; 59953
+cmp ebx, byte 0FFFFFFFFh	; 59959
+je short .x	; 5995C
+mov eax, ebx	; 5995E
+call sub_8F80E	; 59960
+test ax, ax	; 59965
+jne short .x	; 59968
+mov eax, dword [digihandle]	; 5996A
+call sub_8F7AE	; 5996F
+mov dword [digihandle], 0FFFFFFFFh	; 59974
+.x:
+pop edx	; 5997E
+pop ebx	; 5997F
+ret	; 59980
+%endif ; C
+; C: src/c/engine/sound/StopDigiSample.c
+%ifdef CBUILD
+%include "c/engine/sound/StopDigiSample.inc"
+%else
+StopDigiSample:
+push dword 8	; 59981
+call __CHK	; 59986
+push edx	; 5998B
+mov edx, dword [digihandle]	; 5998C
+cmp edx, byte 0FFFFFFFFh	; 59992
+je short .x	; 59995
+mov eax, edx	; 59997
+call sub_8F80E	; 59999
+test ax, ax	; 5999E
+jne short .x	; 599A1
+mov eax, dword [digihandle]	; 599A3
+call sub_8F67D	; 599A8
+mov dword [digihandle], 0FFFFFFFFh	; 599AD
+.x:
+pop edx	; 599B7
+ret	; 599B8
+%endif ; C
+; C: src/c/engine/sound/PlayDigiSample.c
+%ifdef CBUILD
+%include "c/engine/sound/PlayDigiSample.inc"
+%else
+PlayDigiSample:
+push dword 0Ch	; 599B9
+call __CHK	; 599BE
+push ebx	; 599C3
+push edx	; 599C4
+mov ebx, eax	; 599C5
+call StopDigiSample	; 599C7
+test byte [sounddev], 11h	; 599CC
+jne short .x	; 599D3
+test ebx, ebx	; 599D5
+je short .x	; 599D7
+mov edx, dword [dword_D2427]	; 599D9
+mov eax, ebx	; 599DF
+call sub_8F270	; 599E1
+mov dword [digihandle], eax	; 599E6
+.x:
+pop edx	; 599EB
+pop ebx	; 599EC
+ret	; 599ED
+%endif ; C
+; C: src/c/engine/sound/WaitDigiSample.c
+%ifdef CBUILD
+%include "c/engine/sound/WaitDigiSample.inc"
+%else
+WaitDigiSample:
+push dword 4	; 599EE
+call __CHK	; 599F3
+cmp dword [digihandle], byte 0FFFFFFFFh	; 599F8
+je short .x	; 599FF
+.1:
+mov eax, dword [digihandle]	; 59A01
+call sub_8F80E	; 59A06
+test ax, ax	; 59A0B
+je short WaitDigiSample.1	; 59A0E
+.x:
+ret	; 59A10
+%endif ; C
+; C: src/c/engine/sound/PlayCrowdSample.c
+%ifdef CBUILD
+%include "c/engine/sound/PlayCrowdSample.inc"
+%else
+PlayCrowdSample:
+push dword 0Ch	; 59A11
+call __CHK	; 59A16
+push ebx	; 59A1B
+push edx	; 59A1C
+cmp eax, byte 6	; 59A1D
+jge short .2	; 59A20
+shl eax, 2	; 59A22
+mov edx, dword [dword eax+rockteamcues]	; 59A25
+test edx, edx	; 59A2B
+je short .1	; 59A2D
+mov eax, edx	; 59A2F
+call PlayDigiSample	; 59A31
+mov eax, 0Ch	; 59A36
+jmp short .2	; 59A3B
+.1:
+call rand_	; 59A3D
+mov edx, eax	; 59A42
+and edx, 7FFFh	; 59A44
+mov ebx, 3	; 59A4A
+mov eax, edx	; 59A4F
+sar edx, 1Fh	; 59A51
+idiv ebx	; 59A54
+lea eax, [byte edx+06h]	; 59A56
+.2:
+mov edx, eax	; 59A59
+shl edx, 2	; 59A5B
+cmp eax, byte 9	; 59A5E
+jge short .3	; 59A61
+mov eax, dword [dword edx+dword_ED374]	; 59A63
+jmp short .4	; 59A69
+.3:
+cmp eax, byte 0Ch	; 59A6B
+jge short .5	; 59A6E
+mov eax, dword [dword edx+leaguesetimg]	; 59A70
+.4:
+call PlayDigiSample	; 59A76
+.5:
+pop edx	; 59A7B
+pop ebx	; 59A7C
+PlayCrowdSample_ret:
+ret	; 59A7D
+PaOneMinuteLeft:
+push dword 4	; 59A7E
+call __CHK	; 59A83
+cmp byte [musicon], 0	; 59A88
+je short PlayCrowdSample_ret	; 59A8F
+test byte [gameopts+1], 1	; 59A91
+je short PlayCrowdSample_ret	; 59A98
+test byte [gmode], 10h	; 59A9A
+jne short PlayCrowdSample_ret	; 59AA1
+call MusicChanReset	; 59AA3
+jmp near SayOneMinuteLeft	; 59AA8
+%endif ; C
+; C: src/c/engine/sound/PaSpeechBusy.c
+%ifdef CBUILD
+%include "c/engine/sound/PaSpeechBusy.inc"
+%else
+PaSpeechBusy:
+push dword 4	; 59AAD
+call __CHK	; 59AB2
+cmp byte [musicon], 0	; 59AB7
+je short .1	; 59ABE
+test byte [gameopts+1], 1	; 59AC0
+jne near SpeechBusy	; 59AC7
+.1:
+xor eax, eax	; 59ACD
+ret	; 59ACF
+%endif ; C
+; C: src/c/engine/sound/PaGoal.c
+%ifdef CBUILD
+%include "c/engine/sound/PaGoal.inc"
+%else
+PaGoal:
+push dword 10h	; 59AD0
+call __CHK	; 59AD5
+push esi	; 59ADA
+push edi	; 59ADB
+mov esi, eax	; 59ADC
+cmp byte [musicon], 0	; 59ADE
+je short .x	; 59AE5
+test byte [gameopts+1], 1	; 59AE7
+je short .x	; 59AEE
+test byte [gmode], 10h	; 59AF0
+jne short .x	; 59AF7
+call MusicChanReset	; 59AF9
+mov edi, dword [byte esp+0Ch]	; 59AFE
+push edi	; 59B02
+mov eax, esi	; 59B03
+call SayGoal	; 59B05
+.x:
+pop edi	; 59B0A
+pop esi	; 59B0B
+ret 4	; 59B0C
+%endif ; C
+; C: src/c/engine/sound/PaPlayerNumber.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPlayerNumber.inc"
+%else
+PaPlayerNumber:
+push dword 8	; 59B0F
+call __CHK	; 59B14
+push ecx	; 59B19
+mov ecx, eax	; 59B1A
+cmp byte [musicon], 0	; 59B1C
+je short .x	; 59B23
+test byte [gameopts+1], 1	; 59B25
+je short .x	; 59B2C
+call MusicChanReset	; 59B2E
+mov eax, ecx	; 59B33
+call SayPlayerNumber	; 59B35
+.x:
+pop ecx	; 59B3A
+ret	; 59B3B
+%endif ; C
+; C: src/c/engine/sound/PaPenalty.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPenalty.inc"
+%else
+PaPenalty:
+push dword 24h	; 59B3C
+call __CHK	; 59B41
+push esi	; 59B46
+push edi	; 59B47
+push ebp	; 59B48
+mov esi, eax	; 59B49
+cmp byte [musicon], 0	; 59B4B
+je short .x	; 59B52
+test byte [gameopts+1], 1	; 59B54
+je short .x	; 59B5B
+call MusicChanReset	; 59B5D
+mov edi, dword [byte esp+020h]	; 59B62
+push edi	; 59B66
+mov ebp, dword [byte esp+020h]	; 59B67
+push ebp	; 59B6B
+mov eax, dword [byte esp+020h]	; 59B6C
+push eax	; 59B70
+mov edi, dword [byte esp+020h]	; 59B71
+push edi	; 59B75
+mov ebp, dword [byte esp+020h]	; 59B76
+push ebp	; 59B7A
+mov eax, esi	; 59B7B
+call SayPenalty	; 59B7D
+.x:
+pop ebp	; 59B82
+pop edi	; 59B83
+pop esi	; 59B84
+ret 14h	; 59B85
+%endif ; C
+; C: src/c/engine/sound/PaPenaltyShot.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPenaltyShot.inc"
+%else
+PaPenaltyShot:
+push dword 8	; 59B88
+call __CHK	; 59B8D
+push esi	; 59B92
+mov esi, eax	; 59B93
+cmp byte [musicon], 0	; 59B95
+je short .x	; 59B9C
+test byte [gameopts+1], 1	; 59B9E
+je short .x	; 59BA5
+call MusicChanReset	; 59BA7
+mov eax, esi	; 59BAC
+call SayPenaltyShot	; 59BAE
+.x:
+pop esi	; 59BB3
+ret	; 59BB4
+%endif ; C
+; C: src/c/engine/sound/PaTonightIntro.c
+%ifdef CBUILD
+%include "c/engine/sound/PaTonightIntro.inc"
+%else
+PaTonightIntro:
+push dword 0Ch	; 59BB5
+call __CHK	; 59BBA
+push ebx	; 59BBF
+push ecx	; 59BC0
+mov ecx, eax	; 59BC1
+cmp eax, byte 1Ah	; 59BC3
+jl short .1	; 59BC6
+mov ecx, 0Ch	; 59BC8
+.1:
+cmp byte [musicon], 0	; 59BCD
+je short .2	; 59BD4
+test byte [gameopts+1], 1	; 59BD6
+je short .2	; 59BDD
+mov ebx, dword [nosplit eax*4+teamabbrevs]	; 59BDF
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59BE6
+mov eax, dword [nosplit ecx*4+teamabbrevs]	; 59BED
+call SayTonightIntro	; 59BF4
+.2:
+pop ecx	; 59BF9
+pop ebx	; 59BFA
+nullsub_5:
+ret	; 59BFB
+PaScoringPeriod:
+push dword 4	; 59BFC
+call __CHK	; 59C01
+cmp byte [musicon], 0	; 59C06
+je short nullsub_5	; 59C0D
+test byte [gameopts+1], 1	; 59C0F
+je short nullsub_5	; 59C16
+jmp near SayScoringPeriod	; 59C18
+PaNhlIntro:
+push dword 4	; 59C1D
+call __CHK	; 59C22
+cmp byte [musicon], 0	; 59C27
+je short nullsub_5	; 59C2E
+test byte [gameopts+1], 1	; 59C30
+je short nullsub_5	; 59C37
+jmp near SayNhlIntro	; 59C39
+PaGoodnight:
+push dword 4	; 59C3E
+call __CHK	; 59C43
+cmp byte [musicon], 0	; 59C48
+je short nullsub_5	; 59C4F
+test byte [gameopts+1], 1	; 59C51
+je short nullsub_5	; 59C58
+jmp near SayGoodnight	; 59C5A
+PaLineups:
+push dword 4	; 59C5F
+call __CHK	; 59C64
+cmp byte [musicon], 0	; 59C69
+je short nullsub_5	; 59C70
+test byte [gameopts+1], 1	; 59C72
+je short nullsub_5	; 59C79
+jmp near SayLineups	; 59C7B
+PaElseNhl:
+push dword 4	; 59C80
+call __CHK	; 59C85
+cmp byte [musicon], 0	; 59C8A
+je near nullsub_5	; 59C91
+test byte [gameopts+1], 1	; 59C97
+je near nullsub_5	; 59C9E
+jmp near SayElseNhl	; 59CA4
+%endif ; C
+; C: src/c/engine/sound/PaHighlightIntro.c
+%ifdef CBUILD
+%include "c/engine/sound/PaHighlightIntro.inc"
+%else
+PaHighlightIntro:
+push dword 8	; 59CA9
+call __CHK	; 59CAE
+push ebx	; 59CB3
+cmp byte [musicon], 0	; 59CB4
+je short .x	; 59CBB
+test byte [gameopts+1], 1	; 59CBD
+je short .x	; 59CC4
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59CC6
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59CCD
+mov ebx, eax	; 59CD4
+call SayHighlightIntro	; 59CD6
+.x:
+pop ebx	; 59CDB
+ret	; 59CDC
+%endif ; C
+; C: src/c/engine/sound/PaPlayoffResult.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPlayoffResult.inc"
+%else
+PaPlayoffResult:
+push dword 14h	; 59CDD
+call __CHK	; 59CE2
+push esi	; 59CE7
+push edi	; 59CE8
+cmp byte [musicon], 0	; 59CE9
+je short .x	; 59CF0
+test byte [gameopts+1], 1	; 59CF2
+je short .x	; 59CF9
+mov esi, dword [byte esp+010h]	; 59CFB
+push esi	; 59CFF
+mov edi, dword [byte esp+010h]	; 59D00
+push edi	; 59D04
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D05
+call SayPlayoffResult	; 59D0C
+.x:
+pop edi	; 59D11
+pop esi	; 59D12
+ret 8	; 59D13
+%endif ; C
+; C: src/c/engine/sound/PaPlayoffTonight.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPlayoffTonight.inc"
+%else
+PaPlayoffTonight:
+push dword 10h	; 59D16
+call __CHK	; 59D1B
+push esi	; 59D20
+cmp byte [musicon], 0	; 59D21
+je short .x	; 59D28
+test byte [gameopts+1], 1	; 59D2A
+je short .x	; 59D31
+mov esi, dword [byte esp+08h]	; 59D33
+push esi	; 59D37
+push ecx	; 59D38
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 59D39
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 59D40
+mov ecx, ebx	; 59D47
+mov ebx, eax	; 59D49
+call SayPlayoffTonight	; 59D4B
+.x:
+pop esi	; 59D50
+ret 4	; 59D51
+%endif ; C
+; C: src/c/engine/sound/PaOpenBank.c
+%ifdef CBUILD
+%include "c/engine/sound/PaOpenBank.inc"
+%else
+PaOpenBank:
+push dword 4	; 59D54
+call __CHK	; 59D59
+cmp byte [musicon], 0	; 59D5E
+je short .x	; 59D65
+.1:
+call OpenAnnouncerBank	; 59D67
+test eax, eax	; 59D6C
+je short PaOpenBank.1	; 59D6E
+.x:
+ret	; 59D70
+%endif ; C
+; C: src/c/engine/sound/PaPreloadClips.c
+%ifdef CBUILD
+%include "c/engine/sound/PaPreloadClips.inc"
+%else
+PaPreloadClips:
+push dword 0Ch	; 59D71
+call __CHK	; 59D76
+push ebx	; 59D7B
+push ecx	; 59D7C
+mov ebx, eax	; 59D7D
+mov ecx, edx	; 59D7F
+cmp byte [musicon], 0	; 59D81
+je short .x	; 59D88
+.1:
+mov edx, ecx	; 59D8A
+mov eax, ebx	; 59D8C
+call PreloadAnnouncerClips	; 59D8E
+test eax, eax	; 59D93
+je short PaPreloadClips.1	; 59D95
+.x:
+pop ecx	; 59D97
+pop ebx	; 59D98
+ret	; 59D99
+%endif ; C

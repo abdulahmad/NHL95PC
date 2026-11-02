@@ -10,7 +10,7 @@ register or slot miss is not an escalation: it stays in
 
 ## DrawListItems, waiting on DrawListItem
 
-`DrawListItems` in `src/c/023_2FDD1_misc_dialogs/DrawListItem.c` (lane 1, Mhopkinsinc) compiles to the
+`DrawListItems` in `src/c/pc/misc_dialogs/DrawListItem.c` (lane 1, Mhopkinsinc) compiles to the
 EXE bytes: ranked score 0. It is unmarked because it branches into `DrawListItem`, which is still a
 draft (6 differing). Marking `DrawListItems` alone would point the include at a tail that is not the
 matched block.
@@ -25,7 +25,7 @@ the EXE bytes raises `w` into a tie with `y` and was already tried under GA.
 
 ## CreatePlayoffs and POAfterGame, shared exit
 
-Both live in `src/c/064_86696_season_playoffs/POSeedRound2.c` (lane 2, StaticEck2026) and end in
+Both live in `src/c/front/season/POSeedRound2.c` (lane 2, StaticEck2026) and end in
 `POSeedRound2_x`, the exit of the matched `POSeedRound2`. Watcom keeps that exit in one function of
 the file. Moving either draft to its own file, or marking it while the exit still belongs to
 `POSeedRound2`, changes the matched function.
@@ -75,10 +75,10 @@ hand-asm. cc.py's TextTargets now names a tail in a context copy from another se
 
 ## EditTextField and LeadersScreen, goto
 
-`EditTextField` (`src/c/023_2FDD1_misc_dialogs/EditTextField.c`, lane 1) is 36 differing, cause
+`EditTextField` (`src/c/pc/misc_dialogs/EditTextField.c`, lane 1) is 36 differing, cause
 `register 31/35`. The round that cut it from 62 reduced 21 `goto`s to 4. The ones left rotate the
 loop the way the EXE's block order does (the key poll is the test, the handlers are the body).
-`LeadersScreen` (`src/c/017_21CDE_player_stats/LeadersScreen.c`, lane 1) uses `goto done` for the
+`LeadersScreen` (`src/c/front/stats/LeadersScreen.c`, lane 1) uses `goto done` for the
 same kind of rotation and is 84 differing.
 
 **Recommended ruling:** do not mark either while a `goto` is still in the function. A `goto` is an
@@ -88,7 +88,7 @@ rotation the EXE has, stay rejected. Neither function is at that point today.
 
 ## ExecuteTrade, return type
 
-`ExecuteTrade` (`src/c/032_3DC2C_roster_jersey/ExecuteTrade.c`, lane 1) once compiled to the EXE
+`ExecuteTrade` (`src/c/front/roster/ExecuteTrade.c`, lane 1) once compiled to the EXE
 bytes as `unsigned short`. Its caller `TradePlayers` uses `eax`, so a 16-bit result is the wrong
 type and was reverted. The draft is a slot near-miss (`int` result, spilled `traded` / `kb`).
 
@@ -97,7 +97,7 @@ near-miss stays an ordinary lane 1 draft, not an escalation, as long as the resu
 
 ## assbench, no-op mask
 
-`assbench` (`src/c/037_4842A_engine_player_logic/assbench.c`, lane 1) is 22 differing. The swap test
+`assbench` (`src/c/engine/logic/assbench.c`, lane 1) is 22 differing. The swap test
 is `((p->newpnum < 0x19) & 0xFF) ^ (p->newpos == 0)`. The compare is 0 or 1, so `& 0xFF` does not
 change the value. The EXE widens with `mov edx, eax` / `and edx, 0FFh`, which is a real byte
 extend, not a mask on a boolean.
@@ -107,7 +107,7 @@ lane 1's edit, and it is not by itself a match. Do not hand-asm the function to 
 
 ## InProgress, file-local volatile
 
-`InProgress` (`src/c/045_614C2_scoring_penalty_text/InProgress.c`, lane 2) is 88 differing. The file
+`InProgress` (`src/c/engine/penalty/InProgress.c`, lane 2) is 88 differing. The file
 declares `extern volatile short word_CBC44` so the `goto` loop re-reads it; a plain `short` is loaded
 once into `cx`. The same file also has a function-local `volatile int m` so `d - m` is not folded.
 Both are volatile used to force a reload. The `extern` is in this file only.
@@ -118,7 +118,7 @@ loop) before this comes back. Until that shape exists, leave the draft. Do not h
 
 ## OpenSpeechBank, stack layout
 
-`OpenSpeechBank` (`src/c/061_83459_speech/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
+`OpenSpeechBank` (`src/c/front/speech/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
 frame that matches the EXE puts the `int` locals and the `short nsamples` in a fixed order (`w1`
 before `fh`, `unsigned short type`, `int c`). That order is ordinary GA slot assignment
 ([WCC_INTERNALS.md](WCC_INTERNALS.md)), not a non-idiomatic shape. What is left is the first header
@@ -140,11 +140,11 @@ compiles to the EXE bytes only through an extra variable whose one job is to cha
 
 | function | file (lane) | shape | score with / without |
 | --- | --- | --- | --- |
-| CreateFreeAgent | `052_6D2F8_create_player/CreateFreeAgent.c` (2) | `carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`, a temporary on one of six parallel size stores | 0 / 5 |
-| POInitSchedule | `064_86696_season_playoffs/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
-| LockerRoomLoop | `059_8034B_settings_lockerroom/LockerRoomScreen.c` (2) | `n = hm + 1; hm = n % 0x1A;` through n, dead since the pointer block; a new int instead scores 23 | 0 / 2 |
-| wallcoll | `040_53294_engine_physics_ai/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
-| PassLaneChk | `040_53294_engine_physics_ai/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |
+| CreateFreeAgent | `front/create/CreateFreeAgent.c` (2) | `carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`, a temporary on one of six parallel size stores | 0 / 5 |
+| POInitSchedule | `front/season/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
+| LockerRoomLoop | `front/lockerroom/LockerRoomScreen.c` (2) | `n = hm + 1; hm = n % 0x1A;` through n, dead since the pointer block; a new int instead scores 23 | 0 / 2 |
+| wallcoll | `engine/collide/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
+| PassLaneChk | `engine/collide/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |
 
 Why a copy works: the register allocator sorts conflicts by savings with an unstable Shell sort, so when temporaries
 tie (CreateFreeAgent: the goalie loop's index pair and byte tie at savings 30 / 20 with about ten others), adding

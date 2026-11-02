@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """latepick.py - the registers wcc386 10.0 GA picks after register allocation, in compile order.
 
-  python3 tools/wccre/latepick.py src/c/<seg>/<File>.c [--func NAME]
+  python3 tools/wccre/latepick.py src/c/<module>/<File>.c [--func NAME]
 
 After both allocation passes, a late step (+613C8) turns some constants into registers (a byte store of 0
 becomes `xor dh, dh` / `mov [x], dh`, a constant operand becomes a register load). It asks +612FE for the

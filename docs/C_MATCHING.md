@@ -15,12 +15,12 @@ src/cseg01/<segment>.asm  %include "c/<segment>/<Func>.inc" ◀── build/c/<s
 build/obj → tools/link_src.py → build/HOCKEY.EXE → sha1 check (the same check as the asm build)
 ```
 
-* `<segment>` is the stem of the asm file (`042_59D9A_engine_core`); `<Func>` is the asm label of the first function.
+* `<segment>` is the stem of the asm file (`engine/hockey`); `<Func>` is the asm label of the first function.
 * In the asm, the function is wrapped (by `tools/cc.py mark`):
   ```
-  ; C: src/c/042_59D9A_engine_core/SetSPA.c
+  ; C: src/c/engine/hockey/SetSPA.c
   %ifdef CBUILD
-  %include "c/042_59D9A_engine_core/SetSPA.inc"
+  %include "c/engine/hockey/SetSPA.inc"
   %else
   SetSPA:
   push dword 4	; 59D9A

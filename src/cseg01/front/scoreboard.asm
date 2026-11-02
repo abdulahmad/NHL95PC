@@ -1,0 +1,1426 @@
+; The scoreboard drawn during a game, the Stanley Cup final, and the demo that runs from the title screen.
+bits 32
+%include "hockey.inc"
+section s_150C6 progbits alloc exec nowrite align=1
+extern seed, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV, VisTeam, awtmline, hmtmline, lcline
+extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, ctlavailmask
+extern demomode, fileoncd
+extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
+extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
+extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
+extern demoteammode, cont2team, HomeTeam, dword_CC0EC, introskipped, cddriveptr, mousebtns, linesprites
+extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
+extern FreeMemBlock, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
+extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, GameLoop, ReloadGameGfx, SetupDemoGame
+extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, DemoSetupStub, LoadRink, SeriesLength
+extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, PaPreloadClips, GetPeriodTime, LoadTeamPalette, InputInstall, InputRemove
+extern LoadRockMusic, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
+extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, gamepal, PerTimeTab
+extern energywarn, lcblink, word_CBC60, lcboxon
+global RunDemoGame_x
+global DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties
+global DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, LoadCupFinalSeries, IsCupClinched, CupSeriesWinner, RunDemoGame, AnyInputPressed
+global ReadBE32
+; C: src/c/front/scoreboard/DrawHudPanel.c
+%ifdef CBUILD
+%include "c/front/scoreboard/DrawHudPanel.inc"
+%else
+DrawHudPanel:
+push dword 34h	; 150C6
+call __CHK	; 150CB
+push esi	; 150D0
+push edi	; 150D1
+push ebp	; 150D2
+sub esp, byte 14h	; 150D3
+push eax	; 150D6
+mov ebp, edx	; 150D7
+mov esi, ebx	; 150D9
+test ecx, ecx	; 150DB
+je short .1	; 150DD
+call GetPeriodTime	; 150DF
+cwde	; 150E4
+mov dword [hudclocksec], eax	; 150E5
+mov dword [hudclockmin], eax	; 150EA
+mov ebx, 3Ch	; 150EF
+mov edx, eax	; 150F4
+sar edx, 1Fh	; 150F6
+idiv ebx	; 150F9
+mov dword [hudclockmin], eax	; 150FB
+mov eax, dword [hudclocksec]	; 15100
+mov edx, eax	; 15105
+sar edx, 1Fh	; 15107
+idiv ebx	; 1510A
+mov dword [hudclocksec], edx	; 1510C
+xor edx, edx	; 15112
+mov dword [hudclockhund], edx	; 15114
+.1:
+xor ebx, ebx	; 1511A
+mov dword [dword_C583C], ebx	; 1511C
+mov dword [dword_C5848], ebx	; 15122
+mov dword [dword_C5844], ebx	; 15128
+mov eax, dword [hmtmline-2]	; 1512E
+sar eax, 10h	; 15133
+mov dword [hudhomeline], eax	; 15136
+mov eax, dword [awtmline-2]	; 1513B
+sar eax, 10h	; 15140
+mov dword [hudawayline], eax	; 15143
+mov dword [dword_C5858], ebx	; 15148
+mov dword [dword_C5854], ebx	; 1514E
+mov dword [dword_C5860], ebx	; 15154
+mov dword [dword_C585C], ebx	; 1515A
+call SelectScreenBM	; 15160
+mov ecx, str_PPV	; 15165
+mov ebx, str_Scrbrd2	; 1516A
+cmp byte [fileoncd+016Dh], 1	; 1516F
+jne short .2	; 15176
+mov edx, dword [cddriveptr]	; 15178
+jmp short .3	; 1517E
+.2:
+xor edx, edx	; 15180
+.3:
+lea eax, [byte esp+04h]	; 15182
+call MakePath	; 15186
+push byte 0	; 1518B
+lea eax, [byte esp+08h]	; 1518D
+push eax	; 15191
+call sub_8E8A0	; 15192
+mov edi, eax	; 15197
+add esp, byte 8	; 15199
+mov dword [byte esp+014h], eax	; 1519C
+push str_Srb3	; 151A0
+push eax	; 151A5
+call sub_B30B4	; 151A6
+add esp, byte 8	; 151AB
+push eax	; 151AE
+call sub_B4CF2	; 151AF
+add esp, byte 4	; 151B4
+mov edx, dword [hmscore-2]	; 151B7
+sar edx, 10h	; 151BD
+xor eax, eax	; 151C0
+call DrawPanelScore	; 151C2
+mov edx, dword [awscore-2]	; 151C7
+sar edx, 10h	; 151CD
+mov eax, 1	; 151D0
+call DrawPanelScore	; 151D5
+call SelectScreenBM	; 151DA
+call DrawPanelClock	; 151DF
+test esi, esi	; 151E4
+jne short .4	; 151E6
+push byte 16h	; 151E8
+push dword 98h	; 151EA
+mov ecx, dword [off_C57C8]	; 151EF
+push ecx	; 151F5
+jmp short .5	; 151F6
+.4:
+mov ebx, 64h	; 151F8
+mov eax, esi	; 151FD
+mov edx, esi	; 151FF
+sar edx, 1Fh	; 15201
+idiv ebx	; 15204
+mov esi, edx	; 15206
+push byte 16h	; 15208
+push dword 98h	; 1520A
+mov ebx, 0Ah	; 1520F
+mov eax, edx	; 15214
+sar edx, 1Fh	; 15216
+idiv ebx	; 15219
+mov edx, dword [nosplit eax*4+perioddigits]	; 1521B
+push edx	; 15222
+push edi	; 15223
+call sub_B30B4	; 15224
+add esp, byte 8	; 15229
+push eax	; 1522C
+call sub_B4CD8	; 1522D
+add esp, byte 0Ch	; 15232
+push byte 16h	; 15235
+push dword 0A0h	; 15237
+mov ebx, 0Ah	; 1523C
+mov eax, esi	; 15241
+mov edx, esi	; 15243
+sar edx, 1Fh	; 15245
+idiv ebx	; 15248
+mov ebx, dword [nosplit edx*4+perioddigits]	; 1524A
+push ebx	; 15251
+.5:
+push edi	; 15252
+call sub_B30B4	; 15253
+add esp, byte 8	; 15258
+push eax	; 1525B
+call sub_B4CD8	; 1525C
+add esp, byte 0Ch	; 15261
+mov esi, dword [byte esp+014h]	; 15264
+push esi	; 15268
+call FreeMemBlock	; 15269
+add esp, byte 4	; 1526E
+mov ecx, str_PPV	; 15271
+mov ebx, str_Crests4	; 15276
+cmp byte [fileoncd+057h], 1	; 1527B
+jne short .6	; 15282
+mov edx, dword [cddriveptr]	; 15284
+jmp short .7	; 1528A
+.6:
+xor edx, edx	; 1528C
+.7:
+lea eax, [byte esp+04h]	; 1528E
+call MakePath	; 15292
+push byte 0	; 15297
+lea eax, [byte esp+08h]	; 15299
+push eax	; 1529D
+call sub_8E8A0	; 1529E
+mov esi, eax	; 152A3
+add esp, byte 8	; 152A5
+mov dh, 67h	; 152A8
+mov byte [byte_DCA1B], dh	; 152AA
+mov byte [byte_DC91B], dh	; 152B0
+mov bh, 0FFh	; 152B6
+mov byte [byte_DC9D7], bh	; 152B8
+mov byte [byte_DCAD7], bh	; 152BE
+push byte_DC9D8	; 152C4
+call sub_B4DD4	; 152C9
+add esp, byte 4	; 152CE
+push byte 4	; 152D1
+push byte 4	; 152D3
+mov eax, dword [byte esp+08h]	; 152D5
+mov edi, dword [nosplit eax*4+crestnames]	; 152D9
+push edi	; 152E0
+push esi	; 152E1
+call sub_B30B4	; 152E2
+add esp, byte 8	; 152E7
+push eax	; 152EA
+call sub_B4E50	; 152EB
+add esp, byte 0Ch	; 152F0
+push byte_DC8D8	; 152F3
+call sub_B4DD4	; 152F8
+add esp, byte 4	; 152FD
+push byte 4	; 15300
+push dword 11Ch	; 15302
+mov ebp, dword [nosplit ebp*4+crestnames]	; 15307
+push ebp	; 1530E
+push esi	; 1530F
+call sub_B30B4	; 15310
+add esp, byte 8	; 15315
+push eax	; 15318
+call sub_B4E50	; 15319
+add esp, byte 0Ch	; 1531E
+mov ch, 43h	; 15321
+mov byte [byte_DCA1B], ch	; 15323
+mov byte [byte_DC91B], ch	; 15329
+push esi	; 1532F
+call FreeMemBlock	; 15330
+add esp, byte 4	; 15335
+push byte 14h	; 15338
+push byte 2Ah	; 1533A
+mov eax, dword [hudhomeline]	; 1533C
+mov edx, dword [nosplit eax*4+linesprites]	; 15341
+push edx	; 15348
+call sub_B4CD8	; 15349
+add esp, byte 0Ch	; 1534E
+push byte 14h	; 15351
+push dword 0FBh	; 15353
+mov eax, dword [hudawayline]	; 15358
+mov ebx, dword [nosplit eax*4+linesprites]	; 1535D
+push ebx	; 15364
+call sub_B4CD8	; 15365
+add esp, byte 0Ch	; 1536A
+add esp, byte 18h	; 1536D
+pop ebp	; 15370
+pop edi	; 15371
+pop esi	; 15372
+ret	; 15373
+%endif ; C
+; C: src/c/front/scoreboard/TickPanelClock.c
+%ifdef CBUILD
+%include "c/front/scoreboard/TickPanelClock.inc"
+%else
+TickPanelClock:
+push dword 14h	; 15374
+call __CHK	; 15379
+push ebx	; 1537E
+push ecx	; 1537F
+push edx	; 15380
+push esi	; 15381
+mov edx, dword [hudclockmin]	; 15382
+mov dword [dword_C5710], edx	; 15388
+mov edx, dword [hudclocksec]	; 1538E
+mov dword [dword_C5714], edx	; 15394
+mov edx, dword [hudclockhund]	; 1539A
+mov dword [dword_C5718], edx	; 153A0
+sub edx, eax	; 153A6
+mov dword [hudclockhund], edx	; 153A8
+test edx, edx	; 153AE
+jge short .1	; 153B0
+lea ecx, [byte edx+064h]	; 153B2
+mov dword [hudclockhund], ecx	; 153B5
+mov esi, dword [hudclocksec]	; 153BB
+dec esi	; 153C1
+mov dword [hudclocksec], esi	; 153C2
+test esi, esi	; 153C8
+jge short .1	; 153CA
+mov dword [hudclocksec], 3Bh	; 153CC
+mov eax, dword [hudclockmin]	; 153D6
+dec eax	; 153DB
+mov dword [hudclockmin], eax	; 153DC
+test eax, eax	; 153E1
+jge short .1	; 153E3
+xor ebx, ebx	; 153E5
+mov dword [hudclockhund], ebx	; 153E7
+mov dword [hudclocksec], ebx	; 153ED
+mov dword [hudclockmin], ebx	; 153F3
+xor eax, eax	; 153F9
+pop esi	; 153FB
+pop edx	; 153FC
+pop ecx	; 153FD
+pop ebx	; 153FE
+ret	; 153FF
+.1:
+mov eax, 1	; 15400
+pop esi	; 15405
+pop edx	; 15406
+pop ecx	; 15407
+pop ebx	; 15408
+ret	; 15409
+%endif ; C
+; C: src/c/pc/file_utils/UpdateHudPanel.c (DrawPanelClockDigits)
+%ifdef CBUILD
+%include "c/pc/file_utils/UpdateHudPanel.DrawPanelClockDigits.inc"
+%else
+DrawPanelClockDigits:
+push dword 28h	; 1540A
+call __CHK	; 1540F
+push ebx	; 15414
+push ecx	; 15415
+push edx	; 15416
+push esi	; 15417
+push edi	; 15418
+push ebp	; 15419
+mov edx, dword [hudclockmin]	; 1541A
+test edx, edx	; 15420
+jne near .6	; 15422
+cmp edx, dword [dword_C5710]	; 15428
+je short .1	; 1542E
+push byte 3	; 15430
+push dword 0AAh	; 15432
+mov edi, dword [clockcolon]	; 15437
+push edi	; 1543D
+call sub_B4CD8	; 1543E
+add esp, byte 0Ch	; 15443
+.1:
+mov eax, dword [dword_C5714]	; 15446
+mov ebp, dword [hudclocksec]	; 1544B
+cmp eax, ebp	; 15451
+je near .5	; 15453
+mov ebx, 0Ah	; 15459
+mov edx, eax	; 1545E
+sar edx, 1Fh	; 15460
+idiv ebx	; 15463
+mov ebx, eax	; 15465
+mov ecx, 0Ah	; 15467
+mov eax, ebp	; 1546C
+mov edx, ebp	; 1546E
+sar edx, 1Fh	; 15470
+idiv ecx	; 15473
+cmp ebx, eax	; 15475
+je short .4	; 15477
+cmp ebp, ecx	; 15479
+jge short .2	; 1547B
+push byte 3	; 1547D
+push dword 8Ch	; 1547F
+mov ecx, dword [clockcolon]	; 15484
+push ecx	; 1548A
+jmp short .3	; 1548B
+.2:
+push byte 3	; 1548D
+push dword 8Ch	; 1548F
+mov ebx, dword [nosplit eax*4+clockdigits]	; 15494
+push ebx	; 1549B
+.3:
+call sub_B4CD8	; 1549C
+add esp, byte 0Ch	; 154A1
+.4:
+mov ebx, 0Ah	; 154A4
+mov eax, dword [dword_C5714]	; 154A9
+mov edx, eax	; 154AE
+sar edx, 1Fh	; 154B0
+idiv ebx	; 154B3
+mov ebx, edx	; 154B5
+mov ecx, 0Ah	; 154B7
+mov eax, dword [hudclocksec]	; 154BC
+mov edx, eax	; 154C1
+sar edx, 1Fh	; 154C3
+idiv ecx	; 154C6
+cmp ebx, edx	; 154C8
+je short .5	; 154CA
+push byte 3	; 154CC
+push dword 95h	; 154CE
+mov esi, dword [nosplit edx*4+clockdigits]	; 154D3
+push esi	; 154DA
+call sub_B4CD8	; 154DB
+add esp, byte 0Ch	; 154E0
+.5:
+mov ebx, 0Ah	; 154E3
+mov eax, dword [dword_C5718]	; 154E8
+mov edx, eax	; 154ED
+sar edx, 1Fh	; 154EF
+idiv ebx	; 154F2
+mov ebx, eax	; 154F4
+mov ecx, 0Ah	; 154F6
+mov eax, dword [hudclockhund]	; 154FB
+mov edx, eax	; 15500
+sar edx, 1Fh	; 15502
+idiv ecx	; 15505
+cmp ebx, eax	; 15507
+je near UpdateHudPanel_x	; 15509
+push byte 3	; 1550F
+push dword 0A1h	; 15511
+mov edi, dword [nosplit eax*4+clockdigits]	; 15516
+push edi	; 1551D
+jmp near .12	; 1551E
+.6:
+mov eax, dword [dword_C5710]	; 15523
+cmp eax, edx	; 15528
+je near .10	; 1552A
+mov ebx, 0Ah	; 15530
+mov edx, eax	; 15535
+sar edx, 1Fh	; 15537
+idiv ebx	; 1553A
+mov ebx, eax	; 1553C
+mov ecx, 0Ah	; 1553E
+mov eax, dword [hudclockmin]	; 15543
+mov edx, eax	; 15548
+sar edx, 1Fh	; 1554A
+idiv ecx	; 1554D
+cmp ebx, eax	; 1554F
+je short .9	; 15551
+cmp dword [hudclockmin], byte 0Ah	; 15553
+jge short .7	; 1555A
+push byte 3	; 1555C
+push dword 8Ch	; 1555E
+mov edi, dword [clockcolon]	; 15563
+push edi	; 15569
+jmp short .8	; 1556A
+.7:
+push byte 3	; 1556C
+push dword 8Ch	; 1556E
+mov esi, dword [nosplit eax*4+clockdigits]	; 15573
+push esi	; 1557A
+.8:
+call sub_B4CD8	; 1557B
+add esp, byte 0Ch	; 15580
+.9:
+mov ebx, 0Ah	; 15583
+mov eax, dword [dword_C5710]	; 15588
+mov edx, eax	; 1558D
+sar edx, 1Fh	; 1558F
+idiv ebx	; 15592
+mov ebx, edx	; 15594
+mov ecx, 0Ah	; 15596
+mov eax, dword [hudclockmin]	; 1559B
+mov edx, eax	; 155A0
+sar edx, 1Fh	; 155A2
+idiv ecx	; 155A5
+cmp ebx, edx	; 155A7
+je short .10	; 155A9
+push byte 3	; 155AB
+push dword 95h	; 155AD
+mov ebp, dword [nosplit edx*4+clockdigits]	; 155B2
+push ebp	; 155B9
+call sub_B4CD8	; 155BA
+add esp, byte 0Ch	; 155BF
+.10:
+mov eax, dword [dword_C5714]	; 155C2
+cmp eax, dword [hudclocksec]	; 155C7
+je near UpdateHudPanel_x	; 155CD
+mov ebx, 0Ah	; 155D3
+mov edx, eax	; 155D8
+sar edx, 1Fh	; 155DA
+idiv ebx	; 155DD
+mov ebx, eax	; 155DF
+mov ecx, 0Ah	; 155E1
+mov eax, dword [hudclocksec]	; 155E6
+mov edx, eax	; 155EB
+sar edx, 1Fh	; 155ED
+idiv ecx	; 155F0
+cmp ebx, eax	; 155F2
+je short .11	; 155F4
+push byte 3	; 155F6
+push dword 0A1h	; 155F8
+mov ebx, dword [nosplit eax*4+clockdigits]	; 155FD
+push ebx	; 15604
+call sub_B4CD8	; 15605
+add esp, byte 0Ch	; 1560A
+.11:
+mov ebx, 0Ah	; 1560D
+mov eax, dword [dword_C5714]	; 15612
+mov edx, eax	; 15617
+sar edx, 1Fh	; 15619
+idiv ebx	; 1561C
+mov ebx, edx	; 1561E
+mov ecx, 0Ah	; 15620
+mov eax, dword [hudclocksec]	; 15625
+mov edx, eax	; 1562A
+sar edx, 1Fh	; 1562C
+idiv ecx	; 1562F
+cmp ebx, edx	; 15631
+je near UpdateHudPanel_x	; 15633
+push byte 3	; 15639
+push dword 0AAh	; 1563B
+mov ecx, dword [nosplit edx*4+clockdigits]	; 15640
+push ecx	; 15647
+.12:
+call sub_B4CD8	; 15648
+add esp, byte 0Ch	; 1564D
+jmp near UpdateHudPanel_x	; 15650
+%endif ; C
+; C: src/c/pc/file_utils/DrawPanelLine.c (TickPanelPenalties)
+%ifdef CBUILD
+%include "c/pc/file_utils/DrawPanelLine.TickPanelPenalties.inc"
+%else
+TickPanelPenalties:
+push dword 18h	; 15655
+call __CHK	; 1565A
+push ebx	; 1565F
+push ecx	; 15660
+push esi	; 15661
+push edi	; 15662
+push ebp	; 15663
+mov ecx, eax	; 15664
+xor ebp, ebp	; 15666
+.1:
+mov eax, ebp	; 15668
+shl eax, 3	; 1566A
+add eax, ecx	; 1566D
+mov bx, word [byte eax+06h]	; 1566F
+sub ebx, edx	; 15673
+mov word [byte eax+06h], bx	; 15675
+test bx, bx	; 15679
+jge short .2	; 1567C
+mov edi, ebx	; 1567E
+add edi, byte 64h	; 15680
+mov word [byte eax+06h], di	; 15683
+mov bx, word [byte eax+04h]	; 15687
+dec ebx	; 1568B
+mov word [byte eax+04h], bx	; 1568C
+test bx, bx	; 15690
+jge short .2	; 15693
+mov word [byte eax+04h], 3Bh	; 15695
+mov di, word [byte eax+02h]	; 1569B
+dec edi	; 1569F
+mov word [byte eax+02h], di	; 156A0
+test di, di	; 156A4
+jge short .2	; 156A7
+mov word [byte eax+02h], 0	; 156A9
+mov word [byte eax+04h], 0	; 156AF
+mov word [byte eax+06h], 0	; 156B5
+mov word [eax], 0FFFFh	; 156BB
+.2:
+inc ebp	; 156C0
+cmp ebp, byte 2	; 156C1
+jl short TickPanelPenalties.1	; 156C4
+xor ebp, ebp	; 156C6
+.3:
+mov eax, ebp	; 156C8
+cmp word [ecx+eax*8], byte 0	; 156CA
+jge short .7	; 156CF
+mov ebx, ebp	; 156D1
+lea edx, [byte ebp+01h]	; 156D3
+jmp short .6	; 156D6
+.4:
+mov eax, edx	; 156D8
+shl eax, 3	; 156DA
+add eax, ecx	; 156DD
+cmp word [eax], byte 0	; 156DF
+jl short .5	; 156E3
+mov edi, ebx	; 156E5
+shl edi, 3	; 156E7
+add edi, ecx	; 156EA
+mov esi, eax	; 156EC
+movsd	; 156EE
+movsd	; 156EF
+mov word [eax], 0FFFFh	; 156F0
+inc ebx	; 156F5
+.5:
+inc edx	; 156F6
+.6:
+cmp edx, byte 8	; 156F7
+jl short TickPanelPenalties.4	; 156FA
+.7:
+inc ebp	; 156FC
+cmp ebp, byte 7	; 156FD
+jl short TickPanelPenalties.3	; 15700
+jmp near DrawPanelLine_x	; 15702
+%endif ; C
+; C: src/c/pc/file_utils/DrawPanelLine.c (DrawEnergyBar)
+%ifdef CBUILD
+%include "c/pc/file_utils/DrawPanelLine.DrawEnergyBar.inc"
+%else
+DrawEnergyBar:
+push dword 38h	; 15707
+call __CHK	; 1570C
+push ebx	; 15711
+push ecx	; 15712
+push esi	; 15713
+push edi	; 15714
+push ebp	; 15715
+sub esp, byte 0Ch	; 15716
+mov esi, eax	; 15719
+mov edi, edx	; 1571B
+cmp edx, 0A0h	; 1571D
+setg al	; 15723
+mov ebp, eax	; 15726
+and ebp, 0FFh	; 15728
+add ebp, ebp	; 1572E
+cmp word [dword ebp+energywarn], byte 0	; 15730
+je short .1	; 15738
+xor ebx, ebx	; 1573A
+mov dword [byte esp+08h], ebx	; 1573C
+mov ebp, 7	; 15740
+jmp short .2	; 15745
+.1:
+mov dword [byte esp+08h], 67h	; 15747
+xor ebp, ebp	; 1574F
+.2:
+mov ecx, dword [byte esp+08h]	; 15751
+push ecx	; 15755
+push byte 3	; 15756
+push esi	; 15758
+push byte 1Ah	; 15759
+lea eax, [byte edi+09h]	; 1575B
+sub eax, esi	; 1575E
+push eax	; 15760
+call sub_90D20	; 15761
+add esp, byte 14h	; 15766
+mov eax, dword [byte esp+08h]	; 15769
+push eax	; 1576D
+push byte 3	; 1576E
+push esi	; 15770
+push byte 1Ah	; 15771
+lea eax, [byte edi+010h]	; 15773
+mov dword [byte esp+010h], eax	; 15776
+push eax	; 1577A
+call sub_90D20	; 1577B
+add esp, byte 14h	; 15780
+push ebp	; 15783
+push byte 3	; 15784
+mov eax, 8	; 15786
+sub eax, esi	; 1578B
+mov dword [byte esp+0Ch], eax	; 1578D
+push eax	; 15791
+push byte 1Ah	; 15792
+inc edi	; 15794
+push edi	; 15795
+call sub_90D20	; 15796
+add esp, byte 14h	; 1579B
+push ebp	; 1579E
+push byte 3	; 1579F
+mov ecx, dword [byte esp+0Ch]	; 157A1
+push ecx	; 157A5
+push byte 1Ah	; 157A6
+add esi, dword [byte esp+010h]	; 157A8
+push esi	; 157AC
+call sub_90D20	; 157AD
+add esp, byte 14h	; 157B2
+add esp, byte 0Ch	; 157B5
+jmp near DrawPanelLine_x	; 157B8
+%endif ; C
+; C: src/c/front/scoreboard/DrawLineGroupBars.c
+%ifdef CBUILD
+%include "c/front/scoreboard/DrawLineGroupBars.inc"
+%else
+DrawLineGroupBars:
+push dword 4Ch	; 157BD
+call __CHK	; 157C2
+push esi	; 157C7
+push edi	; 157C8
+push ebp	; 157C9
+sub esp, byte 28h	; 157CA
+mov esi, eax	; 157CD
+mov dword [byte esp+014h], ebx	; 157CF
+mov dword [byte esp+010h], ecx	; 157D3
+cmp dword [byte esp+038h], 0A0h	; 157D7
+setg al	; 157DF
+movzx ebp, al	; 157E2
+mov dword [byte esp+0Ch], ebp	; 157E5
+add ebp, ebp	; 157E9
+cmp word [dword ebp+lcboxon], byte 0	; 157EB
+je short .1	; 157F3
+mov ebp, dword [dword ebp+lcline-2]	; 157F5
+sar ebp, 10h	; 157FB
+jmp short .2	; 157FE
+.1:
+mov ebp, dword [byte esp+014h]	; 15800
+.2:
+mov dword [byte esp+01Ch], ebp	; 15804
+mov ecx, dword [byte esp+01Ch]	; 15808
+cmp ecx, byte 4	; 1580C
+jb short .3	; 1580F
+cmp ecx, byte 5	; 15811
+jbe short .5	; 15814
+cmp ecx, byte 7	; 15816
+jbe short .7	; 15819
+jmp near .9	; 1581B
+.3:
+cmp dword [esi], byte 0	; 15820
+jne short .4	; 15823
+mov ebp, dword [edx]	; 15825
+push ebp	; 15827
+call sub_B4CF2	; 15828
+add esp, byte 4	; 1582D
+mov dword [esi], 1	; 15830
+.4:
+mov edi, 8	; 15836
+xor eax, eax	; 1583B
+mov dword [byte esp+08h], eax	; 1583D
+mov dword [byte esp+018h], 4	; 15841
+jmp short .9	; 15849
+.5:
+cmp dword [esi], byte 0	; 1584B
+jne short .6	; 1584E
+mov ebx, dword [byte edx+04h]	; 15850
+push ebx	; 15853
+call sub_B4CF2	; 15854
+add esp, byte 4	; 15859
+mov dword [esi], 1	; 1585C
+.6:
+mov edi, 0Eh	; 15862
+mov dword [byte esp+08h], 4	; 15867
+mov dword [byte esp+018h], 6	; 1586F
+jmp short .9	; 15877
+.7:
+cmp dword [esi], byte 0	; 15879
+jne short .8	; 1587C
+mov ecx, dword [byte edx+08h]	; 1587E
+push ecx	; 15881
+call sub_B4CF2	; 15882
+add esp, byte 4	; 15887
+mov dword [esi], 1	; 1588A
+.8:
+mov edi, 0Eh	; 15890
+mov dword [byte esp+08h], 6	; 15895
+mov dword [byte esp+018h], 8	; 1589D
+.9:
+mov ebp, dword [byte esp+08h]	; 158A5
+jmp near .15	; 158A9
+.10:
+cmp ebp, dword [byte esp+01Ch]	; 158AE
+jne short .11	; 158B2
+mov edx, dword [byte esp+0Ch]	; 158B4
+cmp word [nosplit edx*2+lcblink], byte 0	; 158B8
+je short .11	; 158C1
+mov dword [byte esp+024h], 61h	; 158C3
+mov dword [byte esp+020h], 7	; 158CB
+jmp short .14	; 158D3
+.11:
+cmp ebp, dword [byte esp+014h]	; 158D5
+jne short .12	; 158D9
+mov edx, 21h	; 158DB
+jmp short .13	; 158E0
+.12:
+mov edx, 67h	; 158E2
+.13:
+mov dword [byte esp+024h], edx	; 158E7
+xor eax, eax	; 158EB
+mov dword [byte esp+020h], eax	; 158ED
+.14:
+mov edx, ebp	; 158F1
+shl edx, 2	; 158F3
+add edx, dword [byte esp+010h]	; 158F6
+mov esi, 0C8h	; 158FA
+mov eax, dword [edx]	; 158FF
+mov edx, eax	; 15901
+sar edx, 1Fh	; 15903
+idiv esi	; 15906
+mov esi, eax	; 15908
+mov eax, dword [byte esp+024h]	; 1590A
+push eax	; 1590E
+push byte 3	; 1590F
+push esi	; 15911
+push edi	; 15912
+mov edx, dword [byte esp+048h]	; 15913
+add edx, byte 15h	; 15917
+sub edx, esi	; 1591A
+push edx	; 1591C
+call sub_90D20	; 1591D
+add esp, byte 14h	; 15922
+mov edx, dword [byte esp+024h]	; 15925
+push edx	; 15929
+push byte 3	; 1592A
+push esi	; 1592C
+push edi	; 1592D
+mov edx, dword [byte esp+048h]	; 1592E
+add edx, byte 20h	; 15932
+mov dword [byte esp+010h], edx	; 15935
+push edx	; 15939
+call sub_90D20	; 1593A
+add esp, byte 14h	; 1593F
+mov ecx, dword [byte esp+020h]	; 15942
+push ecx	; 15946
+push byte 3	; 15947
+mov edx, 14h	; 15949
+sub edx, esi	; 1594E
+mov dword [byte esp+0Ch], edx	; 15950
+push edx	; 15954
+push edi	; 15955
+mov edx, dword [byte esp+048h]	; 15956
+inc edx	; 1595A
+push edx	; 1595B
+call sub_90D20	; 1595C
+add esp, byte 14h	; 15961
+mov edx, dword [byte esp+020h]	; 15964
+push edx	; 15968
+push byte 3	; 15969
+mov ebx, dword [byte esp+0Ch]	; 1596B
+push ebx	; 1596F
+push edi	; 15970
+add esi, dword [byte esp+010h]	; 15971
+push esi	; 15975
+call sub_90D20	; 15976
+add esp, byte 14h	; 1597B
+inc ebp	; 1597E
+add edi, byte 6	; 1597F
+.15:
+cmp ebp, dword [byte esp+018h]	; 15982
+jl near DrawLineGroupBars.10	; 15986
+add esp, byte 28h	; 1598C
+pop ebp	; 1598F
+pop edi	; 15990
+pop esi	; 15991
+ret 4	; 15992
+%endif ; C
+; C: src/c/pc/file_utils/DrawPanelLine.c (DrawPanelPenalties)
+%ifdef CBUILD
+%include "c/pc/file_utils/DrawPanelLine.DrawPanelPenalties.inc"
+%else
+DrawPanelPenalties:
+push dword 2Ch	; 15995
+call __CHK	; 1599A
+push ebx	; 1599F
+push ecx	; 159A0
+push esi	; 159A1
+push edi	; 159A2
+push ebp	; 159A3
+sub esp, byte 4	; 159A4
+push eax	; 159A7
+mov edi, edx	; 159A8
+xor edx, edx	; 159AA
+mov dword [byte esp+04h], edx	; 159AC
+mov esi, 9	; 159B0
+jmp near .8	; 159B5
+.1:
+mov eax, ebx	; 159BA
+shl eax, 3	; 159BC
+add eax, dword [esp]	; 159BF
+lea edx, [byte edi+0Ah]	; 159C2
+mov bx, word [eax]	; 159C5
+test bx, bx	; 159C8
+jl near .6	; 159CB
+cmp bx, byte 0Ah	; 159D1
+jge short .2	; 159D5
+push esi	; 159D7
+push edx	; 159D8
+mov ebx, dword [dword_DC2B8]	; 159D9
+push ebx	; 159DF
+jmp short .3	; 159E0
+.2:
+push esi	; 159E2
+push edx	; 159E3
+movsx edx, bx	; 159E4
+mov ebx, 0Ah	; 159E7
+mov eax, edx	; 159EC
+sar edx, 1Fh	; 159EE
+idiv ebx	; 159F1
+mov edx, dword [nosplit eax*4+penaltydigits]	; 159F3
+push edx	; 159FA
+.3:
+call sub_B4CD8	; 159FB
+add esp, byte 0Ch	; 15A00
+push esi	; 15A03
+lea eax, [byte edi+010h]	; 15A04
+push eax	; 15A07
+mov ebp, dword [byte esp+0Ch]	; 15A08
+shl ebp, 3	; 15A0C
+add ebp, dword [byte esp+08h]	; 15A0F
+movsx edx, word [byte ebp+00h]	; 15A13
+mov ebx, 0Ah	; 15A17
+mov eax, edx	; 15A1C
+sar edx, 1Fh	; 15A1E
+idiv ebx	; 15A21
+mov edx, dword [nosplit edx*4+penaltydigits]	; 15A23
+push edx	; 15A2A
+call sub_B4CD8	; 15A2B
+add esp, byte 0Ch	; 15A30
+lea eax, [byte edi+01Bh]	; 15A33
+cmp word [byte ebp+02h], byte 0Ah	; 15A36
+jge short .4	; 15A3B
+push esi	; 15A3D
+push eax	; 15A3E
+mov ecx, dword [dword_DC2B8]	; 15A3F
+push ecx	; 15A45
+jmp short .5	; 15A46
+.4:
+push esi	; 15A48
+push eax	; 15A49
+mov edx, dword [byte ebp+00h]	; 15A4A
+sar edx, 10h	; 15A4D
+mov ebx, 0Ah	; 15A50
+mov eax, edx	; 15A55
+sar edx, 1Fh	; 15A57
+idiv ebx	; 15A5A
+mov ebx, dword [nosplit eax*4+penaltydigits]	; 15A5C
+push ebx	; 15A63
+.5:
+call sub_B4CD8	; 15A64
+add esp, byte 0Ch	; 15A69
+push esi	; 15A6C
+lea eax, [byte edi+021h]	; 15A6D
+push eax	; 15A70
+mov ebp, dword [byte esp+0Ch]	; 15A71
+shl ebp, 3	; 15A75
+add ebp, dword [byte esp+08h]	; 15A78
+mov edx, dword [byte ebp+00h]	; 15A7C
+sar edx, 10h	; 15A7F
+mov ebx, 0Ah	; 15A82
+mov eax, edx	; 15A87
+sar edx, 1Fh	; 15A89
+idiv ebx	; 15A8C
+mov edx, dword [nosplit edx*4+penaltydigits]	; 15A8E
+push edx	; 15A95
+call sub_B4CD8	; 15A96
+add esp, byte 0Ch	; 15A9B
+push esi	; 15A9E
+lea eax, [byte edi+02Ah]	; 15A9F
+push eax	; 15AA2
+mov edx, dword [byte ebp+02h]	; 15AA3
+sar edx, 10h	; 15AA6
+mov ebx, 0Ah	; 15AA9
+mov eax, edx	; 15AAE
+sar edx, 1Fh	; 15AB0
+idiv ebx	; 15AB3
+mov ebx, dword [nosplit eax*4+penaltydigits]	; 15AB5
+push ebx	; 15ABC
+call sub_B4CD8	; 15ABD
+add esp, byte 0Ch	; 15AC2
+push esi	; 15AC5
+lea eax, [byte edi+030h]	; 15AC6
+push eax	; 15AC9
+mov edx, dword [byte ebp+02h]	; 15ACA
+sar edx, 10h	; 15ACD
+mov ebx, 0Ah	; 15AD0
+mov eax, edx	; 15AD5
+sar edx, 1Fh	; 15AD7
+idiv ebx	; 15ADA
+mov ecx, dword [nosplit edx*4+penaltydigits]	; 15ADC
+push ecx	; 15AE3
+jmp short .7	; 15AE4
+.6:
+push esi	; 15AE6
+push edx	; 15AE7
+mov ebp, dword [dword_DC2B8]	; 15AE8
+push ebp	; 15AEE
+call sub_B4CD8	; 15AEF
+add esp, byte 0Ch	; 15AF4
+push esi	; 15AF7
+lea eax, [byte edi+010h]	; 15AF8
+push eax	; 15AFB
+mov eax, dword [dword_DC2B8]	; 15AFC
+push eax	; 15B01
+call sub_B4CD8	; 15B02
+add esp, byte 0Ch	; 15B07
+push esi	; 15B0A
+lea eax, [byte edi+01Bh]	; 15B0B
+push eax	; 15B0E
+mov edx, dword [dword_DC2B8]	; 15B0F
+push edx	; 15B15
+call sub_B4CD8	; 15B16
+add esp, byte 0Ch	; 15B1B
+push esi	; 15B1E
+lea eax, [byte edi+021h]	; 15B1F
+push eax	; 15B22
+mov ebx, dword [dword_DC2B8]	; 15B23
+push ebx	; 15B29
+call sub_B4CD8	; 15B2A
+add esp, byte 0Ch	; 15B2F
+push esi	; 15B32
+lea eax, [byte edi+02Ah]	; 15B33
+push eax	; 15B36
+mov ecx, dword [dword_DC2B8]	; 15B37
+push ecx	; 15B3D
+call sub_B4CD8	; 15B3E
+add esp, byte 0Ch	; 15B43
+push esi	; 15B46
+lea eax, [byte edi+030h]	; 15B47
+push eax	; 15B4A
+mov ebp, dword [dword_DC2B8]	; 15B4B
+push ebp	; 15B51
+.7:
+call sub_B4CD8	; 15B52
+add esp, byte 0Ch	; 15B57
+inc dword [byte esp+04h]	; 15B5A
+add esi, byte 5	; 15B5E
+.8:
+mov ebx, dword [byte esp+04h]	; 15B61
+cmp ebx, byte 4	; 15B65
+jl near DrawPanelPenalties.1	; 15B68
+add esp, byte 8	; 15B6E
+jmp near DrawPanelLine_x	; 15B71
+%endif ; C
+; C: src/c/front/scoreboard/LoadCupFinalSeries.c
+%ifdef CBUILD
+%include "c/front/scoreboard/LoadCupFinalSeries.inc"
+%else
+LoadCupFinalSeries:
+push dword 28h	; 15B76
+call __CHK	; 15B7B
+push ebx	; 15B80
+push ecx	; 15B81
+push edx	; 15B82
+push esi	; 15B83
+push edi	; 15B84
+sub esp, byte 4	; 15B85
+mov eax, dword [HomeTeam-2]	; 15B88
+sar eax, 10h	; 15B8D
+mov edx, dword [VisTeam-2]	; 15B90
+sar edx, 10h	; 15B96
+mov eax, dword [nosplit eax*4+teamdivflags]	; 15B99
+or eax, dword [nosplit edx*4+teamdivflags]	; 15BA0
+test al, 3	; 15BA7
+je near .2	; 15BA9
+test al, 0Ch	; 15BAF
+je short .2	; 15BB1
+push byte 20h	; 15BB3
+push byte 2Ah	; 15BB5
+push str_Stanley	; 15BB7
+call sub_8CCA8	; 15BBC
+add esp, byte 0Ch	; 15BC1
+mov dword [cupseries], eax	; 15BC4
+mov eax, esp	; 15BC9
+call LoadScheduleDB	; 15BCB
+mov eax, dword [esp]	; 15BD0
+add eax, byte 2	; 15BD3
+mov dword [esp], eax	; 15BD6
+xor edx, edx	; 15BD9
+.1:
+lea esi, [dword edx+04A6h]	; 15BDB
+mov eax, esi	; 15BE1
+shl eax, 2	; 15BE3
+sub eax, esi	; 15BE6
+add eax, eax	; 15BE8
+mov esi, dword [esp]	; 15BEA
+add esi, eax	; 15BED
+mov eax, edx	; 15BEF
+shl eax, 2	; 15BF1
+sub eax, edx	; 15BF4
+add eax, eax	; 15BF6
+mov edi, dword [cupseries]	; 15BF8
+add edi, eax	; 15BFE
+movsd	; 15C00
+movsw	; 15C01
+inc edx	; 15C03
+cmp edx, byte 7	; 15C04
+jl short LoadCupFinalSeries.1	; 15C07
+mov eax, dword [esp]	; 15C09
+sub eax, byte 2	; 15C0C
+mov dword [esp], eax	; 15C0F
+je short .x	; 15C12
+push eax	; 15C14
+call FreeMemBlock	; 15C15
+add esp, byte 4	; 15C1A
+jmp short .x	; 15C1D
+.2:
+xor ecx, ecx	; 15C1F
+mov dword [cupseries], ecx	; 15C21
+.x:
+add esp, byte 4	; 15C27
+pop edi	; 15C2A
+pop esi	; 15C2B
+pop edx	; 15C2C
+pop ecx	; 15C2D
+pop ebx	; 15C2E
+ret	; 15C2F
+%endif ; C
+; C: src/c/front/scoreboard/IsCupClinched.c
+%ifdef CBUILD
+%include "c/front/scoreboard/IsCupClinched.inc"
+%else
+IsCupClinched:
+push dword 14h	; 15C30
+call __CHK	; 15C35
+push ebx	; 15C3A
+push ecx	; 15C3B
+push eax	; 15C3C
+push edx	; 15C3D
+cmp dword [cupseries], byte 0	; 15C3E
+jne short .2	; 15C45
+.1:
+xor eax, eax	; 15C47
+jmp near .x	; 15C49
+.2:
+xor ebx, ebx	; 15C4E
+jmp short .4	; 15C50
+.3:
+inc ebx	; 15C52
+.4:
+mov eax, ebx	; 15C53
+shl eax, 2	; 15C55
+sub eax, ebx	; 15C58
+lea edx, [eax+eax]	; 15C5A
+mov eax, dword [cupseries]	; 15C5D
+add eax, edx	; 15C62
+cmp byte [byte eax+04h], 0FFh	; 15C64
+jne short IsCupClinched.3	; 15C68
+mov cl, byte [byte esp+04h]	; 15C6A
+mov byte [byte eax+04h], cl	; 15C6E
+mov eax, dword [cupseries]	; 15C71
+add edx, eax	; 15C76
+mov al, byte [esp]	; 15C78
+mov byte [byte edx+05h], al	; 15C7B
+cmp dword [gamemode], byte 1	; 15C7E
+jne short .5	; 15C85
+mov edx, dword [gameopts]	; 15C87
+shl edx, 11h	; 15C8D
+shr edx, 1Dh	; 15C90
+jmp short .6	; 15C93
+.5:
+mov eax, dword [cupseries]	; 15C95
+call SeriesLength	; 15C9A
+mov edx, eax	; 15C9F
+.6:
+mov eax, dword [cupseries]	; 15CA1
+call CupSeriesWinner	; 15CA6
+mov edx, eax	; 15CAB
+mov eax, ebx	; 15CAD
+shl eax, 2	; 15CAF
+sub eax, ebx	; 15CB2
+lea ebx, [eax+eax]	; 15CB4
+mov eax, dword [cupseries]	; 15CB7
+mov byte [byte ebx+eax+05h], 0FFh	; 15CBC
+mov cl, byte [byte ebx+eax+05h]	; 15CC1
+mov eax, dword [cupseries]	; 15CC5
+mov byte [byte ebx+eax+04h], cl	; 15CCA
+test edx, edx	; 15CCE
+jl near IsCupClinched.1	; 15CD0
+mov eax, 1	; 15CD6
+.x:
+add esp, byte 8	; 15CDB
+pop ecx	; 15CDE
+pop ebx	; 15CDF
+ret	; 15CE0
+%endif ; C
+; C: src/c/front/scoreboard/CupSeriesWinner.c
+%ifdef CBUILD
+%include "c/front/scoreboard/CupSeriesWinner.inc"
+%else
+CupSeriesWinner:
+push dword 24h	; 15CE1
+call __CHK	; 15CE6
+push ebx	; 15CEB
+push ecx	; 15CEC
+push esi	; 15CED
+push edi	; 15CEE
+push ebp	; 15CEF
+sub esp, byte 0Ch	; 15CF0
+mov ebp, edx	; 15CF3
+shr ebp, 1	; 15CF5
+inc ebp	; 15CF7
+xor edx, edx	; 15CF8
+mov dl, byte [byte eax+02h]	; 15CFA
+mov dword [byte esp+08h], edx	; 15CFD
+xor edx, edx	; 15D01
+mov dl, byte [byte eax+03h]	; 15D03
+mov dword [byte esp+04h], edx	; 15D06
+xor edx, edx	; 15D0A
+xor ebx, ebx	; 15D0C
+jmp short .7	; 15D0E
+.1:
+cmp byte [byte eax+04h], 0FFh	; 15D10
+jne short .2	; 15D14
+mov eax, 0FFFFFFFFh	; 15D16
+jmp short .x	; 15D1B
+.2:
+movzx esi, byte [byte eax+02h]	; 15D1D
+mov dword [esp], esi	; 15D21
+lea edi, [byte ebx+01h]	; 15D24
+lea esi, [byte edx+01h]	; 15D27
+mov ecx, dword [esp]	; 15D2A
+cmp ecx, dword [byte esp+08h]	; 15D2D
+jne short .4	; 15D31
+mov cl, byte [byte eax+04h]	; 15D33
+cmp cl, byte [byte eax+05h]	; 15D36
+ja short .5	; 15D39
+.3:
+mov edx, esi	; 15D3B
+jmp short .6	; 15D3D
+.4:
+mov cl, byte [byte eax+04h]	; 15D3F
+cmp cl, byte [byte eax+05h]	; 15D42
+ja short CupSeriesWinner.3	; 15D45
+.5:
+mov ebx, edi	; 15D47
+.6:
+add eax, byte 6	; 15D49
+.7:
+cmp ebx, ebp	; 15D4C
+jae short .8	; 15D4E
+cmp edx, ebp	; 15D50
+jb short CupSeriesWinner.1	; 15D52
+.8:
+cmp ebx, edx	; 15D54
+jle short .9	; 15D56
+mov eax, dword [byte esp+08h]	; 15D58
+jmp short .x	; 15D5C
+.9:
+mov eax, dword [byte esp+04h]	; 15D5E
+.x:
+add esp, byte 0Ch	; 15D62
+pop ebp	; 15D65
+pop edi	; 15D66
+pop esi	; 15D67
+pop ecx	; 15D68
+pop ebx	; 15D69
+ret	; 15D6A
+%endif ; C
+; C: src/c/front/scoreboard/RunDemoGame.c
+%ifdef CBUILD
+%include "c/front/scoreboard/RunDemoGame.inc"
+%else
+RunDemoGame:
+push dword 94h	; 15D6B
+call __CHK	; 15D70
+push ebx	; 15D75
+push ecx	; 15D76
+push edx	; 15D77
+push esi	; 15D78
+push edi	; 15D79
+push ebp	; 15D7A
+sub esp, byte 78h	; 15D7B
+call ShowLoadingScreen	; 15D7E
+call InputRemove	; 15D83
+mov word [PerTimeTab], 3Ch	; 15D88
+call DemoSetupStub	; 15D91
+mov dword [demomode], 1	; 15D96
+call rand_	; 15DA0
+mov edx, eax	; 15DA5
+shl edx, 10h	; 15DA7
+call rand_	; 15DAA
+add edx, eax	; 15DAF
+mov dword [seed], edx	; 15DB1
+mov edx, dword [demoteammode]	; 15DB7
+inc edx	; 15DBD
+mov ebx, 3	; 15DBE
+mov eax, edx	; 15DC3
+sar edx, 1Fh	; 15DC5
+idiv ebx	; 15DC8
+mov dword [demoteammode], edx	; 15DCA
+mov ecx, 1Dh	; 15DD0
+mov edi, esp	; 15DD5
+mov esi, exhstate	; 15DD7
+rep movsd	; 15DDC
+movsb	; 15DDE
+cmp edx, byte 2	; 15DDF
+jne short .1	; 15DE2
+mov dword [exhstate+51h], 1Bh	; 15DE4
+mov dword [exhstate+55h], 1Ah	; 15DEE
+jmp short .3	; 15DF8
+.1:
+cmp edx, byte 1	; 15DFA
+jne short .2	; 15DFD
+mov eax, 11h	; 15DFF
+call randomd0	; 15E04
+movsx edx, ax	; 15E09
+mov eax, dword [nosplit edx*2+dword_C5861]	; 15E0C
+sar eax, 18h	; 15E13
+mov dword [exhstate+51h], eax	; 15E16
+mov eax, dword [nosplit edx*2+dword_C5862]	; 15E1B
+sar eax, 18h	; 15E22
+mov dword [exhstate+55h], eax	; 15E25
+jmp short .3	; 15E2A
+.2:
+call rand_	; 15E2C
+mov edx, eax	; 15E31
+mov ebx, 1Ah	; 15E33
+sar edx, 1Fh	; 15E38
+idiv ebx	; 15E3B
+mov dword [exhstate+51h], edx	; 15E3D
+inc edx	; 15E43
+mov eax, 19h	; 15E44
+call randomd0	; 15E49
+cwde	; 15E4E
+add edx, eax	; 15E4F
+mov eax, edx	; 15E51
+sar edx, 1Fh	; 15E53
+idiv ebx	; 15E56
+mov dword [exhstate+55h], edx	; 15E58
+.3:
+mov ebp, 10h	; 15E5E
+mov dword [exhstate+65h], ebp	; 15E63
+xor eax, eax	; 15E69
+mov dword [gamemode], eax	; 15E6B
+mov dword [exhstate+69h], ebp	; 15E70
+mov dword [exhstate+6Dh], eax	; 15E76
+mov dword [exhstate+71h], 1	; 15E7B
+mov eax, dword [exhstate+51h]	; 15E85
+mov dword [exhstate+5Dh], eax	; 15E8A
+mov dword [exhstate+5Dh], 0FFFFFFFFh	; 15E8F
+mov dword [exhstate+61h], 0FFFFFFFEh	; 15E99
+mov eax, exhstate	; 15EA3
+call LoadModeState	; 15EA8
+or byte [gameopts], 0FFh	; 15EAD
+cmp byte [musicon], 0	; 15EB4
+je short .4	; 15EBB
+or byte [gameopts+1], 1	; 15EBD
+jmp short .5	; 15EC4
+.4:
+and byte [gameopts+1], 0FEh	; 15EC6
+.5:
+mov bh, byte [gameopts+1]	; 15ECD
+or bh, 2	; 15ED3
+mov byte [gameopts+1], bh	; 15ED6
+mov cl, bh	; 15EDC
+and cl, 3	; 15EDE
+mov byte [gameopts+1], cl	; 15EE1
+mov edx, dword [VisTeam-2]	; 15EE7
+sar edx, 10h	; 15EED
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
+mov eax, dword [HomeTeam-2]	; 15EF7
+sar eax, 10h	; 15EFC
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
+call PaPreloadClips	; 15F06
+call SetupControllers	; 15F0B
+xor edx, edx	; 15F10
+xor eax, eax	; 15F12
+call InitGameSummary	; 15F14
+cmp word [HomeTeam], byte 1Ah	; 15F19
+jl short .6	; 15F21
+mov eax, 0Ch	; 15F23
+jmp short .7	; 15F28
+.6:
+mov eax, dword [HomeTeam-2]	; 15F2A
+sar eax, 10h	; 15F2F
+.7:
+call LoadRink	; 15F32
+call LoadRockMusic	; 15F37
+call ReloadGameGfx	; 15F3C
+call FadeOutPalCycle	; 15F41
+mov ebp, 1	; 15F46
+mov dword [dword_CC0EC], ebp	; 15F4B
+call SetupDemoGame	; 15F51
+xor eax, eax	; 15F56
+mov dword [dword_CC0EC], eax	; 15F58
+mov dword [introskipped], eax	; 15F5D
+mov dword [gameresult], eax	; 15F62
+mov edx, 0C8h	; 15F67
+mov eax, 140h	; 15F6C
+call SetScreenSize	; 15F71
+mov edx, dword [VisTeam-2]	; 15F76
+sar edx, 10h	; 15F7C
+mov eax, dword [HomeTeam-2]	; 15F7F
+sar eax, 10h	; 15F84
+mov ebx, gamepal	; 15F87
+call LoadTeamPalette	; 15F8C
+mov edx, dword [VisTeam-2]	; 15F91
+sar edx, 10h	; 15F97
+mov eax, dword [HomeTeam-2]	; 15F9A
+sar eax, 10h	; 15F9F
+mov ecx, ebp	; 15FA2
+mov ebx, ebp	; 15FA4
+call DrawHudPanel	; 15FA6
+call joyq_flush	; 15FAB
+call GameLoop	; 15FB0
+mov edx, 1E0h	; 15FB5
+mov eax, 280h	; 15FBA
+call SetScreenSize	; 15FBF
+mov word [PerTimeTab], 12Ch	; 15FC4
+xor ecx, ecx	; 15FCD
+mov dword [demomode], ecx	; 15FCF
+mov ecx, 1Dh	; 15FD5
+mov edi, exhstate	; 15FDA
+mov esi, esp	; 15FDF
+rep movsd	; 15FE1
+movsb	; 15FE3
+mov eax, exhstate	; 15FE4
+call LoadModeState	; 15FE9
+call InputInstall	; 15FEE
+cmp dword [gameresult], byte 2	; 15FF3
+sete al	; 15FFA
+and eax, 0FFh	; 15FFD
+add esp, byte 78h	; 16002
+RunDemoGame_x:
+pop ebp	; 16005
+pop edi	; 16006
+pop esi	; 16007
+pop edx	; 16008
+pop ecx	; 16009
+pop ebx	; 1600A
+ret	; 1600B
+%endif ; C
+; C: src/c/front/scoreboard/AnyInputPressed.c
+%ifdef CBUILD
+%include "c/front/scoreboard/AnyInputPressed.inc"
+%else
+AnyInputPressed:
+push dword 14h	; 1600C
+call __CHK	; 16011
+push ebx	; 16016
+push ecx	; 16017
+push edx	; 16018
+push esi	; 16019
+call PollKey	; 1601A
+mov esi, eax	; 1601F
+test eax, eax	; 16021
+jne short .3	; 16023
+mov ah, byte [ctlavailmask]	; 16025
+test ah, 2	; 1602B
+jne short .1	; 1602E
+test ah, 4	; 16030
+je short .3	; 16033
+.1:
+call sub_B3464	; 16035
+test al, 30h	; 1603A
+jne short .2	; 1603C
+sar eax, 8	; 1603E
+test al, 30h	; 16041
+je short .3	; 16043
+.2:
+mov esi, 1	; 16045
+.3:
+test esi, esi	; 1604A
+jne short .4	; 1604C
+test byte [ctlavailmask], 1	; 1604E
+je short .4	; 16055
+call dword [mousepollfn]	; 16057
+test byte [mousebtns], 3	; 1605D
+je short .4	; 16064
+mov esi, 1	; 16066
+.4:
+mov eax, esi	; 1606B
+pop esi	; 1606D
+pop edx	; 1606E
+pop ecx	; 1606F
+pop ebx	; 16070
+ret	; 16071
+%endif ; C
+; C: src/c/front/scoreboard/ReadBE32.c
+%ifdef CBUILD
+%include "c/front/scoreboard/ReadBE32.inc"
+%else
+ReadBE32:
+push dword 0Ch	; 16072
+call __CHK	; 16077
+push ebx	; 1607C
+push edx	; 1607D
+movsx edx, byte [eax]	; 1607E
+inc eax	; 16081
+movsx ebx, byte [eax]	; 16082
+shl edx, 8	; 16085
+inc eax	; 16088
+add edx, ebx	; 16089
+movsx ebx, byte [eax]	; 1608B
+shl edx, 8	; 1608E
+inc eax	; 16091
+add edx, ebx	; 16092
+movsx eax, byte [eax]	; 16094
+shl edx, 8	; 16097
+add eax, edx	; 1609A
+pop edx	; 1609C
+pop ebx	; 1609D
+ret	; 1609E
+%endif ; C

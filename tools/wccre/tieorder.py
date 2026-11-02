@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tieorder.py - which order of a function's tied register conflicts gives the EXE's code.
 
-  python3 tools/wccre/tieorder.py src/c/<seg>/<File>.c FUNC [--minutes 15] [--pass N]
+  python3 tools/wccre/tieorder.py src/c/<module>/<File>.c FUNC [--minutes 15] [--pass N]
 
 The register allocator (docs/WCC_INTERNALS.md) sorts every pass's conflicts by savings with an unstable Shell
 sort, so conflicts with equal savings ("a tie run") come out in an order no source line states directly: it

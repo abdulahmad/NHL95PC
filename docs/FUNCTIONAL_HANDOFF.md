@@ -56,7 +56,7 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
-`build/equiv/planted/`, change one constant, run with `--seg 034_41B80_schedule`: must FAIL within 50 cases.
+`build/equiv/planted/`, change one constant, run with `--seg front/schedule`: must FAIL within 50 cases.
 
 Batch loop used so far (no model tokens): a shell loop over `tools/c_functions.csv` nonmatching rows calling
 `check.py <c_file> --func F --seg SEG --quiet --budget 600`, three in parallel with a per-function lock directory.

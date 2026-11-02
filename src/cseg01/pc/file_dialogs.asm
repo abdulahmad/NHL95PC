@@ -1,0 +1,2299 @@
+; The Open and Delete dialogs for a saved game.
+bits 32
+%include "hockey.inc"
+section s_2B7B7 progbits alloc exec nowrite align=1
+extern __CHK, str_OpenBut, str_None, str_Del, str_Open, str_Can, str_Noar, str_Up
+extern str_Down, str_Arro, str_Gtno, str_Gtex, str_Gtlp, str_Gtpo, str_Buf, str_Nhl
+extern str_GsummaryDb3, str_Gsummary, str_Sav, str_Db2, str_PoGameSav, str_LpGameSav, str_Open2, str_Delete
+extern str_Done, str_Exhibition, str_Playoffs, str_League, str_Lp, str_Po, str_Nhl2, str_Dialogbx
+extern str_Dbox, str_Pointer5, str_Po2, str_ScheduleDb2, str_Lp2, str_GameSet3, str_fedd2, str_GameSav3
+extern str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_LAAtMTL
+extern musicon, savefname, fdlgmask, othergames, otherscores
+extern postate, lgstate, gameresult, fdlgshapes, fileoncd
+extern fdlgrects
+extern menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo, menuact_posettings, menuact_pohilights
+extern seriesgameno, cddriveptr, pointerspr, exhfiles, exhfilenames
+extern pofiles, pofilenames, lgfiles
+extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
+extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
+extern ptrupdatefn, j_unlink_, FreeMemBlock, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
+extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
+extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
+extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, GetInputEvent, ClearInputQueue
+extern EditPlayoffSettings, ViewPlayoffHilights, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
+extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
+extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
+extern str_LP, str_fek1, str_fek2, str_fek3, str_fek4, str_fek5, str_fek6, str_fek7
+extern str_fek8, str_feh7, str_feA1, str_fel1, str_feA2, str_fel2, str_fec6, str_fed2
+extern str_fed3, str_fed4, exhstate, delmsgbox, leaguemgrmenu, btn_POHumanOut, unknown_libname_1, unknown_libname_2
+extern unlink_
+global DrawFileDlg_jt, DrawFileDlgList_jt, LoadFileDlgShapes_x
+global DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3
+global DrawFileDlg_n2, DrawFileDlg_n1, DrawFileDlg_x
+global DrawFileDlgList_n6, DrawFileDlgList_n5
+global DrawFileDlgList_n4, DrawFileDlgList_n3, DrawFileDlgList_n2, DrawFileDlgList_n1
+global LoadFileDlgShapes, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy, DrawFileDlg, FileDlgHitTest
+global DrawFileDlgList, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, savefileexts, gsuminitff
+savefileexts:
+dd str_NHL
+dd str_PO2
+dd str_LP
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.inc"
+%else
+LoadFileDlgShapes:
+push dword 44h	; 2B7C3
+call __CHK	; 2B7C8
+push ebx	; 2B7CD
+push ecx	; 2B7CE
+push edx	; 2B7CF
+push esi	; 2B7D0
+push edi	; 2B7D1
+push ebp	; 2B7D2
+sub esp, byte 20h	; 2B7D3
+mov edx, dword [fdlgshapes]	; 2B7D6
+test edx, edx	; 2B7DC
+jne near .2	; 2B7DE
+xor ecx, ecx	; 2B7E4
+mov ebx, str_OpenBut	; 2B7E6
+cmp byte [fileoncd+01C6h], 1	; 2B7EB
+jne short .1	; 2B7F2
+mov edx, dword [cddriveptr]	; 2B7F4
+.1:
+mov eax, esp	; 2B7FA
+call MakePath	; 2B7FC
+push byte 0	; 2B801
+lea eax, [byte esp+04h]	; 2B803
+push eax	; 2B807
+call sub_8E83C	; 2B808
+add esp, byte 8	; 2B80D
+mov dword [fdlgshapes], eax	; 2B810
+push str_None	; 2B815
+push eax	; 2B81A
+call sub_B30B4	; 2B81B
+add esp, byte 8	; 2B820
+mov dword [fdlg_none], eax	; 2B823
+push str_Del	; 2B828
+mov ebx, dword [fdlgshapes]	; 2B82D
+push ebx	; 2B833
+call sub_B30B4	; 2B834
+add esp, byte 8	; 2B839
+mov dword [fdlg_del], eax	; 2B83C
+push str_Open	; 2B841
+mov ecx, dword [fdlgshapes]	; 2B846
+push ecx	; 2B84C
+call sub_B30B4	; 2B84D
+add esp, byte 8	; 2B852
+mov dword [fdlg_open], eax	; 2B855
+push str_Can	; 2B85A
+mov esi, dword [fdlgshapes]	; 2B85F
+push esi	; 2B865
+call sub_B30B4	; 2B866
+add esp, byte 8	; 2B86B
+mov dword [fdlg_cancel], eax	; 2B86E
+push str_Noar	; 2B873
+mov edi, dword [fdlgshapes]	; 2B878
+push edi	; 2B87E
+call sub_B30B4	; 2B87F
+add esp, byte 8	; 2B884
+mov dword [fdlg_noarrow], eax	; 2B887
+push str_Up	; 2B88C
+mov ebp, dword [fdlgshapes]	; 2B891
+push ebp	; 2B897
+call sub_B30B4	; 2B898
+add esp, byte 8	; 2B89D
+mov dword [fdlg_up], eax	; 2B8A0
+push str_Down	; 2B8A5
+mov eax, dword [fdlgshapes]	; 2B8AA
+push eax	; 2B8AF
+call sub_B30B4	; 2B8B0
+add esp, byte 8	; 2B8B5
+mov dword [fdlg_down], eax	; 2B8B8
+push str_Arro	; 2B8BD
+mov edx, dword [fdlgshapes]	; 2B8C2
+push edx	; 2B8C8
+call sub_B30B4	; 2B8C9
+add esp, byte 8	; 2B8CE
+mov dword [fdlg_arrow], eax	; 2B8D1
+push str_Gtno	; 2B8D6
+mov ebx, dword [fdlgshapes]	; 2B8DB
+push ebx	; 2B8E1
+call sub_B30B4	; 2B8E2
+add esp, byte 8	; 2B8E7
+mov dword [fdlg_tabnone], eax	; 2B8EA
+push str_Gtex	; 2B8EF
+mov ecx, dword [fdlgshapes]	; 2B8F4
+push ecx	; 2B8FA
+call sub_B30B4	; 2B8FB
+add esp, byte 8	; 2B900
+mov dword [fdlg_tabexh], eax	; 2B903
+push str_Gtlp	; 2B908
+mov esi, dword [fdlgshapes]	; 2B90D
+push esi	; 2B913
+call sub_B30B4	; 2B914
+add esp, byte 8	; 2B919
+mov dword [fdlg_tablp], eax	; 2B91C
+push str_Gtpo	; 2B921
+mov edi, dword [fdlgshapes]	; 2B926
+push edi	; 2B92C
+call sub_B30B4	; 2B92D
+add esp, byte 8	; 2B932
+mov dword [fdlg_tabpo], eax	; 2B935
+.2:
+add esp, byte 20h	; 2B93A
+LoadFileDlgShapes_x:
+pop ebp	; 2B93D
+pop edi	; 2B93E
+pop esi	; 2B93F
+pop edx	; 2B940
+pop ecx	; 2B941
+pop ebx	; 2B942
+ret	; 2B943
+%endif ; C
+; C: src/c/pc/file_dialogs/MenuOpenSaved.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/MenuOpenSaved.inc"
+%else
+MenuOpenSaved:
+push dword 58h	; 2B944
+call __CHK	; 2B949
+push ebx	; 2B94E
+push ecx	; 2B94F
+push esi	; 2B950
+push edi	; 2B951
+push ebp	; 2B952
+sub esp, byte 34h	; 2B953
+call ScanSavedGames	; 2B956
+push byte 20h	; 2B95B
+push dword 0B825h	; 2B95D
+push str_Buf	; 2B962
+call sub_8CCA8	; 2B967
+mov ebp, eax	; 2B96C
+add esp, byte 0Ch	; 2B96E
+mov esi, dword [pointerspr]	; 2B971
+mov edi, eax	; 2B977
+movsd	; 2B979
+movsd	; 2B97A
+movsd	; 2B97B
+movsd	; 2B97C
+movsb	; 2B97D
+mov word [byte eax+04h], 0EEh	; 2B97E
+mov word [byte eax+06h], 0C6h	; 2B984
+push byte 13h	; 2B98A
+push byte 0Ah	; 2B98C
+push eax	; 2B98E
+call sub_91400	; 2B98F
+add esp, byte 0Ch	; 2B994
+call LoadFileDlgShapes	; 2B997
+call DrawFileDlg	; 2B99C
+call DrawFileDlgTabs	; 2B9A1
+call RunFileDlg	; 2B9A6
+mov esi, eax	; 2B9AB
+push byte 13h	; 2B9AD
+push byte 0Ah	; 2B9AF
+push ebp	; 2B9B1
+call sub_910E0	; 2B9B2
+add esp, byte 0Ch	; 2B9B7
+push ebp	; 2B9BA
+call FreeMemBlock	; 2B9BB
+add esp, byte 4	; 2B9C0
+mov edx, dword [fdlgshapes]	; 2B9C3
+push edx	; 2B9C9
+call FreeMemBlock	; 2B9CA
+add esp, byte 4	; 2B9CF
+xor ebx, ebx	; 2B9D2
+mov dword [fdlgshapes], ebx	; 2B9D4
+call BuildSavedGameLabels	; 2B9DA
+xor eax, eax	; 2B9DF
+call SetupStatsSourceMenu	; 2B9E1
+test esi, esi	; 2B9E6
+je near .21	; 2B9E8
+mov eax, dword [fdlgtab]	; 2B9EE
+cmp eax, byte 1	; 2B9F3
+jb short .1	; 2B9F6
+jbe near .13	; 2B9F8
+cmp eax, byte 2	; 2B9FE
+je near .18	; 2BA01
+jmp near .21	; 2BA07
+.1:
+test eax, eax	; 2BA0C
+jne near .21	; 2BA0E
+mov eax, 1	; 2BA14
+call SetupStatsSourceMenu	; 2BA19
+mov eax, dword [lgfiles+4]	; 2BA1E
+mov edx, dword [nosplit eax*4+lgfilenames]	; 2BA23
+mov eax, esp	; 2BA2A
+call strcpy_	; 2BA2C
+mov edx, str_Nhl	; 2BA31
+mov eax, esp	; 2BA36
+call strcat_	; 2BA38
+lea edx, [byte esp+030h]	; 2BA3D
+mov eax, esp	; 2BA41
+call FileOpenRead	; 2BA43
+test eax, eax	; 2BA48
+je short .2	; 2BA4A
+push str_fek1	; 2BA4C
+call FatalError	; 2BA51
+add esp, byte 4	; 2BA56
+.2:
+lea edx, [byte esp+02Ch]	; 2BA59
+mov eax, str_GsummaryDb3	; 2BA5D
+call FileCreate	; 2BA62
+test eax, eax	; 2BA67
+je short .3	; 2BA69
+push str_fek2	; 2BA6B
+call FatalError	; 2BA70
+add esp, byte 4	; 2BA75
+.3:
+mov ecx, 0Bh	; 2BA78
+mov ebx, 75h	; 2BA7D
+lea edx, [byte esp+020h]	; 2BA82
+mov eax, dword [byte esp+030h]	; 2BA86
+call FileReadAt	; 2BA8A
+test eax, eax	; 2BA8F
+je short .4	; 2BA91
+push str_fek3	; 2BA93
+call FatalError	; 2BA98
+add esp, byte 4	; 2BA9D
+.4:
+mov ecx, 0Bh	; 2BAA0
+mov ebx, 0FFFFFFFFh	; 2BAA5
+lea edx, [byte esp+020h]	; 2BAAA
+mov eax, dword [byte esp+02Ch]	; 2BAAE
+call FileWriteAt	; 2BAB2
+test eax, eax	; 2BAB7
+je short .5	; 2BAB9
+push str_fek4	; 2BABB
+call FatalError	; 2BAC0
+add esp, byte 4	; 2BAC5
+.5:
+mov edi, dword [byte esp+023h]	; 2BAC8
+sar edi, 10h	; 2BACC
+xor esi, esi	; 2BACF
+jmp short .9	; 2BAD1
+.6:
+mov ecx, 0Bh	; 2BAD3
+mov ebx, 0FFFFFFFFh	; 2BAD8
+lea edx, [byte esp+020h]	; 2BADD
+mov eax, dword [byte esp+030h]	; 2BAE1
+call FileReadAt	; 2BAE5
+test eax, eax	; 2BAEA
+je short .7	; 2BAEC
+push str_fek5	; 2BAEE
+call FatalError	; 2BAF3
+add esp, byte 4	; 2BAF8
+.7:
+mov ecx, 0Bh	; 2BAFB
+mov ebx, 0FFFFFFFFh	; 2BB00
+lea edx, [byte esp+020h]	; 2BB05
+mov eax, dword [byte esp+02Ch]	; 2BB09
+call FileWriteAt	; 2BB0D
+test eax, eax	; 2BB12
+je short .8	; 2BB14
+push str_fek6	; 2BB16
+call FatalError	; 2BB1B
+add esp, byte 4	; 2BB20
+.8:
+inc esi	; 2BB23
+.9:
+cmp esi, edi	; 2BB24
+jl short MenuOpenSaved.6	; 2BB26
+lea eax, [byte esp+02Ch]	; 2BB28
+call FileClose	; 2BB2C
+mov ecx, 0Ch	; 2BB31
+mov ebx, 0FFFFFFFFh	; 2BB36
+mov edx, othergames	; 2BB3B
+mov eax, dword [byte esp+030h]	; 2BB40
+call FileReadAt	; 2BB44
+test eax, eax	; 2BB49
+je short .10	; 2BB4B
+push str_fek7	; 2BB4D
+call FatalError	; 2BB52
+add esp, byte 4	; 2BB57
+.10:
+mov ecx, 0Ch	; 2BB5A
+mov ebx, 0FFFFFFFFh	; 2BB5F
+mov edx, otherscores	; 2BB64
+mov eax, dword [byte esp+030h]	; 2BB69
+call FileReadAt	; 2BB6D
+test eax, eax	; 2BB72
+je short .11	; 2BB74
+push str_fek8	; 2BB76
+call FatalError	; 2BB7B
+add esp, byte 4	; 2BB80
+.11:
+mov ecx, 18h	; 2BB83
+mov ebx, 0FFFFFFFFh	; 2BB88
+mov edx, otherperiod	; 2BB8D
+mov eax, dword [byte esp+030h]	; 2BB92
+call FileReadAt	; 2BB96
+test eax, eax	; 2BB9B
+je short .12	; 2BB9D
+push str_feh7	; 2BB9F
+call FatalError	; 2BBA4
+add esp, byte 4	; 2BBA9
+.12:
+and byte [exhstate+5Ah], 7Fh	; 2BBAC
+lea eax, [byte esp+030h]	; 2BBB3
+call MenuNewExhibition	; 2BBB7
+mov edx, eax	; 2BBBC
+xor eax, eax	; 2BBBE
+call SetupStatsSourceMenu	; 2BBC0
+mov eax, edx	; 2BBC5
+jmp near .x	; 2BBC7
+.13:
+push postate+4	; 2BBCC
+mov ecx, postate+4	; 2BBD1
+mov ebx, str_Db2	; 2BBD6
+mov edx, str_Sav	; 2BBDB
+mov eax, str_Gsummary	; 2BBE0
+call CopyFile	; 2BBE5
+test eax, eax	; 2BBEA
+je short .14	; 2BBEC
+push str_feA1	; 2BBEE
+call FatalError	; 2BBF3
+add esp, byte 4	; 2BBF8
+.14:
+mov eax, 2	; 2BBFB
+call SetupStatsSourceMenu	; 2BC00
+mov eax, dword [pofiles+4]	; 2BC05
+mov edx, dword [nosplit eax*4+pofilenames]	; 2BC0A
+mov eax, esp	; 2BC11
+call strcpy_	; 2BC13
+mov edx, str_PoGameSav	; 2BC18
+mov eax, esp	; 2BC1D
+call strcat_	; 2BC1F
+lea edx, [byte esp+030h]	; 2BC24
+mov eax, esp	; 2BC28
+call FileOpenRead	; 2BC2A
+test eax, eax	; 2BC2F
+je short .15	; 2BC31
+push str_fel1	; 2BC33
+call FatalError	; 2BC38
+add esp, byte 4	; 2BC3D
+.15:
+and byte [postate+5Ah], 7Fh	; 2BC40
+lea eax, [byte esp+030h]	; 2BC47
+call PlayoffModeLoop	; 2BC4B
+mov edi, eax	; 2BC50
+test byte [postate+5Ah], 80h	; 2BC52
+.16:
+jne short .17	; 2BC59
+cmp dword [gameresult], byte 1	; 2BC5B
+jne short .17	; 2BC62
+mov eax, esp	; 2BC64
+call j_unlink_	; 2BC66
+.17:
+xor eax, eax	; 2BC6B
+call SetupStatsSourceMenu	; 2BC6D
+mov eax, edi	; 2BC72
+jmp near .x	; 2BC74
+.18:
+push lgstate+4	; 2BC79
+mov ecx, lgstate+4	; 2BC7E
+mov ebx, str_Db2	; 2BC83
+mov edx, str_Sav	; 2BC88
+mov eax, str_Gsummary	; 2BC8D
+call CopyFile	; 2BC92
+test eax, eax	; 2BC97
+je short .19	; 2BC99
+push str_feA2	; 2BC9B
+call FatalError	; 2BCA0
+add esp, byte 4	; 2BCA5
+.19:
+mov eax, 3	; 2BCA8
+call SetupStatsSourceMenu	; 2BCAD
+mov eax, dword [exhfiles+4]	; 2BCB2
+mov edx, dword [nosplit eax*4+exhfilenames]	; 2BCB7
+mov eax, esp	; 2BCBE
+call strcpy_	; 2BCC0
+mov edx, str_LpGameSav	; 2BCC5
+mov eax, esp	; 2BCCA
+call strcat_	; 2BCCC
+lea edx, [byte esp+030h]	; 2BCD1
+mov eax, esp	; 2BCD5
+call FileOpenRead	; 2BCD7
+test eax, eax	; 2BCDC
+je short .20	; 2BCDE
+push str_fel2	; 2BCE0
+call FatalError	; 2BCE5
+add esp, byte 4	; 2BCEA
+.20:
+and byte [lgstate+5Ah], 7Fh	; 2BCED
+lea eax, [byte esp+030h]	; 2BCF4
+call MenuNextLeagueGame	; 2BCF8
+mov edi, eax	; 2BCFD
+test byte [lgstate+5Ah], 80h	; 2BCFF
+jmp near MenuOpenSaved.16	; 2BD06
+.21:
+xor eax, eax	; 2BD0B
+.x:
+add esp, byte 34h	; 2BD0D
+pop ebp	; 2BD10
+pop edi	; 2BD11
+pop esi	; 2BD12
+pop ecx	; 2BD13
+pop ebx	; 2BD14
+ret	; 2BD15
+%endif ; C
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgTabs)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlgTabs.inc"
+%else
+DrawFileDlgTabs:
+push dword 28h	; 2BD16
+call __CHK	; 2BD1B
+push ebx	; 2BD20
+push ecx	; 2BD21
+push edx	; 2BD22
+push esi	; 2BD23
+push edi	; 2BD24
+push ebp	; 2BD25
+push dword 0FFh	; 2BD26
+push dword 0F8h	; 2BD2B
+call sub_8E9C0	; 2BD30
+add esp, byte 8	; 2BD35
+cmp dword [fdlgtab], byte 0	; 2BD38
+jge near .1	; 2BD3F
+push dword 0C0h	; 2BD45
+push byte 2Ah	; 2BD4A
+push str_Open2	; 2BD4C
+call sub_91964	; 2BD51
+add esp, byte 0Ch	; 2BD56
+push dword 0C0h	; 2BD59
+push byte 6Bh	; 2BD5E
+push str_Delete	; 2BD60
+call sub_91964	; 2BD65
+add esp, byte 0Ch	; 2BD6A
+push dword 0FFh	; 2BD6D
+push dword 0FAh	; 2BD72
+call sub_8E9C0	; 2BD77
+add esp, byte 8	; 2BD7C
+push dword 0C0h	; 2BD7F
+push dword 0B8h	; 2BD84
+push str_Done	; 2BD89
+call sub_91964	; 2BD8E
+add esp, byte 0Ch	; 2BD93
+push dword 0FFh	; 2BD96
+push dword 0F8h	; 2BD9B
+call sub_8E9C0	; 2BDA0
+add esp, byte 8	; 2BDA5
+push byte 4Ch	; 2BDA8
+push dword 0A7h	; 2BDAA
+push str_Exhibition	; 2BDAF
+call sub_91964	; 2BDB4
+add esp, byte 0Ch	; 2BDB9
+push byte 64h	; 2BDBC
+push dword 0ABh	; 2BDBE
+push str_Playoffs	; 2BDC3
+call sub_91964	; 2BDC8
+add esp, byte 0Ch	; 2BDCD
+push byte 7Ch	; 2BDD0
+push dword 0B0h	; 2BDD2
+push str_League	; 2BDD7
+call sub_91964	; 2BDDC
+add esp, byte 0Ch	; 2BDE1
+push byte 46h	; 2BDE4
+push byte 18h	; 2BDE6
+mov edx, dword [fdlg_noarrow]	; 2BDE8
+push edx	; 2BDEE
+call sub_91370	; 2BDEF
+add esp, byte 0Ch	; 2BDF4
+push byte 4Bh	; 2BDF7
+push dword 0A3h	; 2BDF9
+mov ebx, dword [fdlg_tabnone]	; 2BDFE
+push ebx	; 2BE04
+jmp near .10	; 2BE05
+.1:
+test byte [fdlgmask], 80h	; 2BE0A
+jne short .2	; 2BE11
+push byte 7Ch	; 2BE13
+push dword 0B0h	; 2BE15
+push str_League	; 2BE1A
+call sub_91964	; 2BE1F
+add esp, byte 0Ch	; 2BE24
+.2:
+test byte [fdlgmask], 40h	; 2BE27
+jne short .3	; 2BE2E
+push byte 64h	; 2BE30
+push dword 0ABh	; 2BE32
+push str_Playoffs	; 2BE37
+call sub_91964	; 2BE3C
+add esp, byte 0Ch	; 2BE41
+.3:
+test byte [fdlgmask], 20h	; 2BE44
+jne short .4	; 2BE4B
+push byte 4Ch	; 2BE4D
+push dword 0A7h	; 2BE4F
+push str_Exhibition	; 2BE54
+call sub_92CD0	; 2BE59
+add esp, byte 0Ch	; 2BE5E
+.4:
+mov eax, dword [fdlgtab]	; 2BE61
+mov eax, dword [nosplit eax*4+off_C6F7C]	; 2BE66
+cmp dword [eax], byte 6	; 2BE6D
+jg short .5	; 2BE70
+push byte 46h	; 2BE72
+push byte 18h	; 2BE74
+mov esi, dword [fdlg_noarrow]	; 2BE76
+push esi	; 2BE7C
+jmp short .6	; 2BE7D
+.5:
+push byte 46h	; 2BE7F
+push byte 18h	; 2BE81
+mov ecx, dword [fdlg_arrow]	; 2BE83
+push ecx	; 2BE89
+.6:
+call sub_91370	; 2BE8A
+add esp, byte 0Ch	; 2BE8F
+mov eax, dword [fdlgtab]	; 2BE92
+cmp eax, byte 1	; 2BE97
+jb short .7	; 2BE9A
+jbe short .8	; 2BE9C
+cmp eax, byte 2	; 2BE9E
+je short .9	; 2BEA1
+jmp near LoadFileDlgShapes_x	; 2BEA3
+.7:
+test eax, eax	; 2BEA8
+jne near LoadFileDlgShapes_x	; 2BEAA
+push byte 4Bh	; 2BEB0
+push dword 0A3h	; 2BEB2
+mov eax, dword [fdlg_tabexh]	; 2BEB7
+push eax	; 2BEBC
+jmp short .10	; 2BEBD
+.8:
+push byte 4Bh	; 2BEBF
+push dword 0A3h	; 2BEC1
+mov ebp, dword [fdlg_tabpo]	; 2BEC6
+push ebp	; 2BECC
+jmp short .10	; 2BECD
+.9:
+push byte 4Bh	; 2BECF
+push dword 0A3h	; 2BED1
+mov edi, dword [fdlg_tablp]	; 2BED6
+push edi	; 2BEDC
+.10:
+call sub_91370	; 2BEDD
+add esp, byte 0Ch	; 2BEE2
+jmp near LoadFileDlgShapes_x	; 2BEE5
+%endif ; C
+; C: src/c/pc/file_dialogs/CmpFileNames.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/CmpFileNames.inc"
+%else
+CmpFileNames:
+push dword 4	; 2BEEA
+call __CHK	; 2BEEF
+mov edx, dword [edx]	; 2BEF4
+mov eax, dword [eax]	; 2BEF6
+jmp near strcmp_	; 2BEF8
+%endif ; C
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (ScanSavedGames)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.ScanSavedGames.inc"
+%else
+ScanSavedGames:
+push dword 48h	; 2BEFD
+call __CHK	; 2BF02
+push ebx	; 2BF07
+push ecx	; 2BF08
+push edx	; 2BF09
+push esi	; 2BF0A
+push edi	; 2BF0B
+push ebp	; 2BF0C
+sub esp, byte 2Ch	; 2BF0D
+xor esi, esi	; 2BF10
+mov dword [exhfiles], esi	; 2BF12
+mov ebx, esp	; 2BF18
+mov edx, 10h	; 2BF1A
+mov eax, str_Lp	; 2BF1F
+call unknown_libname_1	; 2BF24
+test eax, eax	; 2BF29
+jne near .7	; 2BF2B
+.1:
+mov edx, savefname	; 2BF31
+add edx, esi	; 2BF36
+mov eax, dword [exhfiles]	; 2BF38
+mov dword [nosplit eax*4+exhfilenames], edx	; 2BF3D
+xor eax, eax	; 2BF44
+.2:
+mov dl, byte [byte esp+eax+01Eh]	; 2BF46
+test dl, dl	; 2BF4A
+je short .3	; 2BF4C
+cmp dl, 2Eh	; 2BF4E
+je short .3	; 2BF51
+mov byte [dword esi+savefname], dl	; 2BF53
+inc eax	; 2BF59
+inc esi	; 2BF5A
+cmp eax, byte 8	; 2BF5B
+jl short ScanSavedGames.2	; 2BF5E
+.3:
+xor bl, bl	; 2BF60
+mov byte [dword esi+savefname], bl	; 2BF62
+inc esi	; 2BF68
+mov ebx, dword [exhfiles]	; 2BF69
+inc ebx	; 2BF6F
+mov dword [exhfiles], ebx	; 2BF70
+cmp ebx, byte 20h	; 2BF76
+jge short .4	; 2BF79
+mov eax, esp	; 2BF7B
+call unknown_libname_2	; 2BF7D
+test eax, eax	; 2BF82
+je short ScanSavedGames.1	; 2BF84
+.4:
+mov edx, dword [exhfiles]	; 2BF86
+mov ecx, CmpFileNames	; 2BF8C
+mov ebx, 4	; 2BF91
+mov eax, exhfilenames	; 2BF96
+call qsort_	; 2BF9B
+xor edi, edi	; 2BFA0
+mov dword [exhfiles+8], edi	; 2BFA2
+mov dword [exhfiles+4], edi	; 2BFA8
+mov eax, dword [exhfiles]	; 2BFAE
+cmp eax, byte 6	; 2BFB3
+jge short .5	; 2BFB6
+dec eax	; 2BFB8
+jmp short .6	; 2BFB9
+.5:
+mov eax, 5	; 2BFBB
+.6:
+mov dword [exhfiles+0Ch], eax	; 2BFC0
+.7:
+xor edx, edx	; 2BFC5
+mov dword [pofiles], edx	; 2BFC7
+mov ebx, esp	; 2BFCD
+mov edx, 10h	; 2BFCF
+mov eax, str_Po	; 2BFD4
+call unknown_libname_1	; 2BFD9
+test eax, eax	; 2BFDE
+jne near .14	; 2BFE0
+.8:
+mov edx, savefname	; 2BFE6
+add edx, esi	; 2BFEB
+mov eax, dword [pofiles]	; 2BFED
+mov dword [nosplit eax*4+pofilenames], edx	; 2BFF2
+xor eax, eax	; 2BFF9
+.9:
+mov bh, byte [byte esp+eax+01Eh]	; 2BFFB
+test bh, bh	; 2BFFF
+je short .10	; 2C001
+cmp bh, 2Eh	; 2C003
+je short .10	; 2C006
+mov byte [dword esi+savefname], bh	; 2C008
+inc eax	; 2C00E
+inc esi	; 2C00F
+cmp eax, byte 8	; 2C010
+jl short ScanSavedGames.9	; 2C013
+.10:
+xor ch, ch	; 2C015
+mov byte [dword esi+savefname], ch	; 2C017
+inc esi	; 2C01D
+mov ebx, dword [pofiles]	; 2C01E
+inc ebx	; 2C024
+mov dword [pofiles], ebx	; 2C025
+cmp ebx, byte 20h	; 2C02B
+jge short .11	; 2C02E
+mov eax, esp	; 2C030
+call unknown_libname_2	; 2C032
+test eax, eax	; 2C037
+je short ScanSavedGames.8	; 2C039
+.11:
+mov edx, dword [pofiles]	; 2C03B
+mov ecx, CmpFileNames	; 2C041
+mov ebx, 4	; 2C046
+mov eax, pofilenames	; 2C04B
+call qsort_	; 2C050
+xor edi, edi	; 2C055
+mov dword [pofiles+8], edi	; 2C057
+mov dword [pofiles+4], edi	; 2C05D
+mov eax, dword [pofiles]	; 2C063
+cmp eax, byte 6	; 2C068
+jge short .12	; 2C06B
+dec eax	; 2C06D
+jmp short .13	; 2C06E
+.12:
+mov eax, 5	; 2C070
+.13:
+mov dword [pofiles+0Ch], eax	; 2C075
+.14:
+xor edx, edx	; 2C07A
+mov dword [lgfiles], edx	; 2C07C
+mov ebx, esp	; 2C082
+mov eax, str_Nhl2	; 2C084
+call unknown_libname_1	; 2C089
+test eax, eax	; 2C08E
+jne near .21	; 2C090
+.15:
+mov edx, savefname	; 2C096
+add edx, esi	; 2C09B
+mov eax, dword [lgfiles]	; 2C09D
+mov dword [nosplit eax*4+lgfilenames], edx	; 2C0A2
+xor eax, eax	; 2C0A9
+.16:
+mov dl, byte [byte esp+eax+01Eh]	; 2C0AB
+test dl, dl	; 2C0AF
+je short .17	; 2C0B1
+cmp dl, 2Eh	; 2C0B3
+je short .17	; 2C0B6
+mov byte [dword esi+savefname], dl	; 2C0B8
+inc eax	; 2C0BE
+inc esi	; 2C0BF
+cmp eax, byte 8	; 2C0C0
+jl short ScanSavedGames.16	; 2C0C3
+.17:
+xor bl, bl	; 2C0C5
+mov byte [dword esi+savefname], bl	; 2C0C7
+inc esi	; 2C0CD
+mov ebx, dword [lgfiles]	; 2C0CE
+inc ebx	; 2C0D4
+mov dword [lgfiles], ebx	; 2C0D5
+cmp ebx, byte 20h	; 2C0DB
+jge short .18	; 2C0DE
+mov eax, esp	; 2C0E0
+call unknown_libname_2	; 2C0E2
+test eax, eax	; 2C0E7
+je short ScanSavedGames.15	; 2C0E9
+.18:
+mov edx, dword [lgfiles]	; 2C0EB
+mov ecx, CmpFileNames	; 2C0F1
+mov ebx, 4	; 2C0F6
+mov eax, lgfilenames	; 2C0FB
+call qsort_	; 2C100
+xor esi, esi	; 2C105
+mov dword [lgfiles+8], esi	; 2C107
+mov dword [lgfiles+4], esi	; 2C10D
+mov ebp, dword [lgfiles]	; 2C113
+cmp ebp, byte 6	; 2C119
+jge short .19	; 2C11C
+lea eax, [byte ebp-01h]	; 2C11E
+jmp short .20	; 2C121
+.19:
+mov eax, 5	; 2C123
+.20:
+mov dword [lgfiles+0Ch], eax	; 2C128
+.21:
+add esp, byte 2Ch	; 2C12D
+jmp near LoadFileDlgShapes_x	; 2C130
+%endif ; C
+; C: src/c/pc/file_dialogs/PrintTextCopy.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/PrintTextCopy.inc"
+%else
+PrintTextCopy:
+push dword 58h	; 2C135
+call __CHK	; 2C13A
+push ecx	; 2C13F
+push esi	; 2C140
+sub esp, byte 40h	; 2C141
+mov ecx, eax	; 2C144
+mov esi, edx	; 2C146
+xor eax, eax	; 2C148
+jmp short .2	; 2C14A
+.1:
+mov dl, byte [edx]	; 2C14C
+mov byte [esp+eax], dl	; 2C14E
+inc eax	; 2C151
+.2:
+lea edx, [ecx+eax]	; 2C152
+cmp byte [edx], 0	; 2C155
+jne short PrintTextCopy.1	; 2C158
+xor dl, dl	; 2C15A
+mov byte [esp+eax], dl	; 2C15C
+push ebx	; 2C15F
+push esi	; 2C160
+lea eax, [byte esp+08h]	; 2C161
+push eax	; 2C165
+call sub_91964	; 2C166
+add esp, byte 0Ch	; 2C16B
+add esp, byte 40h	; 2C16E
+pop esi	; 2C171
+pop ecx	; 2C172
+ret	; 2C173
+%endif ; C
+db 08Dh,040h,00h
+DrawFileDlg_jt:
+dd DrawFileDlg_n1
+dd DrawFileDlg_n2
+dd DrawFileDlg_n3
+dd DrawFileDlg_n4
+dd DrawFileDlg_n5
+dd DrawFileDlg_n6
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlg)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlg.inc"
+%else
+DrawFileDlg:
+push dword 54h	; 2C18F
+call __CHK	; 2C194
+push ebx	; 2C199
+push ecx	; 2C19A
+push edx	; 2C19B
+push esi	; 2C19C
+push edi	; 2C19D
+push ebp	; 2C19E
+sub esp, byte 24h	; 2C19F
+call sub_B4BA8	; 2C1A2
+xor ecx, ecx	; 2C1A7
+mov ebx, str_Dialogbx	; 2C1A9
+cmp byte [fileoncd+063h], 1	; 2C1AE
+jne short .1	; 2C1B5
+mov edx, dword [cddriveptr]	; 2C1B7
+jmp short .2	; 2C1BD
+.1:
+xor edx, edx	; 2C1BF
+.2:
+mov eax, esp	; 2C1C1
+call MakePath	; 2C1C3
+push byte 0	; 2C1C8
+lea eax, [byte esp+04h]	; 2C1CA
+push eax	; 2C1CE
+call sub_8E83C	; 2C1CF
+mov esi, eax	; 2C1D4
+add esp, byte 8	; 2C1D6
+push byte 13h	; 2C1D9
+push byte 0Ah	; 2C1DB
+push str_Dbox	; 2C1DD
+push eax	; 2C1E2
+call sub_B30B4	; 2C1E3
+add esp, byte 8	; 2C1E8
+push eax	; 2C1EB
+call sub_91284	; 2C1EC
+add esp, byte 0Ch	; 2C1F1
+push esi	; 2C1F4
+call FreeMemBlock	; 2C1F5
+add esp, byte 4	; 2C1FA
+mov dword [fdlgmask], 10h	; 2C1FD
+mov dword [fdlgtab], 0FFFFFFFFh	; 2C207
+cmp dword [exhfiles], byte 0	; 2C211
+je short .3	; 2C218
+mov dword [fdlgmask], 90h	; 2C21A
+mov dword [fdlgtab], 2	; 2C224
+.3:
+cmp dword [pofiles], byte 0	; 2C22E
+je short .4	; 2C235
+or byte [fdlgmask], 40h	; 2C237
+mov dword [fdlgtab], 1	; 2C23E
+.4:
+cmp dword [lgfiles], byte 0	; 2C248
+je short .5	; 2C24F
+or byte [fdlgmask], 20h	; 2C251
+xor ebx, ebx	; 2C258
+mov dword [fdlgtab], ebx	; 2C25A
+.5:
+cmp dword [fdlgtab], byte 0	; 2C260
+jl near DrawFileDlg_x	; 2C267
+or word [fdlgmask], 20Ch	; 2C26D
+push dword 0FFh	; 2C276
+push dword 0FAh	; 2C27B
+call sub_8E9C0	; 2C280
+add esp, byte 8	; 2C285
+mov esi, dword [fdlgtab]	; 2C288
+mov esi, dword [nosplit esi*4+off_C6F7C]	; 2C28E
+mov ebx, dword [fdlgrects+94h]	; 2C295
+add ebx, byte 13h	; 2C29B
+mov edx, dword [fdlgrects+90h]	; 2C29E
+add edx, byte 0Dh	; 2C2A4
+mov eax, dword [byte esi+04h]	; 2C2A7
+mov eax, dword [byte esi+eax*4+010h]	; 2C2AA
+call PrintTextCopy	; 2C2AE
+push dword 0F8h	; 2C2B3
+mov eax, dword [fdlgrects+0ACh]	; 2C2B8
+mov edi, dword [fdlgrects+0A4h]	; 2C2BD
+sub eax, edi	; 2C2C3
+inc eax	; 2C2C5
+push eax	; 2C2C6
+mov eax, dword [fdlgrects+0A8h]	; 2C2C7
+mov ebp, dword [fdlgrects+0A0h]	; 2C2CC
+sub eax, ebp	; 2C2D2
+inc eax	; 2C2D4
+push eax	; 2C2D5
+lea eax, [byte edi+013h]	; 2C2D6
+push eax	; 2C2D9
+lea eax, [byte ebp+0Ah]	; 2C2DA
+push eax	; 2C2DD
+call sub_90D20	; 2C2DE
+add esp, byte 14h	; 2C2E3
+mov ecx, dword [byte esi+08h]	; 2C2E6
+mov edi, 0Ah	; 2C2E9
+jmp short .7	; 2C2EE
+.6:
+mov eax, edi	; 2C2F0
+shl eax, 4	; 2C2F2
+mov ebx, dword [dword eax+fdlgrects+4]	; 2C2F5
+add ebx, byte 10h	; 2C2FB
+mov edx, dword [dword eax+fdlgrects]	; 2C2FE
+add edx, byte 0Ah	; 2C304
+mov eax, ecx	; 2C307
+mov eax, dword [byte esi+eax*4+010h]	; 2C309
+call PrintTextCopy	; 2C30D
+inc ecx	; 2C312
+inc edi	; 2C313
+.7:
+cmp ecx, dword [byte esi+0Ch]	; 2C314
+jle short DrawFileDlg.6	; 2C317
+mov edx, dword [esi]	; 2C319
+cmp edx, byte 6	; 2C31B
+jle near .8	; 2C31E
+or word [fdlgmask], 0FF03h	; 2C324
+mov ebp, dword [fdlgrects+80h]	; 2C32D
+add ebp, byte 0Ah	; 2C333
+mov edi, dword [fdlgrects+84h]	; 2C336
+add edi, byte 13h	; 2C33C
+mov eax, dword [fdlgrects+88h]	; 2C33F
+add eax, byte 0Ah	; 2C344
+mov dword [byte esp+020h], eax	; 2C347
+mov eax, 1E0h	; 2C34B
+mov edx, eax	; 2C350
+sar edx, 1Fh	; 2C352
+idiv dword [esi]	; 2C355
+mov esi, dword [fdlgrects+84h]	; 2C357
+add esi, byte 11h	; 2C35D
+add esi, eax	; 2C360
+push dword 0FAh	; 2C362
+push edi	; 2C367
+mov eax, dword [fdlgrects+88h]	; 2C368
+add eax, byte 9	; 2C36D
+push eax	; 2C370
+push edi	; 2C371
+push ebp	; 2C372
+call sub_B4FAC	; 2C373
+add esp, byte 14h	; 2C378
+push dword 0FAh	; 2C37B
+lea eax, [byte esi-01h]	; 2C380
+push eax	; 2C383
+push ebp	; 2C384
+push edi	; 2C385
+push ebp	; 2C386
+call sub_B4FAC	; 2C387
+add esp, byte 14h	; 2C38C
+push dword 0F8h	; 2C38F
+push esi	; 2C394
+mov ecx, dword [byte esp+028h]	; 2C395
+push ecx	; 2C399
+dec edi	; 2C39A
+push edi	; 2C39B
+mov edi, ecx	; 2C39C
+push ecx	; 2C39E
+call sub_B4FAC	; 2C39F
+add esp, byte 14h	; 2C3A4
+push dword 0F8h	; 2C3A7
+push esi	; 2C3AC
+mov eax, edi	; 2C3AD
+push eax	; 2C3AF
+push esi	; 2C3B0
+dec ebp	; 2C3B1
+push ebp	; 2C3B2
+call sub_B4FAC	; 2C3B3
+add esp, byte 14h	; 2C3B8
+jmp short DrawFileDlg_x	; 2C3BB
+.8:
+lea eax, [byte edx-01h]	; 2C3BD
+cmp eax, byte 5	; 2C3C0
+ja short DrawFileDlg_x	; 2C3C3
+jmp dword [nosplit cs:eax*4+DrawFileDlg_jt]	; 2C3C5
+DrawFileDlg_n6:
+or byte [fdlgmask+1], 80h	; 2C3CD
+DrawFileDlg_n5:
+or byte [fdlgmask+1], 40h	; 2C3D4
+DrawFileDlg_n4:
+or byte [fdlgmask+1], 20h	; 2C3DB
+DrawFileDlg_n3:
+or byte [fdlgmask+1], 10h	; 2C3E2
+DrawFileDlg_n2:
+or byte [fdlgmask+1], 8	; 2C3E9
+DrawFileDlg_n1:
+or byte [fdlgmask+1], 4	; 2C3F0
+DrawFileDlg_x:
+add esp, byte 24h	; 2C3F7
+jmp near LoadFileDlgShapes_x	; 2C3FA
+%endif ; C
+; C: src/c/pc/file_dialogs/FileDlgHitTest.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/FileDlgHitTest.inc"
+%else
+FileDlgHitTest:
+push dword 0Ch	; 2C3FF
+call __CHK	; 2C404
+push ecx	; 2C409
+push esi	; 2C40A
+mov ecx, eax	; 2C40B
+mov esi, edx	; 2C40D
+xor edx, edx	; 2C40F
+lea ecx, [byte eax-06h]	; 2C411
+sub esi, byte 13h	; 2C414
+.1:
+mov eax, edx	; 2C417
+shl eax, 4	; 2C419
+cmp ecx, dword [dword eax+fdlgrects]	; 2C41C
+jl short .2	; 2C422
+cmp ecx, dword [dword eax+fdlgrects+8]	; 2C424
+jg short .2	; 2C42A
+cmp esi, dword [dword eax+fdlgrects+4]	; 2C42C
+jl short .2	; 2C432
+cmp esi, dword [dword eax+fdlgrects+0Ch]	; 2C434
+jg short .2	; 2C43A
+mov dword [ebx], edx	; 2C43C
+mov eax, 1	; 2C43E
+pop esi	; 2C443
+pop ecx	; 2C444
+ret	; 2C445
+.2:
+inc edx	; 2C446
+cmp edx, byte 10h	; 2C447
+jl short FileDlgHitTest.1	; 2C44A
+xor eax, eax	; 2C44C
+pop esi	; 2C44E
+pop ecx	; 2C44F
+ret	; 2C450
+%endif ; C
+db 08Bh,0C0h
+DrawFileDlgList_jt:
+dd DrawFileDlgList_n1
+dd DrawFileDlgList_n2
+dd DrawFileDlgList_n3
+dd DrawFileDlgList_n4
+dd DrawFileDlgList_n5
+dd DrawFileDlgList_n6
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgList)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlgList.inc"
+%else
+DrawFileDlgList:
+push dword 38h	; 2C46B
+call __CHK	; 2C470
+push ebx	; 2C475
+push ecx	; 2C476
+push edx	; 2C477
+push esi	; 2C478
+push edi	; 2C479
+push ebp	; 2C47A
+sub esp, byte 8	; 2C47B
+mov edi, eax	; 2C47E
+push dword 0FFh	; 2C480
+push dword 0FAh	; 2C485
+call sub_8E9C0	; 2C48A
+add esp, byte 8	; 2C48F
+xor esi, esi	; 2C492
+.1:
+push dword 0F9h	; 2C494
+mov eax, esi	; 2C499
+shl eax, 4	; 2C49B
+mov edx, dword [dword eax+fdlgrects+0ACh]	; 2C49E
+mov ebx, dword [dword eax+fdlgrects+0A4h]	; 2C4A4
+sub edx, ebx	; 2C4AA
+inc edx	; 2C4AC
+push edx	; 2C4AD
+mov edx, dword [dword eax+fdlgrects+0A8h]	; 2C4AE
+mov ecx, dword [dword eax+fdlgrects+0A0h]	; 2C4B4
+sub edx, ecx	; 2C4BA
+inc edx	; 2C4BC
+push edx	; 2C4BD
+lea edx, [byte ebx+013h]	; 2C4BE
+push edx	; 2C4C1
+lea eax, [byte ecx+0Ah]	; 2C4C2
+push eax	; 2C4C5
+call sub_90D20	; 2C4C6
+add esp, byte 14h	; 2C4CB
+inc esi	; 2C4CE
+cmp esi, byte 6	; 2C4CF
+jl short DrawFileDlgList.1	; 2C4D2
+test edi, edi	; 2C4D4
+jne short .2	; 2C4D6
+push dword 0F8h	; 2C4D8
+mov eax, dword [fdlgrects+9Ch]	; 2C4DD
+mov edi, dword [fdlgrects+94h]	; 2C4E2
+sub eax, edi	; 2C4E8
+sub eax, byte 5	; 2C4EA
+push eax	; 2C4ED
+mov eax, dword [fdlgrects+98h]	; 2C4EE
+mov ebp, dword [fdlgrects+90h]	; 2C4F3
+sub eax, ebp	; 2C4F9
+sub eax, byte 5	; 2C4FB
+push eax	; 2C4FE
+lea eax, [byte edi+016h]	; 2C4FF
+push eax	; 2C502
+lea eax, [byte ebp+0Dh]	; 2C503
+push eax	; 2C506
+call sub_90D20	; 2C507
+add esp, byte 14h	; 2C50C
+xor eax, eax	; 2C50F
+mov dword [byte esp+04h], eax	; 2C511
+jmp near DrawFileDlgList_n1.9	; 2C515
+.2:
+cmp dword [edi], byte 6	; 2C51A
+jg short .5	; 2C51D
+xor esi, esi	; 2C51F
+jmp short .4	; 2C521
+.3:
+mov eax, esi	; 2C523
+shl eax, 4	; 2C525
+mov ebx, dword [dword eax+fdlgrects+0A4h]	; 2C528
+add ebx, byte 10h	; 2C52E
+mov edx, dword [dword eax+fdlgrects+0A0h]	; 2C531
+add edx, byte 0Ah	; 2C537
+mov eax, esi	; 2C53A
+mov eax, dword [byte edi+eax*4+010h]	; 2C53C
+call PrintTextCopy	; 2C540
+inc esi	; 2C545
+.4:
+cmp esi, dword [edi]	; 2C546
+jl short DrawFileDlgList.3	; 2C548
+jmp short .7	; 2C54A
+.5:
+xor esi, esi	; 2C54C
+.6:
+mov eax, esi	; 2C54E
+shl eax, 4	; 2C550
+mov ebx, dword [dword eax+fdlgrects+0A4h]	; 2C553
+add ebx, byte 10h	; 2C559
+mov edx, dword [dword eax+fdlgrects+0A0h]	; 2C55C
+add edx, byte 0Ah	; 2C562
+mov eax, dword [byte edi+08h]	; 2C565
+add eax, esi	; 2C568
+mov eax, dword [byte edi+eax*4+010h]	; 2C56A
+call PrintTextCopy	; 2C56E
+inc esi	; 2C573
+cmp esi, byte 6	; 2C574
+jl short DrawFileDlgList.6	; 2C577
+.7:
+cmp dword [edi], byte 0	; 2C579
+jle short .8	; 2C57C
+push dword 0F8h	; 2C57E
+mov eax, dword [fdlgrects+9Ch]	; 2C583
+mov ecx, dword [fdlgrects+94h]	; 2C588
+sub eax, ecx	; 2C58E
+sub eax, byte 5	; 2C590
+push eax	; 2C593
+mov eax, dword [fdlgrects+98h]	; 2C594
+mov esi, dword [fdlgrects+90h]	; 2C599
+sub eax, esi	; 2C59F
+sub eax, byte 5	; 2C5A1
+push eax	; 2C5A4
+lea eax, [byte ecx+016h]	; 2C5A5
+push eax	; 2C5A8
+lea eax, [byte esi+0Dh]	; 2C5A9
+push eax	; 2C5AC
+call sub_90D20	; 2C5AD
+add esp, byte 14h	; 2C5B2
+mov ebx, dword [fdlgrects+94h]	; 2C5B5
+add ebx, byte 13h	; 2C5BB
+mov edx, dword [fdlgrects+90h]	; 2C5BE
+add edx, byte 0Dh	; 2C5C4
+mov eax, dword [byte edi+04h]	; 2C5C7
+mov eax, dword [byte edi+eax*4+010h]	; 2C5CA
+call PrintTextCopy	; 2C5CE
+.8:
+mov eax, dword [byte edi+04h]	; 2C5D3
+mov ebp, dword [byte edi+08h]	; 2C5D6
+cmp eax, ebp	; 2C5D9
+jl short .9	; 2C5DB
+cmp eax, dword [byte edi+0Ch]	; 2C5DD
+jg short .9	; 2C5E0
+mov esi, eax	; 2C5E2
+sub esi, ebp	; 2C5E4
+push dword 0F8h	; 2C5E6
+mov ebp, esi	; 2C5EB
+shl ebp, 4	; 2C5ED
+mov eax, dword [dword ebp+fdlgrects+0ACh]	; 2C5F0
+mov ecx, dword [dword ebp+fdlgrects+0A4h]	; 2C5F6
+sub eax, ecx	; 2C5FC
+push eax	; 2C5FE
+mov eax, dword [dword ebp+fdlgrects+0A8h]	; 2C5FF
+mov edx, dword [dword ebp+fdlgrects+0A0h]	; 2C605
+sub eax, edx	; 2C60B
+push eax	; 2C60D
+lea eax, [byte ecx+013h]	; 2C60E
+push eax	; 2C611
+lea eax, [byte edx+0Ah]	; 2C612
+push eax	; 2C615
+call sub_90D20	; 2C616
+add esp, byte 14h	; 2C61B
+mov ebx, dword [dword ebp+fdlgrects+0A4h]	; 2C61E
+add ebx, byte 10h	; 2C624
+mov edx, dword [dword ebp+fdlgrects+0A0h]	; 2C627
+add edx, byte 0Ah	; 2C62D
+mov eax, dword [byte edi+08h]	; 2C630
+add eax, esi	; 2C633
+mov eax, dword [byte edi+eax*4+010h]	; 2C635
+call PrintTextCopy	; 2C639
+.9:
+push dword 0F9h	; 2C63E
+mov eax, dword [fdlgrects+8Ch]	; 2C643
+mov ebx, dword [fdlgrects+84h]	; 2C648
+sub eax, ebx	; 2C64E
+inc eax	; 2C650
+push eax	; 2C651
+mov eax, dword [fdlgrects+88h]	; 2C652
+mov ecx, dword [fdlgrects+80h]	; 2C657
+sub eax, ecx	; 2C65D
+inc eax	; 2C65F
+push eax	; 2C660
+lea eax, [byte ebx+013h]	; 2C661
+push eax	; 2C664
+lea eax, [byte ecx+0Ah]	; 2C665
+push eax	; 2C668
+call sub_90D20	; 2C669
+add esp, byte 14h	; 2C66E
+cmp dword [edi], byte 6	; 2C671
+jg short DrawFileDlgList_n1.1	; 2C674
+and word [fdlgmask], 6FCh	; 2C676
+mov eax, dword [edi]	; 2C67F
+dec eax	; 2C681
+cmp eax, byte 5	; 2C682
+ja near DrawFileDlgList_n1.2	; 2C685
+jmp dword [nosplit cs:eax*4+DrawFileDlgList_jt]	; 2C68B
+DrawFileDlgList_n6:
+or byte [fdlgmask+1], 80h	; 2C693
+DrawFileDlgList_n5:
+or byte [fdlgmask+1], 40h	; 2C69A
+DrawFileDlgList_n4:
+or byte [fdlgmask+1], 20h	; 2C6A1
+DrawFileDlgList_n3:
+or byte [fdlgmask+1], 10h	; 2C6A8
+DrawFileDlgList_n2:
+or byte [fdlgmask+1], 8	; 2C6AF
+DrawFileDlgList_n1:
+or byte [fdlgmask+1], 4	; 2C6B6
+jmp near .2	; 2C6BD
+.1:
+or word [fdlgmask], 0F903h	; 2C6C2
+mov esi, dword [fdlgrects+80h]	; 2C6CB
+add esi, byte 0Ah	; 2C6D1
+mov edx, dword [byte edi+08h]	; 2C6D4
+mov eax, edx	; 2C6D7
+shl eax, 2	; 2C6D9
+add edx, eax	; 2C6DC
+shl edx, 4	; 2C6DE
+mov eax, edx	; 2C6E1
+sar edx, 1Fh	; 2C6E3
+idiv dword [edi]	; 2C6E6
+mov ebp, dword [fdlgrects+84h]	; 2C6E8
+add ebp, byte 13h	; 2C6EE
+add ebp, eax	; 2C6F1
+mov eax, dword [fdlgrects+88h]	; 2C6F3
+add eax, byte 0Ah	; 2C6F8
+mov dword [esp], eax	; 2C6FB
+mov edx, dword [byte edi+0Ch]	; 2C6FE
+inc edx	; 2C701
+mov eax, edx	; 2C702
+shl eax, 2	; 2C704
+add edx, eax	; 2C707
+shl edx, 4	; 2C709
+mov eax, edx	; 2C70C
+sar edx, 1Fh	; 2C70E
+idiv dword [edi]	; 2C711
+mov edi, dword [fdlgrects+84h]	; 2C713
+add edi, byte 12h	; 2C719
+add edi, eax	; 2C71C
+push dword 0FAh	; 2C71E
+push ebp	; 2C723
+mov eax, dword [fdlgrects+88h]	; 2C724
+add eax, byte 9	; 2C729
+push eax	; 2C72C
+push ebp	; 2C72D
+push esi	; 2C72E
+call sub_B4FAC	; 2C72F
+add esp, byte 14h	; 2C734
+push dword 0FAh	; 2C737
+lea eax, [byte edi-01h]	; 2C73C
+push eax	; 2C73F
+push esi	; 2C740
+push ebp	; 2C741
+push esi	; 2C742
+call sub_B4FAC	; 2C743
+add esp, byte 14h	; 2C748
+push dword 0F8h	; 2C74B
+push edi	; 2C750
+mov ecx, dword [byte esp+08h]	; 2C751
+push ecx	; 2C755
+inc ebp	; 2C756
+push ebp	; 2C757
+mov ebp, ecx	; 2C758
+push ecx	; 2C75A
+call sub_B4FAC	; 2C75B
+add esp, byte 14h	; 2C760
+push dword 0F8h	; 2C763
+push edi	; 2C768
+mov eax, ebp	; 2C769
+push eax	; 2C76B
+push edi	; 2C76C
+inc esi	; 2C76D
+push esi	; 2C76E
+call sub_B4FAC	; 2C76F
+add esp, byte 14h	; 2C774
+.2:
+mov eax, dword [fdlgtab]	; 2C777
+mov eax, dword [nosplit eax*4+off_C6F7C]	; 2C77C
+cmp dword [eax], byte 6	; 2C783
+jg short .3	; 2C786
+push byte 46h	; 2C788
+push byte 18h	; 2C78A
+mov ecx, dword [fdlg_noarrow]	; 2C78C
+push ecx	; 2C792
+jmp short .4	; 2C793
+.3:
+push byte 46h	; 2C795
+push byte 18h	; 2C797
+mov ebx, dword [fdlg_arrow]	; 2C799
+push ebx	; 2C79F
+.4:
+call sub_91370	; 2C7A0
+add esp, byte 0Ch	; 2C7A5
+mov eax, dword [fdlgtab]	; 2C7A8
+cmp eax, byte 1	; 2C7AD
+jb short .5	; 2C7B0
+jbe short .6	; 2C7B2
+cmp eax, byte 2	; 2C7B4
+je short .7	; 2C7B7
+jmp short .9	; 2C7B9
+.5:
+test eax, eax	; 2C7BB
+jne short .9	; 2C7BD
+push byte 4Bh	; 2C7BF
+push dword 0A3h	; 2C7C1
+mov ebp, dword [fdlg_tabexh]	; 2C7C6
+push ebp	; 2C7CC
+jmp short .8	; 2C7CD
+.6:
+push byte 4Bh	; 2C7CF
+push dword 0A3h	; 2C7D1
+mov edi, dword [fdlg_tabpo]	; 2C7D6
+push edi	; 2C7DC
+jmp short .8	; 2C7DD
+.7:
+push byte 4Bh	; 2C7DF
+push dword 0A3h	; 2C7E1
+mov esi, dword [fdlg_tablp]	; 2C7E6
+push esi	; 2C7EC
+.8:
+call sub_91370	; 2C7ED
+add esp, byte 0Ch	; 2C7F2
+.9:
+mov eax, dword [byte esp+04h]	; 2C7F5
+add esp, byte 8	; 2C7F9
+jmp near LoadFileDlgShapes_x	; 2C7FC
+%endif ; C
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (RunFileDlg)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.RunFileDlg.inc"
+%else
+RunFileDlg:
+push dword 4Ch	; 2C801
+call __CHK	; 2C806
+push ebx	; 2C80B
+push ecx	; 2C80C
+push edx	; 2C80D
+push esi	; 2C80E
+push edi	; 2C80F
+push ebp	; 2C810
+sub esp, byte 24h	; 2C811
+xor edx, edx	; 2C814
+mov dword [byte esp+018h], edx	; 2C816
+xor ebp, ebp	; 2C81A
+lea eax, [byte esp+010h]	; 2C81C
+push eax	; 2C820
+lea eax, [byte esp+018h]	; 2C821
+push eax	; 2C825
+lea eax, [byte esp+0Ch]	; 2C826
+push eax	; 2C82A
+call sub_B2DCA	; 2C82B
+add esp, byte 0Ch	; 2C830
+mov eax, dword [byte esp+014h]	; 2C833
+mov dword [byte esp+0Ch], eax	; 2C837
+mov eax, dword [byte esp+010h]	; 2C83B
+mov dword [byte esp+08h], eax	; 2C83F
+call sub_B4BA8	; 2C843
+mov eax, dword [pointerspr]	; 2C848
+mov edx, dword [byte eax+02h]	; 2C84D
+sar edx, 10h	; 2C850
+mov eax, dword [byte eax+04h]	; 2C853
+sar eax, 10h	; 2C856
+inc eax	; 2C859
+inc edx	; 2C85A
+imul eax, edx	; 2C85B
+add eax, byte 11h	; 2C85E
+push byte 20h	; 2C861
+push eax	; 2C863
+push str_Pointer5	; 2C864
+call sub_8CCA8	; 2C869
+add esp, byte 0Ch	; 2C86E
+mov dword [byte esp+01Ch], eax	; 2C871
+mov esi, dword [pointerspr]	; 2C875
+mov edi, eax	; 2C87B
+movsd	; 2C87D
+movsd	; 2C87E
+movsd	; 2C87F
+movsd	; 2C880
+movsb	; 2C881
+mov edx, dword [pointerspr]	; 2C882
+mov dx, word [byte edx+04h]	; 2C888
+inc edx	; 2C88C
+mov word [byte eax+04h], dx	; 2C88D
+mov edx, dword [pointerspr]	; 2C891
+mov dx, word [byte edx+06h]	; 2C897
+inc edx	; 2C89B
+mov word [byte eax+06h], dx	; 2C89C
+mov ebx, dword [byte esp+08h]	; 2C8A0
+push ebx	; 2C8A4
+mov edx, dword [byte esp+010h]	; 2C8A5
+sub edx, byte 4	; 2C8A9
+push edx	; 2C8AC
+push eax	; 2C8AD
+call sub_91400	; 2C8AE
+add esp, byte 0Ch	; 2C8B3
+mov ecx, dword [byte esp+08h]	; 2C8B6
+push ecx	; 2C8BA
+mov eax, dword [byte esp+010h]	; 2C8BB
+sub eax, byte 4	; 2C8BF
+push eax	; 2C8C2
+mov esi, dword [pointerspr]	; 2C8C3
+push esi	; 2C8C9
+call sub_91370	; 2C8CA
+add esp, byte 0Ch	; 2C8CF
+mov esi, dword [fdlgtab]	; 2C8D2
+mov esi, dword [nosplit esi*4+off_C6F7C]	; 2C8D8
+call ClearInputQueue	; 2C8DF
+.1:
+xor edi, edi	; 2C8E4
+mov dword [byte esp+04h], edi	; 2C8E6
+.2:
+call GetInputEvent	; 2C8EA
+test eax, eax	; 2C8EF
+je short .3	; 2C8F1
+lea ebx, [byte esp+08h]	; 2C8F3
+lea edx, [byte esp+0Ch]	; 2C8F7
+call dword [ptrupdatefn]	; 2C8FB
+mov dword [byte esp+04h], eax	; 2C901
+test eax, eax	; 2C905
+je short RunFileDlg.2	; 2C907
+.3:
+cmp dword [byte esp+04h], byte 0	; 2C909
+jne near .6	; 2C90E
+mov eax, dword [byte esp+0Ch]	; 2C914
+cmp eax, dword [byte esp+014h]	; 2C918
+jne short .4	; 2C91C
+mov eax, dword [byte esp+08h]	; 2C91E
+cmp eax, dword [byte esp+010h]	; 2C922
+je short RunFileDlg.1	; 2C926
+.4:
+call sub_B4BA8	; 2C928
+mov ebx, dword [byte esp+010h]	; 2C92D
+push ebx	; 2C931
+mov eax, dword [byte esp+018h]	; 2C932
+sub eax, byte 4	; 2C936
+push eax	; 2C939
+mov ecx, dword [byte esp+024h]	; 2C93A
+push ecx	; 2C93E
+call sub_903F0	; 2C93F
+add esp, byte 0Ch	; 2C944
+mov edi, dword [byte esp+08h]	; 2C947
+push edi	; 2C94B
+mov eax, dword [byte esp+010h]	; 2C94C
+sub eax, byte 4	; 2C950
+push eax	; 2C953
+mov eax, dword [byte esp+024h]	; 2C954
+push eax	; 2C958
+call sub_91400	; 2C959
+add esp, byte 0Ch	; 2C95E
+mov edx, dword [byte esp+08h]	; 2C961
+push edx	; 2C965
+mov eax, dword [byte esp+010h]	; 2C966
+sub eax, byte 4	; 2C96A
+push eax	; 2C96D
+mov ebx, dword [pointerspr]	; 2C96E
+push ebx	; 2C974
+.5:
+call sub_91370	; 2C975
+add esp, byte 0Ch	; 2C97A
+mov eax, dword [byte esp+0Ch]	; 2C97D
+mov dword [byte esp+014h], eax	; 2C981
+mov eax, dword [byte esp+08h]	; 2C985
+mov dword [byte esp+010h], eax	; 2C989
+jmp near RunFileDlg.1	; 2C98D
+.6:
+mov edx, dword [byte esp+010h]	; 2C992
+push edx	; 2C996
+mov eax, dword [byte esp+018h]	; 2C997
+sub eax, byte 4	; 2C99B
+push eax	; 2C99E
+mov ebx, dword [byte esp+024h]	; 2C99F
+push ebx	; 2C9A3
+call sub_910E0	; 2C9A4
+add esp, byte 0Ch	; 2C9A9
+test byte [byte esp+04h], 1	; 2C9AC
+je near .28	; 2C9B1
+test byte [fdlgmask+1], 1	; 2C9B7
+je near .28	; 2C9BE
+mov eax, dword [byte esp+014h]	; 2C9C4
+cmp eax, dword [byte esp+0Ch]	; 2C9C8
+jne short .7	; 2C9CC
+mov eax, dword [byte esp+010h]	; 2C9CE
+cmp eax, dword [byte esp+08h]	; 2C9D2
+je near .26	; 2C9D6
+.7:
+mov ebx, esp	; 2C9DC
+mov edx, dword [byte esp+08h]	; 2C9DE
+mov eax, dword [byte esp+0Ch]	; 2C9E2
+call FileDlgHitTest	; 2C9E6
+test eax, eax	; 2C9EB
+je near .27	; 2C9ED
+cmp dword [esp], byte 8	; 2C9F3
+jne near .27	; 2C9F7
+cmp dword [byte esp+018h], byte 0	; 2C9FD
+je near .25	; 2CA02
+mov eax, dword [byte esp+010h]	; 2CA08
+sub eax, byte 13h	; 2CA0C
+sub eax, dword [fdlgrects+84h]	; 2CA0F
+mov edx, dword [esi]	; 2CA15
+imul edx, eax	; 2CA17
+mov ebx, 50h	; 2CA1A
+mov eax, edx	; 2CA1F
+sar edx, 1Fh	; 2CA21
+idiv ebx	; 2CA24
+mov edx, eax	; 2CA26
+mov ebx, dword [byte esi+0Ch]	; 2CA28
+mov eax, dword [byte esp+010h]	; 2CA2B
+cmp eax, dword [byte esp+08h]	; 2CA2F
+je near .26	; 2CA33
+cmp edx, dword [byte esi+08h]	; 2CA39
+jl near .26	; 2CA3C
+cmp edx, ebx	; 2CA42
+jg near .26	; 2CA44
+test ebp, ebp	; 2CA4A
+je short .8	; 2CA4C
+mov eax, dword [byte esp+020h]	; 2CA4E
+.8:
+cmp eax, dword [byte esp+08h]	; 2CA52
+jge short .15	; 2CA56
+test ebp, ebp	; 2CA58
+je short .9	; 2CA5A
+mov eax, dword [byte esp+020h]	; 2CA5C
+jmp short .10	; 2CA60
+.9:
+mov eax, dword [byte esp+010h]	; 2CA62
+.10:
+mov edx, dword [byte esp+08h]	; 2CA66
+sub edx, eax	; 2CA6A
+imul edx, dword [esi]	; 2CA6C
+mov ecx, 50h	; 2CA6F
+mov eax, edx	; 2CA74
+sar edx, 1Fh	; 2CA76
+idiv ecx	; 2CA79
+mov edx, eax	; 2CA7B
+test eax, eax	; 2CA7D
+jne short .12	; 2CA7F
+test ebp, ebp	; 2CA81
+jne short .11	; 2CA83
+mov eax, dword [byte esp+010h]	; 2CA85
+mov dword [byte esp+020h], eax	; 2CA89
+.11:
+mov ebp, 1	; 2CA8D
+jmp short .13	; 2CA92
+.12:
+xor ebp, ebp	; 2CA94
+.13:
+mov eax, dword [byte esi+0Ch]	; 2CA96
+add eax, edx	; 2CA99
+mov edi, dword [esi]	; 2CA9B
+cmp eax, edi	; 2CA9D
+jge short .14	; 2CA9F
+add dword [byte esi+08h], edx	; 2CAA1
+add dword [byte esi+0Ch], edx	; 2CAA4
+jmp near .24	; 2CAA7
+.14:
+lea eax, [byte edi-01h]	; 2CAAC
+mov dword [byte esi+0Ch], eax	; 2CAAF
+mov eax, dword [esi]	; 2CAB2
+sub eax, byte 6	; 2CAB4
+mov dword [byte esi+08h], eax	; 2CAB7
+jmp near .24	; 2CABA
+.15:
+test ebp, ebp	; 2CABF
+je short .16	; 2CAC1
+mov eax, dword [byte esp+020h]	; 2CAC3
+jmp short .17	; 2CAC7
+.16:
+mov eax, dword [byte esp+010h]	; 2CAC9
+.17:
+cmp eax, dword [byte esp+08h]	; 2CACD
+jle short .24	; 2CAD1
+test ebp, ebp	; 2CAD3
+je short .18	; 2CAD5
+mov eax, dword [byte esp+020h]	; 2CAD7
+jmp short .19	; 2CADB
+.18:
+mov eax, dword [byte esp+010h]	; 2CADD
+.19:
+sub eax, dword [byte esp+08h]	; 2CAE1
+mov edx, dword [esi]	; 2CAE5
+imul edx, eax	; 2CAE7
+mov ecx, 50h	; 2CAEA
+mov eax, edx	; 2CAEF
+sar edx, 1Fh	; 2CAF1
+idiv ecx	; 2CAF4
+mov edx, eax	; 2CAF6
+test eax, eax	; 2CAF8
+jne short .21	; 2CAFA
+test ebp, ebp	; 2CAFC
+jne short .20	; 2CAFE
+mov eax, dword [byte esp+010h]	; 2CB00
+mov dword [byte esp+020h], eax	; 2CB04
+.20:
+mov ebp, 1	; 2CB08
+jmp short .22	; 2CB0D
+.21:
+xor ebp, ebp	; 2CB0F
+.22:
+mov eax, dword [byte esi+08h]	; 2CB11
+sub eax, edx	; 2CB14
+test eax, eax	; 2CB16
+jl short .23	; 2CB18
+mov dword [byte esi+08h], eax	; 2CB1A
+sub dword [byte esi+0Ch], edx	; 2CB1D
+jmp short .24	; 2CB20
+.23:
+mov dword [byte esi+08h], 0	; 2CB22
+mov dword [byte esi+0Ch], 5	; 2CB29
+.24:
+cmp ebx, dword [byte esi+0Ch]	; 2CB30
+je near .26	; 2CB33
+jmp near .38	; 2CB39
+.25:
+mov dword [byte esp+018h], 1	; 2CB3E
+.26:
+mov eax, dword [byte esp+08h]	; 2CB46
+push eax	; 2CB4A
+mov eax, dword [byte esp+010h]	; 2CB4B
+sub eax, byte 4	; 2CB4F
+push eax	; 2CB52
+mov edx, dword [byte esp+024h]	; 2CB53
+push edx	; 2CB57
+call sub_91400	; 2CB58
+add esp, byte 0Ch	; 2CB5D
+mov ebx, dword [byte esp+08h]	; 2CB60
+push ebx	; 2CB64
+mov eax, dword [byte esp+010h]	; 2CB65
+sub eax, byte 4	; 2CB69
+push eax	; 2CB6C
+mov ecx, dword [pointerspr]	; 2CB6D
+push ecx	; 2CB73
+jmp near RunFileDlg.5	; 2CB74
+.27:
+xor edx, edx	; 2CB79
+mov dword [byte esp+018h], edx	; 2CB7B
+jmp short RunFileDlg.26	; 2CB7F
+.28:
+mov dh, byte [byte esp+04h]	; 2CB81
+test dh, 2	; 2CB85
+je near .50	; 2CB88
+xor ebp, ebp	; 2CB8E
+mov dword [byte esp+018h], ebp	; 2CB90
+mov ebx, esp	; 2CB94
+mov edx, dword [byte esp+08h]	; 2CB96
+mov eax, dword [byte esp+0Ch]	; 2CB9A
+call FileDlgHitTest	; 2CB9E
+test eax, eax	; 2CBA3
+je short RunFileDlg.26	; 2CBA5
+mov cl, byte [esp]	; 2CBA7
+mov eax, 1	; 2CBAA
+shl eax, cl	; 2CBAF
+mov dword [esp], eax	; 2CBB1
+test dword [fdlgmask], eax	; 2CBB4
+je short RunFileDlg.26	; 2CBBA
+cmp eax, byte 10h	; 2CBBC
+jb short .30	; 2CBBF
+jbe short .32	; 2CBC1
+cmp eax, byte 40h	; 2CBC3
+jb short .29	; 2CBC6
+jbe near .43	; 2CBC8
+cmp eax, 80h	; 2CBCE
+jb near .49	; 2CBD3
+jbe near .44	; 2CBD9
+cmp eax, 100h	; 2CBDF
+je near .36	; 2CBE4
+jmp near .49	; 2CBEA
+.29:
+cmp eax, byte 20h	; 2CBEF
+je near .42	; 2CBF2
+jmp near .49	; 2CBF8
+.30:
+cmp eax, byte 2	; 2CBFD
+jb short .31	; 2CC00
+jbe near .35	; 2CC02
+cmp eax, byte 4	; 2CC08
+jb near .49	; 2CC0B
+jbe near .45	; 2CC11
+cmp eax, byte 8	; 2CC17
+je near .46	; 2CC1A
+jmp near .49	; 2CC20
+.31:
+cmp eax, byte 1	; 2CC25
+je short .34	; 2CC28
+jmp near .49	; 2CC2A
+.32:
+push dword 0BFh	; 2CC2F
+push byte 20h	; 2CC34
+mov esi, dword [fdlg_cancel]	; 2CC36
+push esi	; 2CC3C
+call sub_91370	; 2CC3D
+add esp, byte 0Ch	; 2CC42
+mov edi, dword [byte esp+01Ch]	; 2CC45
+push edi	; 2CC49
+.33:
+call FreeMemBlock	; 2CC4A
+add esp, byte 4	; 2CC4F
+xor eax, eax	; 2CC52
+jmp near DrawFileDlg_x	; 2CC54
+.34:
+push byte 46h	; 2CC59
+push byte 18h	; 2CC5B
+mov ecx, dword [fdlg_up]	; 2CC5D
+push ecx	; 2CC63
+call sub_91370	; 2CC64
+add esp, byte 0Ch	; 2CC69
+mov edi, dword [byte esi+08h]	; 2CC6C
+test edi, edi	; 2CC6F
+je near RunFileDlg.26	; 2CC71
+mov eax, esi	; 2CC77
+lea edx, [byte edi-01h]	; 2CC79
+mov dword [byte esi+08h], edx	; 2CC7C
+dec dword [byte esi+0Ch]	; 2CC7F
+jmp short .39	; 2CC82
+.35:
+push byte 46h	; 2CC84
+push byte 18h	; 2CC86
+mov edx, dword [fdlg_down]	; 2CC88
+push edx	; 2CC8E
+call sub_91370	; 2CC8F
+add esp, byte 0Ch	; 2CC94
+mov eax, dword [byte esi+0Ch]	; 2CC97
+inc eax	; 2CC9A
+cmp eax, dword [esi]	; 2CC9B
+jge near RunFileDlg.26	; 2CC9D
+mov eax, esi	; 2CCA3
+inc dword [byte esi+08h]	; 2CCA5
+inc dword [byte esi+0Ch]	; 2CCA8
+jmp short .39	; 2CCAB
+.36:
+mov edx, dword [byte esp+08h]	; 2CCAD
+sub edx, byte 13h	; 2CCB1
+sub edx, dword [fdlgrects+84h]	; 2CCB4
+imul edx, dword [esi]	; 2CCBA
+mov ebx, 50h	; 2CCBD
+mov eax, edx	; 2CCC2
+sar edx, 1Fh	; 2CCC4
+idiv ebx	; 2CCC7
+mov edx, eax	; 2CCC9
+cmp eax, dword [byte esi+08h]	; 2CCCB
+jge short .40	; 2CCCE
+cmp eax, byte 3	; 2CCD0
+jge short .37	; 2CCD3
+mov dword [byte esi+08h], ebp	; 2CCD5
+mov dword [byte esi+0Ch], 5	; 2CCD8
+jmp short .38	; 2CCDF
+.37:
+sub eax, byte 3	; 2CCE1
+mov dword [byte esi+08h], eax	; 2CCE4
+add edx, byte 2	; 2CCE7
+mov dword [byte esi+0Ch], edx	; 2CCEA
+.38:
+mov eax, esi	; 2CCED
+.39:
+call DrawFileDlgList	; 2CCEF
+jmp near RunFileDlg.26	; 2CCF4
+.40:
+cmp eax, dword [byte esi+0Ch]	; 2CCF9
+jle near RunFileDlg.26	; 2CCFC
+add eax, byte 3	; 2CD02
+mov edi, dword [esi]	; 2CD05
+cmp eax, edi	; 2CD07
+jle short .41	; 2CD09
+lea eax, [byte edi-06h]	; 2CD0B
+mov dword [byte esi+08h], eax	; 2CD0E
+mov eax, dword [esi]	; 2CD11
+dec eax	; 2CD13
+mov dword [byte esi+0Ch], eax	; 2CD14
+jmp short RunFileDlg.38	; 2CD17
+.41:
+mov eax, edx	; 2CD19
+jmp short RunFileDlg.37	; 2CD1B
+.42:
+mov dword [fdlgtab], ebp	; 2CD1D
+mov esi, dword [off_C6F7C]	; 2CD23
+jmp short RunFileDlg.38	; 2CD29
+.43:
+mov dword [fdlgtab], 1	; 2CD2B
+mov esi, dword [off_C6F80]	; 2CD35
+jmp short RunFileDlg.38	; 2CD3B
+.44:
+mov dword [fdlgtab], 2	; 2CD3D
+mov esi, dword [off_C6F84]	; 2CD47
+jmp short RunFileDlg.38	; 2CD4D
+.45:
+push dword 0BFh	; 2CD4F
+push byte 20h	; 2CD54
+mov ebp, dword [fdlg_open]	; 2CD56
+push ebp	; 2CD5C
+call sub_91370	; 2CD5D
+add esp, byte 0Ch	; 2CD62
+mov eax, dword [byte esp+01Ch]	; 2CD65
+push eax	; 2CD69
+call FreeMemBlock	; 2CD6A
+add esp, byte 4	; 2CD6F
+call SelectSavedFile	; 2CD72
+jmp near DrawFileDlg_x	; 2CD77
+.46:
+push dword 0BFh	; 2CD7C
+push byte 20h	; 2CD81
+mov eax, dword [fdlg_del]	; 2CD83
+push eax	; 2CD88
+call sub_91370	; 2CD89
+add esp, byte 0Ch	; 2CD8E
+mov eax, dword [fdlgtab]	; 2CD91
+mov eax, dword [nosplit eax*4+off_C6F7C]	; 2CD96
+call DeleteSavedGame	; 2CD9D
+mov edx, dword [byte esp+08h]	; 2CDA2
+push edx	; 2CDA6
+mov ebx, dword [byte esp+010h]	; 2CDA7
+push ebx	; 2CDAB
+call MouseSetPos	; 2CDAC
+add esp, byte 8	; 2CDB1
+mov ecx, dword [fdlgtab]	; 2CDB4
+test ecx, ecx	; 2CDBA
+jge short .47	; 2CDBC
+xor esi, esi	; 2CDBE
+jmp short .48	; 2CDC0
+.47:
+mov esi, dword [nosplit ecx*4+off_C6F7C]	; 2CDC2
+.48:
+mov eax, esi	; 2CDC9
+call DrawFileDlgList	; 2CDCB
+push dword 0BFh	; 2CDD0
+push byte 20h	; 2CDD5
+mov edi, dword [fdlg_none]	; 2CDD7
+push edi	; 2CDDD
+call sub_91370	; 2CDDE
+add esp, byte 0Ch	; 2CDE3
+jmp near RunFileDlg.26	; 2CDE6
+.49:
+mov ebx, esp	; 2CDEB
+mov edx, dword [byte esp+08h]	; 2CDED
+mov eax, dword [byte esp+0Ch]	; 2CDF1
+call FileDlgHitTest	; 2CDF5
+mov edx, dword [esp]	; 2CDFA
+cmp edx, byte 9	; 2CDFD
+jle near RunFileDlg.38	; 2CE00
+mov eax, dword [byte esi+08h]	; 2CE06
+add eax, edx	; 2CE09
+sub eax, byte 0Ah	; 2CE0B
+mov dword [byte esi+04h], eax	; 2CE0E
+jmp near RunFileDlg.38	; 2CE11
+.50:
+test dh, 4	; 2CE16
+je near RunFileDlg.26	; 2CE19
+mov ecx, dword [byte esp+01Ch]	; 2CE1F
+push ecx	; 2CE23
+jmp near RunFileDlg.33	; 2CE24
+%endif ; C
+; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DeleteSavedGame)
+%ifdef CBUILD
+%include "c/pc/file_dialogs/LoadFileDlgShapes.DeleteSavedGame.inc"
+%else
+DeleteSavedGame:
+push dword 84h	; 2CE29
+call __CHK	; 2CE2E
+push ebx	; 2CE33
+push ecx	; 2CE34
+push edx	; 2CE35
+push esi	; 2CE36
+push edi	; 2CE37
+push ebp	; 2CE38
+sub esp, byte 54h	; 2CE39
+mov ebp, eax	; 2CE3C
+lea edi, [byte esp+03Ch]	; 2CE3E
+mov esi, savefileexts	; 2CE42
+movsd	; 2CE47
+movsd	; 2CE48
+movsd	; 2CE49
+mov dword [byte esp+04Ch], 140h	; 2CE4A
+mov dword [byte esp+048h], 0F0h	; 2CE52
+mov ecx, dword [fdlgtab]	; 2CE5A
+test ecx, ecx	; 2CE60
+jne short .1	; 2CE62
+mov dword [delmsgbox+4], str_ExhibitionGameCalled	; 2CE64
+jmp short .3	; 2CE6E
+.1:
+cmp ecx, byte 1	; 2CE70
+jne short .2	; 2CE73
+mov dword [delmsgbox+4], str_PlayOffSeriesCalled	; 2CE75
+jmp short .3	; 2CE7F
+.2:
+mov dword [delmsgbox+4], str_LeagueCalled	; 2CE81
+.3:
+mov eax, dword [byte ebp+04h]	; 2CE8B
+mov eax, dword [byte ebp+eax*4+010h]	; 2CE8E
+mov dword [delmsgbox+8], eax	; 2CE92
+push byte 0	; 2CE97
+mov ecx, 0FAh	; 2CE99
+mov ebx, 0F8h	; 2CE9E
+mov edx, ecx	; 2CEA3
+mov eax, 0F9h	; 2CEA5
+call SetDialogColors	; 2CEAA
+push byte 0FFFFFFFFh	; 2CEAF
+lea eax, [byte esp+04Ch]	; 2CEB1
+push eax	; 2CEB5
+lea eax, [byte esp+054h]	; 2CEB6
+push eax	; 2CEBA
+push byte 2	; 2CEBB
+push btn_POHumanOut	; 2CEBD
+mov ecx, 3	; 2CEC2
+mov ebx, delmsgbox	; 2CEC7
+mov edx, 0FFFFFFFFh	; 2CECC
+mov eax, edx	; 2CED1
+call MessageBox	; 2CED3
+cmp eax, byte 1	; 2CED8
+je short .4	; 2CEDB
+xor ebx, ebx	; 2CEDD
+mov dword [byte esp+050h], ebx	; 2CEDF
+jmp near .24	; 2CEE3
+.4:
+mov edx, dword [byte ebp+04h]	; 2CEE8
+mov edx, dword [byte ebp+edx*4+010h]	; 2CEEB
+lea eax, [byte esp+02Ch]	; 2CEEF
+call strcpy_	; 2CEF3
+mov edx, dword [fdlgtab]	; 2CEF8
+mov edx, dword [byte esp+edx*4+03Ch]	; 2CEFE
+lea eax, [byte esp+02Ch]	; 2CF02
+call strcat_	; 2CF06
+mov ebx, esp	; 2CF0B
+mov edx, 10h	; 2CF0D
+lea eax, [byte esp+02Ch]	; 2CF12
+call unknown_libname_1	; 2CF16
+test eax, eax	; 2CF1B
+je short .5	; 2CF1D
+xor edx, edx	; 2CF1F
+mov dword [byte esp+050h], edx	; 2CF21
+jmp near .24	; 2CF25
+.5:
+test byte [byte esp+015h], 10h	; 2CF2A
+je short .8	; 2CF2F
+mov edx, lgstate+4	; 2CF31
+lea eax, [byte esp+02Ch]	; 2CF36
+call stricmp_	; 2CF3A
+test eax, eax	; 2CF3F
+jne short .6	; 2CF41
+xor dh, dh	; 2CF43
+mov byte [lgstate+4], dh	; 2CF45
+mov dword [menuact_export], eax	; 2CF4B
+mov dword [menuact_nextlg], eax	; 2CF50
+mov dword [menusub_lgmgr], eax	; 2CF55
+jmp short .7	; 2CF5A
+.6:
+mov edx, postate+4	; 2CF5C
+lea eax, [byte esp+02Ch]	; 2CF61
+call stricmp_	; 2CF65
+test eax, eax	; 2CF6A
+jne short .7	; 2CF6C
+xor dl, dl	; 2CF6E
+mov byte [postate+4], dl	; 2CF70
+mov dword [menuact_nextpo], eax	; 2CF76
+mov dword [menuact_posettings], eax	; 2CF7B
+mov dword [menuact_pohilights], eax	; 2CF80
+.7:
+lea eax, [byte esp+01Eh]	; 2CF85
+call DeleteDir	; 2CF89
+jmp short .9	; 2CF8E
+.8:
+lea eax, [byte esp+01Eh]	; 2CF90
+call unlink_	; 2CF94
+test eax, eax	; 2CF99
+je short .9	; 2CF9B
+push str_fec6	; 2CF9D
+call FatalError	; 2CFA2
+add esp, byte 4	; 2CFA7
+.9:
+mov ebx, dword [byte ebp+00h]	; 2CFAA
+dec ebx	; 2CFAD
+mov dword [byte ebp+00h], ebx	; 2CFAE
+je short .14	; 2CFB1
+mov edx, dword [byte ebp+04h]	; 2CFB3
+jmp short .11	; 2CFB6
+.10:
+mov eax, edx	; 2CFB8
+mov ebx, dword [byte ebp+eax*4+014h]	; 2CFBA
+mov dword [byte ebp+eax*4+010h], ebx	; 2CFBE
+inc edx	; 2CFC2
+.11:
+mov ecx, dword [byte ebp+00h]	; 2CFC3
+cmp edx, ecx	; 2CFC6
+jl short DeleteSavedGame.10	; 2CFC8
+cmp ecx, byte 6	; 2CFCA
+jge short .12	; 2CFCD
+lea eax, [byte ecx-01h]	; 2CFCF
+mov dword [byte ebp+0Ch], eax	; 2CFD2
+mov dword [byte ebp+08h], 0	; 2CFD5
+jmp short .13	; 2CFDC
+.12:
+cmp ecx, dword [byte ebp+0Ch]	; 2CFDE
+jne short .13	; 2CFE1
+dec dword [byte ebp+08h]	; 2CFE3
+dec dword [byte ebp+0Ch]	; 2CFE6
+.13:
+mov eax, dword [byte ebp+04h]	; 2CFE9
+cmp eax, dword [byte ebp+00h]	; 2CFEC
+jne near .24	; 2CFEF
+dec dword [byte ebp+04h]	; 2CFF5
+jmp near .24	; 2CFF8
+.14:
+mov eax, dword [fdlgtab]	; 2CFFD
+cmp eax, byte 1	; 2D002
+jb short .15	; 2D005
+jbe short .17	; 2D007
+cmp eax, byte 2	; 2D009
+je short .16	; 2D00C
+jmp short .19	; 2D00E
+.15:
+test eax, eax	; 2D010
+je short .18	; 2D012
+jmp short .19	; 2D014
+.16:
+and dword [fdlgmask], 0FF7Fh	; 2D016
+jmp short .19	; 2D020
+.17:
+and dword [fdlgmask], 0FFBFh	; 2D022
+jmp short .19	; 2D02C
+.18:
+and dword [fdlgmask], 0FFDFh	; 2D02E
+.19:
+cmp dword [lgfiles], byte 0	; 2D038
+je short .20	; 2D03F
+xor eax, eax	; 2D041
+mov dword [fdlgtab], eax	; 2D043
+jmp short .23	; 2D048
+.20:
+cmp dword [pofiles], byte 0	; 2D04A
+je short .21	; 2D051
+mov dword [fdlgtab], 1	; 2D053
+jmp short .23	; 2D05D
+.21:
+cmp dword [exhfiles], byte 0	; 2D05F
+je short .22	; 2D066
+mov dword [fdlgtab], 2	; 2D068
+jmp short .23	; 2D072
+.22:
+mov dword [fdlgtab], 0FFFFFFFFh	; 2D074
+mov dword [fdlgmask], 10h	; 2D07E
+.23:
+call DrawFileDlgTabs	; 2D088
+.24:
+mov eax, dword [byte esp+050h]	; 2D08D
+add esp, byte 54h	; 2D091
+jmp near LoadFileDlgShapes_x	; 2D094
+%endif ; C
+SelectSavedFile:
+push dword 4Ch	; 2D099
+call __CHK	; 2D09E
+push ebx	; 2D0A3
+push ecx	; 2D0A4
+push edx	; 2D0A5
+push esi	; 2D0A6
+sub esp, byte 30h	; 2D0A7
+mov edx, dword [fdlgtab]	; 2D0AA
+cmp edx, byte 1	; 2D0B0
+jb short .1	; 2D0B3
+jbe near .6	; 2D0B5
+cmp edx, byte 2	; 2D0BB
+je near .7	; 2D0BE
+jmp near .x	; 2D0C4
+.1:
+test edx, edx	; 2D0C9
+jne near .x	; 2D0CB
+mov eax, dword [lgfiles+4]	; 2D0D1
+mov edx, dword [nosplit eax*4+lgfilenames]	; 2D0D6
+lea eax, [byte esp+020h]	; 2D0DD
+call strcpy_	; 2D0E1
+mov edx, str_Nhl	; 2D0E6
+lea eax, [byte esp+020h]	; 2D0EB
+call strcat_	; 2D0EF
+mov ebx, 1	; 2D0F4
+lea edx, [byte esp+020h]	; 2D0F9
+mov eax, exhstate	; 2D0FD
+call ReadGameSettings	; 2D102
+mov eax, exhstate	; 2D107
+call LoadModeState	; 2D10C
+mov edx, dword [exhstate+51h]	; 2D111
+cmp edx, byte 18h	; 2D117
+jge short .2	; 2D11A
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 2D11C
+jmp short .3	; 2D123
+.2:
+mov edx, dword [nosplit edx*4+off_C5441]	; 2D125
+.3:
+mov ebx, 3	; 2D12C
+mov eax, str_LAAtMTL	; 2D131
+call strncpy_	; 2D136
+mov ebx, dword [exhstate+55h]	; 2D13B
+cmp ebx, byte 18h	; 2D141
+jge short .4	; 2D144
+mov edx, dword [nosplit ebx*4+teamabbrevs]	; 2D146
+jmp short .5	; 2D14D
+.4:
+mov edx, dword [nosplit ebx*4+off_C5441]	; 2D14F
+.5:
+mov ebx, 3	; 2D156
+mov eax, str_LAAtMTL+7	; 2D15B
+call strncpy_	; 2D160
+mov eax, 1	; 2D165
+jmp near .x	; 2D16A
+.6:
+mov eax, dword [pofiles+4]	; 2D16F
+mov edx, dword [nosplit eax*4+pofilenames]	; 2D174
+lea eax, [byte esp+020h]	; 2D17B
+call strcpy_	; 2D17F
+mov edx, str_Po2	; 2D184
+lea eax, [byte esp+020h]	; 2D189
+call strcat_	; 2D18D
+xor ebx, ebx	; 2D192
+lea edx, [byte esp+020h]	; 2D194
+mov eax, postate	; 2D198
+call ReadGameSettings	; 2D19D
+mov esi, eax	; 2D1A2
+mov dword [menuact_nextpo], PlayoffModeLoop	; 2D1A4
+mov dword [menuact_posettings], EditPlayoffSettings	; 2D1AE
+mov dword [menuact_pohilights], ViewPlayoffHilights	; 2D1B8
+xor ecx, ecx	; 2D1C2
+mov ebx, str_ScheduleDb2	; 2D1C4
+lea edx, [byte esp+020h]	; 2D1C9
+mov eax, esp	; 2D1CD
+call MakePath	; 2D1CF
+push byte 0	; 2D1D4
+lea eax, [byte esp+04h]	; 2D1D6
+push eax	; 2D1DA
+call sub_8E8A0	; 2D1DB
+mov ebx, eax	; 2D1E0
+add esp, byte 8	; 2D1E2
+mov edx, dword [byte eax+042h]	; 2D1E5
+mov ecx, 7	; 2D1E8
+mov eax, edx	; 2D1ED
+sar edx, 1Fh	; 2D1EF
+idiv ecx	; 2D1F2
+mov dword [seriesgameno], edx	; 2D1F4
+push ebx	; 2D1FA
+call FreeMemBlock	; 2D1FB
+add esp, byte 4	; 2D200
+mov eax, esi	; 2D203
+jmp short .x	; 2D205
+.7:
+mov eax, dword [exhfiles+4]	; 2D207
+mov edx, dword [nosplit eax*4+exhfilenames]	; 2D20C
+lea eax, [byte esp+020h]	; 2D213
+call strcpy_	; 2D217
+mov edx, str_Lp2	; 2D21C
+lea eax, [byte esp+020h]	; 2D221
+call strcat_	; 2D225
+xor ebx, ebx	; 2D22A
+lea edx, [byte esp+020h]	; 2D22C
+mov eax, lgstate	; 2D230
+call ReadGameSettings	; 2D235
+mov dword [menuact_export], MenuExportDbs	; 2D23A
+mov dword [menuact_nextlg], MenuNextLeagueGame	; 2D244
+mov dword [menusub_lgmgr], leaguemgrmenu	; 2D24E
+.x:
+add esp, byte 30h	; 2D258
+pop esi	; 2D25B
+pop edx	; 2D25C
+pop ecx	; 2D25D
+pop ebx	; 2D25E
+ret	; 2D25F
+; C: src/c/pc/file_dialogs/ReadGameSettings.c
+%ifdef CBUILD
+%include "c/pc/file_dialogs/ReadGameSettings.inc"
+%else
+ReadGameSettings:
+push dword 5Ch	; 2D260
+call __CHK	; 2D265
+push ecx	; 2D26A
+push esi	; 2D26B
+push edi	; 2D26C
+push ebp	; 2D26D
+sub esp, byte 44h	; 2D26E
+mov edi, eax	; 2D271
+mov esi, edx	; 2D273
+mov ebp, ebx	; 2D275
+test ebx, ebx	; 2D277
+jne short .1	; 2D279
+xor ecx, ecx	; 2D27B
+mov ebx, str_GameSet3	; 2D27D
+mov eax, esp	; 2D282
+call MakePath	; 2D284
+lea edx, [byte esp+040h]	; 2D289
+mov eax, esp	; 2D28D
+call FileOpenRead	; 2D28F
+test eax, eax	; 2D294
+je short .3	; 2D296
+push str_fed2	; 2D298
+jmp short .2	; 2D29D
+.1:
+lea edx, [byte esp+040h]	; 2D29F
+mov eax, esi	; 2D2A3
+call FileOpenRead	; 2D2A5
+test eax, eax	; 2D2AA
+je short .3	; 2D2AC
+push str_fedd2	; 2D2AE
+.2:
+call FatalError	; 2D2B3
+add esp, byte 4	; 2D2B8
+.3:
+mov ecx, 75h	; 2D2BB
+mov ebx, 0FFFFFFFFh	; 2D2C0
+mov edx, edi	; 2D2C5
+mov eax, dword [byte esp+040h]	; 2D2C7
+call FileReadAt	; 2D2CB
+test eax, eax	; 2D2D0
+je short .4	; 2D2D2
+push str_fed3	; 2D2D4
+call FatalError	; 2D2D9
+add esp, byte 4	; 2D2DE
+.4:
+lea eax, [byte esp+040h]	; 2D2E1
+call FileClose	; 2D2E5
+test eax, eax	; 2D2EA
+je short .5	; 2D2EC
+push str_fed4	; 2D2EE
+call FatalError	; 2D2F3
+add esp, byte 4	; 2D2F8
+.5:
+test ebp, ebp	; 2D2FB
+jne short .6	; 2D2FD
+xor ecx, ecx	; 2D2FF
+mov ebx, str_GameSav3	; 2D301
+mov edx, esi	; 2D306
+mov eax, esp	; 2D308
+call MakePath	; 2D30A
+mov eax, esp	; 2D30F
+push eax	; 2D311
+call sub_B3CC8	; 2D312
+add esp, byte 4	; 2D317
+mov esi, eax	; 2D31A
+.6:
+test esi, esi	; 2D31C
+je short .8	; 2D31E
+cmp byte [musicon], 0	; 2D320
+jne short .7	; 2D327
+and byte [byte edi+05Ah], 0FEh	; 2D329
+.7:
+mov eax, 1	; 2D32D
+jmp short .x	; 2D332
+.8:
+xor eax, eax	; 2D334
+.x:
+add esp, byte 44h	; 2D336
+pop ebp	; 2D339
+pop edi	; 2D33A
+pop esi	; 2D33B
+pop ecx	; 2D33C
+ret	; 2D33D
+%endif ; C
+gsuminitff:
+db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh

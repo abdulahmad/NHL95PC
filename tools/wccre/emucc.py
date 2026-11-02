@@ -117,7 +117,7 @@ def main():
         ok, out, emu = compile_c(a.src, obj)
         sys.stdout.write(out)
         sys.exit(0 if ok else 1)
-    srcs = a.srcs or sorted(glob.glob(os.path.join(ROOT, 'src/c/*/*.c')))
+    srcs = a.srcs or sorted(glob.glob(os.path.join(ROOT, 'src/c/**/*.c'), recursive=True))
     from multiprocessing import Pool
     from collections import Counter
     n = Counter()

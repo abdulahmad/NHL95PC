@@ -3,8 +3,8 @@
 
   python3 tools/find_handasm.py [--list]     writes tools/handasm.csv, prints counts (and the list with --list)
 
-Scope: the game segments of cseg01 (001-066 without cmv_player, cdstream, zonemgr; the Watcom C library, EA libraries, DOS/4GW glue and sound/video
-drivers after them are library code and not scanned). A function is a non-local label that starts after an
+Scope: the game modules of cseg01 (engine/, front/, pc/; lib/ holds the Watcom C library, EA libraries, DOS/4GW glue and sound/video
+drivers, CMV player, CD stream and zone manager: library code, not scanned). A function is a non-local label that starts after an
 unconditional ret/jmp (or at the segment start); a non-local label reached by falling through is a mid-function
 entry of the function before it.
 
@@ -51,7 +51,7 @@ def insns(asm):
 def refs():
     """names called, jumped to, or referenced as data / immediates anywhere in the source"""
     called, jumped, other = set(), set(), set()
-    for asm in glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')) + glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm')):
+    for asm in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True) + glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm')):
         code = '/cseg01/' in asm
         for l in open(asm):
             t = l.split(';')[0].strip()
@@ -67,8 +67,8 @@ def refs():
 def scan():
     called, jumped, other = refs()
     from c_progress import is_lib
-    segs = [f for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')))
-            if 1 <= int(os.path.basename(f)[:3]) <= 66 and not is_lib(os.path.basename(f)[:-4])]
+    segs = [f for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True))
+            if not is_lib(os.path.relpath(f, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'))]
     funcs = []
     for asm in segs:
         cur = None; prev = None
@@ -79,7 +79,7 @@ def scan():
                 # referenced as a pointer: then it is a case block / tail of the function before it
                 inner = t in jumped and t not in called and t not in other
                 if cur is None or (prev and re.match(r'^(ret|retn|jmp)\b', prev) and not inner):
-                    cur = dict(name=t, seg=os.path.basename(asm)[:-4], ins=[], mids=[], addr=None); funcs.append(cur)
+                    cur = dict(name=t, seg=os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'), ins=[], mids=[], addr=None); funcs.append(cur)
                 else: cur['mids'].append(t)
                 continue
             if cur is None: continue

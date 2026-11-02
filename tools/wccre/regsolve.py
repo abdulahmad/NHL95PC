@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """regsolve.py - rank source edits by how close they come to the EXE's registers.
 
-  python3 tools/wccre/regsolve.py src/c/<seg>/<File>.c FUNC
+  python3 tools/wccre/regsolve.py src/c/<module>/<File>.c FUNC
   python3 tools/wccre/regsolve.py --validate [--limit N]
 
 For one draft it compiles the file in the emulator and reads the register allocator the way
@@ -432,10 +432,8 @@ def rank_function(src, func, compile_swaps=True, max_swaps=4):
 
 
 def lane_of(segment):
-    n = int(segment[:3])
-    if n <= 37:
-        return 1, 'Mhopkinsinc', 'Mark'
-    return 2, 'StaticEck2026', 'StaticEck'
+    # one owner since 2026-11-02 (the lane rounds are in docs/archive/)
+    return 1, 'abdulahmad', 'Abdul'
 
 
 def owners_by_func():

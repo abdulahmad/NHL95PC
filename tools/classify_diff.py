@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """classify_diff.py - sort a draft's differences from the EXE by kind.
 
-  python3 tools/classify_diff.py src/c/<seg>/<File>.c:FUNC [...]
+  python3 tools/classify_diff.py src/c/<module>/<File>.c:FUNC [...]
 
 Compiles each file (fresh, as make does), aligns its instructions with the EXE's (difflib over the cdiff texts,
 registers and stack slots folded for the alignment) and counts, per aligned pair: same; stack (only an [ebp/esp+n]

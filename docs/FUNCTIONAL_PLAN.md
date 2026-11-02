@@ -25,7 +25,7 @@ What does not change:
 
 ## How the check works
 
-`tools/equiv/` (lane T), driven by `python3 tools/equiv/check.py src/c/<seg>/<F>.c --func F`:
+`tools/equiv/` (lane T), driven by `python3 tools/equiv/check.py src/c/<module>/<F>.c --func F`:
 
 1. **Image.** Load `HOCKEY.EXE`'s LE objects at their linear addresses with fixups applied (reuse
    `tools/le_parse.py`; `tools/wccre/lx_load.py` already does this for LX) into Unicorn. This gives the real

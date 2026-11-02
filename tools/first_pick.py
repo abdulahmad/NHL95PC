@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """first_pick.py - where a draft first goes wrong, and on which source line.
 
-  python3 tools/first_pick.py src/c/<seg>/<File>.c FUNC [-n 8] [--all]
+  python3 tools/first_pick.py src/c/<module>/<File>.c FUNC [-n 8] [--all]
 
 Compiles the file with -d1 (line numbers only; the code is the same), aligns the function's instructions with the
 EXE's (tools/classify_diff.py's alignment: registers and stack slots folded) and prints the first N differences, each

@@ -46,9 +46,9 @@ def write_if_changed(path, text):
 def labels():
     """{name: (addr, 'cseg01'|'dseg02', is_global)} from the assembled objects"""
     out = {}
-    for p in glob.glob(os.path.join(ROOT, 'build/obj/*/*.o')):
+    for p in glob.glob(os.path.join(ROOT, 'build/obj/**/*.o'), recursive=True):
         d, secs, syms, rels = read_elf(p)
-        kind = p.split('/')[-2]
+        kind = os.path.relpath(p, os.path.join(ROOT, 'build/obj')).split(os.sep)[0]
         for i, s in enumerate(secs):
             if s['name'].startswith('s_'): base = int(s['name'][2:], 16); si = i
         for sy in syms:
@@ -101,7 +101,7 @@ def access_stats(lab):
     """per label: Counter of (width, signed?) for exact accesses, and whether indexed/offset"""
     st = defaultdict(Counter); arr = set()
     tok = re.compile(r'\b([A-Za-z_][\w$?@]*)\b')
-    for f in glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')):
+    for f in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True):
         prev = None
         for ln in open(f):
             s = ln.split(';')[0].strip()

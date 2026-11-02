@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """permute.py - search small source transforms of one C function for a byte match with the EXE.
 
-  python3 tools/permute.py src/c/<seg>/<File>.c FUNC [--max 2000] [--minutes 30] [--stall 300] [--jobs 8]
+  python3 tools/permute.py src/c/<module>/<File>.c FUNC [--max 2000] [--minutes 30] [--stall 300] [--jobs 8]
                            [--round 64] [--seed N] [--write | --write-match] [--log tools/permute_log.csv] [--only T1,T2]
 
 Each candidate is the current best text with one transform applied (once those are used up, two at random):

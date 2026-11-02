@@ -22,7 +22,7 @@ narrow's local is a new typed value, not a copy); the compiler
 decides whether the code changes. Each yields (description, new text) like permute.py's transforms, so
 targetsearch.py scores them with the rest.
 
-  python3 tools/wccre/rewrites.py src/c/<seg>/<File>.c FUNC     lists the rewrites of FUNC (no compile)"""
+  python3 tools/wccre/rewrites.py src/c/<module>/<File>.c FUNC     lists the rewrites of FUNC (no compile)"""
 import os, re, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
 sys.path.insert(0, os.path.join(ROOT, 'tools'))

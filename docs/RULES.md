@@ -19,7 +19,7 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 ## This repo
 
 - Names, in order: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features (season, trade, create player, awards, the 95 menus); 95PC's own name for DOS-only jobs.
-- Files: alignment of the C and asm folders to the 95G modules (`src/c/{engine,front,pc,lib}/<module>`, link order in `segments.txt`) is step F2b of the shared plan. Until it lands, the `NNN_ADDR_topic` folders stay.
+- Files: code is in `src/cseg01/<module>.asm` and `src/c/<module>/`, `<module>` = `engine/<95G module>`, `front/...`, `pc/...` or `lib/...` (docs/module_map.csv, step F2b, 2026-11-02). The link order is in `src/segments.txt`. The data object `src/dseg02/` keeps its `NNN_ADDR_data_*` fragments.
 - One owner (Abdul). No lanes, claims or board; the lane-round files are in docs/archive/.
 
 ## Functional track

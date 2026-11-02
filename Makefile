@@ -13,8 +13,8 @@
 #                             compiler HOCKEY.EXE was built with); the matched C is tuned for GA, so an LA build
 #                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
 #
-# C matching decompilation (docs/C_MATCHING.md): a function written in src/c/<segment>/<Func>.c replaces its asm
-# block (wrapped in %ifdef CBUILD in src/cseg01/<segment>.asm) when CBUILD=1. wcc386 10.0 GA (WATCOM_VER=ga,
+# C matching decompilation (docs/C_MATCHING.md): a function written in src/c/<module>/<Func>.c replaces its asm
+# block (wrapped in %ifdef CBUILD in src/cseg01/<module>.asm) when CBUILD=1. wcc386 10.0 GA (WATCOM_VER=ga,
 # default; la for 10.0 LA) runs under DOSBox (tools/cc.py); the object becomes build/c/<segment>/<Func>.inc (db + dd label fixups) and is assembled in place.
 # Both builds must give the same sha1.
 #
@@ -33,7 +33,7 @@ CBUILD     ?= $(shell $(PYTHON) tools/cc.py check && echo 1 || echo 0)
 
 # each mode has its own object tree, so switching CBUILD only reassembles what changed
 OBJDIR := build/obj$(if $(filter 1,$(CBUILD)),,0)
-SRCS := $(wildcard src/cseg01/*.asm src/dseg02/*.asm)
+SRCS := $(shell find src/cseg01 src/dseg02 -name '*.asm' | sort)
 OBJS := $(patsubst src/%.asm,$(OBJDIR)/%.o,$(SRCS))
 INCS := $(wildcard src/inc/*.inc)
 
@@ -43,7 +43,7 @@ all: build/HOCKEY.EXE
 # C fragments the asm includes (only marked = matched functions are built)
 ifeq ($(CBUILD),1)
 NASMFLAGS += -DCBUILD -I build/
-CINCS := $(addprefix build/,$(sort $(shell grep -ho '^%include "c/[^"]*\.inc"' src/cseg01/*.asm | cut -d'"' -f2)))
+CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/cseg01 --include='*.asm' | cut -d'"' -f2)))
 endif
 CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
 cinfo:
@@ -57,8 +57,9 @@ build/watcom.$(WATCOM_VER):
 .PRECIOUS: build/c/%.obj build/c/%.inc
 build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
 	@$(PYTHON) tools/cc.py compile $< -o $@
-# build/c/<seg>/<File>.inc, or build/c/<seg>/<File>.<Func>.inc for a further function of a multi-block file
-build/c/%.inc: build/c/$$(basename $$*).obj src/cseg01/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
+# build/c/<module>/<File>.inc, or build/c/<module>/<File>.<Func>.inc for a further function of a multi-block file
+# (<module> is a path such as engine/logic: the asm is src/cseg01/<module>.asm)
+build/c/%.inc: build/c/$$(basename $$*).obj $$(subst /.asm,.asm,src/cseg01/$$(dir $$*).asm) tools/cc.py tools/cobj.py | build/parts/manifest.json
 	@$(PYTHON) tools/cc.py frag src/c/$(basename $*).c $< $@
 
 # stubs + LE metadata + fixup order from your EXE (also checks its sha1)

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """slot_solver.py - put a draft's spilled locals in the EXE's stack slots by solving their declaration order.
 
-  python3 tools/slot_solver.py src/c/<seg>/<File>.c FUNC [--rounds 12] [--jobs 8] [--write]
+  python3 tools/slot_solver.py src/c/<module>/<File>.c FUNC [--rounds 12] [--jobs 8] [--write]
 
 1. Reads the spill offsets: the draft is compiled with -d1 (line numbers only; the code is the same) and aligned
    with the EXE (tools/classify_diff.py's alignment). Every aligned pair whose instructions differ only in an

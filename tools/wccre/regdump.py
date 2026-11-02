@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """regdump.py - show how wcc386 10.0 GA hands out registers for a C file, from inside the compiler.
 
-  python3 tools/wccre/regdump.py src/c/<seg>/<File>.c [--raw]
+  python3 tools/wccre/regdump.py src/c/<module>/<File>.c [--raw]
 
 Runs the compiler in the emulator (tools/wccre/emucc.py) and hooks its register allocator, which is the
 Open Watcom code generator's (bld/cg/c/regalloc.c), found in the GA image:

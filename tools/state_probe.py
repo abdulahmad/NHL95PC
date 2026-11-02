@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """state_probe.py - does a draft compile differently in another compiler state?
 
-  python3 tools/state_probe.py src/c/<seg>/<File>.c:FUNC [...]
+  python3 tools/state_probe.py src/c/<module>/<File>.c:FUNC [...]
 
 wcc386 can compile the same source differently after other files in the same DOSBox run (HANDOFF step 3, the
 compiler state). For each draft this compiles, in one DOSBox run, the draft fresh and then after each of four
@@ -12,8 +12,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cc, permute
 
-WARM = ['src/c/040_53294_engine_physics_ai/ChkPullGoalieLate.c', 'src/c/015_1D6E8_menu_system/CmpPoints.c',
-        'src/c/018_27080_standings_playoffs/PlayoffTreeHitTest.c', 'src/c/046_644A8_engine_display/BuildDefaultLines.c']
+WARM = ['src/c/engine/collide/ChkPullGoalieLate.c', 'src/c/front/menu/CmpPoints.c',
+        'src/c/front/playoff/PlayoffTreeHitTest.c', 'src/c/engine/video/BuildDefaultLines.c']
 
 
 def main():

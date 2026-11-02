@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """tieinverse.py - which changes to a function's conflict list would give a needed tie order (A before B).
 
-  python3 tools/wccre/tieinverse.py src/c/<seg>/<File>.c FUNC A B [--pass N]
+  python3 tools/wccre/tieinverse.py src/c/<module>/<File>.c FUNC A B [--pass N]
 
 tieorder.py finds the order of tied conflicts that gives the EXE bytes and its minimal target ("A before B").
 The order comes from the savings sort, an unstable Shell sort over the conflict list as it was built

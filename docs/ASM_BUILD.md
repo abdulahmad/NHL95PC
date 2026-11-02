@@ -20,7 +20,7 @@ Needs `nasm` (2.15 or newer; tested with 2.16.03) and Python 3. No iced-x86, no 
 
 | path | what |
 |---|---|
-| `src/cseg01/NNN_ADDR_module.asm` (198) | code object, one file per segment of `segmap95pc.json`, one NASM section `s_<ADDR>` per file |
+| `src/cseg01/<group>/<module>.asm` (198) | code object, one file per segment of `segmap95pc.json`, one NASM section `s_<ADDR>` per file. `<group>` is `engine`, `front`, `pc` or `lib`; the names are in `docs/module_map.csv` and the link order in `src/segments.txt` |
 | `src/dseg02/NNN_ADDR_module.asm` (106) | data object: `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
 | `src/inc/hockey.inc` | included by every file: `x86enc.inc` + `structs.inc` (equates and macros only, no bytes) |
 | `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings) |

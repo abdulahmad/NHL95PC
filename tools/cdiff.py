@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """cdiff.py - objdiff-style compare of a C function's compiled code with the original.
 
-  python3 tools/cdiff.py src/c/<seg>/<Func>.c [--obj OBJ] [--func NAME] [--all] [--context N]
+  python3 tools/cdiff.py src/c/<module>/<Func>.c [--obj OBJ] [--func NAME] [--all] [--context N]
 
 Compiles the C file (tools/cc.py compile -> build/c/<seg>/<Func>.obj) unless --obj is given, then disassembles
 both sides with capstone and prints them side by side from the function start (the asm label <Func>, or --func).

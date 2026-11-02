@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """targetsearch.py - search natural source edits toward a draft's compiler targets (register ties and stack slots).
 
-  python3 tools/wccre/targetsearch.py src/c/<seg>/<File>.c FUNC [--minutes 60] [--beam 3] [--seed N] [--write-match]
+  python3 tools/wccre/targetsearch.py src/c/<module>/<File>.c FUNC [--minutes 60] [--beam 3] [--seed N] [--write-match]
 
 permute.py scores candidates by differing instructions alone, and those barely move until the last edit. This
 search scores each candidate by the targets the compiler-side tools found, read from one emulator compile:

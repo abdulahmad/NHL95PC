@@ -1,20 +1,20 @@
 #!/usr/bin/env python3
 """cc.py - compile a C source of the matching decompilation and splice it into the asm build.
 
-  python3 tools/cc.py compile src/c/<seg>/<Func>.c [-o OBJ]   wcc386 10.0 GA (or LA) under headless DOSBox -> OMF object
+  python3 tools/cc.py compile src/c/<module>/<Func>.c [-o OBJ]   wcc386 10.0 GA (or LA) under headless DOSBox -> OMF object
   python3 tools/cc.py compile A.c B.c ...                      several sources, one DOSBox run per 16 (objects in build/)
-  python3 tools/cc.py frag    src/c/<seg>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
-  python3 tools/cc.py mark    src/c/<seg>/<Func>.c [--func F [--seg STEM]] [--end LABEL] wrap the asm function in the CBUILD
+  python3 tools/cc.py frag    src/c/<module>/<Func>.c OBJ OUT.inc  object -> NASM fragment for the marked asm block
+  python3 tools/cc.py mark    src/c/<module>/<Func>.c [--func F [--seg STEM]] [--end LABEL] wrap the asm function in the CBUILD
                               markers (--seg: F sits in another asm segment, e.g. the next one)
-  python3 tools/cc.py unmark  src/c/<seg>/<Func>.c [--func F]   remove the markers again (asm block stays)
+  python3 tools/cc.py unmark  src/c/<module>/<Func>.c [--func F]   remove the markers again (asm block stays)
   python3 tools/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
-Layout: src/c/<segment file stem>/<Func>.c (e.g. src/c/042_59D9A_engine_core/SetSPA.c) replaces the block of
+Layout: src/c/<module>/<Func>.c (e.g. src/c/engine/hockey/SetSPA.c) replaces the block of
 src/cseg01/<stem>.asm that starts at label <Func>. In the asm the block is wrapped like this (`mark` writes it):
 
-    ; C: src/c/042_59D9A_engine_core/SetSPA.c
+    ; C: src/c/engine/hockey/SetSPA.c
     %ifdef CBUILD
-    %include "c/042_59D9A_engine_core/SetSPA.inc"
+    %include "c/engine/hockey/SetSPA.inc"
     %else
     SetSPA:
     ... the original asm, unchanged (the fallback build without the compiler) ...
@@ -175,7 +175,7 @@ def compile_batch_raw(items):
 def c_paths(src, func=None):
     """src/c/<stem>/<File>.c [, function F] -> (stem, F (default File), asm path, include name of F's block)"""
     rel = os.path.relpath(os.path.abspath(src), os.path.join(ROOT, 'src/c'))
-    stem, fn = rel.split(os.sep)
+    stem, fn = os.path.split(rel.replace(os.sep, '/'))   # stem: the module path (engine/logic)
     fil = os.path.splitext(fn)[0]
     func = func or fil
     inc = 'c/%s/%s.inc' % (stem, fil) if func == fil else 'c/%s/%s.%s.inc' % (stem, fil, func)
@@ -187,7 +187,7 @@ def c_paths(src, func=None):
         if seg: asm = os.path.join(ROOT, 'src/cseg01', seg + '.asm')
         elif '%%include "%s"' % inc not in open(asm).read():
             label = None
-            for g in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))):
+            for g in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
                 t = open(g).read()
                 if '%%include "%s"' % inc in t: asm = g; label = None; break
                 if label is None and re.search(r'(?m)^%s:' % re.escape(func), t): label = g
@@ -198,7 +198,7 @@ def file_blocks(src):
     """every marked block of this C file: {function: include name}"""
     stem, fil, asm, inc0 = c_paths(src)
     out = {}
-    for g in [asm] + sorted(x for x in glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm')) if x != asm):
+    for g in [asm] + sorted(x for x in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True) if x != asm):
         t = open(g).read()
         if 'c/%s/%s' % (stem, fil) not in t: continue
         for l in t.split('\n'):
@@ -284,7 +284,7 @@ def block(src, func=None):
     for l in L[j + 1:]:
         a = ADDR.search(l)
         if a: end = int(a.group(1), 16); break
-    if end is None: end = seg_end(os.path.basename(asm)[:-4])
+    if end is None: end = seg_end(os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'))
     end -= trailing_data(L, j + 1)
     if pend: labels += [(n, end) for n in pend]
     return first, end, labels, body
@@ -322,7 +322,7 @@ def asm_range(src, func=None):
     for l in L[k:]:
         a = ADDR.search(l)
         if a: return start, int(a.group(1), 16) - trailing_data(L, k)
-    return start, seg_end(os.path.basename(asm)[:-4]) - trailing_data(L, k)
+    return start, seg_end(os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/')) - trailing_data(L, k)
 
 def frag(src, obj, out):
     stem, fil, asm, inc = c_paths(src)
@@ -606,7 +606,7 @@ class TextTargets:
                             break
                 if len(targets) == 1:
                     ta = targets.pop()
-                    for gasm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))):
+                    for gasm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
                         names = [n for n, a in global_labels(gasm).items() if a == ta]
                         if names: return names[0], ta
         if len(hits) != 1:

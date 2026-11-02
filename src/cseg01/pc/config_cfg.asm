@@ -1,0 +1,94 @@
+; Reading NHL.CFG at start-up: which sound device to use, then starting the driver.
+bits 32
+%include "hockey.inc"
+section s_3DB41 progbits alloc exec nowrite align=1
+extern __CHK, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x, str_CFG, greyramp, sounddevids, fclose_
+extern fopen_, fscanf_, MakePath, SetDialogColors, SetSoundDevice, sub_8EB93, sub_8FE83, FatalError
+extern MouseSetPos, sub_B3454, sub_B4B88, str_R3
+global LoadNhlCfg, negone_3DC28
+; C: src/c/pc/config_cfg/LoadNhlCfg.c
+%ifdef CBUILD
+%include "c/pc/config_cfg/LoadNhlCfg.inc"
+%else
+LoadNhlCfg:
+push dword 38h	; 3DB41
+call __CHK	; 3DB46
+push ebx	; 3DB4B
+push ecx	; 3DB4C
+push edx	; 3DB4D
+push esi	; 3DB4E
+push edi	; 3DB4F
+sub esp, byte 14h	; 3DB50
+mov ecx, str_CFG	; 3DB53
+mov ebx, str_NHL2	; 3DB58
+xor edx, edx	; 3DB5D
+mov eax, esp	; 3DB5F
+call MakePath	; 3DB61
+mov edx, str_R3	; 3DB66
+mov eax, esp	; 3DB6B
+call fopen_	; 3DB6D
+mov esi, eax	; 3DB72
+test eax, eax	; 3DB74
+jne short .1	; 3DB76
+push str_CannotOpenNhlCfg	; 3DB78
+call FatalError	; 3DB7D
+add esp, byte 4	; 3DB82
+.1:
+lea eax, [byte esp+010h]	; 3DB85
+push eax	; 3DB89
+push str_fmt4x	; 3DB8A
+push esi	; 3DB8F
+call fscanf_	; 3DB90
+add esp, byte 0Ch	; 3DB95
+cmp eax, byte 1	; 3DB98
+jne short .2	; 3DB9B
+mov edi, dword [byte esp+010h]	; 3DB9D
+mov edi, dword [nosplit edi*4+sounddevids]	; 3DBA1
+jmp short .3	; 3DBA8
+.2:
+mov edi, 10h	; 3DBAA
+.3:
+mov eax, esi	; 3DBAF
+call fclose_	; 3DBB1
+xor esi, esi	; 3DBB6
+.4:
+mov al, byte [dword esi+greyramp]	; 3DBB8
+mov byte [esp], al	; 3DBBE
+mov byte [byte esp+01h], al	; 3DBC1
+mov byte [byte esp+02h], al	; 3DBC5
+mov eax, esp	; 3DBC9
+push eax	; 3DBCB
+push byte 1	; 3DBCC
+push esi	; 3DBCE
+call sub_B4B88	; 3DBCF
+add esp, byte 0Ch	; 3DBD4
+inc esi	; 3DBD7
+cmp esi, byte 4	; 3DBD8
+jl short LoadNhlCfg.4	; 3DBDB
+push sub_8EB93	; 3DBDD
+call sub_B3454	; 3DBE2
+add esp, byte 4	; 3DBE7
+push byte 0	; 3DBEA
+push byte 0	; 3DBEC
+call MouseSetPos	; 3DBEE
+add esp, byte 8	; 3DBF3
+push byte 0	; 3DBF6
+mov ecx, 3	; 3DBF8
+mov ebx, 1	; 3DBFD
+mov edx, ecx	; 3DC02
+mov eax, 2	; 3DC04
+call SetDialogColors	; 3DC09
+mov eax, 1	; 3DC0E
+call sub_8FE83	; 3DC13
+mov eax, edi	; 3DC18
+call SetSoundDevice	; 3DC1A
+add esp, byte 14h	; 3DC1F
+pop edi	; 3DC22
+pop esi	; 3DC23
+pop edx	; 3DC24
+pop ecx	; 3DC25
+pop ebx	; 3DC26
+ret	; 3DC27
+%endif ; C
+negone_3DC28:
+db 0FFh,0FFh,0FFh,0FFh

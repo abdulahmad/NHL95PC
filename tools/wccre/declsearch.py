@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """declsearch.py - search the declaration order of a function's locals for the EXE's stack slots.
 
-  python3 tools/wccre/declsearch.py src/c/<seg>/<File>.c FUNC [--iters N] [--restarts N] [--seed N]
+  python3 tools/wccre/declsearch.py src/c/<module>/<File>.c FUNC [--iters N] [--restarts N] [--seed N]
                                     [--keep NAME,...] [--conflicts] [--all] [--confirm N] [--write]
 
 Names without a register conflict (arrays, structures, address-taken scalars) leave the use-count sort by id, and

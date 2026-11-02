@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """scope_decls.py - try declaring a C function's locals in inner blocks and score each variant against the EXE.
 
-  python3 tools/scope_decls.py src/c/<seg>/<File>.c FUNC [--names a,b,c] [--max N] [--jobs N] [--write]
+  python3 tools/scope_decls.py src/c/<module>/<File>.c FUNC [--names a,b,c] [--max N] [--jobs N] [--write]
 
 Where a local is declared changes Watcom's register picks and frame slots even when the code does not change:
 ModeSetEditLoop matched once `sfx` was declared in the block that uses it, DrawLineGroupBars once its four bar

@@ -79,7 +79,7 @@ says CBUILD=0, fix the compiler setup first.
 Fast loop (each C file is one DOSBox run, so avoid rebuilding everything per function):
 
 ```
-python3 tools/cdiff.py src/c/<seg>/<F>.c   # per function: prints MATCH when the C bytes equal the asm
+python3 tools/cdiff.py src/c/<module>/<F>.c   # per function: prints MATCH when the C bytes equal the asm
 python3 tools/cverify.py                   # cdiff every marked function in changed C files
 make FAST=1                                # incremental; C objects ignore header mtimes
 make fullcheck                             # from scratch, CBUILD=1 and CBUILD=0 in parallel (~45 s)

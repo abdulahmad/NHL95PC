@@ -2,7 +2,7 @@
 """cverify.py - quick per-file check while matching: cdiff every marked function of the given C files (default: the
 C files that differ from HEAD, new ones included) and print MATCH / DIFF per function.
 
-  python3 tools/cverify.py [src/c/<seg>/<File>.c ...]
+  python3 tools/cverify.py [src/c/<module>/<File>.c ...]
 
 A function counts as marked when its asm block includes c/<seg>/<File>.inc or c/<seg>/<File>.<Func>.inc. This is
 the inner loop; `make fullcheck` (both builds from scratch) is still the gate before every push."""
@@ -15,7 +15,8 @@ def changed():
     return [l[3:] for l in out.splitlines() if l[3:].endswith('.c')]
 
 def marked_funcs(src):
-    seg, fname = src.split('/')[-2], os.path.splitext(os.path.basename(src))[0]
+    seg = os.path.dirname(os.path.relpath(os.path.abspath(src), os.path.join(ROOT, 'src/c'))).replace(os.sep, '/')
+    fname = os.path.splitext(os.path.basename(src))[0]
     asm = os.path.join(ROOT, 'src/cseg01', seg + '.asm')
     if not os.path.exists(asm): return []
     funcs = []

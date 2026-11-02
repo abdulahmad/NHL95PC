@@ -562,10 +562,10 @@ def main():
     if not files: raise SystemExit('no C files')
     text, funcs, notes = build(files, set(a.only.split(',')) if a.only else None)
     used = list(OrderedDict((f, 1) for _, _, f in funcs))
-    stem = a.stem.split(',')[0] if a.stem else os.path.basename(os.path.dirname(files[0]))
+    stem = a.stem.split(',')[0] if a.stem else os.path.relpath(os.path.dirname(files[0]), os.path.join('src', 'c'))
     work = tempfile.mkdtemp(prefix='module_')
     try:
-        mod = os.path.join(work, stem.split('_', 2)[-1][:8].upper() + '.c'); open(mod, 'w').write(text)
+        mod = os.path.join(work, stem.replace('/', '_').split('_', 2)[-1][:8].upper() + '.c'); open(mod, 'w').write(text)
         if a.keep:
             os.makedirs(os.path.dirname(os.path.abspath(a.keep)), exist_ok=True); open(a.keep, 'w').write(text)
         items = [(mod, mod[:-2] + '.obj', '')] + [(f, os.path.join(work, 'own%d.obj' % i), '') for i, f in enumerate(used)]

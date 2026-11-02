@@ -1,0 +1,880 @@
+; Choosing a sound card, writing that choice to NHL.CFG, and the timer that feeds the speech queue.
+bits 32
+%include "hockey.inc"
+section s_8291E progbits alloc exec nowrite align=1
+extern __CHK, __STOSD, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3
+extern str_CantOpenNhlCfg, asc_C36C3, str_Emmcopybuf, str_CFG, str_PCBEEP, str_SBDAC, str_ADLIB, str_MT322
+extern str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND, byte_C541B
+extern musicslot, musicon, byte_D2439, dword_C4CFC, gameopts, fileoncd
+extern sounddev, songdata, dword_CCC94, dword_D2350, dword_D2423, dword_D2427, dword_D242B
+extern musichandle, dword_D2435, sounddevids, sndcardname, dword_D27B2, speechinit, cddriveptr, pointerspr
+extern ptrupdatefn, setbits, dword_ED7A4, dword_ED7A8, speechq, speechbank, fclose_, fopen_
+extern fprintf_, FreeMemBlock, ShutdownSpeech_ret5, msg_InitMT32, strcpy_, MakePath, SetDialogColors, RestoreDialogBg
+extern MessageBox, PlayDigiSample, WaitDigiSample, GetInputEvent, ClearInputQueue, DrawSelBoxOn, DrawSelBoxOff, SoundCardHitTest
+extern RedrawSoundCardOpts, InitSpeech, ShutdownSpeech, sub_8CCA8, sub_8D2F0, sub_8EB5B, sub_8EB93, sub_8ECC0
+extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCDF
+extern sub_903F0, sub_91370, sub_91400, sub_97079, FatalError, sub_B2DCA, SetTickDeadline, WaitTickDeadline
+extern sub_B4BA8, unk_C36AC, str_PC, unk_D2403, unk_D2413, unk_D249C
+global SoundCardDlgLoop_poll
+global SoundCardDlgLoop_next, SoundCardDlgLoop_x
+global SoundCardDlgLoop, SoundCardDlg_epilogue, SetSoundDevice
+global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue
+; C: src/c/pc/sound_config/SoundCardDlgLoop.c
+%ifdef CBUILD
+%include "c/pc/sound_config/SoundCardDlgLoop.inc"
+%else
+SoundCardDlgLoop:
+push dword 60h	; 8291E
+call __CHK	; 82923
+push ebx	; 82928
+push ecx	; 82929
+push edx	; 8292A
+push esi	; 8292B
+push edi	; 8292C
+push ebp	; 8292D
+sub esp, byte 38h	; 8292E
+mov eax, dword [pointerspr]	; 82931
+mov edx, dword [byte eax+02h]	; 82936
+sar edx, 10h	; 82939
+mov eax, dword [byte eax+04h]	; 8293C
+sar eax, 10h	; 8293F
+inc eax	; 82942
+inc edx	; 82943
+imul edx, eax	; 82944
+add edx, byte 11h	; 82947
+push byte 0	; 8294A
+push edx	; 8294C
+push str_Pointer21	; 8294D
+call sub_8CCA8	; 82952
+add esp, byte 0Ch	; 82957
+mov ebp, eax	; 8295A
+mov esi, dword [pointerspr]	; 8295C
+mov edi, eax	; 82962
+movsd	; 82964
+movsd	; 82965
+movsd	; 82966
+movsd	; 82967
+movsb	; 82968
+mov edx, dword [pointerspr]	; 82969
+mov dx, word [byte edx+04h]	; 8296F
+inc edx	; 82973
+mov word [byte eax+04h], dx	; 82974
+mov edx, dword [pointerspr]	; 82978
+mov dx, word [byte edx+06h]	; 8297E
+inc edx	; 82982
+mov word [byte eax+06h], dx	; 82983
+mov edx, dword [dword_D2435]	; 82987
+test edx, edx	; 8298D
+je short .1	; 8298F
+push edx	; 82991
+call FreeMemBlock	; 82992
+add esp, byte 4	; 82997
+xor ecx, ecx	; 8299A
+mov dword [dword_D2435], ecx	; 8299C
+.1:
+lea eax, [byte esp+030h]	; 829A2
+push eax	; 829A6
+lea eax, [byte esp+038h]	; 829A7
+push eax	; 829AB
+lea eax, [byte esp+02Ch]	; 829AC
+push eax	; 829B0
+call sub_B2DCA	; 829B1
+add esp, byte 0Ch	; 829B6
+mov eax, dword [byte esp+034h]	; 829B9
+mov dword [byte esp+02Ch], eax	; 829BD
+mov eax, dword [byte esp+030h]	; 829C1
+mov dword [byte esp+028h], eax	; 829C5
+call sub_B4BA8	; 829C9
+mov esi, dword [byte esp+028h]	; 829CE
+push esi	; 829D2
+mov eax, dword [byte esp+030h]	; 829D3
+sub eax, byte 4	; 829D7
+push eax	; 829DA
+push ebp	; 829DB
+call sub_91400	; 829DC
+add esp, byte 0Ch	; 829E1
+mov edi, dword [byte esp+028h]	; 829E4
+push edi	; 829E8
+mov eax, dword [byte esp+030h]	; 829E9
+sub eax, byte 4	; 829ED
+push eax	; 829F0
+mov eax, dword [pointerspr]	; 829F1
+push eax	; 829F6
+call sub_91370	; 829F7
+add esp, byte 0Ch	; 829FC
+call ClearInputQueue	; 829FF
+.2:
+xor edx, edx	; 82A04
+mov dword [byte esp+024h], edx	; 82A06
+.3:
+call GetInputEvent	; 82A0A
+test eax, eax	; 82A0F
+je short .4	; 82A11
+lea ebx, [byte esp+028h]	; 82A13
+lea edx, [byte esp+02Ch]	; 82A17
+call dword [ptrupdatefn]	; 82A1B
+mov dword [byte esp+024h], eax	; 82A21
+test al, 6	; 82A25
+je short SoundCardDlgLoop.3	; 82A27
+.4:
+mov ah, byte [byte esp+024h]	; 82A29
+test ah, 2	; 82A2D
+jne near SoundCardDlgLoop_poll.2	; 82A30
+test ah, 4	; 82A36
+jne short SoundCardDlgLoop_poll.2	; 82A39
+mov eax, dword [byte esp+02Ch]	; 82A3B
+cmp eax, dword [byte esp+034h]	; 82A3F
+jne short .5	; 82A43
+mov eax, dword [byte esp+028h]	; 82A45
+cmp eax, dword [byte esp+030h]	; 82A49
+je short SoundCardDlgLoop.2	; 82A4D
+.5:
+mov ebx, dword [byte esp+030h]	; 82A4F
+push ebx	; 82A53
+mov eax, dword [byte esp+038h]	; 82A54
+sub eax, byte 4	; 82A58
+SoundCardDlgLoop_poll:
+push eax	; 82A5B
+push ebp	; 82A5C
+call sub_903F0	; 82A5D
+add esp, byte 0Ch	; 82A62
+mov ecx, dword [byte esp+028h]	; 82A65
+push ecx	; 82A69
+mov eax, dword [byte esp+030h]	; 82A6A
+sub eax, byte 4	; 82A6E
+push eax	; 82A71
+push ebp	; 82A72
+call sub_91400	; 82A73
+add esp, byte 0Ch	; 82A78
+mov esi, dword [byte esp+028h]	; 82A7B
+push esi	; 82A7F
+mov eax, dword [byte esp+030h]	; 82A80
+sub eax, byte 4	; 82A84
+push eax	; 82A87
+mov edi, dword [pointerspr]	; 82A88
+push edi	; 82A8E
+.1:
+call sub_91370	; 82A8F
+add esp, byte 0Ch	; 82A94
+mov eax, dword [byte esp+02Ch]	; 82A97
+mov dword [byte esp+034h], eax	; 82A9B
+mov eax, dword [byte esp+028h]	; 82A9F
+mov dword [byte esp+030h], eax	; 82AA3
+jmp near SoundCardDlgLoop.2	; 82AA7
+.2:
+mov eax, dword [byte esp+034h]	; 82AAC
+sub eax, byte 4	; 82AB0
+mov dh, byte [byte esp+024h]	; 82AB3
+test dh, 2	; 82AB7
+je near SoundCardDlgLoop_x	; 82ABA
+mov ebx, dword [byte esp+030h]	; 82AC0
+push ebx	; 82AC4
+push eax	; 82AC5
+push ebp	; 82AC6
+call sub_903F0	; 82AC7
+add esp, byte 0Ch	; 82ACC
+lea ebx, [byte esp+020h]	; 82ACF
+mov edx, dword [byte esp+028h]	; 82AD3
+mov eax, dword [byte esp+02Ch]	; 82AD7
+call SoundCardHitTest	; 82ADB
+test eax, eax	; 82AE0
+je near .20	; 82AE2
+mov cl, byte [byte esp+020h]	; 82AE8
+mov eax, 1	; 82AEC
+shl eax, cl	; 82AF1
+mov dword [byte esp+020h], eax	; 82AF3
+test dword [setbits], eax	; 82AF7
+jne near .20	; 82AFD
+test dword [byte_C541B], eax	; 82B03
+je near .20	; 82B09
+cmp eax, byte 10h	; 82B0F
+jb short .5	; 82B12
+jbe short .7	; 82B14
+cmp eax, byte 40h	; 82B16
+jb short .3	; 82B19
+jbe short .8	; 82B1B
+cmp eax, 80h	; 82B1D
+je near .21	; 82B22
+jmp near .19	; 82B28
+.3:
+cmp eax, byte 20h	; 82B2D
+.4:
+je short .7	; 82B30
+jmp near .19	; 82B32
+.5:
+cmp eax, byte 4	; 82B37
+jb short .6	; 82B3A
+jbe short .7	; 82B3C
+cmp eax, byte 8	; 82B3E
+jmp short SoundCardDlgLoop_poll.4	; 82B41
+.6:
+cmp eax, byte 1	; 82B43
+jb near .19	; 82B46
+cmp eax, byte 2	; 82B4C
+ja near .19	; 82B4F
+.7:
+mov eax, dword [byte esp+020h]	; 82B55
+mov dword [setbits], eax	; 82B59
+jmp near .19	; 82B5E
+.8:
+mov eax, unk_D2403	; 82B63
+call DrawSelBoxOn	; 82B68
+push dword 0F7h	; 82B6D
+mov ecx, 0FAh	; 82B72
+mov ebx, 0F8h	; 82B77
+mov edx, ecx	; 82B7C
+mov eax, 0F9h	; 82B7E
+call SetDialogColors	; 82B83
+cmp byte [musicon], 0	; 82B88
+je short .10	; 82B8F
+cmp dword [songdata], byte 0	; 82B91
+je short .10	; 82B98
+mov eax, dword [musichandle]	; 82B9A
+mov ebx, 64h	; 82B9F
+mov edx, 3	; 82BA4
+call sub_8FCDF	; 82BA9
+.9:
+mov eax, dword [musicslot-3]	; 82BAE
+sar eax, 18h	; 82BB3
+mov edx, 3	; 82BB6
+call sub_8FC8A	; 82BBB
+test eax, eax	; 82BC0
+je short SoundCardDlgLoop_poll.9	; 82BC2
+mov eax, dword [songdata]	; 82BC4
+push eax	; 82BC9
+call sub_8D2F0	; 82BCA
+add esp, byte 4	; 82BCF
+xor edx, edx	; 82BD2
+mov dword [songdata], edx	; 82BD4
+.10:
+mov eax, dword [setbits]	; 82BDA
+call SetSoundDevice	; 82BDF
+test eax, eax	; 82BE4
+je near .15	; 82BE6
+mov eax, dword [setbits]	; 82BEC
+mov dword [sounddev], eax	; 82BF1
+push ebp	; 82BF6
+call FreeMemBlock	; 82BF7
+add esp, byte 4	; 82BFC
+cmp byte [musicon], 0	; 82BFF
+je short .13	; 82C06
+cmp dword [songdata], byte 0	; 82C08
+jne short .13	; 82C0F
+mov ecx, str_Iff12	; 82C11
+mov ebx, str_Maindesk2	; 82C16
+cmp byte [fileoncd+01DBh], 1	; 82C1B
+jne short .11	; 82C22
+mov edx, dword [cddriveptr]	; 82C24
+jmp short .12	; 82C2A
+.11:
+xor edx, edx	; 82C2C
+.12:
+mov eax, esp	; 82C2E
+call MakePath	; 82C30
+mov eax, esp	; 82C35
+call sub_8F98F	; 82C37
+mov dword [songdata], eax	; 82C3C
+test eax, eax	; 82C41
+je short .13	; 82C43
+test byte [gameopts], 40h	; 82C45
+je short .13	; 82C4C
+mov edx, dword [musichandle]	; 82C4E
+mov ecx, 4Ch	; 82C54
+mov ebx, 3	; 82C59
+call sub_8FB8E	; 82C5E
+.13:
+cmp byte [musicon], 0	; 82C63
+je short .14	; 82C6A
+or byte [gameopts+1], 1	; 82C6C
+jmp near SoundCardDlgLoop_next.1	; 82C73
+.14:
+and byte [gameopts+1], 0FEh	; 82C78
+jmp near SoundCardDlgLoop_next.1	; 82C7F
+.15:
+mov eax, dword [setbits]	; 82C84
+xor dword [byte_C541B], eax	; 82C89
+mov eax, dword [sounddev]	; 82C8F
+mov dword [setbits], eax	; 82C94
+cmp byte [musicon], 0	; 82C99
+je short .18	; 82CA0
+cmp dword [songdata], byte 0	; 82CA2
+jne short .18	; 82CA9
+mov ecx, str_Iff12	; 82CAB
+mov ebx, str_Maindesk2	; 82CB0
+cmp byte [fileoncd+01DBh], 1	; 82CB5
+jne short .16	; 82CBC
+mov edx, dword [cddriveptr]	; 82CBE
+jmp short .17	; 82CC4
+.16:
+xor edx, edx	; 82CC6
+.17:
+mov eax, esp	; 82CC8
+call MakePath	; 82CCA
+mov eax, esp	; 82CCF
+call sub_8F98F	; 82CD1
+mov dword [songdata], eax	; 82CD6
+test eax, eax	; 82CDB
+je short .18	; 82CDD
+test byte [gameopts], 40h	; 82CDF
+je short .18	; 82CE6
+mov edx, dword [musichandle]	; 82CE8
+mov ecx, 4Ch	; 82CEE
+mov ebx, 3	; 82CF3
+call sub_8FB8E	; 82CF8
+.18:
+mov eax, unk_D2403	; 82CFD
+call DrawSelBoxOff	; 82D02
+.19:
+call RedrawSoundCardOpts	; 82D07
+.20:
+mov edi, dword [byte esp+028h]	; 82D0C
+push edi	; 82D10
+mov eax, dword [byte esp+030h]	; 82D11
+sub eax, byte 4	; 82D15
+push eax	; 82D18
+push ebp	; 82D19
+call sub_91400	; 82D1A
+add esp, byte 0Ch	; 82D1F
+mov eax, dword [byte esp+028h]	; 82D22
+push eax	; 82D26
+mov eax, dword [byte esp+030h]	; 82D27
+sub eax, byte 4	; 82D2B
+push eax	; 82D2E
+mov edx, dword [pointerspr]	; 82D2F
+push edx	; 82D35
+jmp near SoundCardDlgLoop_poll.1	; 82D36
+.21:
+mov eax, unk_D2413	; 82D3B
+call DrawSelBoxOn	; 82D40
+SoundCardDlgLoop_next:
+push ebp	; 82D45
+call FreeMemBlock	; 82D46
+add esp, byte 4	; 82D4B
+.1:
+xor eax, eax	; 82D4E
+add esp, byte 38h	; 82D50
+SoundCardDlg_epilogue:
+pop ebp	; 82D53
+pop edi	; 82D54
+pop esi	; 82D55
+pop edx	; 82D56
+pop ecx	; 82D57
+pop ebx	; 82D58
+ret	; 82D59
+SoundCardDlgLoop_x:
+test dh, 4	; 82D5A
+je short .1	; 82D5D
+mov edx, dword [byte esp+030h]	; 82D5F
+push edx	; 82D63
+push eax	; 82D64
+push ebp	; 82D65
+call sub_903F0	; 82D66
+add esp, byte 0Ch	; 82D6B
+jmp short SoundCardDlgLoop_next	; 82D6E
+.1:
+mov ebx, dword [byte esp+030h]	; 82D70
+push ebx	; 82D74
+jmp near SoundCardDlgLoop_poll	; 82D75
+%endif ; C
+; C: src/c/pc/sound_config/SoundCardDlgLoop.c (SetSoundDevice)
+%ifdef CBUILD
+%include "c/pc/sound_config/SoundCardDlgLoop.SetSoundDevice.inc"
+%else
+SetSoundDevice:
+push dword 74h	; 82D7A
+call __CHK	; 82D7F
+push ebx	; 82D84
+push ecx	; 82D85
+push edx	; 82D86
+push esi	; 82D87
+push edi	; 82D88
+push ebp	; 82D89
+sub esp, byte 44h	; 82D8A
+mov esi, eax	; 82D8D
+xor ebp, ebp	; 82D8F
+mov dword [byte esp+03Ch], 1	; 82D91
+cmp dword [dword_D2423], byte 0	; 82D99
+je short .4	; 82DA0
+mov ecx, dword [sounddev]	; 82DA2
+cmp ecx, byte 2	; 82DA8
+je short .1	; 82DAB
+cmp ecx, byte 20h	; 82DAD
+jne short .2	; 82DB0
+.1:
+call ShutdownSpeech	; 82DB2
+mov edx, dword [dword_ED7A8]	; 82DB7
+push edx	; 82DBD
+call FreeMemBlock	; 82DBE
+add esp, byte 4	; 82DC3
+xor ebx, ebx	; 82DC6
+mov dword [dword_ED7A8], ebx	; 82DC8
+jmp short .3	; 82DCE
+.2:
+cmp ecx, byte 4	; 82DD0
+jne short .3	; 82DD3
+mov eax, dword [dword_ED7A4]	; 82DD5
+call sub_8F1FE	; 82DDA
+.3:
+call sub_8EB93	; 82DDF
+.4:
+mov dword [dword_CCC94], 20h	; 82DE4
+xor edi, edi	; 82DEE
+mov dword [dword_D2423], edi	; 82DF0
+.5:
+cmp esi, byte 4	; 82DF6
+jb short .6	; 82DF9
+jbe near .9	; 82DFB
+cmp esi, byte 8	; 82E01
+jb near .12	; 82E04
+jbe near .10	; 82E0A
+cmp esi, byte 20h	; 82E10
+je near .11	; 82E13
+jmp near .12	; 82E19
+.6:
+cmp esi, byte 1	; 82E1E
+jb near .12	; 82E21
+jbe short .7	; 82E27
+cmp esi, byte 2	; 82E29
+je short .8	; 82E2C
+jmp near .12	; 82E2E
+.7:
+mov edx, str_PCBEEP	; 82E33
+lea eax, [byte esp+020h]	; 82E38
+call strcpy_	; 82E3C
+mov edx, str_PC	; 82E41
+lea eax, [byte esp+010h]	; 82E46
+call strcpy_	; 82E4A
+mov dword [dword_D2427], 1	; 82E4F
+mov dword [dword_D242B], 0FFFFFFFFh	; 82E59
+xor ch, ch	; 82E63
+mov byte [byte_D2439], ch	; 82E65
+jmp near .13	; 82E6B
+.8:
+mov edx, str_SBDAC	; 82E70
+lea eax, [byte esp+020h]	; 82E75
+call strcpy_	; 82E79
+mov edx, str_PC	; 82E7E
+lea eax, [byte esp+010h]	; 82E83
+call strcpy_	; 82E87
+mov dword [dword_D2427], esi	; 82E8C
+mov dword [dword_D242B], 3	; 82E92
+mov bh, 1	; 82E9C
+mov byte [musicslot], bh	; 82E9E
+mov byte [byte_D2439], bh	; 82EA4
+jmp near .13	; 82EAA
+.9:
+mov edx, str_ADLIB	; 82EAF
+lea eax, [byte esp+020h]	; 82EB4
+call strcpy_	; 82EB8
+mov edx, str_PC	; 82EBD
+lea eax, [byte esp+010h]	; 82EC2
+call strcpy_	; 82EC6
+mov dword [dword_D2427], 2	; 82ECB
+mov dword [dword_D242B], 0FFFFFFFFh	; 82ED5
+xor bl, bl	; 82EDF
+mov byte [byte_D2439], bl	; 82EE1
+jmp near .13	; 82EE7
+.10:
+mov edx, str_MT322	; 82EEC
+lea eax, [byte esp+020h]	; 82EF1
+call strcpy_	; 82EF5
+mov edx, str_PC	; 82EFA
+lea eax, [byte esp+010h]	; 82EFF
+call strcpy_	; 82F03
+mov dword [dword_D2427], 4	; 82F08
+mov dword [dword_D242B], 0FFFFFFFFh	; 82F12
+xor dh, dh	; 82F1C
+mov byte [byte_D2439], dh	; 82F1E
+jmp short .13	; 82F24
+.11:
+mov edx, str_SBDAC2	; 82F26
+lea eax, [byte esp+020h]	; 82F2B
+call strcpy_	; 82F2F
+mov edx, str_PC	; 82F34
+lea eax, [byte esp+010h]	; 82F39
+call strcpy_	; 82F3D
+mov dword [dword_D2427], 5	; 82F42
+mov dword [dword_D242B], 6	; 82F4C
+mov ah, 1	; 82F56
+mov byte [musicslot], ah	; 82F58
+mov byte [byte_D2439], ah	; 82F5E
+jmp short .13	; 82F64
+.12:
+mov edx, str_PCBEEP2	; 82F66
+lea eax, [byte esp+020h]	; 82F6B
+call strcpy_	; 82F6F
+mov edx, str_PC	; 82F74
+lea eax, [byte esp+010h]	; 82F79
+call strcpy_	; 82F7D
+xor eax, eax	; 82F82
+mov dword [dword_D2427], eax	; 82F84
+mov dword [dword_D242B], 0FFFFFFFFh	; 82F89
+xor al, al	; 82F93
+mov byte [byte_D2439], al	; 82F95
+.13:
+call sub_8EB5B	; 82F9A
+mov ebx, dword [dword_D2427]	; 82F9F
+test ebx, ebx	; 82FA5
+jl short .15	; 82FA7
+mov eax, ebx	; 82FA9
+call sub_97079	; 82FAB
+mov ebp, eax	; 82FB0
+cmp eax, byte 0FFFFFFFFh	; 82FB2
+je short .15	; 82FB5
+mov ecx, dword [dword_D242B]	; 82FB7
+test ecx, ecx	; 82FBD
+jl short .14	; 82FBF
+mov eax, ecx	; 82FC1
+call sub_97079	; 82FC3
+mov dword [byte esp+03Ch], eax	; 82FC8
+cmp eax, byte 0FFFFFFFFh	; 82FCC
+je short .15	; 82FCF
+.14:
+mov dword [dword_D2423], 0FFFFFFFFh	; 82FD1
+.15:
+cmp dword [dword_D2423], byte 0	; 82FDB
+je near .29	; 82FE2
+lea edx, [byte esp+010h]	; 82FE8
+lea eax, [byte esp+020h]	; 82FEC
+call sub_8ECC0	; 82FF0
+cmp esi, byte 4	; 82FF5
+jne short .18	; 82FF8
+xor ecx, ecx	; 82FFA
+mov ebx, str_Slapshot	; 82FFC
+cmp byte [fileoncd+018Fh], 1	; 83001
+jne short .16	; 83008
+mov edx, dword [cddriveptr]	; 8300A
+jmp short .17	; 83010
+.16:
+xor edx, edx	; 83012
+.17:
+mov eax, esp	; 83014
+call MakePath	; 83016
+mov eax, esp	; 8301B
+call sub_8F13B	; 8301D
+mov dword [dword_ED7A4], eax	; 83022
+.18:
+cmp esi, byte 8	; 83027
+jne near .21	; 8302A
+mov ebx, dword [dword_D2350]	; 83030
+test ebx, ebx	; 83036
+jne near .21	; 83038
+push ebx	; 8303E
+lea eax, [byte esp+034h]	; 8303F
+push eax	; 83043
+lea eax, [byte esp+03Ch]	; 83044
+push eax	; 83048
+push ebx	; 83049
+push ebx	; 8304A
+mov ecx, 2	; 8304B
+mov ebx, msg_InitMT32	; 83050
+mov edx, 0FFFFFFFFh	; 83055
+mov eax, edx	; 8305A
+call MessageBox	; 8305C
+xor ecx, ecx	; 83061
+mov ebx, str_MT32HOCK	; 83063
+cmp byte [fileoncd+0F7h], 1	; 83068
+jne short .19	; 8306F
+mov edx, dword [cddriveptr]	; 83071
+jmp short .20	; 83077
+.19:
+xor edx, edx	; 83079
+.20:
+mov eax, esp	; 8307B
+call MakePath	; 8307D
+mov eax, esp	; 83082
+call sub_8F13B	; 83084
+mov edx, eax	; 83089
+mov dword [dword_D2350], 0FFFFFFFFh	; 8308B
+mov dword [sounddev], 8	; 83095
+call PlayDigiSample	; 8309F
+call WaitDigiSample	; 830A4
+mov eax, edx	; 830A9
+call sub_8F1FE	; 830AB
+call RestoreDialogBg	; 830B0
+.21:
+mov dword [sounddev], esi	; 830B5
+cmp byte [byte_D2439], 0	; 830BB
+je short .22	; 830C2
+mov eax, dword [byte esp+03Ch]	; 830C4
+jmp short .23	; 830C8
+.22:
+mov eax, ebp	; 830CA
+.23:
+mov byte [byte_D2439], al	; 830CC
+mov al, byte [byte esp+03Ch]	; 830D1
+mov byte [musicslot], al	; 830D5
+mov eax, dword [sounddev]	; 830DA
+mov dword [setbits], eax	; 830DF
+mov ecx, str_CFG	; 830E4
+mov ebx, str_NHL3	; 830E9
+xor edx, edx	; 830EE
+mov eax, esp	; 830F0
+call MakePath	; 830F2
+mov edx, unk_C36AC	; 830F7
+mov eax, esp	; 830FC
+call fopen_	; 830FE
+mov edi, eax	; 83103
+test eax, eax	; 83105
+jne short .24	; 83107
+push str_CantOpenNhlCfg	; 83109
+call FatalError	; 8310E
+add esp, byte 4	; 83113
+.24:
+xor eax, eax	; 83116
+.25:
+cmp esi, dword [nosplit eax*4+sounddevids]	; 83118
+je short .26	; 8311F
+inc eax	; 83121
+jmp short SetSoundDevice.25	; 83122
+.26:
+push eax	; 83124
+push asc_C36C3	; 83125
+push edi	; 8312A
+call fprintf_	; 8312B
+add esp, byte 0Ch	; 83130
+mov eax, edi	; 83133
+call fclose_	; 83135
+mov ecx, dword [sounddev]	; 8313A
+cmp ecx, byte 2	; 83140
+je short .27	; 83143
+cmp ecx, byte 20h	; 83145
+jne short .28	; 83148
+.27:
+mov byte [musicon], 1	; 8314A
+mov eax, dword [dword_D242B]	; 83151
+mov dword [musichandle], eax	; 83156
+jmp near .39	; 8315B
+.28:
+xor bh, bh	; 83160
+mov byte [musicon], bh	; 83162
+jmp near .39	; 83168
+.29:
+cmp esi, byte 10h	; 8316D
+je near .37	; 83170
+cmp esi, byte 1	; 83176
+je near .37	; 83179
+cmp esi, byte 4	; 8317F
+jb short .30	; 83182
+jbe short .32	; 83184
+cmp esi, byte 8	; 83186
+jb short .34	; 83189
+jbe short .33	; 8318B
+cmp esi, byte 20h	; 8318D
+je short .31	; 83190
+jmp short .34	; 83192
+.30:
+cmp esi, byte 2	; 83194
+jne short .34	; 83197
+mov dword [sndcardname], str_SoundBlaster2	; 83199
+jmp short .34	; 831A3
+.31:
+mov dword [sndcardname], str_ULTRASOUND	; 831A5
+jmp short .34	; 831AF
+.32:
+mov dword [sndcardname], str_Adlib	; 831B1
+jmp short .34	; 831BB
+.33:
+mov dword [sndcardname], str_MT323	; 831BD
+.34:
+xor edx, edx	; 831C7
+mov dword [byte esp+040h], edx	; 831C9
+lea eax, [byte esp+030h]	; 831CD
+push eax	; 831D1
+lea eax, [byte esp+038h]	; 831D2
+push eax	; 831D6
+lea eax, [byte esp+040h]	; 831D7
+push eax	; 831DB
+call sub_B2DCA	; 831DC
+add esp, byte 0Ch	; 831E1
+push byte 0	; 831E4
+lea eax, [byte esp+034h]	; 831E6
+push eax	; 831EA
+lea eax, [byte esp+03Ch]	; 831EB
+push eax	; 831EF
+push byte 0	; 831F0
+push byte 0	; 831F2
+mov ecx, 3	; 831F4
+mov ebx, unk_D249C	; 831F9
+mov edx, 0FFFFFFFFh	; 831FE
+mov eax, edx	; 83203
+call MessageBox	; 83205
+.35:
+call GetInputEvent	; 8320A
+test eax, eax	; 8320F
+je short .36	; 83211
+lea ebx, [byte esp+030h]	; 83213
+lea edx, [byte esp+034h]	; 83217
+call dword [ptrupdatefn]	; 8321B
+mov dword [byte esp+040h], eax	; 83221
+.36:
+test byte [byte esp+040h], 2	; 83225
+je short SetSoundDevice.35	; 8322A
+call RestoreDialogBg	; 8322C
+mov esi, 10h	; 83231
+jmp short .38	; 83236
+.37:
+mov dword [dword_D2423], 0FFFFFFFFh	; 83238
+.38:
+call sub_8EB93	; 83242
+push byte 64h	; 83247
+call SetTickDeadline	; 83249
+add esp, byte 4	; 8324E
+call WaitTickDeadline	; 83251
+.39:
+cmp dword [dword_D2423], byte 0	; 83256
+je near SetSoundDevice.5	; 8325D
+mov edx, dword [sounddev]	; 83263
+cmp edx, byte 2	; 83269
+je short .40	; 8326C
+cmp edx, byte 20h	; 8326E
+jne short .41	; 83271
+.40:
+push byte 20h	; 83273
+push dword 400h	; 83275
+push str_Emmcopybuf	; 8327A
+call sub_8CCA8	; 8327F
+add esp, byte 0Ch	; 83284
+mov dword [dword_ED7A8], eax	; 83287
+mov edx, dword [dword_C4CFC]	; 8328C
+movzx esi, byte [musicslot]	; 83292
+mov ecx, 400h	; 83299
+mov ebx, eax	; 8329E
+mov eax, esi	; 832A0
+call InitSpeech	; 832A2
+.41:
+xor ecx, ecx	; 832A7
+mov dword [dword_CCC94], ecx	; 832A9
+mov eax, 1	; 832AF
+add esp, byte 44h	; 832B4
+jmp near SoundCardDlg_epilogue	; 832B7
+%endif ; C
+; C: src/c/front/speech/ShutdownSpeech.c (SpeechTimerTick)
+%ifdef CBUILD
+%include "c/front/speech/ShutdownSpeech.SpeechTimerTick.inc"
+%else
+SpeechTimerTick:
+push dword 20h	; 832BC
+call __CHK	; 832C1
+push ebx	; 832C6
+push ecx	; 832C7
+push edx	; 832C8
+push esi	; 832C9
+push edi	; 832CA
+cmp dword [speechinit], byte 0	; 832CB
+je near ShutdownSpeech_ret5	; 832D2
+mov eax, dword [speechq]	; 832D8
+mov ebx, dword [byte eax+05Ch]	; 832DD
+test ebx, ebx	; 832E0
+je short .1	; 832E2
+lea ecx, [byte ebx-01h]	; 832E4
+mov dword [byte eax+05Ch], ecx	; 832E7
+.1:
+mov eax, dword [speechq]	; 832EA
+cmp dword [byte eax+060h], byte 0	; 832EF
+je near ShutdownSpeech_ret5	; 832F3
+mov edi, dword [byte eax+050h]	; 832F9
+test edi, edi	; 832FC
+je short .2	; 832FE
+lea ecx, [byte edi-01h]	; 83300
+mov dword [byte eax+050h], ecx	; 83303
+jmp near ShutdownSpeech_ret5	; 83306
+.2:
+mov ecx, dword [byte eax+058h]	; 8330B
+lea edx, [byte ecx+01h]	; 8330E
+mov dword [byte eax+058h], edx	; 83311
+mov edx, dword [speechq]	; 83314
+cmp ecx, dword [byte edx+054h]	; 8331A
+jge near .5	; 8331D
+mov eax, ecx	; 83323
+mov ecx, dword [edx+eax*4]	; 83325
+cmp ecx, byte 0FFFFFFFFh	; 83328
+jne short .3	; 8332B
+mov dword [byte edx+060h], edi	; 8332D
+jmp near ShutdownSpeech_ret5	; 83330
+.3:
+mov eax, ecx	; 83335
+shl eax, 2	; 83337
+add eax, ecx	; 8333A
+shl eax, 2	; 8333C
+sub eax, ecx	; 8333F
+add eax, eax	; 83341
+mov ebx, dword [speechbank]	; 83343
+add eax, ebx	; 83349
+mov esi, dword [byte eax+0Eh]	; 8334B
+mov ecx, dword [byte eax+016h]	; 8334E
+mov ebx, dword [byte eax+01Eh]	; 83351
+mov dword [byte edx+050h], ebx	; 83354
+mov edx, dword [dword_D27B2]	; 83357
+inc edx	; 8335D
+mov dword [dword_D27B2], edx	; 8335E
+mov ebx, edx	; 83364
+and ebx, byte 1	; 83366
+mov dword [dword_D27B2], ebx	; 83369
+cmp byte [byte eax+0Dh], 47h	; 8336F
+jne short .4	; 83373
+push byte 7Fh	; 83375
+push dword 2B11h	; 83377
+mov edx, dword [musichandle]	; 8337C
+mov eax, esi	; 83382
+call sub_8FBE5	; 83384
+jmp near ShutdownSpeech_ret5	; 83389
+.4:
+add ecx, ecx	; 8338E
+push byte 7Fh	; 83390
+push dword 2B11h	; 83392
+mov edx, dword [musichandle]	; 83397
+mov eax, esi	; 8339D
+call sub_8FC37	; 8339F
+jmp near ShutdownSpeech_ret5	; 833A4
+.5:
+mov dword [byte edx+060h], edi	; 833A9
+mov eax, dword [speechbank]	; 833AC
+mov edx, dword [speechq]	; 833B1
+mov eax, dword [dword eax+03B70h]	; 833B7
+mov dword [byte edx+05Ch], eax	; 833BD
+jmp near ShutdownSpeech_ret5	; 833C0
+%endif ; C
+; C: src/c/pc/sound_config/ClearSpeechSlot.c
+%ifdef CBUILD
+%include "c/pc/sound_config/ClearSpeechSlot.inc"
+%else
+ClearSpeechSlot:
+push dword 4	; 833C5
+call __CHK	; 833CA
+mov byte [eax], 0	; 833CF
+mov byte [byte eax+0Dh], 0	; 833D2
+mov dword [byte eax+0Eh], 0	; 833D6
+mov dword [byte eax+012h], 0	; 833DD
+mov dword [byte eax+016h], 0	; 833E4
+mov dword [byte eax+01Eh], 0	; 833EB
+mov dword [byte eax+022h], 0	; 833F2
+ret	; 833F9
+%endif ; C
+; C: src/c/pc/sound_config/ResetSpeechQueue.c
+%ifdef CBUILD
+%include "c/pc/sound_config/ResetSpeechQueue.inc"
+%else
+ResetSpeechQueue:
+push dword 0Ch	; 833FA
+call __CHK	; 833FF
+push ecx	; 83404
+push edx	; 83405
+mov eax, dword [speechq]	; 83406
+mov dword [byte eax+060h], 0	; 8340B
+mov eax, dword [speechq]	; 83412
+mov ecx, 14h	; 83417
+mov edx, 0FFFFFFFFh	; 8341C
+call __STOSD	; 83421
+mov eax, dword [speechq]	; 83426
+mov dword [byte eax+054h], 0	; 8342B
+mov eax, dword [speechq]	; 83432
+mov dword [byte eax+058h], 0	; 83437
+mov eax, dword [speechq]	; 8343E
+mov dword [byte eax+050h], 0	; 83443
+mov eax, dword [speechq]	; 8344A
+mov dword [byte eax+05Ch], 0	; 8344F
+pop edx	; 83456
+pop ecx	; 83457
+ret	; 83458
+%endif ; C

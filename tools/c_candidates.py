@@ -8,8 +8,8 @@ sys.path.insert(0,'tools')
 import c_progress as cp, cc
 done={r['function'] for r in csv.DictReader(open('tools/c_functions.csv'))}
 out=[]
-for f in sorted(glob.glob('src/cseg01/*.asm')):
-    stem=os.path.basename(f)[:-4]
+for f in sorted(glob.glob('src/cseg01/**/*.asm', recursive=True)):
+    stem=os.path.relpath(f,'src/cseg01')[:-4]
     if cp.is_lib(stem): continue
     L=open(f).read().split('\n')
     labs=[]
@@ -37,7 +37,7 @@ for f in sorted(glob.glob('src/cseg01/*.asm')):
         size=int(a1.group(1),16)-int(a0.group(1),16)+3 if a0 and a1 else 0
         ext=[x for x in body if re.search(r'\bjmp\s+(near\s+)?\w+_ret\d',x)]
         hasret=any(x.split(';')[0].strip()=='ret' or x.split(';')[0].strip().startswith('ret ') for x in body)
-        out.append((size,stem[:3]+stem[9:],name,a0.group(1) if a0 else '?',len(body),'ext' if ext else '','ret' if hasret else 'noret'))
+        out.append((size,stem,name,a0.group(1) if a0 else '?',len(body),'ext' if ext else '','ret' if hasret else 'noret'))
 out.sort()
 lo=int(sys.argv[1]) if len(sys.argv)>1 else 0
 hi=int(sys.argv[2]) if len(sys.argv)>2 else 300

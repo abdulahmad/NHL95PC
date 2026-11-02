@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """slotdump.py - show how wcc386 10.0 GA orders the stack slots of a C file's locals, from inside the compiler.
 
-  python3 tools/wccre/slotdump.py src/c/<seg>/<File>.c [--func NAME] [--count NAME=N ...] [--all]
+  python3 tools/wccre/slotdump.py src/c/<module>/<File>.c [--func NAME] [--count NAME=N ...] [--all]
 
 Runs the compiler in the emulator (tools/wccre/emucc.py, with the file's own cflags) and hooks the three sorts
 that decide the stack slots. All three go through SortList (+64FC3) and its Shell sort (+64F44; not stable):

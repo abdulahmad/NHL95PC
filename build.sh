@@ -10,8 +10,8 @@ NASM="${NASM:-nasm}"
 command -v "$NASM" >/dev/null || { echo "nasm not found (apt install nasm / brew install nasm)" >&2; exit 1; }
 "$PY" tools/rebuild_exe.py extract "$EXE" build/parts
 JOBS="$(getconf _NPROCESSORS_ONLN 2>/dev/null || echo 4)"
-echo "assembling $(ls src/cseg01/*.asm src/dseg02/*.asm | wc -l) files with $JOBS jobs"
-ls src/cseg01/*.asm src/dseg02/*.asm | xargs -P "$JOBS" -I{} sh -c '
+echo "assembling $(find src/cseg01 src/dseg02 -name '*.asm' | wc -l) files with $JOBS jobs"
+find src/cseg01 src/dseg02 -name '*.asm' | sort | xargs -P "$JOBS" -I{} sh -c '
   o="build/obj/${1#src/}"; o="${o%.asm}.o"; mkdir -p "$(dirname "$o")"
   '"$NASM"' -O0 -f elf32 -I src/inc/ -o "$o" "$1"' _ {}
 "$PY" tools/link_src.py --obj build/obj --parts build/parts --out build/HOCKEY.EXE

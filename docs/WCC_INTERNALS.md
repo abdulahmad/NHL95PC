@@ -43,7 +43,7 @@ Needs the `unicorn` Python package (2.1.4 tested; without pip, unzip the manylin
 
 ## Register allocation (tools/wccre/regdump.py)
 
-`python3 tools/wccre/regdump.py src/c/<seg>/<File>.c` compiles the file in the emulator and prints, for every
+`python3 tools/wccre/regdump.py src/c/<module>/<File>.c` compiles the file in the emulator and prints, for every
 allocation pass of every function, each variable and code-generator temporary (`tN`) in the order it is given a
 register, with its savings and what it got:
 
@@ -141,7 +141,7 @@ Measured with `irdump.py --pass 0` on code-neutral variants and a replay of the 
 
 ### The tie order a draft needs (tools/wccre/tieorder.py)
 
-`python3 tools/wccre/tieorder.py src/c/<seg>/<File>.c FUNC [--minutes 15]` answers, for a register draft, whether
+`python3 tools/wccre/tieorder.py src/c/<module>/<File>.c FUNC [--minutes 15]` answers, for a register draft, whether
 the remaining differences are a tie order and which one. At +569B4 AssignConflicts has the sorted list in eax (it
 stores it to +7E794 and walks each node's next pointer at +0); the tool relinks FUNC's nodes there, changing only
 the order inside runs of equal savings, so every forced order is one the unstable sort can produce.
@@ -181,7 +181,7 @@ Validation (2026-10-24):
 
 ### The code generator's IR (tools/wccre/irdump.py)
 
-`python3 tools/wccre/irdump.py src/c/<seg>/<File>.c FUNC [--pass N]` prints the function's instructions as register
+`python3 tools/wccre/irdump.py src/c/<module>/<File>.c FUNC [--pass N]` prints the function's instructions as register
 allocation sees them: per block (with its loop depth) one line per instruction, `L<source line>  result = opcode
 operands  :type`, then every conflict in allocation order with its savings, register, definitions and uses
 (block:line, `*` per loop level). It shows what each `tN` is (`t13 = add nums, i`), the order the optimizer left the
@@ -243,7 +243,7 @@ scalars and every slot of TradeScreenLoop came from a declaration order (lane 1b
 entries (the 2-byte part of an int passed as a short, an array's element parts) keep their place in the input
 and share its slot.
 
-`python3 tools/wccre/declsearch.py src/c/<seg>/<File>.c FUNC [--conflicts] [--write]` searches those orders.
+`python3 tools/wccre/declsearch.py src/c/<module>/<File>.c FUNC [--conflicts] [--write]` searches those orders.
 It reads each local's EXE slot from a -d1 compile aligned with the EXE, scores orders without compiling (the
 Python sorts plus a copy of the hand-out), and confirms the best with an emulator compile and a fresh cc.py
 compile. By default it moves only the names in memory without a conflict. --conflicts also moves the spilled
@@ -253,7 +253,7 @@ use-count sorts, and the tool confirms one order per such tie order. TeamRosterS
 traded, s and kb works: kb (count 60) takes the top slot ahead of traded (12), and the EXE has them the other
 way round.
 
-`python3 tools/wccre/slotdump.py src/c/<seg>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
+`python3 tools/wccre/slotdump.py src/c/<module>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
 the names with a slot in hand-out order with their size, count, position after each sort, location and slot,
 and checks a Python copy of the three sorts against the compiler's lists. `--count NAME=N` compiles again with
 the count written into the conflict before each use-count sort and shows the slots the compiler then hands out
@@ -271,7 +271,7 @@ TeamRosterScreen's n has 63 references; with 50:
 n [esp+3F0h], idx 404h, gs 400h are the EXE's slots: the original has one loop-weighted reference to n fewer
 than the draft (any count from 43 to 60 gives the same slots).
 
-`python3 tools/wccre/countsolve.py src/c/<seg>/<File>.c FUNC` asks the reverse question: which use counts give the
+`python3 tools/wccre/countsolve.py src/c/<module>/<File>.c FUNC` asks the reverse question: which use counts give the
 locals (and the parameters the hand-out places) their EXE slots. It reads the EXE slots as declsearch.py does,
 replays every count of every name in memory with a conflict through declsearch's model of the sorts and the
 hand-out (no compile), then pairs of the best single changes, and confirms the best count sets with a compile that

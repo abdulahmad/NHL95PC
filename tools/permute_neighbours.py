@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """permute_neighbours.py - list tools/permute.py's candidates for a function, with their line changes.
 
-  python3 tools/permute_neighbours.py src/c/<seg>/<File>.c FUNC [T1,T2,...]
+  python3 tools/permute_neighbours.py src/c/<module>/<File>.c FUNC [T1,T2,...]
 
 One line per candidate: the transform name, then the changed lines (- old || + new). The optional third argument
 keeps only those transforms (as permute.py --only)."""

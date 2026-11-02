@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """splice.py - a split function piece by piece: where each piece sits, how far it is from the EXE, which pieces are C.
 
-  python3 tools/splice.py src/c/<seg>/<File>.c FUNC [--obj OBJ] [--mark] [--diff]
+  python3 tools/splice.py src/c/<module>/<File>.c FUNC [--obj OBJ] [--mark] [--diff]
 
 Watcom can split a function: its entry follows a function that falls into it, and the rest stays where the function
 was defined (chkprogress: entry after PenaltyManager, chkprogress_go / chkprogress_x after InProgress; LoadRosterList:

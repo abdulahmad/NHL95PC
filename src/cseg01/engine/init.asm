@@ -1,0 +1,591 @@
+; The skate-out before the puck drops, and the three-stars lap after the game.
+bits 32
+%include "hockey.inc"
+section s_47C31 progbits alloc exec nowrite align=1
+extern DoGameFrame, SetSPA, seed, __CHK, assreplace, sflags, byte_CC9B0, loadpals, VisTeam, bgscrollx, scrollx
+extern textline1, textline2, textline3, textline4, textline5, joysampling, inputframes, escrequest
+extern rinkscrollx, rinkscrolly, loadscreenon, cont2team, HomeTeam, shownumbers, bannertimer, dword_CC0EC
+extern introskipped, dword_CC9AD, spritedrawcount, frameaccum, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx
+extern curperiod, rinkwtiles, rinkhtiles, bgscrolly, palcyclelock, hmtmstruct, awtmstruct, puckstruct
+extern dword_E0244, dword_E9A9E, seqtimer, forcepldata, FreeMemBlock, puckc, camx_m2, randomd0
+extern reenergizeteam, resetplstuff, setpersonel, ResetInputSampling, RunGameFrames, FadePalette, UpdateHudPanel, SetRinkScroll
+extern LoadScreenPalTick, joyq_flush, Readjoy1, Readjoy2, CrowdNoiseUpdate, CrowdFadeOut, CrowdNoiseReset, StopDigiSample
+extern PlayCrowdSample, DrawRinkOverlays, SprSort, LoadTeamPPV, CloseTextOverlay, sub_6ADA7, sub_6AF52, sub_6AF97
+extern sub_6B008, SpeechStopQueue, SelectScreenBM, RemoveTimerCallback, sub_8FFB0, TicksSinceLastCall, SetTickDeadline, WaitTickDeadline
+extern savepal, gamepal, unk_DFD9C, camx, camy, xc1, yc1, SortCords
+extern fox, foy, c1playernum, c2playernum, RefStep, exitgame, energywarn
+extern lcblink, fadeinpending, ovlseq, word_CC9CC, scrolly
+extern word_E0022, word_E0028, word_E002A, word_E002E
+extern word_E0042, word_E0046, word_E0048, word_E004A, regd1, joysampling_save
+global PreGameIntro_scroll
+global PreGameIntro_frameloop, PreGameIntro_end
+global PreGameIntro_popebp, PreGameIntro_popx, ThreeStarsLoop_tick
+global FadeOutPalCycle, PreGameIntro, StartPreGame, ThreeStarsLoop
+; C: src/c/engine/init/FadeOutPalCycle.c
+%ifdef CBUILD
+%include "c/engine/init/FadeOutPalCycle.inc"
+%else
+FadeOutPalCycle:
+push dword 1Ch	; 47C31
+call __CHK	; 47C36
+push ebx	; 47C3B
+push ecx	; 47C3C
+push edx	; 47C3D
+push esi	; 47C3E
+push ebp	; 47C3F
+cmp dword [loadscreenon], byte 0	; 47C40
+je near .x	; 47C47
+xor esi, esi	; 47C4D
+.1:
+test esi, esi	; 47C4F
+jne short .5	; 47C51
+mov esi, 1	; 47C53
+mov dword [palcyclelock], esi	; 47C58
+xor ecx, ecx	; 47C5E
+.2:
+xor edx, edx	; 47C60
+.3:
+mov eax, ecx	; 47C62
+shl eax, 2	; 47C64
+sub eax, ecx	; 47C67
+shl eax, 8	; 47C69
+add eax, edx	; 47C6C
+mov bl, byte [dword eax+loadpals]	; 47C6E
+test bl, bl	; 47C74
+jle short .4	; 47C76
+mov bh, bl	; 47C78
+dec bh	; 47C7A
+mov byte [dword eax+loadpals], bh	; 47C7C
+cmp esi, byte 1	; 47C82
+jne short .4	; 47C85
+xor esi, esi	; 47C87
+.4:
+inc edx	; 47C89
+cmp edx, 300h	; 47C8A
+jl short FadeOutPalCycle.3	; 47C90
+inc ecx	; 47C92
+cmp ecx, byte 3	; 47C93
+jl short FadeOutPalCycle.2	; 47C96
+xor ebp, ebp	; 47C98
+mov dword [palcyclelock], ebp	; 47C9A
+push byte 2	; 47CA0
+call SetTickDeadline	; 47CA2
+add esp, byte 4	; 47CA7
+call WaitTickDeadline	; 47CAA
+jmp short FadeOutPalCycle.1	; 47CAF
+.5:
+mov dword [palcyclelock], 1	; 47CB1
+push LoadScreenPalTick	; 47CBB
+call RemoveTimerCallback	; 47CC0
+add esp, byte 4	; 47CC5
+xor ecx, ecx	; 47CC8
+mov dword [loadscreenon], ecx	; 47CCA
+.x:
+pop ebp	; 47CD0
+pop esi	; 47CD1
+pop edx	; 47CD2
+pop ecx	; 47CD3
+pop ebx	; 47CD4
+ret	; 47CD5
+%endif ; C
+; C: src/c/engine/init/FadeOutPalCycle.c (PreGameIntro)
+%ifdef CBUILD
+%include "c/engine/init/FadeOutPalCycle.PreGameIntro.inc"
+%else
+PreGameIntro:
+push dword 28h	; 47CD6
+call __CHK	; 47CDB
+push ebx	; 47CE0
+push ecx	; 47CE1
+push edx	; 47CE2
+push esi	; 47CE3
+push edi	; 47CE4
+sub esp, byte 10h	; 47CE5
+mov eax, 0Ah	; 47CE8
+call PlayCrowdSample	; 47CED
+mov eax, dword [HomeTeam-2]	; 47CF2
+sar eax, 10h	; 47CF7
+movsx dx, byte [dword eax+byte_CC9B0]	; 47CFA
+mov dword [byte esp+08h], edx	; 47D02
+mov edi, dword [dword eax+byte_CC9B0-3]	; 47D06
+sar edi, 18h	; 47D0C
+mov di, word [nosplit edi*2+word_CC9CC]	; 47D0F
+cmp dx, byte 1	; 47D17
+setne al	; 47D1B
+and eax, 0FFh	; 47D1E
+add eax, byte 3	; 47D23
+cwde	; 47D26
+call LoadTeamPPV	; 47D27
+xor ah, ah	; 47D2C
+mov byte [textline5], ah	; 47D2E
+mov byte [textline4], ah	; 47D34
+mov byte [textline2], ah	; 47D3A
+xor bl, bl	; 47D40
+mov byte [textline1], ah	; 47D42
+xor bh, bh	; 47D48
+mov byte [textline3], ah	; 47D4A
+mov dword [curperiod], 0FFFFFFFFh	; 47D50
+mov word [foy], bx	; 47D5A
+xor ecx, ecx	; 47D61
+mov word [fox], cx	; 47D63
+mov edx, dword [HomeTeam-2]	; 47D6A
+sar edx, 10h	; 47D70
+shl edx, 10h	; 47D73
+mov eax, dword [VisTeam-2]	; 47D76
+sar eax, 10h	; 47D7B
+add eax, edx	; 47D7E
+add dword [seed], eax	; 47D80
+xor ecx, ecx	; 47D86
+mov dword [shownumbers], ecx	; 47D88
+mov dword [seqtimer], 708h	; 47D8E
+xor esi, esi	; 47D98
+mov word [exitgame], si	; 47D9A
+mov eax, 0FFFFFFFFh	; 47DA1
+mov word [c2playernum], ax	; 47DA6
+mov word [c1playernum], ax	; 47DAC
+mov eax, hmtmstruct	; 47DB2
+call reenergizeteam	; 47DB7
+mov eax, hmtmstruct	; 47DBC
+call setpersonel	; 47DC1
+mov eax, hmtmstruct	; 47DC6
+call forcepldata	; 47DCB
+mov eax, awtmstruct	; 47DD0
+call reenergizeteam	; 47DD5
+mov eax, awtmstruct	; 47DDA
+call setpersonel	; 47DDF
+mov eax, awtmstruct	; 47DE4
+call forcepldata	; 47DE9
+call resetplstuff	; 47DEE
+mov ebx, unk_DFD9C	; 47DF3
+mov dword [byte esp+0Ch], esi	; 47DF8
+jmp near .16	; 47DFC
+.1:
+xor esi, esi	; 47E01
+jmp short .3	; 47E03
+.2:
+movsx eax, si	; 47E05
+xor ch, ch	; 47E08
+mov byte [esp+eax], ch	; 47E0A
+inc esi	; 47E0D
+.3:
+cmp si, byte 5	; 47E0E
+jl short PreGameIntro.2	; 47E12
+xor esi, esi	; 47E14
+jmp near .15	; 47E16
+.4:
+mov ax, word [byte ebx+position]	; 47E1B
+test ax, ax	; 47E1F
+jne short .9	; 47E22
+mov word [byte ebx+Xpos+2], ax	; 47E24
+mov word [byte ebx+temp3], ax	; 47E28
+test byte [byte ebx+pflags], 80h	; 47E2C
+je short .5	; 47E30
+mov eax, 0FFFFFF24h	; 47E32
+jmp short .6	; 47E37
+.5:
+mov eax, 0DCh	; 47E39
+.6:
+mov word [byte ebx+Ypos+2], ax	; 47E3E
+mov word [byte ebx+temp4], ax	; 47E42
+mov word [byte ebx+temp5], 0FF9Ch	; 47E46
+mov word [byte ebx+Yvel], 0	; 47E4C
+mov ax, word [byte ebx+Yvel]	; 47E52
+mov word [byte ebx+Xvel], ax	; 47E56
+test byte [byte ebx+pflags], 80h	; 47E5A
+je short .7	; 47E5E
+xor eax, eax	; 47E60
+jmp short .8	; 47E62
+.7:
+mov eax, 4	; 47E64
+.8:
+mov word [byte ebx+facedir], ax	; 47E69
+mov edx, 99h	; 47E6D
+mov eax, ebx	; 47E72
+call SetSPA	; 47E74
+jmp near .14	; 47E79
+.9:
+mov eax, 5	; 47E7E
+call randomd0	; 47E83
+mov edx, eax	; 47E88
+.10:
+movsx eax, dx	; 47E8A
+cmp byte [esp+eax], 0	; 47E8D
+je short .11	; 47E91
+lea edx, [byte eax+01h]	; 47E93
+mov ecx, 5	; 47E96
+mov eax, edx	; 47E9B
+sar edx, 1Fh	; 47E9D
+idiv ecx	; 47EA0
+jmp short PreGameIntro.10	; 47EA2
+.11:
+mov byte [esp+eax], 1	; 47EA4
+imul edx, byte 28h	; 47EA8
+sub edx, byte 50h	; 47EAB
+mov eax, 8	; 47EAE
+call randomd0	; 47EB3
+sub eax, byte 4	; 47EB8
+add edx, eax	; 47EBB
+mov word [byte ebx+Xpos+2], dx	; 47EBD
+mov word [byte ebx+temp3], dx	; 47EC1
+mov eax, 2	; 47EC5
+call randomd0	; 47ECA
+add word [byte ebx+Xpos+2], ax	; 47ECF
+test byte [byte ebx+pflags], 80h	; 47ED3
+je short .12	; 47ED7
+mov edx, 0FFFFFFC6h	; 47ED9
+jmp short .13	; 47EDE
+.12:
+mov edx, 30h	; 47EE0
+.13:
+mov eax, 4	; 47EE5
+call randomd0	; 47EEA
+cwde	; 47EEF
+sub eax, byte 2	; 47EF0
+add edx, eax	; 47EF3
+mov word [byte ebx+Ypos+2], dx	; 47EF5
+mov word [byte ebx+temp4], dx	; 47EF9
+mov word [byte ebx+facedir], 4	; 47EFD
+mov word [byte ebx+Yvel], 0	; 47F03
+mov ax, word [byte ebx+Yvel]	; 47F09
+mov word [byte ebx+Xvel], ax	; 47F0D
+mov eax, 28h	; 47F11
+call randomd0	; 47F16
+sub eax, byte 14h	; 47F1B
+mov edx, edi	; 47F1E
+add edx, eax	; 47F20
+mov word [byte ebx+temp5], dx	; 47F22
+xor edx, edx	; 47F26
+mov eax, ebx	; 47F28
+call SetSPA	; 47F2A
+mov word [byte ebx+012h], 171h	; 47F2F
+.14:
+mov edx, 25h	; 47F35
+mov eax, ebx	; 47F3A
+call assreplace	; 47F3C
+inc esi	; 47F41
+sub ebx, 80h	; 47F42
+.15:
+cmp si, byte 6	; 47F48
+jl near PreGameIntro.4	; 47F4C
+inc dword [byte esp+0Ch]	; 47F52
+.16:
+cmp word [byte esp+0Ch], byte 2	; 47F56
+jl near PreGameIntro.1	; 47F5C
+mov word [puckstruct+28h], 78h	; 47F62
+mov word [puckstruct+2], 0C8h	; 47F6B
+mov word [puckstruct+6], 0FED4h	; 47F74
+xor ecx, ecx	; 47F7D
+mov word [puckstruct+0Ch], cx	; 47F7F
+xor esi, esi	; 47F86
+mov word [puckstruct+0Eh], cx	; 47F88
+mov edx, 1Ah	; 47F8F
+mov eax, puckstruct	; 47F94
+call assreplace	; 47F99
+mov eax, dword [byte esp+08h]	; 47F9E
+mov word [word_E0042], ax	; 47FA2
+mov eax, 8Eh	; 47FA8
+mov word [SortCords+802h], ax	; 47FAD
+mov word [word_E0046], ax	; 47FB3
+mov eax, 2	; 47FB9
+call randomd0	; 47FBE
+add word [SortCords+802h], ax	; 47FC3
+mov word [word_E0022], cx	; 47FCA
+mov word [word_E0048], cx	; 47FD1
+mov word [SortCords+836h], 4	; 47FD8
+mov word [word_E002A], cx	; 47FE1
+mov word [word_E0028], cx	; 47FE8
+mov word [word_E004A], di	; 47FEF
+xor edx, edx	; 47FF6
+mov eax, SortCords+800h	; 47FF8
+call SetSPA	; 47FFD
+mov word [word_E002E], 289h	; 48002
+mov edx, 26h	; 4800B
+mov eax, SortCords+800h	; 48010
+call assreplace	; 48015
+mov word [RefStep], si	; 4801A
+or byte [sflags], 40h	; 48021
+call DoGameFrame	; 48028
+call DoGameFrame	; 4802D
+call SprSort	; 48032
+xor edi, edi	; 48037
+mov dword [frameaccum], edi	; 48039
+mov dword [inputframes], edi	; 4803F
+mov eax, dword [puckc]	; 48045
+mov byte [eax], 0FFh	; 4804A
+mov dword [joysampling], edi	; 4804D
+call joyq_flush	; 48053
+xor edi, edi	; 48058
+mov word [camx], di	; 4805A
+mov word [xc1], si	; 48061
+mov word [camy], si	; 48068
+mov word [yc1], si	; 4806F
+mov dword [viewscrollx], 20h	; 48076
+mov dword [viewscrolly], 0ECh	; 48080
+mov eax, dword [ovlseq-2]	; 4808A
+sar eax, 10h	; 4808F
+cmp eax, byte 0FFFFFFFFh	; 48092
+je short .17	; 48095
+call CloseTextOverlay	; 48097
+.17:
+call SelectScreenBM	; 4809C
+xor ebx, ebx	; 480A1
+mov word [lcblink+2], bx	; 480A3
+mov word [lcblink], bx	; 480AA
+mov word [energywarn+2], bx	; 480B1
+mov word [energywarn], bx	; 480B8
+call UpdateHudPanel	; 480BF
+add esp, byte 10h	; 480C4
+jmp near PreGameIntro_popx	; 480C7
+%endif ; C
+; C: src/c/engine/init/FadeOutPalCycle.c (PreGameIntro_scroll)
+%ifdef CBUILD
+%include "c/engine/init/FadeOutPalCycle.PreGameIntro_scroll.inc"
+%else
+PreGameIntro_scroll:
+test ecx, ecx	; 480CC
+jge short PreGameIntro_frameloop	; 480CE
+xor ebp, ebp	; 480D0
+mov dword [viewscrollx], ebp	; 480D2
+PreGameIntro_frameloop:
+mov edx, dword [viewscrolly]	; 480D8
+cmp edx, 1A8h	; 480DE
+jle short .1	; 480E4
+mov dword [viewscrolly], 1A8h	; 480E6
+jmp short .2	; 480F0
+.1:
+test edx, edx	; 480F2
+jge short .2	; 480F4
+xor ecx, ecx	; 480F6
+mov dword [viewscrolly], ecx	; 480F8
+.2:
+xor edx, edx	; 480FE
+xor eax, eax	; 48100
+call sub_6AF97	; 48102
+call sub_6B008	; 48107
+mov edx, dword [viewscrolly]	; 4810C
+mov eax, dword [viewscrollx]	; 48112
+call SetRinkScroll	; 48117
+mov edx, dword [bgscrolly-2]	; 4811C
+sar edx, 10h	; 48122
+shl edx, 3	; 48125
+mov eax, dword [scrolly-2]	; 48128
+sar eax, 10h	; 4812D
+add edx, eax	; 48130
+lea ecx, [dword edx+0A8h]	; 48132
+mov eax, dword [bgscrollx-2]	; 48138
+sar eax, 10h	; 4813D
+shl eax, 3	; 48140
+mov ebx, dword [scrollx-2]	; 48143
+sar ebx, 10h	; 48149
+add eax, ebx	; 4814C
+lea ebx, [dword eax+0140h]	; 4814E
+call sub_6AF52	; 48154
+xor ebp, ebp	; 48159
+mov dword [spritedrawcount], ebp	; 4815B
+mov edx, dword [viewscrolly-2]	; 48161
+sar edx, 10h	; 48167
+mov eax, dword [viewscrollx-2]	; 4816A
+sar eax, 10h	; 4816F
+call DrawRinkOverlays	; 48172
+mov edx, dword [bgscrolly-2]	; 48177
+sar edx, 10h	; 4817D
+shl edx, 3	; 48180
+mov eax, dword [scrolly-2]	; 48183
+sar eax, 10h	; 48188
+add edx, eax	; 4818B
+neg edx	; 4818D
+mov ebx, dword [bgscrollx-2]	; 4818F
+sar ebx, 10h	; 48195
+shl ebx, 3	; 48198
+mov eax, dword [scrollx-2]	; 4819B
+sar eax, 10h	; 481A0
+add eax, ebx	; 481A3
+neg eax	; 481A5
+call sub_6AF97	; 481A7
+call sub_6ADA7	; 481AC
+cmp word [fadeinpending], byte 0	; 481B1
+je short .3	; 481B9
+mov ax, word [joysampling]	; 481BB
+mov word [joysampling_save], ax	; 481C1
+xor eax, eax	; 481C7
+mov dword [joysampling], ebp	; 481C9
+mov ebx, 10h	; 481CF
+mov edx, gamepal	; 481D4
+call FadePalette	; 481D9
+xor ebx, ebx	; 481DE
+mov word [fadeinpending], bx	; 481E0
+mov eax, dword [joysampling_save-2]	; 481E7
+sar eax, 10h	; 481EC
+mov dword [joysampling], eax	; 481EF
+.3:
+movsx eax, si	; 481F4
+call CrowdNoiseUpdate	; 481F7
+cmp dword [escrequest], byte 0	; 481FC
+jne short PreGameIntro_end	; 48203
+call Readjoy1	; 48205
+mov ah, byte [regd1]	; 4820A
+test ah, 10h	; 48210
+jne short .4	; 48213
+test ah, 20h	; 48215
+je short .5	; 48218
+.4:
+mov dword [introskipped], 1	; 4821A
+mov word [fadeinpending], 1	; 48224
+jmp short PreGameIntro_end	; 4822D
+.5:
+call Readjoy2	; 4822F
+mov dh, byte [regd1]	; 48234
+test dh, 10h	; 4823A
+jne short PreGameIntro_frameloop.4	; 4823D
+test dh, 20h	; 4823F
+jne short PreGameIntro_frameloop.4	; 48242
+call WaitTickDeadline	; 48244
+jmp near ThreeStarsLoop_tick	; 48249
+%endif ; C
+; C: src/c/engine/init/FadeOutPalCycle.c (PreGameIntro_end)
+%ifdef CBUILD
+%include "c/engine/init/FadeOutPalCycle.PreGameIntro_end.inc"
+%else
+PreGameIntro_end:
+xor esi, esi	; 4824E
+mov dword [joysampling], esi	; 48250
+mov eax, dword [ovlseq-2]	; 48256
+sar eax, 10h	; 4825B
+cmp eax, byte 0FFFFFFFFh	; 4825E
+je short .1	; 48261
+mov edi, dword [dword_E0244]	; 48263
+push edi	; 48269
+call FreeMemBlock	; 4826A
+add esp, byte 4	; 4826F
+mov word [ovlseq], 0FFFFh	; 48272
+.1:
+mov ebp, dword [escrequest]	; 4827B
+test ebp, ebp	; 48281
+je short .2	; 48283
+push savepal	; 48285
+push dword 100h	; 4828A
+push byte 0	; 4828F
+call sub_8FFB0	; 48291
+add esp, byte 0Ch	; 48296
+mov ebx, 10h	; 48299
+mov edx, savepal	; 4829E
+mov eax, 1	; 482A3
+call FadePalette	; 482A8
+call CrowdFadeOut	; 482AD
+call StopDigiSample	; 482B2
+call SpeechStopQueue	; 482B7
+xor edx, edx	; 482BC
+mov dword [escrequest], edx	; 482BE
+mov eax, 0FFFFFFFFh	; 482C4
+jmp short PreGameIntro_popebp	; 482C9
+.2:
+cmp dword [introskipped], byte 0	; 482CB
+je short .3	; 482D2
+push savepal	; 482D4
+push dword 100h	; 482D9
+push ebp	; 482DE
+call sub_8FFB0	; 482DF
+add esp, byte 0Ch	; 482E4
+mov ebx, 10h	; 482E7
+mov edx, savepal	; 482EC
+mov eax, 1	; 482F1
+call FadePalette	; 482F6
+.3:
+call StopDigiSample	; 482FB
+call SpeechStopQueue	; 48300
+xor eax, eax	; 48305
+PreGameIntro_popebp:
+pop ebp	; 48307
+PreGameIntro_popx:
+pop edi	; 48308
+pop esi	; 48309
+pop edx	; 4830A
+pop ecx	; 4830B
+pop ebx	; 4830C
+ret	; 4830D
+%endif ; C
+; C: src/c/engine/init/FadeOutPalCycle.c (StartPreGame)
+%ifdef CBUILD
+%include "c/engine/init/FadeOutPalCycle.StartPreGame.inc"
+%else
+StartPreGame:
+push dword 4	; 4830E
+call __CHK	; 48313
+cmp dword [dword_CC0EC], byte 0	; 48318
+je short .1	; 4831F
+xor eax, eax	; 48321
+ret	; 48323
+.1:
+test ax, ax	; 48324
+jne short .2	; 48327
+call PreGameIntro	; 48329
+.2:
+call CrowdNoiseReset	; 4832E
+ThreeStarsLoop:
+push dword 28h	; 48333
+call __CHK	; 48338
+push ebx	; 4833D
+push ecx	; 4833E
+push edx	; 4833F
+push esi	; 48340
+push edi	; 48341
+push ebp	; 48342
+call TicksSinceLastCall	; 48343
+mov dword [joysampling], 1	; 48348
+xor ebx, ebx	; 48352
+mov dword [escrequest], ebx	; 48354
+add dword [rinkscrollx], 3E8h	; 4835A
+add dword [rinkscrolly], 3E8h	; 48364
+ThreeStarsLoop_tick:
+cmp dword [seqtimer], byte 0	; 4836E
+je near PreGameIntro_end	; 48375
+push byte 4	; 4837B
+call SetTickDeadline	; 4837D
+add esp, byte 4	; 48382
+call ResetInputSampling	; 48385
+movsx edx, ax	; 4838A
+mov eax, edx	; 4838D
+shl eax, 2	; 4838F
+sub eax, edx	; 48392
+add eax, eax	; 48394
+mov ebp, dword [frameaccum]	; 48396
+add ebp, eax	; 4839C
+mov dword [frameaccum], ebp	; 4839E
+mov ebx, 0Ah	; 483A4
+mov eax, ebp	; 483A9
+mov edx, ebp	; 483AB
+sar edx, 1Fh	; 483AD
+idiv ebx	; 483B0
+mov esi, eax	; 483B2
+mov eax, ebp	; 483B4
+mov edx, ebp	; 483B6
+sar edx, 1Fh	; 483B8
+idiv ebx	; 483BB
+mov dword [frameaccum], edx	; 483BD
+movsx edx, si	; 483C3
+mov eax, edx	; 483C6
+call RunGameFrames	; 483C8
+mov eax, dword [seqtimer]	; 483CD
+sub eax, edx	; 483D2
+mov dword [seqtimer], eax	; 483D4
+test eax, eax	; 483D9
+jge short .1	; 483DB
+xor ebx, ebx	; 483DD
+mov dword [seqtimer], ebx	; 483DF
+.1:
+mov eax, dword [camx-2]	; 483E5
+sar eax, 10h	; 483EA
+add eax, byte 20h	; 483ED
+mov dword [viewscrollx], eax	; 483F0
+mov eax, dword [camy-2]	; 483F5
+sar eax, 10h	; 483FA
+mov edx, 140h	; 483FD
+sub edx, eax	; 48402
+lea eax, [byte edx-054h]	; 48404
+mov dword [viewscrolly], eax	; 48407
+mov ecx, dword [viewscrollx]	; 4840C
+cmp ecx, byte 40h	; 48412
+jle near PreGameIntro_scroll	; 48415
+mov dword [viewscrollx], 40h	; 4841B
+jmp near PreGameIntro_frameloop	; 48425
+%endif ; C

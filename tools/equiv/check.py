@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Functional-equivalence check (FUNCTIONAL_PLAN.md, "How the check works" 4-8, step 5).
 
-  python3 tools/equiv/check.py src/c/<seg>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64]
+  python3 tools/equiv/check.py src/c/<module>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64]
 
 Runs the original asm of F (in place in HOCKEY.EXE) and the compiled draft on the same seeded cases and compares
 the traces from run.py. Verdicts: PASS, NEEDS-REVIEW (equal, but the original trapped or returned an unset
