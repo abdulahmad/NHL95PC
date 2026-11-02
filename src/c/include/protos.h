@@ -68,7 +68,7 @@ void forcepldata(struct Team *t);                         /* 5E0DD */
 void SetSPA(struct Player *p, short spa);                 /* 59D9A */
 short GetPeriodTime(void);                                /* 5B9D1 */
 void ClearSortCords(void);                                /* 5BA4E */
-void LockScroll(void);                                    /* 5CD25 */
+void freezewindow(void);                                    /* 5CD25 */
 void GameOver(void);                                      /* 5DD9E */
 void SetExitGame(void);                                   /* 5DDBC */
 /* engine/skate */

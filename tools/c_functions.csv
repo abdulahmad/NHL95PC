@@ -100,7 +100,7 @@ GiveControl,5B1CE,202,engine/hockey,src/c/engine/hockey/GiveControl.c,matched,"3
 InitCoachModes,5A669,275,engine/hockey,src/c/engine/hockey/InitCoachModes.c,matched,,
 Intermission,5DE42,46,engine/hockey,src/c/engine/hockey/Intermission.c,matched,,
 PeriodOver_sp,5DE70,54,engine/hockey,src/c/engine/hockey/PeriodOver_sp.c,matched,,
-LockScroll,5CD25,42,engine/hockey,src/c/engine/hockey/LockScroll.c,matched,,
+freezewindow,5CD25,42,engine/hockey,src/c/engine/hockey/freezewindow.c,matched,,
 PenTeamScored,5AAAE,136,engine/hockey,src/c/engine/hockey/PenTeamScored.c,matched,,
 PeriodOver,5DEA6,224,engine/hockey,src/c/engine/hockey/PeriodOver.c,matched,,
 ResetClock,5BA07,71,engine/hockey,src/c/engine/hockey/ResetClock.c,matched,"2 bytes long: the original keeps the clockticks zero in edx (only push edx, __CHK 8); every variant tried (temp, chained stores, PerTimeTotal/2, int temp) zeroes ebx and saves it too (__CHK 0Ch). Maybe randomd0/GetPeriodTime were declared with other types in the original file",

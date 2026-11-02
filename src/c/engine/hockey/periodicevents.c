@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* periodicevents: per frame: penalties and crowd decay; at 0:00 of the clock (play on) the horn (sfx 90h),
- LockScroll and clockcont_0. Every 24th frame (lldisp countdown, toggling lldispodd) the goalie crowd bench
+ freezewindow and clockcont_0. Every 24th frame (lldisp countdown, toggling lldispodd) the goalie crowd bench
  checks and the power-play flags (play on); with line changes on, energywarn[side] blinks (odd ticks) while a
  skater of that side is due for a change (newpnum >= 0) and no penalty shot runs. */
 void periodicevents(void)
@@ -16,7 +16,7 @@ void periodicevents(void)
     DecayCrowdLevel();
     if (!(gmode & 1) && !gameclock && !clockticks[0]) {
         sfx(0x90);
-        LockScroll();
+        freezewindow();
         clockcont_0();
     }
     if (word_CBC44) return;

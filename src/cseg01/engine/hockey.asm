@@ -48,7 +48,7 @@ global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
 global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, calcpuckcross
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
 global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList
-global StartPer, RestBench, updatecrowdf, periodicevents, LockScroll, cleargamevars, DrawRinkOverlays, setupice
+global StartPer, RestBench, updatecrowdf, periodicevents, freezewindow, cleargamevars, DrawRinkOverlays, setupice
 global clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission
 global PeriodOver_sp, PeriodOver, StartGame, forceteams, updateanim, updateplayers
 ; C: src/c/engine/hockey/SetSPA.c
@@ -1370,7 +1370,7 @@ mov word [shotplayer], cx	; 5ACBD
 call ChkShotStat	; 5ACC4
 mov eax, 9Ch	; 5ACC9
 call sfx	; 5ACCE
-call LockScroll	; 5ACD3
+call freezewindow	; 5ACD3
 cmp word [byte esp+04h], byte 0	; 5ACD8
 jne short .15	; 5ACDE
 mov cx, word [crowdlevel]	; 5ACE0
@@ -3237,7 +3237,7 @@ pop edx	; 5C2FF
 pop ecx	; 5C300
 ret	; 5C301
 %endif ; C
-; periodicevents: Clock at 0 -> horn (sfx 90h), LockScroll, clockcont_0. Once a
+; periodicevents: Clock at 0 -> horn (sfx 90h), freezewindow, clockcont_0. Once a
 ; second (lldisp, 18h frames): updatecrowdf, RestBench, the stats/energy checks.
 ; C: src/c/engine/hockey/periodicevents.c
 %ifdef CBUILD
@@ -3258,7 +3258,7 @@ cmp word [clockticks], byte 0	; 5C32B
 jne short .1	; 5C333
 mov eax, 90h	; 5C335
 call sfx	; 5C33A
-call LockScroll	; 5C33F
+call freezewindow	; 5C33F
 call clockcont_0	; 5C344
 .1:
 cmp word [word_CBC44], byte 0	; 5C349
@@ -4025,11 +4025,11 @@ call sfx	; 5CD17
 mov byte [byte ebx+046h], 4	; 5CD1C
 jmp near calcpuckcross_ret5	; 5CD20
 %endif ; C
-; C: src/c/engine/hockey/LockScroll.c
+; C: src/c/engine/hockey/freezewindow.c
 %ifdef CBUILD
-%include "c/engine/hockey/LockScroll.inc"
+%include "c/engine/hockey/freezewindow.inc"
 %else
-LockScroll:
+freezewindow:
 push dword 4	; 5CD25
 call __CHK	; 5CD2A
 mov ax, word [camx]	; 5CD2F

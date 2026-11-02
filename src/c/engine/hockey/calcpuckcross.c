@@ -80,7 +80,7 @@ void GetHot(Player *p)
    puck stops in the net (6 left or right of its x, 4 into it), and while the clock runs it gets assignment 1Ah,
    an offside AddPenalty 8 and AddPenalty2 1Bh. During a penalty shot a goal by the other side only ends the shot.
    Else tmscore + 1; the last toucher (lasttouch) becomes shotplayer when on the other side's team (gmode2 bit 4);
-   ChkShotStat, sfx 9Ch, LockScroll; the crowd (home goal +320h, kept in 708h-7D0h; else at least 320h), the box
+   ChkShotStat, sfx 9Ch, freezewindow; the crowd (home goal +320h, kept in 708h-7D0h; else at least 320h), the box
    door, crowd sample 3 for a home goal unless speech and music are on, excitement +0Ah (away) or +1Eh. word_E9AB0
    = 2 short-handed / 4 power play / 1 even, bit 3 for an empty net. Outside a highlight (gmode bit 4) the
    stats: the scorer (team byte 30h) a goal and the PP / SH / empty-net goal, team words 22h (penalty shot) or
@@ -132,7 +132,7 @@ void Goal(Player *net)
     }
     ChkShotStat();
     sfx(0x9C);
-    LockScroll();
+    freezewindow();
     if (side == 0) {
         crowdlevel += 0x320;
         if (crowdlevel > 0x7D0) crowdlevel = 0x7D0;

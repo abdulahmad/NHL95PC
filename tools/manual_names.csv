@@ -567,7 +567,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005C248,sub_5C248,updatecrowdf,93G,hockey93_01.asm,,,medium,"93G updatecrowdf: crowd excitement level E9AA8 rises/decays, random crowd sfx",engine_core,manual-trace
 0005C302,sub_5C302,periodicevents,93G,hockey93_01.asm,,,high,"93G periodicevents: penalties, crowd, clockcont, then once a second (lldisp 18h frames) the slower checks",engine_core,manual-trace
 0005CAEF,sub_5CAEF,updateanim,93G,hockey93_02.asm,replay94.asm,92G updateanim,high,"93G updateanim: step SPAnum/SPAcnt through the SPA table (C921D), SetSPA when an animation ends",engine_core,manual-trace
-0005CD25,sub_5CD25,LockScroll,PC-new,,,,medium,camera follows the puck unless sfslock: xc1/yc1,engine_core,manual-trace
+0005CD25,sub_5CD25,freezewindow,94G,,logic94.asm,,high,"the 94G freezewindow body: xc1/yc1 = the camera, set sfslock (95G made the same rename)",engine_core,manual-trace
 0005CD4F,sub_5CD4F,cleargamevars,PC-new,,,,medium,clears per-game globals before StartGame,engine_core,manual-trace
 0005CE12,sub_5CE12,DrawRinkOverlays,PC-new,,,,medium,"draws the rink overlay sprites (penalty box markers per PBnum, period marks) through sub_110E0",engine_core,manual-trace
 0005D7F7,sub_5D7F7,setupice,93G,hockey93_06.asm,,,medium,"93G setupice role: per-period rink setup, gmdir flips pfgoal of the players, defaultsprites2",engine_core,manual-trace
