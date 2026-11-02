@@ -264,6 +264,7 @@ def main(argv=None):
     ap = argparse.ArgumentParser(description='functional-equivalence check of one draft against the original asm')
     ap.add_argument('c_file'); ap.add_argument('--func', required=True)
     ap.add_argument('--cases', type=int, default=2000); ap.add_argument('--seed', type=int, default=1)
+    ap.add_argument('--budget', type=float, default=0, help='stop after this many seconds (0: no limit); fewer than 500 cases is NEEDS-REVIEW')
     ap.add_argument('--seg'); ap.add_argument('--quiet', action='store_true')
     ap.add_argument('--ret64', action='store_true', help='function returns edx:eax')
     a = ap.parse_args(argv)
@@ -286,6 +287,7 @@ def main(argv=None):
         d, rv, inf, tk = ck.compare(buf, st); done += 1
         review.update(rv); info.update(inf)
         if tk: traps[tk] += 1
+        if a.budget and time.time() - t1 > a.budget and not d: break
         if d:
             verdict = 'FAIL'; diff = d
             print('FAIL %s: case %d (seed %d, --seed %d)\n  %s' % (a.func, i, a.seed * 1000003 + i, a.seed, d))
@@ -302,11 +304,12 @@ def main(argv=None):
         if review: why.append('trap review: ' + fmtc(review))
         if nt * 2 > done: why.append('mostly trapped')
         if share < 0.85: why.append('coverage %.0f%%, uncovered %s' % (100 * share, ' '.join('%#x-%#x' % r for r in miss)))
+        if done < min(500, a.cases): why.append('only %d cases in the time budget' % done)
         if why: verdict = 'NEEDS-REVIEW'
         diff = '; '.join(why + ([fmtc(info)] if info else []))
     dt = time.time() - t1
     print('%s %s: %d cases in %.1fs (%.1f ms/case)%s' % (verdict, a.func, done, dt, 1000 * dt / max(done, 1), ' ' + diff if diff and verdict != "FAIL" else ""))
-    if real: log({'function': a.func, 'c_file': rel, 'source_sha1': sha, 'cases': a.cases, 'seed': a.seed, 'verdict': verdict,
+    if real: log({'function': a.func, 'c_file': rel, 'source_sha1': sha, 'cases': done if verdict != 'FAIL' else a.cases, 'seed': a.seed, 'verdict': verdict,
                   'first_diff': diff[:200], 'date': datetime.date.today().isoformat()})
     else: q('(file outside src/c: not logged)')
     return 0 if verdict != 'FAIL' else 1
