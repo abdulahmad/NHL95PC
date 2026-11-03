@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90C0F progbits alloc exec nowrite align=1
 extern byte_D4D06
-global loc_90C31, sub_90C0F
+global sub_90C0F, loc_90C31
 sub_90C0F:
 cmp byte [byte_D4D06], 9	; 90C0F
 jne short loc_90C31	; 90C16

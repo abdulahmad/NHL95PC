@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B2720 progbits alloc exec nowrite align=1
-global loc_B278E, sub_B2720, sub_B273C
+global sub_B2720, sub_B273C, loc_B278E
 sub_B2720:
 push ebp	; B2720
 mov ebp, esp	; B2721

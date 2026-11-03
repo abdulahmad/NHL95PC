@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_9A874 progbits alloc exec nowrite align=1
 extern dword_D43E8, dword_D43EC
-global __MemAllocator, __MemFree, __unlink_, loc_9A8A7, loc_9A8C3, loc_9A8C7, loc_9A8F5, loc_9A90A
-global loc_9A912, loc_9A917, loc_9A947, loc_9A95E, loc_9A975, loc_9A984, loc_9A9A1, loc_9A9A5
-global loc_9A9B9, loc_9A9C3, loc_9A9DA, loc_9A9F5, loc_9A9F9, loc_9AA0A, loc_9AA1A, loc_9AA22
+global __MemAllocator, loc_9A8A7, loc_9A8C3, loc_9A8C7, loc_9A8F5, loc_9A90A, loc_9A912, loc_9A917
+global __MemFree, loc_9A947, loc_9A95E, loc_9A975, loc_9A984, loc_9A9A1, loc_9A9A5, loc_9A9B9
+global loc_9A9C3, loc_9A9DA, loc_9A9F5, loc_9A9F9, loc_9AA0A, loc_9AA1A, loc_9AA22, __unlink_
 global loc_9AA3C, loc_9AA4F, loc_9AA5C, loc_9AA63
 __MemAllocator:
 push esi	; 9A874

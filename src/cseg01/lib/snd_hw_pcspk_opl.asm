@@ -7,14 +7,14 @@ extern byte_D6787, byte_D6788, byte_D6789, byte_D678C, byte_D678D, byte_D678E, b
 extern byte_D679A, byte_D67A8, dword_D67A0, dword_D67A4, unk_D67B4, unk_D68FC, unk_D691C, unk_D699C
 extern unk_D69B9, unk_D69FF, unk_D6A1F, unk_D6A9F, unk_D6ABC, word_D6608, word_D677B, word_D677D
 extern word_D677F, word_D6781, word_D6783, word_D679C, word_D67F4, word_D683C, word_D687C
-global loc_A6664, loc_A6670, loc_A6692, loc_A66BA, loc_A66C9, loc_A66E0, loc_A6715, loc_A6745
-global loc_A6754, loc_A6763, loc_A678D, loc_A67A6, loc_A67AF, loc_A67FD, loc_A680A, loc_A6812
-global loc_A6830, loc_A6836, loc_A6844, loc_A684A, loc_A6861, loc_A6877, loc_A6888, loc_A68A9
-global loc_A68B8, loc_A68DD, loc_A68EA, loc_A6900, loc_A690D, loc_A6923, loc_A6935, loc_A694D
-global loc_A697D, loc_A6982, loc_A699B, loc_A69B0, loc_A69C0, loc_A69D5, loc_A6A40, loc_A6A89
-global loc_A6A92, loc_A6ABB, loc_A6AEC, loc_A6B14, loc_A6B29, sub_A65E8, sub_A6612, sub_A6618
-global sub_A6635, sub_A6672, sub_A6684, sub_A677B, sub_A6858, sub_A687D, sub_A68C9, sub_A6957
-global sub_A6983, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01, sub_A6A09, sub_A6A42, sub_A6AC2
+global sub_A65E8, sub_A6612, sub_A6618, sub_A6635, loc_A6664, loc_A6670, sub_A6672, sub_A6684
+global loc_A6692, loc_A66BA, loc_A66C9, loc_A66E0, loc_A6715, loc_A6745, loc_A6754, loc_A6763
+global sub_A677B, loc_A678D, loc_A67A6, loc_A67AF, loc_A67FD, loc_A680A, loc_A6812, loc_A6830
+global loc_A6836, loc_A6844, loc_A684A, sub_A6858, loc_A6861, loc_A6877, sub_A687D, loc_A6888
+global loc_A68A9, loc_A68B8, sub_A68C9, loc_A68DD, loc_A68EA, loc_A6900, loc_A690D, loc_A6923
+global loc_A6935, loc_A694D, sub_A6957, loc_A697D, loc_A6982, sub_A6983, loc_A699B, sub_A699D
+global loc_A69B0, loc_A69C0, loc_A69D5, sub_A69E8, sub_A69FB, sub_A6A01, sub_A6A09, loc_A6A40
+global sub_A6A42, loc_A6A89, loc_A6A92, loc_A6ABB, sub_A6AC2, loc_A6AEC, loc_A6B14, loc_A6B29
 global sub_A6B32, sub_A6B5D, sub_A6B73
 sub_A65E8:
 mov al, 0B6h	; A65E8

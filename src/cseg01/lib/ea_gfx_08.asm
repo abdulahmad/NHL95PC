@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_91FE0 progbits alloc exec nowrite align=1
 extern dword_D30C8, dword_D43E4, sub_903F0, sub_931D0, sub_B3ABC, sub_B6BE5
-global loc_92001, sub_91FE0, sub_92024
+global sub_91FE0, loc_92001, sub_92024
 sub_91FE0:
 mov edx, dword [byte esp+04h]	; 91FE0
 mov ebx, dword [byte esp+08h]	; 91FE4

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9C563 progbits alloc exec nowrite align=1
 extern __fprtf_, __prtf_
-global j___fprtf_, mem_putc__0, vsprintf_
+global mem_putc__0, vsprintf_, j___fprtf_
 mem_putc__0:
 push ebx	; 9C563
 push ecx	; 9C564

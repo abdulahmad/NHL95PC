@@ -4,8 +4,8 @@ bits 32
 section s_9D352 progbits alloc exec nowrite align=1
 extern __hook387, byte_D4B9C, byte_D4D06, byte_D4D08, byte_D51DC, dword_D41F4, dword_D5194, dword_D51D4
 extern sub_A35EC, sub_A365C, word_D41F8, word_D41FA, word_D51D8, word_D51DA
-global loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, loc_9D471, loc_9D486, sub_9D352
-global sub_9D41D, sub_9D43A, sub_9D487
+global sub_9D352, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, sub_9D41D, sub_9D43A
+global loc_9D471, loc_9D486, sub_9D487
 sub_9D352:
 mov byte [byte_D4B9C], 3	; 9D352
 mov byte [byte_D51DC], 1	; 9D359

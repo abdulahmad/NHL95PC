@@ -1,28 +1,287 @@
-; The title. Pioneer and EA Sports logos, the title screen, the credits, and the text drawn over them.
+; The title. The demo that runs from the title screen, the Pioneer and EA Sports logos, the title screen,
+; the credits, and the text drawn over them (95G front/title95).
 bits 32
 %include "hockey.inc"
-section s_1609F progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, str_Eascrn, str_Pal4, str_Scrn2
-extern str_Msk1, str_MASK, str_Iff2, str_Title30, str_Mttitle, str_Adtitle, str_Cmv, str_Title
-extern str_Pioneer1, str_Pl2, str_Pl1, str_Bkgd3, str_Pioneer2, str_Pioneer4, str_Pioneer3, str_FlaD
-extern str_Pion, str_Pio, str_Eaopen, str_Easports, str_Backwin, str_Credits, str_Rockditi, str_Shp0
-extern str_KMS, musicon, byte_D42C3, fileoncd
-extern dword_C4CFC, demomode, sounddev, dword_C588A, textgrid, textgridon
-extern textcolor, textshadow, textoutlinedx, textoutlinedy, songdata, dword_CC0EC, dword_CCC94, musicslot
-extern musichandle, cddriveptr, fontcolor, kaufmfont, mainfont, pointerspr, dword_DC33C, speechbank
-extern fputchar, FreeMemBlock, RunDemoGame_x, memcpy_, memset_, off_C6399, rand_, sprintf_
-extern srand_, strlen_, MakePath, RunDemoGame, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1
-extern sub_1AD16, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7
-extern sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2, sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout
-extern FadeOutPalCycle, StopDigiSample, PlayDigiSample, PaNhlIntro, PaGoodnight, PaOpenBank, ClearInputQueue, FadePalStep
-extern InitSpeechSlots, SpeechStopQueue, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18
-extern sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_9061C
-extern sub_9087C, sub_9121C, sub_91284, sub_912C8, sub_9132C, sub_91370, sub_913B4, sub_91400
-extern sub_91964, sub_B30B4, sub_B392C, GetTicks, TicksSinceLastCall, SetTickDeadline, WaitTickDeadline, TickDeadlinePassed
-extern sub_B3A88, sub_B3AA1, sub_B4B88, sub_B4BA8, SetDrawBitmap, sub_B4F8C, unk_C4E30, unk_C638C
-global TitleScreen, RunIntro
-global ShowCredits, SetTextColors, RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2
-global TextGridOpen, TextGridFree, TextGridOff, TextGridPut
+section s_15D6B progbits alloc exec nowrite align=1
+extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awtmstruct
+extern byte_D42C3, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, cddriveptr
+extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
+extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, dword_C5710
+extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
+extern dword_C5860, dword_C5861, dword_C5862, dword_C588A, dword_CC0EC, dword_CCC94, dword_DC2B8, dword_DC33C
+extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
+extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
+extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
+extern InitGameSummary, InitSpeechSlots, InputInstall, InputRemove, introskipped, joyq_flush, kaufmfont, lcblink
+extern lcboxon, lcline, linesprites, LoadModeState, LoadRink, LoadRockMusic, LoadScheduleDB, LoadTeamPalette
+extern mainfont, MakePath, memcpy_, memset_, mousebtns, mousepollfn, musichandle, musicon
+extern musicslot, off_C57C8, off_C6399, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
+extern perioddigits, PerTimeTab, PlayDigiSample, pointerspr, PollKey, rand_, randomd0, ReloadGameGfx
+extern seed, SelectScreenBM, SeriesLength, SetDrawBitmap, SetScreenSize, SetTickDeadline, SetupControllers, SetupDemoGame
+extern ShowLoadingScreen, songdata, sounddev, speechbank, SpeechStopQueue, sprintf_, srand_, StopDigiSample
+extern str_Adtitle, str_Backwin, str_Bkgd3, str_Cmv, str_Credits, str_Crests4, str_Eaopen, str_Eascrn
+extern str_Easports, str_FlaD, str_Iff2, str_KMS, str_MASK, str_Msk1, str_Mttitle, str_Pal4
+extern str_Pio, str_Pion, str_Pioneer1, str_Pioneer2, str_Pioneer3, str_Pioneer4, str_Pl1, str_Pl2
+extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_Stanley, str_Title
+extern str_Title30, strlen_, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002, sub_1B092, sub_1B09F
+extern sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8
+extern sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern sub_903F0, sub_9061C, sub_9087C, sub_90D20, sub_9121C, sub_91284, sub_912C8, sub_9132C
+extern sub_91370, sub_913B4, sub_91400, sub_91964, sub_B30B4, sub_B3464, sub_B392C, sub_B3A88
+extern sub_B3AA1, sub_B4B88, sub_B4BA8, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, sub_B4F8C
+extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
+extern TickDeadlinePassed, TicksSinceLastCall, unk_C4E30, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
+extern word_CBC60
+global RunDemoGame, RunDemoGame_x, AnyInputPressed, ReadBE32, TitleScreen, RunIntro, ShowCredits, SetTextColors
+global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridFree
+global TextGridOff, TextGridPut
+; C: src/c/front/title/RunDemoGame.c
+%ifdef CBUILD
+%include "c/front/title/RunDemoGame.inc"
+%else
+RunDemoGame:
+push dword 94h	; 15D6B
+call __CHK	; 15D70
+push ebx	; 15D75
+push ecx	; 15D76
+push edx	; 15D77
+push esi	; 15D78
+push edi	; 15D79
+push ebp	; 15D7A
+sub esp, byte 78h	; 15D7B
+call ShowLoadingScreen	; 15D7E
+call InputRemove	; 15D83
+mov word [PerTimeTab], 3Ch	; 15D88
+call DemoSetupStub	; 15D91
+mov dword [demomode], 1	; 15D96
+call rand_	; 15DA0
+mov edx, eax	; 15DA5
+shl edx, 10h	; 15DA7
+call rand_	; 15DAA
+add edx, eax	; 15DAF
+mov dword [seed], edx	; 15DB1
+mov edx, dword [demoteammode]	; 15DB7
+inc edx	; 15DBD
+mov ebx, 3	; 15DBE
+mov eax, edx	; 15DC3
+sar edx, 1Fh	; 15DC5
+idiv ebx	; 15DC8
+mov dword [demoteammode], edx	; 15DCA
+mov ecx, 1Dh	; 15DD0
+mov edi, esp	; 15DD5
+mov esi, exhstate	; 15DD7
+rep movsd	; 15DDC
+movsb	; 15DDE
+cmp edx, byte 2	; 15DDF
+jne short .1	; 15DE2
+mov dword [exhstate+51h], 1Bh	; 15DE4
+mov dword [exhstate+55h], 1Ah	; 15DEE
+jmp short .3	; 15DF8
+.1:
+cmp edx, byte 1	; 15DFA
+jne short .2	; 15DFD
+mov eax, 11h	; 15DFF
+call randomd0	; 15E04
+movsx edx, ax	; 15E09
+mov eax, dword [nosplit edx*2+dword_C5861]	; 15E0C
+sar eax, 18h	; 15E13
+mov dword [exhstate+51h], eax	; 15E16
+mov eax, dword [nosplit edx*2+dword_C5862]	; 15E1B
+sar eax, 18h	; 15E22
+mov dword [exhstate+55h], eax	; 15E25
+jmp short .3	; 15E2A
+.2:
+call rand_	; 15E2C
+mov edx, eax	; 15E31
+mov ebx, 1Ah	; 15E33
+sar edx, 1Fh	; 15E38
+idiv ebx	; 15E3B
+mov dword [exhstate+51h], edx	; 15E3D
+inc edx	; 15E43
+mov eax, 19h	; 15E44
+call randomd0	; 15E49
+cwde	; 15E4E
+add edx, eax	; 15E4F
+mov eax, edx	; 15E51
+sar edx, 1Fh	; 15E53
+idiv ebx	; 15E56
+mov dword [exhstate+55h], edx	; 15E58
+.3:
+mov ebp, 10h	; 15E5E
+mov dword [exhstate+65h], ebp	; 15E63
+xor eax, eax	; 15E69
+mov dword [gamemode], eax	; 15E6B
+mov dword [exhstate+69h], ebp	; 15E70
+mov dword [exhstate+6Dh], eax	; 15E76
+mov dword [exhstate+71h], 1	; 15E7B
+mov eax, dword [exhstate+51h]	; 15E85
+mov dword [exhstate+5Dh], eax	; 15E8A
+mov dword [exhstate+5Dh], 0FFFFFFFFh	; 15E8F
+mov dword [exhstate+61h], 0FFFFFFFEh	; 15E99
+mov eax, exhstate	; 15EA3
+call LoadModeState	; 15EA8
+or byte [gameopts], 0FFh	; 15EAD
+cmp byte [musicon], 0	; 15EB4
+je short .4	; 15EBB
+or byte [gameopts+1], 1	; 15EBD
+jmp short .5	; 15EC4
+.4:
+and byte [gameopts+1], 0FEh	; 15EC6
+.5:
+mov bh, byte [gameopts+1]	; 15ECD
+or bh, 2	; 15ED3
+mov byte [gameopts+1], bh	; 15ED6
+mov cl, bh	; 15EDC
+and cl, 3	; 15EDE
+mov byte [gameopts+1], cl	; 15EE1
+mov edx, dword [VisTeam-2]	; 15EE7
+sar edx, 10h	; 15EED
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
+mov eax, dword [HomeTeam-2]	; 15EF7
+sar eax, 10h	; 15EFC
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
+call PaPreloadClips	; 15F06
+call SetupControllers	; 15F0B
+xor edx, edx	; 15F10
+xor eax, eax	; 15F12
+call InitGameSummary	; 15F14
+cmp word [HomeTeam], byte 1Ah	; 15F19
+jl short .6	; 15F21
+mov eax, 0Ch	; 15F23
+jmp short .7	; 15F28
+.6:
+mov eax, dword [HomeTeam-2]	; 15F2A
+sar eax, 10h	; 15F2F
+.7:
+call LoadRink	; 15F32
+call LoadRockMusic	; 15F37
+call ReloadGameGfx	; 15F3C
+call FadeOutPalCycle	; 15F41
+mov ebp, 1	; 15F46
+mov dword [dword_CC0EC], ebp	; 15F4B
+call SetupDemoGame	; 15F51
+xor eax, eax	; 15F56
+mov dword [dword_CC0EC], eax	; 15F58
+mov dword [introskipped], eax	; 15F5D
+mov dword [gameresult], eax	; 15F62
+mov edx, 0C8h	; 15F67
+mov eax, 140h	; 15F6C
+call SetScreenSize	; 15F71
+mov edx, dword [VisTeam-2]	; 15F76
+sar edx, 10h	; 15F7C
+mov eax, dword [HomeTeam-2]	; 15F7F
+sar eax, 10h	; 15F84
+mov ebx, gamepal	; 15F87
+call LoadTeamPalette	; 15F8C
+mov edx, dword [VisTeam-2]	; 15F91
+sar edx, 10h	; 15F97
+mov eax, dword [HomeTeam-2]	; 15F9A
+sar eax, 10h	; 15F9F
+mov ecx, ebp	; 15FA2
+mov ebx, ebp	; 15FA4
+call DrawHudPanel	; 15FA6
+call joyq_flush	; 15FAB
+call Gameloop	; 15FB0
+mov edx, 1E0h	; 15FB5
+mov eax, 280h	; 15FBA
+call SetScreenSize	; 15FBF
+mov word [PerTimeTab], 12Ch	; 15FC4
+xor ecx, ecx	; 15FCD
+mov dword [demomode], ecx	; 15FCF
+mov ecx, 1Dh	; 15FD5
+mov edi, exhstate	; 15FDA
+mov esi, esp	; 15FDF
+rep movsd	; 15FE1
+movsb	; 15FE3
+mov eax, exhstate	; 15FE4
+call LoadModeState	; 15FE9
+call InputInstall	; 15FEE
+cmp dword [gameresult], byte 2	; 15FF3
+sete al	; 15FFA
+and eax, 0FFh	; 15FFD
+add esp, byte 78h	; 16002
+RunDemoGame_x:
+pop ebp	; 16005
+pop edi	; 16006
+pop esi	; 16007
+pop edx	; 16008
+pop ecx	; 16009
+pop ebx	; 1600A
+ret	; 1600B
+%endif ; C
+; C: src/c/front/title/AnyInputPressed.c
+%ifdef CBUILD
+%include "c/front/title/AnyInputPressed.inc"
+%else
+AnyInputPressed:
+push dword 14h	; 1600C
+call __CHK	; 16011
+push ebx	; 16016
+push ecx	; 16017
+push edx	; 16018
+push esi	; 16019
+call PollKey	; 1601A
+mov esi, eax	; 1601F
+test eax, eax	; 16021
+jne short .3	; 16023
+mov ah, byte [ctlavailmask]	; 16025
+test ah, 2	; 1602B
+jne short .1	; 1602E
+test ah, 4	; 16030
+je short .3	; 16033
+.1:
+call sub_B3464	; 16035
+test al, 30h	; 1603A
+jne short .2	; 1603C
+sar eax, 8	; 1603E
+test al, 30h	; 16041
+je short .3	; 16043
+.2:
+mov esi, 1	; 16045
+.3:
+test esi, esi	; 1604A
+jne short .4	; 1604C
+test byte [ctlavailmask], 1	; 1604E
+je short .4	; 16055
+call dword [mousepollfn]	; 16057
+test byte [mousebtns], 3	; 1605D
+je short .4	; 16064
+mov esi, 1	; 16066
+.4:
+mov eax, esi	; 1606B
+pop esi	; 1606D
+pop edx	; 1606E
+pop ecx	; 1606F
+pop ebx	; 16070
+ret	; 16071
+%endif ; C
+; C: src/c/front/title/ReadBE32.c
+%ifdef CBUILD
+%include "c/front/title/ReadBE32.inc"
+%else
+ReadBE32:
+push dword 0Ch	; 16072
+call __CHK	; 16077
+push ebx	; 1607C
+push edx	; 1607D
+movsx edx, byte [eax]	; 1607E
+inc eax	; 16081
+movsx ebx, byte [eax]	; 16082
+shl edx, 8	; 16085
+inc eax	; 16088
+add edx, ebx	; 16089
+movsx ebx, byte [eax]	; 1608B
+shl edx, 8	; 1608E
+inc eax	; 16091
+add edx, ebx	; 16092
+movsx eax, byte [eax]	; 16094
+shl edx, 8	; 16097
+add eax, edx	; 1609A
+pop edx	; 1609C
+pop ebx	; 1609D
+ret	; 1609E
+%endif ; C
 TitleScreen:
 push dword 378h	; 1609F
 call __CHK	; 160A4
@@ -494,9 +753,9 @@ add esp, byte 4	; 1671A
 mov eax, esi	; 1671D
 add esp, 350h	; 1671F
 jmp near RunDemoGame_x	; 16725
-; C: src/c/front/scoreboard/RunDemoGame.c (RunIntro)
+; C: src/c/front/title/RunDemoGame.c (RunIntro)
 %ifdef CBUILD
-%include "c/front/scoreboard/RunDemoGame.RunIntro.inc"
+%include "c/front/title/RunDemoGame.RunIntro.inc"
 %else
 RunIntro:
 push dword 674h	; 1672A

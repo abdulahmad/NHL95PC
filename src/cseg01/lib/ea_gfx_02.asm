@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90A40 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C4, dword_D42C8, dword_D42D0
-global loc_90A6C, loc_90A97, loc_90AA3, loc_90AAA, loc_90AB4, loc_90AB6, loc_90ABD, sub_90A40
+global sub_90A40, loc_90A6C, loc_90A97, loc_90AA3, loc_90AAA, loc_90AB4, loc_90AB6, loc_90ABD
 sub_90A40:
 push esi	; 90A40
 push edi	; 90A41

@@ -1,29 +1,1559 @@
-; The announcer. Building a sentence from clips for a goal, a penalty, a score, and the playoff round.
+; The announcer. The timer that feeds the speech queue, the speech bank, loading samples into memory
+; and finding a free slot, and building a sentence from clips for a goal, a penalty, a score, and the
+; playoff round. One module (ShutdownSpeech's exits).
 bits 32
 %include "hockey.inc"
-section s_842BA progbits alloc exec nowrite align=1
-extern __CHK, str_Cor, str_GamemiscS, str_EastquadBar, str_EastsemdBar, str_EastfindBar, str_WestquadBar, str_WestsemdBar
-extern str_WestfindBar, str_StanleydBar, str_EastquauBar, str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_WestfinuBar
-extern str_StanleyuBar, str_NhlInt, str_ElsenhlInt, str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum
-extern str_SSS, str_Num, str_DS, str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2
-extern str_SS5, str_PauseCor, str_AtCor, str_1minuteCor, str_MinutesCor, str_1secondCor, str_SecondsCor, str_PennumCor
-extern str_PensnumCor, str_PenshotCor, str_GoalnumCor, str_AsstnumCor, str_AndnumCor, str_OneleftCor, str_2minCor, str_5minCor
-extern str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBar, str_AndBar, str_BetweenBar, str_GamenumBar
-extern str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
-extern str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
-extern str_ThegameBar, str_VIV, dword_CCC98, dword_D27A2, speechinit, cddriveptr, speechq, fileoncd
-extern speechbank, itoa_, ShutdownSpeech, ShutdownSpeech_ret6, penaltyclips, scorperclips, sprintf_, strcpy_, strncpy_
-extern MakePath, ResetSpeechQueue, ResetSampleReq, SpeechIdle, OpenSpeechBank, LoadSpeechSlot, PlaceSpeechSlot, FindFreeSpeechSlot
-extern FindSpeechSlot, SpeechSlotLoaded, RequestSample, EnsureSampleRoom
-global SayClip_body
-global FreeClip_ret
-global SayScoringPeriod_ot2, SayScoringPeriod_ot3
-global SayScoringPeriod_ott, SayScoringPeriod_reg
-global PenaltyLenClip, PlayoffRoundClipD, PlayoffRoundClipU, QueueSpeechClip, LoadClipSlot, SayScorePeriod, SayNhlIntro, SayGoodnight
+section s_832BC progbits alloc exec nowrite align=1
+extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
+extern addtimer, asc_C36C3, byte_C541B, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
+extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, dword_CCC98, dword_D2350, dword_D2423, dword_D2427, dword_D242B
+extern dword_D2435, dword_D27A2, dword_D27B2, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
+extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
+extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
+extern ptrupdatefn, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RedrawSoundCardOpts, RemoveTimerCallback
+extern RestoreDialogBg, samplereq, scorperclips, setbits, SetDialogColors, SetTickDeadline, sndcardname, songdata
+extern SoundCardHitTest, sounddev, sounddevids, speechbank, speechcopybuf, speechcopylen, speechinit, speechq
+extern sprintf_, str_02dS, str_1minuteCor, str_1secondCor, str_2minCor, str_5minCor, str_ADLIB, str_Adlib
+extern str_AndBar, str_AndnumCor, str_AsstnumCor, str_AtCor, str_Awa, str_BackmomtInt, str_Bar, str_BetweenBar
+extern str_CantOpenNhlCfg, str_CFG, str_CoachclpInt, str_Cor, str_DS, str_EasportsBar, str_EastfindBar, str_EastfinuBar
+extern str_EastquadBar, str_EastquauBar, str_EastsemdBar, str_EastsemuBar, str_ElsenhlInt, str_Emmcopybuf, str_Frm, str_GamebtwnBar
+extern str_GamemiscS, str_Gamenum, str_GamenumBar, str_GoalnumCor, str_GoodniteInt, str_HavewonBar, str_HighliteBar, str_Hom
+extern str_Iff12, str_LineupsInt, str_Maindesk2, str_MinutesCor, str_MT322, str_MT323, str_MT32HOCK, str_NHL3
+extern str_NhlInt, str_NowbackInt, str_Num, str_NumberCor, str_OfBar, str_OneleftCor, str_OvertimeBar, str_PauseCor
+extern str_PC, str_PCBEEP, str_PCBEEP2, str_Pen, str_PennumCor, str_PenshotCor, str_PensnumCor, str_Pointer21
+extern str_Rnk, str_SampleMemMan, str_SBDAC, str_SBDAC2, str_Scor1otpBar, str_Scor1perBar, str_Scor2otpBar, str_Scor2perBar
+extern str_Scor3otpBar, str_Scor3perBar, str_ScortotpBar, str_SecondsCor, str_Sentence, str_Slapshot, str_SoundBlaster2, str_SpeechBank
+extern str_Speechbuf, str_SS5, str_SSS, str_StanleydBar, str_StanleyuBar, str_TakeynowBar, str_Tea, str_ThegameBar
+extern str_TonightBar, str_ULTRASOUND, str_VIV, str_WestfindBar, str_WestfinuBar, str_WestquadBar, str_WestquauBar, str_WestsemdBar
+extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4
+extern sub_8EB5B, sub_8EB93, sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5
+extern sub_8FC37, sub_8FC8A, sub_8FCAC, sub_8FCDF, sub_903F0, sub_91370, sub_91400, sub_97079
+extern sub_98028, sub_B2DCA, sub_B4BA8, unk_C36AC, unk_D2403, unk_D2413, unk_D249C, WaitDigiSample
+extern WaitTickDeadline
+global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
+global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
+global Swap16, ReadBE24, ReadBE24_ret, ReadCString, OpenSpeechBank, OpenSpeechBank_ret, SpeechSlotSize, ReadSpeechSample
+global LoadSpeechSlot, PlaceSpeechSlot, StrEqNoCase, FindFreeSpeechSlot, FindLoadedSpeechSlot, FindSpeechSlot, SpeechSlotLoaded, IsSampleRequested
+global RequestSample, FreeUnrequestedSamples, MoveSampleMem, CompactSpeechSlot, MakeSampleRoom, EnsureSampleRoom, CompactSpeechMem, PenaltyLenClip
+global PlayoffRoundClipD, PlayoffRoundClipU, QueueSpeechClip, LoadClipSlot, SayClip_body, SayScorePeriod, SayNhlIntro, SayGoodnight
 global SayLineups, SayNowBack, FreeNowBack, SayBackMoment, FreeBackMoment, SayCoachClip, FreeCoachClip, FreeClip
-global SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayTheGame, SayScoringPeriod, SayClip, SayTonightIntro, SayPlayoffTonight
-global RequestTimeClips, QueueTimeClips, SayPenalty, SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank
-global QueuePenaltyType, PreloadAnnouncerClips
+global FreeClip_ret, SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayTheGame, SayScoringPeriod, SayClip, SayScoringPeriod_ot2
+global SayScoringPeriod_ot3, SayScoringPeriod_ott, SayScoringPeriod_reg, SayTonightIntro, SayPlayoffTonight, RequestTimeClips, QueueTimeClips, SayPenalty
+global SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank, QueuePenaltyType, PreloadAnnouncerClips
+; C: src/c/front/announcer/ShutdownSpeech.c (SpeechTimerTick)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.SpeechTimerTick.inc"
+%else
+SpeechTimerTick:
+push dword 20h	; 832BC
+call __CHK	; 832C1
+push ebx	; 832C6
+push ecx	; 832C7
+push edx	; 832C8
+push esi	; 832C9
+push edi	; 832CA
+cmp dword [speechinit], byte 0	; 832CB
+je near ShutdownSpeech_ret5	; 832D2
+mov eax, dword [speechq]	; 832D8
+mov ebx, dword [byte eax+05Ch]	; 832DD
+test ebx, ebx	; 832E0
+je short .1	; 832E2
+lea ecx, [byte ebx-01h]	; 832E4
+mov dword [byte eax+05Ch], ecx	; 832E7
+.1:
+mov eax, dword [speechq]	; 832EA
+cmp dword [byte eax+060h], byte 0	; 832EF
+je near ShutdownSpeech_ret5	; 832F3
+mov edi, dword [byte eax+050h]	; 832F9
+test edi, edi	; 832FC
+je short .2	; 832FE
+lea ecx, [byte edi-01h]	; 83300
+mov dword [byte eax+050h], ecx	; 83303
+jmp near ShutdownSpeech_ret5	; 83306
+.2:
+mov ecx, dword [byte eax+058h]	; 8330B
+lea edx, [byte ecx+01h]	; 8330E
+mov dword [byte eax+058h], edx	; 83311
+mov edx, dword [speechq]	; 83314
+cmp ecx, dword [byte edx+054h]	; 8331A
+jge near .5	; 8331D
+mov eax, ecx	; 83323
+mov ecx, dword [edx+eax*4]	; 83325
+cmp ecx, byte 0FFFFFFFFh	; 83328
+jne short .3	; 8332B
+mov dword [byte edx+060h], edi	; 8332D
+jmp near ShutdownSpeech_ret5	; 83330
+.3:
+mov eax, ecx	; 83335
+shl eax, 2	; 83337
+add eax, ecx	; 8333A
+shl eax, 2	; 8333C
+sub eax, ecx	; 8333F
+add eax, eax	; 83341
+mov ebx, dword [speechbank]	; 83343
+add eax, ebx	; 83349
+mov esi, dword [byte eax+0Eh]	; 8334B
+mov ecx, dword [byte eax+016h]	; 8334E
+mov ebx, dword [byte eax+01Eh]	; 83351
+mov dword [byte edx+050h], ebx	; 83354
+mov edx, dword [dword_D27B2]	; 83357
+inc edx	; 8335D
+mov dword [dword_D27B2], edx	; 8335E
+mov ebx, edx	; 83364
+and ebx, byte 1	; 83366
+mov dword [dword_D27B2], ebx	; 83369
+cmp byte [byte eax+0Dh], 47h	; 8336F
+jne short .4	; 83373
+push byte 7Fh	; 83375
+push dword 2B11h	; 83377
+mov edx, dword [musichandle]	; 8337C
+mov eax, esi	; 83382
+call sub_8FBE5	; 83384
+jmp near ShutdownSpeech_ret5	; 83389
+.4:
+add ecx, ecx	; 8338E
+push byte 7Fh	; 83390
+push dword 2B11h	; 83392
+mov edx, dword [musichandle]	; 83397
+mov eax, esi	; 8339D
+call sub_8FC37	; 8339F
+jmp near ShutdownSpeech_ret5	; 833A4
+.5:
+mov dword [byte edx+060h], edi	; 833A9
+mov eax, dword [speechbank]	; 833AC
+mov edx, dword [speechq]	; 833B1
+mov eax, dword [dword eax+03B70h]	; 833B7
+mov dword [byte edx+05Ch], eax	; 833BD
+jmp near ShutdownSpeech_ret5	; 833C0
+%endif ; C
+; C: src/c/front/announcer/ClearSpeechSlot.c
+%ifdef CBUILD
+%include "c/front/announcer/ClearSpeechSlot.inc"
+%else
+ClearSpeechSlot:
+push dword 4	; 833C5
+call __CHK	; 833CA
+mov byte [eax], 0	; 833CF
+mov byte [byte eax+0Dh], 0	; 833D2
+mov dword [byte eax+0Eh], 0	; 833D6
+mov dword [byte eax+012h], 0	; 833DD
+mov dword [byte eax+016h], 0	; 833E4
+mov dword [byte eax+01Eh], 0	; 833EB
+mov dword [byte eax+022h], 0	; 833F2
+ret	; 833F9
+%endif ; C
+; C: src/c/front/announcer/ResetSpeechQueue.c
+%ifdef CBUILD
+%include "c/front/announcer/ResetSpeechQueue.inc"
+%else
+ResetSpeechQueue:
+push dword 0Ch	; 833FA
+call __CHK	; 833FF
+push ecx	; 83404
+push edx	; 83405
+mov eax, dword [speechq]	; 83406
+mov dword [byte eax+060h], 0	; 8340B
+mov eax, dword [speechq]	; 83412
+mov ecx, 14h	; 83417
+mov edx, 0FFFFFFFFh	; 8341C
+call __STOSD	; 83421
+mov eax, dword [speechq]	; 83426
+mov dword [byte eax+054h], 0	; 8342B
+mov eax, dword [speechq]	; 83432
+mov dword [byte eax+058h], 0	; 83437
+mov eax, dword [speechq]	; 8343E
+mov dword [byte eax+050h], 0	; 83443
+mov eax, dword [speechq]	; 8344A
+mov dword [byte eax+05Ch], 0	; 8344F
+pop edx	; 83456
+pop ecx	; 83457
+ret	; 83458
+%endif ; C
+; C: src/c/front/announcer/InitSpeechSlots.c
+%ifdef CBUILD
+%include "c/front/announcer/InitSpeechSlots.inc"
+%else
+InitSpeechSlots:
+push dword 1Ch	; 83459
+call __CHK	; 8345E
+push ebx	; 83463
+push ecx	; 83464
+push edx	; 83465
+mov ecx, eax	; 83466
+xor edx, edx	; 83468
+.1:
+mov eax, edx	; 8346A
+shl eax, 2	; 8346C
+add eax, edx	; 8346F
+shl eax, 2	; 83471
+sub eax, edx	; 83474
+add eax, eax	; 83476
+mov ebx, dword [speechbank]	; 83478
+add eax, ebx	; 8347E
+call ClearSpeechSlot	; 83480
+inc edx	; 83485
+cmp edx, 190h	; 83486
+jl short InitSpeechSlots.1	; 8348C
+mov eax, dword [speechbank]	; 8348E
+lea edx, [dword ecx-01388h]	; 83493
+mov dword [dword eax+03B68h], edx	; 83499
+mov edx, dword [dword_CCC94]	; 8349F
+push edx	; 834A5
+push ecx	; 834A6
+push str_Speechbuf	; 834A7
+call sub_8CC70	; 834AC
+add esp, byte 0Ch	; 834B1
+mov edx, dword [speechbank]	; 834B4
+mov dword [dword edx+03B60h], eax	; 834BA
+mov eax, dword [speechbank]	; 834C0
+mov ebx, dword [dword eax+03B60h]	; 834C5
+push ebx	; 834CB
+call sub_8DBD4	; 834CC
+add esp, byte 4	; 834D1
+mov edx, dword [speechbank]	; 834D4
+mov dword [dword edx+03B64h], eax	; 834DA
+mov eax, dword [speechbank]	; 834E0
+mov dword [dword eax+03B6Ch], 0	; 834E5
+mov eax, dword [speechbank]	; 834EF
+mov dword [dword eax+03B74h], 0	; 834F4
+mov eax, dword [speechbank]	; 834FE
+mov dword [dword eax+03B70h], 0	; 83503
+mov eax, dword [speechbank]	; 8350D
+mov dword [dword eax+03B78h], 0	; 83512
+pop edx	; 8351C
+pop ecx	; 8351D
+pop ebx	; 8351E
+ret	; 8351F
+%endif ; C
+; C: src/c/front/announcer/ResetSampleReq.c
+%ifdef CBUILD
+%include "c/front/announcer/ResetSampleReq.inc"
+%else
+ResetSampleReq:
+push dword 0Ch	; 83520
+call __CHK	; 83525
+push ebx	; 8352A
+push edx	; 8352B
+xor edx, edx	; 8352C
+.1:
+mov eax, edx	; 8352E
+shl eax, 2	; 83530
+sub eax, edx	; 83533
+shl eax, 2	; 83535
+lea ebx, [edx+eax]	; 83538
+mov eax, dword [samplereq]	; 8353B
+mov byte [ebx+eax], 0	; 83540
+inc edx	; 83544
+cmp edx, byte 14h	; 83545
+jl short ResetSampleReq.1	; 83548
+mov eax, dword [samplereq]	; 8354A
+mov dword [dword eax+010Ch], 0	; 8354F
+mov eax, dword [samplereq]	; 83559
+mov dword [dword eax+0108h], 0	; 8355E
+mov eax, dword [samplereq]	; 83568
+mov dword [dword eax+0104h], 0	; 8356D
+pop edx	; 83577
+pop ebx	; 83578
+ret	; 83579
+%endif ; C
+; C: src/c/front/announcer/InitSpeech.c
+%ifdef CBUILD
+%include "c/front/announcer/InitSpeech.inc"
+%else
+InitSpeech:
+push dword 1Ch	; 8357A
+call __CHK	; 8357F
+push esi	; 83584
+push edi	; 83585
+sub esp, byte 4	; 83586
+mov byte [esp], al	; 83589
+mov esi, edx	; 8358C
+call SpeechIsInit	; 8358E
+test eax, eax	; 83593
+jne near .x	; 83595
+mov al, byte [esp]	; 8359B
+mov byte [byte_D27B6], al	; 8359E
+xor edx, edx	; 835A3
+mov dword [dword_D27B2], edx	; 835A5
+mov dword [speechcopybuf], ebx	; 835AB
+mov dword [speechcopylen], ecx	; 835B1
+mov ebx, dword [dword_CCC94]	; 835B7
+push ebx	; 835BD
+push byte 64h	; 835BE
+push str_Sentence	; 835C0
+call sub_8CCA8	; 835C5
+add esp, byte 0Ch	; 835CA
+mov dword [speechq], eax	; 835CD
+call ResetSpeechQueue	; 835D2
+mov ecx, dword [dword_CCC94]	; 835D7
+push ecx	; 835DD
+push dword 110h	; 835DE
+push str_SampleMemMan	; 835E3
+call sub_8CCA8	; 835E8
+add esp, byte 0Ch	; 835ED
+mov dword [samplereq], eax	; 835F0
+call ResetSampleReq	; 835F5
+mov edi, dword [dword_CCC94]	; 835FA
+push edi	; 83600
+push dword 3B93h	; 83601
+push str_SpeechBank	; 83606
+call sub_8CCA8	; 8360B
+add esp, byte 0Ch	; 83610
+mov dword [speechbank], eax	; 83613
+mov eax, esi	; 83618
+call InitSpeechSlots	; 8361A
+push SpeechTimerTick	; 8361F
+call addtimer	; 83624
+add esp, byte 4	; 83629
+mov dword [speechinit], 1	; 8362C
+.x:
+add esp, byte 4	; 83636
+pop edi	; 83639
+pop esi	; 8363A
+ret	; 8363B
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.inc"
+%else
+ShutdownSpeech:
+push dword 20h	; 8363C
+call __CHK	; 83641
+push ebx	; 83646
+push ecx	; 83647
+push edx	; 83648
+push esi	; 83649
+push edi	; 8364A
+push ebp	; 8364B
+cmp dword [speechinit], byte 0	; 8364C
+je short ShutdownSpeech_ret6	; 83653
+push SpeechTimerTick	; 83655
+call RemoveTimerCallback	; 8365A
+add esp, byte 4	; 8365F
+mov eax, dword [speechbank]	; 83662
+cmp dword [dword eax+03B78h], byte 0	; 83667
+je short .1	; 8366E
+mov eax, dword [dword eax+03B7Ch]	; 83670
+call _dos_close_	; 83676
+.1:
+mov ecx, dword [speechq]	; 8367B
+push ecx	; 83681
+call FreeMemBlock	; 83682
+add esp, byte 4	; 83687
+mov eax, dword [speechbank]	; 8368A
+mov esi, dword [dword eax+03B60h]	; 8368F
+push esi	; 83695
+call sub_8D2F0	; 83696
+add esp, byte 4	; 8369B
+mov edi, dword [speechbank]	; 8369E
+push edi	; 836A4
+call FreeMemBlock	; 836A5
+add esp, byte 4	; 836AA
+mov ebp, dword [samplereq]	; 836AD
+push ebp	; 836B3
+call FreeMemBlock	; 836B4
+add esp, byte 4	; 836B9
+xor eax, eax	; 836BC
+mov dword [speechinit], eax	; 836BE
+ShutdownSpeech_ret6:
+pop ebp	; 836C3
+ShutdownSpeech_ret5:
+pop edi	; 836C4
+pop esi	; 836C5
+pop edx	; 836C6
+pop ecx	; 836C7
+pop ebx	; 836C8
+ret	; 836C9
+%endif ; C
+; C: src/c/front/announcer/SpeechIsInit.c
+%ifdef CBUILD
+%include "c/front/announcer/SpeechIsInit.inc"
+%else
+SpeechIsInit:
+push dword 4	; 836CA
+call __CHK	; 836CF
+cmp dword [speechinit], byte 0	; 836D4
+setne al	; 836DB
+and eax, 0FFh	; 836DE
+ret	; 836E3
+%endif ; C
+; C: src/c/front/announcer/SpeechBusy.c
+%ifdef CBUILD
+%include "c/front/announcer/SpeechBusy.inc"
+%else
+SpeechBusy:
+push dword 4	; 836E4
+call __CHK	; 836E9
+cmp dword [speechinit], byte 0	; 836EE
+je short .3	; 836F5
+mov eax, dword [speechq]	; 836F7
+cmp dword [byte eax+060h], byte 0	; 836FC
+je short .2	; 83700
+.1:
+mov eax, 1	; 83702
+ret	; 83707
+.2:
+cmp dword [byte eax+05Ch], byte 0	; 83708
+jne short SpeechBusy.1	; 8370C
+.3:
+xor eax, eax	; 8370E
+ret	; 83710
+%endif ; C
+; C: src/c/front/announcer/SpeechIdle.c
+%ifdef CBUILD
+%include "c/front/announcer/SpeechIdle.inc"
+%else
+SpeechIdle:
+push dword 4	; 83711
+call __CHK	; 83716
+cmp dword [speechinit], byte 0	; 8371B
+jne short .2	; 83722
+.1:
+xor eax, eax	; 83724
+ret	; 83726
+.2:
+mov eax, dword [speechq]	; 83727
+cmp dword [byte eax+060h], byte 0	; 8372C
+jne short SpeechIdle.1	; 83730
+cmp dword [byte eax+05Ch], byte 0	; 83732
+jne short SpeechIdle.1	; 83736
+mov eax, 1	; 83738
+ret	; 8373D
+%endif ; C
+; C: src/c/front/announcer/MusicChanReset2.c
+%ifdef CBUILD
+%include "c/front/announcer/MusicChanReset2.inc"
+%else
+MusicChanReset2:
+push dword 4	; 8373E
+call __CHK	; 83743
+call MusicChanReset	; 83748
+SpeechStopQueue:
+push dword 10h	; 8374D
+call __CHK	; 83752
+push ebx	; 83757
+push ecx	; 83758
+push edx	; 83759
+cmp dword [speechinit], byte 0	; 8375A
+je short .x	; 83761
+mov eax, dword [speechq]	; 83763
+mov dword [byte eax+060h], 0	; 83768
+mov eax, dword [speechq]	; 8376F
+mov ebx, dword [speechbank]	; 83774
+mov edx, dword [byte eax+050h]	; 8377A
+mov ecx, dword [dword ebx+03B70h]	; 8377D
+add edx, ecx	; 83783
+mov dword [byte eax+05Ch], edx	; 83785
+.x:
+pop edx	; 83788
+pop ecx	; 83789
+pop ebx	; 8378A
+ret	; 8378B
+%endif ; C
+; C: src/c/front/announcer/MusicChanCmd3.c
+%ifdef CBUILD
+%include "c/front/announcer/MusicChanCmd3.inc"
+%else
+MusicChanCmd3:
+push dword 8	; 8378C
+call __CHK	; 83791
+push edx	; 83796
+mov eax, dword [musichandle]	; 83797
+mov edx, 3	; 8379C
+call sub_8FCAC	; 837A1
+pop edx	; 837A6
+ret	; 837A7
+%endif ; C
+; C: src/c/front/announcer/MusicChanReset.c
+%ifdef CBUILD
+%include "c/front/announcer/MusicChanReset.inc"
+%else
+MusicChanReset:
+push dword 8	; 837A8
+call __CHK	; 837AD
+push edx	; 837B2
+cmp dword [speechinit], byte 0	; 837B3
+je short .x	; 837BA
+mov eax, dword [musichandle]	; 837BC
+xor edx, edx	; 837C1
+call sub_8FCAC	; 837C3
+mov eax, dword [musichandle]	; 837C8
+mov edx, 1	; 837CD
+call sub_8FCAC	; 837D2
+.x:
+pop edx	; 837D7
+ret	; 837D8
+%endif ; C
+; C: src/c/front/announcer/Swap16.c
+%ifdef CBUILD
+%include "c/front/announcer/Swap16.inc"
+%else
+Swap16:
+push dword 8	; 837D9
+call __CHK	; 837DE
+push edx	; 837E3
+mov edx, eax	; 837E4
+and edx, 0FFh	; 837E6
+shl edx, 8	; 837EC
+shr eax, 8	; 837EF
+and eax, 0FFh	; 837F2
+or eax, edx	; 837F7
+pop edx	; 837F9
+ret	; 837FA
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c (ReadBE24)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.ReadBE24.inc"
+%else
+ReadBE24:
+push dword 20h	; 837FB
+call __CHK	; 83800
+push ebx	; 83805
+push ecx	; 83806
+push edx	; 83807
+push esi	; 83808
+sub esp, byte 8	; 83809
+mov esi, eax	; 8380C
+xor ah, ah	; 8380E
+mov byte [byte esp+07h], ah	; 83810
+mov ebx, esp	; 83814
+push ebx	; 83816
+mov edx, 1	; 83817
+mov ecx, ds	; 8381C
+lea ebx, [byte esp+0Ah]	; 8381E
+mov eax, esi	; 83822
+call _dos_read_	; 83824
+mov ebx, esp	; 83829
+push ebx	; 8382B
+mov edx, 1	; 8382C
+mov ecx, ds	; 83831
+lea ebx, [byte esp+09h]	; 83833
+mov eax, esi	; 83837
+call _dos_read_	; 83839
+mov ebx, esp	; 8383E
+push ebx	; 83840
+mov edx, 1	; 83841
+mov ecx, ds	; 83846
+lea ebx, [byte esp+08h]	; 83848
+mov eax, esi	; 8384C
+call _dos_read_	; 8384E
+mov eax, dword [byte esp+04h]	; 83853
+ReadBE24_ret:
+add esp, byte 8	; 83857
+pop esi	; 8385A
+pop edx	; 8385B
+pop ecx	; 8385C
+pop ebx	; 8385D
+ret	; 8385E
+%endif ; C
+; C: src/c/front/announcer/ReadCString.c
+%ifdef CBUILD
+%include "c/front/announcer/ReadCString.inc"
+%else
+ReadCString:
+push dword 1Ch	; 8385F
+call __CHK	; 83864
+push ebx	; 83869
+push ecx	; 8386A
+push esi	; 8386B
+push edi	; 8386C
+sub esp, byte 4	; 8386D
+mov esi, eax	; 83870
+mov edi, edx	; 83872
+.1:
+mov eax, esp	; 83874
+push eax	; 83876
+mov ecx, ds	; 83877
+mov edx, 1	; 83879
+mov ebx, esi	; 8387E
+mov eax, edi	; 83880
+call _dos_read_	; 83882
+mov eax, esi	; 83887
+inc esi	; 83889
+cmp byte [eax], 0	; 8388A
+jne short ReadCString.1	; 8388D
+add esp, byte 4	; 8388F
+pop edi	; 83892
+pop esi	; 83893
+pop ecx	; 83894
+pop ebx	; 83895
+ret	; 83896
+%endif ; C
+OpenSpeechBank:
+push dword 40h	; 83897
+call __CHK	; 8389C
+push ebx	; 838A1
+push ecx	; 838A2
+push esi	; 838A3
+push edi	; 838A4
+push ebp	; 838A5
+sub esp, byte 24h	; 838A6
+mov esi, eax	; 838A9
+mov edi, edx	; 838AB
+cmp dword [speechinit], byte 0	; 838AD
+je near .10	; 838B4
+mov eax, dword [speechbank]	; 838BA
+cmp dword [dword eax+03B78h], byte 0	; 838BF
+je short .1	; 838C6
+lea edx, [dword eax+03B80h]	; 838C8
+mov eax, esi	; 838CE
+call StrEqNoCase	; 838D0
+test eax, eax	; 838D5
+jne near .10	; 838D7
+mov eax, dword [speechbank]	; 838DD
+mov eax, dword [dword eax+03B7Ch]	; 838E2
+call _dos_close_	; 838E8
+.1:
+lea ebx, [byte esp+010h]	; 838ED
+xor edx, edx	; 838F1
+mov eax, esi	; 838F3
+call _dos_open_	; 838F5
+mov eax, dword [speechbank]	; 838FA
+add eax, 3B80h	; 838FF
+mov ebx, 0Dh	; 83904
+mov edx, esi	; 83909
+call strncpy_	; 8390B
+mov edx, dword [speechbank]	; 83910
+mov eax, dword [byte esp+010h]	; 83916
+mov dword [dword edx+03B7Ch], eax	; 8391A
+mov eax, dword [speechbank]	; 83920
+mov dword [dword eax+03B70h], edi	; 83925
+mov eax, dword [speechbank]	; 8392B
+mov dword [dword eax+03B78h], 1	; 83930
+mov eax, dword [speechbank]	; 8393A
+mov dword [dword eax+03B6Ch], 0	; 8393F
+mov eax, dword [speechbank]	; 83949
+mov dword [dword eax+03B74h], 0	; 8394E
+lea eax, [byte esp+08h]	; 83958
+push eax	; 8395C
+mov edx, 2	; 8395D
+mov ecx, ds	; 83962
+lea ebx, [byte esp+024h]	; 83964
+mov eax, dword [byte esp+014h]	; 83968
+call _dos_read_	; 8396C
+mov eax, dword [byte esp+01Eh]	; 83971
+sar eax, 10h	; 83975
+call Swap16	; 83978
+mov edx, dword [speechbank]	; 8397D
+mov word [dword edx+03B8Dh], ax	; 83983
+lea eax, [byte esp+08h]	; 8398A
+push eax	; 8398E
+mov edx, 2	; 8398F
+mov ecx, ds	; 83994
+lea ebx, [byte esp+018h]	; 83996
+mov eax, dword [byte esp+014h]	; 8399A
+call _dos_read_	; 8399E
+mov eax, dword [byte esp+012h]	; 839A3
+sar eax, 10h	; 839A7
+call Swap16	; 839AA
+mov edx, eax	; 839AF
+mov eax, dword [speechbank]	; 839B1
+mov word [dword eax+03B8Fh], dx	; 839B6
+lea eax, [byte esp+08h]	; 839BD
+push eax	; 839C1
+mov edx, 2	; 839C2
+mov ecx, ds	; 839C7
+lea ebx, [byte esp+020h]	; 839C9
+mov eax, dword [byte esp+014h]	; 839CD
+call _dos_read_	; 839D1
+mov eax, dword [byte esp+01Ah]	; 839D6
+sar eax, 10h	; 839DA
+call Swap16	; 839DD
+mov edx, dword [speechbank]	; 839E2
+mov word [dword edx+03B91h], ax	; 839E8
+xor esi, esi	; 839EF
+jmp short .3	; 839F1
+.2:
+mov edi, esi	; 839F3
+shl edi, 2	; 839F5
+add edi, esi	; 839F8
+shl edi, 2	; 839FA
+sub edi, esi	; 839FD
+add edi, edi	; 839FF
+mov dword [byte edi+eax+0Eh], 0	; 83A01
+mov eax, dword [byte esp+010h]	; 83A09
+call ReadBE24	; 83A0D
+mov edx, eax	; 83A12
+mov eax, dword [speechbank]	; 83A14
+mov dword [byte edi+eax+012h], edx	; 83A19
+mov eax, dword [byte esp+010h]	; 83A1D
+call ReadBE24	; 83A21
+mov edx, dword [speechbank]	; 83A26
+mov dword [byte edx+edi+01Ah], eax	; 83A2C
+mov eax, dword [speechbank]	; 83A30
+add eax, edi	; 83A35
+mov edx, dword [byte esp+010h]	; 83A37
+call ReadCString	; 83A3B
+mov eax, dword [speechbank]	; 83A40
+mov dword [byte edi+eax+022h], 0	; 83A45
+inc esi	; 83A4D
+.3:
+mov eax, dword [speechbank]	; 83A4E
+mov edx, dword [dword eax+03B8Fh]	; 83A53
+sar edx, 10h	; 83A59
+cmp esi, edx	; 83A5C
+jl short OpenSpeechBank.2	; 83A5E
+xor esi, esi	; 83A60
+jmp near .7	; 83A62
+.4:
+mov edi, esi	; 83A67
+shl edi, 2	; 83A69
+add edi, esi	; 83A6C
+shl edi, 2	; 83A6E
+sub edi, esi	; 83A71
+add edi, edi	; 83A73
+mov ebp, dword [byte edi+eax+012h]	; 83A75
+xor ebx, ebx	; 83A79
+mov edx, ebp	; 83A7B
+mov eax, dword [byte esp+010h]	; 83A7D
+call lseek_	; 83A81
+lea eax, [byte esp+08h]	; 83A86
+push eax	; 83A8A
+mov edx, 2	; 83A8B
+mov ecx, ds	; 83A90
+lea ebx, [byte esp+01Ch]	; 83A92
+mov eax, dword [byte esp+014h]	; 83A96
+call _dos_read_	; 83A9A
+mov eax, dword [byte esp+018h]	; 83A9F
+xor ah, ah	; 83AA3
+xor edx, edx	; 83AA5
+mov dx, word [byte esp+018h]	; 83AA7
+sar edx, 8	; 83AAC
+mov dword [byte esp+018h], edx	; 83AAF
+cmp ax, 47h	; 83AB3
+jne short .5	; 83AB7
+lea edx, [byte ebp+06h]	; 83AB9
+xor ebx, ebx	; 83ABC
+mov eax, dword [byte esp+010h]	; 83ABE
+call lseek_	; 83AC2
+lea eax, [byte esp+08h]	; 83AC7
+push eax	; 83ACB
+mov edx, 2	; 83ACC
+mov ecx, ds	; 83AD1
+lea ebx, [byte esp+010h]	; 83AD3
+mov eax, dword [byte esp+014h]	; 83AD7
+call _dos_read_	; 83ADB
+mov eax, dword [byte esp+0Ch]	; 83AE0
+call Swap16	; 83AE4
+sub eax, byte 5	; 83AE9
+mov dword [byte esp+0Ch], eax	; 83AEC
+mov edx, dword [speechbank]	; 83AF0
+mov dword [byte edx+edi+016h], eax	; 83AF6
+mov dword [esp], eax	; 83AFA
+xor ebp, ebp	; 83AFD
+mov dword [byte esp+04h], ebp	; 83AFF
+fild qword [esp]	; 83B03
+fmul qword [qword_C37B0]	; 83B06
+fdiv qword [qword_C37C0]	; 83B0C
+call __CHP	; 83B12
+fistp qword [esp]	; 83B17
+mov edx, dword [speechbank]	; 83B1A
+mov eax, dword [esp]	; 83B20
+mov dword [byte edx+edi+01Eh], eax	; 83B23
+mov eax, dword [speechbank]	; 83B27
+mov byte [byte edi+eax+0Dh], 47h	; 83B2C
+jmp short .6	; 83B31
+.5:
+mov edx, dword [speechbank]	; 83B33
+mov eax, dword [byte edx+edi+01Ah]	; 83B39
+mov dword [byte esp+0Ch], eax	; 83B3D
+mov dword [byte edx+edi+016h], eax	; 83B41
+mov dword [esp], eax	; 83B45
+xor ecx, ecx	; 83B48
+mov dword [byte esp+04h], ecx	; 83B4A
+fild qword [esp]	; 83B4E
+fmul qword [qword_C37B0]	; 83B51
+fdiv qword [qword_C37B8]	; 83B57
+call __CHP	; 83B5D
+fistp qword [esp]	; 83B62
+mov edx, dword [speechbank]	; 83B65
+mov eax, dword [esp]	; 83B6B
+sub eax, byte 1Ah	; 83B6E
+mov dword [byte edx+edi+01Eh], eax	; 83B71
+mov eax, dword [speechbank]	; 83B75
+mov byte [byte edi+eax+0Dh], 0FFh	; 83B7A
+.6:
+inc esi	; 83B7F
+.7:
+mov eax, dword [speechbank]	; 83B80
+mov edx, dword [dword eax+03B8Fh]	; 83B85
+sar edx, 10h	; 83B8B
+cmp esi, edx	; 83B8E
+jl near OpenSpeechBank.4	; 83B90
+mov esi, edx	; 83B96
+jmp short .9	; 83B98
+.8:
+mov eax, esi	; 83B9A
+shl eax, 2	; 83B9C
+add eax, esi	; 83B9F
+shl eax, 2	; 83BA1
+sub eax, esi	; 83BA4
+add eax, eax	; 83BA6
+mov edx, dword [speechbank]	; 83BA8
+add eax, edx	; 83BAE
+call ClearSpeechSlot	; 83BB0
+inc esi	; 83BB5
+.9:
+cmp esi, 190h	; 83BB6
+jl short OpenSpeechBank.8	; 83BBC
+.10:
+add esp, byte 24h	; 83BBE
+OpenSpeechBank_ret:
+pop ebp	; 83BC1
+pop edi	; 83BC2
+pop esi	; 83BC3
+pop ecx	; 83BC4
+pop ebx	; 83BC5
+ret	; 83BC6
+; C: src/c/front/announcer/SpeechSlotSize.c
+%ifdef CBUILD
+%include "c/front/announcer/SpeechSlotSize.inc"
+%else
+SpeechSlotSize:
+push dword 8	; 83BC7
+call __CHK	; 83BCC
+push edx	; 83BD1
+cmp eax, byte 0FFFFFFFFh	; 83BD2
+jne short .1	; 83BD5
+xor eax, eax	; 83BD7
+pop edx	; 83BD9
+ret	; 83BDA
+.1:
+mov edx, eax	; 83BDB
+shl eax, 2	; 83BDD
+add eax, edx	; 83BE0
+shl eax, 2	; 83BE2
+sub eax, edx	; 83BE5
+mov edx, dword [speechbank]	; 83BE7
+mov eax, dword [byte edx+eax*2+016h]	; 83BED
+pop edx	; 83BF1
+ret	; 83BF2
+%endif ; C
+; C: src/c/front/announcer/OpenSpeechBank.c (ReadSpeechSample)
+%ifdef CBUILD
+%include "c/front/announcer/OpenSpeechBank.ReadSpeechSample.inc"
+%else
+ReadSpeechSample:
+push dword 38h	; 83BF3
+call __CHK	; 83BF8
+push ebx	; 83BFD
+push ecx	; 83BFE
+push esi	; 83BFF
+push edi	; 83C00
+push ebp	; 83C01
+sub esp, byte 14h	; 83C02
+mov ecx, eax	; 83C05
+mov esi, edx	; 83C07
+shl eax, 2	; 83C09
+add eax, ecx	; 83C0C
+shl eax, 2	; 83C0E
+sub eax, ecx	; 83C11
+add eax, eax	; 83C13
+mov edx, dword [speechbank]	; 83C15
+add eax, edx	; 83C1B
+mov edi, dword [byte eax+01Ah]	; 83C1D
+mov edx, dword [dword edx+03B7Ch]	; 83C20
+mov dword [esp], edx	; 83C26
+mov edx, dword [byte eax+012h]	; 83C29
+mov dword [byte esp+0Ch], edx	; 83C2C
+mov eax, dword [byte eax+016h]	; 83C30
+mov dword [byte esp+08h], eax	; 83C33
+push esi	; 83C37
+call _os_handle_3	; 83C38
+mov ebp, eax	; 83C3D
+add esp, byte 4	; 83C3F
+mov esi, eax	; 83C42
+mov eax, dword [byte esp+08h]	; 83C44
+sub eax, edi	; 83C48
+add eax, 1388h	; 83C4A
+lea edx, [eax+ebp]	; 83C4F
+mov dword [byte esp+010h], edx	; 83C52
+xor ebx, ebx	; 83C56
+mov edx, dword [byte esp+0Ch]	; 83C58
+mov eax, dword [esp]	; 83C5C
+call lseek_	; 83C5F
+lea eax, [byte esp+04h]	; 83C64
+push eax	; 83C68
+mov ecx, ds	; 83C69
+mov edx, edi	; 83C6B
+mov ebx, dword [byte esp+014h]	; 83C6D
+mov eax, dword [byte esp+04h]	; 83C71
+call _dos_read_	; 83C75
+push edi	; 83C7A
+push ebp	; 83C7B
+mov edx, dword [byte esp+018h]	; 83C7C
+push edx	; 83C80
+call sub_98028	; 83C81
+add esp, byte 0Ch	; 83C86
+mov ecx, eax	; 83C89
+xor bl, bl	; 83C8B
+xor edx, edx	; 83C8D
+jmp short .2	; 83C8F
+.1:
+mov bh, byte [byte edx+esi+05h]	; 83C91
+add bh, bl	; 83C95
+mov byte [edx+esi], bh	; 83C97
+add bl, byte [byte edx+esi+05h]	; 83C9A
+inc edx	; 83C9E
+.2:
+lea eax, [byte ecx-05h]	; 83C9F
+cmp edx, eax	; 83CA2
+jl short ReadSpeechSample.1	; 83CA4
+add esp, byte 14h	; 83CA6
+jmp near OpenSpeechBank_ret	; 83CA9
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c (LoadSpeechSlot)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.LoadSpeechSlot.inc"
+%else
+LoadSpeechSlot:
+push dword 1Ch	; 83CAE
+call __CHK	; 83CB3
+push ebx	; 83CB8
+push ecx	; 83CB9
+push edx	; 83CBA
+push esi	; 83CBB
+sub esp, byte 8	; 83CBC
+mov ebx, eax	; 83CBF
+test eax, eax	; 83CC1
+jne short .1	; 83CC3
+mov edx, dword [speechbank]	; 83CC5
+mov edx, dword [dword edx+03B64h]	; 83CCB
+jmp short .2	; 83CD1
+.1:
+lea edx, [byte eax-01h]	; 83CD3
+mov eax, edx	; 83CD6
+shl eax, 2	; 83CD8
+add eax, edx	; 83CDB
+shl eax, 2	; 83CDD
+sub eax, edx	; 83CE0
+add eax, eax	; 83CE2
+mov edx, dword [speechbank]	; 83CE4
+add eax, edx	; 83CEA
+mov edx, dword [byte eax+0Eh]	; 83CEC
+add edx, dword [byte eax+016h]	; 83CEF
+.2:
+mov eax, ebx	; 83CF2
+shl eax, 2	; 83CF4
+add eax, ebx	; 83CF7
+shl eax, 2	; 83CF9
+sub eax, ebx	; 83CFC
+lea ecx, [eax+eax]	; 83CFE
+mov eax, dword [speechbank]	; 83D01
+mov dword [byte ecx+eax+0Eh], edx	; 83D06
+mov eax, ebx	; 83D0A
+call ReadSpeechSample	; 83D0C
+mov edx, eax	; 83D11
+mov eax, dword [speechbank]	; 83D13
+mov dword [byte ecx+eax+016h], edx	; 83D18
+mov eax, dword [speechbank]	; 83D1C
+mov ebx, dword [dword eax+03B70h]	; 83D21
+mov dword [esp], edx	; 83D27
+xor esi, esi	; 83D2A
+mov dword [byte esp+04h], esi	; 83D2C
+fild qword [esp]	; 83D30
+fmul qword [qword_C37C8]	; 83D33
+fdiv qword [qword_C37D0]	; 83D39
+call __CHP	; 83D3F
+fistp qword [esp]	; 83D44
+mov esi, dword [esp]	; 83D47
+sub esi, ebx	; 83D4A
+mov dword [byte ecx+eax+01Eh], esi	; 83D4C
+mov eax, dword [speechbank]	; 83D50
+mov dword [byte ecx+eax+022h], 1	; 83D55
+mov eax, dword [speechbank]	; 83D5D
+add dword [dword eax+03B6Ch], edx	; 83D62
+mov eax, dword [speechbank]	; 83D68
+inc dword [dword eax+03B74h]	; 83D6D
+jmp near ReadBE24_ret	; 83D73
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c (PlaceSpeechSlot)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.PlaceSpeechSlot.inc"
+%else
+PlaceSpeechSlot:
+push dword 28h	; 83D78
+call __CHK	; 83D7D
+push ebx	; 83D82
+push ecx	; 83D83
+push edx	; 83D84
+push esi	; 83D85
+push edi	; 83D86
+push ebp	; 83D87
+sub esp, byte 8	; 83D88
+mov edx, eax	; 83D8B
+test eax, eax	; 83D8D
+jne short .1	; 83D8F
+mov ebp, dword [speechbank]	; 83D91
+mov ebp, dword [dword ebp+03B64h]	; 83D97
+jmp short .2	; 83D9D
+.1:
+lea esi, [byte eax-01h]	; 83D9F
+mov eax, esi	; 83DA2
+shl eax, 2	; 83DA4
+add eax, esi	; 83DA7
+shl eax, 2	; 83DA9
+sub eax, esi	; 83DAC
+mov esi, dword [speechbank]	; 83DAE
+mov ebp, dword [byte esi+eax*2+0Eh]	; 83DB4
+add ebp, dword [byte esi+eax*2+016h]	; 83DB8
+.2:
+mov esi, edx	; 83DBC
+shl esi, 2	; 83DBE
+add esi, edx	; 83DC1
+shl esi, 2	; 83DC3
+sub esi, edx	; 83DC6
+mov eax, dword [speechbank]	; 83DC8
+mov dword [byte eax+esi*2+0Eh], ebp	; 83DCD
+mov eax, dword [speechbank]	; 83DD1
+mov edi, dword [dword eax+03B7Ch]	; 83DD6
+mov edx, dword [byte eax+esi*2+01Ah]	; 83DDC
+mov dword [byte esp+04h], edx	; 83DE0
+mov edx, dword [byte eax+esi*2+012h]	; 83DE4
+xor ebx, ebx	; 83DE8
+mov eax, edi	; 83DEA
+call lseek_	; 83DEC
+mov eax, esp	; 83DF1
+push eax	; 83DF3
+mov ecx, ds	; 83DF4
+mov edx, dword [byte esp+08h]	; 83DF6
+mov ebx, ebp	; 83DFA
+mov eax, edi	; 83DFC
+call _dos_read_	; 83DFE
+mov eax, dword [speechbank]	; 83E03
+mov dword [byte eax+esi*2+022h], 1	; 83E08
+mov edx, dword [speechbank]	; 83E10
+mov eax, dword [esp]	; 83E16
+add dword [dword edx+03B6Ch], eax	; 83E19
+mov eax, dword [speechbank]	; 83E1F
+inc dword [dword eax+03B74h]	; 83E24
+add esp, byte 8	; 83E2A
+jmp near ShutdownSpeech_ret6	; 83E2D
+%endif ; C
+; C: src/c/front/announcer/StrEqNoCase.c
+%ifdef CBUILD
+%include "c/front/announcer/StrEqNoCase.inc"
+%else
+StrEqNoCase:
+push dword 0Ch	; 83E32
+call __CHK	; 83E37
+push ebx	; 83E3C
+push ecx	; 83E3D
+.1:
+cmp byte [eax], 0	; 83E3E
+jne short .2	; 83E41
+cmp byte [edx], 0	; 83E43
+je short .3	; 83E46
+.2:
+movsx ebx, byte [eax]	; 83E48
+and ebx, 0DFh	; 83E4B
+movsx ecx, byte [edx]	; 83E51
+and ecx, 0DFh	; 83E54
+inc eax	; 83E5A
+inc edx	; 83E5B
+cmp ebx, ecx	; 83E5C
+je short StrEqNoCase.1	; 83E5E
+xor eax, eax	; 83E60
+pop ecx	; 83E62
+pop ebx	; 83E63
+ret	; 83E64
+.3:
+mov eax, 1	; 83E65
+pop ecx	; 83E6A
+pop ebx	; 83E6B
+ret	; 83E6C
+%endif ; C
+; C: src/c/front/announcer/FindFreeSpeechSlot.c
+%ifdef CBUILD
+%include "c/front/announcer/FindFreeSpeechSlot.inc"
+%else
+FindFreeSpeechSlot:
+push dword 0Ch	; 83E6D
+call __CHK	; 83E72
+push ebx	; 83E77
+push edx	; 83E78
+mov edx, eax	; 83E79
+mov ebx, dword [speechbank]	; 83E7B
+jmp short .3	; 83E81
+.1:
+mov eax, edx	; 83E83
+shl eax, 2	; 83E85
+add eax, edx	; 83E88
+shl eax, 2	; 83E8A
+sub eax, edx	; 83E8D
+cmp dword [byte ebx+eax*2+022h], byte 0	; 83E8F
+jne short .2	; 83E94
+mov eax, edx	; 83E96
+pop edx	; 83E98
+pop ebx	; 83E99
+ret	; 83E9A
+.2:
+inc edx	; 83E9B
+.3:
+cmp edx, 190h	; 83E9C
+jl short FindFreeSpeechSlot.1	; 83EA2
+mov eax, 0FFFFFFFFh	; 83EA4
+pop edx	; 83EA9
+pop ebx	; 83EAA
+ret	; 83EAB
+%endif ; C
+; C: src/c/front/announcer/FindLoadedSpeechSlot.c
+%ifdef CBUILD
+%include "c/front/announcer/FindLoadedSpeechSlot.inc"
+%else
+FindLoadedSpeechSlot:
+push dword 0Ch	; 83EAC
+call __CHK	; 83EB1
+push ebx	; 83EB6
+push edx	; 83EB7
+mov edx, eax	; 83EB8
+mov ebx, dword [speechbank]	; 83EBA
+jmp short .3	; 83EC0
+.1:
+mov eax, edx	; 83EC2
+shl eax, 2	; 83EC4
+add eax, edx	; 83EC7
+shl eax, 2	; 83EC9
+sub eax, edx	; 83ECC
+cmp dword [byte ebx+eax*2+022h], byte 1	; 83ECE
+jne short .2	; 83ED3
+mov eax, edx	; 83ED5
+pop edx	; 83ED7
+pop ebx	; 83ED8
+ret	; 83ED9
+.2:
+inc edx	; 83EDA
+.3:
+cmp edx, 190h	; 83EDB
+jl short FindLoadedSpeechSlot.1	; 83EE1
+mov eax, 0FFFFFFFFh	; 83EE3
+pop edx	; 83EE8
+pop ebx	; 83EE9
+ret	; 83EEA
+%endif ; C
+; C: src/c/front/announcer/FindSpeechSlot.c
+%ifdef CBUILD
+%include "c/front/announcer/FindSpeechSlot.inc"
+%else
+FindSpeechSlot:
+push dword 10h	; 83EEB
+call __CHK	; 83EF0
+push ebx	; 83EF5
+push ecx	; 83EF6
+push edx	; 83EF7
+mov ecx, eax	; 83EF8
+xor ebx, ebx	; 83EFA
+.1:
+mov eax, ebx	; 83EFC
+shl eax, 2	; 83EFE
+add eax, ebx	; 83F01
+shl eax, 2	; 83F03
+sub eax, ebx	; 83F06
+add eax, eax	; 83F08
+mov edx, dword [speechbank]	; 83F0A
+add edx, eax	; 83F10
+mov eax, ecx	; 83F12
+call StrEqNoCase	; 83F14
+test eax, eax	; 83F19
+je short .2	; 83F1B
+mov eax, ebx	; 83F1D
+pop edx	; 83F1F
+pop ecx	; 83F20
+pop ebx	; 83F21
+ret	; 83F22
+.2:
+inc ebx	; 83F23
+cmp ebx, 190h	; 83F24
+jl short FindSpeechSlot.1	; 83F2A
+mov eax, 0FFFFFFFFh	; 83F2C
+pop edx	; 83F31
+pop ecx	; 83F32
+pop ebx	; 83F33
+ret	; 83F34
+%endif ; C
+; C: src/c/front/announcer/SpeechSlotLoaded.c
+%ifdef CBUILD
+%include "c/front/announcer/SpeechSlotLoaded.inc"
+%else
+SpeechSlotLoaded:
+push dword 8	; 83F35
+call __CHK	; 83F3A
+push edx	; 83F3F
+mov edx, eax	; 83F40
+shl eax, 2	; 83F42
+add eax, edx	; 83F45
+shl eax, 2	; 83F47
+sub eax, edx	; 83F4A
+mov edx, dword [speechbank]	; 83F4C
+cmp dword [byte edx+eax*2+022h], byte 1	; 83F52
+sete al	; 83F57
+and eax, 0FFh	; 83F5A
+pop edx	; 83F5F
+ret	; 83F60
+%endif ; C
+; C: src/c/front/announcer/IsSampleRequested.c
+%ifdef CBUILD
+%include "c/front/announcer/IsSampleRequested.inc"
+%else
+IsSampleRequested:
+push dword 14h	; 83F61
+call __CHK	; 83F66
+push ebx	; 83F6B
+push ecx	; 83F6C
+push edx	; 83F6D
+push esi	; 83F6E
+mov esi, eax	; 83F6F
+xor ebx, ebx	; 83F71
+jmp short .3	; 83F73
+.1:
+mov eax, ebx	; 83F75
+shl eax, 2	; 83F77
+sub eax, ebx	; 83F7A
+shl eax, 2	; 83F7C
+add eax, ebx	; 83F7F
+lea edx, [ecx+eax]	; 83F81
+mov eax, esi	; 83F84
+call StrEqNoCase	; 83F86
+test eax, eax	; 83F8B
+je short .2	; 83F8D
+mov eax, 1	; 83F8F
+pop esi	; 83F94
+pop edx	; 83F95
+pop ecx	; 83F96
+pop ebx	; 83F97
+ret	; 83F98
+.2:
+inc ebx	; 83F99
+.3:
+mov ecx, dword [samplereq]	; 83F9A
+cmp ebx, dword [dword ecx+0108h]	; 83FA0
+jl short IsSampleRequested.1	; 83FA6
+xor eax, eax	; 83FA8
+pop esi	; 83FAA
+pop edx	; 83FAB
+pop ecx	; 83FAC
+pop ebx	; 83FAD
+ret	; 83FAE
+%endif ; C
+; C: src/c/front/announcer/RequestSample.c
+%ifdef CBUILD
+%include "c/front/announcer/RequestSample.inc"
+%else
+RequestSample:
+push dword 14h	; 83FAF
+call __CHK	; 83FB4
+push ebx	; 83FB9
+push ecx	; 83FBA
+push edx	; 83FBB
+push esi	; 83FBC
+mov ecx, eax	; 83FBD
+call IsSampleRequested	; 83FBF
+cmp eax, byte 1	; 83FC4
+je short .x	; 83FC7
+mov edx, dword [samplereq]	; 83FC9
+mov esi, dword [dword edx+0108h]	; 83FCF
+mov eax, esi	; 83FD5
+shl eax, 2	; 83FD7
+sub eax, esi	; 83FDA
+shl eax, 2	; 83FDC
+add eax, esi	; 83FDF
+inc esi	; 83FE1
+mov dword [dword edx+0108h], esi	; 83FE2
+mov edx, dword [samplereq]	; 83FE8
+add eax, edx	; 83FEE
+mov ebx, 0Dh	; 83FF0
+mov edx, ecx	; 83FF5
+call strncpy_	; 83FF7
+mov eax, ecx	; 83FFC
+call FindSpeechSlot	; 83FFE
+mov ecx, eax	; 84003
+cmp eax, byte 0FFFFFFFFh	; 84005
+je short .1	; 84008
+call SpeechSlotLoaded	; 8400A
+test eax, eax	; 8400F
+jne short .1	; 84011
+mov edx, dword [samplereq]	; 84013
+mov eax, ecx	; 84019
+call SpeechSlotSize	; 8401B
+add dword [dword edx+0104h], eax	; 84020
+.1:
+mov eax, dword [samplereq]	; 84026
+inc dword [dword eax+010Ch]	; 8402B
+.x:
+pop esi	; 84031
+pop edx	; 84032
+pop ecx	; 84033
+pop ebx	; 84034
+ret	; 84035
+%endif ; C
+; C: src/c/front/announcer/FreeUnrequestedSamples.c
+%ifdef CBUILD
+%include "c/front/announcer/FreeUnrequestedSamples.inc"
+%else
+FreeUnrequestedSamples:
+push dword 10h	; 84036
+call __CHK	; 8403B
+push ebx	; 84040
+push ecx	; 84041
+push edx	; 84042
+mov edx, 18Fh	; 84043
+jmp short .3	; 84048
+.1:
+mov eax, edx	; 8404A
+shl eax, 2	; 8404C
+add eax, edx	; 8404F
+shl eax, 2	; 84051
+sub eax, edx	; 84054
+lea ebx, [eax+eax]	; 84056
+mov eax, dword [speechbank]	; 84059
+add eax, ebx	; 8405E
+mov ecx, dword [byte eax+022h]	; 84060
+cmp ecx, byte 1	; 84063
+jne short .2	; 84066
+call IsSampleRequested	; 84068
+test eax, eax	; 8406D
+jne short .2	; 8406F
+mov eax, dword [speechbank]	; 84071
+mov dword [byte ebx+eax+022h], 0	; 84076
+mov eax, dword [speechbank]	; 8407E
+mov edx, dword [byte ebx+eax+016h]	; 84083
+sub dword [dword eax+03B6Ch], edx	; 84087
+mov eax, dword [speechbank]	; 8408D
+mov ebx, ecx	; 84092
+sub dword [dword eax+03B74h], ecx	; 84094
+jmp short .4	; 8409A
+.2:
+dec edx	; 8409C
+.3:
+test edx, edx	; 8409D
+jge short FreeUnrequestedSamples.1	; 8409F
+xor ebx, ebx	; 840A1
+.4:
+mov eax, ebx	; 840A3
+pop edx	; 840A5
+pop ecx	; 840A6
+pop ebx	; 840A7
+ret	; 840A8
+%endif ; C
+; C: src/c/front/announcer/OpenSpeechBank.c (MoveSampleMem)
+%ifdef CBUILD
+%include "c/front/announcer/OpenSpeechBank.MoveSampleMem.inc"
+%else
+MoveSampleMem:
+push dword 20h	; 840A9
+call __CHK	; 840AE
+push ecx	; 840B3
+push esi	; 840B4
+push edi	; 840B5
+push ebp	; 840B6
+sub esp, byte 8	; 840B7
+mov ebp, eax	; 840BA
+mov dword [esp], edx	; 840BC
+mov edi, ebx	; 840BF
+.1:
+test edi, edi	; 840C1
+je short .x	; 840C3
+mov edx, dword [speechcopylen]	; 840C5
+cmp edi, edx	; 840CB
+jbe short .2	; 840CD
+mov esi, edx	; 840CF
+jmp short .3	; 840D1
+.2:
+mov esi, edi	; 840D3
+.3:
+mov ebx, dword [esp]	; 840D5
+push ebx	; 840D8
+call _os_handle_3	; 840D9
+add esp, byte 4	; 840DE
+push esi	; 840E1
+mov ecx, ds	; 840E2
+mov edx, ds	; 840E4
+mov ebx, dword [speechcopybuf]	; 840E6
+mov dword [byte esp+08h], ebx	; 840EC
+mov ebx, eax	; 840F0
+mov eax, dword [byte esp+08h]	; 840F2
+call _fmemmove_	; 840F6
+push ebp	; 840FB
+call _os_handle_3	; 840FC
+add esp, byte 4	; 84101
+push esi	; 84104
+mov ecx, ds	; 84105
+mov ebx, dword [speechcopybuf]	; 84107
+mov edx, ds	; 8410D
+call _fmemmove_	; 8410F
+add dword [esp], esi	; 84114
+add ebp, esi	; 84117
+sub edi, esi	; 84119
+jmp short MoveSampleMem.1	; 8411B
+.x:
+add esp, byte 8	; 8411D
+pop ebp	; 84120
+pop edi	; 84121
+pop esi	; 84122
+pop ecx	; 84123
+ret	; 84124
+%endif ; C
+; C: src/c/front/announcer/OpenSpeechBank.c (CompactSpeechSlot)
+%ifdef CBUILD
+%include "c/front/announcer/OpenSpeechBank.CompactSpeechSlot.inc"
+%else
+CompactSpeechSlot:
+push dword 44h	; 84125
+call __CHK	; 8412A
+push ebx	; 8412F
+push ecx	; 84130
+push esi	; 84131
+push edi	; 84132
+push ebp	; 84133
+sub esp, byte 2Ch	; 84134
+mov ecx, eax	; 84137
+mov ebx, edx	; 84139
+mov eax, edx	; 8413B
+shl eax, 2	; 8413D
+add eax, edx	; 84140
+shl eax, 2	; 84142
+sub eax, edx	; 84145
+mov edx, dword [speechbank]	; 84147
+mov esi, dword [byte edx+eax*2+0Eh]	; 8414D
+test ecx, ecx	; 84151
+jne short .1	; 84153
+mov ebp, dword [dword edx+03B64h]	; 84155
+jmp short .2	; 8415B
+.1:
+lea ebp, [byte ecx-01h]	; 8415D
+mov eax, ebp	; 84160
+shl eax, 2	; 84162
+add eax, ebp	; 84165
+shl eax, 2	; 84167
+sub eax, ebp	; 8416A
+mov ebp, dword [byte edx+eax*2+0Eh]	; 8416C
+add ebp, dword [byte edx+eax*2+016h]	; 84170
+.2:
+mov eax, ebx	; 84174
+shl eax, 2	; 84176
+add eax, ebx	; 84179
+shl eax, 2	; 8417B
+sub eax, ebx	; 8417E
+add eax, eax	; 84180
+mov dword [byte esp+028h], eax	; 84182
+mov ebx, dword [speechbank]	; 84186
+add ebx, eax	; 8418C
+mov ebx, dword [byte ebx+016h]	; 8418E
+mov edx, esi	; 84191
+mov eax, ebp	; 84193
+call MoveSampleMem	; 84195
+mov edx, ecx	; 8419A
+shl edx, 2	; 8419C
+add edx, ecx	; 8419F
+shl edx, 2	; 841A1
+sub edx, ecx	; 841A4
+add edx, edx	; 841A6
+mov ebx, dword [speechbank]	; 841A8
+lea eax, [ebx+edx]	; 841AE
+mov ecx, 9	; 841B1
+mov edi, esp	; 841B6
+mov esi, eax	; 841B8
+rep movsd	; 841BA
+movsw	; 841BC
+mov esi, dword [byte esp+028h]	; 841BE
+add esi, ebx	; 841C2
+mov ecx, 9	; 841C4
+mov edi, eax	; 841C9
+rep movsd	; 841CB
+movsw	; 841CD
+mov edi, dword [speechbank]	; 841CF
+mov ebx, dword [byte esp+028h]	; 841D5
+add edi, ebx	; 841D9
+mov ecx, 9	; 841DB
+mov esi, esp	; 841E0
+rep movsd	; 841E2
+movsw	; 841E4
+mov eax, dword [speechbank]	; 841E6
+mov dword [byte edx+eax+0Eh], ebp	; 841EB
+mov eax, dword [speechbank]	; 841EF
+add eax, ebx	; 841F4
+mov dword [byte eax+022h], 0	; 841F6
+add esp, byte 2Ch	; 841FD
+jmp near OpenSpeechBank_ret	; 84200
+%endif ; C
+; C: src/c/front/announcer/MakeSampleRoom.c
+%ifdef CBUILD
+%include "c/front/announcer/MakeSampleRoom.inc"
+%else
+MakeSampleRoom:
+push dword 14h	; 84205
+call __CHK	; 8420A
+push ebx	; 8420F
+push ecx	; 84210
+push edx	; 84211
+push esi	; 84212
+xor edx, edx	; 84213
+xor ecx, ecx	; 84215
+mov eax, dword [speechbank]	; 84217
+mov esi, dword [dword eax+03B68h]	; 8421C
+mov ebx, dword [samplereq]	; 84222
+mov eax, dword [dword eax+03B6Ch]	; 84228
+add eax, dword [dword ebx+0104h]	; 8422E
+cmp eax, esi	; 84234
+jbe short .x	; 84236
+.1:
+call FreeUnrequestedSamples	; 84238
+mov eax, dword [speechbank]	; 8423D
+mov ebx, dword [samplereq]	; 84242
+mov eax, dword [dword eax+03B6Ch]	; 84248
+add eax, dword [dword ebx+0104h]	; 8424E
+cmp eax, esi	; 84254
+jae short .2	; 84256
+mov ecx, 1	; 84258
+.2:
+test ecx, ecx	; 8425D
+jne short .x	; 8425F
+inc edx	; 84261
+cmp edx, 190h	; 84262
+jl short MakeSampleRoom.1	; 84268
+.x:
+pop esi	; 8426A
+pop edx	; 8426B
+pop ecx	; 8426C
+pop ebx	; 8426D
+ret	; 8426E
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c (EnsureSampleRoom)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.EnsureSampleRoom.inc"
+%else
+EnsureSampleRoom:
+push dword 4	; 8426F
+call __CHK	; 84274
+call MakeSampleRoom	; 84279
+%endif ; C
+; C: src/c/front/announcer/ShutdownSpeech.c (CompactSpeechMem)
+%ifdef CBUILD
+%include "c/front/announcer/ShutdownSpeech.CompactSpeechMem.inc"
+%else
+CompactSpeechMem:
+push dword 0Ch	; 8427E
+call __CHK	; 84283
+push ebx	; 84288
+push edx	; 84289
+xor eax, eax	; 8428A
+call FindFreeSpeechSlot	; 8428C
+mov ebx, eax	; 84291
+cmp eax, byte 0FFFFFFFFh	; 84293
+je short .2	; 84296
+.1:
+call FindLoadedSpeechSlot	; 84298
+mov edx, eax	; 8429D
+.2:
+cmp edx, byte 0FFFFFFFFh	; 8429F
+je near FreeClip_ret	; 842A2
+mov eax, ebx	; 842A8
+call CompactSpeechSlot	; 842AA
+mov eax, ebx	; 842AF
+call FindFreeSpeechSlot	; 842B1
+mov ebx, eax	; 842B6
+jmp short CompactSpeechMem.1	; 842B8
+%endif ; C
 ; C: src/c/front/announcer/PenaltyLenClip.c
 %ifdef CBUILD
 %include "c/front/announcer/PenaltyLenClip.inc"
@@ -196,9 +1726,9 @@ add esp, byte 8	; 84413
 pop ecx	; 84416
 ret	; 84417
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (QueueSpeechClip)
+; C: src/c/front/announcer/ShutdownSpeech.c (QueueSpeechClip)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.QueueSpeechClip.inc"
+%include "c/front/announcer/ShutdownSpeech.QueueSpeechClip.inc"
 %else
 QueueSpeechClip:
 push dword 54h	; 84418
@@ -300,9 +1830,9 @@ mov eax, 1	; 8452C
 add esp, byte 38h	; 84531
 jmp near ShutdownSpeech_ret6	; 84534
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (LoadClipSlot)
+; C: src/c/front/announcer/ShutdownSpeech.c (LoadClipSlot)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.LoadClipSlot.inc"
+%include "c/front/announcer/ShutdownSpeech.LoadClipSlot.inc"
 %else
 LoadClipSlot:
 push dword 48h	; 84539
@@ -381,9 +1911,9 @@ mov eax, 1	; 84602
 add esp, byte 2Ch	; 84607
 jmp near ShutdownSpeech_ret6	; 8460A
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayClip_body)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayClip_body)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayClip_body.inc"
+%include "c/front/announcer/ShutdownSpeech.SayClip_body.inc"
 %else
 SayClip_body:
 call SpeechIdle	; 8460F
@@ -405,9 +1935,9 @@ mov eax, 1	; 84650
 pop edx	; 84655
 ret	; 84656
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayScorePeriod)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayScorePeriod)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayScorePeriod.inc"
+%include "c/front/announcer/ShutdownSpeech.SayScorePeriod.inc"
 %else
 SayScorePeriod:
 push dword 8	; 84657
@@ -437,9 +1967,9 @@ mov eax, 1	; 846AD
 pop edx	; 846B2
 ret	; 846B3
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayNhlIntro)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayNhlIntro)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayNhlIntro.inc"
+%include "c/front/announcer/ShutdownSpeech.SayNhlIntro.inc"
 %else
 SayNhlIntro:
 push dword 4	; 846B4
@@ -521,9 +2051,9 @@ call __CHK	; 847BF
 mov eax, str_ElsenhlInt	; 847C4
 jmp near SayClip	; 847C9
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayHighlightIntro)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayHighlightIntro)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayHighlightIntro.inc"
+%include "c/front/announcer/ShutdownSpeech.SayHighlightIntro.inc"
 %else
 SayHighlightIntro:
 push dword 48h	; 847CE
@@ -607,9 +2137,9 @@ add esp, byte 30h	; 84908
 pop ecx	; 8490B
 ret	; 8490C
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayPlayoffResult)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayPlayoffResult)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayPlayoffResult.inc"
+%include "c/front/announcer/ShutdownSpeech.SayPlayoffResult.inc"
 %else
 SayPlayoffResult:
 push dword 64h	; 8490D
@@ -708,9 +2238,9 @@ pop edi	; 84A67
 pop esi	; 84A68
 ret 8	; 84A69
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayTheGame)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayTheGame)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayTheGame.inc"
+%include "c/front/announcer/ShutdownSpeech.SayTheGame.inc"
 %else
 SayTheGame:
 push dword 4	; 84A6C
@@ -718,9 +2248,9 @@ call __CHK	; 84A71
 mov eax, str_ThegameBar	; 84A76
 jmp short SayClip	; 84A7B
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayScoringPeriod)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayScoringPeriod)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayScoringPeriod.inc"
+%include "c/front/announcer/ShutdownSpeech.SayScoringPeriod.inc"
 %else
 SayScoringPeriod:
 push dword 4	; 84A7D
@@ -743,9 +2273,9 @@ cmp eax, byte 1	; 84AA4
 jne short SayScoringPeriod_ott	; 84AA7
 mov eax, str_Scor1otpBar	; 84AA9
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayClip)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayClip)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayClip.inc"
+%include "c/front/announcer/ShutdownSpeech.SayClip.inc"
 %else
 SayClip:
 push dword 8	; 84AAE
@@ -758,9 +2288,9 @@ xor eax, eax	; 84AC8
 pop edx	; 84ACA
 ret	; 84ACB
 %endif ; C
-; C: src/c/front/speech/ShutdownSpeech.c (SayScoringPeriod_ot2)
+; C: src/c/front/announcer/ShutdownSpeech.c (SayScoringPeriod_ot2)
 %ifdef CBUILD
-%include "c/front/speech/ShutdownSpeech.SayScoringPeriod_ot2.inc"
+%include "c/front/announcer/ShutdownSpeech.SayScoringPeriod_ot2.inc"
 %else
 SayScoringPeriod_ot2:
 mov eax, str_Scor2otpBar	; 84ACC

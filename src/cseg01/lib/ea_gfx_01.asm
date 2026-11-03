@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_903F0 progbits alloc exec nowrite align=1
-extern dword_D30A4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104
+extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
 extern dword_D4108, dword_D43E4, sub_B3ABC, sub_B5E00, sub_B5F0F, sub_B608B, sub_B6217, sub_B63AC
 extern sub_B6423, sub_B65B8
-global loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512, loc_9051E
-global loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, loc_9065F, loc_90660
-global loc_9066F, loc_90681, loc_90688, loc_906B9, loc_9074B, loc_9078C, loc_907A8, loc_907C6
-global loc_907E5, loc_907F3, loc_90808, loc_90825, loc_908A9, loc_908EA, loc_90906, loc_90924
-global loc_90943, loc_90959, loc_90972, loc_9098F, sub_903F0, sub_9061C, sub_90638, sub_90698
-global sub_906DC, sub_90720, sub_9082F, sub_90838, sub_9087C, sub_9099C
+global sub_903F0, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
+global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, sub_9061C
+global sub_90638, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, sub_90698, loc_906B9
+global sub_906DC, sub_90720, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
+global loc_90808, loc_90825, sub_9082F, sub_90838, sub_9087C, loc_908A9, loc_908EA, loc_90906
+global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, sub_9099C
 sub_903F0:
 push esi	; 903F0
 push edi	; 903F1

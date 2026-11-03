@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_92DE0 progbits alloc exec nowrite align=1
 extern FreeMemBlock, sub_8D714, sub_8DBC0, sub_B3ABC, sub_B3B19, sub_B3C60, sub_B3C74
-global loc_92E7B, loc_92EC1, sub_92DE0, sub_92DF0, sub_92E00, sub_92E40, sub_92ECC, sub_92EE4
+global sub_92DE0, sub_92DF0, sub_92E00, sub_92E40, loc_92E7B, loc_92EC1, sub_92ECC, sub_92EE4
 sub_92DE0:
 push byte 1	; 92DE0
 mov edx, dword [byte esp+08h]	; 92DE2

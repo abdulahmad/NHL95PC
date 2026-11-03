@@ -3,37 +3,33 @@
 bits 32
 %include "hockey.inc"
 section s_53294 progbits alloc exec nowrite align=1
-extern Acheck, AddPenalty, AddPenalty2, AvgCline, GetHot, Ylist_m2, PBnum, PerTimeTotal, byte_E03C1, cont2team, foy
-extern SetSPA, Stop4Pen, __CHK, a2touchpuck, assexit, assinsert, assreplace
-extern pad1dev, hmshotcnt, awshotcnt, sflags, gmode2, PenBuf, iflags
-extern OOlist, collflag, dirtab, doplayeracc, gameopts, wcradiusy, sflags3
-extern bannertimer, onetimerflag, shotongoal, penshotplayer, penshotctl, penshotmode, penshotstart, shotontarget
-extern penshotlive, dword_CCC2C, dword_CCC4E, hmtmstruct, awtmstruct, puckcross_m2, puckcross
-extern dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, dword_E9A9E
-extern dword_E9AB6, puckvx, gmode, puckx, pucky, puckvy, puckz
-extern puckc, off_CD498, off_CD4A0, lastplayer, puckflip, puckvz, randomd0, CanRemovePlayer
-extern setpersonel, sfx, shotsets, vecdist, CanBlockShot, PassCompleted, changeplayer, restorepl
-extern CompLine, GetHotStick, GetHotOrStick, Goal, GiveControl, SetBoxDoorObject, PostInjuryEvent, ShotLaneOpen
-extern QuickShotChk, CountShotOnGoal, EndPenaltyShot, RemoveFromLines, imul32, sub_93470, threat, SortCords
-extern vtoa, wcradiusx, regd4, camx, camy, shotplayer, passdir
-extern passspeed, passplayer, xc1, yc1, fox, c1playernum, c2playernum, cont1team
-extern gsp, gameclock, clockticks, dirtab_y, word_CBEC2, word_CBEC6, bannermsg, ltack
-extern crowdlevel, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, blockspd
-extern blockspd_y, shotsetz, hmtmap, awtmap, pucknopuck, word_E03A0, regd2
-extern regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos, CwdExciteLvl, lasttouch
-extern lty, word_E9B28
-global Bcheck, CPgoalie, CheckBump, FallDown, Findhittype, SetShotMode, ShotMode, Sweepcheck
-global burst, check4check, checkagr, checkcheck, checkcoll, checkcx, checkgoal, checkgoalp
-global shotdiradj, checkint, checkob, checkplcoll, checkpuckcoll_ccx, checkwallcoll, chk4lc, chk4shot
-global deflect, chk4pass, dopass, doshot, holdcheck
-global checkob_ret5a, checkob_ret5
-global chk4lc_shoot
-global PassLaneChk_ret5a, PassLaneChk_ret5
-global dopass_ret6
-global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
-global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, checkpuckcoll, GetLowestPen
-global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
-global NetCollide, PuckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
+extern __CHK, a2touchpuck, Acheck, AddPenalty, AddPenalty2, assexit, assinsert, assreplace
+extern AvgCline, awshotcnt, awtmap, awtmstruct, bannermsg, bannertimer, blockspd, blockspd_y
+extern byte_E03C1, c1playernum, c2playernum, camx, camy, CanBlockShot, CanRemovePlayer, changeplayer
+extern clockticks, collflag, CompLine, cont1team, cont2team, CountShotOnGoal, crowdlevel, CwdExciteLvl
+extern dirtab, dirtab_y, doplayeracc, dword_CCC2C, dword_CCC4E, dword_E03AE, dword_E03B6, dword_E03B9
+extern dword_E03BD, dword_E9A9E, dword_E9AB6, EndPenaltyShot, fox, foy, gameclock, gameopts
+extern GetHot, GetHotOrStick, GetHotStick, GiveControl, gmode, gmode2, Goal, gsp
+extern hmshotcnt, hmtmap, hmtmstruct, iflags, imul32, lastplayer, lasttouch, ltack
+extern lty, off_CD498, off_CD4A0, onetimerflag, OOlist, OOlistpos, pad1dev, PassCompleted
+extern passdir, passplayer, passspeed, PBnum, PenBuf, penshotctl, penshotlive, penshotmode
+extern penshotplayer, penshotstart, PerTimeTotal, PostInjuryEvent, puckc, puckcross, puckcross_m2, puckflip
+extern pucknopuck, puckvx, puckvy, puckvz, puckx, pucky, puckz, QuickShotChk
+extern randomd0, regd0, regd1, regd2, regd3, regd4, RemoveFromLines, restorepl
+extern SetBoxDoorObject, setpersonel, SetSPA, sflags, sflags3, sfx, ShotLaneOpen, shotongoal
+extern shotontarget, shotplayer, shotsets, shotsetz, SortCords, Stop4Pen, sub_93470, threat
+extern vecdist, vtoa, wcradiusx, wcradiusy, word_CBEC2, word_CBEC6, word_CCBCC, word_CCBDC
+extern word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_E03A0, word_E03B8, word_E9B28, xc1
+extern yc1, Ylist, Ylist_m2
+global ToFixed, Sweepcheck, burst, BlockShotDive, TryBlockShot, check4check, checkagr, FacingBoards
+global checkcheck, checkgoalp, checkint, checkob, checkob_ret5a, checkob_ret5, SkillForAnim, ChkDelayedOffside
+global checkpuckcoll_ccx, checkpuckcoll, CheckBump, GetLowestPen, chk4lc, chk4lc_shoot, PassLaneChk, PassLaneChk_ret5a
+global PassLaneChk_ret5, ScatterPass, dopass, dopass_ret6, passmode, setpassmode, passtoa0, chk4pass
+global chk4shot, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType, NetCollide, FallDown
+global Bcheck, holdcheck, puckbody, PuckIChk, puckshadow, puckglue, puckgoalie, puckstick
+global SetShotMode, ShotMode, Findhittype, deflect, shotdiradj, doshot, newcheck, checkcoll
+global checkwallcoll, checkgoal, wallcoll, wallcollb, checkplcoll, checkcx, CPgoalie, ChkGoalies
+global ReturnGoalies, ChkPullGoalieLate
 ; C: src/c/engine/collide/ToFixed.c
 %ifdef CBUILD
 %include "c/engine/collide/ToFixed.inc"

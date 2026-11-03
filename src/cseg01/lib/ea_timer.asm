@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_8E3DC progbits alloc exec nowrite align=1
-extern __STOSD, _dos_getvect_, _dos_setvect_, asc_C3F5C, tickcount, slowtickcount, oldint8off, timercallbacks
-extern strncmp_, strncpy_, __GETDS, sub_91FA4, sub_98B30, FatalError, sub_B3454, sub_B3ABC
-extern oldint8sel
-global loc_8E42F, loc_8E440, loc_8E443, loc_8E449, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8
-global loc_8E4CB, loc_8E4D6, loc_8E4E9, loc_8E507, loc_8E511, loc_8E523, loc_8E52C, loc_8E536
-global loc_8E56A, loc_8E5A5, loc_8E5A8, sub_8E3DC, sub_8E3E4, sub_8E3F8, sub_8E40C, sub_8E424
-global sub_8E44C, TimerISR, addtimer, sub_8E4F3, RemoveTimerCallback, CountTimerCallbacks, MaskTimerKbdIrq, RestoreTimer
+extern __GETDS, __STOSD, _dos_getvect_, _dos_setvect_, asc_C3F5C, FatalError, oldint8off, oldint8sel
+extern slowtickcount, strncmp_, strncpy_, sub_91FA4, sub_98B30, sub_B3454, sub_B3ABC, tickcount
+extern timercallbacks
+global sub_8E3DC, sub_8E3E4, sub_8E3F8, sub_8E40C, sub_8E424, loc_8E42F, loc_8E440, loc_8E443
+global loc_8E449, sub_8E44C, TimerISR, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8, addtimer
+global loc_8E4CB, loc_8E4D6, loc_8E4E9, sub_8E4F3, RemoveTimerCallback, loc_8E507, loc_8E511, loc_8E523
+global CountTimerCallbacks, loc_8E52C, loc_8E536, MaskTimerKbdIrq, RestoreTimer, loc_8E56A, loc_8E5A5, loc_8E5A8
 global InstallTimer, UnmaskTimerKbdIrq, sub_8E624, sub_8E6A8, sub_8E6CC, sub_8E714, sub_8E738, sub_8E780
 sub_8E3DC:
 mov eax, dword [byte esp+04h]	; 8E3DC

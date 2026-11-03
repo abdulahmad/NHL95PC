@@ -2,21 +2,21 @@
 bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
-extern __CHK, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, joysampling, dword_C66B0, rinkbm, ovlseq
-extern bannertimer, photobankf, rinkendbank, numshpbank, photobanks, s1font, scrbrdshapes, cupseries
-extern dword_DC8A0, dword_DC8C8, dword_E0244, hilightfont, FreeMemBlock, FreeRinkGfx, joyq_flush, CrowdNoiseOff
-extern GameOver, FreeRockMusic, sub_8CCA8, sub_8DAB8, addtimer, RemoveTimerCallback, sub_8EA18, sub_91FA4
-extern FatalError, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, scrpitch
-global jpt_1B283, loc_1B1B7, loc_1B218, loc_1B225, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0
-global loc_1B2F0, loc_1B334, loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D
-global loc_1B4BC, loc_1B534, loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799
-global loc_1B80C, loc_1B84F, loc_1B856, loc_1B859, loc_1B868, loc_1B86A, loc_1B8A7, loc_1B8D0
-global loc_1B8E9, loc_1B8F9, loc_1B904, loc_1B908, loc_1B920, loc_1B926, loc_1B92B, loc_1B92C
-global loc_1B94C, loc_1B963, loc_1B972, loc_1B977, loc_1B9C4, loc_1B9E4, loc_1B9FE, loc_1BA19
-global loc_1BA34, loc_1BA54, loc_1BA7E, loc_1BA7F, loc_1BAA5, loc_1BACC, loc_1BAEC, loc_1BAED
-global loc_1BB0E, loc_1BB18, loc_1BB33, loc_1BB71, loc_1BB86, loc_1BBB3, loc_1BBB4, sub_1B0F3
-global sub_1B18B, sub_1B1C2, sub_1B1DF, sub_1B201, sub_1B2A7, sub_1B818, sub_1B82B, sub_1B871
-global sub_1B88A, sub_1B8AC, sub_1B92E, sub_1B982, sub_1BA85, sub_1BAB1, sub_1BAF3
+extern __CHK, addtimer, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, bannertimer, CrowdNoiseOff
+extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, dword_E0244, FatalError, FreeMemBlock, FreeRinkGfx
+extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
+extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, sub_8CCA8
+extern sub_8DAB8, sub_8EA18, sub_91FA4, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3
+global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
+global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
+global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
+global loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799, loc_1B80C, sub_1B818
+global sub_1B82B, loc_1B84F, loc_1B856, loc_1B859, loc_1B868, loc_1B86A, sub_1B871, sub_1B88A
+global loc_1B8A7, sub_1B8AC, loc_1B8D0, loc_1B8E9, loc_1B8F9, loc_1B904, loc_1B908, loc_1B920
+global loc_1B926, loc_1B92B, loc_1B92C, sub_1B92E, loc_1B94C, loc_1B963, loc_1B972, loc_1B977
+global sub_1B982, loc_1B9C4, loc_1B9E4, loc_1B9FE, loc_1BA19, loc_1BA34, loc_1BA54, loc_1BA7E
+global loc_1BA7F, sub_1BA85, loc_1BAA5, sub_1BAB1, loc_1BACC, loc_1BAEC, loc_1BAED, sub_1BAF3
+global loc_1BB0E, loc_1BB18, loc_1BB33, loc_1BB71, loc_1BB86, loc_1BBB3, loc_1BBB4
 sub_1B0F3:
 push dword 14h	; 1B0F3
 call __CHK	; 1B0F8

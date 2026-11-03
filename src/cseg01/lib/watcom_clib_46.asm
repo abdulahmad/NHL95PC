@@ -6,13 +6,13 @@ extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D0
 extern dword_D5448, dword_D5674, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
 extern dword_D86B0, memset_, strcpy_, strlen_, word_D4D0D, word_D8694, word_D869A, word_D86A0
 extern word_D86A6, word_D86B4, word_D86B6
-global __ccmdline_, __cenvarg_, __dospawn, __setenvp_, _splitpath2_, loc_AF6FE, loc_AF703, loc_AF711
-global loc_AF716, loc_AF71F, loc_AF752, loc_AF761, loc_AF772, loc_AF797, loc_AF79E, loc_AF7A8
-global loc_AF7B4, loc_AF7CD, loc_AF7D7, loc_AF7E4, loc_AF7E9, loc_AF7FC, loc_AF843, loc_AF84D
-global loc_AF86E, loc_AF879, loc_AF87E, loc_AF891, loc_AF89D, loc_AF8A2, loc_AF8AC, loc_AF8B2
-global loc_AF8DA, loc_AF8E8, loc_AF8FD, loc_AF90A, loc_AF927, loc_AF931, loc_AF9BD, loc_AF9BF
-global loc_AF9FE, loc_AFA1E, loc_AFA31, loc_AFA7A, loc_AFA7F, loc_AFA89, loc_AFA8D, loc_AFA8F
-global loc_AFA9E, loc_AFAA7, loc_AFAAB, loc_AFABC, pcopy_, stpcpy_
+global __setenvp_, loc_AF6FE, loc_AF703, loc_AF711, loc_AF716, loc_AF71F, loc_AF752, loc_AF761
+global loc_AF772, loc_AF797, loc_AF79E, stpcpy_, loc_AF7A8, loc_AF7B4, __cenvarg_, loc_AF7CD
+global loc_AF7D7, loc_AF7E4, loc_AF7E9, loc_AF7FC, loc_AF843, loc_AF84D, loc_AF86E, loc_AF879
+global loc_AF87E, loc_AF891, loc_AF89D, loc_AF8A2, loc_AF8AC, loc_AF8B2, loc_AF8DA, loc_AF8E8
+global __ccmdline_, loc_AF8FD, loc_AF90A, loc_AF927, loc_AF931, __dospawn, loc_AF9BD, loc_AF9BF
+global loc_AF9FE, pcopy_, loc_AFA1E, loc_AFA31, _splitpath2_, loc_AFA7A, loc_AFA7F, loc_AFA89
+global loc_AFA8D, loc_AFA8F, loc_AFA9E, loc_AFAA7, loc_AFAAB, loc_AFABC
 __setenvp_:
 push ebx	; AF6D3
 push ecx	; AF6D4

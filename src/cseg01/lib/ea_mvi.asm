@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_96440 progbits alloc exec nowrite align=1
-extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, dword_D30A4, cliprect_x0
-extern cliprect_y0, cliprect_x1, cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock, sub_8CC70
-extern sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, DebugPrintf, sub_B3A88
+extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, cliprect_x0, cliprect_x1
+extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
+extern sub_8CC70, sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
 extern sub_B3AA1, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
 extern sub_B4F8C, sub_B5E00, sub_B6DF7
-global loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D, loc_965A4
-global loc_965CB, loc_965D4, loc_967AE, loc_967C3, loc_9687D, loc_968A8, loc_968CD, loc_968D4
-global loc_96915, loc_96988, loc_9699E, loc_969C4, loc_969D4, loc_96A0D, loc_96A29, sub_96440
-global sub_965DC, sub_96690, sub_966E4, sub_96844, sub_96A10, sub_96A38
+global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
+global loc_965A4, loc_965CB, loc_965D4, sub_965DC, sub_96690, sub_966E4, loc_967AE, loc_967C3
+global sub_96844, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
+global loc_969C4, loc_969D4, loc_96A0D, sub_96A10, loc_96A29, sub_96A38
 sub_96440:
 push esi	; 96440
 push edi	; 96441

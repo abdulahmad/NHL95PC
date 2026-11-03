@@ -3,28 +3,26 @@
 bits 32
 %include "hockey.inc"
 section s_69336 progbits alloc exec nowrite align=1
-extern DoGameFrame, ResetBench, __CHK, assreplace, sflags, gmode2, musicon, bgscrollx, scrollx
-extern iflags, icingPlayer, joysampling, inputframes, escrequest, demomode, gameopts, hudclockmin
-extern hudclocksec, hudclockhund, rinkscrollx, rinkscrolly, yleader, sflags3, cont2team, HomeTeam
-extern bannertimer, lastsfx, crowdsmooth, dword_CCC98, dword_CD9A0, spritedrawcount, dword_D8C72, viewscrolly
-extern hudhundaccum, dword_D8C7A, viewscrollx, curperiod, hudhundstep, rinkwtiles, rinkhtiles, bgscrolly
-extern hmtmstruct, dword_DF646, dword_DF648, awtmstruct, dword_DF748, puckstruct
-extern dword_E0244, dword_E9A9E, forcepldata, gmode, FreeMemBlock, puckx, pucky, puckc
-extern camx_m2, randomd0, reenergizeteam, resetplstuff, setpersonel, SetScreenSize, ResetInputSampling, RunGameFrames
-extern FadePalette, LoadPlayerPhotos, UpdateHudPanel, DrawHudPanel, sub_1BAF3, LoadGameTeams, LoadRink, SetRinkScroll
-extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, ReadJoy1, ReadJoy2, Crowd_Noise, CrowdFadeOut, StopDigiSample
-extern PaHighlightIntro, PaOpenBank, restoreteams, DrawRinkOverlays, setupice, SprSortVert, SprSort, Intermission
-extern FlushGSumQueue, ClearPenaltyBuffer, LoadTeamPalette, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, SpeechBusy
-extern MusicChanReset2, sub_8F633, sub_8FFB0, TicksSinceLastCall, awlinetab, hmlinetab, savepal, gamepal
-extern SortCords, vtoa, camx, camy, passplayer, xc1, yc1
-extern c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, refsignal, RefStep, RefPen
-extern word_C90D8, gsp, gameclock, clockticks, word_CBC44, exitgame, gameover, energywarn
-extern lcblink, lcline, lcboxon, ovltimer
-extern fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep, crowdlevel, scrolly, hmscore
-extern hmtmline, word_DF644, hmtmap, hmtmgoalie, awscore, awtmline, word_DF744, word_DF746
-extern awtmap, awtmgoalie, word_DF816, word_DF81A
-extern word_E0022, word_E0028, word_E002A
-extern regd1, joysampling_save, CwdExciteLvl
+extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtmstruct
+extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
+extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
+extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, dword_CCC98
+extern dword_CD9A0, dword_D8C72, dword_D8C7A, dword_DF646, dword_DF648, dword_DF748, dword_E0244, dword_E9A9E
+extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
+extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
+extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
+extern hudclockmin, hudclocksec, hudhundaccum, hudhundstep, icingPlayer, iflags, inputframes, Intermission
+extern joyq_flush, joysampling, joysampling_save, lastsfx, lcblink, lcboxon, lcline, LoadGameTeams
+extern LoadPlayerPhotos, LoadRink, LoadTeamPalette, MusicChanReset2, musicon, ovlseq, ovlstep, ovltimer
+extern PaHighlightIntro, PaOpenBank, passplayer, Pencntdwn, puckc, puckstruct, puckx, pucky
+extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep, regd1
+extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
+extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
+extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
+extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
+extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, word_C90D8, word_CBC44
+extern word_CBEC6, word_DF644, word_DF744, word_DF746, word_DF816, word_DF81A, word_E0022, word_E0028
+extern word_E002A, xc1, yc1, yleader
 global StartHL2
 ; C: src/c/engine/frame/StartHL2.c
 %ifdef CBUILD

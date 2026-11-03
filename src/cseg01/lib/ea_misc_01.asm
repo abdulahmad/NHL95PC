@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_9B498 progbits alloc exec nowrite align=1
 extern dword_D30C8, sub_90D20, sub_B5DB0, sub_B704C, unk_9B470
-global loc_9B4B9, loc_9B544, loc_9B565, loc_9B589, loc_9B58C, loc_9B5A9, loc_9B5AC, loc_9B5C9
-global loc_9B5E1, loc_9B61A, loc_9B632, loc_9B66B, loc_9B67E, loc_9B6B3, loc_9B6C6, loc_9B6F7
-global loc_9B706, sub_9B498
+global sub_9B498, loc_9B4B9, loc_9B544, loc_9B565, loc_9B589, loc_9B58C, loc_9B5A9, loc_9B5AC
+global loc_9B5C9, loc_9B5E1, loc_9B61A, loc_9B632, loc_9B66B, loc_9B67E, loc_9B6B3, loc_9B6C6
+global loc_9B6F7, loc_9B706
 sub_9B498:
 push esi	; 9B498
 push edi	; 9B499

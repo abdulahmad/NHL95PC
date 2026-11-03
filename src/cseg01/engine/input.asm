@@ -1,23 +1,34 @@
-; What the pads do during a game: skating and shooting input, the faceoff drop,
-; line changes, and the timer queue that records buttons between frames.
+; What the pads do during a game: the timer queue that records buttons between frames, skating,
+; passing and shooting input, line changes, the one-timer and receiving a pass (95G engine/input95).
 bits 32
 %include "hockey.inc"
 section s_4FCE8 progbits alloc exec nowrite align=1
-extern SetLCmode, SetSPA, SetShotMode, ShotMode, __CHK, burst, sflags, gmode2
-extern lchoicetab, puckasslist, checkob, doplayeracc, joysampling, joyqhead, joyqcount, joyqtick
-extern joyrec, gameopts, cont2team, introskipped, onetimerflag, penshotmode
-extern penshotlive, dword_CCC9C, puckcross_m2, dword_E9A9E, gmode, lcreqchoice, puckstruct
-extern RequestLineChange, puckx, pucky, puckvy, puckc, setpassmode, setpersonel, vecdist
-extern DrawPanelLine, BlockShotDive, passmode, changeplayer, restorepl, MouseSetPos, joyqueue, SortCords
-extern vtoa, shotplayer, passdir, passplayer, fodir1, fodir2, c1playernum
-extern c2playernum, cont1team, lcblink, lcblinktime, lcsel, word_CBC60, lcline
-extern lctimer, lcboxon, linenext, pucktemp1, lcrequest, regd2, regd3, regd0
-extern regd1, joysampling_save, lj2, lj1
-global Acheck, doinput
-global CanBlockShot_ret6, CanBlockShot_ret5
-global Readjoy_tail, joyq_pop, joyq_flush, joyq_peek, lineinput
-global faceoffinput, CanBlockShot, OppInReach, Holdplayer, lcselect, getlchoice, lcfound, ReadJoy1
-global ReadJoy2, CenterMouse
+extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
+extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, byte_CCBBA
+extern byte_CCBBB, byte_E0393, byte_E0397, c1playernum, c2playernum, camx, camy, changeplayer
+extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
+extern donothing, doplayeracc, doshot, DrawPanelLine, dword_CC0EC, dword_CC0FA, dword_CCC9C, dword_E0244
+extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
+extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts
+extern gmode, gmode2, gsp, hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline
+extern hmtmpdst, hmtmstruct, iflags, introskipped, joyqcount, joyqhead, joyqtick, joyqueue
+extern joyrec, joysampling, joysampling_save, lcblink, lcblinktime, lcboxon, lchoicetab, lcline
+extern lcreqchoice, lcrequest, lcsel, lctimer, linenext, lj1, lj2, ltx
+extern lty, MouseSetPos, onetimerflag, ovlseq, ovlstep, ovltimer, PaSpeechBusy, passdir
+extern passmode, passplayer, passspeed, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam
+extern PerTimeTotal, puckasslist, puckc, puckcross, puckcross_m2, puckstruct, pucktemp1, puckvx
+extern puckvy, puckvz, puckx, pucky, puckz, randomd0, RefPen, refsignal
+extern RefStep, regd0, regd1, regd2, regd3, regd4, RequestLineChange, ResetBench
+extern resetplstuff, restorepl, ReturnGoalies, SetExitGame, SetLCmode, setpassmode, setpersonel, Setplass
+extern setplayer, SetShotMode, SetSPA, SetupPenaltyShot, sflags, sflags3, sfx, ShotMode
+extern shotplayer, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15, SprSort, SprSortVert
+extern StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3, textline4, textline5
+extern threat, updateanim, vecdist, vtoa, word_C90D8, word_CBC44, word_CBC60, word_CBE8C
+extern word_CBE8E, word_CBEC6, word_E0392, word_E0394, word_E0396, word_E0398, word_E039A, word_E9AAE
+extern xc1, yc1, yleader
+global joyq_pop, joyq_flush, joyq_peek, lineinput, faceoffinput, Acheck, CanBlockShot, CanBlockShot_ret6
+global CanBlockShot_ret5, OppInReach, Holdplayer, lcselect, doinput, getlchoice, lcfound, ReadJoy1
+global Readjoy_tail, ReadJoy2, CenterMouse, PassCompleted, assonetimer, OneTimerChk, asspassrec, SetPenaltyStrength
 ; Input queue. The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
 ; into joyqueue (50 records of 3 bytes) while joysampling is set. The main loop takes the
 ; frame's record with joyq_peek (-> joyrec, read by ReadJoy1/ReadJoy2) and drops it with joyq_pop.
@@ -1315,4 +1326,528 @@ pop edx	; 50AFA
 pop ecx	; 50AFB
 pop ebx	; 50AFC
 ret	; 50AFD
+%endif ; C
+; C: src/c/engine/input/PassCompleted.c
+%ifdef CBUILD
+%include "c/engine/input/PassCompleted.inc"
+%else
+PassCompleted:
+push dword 0Ch	; 50AFE
+call __CHK	; 50B03
+push ebx	; 50B08
+push edx	; 50B09
+cmp word [passplayer], byte 0	; 50B0A
+jl short .1	; 50B12
+cmp word [byte eax+06Ah], byte 6	; 50B14
+setl dl	; 50B19
+mov ebx, edx	; 50B1C
+and ebx, 0FFh	; 50B1E
+cmp word [passplayer], byte 6	; 50B24
+setl dl	; 50B2C
+and edx, 0FFh	; 50B2F
+cmp edx, ebx	; 50B35
+jne short .1	; 50B37
+test byte [gmode], 10h	; 50B39
+jne short .1	; 50B40
+mov eax, dword [byte eax+06Ch]	; 50B42
+inc word [byte eax+028h]	; 50B45
+.1:
+mov word [passplayer], 0FFFFh	; 50B49
+pop edx	; 50B52
+pop ebx	; 50B53
+ret	; 50B54
+%endif ; C
+assonetimer:
+push dword 18h	; 50B55
+call __CHK	; 50B5A
+push ebx	; 50B5F
+push ecx	; 50B60
+push edx	; 50B61
+push esi	; 50B62
+push edi	; 50B63
+mov ebx, eax	; 50B64
+mov eax, dword [puckc]	; 50B66
+cmp byte [eax], 0	; 50B6B
+jge short .1	; 50B6E
+mov eax, dword [byte ebx+024h]	; 50B70
+sar eax, 18h	; 50B73
+cmp eax, byte 0FFFFFFE7h	; 50B76
+jge short .3	; 50B79
+.1:
+mov eax, dword [puckc]	; 50B7B
+movsx ax, byte [eax]	; 50B80
+cmp ax, word [byte ebx+SCnum]	; 50B84
+jne short .2	; 50B88
+mov eax, ebx	; 50B8A
+call PassCompleted	; 50B8C
+.2:
+mov word [passplayer], 0FFFFh	; 50B91
+and byte [byte ebx+pflags], 0FEh	; 50B9A
+mov eax, ebx	; 50B9E
+call assexit	; 50BA0
+xor edi, edi	; 50BA5
+mov dword [onetimerflag], edi	; 50BA7
+jmp near CanBlockShot_ret5	; 50BAD
+.3:
+cmp dword [onetimerflag], byte 0	; 50BB2
+je near CanBlockShot_ret5	; 50BB9
+mov dx, word [byte ebx+SPA]	; 50BBF
+cmp dx, 0DD3h	; 50BC3
+je short .4	; 50BC8
+cmp dx, 0E2Bh	; 50BCA
+jne near .16	; 50BCF
+.4:
+cmp word [byte ebx+SPAnum], byte 2	; 50BD5
+jg short .8	; 50BDA
+mov ch, byte [regd1]	; 50BDC
+test ch, 10h	; 50BE2
+jne short .5	; 50BE5
+test ch, 40h	; 50BE7
+je short .8	; 50BEA
+.5:
+and byte [sflags], 0F7h	; 50BEC
+or byte [byte ebx+pflags], 20h	; 50BF3
+cmp word [byte ebx+SPA], 0DD3h	; 50BF7
+jne short .6	; 50BFD
+mov word [byte ebx+SPA], 1355h	; 50BFF
+jmp short .7	; 50C05
+.6:
+mov word [byte ebx+SPA], 138Dh	; 50C07
+.7:
+xor ecx, ecx	; 50C0D
+mov dword [onetimerflag], ecx	; 50C0F
+.8:
+mov word [byte ebx+03Eh], 5	; 50C15
+mov ax, word [byte ebx+facedir]	; 50C1B
+xor ah, ah	; 50C1F
+and al, 7	; 50C21
+mov word [regd0], ax	; 50C23
+test byte [byte ebx+055h], 8	; 50C29
+je short .9	; 50C2D
+mov eax, 8	; 50C2F
+sub ax, word [regd0]	; 50C34
+xor ah, ah	; 50C3B
+and al, 7	; 50C3D
+mov word [regd0], ax	; 50C3F
+.9:
+mov eax, dword [regd0-2]	; 50C45
+sar eax, 10h	; 50C4A
+movsx dx, byte [nosplit eax*2+byte_CCBBB]	; 50C4D
+mov word [regd1], dx	; 50C56
+movsx ax, byte [nosplit eax*2+byte_CCBBA]	; 50C5D
+mov word [regd0], ax	; 50C66
+test byte [byte ebx+055h], 8	; 50C6C
+je short .10	; 50C70
+mov ecx, eax	; 50C72
+neg ecx	; 50C74
+mov word [regd0], cx	; 50C76
+.10:
+mov dx, word [byte ebx+Xpos+2]	; 50C7D
+add dx, word [regd0]	; 50C81
+mov eax, dword [puckx]	; 50C88
+sub dx, word [eax]	; 50C8D
+movsx edx, dx	; 50C90
+mov ax, word [byte ebx+Ypos+2]	; 50C93
+mov cx, word [regd1]	; 50C97
+add ecx, eax	; 50C9E
+mov eax, dword [pucky]	; 50CA0
+mov si, word [eax]	; 50CA5
+mov eax, ecx	; 50CA8
+sub eax, esi	; 50CAA
+cwde	; 50CAC
+imul edx, edx	; 50CAD
+imul eax, eax	; 50CB0
+add edx, eax	; 50CB3
+cmp word [byte ebx+SPAnum], byte 0	; 50CB5
+jne short .11	; 50CBA
+mov eax, dword [byte ebx+024h]	; 50CBC
+sar eax, 18h	; 50CBF
+cmp eax, byte 0FFFFFFFCh	; 50CC2
+jl short .12	; 50CC5
+cmp edx, 190h	; 50CC7
+jl short .12	; 50CCD
+.11:
+cmp word [byte ebx+SPAnum], byte 2	; 50CCF
+jne short .13	; 50CD4
+cmp edx, 100h	; 50CD6
+jge short .13	; 50CDC
+.12:
+mov word [byte ebx+SPAcnt], 0	; 50CDE
+mov eax, ebx	; 50CE4
+call updateanim	; 50CE6
+.13:
+cmp edx, byte 64h	; 50CEB
+jle short .14	; 50CEE
+cmp edx, 90h	; 50CF0
+jg near CanBlockShot_ret5	; 50CF6
+mov eax, dword [byte ebx+024h]	; 50CFC
+sar eax, 18h	; 50CFF
+cmp eax, byte 0FFFFFFF6h	; 50D02
+jge near CanBlockShot_ret5	; 50D05
+.14:
+cmp word [passdir], byte 8	; 50D0B
+jle short .15	; 50D13
+mov word [passdir], 8	; 50D15
+.15:
+xor edx, edx	; 50D1E
+mov dl, byte [byte ebx+05Bh]	; 50D20
+mov eax, edx	; 50D23
+sar edx, 1Fh	; 50D25
+LD sub, eax, edx	; 50D28
+sar eax, 1	; 50D2A
+add eax, byte 1Eh	; 50D2C
+mov word [passspeed], ax	; 50D2F
+mov word [byte ebx+SPAnum], 4	; 50D35
+mov word [byte ebx+SPAcnt], 4	; 50D3B
+mov byte [byte ebx+046h], 0	; 50D41
+mov eax, ebx	; 50D45
+call updateanim	; 50D47
+mov eax, dword [byte ebx+06Ch]	; 50D4C
+inc word [byte eax+018h]	; 50D4F
+add word [crowdlevel], byte 64h	; 50D53
+mov eax, ebx	; 50D5B
+call a2touchpuck	; 50D5D
+mov eax, ebx	; 50D62
+call doshot	; 50D64
+mov eax, ebx	; 50D69
+call PassCompleted	; 50D6B
+and byte [byte ebx+pflags], 0FEh	; 50D70
+mov eax, ebx	; 50D74
+call assexit	; 50D76
+xor esi, esi	; 50D7B
+mov dword [onetimerflag], esi	; 50D7D
+jmp near CanBlockShot_ret5	; 50D83
+.16:
+cmp byte [byte ebx+027h], 16h	; 50D88
+jg near CanBlockShot_ret5	; 50D8C
+cmp eax, byte 0FFFFFFF6h	; 50D92
+jl near CanBlockShot_ret5	; 50D95
+mov cl, byte [byte ebx+pflags]	; 50D9B
+test cl, 8	; 50D9E
+jne short .18	; 50DA1
+test cl, 80h	; 50DA3
+je short .17	; 50DA6
+cmp word [byte ebx+Ypos+2], byte 46h	; 50DA8
+jl near CanBlockShot_ret5	; 50DAD
+.17:
+test byte [byte ebx+pflags], 80h	; 50DB3
+jne short .18	; 50DB7
+mov eax, dword [byte ebx+Ypos]	; 50DB9
+sar eax, 10h	; 50DBC
+cmp eax, byte 0FFFFFFBAh	; 50DBF
+jg near CanBlockShot_ret5	; 50DC2
+.18:
+mov eax, dword [byte ebx+06Ch]	; 50DC8
+inc word [byte eax+016h]	; 50DCB
+movsx ax, byte [byte ebx+027h]	; 50DCF
+add eax, 0Ah	; 50DD4
+shl eax, 4	; 50DD9
+cwde	; 50DDC
+mov edx, dword [puckvx]	; 50DDD
+movsx edx, word [edx]	; 50DE3
+imul edx, eax	; 50DE6
+sar edx, 10h	; 50DE9
+mov ecx, dword [puckx]	; 50DEC
+add dx, word [ecx]	; 50DF2
+neg edx	; 50DF5
+mov ecx, dword [puckvy]	; 50DF7
+movsx ecx, word [ecx]	; 50DFD
+imul eax, ecx	; 50E00
+sar eax, 10h	; 50E03
+test byte [byte ebx+pflags], 80h	; 50E06
+je short .19	; 50E0A
+mov ecx, 0E8h	; 50E0C
+jmp short .20	; 50E11
+.19:
+mov ecx, 0FFFFFF18h	; 50E13
+.20:
+mov esi, dword [pucky]	; 50E18
+movsx esi, word [esi]	; 50E1E
+cwde	; 50E21
+add eax, esi	; 50E22
+sub ecx, eax	; 50E24
+movsx eax, cx	; 50E26
+movsx ecx, dx	; 50E29
+mov edx, eax	; 50E2C
+mov eax, ecx	; 50E2E
+call vtoa	; 50E30
+movsx edx, ax	; 50E35
+mov eax, ebx	; 50E38
+call Findhittype	; 50E3A
+test ax, ax	; 50E3F
+je short .21	; 50E42
+mov edx, 0E2Bh	; 50E44
+jmp short .22	; 50E49
+.21:
+mov edx, 0DD3h	; 50E4B
+.22:
+mov eax, ebx	; 50E50
+call SetSPA	; 50E52
+jmp near CanBlockShot_ret5	; 50E57
+; C: src/c/engine/input/OneTimerChk.c
+%ifdef CBUILD
+%include "c/engine/input/OneTimerChk.inc"
+%else
+OneTimerChk:
+push dword 10h	; 50E5C
+call __CHK	; 50E61
+push ebx	; 50E66
+push ecx	; 50E67
+push edx	; 50E68
+mov ebx, eax	; 50E69
+cmp word [byte eax+Ypos+2], byte 0	; 50E6B
+jge short .1	; 50E70
+mov eax, dword [byte eax+Ypos]	; 50E72
+sar eax, 10h	; 50E75
+neg eax	; 50E78
+jmp short .2	; 50E7A
+.1:
+mov eax, dword [byte eax+Ypos]	; 50E7C
+sar eax, 10h	; 50E7F
+.2:
+cmp eax, byte 4Eh	; 50E82
+jle near .12	; 50E85
+cmp eax, 0DEh	; 50E8B
+jge near .12	; 50E90
+cmp word [byte ebx+Ypos+2], byte 0	; 50E96
+setl al	; 50E9B
+and eax, 0FFh	; 50E9E
+test byte [byte ebx+pflags], 80h	; 50EA3
+setne dl	; 50EA7
+and edx, 0FFh	; 50EAA
+xor eax, edx	; 50EB0
+je near .12	; 50EB2
+mov eax, dword [byte ebx+070h]	; 50EB8
+cmp word [byte eax+tmgoalie], byte 0	; 50EBB
+jl near .12	; 50EC0
+cmp word [byte ebx+SCnum], byte 6	; 50EC6
+jge short .3	; 50ECB
+mov eax, 6	; 50ECD
+jmp short .4	; 50ED2
+.3:
+xor eax, eax	; 50ED4
+.4:
+shl eax, 7	; 50ED6
+add eax, SortCords	; 50ED9
+xor edx, edx	; 50EDE
+.5:
+cmp word [byte eax+position], byte 0	; 50EE0
+je short .6	; 50EE5
+inc edx	; 50EE7
+add eax, 80h	; 50EE8
+cmp edx, byte 6	; 50EED
+jl short OneTimerChk.5	; 50EF0
+.6:
+mov edx, 3	; 50EF2
+mov ecx, dword [ebx]	; 50EF7
+sar ecx, 10h	; 50EF9
+mov ebx, dword [eax]	; 50EFC
+sar ebx, 10h	; 50EFE
+xor ecx, ebx	; 50F01
+je short .11	; 50F03
+cmp word [byte eax+Xpos+2], byte 0	; 50F05
+jge short .7	; 50F0A
+mov eax, ebx	; 50F0C
+neg eax	; 50F0E
+jmp short .8	; 50F10
+.7:
+mov eax, ebx	; 50F12
+.8:
+cmp eax, byte 0Ch	; 50F14
+jle short .10	; 50F17
+.9:
+mov eax, 1	; 50F19
+pop edx	; 50F1E
+pop ecx	; 50F1F
+pop ebx	; 50F20
+ret	; 50F21
+.10:
+cmp eax, byte 6	; 50F22
+jle short .11	; 50F25
+mov edx, 2	; 50F27
+.11:
+movsx eax, dx	; 50F2C
+call randomd0	; 50F2F
+test ax, ax	; 50F34
+je short OneTimerChk.9	; 50F37
+.12:
+xor eax, eax	; 50F39
+pop edx	; 50F3B
+pop ecx	; 50F3C
+pop ebx	; 50F3D
+ret	; 50F3E
+%endif ; C
+; asspassrec: (asstab 13h, catching a pass). skatetopuck toward the pass; PC adds the
+; one-timer (assonetimer, OneTimerChk) and the pass statistics (PassCompleted).
+; C: src/c/engine/input/CanBlockShot.c (asspassrec)
+%ifdef CBUILD
+%include "c/engine/input/CanBlockShot.asspassrec.inc"
+%else
+asspassrec:
+push dword 18h	; 50F3F
+call __CHK	; 50F44
+push ebx	; 50F49
+push ecx	; 50F4A
+push edx	; 50F4B
+push esi	; 50F4C
+push edi	; 50F4D
+mov edx, eax	; 50F4E
+test byte [byte eax+044h], 20h	; 50F50
+jne near CanBlockShot_ret5	; 50F54
+test byte [gmode], 1	; 50F5A
+je short .1	; 50F61
+xor edi, edi	; 50F63
+mov dword [onetimerflag], edi	; 50F65
+mov eax, edx	; 50F6B
+call assexit	; 50F6D
+mov eax, edx	; 50F72
+call donothing	; 50F74
+jmp near CanBlockShot_ret5	; 50F79
+.1:
+dec byte [byte edx+027h]	; 50F7E
+mov cl, byte [byte edx+pflags]	; 50F81
+test cl, 8	; 50F84
+je short .3	; 50F87
+.2:
+mov eax, edx	; 50F89
+call assonetimer	; 50F8B
+jmp near CanBlockShot_ret5	; 50F90
+.3:
+test cl, 2	; 50F95
+je short .4	; 50F98
+mov al, cl	; 50F9A
+and al, 0FCh	; 50F9C
+mov ah, al	; 50F9E
+or ah, 1	; 50FA0
+mov byte [byte edx+pflags], ah	; 50FA3
+mov word [byte edx+temp2], 8	; 50FA6
+test byte [byte edx+pflags], 40h	; 50FAC
+setne al	; 50FB0
+xor ah, ah	; 50FB3
+inc eax	; 50FB5
+mov word [regd0], ax	; 50FB6
+mov eax, dword [puckc]	; 50FBC
+cmp byte [eax], 0	; 50FC1
+jge short .4	; 50FC4
+mov ax, word [cont1team]	; 50FC6
+mov bx, word [regd0]	; 50FCC
+cmp ax, bx	; 50FD3
+je short .4	; 50FD6
+cmp bx, word [cont2team]	; 50FD8
+je short .4	; 50FDF
+mov eax, edx	; 50FE1
+call OneTimerChk	; 50FE3
+test eax, eax	; 50FE8
+je short .4	; 50FEA
+mov dword [onetimerflag], 1	; 50FEC
+.4:
+cmp dword [onetimerflag], byte 0	; 50FF6
+je short .5	; 50FFD
+and byte [regd1], 0AFh	; 50FFF
+jmp short asspassrec.2	; 51006
+.5:
+mov eax, dword [puckc]	; 51008
+cmp byte [eax], 0	; 5100D
+jge short .11	; 51010
+mov eax, dword [puckvx]	; 51012
+mov si, word [eax]	; 51017
+test si, si	; 5101A
+jge short .6	; 5101D
+movsx eax, si	; 5101F
+neg eax	; 51022
+jmp short .7	; 51024
+.6:
+movsx eax, si	; 51026
+.7:
+cmp eax, 168h	; 51029
+jge short .10	; 5102E
+mov eax, dword [puckvy]	; 51030
+mov di, word [eax]	; 51035
+test di, di	; 51038
+jge short .8	; 5103B
+movsx eax, di	; 5103D
+neg eax	; 51040
+jmp short .9	; 51042
+.8:
+movsx eax, di	; 51044
+.9:
+cmp eax, 168h	; 51047
+jge short .10	; 5104C
+mov eax, edx	; 5104E
+call skatetopuck	; 51050
+.10:
+mov eax, dword [byte edx+024h]	; 51055
+sar eax, 18h	; 51058
+cmp eax, byte 0FFFFFFFBh	; 5105B
+jge near CanBlockShot_ret5	; 5105E
+.11:
+and byte [byte edx+pflags], 0FEh	; 51064
+mov eax, edx	; 51068
+call assexit	; 5106A
+xor esi, esi	; 5106F
+mov dword [onetimerflag], esi	; 51071
+mov eax, dword [puckc]	; 51077
+movsx bx, byte [eax]	; 5107C
+cmp bx, word [byte edx+SCnum]	; 51080
+jne short .12	; 51084
+mov eax, edx	; 51086
+call PassCompleted	; 51088
+jmp near CanBlockShot_ret5	; 5108D
+.12:
+cmp byte [eax], 0	; 51092
+jl near CanBlockShot_ret5	; 51095
+mov word [passplayer], 0FFFFh	; 5109B
+jmp near CanBlockShot_ret5	; 510A4
+%endif ; C
+; SetPenaltyStrength: Each penalized roster player (tmpdst > 0) removes one skater slot (from slot 5
+; down): position -1, temp5 -100; tmap = skaters left.
+; C: src/c/engine/input/SetPenaltyStrength.c
+%ifdef CBUILD
+%include "c/engine/input/SetPenaltyStrength.inc"
+%else
+SetPenaltyStrength:
+push dword 14h	; 510A9
+call __CHK	; 510AE
+push ebx	; 510B3
+push edx	; 510B4
+push esi	; 510B5
+push edi	; 510B6
+xor esi, esi	; 510B7
+mov edi, hmtmstruct	; 510B9
+jmp short .5	; 510BE
+.1:
+mov edx, 6	; 510C0
+mov ebx, 1Bh	; 510C5
+jmp short .4	; 510CA
+.2:
+mov eax, ebx	; 510CC
+cmp word [byte edi+eax*2+07Eh], byte 0	; 510CE
+jle short .3	; 510D4
+cmp edx, byte 4	; 510D6
+jle short .3	; 510D9
+mov eax, esi	; 510DB
+shl eax, 2	; 510DD
+sub eax, esi	; 510E0
+add eax, eax	; 510E2
+dec edx	; 510E4
+add eax, edx	; 510E5
+shl eax, 7	; 510E7
+mov word [dword eax+SortCords+1Ah], 0FFFFh	; 510EA
+mov word [dword eax+SortCords+2Eh], 0FF9Ch	; 510F3
+.3:
+dec ebx	; 510FC
+.4:
+test ebx, ebx	; 510FD
+jge short SetPenaltyStrength.2	; 510FF
+mov word [byte edi+036h], dx	; 51101
+mov edi, awtmstruct	; 51105
+inc esi	; 5110A
+.5:
+cmp esi, byte 2	; 5110B
+jl short SetPenaltyStrength.1	; 5110E
+pop edi	; 51110
+pop esi	; 51111
+pop edx	; 51112
+pop ebx	; 51113
+ret	; 51114
 %endif ; C

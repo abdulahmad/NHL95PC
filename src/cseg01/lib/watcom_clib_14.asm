@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_91984 progbits alloc exec nowrite align=1
-extern __ExpandDGROUP_, __MemAllocator, __MemFree, __allocfp_, __chktty_, __doclose_, __freefp_, __set_errno_
+extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAllocator, __MemFree, __set_errno_
 extern byte_F24C5, dword_D43E8, dword_D43EC, dword_D43F0, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
 extern sopen_, sub_9AFAD, tolower_
-global __doopen_, __open_flags_, _fsopen_, _nfree_, _nmalloc_, close_file_, fopen_, loc_9199D
-global loc_919A4, loc_919B7, loc_919C3, loc_919D5, loc_919E3, loc_919E7, loc_91A18, loc_91A1B
-global loc_91A30, loc_91A45, loc_91A4E, loc_91A58, loc_91A75, loc_91A7D, loc_91A80, loc_91A87
-global loc_91AB8, loc_91B11, loc_91B38, loc_91B3A, loc_91B3E, loc_91B57, loc_91B63, loc_91B6F
-global loc_91B71, loc_91B7D, loc_91B86, loc_91B89, loc_91B8B, loc_91BC7, loc_91BD2, loc_91BD5
-global loc_91BD9, loc_91BF1, loc_91BF3, loc_91BFE, loc_91C01, loc_91C06, loc_91C26, loc_91C4E
-global loc_91C72, loc_91C89, loc_91CA6, loc_91CAC, loc_91CB0, loc_91CB5, loc_91CD3, loc_91CD7
-global strlen_
+global _nmalloc_, loc_9199D, loc_919A4, loc_919B7, loc_919C3, loc_919D5, loc_919E3, loc_919E7
+global loc_91A18, loc_91A1B, loc_91A30, loc_91A45, loc_91A4E, loc_91A58, _nfree_, loc_91A75
+global loc_91A7D, loc_91A80, loc_91A87, loc_91AB8, strlen_, __open_flags_, loc_91B11, loc_91B38
+global loc_91B3A, loc_91B3E, loc_91B57, loc_91B63, loc_91B6F, loc_91B71, loc_91B7D, loc_91B86
+global loc_91B89, loc_91B8B, __doopen_, loc_91BC7, loc_91BD2, loc_91BD5, loc_91BD9, loc_91BF1
+global loc_91BF3, loc_91BFE, loc_91C01, loc_91C06, loc_91C26, loc_91C4E, _fsopen_, loc_91C72
+global fopen_, close_file_, loc_91C89, loc_91CA6, loc_91CAC, loc_91CB0, loc_91CB5, loc_91CD3
+global loc_91CD7
 _nmalloc_:
 push ebx	; 91984
 push ecx	; 91985

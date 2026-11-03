@@ -3,15 +3,14 @@
 bits 32
 %include "hockey.inc"
 section s_8BEDB progbits alloc exec nowrite align=1
-extern seed, __CHK, musicon, vtoa_dt, screenbm, songdata, rinkbm, musicslot
-extern musichandle, vgapage, AnyInputPressed, ReadBE32, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
+extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks, musichandle, musicon
+extern musicslot, ReadBE32, rinkbm, saved_ss, screenbm, scrollx, scrolly, scrpitch
+extern seed, SetDrawBitmap, SetTickDeadline, songdata, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, WaitClickTimeout, ClearInputQueue, sub_8FB8E, sub_8FC8A, sub_8FCDF
-extern sub_90D20, sub_910E0, GetTicks, SetTickDeadline, TickDeadlinePassed, sub_B4B88, sub_B4BA8, SetDrawBitmap
-extern scrpitch, saved_ss, scrolly, scrollx, bgscrollx, bgscrolly8
-global SelectScreenBM_set
-global randomd0, PlayMVI, stub_8C1B7, SelectScreenBM, SelectRinkBM
-global stub_8C1F7, stub_8C202, stub_8C20D, stub_8C218, stub_8C223, vgacopy_bg, SaveSS, vtoa
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_90D20, sub_910E0
+extern sub_B4B88, sub_B4BA8, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
+global PlayMVI, stub_8C1B7, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, stub_8C1F7, stub_8C202, stub_8C20D
+global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
 ; PlayMVI(eax=path, edx=x, ebx=y) -> eax key. (CD movie player).
 ; Opens the file through the cdstream reader, then per chunk:
 ; 'MVIh' header: sets up the decoder (cmv_player) and the frame delay

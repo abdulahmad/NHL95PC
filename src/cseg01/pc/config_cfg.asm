@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_3DB41 progbits alloc exec nowrite align=1
-extern __CHK, str_NHL2, str_CannotOpenNhlCfg, str_fmt4x, str_CFG, greyramp, sounddevids, fclose_
-extern fopen_, fscanf_, MakePath, SetDialogColors, SetSoundDevice, sub_8EB93, sub_8FE83, FatalError
-extern MouseSetPos, sub_B3454, sub_B4B88, str_R3
+extern __CHK, FatalError, fclose_, fopen_, fscanf_, greyramp, MakePath, MouseSetPos
+extern SetDialogColors, SetSoundDevice, sounddevids, str_CannotOpenNhlCfg, str_CFG, str_fmt4x, str_NHL2, str_R3
+extern sub_8EB93, sub_8FE83, sub_B3454, sub_B4B88
 global LoadNhlCfg, negone_3DC28
 ; C: src/c/pc/config_cfg/LoadNhlCfg.c
 %ifdef CBUILD

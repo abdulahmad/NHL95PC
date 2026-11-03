@@ -2,50 +2,39 @@
 bits 32
 %include "hockey.inc"
 section s_21CDE progbits alloc exec nowrite align=1
-extern __CHK, str_PORTR, str_Pstatbar3, str_Pst1, str_Pst22, str_PlayerStats, str_SS2, str_D2
-extern str_Center2, str_Defense, str_LeftWing2, str_RightWing2, str_G2, str_A2, str_Pt2, str_PIM2
-extern str_PlusMinus2, str_PPG2, str_SHG2, str_Shots2, str_Pct2, str_Ratings2, str_Shoots2, str_L2
-extern str_R, str_PORTR2, str_Pstatbar4, str_Pst12, str_Pst23, str_PlayerStats2, str_SS3, str_DGoalie
-extern str_Min2, str_GAA2, str_SA, str_Pct3, str_Ratings3, str_GloveHand2, str_L3, str_R2
-extern str_Teams, str_Addsort, str_Pstatbar5, str_Pst24, str_StatsUnavailable, str_ANA2, str_MightyDucksOfAnaheim, str_Dashes39
-extern str_Dashes36, str_KeyDb, str_Pstatbar6, str_Pst25, str_Trad, str_Regi, str_MightyDucksOfAnaheim2, str_Pos
-extern str_Name, str_G3, str_A3, str_PT, str_Shots3, str_PIM3, str_PlusMinus3, str_Min3
-extern str_GAA3, str_GA, str_SA2, str_PCT, str_Keys, str_Pstat, str_Gstat, str_Addsort2
-extern str_KeyDb2, str_Pstatbar7, str_Pst26, str_StatsUnavailable2, str_POS, str_PLAYER2, str_TEAM, str_AttDb
-extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec
-extern str_fmtEmb, str_Bkgd2, treecolslots, treecol_Wr2
-extern treecol_Er2, treecol_Er1
-extern byte_ED909, teamdivflags, teamconf, statsplayoffs, fileoncd
-extern statsfromleague, westconfteams, eastconfteams, treerowy, cddriveptr, kaufmfont, mainfont, statsnumgoalies
-extern statsskaterorder, statsgoalieorder, dword_DC734, statsgoalieplr, statsnumskaters, statsskaterplr, dword_DC85C, dword_DC860
-extern statspalshape, statsbgshapes, statsteamrecs, statsteambuf, statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf
-extern fputchar, j___close_, FreeMemBlock, lseek_, memcpy_, statslabels, statsbgnames, statsplayerdbs
-extern statsteamdbs, skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname
-extern eastconfname, teamstattitles, teamcolhdrs, leadersortfns, leadertitles
-extern off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50, open_, qsort_, read_
-extern sprintf_, strcat_, strnicmp_, MakePath, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText
-extern PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff, CmpPoints, CmpGAA, MakeStatsTitle, DrawPhotoWithPal
-extern OpenStatsSchedule, FitPlayerName, sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370
-extern sub_913B4, sub_B30B4, sub_B30BB, sub_B4BA8, sub_B4BC4, str_GP2, str_GP3, str_W2
-extern str_L4, str_T2, str_SO2, str_EN2, str_GP4, str_S, str_No, str_GP5
-extern str_C, str_W3, str_L5, str_T3, str_NO, str_GP6, str_C2, statsleague
-extern statsplayer, printfbuf, treecolx
-global TeamStatsScreen_keyjt, TeamStatsScreen_coljt, LeadersScreen_coljt
-global CmpTeamScoring_sub, CmpTeamScoring_ret8
-global CmpTeamScoring_common
-global CmpTeamPP_tie
-global CmpTeamPK_sub, CmpTeamPK_ret10, CmpTeamPK_x
-global TeamStatsScreen_keyStand, TeamStatsScreen_keyPK
-global TeamStatsScreen_keyPP, TeamStatsScreen_keyPen
-global TeamStatsScreen_colScoring
-global TeamStatsScreen_colDefense, TeamStatsScreen_colPK, TeamStatsScreen_colPP, TeamStatsScreen_colPen
-global LeadersScreen_colPPG, LeadersScreen_colSHG, LeadersScreen_colPIM, LeadersScreen_colPlusMinus
-global LeadersScreen_colShootPct, LeadersScreen_colDefault, LeadersScreen_colGAA, LeadersScreen_colWins
-global LeadersScreen_colSavePct
-global SkaterStatsCard, GoalieStatsCard, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
-global CmpTeamPenalties, TeamStatsScreen, PlayerFromMouseY, TeamRosterScreen, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals
-global CmpPlusMinus, CmpPIM, CmpShootPct, CmpGoalieWins, CmpSavePct, LeadersScreen, stand_tmpl2, CmpConfStandings_m
-global TeamFromMouse, stand_tmpl1, CmpConfStandings
+extern __CHK, byte_ED909, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, dword_DC85C
+extern dword_DC860, eastconfname, eastconfteams, fileoncd, FitPlayerName, fputchar, FreeMemBlock, goalieratingnames
+extern j___close_, kaufmfont, leadersortfns, leadertitles, lseek_, mainfont, MakePath, MakeStatsTitle
+extern memcpy_, off_C6A99, off_C6AD1, off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50
+extern open_, OpenStatsSchedule, PrintCenteredText, printfbuf, PrintFmt1, PrintFmt2, PrintOutlinedText, PrintShadowText
+extern qsort_, read_, SetTextColors, skaterratingnames, sprintf_, statsbgnames, statsbgshapes, statsfromleague
+extern statsgoaliebuf, statsgoalieorder, statsgoalieplr, statslabels, statsleague, statsnumgoalies, statsnumskaters, statspalshape
+extern statsplayer, statsplayerbuf, statsplayerdbs, statsplayoffs, statsskaterbuf, statsskaterorder, statsskaterplr, statssortkeys
+extern statsteambuf, statsteamdbs, statsteamrecs, str_A2, str_A3, str_Addsort, str_Addsort2, str_ANA2
+extern str_AttDb, str_Bkgd2, str_C, str_C2, str_Center2, str_D2, str_Dashes36, str_Dashes39
+extern str_Defense, str_DGoalie, str_EN2, str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtEmb
+extern str_fmtMinSec, str_fmtPct, str_fmtPct0, str_fmtTenths, str_G2, str_G3, str_GA, str_GAA2
+extern str_GAA3, str_GloveHand2, str_GP2, str_GP3, str_GP4, str_GP5, str_GP6, str_Gstat
+extern str_KeyDb, str_KeyDb2, str_Keys, str_L2, str_L3, str_L4, str_L5, str_LeftWing2
+extern str_MightyDucksOfAnaheim, str_MightyDucksOfAnaheim2, str_Min2, str_Min3, str_Name, str_NO, str_No, str_PCT
+extern str_Pct2, str_Pct3, str_PIM2, str_PIM3, str_PLAYER2, str_PlayerStats, str_PlayerStats2, str_PlusMinus2
+extern str_PlusMinus3, str_PORTR, str_PORTR2, str_Pos, str_POS, str_PPG2, str_Pst1, str_Pst12
+extern str_Pst22, str_Pst23, str_Pst24, str_Pst25, str_Pst26, str_Pstat, str_Pstatbar3, str_Pstatbar4
+extern str_Pstatbar5, str_Pstatbar6, str_Pstatbar7, str_PT, str_Pt2, str_R, str_R2, str_Ratings2
+extern str_Ratings3, str_Regi, str_RightWing2, str_S, str_SA, str_SA2, str_SHG2, str_Shoots2
+extern str_Shots2, str_Shots3, str_SO2, str_SS2, str_SS3, str_StatsUnavailable, str_StatsUnavailable2, str_T2
+extern str_T3, str_TEAM, str_Teams, str_Trad, str_W2, str_W3, strcat_, strnicmp_
+extern sub_8CCA8, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_91370, sub_913B4, sub_B30B4
+extern sub_B30BB, sub_B4BA8, sub_B4BC4, teamcolhdrs, teamconf, teamdivflags, teamsortfns, teamstattitles
+extern TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Wr2, treecolslots, treecolx, treerowy
+extern westconfname, westconfteams
+global SkaterStatsCard, GoalieStatsCard, CmpTeamStandings, CmpTeamScoring, CmpTeamScoring_sub, CmpTeamScoring_ret8, CmpTeamScoring_common, CmpTeamDefense
+global CmpTeamPP, CmpTeamPP_tie, CmpTeamPK, CmpTeamPK_sub, CmpTeamPK_ret10, CmpTeamPK_x, CmpTeamPenalties, TeamStatsScreen_keyjt
+global TeamStatsScreen_coljt, TeamStatsScreen, TeamStatsScreen_keyStand, TeamStatsScreen_keyPK, TeamStatsScreen_keyPP, TeamStatsScreen_keyPen, TeamStatsScreen_colScoring, TeamStatsScreen_colDefense
+global TeamStatsScreen_colPK, TeamStatsScreen_colPP, TeamStatsScreen_colPen, PlayerFromMouseY, TeamRosterScreen, CmpGoals, CmpAssists, CmpPPGoals
+global CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct, CmpGoalieWins, CmpSavePct, LeadersScreen_coljt, LeadersScreen
+global LeadersScreen_colPPG, LeadersScreen_colSHG, LeadersScreen_colPIM, LeadersScreen_colPlusMinus, LeadersScreen_colShootPct, LeadersScreen_colDefault, LeadersScreen_colGAA, LeadersScreen_colWins
+global LeadersScreen_colSavePct, stand_tmpl1, stand_tmpl2, CmpConfStandings, CmpConfStandings_m, TeamFromMouse
 SkaterStatsCard:
 push dword 138h	; 21CDE
 call __CHK	; 21CE3

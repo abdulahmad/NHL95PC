@@ -4,10 +4,10 @@ bits 32
 section s_1AC25 progbits alloc exec nowrite align=1
 extern __CHK, asc_C09A0, asc_C09AE, FreeMemBlock, sub_8CCA8, sub_8CCC4, sub_9132C, sub_B3ABC
 extern sub_B4F8C
-global loc_1AC96, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, loc_1AD12, loc_1ADE0, loc_1ADF0
-global loc_1AE3B, loc_1AE65, loc_1AEE2, loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB
-global loc_1AFEF, loc_1B029, loc_1B05A, loc_1B087, loc_1B08A, sub_1AC25, sub_1AC9A, sub_1ACF1
-global sub_1AD16, sub_1AE6B, sub_1B002, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9
+global sub_1AC25, loc_1AC96, sub_1AC9A, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, sub_1ACF1
+global loc_1AD12, sub_1AD16, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, sub_1AE6B, loc_1AEE2
+global loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB, loc_1AFEF, sub_1B002, loc_1B029
+global loc_1B05A, loc_1B087, loc_1B08A, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9
 global sub_1B0D7, sub_1B0E5
 sub_1AC25:
 push dword 1Ch	; 1AC25

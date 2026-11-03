@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_9805E progbits alloc exec nowrite align=1
 extern fgetc_
-global _fmemmove_, fgets_, itoa_, loc_98078, loc_9808C, loc_9809B, loc_980AE, loc_980FB
-global loc_9811B, loc_98141, loc_98166, loc_98184, loc_98194, loc_98198, loc_9819B, unk_980C0
-global utoa_
+global _fmemmove_, loc_98078, loc_9808C, loc_9809B, loc_980AE, unk_980C0, utoa_, loc_980FB
+global loc_9811B, itoa_, loc_98141, fgets_, loc_98166, loc_98184, loc_98194, loc_98198
+global loc_9819B
 _fmemmove_:
 push esi	; 9805E
 push edi	; 9805F

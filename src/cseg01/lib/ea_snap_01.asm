@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, asc_C4934, asc_C493C, asc_C4944, asc_C494C, dword_D2F84, dword_D30A4, dword_D30A8
-extern dword_D30C4, dword_D5184, off_D517C, off_D518C, strncpy_, sub_8CC8C, sub_8D2F0, sub_8DBD4
-extern sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8, SetDrawBitmap
-global loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269, loc_9D280
-global loc_9D298, loc_9D299, loc_9D2C8, loc_9D303, sub_9D090, sub_9D2E0
+extern dword_D30C4, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, sub_8CC8C, sub_8D2F0
+extern sub_8DBD4, sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8
+global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
+global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
 sub_9D090:
 push esi	; 9D090
 push edi	; 9D091

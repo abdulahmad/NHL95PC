@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_9AFB0 progbits alloc exec nowrite align=1
-extern __SetIOMode_, __qwrite_, __set_errno_, _nfree_, _nmalloc_, dword_EDF00, dword_F24C8, isatty_
+extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, dword_EDF00, dword_F24C8, isatty_
 extern loc_9B544, loc_9B565, loc_9B589, loc_9B5A9, loc_9B5C9, loc_9B61A, loc_9B66B, loc_9B6B3
 extern loc_9B6F7, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, word_D4CE4
-global __allocfp_, __chktty_, __close_, __flush_, __freefp_, __ioalloc_, __update_buffer_, fputc_
-global fseek_, ftell_, loc_9AFBD, loc_9AFE6, loc_9AFED, loc_9B00A, loc_9B00D, loc_9B02F
-global loc_9B054, loc_9B060, loc_9B070, loc_9B081, loc_9B09B, loc_9B09F, loc_9B0A0, loc_9B0BB
-global loc_9B0E9, loc_9B125, loc_9B12F, loc_9B138, loc_9B140, loc_9B14C, loc_9B167, loc_9B175
-global loc_9B17B, loc_9B1A0, loc_9B1D1, loc_9B1F5, loc_9B1F7, loc_9B228, loc_9B280, loc_9B29F
-global loc_9B2CE, loc_9B2DE, loc_9B319, loc_9B31D, loc_9B341, loc_9B373, loc_9B381, loc_9B388
-global loc_9B3B7, loc_9B3BB, loc_9B3E5, loc_9B3EF, loc_9B3FC, loc_9B439, loc_9B459, loc_9B464
-global loc_9B468, sub_9B22C, tolower_, unk_9B470
+global tolower_, loc_9AFBD, __allocfp_, loc_9AFE6, loc_9AFED, loc_9B00A, loc_9B00D, loc_9B02F
+global loc_9B054, loc_9B060, __freefp_, loc_9B070, loc_9B081, loc_9B09B, loc_9B09F, loc_9B0A0
+global loc_9B0BB, __update_buffer_, loc_9B0E9, fseek_, loc_9B125, loc_9B12F, loc_9B138, loc_9B140
+global loc_9B14C, loc_9B167, loc_9B175, loc_9B17B, loc_9B1A0, loc_9B1D1, loc_9B1F5, loc_9B1F7
+global __chktty_, loc_9B228, sub_9B22C, __flush_, loc_9B280, loc_9B29F, loc_9B2CE, loc_9B2DE
+global ftell_, loc_9B319, loc_9B31D, __close_, loc_9B341, __ioalloc_, loc_9B373, loc_9B381
+global loc_9B388, loc_9B3B7, loc_9B3BB, fputc_, loc_9B3E5, loc_9B3EF, loc_9B3FC, loc_9B439
+global loc_9B459, loc_9B464, loc_9B468, unk_9B470
 tolower_:
 cmp eax, byte 41h	; 9AFB0
 jl short loc_9AFBD	; 9AFB3

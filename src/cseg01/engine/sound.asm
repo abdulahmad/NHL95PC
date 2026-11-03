@@ -3,20 +3,17 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, musicon, byte_D2439, gameopts, sounddev, lastsfx, digihandle
-extern crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_D2427, leaguesetimg, rockteamcues
-extern dword_ED374, dword_ED7A4, gmode, teamabbrevs, rand_, randomd0, SpeechBusy, MusicChanReset
-extern SayNhlIntro, SayGoodnight, SayLineups, SayElseNhl, SayHighlightIntro, SayPlayoffResult, SayScoringPeriod, SayTonightIntro
-extern SayPlayoffTonight, SayPenalty, SayPenaltyShot, SayPlayerNumber, SayGoal, SayOneMinuteLeft, OpenAnnouncerBank, PreloadAnnouncerClips
+extern __CHK, byte_D2439, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, dword_CCC94
+extern dword_CCC98, dword_D2427, dword_ED374, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
+extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
+extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
+extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
 extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F80E, sub_8FD84
-extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, SetTickDeadline, WaitTickDeadline, crowdlevel
-global sndcb_addesp8_x
-global PlayCrowdSample_ret
-global nullsub_5
-global sfx, SndLoadFile, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, FreeDigiSample
-global StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PaOneMinuteLeft, PaSpeechBusy, PaGoal, PaPlayerNumber
-global PaPenalty, PaPenaltyShot, PaTonightIntro, PaScoringPeriod, PaNhlIntro, PaGoodnight, PaLineups, PaElseNhl
-global PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
+extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, teamabbrevs, WaitTickDeadline
+global SndLoadFile, sndcb_addesp8_x, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, sfx
+global FreeDigiSample, StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PlayCrowdSample_ret, PaOneMinuteLeft, PaSpeechBusy
+global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, nullsub_5, PaScoringPeriod, PaNhlIntro
+global PaGoodnight, PaLineups, PaElseNhl, PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
 ; C: src/c/engine/sound/SndLoadFile.c
 %ifdef CBUILD
 %include "c/engine/sound/SndLoadFile.inc"

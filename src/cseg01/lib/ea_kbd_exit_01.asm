@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern asc_C47E8, asc_C47FC, joycalactive, dword_D30D4, bailout_vec, off_D306C, off_D3070, off_D3074
-extern mousepollfn, joycalprehook, joycalposthook, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90267
-extern sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0, sub_A1800
-extern sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, SetDrawBitmap, sub_B4F8C
+extern asc_C47E8, asc_C47FC, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
+extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
+extern sub_90267, sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0
+extern sub_A1800, sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, sub_B4F8C
 extern sub_B6F84, unk_D45D8
-global loc_983B1, loc_983BB, loc_983DB, loc_983F1, loc_984CF, sub_981AD, sub_981B0, sub_981D4
-global sub_981F8, sub_984A8, sub_984D0, sub_9862C, sub_9864C, sub_98664, sub_9867E
+global sub_981AD, sub_981B0, sub_981D4, sub_981F8, loc_983B1, loc_983BB, loc_983DB, loc_983F1
+global sub_984A8, loc_984CF, sub_984D0, sub_9862C, sub_9864C, sub_98664, sub_9867E
 sub_981AD:
 sti	; 981AD
 ret	; 981AE

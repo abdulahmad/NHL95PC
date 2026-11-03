@@ -10,7 +10,7 @@ register or slot miss is not an escalation: it stays in
 
 ## DrawListItems, waiting on DrawListItem
 
-`DrawListItems` in `src/c/pc/misc_dialogs/DrawListItem.c` (lane 1, Mhopkinsinc) compiles to the
+`DrawListItems` in `src/c/pc/dialogs/DrawListItem.c` (lane 1, Mhopkinsinc) compiles to the
 EXE bytes: ranked score 0. It is unmarked because it branches into `DrawListItem`, which is still a
 draft (6 differing). Marking `DrawListItems` alone would point the include at a tail that is not the
 matched block.
@@ -25,7 +25,7 @@ the EXE bytes raises `w` into a tie with `y` and was already tried under GA.
 
 ## CreatePlayoffs and POAfterGame, shared exit
 
-Both live in `src/c/front/season/POSeedRound2.c` (lane 2, StaticEck2026) and end in
+Both live in `src/c/front/playoff_mode/POSeedRound2.c` (lane 2, StaticEck2026) and end in
 `POSeedRound2_x`, the exit of the matched `POSeedRound2`. Watcom keeps that exit in one function of
 the file. Moving either draft to its own file, or marking it while the exit still belongs to
 `POSeedRound2`, changes the matched function.
@@ -75,7 +75,7 @@ hand-asm. cc.py's TextTargets now names a tail in a context copy from another se
 
 ## EditTextField and LeadersScreen, goto
 
-`EditTextField` (`src/c/pc/misc_dialogs/EditTextField.c`, lane 1) is 36 differing, cause
+`EditTextField` (`src/c/pc/dialogs/EditTextField.c`, lane 1) is 36 differing, cause
 `register 31/35`. The round that cut it from 62 reduced 21 `goto`s to 4. The ones left rotate the
 loop the way the EXE's block order does (the key poll is the test, the handlers are the body).
 `LeadersScreen` (`src/c/front/stats/LeadersScreen.c`, lane 1) uses `goto done` for the
@@ -88,7 +88,7 @@ rotation the EXE has, stay rejected. Neither function is at that point today.
 
 ## ExecuteTrade, return type
 
-`ExecuteTrade` (`src/c/front/roster/ExecuteTrade.c`, lane 1) once compiled to the EXE
+`ExecuteTrade` (`src/c/front/trade/ExecuteTrade.c`, lane 1) once compiled to the EXE
 bytes as `unsigned short`. Its caller `TradePlayers` uses `eax`, so a 16-bit result is the wrong
 type and was reverted. The draft is a slot near-miss (`int` result, spilled `traded` / `kb`).
 
@@ -118,7 +118,7 @@ loop) before this comes back. Until that shape exists, leave the draft. Do not h
 
 ## OpenSpeechBank, stack layout
 
-`OpenSpeechBank` (`src/c/front/speech/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
+`OpenSpeechBank` (`src/c/front/announcer/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
 frame that matches the EXE puts the `int` locals and the `short nsamples` in a fixed order (`w1`
 before `fh`, `unsigned short type`, `int c`). That order is ordinary GA slot assignment
 ([WCC_INTERNALS.md](WCC_INTERNALS.md)), not a non-idiomatic shape. What is left is the first header
@@ -141,7 +141,7 @@ compiles to the EXE bytes only through an extra variable whose one job is to cha
 | function | file (lane) | shape | score with / without |
 | --- | --- | --- | --- |
 | CreateFreeAgent | `front/create/CreateFreeAgent.c` (2) | `carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`, a temporary on one of six parallel size stores | 0 / 5 |
-| POInitSchedule | `front/season/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
+| POInitSchedule | `front/playoff_mode/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
 | LockerRoomLoop | `front/lockerroom/LockerRoomScreen.c` (2) | `n = hm + 1; hm = n % 0x1A;` through n, dead since the pointer block; a new int instead scores 23 | 0 / 2 |
 | wallcoll | `engine/collide/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
 | PassLaneChk | `engine/collide/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |

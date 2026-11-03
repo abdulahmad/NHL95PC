@@ -3,15 +3,12 @@
 bits 32
 %include "hockey.inc"
 section s_5E16D progbits alloc exec nowrite align=1
-extern GetHot, SetSPA, Sweepcheck, __CHK, gmode2, puckpflags2, dirtab, gameopts
-extern doplayeracc_ftab, MaxSpeed, puckvx, gmode
-extern puckx, pucky, puckvy, puckc, randomd0, vecdist, imul32, SortCords
-extern vtoa, regd4, xc1, yc1, refsignal, dirtab_y, regd2, regd3
-extern regd0, regd1
-global stopna, doplayeracc, dostop, goalieacc
-global EvadePlayers_popedi
-global noturn0, playeracc, skateto, skatetopuck, EvadePlayers, EvadePlayers_popebp, EvadePC
-global EvadePC_x, avdgoal_box, avdgoal, avdgoal_jt
+extern __CHK, dirtab, dirtab_y, doplayeracc_ftab, gameopts, GetHot, gmode, gmode2
+extern imul32, MaxSpeed, puckc, puckpflags2, puckvx, puckvy, puckx, pucky
+extern randomd0, refsignal, regd0, regd1, regd2, regd3, regd4, SetSPA
+extern SortCords, Sweepcheck, vecdist, vtoa, xc1, yc1
+global doplayeracc, EvadePlayers, EvadePlayers_popebp, EvadePlayers_popedi, EvadePC, EvadePC_x, skateto, skatetopuck
+global playeracc, avdgoal_box, avdgoal_jt, avdgoal, dostop, stopna, goalieacc, noturn0
 ; doplayeracc: player gets acc. in a direction (player a3 gets acc. in d0 dir).
 ; eax = player struct, edx = direction (low nibble: 0-7 skate, 8 none, 9 stop). No result.
 ; Goalie -> goalieacc. Picks the glide animation, turns facedir by doplayeracc_ftab at a rate of $300-speed (min $180),

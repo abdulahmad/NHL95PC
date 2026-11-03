@@ -1,0 +1,1736 @@
+; The pre-game matchup at the arena, and tonight's game with the team logos and the injured list.
+bits 32
+%include "hockey.inc"
+section s_29F18 progbits alloc exec nowrite align=1
+extern __CHK, awlinetab, boxfillcolor, boxlitecolor, boxshadecolor, byte_D42C3, cddriveptr, ClearInputQueue
+extern cont2team, crestnames, ctl1team, ctl2team, curleague, DrawBevelBox, DrawButtons, DrawGadgetByType
+extern dword_DBC7C, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
+extern GameLineEditor, gameopts, GetInputEvent, hmlinetab, hmroster, HomeTeam, kaufmfont, leaguedbnames
+extern mainfont, MakePath, memcpy_, MouseSetPos, MusicChanReset2, musichandle, musicon, musicslot
+extern off_CEF43, off_CEF63, PaLineups, PaOpenBank, PaPlayoffTonight, PaPreloadClips, PaTonightIntro, pointerspr
+extern pregamebuttons, PrintOutlinedText, PrintShadowText, ptrupdatefn, ReadKeyRec, ReadTeamRec, schedgameidx, scoutcatidx
+extern scoutcatnames, SetDialogColors, SetTextColors, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, str_Apal
+extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_Def, str_extDB
+extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
+extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
+extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, sub_8CCA8, sub_8D2F0
+extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
+extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
+extern sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, teamabbrevs, teamconf
+extern TrackButtons, unk_CF1AF, VisTeam, WaitClickTimeout
+global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
+PreGameScreen_jt:
+dd PreGameScreen_awaylines
+dd PreGameScreen_play
+dd PreGameScreen_cancel
+dd PreGameScreen_homelines
+; C: src/c/front/pregame/PreGameScreen.c
+%ifdef CBUILD
+%include "c/front/pregame/PreGameScreen.inc"
+%else
+PreGameScreen:
+push dword 6A0h	; 29F28
+call __CHK	; 29F2D
+push ebx	; 29F32
+push ecx	; 29F33
+push esi	; 29F34
+push edi	; 29F35
+push ebp	; 29F36
+sub esp, 674h	; 29F37
+mov byte [dword esp+0670h], al	; 29F3D
+mov byte [dword esp+066Ch], dl	; 29F44
+mov dword [dword esp+0638h], 0FFFFFFFFh	; 29F4B
+call PaOpenBank	; 29F56
+push dword 0F7h	; 29F5B
+mov ecx, 0FAh	; 29F60
+mov ebx, 0F8h	; 29F65
+mov edx, ecx	; 29F6A
+mov eax, 0F9h	; 29F6C
+call SetDialogColors	; 29F71
+mov edx, 0F7h	; 29F76
+mov eax, 0FAh	; 29F7B
+call SetTextColors	; 29F80
+push byte 20h	; 29F85
+push dword 300h	; 29F87
+push str_Apal	; 29F8C
+call sub_8CCA8	; 29F91
+add esp, byte 0Ch	; 29F96
+mov dword [dword esp+0644h], eax	; 29F99
+mov al, byte [dword esp+0670h]	; 29FA0
+mov byte [dword esp+0668h], al	; 29FA7
+mov al, byte [dword esp+066Ch]	; 29FAE
+mov byte [dword esp+0669h], al	; 29FB5
+mov ebx, dword [leaguedbnames+10h]	; 29FBC
+mov ecx, str_extDB	; 29FC2
+mov edx, curleague	; 29FC7
+lea eax, [dword esp+0610h]	; 29FCC
+call MakePath	; 29FD3
+lea edx, [dword esp+0638h]	; 29FD8
+lea eax, [dword esp+0610h]	; 29FDF
+call FileOpenRead	; 29FE6
+xor cl, cl	; 29FEB
+jmp short .2	; 29FED
+.1:
+xor edx, edx	; 29FEF
+mov dl, cl	; 29FF1
+xor ebx, ebx	; 29FF3
+mov bl, byte [dword esp+edx+0668h]	; 29FF5
+mov eax, edx	; 29FFC
+shl eax, 2	; 29FFE
+sub eax, edx	; 2A001
+shl eax, 3	; 2A003
+mov edx, eax	; 2A006
+shl eax, 5	; 2A008
+sub eax, edx	; 2A00B
+mov edx, esp	; 2A00D
+add edx, eax	; 2A00F
+mov eax, dword [dword esp+0638h]	; 2A011
+call ReadTeamRec	; 2A018
+inc cl	; 2A01D
+.2:
+cmp cl, 2	; 2A01F
+jae short .3	; 2A022
+test eax, eax	; 2A024
+je short PreGameScreen.1	; 2A026
+.3:
+lea eax, [dword esp+0638h]	; 2A028
+call FileClose	; 2A02F
+call sub_B4BA8	; 2A034
+push byte 20h	; 2A039
+push dword 300h	; 2A03B
+push str_Pal10	; 2A040
+call sub_8CCA8	; 2A045
+add esp, byte 0Ch	; 2A04A
+mov esi, eax	; 2A04D
+cmp byte [musicon], 0	; 2A04F
+je short .4	; 2A056
+cmp dword [songdata], byte 0	; 2A058
+je short .4	; 2A05F
+mov eax, dword [musichandle]	; 2A061
+mov ebx, 64h	; 2A066
+mov edx, 3	; 2A06B
+call sub_8FCDF	; 2A070
+.4:
+push esi	; 2A075
+push dword 100h	; 2A076
+push byte 0	; 2A07B
+call sub_8FFB0	; 2A07D
+add esp, byte 0Ch	; 2A082
+mov ebx, 10h	; 2A085
+mov edx, esi	; 2A08A
+mov eax, 1	; 2A08C
+call FadePalStep	; 2A091
+push esi	; 2A096
+call FreeMemBlock	; 2A097
+add esp, byte 4	; 2A09C
+cmp byte [musicon], 0	; 2A09F
+je short .6	; 2A0A6
+cmp dword [songdata], byte 0	; 2A0A8
+je short .6	; 2A0AF
+.5:
+mov eax, dword [musicslot-3]	; 2A0B1
+sar eax, 18h	; 2A0B6
+mov edx, 3	; 2A0B9
+call sub_8FC8A	; 2A0BE
+test eax, eax	; 2A0C3
+je short PreGameScreen.5	; 2A0C5
+mov esi, dword [songdata]	; 2A0C7
+push esi	; 2A0CD
+call sub_8D2F0	; 2A0CE
+add esp, byte 4	; 2A0D3
+xor edi, edi	; 2A0D6
+mov dword [songdata], edi	; 2A0D8
+.6:
+mov ebp, dword [kaufmfont]	; 2A0DE
+mov eax, dword [mainfont]	; 2A0E4
+mov dword [dword esp+0648h], eax	; 2A0E9
+lea eax, [dword esp+05D0h]	; 2A0F0
+push eax	; 2A0F7
+call sub_8E9E8	; 2A0F8
+add esp, byte 4	; 2A0FD
+mov eax, dword [dword esp+0648h]	; 2A100
+push eax	; 2A107
+call sub_8EA18	; 2A108
+add esp, byte 4	; 2A10D
+xor ecx, ecx	; 2A110
+mov ebx, str_Arena	; 2A112
+cmp byte [fileoncd+027h], 1	; 2A117
+jne short .7	; 2A11E
+mov edx, dword [cddriveptr]	; 2A120
+jmp short .8	; 2A126
+.7:
+xor edx, edx	; 2A128
+.8:
+lea eax, [dword esp+0610h]	; 2A12A
+call MakePath	; 2A131
+push byte 0	; 2A136
+lea eax, [dword esp+0614h]	; 2A138
+push eax	; 2A13F
+call sub_8E83C	; 2A140
+mov esi, eax	; 2A145
+add esp, byte 8	; 2A147
+push str_Pal11	; 2A14A
+push eax	; 2A14F
+call sub_B30B4	; 2A150
+add esp, byte 8	; 2A155
+lea edx, [byte eax+010h]	; 2A158
+mov ebx, 300h	; 2A15B
+mov eax, dword [dword esp+0644h]	; 2A160
+call memcpy_	; 2A167
+push str_Rink	; 2A16C
+push esi	; 2A171
+call sub_B30B4	; 2A172
+mov edi, eax	; 2A177
+add esp, byte 8	; 2A179
+push dword 1E0h	; 2A17C
+push byte 0	; 2A181
+push dword 280h	; 2A183
+push byte 0	; 2A188
+call sub_B4BC4	; 2A18A
+add esp, byte 10h	; 2A18F
+push edi	; 2A192
+call sub_9061C	; 2A193
+add esp, byte 4	; 2A198
+push esi	; 2A19B
+call FreeMemBlock	; 2A19C
+add esp, byte 4	; 2A1A1
+xor ecx, ecx	; 2A1A4
+mov ebx, str_Srlogo	; 2A1A6
+cmp byte [fileoncd+0219h], 1	; 2A1AB
+jne short .9	; 2A1B2
+mov edx, dword [cddriveptr]	; 2A1B4
+jmp short .10	; 2A1BA
+.9:
+xor edx, edx	; 2A1BC
+.10:
+lea eax, [dword esp+0610h]	; 2A1BE
+call MakePath	; 2A1C5
+push byte 0	; 2A1CA
+lea eax, [dword esp+0614h]	; 2A1CC
+push eax	; 2A1D3
+call sub_8E83C	; 2A1D4
+mov esi, eax	; 2A1D9
+add esp, byte 8	; 2A1DB
+xor eax, eax	; 2A1DE
+mov al, byte [dword esp+066Ch]	; 2A1E0
+mov edx, dword [nosplit eax*4+crestnames]	; 2A1E7
+push edx	; 2A1EE
+push esi	; 2A1EF
+call sub_B30B4	; 2A1F0
+add esp, byte 8	; 2A1F5
+push byte 6Dh	; 2A1F8
+push byte 3Ch	; 2A1FA
+push eax	; 2A1FC
+call sub_91370	; 2A1FD
+add esp, byte 0Ch	; 2A202
+xor eax, eax	; 2A205
+mov al, byte [dword esp+0670h]	; 2A207
+mov ebx, dword [nosplit eax*4+crestnames]	; 2A20E
+push ebx	; 2A215
+push esi	; 2A216
+call sub_B30B4	; 2A217
+add esp, byte 8	; 2A21C
+push byte 6Dh	; 2A21F
+push dword 1E5h	; 2A221
+push eax	; 2A226
+call sub_91370	; 2A227
+add esp, byte 0Ch	; 2A22C
+push esi	; 2A22F
+call FreeMemBlock	; 2A230
+add esp, byte 4	; 2A235
+push ebp	; 2A238
+call sub_8EA18	; 2A239
+add esp, byte 4	; 2A23E
+lea eax, [byte esp+01Ah]	; 2A241
+push eax	; 2A245
+lea eax, [dword esp+0306h]	; 2A246
+push eax	; 2A24D
+push str_SAtS	; 2A24E
+lea eax, [dword esp+061Ch]	; 2A253
+push eax	; 2A25A
+call sprintf_	; 2A25B
+add esp, byte 10h	; 2A260
+lea eax, [dword esp+0610h]	; 2A263
+push eax	; 2A26A
+call fputchar	; 2A26B
+add esp, byte 4	; 2A270
+mov edx, 280h	; 2A273
+sub edx, eax	; 2A278
+mov eax, edx	; 2A27A
+sar edx, 1Fh	; 2A27C
+LD sub, eax, edx	; 2A27F
+sar eax, 1	; 2A281
+lea ebx, [dword esp+0610h]	; 2A283
+mov edx, 93h	; 2A28A
+call PrintOutlinedText	; 2A28F
+mov ecx, dword [boxfillcolor]	; 2A294
+push ecx	; 2A29A
+push byte 5	; 2A29B
+push dword 1AEh	; 2A29D
+push dword 0CFh	; 2A2A2
+push byte 6Eh	; 2A2A7
+call sub_90D20	; 2A2A9
+add esp, byte 14h	; 2A2AE
+mov esi, dword [boxlitecolor]	; 2A2B1
+push esi	; 2A2B7
+push dword 0CFh	; 2A2B8
+push dword 21Ch	; 2A2BD
+push dword 0CFh	; 2A2C2
+push byte 6Eh	; 2A2C7
+call sub_B4FAC	; 2A2C9
+add esp, byte 14h	; 2A2CE
+mov edi, dword [boxshadecolor]	; 2A2D1
+push edi	; 2A2D7
+push dword 0D3h	; 2A2D8
+push dword 21Ch	; 2A2DD
+push dword 0D3h	; 2A2E2
+push byte 6Eh	; 2A2E7
+call sub_B4FAC	; 2A2E9
+add esp, byte 14h	; 2A2EE
+xor esi, esi	; 2A2F1
+.11:
+xor eax, eax	; 2A2F3
+mov al, byte [byte_D42C3]	; 2A2F5
+add eax, byte 3	; 2A2FA
+imul eax, esi	; 2A2FD
+lea edi, [dword eax+0DAh]	; 2A300
+cmp esi, byte 8	; 2A306
+jne short .12	; 2A309
+mov ebp, dword [boxfillcolor]	; 2A30B
+push ebp	; 2A311
+push byte 5	; 2A312
+push dword 1AEh	; 2A314
+lea ebp, [byte edi+05h]	; 2A319
+push ebp	; 2A31C
+push byte 6Eh	; 2A31D
+call sub_90D20	; 2A31F
+add esp, byte 14h	; 2A324
+mov eax, dword [boxlitecolor]	; 2A327
+push eax	; 2A32C
+push ebp	; 2A32D
+push dword 21Ch	; 2A32E
+lea eax, [byte edi+09h]	; 2A333
+mov dword [dword esp+0648h], eax	; 2A336
+push ebp	; 2A33D
+push byte 6Eh	; 2A33E
+call sub_B4FAC	; 2A340
+add esp, byte 14h	; 2A345
+mov edx, dword [boxshadecolor]	; 2A348
+push edx	; 2A34E
+mov ebx, dword [dword esp+0640h]	; 2A34F
+push ebx	; 2A356
+push dword 21Ch	; 2A357
+add edi, byte 0Eh	; 2A35C
+push ebx	; 2A35F
+push byte 6Eh	; 2A360
+call sub_B4FAC	; 2A362
+add esp, byte 14h	; 2A367
+.12:
+mov ebp, dword [nosplit esi*4+scoutcatnames]	; 2A36A
+push ebp	; 2A371
+call fputchar	; 2A372
+add esp, byte 4	; 2A377
+mov edx, 280h	; 2A37A
+sub edx, eax	; 2A37F
+mov eax, edx	; 2A381
+sar edx, 1Fh	; 2A383
+LD sub, eax, edx	; 2A386
+sar eax, 1	; 2A388
+mov ebx, ebp	; 2A38A
+mov edx, edi	; 2A38C
+call PrintOutlinedText	; 2A38E
+inc esi	; 2A393
+cmp esi, byte 9	; 2A394
+jl near PreGameScreen.11	; 2A397
+lea eax, [dword esp+05C4h]	; 2A39D
+mov dword [dword esp+065Ch], eax	; 2A3A4
+lea eax, [dword esp+02DCh]	; 2A3AB
+mov dword [dword esp+0658h], eax	; 2A3B2
+xor esi, esi	; 2A3B9
+.13:
+mov ebp, 0FAh	; 2A3BB
+mov ecx, ebp	; 2A3C0
+xor eax, eax	; 2A3C2
+mov al, byte [dword esi+scoutcatidx]	; 2A3C4
+mov edx, dword [dword esp+065Ch]	; 2A3CA
+add edx, eax	; 2A3D1
+add eax, dword [dword esp+0658h]	; 2A3D3
+mov bl, byte [edx]	; 2A3DA
+mov bh, byte [eax]	; 2A3DC
+cmp bl, bh	; 2A3DE
+jbe short .14	; 2A3E0
+mov ebp, 0FDh	; 2A3E2
+jmp short .15	; 2A3E7
+.14:
+jae short .15	; 2A3E9
+mov ecx, 0FDh	; 2A3EB
+.15:
+xor eax, eax	; 2A3F0
+mov al, byte [byte_D42C3]	; 2A3F2
+lea edi, [byte eax+03h]	; 2A3F7
+imul edi, esi	; 2A3FA
+add edi, 0DAh	; 2A3FD
+cmp esi, byte 8	; 2A403
+jne short .16	; 2A406
+add edi, byte 0Ch	; 2A408
+.16:
+mov edx, 0F7h	; 2A40B
+mov eax, ebp	; 2A410
+call SetTextColors	; 2A412
+xor eax, eax	; 2A417
+mov al, byte [dword esi+scoutcatidx]	; 2A419
+add eax, dword [dword esp+065Ch]	; 2A41F
+mov al, byte [eax]	; 2A426
+and eax, 0FFh	; 2A428
+push eax	; 2A42D
+push str_D4	; 2A42E
+lea eax, [dword esp+0618h]	; 2A433
+push eax	; 2A43A
+call sprintf_	; 2A43B
+add esp, byte 0Ch	; 2A440
+lea ebx, [dword esp+0610h]	; 2A443
+mov edx, edi	; 2A44A
+mov eax, 6Eh	; 2A44C
+call PrintOutlinedText	; 2A451
+mov edx, 0F7h	; 2A456
+mov eax, ecx	; 2A45B
+call SetTextColors	; 2A45D
+xor eax, eax	; 2A462
+mov al, byte [dword esi+scoutcatidx]	; 2A464
+add eax, dword [dword esp+0658h]	; 2A46A
+mov al, byte [eax]	; 2A471
+and eax, 0FFh	; 2A473
+push eax	; 2A478
+push str_D4	; 2A479
+lea eax, [dword esp+0618h]	; 2A47E
+push eax	; 2A485
+call sprintf_	; 2A486
+add esp, byte 0Ch	; 2A48B
+lea ebx, [dword esp+0610h]	; 2A48E
+mov edx, edi	; 2A495
+mov eax, 212h	; 2A497
+call PrintOutlinedText	; 2A49C
+inc esi	; 2A4A1
+cmp esi, byte 9	; 2A4A2
+jl near PreGameScreen.13	; 2A4A5
+mov edx, 0F7h	; 2A4AB
+mov eax, 0FAh	; 2A4B0
+call SetTextColors	; 2A4B5
+mov ebx, dword [dword esp+0648h]	; 2A4BA
+push ebx	; 2A4C1
+call sub_8EA18	; 2A4C2
+add esp, byte 4	; 2A4C7
+cmp dword [off_CEF43], byte 0	; 2A4CA
+jne short .18	; 2A4D1
+cmp dword [off_CEF63], byte 0	; 2A4D3
+jne short .18	; 2A4DA
+mov dword [dword esp+0650h], 2	; 2A4DC
+.17:
+mov dword [dword esp+0654h], pregamebuttons+1Ch	; 2A4E7
+jmp short .22	; 2A4F2
+.18:
+cmp dword [off_CEF43], byte 0	; 2A4F4
+jne short .19	; 2A4FB
+mov dword [dword esp+0650h], 3	; 2A4FD
+jmp short .21	; 2A508
+.19:
+cmp dword [off_CEF63], byte 0	; 2A50A
+jne short .20	; 2A511
+mov dword [dword esp+0650h], 3	; 2A513
+jmp short PreGameScreen.17	; 2A51E
+.20:
+mov dword [dword esp+0650h], 4	; 2A520
+.21:
+mov dword [dword esp+0654h], pregamebuttons	; 2A52B
+.22:
+push byte 1	; 2A536
+mov ecx, 1DFh	; 2A538
+mov ebx, 26Bh	; 2A53D
+mov edx, 1AEh	; 2A542
+xor eax, eax	; 2A547
+call DrawBevelBox	; 2A549
+mov edx, dword [dword esp+0650h]	; 2A54E
+mov eax, dword [dword esp+0654h]	; 2A555
+call DrawButtons	; 2A55C
+mov eax, dword [pointerspr]	; 2A561
+mov edx, dword [byte eax+02h]	; 2A566
+sar edx, 10h	; 2A569
+mov eax, dword [byte eax+04h]	; 2A56C
+sar eax, 10h	; 2A56F
+inc eax	; 2A572
+inc edx	; 2A573
+imul eax, edx	; 2A574
+add eax, byte 11h	; 2A577
+push byte 20h	; 2A57A
+push eax	; 2A57C
+push str_Pointer4	; 2A57D
+call sub_8CCA8	; 2A582
+mov dword [dword esp+0648h], eax	; 2A587
+add esp, byte 0Ch	; 2A58E
+mov dword [dword esp+0660h], eax	; 2A591
+mov esi, dword [pointerspr]	; 2A598
+mov edi, eax	; 2A59E
+movsd	; 2A5A0
+movsd	; 2A5A1
+movsd	; 2A5A2
+movsd	; 2A5A3
+movsb	; 2A5A4
+mov eax, dword [pointerspr]	; 2A5A5
+mov ax, word [byte eax+04h]	; 2A5AA
+inc eax	; 2A5AE
+mov edx, dword [dword esp+063Ch]	; 2A5AF
+mov word [byte edx+04h], ax	; 2A5B6
+mov eax, dword [pointerspr]	; 2A5BA
+mov ax, word [byte eax+06h]	; 2A5BF
+inc eax	; 2A5C3
+mov word [byte edx+06h], ax	; 2A5C4
+xor ebp, ebp	; 2A5C8
+mov dword [dword esp+0630h], ebp	; 2A5CA
+xor esi, esi	; 2A5D1
+mov dword [dword esp+0634h], ebp	; 2A5D3
+push dword 1E0h	; 2A5DA
+push dword 280h	; 2A5DF
+push ebp	; 2A5E4
+push ebp	; 2A5E5
+call sub_B2E1B	; 2A5E6
+add esp, byte 10h	; 2A5EB
+mov ecx, dword [dword esp+0634h]	; 2A5EE
+push ecx	; 2A5F5
+mov edi, dword [dword esp+0634h]	; 2A5F6
+push edi	; 2A5FD
+call MouseSetPos	; 2A5FE
+add esp, byte 8	; 2A603
+push ebp	; 2A606
+push ebp	; 2A607
+mov eax, dword [dword esp+0644h]	; 2A608
+push eax	; 2A60F
+call sub_91400	; 2A610
+add esp, byte 0Ch	; 2A615
+push ebp	; 2A618
+push ebp	; 2A619
+mov edx, dword [pointerspr]	; 2A61A
+push edx	; 2A620
+call sub_91370	; 2A621
+add esp, byte 0Ch	; 2A626
+call ClearInputQueue	; 2A629
+cmp byte [musicon], 0	; 2A62E
+je short .25	; 2A635
+cmp dword [songdata], byte 0	; 2A637
+jne short .25	; 2A63E
+mov ecx, str_Iff4	; 2A640
+mov ebx, str_Scouting	; 2A645
+cmp byte [fileoncd+01E3h], 1	; 2A64A
+jne short .23	; 2A651
+mov edx, dword [cddriveptr]	; 2A653
+jmp short .24	; 2A659
+.23:
+xor edx, edx	; 2A65B
+.24:
+lea eax, [dword esp+0610h]	; 2A65D
+call MakePath	; 2A664
+lea eax, [dword esp+0610h]	; 2A669
+call sub_8F98F	; 2A670
+mov dword [songdata], eax	; 2A675
+test eax, eax	; 2A67A
+je short .25	; 2A67C
+test byte [gameopts], 40h	; 2A67E
+je short .25	; 2A685
+mov edx, dword [musichandle]	; 2A687
+mov ecx, 4Ch	; 2A68D
+mov ebx, 3	; 2A692
+call sub_8FB8E	; 2A697
+.25:
+mov ebx, 10h	; 2A69C
+mov edx, dword [dword esp+0644h]	; 2A6A1
+xor eax, eax	; 2A6A8
+call FadePalStep	; 2A6AA
+cmp dword [schedgameidx], 444h	; 2A6AF
+jge short .26	; 2A6B9
+xor edx, edx	; 2A6BB
+mov dl, byte [dword esp+066Ch]	; 2A6BD
+xor eax, eax	; 2A6C4
+mov al, byte [dword esp+0670h]	; 2A6C6
+call PaTonightIntro	; 2A6CD
+jmp near .31	; 2A6D2
+.26:
+xor edx, edx	; 2A6D7
+mov dl, byte [dword esp+0670h]	; 2A6D9
+shl edx, 2	; 2A6E0
+xor eax, eax	; 2A6E3
+mov al, byte [dword esp+066Ch]	; 2A6E5
+shl eax, 2	; 2A6EC
+mov ebx, dword [dword edx+teamconf]	; 2A6EF
+mov edi, dword [dword eax+teamconf]	; 2A6F5
+cmp ebx, edi	; 2A6FB
+je short .27	; 2A6FD
+mov ecx, 3	; 2A6FF
+jmp short .28	; 2A704
+.27:
+mov edx, dword [dword edx+teamconf]	; 2A706
+or edx, edi	; 2A70C
+mov ebx, 2	; 2A70E
+mov eax, edx	; 2A713
+sar edx, 1Fh	; 2A715
+idiv ebx	; 2A718
+lea ecx, [byte edx+01h]	; 2A71A
+.28:
+mov eax, 1	; 2A71D
+cmp dword [schedgameidx], 47Ch	; 2A722
+jl short .29	; 2A72C
+mov eax, 2	; 2A72E
+.29:
+cmp dword [schedgameidx], 498h	; 2A733
+jl short .30	; 2A73D
+mov eax, 3	; 2A73F
+.30:
+push eax	; 2A744
+mov edx, dword [schedgameidx]	; 2A745
+sub edx, 444h	; 2A74B
+mov ebx, 7	; 2A751
+mov eax, edx	; 2A756
+sar edx, 1Fh	; 2A758
+idiv ebx	; 2A75B
+lea ebx, [byte edx+01h]	; 2A75D
+xor edx, edx	; 2A760
+mov dl, byte [dword esp+0670h]	; 2A762
+xor eax, eax	; 2A769
+mov al, byte [dword esp+0674h]	; 2A76B
+call PaPlayoffTonight	; 2A772
+.31:
+xor ebx, ebx	; 2A777
+mov dword [dword esp+0664h], ebx	; 2A779
+mov dword [dword esp+0640h], ebx	; 2A780
+.32:
+xor edi, edi	; 2A787
+mov dword [dword esp+064Ch], edi	; 2A789
+.33:
+call GetInputEvent	; 2A790
+mov ecx, eax	; 2A795
+test eax, eax	; 2A797
+je short .34	; 2A799
+lea ebx, [dword esp+0634h]	; 2A79B
+lea edx, [dword esp+0630h]	; 2A7A2
+call dword [ptrupdatefn]	; 2A7A9
+mov dword [dword esp+064Ch], eax	; 2A7AF
+.34:
+test ecx, ecx	; 2A7B6
+je short .35	; 2A7B8
+test byte [dword esp+064Ch], 6	; 2A7BA
+je short PreGameScreen.33	; 2A7C2
+.35:
+cmp dword [dword esp+064Ch], byte 0	; 2A7C4
+jne short .37	; 2A7CC
+cmp ebp, dword [dword esp+0630h]	; 2A7CE
+jne short .36	; 2A7D5
+cmp esi, dword [dword esp+0634h]	; 2A7D7
+je near PreGameScreen_homelines.7	; 2A7DE
+.36:
+push esi	; 2A7E4
+push ebp	; 2A7E5
+mov ecx, dword [dword esp+0668h]	; 2A7E6
+push ecx	; 2A7ED
+call sub_903F0	; 2A7EE
+add esp, byte 0Ch	; 2A7F3
+mov esi, dword [dword esp+0634h]	; 2A7F6
+push esi	; 2A7FD
+mov edi, dword [dword esp+0634h]	; 2A7FE
+push edi	; 2A805
+mov ebp, dword [dword esp+0668h]	; 2A806
+push ebp	; 2A80D
+call sub_91400	; 2A80E
+add esp, byte 0Ch	; 2A813
+mov eax, dword [dword esp+0634h]	; 2A816
+push eax	; 2A81D
+mov edx, dword [dword esp+0634h]	; 2A81E
+push edx	; 2A825
+mov ebx, dword [pointerspr]	; 2A826
+push ebx	; 2A82C
+jmp near PreGameScreen_homelines.5	; 2A82D
+.37:
+test byte [dword esp+064Ch], 4	; 2A832
+je short .38	; 2A83A
+mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A83C
+mov dword [dword esp+0640h], 3	; 2A847
+jmp near PreGameScreen_homelines.7	; 2A852
+.38:
+push esi	; 2A857
+push ebp	; 2A858
+mov edx, dword [dword esp+0668h]	; 2A859
+push edx	; 2A860
+call sub_903F0	; 2A861
+add esp, byte 0Ch	; 2A866
+mov ebx, dword [dword esp+064Ch]	; 2A869
+push ebx	; 2A870
+mov ecx, dword [dword esp+0638h]	; 2A871
+mov ebx, dword [dword esp+0634h]	; 2A878
+mov edx, dword [dword esp+0654h]	; 2A87F
+mov eax, dword [dword esp+0658h]	; 2A886
+call TrackButtons	; 2A88D
+mov edx, eax	; 2A892
+test eax, eax	; 2A894
+jl near PreGameScreen_homelines.4	; 2A896
+cmp dword [off_CEF63], byte 0	; 2A89C
+jne short .39	; 2A8A3
+lea edx, [byte eax+01h]	; 2A8A5
+.39:
+cmp edx, byte 3	; 2A8A8
+ja near PreGameScreen_homelines.3	; 2A8AB
+jmp dword [nosplit cs:edx*4+PreGameScreen_jt]	; 2A8B1
+PreGameScreen_awaylines:
+mov eax, dword [VisTeam-2]	; 2A8B9
+sar eax, 10h	; 2A8BE
+cmp eax, dword [ctl1team]	; 2A8C1
+je short .1	; 2A8C7
+cmp eax, dword [ctl2team]	; 2A8C9
+jne near PreGameScreen_homelines.3	; 2A8CF
+.1:
+push byte 20h	; 2A8D5
+push dword 4B011h	; 2A8D7
+push str_Screen	; 2A8DC
+call sub_8CCA8	; 2A8E1
+mov ebp, eax	; 2A8E6
+add esp, byte 0Ch	; 2A8E8
+mov esi, dword [pointerspr]	; 2A8EB
+mov edi, eax	; 2A8F1
+movsd	; 2A8F3
+movsd	; 2A8F4
+movsd	; 2A8F5
+movsd	; 2A8F6
+movsb	; 2A8F7
+mov word [byte eax+04h], 280h	; 2A8F8
+mov word [byte eax+06h], 1E0h	; 2A8FE
+push byte 0	; 2A904
+push byte 0	; 2A906
+push eax	; 2A908
+call sub_91400	; 2A909
+add esp, byte 0Ch	; 2A90E
+mov ecx, 3	; 2A911
+mov ebx, unk_CF1AF	; 2A916
+mov edx, awlinetab	; 2A91B
+mov eax, 1	; 2A920
+jmp near PreGameScreen_homelines.2	; 2A925
+PreGameScreen_play:
+mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A92A
+jmp near PreGameScreen_homelines.3	; 2A935
+PreGameScreen_cancel:
+mov dword [dword esp+0664h], 0FFFFFFFFh	; 2A93A
+mov dword [dword esp+0640h], 3	; 2A945
+jmp near PreGameScreen_homelines.3	; 2A950
+PreGameScreen_homelines:
+mov eax, dword [HomeTeam-2]	; 2A955
+sar eax, 10h	; 2A95A
+cmp eax, dword [ctl1team]	; 2A95D
+je short .1	; 2A963
+cmp eax, dword [ctl2team]	; 2A965
+jne near .3	; 2A96B
+.1:
+push byte 20h	; 2A971
+push dword 4B011h	; 2A973
+push str_Screen	; 2A978
+call sub_8CCA8	; 2A97D
+mov ebp, eax	; 2A982
+add esp, byte 0Ch	; 2A984
+mov esi, dword [pointerspr]	; 2A987
+mov edi, eax	; 2A98D
+movsd	; 2A98F
+movsd	; 2A990
+movsd	; 2A991
+movsd	; 2A992
+movsb	; 2A993
+mov word [byte eax+04h], 280h	; 2A994
+mov word [byte eax+06h], 1E0h	; 2A99A
+push byte 0	; 2A9A0
+push byte 0	; 2A9A2
+push eax	; 2A9A4
+call sub_91400	; 2A9A5
+add esp, byte 0Ch	; 2A9AA
+mov ecx, 3	; 2A9AD
+mov ebx, unk_CF1AF	; 2A9B2
+mov edx, hmlinetab	; 2A9B7
+xor eax, eax	; 2A9BC
+.2:
+call GameLineEditor	; 2A9BE
+push byte 20h	; 2A9C3
+push dword 300h	; 2A9C5
+push str_Pal10	; 2A9CA
+call sub_8CCA8	; 2A9CF
+mov esi, eax	; 2A9D4
+add esp, byte 0Ch	; 2A9D6
+push eax	; 2A9D9
+push dword 100h	; 2A9DA
+push byte 0	; 2A9DF
+call sub_8FFB0	; 2A9E1
+add esp, byte 0Ch	; 2A9E6
+mov ebx, 10h	; 2A9E9
+mov edx, esi	; 2A9EE
+mov eax, 1	; 2A9F0
+call FadePalStep	; 2A9F5
+push esi	; 2A9FA
+call FreeMemBlock	; 2A9FB
+add esp, byte 4	; 2AA00
+push byte 0	; 2AA03
+push byte 0	; 2AA05
+push ebp	; 2AA07
+call sub_903F0	; 2AA08
+add esp, byte 0Ch	; 2AA0D
+push ebp	; 2AA10
+call FreeMemBlock	; 2AA11
+add esp, byte 4	; 2AA16
+mov ebx, 10h	; 2AA19
+mov edx, dword [dword esp+0644h]	; 2AA1E
+xor eax, eax	; 2AA25
+call FadePalStep	; 2AA27
+mov edx, 0F7h	; 2AA2C
+mov eax, 0FAh	; 2AA31
+call SetTextColors	; 2AA36
+.3:
+call sub_B4BA8	; 2AA3B
+.4:
+mov esi, dword [dword esp+0634h]	; 2AA40
+push esi	; 2AA47
+mov edi, dword [dword esp+0634h]	; 2AA48
+push edi	; 2AA4F
+mov ebp, dword [dword esp+0668h]	; 2AA50
+push ebp	; 2AA57
+call sub_91400	; 2AA58
+add esp, byte 0Ch	; 2AA5D
+cmp dword [dword esp+0664h], byte 0	; 2AA60
+jne short .6	; 2AA68
+mov edx, dword [dword esp+0634h]	; 2AA6A
+push edx	; 2AA71
+mov ebx, dword [dword esp+0634h]	; 2AA72
+push ebx	; 2AA79
+mov ecx, dword [pointerspr]	; 2AA7A
+push ecx	; 2AA80
+.5:
+call sub_91370	; 2AA81
+add esp, byte 0Ch	; 2AA86
+.6:
+mov ebp, dword [dword esp+0630h]	; 2AA89
+mov esi, dword [dword esp+0634h]	; 2AA90
+.7:
+cmp dword [dword esp+0664h], byte 0	; 2AA97
+je near PreGameScreen.32	; 2AA9F
+cmp byte [musicon], 0	; 2AAA5
+je short .8	; 2AAAC
+cmp dword [songdata], byte 0	; 2AAAE
+je short .8	; 2AAB5
+mov eax, dword [musichandle]	; 2AAB7
+mov ebx, 64h	; 2AABC
+mov edx, 3	; 2AAC1
+call sub_8FCDF	; 2AAC6
+.8:
+mov ebx, 10h	; 2AACB
+mov edx, dword [dword esp+0644h]	; 2AAD0
+mov eax, 1	; 2AAD7
+call FadePalStep	; 2AADC
+cmp byte [musicon], 0	; 2AAE1
+je short .10	; 2AAE8
+cmp dword [songdata], byte 0	; 2AAEA
+je short .10	; 2AAF1
+.9:
+mov eax, dword [musicslot-3]	; 2AAF3
+sar eax, 18h	; 2AAF8
+mov edx, 3	; 2AAFB
+call sub_8FC8A	; 2AB00
+test eax, eax	; 2AB05
+je short PreGameScreen_homelines.9	; 2AB07
+mov ebp, dword [songdata]	; 2AB09
+push ebp	; 2AB0F
+call sub_8D2F0	; 2AB10
+add esp, byte 4	; 2AB15
+xor eax, eax	; 2AB18
+mov dword [songdata], eax	; 2AB1A
+.10:
+cmp byte [musicon], 0	; 2AB1F
+je short .12	; 2AB26
+test byte [gameopts+1], 1	; 2AB28
+je short .12	; 2AB2F
+call MusicChanReset2	; 2AB31
+.11:
+call SpeechBusy	; 2AB36
+test eax, eax	; 2AB3B
+jne short PreGameScreen_homelines.11	; 2AB3D
+.12:
+lea eax, [dword esp+05D0h]	; 2AB3F
+push eax	; 2AB46
+call sub_8EA00	; 2AB47
+add esp, byte 4	; 2AB4C
+mov edx, dword [dword esp+0644h]	; 2AB4F
+push edx	; 2AB56
+call FreeMemBlock	; 2AB57
+add esp, byte 4	; 2AB5C
+mov ebx, dword [dword esp+0660h]	; 2AB5F
+push ebx	; 2AB66
+call FreeMemBlock	; 2AB67
+add esp, byte 4	; 2AB6C
+cmp dword [dword esp+0640h], byte 2	; 2AB6F
+jge short .13	; 2AB77
+xor ecx, ecx	; 2AB79
+mov cl, byte [dword esp+066Ch]	; 2AB7B
+xor ebx, ebx	; 2AB82
+mov bl, byte [dword esp+0670h]	; 2AB84
+mov edx, ecx	; 2AB8B
+mov eax, ebx	; 2AB8D
+call TonightsGameScreen	; 2AB8F
+mov dword [dword esp+0640h], eax	; 2AB94
+mov edx, dword [nosplit ecx*4+teamabbrevs]	; 2AB9B
+mov eax, dword [nosplit ebx*4+teamabbrevs]	; 2ABA2
+call PaPreloadClips	; 2ABA9
+.13:
+xor esi, esi	; 2ABAE
+mov dword [dword esp+0664h], esi	; 2ABB0
+cmp dword [dword esp+0640h], byte 3	; 2ABB7
+jne short .14	; 2ABBF
+mov dword [dword esp+0664h], 4	; 2ABC1
+.14:
+mov eax, dword [dword esp+0664h]	; 2ABCC
+add esp, 674h	; 2ABD3
+pop ebp	; 2ABD9
+pop edi	; 2ABDA
+pop esi	; 2ABDB
+pop ecx	; 2ABDC
+pop ebx	; 2ABDD
+ret	; 2ABDE
+%endif ; C
+; C: src/c/front/pregame/TonightsGameScreen.c
+%ifdef CBUILD
+%include "c/front/pregame/TonightsGameScreen.inc"
+%else
+TonightsGameScreen:
+push dword 148h	; 2ABDF
+call __CHK	; 2ABE4
+push ebx	; 2ABE9
+push ecx	; 2ABEA
+push esi	; 2ABEB
+push edi	; 2ABEC
+push ebp	; 2ABED
+sub esp, 120h	; 2ABEE
+mov dword [dword esp+0E8h], 0FFFFFFFFh	; 2ABF4
+call ClearInputQueue	; 2ABFF
+xor ebp, ebp	; 2AC04
+call sub_B4BA8	; 2AC06
+push ebp	; 2AC0B
+call sub_B392C	; 2AC0C
+add esp, byte 4	; 2AC11
+xor ecx, ecx	; 2AC14
+mov ebx, str_Ctlogo	; 2AC16
+cmp byte [fileoncd+059h], 1	; 2AC1B
+jne short .1	; 2AC22
+mov edx, dword [cddriveptr]	; 2AC24
+jmp short .2	; 2AC2A
+.1:
+xor edx, edx	; 2AC2C
+.2:
+lea eax, [dword esp+0C8h]	; 2AC2E
+call MakePath	; 2AC35
+push byte 0	; 2AC3A
+lea eax, [dword esp+0CCh]	; 2AC3C
+push eax	; 2AC43
+call sub_8E83C	; 2AC44
+mov dword [dword esp+0104h], eax	; 2AC49
+add esp, byte 8	; 2AC50
+mov eax, dword [HomeTeam-2]	; 2AC53
+sar eax, 10h	; 2AC58
+mov ebx, dword [nosplit eax*4+crestnames]	; 2AC5B
+push ebx	; 2AC62
+mov ecx, dword [dword esp+0100h]	; 2AC63
+push ecx	; 2AC6A
+call sub_B30B4	; 2AC6B
+mov dword [dword esp+0F4h], eax	; 2AC70
+add esp, byte 8	; 2AC77
+mov eax, dword [byte eax+02h]	; 2AC7A
+sar eax, 10h	; 2AC7D
+mov edx, dword [dword esp+0ECh]	; 2AC80
+mov edx, dword [byte edx+04h]	; 2AC87
+sar edx, 10h	; 2AC8A
+imul eax, edx	; 2AC8D
+add eax, byte 11h	; 2AC90
+mov dword [dword esp+0110h], eax	; 2AC93
+push byte 20h	; 2AC9A
+push eax	; 2AC9C
+push str_Logohome	; 2AC9D
+call sub_8CCA8	; 2ACA2
+add esp, byte 0Ch	; 2ACA7
+mov dword [dword esp+0E0h], eax	; 2ACAA
+mov edi, eax	; 2ACB1
+mov esi, dword [dword esp+0ECh]	; 2ACB3
+movsd	; 2ACBA
+movsd	; 2ACBB
+movsd	; 2ACBC
+movsd	; 2ACBD
+movsb	; 2ACBE
+push byte 0	; 2ACBF
+push byte 0	; 2ACC1
+mov edi, dword [dword esp+0F4h]	; 2ACC3
+push edi	; 2ACCA
+call sub_903F0	; 2ACCB
+add esp, byte 0Ch	; 2ACD0
+push byte 0	; 2ACD3
+push byte 0	; 2ACD5
+mov eax, dword [dword esp+0E8h]	; 2ACD7
+push eax	; 2ACDE
+call sub_91400	; 2ACDF
+add esp, byte 0Ch	; 2ACE4
+mov eax, dword [VisTeam-2]	; 2ACE7
+sar eax, 10h	; 2ACEC
+mov edx, dword [nosplit eax*4+crestnames]	; 2ACEF
+push edx	; 2ACF6
+mov ebx, dword [dword esp+0100h]	; 2ACF7
+push ebx	; 2ACFE
+call sub_B30B4	; 2ACFF
+mov dword [dword esp+0F4h], eax	; 2AD04
+add esp, byte 8	; 2AD0B
+mov edx, dword [byte eax+02h]	; 2AD0E
+sar edx, 10h	; 2AD11
+mov eax, dword [byte eax+04h]	; 2AD14
+sar eax, 10h	; 2AD17
+imul eax, edx	; 2AD1A
+add eax, byte 11h	; 2AD1D
+mov dword [dword esp+0110h], eax	; 2AD20
+push byte 20h	; 2AD27
+push eax	; 2AD29
+push str_Logoaway	; 2AD2A
+call sub_8CCA8	; 2AD2F
+add esp, byte 0Ch	; 2AD34
+mov dword [dword esp+0E4h], eax	; 2AD37
+mov edi, eax	; 2AD3E
+mov esi, dword [dword esp+0ECh]	; 2AD40
+movsd	; 2AD47
+movsd	; 2AD48
+movsd	; 2AD49
+movsd	; 2AD4A
+movsb	; 2AD4B
+push byte 0	; 2AD4C
+push byte 0	; 2AD4E
+mov esi, dword [dword esp+0F4h]	; 2AD50
+push esi	; 2AD57
+call sub_903F0	; 2AD58
+add esp, byte 0Ch	; 2AD5D
+push byte 0	; 2AD60
+push byte 0	; 2AD62
+mov edi, dword [dword esp+0ECh]	; 2AD64
+push edi	; 2AD6B
+call sub_91400	; 2AD6C
+add esp, byte 0Ch	; 2AD71
+mov eax, dword [dword esp+0FCh]	; 2AD74
+push eax	; 2AD7B
+call FreeMemBlock	; 2AD7C
+add esp, byte 4	; 2AD81
+xor ecx, ecx	; 2AD84
+mov ebx, str_Ctbkgd	; 2AD86
+cmp byte [fileoncd+058h], 1	; 2AD8B
+jne short .3	; 2AD92
+mov edx, dword [cddriveptr]	; 2AD94
+jmp short .4	; 2AD9A
+.3:
+xor edx, edx	; 2AD9C
+.4:
+lea eax, [dword esp+0C8h]	; 2AD9E
+call MakePath	; 2ADA5
+push byte 0	; 2ADAA
+lea eax, [dword esp+0CCh]	; 2ADAC
+push eax	; 2ADB3
+call sub_8E83C	; 2ADB4
+mov esi, eax	; 2ADB9
+add esp, byte 8	; 2ADBB
+mov dword [dword esp+0F0h], eax	; 2ADBE
+push str_Bkgd4	; 2ADC5
+push eax	; 2ADCA
+call sub_B30B4	; 2ADCB
+add esp, byte 8	; 2ADD0
+mov dword [dword esp+0100h], eax	; 2ADD3
+push str_Pal12	; 2ADDA
+push esi	; 2ADDF
+call sub_B30B4	; 2ADE0
+add esp, byte 8	; 2ADE5
+add eax, byte 10h	; 2ADE8
+mov dword [dword esp+0108h], eax	; 2ADEB
+xor ecx, ecx	; 2ADF2
+mov ebx, str_Cttitle1	; 2ADF4
+cmp byte [fileoncd+05Ah], 1	; 2ADF9
+jne short .5	; 2AE00
+mov edx, dword [cddriveptr]	; 2AE02
+jmp short .6	; 2AE08
+.5:
+xor edx, edx	; 2AE0A
+.6:
+lea eax, [dword esp+0C8h]	; 2AE0C
+call MakePath	; 2AE13
+push byte 0	; 2AE18
+lea eax, [dword esp+0CCh]	; 2AE1A
+push eax	; 2AE21
+call sub_8E83C	; 2AE22
+mov esi, eax	; 2AE27
+add esp, byte 8	; 2AE29
+mov dword [dword esp+0F8h], eax	; 2AE2C
+push str_Def	; 2AE33
+push eax	; 2AE38
+call sub_B30B4	; 2AE39
+add esp, byte 8	; 2AE3E
+mov dword [dword esp+094h], eax	; 2AE41
+push str_Fowa	; 2AE48
+push esi	; 2AE4D
+call sub_B30B4	; 2AE4E
+add esp, byte 8	; 2AE53
+mov dword [dword esp+098h], eax	; 2AE56
+push str_Scra	; 2AE5D
+push esi	; 2AE62
+call sub_B30B4	; 2AE63
+add esp, byte 8	; 2AE68
+mov dword [dword esp+0B0h], eax	; 2AE6B
+push str_Tlu	; 2AE72
+push esi	; 2AE77
+call sub_B30B4	; 2AE78
+add esp, byte 8	; 2AE7D
+mov dword [dword esp+0B8h], eax	; 2AE80
+push str_Top	; 2AE87
+push esi	; 2AE8C
+call sub_B30B4	; 2AE8D
+add esp, byte 8	; 2AE92
+mov dword [dword esp+0BCh], eax	; 2AE95
+lea eax, [byte esp+054h]	; 2AE9C
+push eax	; 2AEA0
+call sub_8E9E8	; 2AEA1
+add esp, byte 4	; 2AEA6
+mov ecx, str_VFN	; 2AEA9
+mov ebx, str_Indus030	; 2AEAE
+cmp byte [fileoncd+021Ah], 1	; 2AEB3
+jne short .7	; 2AEBA
+mov edx, dword [cddriveptr]	; 2AEBC
+jmp short .8	; 2AEC2
+.7:
+xor edx, edx	; 2AEC4
+.8:
+mov eax, esp	; 2AEC6
+call MakePath	; 2AEC8
+push byte 20h	; 2AECD
+lea eax, [byte esp+04h]	; 2AECF
+push eax	; 2AED3
+call sub_8E8A0	; 2AED4
+add esp, byte 8	; 2AED9
+mov dword [dword esp+0F4h], eax	; 2AEDC
+push eax	; 2AEE3
+call sub_8EA18	; 2AEE4
+add esp, byte 4	; 2AEE9
+xor edx, edx	; 2AEEC
+mov eax, 40h	; 2AEEE
+call SetTextColors	; 2AEF3
+test ebp, ebp	; 2AEF8
+jne short .9	; 2AEFA
+mov ebx, dword [leaguedbnames]	; 2AEFC
+mov ecx, str_extDB	; 2AF02
+mov edx, curleague	; 2AF07
+mov eax, esp	; 2AF0C
+call MakePath	; 2AF0E
+lea edx, [dword esp+0E8h]	; 2AF13
+mov eax, esp	; 2AF1A
+call FileOpenRead	; 2AF1C
+mov ebp, eax	; 2AF21
+.9:
+test ebp, ebp	; 2AF23
+jne near .16	; 2AF25
+push byte 20h	; 2AF2B
+push dword 0B60h	; 2AF2D
+push str_GIPK	; 2AF32
+call sub_8CCA8	; 2AF37
+add esp, byte 0Ch	; 2AF3C
+mov dword [dword esp+010Ch], eax	; 2AF3F
+mov dword [dword esp+0110h], ebp	; 2AF46
+jmp near .15	; 2AF4D
+.10:
+xor esi, esi	; 2AF52
+jmp short .13	; 2AF54
+.11:
+mov edx, dword [dword esp+0110h]	; 2AF56
+mov eax, edx	; 2AF5D
+shl eax, 2	; 2AF5F
+sub eax, edx	; 2AF62
+shl eax, 3	; 2AF64
+mov edx, eax	; 2AF67
+shl eax, 5	; 2AF69
+sub eax, edx	; 2AF6C
+mov ebx, esi	; 2AF6E
+mov ebx, dword [dword eax+ebx*4+dword_DBC7C]	; 2AF70
+cmp ebx, byte 0FFFFFFFFh	; 2AF77
+je short .12	; 2AF7A
+mov edx, dword [dword esp+0110h]	; 2AF7C
+mov eax, edx	; 2AF83
+shl eax, 3	; 2AF85
+sub eax, edx	; 2AF88
+shl eax, 2	; 2AF8A
+lea edx, [eax+esi]	; 2AF8D
+mov eax, edx	; 2AF90
+shl eax, 2	; 2AF92
+sub eax, edx	; 2AF95
+shl eax, 2	; 2AF97
+add eax, edx	; 2AF9A
+shl eax, 2	; 2AF9C
+mov edx, dword [dword esp+010Ch]	; 2AF9F
+add edx, eax	; 2AFA6
+mov eax, dword [dword esp+0E8h]	; 2AFA8
+call ReadKeyRec	; 2AFAF
+mov ebp, eax	; 2AFB4
+.12:
+inc esi	; 2AFB6
+.13:
+cmp esi, byte 1Ch	; 2AFB7
+jge short .14	; 2AFBA
+test ebp, ebp	; 2AFBC
+je short TonightsGameScreen.11	; 2AFBE
+.14:
+inc dword [dword esp+0110h]	; 2AFC0
+.15:
+cmp dword [dword esp+0110h], byte 2	; 2AFC7
+jge short .16	; 2AFCF
+test ebp, ebp	; 2AFD1
+je near TonightsGameScreen.10	; 2AFD3
+.16:
+lea eax, [dword esp+0E8h]	; 2AFD9
+call FileClose	; 2AFE0
+mov dword [dword esp+0D8h], hmlinetab	; 2AFE5
+mov dword [dword esp+0DCh], awlinetab	; 2AFF0
+xor ebp, ebp	; 2AFFB
+mov dword [dword esp+0104h], ebp	; 2AFFD
+xor esi, esi	; 2B004
+cmp byte [musicon], 0	; 2B006
+je short .19	; 2B00D
+cmp dword [songdata], byte 0	; 2B00F
+jne short .19	; 2B016
+mov ecx, str_Iff5	; 2B018
+mov ebx, str_Tonights	; 2B01D
+cmp byte [fileoncd+01DFh], 1	; 2B022
+jne short .17	; 2B029
+mov edx, dword [cddriveptr]	; 2B02B
+jmp short .18	; 2B031
+.17:
+xor edx, edx	; 2B033
+.18:
+lea eax, [dword esp+0C8h]	; 2B035
+call MakePath	; 2B03C
+lea eax, [dword esp+0C8h]	; 2B041
+call sub_8F98F	; 2B048
+mov dword [songdata], eax	; 2B04D
+test eax, eax	; 2B052
+je short .19	; 2B054
+test byte [gameopts], 40h	; 2B056
+je short .19	; 2B05D
+mov edx, dword [musichandle]	; 2B05F
+mov ecx, 4Ch	; 2B065
+mov ebx, 3	; 2B06A
+call sub_8FB8E	; 2B06F
+.19:
+xor edx, edx	; 2B074
+mov dword [dword esp+0114h], edx	; 2B076
+jmp near .48	; 2B07D
+.20:
+call sub_B4BA8	; 2B082
+cmp dword [dword esp+0114h], byte 0	; 2B087
+je short .21	; 2B08F
+push dword 1E0h	; 2B091
+push dword 8Ch	; 2B096
+push dword 280h	; 2B09B
+push dword 80h	; 2B0A0
+call sub_B4BC4	; 2B0A5
+add esp, byte 10h	; 2B0AA
+mov ebx, dword [dword esp+0100h]	; 2B0AD
+push ebx	; 2B0B4
+call sub_9061C	; 2B0B5
+add esp, byte 4	; 2B0BA
+push dword 8Ch	; 2B0BD
+push ebp	; 2B0C2
+push dword 80h	; 2B0C3
+push ebp	; 2B0C8
+call sub_B4BC4	; 2B0C9
+add esp, byte 10h	; 2B0CE
+mov ecx, dword [dword esp+0100h]	; 2B0D1
+push ecx	; 2B0D8
+call sub_9061C	; 2B0D9
+add esp, byte 4	; 2B0DE
+push dword 1E0h	; 2B0E1
+push ebp	; 2B0E6
+push dword 80h	; 2B0E7
+push ebp	; 2B0EC
+call sub_B4BC4	; 2B0ED
+add esp, byte 10h	; 2B0F2
+jmp short .22	; 2B0F5
+.21:
+push dword 1E0h	; 2B0F7
+push ebp	; 2B0FC
+push dword 280h	; 2B0FD
+push ebp	; 2B102
+call sub_B4BC4	; 2B103
+add esp, byte 10h	; 2B108
+mov edx, dword [dword esp+0100h]	; 2B10B
+push edx	; 2B112
+call sub_9061C	; 2B113
+add esp, byte 4	; 2B118
+.22:
+lea eax, [dword esp+011Ch]	; 2B11B
+push eax	; 2B122
+push byte 0	; 2B123
+lea ecx, [dword esp+09Ch]	; 2B125
+mov ebx, dword [dword esp+0110h]	; 2B12C
+xor edx, edx	; 2B133
+mov eax, 8	; 2B135
+call DrawGadgetByType	; 2B13A
+push dword 1E0h	; 2B13F
+push byte 0	; 2B144
+push dword 280h	; 2B146
+push byte 0	; 2B14B
+call sub_B4BC4	; 2B14D
+add esp, byte 10h	; 2B152
+push byte 50h	; 2B155
+push byte 3Dh	; 2B157
+mov eax, dword [dword esp+011Ch]	; 2B159
+mov esi, dword [dword esp+eax*4+0E8h]	; 2B160
+push esi	; 2B167
+call sub_913D0	; 2B168
+add esp, byte 0Ch	; 2B16D
+xor edx, edx	; 2B170
+mov eax, 40h	; 2B172
+call SetTextColors	; 2B177
+push dword 154h	; 2B17C
+push byte 0	; 2B181
+push dword 280h	; 2B183
+push byte 0	; 2B188
+call sub_B4BC4	; 2B18A
+add esp, byte 10h	; 2B18F
+movzx edi, byte [byte_D42C3]	; 2B192
+add edi, 0A6h	; 2B199
+xor eax, eax	; 2B19F
+mov dword [dword esp+0110h], eax	; 2B1A1
+jmp near .28	; 2B1A8
+.23:
+xor esi, esi	; 2B1AD
+jmp near .26	; 2B1AF
+.24:
+mov ebx, dword [dword esp+0114h]	; 2B1B4
+mov edx, dword [dword esp+0110h]	; 2B1BB
+mov eax, edx	; 2B1C2
+shl eax, 2	; 2B1C4
+sub eax, edx	; 2B1C7
+mov edx, eax	; 2B1C9
+mov eax, dword [dword esp+ebx*4+0D8h]	; 2B1CB
+add eax, edx	; 2B1D2
+mov al, byte [esi+eax]	; 2B1D4
+and eax, 0FFh	; 2B1D7
+mov dword [dword esp+0118h], eax	; 2B1DC
+mov eax, ebx	; 2B1E3
+shl eax, 3	; 2B1E5
+sub eax, ebx	; 2B1E8
+shl eax, 2	; 2B1EA
+mov edx, dword [dword esp+0118h]	; 2B1ED
+add edx, eax	; 2B1F4
+mov eax, edx	; 2B1F6
+shl eax, 2	; 2B1F8
+sub eax, edx	; 2B1FB
+shl eax, 2	; 2B1FD
+add eax, edx	; 2B200
+shl eax, 2	; 2B202
+mov edx, dword [dword esp+010Ch]	; 2B205
+add edx, eax	; 2B20C
+test ebp, ebp	; 2B20E
+jne short .25	; 2B210
+lea ebx, [byte edx+013h]	; 2B212
+mov ecx, 0C8h	; 2B215
+xor edx, edx	; 2B21A
+mov eax, esp	; 2B21C
+call FitPlayerName	; 2B21E
+mov eax, esp	; 2B223
+push eax	; 2B225
+call fputchar	; 2B226
+add esp, byte 4	; 2B22B
+mov edx, 96h	; 2B22E
+sub edx, eax	; 2B233
+mov eax, edx	; 2B235
+sar edx, 1Fh	; 2B237
+LD sub, eax, edx	; 2B23A
+sar eax, 1	; 2B23C
+mov ebx, eax	; 2B23E
+mov eax, esi	; 2B240
+shl eax, 2	; 2B242
+add eax, esi	; 2B245
+add eax, eax	; 2B247
+mov edx, eax	; 2B249
+shl eax, 4	; 2B24B
+sub eax, edx	; 2B24E
+add eax, 91h	; 2B250
+add eax, ebx	; 2B255
+mov ebx, esp	; 2B257
+mov edx, edi	; 2B259
+call PrintShadowText	; 2B25B
+.25:
+inc esi	; 2B260
+.26:
+cmp esi, byte 3	; 2B261
+jge short .27	; 2B264
+test ebp, ebp	; 2B266
+je near TonightsGameScreen.24	; 2B268
+.27:
+xor eax, eax	; 2B26E
+mov al, byte [byte_D42C3]	; 2B270
+add eax, byte 0Eh	; 2B275
+add edi, eax	; 2B278
+inc dword [dword esp+0110h]	; 2B27A
+.28:
+cmp dword [dword esp+0110h], byte 4	; 2B281
+jge short .29	; 2B289
+test ebp, ebp	; 2B28B
+je near TonightsGameScreen.23	; 2B28D
+.29:
+cmp dword [dword esp+0104h], byte 0	; 2B293
+jne short .31	; 2B29B
+mov ebx, 10h	; 2B29D
+mov edx, dword [dword esp+0108h]	; 2B2A2
+xor eax, eax	; 2B2A9
+call FadePalStep	; 2B2AB
+cmp dword [dword esp+0114h], byte 0	; 2B2B0
+jne short .30	; 2B2B8
+call PaLineups	; 2B2BA
+.30:
+mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B2BF
+.31:
+mov eax, 3E8h	; 2B2CA
+call WaitClickTimeout	; 2B2CF
+mov esi, eax	; 2B2D4
+cmp eax, byte 2	; 2B2D6
+jge near .40	; 2B2D9
+call sub_B4BA8	; 2B2DF
+push dword 1E0h	; 2B2E4
+push dword 8Ch	; 2B2E9
+push dword 280h	; 2B2EE
+push dword 80h	; 2B2F3
+call sub_B4BC4	; 2B2F8
+add esp, byte 10h	; 2B2FD
+mov edx, dword [dword esp+0100h]	; 2B300
+push edx	; 2B307
+call sub_9061C	; 2B308
+add esp, byte 4	; 2B30D
+push dword 1E0h	; 2B310
+push dword 8Ch	; 2B315
+push dword 80h	; 2B31A
+push byte 0	; 2B31F
+call sub_B4BC4	; 2B321
+add esp, byte 10h	; 2B326
+lea eax, [dword esp+011Ch]	; 2B329
+push eax	; 2B330
+push byte 0	; 2B331
+lea ecx, [dword esp+09Ch]	; 2B333
+mov ebx, dword [dword esp+0110h]	; 2B33A
+xor edx, edx	; 2B341
+mov eax, 10h	; 2B343
+call DrawGadgetByType	; 2B348
+push byte 50h	; 2B34D
+push byte 3Dh	; 2B34F
+mov eax, dword [dword esp+011Ch]	; 2B351
+mov ebx, dword [dword esp+eax*4+0E8h]	; 2B358
+push ebx	; 2B35F
+call sub_913D0	; 2B360
+add esp, byte 0Ch	; 2B365
+push dword 1E0h	; 2B368
+push byte 0	; 2B36D
+push dword 280h	; 2B36F
+push byte 0	; 2B374
+call sub_B4BC4	; 2B376
+add esp, byte 10h	; 2B37B
+movzx edi, byte [byte_D42C3]	; 2B37E
+add edi, 0A6h	; 2B385
+xor ecx, ecx	; 2B38B
+mov dword [dword esp+0110h], ecx	; 2B38D
+jmp near .37	; 2B394
+.32:
+xor esi, esi	; 2B399
+jmp near .35	; 2B39B
+.33:
+mov eax, dword [dword esp+0114h]	; 2B3A0
+mov edx, dword [dword esp+eax*4+0D8h]	; 2B3A7
+mov eax, dword [dword esp+0110h]	; 2B3AE
+add eax, eax	; 2B3B5
+add eax, edx	; 2B3B7
+mov al, byte [byte esi+eax+0Ch]	; 2B3B9
+and eax, 0FFh	; 2B3BD
+mov dword [dword esp+0118h], eax	; 2B3C2
+mov edx, dword [dword esp+0114h]	; 2B3C9
+mov eax, edx	; 2B3D0
+shl eax, 3	; 2B3D2
+sub eax, edx	; 2B3D5
+shl eax, 2	; 2B3D7
+mov edx, dword [dword esp+0118h]	; 2B3DA
+add edx, eax	; 2B3E1
+mov eax, edx	; 2B3E3
+shl eax, 2	; 2B3E5
+sub eax, edx	; 2B3E8
+shl eax, 2	; 2B3EA
+add eax, edx	; 2B3ED
+shl eax, 2	; 2B3EF
+mov edx, dword [dword esp+010Ch]	; 2B3F2
+add edx, eax	; 2B3F9
+test ebp, ebp	; 2B3FB
+jne short .34	; 2B3FD
+lea ebx, [byte edx+013h]	; 2B3FF
+mov ecx, 0C8h	; 2B402
+xor edx, edx	; 2B407
+mov eax, esp	; 2B409
+call FitPlayerName	; 2B40B
+mov eax, esp	; 2B410
+push eax	; 2B412
+call fputchar	; 2B413
+add esp, byte 4	; 2B418
+mov edx, 0F0h	; 2B41B
+sub edx, eax	; 2B420
+mov eax, edx	; 2B422
+sar edx, 1Fh	; 2B424
+LD sub, eax, edx	; 2B427
+sar eax, 1	; 2B429
+mov edx, eax	; 2B42B
+mov eax, esi	; 2B42D
+shl eax, 4	; 2B42F
+sub eax, esi	; 2B432
+shl eax, 4	; 2B434
+add eax, 91h	; 2B437
+add eax, edx	; 2B43C
+mov ebx, esp	; 2B43E
+mov edx, edi	; 2B440
+call PrintShadowText	; 2B442
+.34:
+inc esi	; 2B447
+.35:
+cmp esi, byte 2	; 2B448
+jge short .36	; 2B44B
+test ebp, ebp	; 2B44D
+je near TonightsGameScreen.33	; 2B44F
+.36:
+xor eax, eax	; 2B455
+mov al, byte [byte_D42C3]	; 2B457
+add eax, byte 0Eh	; 2B45C
+add edi, eax	; 2B45F
+inc dword [dword esp+0110h]	; 2B461
+.37:
+cmp dword [dword esp+0110h], byte 3	; 2B468
+jge short .38	; 2B470
+test ebp, ebp	; 2B472
+je near TonightsGameScreen.32	; 2B474
+.38:
+cmp dword [dword esp+0104h], byte 0	; 2B47A
+jne short .39	; 2B482
+mov ebx, 10h	; 2B484
+mov edx, dword [dword esp+0108h]	; 2B489
+xor eax, eax	; 2B490
+call FadePalStep	; 2B492
+mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B497
+.39:
+mov eax, 3E8h	; 2B4A2
+call WaitClickTimeout	; 2B4A7
+mov esi, eax	; 2B4AC
+.40:
+cmp esi, byte 2	; 2B4AE
+jge near .47	; 2B4B1
+call sub_B4BA8	; 2B4B7
+push dword 1E0h	; 2B4BC
+push dword 8Ch	; 2B4C1
+push dword 280h	; 2B4C6
+push dword 80h	; 2B4CB
+call sub_B4BC4	; 2B4D0
+add esp, byte 10h	; 2B4D5
+mov esi, dword [dword esp+0100h]	; 2B4D8
+push esi	; 2B4DF
+call sub_9061C	; 2B4E0
+add esp, byte 4	; 2B4E5
+push dword 1E0h	; 2B4E8
+push dword 8Ch	; 2B4ED
+push dword 80h	; 2B4F2
+push byte 0	; 2B4F7
+call sub_B4BC4	; 2B4F9
+add esp, byte 10h	; 2B4FE
+lea eax, [dword esp+011Ch]	; 2B501
+push eax	; 2B508
+push byte 0	; 2B509
+lea ecx, [dword esp+09Ch]	; 2B50B
+mov ebx, dword [dword esp+0110h]	; 2B512
+xor edx, edx	; 2B519
+mov eax, 4	; 2B51B
+call DrawGadgetByType	; 2B520
+push byte 50h	; 2B525
+push byte 3Dh	; 2B527
+mov eax, dword [dword esp+011Ch]	; 2B529
+mov edi, dword [dword esp+eax*4+0E8h]	; 2B530
+push edi	; 2B537
+call sub_913D0	; 2B538
+add esp, byte 0Ch	; 2B53D
+push dword 1E0h	; 2B540
+push byte 0	; 2B545
+push dword 280h	; 2B547
+push byte 0	; 2B54C
+call sub_B4BC4	; 2B54E
+add esp, byte 10h	; 2B553
+movzx edi, byte [byte_D42C3]	; 2B556
+add edi, byte 7Eh	; 2B55D
+xor eax, eax	; 2B560
+mov dword [dword esp+0110h], eax	; 2B562
+jmp near .44	; 2B569
+.41:
+mov eax, dword [dword esp+0114h]	; 2B56E
+mov eax, dword [dword esp+eax*4+0D8h]	; 2B575
+add eax, edx	; 2B57C
+mov al, byte [byte eax+028h]	; 2B57E
+and eax, 0FFh	; 2B581
+mov dword [dword esp+0118h], eax	; 2B586
+cmp eax, byte 64h	; 2B58D
+jge near .43	; 2B590
+mov edx, dword [dword esp+0114h]	; 2B596
+mov eax, edx	; 2B59D
+shl eax, 3	; 2B59F
+sub eax, edx	; 2B5A2
+shl eax, 2	; 2B5A4
+mov edx, dword [dword esp+0118h]	; 2B5A7
+add edx, eax	; 2B5AE
+mov eax, edx	; 2B5B0
+shl eax, 2	; 2B5B2
+sub eax, edx	; 2B5B5
+shl eax, 2	; 2B5B7
+add eax, edx	; 2B5BA
+shl eax, 2	; 2B5BC
+mov edx, dword [dword esp+010Ch]	; 2B5BF
+add edx, eax	; 2B5C6
+test ebp, ebp	; 2B5C8
+jne short .42	; 2B5CA
+lea ebx, [byte edx+013h]	; 2B5CC
+mov ecx, 0C8h	; 2B5CF
+xor edx, edx	; 2B5D4
+mov eax, esp	; 2B5D6
+call FitPlayerName	; 2B5D8
+mov ebx, esp	; 2B5DD
+mov edx, edi	; 2B5DF
+mov eax, 0B4h	; 2B5E1
+call PrintShadowText	; 2B5E6
+mov edx, dword [dword esp+0114h]	; 2B5EB
+mov ebx, edx	; 2B5F2
+shl ebx, 4	; 2B5F4
+add ebx, edx	; 2B5F7
+shl ebx, 4	; 2B5F9
+add ebx, edx	; 2B5FC
+shl ebx, 2	; 2B5FE
+mov edx, dword [dword esp+0118h]	; 2B601
+mov eax, edx	; 2B608
+shl eax, 2	; 2B60A
+add eax, edx	; 2B60D
+shl eax, 3	; 2B60F
+sub eax, edx	; 2B612
+cmp byte [dword ebx+eax+hmroster], 1	; 2B614
+jne short .42	; 2B61C
+mov ebx, str_Injured	; 2B61E
+mov edx, edi	; 2B623
+mov eax, 226h	; 2B625
+call PrintShadowText	; 2B62A
+.42:
+xor eax, eax	; 2B62F
+mov al, byte [byte_D42C3]	; 2B631
+add eax, byte 0Eh	; 2B636
+add edi, eax	; 2B639
+.43:
+inc dword [dword esp+0110h]	; 2B63B
+.44:
+mov edx, dword [dword esp+0110h]	; 2B642
+cmp edx, byte 8	; 2B649
+jge short .45	; 2B64C
+test ebp, ebp	; 2B64E
+je near TonightsGameScreen.41	; 2B650
+.45:
+cmp dword [dword esp+0104h], byte 0	; 2B656
+jne short .46	; 2B65E
+mov ebx, 10h	; 2B660
+mov edx, dword [dword esp+0108h]	; 2B665
+xor eax, eax	; 2B66C
+call FadePalStep	; 2B66E
+mov dword [dword esp+0104h], 0FFFFFFFFh	; 2B673
+.46:
+mov eax, 3E8h	; 2B67E
+call WaitClickTimeout	; 2B683
+mov esi, eax	; 2B688
+.47:
+inc dword [dword esp+0114h]	; 2B68A
+.48:
+cmp dword [dword esp+0114h], byte 2	; 2B691
+jge short .49	; 2B699
+cmp esi, byte 2	; 2B69B
+jge short .49	; 2B69E
+test ebp, ebp	; 2B6A0
+je near TonightsGameScreen.20	; 2B6A2
+.49:
+mov ecx, dword [dword esp+010Ch]	; 2B6A8
+push ecx	; 2B6AF
+call FreeMemBlock	; 2B6B0
+add esp, byte 4	; 2B6B5
+cmp byte [musicon], 0	; 2B6B8
+je short .50	; 2B6BF
+cmp dword [songdata], byte 0	; 2B6C1
+je short .50	; 2B6C8
+mov eax, dword [musichandle]	; 2B6CA
+mov ebx, 64h	; 2B6CF
+mov edx, 3	; 2B6D4
+call sub_8FCDF	; 2B6D9
+.50:
+mov ebx, 10h	; 2B6DE
+mov edx, dword [dword esp+0108h]	; 2B6E3
+mov eax, 1	; 2B6EA
+call FadePalStep	; 2B6EF
+call sub_B4BA8	; 2B6F4
+push byte 0	; 2B6F9
+call sub_B392C	; 2B6FB
+add esp, byte 4	; 2B700
+cmp byte [musicon], 0	; 2B703
+je short .52	; 2B70A
+cmp dword [songdata], byte 0	; 2B70C
+je short .52	; 2B713
+.51:
+mov eax, dword [musicslot-3]	; 2B715
+sar eax, 18h	; 2B71A
+mov edx, 3	; 2B71D
+call sub_8FC8A	; 2B722
+test eax, eax	; 2B727
+je short TonightsGameScreen.51	; 2B729
+mov edx, dword [songdata]	; 2B72B
+push edx	; 2B731
+call sub_8D2F0	; 2B732
+add esp, byte 4	; 2B737
+xor ebx, ebx	; 2B73A
+mov dword [songdata], ebx	; 2B73C
+.52:
+cmp esi, byte 3	; 2B742
+jge short .53	; 2B745
+call ShowLoadingScreen	; 2B747
+.53:
+lea eax, [byte esp+054h]	; 2B74C
+push eax	; 2B750
+call sub_8EA00	; 2B751
+add esp, byte 4	; 2B756
+mov ecx, dword [dword esp+0F4h]	; 2B759
+push ecx	; 2B760
+call FreeMemBlock	; 2B761
+add esp, byte 4	; 2B766
+mov edi, dword [dword esp+0F8h]	; 2B769
+push edi	; 2B770
+call FreeMemBlock	; 2B771
+add esp, byte 4	; 2B776
+mov ebp, dword [dword esp+0F0h]	; 2B779
+push ebp	; 2B780
+call FreeMemBlock	; 2B781
+add esp, byte 4	; 2B786
+mov eax, dword [dword esp+0E0h]	; 2B789
+push eax	; 2B790
+call FreeMemBlock	; 2B791
+add esp, byte 4	; 2B796
+mov edx, dword [dword esp+0E4h]	; 2B799
+push edx	; 2B7A0
+call FreeMemBlock	; 2B7A1
+add esp, byte 4	; 2B7A6
+mov eax, esi	; 2B7A9
+add esp, 120h	; 2B7AB
+pop ebp	; 2B7B1
+pop edi	; 2B7B2
+pop esi	; 2B7B3
+pop ecx	; 2B7B4
+pop ebx	; 2B7B5
+ret	; 2B7B6
+%endif ; C

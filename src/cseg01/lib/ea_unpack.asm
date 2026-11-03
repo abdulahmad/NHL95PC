@@ -3,24 +3,24 @@ bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
 extern __STOSB, asc_C47B8, asc_C47C4, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
-extern dword_EDEF4, dword_EDEF8, off_D3088, off_D308C, strncmp_, FatalError, sub_B3ABC
-global loc_97329, loc_97338, loc_9734A, loc_973BC, loc_973D9, loc_97406, loc_97429, loc_97462
-global loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE, loc_974D9, loc_974E4, loc_974EF
-global loc_974FA, loc_97505, loc_97510, loc_9751B, loc_9752F, loc_97542, loc_97562, loc_9756D
-global loc_97578, loc_97583, loc_9758E, loc_97599, loc_975A4, loc_975B8, loc_975CB, loc_975E3
-global loc_975EE, loc_97621, loc_97623, loc_97677, loc_97679, loc_976B7, loc_976D7, loc_976EE
-global loc_97703, loc_97720, loc_977A3, loc_97803, loc_97840, loc_9787D, loc_97885, loc_97893
-global loc_97897, loc_978A6, loc_978B0, loc_978D3, loc_978E4, loc_97911, loc_97923, loc_9793A
-global loc_97963, loc_97995, loc_979AE, loc_979CD, loc_979E6, loc_979FA, loc_97A26, loc_97A9A
-global loc_97AD1, loc_97AF6, loc_97B2A, loc_97B30, loc_97B56, loc_97B84, loc_97B9C, loc_97BE4
-global loc_97BEF, loc_97C10, loc_97C24, loc_97C58, loc_97C8A, loc_97C96, loc_97CA2, loc_97CAD
-global loc_97CB8, loc_97CBD, loc_97CBF, loc_97CCF, loc_97CD3, loc_97D13, loc_97D40, loc_97D5A
-global loc_97D63, loc_97D87, loc_97D92, loc_97DAA, loc_97DB3, loc_97DDA, loc_97DE9, loc_97E10
-global loc_97E19, loc_97E60, loc_97E6F, loc_97E7D, loc_97E9E, loc_97EA4, loc_97EAD, loc_97EE1
-global loc_97F3C, loc_97F49, loc_97F64, loc_97F7D, loc_97F8D, loc_97F9F, loc_97FB1, loc_97FBE
-global loc_97FCB, loc_97FE1, loc_97FEF, loc_98009, loc_9801E, sub_97300, sub_97334, sub_97350
-global sub_9762C, sub_9767C, sub_97714, sub_97740, sub_979F8, sub_97A38, sub_97BB8, sub_97C2C
-global sub_97CE0, sub_97EB8, sub_98028, sub_98044
+extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, sub_B3ABC
+global sub_97300, loc_97329, sub_97334, loc_97338, loc_9734A, sub_97350, loc_973BC, loc_973D9
+global loc_97406, loc_97429, loc_97462, loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE
+global loc_974D9, loc_974E4, loc_974EF, loc_974FA, loc_97505, loc_97510, loc_9751B, loc_9752F
+global loc_97542, loc_97562, loc_9756D, loc_97578, loc_97583, loc_9758E, loc_97599, loc_975A4
+global loc_975B8, loc_975CB, loc_975E3, loc_975EE, loc_97621, loc_97623, sub_9762C, loc_97677
+global loc_97679, sub_9767C, loc_976B7, loc_976D7, loc_976EE, loc_97703, sub_97714, loc_97720
+global sub_97740, loc_977A3, loc_97803, loc_97840, loc_9787D, loc_97885, loc_97893, loc_97897
+global loc_978A6, loc_978B0, loc_978D3, loc_978E4, loc_97911, loc_97923, loc_9793A, loc_97963
+global loc_97995, loc_979AE, loc_979CD, loc_979E6, sub_979F8, loc_979FA, loc_97A26, sub_97A38
+global loc_97A9A, loc_97AD1, loc_97AF6, loc_97B2A, loc_97B30, loc_97B56, loc_97B84, loc_97B9C
+global sub_97BB8, loc_97BE4, loc_97BEF, loc_97C10, loc_97C24, sub_97C2C, loc_97C58, loc_97C8A
+global loc_97C96, loc_97CA2, loc_97CAD, loc_97CB8, loc_97CBD, loc_97CBF, loc_97CCF, loc_97CD3
+global sub_97CE0, loc_97D13, loc_97D40, loc_97D5A, loc_97D63, loc_97D87, loc_97D92, loc_97DAA
+global loc_97DB3, loc_97DDA, loc_97DE9, loc_97E10, loc_97E19, loc_97E60, loc_97E6F, loc_97E7D
+global loc_97E9E, loc_97EA4, loc_97EAD, sub_97EB8, loc_97EE1, loc_97F3C, loc_97F49, loc_97F64
+global loc_97F7D, loc_97F8D, loc_97F9F, loc_97FB1, loc_97FBE, loc_97FCB, loc_97FE1, loc_97FEF
+global loc_98009, loc_9801E, sub_98028, sub_98044
 sub_97300:
 push ebx	; 97300
 push ecx	; 97301

@@ -3,37 +3,37 @@ bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
 extern byte_D3064, byte_D3068, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, byte_D545C, byte_D54DC
-extern byte_D6074, dword_D3024, dword_D305C, dword_D3060, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
-extern cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
+extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D3024, dword_D305C, dword_D3060
+extern dword_D30A4, dword_D30A8, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
 extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
-extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, loc_B4D0C, mousepollfn
-extern off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, GetTicks, TicksSince, sub_B39D0
+extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, loc_B4D0C
+extern mousepollfn, off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, sub_B39D0, TicksSince
 extern word_D4F46, word_D4FE4, word_D4FE6, word_D4FE9
-global jpt_B4253, jpt_B42B2, jpt_B439E, jpt_B4488, jpt_B466E, loc_B3ED7, loc_B3F23, loc_B3F3D
-global loc_B3F4B, loc_B3FAC, loc_B3FC8, loc_B401F, loc_B402B, loc_B4030, loc_B403F, loc_B4049
-global loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0, loc_B40D1, loc_B40EE, loc_B4129
-global loc_B4135, loc_B413C, loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197
-global loc_B41A1, loc_B41A8, loc_B41B3, loc_B41C3, loc_B41C8, loc_B41DC, loc_B41E8, loc_B41EA
-global loc_B4204, loc_B4211, loc_B421C, loc_B4222, loc_B4228, loc_B4238, loc_B423E, loc_B4242
-global loc_B4246, loc_B4293, loc_B4299, loc_B42D6, loc_B42DE, loc_B42E9, loc_B42F4, loc_B4306
-global loc_B4318, loc_B4341, loc_B435B, loc_B4384, loc_B43C2, loc_B43CA, loc_B43D5, loc_B43E0
-global loc_B4408, loc_B442B, loc_B4441, loc_B4452, loc_B4456, loc_B447D, loc_B44AC, loc_B44C8
-global loc_B44E4, loc_B4503, loc_B451A, loc_B4521, loc_B4558, loc_B455A, loc_B458F, loc_B45CD
-global loc_B45D2, loc_B45F9, loc_B460F, loc_B4621, loc_B463E, loc_B4658, loc_B465B, loc_B4662
-global loc_B4692, loc_B469C, loc_B46B8, loc_B46D5, loc_B4705, loc_B4740, loc_B4780, loc_B47B3
-global loc_B47C1, loc_B47D1, loc_B47E7, loc_B47F5, loc_B4800, loc_B480B, loc_B481A, loc_B4828
-global loc_B482D, loc_B4839, loc_B4847, loc_B485F, loc_B4870, loc_B487B, loc_B488F, loc_B48AD
-global loc_B48C3, loc_B48D4, loc_B48E7, loc_B48EC, loc_B4908, loc_B4911, loc_B4929, loc_B4935
-global loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A, loc_B49A7, loc_B49B7, loc_B49BA
-global loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E
-global loc_B4A45, loc_B4A49, loc_B4A50, loc_B4A57, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96
-global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, loc_B4B0D, loc_B4B1E, loc_B4B20, loc_B4B27
-global loc_B4B39, loc_B4B3B, loc_B4BA0, loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, loc_B4C48
-global loc_B4C4F, loc_B4C56, loc_B4C6B, loc_B4C72, loc_B4C8E, loc_B4C95, sub_B3E4A, sub_B3E98
-global sub_B3ED8, sub_B3F50, sub_B3FB0, sub_B3FC2, sub_B3FE0, sub_B3FEC, sub_B40BF, sub_B40D4
-global sub_B40E2, sub_B49C0, sub_B4A60, sub_B4A66, sub_B4AA4, sub_B4AFD, sub_B4B58, sub_B4B88
-global sub_B4BA8, sub_B4BC4, sub_B4C28, sub_B4C33, sub_B4C61, sub_B4C84, sub_B4CA7, sub_B4CB4
-global unk_B4A0C
+global sub_B3E4A, sub_B3E98, loc_B3ED7, sub_B3ED8, loc_B3F23, loc_B3F3D, loc_B3F4B, sub_B3F50
+global loc_B3FAC, sub_B3FB0, sub_B3FC2, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
+global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
+global sub_B40BF, loc_B40D1, sub_B40D4, sub_B40E2, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
+global loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197, loc_B41A1, loc_B41A8
+global loc_B41B3, loc_B41C3, loc_B41C8, loc_B41DC, loc_B41E8, loc_B41EA, loc_B4204, loc_B4211
+global loc_B421C, loc_B4222, loc_B4228, loc_B4238, loc_B423E, loc_B4242, loc_B4246, jpt_B4253
+global loc_B4293, loc_B4299, jpt_B42B2, loc_B42D6, loc_B42DE, loc_B42E9, loc_B42F4, loc_B4306
+global loc_B4318, loc_B4341, loc_B435B, loc_B4384, jpt_B439E, loc_B43C2, loc_B43CA, loc_B43D5
+global loc_B43E0, loc_B4408, loc_B442B, loc_B4441, loc_B4452, loc_B4456, loc_B447D, jpt_B4488
+global loc_B44AC, loc_B44C8, loc_B44E4, loc_B4503, loc_B451A, loc_B4521, loc_B4558, loc_B455A
+global loc_B458F, loc_B45CD, loc_B45D2, loc_B45F9, loc_B460F, loc_B4621, loc_B463E, loc_B4658
+global loc_B465B, loc_B4662, jpt_B466E, loc_B4692, loc_B469C, loc_B46B8, loc_B46D5, loc_B4705
+global loc_B4740, loc_B4780, loc_B47B3, loc_B47C1, loc_B47D1, loc_B47E7, loc_B47F5, loc_B4800
+global loc_B480B, loc_B481A, loc_B4828, loc_B482D, loc_B4839, loc_B4847, loc_B485F, loc_B4870
+global loc_B487B, loc_B488F, loc_B48AD, loc_B48C3, loc_B48D4, loc_B48E7, loc_B48EC, loc_B4908
+global loc_B4911, loc_B4929, loc_B4935, loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A
+global loc_B49A7, loc_B49B7, loc_B49BA, sub_B49C0, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
+global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
+global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, sub_B4AA4
+global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
+global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, sub_B4B88, loc_B4BA0, sub_B4BA8, sub_B4BC4
+global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, sub_B4C33, loc_B4C48, loc_B4C4F
+global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
+global sub_B4CB4
 sub_B3E4A:
 mov dword [dword_D4F2C], ebx	; B3E4A
 mov dword [dword_D4F30], ecx	; B3E50

@@ -2,22 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_27080 progbits alloc exec nowrite align=1
-extern __CHK, str_Pstatbar8, str_Pst27, str_Standings, str_Western, str_Conference, str_Eastern, str_Team
-extern str_GF, str_GA2, str_P, str_Pct4, str_Embpal2, str_Pal9, str_PlayoffsHaveNotBeen2, str_Rst12
-extern str_Rst22, str_Scuparrw2, str_WesternConference2, str_EasternConference2, str_C3, str_Aup12, str_Aup22, str_Aup32
-extern str_Midl2, str_Adn32, str_Adn22, str_Adn12, str_fmt2d, str_fmt3d, str_fmtPct, str_fmtPct0
-extern str_Bkgd2, treecolslots, treecol_Wr2
-extern treecol_Er2, treecol_Wr3, treecol_Er3
-extern treecol_Er1, teamconf, fileoncd
-extern dword_C65AC, statsplayoffs, statsfromleague, statspalvalid, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy
-extern divx, divy, cddriveptr, kaufmfont, mainfont, playofftree, statspalshape, statsbgshapes
-extern statspal, fputchar, j___close_, FreeMemBlock, lseek_, memcpy_, divisionnames, statsbgnames
-extern statsteamdbs, off_CF6A3, open_, qsort_, read_, sprintf_, strcat_, MakePath
-extern SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridOff
-extern DeskSetExit3b, MakeStatsTitle, stand_tmpl2, LoadPlayoffModeTree, OpenStatsSchedule, LoadLeagueTree, LoadScheduleDB, sub_8E83C
+extern __CHK, cddriveptr, CmpConfStandings, DeskSetExit3b, divisionnames, divx, divy, dword_C65AC
+extern dword_C6D26, dword_C6DBA, dword_C6E20, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
+extern LoadLeagueTree, LoadPlayoffModeTree, LoadScheduleDB, lseek_, mainfont, MakePath, MakeStatsTitle, memcpy_
+extern off_CF6A3, open_, OpenStatsSchedule, playofftree, PrintCenteredText, PrintFmt1, PrintFmt2, PrintOutlinedText
+extern PrintShadowText, qsort_, read_, SetTextColors, sprintf_, stand_tmpl1, stand_tmpl2, statsbgnames
+extern statsbgshapes, statsfromleague, statsleague, statspal, statspalshape, statspalvalid, statsplayoffs, statsteamdbs
+extern str_Adn12, str_Adn22, str_Adn32, str_Aup12, str_Aup22, str_Aup32, str_Bkgd2, str_C3
+extern str_Conference, str_D3, str_Eastern, str_EasternConference2, str_Embpal2, str_fmt2d, str_fmt3d, str_fmtPct
+extern str_fmtPct0, str_GA2, str_GF, str_GP7, str_L6, str_Midl2, str_P, str_Pal9
+extern str_Pct4, str_PlayoffsHaveNotBeen2, str_Pst27, str_Pstatbar8, str_Rst12, str_Rst22, str_Scuparrw2, str_Standings
+extern str_T4, str_Team, str_TwoSpaces, str_W4, str_Western, str_WesternConference2, strcat_, sub_8E83C
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
-extern sub_B4BA8, sub_B4BC4, stand_tmpl1, CmpConfStandings, str_GP7, str_W4, str_L6, str_T4
-extern str_D3, str_TwoSpaces, statsleague, treeteamnames, treecolx
+extern sub_B4BA8, sub_B4BC4, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
+extern treecol_Wr2, treecol_Wr3, treecolslots, treecolx, treerowy, treeteamnames
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
 ; C: src/c/front/playoff/StandingsScreen.c
 %ifdef CBUILD

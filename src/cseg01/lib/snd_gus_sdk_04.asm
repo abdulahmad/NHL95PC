@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
 extern byte_D89E4, dword_D30C8, dword_D43E4, dword_D86C0, sub_910E0, sub_B3ABC, sub_B77F4
-global loc_B010E, loc_B0123, loc_B0132, loc_B0144, loc_B015B, loc_B016A, loc_B018F, loc_B01A3
-global loc_B01BD, loc_B01CE, loc_B01DC, loc_B01E1, loc_B0205, loc_B027D, loc_B0285, sub_B0100
-global sub_B0128, sub_B0148, sub_B0170, sub_B01B0, sub_B01E4, sub_B0228, sub_B026C, sub_B0288
+global sub_B0100, loc_B010E, loc_B0123, sub_B0128, loc_B0132, loc_B0144, sub_B0148, loc_B015B
+global loc_B016A, sub_B0170, loc_B018F, loc_B01A3, sub_B01B0, loc_B01BD, loc_B01CE, loc_B01DC
+global loc_B01E1, sub_B01E4, loc_B0205, sub_B0228, sub_B026C, loc_B027D, loc_B0285, sub_B0288
 sub_B0100:
 push esi	; B0100
 push edi	; B0101

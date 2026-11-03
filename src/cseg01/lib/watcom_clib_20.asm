@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93284 progbits alloc exec nowrite align=1
 extern __setbits_, byte_C4C70
-global loc_93296, loc_932B8, loc_932C0, strcspn_
+global strcspn_, loc_93296, loc_932B8, loc_932C0
 strcspn_:
 push ebx	; 93284
 push ecx	; 93285

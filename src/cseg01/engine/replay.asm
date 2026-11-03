@@ -1,2080 +1,1507 @@
-; The instant-replay panel, and the rock music played for a team.
+; Recording and stepping instant replay, and the objects at the side of the rink (95G engine/replay95).
 bits 32
 %include "hockey.inc"
-section s_7DC8B progbits alloc exec nowrite align=1
-extern __CHK, str_MTROCKU, str_SBROCKU, str_ADROCKU, str_ROCKDITI, str_Gadget6, str_Gadget5, str_Gad1, HomeTeam, bgscrollx, byte_CC9B0, scrollx
-extern str_Pointer19, str_PPV, musicon, fileoncd
-extern gamemode, ctl1team, ctl2team, sounddev, dword_C66D0, dword_C66D4
-extern rinkscrollx, rinkscrolly, cont2team, lastsfx, dword_CC9AD, crowdsmooth, dword_CCC94, rockcuepool
-extern teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1, cddriveptr, mainfont
-extern spritedrawcount, dword_D8C72, viewscrolly, dword_D8C7A, viewscrollx, pointerspr, rinkwtiles, rinkhtiles
-extern bgscrolly, replayplay, dword_E9F16, dword_E9F38, ptrupdatefn, rockteamcues, rocktunes
-extern rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile, gadgetptry, gadgetptrx, gadgetshape
-extern dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC, dword_ED704, dword_ED708
-extern dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, FreeMemBlock, camx_m2, off_CD4FA
-extern rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace, rand_, SetScreenSize, DrawFrameSprite, FadePalette
-extern MakePath, SetDialogColors, RestoreDialogBg, MessageBox, SetRinkScroll, CrowdNoiseOff, ReplayFirstFrame, ReplayStep
-extern DrawRinkSideObjects, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, GetInputEvent, ClearInputQueue, HilightSaveToDlg
-extern SaveHilight, NudgeRinkScroll, SelectScreenBM, SelectRinkBM, sub_8CCA8, sub_8E8A0, sub_8E9E8, sub_8EA00
-extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FFB0, sub_91370, sub_913B4, sub_91400, sub_96A78
-extern MouseSetPos, sub_B2E1B, sub_B30B4, TicksSinceLastCall, SetTickDeadline, WaitTickDeadline, sub_B4BA8, sub_B4BC4
-extern sub_B4CD8, sub_B4FAC, sub_B500C, sub_B5DB0, str_BothTeams, str_NeitherTeams, savepal, gamepal
-extern camx, camy, crowdlevel, word_CD4FC, replaysfx, scrolly, word_E9F18, word_E9F3A
-extern word_ED758
-global ReplaySaveHilight_jt
-global LoadRockMusic_ret
-global DrawGadgetButton_ret
-global ReplaySaveHilight_n0, ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplaySaveHilight_n3
-global LoadRockMusic, FreeRockMusic, DrawGadgetByType
-global GadgetStub0, sub_7E03F, DrawGadgetButton, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight
-global bothneitherstrs
-; C: src/c/engine/replay/LoadRockMusic.c
+section s_67564 progbits alloc exec nowrite align=1
+extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, byte_CCE00, byte_CD418
+extern byte_CD421, byte_CD473, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6
+extern byte_E03C1, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B
+extern byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD
+extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
+extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
+extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, dword_CCEF6
+extern dword_CD41E, dword_CD4B0, dword_D30BC, dword_D30C0, dword_DEF8C, dword_DEFE0, dword_DF004, dword_E0220
+extern dword_E0230, dword_E0244, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, dword_E9C24, dword_E9C85
+extern dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38, dword_E9F54, dword_E9F56, dword_E9F5A
+extern dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98, dword_E9FA5, dword_E9FA8, dword_E9FAA
+extern dword_E9FD9, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
+extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, off_CC01D, off_CD498, off_CD4A0
+extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
+extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
+extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
+extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
+extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
+extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
+extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
+extern textline1, textline2, textline3, textline4, textline5, unk_DACA0, unk_E9CEC, unk_E9D1E
+extern unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_CC054, word_CC0B0
+extern word_CCEF8, word_CD4FC, word_DEE94, word_E0022, word_E0046, word_E9F12, word_E9F14, word_E9F18
+extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9, word_E9FB0
+extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
+global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
+; C: src/c/engine/replay/ReplayRecordReset.c
 %ifdef CBUILD
-%include "c/engine/replay/LoadRockMusic.inc"
+%include "c/engine/replay/ReplayRecordReset.inc"
 %else
-LoadRockMusic:
-push dword 38h	; 7DC8B
-call __CHK	; 7DC90
-push ebx	; 7DC95
-push ecx	; 7DC96
-push edx	; 7DC97
-push esi	; 7DC98
-push edi	; 7DC99
-sub esp, byte 20h	; 7DC9A
-mov dword [dword_CCC94], 20h	; 7DC9D
-mov eax, dword [HomeTeam-2]	; 7DCA7
-sar eax, 10h	; 7DCAC
-mov dword [byte esp+01Ch], eax	; 7DCAF
-cmp eax, byte 1Ah	; 7DCB3
-jl short .1	; 7DCB6
-mov dword [byte esp+01Ch], 0Dh	; 7DCB8
+ReplayRecordReset:
+push dword 4	; 67564
+call __CHK	; 67569
+mov word [replaytick], 1	; 6756E
+mov word [replaysfx], 0FFFFh	; 67577
+ret	; 67580
+%endif ; C
+; C: src/c/engine/replay/ReplayFirstFrame.c
+%ifdef CBUILD
+%include "c/engine/replay/ReplayFirstFrame.inc"
+%else
+ReplayFirstFrame:
+push dword 4	; 67581
+call __CHK	; 67586
+test byte [sflags], 10h	; 6758B
+jne short .1	; 67592
+mov eax, dword [replaystart]	; 67594
+ret	; 67599
 .1:
-xor edi, edi	; 7DCC0
+mov eax, dword [recbpr]	; 6759A
+ret	; 6759F
+%endif ; C
+; C: src/c/engine/replay/ReplayPrevFrame.c
+%ifdef CBUILD
+%include "c/engine/replay/ReplayPrevFrame.inc"
+%else
+ReplayPrevFrame:
+push dword 8	; 675A0
+call __CHK	; 675A5
+push edx	; 675AA
+mov eax, dword [recbpr]	; 675AB
+mov edx, dword [replaystart]	; 675B0
+cmp eax, edx	; 675B6
+jne short .2	; 675B8
+test byte [sflags], 10h	; 675BA
+je short .1	; 675C1
+lea eax, [dword edx+09580h]	; 675C3
+pop edx	; 675C9
+ret	; 675CA
+.1:
+mov eax, edx	; 675CB
+pop edx	; 675CD
+ret	; 675CE
 .2:
-mov edx, dword [byte esp+01Ch]	; 7DCC2
-mov eax, edx	; 7DCC6
-shl eax, 2	; 7DCC8
-sub eax, edx	; 7DCCB
-mov eax, dword [dword edi+eax*2+teamrockcuetbl]	; 7DCCD
-sar eax, 18h	; 7DCD4
-test eax, eax	; 7DCD7
-jl short .5	; 7DCD9
-xor ecx, ecx	; 7DCDB
-mov ebx, dword [nosplit eax*4+rockcuefiles]	; 7DCDD
-mov eax, dword [nosplit eax*4+rockcuepathsel]	; 7DCE4
-cmp byte [dword eax+fileoncd], 1	; 7DCEB
-jne short .3	; 7DCF2
-mov edx, dword [cddriveptr]	; 7DCF4
-jmp short .4	; 7DCFA
+sub eax, 80h	; 675CF
+pop edx	; 675D4
+ret	; 675D5
+%endif ; C
+updatereplay:
+push dword 1Ch	; 675D6
+call __CHK	; 675DB
+push ebx	; 675E0
+push ecx	; 675E1
+push edx	; 675E2
+push esi	; 675E3
+push edi	; 675E4
+sub esp, byte 4	; 675E5
+test byte [gmode], 10h	; 675E8
+jne near .x	; 675EF
+mov dx, word [replaytick]	; 675F5
+inc edx	; 675FC
+mov word [replaytick], dx	; 675FD
+cmp dx, byte 2	; 67604
+jge short .3	; 67608
+test byte [gmode2], 4	; 6760A
+je short .1	; 67611
+mov word [replaysfx], 0FFFFh	; 67613
+jmp short .2	; 6761C
+.1:
+mov ax, word [lastsfx]	; 6761E
+mov word [replaysfx], ax	; 67624
+.2:
+mov word [lastsfx], 0FFFFh	; 6762A
+jmp near .x	; 67633
 .3:
-xor edx, edx	; 7DCFC
+mov edi, edx	; 67638
+sub edi, byte 2	; 6763A
+mov word [replaytick], di	; 6763D
+test byte [gmode2], 4	; 67644
+je short .4	; 6764B
+call ReplayPrevFrame	; 6764D
+mov dword [recbpr], eax	; 67652
 .4:
-mov eax, esp	; 7DCFE
-call MakePath	; 7DD00
-mov eax, esp	; 7DD05
-call sub_8F13B	; 7DD07
-mov dword [nosplit edi*4+rockteamcues], eax	; 7DD0C
-jmp short .6	; 7DD13
+mov eax, SortCords	; 67657
+xor edx, edx	; 6765C
+jmp short .6	; 6765E
 .5:
-xor esi, esi	; 7DD15
-mov dword [nosplit edi*4+rockteamcues], esi	; 7DD17
+mov bx, word [byte eax+Ypos+2]	; 67660
+and bh, 3	; 67664
+movsx ebx, bx	; 67667
+mov ecx, ebx	; 6766A
+shl ecx, 0Ah	; 6766C
+mov bx, word [byte eax+Xpos+2]	; 6766F
+and bh, 3	; 67673
+movsx ebx, bx	; 67676
+or ecx, ebx	; 67679
+mov bx, word [byte eax+012h]	; 6767B
+and bh, 7	; 6767F
+movsx ebx, bx	; 67682
+shl ebx, 14h	; 67685
+or ecx, ebx	; 67688
+mov bx, word [byte eax+054h]	; 6768A
+xor bl, bl	; 6768E
+and bh, 8	; 67690
+movsx ebx, bx	; 67693
+shl ebx, 14h	; 67696
+or ecx, ebx	; 67699
+mov ebx, dword [recbpr]	; 6769B
+mov dword [ebx], ecx	; 676A1
+add dword [recbpr], byte 4	; 676A3
+inc edx	; 676AA
+add eax, 80h	; 676AB
 .6:
-inc edi	; 7DD1E
-cmp edi, byte 6	; 7DD1F
-jl short LoadRockMusic.2	; 7DD22
-xor edi, edi	; 7DD24
+cmp dx, byte 11h	; 676B0
+jl short updatereplay.5	; 676B4
+mov eax, SortCords	; 676B6
+xor edx, edx	; 676BB
+jmp short .8	; 676BD
 .7:
-mov ebx, 0FFFFFFFFh	; 7DD26
-call rand_	; 7DD2B
-mov edx, eax	; 7DD30
-and edx, 7FFFh	; 7DD32
-mov ecx, 12h	; 7DD38
-mov eax, edx	; 7DD3D
-sar edx, 1Fh	; 7DD3F
-idiv ecx	; 7DD42
-mov esi, edx	; 7DD44
-xor eax, eax	; 7DD46
-jmp short .10	; 7DD48
+mov ebx, dword [recbpr]	; 676BF
+lea ecx, [byte ebx+01h]	; 676C5
+mov dword [recbpr], ecx	; 676C8
+mov cl, byte [byte eax+05Eh]	; 676CE
+mov byte [ebx], cl	; 676D1
+inc edx	; 676D3
+add eax, 80h	; 676D4
 .8:
-mov ecx, dword [byte esp+01Ch]	; 7DD4A
-mov edx, ecx	; 7DD4E
-shl edx, 2	; 7DD50
-sub edx, ecx	; 7DD53
-mov ecx, dword [dword eax+edx*2+teamrockcuetbl]	; 7DD55
-sar ecx, 18h	; 7DD5C
-cmp ecx, dword [nosplit esi*4+rockcuepool]	; 7DD5F
-jne short .9	; 7DD66
-xor ebx, ebx	; 7DD68
+cmp dx, byte 0Ch	; 676D9
+jl short updatereplay.7	; 676DD
+mov eax, SortCords	; 676DF
+xor edx, edx	; 676E4
+jmp short .14	; 676E6
 .9:
-inc eax	; 7DD6A
+mov bx, word [byte eax+position]	; 676E8
+test bx, bx	; 676EC
+jge short .10	; 676EF
+mov word [regd0], 0Fh	; 676F1
+jmp short .11	; 676FA
 .10:
-cmp eax, byte 6	; 7DD6B
-jge short .11	; 7DD6E
-test ebx, ebx	; 7DD70
-jne short LoadRockMusic.8	; 7DD72
+mov word [regd0], bx	; 676FC
 .11:
-xor eax, eax	; 7DD74
-jmp short .14	; 7DD76
+add eax, 80h	; 67703
+mov si, word [byte eax+position]	; 67708
+test si, si	; 6770C
+jge short .12	; 6770F
+or byte [regd0], 0F0h	; 67711
+jmp short .13	; 67718
 .12:
-mov ecx, dword [nosplit esi*4+rockcuepool]	; 7DD78
-cmp ecx, dword [byte esp+eax*4+010h]	; 7DD7F
-jne short .13	; 7DD83
-xor ebx, ebx	; 7DD85
+mov ebx, esi	; 6771A
+shl ebx, 4	; 6771C
+or word [regd0], bx	; 6771F
 .13:
-inc eax	; 7DD87
+mov ebx, dword [recbpr]	; 67726
+add eax, 80h	; 6772C
+lea ecx, [byte ebx+01h]	; 67731
+mov dword [recbpr], ecx	; 67734
+mov cl, byte [regd0]	; 6773A
+mov byte [ebx], cl	; 67740
+inc edx	; 67742
 .14:
-cmp eax, edi	; 7DD88
-jge short .15	; 7DD8A
-test ebx, ebx	; 7DD8C
-jne short LoadRockMusic.12	; 7DD8E
+cmp dx, byte 6	; 67743
+jl short updatereplay.9	; 67747
+mov ebx, dword [puckz]	; 67749
+mov eax, dword [recbpr]	; 6774F
+lea ecx, [byte eax+01h]	; 67754
+mov dword [recbpr], ecx	; 67757
+mov dl, byte [ebx]	; 6775D
+mov byte [eax], dl	; 6775F
+mov eax, dword [recbpr]	; 67761
+lea ebx, [byte eax+01h]	; 67766
+mov dword [recbpr], ebx	; 67769
+mov dl, byte [byte_DFFA6]	; 6776F
+mov byte [eax], dl	; 67775
+mov eax, dword [recbpr]	; 67777
+lea ebx, [byte eax+01h]	; 6777C
+mov dword [recbpr], ebx	; 6777F
+mov dl, byte [replaysfx]	; 67785
+mov byte [eax], dl	; 6778B
+mov eax, dword [recbpr]	; 6778D
+lea ebx, [byte eax+01h]	; 67792
+mov dword [recbpr], ebx	; 67795
+mov dl, byte [lastsfx]	; 6779B
+mov byte [eax], dl	; 677A1
+mov eax, 0FFFFFFFFh	; 677A3
+mov word [lastsfx], ax	; 677A8
+mov word [replaysfx], ax	; 677AE
+mov dl, byte [c2playernum]	; 677B4
+and dl, 0Fh	; 677BA
+shl dl, 4	; 677BD
+mov al, byte [c1playernum]	; 677C0
+and al, 0Fh	; 677C5
+or dl, al	; 677C7
+mov eax, dword [recbpr]	; 677C9
+lea ebx, [byte eax+01h]	; 677CE
+mov dword [recbpr], ebx	; 677D1
+mov byte [eax], dl	; 677D7
+mov ebx, dword [puckc]	; 677D9
+mov eax, dword [recbpr]	; 677DF
+lea ecx, [byte eax+01h]	; 677E4
+mov dword [recbpr], ecx	; 677E7
+mov dl, byte [ebx]	; 677ED
+mov byte [eax], dl	; 677EF
+mov dl, byte [PBnum+1]	; 677F1
+and dl, 0Fh	; 677F7
+shl dl, 4	; 677FA
+mov al, byte [PBnum]	; 677FD
+and al, 0Fh	; 67802
+or dl, al	; 67804
+mov eax, dword [recbpr]	; 67806
+lea ebx, [byte eax+01h]	; 6780B
+mov dword [recbpr], ebx	; 6780E
+mov byte [eax], dl	; 67814
+mov eax, dword [recbpr]	; 67816
+lea ebx, [byte eax+01h]	; 6781B
+mov dword [recbpr], ebx	; 6781E
+mov dl, byte [camx]	; 67824
+mov byte [eax], dl	; 6782A
+mov eax, dword [recbpr]	; 6782C
+mov dx, word [camy]	; 67831
+mov word [eax], dx	; 67838
+mov ecx, dword [recbpr]	; 6783B
+add ecx, byte 2	; 67841
+mov dword [recbpr], ecx	; 67844
+mov dx, word [crowdlevel]	; 6784A
+mov word [ecx], dx	; 67851
+xor edx, edx	; 67854
+add dword [recbpr], byte 2	; 67856
+jmp short .16	; 6785D
 .15:
-test ebx, ebx	; 7DD90
-je short LoadRockMusic.7	; 7DD92
-mov edx, dword [nosplit esi*4+rockcuepool]	; 7DD94
-mov dword [byte esp+edi*4+010h], edx	; 7DD9B
-xor ecx, ecx	; 7DD9F
-mov ebx, dword [nosplit edx*4+rockcuefiles]	; 7DDA1
-mov eax, dword [nosplit edx*4+rockcuepathsel]	; 7DDA8
-cmp byte [dword eax+fileoncd], 1	; 7DDAF
-jne short .16	; 7DDB6
-mov edx, dword [cddriveptr]	; 7DDB8
-jmp short .17	; 7DDBE
+movsx ecx, dx	; 6785F
+lea ebx, [byte ecx+ecx+01h]	; 67862
+mov eax, ebx	; 67866
+shl eax, 2	; 67868
+sub eax, ebx	; 6786B
+mov al, byte [nosplit eax*4+byte_DEE97]	; 6786D
+and al, 0Fh	; 67874
+mov byte [esp], al	; 67876
+mov eax, ecx	; 67879
+shl eax, 2	; 6787B
+sub eax, ecx	; 6787E
+mov al, byte [nosplit eax*8+byte_DEE97]	; 67880
+and al, 0Fh	; 67887
+shl al, 4	; 67889
+mov bl, byte [esp]	; 6788C
+or bl, al	; 6788F
+mov eax, dword [recbpr]	; 67891
+lea ecx, [byte eax+01h]	; 67896
+mov dword [recbpr], ecx	; 67899
+mov byte [eax], bl	; 6789F
+inc edx	; 678A1
 .16:
-xor edx, edx	; 7DDC0
+cmp dx, byte 0Ah	; 678A2
+jl short updatereplay.15	; 678A6
+xor edx, edx	; 678A8
+jmp short .18	; 678AA
 .17:
-mov eax, esp	; 7DDC2
-call MakePath	; 7DDC4
-mov eax, esp	; 7DDC9
-call sub_8F13B	; 7DDCB
-mov dword [nosplit edi*4+rockrandcues], eax	; 7DDD0
-inc edi	; 7DDD7
-cmp edi, byte 3	; 7DDD8
-jl near LoadRockMusic.7	; 7DDDB
-cmp dword [sounddev], byte 8	; 7DDE1
-jne short .19	; 7DDE8
-xor ecx, ecx	; 7DDEA
-mov ebx, str_MTROCKU	; 7DDEC
-cmp byte [fileoncd+0100h], 1	; 7DDF1
+movsx ebx, dx	; 678AC
+mov eax, ebx	; 678AF
+shl eax, 2	; 678B1
+sub eax, ebx	; 678B4
+mov ebx, eax	; 678B6
+shl ebx, 2	; 678B8
+mov eax, dword [recbpr]	; 678BB
+lea ecx, [byte eax+01h]	; 678C0
+mov dword [recbpr], ecx	; 678C3
+mov bl, byte [dword ebx+word_DEE94]	; 678C9
+mov byte [eax], bl	; 678CF
+inc edx	; 678D1
 .18:
-je short .21	; 7DDF8
-xor edx, edx	; 7DDFA
-jmp short .23	; 7DDFC
-.19:
-cmp byte [musicon], 0	; 7DDFE
-je short .20	; 7DE05
-xor ecx, ecx	; 7DE07
-mov ebx, str_SBROCKU	; 7DE09
-cmp byte [fileoncd+0166h], 1	; 7DE0E
-jmp short LoadRockMusic.18	; 7DE15
-.20:
-xor ecx, ecx	; 7DE17
-mov ebx, str_ADROCKU	; 7DE19
-cmp byte [fileoncd+01Fh], 1	; 7DE1E
-jne short .22	; 7DE25
-.21:
-mov edx, dword [cddriveptr]	; 7DE27
-jmp short .23	; 7DE2D
-.22:
-xor edx, edx	; 7DE2F
-.23:
-mov eax, esp	; 7DE31
-call MakePath	; 7DE33
-mov eax, esp	; 7DE38
-call sub_8F13B	; 7DE3A
-mov dword [rocktunes], eax	; 7DE3F
-mov eax, dword [HomeTeam-2]	; 7DE44
-sar eax, 10h	; 7DE49
-mov eax, dword [dword eax+byte_CC9B0-3]	; 7DE4C
-sar eax, 18h	; 7DE52
-xor ecx, ecx	; 7DE55
-mov ebx, dword [nosplit eax*4+teamtunefiles]	; 7DE57
-mov eax, dword [nosplit eax*4+teamtunepathsel]	; 7DE5E
-cmp byte [dword eax+fileoncd], 1	; 7DE65
-jne short .24	; 7DE6C
-mov edx, dword [cddriveptr]	; 7DE6E
-jmp short .25	; 7DE74
-.24:
-xor edx, edx	; 7DE76
-.25:
-mov eax, esp	; 7DE78
-call MakePath	; 7DE7A
-mov eax, esp	; 7DE7F
-call sub_8F13B	; 7DE81
-mov dword [rocktunes+4], eax	; 7DE86
-xor ecx, ecx	; 7DE8B
-mov ebx, str_ROCKDITI	; 7DE8D
-cmp byte [fileoncd+0161h], 1	; 7DE92
-jne short .26	; 7DE99
-mov edx, dword [cddriveptr]	; 7DE9B
-jmp short .27	; 7DEA1
-.26:
-xor edx, edx	; 7DEA3
-.27:
-mov eax, esp	; 7DEA5
-call MakePath	; 7DEA7
-mov eax, esp	; 7DEAC
-call sub_8F13B	; 7DEAE
-mov dword [rocktunes+8], eax	; 7DEB3
-xor eax, eax	; 7DEB8
-mov dword [dword_CCC94], eax	; 7DEBA
-add esp, byte 20h	; 7DEBF
-LoadRockMusic_ret:
-pop edi	; 7DEC2
-pop esi	; 7DEC3
-pop edx	; 7DEC4
-pop ecx	; 7DEC5
-pop ebx	; 7DEC6
-ret	; 7DEC7
-%endif ; C
-; C: src/c/engine/replay/LoadRockMusic.c (FreeRockMusic)
-%ifdef CBUILD
-%include "c/engine/replay/LoadRockMusic.FreeRockMusic.inc"
-%else
-FreeRockMusic:
-push dword 1Ch	; 7DEC8
-call __CHK	; 7DECD
-push ebx	; 7DED2
-push ecx	; 7DED3
-push edx	; 7DED4
-push esi	; 7DED5
-push edi	; 7DED6
-push ebp	; 7DED7
-xor edx, edx	; 7DED8
-.1:
-mov ebx, edx	; 7DEDA
-shl ebx, 2	; 7DEDC
-mov ecx, dword [dword ebx+rockteamcues]	; 7DEDF
-test ecx, ecx	; 7DEE5
-je short .2	; 7DEE7
-mov eax, ecx	; 7DEE9
-call sub_8F1FE	; 7DEEB
-xor esi, esi	; 7DEF0
-mov dword [dword ebx+rockteamcues], esi	; 7DEF2
-.2:
-inc edx	; 7DEF8
-cmp edx, byte 6	; 7DEF9
-jl short FreeRockMusic.1	; 7DEFC
-xor edx, edx	; 7DEFE
-.3:
-mov ebx, edx	; 7DF00
-shl ebx, 2	; 7DF02
-mov edi, dword [dword ebx+rockrandcues]	; 7DF05
-test edi, edi	; 7DF0B
-je short .4	; 7DF0D
-mov eax, edi	; 7DF0F
-call sub_8F1FE	; 7DF11
-xor ebp, ebp	; 7DF16
-mov dword [dword ebx+rockrandcues], ebp	; 7DF18
-.4:
-inc edx	; 7DF1E
-cmp edx, byte 3	; 7DF1F
-jl short FreeRockMusic.3	; 7DF22
-xor edx, edx	; 7DF24
-.5:
-mov ebx, edx	; 7DF26
-shl ebx, 2	; 7DF28
-mov eax, dword [dword ebx+rocktunes]	; 7DF2B
-test eax, eax	; 7DF31
-je short .6	; 7DF33
-call sub_8F1FE	; 7DF35
-xor ecx, ecx	; 7DF3A
-mov dword [dword ebx+rocktunes], ecx	; 7DF3C
-.6:
-inc edx	; 7DF42
-cmp edx, byte 3	; 7DF43
-jl short FreeRockMusic.5	; 7DF46
-pop ebp	; 7DF48
-jmp near LoadRockMusic_ret	; 7DF49
-%endif ; C
-; C: src/c/engine/replay/DrawGadgetByType.c
-%ifdef CBUILD
-%include "c/engine/replay/DrawGadgetByType.inc"
-%else
-DrawGadgetByType:
-push dword 18h	; 7DF4E
-call __CHK	; 7DF53
-push esi	; 7DF58
-push edi	; 7DF59
-push ebp	; 7DF5A
-sub esp, byte 4	; 7DF5B
-mov byte [esp], dl	; 7DF5E
-mov esi, ecx	; 7DF61
-cmp eax, byte 8	; 7DF63
-jb short .1	; 7DF66
-jbe short .3	; 7DF68
-cmp eax, byte 10h	; 7DF6A
-jb near .6	; 7DF6D
-jbe short .4	; 7DF73
-cmp eax, byte 20h	; 7DF75
-je short .5	; 7DF78
-jmp near .6	; 7DF7A
-.1:
-cmp eax, byte 4	; 7DF7F
-jne short .6	; 7DF82
-mov eax, dword [byte ecx+028h]	; 7DF84
-push eax	; 7DF87
-call sub_913B4	; 7DF88
-add esp, byte 4	; 7DF8D
-mov edx, dword [byte esi+024h]	; 7DF90
-push edx	; 7DF93
-call sub_913B4	; 7DF94
-add esp, byte 4	; 7DF99
-mov ebx, dword [byte esi+01Ch]	; 7DF9C
-.2:
-push ebx	; 7DF9F
-jmp near .9	; 7DFA0
-.3:
-mov eax, dword [byte ecx+028h]	; 7DFA5
-push eax	; 7DFA8
-call sub_913B4	; 7DFA9
-add esp, byte 4	; 7DFAE
-mov edx, dword [byte esi+024h]	; 7DFB1
-push edx	; 7DFB4
-call sub_913B4	; 7DFB5
-add esp, byte 4	; 7DFBA
-mov ebx, dword [byte esi+04h]	; 7DFBD
-jmp short DrawGadgetByType.2	; 7DFC0
-.4:
-mov ecx, dword [byte ecx+028h]	; 7DFC2
-push ecx	; 7DFC5
-call sub_913B4	; 7DFC6
-add esp, byte 4	; 7DFCB
-mov edi, dword [byte esi+024h]	; 7DFCE
-push edi	; 7DFD1
-call sub_913B4	; 7DFD2
-add esp, byte 4	; 7DFD7
-mov ebp, dword [esi]	; 7DFDA
-push ebp	; 7DFDC
-jmp short .9	; 7DFDD
-.5:
-mov edx, dword [byte ecx+02Ch]	; 7DFDF
-push edx	; 7DFE2
-call sub_913B4	; 7DFE3
-add esp, byte 4	; 7DFE8
-mov ebx, dword [byte esi+0Ch]	; 7DFEB
-jmp short DrawGadgetByType.2	; 7DFEE
-.6:
-mov ecx, dword [byte esi+028h]	; 7DFF0
-push ecx	; 7DFF3
-call sub_913B4	; 7DFF4
-add esp, byte 4	; 7DFF9
-mov edi, dword [byte esi+020h]	; 7DFFC
-push edi	; 7DFFF
-call sub_913B4	; 7E000
-add esp, byte 4	; 7E005
-cmp byte [esp], 4	; 7E008
-jb short .7	; 7E00C
-mov eax, 2	; 7E00E
-jmp short .8	; 7E013
-.7:
-xor eax, eax	; 7E015
-mov al, byte [esp]	; 7E017
-add eax, byte 3	; 7E01A
-.8:
-mov ebp, dword [esi+eax*4]	; 7E01D
-push ebp	; 7E020
-.9:
-call sub_913B4	; 7E021
-add esp, byte 4	; 7E026
-add esp, byte 4	; 7E029
-pop ebp	; 7E02C
-pop edi	; 7E02D
-pop esi	; 7E02E
-ret 8	; 7E02F
-%endif ; C
-; C: src/c/engine/replay/GadgetStub0.c
-%ifdef CBUILD
-%include "c/engine/replay/GadgetStub0.inc"
-%else
-GadgetStub0:
-push dword 4	; 7E032
-call __CHK	; 7E037
-xor eax, eax	; 7E03C
-ret	; 7E03E
-%endif ; C
-; C: src/c/engine/replay/sub_7E03F.c
-%ifdef CBUILD
-%include "c/engine/replay/sub_7E03F.inc"
-%else
-sub_7E03F:
-push dword 14h	; 7E03F
-call __CHK	; 7E044
-push ebx	; 7E049
-push ecx	; 7E04A
-push edx	; 7E04B
-mov edx, dword [dword_ED6D0]	; 7E04C
-push edx	; 7E052
-call sub_96A78	; 7E053
-add esp, byte 4	; 7E058
-pop edx	; 7E05B
-pop ecx	; 7E05C
-pop ebx	; 7E05D
-ret	; 7E05E
-%endif ; C
-bothneitherstrs:
-dd str_BothTeams
-dd str_NeitherTeams
-; C: src/c/engine/replay/DrawGadgetButton.c
-%ifdef CBUILD
-%include "c/engine/replay/DrawGadgetButton.inc"
-%else
-DrawGadgetButton:
-push dword 34h	; 7E067
-call __CHK	; 7E06C
-push ebx	; 7E071
-push ecx	; 7E072
-push edx	; 7E073
-push esi	; 7E074
-push edi	; 7E075
-push ebp	; 7E076
-sub esp, byte 4	; 7E077
-mov esi, eax	; 7E07A
-shl eax, 3	; 7E07C
-sub eax, esi	; 7E07F
-mov esi, dword [nosplit eax*4+gadgetrects]	; 7E081
-mov dword [esp], esi	; 7E088
-mov edi, dword [nosplit eax*4+gadgetrect_y0]	; 7E08B
-sub edi, 0A8h	; 7E092
-mov esi, dword [nosplit eax*4+gadgetrect_x1]	; 7E098
-mov ebp, dword [nosplit eax*4+gadgetrect_y1]	; 7E09F
-sub ebp, 0A8h	; 7E0A6
-push byte 10h	; 7E0AC
-push edi	; 7E0AE
-push esi	; 7E0AF
-push edi	; 7E0B0
-mov edx, dword [byte esp+010h]	; 7E0B1
-push edx	; 7E0B5
-call sub_B4FAC	; 7E0B6
-add esp, byte 14h	; 7E0BB
-push byte 10h	; 7E0BE
-push ebp	; 7E0C0
-mov ebx, dword [byte esp+08h]	; 7E0C1
-push ebx	; 7E0C5
-push edi	; 7E0C6
-push ebx	; 7E0C7
-call sub_B4FAC	; 7E0C8
-add esp, byte 14h	; 7E0CD
-push byte 15h	; 7E0D0
-push ebp	; 7E0D2
-push esi	; 7E0D3
-push edi	; 7E0D4
-push esi	; 7E0D5
-call sub_B4FAC	; 7E0D6
-add esp, byte 14h	; 7E0DB
-push byte 15h	; 7E0DE
-push ebp	; 7E0E0
-push esi	; 7E0E1
-push ebp	; 7E0E2
-mov esi, dword [byte esp+010h]	; 7E0E3
-push esi	; 7E0E7
-call sub_B4FAC	; 7E0E8
-add esp, byte 14h	; 7E0ED
-add esp, byte 4	; 7E0F0
-DrawGadgetButton_ret:
-pop ebp	; 7E0F3
-pop edi	; 7E0F4
-pop esi	; 7E0F5
-pop edx	; 7E0F6
-pop ecx	; 7E0F7
-pop ebx	; 7E0F8
-ret	; 7E0F9
-%endif ; C
-InstantReplay:
-push dword 50h	; 7E0FA
-call __CHK	; 7E0FF
-push ebx	; 7E104
-push ecx	; 7E105
-push edx	; 7E106
-push esi	; 7E107
-push edi	; 7E108
-push ebp	; 7E109
-sub esp, byte 20h	; 7E10A
-push eax	; 7E10D
-cmp dword [gamemode], byte 0	; 7E10E
-je short .1	; 7E115
-cmp dword [ctl1team], byte 0	; 7E117
-jge short .2	; 7E11E
-cmp dword [ctl2team], byte 0	; 7E120
-jge short .2	; 7E127
-.1:
-mov dword [dword_ED6F8], 1	; 7E129
-jmp short .3	; 7E133
-.2:
-xor esi, esi	; 7E135
-mov dword [dword_ED6F8], esi	; 7E137
-.3:
-mov dword [dword_ED754], 44h	; 7E13D
-mov dword [dword_ED750], 8	; 7E147
-mov dword [gadgetptrx], 100h	; 7E151
-mov dword [gadgetptry], 0BCh	; 7E15B
-push dword 0C1h	; 7E165
-push dword 140h	; 7E16A
-push byte 0	; 7E16F
-push byte 0	; 7E171
-call sub_B2E1B	; 7E173
-add esp, byte 10h	; 7E178
-mov ecx, dword [gadgetptry]	; 7E17B
-push ecx	; 7E181
-mov esi, dword [gadgetptrx]	; 7E182
-push esi	; 7E188
-call MouseSetPos	; 7E189
-add esp, byte 8	; 7E18E
-call SelectScreenBM	; 7E191
-push byte 20h	; 7E196
-push byte 0	; 7E198
-push dword 140h	; 7E19A
-push byte 0	; 7E19F
-call sub_B4BC4	; 7E1A1
-add esp, byte 10h	; 7E1A6
-cmp dword [dword_ED6F8], byte 0	; 7E1A9
-je short .5	; 7E1B0
-mov ecx, str_PPV	; 7E1B2
-mov ebx, str_Gadget6	; 7E1B7
-cmp byte [fileoncd+0223h], 1	; 7E1BC
-jne short .4	; 7E1C3
-mov edx, dword [cddriveptr]	; 7E1C5
-jmp short .7	; 7E1CB
-.4:
-xor edx, edx	; 7E1CD
-jmp short .7	; 7E1CF
-.5:
-mov ecx, str_PPV	; 7E1D1
-mov ebx, str_Gadget5	; 7E1D6
-cmp byte [fileoncd+096h], 1	; 7E1DB
-jne short .6	; 7E1E2
-mov edx, dword [cddriveptr]	; 7E1E4
-jmp short .7	; 7E1EA
-.6:
-xor edx, edx	; 7E1EC
-.7:
-lea eax, [byte esp+04h]	; 7E1EE
-call MakePath	; 7E1F2
-push byte 0	; 7E1F7
-lea eax, [byte esp+08h]	; 7E1F9
-push eax	; 7E1FD
-call sub_8E8A0	; 7E1FE
-add esp, byte 8	; 7E203
-mov dword [gadgetfile], eax	; 7E206
-push str_Gad1	; 7E20B
-push eax	; 7E210
-call sub_B30B4	; 7E211
-add esp, byte 8	; 7E216
-mov dword [gadgetshape], eax	; 7E219
-push byte 0	; 7E21E
-push byte 0	; 7E220
-push eax	; 7E222
-call sub_B4CD8	; 7E223
-add esp, byte 0Ch	; 7E228
-mov eax, 6	; 7E22B
-call DrawGadgetButton	; 7E230
-mov eax, 2	; 7E235
-call DrawGadgetButton	; 7E23A
-mov eax, dword [gadgetptry]	; 7E23F
-sub eax, 0A8h	; 7E244
-push eax	; 7E249
-mov ebp, dword [gadgetptrx]	; 7E24A
-push ebp	; 7E250
-mov eax, dword [pointerspr]	; 7E251
-push eax	; 7E256
-call sub_91370	; 7E257
-add esp, byte 0Ch	; 7E25C
-mov edx, 1	; 7E25F
-mov dword [dword_C66D4], edx	; 7E264
-mov dword [dword_C66D0], edx	; 7E26A
-mov ax, word [camx]	; 7E270
-mov dword [byte esp+01Ch], eax	; 7E276
-mov ax, word [camy]	; 7E27A
-mov dword [byte esp+020h], eax	; 7E280
-mov di, word [viewscrollx]	; 7E284
-mov ax, word [viewscrolly]	; 7E28B
-mov word [byte esp+018h], ax	; 7E291
-mov si, word [crowdlevel]	; 7E296
-xor ecx, ecx	; 7E29D
-mov dword [dword_ED70C], ecx	; 7E29F
-mov word [word_CD4FC], 0FFFFh	; 7E2A5
-mov ebp, 0FFFFFFFFh	; 7E2AE
-mov dword [dword_ED74C], ebp	; 7E2B3
-mov dword [dword_ED6EC], ebp	; 7E2B9
-xor edx, edx	; 7E2BF
-mov dword [dword_ED6FC], ecx	; 7E2C1
-xor ebx, ebx	; 7E2C7
-mov word [word_ED758], bx	; 7E2C9
-add dword [rinkscrollx], 3E8h	; 7E2D0
-add dword [rinkscrolly], 3E8h	; 7E2DA
-call ReplayFirstFrame	; 7E2E4
-mov dword [replayplay], eax	; 7E2E9
-xor ebp, ebp	; 7E2EE
-mov dword [byte esp+014h], ebp	; 7E2F0
-xor eax, eax	; 7E2F4
-call ReplayStep	; 7E2F6
-mov eax, dword [crowdlevel-2]	; 7E2FB
-sar eax, 10h	; 7E300
-mov dword [crowdsmooth], eax	; 7E303
-mov eax, dword [camx-2]	; 7E308
-sar eax, 10h	; 7E30D
-add eax, byte 20h	; 7E310
-mov dword [viewscrollx], eax	; 7E313
-cmp eax, byte 40h	; 7E318
-jle short .8	; 7E31B
-mov dword [viewscrollx], 40h	; 7E31D
-.8:
-cmp dword [viewscrollx], byte 0	; 7E327
-jge short .9	; 7E32E
-xor ecx, ecx	; 7E330
-mov dword [viewscrollx], ecx	; 7E332
-.9:
-mov eax, dword [camy-2]	; 7E338
-sar eax, 10h	; 7E33D
-mov edx, 140h	; 7E340
-sub edx, eax	; 7E345
-lea eax, [byte edx-054h]	; 7E347
-mov dword [viewscrolly], eax	; 7E34A
-cmp eax, 1A8h	; 7E34F
-jle short .10	; 7E354
-mov dword [viewscrolly], 1A8h	; 7E356
-.10:
-cmp dword [viewscrolly], byte 0	; 7E360
-jge short .11	; 7E367
-xor ebx, ebx	; 7E369
-mov dword [viewscrolly], ebx	; 7E36B
-.11:
-call SelectRinkBM	; 7E371
-xor edx, edx	; 7E376
-xor eax, eax	; 7E378
-call sub_6AF97	; 7E37A
-call sub_6B008	; 7E37F
-mov edx, dword [viewscrolly]	; 7E384
-mov eax, dword [viewscrollx]	; 7E38A
-call SetRinkScroll	; 7E38F
-mov eax, dword [bgscrolly-2]	; 7E394
-sar eax, 10h	; 7E399
-shl eax, 3	; 7E39C
-mov edx, dword [scrolly-2]	; 7E39F
-sar edx, 10h	; 7E3A5
-add edx, eax	; 7E3A8
-lea ecx, [dword edx+0A8h]	; 7E3AA
-mov eax, dword [bgscrollx-2]	; 7E3B0
-sar eax, 10h	; 7E3B5
-shl eax, 3	; 7E3B8
-mov ebx, dword [scrollx-2]	; 7E3BB
-sar ebx, 10h	; 7E3C1
-add eax, ebx	; 7E3C4
-lea ebx, [dword eax+0140h]	; 7E3C6
-call sub_6AF52	; 7E3CC
-xor ecx, ecx	; 7E3D1
-mov dword [spritedrawcount], ecx	; 7E3D3
-mov edx, dword [viewscrolly-2]	; 7E3D9
-sar edx, 10h	; 7E3DF
-mov eax, dword [viewscrollx-2]	; 7E3E2
-sar eax, 10h	; 7E3E7
-call DrawRinkSideObjects	; 7E3EA
-mov eax, dword [bgscrolly-2]	; 7E3EF
-sar eax, 10h	; 7E3F4
-shl eax, 3	; 7E3F7
-mov edx, dword [scrolly-2]	; 7E3FA
-sar edx, 10h	; 7E400
-add edx, eax	; 7E403
-neg edx	; 7E405
-mov eax, dword [bgscrollx-2]	; 7E407
-sar eax, 10h	; 7E40C
-shl eax, 3	; 7E40F
-mov ebx, dword [scrollx-2]	; 7E412
-sar ebx, 10h	; 7E418
-add eax, ebx	; 7E41B
-neg eax	; 7E41D
-call sub_6AF97	; 7E41F
-call sub_6ADA7	; 7E424
-mov ebx, 10h	; 7E429
-mov edx, gamepal	; 7E42E
-xor eax, eax	; 7E433
-call FadePalette	; 7E435
-call TicksSinceLastCall	; 7E43A
-call ClearInputQueue	; 7E43F
-xor ebp, ebp	; 7E444
-mov dword [byte esp+014h], ebp	; 7E446
-.12:
-call SelectScreenBM	; 7E44A
-lea eax, [byte esp+014h]	; 7E44F
-call ReplayControlLoop	; 7E453
-test eax, eax	; 7E458
-je near .29	; 7E45A
-imul eax, dword [byte esp+014h], byte 6	; 7E460
-add word [word_ED758], ax	; 7E465
-mov ebx, dword [word_ED758-2]	; 7E46C
-sar ebx, 10h	; 7E472
-mov ecx, 14h	; 7E475
-mov eax, ebx	; 7E47A
-mov edx, ebx	; 7E47C
-sar edx, 1Fh	; 7E47E
-idiv ecx	; 7E481
-mov dword [byte esp+014h], eax	; 7E483
-mov eax, ebx	; 7E487
-mov edx, ebx	; 7E489
-sar edx, 1Fh	; 7E48B
-idiv ecx	; 7E48E
-mov word [word_ED758], dx	; 7E490
-mov eax, dword [dword_ED754]	; 7E497
-and eax, byte 3Fh	; 7E49C
-cmp eax, byte 10h	; 7E49F
-sete al	; 7E4A2
-xor ah, ah	; 7E4A5
-movsx edx, ax	; 7E4A7
-mov eax, dword [byte esp+012h]	; 7E4AA
-sar eax, 10h	; 7E4AE
-call ReplayStep	; 7E4B1
-cwde	; 7E4B6
-mov dword [byte esp+014h], eax	; 7E4B7
-call SelectRinkBM	; 7E4BB
-cmp dword [dword_ED70C], byte 0	; 7E4C0
-je near .17	; 7E4C7
-mov ax, word [dword_ED6F0]	; 7E4CD
-mov word [camx], ax	; 7E4D3
-mov ax, word [dword_ED6F4]	; 7E4D9
-mov word [camy], ax	; 7E4DF
-cmp word [camx], byte 20h	; 7E4E5
-jle short .13	; 7E4ED
-mov word [camx], 20h	; 7E4EF
-jmp short .14	; 7E4F8
-.13:
-mov eax, dword [camx-2]	; 7E4FA
-sar eax, 10h	; 7E4FF
-cmp eax, byte 0FFFFFFE0h	; 7E502
-jge short .14	; 7E505
-mov word [camx], 0FFE0h	; 7E507
-.14:
-cmp word [camy], 0ECh	; 7E510
-jle short .15	; 7E519
-mov word [camy], 0ECh	; 7E51B
-jmp short .16	; 7E524
-.15:
-mov eax, dword [camy-2]	; 7E526
-sar eax, 10h	; 7E52B
-cmp eax, 0FFFFFF44h	; 7E52E
-jge short .16	; 7E533
-mov word [camy], 0FF44h	; 7E535
-.16:
-mov eax, dword [camx-2]	; 7E53E
-sar eax, 10h	; 7E543
-mov dword [dword_ED6F0], eax	; 7E546
-mov eax, dword [camy-2]	; 7E54B
-sar eax, 10h	; 7E550
-mov dword [dword_ED6F4], eax	; 7E553
-jmp near .21	; 7E558
-.17:
-cmp word [word_CD4FC], byte 0	; 7E55D
-jl near .21	; 7E565
-mov eax, dword [word_CD4FC-2]	; 7E56B
-sar eax, 10h	; 7E570
-mov dx, word [nosplit eax*2+word_E9F18]	; 7E573
-mov word [camx], dx	; 7E57B
-mov ax, word [nosplit eax*2+word_E9F3A]	; 7E582
-mov word [camy], ax	; 7E58A
-cmp dx, byte 20h	; 7E590
-jle short .18	; 7E594
-mov word [camx], 20h	; 7E596
-jmp short .19	; 7E59F
-.18:
-mov eax, dword [camx-2]	; 7E5A1
-sar eax, 10h	; 7E5A6
-cmp eax, byte 0FFFFFFE0h	; 7E5A9
-jge short .19	; 7E5AC
-mov word [camx], 0FFE0h	; 7E5AE
-.19:
-cmp word [camy], 0ECh	; 7E5B7
-jle short .20	; 7E5C0
-mov word [camy], 0ECh	; 7E5C2
-jmp short .21	; 7E5CB
-.20:
-mov eax, dword [camy-2]	; 7E5CD
-sar eax, 10h	; 7E5D2
-cmp eax, 0FFFFFF44h	; 7E5D5
-jge short .21	; 7E5DA
-mov word [camy], 0FF44h	; 7E5DC
-.21:
-mov eax, dword [camx-2]	; 7E5E5
-sar eax, 10h	; 7E5EA
-add eax, byte 20h	; 7E5ED
-mov dword [viewscrollx], eax	; 7E5F0
-cmp eax, byte 40h	; 7E5F5
-jle short .22	; 7E5F8
-mov dword [viewscrollx], 40h	; 7E5FA
-.22:
-cmp dword [viewscrollx], byte 0	; 7E604
-jge short .23	; 7E60B
-xor ebp, ebp	; 7E60D
-mov dword [viewscrollx], ebp	; 7E60F
-.23:
-mov eax, dword [camy-2]	; 7E615
-sar eax, 10h	; 7E61A
-mov edx, 140h	; 7E61D
-sub edx, eax	; 7E622
-lea eax, [byte edx-054h]	; 7E624
-mov dword [viewscrolly], eax	; 7E627
-cmp eax, 1A8h	; 7E62C
-jle short .24	; 7E631
-mov dword [viewscrolly], 1A8h	; 7E633
-.24:
-cmp dword [viewscrolly], byte 0	; 7E63D
-jge short .25	; 7E644
-xor ecx, ecx	; 7E646
-mov dword [viewscrolly], ecx	; 7E648
-.25:
-xor edx, edx	; 7E64E
-xor eax, eax	; 7E650
-call sub_6AF97	; 7E652
-call sub_6B008	; 7E657
-mov edx, dword [viewscrolly]	; 7E65C
-mov eax, dword [viewscrollx]	; 7E662
-call SetRinkScroll	; 7E667
-mov eax, dword [bgscrolly-2]	; 7E66C
-sar eax, 10h	; 7E671
-shl eax, 3	; 7E674
-mov edx, dword [scrolly-2]	; 7E677
-sar edx, 10h	; 7E67D
-add edx, eax	; 7E680
-lea ecx, [dword edx+0A8h]	; 7E682
-mov ebx, dword [bgscrollx-2]	; 7E688
-sar ebx, 10h	; 7E68E
-shl ebx, 3	; 7E691
-mov eax, dword [scrollx-2]	; 7E694
-sar eax, 10h	; 7E699
-add eax, ebx	; 7E69C
-lea ebx, [dword eax+0140h]	; 7E69E
-call sub_6AF52	; 7E6A4
-xor ebp, ebp	; 7E6A9
-mov dword [spritedrawcount], ebp	; 7E6AB
-mov edx, dword [viewscrolly-2]	; 7E6B1
-sar edx, 10h	; 7E6B7
-mov eax, dword [viewscrollx-2]	; 7E6BA
-sar eax, 10h	; 7E6BF
-call DrawRinkSideObjects	; 7E6C2
-cmp dword [gadgetptry], 0A8h	; 7E6C7
-jge near .28	; 7E6D1
-mov edx, dword [dword_ED74C]	; 7E6D7
-cmp edx, byte 0FFFFFFFFh	; 7E6DD
-jne short .26	; 7E6E0
-mov dword [dword_ED6EC], edx	; 7E6E2
-mov eax, dword [camx-2]	; 7E6E8
-sar eax, 10h	; 7E6ED
-add eax, dword [gadgetptrx]	; 7E6F0
-sub eax, 0A0h	; 7E6F6
-mov dword [dword_ED704], eax	; 7E6FB
-mov eax, dword [camy-2]	; 7E700
-sar eax, 10h	; 7E705
-sub eax, dword [gadgetptry]	; 7E708
-add eax, byte 54h	; 7E70E
-mov dword [dword_ED708], eax	; 7E711
-push byte 0	; 7E716
-mov ax, word [dword_ED708]	; 7E718
-inc eax	; 7E71E
-movsx ebx, ax	; 7E71F
-mov ax, word [dword_ED704]	; 7E722
-inc eax	; 7E728
-movsx edx, ax	; 7E729
-xor ecx, ecx	; 7E72C
-mov eax, 188h	; 7E72E
-call DrawFrameSprite	; 7E733
-jmp near .28	; 7E738
-.26:
-push byte 1	; 7E73D
-mov eax, edx	; 7E73F
-mov dx, word [nosplit edx*2+word_E9F3A]	; 7E741
-inc edx	; 7E749
-movsx ebx, dx	; 7E74A
-mov ax, word [nosplit eax*2+word_E9F18]	; 7E74D
-inc eax	; 7E755
-movsx edx, ax	; 7E756
-xor ecx, ecx	; 7E759
-mov eax, 188h	; 7E75B
-call DrawFrameSprite	; 7E760
-mov eax, dword [dword_ED6EC]	; 7E765
-mov ebx, dword [dword_ED74C]	; 7E76A
-cmp eax, ebx	; 7E770
-je short .28	; 7E772
-mov eax, ebx	; 7E774
-mov ebx, dword [nosplit ebx*2+dword_E9F16]	; 7E776
-sar ebx, 10h	; 7E77D
-mov edx, dword [camx-2]	; 7E780
-sar edx, 10h	; 7E786
-sub ebx, edx	; 7E789
-add ebx, 0A0h	; 7E78B
-mov dword [gadgetptrx], ebx	; 7E791
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7E797
-sar eax, 10h	; 7E79E
-mov edx, dword [camy-2]	; 7E7A1
-sar edx, 10h	; 7E7A7
-sub edx, eax	; 7E7AA
-add edx, byte 54h	; 7E7AC
-mov dword [gadgetptry], edx	; 7E7AF
-cmp edx, 0A7h	; 7E7B5
-jle short .27	; 7E7BB
-mov dword [gadgetptry], 0A7h	; 7E7BD
-.27:
-mov eax, dword [gadgetptry]	; 7E7C7
-push eax	; 7E7CC
-mov edx, dword [gadgetptrx]	; 7E7CD
-push edx	; 7E7D3
-call MouseSetPos	; 7E7D4
-add esp, byte 8	; 7E7D9
-mov eax, dword [dword_ED74C]	; 7E7DC
-mov dword [dword_ED6EC], eax	; 7E7E1
-.28:
-mov eax, dword [bgscrolly-2]	; 7E7E6
-sar eax, 10h	; 7E7EB
-shl eax, 3	; 7E7EE
-mov edx, dword [scrolly-2]	; 7E7F1
-sar edx, 10h	; 7E7F7
-add edx, eax	; 7E7FA
-neg edx	; 7E7FC
-mov eax, dword [bgscrollx-2]	; 7E7FE
-sar eax, 10h	; 7E803
-shl eax, 3	; 7E806
-mov ebx, dword [scrollx-2]	; 7E809
-sar ebx, 10h	; 7E80F
-add eax, ebx	; 7E812
-neg eax	; 7E814
-call sub_6AF97	; 7E816
-call sub_6ADA7	; 7E81B
-call TicksSinceLastCall	; 7E820
-mov dword [byte esp+014h], eax	; 7E825
-jmp near InstantReplay.12	; 7E829
-.29:
-call CrowdNoiseOff	; 7E82E
-mov ecx, 0FFFFFFFFh	; 7E833
-mov word [lastsfx], cx	; 7E838
-mov word [replaysfx], cx	; 7E83F
-mov eax, dword [byte esp+01Ch]	; 7E846
-mov word [camx], ax	; 7E84A
-mov eax, dword [byte esp+020h]	; 7E850
-mov word [camy], ax	; 7E854
-movsx eax, di	; 7E85A
-mov dword [viewscrollx], eax	; 7E85D
-mov eax, dword [byte esp+016h]	; 7E862
-sar eax, 10h	; 7E866
-mov dword [viewscrolly], eax	; 7E869
-mov word [crowdlevel], si	; 7E86E
-movsx eax, si	; 7E875
-mov dword [crowdsmooth], eax	; 7E878
-mov eax, 1	; 7E87D
-mov dword [dword_C66D4], eax	; 7E882
-mov dword [dword_C66D0], eax	; 7E887
-push savepal	; 7E88C
-push dword 100h	; 7E891
-push byte 0	; 7E896
-call sub_8FFB0	; 7E898
-add esp, byte 0Ch	; 7E89D
-mov ebx, 10h	; 7E8A0
-mov edx, savepal	; 7E8A5
-mov eax, 1	; 7E8AA
-call FadePalette	; 7E8AF
-mov ebx, dword [gadgetfile]	; 7E8B4
-push ebx	; 7E8BA
-call FreeMemBlock	; 7E8BB
-add esp, byte 4	; 7E8C0
-call sub_B4BA8	; 7E8C3
-cmp dword [esp], byte 0	; 7E8C8
-jne short .30	; 7E8CC
-mov edx, 1E0h	; 7E8CE
-mov eax, 280h	; 7E8D3
-call SetScreenSize	; 7E8D8
-.30:
-add esp, byte 24h	; 7E8DD
-jmp near DrawGadgetButton_ret	; 7E8E0
-; C: src/c/engine/replay/GadgetHitTest.c
-%ifdef CBUILD
-%include "c/engine/replay/GadgetHitTest.inc"
-%else
-GadgetHitTest:
-push dword 10h	; 7E8E5
-call __CHK	; 7E8EA
-push ecx	; 7E8EF
-push esi	; 7E8F0
-push edi	; 7E8F1
-mov ecx, eax	; 7E8F2
-mov esi, edx	; 7E8F4
-mov edi, ebx	; 7E8F6
-xor edx, edx	; 7E8F8
-lea ecx, [byte eax+05h]	; 7E8FA
-.1:
-mov eax, edx	; 7E8FD
-shl eax, 3	; 7E8FF
-sub eax, edx	; 7E902
-shl eax, 2	; 7E904
-cmp ecx, dword [dword eax+gadgetrects]	; 7E907
-jl short .2	; 7E90D
-cmp ecx, dword [dword eax+gadgetrect_x1]	; 7E90F
-jg short .2	; 7E915
-cmp esi, dword [dword eax+gadgetrect_y0]	; 7E917
-jl short .2	; 7E91D
-cmp esi, dword [dword eax+gadgetrect_y1]	; 7E91F
-jg short .2	; 7E925
-mov dword [edi], edx	; 7E927
-mov eax, 1	; 7E929
-pop edi	; 7E92E
-pop esi	; 7E92F
-pop ecx	; 7E930
-ret	; 7E931
-.2:
-inc edx	; 7E932
-cmp edx, byte 0Ah	; 7E933
-jl short GadgetHitTest.1	; 7E936
-xor eax, eax	; 7E938
-pop edi	; 7E93A
-pop esi	; 7E93B
-pop ecx	; 7E93C
-ret	; 7E93D
-%endif ; C
-; C: src/c/engine/replay/PickNearestPlayer.c
-%ifdef CBUILD
-%include "c/engine/replay/PickNearestPlayer.inc"
-%else
-PickNearestPlayer:
-push dword 1Ch	; 7E93E
-call __CHK	; 7E943
-push ebx	; 7E948
-push ecx	; 7E949
-push esi	; 7E94A
-push edi	; 7E94B
-push ebp	; 7E94C
-sub esp, byte 4	; 7E94D
-mov edi, eax	; 7E950
-mov dword [esp], edx	; 7E952
-mov esi, 0FFFFFFFFh	; 7E955
-mov ecx, 2710h	; 7E95A
-xor eax, eax	; 7E95F
-mov ebp, dword [esp]	; 7E961
-.1:
-cmp eax, byte 0Ch	; 7E964
-jl short .2	; 7E967
-cmp eax, byte 0Fh	; 7E969
-jle short .3	; 7E96C
-.2:
-mov ebx, dword [nosplit eax*2+dword_E9F16]	; 7E96E
-sar ebx, 10h	; 7E975
-sub ebx, edi	; 7E978
-mov edx, dword [nosplit eax*2+dword_E9F38]	; 7E97A
-sar edx, 10h	; 7E981
-sub edx, ebp	; 7E984
-imul ebx, ebx	; 7E986
-imul edx, edx	; 7E989
-add edx, ebx	; 7E98C
-cmp edx, byte 64h	; 7E98E
-jg short .3	; 7E991
-cmp edx, ecx	; 7E993
-jge short .3	; 7E995
-mov ecx, edx	; 7E997
-mov esi, eax	; 7E999
-.3:
-inc eax	; 7E99B
-cmp eax, byte 11h	; 7E99C
-jl short PickNearestPlayer.1	; 7E99F
-mov eax, esi	; 7E9A1
-add esp, byte 4	; 7E9A3
-pop ebp	; 7E9A6
-pop edi	; 7E9A7
-pop esi	; 7E9A8
-pop ecx	; 7E9A9
-pop ebx	; 7E9AA
-ret	; 7E9AB
-%endif ; C
-; C: src/c/engine/replay/DrawGadgetButton.c (ReplayControlLoop)
-%ifdef CBUILD
-%include "c/engine/replay/DrawGadgetButton.ReplayControlLoop.inc"
-%else
-ReplayControlLoop:
-push dword 3Ch	; 7E9AC
-call __CHK	; 7E9B1
-push ebx	; 7E9B6
-push ecx	; 7E9B7
-push edx	; 7E9B8
-push esi	; 7E9B9
-push edi	; 7E9BA
-push ebp	; 7E9BB
-sub esp, byte 10h	; 7E9BC
-mov esi, eax	; 7E9BF
-xor edi, edi	; 7E9C1
-mov eax, dword [dword_ED754]	; 7E9C3
-mov dword [byte esp+04h], eax	; 7E9C8
-mov eax, dword [gadgetptrx]	; 7E9CC
-mov dword [byte esp+08h], eax	; 7E9D1
-mov ebp, dword [gadgetptry]	; 7E9D5
-mov dword [byte esp+0Ch], edi	; 7E9DB
-mov ecx, 13Fh	; 7E9DF
-.1:
-call GetInputEvent	; 7E9E4
-test eax, eax	; 7E9E9
-je short .4	; 7E9EB
-mov ebx, gadgetptry	; 7E9ED
-mov edx, gadgetptrx	; 7E9F2
-call dword [ptrupdatefn]	; 7E9F7
-mov dword [byte esp+0Ch], eax	; 7E9FD
-cmp dword [gadgetptrx], 140h	; 7EA01
-jl short .2	; 7EA0B
-mov dword [gadgetptrx], ecx	; 7EA0D
-.2:
-cmp dword [gadgetptry], 0C8h	; 7EA13
-jl short .3	; 7EA1D
-mov dword [gadgetptry], 0C7h	; 7EA1F
-.3:
-test byte [byte esp+0Ch], 2	; 7EA29
-je short ReplayControlLoop.1	; 7EA2E
-.4:
-mov dl, byte [byte esp+0Ch]	; 7EA30
-test dl, 1	; 7EA34
-je short .5	; 7EA37
-mov dword [dword_ED6FC], 1	; 7EA39
-jmp short .6	; 7EA43
-.5:
-test dl, 2	; 7EA45
-je short .6	; 7EA48
-xor ebx, ebx	; 7EA4A
-mov dword [dword_ED6FC], ebx	; 7EA4C
-.6:
-mov eax, dword [dword_ED6FC]	; 7EA52
-test eax, eax	; 7EA57
-je short .9	; 7EA59
-mov edx, dword [gadgetptry]	; 7EA5B
-mov eax, dword [gadgetptrx]	; 7EA61
-mov ebx, esp	; 7EA66
-call GadgetHitTest	; 7EA68
-test eax, eax	; 7EA6D
-je short .7	; 7EA6F
-cmp dword [dword_ED6F8], byte 0	; 7EA71
-je short .8	; 7EA78
-cmp dword [esp], byte 7	; 7EA7A
-jne short .8	; 7EA7E
-.7:
-xor eax, eax	; 7EA80
-jmp short .9	; 7EA82
-.8:
-mov cl, byte [esp]	; 7EA84
-mov eax, 1	; 7EA87
-shl eax, cl	; 7EA8C
-.9:
-mov dword [esp], eax	; 7EA8E
-mov edx, dword [gadgetptry]	; 7EA91
-cmp edx, 0A8h	; 7EA97
-jge short .10	; 7EA9D
-mov eax, dword [camx-2]	; 7EA9F
-sar eax, 10h	; 7EAA4
-add eax, dword [gadgetptrx]	; 7EAA7
-sub eax, 0A0h	; 7EAAD
-mov dword [dword_ED704], eax	; 7EAB2
-mov eax, dword [camy-2]	; 7EAB7
-sar eax, 10h	; 7EABC
-sub eax, edx	; 7EABF
-add eax, byte 54h	; 7EAC1
-mov dword [dword_ED708], eax	; 7EAC4
-.10:
-mov eax, dword [dword_ED754]	; 7EAC9
-and eax, byte 54h	; 7EACE
-mov edx, dword [dword_ED754]	; 7EAD1
-and edx, byte 40h	; 7EAD7
-mov ebx, dword [esp]	; 7EADA
-cmp ebx, byte 10h	; 7EADD
-jb short .12	; 7EAE0
-jbe near .15	; 7EAE2
-cmp ebx, byte 40h	; 7EAE8
-jb short .11	; 7EAEB
-jbe near .29	; 7EAED
-cmp ebx, 80h	; 7EAF3
-jb near .32	; 7EAF9
-jbe near .30	; 7EAFF
-cmp ebx, 100h	; 7EB05
-je near .31	; 7EB0B
-jmp near .32	; 7EB11
-.11:
-cmp ebx, byte 20h	; 7EB16
-je near .19	; 7EB19
-jmp near .32	; 7EB1F
-.12:
-cmp ebx, byte 2	; 7EB24
-jb short .13	; 7EB27
-jbe near .20	; 7EB29
-cmp ebx, byte 4	; 7EB2F
-jb near .32	; 7EB32
-jbe short .14	; 7EB38
-cmp ebx, byte 8	; 7EB3A
-je near .25	; 7EB3D
-jmp near .32	; 7EB43
-.13:
-cmp ebx, byte 1	; 7EB48
-je short .18	; 7EB4B
-jmp near .32	; 7EB4D
-.14:
-or dl, 4	; 7EB52
-mov dword [dword_ED754], edx	; 7EB55
-jmp near .46	; 7EB5B
-.15:
-mov eax, dword [dword_ED754]	; 7EB60
-and eax, byte 3Fh	; 7EB65
-cmp eax, byte 10h	; 7EB68
-je short .16	; 7EB6B
-xor ebx, ebx	; 7EB6D
-mov word [word_ED758], bx	; 7EB6F
-.16:
-mov eax, dword [dword_ED754]	; 7EB76
-and eax, byte 40h	; 7EB7B
-or al, 10h	; 7EB7E
-mov dword [dword_ED754], eax	; 7EB80
-.17:
-mov edi, dword [esi]	; 7EB85
-jmp near .47	; 7EB87
-.18:
-or al, 1	; 7EB8C
-mov dword [dword_ED754], eax	; 7EB8E
-mov edi, dword [esi]	; 7EB93
-shl edi, 2	; 7EB95
-neg edi	; 7EB98
-jmp near .47	; 7EB9A
-.19:
-or al, 20h	; 7EB9F
-mov dword [dword_ED754], eax	; 7EBA1
-mov edi, dword [esi]	; 7EBA6
-shl edi, 2	; 7EBA8
-jmp near .47	; 7EBAB
-.20:
-test byte [dword_ED754], 2	; 7EBB0
-je short .22	; 7EBB7
-mov eax, dword [esi]	; 7EBB9
-mov edx, dword [dword_ED6E8]	; 7EBBB
-add edx, eax	; 7EBC1
-mov dword [dword_ED6E8], edx	; 7EBC3
-cmp edx, byte 5	; 7EBC9
-jge short .21	; 7EBCC
-xor edi, edi	; 7EBCE
-jmp short .23	; 7EBD0
-.21:
-mov edi, 0FFFFFFFFh	; 7EBD2
-lea ecx, [byte edx-05h]	; 7EBD7
-mov dword [dword_ED6E8], ecx	; 7EBDA
-jmp short .23	; 7EBE0
-.22:
-xor edi, edi	; 7EBE2
-mov dword [dword_ED6E8], edi	; 7EBE4
-mov edi, 0FFFFFFFFh	; 7EBEA
-mov word [word_ED758], 0FFF2h	; 7EBEF
-.23:
-mov eax, dword [dword_ED754]	; 7EBF8
-and eax, byte 40h	; 7EBFD
-or al, 6	; 7EC00
-.24:
-mov dword [dword_ED754], eax	; 7EC02
-jmp near .47	; 7EC07
-.25:
-test byte [dword_ED754], 8	; 7EC0C
-je short .27	; 7EC13
-mov eax, dword [esi]	; 7EC15
-mov edx, dword [dword_ED6E8]	; 7EC17
-add edx, eax	; 7EC1D
-mov dword [dword_ED6E8], edx	; 7EC1F
-cmp edx, byte 5	; 7EC25
-jge short .26	; 7EC28
-xor edi, edi	; 7EC2A
-jmp short .28	; 7EC2C
-.26:
-mov edi, 1	; 7EC2E
-lea ecx, [byte edx-05h]	; 7EC33
-mov dword [dword_ED6E8], ecx	; 7EC36
-jmp short .28	; 7EC3C
-.27:
-xor edi, edi	; 7EC3E
-mov dword [dword_ED6E8], edi	; 7EC40
-mov edi, 1	; 7EC46
-mov word [word_ED758], 0Eh	; 7EC4B
-.28:
-mov eax, dword [dword_ED754]	; 7EC54
-and eax, byte 40h	; 7EC59
-or al, 0Ch	; 7EC5C
-jmp short ReplayControlLoop.24	; 7EC5E
-.29:
-or byte [dword_ED754], 40h	; 7EC60
-xor edi, edi	; 7EC67
-mov dword [dword_ED70C], edi	; 7EC69
-mov eax, 0FFFFFFFFh	; 7EC6F
-mov dword [dword_ED74C], eax	; 7EC74
-mov dword [dword_ED6EC], eax	; 7EC79
-mov word [word_CD4FC], 0FFFFh	; 7EC7E
-jmp near .47	; 7EC87
-.30:
-or dl, 84h	; 7EC8C
-mov dword [dword_ED754], edx	; 7EC8F
-jmp near .47	; 7EC95
-.31:
-xor eax, eax	; 7EC9A
-jmp near .63	; 7EC9C
-.32:
-cmp dword [gadgetptry], 0A8h	; 7ECA1
-jge near .45	; 7ECAB
-mov edx, dword [dword_ED708]	; 7ECB1
-mov eax, dword [dword_ED704]	; 7ECB7
-call PickNearestPlayer	; 7ECBC
-mov dword [dword_ED74C], eax	; 7ECC1
-test byte [byte esp+0Ch], 2	; 7ECC6
-je near .45	; 7ECCB
-cmp eax, byte 0FFFFFFFFh	; 7ECD1
-jne near .38	; 7ECD4
-mov dword [dword_ED70C], 1	; 7ECDA
-mov dword [dword_ED6EC], eax	; 7ECE4
-mov word [word_CD4FC], 0FFFFh	; 7ECE9
-mov eax, dword [dword_ED704]	; 7ECF2
-mov dword [dword_ED6F0], eax	; 7ECF7
-mov eax, dword [dword_ED708]	; 7ECFC
-mov dword [dword_ED6F4], eax	; 7ED01
-mov eax, dword [dword_ED6F0]	; 7ED06
-mov dword [gadgetptrx], eax	; 7ED0B
-mov eax, dword [dword_ED6F4]	; 7ED10
-mov dword [gadgetptry], eax	; 7ED15
-mov edi, dword [gadgetptrx]	; 7ED1A
-cmp edi, byte 20h	; 7ED20
-jle short .33	; 7ED23
-mov dword [gadgetptrx], 20h	; 7ED25
-jmp short .34	; 7ED2F
-.33:
-cmp edi, byte 0FFFFFFE0h	; 7ED31
-jge short .34	; 7ED34
-mov dword [gadgetptrx], 0FFFFFFE0h	; 7ED36
-.34:
-mov ecx, dword [gadgetptry]	; 7ED40
-cmp ecx, 0ECh	; 7ED46
-jle short .35	; 7ED4C
-mov dword [gadgetptry], 0ECh	; 7ED4E
-jmp short .36	; 7ED58
-.35:
-cmp ecx, 0FFFFFF44h	; 7ED5A
-jge short .36	; 7ED60
-mov dword [gadgetptry], 0FFFFFF44h	; 7ED62
-.36:
-mov eax, dword [dword_ED6F0]	; 7ED6C
-sub eax, dword [gadgetptrx]	; 7ED71
-add eax, 0A0h	; 7ED77
-mov dword [gadgetptrx], eax	; 7ED7C
-mov eax, dword [gadgetptry]	; 7ED81
-sub eax, dword [dword_ED6F4]	; 7ED86
-add eax, byte 54h	; 7ED8C
-mov dword [gadgetptry], eax	; 7ED8F
-cmp eax, 0A7h	; 7ED94
-jle short .37	; 7ED99
-mov dword [gadgetptry], 0A7h	; 7ED9B
-.37:
-mov edx, dword [gadgetptry]	; 7EDA5
-push edx	; 7EDAB
-mov ebx, dword [gadgetptrx]	; 7EDAC
-push ebx	; 7EDB2
-call MouseSetPos	; 7EDB3
-add esp, byte 8	; 7EDB8
-jmp near .44	; 7EDBB
-.38:
-xor edx, edx	; 7EDC0
-mov dword [dword_ED70C], edx	; 7EDC2
-mov dx, word [dword_ED74C]	; 7EDC8
-mov word [word_CD4FC], dx	; 7EDCF
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 7EDD6
-sar edx, 10h	; 7EDDD
-mov dword [gadgetptrx], edx	; 7EDE0
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7EDE6
-sar eax, 10h	; 7EDED
-mov dword [gadgetptry], eax	; 7EDF0
-cmp edx, byte 20h	; 7EDF5
-jle short .39	; 7EDF8
-mov dword [gadgetptrx], 20h	; 7EDFA
-jmp short .40	; 7EE04
-.39:
-cmp edx, byte 0FFFFFFE0h	; 7EE06
-jge short .40	; 7EE09
-mov dword [gadgetptrx], 0FFFFFFE0h	; 7EE0B
-.40:
-mov edx, dword [gadgetptry]	; 7EE15
-cmp edx, 0ECh	; 7EE1B
-jle short .41	; 7EE21
-mov dword [gadgetptry], 0ECh	; 7EE23
-jmp short .42	; 7EE2D
-.41:
-cmp edx, 0FFFFFF44h	; 7EE2F
-jge short .42	; 7EE35
-mov dword [gadgetptry], 0FFFFFF44h	; 7EE37
-.42:
-mov eax, dword [dword_ED74C]	; 7EE41
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 7EE46
-sar edx, 10h	; 7EE4D
-sub edx, dword [gadgetptrx]	; 7EE50
-add edx, 0A0h	; 7EE56
-mov dword [gadgetptrx], edx	; 7EE5C
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7EE62
-sar eax, 10h	; 7EE69
-mov edx, dword [gadgetptry]	; 7EE6C
-sub edx, eax	; 7EE72
-lea eax, [byte edx+054h]	; 7EE74
-mov dword [gadgetptry], eax	; 7EE77
-cmp eax, 0A7h	; 7EE7C
-jle short .43	; 7EE81
-mov dword [gadgetptry], 0A7h	; 7EE83
-.43:
-mov eax, dword [gadgetptry]	; 7EE8D
-push eax	; 7EE92
-mov edx, dword [gadgetptrx]	; 7EE93
-push edx	; 7EE99
-call MouseSetPos	; 7EE9A
-add esp, byte 8	; 7EE9F
-mov eax, dword [dword_ED74C]	; 7EEA2
-mov dword [dword_ED6EC], eax	; 7EEA7
-.44:
-and dword [dword_ED754], byte 14h	; 7EEAC
-.45:
-and dword [dword_ED754], byte 54h	; 7EEB3
-test byte [dword_ED754], 10h	; 7EEBA
-jne near ReplayControlLoop.17	; 7EEC1
-.46:
-xor edi, edi	; 7EEC7
-.47:
-mov eax, dword [byte esp+08h]	; 7EEC9
-cmp eax, dword [gadgetptrx]	; 7EECD
-jne short .48	; 7EED3
-cmp ebp, dword [gadgetptry]	; 7EED5
-jne short .48	; 7EEDB
-mov eax, dword [byte esp+04h]	; 7EEDD
-cmp eax, dword [dword_ED754]	; 7EEE1
-je near .61	; 7EEE7
-.48:
-mov eax, dword [byte esp+04h]	; 7EEED
-cmp eax, dword [dword_ED754]	; 7EEF1
-jne near .57	; 7EEF7
-mov edx, dword [pointerspr]	; 7EEFD
-mov eax, dword [byte edx+02h]	; 7EF03
-sar eax, 10h	; 7EF06
-mov ebx, dword [byte esp+08h]	; 7EF09
-add eax, ebx	; 7EF0D
-mov edx, dword [byte edx+04h]	; 7EF0F
-sar edx, 10h	; 7EF12
-sub ebp, 0A8h	; 7EF15
-add edx, ebp	; 7EF1B
-test ebx, ebx	; 7EF1D
-jge short .49	; 7EF1F
-xor ebx, ebx	; 7EF21
-mov dword [byte esp+08h], ebx	; 7EF23
-jmp short .50	; 7EF27
-.49:
-cmp ebx, 140h	; 7EF29
-jle short .50	; 7EF2F
-mov dword [byte esp+08h], 140h	; 7EF31
-.50:
-test ebp, ebp	; 7EF39
-jge short .51	; 7EF3B
-xor ebp, ebp	; 7EF3D
-jmp short .52	; 7EF3F
-.51:
-cmp ebp, byte 20h	; 7EF41
-jle short .52	; 7EF44
-mov ebp, 20h	; 7EF46
-.52:
-test eax, eax	; 7EF4B
-jge short .53	; 7EF4D
-xor eax, eax	; 7EF4F
-jmp short .54	; 7EF51
-.53:
-cmp eax, 140h	; 7EF53
-jle short .54	; 7EF58
-mov eax, 140h	; 7EF5A
-.54:
-test edx, edx	; 7EF5F
-jge short .55	; 7EF61
-xor edx, edx	; 7EF63
-jmp short .56	; 7EF65
-.55:
-cmp edx, byte 20h	; 7EF67
-jle short .56	; 7EF6A
-mov edx, 20h	; 7EF6C
-.56:
-push edx	; 7EF71
-push ebp	; 7EF72
-push eax	; 7EF73
-mov ecx, dword [byte esp+014h]	; 7EF74
-push ecx	; 7EF78
-call sub_B4BC4	; 7EF79
-add esp, byte 10h	; 7EF7E
-.57:
-push byte 0	; 7EF81
-push byte 0	; 7EF83
-mov ebp, dword [gadgetshape]	; 7EF85
-push ebp	; 7EF8B
-call sub_B500C	; 7EF8C
-add esp, byte 0Ch	; 7EF91
-mov eax, dword [byte esp+04h]	; 7EF94
-cmp eax, dword [dword_ED754]	; 7EF98
-jne short .58	; 7EF9E
-push byte 20h	; 7EFA0
-push byte 0	; 7EFA2
-push dword 140h	; 7EFA4
-push byte 0	; 7EFA9
-call sub_B4BC4	; 7EFAB
-add esp, byte 10h	; 7EFB0
-.58:
-xor ebx, ebx	; 7EFB3
-mov dword [esp], ebx	; 7EFB5
-.59:
-mov cl, byte [esp]	; 7EFB8
-mov eax, 1	; 7EFBB
-shl eax, cl	; 7EFC0
-test dword [dword_ED754], eax	; 7EFC2
-je short .60	; 7EFC8
-mov eax, dword [esp]	; 7EFCA
-call DrawGadgetButton	; 7EFCD
-.60:
-mov ebp, dword [esp]	; 7EFD2
-inc ebp	; 7EFD5
-mov dword [esp], ebp	; 7EFD6
-cmp ebp, byte 9	; 7EFD9
-jl short ReplayControlLoop.59	; 7EFDC
-mov edx, dword [gadgetptry]	; 7EFDE
-cmp edx, 0A8h	; 7EFE4
-jl short .61	; 7EFEA
-lea eax, [dword edx-0A8h]	; 7EFEC
-push eax	; 7EFF2
-mov ebx, dword [gadgetptrx]	; 7EFF3
-push ebx	; 7EFF9
-mov ecx, dword [pointerspr]	; 7EFFA
-push ecx	; 7F000
-call sub_91370	; 7F001
-add esp, byte 0Ch	; 7F006
-.61:
-test byte [dword_ED754], 80h	; 7F009
-je short .62	; 7F010
-xor ebp, ebp	; 7F012
-mov dword [dword_ED6FC], ebp	; 7F014
-mov ebx, dword [gadgetptry]	; 7F01A
-mov edx, dword [gadgetptrx]	; 7F020
-xor eax, eax	; 7F026
-call ReplaySaveHilight	; 7F028
-call ClearInputQueue	; 7F02D
-mov dword [dword_ED754], 4	; 7F032
-call SelectScreenBM	; 7F03C
-push byte 20h	; 7F041
-push ebp	; 7F043
-push dword 140h	; 7F044
-push ebp	; 7F049
-call sub_B4BC4	; 7F04A
-add esp, byte 10h	; 7F04F
-push ebp	; 7F052
-push ebp	; 7F053
-mov edx, dword [gadgetshape]	; 7F054
-push edx	; 7F05A
-call sub_B4CD8	; 7F05B
-add esp, byte 0Ch	; 7F060
-mov eax, 2	; 7F063
-call DrawGadgetButton	; 7F068
-mov eax, dword [gadgetptry]	; 7F06D
-sub eax, 0A8h	; 7F072
-push eax	; 7F077
-mov ebx, dword [gadgetptrx]	; 7F078
-push ebx	; 7F07E
-mov ecx, dword [pointerspr]	; 7F07F
-push ecx	; 7F085
-call sub_91370	; 7F086
-add esp, byte 0Ch	; 7F08B
-.62:
-mov dword [esi], edi	; 7F08E
-mov eax, 1	; 7F090
-.63:
-add esp, byte 10h	; 7F095
-jmp near DrawGadgetButton_ret	; 7F098
-%endif ; C
-db 08Bh,0C0h
-ReplaySaveHilight_jt:
-dd ReplaySaveHilight_n0
-dd ReplaySaveHilight_n1
-dd ReplaySaveHilight_n2
-dd ReplaySaveHilight_n3
-ReplaySaveHilight:
-push dword 94h	; 7F0AF
-call __CHK	; 7F0B4
-push ecx	; 7F0B9
-push esi	; 7F0BA
-push edi	; 7F0BB
-push ebp	; 7F0BC
-sub esp, byte 64h	; 7F0BD
-push edx	; 7F0C0
-push ebx	; 7F0C1
-call sub_B4BA8	; 7F0C2
-mov edx, dword [ctl1team]	; 7F0C7
-test edx, edx	; 7F0CD
-jl short .1	; 7F0CF
-mov ebx, dword [ctl2team]	; 7F0D1
-test ebx, ebx	; 7F0D7
-jl short .1	; 7F0D9
-cmp edx, ebx	; 7F0DB
-jne near .9	; 7F0DD
-.1:
-push byte 64h	; 7F0E3
-call SetTickDeadline	; 7F0E5
-add esp, byte 4	; 7F0EA
-mov edi, dword [ctl1team]	; 7F0ED
-test edi, edi	; 7F0F3
-jl short .3	; 7F0F5
-mov eax, dword [HomeTeam-2]	; 7F0F7
-sar eax, 10h	; 7F0FC
-cmp eax, edi	; 7F0FF
-jne short .2	; 7F101
-xor eax, edi	; 7F103
-jmp short .5	; 7F105
-.2:
-mov eax, 1	; 7F107
-jmp short .5	; 7F10C
-.3:
-mov eax, dword [HomeTeam-2]	; 7F10E
-sar eax, 10h	; 7F113
-mov ebp, dword [ctl2team]	; 7F116
-cmp eax, ebp	; 7F11C
-jne short .4	; 7F11E
-xor eax, ebp	; 7F120
-jmp short .5	; 7F122
-.4:
-mov eax, 1	; 7F124
-.5:
-call SaveHilight	; 7F129
-mov dword [byte esp+068h], eax	; 7F12E
-cmp dword [byte esp+068h], byte 0	; 7F132
-je near .8	; 7F137
-lea eax, [byte esp+08h]	; 7F13D
-push eax	; 7F141
-call sub_8E9E8	; 7F142
-add esp, byte 4	; 7F147
-mov ecx, dword [mainfont]	; 7F14A
-push ecx	; 7F150
-call sub_8EA18	; 7F151
-add esp, byte 4	; 7F156
-push dword 1F4h	; 7F159
-call SetTickDeadline	; 7F15E
-add esp, byte 4	; 7F163
-push byte 0	; 7F166
-mov ecx, 59h	; 7F168
-mov ebx, 11h	; 7F16D
-mov edx, ecx	; 7F172
-mov eax, 14h	; 7F174
-call SetDialogColors	; 7F179
-push byte 0	; 7F17E
-push byte 0	; 7F180
-push byte 0	; 7F182
-push byte 0	; 7F184
-push byte 0	; 7F186
-mov ecx, 3	; 7F188
-mov ebx, msg_NoHilightSpace	; 7F18D
-xor edx, edx	; 7F192
-xor eax, eax	; 7F194
-call MessageBox	; 7F196
-lea eax, [byte esp+08h]	; 7F19B
-push eax	; 7F19F
-call sub_8EA00	; 7F1A0
-add esp, byte 4	; 7F1A5
-mov esi, dword [gadgetfile]	; 7F1A8
-push esi	; 7F1AE
-call FreeMemBlock	; 7F1AF
-add esp, byte 4	; 7F1B4
-mov ecx, str_PPV	; 7F1B7
-mov ebx, str_Gadget6	; 7F1BC
-cmp byte [fileoncd+0223h], 1	; 7F1C1
-jne short .6	; 7F1C8
-mov edx, dword [cddriveptr]	; 7F1CA
-jmp short .7	; 7F1D0
-.6:
-xor edx, edx	; 7F1D2
-.7:
-lea eax, [byte esp+048h]	; 7F1D4
-call MakePath	; 7F1D8
-push byte 0	; 7F1DD
-lea eax, [byte esp+04Ch]	; 7F1DF
-push eax	; 7F1E3
-call sub_8E8A0	; 7F1E4
-add esp, byte 8	; 7F1E9
-mov dword [gadgetfile], eax	; 7F1EC
-push str_Gad1	; 7F1F1
-push eax	; 7F1F6
-call sub_B30B4	; 7F1F7
-add esp, byte 8	; 7F1FC
-mov dword [gadgetshape], eax	; 7F1FF
-call WaitTickDeadline	; 7F204
-call RestoreDialogBg	; 7F209
-jmp near ReplaySaveHilight_n3.x	; 7F20E
-.8:
-call WaitTickDeadline	; 7F213
-jmp near ReplaySaveHilight_n3.x	; 7F218
-.9:
-call SelectScreenBM	; 7F21D
-push byte 20h	; 7F222
-push byte 0	; 7F224
-push dword 0F0h	; 7F226
-push dword 0C2h	; 7F22B
-call sub_B4BC4	; 7F230
-add esp, byte 10h	; 7F235
-push byte 0	; 7F238
-push byte 0	; 7F23A
-mov esi, dword [gadgetshape]	; 7F23C
-push esi	; 7F242
-call sub_B500C	; 7F243
-add esp, byte 0Ch	; 7F248
-mov eax, 7	; 7F24B
-call DrawGadgetButton	; 7F250
-call sub_B4BA8	; 7F255
-push dword 0C8h	; 7F25A
-push byte 0	; 7F25F
-push dword 140h	; 7F261
-push byte 0	; 7F266
-call sub_B4BC4	; 7F268
-add esp, byte 10h	; 7F26D
-mov eax, dword [pointerspr]	; 7F270
-mov edx, dword [byte eax+02h]	; 7F275
-sar edx, 10h	; 7F278
-mov eax, dword [byte eax+04h]	; 7F27B
-sar eax, 10h	; 7F27E
-imul edx, eax	; 7F281
-lea ecx, [byte edx+011h]	; 7F284
-push byte 20h	; 7F287
-push ecx	; 7F289
-push str_Pointer19	; 7F28A
-call sub_8CCA8	; 7F28F
-add esp, byte 0Ch	; 7F294
-mov ebp, eax	; 7F297
-mov esi, dword [pointerspr]	; 7F299
-mov edi, eax	; 7F29F
-movsd	; 7F2A1
-movsd	; 7F2A2
-movsd	; 7F2A3
-movsd	; 7F2A4
-movsb	; 7F2A5
-mov eax, dword [pointerspr]	; 7F2A6
-mov ax, word [byte eax+04h]	; 7F2AB
-mov edx, ebp	; 7F2AF
-mov word [byte edx+04h], ax	; 7F2B1
-mov eax, dword [pointerspr]	; 7F2B5
-mov ax, word [byte eax+06h]	; 7F2BA
-mov word [byte edx+06h], ax	; 7F2BE
-call HilightSaveToDlg	; 7F2C2
-mov dword [dword_ED6D4], 3	; 7F2C7
-mov dword [gadgetptrx], 0EEh	; 7F2D1
-mov dword [gadgetptry], 8Ah	; 7F2DB
-push dword 96h	; 7F2E5
-push dword 136h	; 7F2EA
-push byte 4Bh	; 7F2EF
-push byte 0	; 7F2F1
-call sub_B2E1B	; 7F2F3
-add esp, byte 10h	; 7F2F8
-push dword 8Ah	; 7F2FB
-push dword 0EEh	; 7F300
-call MouseSetPos	; 7F305
-add esp, byte 8	; 7F30A
-push dword 8Ah	; 7F30D
-push dword 0EEh	; 7F312
-mov ebx, ebp	; 7F317
-push ebx	; 7F319
-call sub_91400	; 7F31A
-add esp, byte 0Ch	; 7F31F
-push dword 8Ah	; 7F322
-push dword 0EEh	; 7F327
-mov ecx, dword [pointerspr]	; 7F32C
-push ecx	; 7F332
-call sub_91370	; 7F333
-add esp, byte 0Ch	; 7F338
-call ClearInputQueue	; 7F33B
-xor esi, esi	; 7F340
-mov dword [byte esp+068h], esi	; 7F342
-.10:
-test byte [byte esp+068h], 2	; 7F346
-jne near .18	; 7F34B
-.11:
-call GetInputEvent	; 7F351
-test eax, eax	; 7F356
-je short ReplaySaveHilight.11	; 7F358
-mov ecx, dword [gadgetptrx]	; 7F35A
-mov esi, dword [gadgetptry]	; 7F360
-mov ebx, gadgetptry	; 7F366
-mov edx, gadgetptrx	; 7F36B
-call dword [ptrupdatefn]	; 7F370
-mov dword [byte esp+068h], eax	; 7F376
-test al, 2	; 7F37A
-je near .17	; 7F37C
-mov ebx, dword [gadgetptrx]	; 7F382
-cmp ebx, byte 4Eh	; 7F388
-jl near .16	; 7F38B
-cmp ebx, 0D8h	; 7F391
-jg near .16	; 7F397
-mov edx, dword [gadgetptry]	; 7F39D
-cmp edx, byte 50h	; 7F3A3
-jl short .12	; 7F3A6
-cmp edx, byte 5Eh	; 7F3A8
-jg short .12	; 7F3AB
-xor edx, edx	; 7F3AD
-mov dword [dword_ED6D4], edx	; 7F3AF
-jmp near .17	; 7F3B5
-.12:
-mov edi, dword [gadgetptry]	; 7F3BA
-cmp edi, byte 61h	; 7F3C0
-jl short .13	; 7F3C3
-cmp edi, byte 6Fh	; 7F3C5
-jg short .13	; 7F3C8
-mov dword [dword_ED6D4], 1	; 7F3CA
-jmp short .17	; 7F3D4
-.13:
-mov edx, dword [gadgetptry]	; 7F3D6
-cmp edx, byte 72h	; 7F3DC
-jl short .14	; 7F3DF
-cmp edx, 80h	; 7F3E1
-jg short .14	; 7F3E7
-mov dword [dword_ED6D4], 2	; 7F3E9
-jmp short .17	; 7F3F3
-.14:
-mov edi, dword [gadgetptry]	; 7F3F5
-cmp edi, 83h	; 7F3FB
-jl short .15	; 7F401
-cmp edi, 91h	; 7F403
-jg short .15	; 7F409
-mov dword [dword_ED6D4], 3	; 7F40B
-jmp short .17	; 7F415
-.15:
-xor edx, edx	; 7F417
-mov dword [byte esp+068h], edx	; 7F419
-jmp short .17	; 7F41D
-.16:
-xor eax, eax	; 7F41F
-mov dword [byte esp+068h], eax	; 7F421
-.17:
-push esi	; 7F425
-push ecx	; 7F426
-push ebp	; 7F427
-call sub_91370	; 7F428
-add esp, byte 0Ch	; 7F42D
-mov ebx, dword [gadgetptry]	; 7F430
-push ebx	; 7F436
-mov ecx, dword [gadgetptrx]	; 7F437
-push ecx	; 7F43D
-push ebp	; 7F43E
-call sub_91400	; 7F43F
-add esp, byte 0Ch	; 7F444
-mov esi, dword [gadgetptry]	; 7F447
-push esi	; 7F44D
-mov edi, dword [gadgetptrx]	; 7F44E
-push edi	; 7F454
-mov eax, dword [pointerspr]	; 7F455
-push eax	; 7F45A
-call sub_91370	; 7F45B
-add esp, byte 0Ch	; 7F460
-jmp near ReplaySaveHilight.10	; 7F463
-.18:
-push byte 64h	; 7F468
-call SetTickDeadline	; 7F46A
-add esp, byte 4	; 7F46F
-push dword 0C8h	; 7F472
-push byte 0	; 7F477
-push dword 140h	; 7F479
-push byte 0	; 7F47E
-call sub_B4BC4	; 7F480
-add esp, byte 10h	; 7F485
-push byte 10h	; 7F488
-mov edx, dword [dword_ED6D4]	; 7F48A
-mov eax, edx	; 7F490
-shl eax, 4	; 7F492
-add eax, edx	; 7F495
-lea edx, [byte eax+05Eh]	; 7F497
-push edx	; 7F49A
-push byte 4Eh	; 7F49B
-add eax, byte 50h	; 7F49D
-push eax	; 7F4A0
-push byte 4Eh	; 7F4A1
-call sub_B4FAC	; 7F4A3
-add esp, byte 14h	; 7F4A8
-push byte 10h	; 7F4AB
-mov edx, dword [dword_ED6D4]	; 7F4AD
-mov eax, edx	; 7F4B3
-shl eax, 4	; 7F4B5
-add eax, edx	; 7F4B8
-add eax, byte 50h	; 7F4BA
-push eax	; 7F4BD
-push dword 0D8h	; 7F4BE
-push eax	; 7F4C3
-push byte 4Eh	; 7F4C4
-call sub_B4FAC	; 7F4C6
-add esp, byte 14h	; 7F4CB
-push byte 59h	; 7F4CE
-mov edx, dword [dword_ED6D4]	; 7F4D0
-mov eax, edx	; 7F4D6
-shl eax, 4	; 7F4D8
-add eax, edx	; 7F4DB
-add eax, byte 5Eh	; 7F4DD
-push eax	; 7F4E0
-push dword 0D8h	; 7F4E1
-push eax	; 7F4E6
-push byte 4Fh	; 7F4E7
-call sub_B4FAC	; 7F4E9
-add esp, byte 14h	; 7F4EE
-push byte 59h	; 7F4F1
-mov edx, dword [dword_ED6D4]	; 7F4F3
-mov eax, edx	; 7F4F9
-shl eax, 4	; 7F4FB
-add eax, edx	; 7F4FE
-lea edx, [byte eax+05Eh]	; 7F500
-push edx	; 7F503
-push dword 0D8h	; 7F504
-add eax, byte 51h	; 7F509
-push eax	; 7F50C
-push dword 0D8h	; 7F50D
-call sub_B4FAC	; 7F512
-add esp, byte 14h	; 7F517
-push byte 13h	; 7F51A
-mov edx, dword [dword_ED6D4]	; 7F51C
-mov eax, edx	; 7F522
-shl eax, 4	; 7F524
-add eax, edx	; 7F527
-add eax, byte 50h	; 7F529
-push eax	; 7F52C
-push dword 0D8h	; 7F52D
-call sub_B5DB0	; 7F532
-add esp, byte 0Ch	; 7F537
-push byte 13h	; 7F53A
-mov edx, dword [dword_ED6D4]	; 7F53C
-mov eax, edx	; 7F542
-shl eax, 4	; 7F544
-add eax, edx	; 7F547
-add eax, byte 5Eh	; 7F549
-push eax	; 7F54C
-push byte 4Eh	; 7F54D
-call sub_B5DB0	; 7F54F
-add esp, byte 0Ch	; 7F554
-mov edi, dword [gadgetptry]	; 7F557
-push edi	; 7F55D
-mov eax, dword [gadgetptrx]	; 7F55E
-push eax	; 7F563
-mov edx, dword [pointerspr]	; 7F564
-push edx	; 7F56A
-call sub_91370	; 7F56B
-add esp, byte 0Ch	; 7F570
-mov eax, dword [dword_ED6D4]	; 7F573
-cmp eax, byte 3	; 7F578
-ja short ReplaySaveHilight_n3.1	; 7F57B
-jmp dword [nosplit cs:eax*4+ReplaySaveHilight_jt]	; 7F57D
-ReplaySaveHilight_n0:
-xor eax, eax	; 7F585
-jmp short ReplaySaveHilight_n1.1	; 7F587
-ReplaySaveHilight_n2:
-xor eax, eax	; 7F589
-call SaveHilight	; 7F58B
-mov dword [byte esp+068h], eax	; 7F590
-test eax, eax	; 7F594
-jne short ReplaySaveHilight_n3.1	; 7F596
-ReplaySaveHilight_n1:
-mov eax, 1	; 7F598
-.1:
-call SaveHilight	; 7F59D
-mov dword [byte esp+068h], eax	; 7F5A2
-jmp short ReplaySaveHilight_n3.1	; 7F5A6
-ReplaySaveHilight_n3:
-xor ebx, ebx	; 7F5A8
-mov dword [byte esp+068h], ebx	; 7F5AA
-.1:
-cmp dword [byte esp+068h], byte 0	; 7F5AE
-je near .4	; 7F5B3
-push dword 1F4h	; 7F5B9
-call SetTickDeadline	; 7F5BE
-add esp, byte 4	; 7F5C3
-push byte 0	; 7F5C6
-mov ecx, 59h	; 7F5C8
-mov ebx, 11h	; 7F5CD
-mov edx, ecx	; 7F5D2
-mov eax, 14h	; 7F5D4
-call SetDialogColors	; 7F5D9
-push byte 0	; 7F5DE
-push byte 0	; 7F5E0
-push byte 0	; 7F5E2
-push byte 0	; 7F5E4
-push byte 0	; 7F5E6
-mov ecx, 3	; 7F5E8
-mov ebx, msg_NoHilightSpace	; 7F5ED
-xor edx, edx	; 7F5F2
-xor eax, eax	; 7F5F4
-call MessageBox	; 7F5F6
-mov esi, dword [gadgetfile]	; 7F5FB
-push esi	; 7F601
-call FreeMemBlock	; 7F602
-add esp, byte 4	; 7F607
-mov ecx, str_PPV	; 7F60A
-mov ebx, str_Gadget6	; 7F60F
-cmp byte [fileoncd+0223h], 1	; 7F614
-jne short .2	; 7F61B
-mov edx, dword [cddriveptr]	; 7F61D
-jmp short .3	; 7F623
-.2:
-xor edx, edx	; 7F625
-.3:
-lea eax, [byte esp+048h]	; 7F627
-call MakePath	; 7F62B
-push byte 0	; 7F630
-lea eax, [byte esp+04Ch]	; 7F632
-push eax	; 7F636
-call sub_8E8A0	; 7F637
-add esp, byte 8	; 7F63C
-mov dword [gadgetfile], eax	; 7F63F
-push str_Gad1	; 7F644
-push eax	; 7F649
-call sub_B30B4	; 7F64A
-add esp, byte 8	; 7F64F
-mov dword [gadgetshape], eax	; 7F652
-call WaitTickDeadline	; 7F657
-call RestoreDialogBg	; 7F65C
-jmp short .5	; 7F661
-.4:
-call WaitTickDeadline	; 7F663
-.5:
-call NudgeRinkScroll	; 7F668
-mov eax, dword [byte esp+04h]	; 7F66D
-mov dword [gadgetptrx], eax	; 7F671
-mov eax, dword [esp]	; 7F676
-mov dword [gadgetptry], eax	; 7F679
-push eax	; 7F67E
-mov eax, dword [byte esp+08h]	; 7F67F
-push eax	; 7F683
-call MouseSetPos	; 7F684
-add esp, byte 8	; 7F689
-cmp dword [byte esp+068h], byte 0	; 7F68C
-je short .6	; 7F691
-push dword 1F4h	; 7F693
-call SetTickDeadline	; 7F698
-add esp, byte 4	; 7F69D
-push byte 0	; 7F6A0
-mov ecx, 59h	; 7F6A2
-mov ebx, 11h	; 7F6A7
-mov edx, ecx	; 7F6AC
-mov eax, 14h	; 7F6AE
-call SetDialogColors	; 7F6B3
-call sub_B4BA8	; 7F6B8
-push byte 0	; 7F6BD
-push byte 0	; 7F6BF
-push byte 0	; 7F6C1
-push byte 0	; 7F6C3
-push byte 0	; 7F6C5
-mov ecx, 3	; 7F6C7
-mov ebx, msg_NoHilightSpace	; 7F6CC
-mov edx, 0FFFFFFFFh	; 7F6D1
-mov eax, edx	; 7F6D6
-call MessageBox	; 7F6D8
-call WaitTickDeadline	; 7F6DD
-call RestoreDialogBg	; 7F6E2
-.6:
-push dword 0C8h	; 7F6E7
-push byte 0	; 7F6EC
-push dword 140h	; 7F6EE
-push byte 0	; 7F6F3
-call sub_B4BC4	; 7F6F5
-add esp, byte 10h	; 7F6FA
-push ebp	; 7F6FD
-call FreeMemBlock	; 7F6FE
-add esp, byte 4	; 7F703
-push dword 0C1h	; 7F706
-push dword 140h	; 7F70B
-push byte 0	; 7F710
-push byte 0	; 7F712
-call sub_B2E1B	; 7F714
-add esp, byte 10h	; 7F719
+cmp dx, byte 14h	; 678D2
+jl short updatereplay.17	; 678D6
+mov eax, dword [replaystart]	; 678D8
+lea ebx, [dword eax+09600h]	; 678DD
+cmp ebx, dword [recbpr]	; 678E3
+ja short .x	; 678E9
+or byte [sflags], 10h	; 678EB
+mov dword [recbpr], eax	; 678F2
 .x:
-add esp, byte 6Ch	; 7F71C
-pop ebp	; 7F71F
-pop edi	; 7F720
-pop esi	; 7F721
-pop ecx	; 7F722
-ret	; 7F723
+add esp, byte 4	; 678F7
+pop edi	; 678FA
+pop esi	; 678FB
+pop edx	; 678FC
+pop ecx	; 678FD
+pop ebx	; 678FE
+ret	; 678FF
+ReplayStep:
+push dword 6Ch	; 67900
+call __CHK	; 67905
+push ebx	; 6790A
+push ecx	; 6790B
+push esi	; 6790C
+push edi	; 6790D
+push ebp	; 6790E
+sub esp, byte 48h	; 6790F
+mov esi, eax	; 67912
+mov ecx, edx	; 67914
+mov dword [byte esp+044h], eax	; 67916
+test ax, ax	; 6791A
+jl near .6	; 6791D
+mov ebx, dword [replayplay]	; 67923
+.1:
+cmp si, byte 1	; 67929
+jl near .11	; 6792D
+mov edx, dword [replaystart]	; 67933
+dec esi	; 67939
+mov ebp, dword [replayplay]	; 6793A
+add ebp, 80h	; 67940
+mov dword [replayplay], ebp	; 67946
+lea eax, [dword edx+09600h]	; 6794C
+cmp eax, ebp	; 67952
+jne short .3	; 67954
+test byte [sflags], 10h	; 67956
+jne short .2	; 6795D
+mov esi, 0FFFFFFFFh	; 6795F
+sub ebp, 80h	; 67964
+mov dword [replayplay], ebp	; 6796A
+jmp near .11	; 67970
+.2:
+mov dword [replayplay], edx	; 67975
+.3:
+mov eax, dword [replayplay]	; 6797B
+cmp eax, dword [recbpr]	; 67980
+jne short .4	; 67986
+mov esi, 0FFFFFFFFh	; 67988
+sub dword [replayplay], 80h	; 6798D
+jmp near .11	; 67997
+.4:
+test cx, cx	; 6799C
+je short ReplayStep.1	; 6799F
+cmp ebx, eax	; 679A1
+je short ReplayStep.1	; 679A3
+mov al, byte [byte eax+058h]	; 679A5
+xor ah, ah	; 679A8
+cmp ax, 0FFh	; 679AA
+je short .5	; 679AE
+cwde	; 679B0
+call sfx	; 679B1
+.5:
+mov edx, dword [replayplay]	; 679B6
+xor eax, eax	; 679BC
+mov al, byte [byte edx+059h]	; 679BE
+cmp ax, 0FFh	; 679C1
+je near ReplayStep.1	; 679C5
+cwde	; 679CB
+call sfx	; 679CC
+jmp near ReplayStep.1	; 679D1
+.6:
+mov ebx, dword [recbpr]	; 679D6
+mov edx, dword [replaystart]	; 679DC
+.7:
+test si, si	; 679E2
+jge short .11	; 679E5
+inc esi	; 679E7
+cmp edx, dword [replayplay]	; 679E8
+jne short .10	; 679EE
+test byte [sflags], 10h	; 679F0
+jne short .9	; 679F7
+.8:
+mov esi, 0FFFFFFFFh	; 679F9
+jmp short .11	; 679FE
+.9:
+lea eax, [dword edx+09600h]	; 67A00
+mov dword [replayplay], eax	; 67A06
+.10:
+mov eax, dword [replayplay]	; 67A0B
+cmp eax, ebx	; 67A10
+je short ReplayStep.8	; 67A12
+lea edi, [byte eax-080h]	; 67A14
+mov dword [replayplay], edi	; 67A17
+jmp short ReplayStep.7	; 67A1D
+.11:
+xor eax, eax	; 67A1F
+jmp near .16	; 67A21
+.12:
+mov edx, dword [replayplay]	; 67A26
+mov ebx, dword [edx]	; 67A2C
+mov dword [regd0], ebx	; 67A2E
+mov bx, word [regd0]	; 67A34
+and bh, 3	; 67A3B
+mov word [regd1], bx	; 67A3E
+add edx, byte 4	; 67A45
+mov dword [replayplay], edx	; 67A48
+mov dl, byte [byte_E03C1]	; 67A4E
+test dl, 2	; 67A54
+je short .13	; 67A57
+mov dh, dl	; 67A59
+or dh, 0FCh	; 67A5B
+mov byte [byte_E03C1], dh	; 67A5E
+.13:
+movsx edx, ax	; 67A64
+mov bx, word [regd1]	; 67A67
+mov word [nosplit edx*2+word_E9F18], bx	; 67A6E
+sar dword [regd0], 0Ah	; 67A76
+mov dx, word [regd0]	; 67A7D
+and dh, 3	; 67A84
+mov word [regd1], dx	; 67A87
+mov bl, byte [byte_E03C1]	; 67A8E
+test bl, 2	; 67A94
+je short .14	; 67A97
+mov bh, bl	; 67A99
+or bh, 0FCh	; 67A9B
+mov byte [byte_E03C1], bh	; 67A9E
+.14:
+movsx edx, ax	; 67AA4
+mov bx, word [regd1]	; 67AA7
+mov word [nosplit edx*2+word_E9F3A], bx	; 67AAE
+sar dword [regd0], 0Ah	; 67AB6
+mov dx, word [regd0]	; 67ABD
+and dh, 7	; 67AC4
+mov word [regd1], dx	; 67AC7
+cmp dx, 7FFh	; 67ACE
+jne short .15	; 67AD3
+mov word [regd1], 0FFFFh	; 67AD5
+.15:
+movsx edx, ax	; 67ADE
+mov bx, word [regd1]	; 67AE1
+mov word [nosplit edx*2+word_E9F5C], bx	; 67AE8
+test byte [dword_E03BD], 8	; 67AF0
+setne dl	; 67AF7
+and edx, 0FFh	; 67AFA
+mov bl, dl	; 67B00
+movsx edx, ax	; 67B02
+mov byte [dword edx+byte_E9F7E], bl	; 67B05
+inc eax	; 67B0B
+.16:
+cmp ax, 11h	; 67B0C
+jl near ReplayStep.12	; 67B10
+xor eax, eax	; 67B16
+jmp short .18	; 67B18
+.17:
+mov edx, dword [replayplay]	; 67B1A
+movsx ebx, ax	; 67B20
+lea edi, [byte edx+01h]	; 67B23
+mov dword [replayplay], edi	; 67B26
+mov dl, byte [edx]	; 67B2C
+mov byte [dword ebx+byte_E9F8F], dl	; 67B2E
+inc eax	; 67B34
+.18:
+cmp ax, 0Ch	; 67B35
+jl short ReplayStep.17	; 67B39
+xor eax, eax	; 67B3B
+jmp near .24	; 67B3D
+.19:
+mov edx, dword [replayplay]	; 67B42
+lea ebx, [byte edx+01h]	; 67B48
+mov dword [replayplay], ebx	; 67B4B
+mov dl, byte [edx]	; 67B51
+mov byte [regd0], dl	; 67B53
+and dl, 0Fh	; 67B59
+mov byte [regd1], dl	; 67B5C
+cmp dl, 0Fh	; 67B62
+jne short .20	; 67B65
+mov edx, 0FFFFFFFFh	; 67B67
+jmp short .21	; 67B6C
+.20:
+mov edx, dword [regd1-3]	; 67B6E
+sar edx, 18h	; 67B74
+.21:
+mov bl, dl	; 67B77
+movsx edx, ax	; 67B79
+mov byte [nosplit edx*2+byte_E9F9B], bl	; 67B7C
+mov edx, dword [dword_E03B9]	; 67B83
+sar edx, 1Ch	; 67B89
+and edx, byte 0Fh	; 67B8C
+mov byte [regd1], dl	; 67B8F
+cmp dl, 0Fh	; 67B95
+jne short .22	; 67B98
+mov edx, 0FFFFFFFFh	; 67B9A
+jmp short .23	; 67B9F
+.22:
+mov edx, dword [regd1-3]	; 67BA1
+sar edx, 18h	; 67BA7
+.23:
+mov bl, dl	; 67BAA
+movsx edx, ax	; 67BAC
+mov byte [nosplit edx*2+byte_E9F9C], bl	; 67BAF
+inc eax	; 67BB6
+.24:
+cmp ax, 6	; 67BB7
+jl short ReplayStep.19	; 67BBB
+mov eax, dword [replayplay]	; 67BBD
+lea edx, [byte eax+01h]	; 67BC2
+mov dword [replayplay], edx	; 67BC5
+movsx ax, byte [eax]	; 67BCB
+mov word [word_E9FA7], ax	; 67BCF
+mov eax, edx	; 67BD5
+inc edx	; 67BD7
+mov dword [replayplay], edx	; 67BD8
+movsx ax, byte [eax]	; 67BDE
+mov word [word_E9FA9], ax	; 67BE2
+lea edi, [byte edx+02h]	; 67BE8
+mov dword [replayplay], edi	; 67BEB
+lea edx, [byte edi+01h]	; 67BF1
+mov dword [replayplay], edx	; 67BF4
+mov al, byte [edi]	; 67BFA
+mov byte [regd0], al	; 67BFC
+and al, 0Fh	; 67C01
+mov byte [regd1], al	; 67C03
+cmp al, 0Fh	; 67C08
+jne short .25	; 67C0A
+mov eax, 0FFFFFFFFh	; 67C0C
+jmp short .26	; 67C11
+.25:
+mov eax, dword [regd1-3]	; 67C13
+sar eax, 18h	; 67C18
+.26:
+mov byte [byte_E9FAB], al	; 67C1B
+mov eax, dword [dword_E03B9]	; 67C20
+sar eax, 1Ch	; 67C25
+and eax, byte 0Fh	; 67C28
+mov byte [regd1], al	; 67C2B
+cmp al, 0Fh	; 67C30
+jne short .27	; 67C32
+mov eax, 0FFFFFFFFh	; 67C34
+jmp short .28	; 67C39
+.27:
+mov eax, dword [regd1-3]	; 67C3B
+sar eax, 18h	; 67C40
+.28:
+mov byte [byte_E9FAC], al	; 67C43
+mov eax, dword [replayplay]	; 67C48
+lea edx, [byte eax+01h]	; 67C4D
+mov dword [replayplay], edx	; 67C50
+mov al, byte [eax]	; 67C56
+mov byte [byte_E9FAD], al	; 67C58
+mov eax, edx	; 67C5D
+inc edx	; 67C5F
+mov dword [replayplay], edx	; 67C60
+mov al, byte [eax]	; 67C66
+mov byte [regd0], al	; 67C68
+and al, 0Fh	; 67C6D
+mov byte [byte_E9FAE], al	; 67C6F
+mov eax, dword [dword_E03B9]	; 67C74
+sar eax, 1Ch	; 67C79
+and eax, byte 0Fh	; 67C7C
+mov byte [byte_E9FAF], al	; 67C7F
+mov eax, edx	; 67C84
+inc edx	; 67C86
+mov dword [replayplay], edx	; 67C87
+movsx ax, byte [eax]	; 67C8D
+mov word [word_E9FB0], ax	; 67C91
+mov word [camx], ax	; 67C97
+mov eax, edx	; 67C9D
+mov dx, word [edx]	; 67C9F
+mov word [word_E9FB2], dx	; 67CA2
+mov word [camy], dx	; 67CA9
+add eax, byte 2	; 67CB0
+mov dword [replayplay], eax	; 67CB3
+mov edx, eax	; 67CB8
+mov ax, word [eax]	; 67CBA
+mov word [crowdlevel], ax	; 67CBD
+xor eax, eax	; 67CC3
+add edx, byte 2	; 67CC5
+mov dword [replayplay], edx	; 67CC8
+jmp short .30	; 67CCE
+.29:
+mov edx, dword [replayplay]	; 67CD0
+lea ebx, [byte edx+01h]	; 67CD6
+mov dword [replayplay], ebx	; 67CD9
+mov dl, byte [edx]	; 67CDF
+mov byte [regd0], dl	; 67CE1
+xor edx, edx	; 67CE7
+mov dl, byte [regd0]	; 67CE9
+sar edx, 4	; 67CEF
+mov bl, dl	; 67CF2
+movsx edx, ax	; 67CF4
+mov byte [nosplit edx*2+byte_E9FDC], bl	; 67CF7
+mov bl, byte [regd0]	; 67CFE
+and bl, 0Fh	; 67D04
+mov byte [nosplit edx*2+byte_E9FDD], bl	; 67D07
+inc eax	; 67D0E
+.30:
+cmp ax, 0Ah	; 67D0F
+jl short ReplayStep.29	; 67D13
+xor eax, eax	; 67D15
+jmp short .33	; 67D17
+.31:
+mov edx, dword [replayplay]	; 67D19
+lea ebx, [byte edx+01h]	; 67D1F
+mov dword [replayplay], ebx	; 67D22
+mov dl, byte [edx]	; 67D28
+xor dh, dh	; 67D2A
+mov word [regd0], dx	; 67D2C
+cmp dx, 0FFh	; 67D33
+jne short .32	; 67D38
+mov word [regd0], 0FFFFh	; 67D3A
+.32:
+movsx edx, ax	; 67D43
+mov bx, word [regd0]	; 67D46
+mov word [nosplit edx*2+word_E9FB4], bx	; 67D4D
+inc eax	; 67D55
+.33:
+cmp ax, 14h	; 67D56
+jl short ReplayStep.31	; 67D5A
+test cx, cx	; 67D5C
+je short .34	; 67D5F
+mov eax, dword [replayplay]	; 67D61
+cmp eax, dword [recbpr]	; 67D66
+je short .34	; 67D6C
+mov eax, dword [byte esp+044h]	; 67D6E
+add eax, eax	; 67D72
+cwde	; 67D74
+call Crowd_Noise	; 67D75
+jmp short .35	; 67D7A
+.34:
+call CrowdNoiseOff	; 67D7C
+.35:
+xor eax, eax	; 67D81
+sub dword [replayplay], 80h	; 67D83
+jmp short .37	; 67D8D
+.36:
+movsx ebx, ax	; 67D8F
+mov ecx, dword [nosplit ebx*2+dword_E9F38]	; 67D92
+sar ecx, 10h	; 67D99
+mov dword [esp+ebx*4], ecx	; 67D9C
+mov dword [nosplit ebx*4+dword_E9FF0], ebx	; 67D9F
+inc eax	; 67DA6
+.37:
+cmp ax, 11h	; 67DA7
+jl short ReplayStep.36	; 67DAB
+push dword_E9FF0	; 67DAD
+lea eax, [byte esp+04h]	; 67DB2
+push eax	; 67DB6
+push byte 11h	; 67DB7
+call sub_93540	; 67DB9
+add esp, byte 0Ch	; 67DBE
+mov eax, esi	; 67DC1
+add esp, byte 48h	; 67DC3
+ReplayStep_popx:
+pop ebp	; 67DC6
+pop edi	; 67DC7
+pop esi	; 67DC8
+pop ecx	; 67DC9
+pop ebx	; 67DCA
+ret	; 67DCB
+DrawRinkSideObjects:
+push dword 64h	; 67DCC
+call __CHK	; 67DD1
+push ebx	; 67DD6
+push ecx	; 67DD7
+push esi	; 67DD8
+push edi	; 67DD9
+push ebp	; 67DDA
+mov ebp, esp	; 67DDB
+sub esp, byte 34h	; 67DDD
+push eax	; 67DE0
+push edx	; 67DE1
+mov eax, dword [camx-2]	; 67DE2
+sar eax, 10h	; 67DE7
+cmp eax, byte 0FFFFFFF0h	; 67DEA
+jle near .7	; 67DED
+cmp word [camy], byte 50h	; 67DF3
+jge short .3	; 67DFB
+mov eax, dword [camy-2]	; 67DFD
+sar eax, 10h	; 67E02
+cmp eax, 0FFFFFF6Ch	; 67E05
+jle short .3	; 67E0A
+xor esi, esi	; 67E0C
+jmp short .2	; 67E0E
+.1:
+push byte 0	; 67E10
+mov eax, esi	; 67E12
+add eax, 3	; 67E14
+imul eax, byte 0FFFFFFF5h	; 67E19
+movsx ebx, ax	; 67E1C
+xor ecx, ecx	; 67E1F
+mov edx, 0B3h	; 67E21
+mov eax, 17Eh	; 67E26
+call DrawFrameSprite	; 67E2B
+inc esi	; 67E30
+.2:
+movsx ax, byte [byte_E9FAE]	; 67E31
+cmp si, ax	; 67E39
+jge short .3	; 67E3C
+cmp si, byte 3	; 67E3E
+jl short DrawRinkSideObjects.1	; 67E42
+.3:
+mov eax, dword [camy-2]	; 67E44
+sar eax, 10h	; 67E49
+cmp eax, byte 0FFFFFFB5h	; 67E4C
+jle short .7	; 67E4F
+cmp word [camy], 0B1h	; 67E51
+jge short .7	; 67E5A
+mov eax, dword [byte_E9FAF-3]	; 67E5C
+sar eax, 18h	; 67E61
+dec eax	; 67E64
+cmp eax, byte 2	; 67E65
+jl short .4	; 67E68
+mov eax, 2	; 67E6A
+.4:
+mov esi, eax	; 67E6F
+jmp short .6	; 67E71
+.5:
+push byte 1	; 67E73
+mov eax, esi	; 67E75
+add eax, 3	; 67E77
+imul eax, byte 0Bh	; 67E7C
+movsx ebx, ax	; 67E7F
+xor ecx, ecx	; 67E82
+mov edx, 0B3h	; 67E84
+mov eax, 17Eh	; 67E89
+call DrawFrameSprite	; 67E8E
+dec esi	; 67E93
+.6:
+test si, si	; 67E94
+jge short DrawRinkSideObjects.5	; 67E97
+.7:
+xor esi, esi	; 67E99
+jmp near .10	; 67E9B
+.8:
+movsx eax, si	; 67EA0
+mov di, word [nosplit eax*2+word_E9FB4]	; 67EA3
+test di, di	; 67EAB
+jl short .9	; 67EAE
+imul edi, byte 3	; 67EB0
+movsx edx, di	; 67EB3
+mov dx, word [nosplit edx*2+word_CCEF8]	; 67EB6
+mov word [byte ebp-0Ch], dx	; 67EBE
+inc edi	; 67EC2
+movsx edx, di	; 67EC3
+mov dx, word [nosplit edx*2+word_CCEF8]	; 67EC6
+mov word [byte ebp-04h], dx	; 67ECE
+inc edi	; 67ED2
+movsx edx, di	; 67ED3
+mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67ED6
+sar edx, 10h	; 67EDD
+mov eax, dword [dword eax+byte_E9FDC-3]	; 67EE0
+sar eax, 18h	; 67EE6
+movsx ax, byte [dword edx+eax+byte_CCE00]	; 67EE9
+mov word [byte ebp-08h], ax	; 67EF2
+push byte 0	; 67EF6
+push byte 0FFFFFFFFh	; 67EF8
+cmp word [byte ebp-0Ch], 0C0h	; 67EFA
+setg al	; 67F00
+xor ah, ah	; 67F03
+movsx ecx, ax	; 67F05
+mov ebx, dword [byte ebp-06h]	; 67F08
+sar ebx, 10h	; 67F0B
+mov edx, dword [byte ebp-0Eh]	; 67F0E
+sar edx, 10h	; 67F11
+mov eax, dword [byte ebp-0Ah]	; 67F14
+sar eax, 10h	; 67F17
+mov eax, dword [nosplit eax*4+photoptrsf]	; 67F1A
+call DrawSprite	; 67F21
+.9:
+inc esi	; 67F26
+.10:
+cmp si, byte 12h	; 67F27
+jl near DrawRinkSideObjects.8	; 67F2B
+mov esi, 13h	; 67F31
+jmp near .23	; 67F36
+.11:
+movsx eax, si	; 67F3B
+mov di, word [nosplit eax*2+word_E9FB4]	; 67F3E
+test di, di	; 67F46
+jge short .12	; 67F49
+mov word [byte ebp-08h], 0FFFFh	; 67F4B
+jmp short .13	; 67F51
+.12:
+imul edi, byte 3	; 67F53
+movsx edx, di	; 67F56
+mov dx, word [nosplit edx*2+word_CCEF8]	; 67F59
+mov word [byte ebp-0Ch], dx	; 67F61
+inc edi	; 67F65
+movsx edx, di	; 67F66
+mov dx, word [nosplit edx*2+word_CCEF8]	; 67F69
+mov word [byte ebp-04h], dx	; 67F71
+inc edi	; 67F75
+movsx edx, di	; 67F76
+mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67F79
+sar edx, 10h	; 67F80
+mov eax, dword [dword eax+byte_E9FDC-3]	; 67F83
+sar eax, 18h	; 67F89
+movsx ax, byte [dword edx+eax+byte_CCE00]	; 67F8C
+mov word [byte ebp-08h], ax	; 67F95
+.13:
+cmp word [byte ebp-08h], byte 64h	; 67F99
+jg short .14	; 67F9E
+test di, di	; 67FA0
+jge short .17	; 67FA3
+.14:
+push byte 0	; 67FA5
+cmp si, byte 13h	; 67FA7
+sete al	; 67FAB
+xor ah, ah	; 67FAE
+cwde	; 67FB0
+push eax	; 67FB1
+xor ecx, ecx	; 67FB2
+cmp si, byte 12h	; 67FB4
+jne short .15	; 67FB8
+mov eax, 1A5h	; 67FBA
+jmp short .16	; 67FBF
+.15:
+mov eax, 12Dh	; 67FC1
+.16:
+movsx ebx, ax	; 67FC6
+mov eax, dword [dword_E0220]	; 67FC9
+mov edx, 4	; 67FCE
+call DrawSprite	; 67FD3
+.17:
+cmp word [byte ebp-08h], byte 0	; 67FD8
+jl short .18	; 67FDD
+push byte 0	; 67FDF
+cmp si, byte 13h	; 67FE1
+sete al	; 67FE5
+xor ah, ah	; 67FE8
+cwde	; 67FEA
+push eax	; 67FEB
+mov ebx, dword [byte ebp-06h]	; 67FEC
+sar ebx, 10h	; 67FEF
+mov edx, dword [byte ebp-0Eh]	; 67FF2
+sar edx, 10h	; 67FF5
+mov eax, dword [byte ebp-0Ah]	; 67FF8
+sar eax, 10h	; 67FFB
+mov eax, dword [nosplit eax*4+photoptrsf]	; 67FFE
+xor ecx, ecx	; 68005
+call DrawSprite	; 68007
+.18:
+cmp si, byte 12h	; 6800C
+jne short .21	; 68010
+push byte 0	; 68012
+push byte 0FFFFFFFFh	; 68014
+xor ecx, ecx	; 68016
+cmp si, si	; 68018
+jne short .19	; 6801B
+mov eax, 1A5h	; 6801D
+jmp short .20	; 68022
+.19:
+mov eax, 12Dh	; 68024
+.20:
+movsx ebx, ax	; 68029
+mov eax, dword [dword_E0230]	; 6802C
+mov edx, 4	; 68031
+call DrawSprite	; 68036
+jmp short .22	; 6803B
+.21:
+mov ax, word [word_E9F7A]	; 6803D
+mov word [byte ebp-08h], ax	; 68043
+cmp ax, 362h	; 68047
+jl short .22	; 6804B
+push byte 0	; 6804D
+mov ebx, dword [word_E9F58-2]	; 6804F
+sar ebx, 10h	; 68055
+mov edx, dword [word_E9F36-2]	; 68058
+sar edx, 10h	; 6805E
+mov eax, dword [byte ebp-0Ah]	; 68061
+sar eax, 10h	; 68064
+xor ecx, ecx	; 68067
+call DrawFrameSprite	; 68069
+.22:
+dec esi	; 6806E
+.23:
+cmp si, byte 12h	; 6806F
+jge near DrawRinkSideObjects.11	; 68073
+mov eax, dword [camy-2]	; 68079
+sar eax, 10h	; 6807E
+cmp eax, 0FFFFFF50h	; 68081
+jge short .24	; 68086
+mov ax, word [cliprect_y1]	; 68088
+mov word [byte ebp-010h], ax	; 6808E
+push dword 244h	; 68092
+mov edx, dword [cliprect_y0]	; 68097
+push edx	; 6809D
+mov ebx, dword [dword_D30C0]	; 6809E
+push ebx	; 680A4
+mov ecx, dword [dword_D30BC]	; 680A5
+push ecx	; 680AB
+call sub_B4BC4	; 680AC
+add esp, byte 10h	; 680B1
+.24:
+xor esi, esi	; 680B4
+jmp short .26	; 680B6
+.25:
+movsx edx, si	; 680B8
+xor edi, edi	; 680BB
+mov dword [byte ebp+edx*4-028h], edi	; 680BD
+mov dword [byte ebp+edx*4-034h], edx	; 680C1
+inc esi	; 680C5
+.26:
+cmp si, byte 3	; 680C6
+jl short DrawRinkSideObjects.25	; 680CA
+mov eax, dword [byte_E9FAD-3]	; 680CC
+sar eax, 18h	; 680D1
+cmp eax, byte 0FFFFFFFFh	; 680D4
+je short .27	; 680D7
+mov eax, dword [nosplit eax*2+dword_E9F38]	; 680D9
+sar eax, 10h	; 680E0
+mov dword [byte ebp-020h], eax	; 680E3
+.27:
+cmp byte [byte_E9FAB], 0	; 680E6
+jl short .28	; 680ED
+mov eax, dword [byte_E9FAB-3]	; 680EF
+sar eax, 18h	; 680F4
+mov eax, dword [nosplit eax*2+dword_E9F38]	; 680F7
+sar eax, 10h	; 680FE
+mov dword [byte ebp-028h], eax	; 68101
+.28:
+cmp byte [byte_E9FAC], 0	; 68104
+jl short .29	; 6810B
+mov eax, dword [byte_E9FAC-3]	; 6810D
+sar eax, 18h	; 68112
+mov eax, dword [nosplit eax*2+dword_E9F38]	; 68115
+sar eax, 10h	; 6811C
+mov dword [byte ebp-024h], eax	; 6811F
+.29:
+lea eax, [byte ebp-034h]	; 68122
+push eax	; 68125
+lea eax, [byte ebp-028h]	; 68126
+push eax	; 68129
+push byte 3	; 6812A
+call sub_93540	; 6812C
+add esp, byte 0Ch	; 68131
+xor edi, edi	; 68134
+jmp near .43	; 68136
+.30:
+movsx esi, di	; 6813B
+mov si, word [byte ebp+esi*4-034h]	; 6813E
+cmp si, byte 2	; 68143
+jne short .31	; 68147
+mov eax, dword [byte_E9FAD-3]	; 68149
+sar eax, 18h	; 6814E
+cmp eax, byte 0FFFFFFFFh	; 68151
+je near .42	; 68154
+push byte 0	; 6815A
+mov ebx, dword [nosplit eax*2+dword_E9F38]	; 6815C
+sar ebx, 10h	; 68163
+mov edx, dword [nosplit eax*2+dword_E9F16]	; 68166
+sar edx, 10h	; 6816D
+mov eax, dword [dword_CC0B4]	; 68170
+sar eax, 10h	; 68175
+xor ecx, ecx	; 68178
+jmp near .41	; 6817A
+.31:
+test si, si	; 6817F
+je short .32	; 68182
+mov al, byte [byte_E9FAC]	; 68184
+jmp short .33	; 68189
+.32:
+mov al, byte [byte_E9FAB]	; 6818B
+.33:
+cbw	; 68190
+mov word [byte ebp-08h], ax	; 68192
+test ax, ax	; 68196
+jl near .42	; 68199
+mov eax, dword [byte ebp-0Ah]	; 6819F
+sar eax, 10h	; 681A2
+add eax, eax	; 681A5
+mov edx, dword [dword eax+word_E9F5C-2]	; 681A7
+sar edx, 10h	; 681AD
+cmp edx, byte 0FFFFFFFFh	; 681B0
+je near .42	; 681B3
+mov dx, word [dword eax+word_E9F18]	; 681B9
+mov word [byte ebp-0Ch], dx	; 681C0
+mov ax, word [dword eax+word_E9F3A]	; 681C4
+mov word [byte ebp-04h], ax	; 681CB
+xor eax, eax	; 681CF
+mov word [byte ebp-08h], ax	; 681D1
+mov edx, dword [byte ebp-03Eh]	; 681D5
+sar edx, 10h	; 681D8
+lea eax, [dword edx+0A8h]	; 681DB
+mov ebx, 140h	; 681E1
+sub ebx, eax	; 681E6
+mov eax, dword [byte ebp-06h]	; 681E8
+sar eax, 10h	; 681EB
+cmp eax, ebx	; 681EE
+jge short .34	; 681F0
+mov eax, dword [byte ebp-03Ch]	; 681F2
+add eax, 0A8h	; 681F5
+mov edx, 140h	; 681FA
+sub edx, eax	; 681FF
+mov word [byte ebp-04h], dx	; 68201
+mov word [byte ebp-08h], 1	; 68205
+jmp short .35	; 6820B
+.34:
+mov ebx, 140h	; 6820D
+sub ebx, edx	; 68212
+cmp eax, ebx	; 68214
+jl short .35	; 68216
+mov eax, 140h	; 68218
+sub eax, dword [byte ebp-03Ch]	; 6821D
+inc eax	; 68220
+mov word [byte ebp-04h], ax	; 68221
+mov word [byte ebp-08h], 2	; 68225
+.35:
+mov ebx, 0C0h	; 6822B
+sub ebx, dword [byte ebp-038h]	; 68230
+mov eax, 140h	; 68233
+sub eax, ebx	; 68238
+mov ebx, eax	; 6823A
+cmp word [byte ebp-08h], byte 0	; 6823C
+je short .37	; 68241
+mov eax, dword [byte ebp-03Ah]	; 68243
+sar eax, 10h	; 68246
+mov edx, 0C0h	; 68249
+sub edx, eax	; 6824E
+mov ecx, 140h	; 68250
+sub ecx, edx	; 68255
+mov edx, dword [byte ebp-0Eh]	; 68257
+sar edx, 10h	; 6825A
+sub ecx, byte 0Ch	; 6825D
+cmp edx, ecx	; 68260
+jl short .36	; 68262
+sub ebx, byte 0Dh	; 68264
+mov word [byte ebp-0Ch], bx	; 68267
+or byte [byte ebp-08h], 8	; 6826B
+jmp short .39	; 6826F
+.36:
+sub eax, 0B4h	; 68271
+cmp edx, eax	; 68276
+jge short .39	; 68278
+mov eax, dword [byte ebp-038h]	; 6827A
+db 081h,0E8h,0B4h,00h,00h,00h	; 6827D sub eax,0B4h
+mov word [byte ebp-0Ch], ax	; 68283
+or byte [byte ebp-08h], 4	; 68287
+jmp short .39	; 6828B
+.37:
+mov eax, dword [byte ebp-03Ah]	; 6828D
+sar eax, 10h	; 68290
+mov edx, 0C0h	; 68293
+sub edx, eax	; 68298
+mov ecx, 140h	; 6829A
+sub ecx, edx	; 6829F
+mov edx, dword [byte ebp-0Eh]	; 682A1
+sar edx, 10h	; 682A4
+cmp edx, ecx	; 682A7
+jl short .38	; 682A9
+dec ebx	; 682AB
+mov word [byte ebp-0Ch], bx	; 682AC
+mov word [byte ebp-08h], 8	; 682B0
+jmp short .39	; 682B6
+.38:
+sub eax, 0C0h	; 682B8
+cmp edx, eax	; 682BD
+jge short .39	; 682BF
+mov eax, dword [byte ebp-038h]	; 682C1
+db 081h,0E8h,0C0h,00h,00h,00h	; 682C4 sub eax,0C0h
+mov word [byte ebp-0Ch], ax	; 682CA
+mov word [byte ebp-08h], 4	; 682CE
+.39:
+mov eax, dword [byte ebp-08h]	; 682D4
+test ax, ax	; 682D7
+je short .40	; 682DA
+push byte 0	; 682DC
+xor ah, ah	; 682DE
+and al, 8	; 682E0
+cwde	; 682E2
+mov dword [byte ebp-01Ch], eax	; 682E3
+mov eax, dword [byte ebp-06h]	; 682E6
+sar eax, 10h	; 682E9
+mov dword [byte ebp-018h], eax	; 682EC
+mov eax, dword [byte ebp-0Eh]	; 682EF
+sar eax, 10h	; 682F2
+mov dword [byte ebp-014h], eax	; 682F5
+mov eax, dword [byte ebp-0Ah]	; 682F8
+sar eax, 10h	; 682FB
+push eax	; 682FE
+call sub_B340B	; 682FF
+add esp, byte 4	; 68304
+movsx edx, si	; 68307
+shl edx, 4	; 6830A
+mov eax, dword [dword edx+eax*2+dword_CC0B4]	; 6830D
+sar eax, 10h	; 68314
+mov ecx, dword [byte ebp-01Ch]	; 68317
+mov ebx, dword [byte ebp-018h]	; 6831A
+mov edx, dword [byte ebp-014h]	; 6831D
+jmp short .41	; 68320
+.40:
+push byte 0	; 68322
+mov ebx, dword [byte ebp-06h]	; 68324
+sar ebx, 10h	; 68327
+mov edx, dword [byte ebp-0Eh]	; 6832A
+sar edx, 10h	; 6832D
+movsx eax, si	; 68330
+mov eax, dword [nosplit eax*2+word_CC0B0]	; 68333
+sar eax, 10h	; 6833A
+xor ecx, ecx	; 6833D
+.41:
+call DrawFrameSprite	; 6833F
+.42:
+inc edi	; 68344
+.43:
+cmp di, byte 3	; 68345
+jl near DrawRinkSideObjects.30	; 68349
+mov esi, 0Fh	; 6834F
+mov ax, word [word_E9F7A]	; 68354
+mov word [byte ebp-08h], ax	; 6835A
+cmp ax, 284h	; 6835E
+jl short .44	; 68362
+cmp ax, 288h	; 68364
+jg short .44	; 68368
+push byte 0	; 6836A
+cmp word [word_E9F36], byte 0	; 6836C
+setl al	; 68374
+xor ah, ah	; 68377
+movsx ecx, ax	; 68379
+movsx eax, si	; 6837C
+mov ebx, dword [nosplit eax*2+dword_E9F38]	; 6837F
+sar ebx, 10h	; 68386
+mov edx, dword [nosplit eax*2+dword_E9F16]	; 68389
+sar edx, 10h	; 68390
+mov eax, dword [byte ebp-0Ah]	; 68393
+sar eax, 10h	; 68396
+jmp short .47	; 68399
+.44:
+cmp word [byte ebp-08h], 189h	; 6839B
+jne short .45	; 683A1
+mov eax, dword [word_E9FA7-2]	; 683A3
+sar eax, 10h	; 683A8
+cmp eax, 0FFFFFF00h	; 683AB
+jle short .45	; 683B0
+cmp byte [byte_E9FAD], 10h	; 683B2
+jne short .46	; 683B9
+.45:
+movsx eax, si	; 683BB
+cmp word [nosplit eax*2+word_E9F3A], byte 0	; 683BE
+jl short .48	; 683C7
+mov ecx, dword [byte ebp-08h]	; 683C9
+cmp cx, 22Ah	; 683CC
+jl short .48	; 683D1
+cmp cx, 237h	; 683D3
+jg short .48	; 683D8
+.46:
+push byte 0	; 683DA
+movsx eax, si	; 683DC
+mov ebx, dword [nosplit eax*2+dword_E9F38]	; 683DF
+sar ebx, 10h	; 683E6
+mov edx, dword [nosplit eax*2+dword_E9F16]	; 683E9
+sar edx, 10h	; 683F0
+mov eax, dword [byte ebp-0Ah]	; 683F3
+sar eax, 10h	; 683F6
+xor ecx, ecx	; 683F9
+.47:
+call DrawFrameSprite	; 683FB
+.48:
+cmp byte [byte_E9FAD], 10h	; 68400
+je short .49	; 68407
+cmp word [word_E9FA7], byte 0	; 68409
+jl short .49	; 68411
+push byte 0	; 68413
+mov ebx, dword [dword_E9F56-2]	; 68415
+sar ebx, 10h	; 6841B
+mov edx, dword [word_E9FA7-2]	; 6841E
+sar edx, 10h	; 68424
+mov eax, edx	; 68427
+shl eax, 2	; 68429
+sub eax, edx	; 6842C
+mov edx, eax	; 6842E
+sar edx, 1Fh	; 68430
+LD sub, eax, edx	; 68433
+sar eax, 1	; 68435
+add eax, ebx	; 68437
+movsx ebx, ax	; 68439
+mov edx, dword [dword_E9F34-2]	; 6843C
+sar edx, 10h	; 68442
+mov eax, dword [dword_E9F78-2]	; 68445
+sar eax, 10h	; 6844A
+xor ecx, ecx	; 6844D
+call DrawFrameSprite	; 6844F
+.49:
+xor edi, edi	; 68454
+jmp near .68	; 68456
+.50:
+movsx esi, di	; 6845B
+mov si, word [nosplit esi*4+dword_E9FF0]	; 6845E
+cmp si, byte 0Fh	; 68466
+je near .67	; 6846A
+cmp si, byte 0Eh	; 68470
+jne near .54	; 68474
+mov eax, dword [byte_E9FAD-3]	; 6847A
+sar eax, 18h	; 6847F
+cmp eax, byte 0FFFFFFFFh	; 68482
+jne near .67	; 68485
+cmp word [word_E9FA7], byte 0	; 6848B
+jle near .67	; 68493
+movsx eax, si	; 68499
+add eax, eax	; 6849C
+cmp word [dword eax+word_E9F3A], 0E8h	; 6849E
+jge near .67	; 684A7
+mov edx, dword [dword eax+word_E9F3A-2]	; 684AD
+sar edx, 10h	; 684B3
+cmp edx, 0FFFFFF18h	; 684B6
+jg short .53	; 684BC
+cmp edx, 0FFFFFF10h	; 684BE
+jl short .53	; 684C4
+cmp word [dword eax+word_E9F18], byte 0	; 684C6
+jge short .51	; 684CE
+mov eax, dword [dword eax+word_E9F18-2]	; 684D0
+sar eax, 10h	; 684D6
+neg eax	; 684D9
+jmp short .52	; 684DB
+.51:
+mov eax, dword [dword eax+word_E9F18-2]	; 684DD
+sar eax, 10h	; 684E3
+.52:
+cmp eax, byte 14h	; 684E6
+jg short .53	; 684E9
+cmp word [word_E9FA7], byte 0Dh	; 684EB
+jl near .67	; 684F3
+.53:
+push byte 0	; 684F9
+movsx ebx, si	; 684FB
+mov ecx, dword [nosplit ebx*2+dword_E9F38]	; 684FE
+sar ecx, 10h	; 68505
+mov edx, dword [word_E9FA7-2]	; 68508
+sar edx, 10h	; 6850E
+mov eax, edx	; 68511
+shl eax, 2	; 68513
+sub eax, edx	; 68516
+mov edx, eax	; 68518
+sar edx, 1Fh	; 6851A
+LD sub, eax, edx	; 6851D
+sar eax, 1	; 6851F
+add eax, ecx	; 68521
+cwde	; 68523
+mov edx, dword [nosplit ebx*2+dword_E9F16]	; 68524
+sar edx, 10h	; 6852B
+mov esi, dword [nosplit ebx*2+dword_E9F5A]	; 6852E
+sar esi, 10h	; 68535
+xor ecx, ecx	; 68538
+mov ebx, eax	; 6853A
+mov eax, esi	; 6853C
+jmp near .66	; 6853E
+.54:
+cmp si, byte 0Ch	; 68543
+jge short .55	; 68547
+movsx eax, si	; 68549
+cmp byte [dword eax+byte_E9F9B], 0	; 6854C
+jl near .67	; 68553
+.55:
+movsx eax, si	; 68559
+mov eax, dword [nosplit eax*2+dword_E9F5A]	; 6855C
+sar eax, 10h	; 68563
+cmp eax, byte 0FFFFFFFFh	; 68566
+je near .60	; 68569
+cmp si, byte 0Ch	; 6856F
+jge near .60	; 68573
+mov eax, dword [byte_E9FAD-3]	; 68579
+sar eax, 18h	; 6857E
+cmp eax, byte 0FFFFFFFFh	; 68581
+je short .56	; 68584
+movsx ax, byte [byte_E9FAD]	; 68586
+cmp si, ax	; 6858E
+je short .57	; 68591
+.56:
+movsx ax, byte [byte_E9FAB]	; 68593
+cmp si, ax	; 6859B
+je short .57	; 6859E
+movsx ax, byte [byte_E9FAC]	; 685A0
+cmp si, ax	; 685A8
+je short .57	; 685AB
+movsx eax, si	; 685AD
+cmp eax, dword [dword_ED74C]	; 685B0
+je short .57	; 685B6
+cmp si, word [word_CD4FC]	; 685B8
+jne short .58	; 685BF
+.57:
+movsx eax, si	; 685C1
+mov edx, dword [dword eax+byte_E9F9B-3]	; 685C4
+sar edx, 18h	; 685CA
+mov dword [byte ebp-014h], edx	; 685CD
+mov ebx, dword [dword eax+byte_E9F8F-3]	; 685D0
+sar ebx, 18h	; 685D6
+mov edx, dword [nosplit eax*2+dword_E9F38]	; 685D9
+sar edx, 10h	; 685E0
+mov eax, dword [nosplit eax*2+dword_E9F16]	; 685E3
+sar eax, 10h	; 685EA
+mov ecx, dword [byte ebp-014h]	; 685ED
+jmp short .59	; 685F0
+.58:
+cmp dword [shownumbers], byte 0	; 685F2
+je short .60	; 685F9
+mov ebx, dword [dword eax+byte_E9F8F-3]	; 685FB
+sar ebx, 18h	; 68601
+mov edx, dword [nosplit eax*2+dword_E9F38]	; 68604
+sar edx, 10h	; 6860B
+mov eax, dword [nosplit eax*2+dword_E9F16]	; 6860E
+sar eax, 10h	; 68615
+mov ecx, 0FFFFFFFFh	; 68618
+.59:
+call DrawSpriteNumber	; 6861D
+.60:
+cmp si, byte 5	; 68622
+setg al	; 68626
+xor ah, ah	; 68629
+cwde	; 6862B
+push eax	; 6862C
+movsx eax, si	; 6862D
+mov ecx, dword [dword eax+byte_E9F7E-3]	; 68630
+sar ecx, 18h	; 68636
+mov ebx, dword [nosplit eax*2+dword_E9F38]	; 68639
+sar ebx, 10h	; 68640
+mov edx, dword [nosplit eax*2+dword_E9F16]	; 68643
+sar edx, 10h	; 6864A
+mov eax, dword [nosplit eax*2+dword_E9F5A]	; 6864D
+sar eax, 10h	; 68654
+call DrawFrameSprite	; 68657
+cmp si, byte 0Ch	; 6865C
+jne near .67	; 68660
+cmp byte [byte_E9FAD], 10h	; 68666
+je near .67	; 6866D
+cmp word [dword_E9F34], byte 0	; 68673
+jge short .61	; 6867B
+mov eax, dword [dword_E9F34-2]	; 6867D
+sar eax, 10h	; 68682
+neg eax	; 68685
+jmp short .62	; 68687
+.61:
+mov eax, dword [dword_E9F34-2]	; 68689
+sar eax, 10h	; 6868E
+.62:
+cmp eax, byte 6	; 68691
+jne short .63	; 68694
+cmp word [dword_E9F56], 0F0h	; 68696
+je short .65	; 6869F
+.63:
+movsx eax, si	; 686A1
+add eax, eax	; 686A4
+mov dx, word [dword_E9F56]	; 686A6
+cmp dx, word [dword eax+word_E9F3A]	; 686AD
+jl short .67	; 686B4
+cmp word [word_E9FA7], byte 0Dh	; 686B6
+jl short .67	; 686BE
+mov eax, dword [dword eax+word_E9F18-2]	; 686C0
+sar eax, 10h	; 686C6
+mov edx, dword [dword_E9F34-2]	; 686C9
+sar edx, 10h	; 686CF
+sub edx, eax	; 686D2
+mov eax, edx	; 686D4
+test edx, edx	; 686D6
+jge short .64	; 686D8
+neg eax	; 686DA
+.64:
+cmp eax, byte 15h	; 686DC
+jge short .67	; 686DF
+.65:
+push byte 0	; 686E1
+mov edx, dword [word_E9FA7-2]	; 686E3
+sar edx, 10h	; 686E9
+mov eax, edx	; 686EC
+shl eax, 2	; 686EE
+sub eax, edx	; 686F1
+mov edx, eax	; 686F3
+sar edx, 1Fh	; 686F5
+LD sub, eax, edx	; 686F8
+sar eax, 1	; 686FA
+mov edx, dword [dword_E9F56-2]	; 686FC
+sar edx, 10h	; 68702
+add eax, edx	; 68705
+movsx ebx, ax	; 68707
+mov edx, dword [dword_E9F34-2]	; 6870A
+sar edx, 10h	; 68710
+mov eax, dword [dword_E9F78-2]	; 68713
+sar eax, 10h	; 68718
+xor ecx, ecx	; 6871B
+.66:
+call DrawFrameSprite	; 6871D
+.67:
+inc edi	; 68722
+.68:
+cmp di, byte 11h	; 68723
+jl near DrawRinkSideObjects.50	; 68727
+mov eax, dword [dword_E9F56-2]	; 6872D
+sar eax, 10h	; 68732
+cmp eax, 0FFFFFF18h	; 68735
+jg near .71	; 6873A
+cmp eax, 0FFFFFF14h	; 68740
+jl short .71	; 68745
+cmp word [dword_E9F34], byte 0	; 68747
+jge short .69	; 6874F
+mov eax, dword [dword_E9F34-2]	; 68751
+sar eax, 10h	; 68756
+neg eax	; 68759
+jmp short .70	; 6875B
+.69:
+mov eax, dword [dword_E9F34-2]	; 6875D
+sar eax, 10h	; 68762
+.70:
+cmp eax, byte 14h	; 68765
+jg short .71	; 68768
+cmp word [word_E9FA7], byte 0Dh	; 6876A
+jl short .71	; 68772
+push byte 0	; 68774
+mov edx, dword [word_E9FA7-2]	; 68776
+sar edx, 10h	; 6877C
+mov eax, edx	; 6877F
+shl eax, 2	; 68781
+sub eax, edx	; 68784
+mov edx, eax	; 68786
+sar edx, 1Fh	; 68788
+LD sub, eax, edx	; 6878B
+sar eax, 1	; 6878D
+mov edx, dword [dword_E9F56-2]	; 6878F
+sar edx, 10h	; 68795
+add eax, edx	; 68798
+movsx ebx, ax	; 6879A
+mov edx, dword [dword_E9F34-2]	; 6879D
+sar edx, 10h	; 687A3
+mov eax, dword [dword_E9F78-2]	; 687A6
+sar eax, 10h	; 687AB
+xor ecx, ecx	; 687AE
+call DrawFrameSprite	; 687B0
+.71:
+mov eax, dword [camy-2]	; 687B5
+sar eax, 10h	; 687BA
+cmp eax, 0FFFFFF50h	; 687BD
+jge short .72	; 687C2
+mov eax, dword [byte ebp-012h]	; 687C4
+sar eax, 10h	; 687C7
+push eax	; 687CA
+mov esi, dword [cliprect_y0]	; 687CB
+push esi	; 687D1
+mov edi, dword [dword_D30C0]	; 687D2
+push edi	; 687D8
+mov eax, dword [dword_D30BC]	; 687D9
+push eax	; 687DE
+call sub_B4BC4	; 687DF
+add esp, byte 10h	; 687E4
+.72:
+mov eax, dword [camy-2]	; 687E7
+sar eax, 10h	; 687EC
+cmp eax, 0FFFFFF70h	; 687EF
+jge short .73	; 687F4
+call DrawRinkEndArt	; 687F6
+.73:
+cmp word [word_E9F58], byte 0	; 687FB
+jge short .74	; 68803
+mov si, word [word_E9F7A]	; 68805
+cmp si, 22Ah	; 6880C
+jl short .74	; 68811
+cmp si, 237h	; 68813
+jg short .74	; 68818
+push byte 0	; 6881A
+mov ebx, dword [word_E9F58-2]	; 6881C
+sar ebx, 10h	; 68822
+mov edx, dword [word_E9F36-2]	; 68825
+sar edx, 10h	; 6882B
+mov eax, dword [word_E9F7A-2]	; 6882E
+sar eax, 10h	; 68833
+xor ecx, ecx	; 68836
+call DrawFrameSprite	; 68838
+.74:
+mov ebx, dword [dword_E9F56-2]	; 6883D
+sar ebx, 10h	; 68843
+cmp ebx, 0FFFFFEF8h	; 68846
+jge short .75	; 6884C
+mov eax, dword [byte_E9FAD-3]	; 6884E
+sar eax, 18h	; 68853
+cmp eax, byte 0FFFFFFFFh	; 68856
+jne short .75	; 68859
+cmp word [word_E9FA7], byte 0	; 6885B
+jl short .75	; 68863
+push byte 0	; 68865
+mov edx, dword [word_E9FA7-2]	; 68867
+sar edx, 10h	; 6886D
+mov eax, edx	; 68870
+shl eax, 2	; 68872
+sub eax, edx	; 68875
+mov edx, eax	; 68877
+sar edx, 1Fh	; 68879
+LD sub, eax, edx	; 6887C
+sar eax, 1	; 6887E
+add eax, ebx	; 68880
+movsx ebx, ax	; 68882
+mov edx, dword [dword_E9F34-2]	; 68885
+sar edx, 10h	; 6888B
+mov eax, dword [dword_E9F78-2]	; 6888E
+sar eax, 10h	; 68893
+xor ecx, ecx	; 68896
+call DrawFrameSprite	; 68898
+.75:
+mov esp, ebp	; 6889D
+jmp near ReplayStep_popx	; 6889F

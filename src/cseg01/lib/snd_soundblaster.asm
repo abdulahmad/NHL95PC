@@ -2,26 +2,26 @@
 bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
-extern asc_C4A94, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_, int386x_
-extern memset_, outp_, sub_8F0D7, __GETDS, sub_A6D24, sub_A6D8D, sub_A6DA0, sub_A6DED
+extern __GETDS, asc_C4A94, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
+extern int386x_, memset_, outp_, sub_8F0D7, sub_A6D24, sub_A6D8D, sub_A6DA0, sub_A6DED
 extern sub_A6E10, sub_A6E7B, sub_A6EA2, sub_A6EC3, sub_A6F3C, sub_A6FA2, sub_A6FE1, sub_A7094
 extern sub_A70BC, sub_A70DD, sub_A905E, sub_A9BA4, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
 extern unk_F3534, word_F3454, word_F3456, word_F345C, word_F3538, word_F354A, word_F3714, word_F3716
 extern word_F3718
-global loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1, loc_9F2C5, loc_9F2D1
-global loc_9F2F0, loc_9F311, loc_9F31D, loc_9F324, loc_9F333, loc_9F358, loc_9F36C, loc_9F3CA
-global loc_9F40B, loc_9F413, loc_9F449, loc_9F47A, loc_9F49C, loc_9F4C6, loc_9F4DE, loc_9F511
-global loc_9F523, loc_9F52A, loc_9F533, loc_9F53C, loc_9F565, loc_9F566, loc_9F5A1, loc_9F5AC
-global loc_9F5B9, loc_9F5C1, loc_9F5C8, loc_9F5D8, loc_9F5E5, loc_9F5ED, loc_9F60B, loc_9F615
-global loc_9F6B3, loc_9F6EA, loc_9F714, loc_9F717, loc_9F71D, loc_9F77A, loc_9F782, loc_9F7B1
-global loc_9F7EA, loc_9F81B, loc_9F81E, loc_9F829, loc_9F839, loc_9F858, loc_9F85C, loc_9F861
-global loc_9F880, loc_9F899, loc_9F89D, loc_9F8A4, loc_9F8B3, loc_9F8BD, loc_9FA48, loc_9FA9D
+global sub_9F226, sub_9F22C, loc_9F25C, loc_9F293, loc_9F29D, loc_9F2AE, loc_9F2B7, loc_9F2C1
+global loc_9F2C5, loc_9F2D1, loc_9F2F0, loc_9F311, loc_9F31D, loc_9F324, loc_9F333, sub_9F34C
+global loc_9F358, loc_9F36C, sub_9F380, sub_9F387, sub_9F38D, loc_9F3CA, loc_9F40B, loc_9F413
+global sub_9F418, sub_9F41E, loc_9F449, loc_9F47A, loc_9F49C, sub_9F4A0, sub_9F4A6, loc_9F4C6
+global sub_9F4C8, sub_9F4CE, loc_9F4DE, loc_9F511, loc_9F523, loc_9F52A, loc_9F533, loc_9F53C
+global loc_9F565, loc_9F566, sub_9F577, sub_9F57D, loc_9F5A1, loc_9F5AC, loc_9F5B9, loc_9F5C1
+global loc_9F5C8, loc_9F5D8, loc_9F5E5, loc_9F5ED, loc_9F60B, loc_9F615, sub_9F622, sub_9F628
+global sub_9F642, sub_9F648, sub_9F685, loc_9F6B3, loc_9F6EA, loc_9F714, loc_9F717, loc_9F71D
+global sub_9F725, loc_9F77A, loc_9F782, loc_9F7B1, loc_9F7EA, loc_9F81B, loc_9F81E, loc_9F829
+global loc_9F839, loc_9F858, loc_9F85C, loc_9F861, loc_9F880, loc_9F899, loc_9F89D, loc_9F8A4
+global loc_9F8B3, loc_9F8BD, sub_9F8C5, sub_9F9C4, sub_9FA1A, loc_9FA48, sub_9FA5D, loc_9FA9D
 global loc_9FAB4, loc_9FABF, loc_9FACA, loc_9FAD5, loc_9FAF8, loc_9FB1E, loc_9FB21, loc_9FB29
-global loc_9FB35, loc_9FB55, loc_9FB58, loc_9FB5E, loc_9FB6A, loc_9FB85, loc_9FB88, loc_9FBA8
-global loc_9FC70, loc_9FC76, loc_9FC8C, sub_9F226, sub_9F22C, sub_9F34C, sub_9F380, sub_9F387
-global sub_9F38D, sub_9F418, sub_9F41E, sub_9F4A0, sub_9F4A6, sub_9F4C8, sub_9F4CE, sub_9F577
-global sub_9F57D, sub_9F622, sub_9F628, sub_9F642, sub_9F648, sub_9F685, sub_9F725, sub_9F8C5
-global sub_9F9C4, sub_9FA1A, sub_9FA5D, sub_9FB93, sub_9FBAA, sub_9FBB5, sub_9FC04, sub_9FC24
+global loc_9FB35, loc_9FB55, loc_9FB58, loc_9FB5E, loc_9FB6A, loc_9FB85, loc_9FB88, sub_9FB93
+global loc_9FBA8, sub_9FBAA, sub_9FBB5, sub_9FC04, sub_9FC24, loc_9FC70, loc_9FC76, loc_9FC8C
 global sub_9FC94, sub_9FCAB, sub_9FD01, sub_9FD3D
 sub_9F226:
 push ds	; 9F226

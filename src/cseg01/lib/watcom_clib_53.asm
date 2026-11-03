@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_B27A0 progbits alloc exec nowrite align=1
 extern __CHP, sub_B28C9
-global __Bin2String, __CmpBigInt, __Rnd2Int, loc_B27CC, loc_B27D5, loc_B27DD, loc_B27E0, loc_B27E9
-global loc_B27F1, loc_B281F, loc_B2828, loc_B282C, loc_B284C, loc_B2852, loc_B2874, loc_B2887
-global loc_B2889, loc_B289F, loc_B28C3, modf_
+global modf_, __CmpBigInt, loc_B27CC, loc_B27D5, loc_B27DD, loc_B27E0, loc_B27E9, loc_B27F1
+global __Rnd2Int, loc_B281F, loc_B2828, loc_B282C, loc_B284C, loc_B2852, __Bin2String, loc_B2874
+global loc_B2887, loc_B2889, loc_B289F, loc_B28C3
 modf_:
 push eax	; B27A0
 fld qword [byte esp+08h]	; B27A1

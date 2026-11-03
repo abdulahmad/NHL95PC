@@ -3,17 +3,17 @@ bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
 extern asc_C3B98, asc_C3BA0, asc_C3BAC, asc_C3BB0, asc_C3BCC, asc_C3C10, asc_C3C4C, asc_C3C88
-extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, memlist1
-extern dword_EDAB0, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78, sub_8DB8C
-extern sub_8E3E4, sub_8E424, sub_986E4, FatalError, unknown_libname_22
-global loc_8CAC8, loc_8CAE8, loc_8CBD2, loc_8CBE3, loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53
-global loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17, loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A
-global loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA, loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82
-global loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4, loc_8CFBD, loc_8D022, loc_8D035, loc_8D03D
-global loc_8D08F, loc_8D097, loc_8D0BF, loc_8D0C1, loc_8D1CB, loc_8D202, loc_8D227, loc_8D241
-global loc_8D257, loc_8D271, loc_8D29A, loc_8D2AE, loc_8D2B9, sub_8C990, sub_8CA6C, sub_8CAF4
-global sub_8CBA4, sub_8CC5C, sub_8CC70, sub_8CC8C, sub_8CCA8, sub_8CCC4, sub_8CCE0, sub_8CD04
-global sub_8CD4C, sub_8D0C8, sub_8D0EC, sub_8D10C, sub_8D12C, sub_8D144, sub_8D15C, findmemblock
+extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
+extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
+extern sub_8DB8C, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
+global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
+global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, sub_8CCA8
+global sub_8CCC4, sub_8CCE0, sub_8CD04, sub_8CD4C, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
+global loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A, loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA
+global loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82, loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4
+global loc_8CFBD, loc_8D022, loc_8D035, loc_8D03D, loc_8D08F, loc_8D097, loc_8D0BF, loc_8D0C1
+global sub_8D0C8, sub_8D0EC, sub_8D10C, sub_8D12C, sub_8D144, sub_8D15C, loc_8D1CB, loc_8D202
+global loc_8D227, loc_8D241, loc_8D257, loc_8D271, loc_8D29A, findmemblock, loc_8D2AE, loc_8D2B9
 global sub_8D2D2
 sub_8C990:
 push esi	; 8C990

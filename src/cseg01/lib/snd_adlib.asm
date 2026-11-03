@@ -2,32 +2,32 @@
 bits 32
 %include "hockey.inc"
 section s_9DE9C progbits alloc exec nowrite align=1
-extern byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108, memcpy_
-extern sub_8F0D7, __GETDS, sub_91FA4, sub_A68C9, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01
+extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
+extern memcpy_, sub_8F0D7, sub_91FA4, sub_A68C9, sub_A699D, sub_A69E8, sub_A69FB, sub_A6A01
 extern sub_A6A09, sub_A6B32, sub_A6B5D, sub_A6B73, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
 extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
-global jpt_9E414, loc_9DEE3, loc_9DF3A, loc_9DF46, loc_9DF5C, loc_9DF94, loc_9DFEF, loc_9DFFD
-global loc_9E001, loc_9E010, loc_9E013, loc_9E082, loc_9E0A8, loc_9E0D6, loc_9E0EE, loc_9E0F1
-global loc_9E0F7, loc_9E13B, loc_9E149, loc_9E15A, loc_9E178, loc_9E180, loc_9E196, loc_9E1AB
-global loc_9E1BC, loc_9E1E7, loc_9E20D, loc_9E210, loc_9E218, loc_9E21D, loc_9E222, loc_9E232
-global loc_9E27B, loc_9E27E, loc_9E284, loc_9E2F7, loc_9E309, loc_9E31B, loc_9E383, loc_9E39C
-global loc_9E3BB, loc_9E3C6, loc_9E40F, loc_9E448, loc_9E463, loc_9E484, loc_9E4A5, loc_9E4B8
-global loc_9E4C9, loc_9E4D2, loc_9E506, loc_9E516, loc_9E52B, loc_9E53F, loc_9E55D, loc_9E58D
-global loc_9E596, loc_9E599, loc_9E5E4, loc_9E5F7, loc_9E5FD, loc_9E601, loc_9E641, loc_9E653
-global loc_9E666, loc_9E66A, loc_9E66D, loc_9E6BD, loc_9E6C9, loc_9E6D1, loc_9E701, loc_9E708
-global loc_9E720, loc_9E783, loc_9E788, loc_9E79F, loc_9E7A4, loc_9E7BA, loc_9E7D6, loc_9E7EF
-global loc_9E7F1, loc_9E80C, loc_9E81F, loc_9E848, loc_9E84D, loc_9E89A, loc_9E8C5, loc_9E8F9
-global loc_9E908, loc_9E91A, loc_9E921, loc_9E94E, loc_9E97A, loc_9E9A2, loc_9E9CD, loc_9EA0F
-global loc_9EA37, loc_9EA7A, loc_9EAA0, loc_9EB14, loc_9EB61, loc_9EB97, loc_9EC4D, loc_9ECE0
-global loc_9ED20, loc_9ED25, loc_9ED36, loc_9ED3C, loc_9ED5B, loc_9ED67, loc_9ED6F, loc_9ED9E
-global loc_9EDA0, loc_9EDB6, loc_9EDDB, loc_9EDE0, loc_9EE64, loc_9EE69, loc_9EE7A, loc_9EE91
-global loc_9EED2, loc_9EEDA, loc_9EEE3, loc_9EEE5, loc_9EF91, loc_9EFBA, loc_9EFC2, loc_9EFCB
-global loc_9EFCD, loc_9F08F, loc_9F12B, loc_9F13D, loc_9F155, loc_9F179, loc_9F182, loc_9F18B
-global loc_9F1BA, loc_9F1BC, loc_9F1D2, loc_9F1D4, loc_9F21F, sub_9DE9C, sub_9DEA2, sub_9DEA9
-global sub_9DEAF, sub_9DEBE, sub_9DEC4, sub_9DF73, sub_9DF79, sub_9DF80, sub_9DF86, sub_9E026
-global sub_9E087, sub_9E0FF, sub_9E28B, sub_9E29B, sub_9E2B1, sub_9E378, sub_9E390, sub_9E428
-global sub_9E4D7, sub_9E511, sub_9E59D, sub_9E5C9, sub_9E676, sub_9E67C, sub_9E85B, sub_9EAA6
-global sub_9EBD5, sub_9ECE8, unk_9E876
+global sub_9DE9C, sub_9DEA2, sub_9DEA9, sub_9DEAF, sub_9DEBE, sub_9DEC4, loc_9DEE3, loc_9DF3A
+global loc_9DF46, loc_9DF5C, sub_9DF73, sub_9DF79, sub_9DF80, sub_9DF86, loc_9DF94, loc_9DFEF
+global loc_9DFFD, loc_9E001, loc_9E010, loc_9E013, sub_9E026, loc_9E082, sub_9E087, loc_9E0A8
+global loc_9E0D6, loc_9E0EE, loc_9E0F1, loc_9E0F7, sub_9E0FF, loc_9E13B, loc_9E149, loc_9E15A
+global loc_9E178, loc_9E180, loc_9E196, loc_9E1AB, loc_9E1BC, loc_9E1E7, loc_9E20D, loc_9E210
+global loc_9E218, loc_9E21D, loc_9E222, loc_9E232, loc_9E27B, loc_9E27E, loc_9E284, sub_9E28B
+global sub_9E29B, sub_9E2B1, loc_9E2F7, loc_9E309, loc_9E31B, sub_9E378, loc_9E383, sub_9E390
+global loc_9E39C, loc_9E3BB, loc_9E3C6, loc_9E40F, jpt_9E414, sub_9E428, loc_9E448, loc_9E463
+global loc_9E484, loc_9E4A5, loc_9E4B8, loc_9E4C9, loc_9E4D2, sub_9E4D7, loc_9E506, sub_9E511
+global loc_9E516, loc_9E52B, loc_9E53F, loc_9E55D, loc_9E58D, loc_9E596, loc_9E599, sub_9E59D
+global sub_9E5C9, loc_9E5E4, loc_9E5F7, loc_9E5FD, loc_9E601, loc_9E641, loc_9E653, loc_9E666
+global loc_9E66A, loc_9E66D, sub_9E676, sub_9E67C, loc_9E6BD, loc_9E6C9, loc_9E6D1, loc_9E701
+global loc_9E708, loc_9E720, loc_9E783, loc_9E788, loc_9E79F, loc_9E7A4, loc_9E7BA, loc_9E7D6
+global loc_9E7EF, loc_9E7F1, loc_9E80C, loc_9E81F, loc_9E848, loc_9E84D, sub_9E85B, unk_9E876
+global loc_9E89A, loc_9E8C5, loc_9E8F9, loc_9E908, loc_9E91A, loc_9E921, loc_9E94E, loc_9E97A
+global loc_9E9A2, loc_9E9CD, loc_9EA0F, loc_9EA37, loc_9EA7A, loc_9EAA0, sub_9EAA6, loc_9EB14
+global loc_9EB61, loc_9EB97, sub_9EBD5, loc_9EC4D, loc_9ECE0, sub_9ECE8, loc_9ED20, loc_9ED25
+global loc_9ED36, loc_9ED3C, loc_9ED5B, loc_9ED67, loc_9ED6F, loc_9ED9E, loc_9EDA0, loc_9EDB6
+global loc_9EDDB, loc_9EDE0, loc_9EE64, loc_9EE69, loc_9EE7A, loc_9EE91, loc_9EED2, loc_9EEDA
+global loc_9EEE3, loc_9EEE5, loc_9EF91, loc_9EFBA, loc_9EFC2, loc_9EFCB, loc_9EFCD, loc_9F08F
+global loc_9F12B, loc_9F13D, loc_9F155, loc_9F179, loc_9F182, loc_9F18B, loc_9F1BA, loc_9F1BC
+global loc_9F1D2, loc_9F1D4, loc_9F21F
 sub_9DE9C:
 push ds	; 9DE9C
 call __GETDS	; 9DE9D

@@ -8,17 +8,17 @@ extern inp_, lseek_, outp_, outpw_, sub_B13A1, sub_B14AC, sub_B16BC, sub_B1F9C
 extern sub_B2720, unk_F7978, word_D86DA, word_D86E0, word_D8762, word_D8772, word_D8774, word_D8776
 extern word_D8788, word_D8ACC, word_F799C, word_F799E, word_F79A0, word_F79A2, word_F79B8, word_F79BA
 extern word_F79C9
-global loc_B0815, loc_B083B, loc_B08B5, loc_B08D7, loc_B0A09, loc_B0A58, loc_B0A71, loc_B0A9A
-global loc_B0A9D, loc_B0B2F, loc_B0B4B, loc_B0B98, loc_B0BB4, loc_B0BB9, loc_B0BFD, loc_B0C23
-global loc_B0C2C, loc_B0C47, loc_B0C53, loc_B0C7F, loc_B0C98, loc_B0CAF, loc_B0D14, loc_B0D3D
-global loc_B0D4F, loc_B0DA1, loc_B0DDA, loc_B0DEF, loc_B0E02, loc_B0E22, loc_B0E4B, loc_B0E50
-global loc_B0E69, loc_B0E72, loc_B0E95, loc_B0EBB, loc_B0EDB, loc_B0F0B, loc_B0F10, loc_B0F2B
-global loc_B0F59, loc_B0F9F, loc_B0FB6, loc_B0FE0, loc_B0FE6, loc_B0FFC, loc_B1003, loc_B1019
-global loc_B101B, loc_B10BB, loc_B10F6, loc_B10F8, loc_B1129, loc_B112B, loc_B116E, loc_B11BA
-global loc_B11C0, loc_B1250, loc_B1252, loc_B126E, loc_B1289, sub_B07D0, sub_B085C, sub_B097C
-global sub_B09A4, sub_B0A14, sub_B0A40, sub_B0A5C, sub_B0A78, sub_B0AA4, sub_B0AB0, sub_B0ABC
-global sub_B0B5C, sub_B0BE4, sub_B0C10, sub_B0C34, sub_B0C5C, sub_B0CB8, sub_B0D6C, sub_B0E7C
-global sub_B0FA8, sub_B1024, sub_B103C, sub_B10D0, sub_B121C, sub_B122F, sub_B1237, sub_B1256
+global sub_B07D0, loc_B0815, loc_B083B, sub_B085C, loc_B08B5, loc_B08D7, sub_B097C, sub_B09A4
+global loc_B0A09, sub_B0A14, sub_B0A40, loc_B0A58, sub_B0A5C, loc_B0A71, sub_B0A78, loc_B0A9A
+global loc_B0A9D, sub_B0AA4, sub_B0AB0, sub_B0ABC, loc_B0B2F, loc_B0B4B, sub_B0B5C, loc_B0B98
+global loc_B0BB4, loc_B0BB9, sub_B0BE4, loc_B0BFD, sub_B0C10, loc_B0C23, loc_B0C2C, sub_B0C34
+global loc_B0C47, loc_B0C53, sub_B0C5C, loc_B0C7F, loc_B0C98, loc_B0CAF, sub_B0CB8, loc_B0D14
+global loc_B0D3D, loc_B0D4F, sub_B0D6C, loc_B0DA1, loc_B0DDA, loc_B0DEF, loc_B0E02, loc_B0E22
+global loc_B0E4B, loc_B0E50, loc_B0E69, loc_B0E72, sub_B0E7C, loc_B0E95, loc_B0EBB, loc_B0EDB
+global loc_B0F0B, loc_B0F10, loc_B0F2B, loc_B0F59, loc_B0F9F, sub_B0FA8, loc_B0FB6, loc_B0FE0
+global loc_B0FE6, loc_B0FFC, loc_B1003, loc_B1019, loc_B101B, sub_B1024, sub_B103C, loc_B10BB
+global sub_B10D0, loc_B10F6, loc_B10F8, loc_B1129, loc_B112B, loc_B116E, loc_B11BA, loc_B11C0
+global sub_B121C, sub_B122F, sub_B1237, loc_B1250, loc_B1252, sub_B1256, loc_B126E, loc_B1289
 sub_B07D0:
 push ebp	; B07D0
 mov ebp, esp	; B07D1

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_986CC progbits alloc exec nowrite align=1
-global loc_986D8, sub_986CC, sub_986E4
+global sub_986CC, loc_986D8, sub_986E4
 sub_986CC:
 mov eax, dword [byte esp+04h]	; 986CC
 cmp dword [eax], byte 0	; 986D0

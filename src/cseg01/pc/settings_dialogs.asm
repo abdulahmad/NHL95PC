@@ -2,43 +2,35 @@
 bits 32
 %include "hockey.inc"
 section s_7A13A progbits alloc exec nowrite align=1
-extern __CHK, str_BKGD, str_Setting5, str_Dbox2, str_Music, str_Sound, str_DigitizedSpeech, str_Setting3, hmtmap
-extern str_Pointer15, str_BKGD2, str_Setting7, str_Setting4, str_Dbox3, str_Music2, str_Sound2, str_DigitizedSpeech2
-extern str_Pointer16, str_BKGD3, str_DigitizedSpeech3, str_Music3, str_Sound3, str_Setting6, str_Dbox4, str_Pointer17
-extern str_BKGD4, str_PlayerImg, str_Dbox5, str_OneS, str_TwoS, str_TheMouse, str_JoystickOne, str_JoystickTwo
-extern str_TheKeyboard, str_Pointer18, pad1dev, musicon, hmtmflags, awtmflags, scpflags2
-extern puckasslist, ctlavailmask, fileoncd
-extern samesideflag, postate, gamemode, gameopts, ctl1team, ctl2team, ctl1dev
-extern ctl2dev, ctl1side, ctl2side, sounddev, songdata, sflags3, cont2team, HomeTeam
-extern leaguesetrects, modesetrects
-extern exhsetrects, ctldlgrects
-extern ctldlgalt, settingsfile, musichandle, musicslot
-extern seriesgameno, cddriveptr, pointerspr, fdlg_cancel, hmtmstruct, dword_DF648, hmscore
-extern ptrupdatefn, leaguesetimg, setbits, dword_ED364, pl20spr, pl05spr, pl10spr, puckstruct
-extern pg07spr, na05spr, pg01spr, acptspr, na03spr, pg03spr, chkoffspr, pg05spr
-extern chkonspr, na01spr, puckvx, gmode, FreeMemBlock, teamcitynames, puckx, pucky
-extern puckvy, puckc, off_CD498, off_CD4A0, setpersonel, MakePath, SaveModeState, LoadModeState
-extern WriteModeState, CrowdNoiseOff, CrowdNoiseReset, restorepl, GetInputEvent, ClearInputQueue, LoadSettingsShapes, DrawSettingsHeading
-extern SetSideControls, WriteCurModeState, sub_8CCA8, sub_8E83C, sub_8E9C0, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0, sub_90D20, sub_91284, sub_91370
-extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440, sub_B2DCA, sub_B30B4, sub_B4B88
-extern sub_B4BA8, sub_B4DD4, sub_B4FAC, exhstate, unk_D16A0, unk_D19CC, unk_D19DC, SortCords
-extern c1playernum, c2playernum, cont1team, VisTeam, gsp, gameclock, lcblink
-extern lcboxon, hmtmline, hmtmpde, awtmpde, pucktemp1
-global LeagueOptsToBits_jt, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings_edit
-global LeagueOptsToBits_n1, LeagueOptsToBits_n2, LeagueOptsToBits_n3, LeagueOptsToBits_n4, LeagueOptsToBits_n0
-global DrawCtlBox_common, ControlsDlg_done
-global ControlsDlgInGame_setside
-global ControlsDlg_ret0C, ControlsDlg_ret
-global ControlsDlg_ret0
-global LeagueSettingsDlg, MenuPlayoffSettings, SettingsDlgClose, EditPlayoffSettings, MenuLeagueSettingsEdit
-global MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits, LeagueSetHitTest, DrawLeagueSetChecks
-global LeagueSetViewLoop, LeagueSetEditLoop, SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest
-global DrawModeSetChecks, ModeSetViewLoop, ModeSetEditLoop, MenuExhibitionSettings, ExhSettings_ret, ExhOptsToBits, DrawExhSetChecks, DrawExhSetDlg
-global ExhSetHitTest, ExhSetEditLoop, DrawCtlBoxOn, DrawCtlBoxOff, MenuP1ControlsExh, MenuP2ControlsExh, ControlsDlgExh, MenuP1ControlsLeague
-global MenuP2ControlsLeague, ControlsDlgLeague, MenuP1ControlsInGame, ControlsDlgInGame, MenuP2ControlsInGame, CtlSwapScoreFix, CtlSwapTeamFlag, ReassignCtlPlayer
-global ClearCtlBlink, ControlsDlgInGame_side, MenuP1ControlsPlayoff, MenuP2ControlsPlayoff, ControlsDlgPlayoff, DrawControlsDlg, DrawControlsOpts, CtlDlgHitTest
-global DrawCtlBoxes, ControlsDlgLoop, SetCtlTeams
+extern __CHK, acptspr, awtmflags, awtmpde, c1playernum, c2playernum, cddriveptr, chkoffspr
+extern chkonspr, ClearInputQueue, cont1team, cont2team, CrowdNoiseOff, CrowdNoiseReset, ctl1dev, ctl1side
+extern ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, ctldlgalt, ctldlgrects, DrawSettingsHeading
+extern dword_DF648, dword_ED364, exhsetrects, exhstate, fdlg_cancel, fileoncd, FreeMemBlock, gameclock
+extern gamemode, gameopts, GetInputEvent, gmode, gsp, hmscore, hmtmap, hmtmflags
+extern hmtmline, hmtmpde, hmtmstruct, HomeTeam, lcblink, lcboxon, leaguesetimg, leaguesetrects
+extern LoadModeState, LoadSettingsShapes, MakePath, modesetrects, musichandle, musicon, musicslot, na01spr
+extern na03spr, na05spr, off_CD498, off_CD4A0, pad1dev, pg01spr, pg03spr, pg05spr
+extern pg07spr, pl05spr, pl10spr, pl20spr, pointerspr, postate, ptrupdatefn, puckasslist
+extern puckc, puckstruct, pucktemp1, puckvx, puckvy, puckx, pucky, restorepl
+extern samesideflag, SaveModeState, scpflags2, seriesgameno, setbits, setpersonel, SetSideControls, settingsfile
+extern sflags3, songdata, SortCords, sounddev, str_BKGD, str_BKGD2, str_BKGD3, str_BKGD4
+extern str_Dbox2, str_Dbox3, str_Dbox4, str_Dbox5, str_DigitizedSpeech, str_DigitizedSpeech2, str_DigitizedSpeech3, str_JoystickOne
+extern str_JoystickTwo, str_Music, str_Music2, str_Music3, str_OneS, str_PlayerImg, str_Pointer15, str_Pointer16
+extern str_Pointer17, str_Pointer18, str_Setting3, str_Setting4, str_Setting5, str_Setting6, str_Setting7, str_Sound
+extern str_Sound2, str_Sound3, str_TheKeyboard, str_TheMouse, str_TwoS, sub_8CCA8, sub_8E83C, sub_8E9C0
+extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0
+extern sub_90D20, sub_91284, sub_91370, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440
+extern sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4, sub_B4FAC, teamcitynames, unk_D16A0
+extern unk_D19CC, unk_D19DC, VisTeam, WriteCurModeState, WriteModeState
+global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
+global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
+global LeagueOptsToBits_n1, LeagueOptsToBits_n2, LeagueOptsToBits_n3, LeagueOptsToBits_n4, LeagueOptsToBits_n0, LeagueSetHitTest, DrawLeagueSetChecks, LeagueSetViewLoop
+global LeagueSetEditLoop, SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks
+global ModeSetViewLoop, ModeSetEditLoop, MenuExhibitionSettings, ExhSettings_ret, ExhOptsToBits, DrawExhSetChecks, DrawExhSetDlg, ExhSetHitTest
+global ExhSetEditLoop, DrawCtlBoxOn, DrawCtlBox_common, DrawCtlBoxOff, MenuP1ControlsExh, MenuP2ControlsExh, ControlsDlgExh, ControlsDlg_done
+global MenuP1ControlsLeague, MenuP2ControlsLeague, ControlsDlgLeague, MenuP1ControlsInGame, ControlsDlgInGame, MenuP2ControlsInGame, CtlSwapScoreFix, CtlSwapTeamFlag
+global ReassignCtlPlayer, ClearCtlBlink, ControlsDlgInGame_side, ControlsDlgInGame_setside, ControlsDlg_ret0C, ControlsDlg_ret, ControlsDlg_ret0, MenuP1ControlsPlayoff
+global MenuP2ControlsPlayoff, ControlsDlgPlayoff, DrawControlsDlg, DrawControlsOpts, CtlDlgHitTest, DrawCtlBoxes, ControlsDlgLoop, SetCtlTeams
 ; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.inc"

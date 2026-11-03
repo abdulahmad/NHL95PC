@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
-extern _os_handle_0, _os_handle_1, asc_D544C, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30CC
+extern _os_handle_0, _os_handle_1, asc_D544C, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC
 extern dword_F6138, strncpy_, strrchr_, sub_8CD04, sub_8D15C, sub_8D728, sub_9762C, sub_97EB8
 extern sub_98A40, sub_B0100, sub_B0148, sub_B3ABC, sub_B3B19, sub_B3C60, sub_B3C74, sub_B3CB3
 extern sub_B72D4, sub_B72E9
-global loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD, loc_A220B
-global loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6, loc_A23C4
-global loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E, loc_A2598
-global loc_A259A, loc_A25D8, loc_A25FB, loc_A261E, loc_A2636, loc_A2666, loc_A2679, loc_A2682
-global loc_A26A5, loc_A26A8, loc_A26AA, loc_A26E9, loc_A26FF, loc_A2704, loc_A2727, loc_A2791
-global loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, loc_A29C6, loc_A2AAA, sub_A2000
-global sub_A2610, sub_A26B0, sub_A2744, sub_A275C, sub_A2774, sub_A2794, sub_A27AC, sub_A27C4
-global sub_A28F0, sub_A2AB8
+global sub_A2000, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
+global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
+global loc_A23C4, loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E
+global loc_A2598, loc_A259A, loc_A25D8, loc_A25FB, sub_A2610, loc_A261E, loc_A2636, loc_A2666
+global loc_A2679, loc_A2682, loc_A26A5, loc_A26A8, loc_A26AA, sub_A26B0, loc_A26E9, loc_A26FF
+global loc_A2704, loc_A2727, sub_A2744, sub_A275C, sub_A2774, loc_A2791, sub_A2794, sub_A27AC
+global sub_A27C4, loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, sub_A28F0, loc_A29C6
+global loc_A2AAA, sub_A2AB8
 sub_A2000:
 push esi	; A2000
 push edi	; A2001

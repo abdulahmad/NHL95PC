@@ -2,49 +2,49 @@
 bits 32
 %include "hockey.inc"
 section s_B5D80 progbits alloc exec nowrite align=1
-extern byte_D42E4, byte_D4F54, byte_D89E4, cliprect_x0, cliprect_y0, cliprect_x1, cliprect_y1, dword_D30BC
+extern byte_D42E4, byte_D4F54, byte_D89E4, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30BC
 extern dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0, dword_D3104, dword_D4F4C, dword_D4F50
 extern dword_D86B8, dword_D86BC
-global jpt_B5E1F, jpt_B66B3, jpt_B67CB, jpt_B708F, loc_B5DAC, loc_B5DBC, loc_B5DD8, loc_B5DE0
-global loc_B5E2B, loc_B5E49, loc_B5E4A, loc_B5E76, loc_B5F41, loc_B5F63, loc_B5F67, loc_B5F94
-global loc_B5FC2, loc_B5FE5, loc_B5FEB, loc_B6024, loc_B6037, loc_B603B, loc_B603D, loc_B6055
+global sub_B5D80, loc_B5DAC, sub_B5DB0, loc_B5DBC, loc_B5DD8, loc_B5DE0, sub_B5E00, sub_B5E04
+global jpt_B5E1F, loc_B5E2B, loc_B5E49, loc_B5E4A, loc_B5E76, sub_B5EA7, sub_B5EB8, sub_B5EC5
+global sub_B5EE8, sub_B5F0F, loc_B5F41, loc_B5F63, loc_B5F67, loc_B5F94, loc_B5FC2, loc_B5FE5
+global loc_B5FEB, loc_B6024, loc_B6037, loc_B603B, loc_B603D, loc_B6055, sub_B6064, sub_B608B
 global loc_B60BD, loc_B60DF, loc_B60E3, loc_B6110, loc_B613E, loc_B6161, loc_B6167, loc_B61A3
-global loc_B61A6, loc_B61B8, loc_B61BC, loc_B61C2, loc_B61C5, loc_B61DE, loc_B61DF, loc_B6249
-global loc_B626B, loc_B626F, loc_B629C, loc_B62CA, loc_B62ED, loc_B62F3, loc_B632F, loc_B6332
-global loc_B6344, loc_B6348, loc_B634E, loc_B6351, loc_B636A, loc_B636B, loc_B63A8, loc_B63B8
-global loc_B63D4, loc_B63DC, loc_B6455, loc_B6477, loc_B647B, loc_B64A8, loc_B64D6, loc_B64F9
-global loc_B64FF, loc_B653B, loc_B653E, loc_B6550, loc_B6554, loc_B655A, loc_B655D, loc_B6576
-global loc_B6577, loc_B65B4, loc_B65C4, loc_B65E0, loc_B65E8, loc_B6621, loc_B6634, loc_B664B
-global loc_B6662, loc_B6669, loc_B66C3, loc_B66D0, loc_B66D6, loc_B66E4, loc_B66F3, loc_B6703
-global loc_B670E, loc_B6710, loc_B671A, loc_B6739, loc_B674C, loc_B6763, loc_B677A, loc_B6781
-global loc_B67DB, loc_B67E0, loc_B67E7, loc_B67EF, loc_B67F6, loc_B67FB, loc_B6802, loc_B680C
-global loc_B680F, loc_B6814, loc_B681B, loc_B6826, loc_B6829, loc_B682E, loc_B6835, loc_B6843
-global loc_B684E, loc_B6850, loc_B685A, loc_B68B9, loc_B68EC, loc_B68F6, loc_B68FA, loc_B68FC
-global loc_B690B, loc_B6970, loc_B69A3, loc_B69A6, loc_B69B0, loc_B69B3, loc_B6A18, loc_B6A3A
-global loc_B6A3F, loc_B6A6C, loc_B6A9A, loc_B6ABD, loc_B6AC3, loc_B6AF6, loc_B6AF9, loc_B6B03
-global loc_B6B06, loc_B6B10, loc_B6B79, loc_B6B94, loc_B6BA2, loc_B6BAE, loc_B6C1B, loc_B6C3D
+global loc_B61A6, loc_B61B8, loc_B61BC, loc_B61C2, loc_B61C5, loc_B61DE, loc_B61DF, sub_B61F0
+global sub_B6217, loc_B6249, loc_B626B, loc_B626F, loc_B629C, loc_B62CA, loc_B62ED, loc_B62F3
+global loc_B632F, loc_B6332, loc_B6344, loc_B6348, loc_B634E, loc_B6351, loc_B636A, loc_B636B
+global sub_B637C, loc_B63A8, sub_B63AC, loc_B63B8, loc_B63D4, loc_B63DC, sub_B63FC, sub_B6423
+global loc_B6455, loc_B6477, loc_B647B, loc_B64A8, loc_B64D6, loc_B64F9, loc_B64FF, loc_B653B
+global loc_B653E, loc_B6550, loc_B6554, loc_B655A, loc_B655D, loc_B6576, loc_B6577, sub_B6588
+global loc_B65B4, sub_B65B8, loc_B65C4, loc_B65E0, loc_B65E8, sub_B6608, loc_B6621, loc_B6634
+global loc_B664B, loc_B6662, sub_B6665, loc_B6669, jpt_B66B3, loc_B66C3, loc_B66D0, loc_B66D6
+global loc_B66E4, loc_B66F3, loc_B6703, loc_B670E, loc_B6710, loc_B671A, sub_B6720, loc_B6739
+global loc_B674C, loc_B6763, loc_B677A, sub_B677D, loc_B6781, jpt_B67CB, loc_B67DB, loc_B67E0
+global loc_B67E7, loc_B67EF, loc_B67F6, loc_B67FB, loc_B6802, loc_B680C, loc_B680F, loc_B6814
+global loc_B681B, loc_B6826, loc_B6829, loc_B682E, loc_B6835, loc_B6843, loc_B684E, loc_B6850
+global loc_B685A, sub_B6860, sub_B6887, loc_B68B9, loc_B68EC, loc_B68F6, loc_B68FA, loc_B68FC
+global loc_B690B, sub_B6918, sub_B693C, loc_B6970, loc_B69A3, loc_B69A6, loc_B69B0, loc_B69B3
+global sub_B69C0, sub_B69E4, loc_B6A18, loc_B6A3A, loc_B6A3F, loc_B6A6C, loc_B6A9A, loc_B6ABD
+global loc_B6AC3, loc_B6AF6, loc_B6AF9, loc_B6B03, loc_B6B06, loc_B6B10, sub_B6B18, sub_B6B3F
+global loc_B6B79, loc_B6B94, loc_B6BA2, loc_B6BAE, sub_B6BC0, sub_B6BE5, loc_B6C1B, loc_B6C3D
 global loc_B6C43, loc_B6C70, loc_B6C9E, loc_B6CC1, loc_B6CC7, loc_B6CFA, loc_B6CFD, loc_B6D0F
-global loc_B6D12, loc_B6D1C, loc_B6D79, loc_B6DAC, loc_B6DAF, loc_B6DBF, loc_B6DC2, loc_B6E31
-global loc_B6E53, loc_B6E57, loc_B6E84, loc_B6EB2, loc_B6ED5, loc_B6EDB, loc_B6F1E, loc_B6F2E
-global loc_B6F39, loc_B6F46, loc_B6F4B, loc_B6F57, loc_B6F68, loc_B6F78, loc_B6FB7, loc_B7027
-global loc_B702C, loc_B7037, loc_B7045, loc_B70B7, loc_B70CF, loc_B70FC, loc_B710B, loc_B7111
-global loc_B712E, loc_B7139, loc_B7142, loc_B7146, loc_B714F, loc_B7158, loc_B7179, loc_B7185
-global loc_B71A8, loc_B71B4, loc_B71D2, loc_B71DB, loc_B71DF, loc_B71E5, loc_B7203, loc_B720C
-global loc_B7210, loc_B7239, loc_B725D, loc_B7260, loc_B726C, loc_B7271, loc_B7277, loc_B7280
-global loc_B7296, loc_B72A1, loc_B72A4, loc_B72B2, loc_B72B8, loc_B72BA, loc_B72CB, loc_B72CF
-global loc_B7309, loc_B7314, loc_B7340, loc_B7379, loc_B738A, loc_B73B6, loc_B73CB, loc_B73CD
-global loc_B73F9, loc_B7414, loc_B7416, loc_B7445, loc_B7456, loc_B7482, loc_B74EA, loc_B74F3
+global loc_B6D12, loc_B6D1C, sub_B6D24, sub_B6D47, loc_B6D79, loc_B6DAC, loc_B6DAF, loc_B6DBF
+global loc_B6DC2, sub_B6DD0, sub_B6DF7, loc_B6E31, loc_B6E53, loc_B6E57, loc_B6E84, loc_B6EB2
+global loc_B6ED5, loc_B6EDB, loc_B6F1E, loc_B6F2E, loc_B6F39, loc_B6F46, loc_B6F4B, loc_B6F57
+global loc_B6F68, loc_B6F78, sub_B6F84, loc_B6FB7, sub_B6FFC, sub_B7005, sub_B700E, loc_B7027
+global loc_B702C, loc_B7037, loc_B7045, sub_B704C, jpt_B708F, loc_B70B7, loc_B70CF, loc_B70FC
+global loc_B710B, loc_B7111, loc_B712E, loc_B7139, loc_B7142, loc_B7146, loc_B714F, loc_B7158
+global loc_B7179, loc_B7185, loc_B71A8, loc_B71B4, loc_B71D2, loc_B71DB, loc_B71DF, loc_B71E5
+global loc_B7203, loc_B720C, loc_B7210, sub_B7218, loc_B7239, loc_B725D, loc_B7260, loc_B726C
+global loc_B7271, loc_B7277, loc_B7280, loc_B7296, loc_B72A1, loc_B72A4, loc_B72B2, loc_B72B8
+global loc_B72BA, loc_B72CB, loc_B72CF, sub_B72D4, sub_B72E9, loc_B7309, loc_B7314, sub_B731E
+global loc_B7340, loc_B7379, loc_B738A, loc_B73B6, loc_B73CB, loc_B73CD, loc_B73F9, loc_B7414
+global loc_B7416, sub_B7420, loc_B7445, loc_B7456, loc_B7482, unk_B74AA, loc_B74EA, loc_B74F3
 global loc_B7501, loc_B7511, loc_B7521, loc_B7531, loc_B7541, loc_B7551, loc_B7561, loc_B7571
 global loc_B7581, loc_B7591, loc_B75A1, loc_B75B1, loc_B75C1, loc_B75D1, loc_B75E1, loc_B7603
-global loc_B766D, loc_B768F, loc_B7693, loc_B76C0, loc_B76EE, loc_B7711, loc_B7717, loc_B7748
-global loc_B774B, loc_B7757, loc_B7764, loc_B7767, loc_B7771, loc_B7828, loc_B7860, loc_B7863
-global loc_B786F, loc_B7877, loc_B787A, sub_B5D80, sub_B5DB0, sub_B5E00, sub_B5E04, sub_B5EA7
-global sub_B5EB8, sub_B5EC5, sub_B5EE8, sub_B5F0F, sub_B6064, sub_B608B, sub_B61F0, sub_B6217
-global sub_B637C, sub_B63AC, sub_B63FC, sub_B6423, sub_B6588, sub_B65B8, sub_B6608, sub_B6665
-global sub_B6720, sub_B677D, sub_B6860, sub_B6887, sub_B6918, sub_B693C, sub_B69C0, sub_B69E4
-global sub_B6B18, sub_B6B3F, sub_B6BC0, sub_B6BE5, sub_B6D24, sub_B6D47, sub_B6DD0, sub_B6DF7
-global sub_B6F84, sub_B6FFC, sub_B7005, sub_B700E, sub_B704C, sub_B7218, sub_B72D4, sub_B72E9
-global sub_B731E, sub_B7420, sub_B7614, sub_B763B, sub_B7778, sub_B77D0, sub_B77F4, unk_B74AA
+global sub_B7614, sub_B763B, loc_B766D, loc_B768F, loc_B7693, loc_B76C0, loc_B76EE, loc_B7711
+global loc_B7717, loc_B7748, loc_B774B, loc_B7757, loc_B7764, loc_B7767, loc_B7771, sub_B7778
+global sub_B77D0, sub_B77F4, loc_B7828, loc_B7860, loc_B7863, loc_B786F, loc_B7877, loc_B787A
 sub_B5D80:
 mov eax, dword [byte esp+04h]	; B5D80
 mov edx, dword [byte esp+08h]	; B5D84

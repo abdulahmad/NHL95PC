@@ -1,26 +1,610 @@
-; The scoreboard drawn during a game, the Stanley Cup final, and the demo that runs from the title screen.
+; The scoreboard drawn during a game: the score, the clock, the line energy and penalty bars,
+; and the Stanley Cup final series. One module: the panel functions share UpdateHudPanel's exit.
 bits 32
 %include "hockey.inc"
-section s_150C6 progbits alloc exec nowrite align=1
-extern seed, __CHK, str_Scrbrd2, str_Srb3, str_Crests4, str_Stanley, str_PPV, VisTeam, awtmline, hmtmline, lcline
-extern musicon, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, ctlavailmask
-extern demomode, fileoncd
-extern gameresult, gamemode, gameopts, teamdivflags, hudclockmin
-extern hudclocksec, hudclockhund, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
-extern hudhomeline, hudawayline, dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862
-extern demoteammode, cont2team, HomeTeam, dword_CC0EC, introskipped, cddriveptr, mousebtns, linesprites
-extern penaltydigits, dword_DC2B8, clockdigits, clockcolon, cupseries, hmscore, awscore, hmtmstruct
-extern FreeMemBlock, DrawPanelLine_x, UpdateHudPanel_x, teamabbrevs, perioddigits, off_C57C8, crestnames, awtmstruct
-extern mousepollfn, rand_, randomd0, SetupControllers, SetScreenSize, Gameloop, ReloadGameGfx, SetupDemoGame
-extern MakePath, DrawPanelScore, DrawPanelClock, InitGameSummary, LoadModeState, DemoSetupStub, LoadRink, SeriesLength
-extern ShowLoadingScreen, FadeOutPalCycle, joyq_flush, PaPreloadClips, GetPeriodTime, LoadTeamPalette, InputInstall, InputRemove
-extern LoadRockMusic, LoadScheduleDB, SelectScreenBM, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
-extern PollKey, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, exhstate, gamepal, PerTimeTab
-extern energywarn, lcblink, word_CBC60, lcboxon
-global RunDemoGame_x
-global DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties
-global DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties, LoadCupFinalSeries, IsCupClinched, CupSeriesWinner, RunDemoGame, AnyInputPressed
-global ReadBE32
+section s_14A20 progbits alloc exec nowrite align=1
+extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
+extern awpanelspr, awscore, awtmline, awtmstruct, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8
+extern byte_DCA1B, byte_DCAD7, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
+extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, dword_C5710
+extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
+extern dword_C5860, dword_C5861, dword_C5862, dword_CC0EC, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
+extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult
+extern GetPeriodTime, gmode, hmlineind, hmpanelspr, hmscore, hmtmline, hmtmstruct, HomeTeam
+extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
+extern InitGameSummary, InputInstall, InputRemove, introskipped, j_unlink_, joyq_flush, lcblink, lcboxon
+extern lcline, leaguedbnames, linesprites, LoadModeState, LoadRink, LoadRockMusic, LoadScheduleDB, LoadTeamPalette
+extern lseek_, MakePath, MessageBox, mousebtns, mousepollfn, MouseSetPos, msg_NeedKbytes, musicon
+extern off_C56B5, off_C57C8, PaPreloadClips, penaltydigits, perioddigits, PerTimeTab, PollKey, rand_
+extern randomd0, ReloadGameGfx, rmdir_, scoredigits, seed, SelectRinkBM, SelectScreenBM, SeriesLength
+extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprintf_, str_backslash2, str_Crests4, str_dot
+extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
+extern str_star, strcat_, strcpy_, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
+extern sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
+extern unknown_libname_2, VisTeam, word_CBC60
+global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x
+global DrawPanelClock, DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties
+global LoadCupFinalSeries, IsCupClinched, CupSeriesWinner
+; C: src/c/front/scoreboard/DrawPanelScore.c
+%ifdef CBUILD
+%include "c/front/scoreboard/DrawPanelScore.inc"
+%else
+DrawPanelScore:
+push dword 1Ch	; 14A20
+call __CHK	; 14A25
+push ebx	; 14A2A
+push ecx	; 14A2B
+push esi	; 14A2C
+mov ebx, eax	; 14A2D
+mov esi, edx	; 14A2F
+cmp dx, byte 64h	; 14A31
+jl short .1	; 14A35
+mov ecx, 64h	; 14A37
+mov eax, edx	; 14A3C
+cwd	; 14A3E
+idiv cx	; 14A40
+mov esi, edx	; 14A43
+.1:
+call SelectScreenBM	; 14A45
+test bx, bx	; 14A4A
+je short .4	; 14A4D
+push byte 4	; 14A4F
+push dword 0FFh	; 14A51
+cmp si, byte 0Ah	; 14A56
+jge short .2	; 14A5A
+mov eax, 0Ah	; 14A5C
+jmp short .3	; 14A61
+.2:
+movsx edx, si	; 14A63
+mov ebx, 0Ah	; 14A66
+mov eax, edx	; 14A6B
+sar edx, 1Fh	; 14A6D
+idiv ebx	; 14A70
+.3:
+mov ecx, dword [nosplit eax*4+scoredigits]	; 14A72
+push ecx	; 14A79
+call sub_B4CD8	; 14A7A
+add esp, byte 0Ch	; 14A7F
+push byte 4	; 14A82
+push dword 109h	; 14A84
+movsx edx, si	; 14A89
+mov ebx, 0Ah	; 14A8C
+mov eax, edx	; 14A91
+sar edx, 1Fh	; 14A93
+idiv ebx	; 14A96
+mov esi, dword [nosplit edx*4+scoredigits]	; 14A98
+push esi	; 14A9F
+jmp short .7	; 14AA0
+.4:
+push byte 4	; 14AA2
+push byte 2Eh	; 14AA4
+cmp si, byte 0Ah	; 14AA6
+jge short .5	; 14AAA
+mov eax, 0Ah	; 14AAC
+jmp short .6	; 14AB1
+.5:
+movsx edx, si	; 14AB3
+mov ebx, 0Ah	; 14AB6
+mov eax, edx	; 14ABB
+sar edx, 1Fh	; 14ABD
+idiv ebx	; 14AC0
+.6:
+mov edx, dword [nosplit eax*4+scoredigits]	; 14AC2
+push edx	; 14AC9
+call sub_B4CD8	; 14ACA
+add esp, byte 0Ch	; 14ACF
+push byte 4	; 14AD2
+push byte 38h	; 14AD4
+movsx edx, si	; 14AD6
+mov ebx, 0Ah	; 14AD9
+mov eax, edx	; 14ADE
+sar edx, 1Fh	; 14AE0
+idiv ebx	; 14AE3
+mov ebx, dword [nosplit edx*4+scoredigits]	; 14AE5
+push ebx	; 14AEC
+.7:
+call sub_B4CD8	; 14AED
+add esp, byte 0Ch	; 14AF2
+call SelectRinkBM	; 14AF5
+pop esi	; 14AFA
+pop ecx	; 14AFB
+pop ebx	; 14AFC
+ret	; 14AFD
+%endif ; C
+; C: src/c/front/scoreboard/DrawPanelLine.c
+%ifdef CBUILD
+%include "c/front/scoreboard/DrawPanelLine.inc"
+%else
+DrawPanelLine:
+push dword 24h	; 14AFE
+call __CHK	; 14B03
+push ebx	; 14B08
+push ecx	; 14B09
+push esi	; 14B0A
+push edi	; 14B0B
+push ebp	; 14B0C
+mov ebx, eax	; 14B0D
+call SelectScreenBM	; 14B0F
+test bx, bx	; 14B14
+je short .3	; 14B17
+mov ebp, dword [hudawayline]	; 14B19
+cmp ebp, byte 4	; 14B1F
+setl al	; 14B22
+mov ebx, eax	; 14B25
+and ebx, 0FFh	; 14B27
+cmp dx, byte 4	; 14B2D
+setl al	; 14B31
+and eax, 0FFh	; 14B34
+xor eax, ebx	; 14B39
+jne short .1	; 14B3B
+cmp ebp, byte 6	; 14B3D
+setl al	; 14B40
+mov ebx, eax	; 14B43
+and ebx, 0FFh	; 14B45
+cmp dx, byte 6	; 14B4B
+setl al	; 14B4F
+and eax, 0FFh	; 14B52
+xor eax, ebx	; 14B57
+je short .2	; 14B59
+.1:
+xor ecx, ecx	; 14B5B
+mov dword [dword_C5860], ecx	; 14B5D
+.2:
+movsx eax, dx	; 14B63
+mov dword [hudawayline], eax	; 14B66
+push byte 14h	; 14B6B
+push dword 0FBh	; 14B6D
+mov esi, dword [nosplit eax*4+linesprites]	; 14B72
+push esi	; 14B79
+jmp short .6	; 14B7A
+.3:
+cmp dword [hudhomeline], byte 4	; 14B7C
+setl al	; 14B83
+mov ebx, eax	; 14B86
+and ebx, 0FFh	; 14B88
+cmp dx, byte 4	; 14B8E
+setl al	; 14B92
+and eax, 0FFh	; 14B95
+xor eax, ebx	; 14B9A
+jne short .4	; 14B9C
+cmp dword [hudhomeline], byte 6	; 14B9E
+setl al	; 14BA5
+mov ebx, eax	; 14BA8
+and ebx, 0FFh	; 14BAA
+cmp dx, byte 6	; 14BB0
+setl al	; 14BB4
+and eax, 0FFh	; 14BB7
+xor eax, ebx	; 14BBC
+je short .5	; 14BBE
+.4:
+xor esi, esi	; 14BC0
+mov dword [dword_C585C], esi	; 14BC2
+.5:
+movsx eax, dx	; 14BC8
+mov dword [hudhomeline], eax	; 14BCB
+push byte 14h	; 14BD0
+push byte 2Ah	; 14BD2
+mov edi, dword [nosplit eax*4+linesprites]	; 14BD4
+push edi	; 14BDB
+.6:
+call sub_B4CD8	; 14BDC
+add esp, byte 0Ch	; 14BE1
+call SelectRinkBM	; 14BE4
+DrawPanelLine_x:
+pop ebp	; 14BE9
+pop edi	; 14BEA
+pop esi	; 14BEB
+pop ecx	; 14BEC
+pop ebx	; 14BED
+ret	; 14BEE
+%endif ; C
+; C: src/c/front/scoreboard/GetLineEnergies.c
+%ifdef CBUILD
+%include "c/front/scoreboard/GetLineEnergies.inc"
+%else
+GetLineEnergies:
+push dword 10h	; 14BEF
+call __CHK	; 14BF4
+push ebx	; 14BF9
+push ecx	; 14BFA
+push esi	; 14BFB
+mov ecx, eax	; 14BFC
+mov esi, edx	; 14BFE
+xor ebx, ebx	; 14C00
+.1:
+movsx edx, bx	; 14C02
+movsx eax, cx	; 14C05
+call TeamLineEnergy	; 14C08
+movsx edx, ax	; 14C0D
+mov eax, ebx	; 14C10
+sub edx, byte 60h	; 14C12
+mov dword [esi+eax*4], edx	; 14C15
+inc ebx	; 14C18
+cmp ebx, byte 8	; 14C19
+jl short GetLineEnergies.1	; 14C1C
+pop esi	; 14C1E
+pop ecx	; 14C1F
+pop ebx	; 14C20
+ret	; 14C21
+%endif ; C
+; C: src/c/front/scoreboard/PanelAddPenalty.c
+%ifdef CBUILD
+%include "c/front/scoreboard/PanelAddPenalty.inc"
+%else
+PanelAddPenalty:
+push dword 10h	; 14C22
+call __CHK	; 14C27
+push ecx	; 14C2C
+push esi	; 14C2D
+push edi	; 14C2E
+mov ecx, eax	; 14C2F
+mov edi, edx	; 14C31
+mov esi, ebx	; 14C33
+xor edx, edx	; 14C35
+mov dword [dword_C585C], edx	; 14C37
+mov dword [dword_C5860], edx	; 14C3D
+test ax, ax	; 14C43
+je short .1	; 14C46
+mov eax, hudpenaway	; 14C48
+jmp short .2	; 14C4D
+.1:
+mov eax, hudpenhome	; 14C4F
+.2:
+xor edx, edx	; 14C54
+jmp short .6	; 14C56
+.3:
+movsx ebx, word [eax]	; 14C58
+cmp ebx, byte 0FFFFFFFFh	; 14C5B
+jne short .5	; 14C5E
+mov word [eax], di	; 14C60
+mov word [byte eax+02h], si	; 14C63
+mov word [byte eax+06h], 0	; 14C67
+mov dx, word [byte eax+06h]	; 14C6D
+mov word [byte eax+04h], dx	; 14C71
+test cx, cx	; 14C75
+je short .4	; 14C78
+xor esi, esi	; 14C7A
+mov dword [dword_C5848], esi	; 14C7C
+pop edi	; 14C82
+pop esi	; 14C83
+pop ecx	; 14C84
+ret	; 14C85
+.4:
+xor ecx, ecx	; 14C86
+mov dword [dword_C5844], ecx	; 14C88
+pop edi	; 14C8E
+pop esi	; 14C8F
+pop ecx	; 14C90
+ret	; 14C91
+.5:
+add eax, byte 8	; 14C92
+inc edx	; 14C95
+.6:
+cmp dx, byte 8	; 14C96
+jl short PanelAddPenalty.3	; 14C9A
+pop edi	; 14C9C
+pop esi	; 14C9D
+pop ecx	; 14C9E
+ret	; 14C9F
+%endif ; C
+; C: src/c/front/scoreboard/PanelRemovePenalty.c
+%ifdef CBUILD
+%include "c/front/scoreboard/PanelRemovePenalty.inc"
+%else
+PanelRemovePenalty:
+push dword 0Ch	; 14CA0
+call __CHK	; 14CA5
+push ebx	; 14CAA
+push ecx	; 14CAB
+mov ecx, edx	; 14CAC
+test ax, ax	; 14CAE
+je short .1	; 14CB1
+mov eax, hudpenaway	; 14CB3
+jmp short .2	; 14CB8
+.1:
+mov eax, hudpenhome	; 14CBA
+.2:
+xor ebx, ebx	; 14CBF
+xor edx, edx	; 14CC1
+jmp short .5	; 14CC3
+.3:
+cmp cx, word [eax]	; 14CC5
+jne short .4	; 14CC8
+mov ebx, eax	; 14CCA
+jmp short .6	; 14CCC
+.4:
+add eax, byte 8	; 14CCE
+inc edx	; 14CD1
+.5:
+cmp dx, byte 8	; 14CD2
+jl short PanelRemovePenalty.3	; 14CD6
+.6:
+test ebx, ebx	; 14CD8
+je short .x	; 14CDA
+mov word [byte ebx+06h], 0	; 14CDC
+mov ax, word [byte ebx+06h]	; 14CE2
+mov word [byte ebx+04h], ax	; 14CE6
+mov word [byte ebx+02h], ax	; 14CEA
+.x:
+pop ecx	; 14CEE
+pop ebx	; 14CEF
+ret	; 14CF0
+%endif ; C
+; C: src/c/front/scoreboard/UpdateHudPanel.c
+%ifdef CBUILD
+%include "c/front/scoreboard/UpdateHudPanel.inc"
+%else
+UpdateHudPanel:
+push dword 20h	; 14CF1
+call __CHK	; 14CF6
+push ebx	; 14CFB
+push ecx	; 14CFC
+push edx	; 14CFD
+push esi	; 14CFE
+push edi	; 14CFF
+push ebp	; 14D00
+call SelectScreenBM	; 14D01
+cmp dword [hudclockmin], byte 0	; 14D06
+jl near UpdateHudPanel_x	; 14D0D
+mov eax, dword [hudhundstep]	; 14D13
+mov dword [dword_C583C], eax	; 14D18
+xor ebx, ebx	; 14D1D
+mov dword [hudhundstep], ebx	; 14D1F
+call TickPanelClock	; 14D25
+test eax, eax	; 14D2A
+je short .1	; 14D2C
+test byte [gmode], 10h	; 14D2E
+jne short .1	; 14D35
+mov edx, dword [dword_C583C]	; 14D37
+mov eax, hudpenhome	; 14D3D
+call TickPanelPenalties	; 14D42
+mov edx, dword [dword_C583C]	; 14D47
+mov eax, hudpenaway	; 14D4D
+call TickPanelPenalties	; 14D52
+.1:
+mov edx, dword_C56E4	; 14D57
+xor eax, eax	; 14D5C
+call GetLineEnergies	; 14D5E
+mov edx, dword_C56C4	; 14D63
+mov eax, 1	; 14D68
+call GetLineEnergies	; 14D6D
+call DrawPanelClockDigits	; 14D72
+mov edx, dword [hudhomeline]	; 14D77
+mov ebx, 1F4h	; 14D7D
+mov eax, dword [nosplit edx*4+dword_C56E4]	; 14D82
+mov edx, eax	; 14D89
+sar edx, 1Fh	; 14D8B
+idiv ebx	; 14D8E
+mov edx, 2Bh	; 14D90
+call DrawEnergyBar	; 14D95
+mov edx, dword [hudawayline]	; 14D9A
+mov eax, dword [nosplit edx*4+dword_C56C4]	; 14DA0
+mov edx, eax	; 14DA7
+sar edx, 1Fh	; 14DA9
+idiv ebx	; 14DAC
+mov edx, 0FCh	; 14DAE
+call DrawEnergyBar	; 14DB3
+cmp word [lcboxon], byte 0	; 14DB8
+jne short .2	; 14DC0
+cmp dword [dword_C5844], byte 0	; 14DC2
+jne short .2	; 14DC9
+test byte [gmode], 10h	; 14DCB
+je short .3	; 14DD2
+.2:
+push byte 4Ah	; 14DD4
+mov ebx, dword [hudhomeline]	; 14DD6
+mov ecx, dword_C56E4	; 14DDC
+mov edx, hmlineind	; 14DE1
+mov eax, dword_C585C	; 14DE6
+call DrawLineGroupBars	; 14DEB
+xor ecx, ecx	; 14DF0
+mov dword [dword_C5854], ecx	; 14DF2
+jmp short .6	; 14DF8
+.3:
+cmp word [hudpenhome], byte 0	; 14DFA
+jge short .4	; 14E02
+mov dword [dword_C5844], 1	; 14E04
+push byte 4Ah	; 14E0E
+mov ebx, dword [hudhomeline]	; 14E10
+mov ecx, dword_C56E4	; 14E16
+mov edx, hmlineind	; 14E1B
+mov eax, dword_C585C	; 14E20
+call DrawLineGroupBars	; 14E25
+xor ebx, ebx	; 14E2A
+mov dword [dword_C5854], ebx	; 14E2C
+jmp short .6	; 14E32
+.4:
+cmp dword [dword_C5854], byte 0	; 14E34
+jne short .5	; 14E3B
+mov edi, dword [hmpanelspr]	; 14E3D
+push edi	; 14E43
+call sub_B4CF2	; 14E44
+add esp, byte 4	; 14E49
+mov dword [dword_C5854], 1	; 14E4C
+.5:
+mov edx, 48h	; 14E56
+mov eax, hudpenhome	; 14E5B
+call DrawPanelPenalties	; 14E60
+xor eax, eax	; 14E65
+mov dword [dword_C585C], eax	; 14E67
+.6:
+cmp word [lcboxon+2], byte 0	; 14E6C
+jne short .7	; 14E74
+cmp dword [dword_C5848], byte 0	; 14E76
+jne short .7	; 14E7D
+test byte [gmode], 10h	; 14E7F
+je short .8	; 14E86
+.7:
+push dword 0C1h	; 14E88
+mov ebx, dword [hudawayline]	; 14E8D
+mov ecx, dword_C56C4	; 14E93
+mov edx, awlineind	; 14E98
+mov eax, dword_C5860	; 14E9D
+call DrawLineGroupBars	; 14EA2
+xor esi, esi	; 14EA7
+mov dword [dword_C5858], esi	; 14EA9
+jmp near UpdateHudPanel_x	; 14EAF
+.8:
+cmp word [hudpenaway], byte 0	; 14EB4
+jge short .9	; 14EBC
+mov dword [dword_C5848], 1	; 14EBE
+push dword 0C1h	; 14EC8
+mov ebx, dword [hudawayline]	; 14ECD
+mov ecx, dword_C56C4	; 14ED3
+mov edx, awlineind	; 14ED8
+mov eax, dword_C5860	; 14EDD
+call DrawLineGroupBars	; 14EE2
+xor ecx, ecx	; 14EE7
+mov dword [dword_C5858], ecx	; 14EE9
+jmp short UpdateHudPanel_x	; 14EEF
+.9:
+cmp dword [dword_C5858], byte 0	; 14EF1
+jne short .10	; 14EF8
+mov ebp, dword [awpanelspr]	; 14EFA
+push ebp	; 14F00
+call sub_B4CF2	; 14F01
+add esp, byte 4	; 14F06
+mov dword [dword_C5858], 1	; 14F09
+.10:
+mov edx, 0BFh	; 14F13
+mov eax, hudpenaway	; 14F18
+call DrawPanelPenalties	; 14F1D
+xor edx, edx	; 14F22
+mov dword [dword_C5860], edx	; 14F24
+UpdateHudPanel_x:
+pop ebp	; 14F2A
+pop edi	; 14F2B
+pop esi	; 14F2C
+pop edx	; 14F2D
+pop ecx	; 14F2E
+pop ebx	; 14F2F
+ret	; 14F30
+%endif ; C
+; C: src/c/front/scoreboard/UpdateHudPanel.c (DrawPanelClock)
+%ifdef CBUILD
+%include "c/front/scoreboard/UpdateHudPanel.DrawPanelClock.inc"
+%else
+DrawPanelClock:
+push dword 28h	; 14F31
+call __CHK	; 14F36
+push ebx	; 14F3B
+push ecx	; 14F3C
+push edx	; 14F3D
+push esi	; 14F3E
+push edi	; 14F3F
+push ebp	; 14F40
+mov edx, dword [hudclockmin]	; 14F41
+test edx, edx	; 14F47
+jne near .3	; 14F49
+push byte 3	; 14F4F
+push dword 0AAh	; 14F51
+mov edx, dword [clockcolon]	; 14F56
+push edx	; 14F5C
+call sub_B4CD8	; 14F5D
+add esp, byte 0Ch	; 14F62
+cmp dword [hudclocksec], byte 0Ah	; 14F65
+jge short .1	; 14F6C
+push byte 3	; 14F6E
+push dword 8Ch	; 14F70
+mov esi, dword [clockcolon]	; 14F75
+push esi	; 14F7B
+jmp short .2	; 14F7C
+.1:
+push byte 3	; 14F7E
+push dword 8Ch	; 14F80
+mov ebx, 0Ah	; 14F85
+mov eax, dword [hudclocksec]	; 14F8A
+mov edx, eax	; 14F8F
+sar edx, 1Fh	; 14F91
+idiv ebx	; 14F94
+mov ecx, dword [nosplit eax*4+clockdigits]	; 14F96
+push ecx	; 14F9D
+.2:
+call sub_B4CD8	; 14F9E
+add esp, byte 0Ch	; 14FA3
+push byte 3	; 14FA6
+push dword 95h	; 14FA8
+mov ebx, 0Ah	; 14FAD
+mov eax, dword [hudclocksec]	; 14FB2
+mov edx, eax	; 14FB7
+sar edx, 1Fh	; 14FB9
+idiv ebx	; 14FBC
+mov edi, dword [nosplit edx*4+clockdigits]	; 14FBE
+push edi	; 14FC5
+call sub_B4CD8	; 14FC6
+add esp, byte 0Ch	; 14FCB
+push byte 3	; 14FCE
+push dword 0A1h	; 14FD0
+mov ebx, 0Ah	; 14FD5
+mov eax, dword [hudclockhund]	; 14FDA
+mov edx, eax	; 14FDF
+sar edx, 1Fh	; 14FE1
+idiv ebx	; 14FE4
+mov ebp, dword [nosplit eax*4+clockdigits]	; 14FE6
+push ebp	; 14FED
+jmp near .6	; 14FEE
+.3:
+cmp edx, byte 0Ah	; 14FF3
+jge short .4	; 14FF6
+push byte 3	; 14FF8
+push dword 8Ch	; 14FFA
+mov esi, dword [clockcolon]	; 14FFF
+push esi	; 15005
+jmp short .5	; 15006
+.4:
+push byte 3	; 15008
+push dword 8Ch	; 1500A
+mov ebx, 0Ah	; 1500F
+mov eax, edx	; 15014
+sar edx, 1Fh	; 15016
+idiv ebx	; 15019
+mov ecx, dword [nosplit eax*4+clockdigits]	; 1501B
+push ecx	; 15022
+.5:
+call sub_B4CD8	; 15023
+add esp, byte 0Ch	; 15028
+push byte 3	; 1502B
+push dword 95h	; 1502D
+mov ebx, 0Ah	; 15032
+mov eax, dword [hudclockmin]	; 15037
+mov edx, eax	; 1503C
+sar edx, 1Fh	; 1503E
+idiv ebx	; 15041
+mov edi, dword [nosplit edx*4+clockdigits]	; 15043
+push edi	; 1504A
+call sub_B4CD8	; 1504B
+add esp, byte 0Ch	; 15050
+push byte 3	; 15053
+push dword 0A1h	; 15055
+mov ebx, 0Ah	; 1505A
+mov eax, dword [hudclocksec]	; 1505F
+mov edx, eax	; 15064
+sar edx, 1Fh	; 15066
+idiv ebx	; 15069
+mov ebp, dword [nosplit eax*4+clockdigits]	; 1506B
+push ebp	; 15072
+call sub_B4CD8	; 15073
+add esp, byte 0Ch	; 15078
+push byte 3	; 1507B
+push dword 0AAh	; 1507D
+mov ebx, 0Ah	; 15082
+mov eax, dword [hudclocksec]	; 15087
+mov edx, eax	; 1508C
+sar edx, 1Fh	; 1508E
+idiv ebx	; 15091
+mov eax, dword [nosplit edx*4+clockdigits]	; 15093
+push eax	; 1509A
+.6:
+call sub_B4CD8	; 1509B
+add esp, byte 0Ch	; 150A0
+mov eax, dword [hudclockmin]	; 150A3
+mov dword [dword_C5710], eax	; 150A8
+mov eax, dword [hudclocksec]	; 150AD
+mov dword [dword_C5714], eax	; 150B2
+mov eax, dword [hudclockhund]	; 150B7
+mov dword [dword_C5718], eax	; 150BC
+jmp near UpdateHudPanel_x	; 150C1
+%endif ; C
 ; C: src/c/front/scoreboard/DrawHudPanel.c
 %ifdef CBUILD
 %include "c/front/scoreboard/DrawHudPanel.inc"
@@ -280,9 +864,9 @@ pop ecx	; 15407
 pop ebx	; 15408
 ret	; 15409
 %endif ; C
-; C: src/c/pc/file_utils/UpdateHudPanel.c (DrawPanelClockDigits)
+; C: src/c/front/scoreboard/UpdateHudPanel.c (DrawPanelClockDigits)
 %ifdef CBUILD
-%include "c/pc/file_utils/UpdateHudPanel.DrawPanelClockDigits.inc"
+%include "c/front/scoreboard/UpdateHudPanel.DrawPanelClockDigits.inc"
 %else
 DrawPanelClockDigits:
 push dword 28h	; 1540A
@@ -471,9 +1055,9 @@ call sub_B4CD8	; 15648
 add esp, byte 0Ch	; 1564D
 jmp near UpdateHudPanel_x	; 15650
 %endif ; C
-; C: src/c/pc/file_utils/DrawPanelLine.c (TickPanelPenalties)
+; C: src/c/front/scoreboard/DrawPanelLine.c (TickPanelPenalties)
 %ifdef CBUILD
-%include "c/pc/file_utils/DrawPanelLine.TickPanelPenalties.inc"
+%include "c/front/scoreboard/DrawPanelLine.TickPanelPenalties.inc"
 %else
 TickPanelPenalties:
 push dword 18h	; 15655
@@ -549,9 +1133,9 @@ cmp ebp, byte 7	; 156FD
 jl short TickPanelPenalties.3	; 15700
 jmp near DrawPanelLine_x	; 15702
 %endif ; C
-; C: src/c/pc/file_utils/DrawPanelLine.c (DrawEnergyBar)
+; C: src/c/front/scoreboard/DrawPanelLine.c (DrawEnergyBar)
 %ifdef CBUILD
-%include "c/pc/file_utils/DrawPanelLine.DrawEnergyBar.inc"
+%include "c/front/scoreboard/DrawPanelLine.DrawEnergyBar.inc"
 %else
 DrawEnergyBar:
 push dword 38h	; 15707
@@ -786,9 +1370,9 @@ pop edi	; 15990
 pop esi	; 15991
 ret 4	; 15992
 %endif ; C
-; C: src/c/pc/file_utils/DrawPanelLine.c (DrawPanelPenalties)
+; C: src/c/front/scoreboard/DrawPanelLine.c (DrawPanelPenalties)
 %ifdef CBUILD
-%include "c/pc/file_utils/DrawPanelLine.DrawPanelPenalties.inc"
+%include "c/front/scoreboard/DrawPanelLine.DrawPanelPenalties.inc"
 %else
 DrawPanelPenalties:
 push dword 2Ch	; 15995
@@ -1177,250 +1761,4 @@ pop esi	; 15D67
 pop ecx	; 15D68
 pop ebx	; 15D69
 ret	; 15D6A
-%endif ; C
-; C: src/c/front/scoreboard/RunDemoGame.c
-%ifdef CBUILD
-%include "c/front/scoreboard/RunDemoGame.inc"
-%else
-RunDemoGame:
-push dword 94h	; 15D6B
-call __CHK	; 15D70
-push ebx	; 15D75
-push ecx	; 15D76
-push edx	; 15D77
-push esi	; 15D78
-push edi	; 15D79
-push ebp	; 15D7A
-sub esp, byte 78h	; 15D7B
-call ShowLoadingScreen	; 15D7E
-call InputRemove	; 15D83
-mov word [PerTimeTab], 3Ch	; 15D88
-call DemoSetupStub	; 15D91
-mov dword [demomode], 1	; 15D96
-call rand_	; 15DA0
-mov edx, eax	; 15DA5
-shl edx, 10h	; 15DA7
-call rand_	; 15DAA
-add edx, eax	; 15DAF
-mov dword [seed], edx	; 15DB1
-mov edx, dword [demoteammode]	; 15DB7
-inc edx	; 15DBD
-mov ebx, 3	; 15DBE
-mov eax, edx	; 15DC3
-sar edx, 1Fh	; 15DC5
-idiv ebx	; 15DC8
-mov dword [demoteammode], edx	; 15DCA
-mov ecx, 1Dh	; 15DD0
-mov edi, esp	; 15DD5
-mov esi, exhstate	; 15DD7
-rep movsd	; 15DDC
-movsb	; 15DDE
-cmp edx, byte 2	; 15DDF
-jne short .1	; 15DE2
-mov dword [exhstate+51h], 1Bh	; 15DE4
-mov dword [exhstate+55h], 1Ah	; 15DEE
-jmp short .3	; 15DF8
-.1:
-cmp edx, byte 1	; 15DFA
-jne short .2	; 15DFD
-mov eax, 11h	; 15DFF
-call randomd0	; 15E04
-movsx edx, ax	; 15E09
-mov eax, dword [nosplit edx*2+dword_C5861]	; 15E0C
-sar eax, 18h	; 15E13
-mov dword [exhstate+51h], eax	; 15E16
-mov eax, dword [nosplit edx*2+dword_C5862]	; 15E1B
-sar eax, 18h	; 15E22
-mov dword [exhstate+55h], eax	; 15E25
-jmp short .3	; 15E2A
-.2:
-call rand_	; 15E2C
-mov edx, eax	; 15E31
-mov ebx, 1Ah	; 15E33
-sar edx, 1Fh	; 15E38
-idiv ebx	; 15E3B
-mov dword [exhstate+51h], edx	; 15E3D
-inc edx	; 15E43
-mov eax, 19h	; 15E44
-call randomd0	; 15E49
-cwde	; 15E4E
-add edx, eax	; 15E4F
-mov eax, edx	; 15E51
-sar edx, 1Fh	; 15E53
-idiv ebx	; 15E56
-mov dword [exhstate+55h], edx	; 15E58
-.3:
-mov ebp, 10h	; 15E5E
-mov dword [exhstate+65h], ebp	; 15E63
-xor eax, eax	; 15E69
-mov dword [gamemode], eax	; 15E6B
-mov dword [exhstate+69h], ebp	; 15E70
-mov dword [exhstate+6Dh], eax	; 15E76
-mov dword [exhstate+71h], 1	; 15E7B
-mov eax, dword [exhstate+51h]	; 15E85
-mov dword [exhstate+5Dh], eax	; 15E8A
-mov dword [exhstate+5Dh], 0FFFFFFFFh	; 15E8F
-mov dword [exhstate+61h], 0FFFFFFFEh	; 15E99
-mov eax, exhstate	; 15EA3
-call LoadModeState	; 15EA8
-or byte [gameopts], 0FFh	; 15EAD
-cmp byte [musicon], 0	; 15EB4
-je short .4	; 15EBB
-or byte [gameopts+1], 1	; 15EBD
-jmp short .5	; 15EC4
-.4:
-and byte [gameopts+1], 0FEh	; 15EC6
-.5:
-mov bh, byte [gameopts+1]	; 15ECD
-or bh, 2	; 15ED3
-mov byte [gameopts+1], bh	; 15ED6
-mov cl, bh	; 15EDC
-and cl, 3	; 15EDE
-mov byte [gameopts+1], cl	; 15EE1
-mov edx, dword [VisTeam-2]	; 15EE7
-sar edx, 10h	; 15EED
-mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
-mov eax, dword [HomeTeam-2]	; 15EF7
-sar eax, 10h	; 15EFC
-mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
-call PaPreloadClips	; 15F06
-call SetupControllers	; 15F0B
-xor edx, edx	; 15F10
-xor eax, eax	; 15F12
-call InitGameSummary	; 15F14
-cmp word [HomeTeam], byte 1Ah	; 15F19
-jl short .6	; 15F21
-mov eax, 0Ch	; 15F23
-jmp short .7	; 15F28
-.6:
-mov eax, dword [HomeTeam-2]	; 15F2A
-sar eax, 10h	; 15F2F
-.7:
-call LoadRink	; 15F32
-call LoadRockMusic	; 15F37
-call ReloadGameGfx	; 15F3C
-call FadeOutPalCycle	; 15F41
-mov ebp, 1	; 15F46
-mov dword [dword_CC0EC], ebp	; 15F4B
-call SetupDemoGame	; 15F51
-xor eax, eax	; 15F56
-mov dword [dword_CC0EC], eax	; 15F58
-mov dword [introskipped], eax	; 15F5D
-mov dword [gameresult], eax	; 15F62
-mov edx, 0C8h	; 15F67
-mov eax, 140h	; 15F6C
-call SetScreenSize	; 15F71
-mov edx, dword [VisTeam-2]	; 15F76
-sar edx, 10h	; 15F7C
-mov eax, dword [HomeTeam-2]	; 15F7F
-sar eax, 10h	; 15F84
-mov ebx, gamepal	; 15F87
-call LoadTeamPalette	; 15F8C
-mov edx, dword [VisTeam-2]	; 15F91
-sar edx, 10h	; 15F97
-mov eax, dword [HomeTeam-2]	; 15F9A
-sar eax, 10h	; 15F9F
-mov ecx, ebp	; 15FA2
-mov ebx, ebp	; 15FA4
-call DrawHudPanel	; 15FA6
-call joyq_flush	; 15FAB
-call Gameloop	; 15FB0
-mov edx, 1E0h	; 15FB5
-mov eax, 280h	; 15FBA
-call SetScreenSize	; 15FBF
-mov word [PerTimeTab], 12Ch	; 15FC4
-xor ecx, ecx	; 15FCD
-mov dword [demomode], ecx	; 15FCF
-mov ecx, 1Dh	; 15FD5
-mov edi, exhstate	; 15FDA
-mov esi, esp	; 15FDF
-rep movsd	; 15FE1
-movsb	; 15FE3
-mov eax, exhstate	; 15FE4
-call LoadModeState	; 15FE9
-call InputInstall	; 15FEE
-cmp dword [gameresult], byte 2	; 15FF3
-sete al	; 15FFA
-and eax, 0FFh	; 15FFD
-add esp, byte 78h	; 16002
-RunDemoGame_x:
-pop ebp	; 16005
-pop edi	; 16006
-pop esi	; 16007
-pop edx	; 16008
-pop ecx	; 16009
-pop ebx	; 1600A
-ret	; 1600B
-%endif ; C
-; C: src/c/front/scoreboard/AnyInputPressed.c
-%ifdef CBUILD
-%include "c/front/scoreboard/AnyInputPressed.inc"
-%else
-AnyInputPressed:
-push dword 14h	; 1600C
-call __CHK	; 16011
-push ebx	; 16016
-push ecx	; 16017
-push edx	; 16018
-push esi	; 16019
-call PollKey	; 1601A
-mov esi, eax	; 1601F
-test eax, eax	; 16021
-jne short .3	; 16023
-mov ah, byte [ctlavailmask]	; 16025
-test ah, 2	; 1602B
-jne short .1	; 1602E
-test ah, 4	; 16030
-je short .3	; 16033
-.1:
-call sub_B3464	; 16035
-test al, 30h	; 1603A
-jne short .2	; 1603C
-sar eax, 8	; 1603E
-test al, 30h	; 16041
-je short .3	; 16043
-.2:
-mov esi, 1	; 16045
-.3:
-test esi, esi	; 1604A
-jne short .4	; 1604C
-test byte [ctlavailmask], 1	; 1604E
-je short .4	; 16055
-call dword [mousepollfn]	; 16057
-test byte [mousebtns], 3	; 1605D
-je short .4	; 16064
-mov esi, 1	; 16066
-.4:
-mov eax, esi	; 1606B
-pop esi	; 1606D
-pop edx	; 1606E
-pop ecx	; 1606F
-pop ebx	; 16070
-ret	; 16071
-%endif ; C
-; C: src/c/front/scoreboard/ReadBE32.c
-%ifdef CBUILD
-%include "c/front/scoreboard/ReadBE32.inc"
-%else
-ReadBE32:
-push dword 0Ch	; 16072
-call __CHK	; 16077
-push ebx	; 1607C
-push edx	; 1607D
-movsx edx, byte [eax]	; 1607E
-inc eax	; 16081
-movsx ebx, byte [eax]	; 16082
-shl edx, 8	; 16085
-inc eax	; 16088
-add edx, ebx	; 16089
-movsx ebx, byte [eax]	; 1608B
-shl edx, 8	; 1608E
-inc eax	; 16091
-add edx, ebx	; 16092
-movsx eax, byte [eax]	; 16094
-shl edx, 8	; 16097
-add eax, edx	; 1609A
-pop edx	; 1609C
-pop ebx	; 1609D
-ret	; 1609E
 %endif ; C

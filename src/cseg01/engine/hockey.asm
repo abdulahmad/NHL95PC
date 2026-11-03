@@ -3,54 +3,45 @@
 bits 32
 %include "hockey.inc"
 section s_59D9A progbits alloc exec nowrite align=1
-extern AddPenalty, AddPenalty2, PBnum, Sweepcheck, __CHK, assinsert, assreplace, asstab
-extern pad1dev, pad2dev, sflags, gmode2, byte_CBC37
-extern lldisp, HotList, HotList_y, byte_CC7A4, byte_CC7A5, byte_CCCA0, musicon, hmroster
-extern awroster, hmtmpbox, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, awtmpbox, byte_DF7E6
-extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073
-extern byte_E0074, PlList, byte_E038A, PenBuf, byte_E9AD3, OOlist, byte_E9DB4, byte_E9E4A
-extern checkcoll, checkwindow, collflag, doinput, joysampling, gameopts, rinkscrollx, rinkscrolly
-extern yleader, sflags3, cont2team, shownumbers, bannertimer, dword_CC0B4, lastsfx, onetimerflag
-extern shotongoal, penshotplayer, penshotteam, penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer
-extern Setplass_alist, shotontarget, penshotlive, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, mousex, sublist, priolist
-extern mousey, cliprect_y0, cliprect_y1, dword_D30BC, dword_D30C0, curperiod, dword_DB088, hmtmstruct
-extern dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, hmtmplstats
-extern hmtmglstats, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort, awtmstruct, dword_DF752, dword_DF7EA
-extern awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
-extern puckstruct, sortobj15
-extern dword_E009C, recbpr, dword_E03A8, dword_E03AE
-extern dword_E9A9E, dword_E9AB6, puckvx, gmode, ltx
-extern replaystart, puckx, pucky, puckvy, puckz, puckc, camx_m2, off_CBD2E
-extern lastplayer, randomd0, sfx, vecdist, IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt
-extern DrawPanelScore, DrawPanelLine, IsCupClinched, ReadJoy1, ReadJoy2, SetPenaltyStrength, ChkShotStat, ChkGoalies
-extern PlayCrowdSample, PaOneMinuteLeft, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects, PenaltyManager, UpdatePowerPlayFlags, ClearPenaltyBuffer
-extern PenGoalStuff, EndPenaltyShot, DrawTextOverlay, DrawCallBanner, ReplayRecordReset, sub_93540, sub_B340B, sub_B4BC4
-extern threat, SPAtab, ds2list, unk_CCCC8, awlinetab, unk_DAC40, unk_DAC70, unk_DACA0
-extern unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240, unk_DC252, SortCords
-extern unk_E9D50, unk_E9EE0, updatereplay, vtoa, regd4, camx
-extern camy, shotplayer, xc1, yc1, fox, foy, fodir1, fodir2
-extern c1playernum, c2playernum, cont1team, Pencntdwn, RefStep, gsp, gameclock, clockticks
-extern word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
-extern lcline, lcboxon, ovltimer, fadeinpending, word_CBEC6, bannermsg
-extern ovlseq, word_CC0B0, lldispodd, ltack, crowdlevel, word_CCCA8, hmscore, hmtmline
-extern hmtmlcnt, hmtmgoalie, word_DF656, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
-extern awtmgoalie, word_DF756, word_DF80E, puckcross
-extern word_E0036, lcrequest
-extern word_E03A0, regd2, regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos
-extern joysampling_save, word_E9AA4, word_E9AA6, CwdExciteLvl, periodendtime, word_E9AB0, PerTimeTotal, lasttouch
-extern lty
-global AvgCline, DoGameFrame, GetHot, ResetBench, SetSPA, Setplass, forcepldata
-global SprSort_test
-global changeplayer_ret5
-global getlinee_sum
-global findpc_ret6, findpc_ret5
-global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
-global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, findpc
-global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
-global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList
-global StartPer, RestoreBenchEnergy, updatecrowdf, periodicevents, freezewindow, cleargamevars, DrawRinkOverlays, setupice
-global clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission
-global PeriodOver_sp, PeriodOver, StartGame, forceteams, updateanim, updateplayers
+extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, asstab, awlinetab, awroster
+extern awscore, awteamrec, awtmglstats, awtmgoalie, awtmlcnt, awtmline, awtmlines, awtmpbox
+extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, byte_CBC37
+extern byte_CC7A4, byte_CC7A5, byte_CCCA0, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7E6
+extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
+extern byte_E9AD3, byte_E9DB4, byte_E9E4A, c1playernum, c2playernum, camx, camx_m2, camy
+extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
+extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
+extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
+extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D30BC
+extern dword_D30C0, dword_DB088, dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, dword_DF752
+extern dword_DF7EA, dword_DF7F2, dword_DF7F6, dword_E009C, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
+extern EndPenaltyShot, energywarn, exitgame, fadeinpending, fodir1, fodir2, fox, foy
+extern gameclock, gameopts, gameover, gmode, gmode2, gsp, hmlinetab, hmroster
+extern hmscore, hmteamrec, hmtmglstats, hmtmgoalie, hmtmlcnt, hmtmline, hmtmlines, hmtmpbox
+extern hmtmplstats, hmtmptrF2, hmtmroster, hmtmsort, hmtmstruct, HotList, HotList_y, IntermissionPC
+extern IsCupClinched, joysampling, joysampling_save, lastplayer, lastsfx, lasttouch, lcblink, lcboxon
+extern lcline, lcrequest, lldisp, lldispodd, ltack, ltx, lty, mousex
+extern mousey, musicon, off_CBD2E, onetimerflag, OOlist, OOlistpos, ovlseq, ovltimer
+extern pad1dev, pad2dev, PaOneMinuteLeft, PBnum, PenaltyManager, PenBuf, Pencntdwn, PenGoalStuff
+extern penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, penshottimer
+extern periodendtime, PerTimeTab, PerTimeTotal, PlayCrowdSample, PlList, priolist, puckc, puckcross
+extern puckstruct, puckvx, puckvy, puckx, pucky, puckz, randomd0, ReadJoy1
+extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
+extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
+extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
+extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, unk_CCCC8
+extern unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DC240, unk_DC252, unk_E9D50
+extern unk_E9EE0, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, word_CBEC6, word_CC0B0
+extern word_CCCA8, word_DF656, word_DF70E, word_DF742, word_DF756, word_DF80E, word_E0036, word_E03A0
+extern word_E03B8, word_E9AA4, word_E9AA6, word_E9AB0, xc1, yc1, yleader, Ylist
+global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
+global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6, findpc_ret5, GetHot
+global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, PenTeamScored, Goal, GiveControl
+global Setplass, setplayer, reenergizeteam, clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords
+global defaultsprites_0, TryAddPlayerToList, SetPlList, setpersonel, StartPer, DoGameFrame, RestoreBenchEnergy, updatecrowdf
+global periodicevents, updateplayers, updateanim, freezewindow, cleargamevars, DrawRinkOverlays, setupice, clockcont_0
+global ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission, PeriodOver_sp
+global PeriodOver, ResetBench, resetplstuff, StartGame, forceteams, forcepldata
 ; C: src/c/engine/hockey/SetSPA.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetSPA.inc"

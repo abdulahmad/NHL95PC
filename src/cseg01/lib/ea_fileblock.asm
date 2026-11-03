@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
-extern asc_C3FD8, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, sub_8DBD4
-extern sub_8DBDC, FatalError, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
-global loc_933C7, loc_933CB, loc_933E8, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC
-global loc_934F2, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, loc_93622
-global loc_93671, loc_936A4, loc_936E8, loc_93705, loc_9374E, loc_9377C, loc_937A8, loc_937E5
-global loc_9380C, loc_93818, loc_9382A, loc_9382F, loc_93839, loc_938C1, loc_938D9, loc_938EA
-global loc_93906, loc_93922, sub_93308, sub_9333C, sub_93354, sub_9336C, imul32, sub_933FB
-global sub_93470, sub_93540, DebugPrintf, sub_9362C, sub_936C0, sub_93844, sub_938C8, sub_938F4
-global sub_93908, sub_93914, sub_93924, unk_936AC
+extern asc_C3FD8, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, FatalError
+extern sub_8DBD4, sub_8DBDC, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
+global sub_93308, sub_9333C, sub_93354, sub_9336C, loc_933C7, loc_933CB, loc_933E8, imul32
+global sub_933FB, sub_93470, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
+global sub_93540, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
+global loc_93622, sub_9362C, loc_93671, loc_936A4, unk_936AC, sub_936C0, loc_936E8, loc_93705
+global loc_9374E, loc_9377C, loc_937A8, loc_937E5, loc_9380C, loc_93818, loc_9382A, loc_9382F
+global loc_93839, sub_93844, loc_938C1, sub_938C8, loc_938D9, loc_938EA, sub_938F4, loc_93906
+global sub_93908, sub_93914, loc_93922, sub_93924
 sub_93308:
 sub esp, byte 28h	; 93308
 mov eax, dword [byte esp+030h]	; 9330B

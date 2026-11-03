@@ -4,11 +4,11 @@ bits 32
 section s_9B710 progbits alloc exec nowrite align=1
 extern __flushall_, __ioalloc_, __qread_, __set_errno_, byte_C4C70, dword_D500C, dword_D5060, getche_
 extern memset_
-global __IOMode_, __SetIOMode_, __filbuf_, __fill_buffer_, __fsetbits_, __setbits_, fgetc_, isatty_
-global loc_9B741, loc_9B777, loc_9B7C1, loc_9B7E6, loc_9B80A, loc_9B829, loc_9B859, loc_9B86D
-global loc_9B879, loc_9B898, loc_9B8A4, loc_9B8B7, loc_9B8D3, loc_9B8FC, loc_9B913, loc_9B953
-global loc_9B960, loc_9B963, loc_9B970, loc_9B97F, loc_9B98E, loc_9B9AA, loc_9B9B1, loc_9B9C4
-global loc_9B9E3, loc_9BA04, loc_9BA06, loc_9BA12, ungetc_
+global isatty_, __IOMode_, loc_9B741, loc_9B777, __SetIOMode_, __fsetbits_, loc_9B7C1, loc_9B7E6
+global __setbits_, loc_9B80A, loc_9B829, fgetc_, loc_9B859, loc_9B86D, loc_9B879, loc_9B898
+global loc_9B8A4, loc_9B8B7, __filbuf_, loc_9B8D3, __fill_buffer_, loc_9B8FC, loc_9B913, loc_9B953
+global loc_9B960, loc_9B963, loc_9B970, loc_9B97F, loc_9B98E, ungetc_, loc_9B9AA, loc_9B9B1
+global loc_9B9C4, loc_9B9E3, loc_9BA04, loc_9BA06, loc_9BA12
 isatty_:
 push ebx	; 9B710
 push ecx	; 9B711

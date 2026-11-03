@@ -4,13 +4,13 @@ bits 32
 section s_9AA66 progbits alloc exec nowrite align=1
 extern __brk_, __unlink_, _nfree_, byte_D4D06, byte_D4D07, byte_D4D08, dword_D43E8, dword_D4CD8
 extern dword_D5670, dword_D5674, dword_F58E0, word_F58E2
-global RationalAlloc_, __AdjustAmount_, __CreateNewNHeap_, __ExpandDGROUP_, __FreeDPMIBlocks_, __LastFree_, __LinkUpNewMHeap_, __ReAllocDPMIBlock_
-global loc_9AA71, loc_9AAAF, loc_9AABF, loc_9AADD, loc_9AB45, loc_9AB97, loc_9AB9B, loc_9AB9E
-global loc_9ABA6, loc_9ABA8, loc_9ABBB, loc_9ABC4, loc_9ABC8, loc_9ABD7, loc_9ABDD, loc_9ABE4
-global loc_9AC5E, loc_9AC6B, loc_9ACA1, loc_9ACBE, loc_9ACD3, loc_9AD38, loc_9AD3A, loc_9AD3D
-global loc_9AD52, loc_9AD56, loc_9AD8A, loc_9ADA5, loc_9AE0A, loc_9AE13, loc_9AE20, loc_9AE29
-global loc_9AE30, loc_9AE6E, loc_9AE82, loc_9AEB0, loc_9AEBF, loc_9AEC2, loc_9AEC6, loc_9AEF0
-global loc_9AF0F, loc_9AF2D, loc_9AF47, loc_9AF4D, loc_9AF5F, loc_9AF68, loc_9AF6D, loc_9AF74
+global __FreeDPMIBlocks_, loc_9AA71, loc_9AAAF, loc_9AABF, __ReAllocDPMIBlock_, loc_9AADD, loc_9AB45, loc_9AB97
+global loc_9AB9B, loc_9AB9E, loc_9ABA6, loc_9ABA8, __LinkUpNewMHeap_, loc_9ABBB, loc_9ABC4, loc_9ABC8
+global loc_9ABD7, loc_9ABDD, loc_9ABE4, __LastFree_, loc_9AC5E, loc_9AC6B, RationalAlloc_, loc_9ACA1
+global loc_9ACBE, loc_9ACD3, loc_9AD38, loc_9AD3A, loc_9AD3D, __CreateNewNHeap_, loc_9AD52, loc_9AD56
+global loc_9AD8A, loc_9ADA5, __ExpandDGROUP_, loc_9AE0A, loc_9AE13, loc_9AE20, loc_9AE29, loc_9AE30
+global loc_9AE6E, loc_9AE82, loc_9AEB0, loc_9AEBF, loc_9AEC2, loc_9AEC6, loc_9AEF0, loc_9AF0F
+global loc_9AF2D, __AdjustAmount_, loc_9AF47, loc_9AF4D, loc_9AF5F, loc_9AF68, loc_9AF6D, loc_9AF74
 global loc_9AF8C
 __FreeDPMIBlocks_:
 push ebx	; 9AA66

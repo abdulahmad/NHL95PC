@@ -5,12 +5,12 @@ section s_B19E0 progbits alloc exec nowrite align=1
 extern byte_D8B0E, byte_D8B10, byte_F79D8, byte_F79E8, dword_D89DC, dword_F79F8, dword_F79FC, dword_F7A00
 extern dword_F7B78, inp_, outp_, outpw_, sub_B122F, sub_B1256, sub_B1554, word_D8764
 extern word_D8766, word_D8772, word_D8774, word_D8776, word_D8778, word_F79A0
-global loc_B1A35, loc_B1ABF, loc_B1AF9, loc_B1B83, loc_B1C8A, loc_B1CA9, loc_B1CE9, loc_B1D46
-global loc_B1D71, loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, loc_B1FC4
-global loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D, loc_B2043, loc_B2045, loc_B2067, loc_B20C5
-global loc_B20F1, loc_B211D, loc_B2149, loc_B2175, loc_B2181, loc_B21E7, loc_B21F4, loc_B21FA
-global loc_B2214, sub_B19E0, sub_B1A04, sub_B1AC8, sub_B1B8C, sub_B1BF8, sub_B1C70, sub_B1CBC
-global sub_B1E2C, sub_B1E64, sub_B1EA0, sub_B1F1C, sub_B1F9C, sub_B2074
+global sub_B19E0, sub_B1A04, loc_B1A35, loc_B1ABF, sub_B1AC8, loc_B1AF9, loc_B1B83, sub_B1B8C
+global sub_B1BF8, sub_B1C70, loc_B1C8A, loc_B1CA9, sub_B1CBC, loc_B1CE9, loc_B1D46, loc_B1D71
+global loc_B1D8B, loc_B1DA5, loc_B1DA6, loc_B1DD7, loc_B1E19, loc_B1E22, sub_B1E2C, sub_B1E64
+global sub_B1EA0, sub_B1F1C, sub_B1F9C, loc_B1FC4, loc_B1FC6, loc_B1FD1, loc_B2000, loc_B203D
+global loc_B2043, loc_B2045, loc_B2067, sub_B2074, loc_B20C5, loc_B20F1, loc_B211D, loc_B2149
+global loc_B2175, loc_B2181, loc_B21E7, loc_B21F4, loc_B21FA, loc_B2214
 sub_B19E0:
 push ebp	; B19E0
 mov ebp, esp	; B19E1

@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_96185 progbits alloc exec nowrite align=1
-extern __IOMode_, __delay_, __fprtf_, __set_errno_, __set_errno_dos_, __sys_fini_387_emulator, __sys_init_387_emulator, fputc_
+extern __delay_, __fprtf_, __IOMode_, __set_errno_, __set_errno_dos_, __sys_fini_387_emulator, __sys_init_387_emulator, fputc_
 extern fputs_, strerror_, sub_8C97D, sub_9D66B, sub_9D68E, unk_C472C, unk_D4D4C
-global __CHP, fprintf_, j___delay_, j___sys_fini_387_emulator, j___sys_init_387_emulator, loc_961B4, loc_961C7, loc_961CA
-global loc_961FC, loc_9620F, loc_96212, loc_96240, loc_96286, loc_96295, loc_962A0, loc_962C7
-global loc_962D7, loc_96312, loc_96325, loc_96337, loc_96351, loc_96391, loc_963A5, loc_963AD
-global loc_963F8, loc_9642E, loc_96431, perror_, strlwr_, strupr_, write_
+global fprintf_, strupr_, loc_961B4, loc_961C7, loc_961CA, __CHP, j___sys_init_387_emulator, j___sys_fini_387_emulator
+global strlwr_, loc_961FC, loc_9620F, loc_96212, j___delay_, perror_, loc_96240, write_
+global loc_96286, loc_96295, loc_962A0, loc_962C7, loc_962D7, loc_96312, loc_96325, loc_96337
+global loc_96351, loc_96391, loc_963A5, loc_963AD, loc_963F8, loc_9642E, loc_96431
 fprintf_:
 push ebx	; 96185
 push edx	; 96186

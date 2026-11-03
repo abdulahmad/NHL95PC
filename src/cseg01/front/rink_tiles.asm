@@ -2,14 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_3377C progbits alloc exec nowrite align=1
-extern __CHK, str_Rink2, str_Til, str_InvalidFileSize, str_TILES, str_ErrorLoadingFile, str_Map, str_CRESTS3
-extern str_Pal16, rinkarenas, str_extBIN, fileoncd
-extern rinktilebm, rinkbm, rinkfileidx, currink, rinkscrollx
-extern rinkscrolly, cddriveptr, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly, ptrupdatefn, FreeMemBlock
-extern MakePath, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52, sub_6AF97
-extern GetInputEvent, FadePalStep, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4
-extern sub_92DE0, sub_92EE4, FatalError, sub_B30B4, GetTicks, SetDrawBitmap, sub_B4F8C, unk_DC890
-extern scrolly, scrollx, bgscrollx
+extern __CHK, bgscrollx, bgscrolly, cddriveptr, currink, dword_DD6A6, FadePalStep, FatalError
+extern fileoncd, FreeMemBlock, GetInputEvent, GetTicks, MakePath, ptrupdatefn, rinkarenas, rinkbm
+extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles, scrollx, scrolly
+extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
+extern str_Til, str_TILES, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52
+extern sub_6AF97, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4, sub_92DE0
+extern sub_92EE4, sub_B30B4, sub_B4F8C, unk_DC890
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ; C: src/c/front/rink_tiles/LoadRink.c
 %ifdef CBUILD

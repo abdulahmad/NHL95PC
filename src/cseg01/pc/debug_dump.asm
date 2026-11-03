@@ -2,25 +2,23 @@
 bits 32
 %include "hockey.inc"
 section s_688A4 progbits alloc exec nowrite align=1
-extern __CHK, str_pen, str_dbgClin, str_dbgPenShot, str_dbgLip, str_dbgHVpos, str_dbgRef, str_dbgPb, PenBuf_pl, Pencntdwn, RefStep, awtmgoalie, camy, clockticks, cont2team, gameover, hmtmgoalie, yc1
-extern str_dbgG, str_dbgGO, str_dbgGsp, str_dbgC12, str_dbgPuckc, str_dbgIdx, str_dbgD, str_dbgLbD
-extern str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, str_dbgAss, str_dbgSpa, str_debError, str_dbgBail
-extern str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex, str_dumpSortcords, str_dumpSortLine
-extern str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH, str_dumpGlLine, str_dumpTeamHdrA
-extern str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern gmode2, gamemode, sflags3, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
-extern penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount, dbg_spalist, bailout_vec
-extern frameaccum, hudhundaccum, hmtmstruct
-extern hmtmpdst_m2, hmtmplstats, awtmstruct, hmscore
-extern awscore
-extern awtmplstats, dword_E9A14, fclose_, fopen_, fprintf_, gmode, puckc, PenBuf
-extern camx_m2, dbg_spanames, dbg_assnames, dbg_posnames, puckvz, sprintf_, joyq_flush, AllInPlace
-extern DebugPrintf, sub_93E38, PollKey, WaitKey, threat, str_dbgO, str_dbgDash, str_dbgL
-extern str_dbgI, str_dbgSpace, str_dbgS, str_newline, SortCords, camx, xc1, c1playernum
-extern c2playernum, cont1team, VisTeam, Penaltytimer, refsignal, gsp, gameclock, debugstep
-extern word_CBC44, exitgame, hmtmap, awtmap
-global DebugMonitor_pop
-global DebugMonitor, DumpStatsLog
+extern __CHK, AllInPlace, awgoalcnt, awscore, awshotcnt, awtmap, awtmgoalie, awtmplstats
+extern awtmstruct, bailout_vec, c1playernum, c2playernum, camx, camx_m2, camy, clockticks
+extern cont1team, cont2team, dbg_assnames, dbg_posnames, dbg_spalist, dbg_spanames, DebugPrintf, debugstep
+extern dword_E9A14, exitgame, fclose_, fopen_, fprintf_, frameaccum, gameclock, gamemode
+extern gameover, gmode, gmode2, gsp, hmgoalcnt, hmscore, hmshotcnt, hmtmap
+extern hmtmgoalie, hmtmpdst_m2, hmtmplstats, hmtmstruct, hudhundaccum, joyq_flush, Penaltytimer, PenBuf
+extern PenBuf_pl, Pencntdwn, penshotctl, penshotlive, penshotmode, penshotplayer, penshotpnum, penshotstart
+extern penshotteam, penshottimer, PollKey, psendcount, puckc, puckvz, refsignal, RefStep
+extern sflags3, shotongoal, shotontarget, SortCords, sprintf_, str_dbgAss, str_dbgBail, str_dbgC12
+extern str_dbgClin, str_dbgD, str_dbgDash, str_dbgDRb, str_dbgDS, str_dbgG, str_dbgGO, str_dbgGsp
+extern str_dbgHVpos, str_dbgI, str_dbgIdx, str_dbgL, str_dbgLbD, str_dbgLip, str_dbgO, str_dbgPb
+extern str_dbgPenShot, str_dbgPosVel, str_dbgPuckc, str_dbgRef, str_dbgS, str_dbgSpa, str_dbgSpace, str_dbgVz
+extern str_debError, str_dumpAway, str_dumpGlHdrA, str_dumpGlHdrH, str_dumpGlLine, str_dumpHex, str_dumpHome, str_dumpPlHdrA
+extern str_dumpPlHdrH, str_dumpPlLineA, str_dumpPlLineH, str_dumpPool, str_dumpRule, str_dumpSortcords, str_dumpSortLine, str_dumpTeamHdrA
+extern str_dumpTeamHdrH, str_dumpTmstructs, str_ErrDumpStats, str_fmode_at, str_newline, str_pen, str_statslog, sub_93E38
+extern threat, VisTeam, WaitKey, word_CBC44, xc1, yc1
+global DebugMonitor, DebugMonitor_pop, DumpStatsLog
 ; C: src/c/pc/debug_dump/DebugMonitor.c
 %ifdef CBUILD
 %include "c/pc/debug_dump/DebugMonitor.inc"

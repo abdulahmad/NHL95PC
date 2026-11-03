@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_91370 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, dword_D30A4, dword_D30A8, cliprect_y0
-extern cliprect_y1, dword_D30C8, dword_D30D0, dword_D3104, fontcolor, dword_D42B0, dword_D42B4, dword_D42BC
-extern dword_D42C8, dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4
+extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
+extern dword_D30A8, dword_D30C8, dword_D30D0, dword_D3104, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
+extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, fontcolor
 extern loc_91260, off_D42A4, sub_8E9D4, sub_903F0, sub_B3ABC, sub_B4BC4, sub_B5D80, sub_B5E00
 extern sub_B69E4, sub_B6B3F
-global loc_91391, loc_9142B, loc_9148A, loc_914E6, loc_914FD, loc_91520, loc_91531, loc_915E7
-global loc_91616, loc_9161C, loc_91637, loc_9163D, loc_91655, loc_91660, loc_91679, loc_9167B
-global loc_9169F, loc_916A1, loc_91722, loc_9174E, loc_91765, loc_91787, loc_91790, loc_917A4
-global loc_917B8, loc_917CD, loc_917E2, loc_917F7, loc_9180C, loc_91821, loc_91836, loc_9184B
-global loc_91860, loc_91866, loc_91871, loc_91893, loc_91899, loc_918A9, loc_918BF, loc_918DB
-global loc_918EC, loc_918EF, loc_918FB, loc_9191A, loc_91921, loc_91922, loc_91940, loc_91946
-global loc_91950, loc_9195D, sub_91370, sub_913B4, sub_913D0, sub_91400, sub_91538, sub_91554
-global sub_91580, sub_91964
+global sub_91370, loc_91391, sub_913B4, sub_913D0, sub_91400, loc_9142B, loc_9148A, loc_914E6
+global loc_914FD, loc_91520, loc_91531, sub_91538, sub_91554, sub_91580, loc_915E7, loc_91616
+global loc_9161C, loc_91637, loc_9163D, loc_91655, loc_91660, loc_91679, loc_9167B, loc_9169F
+global loc_916A1, loc_91722, loc_9174E, loc_91765, loc_91787, loc_91790, loc_917A4, loc_917B8
+global loc_917CD, loc_917E2, loc_917F7, loc_9180C, loc_91821, loc_91836, loc_9184B, loc_91860
+global loc_91866, loc_91871, loc_91893, loc_91899, loc_918A9, loc_918BF, loc_918DB, loc_918EC
+global loc_918EF, loc_918FB, loc_9191A, loc_91921, loc_91922, loc_91940, loc_91946, loc_91950
+global loc_9195D, sub_91964
 sub_91370:
 mov edx, dword [byte esp+04h]	; 91370
 mov ebx, dword [byte esp+08h]	; 91374

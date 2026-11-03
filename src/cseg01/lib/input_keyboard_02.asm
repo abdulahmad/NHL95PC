@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_B29F0 progbits alloc exec nowrite align=1
-extern byte_D2C5C, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14, byte_D2D2F
-extern byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, dword_D2C84, dword_D2C8C, dword_D2CCC
-extern dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74, dword_D3024, bailout_vec
-extern __GETDS, sub_93170, sub_9864C, sub_98664, sub_B3454, WaitKey, sub_B3E4A, sub_B3ED8
-extern sub_B4BA8, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
-global loc_B2A9A, loc_B2B09, loc_B2B3A, loc_B2B81, loc_B2B85, loc_B2BA5, loc_B2BA9, loc_B2BC0
-global loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5, loc_B2BED, loc_B2C3B, loc_B2C68
-global loc_B2C6D, loc_B2C85, loc_B2CAC, loc_B2D01, loc_B2D11, sub_B29F0, sub_B2A9B, sub_B2B0A
-global sub_B2C01, sub_B2C4A, sub_B2CBE, sub_B2CCD, FatalError, sub_B2D27, unk_B2C00
+extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12
+extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, dword_D2C84
+extern dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
+extern dword_D3024, sub_93170, sub_9864C, sub_98664, sub_B3454, sub_B3E4A, sub_B3ED8, sub_B4BA8
+extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
+global sub_B29F0, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
+global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
+global loc_B2BED, unk_B2C00, sub_B2C01, loc_B2C3B, sub_B2C4A, loc_B2C68, loc_B2C6D, loc_B2C85
+global loc_B2CAC, sub_B2CBE, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
 sub_B29F0:
 cmp word [word_D2D6E], byte 0	; B29F0
 jne near loc_B2A9A	; B29F8

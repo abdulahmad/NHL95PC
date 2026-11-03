@@ -3,35 +3,34 @@
 bits 32
 %include "hockey.inc"
 section s_5FB03 progbits alloc exec nowrite align=1
-extern PBnum, seed, __CHK, __STOSB, __STOSD, str_ErrLoadGame, str_ErrSaveGame, pad1dev
-extern pad2dev, sflags, gmode2, byte_CCE00, hmroster, awroster, byte_DC264, byte_DC265
-extern byte_DC266, byte_DC267, byte_DC268, byte_E024C, PlList, PenBuf, iflags, byte_E9AC8
-extern byte_E9AD3, OOlist, collflag, postate, lgstate, gamemode, ctl1team, ctl2team
-extern ctl1dev, ctl2dev, ctl1side, hudclockmin, hudclocksec, hudclockhund, deferpending, dword_C66D0
-extern dword_C66D4, yleader, sflags3, cont2team, HomeTeam, shownumbers, bannertimer, dword_CC0AC
-extern lastsfx, photobankf, onetimerflag, shotongoal, penshotplayer, penshotpnum, penshotteam, penshotctl
-extern penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
-extern sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, crowdsmooth, frameaccum
-extern hudhundaccum, curperiod, photobanks, dword_DB088, hudhundstep, savedmousex, savedmousey, hmtmstruct
-extern dword_DF6F2, dword_DF6F6, hmtmplstats, hmtmglstats, hmtmroster, hmtmlines, hmtmptrF2, hmtmsort
-extern awtmstruct, awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, awtmglstats, awtmroster, awtmptrF2
-extern awtmsort, dword_E009C, ovlscript, recbpr, dword_E9A9E, dword_E9AB6, dword_E9B2A, gmode
-extern ltx, replaystart, off_CC01D, lastplayer, LoadGameGfx, FileReadAt, FileWriteAt, LoadGameTeams
-extern SaveModeState, LoadModeState, GetPeriodTime, SprSort, BuildEventLines, LoadTeamPalette, ReplayRecordReset, LoadRockMusic
-extern FatalError, MouseSetPos, threat, exhstate, unk_C5423, unk_C542E, awlinetab, unk_DAC40
-extern unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, hmteamrec, awteamrec, hmlinetab, unk_DC240
-extern unk_DC252, gamepal, SortCords, hudpenhome, hudpenaway, camx, camy
-extern shotplayer, passdir, passspeed, passplayer, xc1, yc1, fox, foy
-extern fodir1, fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer
-extern refsignal, RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, word_CBC44
-extern exitgame, gameover, energywarn, lcblink, lcblinktime
-extern lcsel, word_CBC60, lcline, lctimer, lcboxon
-extern word_CBD64, word_CBD66, ovltimer, word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq
-extern ovlstep, word_CC0B0, lldispodd, ltack, crowdlevel, word_CC10C, word_CCEF8, word_DEE94
-extern word_DEE96, word_DEF84, word_DEF88, puckcross, word_E024E, lcrequest, lcreqchoice
-extern fofdata2, OOlistpos, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, CwdExciteLvl
-extern word_E9AAA, periodendtime, word_E9AAE, word_E9AB0, ovlsteptimer, ovlstepidx, PerTimeTotal, lj2
-extern lj1, lasttouch, lty, word_E9B2C
+extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
+extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
+extern byte_CCE00, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, byte_E024C, byte_E9AC8
+extern byte_E9AD3, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
+extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
+extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, dword_CC0AC, dword_DB088, dword_DF6F2
+extern dword_DF6F6, dword_DF7F2, dword_DF7F6, dword_E009C, dword_E9A9E, dword_E9AB6, dword_E9B2A, energywarn
+extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
+extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
+extern GetPeriodTime, gmode, gmode2, gsp, hmlinetab, hmroster, hmteamrec, hmtmglstats
+extern hmtmlines, hmtmplstats, hmtmptrF2, hmtmroster, hmtmsort, hmtmstruct, HomeTeam, hudclockhund
+extern hudclockmin, hudclocksec, hudhundaccum, hudhundstep, hudpenaway, hudpenhome, iflags, lastplayer
+extern lastsfx, lasttouch, lcblink, lcblinktime, lcboxon, lcline, lcreqchoice, lcrequest
+extern lcsel, lctimer, lgstate, lj1, lj2, lldispodd, LoadGameGfx, LoadGameTeams
+extern LoadModeState, LoadRockMusic, LoadTeamPalette, ltack, ltx, lty, MouseSetPos, off_CC01D
+extern onetimerflag, OOlist, OOlistpos, ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer
+extern ovltimer, pad1dev, pad2dev, passdir, passplayer, passspeed, PBnum, Penaltytimer
+extern PenBuf, Pencntdwn, penshotctl, penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer
+extern penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photobankf, photobanks
+extern PlList, postate, psendcount, pspathdir, pspathside, puckcross, recbpr, RefPen
+extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmousey, SaveModeState, seed
+extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
+extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, unk_C5423
+extern unk_C542E, unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DC240, unk_DC252
+extern VisTeam, word_C90D8, word_CBC44, word_CBC60, word_CBD64, word_CBD66, word_CBEC2, word_CBEC6
+extern word_CC0B0, word_CC10C, word_CCEF8, word_DEE94, word_DEE96, word_DEF84, word_DEF88, word_E024E
+extern word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AAA, word_E9AAE, word_E9AB0, word_E9B2C
+extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
 ; C: src/c/pc/game_saveload/SaveGameState.c
 %ifdef CBUILD

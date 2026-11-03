@@ -2,20 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_1D6E8 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, str_PointerMenu, str_menubuff, str_sfh, str_shape, str_9394Season, str_9394PlayOffs
-extern str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle, mi_9394Season, mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode
-extern menuremap, menuremap2, statscategory, statsteamsel, statsplayoffs, statspalvalid, pointerspr
-extern statsteamorder, statsnumgoalies, statsskaterorder, statsgoalieorder, statsgoalieplr, statsnumskaters, statsskaterplr, playofftree
-extern statsteambuf, statsskaterbuf, statsgoaliebuf, statsplayerbuf, statspal, ptrupdatefn, FreeMemBlock, memcmp_
-extern memcpy_, mousepollfn, sprintf_, strcat_, strlen_, strncpy_, FileOpenRead, FileClose
-extern FileReadAt, DeskSetExit3b, ShowPlayerStatsItem, StrPrefixDiffers, PlayerFromMouseY, TeamFromMouse, MoveTreeHighlight, PlayoffTreeScreen
-extern PlayoffTreeHitTest, GetInputEvent, ClearInputQueue, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, sub_8CCA8
-extern sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, MouseSetPos, sub_B2E1B, sub_B4DD4
-extern statsplayer, printfbuf
-global RunMenu_ret4
-global LoadShapeByTag_x
-global RunMenu, RunTeamPickMenu
-global RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CmpPoints, CmpGAA, LoadShapeByTag, MakeStatsTitle
+extern __CHK, __STOSB, ClearInputQueue, DeskSetExit3b, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, FileClose
+extern FileOpenRead, FileReadAt, FreeMemBlock, GetInputEvent, memcmp_, memcpy_, MenuHitTest, menuremap
+extern menuremap2, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode, mousepollfn, MouseSetPos
+extern MoveTreeHighlight, PlayerFromMouseY, playofftree, PlayoffTreeHitTest, PlayoffTreeScreen, pointerspr, printfbuf, ptrupdatefn
+extern ShowPlayerStatsItem, sprintf_, statscategory, statsgoaliebuf, statsgoalieorder, statsgoalieplr, statsnumgoalies, statsnumskaters
+extern statspal, statspalvalid, statsplayer, statsplayerbuf, statsplayoffs, statsskaterbuf, statsskaterorder, statsskaterplr
+extern statsteambuf, statsteamorder, statsteamsel, str_9394PlayOffs, str_9394Season, str_LgPlayoffsTitle, str_LgSeasonTitle, str_menubuff
+extern str_PointerMenu, str_POTitle, str_sfh, str_shape, strcat_, strlen_, strncpy_, StrPrefixDiffers
+extern sub_8CCA8, sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, sub_B2E1B, sub_B4DD4
+extern TeamFromMouse
+global RunMenu, RunMenu_ret4, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CmpPoints
+global CmpGAA, LoadShapeByTag, LoadShapeByTag_x, MakeStatsTitle
 RunMenu:
 push dword 0B4h	; 1D6E8
 call __CHK	; 1D6ED

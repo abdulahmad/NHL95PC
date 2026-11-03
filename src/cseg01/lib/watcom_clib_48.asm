@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_B028E progbits alloc exec nowrite align=1
-extern _Scale10V_, __CHP, __Nan_Inf_, __cvt_, __set_ERANGE_, dword_C4CA0, dword_C4CA4, floor_
+extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, dword_C4CA0, dword_C4CA4, floor_
 extern memset_, unknown_libname_6
-global AdjField_, DoEFormat_, DoFFormat_, _FtoS_, loc_B02A7, loc_B02AB, loc_B02CE, loc_B02DE
-global loc_B02EE, loc_B02F9, loc_B0329, loc_B032C, loc_B0333, loc_B034A, loc_B035B, loc_B035F
-global loc_B0368, loc_B0370, loc_B037C, loc_B0380, loc_B038D, loc_B03B8, loc_B03D5, loc_B03DF
-global loc_B03EF, loc_B03FB, loc_B042F, loc_B0435, loc_B0437, loc_B0444, loc_B046A, loc_B0497
+global DoEFormat_, loc_B02A7, loc_B02AB, loc_B02CE, loc_B02DE, loc_B02EE, loc_B02F9, loc_B0329
+global loc_B032C, loc_B0333, DoFFormat_, loc_B034A, loc_B035B, loc_B035F, loc_B0368, loc_B0370
+global loc_B037C, loc_B0380, loc_B038D, AdjField_, loc_B03B8, loc_B03D5, loc_B03DF, loc_B03EF
+global loc_B03FB, _FtoS_, loc_B042F, loc_B0435, loc_B0437, loc_B0444, loc_B046A, loc_B0497
 global loc_B049D, loc_B04AD, loc_B04BE, loc_B04C8, loc_B04E0, loc_B04F4, loc_B0509, loc_B050E
 global loc_B0527, loc_B0545, loc_B0577, loc_B0580, loc_B0582, loc_B05B3, loc_B05C4, loc_B05CA
-global loc_B05DF, loc_B05F7, loc_B060A, loc_B061E, loc_B0635, loc_B0646, loc_B0649, loc_B065A
-global loc_B065C, loc_B0662, loc_B0674, loc_B0684, loc_B0694, loc_B0695, loc_B069A, loc_B06B9
-global loc_B06D1, loc_B06D3, loc_B06D6, loc_B06F5, loc_B06FB, loc_B0702, loc_B070C, loc_B070D
-global loc_B0710, loc_B0721, loc_B0730, loc_B073F, loc_B076F, loc_B0781, loc_B0798, loc_B07AD
-global loc_B07B6, loc_B07C4, strtod_
+global loc_B05DF, loc_B05F7, loc_B060A, loc_B061E, strtod_, loc_B0635, loc_B0646, loc_B0649
+global loc_B065A, loc_B065C, loc_B0662, loc_B0674, loc_B0684, loc_B0694, loc_B0695, loc_B069A
+global loc_B06B9, loc_B06D1, loc_B06D3, loc_B06D6, loc_B06F5, loc_B06FB, loc_B0702, loc_B070C
+global loc_B070D, loc_B0710, loc_B0721, loc_B0730, loc_B073F, loc_B076F, loc_B0781, loc_B0798
+global loc_B07AD, loc_B07B6, loc_B07C4
 DoEFormat_:
 push esi	; B028E
 push edi	; B028F

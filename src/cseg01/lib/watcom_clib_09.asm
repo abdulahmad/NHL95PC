@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_909E0 progbits alloc exec nowrite align=1
-global loc_909E4, loc_909E8, loc_909EF, loc_90A03, loc_90A16, loc_90A2E, strnicmp_
+global strnicmp_, loc_909E4, loc_909E8, loc_909EF, loc_90A03, loc_90A16, loc_90A2E
 strnicmp_:
 push ecx	; 909E0
 sub esp, byte 4	; 909E1

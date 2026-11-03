@@ -2,26 +2,24 @@
 bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
-extern __CHK, str_teams, str_key, str_att, str_season, str_career, str_GsummaryDb2, gameopts
-extern byte_C5424, byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt
-extern byte_C66B4, curleague, awgoalieidx, awscratch, gsummarypath, hmroster, hmrosterjersey
-extern byte_DB3AE, awroster, hmgoalieidx, hmscratch, byte_DC267, byte_DC268, leaguedbfmt2
-extern leaguedbfmt, cont2team, HomeTeam, curperiod, dword_DB088, dword_DBC7C, dword_DBCE0, dword_DEB74
-extern dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_m2, dword_DF6C2, fputchar, lseek_, mi_HomeGoalie1
-extern mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, sprintf_, strcat_, strcpy_
-extern strncpy_, FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, LoadCupFinalSeries, LoadScoreboardGfx
-extern FatalError, str_fe1, str_fe2, str_fe3, str_fe4, str_fe5, str_fe7, str_fe8
-extern str_feB1, str_feB5, str_feB8, str_feD, str_feE, str_feF, str_feG, str_feH
-extern str_feI, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_fe9
-extern str_feA, str_feB, str_feC, str_feJ, str_feK, str_backslash3, unk_C5423, unk_C542E
-extern str_GoalieItemTmpl, unk_CEE4F, unk_CEEAF, awlinetab, unk_DAC40, unk_DACA0, hmteamrec
-extern awteamrec, hmlinetab, unk_DC240, unknown_libname_1, word_C5428, hudpenhome, word_C571E
-extern word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760, word_C5762, VisTeam, word_DB08A
+extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
+extern awtmap, awtmgoalie, byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C66B4, byte_DB3AE
+extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, dword_DB088, dword_DBC7C, dword_DBCE0
+extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, dword_DF6C2, FatalError, FileClose, FileCreate
+extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
+extern hmlinetab, hmroster, hmrosterjersey, hmscratch, hmshotcnt, hmteamrec, hmtmap, hmtmgoalie
+extern hmtmpdst_m2, HomeTeam, hudpenaway, hudpenhome, leaguedbfmt, leaguedbfmt2, LoadCupFinalSeries, LoadScoreboardGfx
+extern lseek_, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, sprintf_
+extern str_att, str_backslash3, str_career, str_fe1, str_fe2, str_fe3, str_fe4, str_fe5
+extern str_fe7, str_fe8, str_fe9, str_feA, str_feB, str_feB1, str_feB5, str_feB8
+extern str_feC, str_feD, str_feE, str_feF, str_feG, str_feH, str_feI, str_feJ
+extern str_feK, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_GoalieItemTmpl
+extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, unk_C5423
+extern unk_C542E, unk_CEE4F, unk_CEEAF, unk_DAC40, unk_DACA0, unk_DC240, unknown_libname_1, VisTeam
+extern word_C5428, word_C571E, word_C5720, word_C5722, word_C575E, word_C5760, word_C5762, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
-extern hmtmap, hmtmgoalie, awtmap, awtmgoalie
-global OpenPlayerDBs_x
-global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, LoadTeamRoster
-global MakeGSummaryPath, SetupGoalieMenu, ResetGoalieMenu, ClearPanelPenalties
+global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
+global ResetGoalieMenu, ClearPanelPenalties
 ; C: src/c/front/team_db/LoadGameTeams.c
 %ifdef CBUILD
 %include "c/front/team_db/LoadGameTeams.inc"

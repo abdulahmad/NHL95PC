@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
 extern byte_D42E4, dword_D30C8, dword_D43E4, sub_910E0, sub_92CD0, sub_B3ABC, sub_B6D47, vsprintf_
-global loc_931E4, loc_931F6, loc_931FB, loc_9321D, sub_93170, sub_931D0, sub_931FC, sub_93240
+global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, sub_931FC, loc_9321D, sub_93240
 sub_93170:
 sub esp, 104h	; 93170
 lea eax, [dword esp+0114h]	; 93176

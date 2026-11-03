@@ -2,38 +2,31 @@
 bits 32
 %include "hockey.inc"
 section s_2B7B7 progbits alloc exec nowrite align=1
-extern __CHK, str_OpenBut, str_None, str_Del, str_Open, str_Can, str_Noar, str_Up
-extern str_Down, str_Arro, str_Gtno, str_Gtex, str_Gtlp, str_Gtpo, str_Buf, str_Nhl
-extern str_GsummaryDb3, str_Gsummary, str_Sav, str_Db2, str_PoGameSav, str_LpGameSav, str_Open2, str_Delete
-extern str_Done, str_Exhibition, str_Playoffs, str_League, str_Lp, str_Po, str_Nhl2, str_Dialogbx
-extern str_Dbox, str_Pointer5, str_Po2, str_ScheduleDb2, str_Lp2, str_GameSet3, str_fedd2, str_GameSav3
-extern str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_LAAtMTL
-extern musicon, savefname, fdlgmask, othergames, otherscores
-extern postate, lgstate, gameresult, fdlgshapes, fileoncd
-extern fdlgrects
-extern menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo, menuact_posettings, menuact_pohilights
-extern seriesgameno, cddriveptr, pointerspr, exhfiles, exhfilenames
-extern pofiles, pofilenames, lgfiles
-extern lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open, fdlg_del, fdlg_up
-extern fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow, fdlg_tablp, fdlg_noarrow, otherperiod
-extern ptrupdatefn, j_unlink_, FreeMemBlock, teamabbrevs, off_C5441, off_C6F7C, off_C6F80, off_C6F84
-extern qsort_, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, MakePath, DeleteDir
-extern FileOpenRead, FileCreate, FileClose, FileReadAt, FileWriteAt, CopyFile, SetupStatsSourceMenu, BuildSavedGameLabels
-extern SetDialogColors, MessageBox, LoadModeState, MenuNewExhibition, MenuNextLeagueGame, MenuExportDbs, GetInputEvent, ClearInputQueue
-extern EditPlayoffSettings, ViewPlayoffHilights, PlayoffModeLoop, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0
-extern sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400, sub_91964, sub_92CD0, FatalError
-extern MouseSetPos, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC, str_NHL, str_PO2
-extern str_LP, str_fek1, str_fek2, str_fek3, str_fek4, str_fek5, str_fek6, str_fek7
-extern str_fek8, str_feh7, str_feA1, str_fel1, str_feA2, str_fel2, str_fec6, str_fed2
-extern str_fed3, str_fed4, exhstate, delmsgbox, leaguemgrmenu, btn_POHumanOut, unknown_libname_1, unknown_libname_2
-extern unlink_
-global DrawFileDlg_jt, DrawFileDlgList_jt, LoadFileDlgShapes_x
-global DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3
-global DrawFileDlg_n2, DrawFileDlg_n1, DrawFileDlg_x
-global DrawFileDlgList_n6, DrawFileDlgList_n5
-global DrawFileDlgList_n4, DrawFileDlgList_n3, DrawFileDlgList_n2, DrawFileDlgList_n1
-global LoadFileDlgShapes, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy, DrawFileDlg, FileDlgHitTest
-global DrawFileDlgList, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, savefileexts, gsuminitff
+extern __CHK, btn_POHumanOut, BuildSavedGameLabels, cddriveptr, ClearInputQueue, CopyFile, DeleteDir, delmsgbox
+extern EditPlayoffSettings, exhfilenames, exhfiles, exhstate, FatalError, fdlg_arrow, fdlg_cancel, fdlg_del
+extern fdlg_down, fdlg_noarrow, fdlg_none, fdlg_open, fdlg_tabexh, fdlg_tablp, fdlg_tabnone, fdlg_tabpo
+extern fdlg_up, fdlgmask, fdlgrects, fdlgshapes, fdlgtab, FileClose, FileCreate, fileoncd
+extern FileOpenRead, FileReadAt, FileWriteAt, FreeMemBlock, gameresult, GetInputEvent, j_unlink_, leaguemgrmenu
+extern lgfilenames, lgfiles, lgstate, LoadModeState, MakePath, menuact_export, menuact_nextlg, menuact_nextpo
+extern menuact_pohilights, menuact_posettings, MenuExportDbs, MenuNewExhibition, MenuNextLeagueGame, menusub_lgmgr, MessageBox, MouseSetPos
+extern musicon, off_C5441, off_C6F7C, off_C6F80, off_C6F84, othergames, otherperiod, otherscores
+extern PlayoffModeLoop, pofilenames, pofiles, pointerspr, postate, ptrupdatefn, qsort_, savefname
+extern seriesgameno, SetDialogColors, SetupStatsSourceMenu, str_Arro, str_Buf, str_Can, str_Db2, str_Dbox
+extern str_Del, str_Delete, str_Dialogbx, str_Done, str_Down, str_Exhibition, str_ExhibitionGameCalled, str_feA1
+extern str_feA2, str_fec6, str_fed2, str_fed3, str_fed4, str_fedd2, str_feh7, str_fek1
+extern str_fek2, str_fek3, str_fek4, str_fek5, str_fek6, str_fek7, str_fek8, str_fel1
+extern str_fel2, str_GameSav3, str_GameSet3, str_Gsummary, str_GsummaryDb3, str_Gtex, str_Gtlp, str_Gtno
+extern str_Gtpo, str_LAAtMTL, str_League, str_LeagueCalled, str_LP, str_Lp, str_Lp2, str_LpGameSav
+extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_OpenBut
+extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
+extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, sub_8CCA8
+extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_91370
+extern sub_91400, sub_91964, sub_92CD0, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC
+extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
+global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
+global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
+global DrawFileDlg_x, FileDlgHitTest, DrawFileDlgList_jt, DrawFileDlgList, DrawFileDlgList_n6, DrawFileDlgList_n5, DrawFileDlgList_n4, DrawFileDlgList_n3
+global DrawFileDlgList_n2, DrawFileDlgList_n1, RunFileDlg, DeleteSavedGame, SelectSavedFile, ReadGameSettings, gsuminitff
 savefileexts:
 dd str_NHL
 dd str_PO2

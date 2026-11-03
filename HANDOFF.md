@@ -5,6 +5,7 @@
 - Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 95PC is on `claude/project-thread-ggw7zu`.
 - Branch: `claude/project-thread-ggw7zu`
 - Last check: 2026-11-02 `make fullcheck`, MATCH in both builds
+- Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - Next: F3 naming done for the 94G names (14 renames; review list in the project files). 95G names for the 95 features need a body-by-body pass, not started. C matching takes files from the top of docs/WORK_QUEUE.md
 - Open PRs: none
 

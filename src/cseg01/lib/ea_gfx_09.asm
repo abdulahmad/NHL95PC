@@ -2,16 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_92890 progbits alloc exec nowrite align=1
-extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, dword_D30A4, dword_D30A8, cliprect_y0
-extern cliprect_y1, fontcolor, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC
-extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, off_D42A4, sub_8E9D4, sub_903F0
+extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
+extern dword_D30A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC, dword_D42D0
+extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, sub_8E9D4, sub_903F0
 extern sub_90EC0, sub_B4BC4, sub_B5D80
-global loc_92901, loc_92930, loc_92936, loc_92951, loc_92957, loc_9296F, loc_9297A, loc_92993
-global loc_92995, loc_929B9, loc_929BB, loc_92A3D, loc_92A6A, loc_92A9A, loc_92ABC, loc_92AC5
-global loc_92AD9, loc_92AED, loc_92B02, loc_92B17, loc_92B2C, loc_92B41, loc_92B56, loc_92B6B
-global loc_92B80, loc_92B95, loc_92B9B, loc_92BBF, loc_92BE1, loc_92BE7, loc_92BF7, loc_92C0D
-global loc_92C29, loc_92C3A, loc_92C3D, loc_92C56, loc_92C74, loc_92C7A, loc_92C86, loc_92CA5
-global loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, sub_92890, sub_92CD0, sub_92CF0
+global sub_92890, loc_92901, loc_92930, loc_92936, loc_92951, loc_92957, loc_9296F, loc_9297A
+global loc_92993, loc_92995, loc_929B9, loc_929BB, loc_92A3D, loc_92A6A, loc_92A9A, loc_92ABC
+global loc_92AC5, loc_92AD9, loc_92AED, loc_92B02, loc_92B17, loc_92B2C, loc_92B41, loc_92B56
+global loc_92B6B, loc_92B80, loc_92B95, loc_92B9B, loc_92BBF, loc_92BE1, loc_92BE7, loc_92BF7
+global loc_92C0D, loc_92C29, loc_92C3A, loc_92C3D, loc_92C56, loc_92C74, loc_92C7A, loc_92C86
+global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, sub_92CD0, sub_92CF0
 sub_92890:
 push esi	; 92890
 push edi	; 92891

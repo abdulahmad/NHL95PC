@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_987C0 progbits alloc exec nowrite align=1
 extern __int386x_
-global int386x_, segread_
+global segread_, int386x_
 segread_:
 push edx	; 987C0
 mov edx, eax	; 987C1

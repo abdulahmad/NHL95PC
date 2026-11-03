@@ -4,9 +4,9 @@ bits 32
 section s_9D586 progbits alloc exec nowrite align=1
 extern __init_80x87, asc_C4A83, byte_D4B9C, byte_D4B9D, dword_F24CC, loc_9D582, off_D51E4, off_D6600
 extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, word_D4D04, word_D65FC
-global __chk8087_, __delay_, __delay_init_, __init_8087_, loc_9D5A7, loc_9D5EA, loc_9D5FF, loc_9D60F
-global loc_9D61F, loc_9D659, loc_9D65D, loc_9D666, loc_9D680, loc_9D686, strerror_, sub_9D5B7
-global sub_9D66B, sub_9D671
+global __init_8087_, loc_9D5A7, sub_9D5B7, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
+global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, sub_9D66B, sub_9D671, strerror_
+global loc_9D680, loc_9D686
 __init_8087_:
 push ebx	; 9D586
 push edx	; 9D587

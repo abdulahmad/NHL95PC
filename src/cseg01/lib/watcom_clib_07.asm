@@ -5,11 +5,11 @@ section s_8FFD4 progbits alloc exec nowrite align=1
 extern __CMain, __FiniRtns, __InitRtns, byte_D4D06, byte_D4D07, byte_D4D0F, byte_D4D10, dword_D41F4
 extern dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0, dword_D4CE8, dword_D4CEC, dword_D4D09, kaufmfont
 extern unk_10003, unk_F7B88, word_D41F8, word_D4CE4, word_D4D04, word_D4D0D
-global __STOSB, __STOSD, loc_90048, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082
-global loc_90090, loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B
-global loc_9014C, loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265
-global loc_9027B, loc_9028A, loc_902B6, loc_902C3, loc_902E0, loc_902EB, loc_902F7, loc_90300
-global loc_90326, loc_90329, loc_90337, loc_90352, start, sub_90267, __GETDS
+global start, loc_90048, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
+global loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B, loc_9014C
+global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, sub_90267
+global loc_9027B, loc_9028A, __GETDS, __STOSB, loc_902B6, loc_902C3, loc_902E0, __STOSD
+global loc_902EB, loc_902F7, loc_90300, loc_90326, loc_90329, loc_90337, loc_90352
 start:
 jmp short loc_9004E	; 8FFD4
 push edi	; 8FFD6

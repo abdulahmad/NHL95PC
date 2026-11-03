@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9D521 progbits alloc exec nowrite align=1
 extern byte_D4D06, dword_D5194, dword_D51D4, word_D51D8, word_D51DA
-global loc_9D548, loc_9D55B, loc_9D582, sub_9D521, sub_9D55C, sub_9D57D
+global sub_9D521, loc_9D548, loc_9D55B, sub_9D55C, sub_9D57D, loc_9D582
 sub_9D521:
 mov cl, 7	; 9D521
 mov ax, 2504h	; 9D523

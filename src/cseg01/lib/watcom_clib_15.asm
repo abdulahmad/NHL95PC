@@ -4,11 +4,11 @@ bits 32
 section s_91D0B progbits alloc exec nowrite align=1
 extern __close_, __flush_, __freefp_, __ioalloc_, _nfree_, dword_F24C8, fputc_, ftell_
 extern j_unlink_, lseek_, sub_9B22C
-global __MkTmpFile_, __doclose_, __hex_, __shutdown_stream_, fclose_, fputs_, loc_91D14, loc_91D20
-global loc_91D2B, loc_91D5A, loc_91D76, loc_91DDC, loc_91DEF, loc_91E07, loc_91E15, loc_91E2A
-global loc_91E43, loc_91E53, loc_91E5E, loc_91E62, loc_91E6D, loc_91E88, loc_91EA7, loc_91EAB
-global loc_91EC2, loc_91EE3, loc_91EEB, loc_91F08, loc_91F74, loc_91F79, loc_91F9A, loc_91FD5
-global memcmp_, strcmp_, strncpy_, sub_91FA4
+global fclose_, loc_91D14, loc_91D20, loc_91D2B, __shutdown_stream_, __hex_, loc_91D5A, __MkTmpFile_
+global loc_91D76, __doclose_, loc_91DDC, loc_91DEF, loc_91E07, loc_91E15, loc_91E2A, loc_91E43
+global strncpy_, loc_91E53, loc_91E5E, loc_91E62, loc_91E6D, fputs_, loc_91E88, loc_91EA7
+global loc_91EAB, loc_91EC2, loc_91EE3, loc_91EEB, strcmp_, loc_91F08, loc_91F74, loc_91F79
+global loc_91F9A, sub_91FA4, memcmp_, loc_91FD5
 fclose_:
 push ebx	; 91D0B
 push edx	; 91D0C

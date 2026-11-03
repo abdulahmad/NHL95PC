@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_9A7A0 progbits alloc exec nowrite align=1
-extern _os_handle, asc_C4888, asc_C4894, asc_C48B0, asc_C48C8, sub_8CC70, sub_98D20, FatalError
+extern _os_handle, asc_C4888, asc_C4894, asc_C48B0, asc_C48C8, FatalError, sub_8CC70, sub_98D20
 extern sub_B3FC2
-global loc_9A7DB, loc_9A7EF, loc_9A868, sub_9A7A0
+global sub_9A7A0, loc_9A7DB, loc_9A7EF, loc_9A868
 sub_9A7A0:
 push esi	; 9A7A0
 push edi	; 9A7A1

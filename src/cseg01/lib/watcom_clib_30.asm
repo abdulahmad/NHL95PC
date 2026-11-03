@@ -5,33 +5,33 @@ section s_99A12 progbits alloc exec nowrite align=1
 extern __set_doserrno_, __set_errno_, byte_D4D0F, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, dword_F2440
 extern dword_F24C0, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, off_D2F68
 extern off_D5668, sub_9D68E, sub_A2ACF, toupper_, ultoa_, unk_D8B14, unk_D8B3E, unk_D8B4A
-global FixedPoint_Format_, _Full_at_exit_rtn_, __CMain, __FiniRtns, __InitRtns, __doserror_, __prtf_, __set_errno_dos_
-global _dosretax_, _makepath_, _splitpath_, atexit_, copypart_, evalflags_, far_other_strlen_, far_strlen_
-global float_format_, fmt4hex_, formstring_, getprintspecs_, loc_99A21, loc_99A41, loc_99A6C, loc_99A71
-global loc_99A78, loc_99A7C, loc_99A7E, loc_99A8D, loc_99A96, loc_99A9A, loc_99AB2, loc_99AEA
-global loc_99AF1, loc_99AF3, loc_99B15, loc_99B21, loc_99B40, loc_99B4B, loc_99B4D, loc_99B57
-global loc_99B76, loc_99B8D, loc_99B96, loc_99BA8, loc_99BA9, loc_99BB4, loc_99BDA, loc_99BF0
-global loc_99C29, loc_99C53, loc_99C55, loc_99C89, loc_99C99, loc_99CAC, loc_99CB1, loc_99CC2
-global loc_99CC7, loc_99CD5, loc_99CE5, loc_99CF8, loc_99CFD, loc_99D12, loc_99D17, loc_99D46
-global loc_99D82, loc_99D8B, loc_99D99, loc_99D9F, loc_99DC1, loc_99DCC, loc_99DEA, loc_99DF8
-global loc_99E01, loc_99E0C, loc_99E20, loc_99E33, loc_99E41, loc_99E66, loc_99E83, loc_99E87
-global loc_99E9C, loc_99EBA, loc_99EC8, loc_99EE5, loc_99EF3, loc_99EFA, loc_99F1B, loc_99F3A
-global loc_99F59, loc_99F6F, loc_99F91, loc_99FC6, loc_99FE5, loc_9A00B, loc_9A00C, loc_9A03D
+global copypart_, loc_99A21, loc_99A41, _splitpath_, loc_99A6C, loc_99A71, loc_99A78, loc_99A7C
+global loc_99A7E, loc_99A8D, loc_99A96, loc_99A9A, loc_99AB2, pickup_, loc_99AEA, loc_99AF1
+global loc_99AF3, _makepath_, loc_99B15, loc_99B21, loc_99B40, loc_99B4B, loc_99B4D, loc_99B57
+global loc_99B76, loc_99B8D, loc_99B96, loc_99BA8, loc_99BA9, loc_99BB4, _Full_at_exit_rtn_, loc_99BDA
+global loc_99BF0, atexit_, loc_99C29, __CMain, loc_99C53, loc_99C55, sub_99C77, __InitRtns
+global loc_99C89, loc_99C99, loc_99CAC, loc_99CB1, loc_99CC2, loc_99CC7, __FiniRtns, loc_99CD5
+global loc_99CE5, loc_99CF8, loc_99CFD, loc_99D12, loc_99D17, __prtf_, loc_99D46, loc_99D82
+global loc_99D8B, loc_99D99, loc_99D9F, loc_99DC1, loc_99DCC, loc_99DEA, loc_99DF8, loc_99E01
+global loc_99E0C, loc_99E20, loc_99E33, loc_99E41, loc_99E66, loc_99E83, loc_99E87, loc_99E9C
+global loc_99EBA, loc_99EC8, loc_99EE5, loc_99EF3, loc_99EFA, loc_99F1B, loc_99F3A, loc_99F59
+global loc_99F6F, loc_99F91, getprintspecs_, loc_99FC6, loc_99FE5, loc_9A00B, loc_9A00C, loc_9A03D
 global loc_9A040, loc_9A05F, loc_9A07B, loc_9A084, loc_9A094, loc_9A0A2, loc_9A0B1, loc_9A0B5
-global loc_9A0BB, loc_9A0C1, loc_9A0CC, loc_9A0D6, loc_9A0E3, loc_9A0EE, loc_9A106, loc_9A11D
-global loc_9A125, loc_9A128, loc_9A137, loc_9A14A, loc_9A15B, loc_9A1AA, loc_9A1B2, loc_9A1B9
-global loc_9A1C4, loc_9A1EF, loc_9A1FC, loc_9A211, loc_9A21E, loc_9A22D, loc_9A248, loc_9A250
-global loc_9A257, loc_9A261, loc_9A26F, loc_9A27C, loc_9A284, loc_9A28D, loc_9A294, loc_9A2A2
-global loc_9A2A7, loc_9A2EE, loc_9A2F2, loc_9A2F6, loc_9A302, loc_9A316, loc_9A328, loc_9A332
-global loc_9A336, loc_9A340, loc_9A381, loc_9A38E, loc_9A3A5, loc_9A3CC, loc_9A3D9, loc_9A3E1
-global loc_9A3E8, loc_9A3EC, loc_9A416, loc_9A42A, loc_9A43A, loc_9A443, loc_9A452, loc_9A45B
-global loc_9A465, loc_9A478, loc_9A47F, loc_9A492, loc_9A4A5, loc_9A4C4, loc_9A4C8, loc_9A4CF
-global loc_9A4E2, loc_9A4E6, loc_9A4F9, loc_9A4FB, loc_9A524, loc_9A52F, loc_9A545, loc_9A551
-global loc_9A569, loc_9A56E, loc_9A58D, loc_9A5A2, loc_9A5A9, loc_9A5E8, loc_9A5F1, loc_9A60C
-global loc_9A639, loc_9A663, loc_9A67D, loc_9A68B, loc_9A694, loc_9A698, loc_9A6A4, loc_9A6A9
-global loc_9A6BC, loc_9A6C8, loc_9A6D1, loc_9A701, loc_9A714, loc_9A726, loc_9A728, loc_9A75E
-global loc_9A767, loc_9A76E, loc_9A775, loc_9A784, loc_9A78E, pickup_, sub_99C77, sub_9A729
-global zupstr_
+global loc_9A0BB, loc_9A0C1, loc_9A0CC, evalflags_, loc_9A0D6, loc_9A0E3, loc_9A0EE, loc_9A106
+global loc_9A11D, loc_9A125, loc_9A128, far_strlen_, loc_9A137, loc_9A14A, far_other_strlen_, loc_9A15B
+global fmt4hex_, loc_9A1AA, loc_9A1B2, loc_9A1B9, loc_9A1C4, FixedPoint_Format_, loc_9A1EF, loc_9A1FC
+global loc_9A211, loc_9A21E, loc_9A22D, loc_9A248, loc_9A250, loc_9A257, loc_9A261, loc_9A26F
+global loc_9A27C, loc_9A284, loc_9A28D, loc_9A294, loc_9A2A2, loc_9A2A7, float_format_, formstring_
+global loc_9A2EE, loc_9A2F2, loc_9A2F6, loc_9A302, loc_9A316, loc_9A328, loc_9A332, loc_9A336
+global loc_9A340, loc_9A381, loc_9A38E, loc_9A3A5, loc_9A3CC, loc_9A3D9, loc_9A3E1, loc_9A3E8
+global loc_9A3EC, loc_9A416, loc_9A42A, loc_9A43A, loc_9A443, loc_9A452, loc_9A45B, loc_9A465
+global loc_9A478, loc_9A47F, loc_9A492, loc_9A4A5, loc_9A4C4, loc_9A4C8, loc_9A4CF, loc_9A4E2
+global loc_9A4E6, loc_9A4F9, loc_9A4FB, loc_9A524, loc_9A52F, loc_9A545, loc_9A551, loc_9A569
+global loc_9A56E, loc_9A58D, loc_9A5A2, loc_9A5A9, loc_9A5E8, loc_9A5F1, loc_9A60C, loc_9A639
+global loc_9A663, loc_9A67D, loc_9A68B, loc_9A694, loc_9A698, loc_9A6A4, loc_9A6A9, loc_9A6BC
+global loc_9A6C8, loc_9A6D1, zupstr_, loc_9A701, loc_9A714, __doserror_, loc_9A726, loc_9A728
+global sub_9A729, _dosretax_, __set_errno_dos_, loc_9A75E, loc_9A767, loc_9A76E, loc_9A775, loc_9A784
+global loc_9A78E
 copypart_:
 push esi	; 99A12
 push edi	; 99A13

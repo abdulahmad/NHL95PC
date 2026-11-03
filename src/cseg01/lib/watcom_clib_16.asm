@@ -2,21 +2,21 @@
 bits 32
 %include "hockey.inc"
 section s_92068 progbits alloc exec nowrite align=1
-extern __IOMode_, __SetIOMode_, __close_, __set_errno_, __set_errno_dos_, dword_D4F21, dword_D5008, isatty_
+extern __close_, __IOMode_, __set_errno_, __set_errno_dos_, __SetIOMode_, dword_D4F21, dword_D5008, isatty_
 extern lseek_
-global __set_binary_, byteswap_, j___close_, loc_92098, loc_920A0, loc_920D3, loc_92115, loc_9213C
-global loc_9214D, loc_92178, loc_92189, loc_921DB, loc_921F4, loc_92201, loc_9220A, loc_92213
-global loc_9221D, loc_92231, loc_9223D, loc_9223F, loc_92248, loc_92284, loc_92291, loc_922AC
-global loc_922AE, loc_922D6, loc_922E5, loc_922F0, loc_92314, loc_9231E, loc_92328, loc_9234C
-global loc_92365, loc_92386, loc_92394, loc_92396, loc_923BD, loc_923C1, loc_923D9, loc_923E4
-global loc_923E9, loc_923F2, loc_92423, loc_92427, loc_9242B, loc_92441, loc_92443, loc_9246A
-global loc_92473, loc_92492, loc_924CC, loc_924DA, loc_924DE, loc_924F3, loc_924FB, loc_924FE
-global loc_92516, loc_9251C, loc_9252A, loc_92530, loc_9255F, loc_92612, loc_92623, loc_92643
-global loc_92653, loc_9265E, loc_9267E, loc_926A9, loc_926B7, loc_926C0, loc_926C8, loc_926F5
-global loc_92709, loc_92712, loc_9271D, loc_9273A, loc_92748, loc_9275C, loc_92788, loc_927A1
-global loc_927AC, loc_927B1, loc_927BA, loc_927BB, loc_927D3, loc_927E9, loc_927F4, loc_927F9
-global loc_92802, loc_92803, loc_92841, loc_9287B, med3_, open_, qsort_, read_
-global sopen_
+global open_, sopen_, loc_92098, loc_920A0, loc_920D3, loc_92115, loc_9213C, loc_9214D
+global loc_92178, loc_92189, loc_921DB, loc_921F4, loc_92201, loc_9220A, loc_92213, loc_9221D
+global loc_92231, loc_9223D, loc_9223F, loc_92248, __set_binary_, loc_92284, loc_92291, loc_922AC
+global loc_922AE, read_, loc_922D6, loc_922E5, loc_922F0, loc_92314, loc_9231E, loc_92328
+global loc_9234C, loc_92365, loc_92386, loc_92394, loc_92396, loc_923BD, loc_923C1, j___close_
+global byteswap_, loc_923D9, loc_923E4, loc_923E9, loc_923F2, med3_, loc_92423, loc_92427
+global loc_9242B, loc_92441, loc_92443, qsort_, loc_9246A, loc_92473, loc_92492, loc_924CC
+global loc_924DA, loc_924DE, loc_924F3, loc_924FB, loc_924FE, loc_92516, loc_9251C, loc_9252A
+global loc_92530, loc_9255F, loc_92612, loc_92623, loc_92643, loc_92653, loc_9265E, loc_9267E
+global loc_926A9, loc_926B7, loc_926C0, loc_926C8, loc_926F5, loc_92709, loc_92712, loc_9271D
+global loc_9273A, loc_92748, loc_9275C, loc_92788, loc_927A1, loc_927AC, loc_927B1, loc_927BA
+global loc_927BB, loc_927D3, loc_927E9, loc_927F4, loc_927F9, loc_92802, loc_92803, loc_92841
+global loc_9287B
 open_:
 push ebx	; 92068
 push edx	; 92069

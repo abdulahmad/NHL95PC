@@ -2,32 +2,26 @@
 bits 32
 %include "hockey.inc"
 section s_71F0C progbits alloc exec nowrite align=1
-extern __CHK, str_DSBOX, str_DbBut, str_None2, str_Del2, str_Open3, str_Can2, str_Noar2
-extern str_Up2, str_Down2, str_Arro2, str_Dbno, str_Dbcu, str_Dbtm, str_Dbor, str_Db3
-extern str_CURRENT, str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Current4
-extern str_Original2, str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_extDB
-extern str_ORG, byte_C4B6C, byte_D42C3, savefname, fdlgmask, fileoncd
-extern fdlgshapes, seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb
-extern seasondb_size, careerdb_size, carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dlgfillcol, dlgedgecol1
-extern dlgedgecol2, dbdlgrects
-extern cddriveptr, dword_D42AC, pointerspr, fdlg_tabexh, fdlg_none, fdlg_tabpo
-extern fdlg_open, fdlg_del, fdlg_up, fdlg_cancel, fdlg_tabnone, fdlg_down, fdlgtab, fdlg_arrow
-extern fdlg_tablp, fdlg_noarrow, ptrupdatefn, dbdirty, dblistcur
-extern dblisttemp, dblisttempnames, dblistorig
-extern fputchar, FreeMemBlock, leaguedbnames
-extern dbtablists, qsort_, strcat_, strcpy_, strlen_
-extern MakePath, DeleteDir, PrintShadowText, CmpFileNames, PrintTextCopy, FileDlgHitTest, DlgReturnZero, MeasureTextLine
-extern MessageBox, EditTextField, GetInputEvent, ClearInputQueue, FreeLeagueDbsMem, DrawEditRosters, LoadBothRosterLists, DrawDlgFrame
-extern sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284
-extern sub_91370, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4
-extern sub_B4BA8, sub_B4FAC, deldbmsg, btn_POHumanOut, curdbname, unknown_libname_1, unknown_libname_2, unknown_libname_4
-global DrawDbDialog_jt, DrawDbList_jt
-global DbDialog_ret
-global DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1
-global DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2
-global DrawDbList_n1
-global InputDialog, LoadDbDialogShapes, DbDialog_epilogue, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog
-global DbDialogHitTest, DrawDbList, DbDialogLoop, OpenSelectedDb, LoadDbsFromDir, DeleteSelectedDb, MenuOpenDatabase, unk13_722FE
+extern __CHK, attdb, attdb_size, btn_POHumanOut, byte_C4B6C, byte_D42C3, careerdb, careerdb_size
+extern carteamsdb, carteamsdb_size, cddriveptr, ClearInputQueue, CmpFileNames, curdbname, dbdirty, dbdlgrects
+extern dblistcur, dblistorig, dblisttemp, dblisttempnames, dbtablists, deldbmsg, DeleteDir, dlgedgecol1
+extern dlgedgecol2, dlgfillcol, DlgReturnZero, DrawDlgFrame, DrawEditRosters, dword_D42AC, EditTextField, fdlg_arrow
+extern fdlg_cancel, fdlg_del, fdlg_down, fdlg_noarrow, fdlg_none, fdlg_open, fdlg_tabexh, fdlg_tablp
+extern fdlg_tabnone, fdlg_tabpo, fdlg_up, fdlgmask, fdlgshapes, fdlgtab, FileDlgHitTest, fileoncd
+extern fputchar, FreeLeagueDbsMem, FreeMemBlock, GetInputEvent, keydb, keydb_size, leaguedbnames, LoadBothRosterLists
+extern MakePath, MeasureTextLine, MessageBox, pointerspr, PrintShadowText, PrintTextCopy, ptrupdatefn, qsort_
+extern savefname, seasondb, seasondb_size, str_Arro2, str_Buf2, str_Can2, str_CURRENT, str_Current4
+extern str_Db3, str_DbBut, str_Dbcu, str_Dbdialog, str_Dbno, str_Dbor, str_Dbtm, str_Dbx
+extern str_DBX2, str_Del2, str_Delete2, str_Done2, str_Down2, str_DSBOX, str_extDB, str_Noar2
+extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Original2, str_Pdbx
+extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, sub_8CCA8, sub_8E83C
+extern sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400
+extern sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4, sub_B4BA8, sub_B4FAC
+extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
+global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
+global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
+global DrawDbList_jt, DrawDbList, DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2, DrawDbList_n1
+global DbDialogLoop, OpenSelectedDb, LoadDbsFromDir, DeleteSelectedDb, MenuOpenDatabase
 ; C: src/c/pc/database_dialogs/InputDialog.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/InputDialog.inc"

@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_930A7 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, fgetc_, sub_9BA18, ungetc_
-global cget_file_, fscanf_, loc_930C2, loc_930E8, loc_930F2, loc_93103, loc_9310E, mkdir_
-global uncget_file_, vfscanf_
+global mkdir_, loc_930C2, cget_file_, loc_930E8, loc_930F2, loc_93103, loc_9310E, uncget_file_
+global vfscanf_, fscanf_
 mkdir_:
 push edx	; 930A7
 mov edx, eax	; 930A8

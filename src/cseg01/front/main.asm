@@ -1,39 +1,51 @@
-; Start-up and the in-game pads. Memory and disk checks, keyboard, joystick and mouse,
-; hot keys, the frame loop, and the palette fade.
+; Start-up and the in-game pads. Memory and disk checks, keyboard, joystick and mouse, hot keys,
+; the frame loop, the palette fade, and the game loop that launches a game.
 bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
-extern DoGameFrame, __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, str_NoDiskSpaceC, str_ErrDiskFree2, VisTeam, keydirtab
-extern str_NoDiskSpaceCur, str_NoMemory, str_CheckRefCard, str_NoConvMemory, str_CheckRefCard2, str_Pointer3, str_Pntr, str_Scor2b
-extern str_Scor3b, str_Kaufm020, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_GameSet2, str_Temp3, str_ErrDiskFree3, str_VFN
-extern pad1dev, pad2dev, lasthotkey, byte_C5138, musicon, joyenablemask, byte_D416A, byte_D8C88
-extern ctlavailmask, dword_C4CFC, joypresent, fileoncd
-extern inputticks, joysampling, joyqhead, joyqcount, joyqtick, samesideflag, inputframes
-extern escrequest, joyrec, palfadedin, screenw, screenh, demomode, dword_C5131, dword_C5133
-extern dword_C5135, gameopts
-extern ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side, ctl2side, deferpending, screenbm
-extern songdata, rinkscrollx, rinkscrolly, cont2team, HomeTeam, shownumbers, penshotlive, musicslot
-extern musichandle, cddriveptr, mousex, mousey, mousebtns, dword_D30D4, dword_D4158, dword_D415C
-extern dword_D4160, dword_D4164, bailout_vec, kaufmfont, pntrshapes, scor2font, mainfont, scor3font
-extern joyrawbits, numshapes, dword_D8C4C, rinkendart, hudhundaccum, curperiod, photoptrs, s1font
-extern pointerspr, savedmousex, savedmousey, dword_E9A9E, memlist1, memlist0, exit_, gmode
-extern int386_, mousepollfn, printf_, srand_, MakePath, FileOpenRead, FileClose, FileReadAt
-extern DrawHudPanel, RunIntro, ShowCredits, IntermissionDesk, sub_1BAF3, DrawSprite, CritErrHandler, MainDeskLoop
-extern LoadModeState, LoadNhlCfg, ShowLoadingScreen, joyq_pop, joyq_flush, joyq_peek, CrowdNoiseOff, CrowdFadeOut
-extern CrowdNoiseReset, StopDigiSample, ClockTick, ShowGoalieBanner, sub_6A9CE, JoystickCalScreen, ClearInputQueue, InputInstall
-extern InputRemove, FadePalStep, InstantReplay, SpeechStopQueue, MusicChanReset, InitFileLocations, sub_8CCA8, sub_8D2F0
-extern sub_8DF54, sub_8E080, addtimer, InstallTimer, sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18
-extern sub_8F633, sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_B29F0, sub_B2CBE, FatalError, MouseSetPos, sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4
-extern sub_B30F4, sub_B33DB, sub_B3464, sub_B392C, SetTickDeadline, WaitTickDeadline, PollKey, sub_B3A24
-extern sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, str_S1, str_errd3
-extern str_errd4, unk_C4E30, exhstate, joyqueue, savepal, vtoa, cont1team, word_CBC44
-extern exitgame, gameover, fadeinpending, lcrequest, lcreqchoice, joysampling_save
-global HandleHotKey_ret
-global main_, GetMemListHead, GetMemStats, main_x, DiskFreeBytes, SetupControllers
-global ReadKeyboardPad, ReadJoyPad, ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize
-global IntermissionPC, DrawSpriteNumber, DrawFrameSprite, DrawRinkEndArt, WaitKeyRelease, HandleHotKey, ResetInputSampling, RunGameFrames
-global SetFullPalette, FadePalette
+extern __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, addtimer, awardtype, awardwinners
+extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_C5138, byte_D416A, byte_D8C88
+extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
+extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
+extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
+extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
+extern dword_C5131, dword_C5133, dword_C5135, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
+extern dword_D4164, dword_D8C4C, dword_D8C72, dword_D8C7A, dword_DEF8C, dword_E0244, dword_E9A9E, escrequest
+extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
+extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
+extern gameover, gamepal, gameresult, gmode, gsp, HomeTeam, hudclockhund, hudclockmin
+extern hudclocksec, hudhundaccum, hudhundstep, InitFileLocations, inputframes, InputInstall, InputRemove, inputticks
+extern InstallTimer, InstantReplay, int386_, IntermissionDesk, introskipped, j_unlink_, joyenablemask, joypresent
+extern joyq_flush, joyq_peek, joyq_pop, joyqcount, joyqhead, joyqtick, joyqueue, joyrawbits
+extern joyrec, joysampling, joysampling_save, JoystickCalScreen, kaufmfont, keydirtab, lasthotkey, lcreqchoice
+extern lcrequest, leaguedbnames, LoadCupFinalSeries, LoadGameGfx, LoadGameState, LoadModeState, LoadNhlCfg, LoadRink
+extern LoadRockMusic, LoadTeamPalette, MainDeskLoop, mainfont, MakeGSummaryPath, MakePath, memlist0, memlist1
+extern mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicChanReset, musichandle, musicon
+extern musicslot, NormalizeDressFlags, numshapes, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F
+extern off_C5263, off_C5267, off_C526F, off_C5273, off_CBED0, ovlseq, ovlstep, pad1dev
+extern pad2dev, palfadedin, PaPreloadClips, penshotlive, PeriodOver, photoptrs, PlayCrowdSample, pntrshapes
+extern pointerspr, PollKey, PostGameDesk, presidentsteam, printf_, ReadGoalieSeasonRec, ReadKeyRec, ReadSeasonRec
+extern ReadTeamNames, ReadTeamRec, recbpr, replaystart, ResetGoalieMenu, rinkendart, rinkhtiles, rinkscrollx
+extern rinkscrolly, rinkwtiles, RunDeferredCalls, RunIntro, s1font, samesideflag, savedmousex, savedmousey
+extern savepal, scor2font, scor3font, screenbm, screenh, screenw, scrollx, scrolly
+extern SelectScreenBM, SetRinkScroll, SetTickDeadline, SetupGame, SetupGoalieMenu, SetupTeamLines, sflags, ShowCredits
+extern ShowGoalieBanner, ShowLoadingScreen, shownumbers, songdata, SpeechStopQueue, SportsDesk, spritedrawcount, srand_
+extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_CheckRefCard2, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_errd3
+extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
+extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
+extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, sub_6A9CE
+extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2F0, sub_8DF54, sub_8E080
+extern sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
+extern sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C, sub_B29F0, sub_B2CBE
+extern sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4, sub_B30F4, sub_B33DB, sub_B3464, sub_B392C
+extern sub_B3A24, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, teamabbrevs
+extern TicksSinceLastCall, treeteamnames, unk_C4E30, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
+extern unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly
+extern VisTeam, vtoa, WaitTickDeadline, word_CBC44
+global GetMemListHead, GetMemStats, main_, main_x, DiskFreeBytes, SetupControllers, ReadKeyboardPad, ReadJoyPad
+global ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize, IntermissionPC, DrawSpriteNumber
+global DrawFrameSprite, DrawRinkEndArt, WaitKeyRelease, HandleHotKey, HandleHotKey_ret, ResetInputSampling, RunGameFrames, SetFullPalette
+global FadePalette, Gameloop, PlayGame, assreplace, assinsert, ReplayIsEmpty
 ; C: src/c/front/main/GetMemListHead.c
 %ifdef CBUILD
 %include "c/front/main/GetMemListHead.inc"
@@ -2003,3 +2015,670 @@ pop edi	; 11677
 pop esi	; 11678
 pop ecx	; 11679
 ret	; 1167A
+Gameloop:
+push dword 48h	; 1167B
+call __CHK	; 11680
+push ebx	; 11685
+push ecx	; 11686
+push edx	; 11687
+push esi	; 11688
+push edi	; 11689
+push ebp	; 1168A
+sub esp, byte 20h	; 1168B
+call TicksSinceLastCall	; 1168E
+.1:
+mov dword [joysampling], 1	; 11693
+cmp word [gameover], byte 0	; 1169D
+jne near .29	; 116A5
+.2:
+cmp word [exitgame], byte 0	; 116AB
+jne near .24	; 116B3
+call ResetInputSampling	; 116B9
+mov edx, eax	; 116BE
+shl eax, 2	; 116C0
+sub eax, edx	; 116C3
+add eax, eax	; 116C5
+mov ebp, dword [frameaccum]	; 116C7
+add ebp, eax	; 116CD
+mov dword [frameaccum], ebp	; 116CF
+mov ebx, 0Ah	; 116D5
+mov eax, ebp	; 116DA
+mov edx, ebp	; 116DC
+sar edx, 1Fh	; 116DE
+idiv ebx	; 116E1
+mov esi, eax	; 116E3
+mov eax, ebp	; 116E5
+mov edx, ebp	; 116E7
+sar edx, 1Fh	; 116E9
+idiv ebx	; 116EC
+mov dword [frameaccum], edx	; 116EE
+mov eax, esi	; 116F4
+call RunGameFrames	; 116F6
+mov eax, dword [camx-2]	; 116FB
+sar eax, 10h	; 11700
+add eax, byte 20h	; 11703
+mov dword [viewscrollx], eax	; 11706
+mov eax, dword [camy-2]	; 1170B
+sar eax, 10h	; 11710
+mov edx, 140h	; 11713
+sub edx, eax	; 11718
+lea eax, [byte edx-054h]	; 1171A
+mov dword [viewscrolly], eax	; 1171D
+mov eax, dword [viewscrollx]	; 11722
+cmp eax, byte 40h	; 11727
+jle short .3	; 1172A
+mov dword [viewscrollx], 40h	; 1172C
+jmp short .4	; 11736
+.3:
+test eax, eax	; 11738
+jge short .4	; 1173A
+xor ebx, ebx	; 1173C
+mov dword [viewscrollx], ebx	; 1173E
+.4:
+mov edi, dword [viewscrolly]	; 11744
+cmp edi, 1A8h	; 1174A
+jle short .5	; 11750
+mov dword [viewscrolly], 1A8h	; 11752
+jmp short .6	; 1175C
+.5:
+test edi, edi	; 1175E
+jge short .6	; 11760
+xor eax, eax	; 11762
+mov dword [viewscrolly], eax	; 11764
+.6:
+xor edx, edx	; 11769
+xor eax, eax	; 1176B
+call sub_6AF97	; 1176D
+call sub_6B008	; 11772
+mov edx, dword [viewscrolly]	; 11777
+mov eax, dword [viewscrollx]	; 1177D
+call SetRinkScroll	; 11782
+mov eax, dword [bgscrolly-2]	; 11787
+sar eax, 10h	; 1178C
+shl eax, 3	; 1178F
+mov edx, dword [scrolly-2]	; 11792
+sar edx, 10h	; 11798
+add edx, eax	; 1179B
+lea ecx, [dword edx+0A8h]	; 1179D
+mov ebx, dword [bgscrollx-2]	; 117A3
+sar ebx, 10h	; 117A9
+shl ebx, 3	; 117AC
+mov eax, dword [scrollx-2]	; 117AF
+sar eax, 10h	; 117B4
+add eax, ebx	; 117B7
+lea ebx, [dword eax+0140h]	; 117B9
+call sub_6AF52	; 117BF
+xor ebx, ebx	; 117C4
+mov dword [spritedrawcount], ebx	; 117C6
+mov edx, dword [viewscrolly-2]	; 117CC
+sar edx, 10h	; 117D2
+mov eax, dword [viewscrollx-2]	; 117D5
+sar eax, 10h	; 117DA
+call DrawRinkOverlays	; 117DD
+cmp word [fadeinpending], byte 0	; 117E2
+je short .7	; 117EA
+mov ax, word [joysampling]	; 117EC
+mov word [joysampling_save], ax	; 117F2
+mov dword [joysampling], ebx	; 117F8
+push savepal	; 117FE
+push dword 100h	; 11803
+push ebx	; 11808
+call sub_8FFB0	; 11809
+add esp, byte 0Ch	; 1180E
+mov ebx, 10h	; 11811
+mov edx, savepal	; 11816
+mov eax, 1	; 1181B
+call FadePalette	; 11820
+call FlushGSumQueue	; 11825
+mov eax, dword [joysampling_save-2]	; 1182A
+sar eax, 10h	; 1182F
+mov dword [joysampling], eax	; 11832
+.7:
+movsx eax, si	; 11837
+call Crowd_Noise	; 1183A
+cmp dword [penshotlive], byte 0	; 1183F
+je short .8	; 11846
+xor edi, edi	; 11848
+mov dword [hudhundstep], edi	; 1184A
+jmp near .9	; 11850
+.8:
+mov edx, dword [hudhundaccum]	; 11855
+mov ebx, 18h	; 1185B
+mov eax, edx	; 11860
+sar edx, 1Fh	; 11862
+idiv ebx	; 11865
+mov dword [hudhundstep], eax	; 11867
+mov eax, dword [hudhundaccum]	; 1186C
+mov edx, eax	; 11871
+sar edx, 1Fh	; 11873
+idiv ebx	; 11876
+mov dword [hudhundaccum], edx	; 11878
+cmp word [exitgame], byte 0	; 1187E
+je short .9	; 11886
+mov edx, dword [gameclock-2]	; 11888
+sar edx, 10h	; 1188E
+mov eax, dword [clockticks-2]	; 11891
+sar eax, 10h	; 11896
+or eax, edx	; 11899
+jne short .9	; 1189B
+mov edx, dword [hudclockmin]	; 1189D
+mov eax, edx	; 118A3
+shl eax, 4	; 118A5
+sub eax, edx	; 118A8
+shl eax, 2	; 118AA
+mov edx, dword [hudclocksec]	; 118AD
+add edx, eax	; 118B3
+mov eax, edx	; 118B5
+shl eax, 2	; 118B7
+sub eax, edx	; 118BA
+shl eax, 3	; 118BC
+add eax, edx	; 118BF
+shl eax, 2	; 118C1
+mov edx, dword [hudclockhund]	; 118C4
+add eax, edx	; 118CA
+mov dword [hudhundstep], eax	; 118CC
+.9:
+call UpdateHudPanel	; 118D1
+mov edx, dword [bgscrolly-2]	; 118D6
+sar edx, 10h	; 118DC
+shl edx, 3	; 118DF
+mov eax, dword [scrolly-2]	; 118E2
+sar eax, 10h	; 118E7
+add edx, eax	; 118EA
+neg edx	; 118EC
+mov ebx, dword [bgscrollx-2]	; 118EE
+sar ebx, 10h	; 118F4
+shl ebx, 3	; 118F7
+mov eax, dword [scrollx-2]	; 118FA
+sar eax, 10h	; 118FF
+add eax, ebx	; 11902
+neg eax	; 11904
+call sub_6AF97	; 11906
+call sub_6ADA7	; 1190B
+cmp word [fadeinpending], byte 0	; 11910
+je short .10	; 11918
+mov ax, word [joysampling]	; 1191A
+mov word [joysampling_save], ax	; 11920
+xor ebp, ebp	; 11926
+mov dword [joysampling], ebp	; 11928
+mov ebx, 10h	; 1192E
+mov edx, gamepal	; 11933
+xor eax, eax	; 11938
+call FadePalette	; 1193A
+xor esi, esi	; 1193F
+mov word [fadeinpending], si	; 11941
+mov eax, dword [joysampling_save-2]	; 11948
+sar eax, 10h	; 1194D
+mov dword [joysampling], eax	; 11950
+.10:
+cmp dword [escrequest], byte 0	; 11955
+je near .23	; 1195C
+mov edx, dword [demomode]	; 11962
+test edx, edx	; 11968
+je short .11	; 1196A
+mov ebx, 10h	; 1196C
+mov edx, gamepal	; 11971
+mov eax, 1	; 11976
+call FadePalette	; 1197B
+mov dword [gameresult], 2	; 11980
+jmp near .30	; 1198A
+.11:
+mov ax, word [joysampling]	; 1198F
+mov word [joysampling_save], ax	; 11995
+mov dword [joysampling], edx	; 1199B
+cmp byte [pad1dev], 1	; 119A1
+je short .12	; 119A8
+cmp byte [pad2dev], 1	; 119AA
+jne short .13	; 119B1
+.12:
+mov eax, dword [mousex]	; 119B3
+mov dword [savedmousex], eax	; 119B8
+mov eax, dword [mousey]	; 119BD
+mov dword [savedmousey], eax	; 119C2
+.13:
+call CrowdFadeOut	; 119C7
+cmp byte [musicon], 0	; 119CC
+je short .14	; 119D3
+call MusicChanReset	; 119D5
+jmp short .15	; 119DA
+.14:
+call sub_8F633	; 119DC
+.15:
+call StopDigiSample	; 119E1
+call SpeechStopQueue	; 119E6
+call FlushGSumQueue	; 119EB
+mov ecx, dword [s1font]	; 119F0
+push ecx	; 119F6
+call sub_8EA18	; 119F7
+add esp, byte 4	; 119FC
+push savepal	; 119FF
+push dword 100h	; 11A04
+push byte 0	; 11A09
+call sub_8FFB0	; 11A0B
+add esp, byte 0Ch	; 11A10
+mov ebx, 10h	; 11A13
+mov edx, savepal	; 11A18
+mov eax, 1	; 11A1D
+call FadePalette	; 11A22
+mov edx, 1E0h	; 11A27
+mov eax, 280h	; 11A2C
+call SetScreenSize	; 11A31
+xor eax, eax	; 11A36
+call SportsDesk	; 11A38
+cmp dword [gameresult], byte 2	; 11A3D
+je near .30	; 11A44
+mov edx, 0C8h	; 11A4A
+mov eax, 140h	; 11A4F
+call SetScreenSize	; 11A54
+cmp byte [pad1dev], 1	; 11A59
+je short .16	; 11A60
+cmp byte [pad2dev], 1	; 11A62
+jne short .17	; 11A69
+.16:
+mov edi, dword [savedmousey]	; 11A6B
+push edi	; 11A71
+mov ebp, dword [savedmousex]	; 11A72
+push ebp	; 11A78
+call MouseSetPos	; 11A79
+add esp, byte 8	; 11A7E
+.17:
+mov word [fadeinpending], 1	; 11A81
+xor eax, eax	; 11A8A
+mov dword [escrequest], eax	; 11A8C
+mov eax, dword [VisTeam-2]	; 11A91
+sar eax, 10h	; 11A96
+mov edx, dword [nosplit eax*4+teamabbrevs]	; 11A99
+mov eax, dword [HomeTeam-2]	; 11AA0
+sar eax, 10h	; 11AA5
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11AA8
+call PaPreloadClips	; 11AAF
+mov ebx, dword [curperiod]	; 11AB4
+mov edx, dword [VisTeam-2]	; 11ABA
+sar edx, 10h	; 11AC0
+mov eax, dword [HomeTeam-2]	; 11AC3
+sar eax, 10h	; 11AC8
+xor ecx, ecx	; 11ACB
+call DrawHudPanel	; 11ACD
+mov eax, dword [ovlseq-2]	; 11AD2
+sar eax, 10h	; 11AD7
+add dword [rinkscrollx], 3E8h	; 11ADA
+add dword [rinkscrolly], 3E8h	; 11AE4
+cmp eax, byte 0FFFFFFFFh	; 11AEE
+je near .22	; 11AF1
+mov edx, dword [ovlstep-2]	; 11AF7
+sar edx, 10h	; 11AFD
+cmp edx, byte 0FFFFFFFFh	; 11B00
+je near .22	; 11B03
+cmp dword [dword_E0244], byte 0	; 11B09
+jne near .22	; 11B10
+mov ecx, str_PPV	; 11B16
+mov ebx, dword [nosplit eax*4+off_CBED0]	; 11B1B
+mov eax, dword [nosplit eax*4+dword_CC080]	; 11B22
+cmp byte [dword eax+fileoncd], 1	; 11B29
+jne short .18	; 11B30
+mov edx, dword [cddriveptr]	; 11B32
+jmp short .19	; 11B38
+.18:
+xor edx, edx	; 11B3A
+.19:
+mov eax, esp	; 11B3C
+call MakePath	; 11B3E
+push byte 20h	; 11B43
+lea eax, [byte esp+04h]	; 11B45
+push eax	; 11B49
+call sub_8E8A0	; 11B4A
+add esp, byte 8	; 11B4F
+mov dword [dword_E0244], eax	; 11B52
+xor esi, esi	; 11B57
+jmp short .21	; 11B59
+.20:
+push esi	; 11B5B
+mov ebp, dword [dword_E0244]	; 11B5C
+push ebp	; 11B62
+call sub_9035C	; 11B63
+add esp, byte 8	; 11B68
+mov dword [nosplit esi*4+dword_DEF8C], eax	; 11B6B
+inc esi	; 11B72
+.21:
+mov edi, dword [dword_E0244]	; 11B73
+push edi	; 11B79
+call sub_90354	; 11B7A
+add esp, byte 4	; 11B7F
+cmp esi, eax	; 11B82
+jl short Gameloop.20	; 11B84
+.22:
+mov eax, dword [joysampling_save-2]	; 11B86
+sar eax, 10h	; 11B8B
+mov dword [joysampling], eax	; 11B8E
+call joyq_flush	; 11B93
+.23:
+cmp dword [deferpending], byte 0	; 11B98
+je near Gameloop.2	; 11B9F
+mov ax, word [joysampling]	; 11BA5
+mov word [joysampling_save], ax	; 11BAB
+xor edx, edx	; 11BB1
+mov dword [joysampling], edx	; 11BB3
+call RunDeferredCalls	; 11BB9
+mov dword [deferpending], edx	; 11BBE
+mov eax, dword [joysampling_save-2]	; 11BC4
+sar eax, 10h	; 11BC9
+mov dword [joysampling], eax	; 11BCC
+call joyq_flush	; 11BD1
+jmp near Gameloop.2	; 11BD6
+.24:
+xor esi, esi	; 11BDB
+mov dword [joysampling], esi	; 11BDD
+cmp dword [demomode], byte 0	; 11BE3
+je short .25	; 11BEA
+mov ebx, 10h	; 11BEC
+mov edx, gamepal	; 11BF1
+mov eax, 1	; 11BF6
+call FadePalette	; 11BFB
+mov dword [gameresult], 1	; 11C00
+jmp near .30	; 11C0A
+.25:
+call PeriodOver	; 11C0F
+cmp dword [gameresult], byte 2	; 11C14
+je near .30	; 11C1B
+cmp word [gameover], byte 0	; 11C21
+jne short .26	; 11C29
+call SelectScreenBM	; 11C2B
+mov edx, dword [VisTeam-2]	; 11C30
+sar edx, 10h	; 11C36
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 11C39
+mov eax, dword [HomeTeam-2]	; 11C40
+sar eax, 10h	; 11C45
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11C48
+call PaPreloadClips	; 11C4F
+mov ebx, dword [curperiod]	; 11C54
+mov edx, dword [VisTeam-2]	; 11C5A
+sar edx, 10h	; 11C60
+mov eax, dword [HomeTeam-2]	; 11C63
+sar eax, 10h	; 11C68
+mov ecx, 1	; 11C6B
+call DrawHudPanel	; 11C70
+xor eax, eax	; 11C75
+call PlayCrowdSample	; 11C77
+.26:
+cmp byte [pad1dev], 1	; 11C7C
+je short .27	; 11C83
+cmp byte [pad2dev], 1	; 11C85
+jne short .28	; 11C8C
+.27:
+push byte 64h	; 11C8E
+push dword 0A0h	; 11C90
+call MouseSetPos	; 11C95
+add esp, byte 8	; 11C9A
+.28:
+xor esi, esi	; 11C9D
+mov word [lcrequest+2], si	; 11C9F
+mov word [lcrequest], si	; 11CA6
+xor eax, eax	; 11CAD
+mov dword [deferpending], eax	; 11CAF
+xor edx, edx	; 11CB4
+mov dword [inputframes], eax	; 11CB6
+xor eax, eax	; 11CBB
+mov word [exitgame], ax	; 11CBD
+xor ebx, ebx	; 11CC3
+mov dword [frameaccum], ebx	; 11CC5
+mov dword [hudhundaccum], edx	; 11CCB
+call joyq_flush	; 11CD1
+jmp near Gameloop.1	; 11CD6
+.29:
+xor ebx, ebx	; 11CDB
+mov dword [joysampling], ebx	; 11CDD
+call FlushGSumQueue	; 11CE3
+call StartThreeStars	; 11CE8
+call PostGameDesk	; 11CED
+mov dword [gameresult], 1	; 11CF2
+.30:
+call sub_1B982	; 11CFC
+add esp, byte 20h	; 11D01
+jmp near HandleHotKey_ret	; 11D04
+; C: src/c/front/main/HandleHotKey.c (PlayGame)
+%ifdef CBUILD
+%include "c/front/main/HandleHotKey.PlayGame.inc"
+%else
+PlayGame:
+push dword 64h	; 11D09
+call __CHK	; 11D0E
+push ebx	; 11D13
+push ecx	; 11D14
+push edx	; 11D15
+push esi	; 11D16
+push edi	; 11D17
+push ebp	; 11D18
+sub esp, byte 40h	; 11D19
+mov edx, eax	; 11D1C
+cmp dword [eax], byte 0	; 11D1E
+jge near .4	; 11D21
+call LoadRockMusic	; 11D27
+call LoadGameGfx	; 11D2C
+mov edx, dword [VisTeam-2]	; 11D31
+sar edx, 10h	; 11D37
+mov eax, dword [HomeTeam-2]	; 11D3A
+sar eax, 10h	; 11D3F
+mov ebx, gamepal	; 11D42
+call LoadTeamPalette	; 11D47
+call FadeOutPalCycle	; 11D4C
+mov edx, 0C8h	; 11D51
+mov eax, 140h	; 11D56
+call SetScreenSize	; 11D5B
+cmp word [HomeTeam], byte 1Ah	; 11D60
+jl short .1	; 11D68
+mov eax, 0Ch	; 11D6A
+jmp short .2	; 11D6F
+.1:
+mov eax, dword [HomeTeam-2]	; 11D71
+sar eax, 10h	; 11D76
+.2:
+call LoadRink	; 11D79
+xor esi, esi	; 11D7E
+mov dword [rinkscrolly], esi	; 11D80
+mov dword [rinkscrollx], esi	; 11D86
+call SetupGame	; 11D8C
+test eax, eax	; 11D91
+jge short .3	; 11D93
+mov dword [gameresult], 2	; 11D95
+call sub_1B982	; 11D9F
+call sub_B4BA8	; 11DA4
+jmp near .15	; 11DA9
+.3:
+call SetupGoalieMenu	; 11DAE
+jmp near .14	; 11DB3
+.4:
+test byte [gameopts+1], 2	; 11DB8
+jne short .5	; 11DBF
+call LoadCupFinalSeries	; 11DC1
+.5:
+mov eax, dword [edx]	; 11DC6
+call LoadGameState	; 11DC8
+mov eax, edx	; 11DCD
+call FileClose	; 11DCF
+mov dword [edx], 0FFFFFFFFh	; 11DD4
+call BuildDefaultLines	; 11DDA
+call NormalizeDressFlags	; 11DDF
+xor eax, eax	; 11DE4
+call SetupTeamLines	; 11DE6
+mov eax, 1	; 11DEB
+call SetupTeamLines	; 11DF0
+call MakeGSummaryPath	; 11DF5
+call CrowdNoiseReset	; 11DFA
+call SetupGoalieMenu	; 11DFF
+mov eax, dword [exitgame-2]	; 11E04
+sar eax, 10h	; 11E09
+cmp eax, byte 0FFFFFFFFh	; 11E0C
+je near .14	; 11E0F
+call FadeOutPalCycle	; 11E15
+xor ecx, ecx	; 11E1A
+mov dword [gameresult], ecx	; 11E1C
+xor eax, eax	; 11E22
+call SportsDesk	; 11E24
+cmp dword [gameresult], byte 2	; 11E29
+jne short .6	; 11E30
+call sub_1B982	; 11E32
+jmp near .16	; 11E37
+.6:
+mov edx, 0C8h	; 11E3C
+mov eax, 140h	; 11E41
+call SetScreenSize	; 11E46
+cmp byte [pad1dev], 1	; 11E4B
+je short .7	; 11E52
+cmp byte [pad2dev], 1	; 11E54
+jne short .8	; 11E5B
+.7:
+mov edi, dword [savedmousey]	; 11E5D
+push edi	; 11E63
+mov ebp, dword [savedmousex]	; 11E64
+push ebp	; 11E6A
+call MouseSetPos	; 11E6B
+add esp, byte 8	; 11E70
+.8:
+mov word [fadeinpending], 1	; 11E73
+xor eax, eax	; 11E7C
+mov dword [escrequest], eax	; 11E7E
+mov ebx, dword [curperiod]	; 11E83
+mov edx, dword [VisTeam-2]	; 11E89
+sar edx, 10h	; 11E8F
+mov eax, dword [HomeTeam-2]	; 11E92
+sar eax, 10h	; 11E97
+xor ecx, ecx	; 11E9A
+call DrawHudPanel	; 11E9C
+mov eax, dword [ovlseq-2]	; 11EA1
+sar eax, 10h	; 11EA6
+add dword [rinkscrollx], 3E8h	; 11EA9
+add dword [rinkscrolly], 3E8h	; 11EB3
+cmp eax, byte 0FFFFFFFFh	; 11EBD
+je near .13	; 11EC0
+mov edx, dword [ovlstep-2]	; 11EC6
+sar edx, 10h	; 11ECC
+cmp edx, byte 0FFFFFFFFh	; 11ECF
+je near .13	; 11ED2
+cmp dword [dword_E0244], byte 0	; 11ED8
+jne short .13	; 11EDF
+mov ecx, str_PPV	; 11EE1
+mov ebx, dword [nosplit eax*4+off_CBED0]	; 11EE6
+mov eax, dword [nosplit eax*4+dword_CC080]	; 11EED
+cmp byte [dword eax+fileoncd], 1	; 11EF4
+jne short .9	; 11EFB
+mov edx, dword [cddriveptr]	; 11EFD
+jmp short .10	; 11F03
+.9:
+xor edx, edx	; 11F05
+.10:
+mov eax, esp	; 11F07
+call MakePath	; 11F09
+push byte 20h	; 11F0E
+lea eax, [byte esp+04h]	; 11F10
+push eax	; 11F14
+call sub_8E8A0	; 11F15
+add esp, byte 8	; 11F1A
+mov dword [dword_E0244], eax	; 11F1D
+xor esi, esi	; 11F22
+jmp short .12	; 11F24
+.11:
+push esi	; 11F26
+mov edx, dword [dword_E0244]	; 11F27
+push edx	; 11F2D
+call sub_9035C	; 11F2E
+add esp, byte 8	; 11F33
+mov dword [nosplit esi*4+dword_DEF8C], eax	; 11F36
+inc esi	; 11F3D
+.12:
+mov eax, dword [dword_E0244]	; 11F3E
+push eax	; 11F43
+call sub_90354	; 11F44
+add esp, byte 4	; 11F49
+cmp esi, eax	; 11F4C
+jl short PlayGame.11	; 11F4E
+.13:
+mov edx, dword [VisTeam-2]	; 11F50
+sar edx, 10h	; 11F56
+mov edx, dword [nosplit edx*4+teamabbrevs]	; 11F59
+mov eax, dword [HomeTeam-2]	; 11F60
+sar eax, 10h	; 11F65
+mov eax, dword [nosplit eax*4+teamabbrevs]	; 11F68
+call PaPreloadClips	; 11F6F
+.14:
+xor ebx, ebx	; 11F74
+mov dword [introskipped], ebx	; 11F76
+mov dword [gameresult], ebx	; 11F7C
+call joyq_flush	; 11F82
+call Gameloop	; 11F87
+call ResetGoalieMenu	; 11F8C
+cmp dword [gamemode], byte 0	; 11F91
+je short .15	; 11F98
+cmp dword [gameresult], byte 1	; 11F9A
+jne short .15	; 11FA1
+and byte [gameopts+1], 7Fh	; 11FA3
+mov edx, curleague	; 11FAA
+lea eax, [byte esp+020h]	; 11FAF
+call strcpy_	; 11FB3
+mov edx, str_backslash	; 11FB8
+lea eax, [byte esp+020h]	; 11FBD
+call strcat_	; 11FC1
+mov edx, str_GameSav2	; 11FC6
+lea eax, [byte esp+020h]	; 11FCB
+call strcat_	; 11FCF
+lea eax, [byte esp+020h]	; 11FD4
+call j_unlink_	; 11FD8
+.15:
+mov edx, 1E0h	; 11FDD
+mov eax, 280h	; 11FE2
+call SetScreenSize	; 11FE7
+.16:
+add esp, byte 40h	; 11FEC
+jmp near HandleHotKey_ret	; 11FEF
+%endif ; C
+; C: src/c/front/main/assreplace.c
+%ifdef CBUILD
+%include "c/front/main/assreplace.inc"
+%else
+assreplace:
+push dword 8	; 11FF4
+call __CHK	; 11FF9
+push ebx	; 11FFE
+mov ebx, edx	; 11FFF
+mov edx, dword [byte eax+01Ah]	; 12001
+sar edx, 10h	; 12004
+mov byte [byte edx+eax+01Eh], bl	; 12007
+or byte [byte eax+044h], 2	; 1200B
+pop ebx	; 1200F
+ret	; 12010
+%endif ; C
+; C: src/c/front/main/assinsert.c
+%ifdef CBUILD
+%include "c/front/main/assinsert.inc"
+%else
+assinsert:
+push dword 8	; 12011
+call __CHK	; 12016
+push ebx	; 1201B
+mov bx, word [byte eax+01Ch]	; 1201C
+dec ebx	; 12020
+xor bh, bh	; 12021
+and bl, 7	; 12023
+mov word [byte eax+01Ch], bx	; 12026
+movsx edx, dx	; 1202A
+call assreplace	; 1202D
+pop ebx	; 12032
+ret	; 12033
+%endif ; C
+; C: src/c/front/main/ReplayIsEmpty.c
+%ifdef CBUILD
+%include "c/front/main/ReplayIsEmpty.inc"
+%else
+ReplayIsEmpty:
+push dword 4	; 12034
+call __CHK	; 12039
+mov eax, dword [recbpr]	; 1203E
+cmp eax, dword [replaystart]	; 12043
+jne short .1	; 12049
+test byte [sflags], 10h	; 1204B
+jne short .1	; 12052
+mov eax, 1	; 12054
+ret	; 12059
+.1:
+xor eax, eax	; 1205A
+ret	; 1205C
+%endif ; C

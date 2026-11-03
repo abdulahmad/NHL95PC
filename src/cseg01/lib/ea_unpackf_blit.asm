@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
-extern asc_C48FC, asc_C4904, byte_D506C, cliprect_x0, cliprect_x1, dword_D5064, dword_D5068, fputchar
-extern FreeMemBlock, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, DebugPrintf, sub_A2FD0
+extern asc_C48FC, asc_C4904, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
+extern fputchar, FreeMemBlock, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, sub_A2FD0
 extern sub_A3050, sub_A30D0, sub_B3ABC, sub_B7218
-global loc_9C5A4, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE, loc_9C70C, loc_9C71B, loc_9C72B
-global loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873, loc_9C880, loc_9C924, loc_9C969
-global loc_9C97D, loc_9C97F, loc_9C991, loc_9C9C1, loc_9C9D3, loc_9CA00, loc_9CA2B, loc_9CA3B
-global loc_9CA60, sub_9C594, sub_9C5A8, sub_9C5B0, sub_9C890, sub_9C8D0, sub_9C8E8, sub_9CA6C
+global sub_9C594, loc_9C5A4, sub_9C5A8, sub_9C5B0, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
+global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
+global loc_9C880, sub_9C890, sub_9C8D0, sub_9C8E8, loc_9C924, loc_9C969, loc_9C97D, loc_9C97F
+global loc_9C991, loc_9C9C1, loc_9C9D3, loc_9CA00, loc_9CA2B, loc_9CA3B, loc_9CA60, sub_9CA6C
 global sub_9CA90, sub_9CAB4, sub_9CADC, sub_9CB00, sub_9CB24, sub_9CB4C, sub_9CB70, sub_9CB94
 global sub_9CBBC, sub_9CBE0, sub_9CC04, sub_9CC2C, sub_9CC50, sub_9CC74, sub_9CC9C, sub_9CCC0
 global sub_9CCE4, sub_9CD0C, sub_9CD30, sub_9CD54, sub_9CD7C, sub_9CDA0, sub_9CDC4, sub_9CDEC

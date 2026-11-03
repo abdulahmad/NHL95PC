@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern asc_C3D60, dword_D2F58, dword_D2F64, memlist1, dword_EDAAC, dword_EDAB0, dword_EDAB4, sub_8CD4C
-extern findmemblock, sub_8E3F8, sub_8E44C, sub_986E4, FatalError, sub_B3ABC, unknown_libname_22
-global loc_8D340, loc_8D379, loc_8D38E, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E
-global loc_8D521, loc_8D53A, loc_8D542, loc_8D591, loc_8D5B0, loc_8D5B8, loc_8D640, loc_8D653
-global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, loc_8D727
-global loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, loc_8D85F, loc_8D861, loc_8D874, loc_8D87F
-global loc_8D88C, loc_8D898, loc_8D8AB, loc_8D8EC, loc_8D93F, loc_8D946, loc_8D94E, loc_8D9A6
-global loc_8D9AC, loc_8D9C0, loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F
-global loc_8DAAD, loc_8DB05, loc_8DB12, loc_8DB39, loc_8DB42, loc_8DB49, loc_8DB60, loc_8DB6D
-global loc_8DBB1, sub_8D2F0, sub_8D31C, sub_8D344, sub_8D35C, sub_8D3A0, sub_8D3D4, sub_8D468
-global sub_8D484, sub_8D494, sub_8D4B0, sub_8D4E8, sub_8D548, sub_8D558, sub_8D5C0, sub_8D5D0
-global sub_8D604, sub_8D714, sub_8D728, sub_8D80C, sub_8D844, sub_8D958, sub_8D990, sub_8DA98
-global sub_8DAB8, sub_8DAE4, sub_8DB20, sub_8DB2C, sub_8DB4C, sub_8DB78, sub_8DB8C, sub_8DBC0
+extern asc_C3D60, dword_D2F58, dword_D2F64, dword_EDAAC, dword_EDAB0, dword_EDAB4, FatalError, findmemblock
+extern memlist1, sub_8CD4C, sub_8E3F8, sub_8E44C, sub_986E4, sub_B3ABC, unknown_libname_22
+global sub_8D2F0, sub_8D31C, loc_8D340, sub_8D344, sub_8D35C, loc_8D379, loc_8D38E, sub_8D3A0
+global sub_8D3D4, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, sub_8D468, sub_8D484
+global sub_8D494, sub_8D4B0, sub_8D4E8, loc_8D521, loc_8D53A, loc_8D542, sub_8D548, sub_8D558
+global loc_8D591, loc_8D5B0, loc_8D5B8, sub_8D5C0, sub_8D5D0, sub_8D604, loc_8D640, loc_8D653
+global loc_8D670, loc_8D683, loc_8D697, loc_8D6AA, loc_8D6D8, loc_8D708, loc_8D70A, sub_8D714
+global loc_8D727, sub_8D728, loc_8D78F, loc_8D79E, loc_8D7EA, loc_8D803, sub_8D80C, sub_8D844
+global loc_8D85F, loc_8D861, loc_8D874, loc_8D87F, loc_8D88C, loc_8D898, loc_8D8AB, loc_8D8EC
+global loc_8D93F, loc_8D946, loc_8D94E, sub_8D958, sub_8D990, loc_8D9A6, loc_8D9AC, loc_8D9C0
+global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, sub_8DA98, loc_8DAAD
+global sub_8DAB8, sub_8DAE4, loc_8DB05, loc_8DB12, sub_8DB20, sub_8DB2C, loc_8DB39, loc_8DB42
+global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, sub_8DB8C, loc_8DBB1, sub_8DBC0
 global sub_8DBD4, sub_8DBDC
 sub_8D2F0:
 mov edx, dword [dword_EDAB0]	; 8D2F0

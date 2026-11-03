@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_9FD94 progbits alloc exec nowrite align=1
-extern byte_D5279, byte_D527A, dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270, dword_D5274
-extern __GETDS
-global loc_9FE46, loc_9FEBE, loc_9FECC, loc_9FED3, loc_9FEDE, loc_9FEEC, loc_9FF00, loc_9FF02
-global loc_9FF11, loc_9FF17, loc_9FF1D, loc_9FF23, loc_9FF27, loc_9FF2B, loc_9FF31, loc_9FF35
-global loc_9FF3B, loc_9FF3F, loc_9FF4B, loc_9FF51, loc_9FF60, loc_9FF6E, loc_9FF77, loc_9FF86
-global loc_9FF94, loc_9FF9E, loc_9FFB2, loc_9FFC1, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B
-global sub_9FE94, sub_9FEB0, sub_9FF04, sub_9FF55, sub_9FF78, sub_9FFA0, sub_9FFA6
+extern __GETDS, byte_D5279, byte_D527A, dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270
+extern dword_D5274
+global sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, loc_9FE46, sub_9FE94, sub_9FEB0, loc_9FEBE
+global loc_9FECC, loc_9FED3, loc_9FEDE, loc_9FEEC, loc_9FF00, loc_9FF02, sub_9FF04, loc_9FF11
+global loc_9FF17, loc_9FF1D, loc_9FF23, loc_9FF27, loc_9FF2B, loc_9FF31, loc_9FF35, loc_9FF3B
+global loc_9FF3F, loc_9FF4B, loc_9FF51, sub_9FF55, loc_9FF60, loc_9FF6E, loc_9FF77, sub_9FF78
+global loc_9FF86, loc_9FF94, loc_9FF9E, sub_9FFA0, sub_9FFA6, loc_9FFB2, loc_9FFC1
 sub_9FD94:
 mov eax, 70330h	; 9FD94
 ret	; 9FD99

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90392 progbits alloc exec nowrite align=1
 extern unlink_
-global j_unlink_, loc_90394, loc_903AE, loc_903C4, loc_903E0, strcat_, strcpy_
+global strcpy_, loc_90394, loc_903AE, strcat_, loc_903C4, loc_903E0, j_unlink_
 strcpy_:
 push ecx	; 90392
 push eax	; 90393

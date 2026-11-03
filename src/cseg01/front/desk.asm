@@ -2,33 +2,32 @@
 bits 32
 %include "hockey.inc"
 section s_18D7F progbits alloc exec nowrite align=1
-extern StartHL2, __CHK, str_PleaseEnterOutputFile, str_Eadesk1d, str_Desk, str_Pal5, str_Pointer2, str_Iff3
-extern str_Pause, str_Menubuff3, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn, str_DoYouWishToExit
-extern hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, byte_CCCA0, musicon, othergames
-extern othergamesb, otherscores, otherscoresb, joysampling, escrequest, gameresult, fileoncd
-extern gamemode, gameopts, ctl1team, ctl2team, teamconf, deferpending, hlplayedmask, dword_C66A4
-extern dword_C66AC, dword_C66D0, dword_C66D4, boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
-extern songdata, cont2team, HomeTeam, dword_CCC9D, musichandle, cddriveptr, bailout_vec, musicslot
-extern curperiod, s1font, schedgameidx, pointerspr, dword_DC868, dword_DC888, dword_DC88C, otherperiod
-extern ptrupdatefn, FreeMemBlock, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone
-extern off_CEF23, mousepollfn, randomd0, sprintf_, SetScreenSize, FadePalette, ReplayIsEmpty, LoadPlayerPhotos
-extern MakePath, ShowCredits, WriteScreenTextFile, sub_1B982, sub_1BAF3, SetScreenTitle, GameSummaryScreen, PickOtherGames
-extern UpdateOtherScores, GameStatsScreen, TextInputDialog, SetDialogColors, MessageBox, LoadRink, WaitClickTimeout, ShowLoadingScreen
-extern FadeOutPalCycle, PaPlayoffResult, PaOpenBank, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, SetTeamGoalie
-extern GetInputEvent, ClearInputQueue, InputInstall, InputRemove, DrawMenuBar, DrawMenuDropdown, DrawMenuItemSel, DrawMenuItemNorm
-extern MenuHitTest, FadePalStep, GameLineEditor, InstantReplay, SetModeMenuLabels, SpeechBusy, MusicChanReset, SayNowBack
-extern FreeNowBack, SayBackMoment, FreeBackMoment, CoachCutScene, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8
-extern sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
-extern sub_9061C, sub_91370, sub_91400, MouseSetPos, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
-extern TicksSinceLastCall, sub_B4B58, sub_B4BA8, sub_B4FAC, unk_CEB8F, unk_CEC4F, unk_CF2EF, btn_POHumanOut
-extern awlinetab, hmlinetab, unk_DC890, savepal, VisTeam, word_CBC44, exitgame, scrolly
-extern scrollx, hmscore, awscore
-global DeskGoToReplay, DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, MenuCallbackTrue2
-global DeskLines_common
-global DeskSummary_common, DeskItem_ret2, DeskGoalie_x1, DeskGoalie_x2, DeskGoalie_x3, DeskGoalie_x4, OutputCurrentData, DrawDeskFrames
-global MenuCallbackTrue, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk, DeskReloadGame, DeskBackToGame, DeskToSportsDesk
-global DeskReturnConfirm, DeskExitGame, DeskScoringSummary, DeskTeamScratches, DeskHomeGoalie1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskAwayGoalie1
-global DeskAwayGoalie2, DeskAwayGoalieNone
+extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
+extern boxshadecolor, btn_POHumanOut, byte_CCCA0, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
+extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
+extern DrawMenuItemSel, dword_C66A4, dword_C66AC, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, dword_DC888
+extern dword_DC88C, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
+extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, gameopts, gameresult, GameStatsScreen
+extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
+extern InputInstall, InputRemove, InstantReplay, joysampling, LoadPlayerPhotos, LoadRink, MakePath, MenuHitTest
+extern MessageBox, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mousepollfn
+extern MouseSetPos, MusicChanReset, musichandle, musicon, musicslot, off_CEF23, othergames, othergamesb
+extern otherperiod, otherscores, otherscoresb, PaOpenBank, PaPlayoffResult, PickOtherGames, pointerspr, ptrupdatefn
+extern randomd0, ReadGSumHeader, ReadGSumTail, ReplayIsEmpty, s1font, savepal, SayBackMoment, SayNowBack
+extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetScreenSize, SetScreenTitle, SetTeamGoalie
+extern ShowCredits, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, StartHL2, str_Desk, str_DoYouWishToExit
+extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Menubuff3, str_Pal5, str_Pause, str_PleaseEnterOutputFile
+extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, sub_8CCA8, sub_8D2F0
+extern sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_91400, sub_B2DCA, sub_B2E1B, sub_B30B4
+extern sub_B392C, sub_B4B58, sub_B4BA8, sub_B4FAC, teamconf, TextInputDialog, TicksSinceLastCall, unk_CEB8F
+extern unk_CEC4F, unk_CF2EF, unk_DC890, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
+extern WriteScreenTextFile
+global OutputCurrentData, DrawDeskFrames, MenuCallbackTrue, MenuCallbackTrue2, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk
+global DeskReloadGame, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, DeskGoToReplay, DeskHomeLines, DeskLines_common
+global DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskSummary_common, DeskItem_ret2, DeskTeamScratches, DeskHomeGoalie1
+global DeskGoalie_x1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskGoalie_x2, DeskAwayGoalie1, DeskGoalie_x3, DeskGoalie_x4, DeskAwayGoalie2
+global DeskAwayGoalieNone
 ; C: src/c/front/desk/OutputCurrentData.c
 %ifdef CBUILD
 %include "c/front/desk/OutputCurrentData.inc"

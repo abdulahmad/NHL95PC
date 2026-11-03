@@ -1,59 +1,639 @@
-; Edit Rosters and Create Player. Lines, free agents, ratings, which hand a player shoots with, and his jersey number.
+; Edit Rosters and Create Player. The roster panel, lines, free agents, ratings, which hand a player
+; shoots with, and his jersey number (95G front/create95).
 bits 32
 %include "hockey.inc"
-section s_6D2F8 progbits alloc exec nowrite align=1
-extern __CHK, __CHP, _dos_getdiskfree_, str_Prez2, str_Pal, str_ea, str_Uar, str_Uarm, byte_C4B6C
-extern str_TheJerseyNumber2d, str_PleaseEnterANew, str_Menubuff, str_TheDatabaseHasNot, str_AreYouSureYou, str_ErrorsFoundInDatabases, str_TheForwardLinesAre, str_TheDefenceLinesAre
-extern str_ThePowerPlayLines, str_ThePenaltyKillingLines, str_TheGoalieLinesAre, str_TheExtraAttackerLines, str_NotEnoughPlayers, str_NotEnoughGoalies, str_NotEnoughForwards, str_NotEnoughDefence
-extern str_Shoots, str_spL, str_spR, str_GloveHand, str_EnterANewRating, str_RatingRange, str_ShootsLeftOrRight, str_NotEnoughRatingUnits
-extern str_GloveHandLeftOr, str_Prez22, str_Pal2, str_ea2, str_Pstatbar, str_Pst2, str_FreeAgent, str_fmtSS
-extern str_fmtD, str_Center, str_Defence, str_LeftWing, str_RightWing, str_Goalie, str_RatingUnitsAvailable3d, str_Temp
-extern str_ErrDiskFree, str_3dKbytesOfFree, str_NotEnoughSpaceTo, str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_EnterAPositionFor, str_LCRD
-extern str_EnterAJerseyNumber, str_NotEnoughSpaceFA, str_InTheFreeAgent, str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies
-extern str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList, str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist
-extern str_fmt2d, str_fmt3d, str_TMP, str_Ratings, str_ThereIsNoSpace, str_TheSelectedPlayer, str_NotEnoughSpaceTo2, str_AddAllSelectedPlayers
-extern str_ErrorWhileMakingNew, str_NewPlayer, str_NotAddedToDatabases, str_Move, str_ToFreeAgentList, str_CreateAPlayerOr, str_XXXKbytesOfFree, str_space
-extern divisionteams, rosterteam, rosterisfa, byte_D0AE6, byte_D0F94, byte_D0FE0
-extern musicon, byte_D42C3, rosterlist, rosterjersey, rosterslot, rosterstat, byte_EAC86, rostersel
-extern byte_EAF99, byte_EAFB5, dword_C2CAC, dword_C2CB0, dword_C2CB4, fileoncd
-extern dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-extern dword_C2CD8, dword_C2CDC, dword_C2CF0, dword_C4B69, teamdivflags, songdata, HomeTeam, roster1divmenus
-extern roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, falist, falistsel, facount
-extern seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
-extern carteamsdb_size, keydb_size, teamsdb_size, attdb_size, dword_D0B12, dword_D0C10, dword_D0C20, dword_D0CDA
-extern cddriveptr, kaufmfont, mainfont, pointerspr, ptrupdatefn, fullscrbmp, rosterteamptr, musicslot
-extern dword_EA994, rosterteamrec, dword_EAF7C, dbdirty, msglines, dword_EBCA4
-extern editptrspr, editrosters_exit, fputchar, j_unlink_, FreeMemBlock, RunEditRosters_ret6, RunEditRosters_ret5, memcpy_
-extern memset_, teamcitynames, leaguedbnames
-extern menu_r1_freeagents, menu_r2_freeagents, menu_r1_editlines, menu_r2_editlines, off_D0880, off_D08B9, off_D09DB, off_D0A04
-extern off_D0AC2, off_D1077, mousepollfn, qword_C2CE0, qword_C2CE8, randomd0, sprintf_, strcat_
-extern strcmp_, strcpy_, strlen_, strlwr_, strupr_, MakePath, FileOpenWrite, FileClose
-extern FileWriteAt, SetTextColors, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, ListDialog, TrackButtons
-extern DrawButtons, InitScrollBar, TrackScrollBars, MessageBox, GetInputEvent, ClearInputQueue, DrawMenuBar, DrawMenuDropdown
-extern DrawMenuItemSel, DrawMenuItemNorm, MenuHitTest, BuildFreeAgentList, BuildTeamRosterList, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr
-extern TeamRecPtr, KeyDbPtr, DrawRosterPanel, InputDialog, DbLineEditor, FadePalStep, DrawDlgFrame, sub_8CCA8
-extern sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8FC8A, sub_8FFB0, sub_903F0, sub_9061C
-extern sub_90D20, sub_90F38, sub_9121C, sub_91370, sub_913B4, sub_91400, sub_92DE0, sub_B2CBE
-extern FatalError, MouseSetPos, sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, SetDrawBitmap
-extern sub_B4FAC, sub_B5DB0, str_fmtpd, btn_LeagueExists, unk_D0450, unk_D05F4, unk_D0B80, unk_D0BB8
-extern unk_D0BF0, str_Two, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
-extern unk_D0FF0, unk_D1000, hmteamrec, savepal, unk_EA968, unk_EAC84, unk_EAFB8, word_C2D0E
-extern word_C2D10, VisTeam
-global LoadRosterList_faloop
-global LoadRosterList_team
-global RosterPanelClick_ret
-global DrawShootsField_tail
-global DrawShootsField_pop
-global EditSkaterRating_tail
-global DrawEditRosters, EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, CountSelected
-global RosterPanelClick, FixJerseyNumber, CopyRoster1Rec, LoadBothRosterLists, LoadRosterList, EditTeamLines, EditRosters, ErrorScreenWait
-global DrawDBErrorsScreen, ShowDBError, CheckTeamLines, CheckDatabases, SplitPlayerName, MoveToOtherRoster, RatingToFloat, RandomizeNewRatings
-global CreatePlayerNop, DrawShootsField, DrawGloveField, AskLeftRight, EditSkaterRating, EditGoalieRating, DrawCreatePlayer, CreatePlayerLoop
-global CreateFreeAgent, MoveToFreeAgents, RemovePlayerFromTeam, LoadTempDatabases, DeleteTempDatabases, SwapSelectedPlayers, SelectMatchingPlayers, SetRosterTeamMenus
-global FindPlayer
-; C: src/c/pc/database_save/RunEditRosters.c (DrawEditRosters)
+section s_6CC20 progbits alloc exec nowrite align=1
+extern __CHK, __CHP, _dos_getdiskfree_, attdb, attdb_size, boxfillcolor, boxlitecolor, boxshadecolor
+extern btn_LeagueExists, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, byte_C4B6C, byte_D0AE6, byte_D0F94, byte_D0FE0
+extern byte_D42C3, byte_EAC86, byte_EAF99, byte_EAFB5, careerdb, careerdb_size, CarTeamRecPtr, carteamsdb
+extern carteamsdb_size, cddriveptr, ClearInputQueue, curdbname, dbdirty, dbexistsmsg, DbLineEditor, DeleteDir
+extern divisionteams, dlgtextbg, dlgtextfg, DrawButtons, DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
+extern DrawMenuItemSel, DrawScrollBar, dword_C2CAC, dword_C2CB0, dword_C2CB4, dword_C2CB8, dword_C2CBC, dword_C2CC0
+extern dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4, dword_C2CD8, dword_C2CDC, dword_C2CF0
+extern dword_C4B69, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_D0CDA
+extern dword_EA2B0, dword_EA994, dword_EAF7C, dword_EBCA4, editptrspr, editrosters_exit, facount, FadePalStep
+extern falist, falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FitPlayerName
+extern fputchar, FreeLeagueDbsMem, FreeMemBlock, fullscrbmp, GetInputEvent, hmteamrec, HomeTeam, InitScrollBar
+extern InputDialog, j_unlink_, kaufmfont, keydb, keydb_size, KeyDbPtr, leaguedbnames, ListDialog
+extern LoadLeagueDbsMem, mainfont, MakePath, memcpy_, memset_, menu_r1_editlines, menu_r1_freeagents, menu_r1_tofa
+extern menu_r1_toroster2, menu_r2_editlines, menu_r2_freeagents, menu_r2_tofa, menu_r2_toroster1, MenuHitTest, MessageBox, mkdir_
+extern mousepollfn, MouseSetPos, msglines, musichandle, musicon, musicslot, nodiskspacemsg, off_D0880
+extern off_D08B9, off_D09DB, off_D0A04, off_D0AC2, off_D1077, pointerspr, PrintCenteredText, PrintFmt1
+extern PrintOutlinedText, PrintShadowText, ptrupdatefn, qword_C2CE0, qword_C2CE8, randomd0, RestoreDialogBg, rmdir_
+extern roster1divmenus, roster2divmenus, rosterisfa, rosterjersey, rosterlist, rostersel, rosterslot, rosterstat
+extern rosterteam, rosterteamptr, rosterteamrec, savedbbtns, savepal, seasondb, seasondb_size, SetDrawBitmap
+extern SetTextColors, songdata, sprintf_, str_3dKbytesOfFree, str_3dKbytesOfFree2, str_AddAllSelectedPlayers, str_ANewFreeAgent, str_AreYouSureYou
+extern str_C4, str_Center, str_ChooseWhichTeamTo, str_CreateAPlayerOr, str_Current2, str_Current3, str_DATABASE, str_DBX
+extern str_Defence, str_DoesNotExist, str_ea, str_ea2, str_EnterAJerseyNumber, str_EnterANewDatabase, str_EnterANewRating, str_EnterAPositionFor
+extern str_EnterNameOfPlayer, str_EnterNewGoalieName, str_EnterNewPlayerName, str_ErrDiskFree, str_ErrorGettingDiskSpace, str_ErrorsFoundInDatabases, str_ErrorWhileMakingNew, str_extDB
+extern str_fmt2d, str_fmt3d, str_fmtD, str_fmtpd, str_fmtSS, str_ForAllSelectedPlayers, str_FreeAgent, str_FreeAgentList
+extern str_FreeAgents, str_GloveHand, str_GloveHandLeftOr, str_Goalie, str_Goalies, str_InTheFreeAgent, str_IsAlreadyDisplayedOn, str_LCRD
+extern str_LeftWing, str_Menubuff, str_Move, str_MustBeTheSame, str_NewPlayer, str_NotAddedToDatabases, str_NotEnoughDefence, str_NotEnoughForwards
+extern str_NotEnoughGoalies, str_NotEnoughPlayers, str_NotEnoughRatingUnits, str_NotEnoughSpaceFA, str_NotEnoughSpaceTo, str_NotEnoughSpaceTo2, str_Pal, str_Pal2
+extern str_Players, str_PlayersAndGoalies, str_PleaseEnterANew, str_Pointer11, str_Prez2, str_Prez22, str_Pst2, str_Pstatbar
+extern str_RatingRange, str_Ratings, str_RatingUnitsAvailable3d, str_RightWing, str_Roster1, str_Roster2, str_S5, str_SaveAsGameDatabases
+extern str_SavingDatabases, str_Shoots, str_ShootsLeftOrRight, str_space, str_spL, str_spR, str_Temp, str_Temp7
+extern str_TheDatabaseHasNot, str_TheDefenceLinesAre, str_TheExtraAttackerLines, str_TheForwardLinesAre, str_TheGoalieLinesAre, str_TheJerseyNumber2d, str_TheNumberOfSelected, str_ThePenaltyKillingLines
+extern str_ThePowerPlayLines, str_ThereIsNoSpace, str_TheSelectedPlayer, str_TMP, str_ToFreeAgentList, str_Two, str_Uar, str_Uarm
+extern str_XXXKbytesOfFree, str_XXXKbytesOfFree2, strcat_, strcmp_, strcpy_, strlen_, strlwr_, strupr_
+extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FC8A
+extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_90F38, sub_9121C, sub_91370
+extern sub_913B4, sub_91400, sub_91964, sub_92DE0, sub_932D0, sub_B2CBE, sub_B2E1B, sub_B30B4
+extern sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4F8C, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags
+extern TeamRecPtr, teamsdb, teamsdb_size, TextInputDialog, TrackButtons, TrackScrollBars, unk13_6BF3D, unk_D0450
+extern unk_D05F4, unk_D0B80, unk_D0BB8, unk_D0BF0, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8
+extern unk_D0FBC, unk_D0FD0, unk_D0FF0, unk_D1000, unk_EA968, unk_EAC84, unk_EAFB8, unknown_libname_1
+extern VisTeam, word_C2D0E, word_C2D10, WriteLeagueDbsMem
+global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
+global EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, LoadRosterList_faloop, LoadRosterList_team
+global CountSelected, RosterPanelClick, RosterPanelClick_ret, FixJerseyNumber, CopyRoster1Rec, LoadBothRosterLists, LoadRosterList, EditTeamLines
+global EditRosters, ErrorScreenWait, DrawDBErrorsScreen, ShowDBError, CheckTeamLines, CheckDatabases, SplitPlayerName, MoveToOtherRoster
+global RatingToFloat, RandomizeNewRatings, CreatePlayerNop, DrawShootsField, DrawShootsField_tail, DrawShootsField_pop, DrawGloveField, AskLeftRight
+global EditSkaterRating, EditSkaterRating_tail, EditGoalieRating, DrawCreatePlayer, CreatePlayerLoop, CreateFreeAgent, MoveToFreeAgents, RemovePlayerFromTeam
+global LoadTempDatabases, DeleteTempDatabases, SwapSelectedPlayers, SelectMatchingPlayers, SetRosterTeamMenus, FindPlayer
+; C: src/c/front/create/RunEditRosters.c
 %ifdef CBUILD
-%include "c/pc/database_save/RunEditRosters.DrawEditRosters.inc"
+%include "c/front/create/RunEditRosters.inc"
+%else
+RunEditRosters:
+push dword 7Ch	; 6CC20
+call __CHK	; 6CC25
+push ebx	; 6CC2A
+push ecx	; 6CC2B
+push edx	; 6CC2C
+push esi	; 6CC2D
+push edi	; 6CC2E
+push ebp	; 6CC2F
+sub esp, byte 54h	; 6CC30
+mov eax, dword [boxlitecolor]	; 6CC33
+mov dword [byte esp+040h], eax	; 6CC38
+mov eax, dword [boxshadecolor]	; 6CC3C
+mov dword [byte esp+04Ch], eax	; 6CC41
+mov eax, dword [boxfillcolor]	; 6CC45
+mov dword [byte esp+050h], eax	; 6CC4A
+mov eax, dword [dlgtextfg]	; 6CC4E
+mov dword [byte esp+048h], eax	; 6CC53
+mov eax, dword [dlgtextbg]	; 6CC57
+mov dword [byte esp+044h], eax	; 6CC5C
+mov dword [boxfillcolor], 41h	; 6CC60
+mov ebx, 40h	; 6CC6A
+mov dword [boxlitecolor], ebx	; 6CC6F
+mov ecx, 42h	; 6CC75
+mov dword [boxshadecolor], ecx	; 6CC7A
+mov dword [dlgtextfg], ebx	; 6CC80
+mov dword [dlgtextbg], ecx	; 6CC86
+xor ebp, ebp	; 6CC8C
+mov dword [editrosters_exit], ebp	; 6CC8E
+mov dword [dword_D0B12], ebp	; 6CC94
+push byte 20h	; 6CC9A
+push dword 300h	; 6CC9C
+push str_Temp7	; 6CCA1
+call sub_8CCA8	; 6CCA6
+add esp, byte 0Ch	; 6CCAB
+mov ebp, eax	; 6CCAE
+cmp byte [musicon], 0	; 6CCB0
+je short .1	; 6CCB7
+cmp dword [songdata], byte 0	; 6CCB9
+je short .1	; 6CCC0
+mov eax, dword [musichandle]	; 6CCC2
+mov ebx, 32h	; 6CCC7
+mov edx, 3	; 6CCCC
+call sub_8FCDF	; 6CCD1
+.1:
+push ebp	; 6CCD6
+push dword 100h	; 6CCD7
+push byte 0	; 6CCDC
+call sub_8FFB0	; 6CCDE
+add esp, byte 0Ch	; 6CCE3
+mov ebx, 10h	; 6CCE6
+mov edx, ebp	; 6CCEB
+mov eax, 1	; 6CCED
+call FadePalStep	; 6CCF2
+mov edi, curdbname	; 6CCF7
+mov esi, str_Current3	; 6CCFC
+movsd	; 6CD01
+movsd	; 6CD02
+call sub_B4BA8	; 6CD03
+mov eax, dword [mainfont]	; 6CD08
+mov dword [dword_EA2B0], eax	; 6CD0D
+push eax	; 6CD12
+call sub_8EA18	; 6CD13
+add esp, byte 4	; 6CD18
+mov eax, esp	; 6CD1B
+push eax	; 6CD1D
+call sub_8E9E8	; 6CD1E
+add esp, byte 4	; 6CD23
+cmp byte [musicon], 0	; 6CD26
+je short .3	; 6CD2D
+cmp dword [songdata], byte 0	; 6CD2F
+je short .3	; 6CD36
+.2:
+mov eax, dword [musicslot-3]	; 6CD38
+sar eax, 18h	; 6CD3D
+mov edx, 3	; 6CD40
+call sub_8FC8A	; 6CD45
+test eax, eax	; 6CD4A
+je short RunEditRosters.2	; 6CD4C
+mov esi, dword [songdata]	; 6CD4E
+push esi	; 6CD54
+call sub_8D2F0	; 6CD55
+add esp, byte 4	; 6CD5A
+xor edi, edi	; 6CD5D
+mov dword [songdata], edi	; 6CD5F
+.3:
+push byte 20h	; 6CD65
+push dword 1E0h	; 6CD67
+push dword 280h	; 6CD6C
+call sub_B4F8C	; 6CD71
+add esp, byte 0Ch	; 6CD76
+mov dword [fullscrbmp], eax	; 6CD79
+mov eax, dword [pointerspr]	; 6CD7E
+mov esi, dword [byte eax+02h]	; 6CD83
+sar esi, 10h	; 6CD86
+mov eax, dword [byte eax+04h]	; 6CD89
+sar eax, 10h	; 6CD8C
+lea edx, [byte eax+01h]	; 6CD8F
+lea eax, [byte esi+01h]	; 6CD92
+imul eax, edx	; 6CD95
+add eax, byte 11h	; 6CD98
+push byte 20h	; 6CD9B
+push eax	; 6CD9D
+push str_Pointer11	; 6CD9E
+call sub_8CCA8	; 6CDA3
+add esp, byte 0Ch	; 6CDA8
+mov dword [editptrspr], eax	; 6CDAB
+mov esi, dword [pointerspr]	; 6CDB0
+mov edi, eax	; 6CDB6
+movsd	; 6CDB8
+movsd	; 6CDB9
+movsd	; 6CDBA
+movsd	; 6CDBB
+movsb	; 6CDBC
+mov eax, dword [pointerspr]	; 6CDBD
+mov si, word [byte eax+04h]	; 6CDC2
+inc esi	; 6CDC6
+mov eax, dword [editptrspr]	; 6CDC7
+mov word [byte eax+04h], si	; 6CDCC
+mov eax, dword [pointerspr]	; 6CDD0
+mov si, word [byte eax+06h]	; 6CDD5
+inc esi	; 6CDD9
+mov eax, dword [editptrspr]	; 6CDDA
+mov word [byte eax+06h], si	; 6CDDF
+mov eax, str_extDB	; 6CDE3
+call LoadLeagueDbsMem	; 6CDE8
+push byte 42h	; 6CDED
+mov ecx, 41h	; 6CDEF
+mov ebx, 40h	; 6CDF4
+mov edx, 6	; 6CDF9
+mov eax, unk_D0450	; 6CDFE
+call EditRosters	; 6CE03
+call FreeLeagueDbsMem	; 6CE08
+mov eax, dword [editptrspr]	; 6CE0D
+push eax	; 6CE12
+call FreeMemBlock	; 6CE13
+add esp, byte 4	; 6CE18
+cmp byte [musicon], 0	; 6CE1B
+je short .4	; 6CE22
+cmp dword [songdata], byte 0	; 6CE24
+je short .4	; 6CE2B
+mov eax, dword [musichandle]	; 6CE2D
+mov ebx, 32h	; 6CE32
+mov edx, 3	; 6CE37
+call sub_8FCDF	; 6CE3C
+.4:
+push ebp	; 6CE41
+push dword 100h	; 6CE42
+push byte 0	; 6CE47
+call sub_8FFB0	; 6CE49
+add esp, byte 0Ch	; 6CE4E
+mov ebx, 10h	; 6CE51
+mov edx, ebp	; 6CE56
+mov eax, 1	; 6CE58
+call FadePalStep	; 6CE5D
+push ebp	; 6CE62
+call FreeMemBlock	; 6CE63
+add esp, byte 4	; 6CE68
+mov eax, esp	; 6CE6B
+push eax	; 6CE6D
+call sub_8EA00	; 6CE6E
+add esp, byte 4	; 6CE73
+mov ebx, dword [fullscrbmp]	; 6CE76
+push ebx	; 6CE7C
+call FreeMemBlock	; 6CE7D
+add esp, byte 4	; 6CE82
+mov eax, dword [byte esp+050h]	; 6CE85
+mov dword [boxfillcolor], eax	; 6CE89
+mov eax, dword [byte esp+040h]	; 6CE8E
+mov dword [boxlitecolor], eax	; 6CE92
+mov eax, dword [byte esp+04Ch]	; 6CE97
+mov dword [boxshadecolor], eax	; 6CE9B
+mov eax, dword [byte esp+048h]	; 6CEA0
+mov dword [dlgtextfg], eax	; 6CEA4
+mov eax, dword [byte esp+044h]	; 6CEA9
+mov dword [dlgtextbg], eax	; 6CEAD
+cmp byte [musicon], 0	; 6CEB2
+je short .6	; 6CEB9
+cmp dword [songdata], byte 0	; 6CEBB
+je short .6	; 6CEC2
+.5:
+mov eax, dword [musicslot-3]	; 6CEC4
+sar eax, 18h	; 6CEC9
+mov edx, 3	; 6CECC
+call sub_8FC8A	; 6CED1
+test eax, eax	; 6CED6
+je short RunEditRosters.5	; 6CED8
+mov esi, dword [songdata]	; 6CEDA
+push esi	; 6CEE0
+call sub_8D2F0	; 6CEE1
+add esp, byte 4	; 6CEE6
+xor edi, edi	; 6CEE9
+mov dword [songdata], edi	; 6CEEB
+.6:
+add esp, byte 54h	; 6CEF1
+RunEditRosters_ret6:
+pop ebp	; 6CEF4
+RunEditRosters_ret5:
+pop edi	; 6CEF5
+pop esi	; 6CEF6
+pop edx	; 6CEF7
+pop ecx	; 6CEF8
+pop ebx	; 6CEF9
+ret	; 6CEFA
+%endif ; C
+; C: src/c/front/create/DrawRosterTitle.c
+%ifdef CBUILD
+%include "c/front/create/DrawRosterTitle.inc"
+%else
+DrawRosterTitle:
+push dword 70h	; 6CEFB
+call __CHK	; 6CF00
+push ecx	; 6CF05
+push esi	; 6CF06
+push edi	; 6CF07
+sub esp, byte 54h	; 6CF08
+mov edi, eax	; 6CF0B
+mov esi, edx	; 6CF0D
+cmp byte [dword ebx+rosterisfa], 1	; 6CF0F
+je short .3	; 6CF16
+mov eax, dword [nosplit ebx*4+rosterteamptr]	; 6CF18
+add eax, byte 1Ah	; 6CF1F
+push eax	; 6CF22
+push str_S5	; 6CF23
+lea eax, [byte esp+08h]	; 6CF28
+push eax	; 6CF2C
+call sprintf_	; 6CF2D
+add esp, byte 0Ch	; 6CF32
+.1:
+mov eax, esp	; 6CF35
+push eax	; 6CF37
+call fputchar	; 6CF38
+add esp, byte 4	; 6CF3D
+cmp eax, 91h	; 6CF40
+jle short .2	; 6CF45
+mov eax, esp	; 6CF47
+call strlen_	; 6CF49
+xor dl, dl	; 6CF4E
+mov byte [byte esp+eax-01h], dl	; 6CF50
+jmp short DrawRosterTitle.1	; 6CF54
+.2:
+mov ebx, esp	; 6CF56
+mov edx, esi	; 6CF58
+jmp short .4	; 6CF5A
+.3:
+mov ebx, str_FreeAgents	; 6CF5C
+.4:
+mov eax, edi	; 6CF61
+call PrintShadowText	; 6CF63
+add esp, byte 54h	; 6CF68
+pop edi	; 6CF6B
+pop esi	; 6CF6C
+pop ecx	; 6CF6D
+ret	; 6CF6E
+%endif ; C
+; C: src/c/front/create/DrawRosterList.c
+%ifdef CBUILD
+%include "c/front/create/DrawRosterList.inc"
+%else
+DrawRosterList:
+push dword 94h	; 6CF6F
+call __CHK	; 6CF74
+push ecx	; 6CF79
+push esi	; 6CF7A
+push edi	; 6CF7B
+push ebp	; 6CF7C
+mov ebp, esp	; 6CF7D
+sub esp, byte 60h	; 6CF7F
+push eax	; 6CF82
+push edx	; 6CF83
+push ebx	; 6CF84
+cmp byte [dword ebx+rosterisfa], 1	; 6CF85
+je near .6	; 6CF8C
+xor esi, esi	; 6CF92
+.1:
+mov edi, dword [byte ebp-06Ch]	; 6CF94
+mov eax, edi	; 6CF97
+shl eax, 2	; 6CF99
+sub eax, edi	; 6CF9C
+shl eax, 2	; 6CF9E
+mov edi, eax	; 6CFA1
+shl eax, 6	; 6CFA3
+sub eax, edi	; 6CFA6
+mov dword [byte ebp-08h], eax	; 6CFA8
+mov eax, esi	; 6CFAB
+shl eax, 3	; 6CFAD
+sub eax, esi	; 6CFB0
+shl eax, 2	; 6CFB2
+sub eax, esi	; 6CFB5
+mov dword [byte ebp-04h], eax	; 6CFB7
+mov edi, dword [byte ebp-08h]	; 6CFBA
+add edi, eax	; 6CFBD
+cmp byte [dword edi+rosterlist], 0	; 6CFBF
+je near .4	; 6CFC6
+xor eax, eax	; 6CFCC
+mov al, byte [dword edi+rosterjersey]	; 6CFCE
+push eax	; 6CFD4
+push str_fmt2d	; 6CFD5
+lea eax, [byte ebp-060h]	; 6CFDA
+push eax	; 6CFDD
+call sprintf_	; 6CFDE
+add esp, byte 0Ch	; 6CFE3
+xor eax, eax	; 6CFE6
+mov al, byte [byte_D42C3]	; 6CFE8
+imul eax, esi	; 6CFED
+add eax, dword [byte ebp-068h]	; 6CFF0
+push eax	; 6CFF3
+mov ebx, dword [byte ebp-064h]	; 6CFF4
+push ebx	; 6CFF7
+lea eax, [byte ebp-060h]	; 6CFF8
+push eax	; 6CFFB
+call sub_91964	; 6CFFC
+add esp, byte 0Ch	; 6D001
+xor eax, eax	; 6D004
+mov al, byte [dword edi+rosterlist]	; 6D006
+push eax	; 6D00C
+push str_C4	; 6D00D
+lea eax, [byte ebp-060h]	; 6D012
+push eax	; 6D015
+call sprintf_	; 6D016
+add esp, byte 0Ch	; 6D01B
+xor eax, eax	; 6D01E
+mov al, byte [byte_D42C3]	; 6D020
+imul eax, esi	; 6D025
+add eax, dword [byte ebp-068h]	; 6D028
+push eax	; 6D02B
+mov eax, dword [byte ebp-064h]	; 6D02C
+add eax, byte 28h	; 6D02F
+push eax	; 6D032
+lea eax, [byte ebp-060h]	; 6D033
+push eax	; 6D036
+call sub_91964	; 6D037
+add esp, byte 0Ch	; 6D03C
+mov ebx, rosterlist	; 6D03F
+add ebx, dword [byte ebp-08h]	; 6D044
+add ebx, dword [byte ebp-04h]	; 6D047
+add ebx, byte 8	; 6D04A
+mov ecx, 91h	; 6D04D
+xor edx, edx	; 6D052
+lea eax, [byte ebp-060h]	; 6D054
+call FitPlayerName	; 6D057
+xor eax, eax	; 6D05C
+mov al, byte [byte_D42C3]	; 6D05E
+imul eax, esi	; 6D063
+add eax, dword [byte ebp-068h]	; 6D066
+push eax	; 6D069
+mov eax, dword [byte ebp-064h]	; 6D06A
+add eax, byte 50h	; 6D06D
+push eax	; 6D070
+lea eax, [byte ebp-060h]	; 6D071
+push eax	; 6D074
+call sub_91964	; 6D075
+add esp, byte 0Ch	; 6D07A
+mov edx, dword [byte ebp-06Ch]	; 6D07D
+mov eax, edx	; 6D080
+shl eax, 3	; 6D082
+sub eax, edx	; 6D085
+cmp byte [dword esi+eax*4+rostersel], 0	; 6D087
+je short .5	; 6D08F
+push dword 80h	; 6D091
+xor eax, eax	; 6D096
+mov al, byte [byte_D42C3]	; 6D098
+push eax	; 6D09D
+push dword 0F0h	; 6D09E
+imul eax, esi	; 6D0A3
+add eax, byte 35h	; 6D0A6
+push eax	; 6D0A9
+test edx, edx	; 6D0AA
+je short .2	; 6D0AC
+mov eax, 15Eh	; 6D0AE
+jmp short .3	; 6D0B3
+.2:
+mov eax, 23h	; 6D0B5
+.3:
+push eax	; 6D0BA
+call sub_90F38	; 6D0BB
+add esp, byte 14h	; 6D0C0
+jmp short .5	; 6D0C3
+.4:
+mov esi, 1Ch	; 6D0C5
+.5:
+inc esi	; 6D0CA
+cmp esi, byte 1Ch	; 6D0CB
+jl near DrawRosterList.1	; 6D0CE
+jmp near .x	; 6D0D4
+.6:
+mov edi, dword [dword_EBCA4]	; 6D0D9
+xor esi, esi	; 6D0DF
+jmp near .11	; 6D0E1
+.7:
+mov eax, edi	; 6D0E6
+shl eax, 3	; 6D0E8
+sub eax, edi	; 6D0EB
+shl eax, 2	; 6D0ED
+sub eax, edi	; 6D0F0
+mov dword [byte ebp-0Ch], eax	; 6D0F2
+mov eax, dword [falist]	; 6D0F5
+add eax, dword [byte ebp-0Ch]	; 6D0FA
+mov al, byte [byte eax+01h]	; 6D0FD
+and eax, 0FFh	; 6D100
+push eax	; 6D105
+push str_fmt2d	; 6D106
+lea eax, [byte ebp-060h]	; 6D10B
+push eax	; 6D10E
+call sprintf_	; 6D10F
+add esp, byte 0Ch	; 6D114
+xor eax, eax	; 6D117
+mov al, byte [byte_D42C3]	; 6D119
+imul eax, esi	; 6D11E
+add eax, dword [byte ebp-068h]	; 6D121
+push eax	; 6D124
+mov ecx, dword [byte ebp-064h]	; 6D125
+push ecx	; 6D128
+lea eax, [byte ebp-060h]	; 6D129
+push eax	; 6D12C
+call sub_91964	; 6D12D
+add esp, byte 0Ch	; 6D132
+mov eax, dword [falist]	; 6D135
+add eax, dword [byte ebp-0Ch]	; 6D13A
+mov al, byte [eax]	; 6D13D
+and eax, 0FFh	; 6D13F
+push eax	; 6D144
+push str_C4	; 6D145
+lea eax, [byte ebp-060h]	; 6D14A
+push eax	; 6D14D
+call sprintf_	; 6D14E
+add esp, byte 0Ch	; 6D153
+xor eax, eax	; 6D156
+mov al, byte [byte_D42C3]	; 6D158
+imul eax, esi	; 6D15D
+add eax, dword [byte ebp-068h]	; 6D160
+push eax	; 6D163
+mov eax, dword [byte ebp-064h]	; 6D164
+add eax, byte 28h	; 6D167
+push eax	; 6D16A
+lea eax, [byte ebp-060h]	; 6D16B
+push eax	; 6D16E
+call sub_91964	; 6D16F
+add esp, byte 0Ch	; 6D174
+mov ebx, dword [falist]	; 6D177
+add ebx, dword [byte ebp-0Ch]	; 6D17D
+add ebx, byte 8	; 6D180
+mov ecx, 91h	; 6D183
+xor edx, edx	; 6D188
+lea eax, [byte ebp-060h]	; 6D18A
+call FitPlayerName	; 6D18D
+xor eax, eax	; 6D192
+mov al, byte [byte_D42C3]	; 6D194
+imul eax, esi	; 6D199
+add eax, dword [byte ebp-068h]	; 6D19C
+push eax	; 6D19F
+mov eax, dword [byte ebp-064h]	; 6D1A0
+add eax, byte 50h	; 6D1A3
+push eax	; 6D1A6
+lea eax, [byte ebp-060h]	; 6D1A7
+push eax	; 6D1AA
+call sub_91964	; 6D1AB
+add esp, byte 0Ch	; 6D1B0
+mov eax, dword [falistsel]	; 6D1B3
+cmp byte [edi+eax], 0	; 6D1B8
+je short .10	; 6D1BC
+push dword 80h	; 6D1BE
+xor eax, eax	; 6D1C3
+mov al, byte [byte_D42C3]	; 6D1C5
+push eax	; 6D1CA
+push dword 0F0h	; 6D1CB
+imul eax, esi	; 6D1D0
+add eax, byte 35h	; 6D1D3
+push eax	; 6D1D6
+cmp dword [byte ebp-06Ch], byte 0	; 6D1D7
+je short .8	; 6D1DB
+mov eax, 15Eh	; 6D1DD
+jmp short .9	; 6D1E2
+.8:
+mov eax, 23h	; 6D1E4
+.9:
+push eax	; 6D1E9
+call sub_90F38	; 6D1EA
+add esp, byte 14h	; 6D1EF
+.10:
+inc edi	; 6D1F2
+inc esi	; 6D1F3
+.11:
+cmp esi, byte 1Ch	; 6D1F4
+jge short .12	; 6D1F7
+cmp edi, dword [facount]	; 6D1F9
+jl near DrawRosterList.7	; 6D1FF
+.12:
+cmp dword [dword_D0C20], byte 0	; 6D205
+je short .x	; 6D20C
+mov edx, 2	; 6D20E
+mov eax, unk_D0BB8	; 6D213
+call DrawButtons	; 6D218
+mov eax, dword [dword_EBCA4]	; 6D21D
+mov dword [dword_D0C10], eax	; 6D222
+mov eax, dword [dword_D0BFC]	; 6D227
+sub eax, byte 4	; 6D22C
+imul eax, dword [dword_D0C10]	; 6D22F
+mov ebx, dword [dword_D0C18]	; 6D236
+xor edx, edx	; 6D23C
+div ebx	; 6D23E
+mov dword [dword_D0C04], eax	; 6D240
+mov eax, unk_D0BF0	; 6D245
+call DrawScrollBar	; 6D24A
+.x:
+mov esp, ebp	; 6D24F
+pop ebp	; 6D251
+pop edi	; 6D252
+pop esi	; 6D253
+pop ecx	; 6D254
+ret	; 6D255
+%endif ; C
+; C: src/c/front/create/DrawDatabaseName.c
+%ifdef CBUILD
+%include "c/front/create/DrawDatabaseName.inc"
+%else
+DrawDatabaseName:
+push dword 44h	; 6D256
+call __CHK	; 6D25B
+push edx	; 6D260
+push esi	; 6D261
+push edi	; 6D262
+sub esp, byte 34h	; 6D263
+mov edi, esp	; 6D266
+mov esi, str_DATABASE	; 6D268
+movsd	; 6D26D
+movsd	; 6D26E
+movsd	; 6D26F
+mov eax, curdbname	; 6D270
+call strupr_	; 6D275
+mov edx, curdbname	; 6D27A
+mov eax, esp	; 6D27F
+call strcat_	; 6D281
+mov edx, esp	; 6D286
+mov eax, 18h	; 6D288
+call PrintCenteredText	; 6D28D
+add esp, byte 34h	; 6D292
+pop edi	; 6D295
+pop esi	; 6D296
+pop edx	; 6D297
+ret	; 6D298
+%endif ; C
+; C: src/c/front/create/DrawRosterPanel.c
+%ifdef CBUILD
+%include "c/front/create/DrawRosterPanel.inc"
+%else
+DrawRosterPanel:
+push dword 0Ch	; 6D299
+call __CHK	; 6D29E
+push ebx	; 6D2A3
+push edx	; 6D2A4
+test eax, eax	; 6D2A5
+jne short .1	; 6D2A7
+xor ebx, ebx	; 6D2A9
+mov edx, 25h	; 6D2AB
+mov eax, 64h	; 6D2B0
+call DrawRosterTitle	; 6D2B5
+xor ebx, ebx	; 6D2BA
+mov edx, 35h	; 6D2BC
+mov eax, 2Dh	; 6D2C1
+jmp short .2	; 6D2C6
+.1:
+mov ebx, 1	; 6D2C8
+mov edx, 25h	; 6D2CD
+mov eax, 19Eh	; 6D2D2
+call DrawRosterTitle	; 6D2D7
+mov ebx, 1	; 6D2DC
+mov edx, 35h	; 6D2E1
+mov eax, 167h	; 6D2E6
+.2:
+call DrawRosterList	; 6D2EB
+call DrawDatabaseName	; 6D2F0
+pop edx	; 6D2F5
+pop ebx	; 6D2F6
+ret	; 6D2F7
+%endif ; C
+; C: src/c/front/create/RunEditRosters.c (DrawEditRosters)
+%ifdef CBUILD
+%include "c/front/create/RunEditRosters.DrawEditRosters.inc"
 %else
 DrawEditRosters:
 push dword 80h	; 6D2F8
@@ -336,9 +916,9 @@ call LoadRosterList	; 6D6C9
 call DrawEditRosters	; 6D6CE
 add esp, byte 4	; 6D6D3
 jmp near RunEditRosters_ret6	; 6D6D6
-; C: src/c/pc/database_save/RunEditRosters.c (ShowFreeAgents)
+; C: src/c/front/create/RunEditRosters.c (ShowFreeAgents)
 %ifdef CBUILD
-%include "c/pc/database_save/RunEditRosters.ShowFreeAgents.inc"
+%include "c/front/create/RunEditRosters.ShowFreeAgents.inc"
 %else
 ShowFreeAgents:
 push dword 18h	; 6D6DB
@@ -1093,9 +1673,9 @@ mov dword [facount], edx	; 6DEF9
 xor eax, eax	; 6DEFF
 jmp near LoadRosterList_faloop	; 6DF01
 %endif ; C
-; C: src/c/pc/database_save/RunEditRosters.c (EditTeamLines)
+; C: src/c/front/create/RunEditRosters.c (EditTeamLines)
 %ifdef CBUILD
-%include "c/pc/database_save/RunEditRosters.EditTeamLines.inc"
+%include "c/front/create/RunEditRosters.EditTeamLines.inc"
 %else
 EditTeamLines:
 push dword 30Ch	; 6DF06

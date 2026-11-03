@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_8DBE4 progbits alloc exec nowrite align=1
 extern __fprtf_, __set_EINVAL_, loc_90265, off_D2F68, off_D2F6C, off_D2F70, unk_D4D32
-global __null_int23_exit_, _dos_getdiskfree_, _dos_getdrive_, _dos_setdrive_, _exit_, exit_, loc_8DC92, loc_8DC97
-global printf_, sub_8DBEC, sub_8DC55, type_info__raw_name
+global type_info__raw_name, sub_8DBEC, _dos_getdrive_, _dos_setdrive_, printf_, __null_int23_exit_, exit_, sub_8DC55
+global _exit_, _dos_getdiskfree_, loc_8DC92, loc_8DC97
 type_info__raw_name:
 mov eax, dword [byte esp+04h]	; 8DBE4
 add eax, byte 4	; 8DBE8

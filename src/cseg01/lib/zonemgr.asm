@@ -7,30 +7,30 @@ extern dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C, dword_EA
 extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA074, dword_EA078, dword_EA07C
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
 extern dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4, dword_EA0B8, dword_EA0BC, dword_EA0C4
-extern dword_EA0C8, dword_EA0CC, dword_EA0D0, fputchar, FreeMemBlock, memset_, sub_8CCA8, sub_903F0
-extern FatalError, sub_B4BA8, sub_B4BC4, SetDrawBitmap, sub_B4FAC
-global loc_6A12A, loc_6A13E, loc_6A149, loc_6A18A, loc_6A3B9, loc_6A3BA, loc_6A3FA, loc_6A41D
-global loc_6A479, loc_6A4A8, loc_6A4AD, loc_6A4CB, loc_6A4FD, loc_6A4FF, loc_6A51E, loc_6A520
-global loc_6A535, loc_6A53C, loc_6A542, loc_6A549, loc_6A561, loc_6A563, loc_6A57E, loc_6A580
-global loc_6A593, loc_6A59C, loc_6A59E, loc_6A5BF, loc_6A5C4, loc_6A5E2, loc_6A5E7, loc_6A60A
-global loc_6A61F, loc_6A632, loc_6A645, loc_6A669, loc_6A679, loc_6A693, loc_6A698, loc_6A6A6
-global loc_6A6E5, loc_6A712, loc_6A748, loc_6A755, loc_6A771, loc_6A7E1, loc_6A7E8, loc_6A7FF
-global loc_6A801, loc_6A824, loc_6A82B, loc_6A840, loc_6A842, loc_6A853, loc_6A855, loc_6A86C
-global loc_6A86E, loc_6A88B, loc_6A8A9, loc_6A8E2, loc_6A909, loc_6A916, loc_6A91C, loc_6A941
-global loc_6A94A, loc_6A954, loc_6A95A, loc_6A97C, loc_6A989, loc_6A98E, loc_6A9AB, loc_6A9B9
-global loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, loc_6AB54, loc_6AB5C, loc_6AB64
-global loc_6AB70, loc_6AB78, loc_6ABD2, loc_6ABD8, loc_6ABE0, loc_6ABE8, loc_6ABF4, loc_6AC63
-global loc_6AC73, loc_6AC7A, loc_6AC85, loc_6AC8E, loc_6AC9A, loc_6ACC5, loc_6ACE3, loc_6AD6D
-global loc_6AD7A, loc_6AD80, loc_6ADDB, loc_6ADE9, loc_6AE0C, loc_6AE24, loc_6AE44, loc_6AE79
-global loc_6AE8C, loc_6AE9B, loc_6AEAE, loc_6AEC2, loc_6AED5, loc_6AEEB, loc_6AEFF, loc_6AF0E
-global loc_6AF1B, loc_6AF35, loc_6AF48, loc_6AFDA, loc_6B001, loc_6B03F, loc_6B05F, sub_6A033
-global sub_6A044, sub_6A057, sub_6A068, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4, sub_6A0DE
-global sub_6A0F6, sub_6A106, sub_6A156, sub_6A166, sub_6A1A0, sub_6A1D6, sub_6A234, sub_6A27A
-global sub_6A2BC, sub_6A2C7, sub_6A335, sub_6A373, sub_6A3C0, sub_6A439, sub_6A48E, sub_6A4D3
-global sub_6A5A5, sub_6A5EA, sub_6A649, sub_6A6CC, sub_6A791, sub_6A8B1, sub_6A990, sub_6A9CE
-global sub_6AAD5, sub_6AAF5, sub_6AB7C, sub_6ABF9, sub_6AC31, sub_6ACA2, sub_6ACE9, sub_6AD22
-global sub_6AD4F, sub_6ADA7, sub_6AE5C, sub_6AF52, sub_6AF97, sub_6AFAD, sub_6AFBE, sub_6AFDF
-global sub_6B008
+extern dword_EA0C8, dword_EA0CC, dword_EA0D0, FatalError, fputchar, FreeMemBlock, memset_, SetDrawBitmap
+extern sub_8CCA8, sub_903F0, sub_B4BA8, sub_B4BC4, sub_B4FAC
+global sub_6A033, sub_6A044, sub_6A057, sub_6A068, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4
+global sub_6A0DE, sub_6A0F6, sub_6A106, loc_6A12A, loc_6A13E, loc_6A149, sub_6A156, sub_6A166
+global loc_6A18A, sub_6A1A0, sub_6A1D6, sub_6A234, sub_6A27A, sub_6A2BC, sub_6A2C7, sub_6A335
+global sub_6A373, loc_6A3B9, loc_6A3BA, sub_6A3C0, loc_6A3FA, loc_6A41D, sub_6A439, loc_6A479
+global sub_6A48E, loc_6A4A8, loc_6A4AD, loc_6A4CB, sub_6A4D3, loc_6A4FD, loc_6A4FF, loc_6A51E
+global loc_6A520, loc_6A535, loc_6A53C, loc_6A542, loc_6A549, loc_6A561, loc_6A563, loc_6A57E
+global loc_6A580, loc_6A593, loc_6A59C, loc_6A59E, sub_6A5A5, loc_6A5BF, loc_6A5C4, loc_6A5E2
+global loc_6A5E7, sub_6A5EA, loc_6A60A, loc_6A61F, loc_6A632, loc_6A645, sub_6A649, loc_6A669
+global loc_6A679, loc_6A693, loc_6A698, loc_6A6A6, sub_6A6CC, loc_6A6E5, loc_6A712, loc_6A748
+global loc_6A755, loc_6A771, sub_6A791, loc_6A7E1, loc_6A7E8, loc_6A7FF, loc_6A801, loc_6A824
+global loc_6A82B, loc_6A840, loc_6A842, loc_6A853, loc_6A855, loc_6A86C, loc_6A86E, loc_6A88B
+global loc_6A8A9, sub_6A8B1, loc_6A8E2, loc_6A909, loc_6A916, loc_6A91C, loc_6A941, loc_6A94A
+global loc_6A954, loc_6A95A, loc_6A97C, loc_6A989, loc_6A98E, sub_6A990, loc_6A9AB, loc_6A9B9
+global sub_6A9CE, loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, sub_6AAD5, sub_6AAF5
+global loc_6AB54, loc_6AB5C, loc_6AB64, loc_6AB70, loc_6AB78, sub_6AB7C, loc_6ABD2, loc_6ABD8
+global loc_6ABE0, loc_6ABE8, loc_6ABF4, sub_6ABF9, sub_6AC31, loc_6AC63, loc_6AC73, loc_6AC7A
+global loc_6AC85, loc_6AC8E, loc_6AC9A, sub_6ACA2, loc_6ACC5, loc_6ACE3, sub_6ACE9, sub_6AD22
+global sub_6AD4F, loc_6AD6D, loc_6AD7A, loc_6AD80, sub_6ADA7, loc_6ADDB, loc_6ADE9, loc_6AE0C
+global loc_6AE24, loc_6AE44, sub_6AE5C, loc_6AE79, loc_6AE8C, loc_6AE9B, loc_6AEAE, loc_6AEC2
+global loc_6AED5, loc_6AEEB, loc_6AEFF, loc_6AF0E, loc_6AF1B, loc_6AF35, loc_6AF48, sub_6AF52
+global sub_6AF97, sub_6AFAD, sub_6AFBE, loc_6AFDA, sub_6AFDF, loc_6B001, sub_6B008, loc_6B03F
+global loc_6B05F
 sub_6A033:
 push dword 4	; 6A033
 call __CHK	; 6A038

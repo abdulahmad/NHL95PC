@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_B12A0 progbits alloc exec nowrite align=1
-extern byte_F79A7, byte_F79A8, byte_F79D8, dword_D87A0, dword_D87A8, dword_D87AC, dword_D87B0, dword_D87B4
-extern dword_D87B8, dword_D87BC, dword_D87C0, dword_D87C4, dword_D87C8, dword_D87CC, dword_D87D0, dword_D87D4
-extern inp_, outp_, __GETDS, sub_B0BE4, word_D8760, word_D8762, word_D876C, word_D876E
+extern __GETDS, byte_F79A7, byte_F79A8, byte_F79D8, dword_D87A0, dword_D87A8, dword_D87AC, dword_D87B0
+extern dword_D87B4, dword_D87B8, dword_D87BC, dword_D87C0, dword_D87C4, dword_D87C8, dword_D87CC, dword_D87D0
+extern dword_D87D4, inp_, outp_, sub_B0BE4, word_D8760, word_D8762, word_D876C, word_D876E
 extern word_D8772, word_D8776, word_D8778, word_F799E, word_F79A2
-global loc_B12DD, loc_B12EC, loc_B1311, loc_B1358, loc_B1365, loc_B1392, loc_B13AF, loc_B13E7
-global loc_B13EF, loc_B13F6, loc_B13FB, loc_B146B, loc_B1476, loc_B147B, loc_B1493, loc_B149E
-global loc_B14A3, loc_B14DA, loc_B14DC, loc_B1512, loc_B1514, loc_B154A, loc_B154C, loc_B1573
-global loc_B158F, loc_B1594, loc_B15B1, loc_B15D1, loc_B15F1, loc_B1646, loc_B166D, loc_B16A9
-global loc_B16B3, loc_B16D8, loc_B16F3, loc_B1706, loc_B1735, loc_B1772, loc_B17B9, loc_B1813
-global loc_B186E, loc_B1877, loc_B18C7, loc_B18DC, loc_B18F1, loc_B18F3, loc_B1902, loc_B1917
-global loc_B192C, loc_B192E, loc_B1938, sub_B12A0, sub_B131C, sub_B13A1, sub_B13B5, sub_B1400
-global sub_B145C, sub_B1484, sub_B14AC, sub_B14E4, sub_B151C, sub_B1554, sub_B1598, sub_B15B8
-global sub_B15D8, sub_B15F8, sub_B1680, sub_B16BC
+global sub_B12A0, loc_B12DD, loc_B12EC, loc_B1311, sub_B131C, loc_B1358, loc_B1365, loc_B1392
+global sub_B13A1, loc_B13AF, sub_B13B5, loc_B13E7, loc_B13EF, loc_B13F6, loc_B13FB, sub_B1400
+global sub_B145C, loc_B146B, loc_B1476, loc_B147B, sub_B1484, loc_B1493, loc_B149E, loc_B14A3
+global sub_B14AC, loc_B14DA, loc_B14DC, sub_B14E4, loc_B1512, loc_B1514, sub_B151C, loc_B154A
+global loc_B154C, sub_B1554, loc_B1573, loc_B158F, loc_B1594, sub_B1598, loc_B15B1, sub_B15B8
+global loc_B15D1, sub_B15D8, loc_B15F1, sub_B15F8, loc_B1646, loc_B166D, sub_B1680, loc_B16A9
+global loc_B16B3, sub_B16BC, loc_B16D8, loc_B16F3, loc_B1706, loc_B1735, loc_B1772, loc_B17B9
+global loc_B1813, loc_B186E, loc_B1877, loc_B18C7, loc_B18DC, loc_B18F1, loc_B18F3, loc_B1902
+global loc_B1917, loc_B192C, loc_B192E, loc_B1938
 sub_B12A0:
 pusha	; B12A0
 push ds	; B12A1

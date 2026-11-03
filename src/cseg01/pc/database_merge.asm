@@ -2,33 +2,28 @@
 bits 32
 %include "hockey.inc"
 section s_3A9AA progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, _fstrcspn_, str_02d2, str_SAV2, str_GAME2, str_SET, str_GAME3
-extern str_SAV3, str_02d3, str_Game2, str_Sav2, str_SelectATeamTo2, str_IsAlreadyMerged, str_HasNotBeenMerged, str_PINFO
-extern str_PLAYER, str_GAME4, str_extDB, str_SET2, str_extxx, str_Xx, str_extID
-extern str_dot, str_floppydrv, curleague, leagueflags, lgteamflags, lgteam_17, savedname, byte_DE268
-extern lgstate, dlgsavebuf, msg_InsertDisk_arg, msg_WrongDisk_arg, forceexportmsg
-extern notexportedmsg, insavegamemsg
-extern msg_SavedGame_arg, menuact_export, menuact_nextlg, menusub_lgmgr
-extern floppyok, floppyprobe, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount
-extern lgplayeridfile, dword_DE265, mkdir_, importdiskmsg, oldcopymsg, newfloppymsg, importtypemsg, lgexistsmsg
-extern leaguedbnames, masteronlymsg, mergeincompletemsg, updateerrmsg, exporterrmsg
-extern sprintf_, strcmp_, strcpy_, stricmp_, FileExists, MakePath, DeleteFiles, DeleteDir
-extern FileOpenRead, FileOpenWrite, FileOpenRW, FileCreate, FileClose, FileReadAt, FileWriteAt, ReadKeyRec
-extern CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, SetupStatsSourceMenu, BuildSavedGameLabels, SetDialogColors, RestoreDialogBg
-extern MessageBox, LoadModeState, CopyGameSettings, MenuNextLeagueGame, MenuExportDbs, LeagueTeamSelect, WriteSeasonRec, ReadGoalieSeasonRec
-extern WriteGoalieSeasonRec, WriteSchedGame, WriteTeamRec, ReadLeagueTeamEntry, WriteLeagueTeamEntry, AskTeamPassword, AskMasterPassword, MergeTeamRecDelta
-extern MergeSeasonRecDelta, MergeGoalieRecDelta, FmtFromLeague, LeagueCheckStub, GetLeagueId, MsgCopyingDatabases, CopyHumanTeamDBs, UpdateSeasonSchedule
-extern FatalError, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88, str_wildcard, str_ID, str_L1
-extern str_L22, lgreaderrmsg, notforlgmsg, msg_InsertDisk, msg_WrongDisk, btn_WrongDisk, importerrmsg, forceexportbtns
-extern lgexistsformsg, newfloppybtns, importtypebtns, mergestatemsg, playerdbsmsg, btn_MasterDB, mergingmsg, updschedmsg
-extern insertfloppymsg, whichdrivemsg, msg_SavedGame, masterctlmsg, mergeerrmsg, importmastermsg, drivebtns, leaguemgrmenu
-extern leagueteams, treeteamnames, masterpw, unknown_libname_1, lgteamver_hi
-global MergeTeamDbs_ret
-global UpdateTeamDbs_ret
-global ImportMasterLeague_ret
-global MergeTeamDbs, MergeScheduleDb, LocateTeamDbCopy, UpdateTeamDbs, MergeLeagueFiles, MergeUpdateDbs
-global RebuildLeagueDbs, ExportTeamToFloppy, CopyLeagueFiles, ImportMasterLeague, ImportPlayerTeam, ImportDbs, ExportDbs, SelectFloppyDrive
-global FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
+extern __CHK, _dos_getdiskfree_, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_WrongDisk, BuildSavedGameLabels
+extern byte_DE268, CopyFile, CopyGameSettings, CopyHumanTeamDBs, criterrflag, curleague, DeleteDir, DeleteFiles
+extern dlgsavebuf, drivebtns, dword_DE265, exporterrmsg, FatalError, FileClose, FileCreate, FileExists
+extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, floppyok, floppyprobe, FmtFromLeague
+extern forceexportbtns, forceexportmsg, GetLeagueId, humancount, importdiskmsg, importerrmsg, importmastermsg, importtypebtns
+extern importtypemsg, insavegamemsg, insertfloppymsg, LeagueCheckStub, leaguedbnames, leagueflags, leaguemaster, leaguemgrmenu
+extern leaguesaved, leagueteams, LeagueTeamSelect, lgexistsformsg, lgexistsmsg, lgplayeridfile, lgreaderrmsg, lgstate
+extern lgteam_17, lgteamflags, lgteamver, lgteamver_hi, LoadModeState, MakePath, masterctlmsg, masteronlymsg
+extern masterpw, menuact_export, menuact_nextlg, MenuExportDbs, MenuNextLeagueGame, menusub_lgmgr, mergeerrmsg, MergeGoalieRecDelta
+extern mergeincompletemsg, MergeSeasonRecDelta, mergestatemsg, MergeTeamRecDelta, mergingmsg, MessageBox, mkdir_, msg_InsertDisk
+extern msg_InsertDisk_arg, msg_SavedGame, msg_SavedGame_arg, msg_WrongDisk, msg_WrongDisk_arg, MsgCopyingDatabases, newfloppybtns, newfloppymsg
+extern notexportedmsg, notforlgmsg, oldcopymsg, playerdbsmsg, ReadGoalieSeasonRec, ReadKeyRec, ReadLeagueTeamEntry, ReadSchedGame
+extern ReadSeasonRec, ReadTeamRec, RestoreDialogBg, savedname, SetDialogColors, SetupStatsSourceMenu, sprintf_, str_02d2
+extern str_02d3, str_dot, str_extDB, str_extID, str_extxx, str_floppydrv, str_Game2, str_GAME2
+extern str_GAME3, str_GAME4, str_HasNotBeenMerged, str_ID, str_IsAlreadyMerged, str_L1, str_L22, str_PINFO
+extern str_PLAYER, str_SAV2, str_Sav2, str_SAV3, str_SelectATeamTo2, str_SET, str_SET2, str_wildcard
+extern str_Xx, strcmp_, strcpy_, stricmp_, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88
+extern treeteamnames, unknown_libname_1, updateerrmsg, UpdateSeasonSchedule, updschedmsg, whichdrivemsg, WriteGoalieSeasonRec, WriteLeagueTeamEntry
+extern WriteSchedGame, WriteSeasonRec, WriteTeamRec
+global MergeTeamDbs, MergeTeamDbs_ret, MergeScheduleDb, LocateTeamDbCopy, UpdateTeamDbs, UpdateTeamDbs_ret, MergeLeagueFiles, MergeUpdateDbs
+global RebuildLeagueDbs, ExportTeamToFloppy, CopyLeagueFiles, ImportMasterLeague, ImportMasterLeague_ret, ImportPlayerTeam, ImportDbs, ExportDbs
+global SelectFloppyDrive, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
 ; C: src/c/pc/database_merge/MergeTeamDbs.c
 %ifdef CBUILD
 %include "c/pc/database_merge/MergeTeamDbs.inc"

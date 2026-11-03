@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_90C32 progbits alloc exec nowrite align=1
 extern __doserror_, __set_errno_dos_
-global _dos_close_, _dos_commit_, _dos_creat_, _dos_open_, _dos_read_, _dos_write_, loc_90C4D, loc_90C7A
-global loc_90C8D, loc_90CA1, loc_90CE0, loc_90CE3, loc_90CEF, loc_90D08, lseek_, rmdir_
-global sub_90C94
+global rmdir_, loc_90C4D, _dos_close_, _dos_commit_, _dos_open_, loc_90C7A, _dos_creat_, loc_90C8D
+global sub_90C94, loc_90CA1, lseek_, loc_90CE0, loc_90CE3, _dos_read_, loc_90CEF, loc_90D08
+global _dos_write_
 rmdir_:
 push edx	; 90C32
 mov edx, eax	; 90C33

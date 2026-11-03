@@ -4,14 +4,14 @@ bits 32
 section s_B2220 progbits alloc exec nowrite align=1
 extern __Bin2String, __CmpBigInt, __Rnd2Int, dword_C4B5C, dword_C4B60, dword_C4C90, dword_C4C94, dword_C4C98
 extern dword_C4C9C, frexp_, modf_, qword_C4B64, qword_C4C80, qword_C4C88, qword_C4CAA, unk_C4CA8
-global _Scale10V_, _Scale_, __Nan_Inf_, __cvt_, floor_, loc_B2258, loc_B228B, loc_B2291
-global loc_B229A, loc_B229C, loc_B22D3, loc_B2306, loc_B234C, loc_B2369, loc_B236D, loc_B2394
-global loc_B23AE, loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, loc_B2444
+global __Nan_Inf_, loc_B2258, loc_B228B, loc_B2291, loc_B229A, loc_B229C, floor_, loc_B22D3
+global _Scale_, loc_B2306, _Scale10V_, loc_B234C, loc_B2369, loc_B236D, loc_B2394, loc_B23AE
+global loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, __cvt_, loc_B2444
 global loc_B246E, loc_B2487, loc_B249F, loc_B24BF, loc_B24CB, loc_B24DD, loc_B2507, loc_B2531
 global loc_B2533, loc_B253F, loc_B2549, loc_B2567, loc_B259B, loc_B25A7, loc_B25B1, loc_B25C3
-global loc_B25DF, loc_B25E2, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672, loc_B268C
-global loc_B26B0, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711, loc_B2719, sub_B26C9, unknown_libname_5
-global unknown_libname_6
+global loc_B25DF, loc_B25E2, unknown_libname_5, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672
+global unknown_libname_6, loc_B268C, loc_B26B0, sub_B26C9, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
+global loc_B2719
 __Nan_Inf_:
 push ebx	; B2220
 push edx	; B2221

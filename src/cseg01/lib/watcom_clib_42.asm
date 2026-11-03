@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A321C progbits alloc exec nowrite align=1
 extern strtod_
-global __cnvs2d_, forcedecpt_, loc_A3226, loc_A3239, loc_A3249, loc_A3251, loc_A3257, loc_A3261
+global forcedecpt_, loc_A3226, loc_A3239, loc_A3249, loc_A3251, loc_A3257, loc_A3261, __cnvs2d_
 forcedecpt_:
 push ebx	; A321C
 push ecx	; A321D

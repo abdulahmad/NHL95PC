@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_A2AC8 progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, asc_C4ADC, dword_D5670, dword_D5674
-global abs_, loc_A2ACE, loc_A2B28, loc_A2B48, loc_A2B6E, loc_A2B84, ltoa_, sub_A2ACF
-global sub_A2ADC, sub_A2B85, toupper_, ultoa_, unk_A2AEE
+global abs_, loc_A2ACE, sub_A2ACF, sub_A2ADC, unk_A2AEE, ultoa_, loc_A2B28, loc_A2B48
+global ltoa_, loc_A2B6E, toupper_, loc_A2B84, sub_A2B85
 abs_:
 test eax, eax	; A2AC8
 jge short loc_A2ACE	; A2ACA

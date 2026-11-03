@@ -17,26 +17,26 @@ extern nullsub_4, off_D846C, outp_, sub_A6D24, sub_AB658, sub_AB6D0, sub_AB80C, 
 extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, sub_B0D6C, sub_B14E4, sub_B1CBC, sub_B1F1C
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, word_D8770, word_D8772, word_D8774, word_D8776, word_D8778
-global loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002, loc_AE02F
-global loc_AE061, loc_AE096, loc_AE0A5, loc_AE0C1, loc_AE0D6, loc_AE0E2, loc_AE11D, loc_AE14C
-global loc_AE162, loc_AE1A1, loc_AE1AD, loc_AE1B7, loc_AE22F, loc_AE243, loc_AE24A, loc_AE277
-global loc_AE2A9, loc_AE2DE, loc_AE2ED, loc_AE309, loc_AE31E, loc_AE32A, loc_AE365, loc_AE394
-global loc_AE3AA, loc_AE3E9, loc_AE3F5, loc_AE3FF, loc_AE477, loc_AE48B, loc_AE492, loc_AE4BF
-global loc_AE4F1, loc_AE526, loc_AE535, loc_AE551, loc_AE566, loc_AE572, loc_AE5AD, loc_AE5DC
-global loc_AE5F2, loc_AE631, loc_AE63D, loc_AE647, loc_AE6BF, loc_AE6D3, loc_AE6DA, loc_AE707
-global loc_AE739, loc_AE76E, loc_AE77D, loc_AE799, loc_AE7AE, loc_AE7BA, loc_AE7F5, loc_AE824
-global loc_AE83A, loc_AE879, loc_AE885, loc_AE88F, loc_AE8DD, loc_AE8E3, loc_AE8FE, loc_AE96B
-global loc_AE9E2, loc_AE9E8, loc_AEA05, loc_AEA22, loc_AEA32, loc_AEA68, loc_AEB45, loc_AEE52
-global loc_AEE86, loc_AEEDD, loc_AEEF5, loc_AEF08, loc_AEF26, loc_AEF2E, loc_AEF77, loc_AEF89
-global loc_AEF9F, loc_AEFC6, loc_AEFE7, loc_AF039, loc_AF054, loc_AF073, loc_AF0C8, loc_AF0CF
-global loc_AF0D2, loc_AF10F, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, loc_AF1BE, loc_AF214
-global loc_AF23B, loc_AF262, loc_AF289, loc_AF2C8, loc_AF2CA, loc_AF335, loc_AF337, loc_AF37E
-global loc_AF412, loc_AF417, loc_AF47E, loc_AF48C, loc_AF4A8, loc_AF4B9, loc_AF4E0, loc_AF4F1
-global loc_AF509, loc_AF523, loc_AF549, loc_AF558, loc_AF583, loc_AF5AB, loc_AF5D3, loc_AF601
-global loc_AF610, loc_AF63E, loc_AF657, loc_AF665, loc_AF673, loc_AF6C4, loc_AF6CB, sub_ADEE9
-global sub_AE903, sub_AE9EB, sub_AEA23, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33, sub_AEFA2
-global sub_AEFC9, sub_AEFEA, sub_AF058, sub_AF076, sub_AF0D5, sub_AF112, sub_AF198, sub_AF1A4
-global sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428
+global sub_ADEE9, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
+global loc_AE02F, loc_AE061, loc_AE096, loc_AE0A5, loc_AE0C1, loc_AE0D6, loc_AE0E2, loc_AE11D
+global loc_AE14C, loc_AE162, loc_AE1A1, loc_AE1AD, loc_AE1B7, loc_AE22F, loc_AE243, loc_AE24A
+global loc_AE277, loc_AE2A9, loc_AE2DE, loc_AE2ED, loc_AE309, loc_AE31E, loc_AE32A, loc_AE365
+global loc_AE394, loc_AE3AA, loc_AE3E9, loc_AE3F5, loc_AE3FF, loc_AE477, loc_AE48B, loc_AE492
+global loc_AE4BF, loc_AE4F1, loc_AE526, loc_AE535, loc_AE551, loc_AE566, loc_AE572, loc_AE5AD
+global loc_AE5DC, loc_AE5F2, loc_AE631, loc_AE63D, loc_AE647, loc_AE6BF, loc_AE6D3, loc_AE6DA
+global loc_AE707, loc_AE739, loc_AE76E, loc_AE77D, loc_AE799, loc_AE7AE, loc_AE7BA, loc_AE7F5
+global loc_AE824, loc_AE83A, loc_AE879, loc_AE885, loc_AE88F, loc_AE8DD, loc_AE8E3, loc_AE8FE
+global sub_AE903, loc_AE96B, loc_AE9E2, loc_AE9E8, sub_AE9EB, loc_AEA05, loc_AEA22, sub_AEA23
+global loc_AEA32, loc_AEA68, loc_AEB45, sub_AEDBC, loc_AEE52, sub_AEE54, loc_AEE86, loc_AEEDD
+global loc_AEEF5, loc_AEF08, sub_AEF0E, loc_AEF26, loc_AEF2E, sub_AEF33, loc_AEF77, loc_AEF89
+global loc_AEF9F, sub_AEFA2, loc_AEFC6, sub_AEFC9, loc_AEFE7, sub_AEFEA, loc_AF039, loc_AF054
+global sub_AF058, loc_AF073, sub_AF076, loc_AF0C8, loc_AF0CF, loc_AF0D2, sub_AF0D5, loc_AF10F
+global sub_AF112, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, sub_AF198, sub_AF1A4, loc_AF1BE
+global sub_AF1D0, loc_AF214, loc_AF23B, loc_AF262, loc_AF289, loc_AF2C8, loc_AF2CA, sub_AF2E0
+global loc_AF335, loc_AF337, sub_AF340, loc_AF37E, loc_AF412, loc_AF417, sub_AF428, loc_AF47E
+global loc_AF48C, loc_AF4A8, loc_AF4B9, loc_AF4E0, loc_AF4F1, loc_AF509, loc_AF523, loc_AF549
+global loc_AF558, loc_AF583, loc_AF5AB, loc_AF5D3, loc_AF601, loc_AF610, loc_AF63E, loc_AF657
+global loc_AF665, loc_AF673, loc_AF6C4, loc_AF6CB
 sub_ADEE9:
 push ebp	; ADEE9
 LD mov, ebp, esp	; ADEEA

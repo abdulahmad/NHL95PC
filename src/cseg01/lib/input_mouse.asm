@@ -3,11 +3,11 @@ bits 32
 %include "hockey.inc"
 section s_B2D38 progbits alloc exec nowrite align=1
 extern dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D2FFC, dword_D3000, dword_D301C, dword_D3028
-extern mousex, mousey, mousebtns, dword_D3038, dword_D303C, dword_D3044, dword_D3048, off_D306C
-extern off_D3070, off_D3074, mousepollfn, sub_B3454, word_D3004, word_D3006, word_D3008
-global loc_B2D57, loc_B2D5E, loc_B2D92, loc_B2DB2, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, loc_B2F7C, loc_B3006, sub_B2D38, sub_B2D74, sub_B2D94, MouseSetPos, sub_B2DCA
-global sub_B2DEF, sub_B2E1B, sub_B2E43, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22
+extern dword_D3038, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
+extern off_D306C, off_D3070, off_D3074, sub_B3454, word_D3004, word_D3006, word_D3008
+global sub_B2D38, loc_B2D57, loc_B2D5E, sub_B2D74, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
+global sub_B2DCA, sub_B2DEF, sub_B2E1B, sub_B2E43, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
+global loc_B2EEA, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22, loc_B2F7C, loc_B3006
 sub_B2D38:
 LD xor, eax, eax	; B2D38
 dec dword [dword_D3000]	; B2D3A

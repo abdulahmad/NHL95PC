@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_98A40 progbits alloc exec nowrite align=1
 extern sub_B3B2E, sub_B3C60
-global loc_98A79, sub_98A40
+global sub_98A40, loc_98A79
 sub_98A40:
 sub esp, byte 0Ch	; 98A40
 mov eax, esp	; 98A43

@@ -5,26 +5,26 @@ section s_98B30 progbits alloc exec nowrite align=1
 extern abs_, asc_C481C, asc_C4840, asc_C4854, asc_C485C, byte_D4F5C, byte_D4F5D, byte_D4F5E
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
 extern byte_F234E, dword_D2F60, dword_D4F58, dword_D4F64, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
-extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, stricmp_, sub_8CD04, sub_8D2F0
-extern sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, sub_971F8, sub_9722E, sub_A2000, sub_A2610
-extern sub_A27C4, sub_A28F0, sub_A2AB8, FatalError, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
+extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, sub_8CD04
+extern sub_8D2F0, sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, sub_971F8, sub_9722E, sub_A2000
+extern sub_A2610, sub_A27C4, sub_A28F0, sub_A2AB8, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
-global jpt_998DD, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E, loc_98DA1, loc_98DB7
-global loc_98DC3, loc_98DCD, loc_98DCF, loc_98DF6, loc_98E06, loc_98E17, loc_98E36, loc_98E47
-global loc_98EAA, loc_98EFB, loc_98F0A, loc_98F44, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7
-global loc_98FDB, loc_98FEC, loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091
-global loc_9909A, loc_990C4, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1
-global loc_991C7, loc_991E8, loc_991FF, loc_99203, loc_9921B, loc_99225, loc_9928F, loc_9929C
-global loc_992A9, loc_992C8, loc_992D6, loc_992DE, loc_992F8, loc_9930E, loc_99329, loc_99331
-global loc_9933E, loc_99351, loc_9936D, loc_993A4, loc_993AC, loc_993C5, loc_993CF, loc_993F3
-global loc_99424, loc_99428, loc_99436, loc_99449, loc_99455, loc_9947A, loc_994B0, loc_994DF
-global loc_99503, loc_99506, loc_99513, loc_9951A, loc_9955D, loc_99594, loc_995DB, loc_99600
-global loc_99687, loc_9969C, loc_996A0, loc_99729, loc_99754, loc_9975B, loc_99786, loc_99798
-global loc_997A6, loc_997F1, loc_99812, loc_9981F, loc_99845, loc_9985E, loc_9989B, loc_99936
-global loc_99972, loc_99976, loc_99981, loc_99988, loc_9998E, loc_99991, loc_999A5, loc_999AC
-global loc_999BD, loc_999CF, loc_999E1, loc_999FC, sub_98B30, sub_98BEC, sub_98D20, sub_98DD8
-global sub_98E50, sub_98F11, sub_98F46, sub_990CB, sub_99522, sub_99620, sub_9966E, sub_996B0
-global sub_99700, sub_997B7, sub_99822, sub_998A0, sub_99925, sub_99A0B, sub_99A0E
+global sub_98B30, sub_98BEC, sub_98D20, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
+global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, sub_98DD8, loc_98DF6, loc_98E06
+global loc_98E17, loc_98E36, loc_98E47, sub_98E50, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
+global loc_98F44, sub_98F46, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
+global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
+global sub_990CB, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1, loc_991C7
+global loc_991E8, loc_991FF, loc_99203, loc_9921B, loc_99225, loc_9928F, loc_9929C, loc_992A9
+global loc_992C8, loc_992D6, loc_992DE, loc_992F8, loc_9930E, loc_99329, loc_99331, loc_9933E
+global loc_99351, loc_9936D, loc_993A4, loc_993AC, loc_993C5, loc_993CF, loc_993F3, loc_99424
+global loc_99428, loc_99436, loc_99449, loc_99455, loc_9947A, loc_994B0, loc_994DF, loc_99503
+global loc_99506, loc_99513, loc_9951A, sub_99522, loc_9955D, loc_99594, loc_995DB, loc_99600
+global sub_99620, sub_9966E, loc_99687, loc_9969C, loc_996A0, sub_996B0, sub_99700, loc_99729
+global loc_99754, loc_9975B, loc_99786, loc_99798, loc_997A6, sub_997B7, loc_997F1, loc_99812
+global loc_9981F, sub_99822, loc_99845, loc_9985E, loc_9989B, sub_998A0, jpt_998DD, sub_99925
+global loc_99936, loc_99972, loc_99976, loc_99981, loc_99988, loc_9998E, loc_99991, loc_999A5
+global loc_999AC, loc_999BD, loc_999CF, loc_999E1, loc_999FC, sub_99A0B, sub_99A0E
 sub_98B30:
 push esi	; 98B30
 push edi	; 98B31

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90BB0 progbits alloc exec nowrite align=1
 extern __doserror_, byte_D4D06, sub_90C0F
-global loc_90C0E, sub_90BE9, sub_90BEC, unknown_libname_1, unknown_libname_2
+global unknown_libname_1, unknown_libname_2, sub_90BE9, sub_90BEC, loc_90C0E
 unknown_libname_1:
 push ecx	; 90BB0
 push eax	; 90BB1

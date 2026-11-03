@@ -2,43 +2,43 @@
 bits 32
 %include "hockey.inc"
 section s_8EB5B progbits alloc exec nowrite align=1
-extern _makepath_, _splitpath_, asc_C3FA4, asc_C3FA8, asc_C3FB8, asc_C3FC8, asc_C3FCC, asc_C3FD0
-extern byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D, byte_F23BC, byte_F23CC
-extern byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA, dword_D4F64, dword_D4F8A
-extern dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34
-extern dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300, dword_F2304, dword_F2308
-extern dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, sprintf_, strlen_, SndLoadFile
-extern SndLoadFile2, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC, addtimer, RemoveTimerCallback, __GETDS
+extern __GETDS, _makepath_, _splitpath_, addtimer, asc_C3FA4, asc_C3FA8, asc_C3FB8, asc_C3FC8
+extern asc_C3FCC, asc_C3FD0, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
+extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA
+extern dword_D4F64, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
+extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
+extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
+extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC
 extern sub_97166, sub_971BE, sub_971F8, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
 extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, sub_B3454, sub_B3ABC, sub_B3FB0
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
-global loc_8EB8D, loc_8EBAB, loc_8EBB4, loc_8EBBB, loc_8EBEB, loc_8EC08, loc_8EC12, loc_8EC26
-global loc_8EC30, loc_8EC3D, loc_8EC47, loc_8EC53, loc_8EC5D, loc_8EC7F, loc_8EC89, loc_8EC9D
-global loc_8ECDE, loc_8ED0A, loc_8ED6F, loc_8ED73, loc_8EDB8, loc_8EDB9, loc_8EDCB, loc_8EDE2
-global loc_8EE06, loc_8EE2B, loc_8EE8B, loc_8EE90, loc_8EED5, loc_8EEF5, loc_8EEFF, loc_8EF2F
-global loc_8EF36, loc_8EF43, loc_8EF47, loc_8EF4A, loc_8EF56, loc_8EF6D, loc_8EF98, loc_8EFB1
-global loc_8EFDB, loc_8F008, loc_8F011, loc_8F01B, loc_8F01C, loc_8F029, loc_8F02B, loc_8F05C
-global loc_8F074, loc_8F095, loc_8F0A5, loc_8F0AB, loc_8F0B5, loc_8F0CF, loc_8F0E7, loc_8F0EB
-global loc_8F127, loc_8F151, loc_8F158, loc_8F19C, loc_8F1F2, loc_8F1F4, loc_8F1F7, loc_8F1F8
-global loc_8F244, loc_8F24D, loc_8F262, loc_8F2D7, loc_8F2F8, loc_8F38D, loc_8F3F3, loc_8F413
-global loc_8F420, loc_8F42B, loc_8F43D, loc_8F447, loc_8F44F, loc_8F45B, loc_8F47E, loc_8F47F
-global loc_8F48A, loc_8F4A0, loc_8F4BD, loc_8F4D7, loc_8F4E1, loc_8F4F1, loc_8F526, loc_8F52B
-global loc_8F592, loc_8F609, loc_8F616, loc_8F64F, loc_8F66B, loc_8F66C, loc_8F679, loc_8F694
-global loc_8F6B2, loc_8F6CD, loc_8F6D4, loc_8F6E2, loc_8F6ED, loc_8F6F1, loc_8F70D, loc_8F767
-global loc_8F76B, loc_8F7A2, loc_8F7C6, loc_8F7F6, loc_8F7FA, loc_8F824, loc_8F834, loc_8F838
-global loc_8F83E, loc_8F85C, loc_8F86C, loc_8F870, loc_8F876, loc_8F88D, loc_8F8A5, loc_8F8A9
-global loc_8F8E6, loc_8F909, loc_8F90A, loc_8F929, loc_8F94F, loc_8F950, loc_8F9F6, loc_8FA46
-global loc_8FA83, loc_8FAD8, loc_8FAE0, loc_8FAE6, loc_8FAEA, loc_8FB08, loc_8FB16, loc_8FB18
-global loc_8FB1C, loc_8FB72, loc_8FB87, loc_8FC2E, loc_8FC31, loc_8FC96, loc_8FC9C, loc_8FCDC
-global loc_8FCF8, loc_8FD5F, loc_8FD82, loc_8FDAE, loc_8FDE1, loc_8FE18, loc_8FE4B, loc_8FE7F
-global loc_8FEAD, loc_8FEBE, loc_8FEC2, loc_8FF39, loc_8FF59, loc_8FFCB, sub_8EB5B, sub_8EB93
-global sub_8EBE2, sub_8ECC0, sub_8EDD2, sub_8EE2F, sub_8EE43, sub_8EE4F, sub_8EF50, sub_8EF76
-global sub_8EF91, sub_8EFBB, sub_8F0D7, sub_8F114, sub_8F13B, sub_8F1FE, sub_8F247, sub_8F270
-global sub_8F27A, sub_8F433, sub_8F451, sub_8F48F, sub_8F4A7, sub_8F4C4, sub_8F61D, sub_8F633
-global sub_8F67D, sub_8F7AE, sub_8F80E, sub_8F846, sub_8F963, sub_8F96E, sub_8F979, sub_8F984
-global sub_8F98F, sub_8FAF2, sub_8FB24, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A, sub_8FCAC
-global sub_8FCDF, sub_8FD67, sub_8FD84, sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, sub_8FE83
-global sub_8FE89, sub_8FED2, sub_8FF1E, sub_8FF3E, sub_8FF5E, sub_8FF7C, sub_8FFB0
+global sub_8EB5B, loc_8EB8D, sub_8EB93, loc_8EBAB, loc_8EBB4, loc_8EBBB, sub_8EBE2, loc_8EBEB
+global loc_8EC08, loc_8EC12, loc_8EC26, loc_8EC30, loc_8EC3D, loc_8EC47, loc_8EC53, loc_8EC5D
+global loc_8EC7F, loc_8EC89, loc_8EC9D, sub_8ECC0, loc_8ECDE, loc_8ED0A, loc_8ED6F, loc_8ED73
+global loc_8EDB8, loc_8EDB9, loc_8EDCB, sub_8EDD2, loc_8EDE2, loc_8EE06, loc_8EE2B, sub_8EE2F
+global sub_8EE43, sub_8EE4F, loc_8EE8B, loc_8EE90, loc_8EED5, loc_8EEF5, loc_8EEFF, loc_8EF2F
+global loc_8EF36, loc_8EF43, loc_8EF47, loc_8EF4A, sub_8EF50, loc_8EF56, loc_8EF6D, sub_8EF76
+global sub_8EF91, loc_8EF98, loc_8EFB1, sub_8EFBB, loc_8EFDB, loc_8F008, loc_8F011, loc_8F01B
+global loc_8F01C, loc_8F029, loc_8F02B, loc_8F05C, loc_8F074, loc_8F095, loc_8F0A5, loc_8F0AB
+global loc_8F0B5, loc_8F0CF, sub_8F0D7, loc_8F0E7, loc_8F0EB, sub_8F114, loc_8F127, sub_8F13B
+global loc_8F151, loc_8F158, loc_8F19C, loc_8F1F2, loc_8F1F4, loc_8F1F7, loc_8F1F8, sub_8F1FE
+global loc_8F244, sub_8F247, loc_8F24D, loc_8F262, sub_8F270, sub_8F27A, loc_8F2D7, loc_8F2F8
+global loc_8F38D, loc_8F3F3, loc_8F413, loc_8F420, loc_8F42B, sub_8F433, loc_8F43D, loc_8F447
+global loc_8F44F, sub_8F451, loc_8F45B, loc_8F47E, loc_8F47F, loc_8F48A, sub_8F48F, loc_8F4A0
+global sub_8F4A7, loc_8F4BD, sub_8F4C4, loc_8F4D7, loc_8F4E1, loc_8F4F1, loc_8F526, loc_8F52B
+global loc_8F592, loc_8F609, loc_8F616, sub_8F61D, sub_8F633, loc_8F64F, loc_8F66B, loc_8F66C
+global loc_8F679, sub_8F67D, loc_8F694, loc_8F6B2, loc_8F6CD, loc_8F6D4, loc_8F6E2, loc_8F6ED
+global loc_8F6F1, loc_8F70D, loc_8F767, loc_8F76B, loc_8F7A2, sub_8F7AE, loc_8F7C6, loc_8F7F6
+global loc_8F7FA, sub_8F80E, loc_8F824, loc_8F834, loc_8F838, loc_8F83E, sub_8F846, loc_8F85C
+global loc_8F86C, loc_8F870, loc_8F876, loc_8F88D, loc_8F8A5, loc_8F8A9, loc_8F8E6, loc_8F909
+global loc_8F90A, loc_8F929, loc_8F94F, loc_8F950, sub_8F963, sub_8F96E, sub_8F979, sub_8F984
+global sub_8F98F, loc_8F9F6, loc_8FA46, loc_8FA83, loc_8FAD8, loc_8FAE0, loc_8FAE6, loc_8FAEA
+global sub_8FAF2, loc_8FB08, loc_8FB16, loc_8FB18, loc_8FB1C, sub_8FB24, loc_8FB72, loc_8FB87
+global sub_8FB8E, sub_8FBE5, loc_8FC2E, loc_8FC31, sub_8FC37, sub_8FC8A, loc_8FC96, loc_8FC9C
+global sub_8FCAC, loc_8FCDC, sub_8FCDF, loc_8FCF8, loc_8FD5F, sub_8FD67, loc_8FD82, sub_8FD84
+global loc_8FDAE, sub_8FDB2, loc_8FDE1, sub_8FDE5, loc_8FE18, sub_8FE1C, loc_8FE4B, sub_8FE4F
+global loc_8FE7F, sub_8FE83, sub_8FE89, loc_8FEAD, loc_8FEBE, loc_8FEC2, sub_8FED2, sub_8FF1E
+global loc_8FF39, sub_8FF3E, loc_8FF59, sub_8FF5E, sub_8FF7C, sub_8FFB0, loc_8FFCB
 sub_8EB5B:
 push ebx	; 8EB5B
 push ecx	; 8EB5C

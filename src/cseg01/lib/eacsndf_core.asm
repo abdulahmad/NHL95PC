@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_96A60 progbits alloc exec nowrite align=1
-extern _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, dword_D4F64, dword_D4F96, dword_EDE8C, dword_EDE90
-extern dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0, off_D4BA0
-extern sub_8DBD4, __GETDS, sub_96A10, sub_B3ABC, sub_B3C74, unk_EDE88
-global loc_96AA4, loc_96AB2, loc_96AC0, loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5
-global loc_96C15, loc_96C2B, loc_96C43, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E
-global loc_96D27, loc_96D5E, loc_96D8B, loc_96DA9, loc_96DC4, loc_96DF4, loc_96E09, loc_96E2D
-global loc_96E34, loc_96E47, loc_96E5B, loc_96E73, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90
-global loc_96FC7, loc_9702F, loc_97059, loc_97066, loc_9706F, loc_9708D, loc_97097, loc_9709B
-global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, loc_97175, loc_971A5
-global loc_971D7, loc_971F4, loc_9722C, loc_9724A, loc_9724E, loc_97266, loc_972A5, sub_96A60
-global sub_96A78, sub_96A80, sub_96A94, sub_96AC4, sub_96C4C, sub_96E7C, sub_97079, sub_97166
-global sub_9717F, sub_97194, sub_971AB, sub_971BE, sub_971DB, sub_971F8, sub_9720B, sub_9722E
-global sub_97268, sub_972AB, sub_972B1, sub_972B8, sub_972BE, sub_972C0, sub_972C6, sub_972C8
+extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, dword_D4F64, dword_D4F96, dword_EDE8C
+extern dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0
+extern off_D4BA0, sub_8DBD4, sub_96A10, sub_B3ABC, sub_B3C74, unk_EDE88
+global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
+global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
+global sub_96C4C, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
+global loc_96D8B, loc_96DA9, loc_96DC4, loc_96DF4, loc_96E09, loc_96E2D, loc_96E34, loc_96E47
+global loc_96E5B, loc_96E73, sub_96E7C, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90, loc_96FC7
+global loc_9702F, loc_97059, loc_97066, loc_9706F, sub_97079, loc_9708D, loc_97097, loc_9709B
+global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, sub_97166, loc_97175
+global sub_9717F, sub_97194, loc_971A5, sub_971AB, sub_971BE, loc_971D7, sub_971DB, loc_971F4
+global sub_971F8, sub_9720B, loc_9722C, sub_9722E, loc_9724A, loc_9724E, loc_97266, sub_97268
+global loc_972A5, sub_972AB, sub_972B1, sub_972B8, sub_972BE, sub_972C0, sub_972C6, sub_972C8
 global sub_972CE, sub_972D5, sub_972DB, sub_972DD, sub_972E3, sub_972E5, sub_972EB
 sub_96A60:
 mov eax, dword [byte esp+04h]	; 96A60
