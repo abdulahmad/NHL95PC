@@ -482,7 +482,7 @@
 ;  5A03B  AvgCline                                 cseg01/engine/hockey.asm                     1
 ;  5A0A3  CompLine                                 cseg01/engine/hockey.asm                     2
 ;  5A2EE  TeamLineEnergy                           cseg01/engine/hockey.asm                     1
-;  5A341  calcpuckcross                            cseg01/engine/hockey.asm                     1
+;  5A341  findpc                                   cseg01/engine/hockey.asm                     1
 ;  5A425  GetHot                                   cseg01/engine/hockey.asm                     3
 ;  5A4AD  GetHotStick                              cseg01/engine/hockey.asm                     1
 ;  5A534  GetHotOrStick                            cseg01/engine/hockey.asm                     1

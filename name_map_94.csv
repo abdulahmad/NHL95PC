@@ -646,7 +646,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005A0A3,sub_5A0A3,CompLine,93G,logic93_3.asm,,,medium,"{source_game=93G,source_file=logic93_4.asm,confidence=high} 93G CompLine (find good line for comp to switch to; a2 = team, a1 = other team): tmap difference picks the PP/PK lines, getlinee compares line energies; callers chk4lc (54AF9) and puckfaceoff, as in 93G",engine_core,manual-trace
 0005A2EE,sub_5A2EE,TeamLineEnergy,PC-new,,,,medium,energy of team line for the stats screens (file_utils caller); wraps LineEnergy,engine_core,manual-trace
 0005A30C,sub_5A30C,getlinee,PC-new,,,,medium,"{source_game=93G,source_file=penalty93_2.asm,confidence=medium} 93G getlinee (d0 = line number, a2 = team: energy level of this line); called by CompLine and TeamLineEnergy",engine_core,manual-trace
-0005A341,sub_5A341,calcpuckcross,PC-new,,,,medium,predicts where/when the puck crosses each goal line and stores it in puckcross (DF814); called from player logic,engine_core,manual-trace
+0005A341,sub_5A341,findpc,94G,,logic94.asm,,high,"the 94G findpc: where and when the puck crosses each goal line (puckcross), called from pucknorm",engine_core,manual-trace
 0005A425,sub_5A425,GetHot,93G,logic93_5.asm,logic94.asm,92G GetHot; 95G GetHot,medium,"callee alignment under 2 matched caller(s) assnearest, checkcoll; cosine: 0.00; fieldseq: 0.00; shared: ; calls: 0 known Genesis callees present, 0 missing, 0 extra; size: ninsn PC 40 / G 26",engine_core,callgraph(it1)
 0005A4AD,sub_5A4AD,GetHotStick,PC-new,,,,medium,GetHot variant with the stick-position table CC7A4,engine_core,manual-trace
 0005A534,sub_5A534,GetHotOrStick,PC-new,,,,medium,GetHot or GetHotStick depending on the player; physics caller,engine_core,manual-trace

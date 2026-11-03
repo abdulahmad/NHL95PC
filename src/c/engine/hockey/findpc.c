@@ -1,4 +1,4 @@
-/* Engine core: calcpuckcross and the functions that end in its pop/ret tail (multi-block file, see cc.py). */
+/* Engine core: findpc and the functions that end in its pop/ret tail (multi-block file, see cc.py). */
 #define IsCupClinched IsCupClinched_decl
 #include "nhl95.h"
 #undef IsCupClinched
@@ -10,14 +10,14 @@ typedef struct GlStat { short min, sht, sav; } GlStat;  /* tmglstats entry */
 #define PW(p, o) (*(short *)((char *)(p) + (o)))  /* player word at offset o (updateplayers: 40h 50h) */
 void doinput(Player *p, int pad);  /* 504DA: pad 0 for controller 1, 2 for controller 2 */
 
-/* calcpuckcross: find puck crossing lines: when (if at all) the puck will cross each goal line
+/* findpc: find puck crossing lines: when (if at all) the puck will cross each goal line
 . For the goal lines y = +E8h and -E8h: puckcross[0] = x where the puck crosses (bounced
  off the side boards at +-A0h), puckcross[1] = frames until it crosses (dy * 1000h puckvy); [1] = -1 when it
  will not cross (no y velocity, moving away, or out of range).
  t is a Reg68 local, a 68k data register (93G findpc's d0): both quotients go to t.l and the crossing x is
  worked on t.w, so a bounce stores only the low word (the EXE's 16-bit `mov bx, dx`). Both bounces add
  side twice, as 93G's `add.w d1, d0` pair. */
-void calcpuckcross(void)
+void findpc(void)
 {
     short *pc;
     int goaly;
@@ -55,7 +55,7 @@ void calcpuckcross(void)
  of the hot spot table (HotList/HotList_y, 2 bytes per frame) for the player's frame (word 12h, frames outside 0-283h/293h give 0, 0); x is negated when the
  sprite is X-flipped (attribute bit 3). No result. Storing HotList[f] straight into regd0.w (no temporary) gives
  the EXE's esi negate (found by tools/permute.py). Also gives the distance that makes reenergizeteam's exit a near
- jump into calcpuckcross's tail, as in the EXE. */
+ jump into findpc's tail, as in the EXE. */
 void GetHot(Player *p)
 {
     short f;
@@ -74,7 +74,7 @@ void GetHot(Player *p)
         regd0.w = -regd0.w;
 }
 
-/* Goal (5AB36, 93G Goal; ends in calcpuckcross_ret6): the puck went into the goal of net. side = the scoring side
+/* Goal (5AB36, 93G Goal; ends in findpc_ret6): the puck went into the goal of net. side = the scoring side
    (puck y below 0, flipped by gmode bit 1): t the scoring team, o the other. With the clock stopped (gmode bit 0),
    a delayed penalty on the scoring team (PenTeamScored) or the team offside (tmflags bit 4) there is no goal: the
    puck stops in the net (6 left or right of its x, 4 into it), and while the clock runs it gets assignment 1Ah,
@@ -302,7 +302,7 @@ void defaultsprites_0(void)
     SprSort();
 }
 
-/* SetPlList (5BBFA, 93G SetPlList; ends in calcpuckcross_ret6): build PlList, the roster indexes (pnum) of the
+/* SetPlList (5BBFA, 93G SetPlList; ends in findpc_ret6): build PlList, the roster indexes (pnum) of the
    players team t wants on the ice now, -1 for none, with their positions at PlList+6 (byte_E038A). The tmap
    positions come from priolist, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
    a penalty shot). Each player comes from the team's line table through the sublist of that position: the
@@ -455,8 +455,8 @@ void setpersonel(Team *t)
  gmode2 bit 2, sflags bits 4 (sfwrap) and 6 cleared, replay recording restarts; two DoGameFrame before the
  loop; CwdExciteLvl 10h; sflags3 bit 7 before the playoffs (gsp < 2); puck uncontrolled, camera at 0, fade
  in, rink scroll positions + 3E8h. cont1team / cont2team are read in place (Watcom keeps each in a register
- for its if / else chain); the two zero chains store lcrequest+2 and camy first. Ends in calcpuckcross's pops
- (calcpuckcross_ret5). */
+ for its if / else chain); the two zero chains store lcrequest+2 and camy first. Ends in findpc's pops
+ (findpc_ret5). */
 void StartPer(void)
 {
     lcrequest[0] = lcrequest[1] = 0;            /* no line change request */
@@ -501,7 +501,7 @@ void StartPer(void)
     rinkscrolly += 1000;
 }
 
-/* updateplayers (5C40F, 93G updateplayers; ends in calcpuckcross_ret6): run every sort object for a frame.
+/* updateplayers (5C40F, 93G updateplayers; ends in findpc_ret6): run every sort object for a frame.
    PC first: dword_CCC9C = 1 while the clock is stopped for a highlight (gmode bit 7), or with no replay (gmode2
    bit 0), no penalty countdown or queued penalty, overlay state byte_E003A[...] not 20h / 23h and the overlay idle
    (ovlseq 0 or 2, ovltimer outside 0-FFh); else 0. Then for the 12 players: the puck distance (vecdist, word 4Eh),
@@ -671,7 +671,7 @@ void ResetBench(void)
     }
 }
 
-/* updateanim (5CAEF; 93G hockey93 updateanim, "frame switch control on struct a3"; ends in calcpuckcross_ret5):
+/* updateanim (5CAEF; 93G hockey93 updateanim, "frame switch control on struct a3"; ends in findpc_ret5):
    step p's animation. No SPA: unlock (pfalock, pf2aip) and stop. The SPA's table (SPAtab + SPA; attribute word
    first, bit 15 = loops) gives per facing (facedir; on the horizontal rink, sflags bit 7, 2 less for the skaters
    and object 10h; mirrored when the x-flip attribute bit 3 is set) a list of frame / time pairs. When the time
@@ -743,7 +743,7 @@ frame:
     ((signed char *)p)[0x46] = 4;
 }
 
-/* clockcont_0 (5D852, 93G clockcont_0; ends in calcpuckcross_ret5): end of a period, also entered from
+/* clockcont_0 (5D852, 93G clockcont_0; ends in findpc_ret5): end of a period, also entered from
    puckfaceoff. The puck gets assignment 18h. Periods 1-2 (gsp < 2) just end the period (AddPenalty2 type 1 on the
    puck). Later: regd0 = 7 (score), 8 when the result clinches the cup (IsCupClinched); regd1 = hmscore - awscore.
    A tie in overtime (gsp 3) with fullot on ends the game: clear the penalty buffer, crowd up 384h (to at most

@@ -43,9 +43,9 @@ global AvgCline, DoGameFrame, GetHot, ResetBench, SetSPA, Setplass, forcepldata
 global SprSort_test
 global changeplayer_ret5
 global getlinee_sum
-global calcpuckcross_ret6, calcpuckcross_ret5
+global findpc_ret6, findpc_ret5
 global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
-global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, calcpuckcross
+global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, findpc
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
 global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList
 global StartPer, RestBench, updatecrowdf, periodicevents, freezewindow, cleargamevars, DrawRinkOverlays, setupice
@@ -612,11 +612,11 @@ add eax, edx	; 5A338
 mov edi, 3	; 5A33A
 jmp short getlinee_sum	; 5A33F
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c
+; C: src/c/engine/hockey/findpc.c
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.inc"
+%include "c/engine/hockey/findpc.inc"
 %else
-calcpuckcross:
+findpc:
 push dword 20h	; 5A341
 call __CHK	; 5A346
 push ebx	; 5A34B
@@ -692,11 +692,11 @@ inc dword [esp]	; 5A40A
 add esi, byte 4	; 5A40D
 .6:
 cmp word [esp], byte 2	; 5A410
-jl near calcpuckcross.1	; 5A415
+jl near findpc.1	; 5A415
 add esp, byte 4	; 5A41B
-calcpuckcross_ret6:
+findpc_ret6:
 pop ebp	; 5A41E
-calcpuckcross_ret5:
+findpc_ret5:
 pop edi	; 5A41F
 pop esi	; 5A420
 pop edx	; 5A421
@@ -704,9 +704,9 @@ pop ecx	; 5A422
 pop ebx	; 5A423
 ret	; 5A424
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (GetHot)
+; C: src/c/engine/hockey/findpc.c (GetHot)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.GetHot.inc"
+%include "c/engine/hockey/findpc.GetHot.inc"
 %else
 GetHot:
 push dword 10h	; 5A425
@@ -1248,9 +1248,9 @@ ret	; 5AB35
 ; esi = scoring team, ebp = the other (puck Ypos sign xor gmdir). Puck stopped in the net, assreplace
 ; puck 1Ah. Offside (tmflags bit 4) -> AddPenalty 8 + AddPenalty2 1Bh; PenTeamScored (delayed penalty) -> no goal
 ; else tmscore+1 and the scoring bookkeeping (goal/assist counts, PenGoalStuff).
-; C: src/c/engine/hockey/calcpuckcross.c (Goal)
+; C: src/c/engine/hockey/findpc.c (Goal)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.Goal.inc"
+%include "c/engine/hockey/findpc.Goal.inc"
 %else
 Goal:
 push dword 24h	; 5AB36
@@ -1731,7 +1731,7 @@ mov byte [byte_DF7E7], dl	; 5B1BB
 call UpdateCoachModes	; 5B1C1
 .60:
 add esp, byte 8	; 5B1C6
-jmp near calcpuckcross_ret6	; 5B1C9
+jmp near findpc_ret6	; 5B1C9
 %endif ; C
 ; C: src/c/engine/hockey/GiveControl.c
 %ifdef CBUILD
@@ -2311,9 +2311,9 @@ mov byte [byte ebx+05Ah], al	; 5B81B
 .49:
 add esp, byte 1Ch	; 5B81E
 jmp near changeplayer_ret5	; 5B821
-; C: src/c/engine/hockey/calcpuckcross.c (reenergizeteam)
+; C: src/c/engine/hockey/findpc.c (reenergizeteam)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.reenergizeteam.inc"
+%include "c/engine/hockey/findpc.reenergizeteam.inc"
 %else
 reenergizeteam:
 push dword 18h	; 5B826
@@ -2350,7 +2350,7 @@ inc edx	; 5B875
 .3:
 cmp dx, byte 1Ch	; 5B876
 jl short reenergizeteam.1	; 5B87A
-jmp near calcpuckcross_ret5	; 5B87C
+jmp near findpc_ret5	; 5B87C
 %endif ; C
 ; clearteams: Zero both team structs (200h bytes) and store their data pointers (tmsort, tmlines, tmroster,...).
 ; C: src/c/engine/hockey/clearteams.c
@@ -2525,9 +2525,9 @@ pop ecx	; 5BA86
 pop ebx	; 5BA87
 ret	; 5BA88
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (defaultsprites_0)
+; C: src/c/engine/hockey/findpc.c (defaultsprites_0)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.defaultsprites_0.inc"
+%include "c/engine/hockey/findpc.defaultsprites_0.inc"
 %else
 defaultsprites_0:
 push dword 18h	; 5BA89
@@ -2610,7 +2610,7 @@ mov byte [byte_E0073], ah	; 5BB81
 mov byte [byte_E0074], ah	; 5BB87
 mov word [RefStep], bx	; 5BB8D
 call SprSort	; 5BB94
-jmp near calcpuckcross_ret5	; 5BB99
+jmp near findpc_ret5	; 5BB99
 %endif ; C
 ; C: src/c/engine/hockey/TryAddPlayerToList.c
 %ifdef CBUILD
@@ -2655,9 +2655,9 @@ mov eax, 1	; 5BBF3
 pop ecx	; 5BBF8
 ret	; 5BBF9
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (SetPlList)
+; C: src/c/engine/hockey/findpc.c (SetPlList)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.SetPlList.inc"
+%include "c/engine/hockey/findpc.SetPlList.inc"
 %else
 SetPlList:
 push dword 30h	; 5BBFA
@@ -2910,11 +2910,11 @@ dec edi	; 5BEE2
 test di, di	; 5BEE3
 jge near SetPlList.14	; 5BEE6
 add esp, byte 14h	; 5BEEC
-jmp near calcpuckcross_ret6	; 5BEEF
+jmp near findpc_ret6	; 5BEEF
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (setpersonel)
+; C: src/c/engine/hockey/findpc.c (setpersonel)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.setpersonel.inc"
+%include "c/engine/hockey/findpc.setpersonel.inc"
 %else
 setpersonel:
 push dword 1Ch	; 5BEF4
@@ -3010,13 +3010,13 @@ dec esi	; 5C001
 cmp si, byte 0FFFFh	; 5C002
 jne short setpersonel.7	; 5C006
 add esp, byte 4	; 5C008
-jmp near calcpuckcross_ret5	; 5C00B
+jmp near findpc_ret5	; 5C00B
 %endif ; C
 ; StartPer: setupice, ResetClock, no controlled players, center faceoff, InitCoachModes,
 ; then DoGameFrame.
-; C: src/c/engine/hockey/calcpuckcross.c (StartPer)
+; C: src/c/engine/hockey/findpc.c (StartPer)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.StartPer.inc"
+%include "c/engine/hockey/findpc.StartPer.inc"
 %else
 StartPer:
 push dword 18h	; 5C010
@@ -3111,7 +3111,7 @@ mov word [xc1], ax	; 5C19C
 mov word [fadeinpending], 1	; 5C1A2
 add dword [rinkscrollx], 3E8h	; 5C1AB
 add dword [rinkscrolly], 3E8h	; 5C1B5
-jmp near calcpuckcross_ret5	; 5C1BF
+jmp near findpc_ret5	; 5C1BF
 %endif ; C
 ; C: src/c/engine/hockey/DoGameFrame.c
 %ifdef CBUILD
@@ -3317,9 +3317,9 @@ pop edx	; 5C40C
 pop ebx	; 5C40D
 ret	; 5C40E
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (updateplayers)
+; C: src/c/engine/hockey/findpc.c (updateplayers)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.updateplayers.inc"
+%include "c/engine/hockey/findpc.updateplayers.inc"
 %else
 updateplayers:
 push dword 30h	; 5C40F
@@ -3838,11 +3838,11 @@ mov word [eax], dx	; 5CADB
 mov word [puckstruct+12h], 18Ah	; 5CADE
 .58:
 add esp, byte 0Ch	; 5CAE7
-jmp near calcpuckcross_ret6	; 5CAEA
+jmp near findpc_ret6	; 5CAEA
 %endif ; C
-; C: src/c/engine/hockey/calcpuckcross.c (updateanim)
+; C: src/c/engine/hockey/findpc.c (updateanim)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.updateanim.inc"
+%include "c/engine/hockey/findpc.updateanim.inc"
 %else
 updateanim:
 push dword 18h	; 5CAEF
@@ -3857,7 +3857,7 @@ cmp word [byte eax+SPA], byte 0	; 5CB00
 jne short .1	; 5CB05
 and byte [byte eax+pflags], 0DFh	; 5CB07
 and byte [byte eax+pflags2], 0FDh	; 5CB0B
-jmp near calcpuckcross_ret5	; 5CB0F
+jmp near findpc_ret5	; 5CB0F
 .1:
 mov ax, word [byte eax+facedir]	; 5CB14
 test byte [sflags], 80h	; 5CB18
@@ -3934,7 +3934,7 @@ or byte [byte ebx+pflags], 20h	; 5CBFE
 mov edx, 7A1h	; 5CC02
 mov eax, ebx	; 5CC07
 call SetSPA	; 5CC09
-jmp near calcpuckcross_ret5	; 5CC0E
+jmp near findpc_ret5	; 5CC0E
 .7:
 test di, di	; 5CC13
 jne short .8	; 5CC16
@@ -3958,10 +3958,10 @@ mov al, byte [byte ebx+046h]	; 5CC3C
 dec al	; 5CC3F
 mov byte [byte ebx+046h], al	; 5CC41
 test al, al	; 5CC44
-jge near calcpuckcross_ret5	; 5CC46
+jge near findpc_ret5	; 5CC46
 mov byte [byte ebx+046h], 0	; 5CC4C
 cmp cx, word [byte ebx+012h]	; 5CC50
-je near calcpuckcross_ret5	; 5CC54
+je near findpc_ret5	; 5CC54
 mov word [byte ebx+012h], cx	; 5CC5A
 cmp cx, 112h	; 5CC5E
 jl short .12	; 5CC63
@@ -4023,7 +4023,7 @@ mov eax, 0B3h	; 5CD12
 call sfx	; 5CD17
 .17:
 mov byte [byte ebx+046h], 4	; 5CD1C
-jmp near calcpuckcross_ret5	; 5CD20
+jmp near findpc_ret5	; 5CD20
 %endif ; C
 ; C: src/c/engine/hockey/freezewindow.c
 %ifdef CBUILD
@@ -4948,9 +4948,9 @@ ret	; 5D851
 %endif ; C
 ; clockcont_0: (end of period). Puck assinsert 18h; periods 1-2 -> PeriodOver path
 ; later periods compare hmscore/awscore for overtime shootout game over. Also called from puckfaceoff.
-; C: src/c/engine/hockey/calcpuckcross.c (clockcont_0)
+; C: src/c/engine/hockey/findpc.c (clockcont_0)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.clockcont_0.inc"
+%include "c/engine/hockey/findpc.clockcont_0.inc"
 %else
 clockcont_0:
 push dword 18h	; 5D852
@@ -5198,7 +5198,7 @@ mov edx, 2	; 5DBFF
 mov eax, ecx	; 5DC04
 .31:
 call AddPenalty2	; 5DC06
-jmp near calcpuckcross_ret5	; 5DC0B
+jmp near findpc_ret5	; 5DC0B
 %endif ; C
 ; ClockTick: run from the main loop. Counts clockticks (18h per second) and gameclock down; horn sfx 97h at
 ; 60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via EndPenaltyShot.
@@ -5510,9 +5510,9 @@ ret	; 5DF85
 %endif ; C
 ; ResetBench: Per team: PBnum = players with penalty time left (tmpdst > 0), all others
 ; not dressed back to the bench (tmpdst -2, roster status 3).
-; C: src/c/engine/hockey/calcpuckcross.c (ResetBench)
+; C: src/c/engine/hockey/findpc.c (ResetBench)
 %ifdef CBUILD
-%include "c/engine/hockey/calcpuckcross.ResetBench.inc"
+%include "c/engine/hockey/findpc.ResetBench.inc"
 %else
 ResetBench:
 push dword 18h	; 5DF86
@@ -5569,7 +5569,7 @@ inc edi	; 5E00E
 .7:
 cmp di, byte 2	; 5E00F
 jl short ResetBench.1	; 5E013
-jmp near calcpuckcross_ret5	; 5E015
+jmp near findpc_ret5	; 5E015
 %endif ; C
 ; C: src/c/engine/hockey/resetplstuff.c
 %ifdef CBUILD

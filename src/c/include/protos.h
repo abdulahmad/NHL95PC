@@ -31,7 +31,7 @@ void CrowdNoiseReset(void);                               /* 59863 */
 void changeplayer(struct Player *p, short cont);              /* 59E69 */
 short restorepl(short newpl, short oldpl);                /* 59FE1 */
 void AvgCline(struct Team *t);                            /* 5A03B */
-void calcpuckcross(void);                                 /* 5A341 */
+void findpc(void);                                 /* 5A341 */
 void GetHot(struct Player *p);                             /* 5A425 */
 void Setplass(struct Player *p);                          /* 5B298 */
 void Acheck(struct Player *p, struct Player *q);           /* 4FFAE */

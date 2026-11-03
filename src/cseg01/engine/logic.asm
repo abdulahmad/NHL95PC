@@ -23,7 +23,7 @@ extern teamabbrevs, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
 extern checkpuckcoll, ChkOffsides, MarkTwoLinePlayers, PuckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
-extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
+extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, findpc, setplayer, SprSort, EvadePlayers
 extern EvadePC, SetBoxDoorObject, FormatPlayerName, PostGoalEvent, ChkScorerMilestone, QueueGoalieNote, ShotLaneOpen, EndPenaltyShot
 extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
 extern unk_C1B3E, unk_DACA0, hmteamrec, unk_DC240, savepal, SortCords, updateanim
@@ -6892,7 +6892,7 @@ mov eax, esi	; 4D6E1
 add eax, 5	; 4D6E3
 mov word [byte ebx+temp1], ax	; 4D6E8
 mov eax, ebx	; 4D6EC
-call calcpuckcross	; 4D6EE
+call findpc	; 4D6EE
 .1:
 mov edx, dword [puckc]	; 4D6F3
 mov ah, byte [edx]	; 4D6F9

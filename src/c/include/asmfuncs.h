@@ -457,8 +457,8 @@ extern void CompLine(); /* 5A0A3 */
 extern void getlinee_pp(); /* 5A288 */
 extern void getlinee_sum(); /* 5A2C6 */
 extern void getlinee(); /* 5A30C */
-extern void calcpuckcross_ret6(); /* 5A41E */
-extern void calcpuckcross_ret5(); /* 5A41F */
+extern void findpc_ret6(); /* 5A41E */
+extern void findpc_ret5(); /* 5A41F */
 extern void UpdateCoachModes(); /* 5A77C */
 extern void Goal(); /* 5AB36 */
 extern void ResetClock(); /* 5BA07 */

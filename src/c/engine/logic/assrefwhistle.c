@@ -354,7 +354,7 @@ void CountPuckThreat(Player *p)
 
 /* pucknorm_body (4D6B4; 93G logic93 / 94G pucknorm after the new-assignment part, PC version; ends in ass_popx):
    the puck's normal assignment. Count down the two line-crossing timers (puckcross) and every 5 ticks
-   recompute them (temp1, calcpuckcross). A carried puck is pulled a quarter of the way toward its carrier's hot
+   recompute them (temp1, findpc). A carried puck is pulled a quarter of the way toward its carrier's hot
    spot (a2touchpuck, GetHot into regd0 / regd1) and takes his velocity. Then the ice / offside / two-line checks
    (PuckIChk, ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck resets temp2 (78h) and the
    penalty-shot send count (psendcount); a loose one on a live penalty shot moving back toward the shooter's
@@ -372,7 +372,7 @@ void pucknorm_body(Player *p)
     puckcross[3]--;
     if (--p->temp1 < 0) {
         p->temp1 += 5;
-        ((void (*)(Player *))calcpuckcross)(p);
+        ((void (*)(Player *))findpc)(p);
     }
     if (*puckc >= 0) {
         c = &SortCords[*puckc];
