@@ -5,7 +5,7 @@
 - Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 95PC is on `claude/project-thread-ggw7zu`.
 - Branch: `claude/project-thread-ggw7zu`
 - Last check: 2026-11-02 `make fullcheck`, MATCH in both builds
-- Next: F2b (module layout) is done; the naming pass (F3: 94G, then 94S, then 95G names, clear matches only) is next. C matching takes files from the top of docs/WORK_QUEUE.md
+- Next: F3 naming done for the 94G names (14 renames; review list in the project files). 95G names for the 95 features need a body-by-body pass, not started. C matching takes files from the top of docs/WORK_QUEUE.md
 - Open PRs: none
 
 Everything a new person or agent needs to pick this project up. Read this file, then
