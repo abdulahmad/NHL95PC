@@ -9,7 +9,7 @@ struct Player; struct Team;
 void assreplace(struct Player *p, int ass);                /* 11FF4: replace p's current assignment */
 
 /* engine/logic */
-void StopIfFree(struct Player *p);                        /* 4A80E */
+void donothing(struct Player *p);                        /* 4A80E */
 void pucknorm(struct Player *p);                          /* 4D8C7 */
 void assexit(struct Player *p);                           /* 4D509 */
 void pucknothing(struct Player *p);                       /* 4D8FD */
@@ -97,7 +97,7 @@ short sub_8F80E(int handle);                              /* sound library: samp
 int ReplayIsEmpty(void);                                   /* 12034 */
 void TextGridFree(void);                                  /* 17756 */
 int FileClose(int *h);                                    /* 1457C */
-short GameTimeStamp(void);                                /* 62CD7 */
+short GetPeriodTimeRemaining(void);                                /* 62CD7 */
 void _nfree(void *p);                                     /* Watcom CRT _nfree_ */
 int _dos_close(int h);                                    /* Watcom CRT _dos_close_ */
 int DateKey(int month, int day);  /* 41C79 */

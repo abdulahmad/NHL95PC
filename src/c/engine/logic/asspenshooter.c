@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* asspenshooter: the penalty shot skater. Leave (assexit) without the puck or with
- pflags bit 3; not while flag 20h; in a stoppage stand (SPA 289h, nopuck 60) and StopIfFree. A new assignment (bit
+ pflags bit 3; not while flag 20h; in a stoppage stand (SPA 289h, nopuck 60) and donothing. A new assignment (bit
  1): temp1 0, steering byte +29h 0 +28h 8, path point 0, a random temp3 (0-3) and a path from his y (mirrored by
  end; StartShootoutPath). Past the path end (sopathend < 0): when not facing the path direction, shoot now and then
  (1 in 4 when turned 3 or more steps, else 1 in 32): pass direction 2-3 (+3 on the left side, pspathside), shot
@@ -24,7 +24,7 @@ void asspenshooter(Player *p)
     if (gmode & 1) {
         SetSPA(p, 0x289);
         p->nopuck = 0x3C;
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     y = p->Ypos >> 16;

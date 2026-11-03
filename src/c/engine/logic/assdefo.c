@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* assdefo: a defenceman with his team on the attack. Not while flag 20h or heading to the
- bench (check4bench); in a stoppage StopIfFree. Ignored with pflags bit 3. A new assignment (bit 1) resets temp1
+ bench (check4bench); in a stoppage donothing. Ignored with pflags bit 3. A new assignment (bit 1) resets temp1
  and temp2 = 8. Every aidef frames (countdown in byte +27h) re-check: back to defence (assignment 2) when the team
  is in tmflags bit 4, when the puck is back past y 53h (p's direction) or held by the other team. Else hold the
  blue line: y 58h (mirrored by end), x 100 to the right for position 2 else to the left, moved to the puck's x
@@ -17,7 +17,7 @@ void assdefo(Player *p)
     r = check4bench(p);
     if (r) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) return;

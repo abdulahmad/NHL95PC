@@ -40,7 +40,7 @@ global InProgress_popebp, InProgress_popx
 global chkprogress_x
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, DrawRinkObjects
 global QueueDeferredCall, RunDeferredCalls, AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, ReadGSumTail, WriteGSumHeader, FormatPlayerName
-global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote, GameTimeStamp
+global BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote, GetPeriodTimeRemaining
 global SetPA, InProgress, chkprogress_go, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut
 global updatePPTeamTime, updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot
 global ShotLaneOpen, QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
@@ -2104,11 +2104,11 @@ pop ecx	; 62CD4
 pop ebx	; 62CD5
 ret	; 62CD6
 %endif ; C
-; C: src/c/engine/penalty/GameTimeStamp.c
+; C: src/c/engine/penalty/GetPeriodTimeRemaining.c
 %ifdef CBUILD
-%include "c/engine/penalty/GameTimeStamp.inc"
+%include "c/engine/penalty/GetPeriodTimeRemaining.inc"
 %else
-GameTimeStamp:
+GetPeriodTimeRemaining:
 push dword 4	; 62CD7
 call __CHK	; 62CDC
 mov ax, word [gsp]	; 62CE1

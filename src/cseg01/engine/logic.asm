@@ -54,7 +54,7 @@ global ass_replace_popx, ass_popx
 global ass_skate_temp34
 global puckflip, pucknorm, pucknorm_body, pucknothing, puckunflip, rtss
 global StartShootoutPath, AddStar, StarEligible, StarCompare, PickThreeStars, StartThreeStars, MoveInDir, SteerToTarget
-global StopIfFree, GoalieToPuckVec, AdjustFacingDirection, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
+global donothing, GoalieToPuckVec, AdjustFacingDirection, CountPuckThreat, sub_4C8BD, asspuckc_chkdir, ChkTwoLinePass, SkateToSpot
 global CrowdOnStoppage, NextPathPoint
 ; C: src/c/engine/logic/assintrostand.c
 %ifdef CBUILD
@@ -2097,7 +2097,7 @@ jne near .x	; 49D01
 test byte [gmode], 1	; 49D07
 je short .1	; 49D0E
 mov eax, ebx	; 49D10
-call StopIfFree	; 49D12
+call donothing	; 49D12
 pop esi	; 49D17
 pop edx	; 49D18
 pop ecx	; 49D19
@@ -2222,7 +2222,7 @@ jne near ass_popx	; 49E5F
 test byte [gmode], 1	; 49E65
 je short .1	; 49E6C
 mov eax, ebx	; 49E6E
-call StopIfFree	; 49E70
+call donothing	; 49E70
 jmp near ass_popx	; 49E75
 .1:
 mov dh, byte [byte ebx+pflags]	; 49E7A
@@ -2472,7 +2472,7 @@ jne near ass_popx	; 4A1CB
 test byte [gmode], 1	; 4A1D1
 je short .1	; 4A1D8
 mov eax, ebx	; 4A1DA
-call StopIfFree	; 4A1DC
+call donothing	; 4A1DC
 jmp near ass_popx	; 4A1E1
 .1:
 mov dh, byte [byte ebx+pflags]	; 4A1E6
@@ -2601,7 +2601,7 @@ jne near ass_popx	; 4A368
 test byte [gmode], 1	; 4A36E
 je short .1	; 4A375
 mov eax, ebx	; 4A377
-call StopIfFree	; 4A379
+call donothing	; 4A379
 jmp near ass_popx	; 4A37E
 .1:
 mov dh, byte [byte ebx+pflags]	; 4A383
@@ -2744,7 +2744,7 @@ jne near .x	; 4A55D
 test byte [gmode], 1	; 4A563
 je short .1	; 4A56A
 mov eax, ebx	; 4A56C
-call StopIfFree	; 4A56E
+call donothing	; 4A56E
 pop edx	; 4A573
 pop ecx	; 4A574
 pop ebx	; 4A575
@@ -2848,7 +2848,7 @@ jne near ass_popx	; 4A681
 test byte [gmode], 1	; 4A687
 je short .1	; 4A68E
 mov eax, ebx	; 4A690
-call StopIfFree	; 4A692
+call donothing	; 4A692
 jmp near ass_popx	; 4A697
 .1:
 mov dh, byte [byte ebx+pflags]	; 4A69C
@@ -2952,11 +2952,11 @@ neg edi	; 4A800
 mov word [regd1], di	; 4A802
 jmp near asswingo_evade	; 4A809
 %endif ; C
-; C: src/c/engine/logic/StopIfFree.c
+; C: src/c/engine/logic/donothing.c
 %ifdef CBUILD
-%include "c/engine/logic/StopIfFree.inc"
+%include "c/engine/logic/donothing.inc"
 %else
-StopIfFree:
+donothing:
 push dword 8	; 4A80E
 call __CHK	; 4A813
 push edx	; 4A818
@@ -3720,7 +3720,7 @@ test byte [byte ebx+pflags2], 10h	; 4B161
 je short .2	; 4B165
 .1:
 mov eax, ebx	; 4B167
-call StopIfFree	; 4B169
+call donothing	; 4B169
 pop esi	; 4B16E
 pop edx	; 4B16F
 pop ecx	; 4B170
@@ -5552,7 +5552,7 @@ jne near .x	; 4C724
 test byte [gmode], 1	; 4C72A
 je short .3	; 4C731
 mov eax, ebx	; 4C733
-call StopIfFree	; 4C735
+call donothing	; 4C735
 pop edi	; 4C73A
 pop edx	; 4C73B
 pop ecx	; 4C73C
@@ -6424,7 +6424,7 @@ call check4bench	; 4D1C2
 test ax, ax	; 4D1C7
 jne near .60	; 4D1CA
 mov eax, ebx	; 4D1D0
-call StopIfFree	; 4D1D2
+call donothing	; 4D1D2
 jmp near .60	; 4D1D7
 .34:
 test dl, 8	; 4D1DC
@@ -9832,7 +9832,7 @@ mov eax, ebx	; 4FB33
 call SetSPA	; 4FB35
 mov word [byte ebx+03Eh], 3Ch	; 4FB3A
 mov eax, ebx	; 4FB40
-call StopIfFree	; 4FB42
+call donothing	; 4FB42
 pop esi	; 4FB47
 pop edx	; 4FB48
 pop ecx	; 4FB49

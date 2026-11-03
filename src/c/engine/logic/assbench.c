@@ -21,11 +21,11 @@ void assbench(Player *p)
     if (p->temp1 != 0x64) {
         if (check4bench(p)) return;
         if (p->pflags2 & 0x10) {
-            StopIfFree(p);
+            donothing(p);
             return;
         }
         if (gmode2 & 1) {
-            StopIfFree(p);
+            donothing(p);
             return;
         }
         if ((gmode & 1) && p->position == 0 && (p->tmptr->tmgoalie & 0xFFF0) == 0xFF00

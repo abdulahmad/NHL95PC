@@ -12,7 +12,7 @@ extern onetimerflag, dword_CC0FA, penshotplayer, penshotteam, penshotmode, pensh
 extern dword_E0244, dword_E9A9E, forcepldata, puckvx, gmode
 extern FreeMemBlock, CanBlockShot_ret5, ltx, puckx, pucky, puckvy, puckz, puckc
 extern puckvz, randomd0, resetplstuff, setpersonel, sfx, skateto, skatetopuck, DrawPanelLine
-extern StopIfFree, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, PaSpeechBusy, changeplayer
+extern donothing, SkateToSpot, lcfound, CenterMouse, ReturnGoalies, StopDigiSample, PaSpeechBusy, changeplayer
 extern restorepl, CompLine, setplayer, clockcont_0, SprSortVert, SprSort, SetExitGame, EvadePC
 extern FlushGSumQueue, SetupPenaltyShot, threat, SortCords, updateanim
 extern vtoa, regd4, camx, camy, passdir, passspeed, passplayer, xc1
@@ -403,7 +403,7 @@ mov dword [onetimerflag], edi	; 50F65
 mov eax, edx	; 50F6B
 call assexit	; 50F6D
 mov eax, edx	; 50F72
-call StopIfFree	; 50F74
+call donothing	; 50F74
 jmp near CanBlockShot_ret5	; 50F79
 .1:
 dec byte [byte edx+027h]	; 50F7E

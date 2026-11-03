@@ -3,7 +3,7 @@
 
 /* assdefd (49E3A; 94G logic94 assdefd, PC version; ends in ass_popx): the defenceman's defensive assignment.
    Not while locked (pflags bit 5), at the bench (check4bench) or joystick controlled (bit 3); with the clock
-   stopped (gmode bit 0) just stop (StopIfFree). A new assignment (bit 1) clears temp1 and sets temp2 8. Every aidef
+   stopped (gmode bit 0) just stop (donothing). A new assignment (bit 1) clears temp1 and sets temp2 8. Every aidef
    ticks (the high byte of temp1): when the puck (its y plus the forward part of its y velocity / 40h, toward
    the attacked end) is past 4Eh, not offside (tmflags bit 4) and his own team has it (and, with gmode2 bit 5, he
    is on the gmode2 bit 6 side) switch to the offensive defenceman (assignment 1). Else hold the blue line: x
@@ -19,7 +19,7 @@ void assdefd(Player *p)
     if (p->pflags & 0x20) return;
     if (check4bench(p)) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) return;
@@ -90,7 +90,7 @@ void assdefd(Player *p)
 
 /* asswingd (4A1A6; 94G logic94 asswingd, PC version; ends in ass_popx, owner of asswingd_skate0 /
    asswingd_skateto): the winger's defensive assignment. Not while locked (pflags bit 5), at the bench
-   (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (StopIfFree). A new
+   (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (donothing). A new
    assignment (bit 1) clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the
    offensive winger (assignment 4) when his own team has the puck. Else skate to the wing (x 78h, -78h for the
    right wing, toward the puck's side when the puck is on it) between the blue line (8Eh) and the slot (44h,
@@ -101,7 +101,7 @@ void asswingd(Player *p)
     if (p->pflags & 0x20) return;
     if (check4bench(p)) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) return;
@@ -144,7 +144,7 @@ void asswingd(Player *p)
 
 /* asswingo (4A343; 94G logic94 asswingo, PC version; ends in asswingd_skateto): the winger's offensive
    assignment. Not while locked (pflags bit 5), at the bench (check4bench) or joystick controlled (bit 3); with the
-   clock stopped (gmode bit 0) just stop (StopIfFree). A new assignment (bit 1) sets the high byte of temp5 to -1,
+   clock stopped (gmode bit 0) just stop (donothing). A new assignment (bit 1) sets the high byte of temp5 to -1,
    clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the defensive winger
    (assignment 3) when the other team has the puck. The puck's zone (its y plus the y velocity / 40h, toward the
    attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal line; 4 while offside,
@@ -158,7 +158,7 @@ void asswingo(Player *p)
     if (p->pflags & 0x20) return;
     if (check4bench(p)) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) return;
@@ -206,7 +206,7 @@ void asswingo(Player *p)
 
 /* asscentero (4A65C; 94G logic94 asscentero, PC version; ends in ass_popx / asswingo_evade): the centre's
    offensive assignment, asswingo without the wing side. Not while locked (pflags bit 5), at the bench
-   (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (StopIfFree). A
+   (check4bench) or joystick controlled (bit 3); with the clock stopped (gmode bit 0) just stop (donothing). A
    new assignment (bit 1) sets the high byte of temp5 to -1, clears temp1 and sets temp2 8. Every aioff ticks (the
    high byte of temp1) switch to the defensive centre (assignment 5) when the other team has the puck. The puck's
    zone (its y toward the attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal
@@ -220,7 +220,7 @@ void asscentero(Player *p)
     if (p->pflags & 0x20) return;
     if (check4bench(p)) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) return;

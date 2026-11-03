@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* asspuckc: the puck carrier. Leave (assexit) without the puck or with pflags bit 3; not
- while flag 20h; in a stoppage StopIfFree. A new assignment (bit 1) clears +4Ch, temp1, temp2 = 8, picks a
+ while flag 20h; in a stoppage donothing. A new assignment (bit 1) clears +4Ch, temp1, temp2 = 8, picks a
  random lane temp3 (0-3) and clears threat. Every aioff frames (countdown in byte +27h, reload byte +59h):
  check the opposition (checkob); on a shot on goal within y 70h hand over to assignment 2Eh; else try a line
  change, a shot and a pass (chk4lc chk4shot chk4pass), stopping at the first that acts. Then skate to the
@@ -18,7 +18,7 @@ void asspuckc(Player *p)
     }
     if (p->pflags & 0x20) return;
     if (gmode & 1) {
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     if (p->pflags & 8) {

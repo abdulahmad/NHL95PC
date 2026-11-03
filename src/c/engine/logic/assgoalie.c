@@ -308,7 +308,7 @@ move:
    (assinsert 11h, this one exits). Otherwise maybe stay on him for 12Ch ticks (temp3): the odds grow with the
    distance (190h, E10h, a slow puck), the zone (position beyond 4Eh, as in the 93G code), a power play (gmode2
    bits 5 and 6) and a defenceman's aggression, checking and aidef, unless he is the deepest. Then, unless locked
-   or joystick controlled (with the clock stopped stop, StopIfFree): chase the puck (skatetopuck), or while temp3
+   or joystick controlled (with the clock stopped stop, donothing): chase the puck (skatetopuck), or while temp3
    runs with the opponents holding the puck, cut it off between the puck's next spot and his net (y halfway to
    D4h, x three quarters, kept within C8h / D2h of the goal line near the middle). Then check4check.
    p: the player. No result. */
@@ -400,7 +400,7 @@ chance:
 play:
     if (p->pflags & 0x20) return;
     if (gmode & 1) {
-        if (!check4bench(p)) StopIfFree(p);
+        if (!check4bench(p)) donothing(p);
         return;
     }
     if (p->pflags & 8) return;

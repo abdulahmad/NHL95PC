@@ -364,7 +364,7 @@
 ;  4A343  asswingo                                 cseg01/engine/logic.asm                      1
 ;  4A53A  asscenterd                               cseg01/engine/logic.asm                      1
 ;  4A65C  asscentero                               cseg01/engine/logic.asm                      1
-;  4A80E  StopIfFree                               cseg01/engine/logic.asm                      1
+;  4A80E  donothing                                cseg01/engine/logic.asm                      1
 ;  4A832  assstanley                               cseg01/engine/logic.asm                      1
 ;  4A90F  assscore                                 cseg01/engine/logic.asm                      1
 ;  4AAC2  asseben                                  cseg01/engine/logic.asm                      1

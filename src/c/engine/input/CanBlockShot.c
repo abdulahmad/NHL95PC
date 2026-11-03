@@ -157,7 +157,7 @@ void lineinput(Player *p)
 
 /* asspassrec (50F3F; 93G logic93 asspassrec, "assignment for catching pass", asstab 13h; segment 039, ends in
    CanBlockShot_ret5): not while animation-locked; with the clock stopped leave the assignment (assexit,
-   StopIfFree, onetimerflag 0). Count the high byte of temp1 down. A joystick player waits for the one-timer
+   donothing, onetimerflag 0). Count the high byte of temp1 down. A joystick player waits for the one-timer
    (assonetimer). On a new assignment (pfna): pflags bit 0 on, temp2 8, and when the puck is loose and p's team
    (regd0 = pfteam + 1) has no human controller, OneTimerChk may arm the one-timer (onetimerflag). An armed
    one-timer clears bits 4 and 6 of the new presses (regd1) and goes to assonetimer. Otherwise, while the puck
@@ -171,7 +171,7 @@ void asspassrec(Player *p)
     if (gmode & 1) {
         onetimerflag = 0;
         assexit(p);
-        StopIfFree(p);
+        donothing(p);
         return;
     }
     ((signed char *)&p->temp1)[1]--;
