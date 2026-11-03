@@ -565,7 +565,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005BB9E,sub_5BB9E,TryAddPlayerToList,PC-new,,,,medium,adds a roster player to PlList (E0384) if not already there,engine_core,manual-trace
 0005BBFA,sub_5BBFA,SetPlList,PC-new,,,,medium,builds the player list for the line/stat screens via TryAddPlayerToList,engine_core,manual-trace
 0005C010,sub_5C010,StartPer,93G,hockey93_01.asm,,,high,"93G StartPer: setupice, ResetClock, no controlled players, faceoff at center, InitCoachModes, then the game loop",engine_core,manual-trace
-0005C1E2,sub_5C1E2,RestBench,PC-new,,,,medium,bench players regain energy (+8) each second,engine_core,manual-trace
+0005C1E2,sub_5C1E2,RestoreBenchEnergy,94G,,hockey94.asm,,high,"the 94G RestoreBenchEnergy: once a second with line changes on, bench players (tmpdst -2) gain energy, capped (PC +8, 94G +9)",engine_core,manual-trace
 0005C248,sub_5C248,updatecrowdf,93G,hockey93_01.asm,,,medium,"93G updatecrowdf: crowd excitement level E9AA8 rises/decays, random crowd sfx",engine_core,manual-trace
 0005C302,sub_5C302,periodicevents,93G,hockey93_01.asm,,,high,"93G periodicevents: penalties, crowd, clockcont, then once a second (lldisp 18h frames) the slower checks",engine_core,manual-trace
 0005CAEF,sub_5CAEF,updateanim,93G,hockey93_02.asm,replay94.asm,92G updateanim,high,"93G updateanim: step SPAnum/SPAcnt through the SPA table (C921D), SetSPA when an animation ends",engine_core,manual-trace

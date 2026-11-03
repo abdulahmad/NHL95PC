@@ -48,7 +48,7 @@ global reenergizeteam, PenTeamScored, resetplstuff, setpersonel
 global SprSort_loop, changeplayer, restorepl, CompLine, getlinee_pp, TeamLineEnergy, getlinee, findpc
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, Goal, GiveControl, setplayer
 global clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList
-global StartPer, RestBench, updatecrowdf, periodicevents, freezewindow, cleargamevars, DrawRinkOverlays, setupice
+global StartPer, RestoreBenchEnergy, updatecrowdf, periodicevents, freezewindow, cleargamevars, DrawRinkOverlays, setupice
 global clockcont_0, ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission
 global PeriodOver_sp, PeriodOver, StartGame, forceteams, updateanim, updateplayers
 ; C: src/c/engine/hockey/SetSPA.c
@@ -3125,11 +3125,11 @@ call updateplayers	; 5C1D3
 call checkwindow	; 5C1D8
 jmp near updatereplay	; 5C1DD
 %endif ; C
-; C: src/c/engine/hockey/RestBench.c
+; C: src/c/engine/hockey/RestoreBenchEnergy.c
 %ifdef CBUILD
-%include "c/engine/hockey/RestBench.inc"
+%include "c/engine/hockey/RestoreBenchEnergy.inc"
 %else
-RestBench:
+RestoreBenchEnergy:
 push dword 14h	; 5C1E2
 call __CHK	; 5C1E7
 push ebx	; 5C1EC
@@ -3160,12 +3160,12 @@ mov word [byte eax+046h], 1000h	; 5C22B
 .3:
 dec edx	; 5C231
 test dx, dx	; 5C232
-jge short RestBench.2	; 5C235
+jge short RestoreBenchEnergy.2	; 5C235
 mov ecx, awtmstruct	; 5C237
 inc esi	; 5C23C
 .4:
 cmp si, byte 2	; 5C23D
-jl short RestBench.1	; 5C241
+jl short RestoreBenchEnergy.1	; 5C241
 .x:
 pop esi	; 5C243
 pop edx	; 5C244
@@ -3238,7 +3238,7 @@ pop ecx	; 5C300
 ret	; 5C301
 %endif ; C
 ; periodicevents: Clock at 0 -> horn (sfx 90h), freezewindow, clockcont_0. Once a
-; second (lldisp, 18h frames): updatecrowdf, RestBench, the stats/energy checks.
+; second (lldisp, 18h frames): updatecrowdf, RestoreBenchEnergy, the stats/energy checks.
 ; C: src/c/engine/hockey/periodicevents.c
 %ifdef CBUILD
 %include "c/engine/hockey/periodicevents.inc"
@@ -3274,7 +3274,7 @@ mov byte [lldisp], bl	; 5C372
 xor byte [lldispodd], 1	; 5C378
 call ChkGoalies	; 5C37F
 call updatecrowdf	; 5C384
-call RestBench	; 5C389
+call RestoreBenchEnergy	; 5C389
 test byte [gmode], 1	; 5C38E
 jne short .2	; 5C395
 call UpdatePowerPlayFlags	; 5C397

@@ -1,9 +1,9 @@
 /* Engine core: energy recovery on the bench. */
 #include "nhl95.h"
 
-/* RestBench: when line changes fatigue are on, every roster player of both teams who is on the
+/* RestoreBenchEnergy: when line changes fatigue are on, every roster player of both teams who is on the
  bench (tmpdst -2) gets 8 energy back (tmpde), at most 1000h (full). Called from the game loop. */
-void RestBench(void)
+void RestoreBenchEnergy(void)
 {
     Team *t;
     short i, k;

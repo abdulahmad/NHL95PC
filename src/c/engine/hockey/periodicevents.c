@@ -26,7 +26,7 @@ void periodicevents(void)
     *(unsigned char *)&lldispodd ^= 1;
     ChkGoalies();
     updatecrowdf();
-    RestBench();
+    RestoreBenchEnergy();
     if (!(gmode & 1)) UpdatePowerPlayFlags();
     if (!gameopts.linechanges) return;
     i = 0;
