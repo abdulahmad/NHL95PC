@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* puckgoalie (57096, Genesis puckgoalie): the puck pk hits goalie p (regd0 / regd1 = the gap from
- checkpuckcoll). Nothing during a stoppage (gmode bit 4) or while p's frame is 206h-215h with the puck at height
+ checkpuckcoll_ccx). Nothing during a stoppage (gmode bit 4) or while p's frame is 206h-215h with the puck at height
  5 or more. regd2 = the save side: 2 for a low puck (Zpos <= 8), plus 1 unless the direction of the hit relative
  to facedir has bit 2 (a random direction when it is a multiple of 4), doubled, flipped by 2 with attribute bit 3.
  A hard shot (|vx| + |vy| above 4268h, or above 1770h during SPA 119Dh-121Dh) from the other team's shooter

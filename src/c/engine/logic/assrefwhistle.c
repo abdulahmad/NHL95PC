@@ -362,7 +362,7 @@ void CountPuckThreat(Player *p)
    puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with dword_DF652 /
    dword_DF752 at 14h or less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a moving one
    resets temp2. A puck almost still on the ice (z speed below 100h, z 0) is put flat (puckunflip); then the
-   collisions (PuckCheckColl). p: the puck. No result. */
+   collisions (checkpuckcoll). p: the puck. No result. */
 void pucknorm_body(Player *p)
 {
     Player *c;
@@ -406,7 +406,7 @@ reset:
         }
     }
     if ((p->Zvel < 0 ? -p->Zvel : p->Zvel) < 0x100 && !HIWORD(p->Zpos)) puckunflip(p);
-    PuckCheckColl(p);
+    checkpuckcoll(p);
 }
 
 /* RequestLineChange (4D938, PC only; ends in ass_popx): open the line change box for p's team (pflags bit 6 =

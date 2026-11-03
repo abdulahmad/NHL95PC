@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C9078 progbits alloc noexec write align=1
-extern ass_pc_slot20, assthreestars, assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop
+extern assstarskate, assthreestars, assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop
 extern assrefgoalline, assrefwhistle, assintrostand, assintroline, asstakeposition, assleavebox, assbenchwait, assboxenter
 extern assbenchside, assrefpenshot, asspsclear, asspenshooter, assbench, asscenterd, asscentero, assdefd
 extern assdefo, assdopen, asseben, assepen, assfaceoff, assfaceoffpl, assgoalie, assgoalietopuck
@@ -160,7 +160,7 @@ dd asspuckc
 dd assnearest
 dd assshoot
 dd asspassrec
-dd ass_pc_slot20
+dd assstarskate
 dd assthreestars
 dd assfaceoff
 dd assfaceoffpl

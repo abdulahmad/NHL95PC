@@ -354,7 +354,7 @@
 ;  4842A  assintrostand                            cseg01/engine/logic.asm                      1
 ;  484DA  assintroline                             cseg01/engine/logic.asm                      1
 ;  48F0B  StartThreeStars                          cseg01/engine/logic.asm                      1
-;  49460  ass_pc_slot20                            cseg01/engine/logic.asm                      1
+;  49460  assstarskate                             cseg01/engine/logic.asm                      1
 ;  495B8  assthreestars                            cseg01/engine/logic.asm                      1
 ;  499D8  assboxenter                              cseg01/engine/logic.asm                      1
 ;  49BC2  assbenchside                             cseg01/engine/logic.asm                      1
@@ -429,7 +429,7 @@
 ;  53387  BlockShotDive                            cseg01/engine/collide.asm                    1
 ;  53537  check4check                              cseg01/engine/collide.asm                    1
 ;  53F8C  checkob                                  cseg01/engine/collide.asm                    2
-;  548AC  PuckCheckColl                            cseg01/engine/collide.asm                    1
+;  548AC  checkpuckcoll                            cseg01/engine/collide.asm                    1
 ;  54AF9  chk4lc                                   cseg01/engine/collide.asm                    1
 ;  5514E  passmode                                 cseg01/engine/collide.asm                    1
 ;  551AF  setpassmode                              cseg01/engine/collide.asm                    1

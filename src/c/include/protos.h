@@ -890,8 +890,8 @@ void PickGoalie(short side, short slot, short force);  /* 652D6 */
 void checkcx(Player *p, short x, short d, short pl);  /* 58DC7 */
 void checkcoll(Player *p, int x, int y);  /* 580F5 */
 void checkplcoll(Player *p, short x, int y);  /* 58CE2 */
-void checkpuckcoll(Player *p, int pl);  /* 5428A */
-void PuckCheckColl(Player *p);  /* 548AC */
+void checkpuckcoll_ccx(Player *p, int pl);  /* 5428A */
+void checkpuckcoll(Player *p);  /* 548AC */
 void AppendGSumRecord(void *rec);  /* 61A8A */
 int SayPlayerNumber(char *team, int phrase, int number);  /* 85213 */
 void LoadCrestsPalette(void);  /* 33F02 */
@@ -972,7 +972,7 @@ void skatetopuck(Player *p);  /* 5EB17 */
 void assgoalietopuck(Player *p);  /* 4B5C2 */
 void SteerToTarget(Player *p);  /* 492F9 */
 void sub_4C8BD(Player *p);  /* 4C8BD */
-void ass_pc_slot20(Player *p);  /* 49460 */
+void assstarskate(Player *p);  /* 49460 */
 void assfaceoffpl(Player *p);  /* 4D528 */
 void assdefo(Player *p);  /* 49CDD */
 int BuildLeagueList(char ***list, char **names, int flags);  /* 411C8 */

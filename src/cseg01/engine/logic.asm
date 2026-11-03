@@ -22,7 +22,7 @@ extern seqtimer, puckvx, gmode, goalieacc, FreeMemBlock, PreGameIntro_popebp, Pr
 extern teamabbrevs, puckx, pucky, puckvy, puckz, puckc, camx_m2, starordtab
 extern playeracc, puckshadow, puckvz, qsort_, randomd0, sfx, skateto, skatetopuck
 extern sprintf_, vecdist, FadePalette, IsCupClinched, ThreeStarsLoop, joyq_flush, getlchoice, PenShotAssign
-extern PuckCheckColl, ChkOffsides, MarkTwoLinePlayers, PuckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
+extern checkpuckcoll, ChkOffsides, MarkTwoLinePlayers, PuckIChk, ChkPullGoalieLate, CrowdFadeOut, StopDigiSample, PlayCrowdSample
 extern PaSpeechBusy, PaGoal, PaPlayerNumber, changeplayer, calcpuckcross, setplayer, SprSort, EvadePlayers
 extern EvadePC, SetBoxDoorObject, FormatPlayerName, PostGoalEvent, ChkScorerMilestone, QueueGoalieNote, ShotLaneOpen, EndPenaltyShot
 extern RemoveFromLines, LoadTeamPPV, CloseTextOverlay, MusicChanReset, sub_8F633, sub_8FFB0, imul32, threat
@@ -40,7 +40,7 @@ extern pucktemp1, doortemp1, word_E0022, word_E0028
 extern word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, lcrequest, fofdata2
 extern word_E0392, word_E0396, regd2, regd3, regd0, regd1, joysampling_save, periodendtime
 extern word_E9AAE, PerTimeTotal, lj1, lasttouch, lty, startm, starpl
-global ClampYPosition, Endfaceoff, SetLCmode, StartFaceoffLineChange, a2offsides, a2touchpuck, ass_pc_slot20, assthreestars
+global ClampYPosition, Endfaceoff, SetLCmode, StartFaceoffLineChange, a2offsides, a2touchpuck, assstarskate, assthreestars
 global assleaveice, assrefatdot, assreffollow, assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline, assrefwhistle
 global assintrostand, assintroline, assboxenter, assbenchside, asspenshooter, assbench, asscenterd, asscentero
 global assdefd, assdefo, assdopen, asseben, assepen, assexit, assfaceoff, assfaceoffpl
@@ -1412,11 +1412,11 @@ pop ecx	; 4945D
 pop ebx	; 4945E
 ret	; 4945F
 %endif ; C
-; C: src/c/engine/logic/ass_pc_slot20.c
+; C: src/c/engine/logic/assstarskate.c
 %ifdef CBUILD
-%include "c/engine/logic/ass_pc_slot20.inc"
+%include "c/engine/logic/assstarskate.inc"
 %else
-ass_pc_slot20:
+assstarskate:
 push dword 14h	; 49460
 call __CHK	; 49465
 push ebx	; 4946A
@@ -7043,7 +7043,7 @@ mov eax, ebx	; 4D8B4
 call puckunflip	; 4D8B6
 .17:
 mov eax, ebx	; 4D8BB
-call PuckCheckColl	; 4D8BD
+call checkpuckcoll	; 4D8BD
 jmp near ass_popx	; 4D8C2
 %endif ; C
 ; C: src/c/engine/logic/pucknorm.c

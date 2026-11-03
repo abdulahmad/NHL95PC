@@ -20,10 +20,10 @@ FallDown,562DB,1913,engine/collide,src/c/engine/collide/FallDown.c,matched,,
 Findhittype,579FF,63,engine/collide,src/c/engine/collide/Findhittype.c,matched,,
 MarkTwoLinePlayers,55C6F,185,engine/collide,src/c/engine/collide/MarkTwoLinePlayers.c,matched,,
 puckstick,57483,1003,engine/collide,src/c/engine/collide/PassLaneChk.c,matched,,
-checkpuckcoll,5428A,1570,engine/collide,src/c/engine/collide/PassLaneChk.c,nonmatching,"draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md.",tail 0/0
+checkpuckcoll_ccx,5428A,1570,engine/collide,src/c/engine/collide/PassLaneChk.c,nonmatching,"draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md.",tail 0/0
 PassLaneChk,54C09,346,engine/collide,src/c/engine/collide/PassLaneChk.c,nonmatching,"draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx.",register 9/11
 NetCollide,5601D,702,engine/collide,src/c/engine/collide/PassLaneChk.c,nonmatching,"draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE.",register 7/7
-PuckCheckColl,548AC,228,engine/collide,src/c/engine/collide/PuckCheckColl.c,matched,,
+checkpuckcoll,548AC,228,engine/collide,src/c/engine/collide/checkpuckcoll.c,matched,,
 ScatterPass,54D63,145,engine/collide,src/c/engine/collide/ScatterPass.c,matched,,
 SetShotMode,5786E,140,engine/collide,src/c/engine/collide/SetShotMode.c,matched,"draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6",
 ShotMode,578FA,261,engine/collide,src/c/engine/collide/ShotMode.c,matched,,
@@ -184,7 +184,7 @@ SteerToTarget,492F9,359,engine/logic,src/c/engine/logic/SteerToTarget.c,matched,
 StopIfFree,4A80E,36,engine/logic,src/c/engine/logic/StopIfFree.c,matched,,
 a2offsides,4DCDD,116,engine/logic,src/c/engine/logic/a2offsides.c,matched,,
 a2touchpuck,4DE14,400,engine/logic,src/c/engine/logic/a2touchpuck.c,matched,,
-ass_pc_slot20,49460,344,engine/logic,src/c/engine/logic/ass_pc_slot20.c,matched,"register allocation: side flag kept in ecx (EXE edx), so the first path lookup indexes differently; logic complete",
+assstarskate,49460,344,engine/logic,src/c/engine/logic/assstarskate.c,matched,"register allocation: side flag kept in ecx (EXE edx), so the first path lookup indexes differently; logic complete",
 assbench,4B12C,827,engine/logic,src/c/engine/logic/assbench.c,matched,,
 assbenchside,49BC2,283,engine/logic,src/c/engine/logic/assbenchside.c,matched,,
 assboxenter,499D8,490,engine/logic,src/c/engine/logic/assboxenter.c,matched,,

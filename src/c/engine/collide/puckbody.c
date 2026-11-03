@@ -1,7 +1,7 @@
 /* Engine physics AI: the puck hits a player's body. */
 #include "nhl95.h"
 
-/* puckbody: the puck pk hits player p (regd0 = distance^2 from checkpuckcoll). A low
+/* puckbody: the puck pk hits player p (regd0 = distance^2 from checkpuckcoll_ccx). A low
  puck (Zpos <= 8) only counts when regd0 & 0Fh is 0 (radius^2 from center), outside the frames 430h-467h
  inside them, frames up to 44Fh with bit 0 set let a high puck through. Otherwise: p touches the puck
  (unless he is SCnum 10h), the puck's Zvel is cleared, p's nopuck = 8, the puck bounces off along the

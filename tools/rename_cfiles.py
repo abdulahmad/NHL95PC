@@ -19,10 +19,16 @@ for f in glob.glob('src/c/**/*.c', recursive=True):
     s = os.path.basename(f)[:-2]
     if s in ren:
         subprocess.run(['git', 'mv', f, os.path.join(os.path.dirname(f), ren[s] + '.c')], check=True)
-inc = re.compile(r'(%include "c/[\w/]+/)(\w+)(?:\.(\w+))?(\.inc")')
+inc = re.compile(r'%include "c/([\w/]+)/(\w+)(?:\.(\w+))?\.inc"')
 def fix(m):
-    b = m.group(3)
-    return m.group(1) + ren.get(m.group(2), m.group(2)) + ('.' + ren.get(b, b) if b else '') + m.group(4)
+    # a stem or function part that already names an existing C file / the renamed function stays (chains such as
+    # a -> a_ccx, b -> a, where rename_symbol.py already wrote the new name)
+    d, s, b = m.group(1), m.group(2), m.group(3)
+    if not os.path.isfile('src/c/%s/%s.c' % (d, s)):
+        s = ren.get(s, s)
+    if b and b not in ren.values():
+        b = ren.get(b, b)
+    return '%%include "c/%s/%s%s.inc"' % (d, s, '.' + b if b else '')
 for f in glob.glob('src/cseg01/**/*.asm', recursive=True):
     t = open(f, newline='').read()
     n = inc.sub(fix, t)

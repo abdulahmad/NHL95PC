@@ -24,14 +24,14 @@ extern regd3, word_E03B8, regd0, regd1, Ylist, OOlistpos, CwdExciteLvl, lasttouc
 extern lty, word_E9B28
 global Bcheck, CPgoalie, CheckBump, FallDown, Findhittype, SetShotMode, ShotMode, Sweepcheck
 global burst, check4check, checkagr, checkcheck, checkcoll, checkcx, checkgoal, checkgoalp
-global shotdiradj, checkint, checkob, checkplcoll, checkpuckcoll, checkwallcoll, chk4lc, chk4shot
+global shotdiradj, checkint, checkob, checkplcoll, checkpuckcoll_ccx, checkwallcoll, chk4lc, chk4shot
 global deflect, chk4pass, dopass, doshot, holdcheck
 global checkob_ret5a, checkob_ret5
 global chk4lc_shoot
 global PassLaneChk_ret5a, PassLaneChk_ret5
 global dopass_ret6
 global passtoa0, puckbody, puckglue, puckgoalie, puckshadow, puckstick, setpassmode
-global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, PuckCheckColl, GetLowestPen
+global ToFixed, BlockShotDive, TryBlockShot, FacingBoards, SkillForAnim, ChkDelayedOffside, checkpuckcoll, GetLowestPen
 global PassLaneChk, ScatterPass, passmode, CompShoot, ChkOffsides, MarkTwoLinePlayers, ChkShotStat, setInjuryType
 global NetCollide, PuckIChk, newcheck, ChkGoalies, ReturnGoalies, ChkPullGoalieLate, wallcoll, wallcollb
 ; C: src/c/engine/collide/ToFixed.c
@@ -1391,7 +1391,7 @@ pop edx	; 541C8
 ret	; 541C9
 %endif ; C
 ; ChkDelayedOffside: Offsides option: the flagged team touches the puck in the zone -> AddPenalty2 8 on
-; SortCords[lasttouch], returns 1. Called from checkpuckcoll before puckstick puckgoalie.
+; SortCords[lasttouch], returns 1. Called from checkpuckcoll_ccx before puckstick puckgoalie.
 ; C: src/c/engine/collide/ChkDelayedOffside.c
 %ifdef CBUILD
 %include "c/engine/collide/ChkDelayedOffside.inc"
@@ -1462,7 +1462,7 @@ mov eax, 1	; 54283
 pop edx	; 54288
 ret	; 54289
 %endif ; C
-checkpuckcoll:
+checkpuckcoll_ccx:
 push dword 18h	; 5428A
 call __CHK	; 5428F
 push ebx	; 54294
@@ -1680,15 +1680,15 @@ neg eax	; 5455A
 jmp near .30	; 5455C
 .22:
 test byte [byte ebx+pflags2], 4	; 54561
-jne short checkpuckcoll.21	; 54565
+jne short checkpuckcoll_ccx.21	; 54565
 cmp word [byte ebx+position], byte 0	; 54567
-jl short checkpuckcoll.21	; 5456C
+jl short checkpuckcoll_ccx.21	; 5456C
 cmp dx, byte 10h	; 5456E
-je short checkpuckcoll.21	; 54572
+je short checkpuckcoll_ccx.21	; 54572
 cmp word [byte ecx+0Ah], byte 5	; 54574
-jg short checkpuckcoll.21	; 54579
+jg short checkpuckcoll_ccx.21	; 54579
 cmp word [byte ecx+010h], 200h	; 5457B
-jg short checkpuckcoll.21	; 54581
+jg short checkpuckcoll_ccx.21	; 54581
 mov eax, ebx	; 54583
 call GetHot	; 54585
 mov ax, word [byte ebx+Xpos+2]	; 5458A
@@ -1707,7 +1707,7 @@ mov eax, dword [regd0-2]	; 545B3
 sar eax, 10h	; 545B8
 .24:
 cmp eax, byte 0Eh	; 545BB
-jg near checkpuckcoll.21	; 545BE
+jg near checkpuckcoll_ccx.21	; 545BE
 mov ax, word [byte ebx+Ypos+2]	; 545C4
 sub ax, word [byte ecx+06h]	; 545C8
 mov dx, word [regd1]	; 545CC
@@ -1724,7 +1724,7 @@ mov eax, dword [regd1-2]	; 545ED
 sar eax, 10h	; 545F2
 .26:
 cmp eax, byte 0Eh	; 545F5
-jg near checkpuckcoll.21	; 545F8
+jg near checkpuckcoll_ccx.21	; 545F8
 mov edx, dword [regd0-2]	; 545FE
 sar edx, 10h	; 54604
 imul edx, edx	; 54607
@@ -1740,14 +1740,14 @@ sar word [regd1], 2	; 5462E
 .27:
 mov eax, dword [regd0]	; 54636
 cmp eax, dword [regd1]	; 5463B
-ja near checkpuckcoll.21	; 54641
+ja near checkpuckcoll_ccx.21	; 54641
 mov dx, word [byte ebx+012h]	; 54647
 cmp dx, 430h	; 5464B
 jl short .28	; 54650
 cmp dx, 44Fh	; 54652
 jg short .28	; 54657
 cmp eax, byte 24h	; 54659
-ja near checkpuckcoll.21	; 5465C
+ja near checkpuckcoll_ccx.21	; 5465C
 .28:
 mov edx, ebx	; 54662
 mov eax, ecx	; 54664
@@ -1922,11 +1922,11 @@ mov edx, ebx	; 5489E
 mov eax, ecx	; 548A0
 call puckbody	; 548A2
 jmp near PassLaneChk_ret5	; 548A7
-; C: src/c/engine/collide/PuckCheckColl.c
+; C: src/c/engine/collide/checkpuckcoll.c
 %ifdef CBUILD
-%include "c/engine/collide/PuckCheckColl.inc"
+%include "c/engine/collide/checkpuckcoll.inc"
 %else
-PuckCheckColl:
+checkpuckcoll:
 push dword 14h	; 548AC
 call __CHK	; 548B1
 push ebx	; 548B6
@@ -1970,11 +1970,11 @@ cmp esi, byte 28h	; 54929
 jg short .6	; 5492C
 movsx edx, dx	; 5492E
 mov eax, ebx	; 54931
-call checkpuckcoll	; 54933
+call checkpuckcoll_ccx	; 54933
 inc ecx	; 54938
 .5:
 cmp cx, byte 10h	; 54939
-jne short PuckCheckColl.4	; 5493D
+jne short checkpuckcoll.4	; 5493D
 .6:
 mov ecx, dword [byte ebx+SCnum-2]	; 5493F
 sar ecx, 10h	; 54942
@@ -1995,9 +1995,9 @@ cmp esi, byte 28h	; 54978
 jg short .x	; 5497B
 movsx edx, dx	; 5497D
 mov eax, ebx	; 54980
-call checkpuckcoll	; 54982
+call checkpuckcoll_ccx	; 54982
 dec cx	; 54987
-jne short PuckCheckColl.7	; 54989
+jne short checkpuckcoll.7	; 54989
 .x:
 pop esi	; 5498B
 pop edx	; 5498C

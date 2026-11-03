@@ -5,12 +5,12 @@
  gives esi but swaps the ABS pair, 17), and the y - 4Eh lea comes after the sum's sub 4Eh (EXE before it). The
  tie-breaker p's y through an int py (ruled 2026-10-24, docs/ESCALATIONS.md) is not kept; see docs/UNSURE.md. */
 #define PassLaneChk PassLaneChk_decl
-#define checkpuckcoll checkpuckcoll_decl
+#define checkpuckcoll_ccx checkpuckcoll_decl
 #define imul32 imul32_decl
 #include "nhl95.h"
 #undef PassLaneChk
-#undef checkpuckcoll
-void checkpuckcoll(Player *pk, short n);  /* 5428A: n compared as a short */
+#undef checkpuckcoll_ccx
+void checkpuckcoll_ccx(Player *pk, short n);  /* 5428A: n compared as a short */
 #undef imul32
 int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on the stack */
 
@@ -21,11 +21,11 @@ int __cdecl imul32(int a, int b);  /* 933F0: the library multiply, arguments on 
 int LaneOpen(void);
 #pragma aux LaneOpen "ShotLaneOpen" value [eax] modify [eax];
 
-/* DRAFT (checkpuckcoll, 10.0 GA): compiles to the EXE bytes (0 differing, 1,570 bytes), no goto. Not marked:
+/* DRAFT (checkpuckcoll_ccx, 10.0 GA): compiles to the EXE bytes (0 differing, 1,570 bytes), no goto. Not marked:
    ESCALATE, dead-variable reuse. The match needs the dead height h reused for the body frame (a local of its
    own for either role: 99 differing); v also carries the speed, |dy| and the box limit. The half size and the
    box size are their own local w (declared last), so v (13) outranks s (12) and takes esi as in the EXE. */
-/* checkpuckcoll (5428A, 93G checkpuckcoll .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
+/* checkpuckcoll_ccx (5428A, 93G checkpuckcoll_ccx .ccx; ends in PassLaneChk_ret5): check the puck pk against sort object
    n (from the OOlist walk). Not the carrier, players 0-0Bh and object 10h only, not with pflags bit 2 (no
    collisions) or nopuck. A goalie's stick (available, position 0): reach s from SkillForAnim (s * 800h - FA0h over
    the puck speed |vx| + |vy|, 0-4) on the GetHotOrStick offsets: regd2 = |dx| + s, regd4 = |dx| * 4 / 3,
@@ -37,7 +37,7 @@ int LaneOpen(void);
    delayed offside check and puckgoalie. A skater in an odd frame 431h-44Fh with the puck below z 8 first tries
    the GetHotStick spot (half the offsets, within their size); else within 8 (10h from frame 450h on) and the
    distance squared up to 40h (100h): puckbody. No result. */
-void checkpuckcoll(Player *pk, short n)
+void checkpuckcoll_ccx(Player *pk, short n)
 {
     Player *p;
     short s;
@@ -276,7 +276,7 @@ int NetCollide(Player *p, int dir)
 }
 
 /* puckstick (57483, 93G puckstick; ends in PassLaneChk_ret5a): the puck touches player p's stick (regd0 = the
-   squared distance from checkpuckcoll). A goalie does nothing during a highlight (gmode bit 4); otherwise his
+   squared distance from checkpuckcoll_ccx). A goalie does nothing during a highlight (gmode bit 4); otherwise his
    save flag (byte 63h) is cleared and set again when the puck comes from a shot of the other team's shotplayer
    from beyond 58h, from the far side (by pflags bit 7) and fast (|vy| over 2EE0h, or over 1770h with SPA
    119Dh-121Dh), then ChkShotStat. Then pflags bit 0 is cleared. With a carrier (puckc) on the other team, in range
