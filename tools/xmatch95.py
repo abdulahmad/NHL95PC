@@ -35,9 +35,9 @@ def norm(s):
 
 # ------------------------------------------------------------------ 95PC
 def pc_data():
-    """label -> bytes / pointer target, from src/dseg02."""
+    """label -> bytes / pointer target, from src/data."""
     lab, cur = {}, None
-    for f in sorted(glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm'))):
+    for f in sorted(glob.glob(os.path.join(ROOT, 'src/data/**/*.asm'), recursive=True)):
         for l in open(f, errors='replace'):
             l = l.split(';')[0].rstrip()
             m = re.match(r'^([A-Za-z_][\w@$?]*):', l)

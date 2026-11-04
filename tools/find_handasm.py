@@ -52,8 +52,10 @@ def refs():
     """names called, jumped to, or referenced as data / immediates anywhere in the source"""
     called, jumped, other = set(), set(), set()
     import cc
-    for asm in list(cc.iter_asm()) + glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm')):
-        code = '/cseg01/' in asm or '/engine/' in asm or '/front/' in asm or '/pc/' in asm or '/lib/' in asm
+    data = glob.glob(os.path.join(ROOT, 'src/data/**/*.asm'), recursive=True)
+    for asm in list(cc.iter_asm()) + data:
+        rel = os.path.relpath(asm, os.path.join(ROOT, 'src')).replace('\\', '/')
+        code = rel.startswith(('engine/', 'front/', 'pc/', 'lib/'))
         for l in open(asm):
             t = l.split(';')[0].strip()
             if not t or re.match(r'^(global|extern|%)', t): continue

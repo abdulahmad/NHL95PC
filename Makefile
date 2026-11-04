@@ -32,7 +32,7 @@ CBUILD     ?= $(shell $(PYTHON) tools/cc.py check && echo 1 || echo 0)
 
 # each mode has its own object tree, so switching CBUILD only reassembles what changed
 OBJDIR := build/obj$(if $(filter 1,$(CBUILD)),,0)
-SRCS := $(shell find src/cseg01 src/dseg02 src/engine src/front src/pc src/lib -name '*.asm' 2>/dev/null | sort)
+SRCS := $(shell find src/engine src/front src/pc src/lib src/data -name '*.asm' 2>/dev/null | sort)
 OBJS := $(patsubst src/%.asm,$(OBJDIR)/%.o,$(SRCS))
 INCS := $(wildcard src/inc/*.inc)
 
@@ -42,7 +42,7 @@ all: build/HOCKEY.EXE
 # C fragments the asm includes (only marked = matched functions are built)
 ifeq ($(CBUILD),1)
 NASMFLAGS += -DCBUILD -I build/
-CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/cseg01 src/engine src/front src/pc --include='*.asm' 2>/dev/null | cut -d'"' -f2)))
+CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/engine src/front src/pc --include='*.asm' 2>/dev/null | cut -d'"' -f2)))
 endif
 CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
 cinfo:
