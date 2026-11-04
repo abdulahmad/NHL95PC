@@ -55,7 +55,9 @@ class Image:
             for ln in open(os.path.join(ROOT, 'src/inc/symbols.inc')):
                 m = re.match(r';\s+([0-9A-F]+)\s+(\S+)\s+\S+\.asm\s+\d+', ln)
                 if m: lab[m.group(2)] = int(m.group(1), 16)
-            for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+            sys.path.insert(0, os.path.join(ROOT, 'tools'))
+            import cc
+            for f in cc.iter_asm():
                 prev = None
                 for ln in open(f, errors='replace'):
                     m = re.match(r'[^;\s]+[^;]*\t; ([0-9A-F]+)\s*$', ln)

@@ -6,7 +6,7 @@
 src/inc/symbols.inc is the shared symbol index of the source tree (the PC analogue of the Genesis repos'
 ram_addrs.inc): every label that one src/ file uses from another, with its address, its defining file and the number
 of files that use it. Definitions stay in their segment file (data and BSS names in src/dseg02/*.asm, code names in
-src/cseg01/*.asm); this file is only the index, so it never needs hand edits. Addresses come from the objects that
+src/engine|cseg01); this file is only the index, so it never needs hand edits. Addresses come from the objects that
 `make` wrote to build/obj (section s_<ADDR> + symbol value), names from the global/extern lists of the .asm files.
 --check: exit 1 if the file on disk is not what would be written (e.g. after a hand rename)."""
 import os, re, sys, argparse

@@ -10,17 +10,17 @@ import os, re, subprocess, sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def changed():
-    out = subprocess.run(['git', 'status', '--porcelain', '--untracked-files=all', 'src/c'], cwd=ROOT,
+    out = subprocess.run(['git', 'status', '--porcelain', '--untracked-files=all', 'src/c', 'src/engine', 'src/front', 'src/pc'], cwd=ROOT,
                          capture_output=True, text=True).stdout
     return [l[3:] for l in out.splitlines() if l[3:].endswith('.c')]
 
 def marked_funcs(src):
-    seg = os.path.dirname(os.path.relpath(os.path.abspath(src), os.path.join(ROOT, 'src/c'))).replace(os.sep, '/')
-    fname = os.path.splitext(os.path.basename(src))[0]
-    asm = os.path.join(ROOT, 'src/cseg01', seg + '.asm')
+    sys.path.insert(0, os.path.join(ROOT, 'tools'))
+    import cc
+    stem, fname, asm, inc = cc.c_paths(src)
     if not os.path.exists(asm): return []
     funcs = []
-    for m in re.finditer(r'^%%include "c/%s/%s(?:\.(\w+))?\.inc"' % (re.escape(seg), re.escape(fname)), open(asm).read(), re.M):
+    for m in re.finditer(r'^%%include "c/%s/%s(?:\.(\w+))?\.inc"' % (re.escape(stem), re.escape(fname)), open(asm).read(), re.M):
         funcs.append(m.group(1) or fname)
     return funcs
 

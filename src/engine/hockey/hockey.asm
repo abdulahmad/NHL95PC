@@ -42,7 +42,7 @@ global defaultsprites_0, TryAddPlayerToList, SetPlList, setpersonel, StartPer, D
 global periodicevents, updateplayers, updateanim, freezewindow, cleargamevars, DrawRinkOverlays, setupice, clockcont_0
 global ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission, PeriodOver_sp
 global PeriodOver, ResetBench, resetplstuff, StartGame, forceteams, forcepldata
-; C: src/c/engine/hockey/SetSPA.c
+; C: src/engine/hockey/SetSPA.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetSPA.inc"
 %else
@@ -57,7 +57,7 @@ mov word [byte eax+SPAcnt], 0FFFFh	; 59DB4
 .x:
 ret	; 59DBA
 %endif ; C
-; C: src/c/engine/hockey/SetSPA.c (SprSort_loop)
+; C: src/engine/hockey/SetSPA.c (SprSort_loop)
 %ifdef CBUILD
 %include "c/engine/hockey/SetSPA.SprSort_loop.inc"
 %else
@@ -251,7 +251,7 @@ pop ecx	; 59FDE
 pop ebx	; 59FDF
 ret	; 59FE0
 ; restorepl: eax = new controlled player, edx = old one.
-; C: src/c/engine/hockey/restorepl.c
+; C: src/engine/hockey/restorepl.c
 %ifdef CBUILD
 %include "c/engine/hockey/restorepl.inc"
 %else
@@ -294,7 +294,7 @@ pop ecx	; 5A038
 pop ebx	; 5A039
 ret	; 5A03A
 %endif ; C
-; C: src/c/engine/hockey/AvgCline.c
+; C: src/engine/hockey/AvgCline.c
 %ifdef CBUILD
 %include "c/engine/hockey/AvgCline.inc"
 %else
@@ -342,7 +342,7 @@ ret	; 5A0A2
 ; CompLine: (find good line for comp to switch to). eax = other team, edx = team.
 ; tmap difference picks the power-play penalty-kill lines, getlinee compares line energies, tmline/tmlcnt take
 ; the result (DrawPanelLine is called on a change). Callers: chk4lc and puckfaceoff.
-; C: src/c/engine/hockey/CompLine.c
+; C: src/engine/hockey/CompLine.c
 %ifdef CBUILD
 %include "c/engine/hockey/CompLine.inc"
 %else
@@ -514,7 +514,7 @@ pop ecx	; 5A285
 pop ebx	; 5A286
 ret	; 5A287
 %endif ; C
-; C: src/c/engine/hockey/CompLine.c (getlinee_pp)
+; C: src/engine/hockey/CompLine.c (getlinee_pp)
 %ifdef CBUILD
 %include "c/engine/hockey/CompLine.getlinee_pp.inc"
 %else
@@ -563,7 +563,7 @@ pop ecx	; 5A2EB
 pop ebx	; 5A2EC
 ret	; 5A2ED
 %endif ; C
-; C: src/c/engine/hockey/CompLine.c (TeamLineEnergy)
+; C: src/engine/hockey/CompLine.c (TeamLineEnergy)
 %ifdef CBUILD
 %include "c/engine/hockey/CompLine.TeamLineEnergy.inc"
 %else
@@ -579,7 +579,7 @@ mov eax, hmtmstruct	; 5A304
 .2:
 movsx edx, dx	; 5A309
 %endif ; C
-; C: src/c/engine/hockey/CompLine.c (getlinee)
+; C: src/engine/hockey/CompLine.c (getlinee)
 %ifdef CBUILD
 %include "c/engine/hockey/CompLine.getlinee.inc"
 %else
@@ -603,7 +603,7 @@ add eax, edx	; 5A338
 mov edi, 3	; 5A33A
 jmp short getlinee_sum	; 5A33F
 %endif ; C
-; C: src/c/engine/hockey/findpc.c
+; C: src/engine/hockey/findpc.c
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.inc"
 %else
@@ -695,7 +695,7 @@ pop ecx	; 5A422
 pop ebx	; 5A423
 ret	; 5A424
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (GetHot)
+; C: src/engine/hockey/findpc.c (GetHot)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.GetHot.inc"
 %else
@@ -747,7 +747,7 @@ pop edx	; 5A4AA
 pop ebx	; 5A4AB
 ret	; 5A4AC
 %endif ; C
-; C: src/c/engine/hockey/GetHotStick.c
+; C: src/engine/hockey/GetHotStick.c
 %ifdef CBUILD
 %include "c/engine/hockey/GetHotStick.inc"
 %else
@@ -796,7 +796,7 @@ pop edx	; 5A531
 pop ebx	; 5A532
 ret	; 5A533
 %endif ; C
-; C: src/c/engine/hockey/GetHotOrStick.c
+; C: src/engine/hockey/GetHotOrStick.c
 %ifdef CBUILD
 %include "c/engine/hockey/GetHotOrStick.inc"
 %else
@@ -823,7 +823,7 @@ pop ecx	; 5A57E
 pop ebx	; 5A57F
 ret	; 5A580
 %endif ; C
-; C: src/c/engine/hockey/SetCoachMode.c
+; C: src/engine/hockey/SetCoachMode.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetCoachMode.inc"
 %else
@@ -899,7 +899,7 @@ pop ecx	; 5A666
 pop ebx	; 5A667
 ret	; 5A668
 %endif ; C
-; C: src/c/engine/hockey/InitCoachModes.c
+; C: src/engine/hockey/InitCoachModes.c
 %ifdef CBUILD
 %include "c/engine/hockey/InitCoachModes.inc"
 %else
@@ -972,7 +972,7 @@ ret	; 5A77B
 %endif ; C
 ; UpdateCoachModes: coach AI, once a second from ClockTick. Picks each team's mode (team D2h..D6h) from the
 ; score difference, time left and penalties (details not traced).
-; C: src/c/engine/hockey/UpdateCoachModes.c
+; C: src/engine/hockey/UpdateCoachModes.c
 %ifdef CBUILD
 %include "c/engine/hockey/UpdateCoachModes.inc"
 %else
@@ -1186,7 +1186,7 @@ ret	; 5AAAD
 %endif ; C
 ; PenTeamScored: During a delayed penalty (gmode bit 3): 1 if the scoring team has a skater
 ; with pflags2 bit 4 (caused a penalty), else 0. Goal then disallows the goal.
-; C: src/c/engine/hockey/PenTeamScored.c
+; C: src/engine/hockey/PenTeamScored.c
 %ifdef CBUILD
 %include "c/engine/hockey/PenTeamScored.inc"
 %else
@@ -1239,7 +1239,7 @@ ret	; 5AB35
 ; esi = scoring team, ebp = the other (puck Ypos sign xor gmdir). Puck stopped in the net, assreplace
 ; puck 1Ah. Offside (tmflags bit 4) -> AddPenalty 8 + AddPenalty2 1Bh; PenTeamScored (delayed penalty) -> no goal
 ; else tmscore+1 and the scoring bookkeeping (goal/assist counts, PenGoalStuff).
-; C: src/c/engine/hockey/findpc.c (Goal)
+; C: src/engine/hockey/findpc.c (Goal)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.Goal.inc"
 %else
@@ -1724,7 +1724,7 @@ call UpdateCoachModes	; 5B1C1
 add esp, byte 8	; 5B1C6
 jmp near findpc_ret6	; 5B1C9
 %endif ; C
-; C: src/c/engine/hockey/GiveControl.c
+; C: src/engine/hockey/GiveControl.c
 %ifdef CBUILD
 %include "c/engine/hockey/GiveControl.inc"
 %else
@@ -1792,7 +1792,7 @@ pop ecx	; 5B295
 pop ebx	; 5B296
 ret	; 5B297
 %endif ; C
-; C: src/c/engine/hockey/Setplass.c
+; C: src/engine/hockey/Setplass.c
 %ifdef CBUILD
 %include "c/engine/hockey/Setplass.inc"
 %else
@@ -2302,7 +2302,7 @@ mov byte [byte ebx+05Ah], al	; 5B81B
 .49:
 add esp, byte 1Ch	; 5B81E
 jmp near changeplayer_ret5	; 5B821
-; C: src/c/engine/hockey/findpc.c (reenergizeteam)
+; C: src/engine/hockey/findpc.c (reenergizeteam)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.reenergizeteam.inc"
 %else
@@ -2344,7 +2344,7 @@ jl short reenergizeteam.1	; 5B87A
 jmp near findpc_ret5	; 5B87C
 %endif ; C
 ; clearteams: Zero both team structs (200h bytes) and store their data pointers (tmsort, tmlines, tmroster,...).
-; C: src/c/engine/hockey/clearteams.c
+; C: src/engine/hockey/clearteams.c
 %ifdef CBUILD
 %include "c/engine/hockey/clearteams.inc"
 %else
@@ -2394,7 +2394,7 @@ pop ebx	; 5B978
 ret	; 5B979
 %endif ; C
 ; restoreteams: Both teams: tmap = 6, every tmpdst entry = -2 (bench).
-; C: src/c/engine/hockey/restoreteams.c
+; C: src/engine/hockey/restoreteams.c
 %ifdef CBUILD
 %include "c/engine/hockey/restoreteams.inc"
 %else
@@ -2436,7 +2436,7 @@ pop ecx	; 5B9CE
 pop ebx	; 5B9CF
 ret	; 5B9D0
 %endif ; C
-; C: src/c/engine/hockey/GetPeriodTime.c
+; C: src/engine/hockey/GetPeriodTime.c
 %ifdef CBUILD
 %include "c/engine/hockey/GetPeriodTime.inc"
 %else
@@ -2457,7 +2457,7 @@ ret	; 5BA06
 %endif ; C
 ; ResetClock: gameclock = PerTimeTotal = GetPeriodTime, clockticks = 0,
 ; periodendtime = gameclock - random(length/2), clock stopped (gmode bit 0).
-; C: src/c/engine/hockey/ResetClock.c
+; C: src/engine/hockey/ResetClock.c
 %ifdef CBUILD
 %include "c/engine/hockey/ResetClock.inc"
 %else
@@ -2481,7 +2481,7 @@ or byte [gmode], 1	; 5BA45
 pop edx	; 5BA4C
 ret	; 5BA4D
 %endif ; C
-; C: src/c/engine/hockey/ClearSortCords.c
+; C: src/engine/hockey/ClearSortCords.c
 %ifdef CBUILD
 %include "c/engine/hockey/ClearSortCords.inc"
 %else
@@ -2516,7 +2516,7 @@ pop ecx	; 5BA86
 pop ebx	; 5BA87
 ret	; 5BA88
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (defaultsprites_0)
+; C: src/engine/hockey/findpc.c (defaultsprites_0)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.defaultsprites_0.inc"
 %else
@@ -2603,7 +2603,7 @@ mov word [RefStep], bx	; 5BB8D
 call SprSort	; 5BB94
 jmp near findpc_ret5	; 5BB99
 %endif ; C
-; C: src/c/engine/hockey/TryAddPlayerToList.c
+; C: src/engine/hockey/TryAddPlayerToList.c
 %ifdef CBUILD
 %include "c/engine/hockey/TryAddPlayerToList.inc"
 %else
@@ -2646,7 +2646,7 @@ mov eax, 1	; 5BBF3
 pop ecx	; 5BBF8
 ret	; 5BBF9
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (SetPlList)
+; C: src/engine/hockey/findpc.c (SetPlList)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.SetPlList.inc"
 %else
@@ -2903,7 +2903,7 @@ jge near SetPlList.14	; 5BEE6
 add esp, byte 14h	; 5BEEC
 jmp near findpc_ret6	; 5BEEF
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (setpersonel)
+; C: src/engine/hockey/findpc.c (setpersonel)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.setpersonel.inc"
 %else
@@ -3005,7 +3005,7 @@ jmp near findpc_ret5	; 5C00B
 %endif ; C
 ; StartPer: setupice, ResetClock, no controlled players, center faceoff, InitCoachModes,
 ; then DoGameFrame.
-; C: src/c/engine/hockey/findpc.c (StartPer)
+; C: src/engine/hockey/findpc.c (StartPer)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.StartPer.inc"
 %else
@@ -3104,7 +3104,7 @@ add dword [rinkscrollx], 3E8h	; 5C1AB
 add dword [rinkscrolly], 3E8h	; 5C1B5
 jmp near findpc_ret5	; 5C1BF
 %endif ; C
-; C: src/c/engine/hockey/DoGameFrame.c
+; C: src/engine/hockey/DoGameFrame.c
 %ifdef CBUILD
 %include "c/engine/hockey/DoGameFrame.inc"
 %else
@@ -3116,7 +3116,7 @@ call updateplayers	; 5C1D3
 call checkwindow	; 5C1D8
 jmp near updatereplay	; 5C1DD
 %endif ; C
-; C: src/c/engine/hockey/RestoreBenchEnergy.c
+; C: src/engine/hockey/RestoreBenchEnergy.c
 %ifdef CBUILD
 %include "c/engine/hockey/RestoreBenchEnergy.inc"
 %else
@@ -3164,7 +3164,7 @@ pop ecx	; 5C245
 pop ebx	; 5C246
 ret	; 5C247
 %endif ; C
-; C: src/c/engine/hockey/updatecrowdf.c
+; C: src/engine/hockey/updatecrowdf.c
 %ifdef CBUILD
 %include "c/engine/hockey/updatecrowdf.inc"
 %else
@@ -3230,7 +3230,7 @@ ret	; 5C301
 %endif ; C
 ; periodicevents: Clock at 0 -> horn (sfx 90h), freezewindow, clockcont_0. Once a
 ; second (lldisp, 18h frames): updatecrowdf, RestoreBenchEnergy, the stats/energy checks.
-; C: src/c/engine/hockey/periodicevents.c
+; C: src/engine/hockey/periodicevents.c
 %ifdef CBUILD
 %include "c/engine/hockey/periodicevents.inc"
 %else
@@ -3308,7 +3308,7 @@ pop edx	; 5C40C
 pop ebx	; 5C40D
 ret	; 5C40E
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (updateplayers)
+; C: src/engine/hockey/findpc.c (updateplayers)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.updateplayers.inc"
 %else
@@ -3831,7 +3831,7 @@ mov word [puckstruct+12h], 18Ah	; 5CADE
 add esp, byte 0Ch	; 5CAE7
 jmp near findpc_ret6	; 5CAEA
 %endif ; C
-; C: src/c/engine/hockey/findpc.c (updateanim)
+; C: src/engine/hockey/findpc.c (updateanim)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.updateanim.inc"
 %else
@@ -4016,7 +4016,7 @@ call sfx	; 5CD17
 mov byte [byte ebx+046h], 4	; 5CD1C
 jmp near findpc_ret5	; 5CD20
 %endif ; C
-; C: src/c/engine/hockey/freezewindow.c
+; C: src/engine/hockey/freezewindow.c
 %ifdef CBUILD
 %include "c/engine/hockey/freezewindow.inc"
 %else
@@ -4030,7 +4030,7 @@ mov word [yc1], ax	; 5CD41
 or byte [sflags], 40h	; 5CD47
 ret	; 5CD4E
 %endif ; C
-; C: src/c/engine/hockey/cleargamevars.c
+; C: src/engine/hockey/cleargamevars.c
 %ifdef CBUILD
 %include "c/engine/hockey/cleargamevars.inc"
 %else
@@ -4903,7 +4903,7 @@ call DrawFrameSprite	; 5D7EB
 .77:
 mov esp, ebp	; 5D7F0
 jmp near changeplayer_ret5	; 5D7F2
-; C: src/c/engine/hockey/setupice.c
+; C: src/engine/hockey/setupice.c
 %ifdef CBUILD
 %include "c/engine/hockey/setupice.inc"
 %else
@@ -4939,7 +4939,7 @@ ret	; 5D851
 %endif ; C
 ; clockcont_0: (end of period). Puck assinsert 18h; periods 1-2 -> PeriodOver path
 ; later periods compare hmscore/awscore for overtime shootout game over. Also called from puckfaceoff.
-; C: src/c/engine/hockey/findpc.c (clockcont_0)
+; C: src/engine/hockey/findpc.c (clockcont_0)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.clockcont_0.inc"
 %else
@@ -5193,7 +5193,7 @@ jmp near findpc_ret5	; 5DC0B
 %endif ; C
 ; ClockTick: run from the main loop. Counts clockticks (18h per second) and gameclock down; horn sfx 97h at
 ; 60 s (unless music plays), UpdateCoachModes each second. Debug playback (penshotlive) ends via EndPenaltyShot.
-; C: src/c/engine/hockey/ClockTick.c
+; C: src/engine/hockey/ClockTick.c
 %ifdef CBUILD
 %include "c/engine/hockey/ClockTick.inc"
 %else
@@ -5303,7 +5303,7 @@ pop ecx	; 5DD68
 pop ebx	; 5DD69
 ret	; 5DD6A
 %endif ; C
-; C: src/c/engine/hockey/SetSPA.c (SprSortVert)
+; C: src/engine/hockey/SetSPA.c (SprSortVert)
 %ifdef CBUILD
 %include "c/engine/hockey/SetSPA.SprSortVert.inc"
 %else
@@ -5326,7 +5326,7 @@ mov ecx, SortCords	; 5DD92
 xor ebx, ebx	; 5DD97
 jmp near SprSort_test	; 5DD99
 %endif ; C
-; C: src/c/engine/hockey/GameOver.c
+; C: src/engine/hockey/GameOver.c
 %ifdef CBUILD
 %include "c/engine/hockey/GameOver.inc"
 %else
@@ -5339,7 +5339,7 @@ mov word [gameover], 1	; 5DDB2
 .x:
 ret	; 5DDBB
 %endif ; C
-; C: src/c/engine/hockey/SetExitGame.c
+; C: src/engine/hockey/SetExitGame.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetExitGame.inc"
 %else
@@ -5352,7 +5352,7 @@ mov word [exitgame], 1	; 5DDD0
 .x:
 ret	; 5DDD9
 %endif ; C
-; C: src/c/engine/hockey/SetupTeamForIntermission.c
+; C: src/engine/hockey/SetupTeamForIntermission.c
 %ifdef CBUILD
 %include "c/engine/hockey/SetupTeamForIntermission.inc"
 %else
@@ -5394,7 +5394,7 @@ pop ecx	; 5DE3F
 pop ebx	; 5DE40
 ret	; 5DE41
 %endif ; C
-; C: src/c/engine/hockey/Intermission.c
+; C: src/engine/hockey/Intermission.c
 %ifdef CBUILD
 %include "c/engine/hockey/Intermission.inc"
 %else
@@ -5420,7 +5420,7 @@ pop ebx	; 5DE6E
 ret	; 5DE6F
 %endif ; C
 ; PeriodOver_sp: gsp 4 -> GameOver; else Intermission, StartPer, SetPenaltyStrength.
-; C: src/c/engine/hockey/PeriodOver_sp.c
+; C: src/engine/hockey/PeriodOver_sp.c
 %ifdef CBUILD
 %include "c/engine/hockey/PeriodOver_sp.inc"
 %else
@@ -5439,7 +5439,7 @@ jmp near SetPenaltyStrength	; 5DEA1
 %endif ; C
 ; PeriodOver: Line change box reset, gsp+1, gmdir flips; after the 3rd period:
 ; overtime (gameopts+1 bit 1 = playoffs) or game over (gsp 4) unless tied; then PeriodOver_sp.
-; C: src/c/engine/hockey/PeriodOver.c
+; C: src/engine/hockey/PeriodOver.c
 %ifdef CBUILD
 %include "c/engine/hockey/PeriodOver.inc"
 %else
@@ -5501,7 +5501,7 @@ ret	; 5DF85
 %endif ; C
 ; ResetBench: Per team: PBnum = players with penalty time left (tmpdst > 0), all others
 ; not dressed back to the bench (tmpdst -2, roster status 3).
-; C: src/c/engine/hockey/findpc.c (ResetBench)
+; C: src/engine/hockey/findpc.c (ResetBench)
 %ifdef CBUILD
 %include "c/engine/hockey/findpc.ResetBench.inc"
 %else
@@ -5562,7 +5562,7 @@ cmp di, byte 2	; 5E00F
 jl short ResetBench.1	; 5E013
 jmp near findpc_ret5	; 5E015
 %endif ; C
-; C: src/c/engine/hockey/resetplstuff.c
+; C: src/engine/hockey/resetplstuff.c
 %ifdef CBUILD
 %include "c/engine/hockey/resetplstuff.inc"
 %else
@@ -5610,7 +5610,7 @@ pop ebx	; 5E084
 ret	; 5E085
 %endif ; C
 ; StartGame: role. cleargamevars, clearteams, gsp = 0, restoreteams, PeriodOver_sp.
-; C: src/c/engine/hockey/StartGame.c
+; C: src/engine/hockey/StartGame.c
 %ifdef CBUILD
 %include "c/engine/hockey/StartGame.inc"
 %else
@@ -5627,7 +5627,7 @@ call PeriodOver_sp	; 5E0A9
 pop edx	; 5E0AE
 ret	; 5E0AF
 %endif ; C
-; C: src/c/engine/hockey/forceteams.c
+; C: src/engine/hockey/forceteams.c
 %ifdef CBUILD
 %include "c/engine/hockey/forceteams.inc"
 %else
@@ -5643,7 +5643,7 @@ call setpersonel	; 5E0D3
 mov eax, awtmstruct	; 5E0D8
 ; forcepldata: (no skating on/off, faceoffs only). eax = team: newpos -> position,
 ; Setplass, center gets anearest (11h), tmpdst -1, setplayer with newpnum.
-; C: src/c/engine/hockey/forcepldata.c
+; C: src/engine/hockey/forcepldata.c
 %ifdef CBUILD
 %include "c/engine/hockey/forcepldata.inc"
 %else

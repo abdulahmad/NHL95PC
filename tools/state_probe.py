@@ -12,8 +12,8 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cc, permute
 
-WARM = ['src/c/engine/collide/ChkPullGoalieLate.c', 'src/c/front/menu/CmpPoints.c',
-        'src/c/front/playoff/PlayoffTreeHitTest.c', 'src/c/engine/lines/BuildDefaultLines.c']
+WARM = ['src/engine/collide/ChkPullGoalieLate.c', 'src/c/front/menu/CmpPoints.c',
+        'src/c/front/playoff/PlayoffTreeHitTest.c', 'src/engine/lines/BuildDefaultLines.c']
 
 
 def main():

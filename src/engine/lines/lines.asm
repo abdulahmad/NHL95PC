@@ -31,7 +31,7 @@ extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, w
 extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
 global SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, lines_popx, CanFillLineSlot, lines_addesp10_x, FillDressedSlots, PickForLineSlot
 global lines_popx2, PickGoalie, PickExtraSkater, RefillLineSlots, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, CanRemovePlayer
-; C: src/c/engine/lines/SortPlayersByPos.c
+; C: src/engine/lines/SortPlayersByPos.c
 %ifdef CBUILD
 %include "c/engine/lines/SortPlayersByPos.inc"
 %else
@@ -104,7 +104,7 @@ pop edi	; 6455C
 pop esi	; 6455D
 ret	; 6455E
 %endif ; C
-; C: src/c/engine/lines/SortNonDefPlayers.c
+; C: src/engine/lines/SortNonDefPlayers.c
 %ifdef CBUILD
 %include "c/engine/lines/SortNonDefPlayers.inc"
 %else
@@ -178,7 +178,7 @@ pop esi	; 64611
 pop ecx	; 64612
 ret	; 64613
 %endif ; C
-; C: src/c/engine/lines/BuildDefaultLines.c
+; C: src/engine/lines/BuildDefaultLines.c
 %ifdef CBUILD
 %include "c/engine/lines/BuildDefaultLines.inc"
 %else
@@ -1263,7 +1263,7 @@ pop esi	; 652D2
 pop ecx	; 652D3
 pop ebx	; 652D4
 ret	; 652D5
-; C: src/c/engine/lines/PickGoalie.c
+; C: src/engine/lines/PickGoalie.c
 %ifdef CBUILD
 %include "c/engine/lines/PickGoalie.inc"
 %else
@@ -1355,7 +1355,7 @@ pop esi	; 653BB
 pop ecx	; 653BC
 ret	; 653BD
 %endif ; C
-; C: src/c/engine/lines/PickForLineSlot.c (PickExtraSkater)
+; C: src/engine/lines/PickForLineSlot.c (PickExtraSkater)
 %ifdef CBUILD
 %include "c/engine/lines/PickForLineSlot.PickExtraSkater.inc"
 %else
@@ -1494,7 +1494,7 @@ jl short PickExtraSkater.8	; 65524
 add esp, byte 8	; 65526
 jmp near lines_popx2	; 65529
 %endif ; C
-; C: src/c/engine/lines/RefillLineSlots.c
+; C: src/engine/lines/RefillLineSlots.c
 %ifdef CBUILD
 %include "c/engine/lines/RefillLineSlots.inc"
 %else
@@ -1843,7 +1843,7 @@ pop esi	; 658EF
 pop ecx	; 658F0
 pop ebx	; 658F1
 ret	; 658F2
-; C: src/c/engine/lines/BuildDefaultLines.c (SetupTeamLines)
+; C: src/engine/lines/BuildDefaultLines.c (SetupTeamLines)
 %ifdef CBUILD
 %include "c/engine/lines/BuildDefaultLines.SetupTeamLines.inc"
 %else
@@ -2062,7 +2062,7 @@ cmp cx, byte 19h	; 65B3D
 jl short SetupTeamLines.23	; 65B41
 jmp near lines_popx	; 65B43
 %endif ; C
-; C: src/c/engine/lines/NormalizeDressFlags.c
+; C: src/engine/lines/NormalizeDressFlags.c
 %ifdef CBUILD
 %include "c/engine/lines/NormalizeDressFlags.inc"
 %else
@@ -2088,7 +2088,7 @@ pop edx	; 65B80
 pop ebx	; 65B81
 ret	; 65B82
 %endif ; C
-; C: src/c/engine/lines/BuildDefaultLines.c (CanRemovePlayer)
+; C: src/engine/lines/BuildDefaultLines.c (CanRemovePlayer)
 %ifdef CBUILD
 %include "c/engine/lines/BuildDefaultLines.CanRemovePlayer.inc"
 %else

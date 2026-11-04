@@ -17,7 +17,7 @@ global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
 ; 'MVIf' frame: decodes and waits for the frame time (GetTicks ticks)
 ; 'MVIe' end: stops. A key press (AnyInputPressed) aborts.
 ; Afterwards waits for the music fade and restarts the song if music is on.
-; C: src/c/engine/asm_helpers/PlayMVI.c
+; C: src/engine/asm_helpers/PlayMVI.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/PlayMVI.inc"
 %else
@@ -258,7 +258,7 @@ ret	; 8C1B6
 %endif ; C
 ; stub_8C1B7..stub_8C223: empty functions (__CHK; ret). Only stub_8C218
 ; has a caller (line_editor_rosters, 6 stack args): removed routines.
-; C: src/c/engine/asm_helpers/stub_8C1B7.c
+; C: src/engine/asm_helpers/stub_8C1B7.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C1B7.inc"
 %else
@@ -269,7 +269,7 @@ ret	; 8C1C1
 %endif ; C
 ; SelectScreenBM SelectRinkBM: SetDrawBitmap(*screenbm *rinkbm),
 ; i.e. make that 48-byte bitmap descriptor the current draw target.
-; C: src/c/engine/asm_helpers/SelectScreenBM.c
+; C: src/engine/asm_helpers/SelectScreenBM.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/SelectScreenBM.inc"
 %else
@@ -297,7 +297,7 @@ push edx	; 8C1EE
 mov edx, dword [rinkbm]	; 8C1EF
 jmp short SelectScreenBM_set	; 8C1F5
 %endif ; C
-; C: src/c/engine/asm_helpers/stub_8C1F7.c
+; C: src/engine/asm_helpers/stub_8C1F7.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C1F7.inc"
 %else
@@ -306,7 +306,7 @@ push dword 4	; 8C1F7
 call __CHK	; 8C1FC
 ret	; 8C201
 %endif ; C
-; C: src/c/engine/asm_helpers/stub_8C202.c
+; C: src/engine/asm_helpers/stub_8C202.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C202.inc"
 %else
@@ -315,7 +315,7 @@ push dword 4	; 8C202
 call __CHK	; 8C207
 ret	; 8C20C
 %endif ; C
-; C: src/c/engine/asm_helpers/stub_8C20D.c
+; C: src/engine/asm_helpers/stub_8C20D.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C20D.inc"
 %else
@@ -324,7 +324,7 @@ push dword 4	; 8C20D
 call __CHK	; 8C212
 ret	; 8C217
 %endif ; C
-; C: src/c/engine/asm_helpers/stub_8C218.c
+; C: src/engine/asm_helpers/stub_8C218.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C218.inc"
 %else
@@ -333,7 +333,7 @@ push dword 4	; 8C218
 call __CHK	; 8C21D
 ret	; 8C222
 %endif ; C
-; C: src/c/engine/asm_helpers/stub_8C223.c
+; C: src/engine/asm_helpers/stub_8C223.c
 %ifdef CBUILD
 %include "c/engine/asm_helpers/stub_8C223.inc"
 %else

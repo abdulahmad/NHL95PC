@@ -47,7 +47,7 @@ extern word_E0392, word_E0394, word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yle
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
 global ThreeStarsLoop, ThreeStarsLoop_tick, assintrostand, assintroline, AddStar, StarEligible, StarCompare, PickThreeStars
 global StartThreeStars, MoveInDir, SteerToTarget, assstarskate, assthreestars
-; C: src/c/engine/intro/FadeOutPalCycle.c
+; C: src/engine/intro/FadeOutPalCycle.c
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.inc"
 %else
@@ -114,7 +114,7 @@ pop ecx	; 47CD3
 pop ebx	; 47CD4
 ret	; 47CD5
 %endif ; C
-; C: src/c/engine/intro/FadeOutPalCycle.c (PreGameIntro)
+; C: src/engine/intro/FadeOutPalCycle.c (PreGameIntro)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.PreGameIntro.inc"
 %else
@@ -363,7 +363,7 @@ call UpdateHudPanel	; 480BF
 add esp, byte 10h	; 480C4
 jmp near PreGameIntro_popx	; 480C7
 %endif ; C
-; C: src/c/engine/intro/FadeOutPalCycle.c (PreGameIntro_scroll)
+; C: src/engine/intro/FadeOutPalCycle.c (PreGameIntro_scroll)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.PreGameIntro_scroll.inc"
 %else
@@ -468,7 +468,7 @@ jne short PreGameIntro_frameloop.4	; 48242
 call WaitTickDeadline	; 48244
 jmp near ThreeStarsLoop_tick	; 48249
 %endif ; C
-; C: src/c/engine/intro/FadeOutPalCycle.c (PreGameIntro_end)
+; C: src/engine/intro/FadeOutPalCycle.c (PreGameIntro_end)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.PreGameIntro_end.inc"
 %else
@@ -530,7 +530,7 @@ pop ecx	; 4830B
 pop ebx	; 4830C
 ret	; 4830D
 %endif ; C
-; C: src/c/engine/intro/FadeOutPalCycle.c (StartPreGame)
+; C: src/engine/intro/FadeOutPalCycle.c (StartPreGame)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.StartPreGame.inc"
 %else
@@ -615,7 +615,7 @@ jle near PreGameIntro_scroll	; 48415
 mov dword [viewscrollx], 40h	; 4841B
 jmp near PreGameIntro_frameloop	; 48425
 %endif ; C
-; C: src/c/engine/intro/assintrostand.c
+; C: src/engine/intro/assintrostand.c
 %ifdef CBUILD
 %include "c/engine/intro/assintrostand.inc"
 %else
@@ -679,7 +679,7 @@ pop ecx	; 484D7
 pop ebx	; 484D8
 ret	; 484D9
 %endif ; C
-; C: src/c/engine/intro/assintroline.c
+; C: src/engine/intro/assintroline.c
 %ifdef CBUILD
 %include "c/engine/intro/assintroline.inc"
 %else
@@ -917,7 +917,7 @@ ret	; 48788
 %endif ; C
 ; AddStar: PC three stars. eax = list index (0-2), edx = team, ebx = player. Stores (team, player) in startm/starpl
 ; unless the pair is already in the first eax entries. Returns 1 if added, 0 if a duplicate.
-; C: src/c/engine/intro/AddStar.c
+; C: src/engine/intro/AddStar.c
 %ifdef CBUILD
 %include "c/engine/intro/AddStar.inc"
 %else
@@ -954,7 +954,7 @@ pop esi	; 487D6
 pop ecx	; 487D7
 ret	; 487D8
 %endif ; C
-; C: src/c/engine/intro/StarEligible.c
+; C: src/engine/intro/StarEligible.c
 %ifdef CBUILD
 %include "c/engine/intro/StarEligible.inc"
 %else
@@ -1260,7 +1260,7 @@ pop ebx	; 48AC6
 ret	; 48AC7
 ; PickThreeStars: PC three stars. Empties startm/starpl, records the winner (gwgteam, gwgplayer = its team field 2Eh)
 ; when the scores differ, then fills the 3 stars from the qsorted players (StarCompare) with AddStar.
-; C: src/c/engine/intro/FadeOutPalCycle.c (PickThreeStars)
+; C: src/engine/intro/FadeOutPalCycle.c (PickThreeStars)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.PickThreeStars.inc"
 %else
@@ -1604,7 +1604,7 @@ jmp short PickThreeStars.19	; 48F09
 %endif ; C
 ; StartThreeStars: PC end-of-game set-up for the three-stars ceremony (assthreestars, asstab 15h): PickThreeStars,
 ; clears the clock line-change signal state, stops the clock, empties the penalty boxes and places the players.
-; C: src/c/engine/intro/FadeOutPalCycle.c (StartThreeStars)
+; C: src/engine/intro/FadeOutPalCycle.c (StartThreeStars)
 %ifdef CBUILD
 %include "c/engine/intro/FadeOutPalCycle.StartThreeStars.inc"
 %else
@@ -1785,7 +1785,7 @@ jmp near PreGameIntro_popx	; 49251
 call sub_8F633	; 49256
 jmp near PreGameIntro_popx	; 4925B
 %endif ; C
-; C: src/c/engine/intro/MoveInDir.c
+; C: src/engine/intro/MoveInDir.c
 %ifdef CBUILD
 %include "c/engine/intro/MoveInDir.inc"
 %else
@@ -1851,7 +1851,7 @@ call playeracc	; 492F2
 pop ebx	; 492F7
 ret	; 492F8
 %endif ; C
-; C: src/c/engine/intro/SteerToTarget.c
+; C: src/engine/intro/SteerToTarget.c
 %ifdef CBUILD
 %include "c/engine/intro/SteerToTarget.inc"
 %else
@@ -1971,7 +1971,7 @@ pop ecx	; 4945D
 pop ebx	; 4945E
 ret	; 4945F
 %endif ; C
-; C: src/c/engine/intro/assstarskate.c
+; C: src/engine/intro/assstarskate.c
 %ifdef CBUILD
 %include "c/engine/intro/assstarskate.inc"
 %else

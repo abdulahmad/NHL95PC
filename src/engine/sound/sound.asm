@@ -14,7 +14,7 @@ global SndLoadFile, sndcb_addesp8_x, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, C
 global FreeDigiSample, StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PlayCrowdSample_ret, PaOneMinuteLeft, PaSpeechBusy
 global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, nullsub_5, PaScoringPeriod, PaNhlIntro
 global PaGoodnight, PaLineups, PaElseNhl, PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
-; C: src/c/engine/sound/SndLoadFile.c
+; C: src/engine/sound/SndLoadFile.c
 %ifdef CBUILD
 %include "c/engine/sound/SndLoadFile.inc"
 %else
@@ -43,7 +43,7 @@ push edx	; 594C5
 call sub_8E908	; 594C6
 jmp short sndcb_addesp8_x	; 594CB
 %endif ; C
-; C: src/c/engine/sound/Crowd_Noise.c
+; C: src/engine/sound/Crowd_Noise.c
 %ifdef CBUILD
 %include "c/engine/sound/Crowd_Noise.inc"
 %else
@@ -253,7 +253,7 @@ pop ecx	; 59745
 pop ebx	; 59746
 ret	; 59747
 %endif ; C
-; C: src/c/engine/sound/CrowdNoiseOff.c
+; C: src/engine/sound/CrowdNoiseOff.c
 %ifdef CBUILD
 %include "c/engine/sound/CrowdNoiseOff.inc"
 %else
@@ -302,7 +302,7 @@ pop edx	; 597E0
 pop ebx	; 597E1
 ret	; 597E2
 %endif ; C
-; C: src/c/engine/sound/CrowdFadeOut.c
+; C: src/engine/sound/CrowdFadeOut.c
 %ifdef CBUILD
 %include "c/engine/sound/CrowdFadeOut.inc"
 %else
@@ -349,7 +349,7 @@ pop ecx	; 59860
 pop ebx	; 59861
 ret	; 59862
 %endif ; C
-; C: src/c/engine/sound/CrowdNoiseReset.c
+; C: src/engine/sound/CrowdNoiseReset.c
 %ifdef CBUILD
 %include "c/engine/sound/CrowdNoiseReset.inc"
 %else
@@ -364,7 +364,7 @@ mov dword [crowdvol7], edx	; 5987C
 pop edx	; 59882
 ret	; 59883
 %endif ; C
-; C: src/c/engine/sound/sfx.c
+; C: src/engine/sound/sfx.c
 %ifdef CBUILD
 %include "c/engine/sound/sfx.inc"
 %else
@@ -432,7 +432,7 @@ pop edx	; 59942
 pop ecx	; 59943
 ret	; 59944
 %endif ; C
-; C: src/c/engine/sound/FreeDigiSample.c
+; C: src/engine/sound/FreeDigiSample.c
 %ifdef CBUILD
 %include "c/engine/sound/FreeDigiSample.inc"
 %else
@@ -457,7 +457,7 @@ pop edx	; 5997E
 pop ebx	; 5997F
 ret	; 59980
 %endif ; C
-; C: src/c/engine/sound/StopDigiSample.c
+; C: src/engine/sound/StopDigiSample.c
 %ifdef CBUILD
 %include "c/engine/sound/StopDigiSample.inc"
 %else
@@ -479,7 +479,7 @@ mov dword [digihandle], 0FFFFFFFFh	; 599AD
 pop edx	; 599B7
 ret	; 599B8
 %endif ; C
-; C: src/c/engine/sound/PlayDigiSample.c
+; C: src/engine/sound/PlayDigiSample.c
 %ifdef CBUILD
 %include "c/engine/sound/PlayDigiSample.inc"
 %else
@@ -503,7 +503,7 @@ pop edx	; 599EB
 pop ebx	; 599EC
 ret	; 599ED
 %endif ; C
-; C: src/c/engine/sound/WaitDigiSample.c
+; C: src/engine/sound/WaitDigiSample.c
 %ifdef CBUILD
 %include "c/engine/sound/WaitDigiSample.inc"
 %else
@@ -520,7 +520,7 @@ je short WaitDigiSample.1	; 59A0E
 .x:
 ret	; 59A10
 %endif ; C
-; C: src/c/engine/sound/PlayCrowdSample.c
+; C: src/engine/sound/PlayCrowdSample.c
 %ifdef CBUILD
 %include "c/engine/sound/PlayCrowdSample.inc"
 %else
@@ -578,7 +578,7 @@ jne short PlayCrowdSample_ret	; 59AA1
 call MusicChanReset	; 59AA3
 jmp near SayOneMinuteLeft	; 59AA8
 %endif ; C
-; C: src/c/engine/sound/PaSpeechBusy.c
+; C: src/engine/sound/PaSpeechBusy.c
 %ifdef CBUILD
 %include "c/engine/sound/PaSpeechBusy.inc"
 %else
@@ -593,7 +593,7 @@ jne near SpeechBusy	; 59AC7
 xor eax, eax	; 59ACD
 ret	; 59ACF
 %endif ; C
-; C: src/c/engine/sound/PaGoal.c
+; C: src/engine/sound/PaGoal.c
 %ifdef CBUILD
 %include "c/engine/sound/PaGoal.inc"
 %else
@@ -619,7 +619,7 @@ pop edi	; 59B0A
 pop esi	; 59B0B
 ret 4	; 59B0C
 %endif ; C
-; C: src/c/engine/sound/PaPlayerNumber.c
+; C: src/engine/sound/PaPlayerNumber.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPlayerNumber.inc"
 %else
@@ -639,7 +639,7 @@ call SayPlayerNumber	; 59B35
 pop ecx	; 59B3A
 ret	; 59B3B
 %endif ; C
-; C: src/c/engine/sound/PaPenalty.c
+; C: src/engine/sound/PaPenalty.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPenalty.inc"
 %else
@@ -673,7 +673,7 @@ pop edi	; 59B83
 pop esi	; 59B84
 ret 14h	; 59B85
 %endif ; C
-; C: src/c/engine/sound/PaPenaltyShot.c
+; C: src/engine/sound/PaPenaltyShot.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPenaltyShot.inc"
 %else
@@ -693,7 +693,7 @@ call SayPenaltyShot	; 59BAE
 pop esi	; 59BB3
 ret	; 59BB4
 %endif ; C
-; C: src/c/engine/sound/PaTonightIntro.c
+; C: src/engine/sound/PaTonightIntro.c
 %ifdef CBUILD
 %include "c/engine/sound/PaTonightIntro.inc"
 %else
@@ -761,7 +761,7 @@ test byte [gameopts+1], 1	; 59C97
 je near nullsub_5	; 59C9E
 jmp near SayElseNhl	; 59CA4
 %endif ; C
-; C: src/c/engine/sound/PaHighlightIntro.c
+; C: src/engine/sound/PaHighlightIntro.c
 %ifdef CBUILD
 %include "c/engine/sound/PaHighlightIntro.inc"
 %else
@@ -781,7 +781,7 @@ call SayHighlightIntro	; 59CD6
 pop ebx	; 59CDB
 ret	; 59CDC
 %endif ; C
-; C: src/c/engine/sound/PaPlayoffResult.c
+; C: src/engine/sound/PaPlayoffResult.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPlayoffResult.inc"
 %else
@@ -805,7 +805,7 @@ pop edi	; 59D11
 pop esi	; 59D12
 ret 8	; 59D13
 %endif ; C
-; C: src/c/engine/sound/PaPlayoffTonight.c
+; C: src/engine/sound/PaPlayoffTonight.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPlayoffTonight.inc"
 %else
@@ -829,7 +829,7 @@ call SayPlayoffTonight	; 59D4B
 pop esi	; 59D50
 ret 4	; 59D51
 %endif ; C
-; C: src/c/engine/sound/PaOpenBank.c
+; C: src/engine/sound/PaOpenBank.c
 %ifdef CBUILD
 %include "c/engine/sound/PaOpenBank.inc"
 %else
@@ -845,7 +845,7 @@ je short PaOpenBank.1	; 59D6E
 .x:
 ret	; 59D70
 %endif ; C
-; C: src/c/engine/sound/PaPreloadClips.c
+; C: src/engine/sound/PaPreloadClips.c
 %ifdef CBUILD
 %include "c/engine/sound/PaPreloadClips.inc"
 %else

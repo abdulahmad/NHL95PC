@@ -51,8 +51,9 @@ def insns(asm):
 def refs():
     """names called, jumped to, or referenced as data / immediates anywhere in the source"""
     called, jumped, other = set(), set(), set()
-    for asm in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True) + glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm')):
-        code = '/cseg01/' in asm
+    import cc
+    for asm in list(cc.iter_asm()) + glob.glob(os.path.join(ROOT, 'src/dseg02/*.asm')):
+        code = '/cseg01/' in asm or '/engine/' in asm or '/front/' in asm or '/pc/' in asm or '/lib/' in asm
         for l in open(asm):
             t = l.split(';')[0].strip()
             if not t or re.match(r'^(global|extern|%)', t): continue
@@ -67,8 +68,7 @@ def refs():
 def scan():
     called, jumped, other = refs()
     from c_progress import is_lib
-    segs = [f for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True))
-            if not is_lib(os.path.relpath(f, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'))]
+    segs = [f for f in cc.iter_asm() if not is_lib(cc.asm_stem(f))]
     funcs = []
     for asm in segs:
         cur = None; prev = None
@@ -79,7 +79,7 @@ def scan():
                 # referenced as a pointer: then it is a case block / tail of the function before it
                 inner = t in jumped and t not in called and t not in other
                 if cur is None or (prev and re.match(r'^(ret|retn|jmp)\b', prev) and not inner):
-                    cur = dict(name=t, seg=os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'), ins=[], mids=[], addr=None); funcs.append(cur)
+                    cur = dict(name=t, seg=cc.asm_stem(asm), ins=[], mids=[], addr=None); funcs.append(cur)
                 else: cur['mids'].append(t)
                 continue
             if cur is None: continue

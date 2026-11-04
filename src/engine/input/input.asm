@@ -32,7 +32,7 @@ global Readjoy_tail, ReadJoy2, CenterMouse, PassCompleted, assonetimer, OneTimer
 ; Input queue. The timer ISR (main_startup SampleInputTick) samples both pads every 5 ticks
 ; into joyqueue (50 records of 3 bytes) while joysampling is set. The main loop takes the
 ; frame's record with joyq_peek (-> joyrec, read by ReadJoy1/ReadJoy2) and drops it with joyq_pop.
-; C: src/c/engine/input/joyq_pop.c
+; C: src/engine/input/joyq_pop.c
 %ifdef CBUILD
 %include "c/engine/input/joyq_pop.inc"
 %else
@@ -69,7 +69,7 @@ pop ecx	; 4FD44
 pop ebx	; 4FD45
 ret	; 4FD46
 %endif ; C
-; C: src/c/engine/input/joyq_flush.c
+; C: src/engine/input/joyq_flush.c
 %ifdef CBUILD
 %include "c/engine/input/joyq_flush.inc"
 %else
@@ -83,7 +83,7 @@ mov dword [joyqtick], edx	; 4FD5A
 pop edx	; 4FD60
 ret	; 4FD61
 %endif ; C
-; C: src/c/engine/input/joyq_peek.c
+; C: src/engine/input/joyq_peek.c
 %ifdef CBUILD
 %include "c/engine/input/joyq_peek.inc"
 %else
@@ -108,7 +108,7 @@ ret	; 4FD8D
 ; lineinput: role. The PC line change box is one-button: the highlighted choice
 ; (lcsel lcline) cycles every 60 frames (lctimer) and blinks every 12 (lcblink); a press takes it
 ; through lcfound. Otherwise the player skates (doplayeracc).
-; C: src/c/engine/input/CanBlockShot.c (lineinput)
+; C: src/engine/input/CanBlockShot.c (lineinput)
 %ifdef CBUILD
 %include "c/engine/input/CanBlockShot.lineinput.inc"
 %else
@@ -217,7 +217,7 @@ jmp near CanBlockShot_ret5	; 4FF08
 %endif ; C
 ; faceoffinput: (afaceoffpl 17h, fodir1/fodir2, pf2aip). PC adds an automatic
 ; pull when temp5 runs out (SPA 7F1h) and picks the pull anim by pucktemp1.
-; C: src/c/engine/input/faceoffinput.c
+; C: src/engine/input/faceoffinput.c
 %ifdef CBUILD
 %include "c/engine/input/faceoffinput.inc"
 %else
@@ -279,7 +279,7 @@ pop ecx	; 4FFAB
 pop ebx	; 4FFAC
 ret	; 4FFAD
 %endif ; C
-; C: src/c/engine/input/Acheck.c
+; C: src/engine/input/Acheck.c
 %ifdef CBUILD
 %include "c/engine/input/Acheck.inc"
 %else
@@ -603,7 +603,7 @@ pop edx	; 50339
 pop ecx	; 5033A
 pop ebx	; 5033B
 ret	; 5033C
-; C: src/c/engine/input/CanBlockShot.c (OppInReach)
+; C: src/engine/input/CanBlockShot.c (OppInReach)
 %ifdef CBUILD
 %include "c/engine/input/CanBlockShot.OppInReach.inc"
 %else
@@ -671,7 +671,7 @@ jmp near CanBlockShot_ret6	; 503C8
 %endif ; C
 ; Holdplayer: (A button, not the puck carrier) with two PC checks first:
 ; OppInReach -> hold anim 873h; CanBlockShot -> dive (BlockShotDive); else Acheck on SortCords[impactp].
-; C: src/c/engine/input/Holdplayer.c
+; C: src/engine/input/Holdplayer.c
 %ifdef CBUILD
 %include "c/engine/input/Holdplayer.inc"
 %else
@@ -719,7 +719,7 @@ ret	; 50433
 %endif ; C
 ; lcselect: line change by number (lcrequest/lcreqchoice from the PC keys). Same tail
 ; as lcfound, but the line comes from the choice directly (+4 +6 for PP PK) instead of lchoicetab.
-; C: src/c/engine/input/lcselect.c
+; C: src/engine/input/lcselect.c
 %ifdef CBUILD
 %include "c/engine/input/lcselect.inc"
 %else
@@ -802,7 +802,7 @@ ret	; 504D9
 ; pfalock: B -> changeplayer, else the PC one-timer switch of control to passplayer
 ; puck carrier (.pc1): passmode ShotMode B setpassmode A SetLCmode C SetShotMode skate
 ; other (.notpc): A Holdplayer, B changeplayer, C burst, else skate.
-; C: src/c/engine/input/doinput.c
+; C: src/engine/input/doinput.c
 %ifdef CBUILD
 %include "c/engine/input/doinput.inc"
 %else
@@ -1144,7 +1144,7 @@ pop ecx	; 50905
 pop ebx	; 50906
 ret	; 50907
 %endif ; C
-; C: src/c/engine/input/getlchoice.c
+; C: src/engine/input/getlchoice.c
 %ifdef CBUILD
 %include "c/engine/input/getlchoice.inc"
 %else
@@ -1181,7 +1181,7 @@ pop edx	; 50972
 pop ecx	; 50973
 ret	; 50974
 %endif ; C
-; C: src/c/engine/input/lcfound.c
+; C: src/engine/input/lcfound.c
 %ifdef CBUILD
 %include "c/engine/input/lcfound.inc"
 %else
@@ -1236,7 +1236,7 @@ pop ebx	; 50A03
 ret	; 50A04
 %endif ; C
 ; ReadJoy1 ReadJoy2 = ReadJoy1/2, reading byte 0 1 of joyrec instead of the pad.
-; C: src/c/engine/input/ReadJoy1.c
+; C: src/engine/input/ReadJoy1.c
 %ifdef CBUILD
 %include "c/engine/input/ReadJoy1.inc"
 %else
@@ -1278,7 +1278,7 @@ pop ecx	; 50A81
 pop ebx	; 50A82
 ret	; 50A83
 %endif ; C
-; C: src/c/engine/input/ReadJoy1.c (ReadJoy2)
+; C: src/engine/input/ReadJoy1.c (ReadJoy2)
 %ifdef CBUILD
 %include "c/engine/input/ReadJoy1.ReadJoy2.inc"
 %else
@@ -1308,7 +1308,7 @@ mov ax, word [regd1]	; 50ACD
 mov word [lj2], ax	; 50AD3
 jmp near Readjoy_tail	; 50AD9
 %endif ; C
-; C: src/c/engine/input/CenterMouse.c
+; C: src/engine/input/CenterMouse.c
 %ifdef CBUILD
 %include "c/engine/input/CenterMouse.inc"
 %else
@@ -1327,7 +1327,7 @@ pop ecx	; 50AFB
 pop ebx	; 50AFC
 ret	; 50AFD
 %endif ; C
-; C: src/c/engine/input/PassCompleted.c
+; C: src/engine/input/PassCompleted.c
 %ifdef CBUILD
 %include "c/engine/input/PassCompleted.inc"
 %else
@@ -1584,7 +1584,7 @@ mov edx, 0DD3h	; 50E4B
 mov eax, ebx	; 50E50
 call SetSPA	; 50E52
 jmp near CanBlockShot_ret5	; 50E57
-; C: src/c/engine/input/OneTimerChk.c
+; C: src/engine/input/OneTimerChk.c
 %ifdef CBUILD
 %include "c/engine/input/OneTimerChk.inc"
 %else
@@ -1679,7 +1679,7 @@ ret	; 50F3E
 %endif ; C
 ; asspassrec: (asstab 13h, catching a pass). skatetopuck toward the pass; PC adds the
 ; one-timer (assonetimer, OneTimerChk) and the pass statistics (PassCompleted).
-; C: src/c/engine/input/CanBlockShot.c (asspassrec)
+; C: src/engine/input/CanBlockShot.c (asspassrec)
 %ifdef CBUILD
 %include "c/engine/input/CanBlockShot.asspassrec.inc"
 %else
@@ -1801,7 +1801,7 @@ jmp near CanBlockShot_ret5	; 510A4
 %endif ; C
 ; SetPenaltyStrength: Each penalized roster player (tmpdst > 0) removes one skater slot (from slot 5
 ; down): position -1, temp5 -100; tmap = skaters left.
-; C: src/c/engine/input/SetPenaltyStrength.c
+; C: src/engine/input/SetPenaltyStrength.c
 %ifdef CBUILD
 %include "c/engine/input/SetPenaltyStrength.inc"
 %else

@@ -29,7 +29,7 @@ extern word_CCEF8, word_CD4FC, word_DEE94, word_E0022, word_E0046, word_E9F12, w
 extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9, word_E9FB0
 extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
-; C: src/c/engine/replay/ReplayRecordReset.c
+; C: src/engine/replay/ReplayRecordReset.c
 %ifdef CBUILD
 %include "c/engine/replay/ReplayRecordReset.inc"
 %else
@@ -40,7 +40,7 @@ mov word [replaytick], 1	; 6756E
 mov word [replaysfx], 0FFFFh	; 67577
 ret	; 67580
 %endif ; C
-; C: src/c/engine/replay/ReplayFirstFrame.c
+; C: src/engine/replay/ReplayFirstFrame.c
 %ifdef CBUILD
 %include "c/engine/replay/ReplayFirstFrame.inc"
 %else
@@ -55,7 +55,7 @@ ret	; 67599
 mov eax, dword [recbpr]	; 6759A
 ret	; 6759F
 %endif ; C
-; C: src/c/engine/replay/ReplayPrevFrame.c
+; C: src/engine/replay/ReplayPrevFrame.c
 %ifdef CBUILD
 %include "c/engine/replay/ReplayPrevFrame.inc"
 %else

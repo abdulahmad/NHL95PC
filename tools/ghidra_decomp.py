@@ -48,7 +48,7 @@ def labels():
         if ln.startswith(';') and len(p) >= 2 and len(p[0]) == 5:
             try: out[int(p[0], 16)] = p[1]
             except ValueError: pass
-    for asm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+    for asm in cc.iter_asm():
         L = open(asm).read().split('\n')
         for k, l in enumerate(L):
             m = cc.LABEL.match(l)
@@ -62,8 +62,8 @@ def labels():
 def chk_functions():
     """{name: (address, segment, game?)} of every __CHK function"""
     out = {}
-    for asm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
-        st = os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/')
+    for asm in cc.iter_asm():
+        st = cc.asm_stem(asm)
         for n, a in c_progress.c_functions(asm).items(): out[n] = (a, st, not c_progress.is_lib(st))
     return out
 

@@ -46,7 +46,7 @@ global assshoot_ret, assfaceoff, assexit, assfaceoffpl, pucknorm_body, pucknorm,
 global RequestLineChange, SetLCmode, StartFaceoffLineChange, Endfaceoff, a2offsides, ChkTwoLinePass, a2touchpuck, puckflip
 global assrefatdot, assreffollow, SkateToSpot, CrowdOnStoppage, assrefwhistle, ass_replace_popx, ass_popx, ass_skate_temp34
 global assrefsignal, assrefgoalpa, assrefdrop, assrefgoalline, rtss, NextPathPoint, StartShootoutPath, asspenshooter
-; C: src/c/engine/logic/assboxenter.c
+; C: src/engine/logic/assboxenter.c
 %ifdef CBUILD
 %include "c/engine/logic/assboxenter.inc"
 %else
@@ -192,7 +192,7 @@ pop ecx	; 49BBF
 pop ebx	; 49BC0
 ret	; 49BC1
 %endif ; C
-; C: src/c/engine/logic/assbenchside.c
+; C: src/engine/logic/assbenchside.c
 %ifdef CBUILD
 %include "c/engine/logic/assbenchside.inc"
 %else
@@ -283,7 +283,7 @@ pop edx	; 49CDA
 pop ebx	; 49CDB
 ret	; 49CDC
 %endif ; C
-; C: src/c/engine/logic/assdefo.c
+; C: src/engine/logic/assdefo.c
 %ifdef CBUILD
 %include "c/engine/logic/assdefo.inc"
 %else
@@ -407,7 +407,7 @@ pop ecx	; 49E37
 pop ebx	; 49E38
 ret	; 49E39
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (assdefd)
+; C: src/engine/logic/assrefwhistle.c (assdefd)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.assdefd.inc"
 %else
@@ -657,7 +657,7 @@ mov eax, ebx	; 4A19A
 call check4check	; 4A19C
 jmp near ass_popx	; 4A1A1
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (asswingd)
+; C: src/engine/logic/assrefwhistle.c (asswingd)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.asswingd.inc"
 %else
@@ -786,7 +786,7 @@ mov eax, ebx	; 4A337
 call skateto	; 4A339
 jmp near ass_popx	; 4A33E
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (asswingo)
+; C: src/engine/logic/assrefwhistle.c (asswingo)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.asswingo.inc"
 %else
@@ -931,7 +931,7 @@ asswingo_evade:
 mov edx, EvadePC	; 4A530
 jmp near asswingd_skateto	; 4A535
 %endif ; C
-; C: src/c/engine/logic/asscenterd.c
+; C: src/engine/logic/asscenterd.c
 %ifdef CBUILD
 %include "c/engine/logic/asscenterd.inc"
 %else
@@ -1033,7 +1033,7 @@ pop ecx	; 4A659
 pop ebx	; 4A65A
 ret	; 4A65B
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (asscentero)
+; C: src/engine/logic/assrefwhistle.c (asscentero)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.asscentero.inc"
 %else
@@ -1159,7 +1159,7 @@ neg edi	; 4A800
 mov word [regd1], di	; 4A802
 jmp near asswingo_evade	; 4A809
 %endif ; C
-; C: src/c/engine/logic/donothing.c
+; C: src/engine/logic/donothing.c
 %ifdef CBUILD
 %include "c/engine/logic/donothing.inc"
 %else
@@ -1178,7 +1178,7 @@ call doplayeracc	; 4A82B
 pop edx	; 4A830
 ret	; 4A831
 %endif ; C
-; C: src/c/engine/logic/assstanley.c
+; C: src/engine/logic/assstanley.c
 %ifdef CBUILD
 %include "c/engine/logic/assstanley.inc"
 %else
@@ -1252,7 +1252,7 @@ pop ecx	; 4A90C
 pop ebx	; 4A90D
 ret	; 4A90E
 %endif ; C
-; C: src/c/engine/logic/assscore.c
+; C: src/engine/logic/assscore.c
 %ifdef CBUILD
 %include "c/engine/logic/assscore.inc"
 %else
@@ -1387,7 +1387,7 @@ pop ecx	; 4AABF
 pop ebx	; 4AAC0
 ret	; 4AAC1
 %endif ; C
-; C: src/c/engine/logic/asseben.c
+; C: src/engine/logic/asseben.c
 %ifdef CBUILD
 %include "c/engine/logic/asseben.inc"
 %else
@@ -1453,7 +1453,7 @@ pop ecx	; 4AB84
 pop ebx	; 4AB85
 ret	; 4AB86
 %endif ; C
-; C: src/c/engine/logic/assleaveice.c
+; C: src/engine/logic/assleaveice.c
 %ifdef CBUILD
 %include "c/engine/logic/assleaveice.inc"
 %else
@@ -1626,7 +1626,7 @@ pop ecx	; 4ADA8
 pop ebx	; 4ADA9
 ret	; 4ADAA
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (asspenalty)
+; C: src/engine/logic/assrefwhistle.c (asspenalty)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.asspenalty.inc"
 %else
@@ -1790,7 +1790,7 @@ mov word [regd1], ax	; 4AFF0
 jmp near asswingd_skate0	; 4AFF6
 %endif ; C
 ; assdopen: asstab 0Dh (player goes to the penalty box). Bumps PBnum (home) or PBnum+1 (away).
-; C: src/c/engine/logic/assdopen.c
+; C: src/engine/logic/assdopen.c
 %ifdef CBUILD
 %include "c/engine/logic/assdopen.inc"
 %else
@@ -1814,7 +1814,7 @@ mov word [byte eax+012h], 0FFFFh	; 4B025
 pop edx	; 4B02B
 ret	; 4B02C
 %endif ; C
-; C: src/c/engine/logic/assepen.c
+; C: src/engine/logic/assepen.c
 %ifdef CBUILD
 %include "c/engine/logic/assepen.inc"
 %else
@@ -1903,7 +1903,7 @@ pop ecx	; 4B129
 pop ebx	; 4B12A
 ret	; 4B12B
 %endif ; C
-; C: src/c/engine/logic/assbench.c
+; C: src/engine/logic/assbench.c
 %ifdef CBUILD
 %include "c/engine/logic/assbench.inc"
 %else
@@ -2179,7 +2179,7 @@ pop ecx	; 4B464
 pop ebx	; 4B465
 ret	; 4B466
 %endif ; C
-; C: src/c/engine/logic/GoalieToPuckVec.c
+; C: src/engine/logic/GoalieToPuckVec.c
 %ifdef CBUILD
 %include "c/engine/logic/GoalieToPuckVec.inc"
 %else
@@ -2229,7 +2229,7 @@ pop ecx	; 4B4E6
 pop ebx	; 4B4E7
 ret	; 4B4E8
 %endif ; C
-; C: src/c/engine/logic/AdjustFacingDirection.c
+; C: src/engine/logic/AdjustFacingDirection.c
 %ifdef CBUILD
 %include "c/engine/logic/AdjustFacingDirection.inc"
 %else
@@ -2318,7 +2318,7 @@ pop ecx	; 4B5BF
 pop ebx	; 4B5C0
 ret	; 4B5C1
 %endif ; C
-; C: src/c/engine/logic/assgoalietopuck.c
+; C: src/engine/logic/assgoalietopuck.c
 %ifdef CBUILD
 %include "c/engine/logic/assgoalietopuck.inc"
 %else
@@ -2442,7 +2442,7 @@ pop ecx	; 4B6F1
 pop ebx	; 4B6F2
 ret	; 4B6F3
 %endif ; C
-; C: src/c/engine/logic/ClampYPosition.c
+; C: src/engine/logic/ClampYPosition.c
 %ifdef CBUILD
 %include "c/engine/logic/ClampYPosition.inc"
 %else
@@ -3644,7 +3644,7 @@ call playeracc	; 4C627
 assgoalie_popebp:
 pop ebp	; 4C62C
 jmp near ass_popx	; 4C62D
-; C: src/c/engine/logic/assrefwhistle.c (CountPuckThreat)
+; C: src/engine/logic/assrefwhistle.c (CountPuckThreat)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.CountPuckThreat.inc"
 %else
@@ -3728,7 +3728,7 @@ jmp near ass_popx	; 4C6EE
 %endif ; C
 ; asspuckc: asstab 10h (player has the puck): checkob, chk4lc, chk4shot, chk4pass, then
 ; skateto with asspuckc_chkdir as the collision routine.
-; C: src/c/engine/logic/asspuckc.c
+; C: src/engine/logic/asspuckc.c
 %ifdef CBUILD
 %include "c/engine/logic/asspuckc.inc"
 %else
@@ -3889,7 +3889,7 @@ pop ecx	; 4C8BA
 pop ebx	; 4C8BB
 ret	; 4C8BC
 %endif ; C
-; C: src/c/engine/logic/sub_4C8BD.c
+; C: src/engine/logic/sub_4C8BD.c
 %ifdef CBUILD
 %include "c/engine/logic/sub_4C8BD.inc"
 %else
@@ -4008,7 +4008,7 @@ pop ecx	; 4C9FA
 pop ebx	; 4C9FB
 ret	; 4C9FC
 %endif ; C
-; C: src/c/engine/logic/asspuckc_chkdir.c
+; C: src/engine/logic/asspuckc_chkdir.c
 %ifdef CBUILD
 %include "c/engine/logic/asspuckc_chkdir.inc"
 %else
@@ -4270,7 +4270,7 @@ pop ecx	; 4CD48
 pop ebx	; 4CD49
 ret	; 4CD4A
 %endif ; C
-; C: src/c/engine/logic/assgoalie.c (assnearest)
+; C: src/engine/logic/assgoalie.c (assnearest)
 %ifdef CBUILD
 %include "c/engine/logic/assgoalie.assnearest.inc"
 %else
@@ -4810,7 +4810,7 @@ call check4check	; 4D3EB
 add esp, byte 0Ch	; 4D3F0
 jmp near assgoalie_popebp	; 4D3F3
 %endif ; C
-; C: src/c/engine/logic/assshoot.c
+; C: src/engine/logic/assshoot.c
 %ifdef CBUILD
 %include "c/engine/logic/assshoot.inc"
 %else
@@ -4913,7 +4913,7 @@ pop ebx	; 4D4EE
 assshoot_ret:
 ret	; 4D4EF
 %endif ; C
-; C: src/c/engine/logic/assshoot.c (assfaceoff)
+; C: src/engine/logic/assshoot.c (assfaceoff)
 %ifdef CBUILD
 %include "c/engine/logic/assshoot.assfaceoff.inc"
 %else
@@ -4925,7 +4925,7 @@ jne short assshoot_ret	; 4D4FE
 test byte [gmode2], 1	; 4D500
 jne short assshoot_ret	; 4D507
 %endif ; C
-; C: src/c/engine/logic/assshoot.c (assexit)
+; C: src/engine/logic/assshoot.c (assexit)
 %ifdef CBUILD
 %include "c/engine/logic/assshoot.assexit.inc"
 %else
@@ -4942,7 +4942,7 @@ or byte [byte eax+044h], 2	; 4D522
 pop edx	; 4D526
 ret	; 4D527
 %endif ; C
-; C: src/c/engine/logic/assfaceoffpl.c
+; C: src/engine/logic/assfaceoffpl.c
 %ifdef CBUILD
 %include "c/engine/logic/assfaceoffpl.inc"
 %else
@@ -5075,7 +5075,7 @@ pop ecx	; 4D6B1
 pop ebx	; 4D6B2
 ret	; 4D6B3
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (pucknorm_body)
+; C: src/engine/logic/assrefwhistle.c (pucknorm_body)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.pucknorm_body.inc"
 %else
@@ -5253,7 +5253,7 @@ mov eax, ebx	; 4D8BB
 call checkpuckcoll	; 4D8BD
 jmp near ass_popx	; 4D8C2
 %endif ; C
-; C: src/c/engine/logic/pucknorm.c
+; C: src/engine/logic/pucknorm.c
 %ifdef CBUILD
 %include "c/engine/logic/pucknorm.inc"
 %else
@@ -5276,14 +5276,14 @@ call pucknorm_body	; 4D8F6
 pop edx	; 4D8FB
 ret	; 4D8FC
 %endif ; C
-; C: src/c/engine/logic/pucknothing.c
+; C: src/engine/logic/pucknothing.c
 %ifdef CBUILD
 %include "c/engine/logic/pucknothing.inc"
 %else
 pucknothing:
 push dword 4	; 4D8FD
 call __CHK	; 4D902
-; C: src/c/engine/logic/puckunflip.c
+; C: src/engine/logic/puckunflip.c
 %ifdef CBUILD
 %include "c/engine/logic/puckunflip.inc"
 %else
@@ -5305,7 +5305,7 @@ pop edx	; 4D936
 ret	; 4D937
 %endif ; C
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (RequestLineChange)
+; C: src/engine/logic/assrefwhistle.c (RequestLineChange)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.RequestLineChange.inc"
 %else
@@ -5362,7 +5362,7 @@ xor edx, edx	; 4D9EF
 mov dword [dword_C585C], edx	; 4D9F1
 jmp near ass_popx	; 4D9F7
 %endif ; C
-; C: src/c/engine/logic/SetLCmode.c
+; C: src/engine/logic/SetLCmode.c
 %ifdef CBUILD
 %include "c/engine/logic/SetLCmode.inc"
 %else
@@ -5388,7 +5388,7 @@ pop edx	; 4DA34
 pop ebx	; 4DA35
 ret	; 4DA36
 %endif ; C
-; C: src/c/engine/logic/StartFaceoffLineChange.c
+; C: src/engine/logic/StartFaceoffLineChange.c
 %ifdef CBUILD
 %include "c/engine/logic/StartFaceoffLineChange.inc"
 %else
@@ -5417,7 +5417,7 @@ mov word [byte ebx+temp3], dx	; 4DA75
 pop ebx	; 4DA79
 ret	; 4DA7A
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (Endfaceoff)
+; C: src/engine/logic/assrefwhistle.c (Endfaceoff)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.Endfaceoff.inc"
 %else
@@ -5582,7 +5582,7 @@ mov eax, 0FFFFFB00h	; 4DCCD
 mov word [word_E0028], ax	; 4DCD2
 jmp near ass_popx	; 4DCD8
 %endif ; C
-; C: src/c/engine/logic/a2offsides.c
+; C: src/engine/logic/a2offsides.c
 %ifdef CBUILD
 %include "c/engine/logic/a2offsides.inc"
 %else
@@ -5621,7 +5621,7 @@ mov eax, 1	; 4DD4A
 pop edx	; 4DD4F
 ret	; 4DD50
 %endif ; C
-; C: src/c/engine/logic/ChkTwoLinePass.c
+; C: src/engine/logic/ChkTwoLinePass.c
 %ifdef CBUILD
 %include "c/engine/logic/ChkTwoLinePass.inc"
 %else
@@ -5689,7 +5689,7 @@ pop edx	; 4DE11
 pop ebx	; 4DE12
 ret	; 4DE13
 %endif ; C
-; C: src/c/engine/logic/a2touchpuck.c
+; C: src/engine/logic/a2touchpuck.c
 %ifdef CBUILD
 %include "c/engine/logic/a2touchpuck.inc"
 %else
@@ -5820,7 +5820,7 @@ pop ecx	; 4DFA1
 pop ebx	; 4DFA2
 ret	; 4DFA3
 %endif ; C
-; C: src/c/engine/logic/puckflip.c
+; C: src/engine/logic/puckflip.c
 %ifdef CBUILD
 %include "c/engine/logic/puckflip.inc"
 %else
@@ -5855,7 +5855,7 @@ pop edx	; 4DFF4
 pop ebx	; 4DFF5
 ret	; 4DFF6
 %endif ; C
-; C: src/c/engine/logic/assrefatdot.c
+; C: src/engine/logic/assrefatdot.c
 %ifdef CBUILD
 %include "c/engine/logic/assrefatdot.inc"
 %else
@@ -5918,7 +5918,7 @@ pop edx	; 4E0BA
 pop ebx	; 4E0BB
 ret	; 4E0BC
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (assreffollow)
+; C: src/engine/logic/assrefwhistle.c (assreffollow)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.assreffollow.inc"
 %else
@@ -6472,7 +6472,7 @@ pop esi	; 4E716
 pop ecx	; 4E717
 pop ebx	; 4E718
 ret	; 4E719
-; C: src/c/engine/logic/CrowdOnStoppage.c
+; C: src/engine/logic/CrowdOnStoppage.c
 %ifdef CBUILD
 %include "c/engine/logic/CrowdOnStoppage.inc"
 %else
@@ -6619,7 +6619,7 @@ pop edx	; 4E8EC
 pop ecx	; 4E8ED
 ret	; 4E8EE
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c
+; C: src/engine/logic/assrefwhistle.c
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.inc"
 %else
@@ -6767,7 +6767,7 @@ xor edx, edx	; 4EAF6
 mov eax, ebx	; 4EAF8
 call SkateToSpot	; 4EAFA
 jmp near ass_popx	; 4EAFF
-; C: src/c/engine/logic/assgoalie.c (assrefsignal)
+; C: src/engine/logic/assgoalie.c (assrefsignal)
 %ifdef CBUILD
 %include "c/engine/logic/assgoalie.assrefsignal.inc"
 %else
@@ -7571,7 +7571,7 @@ call SkateToSpot	; 4F5B2
 .64:
 add esp, byte 8	; 4F5B7
 jmp near assgoalie_popebp	; 4F5BA
-; C: src/c/engine/logic/assrefwhistle.c (assrefdrop)
+; C: src/engine/logic/assrefwhistle.c (assrefdrop)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.assrefdrop.inc"
 %else
@@ -7732,7 +7732,7 @@ mov edx, 1Eh	; 4F7C4
 mov eax, ebx	; 4F7C9
 jmp near assrefdrop.1	; 4F7CB
 %endif ; C
-; C: src/c/engine/logic/assrefwhistle.c (assrefgoalline)
+; C: src/engine/logic/assrefwhistle.c (assrefgoalline)
 %ifdef CBUILD
 %include "c/engine/logic/assrefwhistle.assrefgoalline.inc"
 %else
@@ -7882,7 +7882,7 @@ call SetSPA	; 4F981
 mov edx, 20h	; 4F986
 jmp near ass_replace_popx	; 4F98B
 %endif ; C
-; C: src/c/engine/logic/rtss.c
+; C: src/engine/logic/rtss.c
 %ifdef CBUILD
 %include "c/engine/logic/rtss.inc"
 %else
@@ -7891,7 +7891,7 @@ push dword 4	; 4F990
 call __CHK	; 4F995
 ret	; 4F99A
 %endif ; C
-; C: src/c/engine/logic/NextPathPoint.c
+; C: src/engine/logic/NextPathPoint.c
 %ifdef CBUILD
 %include "c/engine/logic/NextPathPoint.inc"
 %else
@@ -7919,7 +7919,7 @@ inc dword [sopathpoint]	; 4F9E7
 pop edx	; 4F9ED
 ret	; 4F9EE
 %endif ; C
-; C: src/c/engine/logic/StartShootoutPath.c
+; C: src/engine/logic/StartShootoutPath.c
 %ifdef CBUILD
 %include "c/engine/logic/StartShootoutPath.inc"
 %else
@@ -8002,7 +8002,7 @@ pop ecx	; 4FAE5
 pop ebx	; 4FAE6
 ret	; 4FAE7
 %endif ; C
-; C: src/c/engine/logic/asspenshooter.c
+; C: src/engine/logic/asspenshooter.c
 %ifdef CBUILD
 %include "c/engine/logic/asspenshooter.inc"
 %else

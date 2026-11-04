@@ -13,9 +13,8 @@
 #                             compiler HOCKEY.EXE was built with); the matched C is tuned for GA, so an LA build
 #                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
 #
-# C matching decompilation (docs/C_MATCHING.md): a function written in src/c/<module>/<Func>.c replaces its asm
-# block (wrapped in %ifdef CBUILD in src/cseg01/<module>.asm) when CBUILD=1. wcc386 10.0 GA (WATCOM_VER=ga,
-# default; la for 10.0 LA) runs under DOSBox (tools/cc.py); the object becomes build/c/<segment>/<Func>.inc (db + dd label fixups) and is assembled in place.
+# C matching decompilation (docs/C_MATCHING.md): a function written in src/engine/<mod>/<Func>.c (or
+# src/c/<module>/<Func>.c for folders not yet colocated) replaces its asm block when CBUILD=1.
 # Both builds must give the same sha1.
 #
 # Needs: nasm (2.15+), python3. The third-party DOS/16M loader, DOS/4GW kernel and Watcom wstub, the LE header
@@ -33,7 +32,7 @@ CBUILD     ?= $(shell $(PYTHON) tools/cc.py check && echo 1 || echo 0)
 
 # each mode has its own object tree, so switching CBUILD only reassembles what changed
 OBJDIR := build/obj$(if $(filter 1,$(CBUILD)),,0)
-SRCS := $(shell find src/cseg01 src/dseg02 -name '*.asm' | sort)
+SRCS := $(shell find src/cseg01 src/dseg02 src/engine src/front src/pc src/lib -name '*.asm' 2>/dev/null | sort)
 OBJS := $(patsubst src/%.asm,$(OBJDIR)/%.o,$(SRCS))
 INCS := $(wildcard src/inc/*.inc)
 
@@ -43,7 +42,7 @@ all: build/HOCKEY.EXE
 # C fragments the asm includes (only marked = matched functions are built)
 ifeq ($(CBUILD),1)
 NASMFLAGS += -DCBUILD -I build/
-CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/cseg01 --include='*.asm' | cut -d'"' -f2)))
+CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/cseg01 src/engine src/front src/pc --include='*.asm' 2>/dev/null | cut -d'"' -f2)))
 endif
 CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
 cinfo:
@@ -54,13 +53,18 @@ build/watcom.$(WATCOM_VER):
 	@mkdir -p build; rm -f build/watcom.*; touch $@
 
 .SECONDEXPANSION:
-.PRECIOUS: build/c/%.obj build/c/%.inc
+.PRECIOUS: build/c/%.obj build/c/%.inc build/c/engine/%.obj build/c/engine/%.inc
 build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
 	@$(PYTHON) tools/cc.py compile $< -o $@
+build/c/engine/%.obj: src/engine/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/cc.py compile $< -o $@
 # build/c/<module>/<File>.inc, or build/c/<module>/<File>.<Func>.inc for a further function of a multi-block file
-# (<module> is a path such as engine/logic: the asm is src/cseg01/<module>.asm)
+# leftover src/c: the asm is src/cseg01/<module>.asm
 build/c/%.inc: build/c/$$(basename $$*).obj $$(subst /.asm,.asm,src/cseg01/$$(dir $$*).asm) tools/cc.py tools/cobj.py | build/parts/manifest.json
 	@$(PYTHON) tools/cc.py frag src/c/$(basename $*).c $< $@
+# colocated engine: src/engine/<mod>/<mod>.asm
+build/c/engine/%.inc: build/c/engine/$$(basename $$*).obj src/engine/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/cc.py frag src/engine/$(basename $*).c $< $@
 
 # stubs + LE metadata + fixup order from your EXE (also checks its sha1)
 build/parts/manifest.json: $(HOCKEY_EXE) segmap95pc.json tools/rebuild_exe.py

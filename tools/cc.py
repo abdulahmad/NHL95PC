@@ -9,10 +9,12 @@
   python3 tools/cc.py unmark  src/c/<module>/<Func>.c [--func F]   remove the markers again (asm block stays)
   python3 tools/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
-Layout: src/c/<module>/<Func>.c (e.g. src/c/engine/hockey/SetSPA.c) replaces the block of
-src/cseg01/<stem>.asm that starts at label <Func>. In the asm the block is wrapped like this (`mark` writes it):
+Layout: a C file lives next to its module's asm (src/engine/hockey/SetSPA.c with
+src/engine/hockey/hockey.asm). Front/pc/lib still sit under src/c/ and src/cseg01/ until those
+folders are colocated. The C replaces the block of that asm that starts at label <Func>. In the
+asm the block is wrapped like this (`mark` writes it):
 
-    ; C: src/c/engine/hockey/SetSPA.c
+    ; C: src/engine/hockey/SetSPA.c
     %ifdef CBUILD
     %include "c/engine/hockey/SetSPA.inc"
     %else
@@ -58,6 +60,51 @@ CC, D4G, W32 = (os.path.join(W, x) for x in COMPILERS[VER][:3])
 CCNAME = COMPILERS[VER][3]
 INC = os.path.join(ROOT, 'src/c/include')
 FLAGS = ''
+CROOT = os.path.join(ROOT, 'src/c')
+SRC = os.path.join(ROOT, 'src')
+
+def iter_asm():
+    """code asm files: colocated src/engine|front|pc|lib plus leftover src/cseg01"""
+    seen = []
+    for pat in ('engine/**/*.asm', 'front/**/*.asm', 'pc/**/*.asm', 'lib/**/*.asm', 'cseg01/**/*.asm'):
+        for g in sorted(glob.glob(os.path.join(SRC, pat), recursive=True)):
+            if g not in seen:
+                seen.append(g)
+                yield g
+
+def asm_stem(asm):
+    """module path: engine/logic from src/engine/logic/logic.asm or src/cseg01/engine/logic.asm"""
+    asm = os.path.abspath(asm)
+    cseg = os.path.join(SRC, 'cseg01')
+    if asm.startswith(cseg + os.sep):
+        return os.path.relpath(asm, cseg)[:-4].replace(os.sep, '/')
+    rel = os.path.relpath(asm, SRC)[:-4].replace(os.sep, '/')
+    parts = rel.split('/')
+    if len(parts) >= 2 and parts[-1] == parts[-2]:
+        return '/'.join(parts[:-1])
+    return rel
+
+def find_asm(stem, seg=None):
+    """stem engine/logic -> src/engine/logic/logic.asm, else src/cseg01/engine/logic.asm"""
+    if seg:
+        stem = seg
+    name = os.path.basename(stem)
+    coloc = os.path.join(SRC, stem, name + '.asm')
+    old = os.path.join(SRC, 'cseg01', stem + '.asm')
+    if os.path.isfile(coloc):
+        return coloc
+    if os.path.isfile(old):
+        return old
+    return old
+
+def iter_c():
+    """game C files under src/c/ and colocated src/engine|front|pc/"""
+    seen = []
+    for pat in ('c/**/*.c', 'engine/**/*.c', 'front/**/*.c', 'pc/**/*.c'):
+        for g in sorted(glob.glob(os.path.join(SRC, pat), recursive=True)):
+            if g not in seen:
+                seen.append(g)
+                yield g
 
 def check():
     return all(os.path.exists(x) for x in (CC, D4G, W32)) and shutil.which('dosbox') is not None
@@ -173,21 +220,26 @@ def compile_batch_raw(items):
     finally: shutil.rmtree(work, ignore_errors=True)
 
 def c_paths(src, func=None):
-    """src/c/<stem>/<File>.c [, function F] -> (stem, F (default File), asm path, include name of F's block)"""
-    rel = os.path.relpath(os.path.abspath(src), os.path.join(ROOT, 'src/c'))
-    stem, fn = os.path.split(rel.replace(os.sep, '/'))   # stem: the module path (engine/logic)
+    """<stem>/<File>.c [, function F] -> (stem, F (default File), asm path, include name of F's block)"""
+    src = os.path.abspath(src)
+    if src.startswith(CROOT + os.sep):
+        rel = os.path.relpath(src, CROOT).replace(os.sep, '/')
+    else:
+        rel = os.path.relpath(src, SRC).replace(os.sep, '/')
+    stem, fn = os.path.split(rel)   # stem: the module path (engine/logic)
     fil = os.path.splitext(fn)[0]
     func = func or fil
     inc = 'c/%s/%s.inc' % (stem, fil) if func == fil else 'c/%s/%s.%s.inc' % (stem, fil, func)
-    asm = os.path.join(ROOT, 'src/cseg01', stem + '.asm')
+    asm = find_asm(stem)
     if func != fil:
         # a further function of the file may sit in the next asm segment (one original source file across a
         # segment split): its block is marked there (cc.py mark --func F --seg STEM)
         seg = os.environ.get('CC_SEG')
-        if seg: asm = os.path.join(ROOT, 'src/cseg01', seg + '.asm')
-        elif '%%include "%s"' % inc not in open(asm).read():
+        if seg:
+            asm = find_asm(seg)
+        elif os.path.isfile(asm) and '%%include "%s"' % inc not in open(asm).read():
             label = None
-            for g in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+            for g in iter_asm():
                 t = open(g).read()
                 if '%%include "%s"' % inc in t: asm = g; label = None; break
                 if label is None and re.search(r'(?m)^%s:' % re.escape(func), t): label = g
@@ -198,7 +250,7 @@ def file_blocks(src):
     """every marked block of this C file: {function: include name}"""
     stem, fil, asm, inc0 = c_paths(src)
     out = {}
-    for g in [asm] + sorted(x for x in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True) if x != asm):
+    for g in [asm] + [x for x in iter_asm() if x != asm]:
         t = open(g).read()
         if 'c/%s/%s' % (stem, fil) not in t: continue
         for l in t.split('\n'):
@@ -256,10 +308,12 @@ def trailing_data(L, j):
     return n
 
 def seg_end(stem):
-    for ln in open(os.path.join(ROOT, 'src/segments.txt')):
+    asm = find_asm(stem)
+    rel = os.path.relpath(asm, SRC).replace(os.sep, '/')
+    for ln in open(os.path.join(SRC, 'segments.txt')):
         if ln.startswith('#') or not ln.strip(): continue
         p = ln.split()
-        if p[5] == 'cseg01/%s.asm' % stem: return int(p[2], 16)
+        if p[5] == rel: return int(p[2], 16)
     raise SystemExit('segment %s not in src/segments.txt' % stem)
 
 def block(src, func=None):
@@ -284,7 +338,7 @@ def block(src, func=None):
     for l in L[j + 1:]:
         a = ADDR.search(l)
         if a: end = int(a.group(1), 16); break
-    if end is None: end = seg_end(os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'))
+    if end is None: end = seg_end(asm_stem(asm))
     end -= trailing_data(L, j + 1)
     if pend: labels += [(n, end) for n in pend]
     return first, end, labels, body
@@ -322,7 +376,7 @@ def asm_range(src, func=None):
     for l in L[k:]:
         a = ADDR.search(l)
         if a: return start, int(a.group(1), 16) - trailing_data(L, k)
-    return start, seg_end(os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/')) - trailing_data(L, k)
+    return start, seg_end(asm_stem(asm)) - trailing_data(L, k)
 
 def frag(src, obj, out):
     stem, fil, asm, inc = c_paths(src)
@@ -606,7 +660,7 @@ class TextTargets:
                             break
                 if len(targets) == 1:
                     ta = targets.pop()
-                    for gasm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+                    for gasm in iter_asm():
                         names = [n for n, a in global_labels(gasm).items() if a == ta]
                         if names: return names[0], ta
         if len(hits) != 1:

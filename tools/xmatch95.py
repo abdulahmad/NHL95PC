@@ -16,9 +16,10 @@ Anchors (68000 and x86 share no opcodes, so the bodies are compared through what
   constants  immediates outside the trivial ones (0, 1, 2, -1, FFh, 8, 10h ...).
 Score = 3*strings + 2*names + 1*constants (each a 0..1 overlap). `mutual` is set when the pair is each other's
 best within the unit."""
-import argparse, collections, csv, glob, math, os, re
+import argparse, collections, csv, glob, math, os, re, sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, os.path.join(ROOT, 'tools'))
 AUTO = re.compile(r'^(sub|loc|locret|byte|word|dword|unk|off|asc|stru|jpt|def|nullsub|j)_[0-9A-Fa-f]+', re.I)
 TRIVIAL = {0, 1, 2, 3, 4, 8, 0x10, 0xFF, 0xFFFF, 0xFFFFFFFF, -1, 0x7F, 0x80}
 WORD = re.compile(r"[A-Za-z][A-Za-z']{2,}")
@@ -83,7 +84,8 @@ def pc_text(lab, name, depth=1):
 def pc_funcs():
     lab = pc_data()
     funcs = {}
-    for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
+    import cc
+    for f in cc.iter_asm():
         glob_names = set()
         lines = open(f, errors='replace').read().split('\n')
         for l in lines:

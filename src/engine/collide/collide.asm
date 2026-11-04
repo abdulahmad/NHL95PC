@@ -30,7 +30,7 @@ global Bcheck, holdcheck, puckbody, PuckIChk, puckshadow, puckglue, puckgoalie, 
 global SetShotMode, ShotMode, Findhittype, deflect, shotdiradj, doshot, newcheck, checkcoll
 global checkwallcoll, checkgoal, wallcoll, wallcollb, checkplcoll, checkcx, CPgoalie, ChkGoalies
 global ReturnGoalies, ChkPullGoalieLate
-; C: src/c/engine/collide/ToFixed.c
+; C: src/engine/collide/ToFixed.c
 %ifdef CBUILD
 %include "c/engine/collide/ToFixed.inc"
 %else
@@ -40,7 +40,7 @@ call __CHK	; 53299
 shl eax, 10h	; 5329E
 ret	; 532A1
 %endif ; C
-; C: src/c/engine/collide/Sweepcheck.c
+; C: src/engine/collide/Sweepcheck.c
 %ifdef CBUILD
 %include "c/engine/collide/Sweepcheck.inc"
 %else
@@ -54,7 +54,7 @@ call SetSPA	; 532B6
 pop edx	; 532BB
 ret	; 532BC
 %endif ; C
-; C: src/c/engine/collide/checkob.c (burst)
+; C: src/engine/collide/checkob.c (burst)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.burst.inc"
 %else
@@ -114,7 +114,7 @@ jmp near checkob_ret5	; 53382
 %endif ; C
 ; BlockShotDive: eax = player, edx = dive direction from CanBlockShot. High puck or fast Zvel: SPA 14ADh /
 ; 1475h; else a sliding block. blockspd is the X speed and blockspd_y the Y speed for that facing.
-; C: src/c/engine/collide/BlockShotDive.c
+; C: src/engine/collide/BlockShotDive.c
 %ifdef CBUILD
 %include "c/engine/collide/BlockShotDive.inc"
 %else
@@ -240,7 +240,7 @@ pop ecx	; 534B8
 pop ebx	; 534B9
 ret	; 534BA
 %endif ; C
-; C: src/c/engine/collide/TryBlockShot.c
+; C: src/engine/collide/TryBlockShot.c
 %ifdef CBUILD
 %include "c/engine/collide/TryBlockShot.inc"
 %else
@@ -292,7 +292,7 @@ pop ecx	; 53534
 pop ebx	; 53535
 ret	; 53536
 %endif ; C
-; C: src/c/engine/collide/checkob.c (check4check)
+; C: src/engine/collide/checkob.c (check4check)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.check4check.inc"
 %else
@@ -404,7 +404,7 @@ mov eax, ecx	; 53693
 call TryBlockShot	; 53695
 jmp near checkob_ret5	; 5369A
 %endif ; C
-; C: src/c/engine/collide/checkagr.c
+; C: src/engine/collide/checkagr.c
 %ifdef CBUILD
 %include "c/engine/collide/checkagr.inc"
 %else
@@ -499,7 +499,7 @@ pop ecx	; 5378A
 pop ebx	; 5378B
 ret	; 5378C
 %endif ; C
-; C: src/c/engine/collide/FacingBoards.c
+; C: src/engine/collide/FacingBoards.c
 %ifdef CBUILD
 %include "c/engine/collide/FacingBoards.inc"
 %else
@@ -1086,7 +1086,7 @@ call wallcoll	; 53E62
 pop edi	; 53E67
 pop esi	; 53E68
 ret	; 53E69
-; C: src/c/engine/collide/checkint.c
+; C: src/engine/collide/checkint.c
 %ifdef CBUILD
 %include "c/engine/collide/checkint.inc"
 %else
@@ -1320,7 +1320,7 @@ pop edx	; 54130
 pop ecx	; 54131
 pop ebx	; 54132
 ret	; 54133
-; C: src/c/engine/collide/checkob.c (SkillForAnim)
+; C: src/engine/collide/checkob.c (SkillForAnim)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.SkillForAnim.inc"
 %else
@@ -1388,7 +1388,7 @@ ret	; 541C9
 %endif ; C
 ; ChkDelayedOffside: Offsides option: the flagged team touches the puck in the zone -> AddPenalty2 8 on
 ; SortCords[lasttouch], returns 1. Called from checkpuckcoll_ccx before puckstick puckgoalie.
-; C: src/c/engine/collide/ChkDelayedOffside.c
+; C: src/engine/collide/ChkDelayedOffside.c
 %ifdef CBUILD
 %include "c/engine/collide/ChkDelayedOffside.inc"
 %else
@@ -1918,7 +1918,7 @@ mov edx, ebx	; 5489E
 mov eax, ecx	; 548A0
 call puckbody	; 548A2
 jmp near PassLaneChk_ret5	; 548A7
-; C: src/c/engine/collide/checkpuckcoll.c
+; C: src/engine/collide/checkpuckcoll.c
 %ifdef CBUILD
 %include "c/engine/collide/checkpuckcoll.inc"
 %else
@@ -2001,7 +2001,7 @@ pop ecx	; 5498D
 pop ebx	; 5498E
 ret	; 5498F
 %endif ; C
-; C: src/c/engine/collide/CheckBump.c
+; C: src/engine/collide/CheckBump.c
 %ifdef CBUILD
 %include "c/engine/collide/CheckBump.inc"
 %else
@@ -2081,7 +2081,7 @@ pop ecx	; 54A50
 pop ebx	; 54A51
 ret	; 54A52
 %endif ; C
-; C: src/c/engine/collide/checkob.c (GetLowestPen)
+; C: src/engine/collide/checkob.c (GetLowestPen)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.GetLowestPen.inc"
 %else
@@ -2153,7 +2153,7 @@ jmp near checkob_ret5	; 54AF4
 ; chk4lc: (see if computer should call line change). Puck in own half below the blue line,
 ; 1 in 4, not pflags2 bit 3; PC adds clock penalty checks (GetLowestPen). Then CompLine, setpersonel and
 ; chk4lc_shoot: CompShoot dumps the puck. Returns 1 when it did.
-; C: src/c/engine/collide/checkob.c (chk4lc)
+; C: src/engine/collide/checkob.c (chk4lc)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.chk4lc.inc"
 %else
@@ -2385,7 +2385,7 @@ pop esi	; 54D5F
 pop ecx	; 54D60
 pop ebx	; 54D61
 ret	; 54D62
-; C: src/c/engine/collide/ScatterPass.c
+; C: src/engine/collide/ScatterPass.c
 %ifdef CBUILD
 %include "c/engine/collide/ScatterPass.inc"
 %else
@@ -2692,7 +2692,7 @@ add esp, byte 0Ch	; 55145
 dopass_ret6:
 pop ebp	; 55148
 jmp near checkob_ret5	; 55149
-; C: src/c/engine/collide/passmode.c
+; C: src/engine/collide/passmode.c
 %ifdef CBUILD
 %include "c/engine/collide/passmode.inc"
 %else
@@ -2723,7 +2723,7 @@ call dopass	; 551A8
 pop edx	; 551AD
 ret	; 551AE
 %endif ; C
-; C: src/c/engine/collide/setpassmode.c
+; C: src/engine/collide/setpassmode.c
 %ifdef CBUILD
 %include "c/engine/collide/setpassmode.inc"
 %else
@@ -2966,7 +2966,7 @@ add esp, byte 1Ch	; 5548B
 jmp near checkob_ret5	; 5548E
 ; chk4pass: (computer looks for a good pass): threat spodds roll, target by vtoa
 ; (PassLaneChk), dopass, assexit.
-; C: src/c/engine/collide/checkob.c (chk4pass)
+; C: src/engine/collide/checkob.c (chk4pass)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.chk4pass.inc"
 %else
@@ -3243,7 +3243,7 @@ jmp near checkob_ret5	; 557FF
 %endif ; C
 ; chk4shot: (computer looks for a shot). regd4 = 20h - spodds; shot lane test; jumps to
 ; chk4lc_shoot (CompShoot) to shoot.
-; C: src/c/engine/collide/checkob.c (chk4shot)
+; C: src/engine/collide/checkob.c (chk4shot)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.chk4shot.inc"
 %else
@@ -3410,7 +3410,7 @@ jne short chk4shot.14	; 55A2E
 jmp near chk4lc_shoot	; 55A30
 %endif ; C
 ; CompShoot: temp2 = swing time (E8h - pucky by pfgoal) 8, max 14h; assreplace ashoot (12h).
-; C: src/c/engine/collide/CompShoot.c
+; C: src/engine/collide/CompShoot.c
 %ifdef CBUILD
 %include "c/engine/collide/CompShoot.inc"
 %else
@@ -3446,7 +3446,7 @@ ret	; 55A9E
 %endif ; C
 ; ChkOffsides: ClearOffsidesIfAllPlayers. Offsides option (gameopts bit 1): a team's
 ; offsides flag (tmflags bit 4) is cleared once none of its skaters is past the blue line (4Eh).
-; C: src/c/engine/collide/checkob.c (ChkOffsides)
+; C: src/engine/collide/checkob.c (ChkOffsides)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.ChkOffsides.inc"
 %else
@@ -3585,7 +3585,7 @@ dec si	; 55C66
 jne short ChkOffsides.18	; 55C68
 jmp near checkob_ret5	; 55C6A
 %endif ; C
-; C: src/c/engine/collide/MarkTwoLinePlayers.c
+; C: src/engine/collide/MarkTwoLinePlayers.c
 %ifdef CBUILD
 %include "c/engine/collide/MarkTwoLinePlayers.inc"
 %else
@@ -3655,7 +3655,7 @@ ret	; 55D27
 %endif ; C
 ; ChkShotStat: If the shot flag (gmode2 bit 4) was set: clear it, crowdlevel +100,
 ; shot counts for the shooter and the goalie.
-; C: src/c/engine/collide/checkob.c (ChkShotStat)
+; C: src/engine/collide/checkob.c (ChkShotStat)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.ChkShotStat.inc"
 %else
@@ -3749,7 +3749,7 @@ jmp near checkob_ret5	; 55E6D
 %endif ; C
 ; setInjuryType: Player unavailable (pflags2 bit 2), crowd up, sfx A1h, camera locked
 ; on him (xc1/yc1, sfslock).
-; C: src/c/engine/collide/checkob.c (setInjuryType)
+; C: src/engine/collide/checkob.c (setInjuryType)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.setInjuryType.inc"
 %else
@@ -4106,7 +4106,7 @@ add esp, byte 0Ch	; 562D3
 jmp near PassLaneChk_ret5	; 562D6
 ; FallDown: A player falls after a hit: fall animation, newcheck, injury (setInjuryType),
 ; penalty roll (checkagr AddPenalty2).
-; C: src/c/engine/collide/FallDown.c
+; C: src/engine/collide/FallDown.c
 %ifdef CBUILD
 %include "c/engine/collide/FallDown.inc"
 %else
@@ -4663,7 +4663,7 @@ pop ecx	; 56A51
 pop ebx	; 56A52
 ret	; 56A53
 %endif ; C
-; C: src/c/engine/collide/Bcheck.c
+; C: src/engine/collide/Bcheck.c
 %ifdef CBUILD
 %include "c/engine/collide/Bcheck.inc"
 %else
@@ -4759,7 +4759,7 @@ pop ecx	; 56B76
 pop ebx	; 56B77
 ret	; 56B78
 %endif ; C
-; C: src/c/engine/collide/holdcheck.c
+; C: src/engine/collide/holdcheck.c
 %ifdef CBUILD
 %include "c/engine/collide/holdcheck.inc"
 %else
@@ -4884,7 +4884,7 @@ pop ecx	; 56D03
 pop ebx	; 56D04
 ret	; 56D05
 %endif ; C
-; C: src/c/engine/collide/puckbody.c
+; C: src/engine/collide/puckbody.c
 %ifdef CBUILD
 %include "c/engine/collide/puckbody.inc"
 %else
@@ -4999,7 +4999,7 @@ ret	; 56E51
 %endif ; C
 ; PuckIChk: (icing). iflags bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; loose puck past the goal
 ; line: |puckx| > 2Ch sets ifcgl (icing), else clears ifok.
-; C: src/c/engine/collide/PuckIChk.c
+; C: src/engine/collide/PuckIChk.c
 %ifdef CBUILD
 %include "c/engine/collide/PuckIChk.inc"
 %else
@@ -5048,7 +5048,7 @@ or byte [iflags], 1	; 56EC6
 pop ebx	; 56ECD
 ret	; 56ECE
 %endif ; C
-; C: src/c/engine/collide/puckshadow.c
+; C: src/engine/collide/puckshadow.c
 %ifdef CBUILD
 %include "c/engine/collide/puckshadow.inc"
 %else
@@ -5094,7 +5094,7 @@ dec word [byte eax+0Ah]	; 56F54
 pop edx	; 56F58
 ret	; 56F59
 %endif ; C
-; C: src/c/engine/collide/puckglue.c
+; C: src/engine/collide/puckglue.c
 %ifdef CBUILD
 %include "c/engine/collide/puckglue.inc"
 %else
@@ -5191,7 +5191,7 @@ pop ecx	; 57093
 pop ebx	; 57094
 ret	; 57095
 %endif ; C
-; C: src/c/engine/collide/puckgoalie.c
+; C: src/engine/collide/puckgoalie.c
 %ifdef CBUILD
 %include "c/engine/collide/puckgoalie.inc"
 %else
@@ -5504,7 +5504,7 @@ pop ecx	; 57480
 pop ebx	; 57481
 ret	; 57482
 %endif ; C
-; C: src/c/engine/collide/PassLaneChk.c (puckstick)
+; C: src/engine/collide/PassLaneChk.c (puckstick)
 %ifdef CBUILD
 %include "c/engine/collide/PassLaneChk.puckstick.inc"
 %else
@@ -5795,7 +5795,7 @@ mov eax, ebp	; 57862
 call deflect	; 57864
 jmp near PassLaneChk_ret5a	; 57869
 %endif ; C
-; C: src/c/engine/collide/SetShotMode.c
+; C: src/engine/collide/SetShotMode.c
 %ifdef CBUILD
 %include "c/engine/collide/SetShotMode.inc"
 %else
@@ -5843,7 +5843,7 @@ pop ecx	; 578F7
 pop ebx	; 578F8
 ret	; 578F9
 %endif ; C
-; C: src/c/engine/collide/ShotMode.c
+; C: src/engine/collide/ShotMode.c
 %ifdef CBUILD
 %include "c/engine/collide/ShotMode.inc"
 %else
@@ -5954,7 +5954,7 @@ pop ecx	; 579FC
 pop ebx	; 579FD
 ret	; 579FE
 %endif ; C
-; C: src/c/engine/collide/Findhittype.c
+; C: src/engine/collide/Findhittype.c
 %ifdef CBUILD
 %include "c/engine/collide/Findhittype.inc"
 %else
@@ -5985,7 +5985,7 @@ xor ah, ah	; 57A3A
 pop ecx	; 57A3C
 ret	; 57A3D
 %endif ; C
-; C: src/c/engine/collide/deflect.c
+; C: src/engine/collide/deflect.c
 %ifdef CBUILD
 %include "c/engine/collide/deflect.inc"
 %else
@@ -6528,7 +6528,7 @@ call assreplace	; 58077
 .40:
 add esp, byte 14h	; 5807C
 jmp near dopass_ret6	; 5807F
-; C: src/c/engine/collide/newcheck.c
+; C: src/engine/collide/newcheck.c
 %ifdef CBUILD
 %include "c/engine/collide/newcheck.inc"
 %else
@@ -6571,7 +6571,7 @@ ret	; 580F4
 %endif ; C
 ; checkcoll: eax = object: wall collision (checkwallcoll) at the hot spot and the stick end,
 ; then player collisions (checkplcoll). Called from updateplayers.
-; C: src/c/engine/collide/checkcoll.c
+; C: src/engine/collide/checkcoll.c
 %ifdef CBUILD
 %include "c/engine/collide/checkcoll.inc"
 %else
@@ -7331,7 +7331,7 @@ cmp word [byte ebx+010h], byte 0	; 58B69
 jle near dopass_ret6	; 58B6E
 mov word [byte ebx+010h], 0	; 58B74
 jmp near dopass_ret6	; 58B7A
-; C: src/c/engine/collide/wallcollb.c
+; C: src/engine/collide/wallcollb.c
 %ifdef CBUILD
 %include "c/engine/collide/wallcollb.inc"
 %else
@@ -7819,7 +7819,7 @@ pop ebp	; 591C3
 pop edi	; 591C4
 pop esi	; 591C5
 ret	; 591C6
-; C: src/c/engine/collide/CPgoalie.c
+; C: src/engine/collide/CPgoalie.c
 %ifdef CBUILD
 %include "c/engine/collide/CPgoalie.inc"
 %else
@@ -7872,7 +7872,7 @@ pop ecx	; 59263
 ret	; 59264
 %endif ; C
 ; ChkGoalies: (computer pulls goalie on delayed penalty), once a second from periodicevents.
-; C: src/c/engine/collide/ChkGoalies.c
+; C: src/engine/collide/ChkGoalies.c
 %ifdef CBUILD
 %include "c/engine/collide/ChkGoalies.inc"
 %else
@@ -7953,7 +7953,7 @@ pop ebx	; 59350
 ret	; 59351
 %endif ; C
 ; ReturnGoalies: (computer returns a pulled goalie), from puckfaceoff.
-; C: src/c/engine/collide/checkob.c (ReturnGoalies)
+; C: src/engine/collide/checkob.c (ReturnGoalies)
 %ifdef CBUILD
 %include "c/engine/collide/checkob.ReturnGoalies.inc"
 %else
@@ -8011,7 +8011,7 @@ cmp cx, byte 2	; 593EA
 jl short ReturnGoalies.1	; 593EE
 jmp near checkob_ret5a	; 593F0
 %endif ; C
-; C: src/c/engine/collide/ChkPullGoalieLate.c
+; C: src/engine/collide/ChkPullGoalieLate.c
 %ifdef CBUILD
 %include "c/engine/collide/ChkPullGoalieLate.inc"
 %else

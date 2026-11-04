@@ -35,7 +35,7 @@ global GetPeriodTimeRemaining, AddPenalty, AddPenalty2, SetPA, InProgress, InPro
 global chkprogress_x, Stop4Pen, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut, updatePPTeamTime
 global updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot, ShotLaneOpen
 global QuickShotChk, CountShotOnGoal, StartPenaltyShot, EndPenaltyShot
-; C: src/c/engine/penalty/GetPeriodTimeRemaining.c
+; C: src/engine/penalty/GetPeriodTimeRemaining.c
 %ifdef CBUILD
 %include "c/engine/penalty/GetPeriodTimeRemaining.inc"
 %else
@@ -48,7 +48,7 @@ add ax, word [PerTimeTotal]	; 62CEA
 sub ax, word [gameclock]	; 62CF1
 ret	; 62CF8
 %endif ; C
-; C: src/c/engine/penalty/AddPenalty.c
+; C: src/engine/penalty/AddPenalty.c
 %ifdef CBUILD
 %include "c/engine/penalty/AddPenalty.inc"
 %else
@@ -95,7 +95,7 @@ call AddPenalty2	; 62D79
 pop ebx	; 62D7E
 ret	; 62D7F
 %endif ; C
-; C: src/c/engine/penalty/AddPenalty2.c
+; C: src/engine/penalty/AddPenalty2.c
 %ifdef CBUILD
 %include "c/engine/penalty/AddPenalty2.inc"
 %else
@@ -189,7 +189,7 @@ pop ecx	; 62E9F
 pop ebx	; 62EA0
 ret	; 62EA1
 %endif ; C
-; C: src/c/engine/penalty/SetPA.c
+; C: src/engine/penalty/SetPA.c
 %ifdef CBUILD
 %include "c/engine/penalty/SetPA.inc"
 %else
@@ -656,7 +656,7 @@ pop edx	; 63471
 pop ecx	; 63472
 pop ebx	; 63473
 ret	; 63474
-; C: src/c/engine/penalty/InProgress.c (chkprogress_go)
+; C: src/engine/penalty/InProgress.c (chkprogress_go)
 %ifdef CBUILD
 %include "c/engine/penalty/InProgress.chkprogress_go.inc"
 %else
@@ -711,7 +711,7 @@ pop edx	; 63540
 pop ebx	; 63541
 ret	; 63542
 %endif ; C
-; C: src/c/engine/penalty/Stop4Pen.c
+; C: src/engine/penalty/Stop4Pen.c
 %ifdef CBUILD
 %include "c/engine/penalty/Stop4Pen.inc"
 %else
@@ -881,7 +881,7 @@ pop esi	; 637B2
 pop edx	; 637B3
 ret	; 637B4
 %endif ; C
-; C: src/c/engine/penalty/checkfornewpen.c
+; C: src/engine/penalty/checkfornewpen.c
 %ifdef CBUILD
 %include "c/engine/penalty/checkfornewpen.inc"
 %else
@@ -989,7 +989,7 @@ pop ecx	; 63927
 pop ebx	; 63928
 ret	; 63929
 %endif ; C
-; C: src/c/engine/penalty/releasepl.c
+; C: src/engine/penalty/releasepl.c
 %ifdef CBUILD
 %include "c/engine/penalty/releasepl.inc"
 %else
@@ -1027,7 +1027,7 @@ pop ecx	; 639A1
 pop ebx	; 639A2
 ret	; 639A3
 %endif ; C
-; C: src/c/engine/penalty/chkatop.c
+; C: src/engine/penalty/chkatop.c
 %ifdef CBUILD
 %include "c/engine/penalty/chkatop.inc"
 %else
@@ -1065,7 +1065,7 @@ inc word [byte eax+tmATOP]	; 639F3
 pop edx	; 639F7
 ret	; 639F8
 %endif ; C
-; C: src/c/engine/penalty/updatepentime_ut_chk.c
+; C: src/engine/penalty/updatepentime_ut_chk.c
 %ifdef CBUILD
 %include "c/engine/penalty/updatepentime_ut_chk.inc"
 %else
@@ -1094,7 +1094,7 @@ pop ecx	; 63A34
 pop ebx	; 63A35
 ret	; 63A36
 %endif ; C
-; C: src/c/engine/penalty/InProgress.c (updatepentime_ut)
+; C: src/engine/penalty/InProgress.c (updatepentime_ut)
 %ifdef CBUILD
 %include "c/engine/penalty/InProgress.updatepentime_ut.inc"
 %else
@@ -1193,7 +1193,7 @@ call updatepentime_ut_chk	; 63B4A
 add esp, byte 4	; 63B4F
 jmp near InProgress_popx	; 63B52
 %endif ; C
-; C: src/c/engine/penalty/updatePPTeamTime.c
+; C: src/engine/penalty/updatePPTeamTime.c
 %ifdef CBUILD
 %include "c/engine/penalty/updatePPTeamTime.inc"
 %else
@@ -1214,7 +1214,7 @@ inc word [byte eax+08h]	; 63B80
 .x:
 ret	; 63B84
 %endif ; C
-; C: src/c/engine/penalty/updatepentime.c
+; C: src/engine/penalty/updatepentime.c
 %ifdef CBUILD
 %include "c/engine/penalty/updatepentime.inc"
 %else
@@ -1248,7 +1248,7 @@ call updatepentime_ut	; 63BF1
 pop edx	; 63BF6
 ret	; 63BF7
 %endif ; C
-; C: src/c/engine/penalty/InProgress.c (PenaltyManager)
+; C: src/engine/penalty/InProgress.c (PenaltyManager)
 %ifdef CBUILD
 %include "c/engine/penalty/InProgress.PenaltyManager.inc"
 %else
@@ -1288,7 +1288,7 @@ pop edx	; 63C70
 pop ebx	; 63C71
 ret	; 63C72
 %endif ; C
-; C: src/c/engine/penalty/UpdatePowerPlayFlags.c
+; C: src/engine/penalty/UpdatePowerPlayFlags.c
 %ifdef CBUILD
 %include "c/engine/penalty/UpdatePowerPlayFlags.inc"
 %else
@@ -1361,7 +1361,7 @@ pop ecx	; 63D39
 pop ebx	; 63D3A
 ret	; 63D3B
 %endif ; C
-; C: src/c/engine/penalty/ClearPenaltyBuffer.c
+; C: src/engine/penalty/ClearPenaltyBuffer.c
 %ifdef CBUILD
 %include "c/engine/penalty/ClearPenaltyBuffer.inc"
 %else
@@ -1545,7 +1545,7 @@ or byte [awtmflags], 1	; 63F63
 .20:
 add esp, byte 4	; 63F6A
 jmp near InProgress_popebp	; 63F6D
-; C: src/c/engine/penalty/SetupPenaltyShot.c
+; C: src/engine/penalty/SetupPenaltyShot.c
 %ifdef CBUILD
 %include "c/engine/penalty/SetupPenaltyShot.inc"
 %else
@@ -1652,7 +1652,7 @@ pop edx	; 640FF
 pop ebx	; 64100
 ret	; 64101
 %endif ; C
-; C: src/c/engine/penalty/InProgress.c (ShotLaneOpen)
+; C: src/engine/penalty/InProgress.c (ShotLaneOpen)
 %ifdef CBUILD
 %include "c/engine/penalty/InProgress.ShotLaneOpen.inc"
 %else
@@ -1795,7 +1795,7 @@ mov eax, esi	; 64275
 add esp, byte 8	; 64277
 jmp near InProgress_popebp	; 6427A
 %endif ; C
-; C: src/c/engine/penalty/QuickShotChk.c
+; C: src/engine/penalty/QuickShotChk.c
 %ifdef CBUILD
 %include "c/engine/penalty/QuickShotChk.inc"
 %else
@@ -1869,7 +1869,7 @@ pop edx	; 64335
 pop ebx	; 64336
 ret	; 64337
 %endif ; C
-; C: src/c/engine/penalty/CountShotOnGoal.c
+; C: src/engine/penalty/CountShotOnGoal.c
 %ifdef CBUILD
 %include "c/engine/penalty/CountShotOnGoal.inc"
 %else
@@ -1906,7 +1906,7 @@ mov eax, edx	; 64394
 pop edx	; 64396
 ret	; 64397
 %endif ; C
-; C: src/c/engine/penalty/StartPenaltyShot.c
+; C: src/engine/penalty/StartPenaltyShot.c
 %ifdef CBUILD
 %include "c/engine/penalty/StartPenaltyShot.inc"
 %else
@@ -1952,7 +1952,7 @@ pop esi	; 64436
 pop ebx	; 64437
 ret	; 64438
 %endif ; C
-; C: src/c/engine/penalty/EndPenaltyShot.c
+; C: src/engine/penalty/EndPenaltyShot.c
 %ifdef CBUILD
 %include "c/engine/penalty/EndPenaltyShot.inc"
 %else

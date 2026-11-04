@@ -24,7 +24,7 @@ extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vt
 extern word_CBEC6, word_DF644, word_DF744, word_DF746, word_DF816, word_DF81A, word_E0022, word_E0028
 extern word_E002A, xc1, yc1, yleader
 global StartHL2
-; C: src/c/engine/frame/StartHL2.c
+; C: src/engine/frame/StartHL2.c
 %ifdef CBUILD
 %include "c/engine/frame/StartHL2.inc"
 %else

@@ -19,6 +19,7 @@ import os, re, sys, glob
 from collections import defaultdict, Counter
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
+import cc
 from link_src import read_elf
 INC = os.path.join(ROOT, 'src/c/include')
 CKEYWORDS = set('auto break case char const continue default do double else enum extern float for goto if int long '
@@ -101,7 +102,7 @@ def access_stats(lab):
     """per label: Counter of (width, signed?) for exact accesses, and whether indexed/offset"""
     st = defaultdict(Counter); arr = set()
     tok = re.compile(r'\b([A-Za-z_][\w$?@]*)\b')
-    for f in glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True):
+    for f in cc.iter_asm():
         prev = None
         for ln in open(f):
             s = ln.split(';')[0].strip()

@@ -8,8 +8,8 @@ sys.path.insert(0,'tools')
 import c_progress as cp, cc
 done={r['function'] for r in csv.DictReader(open('tools/c_functions.csv'))}
 out=[]
-for f in sorted(glob.glob('src/cseg01/**/*.asm', recursive=True)):
-    stem=os.path.relpath(f,'src/cseg01')[:-4]
+for f in cc.iter_asm():
+    stem=cc.asm_stem(f)
     if cp.is_lib(stem): continue
     L=open(f).read().split('\n')
     labs=[]

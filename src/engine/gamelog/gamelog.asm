@@ -34,7 +34,7 @@ extern word_CD39C, word_DB08A, word_DEE94, word_DF644, word_E9AAE, word_E9B2C, y
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
 global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote
-; C: src/c/engine/gamelog/SetRinkObject.c
+; C: src/engine/gamelog/SetRinkObject.c
 %ifdef CBUILD
 %include "c/engine/gamelog/SetRinkObject.inc"
 %else
@@ -97,7 +97,7 @@ pop ecx	; 61573
 pop ebx	; 61574
 ret	; 61575
 %endif ; C
-; C: src/c/engine/gamelog/SetBoxDoorObject.c
+; C: src/engine/gamelog/SetBoxDoorObject.c
 %ifdef CBUILD
 %include "c/engine/gamelog/SetBoxDoorObject.inc"
 %else
@@ -118,7 +118,7 @@ call SetRinkObject	; 6159B
 pop edx	; 615A0
 ret	; 615A1
 %endif ; C
-; C: src/c/engine/gamelog/DecayCrowdLevel.c
+; C: src/engine/gamelog/DecayCrowdLevel.c
 %ifdef CBUILD
 %include "c/engine/gamelog/DecayCrowdLevel.inc"
 %else
@@ -354,7 +354,7 @@ pop ecx	; 6185F
 pop ebx	; 61860
 ret	; 61861
 %endif ; C
-; C: src/c/engine/gamelog/DecayCrowdLevel.c (DrawRinkObjects)
+; C: src/engine/gamelog/DecayCrowdLevel.c (DrawRinkObjects)
 %ifdef CBUILD
 %include "c/engine/gamelog/DecayCrowdLevel.DrawRinkObjects.inc"
 %else
@@ -479,7 +479,7 @@ mov esp, ebp	; 619C0
 pop ebp	; 619C2
 jmp near sfxslots_popx	; 619C3
 %endif ; C
-; C: src/c/engine/gamelog/QueueDeferredCall.c
+; C: src/engine/gamelog/QueueDeferredCall.c
 %ifdef CBUILD
 %include "c/engine/gamelog/QueueDeferredCall.inc"
 %else
@@ -506,7 +506,7 @@ inc dword [defercount]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
 %endif ; C
-; C: src/c/engine/gamelog/RunDeferredCalls.c
+; C: src/engine/gamelog/RunDeferredCalls.c
 %ifdef CBUILD
 %include "c/engine/gamelog/RunDeferredCalls.inc"
 %else
@@ -550,7 +550,7 @@ pop ecx	; 61A87
 pop ebx	; 61A88
 ret	; 61A89
 %endif ; C
-; C: src/c/engine/gamelog/AppendGSumRecord.c
+; C: src/engine/gamelog/AppendGSumRecord.c
 %ifdef CBUILD
 %include "c/engine/gamelog/AppendGSumRecord.inc"
 %else
@@ -635,7 +635,7 @@ pop ecx	; 61B82
 pop ebx	; 61B83
 ret	; 61B84
 %endif ; C
-; C: src/c/engine/gamelog/FlushGSumQueue.c
+; C: src/engine/gamelog/FlushGSumQueue.c
 %ifdef CBUILD
 %include "c/engine/gamelog/FlushGSumQueue.inc"
 %else
@@ -664,7 +664,7 @@ pop edx	; 61BBC
 pop ecx	; 61BBD
 ret	; 61BBE
 %endif ; C
-; C: src/c/engine/gamelog/ReadGSumHeader.c
+; C: src/engine/gamelog/ReadGSumHeader.c
 %ifdef CBUILD
 %include "c/engine/gamelog/ReadGSumHeader.inc"
 %else
@@ -705,7 +705,7 @@ pop ecx	; 61C1F
 pop ebx	; 61C20
 ret	; 61C21
 %endif ; C
-; C: src/c/engine/gamelog/ReadGSumHeader.c (ReadGSumTail)
+; C: src/engine/gamelog/ReadGSumHeader.c (ReadGSumTail)
 %ifdef CBUILD
 %include "c/engine/gamelog/ReadGSumHeader.ReadGSumTail.inc"
 %else
@@ -740,7 +740,7 @@ mov ebx, 0FFFFFFFFh	; 61C77
 mov edx, unk_C542E	; 61C7C
 jmp near fileio_tail_a	; 61C81
 %endif ; C
-; C: src/c/engine/gamelog/ReadGSumHeader.c (WriteGSumHeader)
+; C: src/engine/gamelog/ReadGSumHeader.c (WriteGSumHeader)
 %ifdef CBUILD
 %include "c/engine/gamelog/ReadGSumHeader.WriteGSumHeader.inc"
 %else
@@ -802,7 +802,7 @@ je near fileio_tail_c	; 61D38
 push str_B8	; 61D3E
 jmp near fileio_tail_b	; 61D43
 %endif ; C
-; C: src/c/engine/gamelog/FormatPlayerName.c
+; C: src/engine/gamelog/FormatPlayerName.c
 %ifdef CBUILD
 %include "c/engine/gamelog/FormatPlayerName.inc"
 %else
@@ -929,7 +929,7 @@ pop edi	; 61E94
 pop esi	; 61E95
 ret 8	; 61E96
 %endif ; C
-; C: src/c/engine/gamelog/BuildEventLines.c
+; C: src/engine/gamelog/BuildEventLines.c
 %ifdef CBUILD
 %include "c/engine/gamelog/BuildEventLines.inc"
 %else
@@ -1305,7 +1305,7 @@ add esp, byte 8	; 62338
 add esp, byte 0Ch	; 6233B
 jmp near fileio_popebpx	; 6233E
 %endif ; C
-; C: src/c/engine/gamelog/PostGoalEvent.c
+; C: src/engine/gamelog/PostGoalEvent.c
 %ifdef CBUILD
 %include "c/engine/gamelog/PostGoalEvent.inc"
 %else
@@ -1416,7 +1416,7 @@ pop edi	; 624B4
 pop esi	; 624B5
 ret 0Ch	; 624B6
 %endif ; C
-; C: src/c/engine/gamelog/PostPenaltyEvent.c
+; C: src/engine/gamelog/PostPenaltyEvent.c
 %ifdef CBUILD
 %include "c/engine/gamelog/PostPenaltyEvent.inc"
 %else
@@ -1627,7 +1627,7 @@ pop edi	; 6275F
 pop esi	; 62760
 ret 0Ch	; 62761
 %endif ; C
-; C: src/c/engine/gamelog/PostInjuryEvent.c
+; C: src/engine/gamelog/PostInjuryEvent.c
 %ifdef CBUILD
 %include "c/engine/gamelog/PostInjuryEvent.inc"
 %else
@@ -1675,7 +1675,7 @@ pop edi	; 627F3
 pop esi	; 627F4
 ret 0Ch	; 627F5
 %endif ; C
-; C: src/c/engine/gamelog/PostInjuryEvent.c (NullCallback0C)
+; C: src/engine/gamelog/PostInjuryEvent.c (NullCallback0C)
 %ifdef CBUILD
 %include "c/engine/gamelog/PostInjuryEvent.NullCallback0C.inc"
 %else
@@ -2029,7 +2029,7 @@ mov word [ovltimer], 0FFFFh	; 62C26
 .17:
 add esp, byte 4	; 62C2F
 jmp near fileio_popebpx	; 62C32
-; C: src/c/engine/gamelog/QueueGoalieNote.c
+; C: src/engine/gamelog/QueueGoalieNote.c
 %ifdef CBUILD
 %include "c/engine/gamelog/QueueGoalieNote.inc"
 %else

@@ -26,7 +26,7 @@ global TakePlayerFromBox, TakePlayerFromBox_ret6, TakePlayerFromBox_ret5, PenSho
 global puckfaceoff, puckfaceoff2, assbenchwait, asstakeposition, check4bench, asspsclear, assrefpenshot
 ; TakePlayerFromBox: Sort object eax takes the first roster player whose status is 7 (penalty over):
 ; leaves the box (SPA 7BFh, temp1 5Ah), roster status 3, tmpdst -2.
-; C: src/c/engine/faceoff/TakePlayerFromBox.c
+; C: src/engine/faceoff/TakePlayerFromBox.c
 %ifdef CBUILD
 %include "c/engine/faceoff/TakePlayerFromBox.inc"
 %else
@@ -94,7 +94,7 @@ pop ecx	; 511B1
 pop ebx	; 511B2
 ret	; 511B3
 %endif ; C
-; C: src/c/engine/faceoff/TakePlayerFromBox.c (PenShotStart)
+; C: src/engine/faceoff/TakePlayerFromBox.c (PenShotStart)
 %ifdef CBUILD
 %include "c/engine/faceoff/TakePlayerFromBox.PenShotStart.inc"
 %else
@@ -159,7 +159,7 @@ pop ecx	; 5125C
 pop ebx	; 5125D
 ret	; 5125E
 %endif ; C
-; C: src/c/engine/faceoff/ForceStartLineup.c
+; C: src/engine/faceoff/ForceStartLineup.c
 %ifdef CBUILD
 %include "c/engine/faceoff/ForceStartLineup.inc"
 %else
@@ -186,7 +186,7 @@ ret	; 512A6
 %endif ; C
 ; PenShotAssign: penalty shot set-up: shooter (penshotplayer) -> assignment 27h, other skaters -> 2Dh
 ; (asspsclear: wait by the side boards).
-; C: src/c/engine/faceoff/PenShotAssign.c
+; C: src/engine/faceoff/PenShotAssign.c
 %ifdef CBUILD
 %include "c/engine/faceoff/PenShotAssign.inc"
 %else
@@ -327,7 +327,7 @@ pop ecx	; 5143D
 pop ebx	; 5143E
 ret	; 5143F
 %endif ; C
-; C: src/c/engine/faceoff/AllInPlace.c
+; C: src/engine/faceoff/AllInPlace.c
 %ifdef CBUILD
 %include "c/engine/faceoff/AllInPlace.inc"
 %else
@@ -359,7 +359,7 @@ pop edx	; 5147A
 pop ebx	; 5147B
 ret	; 5147C
 %endif ; C
-; C: src/c/engine/faceoff/assleavebox.c
+; C: src/engine/faceoff/assleavebox.c
 %ifdef CBUILD
 %include "c/engine/faceoff/assleavebox.inc"
 %else
@@ -1622,7 +1622,7 @@ jmp near TakePlayerFromBox_ret6	; 526DC
 mov eax, esi	; 526E1
 call Endfaceoff	; 526E3
 jmp near TakePlayerFromBox_ret6	; 526E8
-; C: src/c/engine/faceoff/assbenchwait.c
+; C: src/engine/faceoff/assbenchwait.c
 %ifdef CBUILD
 %include "c/engine/faceoff/assbenchwait.inc"
 %else
@@ -1644,7 +1644,7 @@ mov word [byte edx+02Eh], 0	; 52718
 pop edx	; 5271E
 ret	; 5271F
 %endif ; C
-; C: src/c/engine/faceoff/TakePlayerFromBox.c (asstakeposition)
+; C: src/engine/faceoff/TakePlayerFromBox.c (asstakeposition)
 %ifdef CBUILD
 %include "c/engine/faceoff/TakePlayerFromBox.asstakeposition.inc"
 %else
@@ -1999,7 +1999,7 @@ mov eax, ebx	; 52BAA
 call SkateToSpot	; 52BAC
 jmp near TakePlayerFromBox_ret5	; 52BB1
 %endif ; C
-; C: src/c/engine/faceoff/check4bench.c
+; C: src/engine/faceoff/check4bench.c
 %ifdef CBUILD
 %include "c/engine/faceoff/check4bench.inc"
 %else
@@ -2172,7 +2172,7 @@ pop ecx	; 52DAD
 pop ebx	; 52DAE
 ret	; 52DAF
 %endif ; C
-; C: src/c/engine/faceoff/asspsclear.c
+; C: src/engine/faceoff/asspsclear.c
 %ifdef CBUILD
 %include "c/engine/faceoff/asspsclear.inc"
 %else
@@ -2334,7 +2334,7 @@ pop ecx	; 52FAD
 pop ebx	; 52FAE
 ret	; 52FAF
 %endif ; C
-; C: src/c/engine/faceoff/assrefpenshot.c
+; C: src/engine/faceoff/assrefpenshot.c
 %ifdef CBUILD
 %include "c/engine/faceoff/assrefpenshot.inc"
 %else

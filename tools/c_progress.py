@@ -85,7 +85,7 @@ def main():
             key = r['c_file'] if os.path.splitext(os.path.basename(r['c_file']))[0] == f0 else '%s:%s' % (r['c_file'], f0)
             notes[key] = r['notes']; causes[key] = r.get('cause') or ''
     rows = []
-    for src in sorted(glob.glob(os.path.join(ROOT, 'src/c/**/*.c'), recursive=True)):
+    for src in cc.iter_c():
         stem, fil, asm, inc = cc.c_paths(src)
         rel = os.path.relpath(src, ROOT)
         body = re.sub(r'/\*.*?\*/', '', open(src).read(), flags=re.S)
@@ -125,8 +125,8 @@ def main():
         w = csv.DictWriter(f, fieldnames=['function', 'address', 'size', 'segment', 'c_file', 'status', 'notes', 'cause'])
         w.writeheader(); w.writerows(rows)
     segs = {}; libs = {}; chk = {}              # segment -> __CHK function count; game segment -> {label: address}
-    for asm in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/**/*.asm'), recursive=True)):
-        st = os.path.relpath(asm, os.path.join(ROOT, 'src/cseg01'))[:-4].replace(os.sep, '/'); fs = c_functions(asm)
+    for asm in cc.iter_asm():
+        st = cc.asm_stem(asm); fs = c_functions(asm)
         if not fs: continue
         if is_lib(st): libs[st] = len(fs)
         else: segs[st] = len(fs); chk[st] = fs
@@ -138,7 +138,7 @@ def main():
     done = {st: [l for l, a in fs.items() if any(s <= a < e for s, e in blocks)] for st, fs in chk.items()}
     partial = {}                                # split functions with a piece still in asm: drafts
     for st in chk:
-        pcs = [p for p in asm_pieces(os.path.join(ROOT, 'src/cseg01', st + '.asm'), blocks) if p not in chk[st]]
+        pcs = [p for p in asm_pieces(cc.find_asm(st), blocks) if p not in chk[st]]
         for f in done[st]:
             fp = [p for p in pcs if p.startswith(f + '_')]
             if fp: partial[f] = fp
