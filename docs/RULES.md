@@ -59,3 +59,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 
 ## Learned
 - 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)
+- 2026-11-04 F3: 95G names for 95 features apply only when the body matches. The DOS season/trade/create/awards screens share strings and labels, not bodies; they keep the PC names. (xmatch95 on season95/trade95/create95/awards95; naming_recommendation_and_95g_pass.md)

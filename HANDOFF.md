@@ -2,12 +2,14 @@
 
 ## Now
 
-- Stage / unit: CONTRIBUTING.md added (stay on the cleanup branch; lineage in `docs/name_map.csv` only). Alignment next is still 95G names for 95 features (out of this unit).
+- Stage / unit: F3 95-feature names done. No further alignment naming in this leftover.
 - Branch: `claude/project-thread-ggw7zu`
-- Last check: 2026-11-02 `make fullcheck`, MATCH in both builds
+- Last check: 2026-11-02 `make fullcheck`, MATCH in both builds (no tree change this unit)
 - Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
-- Next: F3 naming done for the 94G names (14 renames; review list in the project files). 95G names for the 95 features need a body-by-body pass, not started. C matching takes files from the top of docs/WORK_QUEUE.md
-- Open PRs: none
+- F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
+- F3 95G names for 95 features: done, none to apply. `tools/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
+- Next: C matching from the top of docs/WORK_QUEUE.md. Do not merge to main.
+- Open PRs: #279
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
@@ -104,7 +106,7 @@ reassembles everything. Run `make fullcheck` once per commit batch; every pushed
 `make fullcheck` on the tree that produced these numbers: CBUILD=1 and CBUILD=0 both MATCH. Group 2 of the Unsure plan is done. Untouched functions are being worked through by tail owner: most remaining ones end in another function's epilogue (`jmp X_ret`), so they go into the C file of the function that owns that tail, marked in their own segment (`cc.py mark FILE.c --func F --seg STEM`). Session diary (older Current state / Next text): [docs/SESSION_LOG.md](docs/SESSION_LOG.md).
 
 * **Done:** segment map; byte-exact NASM build from `src/`; naming pass over every game segment (queue complete in [SEGMENT_AGENT.md](SEGMENT_AGENT.md)).
-* **In progress:** C matching. Name order for new names: **93G, then 94G, then behaviour**. NHL95Genesis is a loose reference only, not a naming source.
+* **In progress:** C matching. Name order for new names: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features when the body matches; 95PC's own name for DOS-only jobs (file I/O, memory, sound cards, the PC front end).
 
 ## 4. Next
 
