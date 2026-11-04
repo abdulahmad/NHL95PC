@@ -19,7 +19,7 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 ## This repo
 
 - Names, in order: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features (season, trade, create player, awards, the 95 menus); 95PC's own name for DOS-only jobs.
-- Files: engine, front and pc code is in `src/engine/<mod>/`, `src/front/<mod>/` and `src/pc/<mod>/` (asm + C). Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus top-level cdstream/cmv_player/zonemgr); numbered slices stay separate. Link order is `src/segments.txt`. Data is `src/data/` grouped by owner, no `NNN_ADDR` (BSS is `src/data/ram.asm`). Name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged).
+- Files: engine, front and pc code is in `src/engine/<mod>/`, `src/front/<mod>/` and `src/pc/<mod>/` (asm + C). C headers are `src/include/` (8.3 names). Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus top-level cdstream/cmv_player/zonemgr); numbered slices stay separate. Link order is `src/segments.txt`. Data is `src/data/` grouped by owner, no `NNN_ADDR` (BSS is `src/data/ram.asm`). Name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged).
 - One owner (Abdul). No lanes, claims or board; the lane-round files are in docs/archive/.
 
 ## Functional track
@@ -67,3 +67,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-04 layout: data files drop `NNN_ADDR` and live under `src/data/<owner>/`; season95-tagged slices go with front; watcom_stack is `src/data/ram.asm`. Do not fold data slices in the same unit. (CC-68 rename dseg02)
 - 2026-11-04 layout: `engine/overlay` is the in-game HUD, renamed to `engine/hud` in its own unit. `%include "c/engine/hud/..."` follows the folder so fragments live under `build/c/engine/hud/`. Function names (`CloseTextOverlay`, …) stay. (CC-68 overlay→hud)
 - 2026-11-04 layout: name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged). (CC-68 leftover)
+- 2026-11-04 layout: C headers live in `src/include/` (8.3 names; DOS INCLUDE). Watcom still sees them as `C:\\INC`. (CC-68 leftover)

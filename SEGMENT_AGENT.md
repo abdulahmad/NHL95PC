@@ -152,7 +152,7 @@ workflow and compiler notes: [docs/C_MATCHING.md](docs/C_MATCHING.md); progress:
   `tools/watcom`; the three files are committed there). Compare with `python3 tools/cdiff.py src/c/<segment>/<Func>.c`.
 - Names and comments: the asm labels and `structs.inc` fields; 93G, else 94G, else behaviour (not 95G). Every C
   function gets a comment (address, Genesis routine or "PC only", what it does, arguments, result); bring the asm
-  comments over. Constants in `src/c/include/consts.h`, typed globals in `vars.h`, prototypes in `protos.h`.
+  comments over. Constants in `src/include/consts.h`, typed globals in `vars.h`, prototypes in `protos.h`.
 - When the function matches, name the auto globals it uses (`byte_` / `word_` / `dword_`) from the same stores
   in that Genesis routine, with `tools/rename_symbol.py`. A label that is a known object's field (`puckstruct+temp1`)
   takes that field's name. A nosplit column keeps its own label. Do not fold a label that `globals.h` declares

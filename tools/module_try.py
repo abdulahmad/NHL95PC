@@ -44,7 +44,7 @@ register return short signed sizeof static struct switch typedef union unsigned 
 __fortran __syscall __stdcall __near __far __huge __interrupt __loadds __saveregs _Packed __based __segment __self
 __export __inline'''.split())
 CONV = ('__cdecl', '__pascal', '__fortran', '__syscall', '__stdcall')
-INC = os.path.join(ROOT, 'src', 'c', 'include')
+INC = os.path.join(ROOT, 'src', 'include')
 
 # ---- lexing ---------------------------------------------------------------------------------------------------------
 

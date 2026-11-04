@@ -16,7 +16,7 @@ What it does
   2. Checks NEW: a NASM identifier, not an instruction or register (nasm is asked), not defined anywhere in src/
      (labels, locals, equates in src/inc). A name that differs from an existing one only in case is a warning.
   3. Replaces OLD as a whole token in every src/**/*.asm and src/inc/*.inc file (code, global/extern lists and
-     comments; never inside an ';IDA:' note), and in src/c/**/*.c and src/c/include/*.h so a matched C
+     comments; never inside an ';IDA:' note), and in src/{engine,front,pc}/**/*.c and src/include/*.h so a matched C
      function keeps the asm label. OLD.local references follow the rename (NEW.local).
      NEW starting with '.' makes OLD a NASM local label of the global label above it: references in that scope
      become .NEW, all others parent.NEW; it leaves the global list unless another file uses it.
@@ -120,9 +120,13 @@ class Session:
         self.texts = dict(self.orig)
         self.names = defined_names(self.texts)
         cfiles = []
-        for dirpath, _, fnames in os.walk(os.path.join(SRC, 'c')):
-            for fn in fnames:
-                if fn.endswith(('.c', '.h')): cfiles.append(os.path.join(dirpath, fn))
+        for top in ('engine', 'front', 'pc', 'include'):
+            base = os.path.join(SRC, top)
+            if not os.path.isdir(base):
+                continue
+            for dirpath, _, fnames in os.walk(base):
+                for fn in fnames:
+                    if fn.endswith(('.c', '.h')): cfiles.append(os.path.join(dirpath, fn))
         self.corig = {f: open(f).read() for f in cfiles}
         self.ctexts = dict(self.corig)
         self.segs = read_layout()

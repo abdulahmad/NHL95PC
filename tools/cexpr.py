@@ -19,11 +19,11 @@ _TYPEDEFS = None
 
 
 def typedefs():
-    """typedef names from src/c/include (a parenthesized one is a cast)"""
+    """typedef names from src/include (a parenthesized one is a cast)"""
     global _TYPEDEFS
     if _TYPEDEFS is None:
         _TYPEDEFS = set()
-        for h in glob.glob(os.path.join(ROOT, 'src', 'c', 'include', '*.h')):
+        for h in glob.glob(os.path.join(ROOT, 'src', 'include', '*.h')):
             t = re.sub(r'/\*.*?\*/', ' ', open(h, errors='replace').read(), flags=re.S)
             for m in re.finditer(r'\btypedef\b[^;{]*(?:\{[^}]*\}[^;]*)??\b([A-Za-z_]\w*)\s*(?:\[[^\]]*\]\s*)*;', t):
                 _TYPEDEFS.add(m.group(1))
@@ -36,11 +36,11 @@ _PTRS = None
 
 
 def pointer_globals():
-    """globals declared in src/c/include as pointers or arrays"""
+    """globals declared in src/include as pointers or arrays"""
     global _PTRS
     if _PTRS is None:
         _PTRS = set()
-        for h in glob.glob(os.path.join(ROOT, 'src', 'c', 'include', '*.h')):
+        for h in glob.glob(os.path.join(ROOT, 'src', 'include', '*.h')):
             t = re.sub(r'/\*.*?\*/', ' ', open(h, errors='replace').read(), flags=re.S)
             for l in t.split(';'):
                 if '(' in l or 'typedef' in l: continue

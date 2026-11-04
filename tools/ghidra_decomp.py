@@ -100,7 +100,7 @@ def signatures():
     (a definition wins)"""
     defs, protos = {}, {}
     pat = re.compile(r'^((?:(?:unsigned|signed|static|const|struct)\s+)*[A-Za-z_]\w*[\s*]+)(__cdecl\s+)?([A-Za-z_]\w*)\s*\(([^()]*)\)\s*(;|\{|$)')
-    files = list(cc.iter_c()) + [os.path.join(ROOT, 'src/c/include/protos.h')]
+    files = list(cc.iter_c()) + [os.path.join(ROOT, 'src/include/protos.h')]
     for f in files:
         for l in open(f, errors='replace'):
             m = pat.match(l.rstrip())

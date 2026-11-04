@@ -42,7 +42,7 @@ ASSOC_SAME = {'+': '+-', '-': '+-', '*': '*', '&': '&', '|': '|', '^': '^'}
 def typedefs():
     """type names declared in the project headers (for telling a cast from a parenthesised expression)"""
     names = set()
-    inc = os.path.join(ROOT, 'src', 'c', 'include')
+    inc = os.path.join(ROOT, 'src', 'include')
     for fn in os.listdir(inc) if os.path.isdir(inc) else []:
         t = open(os.path.join(inc, fn), errors='replace').read()
         names |= set(re.findall(r'typedef\s+[^;{]*?\b([A-Za-z_]\w*)\s*;', t))

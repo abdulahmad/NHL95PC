@@ -13,7 +13,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.pat
 sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
 import wccemu
 
-INC = os.path.join(ROOT, 'src/c/include')
+INC = os.path.join(ROOT, 'src/include')
 
 
 def stage(src, work):
@@ -117,7 +117,10 @@ def main():
         ok, out, emu = compile_c(a.src, obj)
         sys.stdout.write(out)
         sys.exit(0 if ok else 1)
-    srcs = a.srcs or sorted(glob.glob(os.path.join(ROOT, 'src/c/**/*.c'), recursive=True))
+    srcs = a.srcs or sorted(
+        glob.glob(os.path.join(ROOT, 'src/engine/**/*.c'), recursive=True)
+        + glob.glob(os.path.join(ROOT, 'src/front/**/*.c'), recursive=True)
+        + glob.glob(os.path.join(ROOT, 'src/pc/**/*.c'), recursive=True))
     from multiprocessing import Pool
     from collections import Counter
     n = Counter()

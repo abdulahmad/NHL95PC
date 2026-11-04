@@ -5,7 +5,7 @@
 #   make -j8                  assemble in parallel
 #   make clean
 #   make CBUILD=0             asm only (default: C sources are compiled when the Watcom toolchain is found)
-#   make FAST=1               C objects depend only on their .c file, not on src/c/include/*.h (quick loop while
+#   make FAST=1               C objects depend only on their .c file, not on src/include/*.h (quick loop while
 #                             adding functions; header edits do not recompile every C file)
 #   make fullcheck            from scratch: both builds (CBUILD=1 and CBUILD=0) with every C file recompiled;
 #                             run this before every push
@@ -14,7 +14,7 @@
 #                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
 #
 # C matching decompilation (docs/C_MATCHING.md): a function written in src/engine|front|pc/<mod>/<Func>.c
-# (headers stay in src/c/include) replaces its asm block when CBUILD=1.
+# (headers stay in src/include) replaces its asm block when CBUILD=1.
 # Both builds must give the same sha1.
 #
 # Needs: nasm (2.15+), python3. The third-party DOS/16M loader, DOS/4GW kernel and Watcom wstub, the LE header
@@ -44,7 +44,7 @@ ifeq ($(CBUILD),1)
 NASMFLAGS += -DCBUILD -I build/
 CINCS := $(addprefix build/,$(sort $(shell grep -rho '^%include "c/[^"]*\.inc"' src/engine src/front src/pc --include='*.asm' 2>/dev/null | cut -d'"' -f2)))
 endif
-CHDRS := $(if $(FAST),,$(wildcard src/c/include/*.h))
+CHDRS := $(if $(FAST),,$(wildcard src/include/*.h))
 cinfo:
 	@echo "CBUILD=$(CBUILD), WATCOM_VER=$(WATCOM_VER), $(words $(CINCS)) C files spliced"
 

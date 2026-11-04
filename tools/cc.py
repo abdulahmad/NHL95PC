@@ -44,7 +44,7 @@ Compiler: Watcom C/C++32 10.0 wcc386 under DOSBox, default flags, chosen by WATC
   la            10.0 LA (Limited Availability, Mar 1994; the reference until 2026-10-22, kept as a fallback):
                 tools/watcom/dosla/WCC386.EXE with the 10.0a DOS4GW / W32RUN from tools/watcom/w10a/
 WATCOM_ROOT moves the tools/watcom tree. The cache key includes the compiler, so the two never share objects. A source may add flags with a comment line `/* cflags: -xx */` (none needed so far). Headers come from
-src/c/include (8.3 names)."""
+src/include (8.3 names)."""
 import glob
 import os, re, sys, shutil, subprocess, tempfile, argparse, threading
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
@@ -59,7 +59,7 @@ VER = os.environ.get('WATCOM_VER', '') or 'ga'
 if VER not in COMPILERS: raise SystemExit('cc.py: WATCOM_VER=%s: use one of %s' % (VER, ', '.join(sorted(COMPILERS))))
 CC, D4G, W32 = (os.path.join(W, x) for x in COMPILERS[VER][:3])
 CCNAME = COMPILERS[VER][3]
-INC = os.path.join(ROOT, 'src/c/include')
+INC = os.path.join(ROOT, 'src/include')
 FLAGS = ''
 CROOT = os.path.join(ROOT, 'src/c')
 SRC = os.path.join(ROOT, 'src')
@@ -113,7 +113,7 @@ def check():
 CACHE = os.environ.get('NHL95_CC_CACHE', os.path.expanduser('~/.cache/nhl95pc-cc'))
 
 def included(src):
-    """the headers src actually includes (transitively, from src/c/include), sorted"""
+    """the headers src actually includes (transitively, from src/include), sorted"""
     seen, todo = set(), [src]
     while todo:
         for h in re.findall(r'^\s*#\s*include\s*"([^"]+)"', open(todo.pop(), errors='replace').read(), re.M):

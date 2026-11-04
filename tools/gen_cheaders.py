@@ -4,13 +4,13 @@
   python3 tools/gen_cheaders.py          (after `make`: reads build/obj/**.o for label addresses)
 
 Writes (all generated, do not edit; put hand-written declarations in the manual headers listed below):
-  src/c/include/structs.h   struct Player / struct Team from src/inc/structs.inc (field names = the asm equates;
+  src/include/structs.h   struct Player / struct Team from src/inc/structs.inc (field names = the asm equates;
                             gaps become pad bytes). C type per field: 'size'/'tsize' tag (b/w/d) + CTYPE overrides.
-  src/c/include/globals.h   extern declaration for every data label in dseg02 not declared in a manual header.
+  src/include/globals.h   extern declaration for every data label in dseg02 not declared in a manual header.
                             Type from how the asm accesses it (byte/word/dword operands, movsx/movzx, the -5r
                             short loads dword [x-2]/sar 10h and dword [x-3]/sar 18h); '[]' if it is ever indexed or
                             accessed at an offset. Unknown -> 'unsigned char x[]'.
-  src/c/include/asmfuncs.h  'extern void Name();' (unprototyped; Watcom still passes register arguments) for every
+  src/include/asmfuncs.h  'extern void Name();' (unprototyped; Watcom still passes register arguments) for every
                             code label in cseg01 not prototyped in a manual header.
 Manual headers (scanned for names so the generated ones skip them): protos.h (function prototypes: every matched C
 function and any known signature), vars.h (typed globals, overriding the inferred type).
@@ -21,7 +21,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(HERE)
 sys.path.insert(0, HERE)
 import cc
 from link_src import read_elf
-INC = os.path.join(ROOT, 'src/c/include')
+INC = os.path.join(ROOT, 'src/include')
 CKEYWORDS = set('auto break case char const continue default do double else enum extern float for goto if int long '
                 'register return short signed sizeof static struct switch typedef union unsigned void volatile while '
                 'main near far huge interrupt cdecl pascal fortran syscall'.split())

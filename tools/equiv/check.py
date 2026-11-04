@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 """Functional-equivalence check (FUNCTIONAL_PLAN.md, "How the check works" 4-8, step 5).
 
-  python3 tools/equiv/check.py src/c/<module>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64]
+  python3 tools/equiv/check.py src/<engine|front|pc>/<mod>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64]
 
 Runs the original asm of F (in place in HOCKEY.EXE) and the compiled draft on the same seeded cases and compares
 the traces from run.py. Verdicts: PASS, NEEDS-REVIEW (equal, but the original trapped or returned an unset
 entry register), FAIL (first differing case printed; the run stops there). Rows go to tools/equiv/results.csv
-for files under src/c only; a repeat of the same function + source sha1 + cases that passed prints "cached PASS".
+for files under src/engine, src/front or src/pc; a repeat of the same function + source sha1 + cases that passed prints "cached PASS".
 Compared per case: ret eax (edx with --ret64), esi/edi/ebp always, ebx/ecx/edx when the original saves them
 (push) or leaves them unchanged in that case, esp delta, writes (ordered), calls (ordered; stack args cut to the
 callee's `ret N`, register args cut to the registers the callee reads first), trap kinds.
@@ -368,7 +368,8 @@ def main(argv=None):
     q = (lambda *x: None) if a.quiet else print
     c_path = os.path.abspath(a.c_file)
     sha = hashlib.sha1(open(c_path, 'rb').read()).hexdigest()
-    real = os.path.commonpath([c_path, os.path.join(ROOT, 'src', 'c')]) == os.path.join(ROOT, 'src', 'c')
+    rel_src = os.path.relpath(c_path, os.path.join(ROOT, 'src')).replace('\\', '/')
+    real = rel_src.split('/')[0] in ('engine', 'front', 'pc', 'c')
     rel = os.path.relpath(c_path, ROOT)
     if real:
         for r in read_results():
@@ -428,7 +429,7 @@ def main(argv=None):
     print('%s %s: %d cases in %.1fs (%.1f ms/case)%s' % (verdict, a.func, done, dt, 1000 * dt / max(done, 1), ' ' + diff if diff and verdict != "FAIL" else ""))
     if real: log({'function': a.func, 'c_file': rel, 'source_sha1': sha, 'cases': done if verdict != 'FAIL' else a.cases + a.cases // 2, 'seed': a.seed, 'verdict': verdict,
                   'first_diff': diff[:200], 'date': datetime.date.today().isoformat()})
-    else: q('(file outside src/c: not logged)')
+    else: q('(file outside src/engine|front|pc: not logged)')
     return 0 if verdict != 'FAIL' else 1
 
 if __name__ == '__main__':

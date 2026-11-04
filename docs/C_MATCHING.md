@@ -42,7 +42,7 @@ build/obj → tools/link_src.py → build/HOCKEY.EXE → sha1 check (the same ch
   `CONST`/`_DATA` are refused by `cobj.py` (they live in dseg02, not next to the code). Jump tables that Watcom puts
   in `_TEXT` work (fixups to the block itself).
 
-## Headers (`src/c/include`, 8.3 names: the compiler runs under DOS)
+## Headers (`src/include`, 8.3 names: the compiler runs under DOS)
 
 | header | what | edited by |
 |---|---|---|
