@@ -28,7 +28,7 @@ NASMFLAGS  := -O0 -f elf32 -I src/inc/
 
 WATCOM_VER ?= ga
 export WATCOM_VER
-CBUILD     ?= $(shell $(PYTHON) tools/cc.py check && echo 1 || echo 0)
+CBUILD     ?= $(shell $(PYTHON) tools/match/cc.py check && echo 1 || echo 0)
 
 # each mode has its own object tree, so switching CBUILD only reassembles what changed
 OBJDIR := build/obj$(if $(filter 1,$(CBUILD)),,0)
@@ -54,29 +54,29 @@ build/watcom.$(WATCOM_VER):
 
 .SECONDEXPANSION:
 .PRECIOUS: build/c/%.obj build/c/%.inc build/c/engine/%.obj build/c/engine/%.inc build/c/front/%.obj build/c/front/%.inc build/c/pc/%.obj build/c/pc/%.inc
-build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
-	@$(PYTHON) tools/cc.py compile $< -o $@
-build/c/engine/%.obj: src/engine/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
-	@$(PYTHON) tools/cc.py compile $< -o $@
-build/c/front/%.obj: src/front/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
-	@$(PYTHON) tools/cc.py compile $< -o $@
-build/c/pc/%.obj: src/pc/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
-	@$(PYTHON) tools/cc.py compile $< -o $@
+build/c/%.obj: src/c/%.c $(CHDRS) tools/match/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/match/cc.py compile $< -o $@
+build/c/engine/%.obj: src/engine/%.c $(CHDRS) tools/match/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/match/cc.py compile $< -o $@
+build/c/front/%.obj: src/front/%.c $(CHDRS) tools/match/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/match/cc.py compile $< -o $@
+build/c/pc/%.obj: src/pc/%.c $(CHDRS) tools/match/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/match/cc.py compile $< -o $@
 # build/c/<module>/<File>.inc, or build/c/<module>/<File>.<Func>.inc for a further function of a multi-block file
 # leftover src/c: the asm is src/cseg01/<module>.asm
-build/c/%.inc: build/c/$$(basename $$*).obj $$(subst /.asm,.asm,src/cseg01/$$(dir $$*).asm) tools/cc.py tools/cobj.py | build/parts/manifest.json
-	@$(PYTHON) tools/cc.py frag src/c/$(basename $*).c $< $@
+build/c/%.inc: build/c/$$(basename $$*).obj $$(subst /.asm,.asm,src/cseg01/$$(dir $$*).asm) tools/match/cc.py tools/match/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/match/cc.py frag src/c/$(basename $*).c $< $@
 # colocated engine/front/pc: src/<top>/<mod>/<mod>.asm; fragments stay under build/c/<top>/
-build/c/engine/%.inc: build/c/engine/$$(basename $$*).obj src/engine/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
-	@$(PYTHON) tools/cc.py frag src/engine/$(basename $*).c $< $@
-build/c/front/%.inc: build/c/front/$$(basename $$*).obj src/front/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
-	@$(PYTHON) tools/cc.py frag src/front/$(basename $*).c $< $@
-build/c/pc/%.inc: build/c/pc/$$(basename $$*).obj src/pc/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
-	@$(PYTHON) tools/cc.py frag src/pc/$(basename $*).c $< $@
+build/c/engine/%.inc: build/c/engine/$$(basename $$*).obj src/engine/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/match/cc.py tools/match/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/match/cc.py frag src/engine/$(basename $*).c $< $@
+build/c/front/%.inc: build/c/front/$$(basename $$*).obj src/front/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/match/cc.py tools/match/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/match/cc.py frag src/front/$(basename $*).c $< $@
+build/c/pc/%.inc: build/c/pc/$$(basename $$*).obj src/pc/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/match/cc.py tools/match/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/match/cc.py frag src/pc/$(basename $*).c $< $@
 
 # stubs + LE metadata + fixup order from your EXE (also checks its sha1)
-build/parts/manifest.json: $(HOCKEY_EXE) segmap95pc.json tools/rebuild_exe.py
-	$(PYTHON) tools/rebuild_exe.py extract $(HOCKEY_EXE) build/parts
+build/parts/manifest.json: $(HOCKEY_EXE) segmap95pc.json tools/build/rebuild_exe.py
+	$(PYTHON) tools/build/rebuild_exe.py extract $(HOCKEY_EXE) build/parts
 extract: build/parts/manifest.json
 
 # relink (only) when the mode changes: both modes write build/HOCKEY.EXE
@@ -88,8 +88,8 @@ $(OBJDIR)/%.o: src/%.asm $(INCS) $$(if $(CINCS),$$(addprefix build/,$$(shell gre
 	@$(NASM) $(NASMFLAGS) -o $@ $<
 
 # link (Python), order the fixups like wlink, write the EXE, sha1 check (fails the build on mismatch)
-build/HOCKEY.EXE: $(OBJS) build/parts/manifest.json src/segments.txt tools/link_src.py build/cbuild.$(CBUILD)
-	$(PYTHON) tools/link_src.py --obj $(OBJDIR) --parts build/parts --out $@ || { rm -f $@; exit 1; }
+build/HOCKEY.EXE: $(OBJS) build/parts/manifest.json src/segments.txt tools/build/link_src.py build/cbuild.$(CBUILD)
+	$(PYTHON) tools/build/link_src.py --obj $(OBJDIR) --parts build/parts --out $@ || { rm -f $@; exit 1; }
 
 check: build/HOCKEY.EXE
 

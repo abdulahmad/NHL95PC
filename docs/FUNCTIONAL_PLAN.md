@@ -7,7 +7,7 @@ stops for Abdul's approval before the next one starts.
 
 977 of 1,084 functions are byte-matched. The ~109 drafts left (about 176 KB of code, many of them the biggest
 functions) are mostly register-allocator near-misses: 68 rows have cause `register`, 28 `size`, 11 `slot`
-(`tools/c_functions.csv`). The C in those drafts is usually already the right program; only Watcom's register
+(`tools/match/c_functions.csv`). The C in those drafts is usually already the right program; only Watcom's register
 choice differs. Closing that last gap by hand needs top-tier models and lots of time.
 
 So for these drafts we change the bar from **bit-identical** to **proven to behave the same**: run the original
@@ -25,14 +25,14 @@ What does not change:
 
 ## How the check works
 
-`tools/equiv/` (lane T), driven by `python3 tools/equiv/check.py src/c/<module>/<F>.c --func F`:
+`tools/equiv/` (lane T), driven by `python3 tools/equiv/check.py src/{engine,front,pc}/<mod>/<F>.c --func F`:
 
 1. **Image.** Load `HOCKEY.EXE`'s LE objects at their linear addresses with fixups applied (reuse
-   `tools/le_parse.py`; `tools/wccre/lx_load.py` already does this for LX) into Unicorn. This gives the real
+   `tools/build/le_parse.py`; `tools/match/wccre/lx_load.py` already does this for LX) into Unicorn. This gives the real
    code and the initial data image (dseg02).
 2. **Original side.** The function's original bytes run in place at their EXE address.
-3. **C side.** `tools/cc.py compile` the draft (existing DOSBox path, cached by source hash), read the OMF with
-   `tools/cobj.py`, place the code in a scratch region and resolve its fixups to the same label addresses the
+3. **C side.** `tools/match/cc.py compile` the draft (existing DOSBox path, cached by source hash), read the OMF with
+   `tools/match/cobj.py`, place the code in a scratch region and resolve its fixups to the same label addresses the
    asm uses (`cdiff.py` already maps labels). Both sides therefore see the same globals and the same callees.
 4. **Inputs.** One case = a starting state: argument registers (Watcom passes `eax, edx, ebx, ecx`, then the
    stack), the other registers, and data memory. Sources, in order of cost:
@@ -105,7 +105,7 @@ Each step: goal, model, what "done" means. Rough size is for one session.
 | 4 | **C side.** Compile a draft through `cc.py`, relocate the `cobj.py` output to a scratch address against the same labels. Sanity check: for a **matched** function the C side and the original give identical results on every case (it must, the bytes are the same). | Sonnet / Grok 4.6 medium | Matched functions compare equal. |
 | 5 | **Comparator, case generator, `check.py`.** Pilot on `SeriesLength` (116 bytes, `size` draft) and `FadePalette` (227 bytes, `register` draft). Also a planted bug in a copy of a draft must FAIL. | Sonnet / Grok 4.7 medium | Pilots give a verdict; planted bug caught. |
 | 6 | **Advisor review of the harness** (moment 1 again, before the loop locks): blind spots, N, stack-frame rule, traps. Findings go to `docs/RULES.md`. | Opus / Grok 4.7 high | Short review merged; fixes, if any, done by Sonnet. |
-| 7 | **FUNCTIONAL status.** `tools/equiv/results.csv` as the list; `tools/c_progress.py` shows matched and functional separately (functional never counts as matched). | Haiku / Composer 2.5 | C_PROGRESS shows both counts. |
+| 7 | **FUNCTIONAL status.** `tools/equiv/results.csv` as the list; `tools/match/c_progress.py` shows matched and functional separately (functional never counts as matched). | Haiku / Composer 2.5 | C_PROGRESS shows both counts. |
 | 8 | **The loop.** Drafts smallest first, a batch of ~5 per session: cheap worker runs `check.py`; on PASS it logs; on FAIL a Sonnet fixer changes the C for behaviour (not register shape), max 3 tries, then park. Advisor only after the same failure twice. One PR per batch. | Haiku runs, Sonnet fixes / Composer 2.5, Grok 4.7 medium | All drafts PASS or parked. |
 | 9 | **Real inputs.** DOSBox-X debugger script that snapshots RAM and registers at a function's entry during play (on Abdul's machine). Feed the snapshots to the drafts that only passed on synthetic input or that sit on game state (engine segments). | Sonnet / Grok 4.7 medium | Snapshots for the engine drafts; re-check passes. |
 | 10 | **`FUNCTIONAL=1` build.** Feasibility first: drafts of the same size splice like matched ones; shorter ones pad; longer ones need their mid-function labels moved or the body placed elsewhere with a jump. Advisor before starting. Default build untouched. | Opus plan, then Sonnet / Grok 4.7 high, then 4.7 medium | `make FUNCTIONAL=1` boots and plays. |
@@ -119,18 +119,18 @@ with the ports and netplay work; it is not part of finishing the decompilation.
 FUNCTIONAL is a resting state, not a dead end. Everything needed to resume byte-matching later stays in the repo:
 
 * **The original asm never goes away.** A FUNCTIONAL draft stays unmarked, so its block in `src/cseg01/*.asm` is
-  still the code `make` builds and the exact reference `tools/cdiff.py` diffs against.
+  still the code `make` builds and the exact reference `tools/match/cdiff.py` diffs against.
 * **The draft stays the closest known shape.** A functional fix changes only what behaves differently. Before and
-  after it, run `python3 tools/cdiff.py` on the file and record both scores in `docs/draft_history.csv`, with what
+  after it, run `python3 tools/match/cdiff.py` on the file and record both scores in `docs/draft_history.csv`, with what
   changed. A fix that makes the byte score worse says so in the row and in the draft's comment.
-* **The diff notes stay.** The draft's `DRAFT:` comment, its `tools/c_functions.csv` notes and cause, its
+* **The diff notes stay.** The draft's `DRAFT:` comment, its `tools/match/c_functions.csv` notes and cause, its
   `docs/UNSURE.md` entry and its history rows are kept and updated, never deleted, when it passes.
 * **The proof stays.** `tools/equiv/results.csv` keeps the source hash each verdict was for, so a later edit that
   moves a draft toward a match is re-checked automatically (the hash no longer matches, so it no longer counts).
 
 To resume matching a FUNCTIONAL function: read its `DRAFT:` comment, its `docs/UNSURE.md` entry and its
 `docs/draft_history.csv` rows, then follow the normal workflow in `docs/C_MATCHING.md` (`cdiff.py`, `permute.py`,
-`tools/wccre`). When it matches, `cc.py mark` it as usual: it moves from FUNCTIONAL to matched by itself.
+`tools/match/wccre`). When it matches, `cc.py mark` it as usual: it moves from FUNCTIONAL to matched by itself.
 
 ## Risks
 

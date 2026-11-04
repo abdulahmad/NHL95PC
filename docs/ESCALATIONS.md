@@ -61,7 +61,7 @@ i < n; i++)` scores 30 and the entry stops matching. Not kept. `chkprogress` ent
 reads another function (nominal 206 bytes, score 62). No body edit to try until a splice places
 that piece.
 
-Splice (2026-10-24, lane T): `tools/splice.py FILE.c FUNC` places each piece by the branches that reach it
+Splice (2026-10-24, lane T): `tools/match/splice.py FILE.c FUNC` places each piece by the branches that reach it
 (`cc.flow_anchor`), scores it, and `--mark` marks the pieces that match while the rest stays asm, in the EXE
 layout. `chkprogress_go` sits at +58E in the object (the InProgress draft before it is 2 bytes long): 5
 differing, same size (the EXE does the `i++` of the PenBuf scan before the compare). Matched with
@@ -169,7 +169,7 @@ tie-breaker copies with the ESCALATE shapes. The tagged-match alternative is not
   function (a loop pointer, a result tested later), the same as any natural local.
 - Lead for all five: the tie moves with the conflict count, so a natural difference elsewhere (a statement the
   draft folds that the original kept separate, a temporary the original needed and the draft does not) can give
-  the same order. Look with `tools/wccre/regdump.py` at which conflicts tie, and look for real shape differences
+  the same order. Look with `tools/match/wccre/regdump.py` at which conflicts tie, and look for real shape differences
   in the rest of the function before adding locals.
 
 **Alternative for Abdul (policy, not applied):** accept tie-breaker copies as tagged matches: mark them, with a

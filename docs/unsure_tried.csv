@@ -382,10 +382,10 @@ doshot,,one int for `(int)r`,,la
 doshot,,"the distance divisor and passspeed (worse, 99)","worse, 99",la
 doshot,,the stack shorts declared in reverse and in one other order (no change or worse),no change or worse,la
 doshot,,"the shot power and accuracy as separate shorts, passspeed scaled by plain assignment (89 to 100)",89 to 100,la
-TitleScreen,,"the locals in that order (92 lines), reversed and seven random orders (best 52, kept), and 240 random orders of all 18 locals with tools/permute_decls.py (none better)",none better,la
+TitleScreen,,"the locals in that order (92 lines), reversed and seven random orders (best 52, kept), and 240 random orders of all 18 locals with tools/match/permute_decls.py (none better)",none better,la
 RunIntro,,the five dword locals in all 120 orders,,la
 RunIntro,,"with the song loads as separate statements and `pal[i] = pal[i] - 1` (best 44, kept",,la
-RunIntro,,"tools/permute_decls.py ranks a different order first, 83 by the aligned diff)",,la
+RunIntro,,"tools/match/permute_decls.py ranks a different order first, 83 by the aligned diff)",,la
 DrawTextOverlay,,"the offset and line y as separate shorts (348), ovltimer and the clip offsets without the copy t (357)",357,la
 ShowAwardScreens,,"the centred prints as single calls (108 lines, 7 bytes short)","108 lines, 7 bytes short",la
 ShowAwardScreens,,"the titles as `PrintShadowText(x + 0x34, ...); x += 0x50;` (71)",71,la
@@ -2561,25 +2561,25 @@ LeadersScreen,,"teamgp tests as `!(tg && gp * 100 / tg >= 0x1E)` (85, both parts
 LeadersScreen,,the index through `((unsigned char *)key.c)[0]` (84),84,ga
 LeadersScreen,,"one permute run (321 candidates, no gain, permlog_1a_b3.csv)","321 candidates, no gain, permlog_1a_b3.csv",ga
 RunPlayerPickMenu,,"(2026-10-24, lane 1a batch 3): only read and diagnosed (the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158)",the RunMenu.c changes tried for RunMenu and RunTeamPickMenu left it at 158,ga
-ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 4) `s.fh3 = -1; s.fhid = s.fhp = s.fh2 = s.fh3;`, `s.fh2 = s.fh3 = -1; s.fhid = s.fhp = s.fh2;`, `s.fhp = s.fh2 = s.fh3 = -1; s.fhid = s.fhp;`, `s.fh3 = -1; s.fhp = s.fh2 = s.fh3; s.fhid = s.fhp;` (all 11, identical code), so the copies come from the tie order of the whole function, not from the chain. Also all 6 orders of s / t / err with tools/permute_decls.py: every one the same",,ga
+ExportTeamToFloppy,,"(2026-10-24, lane 1b batch 4) `s.fh3 = -1; s.fhid = s.fhp = s.fh2 = s.fh3;`, `s.fh2 = s.fh3 = -1; s.fhid = s.fhp = s.fh2;`, `s.fhp = s.fh2 = s.fh3 = -1; s.fhid = s.fhp;`, `s.fh3 = -1; s.fhp = s.fh2 = s.fh3; s.fhid = s.fhp;` (all 11, identical code), so the copies come from the tie order of the whole function, not from the chain. Also all 6 orders of s / t / err with tools/match/permute_decls.py: every one the same",,ga
 CreateNewLeague,,"(2026-10-24, lane 1b batch 4): the error tail as `if (!err && s.sel >= 0) goto done;` then the body, `err != 0 ||`, `s.sel < 0 || err` (17)",17,ga
 CreateNewLeague,,the inner test as `if (!err) ; else`,,ga
-CreateNewLeague,,"the store through `(signed char *)` and `(char *)` (all 12 at +480). Also all 120 orders of the five top-level declarations (s, err, quit, sz, j) with tools/permute_decls.py: every one the same (4 by its count)",4 by its count,ga
+CreateNewLeague,,"the store through `(signed char *)` and `(char *)` (all 12 at +480). Also all 120 orders of the five top-level declarations (s, err, quit, sz, j) with tools/match/permute_decls.py: every one the same (4 by its count)",4 by its count,ga
 SkateToSpot,,"(2026-10-24, lane 1b batch 4): on the old end statement `ayp = t = ABS(...)` (same code as t",,ga
 SkateToSpot,,"ayp = t), t replaced by d / spa2 / ary (26-85)",26-85,ga
 SkateToSpot,,"the end as `d = vtoa(...) - p->facedir; d &= 7;` (87), `d = vtoa(...); d -= p->facedir; d &= 7;` (147), `(short)(vtoa(...) - p->facedir) & 7` (5), `(-p->facedir + vtoa(...)) & 7` (5), `(short)regd1.w - HIWORD(p->Ypos)` (108), each with the chain too (42-102)",42-102,ga
 SkateToSpot,,"on the new end: the chain (42), `p->Yvel = 0; p->Xvel = p->Yvel;` (80), chain + int d (51), chain + int t (75)",75,ga
-SkateToSpot,,"permute.py 5 min from the chain (transforms used up after 321, best 2 only by splitting the chain again). Also tools/permute_decls.py over 2,500 random orders of the ten locals with the chained stop (best 56 by its count, no match)","best 56 by its count, no match",ga
+SkateToSpot,,"permute.py 5 min from the chain (transforms used up after 321, best 2 only by splitting the chain again). Also tools/match/permute_decls.py over 2,500 random orders of the ten locals with the chained stop (best 56 by its count, no match)","best 56 by its count, no match",ga
 ExecuteTrade,,"(2026-10-24, lane 1b batch 4): per-module prototypes ClearPlayerFromLines(int p, ...) and (short p, ...), FixJerseyConflict(int, unsigned char k, ...) and (int, short k, ...)",,ga
 ExecuteTrade,,"the first with the third, `(unsigned char)` casts on the two key team-byte stores (all 15)",all 15,ga
 ExecuteTrade,rettype:unsigned_short,unsigned short result,tried (docs/UNSURE.md),ga
 RandomizeSchedule,,"(2026-10-24, lane 1b batch 4): every pair of the append forms base / `[k++] = j; count = k` / `[k] = j; k++; count = k` / `count = ++k` / (v only) `j = k + 1; count = j` (12-14, all +3 or +5 except the kept one)","12-14, all +3 or +5 except the kept one",ga
 RandomizeSchedule,,with the kept v form,,ga
 RandomizeSchedule,,"the h append as `j = k + 1; count = j` (14, +2), `list[s.count[h]] = j; s.count[h]++` or `+= 1` (43), `s.count[h] = s.count[h] + 1` (11, +7), `list[k = s.count[h]] = j` (14, same as base), `count = ++k` (13, +5)","13, +5",ga
-RandomizeSchedule,,"`count[v] = 1 + k` (15). Also tools/permute_decls.py over 2,000 random orders of the ten top-level declarations on the kept draft (best 14 = the draft)",best 14 = the draft,ga
+RandomizeSchedule,,"`count[v] = 1 + k` (15). Also tools/match/permute_decls.py over 2,000 random orders of the ten top-level declarations on the kept draft (best 14 = the draft)",best 14 = the draft,ga
 SeedPlayoffRound3,,"(2026-10-24, lane 1b batch 4): the index as `14 + k` (14)",14,ga
 SeedPlayoffRound3,,the loop body in braces (14),14,ga
-SeedPlayoffRound3,,"the loop as `k = 0; while (k < games) { ...; k++; }` (18). Also tools/permute_decls.py over 1,500 random orders of the fourteen locals (best = the draft order)",,ga
+SeedPlayoffRound3,,"the loop as `k = 0; while (k < games) { ...; k++; }` (18). Also tools/match/permute_decls.py over 1,500 random orders of the fourteen locals (best = the draft order)",,ga
 BlitTileMap,,"(2026-10-24, lane 1b batch 4): `(y + row - row - row) * rinkwtiles` (8, +1)","8, +1",ga
 BlitTileMap,,"`((y + row) - (row << 1)) * rinkwtiles` (11, +5)","11, +5",ga
 BlitTileMap,,col term first in the flip sum,,ga
@@ -2589,7 +2589,7 @@ BlitTileMap,,`(y + row) - row - row` (5),5,ga
 BlitTileMap,,"`row + y - (row + row)`, `row + y - (row << 1)`, `row + y - row - row` (5), `row + y - row * 2`, `(int)y + row - (row + row)`, `-(row + row) + (y + row)`, `-(row + row) + (row + y)` (8 each, +2)","8 each, +2",ga
 BlitTileMap,,`(short)(y + row - (row << 1))` (25),25,ga
 BlitTileMap,,"`y + (row - row - row)`, `y + (row - (row << 1))`, `y + row + (-row - row)` (11), `-(row << 1) + row + y` (13), `y + row + row * -2`, `row * 2` / `col * 2` in both mirrored terms (8)",8,ga
-BlitTileMap,,"permute.py 5 min from `(y + row) - (row << 1)` (transforms used up after 321 candidates, best 8). Also tools/permute_decls.py over 2,500 random orders of the twelve locals (best = the draft order, 10 by its count)","best = the draft order, 10 by its count",ga
+BlitTileMap,,"permute.py 5 min from `(y + row) - (row << 1)` (transforms used up after 321 candidates, best 8). Also tools/match/permute_decls.py over 2,500 random orders of the twelve locals (best = the draft order, 10 by its count)","best = the draft order, 10 by its count",ga
 SimulateGame,,"(2026-10-24, lane 1b batch 4): the plain allocation loop (`for (i = 0; i < 2; i++)` with every store indexed by i, no sv",,ga
 SimulateGame,,"592, same code)",,ga
 SimulateGame,,"permute.py 5 min (513 candidates, batched): best 581 at size +6 (an `== 0` test and a do-loop) and 521 at size +32 (adds a short cast), neither verified fresh nor kept (the draft is compiler-state sensitive)",,ga
@@ -3074,7 +3074,7 @@ EditSkaterRating,,"only the pushed products differ (C `lea edx, [eax+5]` with th
 EditSkaterRating,,"plus the `(short)` max product (`imul eax, eax, 5 / cwde`). DrawShootsField's matched `PrintFmt1(..., (rec[i] + 5) * 5)` push has the EXE's shape because its byte is loaded into ebx, not eax",,ga
 EditGoalieRating,,(time),,ga
 EditGoalieRating,,see the EditSkaterRating finding above (only the pushed products differ),,ga
-DbLineEditorLoop,,with a new reason: tools/wccre/declsearch.py now redoes the frame after such a change,,ga
+DbLineEditorLoop,,with a new reason: tools/match/wccre/declsearch.py now redoes the frame after such a change,,ga
 DbLineEditorLoop,,"261 before it), then the declsearch.py --conflicts order: every local in its EXE slot",,ga
 DbLineEditorLoop,,"the same size, and the pointer size product and the jersey loop's i reload became the EXE's by themselves. Left: the EXE computes level * 4 before the itemoffset store. Tried first on the 92 base: the size factors through the dead k / j in either order (1742-1744), `r *=` / `r +=` steps (1746), one factor in k (1716-1717), `r = [2] + 1; k = [3] + 1; r = r * k + 0x11` (1745) (frame moves)",,ga
 DbLineEditorLoop,,"permute.py 321 candidates. On the 64 base: `else ... = lines[i]` (630), FindRosterSlot inline (635)",635,ga
@@ -3106,7 +3106,7 @@ LoadGameState,,"`id = o->id = *p` (43), `id = *p` (37), `o->first = byte_CCE00[i
 LoadGameState,,"the hud copies indexed, `for (i = 0, pl = SortCords; ...)` (111), `OOlistpos[i] = OOlist[i] = i` (47), `pl = &SortCords[i]` (44)",44,ga
 LoadGameState,,the ovl test operands swapped (45),45,ga
 DrawRinkSideObjects,,"the vy test as `0x140 - vy - 0xA8` (175), `0x140 - (0xA8 + vy)` (118, no change), `0x140 - (vy + 0xA8) > y` (165), y read before x (120), `f = k - k` for the zero (156)",156,ga
-OpenSpeechBank,,"the type-byte shape found on 2026-10-22 (`int type; short c; c = type & 0xFF; type = (unsigned short)type >> 8;`, 43) with tools/wccre/declsearch.py --conflicts after it (20: w3, nsamples, size, fh, got, w1, type",,ga
+OpenSpeechBank,,"the type-byte shape found on 2026-10-22 (`int type; short c; c = type & 0xFF; type = (unsigned short)type >> 8;`, 43) with tools/match/wccre/declsearch.py --conflicts after it (20: w3, nsamples, size, fh, got, w1, type",,ga
 OpenSpeechBank,,"the hand sweep's best). The EXE has the int type at [esp+18h] above the short nsamples at [esp+14h], which the size sort (shorts above ints) does not give two plain locals",,ga
 EditSkaterRating,,"plus the `(short)` max product (`imul eax, eax, 5 / cwde`). DrawShootsField's matched `PrintFmt1(..., (rec[i] + 5) * 5)` push has the EXE's shape because its byte is loaded into ebx, not eax. Lane 2b batch 4 (10.0 GA): improved 57 -> 30 (commit ec192ca",,ga
 EditSkaterRating,,the same 777 bytes): every pushed displayed rating (range min and max,,ga
@@ -3796,7 +3796,7 @@ RunMenu,,"the submenu branch's copy of depth through its own int k instead of th
 RunMenu,,the same code),,ga
 RunMenu,,the branch drawing through level instead of the copy (271),271,ga
 RunTeamPickMenu,,the frame struct s as plain locals in struct order (1638,,ga
-RunTeamPickMenu,,"the slots scattered), then tools/wccre/declsearch.py --conflicts (best order sel, w, nitems, menus, mx, bg, pick, cur, level, h, oldmx, item, ptr, my, hit, oldmy, depth, pos: 17 of 18 slots as in the EXE, oldmy -16 vs EXE -12",,ga
+RunTeamPickMenu,,"the slots scattered), then tools/match/wccre/declsearch.py --conflicts (best order sel, w, nitems, menus, mx, bg, pick, cur, level, h, oldmx, item, ptr, my, hit, oldmy, depth, pos: 17 of 18 slots as in the EXE, oldmy -16 vs EXE -12",,ga
 RunTeamPickMenu,,"889, first difference +0D5)",,ga
 LeadersScreen,,the while with the arms as if / else (115),115,ga
 LeadersScreen,,the team test nesting the rest (115),115,ga
@@ -4141,7 +4141,7 @@ PlacePlayersAtStart,,"the mirror with the two position stores in both arms (18 /
 PlacePlayersAtStart,,the mirror as two ternaries (27),27,ga
 PlacePlayersAtStart,,"the assignment number as if / else with two assinsert calls (16), `(p->position == 4) + 0x16` (13)",13,ga
 PlacePlayersAtStart,,"a short / int n for it (13 / 14), `--regd2.w != 0` and the decrement as its own statement (13), `-regd1.l` (13)",13,ga
-PlacePlayersAtStart,,"tools/wccre/tieorder.py (2 jobs, --max-run 40, 6 minutes): every swap of the 2 x 80 / 2 x 40 / 7 x 30 / 26 x 20 runs plus 129 single-edit orders (323 forced orders): 13, no tie order explains the mirror or the setcc",,ga
+PlacePlayersAtStart,,"tools/match/wccre/tieorder.py (2 jobs, --max-run 40, 6 minutes): every swap of the 2 x 80 / 2 x 40 / 7 x 30 / 26 x 20 runs plus 129 single-edit orders (323 forced orders): 13, no tie order explains the mirror or the setcc",,ga
 PlacePlayersAtStart,,"permute.py seed 2717 (449 candidates): best 10 (+4) only with a tie-breaker copy (`short _t0 = -100; p->temp5 = _t0;`, ESCALATE, not committed)","`short _t0 = -100; p->temp5 = _t0;`, ESCALATE, not committed",ga
 SeedPlayoffRound3,,each SetSeriesTeams if / else as one call with two ternary arguments (137 / 144),137 / 144,ga
 SeedPlayoffRound3,,the arms swapped under `!=` (21 / 21),21 / 21,ga
@@ -4198,7 +4198,7 @@ RunTeamPickMenu,,"the chain from nitems or menus (196 / 181), `13 *` first in th
 RunTeamPickMenu,,"the row ternary inverted (235), HILITE(cur) after `cur = pick` (197 / 182)",197 / 182,ga
 RunTeamPickMenu,,the x / y ternaries inverted (206),206,ga
 RunTeamPickMenu,,the size product commuted (183) or `0x11 +` first (181),181,ga
-PlayoffTreeMenu,,"tools/wccre/tieorder.py on the new shape (5 min, 161 orders, 60)","5 min, 161 orders, 60",ga
+PlayoffTreeMenu,,"tools/match/wccre/tieorder.py on the new shape (5 min, 161 orders, 60)","5 min, 161 orders, 60",ga
 PlayoffTreeMenu,,"declsearch --conflicts on it (best 68, current order kept)","best 68, current order kept",ga
 PlayoffTreeMenu,,"`m = &menus[level][item]` for the on1 / on2 tests (157, +19)","157, +19",ga
 PlayoffTreeMenu,,"m for pad / x2 / x1 in the submenu path, as MainDeskLoop (178, +21)","178, +21",ga
@@ -4224,9 +4224,9 @@ FixJerseyConflict,,declaration moves of bad / e / err / pal (16),16,ga
 FixJerseyConflict,,`0x4C + tr` (16),16,ga
 FixJerseyConflict,,`0x1C > s.i` (16),16,ga
 FixJerseyConflict,,while (1) with a break for the do-while (16),16,ga
-RunTeamPickMenu,,"the tree-close loop's pos zeros as the chain `pos[i][0] = pos[i][1] = 0` followed by tools/wccre/declsearch.py --conflicts (445 before the slots, its three orders 254-275 with all 18 slots)","445 before the slots, its three orders 254-275 with all 18 slots",ga
+RunTeamPickMenu,,"the tree-close loop's pos zeros as the chain `pos[i][0] = pos[i][1] = 0` followed by tools/match/wccre/declsearch.py --conflicts (445 before the slots, its three orders 254-275 with all 18 slots)","445 before the slots, its three orders 254-275 with all 18 slots",ga
 RunTeamPickMenu,,the size declaration at every place in the list (181 only where it is,,ga
-RunTeamPickMenu,,"225-636 elsewhere, slots not followed). tools/wccre/tiesearch.py is not in this tree",,ga
+RunTeamPickMenu,,"225-636 elsewhere, slots not followed). tools/match/wccre/tiesearch.py is not in this tree",,ga
 RunPlayerPickMenu,,the highlight PHILITE as an if / else with a sub_90F38 call per arm (236,,ga
 RunPlayerPickMenu,,"declsearch --conflicts 216-218 with oldmx / oldmy swapped, by hand 190-210: Watcom pushes the constant arguments before the row",,ga
 RunPlayerPickMenu,,"the EXE computes the row first), as an if / else assigning k (376",,ga
@@ -4235,44 +4235,44 @@ RunPlayerPickMenu,,"the picked record's index through k (109), its offset throug
 RunPlayerPickMenu,,an if / else into k (903,,ga
 RunPlayerPickMenu,,"all three single-use copies anyway), `0x34 * PREC(pick)` (104), `((PlayerRec52 *)statsplayerbuf)[PREC(pick)]` (104), r local to the action block (104), m local to the hit block (324, slots not followed), size declared first (153), i or k declared last (299, slots not followed), k as the record index with `k * 0x34` in the four name searches' sums (138",,ga
 RunPlayerPickMenu,,"declsearch 119: the first search's goalie loop takes the EXE's registers, its skater loop and the PREC copy flip instead)",,ga
-RunMenu,,"tools/wccre/tieorder.py (2 compile jobs) 15 min: 6 -> 3 forced (stage 1 swaps 6, cut by time at 153 of 206 orders",,ga
+RunMenu,,"tools/match/wccre/tieorder.py (2 compile jobs) 15 min: 6 -> 3 forced (stage 1 swaps 6, cut by time at 153 of 206 orders",,ga
 RunMenu,,"stage 2: w and h moved to just older than t199 in the creation order, which fixes the pointer-size product's register, t33 EAX -> EBX in its savings-2 run, and reorders the savings-3 / 4 runs of L87-L90)",,ga
 RunMenu,,"again with --max-run 12 and 40 min: 6 -> 3, 558 edit orders, cut by time, nothing cached",,ga
-RunMenu,,"a scratch driver (tieorder's stage 2 to its first gain, then swaps in every run with no max-run, 50 min) also 3, no single swap from that order improves. The batch 19 order with t71 / t72 swapped (0 forced) was not found again. tools/wccre/tiesearch.py --minutes 30 toward the 3 order: 7 needed swaps (L89 / L90 header-store and menus loads before bar / n / pointerspr loads, L84 an `add _, 1` before a `cnv [t29]`), baseline 3 unsatisfied, 417 candidates in 30 min (one climb round, one sideways step), best 6: the only candidates with 2 unsatisfied are against real code (chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221)","chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221",ga
-RunTeamPickMenu,,tools/wccre/tieorder.py 15 min (2 compile jobs): 181 -> 181 (245 orders,,ga
-RunTeamPickMenu,,"stage 1 cut by time at 155), no cache, so tools/wccre/tiesearch.py has no target",,ga
+RunMenu,,"a scratch driver (tieorder's stage 2 to its first gain, then swaps in every run with no max-run, 50 min) also 3, no single swap from that order improves. The batch 19 order with t71 / t72 swapped (0 forced) was not found again. tools/match/wccre/tiesearch.py --minutes 30 toward the 3 order: 7 needed swaps (L89 / L90 header-store and menus loads before bar / n / pointerspr loads, L84 an `add _, 1` before a `cnv [t29]`), baseline 3 unsatisfied, 417 candidates in 30 min (one climb round, one sideways step), best 6: the only candidates with 2 unsatisfied are against real code (chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221)","chain merges at L101 / L102 210, swapstmt L114 194, do loop L45 221",ga
+RunTeamPickMenu,,tools/match/wccre/tieorder.py 15 min (2 compile jobs): 181 -> 181 (245 orders,,ga
+RunTeamPickMenu,,"stage 1 cut by time at 155), no cache, so tools/match/wccre/tiesearch.py has no target",,ga
 RunTeamPickMenu,,stopped,,ga
-RunPlayerPickMenu,,tools/wccre/tieorder.py 15 min (2 compile jobs): 103 -> 103 (253 orders,,ga
-RunPlayerPickMenu,,"stage 1 cut by time at 155), no cache, so tools/wccre/tiesearch.py has no target",,ga
+RunPlayerPickMenu,,tools/match/wccre/tieorder.py 15 min (2 compile jobs): 103 -> 103 (253 orders,,ga
+RunPlayerPickMenu,,"stage 1 cut by time at 155), no cache, so tools/match/wccre/tiesearch.py has no target",,ga
 RunPlayerPickMenu,,stopped,,ga
 assgoalie,,"the poke / dive block written in both arms, `if (*puckc == p->SCnum) {...} else {D}` plus `else {D}` for the shooter flag (188: the inner copy keeps the puckc pointer in edx)",188: the inner copy keeps the puckc pointer in edx,ga
 assgoalie,,the three other arm orders (225 / 281 / 334),225 / 281 / 334,ga
-assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
+assgoalie,,"the move tail repeated at the other-half exit (146: not cross-jumped), `if (regd2.w <= 7) { playeracc(p, regd2.w); return; } StopNA(p);` at the end (26), tools/match/wccre/tieorder.py on the new base (2-job copy, --max-run 40, 6 minutes, 124 orders: 18), `regd1.w = regd1.w - (((signed char *)p)[0x0F] + (p->Ypos >> 16))` and its split form on the new base (76)",76,ga
 assrefgoalpa,,on that base: the first product as `(0xE8 - *pucky) * (p->temp3 - *puckx)` (67-69),67-69,ga
 assrefgoalpa,,"the second as `(p->temp3 - *puckx) * (-0xE8 - *pucky)` (61 but 3 bytes short, not kept), both swapped (64, 3 bytes short), `regd0.w = *puckx + c` in the first crossing (112-115, still `add ecx, eax`), `regd0.w = c; regd0.w += *puckx;` (67-71, two stores)","67-71, two stores",ga
-SelectSavedFile,,"tools/wccre/tieorder.py --minutes 10 (pass 0: 33 conflicts, runs 5 x 5, 24 x 3, 2 x 2",,ga
+SelectSavedFile,,"tools/match/wccre/tieorder.py --minutes 10 (pass 0: 33 conflicts, runs 5 x 5, 24 x 3, 2 x 2",,ga
 SelectSavedFile,,"pass 1: 5 conflicts, 2 x 6, 3 x 5",,ga
 SelectSavedFile,,"258 swap orders + 133 single edits, best 15, inconclusive)",,ga
-SelectSavedFile,,"tools/wccre/targetsearch.py --minutes 30 (1615 candidates, 0 tie targets",,ga
+SelectSavedFile,,"tools/match/wccre/targetsearch.py --minutes 30 (1615 candidates, 0 tie targets",,ga
 SelectSavedFile,,"the two slot targets name / path already met, best 15 = the committed text)",,ga
 SelectSavedFile,,"(tools/probe.py standalone) the else arm as `allstars[t - 0x18]` on a table starting at ASW (teamabbrevs + 0x68, which folds to off_C5441's address: off_C5441 is not a separate table but the ASW / ASE entries indexed by t), and `t <= 0x17` (cmp 17h / jg): both still hoist `t << 2`",,ga
-RunMenu,,tools/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
+RunMenu,,tools/match/wccre/tieorder.py --minutes 10 (it read a complete build/tieorder cache for the current text: 6 -> 3 forced,,ga
 RunMenu,,"the stage 2 move of w / h to just older than t199 in the creation order, which sets the size product's savings-2 run, t33 EAX -> EBX",,ga
 RunMenu,,the L113 t71 / t72 swap of batch 19 is not in it),,ga
-RunMenu,,"tools/wccre/targetsearch.py --minutes 30 (7 tie swaps from that cache, all at L87-L90: the menus loads before the bar / n / pointerspr loads and the header stores",,ga
+RunMenu,,"tools/match/wccre/targetsearch.py --minutes 30 (7 tie swaps from that cache, all at L87-L90: the menus loads before the bar / n / pointerspr loads and the header stores",,ga
 RunMenu,,"15 slot targets, all already met",,ga
 RunMenu,,"baseline 6 differing, 1 neither register nor slot, i.e. the `lea ebx, [eax+1]` / `inc ebx` of the size product, 3 swaps unmet): 376 candidates in one beam round (movedecl 265, swapstmt 35, chain 16, loop 15, swapdecl 14, swap 10, commute 9, incdec 5, zero 4, temp 1), none below 6 differing or 3 unmet, best text the committed one",,ga
 RunMenu,,by hand `m = item + menus[level]` for the hit test's m (6,,ga
 RunMenu,,"the same code). Savings of the tied conflicts as in the batch 19 / 27 notes (the size-product temps t30-t35 and size at 2, t71 / t72 at 20)","the size-product temps t30-t35 and size at 2, t71 / t72 at 20",ga
-PlacePlayersAtStart,,"tools/wccre/tieorder.py --minutes 10 on the old shape (172 forced orders, 13) and on the ternary shape (172, 12): not a tie (2 x 80, 2 x 40, 7 x 30 runs)","2 x 80, 2 x 40, 7 x 30 runs",ga
-PlacePlayersAtStart,,"tools/wccre/targetsearch.py --minutes 30 (1837 candidates, no tie or slot targets): best text negates regd1 before regd0 (14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected)","14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected",ga
+PlacePlayersAtStart,,"tools/match/wccre/tieorder.py --minutes 10 on the old shape (172 forced orders, 13) and on the ternary shape (172, 12): not a tie (2 x 80, 2 x 40, 7 x 30 runs)","2 x 80, 2 x 40, 7 x 30 runs",ga
+PlacePlayersAtStart,,"tools/match/wccre/targetsearch.py --minutes 30 (1837 candidates, no tie or slot targets): best text negates regd1 before regd0 (14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected)","14, 6 other: regd1 then goes to memory but regd0 through a register, against the EXE order, rejected",ga
 PlacePlayersAtStart,,"`0x16u` / `0x16L` constants (13), `(unsigned short *)` table loads (13), `word_CBE8C[regd4.w + 1]` for regd1 (12, same differences)","12, same differences",ga
 PlacePlayersAtStart,,"the mirror as a comma expression, `!= pfgoal` (16), `~p->pflags & pfgoal` (17)",17,ga
 PlacePlayersAtStart,,an empty then-arm,,ga
 PlacePlayersAtStart,,an empty else (12 each),12 each,ga
-ResetGameVars,,tools/wccre/tieorder.py --minutes 10 afresh (stale cache removed,,ga
+ResetGameVars,,tools/match/wccre/tieorder.py --minutes 10 afresh (stale cache removed,,ga
 ResetGameVars,,"2 forced orders, 20: not a tie)",,ga
-ResetGameVars,,"tools/wccre/targetsearch.py --minutes 30 (1307 candidates, 0 tie / slot targets, best text = the committed draft, 20)","1307 candidates, 0 tie / slot targets, best text = the committed draft, 20",ga
+ResetGameVars,,"tools/match/wccre/targetsearch.py --minutes 30 (1307 candidates, 0 tie / slot targets, best text = the committed draft, 20)","1307 candidates, 0 tie / slot targets, best text = the committed draft, 20",ga
 ResetGameVars,,"the __STOSB call written as the fill loop Watcom turns into it (`for (i = 0; i < 16; i++) word_E9B2C[i] = 0;`, i at function scope or in its own block: 20",,ga
 ResetGameVars,,the same code,,ga
 ResetGameVars,,the 32-byte char loop: 38 / 28),,ga
@@ -4284,10 +4284,10 @@ ResetGameVars,,with the crowd-slot loop present they all take ebx (ours) where t
 ResetGameVars,,lane T question,,ga
 TreeSeriesWinner,,"(slots unchanged, 35 each): parameters renamed (series / sched, rnd, flag) and every local renamed (no name / hash dependence), `const unsigned char *s`, no prototype in scope (protos.h declares `int round`), implicit int return (prototype and K&R definitions), `signed int` / `unsigned int` spellings",,ga
 TreeSeriesWinner,,"the same file under 10.0 LA (35, same slots)","35, same slots",ga
-assgoalie,,"tools/wccre/tieorder.py --minutes 10 on the old base (202 orders, 18) and on the new one (188 orders, 13",,ga
+assgoalie,,"tools/match/wccre/tieorder.py --minutes 10 on the old base (202 orders, 18) and on the new one (188 orders, 13",,ga
 assgoalie,,with --max-run 130,,ga
 assgoalie,,"the savings-3 / -2 runs of 115 / 120 included, 205 orders, 13): all inconclusive, no cache",,ga
-assgoalie,,"tools/wccre/targetsearch.py --minutes 30 on the new base (423 candidates, no tie or slot targets: best text 36 with 7 other",,ga
+assgoalie,,"tools/match/wccre/targetsearch.py --minutes 30 on the new base (423 candidates, no tie or slot targets: best text 36 with 7 other",,ga
 assgoalie,,the Y offset as `regd1.w = regd1.w - (...)` plus q in the loop block),,ga
 assgoalie,,the y offset alone swapped 16,,ga
 assgoalie,,"the x alone 18, both with the HIWORD subtraction first 33 / 24 (x only), `(p->Xpos >> 16)` there 13-18",,ga

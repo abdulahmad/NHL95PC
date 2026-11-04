@@ -62,9 +62,9 @@ The PC programmers seem to have grouped the engine by jobs of their own. Each jo
 
 * **Folders follow the PC modules.** One file per reconstructed module, in EXE order. The folder and file names use the 95G or 94G subsystem name where a module is clearly that job (`engine/skate`, `engine/faceoff`, `engine/assign`). Otherwise the name says what the module does (`engine/puckcontrol`).
 * **Cross-game matching lives in the names, not the files.** Each function keeps its 94G name. The report already shows where each one lives in 94G, 95G and 94S, and `95pc_engine_files.csv` lists all four homes.
-* **No regressions.** It's only text moves: the bytes, the C files and the matched set stay the same. Every step must build MATCH in both builds (CBUILD=1 and 0), and the number of matched functions in `tools/c_functions.csv` must stay at 922.
+* **No regressions.** It's only text moves: the bytes, the C files and the matched set stay the same. Every step must build MATCH in both builds (CBUILD=1 and 0), and the number of matched functions in `tools/match/c_functions.csv` must stay at 922.
 
-Applied on 2026-11-03 by `tools/recut_modules.py` (step F4). The file list it produced is below.
+Applied on 2026-11-03 by `tools/build/recut_modules.py` (step F4). The file list it produced is below.
 
 ## The file names (game code)
 

@@ -24,15 +24,15 @@ Needs `nasm` (2.15 or newer; tested with 2.16.03) and Python 3. No iced-x86, no 
 | `src/dseg02/NNN_ADDR_module.asm` (106) | data object: `db`/`dd sym` for initialised data, `resb` (nobits section) for BSS, labels in both |
 | `src/inc/hockey.inc` | included by every file: `x86enc.inc` + `structs.inc` (equates and macros only, no bytes) |
 | `src/inc/x86enc.inc` | the `LD op, dst, src` macro (load-form reg,reg encodings) |
-| `src/inc/structs.inc` | structure field offsets with the Genesis names (player struct), from `tools/struct_fieldmap.csv` |
-| `src/inc/symbols.inc` | index of the 6,755 cross-segment symbols: address, name, defining file, number of users (`tools/update_symbols.py`) |
+| `src/inc/structs.inc` | structure field offsets with the Genesis names (player struct), from `tools/names/struct_fieldmap.csv` |
+| `src/inc/symbols.inc` | index of the 6,755 cross-segment symbols: address, name, defining file, number of users (`tools/build/update_symbols.py`) |
 | `src/segments.txt` | link list: object, start, end, initialised bytes, module, file |
 
 Build steps (`Makefile`; `build.sh` does the same without make):
 1. `rebuild_exe.py extract HOCKEY.EXE build/parts`: checks the sha1 and extracts the stubs, `le.json` and
    `le_fixups.tsv`. It also writes the segment slices, but the link does not use them.
 2. `nasm -O0 -f elf32 -I src/inc/` for every file → `build/obj/**.o`.
-3. `tools/link_src.py`. Each section `s_<ADDR>` is placed at `ADDR`, and globals are resolved by name across all
+3. `tools/build/link_src.py`. Each section `s_<ADDR>` is placed at `ADDR`, and globals are resolved by name across all
    objects. `R_386_32` becomes an LE fixup (the stored value is object-relative), and `PC32`/`PC8` are resolved in
    place. A segment that assembles to a different size, or has non-zero BSS bytes, is an error. The segment slices go
    to `build/link/`; stubs and `le.json` are copied from the extract.
@@ -47,35 +47,35 @@ or pad with `nop`). Moving code between segments needs `segmap95pc.json` + `gen_
 target just works. A new fixup source is appended as a new chunk by `order_fixups()`, so the EXE stays valid but no
 longer matches the sha1.
 
-Renaming: `tools/rename_symbol.py OLD NEW` changes a label everywhere, rebuilds (must MATCH, else everything is
+Renaming: `tools/names/rename_symbol.py OLD NEW` changes a label everywhere, rebuilds (must MATCH, else everything is
 restored) and records the name in the maps; see SEGMENT_AGENT.md. `src/` is edited by hand from here on.
 
 Regenerating `src/` (maintainers only; it would overwrite hand edits, so it needs `--force` for `src/`):
 ```
-python3 tools/rebuild_exe.py extract && python3 tools/gen_src.py --out /tmp/src_fresh   # needs iced-x86 + the listing caches
+python3 tools/build/rebuild_exe.py extract && python3 tools/build/gen_src.py --out /tmp/src_fresh   # needs iced-x86 + the listing caches
 ```
 `gen_src.py` runs the `asm_proto.py` emitter on every segment and assembles each one. It checks bytes and fixups
 against the EXE before writing. The output is deterministic: a second run gives identical files.
 `--no-listing` works too, but gives fewer function names and a few more fallbacks.
 
 ```
-python3 tools/rebuild_exe.py extract                 # build/parts from your HOCKEY.EXE
-python3 tools/fixup_labels.py                        # build/labels/{symbols,sites,tables}.tsv + stats
-python3 tools/asm_proto.py 2970A 8FFD4 CD304         # selected segments -> build/asm/*.asm/.o/.lst + report.json
-python3 tools/asm_proto.py --all --exe-check         # every segment, then rebuild the EXE from them and sha1-check
-python3 tools/asm_proto.py --eval --all              # nasm vs OW wasm vs JWasm encoding comparison -> build/asm/eval.json
+python3 tools/build/rebuild_exe.py extract                 # build/parts from your HOCKEY.EXE
+python3 tools/build/fixup_labels.py                        # build/labels/{symbols,sites,tables}.tsv + stats
+python3 tools/build/asm_proto.py 2970A 8FFD4 CD304         # selected segments -> build/asm/*.asm/.o/.lst + report.json
+python3 tools/build/asm_proto.py --all --exe-check         # every segment, then rebuild the EXE from them and sha1-check
+python3 tools/build/asm_proto.py --eval --all              # nasm vs OW wasm vs JWasm encoding comparison -> build/asm/eval.json
 ```
 Add `--no-listing` to either tool to ignore `tools/funcs.pkl` / `tools/lst_index.pkl` (then only the EXE parts plus
-the committed `segmap95pc.json`, `docs/name_map.csv` and `tools/global_map.csv` are used). Requirements: `nasm` (2.16),
+the committed `segmap95pc.json`, `docs/name_map.csv` and `tools/names/global_map.csv` are used). Requirements: `nasm` (2.16),
 `pip install iced-x86`. For `--eval`: OW 2.0 `wasm` (`$WASM`, default `~/watcom/ow2/binl64/wasm`) and JWasm 2.21
 (`$JWASM`). JWasm builds from github.com/Baron-von-Riedesel/JWasm with `make -f GccUnix.mak`. UASM master does not
 build on Linux right now (missing `direct.h`, old-style C), so it was not evaluated. It is a JWasm fork with the same
 MASM syntax limits.
 
-## 1. Fixup targets as labels (`tools/fixup_labels.py`)
+## 1. Fixup targets as labels (`tools/build/fixup_labels.py`)
 
 Inputs: `build/parts` (the segment slices + `le_fixups.tsv`), `segmap95pc.json`, `docs/name_map.csv`,
-`tools/global_map.csv`, and optionally `tools/funcs.pkl` / `tools/lst_index.pkl`.
+`tools/names/global_map.csv`, and optionally `tools/funcs.pkl` / `tools/lst_index.pkl`.
 
 * **Symbol per fixup target.** The name comes from `docs/name_map.csv` (proposed name, else a non-`sub_` IDA name) or
   `global_map.csv`, made assembler-safe and unique. Otherwise it is an auto name keyed by linear address:
@@ -207,7 +207,7 @@ Per-segment counts: `tools/asm_proto_summary.json`.
 1. Done: switch-table boundaries and the D8B64 split (section 5).
 2. Done: committed `src/` tree + `make` / `build.sh` (section 0).
 3. Prettier operands: emit `parent+off` (e.g. `dword_EDA08+4`) for `mid_item` targets once data item extents
-   are curated, plus struct-field names from `tools/struct_fieldmap.csv` for `[reg+disp8]` accesses.
+   are curated, plus struct-field names from `tools/names/struct_fieldmap.csv` for `[reg+disp8]` accesses.
 4. Replace the remaining 113 db fallbacks with macros (`ALU_EAX_LONG`, `XCHG_RM` …) so every instruction is
    readable text.
 5. Per-function matching: swap one function's asm for `wcc386` (10.0 LA, default flags) output, keep the rest as

@@ -1,10 +1,10 @@
-; NHL 95 PC structure field offsets, written as the 93 Genesis names (see tools/struct_fieldmap.csv for the evidence).
+; NHL 95 PC structure field offsets, written as the 93 Genesis names (see tools/names/struct_fieldmap.csv for the evidence).
 ; Equates only. Use them in operands with the original displacement size: [byte esi+Xvel], not [esi+0Ch]; the
 ; assembled bytes must not change. A field that is a 16.16 long on Genesis and 68k-word-aligned there is often read
 ; with the Watcom -5r short load: mov edx, [byte ecx+Xvel-2] sar edx, 10h loads the word Xvel (sign-extended).
 ; 'size b/w/d' is the PC access size (tools/struct_operands.py matches operands by offset and size). A 'size d' field
 ; is a 16.16 value; its integer word is Field+2 ([byte ebx+Xpos+2]).
-; Add a field here and a row in tools/struct_fieldmap.csv in the same commit. An equate nothing uses may stay.
+; Add a field here and a row in tools/names/struct_fieldmap.csv in the same commit. An equate nothing uses may stay.
 
 ; ---- player structure. Pointer usually in eax/ecx/esi/edi.
 Xpos       equ 00h   ; size d

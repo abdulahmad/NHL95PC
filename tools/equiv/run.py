@@ -151,7 +151,7 @@ def _pop_bytes(img, target):
 
 _FUNCS = None
 def is_func_entry(img, a):
-    """a known function address (tools/c_functions.csv) or a `push N / call __CHK` prologue"""
+    """a known function address (tools/match/c_functions.csv) or a `push N / call __CHK` prologue"""
     global _FUNCS
     if _FUNCS is None:
         import csv

@@ -16,7 +16,7 @@ pointer-ish or static bytes; callee returns come from a seeded script.
 """
 import os, sys, re, csv, random, hashlib, struct, time, argparse, datetime, collections, dataclasses
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
-sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools'))
+sys.path.insert(0, HERE); sys.path.insert(0, os.path.join(ROOT, 'tools')); import paths
 import image, run, cside, capstone
 from capstone.x86_const import X86_OP_MEM
 
@@ -344,7 +344,7 @@ def fmt(l): return ' '.join('(%s)' % ','.join(hx(x) for x in e) for e in l) or '
 
 def find_row(func, seg):
     rows = [r for r in cside._csv_rows() if r['function'] == func and (not seg or r['segment'] == seg or seg in r['segment'])]
-    if not rows: raise SystemExit('function %s not in tools/c_functions.csv%s' % (func, ' for seg ' + seg if seg else ''))
+    if not rows: raise SystemExit('function %s not in tools/match/c_functions.csv%s' % (func, ' for seg ' + seg if seg else ''))
     return rows[0]
 
 def read_results():

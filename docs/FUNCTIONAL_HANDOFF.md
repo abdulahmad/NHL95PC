@@ -12,7 +12,7 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 
 * A function-matched draft stays open for decompilation: its asm, draft, `DRAFT:` notes, UNSURE entry and history
   rows are all kept, so byte-matching can resume at any time.
-* Decompiling a function takes it out of the function-matched pool by itself: `tools/c_progress.py` counts a
+* Decompiling a function takes it out of the function-matched pool by itself: `tools/match/c_progress.py` counts a
   function as function-matched only while its status is `nonmatching`, so once it is marked (matched) it counts
   only as decompiled. A PASS also stops counting when the draft's source changes (the check is tied to its hash).
 
@@ -20,8 +20,8 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 
 * Harness `tools/equiv/` is merged (PR #274): `image.py`, `run.py`, `cside.py`, `check.py`, `results.csv`.
   Self-tests: `python3 tools/equiv/run.py --selftest`, `python3 tools/equiv/cside.py --selftest`.
-* Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/cc.py`).
-* **25 of 109 drafts proven functionally equivalent (PASS).** `python3 tools/c_progress.py` reports the count
+* Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
+* **25 of 109 drafts proven functionally equivalent (PASS).** `python3 tools/match/c_progress.py` reports the count
   separately from matched.
 * **75 NEEDS-REVIEW**: no difference found, but random inputs reach too little of the code (coverage under 85%),
   most cases trap, or uninitialised stack reads.
@@ -58,5 +58,5 @@ Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListH
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
 `build/equiv/planted/`, change one constant, run with `--seg front/schedule`: must FAIL within 50 cases.
 
-Batch loop used so far (no model tokens): a shell loop over `tools/c_functions.csv` nonmatching rows calling
+Batch loop used so far (no model tokens): a shell loop over `tools/match/c_functions.csv` nonmatching rows calling
 `check.py <c_file> --func F --seg SEG --quiet --budget 600`, three in parallel with a per-function lock directory.

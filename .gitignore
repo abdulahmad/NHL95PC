@@ -19,8 +19,11 @@ output/
 
 # --- Intermediate analysis caches (derived from the EXE / IDA listing / Genesis sources) ---
 tools/*.pkl
+tools/**/*.pkl
 tools/le.json
+tools/build/le.json
 tools/name_map_94_before.csv
+tools/names/name_map_94_before.csv
 tools/overview.txt
 
 # --- Read-only copies of the Genesis sources (clone NHL9xGenesis repos instead) ---
