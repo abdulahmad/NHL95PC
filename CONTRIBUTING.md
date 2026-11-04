@@ -19,5 +19,5 @@ of its README and in every release. Add it first.
   95PC's own name for DOS-only jobs. Every rename is recorded; lineage lives only in `docs/name_map.csv` (or the
   pending-renames workflow in AGENTS.md). Never write `92 <name>`, `from 92 <name>`, or another game's name in source
   comments.
-- Do not commit listings, `ref/`, `build/`, objects or generated `.inc` fragments. The retail `HOCKEY.EXE` and the
-  Watcom files under `tools/watcom/` are committed on purpose.
+- Do not commit listings, `ref/`, `build/`, objects or generated `.inc` fragments. The retail `retail/HOCKEY.EXE`
+  (root `HOCKEY.EXE` is a pointer) and the Watcom files under `tools/watcom/` are committed on purpose.

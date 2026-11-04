@@ -2,13 +2,13 @@
 
 ## Now
 
-- Stage / unit: CC-68 leftovers — **`docs/name_map.csv`**, **C headers in `src/include/`**. Game modules live in `src/{engine,front,pc}/<mod>/`. Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus cdstream/cmv_player/zonemgr). Data is `src/data/` (no `NNN_ADDR`; BSS is `ram.asm`). In-game HUD is `src/engine/hud/`.
+- Stage / unit: CC-68 leftovers — **`docs/name_map.csv`**, **C headers in `src/include/`**, **`retail/HOCKEY.EXE`** (root `HOCKEY.EXE` is a pointer). Game modules live in `src/{engine,front,pc}/<mod>/`. Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus cdstream/cmv_player/zonemgr). Data is `src/data/` (no `NNN_ADDR`; BSS is `ram.asm`). In-game HUD is `src/engine/hud/`.
 - Branch: `claude/project-thread-ggw7zu`
-- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (overlay→hud). Header move pending MATCH this unit.
+- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (overlay→hud). EXE move pending MATCH this unit.
 - Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
-- Next layout units: `retail/HOCKEY.EXE` (keep a root pointer), tools split. Do not merge to main.
+- Next layout units: tools split (`tools/{build,match,equiv,names}` plus `tools/watcom`). Do not merge to main.
 - Open PRs: #279
 
 Everything a new person or agent needs to pick this project up. Read this file, then
@@ -33,8 +33,9 @@ section 3. Do not edit those counts, `C_PROGRESS.md`, `tools/c_functions.csv`,
 
 ## 1. Setup from scratch
 
-**The retail EXE (committed).** `HOCKEY.EXE` at the repo root is the retail binary: 1,179,067 bytes,
-SHA-1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`. `.gitignore` keeps `*.lst`, `FUNCTION_MAPPINGS95.md`,
+**The retail EXE (committed).** `retail/HOCKEY.EXE` is the retail binary: 1,179,067 bytes,
+SHA-1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`. Root `HOCKEY.EXE` is a pointer so tools that still look
+at the repo root keep working. `.gitignore` keeps `*.lst`, `FUNCTION_MAPPINGS95.md`,
 `tools/*.pkl`, `ref/` and `build/` out of git.
 
 **Tools.**
@@ -243,7 +244,7 @@ Parked: LoadShapeByTag, POPickConfTeams, BlitClipRect, SetCoachMode, FadeOutPalC
 ## 5. Rules (short form; the full list is in SEGMENT_AGENT.md)
 
 * Never commit the IDA listing, `FUNCTION_MAPPINGS95.md`, `tools/*.pkl`, `ref/`, `build/`, objects or
-  generated `.inc` fragments. The retail `HOCKEY.EXE` and the three Watcom files under `tools/watcom/` are
+  generated `.inc` fragments. The retail `retail/HOCKEY.EXE` (root `HOCKEY.EXE` is a pointer) and the three Watcom files under `tools/watcom/` are
   committed on purpose. The `src/` asm tree is the agreed exception for game code.
 * Every commit builds with `make` MATCH and `make CBUILD=0` MATCH. Commit per function or per batch. Tool and doc
   changes go in their own commits. Never force-push.

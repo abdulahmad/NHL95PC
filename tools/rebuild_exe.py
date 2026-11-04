@@ -6,8 +6,9 @@
   rebuild_exe.py extract [HOCKEY.EXE] [build/parts]    check the EXE's sha1, then split (same as split)
   rebuild_exe.py verify                                 extract + build + sha1/byte compare + fixup experiments
 
-HOCKEY.EXE is not in the repo. Copy your own retail NHL 95 PC HOCKEY.EXE to the repo root
-(1,179,067 bytes, sha1 3961e0eba6b0338fad1613bb534efafd9406ed4a).
+The committed retail binary is retail/HOCKEY.EXE (1,179,067 bytes, sha1
+3961e0eba6b0338fad1613bb534efafd9406ed4a). A root HOCKEY.EXE pointer follows it so older
+tool defaults still resolve.
 
 What is regenerated vs. kept opaque (see BUILD_NOTES.md):
   * DOS/16M loader stub      : MZ header + relocation table -> JSON (re-serialised); load-module body = opaque blob
@@ -33,9 +34,16 @@ RELOC_BLOCK = 512   # wlink RELOC_PAGE_SIZE
 EXPECTED_SIZE = 1179067
 EXPECTED_SHA1 = '3961e0eba6b0338fad1613bb534efafd9406ed4a'
 
+def default_exe():
+    for rel in ('retail/HOCKEY.EXE', 'HOCKEY.EXE'):
+        p = os.path.join(ROOT, rel)
+        if os.path.isfile(p):
+            return p
+    return os.path.join(ROOT, 'retail/HOCKEY.EXE')
+
 def check_exe(exe):
     if not os.path.isfile(exe):
-        sys.exit('%s not found. Copy your own NHL 95 PC HOCKEY.EXE to the repo root (it is not in the repo).' % exe)
+        sys.exit('%s not found. The committed retail binary is retail/HOCKEY.EXE (root HOCKEY.EXE is a pointer).' % exe)
     d = open(exe, 'rb').read(); h = hashlib.sha1(d).hexdigest()
     if len(d) != EXPECTED_SIZE or h != EXPECTED_SHA1:
         sys.exit('%s: %d bytes, sha1 %s. Expected %d bytes, sha1 %s.' % (exe, len(d), h, EXPECTED_SIZE, EXPECTED_SHA1))
@@ -430,7 +438,7 @@ def regen_test(parts):
 # ----------------------------------------------------------------------------------------------- verify
 def main():
     cmd = sys.argv[1] if len(sys.argv) > 1 else 'verify'
-    exe = os.path.join(ROOT, 'HOCKEY.EXE'); parts = os.path.join(ROOT, 'build/parts'); out = os.path.join(ROOT, 'build/HOCKEY.EXE')
+    exe = default_exe(); parts = os.path.join(ROOT, 'build/parts'); out = os.path.join(ROOT, 'build/HOCKEY.EXE')
     if cmd in ('split', 'extract'):
         if cmd == 'extract': check_exe(sys.argv[2] if len(sys.argv) > 2 else exe)
         split(sys.argv[2] if len(sys.argv) > 2 else exe, sys.argv[3] if len(sys.argv) > 3 else parts)

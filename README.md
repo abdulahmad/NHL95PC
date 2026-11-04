@@ -22,11 +22,11 @@ Sister projects: [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis),
 
 ## Retail EXE
 
-The retail `HOCKEY.EXE` is committed at the repo root (same layout the tools expect by default):
+The retail `HOCKEY.EXE` is committed at `retail/HOCKEY.EXE`. Root `HOCKEY.EXE` is a pointer so older tool defaults still resolve:
 
 | | |
 | --- | --- |
-| File | `HOCKEY.EXE` |
+| File | `retail/HOCKEY.EXE` |
 | Size | 1,179,067 bytes |
 | SHA-1 | `3961e0eba6b0338fad1613bb534efafd9406ed4a` |
 

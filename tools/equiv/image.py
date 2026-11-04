@@ -68,8 +68,17 @@ class Image:
             self._labels = lab
         return self._labels
 
-def load(exe='HOCKEY.EXE'):
-    if not os.path.isabs(exe) and not os.path.exists(exe): exe = os.path.join(ROOT, exe)
+def load(exe=None):
+    if exe is None:
+        for rel in ('retail/HOCKEY.EXE', 'HOCKEY.EXE'):
+            p = os.path.join(ROOT, rel)
+            if os.path.isfile(p):
+                exe = p
+                break
+        else:
+            exe = os.path.join(ROOT, 'retail/HOCKEY.EXE')
+    elif not os.path.isabs(exe) and not os.path.exists(exe):
+        exe = os.path.join(ROOT, exe)
     info, fx, d = le_parse.parse(exe)
     objs = []
     for o in info['objects']:

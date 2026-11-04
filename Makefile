@@ -1,6 +1,6 @@
 # NHL 95 PC: build HOCKEY.EXE from the NASM sources in src/ and check it is byte-identical to the retail EXE.
 #
-#   make                      build/HOCKEY.EXE from src/ (needs your HOCKEY.EXE in the repo root, see README)
+#   make                      build/HOCKEY.EXE from src/ (needs retail/HOCKEY.EXE, see README)
 #   make HOCKEY_EXE=/path/to/HOCKEY.EXE
 #   make -j8                  assemble in parallel
 #   make clean
@@ -21,7 +21,7 @@
 # fields and the fixup record order are taken from your HOCKEY.EXE (rebuild_exe.py extract); everything inside the
 # LE objects (code, data, fixups) comes from src/.
 
-HOCKEY_EXE ?= HOCKEY.EXE
+HOCKEY_EXE ?= retail/HOCKEY.EXE
 PYTHON     ?= python3
 NASM       ?= nasm
 NASMFLAGS  := -O0 -f elf32 -I src/inc/

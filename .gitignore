@@ -1,9 +1,10 @@
-# --- Game binary: retail HOCKEY.EXE is committed at the repo root ---
+# --- Game binary: retail/HOCKEY.EXE is the committed MATCH target; root HOCKEY.EXE is a pointer ---
 *.EXE
 *.exe
 *.EXP
 *.exp
 !HOCKEY.EXE
+!retail/HOCKEY.EXE
 HOCKEY.EXE.lst
 *.lst
 FUNCTION_MAPPINGS95.md

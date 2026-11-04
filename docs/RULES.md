@@ -68,3 +68,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-04 layout: `engine/overlay` is the in-game HUD, renamed to `engine/hud` in its own unit. `%include "c/engine/hud/..."` follows the folder so fragments live under `build/c/engine/hud/`. Function names (`CloseTextOverlay`, …) stay. (CC-68 overlay→hud)
 - 2026-11-04 layout: name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged). (CC-68 leftover)
 - 2026-11-04 layout: C headers live in `src/include/` (8.3 names; DOS INCLUDE). Watcom still sees them as `C:\\INC`. (CC-68 leftover)
+- 2026-11-04 layout: the MATCH target is `retail/HOCKEY.EXE`; root `HOCKEY.EXE` is a pointer so tools that default to the repo root still find it. Do not add a second EXE. (CC-68 leftover)
