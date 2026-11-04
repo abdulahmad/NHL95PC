@@ -11,7 +11,7 @@
 
 Layout: a C file lives next to its module's asm (src/engine/hockey/SetSPA.c with
 src/engine/hockey/hockey.asm; src/front/menu/RunMenu.c with src/front/menu/menu.asm;
-src/pc/file_utils with file_utils.asm). Lib still sits under src/cseg01/lib/. The C
+src/pc/file_utils with file_utils.asm). Lib slices sit under src/lib/<family>/. The C
 replaces the block of that asm that starts at label <Func>. In the asm the block is wrapped
 like this (`mark` writes it):
 
