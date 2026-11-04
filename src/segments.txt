@@ -45,7 +45,7 @@
 1 614C2 62CD7 6165 scoring_penalty_text engine/gamelog/gamelog.asm
 1 62CD7 644A8 6097 engine_penalty engine/penalty/penalty.asm
 1 644A8 65CA8 6144 engine_display engine/lines/lines.asm
-1 65CA8 67564 6332 engine_overlay engine/overlay/overlay.asm
+1 65CA8 67564 6332 engine_overlay engine/hud/hud.asm
 1 67564 688A4 4928 engine_replay engine/replay/replay.asm
 1 688A4 69336 2706 debug_dump pc/debug_dump/debug_dump.asm
 1 69336 6A033 3325 game_frame engine/frame/frame.asm

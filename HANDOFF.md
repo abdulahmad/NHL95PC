@@ -2,13 +2,13 @@
 
 ## Now
 
-- Stage / unit: CC-68 tree — **engine/front/pc colocated; lib grouped; data renamed**. Game modules live in `src/{engine,front,pc}/<mod>/`. Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus cdstream/cmv_player/zonemgr). Data is `src/data/` (no `NNN_ADDR`; BSS is `ram.asm`). C headers stay in `src/c/include/`.
+- Stage / unit: CC-68 tree — **engine/front/pc colocated; lib grouped; data renamed; overlay→hud**. Game modules live in `src/{engine,front,pc}/<mod>/`. Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus cdstream/cmv_player/zonemgr). Data is `src/data/` (no `NNN_ADDR`; BSS is `ram.asm`). In-game HUD is `src/engine/hud/`. C headers stay in `src/c/include/`.
 - Branch: `claude/project-thread-ggw7zu`
-- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (data rename).
+- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (overlay→hud).
 - Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
-- Next layout units (not this batch): `engine/overlay`→`hud` (rename, not a move), then optional `retail/HOCKEY.EXE`, `docs/name_map.csv`, tools split. Do not merge to main.
+- Next layout units (optional, not started): `retail/HOCKEY.EXE` (keep a root pointer), `docs/name_map.csv`, tools split. Do not merge to main.
 - Open PRs: #279
 
 Everything a new person or agent needs to pick this project up. Read this file, then

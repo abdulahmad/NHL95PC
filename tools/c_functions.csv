@@ -326,9 +326,9 @@ SetupTeamLines,658F3,597,engine/lines,src/engine/lines/BuildDefaultLines.c,match
 CanRemovePlayer,65B83,293,engine/lines,src/engine/lines/BuildDefaultLines.c,matched,,
 CanFillLineSlot,64A0B,669,engine/lines,src/engine/lines/CanFillLineSlot.c,nonmatching,draft: 688 vs 669. side*444h is computed in eax and added to hmroster; the original keeps that stride in ebx and indexes [ebx+eax+hmroster]. The sign-extended side is not stored at esp+4.,register 13/30
 FillDressedSlots,64CA8,440,engine/lines,src/engine/lines/CanFillLineSlot.c,nonmatching,"draft (CanFillLineSlot.c): 440 vs 440, stack slot order only. See UNSURE.",slot 12/12
-CloseTextOverlay,66DDA,44,engine/overlay,src/engine/overlay/CloseTextOverlay.c,matched,,
-DitherRect,65CA8,89,engine/overlay,src/engine/overlay/DitherRect.c,matched,,
-LoadTeamPalette,673C5,415,engine/overlay,src/engine/overlay/LoadTeamPalette.c,matched,,
+CloseTextOverlay,66DDA,44,engine/hud,src/engine/hud/CloseTextOverlay.c,matched,,
+DitherRect,65CA8,89,engine/hud,src/engine/hud/DitherRect.c,matched,,
+LoadTeamPalette,673C5,415,engine/hud,src/engine/hud/LoadTeamPalette.c,matched,,
 NormalizeDressFlags,65B48,59,engine/lines,src/engine/lines/NormalizeDressFlags.c,matched,,
 PickExtraSkater,653BE,368,engine/lines,src/engine/lines/PickForLineSlot.c,matched,,
 PickForLineSlot,64E60,1142,engine/lines,src/engine/lines/PickForLineSlot.c,nonmatching,,register 7/13
@@ -340,15 +340,15 @@ ReplayPrevFrame,675A0,54,engine/replay,src/engine/replay/ReplayPrevFrame.c,match
 ReplayRecordReset,67564,29,engine/replay,src/engine/replay/ReplayRecordReset.c,matched,,
 ReplayStep,67900,1228,engine/replay,src/engine/replay/ReplayStep.c,nonmatching,,register 21/32
 DrawRinkSideObjects,67DCC,2776,engine/replay,src/engine/replay/ReplayStep.c,nonmatching,"same size, 135 differing lines: f / x / y1 slots; see docs/UNSURE.md",register 54/64
-SetTeamGoalie,672F9,204,engine/overlay,src/engine/overlay/SetTeamGoalie.c,matched,draft: side+1 is same size; widened side stays in ecx (original ebx) and the address copy is ebx (original ecx). int s=side; s++ saved g in ebx (206). A team pointer was 167. Do not retry those.,
-ShowGoalieBanner,671E8,273,engine/overlay,src/engine/overlay/ShowGoalieBanner.c,matched,"close: setge result extends with and eax,FFh in asm (xor ah,ah in C) and the per-team pointer tables are indexed with side*12 in ebx; register/temps only",
+SetTeamGoalie,672F9,204,engine/hud,src/engine/hud/SetTeamGoalie.c,matched,draft: side+1 is same size; widened side stays in ecx (original ebx) and the address copy is ebx (original ecx). int s=side; s++ saved g in ebx (206). A team pointer was 167. Do not retry those.,
+ShowGoalieBanner,671E8,273,engine/hud,src/engine/hud/ShowGoalieBanner.c,matched,"close: setge result extends with and eax,FFh in asm (xor ah,ah in C) and the per-team pointer tables are indexed with side*12 in ebx; register/temps only",
 SortNonDefPlayers,6455F,181,engine/lines,src/engine/lines/SortNonDefPlayers.c,matched,,
 SortPlayersByPos,644A8,183,engine/lines,src/engine/lines/SortPlayersByPos.c,matched,,
-checkwindow,65D01,1942,engine/overlay,src/engine/overlay/checkwindow.c,matched,,
-LoadTeamPPV,66497,278,engine/overlay,src/engine/overlay/checkwindow.c,matched,,
-DrawTextOverlay,665AD,2093,engine/overlay,src/engine/overlay/checkwindow.c,matched,"same size, 132 differing lines: stack short slots; see docs/UNSURE.md",
-UpdateTextOverlay,66E06,476,engine/overlay,src/engine/overlay/checkwindow.c,matched,,
-DrawCallBanner,66FE2,518,engine/overlay,src/engine/overlay/checkwindow.c,matched,,
+checkwindow,65D01,1942,engine/hud,src/engine/hud/checkwindow.c,matched,,
+LoadTeamPPV,66497,278,engine/hud,src/engine/hud/checkwindow.c,matched,,
+DrawTextOverlay,665AD,2093,engine/hud,src/engine/hud/checkwindow.c,matched,"same size, 132 differing lines: stack short slots; see docs/UNSURE.md",
+UpdateTextOverlay,66E06,476,engine/hud,src/engine/hud/checkwindow.c,matched,,
+DrawCallBanner,66FE2,518,engine/hud,src/engine/hud/checkwindow.c,matched,,
 updatereplay,675D6,810,engine/replay,src/engine/replay/updatereplay.c,nonmatching,"draft: 810 vs 812, 198/216 instructions; register choices. See UNSURE.",register 7/17
 OpenAnnouncerBank,85507,105,front/announcer,src/front/announcer/OpenAnnouncerBank.c,matched,,
 PenaltyLenClip,842BA,76,front/announcer,src/front/announcer/PenaltyLenClip.c,matched,"switch tree and blocks match; original keeps len in ebx and out in eax (out moved early), this draft the reverse. 10-min cap",

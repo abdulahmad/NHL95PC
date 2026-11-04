@@ -65,3 +65,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-04 layout: pc C and asm live in `src/pc/<mod>/`; keep `%include "c/pc/..."` so fragments stay under `build/c/pc/`. (CC-68 colocate pc)
 - 2026-11-04 layout: lib slices group by family under `src/lib/` without merging numbered files and without stripping prefixes in the same unit. (CC-68 group lib)
 - 2026-11-04 layout: data files drop `NNN_ADDR` and live under `src/data/<owner>/`; season95-tagged slices go with front; watcom_stack is `src/data/ram.asm`. Do not fold data slices in the same unit. (CC-68 rename dseg02)
+- 2026-11-04 layout: `engine/overlay` is the in-game HUD, renamed to `engine/hud` in its own unit. `%include "c/engine/hud/..."` follows the folder so fragments live under `build/c/engine/hud/`. Function names (`CloseTextOverlay`, …) stay. (CC-68 overlay→hud)

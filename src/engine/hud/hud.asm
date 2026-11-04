@@ -31,9 +31,9 @@ extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, w
 extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
 global DitherRect, checkwindow, checkwindow_popebp, checkwindow_popx, LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, UpdateTextOverlay
 global DrawCallBanner, ShowGoalieBanner, SetTeamGoalie, LoadTeamPalette
-; C: src/engine/overlay/DitherRect.c
+; C: src/engine/hud/DitherRect.c
 %ifdef CBUILD
-%include "c/engine/overlay/DitherRect.inc"
+%include "c/engine/hud/DitherRect.inc"
 %else
 DitherRect:
 push dword 28h	; 65CA8
@@ -76,9 +76,9 @@ pop edi	; 65CFC
 pop esi	; 65CFD
 ret 4	; 65CFE
 %endif ; C
-; C: src/engine/overlay/checkwindow.c
+; C: src/engine/hud/checkwindow.c
 %ifdef CBUILD
-%include "c/engine/overlay/checkwindow.inc"
+%include "c/engine/hud/checkwindow.inc"
 %else
 checkwindow:
 push dword 20h	; 65D01
@@ -609,9 +609,9 @@ pop ecx	; 66494
 pop ebx	; 66495
 ret	; 66496
 %endif ; C
-; C: src/engine/overlay/checkwindow.c (LoadTeamPPV)
+; C: src/engine/hud/checkwindow.c (LoadTeamPPV)
 %ifdef CBUILD
-%include "c/engine/overlay/checkwindow.LoadTeamPPV.inc"
+%include "c/engine/hud/checkwindow.LoadTeamPPV.inc"
 %else
 LoadTeamPPV:
 push dword 38h	; 66497
@@ -692,9 +692,9 @@ mov word [ovlstep], ax	; 6659F
 add esp, byte 10h	; 665A5
 jmp near checkwindow_popebp	; 665A8
 %endif ; C
-; C: src/engine/overlay/checkwindow.c (DrawTextOverlay)
+; C: src/engine/hud/checkwindow.c (DrawTextOverlay)
 %ifdef CBUILD
-%include "c/engine/overlay/checkwindow.DrawTextOverlay.inc"
+%include "c/engine/hud/checkwindow.DrawTextOverlay.inc"
 %else
 DrawTextOverlay:
 push dword 60h	; 665AD
@@ -1323,9 +1323,9 @@ call sub_6AB7C	; 66DCD
 add esp, byte 30h	; 66DD2
 jmp near checkwindow_popebp	; 66DD5
 %endif ; C
-; C: src/engine/overlay/CloseTextOverlay.c
+; C: src/engine/hud/CloseTextOverlay.c
 %ifdef CBUILD
-%include "c/engine/overlay/CloseTextOverlay.inc"
+%include "c/engine/hud/CloseTextOverlay.inc"
 %else
 CloseTextOverlay:
 push dword 8	; 66DDA
@@ -1342,9 +1342,9 @@ mov word [ovltimer], bx	; 66DFD
 pop ebx	; 66E04
 ret	; 66E05
 %endif ; C
-; C: src/engine/overlay/checkwindow.c (UpdateTextOverlay)
+; C: src/engine/hud/checkwindow.c (UpdateTextOverlay)
 %ifdef CBUILD
-%include "c/engine/overlay/checkwindow.UpdateTextOverlay.inc"
+%include "c/engine/hud/checkwindow.UpdateTextOverlay.inc"
 %else
 UpdateTextOverlay:
 push dword 1Ch	; 66E06
@@ -1460,9 +1460,9 @@ mov byte [textline1], dl	; 66FD1
 mov byte [textline3], dl	; 66FD7
 jmp near checkwindow_popx	; 66FDD
 %endif ; C
-; C: src/engine/overlay/checkwindow.c (DrawCallBanner)
+; C: src/engine/hud/checkwindow.c (DrawCallBanner)
 %ifdef CBUILD
-%include "c/engine/overlay/checkwindow.DrawCallBanner.inc"
+%include "c/engine/hud/checkwindow.DrawCallBanner.inc"
 %else
 DrawCallBanner:
 push dword 54h	; 66FE2
@@ -1623,9 +1623,9 @@ call sub_6AB7C	; 671DB
 add esp, byte 24h	; 671E0
 jmp near checkwindow_popebp	; 671E3
 %endif ; C
-; C: src/engine/overlay/ShowGoalieBanner.c
+; C: src/engine/hud/ShowGoalieBanner.c
 %ifdef CBUILD
-%include "c/engine/overlay/ShowGoalieBanner.inc"
+%include "c/engine/hud/ShowGoalieBanner.inc"
 %else
 ShowGoalieBanner:
 push dword 14h	; 671E8
@@ -1713,9 +1713,9 @@ pop ecx	; 672F6
 pop ebx	; 672F7
 ret	; 672F8
 %endif ; C
-; C: src/engine/overlay/SetTeamGoalie.c
+; C: src/engine/hud/SetTeamGoalie.c
 %ifdef CBUILD
-%include "c/engine/overlay/SetTeamGoalie.inc"
+%include "c/engine/hud/SetTeamGoalie.inc"
 %else
 SetTeamGoalie:
 push dword 10h	; 672F9
@@ -1786,9 +1786,9 @@ pop ecx	; 673C2
 pop ebx	; 673C3
 ret	; 673C4
 %endif ; C
-; C: src/engine/overlay/LoadTeamPalette.c
+; C: src/engine/hud/LoadTeamPalette.c
 %ifdef CBUILD
-%include "c/engine/overlay/LoadTeamPalette.inc"
+%include "c/engine/hud/LoadTeamPalette.inc"
 %else
 LoadTeamPalette:
 push dword 30h	; 673C5
