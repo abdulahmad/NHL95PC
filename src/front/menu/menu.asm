@@ -1,0 +1,3356 @@
+; Mouse menus. Running a menu, picking a team or a player, and the comparisons that sort the stat lists.
+bits 32
+%include "hockey.inc"
+section s_1D6E8 progbits alloc exec nowrite align=1
+extern __CHK, __STOSB, ClearInputQueue, DeskSetExit3b, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, FileClose
+extern FileOpenRead, FileReadAt, FreeMemBlock, GetInputEvent, memcmp_, memcpy_, MenuHitTest, menuremap
+extern menuremap2, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode, mousepollfn, MouseSetPos
+extern MoveTreeHighlight, PlayerFromMouseY, playofftree, PlayoffTreeHitTest, PlayoffTreeScreen, pointerspr, printfbuf, ptrupdatefn
+extern ShowPlayerStatsItem, sprintf_, statscategory, statsgoaliebuf, statsgoalieorder, statsgoalieplr, statsnumgoalies, statsnumskaters
+extern statspal, statspalvalid, statsplayer, statsplayerbuf, statsplayoffs, statsskaterbuf, statsskaterorder, statsskaterplr
+extern statsteambuf, statsteamorder, statsteamsel, str_9394PlayOffs, str_9394Season, str_LgPlayoffsTitle, str_LgSeasonTitle, str_menubuff
+extern str_PointerMenu, str_POTitle, str_sfh, str_shape, strcat_, strlen_, strncpy_, StrPrefixDiffers
+extern sub_8CCA8, sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, sub_B2E1B, sub_B4DD4
+extern TeamFromMouse
+global RunMenu, RunMenu_ret4, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CmpPoints
+global CmpGAA, LoadShapeByTag, LoadShapeByTag_x, MakeStatsTitle
+RunMenu:
+push dword 0B4h	; 1D6E8
+call __CHK	; 1D6ED
+push esi	; 1D6F2
+push edi	; 1D6F3
+push ebp	; 1D6F4
+sub esp, 8Ch	; 1D6F5
+push ebx	; 1D6FB
+push ecx	; 1D6FC
+xor ebx, ebx	; 1D6FD
+mov dword [dword esp+090h], ebx	; 1D6FF
+mov dword [byte esp+038h], eax	; 1D706
+mov dword [byte esp+058h], edx	; 1D70A
+mov dword [byte esp+044h], ebx	; 1D70E
+mov dword [byte esp+040h], ebx	; 1D712
+mov dword [byte esp+03Ch], ebx	; 1D716
+mov dword [byte esp+054h], ebx	; 1D71A
+mov dword [byte esp+050h], ebx	; 1D71E
+mov dword [byte esp+04Ch], ebx	; 1D722
+mov dword [byte esp+048h], ebx	; 1D726
+mov dword [byte esp+034h], ebx	; 1D72A
+mov dword [byte esp+030h], ebx	; 1D72E
+mov dword [byte esp+02Ch], ebx	; 1D732
+mov dword [byte esp+028h], ebx	; 1D736
+mov dword [byte esp+0Ch], ebx	; 1D73A
+mov dword [byte esp+08h], ebx	; 1D73E
+mov eax, dword [pointerspr]	; 1D742
+mov edx, dword [byte eax+02h]	; 1D747
+sar edx, 10h	; 1D74A
+mov ebx, dword [byte eax+04h]	; 1D74D
+sar ebx, 10h	; 1D750
+inc ebx	; 1D753
+lea eax, [byte edx+01h]	; 1D754
+imul eax, ebx	; 1D757
+add eax, byte 11h	; 1D75A
+push byte 20h	; 1D75D
+push eax	; 1D75F
+push str_PointerMenu	; 1D760
+call sub_8CCA8	; 1D765
+mov ebx, eax	; 1D76A
+add esp, byte 0Ch	; 1D76C
+mov dword [dword esp+084h], eax	; 1D76F
+mov esi, dword [pointerspr]	; 1D776
+mov edi, eax	; 1D77C
+movsd	; 1D77E
+movsd	; 1D77F
+movsd	; 1D780
+movsd	; 1D781
+movsb	; 1D782
+mov eax, dword [pointerspr]	; 1D783
+mov ax, word [byte eax+04h]	; 1D788
+inc eax	; 1D78C
+mov word [byte ebx+04h], ax	; 1D78D
+mov eax, dword [pointerspr]	; 1D791
+mov ax, word [byte eax+06h]	; 1D796
+inc eax	; 1D79A
+mov word [byte ebx+06h], ax	; 1D79B
+mov edx, dword [byte esp+038h]	; 1D79F
+mov edx, dword [edx]	; 1D7A3
+mov eax, dword [byte esp+038h]	; 1D7A5
+mov ecx, dword [byte eax+08h]	; 1D7A9
+add edx, ecx	; 1D7AC
+mov eax, edx	; 1D7AE
+sar edx, 1Fh	; 1D7B0
+LD sub, eax, edx	; 1D7B3
+sar eax, 1	; 1D7B5
+mov dword [dword esp+088h], eax	; 1D7B7
+mov dword [byte esp+074h], eax	; 1D7BE
+mov edx, dword [byte esp+038h]	; 1D7C2
+mov edx, dword [byte edx+04h]	; 1D7C6
+mov eax, dword [byte esp+038h]	; 1D7C9
+mov esi, dword [byte eax+0Ch]	; 1D7CD
+add edx, esi	; 1D7D0
+mov eax, edx	; 1D7D2
+sar edx, 1Fh	; 1D7D4
+LD sub, eax, edx	; 1D7D7
+sar eax, 1	; 1D7D9
+mov dword [dword esp+08Ch], eax	; 1D7DB
+mov dword [byte esp+070h], eax	; 1D7E2
+mov edi, eax	; 1D7E6
+push eax	; 1D7E8
+mov ebp, dword [dword esp+08Ch]	; 1D7E9
+push ebp	; 1D7F0
+push ebx	; 1D7F1
+call sub_91400	; 1D7F2
+add esp, byte 0Ch	; 1D7F7
+mov eax, edi	; 1D7FA
+push eax	; 1D7FC
+push ebp	; 1D7FD
+mov ebx, dword [pointerspr]	; 1D7FE
+push ebx	; 1D804
+call sub_91370	; 1D805
+add esp, byte 0Ch	; 1D80A
+push dword 1E0h	; 1D80D
+push dword 280h	; 1D812
+push byte 0	; 1D817
+push byte 0	; 1D819
+call sub_B2E1B	; 1D81B
+add esp, byte 10h	; 1D820
+mov ecx, edi	; 1D823
+push ecx	; 1D825
+push ebp	; 1D826
+call MouseSetPos	; 1D827
+add esp, byte 8	; 1D82C
+call dword [mousepollfn]	; 1D82F
+call ClearInputQueue	; 1D835
+.1:
+xor ecx, ecx	; 1D83A
+.2:
+call GetInputEvent	; 1D83C
+test eax, eax	; 1D841
+je short .3	; 1D843
+lea ebx, [byte esp+070h]	; 1D845
+lea edx, [byte esp+074h]	; 1D849
+call dword [ptrupdatefn]	; 1D84D
+mov ecx, eax	; 1D853
+test al, 2	; 1D855
+je short RunMenu.2	; 1D857
+.3:
+test cl, 2	; 1D859
+jne near .6	; 1D85C
+mov eax, dword [byte esp+074h]	; 1D862
+cmp eax, dword [dword esp+088h]	; 1D866
+jne short .4	; 1D86D
+mov eax, dword [byte esp+070h]	; 1D86F
+cmp eax, dword [dword esp+08Ch]	; 1D873
+je short RunMenu.1	; 1D87A
+.4:
+mov ecx, dword [dword esp+08Ch]	; 1D87C
+push ecx	; 1D883
+mov esi, dword [dword esp+08Ch]	; 1D884
+push esi	; 1D88B
+mov edi, dword [dword esp+08Ch]	; 1D88C
+push edi	; 1D893
+call sub_903F0	; 1D894
+add esp, byte 0Ch	; 1D899
+mov ebp, dword [byte esp+070h]	; 1D89C
+push ebp	; 1D8A0
+mov eax, dword [byte esp+078h]	; 1D8A1
+push eax	; 1D8A5
+push edi	; 1D8A6
+call sub_91400	; 1D8A7
+add esp, byte 0Ch	; 1D8AC
+mov ebx, dword [byte esp+070h]	; 1D8AF
+push ebx	; 1D8B3
+mov ecx, dword [byte esp+078h]	; 1D8B4
+push ecx	; 1D8B8
+mov esi, dword [pointerspr]	; 1D8B9
+push esi	; 1D8BF
+.5:
+call sub_91370	; 1D8C0
+add esp, byte 0Ch	; 1D8C5
+mov eax, dword [byte esp+074h]	; 1D8C8
+mov dword [dword esp+088h], eax	; 1D8CC
+mov eax, dword [byte esp+070h]	; 1D8D3
+mov dword [dword esp+08Ch], eax	; 1D8D7
+jmp near RunMenu.1	; 1D8DE
+.6:
+lea eax, [byte esp+068h]	; 1D8E3
+push eax	; 1D8E7
+lea eax, [byte esp+070h]	; 1D8E8
+push eax	; 1D8EC
+lea eax, [byte esp+010h]	; 1D8ED
+push eax	; 1D8F1
+lea eax, [byte esp+064h]	; 1D8F2
+push eax	; 1D8F6
+mov ecx, dword [dword esp+0A0h]	; 1D8F7
+lea ebx, [byte esp+048h]	; 1D8FE
+mov edx, dword [dword esp+080h]	; 1D902
+mov eax, dword [dword esp+084h]	; 1D909
+call MenuHitTest	; 1D910
+test eax, eax	; 1D915
+je near .23	; 1D917
+mov edx, dword [byte esp+06Ch]	; 1D91D
+shl edx, 2	; 1D921
+mov ebx, dword [byte esp+068h]	; 1D924
+shl ebx, 5	; 1D928
+mov eax, dword [byte esp+edx+038h]	; 1D92B
+add eax, ebx	; 1D92F
+cmp dword [byte eax+014h], byte 0	; 1D931
+je near .11	; 1D935
+mov eax, dword [byte esp+068h]	; 1D93B
+cmp eax, dword [byte esp+edx+028h]	; 1D93F
+jne near .10	; 1D943
+mov esi, dword [dword esp+08Ch]	; 1D949
+push esi	; 1D950
+mov edi, dword [dword esp+08Ch]	; 1D951
+push edi	; 1D958
+mov ebp, dword [dword esp+08Ch]	; 1D959
+push ebp	; 1D960
+call sub_903F0	; 1D961
+add esp, byte 0Ch	; 1D966
+mov esi, 3	; 1D969
+jmp short .9	; 1D96E
+.7:
+mov ebp, esi	; 1D970
+shl ebp, 2	; 1D972
+mov ebx, dword [byte esp+ebp+048h]	; 1D975
+test ebx, ebx	; 1D979
+je short .8	; 1D97B
+mov ecx, dword [byte esp+esi*8+0Ch]	; 1D97D
+push ecx	; 1D981
+mov eax, dword [byte esp+esi*8+0Ch]	; 1D982
+push eax	; 1D986
+push ebx	; 1D987
+call sub_903F0	; 1D988
+add esp, byte 0Ch	; 1D98D
+xor ebx, ebx	; 1D990
+mov dword [byte esp+esi*8+0Ch], ebx	; 1D992
+mov dword [byte esp+esi*8+08h], ebx	; 1D996
+mov ecx, dword [byte esp+ebp+048h]	; 1D99A
+push ecx	; 1D99E
+call FreeMemBlock	; 1D99F
+add esp, byte 4	; 1D9A4
+.8:
+dec esi	; 1D9A7
+.9:
+test esi, esi	; 1D9A8
+jge short RunMenu.7	; 1D9AA
+xor edi, edi	; 1D9AC
+mov dword [dword esp+090h], edi	; 1D9AE
+mov eax, dword [byte esp+06Ch]	; 1D9B5
+mov edx, dword [byte esp+068h]	; 1D9B9
+shl edx, 5	; 1D9BD
+mov eax, dword [byte esp+eax*4+038h]	; 1D9C0
+call dword [byte edx+eax+014h]	; 1D9C4
+mov dword [byte esp+044h], edi	; 1D9C8
+mov dword [byte esp+040h], edi	; 1D9CC
+mov dword [byte esp+03Ch], edi	; 1D9D0
+mov dword [byte esp+054h], edi	; 1D9D4
+mov dword [byte esp+050h], edi	; 1D9D8
+mov dword [byte esp+04Ch], edi	; 1D9DC
+mov dword [byte esp+048h], edi	; 1D9E0
+mov dword [byte esp+034h], edi	; 1D9E4
+mov dword [byte esp+030h], edi	; 1D9E8
+mov dword [byte esp+02Ch], edi	; 1D9EC
+mov dword [byte esp+064h], edi	; 1D9F0
+mov dword [byte esp+060h], edi	; 1D9F4
+mov dword [byte esp+05Ch], edi	; 1D9F8
+cmp eax, byte 1	; 1D9FC
+je near .28	; 1D9FF
+mov eax, dword [dword esp+08Ch]	; 1DA05
+push eax	; 1DA0C
+mov edx, dword [dword esp+08Ch]	; 1DA0D
+push edx	; 1DA14
+call MouseSetPos	; 1DA15
+add esp, byte 8	; 1DA1A
+mov eax, dword [dword esp+088h]	; 1DA1D
+mov dword [byte esp+074h], eax	; 1DA24
+mov eax, dword [dword esp+08Ch]	; 1DA28
+mov dword [byte esp+070h], eax	; 1DA2F
+call ClearInputQueue	; 1DA33
+jmp near .22	; 1DA38
+.10:
+mov ecx, dword [dword esp+08Ch]	; 1DA3D
+push ecx	; 1DA44
+mov esi, dword [dword esp+08Ch]	; 1DA45
+push esi	; 1DA4C
+mov edi, dword [dword esp+08Ch]	; 1DA4D
+push edi	; 1DA54
+call sub_903F0	; 1DA55
+add esp, byte 0Ch	; 1DA5A
+mov ebp, dword [dword esp+0A4h]	; 1DA5D
+push ebp	; 1DA64
+mov eax, dword [byte esp+04h]	; 1DA65
+push eax	; 1DA69
+mov eax, dword [byte esp+074h]	; 1DA6A
+mov ebx, dword [byte esp+eax*8+014h]	; 1DA6E
+mov edx, dword [byte esp+eax*8+010h]	; 1DA72
+mov ecx, dword [byte esp+eax*4+030h]	; 1DA76
+shl ecx, 5	; 1DA7A
+mov eax, dword [byte esp+eax*4+040h]	; 1DA7D
+add eax, ecx	; 1DA81
+mov ecx, dword [byte esp+0Ch]	; 1DA83
+call DrawMenuItemSel	; 1DA87
+mov edx, dword [byte esp+06Ch]	; 1DA8C
+mov eax, dword [byte esp+068h]	; 1DA90
+mov dword [byte esp+edx*4+028h], eax	; 1DA94
+push ebp	; 1DA98
+mov ecx, dword [byte esp+04h]	; 1DA99
+push ecx	; 1DA9D
+mov ebx, dword [byte esp+edx*8+014h]	; 1DA9E
+mov eax, dword [byte esp+edx*8+010h]	; 1DAA2
+mov esi, dword [byte esp+edx*4+030h]	; 1DAA6
+shl esi, 5	; 1DAAA
+mov edx, dword [byte esp+edx*4+040h]	; 1DAAD
+add esi, edx	; 1DAB1
+mov ecx, dword [byte esp+0Ch]	; 1DAB3
+mov edx, eax	; 1DAB7
+mov eax, esi	; 1DAB9
+jmp near .21	; 1DABB
+.11:
+cmp dword [byte eax+018h], byte 0	; 1DAC0
+je near .20	; 1DAC4
+mov esi, dword [dword esp+08Ch]	; 1DACA
+push esi	; 1DAD1
+mov edi, dword [dword esp+08Ch]	; 1DAD2
+push edi	; 1DAD9
+mov ebp, dword [dword esp+08Ch]	; 1DADA
+push ebp	; 1DAE1
+call sub_903F0	; 1DAE2
+add esp, byte 0Ch	; 1DAE7
+mov eax, dword [dword esp+090h]	; 1DAEA
+cmp eax, dword [byte esp+06Ch]	; 1DAF1
+je short .15	; 1DAF5
+mov esi, eax	; 1DAF7
+jmp short .14	; 1DAF9
+.12:
+mov edi, esi	; 1DAFB
+shl edi, 2	; 1DAFD
+xor ebp, ebp	; 1DB00
+mov dword [byte esp+edi+028h], ebp	; 1DB02
+mov eax, dword [byte esp+edi+048h]	; 1DB06
+test eax, eax	; 1DB0A
+je short .13	; 1DB0C
+mov ebp, esi	; 1DB0E
+mov edx, dword [byte esp+esi*8+0Ch]	; 1DB10
+push edx	; 1DB14
+mov ebx, dword [byte esp+esi*8+0Ch]	; 1DB15
+push ebx	; 1DB19
+push eax	; 1DB1A
+call sub_903F0	; 1DB1B
+add esp, byte 0Ch	; 1DB20
+xor eax, eax	; 1DB23
+mov dword [byte esp+esi*8+0Ch], eax	; 1DB25
+mov dword [byte esp+esi*8+08h], eax	; 1DB29
+mov edx, dword [byte esp+edi+048h]	; 1DB2D
+push edx	; 1DB31
+call FreeMemBlock	; 1DB32
+add esp, byte 4	; 1DB37
+xor ebx, ebx	; 1DB3A
+mov dword [byte esp+edi+048h], ebx	; 1DB3C
+mov dword [byte esp+edi+038h], ebx	; 1DB40
+xor ebp, esi	; 1DB44
+mov dword [byte esp+edi+058h], ebp	; 1DB46
+.13:
+dec esi	; 1DB4A
+.14:
+mov ecx, dword [byte esp+06Ch]	; 1DB4B
+cmp esi, ecx	; 1DB4F
+jg short RunMenu.12	; 1DB51
+mov dword [dword esp+090h], ecx	; 1DB53
+.15:
+mov eax, dword [dword esp+0A4h]	; 1DB5A
+push eax	; 1DB61
+mov edx, dword [byte esp+04h]	; 1DB62
+push edx	; 1DB66
+mov esi, dword [dword esp+098h]	; 1DB67
+mov ebx, dword [byte esp+esi*8+014h]	; 1DB6E
+mov edx, dword [byte esp+esi*8+010h]	; 1DB72
+mov ecx, dword [byte esp+esi*4+030h]	; 1DB76
+shl ecx, 5	; 1DB7A
+mov eax, dword [byte esp+esi*4+040h]	; 1DB7D
+add eax, ecx	; 1DB81
+mov ecx, dword [byte esp+0Ch]	; 1DB83
+call DrawMenuItemSel	; 1DB87
+mov eax, dword [byte esp+068h]	; 1DB8C
+mov dword [byte esp+esi*4+028h], eax	; 1DB90
+mov ebx, dword [dword esp+0A4h]	; 1DB94
+push ebx	; 1DB9B
+mov ecx, dword [byte esp+04h]	; 1DB9C
+push ecx	; 1DBA0
+mov ebx, dword [byte esp+esi*8+014h]	; 1DBA1
+mov edx, dword [byte esp+esi*8+010h]	; 1DBA5
+shl eax, 5	; 1DBA9
+mov ecx, dword [byte esp+esi*4+040h]	; 1DBAC
+add eax, ecx	; 1DBB0
+mov ecx, dword [byte esp+0Ch]	; 1DBB2
+call DrawMenuItemNorm	; 1DBB6
+mov eax, dword [byte esp+06Ch]	; 1DBBB
+mov ebx, dword [byte esp+068h]	; 1DBBF
+shl ebx, 5	; 1DBC3
+mov ecx, dword [byte esp+eax*4+038h]	; 1DBC6
+inc esi	; 1DBCA
+mov dword [dword esp+090h], esi	; 1DBCB
+mov ecx, dword [byte ecx+ebx+018h]	; 1DBD2
+mov dword [byte esp+esi*4+038h], ecx	; 1DBD6
+mov eax, dword [byte esp+eax*4+038h]	; 1DBDA
+add eax, ebx	; 1DBDE
+mov ebx, dword [byte eax+01Ch]	; 1DBE0
+mov dword [byte esp+esi*4+058h], ebx	; 1DBE3
+cmp esi, byte 1	; 1DBE7
+je short .16	; 1DBEA
+mov edx, dword [byte eax+08h]	; 1DBEC
+jmp short .17	; 1DBEF
+.16:
+mov edx, dword [eax]	; 1DBF1
+.17:
+mov eax, dword [dword esp+090h]	; 1DBF3
+mov ebp, dword [esp+eax*8]	; 1DBFA
+add edx, ebp	; 1DBFD
+mov dword [byte esp+eax*8+08h], edx	; 1DBFF
+mov edx, dword [byte esp+068h]	; 1DC03
+shl edx, 5	; 1DC07
+mov eax, dword [byte esp+06Ch]	; 1DC0A
+shl eax, 2	; 1DC0E
+cmp dword [dword esp+090h], byte 1	; 1DC11
+je short .18	; 1DC19
+mov eax, dword [byte esp+eax+038h]	; 1DC1B
+mov eax, dword [byte edx+eax+04h]	; 1DC1F
+jmp short .19	; 1DC23
+.18:
+mov eax, dword [byte esp+eax+038h]	; 1DC25
+mov eax, dword [byte edx+eax+0Ch]	; 1DC29
+.19:
+mov edx, dword [dword esp+090h]	; 1DC2D
+shl edx, 3	; 1DC34
+mov dword [dword esp+080h], edx	; 1DC37
+mov ecx, dword [byte esp+edx+04h]	; 1DC3E
+add eax, ecx	; 1DC42
+mov dword [byte esp+edx+0Ch], eax	; 1DC44
+mov ebp, dword [dword esp+090h]	; 1DC48
+mov edx, dword [byte esp+ebp*4+058h]	; 1DC4F
+shl edx, 5	; 1DC53
+mov eax, dword [byte esp+ebp*4+038h]	; 1DC56
+mov ebx, dword [byte edx+eax-018h]	; 1DC5A
+sub ebx, dword [eax]	; 1DC5E
+inc ebx	; 1DC60
+mov dword [byte esp+07Ch], ebx	; 1DC61
+mov edx, dword [byte edx+eax-014h]	; 1DC65
+sub edx, dword [byte eax+04h]	; 1DC69
+inc edx	; 1DC6C
+mov dword [byte esp+078h], edx	; 1DC6D
+push byte 20h	; 1DC71
+mov eax, ebx	; 1DC73
+imul eax, edx	; 1DC75
+add eax, byte 11h	; 1DC78
+push eax	; 1DC7B
+push str_menubuff	; 1DC7C
+call sub_8CCA8	; 1DC81
+add esp, byte 0Ch	; 1DC86
+mov dword [byte esp+ebp*4+048h], eax	; 1DC89
+mov esi, dword [pointerspr]	; 1DC8D
+mov edi, eax	; 1DC93
+movsd	; 1DC95
+movsd	; 1DC96
+movsd	; 1DC97
+movsd	; 1DC98
+movsb	; 1DC99
+mov eax, dword [byte esp+ebp*4+048h]	; 1DC9A
+mov edx, dword [byte esp+07Ch]	; 1DC9E
+mov word [byte eax+04h], dx	; 1DCA2
+mov eax, dword [byte esp+ebp*4+048h]	; 1DCA6
+mov edx, dword [byte esp+078h]	; 1DCAA
+mov word [byte eax+06h], dx	; 1DCAE
+mov eax, dword [dword esp+080h]	; 1DCB2
+mov ebx, dword [byte esp+eax+0Ch]	; 1DCB9
+push ebx	; 1DCBD
+mov ecx, dword [byte esp+eax+0Ch]	; 1DCBE
+push ecx	; 1DCC2
+mov esi, dword [byte esp+ebp*4+050h]	; 1DCC3
+push esi	; 1DCC7
+call sub_91400	; 1DCC8
+add esp, byte 0Ch	; 1DCCD
+mov edi, dword [dword esp+0A4h]	; 1DCD0
+push edi	; 1DCD7
+mov eax, dword [byte esp+04h]	; 1DCD8
+push eax	; 1DCDC
+mov edx, dword [byte esp+0Ch]	; 1DCDD
+push edx	; 1DCE1
+mov ecx, dword [dword esp+08Ch]	; 1DCE2
+mov ecx, dword [byte esp+ecx+018h]	; 1DCE9
+mov ebx, dword [dword esp+08Ch]	; 1DCED
+mov ebx, dword [byte esp+ebx+014h]	; 1DCF4
+mov edx, dword [byte esp+ebp*4+064h]	; 1DCF8
+mov eax, dword [byte esp+ebp*4+044h]	; 1DCFC
+call DrawMenuDropdown	; 1DD00
+xor ebx, ebx	; 1DD05
+mov dword [byte esp+ebp*4+028h], ebx	; 1DD07
+push edi	; 1DD0B
+mov esi, dword [byte esp+04h]	; 1DD0C
+push esi	; 1DD10
+mov ebx, dword [dword esp+088h]	; 1DD11
+mov ebx, dword [byte esp+ebx+014h]	; 1DD18
+mov edx, dword [dword esp+088h]	; 1DD1C
+mov edx, dword [byte esp+edx+010h]	; 1DD23
+mov eax, dword [byte esp+ebp*4+040h]	; 1DD27
+mov ecx, dword [byte esp+0Ch]	; 1DD2B
+jmp near .21	; 1DD2F
+.20:
+mov esi, dword [dword esp+08Ch]	; 1DD34
+push esi	; 1DD3B
+mov edi, dword [dword esp+08Ch]	; 1DD3C
+push edi	; 1DD43
+mov ebp, dword [dword esp+08Ch]	; 1DD44
+push ebp	; 1DD4B
+call sub_903F0	; 1DD4C
+add esp, byte 0Ch	; 1DD51
+mov eax, dword [dword esp+0A4h]	; 1DD54
+push eax	; 1DD5B
+mov edx, dword [byte esp+04h]	; 1DD5C
+push edx	; 1DD60
+mov eax, dword [byte esp+074h]	; 1DD61
+mov ebx, dword [byte esp+eax*8+014h]	; 1DD65
+mov edx, dword [byte esp+eax*8+010h]	; 1DD69
+mov ecx, dword [byte esp+eax*4+030h]	; 1DD6D
+shl ecx, 5	; 1DD71
+mov eax, dword [byte esp+eax*4+040h]	; 1DD74
+add eax, ecx	; 1DD78
+mov ecx, dword [byte esp+0Ch]	; 1DD7A
+call DrawMenuItemSel	; 1DD7E
+mov edx, dword [byte esp+06Ch]	; 1DD83
+mov eax, dword [byte esp+068h]	; 1DD87
+mov dword [byte esp+edx*4+028h], eax	; 1DD8B
+mov ebx, dword [dword esp+0A4h]	; 1DD8F
+push ebx	; 1DD96
+mov ecx, dword [byte esp+04h]	; 1DD97
+push ecx	; 1DD9B
+mov ebx, dword [byte esp+edx*8+014h]	; 1DD9C
+mov esi, dword [byte esp+edx*8+010h]	; 1DDA0
+shl eax, 5	; 1DDA4
+mov edx, dword [byte esp+edx*4+040h]	; 1DDA7
+add eax, edx	; 1DDAB
+mov ecx, dword [byte esp+0Ch]	; 1DDAD
+mov edx, esi	; 1DDB1
+.21:
+call DrawMenuItemNorm	; 1DDB3
+.22:
+mov esi, dword [dword esp+08Ch]	; 1DDB8
+push esi	; 1DDBF
+mov edi, dword [dword esp+08Ch]	; 1DDC0
+push edi	; 1DDC7
+mov ebp, dword [dword esp+08Ch]	; 1DDC8
+push ebp	; 1DDCF
+jmp near .27	; 1DDD0
+.23:
+mov edi, dword [dword esp+08Ch]	; 1DDD5
+push edi	; 1DDDC
+mov ebp, dword [dword esp+08Ch]	; 1DDDD
+push ebp	; 1DDE4
+mov eax, dword [dword esp+08Ch]	; 1DDE5
+push eax	; 1DDEC
+call sub_903F0	; 1DDED
+add esp, byte 0Ch	; 1DDF2
+mov esi, 3	; 1DDF5
+jmp short .26	; 1DDFA
+.24:
+mov ebp, esi	; 1DDFC
+shl ebp, 2	; 1DDFE
+mov edx, dword [byte esp+ebp+048h]	; 1DE01
+test edx, edx	; 1DE05
+je short .25	; 1DE07
+mov ebx, dword [byte esp+esi*8+0Ch]	; 1DE09
+push ebx	; 1DE0D
+mov ecx, dword [byte esp+esi*8+0Ch]	; 1DE0E
+push ecx	; 1DE12
+push edx	; 1DE13
+call sub_903F0	; 1DE14
+add esp, byte 0Ch	; 1DE19
+xor edx, edx	; 1DE1C
+mov dword [byte esp+esi*8+0Ch], edx	; 1DE1E
+mov dword [byte esp+esi*8+08h], edx	; 1DE22
+mov ebx, dword [byte esp+ebp+048h]	; 1DE26
+push ebx	; 1DE2A
+call FreeMemBlock	; 1DE2B
+add esp, byte 4	; 1DE30
+.25:
+dec esi	; 1DE33
+.26:
+test esi, esi	; 1DE34
+jge short RunMenu.24	; 1DE36
+xor edi, edi	; 1DE38
+mov dword [dword esp+090h], edi	; 1DE3A
+mov dword [byte esp+044h], edi	; 1DE41
+mov dword [byte esp+040h], edi	; 1DE45
+mov dword [byte esp+03Ch], edi	; 1DE49
+mov dword [byte esp+054h], edi	; 1DE4D
+mov dword [byte esp+050h], edi	; 1DE51
+mov dword [byte esp+04Ch], edi	; 1DE55
+mov dword [byte esp+048h], edi	; 1DE59
+mov dword [byte esp+034h], edi	; 1DE5D
+mov dword [byte esp+030h], edi	; 1DE61
+mov dword [byte esp+02Ch], edi	; 1DE65
+mov dword [byte esp+064h], edi	; 1DE69
+mov dword [byte esp+060h], edi	; 1DE6D
+mov dword [byte esp+05Ch], edi	; 1DE71
+mov edi, dword [dword esp+08Ch]	; 1DE75
+push edi	; 1DE7C
+mov ebp, dword [dword esp+08Ch]	; 1DE7D
+push ebp	; 1DE84
+mov eax, dword [dword esp+08Ch]	; 1DE85
+push eax	; 1DE8C
+.27:
+call sub_91400	; 1DE8D
+add esp, byte 0Ch	; 1DE92
+mov eax, dword [dword esp+08Ch]	; 1DE95
+push eax	; 1DE9C
+mov edx, dword [dword esp+08Ch]	; 1DE9D
+push edx	; 1DEA4
+mov ebx, dword [dword esp+08Ch]	; 1DEA5
+push ebx	; 1DEAC
+call sub_903F0	; 1DEAD
+add esp, byte 0Ch	; 1DEB2
+mov ecx, dword [byte esp+070h]	; 1DEB5
+push ecx	; 1DEB9
+mov esi, dword [byte esp+078h]	; 1DEBA
+push esi	; 1DEBE
+mov edi, dword [dword esp+08Ch]	; 1DEBF
+push edi	; 1DEC6
+call sub_91400	; 1DEC7
+add esp, byte 0Ch	; 1DECC
+mov ebp, dword [byte esp+070h]	; 1DECF
+push ebp	; 1DED3
+mov eax, dword [byte esp+078h]	; 1DED4
+push eax	; 1DED8
+mov edx, dword [pointerspr]	; 1DED9
+push edx	; 1DEDF
+jmp near RunMenu.5	; 1DEE0
+.28:
+mov ebx, dword [dword esp+084h]	; 1DEE5
+push ebx	; 1DEEC
+call FreeMemBlock	; 1DEED
+add esp, byte 4	; 1DEF2
+xor eax, eax	; 1DEF5
+add esp, 94h	; 1DEF7
+RunMenu_ret4:
+pop ebp	; 1DEFD
+pop edi	; 1DEFE
+pop esi	; 1DEFF
+ret 4	; 1DF00
+RunTeamPickMenu:
+push dword 0C4h	; 1DF03
+call __CHK	; 1DF08
+push esi	; 1DF0D
+push edi	; 1DF0E
+push ebp	; 1DF0F
+sub esp, 98h	; 1DF10
+push ebx	; 1DF16
+push ecx	; 1DF17
+xor ebx, ebx	; 1DF18
+mov dword [byte esp+074h], ebx	; 1DF1A
+mov dword [byte esp+070h], ebx	; 1DF1E
+mov dword [dword esp+098h], ebx	; 1DF22
+mov dword [byte esp+058h], eax	; 1DF29
+mov dword [byte esp+028h], edx	; 1DF2D
+mov dword [byte esp+064h], ebx	; 1DF31
+mov dword [byte esp+060h], ebx	; 1DF35
+mov dword [byte esp+05Ch], ebx	; 1DF39
+mov dword [byte esp+054h], ebx	; 1DF3D
+mov dword [byte esp+050h], ebx	; 1DF41
+mov dword [byte esp+04Ch], ebx	; 1DF45
+mov dword [byte esp+048h], ebx	; 1DF49
+mov dword [byte esp+044h], ebx	; 1DF4D
+mov dword [byte esp+040h], ebx	; 1DF51
+mov dword [byte esp+03Ch], ebx	; 1DF55
+mov dword [byte esp+038h], ebx	; 1DF59
+mov dword [byte esp+0Ch], ebx	; 1DF5D
+mov dword [byte esp+08h], ebx	; 1DF61
+mov eax, dword [pointerspr]	; 1DF65
+mov edx, dword [byte eax+02h]	; 1DF6A
+sar edx, 10h	; 1DF6D
+mov eax, dword [byte eax+04h]	; 1DF70
+sar eax, 10h	; 1DF73
+inc eax	; 1DF76
+inc edx	; 1DF77
+imul eax, edx	; 1DF78
+add eax, byte 11h	; 1DF7B
+push byte 20h	; 1DF7E
+push eax	; 1DF80
+push str_PointerMenu	; 1DF81
+call sub_8CCA8	; 1DF86
+add esp, byte 0Ch	; 1DF8B
+mov dword [dword esp+08Ch], eax	; 1DF8E
+mov esi, dword [pointerspr]	; 1DF95
+mov edi, eax	; 1DF9B
+movsd	; 1DF9D
+movsd	; 1DF9E
+movsd	; 1DF9F
+movsd	; 1DFA0
+movsb	; 1DFA1
+mov edx, dword [pointerspr]	; 1DFA2
+mov dx, word [byte edx+04h]	; 1DFA8
+inc edx	; 1DFAC
+mov word [byte eax+04h], dx	; 1DFAD
+mov edx, dword [pointerspr]	; 1DFB1
+mov dx, word [byte edx+06h]	; 1DFB7
+inc edx	; 1DFBB
+mov word [byte eax+06h], dx	; 1DFBC
+mov edx, dword [byte esp+058h]	; 1DFC0
+mov edx, dword [edx]	; 1DFC4
+mov eax, dword [byte esp+058h]	; 1DFC6
+mov esi, dword [byte eax+08h]	; 1DFCA
+add edx, esi	; 1DFCD
+mov eax, edx	; 1DFCF
+sar edx, 1Fh	; 1DFD1
+LD sub, eax, edx	; 1DFD4
+sar eax, 1	; 1DFD6
+mov dword [dword esp+090h], eax	; 1DFD8
+mov dword [byte esp+07Ch], eax	; 1DFDF
+mov edx, dword [byte esp+058h]	; 1DFE3
+mov edx, dword [byte edx+04h]	; 1DFE7
+mov eax, dword [byte esp+058h]	; 1DFEA
+mov edi, dword [byte eax+0Ch]	; 1DFEE
+add edx, edi	; 1DFF1
+mov eax, edx	; 1DFF3
+sar edx, 1Fh	; 1DFF5
+LD sub, eax, edx	; 1DFF8
+sar eax, 1	; 1DFFA
+mov dword [dword esp+094h], eax	; 1DFFC
+mov dword [byte esp+078h], eax	; 1E003
+cmp dword [statsplayoffs], byte 0	; 1E007
+jne near .9	; 1E00E
+xor esi, esi	; 1E014
+mov edx, dword [statsteamsel]	; 1E016
+.1:
+cmp edx, dword [nosplit esi*4+statsteamorder]	; 1E01C
+jne short .2	; 1E023
+mov dword [byte esp+070h], esi	; 1E025
+.2:
+inc esi	; 1E029
+cmp esi, byte 1Ah	; 1E02A
+jl short RunTeamPickMenu.1	; 1E02D
+mov edx, dword [byte esp+070h]	; 1E02F
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E033
+mov eax, edx	; 1E03A
+shl eax, 2	; 1E03C
+sub eax, edx	; 1E03F
+shl eax, 2	; 1E041
+add eax, edx	; 1E044
+mov edx, dword [statsteambuf]	; 1E046
+mov dl, byte [byte edx+eax*2+0Dh]	; 1E04C
+and edx, 0FFh	; 1E050
+mov ebx, 2	; 1E056
+mov eax, edx	; 1E05B
+sar edx, 1Fh	; 1E05D
+idiv ebx	; 1E060
+test edx, edx	; 1E062
+je short .3	; 1E064
+mov esi, 14Ah	; 1E066
+jmp short .4	; 1E06B
+.3:
+mov esi, 0A5h	; 1E06D
+.4:
+mov edx, dword [byte esp+070h]	; 1E072
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E076
+mov eax, edx	; 1E07D
+shl eax, 2	; 1E07F
+sub eax, edx	; 1E082
+shl eax, 2	; 1E084
+add eax, edx	; 1E087
+mov edx, dword [statsteambuf]	; 1E089
+cmp byte [byte edx+eax*2+0Dh], 2	; 1E08F
+jae short .5	; 1E094
+xor ebx, ebx	; 1E096
+jmp short .6	; 1E098
+.5:
+mov ebx, 140h	; 1E09A
+.6:
+mov ecx, dword [byte esp+070h]	; 1E09F
+cmp ecx, byte 0Ch	; 1E0A3
+jge short .7	; 1E0A6
+mov ecx, 6	; 1E0A8
+mov eax, dword [byte esp+070h]	; 1E0AD
+mov edx, eax	; 1E0B1
+jmp short .8	; 1E0B3
+.7:
+lea edx, [byte ecx-0Ch]	; 1E0B5
+mov ecx, 7	; 1E0B8
+mov eax, edx	; 1E0BD
+.8:
+sar edx, 1Fh	; 1E0BF
+idiv ecx	; 1E0C2
+mov eax, edx	; 1E0C4
+shl eax, 2	; 1E0C6
+sub eax, edx	; 1E0C9
+shl eax, 2	; 1E0CB
+add eax, edx	; 1E0CE
+add esi, eax	; 1E0D0
+push dword 80h	; 1E0D2
+push byte 0Dh	; 1E0D7
+push dword 140h	; 1E0D9
+push esi	; 1E0DE
+push ebx	; 1E0DF
+call sub_90F38	; 1E0E0
+add esp, byte 14h	; 1E0E5
+jmp short .10	; 1E0E8
+.9:
+mov eax, dword [statsteamsel]	; 1E0EA
+mov dword [byte esp+070h], eax	; 1E0EF
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E0F3
+je short .10	; 1E0FB
+xor edx, edx	; 1E0FD
+lea eax, [byte esp+070h]	; 1E0FF
+call MoveTreeHighlight	; 1E103
+.10:
+mov esi, dword [dword esp+094h]	; 1E108
+push esi	; 1E10F
+mov edi, dword [dword esp+094h]	; 1E110
+push edi	; 1E117
+mov ebp, dword [dword esp+094h]	; 1E118
+push ebp	; 1E11F
+call sub_91400	; 1E120
+add esp, byte 0Ch	; 1E125
+push esi	; 1E128
+push edi	; 1E129
+mov ebx, dword [pointerspr]	; 1E12A
+push ebx	; 1E130
+call sub_91370	; 1E131
+add esp, byte 0Ch	; 1E136
+push dword 1E0h	; 1E139
+push dword 280h	; 1E13E
+push byte 0	; 1E143
+push byte 0	; 1E145
+call sub_B2E1B	; 1E147
+add esp, byte 10h	; 1E14C
+push esi	; 1E14F
+push edi	; 1E150
+call MouseSetPos	; 1E151
+add esp, byte 8	; 1E156
+call dword [mousepollfn]	; 1E159
+call ClearInputQueue	; 1E15F
+jmp near .19	; 1E164
+.11:
+mov edi, esi	; 1E169
+shl edi, 2	; 1E16B
+mov ebp, dword [byte esp+edi+048h]	; 1E16E
+test ebp, ebp	; 1E172
+je short .12	; 1E174
+mov eax, dword [byte esp+esi*8+0Ch]	; 1E176
+push eax	; 1E17A
+mov edx, dword [byte esp+esi*8+0Ch]	; 1E17B
+push edx	; 1E17F
+push ebp	; 1E180
+call sub_903F0	; 1E181
+add esp, byte 0Ch	; 1E186
+xor ecx, ecx	; 1E189
+mov dword [byte esp+esi*8+0Ch], ecx	; 1E18B
+mov dword [byte esp+esi*8+08h], ecx	; 1E18F
+mov ebp, dword [byte esp+edi+048h]	; 1E193
+push ebp	; 1E197
+call FreeMemBlock	; 1E198
+add esp, byte 4	; 1E19D
+xor eax, eax	; 1E1A0
+mov dword [byte esp+edi+048h], eax	; 1E1A2
+mov dword [byte esp+edi+058h], eax	; 1E1A6
+mov dword [byte esp+edi+028h], eax	; 1E1AA
+.12:
+dec esi	; 1E1AE
+.13:
+test esi, esi	; 1E1AF
+jge short RunTeamPickMenu.11	; 1E1B1
+xor edi, edi	; 1E1B3
+mov dword [dword esp+098h], edi	; 1E1B5
+.14:
+call PlayoffTreeScreen	; 1E1BC
+mov eax, dword [byte esp+070h]	; 1E1C1
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E1C5
+je short .15	; 1E1CD
+xor edx, edx	; 1E1CF
+lea eax, [byte esp+070h]	; 1E1D1
+call MoveTreeHighlight	; 1E1D5
+.15:
+mov esi, dword [dword esp+094h]	; 1E1DA
+push esi	; 1E1E1
+mov edi, dword [dword esp+094h]	; 1E1E2
+push edi	; 1E1E9
+mov ebp, dword [dword esp+094h]	; 1E1EA
+push ebp	; 1E1F1
+call sub_91400	; 1E1F2
+add esp, byte 0Ch	; 1E1F7
+.16:
+mov eax, dword [byte esp+07Ch]	; 1E1FA
+cmp eax, dword [dword esp+090h]	; 1E1FE
+jne short .17	; 1E205
+mov eax, dword [byte esp+078h]	; 1E207
+cmp eax, dword [dword esp+094h]	; 1E20B
+jne short .17	; 1E212
+cmp word [dword esp+09Ch], byte 0	; 1E214
+je short .19	; 1E21D
+.17:
+mov ecx, dword [dword esp+094h]	; 1E21F
+push ecx	; 1E226
+mov esi, dword [dword esp+094h]	; 1E227
+push esi	; 1E22E
+mov edi, dword [dword esp+094h]	; 1E22F
+push edi	; 1E236
+call sub_903F0	; 1E237
+add esp, byte 0Ch	; 1E23C
+mov ebp, dword [byte esp+078h]	; 1E23F
+push ebp	; 1E243
+mov eax, dword [dword esp+080h]	; 1E244
+push eax	; 1E24B
+push edi	; 1E24C
+.18:
+call sub_91400	; 1E24D
+add esp, byte 0Ch	; 1E252
+mov ebx, dword [byte esp+078h]	; 1E255
+push ebx	; 1E259
+mov ecx, dword [dword esp+080h]	; 1E25A
+push ecx	; 1E261
+mov esi, dword [pointerspr]	; 1E262
+push esi	; 1E268
+call sub_91370	; 1E269
+add esp, byte 0Ch	; 1E26E
+mov eax, dword [byte esp+07Ch]	; 1E271
+mov dword [dword esp+090h], eax	; 1E275
+mov eax, dword [byte esp+078h]	; 1E27C
+mov dword [dword esp+094h], eax	; 1E280
+.19:
+xor ecx, ecx	; 1E287
+.20:
+call GetInputEvent	; 1E289
+test eax, eax	; 1E28E
+je short .21	; 1E290
+lea ebx, [byte esp+078h]	; 1E292
+lea edx, [byte esp+07Ch]	; 1E296
+call dword [ptrupdatefn]	; 1E29A
+mov ecx, eax	; 1E2A0
+test al, 2	; 1E2A2
+je short RunTeamPickMenu.20	; 1E2A4
+.21:
+test cl, 2	; 1E2A6
+jne short .22	; 1E2A9
+xor edx, edx	; 1E2AB
+mov dword [dword esp+09Ch], edx	; 1E2AD
+cmp dword [statsplayoffs], byte 1	; 1E2B4
+jne near RunTeamPickMenu.16	; 1E2BB
+mov edx, dword [dword esp+094h]	; 1E2C1
+push edx	; 1E2C8
+mov ecx, dword [dword esp+094h]	; 1E2C9
+mov ebx, dword [dword esp+090h]	; 1E2D0
+lea edx, [byte esp+074h]	; 1E2D7
+mov eax, dword [dword esp+080h]	; 1E2DB
+call PlayoffTreeHitTest	; 1E2E2
+mov dword [dword esp+09Ch], eax	; 1E2E7
+test ax, ax	; 1E2EE
+je near RunTeamPickMenu.16	; 1E2F1
+mov ebx, dword [dword esp+098h]	; 1E2F7
+test ebx, ebx	; 1E2FE
+je near RunTeamPickMenu.14	; 1E300
+mov esi, ebx	; 1E306
+jmp near RunTeamPickMenu.13	; 1E308
+.22:
+lea eax, [byte esp+068h]	; 1E30D
+push eax	; 1E311
+lea eax, [byte esp+070h]	; 1E312
+push eax	; 1E316
+lea eax, [byte esp+010h]	; 1E317
+push eax	; 1E31B
+lea eax, [byte esp+034h]	; 1E31C
+push eax	; 1E320
+mov ecx, dword [dword esp+0A8h]	; 1E321
+lea ebx, [byte esp+068h]	; 1E328
+mov edx, dword [dword esp+088h]	; 1E32C
+mov eax, dword [dword esp+08Ch]	; 1E333
+call MenuHitTest	; 1E33A
+test eax, eax	; 1E33F
+je near .60	; 1E341
+mov edx, dword [byte esp+06Ch]	; 1E347
+shl edx, 2	; 1E34B
+mov ebx, dword [byte esp+068h]	; 1E34E
+shl ebx, 5	; 1E352
+mov eax, dword [byte esp+edx+058h]	; 1E355
+add eax, ebx	; 1E359
+cmp dword [byte eax+014h], byte 0	; 1E35B
+je near .50	; 1E35F
+mov eax, dword [byte esp+068h]	; 1E365
+cmp eax, dword [byte esp+edx+038h]	; 1E369
+jne near .48	; 1E36D
+mov esi, dword [dword esp+094h]	; 1E373
+push esi	; 1E37A
+mov edi, dword [dword esp+094h]	; 1E37B
+push edi	; 1E382
+mov ebp, dword [dword esp+094h]	; 1E383
+push ebp	; 1E38A
+call sub_903F0	; 1E38B
+add esp, byte 0Ch	; 1E390
+mov esi, 3	; 1E393
+jmp short .25	; 1E398
+.23:
+mov ebp, esi	; 1E39A
+shl ebp, 2	; 1E39C
+mov eax, dword [byte esp+ebp+048h]	; 1E39F
+test eax, eax	; 1E3A3
+je short .24	; 1E3A5
+mov edx, dword [byte esp+esi*8+0Ch]	; 1E3A7
+push edx	; 1E3AB
+mov ebx, dword [byte esp+esi*8+0Ch]	; 1E3AC
+push ebx	; 1E3B0
+push eax	; 1E3B1
+call sub_903F0	; 1E3B2
+add esp, byte 0Ch	; 1E3B7
+xor eax, eax	; 1E3BA
+mov dword [byte esp+esi*8+0Ch], eax	; 1E3BC
+mov dword [byte esp+esi*8+08h], eax	; 1E3C0
+mov edx, dword [byte esp+ebp+048h]	; 1E3C4
+push edx	; 1E3C8
+call FreeMemBlock	; 1E3C9
+add esp, byte 4	; 1E3CE
+.24:
+dec esi	; 1E3D1
+.25:
+test esi, esi	; 1E3D2
+jge short RunTeamPickMenu.23	; 1E3D4
+xor esi, esi	; 1E3D6
+mov dword [dword esp+098h], esi	; 1E3D8
+mov eax, dword [byte esp+070h]	; 1E3DF
+shl eax, 2	; 1E3E3
+cmp dword [statsplayoffs], byte 0	; 1E3E6
+jne short .26	; 1E3ED
+mov eax, dword [dword eax+statsteamorder]	; 1E3EF
+mov dword [byte esp+074h], eax	; 1E3F5
+mov dword [statscategory], eax	; 1E3F9
+jmp short .27	; 1E3FE
+.26:
+mov eax, dword [dword eax+playofftree]	; 1E400
+mov dword [statscategory], eax	; 1E406
+mov eax, dword [byte esp+070h]	; 1E40B
+.27:
+mov dword [statsteamsel], eax	; 1E40F
+cmp dword [statsplayoffs], byte 0	; 1E414
+jne near .34	; 1E41B
+mov edx, dword [byte esp+070h]	; 1E421
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E425
+mov eax, edx	; 1E42C
+shl eax, 2	; 1E42E
+sub eax, edx	; 1E431
+shl eax, 2	; 1E433
+add eax, edx	; 1E436
+mov edx, dword [statsteambuf]	; 1E438
+mov dl, byte [byte edx+eax*2+0Dh]	; 1E43E
+and edx, 0FFh	; 1E442
+mov ebx, 2	; 1E448
+mov eax, edx	; 1E44D
+sar edx, 1Fh	; 1E44F
+idiv ebx	; 1E452
+test edx, edx	; 1E454
+je short .28	; 1E456
+mov esi, 14Ah	; 1E458
+jmp short .29	; 1E45D
+.28:
+mov esi, 0A5h	; 1E45F
+.29:
+mov edx, dword [byte esp+070h]	; 1E464
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E468
+mov eax, edx	; 1E46F
+shl eax, 2	; 1E471
+sub eax, edx	; 1E474
+shl eax, 2	; 1E476
+add eax, edx	; 1E479
+mov edx, dword [statsteambuf]	; 1E47B
+cmp byte [byte edx+eax*2+0Dh], 2	; 1E481
+jae short .30	; 1E486
+xor ebx, ebx	; 1E488
+jmp short .31	; 1E48A
+.30:
+mov ebx, 140h	; 1E48C
+.31:
+mov ecx, dword [byte esp+070h]	; 1E491
+cmp ecx, byte 0Ch	; 1E495
+jge short .32	; 1E498
+mov ecx, 6	; 1E49A
+mov eax, dword [byte esp+070h]	; 1E49F
+mov edx, eax	; 1E4A3
+jmp short .33	; 1E4A5
+.32:
+lea edx, [byte ecx-0Ch]	; 1E4A7
+mov ecx, 7	; 1E4AA
+mov eax, edx	; 1E4AF
+.33:
+sar edx, 1Fh	; 1E4B1
+idiv ecx	; 1E4B4
+mov eax, edx	; 1E4B6
+shl eax, 2	; 1E4B8
+sub eax, edx	; 1E4BB
+shl eax, 2	; 1E4BD
+add eax, edx	; 1E4C0
+add esi, eax	; 1E4C2
+push dword 80h	; 1E4C4
+push byte 0Dh	; 1E4C9
+push dword 140h	; 1E4CB
+push esi	; 1E4D0
+push ebx	; 1E4D1
+call sub_90F38	; 1E4D2
+add esp, byte 14h	; 1E4D7
+jmp short .35	; 1E4DA
+.34:
+mov eax, dword [statsteamsel]	; 1E4DC
+mov dword [byte esp+070h], eax	; 1E4E1
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E4E5
+je short .35	; 1E4ED
+xor edx, edx	; 1E4EF
+lea eax, [byte esp+070h]	; 1E4F1
+call MoveTreeHighlight	; 1E4F5
+.35:
+mov eax, dword [byte esp+06Ch]	; 1E4FA
+mov edx, dword [byte esp+068h]	; 1E4FE
+shl edx, 5	; 1E502
+mov eax, dword [byte esp+eax*4+058h]	; 1E505
+call dword [byte edx+eax+014h]	; 1E509
+xor esi, esi	; 1E50D
+mov dword [byte esp+064h], esi	; 1E50F
+mov dword [byte esp+060h], esi	; 1E513
+mov dword [byte esp+05Ch], esi	; 1E517
+mov dword [byte esp+050h], esi	; 1E51B
+mov dword [byte esp+04Ch], esi	; 1E51F
+mov dword [byte esp+048h], esi	; 1E523
+mov dword [byte esp+044h], esi	; 1E527
+mov dword [byte esp+040h], esi	; 1E52B
+mov dword [byte esp+03Ch], esi	; 1E52F
+mov dword [byte esp+034h], esi	; 1E533
+mov dword [byte esp+030h], esi	; 1E537
+mov dword [byte esp+02Ch], esi	; 1E53B
+cmp eax, byte 1	; 1E53F
+jne short .37	; 1E542
+mov ebp, dword [dword esp+08Ch]	; 1E544
+push ebp	; 1E54B
+.36:
+call FreeMemBlock	; 1E54C
+add esp, byte 4	; 1E551
+xor eax, eax	; 1E554
+jmp near .86	; 1E556
+.37:
+mov esi, dword [statsplayoffs]	; 1E55B
+test esi, esi	; 1E561
+jne near .46	; 1E563
+mov eax, dword [byte esp+074h]	; 1E569
+.38:
+cmp eax, dword [nosplit esi*4+statsteamorder]	; 1E56D
+jne short .39	; 1E574
+mov dword [byte esp+070h], esi	; 1E576
+.39:
+inc esi	; 1E57A
+cmp esi, byte 1Ah	; 1E57B
+jl short RunTeamPickMenu.38	; 1E57E
+mov edx, dword [byte esp+070h]	; 1E580
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E584
+mov eax, edx	; 1E58B
+shl eax, 2	; 1E58D
+sub eax, edx	; 1E590
+shl eax, 2	; 1E592
+add eax, edx	; 1E595
+mov edx, dword [statsteambuf]	; 1E597
+mov dl, byte [byte edx+eax*2+0Dh]	; 1E59D
+and edx, 0FFh	; 1E5A1
+mov ebx, 2	; 1E5A7
+mov eax, edx	; 1E5AC
+sar edx, 1Fh	; 1E5AE
+idiv ebx	; 1E5B1
+test edx, edx	; 1E5B3
+je short .40	; 1E5B5
+mov esi, 14Ah	; 1E5B7
+jmp short .41	; 1E5BC
+.40:
+mov esi, 0A5h	; 1E5BE
+.41:
+mov edx, dword [byte esp+070h]	; 1E5C3
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1E5C7
+mov eax, edx	; 1E5CE
+shl eax, 2	; 1E5D0
+sub eax, edx	; 1E5D3
+shl eax, 2	; 1E5D5
+add edx, eax	; 1E5D8
+add edx, edx	; 1E5DA
+mov eax, dword [statsteambuf]	; 1E5DC
+cmp byte [byte edx+eax+0Dh], 2	; 1E5E1
+jae short .42	; 1E5E6
+xor ebx, ebx	; 1E5E8
+jmp short .43	; 1E5EA
+.42:
+mov ebx, 140h	; 1E5EC
+.43:
+mov ecx, dword [byte esp+070h]	; 1E5F1
+cmp ecx, byte 0Ch	; 1E5F5
+jge short .44	; 1E5F8
+mov ecx, 6	; 1E5FA
+mov eax, dword [byte esp+070h]	; 1E5FF
+mov edx, eax	; 1E603
+jmp short .45	; 1E605
+.44:
+lea edx, [byte ecx-0Ch]	; 1E607
+mov ecx, 7	; 1E60A
+mov eax, edx	; 1E60F
+.45:
+sar edx, 1Fh	; 1E611
+idiv ecx	; 1E614
+mov eax, edx	; 1E616
+shl eax, 2	; 1E618
+sub eax, edx	; 1E61B
+shl eax, 2	; 1E61D
+add eax, edx	; 1E620
+add esi, eax	; 1E622
+push dword 80h	; 1E624
+push byte 0Dh	; 1E629
+push dword 140h	; 1E62B
+push esi	; 1E630
+push ebx	; 1E631
+call sub_90F38	; 1E632
+add esp, byte 14h	; 1E637
+jmp short .47	; 1E63A
+.46:
+mov eax, dword [statsteamsel]	; 1E63C
+mov dword [byte esp+070h], eax	; 1E641
+cmp dword [nosplit eax*4+playofftree], byte 1Ah	; 1E645
+je short .47	; 1E64D
+xor edx, edx	; 1E64F
+lea eax, [byte esp+070h]	; 1E651
+call MoveTreeHighlight	; 1E655
+.47:
+mov esi, dword [dword esp+094h]	; 1E65A
+push esi	; 1E661
+mov edi, dword [dword esp+094h]	; 1E662
+push edi	; 1E669
+call MouseSetPos	; 1E66A
+add esp, byte 8	; 1E66F
+mov dword [byte esp+07Ch], edi	; 1E672
+mov dword [byte esp+078h], esi	; 1E676
+call ClearInputQueue	; 1E67A
+jmp near .85	; 1E67F
+.48:
+mov ecx, dword [dword esp+094h]	; 1E684
+push ecx	; 1E68B
+mov esi, dword [dword esp+094h]	; 1E68C
+push esi	; 1E693
+mov edi, dword [dword esp+094h]	; 1E694
+push edi	; 1E69B
+call sub_903F0	; 1E69C
+add esp, byte 0Ch	; 1E6A1
+mov ebp, dword [dword esp+0B0h]	; 1E6A4
+push ebp	; 1E6AB
+mov eax, dword [byte esp+04h]	; 1E6AC
+push eax	; 1E6B0
+mov eax, dword [byte esp+074h]	; 1E6B1
+mov ebx, dword [byte esp+eax*8+014h]	; 1E6B5
+mov edx, dword [byte esp+eax*8+010h]	; 1E6B9
+mov ecx, dword [byte esp+eax*4+040h]	; 1E6BD
+shl ecx, 5	; 1E6C1
+mov eax, dword [byte esp+eax*4+060h]	; 1E6C4
+add eax, ecx	; 1E6C8
+mov ecx, dword [byte esp+0Ch]	; 1E6CA
+call DrawMenuItemSel	; 1E6CE
+mov edx, dword [byte esp+06Ch]	; 1E6D3
+mov eax, dword [byte esp+068h]	; 1E6D7
+mov dword [byte esp+edx*4+038h], eax	; 1E6DB
+push ebp	; 1E6DF
+mov ecx, dword [byte esp+04h]	; 1E6E0
+push ecx	; 1E6E4
+mov ebx, dword [byte esp+edx*8+014h]	; 1E6E5
+mov eax, dword [byte esp+edx*8+010h]	; 1E6E9
+mov esi, dword [byte esp+edx*4+040h]	; 1E6ED
+shl esi, 5	; 1E6F1
+mov edx, dword [byte esp+edx*4+060h]	; 1E6F4
+add esi, edx	; 1E6F8
+mov ecx, dword [byte esp+0Ch]	; 1E6FA
+mov edx, eax	; 1E6FE
+mov eax, esi	; 1E700
+.49:
+call DrawMenuItemNorm	; 1E702
+jmp near .85	; 1E707
+.50:
+cmp dword [byte eax+018h], byte 0	; 1E70C
+je near .59	; 1E710
+mov esi, dword [dword esp+094h]	; 1E716
+push esi	; 1E71D
+mov edi, dword [dword esp+094h]	; 1E71E
+push edi	; 1E725
+mov ebp, dword [dword esp+094h]	; 1E726
+push ebp	; 1E72D
+call sub_903F0	; 1E72E
+add esp, byte 0Ch	; 1E733
+mov eax, dword [dword esp+098h]	; 1E736
+cmp eax, dword [byte esp+06Ch]	; 1E73D
+je short .54	; 1E741
+mov esi, eax	; 1E743
+jmp short .53	; 1E745
+.51:
+mov edi, esi	; 1E747
+shl edi, 2	; 1E749
+xor eax, eax	; 1E74C
+mov dword [byte esp+edi+038h], eax	; 1E74E
+mov edx, dword [byte esp+edi+048h]	; 1E752
+test edx, edx	; 1E756
+je short .52	; 1E758
+mov ebp, esi	; 1E75A
+mov ebx, dword [byte esp+esi*8+0Ch]	; 1E75C
+push ebx	; 1E760
+mov ecx, dword [byte esp+esi*8+0Ch]	; 1E761
+push ecx	; 1E765
+push edx	; 1E766
+call sub_903F0	; 1E767
+add esp, byte 0Ch	; 1E76C
+xor edx, edx	; 1E76F
+mov dword [byte esp+esi*8+0Ch], edx	; 1E771
+mov dword [byte esp+esi*8+08h], edx	; 1E775
+mov ebx, dword [byte esp+edi+048h]	; 1E779
+push ebx	; 1E77D
+call FreeMemBlock	; 1E77E
+add esp, byte 4	; 1E783
+xor ecx, ecx	; 1E786
+mov dword [byte esp+edi+048h], ecx	; 1E788
+xor ebp, esi	; 1E78C
+mov dword [byte esp+edi+058h], ebp	; 1E78E
+mov dword [byte esp+edi+028h], ecx	; 1E792
+.52:
+dec esi	; 1E796
+.53:
+mov ebp, dword [byte esp+06Ch]	; 1E797
+cmp esi, ebp	; 1E79B
+jg short RunTeamPickMenu.51	; 1E79D
+mov dword [dword esp+098h], ebp	; 1E79F
+.54:
+mov edx, dword [dword esp+0B0h]	; 1E7A6
+push edx	; 1E7AD
+mov ebx, dword [byte esp+04h]	; 1E7AE
+push ebx	; 1E7B2
+mov edi, dword [dword esp+0A0h]	; 1E7B3
+mov ebx, dword [byte esp+edi*8+014h]	; 1E7BA
+mov edx, dword [byte esp+edi*8+010h]	; 1E7BE
+mov eax, dword [byte esp+edi*4+040h]	; 1E7C2
+shl eax, 5	; 1E7C6
+mov ecx, dword [byte esp+edi*4+060h]	; 1E7C9
+add eax, ecx	; 1E7CD
+mov ecx, dword [byte esp+0Ch]	; 1E7CF
+call DrawMenuItemSel	; 1E7D3
+mov eax, dword [byte esp+068h]	; 1E7D8
+mov dword [byte esp+edi*4+038h], eax	; 1E7DC
+mov ecx, dword [dword esp+0B0h]	; 1E7E0
+push ecx	; 1E7E7
+mov ebp, dword [byte esp+04h]	; 1E7E8
+push ebp	; 1E7EC
+mov ebx, dword [byte esp+edi*8+014h]	; 1E7ED
+mov edx, dword [byte esp+edi*8+010h]	; 1E7F1
+shl eax, 5	; 1E7F5
+mov ecx, dword [byte esp+edi*4+060h]	; 1E7F8
+add eax, ecx	; 1E7FC
+mov ecx, dword [byte esp+0Ch]	; 1E7FE
+call DrawMenuItemNorm	; 1E802
+mov eax, dword [byte esp+06Ch]	; 1E807
+mov ecx, dword [byte esp+068h]	; 1E80B
+shl ecx, 5	; 1E80F
+mov ebx, dword [byte esp+eax*4+058h]	; 1E812
+lea edx, [byte edi+01h]	; 1E816
+mov dword [dword esp+098h], edx	; 1E819
+mov ebx, dword [byte ecx+ebx+018h]	; 1E820
+mov dword [byte esp+edx*4+058h], ebx	; 1E824
+mov eax, dword [byte esp+eax*4+058h]	; 1E828
+add eax, ecx	; 1E82C
+mov ebx, dword [byte eax+01Ch]	; 1E82E
+mov dword [byte esp+edx*4+028h], ebx	; 1E831
+cmp edx, byte 1	; 1E835
+je short .55	; 1E838
+mov edx, dword [byte eax+08h]	; 1E83A
+jmp short .56	; 1E83D
+.55:
+mov edx, dword [eax]	; 1E83F
+.56:
+mov eax, dword [dword esp+098h]	; 1E841
+mov ecx, dword [esp+eax*8]	; 1E848
+add edx, ecx	; 1E84B
+mov dword [byte esp+eax*8+08h], edx	; 1E84D
+mov edx, dword [byte esp+068h]	; 1E851
+shl edx, 5	; 1E855
+mov eax, dword [byte esp+06Ch]	; 1E858
+shl eax, 2	; 1E85C
+cmp dword [dword esp+098h], byte 1	; 1E85F
+je short .57	; 1E867
+mov eax, dword [byte esp+eax+058h]	; 1E869
+mov eax, dword [byte edx+eax+04h]	; 1E86D
+jmp short .58	; 1E871
+.57:
+mov eax, dword [byte esp+eax+058h]	; 1E873
+mov eax, dword [byte edx+eax+0Ch]	; 1E877
+.58:
+mov edx, dword [dword esp+098h]	; 1E87B
+shl edx, 3	; 1E882
+mov dword [dword esp+088h], edx	; 1E885
+mov edi, dword [byte esp+edx+04h]	; 1E88C
+add eax, edi	; 1E890
+mov dword [byte esp+edx+0Ch], eax	; 1E892
+mov ebp, dword [dword esp+098h]	; 1E896
+mov edx, dword [byte esp+ebp*4+028h]	; 1E89D
+shl edx, 5	; 1E8A1
+mov eax, dword [byte esp+ebp*4+058h]	; 1E8A4
+mov ebx, dword [byte edx+eax-018h]	; 1E8A8
+sub ebx, dword [eax]	; 1E8AC
+inc ebx	; 1E8AE
+mov dword [dword esp+084h], ebx	; 1E8AF
+mov edx, dword [byte edx+eax-014h]	; 1E8B6
+sub edx, dword [byte eax+04h]	; 1E8BA
+inc edx	; 1E8BD
+mov dword [dword esp+080h], edx	; 1E8BE
+push byte 20h	; 1E8C5
+mov eax, ebx	; 1E8C7
+imul eax, edx	; 1E8C9
+add eax, byte 11h	; 1E8CC
+push eax	; 1E8CF
+push str_menubuff	; 1E8D0
+call sub_8CCA8	; 1E8D5
+add esp, byte 0Ch	; 1E8DA
+mov dword [byte esp+ebp*4+048h], eax	; 1E8DD
+mov esi, dword [pointerspr]	; 1E8E1
+mov edi, eax	; 1E8E7
+movsd	; 1E8E9
+movsd	; 1E8EA
+movsd	; 1E8EB
+movsd	; 1E8EC
+movsb	; 1E8ED
+mov eax, dword [byte esp+ebp*4+048h]	; 1E8EE
+mov edx, dword [dword esp+084h]	; 1E8F2
+mov word [byte eax+04h], dx	; 1E8F9
+mov eax, dword [byte esp+ebp*4+048h]	; 1E8FD
+mov edx, dword [dword esp+080h]	; 1E901
+mov word [byte eax+06h], dx	; 1E908
+mov eax, dword [dword esp+088h]	; 1E90C
+mov edx, dword [byte esp+eax+0Ch]	; 1E913
+push edx	; 1E917
+mov ebx, dword [byte esp+eax+0Ch]	; 1E918
+push ebx	; 1E91C
+mov ecx, dword [byte esp+ebp*4+050h]	; 1E91D
+push ecx	; 1E921
+call sub_91400	; 1E922
+add esp, byte 0Ch	; 1E927
+mov esi, dword [dword esp+0B0h]	; 1E92A
+push esi	; 1E931
+mov edi, dword [byte esp+04h]	; 1E932
+push edi	; 1E936
+mov eax, dword [byte esp+0Ch]	; 1E937
+push eax	; 1E93B
+mov ecx, dword [dword esp+094h]	; 1E93C
+mov ecx, dword [byte esp+ecx+018h]	; 1E943
+mov ebx, dword [dword esp+094h]	; 1E947
+mov ebx, dword [byte esp+ebx+014h]	; 1E94E
+mov edx, dword [byte esp+ebp*4+034h]	; 1E952
+mov eax, dword [byte esp+ebp*4+064h]	; 1E956
+call DrawMenuDropdown	; 1E95A
+xor edx, edx	; 1E95F
+mov dword [byte esp+ebp*4+038h], edx	; 1E961
+push esi	; 1E965
+push edi	; 1E966
+mov ebx, dword [dword esp+090h]	; 1E967
+mov ebx, dword [byte esp+ebx+014h]	; 1E96E
+mov edx, dword [dword esp+090h]	; 1E972
+mov edx, dword [byte esp+edx+010h]	; 1E979
+mov eax, dword [byte esp+ebp*4+060h]	; 1E97D
+mov ecx, dword [byte esp+0Ch]	; 1E981
+jmp near RunTeamPickMenu.49	; 1E985
+.59:
+mov esi, dword [dword esp+094h]	; 1E98A
+push esi	; 1E991
+mov edi, dword [dword esp+094h]	; 1E992
+push edi	; 1E999
+mov ebp, dword [dword esp+094h]	; 1E99A
+push ebp	; 1E9A1
+call sub_903F0	; 1E9A2
+add esp, byte 0Ch	; 1E9A7
+mov eax, dword [dword esp+0B0h]	; 1E9AA
+push eax	; 1E9B1
+mov edx, dword [byte esp+04h]	; 1E9B2
+push edx	; 1E9B6
+mov eax, dword [byte esp+074h]	; 1E9B7
+mov ebx, dword [byte esp+eax*8+014h]	; 1E9BB
+mov edx, dword [byte esp+eax*8+010h]	; 1E9BF
+mov ecx, dword [byte esp+eax*4+040h]	; 1E9C3
+shl ecx, 5	; 1E9C7
+mov eax, dword [byte esp+eax*4+060h]	; 1E9CA
+add eax, ecx	; 1E9CE
+mov ecx, dword [byte esp+0Ch]	; 1E9D0
+call DrawMenuItemSel	; 1E9D4
+mov edx, dword [byte esp+06Ch]	; 1E9D9
+mov eax, dword [byte esp+068h]	; 1E9DD
+mov dword [byte esp+edx*4+038h], eax	; 1E9E1
+mov ebx, dword [dword esp+0B0h]	; 1E9E5
+push ebx	; 1E9EC
+mov ecx, dword [byte esp+04h]	; 1E9ED
+push ecx	; 1E9F1
+mov ebx, dword [byte esp+edx*8+014h]	; 1E9F2
+mov esi, dword [byte esp+edx*8+010h]	; 1E9F6
+mov ecx, eax	; 1E9FA
+shl ecx, 5	; 1E9FC
+mov eax, dword [byte esp+edx*4+060h]	; 1E9FF
+add eax, ecx	; 1EA03
+mov ecx, dword [byte esp+0Ch]	; 1EA05
+mov edx, esi	; 1EA09
+jmp near RunTeamPickMenu.49	; 1EA0B
+.60:
+mov edi, dword [dword esp+094h]	; 1EA10
+push edi	; 1EA17
+mov ebp, dword [dword esp+094h]	; 1EA18
+push ebp	; 1EA1F
+mov eax, dword [dword esp+094h]	; 1EA20
+push eax	; 1EA27
+call sub_903F0	; 1EA28
+add esp, byte 0Ch	; 1EA2D
+lea ebx, [byte esp+074h]	; 1EA30
+mov edx, dword [byte esp+078h]	; 1EA34
+mov eax, dword [byte esp+07Ch]	; 1EA38
+call TeamFromMouse	; 1EA3C
+test eax, eax	; 1EA41
+je near .81	; 1EA43
+mov edx, dword [byte esp+070h]	; 1EA49
+shl edx, 2	; 1EA4D
+mov eax, dword [byte esp+070h]	; 1EA50
+mov esi, dword [byte esp+074h]	; 1EA54
+cmp eax, esi	; 1EA58
+je near .74	; 1EA5A
+cmp dword [statsplayoffs], byte 0	; 1EA60
+jne near .73	; 1EA67
+mov edx, dword [dword edx+statsteamorder]	; 1EA6D
+mov eax, edx	; 1EA73
+shl eax, 2	; 1EA75
+sub eax, edx	; 1EA78
+shl eax, 2	; 1EA7A
+add eax, edx	; 1EA7D
+mov edx, dword [statsteambuf]	; 1EA7F
+mov dl, byte [byte edx+eax*2+0Dh]	; 1EA85
+and edx, 0FFh	; 1EA89
+mov ebx, 2	; 1EA8F
+mov eax, edx	; 1EA94
+sar edx, 1Fh	; 1EA96
+idiv ebx	; 1EA99
+test edx, edx	; 1EA9B
+je short .61	; 1EA9D
+mov esi, 14Ah	; 1EA9F
+jmp short .62	; 1EAA4
+.61:
+mov esi, 0A5h	; 1EAA6
+.62:
+mov edx, dword [byte esp+070h]	; 1EAAB
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1EAAF
+mov eax, edx	; 1EAB6
+shl eax, 2	; 1EAB8
+sub eax, edx	; 1EABB
+shl eax, 2	; 1EABD
+add edx, eax	; 1EAC0
+add edx, edx	; 1EAC2
+mov eax, dword [statsteambuf]	; 1EAC4
+cmp byte [byte edx+eax+0Dh], 2	; 1EAC9
+jae short .63	; 1EACE
+xor ebx, ebx	; 1EAD0
+jmp short .64	; 1EAD2
+.63:
+mov ebx, 140h	; 1EAD4
+.64:
+mov edi, dword [byte esp+070h]	; 1EAD9
+cmp edi, byte 0Ch	; 1EADD
+jge short .65	; 1EAE0
+mov ecx, 6	; 1EAE2
+mov eax, edi	; 1EAE7
+mov edx, edi	; 1EAE9
+jmp short .66	; 1EAEB
+.65:
+lea edx, [byte edi-0Ch]	; 1EAED
+mov ecx, 7	; 1EAF0
+mov eax, edx	; 1EAF5
+.66:
+sar edx, 1Fh	; 1EAF7
+idiv ecx	; 1EAFA
+mov eax, edx	; 1EAFC
+shl eax, 2	; 1EAFE
+sub eax, edx	; 1EB01
+shl eax, 2	; 1EB03
+add eax, edx	; 1EB06
+add esi, eax	; 1EB08
+push dword 80h	; 1EB0A
+push byte 0Dh	; 1EB0F
+push dword 140h	; 1EB11
+push esi	; 1EB16
+push ebx	; 1EB17
+call sub_90F38	; 1EB18
+add esp, byte 14h	; 1EB1D
+mov eax, dword [byte esp+074h]	; 1EB20
+mov dword [byte esp+070h], eax	; 1EB24
+mov edx, dword [nosplit eax*4+statsteamorder]	; 1EB28
+mov eax, edx	; 1EB2F
+shl eax, 2	; 1EB31
+sub eax, edx	; 1EB34
+shl eax, 2	; 1EB36
+add eax, edx	; 1EB39
+mov edx, dword [statsteambuf]	; 1EB3B
+mov dl, byte [byte edx+eax*2+0Dh]	; 1EB41
+and edx, 0FFh	; 1EB45
+mov ebx, 2	; 1EB4B
+mov eax, edx	; 1EB50
+sar edx, 1Fh	; 1EB52
+idiv ebx	; 1EB55
+test edx, edx	; 1EB57
+je short .67	; 1EB59
+mov esi, 14Ah	; 1EB5B
+jmp short .68	; 1EB60
+.67:
+mov esi, 0A5h	; 1EB62
+.68:
+mov edx, dword [byte esp+074h]	; 1EB67
+mov edx, dword [nosplit edx*4+statsteamorder]	; 1EB6B
+mov eax, edx	; 1EB72
+shl eax, 2	; 1EB74
+sub eax, edx	; 1EB77
+shl eax, 2	; 1EB79
+add eax, edx	; 1EB7C
+mov edx, dword [statsteambuf]	; 1EB7E
+cmp byte [byte edx+eax*2+0Dh], 2	; 1EB84
+jae short .69	; 1EB89
+xor ebx, ebx	; 1EB8B
+jmp short .70	; 1EB8D
+.69:
+mov ebx, 140h	; 1EB8F
+.70:
+mov ebp, dword [byte esp+074h]	; 1EB94
+cmp ebp, byte 0Ch	; 1EB98
+jge short .71	; 1EB9B
+mov ecx, 6	; 1EB9D
+mov eax, ebp	; 1EBA2
+mov edx, ebp	; 1EBA4
+jmp short .72	; 1EBA6
+.71:
+lea edx, [byte ebp-0Ch]	; 1EBA8
+mov ecx, 7	; 1EBAB
+mov eax, edx	; 1EBB0
+.72:
+sar edx, 1Fh	; 1EBB2
+idiv ecx	; 1EBB5
+mov eax, edx	; 1EBB7
+shl eax, 2	; 1EBB9
+sub eax, edx	; 1EBBC
+shl eax, 2	; 1EBBE
+add eax, edx	; 1EBC1
+add esi, eax	; 1EBC3
+push dword 80h	; 1EBC5
+push byte 0Dh	; 1EBCA
+push dword 140h	; 1EBCC
+push esi	; 1EBD1
+push ebx	; 1EBD2
+call sub_90F38	; 1EBD3
+add esp, byte 14h	; 1EBD8
+jmp near .85	; 1EBDB
+.73:
+cmp dword [nosplit esi*4+playofftree], byte 1Ah	; 1EBE0
+je near .85	; 1EBE8
+cmp dword [dword edx+playofftree], byte 1Ah	; 1EBEE
+je near .85	; 1EBF5
+lea edx, [byte esp+074h]	; 1EBFB
+lea eax, [byte esp+070h]	; 1EBFF
+call MoveTreeHighlight	; 1EC03
+jmp near .85	; 1EC08
+.74:
+cmp dword [statsplayoffs], byte 0	; 1EC0D
+je short .75	; 1EC14
+cmp dword [dword edx+playofftree], byte 1Ah	; 1EC16
+je near .85	; 1EC1D
+.75:
+mov esi, 3	; 1EC23
+jmp short .78	; 1EC28
+.76:
+mov ebp, esi	; 1EC2A
+shl ebp, 2	; 1EC2C
+mov edi, dword [byte esp+ebp+048h]	; 1EC2F
+test edi, edi	; 1EC33
+je short .77	; 1EC35
+mov eax, dword [byte esp+esi*8+0Ch]	; 1EC37
+push eax	; 1EC3B
+mov edx, dword [byte esp+esi*8+0Ch]	; 1EC3C
+push edx	; 1EC40
+push edi	; 1EC41
+call sub_903F0	; 1EC42
+add esp, byte 0Ch	; 1EC47
+xor ecx, ecx	; 1EC4A
+mov dword [byte esp+esi*8+0Ch], ecx	; 1EC4C
+mov dword [byte esp+esi*8+08h], ecx	; 1EC50
+mov edi, dword [byte esp+ebp+048h]	; 1EC54
+push edi	; 1EC58
+call FreeMemBlock	; 1EC59
+add esp, byte 4	; 1EC5E
+.77:
+dec esi	; 1EC61
+.78:
+test esi, esi	; 1EC62
+jge short RunTeamPickMenu.76	; 1EC64
+mov eax, dword [byte esp+070h]	; 1EC66
+shl eax, 2	; 1EC6A
+cmp dword [statsplayoffs], byte 0	; 1EC6D
+jne short .79	; 1EC74
+mov eax, dword [dword eax+statsteamorder]	; 1EC76
+mov dword [byte esp+074h], eax	; 1EC7C
+mov dword [statscategory], eax	; 1EC80
+jmp short .80	; 1EC85
+.79:
+mov eax, dword [dword eax+playofftree]	; 1EC87
+mov dword [statscategory], eax	; 1EC8D
+mov eax, dword [byte esp+070h]	; 1EC92
+.80:
+mov dword [statsteamsel], eax	; 1EC96
+call DeskSetExit3b	; 1EC9B
+xor edi, edi	; 1ECA0
+mov dword [byte esp+064h], edi	; 1ECA2
+mov dword [byte esp+060h], edi	; 1ECA6
+mov dword [byte esp+05Ch], edi	; 1ECAA
+mov dword [byte esp+054h], edi	; 1ECAE
+mov dword [byte esp+050h], edi	; 1ECB2
+mov dword [byte esp+04Ch], edi	; 1ECB6
+mov dword [byte esp+048h], edi	; 1ECBA
+mov dword [byte esp+044h], edi	; 1ECBE
+mov dword [byte esp+040h], edi	; 1ECC2
+mov dword [byte esp+03Ch], edi	; 1ECC6
+mov dword [byte esp+034h], edi	; 1ECCA
+mov dword [byte esp+030h], edi	; 1ECCE
+mov dword [byte esp+02Ch], edi	; 1ECD2
+mov esi, dword [dword esp+08Ch]	; 1ECD6
+push esi	; 1ECDD
+jmp near RunTeamPickMenu.36	; 1ECDE
+.81:
+push edi	; 1ECE3
+push ebp	; 1ECE4
+mov ecx, dword [dword esp+094h]	; 1ECE5
+push ecx	; 1ECEC
+call sub_903F0	; 1ECED
+add esp, byte 0Ch	; 1ECF2
+mov esi, 3	; 1ECF5
+jmp short .84	; 1ECFA
+.82:
+mov ebp, esi	; 1ECFC
+shl ebp, 2	; 1ECFE
+mov ebx, dword [byte esp+ebp+048h]	; 1ED01
+test ebx, ebx	; 1ED05
+je short .83	; 1ED07
+mov ecx, dword [byte esp+esi*8+0Ch]	; 1ED09
+push ecx	; 1ED0D
+mov eax, dword [byte esp+esi*8+0Ch]	; 1ED0E
+push eax	; 1ED12
+push ebx	; 1ED13
+call sub_903F0	; 1ED14
+add esp, byte 0Ch	; 1ED19
+xor ebx, ebx	; 1ED1C
+mov dword [byte esp+esi*8+0Ch], ebx	; 1ED1E
+mov dword [byte esp+esi*8+08h], ebx	; 1ED22
+mov ecx, dword [byte esp+ebp+048h]	; 1ED26
+push ecx	; 1ED2A
+call FreeMemBlock	; 1ED2B
+add esp, byte 4	; 1ED30
+.83:
+dec esi	; 1ED33
+.84:
+test esi, esi	; 1ED34
+jge short RunTeamPickMenu.82	; 1ED36
+xor ecx, ecx	; 1ED38
+mov dword [dword esp+098h], ecx	; 1ED3A
+mov dword [byte esp+064h], ecx	; 1ED41
+mov dword [byte esp+060h], ecx	; 1ED45
+mov dword [byte esp+05Ch], ecx	; 1ED49
+mov dword [byte esp+050h], ecx	; 1ED4D
+mov dword [byte esp+04Ch], ecx	; 1ED51
+mov dword [byte esp+048h], ecx	; 1ED55
+mov dword [byte esp+044h], ecx	; 1ED59
+mov dword [byte esp+040h], ecx	; 1ED5D
+mov dword [byte esp+03Ch], ecx	; 1ED61
+mov dword [byte esp+034h], ecx	; 1ED65
+mov dword [byte esp+030h], ecx	; 1ED69
+mov dword [byte esp+02Ch], ecx	; 1ED6D
+.85:
+mov ebp, dword [byte esp+078h]	; 1ED71
+push ebp	; 1ED75
+mov eax, dword [dword esp+080h]	; 1ED76
+push eax	; 1ED7D
+mov edx, dword [dword esp+094h]	; 1ED7E
+push edx	; 1ED85
+jmp near RunTeamPickMenu.18	; 1ED86
+.86:
+add esp, 0A0h	; 1ED8B
+jmp near RunMenu_ret4	; 1ED91
+RunPlayerPickMenu:
+push dword 0C0h	; 1ED96
+call __CHK	; 1ED9B
+push esi	; 1EDA0
+push edi	; 1EDA1
+push ebp	; 1EDA2
+sub esp, 94h	; 1EDA3
+push ebx	; 1EDA9
+push ecx	; 1EDAA
+xor ebx, ebx	; 1EDAB
+mov dword [byte esp+070h], ebx	; 1EDAD
+mov dword [dword esp+094h], ebx	; 1EDB1
+mov dword [dword esp+098h], ebx	; 1EDB8
+mov dword [byte esp+028h], eax	; 1EDBF
+mov dword [byte esp+038h], edx	; 1EDC3
+mov dword [byte esp+034h], ebx	; 1EDC7
+mov dword [byte esp+030h], ebx	; 1EDCB
+mov dword [byte esp+02Ch], ebx	; 1EDCF
+mov dword [byte esp+054h], ebx	; 1EDD3
+mov dword [byte esp+050h], ebx	; 1EDD7
+mov dword [byte esp+04Ch], ebx	; 1EDDB
+mov dword [byte esp+048h], ebx	; 1EDDF
+mov dword [byte esp+064h], ebx	; 1EDE3
+mov dword [byte esp+060h], ebx	; 1EDE7
+mov dword [byte esp+05Ch], ebx	; 1EDEB
+mov dword [byte esp+058h], ebx	; 1EDEF
+mov dword [byte esp+0Ch], ebx	; 1EDF3
+mov dword [byte esp+08h], ebx	; 1EDF7
+mov eax, dword [pointerspr]	; 1EDFB
+mov ebx, dword [byte eax+02h]	; 1EE00
+sar ebx, 10h	; 1EE03
+mov edx, dword [byte eax+04h]	; 1EE06
+sar edx, 10h	; 1EE09
+inc edx	; 1EE0C
+lea eax, [byte ebx+01h]	; 1EE0D
+imul eax, edx	; 1EE10
+add eax, byte 11h	; 1EE13
+push byte 20h	; 1EE16
+push eax	; 1EE18
+push str_PointerMenu	; 1EE19
+call sub_8CCA8	; 1EE1E
+add esp, byte 0Ch	; 1EE23
+mov dword [dword esp+088h], eax	; 1EE26
+mov esi, dword [pointerspr]	; 1EE2D
+mov edi, eax	; 1EE33
+movsd	; 1EE35
+movsd	; 1EE36
+movsd	; 1EE37
+movsd	; 1EE38
+movsb	; 1EE39
+mov edx, dword [pointerspr]	; 1EE3A
+mov dx, word [byte edx+04h]	; 1EE40
+inc edx	; 1EE44
+mov word [byte eax+04h], dx	; 1EE45
+mov edx, dword [pointerspr]	; 1EE49
+mov dx, word [byte edx+06h]	; 1EE4F
+inc edx	; 1EE53
+mov word [byte eax+06h], dx	; 1EE54
+mov edx, dword [byte esp+028h]	; 1EE58
+mov edx, dword [edx]	; 1EE5C
+mov eax, dword [byte esp+028h]	; 1EE5E
+mov esi, dword [byte eax+08h]	; 1EE62
+add edx, esi	; 1EE65
+mov eax, edx	; 1EE67
+sar edx, 1Fh	; 1EE69
+LD sub, eax, edx	; 1EE6C
+sar eax, 1	; 1EE6E
+mov dword [dword esp+08Ch], eax	; 1EE70
+mov dword [byte esp+078h], eax	; 1EE77
+mov edx, dword [byte esp+028h]	; 1EE7B
+mov edx, dword [byte edx+04h]	; 1EE7F
+mov eax, dword [byte esp+028h]	; 1EE82
+mov edi, dword [byte eax+0Ch]	; 1EE86
+add edx, edi	; 1EE89
+mov eax, edx	; 1EE8B
+sar edx, 1Fh	; 1EE8D
+LD sub, eax, edx	; 1EE90
+sar eax, 1	; 1EE92
+mov dword [dword esp+090h], eax	; 1EE94
+mov dword [byte esp+074h], eax	; 1EE9B
+mov ah, byte [statsplayer+2]	; 1EE9F
+cmp ah, 47h	; 1EEA5
+je short .1	; 1EEA8
+cmp ah, 67h	; 1EEAA
+jne near .5	; 1EEAD
+.1:
+xor esi, esi	; 1EEB3
+jmp short .4	; 1EEB5
+.2:
+mov edx, dword [nosplit esi*4+statsgoalieorder]	; 1EEB7
+mov edx, dword [nosplit edx*4+statsgoalieplr]	; 1EEBE
+mov ebx, edx	; 1EEC5
+shl ebx, 2	; 1EEC7
+sub ebx, edx	; 1EECA
+shl ebx, 2	; 1EECC
+add ebx, edx	; 1EECF
+shl ebx, 2	; 1EED1
+mov edx, dword [statsplayerbuf]	; 1EED4
+add edx, ebx	; 1EEDA
+add edx, byte 3	; 1EEDC
+mov eax, statsplayer+3	; 1EEDF
+call StrPrefixDiffers	; 1EEE4
+test eax, eax	; 1EEE9
+jne short .3	; 1EEEB
+mov eax, dword [statsplayerbuf]	; 1EEED
+add eax, ebx	; 1EEF2
+lea edx, [byte eax+013h]	; 1EEF4
+mov eax, statsplayer+13h	; 1EEF7
+call StrPrefixDiffers	; 1EEFC
+test eax, eax	; 1EF01
+jne short .3	; 1EF03
+mov eax, dword [statsnumskaters]	; 1EF05
+add eax, esi	; 1EF0A
+mov dword [dword esp+094h], eax	; 1EF0C
+jmp near .9	; 1EF13
+.3:
+inc esi	; 1EF18
+.4:
+cmp esi, dword [statsnumgoalies]	; 1EF19
+jl short RunPlayerPickMenu.2	; 1EF1F
+jmp near .9	; 1EF21
+.5:
+test ah, ah	; 1EF26
+je short .9	; 1EF28
+xor esi, esi	; 1EF2A
+jmp short .8	; 1EF2C
+.6:
+mov edx, dword [nosplit esi*4+statsskaterorder]	; 1EF2E
+mov edx, dword [nosplit edx*4+statsskaterplr]	; 1EF35
+mov ebx, edx	; 1EF3C
+shl ebx, 2	; 1EF3E
+sub ebx, edx	; 1EF41
+shl ebx, 2	; 1EF43
+add ebx, edx	; 1EF46
+shl ebx, 2	; 1EF48
+mov edx, dword [statsplayerbuf]	; 1EF4B
+add edx, ebx	; 1EF51
+add edx, byte 3	; 1EF53
+mov eax, statsplayer+3	; 1EF56
+call StrPrefixDiffers	; 1EF5B
+test eax, eax	; 1EF60
+jne short .7	; 1EF62
+mov eax, dword [statsplayerbuf]	; 1EF64
+add eax, ebx	; 1EF69
+lea edx, [byte eax+013h]	; 1EF6B
+mov eax, statsplayer+13h	; 1EF6E
+call StrPrefixDiffers	; 1EF73
+test eax, eax	; 1EF78
+jne short .7	; 1EF7A
+mov dword [dword esp+094h], esi	; 1EF7C
+jmp short .9	; 1EF83
+.7:
+inc esi	; 1EF85
+.8:
+cmp esi, dword [statsnumskaters]	; 1EF86
+jl short RunPlayerPickMenu.6	; 1EF8C
+.9:
+mov eax, dword [dword esp+094h]	; 1EF8E
+mov edx, dword [statsnumskaters]	; 1EF95
+cmp eax, edx	; 1EF9B
+jge short .10	; 1EF9D
+mov edx, eax	; 1EF9F
+shl eax, 2	; 1EFA1
+sub eax, edx	; 1EFA4
+shl eax, 2	; 1EFA6
+add eax, edx	; 1EFA9
+add eax, byte 43h	; 1EFAB
+jmp short .11	; 1EFAE
+.10:
+sub eax, edx	; 1EFB0
+mov edx, eax	; 1EFB2
+shl eax, 2	; 1EFB4
+sub eax, edx	; 1EFB7
+shl eax, 2	; 1EFB9
+add eax, edx	; 1EFBC
+add eax, 1A8h	; 1EFBE
+.11:
+push dword 80h	; 1EFC3
+push byte 0Dh	; 1EFC8
+push dword 280h	; 1EFCA
+push eax	; 1EFCF
+push byte 0	; 1EFD0
+call sub_90F38	; 1EFD2
+add esp, byte 14h	; 1EFD7
+mov ecx, dword [dword esp+090h]	; 1EFDA
+push ecx	; 1EFE1
+mov esi, dword [dword esp+090h]	; 1EFE2
+push esi	; 1EFE9
+mov edi, dword [dword esp+090h]	; 1EFEA
+push edi	; 1EFF1
+call sub_91400	; 1EFF2
+add esp, byte 0Ch	; 1EFF7
+mov ebp, dword [dword esp+090h]	; 1EFFA
+push ebp	; 1F001
+push esi	; 1F002
+mov edx, dword [pointerspr]	; 1F003
+push edx	; 1F009
+call sub_91370	; 1F00A
+add esp, byte 0Ch	; 1F00F
+push dword 1E0h	; 1F012
+push dword 280h	; 1F017
+push byte 0	; 1F01C
+push byte 0	; 1F01E
+call sub_B2E1B	; 1F020
+add esp, byte 10h	; 1F025
+push ebp	; 1F028
+push esi	; 1F029
+call MouseSetPos	; 1F02A
+add esp, byte 8	; 1F02F
+call dword [mousepollfn]	; 1F032
+call ClearInputQueue	; 1F038
+.12:
+xor ecx, ecx	; 1F03D
+.13:
+call GetInputEvent	; 1F03F
+test eax, eax	; 1F044
+je short .14	; 1F046
+lea ebx, [byte esp+074h]	; 1F048
+lea edx, [byte esp+078h]	; 1F04C
+call dword [ptrupdatefn]	; 1F050
+mov ecx, eax	; 1F056
+test al, 2	; 1F058
+je short RunPlayerPickMenu.13	; 1F05A
+.14:
+test cl, 2	; 1F05C
+jne near .17	; 1F05F
+mov eax, dword [byte esp+078h]	; 1F065
+cmp eax, dword [dword esp+08Ch]	; 1F069
+jne short .15	; 1F070
+mov eax, dword [byte esp+074h]	; 1F072
+cmp eax, dword [dword esp+090h]	; 1F076
+je short RunPlayerPickMenu.12	; 1F07D
+.15:
+mov ecx, dword [dword esp+090h]	; 1F07F
+push ecx	; 1F086
+mov esi, dword [dword esp+090h]	; 1F087
+push esi	; 1F08E
+mov edi, dword [dword esp+090h]	; 1F08F
+push edi	; 1F096
+call sub_903F0	; 1F097
+add esp, byte 0Ch	; 1F09C
+mov ebp, dword [byte esp+074h]	; 1F09F
+push ebp	; 1F0A3
+mov eax, dword [byte esp+07Ch]	; 1F0A4
+push eax	; 1F0A8
+push edi	; 1F0A9
+call sub_91400	; 1F0AA
+add esp, byte 0Ch	; 1F0AF
+mov ebx, dword [byte esp+074h]	; 1F0B2
+push ebx	; 1F0B6
+mov ecx, dword [byte esp+07Ch]	; 1F0B7
+push ecx	; 1F0BB
+mov esi, dword [pointerspr]	; 1F0BC
+push esi	; 1F0C2
+.16:
+call sub_91370	; 1F0C3
+add esp, byte 0Ch	; 1F0C8
+mov eax, dword [byte esp+078h]	; 1F0CB
+mov dword [dword esp+08Ch], eax	; 1F0CF
+mov eax, dword [byte esp+074h]	; 1F0D6
+mov dword [dword esp+090h], eax	; 1F0DA
+jmp near RunPlayerPickMenu.12	; 1F0E1
+.17:
+lea eax, [byte esp+068h]	; 1F0E6
+push eax	; 1F0EA
+lea eax, [byte esp+070h]	; 1F0EB
+push eax	; 1F0EF
+lea eax, [byte esp+010h]	; 1F0F0
+push eax	; 1F0F4
+lea eax, [byte esp+044h]	; 1F0F5
+push eax	; 1F0F9
+mov ecx, dword [dword esp+0A8h]	; 1F0FA
+lea ebx, [byte esp+038h]	; 1F101
+mov edx, dword [dword esp+084h]	; 1F105
+mov eax, dword [dword esp+088h]	; 1F10C
+call MenuHitTest	; 1F113
+test eax, eax	; 1F118
+je near .50	; 1F11A
+mov edx, dword [byte esp+06Ch]	; 1F120
+shl edx, 2	; 1F124
+mov ebx, dword [byte esp+068h]	; 1F127
+shl ebx, 5	; 1F12B
+mov eax, dword [byte esp+edx+028h]	; 1F12E
+add eax, ebx	; 1F132
+cmp dword [byte eax+014h], byte 0	; 1F134
+je near .40	; 1F138
+mov eax, dword [byte esp+068h]	; 1F13E
+cmp eax, dword [byte esp+edx+058h]	; 1F142
+jne near .37	; 1F146
+mov esi, dword [dword esp+090h]	; 1F14C
+push esi	; 1F153
+mov edi, dword [dword esp+090h]	; 1F154
+push edi	; 1F15B
+mov ebp, dword [dword esp+090h]	; 1F15C
+push ebp	; 1F163
+call sub_903F0	; 1F164
+add esp, byte 0Ch	; 1F169
+mov esi, 3	; 1F16C
+jmp short .20	; 1F171
+.18:
+mov ebp, esi	; 1F173
+shl ebp, 2	; 1F175
+mov edi, dword [byte esp+ebp+048h]	; 1F178
+test edi, edi	; 1F17C
+je short .19	; 1F17E
+mov eax, dword [byte esp+esi*8+0Ch]	; 1F180
+push eax	; 1F184
+mov edx, dword [byte esp+esi*8+0Ch]	; 1F185
+push edx	; 1F189
+push edi	; 1F18A
+call sub_903F0	; 1F18B
+add esp, byte 0Ch	; 1F190
+xor ecx, ecx	; 1F193
+mov dword [byte esp+esi*8+0Ch], ecx	; 1F195
+mov dword [byte esp+esi*8+08h], ecx	; 1F199
+mov edi, dword [byte esp+ebp+048h]	; 1F19D
+push edi	; 1F1A1
+call FreeMemBlock	; 1F1A2
+add esp, byte 4	; 1F1A7
+.19:
+dec esi	; 1F1AA
+.20:
+test esi, esi	; 1F1AB
+jge short RunPlayerPickMenu.18	; 1F1AD
+xor esi, esi	; 1F1AF
+mov dword [dword esp+098h], esi	; 1F1B1
+mov eax, dword [byte esp+070h]	; 1F1B8
+mov edi, dword [statsnumskaters]	; 1F1BC
+cmp eax, edi	; 1F1C2
+jge short .21	; 1F1C4
+mov eax, dword [nosplit eax*4+statsskaterorder]	; 1F1C6
+mov eax, dword [nosplit eax*4+statsskaterplr]	; 1F1CD
+jmp short .22	; 1F1D4
+.21:
+sub eax, edi	; 1F1D6
+mov eax, dword [nosplit eax*4+statsgoalieorder]	; 1F1D8
+mov eax, dword [nosplit eax*4+statsgoalieplr]	; 1F1DF
+.22:
+mov edx, eax	; 1F1E6
+shl eax, 2	; 1F1E8
+sub eax, edx	; 1F1EB
+shl eax, 2	; 1F1ED
+add eax, edx	; 1F1F0
+shl eax, 2	; 1F1F2
+mov esi, dword [statsplayerbuf]	; 1F1F5
+add esi, eax	; 1F1FB
+mov ecx, 0Dh	; 1F1FD
+mov edi, statsplayer	; 1F202
+rep movsd	; 1F207
+mov eax, dword [dword esp+094h]	; 1F209
+mov edx, dword [statsnumskaters]	; 1F210
+cmp eax, edx	; 1F216
+jge short .23	; 1F218
+mov edx, eax	; 1F21A
+shl eax, 2	; 1F21C
+sub eax, edx	; 1F21F
+shl eax, 2	; 1F221
+add eax, edx	; 1F224
+add eax, byte 43h	; 1F226
+jmp short .24	; 1F229
+.23:
+sub eax, edx	; 1F22B
+mov edx, eax	; 1F22D
+shl eax, 2	; 1F22F
+sub eax, edx	; 1F232
+shl eax, 2	; 1F234
+add eax, edx	; 1F237
+add eax, 1A8h	; 1F239
+.24:
+push dword 80h	; 1F23E
+push byte 0Dh	; 1F243
+push dword 280h	; 1F245
+push eax	; 1F24A
+push byte 0	; 1F24B
+call sub_90F38	; 1F24D
+add esp, byte 14h	; 1F252
+mov eax, dword [byte esp+06Ch]	; 1F255
+mov edx, dword [byte esp+068h]	; 1F259
+shl edx, 5	; 1F25D
+mov eax, dword [byte esp+eax*4+028h]	; 1F260
+call dword [byte edx+eax+014h]	; 1F264
+xor ecx, ecx	; 1F268
+mov dword [byte esp+034h], ecx	; 1F26A
+mov dword [byte esp+030h], ecx	; 1F26E
+mov dword [byte esp+02Ch], ecx	; 1F272
+mov dword [byte esp+054h], ecx	; 1F276
+mov dword [byte esp+050h], ecx	; 1F27A
+mov dword [byte esp+04Ch], ecx	; 1F27E
+mov dword [byte esp+048h], ecx	; 1F282
+mov dword [byte esp+064h], ecx	; 1F286
+mov dword [byte esp+060h], ecx	; 1F28A
+mov dword [byte esp+05Ch], ecx	; 1F28E
+mov dword [byte esp+044h], ecx	; 1F292
+mov dword [byte esp+040h], ecx	; 1F296
+mov dword [byte esp+03Ch], ecx	; 1F29A
+cmp eax, byte 1	; 1F29E
+jne short .26	; 1F2A1
+mov esi, dword [dword esp+088h]	; 1F2A3
+push esi	; 1F2AA
+.25:
+call FreeMemBlock	; 1F2AB
+add esp, byte 4	; 1F2B0
+xor eax, eax	; 1F2B3
+jmp near .69	; 1F2B5
+.26:
+mov bl, byte [statsplayer+2]	; 1F2BA
+cmp bl, 47h	; 1F2C0
+jne near .30	; 1F2C3
+xor esi, esi	; 1F2C9
+jmp short .29	; 1F2CB
+.27:
+mov edi, dword [nosplit esi*4+statsgoalieorder]	; 1F2CD
+mov edi, dword [nosplit edi*4+statsgoalieplr]	; 1F2D4
+mov ebx, edi	; 1F2DB
+shl ebx, 2	; 1F2DD
+sub ebx, edi	; 1F2E0
+shl ebx, 2	; 1F2E2
+add ebx, edi	; 1F2E5
+shl ebx, 2	; 1F2E7
+mov eax, dword [statsplayerbuf]	; 1F2EA
+add eax, ebx	; 1F2EF
+lea edx, [byte eax+03h]	; 1F2F1
+mov eax, statsplayer+3	; 1F2F4
+call StrPrefixDiffers	; 1F2F9
+test eax, eax	; 1F2FE
+jne short .28	; 1F300
+mov edx, dword [statsplayerbuf]	; 1F302
+add edx, ebx	; 1F308
+add edx, byte 13h	; 1F30A
+mov eax, statsplayer+13h	; 1F30D
+call StrPrefixDiffers	; 1F312
+test eax, eax	; 1F317
+jne short .28	; 1F319
+mov eax, dword [statsnumskaters]	; 1F31B
+add eax, esi	; 1F320
+mov dword [dword esp+094h], eax	; 1F322
+jmp near .34	; 1F329
+.28:
+inc esi	; 1F32E
+.29:
+cmp esi, dword [statsnumgoalies]	; 1F32F
+jl short RunPlayerPickMenu.27	; 1F335
+jmp near .34	; 1F337
+.30:
+test bl, bl	; 1F33C
+je short .34	; 1F33E
+xor esi, esi	; 1F340
+jmp short .33	; 1F342
+.31:
+mov edi, dword [nosplit esi*4+statsskaterorder]	; 1F344
+mov edi, dword [nosplit edi*4+statsskaterplr]	; 1F34B
+mov ebx, edi	; 1F352
+shl ebx, 2	; 1F354
+sub ebx, edi	; 1F357
+shl ebx, 2	; 1F359
+add ebx, edi	; 1F35C
+shl ebx, 2	; 1F35E
+mov eax, dword [statsplayerbuf]	; 1F361
+add eax, ebx	; 1F366
+lea edx, [byte eax+03h]	; 1F368
+mov eax, statsplayer+3	; 1F36B
+call StrPrefixDiffers	; 1F370
+test eax, eax	; 1F375
+jne short .32	; 1F377
+mov edx, dword [statsplayerbuf]	; 1F379
+add edx, ebx	; 1F37F
+add edx, byte 13h	; 1F381
+mov eax, statsplayer+13h	; 1F384
+call StrPrefixDiffers	; 1F389
+test eax, eax	; 1F38E
+jne short .32	; 1F390
+mov dword [dword esp+094h], esi	; 1F392
+jmp short .34	; 1F399
+.32:
+inc esi	; 1F39B
+.33:
+cmp esi, dword [statsnumskaters]	; 1F39C
+jl short RunPlayerPickMenu.31	; 1F3A2
+.34:
+mov eax, dword [dword esp+094h]	; 1F3A4
+mov edx, dword [statsnumskaters]	; 1F3AB
+cmp eax, edx	; 1F3B1
+jge short .35	; 1F3B3
+mov edx, eax	; 1F3B5
+shl eax, 2	; 1F3B7
+sub eax, edx	; 1F3BA
+shl eax, 2	; 1F3BC
+add eax, edx	; 1F3BF
+add eax, byte 43h	; 1F3C1
+jmp short .36	; 1F3C4
+.35:
+sub eax, edx	; 1F3C6
+mov edx, eax	; 1F3C8
+shl eax, 2	; 1F3CA
+sub eax, edx	; 1F3CD
+shl eax, 2	; 1F3CF
+add eax, edx	; 1F3D2
+add eax, 1A8h	; 1F3D4
+.36:
+push dword 80h	; 1F3D9
+push byte 0Dh	; 1F3DE
+push dword 280h	; 1F3E0
+push eax	; 1F3E5
+push byte 0	; 1F3E6
+call sub_90F38	; 1F3E8
+add esp, byte 14h	; 1F3ED
+mov ecx, dword [dword esp+090h]	; 1F3F0
+push ecx	; 1F3F7
+mov esi, dword [dword esp+090h]	; 1F3F8
+push esi	; 1F3FF
+call MouseSetPos	; 1F400
+add esp, byte 8	; 1F405
+mov dword [byte esp+078h], esi	; 1F408
+mov eax, dword [dword esp+090h]	; 1F40C
+mov dword [byte esp+074h], eax	; 1F413
+call ClearInputQueue	; 1F417
+jmp near .68	; 1F41C
+.37:
+mov ecx, dword [dword esp+090h]	; 1F421
+push ecx	; 1F428
+mov esi, dword [dword esp+090h]	; 1F429
+push esi	; 1F430
+mov edi, dword [dword esp+090h]	; 1F431
+push edi	; 1F438
+call sub_903F0	; 1F439
+add esp, byte 0Ch	; 1F43E
+mov ebp, dword [dword esp+0ACh]	; 1F441
+push ebp	; 1F448
+mov eax, dword [byte esp+04h]	; 1F449
+push eax	; 1F44D
+mov eax, dword [byte esp+074h]	; 1F44E
+mov ebx, dword [byte esp+eax*8+014h]	; 1F452
+mov edx, dword [byte esp+eax*8+010h]	; 1F456
+mov ecx, dword [byte esp+eax*4+060h]	; 1F45A
+shl ecx, 5	; 1F45E
+mov eax, dword [byte esp+eax*4+030h]	; 1F461
+add eax, ecx	; 1F465
+mov ecx, dword [byte esp+0Ch]	; 1F467
+call DrawMenuItemSel	; 1F46B
+mov edx, dword [byte esp+06Ch]	; 1F470
+mov eax, dword [byte esp+068h]	; 1F474
+mov dword [byte esp+edx*4+058h], eax	; 1F478
+push ebp	; 1F47C
+mov ecx, dword [byte esp+04h]	; 1F47D
+push ecx	; 1F481
+.38:
+mov ebx, dword [byte esp+edx*8+014h]	; 1F482
+mov eax, dword [byte esp+edx*8+010h]	; 1F486
+mov esi, dword [byte esp+edx*4+060h]	; 1F48A
+shl esi, 5	; 1F48E
+mov edx, dword [byte esp+edx*4+030h]	; 1F491
+add esi, edx	; 1F495
+mov ecx, dword [byte esp+0Ch]	; 1F497
+mov edx, eax	; 1F49B
+mov eax, esi	; 1F49D
+.39:
+call DrawMenuItemNorm	; 1F49F
+jmp near .68	; 1F4A4
+.40:
+cmp dword [byte eax+018h], byte 0	; 1F4A9
+je near .49	; 1F4AD
+mov edi, dword [dword esp+090h]	; 1F4B3
+push edi	; 1F4BA
+mov ebp, dword [dword esp+090h]	; 1F4BB
+push ebp	; 1F4C2
+mov eax, dword [dword esp+090h]	; 1F4C3
+push eax	; 1F4CA
+call sub_903F0	; 1F4CB
+add esp, byte 0Ch	; 1F4D0
+mov eax, dword [dword esp+098h]	; 1F4D3
+cmp eax, dword [byte esp+06Ch]	; 1F4DA
+je short .44	; 1F4DE
+mov esi, eax	; 1F4E0
+jmp short .43	; 1F4E2
+.41:
+mov edi, esi	; 1F4E4
+shl edi, 2	; 1F4E6
+xor eax, eax	; 1F4E9
+mov dword [byte esp+edi+058h], eax	; 1F4EB
+mov edx, dword [byte esp+edi+048h]	; 1F4EF
+test edx, edx	; 1F4F3
+je short .42	; 1F4F5
+mov ebp, esi	; 1F4F7
+mov ebx, dword [byte esp+esi*8+0Ch]	; 1F4F9
+push ebx	; 1F4FD
+mov ecx, dword [byte esp+esi*8+0Ch]	; 1F4FE
+push ecx	; 1F502
+push edx	; 1F503
+call sub_903F0	; 1F504
+add esp, byte 0Ch	; 1F509
+xor edx, edx	; 1F50C
+mov dword [byte esp+esi*8+0Ch], edx	; 1F50E
+mov dword [byte esp+esi*8+08h], edx	; 1F512
+mov ebx, dword [byte esp+edi+048h]	; 1F516
+push ebx	; 1F51A
+call FreeMemBlock	; 1F51B
+add esp, byte 4	; 1F520
+xor ecx, ecx	; 1F523
+mov dword [byte esp+edi+048h], ecx	; 1F525
+xor ebp, esi	; 1F529
+mov dword [byte esp+edi+028h], ebp	; 1F52B
+mov dword [byte esp+edi+038h], ecx	; 1F52F
+.42:
+dec esi	; 1F533
+.43:
+mov ebp, dword [byte esp+06Ch]	; 1F534
+cmp esi, ebp	; 1F538
+jg short RunPlayerPickMenu.41	; 1F53A
+mov dword [dword esp+098h], ebp	; 1F53C
+.44:
+mov edx, dword [dword esp+0ACh]	; 1F543
+push edx	; 1F54A
+mov ebx, dword [byte esp+04h]	; 1F54B
+push ebx	; 1F54F
+mov esi, dword [dword esp+0A0h]	; 1F550
+mov ebx, dword [byte esp+esi*8+014h]	; 1F557
+mov edx, dword [byte esp+esi*8+010h]	; 1F55B
+mov eax, dword [byte esp+esi*4+060h]	; 1F55F
+shl eax, 5	; 1F563
+mov ecx, dword [byte esp+esi*4+030h]	; 1F566
+add eax, ecx	; 1F56A
+mov ecx, dword [byte esp+0Ch]	; 1F56C
+call DrawMenuItemSel	; 1F570
+mov eax, dword [byte esp+068h]	; 1F575
+mov dword [byte esp+esi*4+058h], eax	; 1F579
+mov ecx, dword [dword esp+0ACh]	; 1F57D
+push ecx	; 1F584
+mov ebp, dword [byte esp+04h]	; 1F585
+push ebp	; 1F589
+mov ebx, dword [byte esp+esi*8+014h]	; 1F58A
+mov edx, dword [byte esp+esi*8+010h]	; 1F58E
+mov ecx, eax	; 1F592
+shl ecx, 5	; 1F594
+mov eax, dword [byte esp+esi*4+030h]	; 1F597
+add eax, ecx	; 1F59B
+mov ecx, dword [byte esp+0Ch]	; 1F59D
+call DrawMenuItemNorm	; 1F5A1
+mov eax, dword [byte esp+06Ch]	; 1F5A6
+mov ebx, dword [byte esp+068h]	; 1F5AA
+shl ebx, 5	; 1F5AE
+mov ecx, dword [byte esp+eax*4+028h]	; 1F5B1
+lea edx, [byte esi+01h]	; 1F5B5
+mov dword [dword esp+098h], edx	; 1F5B8
+mov ecx, dword [byte ecx+ebx+018h]	; 1F5BF
+mov dword [byte esp+edx*4+028h], ecx	; 1F5C3
+mov eax, dword [byte esp+eax*4+028h]	; 1F5C7
+add eax, ebx	; 1F5CB
+mov ebx, dword [byte eax+01Ch]	; 1F5CD
+mov dword [byte esp+edx*4+038h], ebx	; 1F5D0
+cmp edx, byte 1	; 1F5D4
+je short .45	; 1F5D7
+mov edx, dword [byte eax+08h]	; 1F5D9
+jmp short .46	; 1F5DC
+.45:
+mov edx, dword [eax]	; 1F5DE
+.46:
+mov eax, dword [dword esp+098h]	; 1F5E0
+mov ecx, dword [esp+eax*8]	; 1F5E7
+add edx, ecx	; 1F5EA
+mov dword [byte esp+eax*8+08h], edx	; 1F5EC
+mov edx, dword [byte esp+068h]	; 1F5F0
+shl edx, 5	; 1F5F4
+mov eax, dword [byte esp+06Ch]	; 1F5F7
+shl eax, 2	; 1F5FB
+cmp dword [dword esp+098h], byte 1	; 1F5FE
+je short .47	; 1F606
+mov eax, dword [byte esp+eax+028h]	; 1F608
+mov eax, dword [byte edx+eax+04h]	; 1F60C
+jmp short .48	; 1F610
+.47:
+mov eax, dword [byte esp+eax+028h]	; 1F612
+mov eax, dword [byte edx+eax+0Ch]	; 1F616
+.48:
+mov edx, dword [dword esp+098h]	; 1F61A
+shl edx, 3	; 1F621
+mov dword [dword esp+084h], edx	; 1F624
+mov edi, dword [byte esp+edx+04h]	; 1F62B
+add eax, edi	; 1F62F
+mov dword [byte esp+edx+0Ch], eax	; 1F631
+mov ebp, dword [dword esp+098h]	; 1F635
+mov edx, dword [byte esp+ebp*4+038h]	; 1F63C
+shl edx, 5	; 1F640
+mov eax, dword [byte esp+ebp*4+028h]	; 1F643
+mov ebx, dword [byte edx+eax-018h]	; 1F647
+sub ebx, dword [eax]	; 1F64B
+inc ebx	; 1F64D
+mov dword [dword esp+080h], ebx	; 1F64E
+mov edx, dword [byte edx+eax-014h]	; 1F655
+sub edx, dword [byte eax+04h]	; 1F659
+inc edx	; 1F65C
+mov dword [byte esp+07Ch], edx	; 1F65D
+push byte 20h	; 1F661
+mov eax, ebx	; 1F663
+imul eax, edx	; 1F665
+add eax, byte 11h	; 1F668
+push eax	; 1F66B
+push str_menubuff	; 1F66C
+call sub_8CCA8	; 1F671
+add esp, byte 0Ch	; 1F676
+mov dword [byte esp+ebp*4+048h], eax	; 1F679
+mov esi, dword [pointerspr]	; 1F67D
+mov edi, eax	; 1F683
+movsd	; 1F685
+movsd	; 1F686
+movsd	; 1F687
+movsd	; 1F688
+movsb	; 1F689
+mov eax, dword [byte esp+ebp*4+048h]	; 1F68A
+mov edx, dword [dword esp+080h]	; 1F68E
+mov word [byte eax+04h], dx	; 1F695
+mov eax, dword [byte esp+ebp*4+048h]	; 1F699
+mov edx, dword [byte esp+07Ch]	; 1F69D
+mov word [byte eax+06h], dx	; 1F6A1
+mov eax, dword [dword esp+084h]	; 1F6A5
+mov edx, dword [byte esp+eax+0Ch]	; 1F6AC
+push edx	; 1F6B0
+mov ebx, dword [byte esp+eax+0Ch]	; 1F6B1
+push ebx	; 1F6B5
+mov ecx, dword [byte esp+ebp*4+050h]	; 1F6B6
+push ecx	; 1F6BA
+call sub_91400	; 1F6BB
+add esp, byte 0Ch	; 1F6C0
+mov esi, dword [dword esp+0ACh]	; 1F6C3
+push esi	; 1F6CA
+mov edi, dword [byte esp+04h]	; 1F6CB
+push edi	; 1F6CF
+mov eax, dword [byte esp+0Ch]	; 1F6D0
+push eax	; 1F6D4
+mov ecx, dword [dword esp+090h]	; 1F6D5
+mov ecx, dword [byte esp+ecx+018h]	; 1F6DC
+mov ebx, dword [dword esp+090h]	; 1F6E0
+mov ebx, dword [byte esp+ebx+014h]	; 1F6E7
+mov edx, dword [byte esp+ebp*4+044h]	; 1F6EB
+mov eax, dword [byte esp+ebp*4+034h]	; 1F6EF
+call DrawMenuDropdown	; 1F6F3
+xor edx, edx	; 1F6F8
+mov dword [byte esp+ebp*4+058h], edx	; 1F6FA
+push esi	; 1F6FE
+push edi	; 1F6FF
+mov ebx, dword [dword esp+08Ch]	; 1F700
+mov ebx, dword [byte esp+ebx+014h]	; 1F707
+mov edx, dword [dword esp+08Ch]	; 1F70B
+mov edx, dword [byte esp+edx+010h]	; 1F712
+mov eax, dword [byte esp+ebp*4+030h]	; 1F716
+mov ecx, dword [byte esp+0Ch]	; 1F71A
+jmp near RunPlayerPickMenu.39	; 1F71E
+.49:
+mov edi, dword [dword esp+090h]	; 1F723
+push edi	; 1F72A
+mov ebp, dword [dword esp+090h]	; 1F72B
+push ebp	; 1F732
+mov eax, dword [dword esp+090h]	; 1F733
+push eax	; 1F73A
+call sub_903F0	; 1F73B
+add esp, byte 0Ch	; 1F740
+mov edx, dword [dword esp+0ACh]	; 1F743
+push edx	; 1F74A
+mov ebx, dword [byte esp+04h]	; 1F74B
+push ebx	; 1F74F
+mov eax, dword [byte esp+074h]	; 1F750
+mov ebx, dword [byte esp+eax*8+014h]	; 1F754
+mov edx, dword [byte esp+eax*8+010h]	; 1F758
+mov ecx, dword [byte esp+eax*4+060h]	; 1F75C
+shl ecx, 5	; 1F760
+mov eax, dword [byte esp+eax*4+030h]	; 1F763
+add eax, ecx	; 1F767
+mov ecx, dword [byte esp+0Ch]	; 1F769
+call DrawMenuItemSel	; 1F76D
+mov edx, dword [byte esp+06Ch]	; 1F772
+mov eax, dword [byte esp+068h]	; 1F776
+mov dword [byte esp+edx*4+058h], eax	; 1F77A
+mov ecx, dword [dword esp+0ACh]	; 1F77E
+push ecx	; 1F785
+mov esi, dword [byte esp+04h]	; 1F786
+push esi	; 1F78A
+jmp near RunPlayerPickMenu.38	; 1F78B
+.50:
+mov esi, dword [dword esp+090h]	; 1F790
+push esi	; 1F797
+mov edi, dword [dword esp+090h]	; 1F798
+push edi	; 1F79F
+mov ebp, dword [dword esp+090h]	; 1F7A0
+push ebp	; 1F7A7
+call sub_903F0	; 1F7A8
+add esp, byte 0Ch	; 1F7AD
+lea ebx, [byte esp+070h]	; 1F7B0
+mov edx, dword [byte esp+074h]	; 1F7B4
+mov eax, dword [byte esp+078h]	; 1F7B8
+call PlayerFromMouseY	; 1F7BC
+test eax, eax	; 1F7C1
+je near .64	; 1F7C3
+mov esi, 3	; 1F7C9
+jmp short .53	; 1F7CE
+.51:
+mov ebp, esi	; 1F7D0
+shl ebp, 2	; 1F7D2
+mov edi, dword [byte esp+ebp+048h]	; 1F7D5
+test edi, edi	; 1F7D9
+je short .52	; 1F7DB
+mov eax, dword [byte esp+esi*8+0Ch]	; 1F7DD
+push eax	; 1F7E1
+mov edx, dword [byte esp+esi*8+0Ch]	; 1F7E2
+push edx	; 1F7E6
+push edi	; 1F7E7
+call sub_903F0	; 1F7E8
+add esp, byte 0Ch	; 1F7ED
+xor ecx, ecx	; 1F7F0
+mov dword [byte esp+esi*8+0Ch], ecx	; 1F7F2
+mov dword [byte esp+esi*8+08h], ecx	; 1F7F6
+mov edi, dword [byte esp+ebp+048h]	; 1F7FA
+push edi	; 1F7FE
+call FreeMemBlock	; 1F7FF
+add esp, byte 4	; 1F804
+.52:
+dec esi	; 1F807
+.53:
+test esi, esi	; 1F808
+jge short RunPlayerPickMenu.51	; 1F80A
+xor ebp, ebp	; 1F80C
+mov dword [dword esp+098h], ebp	; 1F80E
+mov dword [byte esp+034h], ebp	; 1F815
+mov dword [byte esp+030h], ebp	; 1F819
+mov dword [byte esp+02Ch], ebp	; 1F81D
+mov dword [byte esp+054h], ebp	; 1F821
+mov dword [byte esp+050h], ebp	; 1F825
+mov dword [byte esp+04Ch], ebp	; 1F829
+mov dword [byte esp+048h], ebp	; 1F82D
+mov dword [byte esp+064h], ebp	; 1F831
+mov dword [byte esp+060h], ebp	; 1F835
+mov dword [byte esp+05Ch], ebp	; 1F839
+mov dword [byte esp+044h], ebp	; 1F83D
+mov dword [byte esp+040h], ebp	; 1F841
+mov dword [byte esp+03Ch], ebp	; 1F845
+mov eax, dword [dword esp+094h]	; 1F849
+cmp eax, dword [byte esp+070h]	; 1F850
+je near .58	; 1F854
+mov edx, dword [statsnumskaters]	; 1F85A
+cmp eax, edx	; 1F860
+jge short .54	; 1F862
+mov edx, eax	; 1F864
+shl eax, 2	; 1F866
+sub eax, edx	; 1F869
+shl eax, 2	; 1F86B
+add eax, edx	; 1F86E
+add eax, byte 43h	; 1F870
+jmp short .55	; 1F873
+.54:
+sub eax, edx	; 1F875
+mov edx, eax	; 1F877
+shl eax, 2	; 1F879
+sub eax, edx	; 1F87C
+shl eax, 2	; 1F87E
+add eax, edx	; 1F881
+add eax, 1A8h	; 1F883
+.55:
+push dword 80h	; 1F888
+push byte 0Dh	; 1F88D
+push dword 280h	; 1F88F
+push eax	; 1F894
+push byte 0	; 1F895
+call sub_90F38	; 1F897
+add esp, byte 14h	; 1F89C
+mov eax, dword [byte esp+070h]	; 1F89F
+mov dword [dword esp+094h], eax	; 1F8A3
+mov ecx, dword [statsnumskaters]	; 1F8AA
+cmp eax, ecx	; 1F8B0
+jge short .56	; 1F8B2
+mov edx, eax	; 1F8B4
+shl eax, 2	; 1F8B6
+sub eax, edx	; 1F8B9
+shl eax, 2	; 1F8BB
+add eax, edx	; 1F8BE
+add eax, byte 43h	; 1F8C0
+jmp near .57	; 1F8C3
+.56:
+sub eax, ecx	; 1F8C8
+mov edx, eax	; 1F8CA
+shl eax, 2	; 1F8CC
+sub eax, edx	; 1F8CF
+shl eax, 2	; 1F8D1
+add eax, edx	; 1F8D4
+add eax, 1A8h	; 1F8D6
+.57:
+push dword 80h	; 1F8DB
+push byte 0Dh	; 1F8E0
+push dword 280h	; 1F8E2
+push eax	; 1F8E7
+push byte 0	; 1F8E8
+call sub_90F38	; 1F8EA
+add esp, byte 14h	; 1F8EF
+jmp near .68	; 1F8F2
+.58:
+mov esi, 3	; 1F8F7
+jmp short .61	; 1F8FC
+.59:
+mov ebp, esi	; 1F8FE
+shl ebp, 2	; 1F900
+mov ecx, dword [byte esp+ebp+048h]	; 1F903
+test ecx, ecx	; 1F907
+je short .60	; 1F909
+mov eax, dword [byte esp+esi*8+0Ch]	; 1F90B
+push eax	; 1F90F
+mov edx, dword [byte esp+esi*8+0Ch]	; 1F910
+push edx	; 1F914
+push ecx	; 1F915
+call sub_903F0	; 1F916
+add esp, byte 0Ch	; 1F91B
+xor ecx, ecx	; 1F91E
+mov dword [byte esp+esi*8+0Ch], ecx	; 1F920
+mov dword [byte esp+esi*8+08h], ecx	; 1F924
+mov edi, dword [byte esp+ebp+048h]	; 1F928
+push edi	; 1F92C
+call FreeMemBlock	; 1F92D
+add esp, byte 4	; 1F932
+.60:
+dec esi	; 1F935
+.61:
+test esi, esi	; 1F936
+jge short RunPlayerPickMenu.59	; 1F938
+mov eax, dword [byte esp+070h]	; 1F93A
+mov ebp, dword [statsnumskaters]	; 1F93E
+cmp eax, ebp	; 1F944
+jge short .62	; 1F946
+mov eax, dword [nosplit eax*4+statsskaterorder]	; 1F948
+mov eax, dword [nosplit eax*4+statsskaterplr]	; 1F94F
+jmp short .63	; 1F956
+.62:
+mov esi, eax	; 1F958
+sub esi, ebp	; 1F95A
+mov eax, dword [nosplit esi*4+statsgoalieorder]	; 1F95C
+mov eax, dword [nosplit eax*4+statsgoalieplr]	; 1F963
+.63:
+mov edx, eax	; 1F96A
+shl eax, 2	; 1F96C
+sub eax, edx	; 1F96F
+shl eax, 2	; 1F971
+add eax, edx	; 1F974
+shl eax, 2	; 1F976
+mov esi, dword [statsplayerbuf]	; 1F979
+add esi, eax	; 1F97F
+mov ecx, 0Dh	; 1F981
+mov edi, statsplayer	; 1F986
+rep movsd	; 1F98B
+xor edx, edx	; 1F98D
+mov dword [statspalvalid], edx	; 1F98F
+mov dword [statspal], edx	; 1F995
+call ShowPlayerStatsItem	; 1F99B
+mov dword [byte esp+034h], edx	; 1F9A0
+mov dword [byte esp+030h], edx	; 1F9A4
+mov dword [byte esp+02Ch], edx	; 1F9A8
+mov dword [byte esp+054h], edx	; 1F9AC
+mov dword [byte esp+050h], edx	; 1F9B0
+mov dword [byte esp+04Ch], edx	; 1F9B4
+mov dword [byte esp+048h], edx	; 1F9B8
+mov dword [byte esp+064h], edx	; 1F9BC
+mov dword [byte esp+060h], edx	; 1F9C0
+mov dword [byte esp+05Ch], edx	; 1F9C4
+mov dword [byte esp+044h], edx	; 1F9C8
+mov dword [byte esp+040h], edx	; 1F9CC
+mov dword [byte esp+03Ch], edx	; 1F9D0
+mov ebx, dword [dword esp+088h]	; 1F9D4
+push ebx	; 1F9DB
+jmp near RunPlayerPickMenu.25	; 1F9DC
+.64:
+push esi	; 1F9E1
+push edi	; 1F9E2
+push ebp	; 1F9E3
+call sub_903F0	; 1F9E4
+add esp, byte 0Ch	; 1F9E9
+mov esi, 3	; 1F9EC
+jmp short .67	; 1F9F1
+.65:
+mov ebp, esi	; 1F9F3
+shl ebp, 2	; 1F9F5
+mov edi, dword [byte esp+ebp+048h]	; 1F9F8
+test edi, edi	; 1F9FC
+je short .66	; 1F9FE
+mov eax, dword [byte esp+esi*8+0Ch]	; 1FA00
+push eax	; 1FA04
+mov edx, dword [byte esp+esi*8+0Ch]	; 1FA05
+push edx	; 1FA09
+push edi	; 1FA0A
+call sub_903F0	; 1FA0B
+add esp, byte 0Ch	; 1FA10
+xor ecx, ecx	; 1FA13
+mov dword [byte esp+esi*8+0Ch], ecx	; 1FA15
+mov dword [byte esp+esi*8+08h], ecx	; 1FA19
+mov edi, dword [byte esp+ebp+048h]	; 1FA1D
+push edi	; 1FA21
+call FreeMemBlock	; 1FA22
+add esp, byte 4	; 1FA27
+.66:
+dec esi	; 1FA2A
+.67:
+test esi, esi	; 1FA2B
+jge short RunPlayerPickMenu.65	; 1FA2D
+xor edi, edi	; 1FA2F
+mov dword [dword esp+098h], edi	; 1FA31
+mov dword [byte esp+034h], edi	; 1FA38
+mov dword [byte esp+030h], edi	; 1FA3C
+mov dword [byte esp+02Ch], edi	; 1FA40
+mov dword [byte esp+054h], edi	; 1FA44
+mov dword [byte esp+050h], edi	; 1FA48
+mov dword [byte esp+04Ch], edi	; 1FA4C
+mov dword [byte esp+048h], edi	; 1FA50
+mov dword [byte esp+064h], edi	; 1FA54
+mov dword [byte esp+060h], edi	; 1FA58
+mov dword [byte esp+05Ch], edi	; 1FA5C
+mov dword [byte esp+044h], edi	; 1FA60
+mov dword [byte esp+040h], edi	; 1FA64
+mov dword [byte esp+03Ch], edi	; 1FA68
+.68:
+mov edi, dword [byte esp+074h]	; 1FA6C
+push edi	; 1FA70
+mov ebp, dword [byte esp+07Ch]	; 1FA71
+push ebp	; 1FA75
+mov eax, dword [dword esp+090h]	; 1FA76
+push eax	; 1FA7D
+call sub_91400	; 1FA7E
+add esp, byte 0Ch	; 1FA83
+mov edx, dword [byte esp+074h]	; 1FA86
+push edx	; 1FA8A
+mov ebx, dword [byte esp+07Ch]	; 1FA8B
+push ebx	; 1FA8F
+mov ecx, dword [pointerspr]	; 1FA90
+push ecx	; 1FA96
+jmp near RunPlayerPickMenu.16	; 1FA97
+.69:
+add esp, 9Ch	; 1FA9C
+jmp near RunMenu_ret4	; 1FAA2
+; C: src/front/menu/InitMenuRemap.c
+%ifdef CBUILD
+%include "c/front/menu/InitMenuRemap.inc"
+%else
+InitMenuRemap:
+push dword 14h	; 1FAA7
+call __CHK	; 1FAAC
+push ebx	; 1FAB1
+push ecx	; 1FAB2
+push edx	; 1FAB3
+test eax, eax	; 1FAB4
+jne short .3	; 1FAB6
+mov ecx, 15h	; 1FAB8
+xor edx, edx	; 1FABD
+mov eax, menuremap	; 1FABF
+call __STOSB	; 1FAC4
+mov ebx, 15h	; 1FAC9
+.1:
+mov al, bl	; 1FACE
+sub al, 15h	; 1FAD0
+mov byte [dword ebx+menuremap], al	; 1FAD2
+inc ebx	; 1FAD8
+cmp ebx, byte 40h	; 1FAD9
+jl short InitMenuRemap.1	; 1FADC
+mov ebx, 40h	; 1FADE
+.2:
+mov byte [dword ebx+menuremap], bl	; 1FAE3
+inc ebx	; 1FAE9
+cmp ebx, 100h	; 1FAEA
+jl short InitMenuRemap.2	; 1FAF0
+jmp short .5	; 1FAF2
+.3:
+xor ebx, ebx	; 1FAF4
+.4:
+mov byte [dword ebx+menuremap], bl	; 1FAF6
+mov byte [dword ebx+menuremap2], bl	; 1FAFC
+inc ebx	; 1FB02
+cmp ebx, 80h	; 1FB03
+jl short InitMenuRemap.4	; 1FB09
+.5:
+push menuremap	; 1FB0B
+call sub_B4DD4	; 1FB10
+add esp, byte 4	; 1FB15
+pop edx	; 1FB18
+pop ecx	; 1FB19
+pop ebx	; 1FB1A
+ret	; 1FB1B
+%endif ; C
+; C: src/front/menu/TextPrintf.c
+%ifdef CBUILD
+%include "c/front/menu/TextPrintf.inc"
+%else
+TextPrintf:
+push dword 14h	; 1FB1C
+call __CHK	; 1FB21
+push esi	; 1FB26
+mov esi, eax	; 1FB27
+push ecx	; 1FB29
+push ebx	; 1FB2A
+push printfbuf	; 1FB2B
+call sprintf_	; 1FB30
+add esp, byte 0Ch	; 1FB35
+push edx	; 1FB38
+push esi	; 1FB39
+push printfbuf	; 1FB3A
+call sub_91964	; 1FB3F
+add esp, byte 0Ch	; 1FB44
+pop esi	; 1FB47
+ret	; 1FB48
+TextPrintf2:
+push dword 1Ch	; 1FB49
+call __CHK	; 1FB4E
+push esi	; 1FB53
+push edi	; 1FB54
+mov esi, eax	; 1FB55
+mov edi, dword [byte esp+0Ch]	; 1FB57
+push edi	; 1FB5B
+push ecx	; 1FB5C
+push ebx	; 1FB5D
+push printfbuf	; 1FB5E
+call sprintf_	; 1FB63
+add esp, byte 10h	; 1FB68
+push edx	; 1FB6B
+push esi	; 1FB6C
+push printfbuf	; 1FB6D
+call sub_91964	; 1FB72
+add esp, byte 0Ch	; 1FB77
+pop edi	; 1FB7A
+pop esi	; 1FB7B
+ret 4	; 1FB7C
+%endif ; C
+; C: src/front/menu/CmpPoints.c
+%ifdef CBUILD
+%include "c/front/menu/CmpPoints.inc"
+%else
+CmpPoints:
+push dword 14h	; 1FB7F
+call __CHK	; 1FB84
+push ebx	; 1FB89
+push ecx	; 1FB8A
+push esi	; 1FB8B
+push edi	; 1FB8C
+cmp dword [statsplayoffs], byte 0	; 1FB8D
+jne short .1	; 1FB94
+mov ebx, dword [eax]	; 1FB96
+mov eax, ebx	; 1FB98
+shl eax, 2	; 1FB9A
+sub eax, ebx	; 1FB9D
+shl eax, 4	; 1FB9F
+sub eax, ebx	; 1FBA2
+mov ebx, eax	; 1FBA4
+mov eax, dword [statsskaterbuf]	; 1FBA6
+add eax, ebx	; 1FBAB
+jmp short .2	; 1FBAD
+.1:
+mov ebx, dword [eax]	; 1FBAF
+mov eax, ebx	; 1FBB1
+shl eax, 2	; 1FBB3
+sub eax, ebx	; 1FBB6
+shl eax, 4	; 1FBB8
+sub eax, ebx	; 1FBBB
+mov ebx, dword [statsskaterbuf]	; 1FBBD
+add eax, ebx	; 1FBC3
+add eax, byte 12h	; 1FBC5
+.2:
+cmp dword [statsplayoffs], byte 0	; 1FBC8
+jne short .3	; 1FBCF
+mov ebx, dword [edx]	; 1FBD1
+mov edx, ebx	; 1FBD3
+shl edx, 2	; 1FBD5
+sub edx, ebx	; 1FBD8
+shl edx, 4	; 1FBDA
+sub edx, ebx	; 1FBDD
+mov ebx, dword [statsskaterbuf]	; 1FBDF
+add ebx, edx	; 1FBE5
+jmp short .4	; 1FBE7
+.3:
+mov ebx, dword [edx]	; 1FBE9
+mov edx, ebx	; 1FBEB
+shl edx, 2	; 1FBED
+sub edx, ebx	; 1FBF0
+shl edx, 4	; 1FBF2
+sub edx, ebx	; 1FBF5
+mov ebx, dword [statsskaterbuf]	; 1FBF7
+add ebx, edx	; 1FBFD
+add ebx, byte 12h	; 1FBFF
+.4:
+mov edx, ebx	; 1FC02
+cmp word [ebx], byte 0	; 1FC04
+sete bl	; 1FC08
+mov ecx, ebx	; 1FC0B
+and ecx, 0FFh	; 1FC0D
+mov si, word [eax]	; 1FC13
+test si, si	; 1FC16
+sete bl	; 1FC19
+and ebx, 0FFh	; 1FC1C
+xor ebx, ecx	; 1FC22
+je short .7	; 1FC24
+mov dx, word [edx]	; 1FC26
+.5:
+and edx, 0FFFFh	; 1FC29
+mov eax, esi	; 1FC2F
+.6:
+and eax, 0FFFFh	; 1FC31
+jmp short .11	; 1FC36
+.7:
+mov bx, word [byte edx+06h]	; 1FC38
+mov di, word [byte eax+06h]	; 1FC3C
+cmp bx, di	; 1FC40
+je short .8	; 1FC43
+mov edx, ebx	; 1FC45
+and edx, 0FFFFh	; 1FC47
+mov eax, edi	; 1FC4D
+jmp short CmpPoints.6	; 1FC4F
+.8:
+cmp si, word [edx]	; 1FC51
+je short .9	; 1FC54
+xor ebx, ebx	; 1FC56
+mov bx, si	; 1FC58
+xor eax, eax	; 1FC5B
+mov ax, word [edx]	; 1FC5D
+sub ebx, eax	; 1FC60
+mov eax, ebx	; 1FC62
+pop edi	; 1FC64
+pop esi	; 1FC65
+pop ecx	; 1FC66
+pop ebx	; 1FC67
+ret	; 1FC68
+.9:
+mov bx, word [byte edx+02h]	; 1FC69
+mov si, word [byte eax+02h]	; 1FC6D
+cmp bx, si	; 1FC71
+je short .10	; 1FC74
+mov edx, ebx	; 1FC76
+jmp short CmpPoints.5	; 1FC78
+.10:
+mov edx, dword [byte edx+0Eh]	; 1FC7A
+sar edx, 10h	; 1FC7D
+mov eax, dword [byte eax+0Eh]	; 1FC80
+sar eax, 10h	; 1FC83
+.11:
+sub edx, eax	; 1FC86
+mov eax, edx	; 1FC88
+pop edi	; 1FC8A
+pop esi	; 1FC8B
+pop ecx	; 1FC8C
+pop ebx	; 1FC8D
+ret	; 1FC8E
+%endif ; C
+; C: src/front/menu/CmpGAA.c
+%ifdef CBUILD
+%include "c/front/menu/CmpGAA.inc"
+%else
+CmpGAA:
+push dword 14h	; 1FC8F
+call __CHK	; 1FC94
+push ebx	; 1FC99
+push ecx	; 1FC9A
+push esi	; 1FC9B
+push edi	; 1FC9C
+cmp dword [statsplayoffs], byte 0	; 1FC9D
+jne short .1	; 1FCA4
+mov ebx, dword [eax]	; 1FCA6
+mov eax, ebx	; 1FCA8
+shl eax, 3	; 1FCAA
+sub eax, ebx	; 1FCAD
+shl eax, 2	; 1FCAF
+sub eax, ebx	; 1FCB2
+add eax, eax	; 1FCB4
+mov ebx, dword [statsgoaliebuf]	; 1FCB6
+add eax, ebx	; 1FCBC
+jmp short .2	; 1FCBE
+.1:
+mov ebx, dword [eax]	; 1FCC0
+mov eax, ebx	; 1FCC2
+shl eax, 3	; 1FCC4
+sub eax, ebx	; 1FCC7
+shl eax, 2	; 1FCC9
+sub eax, ebx	; 1FCCC
+add eax, eax	; 1FCCE
+mov ebx, dword [statsgoaliebuf]	; 1FCD0
+add eax, ebx	; 1FCD6
+add eax, byte 16h	; 1FCD8
+.2:
+cmp dword [statsplayoffs], byte 0	; 1FCDB
+jne short .3	; 1FCE2
+mov ebx, dword [edx]	; 1FCE4
+mov edx, ebx	; 1FCE6
+shl edx, 3	; 1FCE8
+sub edx, ebx	; 1FCEB
+shl edx, 2	; 1FCED
+sub edx, ebx	; 1FCF0
+add edx, edx	; 1FCF2
+mov ebx, dword [statsgoaliebuf]	; 1FCF4
+add ebx, edx	; 1FCFA
+jmp short .4	; 1FCFC
+.3:
+mov ebx, dword [edx]	; 1FCFE
+mov edx, ebx	; 1FD00
+shl edx, 3	; 1FD02
+sub edx, ebx	; 1FD05
+shl edx, 2	; 1FD07
+sub edx, ebx	; 1FD0A
+add edx, edx	; 1FD0C
+mov ebx, dword [statsgoaliebuf]	; 1FD0E
+add ebx, edx	; 1FD14
+add ebx, byte 16h	; 1FD16
+.4:
+mov edx, ebx	; 1FD19
+cmp word [byte ebx+0Ch], byte 0	; 1FD1B
+sete bl	; 1FD20
+mov ecx, ebx	; 1FD23
+and ecx, 0FFh	; 1FD25
+mov si, word [byte eax+0Ch]	; 1FD2B
+test si, si	; 1FD2F
+sete bl	; 1FD32
+and ebx, 0FFh	; 1FD35
+xor ebx, ecx	; 1FD3B
+je short .5	; 1FD3D
+mov dx, word [byte edx+0Ch]	; 1FD3F
+jmp short .9	; 1FD43
+.5:
+mov bx, word [byte edx+010h]	; 1FD45
+mov di, word [byte eax+010h]	; 1FD49
+cmp bx, di	; 1FD4D
+je short .7	; 1FD50
+xor ebx, ebx	; 1FD52
+mov bx, di	; 1FD54
+xor eax, eax	; 1FD57
+mov ax, word [byte edx+010h]	; 1FD59
+.6:
+sub ebx, eax	; 1FD5D
+mov eax, ebx	; 1FD5F
+pop edi	; 1FD61
+pop esi	; 1FD62
+pop ecx	; 1FD63
+pop ebx	; 1FD64
+ret	; 1FD65
+.7:
+mov bx, word [byte edx+0Ch]	; 1FD66
+cmp bx, si	; 1FD6A
+je short .10	; 1FD6D
+.8:
+mov edx, ebx	; 1FD6F
+.9:
+and edx, 0FFFFh	; 1FD71
+mov eax, esi	; 1FD77
+jmp near .14	; 1FD79
+.10:
+mov bx, word [edx]	; 1FD7E
+mov si, word [eax]	; 1FD81
+cmp bx, si	; 1FD84
+jne short CmpGAA.8	; 1FD87
+mov bx, word [byte edx+0Eh]	; 1FD89
+mov di, word [byte eax+0Eh]	; 1FD8D
+cmp bx, di	; 1FD91
+je short .11	; 1FD94
+mov eax, edi	; 1FD96
+and eax, 0FFFFh	; 1FD98
+mov edx, ebx	; 1FD9D
+and edx, 0FFFFh	; 1FD9F
+sub eax, edx	; 1FDA5
+pop edi	; 1FDA7
+pop esi	; 1FDA8
+pop ecx	; 1FDA9
+pop ebx	; 1FDAA
+ret	; 1FDAB
+.11:
+mov bx, word [byte edx+02h]	; 1FDAC
+mov cx, word [byte eax+02h]	; 1FDB0
+cmp bx, cx	; 1FDB4
+je short .12	; 1FDB7
+mov edx, ebx	; 1FDB9
+and edx, 0FFFFh	; 1FDBB
+mov eax, ecx	; 1FDC1
+jmp short .14	; 1FDC3
+.12:
+mov bx, word [byte edx+04h]	; 1FDC5
+mov si, word [byte eax+04h]	; 1FDC9
+cmp bx, si	; 1FDCD
+je short .13	; 1FDD0
+xor ebx, ebx	; 1FDD2
+mov bx, si	; 1FDD4
+xor eax, eax	; 1FDD7
+mov ax, word [byte edx+04h]	; 1FDD9
+jmp near CmpGAA.6	; 1FDDD
+.13:
+mov dx, word [byte edx+014h]	; 1FDE2
+and edx, 0FFFFh	; 1FDE6
+mov ax, word [byte eax+014h]	; 1FDEC
+.14:
+and eax, 0FFFFh	; 1FDF0
+sub edx, eax	; 1FDF5
+mov eax, edx	; 1FDF7
+pop edi	; 1FDF9
+pop esi	; 1FDFA
+pop ecx	; 1FDFB
+pop ebx	; 1FDFC
+ret	; 1FDFD
+%endif ; C
+; C: src/front/menu/LoadShapeByTag.c
+%ifdef CBUILD
+%include "c/front/menu/LoadShapeByTag.inc"
+%else
+LoadShapeByTag:
+push dword 54h	; 1FDFE
+call __CHK	; 1FE03
+push ebx	; 1FE08
+push ecx	; 1FE09
+push esi	; 1FE0A
+push edi	; 1FE0B
+push ebp	; 1FE0C
+sub esp, byte 2Ch	; 1FE0D
+push edx	; 1FE10
+mov dword [byte esp+01Ch], 0FFFFFFFFh	; 1FE11
+xor ebp, ebp	; 1FE19
+mov dword [byte esp+028h], ebp	; 1FE1B
+lea edx, [byte esp+01Ch]	; 1FE1F
+call FileOpenRead	; 1FE23
+mov dword [byte esp+02Ch], eax	; 1FE28
+test eax, eax	; 1FE2C
+jne short .1	; 1FE2E
+mov ecx, 2	; 1FE30
+mov ebx, 4	; 1FE35
+lea edx, [byte esp+020h]	; 1FE3A
+mov eax, dword [byte esp+01Ch]	; 1FE3E
+call FileReadAt	; 1FE42
+mov dword [byte esp+02Ch], eax	; 1FE47
+xor edx, edx	; 1FE4B
+mov word [byte esp+022h], dx	; 1FE4D
+.1:
+cmp dword [byte esp+02Ch], byte 0	; 1FE52
+jne short .2	; 1FE57
+mov esi, dword [byte esp+020h]	; 1FE59
+shl esi, 3	; 1FE5D
+push byte 20h	; 1FE60
+push esi	; 1FE62
+push str_sfh	; 1FE63
+call sub_8CCA8	; 1FE68
+add esp, byte 0Ch	; 1FE6D
+mov ebp, eax	; 1FE70
+mov ecx, esi	; 1FE72
+mov ebx, 6	; 1FE74
+mov edx, eax	; 1FE79
+mov eax, dword [byte esp+01Ch]	; 1FE7B
+call FileReadAt	; 1FE7F
+mov dword [byte esp+02Ch], eax	; 1FE84
+.2:
+mov esi, dword [byte esp+02Ch]	; 1FE88
+test esi, esi	; 1FE8C
+jne near .6	; 1FE8E
+mov dword [byte esp+024h], esi	; 1FE94
+jmp short .5	; 1FE98
+.3:
+mov ecx, esi	; 1FE9A
+shl ecx, 2	; 1FE9C
+lea edx, [ecx+ebp]	; 1FE9F
+mov ebx, 4	; 1FEA2
+lea eax, [byte esp+018h]	; 1FEA7
+call memcpy_	; 1FEAB
+mov ebx, 4	; 1FEB0
+mov edx, dword [esp]	; 1FEB5
+lea eax, [byte esp+018h]	; 1FEB8
+call memcmp_	; 1FEBC
+test eax, eax	; 1FEC1
+jne short .4	; 1FEC3
+mov dword [byte esp+024h], 0FFFFFFFFh	; 1FEC5
+mov eax, dword [byte esp+020h]	; 1FECD
+shl eax, 2	; 1FED1
+add eax, ebp	; 1FED4
+mov edi, dword [byte esp+020h]	; 1FED6
+shl edi, 3	; 1FEDA
+add edi, byte 6	; 1FEDD
+add edi, dword [ecx+eax]	; 1FEE0
+mov ecx, 11h	; 1FEE3
+mov ebx, edi	; 1FEE8
+lea edx, [byte esp+04h]	; 1FEEA
+mov eax, dword [byte esp+01Ch]	; 1FEEE
+call FileReadAt	; 1FEF2
+mov dword [byte esp+02Ch], eax	; 1FEF7
+.4:
+inc esi	; 1FEFB
+.5:
+cmp esi, dword [byte esp+020h]	; 1FEFC
+jge short .6	; 1FF00
+cmp dword [byte esp+024h], byte 0	; 1FF02
+je short LoadShapeByTag.3	; 1FF07
+.6:
+test ebp, ebp	; 1FF09
+je short .7	; 1FF0B
+push ebp	; 1FF0D
+call FreeMemBlock	; 1FF0E
+add esp, byte 4	; 1FF13
+.7:
+cmp dword [byte esp+02Ch], byte 0	; 1FF16
+jne short .8	; 1FF1B
+cmp dword [byte esp+024h], byte 0	; 1FF1D
+je short .8	; 1FF22
+mov edx, dword [byte esp+06h]	; 1FF24
+sar edx, 10h	; 1FF28
+mov eax, dword [byte esp+08h]	; 1FF2B
+sar eax, 10h	; 1FF2F
+imul eax, edx	; 1FF32
+lea ebp, [byte eax+011h]	; 1FF35
+push byte 20h	; 1FF38
+push ebp	; 1FF3A
+push str_shape	; 1FF3B
+call sub_8CCA8	; 1FF40
+mov esi, eax	; 1FF45
+add esp, byte 0Ch	; 1FF47
+mov dword [byte esp+028h], eax	; 1FF4A
+mov ecx, ebp	; 1FF4E
+mov ebx, edi	; 1FF50
+mov edx, eax	; 1FF52
+mov eax, dword [byte esp+01Ch]	; 1FF54
+call FileReadAt	; 1FF58
+test eax, eax	; 1FF5D
+jge short .8	; 1FF5F
+push esi	; 1FF61
+call FreeMemBlock	; 1FF62
+add esp, byte 4	; 1FF67
+xor esi, esi	; 1FF6A
+mov dword [byte esp+028h], esi	; 1FF6C
+.8:
+lea eax, [byte esp+01Ch]	; 1FF70
+call FileClose	; 1FF74
+mov eax, dword [byte esp+028h]	; 1FF79
+add esp, byte 30h	; 1FF7D
+LoadShapeByTag_x:
+pop ebp	; 1FF80
+pop edi	; 1FF81
+pop esi	; 1FF82
+pop ecx	; 1FF83
+pop ebx	; 1FF84
+ret	; 1FF85
+%endif ; C
+; C: src/front/menu/LoadShapeByTag.c (MakeStatsTitle)
+%ifdef CBUILD
+%include "c/front/menu/LoadShapeByTag.MakeStatsTitle.inc"
+%else
+MakeStatsTitle:
+push dword 18h	; 1FF86
+call __CHK	; 1FF8B
+push ebx	; 1FF90
+push ecx	; 1FF91
+push esi	; 1FF92
+push edi	; 1FF93
+push ebp	; 1FF94
+mov esi, eax	; 1FF95
+mov ebp, edx	; 1FF97
+cmp byte [mi_9394Season], 1	; 1FF99
+jne short .2	; 1FFA0
+mov ecx, str_9394Season	; 1FFA2
+.1:
+xor ebx, ebx	; 1FFA7
+jmp short .7	; 1FFA9
+.2:
+cmp byte [mi_9394Playoffs], 1	; 1FFAB
+jne short .3	; 1FFB2
+mov ecx, str_9394PlayOffs	; 1FFB4
+jmp short .6	; 1FFB9
+.3:
+cmp byte [mi_LeagueSeason], 1	; 1FFBB
+jne short .4	; 1FFC2
+mov ecx, str_LgSeasonTitle	; 1FFC4
+jmp short MakeStatsTitle.1	; 1FFC9
+.4:
+cmp byte [mi_LeaguePlayoffs], 1	; 1FFCB
+jne short .5	; 1FFD2
+mov ecx, str_LgPlayoffsTitle	; 1FFD4
+jmp short .6	; 1FFD9
+.5:
+cmp byte [mi_PlayoffMode], 1	; 1FFDB
+jne short .7	; 1FFE2
+mov ecx, str_POTitle	; 1FFE4
+.6:
+mov ebx, 1	; 1FFE9
+.7:
+mov eax, ecx	; 1FFEE
+call strlen_	; 1FFF0
+mov edi, eax	; 1FFF5
+sub edi, ebx	; 1FFF7
+mov ebx, edi	; 1FFF9
+mov edx, ecx	; 1FFFB
+mov eax, esi	; 1FFFD
+call strncpy_	; 1FFFF
+mov byte [edi+esi], 0	; 20004
+mov edx, ebp	; 20008
+mov eax, esi	; 2000A
+call strcat_	; 2000C
+jmp near LoadShapeByTag_x	; 20011
+%endif ; C

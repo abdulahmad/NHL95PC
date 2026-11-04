@@ -13,8 +13,9 @@
 #                             compiler HOCKEY.EXE was built with); the matched C is tuned for GA, so an LA build
 #                             of CBUILD=1 is not expected to be byte-identical (BUILD_NOTES.md)
 #
-# C matching decompilation (docs/C_MATCHING.md): a function written in src/engine/<mod>/<Func>.c (or
-# src/c/<module>/<Func>.c for folders not yet colocated) replaces its asm block when CBUILD=1.
+# C matching decompilation (docs/C_MATCHING.md): a function written in src/engine/<mod>/<Func>.c or
+# src/front/<mod>/<Func>.c (or src/c/<module>/<Func>.c for folders not yet colocated) replaces its asm
+# block when CBUILD=1.
 # Both builds must give the same sha1.
 #
 # Needs: nasm (2.15+), python3. The third-party DOS/16M loader, DOS/4GW kernel and Watcom wstub, the LE header
@@ -53,18 +54,22 @@ build/watcom.$(WATCOM_VER):
 	@mkdir -p build; rm -f build/watcom.*; touch $@
 
 .SECONDEXPANSION:
-.PRECIOUS: build/c/%.obj build/c/%.inc build/c/engine/%.obj build/c/engine/%.inc
+.PRECIOUS: build/c/%.obj build/c/%.inc build/c/engine/%.obj build/c/engine/%.inc build/c/front/%.obj build/c/front/%.inc
 build/c/%.obj: src/c/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
 	@$(PYTHON) tools/cc.py compile $< -o $@
 build/c/engine/%.obj: src/engine/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
+	@$(PYTHON) tools/cc.py compile $< -o $@
+build/c/front/%.obj: src/front/%.c $(CHDRS) tools/cc.py build/watcom.$(WATCOM_VER)
 	@$(PYTHON) tools/cc.py compile $< -o $@
 # build/c/<module>/<File>.inc, or build/c/<module>/<File>.<Func>.inc for a further function of a multi-block file
 # leftover src/c: the asm is src/cseg01/<module>.asm
 build/c/%.inc: build/c/$$(basename $$*).obj $$(subst /.asm,.asm,src/cseg01/$$(dir $$*).asm) tools/cc.py tools/cobj.py | build/parts/manifest.json
 	@$(PYTHON) tools/cc.py frag src/c/$(basename $*).c $< $@
-# colocated engine: src/engine/<mod>/<mod>.asm
+# colocated engine/front: src/<top>/<mod>/<mod>.asm; fragments stay under build/c/<top>/
 build/c/engine/%.inc: build/c/engine/$$(basename $$*).obj src/engine/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
 	@$(PYTHON) tools/cc.py frag src/engine/$(basename $*).c $< $@
+build/c/front/%.inc: build/c/front/$$(basename $$*).obj src/front/$$(firstword $$(subst /, ,$$*))/$$(firstword $$(subst /, ,$$*)).asm tools/cc.py tools/cobj.py | build/parts/manifest.json
+	@$(PYTHON) tools/cc.py frag src/front/$(basename $*).c $< $@
 
 # stubs + LE metadata + fixup order from your EXE (also checks its sha1)
 build/parts/manifest.json: $(HOCKEY_EXE) segmap95pc.json tools/rebuild_exe.py

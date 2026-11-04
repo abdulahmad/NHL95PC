@@ -10,9 +10,10 @@
   python3 tools/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
 Layout: a C file lives next to its module's asm (src/engine/hockey/SetSPA.c with
-src/engine/hockey/hockey.asm). Front/pc/lib still sit under src/c/ and src/cseg01/ until those
-folders are colocated. The C replaces the block of that asm that starts at label <Func>. In the
-asm the block is wrapped like this (`mark` writes it):
+src/engine/hockey/hockey.asm; src/front/menu/RunMenu.c with src/front/menu/menu.asm).
+Pc/lib still sit under src/c/ and src/cseg01/ until those folders are colocated. The C
+replaces the block of that asm that starts at label <Func>. In the asm the block is wrapped
+like this (`mark` writes it):
 
     ; C: src/engine/hockey/SetSPA.c
     %ifdef CBUILD

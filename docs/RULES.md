@@ -19,7 +19,7 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 ## This repo
 
 - Names, in order: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features (season, trade, create player, awards, the 95 menus); 95PC's own name for DOS-only jobs.
-- Files: engine code is in `src/engine/<mod>/` (asm + C). Front, pc and lib remain `src/cseg01/<module>.asm` and `src/c/<module>/`. Link order is `src/segments.txt`. Data stays `src/dseg02/` (`NNN_ADDR_data_*`).
+- Files: engine and front code is in `src/engine/<mod>/` and `src/front/<mod>/` (asm + C). Pc and lib remain `src/cseg01/<module>.asm` and `src/c/<module>/`. Link order is `src/segments.txt`. Data stays `src/dseg02/` (`NNN_ADDR_data_*`).
 - One owner (Abdul). No lanes, claims or board; the lane-round files are in docs/archive/.
 
 ## Functional track
@@ -61,3 +61,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)
 - 2026-11-04 F3: 95G names for 95 features apply only when the body matches. The DOS season/trade/create/awards screens share strings and labels, not bodies; they keep the PC names. (xmatch95 on season95/trade95/create95/awards95; naming_recommendation_and_95g_pass.md)
 - 2026-11-04 layout: engine C and asm live in `src/engine/<mod>/`; keep `%include "c/engine/..."` so fragments stay under `build/c/engine/`. Do not rename overlay→hud in the same unit as a move. (CC-68 colocate engine)
+- 2026-11-04 layout: front C and asm live in `src/front/<mod>/`; keep `%include "c/front/..."` so fragments stay under `build/c/front/`. (CC-68 colocate front)
