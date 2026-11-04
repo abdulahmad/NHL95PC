@@ -56,3 +56,6 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-02 harness: `check.saved_regs` counts every `push reg` (call arguments, parameter homes) as saving the register, so `_cmp_regs` compares ebx/ecx/edx at exit when the original writes them freely and never pops them (NetCollide, SelectHilight, CalendarScreen "edx differs"). Look for a matching `pop` in the original before changing the C. (equiv-fixer; needs a harness change)
 - 2026-11-02 harness: `Checker.codeval` maps a C-side scratch address as the public's EXE label plus offset, so a draft longer than its EXE function renders return addresses near its end as the next function (RunTeamPickMenu vs RunPlayerPickMenu). Compare the sizes before chasing a "CODE function" diff. (equiv-fixer; needs a harness change)
 - 2026-11-02 ReplayStep: `a = b = x` stores b first, then a; when the original stores two globals in a set order, write the chain with the first-stored one innermost-right (`camx = word_E9FB0 = x` stores word_E9FB0 first). Compare store addresses in the first writes[] diff. (equiv-fixer)
+
+## Learned
+- 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)

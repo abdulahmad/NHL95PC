@@ -2,7 +2,7 @@
 
 ## Now
 
-- Stage / unit: see the shared plan (https://github.com/abdulahmad/nhl-disasm-report/blob/main/docs/ALIGNMENT.md); alignment work for 95PC is on `claude/project-thread-ggw7zu`.
+- Stage / unit: CONTRIBUTING.md added (stay on the cleanup branch; lineage in `docs/name_map.csv` only). Alignment next is still 95G names for 95 features (out of this unit).
 - Branch: `claude/project-thread-ggw7zu`
 - Last check: 2026-11-02 `make fullcheck`, MATCH in both builds
 - Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
