@@ -2,13 +2,13 @@
 
 ## Now
 
-- Stage / unit: CC-68 tree — **engine and front colocated**. `src/engine/<mod>/` and `src/front/<mod>/` hold `<mod>.asm` plus that module's `.c` files. Pc and lib still live under `src/cseg01/` + `src/c/`.
+- Stage / unit: CC-68 tree — **engine, front and pc colocated**. `src/engine/<mod>/`, `src/front/<mod>/` and `src/pc/<mod>/` hold `<mod>.asm` plus that module's `.c` files. Lib still lives under `src/cseg01/lib/`. C headers stay in `src/c/include/`.
 - Branch: `claude/project-thread-ggw7zu`
-- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (front colocate; engine already MATCH).
+- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (pc colocate).
 - Done 2026-11-03: F4 module re-cut (tools/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
-- Next layout units (move only, one folder each, MATCH after): colocate `pc/`, then group `lib/`, then rename `dseg02` without `NNN_ADDR`. Do not merge `overlay`→`hud` in a move unit. Do not merge to main.
+- Next layout units (move only, one folder each, MATCH after): group `lib/` (do not merge numbered slices), then rename `dseg02` without `NNN_ADDR`. Do not merge `overlay`→`hud` in a move unit. Do not merge to main.
 - Open PRs: #279
 
 Everything a new person or agent needs to pick this project up. Read this file, then

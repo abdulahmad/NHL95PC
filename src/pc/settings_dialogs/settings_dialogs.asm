@@ -31,7 +31,7 @@ global ExhSetEditLoop, DrawCtlBoxOn, DrawCtlBox_common, DrawCtlBoxOff, MenuP1Con
 global MenuP1ControlsLeague, MenuP2ControlsLeague, ControlsDlgLeague, MenuP1ControlsInGame, ControlsDlgInGame, MenuP2ControlsInGame, CtlSwapScoreFix, CtlSwapTeamFlag
 global ReassignCtlPlayer, ClearCtlBlink, ControlsDlgInGame_side, ControlsDlgInGame_setside, ControlsDlg_ret0C, ControlsDlg_ret, ControlsDlg_ret0, MenuP1ControlsPlayoff
 global MenuP2ControlsPlayoff, ControlsDlgPlayoff, DrawControlsDlg, DrawControlsOpts, CtlDlgHitTest, DrawCtlBoxes, ControlsDlgLoop, SetCtlTeams
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.inc"
 %else
@@ -105,7 +105,7 @@ pop ecx	; 7A1F9
 pop ebx	; 7A1FA
 ret	; 7A1FB
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (MenuPlayoffSettings)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (MenuPlayoffSettings)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.MenuPlayoffSettings.inc"
 %else
@@ -164,7 +164,7 @@ mov dword [settingsfile], ebx	; 7A28F
 xor eax, eax	; 7A295
 jmp near LeagueSettingsDlg_ret	; 7A297
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (EditPlayoffSettings)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (EditPlayoffSettings)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.EditPlayoffSettings.inc"
 %else
@@ -214,7 +214,7 @@ mov eax, exhstate	; 7A326
 call LoadModeState	; 7A32B
 jmp near SettingsDlgClose	; 7A330
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (MenuLeagueSettingsEdit)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (MenuLeagueSettingsEdit)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.MenuLeagueSettingsEdit.inc"
 %else
@@ -254,7 +254,7 @@ call LeagueOptsToBits	; 7A390
 mov eax, 1	; 7A395
 jmp near MenuPlayoffSettings_edit	; 7A39A
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (MenuShowLeagueSettings)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (MenuShowLeagueSettings)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.MenuShowLeagueSettings.inc"
 %else
@@ -293,7 +293,7 @@ call LeagueOptsToBits	; 7A3F5
 call LeagueSetViewLoop	; 7A3FA
 jmp near SettingsDlgClose	; 7A3FF
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (MenuShowLeagueSettings2)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (MenuShowLeagueSettings2)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.MenuShowLeagueSettings2.inc"
 %else
@@ -417,7 +417,7 @@ mov dword [settingsfile], eax	; 7A571
 add esp, byte 28h	; 7A576
 jmp near LeagueSettingsDlg_ret	; 7A579
 %endif ; C
-; C: src/c/pc/settings_dialogs/DrawLeagueSetDlgSel.c
+; C: src/pc/settings_dialogs/DrawLeagueSetDlgSel.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/DrawLeagueSetDlgSel.inc"
 %else
@@ -518,7 +518,7 @@ pop ecx	; 7A6AA
 pop ebx	; 7A6AB
 ret	; 7A6AC
 %endif ; C
-; C: src/c/pc/settings_dialogs/SetLeagueSetImage.c
+; C: src/pc/settings_dialogs/SetLeagueSetImage.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/SetLeagueSetImage.inc"
 %else
@@ -528,7 +528,7 @@ call __CHK	; 7A6B2
 mov dword [leaguesetimg], eax	; 7A6B7
 ret	; 7A6BC
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (DrawLeagueSetDlg)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (DrawLeagueSetDlg)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.DrawLeagueSetDlg.inc"
 %else
@@ -675,7 +675,7 @@ dd LeagueOptsToBits_n0
 dd LeagueOptsToBits_n3
 dd LeagueOptsToBits_n0
 dd LeagueOptsToBits_n4
-; C: src/c/pc/settings_dialogs/LeagueOptsToBits.c
+; C: src/pc/settings_dialogs/LeagueOptsToBits.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueOptsToBits.inc"
 %else
@@ -789,7 +789,7 @@ call DrawLeagueSetChecks	; 7A9C1
 pop edx	; 7A9C6
 ret	; 7A9C7
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSetHitTest.c
+; C: src/pc/settings_dialogs/LeagueSetHitTest.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSetHitTest.inc"
 %else
@@ -879,7 +879,7 @@ pop esi	; 7AAA7
 pop ecx	; 7AAA8
 ret	; 7AAA9
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (DrawLeagueSetChecks)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (DrawLeagueSetChecks)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.DrawLeagueSetChecks.inc"
 %else
@@ -1037,7 +1037,7 @@ call sub_91FE0	; 7AC24
 add esp, byte 0Ch	; 7AC29
 jmp near LeagueSettingsDlg_ret4	; 7AC2C
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (LeagueSetViewLoop)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (LeagueSetViewLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.LeagueSetViewLoop.inc"
 %else
@@ -1186,7 +1186,7 @@ xor eax, eax	; 7ADC9
 add esp, byte 14h	; 7ADCB
 jmp near LeagueSettingsDlg_ret	; 7ADCE
 %endif ; C
-; C: src/c/pc/settings_dialogs/LeagueSettingsDlg.c (LeagueSetEditLoop)
+; C: src/pc/settings_dialogs/LeagueSettingsDlg.c (LeagueSetEditLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/LeagueSettingsDlg.LeagueSetEditLoop.inc"
 %else
@@ -1650,7 +1650,7 @@ mov ebx, dword [pointerspr]	; 7B390
 push ebx	; 7B396
 jmp near LeagueSetEditLoop.6	; 7B397
 %endif ; C
-; C: src/c/pc/settings_dialogs/SettingsStub.c
+; C: src/pc/settings_dialogs/SettingsStub.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/SettingsStub.inc"
 %else
@@ -1659,7 +1659,7 @@ push dword 4	; 7B39C
 call __CHK	; 7B3A1
 ret	; 7B3A6
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuModeSettings.c
+; C: src/pc/settings_dialogs/MenuModeSettings.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuModeSettings.inc"
 %else
@@ -1772,7 +1772,7 @@ pop ecx	; 7B4E9
 pop ebx	; 7B4EA
 ret	; 7B4EB
 %endif ; C
-; C: src/c/pc/settings_dialogs/DrawModeSetDlg.c
+; C: src/pc/settings_dialogs/DrawModeSetDlg.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/DrawModeSetDlg.inc"
 %else
@@ -1864,7 +1864,7 @@ pop ecx	; 7B601
 pop ebx	; 7B602
 ret	; 7B603
 %endif ; C
-; C: src/c/pc/settings_dialogs/ModeOptsToBits.c
+; C: src/pc/settings_dialogs/ModeOptsToBits.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/ModeOptsToBits.inc"
 %else
@@ -1967,7 +1967,7 @@ pop ecx	; 7B731
 pop ebx	; 7B732
 ret	; 7B733
 %endif ; C
-; C: src/c/pc/settings_dialogs/ModeSetHitTest.c
+; C: src/pc/settings_dialogs/ModeSetHitTest.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/ModeSetHitTest.inc"
 %else
@@ -2028,7 +2028,7 @@ pop esi	; 7B7BB
 pop ecx	; 7B7BC
 ret	; 7B7BD
 %endif ; C
-; C: src/c/pc/settings_dialogs/DrawModeSetChecks.c
+; C: src/pc/settings_dialogs/DrawModeSetChecks.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/DrawModeSetChecks.inc"
 %else
@@ -2092,7 +2092,7 @@ pop ecx	; 7B843
 pop ebx	; 7B844
 ret	; 7B845
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuModeSettings.c (ModeSetViewLoop)
+; C: src/pc/settings_dialogs/MenuModeSettings.c (ModeSetViewLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuModeSettings.ModeSetViewLoop.inc"
 %else
@@ -2241,7 +2241,7 @@ xor eax, eax	; 7B9DE
 add esp, byte 14h	; 7B9E0
 jmp near ModeSettings_epilogue	; 7B9E3
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuModeSettings.c (ModeSetEditLoop)
+; C: src/pc/settings_dialogs/MenuModeSettings.c (ModeSetEditLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuModeSettings.ModeSetEditLoop.inc"
 %else
@@ -2621,7 +2621,7 @@ mov edi, dword [byte esp+010h]	; 7BEB1
 push edi	; 7BEB5
 jmp near ModeSetEditLoop.5	; 7BEB6
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuExhibitionSettings.c
+; C: src/pc/settings_dialogs/MenuExhibitionSettings.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuExhibitionSettings.inc"
 %else
@@ -2683,7 +2683,7 @@ pop ecx	; 7BF53
 pop ebx	; 7BF54
 ret	; 7BF55
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuExhibitionSettings.c (ExhOptsToBits)
+; C: src/pc/settings_dialogs/MenuExhibitionSettings.c (ExhOptsToBits)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuExhibitionSettings.ExhOptsToBits.inc"
 %else
@@ -2807,7 +2807,7 @@ pop ecx	; 7C0B6
 pop ebx	; 7C0B7
 ret	; 7C0B8
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuExhibitionSettings.c (DrawExhSetChecks)
+; C: src/pc/settings_dialogs/MenuExhibitionSettings.c (DrawExhSetChecks)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuExhibitionSettings.DrawExhSetChecks.inc"
 %else
@@ -2910,7 +2910,7 @@ add esp, byte 0Ch	; 7C1A1
 add esp, byte 4	; 7C1A4
 jmp near ExhSettings_ret	; 7C1A7
 %endif ; C
-; C: src/c/pc/settings_dialogs/DrawExhSetDlg.c
+; C: src/pc/settings_dialogs/DrawExhSetDlg.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/DrawExhSetDlg.inc"
 %else
@@ -2986,7 +2986,7 @@ pop ecx	; 7C28A
 pop ebx	; 7C28B
 ret	; 7C28C
 %endif ; C
-; C: src/c/pc/settings_dialogs/ExhSetHitTest.c
+; C: src/pc/settings_dialogs/ExhSetHitTest.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/ExhSetHitTest.inc"
 %else
@@ -3047,7 +3047,7 @@ pop esi	; 7C314
 pop ecx	; 7C315
 ret	; 7C316
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuExhibitionSettings.c (ExhSetEditLoop)
+; C: src/pc/settings_dialogs/MenuExhibitionSettings.c (ExhSetEditLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuExhibitionSettings.ExhSetEditLoop.inc"
 %else
@@ -3466,7 +3466,7 @@ mov edi, dword [pointerspr]	; 7C846
 push edi	; 7C84C
 jmp near ExhSetEditLoop.5	; 7C84D
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOn)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOn)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.DrawCtlBoxOn.inc"
 %else
@@ -3544,7 +3544,7 @@ call sub_B4FAC	; 7C8F4
 add esp, byte 14h	; 7C8F9
 jmp near ControlsDlg_ret	; 7C8FC
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOff)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawCtlBoxOff)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.DrawCtlBoxOff.inc"
 %else
@@ -3609,7 +3609,7 @@ add esp, byte 14h	; 7C98A
 push ebp	; 7C98D
 jmp near DrawCtlBox_common	; 7C98E
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsExh)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsExh)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsExh.inc"
 %else
@@ -3619,7 +3619,7 @@ call __CHK	; 7C998
 xor eax, eax	; 7C99D
 jmp short ControlsDlgExh	; 7C99F
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsExh)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsExh)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsExh.inc"
 %else
@@ -3683,7 +3683,7 @@ xor eax, eax	; 7CA49
 add esp, byte 4	; 7CA4B
 jmp near ControlsDlg_ret	; 7CA4E
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsLeague)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsLeague)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsLeague.inc"
 %else
@@ -3693,7 +3693,7 @@ call __CHK	; 7CA58
 xor eax, eax	; 7CA5D
 jmp short ControlsDlgLeague	; 7CA5F
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsLeague)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsLeague)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsLeague.inc"
 %else
@@ -3749,7 +3749,7 @@ xor edx, edx	; 7CAEA
 mov dword [ctldlgalt], edx	; 7CAEC
 jmp near ControlsDlg_done	; 7CAF2
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.inc"
 %else
@@ -3810,7 +3810,7 @@ jge near ControlsDlgInGame_side	; 7CB92
 xor edx, edx	; 7CB98
 jmp near ControlsDlgInGame_setside	; 7CB9A
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsInGame)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsInGame)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsInGame.inc"
 %else
@@ -3820,7 +3820,7 @@ call __CHK	; 7CBA4
 mov eax, 1	; 7CBA9
 jmp near ControlsDlgInGame	; 7CBAE
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (CtlSwapScoreFix)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (CtlSwapScoreFix)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.CtlSwapScoreFix.inc"
 %else
@@ -3895,7 +3895,7 @@ pop ecx	; 7CC87
 pop ebx	; 7CC88
 ret	; 7CC89
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (CtlSwapTeamFlag)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (CtlSwapTeamFlag)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.CtlSwapTeamFlag.inc"
 %else
@@ -4071,7 +4071,7 @@ mov word [c2playernum], ax	; 7CE93
 .15:
 add esp, byte 10h	; 7CE99
 jmp near ControlsDlg_ret0	; 7CE9C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (ClearCtlBlink)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (ClearCtlBlink)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.ClearCtlBlink.inc"
 %else
@@ -4171,7 +4171,7 @@ cmp ebx, byte 2	; 7CFAB
 jl near ClearCtlBlink.1	; 7CFAE
 jmp near ControlsDlg_ret0	; 7CFB4
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgInGame_side)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgInGame_side)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.ControlsDlgInGame_side.inc"
 %else
@@ -4315,7 +4315,7 @@ pop ecx	; 7D134
 pop ebx	; 7D135
 ret	; 7D136
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsPlayoff)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP1ControlsPlayoff)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP1ControlsPlayoff.inc"
 %else
@@ -4325,7 +4325,7 @@ call __CHK	; 7D13C
 xor eax, eax	; 7D141
 jmp short ControlsDlgPlayoff	; 7D143
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsPlayoff)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (MenuP2ControlsPlayoff)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.MenuP2ControlsPlayoff.inc"
 %else
@@ -4418,7 +4418,7 @@ xor eax, eax	; 7D24A
 add esp, byte 8	; 7D24C
 jmp near ControlsDlg_ret	; 7D24F
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawControlsDlg)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawControlsDlg)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.DrawControlsDlg.inc"
 %else
@@ -4550,7 +4550,7 @@ add esp, byte 0Ch	; 7D3E2
 add esp, 120h	; 7D3E5
 jmp near ControlsDlg_ret0	; 7D3EB
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawControlsOpts)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (DrawControlsOpts)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.DrawControlsOpts.inc"
 %else
@@ -4728,7 +4728,7 @@ push str_TheKeyboard	; 7D610
 call sub_91964	; 7D615
 jmp near ControlsDlg_ret0C	; 7D61A
 %endif ; C
-; C: src/c/pc/settings_dialogs/CtlDlgHitTest.c
+; C: src/pc/settings_dialogs/CtlDlgHitTest.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/CtlDlgHitTest.inc"
 %else
@@ -4767,7 +4767,7 @@ pop esi	; 7D66E
 pop ecx	; 7D66F
 ret	; 7D670
 %endif ; C
-; C: src/c/pc/settings_dialogs/DrawCtlBoxes.c
+; C: src/pc/settings_dialogs/DrawCtlBoxes.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/DrawCtlBoxes.inc"
 %else
@@ -4800,7 +4800,7 @@ pop ecx	; 7D6AE
 pop ebx	; 7D6AF
 ret	; 7D6B0
 %endif ; C
-; C: src/c/pc/settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgLoop)
+; C: src/pc/settings_dialogs/MenuP1ControlsInGame.c (ControlsDlgLoop)
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/MenuP1ControlsInGame.ControlsDlgLoop.inc"
 %else
@@ -5174,7 +5174,7 @@ mov edi, dword [byte esp+014h]	; 7DB5D
 push edi	; 7DB61
 jmp near ControlsDlgLoop.5	; 7DB62
 %endif ; C
-; C: src/c/pc/settings_dialogs/SetCtlTeams.c
+; C: src/pc/settings_dialogs/SetCtlTeams.c
 %ifdef CBUILD
 %include "c/pc/settings_dialogs/SetCtlTeams.inc"
 %else

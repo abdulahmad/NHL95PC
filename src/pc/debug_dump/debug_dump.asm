@@ -19,7 +19,7 @@ extern str_dumpPlHdrH, str_dumpPlLineA, str_dumpPlLineH, str_dumpPool, str_dumpR
 extern str_dumpTeamHdrH, str_dumpTmstructs, str_ErrDumpStats, str_fmode_at, str_newline, str_pen, str_statslog, sub_93E38
 extern threat, VisTeam, WaitKey, word_CBC44, xc1, yc1
 global DebugMonitor, DebugMonitor_pop, DumpStatsLog
-; C: src/c/pc/debug_dump/DebugMonitor.c
+; C: src/pc/debug_dump/DebugMonitor.c
 %ifdef CBUILD
 %include "c/pc/debug_dump/DebugMonitor.inc"
 %else
@@ -532,7 +532,7 @@ pop ecx	; 68E78
 pop ebx	; 68E79
 ret	; 68E7A
 %endif ; C
-; C: src/c/pc/debug_dump/DebugMonitor.c (DumpStatsLog)
+; C: src/pc/debug_dump/DebugMonitor.c (DumpStatsLog)
 %ifdef CBUILD
 %include "c/pc/debug_dump/DebugMonitor.DumpStatsLog.inc"
 %else

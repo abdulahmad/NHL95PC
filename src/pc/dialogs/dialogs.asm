@@ -16,7 +16,7 @@ global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColo
 global DrawButton, DrawButton_x, InitScrollBar, DrawScrollBar, TrackScrollBars, SaveDialogBg, RestoreDialogBg, GrowToButton
 global GrowToButtons, MessageBox, RunMessageBox, CritErrHandler, DrawEditCursor, DrawEditCursor_x, DrawEditCursor_ret, DrawEditText
 global EditTextField
-; C: src/c/pc/dialogs/AskDatabaseChoice.c
+; C: src/pc/dialogs/AskDatabaseChoice.c
 %ifdef CBUILD
 %include "c/pc/dialogs/AskDatabaseChoice.inc"
 %else
@@ -62,7 +62,7 @@ pop ecx	; 2FE46
 pop ebx	; 2FE47
 ret	; 2FE48
 %endif ; C
-; C: src/c/pc/dialogs/DrawBevelRect.c
+; C: src/pc/dialogs/DrawBevelRect.c
 %ifdef CBUILD
 %include "c/pc/dialogs/DrawBevelRect.inc"
 %else
@@ -127,7 +127,7 @@ pop edi	; 2FECD
 pop esi	; 2FECE
 ret 0Ch	; 2FECF
 %endif ; C
-; C: src/c/pc/dialogs/DlgReturnZero.c
+; C: src/pc/dialogs/DlgReturnZero.c
 %ifdef CBUILD
 %include "c/pc/dialogs/DlgReturnZero.inc"
 %else
@@ -137,7 +137,7 @@ call __CHK	; 2FED7
 xor eax, eax	; 2FEDC
 ret	; 2FEDE
 %endif ; C
-; C: src/c/pc/dialogs/TextInputDialog.c
+; C: src/pc/dialogs/TextInputDialog.c
 %ifdef CBUILD
 %include "c/pc/dialogs/TextInputDialog.inc"
 %else
@@ -385,7 +385,7 @@ pop edi	; 30204
 pop esi	; 30205
 ret 14h	; 30206
 %endif ; C
-; C: src/c/pc/dialogs/SetListItemColors.c
+; C: src/pc/dialogs/SetListItemColors.c
 %ifdef CBUILD
 %include "c/pc/dialogs/SetListItemColors.inc"
 %else
@@ -411,7 +411,7 @@ pop ecx	; 3023B
 pop ebx	; 3023C
 ret	; 3023D
 %endif ; C
-; C: src/c/pc/dialogs/ListHitTest.c
+; C: src/pc/dialogs/ListHitTest.c
 %ifdef CBUILD
 %include "c/pc/dialogs/ListHitTest.inc"
 %else
@@ -1085,7 +1085,7 @@ pop ebp	; 309DE
 pop edi	; 309DF
 pop esi	; 309E0
 ret 8	; 309E1
-; C: src/c/pc/dialogs/MeasureTextLine.c
+; C: src/pc/dialogs/MeasureTextLine.c
 %ifdef CBUILD
 %include "c/pc/dialogs/MeasureTextLine.inc"
 %else
@@ -1111,7 +1111,7 @@ pop edi	; 30A09
 pop esi	; 30A0A
 ret	; 30A0B
 %endif ; C
-; C: src/c/pc/dialogs/SetDialogColors.c
+; C: src/pc/dialogs/SetDialogColors.c
 %ifdef CBUILD
 %include "c/pc/dialogs/SetDialogColors.inc"
 %else
@@ -1126,7 +1126,7 @@ mov eax, dword [byte esp+04h]	; 30A2D
 mov dword [dlgtextbg], eax	; 30A31
 ret 4	; 30A36
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c
+; C: src/pc/dialogs/TrackButtons.c
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.inc"
 %else
@@ -1201,7 +1201,7 @@ pop edi	; 30ADD
 pop esi	; 30ADE
 ret 4	; 30ADF
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c (DrawButtons)
+; C: src/pc/dialogs/TrackButtons.c (DrawButtons)
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.DrawButtons.inc"
 %else
@@ -1230,7 +1230,7 @@ pop esi	; 30B13
 pop ecx	; 30B14
 ret	; 30B15
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c (DrawButton)
+; C: src/pc/dialogs/TrackButtons.c (DrawButton)
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.DrawButton.inc"
 %else
@@ -1317,7 +1317,7 @@ pop ecx	; 30BF0
 pop ebx	; 30BF1
 ret	; 30BF2
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c (InitScrollBar)
+; C: src/pc/dialogs/TrackButtons.c (InitScrollBar)
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.InitScrollBar.inc"
 %else
@@ -1345,7 +1345,7 @@ mov dword [byte ecx+01Ch], eax	; 30C38
 pop ecx	; 30C3B
 ret	; 30C3C
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c (DrawScrollBar)
+; C: src/pc/dialogs/TrackButtons.c (DrawScrollBar)
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.DrawScrollBar.inc"
 %else
@@ -1415,7 +1415,7 @@ xor edx, eax	; 30D01
 mov dword [boxlitecolor], edx	; 30D03
 jmp near DrawButton_x	; 30D09
 %endif ; C
-; C: src/c/pc/dialogs/TrackButtons.c (TrackScrollBars)
+; C: src/pc/dialogs/TrackButtons.c (TrackScrollBars)
 %ifdef CBUILD
 %include "c/pc/dialogs/TrackButtons.TrackScrollBars.inc"
 %else
@@ -1538,7 +1538,7 @@ mov eax, dword [byte esp+08h]	; 30E5A
 add esp, byte 10h	; 30E5E
 jmp near TrackButtons_x	; 30E61
 %endif ; C
-; C: src/c/pc/dialogs/SaveDialogBg.c
+; C: src/pc/dialogs/SaveDialogBg.c
 %ifdef CBUILD
 %include "c/pc/dialogs/SaveDialogBg.inc"
 %else
@@ -1604,7 +1604,7 @@ pop edi	; 30F0F
 pop esi	; 30F10
 ret	; 30F11
 %endif ; C
-; C: src/c/pc/dialogs/RestoreDialogBg.c
+; C: src/pc/dialogs/RestoreDialogBg.c
 %ifdef CBUILD
 %include "c/pc/dialogs/RestoreDialogBg.inc"
 %else
@@ -1640,7 +1640,7 @@ pop ecx	; 30F5C
 pop ebx	; 30F5D
 ret	; 30F5E
 %endif ; C
-; C: src/c/pc/dialogs/GrowToButton.c
+; C: src/pc/dialogs/GrowToButton.c
 %ifdef CBUILD
 %include "c/pc/dialogs/GrowToButton.inc"
 %else
@@ -1686,7 +1686,7 @@ mov dword [ebx], eax	; 30FB0
 pop ecx	; 30FB2
 ret	; 30FB3
 %endif ; C
-; C: src/c/pc/dialogs/GrowToButtons.c
+; C: src/pc/dialogs/GrowToButtons.c
 %ifdef CBUILD
 %include "c/pc/dialogs/GrowToButtons.inc"
 %else
@@ -1742,7 +1742,7 @@ pop edi	; 31010
 pop esi	; 31011
 ret	; 31012
 %endif ; C
-; C: src/c/pc/dialogs/TextInputDialog.c (MessageBox)
+; C: src/pc/dialogs/TextInputDialog.c (MessageBox)
 %ifdef CBUILD
 %include "c/pc/dialogs/TextInputDialog.MessageBox.inc"
 %else
@@ -1954,7 +1954,7 @@ mov eax, dword [byte esp+08h]	; 31244
 add esp, byte 20h	; 31248
 jmp near DlgNullCallback	; 3124B
 %endif ; C
-; C: src/c/pc/dialogs/RunMessageBox.c
+; C: src/pc/dialogs/RunMessageBox.c
 %ifdef CBUILD
 %include "c/pc/dialogs/RunMessageBox.inc"
 %else
@@ -2171,7 +2171,7 @@ pop edi	; 3149A
 pop esi	; 3149B
 ret	; 3149C
 %endif ; C
-; C: src/c/pc/dialogs/CritErrHandler.c
+; C: src/pc/dialogs/CritErrHandler.c
 %ifdef CBUILD
 %include "c/pc/dialogs/CritErrHandler.inc"
 %else
@@ -2182,7 +2182,7 @@ mov dword [criterrflag], 0FFFFFFFFh	; 314A7
 xor eax, eax	; 314B1
 ret	; 314B3
 %endif ; C
-; C: src/c/pc/dialogs/DrawEditCursor.c
+; C: src/pc/dialogs/DrawEditCursor.c
 %ifdef CBUILD
 %include "c/pc/dialogs/DrawEditCursor.inc"
 %else
@@ -2269,7 +2269,7 @@ pop ecx	; 31596
 pop ebx	; 31597
 ret	; 31598
 %endif ; C
-; C: src/c/pc/dialogs/DrawEditCursor.c (DrawEditText)
+; C: src/pc/dialogs/DrawEditCursor.c (DrawEditText)
 %ifdef CBUILD
 %include "c/pc/dialogs/DrawEditCursor.DrawEditText.inc"
 %else

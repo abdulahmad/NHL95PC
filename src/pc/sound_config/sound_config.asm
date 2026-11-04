@@ -34,7 +34,7 @@ extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr
 extern unk_D2413, unk_D249C, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
 global SoundCardDlg_epilogue, SoundCardDlgLoop_x, SetSoundDevice
-; C: src/c/pc/sound_config/MenuSoundSettings.c
+; C: src/pc/sound_config/MenuSoundSettings.c
 %ifdef CBUILD
 %include "c/pc/sound_config/MenuSoundSettings.inc"
 %else
@@ -97,7 +97,7 @@ pop ecx	; 82619
 pop ebx	; 8261A
 ret	; 8261B
 %endif ; C
-; C: src/c/pc/sound_config/DrawSoundCardDlg.c
+; C: src/pc/sound_config/DrawSoundCardDlg.c
 %ifdef CBUILD
 %include "c/pc/sound_config/DrawSoundCardDlg.inc"
 %else
@@ -146,7 +146,7 @@ pop ecx	; 8268D
 pop ebx	; 8268E
 ret	; 8268F
 %endif ; C
-; C: src/c/pc/sound_config/DrawSoundCardOpts.c
+; C: src/pc/sound_config/DrawSoundCardOpts.c
 %ifdef CBUILD
 %include "c/pc/sound_config/DrawSoundCardOpts.inc"
 %else
@@ -252,7 +252,7 @@ pop ecx	; 827B0
 pop ebx	; 827B1
 ret	; 827B2
 %endif ; C
-; C: src/c/pc/sound_config/SoundCardHitTest.c
+; C: src/pc/sound_config/SoundCardHitTest.c
 %ifdef CBUILD
 %include "c/pc/sound_config/SoundCardHitTest.inc"
 %else
@@ -291,7 +291,7 @@ pop esi	; 82802
 pop ecx	; 82803
 ret	; 82804
 %endif ; C
-; C: src/c/pc/sound_config/RedrawSoundCardOpts.c
+; C: src/pc/sound_config/RedrawSoundCardOpts.c
 %ifdef CBUILD
 %include "c/pc/sound_config/RedrawSoundCardOpts.inc"
 %else
@@ -395,7 +395,7 @@ pop ecx	; 8291B
 pop ebx	; 8291C
 ret	; 8291D
 %endif ; C
-; C: src/c/pc/sound_config/SoundCardDlgLoop.c
+; C: src/pc/sound_config/SoundCardDlgLoop.c
 %ifdef CBUILD
 %include "c/pc/sound_config/SoundCardDlgLoop.inc"
 %else
@@ -752,7 +752,7 @@ mov ebx, dword [byte esp+030h]	; 82D70
 push ebx	; 82D74
 jmp near SoundCardDlgLoop_poll	; 82D75
 %endif ; C
-; C: src/c/pc/sound_config/SoundCardDlgLoop.c (SetSoundDevice)
+; C: src/pc/sound_config/SoundCardDlgLoop.c (SetSoundDevice)
 %ifdef CBUILD
 %include "c/pc/sound_config/SoundCardDlgLoop.SetSoundDevice.inc"
 %else

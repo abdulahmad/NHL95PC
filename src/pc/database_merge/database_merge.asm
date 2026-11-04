@@ -24,7 +24,7 @@ extern WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global MergeTeamDbs, MergeTeamDbs_ret, MergeScheduleDb, LocateTeamDbCopy, UpdateTeamDbs, UpdateTeamDbs_ret, MergeLeagueFiles, MergeUpdateDbs
 global RebuildLeagueDbs, ExportTeamToFloppy, CopyLeagueFiles, ImportMasterLeague, ImportMasterLeague_ret, ImportPlayerTeam, ImportDbs, ExportDbs
 global SelectFloppyDrive, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
-; C: src/c/pc/database_merge/MergeTeamDbs.c
+; C: src/pc/database_merge/MergeTeamDbs.c
 %ifdef CBUILD
 %include "c/pc/database_merge/MergeTeamDbs.inc"
 %else
@@ -308,7 +308,7 @@ pop edi	; 3AE19
 pop esi	; 3AE1A
 ret 8	; 3AE1B
 %endif ; C
-; C: src/c/pc/database_merge/MergeTeamDbs.c (MergeScheduleDb)
+; C: src/pc/database_merge/MergeTeamDbs.c (MergeScheduleDb)
 %ifdef CBUILD
 %include "c/pc/database_merge/MergeTeamDbs.MergeScheduleDb.inc"
 %else
@@ -430,7 +430,7 @@ mov eax, edx	; 3AF66
 add esp, byte 38h	; 3AF68
 jmp near MergeTeamDbs_ret	; 3AF6B
 %endif ; C
-; C: src/c/pc/database_merge/LocateTeamDbCopy.c
+; C: src/pc/database_merge/LocateTeamDbCopy.c
 %ifdef CBUILD
 %include "c/pc/database_merge/LocateTeamDbCopy.inc"
 %else
@@ -510,7 +510,7 @@ pop edi	; 3B034
 pop esi	; 3B035
 ret 0Ch	; 3B036
 %endif ; C
-; C: src/c/pc/database_merge/UpdateTeamDbs.c
+; C: src/pc/database_merge/UpdateTeamDbs.c
 %ifdef CBUILD
 %include "c/pc/database_merge/UpdateTeamDbs.inc"
 %else
@@ -685,7 +685,7 @@ pop ecx	; 3B257
 pop ebx	; 3B258
 ret	; 3B259
 %endif ; C
-; C: src/c/pc/database_merge/UpdateTeamDbs.c (MergeLeagueFiles)
+; C: src/pc/database_merge/UpdateTeamDbs.c (MergeLeagueFiles)
 %ifdef CBUILD
 %include "c/pc/database_merge/UpdateTeamDbs.MergeLeagueFiles.inc"
 %else
@@ -1175,7 +1175,7 @@ sar eax, 18h	; 3B8A5
 add esp, byte 60h	; 3B8A8
 jmp near UpdateTeamDbs_ret	; 3B8AB
 %endif ; C
-; C: src/c/pc/database_merge/MergeUpdateDbs.c
+; C: src/pc/database_merge/MergeUpdateDbs.c
 %ifdef CBUILD
 %include "c/pc/database_merge/MergeUpdateDbs.inc"
 %else
@@ -1274,7 +1274,7 @@ pop ecx	; 3B9C7
 pop ebx	; 3B9C8
 ret	; 3B9C9
 %endif ; C
-; C: src/c/pc/database_merge/UpdateTeamDbs.c (RebuildLeagueDbs)
+; C: src/pc/database_merge/UpdateTeamDbs.c (RebuildLeagueDbs)
 %ifdef CBUILD
 %include "c/pc/database_merge/UpdateTeamDbs.RebuildLeagueDbs.inc"
 %else
@@ -1893,7 +1893,7 @@ pop ebp	; 3C30A
 pop edi	; 3C30B
 pop esi	; 3C30C
 ret 0Ch	; 3C30D
-; C: src/c/pc/database_merge/CopyLeagueFiles.c
+; C: src/pc/database_merge/CopyLeagueFiles.c
 %ifdef CBUILD
 %include "c/pc/database_merge/CopyLeagueFiles.inc"
 %else
@@ -1966,7 +1966,7 @@ pop ecx	; 3C3AC
 pop ebx	; 3C3AD
 ret	; 3C3AE
 %endif ; C
-; C: src/c/pc/database_merge/ImportMasterLeague.c
+; C: src/pc/database_merge/ImportMasterLeague.c
 %ifdef CBUILD
 %include "c/pc/database_merge/ImportMasterLeague.inc"
 %else
@@ -2223,7 +2223,7 @@ pop ecx	; 3C6DF
 pop ebx	; 3C6E0
 ret	; 3C6E1
 %endif ; C
-; C: src/c/pc/database_merge/ImportMasterLeague.c (ImportPlayerTeam)
+; C: src/pc/database_merge/ImportMasterLeague.c (ImportPlayerTeam)
 %ifdef CBUILD
 %include "c/pc/database_merge/ImportMasterLeague.ImportPlayerTeam.inc"
 %else
@@ -2797,7 +2797,7 @@ mov eax, esi	; 3CF4E
 add esp, 0B8h	; 3CF50
 jmp near ImportMasterLeague_ret	; 3CF56
 %endif ; C
-; C: src/c/pc/database_merge/ImportDbs.c
+; C: src/pc/database_merge/ImportDbs.c
 %ifdef CBUILD
 %include "c/pc/database_merge/ImportDbs.inc"
 %else
@@ -2926,7 +2926,7 @@ pop ecx	; 3D105
 pop ebx	; 3D106
 ret	; 3D107
 %endif ; C
-; C: src/c/pc/database_merge/ImportMasterLeague.c (ExportDbs)
+; C: src/pc/database_merge/ImportMasterLeague.c (ExportDbs)
 %ifdef CBUILD
 %include "c/pc/database_merge/ImportMasterLeague.ExportDbs.inc"
 %else
@@ -3181,7 +3181,7 @@ call SetDialogColors	; 3D460
 add esp, byte 48h	; 3D465
 jmp near ImportMasterLeague_ret	; 3D468
 %endif ; C
-; C: src/c/pc/database_merge/SelectFloppyDrive.c
+; C: src/pc/database_merge/SelectFloppyDrive.c
 %ifdef CBUILD
 %include "c/pc/database_merge/SelectFloppyDrive.inc"
 %else
@@ -3350,7 +3350,7 @@ pop ecx	; 3D691
 pop ebx	; 3D692
 ret	; 3D693
 %endif ; C
-; C: src/c/pc/database_merge/FindLeagueFloppy.c
+; C: src/pc/database_merge/FindLeagueFloppy.c
 %ifdef CBUILD
 %include "c/pc/database_merge/FindLeagueFloppy.inc"
 %else
@@ -3477,7 +3477,7 @@ pop esi	; 3D84C
 pop ecx	; 3D84D
 ret	; 3D84E
 %endif ; C
-; C: src/c/pc/database_merge/WaitLeagueFloppy.c
+; C: src/pc/database_merge/WaitLeagueFloppy.c
 %ifdef CBUILD
 %include "c/pc/database_merge/WaitLeagueFloppy.inc"
 %else
@@ -3540,7 +3540,7 @@ pop esi	; 3D8DA
 pop ecx	; 3D8DB
 ret	; 3D8DC
 %endif ; C
-; C: src/c/pc/database_merge/ReadLeagueInfo.c
+; C: src/pc/database_merge/ReadLeagueInfo.c
 %ifdef CBUILD
 %include "c/pc/database_merge/ReadLeagueInfo.inc"
 %else
@@ -3694,7 +3694,7 @@ pop edi	; 3DAB4
 pop esi	; 3DAB5
 ret 10h	; 3DAB6
 %endif ; C
-; C: src/c/pc/database_merge/ReadTeamNames.c
+; C: src/pc/database_merge/ReadTeamNames.c
 %ifdef CBUILD
 %include "c/pc/database_merge/ReadTeamNames.inc"
 %else

@@ -32,7 +32,7 @@ extern word_CC0B0, word_CC10C, word_CCEF8, word_DEE94, word_DEE96, word_DEF84, w
 extern word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AAA, word_E9AAE, word_E9AB0, word_E9B2C
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
-; C: src/c/pc/game_saveload/SaveGameState.c
+; C: src/pc/game_saveload/SaveGameState.c
 %ifdef CBUILD
 %include "c/pc/game_saveload/SaveGameState.inc"
 %else

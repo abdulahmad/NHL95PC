@@ -6,7 +6,7 @@ SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c519
 FadePalette,src/front/main/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,2000,1,PASS,,2026-11-02
 DrawRinkEndArt,src/front/main/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,600,1,PASS,,2026-11-02
 ResetInputSampling,src/front/main/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,600,1,PASS,,2026-11-02
-DrawListItem,src/c/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,2000,1,PASS,,2026-11-02
+DrawListItem,src/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,2000,1,PASS,,2026-11-02
 checkplcoll,src/engine/collide/checkplcoll.c,97f1c6cbc4fecaeef7e5ce1ba41fbc93903221a3,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 72%, uncovered 0x58d7e-0x58dbe",2026-11-02
 SetRosterTeamMenus,src/front/create/SetRosterTeamMenus.c,cc00877ba07f76eb72b97017421c43738a460d03,2000,1,NEEDS-REVIEW,"coverage 84%, uncovered 0x718c6-0x718ec",2026-11-02
 PassLaneChk,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,2000,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x54c99-0x54d55",2026-11-02
@@ -15,26 +15,26 @@ TreeSeriesWinner,src/front/league_tree/TreeSeriesWinner.c,0b19adcb9d2cb5f94aa931
 SimPlayoffRound1,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,2000,1,FAIL,"calls[3]: orig (0x452c5,0xa5a5a5a5,0x2,0x6f4c0,0x6000018) vs C (0x452c5,0xa5a5a5a5,0x2,0x2a05895a,0x6000018) (lens 1160/1160)",2026-11-02
 shotdiradj,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,2000,1,PASS,,2026-11-02
 SelectRosterTeam,src/front/create/RunEditRosters.c,0a883e95688082c74f853cbbab1106dd5228e6c4,2000,1,NEEDS-REVIEW,mostly trapped,2026-11-02
-DrawListItems,src/c/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,300,1,NEEDS-REVIEW,mostly trapped,2026-11-02
+DrawListItems,src/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,300,1,NEEDS-REVIEW,mostly trapped,2026-11-02
 SimPlayoffRound1,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,2000,1,FAIL,"calls[3]: orig (0x452c5,0xa5a5a5a5,0x2,0x6f4c0,0x6000018) vs C (0x452c5,0xa5a5a5a5,0x2,0x2a05895a,0x6000018) (lens 1160/1160)",2026-11-02
 checkgoalp,src/engine/collide/checkgoalp.c,918f9d3ce09fa6ef4ffd50024f5d4dd32f90efac,2000,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x53d16-0x53d2c 0x53db9-0x53e62",2026-11-02
 DrawAwardsSummary,src/front/awards/PickAwardWinners.c,66b4e43d0e4c85827bf76b2657493ee42f78e8d8,2000,1,PASS,,2026-11-02
 checkob,src/engine/collide/checkob.c,d47be81f46691178909c29546882134931b2309b,2000,1,PASS,,2026-11-02
 FillDressedSlots,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x2000; mostly trapped; coverage 38%, uncovered 0x64d20-0x64e1f",2026-11-02
-ReassignCtlPlayer,src/c/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,2000,1,NEEDS-REVIEW,trap review: uninit stack read x938,2026-11-02
+ReassignCtlPlayer,src/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,2000,1,NEEDS-REVIEW,trap review: uninit stack read x938,2026-11-02
 POInitSchedule,src/front/playoff_mode/POCreateSchedule.c,ac9d4273c2e3d7cbb9dd9be2200c69ec5e4457bb,2000,1,NEEDS-REVIEW,trap review: uninit stack read x2000,2026-11-02
-SelectSavedFile,src/c/pc/file_dialogs/SelectSavedFile.c,bbf6b0e47064d56422f3a647d44b1120e749a17b,2000,1,PASS,,2026-11-02
+SelectSavedFile,src/pc/file_dialogs/SelectSavedFile.c,bbf6b0e47064d56422f3a647d44b1120e749a17b,2000,1,PASS,,2026-11-02
 BlitTileMap,src/front/rink_tiles/BlitTileMap.c,eb793c8420327f5aa8bc492ec1221d6e3e4913d9,1271,1,NEEDS-REVIEW,trap review: uninit stack read x1271,2026-11-02
 checkwallcoll,src/engine/collide/checkwallcoll.c,cbc23342317c01a8c7cd524b34df06b8b3cfbac6,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x1154; coverage 79%, uncovered 0x5843a-0x5849e",2026-11-02
 PenGoalStuff,src/engine/penalty/InProgress.c,a4762bf84c42a4982317e7db5a0aa3198cf0050e,2000,1,NEEDS-REVIEW,"coverage 66%, uncovered 0x63eae-0x63eae 0x63ec5-0x63f63",2026-11-02
 EasnGoalieStatsScreen,src/front/stats_screens/EasnGoalieStatsScreen.c,b408f2b36a02182468c2de860541c0f92d99eb18,2000,1,PASS,,2026-11-02
 RosterPanelClick,src/front/create/RosterPanelClick.c,b3be2eb4e6bc2c6bdd35f3a56d3e2472230dfc13,2000,1,NEEDS-REVIEW,"coverage 77%, uncovered 0x6dafa-0x6dafa 0x6db6d-0x6db72 0x6dbc5-0x6dbfe 0x6dc65-0x6dc94 0x6dca8-0x6dcb0",2026-11-02
 SimulateGame,src/front/simgame/SimulateGame.c,c14fd9ebbb7cbf3452af70b02771c0b392555012,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x1964; mostly trapped; coverage 19%, uncovered 0x455c0-0x45a63 0x45a91-0x45ddf 0x45e52-0x47197 0x4721c-0x472b4 0x47733-0x47839",2026-11-02
-PlacePlayersAtStart,src/c/pc/asset_loading/PlacePlayersAtStart.c,89febc923b7794dc9d036f242b1733a79841fbaf,2000,1,PASS,,2026-11-02
+PlacePlayersAtStart,src/pc/asset_loading/PlacePlayersAtStart.c,89febc923b7794dc9d036f242b1733a79841fbaf,2000,1,PASS,,2026-11-02
 GameSummaryScreen,src/front/summary/GameSummaryScreen.c,e2bbf6a2fc4836bb9eba0ff60030ad07e0e3c56c,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x18; mostly trapped; coverage 41%, uncovered 0x2dcc4-0x2dfbd 0x2e08e-0x2e164 0x2e2bb-0x2e321 0x2e4ac-0x2f051 0x2f087-0x2f125",2026-11-02
 CalendarScreen,src/front/calendar/CalendarScreen.c,1e0a4c555fa55759c620318fff1233b53ef10602,2000,1,FAIL,"writes[9]: orig (0xc8992,0x4,0x0) vs C (0xc65c0,0x4,0x20016) (lens 15/15)",2026-11-02
 StarCompare,src/engine/intro/StarCompare.c,a8505e67379010dce0a3e5c258ab3a521fbdb272,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 46%, uncovered 0x48903-0x4890f 0x4893b-0x48975 0x48984-0x48992 0x489a5-0x489ae 0x489d8-0x48ab9",2026-11-02
-ResetGameVars,src/c/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 71%, uncovered 0x1421f-0x142e2",2026-11-02
+ResetGameVars,src/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 71%, uncovered 0x1421f-0x142e2",2026-11-02
 CanFillLineSlot,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,2000,1,FAIL,ebx: orig 0x0 vs C 0x1,2026-11-02
 DrawSprite,src/front/screen_util/DrawSprite.c,1720180b406e1da0078de315a64391b84e42739d,2000,1,FAIL,ecx: orig 0x0 vs C 0x5ff3b50,2026-11-02
 NetCollide,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,2000,1,FAIL,edx: orig 0x911 vs C 0x710,2026-11-02
@@ -61,14 +61,14 @@ assgoalie,src/engine/logic/assgoalie.c,09c4d27acab613ffc6419af02766f5912914efce,
 CanBlockShot,src/engine/input/CanBlockShot.c,51ba02eed3fd16c42369291e63121c29bf417a7d,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 25%, uncovered 0x50095-0x5009a 0x500b4-0x5032f",2026-11-02
 dopass,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,2000,1,NEEDS-REVIEW,trap review: uninit stack read x989,2026-11-02
 SelectHilight,src/front/replay_controls/SelectHilight.c,5a01de44d426c7375fcdbab7ce421094d2855643,2000,1,NEEDS-REVIEW,trap review: uninit stack read x17,2026-11-02
-LoadGameState,src/c/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,2000,1,NEEDS-REVIEW,trap review: uninit stack read x2000,2026-11-02
+LoadGameState,src/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,2000,1,NEEDS-REVIEW,trap review: uninit stack read x2000,2026-11-02
 TeamStatsScreen,src/front/stats/TeamStatsScreen.c,f5aff6a56bdf7774e5c8334fee2a128fc09e0921,2000,1,FAIL,"calls[3]: orig (0x29a97,('STK', b'\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xe8\x02\x00\x00')) vs C (0x29a97,('STK', b'\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xe8\x02\x00\x00\x7f\x00\x00\x00')) (lens ",2026-11-02
 RunTeamPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,2000,1,NEEDS-REVIEW,"mostly trapped; coverage 31%, uncovered 0x1e169-0x1e1f7 0x1e2c1-0x1e308 0x1e421-0x1e4da 0x1e50d-0x1e67f 0x1e70c-0x1ed6d",2026-11-02
 LoadGameRoster,src/front/game_lines/LoadGameRoster.c,5c8d8217b65b851dfcc0bcc9a8c4f0a9e85b7c8b,2000,1,NEEDS-REVIEW,trap review: uninit stack read x2000,2026-11-02
 RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x1; mostly trapped; coverage 34%, uncovered 0x1eeb3-0x1ef21 0x1f07f-0x1f0c2 0x1f180-0x1f1a7 0x1f268-0x1f41c 0x1f4a9-0x1fa68",2026-11-02
 puckfaceoff2,src/engine/faceoff/puckfaceoff.c,594b0ad4feb3f07576ea15b83603a6cea56d8427,2000,1,FAIL,trap kind: orig none vs C invalid insn,2026-11-02
 SwapSelectedPlayers,src/front/create/SwapSelectedPlayers.c,5f5789bd11b47fec8c594f78ce47904539c31af7,2000,1,PASS,,2026-11-02
-EditTextField,src/c/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,204,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 204 cases in the time budget",2026-11-02
+EditTextField,src/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,204,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 204 cases in the time budget",2026-11-02
 DrawRinkSideObjects,src/engine/replay/ReplayStep.c,e618d4d09eb6ec944bee1d911a5a398a5c32243c,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x2000; coverage 83%, uncovered 0x6836a-0x68399 0x683da-0x683fb 0x6848b-0x6853e 0x686e1-0x6871d 0x68747-0x687b0",2026-11-02
 PlayoffTreeMenu,src/front/playoff_mode/PlayoffTreeMenu.c,35bd55599345f1b8ae78917d1c69158826cfdbb8,2000,1,FAIL,"calls[40]: orig (0x6b94e,0xbab593f2,0xa5a5a5a5,0xa5a5a5a5,0xd210,0x7,0x5f07) vs C (0x6b94e,0xb4b6b49f,0xa5a5a5a5,0xa5a5a5a5,0xd210,0x7,0x5f07) (lens 78/78)",2026-11-02
 checkcx,src/engine/collide/checkcx.c,8684c2da6f509a9366277858fbb27f1d4fefca48,2000,1,NEEDS-REVIEW,trap review: uninit stack read x1116,2026-11-02
@@ -106,15 +106,15 @@ POHandleElimination,src/front/playoff_mode/POHandleElimination.c,e8887c22ca4afd3
 avdgoal,src/engine/skate/EvadePlayers.c,53e0b37aabc9a2476aeda601ccf56124948a9583,2000,1,FAIL,"calls[0]: orig (0x5f04e,0x6000000,0xc5,0xfc,0x2c,('STK', b'\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5'),('STK', b'\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5\xa5",2026-11-02
 TradePlayers,src/front/trade/TradePlayers.c,e6059b7d54aa8752883e29fe176b498687d3000a,2000,1,NEEDS-REVIEW,"coverage 42%, uncovered 0x4037f-0x40389 0x403c9-0x40729",2026-11-02
 checkpuckcoll,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,2000,1,NEEDS-REVIEW,"coverage 67%, uncovered 0x545c4-0x5466b 0x546b3-0x546e5 0x54704-0x547eb 0x54855-0x5485f 0x54874-0x548a7",2026-11-02
-ListDialog,src/c/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,76,1,NEEDS-REVIEW,"mostly trapped; coverage 11%, uncovered 0x3049a-0x309e1; only 76 cases in the time budget",2026-11-02
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,76,1,NEEDS-REVIEW,"mostly trapped; coverage 11%, uncovered 0x3049a-0x309e1; only 76 cases in the time budget",2026-11-02
 InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,18,1,NEEDS-REVIEW,"mostly trapped; coverage 74%, uncovered 0x7e1e4-0x7e1ea 0x7e4cd-0x7e558 0x7e56b-0x7e5dc 0x7e6d7-0x7e7e1 0x7e8ce-0x7e8d8; only 18 cases in the time budget",2026-11-02
 BuildStandingsGrid,src/front/league_setup/BuildStandingsGrid.c,4585c9dd16ec51a23de02377e8c8f6b39a59bd22,2000,1,NEEDS-REVIEW,trap review: uninit stack read x2000,2026-11-02
-ExportTeamToFloppy,src/c/pc/database_merge/ExportTeamToFloppy.c,c1b2a6954aeae507a73f585c353d8f2b3377aac5,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x2; coverage 67%, uncovered 0x3bcdf-0x3bd13 0x3bd2e-0x3bdb1 0x3c02c-0x3c066 0x3c077-0x3c09f 0x3c13a-0x3c162",2026-11-02
+ExportTeamToFloppy,src/pc/database_merge/ExportTeamToFloppy.c,c1b2a6954aeae507a73f585c353d8f2b3377aac5,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x2; coverage 67%, uncovered 0x3bcdf-0x3bd13 0x3bd2e-0x3bdb1 0x3c02c-0x3c066 0x3c077-0x3c09f 0x3c13a-0x3c162",2026-11-02
 TitleScreen,src/front/title/RunDemoGame.c,a9ea6db1235f356800bdb2d71974cb80fb84a4ce,2000,1,NEEDS-REVIEW,"trap review: uninit stack read x2000; mostly trapped; coverage 65%, uncovered 0x1622b-0x16248 0x16411-0x165c4 0x165f5-0x16632 0x16642-0x16647 0x16666-0x1666c",2026-11-02
 DrawLockerJersey,src/front/lockerroom/DrawPanel3D.c,06c8af311bafb2c81fce930458a944d0b8d4ac4c,2000,1,PASS,,2026-11-02
 ReplaySaveHilight,src/front/replay_controls/ReplaySaveHilight.c,56a7bbf2447d3a073d7c1f3efc914e2d36465056,2000,1,NEEDS-REVIEW,"coverage 49%, uncovered 0x7f103-0x7f105 0x7f120-0x7f122 0x7f39d-0x7f41d 0x7f468-0x7f719",2026-11-02
 DrawCalendarDay,src/front/calendar/DrawCalendarDay.c,5e17e74e5b822dd533710555c41e4e8180f8c26b,906,1,NEEDS-REVIEW,"mostly trapped; coverage 77%, uncovered 0x342cd-0x342dd 0x344ec-0x344f9 0x3451d-0x34675",2026-11-02
-GameLoop,src/c/pc/gamesave_io/GameLoop.c,631ceb95d212f85bae0be225212b19b6fad3bfbe,737,1,NEEDS-REVIEW,"coverage 83%, uncovered 0x11888-0x118cc 0x119b3-0x119c2 0x11a6b-0x11a7e 0x11b16-0x11b84 0x11c8e-0x11c9a",2026-11-02
+GameLoop,src/pc/gamesave_io/GameLoop.c,631ceb95d212f85bae0be225212b19b6fad3bfbe,737,1,NEEDS-REVIEW,"coverage 83%, uncovered 0x11888-0x118cc 0x119b3-0x119c2 0x11a6b-0x11a7e 0x11b16-0x11b84 0x11c8e-0x11c9a",2026-11-02
 FadePalette,src/front/main/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,300,7,PASS,,2026-11-02
 DrawRinkEndArt,src/front/main/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,300,7,PASS,,2026-11-02
 DrawRinkEndArt,src/front/main/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,301,7,PASS,,2026-11-02
@@ -131,17 +131,17 @@ changeplayer,src/engine/hockey/changeplayer.c,d78ae323ec31a9d753149c52bb88ecc1f1
 SelectRosterTeam,src/front/create/RunEditRosters.c,0a883e95688082c74f853cbbab1106dd5228e6c4,3000,1,FAIL,"writes[0]: orig (0xd079f,0x1,0x2e) vs C (0xd079f,0x1,0x0) (lens 7/7)",2026-11-02
 checkgoalp,src/engine/collide/checkgoalp.c,918f9d3ce09fa6ef4ffd50024f5d4dd32f90efac,3000,1,NEEDS-REVIEW,"coverage 51%, uncovered 0x53d16-0x53d2c 0x53db9-0x53e62; null page x46",2026-11-02
 FillDressedSlots,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,3000,1,NEEDS-REVIEW,trap review: uninit stack read x3000; null page x2858,2026-11-02
-ReassignCtlPlayer,src/c/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2024; null page x278,2026-11-02
+ReassignCtlPlayer,src/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2024; null page x278,2026-11-02
 POInitSchedule,src/front/playoff_mode/POCreateSchedule.c,ac9d4273c2e3d7cbb9dd9be2200c69ec5e4457bb,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2996; null page x59,2026-11-02
 checkplcoll,src/engine/collide/checkplcoll.c,97f1c6cbc4fecaeef7e5ce1ba41fbc93903221a3,3000,1,PASS,null page x2567,2026-11-02
 checkwallcoll,src/engine/collide/checkwallcoll.c,cbc23342317c01a8c7cd524b34df06b8b3cfbac6,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2048; null page x32,2026-11-02
 PenGoalStuff,src/engine/penalty/InProgress.c,a4762bf84c42a4982317e7db5a0aa3198cf0050e,3000,1,NEEDS-REVIEW,"coverage 66%, uncovered 0x63eae-0x63eae 0x63ec5-0x63f63",2026-11-02
 RosterPanelClick,src/front/create/RosterPanelClick.c,b3be2eb4e6bc2c6bdd35f3a56d3e2472230dfc13,3000,1,NEEDS-REVIEW,"coverage 75%, uncovered 0x6dafa-0x6dafa 0x6db4a-0x6db95 0x6dbd5-0x6dbda 0x6dc65-0x6dc94 0x6dca8-0x6dcb0",2026-11-02
 SimulateGame,src/front/simgame/SimulateGame.c,c14fd9ebbb7cbf3452af70b02771c0b392555012,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; coverage 19%, uncovered 0x455c0-0x45a63 0x45a91-0x45ddf 0x45e52-0x47197 0x4721c-0x472b4 0x47733-0x47839; null page x2234",2026-11-02
-DrawListItems,src/c/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,17,1,NEEDS-REVIEW,only 17 cases in the time budget,2026-11-02
+DrawListItems,src/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,17,1,NEEDS-REVIEW,only 17 cases in the time budget,2026-11-02
 CalendarScreen,src/front/calendar/CalendarScreen.c,1e0a4c555fa55759c620318fff1233b53ef10602,3000,1,FAIL,"writes[10]: orig (0xc8992,0x4,0x0) vs C (0xc65c0,0x4,0x20016) (lens 16/16)",2026-11-02
 StarCompare,src/engine/intro/StarCompare.c,a8505e67379010dce0a3e5c258ab3a521fbdb272,3000,1,NEEDS-REVIEW,"coverage 52%, uncovered 0x4892b-0x48931 0x4893b-0x48975 0x48984-0x4898a 0x489d8-0x48ab9; null page x2438",2026-11-02
-ResetGameVars,src/c/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
+ResetGameVars,src/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
 CanFillLineSlot,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,3000,1,FAIL,ebx: orig 0x0 vs C 0xf,2026-11-02
 DrawSprite,src/front/screen_util/DrawSprite.c,1720180b406e1da0078de315a64391b84e42739d,3000,1,FAIL,ecx: orig 0x0 vs C 0x5ff7f46,2026-11-02
 NetCollide,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,3000,1,FAIL,edx: orig 0x112d vs C 0x3ec3,2026-11-02
@@ -170,14 +170,14 @@ dopass,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,3000
 TradeScreenLoop,src/front/trade/TradeScreenLoop.c,f9ec9ffc43779bb1af4f2e1f461ba0fe09f2d50f,3000,1,FAIL,"calls[43]: orig (0x6ba4d,0xb,0xa5a5a5a5,('STK', (193, 42, 227, 140)),0x0,('STK', (64, 255, 241, 7)),('STK', (169, 254, 3, 0)),('STK', (196, 42, 227, 140)),('STK', (197, 42, 227, 140))) vs C (0x6ba4d,0",2026-11-02
 SelectHilight,src/front/replay_controls/SelectHilight.c,5a01de44d426c7375fcdbab7ce421094d2855643,3000,1,NEEDS-REVIEW,trap review: uninit stack read x406; null page x244,2026-11-02
 RunTeamPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,3000,1,FAIL,"writes[37]: orig (0x7f20004,0x4,0x1e28e) vs C (0x7f20004,0x4,0x7000bb5) (lens 12952/12952)",2026-11-02
-LoadGameState,src/c/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,1754,1,NEEDS-REVIEW,trap review: uninit stack read x1754,2026-11-02
+LoadGameState,src/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,1754,1,NEEDS-REVIEW,trap review: uninit stack read x1754,2026-11-02
 TeamStatsScreen,src/front/stats/TeamStatsScreen.c,f5aff6a56bdf7774e5c8334fee2a128fc09e0921,911,1,NEEDS-REVIEW,trap review: uninit stack read x871; null page x467,2026-11-02
 puckfaceoff2,src/engine/faceoff/puckfaceoff.c,594b0ad4feb3f07576ea15b83603a6cea56d8427,3000,1,FAIL,"writes[29]: orig (0xcbc44,0x2,0x80) vs C (0xcbc44,0x2,0x0) (lens 75/75)",2026-11-02
 LoadGameRoster,src/front/game_lines/LoadGameRoster.c,5c8d8217b65b851dfcc0bcc9a8c4f0a9e85b7c8b,1401,1,NEEDS-REVIEW,trap review: uninit stack read x1401,2026-11-02
 RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,76,1,NEEDS-REVIEW,"trap review: uninit stack read x23; mostly trapped; coverage 35%, uncovered 0x1eeb3-0x1ef21 0x1f07f-0x1f0c2 0x1f180-0x1f1a7 0x1f268-0x1f41c 0x1f4a9-0x1fa68; only 76 cases in the time budget; null page",2026-11-02
 PlayoffTreeMenu,src/front/playoff_mode/PlayoffTreeMenu.c,35bd55599345f1b8ae78917d1c69158826cfdbb8,3000,1,FAIL,fault address: orig 0xff808001 vs C 0x8ce29874,2026-11-02
 checkcx,src/engine/collide/checkcx.c,8684c2da6f509a9366277858fbb27f1d4fefca48,3000,1,NEEDS-REVIEW,trap review: uninit stack read x1934; null page x101,2026-11-02
-EditTextField,src/c/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,394,1,NEEDS-REVIEW,"mostly trapped; coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 394 cases in the time budget",2026-11-02
+EditTextField,src/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,394,1,NEEDS-REVIEW,"mostly trapped; coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 394 cases in the time budget",2026-11-02
 DrawRinkSideObjects,src/engine/replay/ReplayStep.c,e618d4d09eb6ec944bee1d911a5a398a5c32243c,1482,1,NEEDS-REVIEW,"trap review: uninit stack read x1482; coverage 83%, uncovered 0x6836a-0x68399 0x683a3-0x683b9 0x68499-0x6853e 0x686c0-0x6871d 0x68747-0x687b0",2026-11-02
 POAfterGame,src/front/playoff_mode/POSeedRound2.c,a4af353b73ac458b1631f1efeb938c75f3ea0a6c,3000,1,NEEDS-REVIEW,"coverage 72%, uncovered 0x888cd-0x888ea 0x88a2b-0x88ac8 0x88ad6-0x88b72 0x88ca0-0x88d7a 0x8904e-0x89081; null page x2809",2026-11-02
 assthreestars,src/engine/intro/FadeOutPalCycle.c,f46f04c65c5d0cbee11902f5cb7985f8e5bdfe6f,3000,1,NEEDS-REVIEW,"coverage 50%, uncovered 0x497b6-0x498f7 0x49907-0x499cb; null page x1800",2026-11-02
@@ -210,14 +210,14 @@ TradePlayers,src/front/trade/TradePlayers.c,e6059b7d54aa8752883e29fe176b498687d3
 checkpuckcoll,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,3000,1,NEEDS-REVIEW,"coverage 71%, uncovered 0x545c4-0x5466b 0x546b3-0x546e5 0x54704-0x547eb; null page x264",2026-11-02
 PickForLineSlot,src/engine/lines/PickForLineSlot.c,31460af63a6efb0fd54926d66db5304dca3e160e,3000,1,NEEDS-REVIEW,"coverage 44%, uncovered 0x64f7b-0x64ff6 0x65005-0x65087 0x65096-0x65119 0x65167-0x651a5 0x6521c-0x6525a",2026-11-02
 POHandleElimination,src/front/playoff_mode/POHandleElimination.c,e8887c22ca4afd3f0966043f66081efa1a98af4c,3000,1,PASS,null page x13,2026-11-02
-ListDialog,src/c/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,168,1,NEEDS-REVIEW,"trap review: uninit stack read x2; mostly trapped; coverage 82%, uncovered 0x305c8-0x305d8 0x30786-0x307dd 0x308e5-0x30903 0x3093d-0x30967 0x309b4-0x309e1; only 168 cases in the time budget; null page",2026-11-02
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,168,1,NEEDS-REVIEW,"trap review: uninit stack read x2; mostly trapped; coverage 82%, uncovered 0x305c8-0x305d8 0x30786-0x307dd 0x308e5-0x30903 0x3093d-0x30967 0x309b4-0x309e1; only 168 cases in the time budget; null page",2026-11-02
 InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,25,1,NEEDS-REVIEW,"trap review: uninit stack read x24; mostly trapped; coverage 74%, uncovered 0x7e1c5-0x7e1cb 0x7e4cd-0x7e558 0x7e56b-0x7e5dc 0x7e6d7-0x7e7e1 0x7e8ce-0x7e8d8; only 25 cases in the time budget",2026-11-02
 BuildStandingsGrid,src/front/league_setup/BuildStandingsGrid.c,4585c9dd16ec51a23de02377e8c8f6b39a59bd22,2847,1,NEEDS-REVIEW,trap review: uninit stack read x2847; null page x28,2026-11-02
 ReplaySaveHilight,src/front/replay_controls/ReplaySaveHilight.c,56a7bbf2447d3a073d7c1f3efc914e2d36465056,3000,1,FAIL,"writes[20]: orig (0x7f20000,0x4,0x7f42d) vs C (0x7f20000,0x4,0x700038e) (lens 74496/74496)",2026-11-02
 TitleScreen,src/front/title/RunDemoGame.c,a9ea6db1235f356800bdb2d71974cb80fb84a4ce,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; coverage 65%, uncovered 0x1622b-0x16248 0x16411-0x165c4 0x165f5-0x16632 0x16642-0x16647 0x16666-0x1666c; null page x2081",2026-11-02
-ExportTeamToFloppy,src/c/pc/database_merge/ExportTeamToFloppy.c,c1b2a6954aeae507a73f585c353d8f2b3377aac5,1117,1,NEEDS-REVIEW,"coverage 59%, uncovered 0x3bcdf-0x3bd13 0x3bd2e-0x3bdb1 0x3c02c-0x3c066 0x3c077-0x3c09f 0x3c26c-0x3c2e5; null page x214",2026-11-02
+ExportTeamToFloppy,src/pc/database_merge/ExportTeamToFloppy.c,c1b2a6954aeae507a73f585c353d8f2b3377aac5,1117,1,NEEDS-REVIEW,"coverage 59%, uncovered 0x3bcdf-0x3bd13 0x3bd2e-0x3bdb1 0x3c02c-0x3c066 0x3c077-0x3c09f 0x3c26c-0x3c2e5; null page x214",2026-11-02
 DrawCalendarDay,src/front/calendar/DrawCalendarDay.c,5e17e74e5b822dd533710555c41e4e8180f8c26b,598,1,NEEDS-REVIEW,"mostly trapped; coverage 80%, uncovered 0x344f9-0x344f9 0x3451d-0x34675; null page x373",2026-11-02
-GameLoop,src/c/pc/gamesave_io/GameLoop.c,631ceb95d212f85bae0be225212b19b6fad3bfbe,327,1,NEEDS-REVIEW,"coverage 84%, uncovered 0x11888-0x118cc 0x1196c-0x1198a 0x11a6b-0x11a7e 0x11b5b-0x11b72 0x11ba5-0x11bd6; only 327 cases in the time budget",2026-11-02
+GameLoop,src/pc/gamesave_io/GameLoop.c,631ceb95d212f85bae0be225212b19b6fad3bfbe,327,1,NEEDS-REVIEW,"coverage 84%, uncovered 0x11888-0x118cc 0x1196c-0x1198a 0x11a6b-0x11a7e 0x11b5b-0x11b72 0x11ba5-0x11bd6; only 327 cases in the time budget",2026-11-02
 SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x4, unset return esi x18",2026-11-02
 shotdiradj,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,450,1,PASS,null page x44,2026-11-02
 FadePalette,src/front/main/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,450,1,PASS,null page x1,2026-11-02
@@ -227,7 +227,7 @@ SelectRosterTeam,src/front/create/RunEditRosters.c,0a883e95688082c74f853cbbab110
 CanFillLineSlot,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,3000,1,FAIL,ebx: orig 0x0 vs C 0xf,2026-11-02
 DrawSprite,src/front/screen_util/DrawSprite.c,1720180b406e1da0078de315a64391b84e42739d,3000,1,FAIL,ecx: orig 0x0 vs C 0x5ff7f46,2026-11-02
 SimPlayoffRound1,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,3000,1,FAIL,"calls[65]: orig (0x452c5,0x600babc,0x6000000,0x5e2,0x6004664,0x600040b,0x6000058,0x2) vs C (0x452c5,0x600babc,0x6000000,0x5e2,0x6004664,0x600040c,0x6000057,0x2) (lens 831/831)",2026-11-02
-ResetGameVars,src/c/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
+ResetGameVars,src/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
 NetCollide,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,3000,1,FAIL,edx: orig 0x112d vs C 0x3ec3,2026-11-02
 MenuSaveTheseLines,src/front/game_lines/MenuSaveDefaultLines.c,ed9b375549762521cda1936c4a5ec9a7822cc51c,3000,1,FAIL,esp_delta: orig -0x320 vs C 0x18,2026-11-02
 GameLineEditorLoop,src/front/game_lines/GameLineEditorLoop.c,513f9811a4fb4c5382a10443e8f987c8790557e4,3000,1,FAIL,"calls[27]: orig (0x6b94e,0x165,0x0,0x0,0xc0,0xc1,0xc2) vs C (0x6b94e,0xa5a5a705,0x0,0x0,0xc0,0xc1,0xc2) (lens 77/77)",2026-11-02
@@ -256,7 +256,7 @@ puckfaceoff2,src/engine/faceoff/puckfaceoff.c,594b0ad4feb3f07576ea15b83603a6cea5
 CalendarScreen,src/front/calendar/CalendarScreen.c,1e0a4c555fa55759c620318fff1233b53ef10602,3000,1,FAIL,"writes[10]: orig (0xc8992,0x4,0x0) vs C (0xc65c0,0x4,0x20016) (lens 16/16)",2026-11-02
 CalendarScreen,src/front/calendar/CalendarScreen.c,a38bd05ab0c4b154791f7b1edc0e395849dddc8b,3000,1,FAIL,edx: orig 0x0 vs C 0x67ce,2026-11-02
 CalendarScreen,src/front/calendar/CalendarScreen.c,a38bd05ab0c4b154791f7b1edc0e395849dddc8b,3000,1,FAIL,edx: orig 0x0 vs C 0x67ce,2026-11-02
-ResetGameVars,src/c/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
+ResetGameVars,src/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,FAIL,"writes[116]: orig (0xc4d0c,0x4,0x0) vs C (0xb54d0c,0x4,0x0) (lens 118/118)",2026-11-02
 GetMemListHead,src/front/main/GetMemListHead.c,0d03d8aa79c7cc39a17caed610d1ecd0be16629e,3000,1,PASS,code pointer compared by function x52,2026-11-02
 DrawRinkEndArt,src/front/main/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,3000,1,PASS,code pointer compared by function x56,2026-11-02
 ResetInputSampling,src/front/main/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,3000,1,PASS,code pointer compared by function x52,2026-11-02
@@ -268,7 +268,7 @@ CanFillLineSlot,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4
 SelectRosterTeam,src/front/create/RunEditRosters.c,0a883e95688082c74f853cbbab1106dd5228e6c4,3000,1,PASS,"code write x31, null page x2875",2026-11-02
 NetCollide,src/engine/collide/PassLaneChk.c,558cd47079d8ee101e4f61b8a93c31cfcfde37bf,3000,1,FAIL,edx: orig 0x112d vs C 0x3ec3,2026-11-02
 DrawSprite,src/front/screen_util/DrawSprite.c,1720180b406e1da0078de315a64391b84e42739d,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; code pointer compared by function x4, null page x30",2026-11-02
-ResetGameVars,src/c/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,PASS,,2026-11-02
+ResetGameVars,src/pc/asset_loading/ResetGameVars.c,de306e823c3ec46ea55af65bc7817ee7b3318dd7,3000,1,PASS,,2026-11-02
 GameLineEditorLoop,src/front/game_lines/GameLineEditorLoop.c,513f9811a4fb4c5382a10443e8f987c8790557e4,3000,1,FAIL,"calls[27]: orig (0x6b94e,0x165,0x0,0x0,0xc0,0xc1,0xc2) vs C (0x6b94e,0xa5a5a705,0x0,0x0,0xc0,0xc1,0xc2) (lens 77/77)",2026-11-02
 SportsDesk,src/front/desk/SportsDesk.c,e82f913b963c159bc6b2475760587472cc7d6871,3000,1,FAIL,"writes[605]: orig (0x7f20020,0x4,0x0) vs C (0x7f20028,0x4,0x0) (lens 35171/37445)",2026-11-02
 PlayLeagueGame,src/front/calendar/PlayLeagueGame.c,10ecd7674e4b6c8778191b2c7842990a50be63f5,3000,1,FAIL,trap kind: orig none vs C invalid insn,2026-11-02
@@ -284,7 +284,7 @@ setplayer,src/engine/hockey/changeplayer.c,d78ae323ec31a9d753149c52bb88ecc1f1796
 changeplayer,src/engine/hockey/changeplayer.c,d78ae323ec31a9d753149c52bb88ecc1f17962c3,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2933; null page x345,2026-11-02
 FillDressedSlots,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; coverage 85%, uncovered 0x64da0-0x64da0 0x64dbe-0x64dbe 0x64dea-0x64e1f; code write x223, null page x2858",2026-11-02
 LeagueTeamSelect,src/front/league_setup/LeagueTeamSelect.c,cf4c02213d8d8474742396d12515e87792703414,3000,1,FAIL,"calls[6]: orig (0x8fcdf,0x7000000) vs C (0x8fcdf,0x38b4f) (lens 36/36)",2026-11-02
-ReassignCtlPlayer,src/c/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2024; null page x278,2026-11-02
+ReassignCtlPlayer,src/pc/settings_dialogs/MenuP1ControlsInGame.c,e40de8db5009c65a65d7d793902e4e3b5e5c13c4,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2024; null page x278,2026-11-02
 PostGameToTeamDb,src/front/calendar/PostGameToTeamDb.c,24b832d2822765db06a5a544252b779995e1dd82,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; coverage 29%, uncovered 0x36396-0x363c6 0x363e9-0x365f9 0x36647-0x36741 0x367b7-0x368bd 0x3694d-0x36b21; code pointer compared by function x15, null page x2485",2026-11-02
 checkwallcoll,src/engine/collide/checkwallcoll.c,cbc23342317c01a8c7cd524b34df06b8b3cfbac6,3000,1,NEEDS-REVIEW,trap review: uninit stack read x2048; null page x32,2026-11-02
 POInitSchedule,src/front/playoff_mode/POCreateSchedule.c,ac9d4273c2e3d7cbb9dd9be2200c69ec5e4457bb,3000,1,FAIL,"writes[10]: orig (0x60000e6,0x4,0x70001e2) vs C (0x60000e6,0x4,('CODE', 'POCreateSchedule')) (lens 422/422)",2026-11-02
@@ -298,10 +298,10 @@ dopass,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,3000
 MenuSaveDefaultLines,src/front/game_lines/MenuSaveDefaultLines.c,ed9b375549762521cda1936c4a5ec9a7822cc51c,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x917; code pointer compared by function x7, null page x325",2026-11-02
 SelectHilight,src/front/replay_controls/SelectHilight.c,5a01de44d426c7375fcdbab7ce421094d2855643,3000,1,FAIL,edx: orig 0x6000000 vs C 0x3fba,2026-11-02
 POSeedTeams,src/front/playoff_mode/POSeedRound2.c,a4af353b73ac458b1631f1efeb938c75f3ea0a6c,814,1,NEEDS-REVIEW,"mostly trapped; code pointer compared by function x1, code write x3, null page x782",2026-11-02
-LoadGameState,src/c/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,1808,1,NEEDS-REVIEW,trap review: uninit stack read x1808; code pointer compared by function x64,2026-11-02
+LoadGameState,src/pc/game_saveload/SaveGameState.c,602c594fcd18f3aa3b8e5e250e91d83cb4e69156,1808,1,NEEDS-REVIEW,trap review: uninit stack read x1808; code pointer compared by function x64,2026-11-02
 TeamStatsScreen,src/front/stats/TeamStatsScreen.c,f5aff6a56bdf7774e5c8334fee2a128fc09e0921,941,1,NEEDS-REVIEW,"trap review: uninit stack read x900; code pointer compared by function x313, code write x2, null page x484",2026-11-02
 LoadGameRoster,src/front/game_lines/LoadGameRoster.c,5c8d8217b65b851dfcc0bcc9a8c4f0a9e85b7c8b,1407,1,NEEDS-REVIEW,trap review: uninit stack read x1407; code pointer compared by function x7,2026-11-02
-EditTextField,src/c/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,379,1,NEEDS-REVIEW,"mostly trapped; coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 379 cases in the time budget",2026-11-02
+EditTextField,src/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,379,1,NEEDS-REVIEW,"mostly trapped; coverage 51%, uncovered 0x317db-0x31809 0x31882-0x318ae 0x318bc-0x318fc 0x31986-0x319ac 0x31a09-0x31a9a; only 379 cases in the time budget",2026-11-02
 RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,72,1,NEEDS-REVIEW,"trap review: uninit stack read x22; mostly trapped; coverage 35%, uncovered 0x1eeb3-0x1ef21 0x1f07f-0x1f0c2 0x1f180-0x1f1a7 0x1f268-0x1f41c 0x1f4a9-0x1fa68; only 72 cases in the time budget; code poin",2026-11-02
 checkcx,src/engine/collide/checkcx.c,8684c2da6f509a9366277858fbb27f1d4fefca48,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x1934; code pointer compared by function x84, null page x101",2026-11-02
 DrawRinkSideObjects,src/engine/replay/ReplayStep.c,e618d4d09eb6ec944bee1d911a5a398a5c32243c,1389,1,NEEDS-REVIEW,"trap review: uninit stack read x1389; coverage 83%, uncovered 0x6836a-0x68399 0x683a3-0x683b9 0x68499-0x6853e 0x686c0-0x6871d 0x68747-0x687b0; code pointer compared by function x22",2026-11-02
@@ -316,7 +316,7 @@ InProgress,src/engine/penalty/InProgress.c,a4762bf84c42a4982317e7db5a0aa3198cf00
 SkaterStatsCard,src/front/stats/SkaterStatsCard.c,3db3cec61366333a5108f65f4517864d660df222,1777,1,NEEDS-REVIEW,trap review: uninit stack read x1777; code pointer compared by function x107,2026-11-02
 ShowCredits,src/front/title/RunDemoGame.c,a9ea6db1235f356800bdb2d71974cb80fb84a4ce,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x12; code pointer compared by function x249, null page x2441",2026-11-02
 RunMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,2062,1,NEEDS-REVIEW,"trap review: uninit stack read x262; mostly trapped; coverage 54%, uncovered 0x1d87c-0x1d8bf 0x1d9c8-0x1da38 0x1dac0-0x1ddb1 0x1dee5-0x1df00; code pointer compared by function x41, null page x1447",2026-11-02
-ListDialog,src/c/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,179,1,NEEDS-REVIEW,"trap review: uninit stack read x2; mostly trapped; coverage 82%, uncovered 0x305c8-0x305d8 0x30786-0x307dd 0x308e5-0x30903 0x3093d-0x30967 0x309b4-0x309e1; only 179 cases in the time budget; code writ",2026-11-02
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,179,1,NEEDS-REVIEW,"trap review: uninit stack read x2; mostly trapped; coverage 82%, uncovered 0x305c8-0x305d8 0x30786-0x307dd 0x308e5-0x30903 0x3093d-0x30967 0x309b4-0x309e1; only 179 cases in the time budget; code writ",2026-11-02
 TitleScreen,src/front/title/RunDemoGame.c,a9ea6db1235f356800bdb2d71974cb80fb84a4ce,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; coverage 65%, uncovered 0x1622b-0x16248 0x16411-0x165c4 0x165f5-0x16632 0x16642-0x16647 0x16666-0x1666c; code pointer compared by function x235, null page x2081",2026-11-02
 InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,26,1,NEEDS-REVIEW,"trap review: uninit stack read x25; mostly trapped; coverage 74%, uncovered 0x7e1c5-0x7e1cb 0x7e4cd-0x7e558 0x7e56b-0x7e5dc 0x7e6d7-0x7e7e1 0x7e8ce-0x7e8d8; only 26 cases in the time budget; code poin",2026-11-02
 BuildStandingsGrid,src/front/league_setup/BuildStandingsGrid.c,4585c9dd16ec51a23de02377e8c8f6b39a59bd22,3000,1,NEEDS-REVIEW,"trap review: uninit stack read x3000; code write x2, null page x27",2026-11-02

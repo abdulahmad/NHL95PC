@@ -10,7 +10,7 @@ extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, s
 extern strcat_, stricmp_, sub_8D2F0, sub_8E83C, sub_8F98F, sub_8FC8A, sub_8FFB0, sub_9061C
 extern sub_B30B4, sub_B4BA8, unk_C3B0C, WaitClickTimeout
 global InitFileLocations, CoachCutScene
-; C: src/c/pc/file_locations/InitFileLocations.c
+; C: src/pc/file_locations/InitFileLocations.c
 %ifdef CBUILD
 %include "c/pc/file_locations/InitFileLocations.inc"
 %else
@@ -130,7 +130,7 @@ pop ecx	; 8BC12
 pop ebx	; 8BC13
 ret	; 8BC14
 %endif ; C
-; C: src/c/pc/file_locations/CoachCutScene.c
+; C: src/pc/file_locations/CoachCutScene.c
 %ifdef CBUILD
 %include "c/pc/file_locations/CoachCutScene.inc"
 %else

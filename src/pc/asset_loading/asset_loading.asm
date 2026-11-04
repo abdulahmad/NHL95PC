@@ -30,7 +30,7 @@ extern word_DEE94, word_E024E, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, w
 extern word_E9B2C
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
-; C: src/c/pc/asset_loading/IndexPhotoBank.c
+; C: src/pc/asset_loading/IndexPhotoBank.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/IndexPhotoBank.inc"
 %else
@@ -83,7 +83,7 @@ pop ecx	; 138CF
 pop ebx	; 138D0
 ret	; 138D1
 %endif ; C
-; C: src/c/pc/asset_loading/LoadPhotoBankF.c
+; C: src/pc/asset_loading/LoadPhotoBankF.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/LoadPhotoBankF.inc"
 %else
@@ -138,7 +138,7 @@ pop ecx	; 1395C
 pop ebx	; 1395D
 ret	; 1395E
 %endif ; C
-; C: src/c/pc/asset_loading/LoadPhotoBankF.c (LoadPlayerPhotos)
+; C: src/pc/asset_loading/LoadPhotoBankF.c (LoadPlayerPhotos)
 %ifdef CBUILD
 %include "c/pc/asset_loading/LoadPhotoBankF.LoadPlayerPhotos.inc"
 %else
@@ -222,7 +222,7 @@ jl near LoadPlayerPhotos.1	; 13A1F
 call LoadPhotoBankF	; 13A25
 jmp near LoadPhotoBankF_x	; 13A2A
 %endif ; C
-; C: src/c/pc/asset_loading/LoadTransparentRinkEndOverlay.c
+; C: src/pc/asset_loading/LoadTransparentRinkEndOverlay.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/LoadTransparentRinkEndOverlay.inc"
 %else
@@ -261,7 +261,7 @@ pop ecx	; 13A8E
 pop ebx	; 13A8F
 ret	; 13A90
 %endif ; C
-; C: src/c/pc/asset_loading/LoadGameGfx.c
+; C: src/pc/asset_loading/LoadGameGfx.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/LoadGameGfx.inc"
 %else
@@ -353,7 +353,7 @@ pop ecx	; 13BB1
 pop ebx	; 13BB2
 ret	; 13BB3
 %endif ; C
-; C: src/c/pc/asset_loading/LoadGameGfx.c (ReloadGameGfx)
+; C: src/pc/asset_loading/LoadGameGfx.c (ReloadGameGfx)
 %ifdef CBUILD
 %include "c/pc/asset_loading/LoadGameGfx.ReloadGameGfx.inc"
 %else
@@ -559,7 +559,7 @@ pop edx	; 13E8B
 pop ecx	; 13E8C
 pop ebx	; 13E8D
 ret	; 13E8E
-; C: src/c/pc/asset_loading/SetupGame.c
+; C: src/pc/asset_loading/SetupGame.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/SetupGame.inc"
 %else
@@ -647,7 +647,7 @@ pop ecx	; 13FA4
 pop ebx	; 13FA5
 ret	; 13FA6
 %endif ; C
-; C: src/c/pc/asset_loading/SetupDemoGame.c
+; C: src/pc/asset_loading/SetupDemoGame.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/SetupDemoGame.inc"
 %else
@@ -844,7 +844,7 @@ mov dword [joysampling], edi	; 142D0
 mov word [joysampling_save], cx	; 142D6
 call joyq_flush	; 142DD
 jmp near IndexPhotoBank_x	; 142E2
-; C: src/c/pc/asset_loading/FileExists.c
+; C: src/pc/asset_loading/FileExists.c
 %ifdef CBUILD
 %include "c/pc/asset_loading/FileExists.inc"
 %else

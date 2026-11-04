@@ -15,7 +15,7 @@ global MakePath, DeleteFiles, DeleteDir, FileOpenRead, FileOpenRead_x, FileOpenW
 global FileClose, FileReadAt, FileReadAt_x, FileReadAt_x2, FileWriteAt, ReadKeyRec, ReadKeyRec_x, WriteKeyRec
 global CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, ReadTeamRec_x, ReadGSummaryRec, DiskSpaceShort, CheckGameDiskSpace
 global GetLeagueDBSizes
-; C: src/c/pc/file_utils/MakePath.c
+; C: src/pc/file_utils/MakePath.c
 %ifdef CBUILD
 %include "c/pc/file_utils/MakePath.inc"
 %else
@@ -52,7 +52,7 @@ call strcat_	; 14361
 pop esi	; 14366
 ret	; 14367
 %endif ; C
-; C: src/c/pc/file_utils/DeleteFiles.c
+; C: src/pc/file_utils/DeleteFiles.c
 %ifdef CBUILD
 %include "c/pc/file_utils/DeleteFiles.inc"
 %else
@@ -124,7 +124,7 @@ pop esi	; 1443F
 pop ecx	; 14440
 ret	; 14441
 %endif ; C
-; C: src/c/pc/file_utils/DeleteDir.c
+; C: src/pc/file_utils/DeleteDir.c
 %ifdef CBUILD
 %include "c/pc/file_utils/DeleteDir.inc"
 %else
@@ -197,7 +197,7 @@ pop ecx	; 14522
 pop ebx	; 14523
 ret	; 14524
 %endif ; C
-; C: src/c/pc/file_utils/FileOpenRead.c
+; C: src/pc/file_utils/FileOpenRead.c
 %ifdef CBUILD
 %include "c/pc/file_utils/FileOpenRead.inc"
 %else
@@ -226,7 +226,7 @@ mov ebx, edx	; 1455D
 mov edx, 42h	; 1455F
 jmp short FileOpenRead_x	; 14564
 %endif ; C
-; C: src/c/pc/file_utils/FileCreate.c
+; C: src/pc/file_utils/FileCreate.c
 %ifdef CBUILD
 %include "c/pc/file_utils/FileCreate.inc"
 %else
@@ -240,7 +240,7 @@ call _dos_creat_	; 14575
 pop ebx	; 1457A
 ret	; 1457B
 %endif ; C
-; C: src/c/pc/file_utils/FileClose.c
+; C: src/pc/file_utils/FileClose.c
 %ifdef CBUILD
 %include "c/pc/file_utils/FileClose.inc"
 %else
@@ -262,7 +262,7 @@ pop edx	; 1459F
 pop ebx	; 145A0
 ret	; 145A1
 %endif ; C
-; C: src/c/pc/file_utils/FileReadAt.c
+; C: src/pc/file_utils/FileReadAt.c
 %ifdef CBUILD
 %include "c/pc/file_utils/FileReadAt.inc"
 %else
@@ -309,7 +309,7 @@ pop edi	; 145F6
 pop esi	; 145F7
 ret	; 145F8
 %endif ; C
-; C: src/c/pc/file_utils/FileReadAt.c (FileWriteAt)
+; C: src/pc/file_utils/FileReadAt.c (FileWriteAt)
 %ifdef CBUILD
 %include "c/pc/file_utils/FileReadAt.FileWriteAt.inc"
 %else
@@ -344,7 +344,7 @@ mov eax, esi	; 14634
 call _dos_write_	; 14636
 jmp short FileReadAt_x	; 1463B
 %endif ; C
-; C: src/c/pc/file_utils/ReadKeyRec.c
+; C: src/pc/file_utils/ReadKeyRec.c
 %ifdef CBUILD
 %include "c/pc/file_utils/ReadKeyRec.inc"
 %else
@@ -366,7 +366,7 @@ call FileWriteAt	; 14664
 pop ecx	; 14669
 ret	; 1466A
 %endif ; C
-; C: src/c/pc/file_utils/ReadKeyRec.c (CopyFile)
+; C: src/pc/file_utils/ReadKeyRec.c (CopyFile)
 %ifdef CBUILD
 %include "c/pc/file_utils/ReadKeyRec.CopyFile.inc"
 %else
@@ -447,7 +447,7 @@ pop edi	; 14786
 pop esi	; 14787
 ret 4	; 14788
 %endif ; C
-; C: src/c/pc/file_utils/ReadKeyRec.c (ReadSeasonRec)
+; C: src/pc/file_utils/ReadKeyRec.c (ReadSeasonRec)
 %ifdef CBUILD
 %include "c/pc/file_utils/ReadKeyRec.ReadSeasonRec.inc"
 %else
@@ -458,7 +458,7 @@ push ecx	; 14795
 mov ecx, 2Fh	; 14796
 jmp near ReadKeyRec_x	; 1479B
 %endif ; C
-; C: src/c/pc/file_utils/ReadSchedGame.c
+; C: src/pc/file_utils/ReadSchedGame.c
 %ifdef CBUILD
 %include "c/pc/file_utils/ReadSchedGame.inc"
 %else
@@ -480,7 +480,7 @@ pop esi	; 147C6
 pop ecx	; 147C7
 ret	; 147C8
 %endif ; C
-; C: src/c/pc/file_utils/ReadTeamRec.c
+; C: src/pc/file_utils/ReadTeamRec.c
 %ifdef CBUILD
 %include "c/pc/file_utils/ReadTeamRec.inc"
 %else
@@ -526,7 +526,7 @@ mov ecx, 0Bh	; 1481C
 mov edx, esi	; 14821
 jmp short ReadTeamRec_x	; 14823
 %endif ; C
-; C: src/c/pc/file_utils/DiskSpaceShort.c
+; C: src/pc/file_utils/DiskSpaceShort.c
 %ifdef CBUILD
 %include "c/pc/file_utils/DiskSpaceShort.inc"
 %else
@@ -589,7 +589,7 @@ pop ecx	; 148A2
 pop ebx	; 148A3
 ret	; 148A4
 %endif ; C
-; C: src/c/pc/file_utils/CheckGameDiskSpace.c
+; C: src/pc/file_utils/CheckGameDiskSpace.c
 %ifdef CBUILD
 %include "c/pc/file_utils/CheckGameDiskSpace.inc"
 %else
@@ -690,7 +690,7 @@ pop ecx	; 149BC
 pop ebx	; 149BD
 ret	; 149BE
 %endif ; C
-; C: src/c/pc/file_utils/GetLeagueDBSizes.c
+; C: src/pc/file_utils/GetLeagueDBSizes.c
 %ifdef CBUILD
 %include "c/pc/file_utils/GetLeagueDBSizes.inc"
 %else

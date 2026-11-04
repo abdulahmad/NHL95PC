@@ -31,7 +31,7 @@ extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common
 global SeasonDbPtr2, CareerDbPtr, CareerDbPtr_common, CareerDbPtr2, AttDbPtr
-; C: src/c/pc/league_db/MenuCentralRegistry.c
+; C: src/pc/league_db/MenuCentralRegistry.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuCentralRegistry.inc"
 %else
@@ -91,7 +91,7 @@ ret	; 6BF3C
 %endif ; C
 unk13_6BF3D:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-; C: src/c/pc/league_db/BuildFreeAgentList.c
+; C: src/pc/league_db/BuildFreeAgentList.c
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.inc"
 %else
@@ -176,7 +176,7 @@ pop ecx	; 6C040
 pop ebx	; 6C041
 ret	; 6C042
 %endif ; C
-; C: src/c/pc/league_db/BuildTeamRosterList.c
+; C: src/pc/league_db/BuildTeamRosterList.c
 %ifdef CBUILD
 %include "c/pc/league_db/BuildTeamRosterList.inc"
 %else
@@ -316,7 +316,7 @@ pop esi	; 6C198
 pop ecx	; 6C199
 ret	; 6C19A
 %endif ; C
-; C: src/c/pc/league_db/LoadLeagueDbsMem.c
+; C: src/pc/league_db/LoadLeagueDbsMem.c
 %ifdef CBUILD
 %include "c/pc/league_db/LoadLeagueDbsMem.inc"
 %else
@@ -433,7 +433,7 @@ pop ecx	; 6C2F6
 pop ebx	; 6C2F7
 ret	; 6C2F8
 %endif ; C
-; C: src/c/pc/league_db/MenuSaveDbs.c
+; C: src/pc/league_db/MenuSaveDbs.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuSaveDbs.inc"
 %else
@@ -503,7 +503,7 @@ pop esi	; 6C3B8
 pop ecx	; 6C3B9
 ret	; 6C3BA
 %endif ; C
-; C: src/c/pc/league_db/MenuSaveDbsAs.c
+; C: src/pc/league_db/MenuSaveDbsAs.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuSaveDbsAs.inc"
 %else
@@ -590,7 +590,7 @@ pop esi	; 6C4B7
 pop ecx	; 6C4B8
 ret	; 6C4B9
 %endif ; C
-; C: src/c/pc/league_db/SaveDbsToDir.c
+; C: src/pc/league_db/SaveDbsToDir.c
 %ifdef CBUILD
 %include "c/pc/league_db/SaveDbsToDir.inc"
 %else
@@ -950,7 +950,7 @@ pop ecx	; 6C969
 pop ebx	; 6C96A
 ret	; 6C96B
 %endif ; C
-; C: src/c/pc/league_db/BuildFreeAgentList.c (WriteLeagueDbsMem)
+; C: src/pc/league_db/BuildFreeAgentList.c (WriteLeagueDbsMem)
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.WriteLeagueDbsMem.inc"
 %else
@@ -1046,7 +1046,7 @@ add esp, byte 0Ch	; 6CA84
 add esp, byte 20h	; 6CA87
 jmp near BuildFreeAgentList_ret	; 6CA8A
 %endif ; C
-; C: src/c/pc/league_db/BuildFreeAgentList.c (FreeLeagueDbsMem)
+; C: src/pc/league_db/BuildFreeAgentList.c (FreeLeagueDbsMem)
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.FreeLeagueDbsMem.inc"
 %else
@@ -1120,7 +1120,7 @@ mov dword [seasondb], ebx	; 6CB5A
 mov dword [seasondb_size], ebx	; 6CB60
 jmp near BuildFreeAgentList_ret	; 6CB66
 %endif ; C
-; C: src/c/pc/league_db/CarTeamRecPtr.c
+; C: src/pc/league_db/CarTeamRecPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/CarTeamRecPtr.inc"
 %else
@@ -1140,7 +1140,7 @@ add eax, edx	; 6CB8C
 pop edx	; 6CB8E
 ret	; 6CB8F
 %endif ; C
-; C: src/c/pc/league_db/TeamRecPtr.c
+; C: src/pc/league_db/TeamRecPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/TeamRecPtr.inc"
 %else
@@ -1161,7 +1161,7 @@ add eax, edx	; 6CBB3
 pop edx	; 6CBB5
 ret	; 6CBB6
 %endif ; C
-; C: src/c/pc/league_db/KeyDbPtr.c
+; C: src/pc/league_db/KeyDbPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/KeyDbPtr.inc"
 %else

@@ -22,7 +22,7 @@ global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
 global DrawDbList_jt, DrawDbList, DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2, DrawDbList_n1
 global DbDialogLoop, OpenSelectedDb, LoadDbsFromDir, DeleteSelectedDb, MenuOpenDatabase
-; C: src/c/pc/database_dialogs/InputDialog.c
+; C: src/pc/database_dialogs/InputDialog.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/InputDialog.inc"
 %else
@@ -366,7 +366,7 @@ ret 14h	; 722FB
 %endif ; C
 unk13_722FE:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.inc"
 %else
@@ -480,7 +480,7 @@ pop ecx	; 72489
 pop ebx	; 7248A
 ret	; 7248B
 %endif ; C
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (ScanDbFiles)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (ScanDbFiles)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.ScanDbFiles.inc"
 %else
@@ -595,7 +595,7 @@ mov dword [dblisttemp+0Ch], eax	; 725F8
 add esp, byte 2Ch	; 725FD
 jmp near DbDialog_ret	; 72600
 %endif ; C
-; C: src/c/pc/database_dialogs/DrawDbDialogButtons.c
+; C: src/pc/database_dialogs/DrawDbDialogButtons.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/DrawDbDialogButtons.inc"
 %else
@@ -745,7 +745,7 @@ dd DrawDbDialog_n3
 dd DrawDbDialog_n4
 dd DrawDbDialog_n5
 dd DrawDbDialog_n6
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (DrawDbDialog)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (DrawDbDialog)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.DrawDbDialog.inc"
 %else
@@ -942,7 +942,7 @@ or byte [fdlgmask+1], 4	; 72A4D
 add esp, byte 24h	; 72A54
 jmp near DbDialog_epilogue	; 72A57
 %endif ; C
-; C: src/c/pc/database_dialogs/DbDialogHitTest.c
+; C: src/pc/database_dialogs/DbDialogHitTest.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/DbDialogHitTest.inc"
 %else
@@ -988,7 +988,7 @@ dd DrawDbList_n3
 dd DrawDbList_n4
 dd DrawDbList_n5
 dd DrawDbList_n6
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (DrawDbList)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (DrawDbList)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.DrawDbList.inc"
 %else
@@ -1273,7 +1273,7 @@ mov eax, dword [byte esp+04h]	; 72DDB
 add esp, byte 8	; 72DDF
 jmp near DbDialog_epilogue	; 72DE2
 %endif ; C
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (DbDialogLoop)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (DbDialogLoop)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.DbDialogLoop.inc"
 %else
@@ -1762,7 +1762,7 @@ mov edi, dword [pointerspr]	; 733B8
 push edi	; 733BE
 jmp near DbDialogLoop.5	; 733BF
 %endif ; C
-; C: src/c/pc/database_dialogs/OpenSelectedDb.c
+; C: src/pc/database_dialogs/OpenSelectedDb.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/OpenSelectedDb.inc"
 %else
@@ -1825,7 +1825,7 @@ pop esi	; 73458
 pop edx	; 73459
 ret	; 7345A
 %endif ; C
-; C: src/c/pc/database_dialogs/LoadDbsFromDir.c
+; C: src/pc/database_dialogs/LoadDbsFromDir.c
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbsFromDir.inc"
 %else
@@ -1945,7 +1945,7 @@ pop ecx	; 735C0
 pop ebx	; 735C1
 ret	; 735C2
 %endif ; C
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (DeleteSelectedDb)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (DeleteSelectedDb)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.DeleteSelectedDb.inc"
 %else
@@ -2049,7 +2049,7 @@ xor eax, eax	; 736F9
 add esp, byte 44h	; 736FB
 jmp near DbDialog_ret	; 736FE
 %endif ; C
-; C: src/c/pc/database_dialogs/LoadDbDialogShapes.c (MenuOpenDatabase)
+; C: src/pc/database_dialogs/LoadDbDialogShapes.c (MenuOpenDatabase)
 %ifdef CBUILD
 %include "c/pc/database_dialogs/LoadDbDialogShapes.MenuOpenDatabase.inc"
 %else

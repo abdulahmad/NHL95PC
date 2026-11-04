@@ -31,7 +31,7 @@ savefileexts:
 dd str_NHL
 dd str_PO2
 dd str_LP
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.inc"
 %else
@@ -144,7 +144,7 @@ pop ecx	; 2B941
 pop ebx	; 2B942
 ret	; 2B943
 %endif ; C
-; C: src/c/pc/file_dialogs/MenuOpenSaved.c
+; C: src/pc/file_dialogs/MenuOpenSaved.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/MenuOpenSaved.inc"
 %else
@@ -430,7 +430,7 @@ pop ecx	; 2BD13
 pop ebx	; 2BD14
 ret	; 2BD15
 %endif ; C
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgTabs)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgTabs)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlgTabs.inc"
 %else
@@ -571,7 +571,7 @@ call sub_91370	; 2BEDD
 add esp, byte 0Ch	; 2BEE2
 jmp near LoadFileDlgShapes_x	; 2BEE5
 %endif ; C
-; C: src/c/pc/file_dialogs/CmpFileNames.c
+; C: src/pc/file_dialogs/CmpFileNames.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/CmpFileNames.inc"
 %else
@@ -582,7 +582,7 @@ mov edx, dword [edx]	; 2BEF4
 mov eax, dword [eax]	; 2BEF6
 jmp near strcmp_	; 2BEF8
 %endif ; C
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (ScanSavedGames)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (ScanSavedGames)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.ScanSavedGames.inc"
 %else
@@ -769,7 +769,7 @@ mov dword [lgfiles+0Ch], eax	; 2C128
 add esp, byte 2Ch	; 2C12D
 jmp near LoadFileDlgShapes_x	; 2C130
 %endif ; C
-; C: src/c/pc/file_dialogs/PrintTextCopy.c
+; C: src/pc/file_dialogs/PrintTextCopy.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/PrintTextCopy.inc"
 %else
@@ -812,7 +812,7 @@ dd DrawFileDlg_n3
 dd DrawFileDlg_n4
 dd DrawFileDlg_n5
 dd DrawFileDlg_n6
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlg)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlg)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlg.inc"
 %else
@@ -1001,7 +1001,7 @@ DrawFileDlg_x:
 add esp, byte 24h	; 2C3F7
 jmp near LoadFileDlgShapes_x	; 2C3FA
 %endif ; C
-; C: src/c/pc/file_dialogs/FileDlgHitTest.c
+; C: src/pc/file_dialogs/FileDlgHitTest.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/FileDlgHitTest.inc"
 %else
@@ -1048,7 +1048,7 @@ dd DrawFileDlgList_n3
 dd DrawFileDlgList_n4
 dd DrawFileDlgList_n5
 dd DrawFileDlgList_n6
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgList)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (DrawFileDlgList)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.DrawFileDlgList.inc"
 %else
@@ -1367,7 +1367,7 @@ mov eax, dword [byte esp+04h]	; 2C7F5
 add esp, byte 8	; 2C7F9
 jmp near LoadFileDlgShapes_x	; 2C7FC
 %endif ; C
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (RunFileDlg)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (RunFileDlg)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.RunFileDlg.inc"
 %else
@@ -1889,7 +1889,7 @@ mov ecx, dword [byte esp+01Ch]	; 2CE1F
 push ecx	; 2CE23
 jmp near RunFileDlg.33	; 2CE24
 %endif ; C
-; C: src/c/pc/file_dialogs/LoadFileDlgShapes.c (DeleteSavedGame)
+; C: src/pc/file_dialogs/LoadFileDlgShapes.c (DeleteSavedGame)
 %ifdef CBUILD
 %include "c/pc/file_dialogs/LoadFileDlgShapes.DeleteSavedGame.inc"
 %else
@@ -2199,7 +2199,7 @@ pop edx	; 2D25C
 pop ecx	; 2D25D
 pop ebx	; 2D25E
 ret	; 2D25F
-; C: src/c/pc/file_dialogs/ReadGameSettings.c
+; C: src/pc/file_dialogs/ReadGameSettings.c
 %ifdef CBUILD
 %include "c/pc/file_dialogs/ReadGameSettings.inc"
 %else

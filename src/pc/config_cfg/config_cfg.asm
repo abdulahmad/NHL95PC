@@ -6,7 +6,7 @@ extern __CHK, FatalError, fclose_, fopen_, fscanf_, greyramp, MakePath, MouseSet
 extern SetDialogColors, SetSoundDevice, sounddevids, str_CannotOpenNhlCfg, str_CFG, str_fmt4x, str_NHL2, str_R3
 extern sub_8EB93, sub_8FE83, sub_B3454, sub_B4B88
 global LoadNhlCfg, negone_3DC28
-; C: src/c/pc/config_cfg/LoadNhlCfg.c
+; C: src/pc/config_cfg/LoadNhlCfg.c
 %ifdef CBUILD
 %include "c/pc/config_cfg/LoadNhlCfg.inc"
 %else

@@ -21,7 +21,7 @@ global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoyst
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
 global PrintMenuTextGrey_ret, PrintMenuTextAlt, DrawMenuItemSel, DrawMenuItemSel_common, DrawMenuItemSel_ret, DrawMenuItemNorm, MenuHitTest, InputPollTick
 global PollMouseEvent, PollJoystickEvent, PollKeyboardEvent
-; C: src/c/pc/input_events/JoystickCalScreen.c
+; C: src/pc/input_events/JoystickCalScreen.c
 %ifdef CBUILD
 %include "c/pc/input_events/JoystickCalScreen.inc"
 %else
@@ -225,7 +225,7 @@ pop edi	; 6B359
 pop esi	; 6B35A
 ret	; 6B35B
 %endif ; C
-; C: src/c/pc/input_events/CalLeftJoystick.c
+; C: src/pc/input_events/CalLeftJoystick.c
 %ifdef CBUILD
 %include "c/pc/input_events/CalLeftJoystick.inc"
 %else
@@ -249,7 +249,7 @@ push byte 8	; 6B38B
 push byte 2	; 6B38D
 jmp short CalLeftJoystick_common	; 6B38F
 %endif ; C
-; C: src/c/pc/input_events/GetInputEvent.c
+; C: src/pc/input_events/GetInputEvent.c
 %ifdef CBUILD
 %include "c/pc/input_events/GetInputEvent.inc"
 %else
@@ -282,7 +282,7 @@ pop edx	; 6B3D4
 pop ebx	; 6B3D5
 ret	; 6B3D6
 %endif ; C
-; C: src/c/pc/input_events/ClearInputQueue.c
+; C: src/pc/input_events/ClearInputQueue.c
 %ifdef CBUILD
 %include "c/pc/input_events/ClearInputQueue.inc"
 %else
@@ -301,7 +301,7 @@ xor eax, eax	; 6B40C
 pop edx	; 6B40E
 ret	; 6B40F
 %endif ; C
-; C: src/c/pc/input_events/InputInstall.c
+; C: src/pc/input_events/InputInstall.c
 %ifdef CBUILD
 %include "c/pc/input_events/InputInstall.inc"
 %else
@@ -337,7 +337,7 @@ pop ecx	; 6B479
 pop ebx	; 6B47A
 ret	; 6B47B
 %endif ; C
-; C: src/c/pc/input_events/InputRemove.c
+; C: src/pc/input_events/InputRemove.c
 %ifdef CBUILD
 %include "c/pc/input_events/InputRemove.inc"
 %else
@@ -365,7 +365,7 @@ pop ecx	; 6B4B8
 pop ebx	; 6B4B9
 ret	; 6B4BA
 %endif ; C
-; C: src/c/pc/input_events/EventToPointer.c
+; C: src/pc/input_events/EventToPointer.c
 %ifdef CBUILD
 %include "c/pc/input_events/EventToPointer.inc"
 %else
@@ -478,7 +478,7 @@ pop esi	; 6B5E1
 pop ecx	; 6B5E2
 ret	; 6B5E3
 %endif ; C
-; C: src/c/pc/input_events/DrawMenuBar.c
+; C: src/pc/input_events/DrawMenuBar.c
 %ifdef CBUILD
 %include "c/pc/input_events/DrawMenuBar.inc"
 %else
@@ -545,7 +545,7 @@ pop edi	; 6B67F
 pop esi	; 6B680
 ret 4	; 6B681
 %endif ; C
-; C: src/c/pc/input_events/DrawMenuDropdown.c
+; C: src/pc/input_events/DrawMenuDropdown.c
 %ifdef CBUILD
 %include "c/pc/input_events/DrawMenuDropdown.inc"
 %else
@@ -742,7 +742,7 @@ add esp, byte 14h	; 6B883
 add esp, byte 4	; 6B886
 jmp near DrawMenuDropdown_ret	; 6B889
 %endif ; C
-; C: src/c/pc/input_events/PrintMenuText.c
+; C: src/pc/input_events/PrintMenuText.c
 %ifdef CBUILD
 %include "c/pc/input_events/PrintMenuText.inc"
 %else
@@ -839,7 +839,7 @@ push eax	; 6B946
 call sub_92CD0	; 6B947
 jmp short PrintMenuTextGrey_common	; 6B94C
 %endif ; C
-; C: src/c/pc/input_events/DrawMenuItemSel.c
+; C: src/pc/input_events/DrawMenuItemSel.c
 %ifdef CBUILD
 %include "c/pc/input_events/DrawMenuItemSel.inc"
 %else
@@ -907,7 +907,7 @@ pop edi	; 6B9E6
 pop esi	; 6B9E7
 ret 8	; 6B9E8
 %endif ; C
-; C: src/c/pc/input_events/DrawMenuItemSel.c (DrawMenuItemNorm)
+; C: src/pc/input_events/DrawMenuItemSel.c (DrawMenuItemNorm)
 %ifdef CBUILD
 %include "c/pc/input_events/DrawMenuItemSel.DrawMenuItemNorm.inc"
 %else
@@ -950,7 +950,7 @@ add ebp, eax	; 6BA42
 mov eax, dword [byte esp+018h]	; 6BA44
 jmp near DrawMenuItemSel_common	; 6BA48
 %endif ; C
-; C: src/c/pc/input_events/MenuHitTest.c
+; C: src/pc/input_events/MenuHitTest.c
 %ifdef CBUILD
 %include "c/pc/input_events/MenuHitTest.inc"
 %else
