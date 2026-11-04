@@ -1,0 +1,30 @@
+; The EA memory manager. Allocating and freeing the blocks the game asks for.
+bits 32
+%include "hockey.inc"
+section s_8DCC0 progbits alloc exec nowrite align=1
+extern _nexpand_, _nfree_, _nmalloc_, _nmsize_
+global sub_8DCC0, loc_8DCC5, loc_8DCD6, loc_8DCD9
+sub_8DCC0:
+mov edx, 4000000h	; 8DCC0
+loc_8DCC5:
+mov eax, edx	; 8DCC5
+call _nmalloc_	; 8DCC7
+mov ebx, eax	; 8DCCC
+test eax, eax	; 8DCCE
+jne short loc_8DCD6	; 8DCD0
+sar edx, 1	; 8DCD2
+jmp short loc_8DCC5	; 8DCD4
+loc_8DCD6:
+jne short loc_8DCD9	; 8DCD6
+ret	; 8DCD8
+loc_8DCD9:
+mov edx, 4000000h	; 8DCD9
+call _nexpand_	; 8DCDE
+mov eax, ebx	; 8DCE3
+call _nmsize_	; 8DCE5
+mov edx, eax	; 8DCEA
+mov eax, ebx	; 8DCEC
+call _nfree_	; 8DCEE
+mov eax, edx	; 8DCF3
+ret	; 8DCF5
+db 08Bh,0C0h

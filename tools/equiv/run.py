@@ -54,10 +54,10 @@ class Trace:
 WARN = []   # warnings for the run header (pop counts that needed a fallback)
 _POP = {}
 _PROTOS = None; _SSIZE = None; _PRET = {}; _R64 = {}
-INC = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'src', 'c', 'include')
+INC = os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))), 'src', 'include')
 
 def protos():
-    """{name: [param type strings]} from src/c/include/protos.h"""
+    """{name: [param type strings]} from src/include/protos.h"""
     global _PROTOS
     if _PROTOS is None:
         txt = re.sub(r'/\*.*?\*/', ' ', open(os.path.join(INC, 'protos.h'), errors='replace').read(), flags=re.S)
@@ -69,7 +69,7 @@ def protos():
     return _PROTOS
 
 def struct_sizes():
-    """{struct name: size in bytes} from src/c/include/structs.h (packed, sum of the field sizes)"""
+    """{struct name: size in bytes} from src/include/structs.h (packed, sum of the field sizes)"""
     global _SSIZE
     if _SSIZE is None:
         _SSIZE = {}
@@ -151,7 +151,7 @@ def _pop_bytes(img, target):
 
 _FUNCS = None
 def is_func_entry(img, a):
-    """a known function address (tools/c_functions.csv) or a `push N / call __CHK` prologue"""
+    """a known function address (tools/match/c_functions.csv) or a `push N / call __CHK` prologue"""
     global _FUNCS
     if _FUNCS is None:
         import csv

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """C side of the functional-equivalence harness (FUNCTIONAL_PLAN.md, "How the check works" item 3).
 
-  obj = compile_draft('src/c/<seg>/<F>.c')        # cc.py compile path, cached by source hash in build/equiv/
+  obj = compile_draft('src/c/<module>/<F>.c')        # cc.py compile path, cached by source hash in build/equiv/
   entry, extent, code = place(img, obj, 'F')      # run.run(img, entry, extent, state, code=code)
 
 place() copies the whole _TEXT of the object to the scratch base and resolves every fixup the way the asm build does:
@@ -14,7 +14,7 @@ and hit run.py's stubs on both sides, so callee logs are comparable.
 Unsupported for now: objects with CONST/_DATA/_BSS bytes (string literals, statics); cobj refuses them."""
 import os, sys, struct, dataclasses
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
-sys.path.insert(0, os.path.join(ROOT, 'tools')); sys.path.insert(0, HERE)
+sys.path.insert(0, os.path.join(ROOT, 'tools')); import paths; sys.path.insert(0, HERE)
 import cc, cobj
 
 OUT = os.path.join(ROOT, 'build', 'equiv')

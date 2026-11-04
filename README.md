@@ -6,11 +6,11 @@
 
 ## 🚧 Current Status
 
-- McMarkis is working on the C decompilation.
+- Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
 - <!-- nhl95-readme-functional:start -->25 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
   - <!-- nhl95-readme-functional-total:start -->1002 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
-- Names come from 93G first, then 94G.
+- Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
 
@@ -22,11 +22,11 @@ Sister projects: [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis),
 
 ## Retail EXE
 
-The retail `HOCKEY.EXE` is committed at the repo root (same layout the tools expect by default):
+The retail `HOCKEY.EXE` is committed at `retail/HOCKEY.EXE`. Root `HOCKEY.EXE` is a pointer so older tool defaults still resolve:
 
 | | |
 | --- | --- |
-| File | `HOCKEY.EXE` |
+| File | `retail/HOCKEY.EXE` |
 | Size | 1,179,067 bytes |
 | SHA-1 | `3961e0eba6b0338fad1613bb534efafd9406ed4a` |
 
@@ -37,22 +37,22 @@ The retail `HOCKEY.EXE` is committed at the repo root (same layout the tools exp
 
 The segment naming queue is finished. The main work is **C matching**: start with [HANDOFF.md](HANDOFF.md) and [docs/C_MATCHING.md](docs/C_MATCHING.md) (progress in [C_PROGRESS.md](C_PROGRESS.md)). Agent standing rules: [AGENTS.md](AGENTS.md).
 
-`python3 tools/rebuild_exe.py verify` needs **Python 3 only** (the committed `HOCKEY.EXE` is enough). Full `make` needs **nasm** (2.15+) and **make**. Matched C (`CBUILD=1`) also needs **DOSBox**; the three Watcom files are already in `tools/watcom/` (see [HANDOFF.md](HANDOFF.md)). Without DOSBox, `make` uses the asm and still matches.
+`python3 tools/build/rebuild_exe.py verify` needs **Python 3 only** (the committed `HOCKEY.EXE` is enough). Full `make` needs **nasm** (2.15+) and **make**. Matched C (`CBUILD=1`) also needs **DOSBox**; the three Watcom files are already in `tools/watcom/` (see [HANDOFF.md](HANDOFF.md)). Without DOSBox, `make` uses the asm and still matches.
 
 ```
 make -j8            # or ./build.sh [path/to/HOCKEY.EXE]
 ```
 
-This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From the committed EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. Layout, editing rules and how `src/` is regenerated (`tools/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
+This assembles the 304 files in `src/` (one per segment: 198 code, 106 data), links them with `tools/build/link_src.py`, and writes `build/HOCKEY.EXE`. It ends with `MATCH` when the result is byte-identical to the retail EXE; otherwise it fails. From the committed EXE the build takes only the three third-party stubs (DOS/16M loader, DOS/4GW kernel, Watcom wstub), the LE header fields and the fixup record order. Code, data and the fixups themselves come from `src/`. Layout, editing rules and how `src/` is regenerated (`tools/build/gen_src.py`): [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 
 ## Byte-exact rebuild from the EXE's own parts
 
 Needs Python 3 only. Run from the repo root.
 
 ```
-python3 tools/rebuild_exe.py extract   # check HOCKEY.EXE sha1, split it into build/parts/
-python3 tools/rebuild_exe.py build     # rebuild build/HOCKEY.EXE from build/parts/ only
-python3 tools/rebuild_exe.py verify    # extract + build + sha1 compare (+ fixup-order experiments)
+python3 tools/build/rebuild_exe.py extract   # check HOCKEY.EXE sha1, split it into build/parts/
+python3 tools/build/rebuild_exe.py build     # rebuild build/HOCKEY.EXE from build/parts/ only
+python3 tools/build/rebuild_exe.py verify    # extract + build + sha1 compare (+ fixup-order experiments)
 ```
 
 `verify` prints `MATCH` and exits 0 when the rebuilt file equals your EXE. `extract` writes the MZ stubs, the LE header and tables as JSON, the 26,790 fixups as `le_fixups.tsv`, and the code/data slices for every segment in `segmap95pc.json` (`build/parts/cseg01/`, `build/parts/dseg02/`). `build` reads only that directory. Only the DOS/16M loader body, the DOS/4GW kernel and the wstub body stay opaque blobs. Details: [BUILD_NOTES.md](BUILD_NOTES.md).
@@ -61,10 +61,10 @@ python3 tools/rebuild_exe.py verify    # extract + build + sha1 compare (+ fixup
 
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md) is the segment map of the code and data objects, with module boundaries, Genesis counterparts and the evidence for each.
 * [segmap95pc.json](segmap95pc.json) is the same map in machine-readable form. `rebuild_exe.py` uses it to slice segments.
-* [name_map_94.csv](name_map_94.csv) maps each function to a name and source file in the 93/94 Genesis sources, with confidence and evidence. It is generated by `tools/matcher.py`; hand-traced rows live in [tools/manual_names.csv](tools/manual_names.csv) (same columns) and override the generated row at that address, so put manual edits there, not in the CSV. Without a local `FUNCTION_MAPPINGS95.md` the unmatched-row universe is every code function from the listing (`--universe funcs`, 2,577 rows; the named rows are identical).
-* `tools/struct_fieldmap.csv` and `tools/global_map.csv` map player-struct fields and globals to their Genesis names.
+* [docs/name_map.csv](docs/name_map.csv) maps each function to a name and source file in the 93/94 Genesis sources, with confidence and evidence. It is generated by `tools/names/matcher.py`; hand-traced rows live in [tools/names/manual_names.csv](tools/names/manual_names.csv) (same columns) and override the generated row at that address, so put manual edits there, not in the CSV. Without a local `FUNCTION_MAPPINGS95.md` the unmatched-row universe is every code function from the listing (`--universe funcs`, 2,577 rows; the named rows are identical).
+* `tools/names/struct_fieldmap.csv` and `tools/names/global_map.csv` map player-struct fields and globals to their Genesis names.
 
-The analysis scripts in `tools/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py`, `features.py`, `ref93_index.py`, `ref94_index.py`, `segdef.py`, `build_segmap.py`, `sem_features.py`, `sem_match.py`, `matcher.py`, `write_md.py`) regenerate the map. They also need an IDA listing `HOCKEY.EXE.lst` that you make yourself, plus the Genesis sources cloned into `ref/93`, `ref/94` and `ref/95`. Their intermediate `.pkl` caches are not committed. Run order is listed at the top of `EXE_SEGMAP95PC.md`.
+The analysis scripts in `tools/build/` and `tools/names/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py`, `features.py`, `ref93_index.py`, `ref94_index.py`, `segdef.py`, `build_segmap.py`, `sem_features.py`, `sem_match.py`, `matcher.py`, `write_md.py`) regenerate the map. They also need an IDA listing `HOCKEY.EXE.lst` that you make yourself, plus the Genesis sources cloned into `ref/93`, `ref/94` and `ref/95`. Their intermediate `.pkl` caches are not committed. Run order is listed at the top of `EXE_SEGMAP95PC.md`.
 
 ## Compiler findings
 
@@ -75,12 +75,12 @@ The analysis scripts in `tools/` (`le_parse.py`, `lst_parse.py`, `build_funcs.py
 Test harness (needs `dosbox`; `$WATCOM_ROOT` defaults to `tools/watcom`; optional full historic installs elsewhere):
 
 ```
-tools/wc10.sh ga tools/cc_tests/t1.c ""   # compile with 10.0 GA wcc386 under headless DOSBox -> build/cc/ga/ (la, 10a, 105 need ~/watcom)
-tools/sweep.sh la ""                      # compile every cc_tests file, compare with HOCKEY.EXE (tools/cmpobj.py)
-python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # library module matching
+tools/build/wc10.sh ga tools/match/cc_tests/t1.c ""   # compile with 10.0 GA wcc386 under headless DOSBox -> build/cc/ga/ (la, 10a, 105 need ~/watcom)
+tools/match/sweep.sh la ""                      # compile every cc_tests file, compare with HOCKEY.EXE (tools/match/cmpobj.py)
+python3 tools/build/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # library module matching
 ```
 
-`tools/cc_tests/targets.txt` lists each test function and the EXE address it should match. `tools/cc_tests/sweep_la.txt` has the flag-sweep results.
+`tools/match/cc_tests/targets.txt` lists each test function and the EXE address it should match. `tools/match/cc_tests/sweep_la.txt` has the flag-sweep results.
 
 ## Docs
 
@@ -90,16 +90,16 @@ python3 tools/libmatch.py $WATCOM_ROOT/w10a/WATCOM/LIB386/DOS/CLIB3R.LIB   # lib
 * [EXE_SEGMAP95PC.md](EXE_SEGMAP95PC.md): segment map
 * [docs/SKATING_AND_RINK.md](docs/SKATING_AND_RINK.md): skating physics and rink geometry vs. 93 Genesis
 * [docs/C_MATCHING.md](docs/C_MATCHING.md): C matching decompilation (wcc386 10.0 GA → OMF → spliced into the asm build), headers, workflow, compiler learnings; progress in [C_PROGRESS.md](C_PROGRESS.md)
-* [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/asm_proto.py`, `tools/gen_src.py`)
+* [docs/ASM_BUILD.md](docs/ASM_BUILD.md): the `src/` tree and `make` build, LE fixups as symbolic labels (`tools/build/fixup_labels.py`), the NASM toolchain, and the asm emitter (`tools/build/asm_proto.py`, `tools/build/gen_src.py`)
 * [docs/UNSURE.md](docs/UNSURE.md): capped drafts and what was tried
 * [docs/SESSION_LOG.md](docs/SESSION_LOG.md): archived session diary from earlier HANDOFF updates
 
 ## Segment naming (queue finished)
 
-The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**. Leftover work there is auto/data names only. [PROMPT.md](PROMPT.md) has the C-matching prompt. Tools:
-* `tools/rename_symbol.py` renames a symbol across `src/`, rebuilds (must MATCH) and records the name in the maps.
+The segment naming queue in [SEGMENT_AGENT.md](SEGMENT_AGENT.md) is **complete**. Leftover work there is auto/data names only. The first C-phase prompt is in [docs/archive/](docs/archive/README.md). Tools:
+* `tools/names/rename_symbol.py` renames a symbol across `src/`, rebuilds (must MATCH) and records the name in the maps.
 * `tools/auto_names.py` lists what is still unnamed in a segment.
-* `tools/update_symbols.py` regenerates `src/inc/symbols.inc`.
+* `tools/build/update_symbols.py` regenerates `src/inc/symbols.inc`.
 
 ## AI assistance
 

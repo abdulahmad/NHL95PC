@@ -1,0 +1,25 @@
+; Watcom C runtime. Stack checks and the library routines the compiled code calls.
+bits 32
+%include "hockey.inc"
+section s_B00E4 progbits alloc exec nowrite align=1
+global strrchr_, loc_B00EA, loc_B00F0
+strrchr_:
+push ebx	; B00E4
+push ecx	; B00E5
+mov cl, dl	; B00E6
+xor ebx, ebx	; B00E8
+loc_B00EA:
+cmp cl, byte [eax]	; B00EA
+jne short loc_B00F0	; B00EC
+mov ebx, eax	; B00EE
+loc_B00F0:
+mov edx, eax	; B00F0
+mov ch, byte [edx]	; B00F2
+inc eax	; B00F4
+test ch, ch	; B00F5
+jne short loc_B00EA	; B00F7
+mov eax, ebx	; B00F9
+pop ecx	; B00FB
+pop ebx	; B00FC
+ret	; B00FD
+db 00h,00h

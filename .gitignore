@@ -1,9 +1,10 @@
-# --- Game binary: retail HOCKEY.EXE is committed at the repo root ---
+# --- Game binary: retail/HOCKEY.EXE is the committed MATCH target; root HOCKEY.EXE is a pointer ---
 *.EXE
 *.exe
 *.EXP
 *.exp
 !HOCKEY.EXE
+!retail/HOCKEY.EXE
 HOCKEY.EXE.lst
 *.lst
 FUNCTION_MAPPINGS95.md
@@ -18,8 +19,11 @@ output/
 
 # --- Intermediate analysis caches (derived from the EXE / IDA listing / Genesis sources) ---
 tools/*.pkl
+tools/**/*.pkl
 tools/le.json
+tools/build/le.json
 tools/name_map_94_before.csv
+tools/names/name_map_94_before.csv
 tools/overview.txt
 
 # --- Read-only copies of the Genesis sources (clone NHL9xGenesis repos instead) ---
@@ -61,3 +65,4 @@ tools/fm95_check.json
 # assembler error files (contain disassembly)
 *.err
 ref
+docs/xmatch/

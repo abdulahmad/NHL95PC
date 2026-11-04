@@ -4,7 +4,7 @@
   img = load('HOCKEY.EXE')      # objects flat at their linear bases, internal fixups applied
   img.read(lin, n); img.fixups; img.labels(); img.map_into(uc)
 
-Fixups: tools/le_parse.py already decodes every record to a linear source and target. Handled kinds:
+Fixups: tools/build/le_parse.py already decodes every record to a linear source and target. Handled kinds:
   7 (32-bit offset): dword = target object base + target offset. This is the only kind in HOCKEY.EXE
      (26809 records, all internal, none import).
   5 (16-bit offset): low word of the target address.  2 (16-bit selector): FAKE_SEL.
@@ -18,7 +18,7 @@ cdiff.load_labels needs `make` output (build/obj), which may be absent, so it is
 """
 import os, re, sys, glob
 ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-sys.path.insert(0, os.path.join(ROOT, 'tools'))
+sys.path.insert(0, os.path.join(ROOT, 'tools')); import paths
 import le_parse   # already decodes fixups to linear form, so rebuild_exe's parse_fixup_records is not needed
 
 FAKE_SEL = 0x0008
@@ -55,7 +55,9 @@ class Image:
             for ln in open(os.path.join(ROOT, 'src/inc/symbols.inc')):
                 m = re.match(r';\s+([0-9A-F]+)\s+(\S+)\s+\S+\.asm\s+\d+', ln)
                 if m: lab[m.group(2)] = int(m.group(1), 16)
-            for f in sorted(glob.glob(os.path.join(ROOT, 'src/cseg01/*.asm'))):
+            sys.path.insert(0, os.path.join(ROOT, 'tools')); import paths
+            import cc
+            for f in cc.iter_asm():
                 prev = None
                 for ln in open(f, errors='replace'):
                     m = re.match(r'[^;\s]+[^;]*\t; ([0-9A-F]+)\s*$', ln)
@@ -66,8 +68,17 @@ class Image:
             self._labels = lab
         return self._labels
 
-def load(exe='HOCKEY.EXE'):
-    if not os.path.isabs(exe) and not os.path.exists(exe): exe = os.path.join(ROOT, exe)
+def load(exe=None):
+    if exe is None:
+        for rel in ('retail/HOCKEY.EXE', 'HOCKEY.EXE'):
+            p = os.path.join(ROOT, rel)
+            if os.path.isfile(p):
+                exe = p
+                break
+        else:
+            exe = os.path.join(ROOT, 'retail/HOCKEY.EXE')
+    elif not os.path.isabs(exe) and not os.path.exists(exe):
+        exe = os.path.join(ROOT, exe)
     info, fx, d = le_parse.parse(exe)
     objs = []
     for o in info['objects']:

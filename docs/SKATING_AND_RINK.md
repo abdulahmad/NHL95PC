@@ -2,7 +2,7 @@
 
 A short summary of what is known so far about skating physics and rink geometry in NHL 95 PC
 `HOCKEY.EXE`, compared with NHLPA 93 Genesis (93G). Addresses are linear addresses in the LE code
-object (cseg01, base `0x10000`), the same ones used in `EXE_SEGMAP95PC.md` and `name_map_94.csv`.
+object (cseg01, base `0x10000`), the same ones used in `EXE_SEGMAP95PC.md` and `docs/name_map.csv`.
 
 ## Skating code
 

@@ -2,6 +2,26 @@
 
 This file is the learning edge of the repo. It holds one line per confirmed lesson: a C idiom that changes behaviour, a harness blind spot, or a process fact that was checked. Add lines in this format, newest last: `- YYYY-MM-DD <function or area>: <rule>. (<PR or evidence>)`. Read it before every unit. Any tool (Claude or Cursor) adds to it, in the same PR as the fix that confirmed the lesson.
 
+## Who decides what (all games)
+
+| Category | Decided by |
+|---|---|
+| Name of a routine several games share | the earliest game that has it (92G is the root); a fix goes to the earliest repo first, then down the lineage |
+| Name of a feature new in year N | that year's Genesis game (94G for 94S and 94PC, 95G for 95S and 95PC) |
+| Name of a platform-only job | the earlier repo on that platform (93S for 94S, 94PC for 95PC), else what the code does |
+| Same name, different job | the earlier meaning keeps the name |
+| Top folder or file | the same-year Genesis file |
+| RAM order | the merged order (92G, 93G, 94G, 93S, 94S, then 95G, 96G) |
+| Data, assets, banks | the earlier repo on the same platform |
+| Order inside a file | ROM order (the report re-sorts for display) |
+| History | `docs/name_map.csv` only, never source comments |
+
+## This repo
+
+- Names, in order: the 94G name when the body matches; the 94S name for code shared with SNES 94; the 95G name for 95 features (season, trade, create player, awards, the 95 menus); 95PC's own name for DOS-only jobs.
+- Files: engine, front and pc code is in `src/engine/<mod>/`, `src/front/<mod>/` and `src/pc/<mod>/` (asm + C). C headers are `src/include/` (8.3 names). Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus top-level cdstream/cmv_player/zonemgr); numbered slices stay separate. Link order is `src/segments.txt`. Data is `src/data/` grouped by owner, no `NNN_ADDR` (BSS is `src/data/ram.asm`). Name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged). Tools are `tools/{build,match,equiv,names}` plus `tools/watcom`.
+- One owner (Abdul). No lanes, claims or board; the lane-round files are in docs/archive/.
+
 ## Functional track
 
 - 2026-11-02 SeriesLength: when the original returns an unset local (whatever a register held on entry), the entry registers carry unique tags so it shows. If the draft returns the same tag in every such case it behaves the same: PASS with the note kept in `first_diff`. If not, FAIL. (step 5 pilot, step 6 review)
@@ -13,7 +33,7 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-02 harness: a draft defined as `void F(` is not compared on ret eax (scratch register); everything else still is. When either side ends on `insn limit` (cap 200000 per side) only the shorter writes and calls list must be a prefix of the longer, whatever the other side ended with. (loop1 false alarms: shotdiradj, SetRosterTeamMenus, DrawListItems)
 - 2026-11-02 harness: an unmapped read or write outside page 0 to 0xFFF, the image, the stack, the ARG buffer and the scratch C region maps a 4 KB page filled from (case seed, page) only, up to 256 pages per run; null-page accesses stay faults. A stubbed callee given a stack pointer writes 16 seeded bytes there. (loop1: wild pointers, changeplayer)
 - 2026-11-02 harness: a `call` from the function under test to another public function of the same C object is stubbed and logged like an EXE callee, with the target reported as that function's EXE label address; jumps inside the object (shared tails) still run inline. Without this the C side ran the sibling inline and the call logs differed. (advisor: DrawListItems, SelectRosterTeam)
-- 2026-11-02 harness: on the original side a `jmp` out of the extent to a target that is not a function entry (no `push N / call __CHK` prologue, not in tools/c_functions.csv) is a shared epilogue and is followed until its `ret`; only a jmp to a real function entry is a tail call. (advisor: shotdiradj `jmp dopass_ret6` gave esp_delta -0x1c vs 0)
+- 2026-11-02 harness: on the original side a `jmp` out of the extent to a target that is not a function entry (no `push N / call __CHK` prologue, not in tools/match/c_functions.csv) is a shared epilogue and is followed until its `ret`; only a jmp to a real function entry is a tail call. (advisor: shotdiradj `jmp dopass_ret6` gave esp_delta -0x1c vs 0)
 - 2026-11-02 SimPlayoffRound1: a FAIL caused only by an out-of-range array index (wins[g[2]]++ with a team byte over 19h) that writes onto the frame or parameter homes is an input artefact, not a behaviour difference: frame layout is register shape. Do not "fix" it in the C (the tried fix was a tie-breaker copy, which AGENTS.md forbids); keep index-like inputs in range instead. (equiv-fixer, reverted)
 - 2026-11-02 harness: `run._pop_bytes` returned 0 for SimulateGame (452C5), whose `ret 0Ch` is far into the body, so every call to it left esp 12 low on both sides and later frame reads were garbage. A callee's pop count must come from all of its `ret` instructions (or its prototype), never from a short scan. (equiv-fixer)
 - 2026-11-02 harness: `run._pop_bytes` follows the callee's control flow (every reachable instruction, jumps followed, calls not entered, cap 20000); if its `ret N` values disagree or none is found it uses the stack args of the prototype in protos.h, else 0, and the warning is printed in the run header. SimulateGame now gives 12 (it was 0). (advisor)
@@ -21,7 +41,7 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-02 harness: after the --cases seeded cases the check runs --cases/2 more, each a mutation of a corpus case that reached new original instructions (bytes near ARG offsets the original read, a patched global, a callee script return, an arg register or stack arg), the same state on both sides; coverage after the seeded cases and after mutation is printed. A planted bug must still FAIL inside the seeded cases. (advisor)
 - 2026-11-02 harness: page 0x0000-0x0FFF is lazily seeded like other unmapped pages (reads and writes, same on both sides), so small field offsets from a null base do not end the run; it is recorded as trap kind `null page`, counted as info only (not review, not a stopping trap). (advisor)
 - 2026-11-02 harness: run.py keeps one Uc per side for a whole check (`run.Runner`); between cases it restores the CPU context, the pages the case wrote (saved before the first write by the write hook) and unmaps lazy pages, so verdicts equal those of a fresh Uc per case but cases are several times cheaper. (advisor)
-- 2026-11-02 harness: a code address in any compared value (writes, call args, regs, ret) is mapped to the EXE: a C-side scratch address becomes its public function's EXE label plus the offset, and an address inside a function of tools/c_functions.csv (not its entry) renders as ('CODE', function), so both sides compare by function and the offset is ignored (noted in info). (round 3 FAILs: RunMenu, RunTeamPickMenu, ReplaySaveHilight, LeagueTeamSelect)
+- 2026-11-02 harness: a code address in any compared value (writes, call args, regs, ret) is mapped to the EXE: a C-side scratch address becomes its public function's EXE label plus the offset, and an address inside a function of tools/match/c_functions.csv (not its entry) renders as ('CODE', function), so both sides compare by function and the offset is ignored (noted in info). (round 3 FAILs: RunMenu, RunTeamPickMenu, ReplaySaveHilight, LeagueTeamSelect)
 - 2026-11-02 harness: a stack address in a written value, a register or the return renders as 'STK' (local layout is register shape); writes whose address is in the caller frame or args stay compared by address. (round 3 FAIL: SportsDesk)
 - 2026-11-02 harness: a FAIL on a function whose original does not start with `push N / call __CHK` (MenuSaveTheseLines, MenuSaveDefaultLines start with db bytes, an entry mid-function) is reported NEEDS-REVIEW "entry is not a C prologue", since esp_delta and extent are not meaningful there. (round 3)
 - 2026-11-02 MenuSaveTheseLines, MenuSaveDefaultLines: the label (the C prologue) sits before the c_functions.csv address (db bytes, entry piece), so the extent now starts at the label and spans label to csv end; with the csv start it cut the shared tail and gave esp_delta -0x320 vs 0x18. (round 3 FAILs)
@@ -36,3 +56,17 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-02 harness: `check.saved_regs` counts every `push reg` (call arguments, parameter homes) as saving the register, so `_cmp_regs` compares ebx/ecx/edx at exit when the original writes them freely and never pops them (NetCollide, SelectHilight, CalendarScreen "edx differs"). Look for a matching `pop` in the original before changing the C. (equiv-fixer; needs a harness change)
 - 2026-11-02 harness: `Checker.codeval` maps a C-side scratch address as the public's EXE label plus offset, so a draft longer than its EXE function renders return addresses near its end as the next function (RunTeamPickMenu vs RunPlayerPickMenu). Compare the sizes before chasing a "CODE function" diff. (equiv-fixer; needs a harness change)
 - 2026-11-02 ReplayStep: `a = b = x` stores b first, then a; when the original stores two globals in a set order, write the chain with the first-stored one innermost-right (`camx = word_E9FB0 = x` stores word_E9FB0 first). Compare store addresses in the first writes[] diff. (equiv-fixer)
+
+## Learned
+- 2026-11-04 contributing: CONTRIBUTING.md must not contradict History: lineage lives only in the name history file, never in source comments. (CONTRIBUTING rewrite vs RULES History row)
+- 2026-11-04 F3: 95G names for 95 features apply only when the body matches. The DOS season/trade/create/awards screens share strings and labels, not bodies; they keep the PC names. (xmatch95 on season95/trade95/create95/awards95; naming_recommendation_and_95g_pass.md)
+- 2026-11-04 layout: engine C and asm live in `src/engine/<mod>/`; keep `%include "c/engine/..."` so fragments stay under `build/c/engine/`. Do not rename overlay→hud in the same unit as a move. (CC-68 colocate engine)
+- 2026-11-04 layout: front C and asm live in `src/front/<mod>/`; keep `%include "c/front/..."` so fragments stay under `build/c/front/`. (CC-68 colocate front)
+- 2026-11-04 layout: pc C and asm live in `src/pc/<mod>/`; keep `%include "c/pc/..."` so fragments stay under `build/c/pc/`. (CC-68 colocate pc)
+- 2026-11-04 layout: lib slices group by family under `src/lib/` without merging numbered files and without stripping prefixes in the same unit. (CC-68 group lib)
+- 2026-11-04 layout: data files drop `NNN_ADDR` and live under `src/data/<owner>/`; season95-tagged slices go with front; watcom_stack is `src/data/ram.asm`. Do not fold data slices in the same unit. (CC-68 rename dseg02)
+- 2026-11-04 layout: `engine/overlay` is the in-game HUD, renamed to `engine/hud` in its own unit. `%include "c/engine/hud/..."` follows the folder so fragments live under `build/c/engine/hud/`. Function names (`CloseTextOverlay`, …) stay. (CC-68 overlay→hud)
+- 2026-11-04 layout: name lineage is `docs/name_map.csv` (moved from `name_map_94.csv`; columns unchanged). (CC-68 leftover)
+- 2026-11-04 layout: C headers live in `src/include/` (8.3 names; DOS INCLUDE). Watcom still sees them as `C:\\INC`. (CC-68 leftover)
+- 2026-11-04 layout: the MATCH target is `retail/HOCKEY.EXE`; root `HOCKEY.EXE` is a pointer so tools that default to the repo root still find it. Do not add a second EXE. (CC-68 leftover)
+- 2026-11-04 layout: tools live under `tools/{build,match,equiv,names}` plus `tools/watcom` (unchanged). Shared ROOT is `tools/paths.py`. MATCH is `python3 tools/match/cc.py` and `tools/build/{rebuild_exe,link_src}.py`. Equiv stays `tools/equiv/check.py`. (CC-68 leftover)
