@@ -8,8 +8,8 @@
 
 - Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
-- <!-- nhl95-readme-functional:start -->25 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
-  - <!-- nhl95-readme-functional-total:start -->1002 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
+- <!-- nhl95-readme-functional:start -->23 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+  - <!-- nhl95-readme-functional-total:start -->1000 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
