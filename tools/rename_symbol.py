@@ -20,10 +20,10 @@ What it does
      function keeps the asm label. OLD.local references follow the rename (NEW.local).
      NEW starting with '.' makes OLD a NASM local label of the global label above it: references in that scope
      become .NEW, all others parent.NEW; it leaves the global list unless another file uses it.
-  4. When OLD is the IDA name of the address (name_map_94.csv ida_name, not an auto name) the definition line gets
+  4. When OLD is the IDA name of the address (docs/name_map.csv ida_name, not an auto name) the definition line gets
      ';IDA: OLD', as in the Genesis repos.
   5. Records the name so the maps stay in step with src/:
-       function entry in cseg01 (sub_ name, or a name_map_94.csv row) -> tools/manual_names.csv + name_map_94.csv
+       function entry in cseg01 (sub_ name, or a docs/name_map.csv row) -> tools/manual_names.csv + docs/name_map.csv
                                                                           (the same row matcher.py would merge)
        label in dseg02 (data / BSS)                                    -> tools/global_map.csv
        equate in src/inc/structs.inc                                   -> tools/struct_fieldmap.csv (genesis_field)
@@ -130,7 +130,7 @@ class Session:
         if os.path.isdir(os.path.join(ROOT, 'build/obj')):
             try: self.addr = US.addresses(os.path.join(ROOT, 'build/obj'), self.segs)
             except Exception as e: print('warning: no addresses from build/obj (%s)' % e)
-        self.nm_path = os.path.join(ROOT, 'name_map_94.csv')
+        self.nm_path = os.path.join(ROOT, 'docs/name_map.csv')
         self.csvs = {}
         self.log = []
 
@@ -199,7 +199,7 @@ class Session:
         if addr is not None: self.addr[full] = self.addr.pop(old)
         for n in [n for n in self.addr if n.startswith(old + '.')]: self.addr[full + n[len(old):]] = self.addr.pop(n)
         # ;IDA: note on the definition when OLD is the listing's name for this address
-        nm_cols, nm_rows, _ = self.table('name_map_94.csv')
+        nm_cols, nm_rows, _ = self.table('docs/name_map.csv')
         nm_row = next((r for r in nm_rows if addr is not None and int(r['pc_address'], 16) == addr), None)
         if nm_row and ident(nm_row['ida_name']) == old and not AUTO.match(old) and not is_equ:
             t = texts[deff].split('\n')
@@ -236,7 +236,7 @@ class Session:
                 self.csvs[os.path.join(ROOT, 'tools/manual_names.csv')][2] = True
                 nrow = {c: mr.get(c, '') for c in nm_cols}      # the row matcher.py would merge
                 nm_rows[:] = sorted([r for r in nm_rows if int(r['pc_address'], 16) != addr] + [nrow], key=lambda r: r['pc_address'])
-                self.csvs[self.nm_path][2] = True; rec = 'tools/manual_names.csv, name_map_94.csv'
+                self.csvs[self.nm_path][2] = True; rec = 'tools/manual_names.csv, docs/name_map.csv'
             elif seg and seg['obj'] == 2:
                 cols, rows, _ = self.table('tools/global_map.csv')
                 gr = next((r for r in rows if r['genesis_symbol'] == old and int(r['pc_address'], 16) == addr), None)

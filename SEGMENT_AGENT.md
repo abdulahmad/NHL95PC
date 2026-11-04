@@ -18,7 +18,7 @@ The segment boundaries come from `segmap95pc.json` (`tools/segdef.py`, `EXE_SEGM
 - Do not disassemble `HOCKEY.EXE`. Do not write a disassembler. Do not run `tools/gen_src.py` on `src/`: it regenerates the tree and throws away every name and comment (it refuses without `--force`).
 - Reference EXE: the retail `HOCKEY.EXE` committed at the repo root (sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`). `make` checks every build against it.
 - Name evidence:
-  - `name_map_94.csv`: one row per function with the proposed Genesis name, source game and file, confidence and evidence. Filter on the `segment` column.
+  - `docs/name_map.csv`: one row per function with the proposed Genesis name, source game and file, confidence and evidence. Filter on the `segment` column.
   - `tools/manual_names.csv`: hand-traced rows. They override the generated ones.
   - `EXE_SEGMAP95PC.md` and `segmap95pc.json`: the segment notes and Genesis counterparts.
   - `tools/struct_fieldmap.csv`: player structure fields.
@@ -61,7 +61,7 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 - The `[reg+NNh]` list (address and operand, not the ebp/esp frame) need not reach 0. Name a field only when the evidence is there; say what is left in the row.
 - `python3 tools/rename_symbol.py OLD NEW --evidence "..." [--source-game 93G --source-file logic93_5.asm --file94 logic94.asm]` renames one symbol everywhere:
   - It changes the definition, every use in every file, the global and extern lists, and comments (never an `;IDA:` note).
-  - It records the name: a function goes to `tools/manual_names.csv` and `name_map_94.csv`, a data or BSS label to `tools/global_map.csv`, a `structs.inc` field to `tools/struct_fieldmap.csv`.
+  - It records the name: a function goes to `tools/manual_names.csv` and `docs/name_map.csv`, a data or BSS label to `tools/global_map.csv`, a `structs.inc` field to `tools/struct_fieldmap.csv`.
   - It refuses names nasm reads as instructions or registers, and names already defined (case differences are a warning).
   - It rebuilds and requires MATCH. On failure it restores every file.
   - When the old name is the listing's name for the address, it adds `;IDA: <name>` to the definition.
@@ -76,7 +76,7 @@ After the segment's last change, also run `python3 tools/update_symbols.py --che
 
 1. Take the current row. Run `make` (MATCH) and `python3 tools/auto_names.py <module>`.
 2. For each function (`sub_` or already named), find the Genesis counterpart:
-   - Read the `name_map_94.csv` row (source game, file, evidence and confidence: `low` means unconfirmed).
+   - Read the `docs/name_map.csv` row (source game, file, evidence and confidence: `low` means unconfirmed).
    - Open that routine in NHLPA93Genesis (or 94G; not 95G for now).
    - Line up the instruction sequences by:
      - the calls (callees with known names)

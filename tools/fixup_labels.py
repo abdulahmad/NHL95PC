@@ -3,7 +3,7 @@
 
 Inputs (all derived from your own HOCKEY.EXE; nothing here is committed):
   build/parts/            from `rebuild_exe.py extract` (segment slices, le_fixups.tsv, manifest.json)
-  segmap95pc.json, name_map_94.csv, tools/global_map.csv (committed)
+  segmap95pc.json, docs/name_map.csv, tools/global_map.csv (committed)
   tools/funcs.pkl, tools/lst_index.pkl (optional, from the IDA listing: extra function starts, data item extents,
                           and an instruction-boundary cross-check). The tool works without them.
 
@@ -93,7 +93,7 @@ def analyse(parts=None, use_listing=True, verbose=False):
 
     # ---- names
     names = {}; aliases = defaultdict(list); fstarts = set(); nm_src = {}
-    for r in csv.DictReader(open(os.path.join(ROOT, 'name_map_94.csv'))):
+    for r in csv.DictReader(open(os.path.join(ROOT, 'docs/name_map.csv'))):
         a = int(r['pc_address'], 16)
         if CB <= a < CE and r['method'] != 'data': fstarts.add(a)
         n = r['proposed_name'] or ('' if re.match(r'(sub|nullsub|j_sub|loc)_[0-9A-F]+$', r['ida_name']) else r['ida_name'])

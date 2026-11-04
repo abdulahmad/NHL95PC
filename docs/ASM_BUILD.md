@@ -66,7 +66,7 @@ python3 tools/asm_proto.py --all --exe-check         # every segment, then rebui
 python3 tools/asm_proto.py --eval --all              # nasm vs OW wasm vs JWasm encoding comparison -> build/asm/eval.json
 ```
 Add `--no-listing` to either tool to ignore `tools/funcs.pkl` / `tools/lst_index.pkl` (then only the EXE parts plus
-the committed `segmap95pc.json`, `name_map_94.csv` and `tools/global_map.csv` are used). Requirements: `nasm` (2.16),
+the committed `segmap95pc.json`, `docs/name_map.csv` and `tools/global_map.csv` are used). Requirements: `nasm` (2.16),
 `pip install iced-x86`. For `--eval`: OW 2.0 `wasm` (`$WASM`, default `~/watcom/ow2/binl64/wasm`) and JWasm 2.21
 (`$JWASM`). JWasm builds from github.com/Baron-von-Riedesel/JWasm with `make -f GccUnix.mak`. UASM master does not
 build on Linux right now (missing `direct.h`, old-style C), so it was not evaluated. It is a JWasm fork with the same
@@ -74,10 +74,10 @@ MASM syntax limits.
 
 ## 1. Fixup targets as labels (`tools/fixup_labels.py`)
 
-Inputs: `build/parts` (the segment slices + `le_fixups.tsv`), `segmap95pc.json`, `name_map_94.csv`,
+Inputs: `build/parts` (the segment slices + `le_fixups.tsv`), `segmap95pc.json`, `docs/name_map.csv`,
 `tools/global_map.csv`, and optionally `tools/funcs.pkl` / `tools/lst_index.pkl`.
 
-* **Symbol per fixup target.** The name comes from `name_map_94.csv` (proposed name, else a non-`sub_` IDA name) or
+* **Symbol per fixup target.** The name comes from `docs/name_map.csv` (proposed name, else a non-`sub_` IDA name) or
   `global_map.csv`, made assembler-safe and unique. Otherwise it is an auto name keyed by linear address:
   `sub_` (function entry), `loc_` (inside a function), `jpt_` (switch table), `off_` (pointer table), `asc_`
   (string referenced as an immediate), `dword_`/`word_`/`byte_`/`qword_`/`tbyte_` (size of the memory operands that

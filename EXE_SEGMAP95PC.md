@@ -374,7 +374,7 @@ Rule used: Watcom wlink keeps each object file contiguous and a function (incl. 
 
 Data counterparts: C1B40 PenaltyList (setup94) names (penalty name strings Roughing..Holding.. match 94 PenaltyList text); C5951 Credits / CreditsList (teamdata94) (shared credit names (Jim Simmons, Scott Orr, Chip Lange, Steve Babineau)); C053C teamdata94 team city names (all 26 team cities incl. ANAHEIM/FLORIDA (94 teams)); C9161 asstab (93G hockey93_11 / 94G setup94) (player-assignment function table, 47 entries; first 29 = 93G asstab order, next 7 = 94G additions); C9100 StanleyCupTimer (93G ram93) = RNGseed (94G ram94) (seed used by randomd0 port (LCG E62D/BB40))
 
-## 7. Name map (`name_map_94.csv`)
+## 7. Name map (`docs/name_map.csv`)
 
 Rows: 1472. By source game / confidence:
 
@@ -476,7 +476,7 @@ Hard areas: engine_display (VGA rendering, 1 match), engine_sound_iface (EACSNDF
 
 * EXE_SEGMAP95PC.md (this file)
 * segmap95pc.json
-* name_map_94.csv
+* docs/name_map.csv
 * tools/*.py (le_parse, lst_parse, build_funcs, features, region, ref94_index, ref93_index, segdef, build_segmap, matcher, write_md)
 * tools/le.json, lst_index.pkl, funcs.pkl, features.pkl, ref93.pkl, ref94.pkl, segs.pkl, matcher_stats.json
 * ref/92, ref/93, ref/94, ref/95: read-only local copies of the Genesis sources used (not committed; clone them from the NHL9xGenesis repos)

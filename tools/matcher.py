@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Produce name_map_94.csv: evidence-based NHL94 name mapping.
+"""Produce docs/name_map.csv: evidence-based NHL94 name mapping.
 Optional: if a local FUNCTION_MAPPINGS95.md is present (it is not in the repo), its claims are fact-checked
 against the listing and written to tools/fm95_check.json (gitignored); its function addresses without a Genesis
 match are also listed in the CSV as unmatched rows. The CSV itself has no FUNCTION_MAPPINGS95 columns.
@@ -9,14 +9,14 @@ A manual row with method 'manual-reject' and an empty proposed_name withdraws an
 low-confidence name that a manual trace placed at another address); duplicate proposed names are reported.
 Address universe for the 'unmatched' rows: FUNCTION_MAPPINGS95.md when present (default --universe auto),
 otherwise every code function in tools/funcs.pkl (IDA procs + synthetic code functions from build_funcs.py).
-Run after build_segmap.py.  Writes name_map_94.csv and tools/matcher_stats.json
-  python3 tools/matcher.py [--universe auto|fm95|funcs] [--out name_map_94.csv]"""
+Run after build_segmap.py.  Writes docs/name_map.csv and tools/matcher_stats.json
+  python3 tools/matcher.py [--universe auto|fm95|funcs] [--out docs/name_map.csv]"""
 import os, re, csv, json, pickle, bisect, argparse, sys
 from collections import Counter
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 AP = argparse.ArgumentParser()
 AP.add_argument('--universe', choices=('auto', 'fm95', 'funcs'), default='auto')
-AP.add_argument('--out', default='name_map_94.csv')
+AP.add_argument('--out', default='docs/name_map.csv')
 AP.add_argument('--manual', default='tools/manual_names.csv')
 ARGS = AP.parse_args()
 FM95 = 'FUNCTION_MAPPINGS95.md'

@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
-"""Write EXE_SEGMAP95PC.md from segmap95pc.json + tools/matcher_stats.json + name_map_94.csv (run last)."""
+"""Write EXE_SEGMAP95PC.md from segmap95pc.json + tools/matcher_stats.json + docs/name_map.csv (run last)."""
 import os, json, csv, collections
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
 J = json.load(open('segmap95pc.json')); ST = json.load(open('tools/matcher_stats.json'))
-rows = list(csv.DictReader(open('name_map_94.csv')))
+rows = list(csv.DictReader(open('docs/name_map.csv')))
 G93 = {'engine_init': '93G hockey93_01 Begin/init (role)', 'engine_player_logic': '93G logic93_2..5 assignments (asstab slots) + 94G onetimer/breakaway/goalie additions',
        'engine_physics_ai': '93G hockey93_05 puck collisions / logic93 (role)', 'engine_sound_iface': '93G sound93 / middle93_1 sfx triggers (role)',
        'engine_core': '93G hockey93_02 updateplayers (asstab dispatch); logic93_5 SetSPA/GetHot',
@@ -86,7 +86,7 @@ for t in [
     P('* ' + t)
 segtable(J['dseg02'], '\n## 6. dseg02 segments (%d, tile %X-%X exactly; owner = majority group of referencing code)\n' % (len(J['dseg02']), J['objects'][1]['base'], J['objects'][1]['base'] + J['objects'][1]['virtual_size']))
 P('\nData counterparts: ' + '; '.join('%s %s (%s)' % (d['addr'], d['name'], d['evidence']) for d in J['data_counterparts_94']) + '\n')
-P('## 7. Name map (`name_map_94.csv`)\n')
+P('## 7. Name map (`docs/name_map.csv`)\n')
 c = collections.Counter((r['source_game'], r['confidence']) for r in rows)
 P('Rows: %d. By source game / confidence:\n' % len(rows))
 for k, v in sorted(c.items()): P('* %s / %s: %d' % (k[0], k[1], v))
@@ -137,7 +137,7 @@ for t in ['Front-end module boundaries (0x10010-0x47C31, 0x6B093-0x8BAAF) follow
           'The 239 FLIRT-collapsed functions have no body in the .lst; a bit-perfect rebuild needs them re-disassembled (or linked from the same Watcom 9.x/10.0 clib version).']:
     P('* ' + t)
 P('\n## 10. Outputs\n')
-for t in ['EXE_SEGMAP95PC.md (this file)', 'segmap95pc.json', 'name_map_94.csv', 'tools/*.py (le_parse, lst_parse, build_funcs, features, region, ref94_index, ref93_index, segdef, build_segmap, matcher, write_md)', 'tools/le.json, lst_index.pkl, funcs.pkl, features.pkl, ref93.pkl, ref94.pkl, segs.pkl, matcher_stats.json', 'ref/92, ref/93, ref/94, ref/95: read-only local copies of the Genesis sources used (not committed; clone them from the NHL9xGenesis repos)']:
+for t in ['EXE_SEGMAP95PC.md (this file)', 'segmap95pc.json', 'docs/name_map.csv', 'tools/*.py (le_parse, lst_parse, build_funcs, features, region, ref94_index, ref93_index, segdef, build_segmap, matcher, write_md)', 'tools/le.json, lst_index.pkl, funcs.pkl, features.pkl, ref93.pkl, ref94.pkl, segs.pkl, matcher_stats.json', 'ref/92, ref/93, ref/94, ref/95: read-only local copies of the Genesis sources used (not committed; clone them from the NHL9xGenesis repos)']:
     P('* ' + t)
 open('EXE_SEGMAP95PC.md', 'w').write('\n'.join(L) + '\n')
 print('wrote', len(L), 'lines')

@@ -5,7 +5,7 @@
 
 Uses the same emitter as tools/asm_proto.py: every segment of segmap95pc.json (code, initialised data and BSS)
 becomes src/<object>/<NNN>_<ADDR>_<module>.asm, one NASM section s_<ADDR> per file, with symbolic labels for
-every fixup target / branch target / function entry, names from name_map_94.csv + tools/global_map.csv, and
+every fixup target / branch target / function entry, names from docs/name_map.csv + tools/global_map.csv, and
 per-element fallbacks (LD macro, db) wherever nasm would pick a different encoding. Each file is assembled and
 checked against the EXE (bytes + fixup set) before it is written to src/.
 Also writes

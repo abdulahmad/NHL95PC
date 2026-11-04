@@ -189,7 +189,7 @@ def main():
     pc = pc_funcs()
     pc_funcs_names = list(pc)
     if a.pcnew:
-        keep = {r['proposed_name'] for r in csv.DictReader(open(os.path.join(ROOT, 'name_map_94.csv')))
+        keep = {r['proposed_name'] for r in csv.DictReader(open(os.path.join(ROOT, 'docs/name_map.csv')))
                 if r['source_game'] == 'PC-new'}
         pc = {n: p for n, p in pc.items() if n in keep or AUTO.match(n)}
     df = collections.Counter()

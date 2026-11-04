@@ -123,9 +123,9 @@ def functions(lines, fentry):
     return [(LABEL.match(lines[s]).group(1), s, (starts[k + 1] if k + 1 < len(starts) else len(lines))) for k, s in enumerate(starts)]
 
 def function_entries(text):
-    """function entry labels: sub_ names plus every label name_map_94.csv lists as a function"""
+    """function entry labels: sub_ names plus every label docs/name_map.csv lists as a function"""
     import csv
-    nm = {r['pc_address'].lstrip('0') for r in csv.DictReader(open(os.path.join(ROOT, 'name_map_94.csv'))) if r['method'] != 'data'}
+    nm = {r['pc_address'].lstrip('0') for r in csv.DictReader(open(os.path.join(ROOT, 'docs/name_map.csv'))) if r['method'] != 'data'}
     lines = text.split('\n'); out = set()
     for i, l in enumerate(lines):
         m = LABEL.match(l)
