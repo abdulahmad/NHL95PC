@@ -2,8 +2,8 @@
 
 ## Now
 
-- Stage / unit: CC-68 leftovers **done** — **`docs/name_map.csv`**, **C headers in `src/include/`**, **`retail/HOCKEY.EXE`** (root `HOCKEY.EXE` is a pointer), **tools split** `tools/{build,match,equiv,names}` plus `tools/watcom`. Game modules live in `src/{engine,front,pc}/<mod>/`. Lib slices are in `src/lib/{watcom,dos4gw,ea,sound,input,video}/` (plus cdstream/cmv_player/zonemgr). Data is `src/data/` (no `NNN_ADDR`; BSS is `ram.asm`). In-game HUD is `src/engine/hud/`.
-- Branch: `claude/project-thread-ggw7zu`
+- Stage / unit: leftover recut — `docs/name_map.csv` `94_source_file` for NextPathPoint / StartShootoutPath is `shootoutpath94.asm` (94G leftover recut). 95PC modules stay job-cut.
+- Branch: `cursor/leftover-recut-f6fc`
 - Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (tools split). SHA-1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`. `python3 tools/equiv/check.py` cached PASS (`puckfaceoff2`); `tools/equiv/image.py --selftest` ALL PASS.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).

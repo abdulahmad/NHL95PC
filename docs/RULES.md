@@ -70,3 +70,4 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-04 layout: C headers live in `src/include/` (8.3 names; DOS INCLUDE). Watcom still sees them as `C:\\INC`. (CC-68 leftover)
 - 2026-11-04 layout: the MATCH target is `retail/HOCKEY.EXE`; root `HOCKEY.EXE` is a pointer so tools that default to the repo root still find it. Do not add a second EXE. (CC-68 leftover)
 - 2026-11-04 layout: tools live under `tools/{build,match,equiv,names}` plus `tools/watcom` (unchanged). Shared ROOT is `tools/paths.py`. MATCH is `python3 tools/match/cc.py` and `tools/build/{rebuild_exe,link_src}.py`. Equiv stays `tools/equiv/check.py`. (CC-68 leftover)
+- 2026-11-05 leftover recut: `docs/name_map.csv` `94_source_file` follows Abdul's leftover files (`shootoutpath94.asm` for NextPathPoint / StartShootoutPath). Do not recut 95PC modules to 94G leftover dumps. (94G leftover recut)
