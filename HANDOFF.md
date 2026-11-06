@@ -2,14 +2,14 @@
 
 ## Now
 
-- Stage / unit: functional track — step 2 NEEDS-REVIEW rerun **logged** (25 new PASS, 2 new FAIL, 44 still review). Next: InstantReplay `bothneitherstrs` + 3 skipped reruns (`docs/FUNCTIONAL_HANDOFF.md` step 2b).
-- Branch: `cursor/equiv-rerun-log-0c53` stacked on `cursor/docs-functional-counts-0c53` (#286 README counts). Do not merge until Abdul says merge.
-- Last check: 2026-11-06 `make fullcheck` MATCH twice. `python3 tools/equiv/{image,run,cside}.py --selftest` ALL PASS. `c_progress.py`: 977/1084 MATCH, 48 of 109 drafts FUNCTIONAL. InstantReplay has no 2026-11-06 row.
+- Stage / unit: functional track — step 2b **done** (Gameloop PASS; InstantReplay NEEDS-REVIEW 75%). Next: park FillDressedSlots and classify RunPlayerPickMenu (`docs/FUNCTIONAL_HANDOFF.md` step 3).
+- Branch: `cursor/equiv-instantreplay-0c53` stacked on #287 / #286. Do not merge until Abdul says merge.
+- Last check: 2026-11-06 `python3 tools/equiv/{image,run,cside}.py --selftest` ALL PASS (`bothneitherstrs` at 0x7E05F). `c_progress.py`: 977/1084 MATCH, 49 of 109 drafts FUNCTIONAL.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: #286 (README/C_PROGRESS functional 48), #284 (superseded mix of counts+log)
+- Open PRs: #286 (README 48), #287 (step-2 log), Unit 2 InstantReplay stacked. #284/#285 closed as superseded.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
