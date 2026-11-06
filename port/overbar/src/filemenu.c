@@ -13,11 +13,6 @@
 
 #include <string.h>
 
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#include <windows.h>
-#endif
-
 static void *g_hwnd;
 static int g_shown;
 
@@ -50,13 +45,9 @@ void ob_filemenu_init(void *sdl_window)
 {
     g_hwnd = sdl_window;
     g_shown = 0;
+    (void)sdl_window;
     /* Win32: later unit CreateMenu from ob_filemenu_items and subclass
      * WM_ENTERMENULOOP / WM_COMMAND. GTK and Cocoa bars are separate files. */
-#ifdef _WIN32
-    (void)g_hwnd;
-#else
-    (void)sdl_window;
-#endif
 }
 
 void ob_filemenu_sync(const ob_host *h)
@@ -68,10 +59,7 @@ void ob_filemenu_sync(const ob_host *h)
 void ob_filemenu_show(int on)
 {
     g_shown = on;
-#ifdef _WIN32
-    /* SetMenu(hwnd, on ? bar : NULL) in the Win32 unit. */
     (void)g_hwnd;
-#endif
 }
 
 void ob_filemenu_event(void *syswm_msg)
@@ -81,11 +69,6 @@ void ob_filemenu_event(void *syswm_msg)
 
 int ob_filemenu_client_size(int *w, int *h)
 {
-#ifdef _WIN32
     (void)w; (void)h;
     return 0;
-#else
-    (void)w; (void)h;
-    return 0;
-#endif
 }

@@ -113,6 +113,7 @@ static int str_ieq(const char *a, const char *b)
     return *a == 0 && *b == 0;
 }
 
+#ifndef _WIN32
 static int str_has_i(const char *s, const char *sub)
 {
     int n, m, i, j;
@@ -129,6 +130,7 @@ static int str_has_i(const char *s, const char *sub)
     }
     return 0;
 }
+#endif
 
 static int driver_handheld(const char *d)
 {
@@ -141,6 +143,11 @@ int ob_handheld_env(void)
 {
     const char *v;
     if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
+#ifdef _WIN32
+    /* PORTMASTER / CFW_NAME leftovers from packing a zip must not switch a
+     * Windows desktop exe onto the handheld present path. */
+    return 0;
+#else
     if ((v = getenv("PORTMASTER")) && v[0]) return 1;
     if ((v = getenv("CFW_NAME")) && v[0]) return 1;
     v = getenv("DEVICE_NAME");
@@ -148,6 +155,7 @@ int ob_handheld_env(void)
               || str_has_i(v, "RGB30") || str_has_i(v, "RK2023")))
         return 1;
     return driver_handheld(getenv("SDL_VIDEODRIVER"));
+#endif
 }
 
 ob_profile ob_profile_from_env(void)

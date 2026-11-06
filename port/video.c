@@ -855,7 +855,16 @@ void video_init(void)
     }
     rflags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
     ren = SDL_CreateRenderer(win, -1, rflags);
-    if (!ren) ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
+    if (!ren) {
+        /* A leftover GLES2 render-driver hint makes both accelerated and
+         * software fail; drop it and try Direct3D / software. */
+        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
+        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
+    }
+    if (!ren) {
+        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
+        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
+    }
     if (!ren) { fprintf(stderr, "SDL renderer: %s\n", SDL_GetError()); exit(1); }
     if (SDL_GetRendererInfo(ren, &rinfo) == 0 && rinfo.name) {
         int gles = strstr(rinfo.name, "opengles") || strstr(rinfo.name, "gles");
