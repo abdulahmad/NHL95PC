@@ -1,7 +1,7 @@
 # Functional-equivalence plan for the last drafts
 
-Status: harness built, paused; see [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md). Owner: Abdul (lane T). Each step below is done on its own, in order, and
-stops for Abdul's approval before the next one starts.
+Status: harness round 7 merged; next is rerun of every NEEDS-REVIEW draft. See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md).
+Each step below is done on its own, in order, and stops for Abdul's approval before the next one starts.
 
 ## Why
 
