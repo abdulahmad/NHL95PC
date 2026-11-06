@@ -25,7 +25,8 @@ UREG = {r: globals()['UC_X86_REG_' + r.upper()] for r in REGS + ('esp', 'eip', '
 STK, STK_SIZE, ENTRY_OFF = 0x7F00000, 0x40000, 0x20000   # stack region; entry esp sits mid-region
 SENT = 0x7E00000                                        # sentinel return address (page holds hlt)
 LAZY_MAX = 256                                          # lazily mapped pages per run, then faults as before
-PAT = 0xA5                                              # stack fill, so uninitialised reads are deterministic
+PAT = 0xA5                                              # initial stack fill; every case refills FILL bytes below esp from its seed
+FILL = 0x4000
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32)
 _BAD = {'in', 'out', 'ins', 'outs', 'insb', 'insw', 'insd', 'outsb', 'outsw', 'outsd', 'int', 'int3', 'into', 'hlt'}
 
@@ -155,7 +156,7 @@ def is_func_entry(img, a):
     global _FUNCS
     if _FUNCS is None:
         import csv
-        p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'c_functions.csv')
+        p = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'match', 'c_functions.csv')
         _FUNCS = {int(r['address'], 16) for r in csv.DictReader(open(p))}
     if a in _FUNCS: return True
     try: b = img.read(a, 10)
@@ -170,7 +171,8 @@ class Runner:
     wrote (copied before its first write, via the write hook and `put`), lazily mapped pages unmapped. `fresh` lists
     code-region addresses (the ARG buffer) that the caller rewrites each case through `data`, so they are never tracked.
     watch=(lo, hi) with reads=set(): offsets from lo of every read in that range are added to reads."""
-    def __init__(self, img, entry, extent, code=(), alias=None, max_insns=200000, cov=None, fresh=(), watch=None, reads=None):
+    def __init__(self, img, entry, extent, code=(), alias=None, max_insns=200000, cov=None, fresh=(), watch=None, reads=None,
+                 shift=0, snap_at=None, snap_lo=0, snap_n=0):
         alias = alias or {}
         ext = [tuple(extent)] if extent and isinstance(extent[0], int) else [tuple(e) for e in extent]
         inext = lambda a: any(s <= a < e for s, e in ext)
@@ -187,7 +189,8 @@ class Runner:
         uc.mem_map(STK, STK_SIZE, UC_PROT_ALL); uc.mem_write(STK, bytes([PAT]) * STK_SIZE)
         uc.mem_map(SENT, 0x1000, UC_PROT_ALL); uc.mem_write(SENT, b'\xf4')
         fixed += [(STK, STK + STK_SIZE), (SENT, SENT + 0x1000)]
-        esp0 = STK + ENTRY_OFF
+        esp0 = STK + ENTRY_OFF + shift
+        self.snap = None
         ctx = uc.context_save()
         saved = {}; lazy = []; lazyset = set(); fa = []; seen = {}
         wlo, whi = watch or (1, 0)
@@ -240,6 +243,16 @@ class Runner:
             esp = u.reg_read(UREG['esp'])
             # execution left the extent: a call (return address on top is inside extent) or a tail jmp
             top = u32(esp)
+            if snap_at is not None and a == snap_at and pm == 'call':   # caller-driven entry state: snapshot and stop
+                pg = {}
+                for p in list(saved) + lazy:
+                    if p == 0 or STK <= p < STK + STK_SIZE or SENT <= p < SENT + 0x1000 or any(lo <= p < hi for lo, hi in freshr + codew): continue
+                    pg[p] = bytes(u.mem_read(p, 0x1000))
+                lo_ = max(esp, snap_lo); hi_ = STK + ENTRY_OFF + 0x3000
+                if lo_ < hi_: pg[lo_] = bytes(u.mem_read(lo_, hi_ - lo_))
+                self.snap = ({r: u.reg_read(UREG[r]) for r in REGS}, [u32(esp + 4 + 4 * i) for i in range(snap_n)], pg,
+                             {lo: bytes(u.mem_read(lo, hi - lo)) for lo, hi in freshr})
+                stop(); return
             if a == chk:   # no-op stub: drop the 4-byte argument
                 u.reg_write(UREG['eip'], top); u.reg_write(UREG['esp'], esp + 8); return
             k = nstub[0]; nstub[0] += 1
@@ -297,6 +310,11 @@ class Runner:
         uc.hook_add(UC_HOOK_MEM_UNMAPPED, unmapped)
         uc.hook_add(UC_HOOK_CODE, code_hook); uc.hook_add(UC_HOOK_MEM_WRITE, write_hook); uc.hook_add(UC_HOOK_MEM_READ, read_hook)
 
+        def ensure(a, n):   # patches may name lazily mapped pages: map them (seeded fill, overwritten by the patch)
+            for p in range(a & ~0xFFF, a + max(n, 1), 0x1000):
+                if p != 0 and p not in lazyset and not any(lo <= p < hi for lo, hi in fixed):
+                    uc.mem_map(p, 0x1000, UC_PROT_ALL); lazy.append(p); lazyset.add(p)
+
         def run_case(st=None, data=None):
             nonlocal tr, written, cur
             for p, b in saved.items(): uc.mem_write(p, b)
@@ -306,7 +324,9 @@ class Runner:
             uc.context_restore(ctx)
             cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False
             for a, b in (data or {}).items(): uc.mem_write(a, b)
-            for lin, b in cur.patches.items(): put(lin, bytes(b))
+            self.snap = None
+            uc.mem_write(esp0 - FILL, random.Random(0x5EED0000 + (cur.seed & 0xFFFFFFFF) * 7919).randbytes(FILL))   # per-case stack fill, same on both sides
+            for lin, b in cur.patches.items(): ensure(lin, len(b)); put(lin, bytes(b))
             put(esp0, struct.pack('<I', SENT) + b''.join(struct.pack('<I', a & 0xFFFFFFFF) for a in cur.args))
             for r in REGS: uc.reg_write(UREG[r], cur.regs.get(r, 0) & 0xFFFFFFFF)
             uc.reg_write(UREG['esp'], esp0); uc.reg_write(UREG['eflags'], 0x202)
