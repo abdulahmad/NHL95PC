@@ -23,11 +23,11 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **55 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+* **56 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
   PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
-  Unit 5: checkgoalp (54→55). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture after Unit 5: **55 PASS / 52 NEEDS-REVIEW / 2 FAIL** over leftover drafts
+  Latest-row CSV picture after Unit 7: **56 PASS / 53 NEEDS-REVIEW / 0 FAIL** over leftover drafts
   (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
@@ -38,7 +38,7 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   PassRecOneTimer) NEEDS-REVIEW 47%; checkpuckcoll_ccx (was checkpuckcoll in PassLaneChk.c) NEEDS-REVIEW 75%.
   InstantReplay KeyError `bothneitherstrs` fixed in `image.labels()` (data after `ret`); rerun NEEDS-REVIEW 75%
   (107 cases, mostly trapped).
-* **2 FAIL remaining after Unit 5.** SportsDesk (typed case 39 `writes[12]` dest 0xdd6aa vs 0xc5840). SimPlayoffRound1 (even case 2 `calls[5]` ARG off-by-one; same family as Unit 3). FAIL→NR after typed inputs: GameLineEditorLoop, DbLineEditorLoop, PlayoffTreeMenu. Old triage:
+* **0 FAIL remaining after Unit 7.** SportsDesk FAIL→NR (autoret `sub_B2E1B` eax into scrolly/scrollx then deferpending; 47% trapped). SimPlayoffRound1 PASS 3000 after team-byte clamp + SeriesLength stub 1/3/5/7. FAIL→NR after typed inputs: GameLineEditorLoop, DbLineEditorLoop, PlayoffTreeMenu. Old triage:
   * input artefacts: SimPlayoffRound1, GameLineEditorLoop;
   * pointer-to-local / frame layout: DbLineEditorLoop, TradeScreenLoop, OpenSpeechBank, SportsDesk;
   * wild pointer fault address: PlayoffTreeMenu;
@@ -83,7 +83,8 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.4 | ~~Typed inputs for coverage-NR~~ **done** (odd seeded cases; MenuHitTest out-params in-rect; G17 PASS; planted SeriesLength FAIL at case 4). Do not re-run the 47 in this unit | Grok 4.7 medium |
 | 107.5 | ~~Re-check leftover NR/FAIL~~ **done** (checkgoalp PASS; 3 FAIL→NR; SportsDesk + SimPlayoffRound1 still FAIL; 52 NR remain for snapshots) | Composer 2.5 |
 | 107.6 | Snapshot **script** done (`tools/equiv/snapshot_dosbox.py`, `docs/SNAPSHOTS.md`, `check.py --play-snaps`). CSV log waits on Abdul dumps | Grok 4.7 medium |
-| 107.7–8 | Advisor if leftovers after dumps, close at 109/109 PASS | see plan |
+| 107.7 | Leftover proofs ([FUNCTIONAL_LEFTOVERS.md](FUNCTIONAL_LEFTOVERS.md)): SportsDesk (c) autoret `eax` into `scrolly`/`scrollx` → NR 47%; SimPlayoffRound1 (a) team-byte clamp + SeriesLength stub 1/3/5/7 → PASS 3000. **56 PASS / 0 FAIL / 53 NR**. 53 NR wait on dumps. No dead-range without a dump. | Grok 4.7 high |
+| 107.8 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to

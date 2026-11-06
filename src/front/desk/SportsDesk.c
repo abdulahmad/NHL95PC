@@ -2,11 +2,13 @@
 #define MenuHitTest MenuHitTest_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
+#define sub_B2E1B sub_B2E1B_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
 #include "nhl95.h"
 #undef MenuHitTest
 #undef sub_8F98F
 #undef sub_8FB8E
+#undef sub_B2E1B
 #undef TicksSinceLastCall
 
 typedef struct MenuItem {
@@ -21,6 +23,7 @@ typedef struct Hdr17 { char c[17]; } Hdr17;
 int MenuHitTest(int x, int y, MenuItem **menus, int i, int *counts, int *origin, int *hitMenu, int *hitItem);
 int sub_8F98F(char *path);  /* music library: load a song (register arguments) */
 void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play a song (register arguments) */
+int __cdecl sub_B2E1B(int x, int y, int w, int h);  /* graphics library: view rect; returns x in eax */
 int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last call */
 
 /* DRAFT under 10.0 GA: 192 differing instructions, 4,512 of 4,567 bytes. The frame is the retail 404h:
@@ -36,7 +39,8 @@ int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last ca
    timeout, speech, ptr), register picks, the overtime / conference argument shapes, r kept in a register (the EXE keeps
    it on the stack), and the miss arm's tail: the EXE keeps its own sub_91400 call and pushes and joins the
    no-click path only at sub_91370 (55 bytes), where C cross-jumps the whole tail. The retail speech timer
-   compares the routine address. */
+   compares the routine address. Functional Unit 7: the autoret exit captures sub_B2E1B's eax into scrolly
+   then scrollx before deferpending = 0 (retail 1992A); the r == 1 path still only clears deferpending. */
 /* SportsDesk (1935D, PC only): the sports desk of a game (mode 0: paused in the game, 1: intermission, 2: after
    the game): the menu labels and title of the mode, the replay item only when a replay is recorded; fade in the
    EADESK<mode> art and palette, the pause music (when music is on and none plays), and the desk menu bar (six
@@ -179,10 +183,10 @@ void SportsDesk(int mode)
                 ClearInputQueue();
                 InputRemove();
                 sub_8EA00(txt);
-                sub_B2E1B(0, 0, 0x280, 0x1E0);
+                /* Retail 1992A: ax from sub_B2E1B into scrolly, then scrollx, then deferpending = 0. */
+                scrolly = (short)sub_B2E1B(0, 0, 0x280, 0x1E0);
+                scrollx = scrolly;
                 deferpending = 0;
-                scrolly = 0;
-                scrollx = 0;
                 MouseSetPos(savex, savey);
                 sub_8FFB0(0, 0x100, pal);
                 FadePalStep(1, pal, 0x10);
