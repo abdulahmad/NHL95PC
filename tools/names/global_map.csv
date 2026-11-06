@@ -1,0 +1,2277 @@
+genesis_symbol,pc_address,evidence
+Ylist_m2,E9A56,Ylist-2: the -5r load dword [eax*2+E9A56] / sar 10h reads Ylist[eax]; used in nosplit operands so it cannot be folded
+PBnum,E9ABA,"aligned 2/3 accesses in assdopen, asspenalty"
+seed,C9100,"95G seed (93G ram93, 94G RNGseed). randomd0 LCG state, initial dword ABCD4321, stirred with the two team numbers and reseeded for the demo"
+collflag,C90BA,"aligned 2/3 accesses in Bcheck, holdcheck"
+dirtab,C90E0,"data table byte match (words->le16, logic93_5.asm, 16 elems)"
+puckvx,C9080,"pointer to the puck's Xvel (dd word_DFF28 = SortCords+14*80h+Xvel); skatetopuck reads its high byte /2 (93G skatetopuckinit puckvx) and vtoa(puckvx,puckvy); was gameclock in the seed global_map (2/2 weak alignment)"
+gmode,C90BB,"Stop4Pen (63543): 93G bset #gmclock,(gmode).w <-> test/or byte_C90BB,1 (low byte of the 68k word)"
+ltx,E9AC6,"aligned 2/2 accesses in Stop4Pen, a2touchpuck"
+lastplayer,C90A2,dopass and doshot store the carrier SCnum here; 95 writes lastplayer
+puckvz,C9090,"aligned 3/5 accesses in dopass, doshot, passtoa0"
+shotsets,CCC60,"data table byte match (words->le16, logic94.asm, 18 elems)"
+threat,C90AA,"aligned 2/3 accesses in assgoalie, chk4pass"
+wcradiusx,C909C,"aligned 2/3 accesses in checkgoal, checkwallcoll"
+regd4,E03B4,"Watcom static for the ported 68k d4: doplayeracc turn rate $300-speed (min $180) times ftab, noturn0 2/6 (93G moveq #2,d4 / addq #4,d4); was wcradiusy in the seed global_map (2/3 weak alignment)"
+doplayeracc_ftab,CCD78,"93G logic93_5 doplayeracc .ftab dc.w 0,$10,$10,$10,0,-$10,-$10,-$10 (turn step per facing delta); PC dword table 0,10h,10h,10h,0,-10h,-10h,-10h read only by doplayeracc"
+MaxSpeed,CCD98,93G logic93_5 MaxSpeed table (16 entries); PC 16 dwords read by playeracc max speed check (.ms)
+SortCords,DF81C,"93G SortCords: the 80h-byte player/puck struct array; EvadePlayers loops it (15 entries, puck = entry 14 at DFF1C as 93G puckscnum=14); avdgoal indexes it by SCnum*80h"
+puckx,C907C,pointer to the puck's Xpos integer word (dd word_DFF1E = SortCords+14*80h+Xpos+2); doplayeracc/skateto/skatetopuck read *puckx where 93G reads (puckx).w
+pucky,C9084,pointer to the puck's Ypos integer word (dd word_DFF22); 93G (pucky).w in doplayeracc/skateto/skatetopuck
+puckvy,C9088,"pointer to the puck's Yvel (dd word_DFF2A); doplayeracc reads its high byte (93G move.b (puckvy).w,d1)"
+puckz,C908C,"pointer to the puck's Zpos integer word (dd word_DFF26, between pucky and puckvx/puckvy/puckvz in the same pointer table)"
+puckc,C9094,"pointer to the puck carrier's SCnum byte (dd unk_DFF5E), -1 = none; compared with SCnum where 93G does cmp (puckc).w / tst.w puckc bmi"
+puckpflags2,DFF61,"the puck struct's pflags2 byte (SortCords+14*80h+45h); skateto tests bit 0 where 93G does btst #pf2fight,(puckx+pflags2).w"
+xc1,C90AC,"93G xc1: skateto faces (xc1,yc1) instead of the puck while the puck is in a fight (93G skateto .nf)"
+yc1,C90AE,93G yc1 (see xc1)
+refsignal,C90D2,"word countdown (decremented by the penalty code at 63475, set in the frame driver); while nonzero struct 10h (the referee) uses its signalling skate animations (0B4Bh...) in doplayeracc/dostop/noturn0"
+gmode2,C90BE,"game-state flag word beside gmode (saved with the game, cleared/restored by the frame driver); bit 7 also selects the referee's signalling animations; meaning of the other bits unknown"
+gameopts,C53FF,"option bit byte (default 0FFh): bit 1 offsides on (EvadePC, 93G gmoffs), bit 2 fatigue on (playeracc energy drain, 93G OptLine test)"
+regd0,E03BC,"Watcom static that holds the ported 68k d0: skateto/avdgoal/EvadePC pass the target direction/x in it (93G d0), playeracc keeps the new Xvel in it"
+regd1,E03C0,"Watcom static for the ported 68k d1 (target y, new Yvel)"
+regd2,E03AC,"Watcom static for the ported 68k d2 (EvadePlayers/EvadePC x distance, playeracc accel factor and max speed)"
+regd3,E03B0,Watcom static for the ported 68k d3 (doplayeracc and playeracc speed squared)
+dirtab_y,C90E2,"93G dirtab y column (2(a0,d2.w) ""y inc"" in playeracc): the second word of each dirtab pair; a separate label because nasm drops nosplit on [nosplit esi*2+dirtab+2]"
+musicslot,D242F,"music driver slot byte read before fade/wait calls (sub_8FC8A(slot,3) polled until done) in PlayMVI, arena_logos, sound_config"
+vtoa_dt,D2C74,"93G vtoa .dt table, same 16 bytes 1,7,3,5,0,0,4,4,2,6,2,6,1,7,3,5"
+scrpitch,C7290,planar VGA bytes per row (50h): every vga* routine multiplies y by it
+scrolly,DD6AA,vgaflip: CRTC start = scrpitch*scrolly + scrollx/4 + page base
+scrollx,DD6AC,vgaflip: low 2 bits -> attribute 33h pixel panning
+vgapage,EDA04,vgaflip toggles it 0/1 and shows page 0B00h or 4400h
+bgscrolly8,DD70C,"background top row in 8-line units in the circular VRAM background buffer (vgacopy_bg, vgacopy_bgfull: *8 rows / *300h bytes)"
+bgscrollx,DD6B2,"background x offset (added twice, words) in the circular VRAM background buffer"
+musicon,D2430,music present/on flag tested before every song call (with songdata != 0)
+songdata,C721D,pointer to the loaded song (0 = none); freed and cleared after a fade in arena_logos; played with musichandle
+musichandle,D2431,music handle passed to the play (sub_8FB8E) and fade (sub_8FCDF) calls
+screenbm,C66C4,"pointer to the screen bitmap descriptor (set in main_ startup), selected by SelectScreenBM"
+rinkbm,C73D4,"pointer to the rink tile buffer bitmap (37840h-byte block, rink_tiles), selected by SelectRinkBM"
+saved_ss,D2F44,SS saved by SaveSS
+joysampling,C4D0C,"timer ISR sub_10DCD samples the pads into joyqueue only while this is non-zero; joyq_pop and the sound calls save it in joysampling_save, clear it and restore it"
+joysampling_save,E9AA0,"saved joysampling while it is switched off (joyq_pop, engine_core, scoring_penalty_text, player_logic: mov [E9AA0],C4D0C / C4D0C=0 / ... / C4D0C=[E9AA0])"
+joyqhead,C4D10,input queue read index 0-49 (joyq_pop wraps it at 32h; ISR writes at (head+count) mod 50)
+joyqcount,C4D14,"input queue entries (ISR increments up to 50, joyq_pop decrements)"
+joyqtick,C4D18,ISR countdown: a pad sample every 5 ticks (reset to 4)
+joyqueue,D8B80,"input queue: 50 records of 3 bytes (pad 1, pad 2, flags; flags bit 7 = key event), filled by the timer ISR"
+joyrec,C4E18,"pointer to the input record of this frame (joyq_peek), read by Readjoy1 (byte 0) and Readjoy2 (byte 1)"
+lj1,E9ABE,93G lj1: Readjoy1 last buttons for the debounce (regd2 = lj1 ^ new)
+lj2,E9ABC,93G lj2: Readjoy2 last buttons
+shotplayer,C90A0,doshot stores the shooter SCnum here; 95 doshot writes shotplayer and assscore compares it with SCnum
+passdir,C90A4,"93G passdir: setpassmode stores facedir&7, passmode/doinput store the dpad&7"
+passplayer,C90A8,94G passplayer: passtoa0 stores the receiver's SCnum; doinput compares it with the current player for the one-timer control switch
+fodir1,C90B6,93G fodir1: faceoffinput stores the dpad here for the pfgoal=0 player
+fodir2,C90B8,93G fodir2: faceoffinput stores the dpad here for the pfgoal=1 player
+sflags,C90BC,"93G sflags: bit 2 sfspdir (setpassmode sets it, doinput -> passmode), bit 3 sfssdir (-> ShotMode)"
+c1playernum,C90C2,93G c1playernum: player controlled by pad 1 (FFFF none); doinput switches it to the pass receiver via sub_59FE1
+c2playernum,C90C4,93G c2playernum: player controlled by pad 2 (FFFF none)
+cont1team,C90C6,93G cont1team (follows c2playernum as in 93G ram): doinput takes a line change request when cont1team != cont2team or the player is c1playernum
+cont2team,C90C8,"93G cont2team, see cont1team"
+lcblink,CBC56,per team: line change box highlight blink state (toggled every 12 frames by lineinput); cleared with lcboxon when the box closes
+lcblinktime,CBC5A,per team: blink countdown (12 frames) in lineinput
+lcsel,CBC5E,per team: highlighted line change choice; lineinput passes it to lcfound on a press and advances it every 60 frames mod 4 (mod 2 when lcline > 3)
+lcline,CBC62,"per team: line offered in the line change box, advanced through linenext; the box opener sets it from tmline or getlchoice(1)"
+lctimer,CBC66,per team: 60-frame countdown that advances lcsel/lcline in lineinput
+lcboxon,CBC6A,"per team: line change box open (set with lcblink by the box opener sub_4D938, cleared by lineinput/doinput when a line is chosen)"
+linenext,CCB4A,"table of the next line: 1,2,3,0 (even strength), 5,4 (PK), 7,6 (PP)"
+lchoicetab,CCB5A,"93G getlchoice .tab: 4 bytes per tmline, +20h/+40h sections for the short-handed / power-play cases, FF = no line"
+lcrequest,E0304,"per team: line change requested by number (PC keys); doinput hands it to lcselect, then clears it"
+lcreqchoice,E0380,per team: the requested line choice passed to lcselect
+wcradiusy,C909E,pair with wcradiusx: sub_580F5 stores [ecx+66h] in wcradiusx and [ecx+68h] here (93G radiusx/radiusy order); engine_input reads lastplayer through it as the -5r load wcradiusy+2... (dword [C909E] / sar 10h = word C90A0)
+OOlist,E9ADE,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+Ylist,E9A58,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+OOlistpos,E9A7A,"93G checkcoll/checkplcoll: sub_5DD7C fills E9A58[0..16] with each sort object's Ypos (Xpos if sfhor) and bubble-sorts the bytes at E9ADE by those words, writing each object's slot into E9A7A: Ylist / OOlist / OOlistpos as in 93G ram. The seeded names sat on -5r alias labels"
+hmtmstruct,DF614,93G hmtmstruct: home team struct (100h bytes); restoreteams/clearteams/ResetBench start here and add 100h for awtmstruct
+awtmstruct,DF714,93G hmtmstruct+tmsize: visitor team struct (DF614+100h)
+hmscore,DF624,home tmscore (team+10h): PeriodOver/clockcont_0 subtract awscore to find a tie
+awscore,DF724,visitor tmscore (awtmstruct+10h)
+hmtmline,DF63E,home tmline (hmtmstruct+2Ah): SetupTeamForIntermission sets 0/3/5
+awtmline,DF73E,visitor tmline (awtmstruct+2Ah)
+hmtmlcnt,DF640,home tmlcnt (hmtmstruct+2Ch)
+awtmlcnt,DF740,visitor tmlcnt (awtmstruct+2Ch)
+hmtmsort,DF70A,home tmsort pointer (hmtmstruct+F6h) to the first of its 6 SortCords entries
+awtmsort,DF80A,visitor tmsort pointer (awtmstruct+F6h)
+hmtmroster,DF702,"home roster pointer (hmtmstruct+EEh), 27h bytes per player; ResetBench/setplayer write status bytes there"
+awtmroster,DF802,visitor roster pointer (awtmstruct+EEh)
+puckcross,DF814,calcpuckcross result: where/when the puck crosses each goal line (2 records after the team structs)
+gsp,C90DA,"93G gsp: period number (0-3, 4 = game over); PeriodOver increments it, IntermissionStart checks 4"
+gameclock,C90DC,"93G gameclock: seconds left in the period; ResetClock sets it, ClockTick counts it down"
+clockticks,C90DE,ticks within the current gameclock second (reloaded with 18h by ClockTick)
+PerTimeTotal,E9AB8,93G PerTimeTotal: period length (ResetClock)
+periodendtime,E9AAC,"93G periodendtime: gameclock - random(length/2), set by ResetClock"
+CwdExciteLvl,E9AA8,crowd excitement level (updatecrowdf)
+lldisp,CC0D9,"93G lldisp: periodicevents frame countdown, +18h once a second (PC byte)"
+lldispodd,CC0D8,bit 0 flips each lldisp second in periodicevents
+exitgame,CBC46,main-loop request flag set by SetExitGame
+gameover,CBC48,main-loop request flag set by GameOver
+PerTimeTab,CBC4A,period length table read by GetPeriodTime
+PlList,E0384,player list built by SetPlList / TryAddPlayerToList
+ds2list,CBD5A,93G defaultsprites2 .list: initial values of the 17 sort objects
+SPAtab,C921D,93G SPA animation table read by updateanim
+camx,C9098,camera x (LockScroll copies it into xc1)
+camy,C909A,camera y (LockScroll copies it into yc1)
+camx_m2,C9096,camx-2 (equ): the -5r load dword [camx_m2] / sar 10h reads camx
+puckstruct,DFF1C,93G puckx struct: the puck's SortCords entry 14 (SortCords+700h)
+sortobj15,DFF9C,"SortCords entry 15 (SortCords+780h), the sort object after the puck"
+hmtmlines,DF6EE,"home team line table pointer (hmtmstruct+DAh); clearteams sets it to unk_DC200, the scoring text indexes it with the team offset (eax+DF6EE)"
+awtmlines,DF7EE,visitor line table pointer (awtmstruct+DAh)
+hmtmptrF2,DF706,"home team struct +F2h data pointer (clearteams sets unk_DBC30, game_state_saveload too); role not identified"
+awtmptrF2,DF806,visitor team struct +F2h data pointer (clearteams sets unk_DBF18); role not identified
+iflags,E9AC0,"93G iflags (icing): puckIChk tests bit 2 ifok, bit 0 ifcgl, bit 1 ifdir; player logic sets them when the puck crosses the red line. Also the -5r alias of lasttouch (dword [lasttouch-2])"
+lasttouch,E9AC2,"SCnum of the player who last touched the puck (written by the player logic puck code); Goal / PenTeamScored compare it with 6 for the team, ChkDelayedOffside penalizes SortCords[lasttouch]"
+crowdlevel,CC0DE,"93G crowdlevel: ChkShotStat +100 (64h), setInjuryType +12Ch, capped at 3E8h; the sound interface decays it"
+puckcross_m2,DF812,"puckcross-2: the -5r load dword [edx*2+puckcross_m2] / sar 10h reads puckcross[edx]; nosplit use, so not folded"
+hmtmap,DF64A,"home tmap (hmtmstruct+36h), players in the penalty box count (6 = none in restoreteams)"
+awtmap,DF74A,visitor tmap (awtmstruct+36h)
+penshotmode,CC118,penalty shot pending: set by the penalty code (64402) with penshotplayer = the fouled player; PenShotAssign / asspsclear test it; cleared with penshotlive at the end (64459)
+penshotlive,CC128,"penalty shot in progress (set with penshotstart at 640E3, penshottimer 3E8h); ClockTick counts penshottimer down and ends it (sub_64439); many AI checks skip while set"
+penshotstart,CC11C,penalty shot started (set at 640E9 with penshotlive); PenShotStart / ChkDelayedOffside / ChkOffsides test it
+penshotplayer,CC0FC,SortCords index of the player awarded the penalty shot (set by checkcheck / Bcheck / holdcheck at 53BAE / 56B13 / 56C79 when they call the foul; -1 = none)
+penshottimer,CC120,"penalty shot time limit: 3E8h when it starts, ClockTick decrements it, at 0 sub_64439 ends the shot"
+hmroster,DB3A8,"home roster records, 27h bytes per player (byte 0 = status: 3 bench, 4 on ice, 7 penalty over); clearteams stores it in hmtmstruct+tmroster"
+awroster,DB7EC,"visitor roster records (awtmstruct+tmroster), as hmroster"
+hmtmpdst,DF692,home tmpdst array (hmtmstruct+7Eh); TakePlayerFromBox indexes it with team*100h + player*2
+hmtmflags,DF658,home tmflags (hmtmstruct+44h)
+awtmflags,DF758,visitor tmflags (awtmstruct+44h)
+onetimerflag,CC0F4,"one-timer pending (94G onetimerflags role): set by the input code at 50716, PassRecOneTimer shoots while it is set and clears it on exit"
+gwgteam,E9AF0,"three stars: winning team (0 home / 1 away, -1 if tied); set by PickThreeStars"
+gwgplayer,E9AF4,three stars: the winning team's player from team field 2Eh (likely the game-winning goal scorer); StarCompare gives him +2
+startm,E9AF8,"three-stars list, team of star i (word, stride 4, 3 entries; -1 = empty); AddStar / PickThreeStars fill it, assthreestars reads it"
+starpl,E9AFA,"three-stars list, player index of star i (word, stride 4); pairs with startm"
+str_EASports,C1B2C,"""EA Sports"" (three-stars caption, assthreestars)"
+str_StarFmt,C1B36,"""%s Star"" sprintf format, filled with str_1st/2nd/3rd by assthreestars"
+starordtab,CCA0A,"dd str_1st, str_2nd, str_3rd: star ordinal strings indexed by star number (assthreestars)"
+str_1st,C1B20,"""1st"" (starordtab)"
+str_2nd,C1B24,"""2nd"" (starordtab)"
+str_3rd,C1B28,"""3rd"" (starordtab)"
+lastsfx,CC0DC,"sound effect number last requested: sfx stores its argument here; the replay recorder (engine_display 6761E/6779B) saves it per frame and resets it to -1. dword loads of it + sar 10h are crowdlevel short loads, written [crowdlevel-2]"
+crowdsmooth,CCC88,MIDI crowd noise: crowdlevel eased by CrowdNoiseUpdate (step 30*eax per call); drives the channel 8/7 volumes
+crowdvol8,CCC8C,MIDI crowd noise: current volume of channel 8 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff
+crowdvol7,CCC90,MIDI crowd noise: current volume of channel 7 (0 = note off); CrowdNoiseUpdate / CrowdNoiseOff
+digihandle,CCC84,handle of the digital sample PlayDigiSample started (-1 = none); StopDigiSample / WaitDigiSample poll it
+Penaltytimer,C90D0,"93G Penaltytimer: updatepentime subtracts 1 per call, at < 0 adds 18h (once a second)"
+Pencntdwn,C90CE,93G Pencntdwn: checkfornewpen raises it to the penalty's delay * 32; chkprogress counts it down (chkprogress_go) or runs InProgress when negative
+PenBuf,E9A16,"93G PenBuf: 32 byte pairs (penalty number, player | 80h called); ClearPenaltyBuffer clears it, checkfornewpen / chkprogress walk it"
+RefPen,C90D6,93G RefPen: penalty / animation number set by SetPA
+RefStep,C90D4,"93G RefStep: SetPA clears it; chkprogress sets it to -1 (93G st RefStep, PC byte RefStep+1)"
+pendelaytab,C9104,per penalty number: delay before stopping play (93G PenaltyList entry byte 0); checkfornewpen shifts it left 5 into Pencntdwn
+penmintab,C9123,"per penalty number: penalty minutes (93G PenaltyList entry byte 1, 0 = no time: called at once); checkfornewpen / chkprogress_go test it"
+priolist,CBC36,"93G priolist: position for the player released from the box, indexed by tmap (+1 when the goalie is pulled); releasepl"
+recbpr,E039C,"94G recbpr: replay record pointer (80h-byte frames); updatereplay writes through it, ReplayPrevFrame / ReplayStep compare with it"
+replaystart,C9078,pointer to the replay buffer (9600h bytes = 12Ch frames of 80h); 94G replaystart / M68K_RAM role
+replayplay,E03A4,replay play-back frame pointer (94G a4 in ReplayMode); ReplayStep moves it between replaystart and recbpr
+replaytick,CD4FE,updatereplay tick counter: a frame is recorded every 2nd call; ReplayRecordReset sets 1
+replaysfx,CD500,sfx number kept from the off tick (lastsfx) for the next recorded frame (-1 = none)
+HomeTeam,C90CA,"93G HomeTeam (team number): the PC RAM keeps the 93G order c1playernum, c2playernum, cont1team, cont2team, HomeTeam, VisTeam, Pencntdwn, Penaltytimer, ..., RefStep, RefPen; team-name lookups index off_C5439 with it (>= 1Ah -> 0Ch); StartHL2 saves / restores it"
+VisTeam,C90CC,"93G VisTeam (visiting team number), right after HomeTeam as in ram93"
+sflags3,C90C0,"93G sflags3 (after sflags and gmode2 = 93G sflags2 slot): updatepentime clears / sets bit 6 once a second as 93G (bclr/bset #6,sflags3)"
+hmtmgoalie,DF64C,"home tmgoalie (hmtmstruct+38h); StartHL2 saves, zeroes and restores it"
+awtmgoalie,DF74C,visitor tmgoalie (awtmstruct+38h)
+hmlinetab,DC200,"home line table (30h bytes; tmlines of hmtmstruct, set by clearteams); SetupTeamLines / RemoveFromLines fill it, StartHL2 saves and restores it"
+awlinetab,DABF0,"visitor line table (tmlines of awtmstruct), as hmlinetab"
+seqtimer,E9B04,"scripted sequence timer: PreGameIntro sets 708h, StartThreeStars 2EE0h; ThreeStarsLoop counts it down by real-time ticks, the PC assignment at 484DA compares it with 0Ah"
+str_ErrSaveGame,CCDEC,"""Error Saving Game"" (SaveGameState)"
+str_ErrLoadGame,CCDD8,"""Error Loading Game"" (LoadGameState)"
+debugstep,CBC42,"only used by DebugMonitor: non-zero prints the per-frame debug lines and waits for a key (WaitKey), '\' toggles it, joyq_flush on toggling off"
+hmgoalcnt,C542F,DumpStatsLog prints it as the home [shots score] 'score'; cleared with C5430-C5432 in key_team_db
+hmshotcnt,C5430,DumpStatsLog home [shots score] 'shots'; engine_physics_ai 55DFD increments it on a home shot
+awgoalcnt,C5431,DumpStatsLog away [shots score] 'score'
+awshotcnt,C5432,DumpStatsLog away [shots score] 'shots'; engine_physics_ai 55E05 increments it on an away shot
+hmtmplstats,DF6FA,"hmtmstruct+tmplstats (E6h): pointer to home skater stats, loaded by DumpStatsLog; separate label because it sits in another data file"
+awtmplstats,DF7FA,"awtmstruct+tmplstats (E6h): pointer to away skater stats, loaded by DumpStatsLog"
+hmtmpdst_m2,DF690,"hmtmstruct+7Ch: -5r short-load base of tmpdst (7Eh), indexed [team*100h + pnum*2]; DebugMonitor/player_logic/key_team_db"
+dbg_posnames,CD984,"pointer table to ""G"",""LD"",""RD"",""LW"",""C"",""RW"",""XC"": DebugMonitor prints the object's position name through it"
+dbg_assnames,CD8C4,"pointer table of assignment-name strings: DebugMonitor indexes it with the object's current asstab entry and prints ""A%s"""
+dbg_spalist,CD504,78h dword SPA values: DebugMonitor searches it for the object's SPA to find its name in dbg_spanames
+dbg_spanames,CD6E4,"78h names parallel to dbg_spalist; DebugMonitor prints the match, else ""spa=%d"""
+bailout_vec,D41F0,"called on the debug 'bail' key in DebugMonitor, from main_startup and from the keyboard handler; exit/abort vector"
+curleague,C8451,"current league path: every league routine builds <curleague>\PINFO.DB, TEAMS.DB, SCHEDULE.DB from it and strips it at '.' for message text"
+humancount,DDAC0,"PINFO +0: 'only one human controlled team' when 1, 'All the teams are already human' when >= 1Ah"
+leaguemaster,DD7A8,PINFO +2: team index CheckMasterPassword passes to AskMasterPassword
+leaguesaved,DD7AC,PINFO +4: non-zero gives 'There is a saved game in the league'; SaveLeagueGameRef writes -1
+leagueflags,DD7B0,PINFO +13h: bit 2 set skips the 'Master databases for' prompt
+leagueteams,DD7B4,"PINFO +20h: 1Ah team entries of 1Eh bytes (name, +16h copied flag, +17h human, +18h on disk)"
+savedname,DDD10,PINFO +6 (0Dh bytes): SaveLeagueGameRef writes 'saved'
+masterpw,DDD1D,PINFO +15h (0Bh bytes): AskMasterPassword strcmp's the input with it
+savleague1,DDD4C,saved-game league path (0Dh): SaveLeagueGameRef writes it and opens its PINFO.DB
+savleague2,DDD59,"second saved-game league path (0Dh), used when dword_DDD3C is set"
+leaguedbnames,C80D7,"7 league database names KEY, CAREER, ATT, CARTEAMS, TEAMS, SEASON, SCHEDULE; CopyHumanTeamDBs copies all 7"
+str_dbgClin,C234F,string '------------------------clin=%d %d '
+str_dbgPenShot,C2373,string 'ps<%d %d %d %d %d> f(%d %d %d %d) b(%d %d)'
+str_dbgLip,C239E,string 'lip %d '
+str_dbgHVpos,C23A6,"string 'HVpos<%d %d, %d %d> '"
+str_dbgRef,C23BB,string 'ref<%d %d> '
+str_dbgPb,C23C7,string 'pb[%d %d]'
+str_dbgG,C23D1,string 'G<%d %d> '
+str_dbgGO,C23DB,string 'GO=%d PO=%d go=%d gs=%d '
+str_dbgGsp,C23F4,string 'g=%d %d '
+str_dbgC12,C23FD,string 'c12(%d %d)(%d %d) '
+str_dbgPuckc,C2410,string 'puckc = %d gmclock%d gmpen%d pcdwn=%d\n'
+str_dbgIdx,C2437,string '%d) '
+str_dbgD,C243C,string '%d '
+str_dbgLbD,C2440,string '[%d '
+str_dbgDRb,C2445,string '%d] '
+str_dbgDS,C244A,string '%d %s '
+str_dbgPosVel,C2451,string '@(%d %d) v(%d %d) %d(%d %d)'
+str_dbgVz,C246D,string 'vz%d '
+str_dbgAss,C2473,string 'A%s '
+str_dbgSpa,C247E,string 'spa=%d'
+str_debError,C2488,string 'debError: %d frame %d \n'
+str_dbgBail,C24A2,string 'bail\n'
+str_statslog,C24A8,string 'stats.log'
+str_fmode_at,C24B2,string 'a+t'
+str_ErrDumpStats,C24B6,string 'error dump stats\n'
+str_dumpPool,C24C8,string '===== pool(%d %d) gm%d ====\n'
+str_dumpTmstructs,C24E5,string '===== tmstructs ====\n'
+str_dumpHex,C24FB,string '%x '
+str_dumpSortcords,C24FF,string '===== sortcords ====\n'
+str_dumpSortLine,C2515,string '%d:%d[%d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %d %x]\n'
+str_dumpRule,C2550,string '==================================================\n'
+str_dumpTeamHdrH,C2584,string '       shts score [shots score] ppg pp pen penmin atop pass passcomp\n'
+str_dumpHome,C25CA,string 'home : %d %d [%d %d] %d %d %d %d %d %d %d\n'
+str_dumpPlHdrH,C25F5,string '   i pnum g  a  pen +/- ppg shg eng sht status\n'
+str_dumpPlLineH,C2625,string '%3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d\n'
+str_dumpGlHdrH,C2652,string '   i pnum min sht sav status\n'
+str_dumpGlLine,C2670,string '%3d %3d %5d %3d %3d %3d\n'
+str_dumpTeamHdrA,C2689,string '       shts score [shots score] ppg pp pen penmin atop pass passcomp\n'
+str_dumpAway,C26CF,string 'away : %d %d [%d %d] %d %d %d %d %d %d %d\n'
+str_dumpPlHdrA,C26FA,string '   i pnum g  a  pen +/- ppg shg eng sht status\n'
+str_dumpPlLineA,C272A,string '%3d %3d %3d %3d %3d %3d %3d %3d %3d %3d %3d\n'
+str_dumpGlHdrA,C2757,string '   i pnum min sht sav status\n'
+str_dbgO,C234B,string 'O'
+str_dbgDash,C234D,string '-'
+str_dbgL,C2478,string 'L'
+str_dbgI,C247A,string 'I'
+str_dbgSpace,C247C,string ' '
+str_dbgS,C2485,string '%s'
+str_newline,C24A0,string '\n'
+msg_MasterDB,C7DEA,message box line table
+msg_MasterDB_arg,C7DEE,msg_MasterDB fill-in string pointer for the message box
+msg_SavedGame,C809D,message box line table
+msg_SavedGame_arg,C80A1,msg_SavedGame fill-in string pointer for the message box
+msg_Copying,C7BD1,message box line table
+msg_Copying_arg,C7BD5,msg_Copying fill-in string pointer for the message box
+msg_InsertDisk,C7611,message box line table
+msg_InsertDisk_arg,C7615,msg_InsertDisk fill-in string pointer for the message box
+msg_WrongDisk,C766B,message box line table
+msg_WrongDisk_arg,C766F,msg_WrongDisk fill-in string pointer for the message box
+msg_AllHuman,C750F,message box line table
+msg_OneHuman,C753C,message box line table
+msg_TradeError,C7847,message box line table
+msg_TradeDeadline,C8C26,message box line table
+str_Show,C1A26,string 'Show '
+str_Statistics,C1A2C,string ' Statistics...'
+str_HOMEPALS,C1A3C,string 'HOMEPALS'
+str_easndesk,C1A48,string 'easndesk'
+str_bangpal,C1A51,string '!pal'
+str_LLST,C1A58,string 'LLST'
+str_LLSN,C1A5D,string 'LLSN'
+str_extnum,C1A62,string '.%02d'
+str_saved,C1A68,string 'saved'
+str_FromLeague,C7632,string ' from the league '
+str_PINFO,C80F3,string 'PINFO'
+str_PLAYER,C80F9,string 'PLAYER'
+str_extDB,C811A,string '.DB'
+str_extBIN,C814F,string '.BIN'
+str_extxx,C8154,string '.xx'
+str_extLP,C815C,string '.LP'
+str_extID,C8166,string '.ID'
+str_dot,C8164,string '.'
+str_floppydrv,C816A,string '?:'
+str_star,C8113,string '*'
+str_SelNewHuman,C818B,string 'Select new human controlled team'
+str_SelRemoveHuman,C81AC,string 'Select human controlled team to remove'
+str_SelTradeTeams,C81D3,string 'Select two teams for trading players'
+str_pen,C223B,string pen (DebugMonitor prints it for an object in the penalty box)
+teamcitynames,C54A9,"pointer table of team city names ('BOSTON', 'BUFFALO', 'CALGARY', ...); TradePlayers builds 'Show <city> Statistics...' from it"
+btn_MasterDB,C7E4E,"two-button table (Yes at +18h, No at +34h) for the 'Master databases for' message box"
+btn_WrongDisk,C7677,two-button table (Yes/No) for the 'That disk is for' message box in CopyHumanTeamDBs
+btn_TradeStats,C885C,button table for the TradePlayers team picker (the two 'Show <city> Statistics...' buttons)
+divisionteams,C83C3,4 divisions x 7 team indexes (63h = none); RandomizeSchedule shuffles inside each row
+teamdivision,C83DF,division (0-3) of each of the 1Ah teams; index into divisionteams
+teamdivslot,C83F9,slot of each team inside its divisionteams row
+monthdays,C8445,"31,28,31,30,31,30,31,31,30,31,30,31"
+monthdays_m1,C8444,monthdays-1 (1-based month index); NormalizeDate reads monthdays_m1[month]; separate label because monthdays is in the next data file
+str_sche,C1A70,string 'sche'
+str_Sch,C1A75,string 'Sch'
+str_gameset,C1A7C,string 'game.set'
+str_KbytesFree,C1A85,string '%4d Kbytes of free disk space.'
+str_SelHumanTeams,C816D,string 'Select human controlled teams'
+str_EnterLeagueName,C8227,string 'Enter New League Name'
+str_KbytesFreeLine,C8CA4,string 'XXXX Kbytes of free disk space.    '
+msg_GenSchedule,C8C59,message box line table
+msg_LeagueExists,C772B,message box line table
+btn_LeagueExists,C7733,string '\x10'
+msg_WhichSchedule,C77AA,message box line table
+btn_WhichSchedule,C77AE,string '\x10'
+msg_CreateError,C7826,message box line table
+msg_CreatingLeague,C7BEA,message box line table
+msg_DiskFull,C8D02,message box line table
+msg_NoDiskSpace,C8CC8,message box line table
+seasondb,D07BB,"buffer of the loaded <league>\SEASON.DB (UpdateSeasonSchedule loads it from leaguedbnames+14h, saves it back with sub_932D0, frees it); size in seasondb_size"
+seasondb_size,D07D3,"size of SEASON.DB from sub_92DE0, passed with seasondb to the save call"
+careerdb,D07BF,buffer of the loaded CAREER.DB (leaguedbnames+4) in UpdateSeasonSchedule
+careerdb_size,D07D7,size of CAREER.DB
+keydb,D07C7,buffer of the loaded KEY.DB (leaguedbnames+0) in UpdateSeasonSchedule
+keydb_size,D07DF,size of KEY.DB
+rosterteam,D079E,team shown in Edit Rosters panel 0/1 (FFh = free-agent list); SelectRosterTeam / ShowFreeAgents set it
+rosterisfa,D07A8,per panel: 1 when it shows the free-agent list
+falist,D07AA,free-agent list (1Bh bytes per player) built by LoadRosterList
+falistsel,D07AE,free-agent selection flags (one byte per entry)
+facount,D07B2,number of free agents (KEY.DB entries with team FFh)
+rostersel,EAF80,"selection flags of the two team panels, 1Ch bytes each"
+rosterlist,EA990,"player lists of the two team panels, 1Ch entries of 1Bh bytes (2F4h) each"
+rosterteamrec,EAF78,per panel pointer to the team's TEAMS.DB record (2E8h bytes); EditTeamLines copies it
+editrosters_exit,EBEA0,EditRostersReturn sets -1; EditRosters leaves its loop on it
+msglines,EBC74,line-pointer table the roster editor fills for MessageBox / the input dialog (sub_71F0C)
+teamdivflags,C5519,per team: >>1 gives the divisionteams row (4 counted as 3); SetSeriesTeams uses 2-3-2 when two teams' flags OR to 3
+roster1divmenus,D0151,"Roster 1 menu: per division (Central, Northeast, Atlantic, Pacific) the submenu item table; team items' handlers (+14h) are SelectRosterTeam or 0"
+roster2divmenus,D0211,"Roster 2 menu division table, as roster1divmenus"
+menu_r1_freeagents,D01CD,handler slot of 'Free Agents ...' in the Roster 1 menu (ShowFreeAgents or 0)
+menu_r2_freeagents,D028D,handler slot of 'Free Agents ...' in the Roster 2 menu
+menu_r1_tofa,D0331,Edit Roster 1 'Move to Free Agent List' handler slot (MoveToFreeAgents or 0)
+menu_r1_toroster2,D0351,Edit Roster 1 'Move to Roster 2' handler slot (MoveToOtherRoster or 0)
+menu_r1_editlines,D0391,Edit Roster 1 'Edit Team Lines ...' handler slot (EditTeamLines or 0)
+menu_r2_tofa,D03B1,Edit Roster 2 'Move to Free Agent List' handler slot
+menu_r2_toroster1,D03D1,Edit Roster 2 'Move to Roster 1' handler slot
+menu_r2_editlines,D0411,Edit Roster 2 'Edit Team Lines ...' handler slot
+str_fmtpd,C5283,string '%d'
+str_Prez2,C28C4,string 'prez2'
+str_Pal,C28CA,string '!pal'
+str_ea,C28CF,string 'ea  '
+str_Uar,C28D4,string 'uar'
+str_Uarm,C28D8,string 'uarm'
+str_TheJerseyNumber2d,C28DD,string 'The jersey number %2d is already used!'
+str_PleaseEnterANew,C2904,string 'Please enter a new jersey number for'
+str_Menubuff,C2929,string 'menubuff'
+str_TheDatabaseHasNot,C2932,string 'The database has not been saved.'
+str_AreYouSureYou,C2953,string 'Are you sure you want to exit?'
+str_ErrorsFoundInDatabases,C2B10,string 'Errors found in databases!'
+str_TheForwardLinesAre,C2B2B,string 'The forward lines are not complete on '
+str_TheDefenceLinesAre,C2B52,string 'The defence lines are not complete on '
+str_ThePowerPlayLines,C2B79,string 'The power play lines are not complete on '
+str_ThePenaltyKillingLines,C2BA3,string 'The penalty killing lines are not complete on '
+str_TheGoalieLinesAre,C2BD2,string 'The goalie lines are not complete on '
+str_TheExtraAttackerLines,C2BF8,string 'The extra attacker lines are not complete on '
+str_NotEnoughPlayers,C2C26,string 'There are not enough players on '
+str_NotEnoughGoalies,C2C47,string 'There are not enough goalies on '
+str_NotEnoughForwards,C2C68,string 'There are not enough forwards on '
+str_NotEnoughDefence,C2C8A,string 'There are not enough defence on '
+str_Shoots,C2CF4,string 'Shoots'
+str_spL,C2CFB,string '  L'
+str_spR,C2CFF,string '  R'
+str_GloveHand,C2D03,string 'Glove Hand'
+str_EnterANewRating,C2D12,string 'Enter a new rating:'
+str_RatingRange,C2D26,string '%2d < %s < %2d'
+str_ShootsLeftOrRight,C2D35,string 'Shoots Left or Right?'
+str_NotEnoughRatingUnits,C2D4B,string 'Not enough Rating Units'
+str_GloveHandLeftOr,C2D63,string 'Glove hand Left or Right?'
+str_Prez22,C2D7D,string 'prez2'
+str_Pal2,C2D83,string '!pal'
+str_ea2,C2D88,string 'ea  '
+str_Pstatbar,C2D8D,string 'pstatbar'
+str_Pst2,C2D96,string 'pst2'
+str_FreeAgent,C2D9B,string 'Free Agent'
+str_fmtSS,C2DA6,string '%s %s'
+str_fmtD,C2DAC,string '%d '
+str_Center,C2DB0,string 'Center'
+str_Defence,C2DB7,string 'Defence'
+str_LeftWing,C2DBF,string 'Left Wing'
+str_RightWing,C2DC9,string 'Right Wing'
+str_Goalie,C2DD4,string 'Goalie'
+str_RatingUnitsAvailable3d,C2DDB,string 'Rating Units Available <%3d>'
+str_Temp,C2DF8,string 'temp'
+str_3dKbytesOfFree,C2E1C,string '%3d Kbytes of free disk space.'
+str_NotEnoughSpaceTo,C2E3B,string 'Not enough space to create'
+str_ANewFreeAgent,C2E56,string 'a new free agent.'
+str_EnterNewPlayerName,C2E68,string 'Enter the name of the new player'
+str_EnterNewGoalieName,C2E89,string 'Enter the name of the new goalie'
+str_EnterAPositionFor,C2EAA,string 'Enter a position for'
+str_LCRD,C2EBF,"string '(L,C,R,D)'"
+str_EnterAJerseyNumber,C2EC9,string 'Enter a jersey number for'
+str_NotEnoughSpaceFA,C2EE3,string 'There is not enough space'
+str_InTheFreeAgent,C2EFD,string 'in the free agent list'
+str_ForAllSelectedPlayers,C2F14,string 'for all selected players'
+str_TheNumberOfSelected,C2F30,string 'The number of selected '
+str_PlayersAndGoalies,C2F48,string 'players and goalies'
+str_Players,C2F5C,string 'players'
+str_Goalies,C2F64,string 'goalies'
+str_MustBeTheSame,C2F6C,string 'must be the same on both teams!'
+str_EnterNameOfPlayer,C2F8C,string 'Enter name of player to find:'
+str_FreeAgentList,C2FAA,string 'Free Agent List'
+str_ChooseWhichTeamTo,C2FBA,string 'Choose which team to display'
+str_IsAlreadyDisplayedOn,C2FD7,string 'is already displayed on'
+str_Roster2,C2FEF,string 'Roster 2'
+str_Roster1,C2FF8,string 'Roster 1'
+str_DoesNotExist,C3001,string 'does not exist!'
+str_fmt2d,C6903,string '%2d'
+str_fmt3d,C6907,string '%3d'
+str_TMP,D07B6,string '.TMP'
+str_Ratings,D0819,string 'Ratings:'
+str_ThereIsNoSpace,D0D68,string 'There is no space to add'
+str_TheSelectedPlayer,D0D81,string 'the selected player'
+str_NotEnoughSpaceTo2,D0D95,string 'There is not enough space to'
+str_AddAllSelectedPlayers,D0DB2,string 'add all selected players'
+str_ErrorWhileMakingNew,D0E18,string 'Error while making new databases!'
+str_NewPlayer,D0E3A,string 'New player'
+str_NotAddedToDatabases,D0E45,string ' not added to databases!'
+str_Move,D0E81,string 'Move'
+str_ToFreeAgentList,D0E86,string 'to Free Agent List?'
+str_CreateAPlayerOr,D0EB4,string 'Create a player or goalie.'
+str_XXXKbytesOfFree,D1056,string 'XXX Kbytes of free disk space.  '
+carteamsdb,D07C3,buffer of CARTEAMS.DB (LoadTempDatabases loads leaguedbnames+0Ch into it); CarTeamRecPtr indexes it by team * 4Ch
+carteamsdb_size,D07DB,size of CARTEAMS.DB (sub_92DE0 after the load)
+teamsdb,D07CB,buffer of TEAMS.DB (leaguedbnames+10h); TeamRecPtr indexes it by team * 2E8h
+teamsdb_size,D07E3,size of TEAMS.DB
+attdb,D07CF,buffer of ATT.DB (leaguedbnames+8) in LoadTempDatabases
+attdb_size,D07E7,size of ATT.DB
+str_space,C8111,string ' ' (separator between first and last name)
+str_ErrDiskFree,C2DFD,string 'error getting disk space free\n' (CreateFreeAgent)
+exhstate,C5298,"mode state block for gamemode 0 (75h bytes, see SaveModeState); CreatePlayoffs saves the current state here and restores it on exit"
+postate,C530D,"mode state block for gamemode 1 (Play-Off): CreatePlayoffs sets it up (+51h home 0Ch, +55h visitor 15h, controller fields) and loads it with LoadModeState"
+lgstate,C5382,mode state block for gamemode 2 (league; temp_files sets +0 = 2)
+gamemode,C53FB,"current game mode: 0 exhibition, 1 Play-Off, 2 league (LoadModeState sets it from state +0; WriteCurModeState switches on it)"
+ctl1team,C5403,"team of controller 1 (-1 none, -2 eliminated in Play-Off); mode state +5Dh"
+ctl2team,C5407,"team of controller 2 (-1 none, -2 eliminated); mode state +61h"
+ctl1dev,C540B,"input device of controller 1 (1/2/4/8, 10h = none, from byte_EA0F4); mode state +65h"
+ctl2dev,C540F,input device of controller 2; mode state +69h
+ctl1side,C5413,"side controller 1 plays (0 home, 1 away); mode state +6Dh; SetSideControls"
+ctl2side,C5417,side controller 2 plays; mode state +71h
+teamconf,C5581,"conference flags per team (3 = west divisions 1|2, 0Ch = east divisions 4|8); POSeedTeams / POInitSchedule"
+confteams,C55E9,the 26 teams ordered by conference (12 west then 14 east); POPickConfTeams picks from it
+playofftree,DC7B8,"playoff tree slots: 16 round-1, 8 round-2, 4 conference-final, 2 final team numbers (1Ah = empty) shown by DrawPlayoffTree"
+playofftree_p1,DC7BC,playofftree+4 (second team of each pair; separate data file so not folded)
+pochampion,DC830,playoff tree slot 30: SeriesWinner of the final (1Ah until decided)
+schedgameidx,DC234,schedule game index of the current game (444h + playoff game number); set by PlayoffModeLoop and temp_files
+seriesgameno,D29FB,game number within the current 7-game series (game index mod 7)
+leaguedbfmt,DD750,league DB path format '<league>\%s.db' built by CreatePlayoffs; LoadScheduleDB sprintf's 'schedule' into it
+leaguedbfmt2,DD710,copy of leaguedbfmt used as the fallback path by LoadScheduleDB
+msg_POExists,D28EB,message box line table
+msg_POSetupError,D2950,message box line table
+msg_POSettingUp,D2983,message box line table
+msg_PODiskSpace,D29EF,message box line table
+msg_PODiskSpace_arg,D29CB,msg_PODiskSpace fill-in string pointer for the message box
+msg_POHumanOut,D2B0C,message box line table
+btn_POHumanOut,D2B38,string '\x10'
+msg_POTeamOut,D2B1C,message box line table
+msg_POTeamOut_arg,D2A6C,msg_POTeamOut fill-in string pointer for the message box
+msg_POTeamOut_arg2,D2AAF,message box line table
+msg_POGenFinal,D2B34,message box line table
+str_Palette,C39B3,string 'palette'
+str_Embscup,C39BB,string 'embscup'
+str_Bkgd,C39C3,string 'bkgd'
+str_Embpal,C39C8,string 'embpal'
+str_PleaseEnterNewPlay,C39D4,string 'Please Enter New Play-Off Name'
+str_PO,C39F3,string '.PO'
+str_GameSet,C39FE,string 'game.set'
+str_4dKbytesOfFree,C3A07,string '%4d Kbytes of free disk space.'
+str_Temp2,C3A26,string 'temp'
+str_ScheduleDb,C3A2B,string 'schedule.db'
+str_E31,C3A43,string 'e31'
+str_E32,C3A47,string 'e32'
+str_Db,C3A4B,string '.db'
+str_Tied,C3A4F,string 'tied'
+str_Schedule,C3A54,string 'schedule'
+str_GameSav,C3A5D,string 'game.sav'
+str_Pointer,C3A68,string 'Pointer'
+str_Menubuff2,C3A70,string 'menubuff'
+str_PlayoffsHaveNotBeen,C3A79,string 'Playoffs have not been seeded yet'
+str_Pstatbar2,C3A9B,string 'pstatbar'
+str_Rst1,C3AA4,string 'rst1'
+str_Rst2,C3AA9,string 'rst2'
+str_Scuparrw,C3AAE,string 'scuparrw'
+str_WesternConference,C3AB7,string 'Western Conference'
+str_EasternConference,C3ACA,string 'Eastern Conference'
+str_Aup1,C3AE4,string 'aup1'
+str_Aup2,C3AE9,string 'aup2'
+str_Aup3,C3AEE,string 'aup3'
+str_Midl,C3AF3,string 'midl'
+str_Adn3,C3AFB,string 'adn3'
+str_Adn2,C3B00,string 'adn2'
+str_Adn1,C3B05,string 'adn1'
+str_Bkgd2,C693B,string 'bkgd'
+str_E1,C3A37,string 'e1'
+str_E2,C3A3A,string 'e2'
+str_F1,C3A3D,string 'f1'
+str_F2,C3A40,string 'f2'
+str_D,C3AE1,string '%d'
+str_BangPal,C39CF,string '!pal'
+str_fmtSlashDb,C39F7,string '\\%s.db'
+str_fmtcsp,C3ADD,string '%c '
+joypresent,C4D00,"joystick 1 present flag (dword_C4D04 = joystick 2), set by main_ after 'Configure Left/Right Joystick'; ReadJoyPad indexes it"
+inputticks,C4D08,"SampleInputTick tick counter (capped at 1000), cleared by ResetInputSampling"
+pad1dev,C4D1C,"controller 1 pad device code (0 none, 1 mouse, 2 joystick 1, 4 joystick 2, 8 keyboard), set by SetupControllers"
+pad2dev,C4D1D,controller 2 pad device code
+lasthotkey,C4D1E,last hot key seen by ReadHotKeys / ReadSkipKeys (edge detection); the keyboard direction table follows at C4D1F
+samesideflag,C4E0C,1 when both controllers play the same side (SetupControllers)
+inputframes,C4E10,frames left for the current joyqueue record (3 per record) in RunGameFrames
+escrequest,C4E14,set by HandleHotKey on Esc; the game frame code checks and clears it
+palfadedin,C4E24,FadePalette: palette currently faded in
+screenw,C4E28,current screen width (SetScreenSize; 280h)
+screenh,C4E2C,current screen height (1E0h)
+joyrawbits,D8B7C,"joystick bits sampled by sub_B3464 (low byte joystick 1, high byte joystick 2)"
+memlist1,EDA08,memory block list head returned by GetMemListHead(1)
+memlist0,EDA0C,memory block list head returned by GetMemListHead(0)
+str_Pointer3,C0172,string 'pointer3'
+str_Pntr,C017B,string 'pntr'
+str_Scor2b,C0183,string 'scor2b'
+str_Scor3b,C018A,string 'scor3b'
+str_Kaufm020,C0191,string 'kaufm020'
+str_ConfigureLeftJoystick,C019A,string 'Configure Left Joystick'
+str_ConfigureRightJoystick,C01B2,string 'Configure Right Joystick'
+str_GameSet2,C01CB,string 'game.set'
+str_Temp3,C01DA,string 'temp'
+str_VFN,C814A,string '.VFN'
+str_S1,C0180,string 's1'
+str_errd3,C01D4,string 'd3'
+str_errd4,C01D7,string 'd4'
+str_NoDiskSpaceC,C0004,"string ""\nInsufficient Disk Space free on 'C:'.\nPlease free up at least 2 Kbytes of disk space\n"""
+str_ErrDiskFree2,C005B,string 'error getting disk space free\n'
+str_NoDiskSpaceCur,C007A,string '\nInsufficient Disk Space free on current drive.\nPlease free up at least %d Kbytes of disk space\n'
+str_NoMemory,C00DB,string '\nInsufficient memory available.'
+str_CheckRefCard,C00FB,string '\nPlease check your reference card.\n\n'
+str_NoConvMemory,C0120,string '\nInsufficient conventional memory available.'
+str_CheckRefCard2,C014D,string '\nPlease check your reference card.\n\n'
+str_ErrDiskFree3,C01DF,string 'error getting disk space free\n'
+rinkendart,D8C70,"frame '0000' of the 'trinknd' rink-end art (asset_loading), drawn by DrawRinkEndArt"
+gameresult,C53F7,"result of the last game: 0 running, 1 completed, 2 quit / cancelled (GameLoop, PlayGame; PlayoffModeLoop calls POAfterGame only on 1)"
+frameaccum,D8C6C,GameLoop: remainder of ticks*6 / 10 carried to the next pass when converting timer ticks to game frames
+str_GameSav2,C0202,string 'game.sav'
+str_PPV,C8136,string '.PPV'
+str_backslash,C0200,string '\\'
+awardart,C5194,"11 pointers to the trophy art file names (""hart"", ""ross"", ""norr"", ""selk"", ""vezi"", ""jenn"", ""cald"", ""pres"", ""conn"", ""easn"", ""stan""); ShowAwardScreens"
+awardnames,C51C0,"11 pointers to the trophy names (""Hart"" .. ""Stanley Cup""); ShowAwardScreens, DrawAwardsSummary"
+awardtitles,C51EC,"11 pairs of string pointers (title, optional line above) for the trophy screens (""Most Valuable Player"", ""Points Leader"" ...); ShowAwardScreens"
+awardtype,C5244,"11 bytes, kind of winner per trophy: 0 goalie, 1 skater, 2 team; ShowAwardScreens, DrawAwardsSummary"
+presidentsteam,D9270,"team record of the best regular-season record (Presidents' Trophy; points 2*W + T, then win%); PickAwardWinners, ShowAwardScreens"
+cupteam,D8F88,"team record shown for award 10 (Stanley Cup); PickAwardWinners, ShowAwardScreens"
+str_ANA,C039F,string 'ANA'
+str_Cal,C03BC,string 'Cal'
+str_Flo,C03C0,string 'Flo'
+str_SS,C03C8,string '%s %s'
+str_Min,C03D1,string 'Min'
+str_GAA,C03D5,string 'GAA'
+str_Shots,C03E5,string 'Shots'
+str_Pct,C03EB,string 'Pct'
+str_PIM,C03F6,string 'PIM'
+str_PPG,C03FE,string 'PPG'
+str_SHG,C0402,string 'SHG'
+str_Pal3,C0406,string '!pal'
+str_Palmem,C040B,string 'palmem'
+str_D02d,C5286,string '%d.%02d'
+str_D01d,C528E,string '%d.%01d'
+str_GP,C03CE,string 'GP'
+str_W,C03D9,string 'W'
+str_L,C03DB,string 'L'
+str_T,C03DD,string 'T'
+str_SO,C03DF,string 'SO'
+str_EN,C03E2,string 'EN'
+str_G,C03EF,string 'G'
+str_A,C03F1,string 'A'
+str_Pt,C03F3,string 'Pt'
+str_PlusMinus,C03FA,string '+/-'
+str_MightyDucks,C03A3,string 'Mighty Ducks\x07 of Anaheim'
+photobanks,D9980,17h loaded .PPV player photo banks (LoadPlayerPhotos)
+photoptrs,D9A38,"46Eh picture pointers, 50 per photo bank (IndexPhotoBank)"
+photobankf,CC0E0,"loaded ""f000_149.PPV"" bank (LoadPhotoBankF)"
+photoptrsf,E00A0,69h picture pointers into photobankf (LoadPhotoBankF)
+hilightfont,ED700,loaded HILIGHT.VFN (LoadGameGfx)
+numshpbank,D8C80,loaded numshp.PPV (LoadGameGfx)
+numshapes,D8C18,"10 number shape pointers ""0000""..""0009"" in numshpbank (LoadGameGfx)"
+rinkendbank,D8C68,loaded trinknd.PPV holding rinkendart (LoadTransparentRinkEndOverlay)
+str_Awardsi,C0412,string 'awardsi'
+str_Scrn,C041A,string 'scrn'
+str_Titl,C041F,string 'titl'
+str_Iff,C0424,string '.iff'
+str_Awards,C0429,string 'awards'
+str_Mtafan,C0430,string 'mtafan'
+str_Adafan,C0437,string 'adafan'
+str_Awasong,C043E,string 'awasong'
+str_Mtawards,C0446,string 'mtawards'
+str_Adawards,C044F,string 'adawards'
+str_Summ,C0458,string 'summ'
+str_04d,C0460,string '%04d'
+str_F000149,C0465,string 'f000_149'
+str_D50D99,C046E,string '%d50%d99'
+str_D00D49,C0477,string '%d00%d49'
+str_D50_D99,C0480,string '%d50_%d99'
+str_D00_D49,C048A,string '%d00_%d49'
+str_Trinknd,C0494,string 'trinknd'
+str_0000,C049C,string '0000'
+str_HILIGHT,C04A1,string 'HILIGHT'
+str_Numshp,C04A9,string 'numshp'
+str_GfxIdList,C04B0,string '000G000D000D000L000C000R000X'
+hudpenhome,C571C,"8 penalty entries of 8 bytes (player, time, ...; -1 free) shown on the left of the panel (PanelAddPenalty / PanelRemovePenalty / UpdateHudPanel)"
+hudpenaway,C575C,8 penalty entries of 8 bytes for the right side of the panel
+hudhomeline,C584C,line indicator currently drawn on the left of the panel (DrawPanelLine)
+hudawayline,C5850,line indicator currently drawn on the right of the panel (DrawPanelLine)
+scoredigits,DC2C4,10 digit shapes for the panel score (DrawPanelScore)
+linesprites,DC26C,line indicator shapes (DrawPanelLine)
+str_GsummaryDb,C068A,string 'gsummary.db'
+str_NeedKbytesFmt,C0696,"string 'play the game, you require %2d Kbytes'"
+msg_NeedKbytes,C5679,message text (sprintf target) for the CheckGameDiskSpace MessageBox
+str_ErrDiskFree4,C064C,string 'error getting disk space free\n'
+str_ErrDiskFree5,C066B,string 'error getting disk space free\n'
+str_backslash2,C8115,string '\\'
+demomode,C5130,1 while RunDemoGame runs the attract-mode game (GameLoop ends it on a key)
+hudclockmin,C5704,"panel clock minutes (DrawHudPanel, TickPanelClock)"
+hudclocksec,C5708,panel clock seconds
+hudclockhund,C570C,panel clock hundredths
+clockdigits,DC30C,"10 digit shapes for the panel clock (DrawPanelClock, DrawPanelClockDigits)"
+clockcolon,DC334,clock separator shape (DrawPanelClock)
+cupseries,DC338,"""Stanley"" copy of the 7 Stanley Cup final games during a final game, else 0 (LoadCupFinalSeries, IsCupClinched)"
+perioddigits,C579C,"names of the period number shapes in scrbrd2.PPV (""3000""..""3009"") (DrawHudPanel)"
+crestnames,C57CC,"crest shape names in crests4.PPV, one per team (""BOS "", ""BUF "" ...) (DrawHudPanel)"
+str_Scrbrd2,C0784,string 'scrbrd2'
+str_Srb3,C078C,string 'srb3'
+str_Crests4,C0791,string 'crests4'
+str_Stanley,C079C,string 'Stanley'
+textcolor,C6418,text colour for the Print* routines (SetTextColors)
+textshadow,C641C,shadow / outline colour for the Print* routines (SetTextColors)
+textgrid,C6410,100 x 36 character copy of the screen text (TextGridOpen / TextGridPut)
+textgridon,C6414,1 while TextGridPut logs text
+textoutlinedx,C6420,4 x offsets for PrintOutlinedText
+textoutlinedy,C6430,4 y offsets for PrintOutlinedText
+fontcolor,D42A8,current font colour read by the text blitter (sub_91964); the Print* routines set it from textshadow / textcolor
+str_Eascrn,C085A,string 'eascrn'
+str_Pal4,C0861,string '!pal'
+str_Scrn2,C0866,string 'scrn'
+str_Msk1,C086B,string 'msk1'
+str_MASK,C0870,string 'MASK'
+str_Iff2,C0875,string '.iff'
+str_Title30,C087A,string 'title30'
+str_Mttitle,C0882,string 'mttitle'
+str_Adtitle,C088A,string 'adtitle'
+str_Cmv,C0892,string '.cmv'
+str_Title,C0897,string 'title'
+str_Pioneer1,C089D,string 'pioneer1'
+str_Pl2,C08A6,string '!pl2'
+str_Pl1,C08AB,string '!pl1'
+str_Bkgd3,C08B0,string 'bkgd'
+str_Pioneer2,C08B5,string 'pioneer2'
+str_Pioneer4,C08BE,string 'pioneer4'
+str_Pioneer3,C08C7,string 'pioneer3'
+str_FlaD,C08D0,string 'fla%d'
+str_Pion,C08D6,string 'pion'
+str_Pio,C08DB,string '!pio'
+str_Eaopen,C08E0,string 'eaopen'
+str_Easports,C08E7,string 'easports'
+str_Backwin,C08F0,string 'backwin'
+str_Credits,C08F8,string 'credits'
+str_Rockditi,C0900,string 'rockditi'
+str_Shp0,C0909,string 'shp0'
+str_KMS,C8140,string '.KMS'
+deskexit,C65BC,sports desk menu result set by the DeskSetExit* items (read by easn_stats and palette_fx)
+statsfromleague,C695A,"stats source: 0 the built-in '93 - '94 data, 1 a user league / Play-Off file (StatsSel*)"
+statsplayoffs,C6956,1 for play-off stats (StatsSel*)
+statsleague,C65D4,name of the league / Play-Off whose stats are shown (StatsSel*)
+mi_9394Season,C671C,"""Statistics Type"" menu item text (first byte 1 = selected, 2 = not)"
+mi_9394Playoffs,C672F,"menu item ""'93 - '94 Play-Offs"""
+mi_LeagueSeason,C6745,"menu item ""<league> Season"""
+mi_LeaguePlayoffs,C6759,"menu item ""<league> Season Play-Offs"""
+mi_PlayoffMode,C6777,"menu item ""<name> Play-Offs"""
+str_OUT,C0910,string '.OUT'
+str_NeedKbytesFmt2,C0915,string 'require %2d Kbytes of free disk space.'
+msg_NeedKbytes2,C6570,message text (sprintf target) for the WriteScreenTextFile free-space MessageBox
+str_rt,C093C,string 'rt'
+str_wt,C093F,string 'wt'
+statscategory,C65B0,"stats category picked in the stats menu (StatsMenu*; team 0-5, skater 0-7, goalie 8-10)"
+teamstatscb,C65C0,redraw callback for the team stats screen (StatsMenu* team items)
+skaterstatscb,C65C4,redraw callback for the skater stats screen
+goaliestatscb,C65C8,redraw callback for the goalie stats screen
+sfpal1,DC6B0,"loaded ""SfPal1"" fade palette (StatsMenu*)"
+sfpal2,DC6AC,"loaded ""SfPal2"" fade palette (StatsMenu*)"
+str_SfPal1,C0944,string 'SfPal1'
+str_SfPal2,C094B,string 'SfPal2'
+statsredrawcb,C65B8,callback (statscategory) that redraws the current stats screen after a Statistics Type change (StatsSel*)
+hlplayedmask,C65F4,"bits of the 6 highlights already shown (PlayRandomHighlight, IntermissionDesk)"
+mi_HomeGoalie1,CEE5F,"goalie menu item (text pointer, action DeskHomeGoalie1)"
+mi_HomeGoalie2,CEE7F,goalie menu item (DeskHomeGoalie2)
+mi_HomeGoalieNone,CEE9F,goalie menu item (DeskHomeGoalieNone)
+mi_AwayGoalie1,CEEBF,goalie menu item (DeskAwayGoalie1)
+mi_AwayGoalie2,CEEDF,goalie menu item (DeskAwayGoalie2)
+mi_AwayGoalieNone,CEEFF,goalie menu item (DeskAwayGoalieNone)
+str_PleaseEnterOutputFile,C0952,string 'Please enter output file name'
+str_Eadesk1d,C0970,string 'eadesk%1d'
+str_Desk,C097A,string 'desk'
+str_Pal5,C097F,string '!pal'
+str_Pointer2,C0984,string 'Pointer'
+str_Iff3,C098C,string '.iff'
+str_Pause,C0991,string 'pause'
+str_Menubuff3,C0997,string 'menubuff'
+str_ReturningToSportsCentral,C65F8,string 'Returning to sports central'
+str_ReturningOutOfThe,C6614,string 'Returning out of the game'
+str_ReturningToThePlayoff,C662E,string 'Returning to the playoff tree'
+str_ExitingTheGame,C664C,string 'Exiting the game'
+str_DoYouWishToReturn,C6678,string 'Do you wish to return?'
+str_DoYouWishToExit,C668F,string 'Do you wish to exit?'
+hmteamrec,DBC30,TEAMS.DB record (2E8h bytes) of the home team for this game (LoadGameTeams)
+awteamrec,DBF18,TEAMS.DB record (2E8h bytes) of the visiting team (LoadGameTeams)
+gsummarypath,DAC20,"path of the league gsummary.db (MakeGSummaryPath, InitGameSummary)"
+hmscratch,DC228,8 scratched home roster slots (64h = none) (LoadGameTeams)
+awscratch,DAC18,8 scratched visiting roster slots (64h = none)
+hmgoalieidx,DC224,roster slots of the two home goalies (SetupGoalieMenu)
+awgoalieidx,DAC14,roster slots of the two visiting goalies
+str_teams,C0A18,string 'teams'
+str_key,C0A4D,string 'key'
+str_att,C0A55,string 'att'
+str_season,C0A5D,string 'season'
+str_career,C0A68,string 'career'
+str_GsummaryDb2,C0A71,string 'gsummary.db'
+str_backslash3,C0A6F,string '\\'
+str_GoalieItemTmpl,CDCD0,string '\x02 00 X. XXXXXXXXXXXXXXXX'
+str_fe1,C0A1E,"FatalError code ""1"" (key_team_db)"
+str_fe2,C0A20,"FatalError code ""2"" (key_team_db)"
+str_fe3,C0A22,"FatalError code ""3"" (key_team_db)"
+str_fe4,C0A24,"FatalError code ""4"" (key_team_db)"
+str_fe5,C0A26,"FatalError code ""5"" (key_team_db)"
+str_fe7,C0A28,"FatalError code ""7"" (key_team_db)"
+str_fe8,C0A2A,"FatalError code ""8"" (key_team_db)"
+str_feB1,C0A2C,"FatalError code ""B1"" (key_team_db)"
+str_feB5,C0A2F,"FatalError code ""B5"" (key_team_db)"
+str_feB8,C0A32,"FatalError code ""B8"" (key_team_db)"
+str_feD,C0A35,"FatalError code ""D"" (key_team_db)"
+str_feE,C0A37,"FatalError code ""E"" (key_team_db)"
+str_feF,C0A39,"FatalError code ""F"" (key_team_db)"
+str_feG,C0A3B,"FatalError code ""G"" (key_team_db)"
+str_feH,C0A3D,"FatalError code ""H"" (key_team_db)"
+str_feI,C0A3F,"FatalError code ""I"" (key_team_db)"
+str_feL,C0A41,"FatalError code ""L"" (key_team_db)"
+str_feM,C0A43,"FatalError code ""M"" (key_team_db)"
+str_feN,C0A45,"FatalError code ""N"" (key_team_db)"
+str_feO,C0A47,"FatalError code ""O"" (key_team_db)"
+str_feP,C0A49,"FatalError code ""P"" (key_team_db)"
+str_feQ,C0A4B,"FatalError code ""Q"" (key_team_db)"
+str_fe9,C0A51,"FatalError code ""9"" (key_team_db)"
+str_feA,C0A53,"FatalError code ""A"" (key_team_db)"
+str_feB,C0A59,"FatalError code ""B"" (key_team_db)"
+str_feC,C0A5B,"FatalError code ""C"" (key_team_db)"
+str_feJ,C0A64,"FatalError code ""J"" (key_team_db)"
+str_feK,C0A66,"FatalError code ""K"" (key_team_db)"
+scrbrdshapes,DC2F0,handle returned by sub_8E8A0 for scrbrd1.PPV
+penaltydigits,DC290,"digit sprites ""2000""..""2009""; indexed in DrawPanelPenalties"
+awlineind,DC300,"vlin/vpp/vpk sprites, used by UpdateHudPanel"
+hmlineind,DC2F4,hlin/hpp/hpk sprites
+awpanelspr,DC2C0,"""visp"" sprite"
+hmpanelspr,DC2BC,"""homp"" sprite"
+cliprect_x0,D30AC,DrawSprite / ea_gfx clip left (0)
+cliprect_y0,D30B0,clip top (0)
+cliprect_x1,D30B4,clip right (640)
+cliprect_y1,D30B8,clip bottom (480)
+spritedrawcount,D8C40,"incremented per DrawSprite, reset per frame"
+lastsprremap,C6718,cached remap selection in DrawSprite
+dirtyrectptr,DC8D0,per-page rect list ptr (AddDirtyRect)
+dirtyrectcount,C66C8,per-page rect count
+str_scrbrd1,C0A80,string
+str_SeasonSfx,C6891,string
+str_SeasonPlayOffsSfx,C689A,string
+str_PlayOffsSfx,C68AD,string
+str_SportsCentral,CE20B,string
+str_LeagueCalendar,CE21A,string
+str_PlayoffTree,CE22A,string
+str_BroadcastBooth,CE237,string
+str_IntermissionDesk,CE247,string
+str_RinkSide,CE259,string
+pointerspr,DC238,"mouse pointer sprite, bg saved as ""Pointer"""
+statsteamsel,C65B4,selected team index in stats pickers
+statsteamorder,DC640,26 team indices for the team picker
+statsteambuf,DD10C,team stat records (1Ah bytes)
+statsskaterbuf,DD110,"skater stat records (2Fh bytes, playoffs +12h)"
+statsgoaliebuf,DD114,"goalie stat records (36h bytes, playoffs +16h)"
+statsplayerbuf,DD11C,"player records (34h bytes; +2 pos, +3 first, +13h last name)"
+statsskaterorder,DC6BC,sorted skater list (qsort CompareSkaterStats)
+statsgoalieorder,DC720,sorted goalie list (qsort CompareGoalieStats)
+statsskaterplr,DC754,skater -> statsplayerbuf index
+statsgoalieplr,DC73C,goalie -> statsplayerbuf index
+statsnumskaters,DC750,skater count
+statsnumgoalies,DC6B8,goalie count
+statsplayer,DC834,copy of picked player record
+printfbuf,DD0D8,sprintf scratch for screen text
+menuremap,DCFD8,remap table
+menuremap2,DD058,second half/remap table written in identity mode
+str_PointerMenu,C0B54,string
+str_menubuff,C0B5C,string
+str_sfh,C0C28,string
+str_shape,C0C2C,string
+str_9394Season,C671E,string
+str_9394PlayOffs,C6731,string
+str_LgSeasonTitle,C6747,"'""' + league name + '"" Season'"
+str_LgPlayoffsTitle,C675B,string
+str_POTitle,C6779,string
+standingscb,C65CC,standings screen callback (Game/Easn/CalStandingsScreen)
+standingsmenucb,C65D0,standings + roster menu callback
+calendarshapes,C8992,"""calendar"" shape file handle"
+statsbgshapes,DD104,embpal shape file handle
+statspalshape,DD100,"""!pal"" shape from embpal"
+statspalvalid,C6A60,nonzero = use statspal copy (cleared by RunPlayerPickMenu)
+statspal,DD120,saved 300h palette
+photoremap,C6960,remap table for photos
+str_embpal,C0C34,string
+str_Pal6,C0C3B,string
+str_tstat,C0C40,string
+str_keys,C0C46,string
+str_pstat,C0C4B,string
+str_gstat,C0C51,string
+str_embpal2,C0C58,string
+str_Pal7,C0C5F,string
+str_easndesk2,C0C64,string
+str_tstat2,C0C6D,string
+str_keys2,C0C73,string
+str_pstat2,C0C78,string
+str_gstat2,C0C7E,string
+str_calendar,C0C84,string
+str_embpal3,C0C8D,string
+str_Pal8,C0C94,string
+str_tstat3,C0C99,string
+str_keys3,C0C9F,string
+str_pstat3,C0CA4,string
+str_gstat3,C0CAA,string
+str_EASNvfn,C6940,string
+teamsortfns,C6AE0,team stats comparators by statscategory
+leadersortfns,C6BE8,leader comparators by statscategory
+teamstattitles,C6B70,""" Team Scoring"" .. "" Team Standings"""
+leadertitles,C6C14,""" Point Leaders"" .. "" Save Percentage Leaders"""
+westconfname,C6B68,"-> ""Western Conference"""
+eastconfname,C6B6C,"-> ""Eastern Conference"""
+statsbgnames,C68E4,embnhl / embscup
+statsplayerdbs,C68EC,career.db / season.db by statsfromleague
+statsteamdbs,C68F4,carteams.db / teams.db
+str_embnhl,C0BF0,string
+str_embscup,C0BF7,string
+str_careerdb,C0BFF,string
+str_seasondb,C0C09,string
+str_carteamsdb,C0C13,string
+str_teamsdb,C0C1F,string
+statsteamrecs,DD108,"""teams"" buffer, 4Ch-byte team stat records"
+statssortkeys,DD118,"""addsort"" buffer, per-entry sort keys"
+str_PORTR,C0D52,string 'PORTR'
+str_Pstatbar3,C0D58,string 'pstatbar'
+str_Pst1,C0D61,string 'pst1'
+str_Pst22,C0D66,string 'pst2'
+str_PlayerStats,C0D6B,string 'Player Stats'
+str_SS2,C0D78,string '%s %s'
+str_D2,C0D7E,string '%d '
+str_Center2,C0D82,string 'Center'
+str_Defense,C0D89,string 'Defense'
+str_LeftWing2,C0D91,string 'Left Wing'
+str_RightWing2,C0D9B,string 'Right Wing'
+str_G2,C0DA9,string '  G'
+str_A2,C0DAD,string '  A'
+str_Pt2,C0DB1,string ' Pt'
+str_PIM2,C0DB5,string 'PIM'
+str_PPG2,C0DBE,string 'PPG'
+str_SHG2,C0DC2,string 'SHG'
+str_Shots2,C0DC6,string 'Shots'
+str_Pct2,C0DCC,string '  Pct'
+str_Ratings2,C0DD2,string 'Ratings:'
+str_Shoots2,C0DDB,string 'Shoots'
+str_L2,C0DE2,string '  L'
+str_R,C0DE6,string '  R'
+str_PORTR2,C0E64,string 'PORTR'
+str_Pstatbar4,C0E6A,string 'pstatbar'
+str_Pst12,C0E73,string 'pst1'
+str_Pst23,C0E78,string 'pst2'
+str_PlayerStats2,C0E7D,string 'Player Stats'
+str_SS3,C0E8A,string '%s %s'
+str_DGoalie,C0E90,string '%d Goalie'
+str_Min2,C0E9D,string ' Min'
+str_GAA2,C0EA2,string '  GAA'
+str_SA,C0EB7,string '   SA'
+str_Pct3,C0EBD,string '  Pct'
+str_Ratings3,C0EC3,string 'Ratings:'
+str_GloveHand2,C0ECC,string 'Glove Hand'
+str_L3,C0ED7,string '  L'
+str_R2,C0EDB,string '  R'
+str_Teams,C0FA6,string 'teams'
+str_Addsort,C0FAC,string 'addsort'
+str_Pstatbar5,C0FB4,string 'pstatbar'
+str_Pst24,C0FBD,string 'pst2'
+str_StatsUnavailable,C0FC2,string 'Stats Unavailable'
+str_ANA2,C0FD7,string 'ANA'
+str_MightyDucksOfAnaheim,C0FDB,string 'Mighty Ducks of Anaheim'
+str_KeyDb,C1040,string 'key.db'
+str_Pstatbar6,C1047,string 'pstatbar'
+str_Pst25,C1050,string 'pst2'
+str_Trad,C1058,string 'trad'
+str_Regi,C105D,string 'regi'
+str_MightyDucksOfAnaheim2,C1062,string 'Mighty Ducks  of Anaheim'
+str_Pos,C107B,string 'Pos'
+str_Name,C1082,string 'Name'
+str_G3,C108A,string '  G'
+str_A3,C108E,string '  A'
+str_PT,C1092,string ' PT'
+str_Shots3,C1096,string 'Shots'
+str_PIM3,C109C,string 'PIM'
+str_Min3,C10A8,string ' Min'
+str_GAA3,C10AD,string '  GAA'
+str_GA,C10BC,string ' GA'
+str_SA2,C10C0,string '  SA'
+str_PCT,C10C5,string '  PCT'
+str_Keys,C1211,string 'keys'
+str_Pstat,C1216,string 'pstat'
+str_Gstat,C121C,string 'gstat'
+str_Addsort2,C1222,string 'addsort'
+str_KeyDb2,C122A,string 'key.db'
+str_Pstatbar7,C1231,string 'pstatbar'
+str_Pst26,C123A,string 'pst2'
+str_StatsUnavailable2,C123F,string 'Stats Unavailable'
+str_POS,C1251,string 'POS'
+str_PLAYER2,C1258,string 'PLAYER'
+str_TEAM,C125F,string 'TEAM'
+str_AttDb,C68FC,string 'att.db'
+str_fmt4d,C690B,string '%4d'
+str_fmt5d,C690F,string '%5d'
+str_fmtTenths,C6913,string '%3d.%1d'
+str_fmtPct,C691B,string '%1d.%03d'
+str_fmtPct0,C6924,string ' .%03d'
+str_fmtMinSec,C692B,string '%2d.%2.2d'
+str_fmtEmb,C6935,string 'emb%s'
+str_GP2,C0DA6,string 'GP'
+str_GP3,C0E9A,string 'GP'
+str_W2,C0EA8,string ' W'
+str_L4,C0EAB,string ' L'
+str_T2,C0EAE,string ' T'
+str_SO2,C0EB1,string 'SO'
+str_EN2,C0EB4,string 'EN'
+str_GP4,C0FD4,string 'GP'
+str_S,C1055,string '%s'
+str_No,C107F,string 'No'
+str_GP5,C1087,string 'GP'
+str_C,C10A5,string '%c'
+str_W3,C10B3,string ' W'
+str_L5,C10B6,string ' L'
+str_T3,C10B9,string ' T'
+str_NO,C1255,string 'NO'
+str_GP6,C1264,string 'GP'
+str_C2,C1267,string '%c'
+str_PlusMinus2,C0DB9,""" +/-"""
+str_PlusMinus3,C10A0,""" +/-"""
+str_Dashes39,C0FF3,39 dashes
+str_Dashes36,C101B,36 dashes
+statslabels,C68CC,Season: / Playoff: / reg. season / playoff / actual / accumulated
+skaterratingnames,C6A64,Speed .. Faceoffs
+goalieratingnames,C6AAC,Glove Left .. Defensive Awareness
+teamcolhdrs,C6B88,team stats column header pointers
+westconfteams,C6AF8,"12 team indices + 63h pad (Western, 12 teams in 94-95)"
+eastconfteams,C6B30,14 team indices (Eastern)
+stand_tmpl1,269EA,"5 words 14h..18h in code, copied into a local by sub_27080"
+treecolslots,C6D72,"9 columns x 8 playofftree slot indices (FFh = none): W r1, W r2, W final, W champ, Cup, E champ, E final, E r2, E r1"
+treecolx,C6E22,column x (dword per column pair)
+treerowy,C6E32,tree y bases
+divisionnames,C68BC,Pacific / Central / Northeast / Atlantic Division
+divx,C6E3A,division block x
+divy,C6E4A,division block y
+str_Pstatbar8,C1282,string 'pstatbar'
+str_Pst27,C128B,string 'pst2'
+str_Standings,C1290,string ' Standings'
+str_Western,C129B,string 'Western'
+str_Conference,C12A3,string 'Conference'
+str_Eastern,C12AE,string 'Eastern'
+str_Team,C12B6,string 'Team'
+str_GF,C12C7,string ' GF'
+str_GA2,C12CB,string ' GA'
+str_P,C12CF,string '  P'
+str_Pct4,C12D3,string '  Pct'
+str_Embpal2,C12D9,string 'embpal'
+str_Pal9,C12E0,string '!pal'
+str_PlayoffsHaveNotBeen2,C12E5,string 'Playoffs have not been seeded yet'
+str_Rst12,C1307,string 'rst1'
+str_Rst22,C130C,string 'rst2'
+str_Scuparrw2,C1311,string 'scuparrw'
+str_WesternConference2,C131A,string 'Western Conference'
+str_EasternConference2,C132D,string 'Eastern Conference'
+str_C3,C1340,string '%c '
+str_Aup12,C1347,string 'aup1'
+str_Aup22,C134C,string 'aup2'
+str_Aup32,C1351,string 'aup3'
+str_Midl2,C1356,string 'midl'
+str_Adn32,C135E,string 'adn3'
+str_Adn22,C1363,string 'adn2'
+str_Adn12,C1368,string 'adn1'
+str_GP7,C12BB,string 'GP'
+str_W4,C12BE,string ' W'
+str_L6,C12C1,string ' L'
+str_T4,C12C4,string ' T'
+str_D3,C1344,string '%d'
+treecol_Wr2,C6D7A,"treecolslots row 1 (West round 2), own name because of nosplit indexing"
+treecol_Er2,C6DAA,treecolslots row 7 (East round 2)
+treecol_Er1,C6DB2,treecolslots row 8 (East round 1)
+str_TwoSpaces,C135B,"""  """
+treeteamnames,DDAC4,26 x 21-byte team names for the playoff tree (+ blank at +222h)
+boxfillcolor,C71CC,DrawBevelBox fill
+boxlitecolor,C71D0,DrawBevelBox top/left
+boxshadecolor,C71D4,DrawBevelBox bottom/right
+str_LSSCHED,C8100,string
+str_Space2,C136D,""" "" blank tree name"
+pregamebuttons,C6E7E,"4 x 1Ch buttons (x, y, w, h, .., text)"
+scoutcatnames,C6F48,Penalty Killing .. Over all (9)
+scoutcatidx,C6F6C,team rating index per scouting category
+str_AwayLines,C6E5C,string
+str_Play,C6E67,string
+str_Cancel,C6E6C,string
+str_HomeLines,C6E73,string
+str_PenaltyKilling,C6EEE,string
+str_PowerPlay,C6EFE,string
+str_Shooting,C6F09,string
+str_Skating,C6F12,string
+str_Passing,C6F1A,string
+str_Defense2,C6F22,string
+str_Checking,C6F2A,string
+str_Goaltending,C6F33,string
+str_Overall,C6F3F,string
+str_Apal,C1370,string 'apal'
+str_Pal10,C1375,string 'Pal'
+str_Arena,C1379,string 'arena'
+str_Pal11,C137F,string '!pal'
+str_Rink,C1384,string 'rink'
+str_Srlogo,C1389,string 'srlogo'
+str_SAtS,C1390,string '%s   at   %s'
+str_Iff4,C13A8,string '.iff'
+str_Scouting,C13AD,string 'scouting'
+str_Screen,C13B6,string 'Screen'
+str_Ctlogo,C13C0,string 'ctlogo'
+str_Logohome,C13C7,string 'logohome'
+str_Logoaway,C13D0,string 'logoaway'
+str_Ctbkgd,C13D9,string 'ctbkgd'
+str_Bkgd4,C13E0,string 'bkgd'
+str_Pal12,C13E5,string '!pal'
+str_Cttitle1,C13EA,string 'cttitle1'
+str_Def,C13F3,string 'def '
+str_Fowa,C13F8,string 'fowa'
+str_Scra,C13FD,string 'scra'
+str_Tlu,C1402,string 'tlu '
+str_Top,C1407,string 'top '
+str_Indus030,C140C,string 'indus030'
+str_GIPK,C1415,string 'GIPK'
+str_Iff5,C141A,string '.iff'
+str_Tonights,C141F,string 'tonights'
+str_Injured,C1428,string 'Injured'
+str_D4,C139D,string '%d'
+str_Pointer4,C13A0,string 'Pointer'
+fdlgshapes,C6F78,open_but shape file handle
+fdlg_none,DD638,"""none"" shape"
+fdlg_del,DD644,"""del "" shape"
+fdlg_open,DD640,"""open"" shape"
+fdlg_cancel,DD64C,"""can "" shape"
+fdlg_noarrow,DD664,"""noar"" shape"
+fdlg_up,DD648,"""up  "" shape"
+fdlg_down,DD654,"""down"" shape"
+fdlg_arrow,DD65C,"""arro"" shape"
+fdlg_tabnone,DD650,"""gtno"" shape"
+fdlg_tabexh,DD634,"""gtex"" shape"
+fdlg_tablp,DD660,"""gtlp"" shape"
+fdlg_tabpo,DD63C,"""gtpo"" shape"
+fdlgtab,DD658,current tab 0 exhibition / 1 playoffs / 2 league
+fdlgmask,DD668,visible-row / button mask
+fdlgrects,C6F88,"16 hotspot rects (x0, y0, x1, y1)"
+exhfiles,DD124,*.nhl list block (90h)
+pofiles,DD1B4,*.po list block
+lgfiles,DD244,*.lp list block
+str_LAAtMTL,CDB75,"""LA  at MTL ..."" label template"
+str_OpenBut,C143D,string 'open_but'
+str_None,C1446,string 'none'
+str_Del,C144B,string 'del '
+str_Open,C1450,string 'open'
+str_Can,C1455,string 'can '
+str_Noar,C145A,string 'noar'
+str_Up,C145F,string 'up  '
+str_Down,C1464,string 'down'
+str_Arro,C1469,string 'arro'
+str_Gtno,C146E,string 'gtno'
+str_Gtex,C1473,string 'gtex'
+str_Gtlp,C1478,string 'gtlp'
+str_Gtpo,C147D,string 'gtpo'
+str_Buf,C1482,string 'buf'
+str_Nhl,C1486,string '.nhl'
+str_GsummaryDb3,C148E,string 'gsummary.db'
+str_Gsummary,C14B2,string 'gsummary'
+str_Sav,C14BB,string '.sav'
+str_Db2,C14C0,string '.db'
+str_PoGameSav,C14C7,string '.po\\game.sav'
+str_LpGameSav,C14DA,string '.lp\\game.sav'
+str_Open2,C14EA,string 'Open'
+str_Delete,C14EF,string 'Delete'
+str_Done,C14F6,string 'Done'
+str_Exhibition,C14FB,string 'Exhibition'
+str_Playoffs,C1506,string 'Playoffs'
+str_League,C150F,string 'League'
+str_Lp,C1516,string '*.lp'
+str_Po,C151B,string '*.po'
+str_Nhl2,C1520,string '*.nhl'
+str_Dialogbx,C1526,string 'dialogbx'
+str_Dbox,C152F,string 'dbox'
+str_Pointer5,C1534,string 'Pointer'
+str_Po2,C153F,string '.po'
+str_ScheduleDb2,C1543,string 'schedule.db'
+str_Lp2,C154F,string '.lp'
+str_GameSet3,C1553,string 'game.set'
+str_fedd2,C155F,FatalError code (file_dialogs)
+str_GameSav3,C1569,string 'game.sav'
+str_ExhibitionGameCalled,C70A0,string 'Exhibition Game Called:'
+str_LeagueCalled,C70B8,string 'League Called:'
+str_PlayOffSeriesCalled,C70C7,string 'Play-Off Series Called:'
+str_NHL,C1430,string '.NHL'
+str_PO2,C1435,string '.PO'
+str_LP,C1439,string '.LP'
+str_fek1,C148B,FatalError code (file_dialogs)
+str_fek2,C149A,FatalError code (file_dialogs)
+str_fek3,C149D,FatalError code (file_dialogs)
+str_fek4,C14A0,FatalError code (file_dialogs)
+str_fek5,C14A3,FatalError code (file_dialogs)
+str_fek6,C14A6,FatalError code (file_dialogs)
+str_fek7,C14A9,FatalError code (file_dialogs)
+str_fek8,C14AC,FatalError code (file_dialogs)
+str_feh7,C14AF,FatalError code (file_dialogs)
+str_feA1,C14C4,FatalError code (file_dialogs)
+str_fel1,C14D4,FatalError code (file_dialogs)
+str_feA2,C14D7,FatalError code (file_dialogs)
+str_fel2,C14E7,FatalError code (file_dialogs)
+str_fec6,C153C,FatalError code (file_dialogs)
+str_fed2,C155C,FatalError code (file_dialogs)
+str_fed3,C1563,FatalError code (file_dialogs)
+str_fed4,C1566,FatalError code (file_dialogs)
+exhfilenames,DD134,*.nhl name pointer array (exhfiles+10h)
+pofilenames,DD1C4,*.po name pointer array
+lgfilenames,DD254,*.lp name pointer array
+savefname,DD2D4,current save file name buffer (also database_dialogs)
+delmsgbox,C70DF,DeleteSavedGame MessageBox args (title at +4)
+savefileexts,2B7B7,"code-segment table of save extensions (str_NHL, str_PO2, str_LP) copied by DeleteSavedGame"
+teamstartlag,C8922,per-team start-time lag in periods (0-3) used to stagger the other-games scoreboard
+otherperiod,DD730,"6 dwords: period / state of each other game (5 final OT, 6 final)"
+othergames,DD774,"6 team pairs (byte, byte) of the other games"
+otherscores,DD788,6 score pairs
+hmcrestbmp,DD66C,home crest bitmap (crestnames[HomeTeam])
+vscrestbmp,DD670,visitor crest bitmap
+gamestatlabels,C719C,12 GameStatsScreen row labels
+penaltynames,CD304,penalty name pointers (PenaltyList ...)
+str_gsScore,C7108,string 'Score'
+str_gsShots,C710E,string 'Shots'
+str_gsPowerPlay,C7114,string 'Power play'
+str_gsPenalties,C711F,string 'Penalties'
+str_gsFaceoffsWon,C7129,string 'Faceoffs won'
+str_gsBodyChecks,C7136,string 'Body checks'
+str_gsAttackZone,C7142,string 'Attack zone'
+str_gsPassing,C714E,string 'Passing'
+str_gsOneTimers,C7156,string 'One Timers'
+str_gsPPMinutes,C7161,string 'Power Play Minutes'
+str_gsPPShots,C7174,string 'Power Play Shots'
+str_gsOffFaceoffs,C7185,string 'Offensive Faceoffs won'
+str_CommaSp,C1679,"string ', '"
+str_RParen2,C167C,string ')'
+str_Indus0302,C1574,string 'indus030'
+str_Ctlogo2,C157D,string 'ctlogo'
+str_Ctbkgd2,C1584,string 'ctbkgd'
+str_Bkgd5,C158B,string 'bkgd'
+str_Pal13,C1590,string '!pal'
+str_Cttitle2,C1595,string 'cttitle2'
+str_Summ2,C159E,string 'summ'
+str_OtShape,C15A3,string 'ot  '
+str_Per1,C15A8,string 'per1'
+str_Per2,C15AD,string 'per2'
+str_Per3,C15B2,string 'per3'
+str_Top2,C15B7,string 'top '
+str_Cttitle12,C15BC,string 'cttitle1'
+str_Def2,C15C5,string 'def '
+str_Fowa2,C15CA,string 'fowa'
+str_Scra2,C15CF,string 'scra'
+str_Tlu2,C15D4,string 'tlu '
+str_Cttitle3,C15D9,string 'cttitle3'
+str_Ots,C15E2,string 'ots '
+str_Colm,C15E7,string 'colm'
+str_Gsummary2,C15EC,string 'gsummary'
+str_Iff6,C15F5,string '.iff'
+str_Gamesum,C15FA,string 'gamesum'
+str_Mtsum,C1602,string 'mtsum'
+str_Adsum,C1608,string 'adsum'
+str_1st2,C1611,string '1st'
+str_2nd2,C1615,string '2nd'
+str_3rd2,C1619,string '3rd'
+str_FinalOT,C1620,string 'Final (OT)'
+str_Final,C162B,string 'Final'
+str_Period,C1631,string ' period'
+str_Injured2,C1639,string 'Injured'
+str_EVNT,C1641,string 'EVNT'
+str_PRDS,C1646,string 'PRDS'
+str_D5,C164E,string ' (%d'
+str_St,C1653,string 'st)'
+str_Nd,C1657,string 'nd)'
+str_Rd,C165B,string 'rd)'
+str_Th,C165F,string 'th)'
+str_SH,C1663,string ' SH'
+str_PP,C1667,string ' PP'
+str_02d02d,C166B,string '%02d:%02d'
+str_S2,C1675,string '(%s'
+str_SS4,C167E,string '%s    %s'
+str_DMinS,C1687,string '%d min : %s'
+str_ShotsOnGoal,C1693,string 'Shots on goal'
+str_SDD,C16A1,string '%s %d/%d'
+str_Ctbkgd3,C16AC,string 'ctbkgd'
+str_Pal14,C16B3,string '!pal'
+str_Bkgd6,C16B8,string 'bkgd'
+str_Cttitle32,C16BD,string 'cttitle3'
+str_Colm2,C16C6,string 'colm'
+str_Gsta,C16CB,string 'gsta'
+str_Ctlogo3,C16D0,string 'ctlogo'
+str_DD,C16DA,string '%d/%d'
+str_D02d2,C16E0,string '%d:%02d'
+str_DDD,C16E8,string '%d/%d (%d%%)'
+str_Iff7,C16F5,string '.iff'
+str_Leaguetm,C16FA,string 'leaguetm'
+str_Mtsum2,C1703,string 'mtsum'
+str_Adsum2,C1709,string 'adsum'
+str_NoScoring,C70EC,string 'No Scoring.'
+str_NoPenalties,C70F8,string 'No Penalties.'
+str_D6,C160E,string '%d'
+str_OT,C161D,string 'OT'
+str_S3,C164B,string '%s'
+str_D7,C16D7,string '%d'
+othergamesb,DD775,second team of each other-game pair (othergames+1)
+otherscoresb,DD789,second score of each pair (otherscores+1)
+gsuminitff,2D33E,8 x FFh copied into GameSummaryScreen locals at entry
+dbextension,DD770,""".DB"" or "".ORG"" from AskDatabaseChoice"
+dbchoicelines,C74AB,3 prompt lines
+dbchoicebtns,C74B7,2 buttons (Current / Original)
+str_DoYouWishToUse,C7453,string 'Do you wish to use your'
+str_CurrentDbOr,C746B,string 'Current database or the'
+str_OriginalNHLDb,C7483,string 'Original NHL database?'
+str_Current,C749A,string 'Current'
+str_Original,C74A2,string 'Original'
+dlgtextfg,C71D8,string '?'
+dlgtextbg,C71DC,string ''
+dlgsavebuf,C71E4,DBOX screen save
+dlgsavex,DD678,string ''
+dlgsavey,DD688,string ''
+criterrflag,DD7A4,set by CritErrHandler
+listscroll,C71E8,ListDialog scroll bar (30h-byte struct)
+editcurw,DD68C,string ''
+editpos,DD690,string ''
+editmaxw,DD694,string ''
+editbuf,DD698,string ''
+editcuron,DD69C,string ''
+edity,DD6A0,string ''
+editx,DD6A4,string ''
+str_Dot,C1720,string '.'
+str_Space,C1722,string ' '
+str_Pointer6,C1710,string 'Pointer'
+str_DBOX,C1718,string 'DBOX'
+str_ORG,C811E,string '.ORG'
+mainmenubar,CE3AF,"main desk menu bar (rect, then File / Game / Statistics entries)"
+filemenu,CE40F,"File menu items (Open ..., New Exhibition Game ..., ..., Exit)"
+gamemenu,CE7EF,Game menu items
+statsmenu,CE8CF,Statistics menu items
+desksongalt,C7218,alternates the desk song between maindesk and tonights
+keepdesksong,C7219,set by easn_stats so returning to the desk keeps the song playing
+ctlavailmask,EA0F4,available control devices bit mask (1/2/4/8); LoadModeState drops ctl1dev / ctl2dev not present
+teamabbrevs,C5439,"team abbreviation pointers (""BOS"", ""BUF"", ...)"
+setdiskmsg,C7282,3 MessageBox lines: not enough disk space for game.set
+str_InsufficientDiskSpace,C7221,string 'Insufficient disk space available'
+str_ToSaveTheSettings,C7243,"string 'to save the settings, you require'"
+str_1KbytesFree,C7265,string '1 Kbytes of free disk space.'
+str_Pointer7,C1724,string 'Pointer'
+str_Iff8,C172C,string '.iff'
+str_Maindesk,C1731,string 'maindesk'
+str_Tonights2,C173A,string 'tonights'
+str_Easndesk,C1743,string 'easndesk'
+str_Desk2,C174C,string 'desk'
+str_Pal15,C1751,string '!pal'
+str_Menubuff4,C1756,string 'menubuff'
+str_GameSet4,C175F,string 'game.set'
+str_Game,C1768,string 'game'
+str_Set,C176D,string '.set'
+str_fee2,C1772,string 'e2'
+str_fee3,C1775,string 'e3'
+str_fee4,C1778,string 'e4'
+menuact_export,CE4E3,"filemenu ""Export Databases"" action slot"
+menuact_nextlg,CE503,"filemenu ""Next League Game"" action slot"
+menusub_lgmgr,CE527,"filemenu ""League Manager"" submenu slot"
+menuact_nextpo,CE583,"filemenu ""Next Play-Off Game"" action slot"
+menuact_posettings,CE5A3,"filemenu ""Play-Off Settings"" action slot"
+menuact_pohilights,CE5C3,"filemenu ""Play-Off Hilights"" action slot"
+leaguemgrmenu,CE64F,League Manager submenu items
+str_Palette2,C177B,string 'palette'
+str_Temp4,C1783,string 'temp'
+str_GameSav4,C1788,string '\\game.sav'
+rinktilebm,C73D0,rink bitmap built by LoadRink
+currink,C7440,rink loaded in rinktilebm (-1 none)
+rinkscrollx,C7444,last SetRinkScroll x (negated; +3E8h forces a redraw)
+rinkscrolly,C7448,last SetRinkScroll y
+rinkwtiles,DD6A8,word: rink width in tiles (30h)
+rinkhtiles,DD6AE,word: rink height in tiles (4Ah)
+bgscrolly,DD6B0,word: background tile scroll y (pairs with bgscrollx)
+rinkarenas,C7298,"12-byte arena entries: abbrev[4] (""BOS""), map x, y, second map x, y (FFFFh none)"
+rinkfileidx,C73D8,per-arena index into the file location flags (byte_ED7CC / byte_ED7CD)
+str_InvalidFileSize,C179E,"string ""Invalid file '%s' size %d\n"""
+str_ErrorLoadingFile,C17BF,"string ""Error loading file '%s'\n"""
+str_Rink2,C1794,string 'rink'
+str_Til,C1799,string '.til'
+str_TILES,C17B9,string 'TILES'
+str_Map,C17D8,string '.map'
+str_CRESTS3,C17E0,string 'CRESTS3'
+str_Pal16,C17E8,string '!pal'
+calmonth,DD7A0,calendar month 0-11
+calsel,DD780,selected calendar day (-1 none)
+calexit,DD794,set by CalReturn
+calnextslot,C85F6,"""Next month"" action slot (cleared at the last month)"
+calprevslot,C8616,"""Previous month"" action slot"
+calplaymenu,C85E2,calendar Play menu (Next month / Previous month / Return to Sports Central)
+calmenubar,C8657,calendar menu bar (Play / Game / Statistics)
+str_NextMonth,C85AF,string 'Next month'
+str_PrevMonth,C85BA,string 'Previous month'
+str_ReturnToSportsCentral,C85C9,string 'Return to Sports Central'
+monthfirstday,C845E,"weekday (Mon = 0) of the 1st of each month, 0-based month"
+monthfirstday_m1,C845D,the same table indexed by 1-based month (monthfirstday-1)
+calcolx,C895E,7 day-column x positions
+calrowy,C897A,6 week-row y positions
+calselmonth,DDD30,month of the selected game (1-based)
+calselday,DDD28,day of the selected game
+str_Boxr,C17F4,string 'boxr'
+str_Boxb,C17F9,string 'boxb'
+str_Bkgd7,C17FE,string 'bkgd'
+str_02d9D,C1803,string '%02d9%d'
+str_Home,C180B,string 'Home'
+str_Away,C1810,string 'Away'
+str_SDD2,C181A,string '%s:%d-%d'
+str_Pal17,C1827,string '!pal'
+str_Calendar,C182C,string 'calendar'
+str_Callogo,C1835,string 'callogo'
+str_Iff9,C183D,string '.iff'
+str_Pointer8,C1842,string 'Pointer'
+str_Menubuff5,C184A,string 'menubuff'
+str_D8,C1815,string '%d'
+str_W5,C1818,string 'W'
+str_L7,C1823,string 'L'
+str_T5,C1825,string 'T'
+leaguediskmsg,C7AE0,"MessageBox lines: ""The league"", name, must be imported / exported ..., ..., ""before a game can be played!"""
+firstteammsg,C800C,"""The first team selected to play must be imported!"""
+str_TheLeague,C7A74,string 'The league'
+str_BeforeAGameCanBePlayed,C7A7F,string 'before a game can be played!'
+str_FirstTeamSelected,C7FDA,string 'The first team selected to'
+str_PlayMustBeImported,C7FF5,string 'play must be imported!'
+gridcellbuf,C8998,"""back"" save of a grid cell"
+gridcelly,DDD68,string ''
+gridcellx,DDD6C,string ''
+str_02d,C1853,string '.%02d'
+str_GSUMMARY,C1859,string 'GSUMMARY'
+str_Pal18,C1862,string 'Pal'
+str_Temp5,C1866,string 'temp'
+str_Easndesk2,C186B,string 'easndesk'
+str_GAME,C1874,string 'GAME'
+str_SAV,C1879,string '.SAV'
+str_Back,C1880,string 'back'
+str_Callogo2,C1885,string 'callogo'
+str_SelectATeamTo,C78A8,string 'Select a team to play.'
+str_MustBeImportedFrom,C7A9C,string 'must be imported from the disk for'
+str_MustBeExportedTo,C7ABF,string 'must be exported to the disk for'
+str_Xx,C8158,string '.xx'
+str_S4,C8117,string '%s'
+lgplayteam,DDD38,"human team chosen in PlayLeagueGame (""Select a team to play."")"
+lggameidx,DDD46,schedule game picked in CalendarScreen (-1 none)
+teamselresult,DD798,1 Done / -1 Cancel
+teamselmenu,C8728,Select menu (Done / Cancel)
+teamselmenubar,C8778,team select menu bar (Select / Settings)
+teamselsetslot,C87B0,"Settings submenu slot (lgsetmenu, lgsetshowmenu or none)"
+lgsetshowmenu,C86CC,"""Show League settings"""
+lgsetmenu,C86FC,"""League settings"""
+exportmsg,C7A30,"""Do you want to export"" <team> ""to a floppy disk?"""
+yesnobtns,C7A3C,Yes / No buttons
+str_DoYouWantToExport,C7A08,string 'Do you want to export'
+str_ToAFloppyDisk,C7A1E,string 'to a floppy disk?'
+pwmismatchmsg,C8055,password verify mismatch lines
+str_PasswordEnteredDifferently,C8014,string 'The password was entered differently'
+str_SecondTimeTryAgain,C8039,string 'the second time! Try again.'
+removeteammsg,C7868,"""Do you really want to remove"" <team>"
+removeteambtns,C7870,string '\x10'
+str_DoYouReallyWantToRemove,C784B,string 'Do you really want to remove'
+passkey_m1,C8332,byte before the password key (backward XOR index)
+str_PLST,C188D,string 'PLST'
+str_PTLS,C1892,string 'PTLS'
+str_Pal19,C1897,string 'Pal'
+str_TPI,C189B,string 'TPI'
+str_Embnhl,C189F,string 'embnhl'
+str_Bkgd8,C18A6,string 'bkgd'
+str_Pointer9,C18AB,string 'Pointer'
+str_Iff10,C18B3,string '.iff'
+str_Leaguetm2,C18B8,string 'leaguetm'
+str_Tspal,C18C1,string 'tspal'
+str_Pal20,C18C7,string '!pal'
+str_Menubuff6,C18CC,string 'menubuff'
+str_WhoWillPlayThe,C18D5,string 'Who will play the '
+str_MightyDucksOfAnaheim3,C18E8,string 'Mighty Ducks of Anaheim'
+str_WhoWillControlThe,C7969,string 'Who will control the league?'
+str_EnterPasswordFor,C82A5,string 'Enter password for '
+str_VerifyPasswordFor,C82B9,string 'Verify password for '
+str_EnterMasterPassword,C82CE,string ' enter master password.'
+str_EnterMasterControllerPasswor,C82E6,string 'Enter master controller password for '
+str_VerifyMasterControllerPasswo,C830C,string 'Verify master controller password for '
+passkey,C8333,"""NHLHockey"" password XOR key"
+str_PLST,C188D,string 'PLST'
+str_PTLS,C1892,string 'PTLS'
+str_Pal19,C1897,string 'Pal'
+str_TPI,C189B,string 'TPI'
+str_Embnhl,C189F,string 'embnhl'
+str_Bkgd8,C18A6,string 'bkgd'
+str_Pointer9,C18AB,string 'Pointer'
+str_Iff10,C18B3,string '.iff'
+str_Leaguetm2,C18B8,string 'leaguetm'
+str_Tspal,C18C1,string 'tspal'
+str_Pal20,C18C7,string '!pal'
+str_Menubuff6,C18CC,string 'menubuff'
+str_WhoWillPlayThe,C18D5,string 'Who will play the '
+str_MightyDucksOfAnaheim3,C18E8,string 'Mighty Ducks of Anaheim'
+str_WhoWillControlThe,C7969,string 'Who will control the league?'
+str_EnterPasswordFor,C82A5,string 'Enter password for '
+str_VerifyPasswordFor,C82B9,string 'Verify password for '
+str_EnterMasterPassword,C82CE,string ' enter master password.'
+str_EnterMasterControllerPasswor,C82E6,string 'Enter master controller password for '
+str_VerifyMasterControllerPasswo,C830C,string 'Verify master controller password for '
+str_NHLHockey,C8333,
+lgteamflags,DD7CA,"leagueteams entry (1Eh) +16h flags: 1 human, 2 checked by merge/import, 4 merged"
+lgteam_17,DD7CB,leagueteams entry +17h
+lgteam_18,DD7CC,leagueteams entry +18h (2 at creation; 1 = local copy in LocateTeamDbCopy)
+lgteam_19,DD7CD,leagueteams entry +19h
+lgteamver,DD7CE,leagueteams entry +1Ah dword stamp compared with the floppy copy (high word = export count)
+lgteamver_hi,DD7D0,"high word of lgteamver, incremented by ExportDbs"
+lgplayeridfile,DDD70,"PLAYER.ID exists in the league dir (floppy player copy, not master)"
+floppyok,DD748,[2] drive A / B readable (SelectFloppyDrive)
+floppyprobe,DD784,-1 while probing floppy drives
+oldcopymsg,C7C1D,"""That floppy disk has an old copy of the league"" <name>"
+updateerrmsg,C8AB9,"""Error while updating players databases!"""
+masteronlymsg,C89DE,"""The databases can only be merged on the master copy of the league"""
+masterctlmsg,C8A27,"""The master controller for the league"" <name>"
+mergeincompletemsg,C8A85,"""Warning! Merge not completed! ..."""
+mergeerrmsg,C8AE0,"""Error while merging databases!"""
+mergingmsg,C7F77,"""Merging players to master database."""
+updschedmsg,C7F8E,"""Updating schedule."""
+mergestatemsg,C7D9D,"""The league"" <name> ""is already merged."" / ""has not been merged."""
+newfloppymsg,C7C59,"""Are you sure you want to use a new floppy disk?"""
+newfloppybtns,C7C61,Yes / No
+exporterrmsg,C8B37,"""Error while exporting player! Player not exported!"""
+importmastermsg,C8B00,"""Importing Master Databases."""
+lgexistsmsg,C7D62,"""Can not import master league! The league already exists!"""
+importerrmsg,C792B,"""Error while importing league!"""
+playerdbsmsg,C7E3E,"""Players databases for"" <name>"
+lgexistsformsg,C7B12,"""The league"" <name> ""already exists for"" <team>"
+notexportedmsg,C7B47,"<team> ""has not been exported for the league"" <name>"
+insavegamemsg,C7BA7,"<team> ""is in a save game in the league"" <name> ""and can not be imported until the game is finished!"""
+forceexportmsg,C79C0,"<team> ""has not been imported for"" <name> ""Do you want to force an export?"""
+forceexportbtns,C79D0,Yes / No
+importtypemsg,C7CE9,"""Import master copy of league or import for player on floppy disk?"""
+importtypebtns,C7CF1,Master / Player
+importdiskmsg,C7905,"""Put disk with league to import in any drive."""
+insertfloppymsg,C7FB9,"""Please put a floppy disk in any drive."""
+whichdrivemsg,C7FD6,"""Use floppy drive A or B?"""
+drivebtns,C8B40,A / B
+notforlgmsg,C7609,"""That floppy disk is not for"" <league>"
+lgreaderrmsg,C7569,"""Can not read databases in the league"" <name>"
+str_wildcard,C1914,string '*'
+str_02d2,C1904,string '.%02d'
+str_SAV2,C190A,string 'SAV'
+str_GAME2,C190E,string 'GAME'
+str_SET,C1919,string '.SET'
+str_GAME3,C191E,string 'GAME'
+str_SAV3,C1923,string 'SAV'
+str_02d3,C1927,string '.%02d'
+str_Game2,C1938,string 'game'
+str_Sav2,C193D,string '.sav'
+str_SelectATeamTo2,C78BF,string 'Select a team to export.'
+str_IsAlreadyMerged,C7D75,string 'is already merged.'
+str_HasNotBeenMerged,C7D88,string 'has not been merged.'
+str_GAME4,C810C,string 'GAME'
+str_SET2,C8131,string '.SET'
+str_ID,C1916,string 'ID'
+str_L1,C192D,string 'l1'
+str_L22,C1930,string 'l2'
+sounddevids,D243A,"[6] sound device ids (10h,1,4,2,8,20h) indexed by the NHL.CFG value"
+greyramp,C8B78,"4 VGA grey levels (0,17h,2Ah,3Fh) for palette entries 0-3"
+negone_3DC28,3DC28,code-segment dword -1 (TradePlayers initial selection)
+str_NHL2,C1942,string 'NHL'
+str_CannotOpenNhlCfg,C1948,string 'cannot open nhl.cfg'
+str_CFG,C8145,string '.CFG'
+str_R3,C1946,string 'r'
+traderesult,DD79C,trade screen result (Done / Cancel)
+traderoster,DDD8C,[2][28] 16h-byte trade entries (side 2 at +268h)
+tradecursor,DDD84,[2] cursor row per side (-1 none)
+tradeclick,DDD74,[2] last clicked row per side (-1 none)
+tradeside,DE260,"active side (0 / 1, -1 none)"
+traderemap1,DDD7C,colour remap of team 1 (byte_DC9D8)
+traderemap2,DDD80,colour remap of team 2 (byte_DC8D8)
+jerseymsg,DE25C,one-line message table (sprintf buffer) for the jersey conflict
+tradebtnx,C8B7C,"[4] x of the trade screen buttons (8-byte x,y pairs)"
+tradebtny,C8B80,[4] y of the trade screen buttons
+unequaltrademsg,C8BDD,"""There must be an equal number of players selected on both teams!"""
+str_Temp6,C1964,string 'temp'
+str_Tstat,C1969,string 'tstat'
+str_Keys2,C196F,string 'keys'
+str_Pstat2,C1974,string 'pstat'
+str_Gstat2,C197A,string 'gstat'
+str_Embpal3,C1980,string 'embpal'
+str_Pal21,C1987,string '!pal'
+str_Donepal,C198C,string 'donepal'
+str_TheJerseyNumber2d2,C1994,string 'The jersey number %2d is already used on %s!'
+str_EnterJerseyNumberFor,C19C1,string 'Enter jersey number for %s'
+str_Pal22,C19DC,string 'Pal'
+str_C2dS,C19E0,string '%c %2d %s'
+str_HOMEPALS2,C19EA,string 'HOMEPALS'
+str_Embnhl2,C19F3,string 'embnhl'
+str_Bkgd9,C19FA,string 'bkgd'
+str_Pntr2,C19FF,string 'pntr'
+str_Pointer10,C1A04,string 'Pointer'
+str_Menubuff7,C1A0C,string 'menubuff'
+str_Lineditp,C1A18,string 'lineditp'
+str_Shrt,C1A21,string 'shrt'
+str_S12,C1A15,string 's1'
+tradejersey,DDD8D,"traderoster entry +1 jersey (indexed with two registers, kept as its own label)"
+tradeslot,DDD8E,"traderoster entry +2 roster slot (two-register index, own label)"
+loadscreenon,C9074,loading screen already shown
+loadpals,DE26C,[3][300h] rotated loading-screen palettes
+palcyclelock,DEB6C,1 while the palette cycle is busy / disabled
+palcyclephase,DEB70,current palette 0..2
+palcycledelay,DEB71,ticks until the next palette step (reload 3)
+simfwdorder,C900C,20 dword forward-line orders (0..3) shuffled by SimulateGame
+simdorder,C905C,6 dword defence-pair orders (0..2) shuffled by SimulateGame
+tag_t,C1AA4,"allocation tag ""t"" (team record, 2E8h)"
+tag_at,C1AA6,"allocation tag ""at"""
+tag_pk,C1AA9,"allocation tag ""pk"""
+tag_ps,C1AAC,"allocation tag ""ps"""
+tag_pset,C1AAF,"allocation tag ""pset"""
+tag_aps,C1AB4,"allocation tag ""aps"""
+tag_apset,C1AB8,"allocation tag ""apset"""
+tag_gk,C1ABE,"allocation tag ""gk"""
+tag_gs,C1AC1,"allocation tag ""gs"""
+tag_gset,C1AC4,"allocation tag ""gset"""
+tag_ags,C1AC9,"allocation tag ""ags"""
+tag_agset,C1ACD,"allocation tag ""agset"""
+str_LoadPic,C1AD4,"""load"""
+str_Pal23,C1AD9,"""!pal"""
+joycalactive,D2FD8,1 while JoystickCalScreen runs
+joycalprehook,D45B4,called before calibration
+joycalposthook,D45B8,called after calibration
+joyenablemask,D3040,enabled joystick bits (cleared on failed calibration)
+joycalx,CD9D0,puck x per stick direction
+joycaly,CD9F4,puck y per stick direction
+inputinstalled,CDA1C,string ''
+ptrstep,CDA20,pointer step for key / joystick movement
+inputqcount,CDA28,string ''
+inputqtail,CDA2C,read index (0..1Fh)
+inputqhead,CDA30,write index (0..1Fh)
+inputpolldiv,CDA34,poll every 5 ticks
+joybtnheld,CDA3C,string ''
+enterheld,CDA40,string ''
+lastmousebtns,CDA44,string ''
+lastmousex,CDA48,string ''
+lastmousey,CDA4C,string ''
+inputqueue,EA0F8,"[32] 13-byte events: type, buttons +4, dir / x +5, y +9"
+inputev,EA2A0,event being polled
+lastinputdir,EA298,string ''
+inputrepeat,EA29C,ticks the same direction is held
+ptrupdatefn,EA0DC,event -> pointer callback (EventToPointer)
+mousex,D302C,string ''
+mousey,D3030,string ''
+mousebtns,D3034,string ''
+mousepollfn,D3078,mouse driver poll hook
+unk13_6BF3D,6BF3D,"13 zero bytes in code (empty event, used by database_save)"
+str_Joycal,C27CC,string 'joycal'
+str_Scrn3,C27D3,string 'scrn'
+str_Rite,C27D8,string 'rite'
+str_Left,C27DD,string 'left'
+str_Pal24,C27E2,string '!pal'
+str_Puck,C27E7,string 'puck'
+str_PuckBack,C27EC,string 'PuckBack'
+str_LEFTJOYSTICK,C27F7,string 'LEFT JOYSTICK'
+str_RIGHTJOYSTICK,C2805,string 'RIGHT JOYSTICK'
+curdbname,EC7C0,"current database name (""Current"" or .DBX name)"
+dbdirty,EBC68,database edited since last save
+savedbbtns,D0C24,string '\x08'
+dbexistsmsg,CFB1C,"""There is already a database with that name! Do you want to replace it?"""
+nodiskspacemsg,CFB8A,"""Insufficient disk space available to save the databases, you require XXX Kbytes"""
+rosterteamptr,EA988,[2] team record pointer per roster panel
+editptrspr,EBE9C,enlarged copy of the pointer sprite
+str_SaveAsGameDatabases,C2814,string 'Save as game databases?'
+str_Current2,C282C,string 'Current'
+str_EnterANewDatabase,C2834,string 'Enter a new database name:'
+str_DBX,C284F,string '.DBX'
+str_3dKbytesOfFree2,C2873,string '%3d Kbytes of free disk space.'
+str_Temp7,C2894,string 'temp'
+str_Current3,C2899,string 'Current'
+str_Pointer11,C28A1,string 'Pointer'
+str_FreeAgents,C28AC,string 'Free Agents'
+str_DATABASE,C28B8,string 'DATABASE : '
+str_XXXKbytesOfFree2,CFB69,string 'XXX Kbytes of free disk space.  '
+str_SavingDatabases,D0F15,string 'Saving databases.'
+str_S5,C28A9,string '%s'
+str_C4,D07EB,string '%c'
+str_ErrorGettingDiskSpace,C2854,"""error getting disk space free\n"" fatal"
+dblistcur,EC6B8,"list struct (58h): count, sel +4, top +8, last visible +0Ch, names[16] +10h; current DB"
+dblisttemp,EC710,temporary (.DBX) list struct
+dblistorig,EC768,original (.ORG) list struct
+dblisttempnames,EC720,"dblisttemp names[16] (own label, nosplit operand)"
+dbtablists,D1184,"list struct per tab (cur, orig, temp)"
+dbdlgrects,D1084,"[16] hit rects x1, y1, x2, y2 (rows at +0A0h)"
+deldbmsg,D11B2,"""Confirm deletion of the database:"" <name>"
+unk13_722FE,722FE,13 zero bytes in code (empty path template)
+str_DSBOX,C3014,string 'DSBOX'
+str_DbBut,C301C,string 'db_but'
+str_None2,C3023,string 'none'
+str_Del2,C3028,string 'del '
+str_Open3,C302D,string 'open'
+str_Can2,C3032,string 'can '
+str_Noar2,C3037,string 'noar'
+str_Up2,C303C,string 'up  '
+str_Down2,C3041,string 'down'
+str_Arro2,C3046,string 'arro'
+str_Dbno,C304B,string 'dbno'
+str_Dbcu,C3050,string 'dbcu'
+str_Dbtm,C3055,string 'dbtm'
+str_Dbor,C305A,string 'dbor'
+str_Db3,C305F,string '*.db'
+str_Org,C306C,string '*.org'
+str_Dbx,C307B,string '*.dbx'
+str_Open4,C3081,string 'Open'
+str_Delete2,C3086,string 'Delete'
+str_Done2,C308D,string 'Done'
+str_Current4,C3092,string 'Current'
+str_Original2,C309A,string 'Original'
+str_Temporary,C30A3,string 'Temporary'
+str_Dbdialog,C30AD,string 'dbdialog'
+str_Pdbx,C30B6,string 'pdbx'
+str_Pointer12,C30BB,string 'Pointer'
+str_DBX2,C30C3,string '.DBX'
+str_Buf2,C30C8,string 'buf'
+str_CURRENT,C3064,string 'CURRENT'
+str_ORIGINAL,C3072,string 'ORIGINAL'
+str_RosterIncomplete,737AA,"code string ""Your Roster is incomplete."""
+str_Scratch,737C5,
+str_Dress,737CD,
+str_Player,737D3,
+str_GoalieW,737DA,
+str_Scratch2,7673A,copy used by team_select
+str_Dress2,76742,
+str_Player2,76748,
+str_GoalieW2,7674F,
+str_RosterIncomplete2,76756,
+rosterjersey,EA991,rosterlist entry +1 jersey
+rosterslot,EA992,rosterlist entry +2 roster slot
+rosterstat,EA993,"rosterlist entry +3: 2 scratched, 3 dressed"
+lineslotx,D1338,"[40] line slot x (8-byte x, y pairs)"
+linesloty,D133C,[40] line slot y
+fadepal,EC7E4,300h working palette of FadePalStep
+fadepal2,ECAE4,300h working palette of FadePalStepSlow
+lineedpanel,EC7E0,roster panel of the line editor
+rosterpstat,EBC70,pstat buffer (skater stats) for ShowRosterStats
+rostergstat,EBC6C,gstat buffer (goalie stats)
+str_Pal25,C30CC,string 'Pal'
+str_Lineditp2,C30D0,string 'lineditp'
+str_Shrt2,C30D9,string 'shrt'
+str_Pntr3,C30DE,string 'pntr'
+str_Pointer13,C30E3,string 'Pointer'
+str_Embpal4,C30EB,string 'embpal'
+str_Pal26,C30F2,string '!pal'
+str_Lelogo,C30F7,string 'lelogo'
+str_Menubuff8,C30FE,string 'menubuff'
+str_C2dS2,C3107,string '%c %2d %s'
+str_S2dSS,C3111,string '%s %2d %s%s'
+str_Keys3,C3122,string 'keys'
+str_Pstat3,C3127,string 'pstat'
+str_Gstat3,C312D,string 'gstat'
+str_SRoster,C3134,string '%s Roster:'
+str_Pos2,C313F,string 'Pos'
+str_Name2,C3146,string 'Name'
+str_G4,C314E,string '  G'
+str_A4,C3152,string '  A'
+str_PT2,C3156,string ' PT'
+str_Shots4,C315A,string 'Shots'
+str_PIM4,C3160,string 'PIM'
+str_Min4,C316C,string ' Min'
+str_GAA4,C3171,string '  GAA'
+str_GA3,C3180,string ' GA'
+str_SA3,C3184,string '  SA'
+str_PCT2,C3189,string '  PCT'
+str_Pal27,C3190,string 'Pal'
+str_Lineditp3,C3194,string 'lineditp'
+str_Shrt3,C319D,string 'shrt'
+str_Pntr4,C31A2,string 'pntr'
+str_Pointer14,C31A7,string 'Pointer'
+str_Embpal5,C31AF,string 'embpal'
+str_Pal28,C31B6,string '!pal'
+str_Lelogo2,C31BB,string 'lelogo'
+str_Menubuff9,C31C2,string 'menubuff'
+str_C2dS3,C31CB,string '%c %2d %s'
+str_Key,C31D5,string 'key'
+str_S6,C311F,string 's.'
+str_No2,C3143,string 'No'
+str_GP8,C314B,string 'GP'
+str_C5,C3169,string '%c'
+str_W6,C3177,string ' W'
+str_L8,C317A,string ' L'
+str_T6,C317D,string ' T'
+str_ErrA1,C31D9,FatalError code
+str_ErrA2,C31DC,FatalError code
+str_ErrA3,C31DF,FatalError code
+str_ErrA4,C31E2,FatalError code
+str_ErrA5,C31E5,FatalError code
+str_ErrA6,C31E8,FatalError code
+str_ErrA7,C31EB,FatalError code
+str_ErrA8,C31EE,FatalError code
+jerseydigits,D1478,1-bit digit glyphs (0Ch bytes each)
+gmroster,ED0F4,game line editor roster entries (1Ah bytes): position
+gmrosterjersey,ED0F5,entry +1 jersey
+gmrosterslot,ED0F6,entry +2 hmroster index
+hmrosterjersey,DB3AD,hmroster entry (27h bytes) +5 jersey
+menuact_savelines,CF443,"""Save These Lines"" action slot (cleared while lines are incomplete)"
+menuact_uselines,CF363,"""Use These Lines"" action slot"
+menuact_uselines2,CF223,"""Use These Lines"" action slot (second menu)"
+menuact_savedeflines,CF3C3,"""Save As Default Lines"" action slot"
+menuact_savedeflines2,CF283,"""Save As Default Lines"" action slot (second menu)"
+str_EmbS,C31F1,string 'emb%s'
+str_HOMEPALS3,C31F7,string 'HOMEPALS'
+str_Bkgd10,C3200,string 'bkgd'
+str_Forward,C3205,string 'forward'
+str_Line1,C320D,string 'line 1'
+str_Line2,C3214,string 'line 2'
+str_Line3,C321B,string 'line 3'
+str_Line4,C3222,string 'line 4'
+str_Power,C3229,string 'power'
+str_Play1,C322F,string 'play 1'
+str_Play2,C3236,string 'play 2'
+str_Penalty,C323D,string 'penalty'
+str_Kill1,C3245,string 'kill 1'
+str_Kill2,C324C,string 'kill 2'
+str_Defense3,C3253,string 'defense'
+str_Goaltenders,C325B,string 'goaltenders'
+str_Extra,C3267,string 'extra'
+str_Attackers,C326D,string 'attackers'
+str_S2dSS2,C3277,string '%s %2d %s%s'
+str_Teams2,C3288,string 'teams'
+str_ErrB2Perror,C328E,"""b2:"" perror prefix"
+str_Tstat2,C32A4,string 'tstat'
+str_Keys4,C32AA,string 'keys'
+str_Pstat4,C32AF,string 'pstat'
+str_Gstat4,C32B5,string 'gstat'
+str_S7,C3285,string 's.'
+str_ErrB3,C3292,FatalError code
+str_ErrB4,C3295,FatalError code
+str_ErrB5,C3298,FatalError code
+str_ErrB6,C329B,FatalError code
+str_ErrB7,C329E,FatalError code
+str_ErrB2,C32A1,FatalError code
+leaguesetimg,ED35C,selects setting5 vs setting3 image
+setbits,ED360,settings dialog checkbox bits
+chkoffspr,ED780,unchecked box shape
+chkonspr,ED788,checked box shape
+leaguesetrects,D14F0,"16-byte rects x0,y0,x1,y1"
+modesetrects,D16AC,rects
+exhsetrects,D17EC,rects
+ctldlgrects,D195C,rects
+ctldlgalt,D19EC,alternate colour flag for controller dialog
+str_BKGD,C32BC,string 'BKGD'
+str_Setting5,C32C1,string 'setting5'
+str_Dbox2,C32CA,string 'dbox'
+str_Music,C32CF,string 'Music'
+str_Sound,C32D5,string 'Sound'
+str_DigitizedSpeech,C32DB,string 'Digitized Speech'
+str_Setting3,C32EC,string 'setting3'
+str_Pointer15,C32F5,string 'Pointer'
+str_BKGD2,C3300,string 'BKGD'
+str_Setting7,C3305,string 'setting7'
+str_Setting4,C330E,string 'setting4'
+str_Dbox3,C3317,string 'dbox'
+str_Music2,C331C,string 'Music'
+str_Sound2,C3322,string 'Sound'
+str_DigitizedSpeech2,C3328,string 'Digitized Speech'
+str_Pointer16,C3339,string 'Pointer'
+str_BKGD3,C3344,string 'BKGD'
+str_DigitizedSpeech3,C3349,string 'Digitized Speech'
+str_Music3,C335A,string 'Music'
+str_Sound3,C3360,string 'Sound'
+str_Setting6,C3366,string 'setting6'
+str_Dbox4,C336F,string 'dbox'
+str_Pointer17,C3374,string 'Pointer'
+str_BKGD4,C337C,string 'BKGD'
+str_PlayerImg,C3381,string 'player'
+str_Dbox5,C3388,string 'dbox'
+str_OneS,C338D,"string ""One's"""
+str_TwoS,C3393,"string ""Two's"""
+str_TheMouse,C3399,string 'The Mouse'
+str_JoystickOne,C33A3,string 'Joystick One'
+str_JoystickTwo,C33B0,string 'Joystick Two'
+str_TheKeyboard,C33BD,string 'The Keyboard'
+str_Pointer18,C33CA,string 'Pointer'
+rockteamcues,ED368,6 loaded team music cue handles
+rockrandcues,ED38C,3 random cue handles
+rocktunes,ED380,"3 handles: device rock tune, team tune, ROCKDITI"
+rockcuepool,D1C8B,18 random cue ids
+teamrockcuetbl,D1BE0,"per-team 6 cue ids (6-byte rows, top byte)"
+rockcuefiles,D1B0B,cue file name pointers
+rockcuepathsel,D1CEE,per-cue path flag index into ED7CC flags
+teamtunefiles,D1CDE,team tune file name pointers
+teamtunepathsel,D1CE6,per-tune path flag index
+gadgetrects,D1DC8,gadget button rects (28-byte entries) x0
+gadgetrect_y0,D1DCC,rect y0 (own label: nosplit)
+gadgetrect_x1,D1DD0,rect x1 (own label: nosplit)
+gadgetrect_y1,D1DD4,rect y1 (own label: nosplit)
+gadgetfile,ED6D8,loaded gadget .PPV file
+gadgetshape,ED6E4,gad1 shape from gadget file
+gadgetptrx,ED6E0,pointer x (init 100h)
+gadgetptry,ED6DC,pointer y (init 0BCh)
+msg_NoHilightSpace,D1F25,message lines 'Insufficient disk space to' / 'save hilights.' / 'Current hilight not saved.'
+str_MTROCKU,C33D4,string 'MTROCKU'
+str_SBROCKU,C33DC,string 'SBROCKU'
+str_ADROCKU,C33E4,string 'ADROCKU'
+str_ROCKDITI,C33EC,string 'ROCKDITI'
+str_Gadget6,C3411,string 'gadget6'
+str_Gadget5,C3419,string 'gadget5'
+str_Gad1,C3421,string 'gad1'
+str_Pointer19,C3426,string 'Pointer'
+str_BothTeams,C33F8,string 'Both Teams'
+str_NeitherTeams,C3403,string 'Neither Teams'
+hilightrec,E03C4,9652h-byte highlight record buffer (.HI file record)
+curperiod,D8C84,"period number (hilight record +3Ch printed as ""Period %d""; compared with 3)"
+msg_NoHilights,D1F4B,message 'There are no hilights!'
+str_CantOpenFile,C3450,"string ""Can not open `%s' file\n"""
+str_SaveTo,C342E,string 'Save To'
+str_HilightsReel,C3436,string 'Hilights Reel'
+str_HI,C3449,string '.HI'
+str_HLTL,C3472,string 'HLTL'
+str_HLT,C3477,string 'HLT'
+str_HLTS,C347B,string 'HLTS'
+str_HI2,C812D,string '.HI'
+str_SelectATeam,C8208,string 'Select a team'
+str_SelectAHilight,C8216,string 'Select a hilight'
+str_HilightDescFmt,D207A,"string '%d %d, %s vs %s, Period %d, Time %02d:%02d.'"
+str_K1,C3444,string 'k1'
+str_F12,C344D,string 'f1'
+str_F3,C3468,string 'f3'
+str_F4,C346B,string 'f4'
+settingsfile,D20A8,"loaded ""settings"" PPV file (0 = not loaded)"
+acptspr,ED774,"""acpt"" shape"
+na01spr,ED78C,"""na01"" shape"
+na03spr,ED778,"""na03"" shape"
+na05spr,ED76C,"""na05"" shape"
+pg01spr,ED770,"""pg01"" shape"
+pg03spr,ED77C,"""pg03"" shape"
+pg05spr,ED784,"""pg05"" shape"
+pg07spr,ED768,"""pg07"" shape"
+pl05spr,ED760,"""pl05"" period length shape"
+pl10spr,ED764,"""pl10"" shape"
+pl20spr,ED75C,"""pl20"" shape"
+homebckspr,ED794,HomeBck
+visbckspr,ED79C,VisBck
+homenamebckspr,ED798,HomeNameBck
+visnamebckspr,ED7A0,VisNameBck
+titlebckspr,ED790,TitleBck
+lockerrects,D227C,16-byte rects
+soundcardrects,D23A3,16-byte rects
+modesetlabel,CDBDC,"menu label buffer ""xxxxxxx..."" patched with mode name"
+str_Settings,C3480,string 'settings'
+str_On,C3489,string 'On  '
+str_Off,C348E,string 'Off '
+str_Acpt,C3493,string 'acpt'
+str_Canc,C3498,string 'canc'
+str_Na01,C349D,string 'na01'
+str_Na03,C34A2,string 'na03'
+str_Na05,C34A7,string 'na05'
+str_Pg01,C34AC,string 'pg01'
+str_Pg03,C34B1,string 'pg03'
+str_Pg05,C34B6,string 'pg05'
+str_Pg07,C34BB,string 'pg07'
+str_Pl05,C34C0,string 'pl05'
+str_Pl10,C34C5,string 'pl10'
+str_Pl20,C34CA,string 'pl20'
+str_HomeBck,C3594,string 'HomeBck'
+str_VisBck,C359C,string 'VisBck'
+str_HomeNameBck,C35A3,string 'HomeNameBck'
+str_VisNameBck,C35AF,string 'VisNameBck'
+str_TitleBck,C35BA,string 'TitleBck'
+str_Lockroom,C35C3,string 'lockroom'
+str_P01,C35CC,string '!p01'
+str_Room,C35D1,string 'room'
+str_JERSH,C35D6,string 'JER%sH'
+str_00002,C35DD,string '0000'
+str_JERSV,C35E2,string 'JER%sV'
+str_Accept,C35EC,string 'Accept'
+str_Cancel2,C35F3,string 'Cancel'
+str_HomeTeam,C35FA,string 'Home Team'
+str_VisitingTeam,C3604,string 'Visiting Team'
+str_ExhibitionGame,C3612,string 'Exhibition Game'
+str_Iff11,C3622,string '.iff'
+str_Jersey,C3627,string 'jersey'
+str_Pointer20,C362E,string 'Pointer'
+str_Temp8,C3638,string 'temp'
+str_Buffer,C363D,string 'buffer'
+str_Sound4,C3644,string 'sound'
+str_Dbx2,C364A,string 'dbx2'
+str_PCSpeaker,C364F,string 'PC Speaker'
+str_SoundBlaster,C365A,string 'Sound Blaster'
+str_ADLib,C3668,string 'AD Lib'
+str_MT32,C366F,string 'MT-32'
+str_UltraSound,C3675,string 'UltraSound'
+str_SportsCentral2,CDD4F,string 'Sports Central'
+str_PlayoffTree2,CDD5E,string 'Playoff Tree'
+str_Return,CDD6B,string 'Return'
+str_Exhibition2,D20AC,string 'Exhibition'
+str_Playoff,D20B7,string 'Playoff'
+str_League2,D20BF,string 'League'
+str_ShowLeague,D20C6,string 'Show League'
+str_Settings3,D20D2,string ' Settings ...'
+str_Vs,C35E9,string 'vs'
+sounddev,C541F,"sound device bits 1 PC speaker, 2 Sound Blaster, 4 AdLib, 8 MT-32, 20h UltraSound (set by SetSoundDevice, saved to nhl.cfg)"
+sndcardname,D24A0,card name string pointer (SoundBlaster/Adlib/MT32/ULTRASOUND)
+msg_InitMT32,D24D1,message 'Initializing the MT32 card.' / 'Please wait.'
+speechq,ED7AC,speech queue struct (20 entries + counters at +50h..+60h)
+speechinit,D27BB,"1 after InitSpeech, 0 after shutdown"
+str_Pointer21,C3680,string 'Pointer'
+str_Iff12,C3688,string '.iff'
+str_Maindesk2,C368D,string 'maindesk'
+str_Slapshot,C3696,string 'slapshot'
+str_MT32HOCK,C369F,string 'MT32HOCK'
+str_NHL3,C36A8,string 'NHL'
+str_CantOpenNhlCfg,C36AF,string 'cannot open nhl.cfg'
+str_Emmcopybuf,C36C9,string 'emmcopybuf'
+str_PCBEEP,D236F,string 'PCBEEP'
+str_SBDAC,D2379,string 'SBDAC'
+str_ADLIB,D2382,string 'ADLIB'
+str_MT322,D238B,string 'MT32'
+str_SBDAC2,D2390,string 'SBDAC'
+str_PCBEEP2,D2399,string 'PCBEEP'
+str_SoundBlaster2,D2479,string 'SoundBlaster'
+str_Adlib,D2486,string 'Adlib'
+str_MT323,D248C,string 'MT32'
+str_ULTRASOUND,D2491,string 'ULTRASOUND'
+str_PC,D23A0,string 'PC'
+speechbank,ED7B0,400 x 26h slot table + header at +3B60h..+3B80h
+samplereq,ED7B4,'sample mem man': 20 requested names + counters
+speechcopybuf,ED7B8,copy buffer for MoveSampleMem
+speechcopylen,D27B7,copy buffer size
+str_Speechbuf,C3782,string 'speechbuf'
+str_Sentence,C378C,string 'sentence'
+str_SampleMemMan,C3795,string 'sample mem man'
+str_SpeechBank,C37A4,string 'speech bank'
+scorperclips,D2776,'scor1per.bar' ... clip names
+penaltyclips,D273E,'roughing.pen' ... penalty clip names
+str_Cor,C37D8,string 'cor'
+str_GamemiscS,C37DC,string 'gamemisc.%s'
+str_EastquadBar,C37E8,string 'eastquad.bar'
+str_EastsemdBar,C37F5,string 'eastsemd.bar'
+str_EastfindBar,C3802,string 'eastfind.bar'
+str_WestquadBar,C380F,string 'westquad.bar'
+str_WestsemdBar,C381C,string 'westsemd.bar'
+str_WestfindBar,C3829,string 'westfind.bar'
+str_StanleydBar,C3836,string 'stanleyd.bar'
+str_EastquauBar,C3843,string 'eastquau.bar'
+str_EastsemuBar,C3850,string 'eastsemu.bar'
+str_EastfinuBar,C385D,string 'eastfinu.bar'
+str_WestquauBar,C386A,string 'westquau.bar'
+str_WestsemuBar,C3877,string 'westsemu.bar'
+str_WestfinuBar,C3884,string 'westfinu.bar'
+str_StanleyuBar,C3891,string 'stanleyu.bar'
+str_NhlInt,C389E,string 'nhl.int'
+str_ElsenhlInt,C38A6,string 'elsenhl.int'
+str_Rnk,C38B2,string 'rnk'
+str_Awa,C38B6,string 'awa'
+str_Hom,C38BA,string 'hom'
+str_Bar,C38BE,string 'bar'
+str_Gamenum,C38C2,string 'gamenum'
+str_SSS,C38CA,string '%s%s.%s'
+str_Num,C38D2,string 'num'
+str_DS,C38D6,string '%d.%s'
+str_02dS,C38DC,string '%02d.%s'
+str_Tea,C38E4,string 'tea'
+str_Pen,C38E8,string 'pen'
+str_Frm,C38EC,string 'frm'
+str_XBRUCE2,C38F0,string 'XBRUCE2'
+str_SS5,D24DC,string '%s.%s'
+str_PauseCor,D24E2,string 'pause.cor'
+str_AtCor,D24EC,string 'at.cor'
+str_1minuteCor,D24F3,string '1minute.cor'
+str_MinutesCor,D24FF,string 'minutes.cor'
+str_1secondCor,D250B,string '1second.cor'
+str_SecondsCor,D2517,string 'seconds.cor'
+str_PennumCor,D2523,string 'pennum.cor'
+str_PensnumCor,D252E,string 'pensnum.cor'
+str_PenshotCor,D253A,string 'penshot.cor'
+str_GoalnumCor,D2546,string 'goalnum.cor'
+str_AsstnumCor,D2552,string 'asstnum.cor'
+str_AndnumCor,D255E,string 'andnum.cor'
+str_OneleftCor,D2569,string 'oneleft.cor'
+str_2minCor,D2575,string '2min.cor'
+str_5minCor,D257E,string '5min.cor'
+str_NumberCor,D2587,string 'number.cor'
+str_NowbackInt,D259F,string 'nowback.int'
+str_BackmomtInt,D25AB,string 'backmomt.int'
+str_CoachclpInt,D25B8,string 'coachclp.int'
+str_OfBar,D25CD,string 'of.bar'
+str_AndBar,D2608,string 'and.bar'
+str_BetweenBar,D2610,string 'between.bar'
+str_GamenumBar,D261C,string 'gamenum.bar'
+str_EasportsBar,D2628,string 'easports.bar'
+str_TonightBar,D2635,string 'tonight.bar'
+str_GamebtwnBar,D2641,string 'gamebtwn.bar'
+str_GoodniteInt,D2672,string 'goodnite.int'
+str_LineupsInt,D267F,string 'lineups.int'
+str_TakeynowBar,D26A4,string 'takeynow.bar'
+str_HighliteBar,D26B1,string 'highlite.bar'
+str_OvertimeBar,D26BE,string 'overtime.bar'
+str_HavewonBar,D26CB,string 'havewon.bar'
+str_Scor1perBar,D26D7,string 'scor1per.bar'
+str_Scor2perBar,D26E4,string 'scor2per.bar'
+str_Scor3perBar,D26F1,string 'scor3per.bar'
+str_Scor1otpBar,D26FE,string 'scor1otp.bar'
+str_Scor2otpBar,D270B,string 'scor2otp.bar'
+str_Scor3otpBar,D2718,string 'scor3otp.bar'
+str_ScortotpBar,D2725,string 'scortotp.bar'
+str_ThegameBar,D2732,string 'thegame.bar'
+str_VIV,D27BF,string '.VIV'
+msg_NoSaveSpace,D2855,"'Insufficient disk space to save' / 'a game, you require XXX Kbytes' / 'of free disk space.'"
+msg_SavingLeagueGame,D27EF,'Saving Current' / 'League Game.'
+msg_SavingPlayoffGame,D27F7,'Saving Current' / 'Play-Off Game.'
+str_GsummaryDb4,C38F8,string 'gsummary.db'
+str_AGameYouRequire,C3904,"string 'a game, you require %3d Kbytes'"
+str_DemoNhl,C3923,string 'demo.nhl'
+str_Gsummary3,C3932,string 'gsummary'
+str_AGameYouRequire2,C3947,"string 'a game, you require %3d Kbytes'"
+str_GameSav5,C3966,string 'game.sav'
+str_Db4,C3972,string '.db'
+str_Sav3,C3976,string '.sav'
+str_Pointer22,C397E,string 'pointer'
+str_Savegame,C3986,string 'savegame'
+str_Prmt,C398F,string 'prmt'
+str_Dialog,C3994,string 'dialog'
+str_Nhl3,C399B,string '.nhl'
+str_Err1,C39A0,string 'err1'
+str_AGameYouRequire3,D281F,"string 'a game, you require XXX Kbytes   '"
+fileoncd,ED7CC,"549 per-file flags: 1 = load from CD (MakePath prefix cddriveptr), 0 = installed locally (from ALLFILES.TXT)"
+cddrivestr,D2C68,"'a:' drive string, letter patched from nhl.cfg"
+cddriveptr,D2C6B,"pointer to cddrivestr, MakePath prefix for CD files"
+str_NhlCfg,C3B0E,string 'nhl.cfg'
+str_CantOpenNhlCfg2,C3B16,string 'cannot open nhl.cfg'
+str_ALLFILESTXT,C3B2A,string ':ALLFILES.TXT'
+str_ALLFILESTXT2,C3B38,string 'ALLFILES.TXT'
+str_CouldNotOpenALLFILES,C3B45,string 'Could not open ALLFILES.TXT file.'
+str_Coachcut,C3B6C,string 'coachcut'
+str_Scrn4,C3B75,string 'scrn'
+str_Pal29,C3B7A,string '!pal'
+str_Iff13,C3B7F,string '.iff'
+str_Coach,C3B84,string 'coach'
+str_Clip04d,C3B8A,string 'clip%04d'
+str_Cmv2,C3B93,string '.cmv'
+fadeend,D1230,"FadePalStep end value per direction (word table, [edi] index; [1] patched to steps+1)"
+fadeend2,D1236,FadePalStepSlow end value per direction
+fadestart,D122C,FadePalStep start value per direction (word table indexed by edi; [0]+1 patched to steps-1)
+fadestep,D122E,FadePalStep step per direction (+1/-1)
+fadestart2,D1232,FadePalStepSlow start value per direction
+fadestep2,D1234,FadePalStepSlow step per direction
+hmpassatt,DF63A,hmtmstruct+26h word: passing attempts (stats screen 'Passing' %d/%d (%d%%) denominator)
+hmpasscmp,DF63C,hmtmstruct+28h word: passes completed (stats screen 'Passing' numerator)
+keydirtab,C4D1F,byte table indexed by the 4-bit arrow-key mask built in keyboard pad read (1090B/109D3) -> direction code
+jerseyremap,D1238,256-byte palette remap table (identity init) filled per team and passed to MakeJerseyShape / sub_B4DD4 by the line editors and trade screen
+dlgfillcol,D0B16,"DrawDlgFrame interior fill colour (sub_90D20 fill); callers save/set it around InputDialog, GameLineEditor, TradePlayers"
+dlgedgecol1,D0B1A,DrawDlgFrame colour for the outer bottom/right edge lines
+dlgedgecol2,D0B1E,DrawDlgFrame colour for the outer top/left edge lines
+dlgedgecol3,D0B22,DrawDlgFrame colour for the second frame ring
+dlgbevelcol1,D0B26,DrawDlgFrame bevel colour (drawn only when the bevel arg is set)
+dlgbevelcol2,D0B2A,DrawDlgFrame second bevel colour (drawn only when the bevel arg is set)
+fullscrbmp,EA2B4,"640x480 bitmap allocated in database_save init (sub_B4F8C 280h,1E0h); passed to SetDrawBitmap by editors/stat screens"
+blitclipright,ECDE4,"BlitClipRect: x >= this rejects, x+w clamped to it"
+blitclipbottom,ECDE8,"BlitClipRect: y >= this rejects, y+h clamped to it"
+blitcliptop,ECDEC,"BlitClipRect: y+h < this rejects, y clamped up to it"
+blitclipleft,ECDF0,"BlitClipRect: x+w < this rejects, x clamped up to it"
+menuact_gamedress,CF2A3,game line editor menu item action slot (GameDressPlayer); swapped by GameLineEditorLoop / TradeScreenLoop
+menuact_gamescratch,CF2C3,game line editor menu item action slot (GameScratchPlayer)
+menuact_dbdress,D056C,database line editor menu item action slot (DressPlayer); swapped by DbLineEditorLoop
+menuact_dbscratch,D058C,database line editor menu item action slot (ScratchPlayer)
+s1font,DC230,handle from sub_8E8A0 for s1.vfn loaded in main startup
+mainfont,D8B74,"copy of the s1.vfn font handle; passed to sub_8EA18 by locker room, stats, save dialogs"
+scor2font,D8B70,handle from sub_8E8A0 for scor2b.vfn
+pntrshapes,D8B6C,handle from sub_8E83C for the pointer shape file; pointerspr is taken from it ('pntr')
+str_FmtNumFirstLast,C1C6A,string '%s#%d %s %s%s'
+str_FmtNumInitialLast,C1C78,string '%s#%d %c. %s%s'
+str_FmtNumNameSuffix,C1C87,string '%s#%d %s%s'
+str_FmtNumName,C1C92,string '%s#%d %s'
+str_FmtClockEvent,C1C9B,string '%02d:%02d %s'
+str_PPTag,C1CA8,string ' PP'
+str_SHTag,C1CAC,string ' SH'
+str_FmtParenD,C1CB3,string ' (%d)'
+str_Unassisted,C1CB9,string 'Unassisted'
+str_Assists,C1CC4,string 'Assists:'
+str_PenaltyShot,C1CCD,string 'Penalty shot'
+str_ToBeTakenBy,C1CDA,string 'to be taken by'
+str_02d02dSPenalty,C1CE9,string '%02d:%02d %s Penalty'
+str_GameMisconduct,C1CFE,string 'game misconduct'
+str_DMinutes,C1D0E,string '%d minutes'
+str_02d02dSInjury,C1D19,string '%02d:%02d %s Injury'
+str_GoneForTheGame,C1D2D,string 'gone for the game'
+str_GoneFor1Period,C1D3F,string 'gone for 1 period'
+str_ServedByD,C1D54,string 'served by #%d'
+str_B3,C1C58,string 'B3'
+str_B4,C1C5B,string 'B4'
+str_B5,C1C5E,string 'B5'
+str_B6,C1C61,string 'B6'
+str_B7,C1C64,string 'B7'
+str_B8,C1C67,string 'B8'
+str_S8,C1CB0,string '%s'
+str_LineCodes0,C0A88,string '0000000100020003000400050006000700080009000 '
+str_LineCodes1,C0AB5,string '1000100110021003100410051006100710081009100 '
+str_LineCodes2,C0AE2,string '2000200120022003200420052006200720082009200 '
+str_VisLineTags,C0B0F,string 'vlinvpp vpk '
+str_HomeLineTags,C0B1C,string 'hlinhpp hpk '
+str_Visp,C0B29,string 'visp'
+str_Homp,C0B2E,string 'homp'
+str_LineNames,C0B33,string 'lin1lin2lin3lin4PP1 PP2 PK1 PK2 '
+str_04d2,C1DB6,string '%04d'
+str_HOMEPALS4,C1DBC,string 'HOMEPALS'
+str_AWAYPALS,C1DC5,string 'AWAYPALS'
+str_Rinkpal,C1DCE,string 'rinkpal'
+str_Pal30,C1DD6,string '!pal'
+str_Two,D0C5C,string '2'
+savepal,DF014,"256-entry palette buffer: sub_8FFB0(0,100h,buf) captures it before fades; passed to FadePalette by pause, desk, highlight and intermission code"
+savedmousex,DF00C,HandleHotKey pause saves mousex here when a pad device is mouse (pad1dev/pad2dev==1); in the saved game state
+savedmousey,DF010,HandleHotKey pause saves mousey here; in the saved game state
+kaufmfont,D8B68,handle from sub_8E8A0 for kaufm020.vfn loaded in main startup
+scor3font,D8B78,handle from sub_8E8A0 for scor3b.vfn loaded in main startup
+textline1,E0250,"60-byte text line buffer (sprintf target in BuildEventLines, drawn by sub_665AD when non-empty)"
+textline2,E028C,60-byte text line buffer (FormatPlayerName target in BuildEventLines)
+textline3,E02C8,60-byte text line buffer ('EA Sports' copied in by player logic)
+textline4,E0308,"60-byte text line buffer, cleared with the others"
+textline5,E0344,"60-byte text line buffer, checked by sub_665AD"
+viewscrollx,D8C7C,"rink view scroll x: camx+20h clamped to 0..40h, passed as eax to SetRinkScroll (game frame, replay)"
+viewscrolly,D8C74,"rink view scroll y: 140h-camy-54h clamped to 1A8h, passed as edx to SetRinkScroll"
+gamepal,DF314,"256-entry palette passed to FadePalette when fading the rink back in (GameLoop, StartHL2, replay, intro)"
+str_ArtHart,C020C,string 'hart'
+str_ArtRoss,C0211,string 'ross'
+str_ArtNorr,C0216,string 'norr'
+str_ArtSelk,C021B,string 'selk'
+str_ArtVezi,C0220,string 'vezi'
+str_ArtJenn,C0225,string 'jenn'
+str_ArtCald,C022A,string 'cald'
+str_ArtPres,C022F,string 'pres'
+str_ArtConn,C0234,string 'conn'
+str_ArtEasn,C0239,string 'easn'
+str_ArtStan,C023E,string 'stan'
+lty,E9AC4,"SaveGameState order ltx, (this), xc1, yc1 matches 94G ram94 ltx/lty/xc1/yc1 (last touch y); compared with the blue-line 26h/4Eh in the offside checks"
+yleader,C90B0,"SaveGameState order yc1, (this), fox, foy matches 94G ram94 yc1/yleader/fox/foy (scroll lead distance); set by the game frame scroll code"
+fox,C90B2,94G ram94 fox (faceoff spot x): follows yleader in the SaveGameState order and the referee slots stand at fox+-0Fh
+foy,C90B4,"94G ram94 foy (faceoff spot y): saved after fox, before fodir1/fodir2; referee slots use it with fox"
+ovltimer,CBEC0,"text overlay slide timer: DrawTextOverlay slides in below 10h, shows at 100h, slides out to 258h; CloseTextOverlay sets 10h/0"
+sopathx,CC130,"94G ram sopathx: current skate-path point x (NextPathPoint / StartShotPath, sign from pspathside); asspenshooter skates to it"
+sopathy,CC134,94G ram sopathy: current skate-path point y (negated for the other net)
+sopathpoint,CC13C,"94G ram sopathpoint: index of the current path point, incremented by NextPathPoint"
+sopathend,CC138,third column of the PC path table; asspenshooter shoots once it goes negative (role of 94G sopathend)
+pspathside,CC140,sign of the penalty-shot path (+-) chosen by StartShotPath; NextPathPoint negates x when it is negative
+pspathdir,CC144,facedir saved when a path point is reached; asspenshooter compares facedir with it before shooting
+psendcount,CC12C,frames the puck has moved away from the net during a live penalty shot; at 1Eh EndPenaltyShot is called
+penshotpnum,CC100,"roster index (+44h high byte) of the penalty shot taker, set in SetupPenaltyShot"
+penshotteam,CC104,1 when the away team takes the penalty shot (SetupPenaltyShot); engine core ends the shot when the other team touches the puck
+penshotctl,CC108,"who controls the shooter: 1 controller 1, 2 controller 2, -1 CPU (set from c1playernum / penshotplayer)"
+penshotfox,CC110,fox saved by SetupPenaltyShot and restored afterwards (also copied to ltx)
+penshotfoy,CC114,foy saved by SetupPenaltyShot and restored afterwards (also copied to lty)
+shotontarget,CC124,"result of sub_64102 (shot is on target), cleared at period start"
+shotongoal,CC0F8,"copy of shotontarget made by CountShotOnGoal; checked by doshot, Goal and sub_6427F"
+fadeinpending,CBEC4,set when the pre-game intro is skipped or a game starts; the next game frame fades the palette in and clears it
+introskipped,CC0F0,1 when the pre-game intro was skipped with a button (Readjoy1 bits 10h/20h); SetupGame then skips PlacePlayersAtStart and the intro fade
+deferpending,C5840,set by sub_62807 after QueueDeferredCall; GameLoop then runs RunDeferredCalls and clears it; also stops the frame loop
+defercount,CD350,number of slots queued by QueueDeferredCall
+gsumqcount,CD34C,number of 0Dh-byte records queued at unk_E9B4C for FlushGSumQueue
+energywarn,CBC52,"per-team word (home, away): 1 while one of the team's skaters is exhausted (+43h < 0) on an odd lldispodd frame; DrawEnergyBar draws the bar in 0/7 instead of 67h"
+bannermsg,CBEC8,"index into the call banner strings off_CD4DC (-1 none); set by offside/icing/faceoff/penalty code, drawn by DrawCallBanner"
+bannertimer,CBECA,word: frames left for the call banner (50h typical); cleared with bannermsg
+bannerstrs,CD4DC,pointer table of the call banner strings indexed by bannermsg (DrawCallBanner)
+str_BnReturnGoalie,C1D64,string 'RETURN GOALIE'
+str_BnPullGoalie,C1D72,string 'PULL GOALIE'
+str_BnFaceOff,C1D7E,string 'FACE-OFF'
+str_BnTwoLinePass,C1D87,string '2 LINE PASS'
+str_BnOffside,C1D93,string 'OFFSIDE'
+str_BnIcing,C1D9B,string 'ICING'
+str_BnPenalty,C1DA1,string 'PENALTY'
+str_BnPenaltyShot,C1DA9,string 'PENALTY SHOT'
+ovlseq,CBECC,current overlay script id (-1 none); UpdateTextOverlay indexes byte_CC049 / word_CC054 with it
+ovlstep,CBECE,current overlay script step value (byte of the script at ovlstepidx); DrawTextOverlay and sub_665AD callers read it
+ovlstepidx,E9AB4,"index of the current step in the overlay script, advanced by UpdateTextOverlay"
+ovlsteptimer,E9AB2,frames left in the current overlay step (from word_CC054[ovlseq])
+ovlscript,E0248,pointer to the loaded overlay script bytes (cleared when the sequence ends)
+shownumbers,CBC3E,toggled by HandleHotKey on scan code 0Fh (Tab); while set the frame code draws each player's number (+5Eh) above him with DrawSpriteNumber
+BOS,C04D0,on-screen team abbreviation in teamabbrevs
+BUF,C04D4,on-screen team abbreviation in teamabbrevs
+CGY,C04D8,on-screen team abbreviation in teamabbrevs
+CHI,C04DC,on-screen team abbreviation in teamabbrevs
+DET,C04E0,on-screen team abbreviation in teamabbrevs
+EDM,C04E4,on-screen team abbreviation in teamabbrevs
+HFD,C04E8,on-screen team abbreviation in teamabbrevs
+LA,C04EC,on-screen team abbreviation in teamabbrevs
+DAL,C04EF,on-screen team abbreviation in teamabbrevs
+MTL,C04F3,on-screen team abbreviation in teamabbrevs
+NJ,C04F7,on-screen team abbreviation in teamabbrevs
+NYI,C04FA,on-screen team abbreviation in teamabbrevs
+NYR,C04FE,on-screen team abbreviation in teamabbrevs
+OTT,C0502,on-screen abbreviation OTT (95G spells the short form OTW)
+PHI,C0506,on-screen team abbreviation in teamabbrevs
+PIT,C050A,on-screen team abbreviation in teamabbrevs
+QUE,C050E,on-screen team abbreviation in teamabbrevs
+STL,C0512,on-screen team abbreviation in teamabbrevs
+SJ,C0516,on-screen team abbreviation in teamabbrevs
+TB,C0519,on-screen abbreviation TB
+TOR,C051C,on-screen team abbreviation in teamabbrevs
+VAN,C0520,on-screen team abbreviation in teamabbrevs
+WSH,C0524,on-screen team abbreviation in teamabbrevs
+WPG,C0528,on-screen team abbreviation in teamabbrevs
+ANA,C052C,on-screen abbreviation ANA (95G spells the short form ANH)
+FLA,C0530,on-screen team abbreviation in teamabbrevs
+ASW,C0534,on-screen abbreviation for West All Stars
+ASE,C0538,on-screen abbreviation for East All Stars
+NYIslanders,C059C,"city string NY ISLANDERS; long name, not NYI"
+NYRangers,C05A9,"city string NY RANGERS; long name, not NYR"
+Buffalo,C0543,city string BUFFALO
+Calgary,C054B,city string CALGARY
+Chicago,C0553,city string CHICAGO
+Detroit,C055B,city string DETROIT
+Edmonton,C0563,city string EDMONTON
+Hartford,C056C,city string HARTFORD
+LosAngeles,C0575,city string LOS ANGELES
+Dallas,C0581,city string DALLAS
+Montreal,C0588,city string MONTREAL
+NewJersey,C0591,city string NEW JERSEY
+Ottawa,C05B4,city string OTTAWA
+Philadelphia,C05BB,city string PHILADELPHIA
+Pittsburgh,C05C8,city string PITTSBURGH
+Quebec,C05D3,city string QUEBEC
+StLouis,C05DA,city string ST LOUIS
+SanJose,C05E3,city string SAN JOSE
+TampaBay,C05EC,city string TAMPA BAY
+Toronto,C05F6,city string TORONTO
+Vancouver,C05FE,city string VANCOUVER
+Washington,C0608,city string WASHINGTON
+Winnipeg,C0613,city string WINNIPEG
+Anaheim,C061C,city string ANAHEIM
+Florida,C0624,city string FLORIDA
+AllStarsWest,C062C,city string WEST ALL STARS
+AllStarsEast,C063B,city string EAST ALL STARS
+passspeed,C90A6,dopass stores passacc*2+$A0 here and doshot scales it by $5249; 95 passspeed
+apl,CBEA8,"faceoff slot list, the bytes of puckfaceoff2 .apl"
+shotsetz,CCC62,z word of each shotsets entry (shotsets+2); kept as its own label because doshot indexes it with nosplit
+ltack,CC0DA,"word before lastsfx, the 95/94 ltack slot; newcheck toggles it to choose the check sound"
+pucktemp1,DFF42,"puckstruct+temp1; the penalty path stores 1C20h and assfaceoffpl compares it with 10h, as 95 puck temp1"
+pucknopuck,DFF5A,"puckstruct+nopuck; ScatterPass clears it, the same absolute-field pattern as puckpflags2"
+puckasslist,DFF3A,puckstruct+asslist; ControlsDlgInGame indexes it by the puck's assnum
+fofdata2,E0390,"assfaceoffpl writes the stick stance here and at +4 for the other side, the 95 fofdata2 frame/flags pairs"
+HotList,CC148,"GetHot reads the hot-spot x byte at frame*2, the 95 HotList"
+HotList_y,CC149,"GetHot y byte, the HotList column at +1; its own label so the indexed operand stays a symbol"
+hmtmpde,DF65A,hmtmstruct+tmpde; MenuModeSettings refills the 1Ch energy words to 1000h
+awtmpde,DF75A,awtmstruct+tmpde
+hmtmpbox,DF6CA,"hmtmstruct+tmpbox; clearteams stores FF, the empty penalty-box list"
+awtmpbox,DF7CA,awtmstruct+tmpbox
+hmtmglstats,DF6FE,"hmtmstruct+tmglstats; clearteams stores the goalie-stats pointer, next to hmtmplstats"
+awtmglstats,DF7FE,awtmstruct+tmglstats
+scpflags2,DF861,"SortCords+pflags2; MenuModeSettings clears bit 3 of each of the 12 players, stride 80h"
+doortemp1,DFFC2,sortobj15+temp1; assboxenter waits until the penalty-box door is ready
+doorpflags,DFFE0,sortobj15+pflags; assboxenter sets bit 5 as the door closes
+icingPlayer,E9AC1,95G a2touchpuck stores the low byte of SCnum (SCnum+1 on 68k) in the byte after iflags
+blockspd,CCC30,"X column of the shot-block slide speeds. Eight facings, short index = facing*2: 0, ±0BB8h (3000), ±1092h (4242). Same interleaved layout as dirtab, and nosplit, so the Y column keeps its own label."
+blockspd_y,CCC32,"Y column of the shot-block slide speeds, the short after blockspd. Own label because nasm drops nosplit on [idx*s+blockspd+2], same as dirtab_y."
+tickcount,D2FDC,"100 Hz tick count: TimerISR incs it on every IRQ0 (PIT divisor 2E9Ch at 8E5EB); read by GetTicks, TicksSince, TicksSinceLastCall, SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks"
+timercallbacks,EDCDC,"8-dword table of tick callbacks: TimerISR calls each non-null slot (8E473), addtimer fills a free slot, RemoveTimerCallback clears one, InstallTimer clears all 8"
+slowtickcount,D2FE0,"20 Hz tick count: TimerISR incs it on every 5th tick, when it chains to the saved int 08h vector (8E4A1); ea_fileio keeps a second set of tick helpers on it (B3D40 get, B3D46 set deadline in dword_D4530, B3D56 wait, B3D64 passed, B3D74 wait n)"
+oldint8off,D2FE4,"offset of the saved int 08h vector: InstallTimer stores _dos_getvect_(8) eax here, RestoreTimer passes it back to _dos_setvect_, TimerISR far-calls through it with oldint8sel"
+oldint8sel,D2FE8,"selector of the saved int 08h vector: InstallTimer stores the _dos_getvect_(8) selector (dx) here, RestoreTimer passes it back in cx"
+tickdeadline,D4294,SetTickDeadline writes tickcount + n; WaitTickDeadline and TickDeadlinePassed compare tickcount with it
+ticklast,D4298,TicksSinceLastCall: tickcount at the previous call
+demoteammode,C5886,"RunDemoGame (15DB7): (x+1) mod 3 on every demo game picks how the two teams are chosen: 2 fixed teams 1Bh/1Ah, 1 a pair from the dword_C5861 table by randomd0(17), 0 rand_ and randomd0"
+randseed,D41C8,"Watcom rand_/srand_ state (sub_8EB21 returns its address; rand_ is the LCG x*41C64E6Dh+3039h, result (x>>16)&7FFFh; initial value 1); not the game RNG, which is StanleyCupTimer (randomd0)"
+hudhundaccum,D8C78,HUD clock accumulator: RunGameFrames adds 64h on every running frame (11504); GameLoop (11855) and the game_frame loop (69BA6) move the quotient by 18h (24 frames a second) into hudhundstep and keep the remainder
+hudhundstep,DC28C,"hundredths of a second to tick off the HUD clock and the penalty timers this pass: GameLoop sets it from hudhundaccum/18h (or the whole remaining HUD clock at game exit, 118CC); UpdateHudPanel (14D13) copies it to dword_C583C for TickPanelClock / TickPanelPenalties and clears it"

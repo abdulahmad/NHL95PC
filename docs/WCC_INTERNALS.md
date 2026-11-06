@@ -8,13 +8,13 @@ in the binary and read against that source, and every one checked so far does wh
 Open Watcom has later changes (comments dated Nov 1994 and later), so the binary is the reference when they
 disagree.
 
-## The binary and the emulator (tools/wccre)
+## The binary and the emulator (tools/match/wccre)
 
 `WCC386.EXE` is three programs in one file:
 
 1. an MZ stub ("This program requires W32RUN.EXE to be in your PATH"),
-2. a small OS/2 LX loader (`tools/wccre/lx_load.py` parses it: 3 pages, imports from DOSCALLS / KBDCALLS),
-3. the compiler, in Watcom's "CF" format (`tools/wccre/cf_load.py`): a flat 32-bit image linked at 0 with a
+2. a small OS/2 LX loader (`tools/match/wccre/lx_load.py` parses it: 3 pages, imports from DOSCALLS / KBDCALLS),
+3. the compiler, in Watcom's "CF" format (`tools/match/wccre/cf_load.py`): a flat 32-bit image linked at 0 with a
    relocation table. GA: image at file offset 2200h, 80E30h bytes, 90000h of memory, entry +2FD30h.
 
 Under DOS, W32RUN.EXE (a DOS/4GW program) loads the CF image; under OS/2 the LX loader does. Either way the
@@ -23,27 +23,27 @@ set = error, code in eax). The LX loader's dispatcher lists the only 24 function
 read, write, seek, close, delete, rename, ioctl 0, allocate, find first / next, get / set file time, current
 directory, true name, date, time, console). In GA every call goes through one stub, image +2FE03h.
 
-`tools/wccre/wccemu.py` runs the CF image in the unicorn CPU emulator and does those int 21h functions in
+`tools/match/wccre/wccemu.py` runs the CF image in the unicorn CPU emulator and does those int 21h functions in
 Python (files under a host directory as drive C:). No DOSBox, no DOS/4GW:
 
-* `python3 tools/wccre/emucc.py compile SRC.c` compiles a project C file the way `cc.py` lays it out for DOSBox
+* `python3 tools/match/wccre/emucc.py compile SRC.c` compiles a project C file the way `cc.py` lays it out for DOSBox
   (S000.C, headers in INC\ with 8.3 upper-case names, INCLUDE=C:\INC, no options). About 1.3 s per file.
-* `python3 tools/wccre/emucc.py validate [--jobs 8]` compiles every C file that has a DOSBox object in the
+* `python3 tools/match/wccre/emucc.py validate [--jobs 8]` compiles every C file that has a DOSBox object in the
   `cc.py` cache and compares the two objects (dependency comments aside: they hold file times). First run:
   703 of 703 the same; later 711 of 711, also with `--fill 0xCC` (garbage instead of zeros in fresh memory)
   and with the heap moved (`--heap-skew 0x123450 --heap-align 16`).
 * `emucc.compile_session([(src, obj), ...])` compiles several files one after another in the same emulated
   memory, as one DOSBox run does (see "The compiler state" below).
-* `python3 tools/wccre/ghidra_wcc.py` decompiles the whole image with Ghidra (headless) at the emulator's load
+* `python3 tools/match/wccre/ghidra_wcc.py` decompiles the whole image with Ghidra (headless) at the emulator's load
   address (`wccemu.BASE` = 400000h, so image offset = address - 400000h) into `build/wccre/ghidra/all.c`: a
   reading aid, about 3,350 functions.
 
 Needs the `unicorn` Python package (2.1.4 tested; without pip, unzip the manylinux wheel from PyPI into
 `~/.local/lib/python3.12/site-packages`, as capstone was installed).
 
-## Register allocation (tools/wccre/regdump.py)
+## Register allocation (tools/match/wccre/regdump.py)
 
-`python3 tools/wccre/regdump.py src/c/<seg>/<File>.c` compiles the file in the emulator and prints, for every
+`python3 tools/match/wccre/regdump.py src/c/<module>/<File>.c` compiles the file in the emulator and prints, for every
 allocation pass of every function, each variable and code-generator temporary (`tN`) in the order it is given a
 register, with its savings and what it got:
 
@@ -104,7 +104,7 @@ built", with each conflict's origin):
 
 * **The names walk** (+57A5B, returns to +57A8C) goes through the temporary names list (+7E778, newest name
   first) and gives a conflict to every name flagged as used in more than one block (+18 bit 1) at that point.
-  These end up at the **back** of the list, oldest first: the parameters in order, then the locals, then the
+  These end up at the **back** of the list, oldest first: the parameters in order, then the locals (in reverse declaration order), then the
   code generator temporaries by id. "Used in more than one block" is judged on the IR when the walk runs, so a
   temporary that is local in the final IR (POInitSchedule's t49, t78) can still be here.
 * **The live-information walk** (calls `NameConflict` +50136, returning to +500F1 inside +500DE) goes through
@@ -120,9 +120,28 @@ operand order there moves them, and a temporary added or removed anywhere shifts
 sort's gaps depend on the length). tieorder.py's explanation now prints each conflict's origin (block and line)
 and also tries every temporary at another place inside its own block's part of the list.
 
-### The tie order a draft needs (tools/wccre/tieorder.py)
+### What source edits do to the list (StaticEck's Fable run, 2026-10-26)
 
-`python3 tools/wccre/tieorder.py src/c/<seg>/<File>.c FUNC [--minutes 15]` answers, for a register draft, whether
+Measured with `irdump.py --pass 0` on code-neutral variants and a replay of the sort
+(docs/board/2026-10-26-1815-staticeck.md). These are the levers for a tie target (`tieorder.py`'s minimal target,
+`tieinverse.py`'s list of changes that would work):
+
+* **Names-walk order:** the parameters in declaration order (register order for register calls), then the locals
+  in **reverse** declaration order, then the multi-block temporaries. Renames, `register`, extra late uses, loop
+  forms and where a local is first set change nothing.
+* **Re-listing:** a name gets a new id (later in the list) at its first 16-bit alias use in code order
+  (NetCollide's gx and ux at the first `HIWORD(p->Xpos) = gx + ux`); names never used as 16 bits keep their ids.
+* **A narrower type adds a conversion conflict without code** where the code already needs only the low byte.
+  JoystickCalScreen matched this way (#247): the abort test's stick value in an `unsigned char` local adds one
+  conflict before the puck size product and flips the tied pair. `char shift` in the signature adds one in each
+  block that shifts (and the second undoes the first).
+* **A single-block named local** used once or twice just takes a temporary's place (same list).
+* **A named local set in two blocks** (NetCollide's `ay = ABS(uy)`) becomes a copy conflict plus a stack slot:
+  not a way to reorder ternary temporaries.
+
+### The tie order a draft needs (tools/match/wccre/tieorder.py)
+
+`python3 tools/match/wccre/tieorder.py src/c/<module>/<File>.c FUNC [--minutes 15]` answers, for a register draft, whether
 the remaining differences are a tie order and which one. At +569B4 AssignConflicts has the sorted list in eax (it
 stores it to +7E794 and walks each node's next pointer at +0); the tool relinks FUNC's nodes there, changing only
 the order inside runs of equal savings, so every forced order is one the unstable sort can produce.
@@ -160,9 +179,9 @@ Validation (2026-10-24):
 * checkob, TradePlayers, calcpuckcross, FadePalette: no tie order within 10 minutes (operand order, savings or
   16-bit differences).
 
-### The code generator's IR (tools/wccre/irdump.py)
+### The code generator's IR (tools/match/wccre/irdump.py)
 
-`python3 tools/wccre/irdump.py src/c/<seg>/<File>.c FUNC [--pass N]` prints the function's instructions as register
+`python3 tools/match/wccre/irdump.py src/c/<module>/<File>.c FUNC [--pass N]` prints the function's instructions as register
 allocation sees them: per block (with its loop depth) one line per instruction, `L<source line>  result = opcode
 operands  :type`, then every conflict in allocation order with its savings, register, definitions and uses
 (block:line, `*` per loop level). It shows what each `tN` is (`t13 = add nums, i`), the order the optimizer left the
@@ -174,7 +193,7 @@ index, +10 offset, +14 base). GA's opcode numbers are not Open Watcom's (GA has 
 01 add, 03 sub, 05 mul, 07 div, 08 mod, 09 and, 0A or, 0B xor, 0C shr, 0D shl, 11 neg, 12 not, 24 convert, 26 mov,
 28 lea, 2A push, 2C parm, 2E / 2F bit test, 30-35 compares (== != > <= < >=), 36 call.
 
-## Stack slots (tools/wccre/slotdump.py)
+## Stack slots (tools/match/wccre/slotdump.py)
 
 After register allocation the names that need memory (locals left in memory, spilled temporaries, arrays and
 structures) get their slots from the order of `Names[N_TEMP]` (+7E778), the list of all variables and
@@ -224,7 +243,7 @@ scalars and every slot of TradeScreenLoop came from a declaration order (lane 1b
 entries (the 2-byte part of an int passed as a short, an array's element parts) keep their place in the input
 and share its slot.
 
-`python3 tools/wccre/declsearch.py src/c/<seg>/<File>.c FUNC [--conflicts] [--write]` searches those orders.
+`python3 tools/match/wccre/declsearch.py src/c/<module>/<File>.c FUNC [--conflicts] [--write]` searches those orders.
 It reads each local's EXE slot from a -d1 compile aligned with the EXE, scores orders without compiling (the
 Python sorts plus a copy of the hand-out), and confirms the best with an emulator compile and a fresh cc.py
 compile. By default it moves only the names in memory without a conflict. --conflicts also moves the spilled
@@ -234,7 +253,7 @@ use-count sorts, and the tool confirms one order per such tie order. TeamRosterS
 traded, s and kb works: kb (count 60) takes the top slot ahead of traded (12), and the EXE has them the other
 way round.
 
-`python3 tools/wccre/slotdump.py src/c/<seg>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
+`python3 tools/match/wccre/slotdump.py src/c/<module>/<File>.c [--func NAME] [--count NAME=N ...]` prints, per function,
 the names with a slot in hand-out order with their size, count, position after each sort, location and slot,
 and checks a Python copy of the three sorts against the compiler's lists. `--count NAME=N` compiles again with
 the count written into the conflict before each use-count sort and shows the slots the compiler then hands out
@@ -252,7 +271,7 @@ TeamRosterScreen's n has 63 references; with 50:
 n [esp+3F0h], idx 404h, gs 400h are the EXE's slots: the original has one loop-weighted reference to n fewer
 than the draft (any count from 43 to 60 gives the same slots).
 
-`python3 tools/wccre/countsolve.py src/c/<seg>/<File>.c FUNC` asks the reverse question: which use counts give the
+`python3 tools/match/wccre/countsolve.py src/c/<module>/<File>.c FUNC` asks the reverse question: which use counts give the
 locals (and the parameters the hand-out places) their EXE slots. It reads the EXE slots as declsearch.py does,
 replays every count of every name in memory with a conflict through declsearch's model of the sorts and the
 hand-out (no compile), then pairs of the best single changes, and confirms the best count sets with a compile that
@@ -267,6 +286,28 @@ more or less, one inside or outside a loop, or a tie broken the other way). Vali
   local with a count above 2 and i above r (43). slot's only reference is the CanFillLineSlot call in the loop,
   so the target is the order, not that count.
 * TitleScreen (committed draft, 3): every local already in its EXE slot (the remaining differences are not slots).
+
+## Late register picks (tools/match/wccre/latepick.py)
+
+Some registers are chosen after both allocation passes, so regdump / irdump / tieorder never see them: a step at
++613C8 turns constants into registers (a byte store of 0 becomes `xor dh, dh` / `mov [x], dh`; a constant operand
+becomes a register load) and asks +612FE for the register. That picker is a round-robin, not a liveness choice:
+per size it has a fixed list and a saved position (+7F5D4 byte, +7F5D8 word, +7F5D0 dword), and it takes the next
+register after the last one it picked that is not busy at the instruction (the instruction's live set +08 or-ed
+with what it clobbers, +2C -> +0C).
+
+  byte   AL AH DL DH BL BH CL CH
+  word   AX DX BX CX SI DI
+  dword  EAX EDX EBX ECX ESI EDI EBP
+
+The position starts at the head of each list once per compile and is never reset, so the first late byte pick of
+a file is AH, and every later pick depends on all the earlier late picks of the same size: in the function and
+in every function compiled before it in the same file. It also advances for constants whose conversion is tried
+and then undone. So a draft compiled alone starts the rotation where the original module did not, and a late
+register moves by changing how many late picks of that size come before it, not by rewriting its statement.
+`python3 tools/match/wccre/latepick.py FILE.c [--func F]` lists every late pick in compile order (line, size, where the
+rotation stood, busy registers, register picked). CreateNewLeague (2026-10-26): L125's zero gets BL because the
+previous byte pick left the rotation at DH; the EXE's DH needs the rotation one step earlier there.
 
 ## The compiler state: one field the compiler never sets
 
@@ -287,7 +328,7 @@ bisecting the warm-up's leftover heap came down to one byte):
 * Constant garbage does not show it: 0x00, 0xCC and 0xFF read as 0 or negative (split, the fresh result); a
   fill such as 0x40 (40404040h) gives the warm result.
 
-`emucc.compile_c(src, obj, fill=0x40)` compiles in that warm state; `python3 tools/wccre/state_scan.py` scores
+`emucc.compile_c(src, obj, fill=0x40)` compiles in that warm state; `python3 tools/match/wccre/state_scan.py` scores
 functions both ways. Results (2026-10-23, 928 matched): of the 711 files with cached objects only DrawPanel3D.c
 compiles differently warm, and DrawPanel3D itself matches fresh (53 differing warm), so the EXE was built in the
 fresh-like state there. Of the 156 drafts, two score differently warm and none matches: FixJerseyConflict

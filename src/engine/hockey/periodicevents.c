@@ -1,0 +1,47 @@
+/* Engine core: periodic events. */
+#include "nhl95.h"
+
+/* periodicevents: per frame: penalties and crowd decay; at 0:00 of the clock (play on) the horn (sfx 90h),
+ freezewindow and clockcont_0. Every 24th frame (lldisp countdown, toggling lldispodd) the goalie crowd bench
+ checks and the power-play flags (play on); with line changes on, energywarn[side] blinks (odd ticks) while a
+ skater of that side is due for a change (newpnum >= 0) and no penalty shot runs. */
+void periodicevents(void)
+{
+    Team *t;
+    Player *p;
+    short i;
+    short k;
+
+    PenaltyManager();
+    DecayCrowdLevel();
+    if (!(gmode & 1) && !gameclock && !clockticks[0]) {
+        sfx(0x90);
+        freezewindow();
+        clockcont_0();
+    }
+    if (word_CBC44) return;
+    if ((signed char)--lldisp >= 0) return;
+    i = lldisp;                                 /* i reused (bl) */
+    lldisp = i + 0x18;
+    *(unsigned char *)&lldispodd ^= 1;
+    ChkGoalies();
+    updatecrowdf();
+    RestoreBenchEnergy();
+    if (!(gmode & 1)) UpdatePowerPlayFlags();
+    if (!gameopts.linechanges) return;
+    i = 0;
+    t = &hmtmstruct;
+    for (; i < 2; i++) {
+        p = t->tmsort;
+        k = 6;
+        do {
+            if (p->position >= 0 && p->newpnum >= 0 && !penshotmode && (lldispodd & 1)) {
+                energywarn[i] = 1;
+                return;
+            }
+            p++;
+        } while (--k);
+        energywarn[i] = k;
+        t = &awtmstruct;
+    }
+}

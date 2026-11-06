@@ -1,0 +1,4263 @@
+; The league line editor from Edit Rosters. Scratch, dress, and the roster printout.
+bits 32
+%include "hockey.inc"
+section s_737AA progbits alloc exec nowrite align=1
+extern __CHK, __STOSB, asc_C3164, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
+extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA
+extern CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1
+extern dlgedgecol2, dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawGameLineJerseys, DrawLineEditorScreen, DrawMenuBar
+extern DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418
+extern dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, dword_DBC7C, dword_DBCE0, editptrspr
+extern fadeend, fadeend2, FadeOutPalCycle, fadepal, fadepal2, fadestart, fadestart2, fadestep
+extern fadestep2, FatalError, fileoncd, FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, GameDressPlayer
+extern gameopts, GameScratchPlayer, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster, hmrosterjersey
+extern HomeTeam, j___close_, j___delay_, jerseyremap, KeyDbPtr, leaguedbfmt, LineEdHitTest, lineedpanel
+extern lineslotx, linesloty, LoadJerseyColours, lseek_, mainfont, MakeJerseyShape, MakePath, memcpy_
+extern menuact_dbdress, menuact_dbscratch, menuact_gamedress, menuact_gamescratch, menuact_savedeflines, menuact_savedeflines2, menuact_savelines, menuact_uselines
+extern menuact_uselines2, MenuHitTest, MenuSaveDefaultLines, MenuSaveTheseLines, MenuUseTheseLines, MessageBox, MouseSetPos, msglines
+extern MusicChanReset2, musichandle, musicon, musicslot, open_, palfadedin, pointerspr, PrintCenteredText
+extern PrintFmt1, PrintFmt2, PrintShadowText, ptrupdatefn, qsort_, read_, rostergstat, rosterjersey
+extern rosterlist, rosterpstat, rosterslot, rosterstat, rosterteam, rosterteamrec, RunMenu, SetDrawBitmap
+extern SetTextColors, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, statsgoalieorder, statsgoalieplr, statsplayerbuf
+extern statsplayoffs, statsskaterorder, statsskaterplr, str_A4, str_Bkgd2, str_C2dS2, str_C2dS3, str_C5
+extern str_Embpal4, str_Embpal5, str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6
+extern str_ErrA7, str_ErrA8, str_fmt2d, str_fmt3d, str_fmt4d, str_fmtEmb, str_fmtMinSec, str_fmtTenths
+extern str_G4, str_GA3, str_GAA4, str_GP8, str_Gstat3, str_Key, str_Keys3, str_L8
+extern str_Lelogo, str_Lelogo2, str_Lineditp2, str_Lineditp3, str_Menubuff8, str_Menubuff9, str_Min4, str_Name2
+extern str_No2, str_Pal25, str_Pal26, str_Pal27, str_Pal28, str_PCT2, str_PIM4, str_Pntr3
+extern str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6
+extern str_SA3, str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_W6, strcmp_
+extern stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
+extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_9121C, sub_913B4
+extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
+extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, unk_C311D, unk_D075E, unknown_libname_1
+extern vgapage, VisTeam
+global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
+global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
+global CmpRosterSkaters, CmpRosterGoalies, MenuRegSeasonStats, MenuRegSeasonStats_common, MenuPlayoffStats, ShowRosterStats, FadePalStep, FadePalStep_ret
+global FadePalStepSlow, SetPalette768, RandLfsrByte, BlitClipRect, str_Scratch2, str_Dress2, str_Player2, str_GoalieW2
+global str_RosterIncomplete2, PrintLineEdStatus
+str_RosterIncomplete:
+db 059h,06Fh,075h,072h,020h,052h,06Fh,073h,074h,065h,072h,020h,069h,073h,020h,069h
+db 06Eh,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,02Eh,00h
+str_Scratch:
+db 053h,063h,072h,061h,074h,063h,068h,00h
+str_Dress:
+db 044h,072h,065h,073h,073h,00h
+str_Player:
+db 050h,06Ch,061h,079h,065h,072h,00h
+str_GoalieW:
+db 047h,06Fh,061h,06Ch,069h,065h,00h
+; C: src/front/lines/DbLineEditor.c
+%ifdef CBUILD
+%include "c/front/lines/DbLineEditor.inc"
+%else
+DbLineEditor:
+push dword 50h	; 737E1
+call __CHK	; 737E6
+push esi	; 737EB
+push edi	; 737EC
+push ebp	; 737ED
+sub esp, byte 30h	; 737EE
+mov byte [byte esp+02Ch], al	; 737F1
+mov dword [byte esp+020h], edx	; 737F5
+mov dword [byte esp+028h], ebx	; 737F9
+mov dword [byte esp+024h], ecx	; 737FD
+push byte 20h	; 73801
+push dword 300h	; 73803
+push str_Pal25	; 73808
+call sub_8CCA8	; 7380D
+mov esi, eax	; 73812
+add esp, byte 0Ch	; 73814
+push eax	; 73817
+push dword 100h	; 73818
+push byte 0	; 7381D
+call sub_8FFB0	; 7381F
+add esp, byte 0Ch	; 73824
+mov ebx, 10h	; 73827
+mov edx, esi	; 7382C
+mov eax, 1	; 7382E
+call FadePalStep	; 73833
+push esi	; 73838
+call FreeMemBlock	; 73839
+add esp, byte 4	; 7383E
+cmp byte [musicon], 0	; 73841
+je short .1	; 73848
+cmp dword [songdata], byte 0	; 7384A
+je short .1	; 73851
+mov eax, dword [musichandle]	; 73853
+mov ebx, 32h	; 73858
+mov edx, 3	; 7385D
+call sub_8FCDF	; 73862
+.1:
+call ShowLoadingScreen	; 73867
+mov ebx, dword [fullscrbmp]	; 7386C
+push ebx	; 73872
+call SetDrawBitmap	; 73873
+add esp, byte 4	; 73878
+mov al, byte [byte esp+02Ch]	; 7387B
+mov byte [lineedpanel], al	; 7387F
+mov ecx, 0C1h	; 73884
+mov dword [dlgfillcol], ecx	; 73889
+mov dword [dlgedgecol1], 0C0h	; 7388F
+mov dword [dlgedgecol2], ecx	; 73899
+mov ebp, 0C2h	; 7389F
+mov dword [dlgedgecol3], ebp	; 738A4
+mov dword [dlgbevelcol1], 0C3h	; 738AA
+mov dword [dlgbevelcol2], ebp	; 738B4
+push dword 0F0h	; 738BA
+push dword 140h	; 738BF
+call MouseSetPos	; 738C4
+add esp, byte 8	; 738C9
+push dword 1E0h	; 738CC
+push byte 0	; 738D1
+push dword 280h	; 738D3
+push byte 0	; 738D8
+call sub_B4BC4	; 738DA
+add esp, byte 10h	; 738DF
+xor ecx, ecx	; 738E2
+mov ebx, str_Lineditp2	; 738E4
+cmp byte [fileoncd+0E8h], 1	; 738E9
+jne short .2	; 738F0
+mov edx, dword [cddriveptr]	; 738F2
+jmp short .3	; 738F8
+.2:
+xor edx, edx	; 738FA
+.3:
+mov eax, esp	; 738FC
+call MakePath	; 738FE
+push byte 0	; 73903
+lea eax, [byte esp+04h]	; 73905
+push eax	; 73909
+call sub_8E83C	; 7390A
+mov edi, eax	; 7390F
+add esp, byte 8	; 73911
+push str_Shrt2	; 73914
+push eax	; 73919
+call sub_B30B4	; 7391A
+mov esi, eax	; 7391F
+add esp, byte 8	; 73921
+mov ebx, dword [byte esp+024h]	; 73924
+push ebx	; 73928
+movzx ebp, byte [byte esp+030h]	; 73929
+mov ecx, dword [byte esp+02Ch]	; 7392E
+xor ebx, ebx	; 73932
+mov edx, eax	; 73934
+mov eax, ebp	; 73936
+call DrawLineEditorScreen	; 73938
+call FadeOutPalCycle	; 7393D
+call sub_B4BA8	; 73942
+mov edx, dword [fullscrbmp]	; 73947
+mov ecx, dword [byte edx+02Ch]	; 7394D
+push ecx	; 73950
+call sub_9061C	; 73951
+add esp, byte 4	; 73956
+push edi	; 73959
+mov eax, dword [byte esp+028h]	; 7395A
+push eax	; 7395E
+mov edx, dword [byte esp+030h]	; 7395F
+push edx	; 73963
+xor ecx, ecx	; 73964
+mov ebx, ebp	; 73966
+mov edx, esi	; 73968
+mov eax, dword [byte esp+02Ch]	; 7396A
+call DbLineEditorLoop	; 7396E
+push edi	; 73973
+call FreeMemBlock	; 73974
+add esp, byte 4	; 73979
+mov ebx, 41h	; 7397C
+mov dword [dlgfillcol], ebx	; 73981
+mov ecx, 40h	; 73987
+mov dword [dlgedgecol1], ecx	; 7398C
+mov esi, 42h	; 73992
+mov dword [dlgedgecol2], esi	; 73997
+mov dword [dlgedgecol3], ebx	; 7399D
+mov dword [dlgbevelcol1], ecx	; 739A3
+mov dword [dlgbevelcol2], esi	; 739A9
+add esp, byte 30h	; 739AF
+pop ebp	; 739B2
+pop edi	; 739B3
+pop esi	; 739B4
+ret	; 739B5
+%endif ; C
+; C: src/front/lines/FindRosterSlot.c
+%ifdef CBUILD
+%include "c/front/lines/FindRosterSlot.inc"
+%else
+FindRosterSlot:
+push dword 14h	; 739B6
+call __CHK	; 739BB
+push ebx	; 739C0
+push ecx	; 739C1
+sub esp, byte 8	; 739C2
+mov byte [byte esp+04h], al	; 739C5
+mov dh, dl	; 739C9
+xor dl, dl	; 739CB
+jmp short .3	; 739CD
+.1:
+xor ebx, ebx	; 739CF
+mov bl, dh	; 739D1
+mov eax, ebx	; 739D3
+shl eax, 2	; 739D5
+sub eax, ebx	; 739D8
+shl eax, 2	; 739DA
+mov ebx, eax	; 739DD
+mov ecx, eax	; 739DF
+shl ecx, 6	; 739E1
+sub ecx, eax	; 739E4
+xor ebx, eax	; 739E6
+mov bl, dl	; 739E8
+mov eax, ebx	; 739EA
+shl eax, 3	; 739EC
+sub eax, ebx	; 739EF
+shl eax, 2	; 739F1
+sub eax, ebx	; 739F4
+mov al, byte [dword ecx+eax+rosterslot]	; 739F6
+cmp al, byte [byte esp+04h]	; 739FD
+jne short .2	; 73A01
+mov byte [esp], dl	; 73A03
+mov dl, 1Ch	; 73A06
+.2:
+inc dl	; 73A08
+.3:
+cmp dl, 1Ch	; 73A0A
+jb short FindRosterSlot.1	; 73A0D
+mov al, byte [esp]	; 73A0F
+add esp, byte 8	; 73A12
+pop ecx	; 73A15
+pop ebx	; 73A16
+ret	; 73A17
+%endif ; C
+DbLineEditorLoop:
+push dword 158h	; 73A18
+call __CHK	; 73A1D
+push esi	; 73A22
+push edi	; 73A23
+push ebp	; 73A24
+mov ebp, esp	; 73A25
+sub esp, 128h	; 73A27
+push eax	; 73A2D
+push edx	; 73A2E
+sub ebp, byte 7Ah	; 73A2F
+mov byte [byte ebp+072h], bl	; 73A32
+xor edx, edx	; 73A35
+mov dword [byte ebp+06Ah], edx	; 73A37
+mov ebx, 0FFFFFFFFh	; 73A3A
+mov dword [byte ebp+026h], ebx	; 73A3F
+mov dword [byte ebp+02Eh], ebx	; 73A42
+mov dword [byte ebp+056h], 0C0h	; 73A45
+mov dword [byte ebp+052h], 0C1h	; 73A4C
+mov dword [byte ebp+05Ah], 0C2h	; 73A53
+push str_Pntr3	; 73A5A
+mov edx, dword [dword ebp+092h]	; 73A5F
+push edx	; 73A65
+call sub_B30B4	; 73A66
+mov dword [byte ebp+046h], eax	; 73A6B
+add esp, byte 8	; 73A6E
+mov eax, dword [dword ebp+08Ah]	; 73A71
+mov dword [byte ebp-0Eh], eax	; 73A77
+mov eax, dword [dword ebp+08Eh]	; 73A7A
+mov dword [byte ebp+012h], eax	; 73A80
+xor ebx, ebx	; 73A83
+mov dword [byte ebp-02h], ebx	; 73A85
+mov dword [byte ebp-06h], ebx	; 73A88
+mov dword [byte ebp-0Ah], ebx	; 73A8B
+mov dword [byte ebp+0Eh], ebx	; 73A8E
+mov dword [byte ebp+0Ah], ebx	; 73A91
+mov dword [byte ebp+06h], ebx	; 73A94
+mov dword [byte ebp+02h], ebx	; 73A97
+mov dword [byte ebp-012h], ebx	; 73A9A
+mov dword [byte ebp-016h], ebx	; 73A9D
+mov dword [byte ebp-01Ah], ebx	; 73AA0
+mov dword [byte ebp-01Eh], ebx	; 73AA3
+mov dword [byte ebp-07Ah], ebx	; 73AA6
+mov dword [byte ebp-07Eh], ebx	; 73AA9
+mov dword [menuact_dbdress], ebx	; 73AAC
+mov dword [menuact_dbscratch], ebx	; 73AB2
+mov edx, dword [byte ebp+046h]	; 73AB8
+mov edx, dword [byte edx+02h]	; 73ABB
+sar edx, 10h	; 73ABE
+mov eax, dword [byte ebp+046h]	; 73AC1
+mov eax, dword [byte eax+04h]	; 73AC4
+sar eax, 10h	; 73AC7
+lea ebx, [byte eax+01h]	; 73ACA
+lea eax, [byte edx+01h]	; 73ACD
+imul eax, ebx	; 73AD0
+add eax, byte 11h	; 73AD3
+push byte 20h	; 73AD6
+push eax	; 73AD8
+push str_Pointer13	; 73AD9
+call sub_8CCA8	; 73ADE
+add esp, byte 0Ch	; 73AE3
+mov dword [byte ebp+066h], eax	; 73AE6
+mov edi, eax	; 73AE9
+mov esi, dword [byte ebp+046h]	; 73AEB
+movsd	; 73AEE
+movsd	; 73AEF
+movsd	; 73AF0
+movsd	; 73AF1
+movsb	; 73AF2
+mov edx, dword [byte ebp+046h]	; 73AF3
+mov dx, word [byte edx+04h]	; 73AF6
+inc edx	; 73AFA
+mov word [byte eax+04h], dx	; 73AFB
+mov edx, dword [byte ebp+046h]	; 73AFF
+mov dx, word [byte edx+06h]	; 73B02
+inc edx	; 73B06
+mov word [byte eax+06h], dx	; 73B07
+mov edx, dword [byte ebp-0Eh]	; 73B0B
+mov edx, dword [edx]	; 73B0E
+mov eax, dword [byte ebp-0Eh]	; 73B10
+mov edi, dword [byte eax+08h]	; 73B13
+add edx, edi	; 73B16
+mov eax, edx	; 73B18
+sar edx, 1Fh	; 73B1A
+LD sub, eax, edx	; 73B1D
+sar eax, 1	; 73B1F
+mov esi, eax	; 73B21
+mov dword [byte ebp+03Eh], eax	; 73B23
+mov edx, dword [byte ebp-0Eh]	; 73B26
+mov edx, dword [byte edx+04h]	; 73B29
+mov eax, dword [byte ebp-0Eh]	; 73B2C
+mov ebx, dword [byte eax+0Ch]	; 73B2F
+add edx, ebx	; 73B32
+mov eax, edx	; 73B34
+sar edx, 1Fh	; 73B36
+LD sub, eax, edx	; 73B39
+sar eax, 1	; 73B3B
+mov edi, eax	; 73B3D
+mov dword [byte ebp+03Ah], eax	; 73B3F
+xor ecx, ecx	; 73B42
+mov dword [byte ebp+042h], ecx	; 73B44
+.1:
+mov eax, dword [dword ebp-0B2h]	; 73B47
+add eax, dword [byte ebp+042h]	; 73B4D
+mov dl, byte [eax]	; 73B50
+cmp dl, 64h	; 73B52
+je short .2	; 73B55
+xor ebx, ebx	; 73B57
+mov bl, byte [byte ebp+072h]	; 73B59
+mov al, dl	; 73B5C
+and eax, 0FFh	; 73B5E
+mov edx, ebx	; 73B63
+call FindRosterSlot	; 73B65
+mov cl, al	; 73B6A
+mov eax, ebx	; 73B6C
+shl eax, 2	; 73B6E
+sub eax, ebx	; 73B71
+shl eax, 2	; 73B73
+mov edx, eax	; 73B76
+mov ebx, eax	; 73B78
+shl ebx, 6	; 73B7A
+sub ebx, eax	; 73B7D
+xor edx, eax	; 73B7F
+mov dl, cl	; 73B81
+mov eax, edx	; 73B83
+shl eax, 3	; 73B85
+sub eax, edx	; 73B88
+shl eax, 2	; 73B8A
+sub eax, edx	; 73B8D
+mov dl, byte [dword ebx+eax+rosterjersey]	; 73B8F
+.2:
+mov eax, dword [byte ebp+042h]	; 73B96
+mov byte [dword eax+ebp-0AEh], dl	; 73B99
+mov ebx, dword [byte ebp+042h]	; 73BA0
+inc ebx	; 73BA3
+mov dword [byte ebp+042h], ebx	; 73BA4
+cmp ebx, byte 28h	; 73BA7
+jl short DbLineEditorLoop.1	; 73BAA
+xor eax, eax	; 73BAC
+mov dword [byte ebp+042h], eax	; 73BAE
+.3:
+xor ebx, ebx	; 73BB1
+mov bl, byte [byte ebp+072h]	; 73BB3
+mov eax, dword [dword ebp-0B2h]	; 73BB6
+add eax, dword [byte ebp+042h]	; 73BBC
+mov al, byte [byte eax+028h]	; 73BBF
+and eax, 0FFh	; 73BC2
+mov edx, ebx	; 73BC7
+call FindRosterSlot	; 73BC9
+mov cl, al	; 73BCE
+mov eax, dword [dword ebp-0B2h]	; 73BD0
+add eax, dword [byte ebp+042h]	; 73BD6
+cmp byte [byte eax+028h], 64h	; 73BD9
+je short .4	; 73BDD
+mov eax, ebx	; 73BDF
+shl eax, 2	; 73BE1
+sub eax, ebx	; 73BE4
+shl eax, 2	; 73BE6
+mov edx, eax	; 73BE9
+mov ebx, eax	; 73BEB
+shl ebx, 6	; 73BED
+sub ebx, eax	; 73BF0
+xor edx, eax	; 73BF2
+mov dl, cl	; 73BF4
+mov eax, edx	; 73BF6
+shl eax, 3	; 73BF8
+sub eax, edx	; 73BFB
+shl eax, 2	; 73BFD
+sub eax, edx	; 73C00
+add eax, ebx	; 73C02
+cmp byte [dword eax+rosterstat], 3	; 73C04
+jne short .4	; 73C0B
+mov byte [dword eax+rosterstat], 2	; 73C0D
+.4:
+mov ebx, dword [byte ebp+042h]	; 73C14
+inc ebx	; 73C17
+mov dword [byte ebp+042h], ebx	; 73C18
+cmp ebx, byte 8	; 73C1B
+jl short DbLineEditorLoop.3	; 73C1E
+push byte 20h	; 73C20
+push dword 300h	; 73C22
+push str_Pal25	; 73C27
+call sub_8CCA8	; 73C2C
+add esp, byte 0Ch	; 73C31
+mov dword [byte ebp+04Ah], eax	; 73C34
+xor ecx, ecx	; 73C37
+mov ebx, str_Embpal4	; 73C39
+cmp byte [fileoncd+08Eh], 1	; 73C3E
+jne short .5	; 73C45
+mov edx, dword [cddriveptr]	; 73C47
+jmp short .6	; 73C4D
+.5:
+xor edx, edx	; 73C4F
+.6:
+lea eax, [byte ebp-05Eh]	; 73C51
+call MakePath	; 73C54
+push byte 0	; 73C59
+lea eax, [byte ebp-05Eh]	; 73C5B
+push eax	; 73C5E
+call sub_8E83C	; 73C5F
+mov dword [byte ebp+046h], eax	; 73C64
+add esp, byte 8	; 73C67
+push str_Pal26	; 73C6A
+push eax	; 73C6F
+call sub_B30B4	; 73C70
+add esp, byte 8	; 73C75
+lea edx, [byte eax+010h]	; 73C78
+mov ebx, 300h	; 73C7B
+mov eax, dword [byte ebp+04Ah]	; 73C80
+call memcpy_	; 73C83
+mov edx, dword [byte ebp+046h]	; 73C88
+push edx	; 73C8B
+call FreeMemBlock	; 73C8C
+add esp, byte 4	; 73C91
+xor ecx, ecx	; 73C94
+mov cl, byte [byte ebp+072h]	; 73C96
+mov ebx, dword [byte ebp+04Ah]	; 73C99
+mov edx, dword [dword ebp+092h]	; 73C9C
+mov eax, ecx	; 73CA2
+call LoadJerseyColours	; 73CA4
+xor eax, eax	; 73CA9
+mov al, byte [dword ecx+rosterteam]	; 73CAB
+mov al, byte [nosplit eax*4+byte_D11BC]	; 73CB1
+mov byte [byte ebp+06Eh], al	; 73CB8
+xor eax, eax	; 73CBB
+mov al, byte [byte ebp+06Eh]	; 73CBD
+mov al, byte [dword eax+jerseyremap]	; 73CC0
+mov byte [byte ebp+06Eh], al	; 73CC6
+mov al, byte [byte_D12DE]	; 73CC9
+mov byte [byte ebp+076h], al	; 73CCE
+mov ebx, ecx	; 73CD1
+mov edx, dword [dword ebp-0B6h]	; 73CD3
+lea eax, [dword ebp-0AEh]	; 73CD9
+call DrawLineJerseys	; 73CDF
+xor ecx, ecx	; 73CE4
+mov ebx, str_Lelogo	; 73CE6
+cmp byte [fileoncd+021Bh], 1	; 73CEB
+jne short .7	; 73CF2
+mov edx, dword [cddriveptr]	; 73CF4
+jmp short .8	; 73CFA
+.7:
+xor edx, edx	; 73CFC
+.8:
+lea eax, [byte ebp-05Eh]	; 73CFE
+call MakePath	; 73D01
+push byte 0	; 73D06
+lea eax, [byte ebp-05Eh]	; 73D08
+push eax	; 73D0B
+call sub_8E83C	; 73D0C
+mov dword [byte ebp+046h], eax	; 73D11
+add esp, byte 8	; 73D14
+push str_Pal26	; 73D17
+push eax	; 73D1C
+call sub_B30B4	; 73D1D
+add esp, byte 8	; 73D22
+lea edx, [dword eax+026Eh]	; 73D25
+mov eax, dword [byte ebp+04Ah]	; 73D2B
+add eax, 25Eh	; 73D2E
+mov ebx, 93h	; 73D33
+call memcpy_	; 73D38
+mov ecx, dword [byte ebp+046h]	; 73D3D
+push ecx	; 73D40
+call FreeMemBlock	; 73D41
+add esp, byte 4	; 73D46
+mov ebx, 10h	; 73D49
+mov edx, dword [byte ebp+04Ah]	; 73D4E
+xor eax, eax	; 73D51
+call FadePalStep	; 73D53
+cmp edi, byte 20h	; 73D58
+jge short .9	; 73D5B
+xor eax, eax	; 73D5D
+jmp short .10	; 73D5F
+.9:
+lea eax, [byte edi-020h]	; 73D61
+.10:
+push eax	; 73D64
+cmp esi, byte 1Ch	; 73D65
+jge short .11	; 73D68
+xor eax, eax	; 73D6A
+jmp short .12	; 73D6C
+.11:
+lea eax, [byte esi-01Ch]	; 73D6E
+.12:
+push eax	; 73D71
+mov eax, dword [editptrspr]	; 73D72
+push eax	; 73D77
+call sub_91400	; 73D78
+add esp, byte 0Ch	; 73D7D
+cmp edi, byte 20h	; 73D80
+jge short .13	; 73D83
+xor eax, eax	; 73D85
+jmp short .14	; 73D87
+.13:
+lea eax, [byte edi-020h]	; 73D89
+.14:
+push eax	; 73D8C
+cmp esi, byte 1Ch	; 73D8D
+jge short .15	; 73D90
+xor eax, eax	; 73D92
+jmp short .16	; 73D94
+.15:
+lea eax, [byte esi-01Ch]	; 73D96
+.16:
+push eax	; 73D99
+mov edx, dword [byte ebp+066h]	; 73D9A
+push edx	; 73D9D
+call sub_91400	; 73D9E
+add esp, byte 0Ch	; 73DA3
+push edi	; 73DA6
+lea eax, [byte esi-03h]	; 73DA7
+push eax	; 73DAA
+mov ebx, dword [pointerspr]	; 73DAB
+push ebx	; 73DB1
+call sub_91FE0	; 73DB2
+add esp, byte 0Ch	; 73DB7
+push dword 1E0h	; 73DBA
+push dword 280h	; 73DBF
+push byte 0	; 73DC4
+push byte 0	; 73DC6
+call sub_B2E1B	; 73DC8
+add esp, byte 10h	; 73DCD
+push edi	; 73DD0
+push esi	; 73DD1
+call MouseSetPos	; 73DD2
+add esp, byte 8	; 73DD7
+lea eax, [byte ebp+042h]	; 73DDA
+push eax	; 73DDD
+push eax	; 73DDE
+push eax	; 73DDF
+call sub_B2DCA	; 73DE0
+add esp, byte 0Ch	; 73DE5
+call ClearInputQueue	; 73DE8
+jmp near .28	; 73DED
+.17:
+sub edi, byte 20h	; 73DF2
+.18:
+push edi	; 73DF5
+cmp esi, byte 1Ch	; 73DF6
+jge short .19	; 73DF9
+xor esi, esi	; 73DFB
+jmp short .20	; 73DFD
+.19:
+sub esi, byte 1Ch	; 73DFF
+.20:
+push esi	; 73E02
+mov ebx, dword [byte ebp+066h]	; 73E03
+push ebx	; 73E06
+call sub_903F0	; 73E07
+add esp, byte 0Ch	; 73E0C
+mov ecx, dword [byte ebp+03Ah]	; 73E0F
+cmp ecx, byte 20h	; 73E12
+jge short .21	; 73E15
+xor eax, eax	; 73E17
+jmp short .22	; 73E19
+.21:
+lea eax, [byte ecx-020h]	; 73E1B
+.22:
+push eax	; 73E1E
+mov esi, dword [byte ebp+03Eh]	; 73E1F
+cmp esi, byte 1Ch	; 73E22
+jge short .23	; 73E25
+xor eax, eax	; 73E27
+jmp short .24	; 73E29
+.23:
+lea eax, [byte esi-01Ch]	; 73E2B
+.24:
+push eax	; 73E2E
+mov edi, dword [byte ebp+066h]	; 73E2F
+push edi	; 73E32
+call sub_91400	; 73E33
+add esp, byte 0Ch	; 73E38
+mov eax, dword [byte ebp+03Ah]	; 73E3B
+mov edx, dword [byte ebp-0Eh]	; 73E3E
+cmp eax, dword [byte edx+0Ch]	; 73E41
+jle near .26	; 73E44
+cmp dword [byte ebp+03Eh], 1F4h	; 73E4A
+jge near .26	; 73E51
+cmp dword [byte ebp+026h], byte 0FFFFFFFFh	; 73E57
+je near .26	; 73E5B
+cmp dword [byte ebp-0Ah], byte 0	; 73E61
+je short .25	; 73E65
+lea eax, [byte ebp+032h]	; 73E67
+push eax	; 73E6A
+lea eax, [byte ebp+036h]	; 73E6B
+push eax	; 73E6E
+lea eax, [byte ebp-07Eh]	; 73E6F
+push eax	; 73E72
+lea eax, [byte ebp+012h]	; 73E73
+push eax	; 73E76
+mov ecx, dword [byte ebp+06Ah]	; 73E77
+lea ebx, [byte ebp-0Eh]	; 73E7A
+mov edx, dword [byte ebp+03Ah]	; 73E7D
+mov eax, dword [byte ebp+03Eh]	; 73E80
+call MenuHitTest	; 73E83
+test eax, eax	; 73E88
+jne short .26	; 73E8A
+.25:
+xor edx, edx	; 73E8C
+mov dl, byte [byte ebp+072h]	; 73E8E
+mov eax, edx	; 73E91
+shl eax, 2	; 73E93
+sub eax, edx	; 73E96
+shl eax, 2	; 73E98
+mov ebx, eax	; 73E9B
+shl ebx, 6	; 73E9D
+sub ebx, eax	; 73EA0
+mov edx, dword [byte ebp+026h]	; 73EA2
+mov eax, edx	; 73EA5
+shl eax, 3	; 73EA7
+sub eax, edx	; 73EAA
+shl eax, 2	; 73EAC
+sub eax, edx	; 73EAF
+add eax, ebx	; 73EB1
+cmp byte [dword eax+rosterstat], 2	; 73EB3
+je short .26	; 73EBA
+xor ecx, ecx	; 73EBC
+mov cl, byte [byte ebp+076h]	; 73EBE
+xor ebx, ebx	; 73EC1
+mov bl, byte [byte ebp+06Eh]	; 73EC3
+xor edx, edx	; 73EC6
+mov dl, byte [dword eax+rosterjersey]	; 73EC8
+mov eax, jerseyremap	; 73ECE
+call MakeJerseyShape	; 73ED3
+push jerseyremap	; 73ED8
+call sub_B4DD4	; 73EDD
+add esp, byte 4	; 73EE2
+mov eax, dword [byte ebp+03Ah]	; 73EE5
+sub eax, byte 20h	; 73EE8
+push eax	; 73EEB
+mov eax, dword [byte ebp+03Eh]	; 73EEC
+sub eax, byte 1Ch	; 73EEF
+push eax	; 73EF2
+mov eax, dword [dword ebp-0B6h]	; 73EF3
+push eax	; 73EF9
+call sub_91FE0	; 73EFA
+add esp, byte 0Ch	; 73EFF
+.26:
+mov edx, dword [byte ebp+03Ah]	; 73F02
+push edx	; 73F05
+mov eax, dword [byte ebp+03Eh]	; 73F06
+sub eax, byte 3	; 73F09
+push eax	; 73F0C
+mov ebx, dword [pointerspr]	; 73F0D
+push ebx	; 73F13
+.27:
+call sub_91FE0	; 73F14
+add esp, byte 0Ch	; 73F19
+mov esi, dword [byte ebp+03Eh]	; 73F1C
+mov edi, dword [byte ebp+03Ah]	; 73F1F
+.28:
+xor ecx, ecx	; 73F22
+.29:
+call GetInputEvent	; 73F24
+test eax, eax	; 73F29
+je short .30	; 73F2B
+lea ebx, [byte ebp+03Ah]	; 73F2D
+lea edx, [byte ebp+03Eh]	; 73F30
+call dword [ptrupdatefn]	; 73F33
+mov ecx, eax	; 73F39
+test al, 2	; 73F3B
+je short DbLineEditorLoop.29	; 73F3D
+.30:
+test cl, 2	; 73F3F
+jne short .32	; 73F42
+cmp esi, dword [byte ebp+03Eh]	; 73F44
+jne short .31	; 73F47
+cmp edi, dword [byte ebp+03Ah]	; 73F49
+je short DbLineEditorLoop.28	; 73F4C
+.31:
+cmp edi, byte 20h	; 73F4E
+jge near DbLineEditorLoop.17	; 73F51
+xor edi, edi	; 73F57
+jmp near DbLineEditorLoop.18	; 73F59
+.32:
+lea eax, [byte ebp+032h]	; 73F5E
+push eax	; 73F61
+lea eax, [byte ebp+036h]	; 73F62
+push eax	; 73F65
+lea eax, [byte ebp-07Eh]	; 73F66
+push eax	; 73F69
+lea eax, [byte ebp+012h]	; 73F6A
+push eax	; 73F6D
+mov ecx, dword [byte ebp+06Ah]	; 73F6E
+lea ebx, [byte ebp-0Eh]	; 73F71
+mov edx, dword [byte ebp+03Ah]	; 73F74
+mov eax, dword [byte ebp+03Eh]	; 73F77
+call MenuHitTest	; 73F7A
+lea edx, [byte edi-020h]	; 73F7F
+test eax, eax	; 73F82
+je near .61	; 73F84
+mov ebx, dword [byte ebp+036h]	; 73F8A
+shl ebx, 2	; 73F8D
+mov eax, dword [byte ebp+032h]	; 73F90
+shl eax, 5	; 73F93
+mov dword [byte ebp+04Eh], eax	; 73F96
+mov eax, dword [byte ebx+ebp-0Eh]	; 73F99
+add eax, dword [byte ebp+04Eh]	; 73F9D
+cmp dword [byte eax+014h], byte 0	; 73FA0
+je near .45	; 73FA4
+mov eax, dword [byte ebp+032h]	; 73FAA
+cmp eax, dword [byte ebx+ebp-01Eh]	; 73FAD
+jne near .39	; 73FB1
+cmp edi, byte 20h	; 73FB7
+jge short .33	; 73FBA
+xor edx, edx	; 73FBC
+.33:
+push edx	; 73FBE
+cmp esi, byte 1Ch	; 73FBF
+jge short .34	; 73FC2
+xor esi, esi	; 73FC4
+jmp short .35	; 73FC6
+.34:
+sub esi, byte 1Ch	; 73FC8
+.35:
+push esi	; 73FCB
+mov esi, dword [byte ebp+066h]	; 73FCC
+push esi	; 73FCF
+call sub_903F0	; 73FD0
+add esp, byte 0Ch	; 73FD5
+mov dword [byte ebp+042h], 3	; 73FD8
+jmp short .38	; 73FDF
+.36:
+mov edx, ebx	; 73FE1
+shl edx, 2	; 73FE3
+mov esi, dword [byte edx+ebp+02h]	; 73FE6
+test esi, esi	; 73FEA
+je short .37	; 73FEC
+mov edi, dword [byte ebp+ebx*8-07Ah]	; 73FEE
+push edi	; 73FF2
+mov ebx, dword [byte ebp+ebx*8-07Eh]	; 73FF3
+push ebx	; 73FF7
+push esi	; 73FF8
+call sub_903F0	; 73FF9
+add esp, byte 0Ch	; 73FFE
+mov eax, dword [byte ebp+042h]	; 74001
+xor esi, esi	; 74004
+mov dword [byte ebp+eax*8-07Ah], esi	; 74006
+mov dword [byte ebp+eax*8-07Eh], esi	; 7400A
+mov edi, dword [byte ebp+eax*4+02h]	; 7400E
+push edi	; 74012
+call FreeMemBlock	; 74013
+add esp, byte 4	; 74018
+.37:
+dec dword [byte ebp+042h]	; 7401B
+.38:
+mov ebx, dword [byte ebp+042h]	; 7401E
+test ebx, ebx	; 74021
+jge short DbLineEditorLoop.36	; 74023
+xor ecx, ecx	; 74025
+mov dword [byte ebp+06Ah], ecx	; 74027
+mov eax, dword [byte ebp+036h]	; 7402A
+mov esi, dword [byte ebp+032h]	; 7402D
+shl esi, 5	; 74030
+mov eax, dword [byte ebp+eax*4-0Eh]	; 74033
+add esi, eax	; 74037
+lea eax, [byte ebp+03Ah]	; 74039
+push eax	; 7403C
+lea eax, [byte ebp+03Eh]	; 7403D
+push eax	; 74040
+mov edi, dword [dword ebp+08Eh]	; 74041
+push edi	; 74047
+mov eax, dword [dword ebp+08Ah]	; 74048
+push eax	; 7404E
+push ecx	; 7404F
+mov edx, dword [dword ebp-0B6h]	; 74050
+push edx	; 74056
+xor ebx, ebx	; 74057
+mov bl, byte [byte ebp+072h]	; 74059
+lea ecx, [byte ebp+026h]	; 7405C
+mov edx, dword [dword ebp-0B2h]	; 7405F
+lea eax, [dword ebp-0AEh]	; 74065
+call dword [byte esi+014h]	; 7406B
+xor ebx, ebx	; 7406E
+mov dword [byte ebp-02h], ebx	; 74070
+mov dword [byte ebp-06h], ebx	; 74073
+mov dword [byte ebp-0Ah], ebx	; 74076
+mov dword [byte ebp+0Ah], ebx	; 74079
+mov dword [byte ebp+06h], ebx	; 7407C
+mov dword [byte ebp+02h], ebx	; 7407F
+mov dword [byte ebp-012h], ebx	; 74082
+mov dword [byte ebp-016h], ebx	; 74085
+mov dword [byte ebp-01Ah], ebx	; 74088
+mov dword [byte ebp+01Eh], ebx	; 7408B
+mov dword [byte ebp+01Ah], ebx	; 7408E
+mov dword [byte ebp+016h], ebx	; 74091
+cmp eax, byte 1	; 74094
+je near .130	; 74097
+call ClearInputQueue	; 7409D
+jmp near .123	; 740A2
+.39:
+cmp edi, byte 20h	; 740A7
+jge short .40	; 740AA
+xor edx, edx	; 740AC
+.40:
+push edx	; 740AE
+cmp esi, byte 1Ch	; 740AF
+jge short .41	; 740B2
+xor esi, esi	; 740B4
+jmp short .42	; 740B6
+.41:
+sub esi, byte 1Ch	; 740B8
+.42:
+push esi	; 740BB
+mov esi, dword [byte ebp+066h]	; 740BC
+push esi	; 740BF
+call sub_903F0	; 740C0
+add esp, byte 0Ch	; 740C5
+mov edi, dword [byte ebp+05Ah]	; 740C8
+push edi	; 740CB
+mov eax, dword [byte ebp+052h]	; 740CC
+push eax	; 740CF
+mov eax, dword [byte ebp+036h]	; 740D0
+mov ebx, dword [byte ebp+eax*8-07Ah]	; 740D3
+mov edx, dword [byte ebp+eax*8-07Eh]	; 740D7
+mov ecx, dword [byte ebp+eax*4-01Eh]	; 740DB
+shl ecx, 5	; 740DF
+mov eax, dword [byte ebp+eax*4-0Eh]	; 740E2
+add eax, ecx	; 740E6
+mov ecx, dword [byte ebp+056h]	; 740E8
+call DrawMenuItemSel	; 740EB
+mov edx, dword [byte ebp+036h]	; 740F0
+mov eax, dword [byte ebp+032h]	; 740F3
+mov dword [byte ebp+edx*4-01Eh], eax	; 740F6
+push edi	; 740FA
+mov ecx, dword [byte ebp+052h]	; 740FB
+push ecx	; 740FE
+mov ebx, dword [byte ebp+edx*8-07Ah]	; 740FF
+mov eax, dword [byte ebp+edx*8-07Eh]	; 74103
+mov ecx, dword [byte ebp+edx*4-01Eh]	; 74107
+shl ecx, 5	; 7410B
+mov esi, dword [byte ebp+edx*4-0Eh]	; 7410E
+add esi, ecx	; 74112
+.43:
+mov ecx, dword [byte ebp+056h]	; 74114
+mov edx, eax	; 74117
+mov eax, esi	; 74119
+.44:
+call DrawMenuItemNorm	; 7411B
+jmp near .123	; 74120
+.45:
+cmp dword [byte eax+018h], byte 0	; 74125
+je near .57	; 74129
+cmp edi, byte 20h	; 7412F
+jge short .46	; 74132
+xor edx, edx	; 74134
+.46:
+push edx	; 74136
+cmp esi, byte 1Ch	; 74137
+jge short .47	; 7413A
+xor esi, esi	; 7413C
+jmp short .48	; 7413E
+.47:
+sub esi, byte 1Ch	; 74140
+.48:
+push esi	; 74143
+mov ecx, dword [byte ebp+066h]	; 74144
+push ecx	; 74147
+call sub_903F0	; 74148
+add esp, byte 0Ch	; 7414D
+mov eax, dword [byte ebp+06Ah]	; 74150
+cmp eax, dword [byte ebp+036h]	; 74153
+je short .52	; 74156
+mov dword [byte ebp+042h], eax	; 74158
+jmp short .51	; 7415B
+.49:
+shl eax, 2	; 7415D
+xor esi, esi	; 74160
+mov dword [byte eax+ebp-01Eh], esi	; 74162
+mov edi, dword [byte eax+ebp+02h]	; 74166
+test edi, edi	; 7416A
+je short .50	; 7416C
+mov edx, dword [byte ebp+042h]	; 7416E
+mov ebx, dword [byte ebp+edx*8-07Ah]	; 74171
+push ebx	; 74175
+mov ecx, dword [byte ebp+edx*8-07Eh]	; 74176
+push ecx	; 7417A
+push edi	; 7417B
+call sub_903F0	; 7417C
+add esp, byte 0Ch	; 74181
+mov eax, dword [byte ebp+042h]	; 74184
+mov dword [byte ebp+eax*8-07Ah], esi	; 74187
+mov dword [byte ebp+eax*8-07Eh], esi	; 7418B
+mov edx, dword [byte ebp+eax*4+02h]	; 7418F
+push edx	; 74193
+call FreeMemBlock	; 74194
+add esp, byte 4	; 74199
+mov eax, dword [byte ebp+042h]	; 7419C
+mov dword [byte ebp+eax*4+02h], esi	; 7419F
+mov dword [byte ebp+eax*4-0Eh], esi	; 741A3
+mov dword [byte ebp+eax*4+012h], esi	; 741A7
+.50:
+dec dword [byte ebp+042h]	; 741AB
+.51:
+mov eax, dword [byte ebp+042h]	; 741AE
+mov ecx, dword [byte ebp+036h]	; 741B1
+cmp eax, ecx	; 741B4
+jg short DbLineEditorLoop.49	; 741B6
+mov dword [byte ebp+06Ah], ecx	; 741B8
+.52:
+mov eax, dword [byte ebp+05Ah]	; 741BB
+push eax	; 741BE
+mov edx, dword [byte ebp+052h]	; 741BF
+push edx	; 741C2
+mov esi, dword [byte ebp+06Ah]	; 741C3
+mov ebx, dword [byte ebp+esi*8-07Ah]	; 741C6
+mov edx, dword [byte ebp+esi*8-07Eh]	; 741CA
+mov eax, dword [byte ebp+esi*4-01Eh]	; 741CE
+shl eax, 5	; 741D2
+mov dword [byte ebp+046h], eax	; 741D5
+mov eax, dword [byte ebp+esi*4-0Eh]	; 741D8
+add eax, dword [byte ebp+046h]	; 741DC
+mov ecx, dword [byte ebp+056h]	; 741DF
+call DrawMenuItemSel	; 741E2
+mov eax, dword [byte ebp+032h]	; 741E7
+mov dword [byte ebp+esi*4-01Eh], eax	; 741EA
+mov eax, dword [byte ebp+05Ah]	; 741EE
+push eax	; 741F1
+mov edx, dword [byte ebp+052h]	; 741F2
+push edx	; 741F5
+mov ebx, dword [byte ebp+esi*8-07Ah]	; 741F6
+mov edx, dword [byte ebp+esi*8-07Eh]	; 741FA
+mov eax, dword [byte ebp+032h]	; 741FE
+shl eax, 5	; 74201
+mov ecx, dword [byte ebp+esi*4-0Eh]	; 74204
+add eax, ecx	; 74208
+mov ecx, dword [byte ebp+056h]	; 7420A
+call DrawMenuItemNorm	; 7420D
+mov eax, dword [byte ebp+036h]	; 74212
+mov ecx, dword [byte ebp+032h]	; 74215
+shl ecx, 5	; 74218
+mov ebx, dword [byte ebp+eax*4-0Eh]	; 7421B
+inc esi	; 7421F
+mov dword [byte ebp+06Ah], esi	; 74220
+mov ebx, dword [byte ecx+ebx+018h]	; 74223
+mov dword [byte ebp+esi*4-0Eh], ebx	; 74227
+mov eax, dword [byte ebp+eax*4-0Eh]	; 7422B
+add eax, ecx	; 7422F
+mov ebx, dword [byte eax+01Ch]	; 74231
+mov dword [byte ebp+esi*4+012h], ebx	; 74234
+cmp esi, byte 1	; 74238
+je short .53	; 7423B
+mov edx, dword [byte eax+08h]	; 7423D
+jmp short .54	; 74240
+.53:
+mov edx, dword [eax]	; 74242
+.54:
+mov eax, dword [byte ebp+06Ah]	; 74244
+mov ebx, dword [dword ebp+eax*8-086h]	; 74247
+add edx, ebx	; 7424E
+mov dword [byte ebp+eax*8-07Eh], edx	; 74250
+mov edx, dword [byte ebp+032h]	; 74254
+shl edx, 5	; 74257
+mov eax, dword [byte ebp+036h]	; 7425A
+shl eax, 2	; 7425D
+cmp dword [byte ebp+06Ah], byte 1	; 74260
+je short .55	; 74264
+mov eax, dword [byte eax+ebp-0Eh]	; 74266
+mov eax, dword [byte edx+eax+04h]	; 7426A
+jmp short .56	; 7426E
+.55:
+mov eax, dword [byte eax+ebp-0Eh]	; 74270
+mov eax, dword [byte edx+eax+0Ch]	; 74274
+.56:
+mov edx, dword [byte ebp+06Ah]	; 74278
+shl edx, 3	; 7427B
+mov dword [byte ebp+05Eh], edx	; 7427E
+mov esi, dword [dword edx+ebp-082h]	; 74281
+add eax, esi	; 74288
+mov dword [byte edx+ebp-07Ah], eax	; 7428A
+mov eax, dword [byte ebp+06Ah]	; 7428E
+shl eax, 2	; 74291
+mov dword [byte ebp+062h], eax	; 74294
+mov edx, dword [byte eax+ebp+012h]	; 74297
+shl edx, 5	; 7429B
+mov eax, dword [byte eax+ebp-0Eh]	; 7429E
+mov ebx, dword [byte edx+eax-018h]	; 742A2
+sub ebx, dword [eax]	; 742A6
+inc ebx	; 742A8
+mov dword [byte ebp+022h], ebx	; 742A9
+mov edx, dword [byte edx+eax-014h]	; 742AC
+sub edx, dword [byte eax+04h]	; 742B0
+inc edx	; 742B3
+mov dword [byte ebp+02Ah], edx	; 742B4
+push byte 20h	; 742B7
+mov eax, dword [byte ebp+022h]	; 742B9
+shl eax, 2	; 742BC
+imul eax, edx	; 742BF
+add eax, byte 11h	; 742C2
+push eax	; 742C5
+push str_Menubuff8	; 742C6
+call sub_8CCA8	; 742CB
+add esp, byte 0Ch	; 742D0
+mov edx, dword [byte ebp+062h]	; 742D3
+mov dword [byte edx+ebp+02h], eax	; 742D6
+mov esi, dword [pointerspr]	; 742DA
+mov edi, eax	; 742E0
+movsd	; 742E2
+movsd	; 742E3
+movsd	; 742E4
+movsd	; 742E5
+movsb	; 742E6
+mov eax, dword [byte edx+ebp+02h]	; 742E7
+mov edx, dword [byte ebp+022h]	; 742EB
+mov word [byte eax+04h], dx	; 742EE
+mov eax, dword [byte ebp+062h]	; 742F2
+mov eax, dword [byte eax+ebp+02h]	; 742F5
+mov edx, dword [byte ebp+02Ah]	; 742F9
+mov word [byte eax+06h], dx	; 742FC
+mov eax, dword [byte ebp+05Eh]	; 74300
+mov esi, dword [byte eax+ebp-07Ah]	; 74303
+push esi	; 74307
+mov edi, dword [byte eax+ebp-07Eh]	; 74308
+push edi	; 7430C
+mov eax, dword [byte ebp+062h]	; 7430D
+mov edx, dword [byte eax+ebp+02h]	; 74310
+push edx	; 74314
+call sub_91400	; 74315
+add esp, byte 0Ch	; 7431A
+mov ebx, dword [byte ebp+05Ah]	; 7431D
+push ebx	; 74320
+mov ecx, dword [byte ebp+052h]	; 74321
+push ecx	; 74324
+mov esi, dword [byte ebp+056h]	; 74325
+push esi	; 74328
+mov ecx, dword [byte ebp+05Eh]	; 74329
+mov ecx, dword [byte ecx+ebp-07Ah]	; 7432C
+mov ebx, dword [byte ebp+05Eh]	; 74330
+mov ebx, dword [byte ebx+ebp-07Eh]	; 74333
+mov edx, dword [byte ebp+062h]	; 74337
+mov edx, dword [byte edx+ebp+012h]	; 7433A
+mov eax, dword [byte ebp+062h]	; 7433E
+mov eax, dword [byte eax+ebp-0Eh]	; 74341
+call DrawMenuDropdown	; 74345
+mov eax, dword [byte ebp+062h]	; 7434A
+xor edi, edi	; 7434D
+mov dword [byte eax+ebp-01Eh], edi	; 7434F
+mov eax, dword [byte ebp+05Ah]	; 74353
+push eax	; 74356
+mov edx, dword [byte ebp+052h]	; 74357
+push edx	; 7435A
+mov ebx, dword [byte ebp+05Eh]	; 7435B
+mov ebx, dword [byte ebx+ebp-07Ah]	; 7435E
+mov edx, dword [byte ebp+05Eh]	; 74362
+mov edx, dword [byte edx+ebp-07Eh]	; 74365
+mov eax, dword [byte ebp+062h]	; 74369
+mov eax, dword [byte eax+ebp-0Eh]	; 7436C
+mov ecx, esi	; 74370
+jmp near DbLineEditorLoop.44	; 74372
+.57:
+cmp edi, byte 20h	; 74377
+jge short .58	; 7437A
+xor edx, edx	; 7437C
+.58:
+push edx	; 7437E
+cmp esi, byte 1Ch	; 7437F
+jge short .59	; 74382
+xor esi, esi	; 74384
+jmp short .60	; 74386
+.59:
+sub esi, byte 1Ch	; 74388
+.60:
+push esi	; 7438B
+mov ecx, dword [byte ebp+066h]	; 7438C
+push ecx	; 7438F
+call sub_903F0	; 74390
+add esp, byte 0Ch	; 74395
+mov esi, dword [byte ebp+05Ah]	; 74398
+push esi	; 7439B
+mov edi, dword [byte ebp+052h]	; 7439C
+push edi	; 7439F
+mov eax, dword [byte ebp+036h]	; 743A0
+mov ebx, dword [byte ebp+eax*8-07Ah]	; 743A3
+mov edx, dword [byte ebp+eax*8-07Eh]	; 743A7
+mov ecx, dword [byte ebp+eax*4-01Eh]	; 743AB
+shl ecx, 5	; 743AF
+mov eax, dword [byte ebp+eax*4-0Eh]	; 743B2
+add eax, ecx	; 743B6
+mov ecx, dword [byte ebp+056h]	; 743B8
+call DrawMenuItemSel	; 743BB
+mov edx, dword [byte ebp+036h]	; 743C0
+mov eax, dword [byte ebp+032h]	; 743C3
+mov dword [byte ebp+edx*4-01Eh], eax	; 743C6
+push esi	; 743CA
+push edi	; 743CB
+mov ebx, dword [byte ebp+edx*8-07Ah]	; 743CC
+mov eax, dword [byte ebp+edx*8-07Eh]	; 743D0
+mov esi, dword [byte ebp+edx*4-01Eh]	; 743D4
+shl esi, 5	; 743D8
+mov edx, dword [byte ebp+edx*4-0Eh]	; 743DB
+add esi, edx	; 743DF
+jmp near DbLineEditorLoop.43	; 743E1
+.61:
+cmp edi, byte 20h	; 743E6
+jge short .62	; 743E9
+xor edx, edx	; 743EB
+.62:
+push edx	; 743ED
+cmp esi, byte 1Ch	; 743EE
+jge short .63	; 743F1
+xor esi, esi	; 743F3
+jmp short .64	; 743F5
+.63:
+sub esi, byte 1Ch	; 743F7
+.64:
+push esi	; 743FA
+mov ecx, dword [byte ebp+066h]	; 743FB
+push ecx	; 743FE
+call sub_903F0	; 743FF
+add esp, byte 0Ch	; 74404
+lea ebx, [byte ebp+02Eh]	; 74407
+mov edx, dword [byte ebp+03Ah]	; 7440A
+mov eax, dword [byte ebp+03Eh]	; 7440D
+call LineEdHitTest	; 74410
+test eax, eax	; 74415
+je near .123	; 74417
+mov dword [byte ebp+042h], 3	; 7441D
+jmp short .67	; 74424
+.65:
+mov eax, ecx	; 74426
+shl eax, 2	; 74428
+mov edx, dword [byte eax+ebp+02h]	; 7442B
+test edx, edx	; 7442F
+je short .66	; 74431
+mov ebx, dword [byte ebp+ecx*8-07Ah]	; 74433
+push ebx	; 74437
+mov ecx, dword [byte ebp+ecx*8-07Eh]	; 74438
+push ecx	; 7443C
+push edx	; 7443D
+call sub_903F0	; 7443E
+add esp, byte 0Ch	; 74443
+mov eax, dword [byte ebp+042h]	; 74446
+xor edi, edi	; 74449
+mov dword [byte ebp+eax*8-07Ah], edi	; 7444B
+mov dword [byte ebp+eax*8-07Eh], edi	; 7444F
+mov edx, dword [byte ebp+eax*4+02h]	; 74453
+push edx	; 74457
+call FreeMemBlock	; 74458
+add esp, byte 4	; 7445D
+.66:
+dec dword [byte ebp+042h]	; 74460
+.67:
+mov ecx, dword [byte ebp+042h]	; 74463
+test ecx, ecx	; 74466
+jge short DbLineEditorLoop.65	; 74468
+xor esi, esi	; 7446A
+mov dword [byte ebp+06Ah], esi	; 7446C
+mov dword [byte ebp-02h], esi	; 7446F
+mov dword [byte ebp-06h], esi	; 74472
+mov dword [byte ebp-0Ah], esi	; 74475
+mov dword [byte ebp+0Ah], esi	; 74478
+mov dword [byte ebp+06h], esi	; 7447B
+mov dword [byte ebp+02h], esi	; 7447E
+mov dword [byte ebp-012h], esi	; 74481
+mov dword [byte ebp-016h], esi	; 74484
+mov dword [byte ebp-01Ah], esi	; 74487
+mov dword [byte ebp+01Eh], esi	; 7448A
+mov dword [byte ebp+01Ah], esi	; 7448D
+mov dword [byte ebp+016h], esi	; 74490
+cmp dword [byte ebp+02Eh], byte 64h	; 74493
+jge near .116	; 74497
+cmp dword [byte ebp+026h], byte 0FFFFFFFFh	; 7449D
+je near .116	; 744A1
+xor edx, edx	; 744A7
+mov dl, byte [byte ebp+072h]	; 744A9
+mov eax, edx	; 744AC
+shl eax, 2	; 744AE
+sub eax, edx	; 744B1
+shl eax, 2	; 744B3
+mov esi, eax	; 744B6
+shl esi, 6	; 744B8
+sub esi, eax	; 744BB
+mov edx, dword [byte ebp+026h]	; 744BD
+mov eax, edx	; 744C0
+shl eax, 3	; 744C2
+sub eax, edx	; 744C5
+shl eax, 2	; 744C7
+sub eax, edx	; 744CA
+cmp byte [dword esi+eax+rosterstat], 2	; 744CC
+je near .116	; 744D4
+push dword 0C1h	; 744DA
+push dword 0C0h	; 744DF
+call sub_8E9C0	; 744E4
+add esp, byte 8	; 744E9
+mov edx, dword [byte ebp+026h]	; 744EC
+mov eax, edx	; 744EF
+shl eax, 3	; 744F1
+sub eax, edx	; 744F4
+shl eax, 2	; 744F6
+sub eax, edx	; 744F9
+add eax, esi	; 744FB
+mov edx, dword [byte ebp+02Eh]	; 744FD
+cmp edx, byte 0Ch	; 74500
+jge near .76	; 74503
+mov dh, byte [dword eax+rosterlist]	; 74509
+cmp dh, 43h	; 7450F
+je short .68	; 74512
+cmp dh, 4Ch	; 74514
+je short .68	; 74517
+cmp dh, 52h	; 74519
+jne near .123	; 7451C
+.68:
+mov ebx, 3	; 74522
+mov eax, dword [byte ebp+02Eh]	; 74527
+mov edx, eax	; 7452A
+sar edx, 1Fh	; 7452C
+idiv ebx	; 7452F
+mov dword [byte ebp+042h], eax	; 74531
+xor esi, esi	; 74534
+.69:
+xor edx, edx	; 74536
+mov dl, byte [byte ebp+072h]	; 74538
+mov eax, edx	; 7453B
+shl eax, 2	; 7453D
+sub eax, edx	; 74540
+shl eax, 2	; 74542
+mov ebx, eax	; 74545
+shl ebx, 6	; 74547
+sub ebx, eax	; 7454A
+mov edx, dword [byte ebp+026h]	; 7454C
+mov eax, edx	; 7454F
+shl eax, 3	; 74551
+sub eax, edx	; 74554
+shl eax, 2	; 74556
+sub eax, edx	; 74559
+add ebx, eax	; 7455B
+mov edx, dword [byte ebp+042h]	; 7455D
+mov eax, edx	; 74560
+shl eax, 2	; 74562
+sub eax, edx	; 74565
+add eax, esi	; 74567
+mov dl, byte [dword eax+ebp-0AEh]	; 74569
+cmp dl, byte [dword ebx+rosterjersey]	; 74570
+jne short .70	; 74576
+mov byte [dword eax+ebp-0AEh], 64h	; 74578
+.70:
+inc esi	; 74580
+cmp esi, byte 3	; 74581
+jl short DbLineEditorLoop.69	; 74584
+mov ebx, 3	; 74586
+mov eax, dword [byte ebp+02Eh]	; 7458B
+mov edx, eax	; 7458E
+sar edx, 1Fh	; 74590
+idiv ebx	; 74593
+mov esi, edx	; 74595
+xor edx, edx	; 74597
+mov dl, byte [byte ebp+072h]	; 74599
+mov eax, edx	; 7459C
+shl eax, 2	; 7459E
+sub eax, edx	; 745A1
+shl eax, 2	; 745A3
+mov ebx, eax	; 745A6
+shl ebx, 6	; 745A8
+sub ebx, eax	; 745AB
+mov edx, dword [byte ebp+026h]	; 745AD
+mov eax, edx	; 745B0
+shl eax, 3	; 745B2
+sub eax, edx	; 745B5
+shl eax, 2	; 745B7
+sub eax, edx	; 745BA
+lea edx, [ebx+eax]	; 745BC
+mov ebx, dword [byte ebp+042h]	; 745BF
+mov eax, ebx	; 745C2
+shl eax, 2	; 745C4
+sub eax, ebx	; 745C7
+add esi, eax	; 745C9
+mov al, byte [dword edx+rosterjersey]	; 745CB
+mov byte [dword esi+ebp-0AEh], al	; 745D1
+xor esi, esi	; 745D8
+.71:
+mov edx, dword [byte ebp+042h]	; 745DA
+mov eax, edx	; 745DD
+shl eax, 2	; 745DF
+sub eax, edx	; 745E2
+add eax, esi	; 745E4
+cmp byte [dword eax+ebp-0AEh], 63h	; 745E6
+ja short .72	; 745EE
+xor ecx, ecx	; 745F0
+mov cl, byte [byte ebp+076h]	; 745F2
+xor ebx, ebx	; 745F5
+mov bl, byte [byte ebp+06Eh]	; 745F7
+xor edx, edx	; 745FA
+mov dl, byte [dword eax+ebp-0AEh]	; 745FC
+mov eax, jerseyremap	; 74603
+call MakeJerseyShape	; 74608
+jmp short .75	; 7460D
+.72:
+xor eax, eax	; 7460F
+mov dl, byte [byte ebp+076h]	; 74611
+.73:
+mov byte [dword eax+jerseyremap], dl	; 74614
+inc eax	; 7461A
+cmp eax, 90h	; 7461B
+jl short DbLineEditorLoop.73	; 74620
+mov eax, 0C0h	; 74622
+mov dl, byte [byte ebp+076h]	; 74627
+.74:
+mov byte [dword eax+jerseyremap], dl	; 7462A
+inc eax	; 74630
+cmp eax, 0F0h	; 74631
+jl short DbLineEditorLoop.74	; 74636
+.75:
+push jerseyremap	; 74638
+call sub_B4DD4	; 7463D
+add esp, byte 4	; 74642
+mov edx, dword [byte ebp+042h]	; 74645
+mov eax, edx	; 74648
+shl eax, 2	; 7464A
+sub eax, edx	; 7464D
+add eax, esi	; 7464F
+mov ecx, dword [nosplit eax*8+linesloty]	; 74651
+push ecx	; 74658
+mov edi, dword [nosplit eax*8+lineslotx]	; 74659
+push edi	; 74660
+mov eax, dword [dword ebp-0B6h]	; 74661
+push eax	; 74667
+call sub_931FC	; 74668
+add esp, byte 0Ch	; 7466D
+inc esi	; 74670
+cmp esi, byte 3	; 74671
+jl near DbLineEditorLoop.71	; 74674
+jmp near .123	; 7467A
+.76:
+cmp edx, byte 12h	; 7467F
+jge near .84	; 74682
+cmp byte [dword eax+rosterlist], 44h	; 74688
+jne near .123	; 7468F
+mov edx, dword [byte ebp+02Eh]	; 74695
+sub edx, byte 0Ch	; 74698
+mov eax, edx	; 7469B
+sar edx, 1Fh	; 7469D
+LD sub, eax, edx	; 746A0
+sar eax, 1	; 746A2
+mov dword [byte ebp+042h], eax	; 746A4
+xor esi, esi	; 746A7
+mov cl, 64h	; 746A9
+.77:
+xor edx, edx	; 746AB
+mov dl, byte [byte ebp+072h]	; 746AD
+mov eax, edx	; 746B0
+shl eax, 2	; 746B2
+sub eax, edx	; 746B5
+shl eax, 2	; 746B7
+mov ebx, eax	; 746BA
+shl ebx, 6	; 746BC
+sub ebx, eax	; 746BF
+mov edx, dword [byte ebp+026h]	; 746C1
+mov eax, edx	; 746C4
+shl eax, 3	; 746C6
+sub eax, edx	; 746C9
+shl eax, 2	; 746CB
+sub eax, edx	; 746CE
+lea edx, [ebx+eax]	; 746D0
+mov eax, dword [byte ebp+042h]	; 746D3
+add eax, eax	; 746D6
+add eax, esi	; 746D8
+mov bl, byte [dword eax+ebp-0A2h]	; 746DA
+cmp bl, byte [dword edx+rosterjersey]	; 746E1
+jne short .78	; 746E7
+mov byte [dword eax+ebp-0A2h], cl	; 746E9
+.78:
+inc esi	; 746F0
+cmp esi, byte 2	; 746F1
+jl short DbLineEditorLoop.77	; 746F4
+mov edx, dword [byte ebp+02Eh]	; 746F6
+sub edx, byte 0Ch	; 746F9
+mov ebx, 2	; 746FC
+mov eax, edx	; 74701
+sar edx, 1Fh	; 74703
+idiv ebx	; 74706
+mov esi, edx	; 74708
+xor edx, edx	; 7470A
+mov dl, byte [byte ebp+072h]	; 7470C
+mov eax, edx	; 7470F
+shl eax, 2	; 74711
+sub eax, edx	; 74714
+shl eax, 2	; 74716
+mov ebx, eax	; 74719
+shl ebx, 6	; 7471B
+sub ebx, eax	; 7471E
+mov edx, dword [byte ebp+026h]	; 74720
+mov eax, edx	; 74723
+shl eax, 3	; 74725
+sub eax, edx	; 74728
+shl eax, 2	; 7472A
+sub eax, edx	; 7472D
+mov edx, dword [byte ebp+042h]	; 7472F
+add edx, edx	; 74732
+add esi, edx	; 74734
+mov al, byte [dword ebx+eax+rosterjersey]	; 74736
+mov byte [dword esi+ebp-0A2h], al	; 7473D
+xor esi, esi	; 74744
+.79:
+mov eax, dword [byte ebp+042h]	; 74746
+add eax, eax	; 74749
+add eax, esi	; 7474B
+cmp byte [dword eax+ebp-0A2h], 63h	; 7474D
+ja short .80	; 74755
+xor ecx, ecx	; 74757
+mov cl, byte [byte ebp+076h]	; 74759
+xor ebx, ebx	; 7475C
+mov bl, byte [byte ebp+06Eh]	; 7475E
+xor edx, edx	; 74761
+mov dl, byte [dword eax+ebp-0A2h]	; 74763
+mov eax, jerseyremap	; 7476A
+call MakeJerseyShape	; 7476F
+jmp short .83	; 74774
+.80:
+xor eax, eax	; 74776
+mov dl, byte [byte ebp+076h]	; 74778
+.81:
+mov byte [dword eax+jerseyremap], dl	; 7477B
+inc eax	; 74781
+cmp eax, 90h	; 74782
+jl short DbLineEditorLoop.81	; 74787
+mov eax, 0C0h	; 74789
+mov dl, byte [byte ebp+076h]	; 7478E
+.82:
+mov byte [dword eax+jerseyremap], dl	; 74791
+inc eax	; 74797
+cmp eax, 0F0h	; 74798
+jl short DbLineEditorLoop.82	; 7479D
+.83:
+push jerseyremap	; 7479F
+call sub_B4DD4	; 747A4
+add esp, byte 4	; 747A9
+mov eax, dword [byte ebp+042h]	; 747AC
+add eax, eax	; 747AF
+add eax, esi	; 747B1
+mov edi, dword [nosplit eax*8+dword_D139C]	; 747B3
+push edi	; 747BA
+mov edx, dword [nosplit eax*8+dword_D1398]	; 747BB
+push edx	; 747C2
+mov ebx, dword [dword ebp-0B6h]	; 747C3
+push ebx	; 747C9
+call sub_931FC	; 747CA
+add esp, byte 0Ch	; 747CF
+inc esi	; 747D2
+cmp esi, byte 2	; 747D3
+jl near DbLineEditorLoop.79	; 747D6
+jmp near .123	; 747DC
+.84:
+cmp edx, byte 1Ch	; 747E1
+jge near .92	; 747E4
+cmp byte [dword eax+rosterlist], 47h	; 747EA
+je near .123	; 747F1
+sub edx, byte 12h	; 747F7
+mov ebx, 5	; 747FA
+mov eax, edx	; 747FF
+sar edx, 1Fh	; 74801
+idiv ebx	; 74804
+mov dword [byte ebp+042h], eax	; 74806
+xor esi, esi	; 74809
+.85:
+xor edx, edx	; 7480B
+mov dl, byte [byte ebp+072h]	; 7480D
+mov eax, edx	; 74810
+shl eax, 2	; 74812
+sub eax, edx	; 74815
+shl eax, 2	; 74817
+mov ebx, eax	; 7481A
+shl ebx, 6	; 7481C
+sub ebx, eax	; 7481F
+mov edx, dword [byte ebp+026h]	; 74821
+mov eax, edx	; 74824
+shl eax, 3	; 74826
+sub eax, edx	; 74829
+shl eax, 2	; 7482B
+sub eax, edx	; 7482E
+add ebx, eax	; 74830
+mov edx, dword [byte ebp+042h]	; 74832
+mov eax, edx	; 74835
+shl eax, 2	; 74837
+add eax, edx	; 7483A
+add eax, esi	; 7483C
+mov dl, byte [dword eax+ebp-09Ch]	; 7483E
+cmp dl, byte [dword ebx+rosterjersey]	; 74845
+jne short .86	; 7484B
+mov byte [dword eax+ebp-09Ch], 64h	; 7484D
+.86:
+inc esi	; 74855
+cmp esi, byte 5	; 74856
+jl short DbLineEditorLoop.85	; 74859
+mov edx, dword [byte ebp+02Eh]	; 7485B
+sub edx, byte 12h	; 7485E
+mov ebx, 5	; 74861
+mov eax, edx	; 74866
+sar edx, 1Fh	; 74868
+idiv ebx	; 7486B
+mov esi, edx	; 7486D
+xor edx, edx	; 7486F
+mov dl, byte [byte ebp+072h]	; 74871
+mov eax, edx	; 74874
+shl eax, 2	; 74876
+sub eax, edx	; 74879
+shl eax, 2	; 7487B
+mov ebx, eax	; 7487E
+shl ebx, 6	; 74880
+sub ebx, eax	; 74883
+mov edx, dword [byte ebp+026h]	; 74885
+mov eax, edx	; 74888
+shl eax, 3	; 7488A
+sub eax, edx	; 7488D
+shl eax, 2	; 7488F
+sub eax, edx	; 74892
+add ebx, eax	; 74894
+mov edx, dword [byte ebp+042h]	; 74896
+mov eax, edx	; 74899
+shl eax, 2	; 7489B
+add eax, edx	; 7489E
+add esi, eax	; 748A0
+mov al, byte [dword ebx+rosterjersey]	; 748A2
+mov byte [dword esi+ebp-09Ch], al	; 748A8
+xor esi, esi	; 748AF
+.87:
+mov edx, dword [byte ebp+042h]	; 748B1
+mov eax, edx	; 748B4
+shl eax, 2	; 748B6
+add eax, edx	; 748B9
+add eax, esi	; 748BB
+cmp byte [dword eax+ebp-09Ch], 63h	; 748BD
+ja short .88	; 748C5
+xor ecx, ecx	; 748C7
+mov cl, byte [byte ebp+076h]	; 748C9
+xor ebx, ebx	; 748CC
+mov bl, byte [byte ebp+06Eh]	; 748CE
+xor edx, edx	; 748D1
+mov dl, byte [dword eax+ebp-09Ch]	; 748D3
+mov eax, jerseyremap	; 748DA
+call MakeJerseyShape	; 748DF
+jmp short .91	; 748E4
+.88:
+xor eax, eax	; 748E6
+mov dl, byte [byte ebp+076h]	; 748E8
+.89:
+mov byte [dword eax+jerseyremap], dl	; 748EB
+inc eax	; 748F1
+cmp eax, 90h	; 748F2
+jl short DbLineEditorLoop.89	; 748F7
+mov eax, 0C0h	; 748F9
+mov dl, byte [byte ebp+076h]	; 748FE
+.90:
+mov byte [dword eax+jerseyremap], dl	; 74901
+inc eax	; 74907
+cmp eax, 0F0h	; 74908
+jl short DbLineEditorLoop.90	; 7490D
+.91:
+push jerseyremap	; 7490F
+call sub_B4DD4	; 74914
+add esp, byte 4	; 74919
+mov edx, dword [byte ebp+042h]	; 7491C
+mov eax, edx	; 7491F
+shl eax, 2	; 74921
+add eax, edx	; 74924
+add eax, esi	; 74926
+mov edx, dword [nosplit eax*8+dword_D13CC]	; 74928
+push edx	; 7492F
+mov ebx, dword [nosplit eax*8+dword_D13C8]	; 74930
+push ebx	; 74937
+mov ecx, dword [dword ebp-0B6h]	; 74938
+push ecx	; 7493E
+call sub_931FC	; 7493F
+add esp, byte 0Ch	; 74944
+inc esi	; 74947
+cmp esi, byte 5	; 74948
+jl near DbLineEditorLoop.87	; 7494B
+jmp near .123	; 74951
+.92:
+cmp edx, byte 24h	; 74956
+jge near .100	; 74959
+cmp byte [dword eax+rosterlist], 47h	; 7495F
+je near .123	; 74966
+sub edx, byte 1Ch	; 7496C
+mov eax, edx	; 7496F
+sar edx, 1Fh	; 74971
+shl edx, 2	; 74974
+LD sbb, eax, edx	; 74977
+sar eax, 2	; 74979
+mov dword [byte ebp+042h], eax	; 7497C
+xor esi, esi	; 7497F
+mov cl, 64h	; 74981
+.93:
+xor edx, edx	; 74983
+mov dl, byte [byte ebp+072h]	; 74985
+mov eax, edx	; 74988
+shl eax, 2	; 7498A
+sub eax, edx	; 7498D
+shl eax, 2	; 7498F
+mov ebx, eax	; 74992
+shl ebx, 6	; 74994
+sub ebx, eax	; 74997
+mov edx, dword [byte ebp+026h]	; 74999
+mov eax, edx	; 7499C
+shl eax, 3	; 7499E
+sub eax, edx	; 749A1
+shl eax, 2	; 749A3
+sub eax, edx	; 749A6
+lea edx, [ebx+eax]	; 749A8
+mov eax, dword [byte ebp+042h]	; 749AB
+shl eax, 2	; 749AE
+add eax, esi	; 749B1
+mov bl, byte [dword eax+ebp-092h]	; 749B3
+cmp bl, byte [dword edx+rosterjersey]	; 749BA
+jne short .94	; 749C0
+mov byte [dword eax+ebp-092h], cl	; 749C2
+.94:
+inc esi	; 749C9
+cmp esi, byte 4	; 749CA
+jl short DbLineEditorLoop.93	; 749CD
+mov edx, dword [byte ebp+02Eh]	; 749CF
+sub edx, byte 1Ch	; 749D2
+mov ebx, 4	; 749D5
+mov eax, edx	; 749DA
+sar edx, 1Fh	; 749DC
+idiv ebx	; 749DF
+mov esi, edx	; 749E1
+xor edx, edx	; 749E3
+mov dl, byte [byte ebp+072h]	; 749E5
+mov eax, edx	; 749E8
+shl eax, 2	; 749EA
+sub eax, edx	; 749ED
+shl eax, 2	; 749EF
+mov ebx, eax	; 749F2
+shl ebx, 6	; 749F4
+sub ebx, eax	; 749F7
+mov edx, dword [byte ebp+026h]	; 749F9
+mov eax, edx	; 749FC
+shl eax, 3	; 749FE
+sub eax, edx	; 74A01
+shl eax, 2	; 74A03
+sub eax, edx	; 74A06
+mov edx, dword [byte ebp+042h]	; 74A08
+shl edx, 2	; 74A0B
+add esi, edx	; 74A0E
+mov al, byte [dword ebx+eax+rosterjersey]	; 74A10
+mov byte [dword esi+ebp-092h], al	; 74A17
+xor esi, esi	; 74A1E
+.95:
+mov eax, dword [byte ebp+042h]	; 74A20
+shl eax, 2	; 74A23
+add eax, esi	; 74A26
+cmp byte [dword eax+ebp-092h], 63h	; 74A28
+ja short .96	; 74A30
+xor ecx, ecx	; 74A32
+mov cl, byte [byte ebp+076h]	; 74A34
+xor ebx, ebx	; 74A37
+mov bl, byte [byte ebp+06Eh]	; 74A39
+xor edx, edx	; 74A3C
+mov dl, byte [dword eax+ebp-092h]	; 74A3E
+mov eax, jerseyremap	; 74A45
+call MakeJerseyShape	; 74A4A
+jmp short .99	; 74A4F
+.96:
+xor eax, eax	; 74A51
+mov dl, byte [byte ebp+076h]	; 74A53
+.97:
+mov byte [dword eax+jerseyremap], dl	; 74A56
+inc eax	; 74A5C
+cmp eax, 90h	; 74A5D
+jl short DbLineEditorLoop.97	; 74A62
+mov eax, 0C0h	; 74A64
+mov dl, byte [byte ebp+076h]	; 74A69
+.98:
+mov byte [dword eax+jerseyremap], dl	; 74A6C
+inc eax	; 74A72
+cmp eax, 0F0h	; 74A73
+jl short DbLineEditorLoop.98	; 74A78
+.99:
+push jerseyremap	; 74A7A
+call sub_B4DD4	; 74A7F
+add esp, byte 4	; 74A84
+mov eax, dword [byte ebp+042h]	; 74A87
+shl eax, 2	; 74A8A
+add eax, esi	; 74A8D
+mov ecx, dword [nosplit eax*8+dword_D141C]	; 74A8F
+push ecx	; 74A96
+mov edi, dword [nosplit eax*8+dword_D1418]	; 74A97
+push edi	; 74A9E
+mov eax, dword [dword ebp-0B6h]	; 74A9F
+push eax	; 74AA5
+call sub_931FC	; 74AA6
+add esp, byte 0Ch	; 74AAB
+inc esi	; 74AAE
+cmp esi, byte 4	; 74AAF
+jl near DbLineEditorLoop.95	; 74AB2
+jmp near .123	; 74AB8
+.100:
+cmp edx, byte 26h	; 74ABD
+jge near .108	; 74AC0
+cmp byte [dword eax+rosterlist], 47h	; 74AC6
+jne near .123	; 74ACD
+xor esi, esi	; 74AD3
+.101:
+xor edx, edx	; 74AD5
+mov dl, byte [byte ebp+072h]	; 74AD7
+mov eax, edx	; 74ADA
+shl eax, 2	; 74ADC
+sub eax, edx	; 74ADF
+shl eax, 2	; 74AE1
+mov ebx, eax	; 74AE4
+shl ebx, 6	; 74AE6
+sub ebx, eax	; 74AE9
+mov edx, dword [byte ebp+026h]	; 74AEB
+mov eax, edx	; 74AEE
+shl eax, 3	; 74AF0
+sub eax, edx	; 74AF3
+shl eax, 2	; 74AF5
+sub eax, edx	; 74AF8
+mov dl, byte [dword esi+ebp-08Ah]	; 74AFA
+cmp dl, byte [dword ebx+eax+rosterjersey]	; 74B01
+jne short .102	; 74B08
+mov byte [dword esi+ebp-08Ah], 64h	; 74B0A
+.102:
+inc esi	; 74B12
+cmp esi, byte 2	; 74B13
+jl short DbLineEditorLoop.101	; 74B16
+mov esi, dword [byte ebp+02Eh]	; 74B18
+sub esi, byte 24h	; 74B1B
+xor edx, edx	; 74B1E
+mov dl, byte [byte ebp+072h]	; 74B20
+mov eax, edx	; 74B23
+shl eax, 2	; 74B25
+sub eax, edx	; 74B28
+shl eax, 2	; 74B2A
+mov ebx, eax	; 74B2D
+shl ebx, 6	; 74B2F
+sub ebx, eax	; 74B32
+mov edx, dword [byte ebp+026h]	; 74B34
+mov eax, edx	; 74B37
+shl eax, 3	; 74B39
+sub eax, edx	; 74B3C
+shl eax, 2	; 74B3E
+sub eax, edx	; 74B41
+mov al, byte [dword ebx+eax+rosterjersey]	; 74B43
+mov byte [dword esi+ebp-08Ah], al	; 74B4A
+xor esi, esi	; 74B51
+.103:
+cmp byte [dword esi+ebp-08Ah], 63h	; 74B53
+ja short .104	; 74B5B
+xor ecx, ecx	; 74B5D
+mov cl, byte [byte ebp+076h]	; 74B5F
+xor ebx, ebx	; 74B62
+mov bl, byte [byte ebp+06Eh]	; 74B64
+xor edx, edx	; 74B67
+mov dl, byte [dword esi+ebp-08Ah]	; 74B69
+mov eax, jerseyremap	; 74B70
+call MakeJerseyShape	; 74B75
+jmp short .107	; 74B7A
+.104:
+xor eax, eax	; 74B7C
+mov dl, byte [byte ebp+076h]	; 74B7E
+.105:
+mov byte [dword eax+jerseyremap], dl	; 74B81
+inc eax	; 74B87
+cmp eax, 90h	; 74B88
+jl short DbLineEditorLoop.105	; 74B8D
+mov eax, 0C0h	; 74B8F
+mov dl, byte [byte ebp+076h]	; 74B94
+.106:
+mov byte [dword eax+jerseyremap], dl	; 74B97
+inc eax	; 74B9D
+cmp eax, 0F0h	; 74B9E
+jl short DbLineEditorLoop.106	; 74BA3
+.107:
+push jerseyremap	; 74BA5
+call sub_B4DD4	; 74BAA
+add esp, byte 4	; 74BAF
+mov edi, dword [nosplit esi*8+dword_D145C]	; 74BB2
+push edi	; 74BB9
+mov edx, dword [nosplit esi*8+dword_D1458]	; 74BBA
+push edx	; 74BC1
+mov ebx, dword [dword ebp-0B6h]	; 74BC2
+push ebx	; 74BC8
+call sub_931FC	; 74BC9
+add esp, byte 0Ch	; 74BCE
+inc esi	; 74BD1
+cmp esi, byte 2	; 74BD2
+jl near DbLineEditorLoop.103	; 74BD5
+jmp near .123	; 74BDB
+.108:
+cmp byte [dword eax+rosterlist], 47h	; 74BE0
+je near .123	; 74BE7
+xor esi, esi	; 74BED
+mov ch, 64h	; 74BEF
+.109:
+xor edx, edx	; 74BF1
+mov dl, byte [byte ebp+072h]	; 74BF3
+mov eax, edx	; 74BF6
+shl eax, 2	; 74BF8
+sub eax, edx	; 74BFB
+shl eax, 2	; 74BFD
+mov ebx, eax	; 74C00
+shl ebx, 6	; 74C02
+sub ebx, eax	; 74C05
+mov edx, dword [byte ebp+026h]	; 74C07
+mov eax, edx	; 74C0A
+shl eax, 3	; 74C0C
+sub eax, edx	; 74C0F
+shl eax, 2	; 74C11
+sub eax, edx	; 74C14
+mov dl, byte [dword esi+ebp-088h]	; 74C16
+cmp dl, byte [dword ebx+eax+rosterjersey]	; 74C1D
+jne short .110	; 74C24
+mov byte [dword esi+ebp-088h], ch	; 74C26
+.110:
+inc esi	; 74C2D
+cmp esi, byte 2	; 74C2E
+jl short DbLineEditorLoop.109	; 74C31
+mov esi, dword [byte ebp+02Eh]	; 74C33
+sub esi, byte 26h	; 74C36
+xor edx, edx	; 74C39
+mov dl, byte [byte ebp+072h]	; 74C3B
+mov eax, edx	; 74C3E
+shl eax, 2	; 74C40
+sub eax, edx	; 74C43
+shl eax, 2	; 74C45
+mov ebx, eax	; 74C48
+shl ebx, 6	; 74C4A
+sub ebx, eax	; 74C4D
+mov edx, dword [byte ebp+026h]	; 74C4F
+mov eax, edx	; 74C52
+shl eax, 3	; 74C54
+sub eax, edx	; 74C57
+shl eax, 2	; 74C59
+sub eax, edx	; 74C5C
+mov al, byte [dword ebx+eax+rosterjersey]	; 74C5E
+mov byte [dword esi+ebp-088h], al	; 74C65
+xor esi, esi	; 74C6C
+.111:
+cmp byte [dword esi+ebp-088h], 63h	; 74C6E
+ja short .112	; 74C76
+xor ecx, ecx	; 74C78
+mov cl, byte [byte ebp+076h]	; 74C7A
+xor ebx, ebx	; 74C7D
+mov bl, byte [byte ebp+06Eh]	; 74C7F
+xor edx, edx	; 74C82
+mov dl, byte [dword esi+ebp-088h]	; 74C84
+mov eax, jerseyremap	; 74C8B
+call MakeJerseyShape	; 74C90
+jmp short .115	; 74C95
+.112:
+xor eax, eax	; 74C97
+mov dl, byte [byte ebp+076h]	; 74C99
+.113:
+mov byte [dword eax+jerseyremap], dl	; 74C9C
+inc eax	; 74CA2
+cmp eax, 90h	; 74CA3
+jl short DbLineEditorLoop.113	; 74CA8
+mov eax, 0C0h	; 74CAA
+mov dl, byte [byte ebp+076h]	; 74CAF
+.114:
+mov byte [dword eax+jerseyremap], dl	; 74CB2
+inc eax	; 74CB8
+cmp eax, 0F0h	; 74CB9
+jl short DbLineEditorLoop.114	; 74CBE
+.115:
+push jerseyremap	; 74CC0
+call sub_B4DD4	; 74CC5
+add esp, byte 4	; 74CCA
+mov edx, dword [nosplit esi*8+dword_D146C]	; 74CCD
+push edx	; 74CD4
+mov ebx, dword [nosplit esi*8+dword_D1468]	; 74CD5
+push ebx	; 74CDC
+mov ecx, dword [dword ebp-0B6h]	; 74CDD
+push ecx	; 74CE3
+call sub_931FC	; 74CE4
+add esp, byte 0Ch	; 74CE9
+inc esi	; 74CEC
+cmp esi, byte 2	; 74CED
+jl near DbLineEditorLoop.111	; 74CF0
+jmp near .123	; 74CF6
+.116:
+cmp dword [byte ebp+02Eh], byte 64h	; 74CFB
+jl near .123	; 74CFF
+xor edx, edx	; 74D05
+mov dl, byte [byte ebp+072h]	; 74D07
+mov eax, edx	; 74D0A
+shl eax, 2	; 74D0C
+sub eax, edx	; 74D0F
+shl eax, 2	; 74D11
+mov ebx, eax	; 74D14
+shl ebx, 6	; 74D16
+sub ebx, eax	; 74D19
+mov ecx, dword [byte ebp+02Eh]	; 74D1B
+sub ecx, byte 64h	; 74D1E
+mov dword [byte ebp+02Eh], ecx	; 74D21
+mov eax, ecx	; 74D24
+shl eax, 3	; 74D26
+sub eax, ecx	; 74D29
+shl eax, 2	; 74D2B
+sub eax, ecx	; 74D2E
+add eax, ebx	; 74D30
+mov bl, byte [dword eax+rosterstat]	; 74D32
+test bl, bl	; 74D38
+je near .123	; 74D3A
+cmp bl, 4	; 74D40
+je short .117	; 74D43
+cmp bl, 3	; 74D45
+je short .117	; 74D48
+cmp bl, 2	; 74D4A
+jne near .123	; 74D4D
+.117:
+mov esi, dword [byte ebp+026h]	; 74D53
+cmp esi, byte 0FFFFFFFFh	; 74D56
+je near .120	; 74D59
+xor edx, edx	; 74D5F
+mov dl, byte [byte ebp+072h]	; 74D61
+mov eax, edx	; 74D64
+shl eax, 2	; 74D66
+sub eax, edx	; 74D69
+shl eax, 2	; 74D6B
+mov ebx, eax	; 74D6E
+shl ebx, 6	; 74D70
+sub ebx, eax	; 74D73
+mov eax, esi	; 74D75
+shl eax, 3	; 74D77
+sub eax, esi	; 74D7A
+shl eax, 2	; 74D7C
+sub eax, esi	; 74D7F
+cmp byte [dword ebx+eax+rosterstat], 2	; 74D81
+jne short .118	; 74D89
+push dword 0C1h	; 74D8B
+push dword 0FCh	; 74D90
+jmp short .119	; 74D95
+.118:
+push dword 0C1h	; 74D97
+push dword 0C3h	; 74D9C
+.119:
+call sub_8E9C0	; 74DA1
+add esp, byte 8	; 74DA6
+xor edx, edx	; 74DA9
+mov dl, byte [byte ebp+072h]	; 74DAB
+mov eax, edx	; 74DAE
+shl eax, 2	; 74DB0
+sub eax, edx	; 74DB3
+shl eax, 2	; 74DB5
+mov ebx, eax	; 74DB8
+shl ebx, 6	; 74DBA
+sub ebx, eax	; 74DBD
+mov ecx, rosterlist	; 74DBF
+add ecx, ebx	; 74DC4
+mov edx, dword [byte ebp+026h]	; 74DC6
+mov eax, edx	; 74DC9
+shl eax, 3	; 74DCB
+sub eax, edx	; 74DCE
+shl eax, 2	; 74DD0
+sub eax, edx	; 74DD3
+lea edx, [byte ecx+eax+08h]	; 74DD5
+push edx	; 74DD9
+xor edx, edx	; 74DDA
+mov dl, byte [dword ebx+eax+rosterjersey]	; 74DDC
+push edx	; 74DE3
+mov al, byte [dword ebx+eax+rosterlist]	; 74DE4
+and eax, 0FFh	; 74DEB
+push eax	; 74DF0
+push str_C2dS2	; 74DF1
+lea eax, [byte ebp-03Eh]	; 74DF6
+push eax	; 74DF9
+call sprintf_	; 74DFA
+add esp, byte 14h	; 74DFF
+mov edx, dword [byte ebp+026h]	; 74E02
+mov eax, edx	; 74E05
+shl eax, 2	; 74E07
+sub eax, edx	; 74E0A
+shl eax, 2	; 74E0C
+add eax, edx	; 74E0F
+lea edx, [byte eax+016h]	; 74E11
+lea ebx, [byte ebp-03Eh]	; 74E14
+mov eax, 1FAh	; 74E17
+call PrintLineEdStatus	; 74E1C
+.120:
+mov eax, dword [byte ebp+02Eh]	; 74E21
+mov dword [byte ebp+026h], eax	; 74E24
+mov dword [menuact_dbdress], DressPlayer	; 74E27
+mov dword [menuact_dbscratch], ScratchPlayer	; 74E31
+xor edx, edx	; 74E3B
+mov dl, byte [byte ebp+072h]	; 74E3D
+mov eax, edx	; 74E40
+shl eax, 2	; 74E42
+sub eax, edx	; 74E45
+shl eax, 2	; 74E47
+mov ebx, eax	; 74E4A
+shl ebx, 6	; 74E4C
+sub ebx, eax	; 74E4F
+mov edx, dword [byte ebp+02Eh]	; 74E51
+mov eax, edx	; 74E54
+shl eax, 3	; 74E56
+sub eax, edx	; 74E59
+shl eax, 2	; 74E5B
+sub eax, edx	; 74E5E
+cmp byte [dword ebx+eax+rosterstat], 2	; 74E60
+jne short .121	; 74E68
+push dword 0C1h	; 74E6A
+push dword 0FDh	; 74E6F
+jmp short .122	; 74E74
+.121:
+push dword 0C1h	; 74E76
+push dword 0C0h	; 74E7B
+.122:
+call sub_8E9C0	; 74E80
+add esp, byte 8	; 74E85
+xor edx, edx	; 74E88
+mov dl, byte [byte ebp+072h]	; 74E8A
+mov eax, edx	; 74E8D
+shl eax, 2	; 74E8F
+sub eax, edx	; 74E92
+shl eax, 2	; 74E94
+mov ebx, eax	; 74E97
+shl ebx, 6	; 74E99
+sub ebx, eax	; 74E9C
+mov ecx, rosterlist	; 74E9E
+add ecx, ebx	; 74EA3
+mov edx, dword [byte ebp+026h]	; 74EA5
+mov eax, edx	; 74EA8
+shl eax, 3	; 74EAA
+sub eax, edx	; 74EAD
+shl eax, 2	; 74EAF
+sub eax, edx	; 74EB2
+add ecx, eax	; 74EB4
+add ecx, byte 8	; 74EB6
+push ecx	; 74EB9
+xor edx, edx	; 74EBA
+mov dl, byte [dword ebx+eax+rosterjersey]	; 74EBC
+push edx	; 74EC3
+mov al, byte [dword ebx+eax+rosterlist]	; 74EC4
+and eax, 0FFh	; 74ECB
+push eax	; 74ED0
+push str_C2dS2	; 74ED1
+lea eax, [byte ebp-03Eh]	; 74ED6
+push eax	; 74ED9
+call sprintf_	; 74EDA
+add esp, byte 14h	; 74EDF
+mov edx, dword [byte ebp+026h]	; 74EE2
+mov eax, edx	; 74EE5
+shl eax, 2	; 74EE7
+sub eax, edx	; 74EEA
+shl eax, 2	; 74EEC
+add eax, edx	; 74EEF
+lea edx, [byte eax+016h]	; 74EF1
+lea ebx, [byte ebp-03Eh]	; 74EF4
+mov eax, 1FAh	; 74EF7
+call PrintLineEdStatus	; 74EFC
+.123:
+mov edx, dword [byte ebp+03Ah]	; 74F01
+cmp edx, byte 20h	; 74F04
+jge short .124	; 74F07
+xor eax, eax	; 74F09
+jmp short .125	; 74F0B
+.124:
+lea eax, [byte edx-020h]	; 74F0D
+.125:
+push eax	; 74F10
+mov ebx, dword [byte ebp+03Eh]	; 74F11
+cmp ebx, byte 1Ch	; 74F14
+jge short .126	; 74F17
+xor eax, eax	; 74F19
+jmp short .127	; 74F1B
+.126:
+lea eax, [byte ebx-01Ch]	; 74F1D
+.127:
+push eax	; 74F20
+mov ecx, dword [byte ebp+066h]	; 74F21
+push ecx	; 74F24
+call sub_91400	; 74F25
+add esp, byte 0Ch	; 74F2A
+mov eax, dword [byte ebp+03Ah]	; 74F2D
+mov edx, dword [byte ebp-0Eh]	; 74F30
+cmp eax, dword [byte edx+0Ch]	; 74F33
+jle near .129	; 74F36
+mov edi, dword [byte ebp+03Eh]	; 74F3C
+cmp edi, 1F4h	; 74F3F
+jge near .129	; 74F45
+cmp dword [byte ebp+026h], byte 0FFFFFFFFh	; 74F4B
+je near .129	; 74F4F
+cmp dword [byte ebp-0Ah], byte 0	; 74F55
+je short .128	; 74F59
+lea eax, [byte ebp+032h]	; 74F5B
+push eax	; 74F5E
+lea eax, [byte ebp+036h]	; 74F5F
+push eax	; 74F62
+lea eax, [byte ebp-07Eh]	; 74F63
+push eax	; 74F66
+lea eax, [byte ebp+012h]	; 74F67
+push eax	; 74F6A
+mov ecx, dword [byte ebp+06Ah]	; 74F6B
+lea ebx, [byte ebp-0Eh]	; 74F6E
+mov edx, dword [byte ebp+03Ah]	; 74F71
+mov eax, edi	; 74F74
+call MenuHitTest	; 74F76
+test eax, eax	; 74F7B
+jne short .129	; 74F7D
+.128:
+xor edx, edx	; 74F7F
+mov dl, byte [byte ebp+072h]	; 74F81
+mov eax, edx	; 74F84
+shl eax, 2	; 74F86
+sub eax, edx	; 74F89
+shl eax, 2	; 74F8B
+mov ebx, eax	; 74F8E
+shl ebx, 6	; 74F90
+sub ebx, eax	; 74F93
+mov edx, dword [byte ebp+026h]	; 74F95
+mov eax, edx	; 74F98
+shl eax, 3	; 74F9A
+sub eax, edx	; 74F9D
+shl eax, 2	; 74F9F
+sub eax, edx	; 74FA2
+add eax, ebx	; 74FA4
+cmp byte [dword eax+rosterstat], 2	; 74FA6
+je short .129	; 74FAD
+xor ecx, ecx	; 74FAF
+mov cl, byte [byte ebp+076h]	; 74FB1
+xor ebx, ebx	; 74FB4
+mov bl, byte [byte ebp+06Eh]	; 74FB6
+xor edx, edx	; 74FB9
+mov dl, byte [dword eax+rosterjersey]	; 74FBB
+mov eax, jerseyremap	; 74FC1
+call MakeJerseyShape	; 74FC6
+push jerseyremap	; 74FCB
+call sub_B4DD4	; 74FD0
+add esp, byte 4	; 74FD5
+mov eax, dword [byte ebp+03Ah]	; 74FD8
+sub eax, byte 20h	; 74FDB
+push eax	; 74FDE
+mov eax, dword [byte ebp+03Eh]	; 74FDF
+sub eax, byte 1Ch	; 74FE2
+push eax	; 74FE5
+mov ebx, dword [dword ebp-0B6h]	; 74FE6
+push ebx	; 74FEC
+call sub_91FE0	; 74FED
+add esp, byte 0Ch	; 74FF2
+.129:
+mov ecx, dword [byte ebp+03Ah]	; 74FF5
+push ecx	; 74FF8
+mov eax, dword [byte ebp+03Eh]	; 74FF9
+sub eax, byte 3	; 74FFC
+push eax	; 74FFF
+mov esi, dword [pointerspr]	; 75000
+push esi	; 75006
+jmp near DbLineEditorLoop.27	; 75007
+.130:
+call ClearInputQueue	; 7500C
+mov edi, dword [byte ebp+066h]	; 75011
+push edi	; 75014
+call FreeMemBlock	; 75015
+add esp, byte 4	; 7501A
+mov ebx, 10h	; 7501D
+mov edx, dword [byte ebp+04Ah]	; 75022
+mov eax, 1	; 75025
+call FadePalStep	; 7502A
+mov eax, dword [byte ebp+04Ah]	; 7502F
+push eax	; 75032
+call FreeMemBlock	; 75033
+add esp, byte 4	; 75038
+xor eax, eax	; 7503B
+lea esp, [byte ebp+07Ah]	; 7503D
+pop ebp	; 75040
+pop edi	; 75041
+pop esi	; 75042
+ret 0Ch	; 75043
+; C: src/front/lines/DrawLineJerseys.c
+%ifdef CBUILD
+%include "c/front/lines/DrawLineJerseys.inc"
+%else
+DrawLineJerseys:
+push dword 58h	; 75046
+call __CHK	; 7504B
+push ecx	; 75050
+push esi	; 75051
+push edi	; 75052
+push ebp	; 75053
+sub esp, byte 30h	; 75054
+mov ebp, eax	; 75057
+mov dword [byte esp+020h], edx	; 75059
+mov byte [byte esp+02Ch], bl	; 7505D
+xor eax, eax	; 75061
+mov al, bl	; 75063
+mov al, byte [dword eax+rosterteam]	; 75065
+and eax, 0FFh	; 7506B
+mov al, byte [nosplit eax*4+byte_D11BC]	; 75070
+mov byte [byte esp+024h], al	; 75077
+xor eax, eax	; 7507B
+mov al, byte [byte esp+024h]	; 7507D
+mov al, byte [dword eax+jerseyremap]	; 75081
+mov byte [byte esp+024h], al	; 75087
+mov al, byte [byte_D12DE]	; 7508B
+mov byte [byte esp+028h], al	; 75090
+xor esi, esi	; 75094
+.1:
+lea eax, [esi+ebp]	; 75096
+cmp byte [eax], 63h	; 75099
+ja short .2	; 7509C
+xor ecx, ecx	; 7509E
+mov cl, byte [byte esp+028h]	; 750A0
+xor ebx, ebx	; 750A4
+mov bl, byte [byte esp+024h]	; 750A6
+xor edx, edx	; 750AA
+mov dl, byte [eax]	; 750AC
+mov eax, jerseyremap	; 750AE
+call MakeJerseyShape	; 750B3
+jmp short .5	; 750B8
+.2:
+xor eax, eax	; 750BA
+mov dl, byte [byte esp+028h]	; 750BC
+.3:
+mov byte [dword eax+jerseyremap], dl	; 750C0
+inc eax	; 750C6
+cmp eax, 90h	; 750C7
+jl short DrawLineJerseys.3	; 750CC
+mov eax, 0C0h	; 750CE
+mov dl, byte [byte esp+028h]	; 750D3
+.4:
+mov byte [dword eax+jerseyremap], dl	; 750D7
+inc eax	; 750DD
+cmp eax, 0F0h	; 750DE
+jl short DrawLineJerseys.4	; 750E3
+.5:
+push jerseyremap	; 750E5
+call sub_B4DD4	; 750EA
+add esp, byte 4	; 750EF
+mov edx, dword [nosplit esi*8+linesloty]	; 750F2
+push edx	; 750F9
+mov ebx, dword [nosplit esi*8+lineslotx]	; 750FA
+push ebx	; 75101
+mov ecx, dword [byte esp+028h]	; 75102
+push ecx	; 75106
+call sub_931FC	; 75107
+add esp, byte 0Ch	; 7510C
+inc esi	; 7510F
+cmp esi, byte 28h	; 75110
+jl short DrawLineJerseys.1	; 75113
+xor esi, esi	; 75115
+.6:
+xor edx, edx	; 75117
+mov dl, byte [byte esp+02Ch]	; 75119
+mov eax, edx	; 7511D
+shl eax, 2	; 7511F
+sub eax, edx	; 75122
+shl eax, 2	; 75124
+mov ebx, eax	; 75127
+shl ebx, 6	; 75129
+sub ebx, eax	; 7512C
+mov eax, esi	; 7512E
+shl eax, 3	; 75130
+sub eax, esi	; 75133
+shl eax, 2	; 75135
+sub eax, esi	; 75138
+add eax, ebx	; 7513A
+mov dh, byte [dword eax+rosterstat]	; 7513C
+test dh, dh	; 75142
+je near .x	; 75144
+mov al, dh	; 7514A
+cmp dh, 2	; 7514C
+jb short .9	; 7514F
+jbe short .7	; 75151
+cmp dh, 3	; 75153
+je short .8	; 75156
+jmp short .9	; 75158
+.7:
+mov edi, 0FCh	; 7515A
+jmp short .9	; 7515F
+.8:
+mov edi, 0C3h	; 75161
+.9:
+push dword 0C1h	; 75166
+push edi	; 7516B
+call sub_8E9C0	; 7516C
+add esp, byte 8	; 75171
+xor edx, edx	; 75174
+mov dl, byte [byte esp+02Ch]	; 75176
+mov eax, edx	; 7517A
+shl eax, 2	; 7517C
+sub eax, edx	; 7517F
+shl eax, 2	; 75181
+mov ecx, eax	; 75184
+shl ecx, 6	; 75186
+sub ecx, eax	; 75189
+mov ebx, rosterlist	; 7518B
+add ebx, ecx	; 75190
+mov edx, esi	; 75192
+mov eax, esi	; 75194
+shl eax, 3	; 75196
+sub eax, esi	; 75199
+shl eax, 2	; 7519B
+sub eax, esi	; 7519E
+add ebx, eax	; 751A0
+add ebx, byte 8	; 751A2
+push ebx	; 751A5
+xor edx, esi	; 751A6
+mov dl, byte [dword ecx+eax+rosterjersey]	; 751A8
+push edx	; 751AF
+mov al, byte [dword ecx+eax+rosterlist]	; 751B0
+and eax, 0FFh	; 751B7
+push eax	; 751BC
+push str_C2dS2	; 751BD
+lea eax, [byte esp+010h]	; 751C2
+push eax	; 751C6
+call sprintf_	; 751C7
+add esp, byte 14h	; 751CC
+mov eax, esi	; 751CF
+shl eax, 2	; 751D1
+sub eax, esi	; 751D4
+shl eax, 2	; 751D6
+add eax, esi	; 751D9
+lea edx, [byte eax+016h]	; 751DB
+mov ebx, esp	; 751DE
+mov eax, 1FAh	; 751E0
+call PrintLineEdStatus	; 751E5
+inc esi	; 751EA
+cmp esi, byte 1Ch	; 751EB
+jl near DrawLineJerseys.6	; 751EE
+.x:
+add esp, byte 30h	; 751F4
+pop ebp	; 751F7
+pop edi	; 751F8
+pop esi	; 751F9
+pop ecx	; 751FA
+ret	; 751FB
+%endif ; C
+; C: src/front/lines/CheckRosterComplete.c
+%ifdef CBUILD
+%include "c/front/lines/CheckRosterComplete.inc"
+%else
+CheckRosterComplete:
+push dword 0B0h	; 751FC
+call __CHK	; 75201
+push ecx	; 75206
+push esi	; 75207
+push edi	; 75208
+push ebp	; 75209
+sub esp, byte 7Ch	; 7520A
+push eax	; 7520D
+push edx	; 7520E
+mov byte [dword esp+080h], bl	; 7520F
+xor ebp, ebp	; 75216
+mov dword [byte esp+07Ch], ebp	; 75218
+mov ecx, 6	; 7521C
+lea edi, [byte esp+040h]	; 75221
+mov esi, str_RosterIncomplete	; 75225
+rep movsd	; 7522A
+movsw	; 7522C
+movsb	; 7522E
+lea edi, [byte esp+05Ch]	; 7522F
+mov esi, str_Scratch	; 75233
+movsd	; 75238
+movsd	; 75239
+lea edi, [byte esp+074h]	; 7523A
+mov esi, str_Dress	; 7523E
+movsd	; 75243
+movsw	; 75244
+lea edi, [byte esp+06Ch]	; 75246
+mov esi, str_Player	; 7524A
+movsd	; 7524F
+movsw	; 75250
+movsb	; 75252
+lea edi, [byte esp+064h]	; 75253
+mov esi, str_GoalieW	; 75257
+movsd	; 7525C
+movsw	; 7525D
+movsb	; 7525F
+mov esi, str_S2dSS	; 75260
+xor ebx, ebx	; 75265
+.1:
+xor edx, edx	; 75267
+mov dl, byte [dword esp+080h]	; 75269
+mov eax, edx	; 75270
+shl eax, 2	; 75272
+sub eax, edx	; 75275
+shl eax, 2	; 75277
+mov ecx, eax	; 7527A
+shl ecx, 6	; 7527C
+sub ecx, eax	; 7527F
+mov eax, ebx	; 75281
+shl eax, 3	; 75283
+sub eax, ebx	; 75286
+shl eax, 2	; 75288
+sub eax, ebx	; 7528B
+add eax, ecx	; 7528D
+cmp byte [dword eax+rosterstat], 3	; 7528F
+jne short .3	; 75296
+cmp byte [dword eax+rosterlist], 47h	; 75298
+je short .2	; 7529F
+inc ebp	; 752A1
+jmp short .3	; 752A2
+.2:
+inc dword [byte esp+07Ch]	; 752A4
+.3:
+inc ebx	; 752A8
+cmp ebx, byte 1Ch	; 752A9
+jl short CheckRosterComplete.1	; 752AC
+cmp ebp, byte 12h	; 752AE
+jne short .4	; 752B1
+cmp dword [byte esp+07Ch], byte 2	; 752B3
+je near .22	; 752B8
+.4:
+cmp ebp, byte 12h	; 752BE
+jge short .7	; 752C1
+mov eax, 12h	; 752C3
+sub eax, ebp	; 752C8
+cmp eax, byte 1	; 752CA
+jne short .5	; 752CD
+mov eax, unk_C311D	; 752CF
+jmp short .6	; 752D4
+.5:
+mov eax, str_S6	; 752D6
+.6:
+push eax	; 752DB
+lea eax, [byte esp+070h]	; 752DC
+push eax	; 752E0
+mov eax, 12h	; 752E1
+sub eax, ebp	; 752E6
+push eax	; 752E8
+lea eax, [dword esp+080h]	; 752E9
+jmp short .10	; 752F0
+.7:
+jle short .11	; 752F2
+lea eax, [byte ebp-012h]	; 752F4
+cmp eax, byte 1	; 752F7
+jne short .8	; 752FA
+mov eax, unk_C311D	; 752FC
+jmp short .9	; 75301
+.8:
+mov eax, str_S6	; 75303
+.9:
+push eax	; 75308
+lea eax, [byte esp+070h]	; 75309
+push eax	; 7530D
+lea eax, [byte ebp-012h]	; 7530E
+push eax	; 75311
+lea eax, [byte esp+068h]	; 75312
+.10:
+push eax	; 75316
+push esi	; 75317
+lea eax, [byte esp+01Ch]	; 75318
+push eax	; 7531C
+call sprintf_	; 7531D
+add esp, byte 18h	; 75322
+.11:
+mov eax, dword [byte esp+07Ch]	; 75325
+cmp eax, byte 2	; 75329
+jge short .14	; 7532C
+mov eax, 2	; 7532E
+sub eax, dword [byte esp+07Ch]	; 75333
+cmp eax, byte 1	; 75337
+jne short .12	; 7533A
+mov eax, unk_C311D	; 7533C
+jmp short .13	; 75341
+.12:
+mov eax, str_S6	; 75343
+.13:
+push eax	; 75348
+lea eax, [byte esp+068h]	; 75349
+push eax	; 7534D
+mov eax, 2	; 7534E
+sub eax, dword [dword esp+084h]	; 75353
+push eax	; 7535A
+lea eax, [dword esp+080h]	; 7535B
+jmp short .17	; 75362
+.14:
+jle short .18	; 75364
+sub eax, byte 2	; 75366
+cmp eax, byte 1	; 75369
+jne short .15	; 7536C
+mov eax, unk_C311D	; 7536E
+jmp short .16	; 75373
+.15:
+mov eax, str_S6	; 75375
+.16:
+push eax	; 7537A
+lea eax, [byte esp+068h]	; 7537B
+push eax	; 7537F
+mov eax, dword [dword esp+084h]	; 75380
+sub eax, byte 2	; 75387
+push eax	; 7538A
+lea eax, [byte esp+068h]	; 7538B
+.17:
+push eax	; 7538F
+push esi	; 75390
+lea eax, [byte esp+038h]	; 75391
+push eax	; 75395
+call sprintf_	; 75396
+add esp, byte 18h	; 7539B
+.18:
+cmp ebp, byte 12h	; 7539E
+je short .19	; 753A1
+cmp dword [byte esp+07Ch], byte 2	; 753A3
+je short .19	; 753A8
+lea eax, [byte esp+040h]	; 753AA
+mov dword [msglines], eax	; 753AE
+lea eax, [byte esp+08h]	; 753B3
+mov dword [msglines+4], eax	; 753B7
+lea eax, [byte esp+024h]	; 753BC
+mov dword [msglines+8], eax	; 753C0
+push byte 0FFFFFFFFh	; 753C5
+mov ebx, dword [byte esp+04h]	; 753C7
+push ebx	; 753CB
+mov ecx, dword [byte esp+0Ch]	; 753CC
+push ecx	; 753D0
+push byte 0	; 753D1
+push byte 0	; 753D3
+mov ecx, 3	; 753D5
+jmp short .21	; 753DA
+.19:
+cmp ebp, byte 12h	; 753DC
+je short .20	; 753DF
+lea eax, [byte esp+040h]	; 753E1
+mov dword [msglines], eax	; 753E5
+lea eax, [byte esp+08h]	; 753EA
+mov dword [msglines+4], eax	; 753EE
+push byte 0FFFFFFFFh	; 753F3
+mov eax, dword [byte esp+04h]	; 753F5
+push eax	; 753F9
+mov edx, dword [byte esp+0Ch]	; 753FA
+push edx	; 753FE
+push byte 0	; 753FF
+push byte 0	; 75401
+mov ecx, 2	; 75403
+jmp short .21	; 75408
+.20:
+lea eax, [byte esp+040h]	; 7540A
+mov dword [msglines], eax	; 7540E
+lea eax, [byte esp+024h]	; 75413
+mov dword [msglines+4], eax	; 75417
+push byte 0FFFFFFFFh	; 7541C
+mov edi, dword [byte esp+04h]	; 7541E
+push edi	; 75422
+mov ebp, dword [byte esp+0Ch]	; 75423
+push ebp	; 75427
+push byte 0	; 75428
+push byte 0	; 7542A
+mov ecx, 2	; 7542C
+.21:
+mov ebx, msglines	; 75431
+mov edx, 0FFFFFFFFh	; 75436
+mov eax, edx	; 7543B
+call MessageBox	; 7543D
+mov eax, 1	; 75442
+jmp short .x	; 75447
+.22:
+xor eax, eax	; 75449
+.x:
+add esp, 84h	; 7544B
+pop ebp	; 75451
+pop edi	; 75452
+pop esi	; 75453
+pop ecx	; 75454
+ret	; 75455
+%endif ; C
+; C: src/front/lines/MenuShowPlayerStats.c (LineEdDone)
+%ifdef CBUILD
+%include "c/front/lines/MenuShowPlayerStats.LineEdDone.inc"
+%else
+LineEdDone:
+push dword 14h	; 75456
+call __CHK	; 7545B
+push esi	; 75460
+push edi	; 75461
+push ebp	; 75462
+sub esp, byte 4	; 75463
+mov edi, eax	; 75466
+mov ebp, edx	; 75468
+mov byte [esp], bl	; 7546A
+xor ebx, ebx	; 7546D
+mov bl, byte [esp]	; 7546F
+mov edx, dword [byte esp+028h]	; 75472
+mov eax, dword [byte esp+024h]	; 75476
+call CheckRosterComplete	; 7547A
+test eax, eax	; 7547F
+je short .1	; 75481
+xor eax, eax	; 75483
+jmp near .11	; 75485
+.1:
+xor esi, esi	; 7548A
+.2:
+lea ecx, [edi+esi]	; 7548C
+mov ah, byte [ecx]	; 7548F
+cmp ah, 64h	; 75491
+jne short .3	; 75494
+mov byte [esi+ebp], ah	; 75496
+jmp short .6	; 75499
+.3:
+xor ecx, ecx	; 7549B
+.4:
+xor edx, edx	; 7549D
+mov dl, byte [esp]	; 7549F
+mov eax, edx	; 754A2
+shl eax, 2	; 754A4
+sub eax, edx	; 754A7
+shl eax, 2	; 754A9
+mov ebx, eax	; 754AC
+shl ebx, 6	; 754AE
+sub ebx, eax	; 754B1
+mov eax, ecx	; 754B3
+shl eax, 3	; 754B5
+sub eax, ecx	; 754B8
+shl eax, 2	; 754BA
+sub eax, ecx	; 754BD
+add eax, ebx	; 754BF
+cmp byte [dword eax+rosterstat], 0	; 754C1
+je short .5	; 754C8
+mov dl, byte [edi+esi]	; 754CA
+cmp dl, byte [dword eax+rosterjersey]	; 754CD
+jne short .5	; 754D3
+mov al, byte [dword eax+rosterslot]	; 754D5
+mov byte [esi+ebp], al	; 754DB
+jmp short .6	; 754DE
+.5:
+inc ecx	; 754E0
+cmp ecx, byte 1Ch	; 754E1
+jl short LineEdDone.4	; 754E4
+.6:
+inc esi	; 754E6
+cmp esi, byte 28h	; 754E7
+jl short LineEdDone.2	; 754EA
+xor esi, esi	; 754EC
+.7:
+mov byte [byte esi+ebp+028h], 64h	; 754EE
+inc esi	; 754F3
+cmp esi, byte 8	; 754F4
+jl short LineEdDone.7	; 754F7
+xor esi, esi	; 754F9
+xor ecx, ecx	; 754FB
+jmp short .10	; 754FD
+.8:
+xor edx, edx	; 754FF
+mov dl, byte [esp]	; 75501
+mov eax, edx	; 75504
+shl eax, 2	; 75506
+sub eax, edx	; 75509
+shl eax, 2	; 7550B
+mov ebx, eax	; 7550E
+shl ebx, 6	; 75510
+sub ebx, eax	; 75513
+mov eax, esi	; 75515
+shl eax, 3	; 75517
+sub eax, esi	; 7551A
+shl eax, 2	; 7551C
+sub eax, esi	; 7551F
+add eax, ebx	; 75521
+mov bl, byte [dword eax+rosterstat]	; 75523
+test bl, bl	; 75529
+je short .9	; 7552B
+cmp bl, 3	; 7552D
+je short .9	; 75530
+mov al, byte [dword eax+rosterslot]	; 75532
+mov byte [byte ecx+ebp+028h], al	; 75538
+inc ecx	; 7553C
+.9:
+inc esi	; 7553D
+.10:
+cmp esi, byte 1Ch	; 7553E
+jl short LineEdDone.8	; 75541
+movzx esi, byte [esp]	; 75543
+mov esi, dword [nosplit esi*4+rosterteamrec]	; 75547
+mov ecx, 0Ch	; 7554E
+lea edi, [dword esi+0ECh]	; 75553
+lea esi, [dword esi+0BCh]	; 75559
+rep movsd	; 7555F
+mov eax, 1	; 75561
+.11:
+add esp, byte 4	; 75566
+jmp near MenuShowPlayerStats_ret	; 75569
+%endif ; C
+; C: src/front/lines/MenuShowPlayerStats.c
+%ifdef CBUILD
+%include "c/front/lines/MenuShowPlayerStats.inc"
+%else
+MenuShowPlayerStats:
+push dword 48h	; 7556E
+call __CHK	; 75573
+push esi	; 75578
+push edi	; 75579
+push ebp	; 7557A
+sub esp, byte 24h	; 7557B
+mov ebp, eax	; 7557E
+mov byte [byte esp+020h], bl	; 75580
+mov esi, ecx	; 75584
+push byte 0	; 75586
+push dword 5B0h	; 75588
+push str_Keys3	; 7558D
+call sub_8CCA8	; 75592
+add esp, byte 0Ch	; 75597
+mov dword [statsplayerbuf], eax	; 7559A
+push byte 0	; 7559F
+push dword 497h	; 755A1
+push str_Pstat3	; 755A6
+call sub_8CCA8	; 755AB
+add esp, byte 0Ch	; 755B0
+mov dword [rosterpstat], eax	; 755B3
+push byte 0	; 755B8
+push dword 10Eh	; 755BA
+push str_Gstat3	; 755BF
+call sub_8CCA8	; 755C4
+add esp, byte 0Ch	; 755C9
+mov dword [rostergstat], eax	; 755CC
+mov ecx, 0C3h	; 755D1
+mov ebx, 0C2h	; 755D6
+mov edx, 0C1h	; 755DB
+mov eax, 0C0h	; 755E0
+call ShowRosterStats	; 755E5
+push dword 0C2h	; 755EA
+mov ecx, 0C1h	; 755EF
+mov ebx, 0C0h	; 755F4
+mov edx, 2	; 755F9
+mov eax, unk_D075E	; 755FE
+call RunMenu	; 75603
+mov edx, dword [rostergstat]	; 75608
+push edx	; 7560E
+call FreeMemBlock	; 7560F
+add esp, byte 4	; 75614
+mov ebx, dword [rosterpstat]	; 75617
+push ebx	; 7561D
+call FreeMemBlock	; 7561E
+add esp, byte 4	; 75623
+mov ecx, dword [statsplayerbuf]	; 75626
+push ecx	; 7562C
+call FreeMemBlock	; 7562D
+add esp, byte 4	; 75632
+xor edi, edi	; 75635
+mov dword [statsplayerbuf], edi	; 75637
+mov dword [rostergstat], edi	; 7563D
+mov dword [rosterpstat], edi	; 75643
+mov ebx, dword [fullscrbmp]	; 75649
+push ebx	; 7564F
+call SetDrawBitmap	; 75650
+add esp, byte 4	; 75655
+push edi	; 75658
+call sub_B392C	; 75659
+add esp, byte 4	; 7565E
+mov ecx, dword [byte esp+040h]	; 75661
+push ecx	; 75665
+movzx edi, byte [byte esp+024h]	; 75666
+mov ecx, dword [byte esp+040h]	; 7566B
+mov ebx, dword [byte esp+03Ch]	; 7566F
+mov edx, dword [byte esp+038h]	; 75673
+mov eax, edi	; 75677
+call DrawLineEditorScreen	; 75679
+mov ebx, edi	; 7567E
+mov edx, dword [byte esp+034h]	; 75680
+mov eax, ebp	; 75684
+call DrawLineJerseys	; 75686
+call sub_B4BA8	; 7568B
+mov eax, dword [fullscrbmp]	; 75690
+mov ebp, dword [byte eax+02Ch]	; 75695
+push ebp	; 75698
+call sub_9121C	; 75699
+add esp, byte 4	; 7569E
+cmp dword [esi], byte 0	; 756A1
+jl near MenuShowPlayerStats_status.1	; 756A4
+mov eax, edi	; 756AA
+shl eax, 2	; 756AC
+sub eax, edi	; 756AF
+shl eax, 2	; 756B1
+mov edx, eax	; 756B4
+shl edx, 6	; 756B6
+sub edx, eax	; 756B9
+mov edi, dword [esi]	; 756BB
+mov eax, edi	; 756BD
+shl eax, 3	; 756BF
+sub eax, edi	; 756C2
+shl eax, 2	; 756C4
+sub eax, edi	; 756C7
+cmp byte [dword edx+eax+rosterstat], 2	; 756C9
+jne short .1	; 756D1
+push dword 0C1h	; 756D3
+push byte 7Eh	; 756D8
+jmp short .2	; 756DA
+.1:
+push dword 0C1h	; 756DC
+push dword 0C0h	; 756E1
+.2:
+call sub_8E9C0	; 756E6
+add esp, byte 8	; 756EB
+movzx edi, byte [byte esp+020h]	; 756EE
+mov eax, edi	; 756F3
+shl eax, 2	; 756F5
+sub eax, edi	; 756F8
+shl eax, 2	; 756FA
+mov ebp, eax	; 756FD
+shl ebp, 6	; 756FF
+sub ebp, eax	; 75702
+mov edx, rosterlist	; 75704
+add edx, ebp	; 75709
+mov edi, dword [esi]	; 7570B
+mov eax, edi	; 7570D
+shl eax, 3	; 7570F
+sub eax, edi	; 75712
+shl eax, 2	; 75714
+sub eax, edi	; 75717
+add edx, eax	; 75719
+add edx, byte 8	; 7571B
+push edx	; 7571E
+xor edx, edx	; 7571F
+mov dl, byte [dword eax+ebp+rosterjersey]	; 75721
+push edx	; 75728
+mov al, byte [dword eax+ebp+rosterlist]	; 75729
+and eax, 0FFh	; 75730
+push eax	; 75735
+push str_C2dS2	; 75736
+lea eax, [byte esp+010h]	; 7573B
+push eax	; 7573F
+call sprintf_	; 75740
+add esp, byte 14h	; 75745
+mov esi, dword [esi]	; 75748
+mov eax, esi	; 7574A
+shl eax, 2	; 7574C
+sub eax, esi	; 7574F
+shl eax, 2	; 75751
+add eax, esi	; 75754
+MenuShowPlayerStats_status:
+lea edx, [byte eax+016h]	; 75756
+mov ebx, esp	; 75759
+mov eax, 1FAh	; 7575B
+call PrintLineEdStatus	; 75760
+.1:
+xor eax, eax	; 75765
+add esp, byte 24h	; 75767
+MenuShowPlayerStats_ret:
+pop ebp	; 7576A
+pop edi	; 7576B
+pop esi	; 7576C
+ret 18h	; 7576D
+%endif ; C
+; C: src/front/lines/MenuShowPlayerStats.c (ScratchPlayer)
+%ifdef CBUILD
+%include "c/front/lines/MenuShowPlayerStats.ScratchPlayer.inc"
+%else
+ScratchPlayer:
+push dword 48h	; 75770
+call __CHK	; 75775
+push esi	; 7577A
+push edi	; 7577B
+push ebp	; 7577C
+sub esp, byte 24h	; 7577D
+mov edi, eax	; 75780
+mov byte [byte esp+020h], bl	; 75782
+mov esi, ecx	; 75786
+xor ebx, ebx	; 75788
+.1:
+xor edx, edx	; 7578A
+mov dl, byte [byte esp+020h]	; 7578C
+mov eax, edx	; 75790
+shl eax, 2	; 75792
+sub eax, edx	; 75795
+shl eax, 2	; 75797
+mov ecx, eax	; 7579A
+shl ecx, 6	; 7579C
+sub ecx, eax	; 7579F
+mov edx, dword [esi]	; 757A1
+mov eax, edx	; 757A3
+shl eax, 3	; 757A5
+sub eax, edx	; 757A8
+shl eax, 2	; 757AA
+sub eax, edx	; 757AD
+lea edx, [ecx+eax]	; 757AF
+lea eax, [edi+ebx]	; 757B2
+mov cl, byte [eax]	; 757B5
+cmp cl, byte [dword edx+rosterjersey]	; 757B7
+jne short .2	; 757BD
+mov byte [eax], 64h	; 757BF
+.2:
+inc ebx	; 757C2
+cmp ebx, byte 28h	; 757C3
+jl short ScratchPlayer.1	; 757C6
+xor ebx, ebx	; 757C8
+mov bl, byte [byte esp+020h]	; 757CA
+mov eax, ebx	; 757CE
+shl eax, 2	; 757D0
+sub eax, ebx	; 757D3
+shl eax, 2	; 757D5
+mov ebp, eax	; 757D8
+shl ebp, 6	; 757DA
+sub ebp, eax	; 757DD
+mov edx, dword [esi]	; 757DF
+mov eax, edx	; 757E1
+shl eax, 3	; 757E3
+sub eax, edx	; 757E6
+shl eax, 2	; 757E8
+sub eax, edx	; 757EB
+mov byte [dword eax+ebp+rosterstat], 2	; 757ED
+mov edx, dword [byte esp+034h]	; 757F5
+mov eax, edi	; 757F9
+call DrawLineJerseys	; 757FB
+push dword 0C1h	; 75800
+push dword 0FDh	; 75805
+call sub_8E9C0	; 7580A
+add esp, byte 8	; 7580F
+mov ebx, rosterlist	; 75812
+add ebx, ebp	; 75817
+mov edx, dword [esi]	; 75819
+mov eax, edx	; 7581B
+shl eax, 3	; 7581D
+sub eax, edx	; 75820
+shl eax, 2	; 75822
+sub eax, edx	; 75825
+lea edx, [byte ebx+eax+08h]	; 75827
+push edx	; 7582B
+xor edx, edx	; 7582C
+mov dl, byte [dword eax+ebp+rosterjersey]	; 7582E
+push edx	; 75835
+mov al, byte [dword eax+ebp+rosterlist]	; 75836
+and eax, 0FFh	; 7583D
+push eax	; 75842
+push str_C2dS2	; 75843
+lea eax, [byte esp+010h]	; 75848
+push eax	; 7584C
+call sprintf_	; 7584D
+add esp, byte 14h	; 75852
+mov edx, dword [esi]	; 75855
+mov eax, edx	; 75857
+shl eax, 2	; 75859
+sub eax, edx	; 7585C
+shl eax, 2	; 7585E
+add eax, edx	; 75861
+jmp near MenuShowPlayerStats_status	; 75863
+%endif ; C
+; C: src/front/lines/MenuShowPlayerStats.c (DressPlayer)
+%ifdef CBUILD
+%include "c/front/lines/MenuShowPlayerStats.DressPlayer.inc"
+%else
+DressPlayer:
+push dword 44h	; 75868
+call __CHK	; 7586D
+push esi	; 75872
+push edi	; 75873
+push ebp	; 75874
+sub esp, byte 20h	; 75875
+mov edi, eax	; 75878
+mov esi, ecx	; 7587A
+and ebx, 0FFh	; 7587C
+mov eax, ebx	; 75882
+shl eax, 2	; 75884
+sub eax, ebx	; 75887
+shl eax, 2	; 75889
+mov ebp, eax	; 7588C
+shl ebp, 6	; 7588E
+sub ebp, eax	; 75891
+mov edx, dword [ecx]	; 75893
+mov eax, edx	; 75895
+shl eax, 3	; 75897
+sub eax, edx	; 7589A
+shl eax, 2	; 7589C
+sub eax, edx	; 7589F
+mov byte [dword eax+ebp+rosterstat], 3	; 758A1
+mov edx, dword [byte esp+030h]	; 758A9
+mov eax, edi	; 758AD
+call DrawLineJerseys	; 758AF
+push dword 0C1h	; 758B4
+push dword 0C0h	; 758B9
+call sub_8E9C0	; 758BE
+add esp, byte 8	; 758C3
+mov ebx, rosterlist	; 758C6
+add ebx, ebp	; 758CB
+mov edx, dword [esi]	; 758CD
+mov eax, edx	; 758CF
+shl eax, 3	; 758D1
+sub eax, edx	; 758D4
+shl eax, 2	; 758D6
+sub eax, edx	; 758D9
+add ebx, eax	; 758DB
+add ebx, byte 8	; 758DD
+push ebx	; 758E0
+xor edx, edx	; 758E1
+mov dl, byte [dword eax+ebp+rosterjersey]	; 758E3
+push edx	; 758EA
+mov al, byte [dword eax+ebp+rosterlist]	; 758EB
+and eax, 0FFh	; 758F2
+push eax	; 758F7
+push str_C2dS2	; 758F8
+lea eax, [byte esp+010h]	; 758FD
+push eax	; 75901
+call sprintf_	; 75902
+add esp, byte 14h	; 75907
+mov edx, dword [esi]	; 7590A
+mov eax, edx	; 7590C
+shl eax, 2	; 7590E
+sub eax, edx	; 75911
+shl eax, 2	; 75913
+add eax, edx	; 75916
+lea edx, [byte eax+016h]	; 75918
+mov ebx, esp	; 7591B
+mov eax, 1FAh	; 7591D
+call PrintLineEdStatus	; 75922
+xor eax, eax	; 75927
+add esp, byte 20h	; 75929
+jmp near MenuShowPlayerStats_ret	; 7592C
+%endif ; C
+; C: src/front/lines/CmpRosterSkaters.c
+%ifdef CBUILD
+%include "c/front/lines/CmpRosterSkaters.inc"
+%else
+CmpRosterSkaters:
+push dword 14h	; 75931
+call __CHK	; 75936
+push ebx	; 7593B
+push ecx	; 7593C
+push esi	; 7593D
+push edi	; 7593E
+cmp dword [statsplayoffs], byte 0	; 7593F
+jne short .1	; 75946
+mov ebx, dword [eax]	; 75948
+mov eax, ebx	; 7594A
+shl eax, 2	; 7594C
+add ebx, eax	; 7594F
+shl ebx, 3	; 75951
+mov eax, dword [rosterpstat]	; 75954
+add eax, ebx	; 75959
+jmp short .2	; 7595B
+.1:
+mov ebx, dword [eax]	; 7595D
+mov eax, ebx	; 7595F
+shl eax, 2	; 75961
+add eax, ebx	; 75964
+shl eax, 3	; 75966
+mov ebx, dword [rosterpstat]	; 75969
+add eax, ebx	; 7596F
+add eax, byte 12h	; 75971
+.2:
+cmp dword [statsplayoffs], byte 0	; 75974
+jne short .3	; 7597B
+mov ebx, dword [edx]	; 7597D
+mov edx, ebx	; 7597F
+shl edx, 2	; 75981
+add edx, ebx	; 75984
+shl edx, 3	; 75986
+mov ebx, dword [rosterpstat]	; 75989
+add ebx, edx	; 7598F
+jmp short .4	; 75991
+.3:
+mov ebx, dword [edx]	; 75993
+mov edx, ebx	; 75995
+shl edx, 2	; 75997
+add edx, ebx	; 7599A
+shl edx, 3	; 7599C
+mov ebx, dword [rosterpstat]	; 7599F
+add ebx, edx	; 759A5
+add ebx, byte 12h	; 759A7
+.4:
+mov edx, ebx	; 759AA
+cmp word [ebx], byte 0	; 759AC
+sete bl	; 759B0
+mov ecx, ebx	; 759B3
+and ecx, 0FFh	; 759B5
+mov si, word [eax]	; 759BB
+test si, si	; 759BE
+sete bl	; 759C1
+and ebx, 0FFh	; 759C4
+xor ebx, ecx	; 759CA
+je short .7	; 759CC
+mov dx, word [edx]	; 759CE
+.5:
+and edx, 0FFFFh	; 759D1
+mov eax, esi	; 759D7
+.6:
+and eax, 0FFFFh	; 759D9
+jmp short .11	; 759DE
+.7:
+mov bx, word [byte edx+06h]	; 759E0
+mov di, word [byte eax+06h]	; 759E4
+cmp bx, di	; 759E8
+je short .8	; 759EB
+mov edx, ebx	; 759ED
+and edx, 0FFFFh	; 759EF
+mov eax, edi	; 759F5
+jmp short CmpRosterSkaters.6	; 759F7
+.8:
+cmp si, word [edx]	; 759F9
+je short .9	; 759FC
+xor ebx, ebx	; 759FE
+mov bx, si	; 75A00
+xor eax, eax	; 75A03
+mov ax, word [edx]	; 75A05
+sub ebx, eax	; 75A08
+mov eax, ebx	; 75A0A
+pop edi	; 75A0C
+pop esi	; 75A0D
+pop ecx	; 75A0E
+pop ebx	; 75A0F
+ret	; 75A10
+.9:
+mov bx, word [byte edx+02h]	; 75A11
+mov si, word [byte eax+02h]	; 75A15
+cmp bx, si	; 75A19
+je short .10	; 75A1C
+mov edx, ebx	; 75A1E
+jmp short CmpRosterSkaters.5	; 75A20
+.10:
+mov edx, dword [byte edx+0Eh]	; 75A22
+sar edx, 10h	; 75A25
+mov eax, dword [byte eax+0Eh]	; 75A28
+sar eax, 10h	; 75A2B
+.11:
+sub edx, eax	; 75A2E
+mov eax, edx	; 75A30
+pop edi	; 75A32
+pop esi	; 75A33
+pop ecx	; 75A34
+pop ebx	; 75A35
+ret	; 75A36
+%endif ; C
+; C: src/front/lines/CmpRosterGoalies.c
+%ifdef CBUILD
+%include "c/front/lines/CmpRosterGoalies.inc"
+%else
+CmpRosterGoalies:
+push dword 14h	; 75A37
+call __CHK	; 75A3C
+push ebx	; 75A41
+push ecx	; 75A42
+push esi	; 75A43
+push edi	; 75A44
+cmp dword [statsplayoffs], byte 0	; 75A45
+jne short .1	; 75A4C
+mov ebx, dword [eax]	; 75A4E
+mov eax, ebx	; 75A50
+shl eax, 2	; 75A52
+sub eax, ebx	; 75A55
+shl eax, 2	; 75A57
+sub eax, ebx	; 75A5A
+shl eax, 2	; 75A5C
+mov ebx, dword [rostergstat]	; 75A5F
+add eax, ebx	; 75A65
+jmp short .2	; 75A67
+.1:
+mov ebx, dword [eax]	; 75A69
+mov eax, ebx	; 75A6B
+shl eax, 2	; 75A6D
+sub eax, ebx	; 75A70
+shl eax, 2	; 75A72
+sub eax, ebx	; 75A75
+shl eax, 2	; 75A77
+mov ebx, dword [rostergstat]	; 75A7A
+add eax, ebx	; 75A80
+add eax, byte 16h	; 75A82
+.2:
+cmp dword [statsplayoffs], byte 0	; 75A85
+jne short .3	; 75A8C
+mov ebx, dword [edx]	; 75A8E
+mov edx, ebx	; 75A90
+shl edx, 2	; 75A92
+sub edx, ebx	; 75A95
+shl edx, 2	; 75A97
+sub edx, ebx	; 75A9A
+shl edx, 2	; 75A9C
+mov ebx, dword [rostergstat]	; 75A9F
+add ebx, edx	; 75AA5
+jmp short .4	; 75AA7
+.3:
+mov ebx, dword [edx]	; 75AA9
+mov edx, ebx	; 75AAB
+shl edx, 2	; 75AAD
+sub edx, ebx	; 75AB0
+shl edx, 2	; 75AB2
+sub edx, ebx	; 75AB5
+shl edx, 2	; 75AB7
+mov ebx, dword [rostergstat]	; 75ABA
+add ebx, edx	; 75AC0
+add ebx, byte 16h	; 75AC2
+.4:
+mov edx, ebx	; 75AC5
+cmp word [byte ebx+0Ch], byte 0	; 75AC7
+sete bl	; 75ACC
+mov ecx, ebx	; 75ACF
+and ecx, 0FFh	; 75AD1
+mov si, word [byte eax+0Ch]	; 75AD7
+test si, si	; 75ADB
+sete bl	; 75ADE
+and ebx, 0FFh	; 75AE1
+xor ebx, ecx	; 75AE7
+je short .5	; 75AE9
+mov dx, word [byte edx+0Ch]	; 75AEB
+jmp short .9	; 75AEF
+.5:
+mov bx, word [byte edx+010h]	; 75AF1
+mov di, word [byte eax+010h]	; 75AF5
+cmp bx, di	; 75AF9
+je short .7	; 75AFC
+xor ebx, ebx	; 75AFE
+mov bx, di	; 75B00
+xor eax, eax	; 75B03
+mov ax, word [byte edx+010h]	; 75B05
+.6:
+sub ebx, eax	; 75B09
+mov eax, ebx	; 75B0B
+pop edi	; 75B0D
+pop esi	; 75B0E
+pop ecx	; 75B0F
+pop ebx	; 75B10
+ret	; 75B11
+.7:
+mov bx, word [byte edx+0Ch]	; 75B12
+cmp bx, si	; 75B16
+je short .10	; 75B19
+.8:
+mov edx, ebx	; 75B1B
+.9:
+and edx, 0FFFFh	; 75B1D
+mov eax, esi	; 75B23
+jmp near .14	; 75B25
+.10:
+mov bx, word [edx]	; 75B2A
+mov si, word [eax]	; 75B2D
+cmp bx, si	; 75B30
+jne short CmpRosterGoalies.8	; 75B33
+mov bx, word [byte edx+0Eh]	; 75B35
+mov di, word [byte eax+0Eh]	; 75B39
+cmp bx, di	; 75B3D
+je short .11	; 75B40
+mov eax, edi	; 75B42
+and eax, 0FFFFh	; 75B44
+mov edx, ebx	; 75B49
+and edx, 0FFFFh	; 75B4B
+sub eax, edx	; 75B51
+pop edi	; 75B53
+pop esi	; 75B54
+pop ecx	; 75B55
+pop ebx	; 75B56
+ret	; 75B57
+.11:
+mov bx, word [byte edx+02h]	; 75B58
+mov cx, word [byte eax+02h]	; 75B5C
+cmp bx, cx	; 75B60
+je short .12	; 75B63
+mov edx, ebx	; 75B65
+and edx, 0FFFFh	; 75B67
+mov eax, ecx	; 75B6D
+jmp short .14	; 75B6F
+.12:
+mov bx, word [byte edx+04h]	; 75B71
+mov si, word [byte eax+04h]	; 75B75
+cmp bx, si	; 75B79
+je short .13	; 75B7C
+xor ebx, ebx	; 75B7E
+mov bx, si	; 75B80
+xor eax, eax	; 75B83
+mov ax, word [byte edx+04h]	; 75B85
+jmp near CmpRosterGoalies.6	; 75B89
+.13:
+mov dx, word [byte edx+014h]	; 75B8E
+and edx, 0FFFFh	; 75B92
+mov ax, word [byte eax+014h]	; 75B98
+.14:
+and eax, 0FFFFh	; 75B9C
+sub edx, eax	; 75BA1
+mov eax, edx	; 75BA3
+pop edi	; 75BA5
+pop esi	; 75BA6
+pop ecx	; 75BA7
+pop ebx	; 75BA8
+ret	; 75BA9
+MenuRegSeasonStats:
+push dword 10h	; 75BAA
+call __CHK	; 75BAF
+push ebx	; 75BB4
+push ecx	; 75BB5
+push edx	; 75BB6
+xor edx, edx	; 75BB7
+mov dword [statsplayoffs], edx	; 75BB9
+MenuRegSeasonStats_common:
+mov ecx, 0C3h	; 75BBF
+mov ebx, 0C2h	; 75BC4
+mov edx, 0C1h	; 75BC9
+mov eax, 0C0h	; 75BCE
+call ShowRosterStats	; 75BD3
+xor eax, eax	; 75BD8
+pop edx	; 75BDA
+pop ecx	; 75BDB
+pop ebx	; 75BDC
+ret	; 75BDD
+MenuPlayoffStats:
+push dword 10h	; 75BDE
+call __CHK	; 75BE3
+push ebx	; 75BE8
+push ecx	; 75BE9
+push edx	; 75BEA
+mov dword [statsplayoffs], 1	; 75BEB
+jmp short MenuRegSeasonStats_common	; 75BF5
+%endif ; C
+ShowRosterStats:
+push dword 0C8h	; 75BF7
+call __CHK	; 75BFC
+push esi	; 75C01
+push edi	; 75C02
+push ebp	; 75C03
+sub esp, 98h	; 75C04
+push eax	; 75C0A
+push edx	; 75C0B
+push ebx	; 75C0C
+push ecx	; 75C0D
+xor edx, edx	; 75C0E
+mov dword [dword esp+0A0h], edx	; 75C10
+xor ebp, ebp	; 75C17
+jmp near .3	; 75C19
+.1:
+xor eax, eax	; 75C1E
+mov al, byte [lineedpanel]	; 75C20
+mov edx, dword [nosplit eax*4+rosterteamrec]	; 75C25
+mov eax, ebp	; 75C2C
+shl eax, 2	; 75C2E
+add eax, edx	; 75C31
+mov ecx, dword [byte eax+04Ch]	; 75C33
+cmp ecx, byte 0FFFFFFFFh	; 75C36
+je short .2	; 75C39
+mov eax, ecx	; 75C3B
+call KeyDbPtr	; 75C3D
+mov esi, ebp	; 75C42
+shl esi, 2	; 75C44
+sub esi, ebp	; 75C47
+shl esi, 2	; 75C49
+add esi, ebp	; 75C4C
+shl esi, 2	; 75C4E
+mov edi, dword [statsplayerbuf]	; 75C51
+add edi, esi	; 75C57
+mov ecx, 0Dh	; 75C59
+mov esi, eax	; 75C5E
+rep movsd	; 75C60
+mov eax, dword [byte eax+028h]	; 75C62
+call CareerDbPtr	; 75C65
+mov edx, dword [dword esp+0A0h]	; 75C6A
+mov ebx, edx	; 75C71
+shl ebx, 2	; 75C73
+add ebx, edx	; 75C76
+shl ebx, 3	; 75C78
+mov edi, dword [rosterpstat]	; 75C7B
+add edi, ebx	; 75C81
+mov ecx, 0Ah	; 75C83
+mov esi, eax	; 75C88
+rep movsd	; 75C8A
+mov dword [nosplit edx*4+statsskaterplr], ebp	; 75C8C
+mov dword [nosplit edx*4+statsskaterorder], edx	; 75C93
+lea esi, [byte edx+01h]	; 75C9A
+mov dword [dword esp+0A0h], esi	; 75C9D
+.2:
+inc ebp	; 75CA4
+.3:
+cmp ebp, byte 19h	; 75CA5
+jl near ShowRosterStats.1	; 75CA8
+xor ebx, ebx	; 75CAE
+mov dword [dword esp+0A4h], ebx	; 75CB0
+xor ebp, ebp	; 75CB7
+jmp near .6	; 75CB9
+.4:
+xor eax, eax	; 75CBE
+mov al, byte [lineedpanel]	; 75CC0
+mov edx, dword [nosplit eax*4+rosterteamrec]	; 75CC5
+mov eax, ebp	; 75CCC
+shl eax, 2	; 75CCE
+add eax, edx	; 75CD1
+mov ebx, dword [dword eax+0B0h]	; 75CD3
+cmp ebx, byte 0FFFFFFFFh	; 75CD9
+je short .5	; 75CDC
+mov eax, ebx	; 75CDE
+call KeyDbPtr	; 75CE0
+lea edx, [byte ebp+019h]	; 75CE5
+mov esi, edx	; 75CE8
+shl esi, 2	; 75CEA
+sub esi, edx	; 75CED
+shl esi, 2	; 75CEF
+add esi, edx	; 75CF2
+shl esi, 2	; 75CF4
+mov edi, dword [statsplayerbuf]	; 75CF7
+add edi, esi	; 75CFD
+mov ecx, 0Dh	; 75CFF
+mov esi, eax	; 75D04
+rep movsd	; 75D06
+mov eax, dword [byte eax+028h]	; 75D08
+call CareerDbPtr2	; 75D0B
+mov ebx, eax	; 75D10
+mov eax, dword [dword esp+0A4h]	; 75D12
+mov esi, eax	; 75D19
+shl esi, 2	; 75D1B
+sub esi, eax	; 75D1E
+shl esi, 2	; 75D20
+sub esi, eax	; 75D23
+shl esi, 2	; 75D25
+mov edi, dword [rostergstat]	; 75D28
+add edi, esi	; 75D2E
+mov ecx, 0Bh	; 75D30
+mov esi, ebx	; 75D35
+rep movsd	; 75D37
+mov dword [nosplit eax*4+statsgoalieplr], edx	; 75D39
+mov dword [nosplit eax*4+statsgoalieorder], eax	; 75D40
+lea ecx, [byte eax+01h]	; 75D47
+mov dword [dword esp+0A4h], ecx	; 75D4A
+.5:
+inc ebp	; 75D51
+.6:
+cmp ebp, byte 3	; 75D52
+jl near ShowRosterStats.4	; 75D55
+mov ecx, CmpRosterSkaters	; 75D5B
+mov ebx, 4	; 75D60
+mov edx, dword [dword esp+0A0h]	; 75D65
+mov eax, statsskaterorder	; 75D6C
+call qsort_	; 75D71
+mov ecx, CmpRosterGoalies	; 75D76
+mov ebx, 4	; 75D7B
+mov edx, dword [dword esp+0A4h]	; 75D80
+mov eax, statsgoalieorder	; 75D87
+call qsort_	; 75D8C
+mov edi, dword [fullscrbmp]	; 75D91
+push edi	; 75D97
+call SetDrawBitmap	; 75D98
+add esp, byte 4	; 75D9D
+push byte 0	; 75DA0
+call sub_B392C	; 75DA2
+add esp, byte 4	; 75DA7
+xor eax, eax	; 75DAA
+mov al, byte [lineedpanel]	; 75DAC
+mov ebp, dword [nosplit eax*4+rosterteamrec]	; 75DB1
+push ebp	; 75DB8
+push str_fmtEmb	; 75DB9
+lea eax, [byte esp+058h]	; 75DBE
+push eax	; 75DC2
+call sprintf_	; 75DC3
+add esp, byte 0Ch	; 75DC8
+xor ecx, ecx	; 75DCB
+lea ebx, [byte esp+050h]	; 75DCD
+xor eax, eax	; 75DD1
+mov al, byte [lineedpanel]	; 75DD3
+mov al, byte [dword eax+rosterteam]	; 75DD8
+and eax, 0FFh	; 75DDE
+cmp byte [dword eax+fileoncd+070h], 1	; 75DE3
+jne short .7	; 75DEA
+mov edx, dword [cddriveptr]	; 75DEC
+jmp short .8	; 75DF2
+.7:
+xor edx, edx	; 75DF4
+.8:
+lea eax, [byte esp+078h]	; 75DF6
+call MakePath	; 75DFA
+push byte 0	; 75DFF
+lea eax, [byte esp+07Ch]	; 75E01
+push eax	; 75E05
+call sub_8E83C	; 75E06
+mov esi, eax	; 75E0B
+add esp, byte 8	; 75E0D
+push str_Bkgd2	; 75E10
+push eax	; 75E15
+call sub_B30B4	; 75E16
+mov edi, eax	; 75E1B
+add esp, byte 8	; 75E1D
+push dword 1E0h	; 75E20
+push byte 13h	; 75E25
+push dword 280h	; 75E27
+push byte 0	; 75E2C
+call sub_B4BC4	; 75E2E
+add esp, byte 10h	; 75E33
+push edi	; 75E36
+call sub_913B4	; 75E37
+add esp, byte 4	; 75E3C
+push dword 1E0h	; 75E3F
+push byte 0	; 75E44
+push dword 280h	; 75E46
+push byte 0	; 75E4B
+call sub_B4BC4	; 75E4D
+add esp, byte 10h	; 75E52
+push esi	; 75E55
+call FreeMemBlock	; 75E56
+add esp, byte 4	; 75E5B
+lea eax, [byte esp+010h]	; 75E5E
+push eax	; 75E62
+call sub_8E9E8	; 75E63
+add esp, byte 4	; 75E68
+mov eax, dword [mainfont]	; 75E6B
+push eax	; 75E70
+call sub_8EA18	; 75E71
+add esp, byte 4	; 75E76
+mov edx, dword [byte esp+04h]	; 75E79
+push edx	; 75E7D
+mov ecx, dword [byte esp+0Ch]	; 75E7E
+mov ebx, dword [byte esp+010h]	; 75E82
+mov edx, 2	; 75E86
+mov eax, unk_D075E	; 75E8B
+call DrawMenuBar	; 75E90
+mov edx, dword [esp]	; 75E95
+mov eax, dword [byte esp+0Ch]	; 75E98
+call SetTextColors	; 75E9C
+xor eax, eax	; 75EA1
+mov al, byte [lineedpanel]	; 75EA3
+mov eax, dword [nosplit eax*4+rosterteamrec]	; 75EA8
+add eax, byte 5	; 75EAF
+push eax	; 75EB2
+push str_SRoster	; 75EB3
+lea eax, [byte esp+058h]	; 75EB8
+push eax	; 75EBC
+call sprintf_	; 75EBD
+add esp, byte 0Ch	; 75EC2
+lea edx, [byte esp+050h]	; 75EC5
+mov eax, 19h	; 75EC9
+call PrintCenteredText	; 75ECE
+mov ebx, str_Pos2	; 75ED3
+mov edx, 30h	; 75ED8
+mov eax, 14h	; 75EDD
+call PrintShadowText	; 75EE2
+mov ebx, str_No2	; 75EE7
+mov edx, 30h	; 75EEC
+mov eax, 42h	; 75EF1
+call PrintShadowText	; 75EF6
+mov ebx, str_Name2	; 75EFB
+mov edx, 30h	; 75F00
+mov eax, 60h	; 75F05
+call PrintShadowText	; 75F0A
+mov ebx, str_GP8	; 75F0F
+mov edx, 30h	; 75F14
+mov eax, 10Eh	; 75F19
+call PrintShadowText	; 75F1E
+mov ebx, str_G4	; 75F23
+mov edx, 30h	; 75F28
+mov eax, 136h	; 75F2D
+call PrintShadowText	; 75F32
+mov ebx, str_A4	; 75F37
+mov edx, 30h	; 75F3C
+mov eax, 15Eh	; 75F41
+call PrintShadowText	; 75F46
+mov ebx, str_PT2	; 75F4B
+mov edx, 30h	; 75F50
+mov eax, 186h	; 75F55
+call PrintShadowText	; 75F5A
+mov ebx, str_Shots4	; 75F5F
+mov edx, 30h	; 75F64
+mov eax, 1AEh	; 75F69
+call PrintShadowText	; 75F6E
+mov ebx, str_PIM4	; 75F73
+mov edx, 30h	; 75F78
+mov eax, 1E8h	; 75F7D
+call PrintShadowText	; 75F82
+mov ebx, asc_C3164	; 75F87
+mov edx, 30h	; 75F8C
+mov eax, 210h	; 75F91
+call PrintShadowText	; 75F96
+xor ebp, ebp	; 75F9B
+mov esi, 40h	; 75F9D
+jmp near .13	; 75FA2
+.9:
+mov eax, dword [nosplit ebp*4+statsskaterorder]	; 75FA7
+mov dword [dword esp+09Ch], eax	; 75FAE
+mov eax, dword [nosplit eax*4+statsskaterplr]	; 75FB5
+mov edi, eax	; 75FBC
+shl edi, 2	; 75FBE
+sub edi, eax	; 75FC1
+shl edi, 2	; 75FC3
+add edi, eax	; 75FC6
+shl edi, 2	; 75FC8
+mov eax, dword [statsplayerbuf]	; 75FCB
+add edi, eax	; 75FD0
+movsx eax, byte [byte edi+02h]	; 75FD2
+push eax	; 75FD6
+push str_C5	; 75FD7
+lea eax, [byte esp+058h]	; 75FDC
+push eax	; 75FE0
+call sprintf_	; 75FE1
+add esp, byte 0Ch	; 75FE6
+lea ebx, [byte esp+050h]	; 75FE9
+mov edx, esi	; 75FED
+mov eax, 14h	; 75FEF
+call PrintShadowText	; 75FF4
+mov dh, byte [byte edi+01h]	; 75FF9
+cmp dh, 64h	; 75FFC
+jae short .10	; 75FFF
+xor ecx, ecx	; 76001
+mov cl, dh	; 76003
+mov ebx, str_fmt2d	; 76005
+mov edx, esi	; 7600A
+mov eax, 42h	; 7600C
+call PrintFmt1	; 76011
+.10:
+lea ebx, [byte edi+013h]	; 76016
+lea edx, [byte edi+03h]	; 76019
+mov ecx, 0A6h	; 7601C
+lea eax, [byte esp+050h]	; 76021
+call FitPlayerName	; 76025
+lea ebx, [byte esp+050h]	; 7602A
+mov edx, esi	; 7602E
+mov eax, 60h	; 76030
+call PrintShadowText	; 76035
+mov eax, dword [dword esp+09Ch]	; 7603A
+mov ebx, eax	; 76041
+shl ebx, 2	; 76043
+add ebx, eax	; 76046
+shl ebx, 3	; 76048
+cmp dword [statsplayoffs], byte 0	; 7604B
+jne short .11	; 76052
+mov edi, dword [rosterpstat]	; 76054
+add edi, ebx	; 7605A
+jmp short .12	; 7605C
+.11:
+mov eax, dword [rosterpstat]	; 7605E
+add ebx, eax	; 76063
+lea edi, [byte ebx+012h]	; 76065
+.12:
+xor ecx, ecx	; 76068
+mov cx, word [edi]	; 7606A
+mov ebx, str_fmt2d	; 7606D
+mov edx, esi	; 76072
+mov eax, 10Eh	; 76074
+call PrintFmt1	; 76079
+xor ecx, ecx	; 7607E
+mov cx, word [byte edi+02h]	; 76080
+mov ebx, str_fmt3d	; 76084
+mov edx, esi	; 76089
+mov eax, 136h	; 7608B
+call PrintFmt1	; 76090
+xor ecx, ecx	; 76095
+mov cx, word [byte edi+04h]	; 76097
+mov ebx, str_fmt3d	; 7609B
+mov edx, esi	; 760A0
+mov eax, 15Eh	; 760A2
+call PrintFmt1	; 760A7
+xor ecx, ecx	; 760AC
+mov cx, word [byte edi+06h]	; 760AE
+mov ebx, str_fmt3d	; 760B2
+mov edx, esi	; 760B7
+mov eax, 186h	; 760B9
+call PrintFmt1	; 760BE
+xor ecx, ecx	; 760C3
+mov cx, word [byte edi+0Eh]	; 760C5
+mov ebx, str_fmt4d	; 760C9
+mov edx, esi	; 760CE
+mov eax, 1AEh	; 760D0
+call PrintFmt1	; 760D5
+xor ecx, ecx	; 760DA
+mov cx, word [byte edi+0Ch]	; 760DC
+mov ebx, str_fmt3d	; 760E0
+mov edx, esi	; 760E5
+mov eax, 1E8h	; 760E7
+call PrintFmt1	; 760EC
+mov ecx, dword [byte edi+0Eh]	; 760F1
+sar ecx, 10h	; 760F4
+mov ebx, str_fmt4d	; 760F7
+mov edx, esi	; 760FC
+mov eax, 210h	; 760FE
+call PrintFmt1	; 76103
+add esi, byte 0Dh	; 76108
+inc ebp	; 7610B
+.13:
+cmp ebp, dword [dword esp+0A0h]	; 7610C
+jl near ShowRosterStats.9	; 76113
+mov esi, 195h	; 76119
+mov ebx, str_Pos2	; 7611E
+mov edx, esi	; 76123
+mov eax, 14h	; 76125
+call PrintShadowText	; 7612A
+mov ebx, str_No2	; 7612F
+mov edx, esi	; 76134
+mov eax, 42h	; 76136
+call PrintShadowText	; 7613B
+mov ebx, str_Name2	; 76140
+mov edx, esi	; 76145
+mov eax, 60h	; 76147
+call PrintShadowText	; 7614C
+mov ebx, str_GP8	; 76151
+mov edx, esi	; 76156
+mov eax, 10Eh	; 76158
+call PrintShadowText	; 7615D
+mov ebx, str_Min4	; 76162
+mov edx, esi	; 76167
+mov eax, 136h	; 76169
+call PrintShadowText	; 7616E
+mov ebx, str_GAA4	; 76173
+mov edx, esi	; 76178
+mov eax, 15Eh	; 7617A
+call PrintShadowText	; 7617F
+mov ebx, str_W6	; 76184
+mov edx, esi	; 76189
+mov eax, 190h	; 7618B
+call PrintShadowText	; 76190
+mov ebx, str_L8	; 76195
+mov edx, esi	; 7619A
+mov eax, 1AEh	; 7619C
+call PrintShadowText	; 761A1
+cmp dword [statsplayoffs], byte 0	; 761A6
+jne short .14	; 761AD
+mov ebx, str_T6	; 761AF
+mov edx, esi	; 761B4
+mov eax, 1CCh	; 761B6
+call PrintShadowText	; 761BB
+.14:
+mov ebx, str_GA3	; 761C0
+mov edx, esi	; 761C5
+mov eax, 1EAh	; 761C7
+call PrintShadowText	; 761CC
+mov ebx, str_SA3	; 761D1
+mov edx, esi	; 761D6
+mov eax, 20Eh	; 761D8
+call PrintShadowText	; 761DD
+mov ebx, str_PCT2	; 761E2
+mov edx, esi	; 761E7
+mov eax, 240h	; 761E9
+call PrintShadowText	; 761EE
+xor ebp, ebp	; 761F3
+add esi, byte 10h	; 761F5
+jmp near .20	; 761F8
+.15:
+mov eax, dword [nosplit ebp*4+statsgoalieorder]	; 761FD
+mov dword [dword esp+09Ch], eax	; 76204
+mov eax, dword [nosplit eax*4+statsgoalieplr]	; 7620B
+mov edi, eax	; 76212
+shl edi, 2	; 76214
+sub edi, eax	; 76217
+shl edi, 2	; 76219
+add eax, edi	; 7621C
+shl eax, 2	; 7621E
+mov edi, dword [statsplayerbuf]	; 76221
+add edi, eax	; 76227
+movsx eax, byte [byte edi+02h]	; 76229
+push eax	; 7622D
+push str_C5	; 7622E
+lea eax, [byte esp+058h]	; 76233
+push eax	; 76237
+call sprintf_	; 76238
+add esp, byte 0Ch	; 7623D
+lea ebx, [byte esp+050h]	; 76240
+mov edx, esi	; 76244
+mov eax, 14h	; 76246
+call PrintShadowText	; 7624B
+mov bl, byte [byte edi+01h]	; 76250
+cmp bl, 64h	; 76253
+jae short .16	; 76256
+xor ecx, ecx	; 76258
+mov cl, bl	; 7625A
+mov ebx, str_fmt2d	; 7625C
+mov edx, esi	; 76261
+mov eax, 42h	; 76263
+call PrintFmt1	; 76268
+.16:
+lea ebx, [byte edi+013h]	; 7626D
+lea edx, [byte edi+03h]	; 76270
+mov ecx, 0A6h	; 76273
+lea eax, [byte esp+050h]	; 76278
+call FitPlayerName	; 7627C
+lea ebx, [byte esp+050h]	; 76281
+mov edx, esi	; 76285
+mov eax, 60h	; 76287
+call PrintShadowText	; 7628C
+mov eax, dword [dword esp+09Ch]	; 76291
+mov edi, eax	; 76298
+shl edi, 2	; 7629A
+sub edi, eax	; 7629D
+shl edi, 2	; 7629F
+sub edi, eax	; 762A2
+shl edi, 2	; 762A4
+cmp dword [statsplayoffs], byte 0	; 762A7
+jne short .17	; 762AE
+mov eax, dword [rostergstat]	; 762B0
+add edi, eax	; 762B5
+jmp short .18	; 762B7
+.17:
+mov eax, dword [rostergstat]	; 762B9
+add edi, eax	; 762BE
+add edi, byte 16h	; 762C0
+.18:
+mov dword [dword esp+098h], edi	; 762C3
+xor ecx, ecx	; 762CA
+mov cx, word [edi]	; 762CC
+mov ebx, str_fmt2d	; 762CF
+mov edx, esi	; 762D4
+mov eax, 10Eh	; 762D6
+call PrintFmt1	; 762DB
+xor ecx, ecx	; 762E0
+mov cx, word [byte edi+0Ch]	; 762E2
+mov ebx, str_fmt4d	; 762E6
+mov edx, esi	; 762EB
+mov eax, 136h	; 762ED
+call PrintFmt1	; 762F2
+xor ebx, ebx	; 762F7
+mov bx, word [byte edi+010h]	; 762F9
+mov ecx, 64h	; 762FD
+mov eax, ebx	; 76302
+mov edx, ebx	; 76304
+sar edx, 1Fh	; 76306
+idiv ecx	; 76309
+push edx	; 7630B
+mov eax, ebx	; 7630C
+mov edx, ebx	; 7630E
+sar edx, 1Fh	; 76310
+idiv ecx	; 76313
+mov ecx, eax	; 76315
+mov ebx, str_fmtMinSec	; 76317
+mov edx, esi	; 7631C
+mov eax, 15Eh	; 7631E
+call PrintFmt2	; 76323
+xor ecx, ecx	; 76328
+mov cx, word [byte edi+02h]	; 7632A
+mov ebx, str_fmt2d	; 7632E
+mov edx, esi	; 76333
+mov eax, 190h	; 76335
+call PrintFmt1	; 7633A
+xor ecx, ecx	; 7633F
+mov cx, word [byte edi+04h]	; 76341
+mov ebx, str_fmt2d	; 76345
+mov edx, esi	; 7634A
+mov eax, 1AEh	; 7634C
+call PrintFmt1	; 76351
+mov ecx, dword [statsplayoffs]	; 76356
+test ecx, ecx	; 7635C
+jne short .19	; 7635E
+mov cx, word [byte edi+06h]	; 76360
+mov ebx, str_fmt2d	; 76364
+mov edx, esi	; 76369
+mov eax, 1CCh	; 7636B
+call PrintFmt1	; 76370
+.19:
+xor ecx, ecx	; 76375
+mov eax, dword [dword esp+098h]	; 76377
+mov cx, word [byte eax+0Eh]	; 7637E
+mov ebx, str_fmt3d	; 76382
+mov edx, esi	; 76387
+mov eax, 1EAh	; 76389
+call PrintFmt1	; 7638E
+xor ecx, ecx	; 76393
+mov eax, dword [dword esp+098h]	; 76395
+mov cx, word [byte eax+012h]	; 7639C
+mov ebx, str_fmt4d	; 763A0
+mov edx, esi	; 763A5
+mov eax, 20Eh	; 763A7
+call PrintFmt1	; 763AC
+xor edi, edi	; 763B1
+mov eax, dword [dword esp+098h]	; 763B3
+mov di, word [byte eax+014h]	; 763BA
+mov ebx, 0Ah	; 763BE
+mov eax, edi	; 763C3
+mov edx, edi	; 763C5
+sar edx, 1Fh	; 763C7
+idiv ebx	; 763CA
+push edx	; 763CC
+mov eax, edi	; 763CD
+mov edx, edi	; 763CF
+sar edx, 1Fh	; 763D1
+idiv ebx	; 763D4
+mov ecx, eax	; 763D6
+mov ebx, str_fmtTenths	; 763D8
+mov edx, esi	; 763DD
+mov eax, 240h	; 763DF
+call PrintFmt2	; 763E4
+add esi, byte 0Dh	; 763E9
+inc ebp	; 763EC
+.20:
+cmp ebp, dword [dword esp+0A4h]	; 763ED
+jl near ShowRosterStats.15	; 763F4
+call sub_B4BA8	; 763FA
+mov eax, dword [fullscrbmp]	; 763FF
+mov esi, dword [byte eax+02Ch]	; 76404
+push esi	; 76407
+call sub_9121C	; 76408
+add esp, byte 4	; 7640D
+lea eax, [byte esp+010h]	; 76410
+push eax	; 76414
+call sub_8EA00	; 76415
+add esp, byte 4	; 7641A
+xor eax, eax	; 7641D
+add esp, 0A8h	; 7641F
+pop ebp	; 76425
+pop edi	; 76426
+pop esi	; 76427
+ret	; 76428
+; C: src/front/lines/FadePalStep.c
+%ifdef CBUILD
+%include "c/front/lines/FadePalStep.inc"
+%else
+FadePalStep:
+push dword 1Ch	; 76429
+call __CHK	; 7642E
+push ecx	; 76433
+push esi	; 76434
+push edi	; 76435
+push ebp	; 76436
+sub esp, byte 4	; 76437
+mov edi, eax	; 7643A
+mov esi, edx	; 7643C
+mov dword [esp], ebx	; 7643E
+test eax, eax	; 76441
+je short .4	; 76443
+cmp dword [palfadedin], byte 0	; 76445
+je short .3	; 7644C
+mov ecx, dword [esp]	; 7644E
+cmp ecx, byte 2	; 76451
+jle short .1	; 76454
+mov eax, 2	; 76456
+jmp short .2	; 7645B
+.1:
+mov eax, ecx	; 7645D
+.2:
+mov dword [esp], eax	; 7645F
+.3:
+mov dword [palfadedin], 1	; 76462
+jmp short .5	; 7646C
+.4:
+mov dword [palfadedin], eax	; 7646E
+.5:
+cmp dword [esp], byte 2	; 76473
+jge short .7	; 76477
+test edi, edi	; 76479
+jne short .6	; 7647B
+mov eax, esi	; 7647D
+call SetPalette768	; 7647F
+jmp near FadePalStep_ret	; 76484
+.6:
+mov ecx, 300h	; 76489
+xor edx, edx	; 7648E
+mov eax, fadepal	; 76490
+call __STOSB	; 76495
+mov eax, fadepal	; 7649A
+call SetPalette768	; 7649F
+push byte 0	; 764A4
+call sub_B392C	; 764A6
+add esp, byte 4	; 764AB
+jmp short FadePalStep_ret	; 764AE
+.7:
+mov al, byte [esp]	; 764B0
+dec al	; 764B3
+mov byte [fadestart+1], al	; 764B5
+mov al, byte [esp]	; 764BA
+inc al	; 764BD
+mov byte [fadeend], al	; 764BF
+mov ecx, dword [dword edi+fadestart-3]	; 764C4
+sar ecx, 18h	; 764CA
+mov ebp, dword [esp]	; 764CD
+jmp short .10	; 764D0
+.8:
+xor ebx, ebx	; 764D2
+.9:
+movsx edx, byte [esi+ebx]	; 764D4
+imul edx, ecx	; 764D8
+mov eax, edx	; 764DB
+sar edx, 1Fh	; 764DD
+idiv ebp	; 764E0
+mov byte [dword ebx+fadepal], al	; 764E2
+inc ebx	; 764E8
+cmp ebx, 300h	; 764E9
+jl short FadePalStep.9	; 764EF
+mov eax, fadepal	; 764F1
+call SetPalette768	; 764F6
+mov eax, dword [dword edi+fadestep-3]	; 764FB
+sar eax, 18h	; 76501
+add ecx, eax	; 76504
+.10:
+mov eax, dword [dword edi+fadeend-3]	; 76506
+sar eax, 18h	; 7650C
+cmp ecx, eax	; 7650F
+jne short FadePalStep.8	; 76511
+FadePalStep_ret:
+add esp, byte 4	; 76513
+pop ebp	; 76516
+pop edi	; 76517
+pop esi	; 76518
+pop ecx	; 76519
+ret	; 7651A
+%endif ; C
+; C: src/front/lines/FadePalStep.c (FadePalStepSlow)
+%ifdef CBUILD
+%include "c/front/lines/FadePalStep.FadePalStepSlow.inc"
+%else
+FadePalStepSlow:
+push dword 1Ch	; 7651B
+call __CHK	; 76520
+push ecx	; 76525
+push esi	; 76526
+push edi	; 76527
+push ebp	; 76528
+sub esp, byte 4	; 76529
+mov edi, eax	; 7652C
+mov esi, edx	; 7652E
+mov dword [esp], ebx	; 76530
+test eax, eax	; 76533
+je short .4	; 76535
+cmp dword [palfadedin], byte 0	; 76537
+je short .3	; 7653E
+mov ecx, dword [esp]	; 76540
+cmp ecx, byte 2	; 76543
+jle short .1	; 76546
+mov eax, 2	; 76548
+jmp short .2	; 7654D
+.1:
+mov eax, ecx	; 7654F
+.2:
+mov dword [esp], eax	; 76551
+.3:
+mov dword [palfadedin], 1	; 76554
+jmp short .5	; 7655E
+.4:
+mov dword [palfadedin], eax	; 76560
+.5:
+cmp dword [esp], byte 2	; 76565
+jge short .7	; 76569
+test edi, edi	; 7656B
+jne short .6	; 7656D
+mov eax, esi	; 7656F
+call SetPalette768	; 76571
+jmp short FadePalStep_ret	; 76576
+.6:
+mov ecx, 300h	; 76578
+xor edx, edx	; 7657D
+mov eax, fadepal2	; 7657F
+call __STOSB	; 76584
+mov eax, fadepal2	; 76589
+call SetPalette768	; 7658E
+push byte 0	; 76593
+call sub_B392C	; 76595
+add esp, byte 4	; 7659A
+jmp near FadePalStep_ret	; 7659D
+.7:
+mov al, byte [esp]	; 765A2
+dec al	; 765A5
+mov byte [fadestart2+1], al	; 765A7
+mov al, byte [esp]	; 765AC
+inc al	; 765AF
+mov byte [fadeend2], al	; 765B1
+mov ecx, dword [dword edi+fadestart2-3]	; 765B6
+sar ecx, 18h	; 765BC
+mov ebp, dword [esp]	; 765BF
+jmp short .10	; 765C2
+.8:
+xor ebx, ebx	; 765C4
+.9:
+movsx edx, byte [esi+ebx]	; 765C6
+imul edx, ecx	; 765CA
+mov eax, edx	; 765CD
+sar edx, 1Fh	; 765CF
+idiv ebp	; 765D2
+mov byte [dword ebx+fadepal2], al	; 765D4
+inc ebx	; 765DA
+cmp ebx, 300h	; 765DB
+jl short FadePalStepSlow.9	; 765E1
+mov eax, 2Dh	; 765E3
+call j___delay_	; 765E8
+mov eax, fadepal2	; 765ED
+call SetPalette768	; 765F2
+mov eax, dword [dword edi+fadestep2-3]	; 765F7
+sar eax, 18h	; 765FD
+add ecx, eax	; 76600
+.10:
+mov eax, dword [dword edi+fadeend2-3]	; 76602
+sar eax, 18h	; 76608
+cmp ecx, eax	; 7660B
+jne short FadePalStepSlow.8	; 7660D
+jmp near FadePalStep_ret	; 7660F
+%endif ; C
+; C: src/front/lines/SetPalette768.c
+%ifdef CBUILD
+%include "c/front/lines/SetPalette768.inc"
+%else
+SetPalette768:
+push dword 28h	; 76614
+call __CHK	; 76619
+push ebx	; 7661E
+push ecx	; 7661F
+push edx	; 76620
+push esi	; 76621
+push edi	; 76622
+push ebp	; 76623
+mov ebp, eax	; 76624
+xor esi, esi	; 76626
+xor edi, edi	; 76628
+jmp short .2	; 7662A
+.1:
+call sub_B4C84	; 7662C
+lea eax, [edi+ebp]	; 76631
+push eax	; 76634
+push dword 80h	; 76635
+push esi	; 7663A
+call sub_B4B88	; 7663B
+add esp, byte 0Ch	; 76640
+add esi, 80h	; 76643
+add edi, 180h	; 76649
+.2:
+cmp esi, 100h	; 7664F
+jl short SetPalette768.1	; 76655
+pop ebp	; 76657
+pop edi	; 76658
+pop esi	; 76659
+pop edx	; 7665A
+pop ecx	; 7665B
+pop ebx	; 7665C
+ret	; 7665D
+%endif ; C
+; C: src/front/lines/RandLfsrByte.c
+%ifdef CBUILD
+%include "c/front/lines/RandLfsrByte.inc"
+%else
+RandLfsrByte:
+push dword 0Ch	; 7665E
+call __CHK	; 76663
+push ebx	; 76668
+push edx	; 76669
+cmp byte [eax], 0	; 7666A
+jne short .1	; 7666D
+mov byte [eax], 2Bh	; 7666F
+.1:
+mov dl, byte [eax]	; 76672
+and dl, 1	; 76674
+mov dh, byte [eax]	; 76677
+shr dh, 1	; 76679
+mov byte [eax], dh	; 7667B
+test dl, dl	; 7667D
+je short .2	; 7667F
+mov bl, dh	; 76681
+xor bl, 0B8h	; 76683
+mov byte [eax], bl	; 76686
+.2:
+mov al, byte [eax]	; 76688
+pop edx	; 7668A
+pop ebx	; 7668B
+ret	; 7668C
+%endif ; C
+; C: src/front/lines/BlitClipRect.c
+%ifdef CBUILD
+%include "c/front/lines/BlitClipRect.inc"
+%else
+BlitClipRect:
+push dword 30h	; 7668D
+call __CHK	; 76692
+push esi	; 76697
+push edi	; 76698
+push ebp	; 76699
+mov ebp, esp	; 7669A
+sub esp, byte 8	; 7669C
+mov edi, eax	; 7669F
+mov esi, edx	; 766A1
+mov dword [byte ebp-04h], ebx	; 766A3
+mov dword [byte ebp-08h], ecx	; 766A6
+add eax, ebx	; 766A9
+add edx, ecx	; 766AB
+cmp edi, dword [blitclipright]	; 766AD
+jge near .x	; 766B3
+cmp esi, dword [blitclipbottom]	; 766B9
+jge near .x	; 766BF
+mov ebx, dword [blitclipleft]	; 766C5
+cmp eax, ebx	; 766CB
+jl short .x	; 766CD
+cmp edx, dword [blitcliptop]	; 766CF
+jl short .x	; 766D5
+cmp edi, ebx	; 766D7
+jge short .1	; 766D9
+mov edi, ebx	; 766DB
+.1:
+mov ecx, dword [blitcliptop]	; 766DD
+cmp esi, ecx	; 766E3
+jge short .2	; 766E5
+mov esi, ecx	; 766E7
+.2:
+mov ebx, dword [blitclipright]	; 766E9
+cmp eax, ebx	; 766EF
+jle short .3	; 766F1
+mov eax, ebx	; 766F3
+.3:
+mov ecx, dword [blitclipbottom]	; 766F5
+cmp edx, ecx	; 766FB
+jle short .4	; 766FD
+mov edx, ecx	; 766FF
+.4:
+sub eax, edi	; 76701
+mov dword [byte ebp-04h], eax	; 76703
+sub edx, esi	; 76706
+mov dword [byte ebp-08h], edx	; 76708
+call sub_B4BA8	; 7670B
+push byte 0	; 76710
+mov eax, dword [byte ebp-08h]	; 76712
+push eax	; 76715
+mov edx, dword [byte ebp-04h]	; 76716
+push edx	; 76719
+push esi	; 7671A
+push edi	; 7671B
+cmp dword [vgapage], byte 0	; 7671C
+sete al	; 76723
+and eax, 0FFh	; 76726
+push eax	; 7672B
+call stub_8C218	; 7672C
+add esp, byte 18h	; 76731
+.x:
+mov esp, ebp	; 76734
+pop ebp	; 76736
+pop edi	; 76737
+pop esi	; 76738
+ret	; 76739
+%endif ; C
+str_Scratch2:
+db 053h,063h,072h,061h,074h,063h,068h,00h
+str_Dress2:
+db 044h,072h,065h,073h,073h,00h
+str_Player2:
+db 050h,06Ch,061h,079h,065h,072h,00h
+str_GoalieW2:
+db 047h,06Fh,061h,06Ch,069h,065h,00h
+str_RosterIncomplete2:
+db 059h,06Fh,075h,072h,020h,072h,06Fh,073h,074h,065h,072h,020h,069h,073h,020h,069h
+db 06Eh,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h,02Eh,00h
+; C: src/front/lines/PrintLineEdStatus.c
+%ifdef CBUILD
+%include "c/front/lines/PrintLineEdStatus.inc"
+%else
+PrintLineEdStatus:
+push dword 28h	; 76771
+call __CHK	; 76776
+push ecx	; 7677B
+push esi	; 7677C
+push edi	; 7677D
+push ebp	; 7677E
+mov esi, eax	; 7677F
+mov ebp, edx	; 76781
+mov edi, ebx	; 76783
+push ebx	; 76785
+call fputchar	; 76786
+add esp, byte 4	; 7678B
+add eax, esi	; 7678E
+cmp eax, 26Bh	; 76790
+jle short .1	; 76795
+mov eax, 26Bh	; 76797
+sub eax, esi	; 7679C
+jmp short .2	; 7679E
+.1:
+push edi	; 767A0
+call fputchar	; 767A1
+add esp, byte 4	; 767A6
+.2:
+mov edx, dword [dlgfillcol]	; 767A9
+push edx	; 767AF
+push byte 0Bh	; 767B0
+push eax	; 767B2
+lea eax, [byte ebp+02h]	; 767B3
+push eax	; 767B6
+push esi	; 767B7
+call sub_90D20	; 767B8
+add esp, byte 14h	; 767BD
+push ebp	; 767C0
+push esi	; 767C1
+push edi	; 767C2
+call sub_91964	; 767C3
+add esp, byte 0Ch	; 767C8
+pop ebp	; 767CB
+pop edi	; 767CC
+pop esi	; 767CD
+pop ecx	; 767CE
+ret	; 767CF
+%endif ; C

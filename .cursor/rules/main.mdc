@@ -1,0 +1,6 @@
+---
+description: Project rules
+alwaysApply: true
+---
+
+Read and follow AGENTS.md. For the functional-equivalence track also read docs/FUNCTIONAL_PLAN.md and docs/RULES.md. Models: Composer 2.5 for mechanical work, Grok 4.6 medium for code that follows existing code, Grok 4.7 medium for new code, Grok 4.7 high only as the advisor at the three moments in AGENTS.md.

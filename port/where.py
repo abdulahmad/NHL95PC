@@ -15,10 +15,16 @@ for l in nm.split('\n'):
 a = int(sys.argv[1], 16)
 orig = a - base
 print('original address %X' % orig)
-for f in sorted(glob.glob(os.path.join(root, 'src/cseg01/*.asm'))):
-    m = re.match(r'(\d+)_([0-9A-F]+)_', os.path.basename(f))
-    if int(m.group(2), 16) <= orig:
-        best = f
+best, best_a = None, -1
+for f in glob.glob(os.path.join(root, 'src', '**', '*.asm'), recursive=True):
+    if '/inc/' in f.replace('\\', '/'):
+        continue
+    for m in re.finditer(r'; ([0-9A-F]{5})\s*$', open(f, encoding='latin1').read(), re.M):
+        a = int(m.group(1), 16)
+        if a <= orig and a >= best_a:
+            best, best_a = f, a
+if best is None:
+    raise SystemExit('no asm file contains an address comment at or below %X' % orig)
 L = open(best, encoding='latin1').read().split('\n')
 print(os.path.basename(best))
 idx = None
