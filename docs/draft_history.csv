@@ -792,3 +792,5 @@ DbLineEditorLoop,cursor,2026-11-06,GA,64,64,"functional Unit 5: FAIL gone; NEEDS
 PlayoffTreeMenu,cursor,2026-11-06,GA,52,52,"functional Unit 5: FAIL gone; NEEDS-REVIEW 42% mostly trapped (119 cases). No C."
 SportsDesk,cursor,2026-11-06,GA,192,192,"functional Unit 5: still FAIL writes[12] dest 0xdd6aa vs 0xc5840 (typed case 39). No C."
 SimPlayoffRound1,cursor,2026-11-06,GA,4,4,"functional Unit 5: still FAIL calls[5] ARG off-by-one (even case 2). No C."
+SportsDesk,cursor,2026-11-06,GA,192,192,"functional Unit 7: autoret exit captures sub_B2E1B eax into scrolly then scrollx then deferpending=0. FAIL writes[12] gone; NEEDS-REVIEW 47% trapped. MATCH shape known-worse (455); unmarked."
+SimPlayoffRound1,cursor,2026-11-06,GA,4,4,"functional Unit 7: team-byte clamp + SeriesLength stub 1/3/5/7. PASS 3000. No C."

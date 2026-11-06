@@ -8,10 +8,10 @@
 
 - Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
-- <!-- nhl95-readme-functional:start -->55 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
-  - <!-- nhl95-readme-functional-total:start -->1032 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
+- <!-- nhl95-readme-functional:start -->56 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+  - <!-- nhl95-readme-functional-total:start -->1033 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - The 107 leftover MATCH functions plus two db-entry drafts (`MenuSaveDefaultLines`, `MenuSaveTheseLines`) are the 109 unmarked compiled-C drafts ([C_PROGRESS.md](C_PROGRESS.md)). 13 hand-asm stay asm.
-- Leftover functional drafts (**109**): **55 PASS**, 2 FAIL, 52 NEEDS-REVIEW. Unit 6 snapshot script is in (`docs/SNAPSHOTS.md`); waiting on Abdul DOSBox-X dumps. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+- Leftover functional drafts (**109**): **56 PASS**, 0 FAIL, 53 NEEDS-REVIEW. Unit 7 leftover proofs: SimPlayoffRound1 PASS; SportsDesk FAIL→NR (autoret scroll). 53 NR wait on Abdul DOSBox-X dumps (`docs/SNAPSHOTS.md`). Unit 8 does not close. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_LEFTOVERS.md](docs/FUNCTIONAL_LEFTOVERS.md))
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
