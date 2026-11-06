@@ -40,6 +40,7 @@ class State:
     seed: int = 0                                # case seed; lazily mapped pages are filled from (seed, page) only
     argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
     ptrsize: object = None                       # f(callee, arg position) -> bytes to compare behind a stack pointer (default 4)
+    event_stub: bool = False                     # GetInputEvent/PollKey dummy events (ListDialog); off for other leftovers so wild menus don't FAIL
 
 @dataclass
 class Trace:
@@ -115,6 +116,11 @@ def hittest_outs(depth, stub_k):
 
 _SERIESLEN = None
 SERIES_LENS = (1, 3, 5, 7)
+EVENT_PTR = 0x6000200  # ARG+0x200 dummy event (check.ARG is 0x6000000)
+_GETINPUT = None
+_POLLKEY = None
+_LISTHIT = None
+_FILEOPEN = None
 
 def serieslen_addr(img):
     """EXE label of SeriesLength, cached."""
@@ -126,6 +132,40 @@ def serieslen_addr(img):
 def serieslen_out(stub_k):
     """SeriesLength stub eax: a real best-of (1, 3, 5, 7), not a huge script leftover."""
     return SERIES_LENS[stub_k % 4]
+
+def getinput_addr(img):
+    global _GETINPUT
+    if _GETINPUT is None: _GETINPUT = img.labels().get('GetInputEvent')
+    return _GETINPUT
+
+def getinput_out(stub_k):
+    """Mapped dummy event for the first hits; then 0 so `while (e = GetInputEvent())` can exit.
+    64 is enough for ListDialog to take a click (ListHitTest) and set the done flag before the 0s."""
+    return EVENT_PTR if stub_k < 64 else 0
+
+def pollkey_addr(img):
+    global _POLLKEY
+    if _POLLKEY is None: _POLLKEY = img.labels().get('PollKey')
+    return _POLLKEY
+
+def pollkey_out(stub_k):
+    return 1 if stub_k < 64 else 0
+
+def listhit_addr(img):
+    global _LISTHIT
+    if _LISTHIT is None: _LISTHIT = img.labels().get('ListHitTest')
+    return _LISTHIT
+
+def listhit_out(stub_k):
+    """ListHitTest row in [0, 8)."""
+    return stub_k % 8
+
+def fileopen_addrs(img):
+    global _FILEOPEN
+    if _FILEOPEN is None:
+        lab = img.labels()
+        _FILEOPEN = {lab[n] for n in ('FileOpenRead', 'FileOpenWrite', 'FileOpenRW') if n in lab}
+    return _FILEOPEN
 
 def ptr_size(img, target, pos):
     """bytes to compare behind a stack pointer passed as argument `pos` (0-3 registers, then stack dwords) to the
@@ -221,7 +261,7 @@ class Runner:
         ctx = uc.context_save()
         saved = {}; lazy = []; lazyset = set(); fa = []; seen = {}
         wlo, whi = watch or (1, 0)
-        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State()
+        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State(); click = [0]
 
         def touch(a, n):
             for p in range(a & ~0xFFF, a + max(n, 1), 0x1000):
@@ -307,6 +347,24 @@ class Runner:
             if a == serieslen_addr(img):
                 eax = serieslen_out(k)
                 edx = 0
+            if a == getinput_addr(img) and not callable(cur.script) and cur.event_stub:
+                eax = getinput_out(k)
+                click[0] = 1 if eax else 0
+            elif a == pollkey_addr(img) and not callable(cur.script) and cur.event_stub:
+                eax = pollkey_out(k)
+            elif a == listhit_addr(img) and not callable(cur.script) and cur.event_stub:
+                eax = listhit_out(k)
+            elif a in fileopen_addrs(img) and not callable(cur.script):
+                eax = 0  # success; edx is int *h
+                try:
+                    put(rg[1], struct.pack('<I', 3))
+                    if ih(rg[1]): written.update(range(rg[1], rg[1] + 4))
+                except UcError:
+                    pass
+            elif click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk):
+                # ptrupdatefn after a real event: button-down bit so the inner input while can exit
+                eax = (eax | 2) & 0xFFFFFFFF
+                click[0] = 0
             for j, (p, n) in enumerate(ptrs.items()):
                 if p in hit_skip: continue
                 base = (eax, edx, eax ^ edx, eax + edx)
@@ -363,7 +421,7 @@ class Runner:
             for p in lazy: uc.mem_unmap(p, 0x1000)
             lazy.clear(); lazyset.clear(); fa.clear()
             uc.context_restore(ctx)
-            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False
+            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False; click[0] = 0
             for a, b in (data or {}).items(): uc.mem_write(a, b)
             self.snap = None
             uc.mem_write(esp0 - FILL, random.Random(0x5EED0000 + (cur.seed & 0xFFFFFFFF) * 7919).randbytes(FILL))   # per-case stack fill, same on both sides
@@ -431,6 +489,15 @@ def _selftest():
     sl = serieslen_out(99)
     good = sl in SERIES_LENS; ok &= good
     print('%s SeriesLength stub eax=%d in %s' % ('PASS' if good else 'FAIL', sl, SERIES_LENS))
+    gi, g0 = getinput_out(0), getinput_out(99)
+    good = gi == EVENT_PTR and g0 == 0; ok &= good
+    print('%s GetInputEvent stub first=%#x then 0=%#x' % ('PASS' if good else 'FAIL', gi, g0))
+    pk, p0 = pollkey_out(0), pollkey_out(99)
+    good = pk == 1 and p0 == 0; ok &= good
+    print('%s PollKey stub first=%d then 0=%d' % ('PASS' if good else 'FAIL', pk, p0))
+    lh = listhit_out(99)
+    good = 0 <= lh < 8; ok &= good
+    print('%s ListHitTest stub row=%d' % ('PASS' if good else 'FAIL', lh))
     print('ALL PASS' if ok else 'FAILED'); return ok
 
 if __name__ == '__main__':
