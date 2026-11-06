@@ -11,6 +11,7 @@
 - <!-- nhl95-readme-functional:start -->52 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
   - <!-- nhl95-readme-functional-total:start -->1029 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - The 107 leftover MATCH functions plus two db-entry drafts (`MenuSaveDefaultLines`, `MenuSaveTheseLines`) are the 109 unmarked compiled-C drafts ([C_PROGRESS.md](C_PROGRESS.md)). 13 hand-asm stay asm.
+- Leftover functional drafts (**109**): **52 PASS**, 10 FAIL, 47 NEEDS-REVIEW. Next: Unit 2 harness proofs so the ten FAIL can PASS. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
