@@ -1,0 +1,46 @@
+; Taking a snapshot of the screen.
+bits 32
+%include "hockey.inc"
+section s_9D521 progbits alloc exec nowrite align=1
+extern byte_D4D06, dword_D5194, dword_D51D4, word_D51D8, word_D51DA
+global sub_9D521, loc_9D548, loc_9D55B, sub_9D55C, sub_9D57D, loc_9D582
+sub_9D521:
+mov cl, 7	; 9D521
+mov ax, 2504h	; 9D523
+mov edx, dword [dword_D51D4]	; 9D527
+push ds	; 9D52D
+o16 mov ds, word [word_D51D8]	; 9D52E
+int 21h	; 9D535
+pop ds	; 9D537
+cmp byte [byte_D4D06], 3	; 9D538
+jl short loc_9D548	; 9D53F
+call sub_9D55C	; 9D541
+jmp short loc_9D55B	; 9D546
+loc_9D548:
+mov ecx, cr0	; 9D548
+and ecx, byte 0FFFFFFF9h	; 9D54B
+mov dx, word [word_D51DA]	; 9D54E
+or cx, dx	; 9D555
+mov cr0, ecx	; 9D558
+loc_9D55B:
+ret	; 9D55B
+sub_9D55C:
+xor ebx, ebx	; 9D55C
+lea edx, [dword_D5194]	; 9D55E
+mov ax, 2535h	; 9D564
+int 21h	; 9D568
+xor ecx, ecx	; 9D56A
+mov cx, word [word_D51DA]	; 9D56C
+mov dword [dword_D5194], ecx	; 9D573
+inc ebx	; 9D579
+int 21h	; 9D57A
+ret	; 9D57C
+sub_9D57D:
+wait	; 9D57D
+fnsave [eax]	; 9D57E
+wait	; 9D580
+ret	; 9D581
+loc_9D582:
+frstor [eax]	; 9D582
+wait	; 9D584
+ret	; 9D585

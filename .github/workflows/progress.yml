@@ -40,13 +40,13 @@ jobs:
           sudo apt-get install -y nasm dosbox
           pip install capstone==5.0.7
       - name: Compiler setup
-        run: python3 tools/cc.py check
+        run: python3 tools/match/cc.py check
       - name: Regenerate progress files
-        run: python3 tools/round_bookkeeping.py --jobs "$(nproc)"
+        run: python3 tools/match/round_bookkeeping.py --jobs "$(nproc)"
       - name: fullcheck
         run: make fullcheck
       - name: Open the progress PR
         env:
           PROGRESS_TOKEN: ${{ secrets.PROGRESS_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: bash tools/open_progress_pr.sh
+        run: bash tools/match/open_progress_pr.sh

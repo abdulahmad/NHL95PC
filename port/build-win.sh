@@ -28,16 +28,16 @@ cp -r src/inc "$OUT/src/inc"
 # are folded into .text and .data (the linker keeps the order of the objects). The uninitialized sections go to .data too, as
 # zeros: the game's data segment has to stay one contiguous block in the original order (a GUS table is cleared from one symbol up to
 # the next, and the first is initialized data, the second zero-filled), which separate .data and .bss sections would break.
-for dir in cseg01 dseg02; do
-    mkdir -p "$OUT/src/$dir"
-    for f in src/$dir/*.asm; do
-        sed -e 's/^section s_[0-9A-F]* progbits alloc exec nowrite align=1/section .text align=1/' \
-            -e 's/^section s_[0-9A-F]* progbits alloc noexec write align=1/section .data align=1/' \
-            -e 's/^section s_[0-9A-F]* nobits alloc noexec write align=1/section .data align=1/' "$f" > "$OUT/src/$dir/$(basename "$f")"
-    done
+# Layout follows Makefile SRCS: src/{engine,front,pc,lib,data} (the cseg01/dseg02 trees were recut).
+find src/engine src/front src/pc src/lib src/data -name '*.asm' | sort | while read -r f; do
+    rel=${f#src/}
+    mkdir -p "$OUT/src/$(dirname "$rel")"
+    sed -e 's/^section s_[0-9A-F]* progbits alloc exec nowrite align=1/section .text align=1/' \
+        -e 's/^section s_[0-9A-F]* progbits alloc noexec write align=1/section .data align=1/' \
+        -e 's/^section s_[0-9A-F]* nobits alloc noexec write align=1/section .data align=1/' "$f" > "$OUT/src/$rel"
 done
-ls "$OUT"/src/cseg01/*.asm "$OUT"/src/dseg02/*.asm | xargs -P 8 -I{} sh -c \
-    'nasm -O0 -f win32 --gprefix _ -I '"$OUT"'/src/inc/ {} -o '"$OUT"'/obj/$(basename $(dirname {}))_$(basename {} .asm).o'
+find "$OUT/src" -name '*.asm' | sort | xargs -P 8 -I{} sh -c \
+    'rel=${1#'"$OUT"'/src/}; mkdir -p "'"$OUT"'/obj/$(dirname "$rel")"; nasm -O0 -f win32 --gprefix _ -I '"$OUT"'/src/inc/ "$1" -o "'"$OUT"'/obj/${rel%.asm}.o"' _ {}
 
 sh port/fetch-deps.sh
 # Munt (the MT-32 emulator) needs a C++ compiler: mingw-w64's g++ (gcc-mingw-w64-i686 plus g++-mingw-w64-i686)
@@ -62,7 +62,7 @@ $WINDRES -O coff port/icon/icon.rc -o "$OUT/icon.o"
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
     -o "$OUT/hockey-win32.exe" port/host.c port/video_gl.c port/menu_win.c port/bindings.c port/bindings_win.c -DHAVE_GL port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
     port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src port/cstart.c \
-    port/overrides.c port/plat_win.c "$OUT/icon.o" $(ls "$OUT"/obj/cseg01_*.o) $(ls "$OUT"/obj/dseg02_*.o) \
+    port/overrides.c port/plat_win.c "$OUT/icon.o" $(find "$OUT/obj" -name '*.o' | sort) \
     build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
     -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"

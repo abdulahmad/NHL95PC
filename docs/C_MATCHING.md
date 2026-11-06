@@ -7,20 +7,20 @@ function, while the EXE keeps building byte-identical. Progress: [C_PROGRESS.md]
 
 ```
 src/c/<segment>/<Func>.c ──wcc386 10.0 GA (DOSBox)──▶ build/c/<segment>/<Func>.obj (OMF)
-        tools/cc.py compile                                   │ tools/cc.py frag (tools/cobj.py reads the OMF)
+        tools/match/cc.py compile                                   │ tools/match/cc.py frag (tools/match/cobj.py reads the OMF)
                                                               ▼
 src/cseg01/<segment>.asm  %include "c/<segment>/<Func>.inc" ◀── build/c/<segment>/<Func>.inc  (db + dd label fixups)
         │ nasm -DCBUILD
         ▼
-build/obj → tools/link_src.py → build/HOCKEY.EXE → sha1 check (the same check as the asm build)
+build/obj → tools/build/link_src.py → build/HOCKEY.EXE → sha1 check (the same check as the asm build)
 ```
 
-* `<segment>` is the stem of the asm file (`042_59D9A_engine_core`); `<Func>` is the asm label of the first function.
-* In the asm, the function is wrapped (by `tools/cc.py mark`):
+* `<segment>` is the stem of the asm file (`engine/hockey`); `<Func>` is the asm label of the first function.
+* In the asm, the function is wrapped (by `tools/match/cc.py mark`):
   ```
-  ; C: src/c/042_59D9A_engine_core/SetSPA.c
+  ; C: src/c/engine/hockey/SetSPA.c
   %ifdef CBUILD
-  %include "c/042_59D9A_engine_core/SetSPA.inc"
+  %include "c/engine/hockey/SetSPA.inc"
   %else
   SetSPA:
   push dword 4	; 59D9A
@@ -32,17 +32,17 @@ build/obj → tools/link_src.py → build/HOCKEY.EXE → sha1 check (the same ch
   `dd (label+k)-($+4)` (rel32 call/jmp), so the linker produces the same LE fixups as the asm. Every label of the
   asm block (the function, its `.x`/`.1` locals, mid-function entry points other code jumps to) is re-emitted at
   its original offset (from the `; <address>` comments), so the rest of the segment assembles unchanged.
-* `make` sets `CBUILD=1` when the toolchain is found (`python3 tools/cc.py check`: dosbox, `$WATCOM_ROOT/dosla/WCC386.EXE`,
+* `make` sets `CBUILD=1` when the toolchain is found (`python3 tools/match/cc.py check`: dosbox, `$WATCOM_ROOT/dosla/WCC386.EXE`,
   10.0a `DOS4GW.EXE` and `W32RUN.EXE`; `WATCOM_ROOT` defaults to `tools/watcom`). `make CBUILD=0` builds the asm
   fallback. **Both must MATCH.** Switching CBUILD rebuilds the objects (stamp `build/cbuild.N`).
 * Only *marked* C files are built by `make`. A C file without the marker is a non-matching draft.
-* Name decoration: wcc386 emits functions as `Name_` and data as `_Name`; `tools/cobj.py` maps them back to the asm
+* Name decoration: wcc386 emits functions as `Name_` and data as `_Name`; `tools/match/cobj.py` maps them back to the asm
   labels (a decorated name that exists as an asm label, such as the library's `strcpy_`, is kept).
 * Limits today: the C file may only produce code (`_TEXT`). String literals, `static` data and switch tables in
   `CONST`/`_DATA` are refused by `cobj.py` (they live in dseg02, not next to the code). Jump tables that Watcom puts
   in `_TEXT` work (fixups to the block itself).
 
-## Headers (`src/c/include`, 8.3 names: the compiler runs under DOS)
+## Headers (`src/include`, 8.3 names: the compiler runs under DOS)
 
 | header | what | edited by |
 |---|---|---|
@@ -51,11 +51,11 @@ build/obj → tools/link_src.py → build/HOCKEY.EXE → sha1 check (the same ch
 | `consts.h` | SPA animation numbers, flag bits (`pfrev`, `pf2aip`, `gmclock` ...) with their Genesis names | hand |
 | `vars.h` | typed globals that override the inferred type (`gameopts` bitfields, `hmtmstruct`/`awtmstruct` as `Team`, replay pointers ...) | hand |
 | `protos.h` | prototypes: every matched function, and asm functions whose signature is known | hand |
-| `structs.h` | `Player` (80h) and `Team` (100h) from `src/inc/structs.inc`; gaps are `pad_XX` bytes; `OFS_*` macros | `tools/gen_cheaders.py` |
-| `globals.h` | `extern` for every dseg02 label (type inferred from the asm accesses; `[]` when indexed) | `tools/gen_cheaders.py` |
-| `asmfuncs.h` | `extern void Name();` for every code label (unprototyped: register args still work) | `tools/gen_cheaders.py` |
+| `structs.h` | `Player` (80h) and `Team` (100h) from `src/inc/structs.inc`; gaps are `pad_XX` bytes; `OFS_*` macros | `tools/match/gen_cheaders.py` |
+| `globals.h` | `extern` for every dseg02 label (type inferred from the asm accesses; `[]` when indexed) | `tools/match/gen_cheaders.py` |
+| `asmfuncs.h` | `extern void Name();` for every code label (unprototyped: register args still work) | `tools/match/gen_cheaders.py` |
 
-Run `python3 tools/gen_cheaders.py` (after `make`, it reads `build/obj`) whenever a label is renamed, a field is added
+Run `python3 tools/match/gen_cheaders.py` (after `make`, it reads `build/obj`) whenever a label is renamed, a field is added
 to `structs.inc`, or a name is added to `vars.h` / `protos.h` (the generated headers skip those names). Struct field
 types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in `CTYPE` in the tool.
 
@@ -64,7 +64,7 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
 1. Pick a compiled-C function in a game segment (library segments stay asm; starts with `push dword N` / `call __CHK`; not hand-written asm like `randomd0`,
    `vtoa`). Check its block has no jumps into other functions (shared tails) and that the previous function does
    not fall into it (see "Tail calls" below); otherwise take the whole group into one file.
-2. Read the asm, its comment, its `name_map_94.csv` row and the Genesis routine (93G, else 94G; not 95G). Write
+2. Read the asm, its comment, its `docs/name_map.csv` row and the Genesis routine (93G, else 94G; not 95G). Write
    `src/c/<segment>/<Func>.c`:
    * `#include "nhl95.h"`, then a comment on **every** function: address, Genesis name and file (or "PC only"),
      what it does, arguments and result. Bring the asm comments over (block comment and the per-line ones).
@@ -72,26 +72,26 @@ types: `size b` is `signed char`, `size w` `short`, `size d` `int`; overrides in
      (`consts.h`). Source order is 93G, else 94G, else behaviour. NHL95Genesis is a loose reference only.
      Locals by what they hold.
    * Name the auto globals this function uses (`byte_` / `word_` / `dword_`) from the same stores in that
-     Genesis routine, with `tools/rename_symbol.py`, before the final `cdiff`. A label that is a known object's
+     Genesis routine, with `tools/names/rename_symbol.py`, before the final `cdiff`. A label that is a known object's
      field takes that field's name (`pucktemp1` is `puckstruct+temp1`). A nosplit column keeps its own label.
      Do not fold a label that `globals.h` declares into `BASE+k`.
    * Add the prototype to `protos.h` (grouped by segment, address in the comment).
-3. `python3 tools/cdiff.py src/c/<segment>/<Func>.c` compiles it and prints compiled vs original side by side
+3. `python3 tools/match/cdiff.py src/c/<segment>/<Func>.c` compiles it and prints compiled vs original side by side
    (`!` differs, `~` same instruction but a different relocation target or immediate); exit 0 and `MATCH` when
    the bytes, the fixup targets and the size agree. Iterate.
-4. `python3 tools/cc.py mark src/c/<segment>/<Func>.c [--end NextLabel]` (`--end` for a multi-function file; a
+4. `python3 tools/match/cc.py mark src/c/<segment>/<Func>.c [--end NextLabel]` (`--end` for a multi-function file; a
    label that does not exist runs to the end of the segment). `make` must MATCH, and `make CBUILD=0` too.
-5. `python3 tools/c_progress.py` (updates `C_PROGRESS.md` and `tools/c_functions.csv`; keep a reason in the notes
+5. `python3 tools/match/c_progress.py` (updates `C_PROGRESS.md` and `tools/match/c_functions.csv`; keep a reason in the notes
    column for a non-matching draft). Commit the C file, the asm marker, the headers, the progress files.
 
-`tools/cc.py unmark` removes a marker (for example to merge a function into a multi-function file).
+`tools/match/cc.py unmark` removes a marker (for example to merge a function into a multi-function file).
 
 **Compile speed.** Objects are cached by a sha1 of the compiler, the flags, the .c file (with its name) and the
 headers it includes (`~/.cache/nhl95pc-cc`; `NHL95_NOCACHE=1` recompiles). DOSBox runs the compiler on the
 dynamic core at a fixed 2,000,000 cycles (`NHL95_CC_CPU` overrides the `[cpu]` lines; `cycles=max` ramps up over
 the first seconds of each run and takes twice as long). A tool that compiles many candidates should call
 `cc.compile_many(items)` (one DOSBox run per 16 sources, `NHL95_CC_BATCH`) or `cc.compile_parallel(items, jobs)`
-(that, on several DOSBox processes at once) instead of `compile_c` per candidate: tools/permute_decls.py and
+(that, on several DOSBox processes at once) instead of `compile_c` per candidate: tools/match/permute_decls.py and
 tools/scope_decls.py do. `cc.py compile A.c B.c ...` does the same from the shell.
 
 **The compiler state.** wcc386 can compile the same source differently after other files in the same DOSBox run
@@ -102,11 +102,11 @@ only the fresh result counts. So `compile_many` caches only the first object of 
 compiles a match again alone before it counts it. A score from a batched run can be off for the few
 state-sensitive drafts (DrawBevelBox, DrawPanel3D): check one with tools/state_probe.py. The cause is known: one
 instruction field the code generator reads without setting decides whether a long basic block is split
-([WCC_INTERNALS.md](WCC_INTERNALS.md) "The compiler state"); `tools/wccre/state_scan.py` scores drafts in both
+([WCC_INTERNALS.md](WCC_INTERNALS.md) "The compiler state"); `tools/match/wccre/state_scan.py` scores drafts in both
 states.
 
 **Inside the compiler.** [WCC_INTERNALS.md](WCC_INTERNALS.md): wcc386 runs in a CPU emulator
-(`tools/wccre/emucc.py`, the same objects as DOSBox), and `tools/wccre/regdump.py FILE.c` prints, per function,
+(`tools/match/wccre/emucc.py`, the same objects as DOSBox), and `tools/match/wccre/regdump.py FILE.c` prints, per function,
 every variable's register-allocation savings and the register it got. Registers go to variables in order of
 (loop-weighted) savings; declaration order only breaks ties, and an unstable sort reorders those.
 
@@ -136,24 +136,24 @@ register and indexes twice where C folds the address. A flag scan (2026-10-24) r
 the default flags all 42 matched functions of the two segments match; `-od` keeps 0, `-os` 7, `-ot` 14, `-or` 6,
 `-oa` 30, `-ol` 15, `-s` 2, `-3r` 9, `-4r` 35, and `-oi` changes nothing. Only segments 017-019 use `-od`.
 
-### Split functions, piece by piece (`tools/splice.py`)
+### Split functions, piece by piece (`tools/match/splice.py`)
 
 A split function (entry after the function that falls into it, body pieces `F_*` where it was defined) is one asm
 block per piece, so each piece is marked on its own (`cc.py mark File.c --func F_piece`) and the others stay asm.
 `cc.anchor` places a piece by a public inside it, else by the branches that reach it (`cc.flow_anchor`: each public
 of the object is aligned with its asm by mnemonics and every aligned branch into the piece votes), else by the
 nearest public. The flow rule keeps a piece measurable when a draft before it has the wrong size (chkprogress_go
-after the InProgress draft, 2 bytes long). `python3 tools/splice.py File.c F` lists F's pieces with their place in
+after the InProgress draft, 2 bytes long). `python3 tools/match/splice.py File.c F` lists F's pieces with their place in
 the object, their differing instructions and which are C; `--diff` prints the differing rows, `--mark` marks the
 pieces that match. The function counts as matched once every piece is marked.
 
 ## Hand-written asm (status `asm`)
 
-`python3 tools/find_handasm.py [--list]` scans the game segments (001-066, libraries excluded) and writes
-`tools/handasm.csv`. Watcom 10.0 C always starts a function with `push N / call __CHK`. A function **without** it
+`python3 tools/match/find_handasm.py [--list]` scans the game segments (001-066, libraries excluded) and writes
+`tools/match/handasm.csv`. Watcom 10.0 C always starts a function with `push N / call __CHK`. A function **without** it
 and with a strong hand-asm signal (port `in`/`out`, 16-bit push/pop, `loop`, `lds`/`les`, `pusha`, `int`,
 `cli`/`sti`, string ops without `rep`, a call to the middle of a function), or any no-`__CHK` function in
-`asm_helpers`, gets status `asm`. `c_progress.py` copies those rows into `tools/c_functions.csv` /
+`asm_helpers`, gets status `asm`. `c_progress.py` copies those rows into `tools/match/c_functions.csv` /
 `C_PROGRESS.md` with status `asm` and no C file: the C queue skips them, and they are not in the denominator.
 No-`__CHK` functions without a strong signal are listed as `nochk` (review by hand): `main_startup`'s
 `Read*Pad` are C compiled without stack checks (Watcom register convention), most of the others are case blocks
@@ -171,8 +171,8 @@ they were. Until 2026-10-22 the reference was **10.0 LA** (`tools/watcom/dosla` 
 ```
 make                       # 10.0 GA (WATCOM_VER=ga, the default)
 make WATCOM_VER=la         # 10.0 LA, e.g. to see whether a draft matched under LA
-WATCOM_VER=la python3 tools/cdiff.py FILE --func F
-python3 tools/cc.py version
+WATCOM_VER=la python3 tools/match/cdiff.py FILE --func F
+python3 tools/match/cc.py version
 ```
 
 Switching recompiles the C (a `build/watcom.<ver>` stamp) and the compile cache keys include the version. The
@@ -266,13 +266,13 @@ The learnings below were found under LA; they hold under GA unless noted.
 * **Plain locals rather than a frame struct** when the EXE spills: a struct whose members have their address taken (`&s.w`) makes every member look clobbered by calls, so a pointer kept there is reloaded after each call and its sums are not kept, and the register pressure moves (a stack argument went into ebp). Plain locals let Watcom choose the spill slots itself; their declaration order sets the slots (MessageBox: `lineh, r, ty, w, h, top` under GA; under LA it was `r, lineh, ty, w, h, top`, found by trying all orders).
 * **One `+=` per branch merges**: `if (c) a += x; else a += y - z;` becomes one shared `add [a], edx` with a `jmp` from the first branch, as the EXE often has; `a += c ? x : y - z` computes the address first (MessageBox).
 * **Distance decides short or near jumps into a shared tail**: a function that ends in another function's pops jumps there `near` in the EXE when other code lies between them. In a C file holding only the two, Watcom uses short jumps and the block comes out smaller; put the functions that lie between them in the EXE into the file, in address order (asstakeposition after PenShotStart in TakePlayerFromBox.c). Putting the user first instead moves the surviving tail into it.
-* **Check symbols with cdiff**: the scoring diffs normalise absolute addresses, so two globals loaded in swapped order look equal there; `tools/cdiff.py FILE --func F` names them (asstakeposition: `apl[regd4.w + regd1.w]`, `(fox ^ regd0.w) < 0`).
+* **Check symbols with cdiff**: the scoring diffs normalise absolute addresses, so two globals loaded in swapped order look equal there; `tools/match/cdiff.py FILE --func F` names them (asstakeposition: `apl[regd4.w + regd1.w]`, `(fox ^ regd0.w) < 0`).
 * **Which copy of a shared exit survives**: the copy that shares the longest run with another function keeps it. When the owner's pops land in the wrong function, add the later functions that end in the owner's longer exit (`add esp, n` plus the pops): LeagueSettingsDlg kept its pops once DrawLeagueSetChecks (ending in LeagueSettingsDlg_ret4) followed it, and MenuSaveDefaultLines once MenuSaveTheseLines (ending in its `add esp, 310h`) did.
 * **A product in an int local**: `v = (r + 5) * 5` compiles to `mov esi, eax; shl esi, 2; add esi, eax` (the EXE's shape); passed straight to a call as `(short)((r + 5) * 5)` it is `imul eax, eax, 5`. A pushed `(r + 5) * 5` is shl / add too, but with the sum in the load register (SkaterStatsCard).
 * **Frame order and cross-call reuse**: Watcom lays the frame out by size, the larger aggregates first and plain spilled scalars after them. A scalar that must sit below other scalars can go in a struct with them; a struct whose address is never taken still lets Watcom keep `(short)s.y` in a register across calls, where a member of an address-taken struct is reloaded after every call (SkaterStatsCard).
-* **Arrays of equal size, and the spilled scalars' slots**: plain arrays are sorted by size, equal sizes in reverse declaration order (TeamStatsScreen: the EXE's west, east, teams, order, title, record, state, path order needs a frame struct). The spilled scalars come in groups that the declaration order does not change: over 24 random orders of TeamRosterScreen's ten scalars the slots were always {kfh, pfh}, gs, {kf, fh}, mf, {m, n}, y, only the order inside a pair moving. In a synthetic function of equal locals (`v = g(k)` each, read later) the slots follow the order of first assignment and ignore the declaration order. So when the EXE's slot order crosses those groups, look for a difference in scope or use, not in declaration order (declaring `gs` in the goalie loop regroups everything). tools/permute.py's movedecl / swapdecl find the best order inside the groups (TeamRosterScreen: 43 -> 19 differing).
+* **Arrays of equal size, and the spilled scalars' slots**: plain arrays are sorted by size, equal sizes in reverse declaration order (TeamStatsScreen: the EXE's west, east, teams, order, title, record, state, path order needs a frame struct). The spilled scalars come in groups that the declaration order does not change: over 24 random orders of TeamRosterScreen's ten scalars the slots were always {kfh, pfh}, gs, {kf, fh}, mf, {m, n}, y, only the order inside a pair moving. In a synthetic function of equal locals (`v = g(k)` each, read later) the slots follow the order of first assignment and ignore the declaration order. So when the EXE's slot order crosses those groups, look for a difference in scope or use, not in declaration order (declaring `gs` in the goalie loop regroups everything). tools/match/permute.py's movedecl / swapdecl find the best order inside the groups (TeamRosterScreen: 43 -> 19 differing).
 * **Why the slot and register orders look arbitrary: an unstable sort**. Open Watcom's `SortList` (bld/cg/c/cgsrtlst.c, the 10.x code generator's descendant) is a Shell sort, not stable. It orders the register allocator's conflicts by descending savings (regalloc.c SortConflicts) and the spilled locals by size before their stack slots are handed out in list order, each one lower on the stack (temps.c AssignOtherLocals, x86temps.c TempAllocBefore). So among equal savings or equal sizes the order depends on every temporary in the function, compiler temporaries included: an extra cast or a byte-sized counter elsewhere reorders two spilled shorts (ReassignCtlPlayer: a `(short)` cast and a `signed char` counter give the EXE's px / best slots, 18 -> 6), and an unused local changes nothing (it never reaches the code generator). Unconstrained temporaries also take new registers in turn, so one temporary more or less early in a function shifts the registers of everything after it (next item).
-* **The register cycle for short-lived temporaries** (probes, 2026-10-21, under LA): a temporary with no other constraint gets the first register after the last one the cycle gave out, in the order edx, ebx, ecx, esi, edi, ebp, eax, skipping registers busy during its lifetime (the first one in a function is edx). Values live across a call are placed before the cycle and do not move it (across a cdecl call only esi / edi / ebp). A slot is taken by: a global or local loaded for a push, a constant in a register, a constant folded back into an immediate (`G = -1`, `add [G], 5`), a condition load folded into `cmp [mem], 0`, the second operand of a sum. No slot: arithmetic results (`x - 4` takes eax), the first operand of a compare, memory-to-memory copies, index copies, byte temporaries. Blocks are processed in code order for straight code and loops, but `if (c) A else B` does B before A, `if (c) { A; return; } REST` does REST before A, and an else-if chain does all the conditions and then the bodies from the last else back to the first (roughly reverse post-order of the flow graph). So a first-pass draft that copies a global or field into a local, or writes `v = G + 1; G = v;` instead of `G++`, has a temporary more or less than the original and every later pick is shifted: tools/permute.py's lvinline and inplace transforms (DrawControlsOpts, chkatop, puckIChk, joyq_pop, updatepentime, RandLfsrByte, GetHotStick matched that way). Open Watcom's own allocator has no such cycle, so 10.0 differs from it here.
+* **The register cycle for short-lived temporaries** (probes, 2026-10-21, under LA): a temporary with no other constraint gets the first register after the last one the cycle gave out, in the order edx, ebx, ecx, esi, edi, ebp, eax, skipping registers busy during its lifetime (the first one in a function is edx). Values live across a call are placed before the cycle and do not move it (across a cdecl call only esi / edi / ebp). A slot is taken by: a global or local loaded for a push, a constant in a register, a constant folded back into an immediate (`G = -1`, `add [G], 5`), a condition load folded into `cmp [mem], 0`, the second operand of a sum. No slot: arithmetic results (`x - 4` takes eax), the first operand of a compare, memory-to-memory copies, index copies, byte temporaries. Blocks are processed in code order for straight code and loops, but `if (c) A else B` does B before A, `if (c) { A; return; } REST` does REST before A, and an else-if chain does all the conditions and then the bodies from the last else back to the first (roughly reverse post-order of the flow graph). So a first-pass draft that copies a global or field into a local, or writes `v = G + 1; G = v;` instead of `G++`, has a temporary more or less than the original and every later pick is shifted: tools/match/permute.py's lvinline and inplace transforms (DrawControlsOpts, chkatop, puckIChk, joyq_pop, updatepentime, RandLfsrByte, GetHotStick matched that way). Open Watcom's own allocator has no such cycle, so 10.0 differs from it here.
 * **Near-miss patterns from the parallel-agent pass (2026-10-21, 64 matches):**
   * *A dead local or parameter reused*: the original often runs a value through a variable that is free by then (`n = randomd0(n)`, `bank = 0x354 / list[0]`, `line = 0; line += ...`), which keeps it in that variable's register where a fresh local is merged into eax (updatecrowdf, DrawDbDialog, periodicevents, LoadCupFinalSeries, getlinee).
   * *A constant against a variable known to hold it*: Watcom reuses a register it knows holds a value, so `return 1` (FreeUnrequestedSamples), `1 < cnt` (SayPenalty) or `palfadedin = 0` instead of `= dir` (FadePalStep) changes the picks; the other way round, constants written out take cycle slots (ChooseLeagueController).
@@ -310,7 +310,7 @@ The learnings below were found under LA; they hold under GA unless noted.
 * **`__CHK` counts the arguments of calls the optimizer drops**: the frame size is fixed before dead code goes. StubRet4b is `push 10h; call __CHK; ret 4` with no body: a three-argument cdecl call behind a local flag that is always 0 (`int dbg = 0; if (dbg) f(a, b, c);`, as a debug print) gives the 12 bytes; a constant `if (0)` does not (the front end drops it), nor do unused or dead-stored locals.
 * **`(short)(cond ? 0x99 : 0x98)`** is `setge al; and eax, 0FFh; add eax, 98h; cwde` (dopass's pass sound); `(short)(cond + 0x98)` narrows to `xor ah, ah`.
 * **A materialized `setne` before a branch** (`test eax, eax; setne al; and eax, 0FFh; jne`) comes from a doubled comparison: `while (((c != 'C' && c != 'L') != 0) != 0)` keeps the EXE's `je`-to-zero layout and the setne; `(... ? 0 : 1) != 0` is optimized to a plain test (CreateFreeAgent).
-* **Declaration order moves frame slots, not register picks**: tools/permute_decls.py found slot orders (MessageBox) but no register change across this round's drafts; register picks follow register pressure and statement shape instead (CreateFreeAgent: two pointer locals in a loop push the arguments into memory).
+* **Declaration order moves frame slots, not register picks**: tools/match/permute_decls.py found slot orders (MessageBox) but no register change across this round's drafts; register picks follow register pressure and statement shape instead (CreateFreeAgent: two pointer locals in a loop push the arguments into memory).
 * **The result type changes register picks in the whole function**: ModeSetViewLoop and LeagueSetViewLoop return a `short`. Declared `int`, Watcom copies the ptrupdatefn result through edx (`mov edx, eax; mov [esp], eax; test dl, 6`); as `short` (still `xor eax, eax` at the end) the result stays in eax (`mov [esp], eax; test al, 6`), and every other instruction is unchanged. A `char` result ends in `xor al, al`. Any byte or word temporary that lands in al / ax elsewhere in the function (a setcc, a byte copy, a narrowing store) has the same effect, which is why SoundCardDlgLoop matched as `int`; one that lands in dl / dx does not. So when a draft differs only in a register copy and ends in `xor eax, eax`, try a short result. Check the callers first: a short result is real when a caller tests `ax` (TryAddPlayerToList, QueueGoalieNote matched that way). When the callers use eax (avdgoal_box, FixJerseyConflict, CopyHumanTeamDBs, WaitClickTimeout also lose most of their differences as short; ExecuteTrade even matches as unsigned short and was reverted), the original is int and something else in it made the same register choice.
 * **One call after an if / else-if chain merges more than a call in each arm**: LeagueSetEditLoop's two radio groups end in the same `or eax, edx; mov [setbits], eax`; with `DrawLeagueSetChecks()` in every arm Watcom cross-jumps only the call, with one call after the chain the first group jumps into the second group's `or` (the EXE). In ExhSetEditLoop the order `else if (hit < 0x15) radio; else if (hit == 0x15) OK; else cancel` (radio placed last by Watcom) gave the EXE's registers; `else if (hit >= 0x15) { OK / cancel } else radio` did not.
 * **A local declared in the block that uses it** can change register picks elsewhere: ModeSetEditLoop's `sfx` (the new sound effects bit, OK branch only) declared at the top of the function copied it into eax before the bitfield store; declared inside the OK block it is updated in edx, as in the EXE. DrawLineGroupBars matched with its four bar locals declared in the loop body (at the top the colour and width slots swap). tools/scope_decls.py tries every such move (and their combinations) for a draft; a sweep over the drafts found only that one match but cut the differences of HighlightGridCell, DumpStatsLog, ReassignCtlPlayer and TeamGridHitTest.
@@ -328,7 +328,7 @@ The learnings below were found under LA; they hold under GA unless noted.
   `line < 4 && pos <= 2`) with `line + sublist[pos]` in the last branch gave the EXE's registers; either change
   alone did not, and the plain inverted chain put the branches in the other order.
 * **A chained assignment stores right to left**: `a = b = -1` stores b first (clockcont_0: c1playernum /
-  c2playernum). tools/cdiff.py shows the swapped symbols; a register-only comparison would not.
+  c2playernum). tools/match/cdiff.py shows the swapped symbols; a register-only comparison would not.
 * **Squares**: `d = dx * dx + dy * dy` evaluated dx into edx; `dx *= dx; d = dx + dy * dy` gave the EXE's
   `imul eax, eax` / `imul edx, edx` / `add eax, edx` (clockcont_0).
 * **A loop counter in its own block**: under LA, FallDown's PenBuf loop matched once its counter was declared in a block

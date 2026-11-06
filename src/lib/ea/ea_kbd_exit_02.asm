@@ -1,0 +1,19 @@
+; Keyboard handlers run on the way out of the program.
+bits 32
+%include "hockey.inc"
+section s_986CC progbits alloc exec nowrite align=1
+global sub_986CC, loc_986D8, sub_986E4
+sub_986CC:
+mov eax, dword [byte esp+04h]	; 986CC
+cmp dword [eax], byte 0	; 986D0
+je short loc_986D8	; 986D3
+xor eax, eax	; 986D5
+ret	; 986D7
+loc_986D8:
+mov dword [eax], 1	; 986D8
+mov eax, 1	; 986DE
+ret	; 986E3
+sub_986E4:
+mov eax, dword [byte esp+04h]	; 986E4
+mov dword [eax], 0	; 986E8
+ret	; 986EE

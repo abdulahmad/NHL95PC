@@ -1,4 +1,4 @@
-; x86enc.inc - encodings NASM cannot be told to pick (used by tools/asm_proto.py output)
+; x86enc.inc - encodings NASM cannot be told to pick (used by tools/build/asm_proto.py output)
 ;
 ; LD op, dst, src   reg,reg ALU/mov in the "load" form (opcode with d=1: 02/03, 0A/0B, ... 8A/8B).
 ;                   NASM always emits the "store" form (00/01, ... 88/89) for reg,reg; MASM-family assemblers

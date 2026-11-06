@@ -1,10 +1,10 @@
-; NHL 95 PC structure field offsets, written as the 93 Genesis names (see tools/struct_fieldmap.csv for the evidence).
+; NHL 95 PC structure field offsets, written as the 93 Genesis names (see tools/names/struct_fieldmap.csv for the evidence).
 ; Equates only. Use them in operands with the original displacement size: [byte esi+Xvel], not [esi+0Ch]; the
 ; assembled bytes must not change. A field that is a 16.16 long on Genesis and 68k-word-aligned there is often read
 ; with the Watcom -5r short load: mov edx, [byte ecx+Xvel-2] sar edx, 10h loads the word Xvel (sign-extended).
 ; 'size b/w/d' is the PC access size (tools/struct_operands.py matches operands by offset and size). A 'size d' field
 ; is a 16.16 value; its integer word is Field+2 ([byte ebx+Xpos+2]).
-; Add a field here and a row in tools/struct_fieldmap.csv in the same commit. An equate nothing uses may stay.
+; Add a field here and a row in tools/names/struct_fieldmap.csv in the same commit. An equate nothing uses may stay.
 
 ; ---- player structure. Pointer usually in eax/ecx/esi/edi.
 Xpos       equ 00h   ; size d
@@ -12,7 +12,7 @@ Ypos       equ 04h   ; size d
 OldXpos    equ 74h   ; size d
 OldYpos    equ 78h   ; size d; 93G OldYpos: updateplayers saves Ypos here
 OldZpos    equ 7Ch   ; size d; 93G OldZpos: updateplayers saves Zpos here
-Zpos       equ 08h   ; size d; defaultsprites2 writes the integer word at +0Ah from the zcord column, as it writes Xpos+2 Ypos+2 from xcord ycord
+Zpos       equ 08h   ; size d; defaultsprites_0 writes the integer word at +0Ah from the zcord column, as it writes Xpos+2 Ypos+2 from xcord ycord
 Xvel       equ 0Ch   ; size w
 Yvel       equ 0Eh   ; size w
 Zvel       equ 10h   ; size w; puckbody clears the puck's word at +10h
@@ -25,8 +25,8 @@ temp4      equ 2Ch   ; size w
 temp5      equ 2Eh   ; size w
 Wallcos    equ 30h   ; size w
 Wallsin    equ 32h   ; size w
-radiusx    equ 66h   ; size w; defaultsprites2 writes word [x+66h] from the radx column
-radiusy    equ 68h   ; size w; defaultsprites2 writes word [x+68h] from the rady column
+radiusx    equ 66h   ; size w; defaultsprites_0 writes word [x+66h] from the radx column
+radiusy    equ 68h   ; size w; defaultsprites_0 writes word [x+68h] from the rady column
 SCnum      equ 6Ah   ; size w
 facedir    equ 36h   ; size w
 SPA        equ 38h   ; size w
@@ -40,15 +40,15 @@ asslist    equ 1Eh   ; size b; byte array indexed by assnum: avdgoal/goalieacc c
 pnum       equ 47h   ; size b; engine_skating playeracc: byte (dword [x-3] sar 18h) *2 indexes the team energy words.b pnum(a3),d1 add d1,d1
 puckdist   equ 4Eh   ; size w; none; updateplayers: word vecdist(puck - player) per frame (mov word [esi+4Eh],ax after vecdist of puckx/pucky minus Xpos/Ypos)
 puckdir    equ 52h   ; size b; none; updateplayers: byte vtoa(puck - player), the direction to the puck; goalieacc/skatetopuck/chk4pass read it
-attrlo     equ 54h   ; size b; low byte; low byte of the attribute word: defaultsprites2 writes word [x+54h] from the.list att column; its high byte is attribute (55h), the byte 68k btst reads
+attrlo     equ 54h   ; size b; low byte; low byte of the attribute word: defaultsprites_0 writes word [x+54h] from the.list att column; its high byte is attribute (55h), the byte 68k btst reads
 attribute  equ 55h   ; size b; doplayeracc.s1 and noturn0.nostop: test byte [reg+55h],8
 weight     equ 56h   ; size b; playeracc: byte >>3 subtracted from 32.b weight(a3),d2 lsr #3
-legstr     equ 57h   ; size b; playeracc: added to the accel factor (twice for the goalie); StopNA step 200+legstr
+legstr     equ 57h   ; size b; playeracc: added to the accel factor (twice for the goalie); stopna step 200+legstr
 legspd     equ 58h   ; size b; playeracc: times the energy level for the MaxSpeed index.b legspd(a3),d2 mulu d0,d2
 endurance  equ 61h   ; size b; playeracc.sube: added to the energy level.b endurance(a3),d2 add d2,d0
 frame      equ 12h   ; size w; (alice frame number); GetHot reads word [x+12h] as the hot spot frame; assdopen sets it to -1
-impactp    equ 14h   ; size w; holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] sar 10h).w impactp(a3),d0 asl #7
-impact     equ 18h   ; size w; holdplayer and Acheck: cmp word [x+18h],0
+impactp    equ 14h   ; size w; Holdplayer: Acheck target SortCords[impactp] when impact != 0 (dword [x+12h] sar 10h).w impactp(a3),d0 asl #7
+impact     equ 18h   ; size w; Holdplayer and Acheck: cmp word [x+18h],0
 limpact    equ 16h   ; size w; 93G limpact (last impact value): updateplayers copies impact here
 tmptr      equ 6Ch   ; size d; none (loadTeamStruct by pfteam); pointer to the player's own team structure: lineinput, lcselect, getlchoice read tmflags/tmline/tmap through it
 optmptr    equ 70h   ; size d; none; pointer to the other team's structure: lcselect and getlchoice compare its tmap with tmptr's
@@ -84,7 +84,7 @@ tmflags    equ 44h   ; tsize b; lineinput: bit 0 'start lc mode' cleared before 
 tmpptime   equ 08h   ; tsize w; (power-play seconds): updatePPTeamTime adds 1 for the team on the power play (gmode2 bits 5/6)
 tmATOP     equ 0Eh   ; tsize w; (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line
 tmgoalie   equ 38h   ; tsize w; (goalie 1/2/none): releasepl picks the priolist row by its sign
-tmpbox     equ 0B6h  ; tsize b array; (penalty box list: roster indexes, ends with a negative byte): ProcessPenaltyList walks it and shifts it down
+tmpbox     equ 0B6h  ; tsize b array; (penalty box list: roster indexes, ends with a negative byte): updatepentime_ut walks it and shifts it down
 tmshots    equ 00h   ; tsize w; team shots: the stats.log dump (DumpStatsLog) prints it under 'shts'
 tmppg      equ 02h   ; tsize w; power-play goals: DumpStatsLog 'ppg' column
 tmpp       equ 04h   ; tsize w; power plays: DumpStatsLog 'pp' column

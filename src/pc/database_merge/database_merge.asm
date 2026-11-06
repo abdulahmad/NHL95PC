@@ -1,0 +1,3761 @@
+; League Manager. Merging, importing, and exporting team and schedule files, including a floppy disk.
+bits 32
+%include "hockey.inc"
+section s_3A9AA progbits alloc exec nowrite align=1
+extern __CHK, _dos_getdiskfree_, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_WrongDisk, BuildSavedGameLabels
+extern byte_DE268, CopyFile, CopyGameSettings, CopyHumanTeamDBs, criterrflag, curleague, DeleteDir, DeleteFiles
+extern dlgsavebuf, drivebtns, dword_DE265, exporterrmsg, FatalError, FileClose, FileCreate, FileExists
+extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, floppyok, floppyprobe, FmtFromLeague
+extern forceexportbtns, forceexportmsg, GetLeagueId, humancount, importdiskmsg, importerrmsg, importmastermsg, importtypebtns
+extern importtypemsg, insavegamemsg, insertfloppymsg, LeagueCheckStub, leaguedbnames, leagueflags, leaguemaster, leaguemgrmenu
+extern leaguesaved, leagueteams, LeagueTeamSelect, lgexistsformsg, lgexistsmsg, lgplayeridfile, lgreaderrmsg, lgstate
+extern lgteam_17, lgteamflags, lgteamver, lgteamver_hi, LoadModeState, MakePath, masterctlmsg, masteronlymsg
+extern masterpw, menuact_export, menuact_nextlg, MenuExportDbs, MenuNextLeagueGame, menusub_lgmgr, mergeerrmsg, MergeGoalieRecDelta
+extern mergeincompletemsg, MergeSeasonRecDelta, mergestatemsg, MergeTeamRecDelta, mergingmsg, MessageBox, mkdir_, msg_InsertDisk
+extern msg_InsertDisk_arg, msg_SavedGame, msg_SavedGame_arg, msg_WrongDisk, msg_WrongDisk_arg, MsgCopyingDatabases, newfloppybtns, newfloppymsg
+extern notexportedmsg, notforlgmsg, oldcopymsg, playerdbsmsg, ReadGoalieSeasonRec, ReadKeyRec, ReadLeagueTeamEntry, ReadSchedGame
+extern ReadSeasonRec, ReadTeamRec, RestoreDialogBg, savedname, SetDialogColors, SetupStatsSourceMenu, sprintf_, str_02d2
+extern str_02d3, str_dot, str_extDB, str_extID, str_extxx, str_floppydrv, str_Game2, str_GAME2
+extern str_GAME3, str_GAME4, str_HasNotBeenMerged, str_ID, str_IsAlreadyMerged, str_L1, str_L22, str_PINFO
+extern str_PLAYER, str_SAV2, str_Sav2, str_SAV3, str_SelectATeamTo2, str_SET, str_SET2, str_wildcard
+extern str_Xx, strcmp_, strcpy_, stricmp_, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88
+extern treeteamnames, unknown_libname_1, updateerrmsg, UpdateSeasonSchedule, updschedmsg, whichdrivemsg, WriteGoalieSeasonRec, WriteLeagueTeamEntry
+extern WriteSchedGame, WriteSeasonRec, WriteTeamRec
+global MergeTeamDbs, MergeTeamDbs_ret, MergeScheduleDb, LocateTeamDbCopy, UpdateTeamDbs, UpdateTeamDbs_ret, MergeLeagueFiles, MergeUpdateDbs
+global RebuildLeagueDbs, ExportTeamToFloppy, CopyLeagueFiles, ImportMasterLeague, ImportMasterLeague_ret, ImportPlayerTeam, ImportDbs, ExportDbs
+global SelectFloppyDrive, FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
+; C: src/pc/database_merge/MergeTeamDbs.c
+%ifdef CBUILD
+%include "c/pc/database_merge/MergeTeamDbs.inc"
+%else
+MergeTeamDbs:
+push dword 0A7Ch	; 3A9AA
+call __CHK	; 3A9AF
+push esi	; 3A9B4
+push edi	; 3A9B5
+push ebp	; 3A9B6
+sub esp, 0A68h	; 3A9B7
+mov esi, eax	; 3A9BD
+mov dword [dword esp+0A64h], edx	; 3A9BF
+mov ebp, ebx	; 3A9C6
+mov dword [dword esp+0A60h], ecx	; 3A9C8
+mov edi, dword [dword esp+0A7Ch]	; 3A9CF
+mov edx, 0FFFFFFFFh	; 3A9D6
+mov dword [dword esp+0A5Ch], edx	; 3A9DB
+mov dword [dword esp+0A58h], edx	; 3A9E2
+mov dword [dword esp+0A54h], edx	; 3A9E9
+mov dword [dword esp+0A50h], edx	; 3A9F0
+mov dword [dword esp+0A4Ch], edx	; 3A9F7
+mov dword [dword esp+0A48h], edx	; 3A9FE
+mov dword [dword esp+0A44h], edx	; 3AA05
+mov ebx, dword [leaguedbnames+10h]	; 3AA0C
+mov ecx, str_extDB	; 3AA12
+mov edx, eax	; 3AA17
+lea eax, [dword esp+0A24h]	; 3AA19
+call MakePath	; 3AA20
+lea edx, [dword esp+0A54h]	; 3AA25
+lea eax, [dword esp+0A24h]	; 3AA2C
+call FileOpenRead	; 3AA33
+mov edx, eax	; 3AA38
+test eax, eax	; 3AA3A
+jne short .1	; 3AA3C
+mov ebx, dword [leaguedbnames+10h]	; 3AA3E
+mov ecx, dword [dword esp+0A60h]	; 3AA44
+mov edx, dword [dword esp+0A64h]	; 3AA4B
+lea eax, [dword esp+0A24h]	; 3AA52
+call MakePath	; 3AA59
+lea edx, [dword esp+0A5Ch]	; 3AA5E
+lea eax, [dword esp+0A24h]	; 3AA65
+call FileOpenRead	; 3AA6C
+mov edx, eax	; 3AA71
+.1:
+test edx, edx	; 3AA73
+jne short .2	; 3AA75
+mov ebx, dword [leaguedbnames+10h]	; 3AA77
+mov ecx, dword [dword esp+0A78h]	; 3AA7D
+mov edx, ebp	; 3AA84
+lea eax, [dword esp+0A24h]	; 3AA86
+call MakePath	; 3AA8D
+lea edx, [dword esp+0A58h]	; 3AA92
+lea eax, [dword esp+0A24h]	; 3AA99
+call FileOpenRW	; 3AAA0
+mov edx, eax	; 3AAA5
+.2:
+test edx, edx	; 3AAA7
+jne short .3	; 3AAA9
+mov ebx, dword [leaguedbnames]	; 3AAAB
+mov ecx, str_extDB	; 3AAB1
+mov edx, esi	; 3AAB6
+lea eax, [dword esp+0A24h]	; 3AAB8
+call MakePath	; 3AABF
+lea edx, [dword esp+0A50h]	; 3AAC4
+lea eax, [dword esp+0A24h]	; 3AACB
+call FileOpenRead	; 3AAD2
+mov edx, eax	; 3AAD7
+.3:
+test edx, edx	; 3AAD9
+jne short .4	; 3AADB
+mov ebx, dword [leaguedbnames+14h]	; 3AADD
+mov ecx, str_extDB	; 3AAE3
+mov edx, esi	; 3AAE8
+lea eax, [dword esp+0A24h]	; 3AAEA
+call MakePath	; 3AAF1
+lea edx, [dword esp+0A44h]	; 3AAF6
+lea eax, [dword esp+0A24h]	; 3AAFD
+call FileOpenRead	; 3AB04
+mov edx, eax	; 3AB09
+.4:
+test edx, edx	; 3AB0B
+jne short .5	; 3AB0D
+mov ebx, dword [leaguedbnames+14h]	; 3AB0F
+mov ecx, dword [dword esp+0A60h]	; 3AB15
+mov edx, dword [dword esp+0A64h]	; 3AB1C
+lea eax, [dword esp+0A24h]	; 3AB23
+call MakePath	; 3AB2A
+lea edx, [dword esp+0A4Ch]	; 3AB2F
+lea eax, [dword esp+0A24h]	; 3AB36
+call FileOpenRead	; 3AB3D
+mov edx, eax	; 3AB42
+.5:
+test edx, edx	; 3AB44
+jne short .6	; 3AB46
+mov ebx, dword [leaguedbnames+14h]	; 3AB48
+mov ecx, dword [dword esp+0A78h]	; 3AB4E
+mov edx, ebp	; 3AB55
+lea eax, [dword esp+0A24h]	; 3AB57
+call MakePath	; 3AB5E
+lea edx, [dword esp+0A48h]	; 3AB63
+lea eax, [dword esp+0A24h]	; 3AB6A
+call FileOpenRW	; 3AB71
+mov edx, eax	; 3AB76
+.6:
+xor ebp, ebp	; 3AB78
+.7:
+test edx, edx	; 3AB7A
+jne short .8	; 3AB7C
+mov ebx, ebp	; 3AB7E
+lea edx, [dword esp+02E8h]	; 3AB80
+mov eax, dword [dword esp+0A54h]	; 3AB87
+call ReadTeamRec	; 3AB8E
+mov edx, eax	; 3AB93
+.8:
+test edx, edx	; 3AB95
+jne short .9	; 3AB97
+mov ebx, ebp	; 3AB99
+mov edx, esp	; 3AB9B
+mov eax, dword [dword esp+0A5Ch]	; 3AB9D
+call ReadTeamRec	; 3ABA4
+mov edx, eax	; 3ABA9
+.9:
+test edx, edx	; 3ABAB
+jne short .10	; 3ABAD
+mov ebx, ebp	; 3ABAF
+lea edx, [dword esp+05D0h]	; 3ABB1
+mov eax, dword [dword esp+0A58h]	; 3ABB8
+call ReadTeamRec	; 3ABBF
+mov edx, eax	; 3ABC4
+.10:
+test edx, edx	; 3ABC6
+jne short .11	; 3ABC8
+push ebp	; 3ABCA
+mov ecx, edi	; 3ABCB
+lea ebx, [dword esp+05D4h]	; 3ABCD
+lea edx, [byte esp+04h]	; 3ABD4
+lea eax, [dword esp+02ECh]	; 3ABD8
+call MergeTeamRecDelta	; 3ABDF
+mov ebx, ebp	; 3ABE4
+lea edx, [dword esp+05D0h]	; 3ABE6
+mov eax, dword [dword esp+0A58h]	; 3ABED
+call WriteTeamRec	; 3ABF4
+mov edx, eax	; 3ABF9
+.11:
+test edx, edx	; 3ABFB
+jne near .25	; 3ABFD
+xor esi, esi	; 3AC03
+jmp near .17	; 3AC05
+.12:
+mov eax, dword [byte esp+esi*4+04Ch]	; 3AC0A
+cmp eax, byte 0FFFFFFFFh	; 3AC0E
+je near .16	; 3AC11
+mov ebx, eax	; 3AC17
+lea edx, [dword esp+0960h]	; 3AC19
+mov eax, dword [dword esp+0A50h]	; 3AC20
+call ReadKeyRec	; 3AC27
+mov edx, eax	; 3AC2C
+test eax, eax	; 3AC2E
+jne short .13	; 3AC30
+mov ebx, dword [dword esp+098Ch]	; 3AC32
+lea edx, [dword esp+0994h]	; 3AC39
+mov eax, dword [dword esp+0A44h]	; 3AC40
+call ReadSeasonRec	; 3AC47
+mov edx, eax	; 3AC4C
+.13:
+test edx, edx	; 3AC4E
+jne short .14	; 3AC50
+mov ebx, dword [dword esp+098Ch]	; 3AC52
+lea edx, [dword esp+09C4h]	; 3AC59
+mov eax, dword [dword esp+0A4Ch]	; 3AC60
+call ReadSeasonRec	; 3AC67
+mov edx, eax	; 3AC6C
+.14:
+test edx, edx	; 3AC6E
+jne short .15	; 3AC70
+mov ebx, dword [dword esp+098Ch]	; 3AC72
+lea edx, [dword esp+09F4h]	; 3AC79
+mov eax, dword [dword esp+0A48h]	; 3AC80
+call ReadSeasonRec	; 3AC87
+mov edx, eax	; 3AC8C
+.15:
+test edx, edx	; 3AC8E
+jne short .16	; 3AC90
+push ebp	; 3AC92
+mov ecx, edi	; 3AC93
+lea ebx, [dword esp+09F8h]	; 3AC95
+lea edx, [dword esp+09C8h]	; 3AC9C
+lea eax, [dword esp+0998h]	; 3ACA3
+call MergeSeasonRecDelta	; 3ACAA
+mov ebx, dword [dword esp+098Ch]	; 3ACAF
+lea edx, [dword esp+09F4h]	; 3ACB6
+mov eax, dword [dword esp+0A48h]	; 3ACBD
+call WriteSeasonRec	; 3ACC4
+mov edx, eax	; 3ACC9
+.16:
+inc esi	; 3ACCB
+.17:
+cmp esi, byte 19h	; 3ACCC
+jge short .18	; 3ACCF
+test edx, edx	; 3ACD1
+je near MergeTeamDbs.12	; 3ACD3
+.18:
+xor esi, esi	; 3ACD9
+jmp near .24	; 3ACDB
+.19:
+mov eax, dword [dword esp+esi*4+0B0h]	; 3ACE0
+cmp eax, byte 0FFFFFFFFh	; 3ACE7
+je near .23	; 3ACEA
+mov ebx, eax	; 3ACF0
+lea edx, [dword esp+0960h]	; 3ACF2
+mov eax, dword [dword esp+0A50h]	; 3ACF9
+call ReadKeyRec	; 3AD00
+mov edx, eax	; 3AD05
+test eax, eax	; 3AD07
+jne short .20	; 3AD09
+mov ebx, dword [dword esp+098Ch]	; 3AD0B
+lea edx, [dword esp+0928h]	; 3AD12
+mov eax, dword [dword esp+0A44h]	; 3AD19
+call ReadGoalieSeasonRec	; 3AD20
+mov edx, eax	; 3AD25
+.20:
+test edx, edx	; 3AD27
+jne short .21	; 3AD29
+mov ebx, dword [dword esp+098Ch]	; 3AD2B
+lea edx, [dword esp+08B8h]	; 3AD32
+mov eax, dword [dword esp+0A4Ch]	; 3AD39
+call ReadGoalieSeasonRec	; 3AD40
+mov edx, eax	; 3AD45
+.21:
+test edx, edx	; 3AD47
+jne short .22	; 3AD49
+mov ebx, dword [dword esp+098Ch]	; 3AD4B
+lea edx, [dword esp+08F0h]	; 3AD52
+mov eax, dword [dword esp+0A48h]	; 3AD59
+call ReadGoalieSeasonRec	; 3AD60
+mov edx, eax	; 3AD65
+.22:
+test edx, edx	; 3AD67
+jne short .23	; 3AD69
+push ebp	; 3AD6B
+mov ecx, edi	; 3AD6C
+lea ebx, [dword esp+08F4h]	; 3AD6E
+lea edx, [dword esp+08BCh]	; 3AD75
+lea eax, [dword esp+092Ch]	; 3AD7C
+call MergeGoalieRecDelta	; 3AD83
+mov ebx, dword [dword esp+098Ch]	; 3AD88
+lea edx, [dword esp+08F0h]	; 3AD8F
+mov eax, dword [dword esp+0A48h]	; 3AD96
+call WriteGoalieSeasonRec	; 3AD9D
+mov edx, eax	; 3ADA2
+.23:
+inc esi	; 3ADA4
+.24:
+cmp esi, byte 3	; 3ADA5
+jge short .25	; 3ADA8
+test edx, edx	; 3ADAA
+je near MergeTeamDbs.19	; 3ADAC
+.25:
+inc ebp	; 3ADB2
+cmp ebp, byte 1Ah	; 3ADB3
+jl near MergeTeamDbs.7	; 3ADB6
+lea eax, [dword esp+0A48h]	; 3ADBC
+call FileClose	; 3ADC3
+lea eax, [dword esp+0A4Ch]	; 3ADC8
+call FileClose	; 3ADCF
+lea eax, [dword esp+0A44h]	; 3ADD4
+call FileClose	; 3ADDB
+lea eax, [dword esp+0A50h]	; 3ADE0
+call FileClose	; 3ADE7
+lea eax, [dword esp+0A58h]	; 3ADEC
+call FileClose	; 3ADF3
+lea eax, [dword esp+0A5Ch]	; 3ADF8
+call FileClose	; 3ADFF
+lea eax, [dword esp+0A54h]	; 3AE04
+call FileClose	; 3AE0B
+mov eax, edx	; 3AE10
+add esp, 0A68h	; 3AE12
+MergeTeamDbs_ret:
+pop ebp	; 3AE18
+pop edi	; 3AE19
+pop esi	; 3AE1A
+ret 8	; 3AE1B
+%endif ; C
+; C: src/pc/database_merge/MergeTeamDbs.c (MergeScheduleDb)
+%ifdef CBUILD
+%include "c/pc/database_merge/MergeTeamDbs.MergeScheduleDb.inc"
+%else
+MergeScheduleDb:
+push dword 48h	; 3AE1E
+call __CHK	; 3AE23
+push esi	; 3AE28
+push edi	; 3AE29
+push ebp	; 3AE2A
+sub esp, byte 38h	; 3AE2B
+mov edi, edx	; 3AE2E
+mov ebp, ecx	; 3AE30
+mov esi, dword [byte esp+048h]	; 3AE32
+mov edx, 0FFFFFFFFh	; 3AE36
+mov dword [byte esp+02Ch], edx	; 3AE3B
+mov dword [byte esp+028h], edx	; 3AE3F
+mov edx, dword [leaguedbnames+18h]	; 3AE43
+mov ecx, ebx	; 3AE49
+mov ebx, edx	; 3AE4B
+mov edx, eax	; 3AE4D
+mov eax, esp	; 3AE4F
+call MakePath	; 3AE51
+lea edx, [byte esp+028h]	; 3AE56
+mov eax, esp	; 3AE5A
+call FileOpenRead	; 3AE5C
+mov edx, eax	; 3AE61
+test eax, eax	; 3AE63
+jne short .1	; 3AE65
+mov ebx, dword [leaguedbnames+18h]	; 3AE67
+mov ecx, ebp	; 3AE6D
+mov edx, edi	; 3AE6F
+mov eax, esp	; 3AE71
+call MakePath	; 3AE73
+lea edx, [byte esp+02Ch]	; 3AE78
+mov eax, esp	; 3AE7C
+call FileOpenRW	; 3AE7E
+mov edx, eax	; 3AE83
+.1:
+test edx, edx	; 3AE85
+jne short .2	; 3AE87
+mov ecx, 2	; 3AE89
+xor ebx, ebx	; 3AE8E
+lea edx, [byte esp+030h]	; 3AE90
+mov eax, dword [byte esp+028h]	; 3AE94
+call FileReadAt	; 3AE98
+mov edx, eax	; 3AE9D
+.2:
+test edx, edx	; 3AE9F
+jne short .3	; 3AEA1
+mov ecx, 2	; 3AEA3
+xor ebx, ebx	; 3AEA8
+lea edx, [byte esp+034h]	; 3AEAA
+mov eax, dword [byte esp+02Ch]	; 3AEAE
+call FileReadAt	; 3AEB2
+mov edx, eax	; 3AEB7
+.3:
+test edx, edx	; 3AEB9
+jne short .4	; 3AEBB
+mov eax, dword [byte esp+032h]	; 3AEBD
+sar eax, 10h	; 3AEC1
+mov ebx, dword [byte esp+04Ch]	; 3AEC4
+mov dword [ebx], eax	; 3AEC8
+mov eax, dword [byte esp+030h]	; 3AECA
+cmp ax, word [byte esp+034h]	; 3AECE
+jle short .4	; 3AED3
+mov eax, dword [byte esp+02Eh]	; 3AED5
+sar eax, 10h	; 3AED9
+mov edx, dword [byte esp+04Ch]	; 3AEDC
+mov dword [edx], eax	; 3AEE0
+mov ecx, 2	; 3AEE2
+xor ebx, ebx	; 3AEE7
+lea edx, [byte esp+030h]	; 3AEE9
+mov eax, dword [byte esp+02Ch]	; 3AEED
+call FileWriteAt	; 3AEF1
+mov edx, eax	; 3AEF6
+.4:
+cmp word [byte esp+030h], 444h	; 3AEF8
+jl short .5	; 3AEFF
+mov word [byte esp+030h], 4ADh	; 3AF01
+.5:
+xor ecx, ecx	; 3AF08
+jmp short .9	; 3AF0A
+.6:
+mov ebx, ecx	; 3AF0C
+lea edx, [byte esp+020h]	; 3AF0E
+mov eax, dword [byte esp+028h]	; 3AF12
+call ReadSchedGame	; 3AF16
+mov edx, eax	; 3AF1B
+test eax, eax	; 3AF1D
+jne short .8	; 3AF1F
+mov al, byte [byte esp+022h]	; 3AF21
+cmp esi, eax	; 3AF25
+je short .7	; 3AF27
+xor eax, eax	; 3AF29
+mov al, byte [byte esp+023h]	; 3AF2B
+cmp esi, eax	; 3AF2F
+jne short .8	; 3AF31
+.7:
+mov ebx, ecx	; 3AF33
+lea edx, [byte esp+020h]	; 3AF35
+mov eax, dword [byte esp+02Ch]	; 3AF39
+call WriteSchedGame	; 3AF3D
+mov edx, eax	; 3AF42
+.8:
+inc ecx	; 3AF44
+.9:
+mov eax, dword [byte esp+02Eh]	; 3AF45
+sar eax, 10h	; 3AF49
+cmp ecx, eax	; 3AF4C
+jge short .10	; 3AF4E
+test edx, edx	; 3AF50
+je short MergeScheduleDb.6	; 3AF52
+.10:
+lea eax, [byte esp+02Ch]	; 3AF54
+call FileClose	; 3AF58
+lea eax, [byte esp+028h]	; 3AF5D
+call FileClose	; 3AF61
+mov eax, edx	; 3AF66
+add esp, byte 38h	; 3AF68
+jmp near MergeTeamDbs_ret	; 3AF6B
+%endif ; C
+; C: src/pc/database_merge/LocateTeamDbCopy.c
+%ifdef CBUILD
+%include "c/pc/database_merge/LocateTeamDbCopy.inc"
+%else
+LocateTeamDbCopy:
+push dword 34h	; 3AF70
+call __CHK	; 3AF75
+push esi	; 3AF7A
+push edi	; 3AF7B
+push ebp	; 3AF7C
+sub esp, byte 10h	; 3AF7D
+mov esi, ebx	; 3AF80
+mov dword [byte esp+0Ch], ecx	; 3AF82
+mov edi, dword [byte esp+024h]	; 3AF86
+mov ebp, dword [byte esp+028h]	; 3AF8A
+xor ebx, ebx	; 3AF8E
+mov ecx, edx	; 3AF90
+shl ecx, 4	; 3AF92
+sub ecx, edx	; 3AF95
+add ecx, ecx	; 3AF97
+add ecx, eax	; 3AF99
+cmp byte [byte ecx+018h], 1	; 3AF9B
+je short .1	; 3AF9F
+cmp byte [byte ecx+016h], 1	; 3AFA1
+jne short .2	; 3AFA5
+.1:
+mov ecx, dword [byte esp+0Ch]	; 3AFA7
+mov dword [edi], ecx	; 3AFAB
+mov ecx, edx	; 3AFAD
+shl ecx, 4	; 3AFAF
+sub ecx, edx	; 3AFB2
+mov eax, dword [byte eax+ecx*2+01Ah]	; 3AFB4
+mov dword [byte ebp+00h], eax	; 3AFB8
+jmp short .3	; 3AFBB
+.2:
+mov eax, dword [byte esp+020h]	; 3AFBD
+mov dword [edi], eax	; 3AFC1
+mov edx, ecx	; 3AFC3
+mov eax, esi	; 3AFC5
+call WaitLeagueFloppy	; 3AFC7
+mov edi, eax	; 3AFCC
+mov ebx, eax	; 3AFCE
+mov edx, ebp	; 3AFD0
+mov eax, dword [byte esp+020h]	; 3AFD2
+call GetLeagueId	; 3AFD6
+cmp edi, byte 4	; 3AFDB
+je short .3	; 3AFDE
+mov eax, dword [byte ebp+00h]	; 3AFE0
+cmp eax, dword [byte ecx+01Ah]	; 3AFE3
+jae short .3	; 3AFE6
+mov dword [oldcopymsg+8], esi	; 3AFE8
+mov eax, esp	; 3AFEE
+push eax	; 3AFF0
+lea eax, [byte esp+08h]	; 3AFF1
+push eax	; 3AFF5
+lea eax, [byte esp+010h]	; 3AFF6
+push eax	; 3AFFA
+call sub_B2DCA	; 3AFFB
+add esp, byte 0Ch	; 3B000
+push byte 0FFFFFFFFh	; 3B003
+lea eax, [byte esp+04h]	; 3B005
+push eax	; 3B009
+lea eax, [byte esp+0Ch]	; 3B00A
+push eax	; 3B00E
+push byte 0	; 3B00F
+push byte 0	; 3B011
+mov ecx, 3	; 3B013
+mov ebx, oldcopymsg	; 3B018
+mov edx, 0FFFFFFFFh	; 3B01D
+mov eax, edx	; 3B022
+call MessageBox	; 3B024
+mov ebx, 0FFFFFFFFh	; 3B029
+.3:
+mov eax, ebx	; 3B02E
+add esp, byte 10h	; 3B030
+pop ebp	; 3B033
+pop edi	; 3B034
+pop esi	; 3B035
+ret 0Ch	; 3B036
+%endif ; C
+; C: src/pc/database_merge/UpdateTeamDbs.c
+%ifdef CBUILD
+%include "c/pc/database_merge/UpdateTeamDbs.inc"
+%else
+UpdateTeamDbs:
+push dword 74h	; 3B039
+call __CHK	; 3B03E
+push ebx	; 3B043
+push ecx	; 3B044
+push edx	; 3B045
+push esi	; 3B046
+push edi	; 3B047
+push ebp	; 3B048
+sub esp, byte 44h	; 3B049
+mov dword [byte esp+030h], 0FFFFFFFFh	; 3B04C
+xor ebp, ebp	; 3B054
+push ebp	; 3B056
+mov ecx, 0FAh	; 3B057
+mov ebx, 0F8h	; 3B05C
+mov edx, ecx	; 3B061
+mov eax, 0F9h	; 3B063
+call SetDialogColors	; 3B068
+mov edx, 2	; 3B06D
+mov eax, curleague	; 3B072
+call LeagueCheckStub	; 3B077
+test eax, eax	; 3B07C
+jne near .6	; 3B07E
+push savedname	; 3B084
+push leaguesaved	; 3B089
+push leagueflags	; 3B08E
+push humancount	; 3B093
+mov ecx, leaguemaster	; 3B098
+mov ebx, masterpw	; 3B09D
+mov edx, leagueteams	; 3B0A2
+mov eax, curleague	; 3B0A7
+call ReadLeagueInfo	; 3B0AC
+mov edi, eax	; 3B0B1
+mov esi, eax	; 3B0B3
+mov edx, curleague	; 3B0B5
+lea eax, [byte esp+020h]	; 3B0BA
+call strcpy_	; 3B0BE
+mov ecx, ds	; 3B0C3
+mov ebx, str_dot	; 3B0C5
+mov edx, ds	; 3B0CA
+lea eax, [byte esp+020h]	; 3B0CC
+call _fstrcspn_	; 3B0D0
+xor dl, dl	; 3B0D5
+mov byte [byte esp+eax+020h], dl	; 3B0D7
+test edi, edi	; 3B0DB
+jne short .1	; 3B0DD
+cmp dword [leaguesaved], byte 0	; 3B0DF
+je short .1	; 3B0E6
+lea eax, [byte esp+020h]	; 3B0E8
+mov dword [msg_SavedGame_arg], eax	; 3B0EC
+lea eax, [byte esp+034h]	; 3B0F1
+push eax	; 3B0F5
+lea eax, [byte esp+03Ch]	; 3B0F6
+push eax	; 3B0FA
+lea eax, [byte esp+044h]	; 3B0FB
+push eax	; 3B0FF
+call sub_B2DCA	; 3B100
+add esp, byte 0Ch	; 3B105
+push byte 0FFFFFFFFh	; 3B108
+lea eax, [byte esp+038h]	; 3B10A
+push eax	; 3B10E
+lea eax, [byte esp+040h]	; 3B10F
+push eax	; 3B113
+push edi	; 3B114
+push edi	; 3B115
+mov ecx, 3	; 3B116
+mov ebx, msg_SavedGame	; 3B11B
+mov edx, 0FFFFFFFFh	; 3B120
+mov eax, edx	; 3B125
+call MessageBox	; 3B127
+mov ebp, 0FFFFFFFFh	; 3B12C
+.1:
+test ebp, ebp	; 3B131
+jne near .6	; 3B133
+test esi, esi	; 3B139
+jne short .2	; 3B13B
+mov ecx, str_extDB	; 3B13D
+mov ebx, str_PINFO	; 3B142
+mov edx, curleague	; 3B147
+mov eax, esp	; 3B14C
+call MakePath	; 3B14E
+lea edx, [byte esp+030h]	; 3B153
+mov eax, esp	; 3B157
+call FileOpenRW	; 3B159
+mov esi, eax	; 3B15E
+.2:
+test esi, esi	; 3B160
+jne short .3	; 3B162
+mov ecx, 2	; 3B164
+mov ebx, 13h	; 3B169
+lea edx, [byte esp+040h]	; 3B16E
+mov eax, dword [byte esp+030h]	; 3B172
+call FileReadAt	; 3B176
+mov esi, eax	; 3B17B
+.3:
+lea eax, [byte esp+030h]	; 3B17D
+call FileClose	; 3B181
+test esi, esi	; 3B186
+jne short .5	; 3B188
+test byte [byte esp+040h], 4	; 3B18A
+je short .4	; 3B18F
+mov ebx, 0FFFFFFFFh	; 3B191
+mov edx, leagueteams	; 3B196
+mov eax, curleague	; 3B19B
+call CopyHumanTeamDBs	; 3B1A0
+mov esi, eax	; 3B1A5
+jmp short .5	; 3B1A7
+.4:
+lea eax, [byte esp+020h]	; 3B1A9
+mov dword [mergestatemsg+4], eax	; 3B1AD
+mov dword [mergestatemsg+8], str_HasNotBeenMerged	; 3B1B2
+lea eax, [byte esp+034h]	; 3B1BC
+push eax	; 3B1C0
+lea eax, [byte esp+03Ch]	; 3B1C1
+push eax	; 3B1C5
+lea eax, [byte esp+044h]	; 3B1C6
+push eax	; 3B1CA
+call sub_B2DCA	; 3B1CB
+add esp, byte 0Ch	; 3B1D0
+push byte 0FFFFFFFFh	; 3B1D3
+lea eax, [byte esp+038h]	; 3B1D5
+push eax	; 3B1D9
+lea eax, [byte esp+040h]	; 3B1DA
+push eax	; 3B1DE
+push esi	; 3B1DF
+push esi	; 3B1E0
+mov ecx, 3	; 3B1E1
+mov ebx, mergestatemsg	; 3B1E6
+mov edx, 0FFFFFFFFh	; 3B1EB
+mov eax, edx	; 3B1F0
+call MessageBox	; 3B1F2
+.5:
+test esi, esi	; 3B1F7
+je short .6	; 3B1F9
+lea eax, [byte esp+034h]	; 3B1FB
+push eax	; 3B1FF
+lea eax, [byte esp+03Ch]	; 3B200
+push eax	; 3B204
+lea eax, [byte esp+044h]	; 3B205
+push eax	; 3B209
+call sub_B2DCA	; 3B20A
+add esp, byte 0Ch	; 3B20F
+push byte 0FFFFFFFFh	; 3B212
+lea eax, [byte esp+038h]	; 3B214
+push eax	; 3B218
+lea eax, [byte esp+040h]	; 3B219
+push eax	; 3B21D
+push byte 0	; 3B21E
+push byte 0	; 3B220
+mov ecx, 2	; 3B222
+mov ebx, updateerrmsg	; 3B227
+mov edx, 0FFFFFFFFh	; 3B22C
+mov eax, edx	; 3B231
+call MessageBox	; 3B233
+.6:
+push byte 0	; 3B238
+mov ecx, 3Fh	; 3B23A
+mov ebx, 17h	; 3B23F
+mov edx, ecx	; 3B244
+mov eax, 2Ah	; 3B246
+call SetDialogColors	; 3B24B
+add esp, byte 44h	; 3B250
+pop ebp	; 3B253
+UpdateTeamDbs_ret:
+pop edi	; 3B254
+pop esi	; 3B255
+pop edx	; 3B256
+pop ecx	; 3B257
+pop ebx	; 3B258
+ret	; 3B259
+%endif ; C
+; C: src/pc/database_merge/UpdateTeamDbs.c (MergeLeagueFiles)
+%ifdef CBUILD
+%include "c/pc/database_merge/UpdateTeamDbs.MergeLeagueFiles.inc"
+%else
+MergeLeagueFiles:
+push dword 8Ch	; 3B25A
+call __CHK	; 3B25F
+push ebx	; 3B264
+push ecx	; 3B265
+push edx	; 3B266
+push esi	; 3B267
+push edi	; 3B268
+sub esp, byte 60h	; 3B269
+mov edx, 0FFFFFFFFh	; 3B26C
+mov dword [byte esp+044h], edx	; 3B271
+mov dword [byte esp+058h], edx	; 3B275
+mov dword [byte esp+03Ch], edx	; 3B279
+push byte 0	; 3B27D
+mov ecx, 0FAh	; 3B27F
+mov ebx, 0F8h	; 3B284
+mov edx, ecx	; 3B289
+mov eax, 0F9h	; 3B28B
+call SetDialogColors	; 3B290
+mov edx, 2	; 3B295
+mov eax, curleague	; 3B29A
+call LeagueCheckStub	; 3B29F
+xor dl, dl	; 3B2A4
+mov byte [byte_DE268], dl	; 3B2A6
+test eax, eax	; 3B2AC
+jne near .27	; 3B2AE
+push savedname	; 3B2B4
+push leaguesaved	; 3B2B9
+push leagueflags	; 3B2BE
+push humancount	; 3B2C3
+mov ecx, leaguemaster	; 3B2C8
+mov ebx, masterpw	; 3B2CD
+mov edx, leagueteams	; 3B2D2
+mov eax, curleague	; 3B2D7
+call ReadLeagueInfo	; 3B2DC
+mov edi, eax	; 3B2E1
+mov esi, eax	; 3B2E3
+mov ecx, str_extID	; 3B2E5
+mov ebx, str_PLAYER	; 3B2EA
+mov edx, curleague	; 3B2EF
+mov eax, esp	; 3B2F4
+call MakePath	; 3B2F6
+mov eax, esp	; 3B2FB
+call FileExists	; 3B2FD
+mov dword [lgplayeridfile], eax	; 3B302
+test edi, edi	; 3B307
+jne near .27	; 3B309
+mov edx, curleague	; 3B30F
+lea eax, [byte esp+020h]	; 3B314
+call strcpy_	; 3B318
+mov ecx, ds	; 3B31D
+mov ebx, str_dot	; 3B31F
+mov edx, ds	; 3B324
+lea eax, [byte esp+020h]	; 3B326
+call _fstrcspn_	; 3B32A
+xor dh, dh	; 3B32F
+mov byte [byte esp+eax+020h], dh	; 3B331
+cmp dword [leaguesaved], byte 0	; 3B335
+je short .1	; 3B33C
+lea eax, [byte esp+020h]	; 3B33E
+mov dword [msg_SavedGame_arg], eax	; 3B342
+lea eax, [byte esp+048h]	; 3B347
+push eax	; 3B34B
+lea eax, [byte esp+050h]	; 3B34C
+push eax	; 3B350
+lea eax, [byte esp+058h]	; 3B351
+push eax	; 3B355
+call sub_B2DCA	; 3B356
+add esp, byte 0Ch	; 3B35B
+push byte 0FFFFFFFFh	; 3B35E
+lea eax, [byte esp+04Ch]	; 3B360
+push eax	; 3B364
+lea eax, [byte esp+054h]	; 3B365
+push eax	; 3B369
+push edi	; 3B36A
+push edi	; 3B36B
+mov ecx, 3	; 3B36C
+mov ebx, msg_SavedGame	; 3B371
+jmp near .26	; 3B376
+.1:
+mov edx, dword [leaguemaster]	; 3B37B
+mov eax, edx	; 3B381
+shl eax, 4	; 3B383
+sub eax, edx	; 3B386
+cmp byte [nosplit eax*2+lgteamflags], 2	; 3B388
+jne short .2	; 3B390
+lea eax, [byte esp+020h]	; 3B392
+mov dword [masterctlmsg+4], eax	; 3B396
+lea eax, [byte esp+048h]	; 3B39B
+push eax	; 3B39F
+lea eax, [byte esp+050h]	; 3B3A0
+push eax	; 3B3A4
+lea eax, [byte esp+058h]	; 3B3A5
+push eax	; 3B3A9
+call sub_B2DCA	; 3B3AA
+add esp, byte 0Ch	; 3B3AF
+push byte 0FFFFFFFFh	; 3B3B2
+lea eax, [byte esp+04Ch]	; 3B3B4
+push eax	; 3B3B8
+lea eax, [byte esp+054h]	; 3B3B9
+push eax	; 3B3BD
+push edi	; 3B3BE
+push edi	; 3B3BF
+mov ecx, 3	; 3B3C0
+mov ebx, masterctlmsg	; 3B3C5
+jmp near .26	; 3B3CA
+.2:
+cmp dword [lgplayeridfile], byte 0	; 3B3CF
+je short .3	; 3B3D6
+lea eax, [byte esp+020h]	; 3B3D8
+mov dword [masteronlymsg+8], eax	; 3B3DC
+lea eax, [byte esp+048h]	; 3B3E1
+push eax	; 3B3E5
+lea eax, [byte esp+050h]	; 3B3E6
+push eax	; 3B3EA
+lea eax, [byte esp+058h]	; 3B3EB
+push eax	; 3B3EF
+call sub_B2DCA	; 3B3F0
+add esp, byte 0Ch	; 3B3F5
+push byte 0FFFFFFFFh	; 3B3F8
+lea eax, [byte esp+04Ch]	; 3B3FA
+push eax	; 3B3FE
+lea eax, [byte esp+054h]	; 3B3FF
+push eax	; 3B403
+push edi	; 3B404
+push edi	; 3B405
+mov ecx, 3	; 3B406
+mov ebx, masteronlymsg	; 3B40B
+jmp near .26	; 3B410
+.3:
+test byte [leagueflags], 4	; 3B415
+jne near .25	; 3B41C
+test edi, edi	; 3B422
+jne short .4	; 3B424
+mov ecx, str_extDB	; 3B426
+mov ebx, str_PINFO	; 3B42B
+mov edx, curleague	; 3B430
+mov eax, esp	; 3B435
+call MakePath	; 3B437
+lea edx, [byte esp+044h]	; 3B43C
+mov eax, esp	; 3B440
+call FileOpenRW	; 3B442
+mov esi, eax	; 3B447
+.4:
+test esi, esi	; 3B449
+jne short .5	; 3B44B
+mov ebx, dword [leaguemaster]	; 3B44D
+push ebx	; 3B453
+push str_02d2	; 3B454
+lea eax, [byte esp+040h]	; 3B459
+push eax	; 3B45D
+call sprintf_	; 3B45E
+add esp, byte 0Ch	; 3B463
+lea edx, [byte esp+038h]	; 3B466
+mov eax, str_Xx	; 3B46A
+call strcpy_	; 3B46F
+lea eax, [byte esp+030h]	; 3B474
+push eax	; 3B478
+lea eax, [byte esp+044h]	; 3B479
+push eax	; 3B47D
+push str_floppydrv	; 3B47E
+mov edx, dword [leaguemaster]	; 3B483
+mov ecx, curleague	; 3B489
+mov ebx, ecx	; 3B48E
+mov eax, leagueteams	; 3B490
+call LocateTeamDbCopy	; 3B495
+mov esi, eax	; 3B49A
+.5:
+test esi, esi	; 3B49C
+jne short .6	; 3B49E
+push esi	; 3B4A0
+push esi	; 3B4A1
+push esi	; 3B4A2
+push esi	; 3B4A3
+push esi	; 3B4A4
+mov ecx, 1	; 3B4A5
+mov ebx, mergingmsg	; 3B4AA
+mov edx, 0FFFFFFFFh	; 3B4AF
+mov eax, edx	; 3B4B4
+call MessageBox	; 3B4B6
+.6:
+xor ecx, ecx	; 3B4BB
+mov dword [byte esp+054h], ecx	; 3B4BD
+jmp near .15	; 3B4C1
+.7:
+mov eax, edi	; 3B4C6
+shl eax, 4	; 3B4C8
+sub eax, edi	; 3B4CB
+add eax, eax	; 3B4CD
+cmp byte [dword eax+lgteam_17], 1	; 3B4CF
+jne near .14	; 3B4D6
+test byte [dword eax+lgteamflags], 4	; 3B4DC
+jne near .14	; 3B4E3
+push edi	; 3B4E9
+push str_02d2	; 3B4EA
+lea eax, [byte esp+040h]	; 3B4EF
+push eax	; 3B4F3
+call sprintf_	; 3B4F4
+add esp, byte 0Ch	; 3B4F9
+lea edx, [byte esp+038h]	; 3B4FC
+mov eax, str_extxx	; 3B500
+call strcpy_	; 3B505
+lea eax, [byte esp+030h]	; 3B50A
+push eax	; 3B50E
+lea eax, [byte esp+038h]	; 3B50F
+push eax	; 3B513
+push str_floppydrv	; 3B514
+mov ecx, curleague	; 3B519
+mov ebx, ecx	; 3B51E
+mov edx, dword [byte esp+060h]	; 3B520
+mov eax, leagueteams	; 3B524
+call LocateTeamDbCopy	; 3B529
+mov esi, eax	; 3B52E
+test eax, eax	; 3B530
+jne short .9	; 3B532
+cmp dword [dlgsavebuf], byte 0	; 3B534
+jne short .8	; 3B53B
+push eax	; 3B53D
+push eax	; 3B53E
+push eax	; 3B53F
+push eax	; 3B540
+push eax	; 3B541
+mov ecx, 1	; 3B542
+mov ebx, mergingmsg	; 3B547
+mov edx, 0FFFFFFFFh	; 3B54C
+mov eax, edx	; 3B551
+call MessageBox	; 3B553
+.8:
+mov ecx, str_extDB	; 3B558
+mov ebx, str_PINFO	; 3B55D
+mov edx, dword [byte esp+034h]	; 3B562
+mov eax, esp	; 3B566
+call MakePath	; 3B568
+lea edx, [byte esp+058h]	; 3B56D
+mov eax, esp	; 3B571
+call FileOpenRW	; 3B573
+mov esi, eax	; 3B578
+.9:
+test esi, esi	; 3B57A
+jne short .10	; 3B57C
+mov eax, dword [byte esp+054h]	; 3B57E
+cmp eax, dword [leaguemaster]	; 3B582
+je short .10	; 3B588
+push eax	; 3B58A
+push str_Xx	; 3B58B
+mov ecx, str_extxx	; 3B590
+mov ebx, dword [byte esp+048h]	; 3B595
+mov edx, dword [byte esp+03Ch]	; 3B599
+mov eax, curleague	; 3B59D
+call MergeTeamDbs	; 3B5A2
+mov esi, eax	; 3B5A7
+test eax, eax	; 3B5A9
+jne short .10	; 3B5AB
+lea eax, [byte esp+05Ch]	; 3B5AD
+push eax	; 3B5B1
+mov eax, dword [byte esp+058h]	; 3B5B2
+push eax	; 3B5B6
+mov ecx, str_Xx	; 3B5B7
+mov ebx, str_extxx	; 3B5BC
+mov edx, curleague	; 3B5C1
+mov eax, dword [byte esp+03Ch]	; 3B5C6
+call MergeScheduleDb	; 3B5CA
+mov esi, eax	; 3B5CF
+.10:
+test esi, esi	; 3B5D1
+jne short .11	; 3B5D3
+mov esi, dword [byte esp+054h]	; 3B5D5
+shl esi, 4	; 3B5D9
+sub esi, dword [byte esp+054h]	; 3B5DC
+add esi, esi	; 3B5E0
+mov eax, dword [byte esp+030h]	; 3B5E2
+mov dword [dword esi+lgteamver], eax	; 3B5E6
+or byte [dword esi+lgteamflags], 4	; 3B5EC
+mov edx, leagueteams	; 3B5F3
+add edx, esi	; 3B5F8
+mov ebx, dword [byte esp+054h]	; 3B5FA
+mov eax, dword [byte esp+044h]	; 3B5FE
+call WriteLeagueTeamEntry	; 3B602
+mov esi, eax	; 3B607
+.11:
+test esi, esi	; 3B609
+jne short .12	; 3B60B
+mov eax, dword [byte esp+054h]	; 3B60D
+shl eax, 4	; 3B611
+mov ebx, dword [byte esp+054h]	; 3B614
+sub eax, ebx	; 3B618
+add eax, eax	; 3B61A
+mov edx, leagueteams	; 3B61C
+add edx, eax	; 3B621
+mov eax, dword [byte esp+058h]	; 3B623
+call WriteLeagueTeamEntry	; 3B627
+mov esi, eax	; 3B62C
+.12:
+test esi, esi	; 3B62E
+jne short .13	; 3B630
+cmp dword [byte esp+034h], curleague	; 3B632
+je short .13	; 3B63A
+mov dword [leagueflags], 4	; 3B63C
+mov ecx, 2	; 3B646
+mov ebx, 13h	; 3B64B
+mov edx, leagueflags	; 3B650
+mov eax, dword [byte esp+058h]	; 3B655
+call FileWriteAt	; 3B659
+mov esi, eax	; 3B65E
+.13:
+lea eax, [byte esp+058h]	; 3B660
+call FileClose	; 3B664
+test esi, esi	; 3B669
+jne short .14	; 3B66B
+mov dword [leagueflags], 8	; 3B66D
+mov ecx, 2	; 3B677
+mov ebx, 13h	; 3B67C
+mov edx, leagueflags	; 3B681
+mov eax, dword [byte esp+044h]	; 3B686
+call FileWriteAt	; 3B68A
+mov esi, eax	; 3B68F
+.14:
+inc dword [byte esp+054h]	; 3B691
+.15:
+mov edi, dword [byte esp+054h]	; 3B695
+cmp edi, byte 1Ah	; 3B699
+jge short .16	; 3B69C
+test esi, esi	; 3B69E
+je near MergeLeagueFiles.7	; 3B6A0
+.16:
+test esi, esi	; 3B6A6
+jne short .17	; 3B6A8
+push curleague	; 3B6AA
+mov eax, dword [leaguedbnames+10h]	; 3B6AF
+mov ecx, dword [byte esp+044h]	; 3B6B4
+mov ebx, str_extDB	; 3B6B8
+mov edx, str_Xx	; 3B6BD
+call CopyFile	; 3B6C2
+mov esi, eax	; 3B6C7
+.17:
+test esi, esi	; 3B6C9
+jne short .18	; 3B6CB
+push curleague	; 3B6CD
+mov eax, dword [leaguedbnames+14h]	; 3B6D2
+mov ecx, dword [byte esp+044h]	; 3B6D7
+mov ebx, str_extDB	; 3B6DB
+mov edx, str_Xx	; 3B6E0
+call CopyFile	; 3B6E5
+mov esi, eax	; 3B6EA
+.18:
+test esi, esi	; 3B6EC
+jne short .19	; 3B6EE
+push curleague	; 3B6F0
+mov eax, dword [leaguedbnames+18h]	; 3B6F5
+mov ecx, dword [byte esp+044h]	; 3B6FA
+mov ebx, str_extDB	; 3B6FE
+mov edx, str_Xx	; 3B703
+call CopyFile	; 3B708
+mov esi, eax	; 3B70D
+.19:
+call RestoreDialogBg	; 3B70F
+test esi, esi	; 3B714
+jne short .20	; 3B716
+mov ebx, dword [leaguedbnames+18h]	; 3B718
+mov ecx, str_extDB	; 3B71E
+mov edx, curleague	; 3B723
+mov eax, esp	; 3B728
+call MakePath	; 3B72A
+lea edx, [byte esp+03Ch]	; 3B72F
+mov eax, esp	; 3B733
+call FileOpenRead	; 3B735
+mov esi, eax	; 3B73A
+.20:
+test esi, esi	; 3B73C
+jne short .21	; 3B73E
+mov ecx, 2	; 3B740
+xor ebx, ebx	; 3B745
+lea edx, [byte esp+05Ch]	; 3B747
+mov eax, dword [byte esp+03Ch]	; 3B74B
+call FileReadAt	; 3B74F
+mov esi, eax	; 3B754
+.21:
+lea eax, [byte esp+03Ch]	; 3B756
+call FileClose	; 3B75A
+test esi, esi	; 3B75F
+jne short .22	; 3B761
+push esi	; 3B763
+push esi	; 3B764
+push esi	; 3B765
+push esi	; 3B766
+push esi	; 3B767
+mov ecx, 1	; 3B768
+mov ebx, updschedmsg	; 3B76D
+mov edx, 0FFFFFFFFh	; 3B772
+mov eax, edx	; 3B777
+call MessageBox	; 3B779
+push byte 7	; 3B77E
+push byte 0FFFFFFFFh	; 3B780
+mov ebx, dword [byte esp+062h]	; 3B782
+sar ebx, 10h	; 3B786
+mov ecx, leagueteams	; 3B789
+mov edx, str_extDB	; 3B78E
+mov eax, curleague	; 3B793
+call UpdateSeasonSchedule	; 3B798
+mov esi, eax	; 3B79D
+.22:
+test esi, esi	; 3B79F
+jne short .23	; 3B7A1
+mov dword [leagueflags], 4	; 3B7A3
+mov ecx, 2	; 3B7AD
+mov ebx, 13h	; 3B7B2
+mov edx, leagueflags	; 3B7B7
+mov eax, dword [byte esp+044h]	; 3B7BC
+call FileWriteAt	; 3B7C0
+mov esi, eax	; 3B7C5
+.23:
+call RestoreDialogBg	; 3B7C7
+lea eax, [byte esp+044h]	; 3B7CC
+call FileClose	; 3B7D0
+lea eax, [byte esp+048h]	; 3B7D5
+push eax	; 3B7D9
+lea eax, [byte esp+050h]	; 3B7DA
+push eax	; 3B7DE
+lea eax, [byte esp+05Ch]	; 3B7DF
+push eax	; 3B7E3
+call sub_B2DCA	; 3B7E4
+add esp, byte 0Ch	; 3B7E9
+cmp esi, byte 4	; 3B7EC
+jne short .24	; 3B7EF
+cmp dword [leagueflags], byte 8	; 3B7F1
+jne near .27	; 3B7F8
+push byte 0FFFFFFFFh	; 3B7FE
+lea eax, [byte esp+04Ch]	; 3B800
+push eax	; 3B804
+lea eax, [byte esp+054h]	; 3B805
+push eax	; 3B809
+push byte 0	; 3B80A
+push byte 0	; 3B80C
+mov ecx, 3	; 3B80E
+mov ebx, mergeincompletemsg	; 3B813
+jmp short .26	; 3B818
+.24:
+test esi, esi	; 3B81A
+je short .27	; 3B81C
+push byte 0FFFFFFFFh	; 3B81E
+lea eax, [byte esp+04Ch]	; 3B820
+push eax	; 3B824
+lea eax, [byte esp+054h]	; 3B825
+push eax	; 3B829
+push byte 0	; 3B82A
+push byte 0	; 3B82C
+mov ecx, 1	; 3B82E
+mov ebx, mergeerrmsg	; 3B833
+jmp short .26	; 3B838
+.25:
+lea eax, [byte esp+020h]	; 3B83A
+mov dword [mergestatemsg+4], eax	; 3B83E
+mov dword [mergestatemsg+8], str_IsAlreadyMerged	; 3B843
+lea eax, [byte esp+048h]	; 3B84D
+push eax	; 3B851
+lea eax, [byte esp+050h]	; 3B852
+push eax	; 3B856
+lea eax, [byte esp+05Ch]	; 3B857
+push eax	; 3B85B
+call sub_B2DCA	; 3B85C
+add esp, byte 0Ch	; 3B861
+push byte 0FFFFFFFFh	; 3B864
+lea eax, [byte esp+04Ch]	; 3B866
+push eax	; 3B86A
+lea eax, [byte esp+054h]	; 3B86B
+push eax	; 3B86F
+push edi	; 3B870
+push edi	; 3B871
+mov ecx, 3	; 3B872
+mov ebx, mergestatemsg	; 3B877
+.26:
+mov edx, 0FFFFFFFFh	; 3B87C
+mov eax, edx	; 3B881
+call MessageBox	; 3B883
+.27:
+push byte 0	; 3B888
+mov ecx, 3Fh	; 3B88A
+mov ebx, 17h	; 3B88F
+mov edx, ecx	; 3B894
+mov eax, 2Ah	; 3B896
+call SetDialogColors	; 3B89B
+mov eax, dword [byte_DE268-3]	; 3B8A0
+sar eax, 18h	; 3B8A5
+add esp, byte 60h	; 3B8A8
+jmp near UpdateTeamDbs_ret	; 3B8AB
+%endif ; C
+; C: src/pc/database_merge/MergeUpdateDbs.c
+%ifdef CBUILD
+%include "c/pc/database_merge/MergeUpdateDbs.inc"
+%else
+MergeUpdateDbs:
+push dword 24h	; 3B8B0
+call __CHK	; 3B8B5
+push ebx	; 3B8BA
+push ecx	; 3B8BB
+push edx	; 3B8BC
+push esi	; 3B8BD
+sub esp, byte 4	; 3B8BE
+call MergeLeagueFiles	; 3B8C1
+mov edx, eax	; 3B8C6
+mov esi, eax	; 3B8C8
+cmp dword [leaguesaved], byte 0	; 3B8CA
+jne near .2	; 3B8D1
+mov ebx, dword [leaguemaster]	; 3B8D7
+mov eax, ebx	; 3B8DD
+shl eax, 4	; 3B8DF
+sub eax, ebx	; 3B8E2
+cmp byte [nosplit eax*2+lgteamflags], 2	; 3B8E4
+je near .2	; 3B8EC
+mov ecx, dword [lgplayeridfile]	; 3B8F2
+test ecx, ecx	; 3B8F8
+jne near .2	; 3B8FA
+test edx, edx	; 3B900
+je short .1	; 3B902
+push ecx	; 3B904
+call sub_B392C	; 3B905
+add esp, byte 4	; 3B90A
+mov bh, 17h	; 3B90D
+mov byte [esp], bh	; 3B90F
+mov byte [byte esp+01h], bh	; 3B912
+mov byte [byte esp+02h], bh	; 3B916
+mov eax, esp	; 3B91A
+push eax	; 3B91C
+push byte 1	; 3B91D
+push dword 0F8h	; 3B91F
+call sub_B4B88	; 3B924
+add esp, byte 0Ch	; 3B929
+mov al, 2Ah	; 3B92C
+mov byte [esp], al	; 3B92E
+mov byte [byte esp+01h], al	; 3B931
+mov byte [byte esp+02h], al	; 3B935
+mov eax, esp	; 3B939
+push eax	; 3B93B
+push byte 1	; 3B93C
+push dword 0F9h	; 3B93E
+call sub_B4B88	; 3B943
+add esp, byte 0Ch	; 3B948
+mov dh, 3Fh	; 3B94B
+mov byte [esp], dh	; 3B94D
+mov byte [byte esp+01h], dh	; 3B950
+mov byte [byte esp+02h], dh	; 3B954
+mov eax, esp	; 3B958
+push eax	; 3B95A
+push byte 1	; 3B95B
+push dword 0FAh	; 3B95D
+call sub_B4B88	; 3B962
+add esp, byte 0Ch	; 3B967
+.1:
+call UpdateTeamDbs	; 3B96A
+test esi, esi	; 3B96F
+je short .2	; 3B971
+push byte 0	; 3B973
+call sub_B392C	; 3B975
+add esp, byte 4	; 3B97A
+xor cl, cl	; 3B97D
+mov byte [esp], cl	; 3B97F
+mov byte [byte esp+01h], cl	; 3B982
+mov byte [byte esp+02h], cl	; 3B986
+mov eax, esp	; 3B98A
+push eax	; 3B98C
+push byte 1	; 3B98D
+push dword 0F8h	; 3B98F
+call sub_B4B88	; 3B994
+add esp, byte 0Ch	; 3B999
+mov eax, esp	; 3B99C
+push eax	; 3B99E
+push byte 1	; 3B99F
+push dword 0F9h	; 3B9A1
+call sub_B4B88	; 3B9A6
+add esp, byte 0Ch	; 3B9AB
+mov eax, esp	; 3B9AE
+push eax	; 3B9B0
+push byte 1	; 3B9B1
+push dword 0FAh	; 3B9B3
+call sub_B4B88	; 3B9B8
+add esp, byte 0Ch	; 3B9BD
+.2:
+mov eax, esi	; 3B9C0
+add esp, byte 4	; 3B9C2
+pop esi	; 3B9C5
+pop edx	; 3B9C6
+pop ecx	; 3B9C7
+pop ebx	; 3B9C8
+ret	; 3B9C9
+%endif ; C
+; C: src/pc/database_merge/UpdateTeamDbs.c (RebuildLeagueDbs)
+%ifdef CBUILD
+%include "c/pc/database_merge/UpdateTeamDbs.RebuildLeagueDbs.inc"
+%else
+RebuildLeagueDbs:
+push dword 60h	; 3B9CA
+call __CHK	; 3B9CF
+push ebx	; 3B9D4
+push ecx	; 3B9D5
+push edx	; 3B9D6
+push esi	; 3B9D7
+push edi	; 3B9D8
+sub esp, byte 34h	; 3B9D9
+mov dword [byte esp+020h], 0FFFFFFFFh	; 3B9DC
+push byte 0	; 3B9E4
+mov ecx, 0FAh	; 3B9E6
+mov ebx, 0F8h	; 3B9EB
+mov edx, ecx	; 3B9F0
+mov eax, 0F9h	; 3B9F2
+call SetDialogColors	; 3B9F7
+mov edx, 2	; 3B9FC
+mov eax, curleague	; 3BA01
+call LeagueCheckStub	; 3BA06
+mov ecx, eax	; 3BA0B
+test eax, eax	; 3BA0D
+jne near .5	; 3BA0F
+push savedname	; 3BA15
+push leaguesaved	; 3BA1A
+push leagueflags	; 3BA1F
+push humancount	; 3BA24
+mov ecx, leaguemaster	; 3BA29
+mov ebx, masterpw	; 3BA2E
+mov edx, leagueteams	; 3BA33
+mov eax, curleague	; 3BA38
+call ReadLeagueInfo	; 3BA3D
+mov ecx, eax	; 3BA42
+xor esi, esi	; 3BA44
+mov dword [byte esp+02Ch], esi	; 3BA46
+jmp short .3	; 3BA4A
+.1:
+mov eax, edi	; 3BA4C
+shl eax, 4	; 3BA4E
+sub eax, edi	; 3BA51
+cmp byte [nosplit eax*2+lgteam_17], 1	; 3BA53
+jne short .2	; 3BA5B
+mov edx, leagueteams	; 3BA5D
+mov eax, edi	; 3BA62
+call AskTeamPassword	; 3BA64
+mov esi, eax	; 3BA69
+.2:
+inc dword [byte esp+02Ch]	; 3BA6B
+.3:
+mov edi, dword [byte esp+02Ch]	; 3BA6F
+cmp edi, byte 1Ah	; 3BA73
+jge short .4	; 3BA76
+test esi, esi	; 3BA78
+je short RebuildLeagueDbs.1	; 3BA7A
+.4:
+test esi, esi	; 3BA7C
+jne short .5	; 3BA7E
+mov eax, dword [leaguemaster]	; 3BA80
+mov ebx, masterpw	; 3BA85
+mov edx, leagueteams	; 3BA8A
+call AskMasterPassword	; 3BA8F
+mov esi, eax	; 3BA94
+.5:
+test ecx, ecx	; 3BA96
+jne near .8	; 3BA98
+test esi, esi	; 3BA9E
+jne near .8	; 3BAA0
+mov ecx, str_extDB	; 3BAA6
+mov ebx, str_PINFO	; 3BAAB
+mov edx, curleague	; 3BAB0
+mov eax, esp	; 3BAB5
+call MakePath	; 3BAB7
+lea edx, [byte esp+020h]	; 3BABC
+mov eax, esp	; 3BAC0
+call FileOpenRW	; 3BAC2
+mov ecx, eax	; 3BAC7
+test eax, eax	; 3BAC9
+jne short .6	; 3BACB
+mov ecx, 2	; 3BACD
+mov ebx, 13h	; 3BAD2
+lea edx, [byte esp+030h]	; 3BAD7
+mov eax, dword [byte esp+020h]	; 3BADB
+call FileReadAt	; 3BADF
+mov ecx, eax	; 3BAE4
+.6:
+lea eax, [byte esp+020h]	; 3BAE6
+call FileClose	; 3BAEA
+test ecx, ecx	; 3BAEF
+jne short .7	; 3BAF1
+mov edx, curleague	; 3BAF3
+mov eax, esp	; 3BAF8
+call strcpy_	; 3BAFA
+mov ebx, str_SAV2	; 3BAFF
+mov edx, str_GAME2	; 3BB04
+mov eax, esp	; 3BB09
+call DeleteFiles	; 3BB0B
+mov ebx, 0FFFFFFFFh	; 3BB10
+mov edx, leagueteams	; 3BB15
+mov eax, curleague	; 3BB1A
+call CopyHumanTeamDBs	; 3BB1F
+mov ecx, eax	; 3BB24
+.7:
+test ecx, ecx	; 3BB26
+je short .8	; 3BB28
+lea eax, [byte esp+024h]	; 3BB2A
+push eax	; 3BB2E
+lea eax, [byte esp+02Ch]	; 3BB2F
+push eax	; 3BB33
+lea eax, [byte esp+034h]	; 3BB34
+push eax	; 3BB38
+call sub_B2DCA	; 3BB39
+add esp, byte 0Ch	; 3BB3E
+push byte 0FFFFFFFFh	; 3BB41
+lea eax, [byte esp+028h]	; 3BB43
+push eax	; 3BB47
+lea eax, [byte esp+030h]	; 3BB48
+push eax	; 3BB4C
+push byte 0	; 3BB4D
+push byte 0	; 3BB4F
+mov ecx, 2	; 3BB51
+mov ebx, updateerrmsg	; 3BB56
+mov edx, 0FFFFFFFFh	; 3BB5B
+mov eax, edx	; 3BB60
+call MessageBox	; 3BB62
+.8:
+push byte 0	; 3BB67
+mov ecx, 3Fh	; 3BB69
+mov ebx, 17h	; 3BB6E
+mov edx, ecx	; 3BB73
+mov eax, 2Ah	; 3BB75
+call SetDialogColors	; 3BB7A
+add esp, byte 34h	; 3BB7F
+jmp near UpdateTeamDbs_ret	; 3BB82
+%endif ; C
+ExportTeamToFloppy:
+push dword 130h	; 3BB87
+call __CHK	; 3BB8C
+push esi	; 3BB91
+push edi	; 3BB92
+push ebp	; 3BB93
+sub esp, 10Ch	; 3BB94
+mov edi, eax	; 3BB9A
+mov dword [dword esp+0F8h], edx	; 3BB9C
+mov dword [dword esp+0F4h], ebx	; 3BBA3
+mov dword [dword esp+0FCh], ecx	; 3BBAA
+mov edx, 0FFFFFFFFh	; 3BBB1
+mov dword [dword esp+0D4h], edx	; 3BBB6
+mov ebx, edx	; 3BBBD
+mov dword [dword esp+0D0h], edx	; 3BBBF
+mov dword [dword esp+0E8h], edx	; 3BBC6
+mov esi, edx	; 3BBCD
+mov dword [dword esp+0CCh], edx	; 3BBCF
+mov ebp, ecx	; 3BBD6
+shl ebp, 4	; 3BBD8
+sub ebp, ecx	; 3BBDB
+add ebp, ebp	; 3BBDD
+add ebp, dword [dword esp+011Ch]	; 3BBDF
+xor esi, ebx	; 3BBE6
+cmp dword [dword esp+0124h], byte 0	; 3BBE8
+je near .12	; 3BBF0
+xor ecx, ecx	; 3BBF6
+mov dword [dword esp+0ECh], ecx	; 3BBF8
+.1:
+xor esi, esi	; 3BBFF
+mov dword [dword esp+0F0h], esi	; 3BC01
+mov dword [dword esp+0100h], esi	; 3BC08
+mov ecx, str_extDB	; 3BC0F
+mov ebx, str_PINFO	; 3BC14
+mov edx, str_floppydrv	; 3BC19
+lea eax, [byte esp+040h]	; 3BC1E
+call MakePath	; 3BC22
+lea edx, [dword esp+0E8h]	; 3BC27
+lea eax, [byte esp+040h]	; 3BC2E
+call FileOpenRW	; 3BC32
+test eax, eax	; 3BC37
+jne near .5	; 3BC39
+mov ebx, dword [dword esp+0FCh]	; 3BC3F
+lea edx, [dword esp+080h]	; 3BC46
+mov eax, dword [dword esp+0E8h]	; 3BC4D
+call ReadLeagueTeamEntry	; 3BC54
+mov esi, eax	; 3BC59
+test eax, eax	; 3BC5B
+jne short .2	; 3BC5D
+mov ecx, str_extID	; 3BC5F
+mov ebx, str_PLAYER	; 3BC64
+mov edx, str_floppydrv	; 3BC69
+lea eax, [byte esp+040h]	; 3BC6E
+call MakePath	; 3BC72
+lea edx, [dword esp+0CCh]	; 3BC77
+lea eax, [byte esp+040h]	; 3BC7E
+call FileOpenRead	; 3BC82
+mov esi, eax	; 3BC87
+.2:
+test esi, esi	; 3BC89
+jne short .3	; 3BC8B
+mov ecx, 0Bh	; 3BC8D
+mov ebx, 1	; 3BC92
+lea edx, [dword esp+0C0h]	; 3BC97
+mov eax, dword [dword esp+0CCh]	; 3BC9E
+call FileReadAt	; 3BCA5
+mov esi, eax	; 3BCAA
+.3:
+test esi, esi	; 3BCAC
+jne short .4	; 3BCAE
+mov ecx, 0Dh	; 3BCB0
+mov ebx, 0Ch	; 3BCB5
+lea edx, [dword esp+0B0h]	; 3BCBA
+mov eax, dword [dword esp+0CCh]	; 3BCC1
+call FileReadAt	; 3BCC8
+mov esi, eax	; 3BCCD
+.4:
+lea eax, [dword esp+0CCh]	; 3BCCF
+call FileClose	; 3BCD6
+test esi, esi	; 3BCDB
+jne short .6	; 3BCDD
+mov edx, ebp	; 3BCDF
+lea eax, [dword esp+0C0h]	; 3BCE1
+call strcmp_	; 3BCE8
+mov ebx, eax	; 3BCED
+mov edx, edi	; 3BCEF
+lea eax, [dword esp+0B0h]	; 3BCF1
+call strcmp_	; 3BCF8
+add ebx, eax	; 3BCFD
+mov dword [dword esp+0100h], ebx	; 3BCFF
+jne short .6	; 3BD06
+mov dword [dword esp+0ECh], 1	; 3BD08
+jmp short .6	; 3BD13
+.5:
+mov dword [dword esp+0F0h], 0FFFFFFFFh	; 3BD15
+.6:
+cmp dword [dword esp+0100h], byte 0	; 3BD20
+je near .8	; 3BD28
+lea ebx, [dword esp+0B0h]	; 3BD2E
+lea edx, [dword esp+0C0h]	; 3BD35
+mov eax, esp	; 3BD3C
+call FmtFromLeague	; 3BD3E
+mov eax, esp	; 3BD43
+mov dword [msg_WrongDisk_arg], eax	; 3BD45
+lea eax, [dword esp+0DCh]	; 3BD4A
+push eax	; 3BD51
+lea eax, [dword esp+0E4h]	; 3BD52
+push eax	; 3BD59
+lea eax, [dword esp+0E0h]	; 3BD5A
+push eax	; 3BD61
+call sub_B2DCA	; 3BD62
+add esp, byte 0Ch	; 3BD67
+push byte 0FFFFFFFFh	; 3BD6A
+lea eax, [dword esp+0E0h]	; 3BD6C
+push eax	; 3BD73
+lea eax, [dword esp+0E8h]	; 3BD74
+push eax	; 3BD7B
+push byte 2	; 3BD7C
+push btn_WrongDisk	; 3BD7E
+mov ecx, 3	; 3BD83
+mov ebx, msg_WrongDisk	; 3BD88
+mov edx, 0FFFFFFFFh	; 3BD8D
+mov eax, edx	; 3BD92
+call MessageBox	; 3BD94
+mov dword [dword esp+0D8h], eax	; 3BD99
+test eax, eax	; 3BDA0
+jne short .7	; 3BDA2
+mov dword [dword esp+0ECh], 0FFFFFFFFh	; 3BDA4
+jmp short .8	; 3BDAF
+.7:
+mov esi, 0FFFFFFFFh	; 3BDB1
+.8:
+test esi, esi	; 3BDB6
+jne near .11	; 3BDB8
+test byte [byte ebp+018h], 2	; 3BDBE
+je near .10	; 3BDC2
+cmp dword [dword esp+0F0h], byte 0	; 3BDC8
+je near .10	; 3BDD0
+mov ebx, 1	; 3BDD6
+mov edx, ebp	; 3BDDB
+mov eax, edi	; 3BDDD
+call WaitLeagueFloppy	; 3BDDF
+mov esi, eax	; 3BDE4
+test eax, eax	; 3BDE6
+jle near .11	; 3BDE8
+xor esi, eax	; 3BDEE
+lea eax, [dword esp+0DCh]	; 3BDF0
+push eax	; 3BDF7
+lea eax, [dword esp+0E4h]	; 3BDF8
+push eax	; 3BDFF
+lea eax, [dword esp+0ECh]	; 3BE00
+push eax	; 3BE07
+call sub_B2DCA	; 3BE08
+add esp, byte 0Ch	; 3BE0D
+push byte 0FFFFFFFFh	; 3BE10
+lea eax, [dword esp+0E0h]	; 3BE12
+push eax	; 3BE19
+lea eax, [dword esp+0E8h]	; 3BE1A
+push eax	; 3BE21
+push byte 2	; 3BE22
+push newfloppybtns	; 3BE24
+mov ecx, 2	; 3BE29
+mov ebx, newfloppymsg	; 3BE2E
+mov edx, 0FFFFFFFFh	; 3BE33
+mov eax, edx	; 3BE38
+call MessageBox	; 3BE3A
+mov dword [dword esp+0D8h], eax	; 3BE3F
+test eax, eax	; 3BE46
+jne short .9	; 3BE48
+mov byte [dword esp+096h], 1	; 3BE4A
+mov dword [dword esp+0ECh], 1	; 3BE52
+.9:
+cmp dword [dword esp+0D8h], byte 0	; 3BE5D
+jge short .11	; 3BE65
+mov esi, 0FFFFFFFFh	; 3BE67
+jmp short .11	; 3BE6C
+.10:
+mov byte [dword esp+096h], 1	; 3BE6E
+xor esi, esi	; 3BE76
+mov dword [dword esp+0ECh], 1	; 3BE78
+.11:
+lea eax, [dword esp+0E8h]	; 3BE83
+call FileClose	; 3BE8A
+cmp dword [dword esp+0ECh], byte 0	; 3BE8F
+jne short .12	; 3BE97
+test esi, esi	; 3BE99
+je near ExportTeamToFloppy.1	; 3BE9B
+.12:
+test esi, esi	; 3BEA1
+jne near .35	; 3BEA3
+cmp dword [dword esp+0120h], byte 0	; 3BEA9
+jne short .13	; 3BEB1
+mov bl, byte [byte ebp+016h]	; 3BEB3
+cmp bl, 1	; 3BEB6
+jne near .33	; 3BEB9
+cmp bl, byte [dword esp+096h]	; 3BEBF
+jne near .33	; 3BEC6
+.13:
+mov eax, dword [dword esp+0FCh]	; 3BECC
+shl eax, 4	; 3BED3
+sub eax, dword [dword esp+0FCh]	; 3BED6
+add eax, eax	; 3BEDD
+add eax, dword [dword esp+011Ch]	; 3BEDF
+call MsgCopyingDatabases	; 3BEE6
+xor ecx, ecx	; 3BEEB
+mov dword [dword esp+0E4h], ecx	; 3BEED
+jmp short .15	; 3BEF4
+.14:
+mov edx, str_floppydrv	; 3BEF6
+lea eax, [byte esp+040h]	; 3BEFB
+call strcpy_	; 3BEFF
+mov edx, dword [dword esp+0E4h]	; 3BF04
+mov edx, dword [nosplit edx*4+leaguedbnames]	; 3BF0B
+lea eax, [byte esp+060h]	; 3BF12
+call strcpy_	; 3BF16
+mov ebx, str_wildcard	; 3BF1B
+lea edx, [byte esp+060h]	; 3BF20
+lea eax, [byte esp+040h]	; 3BF24
+call DeleteFiles	; 3BF28
+inc dword [dword esp+0E4h]	; 3BF2D
+.15:
+cmp dword [dword esp+0E4h], byte 7	; 3BF34
+jge short .16	; 3BF3C
+test esi, esi	; 3BF3E
+je short ExportTeamToFloppy.14	; 3BF40
+.16:
+mov edx, str_floppydrv	; 3BF42
+lea eax, [byte esp+040h]	; 3BF47
+call strcpy_	; 3BF4B
+mov edx, str_PINFO	; 3BF50
+lea eax, [byte esp+060h]	; 3BF55
+call strcpy_	; 3BF59
+mov ebx, str_wildcard	; 3BF5E
+lea edx, [byte esp+060h]	; 3BF63
+lea eax, [byte esp+040h]	; 3BF67
+call DeleteFiles	; 3BF6B
+mov edx, str_floppydrv	; 3BF70
+lea eax, [byte esp+040h]	; 3BF75
+call strcpy_	; 3BF79
+mov edx, str_PLAYER	; 3BF7E
+lea eax, [byte esp+060h]	; 3BF83
+call strcpy_	; 3BF87
+mov ebx, str_ID	; 3BF8C
+lea edx, [byte esp+060h]	; 3BF91
+lea eax, [byte esp+040h]	; 3BF95
+call DeleteFiles	; 3BF99
+xor edx, edx	; 3BF9E
+mov dword [dword esp+0E4h], edx	; 3BFA0
+jmp short .19	; 3BFA7
+.17:
+push str_floppydrv	; 3BFA9
+mov eax, dword [nosplit ecx*4+leaguedbnames]	; 3BFAE
+mov ecx, edi	; 3BFB5
+mov ebx, dword [dword esp+0F8h]	; 3BFB7
+mov edx, dword [dword esp+0FCh]	; 3BFBE
+call CopyFile	; 3BFC5
+mov esi, eax	; 3BFCA
+test eax, eax	; 3BFCC
+jne short .18	; 3BFCE
+push str_floppydrv	; 3BFD0
+mov eax, dword [dword esp+0E8h]	; 3BFD5
+mov eax, dword [nosplit eax*4+leaguedbnames]	; 3BFDC
+mov ecx, edi	; 3BFE3
+mov ebx, str_extDB	; 3BFE5
+mov edx, ebx	; 3BFEA
+call CopyFile	; 3BFEC
+mov esi, eax	; 3BFF1
+.18:
+inc dword [dword esp+0E4h]	; 3BFF3
+.19:
+mov ecx, dword [dword esp+0E4h]	; 3BFFA
+cmp ecx, byte 7	; 3C001
+jge short .20	; 3C004
+test esi, esi	; 3C006
+je short ExportTeamToFloppy.17	; 3C008
+.20:
+test esi, esi	; 3C00A
+jne short .21	; 3C00C
+push str_floppydrv	; 3C00E
+mov ecx, edi	; 3C013
+mov ebx, str_extDB	; 3C015
+mov edx, ebx	; 3C01A
+mov eax, str_PINFO	; 3C01C
+call CopyFile	; 3C021
+mov esi, eax	; 3C026
+.21:
+test esi, esi	; 3C028
+jne short .22	; 3C02A
+mov ecx, str_SET2	; 3C02C
+mov ebx, str_GAME4	; 3C031
+mov edx, edi	; 3C036
+lea eax, [byte esp+040h]	; 3C038
+call MakePath	; 3C03C
+mov ecx, str_SET2	; 3C041
+mov ebx, str_GAME4	; 3C046
+mov edx, str_floppydrv	; 3C04B
+lea eax, [byte esp+060h]	; 3C050
+call MakePath	; 3C054
+lea edx, [byte esp+060h]	; 3C059
+lea eax, [byte esp+040h]	; 3C05D
+call CopyGameSettings	; 3C061
+mov esi, eax	; 3C066
+.22:
+inc dword [byte ebp+01Ah]	; 3C068
+mov byte [byte ebp+016h], 2	; 3C06B
+or byte [byte ebp+018h], 2	; 3C06F
+test esi, esi	; 3C073
+jne short .23	; 3C075
+mov ecx, str_extID	; 3C077
+mov ebx, str_PLAYER	; 3C07C
+mov edx, str_floppydrv	; 3C081
+lea eax, [byte esp+040h]	; 3C086
+call MakePath	; 3C08A
+lea edx, [dword esp+0D4h]	; 3C08F
+lea eax, [byte esp+040h]	; 3C096
+call FileCreate	; 3C09A
+mov esi, eax	; 3C09F
+.23:
+test esi, esi	; 3C0A1
+jne short .24	; 3C0A3
+mov al, byte [dword esp+0FCh]	; 3C0A5
+mov byte [dword esp+0108h], al	; 3C0AC
+mov ecx, 1	; 3C0B3
+xor ebx, ebx	; 3C0B8
+lea edx, [dword esp+0108h]	; 3C0BA
+mov eax, dword [dword esp+0D4h]	; 3C0C1
+call FileWriteAt	; 3C0C8
+mov esi, eax	; 3C0CD
+.24:
+test esi, esi	; 3C0CF
+jne short .25	; 3C0D1
+mov ecx, 0Bh	; 3C0D3
+mov ebx, 0FFFFFFFFh	; 3C0D8
+mov edx, ebp	; 3C0DD
+mov eax, dword [dword esp+0D4h]	; 3C0DF
+call FileWriteAt	; 3C0E6
+mov esi, eax	; 3C0EB
+.25:
+test esi, esi	; 3C0ED
+jne short .26	; 3C0EF
+mov ecx, 0Dh	; 3C0F1
+mov ebx, 0FFFFFFFFh	; 3C0F6
+mov edx, edi	; 3C0FB
+mov eax, dword [dword esp+0D4h]	; 3C0FD
+call FileWriteAt	; 3C104
+mov esi, eax	; 3C109
+.26:
+test esi, esi	; 3C10B
+jne short .27	; 3C10D
+lea edx, [byte ebp+01Ah]	; 3C10F
+mov ecx, 4	; 3C112
+mov ebx, 0FFFFFFFFh	; 3C117
+mov eax, dword [dword esp+0D4h]	; 3C11C
+call FileWriteAt	; 3C123
+mov esi, eax	; 3C128
+.27:
+lea eax, [dword esp+0D4h]	; 3C12A
+call FileClose	; 3C131
+test esi, esi	; 3C136
+jne short .28	; 3C138
+mov ecx, str_extDB	; 3C13A
+mov ebx, str_PINFO	; 3C13F
+mov edx, str_floppydrv	; 3C144
+lea eax, [byte esp+040h]	; 3C149
+call MakePath	; 3C14D
+lea edx, [dword esp+0E8h]	; 3C152
+lea eax, [byte esp+040h]	; 3C159
+call FileOpenWrite	; 3C15D
+mov esi, eax	; 3C162
+.28:
+test esi, esi	; 3C164
+jne short .29	; 3C166
+xor edx, edx	; 3C168
+mov dword [dword esp+0104h], edx	; 3C16A
+mov ecx, 2	; 3C171
+mov ebx, 13h	; 3C176
+lea edx, [dword esp+0104h]	; 3C17B
+mov eax, dword [dword esp+0E8h]	; 3C182
+call FileWriteAt	; 3C189
+mov esi, eax	; 3C18E
+.29:
+test esi, esi	; 3C190
+jne short .30	; 3C192
+mov ebx, dword [dword esp+0FCh]	; 3C194
+mov edx, ebp	; 3C19B
+mov eax, dword [dword esp+0E8h]	; 3C19D
+call WriteLeagueTeamEntry	; 3C1A4
+mov esi, eax	; 3C1A9
+.30:
+lea eax, [dword esp+0E8h]	; 3C1AB
+call FileClose	; 3C1B2
+test esi, esi	; 3C1B7
+jne short .31	; 3C1B9
+mov ecx, str_extDB	; 3C1BB
+mov ebx, str_PINFO	; 3C1C0
+mov edx, edi	; 3C1C5
+lea eax, [byte esp+040h]	; 3C1C7
+call MakePath	; 3C1CB
+lea edx, [dword esp+0D0h]	; 3C1D0
+lea eax, [byte esp+040h]	; 3C1D7
+call FileOpenRW	; 3C1DB
+mov esi, eax	; 3C1E0
+.31:
+test esi, esi	; 3C1E2
+jne short .32	; 3C1E4
+mov ebx, dword [dword esp+0FCh]	; 3C1E6
+mov edx, ebp	; 3C1ED
+mov eax, dword [dword esp+0D0h]	; 3C1EF
+call WriteLeagueTeamEntry	; 3C1F6
+mov esi, eax	; 3C1FB
+.32:
+call RestoreDialogBg	; 3C1FD
+test esi, esi	; 3C202
+je near .35	; 3C204
+mov byte [byte ebp+016h], 1	; 3C20A
+or byte [byte ebp+018h], 1	; 3C20E
+mov ebx, dword [dword esp+0FCh]	; 3C212
+mov edx, ebp	; 3C219
+mov eax, dword [dword esp+0D0h]	; 3C21B
+call WriteLeagueTeamEntry	; 3C222
+lea eax, [dword esp+0DCh]	; 3C227
+push eax	; 3C22E
+lea eax, [dword esp+0E4h]	; 3C22F
+push eax	; 3C236
+lea eax, [dword esp+0ECh]	; 3C237
+push eax	; 3C23E
+call sub_B2DCA	; 3C23F
+add esp, byte 0Ch	; 3C244
+push byte 0FFFFFFFFh	; 3C247
+lea eax, [dword esp+0E0h]	; 3C249
+push eax	; 3C250
+lea eax, [dword esp+0E8h]	; 3C251
+push eax	; 3C258
+push byte 0	; 3C259
+push byte 0	; 3C25B
+mov ecx, 2	; 3C25D
+mov ebx, exporterrmsg	; 3C262
+jmp near .34	; 3C267
+.33:
+mov edx, edi	; 3C26C
+lea eax, [dword esp+0A0h]	; 3C26E
+call strcpy_	; 3C275
+mov ecx, ds	; 3C27A
+mov ebx, str_dot	; 3C27C
+mov edx, ds	; 3C281
+lea eax, [dword esp+0A0h]	; 3C283
+call _fstrcspn_	; 3C28A
+xor cl, cl	; 3C28F
+mov byte [dword esp+eax+0A0h], cl	; 3C291
+lea eax, [dword esp+0A0h]	; 3C298
+mov dword [forceexportmsg], eax	; 3C29F
+mov dword [forceexportmsg+8], ebp	; 3C2A4
+lea eax, [dword esp+0DCh]	; 3C2AA
+push eax	; 3C2B1
+lea eax, [dword esp+0E4h]	; 3C2B2
+push eax	; 3C2B9
+lea eax, [dword esp+0ECh]	; 3C2BA
+push eax	; 3C2C1
+call sub_B2DCA	; 3C2C2
+add esp, byte 0Ch	; 3C2C7
+push byte 0FFFFFFFFh	; 3C2CA
+lea eax, [dword esp+0E0h]	; 3C2CC
+push eax	; 3C2D3
+lea eax, [dword esp+0E8h]	; 3C2D4
+push eax	; 3C2DB
+push byte 0	; 3C2DC
+push byte 0	; 3C2DE
+mov ecx, 3	; 3C2E0
+mov ebx, forceexportmsg	; 3C2E5
+.34:
+mov edx, 0FFFFFFFFh	; 3C2EA
+mov eax, edx	; 3C2EF
+call MessageBox	; 3C2F1
+.35:
+lea eax, [dword esp+0D0h]	; 3C2F6
+call FileClose	; 3C2FD
+mov eax, esi	; 3C302
+add esp, 10Ch	; 3C304
+pop ebp	; 3C30A
+pop edi	; 3C30B
+pop esi	; 3C30C
+ret 0Ch	; 3C30D
+; C: src/pc/database_merge/CopyLeagueFiles.c
+%ifdef CBUILD
+%include "c/pc/database_merge/CopyLeagueFiles.inc"
+%else
+CopyLeagueFiles:
+push dword 20h	; 3C310
+call __CHK	; 3C315
+push ebx	; 3C31A
+push ecx	; 3C31B
+push esi	; 3C31C
+push edi	; 3C31D
+push ebp	; 3C31E
+sub esp, byte 4	; 3C31F
+mov edi, eax	; 3C322
+mov dword [esp], edx	; 3C324
+xor eax, eax	; 3C327
+xor ebp, ebp	; 3C329
+jmp short .3	; 3C32B
+.1:
+mov ecx, dword [esp]	; 3C32D
+push ecx	; 3C330
+mov esi, ebp	; 3C331
+shl esi, 2	; 3C333
+mov eax, dword [dword esi+leaguedbnames]	; 3C336
+mov ecx, edi	; 3C33C
+mov ebx, str_extDB	; 3C33E
+mov edx, ebx	; 3C343
+call CopyFile	; 3C345
+test eax, eax	; 3C34A
+jne short .2	; 3C34C
+mov eax, dword [esp]	; 3C34E
+push eax	; 3C351
+mov eax, dword [dword esi+leaguedbnames]	; 3C352
+mov ecx, edi	; 3C358
+mov ebx, str_extxx	; 3C35A
+mov edx, ebx	; 3C35F
+call CopyFile	; 3C361
+.2:
+inc ebp	; 3C366
+.3:
+cmp ebp, byte 7	; 3C367
+jge short .4	; 3C36A
+test eax, eax	; 3C36C
+je short CopyLeagueFiles.1	; 3C36E
+.4:
+test eax, eax	; 3C370
+jne short .5	; 3C372
+mov edx, dword [esp]	; 3C374
+push edx	; 3C377
+mov ecx, edi	; 3C378
+mov ebx, str_extDB	; 3C37A
+mov edx, ebx	; 3C37F
+mov eax, str_PINFO	; 3C381
+call CopyFile	; 3C386
+.5:
+test eax, eax	; 3C38B
+jne short .x	; 3C38D
+mov ebx, dword [esp]	; 3C38F
+push ebx	; 3C392
+mov ecx, edi	; 3C393
+mov ebx, str_extID	; 3C395
+mov edx, ebx	; 3C39A
+mov eax, str_PLAYER	; 3C39C
+call CopyFile	; 3C3A1
+.x:
+add esp, byte 4	; 3C3A6
+pop ebp	; 3C3A9
+pop edi	; 3C3AA
+pop esi	; 3C3AB
+pop ecx	; 3C3AC
+pop ebx	; 3C3AD
+ret	; 3C3AE
+%endif ; C
+; C: src/pc/database_merge/ImportMasterLeague.c
+%ifdef CBUILD
+%include "c/pc/database_merge/ImportMasterLeague.inc"
+%else
+ImportMasterLeague:
+push dword 0A4h	; 3C3AF
+call __CHK	; 3C3B4
+push ebx	; 3C3B9
+push ecx	; 3C3BA
+push edx	; 3C3BB
+push esi	; 3C3BC
+push edi	; 3C3BD
+push ebp	; 3C3BE
+sub esp, byte 74h	; 3C3BF
+mov edx, 0FFFFFFFFh	; 3C3C2
+mov dword [byte esp+06Ch], edx	; 3C3C7
+mov dword [byte esp+068h], edx	; 3C3CB
+mov ecx, str_extID	; 3C3CF
+mov ebx, str_PLAYER	; 3C3D4
+mov edx, str_floppydrv	; 3C3D9
+lea eax, [byte esp+02Ch]	; 3C3DE
+call MakePath	; 3C3E2
+lea edx, [byte esp+06Ch]	; 3C3E7
+lea eax, [byte esp+02Ch]	; 3C3EB
+call FileOpenRead	; 3C3EF
+mov esi, eax	; 3C3F4
+test eax, eax	; 3C3F6
+jne short .1	; 3C3F8
+mov ecx, 0Dh	; 3C3FA
+mov ebx, 0Ch	; 3C3FF
+mov edx, curleague	; 3C404
+mov eax, dword [byte esp+06Ch]	; 3C409
+call FileReadAt	; 3C40D
+mov esi, eax	; 3C412
+.1:
+lea eax, [byte esp+06Ch]	; 3C414
+call FileClose	; 3C418
+test esi, esi	; 3C41D
+jne near .12	; 3C41F
+jne short .2	; 3C425
+push savedname	; 3C427
+push leaguesaved	; 3C42C
+push leagueflags	; 3C431
+push humancount	; 3C436
+mov ecx, leaguemaster	; 3C43B
+mov ebx, masterpw	; 3C440
+mov edx, leagueteams	; 3C445
+mov eax, str_floppydrv	; 3C44A
+call ReadLeagueInfo	; 3C44F
+mov esi, eax	; 3C454
+.2:
+mov edx, curleague	; 3C456
+lea eax, [byte esp+04Ch]	; 3C45B
+call strcpy_	; 3C45F
+mov ebx, esp	; 3C464
+mov edx, 10h	; 3C466
+lea eax, [byte esp+04Ch]	; 3C46B
+call unknown_libname_1	; 3C46F
+test eax, eax	; 3C474
+je near .11	; 3C476
+mov eax, dword [leaguemaster]	; 3C47C
+mov ebx, masterpw	; 3C481
+mov edx, leagueteams	; 3C486
+call AskMasterPassword	; 3C48B
+mov edi, eax	; 3C490
+test eax, eax	; 3C492
+jne near .12	; 3C494
+push eax	; 3C49A
+lea eax, [byte esp+060h]	; 3C49B
+push eax	; 3C49F
+lea eax, [byte esp+068h]	; 3C4A0
+push eax	; 3C4A4
+push edi	; 3C4A5
+push edi	; 3C4A6
+mov ecx, 1	; 3C4A7
+mov ebx, importmastermsg	; 3C4AC
+mov edx, 0FFFFFFFFh	; 3C4B1
+mov eax, edx	; 3C4B6
+call MessageBox	; 3C4B8
+lea eax, [byte esp+04Ch]	; 3C4BD
+call mkdir_	; 3C4C1
+mov esi, eax	; 3C4C6
+test eax, eax	; 3C4C8
+jne short .5	; 3C4CA
+mov dword [byte esp+064h], eax	; 3C4CC
+jmp short .4	; 3C4D0
+.3:
+push curleague	; 3C4D2
+mov eax, dword [nosplit ebp*4+leaguedbnames]	; 3C4D7
+mov ecx, str_floppydrv	; 3C4DE
+mov ebx, str_extDB	; 3C4E3
+mov edx, ebx	; 3C4E8
+call CopyFile	; 3C4EA
+mov esi, eax	; 3C4EF
+inc dword [byte esp+064h]	; 3C4F1
+.4:
+mov ebp, dword [byte esp+064h]	; 3C4F5
+cmp ebp, byte 7	; 3C4F9
+jge short .5	; 3C4FC
+test esi, esi	; 3C4FE
+je short ImportMasterLeague.3	; 3C500
+.5:
+test esi, esi	; 3C502
+jne short .6	; 3C504
+push curleague	; 3C506
+mov ecx, str_floppydrv	; 3C50B
+mov ebx, str_extDB	; 3C510
+mov edx, ebx	; 3C515
+mov eax, str_PINFO	; 3C517
+call CopyFile	; 3C51C
+mov esi, eax	; 3C521
+.6:
+test esi, esi	; 3C523
+jne short .7	; 3C525
+push curleague	; 3C527
+mov ecx, str_floppydrv	; 3C52C
+mov ebx, str_SET	; 3C531
+mov edx, ebx	; 3C536
+mov eax, str_GAME3	; 3C538
+call CopyFile	; 3C53D
+.7:
+call RestoreDialogBg	; 3C542
+mov edx, curleague	; 3C547
+lea eax, [byte esp+02Ch]	; 3C54C
+call strcpy_	; 3C550
+mov ebx, str_SAV3	; 3C555
+mov edx, str_GAME3	; 3C55A
+lea eax, [byte esp+02Ch]	; 3C55F
+call DeleteFiles	; 3C563
+mov ecx, str_extDB	; 3C568
+mov ebx, str_PINFO	; 3C56D
+mov edx, curleague	; 3C572
+lea eax, [byte esp+02Ch]	; 3C577
+call MakePath	; 3C57B
+lea edx, [byte esp+068h]	; 3C580
+lea eax, [byte esp+02Ch]	; 3C584
+call FileOpenRW	; 3C588
+mov esi, eax	; 3C58D
+test eax, eax	; 3C58F
+jne short .8	; 3C591
+mov ecx, 2	; 3C593
+mov ebx, 13h	; 3C598
+lea edx, [byte esp+070h]	; 3C59D
+mov eax, dword [byte esp+068h]	; 3C5A1
+call FileReadAt	; 3C5A5
+mov esi, eax	; 3C5AA
+.8:
+lea eax, [byte esp+068h]	; 3C5AC
+call FileClose	; 3C5B0
+test esi, esi	; 3C5B5
+jne short .9	; 3C5B7
+mov ebx, 0FFFFFFFFh	; 3C5B9
+mov edx, leagueteams	; 3C5BE
+mov eax, curleague	; 3C5C3
+call CopyHumanTeamDBs	; 3C5C8
+mov esi, eax	; 3C5CD
+.9:
+test esi, esi	; 3C5CF
+je short .10	; 3C5D1
+lea eax, [byte esp+05Ch]	; 3C5D3
+push eax	; 3C5D7
+lea eax, [byte esp+064h]	; 3C5D8
+push eax	; 3C5DC
+lea eax, [byte esp+06Ch]	; 3C5DD
+push eax	; 3C5E1
+call sub_B2DCA	; 3C5E2
+add esp, byte 0Ch	; 3C5E7
+push byte 0FFFFFFFFh	; 3C5EA
+lea eax, [byte esp+060h]	; 3C5EC
+push eax	; 3C5F0
+lea eax, [byte esp+068h]	; 3C5F1
+push eax	; 3C5F5
+push byte 0	; 3C5F6
+push byte 0	; 3C5F8
+mov ecx, 2	; 3C5FA
+mov ebx, updateerrmsg	; 3C5FF
+mov edx, 0FFFFFFFFh	; 3C604
+mov eax, edx	; 3C609
+call MessageBox	; 3C60B
+.10:
+test esi, esi	; 3C610
+je short .12	; 3C612
+lea eax, [byte esp+04Ch]	; 3C614
+call DeleteDir	; 3C618
+jmp short .12	; 3C61D
+.11:
+lea eax, [byte esp+05Ch]	; 3C61F
+push eax	; 3C623
+lea eax, [byte esp+064h]	; 3C624
+push eax	; 3C628
+lea eax, [byte esp+06Ch]	; 3C629
+push eax	; 3C62D
+call sub_B2DCA	; 3C62E
+add esp, byte 0Ch	; 3C633
+push byte 0	; 3C636
+mov ecx, 0FAh	; 3C638
+mov ebx, 0F8h	; 3C63D
+mov edx, ecx	; 3C642
+mov eax, 0F9h	; 3C644
+call SetDialogColors	; 3C649
+push byte 0FFFFFFFFh	; 3C64E
+lea eax, [byte esp+060h]	; 3C650
+push eax	; 3C654
+lea eax, [byte esp+068h]	; 3C655
+push eax	; 3C659
+push byte 0	; 3C65A
+push byte 0	; 3C65C
+mov ecx, 2	; 3C65E
+mov ebx, lgexistsmsg	; 3C663
+mov edx, 0FFFFFFFFh	; 3C668
+mov eax, edx	; 3C66D
+call MessageBox	; 3C66F
+.12:
+test esi, esi	; 3C674
+je short .13	; 3C676
+lea eax, [byte esp+05Ch]	; 3C678
+push eax	; 3C67C
+lea eax, [byte esp+064h]	; 3C67D
+push eax	; 3C681
+lea eax, [byte esp+06Ch]	; 3C682
+push eax	; 3C686
+call sub_B2DCA	; 3C687
+add esp, byte 0Ch	; 3C68C
+push byte 0	; 3C68F
+mov ecx, 0FAh	; 3C691
+mov ebx, 0F8h	; 3C696
+mov edx, ecx	; 3C69B
+mov eax, 0F9h	; 3C69D
+call SetDialogColors	; 3C6A2
+push byte 0FFFFFFFFh	; 3C6A7
+lea eax, [byte esp+060h]	; 3C6A9
+push eax	; 3C6AD
+lea eax, [byte esp+068h]	; 3C6AE
+push eax	; 3C6B2
+push byte 0	; 3C6B3
+push byte 0	; 3C6B5
+mov ecx, 1	; 3C6B7
+mov ebx, importerrmsg	; 3C6BC
+mov edx, 0FFFFFFFFh	; 3C6C1
+mov eax, edx	; 3C6C6
+call MessageBox	; 3C6C8
+.13:
+test edi, edi	; 3C6CD
+je short .14	; 3C6CF
+mov esi, 0FFFFFFFFh	; 3C6D1
+.14:
+mov eax, esi	; 3C6D6
+add esp, byte 74h	; 3C6D8
+ImportMasterLeague_ret:
+pop ebp	; 3C6DB
+pop edi	; 3C6DC
+pop esi	; 3C6DD
+pop edx	; 3C6DE
+pop ecx	; 3C6DF
+pop ebx	; 3C6E0
+ret	; 3C6E1
+%endif ; C
+; C: src/pc/database_merge/ImportMasterLeague.c (ImportPlayerTeam)
+%ifdef CBUILD
+%include "c/pc/database_merge/ImportMasterLeague.ImportPlayerTeam.inc"
+%else
+ImportPlayerTeam:
+push dword 0E8h	; 3C6E2
+call __CHK	; 3C6E7
+push ebx	; 3C6EC
+push ecx	; 3C6ED
+push edx	; 3C6EE
+push esi	; 3C6EF
+push edi	; 3C6F0
+push ebp	; 3C6F1
+sub esp, 0B8h	; 3C6F2
+mov edx, 0FFFFFFFFh	; 3C6F8
+mov dword [dword esp+094h], edx	; 3C6FD
+mov dword [dword esp+0A4h], edx	; 3C704
+mov dword [dword esp+0A0h], edx	; 3C70B
+xor ebp, ebp	; 3C712
+push ebp	; 3C714
+mov ecx, 0FAh	; 3C715
+mov ebx, 0F8h	; 3C71A
+mov edx, ecx	; 3C71F
+mov eax, 0F9h	; 3C721
+call SetDialogColors	; 3C726
+mov ecx, str_extID	; 3C72B
+mov ebx, str_PLAYER	; 3C730
+mov edx, str_floppydrv	; 3C735
+lea eax, [byte esp+02Ch]	; 3C73A
+call MakePath	; 3C73E
+lea edx, [dword esp+094h]	; 3C743
+lea eax, [byte esp+02Ch]	; 3C74A
+call FileOpenRead	; 3C74E
+mov esi, eax	; 3C753
+test eax, eax	; 3C755
+jne short .1	; 3C757
+mov ecx, 1	; 3C759
+xor ebx, ebx	; 3C75E
+lea edx, [dword esp+0B4h]	; 3C760
+mov eax, dword [dword esp+094h]	; 3C767
+call FileReadAt	; 3C76E
+mov esi, eax	; 3C773
+.1:
+test esi, esi	; 3C775
+jne short .2	; 3C777
+mov ecx, 0Bh	; 3C779
+mov ebx, 1	; 3C77E
+lea edx, [byte esp+07Ch]	; 3C783
+mov eax, dword [dword esp+094h]	; 3C787
+call FileReadAt	; 3C78E
+mov esi, eax	; 3C793
+.2:
+test esi, esi	; 3C795
+jne short .3	; 3C797
+mov ecx, 0Dh	; 3C799
+mov ebx, 0Ch	; 3C79E
+mov edx, curleague	; 3C7A3
+mov eax, dword [dword esp+094h]	; 3C7A8
+call FileReadAt	; 3C7AF
+mov esi, eax	; 3C7B4
+.3:
+test esi, esi	; 3C7B6
+jne short .4	; 3C7B8
+mov ecx, 4	; 3C7BA
+mov ebx, 19h	; 3C7BF
+lea edx, [dword esp+09Ch]	; 3C7C4
+mov eax, dword [dword esp+094h]	; 3C7CB
+call FileReadAt	; 3C7D2
+mov esi, eax	; 3C7D7
+.4:
+lea eax, [dword esp+094h]	; 3C7D9
+call FileClose	; 3C7E0
+test esi, esi	; 3C7E5
+jne short .5	; 3C7E7
+mov eax, dword [dword esp+0B1h]	; 3C7E9
+sar eax, 18h	; 3C7F0
+push eax	; 3C7F3
+push str_02d3	; 3C7F4
+lea eax, [dword esp+0A0h]	; 3C7F9
+push eax	; 3C800
+call sprintf_	; 3C801
+add esp, byte 0Ch	; 3C806
+lea edx, [dword esp+098h]	; 3C809
+mov eax, str_extxx	; 3C810
+call strcpy_	; 3C815
+mov ecx, str_extDB	; 3C81A
+mov ebx, str_PINFO	; 3C81F
+mov edx, str_floppydrv	; 3C824
+lea eax, [byte esp+02Ch]	; 3C829
+call MakePath	; 3C82D
+lea edx, [dword esp+0A4h]	; 3C832
+lea eax, [byte esp+02Ch]	; 3C839
+call FileOpenRW	; 3C83D
+mov esi, eax	; 3C842
+.5:
+test esi, esi	; 3C844
+jne short .6	; 3C846
+mov ebx, dword [dword esp+0B1h]	; 3C848
+sar ebx, 18h	; 3C84F
+lea edx, [byte esp+04Ch]	; 3C852
+mov eax, dword [dword esp+0A4h]	; 3C856
+call ReadLeagueTeamEntry	; 3C85D
+mov esi, eax	; 3C862
+.6:
+test esi, esi	; 3C864
+jne short .7	; 3C866
+mov ecx, 2	; 3C868
+mov ebx, 4	; 3C86D
+lea edx, [dword esp+0B0h]	; 3C872
+mov eax, dword [dword esp+0A4h]	; 3C879
+call FileReadAt	; 3C880
+mov esi, eax	; 3C885
+.7:
+lea eax, [dword esp+0A4h]	; 3C887
+call FileClose	; 3C88E
+test esi, esi	; 3C893
+jne near .8	; 3C895
+cmp word [dword esp+0B0h], byte 0	; 3C89B
+je near .8	; 3C8A4
+mov edx, curleague	; 3C8AA
+lea eax, [byte esp+06Ch]	; 3C8AF
+call strcpy_	; 3C8B3
+mov ecx, ds	; 3C8B8
+mov ebx, str_dot	; 3C8BA
+mov edx, ds	; 3C8BF
+lea eax, [byte esp+06Ch]	; 3C8C1
+call _fstrcspn_	; 3C8C5
+xor dh, dh	; 3C8CA
+mov byte [byte esp+eax+06Ch], dh	; 3C8CC
+push esi	; 3C8D0
+mov ecx, 0FAh	; 3C8D1
+mov ebx, 0F8h	; 3C8D6
+mov edx, ecx	; 3C8DB
+mov eax, 0F9h	; 3C8DD
+call SetDialogColors	; 3C8E2
+lea eax, [byte esp+07Ch]	; 3C8E7
+mov dword [insavegamemsg], eax	; 3C8EB
+lea eax, [byte esp+06Ch]	; 3C8F0
+mov dword [insavegamemsg+8], eax	; 3C8F4
+lea eax, [dword esp+0A8h]	; 3C8F9
+push eax	; 3C900
+lea eax, [dword esp+094h]	; 3C901
+push eax	; 3C908
+lea eax, [dword esp+094h]	; 3C909
+push eax	; 3C910
+call sub_B2DCA	; 3C911
+add esp, byte 0Ch	; 3C916
+push byte 0FFFFFFFFh	; 3C919
+lea eax, [dword esp+0ACh]	; 3C91B
+push eax	; 3C922
+lea eax, [dword esp+098h]	; 3C923
+push eax	; 3C92A
+push esi	; 3C92B
+push esi	; 3C92C
+mov ecx, 5	; 3C92D
+mov ebx, insavegamemsg	; 3C932
+mov edx, 0FFFFFFFFh	; 3C937
+mov eax, edx	; 3C93C
+call MessageBox	; 3C93E
+jmp near .35	; 3C943
+.8:
+test esi, esi	; 3C948
+jne near .35	; 3C94A
+mov edx, curleague	; 3C950
+lea eax, [byte esp+06Ch]	; 3C955
+call strcpy_	; 3C959
+mov ebx, esp	; 3C95E
+mov edx, 10h	; 3C960
+lea eax, [byte esp+06Ch]	; 3C965
+call unknown_libname_1	; 3C969
+mov edi, eax	; 3C96E
+mov dword [dword esp+0ACh], eax	; 3C970
+mov ecx, ds	; 3C977
+mov ebx, str_dot	; 3C979
+mov edx, ds	; 3C97E
+lea eax, [byte esp+06Ch]	; 3C980
+call _fstrcspn_	; 3C984
+xor dl, dl	; 3C989
+mov byte [byte esp+eax+06Ch], dl	; 3C98B
+test edi, edi	; 3C98F
+jne near .13	; 3C991
+.9:
+xor edi, edi	; 3C997
+push savedname	; 3C999
+push leaguesaved	; 3C99E
+push leagueflags	; 3C9A3
+push humancount	; 3C9A8
+mov ecx, leaguemaster	; 3C9AD
+mov ebx, masterpw	; 3C9B2
+mov edx, leagueteams	; 3C9B7
+mov eax, curleague	; 3C9BC
+call ReadLeagueInfo	; 3C9C1
+mov esi, eax	; 3C9C6
+push edi	; 3C9C8
+mov ecx, 0FAh	; 3C9C9
+mov ebx, 0F8h	; 3C9CE
+mov edx, ecx	; 3C9D3
+mov eax, 0F9h	; 3C9D5
+call SetDialogColors	; 3C9DA
+lea eax, [dword esp+0A8h]	; 3C9DF
+push eax	; 3C9E6
+lea eax, [dword esp+094h]	; 3C9E7
+push eax	; 3C9EE
+lea eax, [dword esp+094h]	; 3C9EF
+push eax	; 3C9F6
+call sub_B2DCA	; 3C9F7
+add esp, byte 0Ch	; 3C9FC
+test byte [leagueflags], 0Ch	; 3C9FF
+je short .10	; 3CA06
+lea eax, [byte esp+06Ch]	; 3CA08
+mov dword [playerdbsmsg+4], eax	; 3CA0C
+push byte 0FFFFFFFFh	; 3CA11
+lea eax, [dword esp+0ACh]	; 3CA13
+push eax	; 3CA1A
+lea eax, [dword esp+098h]	; 3CA1B
+push eax	; 3CA22
+push byte 2	; 3CA23
+push btn_MasterDB	; 3CA25
+mov ecx, 4	; 3CA2A
+mov ebx, playerdbsmsg	; 3CA2F
+mov edx, 0FFFFFFFFh	; 3CA34
+mov eax, edx	; 3CA39
+call MessageBox	; 3CA3B
+test eax, eax	; 3CA40
+jne short .11	; 3CA42
+call UpdateTeamDbs	; 3CA44
+mov edi, 0FFFFFFFFh	; 3CA49
+jmp short .12	; 3CA4E
+.10:
+cmp dword [leaguesaved], byte 0	; 3CA50
+je short .12	; 3CA57
+lea eax, [byte esp+06Ch]	; 3CA59
+mov dword [msg_SavedGame_arg], eax	; 3CA5D
+push byte 0FFFFFFFFh	; 3CA62
+lea eax, [dword esp+0ACh]	; 3CA64
+push eax	; 3CA6B
+lea eax, [dword esp+098h]	; 3CA6C
+push eax	; 3CA73
+push edi	; 3CA74
+push edi	; 3CA75
+mov ecx, 3	; 3CA76
+mov ebx, msg_SavedGame	; 3CA7B
+mov edx, 0FFFFFFFFh	; 3CA80
+mov eax, edx	; 3CA85
+call MessageBox	; 3CA87
+.11:
+mov ebp, 0FFFFFFFFh	; 3CA8C
+.12:
+test edi, edi	; 3CA91
+jne near ImportPlayerTeam.9	; 3CA93
+.13:
+push byte 0	; 3CA99
+mov ecx, 0FAh	; 3CA9B
+mov ebx, 0F8h	; 3CAA0
+mov edx, ecx	; 3CAA5
+mov eax, 0F9h	; 3CAA7
+call SetDialogColors	; 3CAAC
+test esi, esi	; 3CAB1
+jne near .34	; 3CAB3
+test ebp, ebp	; 3CAB9
+jne near .34	; 3CABB
+lea edx, [dword esp+088h]	; 3CAC1
+mov eax, curleague	; 3CAC8
+call GetLeagueId	; 3CACD
+mov edx, eax	; 3CAD2
+cmp byte [byte esp+062h], 2	; 3CAD4
+jne short .14	; 3CAD9
+cmp dword [dword esp+0ACh], byte 0	; 3CADB
+jne near .16	; 3CAE3
+mov eax, dword [dword esp+0B1h]	; 3CAE9
+sar eax, 18h	; 3CAF0
+mov edi, eax	; 3CAF3
+shl edi, 4	; 3CAF5
+sub edi, eax	; 3CAF8
+add edi, edi	; 3CAFA
+cmp byte [dword edi+lgteamflags], 2	; 3CAFC
+je near .16	; 3CB03
+mov eax, dword [byte esp+066h]	; 3CB09
+cmp eax, dword [dword edi+lgteamver]	; 3CB0D
+ja short .16	; 3CB13
+.14:
+push byte 0	; 3CB15
+mov ecx, 0FAh	; 3CB17
+mov ebx, 0F8h	; 3CB1C
+mov edx, ecx	; 3CB21
+mov eax, 0F9h	; 3CB23
+call SetDialogColors	; 3CB28
+lea eax, [byte esp+07Ch]	; 3CB2D
+mov dword [notexportedmsg], eax	; 3CB31
+lea eax, [byte esp+06Ch]	; 3CB36
+mov dword [notexportedmsg+8], eax	; 3CB3A
+lea eax, [dword esp+0A8h]	; 3CB3F
+push eax	; 3CB46
+lea eax, [dword esp+094h]	; 3CB47
+push eax	; 3CB4E
+lea eax, [dword esp+094h]	; 3CB4F
+push eax	; 3CB56
+call sub_B2DCA	; 3CB57
+add esp, byte 0Ch	; 3CB5C
+push byte 0FFFFFFFFh	; 3CB5F
+lea eax, [dword esp+0ACh]	; 3CB61
+push eax	; 3CB68
+lea eax, [dword esp+098h]	; 3CB69
+push eax	; 3CB70
+push byte 0	; 3CB71
+push byte 0	; 3CB73
+mov ecx, 3	; 3CB75
+mov ebx, notexportedmsg	; 3CB7A
+.15:
+mov edx, 0FFFFFFFFh	; 3CB7F
+mov eax, edx	; 3CB84
+call MessageBox	; 3CB86
+jmp near .34	; 3CB8B
+.16:
+cmp dword [dword esp+0ACh], byte 0	; 3CB90
+jne near .27	; 3CB98
+mov ebp, dword [dword esp+0B1h]	; 3CB9E
+sar ebp, 18h	; 3CBA5
+mov edi, ebp	; 3CBA8
+shl edi, 4	; 3CBAA
+sub edi, ebp	; 3CBAD
+mov eax, dword [byte esp+066h]	; 3CBAF
+cmp eax, dword [nosplit edi*2+lgteamver]	; 3CBB3
+jae short .17	; 3CBBA
+lea eax, [byte esp+06Ch]	; 3CBBC
+mov dword [oldcopymsg+8], eax	; 3CBC0
+lea eax, [dword esp+0A8h]	; 3CBC5
+push eax	; 3CBCC
+lea eax, [dword esp+094h]	; 3CBCD
+push eax	; 3CBD4
+lea eax, [dword esp+094h]	; 3CBD5
+push eax	; 3CBDC
+call sub_B2DCA	; 3CBDD
+add esp, byte 0Ch	; 3CBE2
+push byte 0FFFFFFFFh	; 3CBE5
+lea eax, [dword esp+0ACh]	; 3CBE7
+push eax	; 3CBEE
+lea eax, [dword esp+098h]	; 3CBEF
+push eax	; 3CBF6
+push byte 0	; 3CBF7
+push byte 0	; 3CBF9
+mov ecx, 3	; 3CBFB
+mov ebx, oldcopymsg	; 3CC00
+jmp near ImportPlayerTeam.15	; 3CC05
+.17:
+test edx, edx	; 3CC0A
+jl near .24	; 3CC0C
+cmp edx, ebp	; 3CC12
+je short .18	; 3CC14
+lea eax, [byte esp+06Ch]	; 3CC16
+mov dword [lgexistsformsg+4], eax	; 3CC1A
+mov eax, edx	; 3CC1F
+shl eax, 4	; 3CC21
+sub eax, edx	; 3CC24
+add eax, eax	; 3CC26
+mov edx, leagueteams	; 3CC28
+add edx, eax	; 3CC2D
+mov dword [lgexistsformsg+0Ch], edx	; 3CC2F
+lea eax, [dword esp+0A8h]	; 3CC35
+push eax	; 3CC3C
+lea eax, [dword esp+094h]	; 3CC3D
+push eax	; 3CC44
+lea eax, [dword esp+094h]	; 3CC45
+push eax	; 3CC4C
+call sub_B2DCA	; 3CC4D
+add esp, byte 0Ch	; 3CC52
+push byte 0FFFFFFFFh	; 3CC55
+lea eax, [dword esp+0ACh]	; 3CC57
+push eax	; 3CC5E
+lea eax, [dword esp+098h]	; 3CC5F
+push eax	; 3CC66
+push byte 0	; 3CC67
+push byte 0	; 3CC69
+mov ecx, 4	; 3CC6B
+mov ebx, lgexistsformsg	; 3CC70
+jmp near ImportPlayerTeam.15	; 3CC75
+.18:
+lea eax, [byte esp+07Ch]	; 3CC7A
+call MsgCopyingDatabases	; 3CC7E
+mov byte [byte esp+062h], 1	; 3CC83
+test esi, esi	; 3CC88
+jne short .19	; 3CC8A
+mov edx, curleague	; 3CC8C
+mov eax, str_floppydrv	; 3CC91
+call CopyLeagueFiles	; 3CC96
+mov esi, eax	; 3CC9B
+.19:
+test esi, esi	; 3CC9D
+jne short .20	; 3CC9F
+push curleague	; 3CCA1
+mov ecx, str_floppydrv	; 3CCA6
+mov ebx, str_SET2	; 3CCAB
+mov edx, ebx	; 3CCB0
+mov eax, str_GAME4	; 3CCB2
+call CopyFile	; 3CCB7
+mov esi, eax	; 3CCBC
+.20:
+test esi, esi	; 3CCBE
+jne short .21	; 3CCC0
+mov ecx, str_extDB	; 3CCC2
+mov ebx, str_PINFO	; 3CCC7
+mov edx, curleague	; 3CCCC
+lea eax, [byte esp+02Ch]	; 3CCD1
+call MakePath	; 3CCD5
+lea edx, [dword esp+0A0h]	; 3CCDA
+lea eax, [byte esp+02Ch]	; 3CCE1
+call FileOpenRW	; 3CCE5
+mov esi, eax	; 3CCEA
+.21:
+test esi, esi	; 3CCEC
+jne short .22	; 3CCEE
+mov ebx, dword [dword esp+0B1h]	; 3CCF0
+sar ebx, 18h	; 3CCF7
+lea edx, [byte esp+04Ch]	; 3CCFA
+mov eax, dword [dword esp+0A0h]	; 3CCFE
+call WriteLeagueTeamEntry	; 3CD05
+mov esi, eax	; 3CD0A
+.22:
+lea eax, [dword esp+0A0h]	; 3CD0C
+call FileClose	; 3CD13
+test esi, esi	; 3CD18
+jne short .23	; 3CD1A
+mov ecx, str_extDB	; 3CD1C
+mov ebx, str_PINFO	; 3CD21
+mov edx, str_floppydrv	; 3CD26
+lea eax, [byte esp+02Ch]	; 3CD2B
+call MakePath	; 3CD2F
+lea edx, [dword esp+0A4h]	; 3CD34
+lea eax, [byte esp+02Ch]	; 3CD3B
+call FileOpenRW	; 3CD3F
+mov esi, eax	; 3CD44
+.23:
+test esi, esi	; 3CD46
+jne near .33	; 3CD48
+mov ebx, dword [dword esp+0B1h]	; 3CD4E
+sar ebx, 18h	; 3CD55
+lea edx, [byte esp+04Ch]	; 3CD58
+mov eax, dword [dword esp+0A4h]	; 3CD5C
+call WriteLeagueTeamEntry	; 3CD63
+jmp near .33	; 3CD68
+.24:
+lea eax, [byte esp+07Ch]	; 3CD6D
+call MsgCopyingDatabases	; 3CD71
+mov byte [byte esp+062h], 1	; 3CD76
+xor ecx, ecx	; 3CD7B
+mov dword [dword esp+08Ch], ecx	; 3CD7D
+jmp short .26	; 3CD84
+.25:
+push curleague	; 3CD86
+mov eax, dword [nosplit edi*4+leaguedbnames]	; 3CD8B
+mov ecx, str_floppydrv	; 3CD92
+mov ebx, str_extxx	; 3CD97
+mov edx, ebx	; 3CD9C
+call CopyFile	; 3CD9E
+mov esi, eax	; 3CDA3
+inc dword [dword esp+08Ch]	; 3CDA5
+.26:
+mov edi, dword [dword esp+08Ch]	; 3CDAC
+cmp edi, byte 7	; 3CDB3
+jge near ImportPlayerTeam.19	; 3CDB6
+test esi, esi	; 3CDBC
+je short ImportPlayerTeam.25	; 3CDBE
+jmp near ImportPlayerTeam.19	; 3CDC0
+.27:
+lea eax, [byte esp+07Ch]	; 3CDC5
+call MsgCopyingDatabases	; 3CDC9
+mov edx, curleague	; 3CDCE
+lea eax, [byte esp+06Ch]	; 3CDD3
+call strcpy_	; 3CDD7
+lea eax, [byte esp+06Ch]	; 3CDDC
+call mkdir_	; 3CDE0
+mov esi, eax	; 3CDE5
+mov byte [byte esp+062h], 1	; 3CDE7
+test eax, eax	; 3CDEC
+jne short .28	; 3CDEE
+mov edx, curleague	; 3CDF0
+mov eax, str_floppydrv	; 3CDF5
+call CopyLeagueFiles	; 3CDFA
+mov esi, eax	; 3CDFF
+.28:
+test esi, esi	; 3CE01
+jne short .29	; 3CE03
+push curleague	; 3CE05
+mov ecx, str_floppydrv	; 3CE0A
+mov ebx, str_SET2	; 3CE0F
+mov edx, ebx	; 3CE14
+mov eax, str_GAME4	; 3CE16
+call CopyFile	; 3CE1B
+mov esi, eax	; 3CE20
+.29:
+test esi, esi	; 3CE22
+jne short .30	; 3CE24
+mov ecx, str_extDB	; 3CE26
+mov ebx, str_PINFO	; 3CE2B
+mov edx, curleague	; 3CE30
+lea eax, [byte esp+02Ch]	; 3CE35
+call MakePath	; 3CE39
+lea edx, [dword esp+0A0h]	; 3CE3E
+lea eax, [byte esp+02Ch]	; 3CE45
+call FileOpenRW	; 3CE49
+mov esi, eax	; 3CE4E
+.30:
+test esi, esi	; 3CE50
+jne short .31	; 3CE52
+mov ebx, dword [dword esp+0B1h]	; 3CE54
+sar ebx, 18h	; 3CE5B
+lea edx, [byte esp+04Ch]	; 3CE5E
+mov eax, dword [dword esp+0A0h]	; 3CE62
+call WriteLeagueTeamEntry	; 3CE69
+mov esi, eax	; 3CE6E
+.31:
+lea eax, [dword esp+0A0h]	; 3CE70
+call FileClose	; 3CE77
+test esi, esi	; 3CE7C
+jne short .32	; 3CE7E
+mov ecx, str_extDB	; 3CE80
+mov ebx, str_PINFO	; 3CE85
+mov edx, str_floppydrv	; 3CE8A
+lea eax, [byte esp+02Ch]	; 3CE8F
+call MakePath	; 3CE93
+lea edx, [dword esp+0A4h]	; 3CE98
+lea eax, [byte esp+02Ch]	; 3CE9F
+call FileOpenRW	; 3CEA3
+mov esi, eax	; 3CEA8
+.32:
+test esi, esi	; 3CEAA
+jne short .33	; 3CEAC
+mov ebx, dword [dword esp+0B1h]	; 3CEAE
+sar ebx, 18h	; 3CEB5
+lea edx, [byte esp+04Ch]	; 3CEB8
+mov eax, dword [dword esp+0A4h]	; 3CEBC
+call WriteLeagueTeamEntry	; 3CEC3
+.33:
+lea eax, [dword esp+0A4h]	; 3CEC8
+call FileClose	; 3CECF
+.34:
+test esi, esi	; 3CED4
+je short .35	; 3CED6
+cmp dword [dword esp+0ACh], byte 0	; 3CED8
+je short .35	; 3CEE0
+mov edx, curleague	; 3CEE2
+lea eax, [byte esp+06Ch]	; 3CEE7
+call strcpy_	; 3CEEB
+lea eax, [byte esp+06Ch]	; 3CEF0
+call DeleteDir	; 3CEF4
+.35:
+call RestoreDialogBg	; 3CEF9
+test esi, esi	; 3CEFE
+je short .36	; 3CF00
+lea eax, [dword esp+0A8h]	; 3CF02
+push eax	; 3CF09
+lea eax, [dword esp+094h]	; 3CF0A
+push eax	; 3CF11
+lea eax, [dword esp+094h]	; 3CF12
+push eax	; 3CF19
+call sub_B2DCA	; 3CF1A
+add esp, byte 0Ch	; 3CF1F
+push byte 0FFFFFFFFh	; 3CF22
+lea eax, [dword esp+0ACh]	; 3CF24
+push eax	; 3CF2B
+lea eax, [dword esp+098h]	; 3CF2C
+push eax	; 3CF33
+push byte 0	; 3CF34
+push byte 0	; 3CF36
+mov ecx, 1	; 3CF38
+mov ebx, importerrmsg	; 3CF3D
+mov edx, 0FFFFFFFFh	; 3CF42
+mov eax, edx	; 3CF47
+call MessageBox	; 3CF49
+.36:
+mov eax, esi	; 3CF4E
+add esp, 0B8h	; 3CF50
+jmp near ImportMasterLeague_ret	; 3CF56
+%endif ; C
+; C: src/pc/database_merge/ImportDbs.c
+%ifdef CBUILD
+%include "c/pc/database_merge/ImportDbs.inc"
+%else
+ImportDbs:
+push dword 54h	; 3CF5B
+call __CHK	; 3CF60
+push ebx	; 3CF65
+push ecx	; 3CF66
+push edx	; 3CF67
+sub esp, byte 30h	; 3CF68
+push byte 0	; 3CF6B
+mov ecx, 0FAh	; 3CF6D
+mov ebx, 0F8h	; 3CF72
+mov edx, ecx	; 3CF77
+mov eax, 0F9h	; 3CF79
+call SetDialogColors	; 3CF7E
+lea eax, [byte esp+020h]	; 3CF83
+push eax	; 3CF87
+lea eax, [byte esp+030h]	; 3CF88
+push eax	; 3CF8C
+lea eax, [byte esp+02Ch]	; 3CF8D
+push eax	; 3CF91
+call sub_B2DCA	; 3CF92
+add esp, byte 0Ch	; 3CF97
+push byte 0FFFFFFFFh	; 3CF9A
+lea eax, [byte esp+024h]	; 3CF9C
+push eax	; 3CFA0
+lea eax, [byte esp+034h]	; 3CFA1
+push eax	; 3CFA5
+push byte 2	; 3CFA6
+push importtypebtns	; 3CFA8
+mov ecx, 2	; 3CFAD
+mov ebx, importtypemsg	; 3CFB2
+mov edx, 0FFFFFFFFh	; 3CFB7
+mov eax, edx	; 3CFBC
+call MessageBox	; 3CFBE
+mov dword [byte esp+024h], eax	; 3CFC3
+test eax, eax	; 3CFC7
+jl near .7	; 3CFC9
+push byte 0FFFFFFFFh	; 3CFCF
+lea eax, [byte esp+024h]	; 3CFD1
+push eax	; 3CFD5
+lea eax, [byte esp+034h]	; 3CFD6
+push eax	; 3CFDA
+push byte 0	; 3CFDB
+push byte 0	; 3CFDD
+mov ecx, 2	; 3CFDF
+mov ebx, importdiskmsg	; 3CFE4
+mov edx, 0FFFFFFFFh	; 3CFE9
+mov eax, edx	; 3CFEE
+call MessageBox	; 3CFF0
+test eax, eax	; 3CFF5
+jne short .1	; 3CFF7
+xor edx, edx	; 3CFF9
+call SelectFloppyDrive	; 3CFFB
+.1:
+test eax, eax	; 3D000
+jne near .7	; 3D002
+cmp dword [byte esp+024h], byte 0	; 3D008
+jne short .2	; 3D00D
+call ImportMasterLeague	; 3D00F
+jmp short .3	; 3D014
+.2:
+call ImportPlayerTeam	; 3D016
+.3:
+test eax, eax	; 3D01B
+jne near .6	; 3D01D
+mov ecx, str_SET	; 3D023
+mov ebx, str_GAME3	; 3D028
+mov edx, curleague	; 3D02D
+mov eax, esp	; 3D032
+call MakePath	; 3D034
+lea edx, [byte esp+028h]	; 3D039
+mov eax, esp	; 3D03D
+call FileOpenRead	; 3D03F
+test eax, eax	; 3D044
+jne short .5	; 3D046
+mov ecx, 75h	; 3D048
+mov ebx, 0FFFFFFFFh	; 3D04D
+mov edx, lgstate	; 3D052
+mov eax, dword [byte esp+028h]	; 3D057
+call FileReadAt	; 3D05B
+test eax, eax	; 3D060
+je short .4	; 3D062
+push str_L1	; 3D064
+call FatalError	; 3D069
+add esp, byte 4	; 3D06E
+.4:
+lea eax, [byte esp+028h]	; 3D071
+call FileClose	; 3D075
+test eax, eax	; 3D07A
+je short .5	; 3D07C
+push str_L22	; 3D07E
+call FatalError	; 3D083
+add esp, byte 4	; 3D088
+.5:
+mov eax, lgstate	; 3D08B
+call LoadModeState	; 3D090
+call BuildSavedGameLabels	; 3D095
+xor eax, eax	; 3D09A
+call SetupStatsSourceMenu	; 3D09C
+mov dword [menuact_export], MenuExportDbs	; 3D0A1
+mov dword [menuact_nextlg], MenuNextLeagueGame	; 3D0AB
+mov dword [menusub_lgmgr], leaguemgrmenu	; 3D0B5
+jmp short .7	; 3D0BF
+.6:
+xor ah, ah	; 3D0C1
+mov byte [lgstate+4], ah	; 3D0C3
+call BuildSavedGameLabels	; 3D0C9
+xor eax, eax	; 3D0CE
+call SetupStatsSourceMenu	; 3D0D0
+xor ebx, ebx	; 3D0D5
+mov dword [menuact_export], ebx	; 3D0D7
+mov dword [menuact_nextlg], ebx	; 3D0DD
+mov dword [menusub_lgmgr], ebx	; 3D0E3
+.7:
+push byte 0	; 3D0E9
+mov ecx, 3Fh	; 3D0EB
+mov ebx, 17h	; 3D0F0
+mov edx, ecx	; 3D0F5
+mov eax, 2Ah	; 3D0F7
+call SetDialogColors	; 3D0FC
+add esp, byte 30h	; 3D101
+pop edx	; 3D104
+pop ecx	; 3D105
+pop ebx	; 3D106
+ret	; 3D107
+%endif ; C
+; C: src/pc/database_merge/ImportMasterLeague.c (ExportDbs)
+%ifdef CBUILD
+%include "c/pc/database_merge/ImportMasterLeague.ExportDbs.inc"
+%else
+ExportDbs:
+push dword 78h	; 3D108
+call __CHK	; 3D10D
+push ebx	; 3D112
+push ecx	; 3D113
+push edx	; 3D114
+push esi	; 3D115
+push edi	; 3D116
+push ebp	; 3D117
+sub esp, byte 48h	; 3D118
+mov edx, 3	; 3D11B
+mov eax, curleague	; 3D120
+call LeagueCheckStub	; 3D125
+mov esi, eax	; 3D12A
+.1:
+xor edi, edi	; 3D12C
+test esi, esi	; 3D12E
+jne near .4	; 3D130
+push savedname	; 3D136
+push leaguesaved	; 3D13B
+push leagueflags	; 3D140
+push humancount	; 3D145
+mov ecx, leaguemaster	; 3D14A
+mov ebx, masterpw	; 3D14F
+mov edx, leagueteams	; 3D154
+mov eax, curleague	; 3D159
+call ReadLeagueInfo	; 3D15E
+mov esi, eax	; 3D163
+mov edx, curleague	; 3D165
+lea eax, [byte esp+020h]	; 3D16A
+call strcpy_	; 3D16E
+mov ecx, ds	; 3D173
+mov ebx, str_dot	; 3D175
+mov edx, ds	; 3D17A
+lea eax, [byte esp+020h]	; 3D17C
+call _fstrcspn_	; 3D180
+xor dl, dl	; 3D185
+mov byte [byte esp+eax+020h], dl	; 3D187
+push edi	; 3D18B
+mov ecx, 0FAh	; 3D18C
+mov ebx, 0F8h	; 3D191
+mov edx, ecx	; 3D196
+mov eax, 0F9h	; 3D198
+call SetDialogColors	; 3D19D
+lea eax, [byte esp+034h]	; 3D1A2
+push eax	; 3D1A6
+lea eax, [byte esp+048h]	; 3D1A7
+push eax	; 3D1AB
+lea eax, [byte esp+044h]	; 3D1AC
+push eax	; 3D1B0
+call sub_B2DCA	; 3D1B1
+add esp, byte 0Ch	; 3D1B6
+test byte [leagueflags], 0Ch	; 3D1B9
+je short .2	; 3D1C0
+lea eax, [byte esp+020h]	; 3D1C2
+mov dword [playerdbsmsg+4], eax	; 3D1C6
+push byte 0FFFFFFFFh	; 3D1CB
+lea eax, [byte esp+038h]	; 3D1CD
+push eax	; 3D1D1
+lea eax, [byte esp+04Ch]	; 3D1D2
+push eax	; 3D1D6
+push byte 2	; 3D1D7
+push btn_MasterDB	; 3D1D9
+mov ecx, 4	; 3D1DE
+mov ebx, playerdbsmsg	; 3D1E3
+mov edx, 0FFFFFFFFh	; 3D1E8
+mov eax, edx	; 3D1ED
+call MessageBox	; 3D1EF
+mov dword [byte esp+03Ch], eax	; 3D1F4
+test eax, eax	; 3D1F8
+jne short .3	; 3D1FA
+call UpdateTeamDbs	; 3D1FC
+mov edi, 0FFFFFFFFh	; 3D201
+jmp short .4	; 3D206
+.2:
+cmp dword [leaguesaved], byte 0	; 3D208
+je short .4	; 3D20F
+lea eax, [byte esp+020h]	; 3D211
+mov dword [msg_SavedGame_arg], eax	; 3D215
+push byte 0FFFFFFFFh	; 3D21A
+lea eax, [byte esp+038h]	; 3D21C
+push eax	; 3D220
+lea eax, [byte esp+04Ch]	; 3D221
+push eax	; 3D225
+push edi	; 3D226
+push edi	; 3D227
+mov ecx, 3	; 3D228
+mov ebx, msg_SavedGame	; 3D22D
+mov edx, 0FFFFFFFFh	; 3D232
+mov eax, edx	; 3D237
+call MessageBox	; 3D239
+.3:
+mov esi, 0FFFFFFFFh	; 3D23E
+.4:
+test edi, edi	; 3D243
+jne near ExportDbs.1	; 3D245
+test esi, esi	; 3D24B
+jne near .14	; 3D24D
+mov ebx, dword [leaguedbnames+10h]	; 3D253
+mov ecx, str_extDB	; 3D259
+mov edx, curleague	; 3D25E
+mov eax, esp	; 3D263
+call MakePath	; 3D265
+mov ebx, 1	; 3D26A
+mov edx, treeteamnames	; 3D26F
+mov eax, esp	; 3D274
+call ReadTeamNames	; 3D276
+test eax, eax	; 3D27B
+jne near .14	; 3D27D
+mov ebp, 0FFFFFFFFh	; 3D283
+lea edx, [byte esp+038h]	; 3D288
+mov eax, curleague	; 3D28C
+call GetLeagueId	; 3D291
+mov dword [byte esp+040h], eax	; 3D296
+test eax, eax	; 3D29A
+jge short .5	; 3D29C
+lea eax, [byte esp+040h]	; 3D29E
+push eax	; 3D2A2
+push str_SelectATeamTo2	; 3D2A3
+push byte 8	; 3D2A8
+mov ecx, leagueteams	; 3D2AA
+mov ebx, treeteamnames	; 3D2AF
+mov edx, humancount	; 3D2B4
+mov eax, curleague	; 3D2B9
+call LeagueTeamSelect	; 3D2BE
+cmp dword [humancount], byte 1	; 3D2C3
+jne short .6	; 3D2CA
+push edi	; 3D2CC
+mov ecx, 0FAh	; 3D2CD
+mov ebx, 0F8h	; 3D2D2
+mov edx, ecx	; 3D2D7
+mov eax, 0F9h	; 3D2D9
+call SetDialogColors	; 3D2DE
+jmp short .6	; 3D2E3
+.5:
+xor ebp, ebp	; 3D2E5
+.6:
+mov ecx, dword [byte esp+040h]	; 3D2E7
+test ecx, ecx	; 3D2EB
+jl near .9	; 3D2ED
+mov eax, ecx	; 3D2F3
+shl eax, 4	; 3D2F5
+sub eax, ecx	; 3D2F8
+add eax, eax	; 3D2FA
+cmp byte [dword eax+lgteamflags], 2	; 3D2FC
+jne near .9	; 3D303
+lea edx, [byte esp+020h]	; 3D309
+mov dword [forceexportmsg], edx	; 3D30D
+mov edx, leagueteams	; 3D313
+add edx, eax	; 3D318
+mov dword [forceexportmsg+8], edx	; 3D31A
+lea eax, [byte esp+034h]	; 3D320
+push eax	; 3D324
+lea eax, [byte esp+048h]	; 3D325
+push eax	; 3D329
+lea eax, [byte esp+044h]	; 3D32A
+push eax	; 3D32E
+call sub_B2DCA	; 3D32F
+add esp, byte 0Ch	; 3D334
+push byte 0FFFFFFFFh	; 3D337
+lea eax, [byte esp+038h]	; 3D339
+push eax	; 3D33D
+lea eax, [byte esp+04Ch]	; 3D33E
+push eax	; 3D342
+push byte 2	; 3D343
+push forceexportbtns	; 3D345
+mov ecx, 4	; 3D34A
+mov ebx, forceexportmsg	; 3D34F
+mov edx, 0FFFFFFFFh	; 3D354
+mov eax, edx	; 3D359
+call MessageBox	; 3D35B
+mov dword [byte esp+03Ch], eax	; 3D360
+mov esi, 0FFFFFFFFh	; 3D364
+test eax, eax	; 3D369
+jne short .7	; 3D36B
+mov eax, dword [leaguemaster]	; 3D36D
+mov ebx, masterpw	; 3D372
+mov edx, leagueteams	; 3D377
+call AskMasterPassword	; 3D37C
+mov esi, eax	; 3D381
+.7:
+test esi, esi	; 3D383
+jne short .8	; 3D385
+mov edi, 0FFFFFFFFh	; 3D387
+mov eax, dword [byte esp+040h]	; 3D38C
+shl eax, 4	; 3D390
+sub eax, dword [byte esp+040h]	; 3D393
+inc word [nosplit eax*2+lgteamver_hi]	; 3D397
+jmp short .9	; 3D39F
+.8:
+mov dword [byte esp+040h], 0FFFFFFFFh	; 3D3A1
+.9:
+cmp dword [byte esp+040h], byte 0	; 3D3A9
+jl near .14	; 3D3AE
+cmp dword [humancount], byte 1	; 3D3B4
+je short .10	; 3D3BB
+test ebp, ebp	; 3D3BD
+jne short .11	; 3D3BF
+.10:
+push byte 0	; 3D3C1
+mov ecx, 0FAh	; 3D3C3
+mov ebx, 0F8h	; 3D3C8
+mov edx, ecx	; 3D3CD
+mov eax, 0F9h	; 3D3CF
+call SetDialogColors	; 3D3D4
+.11:
+mov esi, dword [byte esp+040h]	; 3D3D9
+push esi	; 3D3DD
+push str_02d3	; 3D3DE
+lea eax, [byte esp+038h]	; 3D3E3
+push eax	; 3D3E7
+call sprintf_	; 3D3E8
+add esp, byte 0Ch	; 3D3ED
+lea edx, [byte esp+030h]	; 3D3F0
+mov eax, str_extxx	; 3D3F4
+call strcpy_	; 3D3F9
+test edi, edi	; 3D3FE
+je short .12	; 3D400
+mov esi, str_extDB	; 3D402
+jmp short .13	; 3D407
+.12:
+mov esi, str_extxx	; 3D409
+.13:
+mov eax, dword [byte esp+040h]	; 3D40E
+shl eax, 4	; 3D412
+sub eax, dword [byte esp+040h]	; 3D415
+add eax, eax	; 3D419
+mov edx, leagueteams	; 3D41B
+add edx, eax	; 3D420
+mov eax, curleague	; 3D422
+call SelectFloppyDrive	; 3D427
+test eax, eax	; 3D42C
+jne short .14	; 3D42E
+push byte 0FFFFFFFFh	; 3D430
+push edi	; 3D432
+push leagueteams	; 3D433
+mov ecx, dword [byte esp+04Ch]	; 3D438
+mov ebx, str_extxx	; 3D43C
+mov edx, esi	; 3D441
+mov eax, curleague	; 3D443
+call ExportTeamToFloppy	; 3D448
+.14:
+push byte 0	; 3D44D
+mov ecx, 3Fh	; 3D44F
+mov ebx, 17h	; 3D454
+mov edx, ecx	; 3D459
+mov eax, 2Ah	; 3D45B
+call SetDialogColors	; 3D460
+add esp, byte 48h	; 3D465
+jmp near ImportMasterLeague_ret	; 3D468
+%endif ; C
+; C: src/pc/database_merge/SelectFloppyDrive.c
+%ifdef CBUILD
+%include "c/pc/database_merge/SelectFloppyDrive.inc"
+%else
+SelectFloppyDrive:
+push dword 84h	; 3D46D
+call __CHK	; 3D472
+push ebx	; 3D477
+push ecx	; 3D478
+push esi	; 3D479
+push edi	; 3D47A
+push ebp	; 3D47B
+sub esp, byte 58h	; 3D47C
+mov edi, eax	; 3D47F
+mov esi, edx	; 3D481
+mov edx, 0FFFFFFFFh	; 3D483
+mov dword [byte esp+044h], edx	; 3D488
+mov dword [floppyprobe], edx	; 3D48C
+.1:
+xor ecx, ecx	; 3D492
+mov dword [byte esp+054h], ecx	; 3D494
+xor ebp, ebp	; 3D498
+mov dword [byte esp+050h], ecx	; 3D49A
+jmp near .6	; 3D49E
+.2:
+mov dword [criterrflag], ebp	; 3D4A3
+mov dword [nosplit edx*4+floppyok], 0FFFFFFFFh	; 3D4A9
+lea eax, [byte edx+01h]	; 3D4B4
+lea edx, [byte esp+03Ch]	; 3D4B7
+call _dos_getdiskfree_	; 3D4BB
+cmp dword [criterrflag], byte 0	; 3D4C0
+je short .3	; 3D4C7
+mov eax, dword [byte esp+050h]	; 3D4C9
+mov dword [nosplit eax*4+floppyok], ebp	; 3D4CD
+jmp near .5	; 3D4D4
+.3:
+test edi, edi	; 3D4D9
+je near .5	; 3D4DB
+test esi, esi	; 3D4E1
+je near .5	; 3D4E3
+mov al, byte [byte esp+050h]	; 3D4E9
+add al, 41h	; 3D4ED
+mov byte [str_floppydrv], al	; 3D4EF
+mov ecx, str_extID	; 3D4F4
+mov ebx, str_PLAYER	; 3D4F9
+mov edx, str_floppydrv	; 3D4FE
+mov eax, esp	; 3D503
+call MakePath	; 3D505
+lea edx, [byte esp+044h]	; 3D50A
+mov eax, esp	; 3D50E
+call FileOpenRead	; 3D510
+test eax, eax	; 3D515
+jne short .4	; 3D517
+mov ecx, 0Bh	; 3D519
+mov ebx, 1	; 3D51E
+lea edx, [byte esp+030h]	; 3D523
+mov eax, dword [byte esp+044h]	; 3D527
+call FileReadAt	; 3D52B
+mov ecx, 0Dh	; 3D530
+mov ebx, 0FFFFFFFFh	; 3D535
+lea edx, [byte esp+020h]	; 3D53A
+mov eax, dword [byte esp+044h]	; 3D53E
+call FileReadAt	; 3D542
+lea edx, [byte esp+030h]	; 3D547
+mov eax, esi	; 3D54B
+call stricmp_	; 3D54D
+test eax, eax	; 3D552
+jne short .4	; 3D554
+lea edx, [byte esp+020h]	; 3D556
+mov eax, edi	; 3D55A
+call stricmp_	; 3D55C
+test eax, eax	; 3D561
+jne short .4	; 3D563
+mov ebp, 0FFFFFFFFh	; 3D565
+.4:
+lea eax, [byte esp+044h]	; 3D56A
+call FileClose	; 3D56E
+.5:
+inc dword [byte esp+050h]	; 3D573
+.6:
+mov edx, dword [byte esp+050h]	; 3D577
+cmp edx, byte 2	; 3D57B
+jge short .7	; 3D57E
+test ebp, ebp	; 3D580
+je near SelectFloppyDrive.2	; 3D582
+.7:
+cmp dword [floppyok], byte 0	; 3D588
+jne short .8	; 3D58F
+cmp dword [floppyok+4], byte 0	; 3D591
+jne short .8	; 3D598
+lea eax, [byte esp+048h]	; 3D59A
+push eax	; 3D59E
+lea eax, [byte esp+050h]	; 3D59F
+push eax	; 3D5A3
+lea eax, [byte esp+058h]	; 3D5A4
+push eax	; 3D5A8
+call sub_B2DCA	; 3D5A9
+add esp, byte 0Ch	; 3D5AE
+push byte 0FFFFFFFFh	; 3D5B1
+lea eax, [byte esp+04Ch]	; 3D5B3
+push eax	; 3D5B7
+lea eax, [byte esp+054h]	; 3D5B8
+push eax	; 3D5BC
+push byte 0	; 3D5BD
+push byte 0	; 3D5BF
+mov ecx, 1	; 3D5C1
+mov ebx, insertfloppymsg	; 3D5C6
+mov edx, 0FFFFFFFFh	; 3D5CB
+mov eax, edx	; 3D5D0
+call MessageBox	; 3D5D2
+mov dword [byte esp+054h], eax	; 3D5D7
+.8:
+cmp dword [floppyok], byte 0	; 3D5DB
+jne short .9	; 3D5E2
+cmp dword [floppyok+4], byte 0	; 3D5E4
+jne short .9	; 3D5EB
+cmp dword [byte esp+054h], byte 4	; 3D5ED
+jne near SelectFloppyDrive.1	; 3D5F2
+.9:
+xor ecx, ecx	; 3D5F8
+mov dword [floppyprobe], ecx	; 3D5FA
+test ebp, ebp	; 3D600
+jne near .12	; 3D602
+cmp dword [byte esp+054h], byte 4	; 3D608
+je near .12	; 3D60D
+cmp dword [floppyok], byte 0	; 3D613
+je short .10	; 3D61A
+cmp dword [floppyok+4], byte 0	; 3D61C
+je short .10	; 3D623
+lea eax, [byte esp+048h]	; 3D625
+push eax	; 3D629
+lea eax, [byte esp+050h]	; 3D62A
+push eax	; 3D62E
+lea eax, [byte esp+058h]	; 3D62F
+push eax	; 3D633
+call sub_B2DCA	; 3D634
+add esp, byte 0Ch	; 3D639
+push byte 0FFFFFFFFh	; 3D63C
+lea eax, [byte esp+04Ch]	; 3D63E
+push eax	; 3D642
+lea eax, [byte esp+054h]	; 3D643
+push eax	; 3D647
+push byte 2	; 3D648
+push drivebtns	; 3D64A
+mov ecx, 1	; 3D64F
+mov ebx, whichdrivemsg	; 3D654
+mov edx, 0FFFFFFFFh	; 3D659
+mov eax, edx	; 3D65E
+call MessageBox	; 3D660
+add al, 41h	; 3D665
+mov byte [str_floppydrv], al	; 3D667
+jmp short .12	; 3D66C
+.10:
+cmp dword [floppyok], byte 0	; 3D66E
+je short .11	; 3D675
+mov byte [str_floppydrv], 41h	; 3D677
+jmp short .12	; 3D67E
+.11:
+mov byte [str_floppydrv], 42h	; 3D680
+.12:
+mov eax, dword [byte esp+054h]	; 3D687
+add esp, byte 58h	; 3D68B
+pop ebp	; 3D68E
+pop edi	; 3D68F
+pop esi	; 3D690
+pop ecx	; 3D691
+pop ebx	; 3D692
+ret	; 3D693
+%endif ; C
+; C: src/pc/database_merge/FindLeagueFloppy.c
+%ifdef CBUILD
+%include "c/pc/database_merge/FindLeagueFloppy.inc"
+%else
+FindLeagueFloppy:
+push dword 0C0h	; 3D694
+call __CHK	; 3D699
+push ecx	; 3D69E
+push esi	; 3D69F
+push edi	; 3D6A0
+push ebp	; 3D6A1
+sub esp, 98h	; 3D6A2
+mov ebp, eax	; 3D6A8
+mov edi, edx	; 3D6AA
+mov dword [dword esp+090h], 0FFFFFFFFh	; 3D6AC
+.1:
+mov esi, 0FFFFFFFFh	; 3D6B7
+mov dword [floppyprobe], esi	; 3D6BC
+xor ecx, ecx	; 3D6C2
+mov dword [dword esp+08Ch], ecx	; 3D6C4
+jmp near .7	; 3D6CB
+.2:
+xor esi, esi	; 3D6D0
+mov dword [criterrflag], esi	; 3D6D2
+mov ecx, 0FFFFFFFFh	; 3D6D8
+mov dword [nosplit eax*4+floppyok], ecx	; 3D6DD
+inc eax	; 3D6E4
+lea edx, [byte esp+07Ch]	; 3D6E5
+call _dos_getdiskfree_	; 3D6E9
+cmp dword [criterrflag], byte 0	; 3D6EE
+jne near .5	; 3D6F5
+mov al, byte [dword esp+08Ch]	; 3D6FB
+add al, 41h	; 3D702
+mov byte [str_floppydrv], al	; 3D704
+mov ecx, str_extID	; 3D709
+mov ebx, str_PLAYER	; 3D70E
+mov edx, str_floppydrv	; 3D713
+lea eax, [byte esp+040h]	; 3D718
+call MakePath	; 3D71C
+lea edx, [dword esp+090h]	; 3D721
+lea eax, [byte esp+040h]	; 3D728
+call FileOpenRead	; 3D72C
+mov dword [dword esp+094h], eax	; 3D731
+test eax, eax	; 3D738
+jne short .3	; 3D73A
+mov ecx, 0Bh	; 3D73C
+mov ebx, 1	; 3D741
+lea edx, [byte esp+070h]	; 3D746
+mov eax, dword [dword esp+090h]	; 3D74A
+call FileReadAt	; 3D751
+mov ecx, 0Dh	; 3D756
+mov ebx, 0FFFFFFFFh	; 3D75B
+lea edx, [byte esp+060h]	; 3D760
+mov eax, dword [dword esp+090h]	; 3D764
+call FileReadAt	; 3D76B
+lea edx, [byte esp+070h]	; 3D770
+mov eax, edi	; 3D774
+call stricmp_	; 3D776
+test eax, eax	; 3D77B
+jne short .3	; 3D77D
+lea edx, [byte esp+060h]	; 3D77F
+mov eax, ebp	; 3D783
+call stricmp_	; 3D785
+test eax, eax	; 3D78A
+je short .4	; 3D78C
+.3:
+mov esi, 0FFFFFFFFh	; 3D78E
+.4:
+lea eax, [dword esp+090h]	; 3D793
+call FileClose	; 3D79A
+jmp short .6	; 3D79F
+.5:
+mov esi, ecx	; 3D7A1
+.6:
+inc dword [dword esp+08Ch]	; 3D7A3
+.7:
+mov eax, dword [dword esp+08Ch]	; 3D7AA
+cmp eax, byte 2	; 3D7B1
+jge short .8	; 3D7B4
+test esi, esi	; 3D7B6
+jne near FindLeagueFloppy.2	; 3D7B8
+.8:
+xor edx, edx	; 3D7BE
+mov dword [floppyprobe], edx	; 3D7C0
+test esi, esi	; 3D7C6
+je short .9	; 3D7C8
+mov ebx, ebp	; 3D7CA
+mov edx, edi	; 3D7CC
+mov eax, esp	; 3D7CE
+call FmtFromLeague	; 3D7D0
+mov eax, esp	; 3D7D5
+mov dword [notforlgmsg+4], eax	; 3D7D7
+lea eax, [dword esp+084h]	; 3D7DC
+push eax	; 3D7E3
+lea eax, [dword esp+08Ch]	; 3D7E4
+push eax	; 3D7EB
+lea eax, [dword esp+094h]	; 3D7EC
+push eax	; 3D7F3
+call sub_B2DCA	; 3D7F4
+add esp, byte 0Ch	; 3D7F9
+push byte 0FFFFFFFFh	; 3D7FC
+lea eax, [dword esp+088h]	; 3D7FE
+push eax	; 3D805
+lea eax, [dword esp+090h]	; 3D806
+push eax	; 3D80D
+push byte 0	; 3D80E
+push byte 0	; 3D810
+mov ecx, 6	; 3D812
+mov ebx, notforlgmsg	; 3D817
+mov edx, 0FFFFFFFFh	; 3D81C
+mov eax, edx	; 3D821
+call MessageBox	; 3D823
+mov dword [dword esp+094h], eax	; 3D828
+test eax, eax	; 3D82F
+je short .9	; 3D831
+xor esi, esi	; 3D833
+.9:
+test esi, esi	; 3D835
+jne near FindLeagueFloppy.1	; 3D837
+mov eax, dword [dword esp+094h]	; 3D83D
+add esp, 98h	; 3D844
+pop ebp	; 3D84A
+pop edi	; 3D84B
+pop esi	; 3D84C
+pop ecx	; 3D84D
+ret	; 3D84E
+%endif ; C
+; C: src/pc/database_merge/WaitLeagueFloppy.c
+%ifdef CBUILD
+%include "c/pc/database_merge/WaitLeagueFloppy.inc"
+%else
+WaitLeagueFloppy:
+push dword 74h	; 3D84F
+call __CHK	; 3D854
+push ecx	; 3D859
+push esi	; 3D85A
+push edi	; 3D85B
+push ebp	; 3D85C
+sub esp, byte 4Ch	; 3D85D
+mov esi, eax	; 3D860
+mov edi, edx	; 3D862
+mov ebp, ebx	; 3D864
+mov ebx, eax	; 3D866
+mov eax, esp	; 3D868
+call FmtFromLeague	; 3D86A
+mov eax, esp	; 3D86F
+mov dword [msg_InsertDisk_arg], eax	; 3D871
+lea eax, [byte esp+040h]	; 3D876
+push eax	; 3D87A
+lea eax, [byte esp+048h]	; 3D87B
+push eax	; 3D87F
+lea eax, [byte esp+050h]	; 3D880
+push eax	; 3D884
+call sub_B2DCA	; 3D885
+add esp, byte 0Ch	; 3D88A
+push byte 0FFFFFFFFh	; 3D88D
+lea eax, [byte esp+044h]	; 3D88F
+push eax	; 3D893
+lea eax, [byte esp+04Ch]	; 3D894
+push eax	; 3D898
+push byte 0	; 3D899
+push byte 0	; 3D89B
+mov ecx, 4	; 3D89D
+mov ebx, msg_InsertDisk	; 3D8A2
+mov edx, 0FFFFFFFFh	; 3D8A7
+mov eax, edx	; 3D8AC
+call MessageBox	; 3D8AE
+mov edx, eax	; 3D8B3
+cmp eax, byte 4	; 3D8B5
+je short .1	; 3D8B8
+mov ebx, ebp	; 3D8BA
+mov edx, edi	; 3D8BC
+mov eax, esi	; 3D8BE
+call FindLeagueFloppy	; 3D8C0
+mov edx, eax	; 3D8C5
+.1:
+cmp edx, byte 4	; 3D8C7
+jne short .2	; 3D8CA
+mov eax, 0FFFFFFFFh	; 3D8CC
+jmp short .x	; 3D8D1
+.2:
+mov eax, edx	; 3D8D3
+.x:
+add esp, byte 4Ch	; 3D8D5
+pop ebp	; 3D8D8
+pop edi	; 3D8D9
+pop esi	; 3D8DA
+pop ecx	; 3D8DB
+ret	; 3D8DC
+%endif ; C
+; C: src/pc/database_merge/ReadLeagueInfo.c
+%ifdef CBUILD
+%include "c/pc/database_merge/ReadLeagueInfo.inc"
+%else
+ReadLeagueInfo:
+push dword 6Ch	; 3D8DD
+call __CHK	; 3D8E2
+push esi	; 3D8E7
+push edi	; 3D8E8
+push ebp	; 3D8E9
+sub esp, byte 48h	; 3D8EA
+mov edi, eax	; 3D8ED
+mov dword [byte esp+044h], edx	; 3D8EF
+mov dword [byte esp+040h], ebx	; 3D8F3
+mov ebp, ecx	; 3D8F7
+mov dword [byte esp+038h], 0FFFFFFFFh	; 3D8F9
+mov ecx, str_extDB	; 3D901
+mov ebx, str_PINFO	; 3D906
+mov edx, eax	; 3D90B
+mov eax, esp	; 3D90D
+call MakePath	; 3D90F
+mov eax, esp	; 3D914
+push eax	; 3D916
+call sub_B3CC8	; 3D917
+add esp, byte 4	; 3D91C
+test eax, eax	; 3D91F
+jne near .1	; 3D921
+mov esi, 1	; 3D927
+mov edx, curleague	; 3D92C
+lea eax, [byte esp+020h]	; 3D931
+call strcpy_	; 3D935
+mov ecx, ds	; 3D93A
+mov ebx, str_dot	; 3D93C
+mov edx, ds	; 3D941
+lea eax, [byte esp+020h]	; 3D943
+call _fstrcspn_	; 3D947
+xor dl, dl	; 3D94C
+mov byte [byte esp+eax+020h], dl	; 3D94E
+lea eax, [byte esp+020h]	; 3D952
+mov dword [lgreaderrmsg+4], eax	; 3D956
+push byte 0	; 3D95B
+mov ecx, 11h	; 3D95D
+mov ebx, 5	; 3D962
+mov edx, ecx	; 3D967
+mov eax, 0Bh	; 3D969
+call SetDialogColors	; 3D96E
+lea eax, [byte esp+03Ch]	; 3D973
+push eax	; 3D977
+lea eax, [byte esp+034h]	; 3D978
+push eax	; 3D97C
+lea eax, [byte esp+03Ch]	; 3D97D
+push eax	; 3D981
+call sub_B2DCA	; 3D982
+add esp, byte 0Ch	; 3D987
+push byte 0FFFFFFFFh	; 3D98A
+lea eax, [byte esp+040h]	; 3D98C
+push eax	; 3D990
+lea eax, [byte esp+038h]	; 3D991
+push eax	; 3D995
+push byte 0	; 3D996
+push byte 0	; 3D998
+mov ecx, 2	; 3D99A
+mov ebx, lgreaderrmsg	; 3D99F
+mov edx, 0FFFFFFFFh	; 3D9A4
+mov eax, edx	; 3D9A9
+call MessageBox	; 3D9AB
+jmp near .9	; 3D9B0
+.1:
+lea edx, [byte esp+038h]	; 3D9B5
+mov eax, esp	; 3D9B9
+call FileOpenRead	; 3D9BB
+mov esi, eax	; 3D9C0
+test eax, eax	; 3D9C2
+jne short .2	; 3D9C4
+mov ecx, 2	; 3D9C6
+xor ebx, ebx	; 3D9CB
+mov edx, dword [byte esp+058h]	; 3D9CD
+mov eax, dword [byte esp+038h]	; 3D9D1
+call FileReadAt	; 3D9D5
+mov esi, eax	; 3D9DA
+.2:
+test esi, esi	; 3D9DC
+jne short .3	; 3D9DE
+mov ecx, 2	; 3D9E0
+mov ebx, ecx	; 3D9E5
+mov edx, ebp	; 3D9E7
+mov eax, dword [byte esp+038h]	; 3D9E9
+call FileReadAt	; 3D9ED
+mov esi, eax	; 3D9F2
+.3:
+test esi, esi	; 3D9F4
+jne short .4	; 3D9F6
+mov ecx, 2	; 3D9F8
+mov ebx, 4	; 3D9FD
+mov edx, dword [byte esp+060h]	; 3DA02
+mov eax, dword [byte esp+038h]	; 3DA06
+call FileReadAt	; 3DA0A
+mov esi, eax	; 3DA0F
+.4:
+test esi, esi	; 3DA11
+jne short .5	; 3DA13
+mov ecx, 0Dh	; 3DA15
+mov ebx, 6	; 3DA1A
+mov edx, dword [byte esp+064h]	; 3DA1F
+mov eax, dword [byte esp+038h]	; 3DA23
+call FileReadAt	; 3DA27
+mov esi, eax	; 3DA2C
+.5:
+test esi, esi	; 3DA2E
+jne short .6	; 3DA30
+mov ecx, 2	; 3DA32
+mov ebx, 13h	; 3DA37
+mov edx, dword [byte esp+05Ch]	; 3DA3C
+mov eax, dword [byte esp+038h]	; 3DA40
+call FileReadAt	; 3DA44
+mov esi, eax	; 3DA49
+.6:
+test esi, esi	; 3DA4B
+jne short .7	; 3DA4D
+mov ecx, 0Bh	; 3DA4F
+mov ebx, 15h	; 3DA54
+mov edx, dword [byte esp+040h]	; 3DA59
+mov eax, dword [byte esp+038h]	; 3DA5D
+call FileReadAt	; 3DA61
+mov esi, eax	; 3DA66
+.7:
+test esi, esi	; 3DA68
+jne short .8	; 3DA6A
+mov ecx, 30Ch	; 3DA6C
+mov ebx, 20h	; 3DA71
+mov edx, dword [byte esp+044h]	; 3DA76
+mov eax, dword [byte esp+038h]	; 3DA7A
+call FileReadAt	; 3DA7E
+mov esi, eax	; 3DA83
+.8:
+lea eax, [byte esp+038h]	; 3DA85
+call FileClose	; 3DA89
+mov ecx, str_Sav2	; 3DA8E
+mov ebx, str_Game2	; 3DA93
+mov edx, edi	; 3DA98
+mov eax, esp	; 3DA9A
+call MakePath	; 3DA9C
+mov eax, esp	; 3DAA1
+call FileExists	; 3DAA3
+mov edx, dword [byte esp+060h]	; 3DAA8
+mov dword [edx], eax	; 3DAAC
+.9:
+mov eax, esi	; 3DAAE
+add esp, byte 48h	; 3DAB0
+pop ebp	; 3DAB3
+pop edi	; 3DAB4
+pop esi	; 3DAB5
+ret 10h	; 3DAB6
+%endif ; C
+; C: src/pc/database_merge/ReadTeamNames.c
+%ifdef CBUILD
+%include "c/pc/database_merge/ReadTeamNames.inc"
+%else
+ReadTeamNames:
+push dword 18h	; 3DAB9
+call __CHK	; 3DABE
+push ecx	; 3DAC3
+push esi	; 3DAC4
+push edi	; 3DAC5
+push ebp	; 3DAC6
+sub esp, byte 4	; 3DAC7
+mov ebp, edx	; 3DACA
+mov edi, ebx	; 3DACC
+mov dword [esp], 0FFFFFFFFh	; 3DACE
+mov edx, esp	; 3DAD5
+call FileOpenRead	; 3DAD7
+mov edx, eax	; 3DADC
+test eax, eax	; 3DADE
+jne short .5	; 3DAE0
+xor esi, esi	; 3DAE2
+jmp short .4	; 3DAE4
+.1:
+mov ebx, esi	; 3DAE6
+shl ebx, 2	; 3DAE8
+add ebx, esi	; 3DAEB
+shl ebx, 2	; 3DAED
+add ebx, esi	; 3DAF0
+mov eax, esi	; 3DAF2
+shl eax, 2	; 3DAF4
+sub eax, esi	; 3DAF7
+shl eax, 3	; 3DAF9
+mov edx, eax	; 3DAFC
+shl eax, 5	; 3DAFE
+sub eax, edx	; 3DB01
+lea edx, [ebx+ebp]	; 3DB03
+test edi, edi	; 3DB06
+je short .2	; 3DB08
+lea ebx, [byte eax+05h]	; 3DB0A
+mov ecx, 15h	; 3DB0D
+jmp short .3	; 3DB12
+.2:
+lea ebx, [byte eax+01Ah]	; 3DB14
+mov ecx, 0Dh	; 3DB17
+.3:
+mov eax, dword [esp]	; 3DB1C
+call FileReadAt	; 3DB1F
+mov edx, eax	; 3DB24
+inc esi	; 3DB26
+.4:
+cmp esi, byte 1Ah	; 3DB27
+jge short .5	; 3DB2A
+test edx, edx	; 3DB2C
+je short ReadTeamNames.1	; 3DB2E
+.5:
+mov eax, esp	; 3DB30
+call FileClose	; 3DB32
+mov eax, edx	; 3DB37
+add esp, byte 4	; 3DB39
+pop ebp	; 3DB3C
+pop edi	; 3DB3D
+pop esi	; 3DB3E
+pop ecx	; 3DB3F
+ret	; 3DB40
+%endif ; C

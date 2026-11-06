@@ -1,0 +1,848 @@
+; Scoreboard sprites, the blitter the menus call, and the titles on the statistics screens.
+bits 32
+%include "hockey.inc"
+section s_1CC3D progbits alloc exec nowrite align=1
+extern __CHK, awlineind, awpanelspr, byte_C67A9, byte_DC8D8, byte_DC9D8, cddriveptr, cliprect_x0
+extern cliprect_x1, cliprect_y0, cliprect_y1, clockdigits, dirtyrectcount, dirtyrectptr, dword_C679D, dword_C67B9
+extern dword_C67BD, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7
+extern dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B
+extern dword_CF8CB, dword_CFA4B, exhstate, fileoncd, hmlineind, hmpanelspr, lastsprremap, lgstate
+extern linesprites, MakePath, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode, off_C6821
+extern off_C6825, off_C6841, off_C6845, off_C6881, off_C6885, off_CF51F, off_CF5DF, off_CF61F
+extern off_CF67F, penaltydigits, postate, scoredigits, scrbrdshapes, spritedrawcount, statsfromleague, statsleague
+extern statsplayoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode, statsteamsel, str_BroadcastBooth, str_HomeLineTags, str_Homp
+extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeasonTitle, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_LineNames
+extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
+extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, sub_6AB7C, sub_8E8A0, sub_90B80
+extern sub_B30B4, sub_B4CD8, sub_B4DD4, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
+extern sub_B5974, sub_B5AC8, unk_DC998, unk_DCA98, vgapage
+global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
+global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
+global SetupStatsSourceMenu_lg, SetupStatsSourceMenu_po, SetupStatsSourceMenu_exh, SetupStatsSourceMenu_all, BuildSavedGameLabels, StrLenToDot, SetScreenTitle_jt, SetScreenTitle
+global SetScreenTitle_central, SetScreenTitle_calendar, SetScreenTitle_tree, SetScreenTitle_booth, SetScreenTitle_desk, SetScreenTitle_rink, StrPrefixDiffers
+; C: src/front/screen_util/LoadScoreboardGfx.c
+%ifdef CBUILD
+%include "c/front/screen_util/LoadScoreboardGfx.inc"
+%else
+LoadScoreboardGfx:
+push dword 38h	; 1CC3D
+call __CHK	; 1CC42
+push ebx	; 1CC47
+push ecx	; 1CC48
+push edx	; 1CC49
+push esi	; 1CC4A
+push edi	; 1CC4B
+push ebp	; 1CC4C
+sub esp, byte 10h	; 1CC4D
+mov ecx, str_PPV	; 1CC50
+mov ebx, str_scrbrd1	; 1CC55
+cmp byte [fileoncd+016Ch], 1	; 1CC5A
+jne short .1	; 1CC61
+mov edx, dword [cddriveptr]	; 1CC63
+jmp short .2	; 1CC69
+.1:
+xor edx, edx	; 1CC6B
+.2:
+mov eax, esp	; 1CC6D
+call MakePath	; 1CC6F
+push byte 20h	; 1CC74
+lea eax, [byte esp+04h]	; 1CC76
+push eax	; 1CC7A
+call sub_8E8A0	; 1CC7B
+add esp, byte 8	; 1CC80
+mov dword [scrbrdshapes], eax	; 1CC83
+push scoredigits	; 1CC88
+push str_LineCodes0	; 1CC8D
+push eax	; 1CC92
+call sub_90B80	; 1CC93
+add esp, byte 0Ch	; 1CC98
+push clockdigits	; 1CC9B
+push str_LineCodes1	; 1CCA0
+mov edx, dword [scrbrdshapes]	; 1CCA5
+push edx	; 1CCAB
+call sub_90B80	; 1CCAC
+add esp, byte 0Ch	; 1CCB1
+push penaltydigits	; 1CCB4
+push str_LineCodes2	; 1CCB9
+mov ebx, dword [scrbrdshapes]	; 1CCBE
+push ebx	; 1CCC4
+call sub_90B80	; 1CCC5
+add esp, byte 0Ch	; 1CCCA
+push awlineind	; 1CCCD
+push str_VisLineTags	; 1CCD2
+mov ecx, dword [scrbrdshapes]	; 1CCD7
+push ecx	; 1CCDD
+call sub_90B80	; 1CCDE
+add esp, byte 0Ch	; 1CCE3
+push hmlineind	; 1CCE6
+push str_HomeLineTags	; 1CCEB
+mov esi, dword [scrbrdshapes]	; 1CCF0
+push esi	; 1CCF6
+call sub_90B80	; 1CCF7
+add esp, byte 0Ch	; 1CCFC
+push str_Visp	; 1CCFF
+mov edi, dword [scrbrdshapes]	; 1CD04
+push edi	; 1CD0A
+call sub_B30B4	; 1CD0B
+add esp, byte 8	; 1CD10
+mov dword [awpanelspr], eax	; 1CD13
+push str_Homp	; 1CD18
+mov ebp, dword [scrbrdshapes]	; 1CD1D
+push ebp	; 1CD23
+call sub_B30B4	; 1CD24
+add esp, byte 8	; 1CD29
+mov dword [hmpanelspr], eax	; 1CD2C
+push linesprites	; 1CD31
+push str_LineNames	; 1CD36
+mov eax, dword [scrbrdshapes]	; 1CD3B
+push eax	; 1CD40
+call sub_90B80	; 1CD41
+add esp, byte 0Ch	; 1CD46
+add esp, byte 10h	; 1CD49
+pop ebp	; 1CD4C
+pop edi	; 1CD4D
+pop esi	; 1CD4E
+pop edx	; 1CD4F
+pop ecx	; 1CD50
+pop ebx	; 1CD51
+ret	; 1CD52
+%endif ; C
+DrawSprite_jt:
+dd DrawSprite_b0
+dd DrawSprite_b1
+dd DrawSprite_b2
+dd DrawSprite_b3
+dd DrawSprite_b4
+dd DrawSprite_b5
+dd DrawSprite_b6
+dd DrawSprite_b7
+DrawSprite:
+push dword 3Ch	; 1CD73
+call __CHK	; 1CD78
+push esi	; 1CD7D
+push edi	; 1CD7E
+push ebp	; 1CD7F
+sub esp, byte 20h	; 1CD80
+mov esi, eax	; 1CD83
+mov word [byte esp+018h], cx	; 1CD85
+xor ecx, ecx	; 1CD8A
+mov dword [byte esp+010h], ecx	; 1CD8C
+cmp word [byte esp+018h], byte 0	; 1CD90
+je short .1	; 1CD96
+mov cx, word [byte eax+04h]	; 1CD98
+mov eax, edx	; 1CD9C
+sub eax, ecx	; 1CD9E
+add ax, word [byte esi+08h]	; 1CDA0
+inc eax	; 1CDA4
+mov word [byte esp+014h], ax	; 1CDA5
+jmp short .2	; 1CDAA
+.1:
+mov ax, word [byte eax+08h]	; 1CDAC
+sub edx, eax	; 1CDB0
+mov word [byte esp+014h], dx	; 1CDB2
+.2:
+mov ax, word [byte esi+0Ah]	; 1CDB7
+sub ebx, eax	; 1CDBB
+mov word [byte esp+01Ch], bx	; 1CDBD
+mov eax, dword [byte esp+014h]	; 1CDC2
+add ax, word [byte esi+04h]	; 1CDC6
+dec eax	; 1CDCA
+mov edx, ebx	; 1CDCB
+add dx, word [byte esi+06h]	; 1CDCD
+mov edi, dword [byte esp+012h]	; 1CDD1
+sar edi, 10h	; 1CDD5
+cmp edi, dword [cliprect_x1]	; 1CDD8
+jge near DrawSprite_b0.x	; 1CDDE
+cwde	; 1CDE4
+cmp eax, dword [cliprect_x0]	; 1CDE5
+jl near DrawSprite_b0.x	; 1CDEB
+mov ecx, dword [byte esp+01Ah]	; 1CDF1
+sar ecx, 10h	; 1CDF5
+cmp ecx, dword [cliprect_y1]	; 1CDF8
+jge near DrawSprite_b0.x	; 1CDFE
+movsx edx, dx	; 1CE04
+cmp edx, dword [cliprect_y0]	; 1CE07
+jle near DrawSprite_b0.x	; 1CE0D
+cmp edi, dword [cliprect_x0]	; 1CE13
+jl short .3	; 1CE19
+cmp eax, dword [cliprect_x1]	; 1CE1B
+jge short .3	; 1CE21
+cmp ecx, dword [cliprect_y0]	; 1CE23
+jl short .3	; 1CE29
+cmp edx, dword [cliprect_y1]	; 1CE2B
+jl short .4	; 1CE31
+.3:
+mov dword [byte esp+010h], 1	; 1CE33
+.4:
+cmp word [byte esp+018h], byte 0	; 1CE3B
+je short .5	; 1CE41
+add dword [byte esp+010h], byte 4	; 1CE43
+.5:
+mov edx, dword [byte esp+030h]	; 1CE48
+test dx, dx	; 1CE4C
+jl near .17	; 1CE4F
+mov eax, dword [byte esp+016h]	; 1CE55
+sar eax, 10h	; 1CE59
+add eax, eax	; 1CE5C
+mov ebp, dword [byte esp+02Eh]	; 1CE5E
+sar ebp, 10h	; 1CE62
+add ebp, eax	; 1CE65
+cmp ebp, dword [lastsprremap]	; 1CE67
+je near .16	; 1CE6D
+cmp word [byte esp+018h], byte 0	; 1CE73
+je short .9	; 1CE79
+test dx, dx	; 1CE7B
+je short .6	; 1CE7E
+mov edi, unk_DC998	; 1CE80
+jmp short .7	; 1CE85
+.6:
+mov edi, unk_DCA98	; 1CE87
+.7:
+xor edx, edx	; 1CE8C
+.8:
+mov bl, byte [byte edx+edi+04h]	; 1CE8E
+mov byte [byte esp+08h], bl	; 1CE92
+mov bl, byte [byte edx+edi+03h]	; 1CE96
+mov byte [byte esp+09h], bl	; 1CE9A
+mov bl, byte [byte edx+edi+01h]	; 1CE9E
+mov byte [byte esp+0Bh], bl	; 1CEA2
+mov bl, byte [edx+edi]	; 1CEA6
+mov byte [byte esp+0Ch], bl	; 1CEA9
+mov bl, byte [byte esp+08h]	; 1CEAD
+mov byte [edx+edi], bl	; 1CEB1
+mov bl, byte [byte esp+09h]	; 1CEB4
+mov byte [byte edx+edi+01h], bl	; 1CEB8
+mov bl, byte [byte esp+0Bh]	; 1CEBC
+mov byte [byte edx+edi+03h], bl	; 1CEC0
+mov bl, byte [byte esp+0Ch]	; 1CEC4
+mov byte [byte edx+edi+04h], bl	; 1CEC8
+add edx, byte 10h	; 1CECC
+cmp edx, byte 40h	; 1CECF
+jl short DrawSprite.8	; 1CED2
+.9:
+cmp word [byte esp+030h], byte 0	; 1CED4
+je short .10	; 1CEDA
+mov eax, byte_DC8D8	; 1CEDC
+jmp short .11	; 1CEE1
+.10:
+mov eax, byte_DC9D8	; 1CEE3
+.11:
+push eax	; 1CEE8
+call sub_B4DD4	; 1CEE9
+add esp, byte 4	; 1CEEE
+cmp word [byte esp+018h], byte 0	; 1CEF1
+je short .15	; 1CEF7
+cmp word [byte esp+030h], byte 0	; 1CEF9
+je short .12	; 1CEFF
+mov edi, unk_DC998	; 1CF01
+jmp short .13	; 1CF06
+.12:
+mov edi, unk_DCA98	; 1CF08
+.13:
+xor edx, edx	; 1CF0D
+.14:
+mov bl, byte [byte edx+edi+04h]	; 1CF0F
+mov byte [esp], bl	; 1CF13
+mov bl, byte [byte edx+edi+03h]	; 1CF16
+mov byte [byte esp+01h], bl	; 1CF1A
+mov bl, byte [byte edx+edi+01h]	; 1CF1E
+mov byte [byte esp+03h], bl	; 1CF22
+mov bl, byte [edx+edi]	; 1CF26
+mov byte [byte esp+04h], bl	; 1CF29
+mov bl, byte [esp]	; 1CF2D
+mov byte [edx+edi], bl	; 1CF30
+mov bl, byte [byte esp+01h]	; 1CF33
+mov byte [byte edx+edi+01h], bl	; 1CF37
+mov bl, byte [byte esp+03h]	; 1CF3B
+mov byte [byte edx+edi+03h], bl	; 1CF3F
+mov bl, byte [byte esp+04h]	; 1CF43
+mov byte [byte edx+edi+04h], bl	; 1CF47
+add edx, byte 10h	; 1CF4B
+cmp edx, byte 40h	; 1CF4E
+jl short DrawSprite.14	; 1CF51
+.15:
+mov dword [lastsprremap], ebp	; 1CF53
+.16:
+add dword [byte esp+010h], byte 2	; 1CF59
+.17:
+mov eax, dword [esi]	; 1CF5E
+shl eax, 18h	; 1CF60
+sar eax, 18h	; 1CF63
+test eax, eax	; 1CF66
+je short .18	; 1CF68
+add dword [byte esp+010h], byte 8	; 1CF6A
+.18:
+mov eax, dword [byte esi+04h]	; 1CF6F
+sar eax, 10h	; 1CF72
+mov ebp, dword [byte esp+01Ah]	; 1CF75
+sar ebp, 10h	; 1CF79
+add eax, ebp	; 1CF7C
+push eax	; 1CF7E
+mov ecx, dword [byte esi+02h]	; 1CF7F
+sar ecx, 10h	; 1CF82
+mov edi, dword [byte esp+016h]	; 1CF85
+sar edi, 10h	; 1CF89
+add ecx, edi	; 1CF8C
+mov eax, dword [spritedrawcount]	; 1CF8E
+lea edx, [byte eax+01h]	; 1CF93
+mov dword [spritedrawcount], edx	; 1CF96
+mov ebx, ebp	; 1CF9C
+mov edx, edi	; 1CF9E
+call sub_6AB7C	; 1CFA0
+mov eax, dword [byte esp+010h]	; 1CFA5
+sub eax, byte 8	; 1CFA9
+cmp ax, 7	; 1CFAC
+ja short DrawSprite_b0.x	; 1CFB0
+and eax, 0FFFFh	; 1CFB2
+jmp dword [nosplit cs:eax*4+DrawSprite_jt]	; 1CFB7
+DrawSprite_b0:
+push ebp	; 1CFBF
+push edi	; 1CFC0
+push esi	; 1CFC1
+call sub_B4CD8	; 1CFC2
+.1:
+add esp, byte 0Ch	; 1CFC7
+.x:
+add esp, byte 20h	; 1CFCA
+pop ebp	; 1CFCD
+pop edi	; 1CFCE
+pop esi	; 1CFCF
+ret 8	; 1CFD0
+DrawSprite_b1:
+push ebp	; 1CFD3
+push edi	; 1CFD4
+push esi	; 1CFD5
+call sub_B500C	; 1CFD6
+jmp short DrawSprite_b0.1	; 1CFDB
+DrawSprite_b2:
+push ebp	; 1CFDD
+push edi	; 1CFDE
+push esi	; 1CFDF
+call sub_B4E50	; 1CFE0
+jmp short DrawSprite_b0.1	; 1CFE5
+DrawSprite_b3:
+push ebp	; 1CFE7
+push edi	; 1CFE8
+push esi	; 1CFE9
+call sub_B52B4	; 1CFEA
+jmp short DrawSprite_b0.1	; 1CFEF
+DrawSprite_b4:
+push ebp	; 1CFF1
+push edi	; 1CFF2
+push esi	; 1CFF3
+call sub_B5584	; 1CFF4
+jmp short DrawSprite_b0.1	; 1CFF9
+DrawSprite_b5:
+push ebp	; 1CFFB
+push edi	; 1CFFC
+push esi	; 1CFFD
+call sub_B56B8	; 1CFFE
+jmp short DrawSprite_b0.1	; 1D003
+DrawSprite_b6:
+push ebp	; 1D005
+push edi	; 1D006
+push esi	; 1D007
+call sub_B5974	; 1D008
+jmp short DrawSprite_b0.1	; 1D00D
+DrawSprite_b7:
+push ebp	; 1D00F
+push edi	; 1D010
+push esi	; 1D011
+call sub_B5AC8	; 1D012
+jmp short DrawSprite_b0.1	; 1D017
+; C: src/front/screen_util/NullBlit.c
+%ifdef CBUILD
+%include "c/front/screen_util/NullBlit.inc"
+%else
+NullBlit:
+push dword 4	; 1D019
+call __CHK	; 1D01E
+ret	; 1D023
+%endif ; C
+; C: src/front/screen_util/NullFunc_1D024.c
+%ifdef CBUILD
+%include "c/front/screen_util/NullFunc_1D024.inc"
+%else
+NullFunc_1D024:
+push dword 4	; 1D024
+call __CHK	; 1D029
+ret	; 1D02E
+%endif ; C
+; C: src/front/screen_util/AddDirtyRect.c
+%ifdef CBUILD
+%include "c/front/screen_util/AddDirtyRect.inc"
+%else
+AddDirtyRect:
+push dword 0Ch	; 1D02F
+call __CHK	; 1D034
+push esi	; 1D039
+push edi	; 1D03A
+mov esi, edx	; 1D03B
+movsx edi, ax	; 1D03D
+movsx edx, bx	; 1D040
+add edx, edi	; 1D043
+shr edx, 2	; 1D045
+movsx ebx, ax	; 1D048
+shr ebx, 2	; 1D04B
+sub edx, ebx	; 1D04E
+lea ebx, [byte edx+01h]	; 1D050
+cmp dword [vgapage], byte 0	; 1D053
+sete dl	; 1D05A
+and edx, 0FFh	; 1D05D
+mov edx, dword [nosplit edx*4+dirtyrectptr]	; 1D063
+mov dword [byte edx+08h], ebx	; 1D06A
+movsx ebx, cx	; 1D06D
+cmp dword [vgapage], byte 0	; 1D070
+sete dl	; 1D077
+and edx, 0FFh	; 1D07A
+mov edx, dword [nosplit edx*4+dirtyrectptr]	; 1D080
+mov dword [byte edx+0Ch], ebx	; 1D087
+cwde	; 1D08A
+mov edx, eax	; 1D08B
+shr edx, 2	; 1D08D
+cmp dword [vgapage], byte 0	; 1D090
+sete al	; 1D097
+and eax, 0FFh	; 1D09A
+mov eax, dword [nosplit eax*4+dirtyrectptr]	; 1D09F
+mov dword [eax], edx	; 1D0A6
+movsx edx, si	; 1D0A8
+cmp dword [vgapage], byte 0	; 1D0AB
+sete al	; 1D0B2
+and eax, 0FFh	; 1D0B5
+mov eax, dword [nosplit eax*4+dirtyrectptr]	; 1D0BA
+mov dword [byte eax+04h], edx	; 1D0C1
+mov esi, dword [vgapage]	; 1D0C4
+test esi, esi	; 1D0CA
+sete al	; 1D0CC
+and eax, 0FFh	; 1D0CF
+inc dword [nosplit eax*4+dirtyrectcount]	; 1D0D4
+test esi, esi	; 1D0DB
+sete al	; 1D0DD
+and eax, 0FFh	; 1D0E0
+add dword [nosplit eax*4+dirtyrectptr], byte 10h	; 1D0E5
+pop edi	; 1D0ED
+pop esi	; 1D0EE
+ret	; 1D0EF
+%endif ; C
+SetupStatsSourceMenu_jt:
+dd SetupStatsSourceMenu_all
+dd SetupStatsSourceMenu_exh
+dd SetupStatsSourceMenu_po
+dd SetupStatsSourceMenu_lg
+SetupStatsSourceMenu:
+push dword 1Ch	; 1D100
+call __CHK	; 1D105
+push ebx	; 1D10A
+push ecx	; 1D10B
+push edx	; 1D10C
+push esi	; 1D10D
+push edi	; 1D10E
+push ebp	; 1D10F
+test eax, eax	; 1D110
+jne short .4	; 1D112
+cmp byte [postate+4], 0	; 1D114
+je short .1	; 1D11B
+cmp byte [lgstate+4], 0	; 1D11D
+jne short .4	; 1D124
+.1:
+cmp byte [postate+4], 0	; 1D126
+je short .2	; 1D12D
+mov eax, 2	; 1D12F
+jmp short .4	; 1D134
+.2:
+cmp byte [lgstate+4], 0	; 1D136
+je short .3	; 1D13D
+mov eax, 3	; 1D13F
+jmp short .4	; 1D144
+.3:
+mov eax, 1	; 1D146
+.4:
+cmp eax, byte 3	; 1D14B
+ja near SetupStatsSourceMenu_all.9	; 1D14E
+jmp dword [nosplit cs:eax*4+SetupStatsSourceMenu_jt]	; 1D154
+SetupStatsSourceMenu_lg:
+mov dword [off_C6825], StatsSelLeague	; 1D15C
+mov dword [off_C6845], StatsSelLeaguePlayoffs	; 1D166
+mov dword [off_C6821], mi_LeagueSeason	; 1D170
+mov dword [off_C6841], mi_LeaguePlayoffs	; 1D17A
+cmp byte [mi_PlayoffMode], 1	; 1D184
+je short .1	; 1D18B
+cmp byte [mi_LeagueSeason], 1	; 1D18D
+jne short .3	; 1D194
+.1:
+mov byte [mi_LeagueSeason], 1	; 1D196
+mov ch, 2	; 1D19D
+mov byte [mi_PlayoffMode], ch	; 1D19F
+mov byte [mi_LeaguePlayoffs], ch	; 1D1A5
+mov byte [mi_9394Playoffs], ch	; 1D1AB
+mov byte [mi_9394Season], ch	; 1D1B1
+mov dword [statsfromleague], 1	; 1D1B7
+cmp dword [statsplayoffs], byte 0	; 1D1C1
+je short .2	; 1D1C8
+xor esi, esi	; 1D1CA
+mov dword [statsteamsel], esi	; 1D1CC
+.2:
+xor edi, edi	; 1D1D2
+mov dword [statsplayoffs], edi	; 1D1D4
+jmp short .5	; 1D1DA
+.3:
+cmp byte [mi_LeaguePlayoffs], 1	; 1D1DC
+jne short .6	; 1D1E3
+mov dl, 2	; 1D1E5
+mov byte [mi_PlayoffMode], dl	; 1D1E7
+mov byte [mi_LeagueSeason], dl	; 1D1ED
+mov byte [mi_9394Playoffs], dl	; 1D1F3
+mov byte [mi_9394Season], dl	; 1D1F9
+mov dword [statsfromleague], 1	; 1D1FF
+mov ebp, dword [statsplayoffs]	; 1D209
+test ebp, ebp	; 1D20F
+jne short .4	; 1D211
+mov dword [statsteamsel], ebp	; 1D213
+.4:
+mov dword [statsplayoffs], 1	; 1D219
+.5:
+mov ebx, 1Fh	; 1D223
+mov edx, lgstate+4	; 1D228
+mov eax, statsleague	; 1D22D
+call strncpy_	; 1D232
+.6:
+mov ecx, 5	; 1D237
+jmp near SetupStatsSourceMenu_all.9	; 1D23C
+SetupStatsSourceMenu_po:
+mov dword [off_C6825], StatsSelPlayoffMode	; 1D241
+mov dword [off_C6821], mi_PlayoffMode	; 1D24B
+cmp byte [mi_LeagueSeason], 1	; 1D255
+je short .1	; 1D25C
+cmp byte [mi_LeaguePlayoffs], 1	; 1D25E
+je short .1	; 1D265
+cmp byte [mi_PlayoffMode], 1	; 1D267
+jne short .3	; 1D26E
+.1:
+mov byte [mi_PlayoffMode], 1	; 1D270
+mov ch, 2	; 1D277
+mov byte [mi_LeaguePlayoffs], ch	; 1D279
+mov byte [mi_LeagueSeason], ch	; 1D27F
+mov byte [mi_9394Playoffs], ch	; 1D285
+mov byte [mi_9394Season], ch	; 1D28B
+mov dword [statsfromleague], 1	; 1D291
+mov ebx, dword [statsplayoffs]	; 1D29B
+test ebx, ebx	; 1D2A1
+jne short .2	; 1D2A3
+mov dword [statsteamsel], ebx	; 1D2A5
+.2:
+mov dword [statsplayoffs], 1	; 1D2AB
+mov ebx, 1Fh	; 1D2B5
+mov edx, postate+4	; 1D2BA
+mov eax, statsleague	; 1D2BF
+call strncpy_	; 1D2C4
+.3:
+mov ecx, 4	; 1D2C9
+jmp near SetupStatsSourceMenu_all.9	; 1D2CE
+SetupStatsSourceMenu_exh:
+mov dh, byte [mi_9394Season]	; 1D2D3
+cmp dh, 2	; 1D2D9
+jne short .2	; 1D2DC
+cmp dh, byte [mi_9394Playoffs]	; 1D2DE
+jne short .2	; 1D2E4
+mov byte [mi_9394Season], 1	; 1D2E6
+mov byte [mi_PlayoffMode], dh	; 1D2ED
+mov byte [mi_LeaguePlayoffs], dh	; 1D2F3
+mov byte [mi_LeagueSeason], dh	; 1D2F9
+mov byte [mi_9394Playoffs], dh	; 1D2FF
+xor edi, edi	; 1D305
+mov dword [statsfromleague], edi	; 1D307
+cmp dword [statsplayoffs], byte 0	; 1D30D
+je short .1	; 1D314
+mov dword [statsteamsel], edi	; 1D316
+.1:
+xor edx, edx	; 1D31C
+mov dword [statsplayoffs], edx	; 1D31E
+mov ebx, 1Fh	; 1D324
+mov edx, exhstate+4	; 1D329
+mov eax, statsleague	; 1D32E
+call strncpy_	; 1D333
+.2:
+mov ecx, 2	; 1D338
+jmp near SetupStatsSourceMenu_all.9	; 1D33D
+SetupStatsSourceMenu_all:
+mov dword [off_C6825], StatsSelLeague	; 1D342
+mov dword [off_C6845], StatsSelLeaguePlayoffs	; 1D34C
+mov dword [off_C6885], StatsSelPlayoffMode	; 1D356
+mov dword [off_C6821], mi_LeagueSeason	; 1D360
+mov dword [off_C6841], mi_LeaguePlayoffs	; 1D36A
+mov dword [off_C6881], mi_PlayoffMode	; 1D374
+cmp byte [mi_LeagueSeason], 1	; 1D37E
+jne short .3	; 1D385
+mov al, 2	; 1D387
+mov byte [mi_PlayoffMode], al	; 1D389
+mov byte [mi_LeaguePlayoffs], al	; 1D38E
+mov byte [mi_9394Playoffs], al	; 1D393
+mov byte [mi_9394Season], al	; 1D398
+mov dword [statsfromleague], 1	; 1D39D
+cmp dword [statsplayoffs], byte 0	; 1D3A7
+je short .1	; 1D3AE
+xor esi, esi	; 1D3B0
+mov dword [statsteamsel], esi	; 1D3B2
+.1:
+xor edi, edi	; 1D3B8
+mov dword [statsplayoffs], edi	; 1D3BA
+.2:
+mov ebx, 1Fh	; 1D3C0
+mov edx, lgstate+4	; 1D3C5
+jmp near .7	; 1D3CA
+.3:
+cmp byte [mi_LeaguePlayoffs], 1	; 1D3CF
+jne short .5	; 1D3D6
+mov dh, 2	; 1D3D8
+mov byte [mi_PlayoffMode], dh	; 1D3DA
+mov byte [mi_LeagueSeason], dh	; 1D3E0
+mov byte [mi_9394Playoffs], dh	; 1D3E6
+mov byte [mi_9394Season], dh	; 1D3EC
+mov dword [statsfromleague], 1	; 1D3F2
+mov ebp, dword [statsplayoffs]	; 1D3FC
+test ebp, ebp	; 1D402
+jne short .4	; 1D404
+mov dword [statsteamsel], ebp	; 1D406
+.4:
+mov dword [statsplayoffs], 1	; 1D40C
+jmp short SetupStatsSourceMenu_all.2	; 1D416
+.5:
+cmp byte [mi_PlayoffMode], 1	; 1D418
+jne short .8	; 1D41F
+mov cl, 2	; 1D421
+mov byte [mi_LeaguePlayoffs], cl	; 1D423
+mov byte [mi_LeagueSeason], cl	; 1D429
+mov byte [mi_9394Playoffs], cl	; 1D42F
+mov byte [mi_9394Season], cl	; 1D435
+mov dword [statsfromleague], 1	; 1D43B
+mov ebx, dword [statsplayoffs]	; 1D445
+test ebx, ebx	; 1D44B
+jne short .6	; 1D44D
+mov dword [statsteamsel], ebx	; 1D44F
+.6:
+mov dword [statsplayoffs], 1	; 1D455
+mov ebx, 1Fh	; 1D45F
+mov edx, postate+4	; 1D464
+.7:
+mov eax, statsleague	; 1D469
+call strncpy_	; 1D46E
+.8:
+mov ecx, 7	; 1D473
+.9:
+cmp ecx, byte 4	; 1D478
+jne short .10	; 1D47B
+mov dword [dword_C67B9], 0C5h	; 1D47D
+xor bh, bh	; 1D487
+mov byte [byte_C67A9], bh	; 1D489
+jmp short .11	; 1D48F
+.10:
+mov dword [dword_C67B9], 0F7h	; 1D491
+mov byte [byte_C67A9], 2Dh	; 1D49B
+.11:
+xor edx, edx	; 1D4A2
+mov ebx, 11h	; 1D4A4
+jmp short .13	; 1D4A9
+.12:
+mov eax, edx	; 1D4AB
+shl eax, 5	; 1D4AD
+mov dword [dword eax+dword_C67BD], ebx	; 1D4B0
+mov esi, dword [dword_C67B9]	; 1D4B6
+mov dword [dword eax+dword_C67B9], esi	; 1D4BC
+inc edx	; 1D4C2
+add ebx, byte 12h	; 1D4C3
+.13:
+cmp edx, ecx	; 1D4C6
+jl short SetupStatsSourceMenu_all.12	; 1D4C8
+mov eax, ecx	; 1D4CA
+shl eax, 5	; 1D4CC
+mov dword [dword_CE8EB], ecx	; 1D4CF
+mov dword [dword_CF00B], ecx	; 1D4D5
+mov dword [dword_CF4CB], ecx	; 1D4DB
+mov dword [dword_CF5AB], ecx	; 1D4E1
+mov dword [dword_CF70B], ecx	; 1D4E7
+mov dword [dword_CF7CB], ecx	; 1D4ED
+mov dword [dword_CF84B], ecx	; 1D4F3
+mov dword [dword_CF8CB], ecx	; 1D4F9
+mov dword [dword_CFA4B], ecx	; 1D4FF
+mov dword [dword_C891E], ecx	; 1D505
+inc dword [dword eax+dword_C679D]	; 1D50B
+pop ebp	; 1D511
+pop edi	; 1D512
+pop esi	; 1D513
+pop edx	; 1D514
+pop ecx	; 1D515
+pop ebx	; 1D516
+ret	; 1D517
+; C: src/front/screen_util/BuildSavedGameLabels.c
+%ifdef CBUILD
+%include "c/front/screen_util/BuildSavedGameLabels.inc"
+%else
+BuildSavedGameLabels:
+push dword 10h	; 1D518
+call __CHK	; 1D51D
+push ebx	; 1D522
+push ecx	; 1D523
+push edx	; 1D524
+cmp byte [postate+4], 0	; 1D525
+je short .1	; 1D52C
+mov eax, postate+4	; 1D52E
+call StrLenToDot	; 1D533
+mov ebx, eax	; 1D538
+xor dl, dl	; 1D53A
+mov byte [dword eax+postate+4], dl	; 1D53C
+mov edx, postate+4	; 1D542
+mov eax, str_POTitle+1	; 1D547
+call strcpy_	; 1D54C
+lea eax, [byte ebx+03h]	; 1D551
+add eax, mi_PlayoffMode	; 1D554
+mov edx, str_PlayOffsSfx	; 1D559
+call strcpy_	; 1D55E
+mov byte [dword ebx+postate+4], 2Eh	; 1D563
+.1:
+cmp byte [lgstate+4], 0	; 1D56A
+je short .x	; 1D571
+mov eax, lgstate+4	; 1D573
+call StrLenToDot	; 1D578
+mov ebx, eax	; 1D57D
+xor cl, cl	; 1D57F
+mov byte [dword eax+lgstate+4], cl	; 1D581
+mov edx, lgstate+4	; 1D587
+mov eax, str_LgSeasonTitle+1	; 1D58C
+call strcpy_	; 1D591
+mov edx, lgstate+4	; 1D596
+mov eax, str_LgPlayoffsTitle+1	; 1D59B
+call strcpy_	; 1D5A0
+lea ecx, [byte ebx+03h]	; 1D5A5
+mov eax, mi_LeagueSeason	; 1D5A8
+add eax, ecx	; 1D5AD
+mov edx, str_SeasonSfx	; 1D5AF
+call strcpy_	; 1D5B4
+mov eax, mi_LeaguePlayoffs	; 1D5B9
+add eax, ecx	; 1D5BE
+mov edx, str_SeasonPlayOffsSfx	; 1D5C0
+call strcpy_	; 1D5C5
+mov byte [dword ebx+lgstate+4], 2Eh	; 1D5CA
+.x:
+pop edx	; 1D5D1
+pop ecx	; 1D5D2
+pop ebx	; 1D5D3
+ret	; 1D5D4
+%endif ; C
+; C: src/front/screen_util/StrLenToDot.c
+%ifdef CBUILD
+%include "c/front/screen_util/StrLenToDot.inc"
+%else
+StrLenToDot:
+push dword 0Ch	; 1D5D5
+call __CHK	; 1D5DA
+push ebx	; 1D5DF
+push edx	; 1D5E0
+xor edx, edx	; 1D5E1
+jmp short .2	; 1D5E3
+.1:
+inc edx	; 1D5E5
+inc eax	; 1D5E6
+.2:
+mov bl, byte [eax]	; 1D5E7
+test bl, bl	; 1D5E9
+je short .3	; 1D5EB
+cmp bl, 2Eh	; 1D5ED
+jne short StrLenToDot.1	; 1D5F0
+.3:
+mov eax, edx	; 1D5F2
+pop edx	; 1D5F4
+pop ebx	; 1D5F5
+ret	; 1D5F6
+%endif ; C
+db 090h
+SetScreenTitle_jt:
+dd SetScreenTitle_central
+dd SetScreenTitle_tree
+dd SetScreenTitle_calendar
+dd SetScreenTitle_booth
+dd SetScreenTitle_desk
+dd SetScreenTitle_rink
+; C: src/front/screen_util/SetScreenTitle.c
+%ifdef CBUILD
+%include "c/front/screen_util/SetScreenTitle.inc"
+%else
+SetScreenTitle:
+push dword 0Ch	; 1D610
+call __CHK	; 1D615
+push ebx	; 1D61A
+push edx	; 1D61B
+cmp eax, byte 5	; 1D61C
+ja short SetScreenTitle_rink.1	; 1D61F
+jmp dword [nosplit cs:eax*4+SetScreenTitle_jt]	; 1D621
+SetScreenTitle_central:
+mov ebx, str_SportsCentral	; 1D629
+mov edx, 67h	; 1D62E
+jmp short SetScreenTitle_rink.1	; 1D633
+SetScreenTitle_calendar:
+mov ebx, str_LeagueCalendar	; 1D635
+mov edx, 76h	; 1D63A
+jmp short SetScreenTitle_rink.1	; 1D63F
+SetScreenTitle_tree:
+mov ebx, str_PlayoffTree	; 1D641
+mov edx, 59h	; 1D646
+jmp short SetScreenTitle_rink.1	; 1D64B
+SetScreenTitle_booth:
+mov ebx, str_BroadcastBooth	; 1D64D
+mov edx, 73h	; 1D652
+jmp short SetScreenTitle_rink.1	; 1D657
+SetScreenTitle_desk:
+mov ebx, str_IntermissionDesk	; 1D659
+mov edx, 7Eh	; 1D65E
+jmp short SetScreenTitle_rink.1	; 1D663
+SetScreenTitle_rink:
+mov ebx, str_RinkSide	; 1D665
+mov edx, 41h	; 1D66A
+.1:
+mov dword [off_CF67F], ebx	; 1D66F
+mov dword [off_CF61F], ebx	; 1D675
+mov dword [off_CF5DF], ebx	; 1D67B
+mov dword [off_CF51F], ebx	; 1D681
+mov dword [dword_CF5D7], edx	; 1D687
+mov dword [dword_CF517], edx	; 1D68D
+cmp edx, byte 7Dh	; 1D693
+jg short .2	; 1D696
+mov edx, 7Dh	; 1D698
+.2:
+mov dword [dword_CF677], edx	; 1D69D
+mov dword [dword_CF657], edx	; 1D6A3
+mov dword [dword_CF637], edx	; 1D6A9
+mov dword [dword_CF617], edx	; 1D6AF
+mov dword [dword_CF5F7], edx	; 1D6B5
+pop edx	; 1D6BB
+pop ebx	; 1D6BC
+ret	; 1D6BD
+%endif ; C
+; C: src/front/screen_util/StrPrefixDiffers.c
+%ifdef CBUILD
+%include "c/front/screen_util/StrPrefixDiffers.inc"
+%else
+StrPrefixDiffers:
+push dword 8	; 1D6BE
+call __CHK	; 1D6C3
+push ebx	; 1D6C8
+.1:
+mov bl, byte [eax]	; 1D6C9
+test bl, bl	; 1D6CB
+je short .3	; 1D6CD
+mov bh, byte [edx]	; 1D6CF
+test bh, bh	; 1D6D1
+je short .3	; 1D6D3
+cmp bl, bh	; 1D6D5
+je short .2	; 1D6D7
+mov eax, 1	; 1D6D9
+pop ebx	; 1D6DE
+ret	; 1D6DF
+.2:
+inc eax	; 1D6E0
+inc edx	; 1D6E1
+jmp short StrPrefixDiffers.1	; 1D6E2
+.3:
+xor eax, eax	; 1D6E4
+pop ebx	; 1D6E6
+ret	; 1D6E7
+%endif ; C

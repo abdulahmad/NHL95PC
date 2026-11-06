@@ -1,14 +1,14 @@
 # NHL 95 PC (HOCKEY.EXE) – rebuild + toolchain notes
 
-All paths are relative to the repo root. The retail `HOCKEY.EXE` is committed at the repo root. The three Watcom binaries for C matching are committed under `tools/watcom/` (`$WATCOM_ROOT` defaults there; override with the env var). Optional full historic installs for experiments still live outside the repo (e.g. `~/watcom`).
+All paths are relative to the repo root. The retail `HOCKEY.EXE` is committed at `retail/HOCKEY.EXE`; root `HOCKEY.EXE` is a pointer. The three Watcom binaries for C matching are committed under `tools/watcom/` (`$WATCOM_ROOT` defaults there; override with the env var). Optional full historic installs for experiments still live outside the repo (e.g. `~/watcom`).
 
-## 1. Byte-exact rebuild (`tools/rebuild_exe.py`)
+## 1. Byte-exact rebuild (`tools/build/rebuild_exe.py`)
 
 ```
-python3 tools/rebuild_exe.py extract [EXE] [PARTS]   # check sha1, then split -> build/parts (same as split)
-python3 tools/rebuild_exe.py verify     # split -> build/parts, build -> build/HOCKEY.EXE, compare + fixup experiments
-python3 tools/rebuild_exe.py split  [EXE] [PARTS]
-python3 tools/rebuild_exe.py build  [PARTS] [OUT]   # uses only the parts dir; never reads the original EXE
+python3 tools/build/rebuild_exe.py extract [EXE] [PARTS]   # check sha1, then split -> build/parts (same as split)
+python3 tools/build/rebuild_exe.py verify     # split -> build/parts, build -> build/HOCKEY.EXE, compare + fixup experiments
+python3 tools/build/rebuild_exe.py split  [EXE] [PARTS]
+python3 tools/build/rebuild_exe.py build  [PARTS] [OUT]   # uses only the parts dir; never reads the original EXE
 ```
 
 Result: **MATCH**. Rebuilt file is 1,179,067 bytes, sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a` (same as the original).
@@ -63,7 +63,7 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
    | EMU387.LIB (all 10.x) | 99.3% (emulator is linked, so `-fpi`) |
    * The modules that do **not** match 10.0a exactly are the ones its A-level patch (`A_LEVEL/README.A`) lists as fixed: scanf '%' counting (`scnf`, which differs right at the `cmp ebx,25h` code), DOS/4G realloc heap corruption (`grownear`), and the `cstrt386` startup. Several modules (nmalloc, nfree, memalloc, nexpand, fputs, stk386 `__CHK`) match 10.0a but **not** LA. So the runtime is newer than LA and older than 10.0a, which means 10.0 GA.
    * The register-convention clib (`clib3r`) is used, and register arguments are visible everywhere (eax, edx, ebx, ecx).
-3. **Codegen reproduction** (historic compilers run under headless DOSBox: `tools/wc10.sh`, `tools/sweep.sh`, `tools/cmpobj.py`, tests in `tools/cc_tests/`). I wrote 8 small game functions in C: 8C1C2, 8C1E2 (shared tail via cross-jump), 1431E, 17711, 2C3FF, 4F99B, 14CA0, 59FE1.
+3. **Codegen reproduction** (historic compilers run under headless DOSBox: `tools/build/wc10.sh`, `tools/match/sweep.sh`, `tools/match/cmpobj.py`, tests in `tools/match/cc_tests/`). I wrote 8 small game functions in C: 8C1C2, 8C1E2 (shared tail via cross-jump), 1431E, 17711, 2C3FF, 4F99B, 14CA0, 59FE1.
    * **10.0 LA `wcc386` with default flags: 8/8 byte-exact** (fixups masked).
    * 10.0a with defaults: 6/8. It cannot produce the EXE's 16-bit short compares (`cmp dx,8`); 10.0a always widens with `movsx`. So the GA compiler still behaves like LA here.
    * Flags that break exact matches: -3r, -s, -ox, -oneatx, -otexan, -or, -ol, -os, -ot, -d2, and -oi (with real `<string.h>`, strcpy/strcat get inlined; the EXE calls strcpy_/strcat_/memset_).
@@ -93,8 +93,8 @@ Confidence: version family 10.0 = very high. GA rather than 10.0a/LA = high. Fla
 * **In repo (`tools/watcom/`, default `$WATCOM_ROOT`):** enough for `make` C matching with DOSBox.
   * **10.0 GA (default, `WATCOM_VER=ga`)**: `dosga/WCC386.EXE` (sha1 18969cc5...), `dosga/DOS4GW.EXE`, `dosga/W32RUN.EXE` from the GA install tree (evidence 5). The GA `clib3r.lib` is not needed by the build and is not committed.
   * **10.0 LA (fallback, `WATCOM_VER=la`)**: `dosla/WCC386.EXE` with the 10.0a `w10a/WATCOM/BIN/DOS4GW.EXE` and `W32RUN.EXE`; the reference compiler until 2026-10-22, kept unchanged.
-  * Select with `make WATCOM_VER=la` (or `WATCOM_VER=la python3 tools/cc.py ...`; `python3 tools/cc.py version` prints the active one). The C objects are rebuilt when it changes, and the compile cache keys include it.
-* **Optional full trees** (outside the repo, e.g. `~/watcom`, ~2.2 GB): Open Watcom 1.9 (`ow19/`), OW 2.0 (`ow2/`), Watcom 10.0a CD (`w10a/`), 10.0 LA CD (`wla/` → unpacked into `dosla/`), 10.5 (`w105/`), 9.5b (`w95b/`). Used by `tools/wc10.sh` / library matching, not required for `make`.
+  * Select with `make WATCOM_VER=la` (or `WATCOM_VER=la python3 tools/match/cc.py ...`; `python3 tools/match/cc.py version` prints the active one). The C objects are rebuilt when it changes, and the compile cache keys include it.
+* **Optional full trees** (outside the repo, e.g. `~/watcom`, ~2.2 GB): Open Watcom 1.9 (`ow19/`), OW 2.0 (`ow2/`), Watcom 10.0a CD (`w10a/`), 10.0 LA CD (`wla/` → unpacked into `dosla/`), 10.5 (`w105/`), 9.5b (`w95b/`). Used by `tools/build/wc10.sh` / library matching, not required for `make`.
 * Source of the historic media: archive.org item `watcom-c-cpp-compilers-collection` (and Watcom_C_10.0, the same 10.0a disc). Its `watcom-10.0/discmaster/Sybase - Watcom C++ 10.0.zip` is the **10.0 GA** install tree (found 2026-10-22; before that no GA binaries were known, and the a-level patch format, bpatch DIFFS, only stores new bytes, so it cannot be run backwards to get GA).
 
 ## 2b. C matching (Oct 2026)
@@ -104,7 +104,7 @@ The **10.0 GA** `wcc386` with default flags is the reference compiler for the C 
 ## 3. Next steps
 1. Use **10.0 GA `wcc386` (defaults)** as the reference compiler for matching game C code (done 2026-10-22: `tools/watcom/dosga`, the `make` default). LA stays selectable (`WATCOM_VER=la`) to compare a draft that LA matched.
 2. Link the libc side from the matched objects: take the 10.0a CLIB3R modules that match exactly, and treat cstrt386/scnf/grownear/sscanf/strspn/fstrspn (GA versions) as binary blobs from the EXE.
-3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Done:** the NASM sources are committed in `src/` and `make` / `./build.sh` (`tools/link_src.py`) builds a sha1-identical EXE from them plus the stubs, LE header and fixup order extracted from your EXE. See [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
+3. Assembler-based build: emit per-segment asm → assemble → harvest absolute relocations → `order_fixups()` → `rebuild_exe.build()`. Remember that stored values are **object-relative** offsets. **Done:** the NASM sources are committed in `src/` and `make` / `./build.sh` (`tools/build/link_src.py`) builds a sha1-identical EXE from them plus the stubs, LE header and fixup order extracted from your EXE. See [docs/ASM_BUILD.md](docs/ASM_BUILD.md).
 4. Optionally run real wlink 10.0a/LA on synthetic OBJs to confirm the chunk/FIXUPP-order theory, so a fully native wcc386+wlink path can reproduce the order without the table.
 5. Run the remaining -o letter tests (-oe inlining, -om, -op, -oa) on functions that exercise them, plus FP-heavy functions (-fp3 vs -fp5).
 

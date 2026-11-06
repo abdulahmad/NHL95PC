@@ -1,10 +1,10 @@
 # Tie-order survey (lane T, 2026-10-24/25)
 
-`tools/wccre/tieorder.py --minutes 10` on the near-miss register drafts, as they stood on main then (scores are
+`tools/match/wccre/tieorder.py --minutes 10` on the near-miss register drafts, as they stood on main then (scores are
 differing instructions, the draft's baseline -> the best forced tie order). A forced order of 0 means the rest of
 the source is right and only the order of tied conflicts differs: reach it with a natural edit (AGENTS.md: no
 tie-breaker copies), using the explanation's block / line hints (docs/WCC_INTERNALS.md, "How the conflict list is
-built") and `tools/wccre/tiesearch.py`. A partial gain means a tie is part of the difference. Ten minutes is
+built") and `tools/match/wccre/tiesearch.py`. A partial gain means a tie is part of the difference. Ten minutes is
 not exhaustive: "no gain" means none was found, not that none exists. Rerun before relying on a line: the drafts
 have moved on since.
 

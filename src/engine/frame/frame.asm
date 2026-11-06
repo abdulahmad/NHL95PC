@@ -1,0 +1,834 @@
+; One frame of a played game, including a highlight that borrows another
+; game's teams and then puts the current game back.
+bits 32
+%include "hockey.inc"
+section s_69336 progbits alloc exec nowrite align=1
+extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtmstruct
+extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
+extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
+extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, dword_CCC98
+extern dword_CD9A0, dword_D8C72, dword_D8C7A, dword_DF646, dword_DF648, dword_DF748, dword_E0244, dword_E9A9E
+extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
+extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
+extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
+extern hudclockmin, hudclocksec, hudhundaccum, hudhundstep, icingPlayer, iflags, inputframes, Intermission
+extern joyq_flush, joysampling, joysampling_save, lastsfx, lcblink, lcboxon, lcline, LoadGameTeams
+extern LoadPlayerPhotos, LoadRink, LoadTeamPalette, MusicChanReset2, musicon, ovlseq, ovlstep, ovltimer
+extern PaHighlightIntro, PaOpenBank, passplayer, Pencntdwn, puckc, puckstruct, puckx, pucky
+extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep, regd1
+extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
+extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
+extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
+extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
+extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, word_C90D8, word_CBC44
+extern word_CBEC6, word_DF644, word_DF744, word_DF746, word_DF816, word_DF81A, word_E0022, word_E0028
+extern word_E002A, xc1, yc1, yleader
+global StartHL2
+; C: src/engine/frame/StartHL2.c
+%ifdef CBUILD
+%include "c/engine/frame/StartHL2.inc"
+%else
+StartHL2:
+push dword 120h	; 69336
+call __CHK	; 6933B
+push esi	; 69340
+push edi	; 69341
+push ebp	; 69342
+sub esp, 0F8h	; 69343
+push eax	; 69349
+push edx	; 6934A
+push ebx	; 6934B
+mov ebp, ecx	; 6934C
+xor edx, edx	; 6934E
+mov dword [dword_CCC98], edx	; 69350
+mov ax, word [gameover]	; 69356
+mov dword [dword esp+0F8h], eax	; 6935C
+mov ax, word [HomeTeam]	; 69363
+mov word [byte esp+0Ch], ax	; 69369
+lea eax, [byte esp+0Ch]	; 6936E
+add eax, byte 2	; 69372
+mov dx, word [VisTeam]	; 69375
+mov word [eax], dx	; 6937C
+add eax, byte 2	; 6937F
+mov dx, word [hmtmgoalie]	; 69382
+mov word [eax], dx	; 69389
+add eax, byte 2	; 6938C
+mov dx, word [awtmgoalie]	; 6938F
+mov word [eax], dx	; 69396
+add eax, byte 2	; 69399
+mov dx, word [cont1team]	; 6939C
+mov word [eax], dx	; 693A3
+add eax, byte 2	; 693A6
+mov dx, word [cont2team]	; 693A9
+mov word [eax], dx	; 693B0
+add eax, byte 2	; 693B3
+mov dx, word [curperiod]	; 693B6
+mov word [eax], dx	; 693BD
+add eax, byte 2	; 693C0
+mov dx, word [gsp]	; 693C3
+mov word [eax], dx	; 693CA
+add eax, byte 2	; 693CD
+mov dx, word [hmtmap]	; 693D0
+mov word [eax], dx	; 693D7
+add eax, byte 2	; 693DA
+mov dx, word [awtmap]	; 693DD
+mov word [eax], dx	; 693E4
+add eax, byte 2	; 693E7
+mov dx, word [hmscore]	; 693EA
+mov word [eax], dx	; 693F1
+add eax, byte 2	; 693F4
+mov dx, word [awscore]	; 693F7
+mov word [eax], dx	; 693FE
+xor edi, edi	; 69401
+add eax, byte 2	; 69403
+.1:
+mov edx, edi	; 69406
+shl edx, 8	; 69408
+add edx, hmtmstruct	; 6940B
+add edx, byte 7Eh	; 69411
+xor esi, esi	; 69414
+.2:
+mov bx, word [edx]	; 69416
+mov word [eax], bx	; 69419
+add edx, byte 2	; 6941C
+add eax, byte 2	; 6941F
+inc esi	; 69422
+cmp esi, byte 1Ch	; 69423
+jl short StartHL2.2	; 69426
+inc edi	; 69428
+cmp edi, byte 2	; 69429
+jl short StartHL2.1	; 6942C
+mov eax, dword [gameopts]	; 6942E
+mov dword [dword esp+0F4h], eax	; 69433
+mov ecx, 0Ch	; 6943A
+lea edi, [dword esp+0C4h]	; 6943F
+mov esi, hmlinetab	; 69446
+rep movsd	; 6944B
+mov ecx, 0Ch	; 6944D
+lea edi, [dword esp+094h]	; 69452
+mov esi, awlinetab	; 69459
+rep movsd	; 6945E
+call FlushGSumQueue	; 69460
+and byte [gameopts], 0E4h	; 69465
+xor edx, edx	; 6946C
+mov word [gameover], dx	; 6946E
+mov word [CwdExciteLvl], dx	; 69475
+mov eax, dword [byte esp+08h]	; 6947C
+mov word [HomeTeam], ax	; 69480
+mov eax, dword [byte esp+04h]	; 69486
+mov word [VisTeam], ax	; 6948A
+mov eax, 2	; 69490
+call LoadGameTeams	; 69495
+mov eax, dword [ovlseq-2]	; 6949A
+sar eax, 10h	; 6949F
+cmp eax, byte 0FFFFFFFFh	; 694A2
+je short .3	; 694A5
+mov ebx, dword [dword_E0244]	; 694A7
+push ebx	; 694AD
+call FreeMemBlock	; 694AE
+add esp, byte 4	; 694B3
+.3:
+mov edx, dword [VisTeam-2]	; 694B6
+sar edx, 10h	; 694BC
+mov eax, dword [HomeTeam-2]	; 694BF
+sar eax, 10h	; 694C4
+mov ebx, gamepal	; 694C7
+call LoadTeamPalette	; 694CC
+call LoadPlayerPhotos	; 694D1
+xor ecx, ecx	; 694D6
+mov word [awtmgoalie], cx	; 694D8
+mov word [hmtmgoalie], cx	; 694DF
+call restoreteams	; 694E6
+mov edi, 0FFFFFFFFh	; 694EB
+mov word [c2playernum], di	; 694F0
+mov word [c1playernum], di	; 694F7
+mov word [cont2team], cx	; 694FE
+mov word [cont1team], cx	; 69505
+mov eax, 78h	; 6950C
+call randomd0	; 69511
+add eax, 3Ch	; 69516
+mov word [gameclock], ax	; 6951B
+mov word [clockticks], cx	; 69521
+mov ebx, dword [gameclock-2]	; 69528
+sar ebx, 10h	; 6952E
+mov ecx, 3Ch	; 69531
+mov eax, ebx	; 69536
+mov edx, ebx	; 69538
+sar edx, 1Fh	; 6953A
+idiv ecx	; 6953D
+mov dword [hudclockmin], eax	; 6953F
+mov eax, ebx	; 69544
+mov edx, ebx	; 69546
+sar edx, 1Fh	; 69548
+idiv ecx	; 6954B
+mov dword [hudclocksec], edx	; 6954D
+xor ecx, ecx	; 69553
+mov dword [hudclockhund], ecx	; 69555
+mov eax, dword [dword esp+0114h]	; 6955B
+mov dword [curperiod], eax	; 69562
+mov eax, dword [dword esp+0114h]	; 69567
+dec eax	; 6956E
+mov word [gsp], ax	; 6956F
+mov eax, dword [esp]	; 69575
+mov ax, word [eax]	; 69578
+mov word [hmscore], ax	; 6957B
+mov ax, word [byte ebp+00h]	; 69581
+mov word [awscore], ax	; 69585
+mov eax, 7	; 6958B
+call randomd0	; 69590
+movsx edx, ax	; 69595
+mov ebx, 4	; 69598
+mov eax, edx	; 6959D
+sar edx, 1Fh	; 6959F
+idiv ebx	; 695A2
+mov word [hmtmline], dx	; 695A4
+mov eax, 7	; 695AB
+call randomd0	; 695B0
+movsx edx, ax	; 695B5
+mov eax, edx	; 695B8
+sar edx, 1Fh	; 695BA
+idiv ebx	; 695BD
+mov word [awtmline], dx	; 695BF
+call FadeOutPalCycle	; 695C6
+mov edx, 0C8h	; 695CB
+mov eax, 140h	; 695D0
+call SetScreenSize	; 695D5
+cmp word [HomeTeam], byte 1Ah	; 695DA
+jl short .4	; 695E2
+mov eax, 0Ch	; 695E4
+jmp short .5	; 695E9
+.4:
+mov eax, dword [HomeTeam-2]	; 695EB
+sar eax, 10h	; 695F0
+.5:
+call LoadRink	; 695F3
+mov ebx, dword [curperiod]	; 695F8
+mov edx, dword [VisTeam-2]	; 695FE
+sar edx, 10h	; 69604
+mov eax, dword [HomeTeam-2]	; 69607
+sar eax, 10h	; 6960C
+xor ecx, ecx	; 6960F
+call DrawHudPanel	; 69611
+xor dl, dl	; 69616
+mov byte [gmode], dl	; 69618
+mov byte [gmode], 10h	; 6961E
+test byte [gsp], 1	; 69625
+je short .9	; 6962C
+cmp word [gsp], byte 3	; 6962E
+jne short .6	; 69636
+test byte [gameopts+1], 2	; 69638
+jne short .7	; 6963F
+.6:
+mov eax, 1	; 69641
+jmp short .8	; 69646
+.7:
+xor eax, eax	; 69648
+.8:
+test eax, eax	; 6964A
+je short .9	; 6964C
+or byte [gmode], 2	; 6964E
+.9:
+mov ax, word [gmode2]	; 69655
+mov dword [dword esp+0FCh], eax	; 6965B
+xor eax, eax	; 69662
+mov word [sflags3], ax	; 69664
+xor edx, edx	; 6966A
+mov word [gmode2], ax	; 6966C
+xor ebx, ebx	; 69672
+mov word [sflags], ax	; 69674
+mov word [gmode2], 4	; 6967A
+xor ch, ch	; 69683
+mov byte [icingPlayer], ch	; 69685
+xor al, al	; 6968B
+mov byte [iflags], al	; 6968D
+mov esi, 0FFFFFFFFh	; 69692
+mov word [passplayer], si	; 69697
+xor edi, edi	; 6969E
+mov word [refsignal], dx	; 696A0
+mov eax, esi	; 696A7
+mov word [RefStep], si	; 696A9
+mov edx, esi	; 696B0
+mov word [Pencntdwn], si	; 696B2
+mov word [RefPen], bx	; 696B9
+mov ecx, esi	; 696C0
+mov word [word_C90D8], si	; 696C2
+mov word [ovltimer], si	; 696C9
+mov word [word_CBC44], di	; 696D0
+mov word [bannermsg], si	; 696D7
+mov word [ovlstep], si	; 696DE
+mov ebx, esi	; 696E5
+mov word [ovlseq], si	; 696E7
+xor ecx, esi	; 696EE
+mov word [bannertimer], cx	; 696F0
+xor esi, esi	; 696F7
+mov word [word_CBEC6], si	; 696F9
+mov word [crowdlevel], si	; 69700
+xor esi, esi	; 69707
+mov dword [crowdsmooth], esi	; 69709
+mov word [word_DF81A], ax	; 6970F
+mov word [word_DF816], ax	; 69715
+call setupice	; 6971B
+call SprSortVert	; 69720
+xor ebx, edx	; 69725
+mov word [camy], bx	; 69727
+xor ecx, ecx	; 6972E
+mov word [camx], cx	; 69730
+mov word [yleader], cx	; 69737
+mov word [yc1], cx	; 6973E
+mov word [xc1], cx	; 69745
+add dword [rinkscrollx], 3E8h	; 6974C
+add dword [rinkscrolly], 3E8h	; 69756
+call ResetBench	; 69760
+mov eax, hmtmstruct	; 69765
+call reenergizeteam	; 6976A
+mov eax, hmtmstruct	; 6976F
+call setpersonel	; 69774
+mov eax, hmtmstruct	; 69779
+call forcepldata	; 6977E
+mov word [dword_DF648], dx	; 69783
+mov ebx, edx	; 6978A
+mov word [dword_DF646], bx	; 6978C
+mov word [word_DF644], bx	; 69793
+mov eax, awtmstruct	; 6979A
+call reenergizeteam	; 6979F
+mov eax, awtmstruct	; 697A4
+call setpersonel	; 697A9
+mov eax, awtmstruct	; 697AE
+call forcepldata	; 697B3
+mov word [dword_DF748], bx	; 697B8
+mov word [word_DF746], bx	; 697BF
+mov word [word_DF744], bx	; 697C6
+call resetplstuff	; 697CD
+mov ebx, SortCords	; 697D2
+xor edi, edi	; 697D7
+.10:
+test byte [byte ebx+pflags], 80h	; 697D9
+je short .11	; 697DD
+xor edx, edx	; 697DF
+jmp short .12	; 697E1
+.11:
+mov edx, 6	; 697E3
+.12:
+mov eax, dword [byte ebx+position-2]	; 697E8
+sar eax, 10h	; 697EB
+add edx, eax	; 697EE
+lea esi, [edx+edx]	; 697F0
+mov eax, 14h	; 697F3
+call randomd0	; 697F8
+sub eax, byte 0Ah	; 697FD
+mov dword [dword esp+0100h], eax	; 69800
+mov ax, word [nosplit edx*4+dword_CD9A0]	; 69807
+mov edx, dword [dword esp+0100h]	; 6980F
+add eax, edx	; 69816
+mov word [byte ebx+Xpos+2], ax	; 69818
+mov cx, word [byte ebx+position]	; 6981C
+test cx, cx	; 69820
+sete al	; 69823
+mov edx, eax	; 69826
+and edx, 0FFh	; 69828
+test cx, cx	; 6982E
+jne short .13	; 69831
+mov eax, 4	; 69833
+jmp short .14	; 69838
+.13:
+mov eax, 14h	; 6983A
+.14:
+cwde	; 6983F
+call randomd0	; 69840
+cwde	; 69845
+sub eax, edx	; 69846
+je short .15	; 69848
+mov eax, 4	; 6984A
+jmp short .16	; 6984F
+.15:
+mov eax, 0Ah	; 69851
+.16:
+mov edx, dword [nosplit esi*2+dword_CD9A0]	; 69856
+sar edx, 10h	; 6985D
+add eax, edx	; 69860
+mov word [byte ebx+Ypos+2], ax	; 69862
+mov word [byte ebx+Yvel], 0	; 69866
+mov ax, word [byte ebx+Yvel]	; 6986C
+mov word [byte ebx+Xvel], ax	; 69870
+mov eax, dword [pucky]	; 69874
+mov ax, word [eax]	; 69879
+sub ax, word [byte ebx+Ypos+2]	; 6987C
+movsx edx, ax	; 69880
+mov eax, dword [puckx]	; 69883
+mov ax, word [eax]	; 69888
+sub ax, word [byte ebx+Xpos+2]	; 6988B
+cwde	; 6988F
+call vtoa	; 69890
+mov word [byte ebx+facedir], ax	; 69895
+inc edi	; 69899
+add ebx, 80h	; 6989A
+cmp edi, byte 0Ch	; 698A0
+jl near StartHL2.10	; 698A3
+mov word [puckstruct+28h], 78h	; 698A9
+mov eax, 14h	; 698B2
+call randomd0	; 698B7
+sub eax, byte 0Ah	; 698BC
+mov word [puckstruct+2], ax	; 698BF
+mov eax, 14h	; 698C5
+call randomd0	; 698CA
+sub eax, byte 0Ah	; 698CF
+mov word [puckstruct+6], ax	; 698D2
+xor edi, edi	; 698D8
+mov word [puckstruct+0Ah], di	; 698DA
+mov eax, 7D0h	; 698E1
+call randomd0	; 698E6
+db 081h,0E8h,0E8h,03h,00h,00h	; 698EB sub eax,3E8h
+mov word [puckstruct+0Ch], ax	; 698F1
+mov eax, 7D0h	; 698F7
+call randomd0	; 698FC
+db 081h,0E8h,0E8h,03h,00h,00h	; 69901 sub eax,3E8h
+mov word [puckstruct+0Eh], ax	; 69907
+mov word [puckstruct+12h], 18Ah	; 6990D
+mov word [puckstruct+54h], di	; 69916
+mov edx, 18h	; 6991D
+mov eax, puckstruct	; 69922
+call assreplace	; 69927
+mov ebx, puckstruct	; 6992C
+add ebx, 80h	; 69931
+mov word [byte ebx+012h], 189h	; 69937
+mov word [byte ebx+054h], di	; 6993D
+mov edx, 19h	; 69941
+mov eax, ebx	; 69946
+call assreplace	; 69948
+mov word [SortCords+802h], 0FF88h	; 6994D
+mov word [word_E0022], di	; 69956
+mov esi, 2	; 6995D
+mov word [SortCords+836h], si	; 69962
+mov word [word_E002A], di	; 69969
+mov word [word_E0028], di	; 69970
+mov edx, 1Fh	; 69977
+mov eax, SortCords+800h	; 6997C
+call assreplace	; 69981
+call DoGameFrame	; 69986
+call DoGameFrame	; 6998B
+call SprSort	; 69990
+xor edi, edi	; 69995
+xor edx, edx	; 69997
+mov dword [hudhundaccum], edi	; 69999
+mov dword [inputframes], edi	; 6999F
+mov eax, dword [puckc]	; 699A5
+mov byte [eax], 0FFh	; 699AA
+mov dword [joysampling], edi	; 699AD
+call joyq_flush	; 699B3
+xor edx, edi	; 699B8
+mov word [exitgame], dx	; 699BA
+mov word [gameover], dx	; 699C1
+mov word [fadeinpending], si	; 699C8
+call TicksSinceLastCall	; 699CF
+mov esi, 1	; 699D4
+mov dword [joysampling], esi	; 699D9
+mov dword [demomode], esi	; 699DF
+mov dword [escrequest], edi	; 699E5
+.17:
+cmp word [exitgame], byte 0	; 699EB
+jne near .26	; 699F3
+call ResetInputSampling	; 699F9
+mov edx, eax	; 699FE
+shl eax, 2	; 69A00
+sub eax, edx	; 69A03
+add eax, eax	; 69A05
+add edi, eax	; 69A07
+mov ebx, 0Ah	; 69A09
+mov eax, edi	; 69A0E
+mov edx, edi	; 69A10
+sar edx, 1Fh	; 69A12
+idiv ebx	; 69A15
+mov esi, eax	; 69A17
+mov eax, edi	; 69A19
+mov edx, edi	; 69A1B
+sar edx, 1Fh	; 69A1D
+idiv ebx	; 69A20
+mov edi, edx	; 69A22
+mov eax, esi	; 69A24
+call RunGameFrames	; 69A26
+mov eax, dword [camx-2]	; 69A2B
+sar eax, 10h	; 69A30
+add eax, byte 20h	; 69A33
+mov dword [viewscrollx], eax	; 69A36
+mov eax, dword [camy-2]	; 69A3B
+sar eax, 10h	; 69A40
+mov edx, 140h	; 69A43
+sub edx, eax	; 69A48
+lea eax, [byte edx-054h]	; 69A4A
+mov dword [viewscrolly], eax	; 69A4D
+mov ebx, dword [viewscrollx]	; 69A52
+cmp ebx, byte 40h	; 69A58
+jle short .18	; 69A5B
+mov dword [viewscrollx], 40h	; 69A5D
+jmp short .19	; 69A67
+.18:
+test ebx, ebx	; 69A69
+jge short .19	; 69A6B
+xor eax, eax	; 69A6D
+mov dword [viewscrollx], eax	; 69A6F
+.19:
+mov ebx, dword [viewscrolly]	; 69A74
+cmp ebx, 1A8h	; 69A7A
+jle short .20	; 69A80
+mov dword [viewscrolly], 1A8h	; 69A82
+jmp short .21	; 69A8C
+.20:
+test ebx, ebx	; 69A8E
+jge short .21	; 69A90
+xor eax, eax	; 69A92
+mov dword [viewscrolly], eax	; 69A94
+.21:
+xor edx, edx	; 69A99
+xor eax, eax	; 69A9B
+call sub_6AF97	; 69A9D
+call sub_6B008	; 69AA2
+mov edx, dword [viewscrolly]	; 69AA7
+mov eax, dword [viewscrollx]	; 69AAD
+call SetRinkScroll	; 69AB2
+mov eax, dword [bgscrolly-2]	; 69AB7
+sar eax, 10h	; 69ABC
+shl eax, 3	; 69ABF
+mov edx, dword [scrolly-2]	; 69AC2
+sar edx, 10h	; 69AC8
+add edx, eax	; 69ACB
+lea ecx, [dword edx+0A8h]	; 69ACD
+mov ebx, dword [bgscrollx-2]	; 69AD3
+sar ebx, 10h	; 69AD9
+shl ebx, 3	; 69ADC
+mov eax, dword [scrollx-2]	; 69ADF
+sar eax, 10h	; 69AE4
+add eax, ebx	; 69AE7
+lea ebx, [dword eax+0140h]	; 69AE9
+call sub_6AF52	; 69AEF
+xor ebx, ebx	; 69AF4
+mov dword [spritedrawcount], ebx	; 69AF6
+mov edx, dword [viewscrolly-2]	; 69AFC
+sar edx, 10h	; 69B02
+mov eax, dword [viewscrollx-2]	; 69B05
+sar eax, 10h	; 69B0A
+call DrawRinkOverlays	; 69B0D
+mov edx, dword [bgscrolly-2]	; 69B12
+sar edx, 10h	; 69B18
+shl edx, 3	; 69B1B
+mov eax, dword [scrolly-2]	; 69B1E
+sar eax, 10h	; 69B23
+add edx, eax	; 69B26
+neg edx	; 69B28
+mov eax, dword [bgscrollx-2]	; 69B2A
+sar eax, 10h	; 69B2F
+shl eax, 3	; 69B32
+mov ebx, dword [scrollx-2]	; 69B35
+sar ebx, 10h	; 69B3B
+add eax, ebx	; 69B3E
+neg eax	; 69B40
+call sub_6AF97	; 69B42
+call sub_6ADA7	; 69B47
+cmp word [fadeinpending], byte 0	; 69B4C
+je short .22	; 69B54
+mov ax, word [joysampling]	; 69B56
+mov word [joysampling_save], ax	; 69B5C
+xor ecx, ecx	; 69B62
+mov dword [joysampling], ecx	; 69B64
+push savepal	; 69B6A
+push dword 100h	; 69B6F
+push ecx	; 69B74
+call sub_8FFB0	; 69B75
+add esp, byte 0Ch	; 69B7A
+mov ebx, 10h	; 69B7D
+mov edx, savepal	; 69B82
+mov eax, 1	; 69B87
+call FadePalette	; 69B8C
+mov eax, dword [joysampling_save-2]	; 69B91
+sar eax, 10h	; 69B96
+mov dword [joysampling], eax	; 69B99
+.22:
+movsx eax, si	; 69B9E
+call Crowd_Noise	; 69BA1
+mov edx, dword [hudhundaccum]	; 69BA6
+mov ebx, 18h	; 69BAC
+mov eax, edx	; 69BB1
+sar edx, 1Fh	; 69BB3
+idiv ebx	; 69BB6
+mov dword [hudhundstep], eax	; 69BB8
+mov eax, dword [hudhundaccum]	; 69BBD
+mov edx, eax	; 69BC2
+sar edx, 1Fh	; 69BC4
+idiv ebx	; 69BC7
+mov dword [hudhundaccum], edx	; 69BC9
+cmp word [exitgame], byte 0	; 69BCF
+je short .23	; 69BD7
+mov eax, dword [gameclock-2]	; 69BD9
+sar eax, 10h	; 69BDE
+mov edx, dword [clockticks-2]	; 69BE1
+sar edx, 10h	; 69BE7
+or eax, edx	; 69BEA
+jne short .23	; 69BEC
+mov edx, dword [hudclockmin]	; 69BEE
+mov eax, edx	; 69BF4
+shl eax, 4	; 69BF6
+sub eax, edx	; 69BF9
+shl eax, 2	; 69BFB
+mov edx, dword [hudclocksec]	; 69BFE
+add edx, eax	; 69C04
+mov eax, edx	; 69C06
+shl eax, 2	; 69C08
+sub eax, edx	; 69C0B
+shl eax, 3	; 69C0D
+add eax, edx	; 69C10
+shl eax, 2	; 69C12
+mov edx, dword [hudclockhund]	; 69C15
+add eax, edx	; 69C1B
+mov dword [hudhundstep], eax	; 69C1D
+.23:
+call UpdateHudPanel	; 69C22
+mov bx, word [fadeinpending]	; 69C27
+test bx, bx	; 69C2E
+je short .25	; 69C31
+mov ax, word [joysampling]	; 69C33
+mov word [joysampling_save], ax	; 69C39
+xor esi, esi	; 69C3F
+mov dword [joysampling], esi	; 69C41
+cmp bx, byte 2	; 69C47
+jne short .24	; 69C4B
+call PaOpenBank	; 69C4D
+mov edx, dword [byte esp+04h]	; 69C52
+mov eax, dword [byte esp+08h]	; 69C56
+call PaHighlightIntro	; 69C5A
+mov ebx, 10h	; 69C5F
+mov edx, gamepal	; 69C64
+xor eax, eax	; 69C69
+call FadePalette	; 69C6B
+xor esi, esi	; 69C70
+mov word [fadeinpending], si	; 69C72
+mov eax, 0C8h	; 69C79
+call randomd0	; 69C7E
+add eax, 64h	; 69C83
+mov word [crowdlevel], ax	; 69C88
+mov eax, dword [crowdlevel-2]	; 69C8E
+sar eax, 10h	; 69C93
+mov dword [crowdsmooth], eax	; 69C96
+.24:
+mov eax, dword [joysampling_save-2]	; 69C9B
+sar eax, 10h	; 69CA0
+mov dword [joysampling], eax	; 69CA3
+.25:
+cmp dword [escrequest], byte 0	; 69CA8
+jne short .26	; 69CAF
+call ReadJoy1	; 69CB1
+mov dl, byte [regd1]	; 69CB6
+test dl, 10h	; 69CBC
+jne short .26	; 69CBF
+test dl, 20h	; 69CC1
+jne short .26	; 69CC4
+call ReadJoy2	; 69CC6
+mov bl, byte [regd1]	; 69CCB
+test bl, 10h	; 69CD1
+jne short .26	; 69CD4
+test bl, 20h	; 69CD6
+je near StartHL2.17	; 69CD9
+.26:
+xor edx, edx	; 69CDF
+mov dword [joysampling], edx	; 69CE1
+mov eax, dword [ovlseq-2]	; 69CE7
+sar eax, 10h	; 69CEC
+cmp eax, byte 0FFFFFFFFh	; 69CEF
+je short .27	; 69CF2
+mov ebx, dword [dword_E0244]	; 69CF4
+push ebx	; 69CFA
+call FreeMemBlock	; 69CFB
+add esp, byte 4	; 69D00
+.27:
+mov edi, 0FFFFFFFFh	; 69D03
+mov word [bannermsg], di	; 69D08
+mov word [ovlstep], di	; 69D0F
+mov word [ovlseq], di	; 69D16
+xor ecx, ecx	; 69D1D
+mov dword [demomode], ecx	; 69D1F
+mov dword [dword_CCC98], ecx	; 69D25
+push savepal	; 69D2B
+push dword 100h	; 69D30
+push ecx	; 69D35
+call sub_8FFB0	; 69D36
+add esp, byte 0Ch	; 69D3B
+mov ebx, 10h	; 69D3E
+mov edx, savepal	; 69D43
+mov eax, 1	; 69D48
+call FadePalette	; 69D4D
+call CrowdFadeOut	; 69D52
+xor ebx, ebx	; 69D57
+mov word [crowdlevel], bx	; 69D59
+xor edi, edi	; 69D60
+mov dword [crowdsmooth], edi	; 69D62
+cmp byte [musicon], 0	; 69D68
+je short .29	; 69D6F
+test byte [gameopts+1], 1	; 69D71
+je short .29	; 69D78
+call MusicChanReset2	; 69D7A
+.28:
+call SpeechBusy	; 69D7F
+test eax, eax	; 69D84
+jne short StartHL2.28	; 69D86
+jmp short .30	; 69D88
+.29:
+call sub_8F633	; 69D8A
+.30:
+call StopDigiSample	; 69D8F
+mov word [exitgame], 0FFFFh	; 69D94
+mov edx, 1E0h	; 69D9D
+mov eax, 280h	; 69DA2
+call SetScreenSize	; 69DA7
+cmp dword [escrequest], byte 0	; 69DAC
+jne short .31	; 69DB3
+mov eax, 222E0h	; 69DB5
+call sub_1BAF3	; 69DBA
+call ShowLoadingScreen	; 69DBF
+.31:
+mov eax, dword [dword esp+0F8h]	; 69DC4
+mov word [gameover], ax	; 69DCB
+mov eax, dword [byte esp+0Ch]	; 69DD1
+mov word [HomeTeam], ax	; 69DD5
+lea eax, [byte esp+0Ch]	; 69DDB
+add eax, byte 2	; 69DDF
+mov dx, word [eax]	; 69DE2
+mov word [VisTeam], dx	; 69DE5
+add eax, byte 2	; 69DEC
+mov dx, word [eax]	; 69DEF
+mov word [hmtmgoalie], dx	; 69DF2
+add eax, byte 2	; 69DF9
+mov dx, word [eax]	; 69DFC
+mov word [awtmgoalie], dx	; 69DFF
+add eax, byte 2	; 69E06
+mov dx, word [eax]	; 69E09
+mov word [cont1team], dx	; 69E0C
+add eax, byte 2	; 69E13
+mov dx, word [eax]	; 69E16
+mov word [cont2team], dx	; 69E19
+add eax, byte 2	; 69E20
+movsx edx, word [eax]	; 69E23
+mov dword [curperiod], edx	; 69E26
+add eax, byte 2	; 69E2C
+mov dx, word [eax]	; 69E2F
+mov word [gsp], dx	; 69E32
+add eax, byte 2	; 69E39
+mov dx, word [eax]	; 69E3C
+mov word [hmtmap], dx	; 69E3F
+add eax, byte 2	; 69E46
+mov dx, word [eax]	; 69E49
+mov word [awtmap], dx	; 69E4C
+mov edx, dword [hmscore-2]	; 69E53
+sar edx, 10h	; 69E59
+mov ebx, dword [esp]	; 69E5C
+mov dword [ebx], edx	; 69E5F
+mov edx, dword [awscore-2]	; 69E61
+sar edx, 10h	; 69E67
+mov dword [byte ebp+00h], edx	; 69E6A
+add eax, byte 2	; 69E6D
+mov dx, word [eax]	; 69E70
+mov word [hmscore], dx	; 69E73
+add eax, byte 2	; 69E7A
+mov dx, word [eax]	; 69E7D
+mov word [awscore], dx	; 69E80
+xor edi, edi	; 69E87
+add eax, byte 2	; 69E89
+.32:
+mov edx, edi	; 69E8C
+shl edx, 8	; 69E8E
+add edx, hmtmstruct	; 69E91
+add edx, byte 7Eh	; 69E97
+xor esi, esi	; 69E9A
+.33:
+mov bx, word [eax]	; 69E9C
+mov word [edx], bx	; 69E9F
+add eax, byte 2	; 69EA2
+add edx, byte 2	; 69EA5
+inc esi	; 69EA8
+cmp esi, byte 1Ch	; 69EA9
+jl short StartHL2.33	; 69EAC
+inc edi	; 69EAE
+cmp edi, byte 2	; 69EAF
+jl short StartHL2.32	; 69EB2
+mov eax, dword [dword esp+0F4h]	; 69EB4
+mov dword [gameopts], eax	; 69EBB
+mov ecx, 0Ch	; 69EC0
+mov edi, hmlinetab	; 69EC5
+lea esi, [dword esp+0C4h]	; 69ECA
+rep movsd	; 69ED1
+mov ecx, 0Ch	; 69ED3
+mov edi, awlinetab	; 69ED8
+lea esi, [dword esp+094h]	; 69EDD
+rep movsd	; 69EE4
+mov eax, 4	; 69EE6
+call LoadGameTeams	; 69EEB
+call Intermission	; 69EF0
+xor al, al	; 69EF5
+mov byte [gmode], al	; 69EF7
+mov ah, 1	; 69EFC
+mov byte [gmode], ah	; 69EFE
+test byte [gsp], ah	; 69F04
+je short .37	; 69F0A
+cmp word [gsp], byte 3	; 69F0C
+jne short .34	; 69F14
+test byte [gameopts+1], 2	; 69F16
+jne short .35	; 69F1D
+.34:
+mov eax, 1	; 69F1F
+jmp short .36	; 69F24
+.35:
+xor eax, eax	; 69F26
+.36:
+test eax, eax	; 69F28
+je short .37	; 69F2A
+or byte [gmode], 2	; 69F2C
+.37:
+xor edi, edi	; 69F33
+mov word [sflags3], di	; 69F35
+mov word [gmode2], di	; 69F3C
+mov word [sflags], di	; 69F43
+mov eax, dword [dword esp+0FCh]	; 69F4A
+mov word [gmode2], ax	; 69F51
+mov eax, dword [puckc]	; 69F57
+mov byte [eax], 0FFh	; 69F5C
+mov word [ovltimer], 0FFFFh	; 69F5F
+mov word [camx], di	; 69F68
+mov word [camy], di	; 69F6F
+mov edx, dword [VisTeam-2]	; 69F76
+sar edx, 10h	; 69F7C
+mov eax, dword [HomeTeam-2]	; 69F7F
+sar eax, 10h	; 69F84
+mov ebx, gamepal	; 69F87
+call LoadTeamPalette	; 69F8C
+mov word [energywarn+2], di	; 69F91
+mov word [energywarn], di	; 69F98
+mov word [lcblink+2], di	; 69F9F
+mov word [lcblink], di	; 69FA6
+mov ecx, 0FFFFFFFFh	; 69FAD
+mov word [lcline+2], cx	; 69FB2
+mov word [lcline], cx	; 69FB9
+mov word [lcboxon+2], di	; 69FC0
+mov word [lcboxon], di	; 69FC7
+mov word [fadeinpending], 1	; 69FCE
+xor edx, edx	; 69FD7
+mov dword [hudhundaccum], edx	; 69FD9
+mov word [refsignal], di	; 69FDF
+mov word [RefStep], cx	; 69FE6
+mov edx, 1Eh	; 69FED
+mov eax, SortCords+800h	; 69FF2
+call assreplace	; 69FF7
+call ClearPenaltyBuffer	; 69FFC
+mov word [Pencntdwn], cx	; 6A001
+call joyq_flush	; 6A008
+cmp dword [escrequest], byte 0	; 6A00D
+je short .38	; 6A014
+xor ecx, ecx	; 6A016
+mov dword [escrequest], ecx	; 6A018
+mov eax, 0FFFFFFFFh	; 6A01E
+jmp short .x	; 6A023
+.38:
+xor eax, eax	; 6A025
+.x:
+add esp, 104h	; 6A027
+pop ebp	; 6A02D
+pop edi	; 6A02E
+pop esi	; 6A02F
+ret 4	; 6A030
+%endif ; C
