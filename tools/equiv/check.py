@@ -525,6 +525,13 @@ def _selftest():
     hm, hi = run.hittest_outs(5, 99)
     check('MenuHitTest hitMenu in [0, 4)', 0 <= hm < 4)
     check('MenuHitTest hitItem in [0, 32)', 0 <= hi < 32)
+    import snapshot_dosbox, tempfile
+    sample = '{"function":"SeriesLength","regs":{"eax":"0x6000000","ebx":"1"},"args":["0x2"],"pages":{}}\n{"function":"other","regs":{"eax":0}}\n'
+    path = tempfile.mktemp(suffix='.jsonl')
+    open(path, 'w').write(sample)
+    play = snapshot_dosbox.load_play_snaps(path, 'SeriesLength')
+    os.remove(path)
+    check('play-snaps loads one SeriesLength dump', len(play) == 1 and play[0][1].regs.get('eax') == 0x6000000 and play[0][1].args == [2])
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
@@ -556,6 +563,7 @@ def main(argv=None):
     ap.add_argument('--callers', action='store_true', help='also run caller-driven entry states (automatic when coverage after seeded + mutated cases is under 85%%)')
     ap.add_argument('--force', action='store_true', help='ignore a cached PASS')
     ap.add_argument('--no-callers', action='store_true', help='never run the callers phase')
+    ap.add_argument('--play-snaps', metavar='JSONL', help='DOSBox-X entry dumps (docs/SNAPSHOTS.md); extra cases after callers')
     ap.add_argument('--selftest', action='store_true', help='harness proofs: short-return, non-entry nreg, STK write dests, typed bounds, MenuHitTest outs')
     a = ap.parse_args(argv)
     if a.selftest:
@@ -646,6 +654,16 @@ def main(argv=None):
         q('callers: %d callers, %d snapshots (%d via callers of callers), %d run clean; coverage before callers %.1f%%, after %.1f%%' %
           (ncall, len(snaps), up, nsn, 100 * cov_a, 100 * cov_b))
         info['callers cov %.0f%% to %.0f%% (%d snaps)' % (100 * cov_a, 100 * cov_b, len(snaps))] += 1
+    if not failed and a.play_snaps:
+        import snapshot_dosbox
+        play = snapshot_dosbox.load_play_snaps(a.play_snaps, a.func)
+        pool = []
+        for k, (buf, st) in enumerate(play):
+            st.seed = a.seed * 1000003 + 900000 + k
+            if one(buf, st, 'play-snap case %d (%s)' % (k, a.play_snaps), pool): failed = True; break
+        if not failed and pool: failed = mutate_phase(pool, nmut, 1.0, 'play-snap ', 200000)
+        q('play-snaps: %d dumps for %s, %d run clean; coverage %.1f%%' % (len(play), a.func, len(pool), 100 * ck.coverage()[0]))
+        info['play-snaps %d dumps %d clean' % (len(play), len(pool))] += 1
     verdict, diff = V['verdict'], V['diff']
     if cov_seeded is not None and nmutdone > 0: q('coverage after seeded cases %.1f%%, after %d mutated cases %.1f%% (corpus %d)' % (100 * cov_seeded, nmutdone, 100 * cov_a, len(corpus)))
     if run.WARN: q('warnings: ' + '; '.join(sorted(set(run.WARN))))
