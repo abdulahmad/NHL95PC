@@ -1,10 +1,12 @@
-# Function matching accept-list for native
+# Function matching accept-list for native (historical)
+
+**Superseded.** This is the 2026-11-06 advisor snapshot (52 PASS / 10 FAIL-parked / 29 accepted-for-native-link / 18 snapshot-required-before-M2). FAIL-park and accept-for-link are not resting states any more. The live bar is `check.py` PASS on the current source sha for every leftover unmarked draft. Table below is history; do not treat it as a done list.
 
 Advisor moment 3 (2026-11-06): every leftover unmarked draft has one disposition. `check.py` was not re-run for this list. Verdict source: latest `tools/equiv/results.csv` row per function. Draft pool: 109 `nonmatching` rows in `tools/match/c_functions.csv`. Recut names: Gameloop, assonetimer, checkpuckcoll_ccx.
 
-`c_progress.py` FUNCTIONAL stays **49** (PASS rows whose file sha1 still matches). Do not hand-edit C_PROGRESS. Three stale-hash rows are advisor PASS as well (52 total) because the checked C did not change behaviour; they are not in the 49.
+`c_progress.py` FUNCTIONAL was **49** when this list was signed (PASS rows whose file sha1 still matches). Three stale-hash rows were advisor PASS as well (52 total). Unit 1 of the 107-PASS plan stamps those three onto the current file sha without Unicorn.
 
-Native gcc smoke (native F4) may start after Abdul merges this list. Exhibition M2 waits on DOSBox-X entry snapshots for the `snapshot-required-before-M2` set, or a later PASS. FAIL-parked C is not linked. No `abort()` stubs. No `cc.py mark`. Asm, drafts, `DRAFT:` notes, UNSURE entries and history rows stay so byte-match can resume.
+No `abort()` stubs. No `cc.py mark`. Asm, drafts, `DRAFT:` notes, UNSURE entries and history rows stay so byte-match can resume. PRs #294–#299 that landed this file stay merged.
 
 ## Counts
 
