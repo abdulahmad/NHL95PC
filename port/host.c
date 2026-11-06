@@ -3,6 +3,7 @@
  * hands them to the emulation here. The main thread owns SDL: window, events, timer ticks. */
 #include "host.h"
 #include "audio.h"
+#include "overbar_client.h"
 void sound_init(void);
 #include <SDL.h>
 
@@ -63,8 +64,9 @@ int main(int argc, char **argv)
         }
         /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
+        if (overbar_client_quit()) host_exit(0);
         while (now >= next_tick) {
-            irq_raise(0);
+            if (!overbar_client_open()) irq_raise(0);           /* overlay open: the game clock waits */
             next_tick += 1000000000LL / irq_pit_hz() / (intro_skip ? 20 : 1);        /* skipping the splash screens: the game's clock runs fast */
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }

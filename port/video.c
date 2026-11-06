@@ -3,6 +3,7 @@
  * changes, and the main thread turns vram[] into an SDL texture a few dozen times a second. */
 #include "host.h"
 #include "bindings.h"
+#include "overbar_client.h"
 #include <ctype.h>
 #include <math.h>
 #include <SDL.h>
@@ -56,6 +57,7 @@ static uint32_t argb[1280 * 1024];
 /* ---- the settings: how often the window is drawn, vsync, the numbers on the picture, and how the picture is scaled ----
  * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program and changed from the window's menu or the keys 1-6. */
 static int present_hz = 60, vsync_on = 0, osd_on, vrr_on = 1;      /* by default: draw each new image, vsync off */
+static int video_ini_missing, overbar_busy;
 static void title_refresh(void);
 static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
 #define NHIRES NHIRES_ITEMS
@@ -322,7 +324,7 @@ static void settings_load(void)
     FILE *f;
     ini_path(path, sizeof path);
     f = fopen(path, "r");
-    if (!f) return;
+    if (!f) { video_ini_missing = 1; return; }
     while (fgets(line, sizeof line, f)) {
         char *k = line, *v = strchr(line, '='), *e;
         if (!v || line[0] == ';' || line[0] == '[') continue;
@@ -450,6 +452,72 @@ static void scan_rows(float sigma, int rows, float *center, float *gain)
     *gain = rows / sum;
 }
 
+/* Overbar dual-write: overlay Scale Mode / refresh / stats map onto the existing commands. */
+static int ob_look_to_mode(const ob_look *l)
+{
+    if (l->mode == OB_MODE_MISTER) return 9;
+    if (l->mode == OB_MODE_CRT) return l->crt >= OB_CRT_CUSTOM ? 10 : 4 + (int)l->crt;
+    return l->sharp % 4;                    /* Sharp and unimplemented pixel modes */
+}
+
+static void ob_mode_to_look(ob_look *l, int mode, int height)
+{
+    l->height = (ob_picture_height)height;
+    if (mode < 4) { l->mode = OB_MODE_SHARP; l->sharp = mode; }
+    else if (mode == 9) l->mode = OB_MODE_MISTER;
+    else if (mode == 10) { l->mode = OB_MODE_CRT; l->crt = OB_CRT_CUSTOM; }
+    else { l->mode = OB_MODE_CRT; l->crt = (ob_crt_look)(mode - 4); }
+}
+
+static void overbar_capture_host(void)
+{
+    ob_host *h = overbar_client_host();
+    if (!h || overbar_busy) return;
+    h->refresh = vrr_on ? OB_REFRESH_VRR : present_hz == 70 ? OB_REFRESH_70 : OB_REFRESH_60;
+    h->vsync = vsync_on;
+    h->stats = osd_on;
+    ob_mode_to_look(&h->hires, hires_mode, vscale_hi);
+    ob_mode_to_look(&h->lores, lores_mode, vscale_lo);
+    h->lores.khz31 = lores_khz31;
+    h->hires.mask_scale = mcfg[0].mask_scale;
+    h->lores.mask_scale = mcfg[1].mask_scale;
+    h->hires.bright = (int)(mcfg[0].bright * 100.0f + 0.5f);
+    h->lores.bright = (int)(mcfg[1].bright * 100.0f + 0.5f);
+}
+
+static void overbar_apply_host(ob_host *h)
+{
+    int hi, lo, b;
+    if (!h) return;
+    overbar_busy = 1;
+    if (h->refresh == OB_REFRESH_VRR) video_command(CMD_REFRESH_VRR);
+    else if (h->refresh == OB_REFRESH_70) video_command(CMD_REFRESH_70);
+    else video_command(CMD_REFRESH_60);
+    if (h->vsync != video_command_checked(CMD_VSYNC)) video_command(CMD_VSYNC);
+    if (h->stats != video_command_checked(CMD_STATS)) video_command(CMD_STATS);
+    hi = ob_look_to_mode(&h->hires);
+    lo = ob_look_to_mode(&h->lores);
+    if (hi != hires_mode) video_command(CMD_HIRES + hi);
+    if (lo != lores_mode) video_command(CMD_LORES + lo);
+    video_command(CMD_VSCALE_HI + (h->hires.height % 4));
+    video_command(CMD_VSCALE_LO + (h->lores.height % 4));
+    if (ob_mode_has_khz(h->lores.mode))
+        video_command(h->lores.khz31 ? CMD_MKHZ + 1 : CMD_MKHZ);
+    if (h->hires.mode == OB_MODE_MISTER) {
+        b = (h->hires.bright - 70) / 10;
+        if (b < 0) b = 0; if (b > 8) b = 8;
+        video_command(CMD_MBRIGHT_HI + b);
+        video_command(CMD_MSCALE_HI + ((h->hires.mask_scale < 1 ? 1 : h->hires.mask_scale) - 1) % 4);
+    }
+    if (h->lores.mode == OB_MODE_MISTER) {
+        b = (h->lores.bright - 70) / 10;
+        if (b < 0) b = 0; if (b > 8) b = 8;
+        video_command(CMD_MBRIGHT_LO + b);
+        video_command(CMD_MSCALE_LO + ((h->lores.mask_scale < 1 ? 1 : h->lores.mask_scale) - 1) % 4);
+    }
+    overbar_busy = 0;
+}
+
 /* the menu commands (host.h) and the keys 1-6 */
 void video_command(int id)
 {
@@ -475,6 +543,7 @@ void video_command(int id)
     settings_save();
     menu_sync();
     title_refresh();
+    if (!overbar_busy) overbar_capture_host();
 }
 
 int video_command_checked(int id)
@@ -687,27 +756,15 @@ static void client_size(int *w, int *h)
 
 void video_view(int *vx, int *vy, int *vw, int *vh)
 {
-    int ww = 640, wh = 480, w, h, vs = mode_w == 320 ? vscale_lo : vscale_hi;
+    int ww = 640, wh = 480, vs = mode_w == 320 ? vscale_lo : vscale_hi;
+    int pre, period, style, line_double = 0;
+    float scan;
     if (win) client_size(&ww, &wh);
-    w = ww; h = ww * 3 / 4;
-    if (h > wh) { h = wh; w = wh * 4 / 3; }
-    if (vs) {                                   /* a whole number of window rows for each source line (or scanline), so that the lines are even */
-        int pre, period, style, unit, kf, kc, k;
-        float scan;
-        look(mode_w, &pre, &scan, &period, &style);
-        unit = mode_h * (period == 2 ? 2 : 1);
-        kf = wh / unit;
-        if (kf < 1) kf = 1;
-        while (kf > 1 && kf * unit * 4 / 3 > ww) kf--;
-        kc = (wh + unit - 1) / unit;
-        if (kc * unit * 4 / 3 > ww) kc = kf;          /* the rows may be cropped a little (overscan, auto crop), the columns never: too wide is one multiple down */
-        if (kc < kf) kc = kf;
-        if (vs == 1) k = kf;
-        else if (vs == 2) k = kc;
-        else k = (kc * unit - wh <= (mode_w == 320 ? 6 : 10) * kc * (unit / mode_h)) ? kc : kf;       /* auto crop: at most 6 or 10 of the game's own lines cut off */
-        h = k * unit; w = h * 4 / 3;
-    }
-    *vw = w; *vh = h; *vx = (ww - w) / 2; *vy = (wh - h) / 2;
+    look(mode_w, &pre, &scan, &period, &style);
+    (void)pre; (void)scan; (void)style;
+    line_double = period == 2;
+    overbar_client_set_class(mode_w == 320);
+    overbar_client_view(mode_w, mode_h, ww, wh, vs, line_double, vx, vy, vw, vh);
 }
 
 void video_window_to_game(int wx, int wy, int *gx, int *gy)
@@ -764,6 +821,12 @@ void video_init(void)
 {
     lock = SDL_CreateMutex();
     settings_load();
+    overbar_client_init(ob_profile_detect(SDL_GetCurrentVideoDriver(), getenv("OVERBAR_HANDHELD") != NULL), overbar_apply_host);
+    if (video_ini_missing && overbar_client_host()->profile == OB_PROFILE_HANDHELD) {
+        video_command(CMD_REFRESH_60);
+        if (!video_command_checked(CMD_VSYNC)) video_command(CMD_VSYNC);
+    }
+    overbar_capture_host();
     if (getenv("NHL95_PRESET")) { const char *t = getenv("NHL95_PRESET"); apply_preset(t[0] == 'l', t + 2); settings_save(); }      /* a test aid: h:path or l:path of a preset */
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     if (!getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
@@ -846,6 +909,7 @@ void video_present(void)
         }
     }
     dump_frame(w, h);
+    if (overbar_client_open()) overbar_client_draw(argb, w, h, w);
     {
         int vx, vy, vw, vh;
         video_view(&vx, &vy, &vw, &vh);
