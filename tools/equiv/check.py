@@ -7,11 +7,11 @@ Runs the original asm of F (in place in HOCKEY.EXE) and the compiled draft on th
 the traces from run.py. Verdicts: PASS, NEEDS-REVIEW (equal, but the original trapped or returned an unset
 entry register), FAIL (first differing case printed; the run stops there). Rows go to tools/equiv/results.csv
 for files under src/engine, src/front or src/pc; a repeat of the same function + source sha1 + cases that passed prints "cached PASS".
-Compared per case: ret eax (edx with --ret64), esi/edi/ebp always, ebx/ecx/edx when the original saves them
-(push) or leaves them unchanged in that case, esp delta, writes (ordered), calls (ordered; stack args cut to the
-callee's `ret N`, register args cut to the registers the callee reads first), trap kinds.
+Compared per case: ret eax (edx with --ret64; ax only for the short-return allow-list), esi/edi/ebp always, ebx/ecx/edx when the original saves them
+(push) or leaves them unchanged in that case, esp delta, writes (ordered; stack-region dests as STK offset from entry esp), calls (ordered; stack args cut to the
+callee's `ret N`, register args cut to the registers the callee reads first, and only at a real function entry).
 Case inputs: arg registers and stack args are edge values, small randoms or pointers into a 64 KB random arg
-buffer at ARG; globals the function references (original and draft fixups) are patched with random, edge,
+buffer at ARG (index-typed regs stay in [0, 32); deref regs and most stack args stay mapped in ARG); globals the function references (original and draft fixups) are patched with random, edge,
 pointer-ish or static bytes; callee returns come from a seeded script. The stack below the entry esp is refilled per
 case from the case seed (same bytes on both sides); an uninitialised stack read in a case that still compares equal is
 info ("uninit read, outputs equal"), not review.
@@ -36,6 +36,9 @@ FAM = {'eax': 'eax ax ah al', 'ebx': 'ebx bx bh bl', 'ecx': 'ecx cx ch cl', 'edx
        'esi': 'esi si', 'edi': 'edi di', 'ebp': 'ebp bp'}
 FAMOF = {n: r for r, ns in FAM.items() for n in ns.split()}
 ARGREGS = ('eax', 'edx', 'ebx', 'ecx')
+# Callers test ax (Abdul ESCALATE: do not change the C return type). Compare ret eax as uint16.
+SHORT_AX = frozenset(('CanFillLineSlot', 'FillDressedSlots'))
+INDEX_BOUND = 32
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); _md.detail = True
 
 def first_use(code, addr, to_ret=False):
@@ -199,10 +202,15 @@ class Checker:
         for r in ('eax', 'edx', 'ebx', 'ecx', 'esi', 'edi', 'ebp'):
             u = use_.get(r)
             p = 1.0 if u == 'deref' else 0.5 if u == 'read' else 0.2
-            regs[r] = rng.choice((0, 1, 2, 3, 5, 7, 15, 31, 0xFF)) if u == 'index' and rng.random() < 0.9 else val(p)
-            if r in ('esi', 'edi', 'ebp') and u != 'deref' and rng.random() < 0.7:
+            if u == 'index':
+                regs[r] = rng.randrange(0, INDEX_BOUND)
+            elif u == 'deref':
+                regs[r] = ptr()
+            else:
+                regs[r] = val(p)
+            if r in ('esi', 'edi', 'ebp') and u != 'deref' and u != 'index' and rng.random() < 0.7:
                 regs[r] = 0xE5000000 | rng.getrandbits(20) << 4 | (1 + ('esi', 'edi', 'ebp').index(r))   # unique tag
-        args = [val(0.4) for _ in range(nstack_ + 2)]
+        args = [ptr() if rng.random() < 0.4 else rng.randrange(0, INDEX_BOUND) for _ in range(nstack_ + 2)]
         patches = {}
         for lo, n in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
             m = rng.random(); st0 = self.img.read(lo, n)
@@ -242,9 +250,9 @@ class Checker:
             elif k < 0.75 and script:
                 script[rng.randrange(len(script))] = (rng.choice(EDGE) if rng.random() < 0.6 else rng.randrange(0, 16), rng.choice(EDGE))
             elif k < 0.92:
-                regs[rng.choice(list(regs) or ['eax'])] = rng.choice(EDGE + [ARG, ARG + 0x100, 3, 5, 15, 31])
+                regs[rng.choice(list(regs) or ['eax'])] = rng.choice([0, 1, 3, 5, 15, 31, ARG, ARG + 0x100])
             elif args:
-                args[rng.randrange(len(args))] = rng.choice(EDGE + [ARG, ARG + 0x40])
+                args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
         return bytes(b), dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
 
@@ -340,12 +348,16 @@ class Checker:
 
     def nreg(self, target):
         if target not in self.reg_n:
-            try: u = first_use(self.img.read(target, 512), target, True)
-            except ValueError: u = {}
-            n = 0
-            for k, r in enumerate(ARGREGS):
-                if u.get(r) in ('read', 'deref'): n = k + 1
-            self.reg_n[target] = n
+            # Bytes at a non-entry (RunPlayerPickMenu 0xb300a) are not a callee; first_use invents nreg.
+            if not run.is_func_entry(self.img, target):
+                self.reg_n[target] = 0
+            else:
+                try: u = first_use(self.img.read(target, 512), target, True)
+                except ValueError: u = {}
+                n = 0
+                for k, r in enumerate(ARGREGS):
+                    if u.get(r) in ('read', 'deref'): n = k + 1
+                self.reg_n[target] = n
         return self.reg_n[target]
 
     def npop(self, target):
@@ -381,10 +393,17 @@ class Checker:
             if not run.STK <= v < run.STK + run.STK_SIZE: return self.codeval(v, orig)
             return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'esp_delta': t.esp_delta}
-        if not self.void: d['ret eax'] = sv(t.ret_eax)
+        if not self.void:
+            eax = t.ret_eax & 0xFFFF if self.func in SHORT_AX else t.ret_eax
+            d['ret eax'] = sv(eax)
         if self.ret64: d['ret edx'] = sv(t.ret_edx)
         for r in ('esi', 'edi', 'ebp'): d[r] = sv(t.regs.get(r))
-        d['writes'] = [(a, s, sv(v)) for a, s, v in t.writes]
+        esp0 = run.STK + run.ENTRY_OFF
+        def wdest(a):
+            if run.STK <= a < run.STK + run.STK_SIZE:
+                return ('STK', a - esp0)
+            return a
+        d['writes'] = [(wdest(a), s, sv(v)) for a, s, v in t.writes]
         d['calls'] = [(c[0],) + tuple(sv(x, c[6]) for x in c[1:1 + self.nreg(c[0])]) + tuple(sv(x, c[6]) for x in c[5][:self.npop(c[0])])
                       for c in t.calls]
         return d
@@ -434,6 +453,28 @@ class Checker:
         rngs = sorted(sorted(rngs, key=lambda r: pos[r[0]] - r[2])[:5], key=lambda r: r[0])   # 5 largest, by address
         return 1 - len(miss) / max(len(self.insns), 1), [(r[0], r[1]) for r in rngs]
 
+def _selftest():
+    """No Unicorn cases. Proves the Unit 2 comparison rules against the loaded EXE labels."""
+    img = image.load(); ok = True
+    def check(name, cond):
+        nonlocal ok
+        print('%s %s' % ('PASS' if cond else 'FAIL', name)); ok = ok and cond
+    check('0xb300a is not a function entry', not run.is_func_entry(img, 0xb300a))
+    sl = img.labels()['SeriesLength']
+    check('SeriesLength is a function entry', run.is_func_entry(img, sl))
+    class Box:
+        pass
+    b = Box(); b.img = img; b.reg_n = {}
+    check('nreg at 0xb300a is 0', Checker.nreg(b, 0xb300a) == 0)
+    check('nreg at SeriesLength > 0', Checker.nreg(b, sl) >= 0)
+    check('CanFillLineSlot is short-ax', 'CanFillLineSlot' in SHORT_AX and 'FillDressedSlots' in SHORT_AX)
+    check('SeriesLength is not short-ax', 'SeriesLength' not in SHORT_AX)
+    esp0 = run.STK + run.ENTRY_OFF
+    check('SportsDesk dest 0x7f20020 is in the stack region', run.STK <= 0x7F20020 < run.STK + run.STK_SIZE)
+    check('STK offset of 0x7f20020 is +0x20', 0x7F20020 - esp0 == 0x20)
+    print('ALL PASS' if ok else 'FAILED')
+    return 0 if ok else 1
+
 def hx(v): return hex(v) if isinstance(v, int) else str(v)
 def fmt(l): return ' '.join('(%s)' % ','.join(hx(x) for x in e) for e in l) or '(none)'
 
@@ -454,7 +495,7 @@ def log(row):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description='functional-equivalence check of one draft against the original asm')
-    ap.add_argument('c_file'); ap.add_argument('--func', required=True)
+    ap.add_argument('c_file', nargs='?'); ap.add_argument('--func')
     ap.add_argument('--cases', type=int, default=2000); ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('--budget', type=float, default=0, help='stop after this many seconds (0: no limit; seeded cases get 60%%, mutation the rest); fewer than 500 cases is NEEDS-REVIEW')
     ap.add_argument('--seg'); ap.add_argument('--quiet', action='store_true')
@@ -462,7 +503,12 @@ def main(argv=None):
     ap.add_argument('--callers', action='store_true', help='also run caller-driven entry states (automatic when coverage after seeded + mutated cases is under 85%%)')
     ap.add_argument('--force', action='store_true', help='ignore a cached PASS')
     ap.add_argument('--no-callers', action='store_true', help='never run the callers phase')
+    ap.add_argument('--selftest', action='store_true', help='harness proofs: short-return, non-entry nreg, STK write dests')
     a = ap.parse_args(argv)
+    if a.selftest:
+        return _selftest()
+    if not a.c_file or not a.func:
+        ap.error('c_file and --func are required (except with --selftest)')
     q = (lambda *x: None) if a.quiet else print
     c_path = os.path.abspath(a.c_file)
     sha = hashlib.sha1(open(c_path, 'rb').read()).hexdigest()
