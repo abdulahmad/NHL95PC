@@ -3,6 +3,7 @@
 #include "host.h"
 #include "audio.h"
 #include "bindings.h"
+#include "overbar_client.h"
 #include <SDL.h>
 
 #define QSIZE 256
@@ -296,14 +297,32 @@ void input_poll(void)
                 if (!e.key.repeat) audio_capture_toggle();
                 break;
             }
-            if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE && !(e.key.keysym.mod & (KMOD_CTRL | KMOD_ALT))) {      /* the key ` (tilde): the stats display */
-                if (!e.key.repeat) video_command(CMD_STATS);
-                break;
+            if (!e.key.repeat && overbar_client_key(e.key.keysym.scancode)) break;   /* ` / F11 overlay, F12 stats */
+            if (overbar_client_open()) {
+                int in = -1;
+                SDL_Scancode k = e.key.keysym.scancode;
+                if (k == SDL_SCANCODE_UP) in = MDRT_MENU_UP;
+                else if (k == SDL_SCANCODE_DOWN) in = MDRT_MENU_DOWN;
+                else if (k == SDL_SCANCODE_LEFT) in = MDRT_MENU_LEFT;
+                else if (k == SDL_SCANCODE_RIGHT) in = MDRT_MENU_RIGHT;
+                else if (k == SDL_SCANCODE_RETURN || k == SDL_SCANCODE_KP_ENTER) in = MDRT_MENU_OK;
+                else if (k == SDL_SCANCODE_ESCAPE) in = MDRT_MENU_BACK;   /* backs out; does not open */
+#ifdef _WIN32
+                if (in >= 0) {
+                    int r = overbar_client_input(in);
+                    if (r == OB_ID_CONTROLLERS) bindings_dialog_open(NULL);
+                }
+#else
+                if (in >= 0) overbar_client_input(in);
+#endif
+                break;                                          /* overlay eats the keyboard; the game is paused */
             }
             if (!e.key.repeat) { key_physical(e.key.keysym.scancode, 1); intro_skip_start(); }
             break;
         case SDL_KEYUP:
-            if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE) break;
+            if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE || e.key.keysym.scancode == SDL_SCANCODE_F11
+                || e.key.keysym.scancode == SDL_SCANCODE_F12) break;
+            if (overbar_client_open()) break;
             key_physical(e.key.keysym.scancode, 0);
             break;
         case SDL_SYSWMEVENT: menu_event(e.syswm.msg); break;      /* the window's menu (Windows) */
@@ -379,9 +398,43 @@ static void joy_scan(void)                      /* at start and when a device is
     }
 }
 
+static void joy_overlay(void)
+{
+    static int prev, back_was;
+    int i, btns = 0, back = 0;
+    for (i = 0; i < 2; i++) {
+        SDL_GameController *g = joy[i].gc;
+        if (!g) continue;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_BACK)) back = 1;
+        if (!overbar_client_open()) continue;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_UP)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTY) < -16384) btns |= 1;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_DOWN)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTY) > 16384) btns |= 2;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_LEFT)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX) < -16384) btns |= 4;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX) > 16384) btns |= 8;
+        if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A)
+            || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_START)) btns |= 16;
+    }
+    if (back && !back_was) overbar_client_pad_back();
+    back_was = back;
+    if (overbar_client_open()) {
+        if ((btns & 1) && !(prev & 1)) overbar_client_input(MDRT_MENU_UP);
+        if ((btns & 2) && !(prev & 2)) overbar_client_input(MDRT_MENU_DOWN);
+        if ((btns & 4) && !(prev & 4)) overbar_client_input(MDRT_MENU_LEFT);
+        if ((btns & 8) && !(prev & 8)) overbar_client_input(MDRT_MENU_RIGHT);
+        if ((btns & 16) && !(prev & 16)) overbar_client_input(MDRT_MENU_OK);
+    }
+    prev = btns;
+}
+
 static void joy_update(void)                    /* main thread, every pass of the loop */
 {
     int i;
+    joy_overlay();
+    if (overbar_client_open()) return;          /* the game is paused; do not feed the stick */
     for (i = 0; i < 2; i++) {
         int x = 0, y = 0, b1 = 0, b2 = 0;
         if (joy[i].gc) {

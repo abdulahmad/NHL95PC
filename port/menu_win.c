@@ -166,7 +166,7 @@ void menu_init(void *sdl_window)
     item(m, CMD_REFRESH_VRR, "VRR (draw each new image)");
     line(m);
     item(m, CMD_VSYNC, "V-Sync");
-    item(m, CMD_STATS, "Stats display\t`");
+    item(m, CMD_STATS, "Stats display\tF12");
     line(m);
     item(m, CMD_POINTER, "Windows pointer: automatic");
     item(m, CMD_POINTER + 1, "Windows pointer: always show");

@@ -3,6 +3,7 @@
  * hands them to the emulation here. The main thread owns SDL: window, events, timer ticks. */
 #include "host.h"
 #include "audio.h"
+#include "overbar_client.h"
 void sound_init(void);
 #include <SDL.h>
 
@@ -12,6 +13,20 @@ static char **g_argv;
 
 #ifdef _WIN32
 #define SYM(s) "_" s
+static void win32_scrub_portmaster_env(void)
+{
+    /* Delete, do not _putenv("VAR="): an empty SDL_VIDEODRIVER makes SDL_Init fail. */
+    SetEnvironmentVariableA("SDL_RENDER_DRIVER", NULL);
+    SetEnvironmentVariableA("SDL_OPENGL_ES_DRIVER", NULL);
+    SetEnvironmentVariableA("SDL_VIDEODRIVER", NULL);
+    SetEnvironmentVariableA("OVERBAR_HANDHELD", NULL);
+    SetEnvironmentVariableA("PORTMASTER", NULL);
+    SetEnvironmentVariableA("CFW_NAME", NULL);
+    SDL_SetHintWithPriority(SDL_HINT_RENDER_DRIVER, "", SDL_HINT_OVERRIDE);
+#ifdef SDL_HINT_OPENGL_ES_DRIVER
+    SDL_SetHintWithPriority(SDL_HINT_OPENGL_ES_DRIVER, "0", SDL_HINT_OVERRIDE);
+#endif
+}
 #else
 #define SYM(s) s
 #endif
@@ -37,9 +52,27 @@ int main(int argc, char **argv)
     int64_t next_tick, next_frame;
     g_argc = argc; g_argv = argv;
     trace_on = getenv("NHL95_TRACE") != 0;    stats_init();
+#ifdef _WIN32
+    /* PortMaster / Overbar packing leftovers (SDL_RENDER_DRIVER=opengles2, OVERBAR_HANDHELD)
+     * must be gone before SDL_Init: otherwise Windows creates an ES context or kmsdrm fails. */
+    win32_scrub_portmaster_env();
+#endif
     SDL_SetMainReady();
-    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0) { fprintf(stderr, "SDL_Init: %s\n", SDL_GetError()); return 1; }
+    if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0) {
+        fprintf(stderr, "SDL_Init: %s\n", SDL_GetError());
+#ifdef _WIN32
+        MessageBoxA(NULL, SDL_GetError(), "NHL Hockey 95 — SDL_Init", MB_ICONERROR);
+#endif
+        return 1;
+    }
+#ifdef _WIN32
+    win32_scrub_portmaster_env();   /* SDL_Init can copy env into hints; scrub again before the window */
+#endif
+    ob_present_apply_hints(ob_profile_detect(SDL_GetCurrentVideoDriver(), ob_handheld_env()));
     video_init();
+#ifdef _WIN32
+    SDL_FlushEvent(SDL_QUIT);   /* leftover from a failed OpenGL window destroy during video_init */
+#endif
     input_init();
     sound_init();
     if (map_low_memory()) fprintf(stderr, "cannot map DOS memory below 1 MB\n");
@@ -63,8 +96,9 @@ int main(int argc, char **argv)
         }
         /* one tick per period that has passed: a sleep that lasted longer than asked (Windows rounds it to 15.6 ms when it does not
          * treat the process as in the foreground) must not lose ticks. They queue in irq.c. */
+        if (overbar_client_quit()) host_exit(0);
         while (now >= next_tick) {
-            irq_raise(0);
+            if (!overbar_client_open()) irq_raise(0);           /* overlay open: the game clock waits */
             next_tick += 1000000000LL / irq_pit_hz() / (intro_skip ? 20 : 1);        /* skipping the splash screens: the game's clock runs fast */
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }

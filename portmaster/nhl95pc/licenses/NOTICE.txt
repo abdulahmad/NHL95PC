@@ -1,0 +1,12 @@
+NHL 95 PC on Overbar for PortMaster.
+
+Derivative of https://github.com/abdulahmad/nhl95pc (abdulahmad).
+Credit: abdulahmad, chaos, StaticEck and McMarkis (Mhopkinsinc).
+
+Host: Overbar (https://github.com/abdulahmad/overbar), including files from
+PulseMan (https://github.com/1nputs/pulseman), MIT License,
+Copyright (c) 2026 The pulseman authors.
+
+MiSTer filter data: Filters_MiSTer, ShadowMasks_MiSTer, Presets_MiSTer.
+
+HOCKEY.EXE and CD data are not included. Bring your own install.
