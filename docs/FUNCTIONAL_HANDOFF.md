@@ -81,7 +81,8 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.1 | Stamp stale PASS hashes (`avdgoal`, `NetCollide`, `ReplayStep`) without Unicorn | Composer 2.5 |
 | 107.2 | Harness proofs for the ten FAIL | Grok 4.7 medium |
 | 107.3 | ~~Re-check the ten FAIL~~ **done** (2 PASS, 3 NR, 5 still FAIL; no C) | Composer 2.5 |
-| 107.4–8 | Typed inputs, re-check NR, snapshots, advisor if needed, close at 109/109 PASS | see plan |
+| 107.4 | ~~Typed inputs for coverage-NR~~ **done** (odd seeded cases; MenuHitTest out-params in-rect; G17 PASS; planted SeriesLength FAIL at case 4). Do not re-run the 47 in this unit | Grok 4.7 medium |
+| 107.5–8 | Re-check NR, snapshots, advisor if needed, close at 109/109 PASS | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to

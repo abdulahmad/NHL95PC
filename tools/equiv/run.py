@@ -100,6 +100,19 @@ def returns64(img, target):
         _R64[target] = r
     return _R64[target]
 
+_HITTEST = None
+
+def hittest_addr(img):
+    """EXE label of MenuHitTest, cached."""
+    global _HITTEST
+    if _HITTEST is None:
+        _HITTEST = img.labels().get('MenuHitTest')
+    return _HITTEST
+
+def hittest_outs(depth, stub_k):
+    """MenuHitTest out-params: hitMenu in [0, 4), hitItem in [0, 32). In-rect, not eax leftover."""
+    return depth & 3, stub_k & 31
+
 def ptr_size(img, target, pos):
     """bytes to compare behind a stack pointer passed as argument `pos` (0-3 registers, then stack dwords) to the
     callee at `target`: 4, or the struct size (cap 64) when protos.h types the parameter as a struct pointer"""
@@ -267,7 +280,18 @@ class Runner:
             snap = tuple((p, tuple(u.mem_read(p + i, 1)[0] if (not ih(p + i) or p + i in written) else None for i in range(n)))
                          for p, n in ptrs.items())
             tr.calls.append((a,) + rg + (sa, snap))
+            hit_skip = set()
+            if a == hittest_addr(img):
+                # hitMenu / hitItem are stack args 2 and 3 (int *). In-rect, not eax leftover.
+                hm, hi = hittest_outs(u.reg_read(UREG['ecx']), k)
+                for v, val in ((sa[2], hm), (sa[3], hi)):
+                    if STK <= v <= STK + STK_SIZE - 4:
+                        put(v, struct.pack('<I', val))
+                        hit_skip.add(v)
+                        if ih(v): written.update(range(v, min(v + 4, esp0)))
+                eax = eax & 1
             for j, (p, n) in enumerate(ptrs.items()):
+                if p in hit_skip: continue
                 base = (eax, edx, eax ^ edx, eax + edx)
                 put(p, b''.join(struct.pack('<I', (base[i % 4] + j + i // 4) & 0xFFFFFFFF) for i in range((n + 3) // 4))[:n])
                 if ih(p): written.update(range(p, min(p + n, esp0)))
@@ -384,6 +408,9 @@ def _selftest():
     tr = run(img, SC, (SC, SC + 8), State(regs={'eax': 9}), code=[(SC, b'\x40\xc3')])
     good = tr.ended == 'ret' and tr.ret_eax == 10; ok &= good
     print('%s scratch inc eax; ret -> eax=%d' % ('PASS' if good else 'FAIL', tr.ret_eax))
+    hm, hi = hittest_outs(5, 99)
+    good = 0 <= hm < 4 and 0 <= hi < 32; ok &= good
+    print('%s MenuHitTest outs hitMenu=%d hitItem=%d' % ('PASS' if good else 'FAIL', hm, hi))
     print('ALL PASS' if ok else 'FAILED'); return ok
 
 if __name__ == '__main__':
