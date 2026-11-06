@@ -1,6 +1,6 @@
 # Functional-equivalence plan for the last drafts
 
-Status: harness round 7 merged; next is rerun of every NEEDS-REVIEW draft. See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md).
+Status: finish bar closed. Every leftover draft is PASS, FAIL-parked, or advisor-accepted for native ([FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md)). See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md). Next *native* unit is gcc smoke (native F4), not a functional unit. Steps 10–11 (`FUNCTIONAL=1`, nightly) stay later.
 Each step below is done on its own, in order, and stops for Abdul's approval before the next one starts.
 
 ## Why
