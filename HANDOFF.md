@@ -2,14 +2,14 @@
 
 ## Now
 
-- Stage / unit: functional **107-PASS plan, Unit 1** (reopen bar + stamp stale PASS hashes). Old native-link bar (PASS / parked / accepted-for-link) is superseded; [docs/FUNCTIONAL_ACCEPT.md](docs/FUNCTIONAL_ACCEPT.md) stays as history. #294–#299 stay merged. Next: harness proofs for the ten FAIL. Native F4 waits until 109/109 PASS.
-- Branch: `cursor/equiv-107-reopen-4bec` stacked on the README PR. Do not merge until Abdul says. Do not close #294–#299.
-- Last check: 2026-11-06 `make fullcheck` MATCH twice. `c_progress.py`: 977/1084 MATCH, 52 of 109 drafts FUNCTIONAL (three stale PASS hashes stamped).
+- Stage / unit: functional **107-PASS plan, Unit 7** (leftover proofs). SimPlayoffRound1 PASS 3000. SportsDesk FAIL→NR (autoret `eax` into scrolly/scrollx). **56 PASS / 0 FAIL / 53 NR**. 53 NR wait on Abdul dumps (`docs/SNAPSHOTS.md`). Unit 8 does **not** close. Native F4 waits until 109/109 PASS. #294–#299 stay merged.
+- Branch: `cursor/equiv-107-leftovers-4bec` stacked on Unit 6. Leave open. Do not merge until Abdul says.
+- Last check: 2026-11-06 `make fullcheck` MATCH twice. `c_progress.py`: 977/1084 MATCH, 56 of 109 drafts FUNCTIONAL. Leftovers: 56 PASS / 0 FAIL / 53 NR.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: README #300 / sdl2 #301, then this Unit 1 stack. #286–#299 stay merged (#294–#299 are the old native-link bar). Do not close them.
+- Open PRs: Unit 1 #303/#304, Unit 2 #306/#307, Unit 3 #308/#309, Unit 4 #310/#311, Unit 5 #312/#313, Unit 6 #314/#315, this Unit 7 stacked on #314. #300/#301 merged. #294–#299 stay merged. Do not close them.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
