@@ -2,9 +2,9 @@
 
 ## Now
 
-- Stage / unit: leftover recut — `docs/name_map.csv` `94_source_file` for NextPathPoint / StartShootoutPath is `shootoutpath94.asm` (94G leftover recut). 95PC modules stay job-cut.
-- Branch: `cursor/leftover-recut-f6fc`
-- Last check: 2026-11-04 `make CBUILD=0` MATCH and `make CBUILD=1` MATCH (tools split). SHA-1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`. `python3 tools/equiv/check.py` cached PASS (`puckfaceoff2`); `tools/equiv/image.py --selftest` ALL PASS.
+- Stage / unit: functional track — harness **round 7** merged (per-case stack fill; `--callers`). Next: rerun every NEEDS-REVIEW draft (`docs/FUNCTIONAL_HANDOFF.md` step 2).
+- Branch: `cursor/equiv-round7-0c53` (PR onto `main`; same commits onto `sdl2-port` via `cursor/sdl2-sync-main-0c53`).
+- Last check: 2026-11-06 `python3 tools/equiv/{image,run,cside}.py --selftest` ALL PASS. Pilots PASS (`--force --no-callers --cases 200`). Planted SeriesLength bug FAIL at case 6. `--callers` smoke on SeriesLength: 50 snapshots, coverage 100%.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.

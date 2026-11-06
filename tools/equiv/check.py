@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Functional-equivalence check (FUNCTIONAL_PLAN.md, "How the check works" 4-8, step 5).
 
-  python3 tools/equiv/check.py src/<engine|front|pc>/<mod>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64]
+  python3 tools/equiv/check.py src/<engine|front|pc>/<mod>/<F>.c --func F [--cases 2000] [--seed 1] [--quiet] [--seg SEG] [--ret64] [--callers|--no-callers] [--force] [--budget N]
 
 Runs the original asm of F (in place in HOCKEY.EXE) and the compiled draft on the same seeded cases and compares
 the traces from run.py. Verdicts: PASS, NEEDS-REVIEW (equal, but the original trapped or returned an unset
@@ -12,7 +12,13 @@ Compared per case: ret eax (edx with --ret64), esi/edi/ebp always, ebx/ecx/edx w
 callee's `ret N`, register args cut to the registers the callee reads first), trap kinds.
 Case inputs: arg registers and stack args are edge values, small randoms or pointers into a 64 KB random arg
 buffer at ARG; globals the function references (original and draft fixups) are patched with random, edge,
-pointer-ish or static bytes; callee returns come from a seeded script.
+pointer-ish or static bytes; callee returns come from a seeded script. The stack below the entry esp is refilled per
+case from the case seed (same bytes on both sides); an uninitialised stack read in a case that still compares equal is
+info ("uninit read, outputs equal"), not review.
+Callers mode (--callers; also automatic when coverage after seeded + mutated cases is under 85%, off with --no-callers):
+the original callers of F (direct `call rel32` sites in the image) run from seeded random states with every callee
+stubbed except F; at F's entry the registers, stack args and every page written so far are snapshotted and become a
+case State for both sides. One level up (callers of callers) is used when fewer than 50 snapshots come out.
 """
 import os, sys, re, csv, random, hashlib, struct, time, argparse, datetime, collections, dataclasses
 HERE = os.path.dirname(os.path.abspath(__file__)); ROOT = os.path.dirname(os.path.dirname(HERE))
@@ -149,10 +155,14 @@ class Checker:
 
     def _spans(self, obj):
         """data ranges to patch: from each referenced data address to the next label, 4..256 bytes"""
-        img, lab = self.img, self.lab; code0 = img.objects[0]
-        tg = {t for s, (k, t) in img.fixups.items() if self.addr <= s < self.addr + self.size}
+        lab = self.lab
         r = cside._parse(obj['path'], set(lab))
-        tg |= {lab[f['target']] + f['addend'] for f in r['fixups'] if f['target'] in lab}
+        return self._spans_of(self.addr, self.size, {lab[f['target']] + f['addend'] for f in r['fixups'] if f['target'] in lab})
+
+    def _spans_of(self, addr, size, extra=()):
+        img, lab = self.img, self.lab; code0 = img.objects[0]
+        tg = {t for s, (k, t) in img.fixups.items() if addr <= s < addr + size}
+        tg |= set(extra)
         tg = sorted(t for t in tg if not (code0.base <= t < code0.base + code0.size))
         alls = sorted(set(lab.values())); out = []
         for t in tg:
@@ -163,7 +173,8 @@ class Checker:
         return out
 
     # ---- case generator
-    def case(self, seed, i):
+    def case(self, seed, i, ctx=None):
+        use_, nstack_, spans_ = ctx or (self.use, self.nstack, self.spans)
         rng = random.Random(seed * 1000003 + i)
         m = rng.random(); ff = rng.choice((0.05, 0.1, 0.2, 0.3))
         n = ARG_SIZE   # bulk bytes from randbytes, selected with translate tables and big-int masks (a per-byte loop cost 10 ms)
@@ -186,14 +197,14 @@ class Checker:
         def val(p): return ptr() if rng.random() < p else scalar()
         regs = {}
         for r in ('eax', 'edx', 'ebx', 'ecx', 'esi', 'edi', 'ebp'):
-            u = self.use.get(r)
+            u = use_.get(r)
             p = 1.0 if u == 'deref' else 0.5 if u == 'read' else 0.2
             regs[r] = rng.choice((0, 1, 2, 3, 5, 7, 15, 31, 0xFF)) if u == 'index' and rng.random() < 0.9 else val(p)
             if r in ('esi', 'edi', 'ebp') and u != 'deref' and rng.random() < 0.7:
                 regs[r] = 0xE5000000 | rng.getrandbits(20) << 4 | (1 + ('esi', 'edi', 'ebp').index(r))   # unique tag
-        args = [val(0.4) for _ in range(self.nstack + 2)]
+        args = [val(0.4) for _ in range(nstack_ + 2)]
         patches = {}
-        for lo, n in self.spans if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
+        for lo, n in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
             m = rng.random(); st0 = self.img.read(lo, n)
             if m < 0.3: continue   # static image value
             if m < 0.6:            # static with one byte nudged
@@ -211,7 +222,8 @@ class Checker:
         """a changed copy of a corpus case (buf, state, ARG offsets the original read): bytes near read offsets, a patched
         global, a callee script return, an arg register or a stack arg. The same result goes to both sides."""
         buf, st, reads = ent
-        b = bytearray(buf); regs = dict(st.regs); args = list(st.args); patches = dict(st.patches); script = list(st.script)
+        b = bytearray(buf); regs = dict(st.regs); args = list(st.args); patches = dict(st.patches)
+        script = list(st.script) if isinstance(st.script, (list, tuple)) else []
         rl = sorted(reads)
         for _ in range(rng.choice((1, 1, 2, 3))):
             k = rng.random()
@@ -235,10 +247,93 @@ class Checker:
                 args[rng.randrange(len(args))] = rng.choice(EDGE + [ARG, ARG + 0x40])
         return bytes(b), dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
-    # ---- one side
-    def go(self, buf, st, orig):
+
+    # ---- caller-driven entry states
+    def callers_of(self, target):
+        """[(entry, size)] of the functions with a direct `call rel32` to target, most call sites first (cached)"""
+        if not hasattr(self, '_callers'):
+            import bisect
+            o = self.img.objects[0]; code = self.img.read(o.base, o.size); rows = self._funcs(); starts = [r[0] for r in rows]
+            self._sites = collections.defaultdict(collections.Counter); self._callers = {}
+            pos = code.find(b'\xe8')
+            while pos >= 0 and pos + 5 <= len(code):
+                t = (o.base + pos + 5 + struct.unpack_from('<i', code, pos + 1)[0]) & 0xFFFFFFFF
+                k = bisect.bisect_right(starts, o.base + pos) - 1
+                if k >= 0 and o.base + pos < rows[k][0] + rows[k][1]: self._sites[t][(rows[k][0], rows[k][1])] += 1
+                pos = code.find(b'\xe8', pos + 1)
+        if target not in self._callers:
+            self._callers[target] = [c for c, n in self._sites.get(target, collections.Counter()).most_common() if c[0] != target][:12]
+        return self._callers[target]
+
+    def ctx_of(self, fn):
+        if fn not in self._ctx:
+            e, sz = fn
+            try: code = self.img.read(e, max(sz, 1))
+            except ValueError: code = b'\xc3'
+            self._ctx[fn] = (first_use(code, e), run._pop_bytes(self.img, e) // 4, self._spans_of(e, max(sz, 1)))
+        return self._ctx[fn]
+
+    def snap_runner(self, caller, target, shift, nargs):
+        k = (caller, target, shift)
+        if k not in self._runners:
+            e, sz = caller
+            lo = run.STK + run.ENTRY_OFF + shift - 0x1000 + 0x80   # the target's esp0 plus 0x80
+            self._runners[k] = run.Runner(self.img, e, (e, e + sz), [(ARG, bytes(ARG_SIZE))], None, 100000, None, fresh=(ARG,),
+                                          shift=shift, snap_at=target, snap_lo=lo, snap_n=nargs)
+        return self._runners[k]
+
+    def get_snap(self, target, level, s_t):
+        """one attempt: (buf, State) at the entry of target, from a round-robin caller run at stack shift s_t + 0x1000
+        (level > 0: the caller's own entry state comes from its callers), or None"""
+        cs = [c for c in self.callers_of(target) if self._dead.get((c, target), 0) < 150]
+        if not cs: return None
+        k = self._rr.get(target, 0); self._rr[target] = k + 1; c = cs[k % len(cs)]
+        s_c = s_t + 0x1000
+        nargs = (self.nstack if target == self.addr else run._pop_bytes(self.img, target) // 4) + 2
+        runner = self.snap_runner(c, target, s_c, nargs)
+        self._att += 1; buf, st = self.case(self.seed0 + 77, self._att, self.ctx_of(c))
+        if level > 0:
+            src = self.get_snap(c[0], level - 1, s_c)
+            if src is None: self._dead[(c, target)] = self._dead.get((c, target), 0) + 1; return None
+            buf, st0 = src; st = dataclasses.replace(st0, script=st.script)
+        st.seed = self.seed0 * 1000003 + 500000 + self._att
+        self.prep(st); runner.run(st, {ARG: buf})
+        if runner.snap is None: self._dead[(c, target)] = self._dead.get((c, target), 0) + 1; return None
+        self._dead[(c, target)] = 0
+        regs, args, pg, fresh = runner.snap
+        raw = fresh.get(ARG) or next(iter(fresh.values()), b'\x00' * ARG_SIZE)
+        return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None)
+
+    def gather(self, want, deadline, max_att):
+        """up to `want` distinct entry snapshots of the function under test (level 0, then one level up when under 50)
+        -> (list of (buf, State, caller entry), number of callers, snapshots from the level above)"""
+        self._rr = {}; self._dead = {}; self._att = 0; self._ctx = {}; self._runners = {}; seen = set(); out = []
+        self.seed0 = self.seed0 if hasattr(self, 'seed0') else 1
+        ncall = len(self.callers_of(self.addr)); up = 0
+        for level in (0, 1):
+            if level == 1 and (len(out) >= 50 or not ncall): break
+            att = 0
+            while len(out) < want and att < max_att and (not deadline or time.time() < deadline):
+                att += 1
+                r = self.get_snap(self.addr, level, 0)
+                if r is None:
+                    if all(self._dead.get((c, self.addr), 0) >= 150 for c in self.callers_of(self.addr)): break
+                    continue
+                buf, st = r
+                st = dataclasses.replace(st, script=self.case(self.seed0 + 99, len(out))[1].script)
+                key = (hash(buf[:2048]), tuple(sorted(st.regs.items())), tuple(st.args), tuple(sorted((a, hash(b)) for a, b in st.patches.items())))
+                if key in seen: continue
+                seen.add(key); out.append((buf, st)); up += level
+            if level == 0 and len(out) >= 50: break
+        return out, ncall, up
+
+    def prep(self, st):
         st.argsof = lambda t: (self.nreg(t), self.npop(t))
         st.ptrsize = lambda t, pos: run.ptr_size(self.img, t, pos)
+
+    # ---- one side
+    def go(self, buf, st, orig):
+        self.prep(st)
         if orig: self.reads.clear()
         t = (self.rorig if orig else self.rc).run(st, {ARG: buf})
         return cside._norm(t, self.addr if orig else self.entry)
@@ -299,10 +394,10 @@ class Checker:
         self.codeptr = False; a = self.go(buf, st, True); c = self.go(buf, st, False)
         stop = lambda t: next((k for k, e, dd in t.traps if k not in run.SOFT), '')
         ka, kc = stop(a), stop(c)
-        rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD or k == 'uninit stack read'})
+        rev = sorted({k for k, e, dd in a.traps + c.traps if k in run._BAD})
         va, vc = self.view(a, st, True), self.view(c, st, False)
         cw = ka == kc == 'code write'
-        np_ = (['code pointer compared by function'] if self.codeptr else []) + ['null page'] * any(k == 'null page' for k, e, dd in a.traps + c.traps) + ['code write'] * cw
+        np_ = (['uninit read, outputs equal'] if any(k == 'uninit stack read' for k, e, dd in a.traps + c.traps) else []) + (['code pointer compared by function'] if self.codeptr else []) + ['null page'] * any(k == 'null page' for k, e, dd in a.traps + c.traps) + ['code write'] * cw
         if ka or kc:
             lim = 'insn limit' in (ka, kc) or cw   # either side ran out: compare only as a prefix, whatever the other ended with
             if ka != kc and not lim: return 'trap kind: orig %s vs C %s' % (ka or 'none', kc or 'none'), rev, np_, ka
@@ -364,6 +459,9 @@ def main(argv=None):
     ap.add_argument('--budget', type=float, default=0, help='stop after this many seconds (0: no limit; seeded cases get 60%%, mutation the rest); fewer than 500 cases is NEEDS-REVIEW')
     ap.add_argument('--seg'); ap.add_argument('--quiet', action='store_true')
     ap.add_argument('--ret64', action='store_true', help='function returns edx:eax')
+    ap.add_argument('--callers', action='store_true', help='also run caller-driven entry states (automatic when coverage after seeded + mutated cases is under 85%%)')
+    ap.add_argument('--force', action='store_true', help='ignore a cached PASS')
+    ap.add_argument('--no-callers', action='store_true', help='never run the callers phase')
     a = ap.parse_args(argv)
     q = (lambda *x: None) if a.quiet else print
     c_path = os.path.abspath(a.c_file)
@@ -371,7 +469,7 @@ def main(argv=None):
     rel_src = os.path.relpath(c_path, os.path.join(ROOT, 'src')).replace('\\', '/')
     real = rel_src.split('/')[0] in ('engine', 'front', 'pc', 'c')
     rel = os.path.relpath(c_path, ROOT)
-    if real:
+    if real and not a.force:
         for r in read_results():
             if (r['function'], r['source_sha1'], r['cases'], r['verdict']) == (a.func, sha, str(a.cases + a.cases // 2), 'PASS'):
                 print('cached PASS %s (%s, %s)' % (a.func, r['cases'], r['date'])); return 0
@@ -380,36 +478,77 @@ def main(argv=None):
     la = img.labels()[a.func]; ca = int(row['address'], 16)
     ck = Checker(img, a.func, c_path, int(row['size']) + (ca - la if 0 < ca - la < 0x100 else 0), a.ret64)   # label sits before the csv address (db bytes / entry piece): extent starts at the label
     q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords%s' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack, '; void: eax not compared' if ck.void else ''))
-    review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); verdict = 'PASS'; diff = ''; t1 = time.time(); done = 0
-    corpus = []; nseed = a.cases; total = a.cases + a.cases // 2; cov_seeded = None; seeding = True; i = 0
-    while i < total:
-        if seeding and (i >= nseed or (a.budget and time.time() - t1 > a.budget * 0.6)):   # mutation phase starts
-            seeding = False; nseed = i; cov_seeded = ck.coverage()[0]
-            if not corpus: break
-        if seeding:
-            buf, st = ck.case(a.seed, i); st.seed = a.seed * 1000003 + i; label = 'case %d (seed %d, --seed %d)' % (i, st.seed, a.seed)
-        else:
-            m = i - nseed; rng = random.Random(a.seed * 7919 + m)
-            buf, st = ck.mutate(corpus[rng.randrange(len(corpus))], rng); label = 'mutated case %d (--seed %d --cases %d; %d seeded cases first)' % (m, a.seed, a.cases, a.cases)
-        i += 1
+    review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); V = {'verdict': 'PASS', 'diff': ''}; t1 = time.time(); done = 0
+    corpus = []; nseed = a.cases; nmut = a.cases // 2; total = nseed + nmut; cov_seeded = None; cov_a = None; cov_b = None; ck.seed0 = a.seed
+    left = lambda f: not a.budget or time.time() - t1 < a.budget * f
+
+    def one(buf, st, label, pool=None):
+        """run one case on both sides; True on a FAIL (printed). pool: list that gets (buf, state, reads, added coverage)"""
+        nonlocal done
         n0 = len(ck.cov)
         d, rv, inf, tk = ck.compare(buf, st); done += 1
         review.update(rv); info.update(inf)
         if tk: traps[tk] += 1
-        if len(ck.cov) > n0 and not d:
-            corpus.append((buf, st, set(ck.reads)))
-            if len(corpus) > 100: corpus.pop(random.Random(i).randrange(1, 100))
-        if a.budget and time.time() - t1 > a.budget and not d: break
+        if pool is not None and not d: pool.append((buf, st, set(ck.reads), len(ck.cov) > n0))
         if d:
-            verdict = 'FAIL'; diff = d
+            V['verdict'] = 'FAIL'; V['diff'] = d
             b = ck.orig[:10]; n = 2 if b[0] == 0x6A else 5 if b[0] == 0x68 else 0
             if not (n and b[n] == 0xE8 and (ck.addr + n + 5 + struct.unpack_from('<i', b, n + 1)[0]) & 0xFFFFFFFF == ck.lab['__CHK']):
-                verdict = 'NEEDS-REVIEW'; diff = 'entry is not a C prologue; ' + d
-            print('%s %s: %s\n  %s' % (verdict, a.func, label, d))
+                V['verdict'] = 'NEEDS-REVIEW'; V['diff'] = 'entry is not a C prologue; ' + d
+            print('%s %s: %s\n  %s' % (V['verdict'], a.func, label, d))
             print('  entry regs: ' + ' '.join('%s=%#x' % (r, v) for r, v in st.regs.items()))
             print('  stack args: ' + ' '.join('%#x' % v for v in st.args[:ck.nstack]))
-            break
-    if cov_seeded is not None and done > nseed: q('coverage after seeded cases %.1f%%, after %d mutated cases %.1f%% (corpus %d)' % (100 * cov_seeded, done - nseed, 100 * ck.coverage()[0], len(corpus)))
+            return True
+        return False
+
+    def mutate_phase(pool, n, frac, tag, base):
+        for m in range(n):
+            if not left(frac): break
+            rng = random.Random(a.seed * 7919 + base + m)
+            adders = [e for e in pool if e[3]]
+            src = adders if adders and rng.random() < 0.7 else pool
+            ent = src[rng.randrange(len(src))]
+            buf, st = ck.mutate(ent[:3], rng)
+            if one(buf, st, 'mutated %scase %d (--seed %d --cases %d)' % (tag, m, a.seed, a.cases), pool if tag else None): return True
+        return False
+
+    failed = False
+    for i in range(nseed):   # seeded cases get 40% of the budget
+        if not left(0.4): break
+        buf, st = ck.case(a.seed, i); st.seed = a.seed * 1000003 + i
+        n0 = len(ck.cov)
+        if one(buf, st, 'case %d (seed %d, --seed %d)' % (i, st.seed, a.seed)): failed = True; break
+        if len(ck.cov) > n0:
+            corpus.append((buf, st, set(ck.reads), True))
+            if len(corpus) > 100: corpus.pop(random.Random(i).randrange(1, 100))
+    nseed = done; cov_seeded = ck.coverage()[0]
+    if not failed and corpus:   # coverage-guided mutation of the corpus
+        for m in range(nmut):
+            if not left(0.6): break
+            rng = random.Random(a.seed * 7919 + m)
+            buf, st = ck.mutate(corpus[rng.randrange(len(corpus))][:3], rng)
+            n0 = len(ck.cov)
+            if one(buf, st, 'mutated case %d (--seed %d --cases %d; %d seeded cases first)' % (m, a.seed, a.cases, a.cases)): failed = True; break
+            if len(ck.cov) > n0:
+                corpus.append((buf, st, set(ck.reads), True))
+                if len(corpus) > 100: corpus.pop(random.Random(m).randrange(1, 100))
+    cov_a = ck.coverage()[0]; nmutdone = done - nseed
+    if not failed and (a.callers or (not a.no_callers and cov_a < 0.85)):
+        tb = time.time(); rem = (t1 + a.budget - tb) if a.budget else 0
+        snaps, ncall, up = ck.gather(a.cases, tb + 0.3 * rem if a.budget else 0, 8 * a.cases)
+        pool = []
+        for k, (buf, st) in enumerate(snaps):
+            if a.budget and time.time() > tb + 0.65 * rem: break
+            st.seed = a.seed * 1000003 + 700000 + k
+            if one(buf, st, 'snapshot case %d (callers mode, --seed %d --cases %d)' % (k, a.seed, a.cases), pool): failed = True; break
+        nsn = len(pool)
+        if not failed and pool: failed = mutate_phase(pool, nmut, 1.0, 'snapshot ', 100000)
+        cov_b = ck.coverage()[0]
+        q('callers: %d callers, %d snapshots (%d via callers of callers), %d run clean; coverage before callers %.1f%%, after %.1f%%' %
+          (ncall, len(snaps), up, nsn, 100 * cov_a, 100 * cov_b))
+        info['callers cov %.0f%% to %.0f%% (%d snaps)' % (100 * cov_a, 100 * cov_b, len(snaps))] += 1
+    verdict, diff = V['verdict'], V['diff']
+    if cov_seeded is not None and nmutdone > 0: q('coverage after seeded cases %.1f%%, after %d mutated cases %.1f%% (corpus %d)' % (100 * cov_seeded, nmutdone, 100 * cov_a, len(corpus)))
     if run.WARN: q('warnings: ' + '; '.join(sorted(set(run.WARN))))
     share, miss = ck.coverage(); nt = sum(traps.values())
     fmtc = lambda c: ', '.join('%s x%d' % kv for kv in sorted(c.items()))
