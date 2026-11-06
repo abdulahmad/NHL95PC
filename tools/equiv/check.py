@@ -11,10 +11,12 @@ Compared per case: ret eax (edx with --ret64; ax only for the short-return allow
 (push) or leaves them unchanged in that case, esp delta, writes (ordered; stack-region dests as STK offset from entry esp), calls (ordered; stack args cut to the
 callee's `ret N`, register args cut to the registers the callee reads first, and only at a real function entry).
 Case inputs: arg registers and stack args are edge values, small randoms or pointers into a 64 KB random arg
-buffer at ARG (index-typed regs stay in [0, 32); deref regs and most stack args stay mapped in ARG); globals the function references (original and draft fixups) are patched with random, edge,
+buffer at ARG (index-typed regs stay in [0, table-bound); deref regs and most stack args stay mapped in ARG). Odd
+seeded cases are a typed stream (no EDGE / 0xa5a5a5a5; struct-shaped objects in ARG); even cases keep the random
+corpus. Globals the function references (original and draft fixups) are patched with random, edge,
 pointer-ish or static bytes; callee returns come from a seeded script. The stack below the entry esp is refilled per
 case from the case seed (same bytes on both sides); an uninitialised stack read in a case that still compares equal is
-info ("uninit read, outputs equal"), not review.
+info ("uninit read, outputs equal"), not review. MenuHitTest out-params are in-rect (hitMenu in [0, 4), hitItem in [0, 32)).
 Callers mode (--callers; also automatic when coverage after seeded + mutated cases is under 85%, off with --no-callers):
 the original callers of F (direct `call rel32` sites in the image) run from seeded random states with every callee
 stubbed except F; at F's entry the registers, stack args and every page written so far are snapshotted and become a
@@ -38,8 +40,17 @@ FAMOF = {n: r for r, ns in FAM.items() for n in ns.split()}
 ARGREGS = ('eax', 'edx', 'ebx', 'ecx')
 # Callers test ax (Abdul ESCALATE: do not change the C return type). Compare ret eax as uint16.
 SHORT_AX = frozenset(('CanFillLineSlot', 'FillDressedSlots'))
-INDEX_BOUND = 32
+INDEX_BOUND = 32  # default when the table length is unknown
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); _md.detail = True
+
+def table_bound(func):
+    """[0, bound) for index-typed regs / stack slots. Nearest table length; 32 if unknown."""
+    n = (func or '').lower()
+    if any(s in n for s in ('playoff',)): return 16
+    if any(s in n for s in ('menu', 'desk', 'pick')): return 8
+    if any(s in n for s in ('team', 'roster', 'stand', 'division')): return 26
+    if any(s in n for s in ('dressed', 'lineslot', 'line', 'skater', 'player', 'slot')): return 25
+    return INDEX_BOUND
 
 def first_use(code, addr, to_ret=False):
     """{reg: 'deref'|'index'|'read'|'write'} for the first use of each register in linear order. pushes, pops and
@@ -175,23 +186,49 @@ class Checker:
             out.append((t, max(4, min(nxt - t, 256))))
         return out
 
+    def index_bound(self):
+        return table_bound(self.func)
+
     # ---- case generator
-    def case(self, seed, i, ctx=None):
+    def case(self, seed, i, ctx=None, typed=False):
         use_, nstack_, spans_ = ctx or (self.use, self.nstack, self.spans)
         rng = random.Random(seed * 1000003 + i)
+        bound = self.index_bound() if typed else INDEX_BOUND
         m = rng.random(); ff = rng.choice((0.05, 0.1, 0.2, 0.3))
         n = ARG_SIZE   # bulk bytes from randbytes, selected with translate tables and big-int masks (a per-byte loop cost 10 ms)
         sel = lambda p: rng.randbytes(n).translate(bytes(255 if x < p * 256 else 0 for x in range(256)))   # 0xFF where chosen
         mix = lambda x, y, k: (((int.from_bytes(x, 'little') & int.from_bytes(k, 'little')) | (int.from_bytes(y, 'little') & ~int.from_bytes(k, 'little')))
                                & ((1 << 8 * n) - 1)).to_bytes(n, 'little')
-        if m < 0.4: buf = rng.randbytes(n)
+        if typed:
+            raw = bytearray(rng.randbytes(n))
+            # Seed struct-shaped objects in ARG: 4 MenuItem slots, a Player (0x80), a Team (cap 64 of 0x100).
+            for k in range(4):
+                base = 0x100 + k * 32
+                raw[base:base + 16] = struct.pack('<IIII', 0, 0, 40, 16)  # in-rect x1,y1,x2,y2
+                raw[k * 4:(k + 1) * 4] = struct.pack('<I', ARG + base)
+            pbase = 0x400
+            raw[pbase + 0x47] = rng.randrange(0, bound) & 0xFF  # pnum
+            raw[pbase + 0x1A:pbase + 0x1C] = struct.pack('<H', rng.randrange(0, 7))  # position
+            tbase = 0x500
+            raw[tbase + 0x10:tbase + 0x12] = struct.pack('<H', rng.randrange(0, 10))  # tmscore
+            buf = bytes(raw)
+        elif m < 0.4: buf = rng.randbytes(n)
         elif m < 0.7: buf = mix(rng.randbytes(n).translate(bytes((0, 1, 0xFF, 0x80, 0x7F)[x * 5 // 256] for x in range(256))), rng.randbytes(n), sel(0.8))
         else: buf = mix(b'\xff' * n, rng.randbytes(n), sel(ff))   # sentinel-heavy
         def ptr():
             r = rng.random()
+            if typed:
+                # mapped ARG, never kernel-ish / 0xa5a5a5a5
+                off = 0 if r < 0.3 else 0x100 if r < 0.5 else 0x400 if r < 0.7 else rng.randrange(0, ARG_SIZE - 0x2000) & ~3
+                return ARG + off
             off = 0 if r < 0.2 else rng.randrange(0, 256) if r < 0.5 else rng.randrange(0, ARG_SIZE - 0x2000)
             return ARG + off
         def scalar():
+            if typed:
+                r = rng.random()
+                if r < 0.7: return rng.randrange(0, bound)
+                if r < 0.9: return rng.randrange(0, 256)
+                return ptr()
             r = rng.random()
             if r < 0.4: return rng.choice(EDGE)
             if r < 0.7: return rng.randrange(0, 16)
@@ -203,26 +240,34 @@ class Checker:
             u = use_.get(r)
             p = 1.0 if u == 'deref' else 0.5 if u == 'read' else 0.2
             if u == 'index':
-                regs[r] = rng.randrange(0, INDEX_BOUND)
+                regs[r] = rng.randrange(0, bound)
             elif u == 'deref':
                 regs[r] = ptr()
             else:
                 regs[r] = val(p)
             if r in ('esi', 'edi', 'ebp') and u != 'deref' and u != 'index' and rng.random() < 0.7:
                 regs[r] = 0xE5000000 | rng.getrandbits(20) << 4 | (1 + ('esi', 'edi', 'ebp').index(r))   # unique tag
-        args = [ptr() if rng.random() < 0.4 else rng.randrange(0, INDEX_BOUND) for _ in range(nstack_ + 2)]
+        args = [ptr() if rng.random() < 0.4 else rng.randrange(0, bound) for _ in range(nstack_ + 2)]
         patches = {}
-        for lo, n in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
-            m = rng.random(); st0 = self.img.read(lo, n)
+        for lo, nspan in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
+            m = rng.random(); st0 = self.img.read(lo, nspan)
             if m < 0.3: continue   # static image value
-            if m < 0.6:            # static with one byte nudged
-                b = bytearray(st0); j = rng.randrange(n); b[j] = (b[j] + rng.choice((1, 2, 3, 0xFF, 0xFE, 0x80))) & 0xFF
-            elif m < 0.7: b = bytes(rng.getrandbits(8) for _ in range(n))
-            elif m < 0.8: b = b''.join(struct.pack('<I', rng.choice(EDGE)) for _ in range((n + 3) // 4))
-            elif m < 0.9: b = b''.join(struct.pack('<I', ptr()) for _ in range((n + 3) // 4))
-            else: b = bytes(rng.choice((0, 1, 0xFF)) for _ in range(n))
-            patches[lo] = bytes(b[:n])
-        script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
+            if typed:
+                if m < 0.6:
+                    b = bytearray(st0); j = rng.randrange(nspan); b[j] = (b[j] + rng.choice((1, 2, 3))) & 0xFF
+                elif m < 0.8: b = b''.join(struct.pack('<I', rng.randrange(0, bound)) for _ in range((nspan + 3) // 4))
+                else: b = b''.join(struct.pack('<I', ptr()) for _ in range((nspan + 3) // 4))
+            elif m < 0.6:            # static with one byte nudged
+                b = bytearray(st0); j = rng.randrange(nspan); b[j] = (b[j] + rng.choice((1, 2, 3, 0xFF, 0xFE, 0x80))) & 0xFF
+            elif m < 0.7: b = bytes(rng.getrandbits(8) for _ in range(nspan))
+            elif m < 0.8: b = b''.join(struct.pack('<I', rng.choice(EDGE)) for _ in range((nspan + 3) // 4))
+            elif m < 0.9: b = b''.join(struct.pack('<I', ptr()) for _ in range((nspan + 3) // 4))
+            else: b = bytes(rng.choice((0, 1, 0xFF)) for _ in range(nspan))
+            patches[lo] = bytes(b[:nspan])
+        if typed:
+            script = [((ptr() if rng.random() < 0.2 else rng.randrange(0, bound)), rng.randrange(0, bound)) for _ in range(32)]
+        else:
+            script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
         return buf, run.State(regs=regs, args=args, patches=patches, script=script)
 
     # ---- coverage-guided mutation
@@ -472,6 +517,14 @@ def _selftest():
     esp0 = run.STK + run.ENTRY_OFF
     check('SportsDesk dest 0x7f20020 is in the stack region', run.STK <= 0x7F20020 < run.STK + run.STK_SIZE)
     check('STK offset of 0x7f20020 is +0x20', 0x7F20020 - esp0 == 0x20)
+    check('table_bound SeriesLength is 32', table_bound('SeriesLength') == INDEX_BOUND)
+    check('table_bound CanFillLineSlot is 25', table_bound('CanFillLineSlot') == 25)
+    check('table_bound SportsDesk is 8', table_bound('SportsDesk') == 8)
+    check('table_bound PlayoffTreeMenu is 16', table_bound('PlayoffTreeMenu') == 16)
+    check('table_bound LoadTeamRoster is 26', table_bound('LoadTeamRoster') == 26)
+    hm, hi = run.hittest_outs(5, 99)
+    check('MenuHitTest hitMenu in [0, 4)', 0 <= hm < 4)
+    check('MenuHitTest hitItem in [0, 32)', 0 <= hi < 32)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
@@ -503,7 +556,7 @@ def main(argv=None):
     ap.add_argument('--callers', action='store_true', help='also run caller-driven entry states (automatic when coverage after seeded + mutated cases is under 85%%)')
     ap.add_argument('--force', action='store_true', help='ignore a cached PASS')
     ap.add_argument('--no-callers', action='store_true', help='never run the callers phase')
-    ap.add_argument('--selftest', action='store_true', help='harness proofs: short-return, non-entry nreg, STK write dests')
+    ap.add_argument('--selftest', action='store_true', help='harness proofs: short-return, non-entry nreg, STK write dests, typed bounds, MenuHitTest outs')
     a = ap.parse_args(argv)
     if a.selftest:
         return _selftest()
@@ -561,9 +614,9 @@ def main(argv=None):
     failed = False
     for i in range(nseed):   # seeded cases get 40% of the budget
         if not left(0.4): break
-        buf, st = ck.case(a.seed, i); st.seed = a.seed * 1000003 + i
+        buf, st = ck.case(a.seed, i, typed=(i % 2 == 1)); st.seed = a.seed * 1000003 + i
         n0 = len(ck.cov)
-        if one(buf, st, 'case %d (seed %d, --seed %d)' % (i, st.seed, a.seed)): failed = True; break
+        if one(buf, st, 'case %d (seed %d, --seed %d%s)' % (i, st.seed, a.seed, ', typed' if i % 2 else '')): failed = True; break
         if len(ck.cov) > n0:
             corpus.append((buf, st, set(ck.reads), True))
             if len(corpus) > 100: corpus.pop(random.Random(i).randrange(1, 100))
