@@ -82,7 +82,8 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.3 | ~~Re-check the ten FAIL~~ **done** (2 PASS, 3 NR, 5 still FAIL; no C) | Composer 2.5 |
 | 107.4 | ~~Typed inputs for coverage-NR~~ **done** (odd seeded cases; MenuHitTest out-params in-rect; G17 PASS; planted SeriesLength FAIL at case 4). Do not re-run the 47 in this unit | Grok 4.7 medium |
 | 107.5 | ~~Re-check leftover NR/FAIL~~ **done** (checkgoalp PASS; 3 FAIL→NR; SportsDesk + SimPlayoffRound1 still FAIL; 52 NR remain for snapshots) | Composer 2.5 |
-| 107.6–8 | DOSBox-X snapshots (needs Abdul dumps), advisor if leftovers, close at 109/109 PASS | see plan |
+| 107.6 | Snapshot **script** done (`tools/equiv/snapshot_dosbox.py`, `docs/SNAPSHOTS.md`, `check.py --play-snaps`). CSV log waits on Abdul dumps | Grok 4.7 medium |
+| 107.7–8 | Advisor if leftovers after dumps, close at 109/109 PASS | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
