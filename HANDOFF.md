@@ -2,9 +2,9 @@
 
 ## Now
 
-- Stage / unit: functional track — harness **round 7** merged (per-case stack fill; `--callers`). Next: rerun every NEEDS-REVIEW draft (`docs/FUNCTIONAL_HANDOFF.md` step 2).
-- Branch: `cursor/equiv-round7-0c53` (PR onto `main`; same commits onto `sdl2-port` via `cursor/sdl2-sync-main-0c53`).
-- Last check: 2026-11-06 `python3 tools/equiv/{image,run,cside}.py --selftest` ALL PASS. Pilots PASS (`--force --no-callers --cases 200`). Planted SeriesLength bug FAIL at case 6. `--callers` smoke on SeriesLength: 50 snapshots, coverage 100%.
+- Stage / unit: functional track — step 2 NEEDS-REVIEW rerun **logged** (25 new PASS, 2 new FAIL, 44 still review). Next: InstantReplay `bothneitherstrs` + 3 skipped reruns (`docs/FUNCTIONAL_HANDOFF.md` step 2b).
+- Branch: `cursor/equiv-rerun-review-0c53` (PR onto `main`; same commit onto `sdl2-port`). Do not merge until Abdul says merge.
+- Last check: 2026-11-06 `make fullcheck` MATCH twice. `python3 tools/equiv/{image,run,cside}.py --selftest` ALL PASS. `c_progress.py`: 977/1084 MATCH, 48 of 109 drafts FUNCTIONAL. InstantReplay has no 2026-11-06 row.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
