@@ -2,14 +2,14 @@
 
 ## Now
 
-- Stage / unit: functional **107-PASS plan, Unit 2** (harness proofs for the ten FAIL). Do not re-run the 52 PASS or the ten FAIL in this unit. Next: Unit 3 re-check of those ten. Native F4 waits until 109/109 PASS. #294–#299 stay merged.
-- Branch: `cursor/equiv-107-harness-fail-4bec` stacked on Unit 1. Leave open. Do not merge until Abdul says.
-- Last check: 2026-11-06 `make fullcheck` MATCH twice. `c_progress.py`: 977/1084 MATCH, 52 of 109 drafts FUNCTIONAL. Leftovers: 52 PASS / 10 FAIL / 47 NR.
+- Stage / unit: functional **107-PASS plan, Unit 3** (re-check the ten FAIL after Unit 2 harness). FUNCTIONAL 54. Next: Unit 4 typed inputs for coverage-NR. Native F4 waits until 109/109 PASS. #294–#299 stay merged.
+- Branch: `cursor/equiv-107-recheck-fail-4bec` stacked on Unit 2. Leave open. Do not merge until Abdul says.
+- Last check: 2026-11-06 `make fullcheck` MATCH twice. `c_progress.py`: 977/1084 MATCH, 54 of 109 drafts FUNCTIONAL. Leftovers: 54 PASS / 5 FAIL / 50 NR.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: Unit 1 #303 (main) / #304 (sdl2-port); this Unit 2 stacked on #303. #300/#301 merged. #294–#299 stay merged. Do not close them.
+- Open PRs: Unit 1 #303/#304, Unit 2 #306/#307, this Unit 3 stacked on #306. #300/#301 merged. #294–#299 stay merged. Do not close them.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
