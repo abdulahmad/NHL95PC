@@ -8,10 +8,10 @@
 
 - Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
-- <!-- nhl95-readme-functional:start -->52 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
-  - <!-- nhl95-readme-functional-total:start -->1029 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
+- <!-- nhl95-readme-functional:start -->54 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+  - <!-- nhl95-readme-functional-total:start -->1031 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - The 107 leftover MATCH functions plus two db-entry drafts (`MenuSaveDefaultLines`, `MenuSaveTheseLines`) are the 109 unmarked compiled-C drafts ([C_PROGRESS.md](C_PROGRESS.md)). 13 hand-asm stay asm.
-- Leftover functional drafts (**109**): **52 PASS**, 10 FAIL, 47 NEEDS-REVIEW. Next: Unit 3 re-check of the ten FAIL after the Unit 2 harness (short-return ax, non-entry nreg, STK write dests, range-keep). Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+- Leftover functional drafts (**109**): **54 PASS**, 5 FAIL, 50 NEEDS-REVIEW. Unit 3 re-check of the old ten FAIL: CanFillLineSlot and OpenSpeechBank PASS; FillDressedSlots / RunPlayerPickMenu / TradeScreenLoop moved to NR; SportsDesk, GameLineEditorLoop, DbLineEditorLoop, PlayoffTreeMenu, SimPlayoffRound1 still FAIL (call-arg / fault). Next: Unit 4 typed inputs. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
