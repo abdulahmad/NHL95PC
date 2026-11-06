@@ -816,11 +816,28 @@ void video_toggle_fullscreen(void)
 
 int video_is_fullscreen(void) { return fullscreen; }
 
+#ifdef _WIN32
+static void video_die(const char *where)
+{
+    char buf[640];
+    snprintf(buf, sizeof buf, "%s: %s", where, SDL_GetError());
+    fprintf(stderr, "%s\n", buf);
+    MessageBoxA(NULL, buf, "NHL Hockey 95", MB_ICONERROR);
+    exit(1);
+}
+#else
+static void video_die(const char *where)
+{
+    fprintf(stderr, "%s: %s\n", where, SDL_GetError());
+    exit(1);
+}
+#endif
+
 /* ---- the main thread: window and presentation ---- */
 void video_init(void)
 {
     ob_profile profile;
-    int handheld, ww, wh;
+    int handheld, skip_gl, ww, wh;
     Uint32 wflags, rflags;
     SDL_RendererInfo rinfo;
     lock = SDL_CreateMutex();
@@ -837,39 +854,54 @@ void video_init(void)
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
     ww = getenv("NHL95_WINDOW_W") ? atoi(getenv("NHL95_WINDOW_W")) : (handheld ? 640 : 960);
     wh = getenv("NHL95_WINDOW_H") ? atoi(getenv("NHL95_WINDOW_H")) : (handheld ? 480 : 720);
-    /* Handheld / KMSDRM: SDL_Renderer only. Never desktop OpenGL, never a menu bar. */
-    if (!handheld && !getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
+    /* Desktop Windows always tries OpenGL (the sdl2-port path). Handheld skip is
+     * KMSDRM/Linux only: on Win32 it left a window that died on SDL_QUIT. */
+    skip_gl = getenv("NHL95_NOGL") || !SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy");
+#ifdef _WIN32
+    skip_gl = getenv("NHL95_NOGL") != NULL;
+#else
+    if (handheld) skip_gl = 1;
+#endif
+    if (!skip_gl) {        /* the OpenGL path: shader scaling */
         win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
         if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); if (getenv("NHL95_MAXIMIZE")) SDL_MaximizeWindow(win); return; }
         fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
         vgl_quit();
-        if (win) SDL_DestroyWindow(win);
-        win = 0;
+        /* Destroying the last window queues SDL_QUIT; the next window then
+         * closes on the first input_poll. Drain it. */
+        if (win) { SDL_DestroyWindow(win); win = 0; }
+        SDL_FlushEvent(SDL_QUIT);
+        SDL_FlushEvent(SDL_WINDOWEVENT);
     }
     wflags = handheld ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_RESIZABLE;
+#ifdef _WIN32
+    wflags = SDL_WINDOW_RESIZABLE;
+#endif
     win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, wflags);
-    if (!win) { fprintf(stderr, "SDL window: %s\n", SDL_GetError()); exit(1); }
+    if (!win) video_die("SDL window");
     if (handheld) {
+#ifndef _WIN32
         fullscreen = 1;
         menu_show(0);
+#endif
     }
-    rflags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+    SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
+    rflags = SDL_RENDERER_ACCELERATED;
+    if (handheld) rflags |= SDL_RENDERER_PRESENTVSYNC;
     ren = SDL_CreateRenderer(win, -1, rflags);
-    if (!ren) {
-        /* A leftover GLES2 render-driver hint makes both accelerated and
-         * software fail; drop it and try Direct3D / software. */
-        SDL_SetHint(SDL_HINT_RENDER_DRIVER, "direct3d");
-        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED);
-    }
+    if (!ren)
+        ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
     if (!ren) {
         SDL_SetHint(SDL_HINT_RENDER_DRIVER, "software");
         ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
     }
-    if (!ren) { fprintf(stderr, "SDL renderer: %s\n", SDL_GetError()); exit(1); }
+    if (!ren) video_die("SDL renderer");
     if (SDL_GetRendererInfo(ren, &rinfo) == 0 && rinfo.name) {
         int gles = strstr(rinfo.name, "opengles") || strstr(rinfo.name, "gles");
-        ob_host_set_present(overbar_client_host(), gles, 0);
+        ob_host_set_present(overbar_client_host(), gles, !gles);
     }
+    menu_init(win);
+    title_refresh();
 }
 
 /* NHL95_DUMP=dir writes a PPM of the screen about twice a second (for testing without a display) */

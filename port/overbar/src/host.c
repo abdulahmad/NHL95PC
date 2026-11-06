@@ -142,12 +142,14 @@ static int driver_handheld(const char *d)
 int ob_handheld_env(void)
 {
     const char *v;
-    if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
 #ifdef _WIN32
-    /* PORTMASTER / CFW_NAME leftovers from packing a zip must not switch a
-     * Windows desktop exe onto the handheld present path. */
+    /* A desktop .exe must never take the KMSDRM/GLES2 path. OVERBAR_HANDHELD
+     * leftover from packing a PortMaster zip still skips OpenGL and the window
+     * then dies on the first SDL_QUIT after the failed renderer. */
+    (void)v;
     return 0;
 #else
+    if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
     if ((v = getenv("PORTMASTER")) && v[0]) return 1;
     if ((v = getenv("CFW_NAME")) && v[0]) return 1;
     v = getenv("DEVICE_NAME");
