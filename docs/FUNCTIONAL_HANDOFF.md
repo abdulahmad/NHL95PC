@@ -23,11 +23,11 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **56 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+* **59 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
   PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
-  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture after Unit 7: **56 PASS / 53 NEEDS-REVIEW / 0 FAIL** over leftover drafts
+  Latest-row CSV picture after 109-plan H1: **59 PASS / 50 NEEDS-REVIEW / 0 FAIL** over leftover drafts
   (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
@@ -85,6 +85,7 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.6 | Snapshot **script** done (`tools/equiv/snapshot_dosbox.py`, `docs/SNAPSHOTS.md`, `check.py --play-snaps`). CSV log waits on Abdul dumps | Grok 4.7 medium |
 | 107.7 | Leftover proofs ([FUNCTIONAL_LEFTOVERS.md](FUNCTIONAL_LEFTOVERS.md)): SportsDesk (c) autoret `eax` into `scrolly`/`scrollx` → NR 47%; SimPlayoffRound1 (a) team-byte clamp + SeriesLength stub 1/3/5/7 → PASS 3000. **56 PASS / 0 FAIL / 53 NR**. 53 NR wait on dumps. No dead-range without a dump. | Grok 4.7 high |
 | 107.8 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
+| 109.H1 | ~~Soft traps + list counts~~ **done** (POSeedTeams / DrawListItems / ListDialog PASS 3000; G17 PASS; planted SeriesLength FAIL case 4). SportsDesk event stub is ListDialog-only. **59 PASS / 50 NR**. | Grok 4.7 medium |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
