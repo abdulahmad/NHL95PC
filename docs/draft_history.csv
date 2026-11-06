@@ -797,3 +797,6 @@ SimPlayoffRound1,cursor,2026-11-06,GA,4,4,"functional Unit 7: team-byte clamp + 
 RunMenu,cursor,2026-11-06,GA,72,72,"functional 109-plan H2: --budget 1800 still NR 510 cases 49% coverage. No C."
 RunTeamPickMenu,cursor,2026-11-06,GA,181,181,"functional 109-plan H2: --budget 1800 still NR 486 cases 64% coverage. No C."
 InstantReplay,cursor,2026-11-06,GA,22,22,"functional 109-plan H2: --budget 1800 still NR 306 cases 75% mostly trapped. No C."
+RunMenu,cursor,2026-11-06,GA,72,72,"functional 109-plan H3: pointerspr/alloc/MenuHitTest in-param/cdecl nreg/menu GetInputEvent. PASS 3000. No C."
+ListDialog,cursor,2026-11-06,GA,146,146,"functional 109-plan H3: still PASS 3000 with event_mode=list. No C."
+SportsDesk,cursor,2026-11-06,GA,192,192,"functional 109-plan H3: menu-mode event stub is NR 70% not FAIL. No C."

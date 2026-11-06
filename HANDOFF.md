@@ -2,14 +2,14 @@
 
 ## Now
 
-- Stage / unit: functional **109-plan H2** (budget 1800). RunMenu / RunTeamPickMenu / InstantReplay still NR at 1800s. **59 PASS / 0 FAIL / 50 NR**. H3 inputs next. Native F4 waits until 109/109 PASS. #294–#299 stay merged. H1 #319/#320 merged.
-- Branch: `cursor/equiv-109-budget-4bec` off `origin/main`. Leave open. Do not merge until Abdul says.
-- Last check: 2026-11-06 H2 `--budget 1800`: RunMenu NR 510/49%, RunTeamPickMenu NR 486/64%, InstantReplay NR 306/75%. Leftovers: 59 PASS / 0 FAIL / 50 NR.
+- Stage / unit: functional **109-plan H3** (screen inputs). RunMenu **PASS 3000**. ListDialog still PASS 3000. **60 PASS / 0 FAIL / 49 NR**. H4 recheck remaining NR. Native F4 waits until 109/109 PASS. H1 #319/#320 merged. H2 #322 open.
+- Branch: `cursor/equiv-109-inputs-4bec` off H2. Leave open. Do not merge until Abdul says.
+- Last check: 2026-11-06 `check.py --selftest` ALL PASS; G17 NetCollide PASS 4500; planted SeriesLength FAIL case 4. RunMenu PASS 3000. Leftovers: 60 PASS / 0 FAIL / 49 NR.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: 109-plan H2 `cursor/equiv-109-budget-4bec` (this). H1 #319/#320 merged. 107-PASS stack is on `main` (#303–#316) and `sdl2-port` (#304–#317). #294–#299 stay merged. Do not close them.
+- Open PRs: 109-plan H3 `cursor/equiv-109-inputs-4bec` (this), H2 #322. H1 #319/#320 merged. 107-PASS stack is on `main` (#303–#316) and `sdl2-port` (#304–#317). #294–#299 stay merged. Do not close them.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),

@@ -43,7 +43,12 @@ ARGREGS = ('eax', 'edx', 'ebx', 'ecx')
 # Callers test ax (Abdul ESCALATE: do not change the C return type). Compare ret eax as uint16.
 SHORT_AX = frozenset(('CanFillLineSlot', 'FillDressedSlots'))
 INDEX_BOUND = 32  # default when the table length is unknown
-EVENT_STUB = frozenset(('ListDialog',))  # GetInputEvent dummy events; other screen loops FAIL on wild menus
+EVENT_STUB = frozenset((
+    'ListDialog', 'RunMenu', 'RunTeamPickMenu', 'RunPlayerPickMenu', 'SportsDesk',
+    'GameLineEditorLoop', 'DbLineEditorLoop', 'PlayoffTreeMenu', 'LeagueTeamSelect',
+    'TradeScreenLoop', 'InstantReplay', 'EditRosters', 'CalendarScreen', 'TitleScreen',
+))
+MENU_BARS = frozenset(('RunMenu', 'RunTeamPickMenu', 'RunPlayerPickMenu', 'PlayoffTreeMenu'))
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); _md.detail = True
 
 def table_bound(func):
@@ -98,6 +103,46 @@ def clamp_playoff_team_bytes(func, buf, args, regs=None):
             o += 6
     return bytes(b)
 
+ON1_STUB = ARG + 0x1E0     # non-entry: both sides stub; 0-arg event_stub returns 1
+SPRITE_OFF = 0x180
+PTRFN_STUB = ARG + 0x1C0   # ptrupdatefn / mousepollfn: leave extent, click-bit 2
+
+def plant_menus(buf, on1=ON1_STUB):
+    """4 MenuItem slots at ARG+0x100: in-rect box, text in ARG, on1 a 0-arg stub target."""
+    b = bytearray(buf)
+    for k in range(4):
+        base = 0x100 + k * 32
+        if base + 32 > len(b):
+            break
+        b[base:base + 16] = struct.pack('<IIII', 10, 10, 50, 26)
+        b[base + 16:base + 20] = struct.pack('<I', ARG)
+        b[base + 20:base + 24] = struct.pack('<I', on1 & 0xFFFFFFFF)
+        b[base + 24:base + 32] = bytes(8)
+        b[k * 4:(k + 1) * 4] = struct.pack('<I', ARG + base)
+    # item 1 is a submenu (on1 0, on2 the same 4 items) so RunMenu covers the on2 arm
+    if len(b) >= 0x100 + 64:
+        b[0x100 + 32 + 20:0x100 + 32 + 24] = struct.pack('<I', 0)
+        b[0x100 + 32 + 24:0x100 + 32 + 32] = struct.pack('<II', ARG + 0x100, 4)
+    return bytes(b)
+
+def plant_screen(img, buf, patches):
+    """Pointer sprite + fn-pointer globals so leftover screen loops don't null-page on pointerspr."""
+    b = bytearray(plant_menus(buf, ON1_STUB))
+    if len(b) >= SPRITE_OFF + 17:
+        b[SPRITE_OFF:SPRITE_OFF + 17] = struct.pack('<HHHH', 0, 0, 8, 8) + bytes(9)
+    for stub in (PTRFN_STUB, ON1_STUB):
+        off = stub - ARG
+        if 0 <= off < len(b):
+            b[off] = 0xC3  # ret: pop-scan of the stub target is 0
+    patches = dict(patches)
+    lab = img.labels()
+    spr = ARG + SPRITE_OFF
+    for name, val in (('pointerspr', spr), ('ptrupdatefn', PTRFN_STUB), ('mousepollfn', PTRFN_STUB)):
+        a = lab.get(name)
+        if a:
+            patches[a] = struct.pack('<I', val & 0xFFFFFFFF)
+    return bytes(b), patches
+
 def clamp_leftover_inputs(func, regs, args):
     """Even-case clamps for leftover NR (109-plan H3). Typed stream already stays in-bound; this
     keeps loop counts and collide indices off EDGE / ARG-as-count so screen and collide drafts finish."""
@@ -108,6 +153,9 @@ def clamp_leftover_inputs(func, regs, args):
         if 'edx' in regs: regs['edx'] = collide_sort_index(regs['edx'])
         if 'ebx' in regs and low in ('checkcheck', 'checkgoal', 'wallcoll'):
             regs['ebx'] = collide_sort_index(regs['ebx'])
+        eax = regs.get('eax', 0)
+        if not (ARG <= eax < ARG + ARG_SIZE):
+            regs['eax'] = ARG + 0x400  # Player in ARG, not EDGE / null
     if n == 'ListDialog':
         regs['edx'] = (regs.get('edx', 1) % 20) or 1
         if args: args[0] = 0  # marks off: first ListHitTest can set n=1
@@ -116,6 +164,11 @@ def clamp_leftover_inputs(func, regs, args):
         args[0] %= 8          # top
         args[1] %= 20         # sel
         args[2] = (args[2] % 20) or 1  # n: never a pointer used as a loop count
+    if n in MENU_BARS:
+        regs['eax'] = ARG + 0x100
+        regs['edx'] = 4  # four planted items (item 1 is a submenu)
+    if n == 'SportsDesk':
+        regs['eax'] = regs.get('eax', 0) % 3  # mode 0/1/2
     return regs, args
 
 def first_use(code, addr, to_ret=False):
@@ -336,8 +389,11 @@ class Checker:
             script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
         buf = clamp_playoff_team_bytes(self.func, buf, args, regs)
         regs, args = clamp_leftover_inputs(self.func, regs, args)
+        mode = 'list' if self.func == 'ListDialog' else 'menu' if self.func in EVENT_STUB else ''
+        if mode == 'menu':
+            buf, patches = plant_screen(self.img, buf, patches)
         return buf, run.State(regs=regs, args=args, patches=patches, script=script,
-                              event_stub=self.func in EVENT_STUB)
+                              event_stub=bool(mode), event_mode=mode)
 
     # ---- coverage-guided mutation
     def mutate(self, ent, rng):
@@ -357,7 +413,10 @@ class Checker:
                 elif op < 0.8: b[off:off + 4] = struct.pack('<I', rng.choice(EDGE))
                 else: b[off:off + 4] = struct.pack('<I', ARG + rng.randrange(0, ARG_SIZE - 0x2000))
             elif k < 0.6 and self.spans:
-                lo, n = rng.choice(self.spans); x = bytearray(patches.get(lo) or self.img.read(lo, n)); j = rng.randrange(n)
+                lo, n = rng.choice(self.spans)
+                x = bytearray(patches.get(lo) or self.img.read(lo, n) or b'')
+                x = (x + bytes(n))[:n]
+                j = rng.randrange(n)
                 if rng.random() < 0.5: x[j] = (x[j] + rng.choice((1, 0xFF, 2, 0xFE, 0x80))) & 0xFF
                 else: x[j:j + 4] = struct.pack('<I', rng.choice(EDGE))[:n - j]
                 patches[lo] = bytes(x[:n])
@@ -369,6 +428,8 @@ class Checker:
                 args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
         b = clamp_playoff_team_bytes(self.func, bytes(b), args, regs)
         regs, args = clamp_leftover_inputs(self.func, regs, args)
+        if st.event_mode == 'menu':
+            b, patches = plant_screen(self.img, b, patches)
         return b, dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
 
@@ -426,8 +487,9 @@ class Checker:
         self._dead[(c, target)] = 0
         regs, args, pg, fresh = runner.snap
         raw = fresh.get(ARG) or next(iter(fresh.values()), b'\x00' * ARG_SIZE)
+        mode = 'list' if self.func == 'ListDialog' else 'menu' if self.func in EVENT_STUB else ''
         return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None,
-                                         event_stub=self.func in EVENT_STUB)
+                                         event_stub=bool(mode), event_mode=mode)
 
     def gather(self, want, deadline, max_att):
         """up to `want` distinct entry snapshots of the function under test (level 0, then one level up when under 50)
@@ -453,7 +515,12 @@ class Checker:
         return out, ncall, up
 
     def prep(self, st):
-        st.argsof = lambda t: (self.nreg(t), self.npop(t))
+        def argsof(t):
+            nr, np_ = self.nreg(t), self.npop(t)
+            if st.event_mode == 'menu' and run.is_cdecl(self.img, t):
+                nr = 0  # cdecl: leftover ebx is the menus pointer, not an out-param
+            return nr, np_
+        st.argsof = argsof
         st.ptrsize = lambda t, pos: run.ptr_size(self.img, t, pos)
 
     # ---- one side
@@ -584,6 +651,9 @@ def _selftest():
     b = Box(); b.img = img; b.reg_n = {}
     check('nreg at 0xb300a is 0', Checker.nreg(b, 0xb300a) == 0)
     check('nreg at SeriesLength > 0', Checker.nreg(b, sl) >= 0)
+    s903 = img.labels().get('sub_903F0')
+    check('sub_903F0 is cdecl', s903 and run.is_cdecl(img, s903))
+    check('MenuHitTest is not cdecl', not run.is_cdecl(img, img.labels()['MenuHitTest']))
     check('CanFillLineSlot is short-ax', 'CanFillLineSlot' in SHORT_AX and 'FillDressedSlots' in SHORT_AX)
     check('SeriesLength is not short-ax', 'SeriesLength' not in SHORT_AX)
     esp0 = run.STK + run.ENTRY_OFF
@@ -626,7 +696,16 @@ def _selftest():
     check('GetInputEvent first hits are a mapped event', run.getinput_out(0) != 0 and run.getinput_out(99) == 0)
     check('PollKey first hits are pressed', run.pollkey_out(0) != 0 and run.pollkey_out(99) == 0)
     check('ListHitTest stub is in-rect', 0 <= run.listhit_out(99) < 8)
-    check('event stub is ListDialog-only', 'ListDialog' in EVENT_STUB and 'SportsDesk' not in EVENT_STUB)
+    check('event stub includes RunMenu and SportsDesk', 'RunMenu' in EVENT_STUB and 'SportsDesk' in EVENT_STUB)
+    r, a = clamp_leftover_inputs('RunMenu', {'eax': 0, 'edx': 99}, [])
+    check('RunMenu bar is ARG+0x100 and n is 4', r['eax'] == ARG + 0x100 and r['edx'] == 4)
+    planted = plant_menus(bytes(0x200), 0x2FED2)
+    check('plant_menus on1 at item0+20', struct.unpack_from('<I', planted, 0x100 + 20)[0] == 0x2FED2)
+    buf, p = plant_screen(img, bytes(0x200), {})
+    ps = img.labels().get('pointerspr')
+    check('plant_screen pointerspr -> ARG sprite', ps and struct.unpack_from('<I', p[ps])[0] == ARG + SPRITE_OFF)
+    r, a = clamp_leftover_inputs('checkcheck', {'eax': 0xA5A5A5A5, 'edx': 0x20}, [])
+    check('checkcheck eax is Player in ARG', ARG <= r['eax'] < ARG + ARG_SIZE)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
