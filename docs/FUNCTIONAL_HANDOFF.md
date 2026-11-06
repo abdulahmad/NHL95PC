@@ -49,6 +49,9 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   writes/ret matched; --force --no-callers case 64; no C).
 * Real fixes found so far: CalendarScreen and ReplayStep (store order). Every harness lesson is a line in
   `docs/RULES.md`.
+* **Finish bar closed (2026-11-06).** Every leftover draft is PASS, FAIL-parked, or advisor-accepted for native:
+  [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) (52 / 10 / 29 / 18, sum 109). `c_progress` FUNCTIONAL stays 49.
+  Next *native* unit is gcc smoke (native F4). Exhibition M2 waits on the snapshot-required set.
 
 ## Round 7 (done)
 
@@ -63,7 +66,9 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 
 `tools/equiv/wip/round7.patch` is removed; the code is in `check.py` / `run.py`.
 
-## Next steps, in order (one per session, stop for approval)
+## Next steps
+
+This functional finish bar is closed. Native F4 (gcc smoke) is the next *native* unit, not a functional unit. Exhibition M2 waits on the `snapshot-required-before-M2` set in [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md). `FUNCTIONAL=1` / nightly are steps 10–11 of FUNCTIONAL_PLAN.md, later.
 
 | # | Step | Model (Claude / Cursor) |
 |---|---|---|
@@ -71,8 +76,8 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 | 2b | ~~InstantReplay `bothneitherstrs` + 3 skipped~~ **done** (Gameloop PASS; InstantReplay / assonetimer / checkpuckcoll_ccx still NEEDS-REVIEW) | — |
 | 3a | ~~Park FillDressedSlots short-return~~ **done** (UNSURE + history; no C) | — |
 | 3b | ~~Classify RunPlayerPickMenu~~ **done** (parked wild call-arg; no C) | — |
-| 4 | Advisor accept-list for leftover NEEDS-REVIEW (`docs/FUNCTIONAL_ACCEPT.md`) | Opus / Grok 4.7 high, once |
-| 5 | Steps 10-11 of the plan (FUNCTIONAL=1 build, nightly check) are **not** this finish bar | see FUNCTIONAL_PLAN.md |
+| 4 | ~~Advisor accept-list~~ **done** (`docs/FUNCTIONAL_ACCEPT.md`: 52 PASS / 10 FAIL-parked / 29 accepted-for-native-link / 18 snapshot-required-before-M2) | — |
+| 5 | ~~Handoff close~~ **done**. FUNCTIONAL=1 / nightly are **not** this finish bar | see FUNCTIONAL_PLAN.md steps 10–11 |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
