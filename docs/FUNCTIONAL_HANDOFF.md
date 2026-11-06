@@ -86,6 +86,7 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.7 | Leftover proofs ([FUNCTIONAL_LEFTOVERS.md](FUNCTIONAL_LEFTOVERS.md)): SportsDesk (c) autoret `eax` into `scrolly`/`scrollx` → NR 47%; SimPlayoffRound1 (a) team-byte clamp + SeriesLength stub 1/3/5/7 → PASS 3000. **56 PASS / 0 FAIL / 53 NR**. 53 NR wait on dumps. No dead-range without a dump. | Grok 4.7 high |
 | 107.8 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 | 109.H1 | ~~Soft traps + list counts~~ **done** (POSeedTeams / DrawListItems / ListDialog PASS 3000; G17 PASS; planted SeriesLength FAIL case 4). SportsDesk event stub is ListDialog-only. **59 PASS / 50 NR**. | Grok 4.7 medium |
+| 109.H2 | ~~Budget 1800~~ **done** (RunMenu NR 510/49%, RunTeamPickMenu NR 486/64%, InstantReplay NR 306/75%). Still 59/50. H3 next. | Composer |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
