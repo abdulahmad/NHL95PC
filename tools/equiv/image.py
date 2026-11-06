@@ -59,12 +59,35 @@ class Image:
             import cc
             for f in cc.iter_asm():
                 prev = None
-                for ln in open(f, errors='replace'):
+                last_ret_end = None
+                lines = open(f, errors='replace').read().splitlines()
+                for i, ln in enumerate(lines):
                     m = re.match(r'[^;\s]+[^;]*\t; ([0-9A-F]+)\s*$', ln)
                     if prev and m: lab.setdefault(prev, int(m.group(1), 16))
+                    if m and re.match(r'ret\b', ln.split(';')[0].strip()):
+                        last_ret_end = int(m.group(1), 16) + 1
+                    elif m:
+                        last_ret_end = None
                     prev = None
                     m = re.match(r'([A-Za-z_]\w*):\s*$', ln)
-                    if m: prev = m.group(1)
+                    if m:
+                        prev = m.group(1)
+                        # Data sitting after a function's `ret` has no `; HEX` on the dd/db line
+                        # (bothneitherstrs at 7E05F). Assign the byte after that ret.
+                        if last_ret_end is not None and prev not in lab:
+                            for nxt in lines[i + 1:i + 8]:
+                                s = nxt.strip()
+                                if not s or s.startswith(';') or s.startswith('%'):
+                                    continue
+                                if re.match(r'(d[bwdq]|times|res[bwdq])\b', s):
+                                    lab.setdefault(prev, last_ret_end)
+                                break
+            ah = os.path.join(ROOT, 'src/include/asmfuncs.h')
+            if os.path.isfile(ah):
+                for ln in open(ah, errors='replace'):
+                    m = re.search(r'\b([A-Za-z_]\w*)\s*\([^;]*\)\s*;\s*/\*\s*([0-9A-Fa-f]+)', ln)
+                    if m:
+                        lab.setdefault(m.group(1), int(m.group(2), 16))
             self._labels = lab
         return self._labels
 
@@ -132,6 +155,8 @@ def selftest():
         uc.emu_start(lab['SetSPA'], RET, count=100); fault = ''
     except Exception as e: fault = str(e)
     chk('c run SetSPA to ret', not fault and uc.reg_read(UC_X86_REG_EIP) == RET, fault)
+    chk('d data label after ret bothneitherstrs', lab.get('bothneitherstrs') == 0x7E05F,
+        'label=%#x' % lab.get('bothneitherstrs', 0))
     print('ALL PASS' if ok else 'FAILED'); return ok
 
 if __name__ == '__main__':

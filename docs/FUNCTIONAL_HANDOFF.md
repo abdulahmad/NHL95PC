@@ -23,8 +23,8 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **48 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
-  PASSes). Generated baseline before this rerun was 23; this rerun added 25 hash-matching PASSes.
+* **49 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+  PASSes). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
   Latest-row CSV picture: **54 PASS / 48 NEEDS-REVIEW / 10 FAIL** over 112 names (includes matched-function
   pilot rows). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
@@ -33,9 +33,10 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   MenuSaveDefaultLines, SelectHilight, TeamStatsScreen, LoadGameRoster, checkcx, DrawRinkSideObjects,
   LoadTeamRoster, doshot, CreateNewLeague, SkaterStatsCard, ShowCredits, setplayer, BuildStandingsGrid,
   LoadGameState.
-* **Step 2 leftovers (not in the 71, or no new row):** InstantReplay (KeyError `bothneitherstrs`, stale
-  2026-11-02 NEEDS-REVIEW 74%); GameLoop, PassRecOneTimer, checkpuckcoll never in the 72-todo (still 2026-11-02
-  NEEDS-REVIEW 84% / 46% / 71%). checkgoal and SeedPlayoffRound3 **did** write CSV rows (NEEDS-REVIEW).
+* **Step 2b leftovers (done, 2026-11-06).** Recut names: Gameloop (was GameLoop) **PASS**; assonetimer (was
+  PassRecOneTimer) NEEDS-REVIEW 47%; checkpuckcoll_ccx (was checkpuckcoll in PassLaneChk.c) NEEDS-REVIEW 75%.
+  InstantReplay KeyError `bothneitherstrs` fixed in `image.labels()` (data after `ret`); rerun NEEDS-REVIEW 75%
+  (107 cases, mostly trapped).
 * **10 FAIL.** Old 8 still triaged, none a confirmed draft bug:
   * input artefacts: SimPlayoffRound1, GameLineEditorLoop;
   * pointer-to-local / frame layout: DbLineEditorLoop, TradeScreenLoop, OpenSpeechBank, SportsDesk;
@@ -64,8 +65,8 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 
 | # | Step | Model (Claude / Cursor) |
 |---|---|---|
-| 2 | ~~Rerun every NEEDS-REVIEW draft~~ **done** (CSV logged; InstantReplay + 3 skipped still open) | — |
-| 2b | InstantReplay `bothneitherstrs` data-public harness + rerun GameLoop, PassRecOneTimer, checkpuckcoll | Sonnet / Grok 4.7 medium, then Composer to run |
+| 2 | ~~Rerun every NEEDS-REVIEW draft~~ **done** | — |
+| 2b | ~~InstantReplay `bothneitherstrs` + 3 skipped~~ **done** (Gameloop PASS; InstantReplay / assonetimer / checkpuckcoll_ccx still NEEDS-REVIEW) | — |
 | 3 | Triage the two new FAIL: park FillDressedSlots (short-return, no C); classify RunPlayerPickMenu (frame/call-arg first, max 3 C tries) | Sonnet / Grok 4.7 medium |
 | 4 | Advisor accept-list for leftover NEEDS-REVIEW (`docs/FUNCTIONAL_ACCEPT.md`) | Opus / Grok 4.7 high, once |
 | 5 | Steps 10-11 of the plan (FUNCTIONAL=1 build, nightly check) are **not** this finish bar | see FUNCTIONAL_PLAN.md |
