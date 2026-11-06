@@ -505,3 +505,19 @@ SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c519
 SportsDesk,src/front/desk/SportsDesk.c,3282821d3fc730630e065ee15d56555b5a9c1b13,116,1,NEEDS-REVIEW,"mostly trapped; coverage 47%, uncovered 0x1977e-0x1983e 0x19a72-0x19ad1 0x19c71-0x19f85 0x19fbe-0x1a03b 0x1a0d1-0x1a40f; only 116 cases in the time budget; callers cov 47% to 47% (2000 snaps) x1, code",2026-11-06
 SimPlayoffRound1,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,3000,1,FAIL,"calls[19]: orig (0x452c5,0x6003fff,0x6003116,0x195a,0x60141df,0x6,0x187c,0x2) vs C (0x452c5,0x6003fff,0x6003116,0x195a,0x60141df,0xa,0x1878,0x2) (lens 20/20)",2026-11-06
 SimPlayoffRound1,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,3000,1,PASS,"null page x41, uninit read, outputs equal x2997",2026-11-06
+GetMemListHead,src/front/main/GetMemListHead.c,0d03d8aa79c7cc39a17caed610d1ecd0be16629e,300,1,PASS,code pointer compared by function x8,2026-11-06
+ResetInputSampling,src/front/main/ResetInputSampling.c,d135556e69e9cc67f0f438c7a19fa66c0e79167c,300,1,PASS,code pointer compared by function x7,2026-11-06
+DrawRinkEndArt,src/front/main/DrawRinkEndArt.c,c20cfc83500af3a934e25c782901818c53b14011,300,1,PASS,code pointer compared by function x8,2026-11-06
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,300,1,PASS,"null page x4, unset return esi x5",2026-11-06
+shotdiradj,src/engine/collide/dopass.c,1d81a902579405e7b8990247d31cb45cc3221e7a,300,1,PASS,null page x24,2026-11-06
+FadePalette,src/front/main/FadePalette.c,89bd5ee2197d660eea5493a284493d7895caca9c,300,1,PASS,,2026-11-06
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,300,1,NEEDS-REVIEW,"coverage 83%, uncovered 0x5624b-0x562c0; null page x298",2026-11-06
+puckfaceoff2,src/engine/faceoff/puckfaceoff.c,594b0ad4feb3f07576ea15b83603a6cea56d8427,300,1,PASS,"code write x15, null page x298",2026-11-06
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,3000,1,PASS,null page x2988,2026-11-06
+DrawListItems,src/pc/dialogs/DrawListItem.c,4103444e6610f18896f0557d1ce7267b82407c88,3000,1,PASS,"code pointer compared by function x61, null page x2166",2026-11-06
+POSeedTeams,src/front/playoff_mode/POSeedRound2.c,a4af353b73ac458b1631f1efeb938c75f3ea0a6c,3000,1,PASS,"code pointer compared by function x3, code write x7, null page x2987",2026-11-06
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,300,1,PASS,"code pointer compared by function x42, null page x275, uninit read, outputs equal x291",2026-11-06
+SportsDesk,src/front/desk/SportsDesk.c,3282821d3fc730630e065ee15d56555b5a9c1b13,3000,1,FAIL,"writes[13]: orig (0x78c3be44,0x4,0x0) vs C (0x78c3be74,0x4,0x0) (lens 35621/17829)",2026-11-06
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,1472,1,NEEDS-REVIEW,"coverage 55%, uncovered 0x30464-0x3046a 0x305a3-0x305c6 0x30762-0x30770 0x3079e-0x309a8 0x309b4-0x309e1; callers cov 50% to 55% (274 snaps) x1, code pointer compared by function x137, null page x1382,",2026-11-06
+ListDialog,src/pc/dialogs/ListDialog.c,1e95c3035447a24216b25a60507ca4e8cd9c9a0c,3000,1,PASS,"code pointer compared by function x395, null page x2758, uninit read, outputs equal x2954",2026-11-06
+SportsDesk,src/front/desk/SportsDesk.c,3282821d3fc730630e065ee15d56555b5a9c1b13,79,1,NEEDS-REVIEW,"coverage 47%, uncovered 0x1977e-0x1983e 0x19a72-0x19ad1 0x19c71-0x19f85 0x19fbe-0x1a03b 0x1a0d1-0x1a40f; only 79 cases in the time budget; code pointer compared by function x3, null page x75, uninit r",2026-11-06

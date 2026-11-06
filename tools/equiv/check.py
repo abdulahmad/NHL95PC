@@ -13,10 +13,12 @@ callee's `ret N`, register args cut to the registers the callee reads first, and
 Case inputs: arg registers and stack args are edge values, small randoms or pointers into a 64 KB random arg
 buffer at ARG (index-typed regs stay in [0, table-bound); deref regs and most stack args stay mapped in ARG). Odd
 seeded cases are a typed stream (no EDGE / 0xa5a5a5a5; struct-shaped objects in ARG); even cases keep the random
-corpus. Globals the function references (original and draft fixups) are patched with random, edge,
-pointer-ish or static bytes; callee returns come from a seeded script. The stack below the entry esp is refilled per
+corpus except leftover clamps (collide sort-index in {0..0xB, 0x10}; DrawListItems / ListDialog loop counts). Globals the function references (original and draft fixups) are patched with random, edge,
+pointer-ish or static bytes; callee returns come from a seeded script. GetInputEvent / PollKey return a dummy event
+for the first few hits then 0; ListHitTest returns an in-rect row; FileOpen* returns 0 (success). The stack below the entry esp is refilled per
 case from the case seed (same bytes on both sides); an uninitialised stack read in a case that still compares equal is
 info ("uninit read, outputs equal"), not review. MenuHitTest out-params are in-rect (hitMenu in [0, 4), hitItem in [0, 32)).
+A stopping trap on a case that also hit null page does not count toward "mostly trapped".
 Callers mode (--callers; also automatic when coverage after seeded + mutated cases is under 85%, off with --no-callers):
 the original callers of F (direct `call rel32` sites in the image) run from seeded random states with every callee
 stubbed except F; at F's entry the registers, stack args and every page written so far are snapshotted and become a
@@ -41,16 +43,31 @@ ARGREGS = ('eax', 'edx', 'ebx', 'ecx')
 # Callers test ax (Abdul ESCALATE: do not change the C return type). Compare ret eax as uint16.
 SHORT_AX = frozenset(('CanFillLineSlot', 'FillDressedSlots'))
 INDEX_BOUND = 32  # default when the table length is unknown
+EVENT_STUB = frozenset(('ListDialog',))  # GetInputEvent dummy events; other screen loops FAIL on wild menus
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); _md.detail = True
 
 def table_bound(func):
     """[0, bound) for index-typed regs / stack slots. Nearest table length; 32 if unknown."""
     n = (func or '').lower()
+    if any(s in n for s in ('puckcoll', 'passlane', 'checkcheck', 'checkgoal', 'wallcoll', 'blockshot', 'assone')):
+        return 17  # SortCords 0-0Bh plus object 10h
     if any(s in n for s in ('playoff',)): return 16
     if any(s in n for s in ('menu', 'desk', 'pick')): return 8
     if any(s in n for s in ('team', 'roster', 'stand', 'division')): return 26
     if any(s in n for s in ('dressed', 'lineslot', 'line', 'skater', 'player', 'slot')): return 25
     return INDEX_BOUND
+
+def collide_sort_index(v):
+    """Player / puck sort-index in {0..0xB, 0x10} (checkpuckcoll_ccx early-out)."""
+    x = v & 0xFFFF
+    if x == 0x10 or x <= 0xB: return x
+    return 0x10 if x & 1 else x % 12
+
+def mostly_trapped(done, traps, n_null_stop=0):
+    """True when more than half the cases had a stopping trap that was not a null-page continuation.
+    Lazy page 0 is info (RULES 2026-11-02); insn-limit / no-return after it is the same artefact."""
+    nt = sum(traps.values()) - n_null_stop
+    return nt * 2 > done
 
 def clamp_playoff_team_bytes(func, buf, args, regs=None):
     """Keep SimPlayoff/SeedPlayoff series team bytes in [0, 26) so wins[] cannot spill onto the frame.
@@ -80,6 +97,26 @@ def clamp_playoff_team_bytes(func, buf, args, regs=None):
                     b[off] %= 26
             o += 6
     return bytes(b)
+
+def clamp_leftover_inputs(func, regs, args):
+    """Even-case clamps for leftover NR (109-plan H3). Typed stream already stays in-bound; this
+    keeps loop counts and collide indices off EDGE / ARG-as-count so screen and collide drafts finish."""
+    regs, args = dict(regs), list(args)
+    n = func or ''
+    low = n.lower()
+    if any(s in low for s in ('puckcoll', 'passlane', 'checkcheck', 'checkgoal', 'wallcoll', 'blockshot', 'assone')):
+        if 'edx' in regs: regs['edx'] = collide_sort_index(regs['edx'])
+        if 'ebx' in regs and low in ('checkcheck', 'checkgoal', 'wallcoll'):
+            regs['ebx'] = collide_sort_index(regs['ebx'])
+    if n == 'ListDialog':
+        regs['edx'] = (regs.get('edx', 1) % 20) or 1
+        if args: args[0] = 0  # marks off: first ListHitTest can set n=1
+    if n == 'DrawListItems':
+        while len(args) < 3: args.append(1)
+        args[0] %= 8          # top
+        args[1] %= 20         # sel
+        args[2] = (args[2] % 20) or 1  # n: never a pointer used as a loop count
+    return regs, args
 
 def first_use(code, addr, to_ret=False):
     """{reg: 'deref'|'index'|'read'|'write'} for the first use of each register in linear order. pushes, pops and
@@ -298,7 +335,9 @@ class Checker:
         else:
             script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
         buf = clamp_playoff_team_bytes(self.func, buf, args, regs)
-        return buf, run.State(regs=regs, args=args, patches=patches, script=script)
+        regs, args = clamp_leftover_inputs(self.func, regs, args)
+        return buf, run.State(regs=regs, args=args, patches=patches, script=script,
+                              event_stub=self.func in EVENT_STUB)
 
     # ---- coverage-guided mutation
     def mutate(self, ent, rng):
@@ -329,6 +368,7 @@ class Checker:
             elif args:
                 args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
         b = clamp_playoff_team_bytes(self.func, bytes(b), args, regs)
+        regs, args = clamp_leftover_inputs(self.func, regs, args)
         return b, dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
 
@@ -386,7 +426,8 @@ class Checker:
         self._dead[(c, target)] = 0
         regs, args, pg, fresh = runner.snap
         raw = fresh.get(ARG) or next(iter(fresh.values()), b'\x00' * ARG_SIZE)
-        return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None)
+        return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None,
+                                         event_stub=self.func in EVENT_STUB)
 
     def gather(self, want, deadline, max_att):
         """up to `want` distinct entry snapshots of the function under test (level 0, then one level up when under 50)
@@ -570,6 +611,22 @@ def _selftest():
     check('SimPlayoffRound1 eax sched g[2] clamped', eax_clamped[10] == 0xFF % 26)
     check('SeriesLength even-case ARG is not clamped', clamp_playoff_team_bytes('SeriesLength', raw, [ARG])[2] == 0xFF)
     check('SeriesLength stub eax is a best-of', run.serieslen_out(99) in run.SERIES_LENS)
+    check('null-page insn-limit is not mostly trapped',
+          not mostly_trapped(1834, collections.Counter({'insn limit': 900, 'code write': 4}), n_null_stop=900))
+    check('hard insn-limit majority is mostly trapped',
+          mostly_trapped(100, collections.Counter({'insn limit': 60}), 0))
+    check('null page is SOFT', 'null page' in run.SOFT)
+    check('uninit stack read is SOFT', 'uninit stack read' in run.SOFT)
+    check('collide sort-index 0x10 stays', collide_sort_index(0x10) == 0x10)
+    check('collide sort-index 0x20 folds to 0-0xB or 0x10', collide_sort_index(0x20) in set(range(12)) | {0x10})
+    r, a = clamp_leftover_inputs('DrawListItems', {'eax': ARG}, [0x6000100, 99, ARG])
+    check('DrawListItems n is a small count not ARG', 1 <= a[2] <= 20)
+    r, a = clamp_leftover_inputs('ListDialog', {'edx': 0x7FFFFFFF}, [5, ARG])
+    check('ListDialog edx n in 1..20 and marks 0', 1 <= r['edx'] <= 20 and a[0] == 0)
+    check('GetInputEvent first hits are a mapped event', run.getinput_out(0) != 0 and run.getinput_out(99) == 0)
+    check('PollKey first hits are pressed', run.pollkey_out(0) != 0 and run.pollkey_out(99) == 0)
+    check('ListHitTest stub is in-rect', 0 <= run.listhit_out(99) < 8)
+    check('event stub is ListDialog-only', 'ListDialog' in EVENT_STUB and 'SportsDesk' not in EVENT_STUB)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
@@ -623,17 +680,19 @@ def main(argv=None):
     la = img.labels()[a.func]; ca = int(row['address'], 16)
     ck = Checker(img, a.func, c_path, int(row['size']) + (ca - la if 0 < ca - la < 0x100 else 0), a.ret64)   # label sits before the csv address (db bytes / entry piece): extent starts at the label
     q('%s: orig %#x+%d, draft at %#x, %d data spans, %d stack dwords%s' % (a.func, ck.addr, ck.size, ck.entry, len(ck.spans), ck.nstack, '; void: eax not compared' if ck.void else ''))
-    review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); V = {'verdict': 'PASS', 'diff': ''}; t1 = time.time(); done = 0
+    review = collections.Counter(); info = collections.Counter(); traps = collections.Counter(); V = {'verdict': 'PASS', 'diff': ''}; t1 = time.time(); done = 0; n_null_stop = 0
     corpus = []; nseed = a.cases; nmut = a.cases // 2; total = nseed + nmut; cov_seeded = None; cov_a = None; cov_b = None; ck.seed0 = a.seed
     left = lambda f: not a.budget or time.time() - t1 < a.budget * f
 
     def one(buf, st, label, pool=None):
         """run one case on both sides; True on a FAIL (printed). pool: list that gets (buf, state, reads, added coverage)"""
-        nonlocal done
+        nonlocal done, n_null_stop
         n0 = len(ck.cov)
         d, rv, inf, tk = ck.compare(buf, st); done += 1
         review.update(rv); info.update(inf)
-        if tk: traps[tk] += 1
+        if tk:
+            traps[tk] += 1
+            if 'null page' in inf: n_null_stop += 1
         if pool is not None and not d: pool.append((buf, st, set(ck.reads), len(ck.cov) > n0))
         if d:
             V['verdict'] = 'FAIL'; V['diff'] = d
@@ -714,7 +773,7 @@ def main(argv=None):
         why = []
         if review: why.append('trap review: ' + fmtc(review))
         if traps['code write'] * 4 > done: why.append('inputs write into code')
-        elif nt * 2 > done: why.append('mostly trapped')
+        elif mostly_trapped(done, traps, n_null_stop): why.append('mostly trapped')
         if share < 0.85: why.append('coverage %.0f%%, uncovered %s' % (100 * share, ' '.join('%#x-%#x' % r for r in miss)))
         if done < min(500, total): why.append('only %d cases in the time budget' % done)
         if why: verdict = 'NEEDS-REVIEW'
