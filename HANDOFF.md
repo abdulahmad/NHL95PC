@@ -2,14 +2,14 @@
 
 ## Now
 
-- Stage / unit: functional track — step 3a **done** (FillDressedSlots parked, short-return, no C). Next: classify RunPlayerPickMenu (`docs/FUNCTIONAL_HANDOFF.md` step 3b).
-- Branch: `cursor/equiv-park-filldressed-0c53` stacked on #290 / #287 / #286. Do not merge until Abdul says merge.
-- Last check: 2026-11-06 `make fullcheck` MATCH twice (CBUILD=1 and 0) on FillDressedSlots park. `c_progress.py`: 977/1084 MATCH, 49 of 109 drafts FUNCTIONAL.
+- Stage / unit: functional track — step 3b **done** (RunPlayerPickMenu parked, wild call-arg, no C). Next: advisor accept-list (`docs/FUNCTIONAL_HANDOFF.md` step 4).
+- Branch: `cursor/equiv-runplayerpickmenu-fd0a` off merged `main`. Do not merge 3b–5 until Abdul says merge.
+- Last check: 2026-11-06 `make fullcheck` MATCH twice on RunPlayerPickMenu park. Equiv `--force --no-callers` FAIL calls[6] ebx (parked). `c_progress.py`: 977/1084 MATCH, 49 of 109 drafts FUNCTIONAL.
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: #286 (README 48), #287 (step-2 log), #290 (InstantReplay), Unit 3a FillDressedSlots stacked. sdl2 copies #288/#289/#291. #284/#285 closed as superseded.
+- Open PRs: none of #286/#287/#290/#292 (merged to main) or #288/#289/#291/#293 (merged to sdl2-port). Unit 3b+ stacked unmerged.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),

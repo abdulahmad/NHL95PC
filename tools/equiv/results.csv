@@ -431,3 +431,4 @@ InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245
 checkpuckcoll_ccx,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6000,1,NEEDS-REVIEW,"coverage 75%, uncovered 0x545c4-0x5466b 0x54704-0x547eb; callers cov 71% to 75% (2000 snaps) x1, null page x784",2026-11-06
 assonetimer,src/engine/input/CanBlockShot.c,7f67c63d32983c8aef19cd0d444013ec8e2eb1c2,6000,1,NEEDS-REVIEW,"coverage 47%, uncovered 0x50bd5-0x50d83; callers cov 46% to 47% (2000 snaps) x1, code write x7, null page x3002",2026-11-06
 Gameloop,src/front/main/Gameloop.c,21751dc1004861f1127f0528499a8cbac5d59945,998,1,PASS,code pointer compared by function x41,2026-11-06
+RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,3000,1,FAIL,"calls[6]: orig (0xb300a,0xd62fcdab,0x4bc458e8,0xffff9e24) vs C (0xb300a,0xd62fcdab,0x4bc458e8,0x0) (lens 9/9)",2026-11-06
