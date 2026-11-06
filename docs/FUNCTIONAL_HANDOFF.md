@@ -21,18 +21,29 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Harness `tools/equiv/` is merged (PR #274) plus **round 7** (per-case stack fill; `--callers` / `--no-callers` /
   `--force`). Self-tests: `python3 tools/equiv/image.py --selftest`, `run.py --selftest`, `cside.py --selftest`.
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
-* **25 of 109 drafts proven functionally equivalent (PASS).** `python3 tools/match/c_progress.py` reports the count
-  separately from matched.
-* **75 NEEDS-REVIEW**: no difference found, but random inputs reach too little of the code (coverage under 85%),
-  most cases trap, or (before round 7) uninitialised stack reads. Round 7 turns equal-output uninit reads into info
-  and auto-runs callers when coverage is under 85%. **Those 75 have not been re-run yet.**
-* **8 FAIL**, all triaged, none a confirmed draft bug:
-  * input artefacts (wild index or out-param): SimPlayoffRound1, GameLineEditorLoop;
-  * pointer-to-local bytes differ by frame layout (likely harness): DbLineEditorLoop, TradeScreenLoop,
-    OpenSpeechBank, SportsDesk;
+* Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
+  line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
+* **48 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+  PASSes). Generated baseline before this rerun was 23; this rerun added 25 hash-matching PASSes.
+* **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
+  Latest-row CSV picture: **54 PASS / 48 NEEDS-REVIEW / 10 FAIL** over 112 names (includes matched-function
+  pilot rows). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
+* **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
+  checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
+  MenuSaveDefaultLines, SelectHilight, TeamStatsScreen, LoadGameRoster, checkcx, DrawRinkSideObjects,
+  LoadTeamRoster, doshot, CreateNewLeague, SkaterStatsCard, ShowCredits, setplayer, BuildStandingsGrid,
+  LoadGameState.
+* **Step 2 leftovers (not in the 71, or no new row):** InstantReplay (KeyError `bothneitherstrs`, stale
+  2026-11-02 NEEDS-REVIEW 74%); GameLoop, PassRecOneTimer, checkpuckcoll never in the 72-todo (still 2026-11-02
+  NEEDS-REVIEW 84% / 46% / 71%). checkgoal and SeedPlayoffRound3 **did** write CSV rows (NEEDS-REVIEW).
+* **10 FAIL.** Old 8 still triaged, none a confirmed draft bug:
+  * input artefacts: SimPlayoffRound1, GameLineEditorLoop;
+  * pointer-to-local / frame layout: DbLineEditorLoop, TradeScreenLoop, OpenSpeechBank, SportsDesk;
   * wild pointer fault address: PlayoffTreeMenu;
   * CanFillLineSlot: original returns junk in the upper 16 bits that callers ignore; matching needs a `short`
     return, an ESCALATE shape: **Abdul's call**.
+  New from the rerun (not yet parked): FillDressedSlots (`ret eax` low 16 bits equal, same file as
+  CanFillLineSlot); RunPlayerPickMenu (`calls[6]` wild stack pointer vs C 0).
 * Real fixes found so far: CalendarScreen and ReplayStep (store order). Every harness lesson is a line in
   `docs/RULES.md`.
 
@@ -53,10 +64,11 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 
 | # | Step | Model (Claude / Cursor) |
 |---|---|---|
-| 2 | Rerun every NEEDS-REVIEW draft: 3 parallel, `--cases 2000 --budget 600 --quiet` (plain script, no model) | none, then Haiku / Composer 2.5 to log |
-| 3 | Triage any new FAIL: fixer, max 3 tries each, no tie-breaker copies (AGENTS.md) | Sonnet / Grok 4.7 medium |
-| 4 | Advisor pass on what is still NEEDS-REVIEW: accept, or plan step 9 (DOSBox-X snapshots, needs Abdul) | Opus / Grok 4.7 high, once |
-| 5 | Steps 10-11 of the plan (FUNCTIONAL=1 build, nightly check) | see FUNCTIONAL_PLAN.md |
+| 2 | ~~Rerun every NEEDS-REVIEW draft~~ **done** (CSV logged; InstantReplay + 3 skipped still open) | — |
+| 2b | InstantReplay `bothneitherstrs` data-public harness + rerun GameLoop, PassRecOneTimer, checkpuckcoll | Sonnet / Grok 4.7 medium, then Composer to run |
+| 3 | Triage the two new FAIL: park FillDressedSlots (short-return, no C); classify RunPlayerPickMenu (frame/call-arg first, max 3 C tries) | Sonnet / Grok 4.7 medium |
+| 4 | Advisor accept-list for leftover NEEDS-REVIEW (`docs/FUNCTIONAL_ACCEPT.md`) | Opus / Grok 4.7 high, once |
+| 5 | Steps 10-11 of the plan (FUNCTIONAL=1 build, nightly check) are **not** this finish bar | see FUNCTIONAL_PLAN.md |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to
