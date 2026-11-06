@@ -23,11 +23,12 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **49 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
-  PASSes). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+* **56 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+  PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture: **54 PASS / 48 NEEDS-REVIEW / 10 FAIL** over 112 names (includes matched-function
-  pilot rows). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
+  Latest-row CSV picture after Unit 7: **56 PASS / 53 NEEDS-REVIEW / 0 FAIL** over leftover drafts
+  (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
   MenuSaveDefaultLines, SelectHilight, TeamStatsScreen, LoadGameRoster, checkcx, DrawRinkSideObjects,
@@ -37,7 +38,7 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   PassRecOneTimer) NEEDS-REVIEW 47%; checkpuckcoll_ccx (was checkpuckcoll in PassLaneChk.c) NEEDS-REVIEW 75%.
   InstantReplay KeyError `bothneitherstrs` fixed in `image.labels()` (data after `ret`); rerun NEEDS-REVIEW 75%
   (107 cases, mostly trapped).
-* **10 FAIL.** Old 8 still triaged, none a confirmed draft bug:
+* **0 FAIL remaining after Unit 7.** SportsDesk FAIL→NR (autoret `sub_B2E1B` eax into scrolly/scrollx then deferpending; 47% trapped). SimPlayoffRound1 PASS 3000 after team-byte clamp + SeriesLength stub 1/3/5/7. FAIL→NR after typed inputs: GameLineEditorLoop, DbLineEditorLoop, PlayoffTreeMenu. Old triage:
   * input artefacts: SimPlayoffRound1, GameLineEditorLoop;
   * pointer-to-local / frame layout: DbLineEditorLoop, TradeScreenLoop, OpenSpeechBank, SportsDesk;
   * wild pointer fault address: PlayoffTreeMenu;
@@ -49,9 +50,7 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   writes/ret matched; --force --no-callers case 64; no C).
 * Real fixes found so far: CalendarScreen and ReplayStep (store order). Every harness lesson is a line in
   `docs/RULES.md`.
-* **Finish bar closed (2026-11-06).** Every leftover draft is PASS, FAIL-parked, or advisor-accepted for native:
-  [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) (52 / 10 / 29 / 18, sum 109). `c_progress` FUNCTIONAL stays 49.
-  Next *native* unit is gcc smoke (native F4). Exhibition M2 waits on the snapshot-required set.
+* **Native-link bar superseded (2026-11-06).** [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) (52 / 10 / 29 / 18, sum 109) is history. The live bar is `check.py` PASS on the current sha for all 109 unmarked drafts. FAIL-park and accept-for-link are not resting states. Native F4 waits. #294–#299 stay merged.
 
 ## Round 7 (done)
 
@@ -68,16 +67,24 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 
 ## Next steps
 
-This functional finish bar is closed. Native F4 (gcc smoke) is the next *native* unit, not a functional unit. Exhibition M2 waits on the `snapshot-required-before-M2` set in [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md). `FUNCTIONAL=1` / nightly are steps 10–11 of FUNCTIONAL_PLAN.md, later.
+The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked draft must PASS. `FUNCTIONAL=1` / nightly stay later.
 
 | # | Step | Model (Claude / Cursor) |
 |---|---|---|
 | 2 | ~~Rerun every NEEDS-REVIEW draft~~ **done** | — |
 | 2b | ~~InstantReplay `bothneitherstrs` + 3 skipped~~ **done** (Gameloop PASS; InstantReplay / assonetimer / checkpuckcoll_ccx still NEEDS-REVIEW) | — |
-| 3a | ~~Park FillDressedSlots short-return~~ **done** (UNSURE + history; no C) | — |
-| 3b | ~~Classify RunPlayerPickMenu~~ **done** (parked wild call-arg; no C) | — |
-| 4 | ~~Advisor accept-list~~ **done** (`docs/FUNCTIONAL_ACCEPT.md`: 52 PASS / 10 FAIL-parked / 29 accepted-for-native-link / 18 snapshot-required-before-M2) | — |
-| 5 | ~~Handoff close~~ **done**. FUNCTIONAL=1 / nightly are **not** this finish bar | see FUNCTIONAL_PLAN.md steps 10–11 |
+| 3a | ~~Park FillDressedSlots short-return~~ **done** (UNSURE + history; no C). Reopened under the 107-PASS bar | — |
+| 3b | ~~Classify RunPlayerPickMenu~~ **done** (parked wild call-arg; no C). Reopened under the 107-PASS bar | — |
+| 4 | ~~Advisor accept-list~~ **done** (historical: [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) 52/10/29/18). Not the live bar | — |
+| 5 | ~~Handoff close (old bar)~~ **done** | — |
+| 107.1 | Stamp stale PASS hashes (`avdgoal`, `NetCollide`, `ReplayStep`) without Unicorn | Composer 2.5 |
+| 107.2 | Harness proofs for the ten FAIL | Grok 4.7 medium |
+| 107.3 | ~~Re-check the ten FAIL~~ **done** (2 PASS, 3 NR, 5 still FAIL; no C) | Composer 2.5 |
+| 107.4 | ~~Typed inputs for coverage-NR~~ **done** (odd seeded cases; MenuHitTest out-params in-rect; G17 PASS; planted SeriesLength FAIL at case 4). Do not re-run the 47 in this unit | Grok 4.7 medium |
+| 107.5 | ~~Re-check leftover NR/FAIL~~ **done** (checkgoalp PASS; 3 FAIL→NR; SportsDesk + SimPlayoffRound1 still FAIL; 52 NR remain for snapshots) | Composer 2.5 |
+| 107.6 | Snapshot **script** done (`tools/equiv/snapshot_dosbox.py`, `docs/SNAPSHOTS.md`, `check.py --play-snaps`). CSV log waits on Abdul dumps | Grok 4.7 medium |
+| 107.7 | Leftover proofs ([FUNCTIONAL_LEFTOVERS.md](FUNCTIONAL_LEFTOVERS.md)): SportsDesk (c) autoret `eax` into `scrolly`/`scrollx` → NR 47%; SimPlayoffRound1 (a) team-byte clamp + SeriesLength stub 1/3/5/7 → PASS 3000. **56 PASS / 0 FAIL / 53 NR**. 53 NR wait on dumps. No dead-range without a dump. | Grok 4.7 high |
+| 107.8 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to

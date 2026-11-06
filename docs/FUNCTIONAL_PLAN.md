@@ -1,6 +1,6 @@
 # Functional-equivalence plan for the last drafts
 
-Status: finish bar closed. Every leftover draft is PASS, FAIL-parked, or advisor-accepted for native ([FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md)). See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md). Next *native* unit is gcc smoke (native F4), not a functional unit. Steps 10–11 (`FUNCTIONAL=1`, nightly) stay later.
+Status: the 2026-11-06 native-link bar (PASS / FAIL-parked / accepted-for-native-link) is **superseded**. Every leftover unmarked draft must become `check.py` PASS (or a harness change that produces PASS). [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) is the historical 52/10/29/18 snapshot. Native F4, `FUNCTIONAL=1`, and nightly stay later. See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md).
 Each step below is done on its own, in order, and stops for Abdul's approval before the next one starts.
 
 ## Why

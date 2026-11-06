@@ -7,14 +7,16 @@ Runs the original asm of F (in place in HOCKEY.EXE) and the compiled draft on th
 the traces from run.py. Verdicts: PASS, NEEDS-REVIEW (equal, but the original trapped or returned an unset
 entry register), FAIL (first differing case printed; the run stops there). Rows go to tools/equiv/results.csv
 for files under src/engine, src/front or src/pc; a repeat of the same function + source sha1 + cases that passed prints "cached PASS".
-Compared per case: ret eax (edx with --ret64), esi/edi/ebp always, ebx/ecx/edx when the original saves them
-(push) or leaves them unchanged in that case, esp delta, writes (ordered), calls (ordered; stack args cut to the
-callee's `ret N`, register args cut to the registers the callee reads first), trap kinds.
+Compared per case: ret eax (edx with --ret64; ax only for the short-return allow-list), esi/edi/ebp always, ebx/ecx/edx when the original saves them
+(push) or leaves them unchanged in that case, esp delta, writes (ordered; stack-region dests as STK offset from entry esp), calls (ordered; stack args cut to the
+callee's `ret N`, register args cut to the registers the callee reads first, and only at a real function entry).
 Case inputs: arg registers and stack args are edge values, small randoms or pointers into a 64 KB random arg
-buffer at ARG; globals the function references (original and draft fixups) are patched with random, edge,
+buffer at ARG (index-typed regs stay in [0, table-bound); deref regs and most stack args stay mapped in ARG). Odd
+seeded cases are a typed stream (no EDGE / 0xa5a5a5a5; struct-shaped objects in ARG); even cases keep the random
+corpus. Globals the function references (original and draft fixups) are patched with random, edge,
 pointer-ish or static bytes; callee returns come from a seeded script. The stack below the entry esp is refilled per
 case from the case seed (same bytes on both sides); an uninitialised stack read in a case that still compares equal is
-info ("uninit read, outputs equal"), not review.
+info ("uninit read, outputs equal"), not review. MenuHitTest out-params are in-rect (hitMenu in [0, 4), hitItem in [0, 32)).
 Callers mode (--callers; also automatic when coverage after seeded + mutated cases is under 85%, off with --no-callers):
 the original callers of F (direct `call rel32` sites in the image) run from seeded random states with every callee
 stubbed except F; at F's entry the registers, stack args and every page written so far are snapshotted and become a
@@ -36,7 +38,48 @@ FAM = {'eax': 'eax ax ah al', 'ebx': 'ebx bx bh bl', 'ecx': 'ecx cx ch cl', 'edx
        'esi': 'esi si', 'edi': 'edi di', 'ebp': 'ebp bp'}
 FAMOF = {n: r for r, ns in FAM.items() for n in ns.split()}
 ARGREGS = ('eax', 'edx', 'ebx', 'ecx')
+# Callers test ax (Abdul ESCALATE: do not change the C return type). Compare ret eax as uint16.
+SHORT_AX = frozenset(('CanFillLineSlot', 'FillDressedSlots'))
+INDEX_BOUND = 32  # default when the table length is unknown
 _md = capstone.Cs(capstone.CS_ARCH_X86, capstone.CS_MODE_32); _md.detail = True
+
+def table_bound(func):
+    """[0, bound) for index-typed regs / stack slots. Nearest table length; 32 if unknown."""
+    n = (func or '').lower()
+    if any(s in n for s in ('playoff',)): return 16
+    if any(s in n for s in ('menu', 'desk', 'pick')): return 8
+    if any(s in n for s in ('team', 'roster', 'stand', 'division')): return 26
+    if any(s in n for s in ('dressed', 'lineslot', 'line', 'skater', 'player', 'slot')): return 25
+    return INDEX_BOUND
+
+def clamp_playoff_team_bytes(func, buf, args, regs=None):
+    """Keep SimPlayoff/SeedPlayoff series team bytes in [0, 26) so wins[] cannot spill onto the frame.
+    Watcom register args: sched is eax, then edx/ebx/ecx, then stack. Every ARG pointer is walked as 6-byte
+    game slots (team bytes at +2/+3). No-op for other names."""
+    if not any(tag in (func or '') for tag in ('SimPlayoff', 'SeedPlayoff')):
+        return buf
+    ptrs = []
+    if args:
+        ptrs.extend(args)
+    if regs:
+        ptrs.extend(regs.values())
+    b = bytearray(buf)
+    n = min(len(b), ARG_SIZE)
+    seen = set()
+    for p in ptrs:
+        if not isinstance(p, int) or not (ARG <= p < ARG + ARG_SIZE):
+            continue
+        base = p - ARG
+        if base in seen:
+            continue
+        seen.add(base)
+        o = base
+        while o + 4 <= n:
+            for off in (o + 2, o + 3):
+                if 0 <= off < n:
+                    b[off] %= 26
+            o += 6
+    return bytes(b)
 
 def first_use(code, addr, to_ret=False):
     """{reg: 'deref'|'index'|'read'|'write'} for the first use of each register in linear order. pushes, pops and
@@ -172,23 +215,49 @@ class Checker:
             out.append((t, max(4, min(nxt - t, 256))))
         return out
 
+    def index_bound(self):
+        return table_bound(self.func)
+
     # ---- case generator
-    def case(self, seed, i, ctx=None):
+    def case(self, seed, i, ctx=None, typed=False):
         use_, nstack_, spans_ = ctx or (self.use, self.nstack, self.spans)
         rng = random.Random(seed * 1000003 + i)
+        bound = self.index_bound() if typed else INDEX_BOUND
         m = rng.random(); ff = rng.choice((0.05, 0.1, 0.2, 0.3))
         n = ARG_SIZE   # bulk bytes from randbytes, selected with translate tables and big-int masks (a per-byte loop cost 10 ms)
         sel = lambda p: rng.randbytes(n).translate(bytes(255 if x < p * 256 else 0 for x in range(256)))   # 0xFF where chosen
         mix = lambda x, y, k: (((int.from_bytes(x, 'little') & int.from_bytes(k, 'little')) | (int.from_bytes(y, 'little') & ~int.from_bytes(k, 'little')))
                                & ((1 << 8 * n) - 1)).to_bytes(n, 'little')
-        if m < 0.4: buf = rng.randbytes(n)
+        if typed:
+            raw = bytearray(rng.randbytes(n))
+            # Seed struct-shaped objects in ARG: 4 MenuItem slots, a Player (0x80), a Team (cap 64 of 0x100).
+            for k in range(4):
+                base = 0x100 + k * 32
+                raw[base:base + 16] = struct.pack('<IIII', 0, 0, 40, 16)  # in-rect x1,y1,x2,y2
+                raw[k * 4:(k + 1) * 4] = struct.pack('<I', ARG + base)
+            pbase = 0x400
+            raw[pbase + 0x47] = rng.randrange(0, bound) & 0xFF  # pnum
+            raw[pbase + 0x1A:pbase + 0x1C] = struct.pack('<H', rng.randrange(0, 7))  # position
+            tbase = 0x500
+            raw[tbase + 0x10:tbase + 0x12] = struct.pack('<H', rng.randrange(0, 10))  # tmscore
+            buf = bytes(raw)
+        elif m < 0.4: buf = rng.randbytes(n)
         elif m < 0.7: buf = mix(rng.randbytes(n).translate(bytes((0, 1, 0xFF, 0x80, 0x7F)[x * 5 // 256] for x in range(256))), rng.randbytes(n), sel(0.8))
         else: buf = mix(b'\xff' * n, rng.randbytes(n), sel(ff))   # sentinel-heavy
         def ptr():
             r = rng.random()
+            if typed:
+                # mapped ARG, never kernel-ish / 0xa5a5a5a5
+                off = 0 if r < 0.3 else 0x100 if r < 0.5 else 0x400 if r < 0.7 else rng.randrange(0, ARG_SIZE - 0x2000) & ~3
+                return ARG + off
             off = 0 if r < 0.2 else rng.randrange(0, 256) if r < 0.5 else rng.randrange(0, ARG_SIZE - 0x2000)
             return ARG + off
         def scalar():
+            if typed:
+                r = rng.random()
+                if r < 0.7: return rng.randrange(0, bound)
+                if r < 0.9: return rng.randrange(0, 256)
+                return ptr()
             r = rng.random()
             if r < 0.4: return rng.choice(EDGE)
             if r < 0.7: return rng.randrange(0, 16)
@@ -199,22 +268,36 @@ class Checker:
         for r in ('eax', 'edx', 'ebx', 'ecx', 'esi', 'edi', 'ebp'):
             u = use_.get(r)
             p = 1.0 if u == 'deref' else 0.5 if u == 'read' else 0.2
-            regs[r] = rng.choice((0, 1, 2, 3, 5, 7, 15, 31, 0xFF)) if u == 'index' and rng.random() < 0.9 else val(p)
-            if r in ('esi', 'edi', 'ebp') and u != 'deref' and rng.random() < 0.7:
+            if u == 'index':
+                regs[r] = rng.randrange(0, bound)
+            elif u == 'deref':
+                regs[r] = ptr()
+            else:
+                regs[r] = val(p)
+            if r in ('esi', 'edi', 'ebp') and u != 'deref' and u != 'index' and rng.random() < 0.7:
                 regs[r] = 0xE5000000 | rng.getrandbits(20) << 4 | (1 + ('esi', 'edi', 'ebp').index(r))   # unique tag
-        args = [val(0.4) for _ in range(nstack_ + 2)]
+        args = [ptr() if rng.random() < 0.4 else rng.randrange(0, bound) for _ in range(nstack_ + 2)]
         patches = {}
-        for lo, n in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
-            m = rng.random(); st0 = self.img.read(lo, n)
+        for lo, nspan in spans_ if rng.random() > 0.3 else ():   # 30% of the cases keep every global as loaded
+            m = rng.random(); st0 = self.img.read(lo, nspan)
             if m < 0.3: continue   # static image value
-            if m < 0.6:            # static with one byte nudged
-                b = bytearray(st0); j = rng.randrange(n); b[j] = (b[j] + rng.choice((1, 2, 3, 0xFF, 0xFE, 0x80))) & 0xFF
-            elif m < 0.7: b = bytes(rng.getrandbits(8) for _ in range(n))
-            elif m < 0.8: b = b''.join(struct.pack('<I', rng.choice(EDGE)) for _ in range((n + 3) // 4))
-            elif m < 0.9: b = b''.join(struct.pack('<I', ptr()) for _ in range((n + 3) // 4))
-            else: b = bytes(rng.choice((0, 1, 0xFF)) for _ in range(n))
-            patches[lo] = bytes(b[:n])
-        script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
+            if typed:
+                if m < 0.6:
+                    b = bytearray(st0); j = rng.randrange(nspan); b[j] = (b[j] + rng.choice((1, 2, 3))) & 0xFF
+                elif m < 0.8: b = b''.join(struct.pack('<I', rng.randrange(0, bound)) for _ in range((nspan + 3) // 4))
+                else: b = b''.join(struct.pack('<I', ptr()) for _ in range((nspan + 3) // 4))
+            elif m < 0.6:            # static with one byte nudged
+                b = bytearray(st0); j = rng.randrange(nspan); b[j] = (b[j] + rng.choice((1, 2, 3, 0xFF, 0xFE, 0x80))) & 0xFF
+            elif m < 0.7: b = bytes(rng.getrandbits(8) for _ in range(nspan))
+            elif m < 0.8: b = b''.join(struct.pack('<I', rng.choice(EDGE)) for _ in range((nspan + 3) // 4))
+            elif m < 0.9: b = b''.join(struct.pack('<I', ptr()) for _ in range((nspan + 3) // 4))
+            else: b = bytes(rng.choice((0, 1, 0xFF)) for _ in range(nspan))
+            patches[lo] = bytes(b[:nspan])
+        if typed:
+            script = [((ptr() if rng.random() < 0.2 else rng.randrange(0, bound)), rng.randrange(0, bound)) for _ in range(32)]
+        else:
+            script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
+        buf = clamp_playoff_team_bytes(self.func, buf, args, regs)
         return buf, run.State(regs=regs, args=args, patches=patches, script=script)
 
     # ---- coverage-guided mutation
@@ -242,10 +325,11 @@ class Checker:
             elif k < 0.75 and script:
                 script[rng.randrange(len(script))] = (rng.choice(EDGE) if rng.random() < 0.6 else rng.randrange(0, 16), rng.choice(EDGE))
             elif k < 0.92:
-                regs[rng.choice(list(regs) or ['eax'])] = rng.choice(EDGE + [ARG, ARG + 0x100, 3, 5, 15, 31])
+                regs[rng.choice(list(regs) or ['eax'])] = rng.choice([0, 1, 3, 5, 15, 31, ARG, ARG + 0x100])
             elif args:
-                args[rng.randrange(len(args))] = rng.choice(EDGE + [ARG, ARG + 0x40])
-        return bytes(b), dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
+                args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
+        b = clamp_playoff_team_bytes(self.func, bytes(b), args, regs)
+        return b, dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
 
     # ---- caller-driven entry states
@@ -340,12 +424,16 @@ class Checker:
 
     def nreg(self, target):
         if target not in self.reg_n:
-            try: u = first_use(self.img.read(target, 512), target, True)
-            except ValueError: u = {}
-            n = 0
-            for k, r in enumerate(ARGREGS):
-                if u.get(r) in ('read', 'deref'): n = k + 1
-            self.reg_n[target] = n
+            # Bytes at a non-entry (RunPlayerPickMenu 0xb300a) are not a callee; first_use invents nreg.
+            if not run.is_func_entry(self.img, target):
+                self.reg_n[target] = 0
+            else:
+                try: u = first_use(self.img.read(target, 512), target, True)
+                except ValueError: u = {}
+                n = 0
+                for k, r in enumerate(ARGREGS):
+                    if u.get(r) in ('read', 'deref'): n = k + 1
+                self.reg_n[target] = n
         return self.reg_n[target]
 
     def npop(self, target):
@@ -381,10 +469,17 @@ class Checker:
             if not run.STK <= v < run.STK + run.STK_SIZE: return self.codeval(v, orig)
             return ('STK', dict(snap).get(v, b''))
         d = {'ended': t.ended, 'esp_delta': t.esp_delta}
-        if not self.void: d['ret eax'] = sv(t.ret_eax)
+        if not self.void:
+            eax = t.ret_eax & 0xFFFF if self.func in SHORT_AX else t.ret_eax
+            d['ret eax'] = sv(eax)
         if self.ret64: d['ret edx'] = sv(t.ret_edx)
         for r in ('esi', 'edi', 'ebp'): d[r] = sv(t.regs.get(r))
-        d['writes'] = [(a, s, sv(v)) for a, s, v in t.writes]
+        esp0 = run.STK + run.ENTRY_OFF
+        def wdest(a):
+            if run.STK <= a < run.STK + run.STK_SIZE:
+                return ('STK', a - esp0)
+            return a
+        d['writes'] = [(wdest(a), s, sv(v)) for a, s, v in t.writes]
         d['calls'] = [(c[0],) + tuple(sv(x, c[6]) for x in c[1:1 + self.nreg(c[0])]) + tuple(sv(x, c[6]) for x in c[5][:self.npop(c[0])])
                       for c in t.calls]
         return d
@@ -434,6 +529,50 @@ class Checker:
         rngs = sorted(sorted(rngs, key=lambda r: pos[r[0]] - r[2])[:5], key=lambda r: r[0])   # 5 largest, by address
         return 1 - len(miss) / max(len(self.insns), 1), [(r[0], r[1]) for r in rngs]
 
+def _selftest():
+    """No Unicorn cases. Proves the Unit 2 comparison rules against the loaded EXE labels."""
+    img = image.load(); ok = True
+    def check(name, cond):
+        nonlocal ok
+        print('%s %s' % ('PASS' if cond else 'FAIL', name)); ok = ok and cond
+    check('0xb300a is not a function entry', not run.is_func_entry(img, 0xb300a))
+    sl = img.labels()['SeriesLength']
+    check('SeriesLength is a function entry', run.is_func_entry(img, sl))
+    class Box:
+        pass
+    b = Box(); b.img = img; b.reg_n = {}
+    check('nreg at 0xb300a is 0', Checker.nreg(b, 0xb300a) == 0)
+    check('nreg at SeriesLength > 0', Checker.nreg(b, sl) >= 0)
+    check('CanFillLineSlot is short-ax', 'CanFillLineSlot' in SHORT_AX and 'FillDressedSlots' in SHORT_AX)
+    check('SeriesLength is not short-ax', 'SeriesLength' not in SHORT_AX)
+    esp0 = run.STK + run.ENTRY_OFF
+    check('SportsDesk dest 0x7f20020 is in the stack region', run.STK <= 0x7F20020 < run.STK + run.STK_SIZE)
+    check('STK offset of 0x7f20020 is +0x20', 0x7F20020 - esp0 == 0x20)
+    check('table_bound SeriesLength is 32', table_bound('SeriesLength') == INDEX_BOUND)
+    check('table_bound CanFillLineSlot is 25', table_bound('CanFillLineSlot') == 25)
+    check('table_bound SportsDesk is 8', table_bound('SportsDesk') == 8)
+    check('table_bound PlayoffTreeMenu is 16', table_bound('PlayoffTreeMenu') == 16)
+    check('table_bound LoadTeamRoster is 26', table_bound('LoadTeamRoster') == 26)
+    hm, hi = run.hittest_outs(5, 99)
+    check('MenuHitTest hitMenu in [0, 4)', 0 <= hm < 4)
+    check('MenuHitTest hitItem in [0, 32)', 0 <= hi < 32)
+    import snapshot_dosbox, tempfile
+    sample = '{"function":"SeriesLength","regs":{"eax":"0x6000000","ebx":"1"},"args":["0x2"],"pages":{}}\n{"function":"other","regs":{"eax":0}}\n'
+    path = tempfile.mktemp(suffix='.jsonl')
+    open(path, 'w').write(sample)
+    play = snapshot_dosbox.load_play_snaps(path, 'SeriesLength')
+    os.remove(path)
+    check('play-snaps loads one SeriesLength dump', len(play) == 1 and play[0][1].regs.get('eax') == 0x6000000 and play[0][1].args == [2])
+    raw = bytes([0xFF] * 64)
+    clamped = clamp_playoff_team_bytes('SimPlayoffRound1', raw, [ARG])
+    check('SimPlayoffRound1 g[2] clamped to [0, 26)', clamped[2] == 0xFF % 26 and clamped[3] == 0xFF % 26)
+    eax_clamped = clamp_playoff_team_bytes('SimPlayoffRound1', raw, [], {'eax': ARG + 8})
+    check('SimPlayoffRound1 eax sched g[2] clamped', eax_clamped[10] == 0xFF % 26)
+    check('SeriesLength even-case ARG is not clamped', clamp_playoff_team_bytes('SeriesLength', raw, [ARG])[2] == 0xFF)
+    check('SeriesLength stub eax is a best-of', run.serieslen_out(99) in run.SERIES_LENS)
+    print('ALL PASS' if ok else 'FAILED')
+    return 0 if ok else 1
+
 def hx(v): return hex(v) if isinstance(v, int) else str(v)
 def fmt(l): return ' '.join('(%s)' % ','.join(hx(x) for x in e) for e in l) or '(none)'
 
@@ -454,7 +593,7 @@ def log(row):
 
 def main(argv=None):
     ap = argparse.ArgumentParser(description='functional-equivalence check of one draft against the original asm')
-    ap.add_argument('c_file'); ap.add_argument('--func', required=True)
+    ap.add_argument('c_file', nargs='?'); ap.add_argument('--func')
     ap.add_argument('--cases', type=int, default=2000); ap.add_argument('--seed', type=int, default=1)
     ap.add_argument('--budget', type=float, default=0, help='stop after this many seconds (0: no limit; seeded cases get 60%%, mutation the rest); fewer than 500 cases is NEEDS-REVIEW')
     ap.add_argument('--seg'); ap.add_argument('--quiet', action='store_true')
@@ -462,7 +601,13 @@ def main(argv=None):
     ap.add_argument('--callers', action='store_true', help='also run caller-driven entry states (automatic when coverage after seeded + mutated cases is under 85%%)')
     ap.add_argument('--force', action='store_true', help='ignore a cached PASS')
     ap.add_argument('--no-callers', action='store_true', help='never run the callers phase')
+    ap.add_argument('--play-snaps', metavar='JSONL', help='DOSBox-X entry dumps (docs/SNAPSHOTS.md); extra cases after callers')
+    ap.add_argument('--selftest', action='store_true', help='harness proofs: short-return, non-entry nreg, STK write dests, typed bounds, MenuHitTest outs')
     a = ap.parse_args(argv)
+    if a.selftest:
+        return _selftest()
+    if not a.c_file or not a.func:
+        ap.error('c_file and --func are required (except with --selftest)')
     q = (lambda *x: None) if a.quiet else print
     c_path = os.path.abspath(a.c_file)
     sha = hashlib.sha1(open(c_path, 'rb').read()).hexdigest()
@@ -515,9 +660,9 @@ def main(argv=None):
     failed = False
     for i in range(nseed):   # seeded cases get 40% of the budget
         if not left(0.4): break
-        buf, st = ck.case(a.seed, i); st.seed = a.seed * 1000003 + i
+        buf, st = ck.case(a.seed, i, typed=(i % 2 == 1)); st.seed = a.seed * 1000003 + i
         n0 = len(ck.cov)
-        if one(buf, st, 'case %d (seed %d, --seed %d)' % (i, st.seed, a.seed)): failed = True; break
+        if one(buf, st, 'case %d (seed %d, --seed %d%s)' % (i, st.seed, a.seed, ', typed' if i % 2 else '')): failed = True; break
         if len(ck.cov) > n0:
             corpus.append((buf, st, set(ck.reads), True))
             if len(corpus) > 100: corpus.pop(random.Random(i).randrange(1, 100))
@@ -547,6 +692,16 @@ def main(argv=None):
         q('callers: %d callers, %d snapshots (%d via callers of callers), %d run clean; coverage before callers %.1f%%, after %.1f%%' %
           (ncall, len(snaps), up, nsn, 100 * cov_a, 100 * cov_b))
         info['callers cov %.0f%% to %.0f%% (%d snaps)' % (100 * cov_a, 100 * cov_b, len(snaps))] += 1
+    if not failed and a.play_snaps:
+        import snapshot_dosbox
+        play = snapshot_dosbox.load_play_snaps(a.play_snaps, a.func)
+        pool = []
+        for k, (buf, st) in enumerate(play):
+            st.seed = a.seed * 1000003 + 900000 + k
+            if one(buf, st, 'play-snap case %d (%s)' % (k, a.play_snaps), pool): failed = True; break
+        if not failed and pool: failed = mutate_phase(pool, nmut, 1.0, 'play-snap ', 200000)
+        q('play-snaps: %d dumps for %s, %d run clean; coverage %.1f%%' % (len(play), a.func, len(pool), 100 * ck.coverage()[0]))
+        info['play-snaps %d dumps %d clean' % (len(play), len(pool))] += 1
     verdict, diff = V['verdict'], V['diff']
     if cov_seeded is not None and nmutdone > 0: q('coverage after seeded cases %.1f%%, after %d mutated cases %.1f%% (corpus %d)' % (100 * cov_seeded, nmutdone, 100 * cov_a, len(corpus)))
     if run.WARN: q('warnings: ' + '; '.join(sorted(set(run.WARN))))
