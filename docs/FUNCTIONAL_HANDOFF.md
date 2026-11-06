@@ -44,8 +44,9 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
   * CanFillLineSlot: original returns junk in the upper 16 bits that callers ignore; matching needs a `short`
     return, an ESCALATE shape: **Abdul's call**.
   New from the rerun: **FillDressedSlots parked** (same short-return as CanFillLineSlot: ax
-  0x005d both sides, upper junk from a dword load of a word home; no C). RunPlayerPickMenu
-  (`calls[6]` wild stack pointer vs C 0) still to classify.
+  0x005d both sides, upper junk from a dword load of a word home; no C). **RunPlayerPickMenu
+  parked** (`calls[6]` ebx leftover vs C 0 at wild target 0xb300a, 2 bytes before sub_B300C;
+  writes/ret matched; --force --no-callers case 64; no C).
 * Real fixes found so far: CalendarScreen and ReplayStep (store order). Every harness lesson is a line in
   `docs/RULES.md`.
 
@@ -69,7 +70,7 @@ Applied the unfinished `tools/equiv/wip/round7.patch` onto the recut tree (paths
 | 2 | ~~Rerun every NEEDS-REVIEW draft~~ **done** | — |
 | 2b | ~~InstantReplay `bothneitherstrs` + 3 skipped~~ **done** (Gameloop PASS; InstantReplay / assonetimer / checkpuckcoll_ccx still NEEDS-REVIEW) | — |
 | 3a | ~~Park FillDressedSlots short-return~~ **done** (UNSURE + history; no C) | — |
-| 3b | Classify RunPlayerPickMenu (frame/call-arg first, max 3 C tries) | Sonnet / Grok 4.7 medium |
+| 3b | ~~Classify RunPlayerPickMenu~~ **done** (parked wild call-arg; no C) | — |
 | 4 | Advisor accept-list for leftover NEEDS-REVIEW (`docs/FUNCTIONAL_ACCEPT.md`) | Opus / Grok 4.7 high, once |
 | 5 | Steps 10-11 of the plan (FUNCTIONAL=1 build, nightly check) are **not** this finish bar | see FUNCTIONAL_PLAN.md |
 
