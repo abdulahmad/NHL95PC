@@ -1,6 +1,6 @@
 # DOSBox-X entry snapshots (functional Unit 6)
 
-Leftover NR drafts need real entry states. Synthetic cases and `--callers` already ran; many added 0 snapshots. This file is the capture recipe. The dumps live **outside git** (they contain RAM from a running retail EXE).
+Leftover NR drafts need real entry states. Synthetic cases and `--callers` already ran; many added 0 snapshots. This file is the capture recipe. The dumps live **outside git** (they contain RAM from a running retail EXE). Unit 7 left **53 NR** (0 FAIL); still wait on these dumps — do not accept-for-link.
 
 This VM has no play session. Abdul captures on his machine. The agent consumes the JSONL with `check.py --play-snaps`.
 

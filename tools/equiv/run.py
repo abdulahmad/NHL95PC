@@ -113,6 +113,20 @@ def hittest_outs(depth, stub_k):
     """MenuHitTest out-params: hitMenu in [0, 4), hitItem in [0, 32). In-rect, not eax leftover."""
     return depth & 3, stub_k & 31
 
+_SERIESLEN = None
+SERIES_LENS = (1, 3, 5, 7)
+
+def serieslen_addr(img):
+    """EXE label of SeriesLength, cached."""
+    global _SERIESLEN
+    if _SERIESLEN is None:
+        _SERIESLEN = img.labels().get('SeriesLength')
+    return _SERIESLEN
+
+def serieslen_out(stub_k):
+    """SeriesLength stub eax: a real best-of (1, 3, 5, 7), not a huge script leftover."""
+    return SERIES_LENS[stub_k % 4]
+
 def ptr_size(img, target, pos):
     """bytes to compare behind a stack pointer passed as argument `pos` (0-3 registers, then stack dwords) to the
     callee at `target`: 4, or the struct size (cap 64) when protos.h types the parameter as a struct pointer"""
@@ -290,6 +304,9 @@ class Runner:
                         hit_skip.add(v)
                         if ih(v): written.update(range(v, min(v + 4, esp0)))
                 eax = eax & 1
+            if a == serieslen_addr(img):
+                eax = serieslen_out(k)
+                edx = 0
             for j, (p, n) in enumerate(ptrs.items()):
                 if p in hit_skip: continue
                 base = (eax, edx, eax ^ edx, eax + edx)
@@ -411,6 +428,9 @@ def _selftest():
     hm, hi = hittest_outs(5, 99)
     good = 0 <= hm < 4 and 0 <= hi < 32; ok &= good
     print('%s MenuHitTest outs hitMenu=%d hitItem=%d' % ('PASS' if good else 'FAIL', hm, hi))
+    sl = serieslen_out(99)
+    good = sl in SERIES_LENS; ok &= good
+    print('%s SeriesLength stub eax=%d in %s' % ('PASS' if good else 'FAIL', sl, SERIES_LENS))
     print('ALL PASS' if ok else 'FAILED'); return ok
 
 if __name__ == '__main__':

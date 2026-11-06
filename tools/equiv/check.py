@@ -52,6 +52,35 @@ def table_bound(func):
     if any(s in n for s in ('dressed', 'lineslot', 'line', 'skater', 'player', 'slot')): return 25
     return INDEX_BOUND
 
+def clamp_playoff_team_bytes(func, buf, args, regs=None):
+    """Keep SimPlayoff/SeedPlayoff series team bytes in [0, 26) so wins[] cannot spill onto the frame.
+    Watcom register args: sched is eax, then edx/ebx/ecx, then stack. Every ARG pointer is walked as 6-byte
+    game slots (team bytes at +2/+3). No-op for other names."""
+    if not any(tag in (func or '') for tag in ('SimPlayoff', 'SeedPlayoff')):
+        return buf
+    ptrs = []
+    if args:
+        ptrs.extend(args)
+    if regs:
+        ptrs.extend(regs.values())
+    b = bytearray(buf)
+    n = min(len(b), ARG_SIZE)
+    seen = set()
+    for p in ptrs:
+        if not isinstance(p, int) or not (ARG <= p < ARG + ARG_SIZE):
+            continue
+        base = p - ARG
+        if base in seen:
+            continue
+        seen.add(base)
+        o = base
+        while o + 4 <= n:
+            for off in (o + 2, o + 3):
+                if 0 <= off < n:
+                    b[off] %= 26
+            o += 6
+    return bytes(b)
+
 def first_use(code, addr, to_ret=False):
     """{reg: 'deref'|'index'|'read'|'write'} for the first use of each register in linear order. pushes, pops and
     `xor r,r` do not count. to_ret: stop at the first ret past the furthest forward jump (callee scan)."""
@@ -268,6 +297,7 @@ class Checker:
             script = [((ptr() if rng.random() < 0.2 else rng.randrange(0, bound)), rng.randrange(0, bound)) for _ in range(32)]
         else:
             script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
+        buf = clamp_playoff_team_bytes(self.func, buf, args, regs)
         return buf, run.State(regs=regs, args=args, patches=patches, script=script)
 
     # ---- coverage-guided mutation
@@ -298,7 +328,8 @@ class Checker:
                 regs[rng.choice(list(regs) or ['eax'])] = rng.choice([0, 1, 3, 5, 15, 31, ARG, ARG + 0x100])
             elif args:
                 args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
-        return bytes(b), dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
+        b = clamp_playoff_team_bytes(self.func, bytes(b), args, regs)
+        return b, dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
 
     # ---- caller-driven entry states
@@ -532,6 +563,13 @@ def _selftest():
     play = snapshot_dosbox.load_play_snaps(path, 'SeriesLength')
     os.remove(path)
     check('play-snaps loads one SeriesLength dump', len(play) == 1 and play[0][1].regs.get('eax') == 0x6000000 and play[0][1].args == [2])
+    raw = bytes([0xFF] * 64)
+    clamped = clamp_playoff_team_bytes('SimPlayoffRound1', raw, [ARG])
+    check('SimPlayoffRound1 g[2] clamped to [0, 26)', clamped[2] == 0xFF % 26 and clamped[3] == 0xFF % 26)
+    eax_clamped = clamp_playoff_team_bytes('SimPlayoffRound1', raw, [], {'eax': ARG + 8})
+    check('SimPlayoffRound1 eax sched g[2] clamped', eax_clamped[10] == 0xFF % 26)
+    check('SeriesLength even-case ARG is not clamped', clamp_playoff_team_bytes('SeriesLength', raw, [ARG])[2] == 0xFF)
+    check('SeriesLength stub eax is a best-of', run.serieslen_out(99) in run.SERIES_LENS)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
