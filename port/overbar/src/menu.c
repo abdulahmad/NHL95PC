@@ -115,6 +115,10 @@ int ob_video_items(const ob_host *h, ob_class cls, ob_item *out, int cap)
     if (h->has_hires)
         add_choice(out, &n, cap, OB_ID_VIDEO_CLASS, "Screen", class_choices, 2, cls == OB_CLASS_HIRES);
     add_choice(out, &n, cap, OB_ID_SCALE_MODE, "Scale Mode", mode_choices, OB_MODE_COUNT, m);
+    {
+        const char *note = h->fallback_note ? h->fallback_note : ob_look_fallback_note(m, h->present);
+        if (note) add_text(out, &n, cap, OB_ID_PRESENT_NOTE, "This look", note);
+    }
 
     /* Only the selected mode's sub-options (L9). No SNES Native. */
     if (m == OB_MODE_SHARP) {

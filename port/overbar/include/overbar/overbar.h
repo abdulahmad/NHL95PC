@@ -31,6 +31,13 @@ typedef enum {
     OB_PROFILE_HANDHELD       /* KMSDRM / RetroPie / PortMaster: overlay only, 60 Hz */
 } ob_profile;
 
+/* How the picture is shown. Handheld never picks desktop OpenGL (L6 / RG35XX). */
+typedef enum {
+    OB_PRESENT_SDL = 0,       /* SDL_Renderer: KMSDRM, GLES2, or software. No libGL */
+    OB_PRESENT_GLES2,         /* EGL/GLES2 shaders (MiSTer / Lottes) */
+    OB_PRESENT_GL             /* desktop OpenGL; never on handheld */
+} ob_present_backend;
+
 typedef enum {
     OB_CLASS_LORES = 0,
     OB_CLASS_HIRES,
@@ -139,6 +146,7 @@ enum {
     OB_ID_CAP_SECONDS,
     OB_ID_CAP_GIFSCALE,
     OB_ID_ONLINE_NOTE,
+    OB_ID_PRESENT_NOTE,
     OB_ID_ADDON = 1000
 };
 
@@ -195,6 +203,8 @@ typedef struct ob_host {
     int live_preview;           /* 1: a menu change is already in the host (always on) */
     int wrote_defaults;
     int request_quit;           /* overlay Quit: the client should exit */
+    ob_present_backend present; /* SDL_Renderer on handheld; never GL there */
+    const char *fallback_note;  /* Scale Mode that cannot run on this present */
     char ini_path[512];
     ob_addon addons[OB_ADDONS_MAX];
     int naddons;
@@ -232,8 +242,11 @@ typedef struct ob_view_out {
 
 void ob_host_init(ob_host *h, ob_port port, ob_profile profile);
 void ob_host_free(ob_host *h);
+int ob_handheld_env(void);                                /* CFW_NAME / PORTMASTER / OVERBAR_HANDHELD / RG35* */
+ob_profile ob_profile_from_env(void);                     /* env + SDL_VIDEODRIVER; no SDL_Init needed */
 ob_profile ob_profile_detect(const char *sdl_video_driver, int env_handheld);
 void ob_defaults_apply(ob_host *h, ob_profile profile);   /* L15 first-launch values */
+void ob_host_set_present(ob_host *h, int have_gles2, int have_desktop_gl);
 int ob_host_load_ini(ob_host *h, const char *path);       /* 0 missing: apply defaults, save */
 int ob_host_save_ini(const ob_host *h);
 
@@ -269,6 +282,29 @@ void ob_view_par(const ob_view_out *v, int *num, int *den);
 /* Fill a view_in from the host for a console (dar_h=240) or VGA (dar_h=src_h) frame. */
 void ob_view_from_host(const ob_host *h, ob_class cls, int src_w, int src_h,
                        int window_w, int window_h, ob_view_in *in);
+
+/* ---- present (KMSDRM / SDL_Renderer; no desktop GL required) ---------- */
+
+ob_present_backend ob_present_pick(ob_profile profile, int have_gles2, int have_desktop_gl);
+int ob_look_supported(ob_scale_mode mode, ob_present_backend backend);
+const char *ob_look_fallback_note(ob_scale_mode mode, ob_present_backend backend); /* NULL if ok */
+void ob_present_apply_hints(ob_profile profile);          /* env for GLES2 renderer; no-op on desktop */
+/* Nearest-neighbour blit of src into view->blit_* of dst (tests + SDL_Renderer upload). */
+void ob_present_soft(const uint32_t *src, int src_w, int src_h,
+                     uint32_t *dst, int dst_w, int dst_h, int dst_pitch,
+                     const ob_view_out *view);
+
+#ifdef OVERBAR_SDL
+typedef struct ob_present_sdl {
+    void *window;               /* SDL_Window * */
+    void *renderer;             /* SDL_Renderer * */
+    void *texture;              /* SDL_Texture * */
+    int tex_w, tex_h;
+} ob_present_sdl;
+int ob_present_sdl_open(ob_present_sdl *p, const char *title, ob_host *h, int src_w, int src_h);
+void ob_present_sdl_frame(ob_present_sdl *p, ob_host *h, const uint32_t *px, int src_w, int src_h);
+void ob_present_sdl_close(ob_present_sdl *p);
+#endif
 
 /* ---- overlay ---------------------------------------------------------- */
 

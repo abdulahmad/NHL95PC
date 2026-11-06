@@ -39,6 +39,7 @@ int main(int argc, char **argv)
     g_argc = argc; g_argv = argv;
     trace_on = getenv("NHL95_TRACE") != 0;    stats_init();
     SDL_SetMainReady();
+    ob_present_apply_hints(ob_profile_from_env());
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO | SDL_INIT_JOYSTICK | SDL_INIT_GAMECONTROLLER) < 0) { fprintf(stderr, "SDL_Init: %s\n", SDL_GetError()); return 1; }
     video_init();
     input_init();

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<gameList>
+  <game>
+    <path>./NHL 95 PC.sh</path>
+    <name>NHL 95 PC</name>
+    <desc>EA Sports NHL 95 for DOS, hosted by Overbar. Overlay on Select. Bring your own install and CD files.</desc>
+    <releasedate>19940930T000000</releasedate>
+    <developer>EA Sports</developer>
+    <publisher>Electronic Arts</publisher>
+    <genre>Sports</genre>
+  </game>
+</gameList>

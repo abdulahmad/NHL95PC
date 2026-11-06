@@ -819,29 +819,48 @@ int video_is_fullscreen(void) { return fullscreen; }
 /* ---- the main thread: window and presentation ---- */
 void video_init(void)
 {
+    ob_profile profile;
+    int handheld, ww, wh;
+    Uint32 wflags, rflags;
+    SDL_RendererInfo rinfo;
     lock = SDL_CreateMutex();
     settings_load();
-    overbar_client_init(ob_profile_detect(SDL_GetCurrentVideoDriver(), getenv("OVERBAR_HANDHELD") != NULL), overbar_apply_host);
-    if (video_ini_missing && overbar_client_host()->profile == OB_PROFILE_HANDHELD) {
+    profile = ob_profile_detect(SDL_GetCurrentVideoDriver(), ob_handheld_env());
+    overbar_client_init(profile, overbar_apply_host);
+    handheld = overbar_client_host()->profile == OB_PROFILE_HANDHELD;
+    if (video_ini_missing && handheld) {
         video_command(CMD_REFRESH_60);
         if (!video_command_checked(CMD_VSYNC)) video_command(CMD_VSYNC);
     }
     overbar_capture_host();
     if (getenv("NHL95_PRESET")) { const char *t = getenv("NHL95_PRESET"); apply_preset(t[0] == 'l', t + 2); settings_save(); }      /* a test aid: h:path or l:path of a preset */
     SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "nearest");
-    if (!getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
-        win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, getenv("NHL95_WINDOW_W") ? atoi(getenv("NHL95_WINDOW_W")) : 960, getenv("NHL95_WINDOW_H") ? atoi(getenv("NHL95_WINDOW_H")) : 720, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
+    ww = getenv("NHL95_WINDOW_W") ? atoi(getenv("NHL95_WINDOW_W")) : (handheld ? 640 : 960);
+    wh = getenv("NHL95_WINDOW_H") ? atoi(getenv("NHL95_WINDOW_H")) : (handheld ? 480 : 720);
+    /* Handheld / KMSDRM: SDL_Renderer only. Never desktop OpenGL, never a menu bar. */
+    if (!handheld && !getenv("NHL95_NOGL") && SDL_strcmp(SDL_GetCurrentVideoDriver(), "dummy")) {        /* the OpenGL path: shader scaling */
+        win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
         if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); if (getenv("NHL95_MAXIMIZE")) SDL_MaximizeWindow(win); return; }
         fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
         vgl_quit();
         if (win) SDL_DestroyWindow(win);
         win = 0;
     }
-    win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 960, 720, SDL_WINDOW_RESIZABLE);
+    wflags = handheld ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_RESIZABLE;
+    win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, wflags);
     if (!win) { fprintf(stderr, "SDL window: %s\n", SDL_GetError()); exit(1); }
-    ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+    if (handheld) {
+        fullscreen = 1;
+        menu_show(0);
+    }
+    rflags = SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC;
+    ren = SDL_CreateRenderer(win, -1, rflags);
     if (!ren) ren = SDL_CreateRenderer(win, -1, SDL_RENDERER_SOFTWARE);
     if (!ren) { fprintf(stderr, "SDL renderer: %s\n", SDL_GetError()); exit(1); }
+    if (SDL_GetRendererInfo(ren, &rinfo) == 0 && rinfo.name) {
+        int gles = strstr(rinfo.name, "opengles") || strstr(rinfo.name, "gles");
+        ob_host_set_present(overbar_client_host(), gles, 0);
+    }
 }
 
 /* NHL95_DUMP=dir writes a PPM of the screen about twice a second (for testing without a display) */

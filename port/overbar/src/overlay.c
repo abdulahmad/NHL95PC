@@ -30,8 +30,12 @@ void ob_overlay_build(ob_host *h)
     int i, sel = h->overlay.sel;
     mdrt_menu *m = &h->overlay;
     mdrt_menu_page(m, page_title(h->overlay_page));
-    if (h->overlay_page == OB_PAGE_VIDEO)
-        snprintf(m->subtitle, sizeof m->subtitle, "Only this Scale Mode's options. Changes live-preview.");
+    if (h->overlay_page == OB_PAGE_VIDEO) {
+        if (h->fallback_note)
+            snprintf(m->subtitle, sizeof m->subtitle, "%s", h->fallback_note);
+        else
+            snprintf(m->subtitle, sizeof m->subtitle, "Only this Scale Mode's options. Changes live-preview.");
+    }
     else if (h->overlay_page == OB_PAGE_MAIN)
         snprintf(m->subtitle, sizeof m->subtitle, "` / F11 overlay   F12 stats");
     for (i = 0; i < n; i++) {

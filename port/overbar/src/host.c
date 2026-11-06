@@ -81,7 +81,17 @@ void ob_host_init(ob_host *h, ob_port port, ob_profile profile)
     h->port = port;
     caps_from_port(h);
     ob_defaults_apply(h, profile);
+    h->present = ob_present_pick(profile, 0, profile != OB_PROFILE_HANDHELD);
+    h->fallback_note = NULL;
     mdrt_menu_init(&h->overlay);
+}
+
+void ob_host_set_present(ob_host *h, int have_gles2, int have_desktop_gl)
+{
+    const ob_look *look;
+    h->present = ob_present_pick(h->profile, have_gles2, have_desktop_gl);
+    look = (h->video_class == OB_CLASS_HIRES) ? &h->hires : &h->lores;
+    h->fallback_note = ob_look_fallback_note(look->mode, h->present);
 }
 
 void ob_host_free(ob_host *h)
@@ -90,15 +100,66 @@ void ob_host_free(ob_host *h)
     memset(h, 0, sizeof *h);
 }
 
+static int str_ieq(const char *a, const char *b)
+{
+    if (!a || !b) return 0;
+    while (*a && *b) {
+        int ca = (*a >= 'A' && *a <= 'Z') ? *a + 32 : *a;
+        int cb = (*b >= 'A' && *b <= 'Z') ? *b + 32 : *b;
+        if (ca != cb) return 0;
+        a++;
+        b++;
+    }
+    return *a == 0 && *b == 0;
+}
+
+static int str_has_i(const char *s, const char *sub)
+{
+    int n, m, i, j;
+    if (!s || !sub || !sub[0]) return 0;
+    n = (int)strlen(s);
+    m = (int)strlen(sub);
+    for (i = 0; i + m <= n; i++) {
+        for (j = 0; j < m; j++) {
+            int ca = (s[i + j] >= 'A' && s[i + j] <= 'Z') ? s[i + j] + 32 : s[i + j];
+            int cb = (sub[j] >= 'A' && sub[j] <= 'Z') ? sub[j] + 32 : sub[j];
+            if (ca != cb) break;
+        }
+        if (j == m) return 1;
+    }
+    return 0;
+}
+
+static int driver_handheld(const char *d)
+{
+    if (!d || !d[0]) return 0;
+    return str_ieq(d, "kmsdrm") || str_ieq(d, "rpi") || str_ieq(d, "mali")
+        || str_ieq(d, "vivante");
+}
+
+int ob_handheld_env(void)
+{
+    const char *v;
+    if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
+    if ((v = getenv("PORTMASTER")) && v[0]) return 1;
+    if ((v = getenv("CFW_NAME")) && v[0]) return 1;
+    v = getenv("DEVICE_NAME");
+    if (v && (str_has_i(v, "RG35") || str_has_i(v, "RG353") || str_has_i(v, "RG351")
+              || str_has_i(v, "RGB30") || str_has_i(v, "RK2023")))
+        return 1;
+    return driver_handheld(getenv("SDL_VIDEODRIVER"));
+}
+
+ob_profile ob_profile_from_env(void)
+{
+    return ob_profile_detect(getenv("SDL_VIDEODRIVER"), ob_handheld_env());
+}
+
 ob_profile ob_profile_detect(const char *sdl_video_driver, int env_handheld)
 {
     if (env_handheld) return OB_PROFILE_HANDHELD;
-    if (sdl_video_driver) {
-        if (!strcmp(sdl_video_driver, "KMSDRM") || !strcmp(sdl_video_driver, "kmsdrm"))
-            return OB_PROFILE_HANDHELD;
-        if (!strcmp(sdl_video_driver, "RPI") || !strcmp(sdl_video_driver, "rpi"))
-            return OB_PROFILE_HANDHELD;
-    }
+    if (ob_handheld_env()) return OB_PROFILE_HANDHELD;
+    if (driver_handheld(sdl_video_driver)) return OB_PROFILE_HANDHELD;
     return OB_PROFILE_DESKTOP;
 }
 
@@ -252,7 +313,10 @@ int ob_host_apply(ob_host *h, ob_class cls, int id, int value)
         break;
     case OB_ID_VSYNC: h->vsync = value; break;
     case OB_ID_STATS: h->stats = value; break;
-    case OB_ID_SCALE_MODE: look->mode = (ob_scale_mode)value; break;
+    case OB_ID_SCALE_MODE:
+        look->mode = (ob_scale_mode)value;
+        h->fallback_note = ob_look_fallback_note(look->mode, h->present);
+        break;
     case OB_ID_VIDEO_CLASS: h->video_class = value ? OB_CLASS_HIRES : OB_CLASS_LORES; break;
     case OB_ID_SHARP_AMOUNT: look->sharp = value; break;
     case OB_ID_CRT_LOOK: look->crt = (ob_crt_look)value; break;

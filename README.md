@@ -53,6 +53,7 @@ The branch `sdl2-port` runs the game's own code natively, with the DOS, BIOS, so
 (`port/`). Build and details: [docs/SDL2_PORT.md](docs/SDL2_PORT.md); state and open items: [docs/SDL2_HANDOFF.md](docs/SDL2_HANDOFF.md).
 `src/` is untouched, so `make` still ends with `MATCH`.
 
+* **PortMaster / RG35XX**: zip layout and launch script are in [`portmaster/`](portmaster/). Handheld first launch is **60 Hz** (not VRR), overlay only (no menu bar), SDL_Renderer / KMSDRM, `NHL95_NOGL=1`. Copy the install into `gamedata/` and CD files into `cd/`. `./portmaster/pack.sh` builds `nhl95pc.zip`. The aarch64 native binary is a later build; this zip is the host layout. Private zip; `HOCKEY.EXE` is never included.
 * **Start**: run `hockey-win32.exe` (Windows build, `port/build-win.sh`) in the game's folder, or set `NHL95_ROOT`. It finds the game files
   next to the program, in the parent folder, or in `NHL95_CD` (the CD's contents). No setup files needed.
 * **Video**: the 8-bit screen is drawn by OpenGL. The 320x200 play screen is enlarged 3x with nearest-neighbour, then filtered with a
