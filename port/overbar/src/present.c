@@ -37,9 +37,9 @@ ob_present_backend ob_present_pick(ob_profile profile, int have_gles2, int have_
 int ob_look_supported(ob_scale_mode mode, ob_present_backend backend)
 {
     switch (mode) {
-    case OB_MODE_CRT:
     case OB_MODE_MISTER:
-    case OB_MODE_RETROARCH:
+        /* .txt filters need the GLES path. CRT scanlines and the MIT pixel-art
+         * set (Scale2x, MMPX, xBR) run on the SDL renderer. */
         return backend == OB_PRESENT_GLES2 || backend == OB_PRESENT_GL;
     default:
         return 1;

@@ -60,7 +60,7 @@ WINDRES=${WINDRES:-i686-w64-mingw32-windres}
 command -v "$WINDRES" >/dev/null 2>&1 || WINDRES=windres
 $WINDRES -O coff port/icon/icon.rc -o "$OUT/icon.o"
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
-    -Iport/overbar/include -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src \
+    -DOB_SDL_BASE -Iport/overbar/include -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src \
     -o "$OUT/hockey-win32.exe" port/host.c port/video_gl.c port/menu_win.c port/bindings.c port/bindings_win.c -DHAVE_GL port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
     port/overbar_client.c port/overbar/src/scaler.c port/overbar/src/host.c port/overbar/src/present.c port/overbar/src/menu.c port/overbar/src/overlay.c port/overbar/src/filemenu.c \
     port/overbar/third_party/pulseman/menu.c \

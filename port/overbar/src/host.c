@@ -18,6 +18,7 @@ static const char *mode_label[OB_MODE_COUNT] = {
     "Scale2x", "Scale3x", "MMPX 2x", "MMPX 4x", "xBR 2x", "xBR 3x", "xBR 4x"
 };
 static const char *refresh_name[3] = { "60", "70", "vrr" };
+static const char *pointer_name[3] = { "auto", "show", "hide" };
 static const char *height_name[4] = { "fit", "integer", "overscan", "auto-crop" };
 static const char *height_label[4] = {
     "Fit", "Integer", "Integer+Overscan", "Auto Crop"
@@ -48,9 +49,9 @@ static void look_init(ob_look *l, int console, int lores)
     l->khz31 = 0;
     l->mask_scale = 1;
     l->bright = 100;
-    if (console) l->sharp = OB_SHARP_1X;
-    else if (lores) l->sharp = OB_SHARP_LO_3X;
-    else l->sharp = OB_SHARP_1X;
+    l->sharp = OB_SHARP_3X;
+    (void)console;
+    (void)lores;
 }
 
 void ob_defaults_apply(ob_host *h, ob_profile profile)
@@ -142,14 +143,12 @@ static int driver_handheld(const char *d)
 int ob_handheld_env(void)
 {
     const char *v;
+    if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
 #ifdef _WIN32
-    /* A desktop .exe must never take the KMSDRM/GLES2 path. OVERBAR_HANDHELD
-     * leftover from packing a PortMaster zip still skips OpenGL and the window
-     * then dies on the first SDL_QUIT after the failed renderer. */
-    (void)v;
+    /* PORTMASTER / CFW_NAME leftovers from packing a zip must not switch a
+     * Windows desktop exe onto the handheld present path. */
     return 0;
 #else
-    if ((v = getenv("OVERBAR_HANDHELD")) && v[0] && strcmp(v, "0") != 0) return 1;
     if ((v = getenv("PORTMASTER")) && v[0]) return 1;
     if ((v = getenv("CFW_NAME")) && v[0]) return 1;
     v = getenv("DEVICE_NAME");
@@ -176,6 +175,25 @@ ob_profile ob_profile_detect(const char *sdl_video_driver, int env_handheld)
 const char *ob_mode_label(ob_scale_mode m)
 {
     return (m >= 0 && m < OB_MODE_COUNT) ? mode_label[m] : "Sharp";
+}
+
+int ob_sharp_mul(int index)
+{
+    static const int mul[OB_SHARP_COUNT] = { 2, 3, 4, 5, 6, 9 };
+    if (index < 0) index = 0;
+    if (index >= OB_SHARP_COUNT) index = OB_SHARP_COUNT - 1;
+    return mul[index];
+}
+
+int ob_sharp_index(int mul)
+{
+    int i, best = OB_SHARP_3X, bd = 100;
+    for (i = 0; i < OB_SHARP_COUNT; i++) {
+        int d = ob_sharp_mul(i) - mul;
+        if (d < 0) d = -d;
+        if (d < bd) { bd = d; best = i; }
+    }
+    return best;
 }
 
 const char *ob_refresh_label(ob_refresh r)
@@ -232,27 +250,36 @@ static void strip(char *s)
 
 static void apply_look_key(ob_look *l, const char *key, const char *v)
 {
-    if (!strcmp(key, "scale_mode")) l->mode = (ob_scale_mode)name_index(v, mode_name, OB_MODE_COUNT, 0);
+    if (!strcmp(key, "scale_mode")) {
+        l->mode = (ob_scale_mode)name_index(v, mode_name, OB_MODE_COUNT, 0);
+        if (l->mode == OB_MODE_RETROARCH) l->mode = OB_MODE_SHARP;
+    }
     else if (!strcmp(key, "sharp")) {
-        if (!strcmp(v, "1x") || !strcmp(v, "1X")) l->sharp = 0;
-        else if (!strcmp(v, "2x") || !strcmp(v, "2X")) l->sharp = 1;
-        else if (!strcmp(v, "3x") || !strcmp(v, "3X")) l->sharp = 2;
-        else if (!strcmp(v, "4x") || !strcmp(v, "4X") || !strcmp(v, "5x")) l->sharp = 3;
-        else if (!strcmp(v, "7x")) l->sharp = 2;
-        else if (!strcmp(v, "11x")) l->sharp = 3;
-        else l->sharp = atoi(v);
+        if (!strcmp(v, "2x") || !strcmp(v, "2X") || !strcmp(v, "1x") || !strcmp(v, "1X")) l->sharp = OB_SHARP_2X;
+        else if (!strcmp(v, "3x") || !strcmp(v, "3X")) l->sharp = OB_SHARP_3X;
+        else if (!strcmp(v, "4x") || !strcmp(v, "4X")) l->sharp = OB_SHARP_4X;
+        else if (!strcmp(v, "5x") || !strcmp(v, "5X")) l->sharp = OB_SHARP_5X;
+        else if (!strcmp(v, "6x") || !strcmp(v, "6X") || !strcmp(v, "7x")) l->sharp = OB_SHARP_6X;
+        else if (!strcmp(v, "9x") || !strcmp(v, "9X") || !strcmp(v, "11x")) l->sharp = OB_SHARP_9X;
+        else l->sharp = ob_sharp_index(atoi(v));
     } else if (!strcmp(key, "crt")) l->crt = (ob_crt_look)atoi(v);
     else if (!strcmp(key, "picture_height")) l->height = (ob_picture_height)name_index(v, height_name, 4, 0);
     else if (!strcmp(key, "khz")) l->khz31 = atoi(v) == 31;
     else if (!strcmp(key, "mask_scale")) l->mask_scale = atoi(v) < 1 ? 1 : atoi(v) > 4 ? 4 : atoi(v);
     else if (!strcmp(key, "bright")) l->bright = atoi(v);
+    else if (!strcmp(key, "mister_h")) snprintf(l->mister_path[0], sizeof l->mister_path[0], "%s", v);
+    else if (!strcmp(key, "mister_v")) snprintf(l->mister_path[1], sizeof l->mister_path[1], "%s", v);
+    else if (!strcmp(key, "mister_gamma")) snprintf(l->mister_path[2], sizeof l->mister_path[2], "%s", v);
+    else if (!strcmp(key, "mister_mask")) snprintf(l->mister_path[3], sizeof l->mister_path[3], "%s", v);
+    else if (!strcmp(key, "mister_preset")) snprintf(l->mister_path[4], sizeof l->mister_path[4], "%s", v);
 }
 
 static void write_look(FILE *f, const char *prefix, const ob_look *l, int console, int lores)
 {
-    static const char *sharp_hi[4] = { "1x", "2x", "3x", "4x" };
-    static const char *sharp_lo[4] = { "3x", "5x", "7x", "11x" };
-    const char *sh = (console || !lores) ? sharp_hi[l->sharp % 4] : sharp_lo[l->sharp % 4];
+    static const char *sharp_name[OB_SHARP_COUNT] = { "2x", "3x", "4x", "5x", "6x", "9x" };
+    const char *sh = sharp_name[l->sharp >= 0 && l->sharp < OB_SHARP_COUNT ? l->sharp : OB_SHARP_3X];
+    (void)console;
+    (void)lores;
     fprintf(f, "%s_scale_mode=%s\n", prefix, mode_name[l->mode % OB_MODE_COUNT]);
     fprintf(f, "%s_sharp=%s\n", prefix, sh);
     fprintf(f, "%s_crt=%d\n", prefix, l->crt);
@@ -260,6 +287,11 @@ static void write_look(FILE *f, const char *prefix, const ob_look *l, int consol
     fprintf(f, "%s_khz=%d\n", prefix, l->khz31 ? 31 : 15);
     fprintf(f, "%s_mask_scale=%d\n", prefix, l->mask_scale);
     fprintf(f, "%s_bright=%d\n", prefix, l->bright);
+    fprintf(f, "%s_mister_h=%s\n", prefix, l->mister_path[0]);
+    fprintf(f, "%s_mister_v=%s\n", prefix, l->mister_path[1]);
+    fprintf(f, "%s_mister_gamma=%s\n", prefix, l->mister_path[2]);
+    fprintf(f, "%s_mister_mask=%s\n", prefix, l->mister_path[3]);
+    fprintf(f, "%s_mister_preset=%s\n", prefix, l->mister_path[4]);
 }
 
 int ob_host_save_ini(const ob_host *h)
@@ -272,6 +304,7 @@ int ob_host_save_ini(const ob_host *h)
     fprintf(f, "refresh=%s\n", refresh_name[h->refresh % 3]);
     fprintf(f, "vsync=%s\n", h->vsync ? "on" : "off");
     fprintf(f, "stats=%s\n", h->stats ? "on" : "off");
+    fprintf(f, "windows_pointer=%s\n", pointer_name[h->pointer % 3]);
     write_look(f, "lores", &h->lores, h->console_dar, 1);
     if (h->has_hires) write_look(f, "hires", &h->hires, 0, 0);
     fprintf(f, "volume=%d\n", h->volume);
@@ -302,6 +335,9 @@ int ob_host_load_ini(ob_host *h, const char *path)
         if (!strcmp(k, "refresh")) h->refresh = (ob_refresh)name_index(v, refresh_name, 3, OB_REFRESH_VRR);
         else if (!strcmp(k, "vsync")) h->vsync = strcmp(v, "off") != 0;
         else if (!strcmp(k, "stats")) h->stats = !strcmp(v, "on");
+        else if (!strcmp(k, "windows_pointer"))
+            h->pointer = !strcmp(v, "show") || !strcmp(v, "always show") ? 1
+                : !strcmp(v, "hide") || !strcmp(v, "always hide") ? 2 : 0;
         else if (!strcmp(k, "volume")) h->volume = atoi(v);
         else if (!strcmp(k, "mute")) h->mute = !strcmp(v, "on");
         else if (!strncmp(k, "lores_", 6)) apply_look_key(&h->lores, k + 6, v);
@@ -310,6 +346,26 @@ int ob_host_load_ini(ob_host *h, const char *path)
     fclose(f);
     h->wrote_defaults = 0;
     return 1;
+}
+
+const char *ob_mister_selected(const ob_host *h, ob_class cls, int kind)
+{
+    const ob_look *look;
+    if (!h || kind < 0 || kind > 4) return "";
+    look = cls == OB_CLASS_HIRES ? &h->hires : &h->lores;
+    return look->mister_path[kind];
+}
+
+void ob_mister_pick(ob_host *h, ob_class cls, int kind, const char *rel)
+{
+    ob_look *look;
+    if (!h || kind < 0 || kind > 4) return;
+    look = cls == OB_CLASS_HIRES ? &h->hires : &h->lores;
+    snprintf(look->mister_path[kind], sizeof look->mister_path[kind], "%s", rel ? rel : "");
+    look->mode = OB_MODE_MISTER;
+    h->fallback_note = ob_look_fallback_note(look->mode, h->present);
+    h->live_preview = 1;
+    if (h->ini_path[0]) ob_host_save_ini(h);
 }
 
 int ob_host_apply(ob_host *h, ob_class cls, int id, int value)
@@ -323,7 +379,12 @@ int ob_host_apply(ob_host *h, ob_class cls, int id, int value)
         break;
     case OB_ID_VSYNC: h->vsync = value; break;
     case OB_ID_STATS: h->stats = value; break;
+    case OB_ID_BLEND: h->blend = value; break;
+    case OB_ID_POINTER: h->pointer = value; break;
+    case OB_ID_FM_CORE: h->fm_core = value; break;
+    case OB_ID_FM_CHIP: h->fm_chip = value; break;
     case OB_ID_SCALE_MODE:
+        if (value == OB_MODE_RETROARCH) value = OB_MODE_SHARP;
         look->mode = (ob_scale_mode)value;
         h->fallback_note = ob_look_fallback_note(look->mode, h->present);
         break;
@@ -337,6 +398,7 @@ int ob_host_apply(ob_host *h, ob_class cls, int id, int value)
     case OB_ID_MISTER_RESET:
         look->mask_scale = 1;
         look->bright = 100;
+        memset(look->mister_path, 0, sizeof look->mister_path);
         break;
     case OB_ID_VOLUME: h->volume = value; break;
     case OB_ID_MUTE: h->mute = value; break;

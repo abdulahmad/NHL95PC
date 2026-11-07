@@ -6,6 +6,7 @@
 #include "overbar_client.h"
 #include <ctype.h>
 #include <math.h>
+#include <string.h>
 #include <SDL.h>
 
 #define WINDOW ((uint8_t *)0xA0000)
@@ -58,6 +59,7 @@ static uint32_t argb[1280 * 1024];
  * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program and changed from the window's menu or the keys 1-6. */
 static int present_hz = 60, vsync_on = 0, osd_on, vrr_on = 1;      /* by default: draw each new image, vsync off */
 static int video_ini_missing, overbar_busy;
+static void overbar_capture_host(void);
 static void title_refresh(void);
 static int hires_mode, lores_mode, vscale_hi, vscale_lo;              /* the scaling of the 640x480 screens and of the 320x200 screens: see the tables */
 #define NHIRES NHIRES_ITEMS
@@ -85,6 +87,7 @@ static float c_dark = 0.30f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.60f;  
 static float m_horiz[2][64][4], m_vert[2][2][256][4], m_gamma[2][256];
 static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[2][8];
 static int m_nmasks[2], m_dirty[2] = { 1, 1 }, m_mask_for = -1, m_class_up = -1;
+static int sharp_pre[2] = { 3, 3 };          /* integer scale before the window fit; 3x is the default */
 
 static void mister_defaults(int c)
 {
@@ -277,11 +280,10 @@ static void apply_preset(int cls, const char *rel)
  * in linear light, after Timothy Lottes' CRT shader), 2 the same with an aperture grille mask. */
 static void look(int w, int *pre, float *scan, int *period, int *style)
 {
-    static const int lo_pre[4] = { 3, 5, 7, 11 };
     *scan = 0; *period = 1; *style = 0;
     if (w == 320) {
         int m = lores_mode;
-        *pre = m < 4 ? lo_pre[m] : 3;
+        *pre = m < 4 ? sharp_pre[1] : 3;
         if (m >= 4) *period = lores_khz31 ? 2 : 1;      /* the CRT looks (not the plain scales): 31 kHz is every line twice, a 320x400 picture */
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m == 7 || m == 8) { *style = m - 6; *pre = 1; }
@@ -289,7 +291,7 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
         if (m == 10) { *style = 4; *pre = 3; }
     } else {
         int m = hires_mode;
-        *pre = m < 4 ? m + 1 : 1;
+        *pre = m < 4 ? sharp_pre[0] : 1;
         if (m >= 4 && m < 7) *scan = scan_strength[m - 4];
         if (m >= 7 && m < 9) *style = 1 + (m - 7);
         if (m == 9) *style = 3;
@@ -365,6 +367,11 @@ static void settings_load(void)
         else if (!strcmp(k, "lores_picture_height")) vscale_lo = name_index(v, vscale_names, 4, 0);
     }
     fclose(f);
+    if (hires_mode < 4) sharp_pre[0] = hires_mode + 1;
+    if (lores_mode < 4) {
+        static const int lo_pre[4] = { 3, 5, 7, 11 };
+        sharp_pre[1] = lo_pre[lores_mode];
+    }
 }
 
 void settings_save_all(void);
@@ -436,6 +443,7 @@ void video_mister_pick(int cls, int kind, const char *rel)
     mister_on(cls);
     settings_save();
     menu_sync();
+    if (!overbar_busy) overbar_capture_host();
 }
 
 /* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
@@ -476,13 +484,24 @@ static void overbar_capture_host(void)
     h->refresh = vrr_on ? OB_REFRESH_VRR : present_hz == 70 ? OB_REFRESH_70 : OB_REFRESH_60;
     h->vsync = vsync_on;
     h->stats = osd_on;
+    h->pointer = video_pointer_mode();
     ob_mode_to_look(&h->hires, hires_mode, vscale_hi);
     ob_mode_to_look(&h->lores, lores_mode, vscale_lo);
+    h->hires.sharp = ob_sharp_index(sharp_pre[0]);
+    h->lores.sharp = ob_sharp_index(sharp_pre[1]);
     h->lores.khz31 = lores_khz31;
     h->hires.mask_scale = mcfg[0].mask_scale;
     h->lores.mask_scale = mcfg[1].mask_scale;
     h->hires.bright = (int)(mcfg[0].bright * 100.0f + 0.5f);
     h->lores.bright = (int)(mcfg[1].bright * 100.0f + 0.5f);
+    /* The bar stores mister/Filters/...; the overlay's folder page uses the path under mister/. */
+    for (int k = 0; k < 4; k++) {
+        const char *hp = video_mister_path(0, k), *lp = video_mister_path(1, k);
+        if (!strncmp(hp, "mister/", 7)) hp += 7;
+        if (!strncmp(lp, "mister/", 7)) lp += 7;
+        snprintf(h->hires.mister_path[k], sizeof h->hires.mister_path[k], "%s", hp);
+        snprintf(h->lores.mister_path[k], sizeof h->lores.mister_path[k], "%s", lp);
+    }
 }
 
 static void overbar_apply_host(ob_host *h)
@@ -505,16 +524,49 @@ static void overbar_apply_host(ob_host *h)
         video_command(h->lores.khz31 ? CMD_MKHZ + 1 : CMD_MKHZ);
     if (h->hires.mode == OB_MODE_MISTER) {
         b = (h->hires.bright - 70) / 10;
-        if (b < 0) b = 0; if (b > 8) b = 8;
+        if (b < 0) b = 0;
+        if (b > 8) b = 8;
         video_command(CMD_MBRIGHT_HI + b);
         video_command(CMD_MSCALE_HI + ((h->hires.mask_scale < 1 ? 1 : h->hires.mask_scale) - 1) % 4);
     }
     if (h->lores.mode == OB_MODE_MISTER) {
         b = (h->lores.bright - 70) / 10;
-        if (b < 0) b = 0; if (b > 8) b = 8;
+        if (b < 0) b = 0;
+        if (b > 8) b = 8;
         video_command(CMD_MBRIGHT_LO + b);
         video_command(CMD_MSCALE_LO + ((h->lores.mask_scale < 1 ? 1 : h->lores.mask_scale) - 1) % 4);
     }
+    sharp_pre[0] = ob_sharp_mul(h->hires.sharp);
+    sharp_pre[1] = ob_sharp_mul(h->lores.sharp);
+    {
+        static char last_preset[2][192];
+        int cls;
+        for (cls = 0; cls < 2; cls++) {
+            const ob_look *look = cls ? &h->lores : &h->hires;
+            int k;
+            if (look->mode != OB_MODE_MISTER) continue;
+            for (k = 0; k < 5; k++) {
+                char full[220];
+                const char *rel = look->mister_path[k];
+                if (!rel[0]) {
+                    if (k == 4) last_preset[cls][0] = 0;
+                    else if (video_mister_path(cls, k)[0]) video_mister_pick(cls, k, "");
+                    continue;
+                }
+                if (!strncmp(rel, "mister/", 7)) snprintf(full, sizeof full, "%s", rel);
+                else snprintf(full, sizeof full, "mister/%s", rel);
+                if (k == 4) {
+                    if (strcmp(last_preset[cls], full)) {
+                        video_mister_pick(cls, 4, full);
+                        snprintf(last_preset[cls], sizeof last_preset[cls], "%s", full);
+                    }
+                } else if (strcmp(video_mister_path(cls, k), full))
+                    video_mister_pick(cls, k, full);
+            }
+        }
+    }
+    if (video_pointer_mode() != (h->pointer % 3))
+        video_command(CMD_POINTER + (h->pointer % 3));
     overbar_busy = 0;
 }
 
@@ -526,8 +578,17 @@ void video_command(int id)
     else if (id == CMD_REFRESH_VRR) { vrr_on = 1; vsync_on = 0; }
     else if (id == CMD_VSYNC) vsync_on = !vsync_on;
     else if (id == CMD_STATS) osd_on = !osd_on;
-    else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) { hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 ? 3 : 0; }     /* a look with scanlines: auto crop; a plain scale (1X-11X): fit the window */
-    else if (id >= CMD_LORES && id < CMD_LORES + NLORES) { lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 ? 3 : 0; }
+    else if (id >= CMD_HIRES && id < CMD_HIRES + NHIRES) {
+        hires_mode = id - CMD_HIRES; vscale_hi = hires_mode >= 4 ? 3 : 0;   /* scanlines: auto crop; a plain scale: fit */
+        if (hires_mode < 4) sharp_pre[0] = hires_mode + 1;
+        if (hires_mode == 9) m_dirty[0] = 1;
+    }
+    else if (id >= CMD_LORES && id < CMD_LORES + NLORES) {
+        static const int lo_pre[4] = { 3, 5, 7, 11 };
+        lores_mode = id - CMD_LORES; vscale_lo = lores_mode >= 4 ? 3 : 0;
+        if (lores_mode < 4) sharp_pre[1] = lo_pre[lores_mode];
+        if (lores_mode == 9) m_dirty[1] = 1;
+    }
     else if (id >= CMD_POINTER && id < CMD_POINTER + 3) ptr_mode = id - CMD_POINTER;
     else if (id >= CMD_MBRIGHT_HI && id < CMD_MBRIGHT_HI + 9) { mcfg[0].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_HI); mister_on(0); }
     else if (id >= CMD_MBRIGHT_LO && id < CMD_MBRIGHT_LO + 9) { mcfg[1].bright = 0.7f + 0.1f * (id - CMD_MBRIGHT_LO); mister_on(1); }

@@ -253,8 +253,11 @@ static void cursor_update(void)
     video_confine_mouse(active && (fs || play_mouse));
     SDL_GetMouseState(&px, &py);
     over = active && SDL_GetMouseFocus() != 0 && px >= vx && px < vx + vw && py >= vy && py < vy + vh;
-    hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
-    if (video_pointer_mode() == 0 && active && fs && curperiod != -1) hide = 1;    /* automatic: always hidden during a game in fullscreen */
+    if (overbar_client_open()) hide = 0;
+    else {
+        hide = over && (video_pointer_mode() == 0 ? drawn : video_pointer_mode() == 2);
+        if (video_pointer_mode() == 0 && active && fs && curperiod != -1) hide = 1;    /* automatic: always hidden during a game in fullscreen */
+    }
     { static int was = -1; if (drawn != was) TRACE("game pointer %d (play with the mouse %d)\n", drawn, play_mouse); was = drawn; }
     if (hide != hidden) { SDL_ShowCursor(hide ? SDL_DISABLE : SDL_ENABLE); hidden = hide; }
 }
@@ -275,6 +278,22 @@ static void mouse_follow(int *cx, int *cy)
 }
 
 /* main thread */
+static void overlay_mouse(int wx, int wy, int what)
+{
+    int vx, vy, vw, vh, mw, mh, r;
+    if (!overbar_client_open() || what < 0) return;
+    video_view(&vx, &vy, &vw, &vh);
+    video_mode_size(&mw, &mh);
+    if (vw <= 0 || vh <= 0 || mw <= 0 || mh <= 0) return;
+    if (wx < vx || wy < vy || wx >= vx + vw || wy >= vy + vh) return;
+    r = overbar_client_pointer((wx - vx) * mw / vw, (wy - vy) * mh / vh, mw, mh, what);
+#ifdef _WIN32
+    if (what != 0 && r == OB_ID_CONTROLLERS) bindings_dialog_open(NULL);
+#else
+    (void)r;
+#endif
+}
+
 void input_poll(void)
 {
     SDL_Event e;
@@ -328,12 +347,26 @@ void input_poll(void)
         case SDL_SYSWMEVENT: menu_event(e.syswm.msg); break;      /* the window's menu (Windows) */
         case SDL_MOUSEMOTION: {
             int gx, gy;
+            if (overbar_client_open()) { overlay_mouse(e.motion.x, e.motion.y, 0); break; }
             video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
             mouse_x = gx; mouse_y = gy;
             win_x = e.motion.x; win_y = e.motion.y; win_moved = 1;
             break;
         }
+        case SDL_MOUSEWHEEL:
+            if (overbar_client_open()) {
+                int mx, my;
+                SDL_GetMouseState(&mx, &my);
+                overlay_mouse(mx, my, e.wheel.y > 0 ? 3 : e.wheel.y < 0 ? 4 : -1);
+            }
+            break;
         case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: {
+            if (overbar_client_open()) {
+                if (e.type == SDL_MOUSEBUTTONDOWN)
+                    overlay_mouse(e.button.x, e.button.y, e.button.button == SDL_BUTTON_LEFT ? 1
+                                  : e.button.button == SDL_BUTTON_RIGHT ? 2 : -1);
+                break;
+            }
             static unsigned char mdown[8];
             int btn = e.button.button;
             if (btn >= 1 && btn <= 5) mdown[btn] = e.type == SDL_MOUSEBUTTONDOWN;

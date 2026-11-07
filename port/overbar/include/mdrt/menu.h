@@ -72,6 +72,8 @@ void mdrt_menu_select(mdrt_menu *m, int id);
  * (its id is returned), BACK puts it back, LEFT erases, the others do nothing. Returns the id of
  * the item chosen or changed, MDRT_MENU_CLOSE for BACK, or MDRT_MENU_NOTHING. */
 int mdrt_menu_input(mdrt_menu *m, int input);
+/* The row under a pixel of the last-drawn page, or -1. w and h are that page's buffer. */
+int mdrt_menu_at(const mdrt_menu *m, int x, int y, int w, int h);
 /* the page over w x h pixels (0x??RRGGBB, pitch pixels a row), the picture under it darkened */
 void mdrt_menu_draw(mdrt_menu *m, uint32_t *px, int w, int h, int pitch);
 /* text in the font with its top left at pixel x, y (clipped to the picture); the x after it */

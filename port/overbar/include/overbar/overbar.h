@@ -82,21 +82,16 @@ typedef enum {
     OB_CRT_COUNT
 } ob_crt_look;
 
+/* Integer prescale before the window fit. 3x (720p) is the default. */
 typedef enum {
-    OB_SHARP_1X = 0,
-    OB_SHARP_2X,
+    OB_SHARP_2X = 0,
     OB_SHARP_3X,
     OB_SHARP_4X,
-    OB_SHARP_HI_COUNT
-} ob_sharp_hi;
-
-typedef enum {
-    OB_SHARP_LO_3X = 0,
-    OB_SHARP_LO_5X,
-    OB_SHARP_LO_7X,
-    OB_SHARP_LO_11X,
-    OB_SHARP_LO_COUNT
-} ob_sharp_lo_pc;
+    OB_SHARP_5X,
+    OB_SHARP_6X,
+    OB_SHARP_9X,
+    OB_SHARP_COUNT
+} ob_sharp_amount;
 
 enum {
     OB_PAGE_MAIN = 0,
@@ -106,6 +101,13 @@ enum {
     OB_PAGE_CAPTURE,
     OB_PAGE_ONLINE,
     OB_PAGE_KEYS,
+    OB_PAGE_SCALE_HI,
+    OB_PAGE_SCALE_LO,
+    OB_PAGE_MODE_HI,
+    OB_PAGE_MODE_LO,
+    OB_PAGE_OPTS_HI,
+    OB_PAGE_OPTS_LO,
+    OB_PAGE_MISTER,             /* one directory of the MiSTer tree */
     OB_PAGE_COUNT
 };
 
@@ -138,6 +140,12 @@ enum {
     OB_ID_MISTER_BRIGHT,
     OB_ID_MISTER_RESET,
     OB_ID_RETROARCH_SHADER,
+    OB_ID_BLEND,
+    OB_ID_SCALE_HI,
+    OB_ID_SCALE_LO,
+    OB_ID_FM_CORE,
+    OB_ID_FM_CHIP,
+    OB_ID_POINTER,
     OB_ID_VOLUME,
     OB_ID_MUTE,
     OB_ID_CONTROLLERS,
@@ -147,8 +155,17 @@ enum {
     OB_ID_CAP_GIFSCALE,
     OB_ID_ONLINE_NOTE,
     OB_ID_PRESENT_NOTE,
+    OB_ID_MODE_MENU_HI,         /* Scaling: Scale Mode opens this */
+    OB_ID_MODE_MENU_LO,
+    OB_ID_OPTS_MENU_HI,         /* the selected mode's own knobs */
+    OB_ID_OPTS_MENU_LO,
+    OB_ID_MISTER_DIR,           /* a folder inside the MiSTer tree */
+    OB_ID_MISTER_FILE,          /* a .txt or a preset .ini; value is the kind */
     OB_ID_ADDON = 1000
 };
+
+/* A horizontal divider between setting groups. Not a PulseMan item kind. */
+#define OB_ITEM_SEP 64
 
 /* SDL2 scancodes so a client can pass e.key.keysym.scancode through. */
 enum {
@@ -164,7 +181,7 @@ typedef enum {
 } ob_hostkey;
 
 #define OB_ADDONS_MAX 16
-#define OB_ITEMS_MAX 48
+#define OB_ITEMS_MAX 96          /* one MiSTer folder (the largest is under 70) */
 
 typedef struct ob_addon {
     int id;
@@ -180,6 +197,8 @@ typedef struct ob_look {
     int khz31;                  /* lo-res CRT/MiSTer: 0 = 15 kHz, 1 = 31 kHz */
     int mask_scale;             /* 1..4 */
     int bright;                 /* 70..150 step 10 */
+    /* Paths under mister/, kind 0 H, 1 V, 2 gamma, 3 mask, 4 preset. Empty is none. */
+    char mister_path[5][192];
 } ob_look;
 
 typedef struct ob_host {
@@ -190,6 +209,9 @@ typedef struct ob_host {
     int stats;
     ob_look lores, hires;
     int volume, mute;
+    int blend;                  /* 0 off, 1 dither, 2 soft (PulseMan) */
+    int pointer;                /* 0 auto, 1 show, 2 hide */
+    int fm_core, fm_chip;
     int replay_secs_index;      /* 0 off, 1 10s, 2 20s, 3 30s, 4 60s */
     int gif_scale;              /* 0 1x, 1 2x, 2 3x */
     int recording;
@@ -203,6 +225,9 @@ typedef struct ob_host {
     int live_preview;           /* 1: a menu change is already in the host (always on) */
     int wrote_defaults;
     int request_quit;           /* overlay Quit: the client should exit */
+    int mister_kind;            /* which MiSTer list the mister page is showing */
+    char mister_dir[192];       /* that list's directory, under mister/ */
+    char mister_row[OB_ITEMS_MAX][192]; /* path behind each row of the mister page */
     ob_present_backend present; /* SDL_Renderer on handheld; never GL there */
     const char *fallback_note;  /* Scale Mode that cannot run on this present */
     char ini_path[512];
@@ -219,7 +244,8 @@ typedef struct ob_item {
     const char *const *choices;
     int nchoices;
     int value;
-    char detail[96];
+    char detail[192];
+    char text[96];              /* owned label when it is not a literal */
 } ob_item;
 
 /* dest-rect: 4:3 of a dar_h canvas (240 for consoles); source stays src_h. */
@@ -259,6 +285,15 @@ int ob_mode_has_khz(ob_scale_mode m);
 int ob_mode_is_pixel(ob_scale_mode m);                    /* Scale2x..xBR: picture height only */
 
 const char *ob_mode_label(ob_scale_mode m);
+int ob_sharp_mul(int index);                          /* 2, 3, 4, 5, 6 or 9 */
+int ob_sharp_index(int mul);                          /* nearest step to a multiplier */
+const char *const *ob_mode_choice_list(int *n);       /* overlay cycles these in place */
+int ob_mode_choice_value(int index);                  /* choice index to ob_scale_mode */
+int ob_mode_choice_index(ob_scale_mode m);
+/* MiSTer taps as a prescale of the source (factor 3). *dst is owned here.
+ * 1 when a frame was written. The caller then scales that image to the aspect rect. */
+int ob_mister_prescale(const ob_look *look, const uint32_t *src, int sw, int sh, int spitch,
+                       uint32_t **dst, int *dw, int *dh);
 const char *ob_refresh_label(ob_refresh r);
 const char *ob_height_label(ob_picture_height h);
 
@@ -266,11 +301,33 @@ const char *ob_height_label(ob_picture_height h);
 int ob_main_items(const ob_host *h, ob_item *out, int cap);
 int ob_video_items(const ob_host *h, ob_class cls, ob_item *out, int cap);
 int ob_page_items(const ob_host *h, int page, ob_item *out, int cap);
+/* One directory of the MiSTer tree (folders, then files). at_root adds None for gamma and mask. */
+int ob_mister_entries(const char *dir_rel, int kind, int at_root, const char *selected,
+                     ob_item *out, int cap);
+void ob_mister_pick(ob_host *h, ob_class cls, int kind, const char *rel);
+const char *ob_mister_selected(const ob_host *h, ob_class cls, int kind);
 int ob_items_contain(const ob_item *items, int n, int id);
 int ob_items_contain_label(const ob_item *items, int n, const char *label);
 
 /* Apply a choice / action. Overlay does this on every change (live preview). */
 int ob_host_apply(ob_host *h, ob_class cls, int id, int value);
+
+/* The client paints and pauses. Overbar does not link SDL or the game host.
+ * A NULL hook is a no-op, which is how the library test runs. */
+typedef struct ob_shell {
+    void (*picture)(const ob_host *h);
+    void (*capture)(const ob_host *h, int id);
+    void (*hold)(int paused);
+    void (*redraw)(void);
+    void (*draw_now)(void);
+    int (*vsync)(int v);          /* -1 reads the running window */
+    int (*stats)(int v);
+    void (*quit)(void);
+} ob_shell;
+
+void ob_shell_set(const ob_shell *hooks);                 /* NULL clears */
+void ob_picture_apply(const ob_host *h);                  /* calls shell.picture */
+void ob_capture_apply(const ob_host *h, int id);          /* calls shell.capture */
 
 int ob_host_add_addon(ob_host *h, int id, const char *label, int (*open)(void *ctx));
 
@@ -312,18 +369,28 @@ void ob_overlay_open(ob_host *h);
 void ob_overlay_close(ob_host *h);
 void ob_overlay_build(ob_host *h);                        /* rebuild current page from the host */
 int ob_overlay_input(ob_host *h, int mdrt_input);         /* applies + live-previews; 1 still open */
+/* A mouse over the overlay buffer. what: 0 move, 1 left click, 2 right click, 3 wheel up, 4 wheel down. */
+int ob_overlay_pointer(ob_host *h, int x, int y, int w, int hgt, int what);
 void ob_overlay_draw(ob_host *h, uint32_t *px, int w, int hgt, int pitch);
 int ob_overlay_toggle_key(ob_host *h, int sdl_scancode);  /* ` / F11; 1 if handled */
 int ob_stats_toggle_key(ob_host *h, int sdl_scancode);    /* F12; 1 if handled */
 
-/* ---- file-menu shell (Win32 later; v1 is the item list + show policy) */
+/* ---- file-menu shell (Win32 CreateMenu; other OS bars later) */
+
+/* A Win32 message, copied by the client out of its own window event.
+ * Overbar does not include SDL. */
+typedef struct ob_wm {
+    unsigned msg;
+    uintptr_t wparam;
+} ob_wm;
 
 int ob_filemenu_wanted(int windowed, int fullscreen, int handheld);
 int ob_filemenu_items(const ob_host *h, ob_item *out, int cap);
-void ob_filemenu_init(void *sdl_window);                  /* Win32 stub: remember HWND */
+void ob_filemenu_init(void *native_window);               /* Win32: HWND. Ignored elsewhere. */
 void ob_filemenu_sync(const ob_host *h);
+void ob_filemenu_after_change(int id);                    /* bar checkmarks track the overlay, and the reverse */
 void ob_filemenu_show(int on);
-void ob_filemenu_event(void *syswm_msg);
+void ob_filemenu_event(const ob_wm *wm);
 int ob_filemenu_client_size(int *w, int *h);              /* 0 if unknown (non-Win32) */
 
 #ifdef __cplusplus

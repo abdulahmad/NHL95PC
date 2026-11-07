@@ -223,6 +223,23 @@ int mdrt_menu_erase(mdrt_menu *m)
 
 static int selectable(const mdrt_menu *m, int i) { return i >= 0 && i < m->count && m->items[i].kind != MDRT_ITEM_TEXT; }
 
+int mdrt_menu_at(const mdrt_menu *m, int x, int y, int w, int h)
+{
+    int cols, rows, x0, y0, list, row, i;
+    if (!m || w <= 0 || h <= 0) return -1;
+    cols = w / CW;
+    rows = h / CH;
+    if (cols < 12 || rows < 8) return -1;
+    x0 = (w - cols * CW) / 2;
+    y0 = (h - rows * CH) / 2;
+    list = rows - 6;
+    if (x < x0 || y < y0) return -1;
+    row = (y - y0) / CH;
+    if (row < 3 || row >= 3 + list) return -1;
+    i = m->top + (row - 3);
+    return selectable(m, i) ? i : -1;
+}
+
 mdrt_menu_item *mdrt_menu_find(mdrt_menu *m, int id)
 {
     for (int i = 0; i < m->count; i++) if (m->items[i].id == id) return &m->items[i];
@@ -304,6 +321,9 @@ int mdrt_menu_input(mdrt_menu *m, int input)
 
 static void put(uint32_t *px, int w, int h, int pitch, int x, int y, uint32_t rgb)
 {
+    /* Overlay pixels are ARGB. RGB-only colours (and a 0 shadow) used to leave
+     * A=0, which SDL_BLENDMODE_BLEND and some D3D paths drop entirely. */
+    if (!(rgb >> 24)) rgb |= 0xFF000000u;
     if (x >= 0 && y >= 0 && x < w && y < h) px[y * pitch + x] = rgb;
 }
 
@@ -321,7 +341,7 @@ static int glyphs(uint32_t *px, int w, int h, int pitch, int x, int y, const cha
 
 int mdrt_menu_text(uint32_t *px, int w, int h, int pitch, int x, int y, const char *s, uint32_t rgb)
 {
-    glyphs(px, w, h, pitch, x + 1, y + 1, s, 0);         /* (a shadow, for any picture under it) */
+    glyphs(px, w, h, pitch, x + 1, y + 1, s, 0xFF000000u); /* (a shadow, for any picture under it) */
     return glyphs(px, w, h, pitch, x, y, s, rgb);
 }
 
@@ -344,7 +364,8 @@ static void row_text(uint32_t *px, int w, int h, int pitch, int x0, int y0, int 
 void mdrt_menu_draw(mdrt_menu *m, uint32_t *px, int w, int h, int pitch)
 {
     for (int y = 0; y < h; y++)                           /* the picture under it, a quarter as bright */
-        for (int x = 0; x < w; x++) px[y * pitch + x] = px[y * pitch + x] >> 2 & 0x3F3F3Fu;
+        for (int x = 0; x < w; x++)
+            px[y * pitch + x] = (px[y * pitch + x] >> 2 & 0x3F3F3Fu) | 0xFF000000u;
     int cols = w / CW, rows = h / CH, x0 = (w - cols * CW) / 2, y0 = (h - rows * CH) / 2;
     if (cols < 12 || rows < 8) return;
     int list = rows - 6;                                  /* title, subtitle, a gap; the list; arrow, message, keys */
@@ -397,7 +418,7 @@ void mdrt_menu_draw(mdrt_menu *m, uint32_t *px, int w, int h, int pitch)
         int iw = m->image_w / 2, ih = m->image_h / 2, ix = x0 + (cols - 1) * CW - iw, iy = y0 + 3 * CH;
         for (int y = -1; y <= ih; y++)
             for (int x = -1; x <= iw; x++) {
-                uint32_t c = x < 0 || y < 0 || x == iw || y == ih ? GREY : m->image[(2 * y) * m->image_pitch + 2 * x] & 0xFFFFFF;
+                uint32_t c = x < 0 || y < 0 || x == iw || y == ih ? GREY : m->image[(2 * y) * m->image_pitch + 2 * x] & 0xFFFFFFu;
                 put(px, w, h, pitch, ix + x, iy + y, c);
             }
     }
