@@ -813,3 +813,7 @@ PassLaneChk,cursor,2026-11-06,GA,49,49,"functional leftover pairs: edx Player pa
 CanBlockShot,cursor,2026-11-06,GA,26,26,"functional leftover near: puckvy toward goal + carrier vs loose. PASS 3000. No C."
 checkgoal,cursor,2026-11-06,GA,74,74,"functional leftover near: checkgoalp/OLDZ/post/Goal mix. PASS 3000. No C."
 wallcoll,cursor,2026-11-06,GA,59,59,"functional leftover near: player vs puck SCnum mix + Yvel 0x2000. PASS 3000. No C."
+FillDressedSlots,cursor,2026-11-06,GA,38,38,"functional leftover close: CanFillLineSlot eax=1 + dressed list in ARG. PASS 3000. No C."
+PenGoalStuff,cursor,2026-11-06,GA,67,67,"functional leftover close: PenBuf type 2 minor + tmap advantage. PASS 3000. No C."
+SeedPlayoffRound3,cursor,2026-11-06,GA,72,72,"functional leftover close: games 1/3/5/7 not ARG. PASS 3000. No C."
+PickForLineSlot,cursor,2026-11-06,GA,36,36,"functional leftover close: CanFillLineSlot eax=0 + FillDressedSlots stub + pos-letter lists. PASS 3000. No C."

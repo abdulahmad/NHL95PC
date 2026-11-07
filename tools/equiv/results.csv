@@ -702,7 +702,6 @@ PlayoffTreeMenu,src/front/playoff_mode/PlayoffTreeMenu.c,35bd55599345f1b8ae78917
 PostGameToTeamDb,src/front/calendar/PostGameToTeamDb.c,24b832d2822765db06a5a544252b779995e1dd82,3000,1,NEEDS-REVIEW,"coverage 52%, uncovered 0x36543-0x36583 0x36589-0x365e2 0x36668-0x36741 0x36808-0x368bb 0x3694d-0x36b21; code pointer compared by function x15, null page x1991, uninit read, outputs equal x3000",2026-11-07
 EditTextField,src/pc/dialogs/EditTextField.c,264cb0050d815549128e1475f0457e2b6cf1942f,2976,1,NEEDS-REVIEW,"coverage 71%, uncovered 0x317db-0x31800 0x31858-0x31878 0x31882-0x318ae 0x318bc-0x318e8 0x31a1a-0x31a39; code pointer compared by function x1, null page x112",2026-11-07
 RosterPanelClick,src/front/create/RosterPanelClick.c,b3be2eb4e6bc2c6bdd35f3a56d3e2472230dfc13,3000,1,NEEDS-REVIEW,"coverage 18%, uncovered 0x6dae8-0x6daea 0x6dafa-0x6dafa 0x6db07-0x6dcb0",2026-11-07
-RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,3000,1,NEEDS-REVIEW,"coverage 79%, uncovered 0x1f180-0x1f1a7 0x1f4e0-0x1f53c 0x1f723-0x1f78b 0x1f7dd-0x1f804 0x1f8f7-0x1f9dc; code pointer compared by function x3000, null page x3000",2026-11-07
 InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,202,1,NEEDS-REVIEW,"mostly trapped; coverage 74%, uncovered 0x7e1c5-0x7e1cb 0x7e4cd-0x7e558 0x7e56b-0x7e5dc 0x7e6d7-0x7e7e1; only 202 cases in the time budget; code pointer compared by function x75, uninit read, outputs ",2026-11-07
 SimulateGame,src/front/simgame/SimulateGame.c,c14fd9ebbb7cbf3452af70b02771c0b392555012,3000,1,NEEDS-REVIEW,"coverage 19%, uncovered 0x455c0-0x45a63 0x45a91-0x45ddf 0x45e52-0x47197 0x4721c-0x472b4 0x47733-0x47839; code pointer compared by function x8, code write x9, null page x2509, uninit read, outputs equa",2026-11-07
 LeagueTeamSelect,src/front/league_setup/LeagueTeamSelect.c,cf4c02213d8d8474742396d12515e87792703414,1615,1,NEEDS-REVIEW,"coverage 50%, uncovered 0x3932c-0x393b2 0x39420-0x394c5 0x3986a-0x39916 0x39922-0x3a066 0x3a12a-0x3a1d9; code pointer compared by function x771, null page x768, uninit read, outputs equal x768",2026-11-07
@@ -730,3 +729,16 @@ assrefgoalpa,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8f
 assgoalie,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,NEEDS-REVIEW,"coverage 54%, uncovered 0x4ba03-0x4baa5 0x4bbec-0x4bca4 0x4c065-0x4c0fa 0x4c23c-0x4c2ac 0x4c35c-0x4c3fc; null page x357",2026-11-07
 SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
 NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+FillDressedSlots,src/engine/lines/CanFillLineSlot.c,7a8a116db12bc46ec4f26dcac1ec4930ef26b151,3000,1,PASS,"uninit read, outputs equal x3000",2026-11-07
+checkcheck,src/engine/collide/checkcheck.c,e4d0635dc7b6b7288f8db5777836fd5a6a3e31c1,3000,1,NEEDS-REVIEW,"coverage 82%, uncovered 0x53861-0x5386a 0x538ee-0x538f5 0x53a11-0x53a30 0x53b50-0x53b7e 0x53c5b-0x53c7a",2026-11-07
+PenGoalStuff,src/engine/penalty/InProgress.c,f42e15fd96ffbfa2e4c913dc8aaf3d377b654a6c,3000,1,PASS,null page x1055,2026-11-07
+SeedPlayoffRound3,src/front/season/SimPlayoffRound1.c,4bdc76d5093230418f84e5e95b05a877453ff81a,3000,1,PASS,null page x912,2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+PickForLineSlot,src/engine/lines/PickForLineSlot.c,31460af63a6efb0fd54926d66db5304dca3e160e,3000,1,PASS,,2026-11-07
+InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,3000,1,NEEDS-REVIEW,"coverage 77%, uncovered 0x7e4cd-0x7e558 0x7e596-0x7e59f 0x7e5c2-0x7e5cb 0x7e60d-0x7e60f 0x7e6d7-0x7e7e1; code pointer compared by function x801, uninit read, outputs equal x3000",2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+checkcheck,src/engine/collide/checkcheck.c,e4d0635dc7b6b7288f8db5777836fd5a6a3e31c1,3000,1,NEEDS-REVIEW,"coverage 82%, uncovered 0x53861-0x5386a 0x538ee-0x538f5 0x53a11-0x53a30 0x53b50-0x53b7e 0x53c5b-0x53c7a",2026-11-07

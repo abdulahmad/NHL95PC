@@ -302,18 +302,20 @@ def plant_leftover(func, img, buf, patches, seed=0):
             b[0x480:0x480 + 128] = plant_player_bytes(
                 x=0x20, y=oy, z=2, sc=1, pos=1, xv=0x40, yv=yv, facedir=2)
     elif n == 'checkcheck':
-        kind = seed % 4
-        spa_other = (0x639, 0x873, 0x589, 0)[kind]
+        # Mostly the SPA 0x621 arm (holdcheck/Bcheck are other functions). q close, ref mix.
+        spa_q = (0, 0, 0, 0x589)[seed % 4]
+        qsc = 0x10 if seed & 2 else 1
+        qpfl = 8 if seed & 1 else 0
         if 0x400 + 128 <= len(b):
             b[0x400:0x400 + 128] = plant_player_bytes(
                 x=0x18, y=0x20, z=2, sc=1, pos=1, xv=0x40, spa=0x621, facedir=2,
-                attribute=0 if kind & 2 else 8, pflags=0x80 if kind & 1 else 0,
+                attribute=0 if seed & 4 else 8, pflags=0x80 if seed & 1 else 0,
                 aggress=20, checking=2, weight=80)
         if 0x480 + 128 <= len(b):
             b[0x480:0x480 + 128] = plant_player_bytes(
-                x=0x20, y=0x24, z=2, sc=0x10 if kind == 0 else 1, pos=1, spa=spa_other,
-                xv=0x80, yv=0x80, weight=100, impact=0x30, facedir=2)
-        patch_u8(img, patches, 'gmode', 1 if kind & 1 else 0)
+                x=0x20, y=0x24, z=2, sc=qsc, pos=1, spa=spa_q,
+                xv=0x80, yv=0x80, weight=100, impact=0x30, facedir=2, pflags=qpfl)
+        patch_u8(img, patches, 'gmode', 0x10 if seed & 4 else (1 if seed & 1 else 0))
     elif n == 'CanBlockShot':
         kind = seed % 4
         side = kind & 1
@@ -468,6 +470,84 @@ def plant_leftover(func, img, buf, patches, seed=0):
     if n == 'PlayoffTreeMenu':
         patch_u16(img, patches, 'word_C6D24', 1 if seed & 1 else 0)
         patch_u32(img, patches, 'dword_C65AC', 0)
+    if n == 'FillDressedSlots':
+        if 0x120 <= len(b):
+            b[0x100:0x119] = bytes(range(8)) + bytes([0xFF]) + bytes(16)
+        patch_u16(img, patches, 'word_E9F12', 0 if seed & 1 else 4)
+        patch_u16(img, patches, 'word_E9F14', 0)
+        patch_u32(img, patches, 'dword_E9F16', 0)
+        e9 = img.labels().get('byte_E9E18')
+        if e9:
+            overlay_patch(patches, e9, bytes([2 if seed & 2 else 1] * 25))
+        hm = img.labels().get('hmroster')
+        if hm:
+            rec = bytearray(0x27); rec[0] = 1; rec[5] = 3
+            overlay_patch(patches, hm, bytes(rec) * 8)
+        db = img.labels().get('byte_DB3AE')
+        if db:
+            overlay_patch(patches, db, bytes([ord('C' if seed & 1 else 'D')]) * 8)
+        tab = img.labels().get('hmlinetab')
+        if tab:
+            overlay_patch(patches, tab, bytes(range(0x30)))
+        g473 = img.labels().get('byte_CD473')
+        if g473:
+            overlay_patch(patches, g473, bytes(25))
+        g421 = img.labels().get('byte_CD421')
+        if g421:
+            overlay_patch(patches, g421, bytes([0, 1, 2, 0xFF]) + bytes([0xFF]) * 12)
+    if n == 'PickForLineSlot':
+        rec = bytearray(0x27); rec[0] = 1; rec[5] = 3
+        hm = img.labels().get('hmroster')
+        if hm:
+            overlay_patch(patches, hm, bytes(rec) * 8)
+        pos = (ord('D'), ord('C'), ord('R'), ord('L'))[seed & 3]
+        db = img.labels().get('byte_DB3AE')
+        if db:
+            blob = bytearray(0x24 * 39)
+            for i in range(0x24):
+                blob[i * 39] = pos
+            overlay_patch(patches, db, bytes(blob))
+        for name in ('hmlinetab', 'awlinetab'):
+            tab = img.labels().get(name)
+            if tab:
+                overlay_patch(patches, tab, bytes(range(0x30)))
+        g473 = img.labels().get('byte_CD473')
+        if g473:
+            overlay_patch(patches, g473, bytes(0x24))  # start=0 so CD421 scan finds the slot
+        g421 = img.labels().get('byte_CD421')
+        if g421:
+            overlay_patch(patches, g421, bytes([0, 0x0C, 0x12, 0x1C, 0xFF]) + bytes([0xFF]) * 12)
+        dressed = bytes(range(8)) + bytes([0xFF]) * 17
+        for name in ('unk_E9D50', 'byte_E9DB4', 'unk_E9CEC', 'unk_E9DE6', 'unk_E9EAE',
+                     'unk_E9D82', 'unk_E9E7C', 'unk_E9D1E', 'byte_E9E4A', 'unk_E9EE0'):
+            a = img.labels().get(name)
+            if a:
+                overlay_patch(patches, a, dressed * 2)
+    if n == 'PenGoalStuff':
+        pb = img.labels().get('PenBuf')
+        if pb:
+            overlay_patch(patches, pb, bytes([2, 0, 0, 0, 0, 0, 0, 0]))
+        pl = img.labels().get('PenBuf_pl')
+        if pl:
+            overlay_patch(patches, pl, bytes([8 if seed & 1 else 3, 0, 0, 0, 0, 0, 0, 0]))
+        patch_u16(img, patches, 'gsp', 0 if seed & 2 else 1)
+        patch_u16(img, patches, 'bannermsg', 6)
+        hm = img.labels().get('hmtmstruct')
+        if hm:
+            overlay_patch(patches, hm + 0x36, struct.pack('<h', 6))  # tmap
+            overlay_patch(patches, hm + 0x7E, b'\x02\x00' * 28)     # tmpdst
+            overlay_patch(patches, hm + 0xB6, bytes([0, 0xFF]) + bytes(34))  # tmpbox
+        aw = img.labels().get('awtmstruct')
+        if aw:
+            overlay_patch(patches, aw + 0x36, struct.pack('<h', 4))
+            overlay_patch(patches, aw + 0x7E, b'\x02\x00' * 28)
+            overlay_patch(patches, aw + 0xB6, bytes([0, 0xFF]) + bytes(34))
+    if n == 'SeedPlayoffRound3':
+        # 6-byte games at buf+0x150; g[4] != 0xFF so the date walk finds a played game.
+        base = 0x200 + 0x150
+        if base + 12 <= len(b):
+            b[base:base + 6] = bytes([4, 10, 5, 6, 3, 2])
+            b[base + 6:base + 12] = bytes([4, 11, 6, 5, 0xFF, 0xFF])
     return bytes(b), patches
 
 def clamp_leftover_inputs(func, regs, args):
@@ -523,6 +603,23 @@ def clamp_leftover_inputs(func, regs, args):
         while len(args) < 2:
             args.append(0)
         args[1] = (regs.get('ebx', 0) % 16)  # series; slot = series*2
+    if n == 'FillDressedSlots':
+        regs['eax'] = ARG + 0x100
+        regs['edx'] = 0 if (regs.get('edx', 0) & 1) else 1  # side
+        regs['ebx'] = regs.get('ebx', 0) % 0x24            # slot
+    if n == 'PickForLineSlot':
+        regs['eax'] = 0 if (regs.get('eax', 0) & 1) else 1
+        regs['edx'] = (0, 0x0C, 0x12, 0x1C)[regs.get('edx', 0) & 3]
+    if n == 'SeedPlayoffRound3':
+        regs['eax'] = ARG + 0x200
+        regs['edx'] = (1, 3, 5, 7)[regs.get('edx', 0) & 3]  # games, not ARG
+        while len(args) < 1:
+            args.append(0)
+        args[0] = ARG + 0x50  # human out-param
+    if n == 'PenGoalStuff':
+        regs['eax'] = 0 if (regs.get('eax', 0) & 1) else 1
+    if n == 'InstantReplay':
+        regs['eax'] = regs.get('eax', 0) & 1  # mode 0/1
     return regs, args
 
 def first_use(code, addr, to_ret=False):
@@ -755,7 +852,7 @@ class Checker:
         if mode in ('menu', 'menu_pick', 'menu_redraw'):
             buf, patches = plant_screen(self.img, buf, patches, y1=y1, y2=y2)
         return buf, run.State(regs=regs, args=args, patches=patches, script=script,
-                              event_stub=bool(mode), event_mode=mode)
+                              event_stub=bool(mode), event_mode=mode, func=self.func)
 
     # ---- coverage-guided mutation
     def mutate(self, ent, rng):
@@ -857,7 +954,7 @@ class Checker:
         if self.func == 'PlayoffTreeMenu':
             mode = 'menu_redraw'
         return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None,
-                                         event_stub=bool(mode), event_mode=mode)
+                                         event_stub=bool(mode), event_mode=mode, func=self.func)
 
     def gather(self, want, deadline, max_att):
         """up to `want` distinct entry snapshots of the function under test (level 0, then one level up when under 50)
@@ -1122,6 +1219,15 @@ def _selftest():
     check('CanBlockShot puckvy toward +Y goal', struct.unpack_from('<h', buf, 0x5F8)[0] == 0x100)
     buf, p = plant_leftover('wallcoll', img, bytes(0x600), {}, seed=0)
     check('wallcoll even seed is a player', struct.unpack_from('<h', buf, 0x400 + 0x6A)[0] == 1)
+    r, a = clamp_leftover_inputs('FillDressedSlots', {'edx': 0, 'ebx': 99}, [])
+    check('FillDressedSlots list in ARG and slot in range', r['eax'] == ARG + 0x100 and r['ebx'] < 0x24)
+    r, a = clamp_leftover_inputs('PickForLineSlot', {'edx': 99}, [])
+    check('PickForLineSlot slot is a planted group', r['edx'] in (0, 0x0C, 0x12, 0x1C))
+    r, a = clamp_leftover_inputs('SeedPlayoffRound3', {'edx': 99}, [])
+    check('SeedPlayoffRound3 games is a best-of', r['edx'] in (1, 3, 5, 7))
+    buf, p = plant_leftover('PenGoalStuff', img, bytes(0x100), {}, seed=0)
+    pb = img.labels().get('PenBuf')
+    check('PenGoalStuff PenBuf is a minor', pb and p.get(pb, b'\x00')[:1] == b'\x02')
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 

@@ -42,6 +42,7 @@ class State:
     ptrsize: object = None                       # f(callee, arg position) -> bytes to compare behind a stack pointer (default 4)
     event_stub: bool = False                     # GetInputEvent/PollKey dummy events (leftover screen loops)
     event_mode: str = ''                         # 'list' / 'menu' / 'menu_pick' / 'menu_redraw'
+    func: str = ''                               # function under test (leftover callee stubs)
 
 @dataclass
 class Trace:
@@ -136,6 +137,34 @@ _POLLKEY = None
 _LISTHIT = None
 _FILEOPEN = None
 _ALLOC = None
+_FILLSLOT = None
+_FILLDRESSED = None
+_REPLAYCTL = None
+_RANDOMD0 = None
+
+def fillslot_addr(img):
+    global _FILLSLOT
+    if _FILLSLOT is None:
+        _FILLSLOT = img.labels().get('CanFillLineSlot')
+    return _FILLSLOT
+
+def filldressed_addr(img):
+    global _FILLDRESSED
+    if _FILLDRESSED is None:
+        _FILLDRESSED = img.labels().get('FillDressedSlots')
+    return _FILLDRESSED
+
+def replayctl_addr(img):
+    global _REPLAYCTL
+    if _REPLAYCTL is None:
+        _REPLAYCTL = img.labels().get('ReplayControlLoop')
+    return _REPLAYCTL
+
+def randomd0_addr(img):
+    global _RANDOMD0
+    if _RANDOMD0 is None:
+        _RANDOMD0 = img.labels().get('randomd0')
+    return _RANDOMD0
 
 def serieslen_addr(img):
     """EXE label of SeriesLength, cached."""
@@ -403,6 +432,54 @@ class Runner:
                     click[0] = 1 if eax else 0
             elif a == pollkey_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = pollkey_out(k)
+            elif a == fillslot_addr(img) and cur.func == 'FillDressedSlots':
+                eax = 1  # fits the slot so FillDressedSlots takes a dressed player
+            elif a == fillslot_addr(img) and cur.func == 'PickForLineSlot':
+                eax = 0  # skip the group-scan returns so the pos-letter lists run
+            elif a == filldressed_addr(img) and cur.func == 'PickForLineSlot':
+                # miss the first lists (C/R/L have 3), then a player so a later arm can return
+                eax = 0xFFFFFFFF if k < (cur.seed or 0) % 4 else (k & 7)
+            elif a == replayctl_addr(img) and cur.func == 'InstantReplay':
+                lab = img.labels()
+                if k < 40:
+                    eax = 1
+                    steps = (0, 1, -1, 2, 4, 8, 0x10, -4)
+                    if STK <= rg[0] <= STK + STK_SIZE - 4:
+                        put(rg[0], struct.pack('<i', steps[k % 8]))
+                        hit_skip.add(rg[0])
+                        if ih(rg[0]): written.update(range(rg[0], min(rg[0] + 4, esp0)))
+                    # ReplayControlLoop would have written these; InstantReplay reads them after the call.
+                    kind = k % 4
+                    def _g(name):
+                        return lab.get(name)
+                    ed70c, cd4fc, ed74c = _g('dword_ED70C'), _g('word_CD4FC'), _g('dword_ED74C')
+                    gptry, e9f18, e9f3a = _g('gadgetptry'), _g('word_E9F18'), _g('word_E9F3A')
+                    ed754, ed6f0, ed6f4 = _g('dword_ED754'), _g('dword_ED6F0'), _g('dword_ED6F4')
+                    if ed754:
+                        put(ed754, struct.pack('<I', 0x10 if k & 1 else 0x44))
+                    idx = k % 12
+                    if e9f18:
+                        put(e9f18 + idx * 2, struct.pack('<h', 0x10))
+                    if e9f3a:
+                        put(e9f3a + idx * 2, struct.pack('<h', 0x40))
+                    if kind == 0:
+                        if ed70c: put(ed70c, struct.pack('<I', 1))
+                        if ed6f0: put(ed6f0, struct.pack('<i', 0x10))
+                        if ed6f4: put(ed6f4, struct.pack('<i', 0x40))
+                        if cd4fc: put(cd4fc, struct.pack('<h', -1))
+                    elif kind == 1:
+                        if ed70c: put(ed70c, struct.pack('<I', 0))
+                        if cd4fc: put(cd4fc, struct.pack('<h', idx))
+                    elif kind == 2:
+                        if gptry: put(gptry, struct.pack('<i', 0x50))
+                        if ed74c: put(ed74c, struct.pack('<i', idx))
+                    else:
+                        if gptry: put(gptry, struct.pack('<i', 0x50))
+                        if ed74c: put(ed74c, struct.pack('<I', 0xFFFFFFFF))
+                else:
+                    eax = 0  # quit so InstantReplay cannot spin to insn-limit
+            elif a == randomd0_addr(img) and cur.func == 'checkcheck':
+                eax = 0 if k & 1 else 9  # < aggress, then sometimes > checking
             elif a == listhit_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = listhit_out(k)
             elif a in fileopen_addrs(img) and not callable(cur.script):
@@ -416,7 +493,9 @@ class Runner:
                 eax = ALLOC_PTR  # mapped ARG block; not a script leftover / null
             click_set = False
             if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk,
-                                       getinput_addr(img), pollkey_addr(img), listhit_addr(img))
+                                       getinput_addr(img), pollkey_addr(img), listhit_addr(img),
+                                       fillslot_addr(img), filldressed_addr(img), replayctl_addr(img),
+                                       randomd0_addr(img))
                     and a not in fileopen_addrs(img)):
                 # ptrupdatefn after a real event: button-down bit so the inner input while can exit
                 eax = (eax | 2) & 0xFFFFFFFF
@@ -435,7 +514,8 @@ class Runner:
             # Do not clobber the click-bit on ptrupdatefn (nreg 0 at a non-entry).
             if (cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and nr == 0 and np_ == 0 and not click_set
                     and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
-                                  hittest_addr(img), serieslen_addr(img), chk)
+                                  hittest_addr(img), serieslen_addr(img), fillslot_addr(img),
+                                  filldressed_addr(img), replayctl_addr(img), randomd0_addr(img), chk)
                     and a not in fileopen_addrs(img)
                     and a != PTRFN_STUB):
                 if cur.event_mode == 'menu_pick':
