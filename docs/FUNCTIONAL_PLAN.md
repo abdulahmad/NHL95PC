@@ -1,6 +1,6 @@
 # Functional-equivalence plan for the last drafts
 
-Status: the 2026-11-06 native-link bar (PASS / FAIL-parked / accepted-for-native-link) is **superseded**. Every leftover unmarked draft must become `check.py` PASS (or a harness change that produces PASS). [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) is the historical 52/10/29/18 snapshot. Native F4, `FUNCTIONAL=1`, and nightly stay later. See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md).
+Status: leftover NR **paused** 2026-11-07 at **82 PASS / 27 NR** (H1–keep). The 2026-11-06 native-link bar (PASS / FAIL-parked / accepted-for-native-link) is **superseded**. Every leftover unmarked draft must become `check.py` PASS (or a harness change that produces PASS) before H6 closes. [FUNCTIONAL_ACCEPT.md](FUNCTIONAL_ACCEPT.md) is the historical 52/10/29/18 snapshot. Native F4, `FUNCTIONAL=1`, and nightly stay later. See [FUNCTIONAL_HANDOFF.md](FUNCTIONAL_HANDOFF.md).
 Each step below is done on its own, in order, and stops for Abdul's approval before the next one starts.
 
 ## Why

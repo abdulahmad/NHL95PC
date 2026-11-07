@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after keep plants: **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer PASS 3000.
+Leftover NR **paused** 2026-11-07: **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer PASS 3000. Do not resume unless asked.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -191,6 +191,44 @@ G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, LeagueTeamSelect, MoveToOtherRoster, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie.
 
+## Pause (2026-11-07)
+
+Leftover NR chase stopped at **82/27**. H6 stays closed. Native F4 waits. Never `cc.py mark`. MATCH stays 977.
+
+Unlanded still-unit plants (discarded; no PASS): TradeScreenLoop jersey-column PTRFN_STUB `mx=0x100` `my=0x80` reached 86.2% of 1187 insns at 214 cases / budget 180 (floor miss is case count, not coverage). assgoalie kinds 10/11 (other-half `pucky ^ Ypos < 0`, ShotLaneOpen stub eax=1, neg puck vel) 81.6% still NR. MoveToOtherRoster KeyDbPtr dropped 61→56%; do not restore.
+
+Do not retry: MenuHitTest hit-count, TradeHitTest, EditTextField PollKey, TitleScreen movie stubs, RunPlayerPickMenu sequenced hits.
+
+| Function | Last landed check |
+|---|---|
+| EditGoalieRating | NR 16% / 3000 |
+| RosterPanelClick | NR 18% / 3000 |
+| EditSkaterRating | NR 18% / 3000 |
+| SimulateGame | NR 19% / 3000 |
+| FixJerseyConflict | NR 20% / 3000 |
+| CalendarScreen | NR 21% / 3000 |
+| PlayLeagueGame | NR 23% / 3000 |
+| PickAwardWinners | NR 35% / 3000 |
+| DbLineEditorLoop | NR 39% / 3000 |
+| ExecuteTrade | NR 42% / 3000 |
+| TradePlayers | NR 43% / 3000 |
+| GameLineEditorLoop | NR 43% / 3000 |
+| CopyHumanTeamDBs | NR 44% / 3000 |
+| GameSummaryScreen | NR 49% / 3000 |
+| ReplaySaveHilight | NR 49% / 3000 |
+| LeagueTeamSelect | NR 50% / 1615 |
+| PostGameToTeamDb | NR 52% / 3000 |
+| ExportTeamToFloppy | NR 52% / 3000 |
+| MoveToOtherRoster | NR 61% / 3000 |
+| TitleScreen | NR 64% / 3000 |
+| EditTextField | NR 71% / 2976 |
+| PlayoffTreeMenu | NR 73% / 3000 |
+| TradeScreenLoop | NR 77% / 206 (unlanded jersey plant 86.2% / 214) |
+| assgoalie | NR 80% / 300 (unlanded kinds 10/11 81.6%) |
+| RunPlayerPickMenu | NR 81% / 3000 |
+| SportsDesk | NR uninit-fault / 489 |
+| EditRosters | NR mostly trapped / 3000 |
+
 ## Close
 
-Unit 8 / H6 stays closed until 109/109 PASS. Native F4 waits.
+H6 stays closed until 109/109 PASS. Leftover NR is paused, not finished. Native F4 waits.
