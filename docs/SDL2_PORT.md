@@ -32,6 +32,10 @@ addresses as signed numbers) and at most 32 MB each (the EA memory manager takes
 
 ## Windows
 
+The host menu, overlay and scaler are [Overbar](https://github.com/abdulahmad/overbar), the git submodule `port/overbar`:
+clone with `--recurse-submodules`, or run `git submodule update --init` once after a plain clone. The build scripts
+read Overbar's file list from `port/overbar/sources.txt`.
+
 ```
 port/setup-win.sh                    # from Linux or WSL: installs mingw-w64 and nasm, downloads SDL2 for mingw, builds
 # or, in an MSYS2 "MINGW32" shell:

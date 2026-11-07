@@ -59,11 +59,13 @@ grep -q '^  \.lowmem' "$OUT/lowmem.ld" || { echo "could not add .lowmem to the l
 WINDRES=${WINDRES:-i686-w64-mingw32-windres}
 command -v "$WINDRES" >/dev/null 2>&1 || WINDRES=windres
 $WINDRES -O coff port/icon/icon.rc -o "$OUT/icon.o"
+# Overbar, the host menu and scaler: the git submodule port/overbar (git submodule update --init)
+[ -f port/overbar/sources.txt ] || { echo "no Overbar at port/overbar: git submodule update --init" >&2; exit 1; }
+OVERBAR_SRCS=$(tr -d '\r' < port/overbar/sources.txt | sed 's|^|port/overbar/|')
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
     -DOB_SDL_BASE -Iport/overbar/include -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src \
     -o "$OUT/hockey-win32.exe" port/host.c port/video_gl.c port/menu_win.c port/bindings.c port/bindings_win.c -DHAVE_GL port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
-    port/overbar_client.c port/overbar/src/scaler.c port/overbar/src/host.c port/overbar/src/present.c port/overbar/src/menu.c port/overbar/src/overlay.c port/overbar/src/filemenu.c \
-    port/overbar/third_party/pulseman/menu.c \
+    port/overbar_client.c $OVERBAR_SRCS \
     port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT port/cstart.c \
     port/overrides.c port/plat_win.c "$OUT/icon.o" $(find "$OUT/obj" -name '*.o' | sort) \
     build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
