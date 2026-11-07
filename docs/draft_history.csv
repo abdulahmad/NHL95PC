@@ -820,3 +820,5 @@ PickForLineSlot,cursor,2026-11-06,GA,36,36,"functional leftover close: CanFillLi
 assthreestars,cursor,2026-11-06,GA,15,15,"functional leftover rest: ovltimer -1 + intro/star-done/bring-out/gameover mix. PASS 3000. No C."
 checkcheck,cursor,2026-11-06,GA,82,82,"functional leftover rest: SetSPA writes SPA + signed/fast q. PASS 3000. No C."
 assrefgoalpa,cursor,2026-11-06,GA,76,76,"functional leftover more: temp5 drop without pflags bit 1 + resting-puck pickup. PASS 3000. No C."
+InstantReplay,cursor,2026-11-06,GA,77,77,"functional leftover next: ReplayControlLoop own-hit counter not nstub k. PASS 3000. No C."
+POAfterGame,cursor,2026-11-06,GA,74,74,"functional leftover next: p+0x40 series*7 + SeriesWinner HomeTeam/-1. PASS 3000. No C."

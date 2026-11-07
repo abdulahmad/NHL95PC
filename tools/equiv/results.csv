@@ -772,3 +772,13 @@ assrefgoalpa,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8f
 assrefgoalpa,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,PASS,"code pointer compared by function x1, null page x84, uninit read, outputs equal x244",2026-11-07
 SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
 NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+assgoalie,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,300,1,NEEDS-REVIEW,"coverage 72%, uncovered 0x4bbec-0x4bca4 0x4bcb6-0x4bce4 0x4bd82-0x4bdc2 0x4c02a-0x4c0fa 0x4c1a2-0x4c1e7; null page x15",2026-11-07
+POAfterGame,src/front/playoff_mode/POSeedRound2.c,a4af353b73ac458b1631f1efeb938c75f3ea0a6c,300,1,PASS,code pointer compared by function x3,2026-11-07
+InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,300,1,PASS,"code pointer compared by function x101, uninit read, outputs equal x300",2026-11-07
+POAfterGame,src/front/playoff_mode/POSeedRound2.c,a4af353b73ac458b1631f1efeb938c75f3ea0a6c,3000,1,PASS,code pointer compared by function x35,2026-11-07
+InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245360e2865ee101c8832c,3000,1,PASS,"code pointer compared by function x875, uninit read, outputs equal x3000",2026-11-07
+assgoalie,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,300,1,NEEDS-REVIEW,"coverage 77%, uncovered 0x4bcb6-0x4bce4 0x4bd82-0x4bdc2 0x4c038-0x4c0fa 0x4c1a2-0x4c1e7 0x4c494-0x4c4ae; null page x18",2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+assonetimer,src/engine/input/CanBlockShot.c,7f67c63d32983c8aef19cd0d444013ec8e2eb1c2,300,1,NEEDS-REVIEW,"coverage 55%, uncovered 0x50b7b-0x50bad 0x50c2f-0x50c3f 0x50c72-0x50c76 0x50cc7-0x50cdc 0x50d88-0x50e57",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,300,1,NEEDS-REVIEW,"coverage 83%, uncovered 0x5624b-0x562c0; null page x298",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
