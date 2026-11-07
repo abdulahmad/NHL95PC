@@ -817,3 +817,5 @@ FillDressedSlots,cursor,2026-11-06,GA,38,38,"functional leftover close: CanFillL
 PenGoalStuff,cursor,2026-11-06,GA,67,67,"functional leftover close: PenBuf type 2 minor + tmap advantage. PASS 3000. No C."
 SeedPlayoffRound3,cursor,2026-11-06,GA,72,72,"functional leftover close: games 1/3/5/7 not ARG. PASS 3000. No C."
 PickForLineSlot,cursor,2026-11-06,GA,36,36,"functional leftover close: CanFillLineSlot eax=0 + FillDressedSlots stub + pos-letter lists. PASS 3000. No C."
+assthreestars,cursor,2026-11-06,GA,15,15,"functional leftover rest: ovltimer -1 + intro/star-done/bring-out/gameover mix. PASS 3000. No C."
+checkcheck,cursor,2026-11-06,GA,82,82,"functional leftover rest: SetSPA writes SPA + signed/fast q. PASS 3000. No C."
