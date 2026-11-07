@@ -810,3 +810,6 @@ SkateToSpot,cursor,2026-11-06,GA,94,94,"functional leftover synth: signed world 
 InProgress,cursor,2026-11-06,GA,76,76,"functional leftover pairs: PenBuf 0x1A StartPenaltyShot + RefStep. PASS 3000. No C."
 DrawRinkOverlays,cursor,2026-11-06,GA,77,77,"functional leftover pairs: sortobj15 frame/SCnum/pucky -0xEC mix. PASS 3000. No C."
 PassLaneChk,cursor,2026-11-06,GA,49,49,"functional leftover pairs: edx Player pair + |Y| in (0x4E,0x76] + teammate 0x20 shallower. PASS 3000. No C."
+CanBlockShot,cursor,2026-11-06,GA,26,26,"functional leftover near: puckvy toward goal + carrier vs loose. PASS 3000. No C."
+checkgoal,cursor,2026-11-06,GA,74,74,"functional leftover near: checkgoalp/OLDZ/post/Goal mix. PASS 3000. No C."
+wallcoll,cursor,2026-11-06,GA,59,59,"functional leftover near: player vs puck SCnum mix + Yvel 0x2000. PASS 3000. No C."

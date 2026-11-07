@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after pair plants: **68 PASS / 0 FAIL / 41 NR**. InProgress / DrawRinkOverlays / PassLaneChk PASS 3000.
+Live leftover after near plants: **71 PASS / 0 FAIL / 38 NR**. CanBlockShot / checkgoal / wallcoll PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -104,6 +104,21 @@ Remaining NR: CalendarScreen, CanBlockShot, CopyHumanTeamDBs, DbLineEditorLoop, 
 G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
 
 Remaining NR: CalendarScreen, CanBlockShot, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck, checkgoal, wallcoll.
+
+## Leftover near (puckvy / goal mix / wallcoll player arm)
+
+CanBlockShot `puckvy` toward that goal (opposite sign early-outs at 0x500e0); carrier vs loose `puckc`. checkgoal 8-way mix: `sc!=0xE` checkgoalp, OLDZ bounce, dy=0 wallcoll, `|x-g.x|==24` post, inner Goal. wallcoll even seed is a player (`SCnum!=0xE`) so 0x58a14+ runs; puck `Yvel` 0x2000 is wallcoll-only (not ass*). `--force --budget 1800 --cases 2000 --no-callers` on the leftover NR. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| CanBlockShot | **PASS 3000** (was NR 26%; puckvy toward goal) |
+| checkgoal | **PASS 3000** (was NR 74%; Goal/post/checkgoalp mix) |
+| wallcoll | **PASS 3000** (was NR 59%; player vs puck SCnum mix) |
+| remaining 38 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck.
 
 ## Close
 
