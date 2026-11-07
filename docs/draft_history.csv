@@ -800,3 +800,6 @@ InstantReplay,cursor,2026-11-06,GA,22,22,"functional 109-plan H2: --budget 1800 
 RunMenu,cursor,2026-11-06,GA,72,72,"functional 109-plan H3: pointerspr/alloc/MenuHitTest in-param/cdecl nreg/menu GetInputEvent. PASS 3000. No C."
 ListDialog,cursor,2026-11-06,GA,146,146,"functional 109-plan H3: still PASS 3000 with event_mode=list. No C."
 SportsDesk,cursor,2026-11-06,GA,192,192,"functional 109-plan H3: menu-mode event stub is NR 70% not FAIL. No C."
+RandomizeSchedule,cursor,2026-11-06,GA,14,14,"functional 109-plan H4: --force --budget 1800 --cases 2000 --no-callers. PASS 3000. No C."
+SportsDesk,cursor,2026-11-06,GA,192,192,"functional 109-plan H4: uninit-fault address 0xa5a5a5a5 is NR not FAIL. 489 cases 76%. No C."
+RunTeamPickMenu,cursor,2026-11-06,GA,181,181,"functional 109-plan H5: 0x1e55b statsplayoffs path is live. Not dead-range. No C."

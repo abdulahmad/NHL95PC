@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after H3: **60 PASS / 0 FAIL / 49 NR**. RunMenu PASS 3000.
+Live leftover after H4/H5: **61 PASS / 0 FAIL / 48 NR**. RandomizeSchedule PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -43,10 +43,37 @@ Menu-mode leftovers (`event_mode=menu`): plant `pointerspr` → ARG sprite, `sub
 
 G17: SeriesLength PASS 300, NetCollide PASS 4500. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). `--no-callers` on screen loops.
 
-## NEEDS-REVIEW (49)
+## H4 (recheck remaining NR)
 
-H4: `--force --budget 1800 --cases 2000 --no-callers` on remaining NR. Dead-range still needs a disasm proof (H5).
+`--force --budget 1800 --cases 2000 --no-callers` on all 49 leftover NR. One new PASS. SportsDesk both-fault at case 488 (`orig 0xa5a5a5a5` vs C) is review, not a C store/call FAIL. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| RandomizeSchedule | **PASS 3000** (was NR 56%) |
+| SportsDesk | NR 489 cases, 76% (uninit-fault address is review) |
+| RunTeamPickMenu | NR 3000 cases, 82% |
+| SkateToSpot | NR 3000 cases, 82% |
+| DrawCalendarDay | NR 3000 cases, 80% |
+| checkpuckcoll_ccx | NR 3000 cases, 79% |
+| TradeScreenLoop | NR 2228 cases, 77% |
+| PlayoffTreeMenu | NR 3000 cases, 73% |
+| InstantReplay | NR 204 cases, 74%, mostly trapped, budget |
+| others (39) | still NR; coverage holes, not FAIL |
+
+G17: SeriesLength PASS 300, NetCollide PASS 4500. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+## H5 (dead-range)
+
+Near-miss holes are live retail paths. No `dead_ranges.txt`. Not accept-for-link.
+
+| Function | Uncovered | Why live |
+|---|---|---|
+| RunTeamPickMenu 0x1e55b | `mov esi, [statsplayoffs]` season team-order | retail regular-season stats |
+| SkateToSpot 0x4e46e | `cmp ax, 0E0h` inside the 0xE0..0xE8 Y corridor | retail player on that band |
+| DrawCalendarDay 0x344f9 | selected-day store after `calselmonth`/`calselday` match | retail highlighted cell |
+
+Live holes stay NR. Advisor, not a dump wait.
 
 ## Close
 
-Unit 8 / H6 stays closed until 109/109 PASS.
+Unit 8 / H6 stays closed until 109/109 PASS. Native F4 waits.
