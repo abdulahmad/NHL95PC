@@ -41,7 +41,8 @@ class State:
     argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
     ptrsize: object = None                       # f(callee, arg position) -> bytes to compare behind a stack pointer (default 4)
     event_stub: bool = False                     # GetInputEvent/PollKey dummy events (leftover screen loops)
-    event_mode: str = ''                         # 'list' = 64 events then 0; 'menu' = move, empty, then click
+    event_mode: str = ''                         # 'list' / 'menu' / 'menu_pick' / 'menu_redraw'
+    func: str = ''                               # function under test (leftover callee stubs)
 
 @dataclass
 class Trace:
@@ -136,6 +137,57 @@ _POLLKEY = None
 _LISTHIT = None
 _FILEOPEN = None
 _ALLOC = None
+_FILLSLOT = None
+_FILLDRESSED = None
+_REPLAYCTL = None
+_RANDOMD0 = None
+_PLAYERY = None
+_CHECK4BENCH = None
+_SETSPA = None
+_SERIESWIN = None
+_STARELIG = None
+
+def fillslot_addr(img):
+    global _FILLSLOT
+    if _FILLSLOT is None:
+        _FILLSLOT = img.labels().get('CanFillLineSlot')
+    return _FILLSLOT
+
+def filldressed_addr(img):
+    global _FILLDRESSED
+    if _FILLDRESSED is None:
+        _FILLDRESSED = img.labels().get('FillDressedSlots')
+    return _FILLDRESSED
+
+def replayctl_addr(img):
+    global _REPLAYCTL
+    if _REPLAYCTL is None:
+        _REPLAYCTL = img.labels().get('ReplayControlLoop')
+    return _REPLAYCTL
+
+def randomd0_addr(img):
+    global _RANDOMD0
+    if _RANDOMD0 is None:
+        _RANDOMD0 = img.labels().get('randomd0')
+    return _RANDOMD0
+
+def playery_addr(img):
+    global _PLAYERY
+    if _PLAYERY is None:
+        _PLAYERY = img.labels().get('PlayerFromMouseY')
+    return _PLAYERY
+
+def check4bench_addr(img):
+    global _CHECK4BENCH
+    if _CHECK4BENCH is None:
+        _CHECK4BENCH = img.labels().get('check4bench')
+    return _CHECK4BENCH
+
+def setspa_addr(img):
+    global _SETSPA
+    if _SETSPA is None:
+        _SETSPA = img.labels().get('SetSPA')
+    return _SETSPA
 
 def serieslen_addr(img):
     """EXE label of SeriesLength, cached."""
@@ -147,6 +199,30 @@ def serieslen_addr(img):
 def serieslen_out(stub_k):
     """SeriesLength stub eax: a real best-of (1, 3, 5, 7), not a huge script leftover."""
     return SERIES_LENS[stub_k % 4]
+
+def serieswin_addr(img):
+    """EXE label of SeriesWinner, cached."""
+    global _SERIESWIN
+    if _SERIESWIN is None:
+        _SERIESWIN = img.labels().get('SeriesWinner')
+    return _SERIESWIN
+
+def serieswin_out(seed):
+    """POAfterGame SeriesWinner: HomeTeam 5 or -1 (undecided), not a leftover eax."""
+    return 5 if seed & 1 else 0xFFFFFFFF
+
+def starelig_addr(img):
+    """EXE label of StarEligible, cached."""
+    global _STARELIG
+    if _STARELIG is None:
+        _STARELIG = img.labels().get('StarEligible')
+    return _STARELIG
+
+def replayctl_out(replay_n):
+    """ReplayControlLoop: 1 for the first 8 hits of THIS callee, then 0.
+    InstantReplay has many earlier callees, so nstub k is already >40 at the first hit.
+    Eight is 4 camera/sprite kinds twice; 40 real loop bodies starve the 500-case floor."""
+    return 1 if replay_n < 8 else 0
 
 def getinput_addr(img):
     global _GETINPUT
@@ -283,7 +359,7 @@ class Runner:
         ctx = uc.context_save()
         saved = {}; lazy = []; lazyset = set(); fa = []; seen = {}
         wlo, whi = watch or (1, 0)
-        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State(); click = [0]; event_n = [0]
+        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State(); click = [0]; event_n = [0]; rpl = [0]
 
         def touch(a, n):
             for p in range(a & ~0xFFF, a + max(n, 1), 0x1000):
@@ -389,7 +465,7 @@ class Runner:
             if a == getinput_addr(img) and not callable(cur.script) and cur.event_stub:
                 event_n[0] += 1
                 n = event_n[0]
-                if cur.event_mode == 'menu':
+                if cur.event_mode in ('menu', 'menu_pick', 'menu_redraw'):
                     if n == 1:
                         eax, click[0] = EVENT_PTR, 0     # move, no button
                     elif n == 2:
@@ -403,6 +479,78 @@ class Runner:
                     click[0] = 1 if eax else 0
             elif a == pollkey_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = pollkey_out(k)
+            elif a == fillslot_addr(img) and cur.func == 'FillDressedSlots':
+                eax = 1  # fits the slot so FillDressedSlots takes a dressed player
+            elif a == fillslot_addr(img) and cur.func == 'PickForLineSlot':
+                eax = 0  # skip the group-scan returns so the pos-letter lists run
+            elif a == filldressed_addr(img) and cur.func == 'PickForLineSlot':
+                # miss the first lists (C/R/L have 3), then a player so a later arm can return
+                eax = 0xFFFFFFFF if k < (cur.seed or 0) % 4 else (k & 7)
+            elif a == replayctl_addr(img) and cur.func == 'InstantReplay':
+                lab = img.labels()
+                rpl[0] += 1
+                n = rpl[0]
+                if replayctl_out(n) == 1:
+                    eax = 1
+                    steps = (0, 1, -1, 2, 4, 8, 0x10, -4)
+                    if STK <= rg[0] <= STK + STK_SIZE - 4:
+                        put(rg[0], struct.pack('<i', steps[n % 8]))
+                        hit_skip.add(rg[0])
+                        if ih(rg[0]): written.update(range(rg[0], min(rg[0] + 4, esp0)))
+                    # ReplayControlLoop would have written these; InstantReplay reads them after the call.
+                    kind = n % 4
+                    def _g(name):
+                        return lab.get(name)
+                    ed70c, cd4fc, ed74c = _g('dword_ED70C'), _g('word_CD4FC'), _g('dword_ED74C')
+                    gptry, e9f18, e9f3a = _g('gadgetptry'), _g('word_E9F18'), _g('word_E9F3A')
+                    ed754, ed6f0, ed6f4 = _g('dword_ED754'), _g('dword_ED6F0'), _g('dword_ED6F4')
+                    if ed754:
+                        put(ed754, struct.pack('<I', 0x10 if n & 1 else 0x44))
+                    idx = n % 12
+                    if e9f18:
+                        put(e9f18 + idx * 2, struct.pack('<h', 0x10))
+                    if e9f3a:
+                        put(e9f3a + idx * 2, struct.pack('<h', 0x40))
+                    if kind == 0:
+                        if ed70c: put(ed70c, struct.pack('<I', 1))
+                        if ed6f0: put(ed6f0, struct.pack('<i', 0x30 if n & 1 else -0x30))
+                        if ed6f4: put(ed6f4, struct.pack('<i', 0xF0 if n & 2 else -0xC0))
+                        if cd4fc: put(cd4fc, struct.pack('<h', -1))
+                    elif kind == 1:
+                        if ed70c: put(ed70c, struct.pack('<I', 0))
+                        if cd4fc: put(cd4fc, struct.pack('<h', idx))
+                    elif kind == 2:
+                        if gptry: put(gptry, struct.pack('<i', 0x50))
+                        if ed74c: put(ed74c, struct.pack('<i', idx))
+                    else:
+                        if gptry: put(gptry, struct.pack('<i', 0x50))
+                        if ed74c: put(ed74c, struct.pack('<I', 0xFFFFFFFF))
+                else:
+                    eax = 0  # quit so InstantReplay cannot spin to insn-limit
+            elif a == serieswin_addr(img) and cur.func == 'POAfterGame':
+                eax = serieswin_out(cur.seed or 0)
+            elif a == starelig_addr(img) and cur.func == 'StarCompare':
+                # kind 5 (seed%7==5): 0 then 1 so sa!=sb; else both 0 and unk_DACA0 runs
+                eax = (k & 1) if (cur.seed or 0) % 7 == 5 else 0
+            elif a == randomd0_addr(img) and cur.func == 'checkcheck':
+                eax = 0 if k & 1 else 9  # < aggress, then sometimes > checking
+            elif a == randomd0_addr(img) and cur.func == 'assgoalie':
+                # kinds 6/7/8 (seed%9) need 0 for freeze/dive/poke; others skip to angle
+                eax = 0 if (cur.seed or 0) % 10 in (6, 7, 8) else 0x20
+            elif a == playery_addr(img) and cur.func == 'RunPlayerPickMenu':
+                eax = 1  # a hit so the picker runs; pick 0 = same row (ShowPlayerStatsItem)
+                pick = 0 if k & 1 else 1
+                if STK <= rg[2] <= STK + STK_SIZE - 4:
+                    put(rg[2], struct.pack('<I', pick))
+                    hit_skip.add(rg[2])
+                    if ih(rg[2]): written.update(range(rg[2], min(rg[2] + 4, esp0)))
+            elif a == check4bench_addr(img) and cur.func in ('assgoalie', 'assrefgoalpa'):
+                eax = 0  # not at the bench so the assignment body runs
+            elif a == setspa_addr(img) and cur.func == 'checkcheck':
+                try:
+                    put(rg[0] + 0x38, struct.pack('<H', rg[1] & 0xFFFF))  # p->SPA = edx
+                except UcError:
+                    pass
             elif a == listhit_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = listhit_out(k)
             elif a in fileopen_addrs(img) and not callable(cur.script):
@@ -412,17 +560,21 @@ class Runner:
                     if ih(rg[1]): written.update(range(rg[1], rg[1] + 4))
                 except UcError:
                     pass
-            elif cur.event_mode == 'menu' and a == alloc_addr(img):
+            elif cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and a == alloc_addr(img):
                 eax = ALLOC_PTR  # mapped ARG block; not a script leftover / null
             click_set = False
-            if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk,
-                                       getinput_addr(img), pollkey_addr(img), listhit_addr(img))
+            if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), serieswin_addr(img),
+                                       starelig_addr(img), chk,
+                                       getinput_addr(img), pollkey_addr(img), listhit_addr(img),
+                                       fillslot_addr(img), filldressed_addr(img), replayctl_addr(img),
+                                       randomd0_addr(img), playery_addr(img), check4bench_addr(img),
+                                       setspa_addr(img))
                     and a not in fileopen_addrs(img)):
                 # ptrupdatefn after a real event: button-down bit so the inner input while can exit
                 eax = (eax | 2) & 0xFFFFFFFF
                 click[0] = 0
                 click_set = True
-            if a == PTRFN_STUB and cur.event_mode == 'menu':
+            if a == PTRFN_STUB and cur.event_mode in ('menu', 'menu_pick', 'menu_redraw'):
                 for v in (rg[1], rg[2]):  # edx=&mx ebx=&my: nudge so the no-click arm runs
                     if STK <= v <= STK + STK_SIZE - 4:
                         try:
@@ -433,12 +585,20 @@ class Runner:
                         if ih(v): written.update(range(v, min(v + 4, esp0)))
             # menu item callbacks are 0-arg; return 1 so RunMenu / SportsDesk take the done path.
             # Do not clobber the click-bit on ptrupdatefn (nreg 0 at a non-entry).
-            if (cur.event_mode == 'menu' and nr == 0 and np_ == 0 and not click_set
+            if (cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and nr == 0 and np_ == 0 and not click_set
                     and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
-                                  hittest_addr(img), serieslen_addr(img), chk)
+                                  hittest_addr(img), serieslen_addr(img), serieswin_addr(img),
+                                  starelig_addr(img), fillslot_addr(img), filldressed_addr(img),
+                                  replayctl_addr(img), randomd0_addr(img), playery_addr(img),
+                                  check4bench_addr(img), setspa_addr(img), chk)
                     and a not in fileopen_addrs(img)
                     and a != PTRFN_STUB):
-                eax = 1 if k > 12 else 0  # first callback continues; later ones exit the menu loop
+                if cur.event_mode == 'menu_pick':
+                    eax = 1 if k > 40 else 0  # 0: statsplayoffs arm; later k exits
+                elif cur.event_mode == 'menu_redraw':
+                    eax = 2 if k <= 12 else 1  # DrawPlayoffTree then exit
+                else:
+                    eax = 1 if k > 12 else 0  # first callback continues; later ones exit the menu loop
             for j, (p, n) in enumerate(ptrs.items()):
                 if p in hit_skip: continue
                 base = (eax, edx, eax ^ edx, eax + edx)
@@ -495,7 +655,7 @@ class Runner:
             for p in lazy: uc.mem_unmap(p, 0x1000)
             lazy.clear(); lazyset.clear(); fa.clear()
             uc.context_restore(ctx)
-            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False; click[0] = 0; event_n[0] = 0
+            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False; click[0] = 0; event_n[0] = 0; rpl[0] = 0
             for a, b in (data or {}).items(): uc.mem_write(a, b)
             self.snap = None
             uc.mem_write(esp0 - FILL, random.Random(0x5EED0000 + (cur.seed & 0xFFFFFFFF) * 7919).randbytes(FILL))   # per-case stack fill, same on both sides
@@ -563,6 +723,12 @@ def _selftest():
     sl = serieslen_out(99)
     good = sl in SERIES_LENS; ok &= good
     print('%s SeriesLength stub eax=%d in %s' % ('PASS' if good else 'FAIL', sl, SERIES_LENS))
+    sw0, sw1 = serieswin_out(0), serieswin_out(1)
+    good = sw0 == 0xFFFFFFFF and sw1 == 5; ok &= good
+    print('%s SeriesWinner stub undecided=%#x HomeTeam=%d' % ('PASS' if good else 'FAIL', sw0, sw1))
+    rc0, rc8 = replayctl_out(1), replayctl_out(8)
+    good = rc0 == 1 and rc8 == 0; ok &= good
+    print('%s ReplayControlLoop own-hit 1 then 0 (%d, %d)' % ('PASS' if good else 'FAIL', rc0, rc8))
     gi, g0 = getinput_out(0), getinput_out(99)
     good = gi == EVENT_PTR and g0 == 0; ok &= good
     print('%s GetInputEvent stub first=%#x then 0=%#x' % ('PASS' if good else 'FAIL', gi, g0))
