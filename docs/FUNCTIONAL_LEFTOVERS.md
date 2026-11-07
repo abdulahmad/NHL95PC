@@ -163,6 +163,20 @@ G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer.
 
+## Leftover next (InstantReplay own-hit + POAfterGame series×7)
+
+InstantReplay `ReplayControlLoop` must count that callee's own hits, not nstub k (many earlier callees already make k>40, so the stub quit before the camera/sprite body). Eight own-hits mix camera-follow / CD4FC / player-cursor / free-spot, then 0. POAfterGame `p+0x40` is the game index (`series*7`); SeriesWinner stub is HomeTeam 5 or -1. `--force --budget 1800 --cases 2000 --no-callers`. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| InstantReplay | **PASS 3000** (was NR 77%; ReplayControlLoop own-hit, 95.7%) |
+| POAfterGame | **PASS 3000** (was NR 74%; series×7 + SeriesWinner mix, 86.2%) |
+| remaining 29 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, LeagueTeamSelect, MoveToOtherRoster, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer.
+
 ## Close
 
 Unit 8 / H6 stays closed until 109/109 PASS. Native F4 waits.

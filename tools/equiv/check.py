@@ -454,7 +454,7 @@ def plant_leftover(func, img, buf, patches, seed=0):
                 struct.pack_into('<h', p, 0x26, 0)  # temp1: --temp1 < 0 then +8
             b[0x400:0x400 + 128] = p
     if n == 'assgoalie':
-        kind = seed % 5
+        kind = seed % 9
         if kind == 1:   # behind the goal line
             gx, gy = 0x10, 0xF0
         elif kind == 2:  # out of the crease (|x| > 0x34)
@@ -464,20 +464,75 @@ def plant_leftover(func, img, buf, patches, seed=0):
         else:
             gx, gy = 0x10, 0xD0  # crease
         pfl = 2 if kind == 3 else (0x80 if seed & 2 else 0)
+        pdist = 0x10 if kind in (6, 7, 8) else 0x20
         if 0x400 + 128 <= len(b):
             p = bytearray(plant_player_bytes(
                 x=gx, y=gy, z=2, sc=1, pos=0, xv=0x40, yv=0x200,
-                pflags=pfl, puckdist=0x20, spa=0x99))
-            struct.pack_into('<h', p, 0x26, -1)  # temp1: --temp1 < 0 takes aidef
-            struct.pack_into('<h', p, 0x2E, -1)  # temp5
+                pflags=pfl, puckdist=pdist, spa=0x99))
+            struct.pack_into('<h', p, 0x26, 2 if kind == 5 else -1)  # temp1: 2 is playeracc, -1 takes aidef
+            struct.pack_into('<h', p, 0x2E, 10 if kind == 6 else -1)  # temp5 delay vs skip
+            struct.pack_into('<h', p, 0x2C, 1 if kind == 7 else 0)  # temp4: -- then 0 for dive
             p[0x5A] = 9  # aidef
             p[0x45] = 0  # pflags2
+            if kind == 7:
+                struct.pack_into('<I', p, 0x70, ARG + 0x900)  # optmptr: dive reads +0x3E
             b[0x400:0x400 + 128] = p
         patch_u8(img, patches, 'gmode', 0)
-        if kind == 3:
-            # holding the puck: puckc == SCnum
-            if 0x5F0 < len(b):
-                b[0x5F0] = 1
+        if 0x5F0 < len(b):
+            if kind in (3, 6):
+                b[0x5F0] = 1   # holding: puckc == SCnum
+            elif kind == 8:
+                b[0x5F0] = 6   # other team: poke
+            elif kind == 7:
+                b[0x5F0] = 0xFF  # loose: dive
+        if kind == 0 and 0x5F4 <= len(b):
+            b[0x5F2:0x5F4] = struct.pack('<h', -0x40)  # other-half: *pucky ^ Ypos < 0
+        if kind == 7 and 0x940 <= len(b):
+            struct.pack_into('<i', b, 0x900 + 0x3E, 0x20)  # *(int *)(optmptr+0x3E) < 0x3C
+        sc0 = img.labels().get('SortCords')
+        if sc0 and kind == 6:
+            overlay_patch(patches, sc0 + 6 * 128, plant_player_bytes(
+                x=0x10, y=0xC0, z=2, sc=6, pos=1, puckdist=0x10, pflags2=0))
+    if n == 'assonetimer':
+        patch_u32(img, patches, 'onetimerflag', 1)
+        if 0x400 + 128 <= len(b):
+            p = bytearray(b[0x400:0x400 + 128])
+            struct.pack_into('<h', p, 0x26, -0x800)  # temp1 high byte -8: in (-0x19, 0x16]
+            struct.pack_into('<h', p, 0x38, 0xDD3)   # SPA wind-up
+            struct.pack_into('<h', p, 0x3A, 0)       # SPAnum
+            struct.pack_into('<I', p, 0x6C, ARG + 0x900)  # tmptr
+            b[0x400:0x400 + 128] = p
+        if 0x5F0 < len(b):
+            b[0x5F0] = 0xFF  # loose so the one-timer body is not the PassCompleted early-out
+        patch_u16(img, patches, 'passdir', 4)
+    if n == 'POAfterGame':
+        # p+0x40 is the game index; idx/=7 is the series. Plant series*7 so round 1/2/conf/cup mix.
+        idxs = (0, 28, 56, 70, 84, 91, 98)
+        gi = idxs[seed % 7]
+        if 0x244 <= len(b):
+            struct.pack_into('<I', b, 0x200 + 0x40, gi)
+        patch_u16(img, patches, 'hmscore', 3)
+        patch_u16(img, patches, 'awscore', 2)
+        patch_u32(img, patches, 'gameopts', 1 << 12)  # optbits12 = 1
+        patch_u16(img, patches, 'HomeTeam', 5)
+        patch_u16(img, patches, 'VisTeam', 6)
+        patch_u32(img, patches, 'ctl1team', 5)
+        patch_u32(img, patches, 'ctl2team', 0xFFFFFFFF)
+        patch_u32(img, patches, 'ctl1side', 0)
+        patch_u32(img, patches, 'ctl2side', 1)
+        rec = 0x200 + 0x1998
+        if rec + 0x2A * 16 <= len(b):
+            for j in range(16):
+                off = rec + j * 0x2A
+                b[off:off + 6] = bytes([4, 10, 5, 6, 3, 2])
+    if n == 'InstantReplay':
+        patch_u32(img, patches, 'gamemode', 0 if seed & 1 else 1)
+        patch_u32(img, patches, 'ctl1team', 0xFFFFFFFF if seed & 2 else 5)
+        patch_u32(img, patches, 'ctl2team', 0xFFFFFFFF)
+        fc = img.labels().get('fileoncd')
+        if fc:
+            overlay_patch(patches, fc + 0x96, b'\x01')
+            overlay_patch(patches, fc + 0x223, b'\x01')
     if n in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
         patch_u32(img, patches, 'statsplayoffs', 0 if seed % 2 == 0 else 1)
         order = img.labels().get('statsteamorder')
@@ -727,6 +782,8 @@ def clamp_leftover_inputs(func, regs, args):
         regs['eax'] = 0 if (regs.get('eax', 0) & 1) else 1
     if n == 'InstantReplay':
         regs['eax'] = regs.get('eax', 0) & 1  # mode 0/1
+    if n == 'POAfterGame':
+        regs['eax'] = ARG + 0x200  # planted schedule, not EDGE
     return regs, args
 
 def first_use(code, addr, to_ret=False):
@@ -1338,6 +1395,14 @@ def _selftest():
     buf, p = plant_leftover('assthreestars', img, bytes(0x600), {}, seed=0)
     ot = img.labels().get('ovltimer')
     check('assthreestars ovltimer is -1', ot and struct.unpack_from('<h', p.get(ot, b'\x00\x00')[:2])[0] == -1)
+    buf, p = plant_leftover('assgoalie', img, bytes(0xA00), {}, seed=7)
+    check('assgoalie dive optmptr in ARG', struct.unpack_from('<I', buf, 0x400 + 0x70)[0] == ARG + 0x900)
+    r, a = clamp_leftover_inputs('POAfterGame', {'eax': 99}, [])
+    check('POAfterGame eax is schedule in ARG', r['eax'] == ARG + 0x200)
+    buf, p = plant_leftover('POAfterGame', img, bytes(0x300), {}, seed=2)
+    check('POAfterGame idx is series*7', struct.unpack_from('<I', buf, 0x200 + 0x40)[0] in (0, 28, 56, 70, 84, 91, 98))
+    check('SeriesWinner stub HomeTeam or -1', run.serieswin_out(1) == 5 and run.serieswin_out(0) == 0xFFFFFFFF)
+    check('ReplayControlLoop own-hit not nstub k', run.replayctl_out(1) == 1 and run.replayctl_out(8) == 0)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
