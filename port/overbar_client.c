@@ -88,3 +88,8 @@ void overbar_client_set_class(int lores)
 {
     host.video_class = lores ? OB_CLASS_LORES : OB_CLASS_HIRES;
 }
+
+void overbar_client_apply(void)
+{
+    if (apply_host) apply_host(&host);
+}

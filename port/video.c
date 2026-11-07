@@ -442,8 +442,8 @@ void video_mister_pick(int cls, int kind, const char *rel)
     m_dirty[cls] = 1;
     mister_on(cls);
     settings_save();
-    menu_sync();
     if (!overbar_busy) overbar_capture_host();
+    if (!overbar_busy) menu_sync();
 }
 
 /* A scanline is drawn over `rows` window rows. Its brightest row is the middle one (the one above the middle when there is an even number),
@@ -568,6 +568,7 @@ static void overbar_apply_host(ob_host *h)
     if (video_pointer_mode() != (h->pointer % 3))
         video_command(CMD_POINTER + (h->pointer % 3));
     overbar_busy = 0;
+    menu_sync();
 }
 
 /* the menu commands (host.h) and the keys 1-6 */
@@ -602,9 +603,8 @@ void video_command(int id)
     else return;
     if (use_gl) vgl_set_vsync(vsync_on);
     settings_save();
-    menu_sync();
     title_refresh();
-    if (!overbar_busy) overbar_capture_host();
+    if (!overbar_busy) { overbar_capture_host(); menu_sync(); }
 }
 
 int video_command_checked(int id)

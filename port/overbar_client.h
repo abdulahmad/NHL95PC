@@ -22,5 +22,6 @@ void overbar_client_draw(uint32_t *px, int w, int h, int pitch);
 void overbar_client_view(int src_w, int src_h, int win_w, int win_h,
                          int height, int line_double, int *x, int *y, int *w, int *h);
 void overbar_client_set_class(int lores);
+void overbar_client_apply(void);                 /* run apply_host on the ob_host: a change made outside the overlay (the menu bar) */
 
 #endif

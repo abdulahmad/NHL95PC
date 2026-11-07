@@ -117,6 +117,7 @@ void menu_sync(void);
 void menu_show(int on);
 void menu_event(void *syswm_msg);
 int menu_client_size(int *w, int *h);                  /* the client area as Windows has it, 0 if unknown */
+extern volatile int menu_resync;                       /* the bar's menu loop ran: drop the game clock's backlog (host.c) */
 #else
 static inline void menu_init(void *w) { (void)w; }
 static inline void menu_sync(void) {}
