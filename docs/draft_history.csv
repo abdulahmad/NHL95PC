@@ -822,3 +822,5 @@ checkcheck,cursor,2026-11-06,GA,82,82,"functional leftover rest: SetSPA writes S
 assrefgoalpa,cursor,2026-11-06,GA,76,76,"functional leftover more: temp5 drop without pflags bit 1 + resting-puck pickup. PASS 3000. No C."
 InstantReplay,cursor,2026-11-06,GA,77,77,"functional leftover next: ReplayControlLoop own-hit counter not nstub k. PASS 3000. No C."
 POAfterGame,cursor,2026-11-06,GA,74,74,"functional leftover next: p+0x40 series*7 + SeriesWinner HomeTeam/-1. PASS 3000. No C."
+StarCompare,cursor,2026-11-06,GA,67,67,"functional leftover keep: equal-points hmscore tie so StarElig/DACA0 run. PASS 3000. No C."
+assonetimer,cursor,2026-11-06,GA,32,32,"functional leftover keep: onetimerflag/SPA/puckc/pfjoy mix. PASS 3000. No C."
