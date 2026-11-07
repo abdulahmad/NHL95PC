@@ -23,11 +23,11 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **60 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+* **61 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
   PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
-  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). H4: RandomizeSchedule (60→61). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture after 109-plan H3: **60 PASS / 49 NEEDS-REVIEW / 0 FAIL** over leftover drafts
+  Latest-row CSV picture after 109-plan H4: **61 PASS / 48 NEEDS-REVIEW / 0 FAIL** over leftover drafts
   (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
@@ -87,7 +87,10 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 107.8 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 | 109.H1 | ~~Soft traps + list counts~~ **done** (POSeedTeams / DrawListItems / ListDialog PASS 3000; G17 PASS; planted SeriesLength FAIL case 4). SportsDesk event stub is ListDialog-only. **59 PASS / 50 NR**. | Grok 4.7 medium |
 | 109.H2 | ~~Budget 1800~~ **done** (RunMenu NR 510/49%, RunTeamPickMenu NR 486/64%, InstantReplay NR 306/75%). Still 59/50. H3 next. | Composer |
-| 109.H3 | ~~Screen inputs~~ **done** (RunMenu PASS 3000; ListDialog still PASS 3000; SportsDesk NR not FAIL). **60 PASS / 49 NR**. H4 next. | Grok 4.7 medium |
+| 109.H3 | ~~Screen inputs~~ **done** (RunMenu PASS 3000; ListDialog still PASS 3000; SportsDesk NR not FAIL). **60 PASS / 49 NR**. | Grok 4.7 medium |
+| 109.H4 | ~~Recheck remaining NR~~ **done** (RandomizeSchedule PASS 3000; SportsDesk uninit-fault is NR not FAIL; 48 still NR). **61 PASS / 48 NR**. | Composer |
+| 109.H5 | ~~Dead-range disasm~~ **done** (RunTeamPickMenu / SkateToSpot / DrawCalendarDay holes are live retail paths. No dead_ranges.txt). | Grok 4.7 medium |
+| 109.H6 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),
 SeriesLength, FadePalette, shotdiradj, puckfaceoff2, NetCollide. Planted bug: copy SeriesLength.c to

@@ -687,6 +687,8 @@ def _selftest():
           mostly_trapped(100, collections.Counter({'insn limit': 60}), 0))
     check('null page is SOFT', 'null page' in run.SOFT)
     check('uninit stack read is SOFT', 'uninit stack read' in run.SOFT)
+    check('uninit-fault address is review', is_uninit_fault_review('fault address: orig 0xa5a5a5a5 vs C 0x1'))
+    check('mapped fault address is not review', not is_uninit_fault_review('fault address: orig 0x100 vs C 0x200'))
     check('collide sort-index 0x10 stays', collide_sort_index(0x10) == 0x10)
     check('collide sort-index 0x20 folds to 0-0xB or 0x10', collide_sort_index(0x20) in set(range(12)) | {0x10})
     r, a = clamp_leftover_inputs('DrawListItems', {'eax': ARG}, [0x6000100, 99, ARG])
@@ -708,6 +710,10 @@ def _selftest():
     check('checkcheck eax is Player in ARG', ARG <= r['eax'] < ARG + ARG_SIZE)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
+
+def is_uninit_fault_review(d):
+    """Both sides faulted; orig address is the stack fill. Review, not a C store/call FAIL."""
+    return isinstance(d, str) and d.startswith('fault address:') and 'a5a5a5a5' in d.lower()
 
 def hx(v): return hex(v) if isinstance(v, int) else str(v)
 def fmt(l): return ' '.join('(%s)' % ','.join(hx(x) for x in e) for e in l) or '(none)'
@@ -778,6 +784,8 @@ def main(argv=None):
             b = ck.orig[:10]; n = 2 if b[0] == 0x6A else 5 if b[0] == 0x68 else 0
             if not (n and b[n] == 0xE8 and (ck.addr + n + 5 + struct.unpack_from('<i', b, n + 1)[0]) & 0xFFFFFFFF == ck.lab['__CHK']):
                 V['verdict'] = 'NEEDS-REVIEW'; V['diff'] = 'entry is not a C prologue; ' + d
+            elif is_uninit_fault_review(d):
+                V['verdict'] = 'NEEDS-REVIEW'  # orig walked 0xa5a5a5a5; both crashed. Not a C bug.
             print('%s %s: %s\n  %s' % (V['verdict'], a.func, label, d))
             print('  entry regs: ' + ' '.join('%s=%#x' % (r, v) for r, v in st.regs.items()))
             print('  stack args: ' + ' '.join('%#x' % v for v in st.args[:ck.nstack]))
