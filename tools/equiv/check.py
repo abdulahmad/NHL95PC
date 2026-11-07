@@ -454,7 +454,7 @@ def plant_leftover(func, img, buf, patches, seed=0):
                 struct.pack_into('<h', p, 0x26, 0)  # temp1: --temp1 < 0 then +8
             b[0x400:0x400 + 128] = p
     if n == 'assgoalie':
-        kind = seed % 9
+        kind = seed % 10
         if kind == 1:   # behind the goal line
             gx, gy = 0x10, 0xF0
         elif kind == 2:  # out of the crease (|x| > 0x34)
@@ -462,7 +462,7 @@ def plant_leftover(func, img, buf, patches, seed=0):
         elif kind == 4:  # behind, |x| > 0x30 so he keeps his own x
             gx, gy = 0x40, 0xF0
         else:
-            gx, gy = 0x10, 0xD0  # crease
+            gx, gy = 0x10, 0xD0  # crease (0 wraparound, 9 post)
         pfl = 2 if kind == 3 else (0x80 if seed & 2 else 0)
         pdist = 0x10 if kind in (6, 7, 8) else 0x20
         if 0x400 + 128 <= len(b):
@@ -474,37 +474,61 @@ def plant_leftover(func, img, buf, patches, seed=0):
             struct.pack_into('<h', p, 0x2C, 1 if kind == 7 else 0)  # temp4: -- then 0 for dive
             p[0x5A] = 9  # aidef
             p[0x45] = 0  # pflags2
-            if kind == 7:
-                struct.pack_into('<I', p, 0x70, ARG + 0x900)  # optmptr: dive reads +0x3E
+            struct.pack_into('<h', p, 0x36, 1)  # facedir: 1<<1 & 0x42 takes the facing turn
+            if kind in (0, 7, 9):
+                struct.pack_into('<I', p, 0x6C, ARG + 0x800)  # tmptr
+                struct.pack_into('<I', p, 0x70, ARG + 0x900)  # optmptr
             b[0x400:0x400 + 128] = p
         patch_u8(img, patches, 'gmode', 0)
+        patch_u8(img, patches, 'iflags', 0)
+        patch_u32(img, patches, 'puckvx', ARG + 0x5F8)
+        patch_u32(img, patches, 'puckvy', ARG + 0x5FA)
+        if 0x5FC <= len(b):
+            b[0x5F8:0x5FC] = struct.pack('<hh', 0, 0x4000)
         if 0x5F0 < len(b):
             if kind in (3, 6):
                 b[0x5F0] = 1   # holding: puckc == SCnum
             elif kind == 8:
                 b[0x5F0] = 6   # other team: poke
-            elif kind == 7:
-                b[0x5F0] = 0xFF  # loose: dive
-        if kind == 0 and 0x5F4 <= len(b):
-            b[0x5F2:0x5F4] = struct.pack('<h', -0x40)  # other-half: *pucky ^ Ypos < 0
-        if kind == 7 and 0x940 <= len(b):
-            struct.pack_into('<i', b, 0x900 + 0x3E, 0x20)  # *(int *)(optmptr+0x3E) < 0x3C
+            elif kind in (0, 7, 9):
+                b[0x5F0] = 0xFF  # loose: wraparound / dive / post
+        if kind == 0 and 0x5F6 <= len(b):
+            b[0x5F2:0x5F6] = struct.pack('<hh', 0xA0, 0x50)  # |pucky|>=0x98, |puckx|>=0x44
+            struct.pack_into('<h', b, 0x400 + 0x2C, 2)  # temp4: -- then 1, skip dive
+        if kind == 9 and 0x5F6 <= len(b):
+            b[0x5F2:0x5F6] = struct.pack('<hh', 0xE0, 0x20)  # |pucky|>0xDC post
+            struct.pack_into('<h', b, 0x400 + 0x2C, 2)
+        if kind in (0, 7, 9) and 0x944 <= len(b):
+            struct.pack_into('<i', b, 0x800 + 0x3E, 0x200 if kind != 7 else 0x20)
+            struct.pack_into('<i', b, 0x900 + 0x3E, 0x200 if kind != 7 else 0x20)
+        pc = img.labels().get('puckcross')
+        if pc and kind == 0:
+            overlay_patch(patches, pc, struct.pack('<hh', 0x20, 0))  # |pc[0]|>=0x19, pc[1]<0x23
+        if pc and kind == 9:
+            overlay_patch(patches, pc, struct.pack('<hh', 4, 0x20))  # |pc[0]|<0x19, pc[1]>=x+0xC
         sc0 = img.labels().get('SortCords')
         if sc0 and kind == 6:
             overlay_patch(patches, sc0 + 6 * 128, plant_player_bytes(
                 x=0x10, y=0xC0, z=2, sc=6, pos=1, puckdist=0x10, pflags2=0))
     if n == 'assonetimer':
-        patch_u32(img, patches, 'onetimerflag', 1)
+        kind = seed % 4
+        patch_u32(img, patches, 'onetimerflag', 0 if kind == 3 else 1)
         if 0x400 + 128 <= len(b):
             p = bytearray(b[0x400:0x400 + 128])
-            struct.pack_into('<h', p, 0x26, -0x800)  # temp1 high byte -8: in (-0x19, 0x16]
-            struct.pack_into('<h', p, 0x38, 0xDD3)   # SPA wind-up
-            struct.pack_into('<h', p, 0x3A, 0)       # SPAnum
+            struct.pack_into('<h', p, 0x26, -0x800)  # temp1 high byte -8
+            struct.pack_into('<h', p, 0x38, 0xDD3 if kind == 0 else 0)
+            struct.pack_into('<h', p, 0x3A, 0)
             struct.pack_into('<I', p, 0x6C, ARG + 0x900)  # tmptr
+            if kind == 2:
+                p[0x44] = 8  # pfjoy: skip the attacking-zone test
             b[0x400:0x400 + 128] = p
         if 0x5F0 < len(b):
-            b[0x5F0] = 0xFF  # loose so the one-timer body is not the PassCompleted early-out
+            b[0x5F0] = 1 if kind == 1 else 0xFF  # SCnum vs loose
         patch_u16(img, patches, 'passdir', 4)
+        patch_u32(img, patches, 'puckvx', ARG + 0x5F8)
+        patch_u32(img, patches, 'puckvy', ARG + 0x5FA)
+        if 0x5FC <= len(b):
+            b[0x5F8:0x5FC] = struct.pack('<hh', 0x40, 0x40)
     if n == 'POAfterGame':
         # p+0x40 is the game index; idx/=7 is the series. Plant series*7 so round 1/2/conf/cup mix.
         idxs = (0, 28, 56, 70, 84, 91, 98)
@@ -533,6 +557,49 @@ def plant_leftover(func, img, buf, patches, seed=0):
         if fc:
             overlay_patch(patches, fc + 0x96, b'\x01')
             overlay_patch(patches, fc + 0x223, b'\x01')
+    if n == 'StarCompare':
+        kind = seed % 7
+        if 0x108 <= len(b):
+            struct.pack_into('<I', b, 0x100, 1)   # team 0 player 1
+            struct.pack_into('<I', b, 0x104, 27)  # team 1 player 2
+        def star_row(g, a_, w6=0, w0e=0):
+            r = bytearray(16)
+            struct.pack_into('<hh', r, 0, g, a_)
+            struct.pack_into('<h', r, 6, w6)
+            struct.pack_into('<h', r, 14, w0e)
+            return bytes(r)
+        if kind == 0:
+            ra, rb = star_row(5, 0), star_row(1, 0)          # different points
+        elif kind == 1:
+            ra, rb = star_row(3, 2), star_row(4, 1)          # sa==sb, goals differ
+        elif kind == 3:
+            ra, rb = star_row(2, 3, 0, 4), star_row(2, 3, 0, 1)  # +0Eh differ
+        elif kind == 4:
+            ra, rb = star_row(2, 3, 5, 0), star_row(2, 3, 2, 0)  # +6 differ
+        else:
+            ra, rb = star_row(2, 3), star_row(2, 3)          # equal: hmscore / StarElig / DACA0
+        db = img.labels().get('dword_DB088')
+        if db:
+            overlay_patch(patches, db + 16, ra)     # pa=1
+            overlay_patch(patches, db + 432, rb)    # team1*400 + pb=2 * 16
+        patch_u32(img, patches, 'gwgteam', 0 if kind == 0 else 0xFFFFFFFF)
+        patch_u32(img, patches, 'gwgplayer', 1)
+        hs = img.labels().get('hmscore')
+        if hs:
+            # kinds 0-1 may return at points/goals; 2+ need ds==0 so +0Eh / +6 / StarElig / DACA0 run
+            overlay_patch(patches, hs, struct.pack('<h', 3))
+            overlay_patch(patches, hs + 256, struct.pack('<h', 3 if kind >= 2 else 1))
+        da = img.labels().get('unk_DACA0')
+        if da:
+            ua, ub = bytearray(20), bytearray(20)
+            ua[1], ub[1] = 2, 5
+            overlay_patch(patches, da + 20, bytes(ua))
+            overlay_patch(patches, da + 540, bytes(ub))
+    if n == 'TradeScreenLoop':
+        patch_u32(img, patches, 'tradeside', 0)
+        tc = img.labels().get('tradecursor')
+        if tc:
+            overlay_patch(patches, tc, struct.pack('<ii', 1, 1))
     if n in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
         patch_u32(img, patches, 'statsplayoffs', 0 if seed % 2 == 0 else 1)
         order = img.labels().get('statsteamorder')
@@ -784,6 +851,9 @@ def clamp_leftover_inputs(func, regs, args):
         regs['eax'] = regs.get('eax', 0) & 1  # mode 0/1
     if n == 'POAfterGame':
         regs['eax'] = ARG + 0x200  # planted schedule, not EDGE
+    if n == 'StarCompare':
+        regs['eax'] = ARG + 0x100
+        regs['edx'] = ARG + 0x104
     return regs, args
 
 def first_use(code, addr, to_ret=False):
@@ -1403,6 +1473,18 @@ def _selftest():
     check('POAfterGame idx is series*7', struct.unpack_from('<I', buf, 0x200 + 0x40)[0] in (0, 28, 56, 70, 84, 91, 98))
     check('SeriesWinner stub HomeTeam or -1', run.serieswin_out(1) == 5 and run.serieswin_out(0) == 0xFFFFFFFF)
     check('ReplayControlLoop own-hit not nstub k', run.replayctl_out(1) == 1 and run.replayctl_out(8) == 0)
+    r, a = clamp_leftover_inputs('StarCompare', {'eax': 99, 'edx': 99}, [])
+    check('StarCompare keys in ARG', r['eax'] == ARG + 0x100 and r['edx'] == ARG + 0x104)
+    buf, p = plant_leftover('StarCompare', img, bytes(0x200), {}, seed=1)
+    db = img.labels().get('dword_DB088')
+    check('StarCompare keys 1 and 27', struct.unpack_from('<I', buf, 0x100)[0] == 1
+          and struct.unpack_from('<I', buf, 0x104)[0] == 27)
+    check('StarCompare DB088 row patched', db and any(lo <= db + 16 < lo + len(v) for lo, v in p.items()))
+    buf2, p2 = plant_leftover('StarCompare', img, bytes(0x200), {}, seed=3)
+    hs = img.labels().get('hmscore')
+    check('StarCompare equal hmscore on tie kinds',
+          hs and struct.unpack_from('<h', p2[hs])[0] == 3
+          and struct.unpack_from('<h', p2[hs + 256])[0] == 3)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 

@@ -145,6 +145,7 @@ _PLAYERY = None
 _CHECK4BENCH = None
 _SETSPA = None
 _SERIESWIN = None
+_STARELIG = None
 
 def fillslot_addr(img):
     global _FILLSLOT
@@ -209,6 +210,13 @@ def serieswin_addr(img):
 def serieswin_out(seed):
     """POAfterGame SeriesWinner: HomeTeam 5 or -1 (undecided), not a leftover eax."""
     return 5 if seed & 1 else 0xFFFFFFFF
+
+def starelig_addr(img):
+    """EXE label of StarEligible, cached."""
+    global _STARELIG
+    if _STARELIG is None:
+        _STARELIG = img.labels().get('StarEligible')
+    return _STARELIG
 
 def replayctl_out(replay_n):
     """ReplayControlLoop: 1 for the first 8 hits of THIS callee, then 0.
@@ -521,11 +529,14 @@ class Runner:
                     eax = 0  # quit so InstantReplay cannot spin to insn-limit
             elif a == serieswin_addr(img) and cur.func == 'POAfterGame':
                 eax = serieswin_out(cur.seed or 0)
+            elif a == starelig_addr(img) and cur.func == 'StarCompare':
+                # kind 5 (seed%7==5): 0 then 1 so sa!=sb; else both 0 and unk_DACA0 runs
+                eax = (k & 1) if (cur.seed or 0) % 7 == 5 else 0
             elif a == randomd0_addr(img) and cur.func == 'checkcheck':
                 eax = 0 if k & 1 else 9  # < aggress, then sometimes > checking
             elif a == randomd0_addr(img) and cur.func == 'assgoalie':
                 # kinds 6/7/8 (seed%9) need 0 for freeze/dive/poke; others skip to angle
-                eax = 0 if (cur.seed or 0) % 9 in (6, 7, 8) else 0x20
+                eax = 0 if (cur.seed or 0) % 10 in (6, 7, 8) else 0x20
             elif a == playery_addr(img) and cur.func == 'RunPlayerPickMenu':
                 eax = 1  # a hit so the picker runs; pick 0 = same row (ShowPlayerStatsItem)
                 pick = 0 if k & 1 else 1
@@ -552,7 +563,8 @@ class Runner:
             elif cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and a == alloc_addr(img):
                 eax = ALLOC_PTR  # mapped ARG block; not a script leftover / null
             click_set = False
-            if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), serieswin_addr(img), chk,
+            if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), serieswin_addr(img),
+                                       starelig_addr(img), chk,
                                        getinput_addr(img), pollkey_addr(img), listhit_addr(img),
                                        fillslot_addr(img), filldressed_addr(img), replayctl_addr(img),
                                        randomd0_addr(img), playery_addr(img), check4bench_addr(img),
@@ -576,9 +588,9 @@ class Runner:
             if (cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and nr == 0 and np_ == 0 and not click_set
                     and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
                                   hittest_addr(img), serieslen_addr(img), serieswin_addr(img),
-                                  fillslot_addr(img), filldressed_addr(img), replayctl_addr(img),
-                                  randomd0_addr(img), playery_addr(img), check4bench_addr(img),
-                                  setspa_addr(img), chk)
+                                  starelig_addr(img), fillslot_addr(img), filldressed_addr(img),
+                                  replayctl_addr(img), randomd0_addr(img), playery_addr(img),
+                                  check4bench_addr(img), setspa_addr(img), chk)
                     and a not in fileopen_addrs(img)
                     and a != PTRFN_STUB):
                 if cur.event_mode == 'menu_pick':

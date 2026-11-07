@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after more plants: **78 PASS / 0 FAIL / 31 NR**. assrefgoalpa PASS 3000.
+Live leftover after keep plants: **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -176,6 +176,20 @@ InstantReplay `ReplayControlLoop` must count that callee's own hits, not nstub k
 G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, LeagueTeamSelect, MoveToOtherRoster, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer.
+
+## Leftover keep (StarCompare equal-points + assonetimer mix)
+
+StarCompare `dword_DB088` is a global array. Equal-points keys (team*25+player) still returned at `hmscore` until both teams' `hmscore[team*128]` matched, so StarElig / DACA0 / +0Eh / +6 ran. StarEligible stub: kind 5 returns 0 then 1; else both 0 and DACA0 runs. assonetimer mix is onetimerflag 0/1, SPA DD3 vs 0, puckc==SCnum vs loose, pfjoy start wind-up. `--force --budget 1800 --cases 2000 --no-callers`. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| StarCompare | **PASS 3000** (was NR 52%; equal hmscore on tie kinds, 97.5%) |
+| assonetimer | **PASS 3000** (was NR 55%; SPA/puckc/pfjoy mix, 85.3%) |
+| remaining 27 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, LeagueTeamSelect, MoveToOtherRoster, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie.
 
 ## Close
 
