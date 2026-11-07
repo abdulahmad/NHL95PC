@@ -100,3 +100,8 @@ This file is the learning edge of the repo. It holds one line per confirmed less
 - 2026-11-06 harness: SkateToSpot reads HIWORD Xpos/Ypos vs `regd0`/`regd1`. `|Xvel|/|Yvel| > 0x9C4` damping only runs when `|dx|,|dy|` are in 8..24 after `skateto`; a far target skips it. Negative world coords hit the ABS arms. (109 leftover synth)
 - 2026-11-06 harness: checkpuckcoll_ccx `SortCords[n]` with `position==0` is the goalie path; frame `0x431` is the stick window; `puckvx`/`puckvy` are the planted Player Xvel/Yvel. Skater-only plants stall around 77%. (109 leftover synth)
 - 2026-11-06 harness: RunTeamPickMenu 0-arg callbacks stay 0 until `k>40` (`event_mode=menu_pick`) so the `statsplayoffs` arm runs; `menu` exits at `k>12` and never reaches it. (109 leftover synth)
+- 2026-11-06 harness: checkcheck / PassLaneChk / checkgoal `edx` is a second Player, not a SortCords index. Clamping it to 0 null-pages `[edx+SPA]` / `[edx+Ypos]`. (109 leftover pairs)
+- 2026-11-06 harness: checkgoal `SCnum==0x0E` is on `eax` (puck/player), not `edx` (goalie). `ebx`/`ecx` are the goal world xy; plant p and g at that xy so the box test is in-range. (109 leftover pairs)
+- 2026-11-06 harness: PassLaneChk needs `|Y|` in `(0x4E, 0x76]` and `(Y>threshold) XOR pflags.7 == 0`. `|Y|==0x80` dies on the 0x76 cap; teammate must sit 0x20 shallower with matching Yvel sign. (109 leftover pairs)
+- 2026-11-06 harness: InProgress `PenBuf[0]==0x1A` is StartPenaltyShot; `RefStep=1` takes the overlay arm. Energy-byte 0 alone stalls around 79%. (109 leftover pairs)
+- 2026-11-06 harness: DrawRinkOverlays `sortobj15` frames 0x286/0x22E/0x189, SCnum 0x0E/0x0C/0x0F, and `pucky -0xEC` with `px`/`pz` 0x10 cover the overlay mix. Cam at 0x40 is not enough. (109 leftover pairs)

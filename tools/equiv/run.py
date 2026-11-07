@@ -41,7 +41,7 @@ class State:
     argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
     ptrsize: object = None                       # f(callee, arg position) -> bytes to compare behind a stack pointer (default 4)
     event_stub: bool = False                     # GetInputEvent/PollKey dummy events (leftover screen loops)
-    event_mode: str = ''                         # 'list' / 'menu' / 'menu_pick' (0-arg returns 0 for stats arm)
+    event_mode: str = ''                         # 'list' / 'menu' / 'menu_pick' / 'menu_redraw'
 
 @dataclass
 class Trace:
@@ -389,7 +389,7 @@ class Runner:
             if a == getinput_addr(img) and not callable(cur.script) and cur.event_stub:
                 event_n[0] += 1
                 n = event_n[0]
-                if cur.event_mode in ('menu', 'menu_pick'):
+                if cur.event_mode in ('menu', 'menu_pick', 'menu_redraw'):
                     if n == 1:
                         eax, click[0] = EVENT_PTR, 0     # move, no button
                     elif n == 2:
@@ -412,7 +412,7 @@ class Runner:
                     if ih(rg[1]): written.update(range(rg[1], rg[1] + 4))
                 except UcError:
                     pass
-            elif cur.event_mode in ('menu', 'menu_pick') and a == alloc_addr(img):
+            elif cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and a == alloc_addr(img):
                 eax = ALLOC_PTR  # mapped ARG block; not a script leftover / null
             click_set = False
             if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk,
@@ -422,7 +422,7 @@ class Runner:
                 eax = (eax | 2) & 0xFFFFFFFF
                 click[0] = 0
                 click_set = True
-            if a == PTRFN_STUB and cur.event_mode in ('menu', 'menu_pick'):
+            if a == PTRFN_STUB and cur.event_mode in ('menu', 'menu_pick', 'menu_redraw'):
                 for v in (rg[1], rg[2]):  # edx=&mx ebx=&my: nudge so the no-click arm runs
                     if STK <= v <= STK + STK_SIZE - 4:
                         try:
@@ -433,13 +433,15 @@ class Runner:
                         if ih(v): written.update(range(v, min(v + 4, esp0)))
             # menu item callbacks are 0-arg; return 1 so RunMenu / SportsDesk take the done path.
             # Do not clobber the click-bit on ptrupdatefn (nreg 0 at a non-entry).
-            if (cur.event_mode in ('menu', 'menu_pick') and nr == 0 and np_ == 0 and not click_set
+            if (cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and nr == 0 and np_ == 0 and not click_set
                     and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
                                   hittest_addr(img), serieslen_addr(img), chk)
                     and a not in fileopen_addrs(img)
                     and a != PTRFN_STUB):
                 if cur.event_mode == 'menu_pick':
                     eax = 1 if k > 40 else 0  # 0: statsplayoffs arm; later k exits
+                elif cur.event_mode == 'menu_redraw':
+                    eax = 2 if k <= 12 else 1  # DrawPlayoffTree then exit
                 else:
                     eax = 1 if k > 12 else 0  # first callback continues; later ones exit the menu loop
             for j, (p, n) in enumerate(ptrs.items()):
