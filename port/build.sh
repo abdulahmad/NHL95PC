@@ -8,7 +8,7 @@ sh port/fetch-deps.sh || exit 1
 # Munt (the MT-32 emulator) as a 32-bit static library; its ROMs are not included
 CXX="g++ -m32" sh port/munt-build.sh build/munt-linux "" || exit 1
 rm -f build/hockey-linux
-O=$(find build/obj0 -name '*.o' | sort)
+O=$(sh port/objorder.sh build/obj0)
 # Overbar, the host menu and scaler: the git submodule port/overbar (git submodule update --init)
 [ -f port/overbar/sources.txt ] || { echo "no Overbar at port/overbar: git submodule update --init" >&2; exit 1; }
 OVERBAR_SRCS=$(tr -d '\r' < port/overbar/sources.txt | sed 's|^|port/overbar/|')
