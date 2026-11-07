@@ -143,6 +143,132 @@ def plant_screen(img, buf, patches):
             patches[a] = struct.pack('<I', val & 0xFFFFFFFF)
     return bytes(b), patches
 
+def overlay_patch(patches, addr, data):
+    """Write data at addr, overlaying an existing span patch that contains it."""
+    data = bytes(data)
+    for lo, b in list(patches.items()):
+        if lo <= addr < lo + len(b):
+            x = bytearray(b)
+            off = addr - lo
+            n = min(len(data), len(x) - off)
+            x[off:off + n] = data[:n]
+            patches[lo] = bytes(x)
+            return
+    patches[addr] = data
+
+def patch_u32(img, patches, name, val):
+    a = img.labels().get(name)
+    if a:
+        overlay_patch(patches, a, struct.pack('<I', val & 0xFFFFFFFF))
+
+def patch_u16(img, patches, name, val):
+    a = img.labels().get(name)
+    if a:
+        overlay_patch(patches, a, struct.pack('<H', val & 0xFFFF))
+
+def plant_player_bytes(x=0x14, y=0xEA, z=2, sc=1, pos=1, pflags=0, nopuck=0, frame=0, xv=0, yv=0, zv=0, pflags2=0):
+    """128-byte Player: HIWORD X/Y/Z in world units (structs.h). x/y may be negative."""
+    p = bytearray(128)
+    struct.pack_into('<I', p, 0x00, (x & 0xFFFF) << 16)   # Xpos
+    struct.pack_into('<I', p, 0x04, (y & 0xFFFF) << 16)   # Ypos
+    struct.pack_into('<I', p, 0x08, (z & 0xFFFF) << 16)   # Zpos
+    struct.pack_into('<h', p, 0x0C, xv)
+    struct.pack_into('<h', p, 0x0E, yv)
+    struct.pack_into('<h', p, 0x10, zv)
+    struct.pack_into('<h', p, 0x12, frame)
+    struct.pack_into('<h', p, 0x1A, pos)
+    p[0x3E:0x40] = struct.pack('<h', nopuck)
+    p[0x44] = pflags & 0xFF
+    p[0x45] = pflags2 & 0xFF
+    struct.pack_into('<h', p, 0x6A, sc)
+    return bytes(p)
+
+def plant_leftover(func, img, buf, patches, seed=0):
+    """Deeper H3 plants for leftover NR only: skate corridor, calendar games, collide SortCords, statsplayoffs."""
+    n = func or ''
+    low = n.lower()
+    b = bytearray(buf)
+    patches = dict(patches)
+    # Player at ARG+0x400 for skate / collide (eax)
+    if 'skate' in low:
+        kind = seed % 8
+        xv = yv = 0
+        if kind == 0:   # boards corridor (0xE0 < |y_target| < 0xE8)
+            x, y, r0, r1 = 0x14, 0xEA, 0x08, 0xE4
+        elif kind == 1: # goal-line (|y| >= 0xF2)
+            x, y, r0, r1 = 0x10, 0xF4, 0x14, 0xF0
+        elif kind == 2: # within 8: early stop
+            x, y, r0, r1 = 0x20, 0x20, 0x22, 0x22
+        elif kind == 3: # far: speed / animation
+            x, y, r0, r1 = 0x40, 0x40, 0x100, 0x80
+        elif kind == 4: # negative world: ABS(Xpos)/ABS(Ypos) arms
+            x, y, r0, r1 = -0x40, -0x20, -0x10, 0x10
+        elif kind == 5: # target behind: dx/dy negative
+            x, y, r0, r1 = 0x80, 0x80, 0x10, 0x10
+        elif kind == 6: # |dx|,|dy| in 8..24 so damping runs; |vel| > 0x9C4
+            x, y, r0, r1 = 0x20, 0x20, 0x30, 0x30
+            xv, yv = -0xC00, -0xC00
+        else:           # |X|<=30, |Y|>=0xF2, Ypos<0: boards path with cx<0 (4e414)
+            x, y, r0, r1 = 0x10, -0xF4, 0x08, 0x20
+        if 0x400 + 128 <= len(b):
+            sc = 0x10 if kind in (3, 6) else 1
+            pos = 0 if kind in (3, 6) else 1
+            b[0x400:0x400 + 128] = plant_player_bytes(x=x, y=y, z=2, sc=sc, pos=pos, xv=xv, yv=yv)
+        patch_u16(img, patches, 'regd0', r0 & 0xFFFF)
+        patch_u16(img, patches, 'regd1', r1 & 0xFFFF)
+    elif any(s in low for s in ('puckcoll', 'passlane', 'checkcheck', 'checkgoal', 'wallcoll',
+                                'blockshot', 'assone', 'assgoal', 'assref')):
+        puck = ARG + 0x400
+        kind = seed % 4
+        # Mix goalie (pos=0) vs skater; stick-frame 0x431; negative puck vel; slight offset.
+        puck_pos = 1
+        sc_pos = 0 if kind in (0, 1) else 1
+        sc_frame = 0x431 if kind in (1, 3) else 0
+        xv = -0x80 if kind & 1 else 0x40
+        yv = -0x40 if kind & 2 else 0x20
+        if 0x400 + 128 <= len(b):
+            b[0x400:0x400 + 128] = plant_player_bytes(
+                x=0x18, y=0x22, z=2, sc=1, pos=puck_pos, xv=xv, yv=yv, zv=0, frame=0)
+        sc0 = img.labels().get('SortCords')
+        if sc0:
+            overlay_patch(patches, sc0, plant_player_bytes(
+                x=0x20, y=0x20, z=2, sc=0, pos=sc_pos, nopuck=0, frame=sc_frame, xv=0, yv=0))
+        patch_u32(img, patches, 'puckc', ARG + 0x5F0)
+        if 0x5F0 < len(b):
+            b[0x5F0] = 0x10   # puck sort-index != player 0
+        patch_u32(img, patches, 'puckx', puck + 2)
+        patch_u32(img, patches, 'pucky', puck + 6)
+        patch_u32(img, patches, 'puckz', puck + 10)
+        patch_u32(img, patches, 'puckvx', puck + 0x0C)
+        patch_u32(img, patches, 'puckvy', puck + 0x0E)
+        patch_u32(img, patches, 'puckvz', puck + 0x10)
+    if n in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
+        patch_u32(img, patches, 'statsplayoffs', 0 if seed % 2 == 0 else 1)
+        order = img.labels().get('statsteamorder')
+        if order:
+            overlay_patch(patches, order, b''.join(struct.pack('<I', i) for i in range(26)))
+        patch_u32(img, patches, 'statsteambuf', ARG + 0x800)
+        if 0x800 + 64 <= len(b):
+            b[0x800 + 0x0D] = 3
+    if n in ('DrawCalendarDay', 'CalendarScreen'):
+        # 6-byte games: month+1, day, home, away, us, them. Selected cell matches calsel*.
+        g = ARG + 0x200
+        month = 0
+        day = 15
+        if 0x200 + 12 <= len(b):
+            b[0x200:0x200 + 6] = bytes([month + 1, day, 5, 6, 3, 2])
+            b[0x206:0x206 + 6] = bytes([month + 1, 16, 6, 5, 0xFF, 0xFF])
+        crests = ARG + 0x700
+        if 0x700 + 26 * 4 <= len(b):
+            for i in range(26):
+                b[0x700 + i * 4:0x700 + i * 4 + 4] = struct.pack('<I', ARG + SPRITE_OFF)
+        patch_u32(img, patches, 'calselmonth', month + 1)
+        patch_u32(img, patches, 'calselday', day)
+        mf = img.labels().get('monthfirstday')
+        if mf:
+            overlay_patch(patches, mf, bytes([1]) * 12)
+    return bytes(b), patches
+
 def clamp_leftover_inputs(func, regs, args):
     """Even-case clamps for leftover NR (109-plan H3). Typed stream already stays in-bound; this
     keeps loop counts and collide indices off EDGE / ARG-as-count so screen and collide drafts finish."""
@@ -169,6 +295,27 @@ def clamp_leftover_inputs(func, regs, args):
         regs['edx'] = 4  # four planted items (item 1 is a submenu)
     if n == 'SportsDesk':
         regs['eax'] = regs.get('eax', 0) % 3  # mode 0/1/2
+    if any(s in low for s in ('skate', 'puckcoll', 'passlane', 'checkcheck', 'checkgoal', 'wallcoll',
+                              'blockshot', 'assone', 'assgoal', 'assref')):
+        regs['eax'] = ARG + 0x400  # planted Player
+        if 'edx' in regs and any(s in low for s in ('puckcoll', 'passlane', 'checkcheck', 'checkgoal')):
+            regs['edx'] = 0 if (regs.get('edx', 1) & 1) else collide_sort_index(regs['edx'])
+    if n == 'DrawCalendarDay':
+        # Watcom register: eax month, edx crests, ebx unused, ecx games; stack ngames, team, font, bank
+        regs['eax'] = 0
+        regs['edx'] = ARG + 0x700
+        regs['ebx'] = 0
+        regs['ecx'] = ARG + 0x200
+        while len(args) < 4:
+            args.append(0)
+        args[0] = 2   # ngames
+        args[1] = 5   # team == games[0].home
+        args[2] = 0
+        args[3] = 1   # bank
+    if n == 'CalendarScreen':
+        while len(args) < 4:
+            args.append(0)
+        regs['eax'] = regs.get('eax', 0) % 26
     return regs, args
 
 def first_use(code, addr, to_ret=False):
@@ -389,8 +536,11 @@ class Checker:
             script = [((ptr() if rng.random() < 0.2 else scalar()), scalar()) for _ in range(32)]
         buf = clamp_playoff_team_bytes(self.func, buf, args, regs)
         regs, args = clamp_leftover_inputs(self.func, regs, args)
+        buf, patches = plant_leftover(self.func, self.img, buf, patches, seed=i)
         mode = 'list' if self.func == 'ListDialog' else 'menu' if self.func in EVENT_STUB else ''
-        if mode == 'menu':
+        if self.func in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
+            mode = 'menu_pick'  # 0-arg returns 0 so the statsplayoffs arm runs
+        if mode in ('menu', 'menu_pick'):
             buf, patches = plant_screen(self.img, buf, patches)
         return buf, run.State(regs=regs, args=args, patches=patches, script=script,
                               event_stub=bool(mode), event_mode=mode)
@@ -428,7 +578,8 @@ class Checker:
                 args[rng.randrange(len(args))] = rng.choice([ARG, ARG + 0x40] + list(range(INDEX_BOUND)))
         b = clamp_playoff_team_bytes(self.func, bytes(b), args, regs)
         regs, args = clamp_leftover_inputs(self.func, regs, args)
-        if st.event_mode == 'menu':
+        b, patches = plant_leftover(self.func, self.img, b, patches, seed=st.seed or 0)
+        if st.event_mode in ('menu', 'menu_pick'):
             b, patches = plant_screen(self.img, b, patches)
         return b, dataclasses.replace(st, regs=regs, args=args, patches=patches, script=script)
 
@@ -488,6 +639,8 @@ class Checker:
         regs, args, pg, fresh = runner.snap
         raw = fresh.get(ARG) or next(iter(fresh.values()), b'\x00' * ARG_SIZE)
         mode = 'list' if self.func == 'ListDialog' else 'menu' if self.func in EVENT_STUB else ''
+        if self.func in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
+            mode = 'menu_pick'
         return raw[:ARG_SIZE], run.State(regs=regs, args=args, patches=pg, script=None,
                                          event_stub=bool(mode), event_mode=mode)
 
@@ -517,7 +670,7 @@ class Checker:
     def prep(self, st):
         def argsof(t):
             nr, np_ = self.nreg(t), self.npop(t)
-            if st.event_mode == 'menu' and run.is_cdecl(self.img, t):
+            if st.event_mode in ('menu', 'menu_pick') and run.is_cdecl(self.img, t):
                 nr = 0  # cdecl: leftover ebx is the menus pointer, not an out-param
             return nr, np_
         st.argsof = argsof
@@ -708,6 +861,24 @@ def _selftest():
     check('plant_screen pointerspr -> ARG sprite', ps and struct.unpack_from('<I', p[ps])[0] == ARG + SPRITE_OFF)
     r, a = clamp_leftover_inputs('checkcheck', {'eax': 0xA5A5A5A5, 'edx': 0x20}, [])
     check('checkcheck eax is Player in ARG', ARG <= r['eax'] < ARG + ARG_SIZE)
+    r, a = clamp_leftover_inputs('SkateToSpot', {'eax': 0, 'edx': 0xBEEF}, [])
+    check('SkateToSpot eax is planted Player', r['eax'] == ARG + 0x400 and r['edx'] == 0xBEEF)
+    r, a = clamp_leftover_inputs('DrawCalendarDay', {}, [])
+    check('DrawCalendarDay month/games in regs', r['eax'] == 0 and r['ecx'] == ARG + 0x200 and a[0] == 2)
+    pb = plant_player_bytes(x=0x14, y=0xEA)
+    check('plant_player Ypos hiword is corridor', struct.unpack_from('<I', pb, 4)[0] >> 16 == 0xEA)
+    pb = plant_player_bytes(x=-0x40, y=-0x20, xv=-0xC00, yv=0xC00)
+    check('plant_player signed Xpos and Xvel', (struct.unpack_from('<i', pb, 0)[0] >> 16) == -0x40
+          and struct.unpack_from('<h', pb, 0x0C)[0] == -0xC00)
+    buf, p = plant_leftover('checkpuckcoll_ccx', img, bytes(0x800), {}, seed=0)
+    sc0 = img.labels().get('SortCords')
+    check('plant leftover SortCords goalie pos 0', sc0 and struct.unpack_from('<h', p[sc0], 0x1A)[0] == 0)
+    buf, p = plant_leftover('DrawCalendarDay', img, bytes(0x800), {}, seed=0)
+    cm = img.labels().get('calselmonth')
+    check('plant leftover calselmonth is month+1', cm and struct.unpack_from('<I', p[cm])[0] == 1)
+    buf, p = plant_leftover('RunTeamPickMenu', img, bytes(0x900), {}, seed=0)
+    sp = img.labels().get('statsplayoffs')
+    check('plant leftover statsplayoffs seeded', sp and sp in p)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
