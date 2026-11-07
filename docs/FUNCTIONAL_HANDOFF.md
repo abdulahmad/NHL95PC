@@ -23,11 +23,11 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **77 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+* **78 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
   PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
-  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). H4: RandomizeSchedule (60→61). Leftover synth: DrawCalendarDay, checkpuckcoll_ccx, RunTeamPickMenu, SkateToSpot (61→65). Leftover pairs: InProgress, DrawRinkOverlays, PassLaneChk (65→68). Leftover near: CanBlockShot, checkgoal, wallcoll (68→71). Leftover close: FillDressedSlots, PenGoalStuff, SeedPlayoffRound3, PickForLineSlot (71→75). Leftover rest: assthreestars, checkcheck (75→77). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). H4: RandomizeSchedule (60→61). Leftover synth: DrawCalendarDay, checkpuckcoll_ccx, RunTeamPickMenu, SkateToSpot (61→65). Leftover pairs: InProgress, DrawRinkOverlays, PassLaneChk (65→68). Leftover near: CanBlockShot, checkgoal, wallcoll (68→71). Leftover close: FillDressedSlots, PenGoalStuff, SeedPlayoffRound3, PickForLineSlot (71→75). Leftover rest: assthreestars, checkcheck (75→77). Leftover more: assrefgoalpa (77→78). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture after leftover rest: **77 PASS / 32 NEEDS-REVIEW / 0 FAIL** over leftover drafts
+  Latest-row CSV picture after leftover more: **78 PASS / 31 NEEDS-REVIEW / 0 FAIL** over leftover drafts
   (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
@@ -95,6 +95,7 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 109.near | ~~Puckvy / goal mix / wallcoll player arm~~ **done** (CanBlockShot / checkgoal / wallcoll PASS 3000; remaining 38 NR). **71 PASS / 38 NR**. | Grok 4.7 medium |
 | 109.close | ~~Line/penalty/playoff plants + InstantReplay quit~~ **done** (FillDressedSlots / PenGoalStuff / SeedPlayoffRound3 / PickForLineSlot PASS 3000; remaining 34 NR). **75 PASS / 34 NR**. | Grok 4.7 medium |
 | 109.rest | ~~Three-stars / checkcheck plants~~ **done** (assthreestars / checkcheck PASS 3000; remaining 32 NR). **77 PASS / 32 NR**. | Grok 4.7 medium |
+| 109.more | ~~assrefgoalpa drop/pickup~~ **done** (assrefgoalpa PASS 3000; remaining 31 NR). **78 PASS / 31 NR**. | Grok 4.7 medium |
 | 109.H6 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),

@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after rest plants: **77 PASS / 0 FAIL / 32 NR**. assthreestars / checkcheck PASS 3000.
+Live leftover after more plants: **78 PASS / 0 FAIL / 31 NR**. assrefgoalpa PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -149,6 +149,19 @@ assthreestars `ovltimer=-1` plus intro / star-done / last-star / bring-out / gam
 G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa.
+
+## Leftover more (assrefgoalpa drop/pickup)
+
+assrefgoalpa `temp5>0x258` without `pflags` bit 1 (that bit returns in the new-assignment path); `|puckx|==6` and `|pucky|==0xF0` is the resting-puck pickup. MenuHitTest hit-count sequencing on PlayoffTreeMenu dropped 73→43 (reverted). RunPlayerPickMenu sequenced hits dropped 81→73 (reverted). `--force --budget 1800 --cases 2000 --no-callers`. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| assrefgoalpa | **PASS 3000** (was NR 76%; drop/pickup mix, 85.6%) |
+| remaining 31 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer.
 
 ## Close
 

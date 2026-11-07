@@ -819,3 +819,4 @@ SeedPlayoffRound3,cursor,2026-11-06,GA,72,72,"functional leftover close: games 1
 PickForLineSlot,cursor,2026-11-06,GA,36,36,"functional leftover close: CanFillLineSlot eax=0 + FillDressedSlots stub + pos-letter lists. PASS 3000. No C."
 assthreestars,cursor,2026-11-06,GA,15,15,"functional leftover rest: ovltimer -1 + intro/star-done/bring-out/gameover mix. PASS 3000. No C."
 checkcheck,cursor,2026-11-06,GA,82,82,"functional leftover rest: SetSPA writes SPA + signed/fast q. PASS 3000. No C."
+assrefgoalpa,cursor,2026-11-06,GA,76,76,"functional leftover more: temp5 drop without pflags bit 1 + resting-puck pickup. PASS 3000. No C."

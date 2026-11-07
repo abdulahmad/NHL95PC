@@ -420,7 +420,7 @@ def plant_leftover(func, img, buf, patches, seed=0):
         if so:
             overlay_patch(patches, so, b'\x01\x00\x00\x00' * 4)
     if n == 'assrefgoalpa':
-        kind = seed % 6
+        kind = seed % 8
         # ovlseq must be neither 0 nor 2 for the PaGoal overlay body.
         patch_u16(img, patches, 'ovlseq', 1 if kind == 0 else 0)
         patch_u16(img, patches, 'ovltimer', 0xF0 if kind == 0 else (0x100 if kind == 3 else 0))
@@ -435,11 +435,23 @@ def plant_leftover(func, img, buf, patches, seed=0):
         patch_u16(img, patches, 'word_CBEC6', 1 if kind == 5 else 0)
         if kind == 2 and 0x5F8 <= len(b):
             b[0x5F2:0x5F4] = struct.pack('<h', 0x120)  # |pucky| > 0x112
-        if 0x400 + 128 <= len(b) and kind in (3, 4, 5):
+        if kind == 6 and 0x5F8 <= len(b):
+            b[0x5F2:0x5F4] = struct.pack('<h', 0xF0)  # |pucky| == 0xF0
+            b[0x5F4:0x5F6] = struct.pack('<h', 6)     # |puckx| == 6
+        if 0x400 + 128 <= len(b) and kind in (3, 4, 5, 6, 7):
             p = bytearray(b[0x400:0x400 + 128])
-            p[0x44] = 2  # new assignment
+            if kind in (3, 4, 5):
+                p[0x44] = 2  # new assignment
             if kind == 5:
+                struct.pack_into('<h', p, 0x2E, 0x300)  # temp5 > 0x258, but pflags&2 returns first
+            if kind == 7:
                 struct.pack_into('<h', p, 0x2E, 0x300)  # temp5 > 0x258: drop the puck
+                p[0x44] = 0
+            if kind == 6:
+                # close to the resting puck so the pickup arm runs
+                struct.pack_into('<I', p, 0x00, (6 & 0xFFFF) << 16)
+                struct.pack_into('<I', p, 0x04, (0xE8 & 0xFFFF) << 16)
+                struct.pack_into('<h', p, 0x26, 0)  # temp1: --temp1 < 0 then +8
             b[0x400:0x400 + 128] = p
     if n == 'assgoalie':
         kind = seed % 5
