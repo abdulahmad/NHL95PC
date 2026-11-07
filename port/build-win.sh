@@ -65,7 +65,7 @@ $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_C
     port/overbar_client.c port/overbar/src/scaler.c port/overbar/src/host.c port/overbar/src/present.c port/overbar/src/menu.c port/overbar/src/overlay.c port/overbar/src/filemenu.c \
     port/overbar/third_party/pulseman/menu.c \
     port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT port/cstart.c \
-    port/overrides.c port/plat_win.c "$OUT/icon.o" $(find "$OUT/obj" -name '*.o' | sort) \
+    port/overrides.c port/plat_win.c "$OUT/icon.o" $(sh port/objorder.sh "$OUT/obj") \
     build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
     -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"
