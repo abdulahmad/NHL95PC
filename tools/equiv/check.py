@@ -303,18 +303,21 @@ def plant_leftover(func, img, buf, patches, seed=0):
                 x=0x20, y=oy, z=2, sc=1, pos=1, xv=0x40, yv=yv, facedir=2)
     elif n == 'checkcheck':
         # Mostly the SPA 0x621 arm (holdcheck/Bcheck are other functions). q close, ref mix.
-        spa_q = (0, 0, 0, 0x589)[seed % 4]
+        spa_q = (0, 0, 0, 0, 0, 0x589, 0x639, 0x873)[seed % 8]
         qsc = 0x10 if seed & 2 else 1
         qpfl = 8 if seed & 1 else 0
+        qx = -0x20 if seed & 8 else 0x20
+        qv = 0x200 if seed & 16 else 0x80  # >= 0x1F4 takes the vtoa hit-SPA arm
+        ppfl = 8 if qsc == 0x10 else (0x80 if seed & 1 else 0)
         if 0x400 + 128 <= len(b):
             b[0x400:0x400 + 128] = plant_player_bytes(
                 x=0x18, y=0x20, z=2, sc=1, pos=1, xv=0x40, spa=0x621, facedir=2,
-                attribute=0 if seed & 4 else 8, pflags=0x80 if seed & 1 else 0,
+                attribute=0 if seed & 4 else 8, pflags=ppfl,
                 aggress=20, checking=2, weight=80)
         if 0x480 + 128 <= len(b):
             b[0x480:0x480 + 128] = plant_player_bytes(
-                x=0x20, y=0x24, z=2, sc=qsc, pos=1, spa=spa_q,
-                xv=0x80, yv=0x80, weight=100, impact=0x30, facedir=2, pflags=qpfl)
+                x=qx, y=0x24, z=2, sc=qsc, pos=1, spa=spa_q,
+                xv=qv, yv=qv, weight=100, impact=0x30, facedir=2, pflags=qpfl)
         patch_u8(img, patches, 'gmode', 0x10 if seed & 4 else (1 if seed & 1 else 0))
     elif n == 'CanBlockShot':
         kind = seed % 4
@@ -371,6 +374,98 @@ def plant_leftover(func, img, buf, patches, seed=0):
         if 0x5F8 <= len(b):
             b[0x5F4:0x5F8] = struct.pack('<hh', 0x20, 4)
         patch_u32(img, patches, 'dword_CCC2C', 1 if seed & 2 else 0)
+    if n == 'assthreestars':
+        # ovltimer -1 skips the early-out (<0x10 / 0x258..0x268).
+        patch_u16(img, patches, 'ovltimer', 0xFFFF)
+        kind = seed % 5
+        pfl = 2 if kind == 0 else 0
+        if kind == 2:
+            t1, t2, t3 = -1, 0, -1          # gameover
+        elif kind == 4:
+            t1, t2, t3 = 0, 1, 5            # last star done: ovltimer = 0x258
+        elif kind == 1:
+            t1, t2, t3 = 2, 1, 5            # star done, announce next
+        elif kind == 3:
+            t1, t2, t3 = 2, 1, -1           # bring the star out (0x49907)
+        else:
+            t1, t2, t3 = 2, 1, -1           # intro (pflags=2)
+        if 0x400 + 128 <= len(b):
+            p = bytearray(b[0x400:0x400 + 128])
+            p[0x44] = pfl
+            struct.pack_into('<h', p, 0x26, t1)
+            struct.pack_into('<h', p, 0x28, t2)
+            struct.pack_into('<h', p, 0x2A, t3)
+            b[0x400:0x400 + 128] = p
+        sm = img.labels().get('startm')
+        if sm:
+            overlay_patch(patches, sm, b'\x00\x00' * 8)
+        spl = img.labels().get('starpl')
+        if spl:
+            overlay_patch(patches, spl, b'\x00\x00' * 8)
+        sc0 = img.labels().get('SortCords')
+        if sc0:
+            overlay_patch(patches, sc0 + 5 * 128, plant_player_bytes(
+                x=0x10, y=0x40, z=2, sc=5, pos=4, frame=-1 if kind == 1 else 0,
+                pflags=0x40 if seed & 1 else 0))
+            overlay_patch(patches, sc0 + 6 * 128, plant_player_bytes(
+                x=0x10, y=-0x40, z=2, sc=6, pos=4, pflags=0))
+            if kind in (1, 4):
+                q = bytearray(128)
+                q[:] = plant_player_bytes(x=0x10, y=0x40, z=2, sc=5, pos=4, frame=-1)
+                struct.pack_into('<h', q, 0x26, 0x64)  # q->temp1 == 0x64
+                overlay_patch(patches, sc0 + 5 * 128, bytes(q))
+        patch_u32(img, patches, 'gameopts', 0x100)  # speech bit
+        patch_u32(img, patches, 'musicon', 1)
+        so = img.labels().get('starordtab')
+        if so:
+            overlay_patch(patches, so, b'\x01\x00\x00\x00' * 4)
+    if n == 'assrefgoalpa':
+        kind = seed % 6
+        # ovlseq must be neither 0 nor 2 for the PaGoal overlay body.
+        patch_u16(img, patches, 'ovlseq', 1 if kind == 0 else 0)
+        patch_u16(img, patches, 'ovltimer', 0xF0 if kind == 0 else (0x100 if kind == 3 else 0))
+        e9 = img.labels().get('byte_E9AD3')
+        if e9:
+            overlay_patch(patches, e9, bytes([1 if kind == 0 else 0, 0, 1, 0xFF, 0xFF]))
+        pb = img.labels().get('PenBuf')
+        if pb:
+            overlay_patch(patches, pb, bytes([2 if kind == 1 else 0, 0, 0, 0, 0, 0, 0, 0]))
+        patch_u16(img, patches, 'RefPen', 4 if kind == 3 else (7 if kind == 4 else 1))
+        patch_u16(img, patches, 'gsp', 3 if kind == 4 else (0 if kind == 3 else 1))
+        patch_u16(img, patches, 'word_CBEC6', 1 if kind == 5 else 0)
+        if kind == 2 and 0x5F8 <= len(b):
+            b[0x5F2:0x5F4] = struct.pack('<h', 0x120)  # |pucky| > 0x112
+        if 0x400 + 128 <= len(b) and kind in (3, 4, 5):
+            p = bytearray(b[0x400:0x400 + 128])
+            p[0x44] = 2  # new assignment
+            if kind == 5:
+                struct.pack_into('<h', p, 0x2E, 0x300)  # temp5 > 0x258: drop the puck
+            b[0x400:0x400 + 128] = p
+    if n == 'assgoalie':
+        kind = seed % 5
+        if kind == 1:   # behind the goal line
+            gx, gy = 0x10, 0xF0
+        elif kind == 2:  # out of the crease (|x| > 0x34)
+            gx, gy = 0x40, 0xD0
+        elif kind == 4:  # behind, |x| > 0x30 so he keeps his own x
+            gx, gy = 0x40, 0xF0
+        else:
+            gx, gy = 0x10, 0xD0  # crease
+        pfl = 2 if kind == 3 else (0x80 if seed & 2 else 0)
+        if 0x400 + 128 <= len(b):
+            p = bytearray(plant_player_bytes(
+                x=gx, y=gy, z=2, sc=1, pos=0, xv=0x40, yv=0x200,
+                pflags=pfl, puckdist=0x20, spa=0x99))
+            struct.pack_into('<h', p, 0x26, -1)  # temp1: --temp1 < 0 takes aidef
+            struct.pack_into('<h', p, 0x2E, -1)  # temp5
+            p[0x5A] = 9  # aidef
+            p[0x45] = 0  # pflags2
+            b[0x400:0x400 + 128] = p
+        patch_u8(img, patches, 'gmode', 0)
+        if kind == 3:
+            # holding the puck: puckc == SCnum
+            if 0x5F0 < len(b):
+                b[0x5F0] = 1
     if n in ('RunTeamPickMenu', 'RunPlayerPickMenu'):
         patch_u32(img, patches, 'statsplayoffs', 0 if seed % 2 == 0 else 1)
         order = img.labels().get('statsteamorder')
@@ -1228,6 +1323,9 @@ def _selftest():
     buf, p = plant_leftover('PenGoalStuff', img, bytes(0x100), {}, seed=0)
     pb = img.labels().get('PenBuf')
     check('PenGoalStuff PenBuf is a minor', pb and p.get(pb, b'\x00')[:1] == b'\x02')
+    buf, p = plant_leftover('assthreestars', img, bytes(0x600), {}, seed=0)
+    ot = img.labels().get('ovltimer')
+    check('assthreestars ovltimer is -1', ot and struct.unpack_from('<h', p.get(ot, b'\x00\x00')[:2])[0] == -1)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 

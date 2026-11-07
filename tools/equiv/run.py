@@ -141,6 +141,9 @@ _FILLSLOT = None
 _FILLDRESSED = None
 _REPLAYCTL = None
 _RANDOMD0 = None
+_PLAYERY = None
+_CHECK4BENCH = None
+_SETSPA = None
 
 def fillslot_addr(img):
     global _FILLSLOT
@@ -165,6 +168,24 @@ def randomd0_addr(img):
     if _RANDOMD0 is None:
         _RANDOMD0 = img.labels().get('randomd0')
     return _RANDOMD0
+
+def playery_addr(img):
+    global _PLAYERY
+    if _PLAYERY is None:
+        _PLAYERY = img.labels().get('PlayerFromMouseY')
+    return _PLAYERY
+
+def check4bench_addr(img):
+    global _CHECK4BENCH
+    if _CHECK4BENCH is None:
+        _CHECK4BENCH = img.labels().get('check4bench')
+    return _CHECK4BENCH
+
+def setspa_addr(img):
+    global _SETSPA
+    if _SETSPA is None:
+        _SETSPA = img.labels().get('SetSPA')
+    return _SETSPA
 
 def serieslen_addr(img):
     """EXE label of SeriesLength, cached."""
@@ -480,6 +501,20 @@ class Runner:
                     eax = 0  # quit so InstantReplay cannot spin to insn-limit
             elif a == randomd0_addr(img) and cur.func == 'checkcheck':
                 eax = 0 if k & 1 else 9  # < aggress, then sometimes > checking
+            elif a == playery_addr(img) and cur.func == 'RunPlayerPickMenu':
+                eax = 1  # a hit so the picker runs; pick 0 = same row (ShowPlayerStatsItem)
+                pick = 0 if k & 1 else 1
+                if STK <= rg[2] <= STK + STK_SIZE - 4:
+                    put(rg[2], struct.pack('<I', pick))
+                    hit_skip.add(rg[2])
+                    if ih(rg[2]): written.update(range(rg[2], min(rg[2] + 4, esp0)))
+            elif a == check4bench_addr(img) and cur.func in ('assgoalie', 'assrefgoalpa'):
+                eax = 0  # not at the bench so the assignment body runs
+            elif a == setspa_addr(img) and cur.func == 'checkcheck':
+                try:
+                    put(rg[0] + 0x38, struct.pack('<H', rg[1] & 0xFFFF))  # p->SPA = edx
+                except UcError:
+                    pass
             elif a == listhit_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = listhit_out(k)
             elif a in fileopen_addrs(img) and not callable(cur.script):
@@ -495,7 +530,8 @@ class Runner:
             if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk,
                                        getinput_addr(img), pollkey_addr(img), listhit_addr(img),
                                        fillslot_addr(img), filldressed_addr(img), replayctl_addr(img),
-                                       randomd0_addr(img))
+                                       randomd0_addr(img), playery_addr(img), check4bench_addr(img),
+                                       setspa_addr(img))
                     and a not in fileopen_addrs(img)):
                 # ptrupdatefn after a real event: button-down bit so the inner input while can exit
                 eax = (eax | 2) & 0xFFFFFFFF
@@ -515,7 +551,8 @@ class Runner:
             if (cur.event_mode in ('menu', 'menu_pick', 'menu_redraw') and nr == 0 and np_ == 0 and not click_set
                     and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
                                   hittest_addr(img), serieslen_addr(img), fillslot_addr(img),
-                                  filldressed_addr(img), replayctl_addr(img), randomd0_addr(img), chk)
+                                  filldressed_addr(img), replayctl_addr(img), randomd0_addr(img),
+                                  playery_addr(img), check4bench_addr(img), setspa_addr(img), chk)
                     and a not in fileopen_addrs(img)
                     and a != PTRFN_STUB):
                 if cur.event_mode == 'menu_pick':

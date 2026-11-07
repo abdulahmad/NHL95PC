@@ -742,3 +742,20 @@ InstantReplay,src/front/replay_controls/DrawGadgetButton.c,1745cf37fddc0512d6245
 SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
 NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
 checkcheck,src/engine/collide/checkcheck.c,e4d0635dc7b6b7288f8db5777836fd5a6a3e31c1,3000,1,NEEDS-REVIEW,"coverage 82%, uncovered 0x53861-0x5386a 0x538ee-0x538f5 0x53a11-0x53a30 0x53b50-0x53b7e 0x53c5b-0x53c7a",2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+assthreestars,src/engine/intro/FadeOutPalCycle.c,7566e624cac29dfed80279f318dd8579cbef87e1,3000,1,NEEDS-REVIEW,"coverage 66%, uncovered 0x49770-0x4978b 0x497ab-0x498f7 0x49970-0x49970; code pointer compared by function x16",2026-11-07
+assrefgoalpa,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,NEEDS-REVIEW,"coverage 73%, uncovered 0x4f059-0x4f090 0x4f10b-0x4f136 0x4f169-0x4f1de 0x4f346-0x4f3b5 0x4f44f-0x4f486; code pointer compared by function x1, code write x1, null page x16, uninit read, outputs equal ",2026-11-07
+assgoalie,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,NEEDS-REVIEW,"coverage 64%, uncovered 0x4b834-0x4b86f 0x4ba03-0x4baa5 0x4bbec-0x4bca4 0x4c065-0x4c0fa 0x4c1a2-0x4c1e7; null page x581",2026-11-07
+assthreestars,src/engine/intro/FadeOutPalCycle.c,7566e624cac29dfed80279f318dd8579cbef87e1,3000,1,NEEDS-REVIEW,"coverage 81%, uncovered 0x49804-0x4980d 0x49907-0x499cb; code pointer compared by function x4",2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07
+assthreestars,src/engine/intro/FadeOutPalCycle.c,7566e624cac29dfed80279f318dd8579cbef87e1,3000,1,NEEDS-REVIEW,"coverage 81%, uncovered 0x49804-0x4980d 0x49907-0x499cb; code pointer compared by function x4",2026-11-07
+RunPlayerPickMenu,src/front/menu/RunMenu.c,6e917f3a177ca7ad68150ebddbf56451cb408b27,3000,1,NEEDS-REVIEW,"coverage 81%, uncovered 0x1f180-0x1f1a7 0x1f4e0-0x1f53c 0x1f723-0x1f78b 0x1f7dd-0x1f804 0x1f9e1-0x1fa68; code pointer compared by function x3000, null page x3000",2026-11-07
+assthreestars,src/engine/intro/FadeOutPalCycle.c,7566e624cac29dfed80279f318dd8579cbef87e1,3000,1,PASS,code pointer compared by function x3,2026-11-07
+checkcheck,src/engine/collide/checkcheck.c,e4d0635dc7b6b7288f8db5777836fd5a6a3e31c1,3000,1,NEEDS-REVIEW,"coverage 76%, uncovered 0x538ee-0x538f5 0x53a11-0x53a30 0x53b46-0x53b7e 0x53c0e-0x53c3d 0x53c5b-0x53c7a",2026-11-07
+assrefgoalpa,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,NEEDS-REVIEW,"coverage 76%, uncovered 0x4f10b-0x4f136 0x4f169-0x4f1de 0x4f30a-0x4f31e 0x4f346-0x4f3b5 0x4f44f-0x4f486; null page x81, uninit read, outputs equal x328",2026-11-07
+assgoalie,src/engine/logic/assgoalie.c,c12e65cd6e4c786e6f778f28e86c0d50879d8fbc,3000,1,NEEDS-REVIEW,"coverage 68%, uncovered 0x4ba21-0x4baa5 0x4bbec-0x4bca4 0x4bd82-0x4bdc2 0x4c065-0x4c0fa 0x4c1a2-0x4c1e7; null page x295",2026-11-07
+checkcheck,src/engine/collide/checkcheck.c,e4d0635dc7b6b7288f8db5777836fd5a6a3e31c1,3000,1,PASS,,2026-11-07
+SeriesLength,src/front/season/SeriesLength.c,961788347d6b902f01792037a65b671c51987110,450,1,PASS,"null page x6, unset return esi x8",2026-11-07
+NetCollide,src/engine/collide/PassLaneChk.c,e9be397246f3971e95d1c114e16ed3b080806d9d,6750,1,PASS,null page x6722,2026-11-07

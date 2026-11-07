@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after close plants: **75 PASS / 0 FAIL / 34 NR**. FillDressedSlots / PenGoalStuff / SeedPlayoffRound3 / PickForLineSlot PASS 3000.
+Live leftover after rest plants: **77 PASS / 0 FAIL / 32 NR**. assthreestars / checkcheck PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -135,6 +135,20 @@ FillDressedSlots `CanFillLineSlot` eax=1 and the dressed list in ARG. PickForLin
 G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck.
+
+## Leftover rest (three-stars / checkcheck plants)
+
+assthreestars `ovltimer=-1` plus intro / star-done / last-star / bring-out / gameover mix (speech bit on `gameopts+1`). checkcheck SetSPA writes `p->SPA`, negative q X, `|vel|>=0x1F4`, holdcheck/Bcheck minority. assrefgoalpa `ovlseq=1` (neither 0 nor 2). assgoalie `check4bench` eax=0 plus crease/behind/out mix. TitleScreen movie stubs dropped 64→47 (reverted). EditTextField PollKey special dropped 71→36 (reverted). TradeHitTest hung TradeScreenLoop (reverted). `--force --budget 1800 --cases 2000 --no-callers` on the leftover NR. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| assthreestars | **PASS 3000** (was NR 15% then 81%; ovltimer -1 + star mix) |
+| checkcheck | **PASS 3000** (was NR 82%; SetSPA + signed/fast q) |
+| remaining 32 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa.
 
 ## Close
 
