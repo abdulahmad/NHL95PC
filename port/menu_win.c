@@ -5,6 +5,7 @@
 #include "host.h"
 #include "audio.h"
 #include "overbar_client.h"
+#include "bindings.h"
 #include <SDL.h>
 #include <SDL_syswm.h>
 
@@ -56,8 +57,11 @@ static void shell_quit(void)
     SDL_PushEvent(&q);
 }
 
+/* the bar's Input > Controllers: the bindings dialog, at once */
+static void shell_controllers(void) { bindings_dialog_open(NULL); }
+
 static const ob_shell shell = {
-    shell_picture, NULL, shell_hold, shell_redraw, shell_draw_now, shell_vsync, shell_stats, shell_quit
+    shell_picture, NULL, shell_hold, shell_redraw, shell_draw_now, shell_vsync, shell_stats, shell_quit, shell_controllers
 };
 
 void menu_init(void *sdl_window)

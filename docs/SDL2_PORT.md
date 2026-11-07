@@ -182,3 +182,51 @@ A key or a mouse button pressed before the front end skips the screen that is sh
 the game's waits are cut to nothing (`SetTickDeadline` and `WaitTicks` in `port/overrides.c`), its clock, the retrace and the sound devices run fast,
 the digital music is reported finished, and F12 (nothing in the game uses it) is pressed now and then for the title screen's "any key". It ends when
 the menus ask for input. The loading picture (`ShowLoadingScreen`) is not shown; `NHL95_LOADSCREEN=1` brings it back.
+
+### Online play
+
+Two machines play one exhibition game in lockstep (`port/netplay.c`, on Overbar's netplay core, `port/overbar/include/overbar/net.h`). Nothing is
+saved or loaded and no state is sent: the simulation reads its pads only through the input records of `joyqueue` (pad 1, pad 2, hot key; one per
+3 game frames, 20 a second), so both machines run the same game from the same records. The original game has no modem, serial or IPX play.
+
+**How a session starts.** The Online page's Host / Connect only arms online play. Each player then starts an exhibition game from the game's
+own menus; `PlayGame` (main.asm, at its entry) waits there, with the Online page open, until the other machine is there too. The host's
+settings then go to the guest: the teams (`HomeTeam`, `VisTeam`), `gamemode` and `gameopts` (period length, penalties, sound options), the
+controller sides (`ctl1team`/`ctl1side`, `ctl2team`/`ctl2side`; when the host set up only one player, the guest takes the other team), the
+engine's random seed (`seed`, randomd0) and the C library's (`randseed`), `PerTimeTab[0]` and the host's time of day. Both machines then run
+`InitGameSummary(0)` again (the game summary, and the rosters from the league database for those teams, as `MenuNewExhibition` did) and
+`PlayGame` goes on: the loading, `SetupGame`, the play. The host is pad 1, the guest pad 2; each machine reads its own controller 1 (keyboard,
+stick A or stick B; the mouse can't play online). Once the game is over and its three stars have ended, the rest (the post-game desk) is
+local; the session ends when `PlayGame` returns, and each machine's own menu settings are put back. A
+loaded game, a season or the playoffs are not online (the page says so and stays armed for an exhibition game).
+
+**The records.** `SampleInputTick` is taken over: every 5 ticks this machine's pad and hot key (`ReadControllerPad`, `ReadHotKeys`) go to
+`ob_net_step` as its buttons for the next step. Only once that step has both machines' buttons is the merged record put in a queue of
+`netplay.c`, which `joyq_peek` / `joyq_pop` read instead of `joyqueue`. A step that is not complete yet is asked again at the next tick (the
+timer callback runs inside the game's timer interrupt and never waits); meanwhile `RunGameFrames` finds no record and only draws, as it always
+did. `joyq_flush` does nothing in a session (how many records wait at a given moment is not the same on both machines). The input delay is the
+Online page's (default 2 steps, 100 ms; up to 10). The main thread polls the socket every pass of its loop. While the overlay is open the game
+keeps running (IRQ 0 is raised) and this machine's pad reads as nothing; the sound is muted as usual.
+
+**What is made the same on both machines.**
+* `RunGameFrames` runs at most to the end of the record it is on (the frames it could not run come with the next call), and gives back in `edx`
+  the frames it really ran. The intro / three stars loop (`ThreeStarsLoop`) counts its timer with that.
+* The pre-game intro and the three stars end at the end of their first record (their "press a button" test, in the loop between game frames,
+  is answered there; the game's own skip path follows).
+* `Crowd_Noise` (called between game frames) gives back what it drew from `seed`.
+* `PaSpeechBusy` and `SpeechBusy` say 0: the play does not wait for the announcer, whose timing is the sound card's.
+* `IntermissionPC` only moves to the next period: the intermission desk (stats, highlights, the desk's menus) is skipped online.
+* DOS get-time (int 21h/2Ch) counts from the host's time by the records run.
+* The identity both machines must have: the build (`git describe`), the sound device (`sounddev`) and `musicon` (several game routines draw
+  random numbers or wait only with digital sound). The game's data files are not part of it: rosters that differ show as a desync at once.
+
+**Hot keys online.** F1-F8 (line changes), F9 / F10 (goalie) and Tab (numbers) work from either player (the host's wins when both press one at
+the same step). Esc (the sports desk), R (instant replay), S and M (sound) are dropped: they open local menus or change local settings. To leave,
+use Leave on the Online page; the game then goes on locally, the other player's team played by the computer.
+
+**The desync check.** At the first record and every 60 records (3 s) both machines hash what `SaveGameState` keeps of the players
+(`SortCords`, 0x66 bytes of each of the 17), both team structures (0xD4 bytes each), the lines, `seed`, the clock, the period, `lj1`/`lj2` and the
+crowd level; a difference ends the session as "desync at step N" on both. No check runs once `gameover` is set.
+
+Not known yet (nothing here could be run): whether anything else between game frames writes the simulation (the check would say), and whether
+choices made in the pre-game screen (lines, goalies) are kept in memory the guest does not get; use the defaults there.

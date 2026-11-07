@@ -22,6 +22,13 @@ void overbar_client_draw(uint32_t *px, int w, int h, int pitch);
 void overbar_client_view(int src_w, int src_h, int win_w, int win_h,
                          int height, int line_double, int *x, int *y, int *w, int *h);
 void overbar_client_set_class(int lores);
-void overbar_client_apply(void);                 /* run apply_host on the ob_host: a change made outside the overlay (the menu bar) */
+void overbar_client_apply(void);
+void overbar_client_close(void);
+void overbar_client_online_open(void);           /* the overlay, on the Online page */
+int overbar_client_editing(void);               /* a field of the Online page takes typed text (SDL text input on) */
+int overbar_client_text(const char *utf8);      /* SDL_TEXTINPUT's text for it; 1 if used */
+
+/* online play (netplay.c) */
+void netplay_online_setup(ob_host *h);          /* the rest is in host.h */                 /* run apply_host on the ob_host: a change made outside the overlay (the menu bar) */
 
 #endif

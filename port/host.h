@@ -143,4 +143,9 @@ void input_poll(void);                 /* main thread: SDL events */
 uint32_t input_port_in(unsigned port);
 int input_port_out(unsigned port, uint32_t val);
 int input_mouse(ctx_t *c);
+/* online play (netplay.c) */
+void netplay_install(void);                      /* after install_overrides, before the game thread */
+void netplay_main_poll(void);                    /* main thread, every pass of the loop */
+int netplay_running(void);                       /* a session drives the game: its clock runs while the overlay is open */
+int netplay_dos_time(int *h, int *m, int *s, int *cs);  /* int 21h/2Ch in a session: the host's time, on by the records run */
 #endif

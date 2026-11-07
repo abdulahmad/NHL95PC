@@ -79,6 +79,7 @@ int main(int argc, char **argv)
     if (getenv("NHL95_SOUNDTEST")) { extern int soundtest(void); return soundtest(); }
     plat_make_image_writable();
     install_overrides();
+    netplay_install();
     plat_install_traps();
     if (getenv("NHL95_CRASHTEST")) { volatile int *p = 0; *p = 1; }      /* checks that a crash is reported */
     plat_start_game();
@@ -101,7 +102,7 @@ int main(int argc, char **argv)
         if (menu_resync) { menu_resync = 0; next_tick = now; }        /* a menu bar loop ran: no catching up */
 #endif
         while (now >= next_tick) {
-            if (!overbar_client_open()) irq_raise(0);           /* overlay open: the game clock waits */
+            if (!overbar_client_open() || netplay_running()) irq_raise(0);     /* overlay open: the game clock waits (not online) */
             next_tick += 1000000000LL / irq_pit_hz() / (intro_skip ? 20 : 1);        /* skipping the splash screens: the game's clock runs fast */
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }
@@ -113,6 +114,7 @@ int main(int argc, char **argv)
                 "Put MT32_CONTROL.ROM and MT32_PCM.ROM in a folder named roms next to the program (or in the game folder), "
                 "or set NHL95_MT32_ROMS to the folder that has them.", 0);
         audio_pump();
+        netplay_main_poll();
         irq_poll();
         stats_report();
         plat_sleep_ms(1);

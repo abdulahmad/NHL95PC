@@ -336,6 +336,10 @@ static int int21(ctx_t *c)
     }
     case 0x2C: {
         time_t now_t = time(0); unsigned ms = SDL_GetTicks() % 1000; struct tm *tm = localtime(&now_t);
+        int nh, nm, ns, ncs;
+        if (netplay_dos_time(&nh, &nm, &ns, &ncs)) {         /* online: the same on both machines */
+            R(c, ECX) = (nh << 8) | nm; R(c, EDX) = (ns << 8) | ncs; return 1;
+        }
         R(c, ECX) = (tm->tm_hour << 8) | tm->tm_min; R(c, EDX) = (tm->tm_sec << 8) | (ms / 10); return 1;
     }
     case 0x30: SETAX(c, 0x0005); R(c, EBX) = 0; R(c, ECX) = 0; return 1;      /* DOS 5.0 */

@@ -1,0 +1,736 @@
+/* SPDX-License-Identifier: MIT
+ * Copyright (c) 2026 abdulahmad and contributors
+ *
+ * Online play: two machines run the same game in lockstep with Overbar's netplay core (overbar/net.h). Nothing is saved or
+ * loaded: the game's simulation reads its pads only through the input records of joyqueue (3 bytes: pad 1, pad 2, hot key),
+ * one record per 3 game frames, so the same records give the same game on both machines.
+ *
+ *   - SampleInputTick (the timer callback that pushes a record every 5 ticks) is taken over during a session: this machine's own
+ *     pad and hot key are its buttons for the next step (ob_net_step); once the step has every machine's buttons, the merged
+ *     record (host's pad as pad 1, guest's as pad 2, the hot keys that are safe online) goes into a queue of this file.
+ *   - joyq_peek / joyq_pop / joyq_flush read that queue instead of the game's. A missing record stalls the game as it always
+ *     did (RunGameFrames only draws). joyq_flush does nothing: the records are the same on both machines, but how many of them
+ *     are waiting at a given moment is not.
+ *   - RunGameFrames runs at most to the end of the record it is on, and says (in edx) how many frames it really ran, so the
+ *     code that runs between calls (the pre-game intro's timer and its "press a button to skip" test) sees the same game.
+ *
+ * The session begins at the start of a new exhibition game (PlayGame), on both machines: the Online page's Host / Connect only
+ * arms it, each player starts an exhibition game from the menus as usual, and PlayGame waits there until the other machine is
+ * there too. The host's teams, game options, controller sides and both random seeds then go to the guest (the settings blob),
+ * and the game goes on from there on both. It ends with that game (PlayGame returns). Everything else stays local.
+ *
+ * In a session (docs/SDL2_PORT.md, "Online play"):
+ *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
+ *     between game frames, gives back what it drew; DOS get-time (int 21h/2Ch) counts from the host's time by the records run;
+ *   - PaSpeechBusy and SpeechBusy say 0 (the play does not wait for the announcer, whose speed is the sound card's);
+ *   - hot keys online: F1-F8 (line changes), F9 / F10 (goalie), Tab (numbers). Esc (the desk), R (replay), S and M (sound) are
+ *     dropped: they open local menus or change local settings;
+ *   - the pre-game intro and the three stars end at their first record; the intermission between periods is skipped.
+ * The game thread runs the hooks; SampleInputTick runs inside the game's timer interrupt, so it never waits for the lock.
+ * The main thread polls the socket (netplay_main_poll) so it keeps going while the game waits. */
+#include "host.h"
+#include "overbar_client.h"
+#include <SDL.h>
+#include <time.h>
+
+#ifdef _WIN32
+#define SYM(s) "_" s
+#else
+#define SYM(s) s
+#endif
+#ifndef NHL95_BUILD
+#define NHL95_BUILD "unknown"
+#endif
+#define GAME_ADDR(orig) ((uint8_t *)sub_10000 + ((orig) - 0x10000))
+
+/* ---- the game's data and code ---- */
+extern uint32_t joysampling, inputticks, inputframes, joyrawbits, gamemode, gameopts, samesideflag, sounddev;
+extern uint32_t ctl1side, ctl2side, ctl1dev, ctl2dev, seed;
+extern int32_t ctl1team, ctl2team, curperiod;
+extern int16_t HomeTeam, VisTeam, cont1team, cont2team, gameover;
+extern uint16_t PerTimeTab[];
+extern uint8_t pad1dev, pad2dev, musicon;
+extern uint8_t SortCords[], hmtmstruct[], hmlinetab[], awlinetab[];
+extern uint16_t gameclock, clockticks, gsp, lj1, lj2, crowdlevel;
+extern char SampleInputTick[], joyq_peek[], joyq_pop[], joyq_flush[], RunGameFrames[], PlayGame[], PaSpeechBusy[], SpeechBusy[];
+extern char Crowd_Noise[], IntermissionPC[], ThreeStarsLoop[], ReadJoy1[], ReadJoy2[], ReadControllerPad[], ReadHotKeys[], sub_B3464[];
+extern char InitGameSummary[];
+
+#define RJ1_SITE 0x48205u           /* PreGameIntro_frameloop: call ReadJoy1 (a button skips the intro / the three stars) */
+#define RJ2_SITE 0x4822Fu           /* call ReadJoy2 */
+#define RJ_SKIP 0x4821Au            /* .4: introskipped = 1, fadeinpending = 1, to PreGameIntro_end */
+#define RJ_NONE 0x48244u            /* call WaitTickDeadline: no button */
+
+/* ---- the state ----
+ * nh_sim: a session's records drive the game (the hooks are on); set and cleared by the game thread only.
+ * nh_take: this machine's input goes to the session (cleared when the session ends; the game then plays on locally). */
+volatile int nh_sim, nh_take;
+void *nh_peek_cont, *nh_pop_cont, *nh_flush_cont, *nh_rgf_cont, *nh_pg_cont, *nh_pab_cont, *nh_spb_cont, *nh_crowd_cont,
+     *nh_inter_cont, *nh_tsl_cont, *nh_sit_cont, *nh_readjoy1, *nh_readjoy2;
+
+static SDL_mutex *nh_lock;
+static ob_net *nh_net;
+static int nh_ok;                       /* the hooks are in */
+static volatile int nh_armed;           /* Host / Connect was pressed: the next exhibition game is online */
+static ob_online nh_cfg;
+static char nh_why[128];                /* why the last session ended or did not start */
+static volatile int nh_dead, nh_me;     /* the session has ended mid-game; this machine's pad (0 host, 1 guest) */
+static volatile int nh_want_page, nh_close_page, nh_opened_page;
+static volatile int nh_finish;          /* the game is over and its three stars have ended: the rest (the post-game desk) is local */
+
+#define RING 64
+#define QMAX 50                         /* as joyqueue */
+static uint8_t nh_ring[RING][3];
+static volatile uint32_t nh_head, nh_tail;      /* records taken by the game / made; head written by the game, tail by the timer */
+static volatile uint32_t nh_consumed;           /* records the game has finished in this session */
+static int nh_cadence, nh_pending;
+static uint16_t nh_local;
+static uint32_t nh_loop_mark, nh_rgf_pops0, nh_rgf_f0, nh_rgf_asked;
+static int nh_rgf_carry, nh_rgf_total;
+static uint32_t nh_clock;               /* the host's time of day when the session began, in seconds */
+
+/* the machine's own game set-up, put back when the session's game is over */
+static struct {
+    int16_t home, vis;
+    uint32_t gamemode, gameopts, ctl1side, ctl2side, ctl1dev, ctl2dev;
+    int32_t ctl1team, ctl2team;
+    uint16_t pertime;
+} nh_saved;
+
+/* the host's settings, sent to the guest before the first step */
+typedef struct nh_settings {
+    uint32_t magic, version;
+    int32_t home, vis;
+    uint32_t gamemode, gameopts;
+    int32_t ctl1team, ctl2team;
+    uint32_t ctl1side, ctl2side;
+    uint32_t seed, randseed;
+    uint32_t pertime, clock;
+} nh_settings;
+#define NH_MAGIC 0x4F353948u            /* "H95O" */
+
+static uint32_t *randseed_ptr(void)       /* sub_8EB21: mov eax, randseed (the C library's rand state) */
+{
+    const uint8_t *p = GAME_ADDR(0x8EB21u);
+    uint32_t a;
+    if (p[0] != 0xB8) return NULL;
+    memcpy(&a, p + 1, 4);
+    return (uint32_t *)(uintptr_t)a;
+}
+
+/* a game routine with the Watcom register convention: eax and edx in, eax out */
+__attribute__((naked)) static uint32_t game_call(void *fn, uint32_t a, uint32_t d)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tcall *8(%ebp)\n\t"
+        "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret");
+}
+
+/* SetupControllers, for the values the play reads: which team each controller plays and its device (pad1dev: 1 mouse,
+ * 2 stick A, 4 stick B, 8 keyboard, 0 none) */
+static uint8_t pad_dev(uint32_t ctl) { return ctl == 1 || ctl == 2 || ctl == 4 || ctl == 8 ? (uint8_t)ctl : 0; }
+static void setup_controllers(void)
+{
+    cont1team = ctl1team < 0 ? 0 : ctl1side == 0 ? 1 : 2;
+    cont2team = ctl2team < 0 ? 0 : ctl2side == 0 ? 1 : 2;
+    samesideflag = ctl1side == ctl2side;
+    pad1dev = pad_dev(ctl1dev);
+    pad2dev = pad_dev(ctl2dev);
+}
+
+/* ---- the queue of merged records ---- */
+static int hot_ok(unsigned h)           /* hot keys that change only the game, the same way on both machines */
+{
+    if (!(h & 0x80)) return 0;
+    h &= 0x7F;
+    return h == 0x0F || (h >= 0x3B && h <= 0x44);   /* Tab: numbers; F1-F8: lines; F9, F10: goalie */
+}
+
+static void push_merged(const uint16_t *all)
+{
+    uint8_t *r = nh_ring[nh_tail % RING];
+    unsigned h0 = all[0] >> 8, h1 = all[1] >> 8;
+    r[0] = (uint8_t)((all[0] & 0xFF) ^ 8);          /* sent as pad ^ 8: the steps before the first ones given (all 0) are "no direction" (8) */
+    r[1] = (uint8_t)((all[1] & 0xFF) ^ 8);
+    r[2] = (uint8_t)(hot_ok(h0) ? h0 : hot_ok(h1) ? h1 : 0);
+    nh_tail++;
+}
+
+/* this machine's pad and hot key, as ReadControllerPad and ReadHotKeys give them (0 while the overlay is open) */
+static uint16_t read_local(void)
+{
+    uint8_t pad = 8, hot = 0;
+    if (overbar_client_open()) return 0;
+    if ((nh_me ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
+    game_call(ReadControllerPad, (uint32_t)nh_me, (uint32_t)(uintptr_t)&pad);
+    game_call(ReadHotKeys, (uint32_t)(uintptr_t)&hot, 0);
+    return (uint16_t)((pad ^ 8) | (hot << 8));
+}
+
+static void try_step(void)
+{
+    uint16_t all[OB_NET_MAX_PADS];
+    int r;
+    if (SDL_TryLockMutex(nh_lock) != 0) return;     /* the main thread is in the core: the next tick tries again */
+    r = nh_net ? ob_net_step(nh_net, &nh_local, all) : -1;
+    SDL_UnlockMutex(nh_lock);
+    if (r == 0) return;
+    nh_pending = 0;
+    if (r > 0) push_merged(all);
+    else { nh_take = 0; nh_dead = 1; }
+}
+
+/* SampleInputTick in a session: the game thread, inside the timer interrupt. Never waits. */
+void nh_sample_tick(void)
+{
+    if (!joysampling) return;
+    if (inputticks < 1000) inputticks++;
+    if (!nh_pending) {
+        if (--nh_cadence >= 0) return;              /* a record every 5 ticks, as joyqtick */
+        nh_cadence = 4;
+        if (nh_tail - nh_head >= QMAX) return;
+        nh_local = read_local();
+        nh_pending = 1;
+    }
+    try_step();                                     /* not yet: the next tick asks again (the core keeps the first local) */
+}
+
+/* the session has ended mid-game: the game plays on here alone, the other machine's team by the computer */
+static void go_local(void)
+{
+    nh_sim = 0;
+    if (nh_me == 0) { cont2team = 0; pad2dev = 0; }
+    else { cont1team = 0; pad1dev = 0; }
+}
+
+/* joyq_peek: the record of the next 3 frames, 0 for none yet; 1: not a session any more (the game's own) */
+uintptr_t nh_peek(void)
+{
+    if (nh_finish) { nh_sim = 0; return 1; }
+    if (nh_head == nh_tail) {
+        if (nh_dead) { go_local(); return 1; }
+        return 0;
+    }
+    return (uintptr_t)nh_ring[nh_head % RING];
+}
+
+/* the game state the desync check compares: what SaveGameState keeps of the players, the teams, the lines, the clock */
+static uint64_t sim_hash(void)
+{
+    uint64_t h = 1469598103934665603ULL;
+    int i;
+#define MIX(p, n) do { const uint8_t *q_ = (const uint8_t *)(p); size_t k_; for (k_ = 0; k_ < (size_t)(n); k_++) { h ^= q_[k_]; h *= 1099511628211ULL; } } while (0)
+    for (i = 0; i < 17; i++) MIX(SortCords + i * 0x80, 0x66);
+    MIX(hmtmstruct, 0xD4);
+    MIX(hmtmstruct + 0x100, 0xD4);
+    MIX(hmlinetab, 0x30);
+    MIX(awlinetab, 0x30);
+    MIX(&seed, 4); MIX(&gameclock, 2); MIX(&clockticks, 2); MIX(&gsp, 2); MIX(&curperiod, 4);
+    MIX(&lj1, 2); MIX(&lj2, 2); MIX(&crowdlevel, 2);
+#undef MIX
+    return h;
+}
+
+void nh_pop(void)
+{
+    if (nh_head == nh_tail) return;
+    nh_head++;
+    nh_consumed++;
+    if (!gameover && (nh_consumed == 1 || nh_consumed % 60 == 0)) {     /* the game thread, outside the interrupt: may wait */
+        uint64_t h = sim_hash();
+        SDL_LockMutex(nh_lock);
+        if (nh_net) ob_net_check(nh_net, nh_consumed - 1, h);
+        SDL_UnlockMutex(nh_lock);
+    }
+}
+
+/* RunGameFrames(n): at most to the end of the record it is on; the frames it could not run this time come with the next call
+ * (unless it stopped for want of a record, as the game always did) */
+uint32_t nh_rgf_before(int32_t n)
+{
+    int lim;
+    nh_rgf_pops0 = nh_consumed;
+    nh_rgf_f0 = inputframes;
+    if (n <= 0) { nh_rgf_asked = 0; nh_rgf_total = 0; return (uint32_t)n; }
+    nh_rgf_total = n + nh_rgf_carry;
+    nh_rgf_carry = 0;
+    lim = nh_rgf_f0 > 0 ? (int)nh_rgf_f0 : 3;
+    nh_rgf_asked = (uint32_t)(nh_rgf_total < lim ? nh_rgf_total : lim);
+    return nh_rgf_asked;
+}
+
+uint32_t nh_rgf_after(void)                         /* frames run: goes back in edx */
+{
+    uint32_t f1 = inputframes, pops = nh_consumed - nh_rgf_pops0;
+    int started = (int)pops + (f1 > 0) - (nh_rgf_f0 > 0);
+    int ran = (int)nh_rgf_f0 - (int)f1 + 3 * started;
+    if (ran < 0) ran = 0;
+    if ((uint32_t)ran == nh_rgf_asked && nh_rgf_total > ran) nh_rgf_carry = nh_rgf_total - ran > 12 ? 12 : nh_rgf_total - ran;
+    return (uint32_t)ran;
+}
+
+/* the intro / three stars loop: "a button" once a record has ended in it, at the end of a record (both machines alike) */
+void nh_loop_start(void) { nh_loop_mark = nh_consumed; }
+static int loop_press(void)
+{
+    if (inputframes != 0 || nh_consumed <= nh_loop_mark) return 0;
+    if (gameover) { nh_finish = 1; nh_take = 0; }   /* the three stars: every record the other machine needs to get here is made */
+    return 1;
+}
+uint32_t nh_rj1_ret(void) { return (uint32_t)(uintptr_t)GAME_ADDR(loop_press() ? RJ_SKIP : RJ2_SITE); }
+uint32_t nh_rj2_ret(void) { return (uint32_t)(uintptr_t)GAME_ADDR(loop_press() ? RJ_SKIP : RJ_NONE); }
+
+/* ---- the start and end of the session's game ---- */
+static void save_local(void)
+{
+    nh_saved.home = HomeTeam; nh_saved.vis = VisTeam;
+    nh_saved.gamemode = gamemode; nh_saved.gameopts = gameopts;
+    nh_saved.ctl1team = ctl1team; nh_saved.ctl2team = ctl2team;
+    nh_saved.ctl1side = ctl1side; nh_saved.ctl2side = ctl2side;
+    nh_saved.ctl1dev = ctl1dev; nh_saved.ctl2dev = ctl2dev;
+    nh_saved.pertime = PerTimeTab[0];
+}
+
+static void restore_local(void)
+{
+    HomeTeam = nh_saved.home; VisTeam = nh_saved.vis;
+    gamemode = nh_saved.gamemode; gameopts = nh_saved.gameopts;
+    ctl1team = nh_saved.ctl1team; ctl2team = nh_saved.ctl2team;
+    ctl1side = nh_saved.ctl1side; ctl2side = nh_saved.ctl2side;
+    ctl1dev = nh_saved.ctl1dev; ctl2dev = nh_saved.ctl2dev;
+    PerTimeTab[0] = nh_saved.pertime;
+    setup_controllers();
+}
+
+static void make_settings(nh_settings *s)
+{
+    uint32_t *rs = randseed_ptr();
+    time_t t = time(0);
+    struct tm *tm = localtime(&t);
+    memset(s, 0, sizeof *s);
+    s->magic = NH_MAGIC; s->version = 1;
+    s->home = HomeTeam; s->vis = VisTeam;
+    s->gamemode = gamemode; s->gameopts = gameopts;
+    s->ctl1team = ctl1team < 0 ? 0 : ctl1team;
+    s->ctl1side = ctl1side;
+    if (ctl2team < 0) { s->ctl2team = 0; s->ctl2side = ctl1side ? 0 : 1; }    /* the host plays alone here: the guest takes the other team */
+    else { s->ctl2team = ctl2team; s->ctl2side = ctl2side; }
+    s->seed = seed;
+    s->randseed = rs ? *rs : 0;
+    s->pertime = PerTimeTab[0];
+    s->clock = tm ? (uint32_t)(tm->tm_hour * 3600 + tm->tm_min * 60 + tm->tm_sec) : 0;
+}
+
+static void apply_settings(const nh_settings *s, uint32_t my_dev)
+{
+    uint32_t *rs = randseed_ptr();
+    HomeTeam = (int16_t)s->home; VisTeam = (int16_t)s->vis;
+    gamemode = s->gamemode; gameopts = s->gameopts;
+    ctl1team = s->ctl1team; ctl2team = s->ctl2team;
+    ctl1side = s->ctl1side; ctl2side = s->ctl2side;
+    /* each machine reads its own device; the other's pad comes over the network ("none" here, so no mouse rules apply to it) */
+    ctl1dev = nh_me == 0 ? my_dev : 0x10;
+    ctl2dev = nh_me == 1 ? my_dev : 0x10;
+    PerTimeTab[0] = (uint16_t)s->pertime;
+    setup_controllers();
+    seed = s->seed;
+    if (rs) *rs = s->randseed;
+    nh_clock = s->clock;
+}
+
+static void end_net(const char *why)
+{
+    SDL_LockMutex(nh_lock);
+    if (nh_net) {
+        if (ob_net_state(nh_net) == OB_NET_ENDED && ob_net_why(nh_net)[0]) snprintf(nh_why, sizeof nh_why, "%s", ob_net_why(nh_net));
+        else if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
+        ob_net_free(nh_net);
+        nh_net = NULL;
+    } else if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
+    SDL_UnlockMutex(nh_lock);
+}
+
+/* PlayGame(&saved game handle): the game thread, before the game is loaded */
+void nh_playgame_enter(int32_t *handle)
+{
+    char err[160], identity[200];
+    nh_settings mine;
+    const nh_settings *theirs;
+    size_t size = 0;
+    ob_net_game g;
+    uint32_t my_dev = ctl1dev;
+    int st;
+    if (!nh_armed || !nh_ok) return;
+    if (*handle >= 0 || gamemode != 0) {
+        snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition game");
+        return;                                     /* (still armed for the next one) */
+    }
+    nh_armed = 0;
+    if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
+        snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
+        return;
+    }
+    snprintf(identity, sizeof identity, "nhl95pc %s lockstep1 sound %02x/%u", NHL95_BUILD, (unsigned)(sounddev & 0xFF), (unsigned)musicon);
+    make_settings(&mine);
+    memset(&g, 0, sizeof g);
+    g.identity = identity;
+    g.pads = 2;
+    g.settings = &mine;
+    g.settings_size = sizeof mine;
+    SDL_LockMutex(nh_lock);
+    nh_net = ob_net_new(&nh_cfg, &g, err, sizeof err);
+    SDL_UnlockMutex(nh_lock);
+    if (!nh_net) { snprintf(nh_why, sizeof nh_why, "%s", err); return; }
+    nh_why[0] = 0;
+    nh_want_page = 1;                               /* the Online page shows what it waits for */
+    for (;;) {                                      /* here, not in game code: no interrupt comes in meanwhile */
+        SDL_LockMutex(nh_lock);
+        st = nh_net ? ob_net_poll(nh_net) : OB_NET_ENDED;
+        SDL_UnlockMutex(nh_lock);
+        if (st != OB_NET_CONNECTING) break;
+        plat_sleep_ms(2);
+    }
+    nh_close_page = 1;
+    if (st != OB_NET_GO) { end_net("the session did not start"); return; }
+    SDL_LockMutex(nh_lock);
+    theirs = (const nh_settings *)ob_net_settings(nh_net, &size);
+    nh_me = (ob_net_my_pads(nh_net) & 1) ? 0 : 1;
+    SDL_UnlockMutex(nh_lock);
+    if (!theirs || size != sizeof *theirs || theirs->magic != NH_MAGIC || theirs->version != 1) {
+        SDL_LockMutex(nh_lock); ob_net_quit(nh_net); SDL_UnlockMutex(nh_lock);
+        end_net("the host's settings are not this version's");
+        return;
+    }
+    save_local();
+    apply_settings(theirs, my_dev);
+    /* as MenuNewExhibition did before PlayGame, now with these teams: the game summary, and the teams' rosters from the
+     * league's database (LoadGameTeams) */
+    game_call(InitGameSummary, 0, 0);
+    nh_head = nh_tail = nh_consumed = 0;
+    nh_cadence = 0; nh_pending = 0; nh_rgf_carry = 0; nh_loop_mark = 0;
+    nh_dead = 0; nh_finish = 0;
+    nh_take = 1;
+    nh_sim = 1;
+}
+
+/* PlayGame has returned: the session's game is over */
+void nh_playgame_exit(void)
+{
+    if (!nh_net && !nh_sim && !nh_dead && !nh_finish) return;
+    nh_take = 0;
+    nh_sim = 0;
+    nh_dead = 0; nh_finish = 0;
+    end_net("the game is over");
+    restore_local();
+}
+
+/* ---- int 21h / 2Ch in a session: the host's time when it began, on by the records run (20 a second) ---- */
+int netplay_dos_time(int *h, int *m, int *s, int *cs)
+{
+    uint32_t t;
+    if (!nh_sim) return 0;
+    t = nh_clock + nh_consumed / 20;
+    *h = (int)(t / 3600 % 24); *m = (int)(t / 60 % 60); *s = (int)(t % 60); *cs = (int)(nh_consumed % 20 * 5);
+    return 1;
+}
+
+int netplay_running(void) { return nh_take; }
+
+/* ---- the stubs at the game routines' entries (each starts with push dword N, 5 bytes, or as noted) ---- */
+__attribute__((naked)) static void peek_entry(void)
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushal\n\tcall " SYM("nh_peek") "\n\tcmpl $1, %eax\n\tje 2f\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret\n"
+        "2:\n\tpopal\n"
+        "1:\n\tpushl $8\n\tjmp *" SYM("nh_peek_cont"));
+}
+
+__attribute__((naked)) static void pop_entry(void)
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushal\n\tcall " SYM("nh_pop") "\n\tpopal\n\tret\n"
+        "1:\n\tpushl $0x14\n\tjmp *" SYM("nh_pop_cont"));
+}
+
+__attribute__((naked)) static void flush_entry(void)
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\tret\n"
+        "1:\n\tpushl $8\n\tjmp *" SYM("nh_flush_cont"));
+}
+
+__attribute__((naked)) static void rgf_entry(void)       /* RunGameFrames(eax frames); in a session edx comes back as the frames run */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushal\n\tpushl %eax\n\tcall " SYM("nh_rgf_before") "\n\taddl $4, %esp\n\tmovl %eax, 28(%esp)\n\tpopal\n\t"
+        "pushl $2f\n\tpushl $0x0C\n\tjmp *" SYM("nh_rgf_cont") "\n"
+        "2:\n\tpushal\n\tcall " SYM("nh_rgf_after") "\n\tmovl %eax, 20(%esp)\n\tpopal\n\tret\n"
+        "1:\n\tpushl $0x0C\n\tjmp *" SYM("nh_rgf_cont"));
+}
+
+__attribute__((naked)) static void pg_entry(void)        /* PlayGame(eax): around the whole game */
+{
+    __asm__ volatile(
+        "pushal\n\tpushl %eax\n\tcall " SYM("nh_playgame_enter") "\n\taddl $4, %esp\n\tpopal\n\t"
+        "pushl $2f\n\tpushl $0x64\n\tjmp *" SYM("nh_pg_cont") "\n"
+        "2:\n\tpushal\n\tcall " SYM("nh_playgame_exit") "\n\tpopal\n\tret");
+}
+
+__attribute__((naked)) static void pab_entry(void)       /* PaSpeechBusy */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\txorl %eax, %eax\n\tret\n"
+        "1:\n\tpushl $4\n\tjmp *" SYM("nh_pab_cont"));
+}
+
+__attribute__((naked)) static void spb_entry(void)       /* SpeechBusy */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\txorl %eax, %eax\n\tret\n"
+        "1:\n\tpushl $4\n\tjmp *" SYM("nh_spb_cont"));
+}
+
+__attribute__((naked)) static void crowd_entry(void)     /* Crowd_Noise: in a session `seed` is as it was before */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushl " SYM("seed") "\n\tpushl $2f\n\tpushl $0x14\n\tjmp *" SYM("nh_crowd_cont") "\n"
+        "2:\n\tpopl " SYM("seed") "\n\tret\n"
+        "1:\n\tpushl $0x14\n\tjmp *" SYM("nh_crowd_cont"));
+}
+
+__attribute__((naked)) static void inter_entry(void)     /* IntermissionPC: in a session only its curperiod + 1 */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\tincl " SYM("curperiod") "\n\tret\n"
+        "1:\n\tpushl $0x1C\n\tjmp *" SYM("nh_inter_cont"));
+}
+
+__attribute__((naked)) static void tsl_entry(void)       /* ThreeStarsLoop (the intro's too) */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\tpushal\n\tcall " SYM("nh_loop_start") "\n\tpopal\n"
+        "1:\n\tpushl $0x28\n\tjmp *" SYM("nh_tsl_cont"));
+}
+
+__attribute__((naked)) static void sit_entry(void)       /* SampleInputTick: push ebx, ecx, edx, esi, cmp dword [joysampling], 0 (11 bytes) */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_take") "\n\tjne 1f\n\t"
+        "pushl %ebx\n\tpushl %ecx\n\tpushl %edx\n\tpushl %esi\n\tcmpl $0, " SYM("joysampling") "\n\tjmp *" SYM("nh_sit_cont") "\n"
+        "1:\n\tpushal\n\tcall " SYM("nh_sample_tick") "\n\tpopal\n\tret");
+}
+
+__attribute__((naked)) static void rj1_stub(void)        /* the loop's call ReadJoy1: in a session, where to go on (no button read) */
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushal\n\tcall " SYM("nh_rj1_ret") "\n\tmovl %eax, 32(%esp)\n\tpopal\n\tret\n"
+        "1:\n\tjmp *" SYM("nh_readjoy1"));
+}
+
+__attribute__((naked)) static void rj2_stub(void)
+{
+    __asm__ volatile(
+        "cmpl $0, " SYM("nh_sim") "\n\tje 1f\n\t"
+        "pushal\n\tcall " SYM("nh_rj2_ret") "\n\tmovl %eax, 32(%esp)\n\tpopal\n\tret\n"
+        "1:\n\tjmp *" SYM("nh_readjoy2"));
+}
+
+static int entry_is(const char *fn, uint32_t n)
+{
+    const uint8_t *p = (const uint8_t *)fn;
+    uint32_t v;
+    memcpy(&v, p + 1, 4);
+    return p[0] == 0x68 && v == n;
+}
+
+static int call_to(uint32_t site, const void *target)    /* call rel32 at site goes to target */
+{
+    const uint8_t *p = GAME_ADDR(site);
+    int32_t rel;
+    memcpy(&rel, p + 1, 4);
+    return p[0] == 0xE8 && p + 5 + rel == (const uint8_t *)target;
+}
+
+static void set_call(uint32_t site, void *to)
+{
+    uint8_t *p = GAME_ADDR(site);
+    int32_t rel = (int32_t)((uintptr_t)to - ((uintptr_t)p + 5));
+    patch_bytes(p + 1, &rel, 4);
+}
+
+/* after install_overrides, before the game thread starts */
+void netplay_install(void)
+{
+    static const uint8_t sit_head[6] = { 0x53, 0x51, 0x52, 0x56, 0x83, 0x3D };
+    const uint8_t *s = (const uint8_t *)SampleInputTick, *q;
+    uint32_t a;
+    int ok = 1;
+    if (!nh_lock) nh_lock = SDL_CreateMutex();
+    memcpy(&a, s + 6, 4);
+    if (memcmp(s, sit_head, 6) || a != (uint32_t)(uintptr_t)&joysampling || s[10] != 0) ok = 0;
+    if (!entry_is(joyq_peek, 8) || !entry_is(joyq_pop, 0x14) || !entry_is(joyq_flush, 8) || !entry_is(RunGameFrames, 0x0C) ||
+        !entry_is(PlayGame, 0x64) || !entry_is(PaSpeechBusy, 4) || !entry_is(SpeechBusy, 4) || !entry_is(Crowd_Noise, 0x14) ||
+        !entry_is(IntermissionPC, 0x1C) || !entry_is(ThreeStarsLoop, 0x28) || !entry_is(InitGameSummary, 0x1C)) ok = 0;
+    if (!call_to(RJ1_SITE, ReadJoy1) || !call_to(RJ2_SITE, ReadJoy2) || !randseed_ptr()) ok = 0;
+    q = GAME_ADDR(RJ1_SITE + 5);                            /* mov ah, [regd1] / test ah, 10h / jne .4 / test ah, 20h / je .5 */
+    if (q[0] != 0x8A || q[6] != 0xF6 || q[8] != 0x10 || q[9] != 0x75 || q[11] != 0xF6 || q[13] != 0x20 || q[14] != 0x74 ||
+        q + 16 + (int8_t)q[15] != GAME_ADDR(RJ2_SITE) || q + 11 + (int8_t)q[10] != GAME_ADDR(RJ_SKIP)) ok = 0;
+    q = GAME_ADDR(RJ2_SITE + 5);                            /* the same, then call WaitTickDeadline */
+    if (q[0] != 0x8A || q[6] != 0xF6 || q[9] != 0x75 || q[11] != 0xF6 || q[14] != 0x75 || q + 16 != GAME_ADDR(RJ_NONE) ||
+        GAME_ADDR(RJ_NONE)[0] != 0xE8) ok = 0;
+    if (!ok || !nh_lock) { fprintf(stderr, "online play: the game's code is not as expected, not available\n"); return; }
+    nh_peek_cont = joyq_peek + 5; nh_pop_cont = joyq_pop + 5; nh_flush_cont = joyq_flush + 5; nh_rgf_cont = RunGameFrames + 5;
+    nh_pg_cont = PlayGame + 5; nh_pab_cont = PaSpeechBusy + 5; nh_spb_cont = SpeechBusy + 5; nh_crowd_cont = Crowd_Noise + 5;
+    nh_inter_cont = IntermissionPC + 5; nh_tsl_cont = ThreeStarsLoop + 5; nh_sit_cont = SampleInputTick + 11;
+    nh_readjoy1 = ReadJoy1; nh_readjoy2 = ReadJoy2;
+    patch_jmp(joyq_peek, peek_entry);
+    patch_jmp(joyq_pop, pop_entry);
+    patch_jmp(joyq_flush, flush_entry);
+    patch_jmp(RunGameFrames, rgf_entry);
+    patch_jmp(PlayGame, pg_entry);
+    patch_jmp(PaSpeechBusy, pab_entry);
+    patch_jmp(SpeechBusy, spb_entry);
+    patch_jmp(Crowd_Noise, crowd_entry);
+    patch_jmp(IntermissionPC, inter_entry);
+    patch_jmp(ThreeStarsLoop, tsl_entry);
+    patch_jmp(SampleInputTick, sit_entry);
+    set_call(RJ1_SITE, rj1_stub);
+    set_call(RJ2_SITE, rj2_stub);
+    nh_ok = 1;
+}
+
+/* ---- the main thread ---- */
+void netplay_main_poll(void)
+{
+    if (nh_lock) {
+        SDL_LockMutex(nh_lock);
+        if (nh_net) ob_net_poll(nh_net);
+        SDL_UnlockMutex(nh_lock);
+    }
+    if (nh_want_page) {
+        nh_want_page = 0;
+        if (!overbar_client_open()) { overbar_client_online_open(); nh_opened_page = 1; }
+    }
+    if (nh_close_page) {
+        nh_close_page = 0;
+        if (nh_opened_page && overbar_client_open()) overbar_client_close();
+        nh_opened_page = 0;
+    }
+}
+
+/* ---- the Online page's hooks (main thread) and its settings file ---- */
+static void ini_path(char *out, size_t n)
+{
+    char *base = SDL_GetBasePath();
+    snprintf(out, n, "%shockey-online.ini", base ? base : "");
+    SDL_free(base);
+}
+
+static void ini_save(const ob_online *o)
+{
+    char path[1024];
+    FILE *f;
+    ini_path(path, sizeof path);
+    f = fopen(path, "w");
+    if (!f) return;
+    fprintf(f, "; NHL Hockey 95 (SDL2 port): the Online page's last settings. role: 0 host, 1 join, 2 both connect\n");
+    fprintf(f, "name=%s\nrole=%d\naddress=%s\nport=%d\ndelay=%d\n", o->name, o->role, o->addr, o->port, o->delay);
+    fclose(f);
+}
+
+static void ini_load(ob_online *o)
+{
+    char path[1024], line[256];
+    FILE *f;
+    ini_path(path, sizeof path);
+    f = fopen(path, "r");
+    if (!f) return;
+    while (fgets(line, sizeof line, f)) {
+        char *v = strchr(line, '='), *e;
+        if (!v || line[0] == ';') continue;
+        *v++ = 0;
+        for (e = v + strlen(v); e > v && (e[-1] == '\n' || e[-1] == '\r' || e[-1] == ' '); ) *--e = 0;
+        if (!strcmp(line, "name")) snprintf(o->name, sizeof o->name, "%s", v);
+        else if (!strcmp(line, "role")) o->role = atoi(v) >= 0 && atoi(v) <= 2 ? atoi(v) : 0;
+        else if (!strcmp(line, "address")) snprintf(o->addr, sizeof o->addr, "%s", v);
+        else if (!strcmp(line, "port")) o->port = atoi(v) > 0 && atoi(v) < 65536 ? atoi(v) : OB_NET_PORT_DEFAULT;
+        else if (!strcmp(line, "delay")) o->delay = atoi(v) < 0 ? 0 : atoi(v) > 10 ? 10 : atoi(v);
+    }
+    fclose(f);
+}
+
+static int online_start(const ob_online *o, char *msg, int msg_size)
+{
+    int busy;
+    if (!nh_ok) { snprintf(msg, (size_t)msg_size, "the game's code is not as expected"); return -1; }
+    SDL_LockMutex(nh_lock);
+    busy = nh_net != NULL;
+    SDL_UnlockMutex(nh_lock);
+    if (busy || nh_sim) { snprintf(msg, (size_t)msg_size, "a session is on: Leave it first"); return -1; }
+    nh_cfg = *o;
+    nh_cfg.here = 1;
+    nh_cfg.all = 2;
+    ini_save(o);
+    nh_why[0] = 0;
+    nh_armed = 1;
+    return 0;
+}
+
+static void online_leave(void)
+{
+    nh_armed = 0;
+    SDL_LockMutex(nh_lock);
+    if (nh_net) ob_net_quit(nh_net);        /* the game thread sees it end: waiting in PlayGame, or at the next record */
+    SDL_UnlockMutex(nh_lock);
+    snprintf(nh_why, sizeof nh_why, "you left");
+}
+
+static int online_status(char *line, int size)
+{
+    int on = 0;
+    line[0] = 0;
+    SDL_LockMutex(nh_lock);
+    if (nh_net) {
+        ob_net_status(nh_net, line, size);
+        on = ob_net_state(nh_net) != OB_NET_ENDED;
+    }
+    SDL_UnlockMutex(nh_lock);
+    if (!nh_net) {
+        if (nh_armed) {
+            snprintf(line, (size_t)size, "%s%sboth players: start an exhibition game", nh_why[0] ? nh_why : "", nh_why[0] ? "; " : "");
+            on = 1;
+        } else snprintf(line, (size_t)size, "%s", nh_why);
+    }
+    return on;
+}
+
+static const char *online_lan(char *buf, int size)
+{
+    const char *a = ob_net_lan_address(buf, size);
+    return a && a[0] ? a : NULL;
+}
+
+void netplay_online_setup(ob_host *h)
+{
+    ob_online_ops ops;
+    if (!nh_lock) nh_lock = SDL_CreateMutex();
+    memset(&ops, 0, sizeof ops);
+    ops.max_pads = 2;
+    ops.max_delay = 10;
+    ops.roles = 3;
+    ops.start = online_start;
+    ops.leave = online_leave;
+    ops.status = online_status;
+    ops.lan_address = online_lan;
+    ini_load(&h->online);
+    h->online.here = 1;
+    h->online.all = 2;
+    ob_online_set_ops(h, &ops);
+}

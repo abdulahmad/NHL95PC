@@ -16,6 +16,7 @@ void overbar_client_init(ob_profile profile, void (*apply)(ob_host *h))
 {
     ob_host_init(&host, OB_PORT_PC95, profile);
     apply_host = apply;
+    netplay_online_setup(&host);        /* the Online page (netplay.c); before the menu bar, which greys it out otherwise */
 }
 
 void overbar_client_free(void)
@@ -26,6 +27,10 @@ void overbar_client_free(void)
 ob_host *overbar_client_host(void) { return &host; }
 
 int overbar_client_open(void) { return host.overlay_open; }
+void overbar_client_close(void) { if (host.overlay_open) ob_overlay_close(&host); }
+void overbar_client_online_open(void) { ob_online_open(&host); }
+int overbar_client_editing(void) { return host.overlay_open && ob_overlay_editing(&host); }
+int overbar_client_text(const char *utf8) { return overbar_client_editing() && ob_overlay_text(&host, utf8); }
 int overbar_client_quit(void) { return host.request_quit; }
 
 int overbar_client_key(int scancode)

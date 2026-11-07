@@ -62,13 +62,15 @@ $WINDRES -O coff port/icon/icon.rc -o "$OUT/icon.o"
 # Overbar, the host menu and scaler: the git submodule port/overbar (git submodule update --init)
 [ -f port/overbar/sources.txt ] || { echo "no Overbar at port/overbar: git submodule update --init" >&2; exit 1; }
 OVERBAR_SRCS=$(tr -d '\r' < port/overbar/sources.txt | sed 's|^|port/overbar/|')
-$CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED $SDL_CFLAGS \
+# the build, for online play's check that both machines run the same one
+NHL95_BUILD=$(git describe --always --dirty 2>/dev/null || echo unknown)
+$CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED -DNHL95_BUILD="\"$NHL95_BUILD\"" $SDL_CFLAGS \
     -DOB_SDL_BASE -Iport/overbar/include -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src \
     -o "$OUT/hockey-win32.exe" port/host.c port/video_gl.c port/menu_win.c port/bindings.c port/bindings_win.c -DHAVE_GL port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
-    port/overbar_client.c $OVERBAR_SRCS \
+    port/overbar_client.c port/netplay.c $OVERBAR_SRCS \
     port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT port/cstart.c \
     port/overrides.c port/plat_win.c "$OUT/icon.o" $(sh port/objorder.sh "$OUT/obj") \
-    build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
+    build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -lws2_32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \
     -Wl,--disable-dynamicbase -Wl,--image-base=0x10000 -Wl,-T,"$OUT/lowmem.ld"
 cp "$SDL_DLL" "$OUT/"
 rm -rf "$OUT/mister" && cp -r port/mister "$OUT/mister"       # the MiSTer filter files the "MiSTer filters" menus list
