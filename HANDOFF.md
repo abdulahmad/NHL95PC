@@ -2,15 +2,15 @@
 
 ## Now
 
-- Stage / unit: leftover NR **paused** 2026-11-07 at **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer **PASS 3000**. H6 stays closed. Native F4 waits. H1 #319/#320 already on main. Do not resume leftover NR unless asked.
-- Branch: leftover stack H2–keep landing on `main` (#322→#345) and `sdl2-port` (#324→#346).
+- Stage / unit: leftover NR **paused** 2026-11-07 at **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer **PASS 3000**. H6 stays closed. Native F4 waits. Do not resume leftover NR unless asked.
+- Branch: `main` (leftover stack H2–keep merged, #322–#345). sdl2 twin on `sdl2-port` (#324–#346).
 - Last check: 2026-11-06 `check.py --selftest` ALL PASS; G17 SeriesLength PASS 450, NetCollide PASS 6750; planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). Leftover 82/27.
 - Next (when leftover NR resumes): remaining 27 in [docs/FUNCTIONAL_LEFTOVERS.md](docs/FUNCTIONAL_LEFTOVERS.md). Closest unlanded plant: TradeScreenLoop jersey-column PTRFN_STUB `mx=0x100` `my=0x80` (86.2% of 1187 insns at 214 cases / budget 180; needs `--budget 1800` for the 500-case floor). assgoalie kinds 10/11 (other-half / ShotLaneOpen + neg vel) 81.6% still NR. Do not retry MenuHitTest hit-count, TradeHitTest, EditTextField PollKey, TitleScreen movie stubs, RunPlayerPickMenu sequenced hits, or MoveToOtherRoster KeyDbPtr (61→56).
 - Done 2026-11-03: F4 module re-cut (tools/build/recut_modules.py, docs/MODULE_LAYOUT.md): 198 code files -> 195, each one PC module, named by its job.
 - F3 94G names: done (14 renames; engine review in nhl-disasm-report `docs/project/naming_recommendation_and_95g_pass.md`).
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
-- Open PRs: leftover stack H2–keep (#322, #323, #328, #331, #333, #335, #337, #339, #341, #343, #345) and sdl2 twins (#324…#346) landing as of this pause. H1 #319/#320 already merged. 107-PASS stack is on `main` (#303–#316) and `sdl2-port` (#304–#317). #294–#299 stay merged. Do not close them.
+- Open PRs: leftover H2–keep stack is merged (#322–#345 on `main`, #324–#346 on `sdl2-port`). H1 #319/#320 already merged. 107-PASS stack is on `main` (#303–#316) and `sdl2-port` (#304–#317). #294–#299 stay merged. Do not close them.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),
