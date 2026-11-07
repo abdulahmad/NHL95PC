@@ -264,18 +264,19 @@ def plant_leftover(func, img, buf, patches, seed=0):
         patch_u32(img, patches, 'puckvy', puck + 0x0E)
         patch_u32(img, patches, 'puckvz', puck + 0x10)
     elif n == 'checkgoal':
-        # ebx/ecx clamped to 0x20; g at the same world xy so the box test is in-range.
-        kind = seed % 4
-        z = (2, 0xC, 2, 0xD)[kind]
-        oldz = (0x10, 4, 2, 0x10)[kind]  # bounce vs through-mouth
-        zv = (-0x80, 0x40, -0x20, 0)[kind]
+        # ebx/ecx clamped to 0x20. Mix checkgoalp, z-bounce, Goal, post (.6), side wallcoll (.10).
+        kind = seed % 8
+        sc = 1 if kind == 0 else 0x0E
+        gx = 0x08 if kind in (2, 3) else 0x20  # arg x - g.x = 24 → outer box, inner Goal fails
+        oldy = 0x20 if kind == 2 else 0x10     # dy=0 → .10; else interpolation
+        oldz = 0x10 if kind == 1 else 4
+        z = 2 if kind != 5 else 0xD
         if 0x400 + 128 <= len(b):
             b[0x400:0x400 + 128] = plant_player_bytes(
-                x=0x20, y=0x20, z=z, sc=0x0E, pos=1, xv=0x40, yv=0x80, zv=zv,
-                pflags=0x80 if kind & 1 else 0, oldx=(0x18, 0x20, 0x28, 0x10)[kind],
-                oldy=0x10, oldz=oldz)
+                x=0x20, y=0x20, z=z, sc=sc, pos=1, xv=0x40, yv=0x80, zv=-0x80 if kind == 1 else 0x40,
+                pflags=0x80 if kind == 6 else 0, oldx=0x10, oldy=oldy, oldz=oldz)
         if 0x480 + 128 <= len(b):
-            b[0x480:0x480 + 128] = plant_player_bytes(x=0x20, y=0x20, z=2, sc=0x0C, pos=0)
+            b[0x480:0x480 + 128] = plant_player_bytes(x=gx, y=0x20, z=2, sc=0x0C, pos=0)
         patch_u16(img, patches, 'wcradiusx', 8)
         patch_u16(img, patches, 'wcradiusy', 8)
         patch_u32(img, patches, 'puckc', ARG + 0x5F0)
@@ -318,15 +319,17 @@ def plant_leftover(func, img, buf, patches, seed=0):
         side = kind & 1
         py, pky, pfl = (0xC0, 0x80, 8) if not side else (-0xC0, -0x80, 0x80 | 8)
         gy = 0xE0 if not side else -0xE0
+        pvy = 0x100 if not side else -0x100  # toward that goal; opposite sign early-outs
+        carrier = kind & 2
         if 0x400 + 128 <= len(b):
             b[0x400:0x400 + 128] = plant_player_bytes(
                 x=0x20, y=py, z=2, sc=8, pos=1, pflags=pfl, puckdist=0x20,
                 facedir=6, puckdir=6)
         patch_u32(img, patches, 'puckc', ARG + 0x5F0)
         if 0x5FA <= len(b):
-            b[0x5F0] = 0xFF  # loose: shotplayer path
+            b[0x5F0] = 0 if carrier else 0xFF  # carrier (other team) vs loose shotplayer
             b[0x5F2:0x5F8] = struct.pack('<hhh', 0x20, pky, 4)
-            b[0x5F8:0x5FA] = struct.pack('<h', -0x100 if not side else 0x100)
+            b[0x5F8:0x5FA] = struct.pack('<h', pvy)
         patch_u32(img, patches, 'puckx', ARG + 0x5F2)
         patch_u32(img, patches, 'pucky', ARG + 0x5F4)
         patch_u32(img, patches, 'puckz', ARG + 0x5F6)
@@ -340,13 +343,20 @@ def plant_leftover(func, img, buf, patches, seed=0):
             overlay_patch(patches, sc0, plant_player_bytes(x=0x20, y=pky, z=2, sc=0, pos=1, spa=0x3F9))
             overlay_patch(patches, sc0 + 12 * 128, plant_player_bytes(x=0x20, y=gy, z=2, sc=0x0C, pos=0))
             overlay_patch(patches, sc0 + 13 * 128, plant_player_bytes(x=0x20, y=gy, z=2, sc=0x0D, pos=0))
-    elif any(s in low for s in ('wallcoll', 'blockshot', 'assone', 'assgoal', 'assref', 'threestars')):
-        sc = 0x0E if ('wallcoll' in low or seed & 1) else 1
+    elif n == 'wallcoll' or any(s in low for s in ('blockshot', 'assone', 'assgoal', 'assref', 'threestars')):
+        if n == 'wallcoll':
+            sc = 0x0E if seed & 1 else 1  # puck vs player bounce (player arm is 0x58a14+)
+            xv, yv = 0, 0x2000
+            px = 0x20 if seed & 4 else -0x20
+            z = 0xC if seed & 4 else 2
+        else:
+            sc = 0x0E if seed & 1 else 1
+            xv, yv, px, z = 0x40, 0x200, 0x20, 2
         if 0x400 + 128 <= len(b):
             b[0x400:0x400 + 128] = plant_player_bytes(
-                x=0x20, y=0xC0, z=2, sc=sc, pos=1, xv=0x40, yv=0x200,
+                x=px, y=0xC0, z=z, sc=sc, pos=1, xv=xv, yv=yv,
                 pflags=0x80 if seed & 2 else 0, puckdist=0x20, spa=0x99,
-                oldx=0x20, oldy=0xC0, impact=0x10)
+                oldx=px, oldy=0xC0, impact=0x10)
         patch_u16(img, patches, 'regd0', 0x100)
         patch_u16(img, patches, 'regd1', 0x40)
         patch_u32(img, patches, 'puckc', ARG + 0x5F0)
@@ -1108,6 +1118,10 @@ def _selftest():
     check('plant_menus y1 is player-list row', struct.unpack_from('<I', planted, 0x100 + 4)[0] == 0x38)
     r, a = clamp_leftover_inputs('PlayoffTreeMenu', {'eax': 0, 'edx': 99, 'ebx': 5}, [])
     check('PlayoffTreeMenu series is 0..15', a[1] == 5)
+    buf, p = plant_leftover('CanBlockShot', img, bytes(0x700), {}, seed=0)
+    check('CanBlockShot puckvy toward +Y goal', struct.unpack_from('<h', buf, 0x5F8)[0] == 0x100)
+    buf, p = plant_leftover('wallcoll', img, bytes(0x600), {}, seed=0)
+    check('wallcoll even seed is a player', struct.unpack_from('<h', buf, 0x400 + 0x6A)[0] == 1)
     print('ALL PASS' if ok else 'FAILED')
     return 0 if ok else 1
 
