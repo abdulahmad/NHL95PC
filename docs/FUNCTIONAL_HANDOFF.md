@@ -23,11 +23,11 @@ Read with [FUNCTIONAL_PLAN.md](FUNCTIONAL_PLAN.md), [RULES.md](RULES.md) and the
 * Needs: `pip install unicorn capstone`, `apt install dosbox nasm` (drafts compile through `tools/match/cc.py`).
 * Verdict source is the **latest `tools/equiv/results.csv` row per function**, not a batch runner's last stderr
   line (a Watcom warning can hide a real verdict; RULES 2026-11-06).
-* **65 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
+* **68 of 109 drafts proven functionally equivalent (PASS)** by `c_progress.py` (current source hash still
   PASSes). Unit 1 stamped three stale hashes (49→52). Unit 3: CanFillLineSlot and OpenSpeechBank (52→54).
-  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). H4: RandomizeSchedule (60→61). Leftover synth: DrawCalendarDay, checkpuckcoll_ccx, RunTeamPickMenu, SkateToSpot (61→65). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
+  Unit 5: checkgoalp (54→55). Unit 7: SimPlayoffRound1 (55→56). 109-plan H1: POSeedTeams, DrawListItems, ListDialog (56→59). H3: RunMenu (59→60). H4: RandomizeSchedule (60→61). Leftover synth: DrawCalendarDay, checkpuckcoll_ccx, RunTeamPickMenu, SkateToSpot (61→65). Leftover pairs: InProgress, DrawRinkOverlays, PassLaneChk (65→68). Generated baseline before the round-7 rerun was 23; that rerun added 25, then Gameloop.
 * **Step 2 rerun (done, 2026-11-06).** 71 unique functions logged: **25 PASS / 44 NEEDS-REVIEW / 2 FAIL**.
-  Latest-row CSV picture after leftover synth: **65 PASS / 44 NEEDS-REVIEW / 0 FAIL** over leftover drafts
+  Latest-row CSV picture after leftover pairs: **68 PASS / 41 NEEDS-REVIEW / 0 FAIL** over leftover drafts
   (matched-function pilots still in the CSV). `c_progress.py` is the FUNCTIONAL count in C_PROGRESS / README.
 * **25 new PASS** (unmarked; native bodies): changeplayer, ReassignCtlPlayer, POInitSchedule, SetRosterTeamMenus,
   checkwallcoll, BlitTileMap, DrawSprite, passtoa0, MenuSaveTheseLines, RemoveFromLines, dopass,
@@ -91,6 +91,7 @@ The 2026-11-06 native-link finish bar is superseded. Every leftover unmarked dra
 | 109.H4 | ~~Recheck remaining NR~~ **done** (RandomizeSchedule PASS 3000; SportsDesk uninit-fault is NR not FAIL; 48 still NR). **61 PASS / 48 NR**. | Composer |
 | 109.H5 | ~~Dead-range disasm~~ **done** (RunTeamPickMenu / SkateToSpot / DrawCalendarDay holes are live retail paths. No dead_ranges.txt). | Grok 4.7 medium |
 | 109.synth | ~~Deeper leftover plants~~ **done** (DrawCalendarDay / checkpuckcoll_ccx / RunTeamPickMenu / SkateToSpot PASS 3000; remaining 44 NR rechecked `--budget 1800`). **65 PASS / 44 NR**. | Grok 4.7 medium |
+| 109.pairs | ~~Collide pair ABI + overlay/penalty plants~~ **done** (InProgress / DrawRinkOverlays / PassLaneChk PASS 3000; remaining 41 NR rechecked `--budget 1800`). **68 PASS / 41 NR**. | Grok 4.7 medium |
 | 109.H6 | **not done** — close only at 109/109 PASS. Native F4 waits. | see plan |
 
 Pilots that must stay PASS after any harness change: DrawRinkEndArt, GetMemListHead, ResetInputSampling (matched),

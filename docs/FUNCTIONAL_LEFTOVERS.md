@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after synth plants: **65 PASS / 0 FAIL / 44 NR**. DrawCalendarDay / checkpuckcoll_ccx / RunTeamPickMenu / SkateToSpot PASS 3000.
+Live leftover after pair plants: **68 PASS / 0 FAIL / 41 NR**. InProgress / DrawRinkOverlays / PassLaneChk PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -89,6 +89,21 @@ Calendar games in regs (Watcom `eax` month, `edx` crests, `ecx` games; 4 stack a
 G17: SeriesLength PASS 300, NetCollide PASS 4500. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). RunMenu still PASS 85.1% at 600 (not re-logged).
 
 Remaining NR: CalendarScreen, CanBlockShot, CopyHumanTeamDBs, DbLineEditorLoop, DrawRinkOverlays, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InProgress, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PassLaneChk, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck, checkgoal, wallcoll.
+
+## Leftover pairs (collide ABI + overlay/penalty plants)
+
+`checkcheck` / `PassLaneChk` / `checkgoal` `edx` is a second Player at ARG+0x480, not a SortCords index. PassLaneChk `|Y|` in `(0x4E, 0x76]` with the teammate 0x20 shallower and `(Y>threshold) XOR pflags.7 == 0`. checkgoal `SCnum==0x0E` on `eax` (puck), in-box vs g. InProgress `PenBuf[0]==0x1A` is StartPenaltyShot. DrawRinkOverlays mixes `sortobj15` frames `0x286/0x22E/0x189`, SCnum `0x0E/0x0C/0x0F`, `pucky -0xEC`. `--force --budget 1800 --cases 2000 --no-callers` on the leftover NR. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| InProgress | **PASS 3000** (was NR 76%; PenBuf 0x1A + RefStep) |
+| DrawRinkOverlays | **PASS 3000** (was NR 77%; frame/SCnum/pucky mix) |
+| PassLaneChk | **PASS 3000** (was NR 49%; Y-band + teammate geometry) |
+| remaining 41 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CanBlockShot, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck, checkgoal, wallcoll.
 
 ## Close
 
