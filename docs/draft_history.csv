@@ -803,3 +803,7 @@ SportsDesk,cursor,2026-11-06,GA,192,192,"functional 109-plan H3: menu-mode event
 RandomizeSchedule,cursor,2026-11-06,GA,14,14,"functional 109-plan H4: --force --budget 1800 --cases 2000 --no-callers. PASS 3000. No C."
 SportsDesk,cursor,2026-11-06,GA,192,192,"functional 109-plan H4: uninit-fault address 0xa5a5a5a5 is NR not FAIL. 489 cases 76%. No C."
 RunTeamPickMenu,cursor,2026-11-06,GA,181,181,"functional 109-plan H5: 0x1e55b statsplayoffs path is live. Not dead-range. No C."
+DrawCalendarDay,cursor,2026-11-06,GA,80,80,"functional leftover synth: Watcom register month/crests/games + selected-day plant. PASS 3000. No C."
+checkpuckcoll_ccx,cursor,2026-11-06,GA,79,79,"functional leftover synth: SortCords goalie pos=0 + stick frame 0x431 + signed puck vel. PASS 3000. No C."
+RunTeamPickMenu,cursor,2026-11-06,GA,181,181,"functional leftover synth: statsplayoffs + event_mode=menu_pick. PASS 3000. No C."
+SkateToSpot,cursor,2026-11-06,GA,94,94,"functional leftover synth: signed world + |dx|,|dy| in 8..24 with |vel|>0x9C4. PASS 3000. No C."

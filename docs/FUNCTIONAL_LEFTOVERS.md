@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after H4/H5: **61 PASS / 0 FAIL / 48 NR**. RandomizeSchedule PASS 3000.
+Live leftover after synth plants: **65 PASS / 0 FAIL / 44 NR**. DrawCalendarDay / checkpuckcoll_ccx / RunTeamPickMenu / SkateToSpot PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -73,6 +73,22 @@ Near-miss holes are live retail paths. No `dead_ranges.txt`. Not accept-for-link
 | DrawCalendarDay 0x344f9 | selected-day store after `calselmonth`/`calselday` match | retail highlighted cell |
 
 Live holes stay NR. Advisor, not a dump wait.
+
+## Leftover synth (deeper H3 plants + budget 1800)
+
+Calendar games in regs (Watcom `eax` month, `edx` crests, `ecx` games; 4 stack args), skate mix (boards / goal-line / close / far / signed world / `|dx|,|dy|` in 8..24 with `|vel| > 0x9C4`), collide SortCords goalie `pos=0` + stick frame `0x431` + signed puck vel, `statsplayoffs` + `event_mode=menu_pick`. `--force --budget 1800 --cases 2000 --no-callers` on the leftover NR. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| DrawCalendarDay | **PASS 3000** (was NR 80%; 93.7% coverage) |
+| checkpuckcoll_ccx | **PASS 3000** (was NR 79%; 97.3% coverage) |
+| RunTeamPickMenu | **PASS 3000** (was NR 82%; 85.9% coverage) |
+| SkateToSpot | **PASS 3000** (was NR 82%; 94.8% coverage) |
+| remaining 44 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 300, NetCollide PASS 4500. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). RunMenu still PASS 85.1% at 600 (not re-logged).
+
+Remaining NR: CalendarScreen, CanBlockShot, CopyHumanTeamDBs, DbLineEditorLoop, DrawRinkOverlays, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InProgress, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PassLaneChk, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck, checkgoal, wallcoll.
 
 ## Close
 

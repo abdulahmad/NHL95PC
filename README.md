@@ -8,10 +8,10 @@
 
 - Abdul is working on the C decompilation.
 - <!-- nhl95-readme-count:start -->977 of 1084 functions are a bit-perfect match.<!-- nhl95-readme-count:end -->
-- <!-- nhl95-readme-functional:start -->56 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
-  - <!-- nhl95-readme-functional-total:start -->1033 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
+- <!-- nhl95-readme-functional:start -->65 of 107 remaining functions are confirmed to be a functional match.<!-- nhl95-readme-functional:end --> ([docs/FUNCTIONAL_HANDOFF.md](docs/FUNCTIONAL_HANDOFF.md))
+  - <!-- nhl95-readme-functional-total:start -->1042 of 1084 functions are a functional match.<!-- nhl95-readme-functional-total:end -->
 - The 107 leftover MATCH functions plus two db-entry drafts (`MenuSaveDefaultLines`, `MenuSaveTheseLines`) are the 109 unmarked compiled-C drafts ([C_PROGRESS.md](C_PROGRESS.md)). 13 hand-asm stay asm.
-- Leftover functional drafts (**109**): **61 PASS**, 0 FAIL, 48 NEEDS-REVIEW. 109-plan H4: RandomizeSchedule PASS 3000. H5: near-miss holes are live; no dead-range. H6 closed until 109/109. No dumps. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_LEFTOVERS.md](docs/FUNCTIONAL_LEFTOVERS.md))
+- Leftover functional drafts (**109**): **65 PASS**, 0 FAIL, 44 NEEDS-REVIEW. Synth plants: DrawCalendarDay / checkpuckcoll_ccx / RunTeamPickMenu / SkateToSpot PASS 3000. H6 closed until 109/109. No dumps. Bar: 109/109 `check.py` PASS; MATCH stays 977. ([docs/FUNCTIONAL_LEFTOVERS.md](docs/FUNCTIONAL_LEFTOVERS.md))
 - Names come from 94G first, then 94S, then 95G for 95 features.
 
 **Picking this up? Start with [HANDOFF.md](HANDOFF.md)** (setup, verify, current state, what to do next).
