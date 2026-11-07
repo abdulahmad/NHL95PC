@@ -40,7 +40,8 @@ class State:
     seed: int = 0                                # case seed; lazily mapped pages are filled from (seed, page) only
     argsof: object = None                        # f(callee) -> (register args, stack dwords) it reads; enables stack-pointer handling
     ptrsize: object = None                       # f(callee, arg position) -> bytes to compare behind a stack pointer (default 4)
-    event_stub: bool = False                     # GetInputEvent/PollKey dummy events (ListDialog); off for other leftovers so wild menus don't FAIL
+    event_stub: bool = False                     # GetInputEvent/PollKey dummy events (leftover screen loops)
+    event_mode: str = ''                         # 'list' = 64 events then 0; 'menu' = move, empty, then click
 
 @dataclass
 class Trace:
@@ -91,6 +92,17 @@ def proto_of(img, target):
     inv = [n for n, a in img.labels().items() if a == target]
     return next((protos()[n] for n in inv if n in protos()), None)
 
+_CDECL = {}
+def is_cdecl(img, target):
+    """True when protos.h types the callee `__cdecl` (stack args only; leftover ebx is not an argument)."""
+    if target not in _CDECL:
+        protos(); r = False
+        for n, a in img.labels().items():
+            if a == target and n in _PRET and '__cdecl' in _PRET[n]:
+                r = True; break
+        _CDECL[target] = r
+    return _CDECL[target]
+
 def returns64(img, target):
     """True when protos.h gives the callee at `target` a `long long` / `__int64` return (the stub then sets edx too;
     every other callee preserves edx)"""
@@ -117,10 +129,13 @@ def hittest_outs(depth, stub_k):
 _SERIESLEN = None
 SERIES_LENS = (1, 3, 5, 7)
 EVENT_PTR = 0x6000200  # ARG+0x200 dummy event (check.ARG is 0x6000000)
+ALLOC_PTR = 0x6000800  # ARG+0x800 dummy block for sub_8CCA8 when event_stub
+PTRFN_STUB = 0x60001C0  # check.PTRFN_STUB: ptrupdatefn / mousepollfn
 _GETINPUT = None
 _POLLKEY = None
 _LISTHIT = None
 _FILEOPEN = None
+_ALLOC = None
 
 def serieslen_addr(img):
     """EXE label of SeriesLength, cached."""
@@ -166,6 +181,13 @@ def fileopen_addrs(img):
         lab = img.labels()
         _FILEOPEN = {lab[n] for n in ('FileOpenRead', 'FileOpenWrite', 'FileOpenRW') if n in lab}
     return _FILEOPEN
+
+def alloc_addr(img):
+    """sub_8CCA8: screen loops copy a 17-byte sprite header onto its result."""
+    global _ALLOC
+    if _ALLOC is None:
+        _ALLOC = img.labels().get('sub_8CCA8')
+    return _ALLOC
 
 def ptr_size(img, target, pos):
     """bytes to compare behind a stack pointer passed as argument `pos` (0-3 registers, then stack dwords) to the
@@ -261,7 +283,7 @@ class Runner:
         ctx = uc.context_save()
         saved = {}; lazy = []; lazyset = set(); fa = []; seen = {}
         wlo, whi = watch or (1, 0)
-        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State(); click = [0]
+        tr = Trace(); written = set(); nstub = [0]; done = [False]; prev = ['']; follow = [False]; cur = State(); click = [0]; event_n = [0]
 
         def touch(a, n):
             for p in range(a & ~0xFFF, a + max(n, 1), 0x1000):
@@ -337,19 +359,48 @@ class Runner:
             hit_skip = set()
             if a == hittest_addr(img):
                 # hitMenu / hitItem are stack args 2 and 3 (int *). In-rect, not eax leftover.
-                hm, hi = hittest_outs(u.reg_read(UREG['ecx']), k)
+                if cur.event_stub:
+                    # Per-case path mix, then force the action/exit arm so the loop cannot spin.
+                    if k > 15:
+                        hm, hi, eax = 0, 0, 1
+                    else:
+                        kind = (cur.seed or 0) % 5
+                        if kind == 1:
+                            hm, hi, eax = 0, 0, 0
+                        elif kind == 2:
+                            hm, hi, eax = 0, 1, 1  # planted submenu
+                        elif kind == 3:
+                            hm, hi, eax = 0, 2, 1  # reselect
+                        else:
+                            hm, hi, eax = 0, 0, 1
+                else:
+                    hm, hi = hittest_outs(u.reg_read(UREG['ecx']), k)
+                    eax = eax & 1
                 for v, val in ((sa[2], hm), (sa[3], hi)):
                     if STK <= v <= STK + STK_SIZE - 4:
                         put(v, struct.pack('<I', val))
                         hit_skip.add(v)
                         if ih(v): written.update(range(v, min(v + 4, esp0)))
-                eax = eax & 1
+                if STK <= rg[2] <= STK + STK_SIZE - 4:
+                    hit_skip.add(rg[2])  # menus[] is an in-param; seeding it wipes bar pointers
             if a == serieslen_addr(img):
                 eax = serieslen_out(k)
                 edx = 0
             if a == getinput_addr(img) and not callable(cur.script) and cur.event_stub:
-                eax = getinput_out(k)
-                click[0] = 1 if eax else 0
+                event_n[0] += 1
+                n = event_n[0]
+                if cur.event_mode == 'menu':
+                    if n == 1:
+                        eax, click[0] = EVENT_PTR, 0     # move, no button
+                    elif n == 2:
+                        eax, click[0] = 0, 0             # queue empty: pointer-move arm
+                    elif n < 64:
+                        eax, click[0] = EVENT_PTR, 1     # click so the menu can exit
+                    else:
+                        eax, click[0] = 0, 0
+                else:
+                    eax = getinput_out(k)
+                    click[0] = 1 if eax else 0
             elif a == pollkey_addr(img) and not callable(cur.script) and cur.event_stub:
                 eax = pollkey_out(k)
             elif a == listhit_addr(img) and not callable(cur.script) and cur.event_stub:
@@ -361,10 +412,33 @@ class Runner:
                     if ih(rg[1]): written.update(range(rg[1], rg[1] + 4))
                 except UcError:
                     pass
-            elif click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk):
+            elif cur.event_mode == 'menu' and a == alloc_addr(img):
+                eax = ALLOC_PTR  # mapped ARG block; not a script leftover / null
+            click_set = False
+            if (click[0] and a not in (hittest_addr(img), serieslen_addr(img), chk,
+                                       getinput_addr(img), pollkey_addr(img), listhit_addr(img))
+                    and a not in fileopen_addrs(img)):
                 # ptrupdatefn after a real event: button-down bit so the inner input while can exit
                 eax = (eax | 2) & 0xFFFFFFFF
                 click[0] = 0
+                click_set = True
+            if a == PTRFN_STUB and cur.event_mode == 'menu':
+                for v in (rg[1], rg[2]):  # edx=&mx ebx=&my: nudge so the no-click arm runs
+                    if STK <= v <= STK + STK_SIZE - 4:
+                        try:
+                            cur_mx = struct.unpack('<I', bytes(u.mem_read(v, 4)))[0]
+                        except UcError:
+                            cur_mx = 0
+                        put(v, struct.pack('<I', (cur_mx + 8) & 0xFFFFFFFF))
+                        if ih(v): written.update(range(v, min(v + 4, esp0)))
+            # menu item callbacks are 0-arg; return 1 so RunMenu / SportsDesk take the done path.
+            # Do not clobber the click-bit on ptrupdatefn (nreg 0 at a non-entry).
+            if (cur.event_mode == 'menu' and nr == 0 and np_ == 0 and not click_set
+                    and a not in (getinput_addr(img), pollkey_addr(img), listhit_addr(img),
+                                  hittest_addr(img), serieslen_addr(img), chk)
+                    and a not in fileopen_addrs(img)
+                    and a != PTRFN_STUB):
+                eax = 1 if k > 12 else 0  # first callback continues; later ones exit the menu loop
             for j, (p, n) in enumerate(ptrs.items()):
                 if p in hit_skip: continue
                 base = (eax, edx, eax ^ edx, eax + edx)
@@ -421,7 +495,7 @@ class Runner:
             for p in lazy: uc.mem_unmap(p, 0x1000)
             lazy.clear(); lazyset.clear(); fa.clear()
             uc.context_restore(ctx)
-            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False; click[0] = 0
+            cur = st or State(); tr = Trace(); written = set(); nstub[0] = 0; done[0] = False; prev[0] = ''; follow[0] = False; click[0] = 0; event_n[0] = 0
             for a, b in (data or {}).items(): uc.mem_write(a, b)
             self.snap = None
             uc.mem_write(esp0 - FILL, random.Random(0x5EED0000 + (cur.seed & 0xFFFFFFFF) * 7919).randbytes(FILL))   # per-case stack fill, same on both sides
@@ -498,6 +572,9 @@ def _selftest():
     lh = listhit_out(99)
     good = 0 <= lh < 8; ok &= good
     print('%s ListHitTest stub row=%d' % ('PASS' if good else 'FAIL', lh))
+    al = alloc_addr(img)
+    good = al and ALLOC_PTR == 0x6000800; ok &= bool(good)
+    print('%s sub_8CCA8 alloc stub -> ARG+0x800 (%s)' % ('PASS' if good else 'FAIL', hex(al or 0)))
     print('ALL PASS' if ok else 'FAILED'); return ok
 
 if __name__ == '__main__':

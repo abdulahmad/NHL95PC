@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after H2: **59 PASS / 0 FAIL / 50 NR**. H2 did not add a PASS.
+Live leftover after H3: **60 PASS / 0 FAIL / 49 NR**. RunMenu PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -30,9 +30,22 @@ SportsDesk: GetInputEvent stub on even cases FAILed `writes[13]` through wild me
 
 DrawListItems / ListDialog already PASS from H1; not re-run. The rest of the H2 list (SeedPlayoffRound3, GameLineEditorLoop, DbLineEditorLoop, PlayoffTreeMenu, LeagueTeamSelect, TradeScreenLoop, SportsDesk) is the same class: H3 inputs, then H4 recheck. Not accept-for-link.
 
-## NEEDS-REVIEW (50)
+## H3 (retail-shaped screen inputs)
 
-Coverage holes remain. H3 (retail-shaped pointerspr / GetInputEvent / cdecl nreg / MenuHitTest in-param) then H4 recheck. Dead-range still needs a disasm proof (H5).
+Menu-mode leftovers (`event_mode=menu`): plant `pointerspr` → ARG sprite, `sub_8CCA8` → ARG+0x800, MenuHitTest does not seed `menus[]`, `__cdecl` nreg 0, GetInputEvent sequence move / empty / click. ListDialog keeps `event_mode=list` (64 events then 0).
+
+| Function | Result |
+|---|---|
+| RunMenu | **PASS 3000** (was NR 49%). 0 stopping traps. |
+| ListDialog | **PASS 3000** (still; list-mode GetInputEvent) |
+| SportsDesk | NR 92 cases, 70% coverage (was FAIL with a global event stub; now not FAIL) |
+| RunTeamPickMenu | NR 120 cases, 72% coverage, 0 stopping traps |
+
+G17: SeriesLength PASS 300, NetCollide PASS 4500. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). `--no-callers` on screen loops.
+
+## NEEDS-REVIEW (49)
+
+H4: `--force --budget 1800 --cases 2000 --no-callers` on remaining NR. Dead-range still needs a disasm proof (H5).
 
 ## Close
 
