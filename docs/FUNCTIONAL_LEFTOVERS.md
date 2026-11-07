@@ -2,7 +2,7 @@
 
 No DOSBox-X dumps. MATCH stays 977/1084. Never `cc.py mark`.
 
-Live leftover after near plants: **71 PASS / 0 FAIL / 38 NR**. CanBlockShot / checkgoal / wallcoll PASS 3000.
+Live leftover after close plants: **75 PASS / 0 FAIL / 34 NR**. FillDressedSlots / PenGoalStuff / SeedPlayoffRound3 / PickForLineSlot PASS 3000.
 
 ## H1 (soft traps) + list-count clamps
 
@@ -119,6 +119,22 @@ CanBlockShot `puckvy` toward that goal (opposite sign early-outs at 0x500e0); ca
 G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
 
 Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FillDressedSlots, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PenGoalStuff, PickAwardWinners, PickForLineSlot, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SeedPlayoffRound3, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck.
+
+## Leftover close (line / penalty / playoff plants)
+
+FillDressedSlots `CanFillLineSlot` eax=1 and the dressed list in ARG. PickForLineSlot `CanFillLineSlot` eax=0 so the group scan does not return, `FillDressedSlots` stub -1 then a player, pos-letter `byte_DB3AE` and the E9 lists. SeedPlayoffRound3 `games` in {1,3,5,7} (ARG as a count hung at 121 cases). PenGoalStuff PenBuf type 2 (minor) plus tmap advantage. InstantReplay `ReplayControlLoop` returns 1 for 40 hits with camera globals then 0 (quit-after-6 dropped to 52%). EditTextField typed PollKey then Enter dropped 71→37; reverted. `--force --budget 1800 --cases 2000 --no-callers` on the leftover NR. No C. Never `cc.py mark`.
+
+| Function | Result |
+|---|---|
+| FillDressedSlots | **PASS 3000** (was NR 38%; CanFillLineSlot eax=1) |
+| PenGoalStuff | **PASS 3000** (was NR 67%; PenBuf minor + tmap) |
+| SeedPlayoffRound3 | **PASS 3000** (was NR 72%/121; games 1/3/5/7) |
+| PickForLineSlot | **PASS 3000** (was NR 36%; pos-letter lists) |
+| remaining 34 NR | still NR; coverage / budget / uninit-fault, not FAIL |
+
+G17: SeriesLength PASS 450, NetCollide PASS 6750. Planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2).
+
+Remaining NR: CalendarScreen, CopyHumanTeamDBs, DbLineEditorLoop, EditGoalieRating, EditRosters, EditSkaterRating, EditTextField, ExecuteTrade, ExportTeamToFloppy, FixJerseyConflict, GameLineEditorLoop, GameSummaryScreen, InstantReplay, LeagueTeamSelect, MoveToOtherRoster, POAfterGame, PickAwardWinners, PlayLeagueGame, PlayoffTreeMenu, PostGameToTeamDb, ReplaySaveHilight, RosterPanelClick, RunPlayerPickMenu, SimulateGame, SportsDesk, StarCompare, TitleScreen, TradePlayers, TradeScreenLoop, assgoalie, assonetimer, assrefgoalpa, assthreestars, checkcheck.
 
 ## Close
 
