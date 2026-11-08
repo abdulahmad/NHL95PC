@@ -201,6 +201,7 @@ static void st_regions(void)
 static void st_record(uint16_t *all)           /* the record with this number: a direction held for six records, no fire */
 {
     uint32_t i = nh_tail;
+    if (st_phase == 3) { all[0] = nh_local; all[1] = 0; return; }       /* the test is over: the player's own pad plays on */
     all[0] = (uint16_t)(((i / 6) * 2654435761u >> 20) & 7);
     all[1] = (uint16_t)(((i / 9 + 3) * 2246822519u >> 20) & 7);
 }
