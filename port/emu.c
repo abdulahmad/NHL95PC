@@ -25,6 +25,8 @@ static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
 #define SPEECH_HOOK 0x83459u                     /* InitSpeechSlots: the start of the EA Sports screen, so the end of the pioneer screens */
 #define TITLE_HOOK 0x1609Fu                      /* TitleScreen: the end of the EA Sports screen */
 extern volatile int intro_skip, intro_title;
+#define MAIN_HOOK 0x31AB5u                       /* MainDeskLoop: the main menu begins */
+static volatile int64_t main_seen_ns;
 #define PLAY_HOOK 0x2A892u                       /* PreGameScreen, after TrackButtons: NHL95_AUTOSKIP presses Play (the scouting report) */
 extern int32_t off_CEF63;
 #define INPUT_HOOK 0x6B391u                      /* GetInputEvent: the menus ask for an event every time round their loop, even when there is none */
@@ -48,6 +50,7 @@ void install_flag_traps(void)
     { uint8_t *h1 = GAME_ADDR(SPEECH_HOOK), *h2 = GAME_ADDR(TITLE_HOOK);
       if (h1[0] == 0x68) h1[0] = 0xCC; else fprintf(stderr, "InitSpeechSlots is %02x, not hooked\n", h1[0]);
       if (h2[0] == 0x68) h2[0] = 0xCC; else fprintf(stderr, "TitleScreen is %02x, not hooked\n", h2[0]); }
+    if (getenv("NHL95_AUTOSKIP")) { uint8_t *m = GAME_ADDR(MAIN_HOOK); if (m[0] == 0x68) m[0] = 0xCC; else fprintf(stderr, "MainDeskLoop is %02x, not hooked\n", m[0]); }
     if (getenv("NHL95_AUTOSKIP")) { uint8_t *h = GAME_ADDR(PLAY_HOOK); if (h[0] == 0x89 && h[1] == 0xC2) h[0] = 0xCC; else fprintf(stderr, "PreGameScreen is %02x %02x, not hooked\n", h[0], h[1]); }
     { uint8_t *q = GAME_ADDR(INPUT_HOOK); if (q[0] == 0x68 && q[1] == 0x0C) q[0] = 0xCC; else fprintf(stderr, "GetInputEvent is %02x %02x, not hooked\n", q[0], q[1]); }
     { uint8_t *p = GAME_ADDR(PTR_HOOK); if (p[0] == 0x68 && p[1] == 0x1C) p[0] = 0xCC; else fprintf(stderr, "EventToPointer is %02x %02x, not hooked\n", p[0], p[1]); }
@@ -89,12 +92,11 @@ __attribute__((naked)) static void autostart_stub(void)
 }
 static int autostart_due(int64_t now)
 {
-    static int64_t first;
+    
     static int on = -1, done;
     if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; memset(autostart_arg, 0xFF, sizeof autostart_arg); }
     if (!on || done) return 0;
-    if (!first) first = now;
-    if (now - first < 4000000000LL) return 0;
+    if (!main_seen_ns || now - main_seen_ns < 2000000000LL) return 0;
     done = 1;
     fprintf(stderr, "autostart: calling MenuNewExhibition\n");
     return 1;
@@ -112,6 +114,13 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
             *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
             return 5;
         }
+    }
+    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == MAIN_HOOK) {         /* push dword 0CCh */
+        main_seen_ns = plat_now_ns();
+        fprintf(stderr, "autostart: the main menu begins\n");
+        R(c, ESP) -= 4;
+        *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
+        return 5;
     }
     if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PLAY_HOOK) {      /* mov edx, eax: TrackButtons answers "Play" (index 0, or 1 when the table is shifted) */
         { static int n; if (n++ < 3) fprintf(stderr, "autostart: Play pressed on the scouting report (off_CEF63 %d)\n", (int)off_CEF63); }
