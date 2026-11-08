@@ -66,6 +66,7 @@ extern char InitGameSummary[];
  * nh_sim: a session's records drive the game (the hooks are on); set and cleared by the game thread only.
  * nh_take: this machine's input goes to the session (cleared when the session ends; the game then plays on locally). */
 volatile int nh_sim, nh_take;
+volatile const char *nh_where = "";     /* what the game thread does under nh_lock (for the log when the main thread cannot get it) */
 volatile int nh_rb, nh_quiet;           /* rollback is on in this session; a replay is running (nothing is shown) */
 static volatile int nh_due;             /* rollback: records the timer says are due, not yet made */
 void *nh_peek_cont, *nh_pop_cont, *nh_flush_cont, *nh_rgf_cont, *nh_pg_cont, *nh_pab_cont, *nh_spb_cont, *nh_crowd_cont,
@@ -480,7 +481,9 @@ static void rb_make(void)
     if (__builtin_setjmp(rb_jb)) vif = rb_slot_vif[rb_target];        /* back from snap_jump: the queue and the game as they were */
     rb_low = snap_sp();
     SDL_LockMutex(nh_lock);
+    nh_where = "rb_make: ob_net_frame";
     r = nh_net ? ob_net_frame(nh_net, 1, &nh_local, all) : -1;
+    nh_where = "";
     SDL_UnlockMutex(nh_lock);
     if (r == OB_NET_RESTART) snap_jump(&rb_snap[rb_target]);
     if (r == OB_NET_RUN) {
@@ -539,7 +542,9 @@ void nh_pop(void)
     if (!gameover && (nh_consumed == 1 || nh_consumed % 60 == 0)) {     /* the game thread, outside the interrupt: may wait */
         uint64_t h = sim_hash();
         SDL_LockMutex(nh_lock);
+        nh_where = "nh_pop: ob_net_check";
         if (nh_net) ob_net_check(nh_net, nh_consumed - 1, h);
+        nh_where = "";
         SDL_UnlockMutex(nh_lock);
     }
 }
@@ -954,9 +959,17 @@ void netplay_install(void)
 void netplay_main_poll(void)
 {
     if (nh_lock) {
-        SDL_LockMutex(nh_lock);
-        if (nh_net) ob_net_poll(nh_net);
-        SDL_UnlockMutex(nh_lock);
+        static int64_t since;
+        if (SDL_TryLockMutex(nh_lock) == 0) {
+            since = 0;
+            if (nh_net) ob_net_poll(nh_net);
+            SDL_UnlockMutex(nh_lock);
+        } else {
+            int64_t now = plat_now_ns();
+            static int64_t said;
+            if (!since) since = now;
+            if (now - since > 2000000000LL && now - said > 2000000000LL && getenv("NHL95_ONLINE")) { said = now; fprintf(stderr, "online: the main thread has waited %.1f s for the session lock; the game thread is in %s\n", (now - since) / 1e9, nh_where); }
+        }
     }
     if (nh_want_page) {
         nh_want_page = 0;
