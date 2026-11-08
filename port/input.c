@@ -306,6 +306,8 @@ static void text_input_sync(void)
 
 /* NHL95_AUTOSKIP=1 (a test aid): skips the pioneer, EA Sports and title screens as a key press would, one after the other, until the
  * front end asks for input, so a test gets to the menus in a few seconds without a script */
+extern volatile uint32_t trap_ring[256];
+extern volatile unsigned trap_ring_n;
 extern volatile int intro_title;
 static void autoskip_poll(void)
 {
@@ -315,7 +317,8 @@ static void autoskip_poll(void)
     if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; next = now + 1500000000LL; }
     if (on > 0) {
         static int64_t beat;
-        if (now - beat > 3000000000LL) { beat = now; fprintf(stderr, "autostart: alive, curperiod %d, front end %s, title %d\n", (int)curperiod, game_pointer_ns() ? "reached" : "not yet", intro_title); }
+        if (now - beat > 3000000000LL) { beat = now; fprintf(stderr, "autostart: alive, curperiod %d, front end %s, title %d\n", (int)curperiod, game_pointer_ns() ? "reached" : "not yet", intro_title);
+            { unsigned i, n = trap_ring_n; fprintf(stderr, "  last traps:"); for (i = 0; i < 6; i++) { uint32_t a = trap_ring[(n - 1 - i) & 255]; fprintf(stderr, " %05X", a & 0x80000000u ? a : (unsigned)(a - (uint32_t)(uintptr_t)sub_10000 + 0x10000)); } fprintf(stderr, "\n"); } }
     }
     if (!on || game_pointer_ns() || now < next) return;
     next = now + 400000000LL;
