@@ -304,11 +304,25 @@ static void text_input_sync(void)
     on = want;
 }
 
+/* NHL95_AUTOSKIP=1 (a test aid): skips the pioneer, EA Sports and title screens as a key press would, one after the other, until the
+ * front end asks for input, so a test gets to the menus in a few seconds without a script */
+static void autoskip_poll(void)
+{
+    static int on = -1;
+    static int64_t next;
+    int64_t now = plat_now_ns();
+    if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; next = now + 1500000000LL; }
+    if (!on || game_pointer_ns() || now < next) return;
+    next = now + 400000000LL;
+    intro_skip_start();
+}
+
 void input_poll(void)
 {
     SDL_Event e;
     text_input_sync();
     script_poll();
+    autoskip_poll();
     joy_update();
     cursor_update();
     intro_skip_poll();
