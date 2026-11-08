@@ -94,6 +94,7 @@ __attribute__((naked)) static void autostart_stub(void)
         "popal\n\t"
         "ret");
 }
+static volatile int autostart_fired;
 static int autostart_due(int64_t now)
 {
     
@@ -102,6 +103,7 @@ static int autostart_due(int64_t now)
     if (!on || done) return 0;
     if (!main_seen_ns || now - main_seen_ns < 2000000000LL) return 0;
     done = 1;
+    autostart_fired = 1;
     fprintf(stderr, "autostart: calling MenuNewExhibition\n");
     return 1;
 }
@@ -136,6 +138,18 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
         ptr_hook_ns = plat_now_ns();
         R(c, ESP) -= 4;
         *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
+        if (autostart_fired) {                  /* where the menu loop was called from: the code addresses on the stack */
+            static int64_t last;
+            if (ptr_hook_ns - last > 5000000000LL) {
+                uint32_t *sp = (uint32_t *)R(c, ESP) + 1;
+                int i, k = 0;
+                last = ptr_hook_ns;
+                fprintf(stderr, "autostart: GetInputEvent called from");
+                for (i = 0; i < 400 && k < 14; i++)
+                    if (sp[i] >= (uint32_t)(uintptr_t)sub_10000 && sp[i] < (uint32_t)(uintptr_t)sub_10000 + 0xB0000) { fprintf(stderr, " %05X", (unsigned)(sp[i] - (uint32_t)(uintptr_t)sub_10000 + 0x10000)); k++; }
+                fprintf(stderr, "\n");
+            }
+        }
         if (autostart_due(ptr_hook_ns)) {       /* NHL95_AUTOSKIP: a call of MenuNewExhibition, as the main menu's entry would make, then on with this instruction */
             R(c, ESP) -= 4;
             *(uint32_t *)R(c, ESP) = (uint32_t)(uintptr_t)(ip + 5);
