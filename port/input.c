@@ -306,6 +306,7 @@ static void text_input_sync(void)
 
 /* NHL95_AUTOSKIP=1 (a test aid): skips the pioneer, EA Sports and title screens as a key press would, one after the other, until the
  * front end asks for input, so a test gets to the menus in a few seconds without a script */
+extern volatile int intro_title;
 static void autoskip_poll(void)
 {
     static int on = -1;
@@ -314,6 +315,13 @@ static void autoskip_poll(void)
     if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; next = now + 1500000000LL; }
     if (!on || game_pointer_ns() || now < next) return;
     next = now + 400000000LL;
+    if (intro_title) {                          /* the title screen ends on any key: press F12 (nothing else uses it) */
+        static int down;
+        down = !down;
+        key_event(SDL_SCANCODE_F12, down);
+        next = now + 150000000LL;
+        return;
+    }
     intro_skip_start();
 }
 
