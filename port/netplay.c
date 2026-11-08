@@ -281,6 +281,26 @@ static void st_track(uint32_t c)
     }
 }
 
+/* the parts of sim_hash apart, and where each lives (which of the state's regions holds it, if any) */
+#define ST_PARTS 8
+static uint64_t st_part[2][ST_PARTS];
+static void st_parts(uint64_t *o, int show)
+{
+    int k;
+    struct { const char *name; const void *p; size_t n; } t[ST_PARTS] = {
+        { "SortCords", SortCords, 17 * 0x80 }, { "hmtmstruct", hmtmstruct, 0x1D4 }, { "hmlinetab", hmlinetab, 0x30 }, { "awlinetab", awlinetab, 0x30 },
+        { "seed", &seed, 4 }, { "gameclock", &gameclock, 2 }, { "clockticks", &clockticks, 2 }, { "gsp", &gsp, 2 } };
+    for (k = 0; k < ST_PARTS; k++) {
+        int r, in = -1;
+        o[k] = st_fnv(t[k].p, t[k].n);
+        if (!show) continue;
+        for (r = 0; r < st_nregs; r++)
+            if ((const uint8_t *)t[k].p >= (const uint8_t *)st_regs[r].p && (const uint8_t *)t[k].p < (const uint8_t *)st_regs[r].p + st_regs[r].n) in = r;
+        fprintf(stderr, "snaptest: %s at %p (game addr %05X) is %s%d\n", t[k].name, t[k].p, (unsigned)((const uint8_t *)t[k].p - (const uint8_t *)sub_10000 + 0x10000),
+                in < 0 ? "in no region" : "in region ", in < 0 ? 0 : in);
+    }
+}
+
 static void selftest_step(void)
 {
     uint32_t c = nh_consumed;
@@ -302,6 +322,7 @@ static void selftest_step(void)
         st_sim = sim_hash();
         st_all = st_fingerprint();
         st_copy_all();
+        st_parts(st_part[0], 1);
         st_phase = 2;
         if (snap_fits(&st_snap, st_extra, st_nextra)) { fprintf(stderr, "snaptest: FAIL the memory blocks changed between the two records\n"); st_phase = 3; return; }
         fprintf(stderr, "snaptest: record %u first time: sim %016llx all %016llx; going back\n", (unsigned)c, (unsigned long long)st_sim, (unsigned long long)st_all);
@@ -314,6 +335,12 @@ static void selftest_step(void)
         fprintf(stderr, "snaptest: record %u again: sim %016llx all %016llx: %s\n", (unsigned)c, (unsigned long long)a, (unsigned long long)b,
                 a == st_sim && b == st_all ? "SAME" : a == st_sim ? "sim same, other game data differ" : "DIFFERENT");
         st_diff_all();
+        {
+            int k;
+            st_parts(st_part[1], 0);
+            for (k = 0; k < ST_PARTS; k++)
+                if (st_part[0][k] != st_part[1][k]) fprintf(stderr, "snaptest: part %d of the sim's hash differs\n", k);
+        }
         st_phase = 3;
     }
 }
