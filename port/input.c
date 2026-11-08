@@ -315,11 +315,8 @@ static void autoskip_poll(void)
     if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; next = now + 1500000000LL; }
     if (!on || game_pointer_ns() || now < next) return;
     next = now + 400000000LL;
-    if (intro_title) {                          /* the title screen ends on any key: press F12 (nothing else uses it) */
-        static int down;
-        down = !down;
-        key_event(SDL_SCANCODE_F12, down);
-        next = now + 150000000LL;
+    if (intro_title) {                          /* the title screen waits for its speech clip: skip it the way a key before the front end would */
+        if (!skipping) { skipping = 1; intro_skip = 1; audio_muted = 1; skip_start = now; skip_next = now + 300000000LL; }
         return;
     }
     intro_skip_start();
