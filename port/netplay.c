@@ -898,6 +898,17 @@ static void set_call(uint32_t site, void *to)
 /* after install_overrides, before the game thread starts */
 /* NHL95_ONLINE=host|join (a test aid): arms a session on 127.0.0.1 as the Online page's Host / Join would, with NHL95_NETSIM="delay,jitter,loss%"
  * making the link bad. Both machines then start an exhibition game (NHL95_AUTOSKIP does) and the log (stderr) says how it went. */
+static int watchdog(void *arg)
+{
+    (void)arg;
+    for (;;) {
+        SDL_Delay(5000);
+        fprintf(stderr, "watch: consumed %u, queue %u..%u, due %d, hi %u, vif %d, quiet %d, dead %d, lock holder: %s, ticks %u\n", (unsigned)nh_consumed, (unsigned)nh_head,
+                (unsigned)nh_tail, (int)nh_due, (unsigned)nh_hi, (int)vif, (int)nh_quiet, (int)nh_dead, nh_where, (unsigned)inputticks);
+    }
+    return 0;
+}
+
 static void online_env(void)
 {
     const char *e = getenv("NHL95_ONLINE");
@@ -911,6 +922,7 @@ static void online_env(void)
     nh_cfg.here = 1;
     nh_cfg.all = 2;
     nh_armed = 1;
+    SDL_CreateThread(watchdog, "nh-watch", NULL);
     fprintf(stderr, "online: armed as %s on port %d\n", e, nh_cfg.port);
 }
 
