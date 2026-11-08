@@ -270,7 +270,7 @@ static void st_track(uint32_t c)
     uint64_t v[3];
     if (c <= ST_SAVE || c > ST_BACK || (st_phase != 1 && st_phase != 2)) return;
     v[0] = sim_hash();
-    v[1] = st_fnv((uint8_t *)sub_10000 + (ST_DATA_LO - 0x10000), ST_DATA_HI - ST_DATA_LO);
+    v[1] = st_fnv(st_regs[0].p, st_regs[0].n) ^ st_fnv(st_regs[1].p, st_regs[1].n);
     v[2] = st_fnv((void *)0x20000, 0x68000);
     if (st_phase == 1) { memcpy(st_rec[c], v, sizeof v); return; }
     if (!st_first_bad && memcmp(st_rec[c], v, sizeof v)) {
