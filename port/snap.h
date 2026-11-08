@@ -15,8 +15,10 @@ typedef struct snap_region { void *p; size_t n; } snap_region;
 #define SNAP_MAX_REGIONS 560
 
 typedef struct snap {
-    uint8_t *mem;               /* the regions' bytes, then the stack's */
-    size_t size;
+    uint8_t *mem;               /* the stack's bytes, then the pages that differ from the base (see snap.c) */
+    size_t size;                /* all of it */
+    size_t ndiff;               /* pages that differ from the base */
+    unsigned base_id;           /* the base this state is a difference to; a new base makes older states unusable */
     int nregs;
     snap_region r[SNAP_MAX_REGIONS];
     char *low;

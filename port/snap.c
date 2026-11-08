@@ -50,9 +50,40 @@ static int gather(snap_region *r, const snap_region *extra, int nextra)
     return n;
 }
 
-int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextra)
+/* A state holds only the pages that differ from a base, a full copy of the regions taken when the first state is, and again whenever the
+ * regions change (a block came or went). Most of the 68 MB is the game's assets, which never change. Restoring copies the base back and
+ * lays the state's pages over it. */
+#define PAGE 4096u
+static uint8_t *base_mem;
+static snap_region base_r[SNAP_MAX_REGIONS];
+static int base_n;
+static unsigned base_id;
+
+static int base_matches(const snap_region *r, int n)
+{
+    int i;
+    if (!base_mem || n != base_n) return 0;
+    for (i = 0; i < n; i++) if (r[i].p != base_r[i].p || r[i].n != base_r[i].n) return 0;
+    return 1;
+}
+
+static int base_take(const snap_region *r, int n)
 {
     size_t total = 0, at = 0;
+    int i;
+    for (i = 0; i < n; i++) total += r[i].n;
+    free(base_mem);
+    base_mem = malloc(total);
+    if (!base_mem) return -1;
+    for (i = 0; i < n; i++) { memcpy(base_mem + at, r[i].p, r[i].n); at += r[i].n; base_r[i] = r[i]; }
+    base_n = n;
+    base_id++;
+    return 0;
+}
+
+int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextra)
+{
+    size_t at = 0, ndiff = 0, cap, out;
     int i;
     if (!stack_base || !low || low >= stack_base) return -1;
     s->valid = 0;
@@ -60,13 +91,39 @@ int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextr
     s->mem = NULL;
     s->nregs = gather(s->r, extra, nextra);
     if (s->nregs < 0) return -1;
-    for (i = 0; i < s->nregs; i++) total += s->r[i].n;
+    if (!base_matches(s->r, s->nregs) && base_take(s->r, s->nregs)) return -1;
+    s->base_id = base_id;
     s->stack = (size_t)(stack_base - low);
-    s->size = total + s->stack;
-    s->mem = malloc(s->size);
+    for (i = 0; i < s->nregs; i++) {                      /* count the pages that differ */
+        size_t k;
+        for (k = 0; k < s->r[i].n; k += PAGE) {
+            size_t len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
+            if (memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, len)) ndiff++;
+        }
+        at += s->r[i].n;
+    }
+    cap = ndiff * (PAGE + sizeof(void *) + sizeof(uint32_t));
+    s->size = s->stack + cap;
+    s->mem = malloc(s->size ? s->size : 1);
     if (!s->mem) return -1;
-    for (i = 0; i < s->nregs; i++) { memcpy(s->mem + at, s->r[i].p, s->r[i].n); at += s->r[i].n; }
-    memcpy(s->mem + at, low, s->stack);
+    memcpy(s->mem, low, s->stack);
+    out = s->stack;
+    at = 0;
+    for (i = 0; i < s->nregs; i++) {                      /* each page: its address, its length, its bytes */
+        size_t k;
+        for (k = 0; k < s->r[i].n; k += PAGE) {
+            size_t len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
+            void *dst = (uint8_t *)s->r[i].p + k;
+            uint32_t l32 = (uint32_t)len;
+            if (!memcmp(dst, base_mem + at + k, len)) continue;
+            memcpy(s->mem + out, &dst, sizeof dst); out += sizeof dst;
+            memcpy(s->mem + out, &l32, sizeof l32); out += sizeof l32;
+            memcpy(s->mem + out, dst, len); out += len;
+        }
+        at += s->r[i].n;
+    }
+    s->ndiff = ndiff;
+    s->size = out;
     s->low = low;
     s->jb_at = jb;
     memcpy(s->jb, jb, sizeof s->jb);
@@ -78,24 +135,31 @@ int snap_fits(const snap *s, const snap_region *extra, int nextra)
 {
     static snap_region now[SNAP_MAX_REGIONS];
     int n = s->valid ? gather(now, extra, nextra) : -1, i;
-    if (n != s->nregs) return -1;
+    if (n != s->nregs || s->base_id != base_id) return -1;
     for (i = 0; i < n; i++) if (now[i].p != s->r[i].p || now[i].n != s->r[i].n) return -1;
     return 0;
 }
 
 int snap_restore_memory(const snap *s)
 {
-    size_t at = 0;
+    size_t at = 0, p;
     int i;
-    if (!s->valid) return -1;
-    for (i = 0; i < s->nregs; i++) { memcpy(s->r[i].p, s->mem + at, s->r[i].n); at += s->r[i].n; }
+    if (!s->valid || s->base_id != base_id) return -1;
+    for (i = 0; i < s->nregs; i++) { memcpy(s->r[i].p, base_mem + at, s->r[i].n); at += s->r[i].n; }
+    for (p = s->stack; p < s->size;) {
+        void *dst;
+        uint32_t len;
+        memcpy(&dst, s->mem + p, sizeof dst); p += sizeof dst;
+        memcpy(&len, s->mem + p, sizeof len); p += sizeof len;
+        memcpy(dst, s->mem + p, len); p += len;
+    }
     return 0;
 }
 
 /* (below every byte the state's stack puts back, so no interrupt frame or call here is overwritten) */
 NOINLINE static void put_back(const snap *s)
 {
-    memcpy(s->low, s->mem + (s->size - s->stack), s->stack);
+    memcpy(s->low, s->mem, s->stack);
     memcpy(s->jb_at, s->jb, sizeof s->jb);
     __builtin_longjmp(s->jb_at, 1);
 }

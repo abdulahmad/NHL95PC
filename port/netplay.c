@@ -315,7 +315,7 @@ static void selftest_step(void)
             return;
         }
         if (snap_save(&st_snap, st_jb, snap_sp(), st_extra, st_nextra)) { fprintf(stderr, "snaptest: FAIL cannot take a state\n"); st_phase = 3; return; }
-        fprintf(stderr, "snaptest: state taken at record %u: %zu bytes in %d regions (stack %zu)\n", (unsigned)c, st_snap.size, st_snap.nregs, st_snap.stack);
+        fprintf(stderr, "snaptest: state taken at record %u: %zu bytes (%zu pages differ from the base) in %d regions (stack %zu)\n", (unsigned)c, st_snap.size, st_snap.ndiff, st_snap.nregs, st_snap.stack);
         return;
     }
     if (st_phase == 1 && c == ST_BACK) {
