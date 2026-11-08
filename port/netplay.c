@@ -496,7 +496,7 @@ static void rb_make(void)
             SDL_LockMutex(nh_lock);
             if (nh_net) ob_net_status(nh_net, line, sizeof line);
             SDL_UnlockMutex(nh_lock);
-            fprintf(stderr, "rollback: step %u, %u states, %.1f ms each; %s\n", (unsigned)cnt, (unsigned)rb_timing_n, rb_timing_n ? rb_timing_ns / 1e6 / rb_timing_n : 0.0, line);
+            fprintf(stderr, "rollback: at %.1f s, step %u, %u states, %.1f ms each; %s\n", plat_now_ns() / 1e9, (unsigned)cnt, (unsigned)rb_timing_n, rb_timing_n ? rb_timing_ns / 1e6 / rb_timing_n : 0.0, line);
         }
     } else if (r < 0) { nh_take = 0; nh_dead = 1; nh_quiet = 0; }
 }
