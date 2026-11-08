@@ -5,12 +5,13 @@
 #include "bindings.h"
 #include "overbar_client.h"
 #include <SDL.h>
+#include <overbar/plat.h>
 
 #define QSIZE 256
 static volatile uint8_t queue[QSIZE];
 static volatile unsigned qhead, qtail;
 static uint8_t last_scan;
-static int quit_requested;
+
 static volatile int mouse_x, mouse_y, mouse_buttons, mickey_x, mickey_y;
 static int mouse_range_x = 640, mouse_range_y = 480;
 
@@ -294,15 +295,6 @@ static void overlay_mouse(int wx, int wy, int what)
 #endif
 }
 
-/* A field of the Online page (Name, Address, Port) takes typed text: SDL's text input is on while one is edited */
-static void text_input_sync(void)
-{
-    static int on;
-    int want = overbar_client_editing();
-    if (want && !on) SDL_StartTextInput();
-    else if (!want && on) SDL_StopTextInput();
-    on = want;
-}
 
 /* NHL95_AUTOSKIP=1 (a test aid): skips the pioneer, EA Sports and title screens as a key press would, one after the other, until the
  * front end asks for input, so a test gets to the menus in a few seconds without a script */
@@ -329,103 +321,61 @@ static void autoskip_poll(void)
     intro_skip_start();
 }
 
+/* The events Overbar's layer (shell.c) did not use: the overlay, its keys, text, Alt+Enter, quit and the bar's are the layer's. These are the game's. */
+void input_event(const SDL_Event *ep)
+{
+    const SDL_Event e = *ep;
+    switch (e.type) {
+    case SDL_JOYDEVICEADDED: case SDL_JOYDEVICEREMOVED: case SDL_CONTROLLERDEVICEADDED: case SDL_CONTROLLERDEVICEREMOVED:
+        if (!getenv("NHL95_JOY")) joy_scan();
+        break;
+    case SDL_KEYDOWN:
+        if (!e.key.repeat) { key_physical(e.key.keysym.scancode, 1); intro_skip_start(); }
+        break;
+    case SDL_KEYUP:
+        key_physical(e.key.keysym.scancode, 0);
+        break;
+    case SDL_MOUSEMOTION: {
+        int gx, gy;
+        if (overbar_client_open()) { overlay_mouse(e.motion.x, e.motion.y, 0); break; }
+        video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
+        mouse_x = gx; mouse_y = gy;
+        win_x = e.motion.x; win_y = e.motion.y; win_moved = 1;
+        break;
+    }
+    case SDL_MOUSEWHEEL:
+        if (overbar_client_open()) {
+            int mx, my;
+            SDL_GetMouseState(&mx, &my);
+            overlay_mouse(mx, my, e.wheel.y > 0 ? 3 : e.wheel.y < 0 ? 4 : -1);
+        }
+        break;
+    case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: {
+        static unsigned char mdown[8];
+        int btn = e.button.button;
+        if (overbar_client_open()) {
+            if (e.type == SDL_MOUSEBUTTONDOWN)
+                overlay_mouse(e.button.x, e.button.y, e.button.button == SDL_BUTTON_LEFT ? 1
+                              : e.button.button == SDL_BUTTON_RIGHT ? 2 : -1);
+            break;
+        }
+        if (btn >= 1 && btn <= 5) mdown[btn] = e.type == SDL_MOUSEBUTTONDOWN;
+        if (curperiod != -1) mouse_buttons = bindings_mouse(mdown);      /* during a game: the bindings */
+        else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
+        if (e.type == SDL_MOUSEBUTTONDOWN) intro_skip_start();
+        break;
+    }
+    }
+}
+
 void input_poll(void)
 {
-    SDL_Event e;
-    text_input_sync();
     script_poll();
     autoskip_poll();
     joy_update();
     cursor_update();
     intro_skip_poll();
-    while (SDL_PollEvent(&e)) {
-        switch (e.type) {
-        case SDL_QUIT: quit_requested = 1; break;
-        case SDL_JOYDEVICEADDED: case SDL_JOYDEVICEREMOVED: case SDL_CONTROLLERDEVICEADDED: case SDL_CONTROLLERDEVICEREMOVED:
-            if (!getenv("NHL95_JOY")) joy_scan();
-            break;
-        case SDL_KEYDOWN:
-            if (e.key.keysym.scancode == SDL_SCANCODE_RETURN && (e.key.keysym.mod & KMOD_ALT)) {    /* Alt+Enter: fullscreen */
-                if (!e.key.repeat) video_toggle_fullscreen();
-                break;
-            }
-            if (audio_debug() && e.key.keysym.scancode == SDL_SCANCODE_F11 && (e.key.keysym.mod & KMOD_CTRL)) {      /* Ctrl+F11: record the sound */
-                if (!e.key.repeat) audio_capture_toggle();
-                break;
-            }
-            if (!e.key.repeat && overbar_client_key(e.key.keysym.scancode)) break;   /* ` / F11 overlay, F12 stats */
-            if (overbar_client_editing()) {                     /* a field: its text comes as SDL_TEXTINPUT; only these keys */
-                SDL_Scancode k = e.key.keysym.scancode;
-                int in = k == SDL_SCANCODE_BACKSPACE ? MDRT_MENU_LEFT : k == SDL_SCANCODE_RETURN || k == SDL_SCANCODE_KP_ENTER ? MDRT_MENU_OK
-                       : k == SDL_SCANCODE_ESCAPE ? MDRT_MENU_BACK : -1;
-                if (k == SDL_SCANCODE_V && (e.key.keysym.mod & (KMOD_CTRL | KMOD_GUI))) {     /* paste */
-                    char *clip = SDL_GetClipboardText();
-                    if (clip) { overbar_client_text(clip); SDL_free(clip); }
-                } else if (in >= 0) overbar_client_input(in);
-                text_input_sync();
-                break;
-            }
-            if (overbar_client_open()) {
-                int in = -1;
-                SDL_Scancode k = e.key.keysym.scancode;
-                if (k == SDL_SCANCODE_UP) in = MDRT_MENU_UP;
-                else if (k == SDL_SCANCODE_DOWN) in = MDRT_MENU_DOWN;
-                else if (k == SDL_SCANCODE_LEFT) in = MDRT_MENU_LEFT;
-                else if (k == SDL_SCANCODE_RIGHT) in = MDRT_MENU_RIGHT;
-                else if (k == SDL_SCANCODE_RETURN || k == SDL_SCANCODE_KP_ENTER) in = MDRT_MENU_OK;
-                else if (k == SDL_SCANCODE_ESCAPE) in = MDRT_MENU_BACK;   /* backs out; does not open */
-#ifdef _WIN32
-                if (in >= 0) {
-                    int r = overbar_client_input(in);
-                    if (r == OB_ID_CONTROLLERS) bindings_dialog_open(NULL);
-                }
-#else
-                if (in >= 0) overbar_client_input(in);
-#endif
-                break;                                          /* overlay eats the keyboard; the game is paused */
-            }
-            if (!e.key.repeat) { key_physical(e.key.keysym.scancode, 1); intro_skip_start(); }
-            break;
-        case SDL_KEYUP:
-            if (e.key.keysym.scancode == SDL_SCANCODE_GRAVE || e.key.keysym.scancode == SDL_SCANCODE_F11
-                || e.key.keysym.scancode == SDL_SCANCODE_F12) break;
-            if (overbar_client_open()) break;
-            key_physical(e.key.keysym.scancode, 0);
-            break;
-        case SDL_TEXTINPUT: overbar_client_text(e.text.text); break;     /* typed into a field of the Online page */
-        case SDL_SYSWMEVENT: menu_event(e.syswm.msg); break;      /* the window's menu (Windows) */
-        case SDL_MOUSEMOTION: {
-            int gx, gy;
-            if (overbar_client_open()) { overlay_mouse(e.motion.x, e.motion.y, 0); break; }
-            video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
-            mouse_x = gx; mouse_y = gy;
-            win_x = e.motion.x; win_y = e.motion.y; win_moved = 1;
-            break;
-        }
-        case SDL_MOUSEWHEEL:
-            if (overbar_client_open()) {
-                int mx, my;
-                SDL_GetMouseState(&mx, &my);
-                overlay_mouse(mx, my, e.wheel.y > 0 ? 3 : e.wheel.y < 0 ? 4 : -1);
-            }
-            break;
-        case SDL_MOUSEBUTTONDOWN: case SDL_MOUSEBUTTONUP: {
-            if (overbar_client_open()) {
-                if (e.type == SDL_MOUSEBUTTONDOWN)
-                    overlay_mouse(e.button.x, e.button.y, e.button.button == SDL_BUTTON_LEFT ? 1
-                                  : e.button.button == SDL_BUTTON_RIGHT ? 2 : -1);
-                break;
-            }
-            static unsigned char mdown[8];
-            int btn = e.button.button;
-            if (btn >= 1 && btn <= 5) mdown[btn] = e.type == SDL_MOUSEBUTTONDOWN;
-            if (curperiod != -1) mouse_buttons = bindings_mouse(mdown);      /* during a game: the bindings */
-            else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
-            if (e.type == SDL_MOUSEBUTTONDOWN) intro_skip_start();
-            break;
-        }
-        }
-    }
+    ob_plat_pump();
     if (quit_requested) host_exit(0);
 }
 

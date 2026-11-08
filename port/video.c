@@ -899,7 +899,7 @@ void video_init(void)
 {
     ob_profile profile;
     int handheld, skip_gl, ww, wh;
-    Uint32 wflags, rflags;
+    Uint32 rflags;
     SDL_RendererInfo rinfo;
     lock = SDL_CreateMutex();
     settings_load();
@@ -924,21 +924,17 @@ void video_init(void)
     if (handheld) skip_gl = 1;
 #endif
     if (!skip_gl) {        /* the OpenGL path: shader scaling */
-        win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, SDL_WINDOW_RESIZABLE | SDL_WINDOW_OPENGL);
-        if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); menu_init(win); title_refresh(); if (getenv("NHL95_MAXIMIZE")) SDL_MaximizeWindow(win); return; }
+        win = shell_open("NHL Hockey 95", ww, wh, 1);
+        if (win && vgl_init(win)) { use_gl = 1; vgl_set_vsync(vsync_on); title_refresh(); if (getenv("NHL95_MAXIMIZE")) SDL_MaximizeWindow(win); return; }
         fprintf(stderr, "OpenGL scaling is not available, using SDL's renderer\n");
         vgl_quit();
         /* Destroying the last window queues SDL_QUIT; the next window then
          * closes on the first input_poll. Drain it. */
-        if (win) { SDL_DestroyWindow(win); win = 0; }
+        if (win) { shell_close(); win = 0; }
         SDL_FlushEvent(SDL_QUIT);
         SDL_FlushEvent(SDL_WINDOWEVENT);
     }
-    wflags = handheld ? SDL_WINDOW_FULLSCREEN_DESKTOP : SDL_WINDOW_RESIZABLE;
-#ifdef _WIN32
-    wflags = SDL_WINDOW_RESIZABLE;
-#endif
-    win = SDL_CreateWindow("NHL Hockey 95", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, ww, wh, wflags);
+    win = shell_open("NHL Hockey 95", ww, wh, 0);
     if (!win) video_die("SDL window");
     if (handheld) {
 #ifndef _WIN32
@@ -961,7 +957,6 @@ void video_init(void)
         int gles = strstr(rinfo.name, "opengles") || strstr(rinfo.name, "gles");
         ob_host_set_present(overbar_client_host(), gles, !gles);
     }
-    menu_init(win);
     title_refresh();
 }
 

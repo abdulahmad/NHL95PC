@@ -116,20 +116,16 @@ enum { CMD_REFRESH_60 = 100, CMD_REFRESH_70, CMD_REFRESH_VRR, CMD_VSYNC, CMD_STA
 #define NLORES_ITEMS 11   /* the menu commands */
 void video_command(int id);
 int video_command_checked(int id);
-#ifdef _WIN32
-void menu_init(void *sdl_window);                      /* menu_win.c: the window's menu bar */
-void menu_sync(void);
+void menu_sync(void);                                  /* shell.c: the window's menu bar (Overbar's bar; Windows) */
 void menu_show(int on);
-void menu_event(void *syswm_msg);
 int menu_client_size(int *w, int *h);                  /* the client area as Windows has it, 0 if unknown */
 extern volatile int menu_resync;                       /* the bar's menu loop ran: drop the game clock's backlog (host.c) */
-#else
-static inline void menu_init(void *w) { (void)w; }
-static inline void menu_sync(void) {}
-static inline void menu_show(int on) { (void)on; }
-static inline void menu_event(void *m) { (void)m; }
-static inline int menu_client_size(int *w, int *h) { (void)w; (void)h; return 0; }
-#endif
+extern volatile int quit_requested;                    /* the window was closed */
+struct SDL_Window;
+struct SDL_Window *shell_open(const char *title, int w, int h, int gl);   /* the layer's window (OpenGL if gl), the bar and the events */
+void shell_close(void);
+union SDL_Event;
+void input_event(const union SDL_Event *e);            /* input.c: an event the layer did not use (the game's keys, mouse, joystick scan) */
 int video_vrr(void);
 void video_mister_pick(int cls, int kind, const char *rel);  /* a MiSTer look file chosen from the menu, for the menus (cls 0) or the game (1): 0 horizontal filter, 1 vertical filter, 2 gamma, 3 shadow mask, 4 preset */
 const char *video_mister_path(int cls, int kind);
