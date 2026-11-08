@@ -185,9 +185,21 @@ the menus ask for input. The loading picture (`ShowLoadingScreen`) is not shown;
 
 ### Online play
 
-Two machines play one exhibition game in lockstep (`port/netplay.c`, on Overbar's netplay core, `port/overbar/include/overbar/net.h`). Nothing is
-saved or loaded and no state is sent: the simulation reads its pads only through the input records of `joyqueue` (pad 1, pad 2, hot key; one per
-3 game frames, 20 a second), so both machines run the same game from the same records. The original game has no modem, serial or IPX play.
+Two machines play one exhibition game with rollback netcode (`port/netplay.c`, on Overbar's netplay core, `port/overbar/include/overbar/net.h`). The
+simulation reads its pads only through the input records of `joyqueue` (pad 1, pad 2, hot key; one per 3 game frames, 20 a second), so both machines
+run the same game from the same records. No game state is sent. When the other machine's buttons for a record are late, this machine guesses them
+(holding the last ones) and goes on; when the real ones differ, it loads the state it saved before that record and plays the records again, without
+drawing, with the right buttons (`ob_net_frame`). `NHL95_LOCKSTEP=1` (on both machines) plays in lockstep instead: a record waits for every machine's buttons.
+The original game has no modem, serial or IPX play.
+
+**States.** The game asks for its next record (`nh_peek`, outside any interrupt) with the queue empty: that is the resumable point. `rb_make` takes the
+state there: the game's data (on Windows found by symbol: the link folds the sections into `.data` / `.bss`), the DOS memory and DPMI blocks, the queue's
+variables, the game's code (it patches itself) and the game thread's stack (`__builtin_setjmp`; `snap_jump` comes back to the same call). Only the pages
+that differ from a base copy are stored (`port/snap.c`); the DPMI blocks, which are most of the 68 MB, are `MEM_WRITE_WATCH` memory so only the pages written
+since the base are compared (about 11 ms a state). Not part of a state: the sound chips' (a replayed record's sound events play again), the timer's
+counters. The test aids are `NHL95_ONLINE=host|join` (arm a session on 127.0.0.1; `NHL95_PORT`), `NHL95_NETSIM="delay,jitter,loss%"`, `NHL95_AUTOPAD=1`
+(each pad moves by itself, so guesses go wrong), `NHL95_AUTOSKIP=1` (skips the intro, starts an exhibition game and presses Play by itself) and
+`NHL95_SNAPTEST=1` (a state round trip with no network).
 
 **How a session starts.** The Online page's Host / Connect only arms online play. Each player then starts an exhibition game from the game's
 own menus; `PlayGame` (main.asm, at its entry) waits there, with the Online page open, until the other machine is there too. The host's
