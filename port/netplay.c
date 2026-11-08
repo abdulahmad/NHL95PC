@@ -195,6 +195,7 @@ static void st_regions(void)
     X(nh_ring); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
+    st_extra[n].p = sub_10000; st_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
     st_nextra = n;
 }
 
@@ -207,6 +208,50 @@ static void st_record(uint16_t *all)           /* the record with this number: a
 }
 
 static uint64_t st_fingerprint(void) { return snap_hash(st_extra, st_nextra); }
+
+static snap_region st_regs[SNAP_MAX_REGIONS];
+static int st_nregs;
+static void st_copy_all(void)                   /* every region as it is now, for st_diff_all */
+{
+    size_t total = 0, at = 0;
+    int i;
+    st_nregs = snap_regions(st_regs, SNAP_MAX_REGIONS - st_nextra);
+    for (i = 0; i < st_nextra && st_nregs >= 0; i++) st_regs[st_nregs + i] = st_extra[i];
+    if (st_nregs < 0) return;
+    st_nregs += st_nextra;
+    for (i = 0; i < st_nregs; i++) total += st_regs[i].n;
+    st_copy = malloc(total);
+    if (!st_copy) return;
+    for (i = 0; i < st_nregs; i++) { memcpy(st_copy + at, st_regs[i].p, st_regs[i].n); at += st_regs[i].n; }
+}
+
+static void st_diff_all(void)                   /* which bytes differ now from st_copy_all's: runs, by region and address */
+{
+    size_t at = 0;
+    uint32_t runs = 0, bytes = 0;
+    int r;
+    if (!st_copy) return;
+    for (r = 0; r < st_nregs; r++) {
+        const uint8_t *now = st_regs[r].p;
+        size_t i, n = st_regs[r].n;
+        for (i = 0; i < n; i++) {
+            size_t j = i;
+            if (now[i] == st_copy[at + i]) continue;
+            while (j + 1 < n && j - i < 64 && now[j + 1] != st_copy[at + j + 1]) j++;
+            bytes += (uint32_t)(j - i + 1);
+            if (runs++ < 120) {
+                uintptr_t a = (uintptr_t)now + i, base = (uintptr_t)sub_10000;
+                fprintf(stderr, "snaptest: differs region %d (%p, %zu bytes) +%zx %u bytes (game addr %05X): first %02x now %02x\n", r, st_regs[r].p,
+                        n, i, (unsigned)(j - i + 1), (unsigned)(a - base + 0x10000), st_copy[at + i], now[i]);
+            }
+            i = j;
+        }
+        at += n;
+    }
+    fprintf(stderr, "snaptest: %u runs, %u bytes differ in %d regions\n", runs, bytes, st_nregs);
+    free(st_copy);
+    st_copy = NULL;
+}
 
 static void selftest_step(void)
 {
@@ -227,8 +272,7 @@ static void selftest_step(void)
     if (st_phase == 1 && c == ST_BACK) {
         st_sim = sim_hash();
         st_all = st_fingerprint();
-        st_copy = malloc(ST_DATA_HI - ST_DATA_LO);
-        if (st_copy) memcpy(st_copy, (uint8_t *)sub_10000 + (ST_DATA_LO - 0x10000), ST_DATA_HI - ST_DATA_LO);
+        st_copy_all();
         st_phase = 2;
         if (snap_fits(&st_snap, st_extra, st_nextra)) { fprintf(stderr, "snaptest: FAIL the memory blocks changed between the two records\n"); st_phase = 3; return; }
         fprintf(stderr, "snaptest: record %u first time: sim %016llx all %016llx; going back\n", (unsigned)c, (unsigned long long)st_sim, (unsigned long long)st_all);
@@ -240,21 +284,7 @@ static void selftest_step(void)
         uint64_t a = sim_hash(), b = st_fingerprint();
         fprintf(stderr, "snaptest: record %u again: sim %016llx all %016llx: %s\n", (unsigned)c, (unsigned long long)a, (unsigned long long)b,
                 a == st_sim && b == st_all ? "SAME" : a == st_sim ? "sim same, other game data differ" : "DIFFERENT");
-        if (st_copy) {                              /* which of the game's data differ: runs of bytes, by the original's addresses */
-            const uint8_t *now = (uint8_t *)sub_10000 + (ST_DATA_LO - 0x10000);
-            uint32_t i, runs = 0, bytes = 0;
-            for (i = 0; i < ST_DATA_HI - ST_DATA_LO; i++) {
-                uint32_t j = i;
-                if (now[i] == st_copy[i]) continue;
-                while (j + 1 < ST_DATA_HI - ST_DATA_LO && j - i < 64 && now[j + 1] != st_copy[j + 1]) j++;
-                bytes += j - i + 1;
-                if (runs++ < 80) fprintf(stderr, "snaptest: differs %05X..%05X (%u): first %02x now %02x\n", ST_DATA_LO + i, ST_DATA_LO + j, j - i + 1, st_copy[i], now[i]);
-                i = j;
-            }
-            fprintf(stderr, "snaptest: %u runs, %u bytes of the game's data differ (inputticks %d)\n", runs, bytes, (int)inputticks);
-            free(st_copy);
-            st_copy = NULL;
-        }
+        st_diff_all();
         st_phase = 3;
     }
 }
