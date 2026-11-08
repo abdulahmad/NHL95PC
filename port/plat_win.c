@@ -138,10 +138,22 @@ void *plat_map_any(size_t size)
     size_t len = (size + 0xFFF) & ~0xFFFu;
     void *m = 0;
     while (!m && next + len + 0x10000 <= 0x7F000000u) {
-        m = VirtualAlloc((void *)next, len, MEM_RESERVE | MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+        m = VirtualAlloc((void *)next, len, MEM_RESERVE | MEM_COMMIT | MEM_WRITE_WATCH, PAGE_EXECUTE_READWRITE);
         next += m ? len + 0x1000 : 0x10000;
     }
     return m;
+}
+
+/* the pages of a block from plat_map_any written since the last reset (the block's own start and size): 0 and n pages in pages[], or -1 (not
+ * such a block). reset: forget them (snap.c) */
+int plat_write_watch(void *addr, size_t size, void **pages, size_t *n, int reset)
+{
+    ULONG_PTR count = (ULONG_PTR)*n;
+    ULONG gran;
+    if (!pages) return ResetWriteWatch(addr, size) == 0 ? 0 : -1;
+    if (GetWriteWatch(reset ? WRITE_WATCH_FLAG_RESET : 0, addr, size, pages, &count, &gran) != 0) return -1;
+    *n = (size_t)count;
+    return 0;
 }
 
 void plat_unmap(void *addr, size_t size)

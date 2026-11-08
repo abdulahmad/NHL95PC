@@ -165,6 +165,9 @@ static void push_merged(const uint16_t *all)
 static uint16_t read_local(void)
 {
     uint8_t pad = 8, hot = 0;
+    static int autopad = -1;
+    if (autopad < 0) autopad = getenv("NHL95_AUTOPAD") != NULL;
+    if (autopad) return (uint16_t)(((((uint32_t)nh_tail / 6 + (uint32_t)nh_me * 3) * 2654435761u) >> 20) & 7);       /* (a test aid: a direction held for six records) */
     if (overbar_client_open()) return 0;
     if ((nh_me ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
     game_call(ReadControllerPad, (uint32_t)nh_me, (uint32_t)(uintptr_t)&pad);
@@ -434,7 +437,11 @@ static size_t rb_save(void *user, void *out, size_t cap)
     int64_t t0 = plat_now_ns();
     (void)user;
     if (cap < sizeof b) return sizeof b;
-    if (snap_save(&rb_snap[slot], rb_jb, rb_low, rb_extra, rb_nextra)) return 0;
+    { int v0 = vif, bad;
+      vif = 0;                                      /* no interrupt changes the game while its state is taken */
+      bad = snap_save(&rb_snap[slot], rb_jb, rb_low, rb_extra, rb_nextra);
+      vif = v0;
+      if (bad) return 0; }
     rb_next++;
     rb_gen[slot] = ++rb_genc;
     rb_slot_vif[slot] = vif;

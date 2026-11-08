@@ -160,3 +160,5 @@ void plat_sleep_ms(int ms)
 
 int plat_cpu_percent(void) { return -1; }
 int plat_gpu_percent(void) { return -1; }
+
+int plat_write_watch(void *addr, size_t size, void **pages, size_t *n, int reset) { (void)addr; (void)size; (void)pages; (void)n; (void)reset; return -1; }

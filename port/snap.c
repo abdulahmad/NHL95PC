@@ -72,12 +72,25 @@ static int base_take(const snap_region *r, int n)
     size_t total = 0, at = 0;
     int i;
     for (i = 0; i < n; i++) total += r[i].n;
+    for (i = 0; i < n; i++) plat_write_watch(r[i].p, r[i].n, NULL, NULL, 1);    /* (the watch of a block starts again) */
     free(base_mem);
     base_mem = malloc(total);
     if (!base_mem) return -1;
     for (i = 0; i < n; i++) { memcpy(base_mem + at, r[i].p, r[i].n); at += r[i].n; base_r[i] = r[i]; }
     base_n = n;
     base_id++;
+    return 0;
+}
+
+static void **wlist;
+static size_t wnum, wcap;
+/* the pages of a watched block written since the base (in wlist[0..wnum)), or -1 when the region is not such a block */
+static int page_list(const snap_region *r)
+{
+    size_t want = r->n / PAGE + 2;
+    if (wcap < want) { void **nl = realloc(wlist, want * sizeof *wlist); if (!nl) return -1; wlist = nl; wcap = want; }
+    wnum = wcap;
+    if (plat_write_watch(r->p, r->n, wlist, &wnum, 0)) return -1;
     return 0;
 }
 
@@ -96,6 +109,14 @@ int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextr
     s->stack = (size_t)(stack_base - low);
     for (i = 0; i < s->nregs; i++) {                      /* count the pages that differ */
         size_t k;
+        if (page_list(&s->r[i]) >= 0) {                  /* a block with a write watch: only the pages written since the base are looked at */
+            size_t q;
+            for (q = 0; q < wnum; q++) {
+                k = (size_t)((uint8_t *)wlist[q] - (uint8_t *)s->r[i].p);
+                if (k >= s->r[i].n) continue;
+                if (memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE)) ndiff++;
+            }
+        } else
         for (k = 0; k < s->r[i].n; k += PAGE) {
             size_t len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
             if (memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, len)) ndiff++;
@@ -110,15 +131,24 @@ int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextr
     out = s->stack;
     at = 0;
     for (i = 0; i < s->nregs; i++) {                      /* each page: its address, its length, its bytes */
-        size_t k;
-        for (k = 0; k < s->r[i].n; k += PAGE) {
-            size_t len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
-            void *dst = (uint8_t *)s->r[i].p + k;
-            uint32_t l32 = (uint32_t)len;
-            if (!memcmp(dst, base_mem + at + k, len)) continue;
+        size_t k, q = 0, nq = 0;
+        int watched = page_list(&s->r[i]) >= 0;
+        if (watched) nq = wnum;
+        for (k = 0; watched ? q < nq : k < s->r[i].n; k += PAGE) {
+            size_t len;
+            void *dst;
+            uint32_t l32;
+            if (watched) k = (size_t)((uint8_t *)wlist[q++] - (uint8_t *)s->r[i].p);
+            if (k >= s->r[i].n) continue;
+            len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
+            dst = (uint8_t *)s->r[i].p + k;
+            l32 = (uint32_t)len;
+            if (!memcmp(dst, base_mem + at + k, len)) { if (watched) k = 0; continue; }
+            if (out + sizeof dst + sizeof l32 + len > s->size) { free(s->mem); s->mem = NULL; return -1; }       /* (a page written meanwhile) */
             memcpy(s->mem + out, &dst, sizeof dst); out += sizeof dst;
             memcpy(s->mem + out, &l32, sizeof l32); out += sizeof l32;
             memcpy(s->mem + out, dst, len); out += len;
+            if (watched) k = 0;
         }
         at += s->r[i].n;
     }
