@@ -68,6 +68,37 @@ static int flagop_kind(const uint8_t *ip)
 
 #define FLAGS_POPPED 0xCD5u                   /* CF PF AF ZF SF DF OF: what popf may change in a user process, besides IF */
 
+/* NHL95_AUTOSKIP: 4 s after the front end is reached, once, the game starts a New Exhibition Game with the teams it has (a negative first word of
+ * the argument is what the menu item's state holds for a new game) */
+#ifdef _WIN32
+#define SYM(s) "_" s
+#else
+#define SYM(s) s
+#endif
+uint8_t autostart_arg[64];
+__attribute__((naked)) static void autostart_stub(void)
+{
+    __asm__ volatile(
+        "pushal\n\t"
+        "pushfl\n\t"
+        "movl $" SYM("autostart_arg") ", %eax\n\t"
+        "call " SYM("MenuNewExhibition") "\n\t"
+        "popfl\n\t"
+        "popal\n\t"
+        "ret");
+}
+static int autostart_due(int64_t now)
+{
+    static int64_t first;
+    static int on = -1, done;
+    if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; memset(autostart_arg, 0xFF, sizeof autostart_arg); }
+    if (!on || done) return 0;
+    if (!first) first = now;
+    if (now - first < 4000000000LL) return 0;
+    done = 1;
+    return 1;
+}
+
 static int emulate_flagop(ctx_t *c, uint8_t *ip)
 {
     int kind;
@@ -90,6 +121,11 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
         ptr_hook_ns = plat_now_ns();
         R(c, ESP) -= 4;
         *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
+        if (autostart_due(ptr_hook_ns)) {       /* NHL95_AUTOSKIP: a call of MenuNewExhibition, as the main menu's entry would make, then on with this instruction */
+            R(c, ESP) -= 4;
+            *(uint32_t *)R(c, ESP) = (uint32_t)(uintptr_t)(ip + 5);
+            R(c, EIP) = (uint32_t)(uintptr_t)autostart_stub - 5;
+        }
         return 5;
     }
     kind = flagop_kind(ip);
