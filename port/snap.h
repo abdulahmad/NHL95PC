@@ -43,6 +43,7 @@ int snap_restore_memory(const snap *s);
 /* puts the stack back and comes back where snap_save was called; does not return */
 void snap_jump(const snap *s) __attribute__((noreturn));
 void snap_free(snap *s);
+const char *snap_stats(void);    /* where the time of snap_save goes (a line of text, for logs) */
 /* a hash of the regions now (the game's data and the extra ones), for tests */
 uint64_t snap_hash(const snap_region *extra, int nextra);
 
