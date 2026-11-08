@@ -10,17 +10,16 @@
 #include <stddef.h>
 #include <stdint.h>
 
-typedef struct snap_region { void *p; size_t n; } snap_region;
+#include "overbar/snap.h"
+typedef struct snap_region { void *p; size_t n; } snap_region;      /* (as ob_snap_region) */
 
 #define SNAP_MAX_REGIONS 560
 
 typedef struct snap {
-    uint8_t *mem;               /* the stack's bytes, then the pages that differ from the base (see snap.c) */
-    size_t size;                /* all of it */
+    ob_snap os;                 /* the memory and the stack (Overbar's overbar/snap) */
+    size_t size;                /* what it takes */
     size_t ndiff;               /* pages that differ from the base */
-    unsigned base_id;           /* the base this state is a difference to; a new base makes older states unusable */
     int nregs;
-    snap_region r[SNAP_MAX_REGIONS];
     char *low;
     size_t stack;
     void *jb[5];
