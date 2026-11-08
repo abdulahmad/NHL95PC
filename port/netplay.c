@@ -253,9 +253,38 @@ static void st_diff_all(void)                   /* which bytes differ now from s
     st_copy = NULL;
 }
 
+/* the first time, each record's fingerprints (the sim's, the game's data object, DOS memory); the second time they are compared, so the first
+ * record at which the replay goes its own way is known */
+static uint64_t st_rec[ST_BACK + 2][3];
+static int st_first_bad;
+static uint64_t st_fnv(const void *p, size_t n)
+{
+    const uint8_t *q = p;
+    uint64_t h = 1469598103934665603ULL;
+    size_t i;
+    for (i = 0; i < n; i++) { h ^= q[i]; h *= 1099511628211ULL; }
+    return h;
+}
+static void st_track(uint32_t c)
+{
+    uint64_t v[3];
+    if (c <= ST_SAVE || c > ST_BACK || (st_phase != 1 && st_phase != 2)) return;
+    v[0] = sim_hash();
+    v[1] = st_fnv((uint8_t *)sub_10000 + (ST_DATA_LO - 0x10000), ST_DATA_HI - ST_DATA_LO);
+    v[2] = st_fnv((void *)0x20000, 0x68000);
+    if (st_phase == 1) { memcpy(st_rec[c], v, sizeof v); return; }
+    if (!st_first_bad && memcmp(st_rec[c], v, sizeof v)) {
+        st_first_bad = (int)c;
+        fprintf(stderr, "snaptest: the replay first differs at record %u: sim %s, data %s, DOS memory %s (queue %u..%u)\n", (unsigned)c,
+                st_rec[c][0] != v[0] ? "DIFFERENT" : "same", st_rec[c][1] != v[1] ? "DIFFERENT" : "same", st_rec[c][2] != v[2] ? "DIFFERENT" : "same",
+                (unsigned)nh_head, (unsigned)nh_tail);
+    }
+}
+
 static void selftest_step(void)
 {
     uint32_t c = nh_consumed;
+    st_track(c);
     if (st_phase == 0 && c == ST_SAVE) {
         st_phase = 1;
         st_regions();
