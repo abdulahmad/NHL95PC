@@ -29,6 +29,7 @@ extern volatile int intro_skip, intro_title;
 static volatile int64_t main_seen_ns;
 #define PLAY_HOOK 0x2A892u                       /* PreGameScreen, after TrackButtons: NHL95_AUTOSKIP presses Play (the scouting report) */
 extern int32_t off_CEF63;
+extern char PreGameScreen_play[];
 #define INPUT_HOOK 0x6B391u                      /* GetInputEvent: the menus ask for an event every time round their loop, even when there is none */
 static volatile int64_t ptr_hook_ns;
 int64_t game_pointer_ns(void) { return ptr_hook_ns; }
@@ -136,6 +137,12 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
     }
     if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PTR_HOOK || (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == INPUT_HOOK) {     /* push dword 1Ch, push dword 0Ch */
         ptr_hook_ns = plat_now_ns();
+        if (autostart_fired && *(uint32_t *)R(c, ESP) == (uint32_t)(uintptr_t)GAME_ADDR(0x2A795)) {      /* PreGameScreen waits for a click on Play: take its Play exit instead */
+            fprintf(stderr, "autostart: Play pressed on the scouting report\n");
+            R(c, ESP) += 4;
+            R(c, EIP) = (uint32_t)(uintptr_t)PreGameScreen_play - 5;
+            return 5;
+        }
         R(c, ESP) -= 4;
         *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
         if (autostart_fired) {                  /* where the menu loop was called from: the code addresses on the stack */
