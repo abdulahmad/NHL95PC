@@ -987,8 +987,10 @@ static void dump_frame(int w, int h)
     fclose(f);
 }
 
+extern volatile int nh_quiet;
 void video_present(void)
 {
+    if (nh_quiet) return;                           /* a rollback is playing steps again: nothing of it is shown */
     int64_t t0 = stats_on ? plat_now_ns() : 0;
     int w, h, x, y;
     uint32_t pal[256];

@@ -66,6 +66,8 @@ extern char InitGameSummary[];
  * nh_sim: a session's records drive the game (the hooks are on); set and cleared by the game thread only.
  * nh_take: this machine's input goes to the session (cleared when the session ends; the game then plays on locally). */
 volatile int nh_sim, nh_take;
+volatile int nh_rb, nh_quiet;           /* rollback is on in this session; a replay is running (nothing is shown) */
+static volatile int nh_due;             /* rollback: records the timer says are due, not yet made */
 void *nh_peek_cont, *nh_pop_cont, *nh_flush_cont, *nh_rgf_cont, *nh_pg_cont, *nh_pab_cont, *nh_spb_cont, *nh_crowd_cont,
      *nh_inter_cont, *nh_tsl_cont, *nh_sit_cont, *nh_readjoy1, *nh_readjoy2;
 
@@ -79,6 +81,7 @@ static volatile int nh_dead, nh_me;     /* the session has ended mid-game; this 
 static volatile int nh_want_page, nh_close_page, nh_opened_page;
 static volatile int nh_finish;          /* the game is over and its three stars have ended: the rest (the post-game desk) is local */
 
+#define ST_DATA_LO 0xC0000u
 #define RING 64
 #define QMAX 50                         /* as joyqueue */
 static uint8_t nh_ring[RING][3];
@@ -181,7 +184,6 @@ static snap st_snap;
 static uint64_t st_sim, st_all;
 static int st_vif;
 static uint8_t *st_copy;                         /* the game's data as it was at the second record, the first time */
-#define ST_DATA_LO 0xC0000u
 #define ST_DATA_HI 0xFAB90u
 static snap_region st_extra[16];
 static int st_nextra;
@@ -370,6 +372,12 @@ void nh_sample_tick(void)
 {
     if (!joysampling) return;
     if (inputticks < 1000) inputticks++;
+    if (nh_rb) {                                    /* rollback: the timer only says a record is due, with this machine's buttons for it */
+        if (--nh_cadence >= 0) return;
+        nh_cadence = 4;
+        if (nh_due < 2) { nh_local = read_local(); nh_due++; }
+        return;
+    }
     if (!nh_pending) {
         if (--nh_cadence >= 0) return;              /* a record every 5 ticks, as joyqtick */
         nh_cadence = 4;
@@ -388,10 +396,109 @@ static void go_local(void)
     else { cont1team = 0; pad1dev = 0; }
 }
 
+/* ---- rollback (the default in a session; NHL95_LOCKSTEP=1 is the old lockstep) ----
+ * The game asks for its next record (nh_peek) outside any interrupt, with the queue empty: that is the resumable point. The timer
+ * only counts the records that are due (every 5 ticks) and reads this machine's pad for them. rb_make asks the core for the step: it
+ * runs at once when the others' buttons are late (guessing them), or again after a wrong guess, when a state is loaded and the game
+ * comes back here (snap_jump) with the queue and counters as they were. A state is the game's data and DOS memory as a difference
+ * to a base (snap.c), the queue's variables and the game thread's stack. */
+#define RB_SLOTS 32
+static uint32_t nh_hi;                          /* the most steps made so far: below it the steps are replays, which need no timer */
+static snap rb_snap[RB_SLOTS];
+static uint32_t rb_gen[RB_SLOTS], rb_genc, rb_next, rb_target;
+static int rb_slot_vif[RB_SLOTS];
+static void *rb_jb[5];
+static char *rb_low;
+static snap_region rb_extra[16];
+static int rb_nextra;
+static uint32_t rb_timing_n;
+static int64_t rb_timing_ns;
+
+static void rb_regions(void)
+{
+    int n = 0;
+#define X(v) do { rb_extra[n].p = (void *)&(v); rb_extra[n].n = sizeof (v); n++; } while (0)
+    X(nh_ring); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_loop_mark);
+    X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
+#undef X
+    rb_extra[n].p = sub_10000; rb_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
+    rb_nextra = n;
+}
+
+typedef struct { uint32_t slot, gen; } rb_blob;
+
+static size_t rb_save(void *user, void *out, size_t cap)
+{
+    rb_blob b;
+    uint32_t slot = rb_next % RB_SLOTS;
+    int64_t t0 = plat_now_ns();
+    (void)user;
+    if (cap < sizeof b) return sizeof b;
+    if (snap_save(&rb_snap[slot], rb_jb, rb_low, rb_extra, rb_nextra)) return 0;
+    rb_next++;
+    rb_gen[slot] = ++rb_genc;
+    rb_slot_vif[slot] = vif;
+    b.slot = slot; b.gen = rb_gen[slot];
+    memcpy(out, &b, sizeof b);
+    rb_timing_ns += plat_now_ns() - t0;
+    rb_timing_n++;
+    return sizeof b;
+}
+
+static int rb_load(void *user, const void *in, size_t size)
+{
+    rb_blob b;
+    (void)user;
+    if (size != sizeof b) return -1;
+    memcpy(&b, in, sizeof b);
+    if (b.slot >= RB_SLOTS || rb_gen[b.slot] != b.gen || !rb_snap[b.slot].valid) return -1;
+    vif = 0;                                        /* no interrupt comes in while the memory is put back */
+    if (snap_restore_memory(&rb_snap[b.slot])) return -1;
+    rb_target = b.slot;
+    return 0;
+}
+
+static const ob_net_states rb_states = { NULL, rb_save, rb_load };
+
+static void rb_make(void)
+{
+    static uint16_t all[OB_NET_MAX_PADS];
+    static int r;
+    static uint32_t cnt;
+    if (!nh_net) return;
+    SDL_LockMutex(nh_lock);
+    cnt = nh_net ? ob_net_step_count(nh_net) : 0;
+    SDL_UnlockMutex(nh_lock);
+    if (cnt >= nh_hi && !nh_due) return;            /* a new step waits for the timer; a replay does not */
+    if (__builtin_setjmp(rb_jb)) vif = rb_slot_vif[rb_target];        /* back from snap_jump: the queue and the game as they were */
+    rb_low = snap_sp();
+    SDL_LockMutex(nh_lock);
+    r = nh_net ? ob_net_frame(nh_net, 1, &nh_local, all) : -1;
+    SDL_UnlockMutex(nh_lock);
+    if (r == OB_NET_RESTART) snap_jump(&rb_snap[rb_target]);
+    if (r == OB_NET_RUN) {
+        SDL_LockMutex(nh_lock);
+        nh_quiet = ob_net_replaying(nh_net);
+        cnt = ob_net_step_count(nh_net);
+        SDL_UnlockMutex(nh_lock);
+        if (!nh_quiet && nh_due > 0) nh_due--;
+        if (cnt > nh_hi) nh_hi = cnt;
+        push_merged(all);
+        if (cnt % 200 == 0 && getenv("NHL95_ONLINE")) {
+            char line[200] = "";
+            SDL_LockMutex(nh_lock);
+            if (nh_net) ob_net_status(nh_net, line, sizeof line);
+            SDL_UnlockMutex(nh_lock);
+            fprintf(stderr, "rollback: step %u, %u states, %.1f ms each; %s\n", (unsigned)cnt, (unsigned)rb_timing_n, rb_timing_n ? rb_timing_ns / 1e6 / rb_timing_n : 0.0, line);
+        }
+    } else if (r < 0) { nh_take = 0; nh_dead = 1; nh_quiet = 0; }
+}
+
 /* joyq_peek: the record of the next 3 frames, 0 for none yet; 1: not a session any more (the game's own) */
 uintptr_t nh_peek(void)
 {
     if (nh_finish) { nh_sim = 0; return 1; }
+    if (nh_head == nh_tail && nh_rb && !nh_dead) rb_make();
     if (nh_head == nh_tail) {
         if (nh_dead) { go_local(); return 1; }
         return 0;
@@ -526,6 +633,7 @@ static void apply_settings(const nh_settings *s, uint32_t my_dev)
 
 static void end_net(const char *why)
 {
+    if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: session ends: %s\n", nh_net && ob_net_why(nh_net)[0] ? ob_net_why(nh_net) : why ? why : "");
     SDL_LockMutex(nh_lock);
     if (nh_net) {
         if (ob_net_state(nh_net) == OB_NET_ENDED && ob_net_why(nh_net)[0]) snprintf(nh_why, sizeof nh_why, "%s", ob_net_why(nh_net));
@@ -568,17 +676,25 @@ void nh_playgame_enter(int32_t *handle)
         snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
         return;
     }
-    snprintf(identity, sizeof identity, "nhl95pc %s lockstep1 sound %02x/%u", NHL95_BUILD, (unsigned)(sounddev & 0xFF), (unsigned)musicon);
+    nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
+    snprintf(identity, sizeof identity, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback1" : "lockstep1", (unsigned)(sounddev & 0xFF), (unsigned)musicon);
     make_settings(&mine);
     memset(&g, 0, sizeof g);
     g.identity = identity;
     g.pads = 2;
     g.settings = &mine;
     g.settings_size = sizeof mine;
+    g.states = nh_rb ? &rb_states : NULL;
     SDL_LockMutex(nh_lock);
     nh_net = ob_net_new(&nh_cfg, &g, err, sizeof err);
     SDL_UnlockMutex(nh_lock);
     if (!nh_net) { snprintf(nh_why, sizeof nh_why, "%s", err); return; }
+    if (getenv("NHL95_NETSIM")) {
+        int d = 0, j = 0, l = 0;
+        sscanf(getenv("NHL95_NETSIM"), "%d,%d,%d", &d, &j, &l);
+        ob_net_simulate(nh_net, d, j, l, 0);
+        fprintf(stderr, "online: simulating %d ms delay, %d ms jitter, %d%% loss\n", d, j, l);
+    }
     nh_why[0] = 0;
     nh_want_page = 1;                               /* the Online page shows what it waits for */
     for (;;) {                                      /* here, not in game code: no interrupt comes in meanwhile */
@@ -607,6 +723,8 @@ void nh_playgame_enter(int32_t *handle)
     nh_head = nh_tail = nh_consumed = 0;
     nh_cadence = 0; nh_pending = 0; nh_rgf_carry = 0; nh_loop_mark = 0;
     nh_dead = 0; nh_finish = 0;
+    nh_due = 0; nh_hi = 0; nh_quiet = 0; rb_next = 0;
+    if (nh_rb) rb_regions();
     nh_take = 1;
     nh_sim = 1;
 }
@@ -619,6 +737,8 @@ void nh_playgame_exit(void)
     nh_take = 0;
     nh_sim = 0;
     nh_dead = 0; nh_finish = 0;
+    if (nh_rb) { int k; for (k = 0; k < RB_SLOTS; k++) snap_free(&rb_snap[k]); memset(rb_gen, 0, sizeof rb_gen); }
+    nh_rb = 0; nh_quiet = 0;
     end_net("the game is over");
     restore_local();
 }
@@ -764,6 +884,24 @@ static void set_call(uint32_t site, void *to)
 }
 
 /* after install_overrides, before the game thread starts */
+/* NHL95_ONLINE=host|join (a test aid): arms a session on 127.0.0.1 as the Online page's Host / Join would, with NHL95_NETSIM="delay,jitter,loss%"
+ * making the link bad. Both machines then start an exhibition game (NHL95_AUTOSKIP does) and the log (stderr) says how it went. */
+static void online_env(void)
+{
+    const char *e = getenv("NHL95_ONLINE");
+    if (!e) return;
+    memset(&nh_cfg, 0, sizeof nh_cfg);
+    snprintf(nh_cfg.name, sizeof nh_cfg.name, "%s", !strcmp(e, "host") ? "Host" : "Guest");
+    nh_cfg.role = !strcmp(e, "host") ? 0 : 1;
+    snprintf(nh_cfg.addr, sizeof nh_cfg.addr, "127.0.0.1");
+    nh_cfg.port = getenv("NHL95_PORT") ? atoi(getenv("NHL95_PORT")) : 41950;
+    nh_cfg.delay = 0;
+    nh_cfg.here = 1;
+    nh_cfg.all = 2;
+    nh_armed = 1;
+    fprintf(stderr, "online: armed as %s on port %d\n", e, nh_cfg.port);
+}
+
 void netplay_install(void)
 {
     static const uint8_t sit_head[6] = { 0x53, 0x51, 0x52, 0x56, 0x83, 0x3D };
@@ -802,6 +940,7 @@ void netplay_install(void)
     set_call(RJ1_SITE, rj1_stub);
     set_call(RJ2_SITE, rj2_stub);
     nh_ok = 1;
+    online_env();
 }
 
 /* ---- the main thread ---- */
