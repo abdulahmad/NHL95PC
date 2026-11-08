@@ -9,6 +9,7 @@ static unsigned pit_lo;
 /* Sound Blaster, MPU-401 and Gravis UltraSound ports, wherever the configuration put them (sound_ports.c) */
 int sound_port_in(unsigned port, uint32_t *v);
 int sound_port_out(unsigned port, uint32_t val);
+extern volatile int nh_quiet;                  /* a rollback is playing records again: the sound chips are not written to (netplay.c) */
 
 uint32_t port_in(ctx_t *c, unsigned port, int size)
 {
@@ -50,7 +51,7 @@ void port_out(ctx_t *c, unsigned port, uint32_t val, int size)
     if (port == 0x61 || port == 0x42) { speaker_out(port, val); return; }
     if (port == 0x20 || port == 0x21 || port == 0xA0 || port == 0xA1) { pic_out(port, val); return; }
     if (port < 0x10 || (port >= 0x80 && port < 0x90) || (port >= 0xC0 && port < 0xE0)) { dma_out(port, val); return; }
-    if (port >= 0x388 && port <= 0x38B) { opl_out(port, val); return; }
+    if (port >= 0x388 && port <= 0x38B) { if (!nh_quiet) opl_out(port, val); return; }
     if (sound_port_out(port, val)) return;
     if (port == 0x43) { if ((val >> 6) == 0) pit_state = 0; else speaker_out(port, val); return; }
     if (port == 0x40) {

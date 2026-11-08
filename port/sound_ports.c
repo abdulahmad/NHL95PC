@@ -62,8 +62,18 @@ int sound_port_in(unsigned port, uint32_t *v)
     return 0;
 }
 
+/* a rollback is playing records again: the sound chips already got these writes the first time, so they are not made again (the sound would
+ * start twice) */
+extern volatile int nh_quiet;
+static int claims(unsigned port)
+{
+    return (have_sb && port >= (unsigned)sb_b && port < (unsigned)sb_b + 16) || (have_mpu && (port == (unsigned)mpu_b || port == (unsigned)mpu_b + 1)) ||
+           (have_gus && ((port >= (unsigned)gus_b && port < (unsigned)gus_b + 16) || (port >= (unsigned)gus_b + 0x100 && port < (unsigned)gus_b + 0x108)));
+}
+
 int sound_port_out(unsigned port, uint32_t val)
 {
+    if (nh_quiet && claims(port)) return 1;
     if (have_sb && port >= (unsigned)sb_b && port < (unsigned)sb_b + 16) {
         unsigned o = port - sb_b;
         if (o < 4 || o == 8 || o == 9) opl_out(o & 3, val);
