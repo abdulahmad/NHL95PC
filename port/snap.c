@@ -86,13 +86,17 @@ static int base_take(const snap_region *r, int n)
 static void **wlist;
 static size_t wnum, wcap;
 /* the pages of a watched block written since the base (in wlist[0..wnum)), or -1 when the region is not such a block */
+static int64_t t_list;
 static int page_list(const snap_region *r)
 {
+    int64_t t0 = plat_now_ns();
+    int rc = -1;
     size_t want = r->n / PAGE + 2;
     if (wcap < want) { void **nl = realloc(wlist, want * sizeof *wlist); if (!nl) return -1; wlist = nl; wcap = want; }
     wnum = wcap;
-    if (plat_write_watch(r->p, r->n, wlist, &wnum, 0)) return -1;
-    return 0;
+    rc = plat_write_watch(r->p, r->n, wlist, &wnum, 0) ? -1 : 0;
+    t_list += plat_now_ns() - t0;
+    return rc;
 }
 
 static int64_t t_gather, t_count, t_copy, t_alloc;
@@ -100,16 +104,19 @@ static unsigned n_saves, n_watched, n_plain;
 const char *snap_stats(void)
 {
     static char b[200];
-    snprintf(b, sizeof b, "snap: gather %.2f count %.2f alloc %.2f copy %.2f ms each; %u watched, %u plain regions in the last", n_saves ? t_gather / 1e6 / n_saves : 0.0,
-             n_saves ? t_count / 1e6 / n_saves : 0.0, n_saves ? t_alloc / 1e6 / n_saves : 0.0, n_saves ? t_copy / 1e6 / n_saves : 0.0, n_watched, n_plain);
+    snprintf(b, sizeof b, "snap: gather %.2f scan %.2f (of it the watch lists %.2f) copy %.2f ms each; %u watched, %u plain regions in the last", n_saves ? t_gather / 1e6 / n_saves : 0.0,
+             n_saves ? t_count / 1e6 / n_saves : 0.0, n_saves ? t_list / 1e6 / n_saves : 0.0, n_saves ? t_copy / 1e6 / n_saves : 0.0, n_watched, n_plain);
     return b;
 }
 
 int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextra)
 {
-    int64_t t0 = plat_now_ns(), t1, t2, t3;
-    size_t at = 0, ndiff = 0, cap, out;
+    typedef struct { uint8_t *dst; uint32_t len; } page_t;
+    static page_t *pg;
+    static size_t pgcap;
+    size_t at = 0, ndiff = 0, out, bytes = 0;
     int i;
+    int64_t t0 = plat_now_ns(), t1, t2;
     if (!stack_base || !low || low >= stack_base) return -1;
     s->valid = 0;
     free(s->mem);
@@ -117,61 +124,42 @@ int snap_save(snap *s, void **jb, char *low, const snap_region *extra, int nextr
     s->nregs = gather(s->r, extra, nextra);
     if (s->nregs < 0) return -1;
     if (!base_matches(s->r, s->nregs) && base_take(s->r, s->nregs)) return -1;
-    t1 = plat_now_ns();
-    n_watched = n_plain = 0;
     s->base_id = base_id;
     s->stack = (size_t)(stack_base - low);
-    for (i = 0; i < s->nregs; i++) {                      /* count the pages that differ */
-        size_t k;
-        if (page_list(&s->r[i]) >= 0) {                  /* a block with a write watch: only the pages written since the base are looked at */
-            size_t q;
-            n_watched++;
-            for (q = 0; q < wnum; q++) {
-                k = (size_t)((uint8_t *)wlist[q] - (uint8_t *)s->r[i].p);
-                if (k >= s->r[i].n) continue;
-                if (memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE)) ndiff++;
+    t1 = plat_now_ns();
+    n_watched = n_plain = 0;
+    for (i = 0; i < s->nregs; i++) {                      /* the pages that differ from the base, once */
+        size_t k, q = 0, nq = 0;
+        int watched = page_list(&s->r[i]) >= 0;        /* a block with a write watch: only the pages written since the base are looked at */
+        if (watched) { nq = wnum; n_watched++; } else n_plain++;
+        for (k = 0; watched ? q < nq : k < s->r[i].n; k += PAGE) {
+            size_t len;
+            if (watched) k = (size_t)((uint8_t *)wlist[q++] - (uint8_t *)s->r[i].p);
+            if (k >= s->r[i].n) continue;
+            len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
+            if (!memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, len)) continue;
+            if (ndiff == pgcap) {
+                page_t *np = realloc(pg, (pgcap ? pgcap * 2 : 1024) * sizeof *pg);
+                if (!np) return -1;
+                pg = np; pgcap = pgcap ? pgcap * 2 : 1024;
             }
-        } else {
-        n_plain++;
-        for (k = 0; k < s->r[i].n; k += PAGE) {
-            size_t len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
-            if (memcmp((uint8_t *)s->r[i].p + k, base_mem + at + k, len)) ndiff++;
-        }
+            pg[ndiff].dst = (uint8_t *)s->r[i].p + k; pg[ndiff].len = (uint32_t)len;
+            ndiff++; bytes += len;
         }
         at += s->r[i].n;
     }
     t2 = plat_now_ns();
-    cap = ndiff * (PAGE + sizeof(void *) + sizeof(uint32_t));
-    s->size = s->stack + cap;
+    s->size = s->stack + bytes + ndiff * (sizeof(void *) + sizeof(uint32_t));
     s->mem = malloc(s->size ? s->size : 1);
     if (!s->mem) return -1;
-    t3 = plat_now_ns();
     memcpy(s->mem, low, s->stack);
     out = s->stack;
-    at = 0;
-    for (i = 0; i < s->nregs; i++) {                      /* each page: its address, its length, its bytes */
-        size_t k, q = 0, nq = 0;
-        int watched = page_list(&s->r[i]) >= 0;
-        if (watched) nq = wnum;
-        for (k = 0; watched ? q < nq : k < s->r[i].n; k += PAGE) {
-            size_t len;
-            void *dst;
-            uint32_t l32;
-            if (watched) k = (size_t)((uint8_t *)wlist[q++] - (uint8_t *)s->r[i].p);
-            if (k >= s->r[i].n) continue;
-            len = s->r[i].n - k < PAGE ? s->r[i].n - k : PAGE;
-            dst = (uint8_t *)s->r[i].p + k;
-            l32 = (uint32_t)len;
-            if (!memcmp(dst, base_mem + at + k, len)) { if (watched) k = 0; continue; }
-            if (out + sizeof dst + sizeof l32 + len > s->size) { free(s->mem); s->mem = NULL; return -1; }       /* (a page written meanwhile) */
-            memcpy(s->mem + out, &dst, sizeof dst); out += sizeof dst;
-            memcpy(s->mem + out, &l32, sizeof l32); out += sizeof l32;
-            memcpy(s->mem + out, dst, len); out += len;
-            if (watched) k = 0;
-        }
-        at += s->r[i].n;
+    for (i = 0; (size_t)i < ndiff; i++) {                  /* each page: its address, its length, its bytes */
+        memcpy(s->mem + out, &pg[i].dst, sizeof pg[i].dst); out += sizeof pg[i].dst;
+        memcpy(s->mem + out, &pg[i].len, sizeof pg[i].len); out += sizeof pg[i].len;
+        memcpy(s->mem + out, pg[i].dst, pg[i].len); out += pg[i].len;
     }
-    t_gather += t1 - t0; t_count += t2 - t1; t_alloc += t3 - t2; t_copy += plat_now_ns() - t3; n_saves++;
+    t_gather += t1 - t0; t_count += t2 - t1; t_copy += plat_now_ns() - t2; n_saves++;
     s->ndiff = ndiff;
     s->size = out;
     s->low = low;
