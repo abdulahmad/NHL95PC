@@ -79,6 +79,7 @@ static int flagop_kind(const uint8_t *ip)
 #define SYM(s) s
 #endif
 uint8_t autostart_arg[64];
+void autostart_done(int r) { fprintf(stderr, "autostart: MenuNewExhibition returned %d\n", r); }
 __attribute__((naked)) static void autostart_stub(void)
 {
     __asm__ volatile(
@@ -86,6 +87,9 @@ __attribute__((naked)) static void autostart_stub(void)
         "pushfl\n\t"
         "movl $" SYM("autostart_arg") ", %eax\n\t"
         "call " SYM("MenuNewExhibition") "\n\t"
+        "pushl %eax\n\t"
+        "call " SYM("autostart_done") "\n\t"
+        "addl $4, %esp\n\t"
         "popfl\n\t"
         "popal\n\t"
         "ret");
