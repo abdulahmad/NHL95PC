@@ -29,6 +29,7 @@
  * The game thread runs the hooks; SampleInputTick runs inside the game's timer interrupt, so it never waits for the lock.
  * The main thread polls the socket (netplay_main_poll) so it keeps going while the game waits. */
 #include "host.h"
+#include "snap.h"
 #include "overbar_client.h"
 #include <SDL.h>
 #include <time.h>
@@ -168,10 +169,86 @@ static uint16_t read_local(void)
     return (uint16_t)((pad ^ 8) | (hot << 8));
 }
 
+/* ---- NHL95_SNAPTEST: a round trip of a state of the game, with no network (docs/SDL2_PORT.md "Rollback") ----
+ * An exhibition game started with NHL95_SNAPTEST set plays on records made here (a function of the record's number), as a
+ * session would. At record ST_SAVE a state is taken; at record ST_BACK the game goes back to it and plays the same records
+ * again; at ST_BACK again the game's data (and the record queue) must hash as they did the first time. */
+#define ST_SAVE 40u
+#define ST_BACK 100u
+static int nh_selftest, st_phase;
+static void *st_jb[5];
+static snap st_snap;
+static uint64_t st_sim, st_all;
+static int st_vif;
+static snap_region st_extra[16];
+static int st_nextra;
+extern volatile int vif;
+static uint64_t sim_hash(void);
+
+static void st_regions(void)
+{
+    int n = 0;
+#define X(v) do { st_extra[n].p = (void *)&(v); st_extra[n].n = sizeof (v); n++; } while (0)
+    X(nh_ring); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
+    X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
+#undef X
+    st_nextra = n;
+}
+
+static void st_record(uint16_t *all)           /* the record with this number: a direction held for six records, no fire */
+{
+    uint32_t i = nh_tail;
+    all[0] = (uint16_t)(((i / 6) * 2654435761u >> 20) & 7);
+    all[1] = (uint16_t)(((i / 9 + 3) * 2246822519u >> 20) & 7);
+}
+
+static uint64_t st_fingerprint(void) { return snap_hash(st_extra, st_nextra); }
+
+static void selftest_step(void)
+{
+    uint32_t c = nh_consumed;
+    if (st_phase == 0 && c == ST_SAVE) {
+        st_phase = 1;
+        st_regions();
+        st_vif = vif;
+        if (__builtin_setjmp(st_jb)) {              /* back from snap_jump: the state of record ST_SAVE */
+            vif = st_vif;
+            fprintf(stderr, "snaptest: back at record %u (queue %u..%u)\n", (unsigned)nh_consumed, (unsigned)nh_head, (unsigned)nh_tail);
+            return;
+        }
+        if (snap_save(&st_snap, st_jb, snap_sp(), st_extra, st_nextra)) { fprintf(stderr, "snaptest: FAIL cannot take a state\n"); st_phase = 3; return; }
+        fprintf(stderr, "snaptest: state taken at record %u: %zu bytes in %d regions (stack %zu)\n", (unsigned)c, st_snap.size, st_snap.nregs, st_snap.stack);
+        return;
+    }
+    if (st_phase == 1 && c == ST_BACK) {
+        st_sim = sim_hash();
+        st_all = st_fingerprint();
+        st_phase = 2;
+        if (snap_fits(&st_snap, st_extra, st_nextra)) { fprintf(stderr, "snaptest: FAIL the memory blocks changed between the two records\n"); st_phase = 3; return; }
+        fprintf(stderr, "snaptest: record %u first time: sim %016llx all %016llx; going back\n", (unsigned)c, (unsigned long long)st_sim, (unsigned long long)st_all);
+        vif = 0;                                    /* no interrupt comes in while the memory is put back */
+        snap_restore_memory(&st_snap);
+        snap_jump(&st_snap);
+    }
+    if (st_phase == 2 && c == ST_BACK) {
+        uint64_t a = sim_hash(), b = st_fingerprint();
+        fprintf(stderr, "snaptest: record %u again: sim %016llx all %016llx: %s\n", (unsigned)c, (unsigned long long)a, (unsigned long long)b,
+                a == st_sim && b == st_all ? "SAME" : a == st_sim ? "sim same, other game data differ" : "DIFFERENT");
+        st_phase = 3;
+    }
+}
+
 static void try_step(void)
 {
     uint16_t all[OB_NET_MAX_PADS];
     int r;
+    if (nh_selftest) {                              /* (records of its own, no network) */
+        if (!nh_pending) return;
+        st_record(all);
+        nh_pending = 0;
+        push_merged(all);
+        return;
+    }
     if (SDL_TryLockMutex(nh_lock) != 0) return;     /* the main thread is in the core: the next tick tries again */
     r = nh_net ? ob_net_step(nh_net, &nh_local, all) : -1;
     SDL_UnlockMutex(nh_lock);
@@ -237,6 +314,7 @@ void nh_pop(void)
     if (nh_head == nh_tail) return;
     nh_head++;
     nh_consumed++;
+    if (nh_selftest) { selftest_step(); return; }
     if (!gameover && (nh_consumed == 1 || nh_consumed % 60 == 0)) {     /* the game thread, outside the interrupt: may wait */
         uint64_t h = sim_hash();
         SDL_LockMutex(nh_lock);
@@ -361,6 +439,18 @@ void nh_playgame_enter(int32_t *handle)
     ob_net_game g;
     uint32_t my_dev = ctl1dev;
     int st;
+    if (nh_ok && !nh_armed && !nh_selftest && !st_phase && getenv("NHL95_SNAPTEST") && *handle < 0 && gamemode == 0) {
+        fprintf(stderr, "snaptest: a game with records of its own; state at record %u, back at %u\n", ST_SAVE, ST_BACK);
+        save_local();
+        nh_selftest = 1;
+        nh_me = 0;
+        nh_head = nh_tail = nh_consumed = 0;
+        nh_cadence = 0; nh_pending = 0; nh_rgf_carry = 0; nh_loop_mark = 0;
+        nh_dead = 0; nh_finish = 0;
+        nh_take = 1;
+        nh_sim = 1;
+        return;
+    }
     if (!nh_armed || !nh_ok) return;
     if (*handle >= 0 || gamemode != 0) {
         snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition game");
@@ -418,6 +508,7 @@ void nh_playgame_enter(int32_t *handle)
 void nh_playgame_exit(void)
 {
     if (!nh_net && !nh_sim && !nh_dead && !nh_finish) return;
+    if (nh_selftest) { nh_selftest = 0; snap_free(&st_snap); fprintf(stderr, "snaptest: the game is over (phase %d)\n", st_phase); }
     nh_take = 0;
     nh_sim = 0;
     nh_dead = 0; nh_finish = 0;

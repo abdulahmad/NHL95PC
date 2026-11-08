@@ -241,6 +241,23 @@ static int dpmi_free(uint32_t handle)
     return 0;
 }
 
+#include "snap.h"
+/* the regions a state of the game holds besides its data (snap.h) */
+int dos_snap_regions(struct snap_region *r, int n, int max)
+{
+    int i;
+#define ADD(ptr, len) do { if (n >= max) return -1; r[n].p = (void *)(ptr); r[n].n = (len); n++; } while (0)
+    ADD(&dos_next, sizeof dos_next);
+    ADD(dos_blocks, sizeof dos_blocks);
+    ADD(&dos_nblocks, sizeof dos_nblocks);
+    ADD(dpmi_blocks, sizeof dpmi_blocks);
+    ADD(&dpmi_used, sizeof dpmi_used);
+    if (dos_next > DOS_POOL_LO) ADD(DOS_POOL_LO, dos_next - DOS_POOL_LO);
+    for (i = 0; i < 512; i++) if (dpmi_blocks[i].addr) ADD(dpmi_blocks[i].addr, dpmi_blocks[i].size);
+#undef ADD
+    return n;
+}
+
 /* ---- DPMI (int 31h) ---- */
 #define BXCX(c) ((R(c, EBX) << 16) | (R(c, ECX) & 0xFFFF))
 #define SETBXCX(c, v) do { R(c, EBX) = (R(c, EBX) & ~0xFFFFu) | ((v) >> 16); R(c, ECX) = (R(c, ECX) & ~0xFFFFu) | ((v) & 0xFFFF); } while (0)

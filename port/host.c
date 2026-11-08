@@ -2,6 +2,7 @@
  * this program. Instructions that only DOS or the PC hardware could execute (int n, in, out, cli, sti) fault; the platform layer
  * hands them to the emulation here. The main thread owns SDL: window, events, timer ticks. */
 #include "host.h"
+#include "snap.h"
 #include "audio.h"
 #include "overbar_client.h"
 void sound_init(void);
@@ -34,6 +35,7 @@ static void win32_scrub_portmaster_env(void)
 /* The game: C library start-up, then main(). Runs on the game thread. */
 void game_run(int argc, char **argv)
 {
+    snap_set_stack_base(__builtin_frame_address(0));
     host_cstart(argc, argv);
     __asm__ volatile("mov $0xFF, %%eax\n call " SYM("__InitRtns") "\n xor %%ebp, %%ebp\n call " SYM("__CMain") ::: "eax", "edx", "ecx", "memory");
     host_exit(0);
