@@ -313,6 +313,10 @@ static void autoskip_poll(void)
     static int64_t next;
     int64_t now = plat_now_ns();
     if (on < 0) { on = getenv("NHL95_AUTOSKIP") != NULL; next = now + 1500000000LL; }
+    if (on > 0) {
+        static int64_t beat;
+        if (now - beat > 3000000000LL) { beat = now; fprintf(stderr, "autostart: alive, curperiod %d, front end %s, title %d\n", (int)curperiod, game_pointer_ns() ? "reached" : "not yet", intro_title); }
+    }
     if (!on || game_pointer_ns() || now < next) return;
     next = now + 400000000LL;
     if (intro_title) {                          /* the title screen waits for its speech clip: skip it the way a key before the front end would */

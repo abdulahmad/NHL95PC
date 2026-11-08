@@ -96,6 +96,7 @@ static int autostart_due(int64_t now)
     if (!first) first = now;
     if (now - first < 4000000000LL) return 0;
     done = 1;
+    fprintf(stderr, "autostart: calling MenuNewExhibition\n");
     return 1;
 }
 
@@ -113,6 +114,7 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
         }
     }
     if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PLAY_HOOK) {      /* mov edx, eax: TrackButtons answers "Play" (index 0, or 1 when the table is shifted) */
+        { static int n; if (n++ < 3) fprintf(stderr, "autostart: Play pressed on the scouting report (off_CEF63 %d)\n", (int)off_CEF63); }
         R(c, EAX) = off_CEF63 ? 1 : 0;
         R(c, EDX) = R(c, EAX);
         return 2;
