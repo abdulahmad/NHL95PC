@@ -148,9 +148,10 @@ void *plat_map_any(size_t size)
  * such a block). reset: forget them (snap.c) */
 int plat_write_watch(void *addr, size_t size, void **pages, size_t *n, int reset)
 {
-    ULONG_PTR count = (ULONG_PTR)*n;
+    ULONG_PTR count;
     ULONG gran;
     if (!pages) return ResetWriteWatch(addr, size) == 0 ? 0 : -1;
+    count = (ULONG_PTR)*n;
     if (GetWriteWatch(reset ? WRITE_WATCH_FLAG_RESET : 0, addr, size, pages, &count, &gran) != 0) return -1;
     *n = (size_t)count;
     return 0;
