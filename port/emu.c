@@ -25,6 +25,8 @@ static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
 #define SPEECH_HOOK 0x83459u                     /* InitSpeechSlots: the start of the EA Sports screen, so the end of the pioneer screens */
 #define TITLE_HOOK 0x1609Fu                      /* TitleScreen: the end of the EA Sports screen */
 extern volatile int intro_skip, intro_title;
+#define PLAY_HOOK 0x2A892u                       /* PreGameScreen, after TrackButtons: NHL95_AUTOSKIP presses Play (the scouting report) */
+extern int32_t off_CEF63;
 #define INPUT_HOOK 0x6B391u                      /* GetInputEvent: the menus ask for an event every time round their loop, even when there is none */
 static volatile int64_t ptr_hook_ns;
 int64_t game_pointer_ns(void) { return ptr_hook_ns; }
@@ -46,6 +48,7 @@ void install_flag_traps(void)
     { uint8_t *h1 = GAME_ADDR(SPEECH_HOOK), *h2 = GAME_ADDR(TITLE_HOOK);
       if (h1[0] == 0x68) h1[0] = 0xCC; else fprintf(stderr, "InitSpeechSlots is %02x, not hooked\n", h1[0]);
       if (h2[0] == 0x68) h2[0] = 0xCC; else fprintf(stderr, "TitleScreen is %02x, not hooked\n", h2[0]); }
+    if (getenv("NHL95_AUTOSKIP")) { uint8_t *h = GAME_ADDR(PLAY_HOOK); if (h[0] == 0x89 && h[1] == 0xC2) h[0] = 0xCC; else fprintf(stderr, "PreGameScreen is %02x %02x, not hooked\n", h[0], h[1]); }
     { uint8_t *q = GAME_ADDR(INPUT_HOOK); if (q[0] == 0x68 && q[1] == 0x0C) q[0] = 0xCC; else fprintf(stderr, "GetInputEvent is %02x %02x, not hooked\n", q[0], q[1]); }
     { uint8_t *p = GAME_ADDR(PTR_HOOK); if (p[0] == 0x68 && p[1] == 0x1C) p[0] = 0xCC; else fprintf(stderr, "EventToPointer is %02x %02x, not hooked\n", p[0], p[1]); }
 }
@@ -77,6 +80,11 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
             *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
             return 5;
         }
+    }
+    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PLAY_HOOK) {      /* mov edx, eax: TrackButtons answers "Play" (index 0, or 1 when the table is shifted) */
+        R(c, EAX) = off_CEF63 ? 1 : 0;
+        R(c, EDX) = R(c, EAX);
+        return 2;
     }
     if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PTR_HOOK || (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == INPUT_HOOK) {     /* push dword 1Ch, push dword 0Ch */
         ptr_hook_ns = plat_now_ns();
