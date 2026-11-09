@@ -2,6 +2,8 @@
 
 > **Making a mod, hack, port or other derivative work from this repo? You must credit me (abdulahmad) and everyone credited in this repo, clearly, in your own repo and in every release. See [Credits and derivative works](#credits-and-derivative-works).**
 
+> **The SDL2 port's 94 Genesis feel options and NHLPA 93 fights** are built from [NHL94Genesis-C-Port](https://github.com/abdulahmad/NHL94Genesis-C-Port) (on [NHL94Genesis](https://github.com/abdulahmad/NHL94Genesis); its C by 1nput), the [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis) disassembly and [NHL9XStudio](https://github.com/abdulahmad/NHL9XStudio), all by abdulahmad, with thanks to chaos, StaticEck, McMarkis (Mhopkinsinc) and Drezz, and special thanks to smozoma and kingraph. The 93 fight frames and punch sound are read from your own NHLPA 93 ROM; nothing from 93 is in this repository.
+
 > **Work in progress:** this decompilation is unfinished and unpolished, and is being actively worked on. Expect labels, file layout and docs to change.
 
 ## 🚧 Current Status
@@ -140,6 +142,8 @@ This project is AI-assisted. The work is directed by a strict ruleset and curate
 
 Thanks to **chaos**, **StaticEck** and **McMarkis** for help with the disassemblies.
 
+The SDL2 port's feel options (port/feel.c) and fights (port/fight/) come from abdulahmad's [NHL94Genesis-C-Port](https://github.com/abdulahmad/NHL94Genesis-C-Port) (built on [NHL94Genesis](https://github.com/abdulahmad/NHL94Genesis); the C, its runtime and its verification tools are by **1nput**), the [NHLPA93Genesis](https://github.com/abdulahmad/NHLPA93Genesis) disassembly and [NHL9XStudio](https://github.com/abdulahmad/NHL9XStudio). Thanks to **chaos**, **StaticEck**, **McMarkis (Mhopkinsinc)** and **Drezz** for their help with those disassemblies, with special thanks to **smozoma** and **kingraph**, and thank you to the [original developers of NHLPA Hockey 93](https://www.mobygames.com/game/11455/nhlpa-hockey-93/credits/genesis/) and NHL Hockey 94.
+
 And thank you to the [original developers of the game](https://www.mobygames.com/game/265/nhl-95/credits/dos/).
 
 The SDL2 port's MiSTer look (the `mister` folder of filters, gamma curves, shadow masks and presets, and the file formats it reads) comes from the **MiSTer FPGA project**: the scaler's filter files are from [Filters_MiSTer](https://github.com/MiSTer-devel/Filters_MiSTer) (including the adaptive scanline filters by Soltan_G42 and Tonurics), the shadow masks from [ShadowMasks_MiSTer](https://github.com/MiSTer-devel/ShadowMasks_MiSTer) (the JVC masks are by TrashUncle) and the presets from [Presets_MiSTer](https://github.com/MiSTer-devel/Presets_MiSTer). The MiSTer project is GPL-3.0; those files are included unchanged in [port/overbar/mister](https://github.com/abdulahmad/overbar/tree/main/mister) with their credits and links. The soft CRT looks follow the shader by Timothy Lottes, and the Munt library plays the MT-32 sound ([Munt](https://github.com/munt/munt)); the OPL emulation is Nuked-OPL3.
@@ -148,7 +152,7 @@ This project is the result of my work (abdulahmad) and the work of the people cr
 
 - Put the credit in your repo's README, near the top and not buried in a footer, and in the notes of every release you publish, including any text file shipped inside a release archive.
 - Name me (abdulahmad) and link to this repository.
-- Name everyone credited here: chaos, StaticEck and McMarkis (Mhopkinsinc).
+- Name everyone credited here: chaos, StaticEck and McMarkis (Mhopkinsinc); for the feel options and fights also Drezz, smozoma, kingraph and 1nput.
 - If you only use part of this repo (docs, a tool, labels, a file format description), the credit still applies.
 - If you are unsure, over-credit.
 
