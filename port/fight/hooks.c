@@ -32,7 +32,7 @@ extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[];
 extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
-extern short ovltimer, ovlseq, refsignal;
+extern short ovltimer, ovlseq, refsignal, Pencntdwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
 extern char DrawFrameSprite[], changeplayer[], doinput[];
 extern int32_t regd0, regd1;
@@ -91,7 +91,7 @@ void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont;
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
-static int watcher[12], nwatch, pen_wait, hold_lines;
+static int watcher[12], nwatch, pen_wait, hold_lines, pen_now;
 static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
@@ -278,6 +278,7 @@ static void end_fight(void)
     pen_wait = 1;
     for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
     post[0] = post[1] = 1;
+    pen_now = 1;
     post_timer = 1200;            /* 10 s (counted once per fighter a frame) */
     /* the whistle now (93 stopped play for the fight's penalties at once), not when the puck is next touched:
      * the first of the fight's penalties in PenBuf stops play (Stop4Pen, as checkfornewpen would) */
@@ -305,6 +306,24 @@ static void check_pen_wait(void)
         if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl) == who[0] || PLAYER(pl) == who[1])) left++;
     }
     if (!left) { penmintab[PEN_ROUGHING] = 2; pen_wait = 0; }
+}
+
+/* checkfornewpen gives a called Roughing its pendelaytab wait (0Ah x 32 frames, the camera on the puck): after a
+ * fight the penalty sequence (the ref to the box) starts at once instead */
+static void pen_no_wait(void)
+{
+    int i;
+    if (!pen_now || !(gmode & 4)) return;
+    for (i = 0; i < 0x20 && PenBuf[i * 2]; i++) {
+        int pl = PenBuf_pl[i * 2];
+        if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl & 0x7F) == who[0] || PLAYER(pl & 0x7F) == who[1])) {
+            if (!(pl & 0x80)) return;   /* not counted yet */
+            if (Pencntdwn > 0) Pencntdwn = 0;
+            pen_now = 0;
+            return;
+        }
+    }
+    pen_now = 0;                        /* gone */
 }
 
 /* 93's banner with the two names, in 95 PC's scoreboard box: "#12 Neely / vs. / #7 Probert" */
@@ -343,6 +362,7 @@ void fight_frame(void)
     int k;
     undraw();
     check_pen_wait();
+    pen_no_wait();
     /* the scoreboard box only runs while play is stopped (chkprogress): during the fight it is moved on here */
     if (hold_lines && !(gmode & 1) && ovltimer >= 0 && ovltimer < 0x100) ovltimer++;
     if (!ft.on) return;
