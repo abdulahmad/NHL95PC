@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <math.h>
 
 #include "../host.h"
 #include "../feel.h"
@@ -91,7 +92,7 @@ void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont;
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
-static int watcher[12], nwatch, pen_wait, hold_lines, pen_now;
+static int watcher[12], watch_t[12], watch_x[12], watch_y[12], nwatch, pen_wait, hold_lines, pen_now;
 static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
@@ -233,6 +234,7 @@ void fight_check(uint8_t *a, uint8_t *b)
         if (p == a || p == b || P_W(p, P_POSITION) <= 0 || (P_B(p, P_PFLAGS2) & 1)) continue;
         P_B(p, P_PFLAGS2) |= 1;
         ass_insert(p, ASS_NOTHING);
+        watch_t[nwatch] = 0;
         watcher[nwatch++] = k;
     }
     puckpflags2 |= 1;
@@ -358,6 +360,32 @@ static void fight_accel(void *ctx, int k, int dir)
     f->yvel = P_W(who[k], P_YVEL);
 }
 
+/* 93's assfwatch: each watcher skates to a spot 80 from the fight on the line to him, picked again every second, and
+ * skateto turns him to face the fight once he is there (the puck's pflags2 bit 0) */
+static void watch(void)
+{
+    int k;
+    for (k = 0; k < nwatch; k++) {
+        uint8_t *p = PLAYER(watcher[k]);
+        if (--watch_t[k] < 0) {
+            int dx = P_W(p, P_XPOS_HI) - ft.xc1, dy = P_W(p, P_YPOS_HI) - ft.yc1, d = (int)sqrt((double)dx * dx + (double)dy * dy), x;
+            if (!d) d = 1;
+            watch_t[k] = 60;
+            x = ft.xc1 + dx * 0x50 / d;
+            if (x > 0x7E) x = 0x7E;
+            if (x < -0x7E) x = -0x7E;
+            watch_x[k] = x;
+            watch_y[k] = ft.yc1 + dy * 0x50 / d;
+        }
+        regd0 = (regd0 & ~0xFFFF) | (watch_x[k] & 0xFFFF);
+        regd1 = (regd1 & ~0xFFFF) | (watch_y[k] & 0xFFFF);
+        {
+            int a = (int)(uintptr_t)p, d = 0;
+            __asm__ volatile("call " SYM("skateto") : "+a"(a), "+d"(d) : : "memory", "cc");
+        }
+    }
+}
+
 void fight_frame(void)
 {
     int k;
@@ -387,6 +415,7 @@ void fight_frame(void)
         }
         fight_pass(&ft, 1, pad, fight_accel);
     }
+    watch();
     for (k = 0; k < 2; k++) {
         fighter *f = &ft.f[k];
         P_W(who[k], P_XVEL) = (int16_t)f->xvel;
