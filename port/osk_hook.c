@@ -43,6 +43,7 @@ static int copyable(const uint8_t *p)
     int n = 0;
     while (n < 5) {
         if (p[n] >= 0x50 && p[n] <= 0x57) n += 1;
+        else if (p[n] == 0x68) n += 5;                             /* push imm32 (Watcom's frame-size probe before the call to the stack check) */
         else if (p[n] == 0x83 && p[n + 1] == 0xEC) n += 3;
         else if (p[n] == 0x81 && p[n + 1] == 0xEC) n += 6;
         else if ((p[n] == 0x8B || p[n] == 0x89) && (p[n + 1] & 0xC0) == 0xC0) n += 2;
