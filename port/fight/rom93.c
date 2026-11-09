@@ -249,8 +249,8 @@ void f93_pc95_colours(uint32_t rgb[64])
     rgb[F93_EYE] = 0x60381C;
     for (line = 2; line < 4; line++) {
         rgb[line * 16 + 1] = 0x004080;
-        rgb[line * 16 + 6] = 0xDC9468;
-        rgb[line * 16 + 7] = 0xC8845C;
+        rgb[line * 16 + 6] = 0xC8845C;
+        rgb[line * 16 + 7] = 0xA46C48;
         rgb[line * 16 + 14] = 0xA06060;
         rgb[line * 16 + 15] = 0x40A0E0;
     }
