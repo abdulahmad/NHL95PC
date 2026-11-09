@@ -54,6 +54,7 @@ static void sheet(const rom93 *r, const char *path)
     uint8_t *img = (uint8_t *)calloc((size_t)COLS * C * rows * C * 3, 1);
     FILE *f;
     f93_palette(r, 0, 1, pal);                  /* Boston, home */
+    if (getenv("NHL93_PC95")) f93_pc95_colours(pal);
     for (g = 0; g < 4; g++)
         for (k = 0; k < groups[g][1]; k++, i++) {
             f93_frame fr;
