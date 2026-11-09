@@ -294,8 +294,9 @@ static void apply_constants(void)
         patch_bytes((uint8_t *)updateplayers + FRICTION_SKATE + 6, &skate, 1);
     }
     if (ftab_ok) {
-        /* doplayeracc's turn steps: 0, 16, 16, 16, 0, -16, -16, -16 (8 and -8 for the cartridge's turn) */
-        int half = now.turn && now.cartridge, i;
+        /* doplayeracc's turn steps: 0, 16, 16, 16, 0, -16, -16, -16. The cartridge's would be half (a step a pass, 30
+         * passes a second), but it steered far too slowly in play (Abdul, 2026-11-09): every timing keeps 95 PC's. */
+        int half = 0, i;
         for (i = 0; i < 8; i++) {
             int32_t v = (i == 0 || i == 4) ? 0 : (i < 4 ? 16 : -16);
             if (half) v /= 2;
