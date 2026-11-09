@@ -55,7 +55,7 @@ void f93_palette(const rom93 *r, int team, int home, uint32_t rgb[64]);
 const char *f93_team_abbrev(int team);
 /* 95 PC's own colours for the parts every skater shares, written over a palette from f93_palette (lines 2 and 3):
  * the shadow (index 15: 95 PC's rink entry 99, 40A0E0), the skin (6 light, 7 dark: entries 72 E08080 and 73 C06060)
- * and the stick (14: entry 6, A06060), so the 93 frames sit beside 95 PC's skaters. Read from 95 PC's skater frames
+ * the stick (14: entry 6, A06060) and the skate blade (1: entry 16, 202020), so the 93 frames sit beside 95 PC's skaters. Read from 95 PC's skater frames
  * through HOMEPALS.BIN's remap (2026-11-09). */
 void f93_pc95_colours(uint32_t rgb[64]);
 
