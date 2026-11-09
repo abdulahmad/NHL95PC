@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #ifdef _WIN32
 #include <windows.h>
 #else
@@ -79,5 +80,6 @@ void osk_poll(void)
     int want = osk_text_wanted;
     if (want == shown) return;
     shown = want;
+    if (getenv("OVERBAR_TEST_LOG")) { FILE *f = fopen(getenv("OVERBAR_TEST_LOG"), "ab"); if (f) { fprintf(f, "TEST osk-auto %s\n", want ? "open" : "close"); fclose(f); } }
     if (want) ob_plat_osk_open(); else ob_plat_osk_close();
 }
