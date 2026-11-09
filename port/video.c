@@ -79,7 +79,7 @@ static float c_dark = 0.30f, c_gamma = 1.13f, c_mask = 0.12f, c_sharp = 0.60f;  
 static float m_horiz[2][64][4], m_vert[2][2][256][4], m_gamma[2][256];
 static struct { int res, w, h; float rgb[16 * 16 * 3]; } m_masks[2][8];
 static int m_nmasks[2], m_dirty[2] = { 1, 1 }, m_mask_for = -1, m_class_up = -1;
-static int sharp_pre[2] = { 3, 3 };          /* integer scale before the window fit; 3x is the default */
+static int sharp_pre[2] = { 1, 3 };          /* integer scale before the window fit: hi-res 1x, lo-res 3x by default */
 
 static void mister_defaults(int c)
 {
@@ -453,11 +453,15 @@ static void scan_rows(float sigma, int rows, float *center, float *gain)
 }
 
 /* Overbar dual-write: overlay Scale Mode / refresh / stats map onto the existing commands. */
-static int ob_look_to_mode(const ob_look *l)
+static int ob_look_to_mode(const ob_look *l, int hires)
 {
     if (l->mode == OB_MODE_MISTER) return 9;
     if (l->mode == OB_MODE_CRT) return l->crt >= OB_CRT_CUSTOM ? 10 : 4 + (int)l->crt;
-    return l->sharp % 4;                    /* Sharp and unimplemented pixel modes */
+    {   /* Sharp: hi-res steps 1x-4x are the first four menu steps; lo-res maps to the nearest of 3x, 5x, 7x, 11x */
+        int mul = ob_sharp_mul(l->sharp);
+        if (hires) return mul > 4 ? 3 : mul - 1;
+        return mul <= 3 ? 0 : mul <= 5 ? 1 : mul <= 6 ? 2 : 3;
+    }
 }
 
 static void ob_mode_to_look(ob_look *l, int mode, int height)
@@ -506,8 +510,8 @@ static void overbar_apply_host(ob_host *h)
     else video_command(CMD_REFRESH_60);
     if (h->vsync != video_command_checked(CMD_VSYNC)) video_command(CMD_VSYNC);
     if (h->stats != video_command_checked(CMD_STATS)) video_command(CMD_STATS);
-    hi = ob_look_to_mode(&h->hires);
-    lo = ob_look_to_mode(&h->lores);
+    hi = ob_look_to_mode(&h->hires, 1);
+    lo = ob_look_to_mode(&h->lores, 0);
     if (hi != hires_mode) video_command(CMD_HIRES + hi);
     if (lo != lores_mode) video_command(CMD_LORES + lo);
     video_command(CMD_VSCALE_HI + (h->hires.height % 4));
