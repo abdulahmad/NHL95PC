@@ -247,7 +247,7 @@ void f93_pc95_colours(uint32_t rgb[64])
     int line;
     if (!rgb) return;
     for (line = 2; line < 4; line++) {
-        rgb[line * 16 + 1] = 0x202020;
+        rgb[line * 16 + 1] = 0x004080;
         rgb[line * 16 + 6] = 0xE08080;
         rgb[line * 16 + 7] = 0xC06060;
         rgb[line * 16 + 14] = 0xA06060;
