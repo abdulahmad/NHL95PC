@@ -40,6 +40,7 @@ extern int32_t regd0, regd1;
 extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
+extern short HomeTeam, VisTeam, crowdlevel, CwdExciteLvl;
 extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
@@ -96,7 +97,10 @@ static int watcher[12], watch_t[12], watch_x[12], watch_y[12], nwatch, pen_wait,
 static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
-static int fpal[48];
+#define NTEAM95 28
+static int8_t fpal_set[NTEAM95][2];             /* a section for this jersey (team, 0 home / 1 away) */
+static int16_t fpal[NTEAM95 + 1][2][48];        /* [NTEAM95]: lines before any section, for every jersey */
+static int team93(int t95);
 static void undraw(void);
 static void give_control(uint8_t *p);
 
@@ -209,6 +213,8 @@ void fight_check(uint8_t *a, uint8_t *b)
     who[1] = b;
     fight_begin(&ft);
     fight_on_now = 1;
+    crowdlevel = (short)(crowdlevel + ft.crowd);        /* the crowd gets up for a fight */
+    CwdExciteLvl = (short)(CwdExciteLvl + ft.excite);
     if (have_rom) {
         free_sprites();
         make_lut(0);
@@ -414,6 +420,8 @@ void fight_frame(void)
             pad_new[k] = 0;
         }
         fight_pass(&ft, 1, pad, fight_accel);
+        crowdlevel = (short)(crowdlevel + ft.crowd);    /* 93's Crowdlevel / CwdExciteLvl: each punch, the end */
+        CwdExciteLvl = (short)(CwdExciteLvl + ft.excite);
     }
     watch();
     for (k = 0; k < 2; k++) {
@@ -422,9 +430,15 @@ void fight_frame(void)
         P_W(who[k], P_YVEL) = (int16_t)f->yvel;
         P_W(who[k], P_FACEDIR) = (int16_t)f->facedir;
     }
-    if ((ft.events & (FE_PUNCH_HIGH | FE_PUNCH_LOW)) && have_rom) {
-        if (!punch_on) { punch_init(&rom); punch_on = 1; }
-        punch_play(!(ft.events & FE_PUNCH_HIGH));
+    if (ft.events & (FE_PUNCH_HIGH | FE_PUNCH_LOW)) {
+        if (have_rom) {
+            if (!punch_on) { punch_init(&rom); punch_on = 1; }
+            punch_play(!(ft.events & FE_PUNCH_HIGH));
+        }
+    }
+    if (ft.events & (FE_CHEER | FE_BOO | FE_INJURY)) {
+        int n = ft.events & FE_CHEER ? 1 : ft.events & FE_BOO ? 4 : -1;     /* 93: cheer if the visitors lost, boo if home */
+        if (n >= 0) __asm__ volatile("call " SYM("PlayCrowdSample") : "+a"(n) : : "ecx", "edx", "memory", "cc");
     }
     if (ft.events & FE_OVER) {
         if (getenv("NHL95_FIGHT_LOG")) fprintf(stderr, "fight: over, winner %d\n", ft.winner);
@@ -448,40 +462,79 @@ static int dist(uint32_t a, uint32_t b)
 static void make_lut(int k)
 {
     uint32_t dac[256], pal[64];
-    const uint8_t *remap = P_W(who[k], P_SCNUM) < 6 ? byte_DC9D8 : byte_DC8D8;
+    int home = P_W(who[k], P_SCNUM) < 6, t95 = home ? HomeTeam : VisTeam, t93;
+    const uint8_t *remap = home ? byte_DC9D8 : byte_DC8D8;
     int v, sidx;
+    if (t95 < 0 || t95 >= NTEAM95) t95 = 0;
+    t93 = team93(t95);
     video_dac_rgb(dac);
-    f93_palette(&rom, 0, 1, pal);
+    /* the default: the fighter's own 93 jersey (Boston's, kept to his 95 PC team colours, for a team 93 did not have) */
+    f93_palette(&rom, t93 < 0 ? 0 : t93, home, pal);
     f93_pc95_colours(pal);
     for (v = 1; v < 64; v++) {
-        int team = v >= 32 && (v & 15) != 1 && (v & 15) != 6 && (v & 15) != 7 && (v & 15) != 14 && (v & 15) != 15;
+        int team = t93 < 0 && v >= 32 && (v & 15) != 1 && (v & 15) != 6 && (v & 15) != 7 && (v & 15) != 14 && (v & 15) != 15;
+        int c = v >= 48 ? v - 16 : v, set = fpal_set[t95][!home] ? fpal[t95][!home][c] : -1;
         int lo = team ? 0x90 : 0, hi = team ? 0xC0 : 0xC0, best = -1, bd = 1 << 30;
         for (sidx = lo; sidx < hi; sidx++) {
             int d = dist(dac[remap[sidx]], pal[v]);
             if (d < bd) { bd = d; best = sidx; }
         }
-        lut[k][v] = (uint8_t)(fpal[v >= 48 ? v - 16 : v] >= 0 ? fpal[v >= 48 ? v - 16 : v] : best);
+        if (set < 0) set = fpal[NTEAM95][0][c];
+        lut[k][v] = (uint8_t)(set >= 0 ? set : best);
     }
 }
 
-/* FIGHTPAL.TXT in the game folder (NHL9X Studio's Fight colours tab): "v = s" lines, 93 colour v (line x 16 +
- * colour, 1-47; line 3 follows line 2) drawn with 95 PC sprite colour s (0-254). The rest are the nearest colours. */
+/* 95 PC's teams in HOMEPALS.BIN order (HomeTeam / VisTeam), matched to 93's TeamList by their letters */
+static const char *const teams95[NTEAM95] = {
+    "bos", "buf", "cgy", "chi", "det", "edm", "hfd", "la", "min", "mtl", "nj", "nyi", "nyr", "ott",
+    "phi", "pit", "que", "stl", "sj", "tb", "tor", "van", "wsh", "wpg", "ana", "fla", "asw", "ase"
+};
+static int team93(int t95)
+{
+    int t;
+    if (t95 < 0 || t95 >= NTEAM95) return -1;
+    for (t = 0; t < F93_NTEAMS; t++) {
+        const char *a = f93_team_abbrev(t), *b = teams95[t95];
+        while (*a && *b && (*a | 32) == *b) a++, b++;
+        if (!*a && !*b) return t;
+    }
+    return -1;
+}
+
+/* FIGHTPAL.TXT in the game folder (NHL9X Studio's Fight colours tab): a "[code home]" / "[code away]" section per
+ * jersey, each with "v = s" lines: 93 colour v (line x 16 + colour, 1-47; line 3 follows line 2) drawn with 95 PC
+ * sprite colour s (0-254). Lines before any section are for every jersey. The rest: the fighter's 93 jersey, nearest. */
 static void load_fightpal(void)
 {
     FILE *f = fopen("FIGHTPAL.TXT", "r");
     char line[128];
-    int v, n = 0;
-    for (v = 0; v < 48; v++) fpal[v] = -1;
+    int t, sd, v, n = 0, nj = 0;
+    int16_t *cur;
+    memset(fpal_set, 0, sizeof fpal_set);
+    for (t = 0; t <= NTEAM95; t++) for (sd = 0; sd < 2; sd++) for (v = 0; v < 48; v++) fpal[t][sd][v] = -1;
+    cur = fpal[NTEAM95][0];
     if (!f) f = fopen("fightpal.txt", "r");
     if (!f) return;
     while (fgets(line, sizeof line, f)) {
         int a, b;
-        char *c = strpbrk(line, ";#");
+        char code[16], side[16], *c = strpbrk(line, ";#");
         if (c) *c = 0;
-        if (sscanf(line, "%d = %d", &a, &b) == 2 && a >= 1 && a < 48 && b >= 0 && b < 255) { fpal[a] = b; n++; }
+        if (sscanf(line, " [ %15[a-zA-Z] %15[a-zA-Z] ]", code, side) == 2) {
+            cur = NULL;
+            for (c = code; *c; c++) *c = (char)(*c | 32);
+            for (t = 0; t < NTEAM95; t++)
+                if (!strcmp(code, teams95[t])) {
+                    sd = (side[0] | 32) == 'a';
+                    cur = fpal[t][sd];
+                    fpal_set[t][sd] = 1;
+                    nj++;
+                }
+            continue;
+        }
+        if (cur && sscanf(line, "%d = %d", &a, &b) == 2 && a >= 1 && a < 48 && b >= 0 && b < 255) { cur[a] = (int16_t)b; n++; }
     }
     fclose(f);
-    fprintf(stderr, "Fights: FIGHTPAL.TXT, %d colours\n", n);
+    fprintf(stderr, "Fights: FIGHTPAL.TXT, %d jerseys, %d colours\n", nj, n);
 }
 
 static uint8_t *build(int k, int n)
