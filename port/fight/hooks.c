@@ -3,8 +3,8 @@
  *
  * The game side of NHLPA 93's fights (port/fight/hooks.h, HOOKS.md). Stage 1: a fight starts where 93's checkfight
  * did (after checkcheck in checkcx), port/fight/rules.c runs it once a frame before updateplayers, and it ends with
- * a penalty for both. The fighters keep 95 PC's own sprites for now (the 93 frames come in stage 2), and a human
- * fighter is played by the computer.
+ * a penalty for both. A fighter on a team with a controller is given to it (93's setd0player) and is played from
+ * the pad (doinput, patched); the others are played by the computer.
  *
  * 95 PC kept 93's pf2fight (pflags2 bit 0): a player with it gets no joystick skating and no collisions or falls,
  * and the puck's bit makes the others face xc1 / yc1. Faceoffs clear the bit.
@@ -34,7 +34,9 @@ extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
 extern short ovltimer, ovlseq, refsignal;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
-extern char DrawFrameSprite[], changeplayer[];
+extern char DrawFrameSprite[], changeplayer[], doinput[];
+extern int32_t regd0, regd1;
+extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
 extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
@@ -62,6 +64,9 @@ extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour rema
 #define PEN_ROUGHING 9                  /* Roughing: its minutes are made 5 while a fight's is waiting (93's Fighting) */
 #define ASS_NOTHING 0                   /* asstab 0: rtss */
 #define ASS_PUCKNOTHING 26
+#define ASS_PENBOX 0xC
+#define CAM_DX 0x30
+#define CAM_DY 0x30
 
 static fight ft;
 static uint8_t *who[2];
@@ -82,7 +87,8 @@ static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame nu
 static uint8_t lut[2][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont;
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont;
+static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
 static int watcher[12], nwatch, pen_wait, hold_lines;
@@ -90,6 +96,7 @@ static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
 static void undraw(void);
+static void give_control(uint8_t *p);
 
 /* ---- the game's routines (Watcom: eax, edx) ---- */
 static int game_random(void *ctx, int range)
@@ -115,6 +122,42 @@ static void ass_insert(uint8_t *p, int slot)
 /* back to the assignment under the one assinsert pushed */
 static void ass_done(uint8_t *p) { P_W(p, P_ASSNUM) = (int16_t)((P_W(p, P_ASSNUM) + 1) & 7); }
 
+static int restore_pl(int newpl, int oldpl)
+{
+    int a = newpl, d = oldpl;
+    __asm__ volatile("call " SYM("restorepl") : "+a"(a), "+d"(d) : : "ecx", "memory", "cc");
+    return (int16_t)a;
+}
+
+/* 93's setd0player: a fighter whose team has a controller is given to it (controller 2 first if it had the last
+ * player). The one he had gets pfna, which his own assignment takes up after the fight. */
+static void give_control(uint8_t *p)
+{
+    int sc = P_W(p, P_SCNUM), team = sc < 6 ? 1 : 2;
+    if (c1playernum[0] == sc || c2playernum[0] == sc) return;
+    if (lastplayer == c2playernum[0] && cont2team == team) c2playernum[0] = (short)restore_pl(sc, c2playernum[0]);
+    else if (cont1team == team) c1playernum[0] = (short)restore_pl(sc, c1playernum[0]);
+    else if (cont2team == team) c2playernum[0] = (short)restore_pl(sc, c2playernum[0]);
+}
+
+/* doinput (patched): during a fight a fighter's pad goes to the fight (93's fightinput) and nobody else skates,
+ * changes player or shoots from the pad; after it the fighters stay put until they are sent off. 1: skip doinput. */
+int fight_doinput(uint8_t *p)
+{
+    int k;
+    for (k = 0; k < 2; k++) {
+        if (p != who[k]) continue;
+        if (ft.on) {
+            int d = regd0 & 0xF, b = regd1 & 0xFFFF;
+            pad_dir[k] = d > 7 ? 8 : d;
+            pad_new[k] |= (b & 0x40 ? FP_A : 0) | (b & 0x10 ? FP_B : 0) | (b & 0x20 ? FP_C : 0);
+            return 1;
+        }
+        if (post[k]) return 1;
+    }
+    return ft.on;
+}
+
 /* ---- start (93's checkfight) ---- */
 static void to_fighter(fighter *f, const uint8_t *p, int away)
 {
@@ -123,7 +166,7 @@ static void to_fighter(fighter *f, const uint8_t *p, int away)
     f->xvel = P_W(p, P_XVEL);
     f->yvel = P_W(p, P_YVEL);
     f->facedir = P_W(p, P_FACEDIR) & 7;
-    f->human = 0;                       /* stage 1: the computer fights for everyone */
+    f->human = 0;                       /* set once the controllers are given out (fight_check) */
     f->fighting = P_B(p, P_AGGRESS) & 0xE;      /* 93's fighting rating is the nibble with bit 0 clear */
     f->checking = P_B(p, P_CHECKING) & 0xF;
     f->energy = 0x1000;
@@ -139,7 +182,7 @@ static int can_fight(const uint8_t *p)
 void fight_check(uint8_t *a, uint8_t *b)
 {
     int inst, k;
-    if (ft.on || !feel_fights()) return;
+    if (ft.on || post[0] || post[1] || !feel_fights()) return;
     if (gsp != last_gsp) { last_gsp = gsp; chkcnt = 0; memset(checks, 0, sizeof checks); }
     if (P_W(a, P_SCNUM) < 12 && P_W(b, P_SCNUM) < 12 && P_W(a, P_IMPACT) >= 10 && P_W(b, P_IMPACT) >= 10) {
         chkcnt++;
@@ -169,12 +212,18 @@ void fight_check(uint8_t *a, uint8_t *b)
         make_lut(0);
         make_lut(1);
     }
-    xc1 = (int16_t)ft.xc1;
-    yc1 = (int16_t)ft.yc1;
+    /* the camera centre is up and to the left of the fight, so the fighters are not under the scoreboard box
+     * (top left of the screen) */
+    xc1 = (int16_t)(ft.xc1 - CAM_DX);
+    yc1 = (int16_t)(ft.yc1 + CAM_DY);
     sflags |= 0x40;                     /* 93's sfslock: the camera stays on xc1 / yc1 */
     for (k = 0; k < 2; k++) {
         P_B(who[k], P_PFLAGS2) |= 1 | 4;        /* fighting, unavailable */
         ass_insert(who[k], ASS_NOTHING);
+        give_control(who[k]);
+        ft.f[k].human = (P_B(who[k], P_PFLAGS) & 8) != 0;
+        pad_dir[k] = 8;
+        pad_new[k] = 0;
     }
     /* everyone else watches (93's afwatch): no assignment and, with pflags2 bit 0, no skating from the joystick */
     nwatch = 0;
@@ -194,13 +243,18 @@ void fight_check(uint8_t *a, uint8_t *b)
 }
 
 /* ---- each frame ---- */
-static void release(void)
+/* the fighter's own assignment and flags back; held: he keeps them (no skating) until fight_after lets him go */
+static void let_go(uint8_t *p)
+{
+    P_B(p, P_PFLAGS2) &= (uint8_t)~(1 | 4);
+    if (((const int8_t *)p)[0x1E + (P_W(p, P_ASSNUM) & 7)] == ASS_NOTHING) ass_done(p);
+}
+
+static void release(int hold)
 {
     int k;
-    for (k = 0; k < 2; k++) {
-        P_B(who[k], P_PFLAGS2) &= (uint8_t)~(1 | 4);
-        ass_done(who[k]);
-    }
+    if (!hold)
+        for (k = 0; k < 2; k++) let_go(who[k]);
     for (k = 0; k < nwatch; k++) {
         uint8_t *p = PLAYER(watcher[k]);
         P_B(p, P_PFLAGS2) &= (uint8_t)~1;
@@ -219,7 +273,7 @@ static void release(void)
 static void end_fight(void)
 {
     int k;
-    release();
+    release(1);
     penmintab[PEN_ROUGHING] = 5;        /* 93's Fighting: 5 minutes, put back once both are called */
     pen_wait = 1;
     for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
@@ -272,6 +326,18 @@ static void show_names(void)
     hold_lines = 1;
 }
 
+/* a human fighter skates from the pad (93's fightinput calls playeracc) */
+static void fight_accel(void *ctx, int k, int dir)
+{
+    fighter *f = &ft.f[k];
+    (void)ctx;
+    P_W(who[k], P_XVEL) = (int16_t)f->xvel;
+    P_W(who[k], P_YVEL) = (int16_t)f->yvel;
+    feel_playeracc(who[k], dir);
+    f->xvel = P_W(who[k], P_XVEL);
+    f->yvel = P_W(who[k], P_YVEL);
+}
+
 void fight_frame(void)
 {
     int k;
@@ -281,7 +347,7 @@ void fight_frame(void)
     if (hold_lines && !(gmode & 1) && ovltimer >= 0 && ovltimer < 0x100) ovltimer++;
     if (!ft.on) return;
     if (gmode & 1) {                    /* play stopped some other way (a goal, the period): no penalty */
-        release();
+        release(0);
         return;
     }
     for (k = 0; k < 2; k++) {
@@ -291,7 +357,15 @@ void fight_frame(void)
         f->xvel = P_W(who[k], P_XVEL);
         f->yvel = P_W(who[k], P_YVEL);
     }
-    fight_pass(&ft, 1, NULL, NULL);
+    {
+        int pad[2];
+        for (k = 0; k < 2; k++) {
+            ft.f[k].human = (P_B(who[k], P_PFLAGS) & 8) != 0;
+            pad[k] = pad_dir[k] | pad_new[k] << 4;
+            pad_new[k] = 0;
+        }
+        fight_pass(&ft, 1, pad, fight_accel);
+    }
     for (k = 0; k < 2; k++) {
         fighter *f = &ft.f[k];
         P_W(who[k], P_XVEL) = (int16_t)f->xvel;
@@ -379,21 +453,23 @@ void fight_after(void)
 {
     int k;
     drawing = 0;
-    if (!have_rom || no_draw) return;
     for (k = 0; k < 2; k++) {
         int n = ft.f[k].frame;
         if (!ft.on && !post[k]) continue;
         if (!ft.on) {
-            /* after the fight he keeps his last pose until he is sent off (the penalty box assignment, 0Ch), skates
-             * away, or 10 s have gone */
-            const uint8_t *p = who[k];
-            int ass = ((const int8_t *)p)[0x1E + (P_W(p, P_ASSNUM) & 7)], vx = P_W(p, P_XVEL), vy = P_W(p, P_YVEL);
-            if (ass == 0xC || vx > 0x300 || vx < -0x300 || vy > 0x300 || vy < -0x300 || --post_timer < 0 || P_W(p, P_POSITION) < 0) {
+            /* after the fight both stand still in their last pose (no skating, from the pad or the computer) until
+             * he is sent off (the penalty box assignment), or 10 s have gone */
+            uint8_t *p = who[k];
+            int ass = ((const int8_t *)p)[0x1E + (P_W(p, P_ASSNUM) & 7)];
+            if (ass == ASS_PENBOX || --post_timer < 0 || P_W(p, P_POSITION) < 0) {
                 post[k] = 0;
+                let_go(p);
                 continue;
             }
+            P_W(p, P_XVEL) = (int16_t)(P_W(p, P_XVEL) * 7 / 8);       /* glide to a stop */
+            P_W(p, P_YVEL) = (int16_t)(P_W(p, P_YVEL) * 7 / 8);
         }
-        if (n <= 0 || n >= NFR) continue;
+        if (!have_rom || no_draw || n <= 0 || n >= NFR) continue;
         if (!spr[k][n] && !(spr[k][n] = build(k, n))) continue;
         saved_frame[k] = P_W(who[k], P_FRAME);
         P_W(who[k], P_FRAME) = (int16_t)(FR_93 + k * 0x400 + n);
@@ -459,6 +535,13 @@ __attribute__((naked)) static void changeplayer_thunk(void)
                      "1:\n\tpush $0x28\n\tjmp *" SYM("fight_cp_cont"));
 }
 
+/* doinput (eax player, edx controller): fight_doinput first */
+__attribute__((naked)) static void doinput_thunk(void)
+{
+    __asm__ volatile("pushal\n\tpush %eax\n\tcall " SYM("fight_doinput") "\n\tadd $4, %esp\n\ttest %eax, %eax\n\tpopal\n\t"
+                     "jz 1f\n\tret\n1:\n\tpush $0x14\n\tjmp *" SYM("fight_di_cont"));
+}
+
 __attribute__((naked)) static void checkcheck_thunk(void)
 {
     __asm__ volatile("call " SYM("checkcheck") "\n\tpushal\n\tpush %ecx\n\tpush %esi\n\tcall " SYM("fight_check")
@@ -503,7 +586,8 @@ void fight_install(void)
     ok_check = ok_frame && redirect_call(checkcx, 0x1000, checkcheck, (const void *)checkcheck_thunk);
     if (!ok_check) fprintf(stderr, "Fights: the hook points are not the expected code, fights are off\n");
     {
-        static const uint8_t push10[5] = { 0x68, 0x10, 0, 0, 0 }, push28[5] = { 0x68, 0x28, 0, 0, 0 };
+        static const uint8_t push10[5] = { 0x68, 0x10, 0, 0, 0 }, push28[5] = { 0x68, 0x28, 0, 0, 0 },
+                             push14[5] = { 0x68, 0x14, 0, 0, 0 };
         if (ok_check && !memcmp(DrawFrameSprite, push10, 5)) {
             fight_dfs_cont = DrawFrameSprite + 5;
             patch_jmp(DrawFrameSprite, (void *)drawframe_thunk);
@@ -515,5 +599,9 @@ void fight_install(void)
             fight_cp_cont = changeplayer + 5;
             patch_jmp(changeplayer, (void *)changeplayer_thunk);
         }
+        if (ok_check && !memcmp(doinput, push14, 5)) {
+            fight_di_cont = doinput + 5;
+            patch_jmp(doinput, (void *)doinput_thunk);
+        } else if (ok_check) fprintf(stderr, "Fights: doinput is not the expected code, the computer plays both fighters\n");
     }
 }
