@@ -35,7 +35,8 @@ extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
 extern short ovltimer, ovlseq, refsignal, Pencntdwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
-extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[];
+extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[];
+extern uint8_t gmode2;
 extern int32_t regd0, regd1;
 extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
@@ -89,7 +90,8 @@ static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame nu
 static uint8_t lut[2][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont;
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont;
+static int gloves, glove_x, glove_y, glove_side;    /* 93's glovecords: the dropped gloves on the ice */
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
@@ -396,6 +398,7 @@ void fight_frame(void)
 {
     int k;
     undraw();
+    if (gmode2 & 1) gloves = 0;         /* a faceoff clears them (93's puckfaceoff2) */
     check_pen_wait();
     pen_no_wait();
     /* the scoreboard box only runs while play is stopped (chkprogress): during the fight it is moved on here */
@@ -435,6 +438,12 @@ void fight_frame(void)
             if (!punch_on) { punch_init(&rom); punch_on = 1; }
             punch_play(!(ft.events & FE_PUNCH_HIGH));
         }
+    }
+    if (ft.events & FE_GLOVES) {        /* the gloves stay on the ice until the next faceoff */
+        gloves = 1;
+        glove_x = ft.glove_x * 4;
+        glove_y = ft.glove_y * 4;
+        glove_side = P_W(who[0], P_SCNUM) >= 6;
     }
     if (ft.events & FE_INJURY) {
         /* 93: the loser is hurt (pf2inj, pflags2 bit 6: 95 PC still skates him at 1/8 speed with its stumble, SPA
@@ -666,6 +675,24 @@ __attribute__((naked)) static void changeplayer_thunk(void)
                      "1:\n\tpush $0x28\n\tjmp *" SYM("fight_cp_cont"));
 }
 
+/* DrawRinkOverlays (eax, edx: the view): the gloves first, so the players are drawn over them */
+void fight_overlays(void)
+{
+    int code, x, y, side;
+    if (!gloves || !have_rom || no_draw) return;
+    side = glove_side;
+    code = FR_93 + 0 * 0x400 + F93_GLOVES;      /* fighter 0's colours */
+    x = glove_x; y = glove_y;
+    __asm__ volatile("push %4\n\tcall " SYM("DrawFrameSprite")
+                     : "+a"(code), "+d"(x), "+b"(y) : "c"(0), "r"(side) : "memory", "cc");
+}
+
+__attribute__((naked)) static void rinkoverlays_thunk(void)
+{
+    __asm__ volatile("pushal\n\tcall " SYM("fight_overlays") "\n\tpopal\n\t"
+                     "push $0x6C\n\tjmp *" SYM("fight_ro_cont"));
+}
+
 /* ClockTick: the clock stops for a fight (93 counted no time while the players fought) */
 __attribute__((naked)) static void clocktick_thunk(void)
 {
@@ -737,6 +764,11 @@ void fight_install(void)
         if (ok_check && !memcmp(changeplayer, push28, 5)) {
             fight_cp_cont = changeplayer + 5;
             patch_jmp(changeplayer, (void *)changeplayer_thunk);
+        }
+        static const uint8_t push6c[5] = { 0x68, 0x6C, 0, 0, 0 };
+        if (ok_check && have_rom && !no_draw && !memcmp(DrawRinkOverlays, push6c, 5)) {
+            fight_ro_cont = DrawRinkOverlays + 5;
+            patch_jmp(DrawRinkOverlays, (void *)rinkoverlays_thunk);
         }
         if (ok_check && !memcmp(ClockTick, push14, 5)) {
             fight_ck_cont = ClockTick + 5;
