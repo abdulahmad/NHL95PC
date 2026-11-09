@@ -128,7 +128,62 @@ static int is_skater(uint8_t *p)
 }
 
 /* ---- playeracc (5EDAD): eax = player, edx = direction ---- */
+static void playeracc_body(uint8_t *p, int dir);
+
+#ifndef FEEL_TEST
+/* NHL95_FEEL_LOG=file: every 5 seconds of skating, each skater's top speed in rink units a second (velocity x 16 a
+ * frame, 16.16) and ratings, for comparing the presets on the laptop */
+#include <math.h>
+static FILE *feel_log;
+static int log_checked;
+static struct { uint8_t *p; int legspd, legstr, weight, energy; double top; } seen[32];
+static int nseen, calls;
+
+static void log_speed(uint8_t *p)
+{
+    int k;
+    double v;
+    if (!log_checked) {
+        const char *path = getenv("NHL95_FEEL_LOG");
+        log_checked = 1;
+        if (path) feel_log = fopen(path, "a");
+        if (feel_log) fprintf(feel_log, "feel log: speed %d accel %d stop %d glide %d turn %d cartridge %d\n",
+                              now.speed, now.accel, now.stop, now.glide, now.turn, now.cartridge);
+    }
+    if (!feel_log || !is_skater(p)) return;
+    for (k = 0; k < nseen && seen[k].p != p; k++) {}
+    if (k == nseen) {
+        if (nseen == 32) return;
+        nseen++;
+        seen[k].p = p;
+        seen[k].top = 0;
+    }
+    v = sqrt((double)P_W(p, P_XVEL) * P_W(p, P_XVEL) + (double)P_W(p, P_YVEL) * P_W(p, P_YVEL)) * 16 * 60 / 65536;
+    if (v > seen[k].top) seen[k].top = v;
+    seen[k].legspd = P_B(p, P_LEGSPD); seen[k].legstr = P_B(p, P_LEGSTR); seen[k].weight = P_B(p, P_WEIGHT);
+    seen[k].energy = *tmpde_of(p);
+    if (++calls < 10 * 60 * 5) return;
+    calls = 0;
+    fprintf(feel_log, "profile speed %d accel %d stop %d glide %d turn %d cartridge %d\n", now.speed, now.accel, now.stop, now.glide,
+            now.turn, now.cartridge);
+    for (k = 0; k < nseen; k++) {
+        fprintf(feel_log, "  skater %08x legspd %2d legstr %2d weight %2d energy %4x top %.1f\n", (unsigned)(uintptr_t)seen[k].p,
+                seen[k].legspd, seen[k].legstr, seen[k].weight, seen[k].energy, seen[k].top);
+        seen[k].top = 0;
+    }
+    fflush(feel_log);
+}
+#else
+static void log_speed(uint8_t *p) { (void)p; }
+#endif
+
 void feel_playeracc(uint8_t *p, int dir)
+{
+    playeracc_body(p, dir);
+    log_speed(p);
+}
+
+static void playeracc_body(uint8_t *p, int dir)
 {
     int i = (int16_t)(dir * 2);
     int x, y, d2, legstr = P_B(p, P_LEGSTR), sk = is_skater(p);
@@ -371,6 +426,15 @@ void feel_register(ob_host *h, const char *ini_path)
     }
     /* the preset row follows the feature rows the file gave */
     ob_game_set(h, O_PRESET, matching_preset());
+    /* NHL95_FEEL=0-2 (a preset), NHL95_FEEL_TIMING=0 cartridge / 1 smooth: a test aid, not written to the ini */
+    if (getenv("NHL95_FEEL_TIMING")) ob_game_set(h, O_TIMING, atoi(getenv("NHL95_FEEL_TIMING")) ? 1 : 0);
+    if (getenv("NHL95_FEEL")) {
+        int v = atoi(getenv("NHL95_FEEL")), k;
+        if (v >= 0 && v < 3) {
+            for (k = 0; k < 5; k++) ob_game_set(h, O_SPEED + k, preset_rows[v][k]);
+            ob_game_set(h, O_PRESET, v);
+        }
+    }
     profile_from_rows();
     loading = 0;
 }
