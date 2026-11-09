@@ -1,6 +1,6 @@
 /* The window, its events and the menu bar come from Overbar's SDL2 platform layer (overbar/plat.h): this file is 95 PC's side of it, the hooks.
  * The layer makes the window (OpenGL when asked), the native bar (Windows), the overlay's keys and the live redraw while Windows sizes the
- * window; 95 PC keeps its own present (video.c / video_gl.c), the game's keys and mouse, and the DOS game port's controllers (input.c). */
+ * window; 95 PC keeps its own present (video.c, with Overbar's ob_gl), the game's keys and mouse, and the DOS game port's controllers (input.c). */
 #include "host.h"
 #include "audio.h"
 #include "overbar_client.h"
