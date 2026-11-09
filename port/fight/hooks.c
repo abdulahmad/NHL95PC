@@ -95,6 +95,7 @@ static int watcher[12], nwatch, pen_wait, hold_lines, pen_now;
 static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
+static int fpal[48];
 static void undraw(void);
 static void give_control(uint8_t *p);
 
@@ -430,8 +431,28 @@ static void make_lut(int k)
             int d = dist(dac[remap[sidx]], pal[v]);
             if (d < bd) { bd = d; best = sidx; }
         }
-        lut[k][v] = (uint8_t)best;
+        lut[k][v] = (uint8_t)(fpal[v >= 48 ? v - 16 : v] >= 0 ? fpal[v >= 48 ? v - 16 : v] : best);
     }
+}
+
+/* FIGHTPAL.TXT in the game folder (NHL9X Studio's Fight colours tab): "v = s" lines, 93 colour v (line x 16 +
+ * colour, 1-47; line 3 follows line 2) drawn with 95 PC sprite colour s (0-254). The rest are the nearest colours. */
+static void load_fightpal(void)
+{
+    FILE *f = fopen("FIGHTPAL.TXT", "r");
+    char line[128];
+    int v, n = 0;
+    for (v = 0; v < 48; v++) fpal[v] = -1;
+    if (!f) f = fopen("fightpal.txt", "r");
+    if (!f) return;
+    while (fgets(line, sizeof line, f)) {
+        int a, b;
+        char *c = strpbrk(line, ";#");
+        if (c) *c = 0;
+        if (sscanf(line, "%d = %d", &a, &b) == 2 && a >= 1 && a < 48 && b >= 0 && b < 255) { fpal[a] = b; n++; }
+    }
+    fclose(f);
+    fprintf(stderr, "Fights: FIGHTPAL.TXT, %d colours\n", n);
 }
 
 static uint8_t *build(int k, int n)
@@ -601,6 +622,7 @@ void fight_install(void)
     const char *dirs[3] = { ".", getenv("NHL93_ROM_DIR"), NULL };
     if (!dirs[1]) dirs[1] = "";
     have_rom = !rom93_find(dirs, &rom, NULL, 0);
+    load_fightpal();
     /* the frame hook first: a fight is never started that would not run */
     ok_frame = redirect_call(DoGameFrame, 0x40, updateplayers, (const void *)updateplayers_thunk);
     ok_check = ok_frame && redirect_call(checkcx, 0x1000, checkcheck, (const void *)checkcheck_thunk);
