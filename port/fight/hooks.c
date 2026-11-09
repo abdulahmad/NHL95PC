@@ -124,8 +124,10 @@ void fight_check(uint8_t *a, uint8_t *b)
     to_fighter(&ft.f[0], a, !(P_B(a, P_PFLAGS) & 0x40));
     to_fighter(&ft.f[1], b, !(P_B(b, P_PFLAGS) & 0x40));
     ft.random = game_random;
-    if (!fight_wants(&ft.f[0], &ft.f[1], chkcnt, checks[P_W(a, P_SCNUM)], checks[P_W(b, P_SCNUM)], gameopts & 1, game_random,
-                     NULL, &inst))
+    /* NHL95_FIGHT_TEST=1: every hit that may start a fight does (a test aid) */
+    if (getenv("NHL95_FIGHT_TEST")) inst = -1;
+    else if (!fight_wants(&ft.f[0], &ft.f[1], chkcnt, checks[P_W(a, P_SCNUM)], checks[P_W(b, P_SCNUM)], gameopts & 1, game_random,
+                          NULL, &inst))
         return;
     chkcnt = 0;
     memset(checks, 0, sizeof checks);
@@ -188,7 +190,10 @@ void fight_frame(void)
         if (!punch_on) { punch_init(&rom); punch_on = 1; }
         punch_play(!(ft.events & FE_PUNCH_HIGH));
     }
-    if (ft.events & FE_OVER) end_fight();
+    if (ft.events & FE_OVER) {
+        if (getenv("NHL95_FIGHT_LOG")) fprintf(stderr, "fight: over, winner %d\n", ft.winner);
+        end_fight();
+    }
 }
 
 /* ---- the thunks ---- */
