@@ -35,7 +35,7 @@ extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
 extern short ovltimer, ovlseq, refsignal, Pencntdwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
-extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[], DrawTextOverlay[];
+extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[], DrawTextOverlay[], assrefgoalpa[];
 extern short scrollx, scrolly;
 extern int hudhundaccum;
 extern uint8_t gmode2;
@@ -93,8 +93,15 @@ static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame nu
 static uint8_t lut[2][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont, *fight_dto_cont;
-static int gloves, glove_x, glove_y, glove_side;    /* 93's glovecords: the dropped gloves on the ice */
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont, *fight_dto_cont, *fight_rg_cont;
+/* 93's glovecords: the dropped gloves on the ice. 93's sprite is one pile with both sticks and glove pairs; it is drawn
+ * as two halves (PILE_L, PILE_R: a stick and its gloves each) so the referee can pick them up one at a time. */
+static int gloves, glove_x, glove_y;
+static int pile_on[2], pile_k[2], pile_side[2];  /* per half: still on the ice, whose colours (fighter), home/visitors */
+static int ref_time;                            /* the referee: frames spent collecting */
+#define PILE_L 1000
+#define PILE_R 1001
+#define PILE_SPLIT 50                           /* the column of 93's glove frame between the two halves */
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
@@ -443,10 +450,13 @@ void fight_frame(void)
         }
     }
     if (ft.events & FE_GLOVES) {        /* the gloves stay on the ice until the next faceoff */
+        int l = P_W(who[0], P_XPOS_HI) > P_W(who[1], P_XPOS_HI);       /* the fighter on the left */
         gloves = 1;
         glove_x = ft.glove_x * 4;
         glove_y = ft.glove_y * 4;
-        glove_side = P_W(who[0], P_SCNUM) >= 6;
+        pile_k[0] = l; pile_k[1] = !l;
+        for (k = 0; k < 2; k++) { pile_on[k] = 1; pile_side[k] = P_W(who[pile_k[k]], P_SCNUM) >= 6; }
+        ref_time = 0;
     }
     if (ft.events & FE_INJURY) {
         /* 93: the loser is hurt (pf2inj, pflags2 bit 6: 95 PC still skates him at 1/8 speed with its stumble, SPA
@@ -562,8 +572,13 @@ static uint8_t *build(int k, int n)
     f93_frame f;
     uint8_t *b, *o;
     int x, y, i;
-    if (f93_decode(&rom, n, &f) || !f.pix) return NULL;
+    int half = n == PILE_L ? 1 : n == PILE_R ? 2 : 0;
+    if (f93_decode(&rom, half ? F93_GLOVES : n, &f) || !f.pix) return NULL;
     f93_pc95_frame(&f);
+    if (half)
+        for (y = 0; y < f.h; y++)
+            for (x = 0; x < f.w; x++)
+                if ((x < PILE_SPLIT) != (half == 1)) f.pix[y * f.w + x] = 0;
     b = (uint8_t *)calloc(16 + (size_t)f.w * f.h * 2 + 16, 1);
     if (!b) { f93_frame_free(&f); return NULL; }
     b[0] = 1;
@@ -682,13 +697,72 @@ __attribute__((naked)) static void changeplayer_thunk(void)
 void fight_overlays(void)
 {
     int code, x, y, side;
+    int h;
     if (gmode2 & 1 || introskipped) gloves = 0;    /* gone before the fade back in, not a frame after */
     if (!gloves || !have_rom || no_draw) return;
-    side = glove_side;
-    code = FR_93 + 0 * 0x400 + F93_GLOVES;      /* fighter 0's colours */
-    x = glove_x; y = glove_y;
-    __asm__ volatile("push %4\n\tcall " SYM("DrawFrameSprite")
-                     : "+a"(code), "+d"(x), "+b"(y) : "c"(0), "r"(side) : "memory", "cc");
+    for (h = 0; h < 2; h++) {
+        if (!pile_on[h]) continue;
+        side = pile_side[h];
+        code = FR_93 + pile_k[h] * 0x400 + (h ? PILE_R : PILE_L);    /* each half in its fighter's colours */
+        x = glove_x; y = glove_y;
+        __asm__ volatile("push %4\n\tcall " SYM("DrawFrameSprite")
+                         : "+a"(code), "+d"(x), "+b"(y) : "c"(0), "r"(side) : "memory", "cc");
+    }
+}
+
+/* where the referee stands to pick up half h: its middle, from the glove frame's origin (rink y is up) */
+static void pile_spot(int h, int *x, int *y)
+{
+    *x = glove_x + (h ? 33 : -27);
+    *y = glove_y - (h ? 4 : 1);
+}
+
+/* assrefgoalpa (eax: the referee), each frame after a call: with the penalties called (PenBuf empty) he goes to the
+ * puck and picks it up. With sticks and gloves still on the ice he first skates to each half and picks it up with
+ * the same move (SPA C03h, locked while it plays): the half goes with him. 1: done here, 0: the game's code. */
+int fight_ref(uint8_t *p)
+{
+    int h, best = -1, bd = 0, x, y, dx, dy;
+    if (!gloves || (gmode2 & 1) || introskipped) return 0;
+    if (P_B(p, P_PFLAGS) & 0x22) return 0;      /* locked, or a new assignment: the game sets it up first */
+    if (ovlseq != 2 && ovlseq != 0 && ovltimer >= 0 && ovltimer < 0x100) return 0;      /* a goal */
+    if (PenBuf[0]) return 0;
+    if (++ref_time > 900) { gloves = 0; return 0; }     /* 15 s: never stuck; they go at the faceoff anyway */
+    for (h = 0; h < 2; h++) {
+        if (!pile_on[h]) continue;
+        pile_spot(h, &x, &y);
+        dx = x - P_W(p, P_XPOS_HI); dy = y - P_W(p, P_YPOS_HI);
+        if (best < 0 || dx * dx + dy * dy < bd) { best = h; bd = dx * dx + dy * dy; }
+    }
+    if (best < 0) { gloves = 0; return 0; }
+    pile_spot(best, &x, &y);
+    dx = x - P_W(p, P_XPOS_HI); dy = y - P_W(p, P_YPOS_HI);
+    if (dx < -0xC || dx > 0xC || dy < -0xC || dy > 0xC) {
+        int a = (int)(uintptr_t)p, d = 0;
+        regd0 = (regd0 & ~0xFFFF) | (x & 0xFFFF);
+        regd1 = (regd1 & ~0xFFFF) | (y & 0xFFFF);
+        __asm__ volatile("call " SYM("SkateToSpot") : "+a"(a), "+d"(d) : : "ebx", "ecx", "memory", "cc");
+        return 1;
+    }
+    {
+        int a = dx, d = dy, s = 0xC03;
+        __asm__ volatile("call " SYM("vtoa") : "+a"(a), "+d"(d) : : "ebx", "ecx", "memory", "cc");
+        if ((a & 0xFFFF) < 8) P_W(p, P_FACEDIR) = (int16_t)a;
+        P_W(p, P_XVEL) = 0; P_W(p, P_YVEL) = 0;
+        a = (int)(uintptr_t)p;
+        __asm__ volatile("call " SYM("SetSPA") : "+a"(a), "+d"(s) : : "ebx", "ecx", "memory", "cc");
+    }
+    P_B(p, P_PFLAGS) |= 0x20;                   /* locked while the move plays, as for the puck */
+    pile_on[best] = 0;
+    if (!pile_on[0] && !pile_on[1]) gloves = 0;
+    return 1;
+}
+
+__attribute__((naked)) static void refgoalpa_thunk(void)
+{
+    __asm__ volatile("pushal\n\tpush %eax\n\tcall " SYM("fight_ref") "\n\tadd $4, %esp\n\t"
+                     "test %eax, %eax\n\tpopal\n\tjz 1f\n\tret\n"
+                     "1:\n\tpush $0x28\n\tjmp *" SYM("fight_rg_cont"));
 }
 
 __attribute__((naked)) static void rinkoverlays_thunk(void)
@@ -812,6 +886,10 @@ void fight_install(void)
         if (ok_check && have_rom && !no_draw && !memcmp(DrawRinkOverlays, push6c, 5)) {
             fight_ro_cont = DrawRinkOverlays + 5;
             patch_jmp(DrawRinkOverlays, (void *)rinkoverlays_thunk);
+        }
+        if (ok_check && have_rom && !no_draw && !memcmp(assrefgoalpa, push28, 5)) {
+            fight_rg_cont = assrefgoalpa + 5;
+            patch_jmp(assrefgoalpa, (void *)refgoalpa_thunk);
         }
         static const uint8_t push60[5] = { 0x68, 0x60, 0, 0, 0 };
         if (ok_check && !memcmp(DrawTextOverlay, push60, 5)) {
