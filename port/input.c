@@ -377,6 +377,7 @@ void input_poll(void)
     joy_update();
     cursor_update();
     intro_skip_poll();
+    osk_poll();
     ob_plat_pump();
     if (quit_requested) host_exit(0);
 }

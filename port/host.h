@@ -124,6 +124,7 @@ extern volatile int quit_requested;                    /* the window was closed 
 struct SDL_Window;
 struct SDL_Window *shell_open(const char *title, int w, int h, int gl);   /* the layer's window (OpenGL if gl), the bar and the events */
 void shell_close(void);
+void osk_poll(void);                                   /* osk_hook.c: the on-screen keyboard follows the game's text editing */
 union SDL_Event;
 void input_osk_key(int scancode, int down);            /* input.c: a key typed on the on-screen keyboard */
 void input_event(const union SDL_Event *e);            /* input.c: an event the layer did not use (the game's keys, mouse, joystick scan) */

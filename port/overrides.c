@@ -236,6 +236,7 @@ __attribute__((naked)) static void music_done_entry(void)
         "jmp " SYM("sub_971F8"));
 }
 
+void osk_hook_install(void);
 void install_overrides(void)
 {
 #ifdef _WIN32
@@ -256,4 +257,5 @@ void install_overrides(void)
     if (!getenv("NHL95_LOADSCREEN")) stub_zero(ShowLoadingScreen);      /* the loading picture and its palette cycling are not needed on a modern machine */
     mt32_digital();
     install_flag_traps();
+    osk_hook_install();
 }
