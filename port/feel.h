@@ -43,5 +43,8 @@ void feel_set_profile(const feel_profile *f);
 
 /* the Game page's Fights row (port/fight/hooks.c): 1 on */
 int feel_fights(void);
+/* the Game page's debug row: the next hit that may start a fight does (cleared once it has) */
+int feel_fight_next(void);
+void feel_fight_next_done(void);
 
 #endif

@@ -11,5 +11,6 @@
 void fight_install(void);                       /* from install_overrides, after feel_install */
 void fight_check(uint8_t *a, uint8_t *b);       /* after checkcheck in checkcx */
 void fight_frame(void);                         /* each DoGameFrame, before updateplayers */
+void fight_after(void);                         /* and after it */
 
 #endif

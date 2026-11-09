@@ -33,6 +33,8 @@ extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
+extern uint8_t *photoptrs[0x46E];
+extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
 #define P_B(p, o) (*(uint8_t *)((p) + (o)))
@@ -43,7 +45,9 @@ extern int16_t gsp, xc1, yc1;
 #define P_IMPACT 0x18
 #define P_POSITION 0x1A
 #define P_ASSNUM 0x1C
+#define P_FRAME 0x12
 #define P_FACEDIR 0x36
+#define P_ATTRIBUTE 0x55
 #define P_PFLAGS 0x44
 #define P_PFLAGS2 0x45
 #define P_AGGRESS 0x62
@@ -61,6 +65,22 @@ static int checks[12], chkcnt, last_gsp = -1;
 static rom93 rom;
 static int have_rom, punch_on;
 static int ok_check, ok_frame;
+
+/* ---- drawing: the 93 frames as 95 PC sprites (stage 2) ----
+ * 95 PC's sprite: a flag byte (non-zero: the run-length blitter), w and h at +4 / +6, the hot spot at +8 / +0Ah, then
+ * from +10h: a count byte c > 0 and a colour (FFh: c transparent pixels) or c < 0 and -c literal colours, 0 ends;
+ * rows follow on from each other. After updateplayers a fighter's frame is a free photoptrs slot holding his
+ * current 93 frame, so DrawRinkOverlays draws it in his place, in depth order; his own frame is put back before
+ * the next updateplayers. The colours are found once per fight: the 95 PC sprite index whose remapped palette
+ * entry is nearest to each 93 colour (team colours among 95 PC's own team-colour indexes, 90h-BFh). */
+#define NFR 1024
+static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame number */
+static uint8_t lut[2][64];
+static int slot[2] = { -1, -1 }, saved_frame[2], drawing;
+static void free_sprites(void);
+static void make_lut(int k);
+static void find_slots(void);
+static void undraw(void);
 
 /* ---- the game's routines (Watcom: eax, edx) ---- */
 static int game_random(void *ctx, int range)
@@ -124,8 +144,8 @@ void fight_check(uint8_t *a, uint8_t *b)
     to_fighter(&ft.f[0], a, !(P_B(a, P_PFLAGS) & 0x40));
     to_fighter(&ft.f[1], b, !(P_B(b, P_PFLAGS) & 0x40));
     ft.random = game_random;
-    /* NHL95_FIGHT_TEST=1: every hit that may start a fight does (a test aid) */
-    if (getenv("NHL95_FIGHT_TEST")) inst = -1;
+    /* the Game page's debug row, or NHL95_FIGHT_TEST=1: every hit that may start a fight does */
+    if (feel_fight_next() || getenv("NHL95_FIGHT_TEST")) { inst = -1; feel_fight_next_done(); }
     else if (!fight_wants(&ft.f[0], &ft.f[1], chkcnt, checks[P_W(a, P_SCNUM)], checks[P_W(b, P_SCNUM)], gameopts & 1, game_random,
                           NULL, &inst))
         return;
@@ -134,6 +154,12 @@ void fight_check(uint8_t *a, uint8_t *b)
     who[0] = a;
     who[1] = b;
     fight_begin(&ft);
+    if (have_rom) {
+        free_sprites();
+        make_lut(0);
+        make_lut(1);
+        if (slot[1] < 0) find_slots();
+    }
     xc1 = (int16_t)ft.xc1;
     yc1 = (int16_t)ft.yc1;
     for (k = 0; k < 2; k++) {
@@ -164,6 +190,7 @@ static void end_fight(void)
 void fight_frame(void)
 {
     int k;
+    undraw();
     if (!ft.on) return;
     if (gmode & 1) {                    /* play stopped some other way (a goal, the period): no penalty */
         for (k = 0; k < 2; k++) { P_B(who[k], P_PFLAGS2) &= (uint8_t)~1; ass_done(who[k]); }
@@ -196,6 +223,110 @@ void fight_frame(void)
     }
 }
 
+static void free_sprites(void)
+{
+    int k, n;
+    for (k = 0; k < 2; k++)
+        for (n = 0; n < NFR; n++) { free(spr[k][n]); spr[k][n] = NULL; }
+}
+
+static int dist(uint32_t a, uint32_t b)
+{
+    int dr = (int)(a >> 16 & 255) - (int)(b >> 16 & 255), dg = (int)(a >> 8 & 255) - (int)(b >> 8 & 255), db = (int)(a & 255) - (int)(b & 255);
+    return dr * dr * 3 + dg * dg * 4 + db * db * 2;
+}
+
+static void make_lut(int k)
+{
+    uint32_t dac[256], pal[64];
+    const uint8_t *remap = P_W(who[k], P_SCNUM) < 6 ? byte_DC9D8 : byte_DC8D8;
+    int v, sidx;
+    video_dac_rgb(dac);
+    f93_palette(&rom, 0, 1, pal);
+    f93_pc95_colours(pal);
+    for (v = 1; v < 64; v++) {
+        int team = v >= 32 && (v & 15) != 1 && (v & 15) != 6 && (v & 15) != 7 && (v & 15) != 14 && (v & 15) != 15;
+        int lo = team ? 0x90 : 0, hi = team ? 0xC0 : 0xC0, best = -1, bd = 1 << 30;
+        for (sidx = lo; sidx < hi; sidx++) {
+            int d = dist(dac[remap[sidx]], pal[v]);
+            if (d < bd) { bd = d; best = sidx; }
+        }
+        lut[k][v] = (uint8_t)best;
+    }
+}
+
+static uint8_t *build(int k, int n)
+{
+    f93_frame f;
+    uint8_t *b, *o;
+    int x, y, i;
+    if (f93_decode(&rom, n, &f) || !f.pix) return NULL;
+    f93_pc95_frame(&f);
+    b = (uint8_t *)calloc(16 + (size_t)f.w * f.h * 2 + 16, 1);
+    if (!b) { f93_frame_free(&f); return NULL; }
+    b[0] = 1;
+    *(int16_t *)(b + 4) = (int16_t)f.w;
+    *(int16_t *)(b + 6) = (int16_t)f.h;
+    *(int16_t *)(b + 8) = (int16_t)-f.x0;
+    *(int16_t *)(b + 10) = (int16_t)-f.y0;
+    o = b + 16;
+    for (y = 0; y < f.h; y++) {
+        const uint8_t *row = f.pix + y * f.w;
+        for (x = 0; x < f.w; ) {
+            if (!row[x]) {
+                for (i = 0; x + i < f.w && !row[x + i] && i < 127; i++) {}
+                *o++ = (uint8_t)i; *o++ = 0xFF;
+            } else {
+                for (i = 0; x + i < f.w && row[x + i] && i < 127; i++) {}
+                *o++ = (uint8_t)(int8_t)-i;
+                { int j; for (j = 0; j < i; j++) *o++ = lut[k][row[x + j] & 63]; }
+            }
+            x += i;
+        }
+    }
+    *o = 0;
+    f93_frame_free(&f);
+    return b;
+}
+
+static void find_slots(void)
+{
+    int n, k = 0;
+    for (n = 0x46D; n > 0 && k < 2; n--)
+        if (!photoptrs[n]) slot[k++] = n;
+    if (k < 2) slot[0] = slot[1] = -1;
+}
+
+/* after updateplayers: the fighters show their 93 frame */
+void fight_after(void)
+{
+    int k;
+    drawing = 0;
+    if (!ft.on || !have_rom || slot[1] < 0) return;
+    for (k = 0; k < 2; k++) {
+        int n = ft.f[k].frame;
+        if (n <= 0 || n >= NFR) return;
+        if (!spr[k][n] && !(spr[k][n] = build(k, n))) return;
+    }
+    for (k = 0; k < 2; k++) {
+        photoptrs[slot[k]] = spr[k][ft.f[k].frame];
+        saved_frame[k] = P_W(who[k], P_FRAME);
+        P_W(who[k], P_FRAME) = (int16_t)slot[k];
+        if (ft.f[k].flip) P_B(who[k], P_ATTRIBUTE) |= 8;
+        else P_B(who[k], P_ATTRIBUTE) &= (uint8_t)~8;
+    }
+    drawing = 1;
+}
+
+/* before updateplayers: their own frames back, so updateanim carries on as it was */
+static void undraw(void)
+{
+    int k;
+    if (!drawing) return;
+    for (k = 0; k < 2; k++) P_W(who[k], P_FRAME) = (int16_t)saved_frame[k];
+    drawing = 0;
+}
+
 /* ---- the thunks ---- */
 __attribute__((naked)) static void checkcheck_thunk(void)
 {
@@ -205,7 +336,8 @@ __attribute__((naked)) static void checkcheck_thunk(void)
 
 __attribute__((naked)) static void updateplayers_thunk(void)
 {
-    __asm__ volatile("pushal\n\tcall " SYM("fight_frame") "\n\tpopal\n\tjmp " SYM("updateplayers"));
+    __asm__ volatile("pushal\n\tcall " SYM("fight_frame") "\n\tpopal\n\tcall " SYM("updateplayers")
+                     "\n\tpushal\n\tcall " SYM("fight_after") "\n\tpopal\n\tret");
 }
 
 /* the call rel32 to `target` within n bytes of `from`, moved to `to` */

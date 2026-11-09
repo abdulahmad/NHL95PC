@@ -338,7 +338,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_NEXT, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -356,6 +356,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "feel_glide", "Glide", two_names, 2, 0, 1, 1 },
     { "feel_turning", "Turning", two_names, 2, 0, 1, 1 },
     { "fights", "Fights (NHLPA 93's)", onoff_names, 2, 1, 1, 2 },
+    { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */
@@ -448,6 +449,16 @@ void feel_register(ob_host *h, const char *ini_path)
 int feel_fights(void)
 {
     return g_host ? ob_game_get(g_host, O_FIGHTS) : 1;
+}
+
+int feel_fight_next(void)
+{
+    return g_host ? ob_game_get(g_host, O_FIGHT_NEXT) : 0;
+}
+
+void feel_fight_next_done(void)
+{
+    if (g_host) ob_game_set(g_host, O_FIGHT_NEXT, 0);
 }
 
 void feel_session_begin(const char *text, size_t size)
