@@ -31,9 +31,12 @@
 extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[];
 extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
+extern signed char PenBuf[], PenBuf_pl[], penmintab[];
+extern short ovltimer, ovlseq;
+extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
+extern char DrawFrameSprite[], changeplayer[];
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
-extern uint8_t *photoptrs[0x46E];
 extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
@@ -52,10 +55,11 @@ extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour rema
 #define P_PFLAGS2 0x45
 #define P_AGGRESS 0x62
 #define P_CHECKING 0x64
+#define P_PNUM 0x47
 #define P_SCNUM 0x6A
 #define PLAYER(i) (SortCords + (i) * 0x80)
 
-#define PEN_ROUGHING 0x0B               /* stage 1's stand-in for Fighting (2 minutes; 93 gave 5) */
+#define PEN_ROUGHING 9                  /* Roughing: its minutes are made 5 while a fight's is waiting (93's Fighting) */
 #define ASS_NOTHING 0                   /* asstab 0: rtss */
 #define ASS_PUCKNOTHING 26
 
@@ -64,22 +68,27 @@ static uint8_t *who[2];
 static int checks[12], chkcnt, last_gsp = -1;
 static rom93 rom;
 static int have_rom, punch_on;
-static int ok_check, ok_frame;
+static int ok_check, ok_frame, no_draw;
 
 /* ---- drawing: the 93 frames as 95 PC sprites (stage 2) ----
  * 95 PC's sprite: a flag byte (non-zero: the run-length blitter), w and h at +4 / +6, the hot spot at +8 / +0Ah, then
  * from +10h: a count byte c > 0 and a colour (FFh: c transparent pixels) or c < 0 and -c literal colours, 0 ends;
- * rows follow on from each other. After updateplayers a fighter's frame is a free photoptrs slot holding his
- * current 93 frame, so DrawRinkOverlays draws it in his place, in depth order; his own frame is put back before
- * the next updateplayers. The colours are found once per fight: the 95 PC sprite index whose remapped palette
+ * rows follow on from each other. After updateplayers a fighter's frame is FR_93 + fighter x 400h + his 93 frame,
+ * which DrawFrameSprite (patched) draws from here, so DrawRinkOverlays draws it in his place, in depth order, and
+ * replays (which keep the frame numbers) show it too; his own frame is put back before the next updateplayers. The colours are found once per fight: the 95 PC sprite index whose remapped palette
  * entry is nearest to each 93 colour (team colours among 95 PC's own team-colour indexes, 90h-BFh). */
 #define NFR 1024
 static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame number */
 static uint8_t lut[2][64];
-static int slot[2] = { -1, -1 }, saved_frame[2], drawing;
+#define FR_93 0x7000
+static int saved_frame[2], drawing, replay_frame[2];
+void *fight_dfs_cont, *fight_cp_cont;
+int fight_on_now;
+static uint8_t *build(int k, int n);
+static int watcher[12], nwatch, pen_wait, hold_lines;
 static void free_sprites(void);
+static void show_names(void);
 static void make_lut(int k);
-static void find_slots(void);
 static void undraw(void);
 
 /* ---- the game's routines (Watcom: eax, edx) ---- */
@@ -154,49 +163,107 @@ void fight_check(uint8_t *a, uint8_t *b)
     who[0] = a;
     who[1] = b;
     fight_begin(&ft);
+    fight_on_now = 1;
     if (have_rom) {
         free_sprites();
         make_lut(0);
         make_lut(1);
-        if (slot[1] < 0) find_slots();
     }
     xc1 = (int16_t)ft.xc1;
     yc1 = (int16_t)ft.yc1;
+    sflags |= 0x40;                     /* 93's sfslock: the camera stays on xc1 / yc1 */
     for (k = 0; k < 2; k++) {
-        P_B(who[k], P_PFLAGS2) |= 1;
+        P_B(who[k], P_PFLAGS2) |= 1 | 4;        /* fighting, unavailable */
         ass_insert(who[k], ASS_NOTHING);
+    }
+    /* everyone else watches (93's afwatch): no assignment and, with pflags2 bit 0, no skating from the joystick */
+    nwatch = 0;
+    for (k = 0; k < 12; k++) {
+        uint8_t *p = PLAYER(k);
+        if (p == a || p == b || P_W(p, P_POSITION) <= 0 || (P_B(p, P_PFLAGS2) & 1)) continue;
+        P_B(p, P_PFLAGS2) |= 1;
+        ass_insert(p, ASS_NOTHING);
+        watcher[nwatch++] = k;
     }
     puckpflags2 |= 1;
     ass_insert(puckstruct, ASS_PUCKNOTHING);
+    show_names();
     if (getenv("NHL95_FIGHT_LOG"))
         fprintf(stderr, "fight: %d against %d (fighting %d / %d), instigator %d\n", P_W(a, P_SCNUM), P_W(b, P_SCNUM), ft.f[0].fighting,
                 ft.f[1].fighting, inst);
 }
 
 /* ---- each frame ---- */
-static void end_fight(void)
+static void release(void)
 {
     int k;
     for (k = 0; k < 2; k++) {
-        P_B(who[k], P_PFLAGS2) &= (uint8_t)~1;
+        P_B(who[k], P_PFLAGS2) &= (uint8_t)~(1 | 4);
         ass_done(who[k]);
     }
+    for (k = 0; k < nwatch; k++) {
+        uint8_t *p = PLAYER(watcher[k]);
+        P_B(p, P_PFLAGS2) &= (uint8_t)~1;
+        ass_done(p);
+    }
+    nwatch = 0;
     puckpflags2 &= (uint8_t)~1;
     ass_done(puckstruct);
-    for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
+    sflags &= (uint8_t)~0x40;
+    if (hold_lines && ovltimer >= 0 && ovltimer <= 0x100) ovltimer = 0x258;      /* the names slide out */
+    hold_lines = 0;
     ft.on = 0;
+    fight_on_now = 0;
+}
+
+static void end_fight(void)
+{
+    int k;
+    release();
+    penmintab[PEN_ROUGHING] = 5;        /* 93's Fighting: 5 minutes, put back once both are called */
+    pen_wait = 1;
+    for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
+}
+
+/* Roughing goes back to 2 minutes once the fight's two are out of PenBuf (called, or dropped) */
+static void check_pen_wait(void)
+{
+    int i, left = 0;
+    if (!pen_wait) return;
+    for (i = 0; i < 0x20; i++) {
+        int pl = PenBuf_pl[i * 2] & 0x7F;
+        if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl) == who[0] || PLAYER(pl) == who[1])) left++;
+    }
+    if (!left) { penmintab[PEN_ROUGHING] = 2; pen_wait = 0; }
+}
+
+/* 93's banner with the two names, in 95 PC's scoreboard box: "#12 Neely / vs. / #7 Probert" */
+static void name_line(unsigned char *out, const uint8_t *p)
+{
+    int side = (P_B(p, P_PFLAGS) & 0x40) != 0, pn = P_B(p, P_PNUM) & 0x7F;
+    const unsigned char *r = hmroster + side * 0x444 + pn * 0x27;
+    snprintf((char *)out, 0x3C, "#%d %.20s", hmrosterjersey[side * 0x444 + pn * 0x27], (const char *)r + 0x17);
+}
+
+static void show_names(void)
+{
+    if (ovltimer >= 0) return;          /* the box is busy (a goal, a penalty): no names */
+    name_line(textline3, who[0]);
+    snprintf((char *)textline1, 0x3C, "vs.");
+    name_line(textline2, who[1]);
+    ovlseq = -1;
+    ovltimer = 0;
+    hold_lines = 1;
 }
 
 void fight_frame(void)
 {
     int k;
     undraw();
+    check_pen_wait();
     if (!ft.on) return;
     if (gmode & 1) {                    /* play stopped some other way (a goal, the period): no penalty */
-        for (k = 0; k < 2; k++) { P_B(who[k], P_PFLAGS2) &= (uint8_t)~1; ass_done(who[k]); }
-        puckpflags2 &= (uint8_t)~1;
-        ass_done(puckstruct);
-        ft.on = 0;
+        release();
         return;
     }
     for (k = 0; k < 2; k++) {
@@ -289,29 +356,20 @@ static uint8_t *build(int k, int n)
     return b;
 }
 
-static void find_slots(void)
-{
-    int n, k = 0;
-    for (n = 0x46D; n > 0 && k < 2; n--)
-        if (!photoptrs[n]) slot[k++] = n;
-    if (k < 2) slot[0] = slot[1] = -1;
-}
-
 /* after updateplayers: the fighters show their 93 frame */
 void fight_after(void)
 {
     int k;
     drawing = 0;
-    if (!ft.on || !have_rom || slot[1] < 0) return;
+    if (!ft.on || !have_rom || no_draw) return;
     for (k = 0; k < 2; k++) {
         int n = ft.f[k].frame;
         if (n <= 0 || n >= NFR) return;
         if (!spr[k][n] && !(spr[k][n] = build(k, n))) return;
     }
     for (k = 0; k < 2; k++) {
-        photoptrs[slot[k]] = spr[k][ft.f[k].frame];
         saved_frame[k] = P_W(who[k], P_FRAME);
-        P_W(who[k], P_FRAME) = (int16_t)slot[k];
+        P_W(who[k], P_FRAME) = (int16_t)(FR_93 + k * 0x400 + ft.f[k].frame);
         if (ft.f[k].flip) P_B(who[k], P_ATTRIBUTE) |= 8;
         else P_B(who[k], P_ATTRIBUTE) &= (uint8_t)~8;
     }
@@ -327,7 +385,53 @@ static void undraw(void)
     drawing = 0;
 }
 
+/* DrawFrameSprite's frame FR_93 + k x 400h + n: fighter k's 93 frame n. In a replay (sflags bit 7) a punch frame
+ * coming up plays the punch, as the live fight did. */
+void *fight_sprite(int code)
+{
+    int k = (code - FR_93) >> 10 & 1, n = code & 0x3FF;
+    if (!have_rom) return NULL;
+    if (sflags & 0x80) {
+        if (n != replay_frame[k]) {
+            int c = n - F93_FIGHT;
+            replay_frame[k] = n;
+            if (c == 6 || c == 11 || c == 7 || c == 12) {
+                if (!punch_on) { punch_init(&rom); punch_on = 1; }
+                punch_play(c == 7 || c == 12);
+            }
+        }
+    } else replay_frame[k] = 0;
+    if (!spr[k][n] && !lut[k][1]) return NULL;
+    if (!spr[k][n]) spr[k][n] = build(k, n);
+    return spr[k][n];
+}
+
 /* ---- the thunks ---- */
+/* DrawFrameSprite (Watcom: n eax, x edx, y ebx, flip ecx, colours on the stack, ret 4): FR_93 frames are ours, the
+ * rest go on to the game's code after its first instruction (push 10h, moved here) */
+__attribute__((naked)) static void drawframe_thunk(void)
+{
+    __asm__ volatile(
+        "cmpw $0x7000, %ax\n\tjl 1f\n\tcmpw $0x7800, %ax\n\tjge 1f\n\t"
+        "push %esi\n\tpush %edx\n\tpush %ebx\n\tpush %ecx\n\t"
+        "movswl %ax, %eax\n\tpush %eax\n\tcall " SYM("fight_sprite") "\n\tadd $4, %esp\n\t"
+        "pop %ecx\n\tpop %ebx\n\tpop %edx\n\t"
+        "test %eax, %eax\n\tjz 2f\n\t"
+        "mov %edx, %esi\n\tadd $0xC0, %esi\n\tmov $0x140, %edx\n\tsub %ebx, %edx\n\tmov %edx, %ebx\n\t"
+        "push $1\n\tmov 0xA(%esp), %edx\n\tsar $16, %edx\n\tpush %edx\n\t"
+        "movswl %cx, %ecx\n\tmovswl %bx, %ebx\n\tmovswl %si, %edx\n\t"
+        "call " SYM("DrawSprite") "\n"
+        "2:\n\tpop %esi\n\tret $4\n"
+        "1:\n\tpush $0x10\n\tjmp *" SYM("fight_dfs_cont"));
+}
+
+/* changeplayer (eax player, edx controller): no change of player during a fight */
+__attribute__((naked)) static void changeplayer_thunk(void)
+{
+    __asm__ volatile("cmpl $0, " SYM("fight_on_now") "\n\tje 1f\n\tret\n"
+                     "1:\n\tpush $0x28\n\tjmp *" SYM("fight_cp_cont"));
+}
+
 __attribute__((naked)) static void checkcheck_thunk(void)
 {
     __asm__ volatile("call " SYM("checkcheck") "\n\tpushal\n\tpush %ecx\n\tpush %esi\n\tcall " SYM("fight_check")
@@ -371,4 +475,18 @@ void fight_install(void)
     ok_frame = redirect_call(DoGameFrame, 0x40, updateplayers, (const void *)updateplayers_thunk);
     ok_check = ok_frame && redirect_call(checkcx, 0x1000, checkcheck, (const void *)checkcheck_thunk);
     if (!ok_check) fprintf(stderr, "Fights: the hook points are not the expected code, fights are off\n");
+    {
+        static const uint8_t push10[5] = { 0x68, 0x10, 0, 0, 0 }, push28[5] = { 0x68, 0x28, 0, 0, 0 };
+        if (ok_check && !memcmp(DrawFrameSprite, push10, 5)) {
+            fight_dfs_cont = DrawFrameSprite + 5;
+            patch_jmp(DrawFrameSprite, (void *)drawframe_thunk);
+        } else if (have_rom) {
+            fprintf(stderr, "Fights: DrawFrameSprite is not the expected code, fighters keep 95 PC's sprites\n");
+            no_draw = 1;
+        }
+        if (ok_check && !memcmp(changeplayer, push28, 5)) {
+            fight_cp_cont = changeplayer + 5;
+            patch_jmp(changeplayer, (void *)changeplayer_thunk);
+        }
+    }
 }
