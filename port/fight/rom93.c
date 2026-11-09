@@ -242,6 +242,18 @@ const char *f93_team_abbrev(int team)
     return team >= 0 && team < F93_NTEAMS ? names[team] : "";
 }
 
+void f93_pc95_colours(uint32_t rgb[64])
+{
+    int line;
+    if (!rgb) return;
+    for (line = 2; line < 4; line++) {
+        rgb[line * 16 + 6] = 0xE08080;
+        rgb[line * 16 + 7] = 0xC06060;
+        rgb[line * 16 + 14] = 0xA06060;
+        rgb[line * 16 + 15] = 0x40A0E0;
+    }
+}
+
 const uint8_t *rom93_punch(const rom93 *r, size_t *len)
 {
     size_t n = 0;
