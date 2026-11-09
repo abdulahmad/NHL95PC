@@ -338,7 +338,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_NEXT, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -346,6 +346,7 @@ static const char *const timing_names[] = { "Cartridge (30 a second, skating onl
 static const char *const src_names[] = { "95 PC", "94 Genesis", "94 Genesis, scaled to rink" };
 static const char *const two_names[] = { "95 PC", "94 Genesis" };
 static const char *const onoff_names[] = { "Off", "On" };
+static const char *const fightbox_names[] = { "Moves to the top right", "Hides" };
 
 static const ob_game_opt opts[O_COUNT] = {
     { "feel", "Feel", preset_names, 4, PRESET_ORIGINAL, 1, 0 },
@@ -356,6 +357,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "feel_glide", "Glide", two_names, 2, 0, 1, 1 },
     { "feel_turning", "Turning", two_names, 2, 0, 1, 1 },
     { "fights", "Fights (NHLPA 93's)", onoff_names, 2, 1, 1, 2 },
+    { "fight_box", "Names box over the fighters", fightbox_names, 2, 0, 1, 2 },
     { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
 };
 
@@ -449,6 +451,11 @@ void feel_register(ob_host *h, const char *ini_path)
 int feel_fights(void)
 {
     return g_host ? ob_game_get(g_host, O_FIGHTS) : 1;
+}
+
+int feel_fight_box(void)
+{
+    return g_host ? ob_game_get(g_host, O_FIGHT_BOX) : 0;
 }
 
 int feel_fight_next(void)

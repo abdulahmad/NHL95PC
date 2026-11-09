@@ -35,8 +35,11 @@ extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
 extern short ovltimer, ovlseq, refsignal, Pencntdwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
-extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[];
+extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[], DrawRinkOverlays[], DrawTextOverlay[];
+extern short scrollx, scrolly;
+extern int hudhundaccum;
 extern uint8_t gmode2;
+extern int32_t introskipped;     /* the post-play was skipped: the screen fades to the next faceoff */
 extern int32_t regd0, regd1;
 extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
@@ -90,7 +93,7 @@ static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame nu
 static uint8_t lut[2][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont;
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont, *fight_dto_cont;
 static int gloves, glove_x, glove_y, glove_side;    /* 93's glovecords: the dropped gloves on the ice */
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
@@ -679,6 +682,7 @@ __attribute__((naked)) static void changeplayer_thunk(void)
 void fight_overlays(void)
 {
     int code, x, y, side;
+    if (gmode2 & 1 || introskipped) gloves = 0;    /* gone before the fade back in, not a frame after */
     if (!gloves || !have_rom || no_draw) return;
     side = glove_side;
     code = FR_93 + 0 * 0x400 + F93_GLOVES;      /* fighter 0's colours */
@@ -693,11 +697,50 @@ __attribute__((naked)) static void rinkoverlays_thunk(void)
                      "push $0x6C\n\tjmp *" SYM("fight_ro_cont"));
 }
 
-/* ClockTick: the clock stops for a fight (93 counted no time while the players fought) */
+/* ClockTick: the clock stops for a fight (93 counted no time while the players fought). RunGameFrames has just added
+ * 100 to hudhundaccum, which runs the scoreboard's clock: that is taken back too. */
 __attribute__((naked)) static void clocktick_thunk(void)
 {
-    __asm__ volatile("cmpl $0, " SYM("fight_on_now") "\n\tje 1f\n\tret\n"
+    __asm__ volatile("cmpl $0, " SYM("fight_on_now") "\n\tje 1f\n\t"
+                     "subl $100, " SYM("hudhundaccum") "\n\tret\n"
                      "1:\n\tpush $0x14\n\tjmp *" SYM("fight_ck_cont"));
+}
+
+/* DrawTextOverlay: the names box (top left of the view, 7Bh x 4Bh from 0Ch, 0Ch; the shootout's place is 0ACh to
+ * the right) over a fighter moves to the top right (the Game page's row, 0) or is not drawn (1) */
+__attribute__((naked, used)) void dto_orig(void)
+{
+    __asm__ volatile("push $0x60\n\tjmp *" SYM("fight_dto_cont"));
+}
+
+static int box_covers(int dx)
+{
+    int k, x0 = scrollx + 0xC - 4 + dx, x1 = scrollx + 0x87 + 4 + dx, y0 = scrolly + 0xC - 4, y1 = scrolly + 0x57 + 4;
+    for (k = 0; k < 2; k++) {
+        int x = P_W(who[k], P_XPOS_HI) + 0xC0, y = 0x140 - P_W(who[k], P_YPOS_HI);    /* DrawFrameSprite's place: his feet */
+        if (x >= x0 - 14 && x <= x1 + 14 && y >= y0 && y <= y1 + 34) return 1;
+    }
+    return 0;
+}
+
+void fight_dto(void)
+{
+    int mode = 0;               /* 0 as it is, 1 at the top right, 2 not drawn */
+    if (hold_lines && who[0] && who[1] && box_covers(0)) mode = feel_fight_box() == 0 && !box_covers(0xAC) ? 1 : 2;
+    if (mode == 2) return;
+    if (mode == 1) {
+        short g = gsp;
+        gsp = 4;
+        __asm__ volatile("call " SYM("dto_orig") : : : "eax", "ecx", "edx", "memory", "cc");
+        gsp = g;
+        return;
+    }
+    __asm__ volatile("call " SYM("dto_orig") : : : "eax", "ecx", "edx", "memory", "cc");
+}
+
+__attribute__((naked)) static void dto_thunk(void)
+{
+    __asm__ volatile("pushal\n\tcall " SYM("fight_dto") "\n\tpopal\n\tret");
 }
 
 /* doinput (eax player, edx controller): fight_doinput first */
@@ -769,6 +812,11 @@ void fight_install(void)
         if (ok_check && have_rom && !no_draw && !memcmp(DrawRinkOverlays, push6c, 5)) {
             fight_ro_cont = DrawRinkOverlays + 5;
             patch_jmp(DrawRinkOverlays, (void *)rinkoverlays_thunk);
+        }
+        static const uint8_t push60[5] = { 0x68, 0x60, 0, 0, 0 };
+        if (ok_check && !memcmp(DrawTextOverlay, push60, 5)) {
+            fight_dto_cont = DrawTextOverlay + 5;
+            patch_jmp(DrawTextOverlay, (void *)dto_thunk);
         }
         if (ok_check && !memcmp(ClockTick, push14, 5)) {
             fight_ck_cont = ClockTick + 5;
