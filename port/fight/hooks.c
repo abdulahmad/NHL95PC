@@ -255,7 +255,7 @@ void fight_check(uint8_t *a, uint8_t *b)
 /* the fighter's own assignment and flags back; held: he keeps them (no skating) until fight_after lets him go */
 static void let_go(uint8_t *p)
 {
-    P_B(p, P_PFLAGS2) &= (uint8_t)~(1 | 4);
+    P_B(p, P_PFLAGS2) &= (uint8_t)~(P_B(p, P_PFLAGS2) & 0x40 ? 1 : 1 | 4);   /* hurt: stays unavailable */
     if (((const int8_t *)p)[0x1E + (P_W(p, P_ASSNUM) & 7)] == ASS_NOTHING) ass_done(p);
 }
 
@@ -435,6 +435,14 @@ void fight_frame(void)
             if (!punch_on) { punch_init(&rom); punch_on = 1; }
             punch_play(!(ft.events & FE_PUNCH_HIGH));
         }
+    }
+    if (ft.events & FE_INJURY) {
+        /* 93: the loser is hurt (pf2inj, pflags2 bit 6: 95 PC still skates him at 1/8 speed with its stumble, SPA
+         * 8D3h) and setInjuryType takes him out of the lineup */
+        uint8_t *p = who[ft.loser];
+        int a = (int)(uintptr_t)p;
+        P_B(p, P_PFLAGS2) |= 0x40;
+        __asm__ volatile("call " SYM("setInjuryType") : "+a"(a) : : "ecx", "edx", "memory", "cc");
     }
     if (ft.events & (FE_CHEER | FE_BOO | FE_INJURY)) {
         int n = ft.events & FE_CHEER ? 1 : ft.events & FE_BOO ? 4 : -1;     /* 93: cheer if the visitors lost, boo if home */
