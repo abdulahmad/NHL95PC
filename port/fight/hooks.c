@@ -35,7 +35,7 @@ extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
 extern short ovltimer, ovlseq, refsignal, Pencntdwn;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
-extern char DrawFrameSprite[], changeplayer[], doinput[];
+extern char DrawFrameSprite[], changeplayer[], doinput[], ClockTick[];
 extern int32_t regd0, regd1;
 extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
@@ -89,7 +89,7 @@ static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame nu
 static uint8_t lut[2][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont;
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont;
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
@@ -658,6 +658,13 @@ __attribute__((naked)) static void changeplayer_thunk(void)
                      "1:\n\tpush $0x28\n\tjmp *" SYM("fight_cp_cont"));
 }
 
+/* ClockTick: the clock stops for a fight (93 counted no time while the players fought) */
+__attribute__((naked)) static void clocktick_thunk(void)
+{
+    __asm__ volatile("cmpl $0, " SYM("fight_on_now") "\n\tje 1f\n\tret\n"
+                     "1:\n\tpush $0x14\n\tjmp *" SYM("fight_ck_cont"));
+}
+
 /* doinput (eax player, edx controller): fight_doinput first */
 __attribute__((naked)) static void doinput_thunk(void)
 {
@@ -723,6 +730,10 @@ void fight_install(void)
             fight_cp_cont = changeplayer + 5;
             patch_jmp(changeplayer, (void *)changeplayer_thunk);
         }
+        if (ok_check && !memcmp(ClockTick, push14, 5)) {
+            fight_ck_cont = ClockTick + 5;
+            patch_jmp(ClockTick, (void *)clocktick_thunk);
+        } else if (ok_check) fprintf(stderr, "Fights: ClockTick is not the expected code, the clock runs during fights\n");
         if (ok_check && !memcmp(doinput, push14, 5)) {
             fight_di_cont = doinput + 5;
             patch_jmp(doinput, (void *)doinput_thunk);
