@@ -53,6 +53,10 @@ static int hook_action(int id)
 static int hook_event(const SDL_Event *e)
 {
     if (e->type != SDL_KEYDOWN) return 0;
+    if (e->key.keysym.scancode == SDL_SCANCODE_F9) {            /* F9: the on-screen keyboard (for names; a pad or the arrow keys move it) */
+        if (!e->key.repeat) { if (ob_plat_osk_is_open()) ob_plat_osk_close(); else ob_plat_osk_open(); }
+        return 1;
+    }
     if (e->key.keysym.scancode == SDL_SCANCODE_RETURN && (e->key.keysym.mod & KMOD_ALT)) {
         if (!e->key.repeat) video_toggle_fullscreen();
         return 1;
@@ -80,6 +84,7 @@ SDL_Window *shell_open(const char *title, int w, int h, int gl)
     hk.event = hook_event;
     hk.unused = input_event;
     hk.modal = hook_modal;
+    hk.key = input_osk_key;
     hk.quit_flag = &quit_requested;
     ob_shell_set(&shell);
     if (!ob_plat_open(&hk, overbar_client_host())) return NULL;

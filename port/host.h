@@ -125,6 +125,7 @@ struct SDL_Window;
 struct SDL_Window *shell_open(const char *title, int w, int h, int gl);   /* the layer's window (OpenGL if gl), the bar and the events */
 void shell_close(void);
 union SDL_Event;
+void input_osk_key(int scancode, int down);            /* input.c: a key typed on the on-screen keyboard */
 void input_event(const union SDL_Event *e);            /* input.c: an event the layer did not use (the game's keys, mouse, joystick scan) */
 int video_vrr(void);
 void video_mister_pick(int cls, int kind, const char *rel);  /* a MiSTer look file chosen from the menu, for the menus (cls 0) or the game (1): 0 horizontal filter, 1 vertical filter, 2 gamma, 3 shadow mask, 4 preset */

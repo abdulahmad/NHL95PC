@@ -8,6 +8,7 @@
 #include <math.h>
 #include <string.h>
 #include <SDL.h>
+#include <overbar/plat.h>
 
 #define WINDOW ((uint8_t *)0xA0000)
 
@@ -1028,6 +1029,7 @@ void video_present(void)
     }
     dump_frame(w, h);
     if (overbar_client_open()) overbar_client_draw(argb, w, h, w);
+    if (ob_plat_osk_is_open()) ob_plat_osk_draw(argb, w, h, w);
     {
         int vx, vy, vw, vh;
         video_view(&vx, &vy, &vw, &vh);

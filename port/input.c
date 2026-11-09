@@ -368,6 +368,8 @@ void input_event(const SDL_Event *ep)
     }
 }
 
+void input_osk_key(int scancode, int down) { key_physical((SDL_Scancode)scancode, down); }
+
 void input_poll(void)
 {
     script_poll();
