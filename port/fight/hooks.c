@@ -32,7 +32,7 @@ extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[];
 extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
-extern short ovltimer, ovlseq;
+extern short ovltimer, ovlseq, refsignal;
 extern unsigned char textline1[0x3C], textline2[0x3C], textline3[0x3C], hmroster[], hmrosterjersey[];
 extern char DrawFrameSprite[], changeplayer[];
 extern uint32_t gameopts;
@@ -81,7 +81,7 @@ static int ok_check, ok_frame, no_draw;
 static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame number */
 static uint8_t lut[2][64];
 #define FR_93 0x7000
-static int saved_frame[2], drawing, replay_frame[2];
+static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
 void *fight_dfs_cont, *fight_cp_cont;
 int fight_on_now;
 static uint8_t *build(int k, int n);
@@ -223,6 +223,22 @@ static void end_fight(void)
     penmintab[PEN_ROUGHING] = 5;        /* 93's Fighting: 5 minutes, put back once both are called */
     pen_wait = 1;
     for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
+    post[0] = post[1] = 1;
+    post_timer = 1200;            /* 10 s (counted once per fighter a frame) */
+    /* the whistle now (93 stopped play for the fight's penalties at once), not when the puck is next touched:
+     * the first of the fight's penalties in PenBuf stops play (Stop4Pen, as checkfornewpen would) */
+    if (!(gmode & 1)) {
+        int i;
+        for (i = 0; i < 0x20 && PenBuf[i * 2]; i++) {
+            int pl = PenBuf_pl[i * 2] & 0x7F;
+            if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl) == who[0] || PLAYER(pl) == who[1])) {
+                int a = i;
+                refsignal = 0x28;
+                __asm__ volatile("call " SYM("Stop4Pen") : "+a"(a) : : "ecx", "edx", "memory", "cc");
+                break;
+            }
+        }
+    }
 }
 
 /* Roughing goes back to 2 minutes once the fight's two are out of PenBuf (called, or dropped) */
@@ -261,6 +277,8 @@ void fight_frame(void)
     int k;
     undraw();
     check_pen_wait();
+    /* the scoreboard box only runs while play is stopped (chkprogress): during the fight it is moved on here */
+    if (hold_lines && !(gmode & 1) && ovltimer >= 0 && ovltimer < 0x100) ovltimer++;
     if (!ft.on) return;
     if (gmode & 1) {                    /* play stopped some other way (a goal, the period): no penalty */
         release();
@@ -361,27 +379,36 @@ void fight_after(void)
 {
     int k;
     drawing = 0;
-    if (!ft.on || !have_rom || no_draw) return;
+    if (!have_rom || no_draw) return;
     for (k = 0; k < 2; k++) {
         int n = ft.f[k].frame;
-        if (n <= 0 || n >= NFR) return;
-        if (!spr[k][n] && !(spr[k][n] = build(k, n))) return;
-    }
-    for (k = 0; k < 2; k++) {
+        if (!ft.on && !post[k]) continue;
+        if (!ft.on) {
+            /* after the fight he keeps his last pose until he is sent off (the penalty box assignment, 0Ch), skates
+             * away, or 10 s have gone */
+            const uint8_t *p = who[k];
+            int ass = ((const int8_t *)p)[0x1E + (P_W(p, P_ASSNUM) & 7)], vx = P_W(p, P_XVEL), vy = P_W(p, P_YVEL);
+            if (ass == 0xC || vx > 0x300 || vx < -0x300 || vy > 0x300 || vy < -0x300 || --post_timer < 0 || P_W(p, P_POSITION) < 0) {
+                post[k] = 0;
+                continue;
+            }
+        }
+        if (n <= 0 || n >= NFR) continue;
+        if (!spr[k][n] && !(spr[k][n] = build(k, n))) continue;
         saved_frame[k] = P_W(who[k], P_FRAME);
-        P_W(who[k], P_FRAME) = (int16_t)(FR_93 + k * 0x400 + ft.f[k].frame);
+        P_W(who[k], P_FRAME) = (int16_t)(FR_93 + k * 0x400 + n);
         if (ft.f[k].flip) P_B(who[k], P_ATTRIBUTE) |= 8;
         else P_B(who[k], P_ATTRIBUTE) &= (uint8_t)~8;
+        drawing |= 1 << k;
     }
-    drawing = 1;
 }
 
 /* before updateplayers: their own frames back, so updateanim carries on as it was */
 static void undraw(void)
 {
     int k;
-    if (!drawing) return;
-    for (k = 0; k < 2; k++) P_W(who[k], P_FRAME) = (int16_t)saved_frame[k];
+    for (k = 0; k < 2; k++)
+        if (drawing & 1 << k) P_W(who[k], P_FRAME) = (int16_t)saved_frame[k];
     drawing = 0;
 }
 
