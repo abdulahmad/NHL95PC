@@ -246,13 +246,27 @@ void f93_pc95_colours(uint32_t rgb[64])
 {
     int line;
     if (!rgb) return;
+    rgb[F93_EYE] = 0x60381C;
     for (line = 2; line < 4; line++) {
         rgb[line * 16 + 1] = 0x004080;
-        rgb[line * 16 + 6] = 0xE08080;
-        rgb[line * 16 + 7] = 0xC06060;
+        rgb[line * 16 + 6] = 0xDC9468;
+        rgb[line * 16 + 7] = 0xC8845C;
         rgb[line * 16 + 14] = 0xA06060;
         rgb[line * 16 + 15] = 0x40A0E0;
     }
+}
+
+static int is_skin(int v) { return v >= 32 && ((v & 15) == 6 || (v & 15) == 7); }
+
+void f93_pc95_frame(f93_frame *f)
+{
+    int x, y;
+    if (!f || !f->pix) return;
+    for (y = 0; y < f->h; y++)
+        for (x = 1; x + 1 < f->w; x++) {
+            uint8_t *p = f->pix + y * f->w + x;
+            if (p[0] >= 32 && (p[0] & 15) == 13 && is_skin(p[-1]) && is_skin(p[1])) p[0] = F93_EYE;
+        }
 }
 
 const uint8_t *rom93_punch(const rom93 *r, size_t *len)
