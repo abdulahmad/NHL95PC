@@ -60,6 +60,7 @@ static void sheet(const rom93 *r, const char *path)
             f93_frame fr;
             int ox = (i % COLS) * C + C / 2, oy = (i / COLS) * C + C * 3 / 4;
             if (f93_decode(r, groups[g][0] + k, &fr)) continue;
+            if (getenv("NHL93_PC95")) f93_pc95_frame(&fr);
             for (y = 0; y < fr.h; y++)
                 for (x = 0; x < fr.w; x++) {
                     int v = fr.pix[y * fr.w + x], px = ox + fr.x0 + x, py = oy + fr.y0 + y;
