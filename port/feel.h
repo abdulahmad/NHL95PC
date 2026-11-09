@@ -41,4 +41,7 @@ void feel_playeracc(uint8_t *p, int dir);
 void feel_stopna(uint8_t *p);
 void feel_set_profile(const feel_profile *f);
 
+/* the Game page's Fights row (port/fight/hooks.c): 1 on */
+int feel_fights(void);
+
 #endif

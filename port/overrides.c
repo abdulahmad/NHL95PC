@@ -1,6 +1,7 @@
 /* Game routines that talk to hardware are replaced at their entry by a jump to host code (or by a plain ret). */
 #include "host.h"
 #include "feel.h"
+#include "fight/hooks.h"
 #include <string.h>
 #include <SDL.h>
 
@@ -260,4 +261,5 @@ void install_overrides(void)
     install_flag_traps();
     osk_hook_install();
     feel_install();         /* the Game page's feel options (port/feel.c) */
+    fight_install();        /* NHLPA 93's fights (port/fight/hooks.c) */
 }
