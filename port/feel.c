@@ -6,7 +6,9 @@
  *
  *   - The cartridge runs a game pass every 2 vblanks in play (elapsed 2). Its acceleration is times elapsed, so per
  *     second it is the same at either timing; friction (velocity >> 6), the turn step and the stop step are per pass,
- *     so the cartridge's are half of them per frame. Smooth (the C port's default) runs every vblank.
+ *     so the cartridge's are half of them per frame. Smooth (the C port's default) runs every vblank, and is the
+ *     default here too: Cartridge times only the skating, while the puck, checks and the AI stay at 95 PC's 60 a
+ *     second, and Abdul found it felt wrong in play (2026-11-09).
  *   - Positions move by velocity x 17 a vblank on the Genesis and x 16 a frame on 95 PC: 94G speeds are times 17/16
  *     here to move as many rink units a second ("per pixel"). "Scaled to rink" also takes them times 528/596, the
  *     length of 95 PC's rink (end boards 264) over 94G's (298), so a skater crosses it in the same time.
@@ -285,8 +287,9 @@ static int check_friction(void)
 static void apply_constants(void)
 {
     if (friction_ok) {
+        /* a skater down keeps 95 PC's slide: its checks and falls are still 95 PC's, made for that friction */
         int half = now.glide && now.cartridge;
-        uint8_t fall = (uint8_t)(half ? 10 : 9), skate = (uint8_t)(half ? 7 : 6);
+        uint8_t fall = 9, skate = (uint8_t)(half ? 7 : 6);
         patch_bytes((uint8_t *)updateplayers + FRICTION_FALL + 6, &fall, 1);
         patch_bytes((uint8_t *)updateplayers + FRICTION_SKATE + 6, &skate, 1);
     }
@@ -338,13 +341,13 @@ enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
-static const char *const timing_names[] = { "Cartridge (30 a second)", "Smooth (60 a second)" };
+static const char *const timing_names[] = { "Cartridge (30 a second, skating only)", "Smooth (60 a second)" };
 static const char *const src_names[] = { "95 PC", "94 Genesis", "94 Genesis, scaled to rink" };
 static const char *const two_names[] = { "95 PC", "94 Genesis" };
 
 static const ob_game_opt opts[O_COUNT] = {
     { "feel", "Feel", preset_names, 4, PRESET_ORIGINAL, 1, 0 },
-    { "feel_timing", "94 Genesis timing", timing_names, 2, 0, 1, 0 },
+    { "feel_timing", "94 Genesis timing", timing_names, 2, 1, 1, 0 },
     { "feel_top_speed", "Top speed", src_names, 3, 0, 1, 1 },
     { "feel_acceleration", "Acceleration", src_names, 3, 0, 1, 1 },
     { "feel_stopping", "Stopping", src_names, 3, 0, 1, 1 },
