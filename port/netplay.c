@@ -31,6 +31,7 @@
 #include "host.h"
 #include "snap.h"
 #include "overbar_client.h"
+#include "feel.h"
 #include <SDL.h>
 #include <time.h>
 
@@ -111,8 +112,10 @@ typedef struct nh_settings {
     uint32_t ctl1side, ctl2side;
     uint32_t seed, randseed;
     uint32_t pertime, clock;
+    char game[512];                     /* the Game page's online options (ob_game_pack): the host's feel */
 } nh_settings;
 #define NH_MAGIC 0x4F353948u            /* "H95O" */
+#define NH_VERSION 2                    /* 2: the Game page's options */
 
 static uint32_t *randseed_ptr(void)       /* sub_8EB21: mov eax, randseed (the C library's rand state) */
 {
@@ -605,6 +608,7 @@ static void restore_local(void)
     ctl1dev = nh_saved.ctl1dev; ctl2dev = nh_saved.ctl2dev;
     PerTimeTab[0] = nh_saved.pertime;
     setup_controllers();
+    feel_session_end();
 }
 
 static void make_settings(nh_settings *s)
@@ -613,7 +617,7 @@ static void make_settings(nh_settings *s)
     time_t t = time(0);
     struct tm *tm = localtime(&t);
     memset(s, 0, sizeof *s);
-    s->magic = NH_MAGIC; s->version = 1;
+    s->magic = NH_MAGIC; s->version = NH_VERSION;
     s->home = HomeTeam; s->vis = VisTeam;
     s->gamemode = gamemode; s->gameopts = gameopts;
     s->ctl1team = ctl1team < 0 ? 0 : ctl1team;
@@ -624,6 +628,7 @@ static void make_settings(nh_settings *s)
     s->randseed = rs ? *rs : 0;
     s->pertime = PerTimeTab[0];
     s->clock = tm ? (uint32_t)(tm->tm_hour * 3600 + tm->tm_min * 60 + tm->tm_sec) : 0;
+    ob_game_pack(overbar_client_host(), s->game, sizeof s->game);
 }
 
 static void apply_settings(const nh_settings *s, uint32_t my_dev)
@@ -641,6 +646,7 @@ static void apply_settings(const nh_settings *s, uint32_t my_dev)
     seed = s->seed;
     if (rs) *rs = s->randseed;
     nh_clock = s->clock;
+    feel_session_begin(s->game, strnlen(s->game, sizeof s->game));
 }
 
 static void end_net(const char *why)
@@ -722,7 +728,7 @@ void nh_playgame_enter(int32_t *handle)
     theirs = (const nh_settings *)ob_net_settings(nh_net, &size);
     nh_me = (ob_net_my_pads(nh_net) & 1) ? 0 : 1;
     SDL_UnlockMutex(nh_lock);
-    if (!theirs || size != sizeof *theirs || theirs->magic != NH_MAGIC || theirs->version != 1) {
+    if (!theirs || size != sizeof *theirs || theirs->magic != NH_MAGIC || theirs->version != NH_VERSION) {
         SDL_LockMutex(nh_lock); ob_net_quit(nh_net); SDL_UnlockMutex(nh_lock);
         end_net("the host's settings are not this version's");
         return;

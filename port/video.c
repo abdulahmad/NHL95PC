@@ -4,6 +4,7 @@
 #include "host.h"
 #include "bindings.h"
 #include "overbar_client.h"
+#include "feel.h"
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
@@ -303,6 +304,7 @@ static void ini_path(char *out, size_t n)
     snprintf(out, n, "%s%s", base ? base : "", INI_NAME);
     SDL_free(base);
 }
+void settings_ini_path(char *out, size_t n) { ini_path(out, n); }
 
 static int name_index(const char *v, const char **names, int n, int def)
 {
@@ -393,6 +395,7 @@ static void settings_save(void)
     fprintf(f, "; the custom look: scanline gap darkness (0-1), gamma, RGB mask strength (0-0.3), horizontal sharpness (0 bilinear, 1 bicubic)\n");
     fprintf(f, "custom_scanline_darkness=%.2f\ncustom_gamma=%.2f\ncustom_mask_strength=%.2f\ncustom_sharpness=%.2f\n", c_dark, c_gamma, c_mask, c_sharp);
     fprintf(f, "; windows_pointer: auto (hidden over the picture only where the game draws a pointer of its own), show or hide\nwindows_pointer=%s\n", ptr_names[ptr_mode]);
+    feel_write_ini(f);
     bindings_save(f);
     fclose(f);
 }
