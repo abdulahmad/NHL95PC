@@ -11,6 +11,7 @@
 
 void overbar_client_init(ob_profile profile, void (*apply_host)(ob_host *h));
 void overbar_client_free(void);
+void settings_ini_path(char *out, size_t n);      /* the port's ini (video.c) */
 ob_host *overbar_client_host(void);
 int overbar_client_open(void);
 int overbar_client_quit(void);

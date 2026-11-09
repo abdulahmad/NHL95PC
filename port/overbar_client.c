@@ -6,6 +6,7 @@
  * on the menu and fall back to Sharp in the existing scaler.
  */
 #include "overbar_client.h"
+#include "feel.h"
 
 #include <string.h>
 
@@ -16,6 +17,11 @@ void overbar_client_init(ob_profile profile, void (*apply)(ob_host *h))
 {
     ob_host_init(&host, OB_PORT_PC95, profile);
     apply_host = apply;
+    {
+        char path[1024];
+        settings_ini_path(path, sizeof path);
+        feel_register(&host, path);     /* the Game page; before the menu bar is built */
+    }
     netplay_online_setup(&host);        /* the Online page (netplay.c); before the menu bar, which greys it out otherwise */
 }
 

@@ -1,5 +1,6 @@
 /* Game routines that talk to hardware are replaced at their entry by a jump to host code (or by a plain ret). */
 #include "host.h"
+#include "feel.h"
 #include <string.h>
 #include <SDL.h>
 
@@ -258,4 +259,5 @@ void install_overrides(void)
     mt32_digital();
     install_flag_traps();
     osk_hook_install();
+    feel_install();         /* the Game page's feel options (port/feel.c) */
 }
