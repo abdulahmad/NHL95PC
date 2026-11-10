@@ -168,7 +168,7 @@ int lineup_ea_has(const void *p, const void *lists)
 #ifndef LINEUP_TEST
 
 extern char FileOpenRead[], FitPlayerName[], FreeMemBlock[], sub_8CCA8[], TonightsGameScreen[];
-extern char _dos_open_[], fputchar[];
+extern char _dos_open_[];
 extern unsigned char leaguedbfmt, leaguedbfmt2;
 extern int dword_D2F58;
 
@@ -217,10 +217,15 @@ void *lineup_named_alloc(char *name, int size, int flags)
     return data;
 }
 
+/* Retail 90AC4 (watcom_clib_10.asm). Do not take the linker symbol fputchar: MinGW stdio.h's
+ * int fputchar(int) is _fputchar and wins over the game's NASM label. Same GAME_ADDR pattern as emu.c. */
+#define FPUTCHAR_EA 0x90AC4u
+#define GAME_FPUTCHAR ((void *)((uint8_t *)sub_10000 + (FPUTCHAR_EA - 0x10000u)))
+
 static int name_width(const char *s)
 {
     int r;
-    void *fn = fputchar;
+    void *fn = GAME_FPUTCHAR;
     __asm__ volatile("push %[s]\n\tcall *%[fn]\n\tadd $4, %%esp" : "=a"(r) : [fn]"r"(fn), [s]"r"(s) : "ecx", "edx", "memory", "cc");
     return r;
 }
@@ -257,14 +262,14 @@ __attribute__((naked)) static void free_thunk(void)
 {
     __asm__ volatile(
         "pushal\n\t"
-        "pushl 36(%esp)\n\t"
+        "pushl 36(%%esp)\n\t"
         "call " SYM("lineup_should_free") "\n\t"
-        "add $4, %esp\n\t"
-        "test %eax, %eax\n\t"
+        "add $4, %%esp\n\t"
+        "test %%eax, %%eax\n\t"
         "popal\n\t"
         "jz 1f\n\t"
-        "movl 4(%esp), %edx\n\t"
-        "push %edx\n\t"
+        "movl 4(%%esp), %%edx\n\t"
+        "push %%edx\n\t"
         "jmp *%0\n"
         "1:\n\tret"
         :
@@ -304,9 +309,13 @@ void lineup_install(void)
     if (ok_open) patch_jmp(FileOpenRead, (void *)open_thunk);
     else fprintf(stderr, "Tonight's Lineup: FileOpenRead is not the expected code, KEY.DB is not retried\n");
 
-    ok_fit = check_bytes((uint8_t *)FitPlayerName, push18, 5);
-    if (ok_fit) patch_jmp(FitPlayerName, (void *)fit_thunk);
-    else fprintf(stderr, "Tonight's Lineup: FitPlayerName is not the expected code, names stay unbounded\n");
+    {
+        static const uint8_t fput5[5] = { 0x68, 0x00, 0x02, 0x00, 0x00 }; /* push 200h at 90AC4 */
+        ok_fit = check_bytes((uint8_t *)FitPlayerName, push18, 5)
+            && check_bytes((const uint8_t *)GAME_FPUTCHAR, fput5, 5);
+        if (ok_fit) patch_jmp(FitPlayerName, (void *)fit_thunk);
+        else fprintf(stderr, "Tonight's Lineup: FitPlayerName or game fputchar (90AC4) is not the expected code, names stay unbounded\n");
+    }
 
     ok_free = check_bytes((uint8_t *)FreeMemBlock, free5, 5);
     if (ok_free) {
