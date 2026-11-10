@@ -39,7 +39,7 @@ looks) needs an OpenGL or Direct3D path with a shader.
   were folded into `.bss`, which broke the GUS driver's table clearing; see `port/build-win.sh`).
 - Digital audio in MT-32 mode (the original game plays only music there; the author would like the digital sound too).
 - Gameplay with the keyboard has not been checked in detail.
-- Later (unchanged): key bindings, rollback netcode (see `docs/SDL2_PORT.md`). Auto line changes is `port/lines.c` (`NHL95_AUTOLINE=1`). Manual goalie is `port/goalie.c` (`NHL95_GOALIE=1`): 96 PC pad, 94 Genesis move/save. Select-sides is Overbar's one screen (`port/sides.c`), two seats on 95 PC, every connected controller; online uses the same module.
+- Later (unchanged): key bindings, rollback netcode (see `docs/SDL2_PORT.md`). Auto line changes is `port/lines.c` (`NHL95_AUTOLINE=1`). Manual goalie is `port/goalie.c` (`NHL95_GOALIE=1`): 96 PC pad, 94 Genesis move/save. Skill level is `port/skill.c` (`NHL95_SKILL=0-2`): 96 Genesis OptSkill (pro / all-star / rookie); 96 PC has no skill row. Select-sides is Overbar's one screen (`port/sides.c`), two seats on 95 PC, every connected controller; online uses the same module.
 
 ## Diagnosing a machine
 

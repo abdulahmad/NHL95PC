@@ -343,7 +343,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_GOALIE, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_GOALIE, O_SKILL, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -352,6 +352,7 @@ static const char *const src_names[] = { "95 PC", "94 Genesis", "94 Genesis, sca
 static const char *const two_names[] = { "95 PC", "94 Genesis" };
 static const char *const onoff_names[] = { "Off", "On" };
 static const char *const fightbox_names[] = { "Moves to the top right", "Hides" };
+static const char *const skill_names[] = { "Pro", "All-Star", "Rookie" };
 
 static const ob_game_opt opts[O_COUNT] = {
     { "feel", "Feel", preset_names, 4, PRESET_ORIGINAL, 1, 0 },
@@ -366,6 +367,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
     { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
+    { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */
@@ -455,6 +457,12 @@ void feel_register(ob_host *h, const char *ini_path)
     }
     if (getenv("NHL95_AUTOLINE")) ob_game_set(h, O_AUTOLINE, atoi(getenv("NHL95_AUTOLINE")) ? 1 : 0);
     if (getenv("NHL95_GOALIE")) ob_game_set(h, O_GOALIE, atoi(getenv("NHL95_GOALIE")) ? 1 : 0);
+    if (getenv("NHL95_SKILL")) {
+        int v = atoi(getenv("NHL95_SKILL"));
+        if (v < 0) v = 0;
+        if (v > 2) v = 2;
+        ob_game_set(h, O_SKILL, v);
+    }
     profile_from_rows();
     (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
@@ -487,6 +495,11 @@ int feel_manual_goalie(void)
     return g_host ? ob_game_get(g_host, O_GOALIE) : 0;
 }
 
+int feel_skill(void)
+{
+    return g_host ? ob_game_get(g_host, O_SKILL) : 1;    /* 96G SRAM default: all-star */
+}
+
 void feel_fight_next_done(void)
 {
     if (g_host) ob_game_set(g_host, O_FIGHT_NEXT, 0);
@@ -514,6 +527,7 @@ void feel_write_ini(FILE *f)
     fprintf(f, "; the Game page. feel: a preset; feel_timing: 94 Genesis's cartridge timing (about 51 game passes a second, its slowdown)\n"
                "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n"
                "; auto_lines: 96 PC Auto line changes (CompLine at faceoff for a human team, chk4lc on the fly)\n"
-               "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n");
+               "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
+               "; skill_level: 96 Genesis OptSkill (pro / all-star / rookie). 96 PC has no skill row; this is the Genesis option\n");
     ob_game_write_ini(g_host, f);
 }
