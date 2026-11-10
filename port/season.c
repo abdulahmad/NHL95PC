@@ -32,20 +32,26 @@
 #endif
 
 extern unsigned char curleague;
+extern int gamemode;
 extern int lgstate[];                   /* the league's saved mode state: its folder name at +4 */
 
-/* the league open in the game: curleague while the league state is loaded, else the one the desk keeps
-   in lgstate (File > Open on a league; Import / Export / Next League Game are then enabled) */
+static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
+{
+    return n && n[0] && n[0] != '.';
+}
+
+/* the league open in the game: curleague while the league state is loaded (gamemode 2), else the one the
+   desk keeps in lgstate (File > Open on a league, New League). The exhibition state carries "." or a stale
+   name in curleague, so it never counts. "" none */
 static const char *open_league(void)
 {
-    const char *c = (const char *)&curleague;
-    if (c[0]) return c;
-    return (const char *)lgstate + 4;
+    const char *c = (const char *)&curleague, *l = (const char *)lgstate + 4;
+    if (gamemode == 2 && real_league(c)) return c;
+    return real_league(l) ? l : "";
 }
 extern unsigned char leagueteams[];
 extern unsigned char treeteamnames[];
 extern unsigned char str_floppydrv;
-extern int gamemode;
 
 extern int MergeTeamDbs();
 extern int MergeScheduleDb();
