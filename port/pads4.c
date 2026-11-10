@@ -69,6 +69,7 @@ void pads4_map_seats(int n, const int *team, const int *kb, int *out)
 
 #include "goalie.h"
 #include "host.h"
+#include "rom94.h"
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -99,6 +100,10 @@ extern uint8_t gmode, gmode2;
 extern int penshotmode, penshotlive, dword_CCC9C;
 extern int16_t word_CC0B0[];
 extern int demomode;
+extern int puckstruct[];
+extern uint8_t puckasslist[], byte_DC9D8[];
+extern void *fight_dfs_cont;
+extern int viewscrollx, viewscrolly;
 extern int32_t ctl1team, ctl2team;
 extern uint32_t ctl1side, ctl2side;
 
@@ -122,9 +127,12 @@ static int log_on(void)
     return logon;
 }
 
+static void mk_free(void);
+
 void pads4_clear(void)
 {
     int k;
+    mk_free();
     for (k = 0; k < 2; k++) {
         int sc = pads4.player[k];
         if (sc >= 0 && sc <= 11 && sc != c1playernum[0] && sc != c2playernum[0]) P_B(SortCords + sc * 0x80, P_PFLAGS) &= (uint8_t)~PFJOY;
@@ -194,6 +202,14 @@ static void others_of(int k, int16_t *o)
     o[2] = pads4.team[!k] ? pads4.player[!k] : -1;
 }
 
+/* no pad 3 or 4 player while the game's own pads have none (the intro, the anthem, between periods) or the pre-game
+ * intro runs (the puck's assignment 1Ch, as doinput checks) */
+static int pads4_idle(void)
+{
+    if (c1playernum[0] < 0 && c2playernum[0] < 0) return 1;
+    return puckasslist[((int16_t *)puckstruct)[0xE]] == 0x1C && !penshotmode;
+}
+
 /* pad k keeps a player of its own: else the free skater of its team nearest the puck's next spot */
 static void keep_player(int k)
 {
@@ -204,6 +220,11 @@ static void keep_player(int k)
     uint8_t *p;
     if (!team) return;
     others_of(k, o);
+    if (pads4_idle()) {                                 /* the intro and anthem: the game's pads have nobody yet */
+        if (sc >= 0 && sc <= 11 && sc != o[0] && sc != o[1]) P_B(SortCords + sc * 0x80, P_PFLAGS) &= (uint8_t)~PFJOY;
+        pads4.player[k] = -1;
+        return;
+    }
     if (penshotmode || penshotlive) {                   /* the game's own pads leave the ice for a penalty shot too */
         if (sc >= 0 && sc <= 11 && sc != o[0] && sc != o[1]) P_B(SortCords + sc * 0x80, P_PFLAGS) &= (uint8_t)~PFJOY;
         pads4.player[k] = -1;
@@ -325,27 +346,163 @@ __attribute__((naked)) static void gc_thunk(void)
         "1:\n\tret");
 }
 
-static void draw_sprite(int frame, int x, int y)
+static void draw_sprite(int frame, int x, int y, int flip)
 {
     __asm__ volatile("push $0\n\tcall *%[fn]"
-                     : "+a"(frame), "+d"(x), "+b"(y)
-                     : "c"(0), [fn] "r"(DrawFrameSprite)
+                     : "+a"(frame), "+d"(x), "+b"(y), "+c"(flip)
+                     : [fn] "r"(DrawFrameSprite)
                      : "memory", "cc");
 }
 
-/* DrawRinkOverlays' DrawRinkObjects: then the stars of pads 3 and 4 (the original draws pads 1 and 2's next) */
+/* ---- the stars and arrows of 94 Genesis (its ROM, rom94.c), drawn through the fights' DrawFrameSprite hook ----
+ * codes FR_MARK + pad x 8 + v: v 0 the star, 1 up, 2 up-right, 3 right (left by the game's flip), 4 down, 5 down-right;
+ * FR_MARK + 32 the puck carrier's star. Without the ROM (or the hook) 95 PC's own frames. */
+#define FR_MARK 0x7F00
+#define MK_N 33
+static uint8_t *mk[MK_N];
+static uint8_t mk_lut[32];
+static int mk_lut_ok;
+
+static int marks94(void)
+{
+    return fight_dfs_cont && rom94_sprites() != NULL;
+}
+
+static void mk_make_lut(void)
+{
+    uint32_t dac[256], pal[32];
+    int v, i;
+    video_dac_rgb(dac);
+    rom94_rink_palette(pal);
+    for (v = 1; v < 32; v++) {
+        int best = 0, bd = 1 << 30;
+        for (i = 0; i < 0x90; i++) {                    /* not the team colours: a star keeps its colour on any team */
+            uint32_t a = dac[byte_DC9D8[i]], b = pal[v];
+            int dr = (int)(a >> 16 & 255) - (int)(b >> 16 & 255), dg = (int)(a >> 8 & 255) - (int)(b >> 8 & 255), db = (int)(a & 255) - (int)(b & 255);
+            int d = dr * dr * 3 + dg * dg * 4 + db * db * 2;
+            if (d < bd) { bd = d; best = i; }
+        }
+        mk_lut[v] = (uint8_t)best;
+    }
+    mk_lut_ok = 1;
+}
+
+/* as port/fight/hooks.c build(): 16 bytes of header (1, w, h, hot spot), then each row's runs */
+static uint8_t *mk_build(int frame, int vflip)
+{
+    f93_frame f;
+    uint8_t *b, *o;
+    int x, y, i;
+    if (f93_decode(rom94_sprites(), frame, &f) || !f.pix) return NULL;
+    b = (uint8_t *)calloc(16 + (size_t)f.w * f.h * 2 + 16, 1);
+    if (!b) { f93_frame_free(&f); return NULL; }
+    b[0] = 1;
+    *(int16_t *)(b + 4) = (int16_t)f.w;
+    *(int16_t *)(b + 6) = (int16_t)f.h;
+    *(int16_t *)(b + 8) = (int16_t)-f.x0;
+    *(int16_t *)(b + 10) = (int16_t)(vflip ? f.y0 + f.h : -f.y0);   /* flipped about the frame's origin, as the VDP does */
+    o = b + 16;
+    for (y = 0; y < f.h; y++) {
+        const uint8_t *row = f.pix + (vflip ? f.h - 1 - y : y) * f.w;
+        for (x = 0; x < f.w; ) {
+            if (!row[x]) {
+                for (i = 0; x + i < f.w && !row[x + i] && i < 127; i++) {}
+                *o++ = (uint8_t)i; *o++ = 0xFF;
+            } else {
+                for (i = 0; x + i < f.w && row[x + i] && i < 127; i++) {}
+                *o++ = (uint8_t)(int8_t)-i;
+                { int j; for (j = 0; j < i; j++) *o++ = mk_lut[row[x + j] & 31]; }
+            }
+            x += i;
+        }
+    }
+    *o = 0;
+    f93_frame_free(&f);
+    return b;
+}
+
+/* port/fight/hooks.c fight_sprite: codes from FR_MARK are these */
+void *pads4_mark_sprite(int code)
+{
+    static const int star[4] = { F94_STAR1, F94_STAR2, F94_STAR3, F94_STAR4 };
+    static const int arrow[4] = { F94_ARROW1, F94_ARROW2, F94_ARROW3, F94_ARROW4 };
+    int i = code - FR_MARK, pad = i / 8, v = i % 8;
+    if (i < 0 || i >= MK_N || !marks94()) return NULL;
+    if (!mk_lut_ok) mk_make_lut();
+    if (!mk[i]) {
+        if (i == 32) mk[i] = mk_build(F94_STARPUCK, 0);
+        else if (v == 0) mk[i] = mk_build(star[pad], 0);
+        else if (v <= 5) mk[i] = mk_build(arrow[pad] + (v == 1 || v == 4 ? 0 : v == 2 || v == 5 ? 1 : 2), v >= 4);
+    }
+    return mk[i];
+}
+
+static void mk_free(void)
+{
+    int i;
+    for (i = 0; i < MK_N; i++) { free(mk[i]); mk[i] = NULL; }
+    mk_lut_ok = 0;                                      /* colours again for the next game's palette */
+}
+
+/* 95 PC's own frames (word_CC0B0): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2:
+ * down 17Fh / 182h, down-right 180h / 183h, right 181h / 184h, up-right 161h / 163h, up 160h / 162h */
+int pads4_mark_code(int frame)
+{
+    static const int16_t a95[2][5] = { { 0x160, 0x161, 0x181, 0x17F, 0x180 }, { 0x162, 0x163, 0x184, 0x182, 0x183 } };
+    int j, v;
+    frame = (int16_t)frame;
+    if (!marks94()) return frame;
+    if (frame == 0x185) return FR_MARK;
+    if (frame == 0x186) return FR_MARK + 8;
+    if (frame == 0x187) return FR_MARK + 32;
+    for (j = 0; j < 2; j++)
+        for (v = 0; v < 5; v++)
+            if (a95[j][v] == frame) return FR_MARK + j * 8 + 1 + v;
+    return frame;
+}
+
+/* DrawRinkOverlays' DrawFrameSprite: 95 PC's star and arrow frames become 94's (eax the frame) */
+__attribute__((naked)) static void mark_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpush %eax\n\tcall " SYM("pads4_mark_code") "\n\tadd $4, %esp\n\tmov %eax, 28(%esp)\n\tpopal\n\t"
+        "jmp " SYM("DrawFrameSprite"));
+}
+
+/* DrawRinkOverlays' DrawRinkObjects: then the stars (or edge arrows) of pads 3 and 4, as the game draws pads 1 and 2's
+ * (DrawRinkOverlays: the view's edges from viewscrollx / viewscrolly) */
 void pads4_draw(void)
 {
     int k;
-    if (dword_CCC9C) return;
+    if (dword_CCC9C || pads4_idle()) return;
     for (k = 0; k < 2; k++) {
-        int sc = pads4.player[k], slot;
+        int sc = pads4.player[k], slot, x, y, fl = 0, vx = (int16_t)viewscrollx, vy = (int16_t)viewscrolly, code;
         uint8_t *p;
         if (!pads4.team[k] || sc < 0 || sc > 11) continue;
         p = SortCords + sc * 0x80;
         if (P_W(p, P_FRAME) == -1) continue;
         slot = pads4.team[k] == cont1team ? 0 : pads4.team[k] == cont2team ? 1 : 0;
-        draw_sprite(word_CC0B0[1 + slot], P_W(p, P_XHI), P_W(p, P_YHI));
+        x = P_W(p, P_XHI);
+        y = P_W(p, P_YHI);
+        if (y < 0x140 - (vy + 0xA8)) { y = 0x140 - (vy + 0xA8); fl = 2; }
+        else if (y >= 0x140 - vy) { y = 0x140 - vy + 1; fl = 1; }
+        if (fl) {
+            if (x >= 0x140 - (0xC0 - vx) - 0xC) { x = 0x140 - (0xC0 - vx) - 0xD; fl |= 4; }
+            else if (x < vx - 0xB4) { x = vx - 0xB4; fl |= 8; }
+        } else {
+            if (x >= 0x140 - (0xC0 - vx)) { x = 0x140 - (0xC0 - vx) - 1; fl = 4; }
+            else if (x < vx - 0xC0) { x = vx - 0xC0; fl = 8; }
+        }
+        if (!marks94()) {                               /* 95 PC's: the star of the game pad it swaps into; no arrow */
+            if (!fl) draw_sprite(word_CC0B0[1 + slot], x, y, 0);
+            continue;
+        }
+        if (!fl) code = FR_MARK + (k + 2) * 8;
+        else {
+            int up = fl & 2, down = fl & 1, side = fl & 12;
+            code = FR_MARK + (k + 2) * 8 + (up ? (side ? 2 : 1) : down ? (side ? 5 : 4) : 3);
+        }
+        draw_sprite(code, x, y, fl & 8);
     }
 }
 
@@ -354,6 +511,31 @@ __attribute__((naked)) static void dro_thunk(void)
     __asm__ volatile(
         "call " SYM("DrawRinkObjects") "\n\t"
         "pushal\n\tcall " SYM("pads4_draw") "\n\tpopal\n\tret");
+}
+
+/* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + word_CC0B0] /
+ * sar eax, 10h / xor ecx, ecx / call DrawFrameSprite; the arrow and puck paths jump to the call) */
+static int patch_marks(void)
+{
+    uint8_t *base = (uint8_t *)DrawRinkOverlays;
+    size_t i;
+    for (i = 12; i + 5 <= 0x9E0; i++) {
+        uint8_t *c = base + i, code[5];
+        uint32_t a;
+        int32_t rel;
+        if (c[0] != 0xE8 || c[-2] != 0x31 || c[-1] != 0xC9 || c[-5] != 0xC1 || c[-4] != 0xF8 || c[-3] != 0x10) continue;
+        if (c[-12] != 0x8B || c[-11] != 0x04 || c[-10] != 0x45) continue;
+        memcpy(&a, c - 9, 4);
+        if (a != (uint32_t)(uintptr_t)word_CC0B0) continue;
+        memcpy(&rel, c + 1, 4);
+        if ((uintptr_t)c + 5 + (uintptr_t)(intptr_t)rel != (uintptr_t)DrawFrameSprite) return 0;
+        rel = (int32_t)((uintptr_t)mark_thunk - ((uintptr_t)c + 5));
+        code[0] = 0xE8;
+        memcpy(code + 1, &rel, 4);
+        patch_bytes(c, code, 5);
+        return 1;
+    }
+    return 0;
 }
 
 static int redirect_call(char *from, size_t n, const void *target, const void *to)
@@ -403,6 +585,7 @@ static int patch_up(void)
 void pads4_install(void)
 {
     static const uint8_t push14[5] = { 0x68, 0x14, 0, 0, 0 };
+    rom94_load();                                       /* (at start-up: the folder is searched once) */
     ok_up = patch_up();
     if (!ok_up) { fprintf(stderr, "Four players: updateplayers is not the expected code, pads 3 and 4 do not play\n"); return; }
     ok_gc = !memcmp(GiveControl, push14, 5);
@@ -414,6 +597,7 @@ void pads4_install(void)
     }
     ok_draw = redirect_call(DrawRinkOverlays, 400, DrawRinkObjects, (const void *)dro_thunk);
     if (!ok_draw) fprintf(stderr, "Four players: DrawRinkOverlays is not the expected code, pads 3 and 4 have no star\n");
+    if (!patch_marks()) fprintf(stderr, "Four players: DrawRinkOverlays' star call is not the expected code, pads 1 and 2 keep 95 PC's stars\n");
 }
 
 #endif /* !PADS4_TEST */

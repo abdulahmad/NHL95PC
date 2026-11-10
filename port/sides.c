@@ -90,11 +90,12 @@ static ob_sides_game game95(void)
     return g;
 }
 
-#define FAKE_LOCAL 100              /* the Game page's pretend controllers: locals 100 and 101, no device */
+int feel_fake_pads(void);
+#define FAKE_LOCAL 100              /* the Game page's pretend controllers (added at the start, not on the screen) */
 
 static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
 {
-    int i, team[OB_SIDES_MAX_SEATS], kb[OB_SIDES_MAX_SEATS], slot[OB_SIDES_MAX_SEATS];
+    int i, m, team[4], kb[4], mine[4], local[4], slot[4], count[3] = { 0, 0, 0 };
     (void)ud;
     ctl1team = ctl2team = -1;
     ctl1dev = ctl2dev = 0x10;
@@ -103,32 +104,43 @@ static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
     input_bind_stick(0, -1);
     input_bind_stick(1, -1);
     pads4_clear();
-    if (n > 4) n = 4;
-    for (i = 0; i < n; i++) {
-        team[i] = seat[i].team == 1 ? 1 : 2;                /* column 1 Home (cont 1), 0 Away (cont 2) */
-        kb[i] = seat[i].owner == g_sides.me && seat[i].local == 0;
+    for (m = 0; m < n && m < 4; m++) {
+        team[m] = seat[m].team == 1 ? 1 : 2;                /* column 1 Home (cont 1), 0 Away (cont 2) */
+        mine[m] = seat[m].owner == g_sides.me;
+        local[m] = seat[m].local;
+        kb[m] = mine[m] && local[m] == 0;
+        count[team[m]]++;
     }
-    pads4_map_seats(n, team, kb, slot);
-    for (i = 0; i < 4; i++) g_slot[i] = i < n ? slot[i] : -1;
-    for (i = 0; i < n; i++) {
+    /* Debug: pretend controllers fill both teams to two (one person: three of them, a 2 v 2) */
+    if (!g_net && m > 0 && feel_fake_pads()) {
+        int t;
+        for (t = 1; t <= 2; t++)
+            while (count[t] < 2 && m < 4) {
+                team[m] = t; mine[m] = 1; local[m] = FAKE_LOCAL; kb[m] = 0;
+                count[t]++;
+                m++;
+            }
+    }
+    pads4_map_seats(m, team, kb, slot);
+    for (i = 0; i < 4; i++) g_slot[i] = i < n && i < m ? slot[i] : -1;
+    for (i = 0; i < m; i++) {
         int s = slot[i], pad;
         int32_t *t;
         uint32_t *side, *dev;
         if (s < 0) continue;
         if (s >= 2) {                                       /* pads 3 and 4: pads4.c */
-            int src = seat[i].owner != g_sides.me ? PADS4_REMOTE
-                    : seat[i].local >= FAKE_LOCAL ? PADS4_FAKE : sides_pad_index(seat[i].local);
+            int src = !mine[i] ? PADS4_REMOTE : local[i] >= FAKE_LOCAL ? PADS4_FAKE : sides_pad_index(local[i]);
             pads4_set(s - 2, team[i], src);
             continue;
         }
         t = s == 0 ? &ctl1team : &ctl2team;
         side = s == 0 ? &ctl1side : &ctl2side;
         dev = s == 0 ? &ctl1dev : &ctl2dev;
-        sides_seat_ctl(seat[i].team, HomeTeam, VisTeam, t, side);
+        sides_seat_ctl(team[i] == 1 ? 1 : 0, HomeTeam, VisTeam, t, side);
         /* the other machine's: the records; a pretend pad: no device (the game reads it as no direction, no button) */
-        if (seat[i].owner != g_sides.me || seat[i].local >= FAKE_LOCAL) { *dev = 0x10; continue; }
-        *dev = sides_dev_for_slot(s, seat[i].local);
-        pad = sides_pad_index(seat[i].local);
+        if (!mine[i] || local[i] >= FAKE_LOCAL) { *dev = 0x10; continue; }
+        *dev = sides_dev_for_slot(s, local[i]);
+        pad = sides_pad_index(local[i]);
         if (pad >= 0) input_bind_stick(*dev == 2 ? 0 : 1, pad);
     }
     setup_controllers();
@@ -180,8 +192,6 @@ static int skip_screen(void)
     return 0;
 }
 
-int feel_fake_pads(void);
-
 static void add_devices(void)
 {
     int i, n = input_pad_count();
@@ -189,10 +199,6 @@ static void add_devices(void)
     for (i = 0; i < n; i++) {
         const char *name = input_pad_name(i);
         ob_sides_add(&g_sides, 1 + i, name && name[0] ? name : "Controller");
-    }
-    if (!g_net && feel_fake_pads()) {                       /* Debug: two pretend controllers, one on each team */
-        ob_sides_add(&g_sides, FAKE_LOCAL, "Pretend pad 1");
-        ob_sides_add(&g_sides, FAKE_LOCAL + 1, "Pretend pad 2");
     }
 }
 
@@ -215,12 +221,6 @@ static void restore_from_ctl(void)
 {
     if (ctl1team >= 0) place(local_of_dev(ctl1dev), ctl1side == 0 ? 1 : 0);
     if (ctl2team >= 0) place(local_of_dev(ctl2dev), ctl2side == 0 ? 1 : 0);
-    if (ob_sides_find(&g_sides, g_sides.me, FAKE_LOCAL) >= 0) {
-        place(FAKE_LOCAL, 1);
-        place(FAKE_LOCAL + 1, 0);
-        ob_sides_input(&g_sides, FAKE_LOCAL, MDRT_MENU_OK);         /* ready: nobody presses OK for them */
-        ob_sides_input(&g_sides, FAKE_LOCAL + 1, MDRT_MENU_OK);
-    }
 }
 
 void port_sides_poll(void)

@@ -12,6 +12,7 @@
 #include "hooks.h"
 #include "rules.h"
 #include "rom93.h"
+#include "../rom94.h"
 #include "punch.h"
 
 #include <stdint.h>
@@ -601,6 +602,7 @@ static int dist(uint32_t a, uint32_t b)
     return dr * dr * 3 + dg * dg * 4 + db * db * 2;
 }
 
+static const char *team95_abbrev(int t95);
 static void make_lut_for(int k, const uint8_t *p);
 static void make_lut(int k) { make_lut_for(k, who[k]); }
 static void make_lut_for(int k, const uint8_t *p)
@@ -612,8 +614,17 @@ static void make_lut_for(int k, const uint8_t *p)
     if (t95 < 0 || t95 >= NTEAM95) t95 = 0;
     t93 = team93(t95);
     video_dac_rgb(dac);
-    /* the default: the fighter's own 93 jersey (Boston's, kept to his 95 PC team colours, for a team 93 did not have) */
+    /* the default: the fighter's own 93 jersey (Boston's, kept to his 95 PC team colours, for a team 93 did not have);
+     * with the 94 ROM (port/rom94.c), 94's colours of his team: every 95 PC team is there, the layout is 93's */
     f93_palette(&rom, t93 < 0 ? 0 : t93, home, pal);
+    {
+        uint32_t c94[16];
+        int i;
+        if (!rom94_team_colours(team95_abbrev(t95), home, c94)) {
+            for (i = 0; i < 16; i++) pal[32 + i] = pal[48 + i] = c94[i];
+            t93 = 0;                                /* (his jersey's colours: no 95 PC team colours kept) */
+        }
+    }
     f93_pc95_colours(pal);
     for (v = 1; v < 64; v++) {
         int team = t93 < 0 && v >= 32 && (v & 15) != 1 && (v & 15) != 6 && (v & 15) != 7 && (v & 15) != 14 && (v & 15) != 15;
@@ -633,6 +644,8 @@ static const char *const teams95[NTEAM95] = {
     "bos", "buf", "cgy", "chi", "det", "edm", "hfd", "la", "min", "mtl", "nj", "nyi", "nyr", "ott",
     "phi", "pit", "que", "stl", "sj", "tb", "tor", "van", "wsh", "wpg", "ana", "fla", "asw", "ase"
 };
+static const char *team95_abbrev(int t95) { return t95 >= 0 && t95 < NTEAM95 ? teams95[t95] : ""; }
+
 static int team93(int t95)
 {
     int t;
@@ -797,9 +810,12 @@ static void undraw(void)
 
 /* DrawFrameSprite's frame FR_93 + k x 400h + n: fighter k's 93 frame n. In a replay (sflags bit 7) a punch frame
  * coming up plays the punch, as the live fight did. */
+void *pads4_mark_sprite(int code);            /* port/pads4.c: 94's stars and arrows, codes 7F00h up */
+
 void *fight_sprite(int code)
 {
     int k = (code - FR_93) >> 10 & 3, n = code & 0x3FF;
+    if (code >= 0x7F00) return pads4_mark_sprite(code);
     if (!have_rom) return NULL;
     if (sflags & 0x80) {
         if (n != replay_frame[k]) {
