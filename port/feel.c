@@ -343,7 +343,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -364,6 +364,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "fights", "Fights (NHLPA 93's)", onoff_names, 2, 1, 1, 2 },
     { "fight_box", "Names box over the fighters", fightbox_names, 2, 0, 1, 2 },
     { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
+    { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */
@@ -406,8 +407,10 @@ static void changed(void *ctx, int index, int value)
     if (index == O_PRESET && value != PRESET_CUSTOM) {
         int k;
         for (k = 0; k < 5; k++) ob_game_set(g_host, O_SPEED + k, preset_rows[value][k]);
-    } else if (index >= O_SPEED)
+    } else if (index >= O_SPEED && index <= O_TURN)
         ob_game_set(g_host, O_PRESET, matching_preset());
+    if (index == O_AUTOLINE && value)
+        gameopts |= 4;                  /* 96 PC Auto includes line changes on (gameopts bit 2) */
     profile_from_rows();
 #ifndef FEEL_TEST
     if (!loading) settings_save_all();
@@ -449,7 +452,9 @@ void feel_register(ob_host *h, const char *ini_path)
             ob_game_set(h, O_PRESET, v);
         }
     }
+    if (getenv("NHL95_AUTOLINE")) ob_game_set(h, O_AUTOLINE, atoi(getenv("NHL95_AUTOLINE")) ? 1 : 0);
     profile_from_rows();
+    (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
 }
 
@@ -466,6 +471,13 @@ int feel_fight_box(void)
 int feel_fight_next(void)
 {
     return g_host ? ob_game_get(g_host, O_FIGHT_NEXT) : 0;
+}
+
+int feel_auto_lines(void)
+{
+    int on = g_host ? ob_game_get(g_host, O_AUTOLINE) : 0;
+    if (on) gameopts |= 4;              /* 96 PC Auto includes line changes on (chk4lc tests this bit) */
+    return on;
 }
 
 void feel_fight_next_done(void)
@@ -493,6 +505,7 @@ void feel_write_ini(FILE *f)
 {
     if (!g_host || !f) return;
     fprintf(f, "; the Game page. feel: a preset; feel_timing: 94 Genesis's cartridge timing (about 51 game passes a second, its slowdown)\n"
-               "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n");
+               "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n"
+               "; auto_lines: 96 PC Auto line changes (CompLine at faceoff for a human team, chk4lc on the fly)\n");
     ob_game_write_ini(g_host, f);
 }
