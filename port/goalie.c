@@ -112,6 +112,8 @@ void *goalie_agc_cont;
 static uint8_t bhold[2];
 static int ok_di, ok_pos, ok_gacc, ok_agc;
 
+uint8_t *goalie_bhold_timer(int i) { return &bhold[i ? 1 : 0]; }     /* (pads4.c swaps pads 3 and 4 in) */
+
 static int16_t call_vtoa(int dx, int dy)
 {
     int16_t r;

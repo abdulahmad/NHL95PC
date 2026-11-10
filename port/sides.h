@@ -23,6 +23,8 @@ int port_sides_wait(void);
 void port_sides_poll(void);                     /* main thread: open, devices, hotplug */
 
 int port_sides_is_open(void);
+/* the game slot of seat k (0, 1 the game's pads, 2, 3 pads 3 and 4; -1 none); before a sides screen, k */
+int port_sides_slot_of_seat(int seat);
 void port_sides_draw(uint32_t *px, int w, int h, int pitch);
 int port_sides_pad_input(int local, int mdrt_input);    /* 1: the screen used it */
 /* F1-F8 / F9 / F10: 0 when this machine has no seat on that team. sc is the XT code. */

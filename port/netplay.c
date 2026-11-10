@@ -35,9 +35,13 @@
 #include "feel.h"
 #include "season.h"
 #include "sides.h"
+#include "pads4.h"
 #include "overbar/sides.h"
 #include <SDL.h>
 #include <time.h>
+
+#define NH_PADS 4                       /* a seat a pad: the game's pads 1 and 2, then pads 3 and 4 (pads4.c) */
+extern int joyrec;
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -90,7 +94,7 @@ static volatile int nh_finish;          /* the game is over and its three stars 
 #define ST_DATA_LO 0xC0000u
 #define RING 64
 #define QMAX 50                         /* as joyqueue */
-static uint8_t nh_ring[RING][3];
+static uint8_t nh_ring[RING][5];      /* pad 1, pad 2, hot key (the game's record), pads 3 and 4 (pads4.c) */
 static volatile uint32_t nh_head, nh_tail;      /* records taken by the game / made; head written by the game, tail by the timer */
 static volatile uint32_t nh_consumed;           /* records the game has finished in this session */
 static int nh_cadence, nh_pending;
@@ -162,21 +166,31 @@ static int hot_ok(unsigned h)           /* hot keys that change only the game, t
 static void push_merged(const uint16_t *all)
 {
     uint8_t *r = nh_ring[nh_tail % RING];
-    unsigned h0 = all[0] >> 8, h1 = all[1] >> 8;
-    r[0] = (uint8_t)((all[0] & 0xFF) ^ 8);          /* sent as pad ^ 8: the steps before the first ones given (all 0) are "no direction" (8) */
-    r[1] = (uint8_t)((all[1] & 0xFF) ^ 8);
-    r[2] = (uint8_t)(hot_ok(h0) ? h0 : hot_ok(h1) ? h1 : 0);
+    static const int at[4] = { 0, 1, 3, 4 };        /* game slot -> byte of the record */
+    int p;
+    r[0] = r[1] = r[3] = r[4] = 8;
+    r[2] = 0;
+    for (p = 0; p < NH_PADS; p++) {
+        int slot = port_sides_slot_of_seat(p);
+        unsigned h = all[p] >> 8;
+        if (slot < 0 || slot > 3) continue;
+        r[at[slot]] = (uint8_t)((all[p] & 0xFF) ^ 8);   /* sent as pad ^ 8: the steps before the first ones given (all 0) are "no direction" (8) */
+        if (!r[2] && hot_ok(h)) r[2] = (uint8_t)h;
+    }
     nh_tail++;
 }
 
 /* this machine's pad and hot key, as ReadControllerPad and ReadHotKeys give them (0 while the overlay is open) */
-static uint16_t read_pad(int p)
+static uint16_t read_pad(int p)                 /* p: the seat; its game slot reads the device */
 {
     uint8_t pad = 8, hot = 0;
     static int autopad = -1;
     if (autopad < 0) autopad = getenv("NHL95_AUTOPAD") != NULL;
     if (autopad) return (uint16_t)(((((uint32_t)nh_tail / 6 + (uint32_t)p * 3) * 2654435761u) >> 20) & 7);       /* (a test aid: a direction held for six records) */
     if (overbar_client_open() || port_sides_is_open()) return 0;
+    p = port_sides_slot_of_seat(p);
+    if (p >= 2) return (uint16_t)(pads4_local_byte(p - 2) ^ 8);   /* pads 3 and 4: a controller of this machine; no hot keys */
+    if (p < 0) return 0;
     if ((p ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
     game_call(ReadControllerPad, (uint32_t)p, (uint32_t)(uintptr_t)&pad);
     game_call(ReadHotKeys, (uint32_t)(uintptr_t)&hot, 0);
@@ -220,7 +234,7 @@ static void st_regions(void)
 {
     int n = 0;
 #define X(v) do { st_extra[n].p = (void *)&(v); st_extra[n].n = sizeof (v); n++; } while (0)
-    X(nh_ring); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
+    X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
     st_extra[n].p = sub_10000; st_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
@@ -420,6 +434,7 @@ static void go_local(void)
     nh_sim = 0;
     if (nh_me == 0) { cont2team = 0; pad2dev = 0; }
     else { cont1team = 0; pad1dev = 0; }
+    pads4_drop_remote();
 }
 
 /* ---- rollback (the default in a session; NHL95_LOCKSTEP=1 is the old lockstep) ----
@@ -444,7 +459,7 @@ static void rb_regions(void)
 {
     int n = 0;
 #define X(v) do { rb_extra[n].p = (void *)&(v); rb_extra[n].n = sizeof (v); n++; } while (0)
-    X(nh_ring); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_loop_mark);
+    X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
     rb_extra[n].p = sub_10000; rb_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
@@ -536,6 +551,15 @@ uintptr_t nh_peek(void)
         return 0;
     }
     return (uintptr_t)nh_ring[nh_head % RING];
+}
+
+/* pads 3 and 4 of the record the game is playing (joyrec), in a session */
+int netplay_pad34(int k, uint8_t *out)
+{
+    uintptr_t r = (uintptr_t)(uint32_t)joyrec;
+    if (!nh_sim || r < (uintptr_t)nh_ring || r >= (uintptr_t)nh_ring + sizeof nh_ring) return 0;
+    *out = ((const uint8_t *)r)[3 + (k ? 1 : 0)];
+    return 1;
 }
 
 /* the game state the desync check compares: what SaveGameState keeps of the players, the teams, the lines, the clock */
@@ -699,10 +723,10 @@ static int room_open(char *err, int err_size)
     ob_net_game g;
     if (nh_net) return 0;
     nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
-    snprintf(identity, sizeof identity, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback1" : "lockstep1", (unsigned)(sounddev & 0xFF), (unsigned)musicon);
+    snprintf(identity, sizeof identity, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback2" : "lockstep2", (unsigned)(sounddev & 0xFF), (unsigned)musicon);
     memset(&g, 0, sizeof g);
     g.identity = identity;
-    g.pads = 2;
+    g.pads = NH_PADS;
     g.room = 1;
     g.states = nh_rb ? &rb_states : NULL;
     SDL_LockMutex(nh_lock);
@@ -782,7 +806,7 @@ void nh_playgame_enter(int32_t *handle)
             for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
         }
         if (port_sides_ob() && port_sides_ob()->done)
-            ob_sides_owners(port_sides_ob(), m.owner, 2, 1);
+            ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
         else {
             m.owner[0] = 0;
             m.owner[1] = 1;
@@ -1183,7 +1207,7 @@ void netplay_online_setup(ob_host *h)
     ob_online_ops ops;
     if (!nh_lock) nh_lock = SDL_CreateMutex();
     memset(&ops, 0, sizeof ops);
-    ops.max_pads = 2;
+    ops.max_pads = NH_PADS;
     ops.max_delay = 10;
     ops.roles = 3;
     ops.start = online_start;

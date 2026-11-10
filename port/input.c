@@ -1,6 +1,7 @@
 /* Keyboard (port 60h and IRQ 1), mouse and joystick ports. SDL key events become XT scan codes in a queue; the game's own
  * keyboard handler (vector 9) reads them from port 60h exactly like it did from the keyboard controller. */
 #include "host.h"
+#include "pads4.h"
 #include "audio.h"
 #include "bindings.h"
 #include "overbar_client.h"
@@ -541,11 +542,55 @@ static void joy_overlay(void)
     prev = btns;
 }
 
+/* pads 3 and 4 (pads4.c) read any connected controller as the game's pad byte: direction and buttons as ReadJoyPad
+ * makes them (pass A / X, shoot B / Y, both a shoulder button). Made here on the main thread, read by the game thread. */
+static volatile uint8_t pad_bytes[INPUT_PADS];
+
+int input_pad_byte(int pad)
+{
+    return pad >= 0 && pad < INPUT_PADS ? pad_bytes[pad] : 8;
+}
+
+static void pad_bytes_update(int paused)
+{
+    int i;
+    for (i = 0; i < INPUT_PADS; i++) {
+        int mask = 0, pass = 0, shoot = 0;
+        if (!paused && i < npads && pads[i].present) {
+            if (pads[i].gc) {
+                SDL_GameController *g = pads[i].gc;
+                int x = axis_value(SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX));
+                int y = axis_value(SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTY));
+                if (x < -500 || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_LEFT)) mask |= 8;
+                if (x > 500 || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)) mask |= 4;
+                if (y < -500 || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_UP)) mask |= 1;
+                if (y > 500 || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) mask |= 2;
+                pass = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X);
+                shoot = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y);
+                if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_LEFTSHOULDER) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_RIGHTSHOULDER)) pass = shoot = 1;
+            } else if (pads[i].js) {
+                SDL_Joystick *j = pads[i].js;
+                Uint8 hat = SDL_JoystickNumHats(j) ? SDL_JoystickGetHat(j, 0) : 0;
+                int x = SDL_JoystickNumAxes(j) > 1 ? axis_value(SDL_JoystickGetAxis(j, 0)) : 0;
+                int y = SDL_JoystickNumAxes(j) > 1 ? axis_value(SDL_JoystickGetAxis(j, 1)) : 0;
+                if (x < -500 || (hat & SDL_HAT_LEFT)) mask |= 8;
+                if (x > 500 || (hat & SDL_HAT_RIGHT)) mask |= 4;
+                if (y < -500 || (hat & SDL_HAT_UP)) mask |= 1;
+                if (y > 500 || (hat & SDL_HAT_DOWN)) mask |= 2;
+                pass = SDL_JoystickNumButtons(j) > 0 && (SDL_JoystickGetButton(j, 0) || (SDL_JoystickNumButtons(j) > 2 && SDL_JoystickGetButton(j, 2)));
+                shoot = SDL_JoystickNumButtons(j) > 1 && (SDL_JoystickGetButton(j, 1) || (SDL_JoystickNumButtons(j) > 3 && SDL_JoystickGetButton(j, 3)));
+            }
+        }
+        pad_bytes[i] = pads4_byte(mask, pass, shoot);
+    }
+}
+
 static void joy_update(void)                    /* main thread, every pass of the loop */
 {
     int i;
     joy_sync();
     joy_overlay();
+    pad_bytes_update(overbar_client_open() || port_sides_is_open());
     if (overbar_client_open() || port_sides_is_open()) return;          /* the game is paused; do not feed the stick */
     for (i = 0; i < 2; i++) {
         int x = 0, y = 0, b1 = 0, b2 = 0;

@@ -346,7 +346,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_FAKEPADS, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -373,6 +373,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
+    { "fake_pads", "Debug: 2 pretend controllers (2 v 2)", onoff_names, 2, 0, 0, 4 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */
@@ -498,6 +499,12 @@ int feel_auto_lines(void)
 int feel_auto_fly(void)
 {
     return g_host ? ob_game_get(g_host, O_AUTOFLY) : 0;
+}
+
+int feel_fake_pads(void)
+{
+    if (getenv("NHL95_FAKEPADS")) return atoi(getenv("NHL95_FAKEPADS")) != 0;
+    return g_host ? ob_game_get(g_host, O_FAKEPADS) : 0;
 }
 
 int feel_manual_goalie(void)
