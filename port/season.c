@@ -411,7 +411,7 @@ static void files_send(void *ud, int to, const void *data, size_t size)
 static void season_send(void *ud, int to, const void *data, size_t size)
 {
     (void)ud;
-    if (g_net) ob_net_send(g_net, to, OB_NET_TYPE_SEASON, data, size);
+    if (!g_net || ob_net_send(g_net, to, OB_NET_TYPE_SEASON, data, size)) g_season.send_failed++;
 }
 
 static void rebuild_bar_if_league(void)
@@ -435,15 +435,18 @@ static void diag_log(void)
     ob_season_league l;
     FILE *f;
     const char *name = open_league();
-    static char last[256];
-    char line[256];
+    static char last[400];
+    char line[400];
     int nteam = 0;
     if (!lp || !lp[0]) return;
     memset(&l, 0, sizeof l);
     if (name[0] && op_league(NULL, &l) == 0) nteam = l.nteam;
-    snprintf(line, sizeof line, "TEST season league=%s master=%d nteam=%d gamemode=%d net=%d why=%s\n",
+    snprintf(line, sizeof line, "TEST season league=%s master=%d nteam=%d gamemode=%d net=%d host=%d state=%d asked=%u answered=%u "
+             "notsent=%u roster=%d:%s why=%s\n",
              name && name[0] ? name : "-", is_master_copy() ? 1 : 0, nteam, (int)gamemode,
-             g_net ? 1 : 0, g_season.why[0] ? g_season.why : "-");
+             g_net ? 1 : 0, g_net ? ob_net_is_host(g_net) : -1, g_net ? (int)ob_net_state(g_net) : -1,
+             g_season.asked, g_season.answered, g_season.send_failed, g_season.roster_have,
+             g_season.roster_league[0] ? g_season.roster_league : "-", g_season.why[0] ? g_season.why : "-");
     if (!strcmp(line, last)) return;
     snprintf(last, sizeof last, "%s", line);
     f = fopen(lp, "ab");
@@ -518,6 +521,11 @@ void port_season_tick(void)
     if (!g_ready) return;
     rebuild_bar_if_league();
     if (g_host) ob_season_tick(g_host);
+    {   /* OVERBAR_TEST_LOG: a guest asks for the league list every ~2 s with no page open (headless checks) */
+        static int t;
+        const char *lp = getenv("OVERBAR_TEST_LOG");
+        if (lp && lp[0] && g_net && !ob_net_is_host(g_net) && ++t >= 120) { t = 0; ob_season_teams(&g_season, 0); }
+    }
     mount_play();
     diag_log();
 }
