@@ -50,7 +50,8 @@ extern uint32_t gameopts;
 #define PFJOY 0x08
 
 void *lines_slc_cont;
-static int ok_slc, ok_face, ok_checkob;
+static int ok_slc, ok_face, ok_checkob, ok_chk;
+void *lines_chk_cont;
 
 int lines_faceoff_computer(void)
 {
@@ -69,11 +70,26 @@ static short call_chk4lc(void *p)
     return r;
 }
 
+/* chk4lc (the on-the-fly line change): 94 Genesis's Auto has none (its chk4lc returns at once when Auto is on);
+ * 96 PC's Auto keeps it and adds the human puck carrier (lines_after_checkob). */
+int lines_fly_blocked(void)
+{
+    return feel_auto_lines() && !feel_auto_fly();
+}
+
 int lines_after_checkob(uint8_t *p)
 {
-    if (!feel_auto_lines() || !p) return 0;
+    if (!feel_auto_lines() || !feel_auto_fly() || !p) return 0;
     if (!(p[P_PFLAGS] & PFJOY)) return 0;
     return call_chk4lc(p) != 0;
+}
+
+__attribute__((naked)) static void chk_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tcall " SYM("lines_fly_blocked") "\n\ttest %eax, %eax\n\tpopal\n\t"
+        "jz 1f\n\txor %eax, %eax\n\tret\n"
+        "1:\n\tpush $0x18\n\tjmp *" SYM("lines_chk_cont"));
 }
 
 __attribute__((naked)) static void slc_thunk(void)
@@ -217,6 +233,7 @@ static int redirect_call(char *from, size_t n, const void *target, const void *t
 void lines_install(void)
 {
     static const uint8_t push0c[5] = { 0x68, 0x0C, 0, 0, 0 };
+    static const uint8_t push18[5] = { 0x68, 0x18, 0, 0, 0 };
     ok_slc = !memcmp(SetLCmode, push0c, 5);
     if (ok_slc) {
         lines_slc_cont = SetLCmode + 5;
@@ -227,12 +244,14 @@ void lines_install(void)
     ok_face = patch_faceoff_lc_on(0) && patch_faceoff_skips(0);        /* both sites of both kinds, or nothing */
     if (ok_face) { patch_faceoff_lc_on(1); patch_faceoff_skips(1); }
     if (!ok_face) fprintf(stderr, "Auto line changes: puckfaceoff is not the expected code, faceoff CompLine stays computer-only\n");
-    /* Not installed: chk4lc on the human puck carrier sent the player being played to the bench (pflags2 bit 3, lineinput's
-     * slow skate) and doinput returned without his input (Abdul's test, 2026-11-10: the carrier stopped or crawled with Auto
-     * on, fine with it off). On-the-fly changes for a human team need the controlled player handed over first. */
-    if (getenv("NHL95_AUTOLINE_FLY")) {
-        ok_checkob = redirect_call(doinput, 1070, checkob, (const void *)checkob_thunk);
-        if (!ok_checkob) fprintf(stderr, "Auto line changes: doinput's checkob is not the expected call, on-the-fly changes stay computer-only\n");
+    ok_checkob = redirect_call(doinput, 1070, checkob, (const void *)checkob_thunk);
+    if (!ok_checkob) fprintf(stderr, "Auto line changes: doinput's checkob is not the expected call, on-the-fly changes stay computer-only\n");
+    ok_chk = !memcmp((const void *)chk4lc, push18, 5);
+    if (ok_chk) {
+        lines_chk_cont = (char *)chk4lc + 5;
+        patch_jmp((void *)chk4lc, (void *)chk_thunk);
+    } else {
+        fprintf(stderr, "Auto line changes: chk4lc is not the expected code, Auto still changes computer lines on the fly\n");
     }
 }
 

@@ -346,7 +346,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_GOALIE, O_SKILL, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -356,6 +356,7 @@ static const char *const two_names[] = { "95 PC", "94 Genesis" };
 static const char *const onoff_names[] = { "Off", "On" };
 static const char *const fightbox_names[] = { "Moves to the top right", "Hides" };
 static const char *const skill_names[] = { "Rookie", "Pro", "All-Star" };
+static const char *const fly_names[] = { "Faceoffs only (94 Genesis)", "On the fly too (96 PC)" };
 
 static const ob_game_opt opts[O_COUNT] = {
     { "feel", "Feel", preset_names, 4, PRESET_ORIGINAL, 1, 0 },
@@ -369,6 +370,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "fight_box", "Names box over the fighters", fightbox_names, 2, 0, 1, 2 },
     { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
     { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
+    { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
 };
@@ -493,6 +495,11 @@ int feel_auto_lines(void)
     return on;
 }
 
+int feel_auto_fly(void)
+{
+    return g_host ? ob_game_get(g_host, O_AUTOFLY) : 0;
+}
+
 int feel_manual_goalie(void)
 {
     return g_host ? ob_game_get(g_host, O_GOALIE) : 0;
@@ -529,7 +536,8 @@ void feel_write_ini(FILE *f)
     if (!g_host || !f) return;
     fprintf(f, "; the Game page. feel: a preset; feel_timing: 94 Genesis's cartridge timing (about 51 game passes a second, its slowdown)\n"
                "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n"
-               "; auto_lines: 96 PC Auto line changes (CompLine at faceoff for a human team, chk4lc on the fly)\n"
+               "; auto_lines: Auto line changes (every team's lines are set at each faceoff, no line-change box)\n"
+               "; auto_lines_when: Faceoffs only (94 Genesis) or On the fly too (96 PC: also during play, your puck carrier included)\n"
                "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
                "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n");
     ob_game_write_ini(g_host, f);
