@@ -88,6 +88,12 @@ int goalie_bhold(int manual, int on_goalie, int b_new, int b_held, int b_rel, ui
     return GB_PASS;
 }
 
+int goalie_team_has_puck(int carrier, int sc)
+{
+    if (carrier < 0 || carrier > 0xB) return 0;
+    return (carrier <= 5) == (sc <= 5);
+}
+
 #ifndef GOALIE_TEST
 
 extern char doinput[], updateplayers[], goalieacc[], assgoalie[], changeplayer[];
@@ -104,6 +110,7 @@ extern signed char *puckc;
 extern int32_t regd0, regd1, regd2, regd3;
 extern int16_t crowdlevel;
 extern short dword_CCA5A[];
+extern uint8_t gmode2;               /* bit 0: a faceoff is on (doinput hands the pad to faceoffinput) */
 
 void *goalie_gacc_cont;
 void *goalie_agc_cont;
@@ -249,6 +256,12 @@ int goalie_before_doinput(uint8_t *p, int ctl)
     int i, on, b_new, b_held, b_rel, act;
     if (!feel_manual_goalie() || !p) return 0;
     i = ctl ? 1 : 0;
+    /* the game's own input first: a faceoff (faceoffinput), the line-change box (lineinput), and B while this
+     * team has the puck (a pass or changeplayer, as in 96 PC: the goalie is taken on defence only) */
+    if ((gmode2 & 1) || (P_B(p, P_PFLAGS2) & 0x08) || goalie_team_has_puck(*puckc, P_W(p, P_SCNUM))) {
+        bhold[i] = 0;
+        return 0;
+    }
     on = P_W(p, P_POSITION) == 0;
     b_new = ((int16_t)regd1 & BUT_B) != 0;
     b_held = ((int16_t)regd3 & BUT_B) != 0;
