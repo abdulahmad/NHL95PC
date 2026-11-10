@@ -119,7 +119,12 @@ static int16_t call_vtoa(int dx, int dy)
 
 static void call_ad(void *fn, void *a, int d)
 {
-    __asm__ volatile("call *%0" : : "r"(fn), "a"(a), "d"(d) : "ecx", "edx", "memory", "cc");
+    /* eax/edx are Watcom args and the callee overwrites them: "+a/+d", not an edx clobber
+     * (GCC: "asm operand has impossible constraints" if "d"(d) is also in the clobber list). */
+    __asm__ volatile("call *%[fn]"
+                     : [a] "+a"(a), [d] "+d"(d)
+                     : [fn] "r"(fn)
+                     : "ecx", "memory", "cc");
 }
 
 static int16_t call_restore(int nw, int old)
