@@ -21,6 +21,8 @@
 #define O_BINARY 0
 #endif
 
+extern int criterrflag;
+
 void host_exit(int code)
 {
     TRACE("host_exit(%d) called from %p\n", code, __builtin_return_address(0));
@@ -366,9 +368,19 @@ static int int21(ctx_t *c)
     case 0x30: SETAX(c, 0x0005); R(c, EBX) = 0; R(c, ECX) = 0; return 1;      /* DOS 5.0 */
     case 0x36: {                                                /* free disk space: 4 GB of 32 KB clusters */
         unsigned tc, fc, spc, bps;
-        int letter = (R(c, EDX) & 0xFF) ? 'A' + (int)(R(c, EDX) & 0xFF) - 1 : 'A';
+        int dl = (int)(R(c, EDX) & 0xFF);
+        /* DL=0 is the current drive (AH=19 is C:), 1=A: … not A: when DL is 0.
+           CreateNewLeague DiskSpaceShort(0) must not see a virtual A: (512-byte
+           clusters → KB/cluster = 0). */
+        int letter = dl ? 'A' + dl - 1 : 'C';
         if (port_season_diskfree(letter, &tc, &fc, &spc, &bps) == 0) {
             SETAX(c, spc); R(c, EBX) = fc; R(c, ECX) = bps; R(c, EDX) = tc; return 1;
+        }
+        if (letter == 'A' || letter == 'B') {
+            criterrflag = -1;                   /* empty floppy: SelectFloppyDrive treats this as no disk */
+            SETAX(c, 0xFFFF);
+            SET_CF(c, 1);
+            return 1;
         }
         SETAX(c, 64); R(c, EBX) = 60000; R(c, ECX) = 512; R(c, EDX) = 65000; return 1;
     }

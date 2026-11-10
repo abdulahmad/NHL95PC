@@ -31,7 +31,6 @@
 #endif
 
 extern unsigned char curleague;
-extern int leaguemaster;
 extern unsigned char leagueteams[];
 extern unsigned char treeteamnames[];
 extern unsigned char str_floppydrv;
@@ -115,6 +114,33 @@ static int team_local(int team)
     return team_human(team) && !team_remote(team);
 }
 
+static int has_human(void)
+{
+    int i;
+    for (i = 0; i < 26; i++)
+        if (team_human(i)) return 1;
+    return 0;
+}
+
+/* HD copy that still has a local human. leaguemaster is a team index (0 is valid), not a boolean. */
+static int is_master_copy(void)
+{
+    int i;
+    for (i = 0; i < 26; i++)
+        if (team_local(i)) return 1;
+    return 0;
+}
+
+/* CopyHumanTeamDBs still writes a floppy for +18h==2 with +16h bit 0 clear. */
+static int needs_floppy(void)
+{
+    int i;
+    for (i = 0; i < 26; i++)
+        if (team_remote(i) && !(leagueteams[i * 30 + 0x16] & 1))
+            return 1;
+    return 0;
+}
+
 static int league_host_dir(char *dir, int size)
 {
     const char *name = (const char *)&curleague;
@@ -147,26 +173,42 @@ static int copy_team_files(const char *from, const char *to, int team)
     return need ? 0 : -1;
 }
 
+static void unmount_play(void)
+{
+    if (g_play_on) ob_vdrive_unmount(&g_vdrive, 'A');
+    g_play_on = 0;
+    g_play_dir[0] = 0;
+}
+
+static void mount_a(const char *dir)
+{
+    ob_vdrive_mount(&g_vdrive, 'A', dir);
+    snprintf(g_play_dir, sizeof g_play_dir, "%s", dir);
+    g_play_on = 1;
+    if (str_floppydrv == '?' || str_floppydrv == 0) str_floppydrv = 'A';
+}
+
 static void mount_play(void)
 {
     char dir[512];
-    if (league_host_dir(dir, (int)sizeof dir)) {
-        if (g_play_on) ob_vdrive_unmount(&g_vdrive, 'A');
-        g_play_on = 0;
-        g_play_dir[0] = 0;
+    /* CreateNewLeague strcpy's curleague, then asks schedule/database (frames tick here),
+       then mkdir. ob_vdrive_mount mkdir's, so mounting A: on that path first makes the
+       game's mkdir fail → "Error while creating league!". Only a guest copy (humans, none
+       local) should own A: as the league folder, and only once that folder is already there.
+       A remote team at New League still goes through CopyHumanTeamDBs's floppy write: give
+       it a scratch A: so that does not land in NHL95_ROOT. */
+    if (is_master_copy() && needs_floppy()) {
+        char floppy[512];
+        snprintf(floppy, sizeof floppy, "%s/floppy", g_work[0] ? g_work : "overbar-season");
+        MKDIR(floppy);
+        mount_a(floppy);
         return;
     }
-    if (!leaguemaster) {
-        ob_vdrive_mount(&g_vdrive, 'A', dir);
-        snprintf(g_play_dir, sizeof g_play_dir, "%s", dir);
-        g_play_on = 1;
-        if (str_floppydrv == '?' || str_floppydrv == 0) str_floppydrv = 'A';
+    if (league_host_dir(dir, (int)sizeof dir) || !exists_path(dir) || !has_human() || is_master_copy()) {
+        unmount_play();
         return;
     }
-    if (g_play_on && g_play_dir[0]) return;
-    ob_vdrive_unmount(&g_vdrive, 'A');
-    g_play_on = 0;
-    g_play_dir[0] = 0;
+    mount_a(dir);
 }
 
 static void restore_play(void)
@@ -194,7 +236,7 @@ static int op_league(void *ud, ob_season_league *l)
     if (!name[0]) return -1;
     snprintf(l->name, sizeof l->name, "%s", name);
     snprintf(l->id, sizeof l->id, "%s", name);
-    l->master = leaguemaster ? 1 : 0;
+    l->master = is_master_copy() ? 1 : 0;
     for (i = 0; i < 26 && l->nteam < OB_SEASON_TEAMS; i++) {
         /* host: local humans only (Boston). remote exports (LA) are pickable, not "the host's". */
         if (l->master) {
@@ -340,7 +382,7 @@ static void rebuild_bar_if_league(void)
 {
     ob_season_league l;
     const char *name = (const char *)&curleague;
-    int master = leaguemaster ? 1 : 0, nteam = 0;
+    int master = is_master_copy() ? 1 : 0, nteam = 0;
     memset(&l, 0, sizeof l);
     if (name[0] && op_league(NULL, &l) == 0) nteam = l.nteam;
     if (g_seen_master == master && g_seen_nteam == nteam && strcmp(g_seen_league, name ? name : "") == 0)
@@ -364,7 +406,7 @@ static void diag_log(void)
     memset(&l, 0, sizeof l);
     if (name[0] && op_league(NULL, &l) == 0) nteam = l.nteam;
     snprintf(line, sizeof line, "TEST season league=%s master=%d nteam=%d gamemode=%d net=%d why=%s\n",
-             name && name[0] ? name : "-", leaguemaster ? 1 : 0, nteam, (int)gamemode,
+             name && name[0] ? name : "-", is_master_copy() ? 1 : 0, nteam, (int)gamemode,
              g_net ? 1 : 0, g_season.why[0] ? g_season.why : "-");
     if (!strcmp(line, last)) return;
     snprintf(last, sizeof last, "%s", line);
