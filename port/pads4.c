@@ -130,6 +130,8 @@ static int log_on(void)
 }
 
 static void mk_free(void);
+static void rp_record(void);
+static int8_t rp_pl[0x9600 / 0x80][2];         /* pads 3 and 4's players in each replay record (below) */
 static int fake_done;           /* this game's pretend pads were given out */
 
 void pads4_clear(void)
@@ -137,6 +139,7 @@ void pads4_clear(void)
     int k;
     mk_free();
     fake_done = 0;
+    memset(rp_pl, -1, sizeof rp_pl);
     for (k = 0; k < 2; k++) {
         int sc = pads4.player[k];
         if (sc >= 0 && sc <= 11 && sc != c1playernum[0] && sc != c2playernum[0]) P_B(SortCords + sc * 0x80, P_PFLAGS) &= (uint8_t)~PFJOY;
@@ -211,12 +214,20 @@ static void others_of(int k, int16_t *o)
     o[2] = pads4.team[!k] ? pads4.player[!k] : -1;
 }
 
-/* no pad 3 or 4 player while the game's own pads have none (the intro, the anthem, between periods) or the pre-game
- * intro runs (the puck's assignment 1Ch, as doinput checks) */
+/* no pad 3 or 4 player while the game's own pads have none (between periods) or the pre-game intro and anthem run:
+ * a player on assintrostand or assintroline (asstab 25h, 26h). (Not the puck's puckfaceoff2, 1Ch: every faceoff has it.) */
+#define P_ASSNUM 0x1C
+#define P_ASSLIST 0x1E
 static int pads4_idle(void)
 {
+    int i;
     if (c1playernum[0] < 0 && c2playernum[0] < 0) return 1;
-    return puckasslist[((int16_t *)puckstruct)[0xE]] == 0x1C && !penshotmode;
+    for (i = 0; i < 12; i++) {
+        const uint8_t *p = SortCords + i * 0x80;
+        int a = p[P_ASSLIST + (P_W(p, P_ASSNUM) & 7)];
+        if (a == 0x25 || a == 0x26) return 1;
+    }
+    return 0;
 }
 
 /* pad k keeps a player of its own: else the free skater of its team nearest the puck's next spot */
@@ -339,6 +350,7 @@ void pads4_tick(void)
     if (!fake_done && !pads4.team[0] && !pads4.team[1] && !netplay_session() && feel_fake_pads() && (cont1team > 0 || cont2team > 0))
         fake_fill(cont1team > 0 ? cont1team : 0, cont2team > 0 ? cont2team : 0);
     for (k = 0; k < 2; k++) keep_player(k);
+    rp_record();
 }
 
 /* at updateplayers .36: cmp ax, [c2playernum] / jne .38 (9 bytes), ax the player's SCnum, esi the player */
@@ -492,6 +504,21 @@ int pads4_mark_code(int frame)
     return frame;
 }
 
+/* the replay's (DrawRinkSideObjects): the stars only (its edge flags are not the live ones') */
+int pads4_mark_star(int frame)
+{
+    frame = (int16_t)frame;
+    if (!marks94()) return frame;
+    return frame == 0x185 ? FR_MARK : frame == 0x186 ? FR_MARK + 8 : frame == 0x187 ? FR_MARK + 32 : frame;
+}
+
+__attribute__((naked)) static void star_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpush %eax\n\tcall " SYM("pads4_mark_star") "\n\tadd $4, %esp\n\tmov %eax, 28(%esp)\n\tpopal\n\t"
+        "jmp " SYM("DrawFrameSprite"));
+}
+
 /* DrawRinkOverlays' DrawFrameSprite: 95 PC's star and arrow frames become 94's (eax the frame) */
 __attribute__((naked)) static void mark_thunk(void)
 {
@@ -502,19 +529,11 @@ __attribute__((naked)) static void mark_thunk(void)
 
 /* DrawRinkOverlays' DrawRinkObjects: then the stars (or edge arrows) of pads 3 and 4, as the game draws pads 1 and 2's
  * (DrawRinkOverlays: the view's edges from viewscrollx / viewscrolly) */
-void pads4_draw(void)
+static void draw_mark(int k, int team, int x, int y)
 {
-    int k;
-    if (dword_CCC9C || pads4_idle()) return;
-    for (k = 0; k < 2; k++) {
-        int sc = pads4.player[k], slot, x, y, fl = 0, vx = (int16_t)viewscrollx, vy = (int16_t)viewscrolly, code;
-        uint8_t *p;
-        if (!pads4.team[k] || sc < 0 || sc > 11) continue;
-        p = SortCords + sc * 0x80;
-        if (P_W(p, P_FRAME) == -1) continue;
-        slot = pads4.team[k] == cont1team ? 0 : pads4.team[k] == cont2team ? 1 : 0;
-        x = P_W(p, P_XHI);
-        y = P_W(p, P_YHI);
+    int slot, fl = 0, vx = (int16_t)viewscrollx, vy = (int16_t)viewscrolly, code;
+    {
+        slot = team == cont1team ? 0 : team == cont2team ? 1 : 0;
         if (y < 0x140 - (vy + 0xA8)) { y = 0x140 - (vy + 0xA8); fl = 2; }
         else if (y >= 0x140 - vy) { y = 0x140 - vy + 1; fl = 1; }
         if (fl) {
@@ -526,7 +545,7 @@ void pads4_draw(void)
         }
         if (!marks94()) {                               /* 95 PC's: the star of the game pad it swaps into; no arrow */
             if (!fl) draw_sprite(word_CC0B0[1 + slot], x, y, 0);
-            continue;
+            return;
         }
         if (!fl) code = FR_MARK + (k + 2) * 8;
         else {
@@ -535,6 +554,64 @@ void pads4_draw(void)
         }
         draw_sprite(code, x, y, fl & 8);
     }
+}
+
+void pads4_draw(void)
+{
+    int k;
+    if (dword_CCC9C || pads4_idle()) return;
+    for (k = 0; k < 2; k++) {
+        int sc = pads4.player[k];
+        uint8_t *p;
+        if (!pads4.team[k] || sc < 0 || sc > 11) continue;
+        p = SortCords + sc * 0x80;
+        if (P_W(p, P_FRAME) == -1) continue;
+        draw_mark(k, pads4.team[k], P_W(p, P_XHI), P_W(p, P_YHI));
+    }
+}
+
+/* ---- replays: the game's records keep pads 1 and 2's players (updatereplay), these keep pads 3 and 4's, one per
+ * record (80h bytes from replaystart, 9600h in all); the replay's own positions (ReplayStep's arrays) ---- */
+#define RP_N (0x9600 / 0x80)
+extern uint8_t *replaystart, *recbpr, *replayplay;
+extern uint8_t sflags;
+extern int16_t word_E9F18[], word_E9F3A[], word_E9F5C[];
+extern char DrawRinkSideObjects[], sub_93540[];
+static int8_t rp_team[2];
+
+static void rp_record(void)
+{
+    long slot;
+    int k;
+    if ((sflags & 0x80) || dword_CCC9C || !replaystart) return;
+    slot = (long)(recbpr - replaystart) >> 7;
+    if (slot < 0 || slot >= RP_N) return;
+    for (k = 0; k < 2; k++) {
+        rp_pl[slot][k] = (int8_t)(pads4.team[k] && !pads4_idle() ? pads4.player[k] : -1);
+        rp_team[k] = (int8_t)pads4.team[k];
+    }
+}
+
+void pads4_replay_draw(void)
+{
+    long slot;
+    int k;
+    if (!replaystart) return;
+    slot = (long)(replayplay - replaystart) >> 7;
+    if (slot < 0 || slot >= RP_N) return;
+    for (k = 0; k < 2; k++) {
+        int sc = rp_pl[slot][k];
+        if (!rp_team[k] || sc < 0 || sc > 11 || word_E9F5C[sc] == -1) continue;
+        draw_mark(k, rp_team[k], word_E9F18[sc], word_E9F3A[sc]);
+    }
+}
+
+/* DrawRinkSideObjects' sub_93540 (the depth order of its three stars): then pads 3 and 4's */
+__attribute__((naked)) static void rp_thunk(void)
+{
+    __asm__ volatile(
+        "call " SYM("sub_93540") "\n\t"
+        "pushal\n\tcall " SYM("pads4_replay_draw") "\n\tpopal\n\tret");
 }
 
 __attribute__((naked)) static void dro_thunk(void)
@@ -546,11 +623,11 @@ __attribute__((naked)) static void dro_thunk(void)
 
 /* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + word_CC0B0] /
  * sar eax, 10h / xor ecx, ecx / call DrawFrameSprite; the arrow and puck paths jump to the call) */
-static int patch_marks(void)
+static int patch_marks(char *fn, size_t n, void (*thunk)(void))
 {
-    uint8_t *base = (uint8_t *)DrawRinkOverlays;
+    uint8_t *base = (uint8_t *)fn;
     size_t i;
-    for (i = 12; i + 5 <= 0x9E0; i++) {
+    for (i = 12; i + 5 <= n; i++) {
         uint8_t *c = base + i, code[5];
         uint32_t a;
         int32_t rel;
@@ -560,7 +637,7 @@ static int patch_marks(void)
         if (a != (uint32_t)(uintptr_t)word_CC0B0) continue;
         memcpy(&rel, c + 1, 4);
         if ((uintptr_t)c + 5 + (uintptr_t)(intptr_t)rel != (uintptr_t)DrawFrameSprite) return 0;
-        rel = (int32_t)((uintptr_t)mark_thunk - ((uintptr_t)c + 5));
+        rel = (int32_t)((uintptr_t)thunk - ((uintptr_t)c + 5));
         code[0] = 0xE8;
         memcpy(code + 1, &rel, 4);
         patch_bytes(c, code, 5);
@@ -628,7 +705,11 @@ void pads4_install(void)
     }
     ok_draw = redirect_call(DrawRinkOverlays, 400, DrawRinkObjects, (const void *)dro_thunk);
     if (!ok_draw) fprintf(stderr, "Four players: DrawRinkOverlays is not the expected code, pads 3 and 4 have no star\n");
-    if (!patch_marks()) fprintf(stderr, "Four players: DrawRinkOverlays' star call is not the expected code, pads 1 and 2 keep 95 PC's stars\n");
+    if (!redirect_call(DrawRinkSideObjects, 0x400, sub_93540, (const void *)rp_thunk))
+        fprintf(stderr, "Four players: DrawRinkSideObjects is not the expected code, replays show no star for pads 3 and 4\n");
+    if (!patch_marks(DrawRinkSideObjects, 0x700, star_thunk))
+        fprintf(stderr, "Four players: the replay's star call is not the expected code, it keeps 95 PC's stars\n");
+    if (!patch_marks(DrawRinkOverlays, 0x9E0, mark_thunk)) fprintf(stderr, "Four players: DrawRinkOverlays' star call is not the expected code, pads 1 and 2 keep 95 PC's stars\n");
 }
 
 #endif /* !PADS4_TEST */
