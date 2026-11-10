@@ -53,5 +53,7 @@ void feel_fight_next_done(void);
 int feel_auto_lines(void);
 /* the Game page's Manual goalie row (port/goalie.c): 1 on. 96 PC Manual; 94G move/save. */
 int feel_manual_goalie(void);
+/* the Game page's Skill level row (port/skill.c): 0 pro, 1 all-star, 2 rookie. 96 Genesis OptSkill. */
+int feel_skill(void);
 
 #endif

@@ -66,6 +66,7 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_STATS=1` prints every 2 s how many traps (int, in, out, cli, sti, pushf, popf) the game made by opcode, port and int 21h function, the time spent in them, the game thread's user and kernel CPU time, `video_present` timing and the game's tick rate against the PIT rate; `NHL95_KEYS="ms:Key[/hold] ..."` presses keys at given times (SDL key names);
 `NHL95_AUTOLINE=1` turns on the Game page's Auto line changes (96 PC Auto: CompLine at faceoff for a human team, chk4lc on the fly);
 `NHL95_GOALIE=1` turns on Manual goalie (96 PC: B-hold takes the goalie, A dives, C a save; 94 Genesis movement);
+`NHL95_SKILL=0-2` sets Skill level (96 Genesis OptSkill: 0 pro, 1 all-star, 2 rookie; 96 PC has no skill row);
 `NHL95_NOSIDES=1` (or `NHL95_SIDES=0`) skips Overbar's select-sides screen (every connected controller, the same module online); `NHL95_AUTOSKIP` / `NHL95_KEYS` skip it too;
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
@@ -96,7 +97,7 @@ volume ramp and frees the voice when the ramp-end interrupt arrives, so the ramp
 unit, as in DOSBox). The interrupt-queue semantics of GF1 register 8Fh and the voice-control acknowledge are modelled.
 
 Debugging: `NHL95_TRACE=1`, `NHL95_STATS=1` (traps, ticks, `video_present` timing), `NHL95_KEYS="ms:Key ms:@x,y ms:@click"` (scripted input),
-`NHL95_AUTOLINE=1`, `NHL95_GOALIE=1`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py` maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last
+`NHL95_AUTOLINE=1`, `NHL95_GOALIE=1`, `NHL95_SKILL=0-2`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py` maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last
 exception handler. Without any setting, the program appends to `nhl95-audio.log` next to it while a sound card is in use (refill and interrupt
 timing, slow DOS calls, the music files the game opens, native GUS voice activity), and **Ctrl+F11** records the mixed sound to
 `nhl95-capture-N.wav` (the window title says so): that is how sound problems on a machine are diagnosed without a debugger.
