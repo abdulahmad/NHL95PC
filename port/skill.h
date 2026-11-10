@@ -1,21 +1,30 @@
 /* SPDX-License-Identifier: MIT
  * Copyright (c) 2026 abdulahmad and contributors
  *
- * 96 Genesis skill level on 95 PC (the Game page's Skill level row).
- * 96 PC's User Setup has no skill/difficulty row; the 96-family option is 96 Genesis OptSkill.
+ * 96 PC main-menu LEVEL (GAME SETUP) on 95 PC (the Game page's Skill level row).
+ * Rookie / Pro / All-Star; default Pro. Not 96 Genesis OptSkill.
  */
 #ifndef NHL95_SKILL_H
 #define NHL95_SKILL_H
 
 void skill_install(void);
 
-/* 96G OptSkill: 0 pro, 1 all-star, 2 rookie. */
-enum { SKILL_PRO = 0, SKILL_ALLSTAR = 1, SKILL_ROOKIE = 2 };
+/* 96 PC dword_17C9A8 bits 7-8: 0 Rookie, 1 Pro (default), 2 All-Star. */
+enum { SKILL_ROOKIE = 0, SKILL_PRO = 1, SKILL_ALLSTAR = 2 };
 
-/* 96G SkillLevelTbl NTSC ($15, $15, $14). Rookie + pfjoycon: addq #2. */
-int skill_gravity(int skill, int human);
+/* Exact 96 PC playeracc scales: Rookie/Pro v - v/4 (sar 2), All-Star v + v/8 (sar 3). */
+int skill_scale_96(int skill, int v);
 
-/* 95 PC updateplayers multiplies velocity by 16; 96G multiplies by skillspeed (21 on pro). */
-int skill_step(int skill, int human);
+/* 95 PC vs its own unscaled playeracc (Pro). 96 PC All-Star is 9/8 over Pro's 3/4 = 3/2. */
+int skill_scale_action(int skill, int v);
+
+/* Live Game-page wrapper. */
+int skill_scale_now(int v);
+
+/* 96 PC checkcheck hit base: 150 Rookie/Pro, 100 All-Star (replaces 95 PC's 160/100 human/CPU). */
+int skill_hit_base(int skill);
+
+/* 96 PC AI proximity (sub_43605): 3 Rookie, 4 Pro/All-Star. */
+int skill_ai_near(int skill);
 
 #endif
