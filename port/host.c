@@ -5,6 +5,7 @@
 #include "snap.h"
 #include "audio.h"
 #include "overbar_client.h"
+#include "sides.h"
 void sound_init(void);
 #include <SDL.h>
 
@@ -104,7 +105,7 @@ int main(int argc, char **argv)
         if (menu_resync) { menu_resync = 0; next_tick = now; }        /* a menu bar loop ran: no catching up */
 #endif
         while (now >= next_tick) {
-            if (!overbar_client_open() || netplay_running()) irq_raise(0);     /* overlay open: the game clock waits (not online) */
+            if ((!overbar_client_open() && !port_sides_is_open()) || netplay_running()) irq_raise(0);     /* overlay / sides: the game clock waits (not online) */
             next_tick += 1000000000LL / irq_pit_hz() / (intro_skip ? 20 : 1);        /* skipping the splash screens: the game's clock runs fast */
             if (now - next_tick > 200000000) { next_tick = now; break; }
         }

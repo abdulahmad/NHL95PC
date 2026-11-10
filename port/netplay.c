@@ -15,14 +15,16 @@
  *     code that runs between calls (the pre-game intro's timer and its "press a button to skip" test) sees the same game.
  *
  * Host / Connect opens a room at once (port_season_bind_net), so overlay Pick / Sync have the socket before a
- * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) begins a match in that
- * room. A loaded game stays local. The match ends with PlayGame; the room lasts until Leave.
+ * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) shows Overbar's select-sides
+ * screen (every connected controller; the same module online) and then begins a match in that room. A loaded game
+ * stays local. The match ends with PlayGame; the room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
  *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
  *     between game frames, gives back what it drew; DOS get-time (int 21h/2Ch) counts from the host's time by the records run;
  *   - PaSpeechBusy and SpeechBusy say 0 (the play does not wait for the announcer, whose speed is the sound card's);
- *   - hot keys online: F1-F8 (line changes), F9 / F10 (goalie), Tab (numbers). Esc (the desk), R (replay), S and M (sound) are
+ *   - hot keys online: F1-F8 (line changes), F9 / F10 (goalie), Tab (numbers); F1-F10 of a team this machine has no
+ *     seat on are dropped (ob_sides_hotkeys_filter). Esc (the desk), R (replay), S and M (sound) are
  *     dropped: they open local menus or change local settings;
  *   - the pre-game intro and the three stars end at their first record; the intermission between periods is skipped.
  * The game thread runs the hooks; SampleInputTick runs inside the game's timer interrupt, so it never waits for the lock.
@@ -32,6 +34,8 @@
 #include "overbar_client.h"
 #include "feel.h"
 #include "season.h"
+#include "sides.h"
+#include "overbar/sides.h"
 #include <SDL.h>
 #include <time.h>
 
@@ -90,7 +94,7 @@ static uint8_t nh_ring[RING][3];
 static volatile uint32_t nh_head, nh_tail;      /* records taken by the game / made; head written by the game, tail by the timer */
 static volatile uint32_t nh_consumed;           /* records the game has finished in this session */
 static int nh_cadence, nh_pending;
-static uint16_t nh_local;
+static uint16_t nh_local[OB_NET_MAX_PADS];
 static uint32_t nh_loop_mark, nh_rgf_pops0, nh_rgf_f0, nh_rgf_asked;
 static int nh_rgf_carry, nh_rgf_total;
 static uint32_t nh_clock;               /* the host's time of day when the session began, in seconds */
@@ -166,17 +170,32 @@ static void push_merged(const uint16_t *all)
 }
 
 /* this machine's pad and hot key, as ReadControllerPad and ReadHotKeys give them (0 while the overlay is open) */
-static uint16_t read_local(void)
+static uint16_t read_pad(int p)
 {
     uint8_t pad = 8, hot = 0;
     static int autopad = -1;
     if (autopad < 0) autopad = getenv("NHL95_AUTOPAD") != NULL;
-    if (autopad) return (uint16_t)(((((uint32_t)nh_tail / 6 + (uint32_t)nh_me * 3) * 2654435761u) >> 20) & 7);       /* (a test aid: a direction held for six records) */
-    if (overbar_client_open()) return 0;
-    if ((nh_me ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
-    game_call(ReadControllerPad, (uint32_t)nh_me, (uint32_t)(uintptr_t)&pad);
+    if (autopad) return (uint16_t)(((((uint32_t)nh_tail / 6 + (uint32_t)p * 3) * 2654435761u) >> 20) & 7);       /* (a test aid: a direction held for six records) */
+    if (overbar_client_open() || port_sides_is_open()) return 0;
+    if ((p ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
+    game_call(ReadControllerPad, (uint32_t)p, (uint32_t)(uintptr_t)&pad);
     game_call(ReadHotKeys, (uint32_t)(uintptr_t)&hot, 0);
+    if (hot) {
+        unsigned sc = port_sides_filter_hot((unsigned)hot & 0x7Fu, nh_net ? ob_net_me(nh_net) : 0);
+        hot = sc ? (uint8_t)(sc | 0x80u) : 0;
+    }
     return (uint16_t)((pad ^ 8) | (hot << 8));
+}
+
+static void fill_local(void)
+{
+    unsigned mine = nh_net ? ob_net_my_pads(nh_net) : 1u;
+    int i = 0, p;
+    memset(nh_local, 0, sizeof nh_local);
+    for (p = 0; p < OB_NET_MAX_PADS && i < OB_NET_MAX_PADS; p++) {
+        if (!(mine & (1u << p))) continue;
+        nh_local[i++] = read_pad(p);
+    }
 }
 
 /* ---- NHL95_SNAPTEST: a round trip of a state of the game, with no network (docs/SDL2_PORT.md "Rollback") ----
@@ -211,7 +230,7 @@ static void st_regions(void)
 static void st_record(uint16_t *all)           /* the record with this number: a direction held for six records, no fire */
 {
     uint32_t i = nh_tail;
-    if (st_phase == 3) { all[0] = nh_local; all[1] = 0; return; }       /* the test is over: the player's own pad plays on */
+    if (st_phase == 3) { all[0] = nh_local[0]; all[1] = 0; return; }       /* the test is over: the player's own pad plays on */
     all[0] = (uint16_t)(((i / 6) * 2654435761u >> 20) & 7);
     all[1] = (uint16_t)(((i / 9 + 3) * 2246822519u >> 20) & 7);
 }
@@ -366,7 +385,7 @@ static void try_step(void)
         return;
     }
     if (SDL_TryLockMutex(nh_lock) != 0) return;     /* the main thread is in the core: the next tick tries again */
-    r = nh_net ? ob_net_step(nh_net, &nh_local, all) : -1;
+    r = nh_net ? ob_net_step(nh_net, nh_local, all) : -1;
     SDL_UnlockMutex(nh_lock);
     if (r == 0) return;
     nh_pending = 0;
@@ -382,14 +401,14 @@ void nh_sample_tick(void)
     if (nh_rb) {                                    /* rollback: the timer only says a record is due, with this machine's buttons for it */
         if (--nh_cadence >= 0) return;
         nh_cadence = 4;
-        if (nh_due < 2) { nh_local = read_local(); nh_due++; }
+        if (nh_due < 2) { fill_local(); nh_due++; }
         return;
     }
     if (!nh_pending) {
         if (--nh_cadence >= 0) return;              /* a record every 5 ticks, as joyqtick */
         nh_cadence = 4;
         if (nh_tail - nh_head >= QMAX) return;
-        nh_local = read_local();
+        fill_local();
         nh_pending = 1;
     }
     try_step();                                     /* not yet: the next tick asks again (the core keeps the first local) */
@@ -485,7 +504,7 @@ static void rb_make(void)
     rb_low = snap_sp();
     SDL_LockMutex(nh_lock);
     nh_where = "rb_make: ob_net_frame";
-    r = nh_net ? ob_net_frame(nh_net, 1, &nh_local, all) : -1;
+    r = nh_net ? ob_net_frame(nh_net, 1, nh_local, all) : -1;
     nh_where = "";
     SDL_UnlockMutex(nh_lock);
     if (r == OB_NET_RESTART) snap_jump(&rb_snap[rb_target]);
@@ -638,9 +657,12 @@ static void apply_settings(const nh_settings *s, uint32_t my_dev)
     gamemode = s->gamemode; gameopts = s->gameopts;
     ctl1team = s->ctl1team; ctl2team = s->ctl2team;
     ctl1side = s->ctl1side; ctl2side = s->ctl2side;
-    /* each machine reads its own device; the other's pad comes over the network ("none" here, so no mouse rules apply to it) */
-    ctl1dev = nh_me == 0 ? my_dev : 0x10;
-    ctl2dev = nh_me == 1 ? my_dev : 0x10;
+    /* each machine reads its own device; the other's pad comes over the network ("none" here, so no mouse rules apply to it).
+     * select-sides already wrote ctl*dev for this machine's seats. */
+    if (!(port_sides_ob() && port_sides_ob()->done)) {
+        ctl1dev = nh_me == 0 ? my_dev : 0x10;
+        ctl2dev = nh_me == 1 ? my_dev : 0x10;
+    }
     PerTimeTab[0] = (uint16_t)s->pertime;
     setup_controllers();
     seed = s->seed;
@@ -712,10 +734,13 @@ void nh_playgame_enter(int32_t *handle)
         return;
     }
     if (!nh_ok) return;
-    if (!nh_armed && !nh_net) return;
     if (*handle >= 0) {
-        snprintf(nh_why, sizeof nh_why, "online play starts with a new game");
+        if (nh_armed || nh_net) snprintf(nh_why, sizeof nh_why, "online play starts with a new game");
         return;                                     /* loaded games stay local; the room stays */
+    }
+    if (!nh_armed && !nh_net) {
+        port_sides_wait();                          /* local: Overbar's select-sides, every connected controller */
+        return;
     }
     if (gamemode != 0 && gamemode != 1 && gamemode != 2) {
         snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition, season, or playoff game");
@@ -746,6 +771,9 @@ void nh_playgame_enter(int32_t *handle)
         if (st != OB_NET_CONNECTING) break;
         plat_sleep_ms(2);
     }
+    nh_close_page = 1;                               /* sides takes the keys; the overlay would swallow them */
+    while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
+    if (st == OB_NET_LOBBY) port_sides_wait();      /* same Overbar screen as local; the host's model is the one */
     if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
         ob_net_match m;
         memset(&m, 0, sizeof m);
@@ -753,8 +781,13 @@ void nh_playgame_enter(int32_t *handle)
             int p;
             for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
         }
-        m.owner[0] = 0;
-        m.owner[1] = 1;
+        if (port_sides_ob() && port_sides_ob()->done)
+            ob_sides_owners(port_sides_ob(), m.owner, 2, 1);
+        else {
+            m.owner[0] = 0;
+            m.owner[1] = 1;
+        }
+        make_settings(&mine);                       /* after sides: ctl* are the seat table */
         m.delay = -1;
         m.settings = &mine;
         m.settings_size = sizeof mine;

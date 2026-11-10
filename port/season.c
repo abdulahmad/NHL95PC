@@ -16,6 +16,7 @@
 #include "overbar/room.h"
 #include "overbar/season.h"
 #include "overbar/vdrive.h"
+#include "sides.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -459,12 +460,14 @@ void port_season_bind_net(ob_net *n)
 {
     g_net = n;
     if (!n) return;
-    ob_room_init(&g_room, n, NULL, NULL);
+    port_sides_bind_net(n);
+    ob_room_init(&g_room, n, port_sides_ob(), NULL);
     ob_room_modules(&g_room, &g_files, &g_season);
 }
 
 void port_season_unbind_net(void)
 {
+    port_sides_unbind_net();
     g_net = NULL;
     memset(&g_room, 0, sizeof g_room);
 }

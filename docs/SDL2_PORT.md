@@ -66,6 +66,7 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_STATS=1` prints every 2 s how many traps (int, in, out, cli, sti, pushf, popf) the game made by opcode, port and int 21h function, the time spent in them, the game thread's user and kernel CPU time, `video_present` timing and the game's tick rate against the PIT rate; `NHL95_KEYS="ms:Key[/hold] ..."` presses keys at given times (SDL key names);
 `NHL95_AUTOLINE=1` turns on the Game page's Auto line changes (96 PC Auto: CompLine at faceoff for a human team, chk4lc on the fly);
 `NHL95_GOALIE=1` turns on Manual goalie (96 PC: B-hold takes the goalie, A dives, C a save; 94 Genesis movement);
+`NHL95_NOSIDES=1` (or `NHL95_SIDES=0`) skips Overbar's select-sides screen (every connected controller, the same module online); `NHL95_AUTOSKIP` / `NHL95_KEYS` skip it too;
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
 
@@ -111,7 +112,7 @@ Not done: digital audio in MT-32 mode (the game plays only music there), fullscr
 ## Next steps (in the order asked for)
 
 1. Finish the SDL2 port against the real data: assets, sound, joystick.
-2. custom keyboard bindings, 3. four players, 4. rollback netcode. These change game logic, so
+2. custom keyboard bindings, 3. four players (Overbar select-sides is in `port/sides.c`; 95 PC still has two game-port slots), 4. rollback netcode. These change game logic, so
    they belong in C functions of `src/c` that are compiled for the host (the byte-exact build keeps the matched originals). Rollback needs the
    whole game state in one block: the game's data segment is a single contiguous region, so it can be saved and restored once the input
    sampling is separated from the frame step.
@@ -234,8 +235,13 @@ keeps running (IRQ 0 is raised) and this machine's pad reads as nothing; the sou
 * The identity both machines must have: the build (`git describe`), the sound device (`sounddev`) and `musicon` (several game routines draw
   random numbers or wait only with digital sound). The game's data files are not part of it: rosters that differ show as a desync at once.
 
-**Hot keys online.** F1-F8 (line changes), F9 / F10 (goalie) and Tab (numbers) work from either player (the host's wins when both press one at
-the same step). Esc (the sports desk), R (instant replay), S and M (sound) are dropped: they open local menus or change local settings. To leave,
+**Select sides.** Overbar's one screen (`overbar/sides.h`, hooked in `port/sides.c`) opens on PlayGame of a new exhibition, season, or playoff,
+local and online. Keyboard is device 0; every SDL controller is 1 + its index. Left / Right pick Away or Home, OK ready, the host's OK starts.
+Devices left in the middle do not play. The seat table writes `ctl1*` / `ctl2*` (95 PC has two slots). Online the host's model is the only one
+that changes; guests send devices and presses as `OB_NET_TYPE_SIDES`. `NHL95_NOSIDES=1` keeps the DOS controls dialog's assignment.
+
+**Hot keys online.** F1-F8 (line changes), F9 / F10 (goalie) and Tab (numbers) work from a machine that has a seat on that team (`ob_sides_hotkeys_filter`;
+the host's wins when both press one at the same step). Esc (the sports desk), R (instant replay), S and M (sound) are dropped: they open local menus or change local settings. To leave,
 use Leave on the Online page; the game then goes on locally, the other player's team played by the computer.
 
 **The desync check.** At the first record and every 60 records (3 s) both machines hash what `SaveGameState` keeps of the players

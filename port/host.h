@@ -148,6 +148,9 @@ void input_poll(void);                 /* main thread: SDL events */
 uint32_t input_port_in(unsigned port);
 int input_port_out(unsigned port, uint32_t val);
 int input_mouse(ctx_t *c);
+int input_pad_count(void);             /* SDL controllers for the select-sides screen */
+const char *input_pad_name(int i);
+void input_bind_stick(int stick, int pad);   /* game-port stick 0/1 reads pads[pad]; pad -1: none */
 /* online play (netplay.c) */
 void netplay_install(void);                      /* after install_overrides, before the game thread */
 void netplay_main_poll(void);                    /* main thread, every pass of the loop */

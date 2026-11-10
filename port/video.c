@@ -6,6 +6,7 @@
 #include "overbar_client.h"
 #include "feel.h"
 #include "season.h"
+#include "sides.h"
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
@@ -1038,6 +1039,7 @@ void video_present(void)
         }
     }
     if (overbar_client_open()) overbar_client_draw(argb, w, h, w);
+    if (port_sides_is_open()) port_sides_draw(argb, w, h, w);
     if (ob_plat_osk_is_open()) ob_plat_osk_draw(argb, w, h, w);
     dump_frame(w, h);                       /* after the overlay, so NHL95_DUMP shows Season */
     port_season_tick();
