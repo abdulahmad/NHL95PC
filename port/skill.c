@@ -11,13 +11,15 @@
  * Engine (every player, no human/CPU test on the playeracc path):
  *   sub_4C860 is 96 PC playeracc: skill-scales (legstr+30h) before dirtab/64 (3/4 Rookie+Pro, 9/8 All-Star)
  *     and the MaxSpeed cap after legspd*energy>>12 (same factors). Tiny *63/64 on another vel path (sub_4DD1B)
- *     is not hooked.
+ *     is not hooked (Rookie and Pro share it; it is 96 PC's 3/4 family).
  *   checkcheck (sub_3EC30): hit base 64h All-Star / 96h Pro and Rookie, then the same
  *     ((base - p.weight + q.weight)>>1) - q.impact as 95 PC.
  *   sub_43605: AI range 3 Rookie, 4 Pro/All-Star — 95 PC has no matching immediate to patch.
  *
- * 95 PC: Pro is this game's unscaled playeracc (96 PC Pro is 3/4 of *its* unscaled copy). All-Star is
- * 3/2 of that (9/8 ÷ 3/4). Rookie shares Pro's playeracc and hit base; its unique 96 PC extra is AI range.
+ * Live: Pro is 1× the current feel. feel_playeracc already built 94G or 95 PC stock; skill_scale_action
+ * leaves that for Pro and Rookie and takes All-Star at 3/2 (96 PC 9/8 over Pro's 3/4). Do not apply
+ * 96 PC's 3/4 to Pro. Hits: 95 PC feel uses 150 / 100; 94G feel uses CCStart's 0x78 as Pro, All-Star
+ * 100/150 of that. Rookie skating equals Pro; the only 96 PC Rookie-only extra is AI range (unhooked).
  */
 #include "skill.h"
 
@@ -43,13 +45,24 @@ int skill_scale_96(int skill, int v)
 
 int skill_scale_action(int skill, int v)
 {
-    if (skill == SKILL_ALLSTAR) return v + (v >> 1);    /* 9/8 vs Pro's 3/4 */
-    return v;
+    if (skill == SKILL_ALLSTAR) return v + (v >> 1);    /* 1.5× the feel-mode term */
+    return v;                                           /* Pro and Rookie: 1× */
+}
+
+int skill_hit_pro_base(int feel94)
+{
+    return feel94 ? 0x78 : 0x96;                        /* 94G CCStart d0; 96 PC Pro 150 */
+}
+
+int skill_hit_base_on(int skill, int pro_base)
+{
+    if (skill == SKILL_ALLSTAR) return pro_base * 100 / 150;
+    return pro_base;
 }
 
 int skill_hit_base(int skill)
 {
-    return skill == SKILL_ALLSTAR ? 0x64 : 0x96;
+    return skill_hit_base_on(skill, 0x96);
 }
 
 int skill_ai_near(int skill)
@@ -70,7 +83,9 @@ int skill_scale_now(int v)
 
 int skill_hit_base_now(void)
 {
-    return skill_hit_base(feel_skill());
+    const feel_profile *f = feel_now();
+    int feel94 = f && (f->speed != FEEL_95PC || f->accel != FEEL_95PC);
+    return skill_hit_base_on(feel_skill(), skill_hit_pro_base(feel94));
 }
 
 __attribute__((naked)) static void hit_thunk(void)
