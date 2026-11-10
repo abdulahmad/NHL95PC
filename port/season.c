@@ -3,8 +3,8 @@
  *
  * Per-game season hooks. A team flagged for export at New League (+18h == 2) is a
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
- * name. Overbar still carries the room and .obt packs; this file names packs after
- * the team and copies that team's seven DBs + PINFO + PLAYER.ID, not the whole
+ * name ("Edmonton - Bob": the player's name the host typed at New League), and the
+ * copy waits as the guest's A: disk for File > Import Databases. No file names. It copies that team's seven DBs + PINFO + PLAYER.ID, not the whole
  * league tree. Virtual A: stays mounted on the copy used in play.
  */
 #include "season.h"
@@ -46,7 +46,7 @@ static ob_vdrive g_vdrive;
 static ob_room g_room;
 static ob_net *g_net;
 static ob_host *g_host;
-static char g_work[260], g_teams[260], g_root[260], g_play_dir[260];
+static char g_work[260], g_root[260], g_play_dir[260];
 static int g_ready, g_play_on;
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
@@ -98,6 +98,17 @@ static int copy_named(const char *from, const char *to, const char *stem, const 
     join2(b, (int)sizeof b, to, leaf);
     if (!exists_path(a)) return 1;          /* optional */
     return copy_file(a, b);
+}
+
+static int stricmp_ascii(const char *a, const char *b)
+{
+    for (; *a && *b; a++, b++) {
+        int x = (unsigned char)*a, y = (unsigned char)*b;
+        if (x >= 'a' && x <= 'z') x -= 32;
+        if (y >= 'a' && y <= 'z') y -= 32;
+        if (x != y) return x - y;
+    }
+    return (unsigned char)*a - (unsigned char)*b;
 }
 
 static int team_human(int team)
@@ -189,6 +200,17 @@ static void mount_a(const char *dir)
     if (str_floppydrv == '?' || str_floppydrv == 0) str_floppydrv = 'A';
 }
 
+/* a team picked in the room whose league is not the one loaded yet: its disk (0 none) */
+static int disk_pending(char *disk, int size)
+{
+    char cur[16];
+    const char *name = (const char *)&curleague;
+    if (ob_season_disk(&g_season, -1, disk, size) < 0) return 0;
+    snprintf(cur, sizeof cur, "%s", name);
+    if (strchr(cur, '.')) *strchr(cur, '.') = 0;
+    return !g_season.roster_league[0] || stricmp_ascii(cur, g_season.roster_league) != 0;
+}
+
 static void mount_play(void)
 {
     char dir[512];
@@ -204,6 +226,14 @@ static void mount_play(void)
         MKDIR(floppy);
         mount_a(floppy);
         return;
+    }
+    {
+        char disk[512];
+        /* a team picked in the room and not loaded yet: its disk is the floppy in A: for Import Databases */
+        if (!is_master_copy() && disk_pending(disk, (int)sizeof disk)) {
+            if (!g_play_on || strcmp(g_play_dir, disk)) mount_a(disk);
+            return;
+        }
     }
     if (league_host_dir(dir, (int)sizeof dir) || !exists_path(dir) || !has_human() || is_master_copy()) {
         unmount_play();
@@ -236,6 +266,7 @@ static int op_league(void *ud, ob_season_league *l)
     memset(l, 0, sizeof *l);
     if (!name[0]) return -1;
     snprintf(l->name, sizeof l->name, "%s", name);
+    if (strchr(l->name, '.')) *strchr(l->name, '.') = 0;      /* "ABDUL", not the folder ABDUL.LP */
     snprintf(l->id, sizeof l->id, "%s", name);
     l->master = is_master_copy() ? 1 : 0;
     for (i = 0; i < 26 && l->nteam < OB_SEASON_TEAMS; i++) {
@@ -334,6 +365,17 @@ static const char *team_name(void *ud, int team)
     return (const char *)(treeteamnames + team * 21);
 }
 
+/* the player the host set this team up for at New League (played on another computer) */
+static const char *op_player(void *ud, int team)
+{
+    static char name[12];
+    (void)ud;
+    if (!team_remote(team)) return NULL;
+    memcpy(name, leagueteams + team * 30, 11);
+    name[11] = 0;
+    return name[0] ? name : "a player";
+}
+
 static int op_add_human(void *ud, int team, const char *name)
 {
     (void)ud;
@@ -353,30 +395,6 @@ static void season_send(void *ud, int to, const void *data, size_t size)
 {
     (void)ud;
     if (g_net) ob_net_send(g_net, to, OB_NET_TYPE_SEASON, data, size);
-}
-
-static void auto_pack_name(void)
-{
-    ob_season_league l;
-    const char *n;
-    char file[96];
-    int i, t, k = 0;
-    if (!g_host || overbar_client_editing()) return;
-    memset(&l, 0, sizeof l);
-    if (op_league(NULL, &l)) return;
-    t = g_host->season_team;
-    if (t < 0 || t >= 26 || !team_human(t)) t = l.nteam ? l.team[0] : -1;
-    if (t < 0) return;
-    n = team_name(NULL, t);
-    if (!n || !n[0]) return;
-    for (i = 0; n[i] && k < 80; i++) {
-        unsigned char c = (unsigned char)n[i];
-        if ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9'))
-            file[k++] = (char)c;
-    }
-    if (!k) return;
-    snprintf(file + k, sizeof file - (size_t)k, ".obt");
-    if (strcmp(g_host->season_file, file)) snprintf(g_host->season_file, sizeof g_host->season_file, "%s", file);
 }
 
 static void rebuild_bar_if_league(void)
@@ -426,9 +444,7 @@ void port_season_setup(ob_host *h)
     g_host = h;
     snprintf(g_root, sizeof g_root, "%s", game_root());
     snprintf(g_work, sizeof g_work, "%s/overbar-season", g_root);
-    snprintf(g_teams, sizeof g_teams, "%s/teams", g_root);
     MKDIR(g_work);
-    MKDIR(g_teams);
     ob_vdrive_init(&g_vdrive);
     memset(&ops, 0, sizeof ops);
     ops.league = op_league;
@@ -438,11 +454,14 @@ void port_season_setup(ob_host *h)
     ops.import_team = op_import;
     ops.league_dir = op_dir;
     ops.add_human = op_add_human;
+    ops.player = op_player;
+    ops.give_as_disk = 1;           /* the picked team is this player's floppy in A: */
     me = h->online.name[0] ? h->online.name : "player";
     ob_files_init(&g_files, files_send, NULL);
     ob_season_init(&g_season, &ops, g_work, me, &g_files, season_send, NULL);
-    ob_season_set(h, &g_season, 0, g_teams);
+    ob_season_set(h, &g_season, 0, NULL);
     ob_season_set_names(h, team_name, NULL);
+    ob_season_set_hint(h, "yours: in the game, File > Import Databases (the disk is in drive A:)");
     g_ready = 1;
 }
 
@@ -482,7 +501,6 @@ void port_season_tick(void)
     if (!g_ready) return;
     rebuild_bar_if_league();
     mount_play();
-    auto_pack_name();
     diag_log();
 }
 
