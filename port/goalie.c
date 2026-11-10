@@ -263,6 +263,12 @@ int goalie_before_doinput(uint8_t *p, int ctl)
         return 0;
     }
     on = P_W(p, P_POSITION) == 0;
+    if (on && ((int16_t)regd1 & BUT_A)) {
+        /* doinput's no-puck path sends A to Holdplayer before its goalie return: the goalie dives here instead */
+        int dir = (int16_t)regd0 & 0xF;
+        *(int16_t *)&regd1 &= (int16_t)~BUT_A;
+        if (dir < 8 && !(P_B(p, P_PFLAGS) & PFALOCK)) goalie_dive(p, dir);
+    }
     b_new = ((int16_t)regd1 & BUT_B) != 0;
     b_held = ((int16_t)regd3 & BUT_B) != 0;
     b_rel = ((int16_t)regd2 & BUT_B) != 0 && !b_held;

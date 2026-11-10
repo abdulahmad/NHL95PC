@@ -92,6 +92,10 @@ extern short word_CC0B0[];                      /* the box-time count of a call 
 static fight ft;
 static uint8_t *who[2];
 static int checks[12], chkcnt, last_gsp = -1;
+/* checkcheck runs for a pair every frame they touch and impact stays up for frames after a hit: 93's checkfight
+ * ran once per hit (chkhit). A pair counts again only after HIT_GAP frames without contact. */
+#define HIT_GAP 30
+static uint32_t frame_no, pair_seen[12][12];
 static rom93 rom;
 static int have_rom, punch_on;
 static int ok_check, ok_frame, no_draw;
@@ -223,10 +227,17 @@ void fight_check(uint8_t *a, uint8_t *b)
     int inst, k;
     if (ft.on || post[0] || post[1] || !feel_fights()) return;
     if (gsp != last_gsp) { last_gsp = gsp; chkcnt = 0; memset(checks, 0, sizeof checks); }
-    if (P_W(a, P_SCNUM) < 12 && P_W(b, P_SCNUM) < 12 && P_W(a, P_IMPACT) >= 10 && P_W(b, P_IMPACT) >= 10) {
+    {
+        int sa = P_W(a, P_SCNUM), sb = P_W(b, P_SCNUM);
+        uint32_t *seen, was;
+        if (sa < 0 || sa >= 12 || sb < 0 || sb >= 12 || P_W(a, P_IMPACT) < 10 || P_W(b, P_IMPACT) < 10) return;   /* not a hit */
+        seen = &pair_seen[sa < sb ? sa : sb][sa < sb ? sb : sa];
+        was = *seen;
+        *seen = frame_no ? frame_no : 1;
+        if (was && frame_no - was < HIT_GAP) return;                 /* the same hit, still in contact */
         chkcnt++;
-        checks[P_W(a, P_SCNUM)]++;
-        checks[P_W(b, P_SCNUM)]++;
+        checks[sa]++;
+        checks[sb]++;
     }
     if (!can_fight(a) || !can_fight(b)) return;
     if ((gmode & 1) || (sflags & 0x80) || (puckpflags2 & 1)) return;
@@ -486,6 +497,7 @@ void fight_frame(void)
 {
     int k;
     undraw();
+    frame_no++;
     if (gmode2 & 1) gloves = 0;         /* a faceoff clears them (93's puckfaceoff2) */
     if ((gmode2 & 1) && !ft.on && !post[0] && !post[1]) nevmap = 0;   /* the fight's calls are posted by now */
     check_pen_wait();
