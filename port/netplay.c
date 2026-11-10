@@ -877,6 +877,7 @@ int netplay_dos_time(int *h, int *m, int *s, int *cs)
 }
 
 int netplay_running(void) { return nh_take; }
+int netplay_session(void) { return nh_armed || nh_net != NULL; }
 
 /* ---- the stubs at the game routines' entries (each starts with push dword N, 5 bytes, or as noted) ---- */
 __attribute__((naked)) static void peek_entry(void)

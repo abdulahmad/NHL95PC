@@ -373,7 +373,7 @@ static const ob_game_opt opts[O_COUNT] = {
     { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
-    { "fake_pads", "Debug: 2 pretend controllers (2 v 2)", onoff_names, 2, 0, 0, 4 },
+    { "fake_pads", "Debug: pretend controllers (2 v 2)", onoff_names, 2, 0, 0, 4 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */

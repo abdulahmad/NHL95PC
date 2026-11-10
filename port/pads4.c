@@ -108,7 +108,8 @@ extern int32_t ctl1team, ctl2team;
 extern uint32_t ctl1side, ctl2side;
 
 int input_pad_byte(int pad);                    /* input.c: an SDL pad's byte now (8: none) */
-int netplay_pad34(int k, uint8_t *out);         /* netplay.c: pad 3 / 4 of the record being played (1 in a session) */
+int netplay_pad34(int k, uint8_t *out);
+int netplay_session(void);                      /* netplay.c: an online session (the room is up) */         /* netplay.c: pad 3 / 4 of the record being played (1 in a session) */
 uint8_t *goalie_bhold_timer(int i);             /* goalie.c: pad 1's (0) or pad 2's (1) */
 int feel_fake_pads(void);                       /* feel.c: the Game page's pretend controllers */
 
@@ -128,11 +129,13 @@ static int log_on(void)
 }
 
 static void mk_free(void);
+static int fake_done;           /* this game's pretend pads were given out */
 
 void pads4_clear(void)
 {
     int k;
     mk_free();
+    fake_done = 0;
     for (k = 0; k < 2; k++) {
         int sc = pads4.player[k];
         if (sc >= 0 && sc <= 11 && sc != c1playernum[0] && sc != c2playernum[0]) P_B(SortCords + sc * 0x80, P_PFLAGS) &= (uint8_t)~PFJOY;
@@ -155,16 +158,21 @@ void pads4_set(int k, int team, int src)
     if (log_on()) fprintf(stderr, "pads4: pad %d plays %s from %d\n", k + 3, team == 1 ? "home" : team == 2 ? "away" : "nobody", src);
 }
 
-void pads4_fake_fill(void)
+static void fake_fill(int t1, int t2)
 {
-    int k = 0, t1, t2;
-    if (!feel_fake_pads()) return;
-    t1 = ctl1team < 0 ? 0 : ctl1side == 0 ? 1 : 2;        /* as the game's SetupControllers makes cont1team */
-    t2 = ctl2team < 0 ? 0 : ctl2side == 0 ? 1 : 2;
+    int k = 0;
+    fake_done = 1;
     /* one pretend pad beside each of the game's pads, so a 1 v 1 becomes 2 v 2 (both teams when only pad 1 plays) */
     if (t1) pads4_set(k++, t1, PADS4_FAKE);
     if (t2 && t2 != t1) pads4_set(k++, t2, PADS4_FAKE);
     else if (t1 && k < 2) pads4_set(k++, t1 == 1 ? 2 : 1, PADS4_FAKE);
+}
+
+void pads4_fake_fill(void)
+{
+    if (!feel_fake_pads()) return;
+    /* as the game's SetupControllers makes cont1team */
+    fake_fill(ctl1team < 0 ? 0 : ctl1side == 0 ? 1 : 2, ctl2team < 0 ? 0 : ctl2side == 0 ? 1 : 2);
 }
 
 static uint8_t pad_byte(int k)
@@ -315,6 +323,10 @@ void pads4_other(uint8_t *p)
 {
     int k, sc = P_W(p, P_SCNUM);
     if (demomode) return;                               /* the attract demo plays its own records */
+    /* the Game page's pretend controllers when no set-up gave them out (a game started without the select-sides
+     * step, or the option turned on during the game): beside the game's own pads, as they play now */
+    if (!fake_done && !pads4.team[0] && !pads4.team[1] && !netplay_session() && feel_fake_pads() && (cont1team > 0 || cont2team > 0))
+        fake_fill(cont1team > 0 ? cont1team : 0, cont2team > 0 ? cont2team : 0);
     for (k = 0; k < 2; k++) keep_player(k);
     for (k = 0; k < 2; k++)
         if (pads4.team[k] && pads4.player[k] == sc) { run_pad(k, p); return; }
@@ -444,11 +456,12 @@ static void mk_free(void)
     mk_lut_ok = 0;                                      /* colours again for the next game's palette */
 }
 
-/* 95 PC's own frames (word_CC0B0): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2:
- * down 17Fh / 182h, down-right 180h / 183h, right 181h / 184h, up-right 161h / 163h, up 160h / 162h */
+/* 95 PC's own frames (word_CC0B0): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2
+ * (dword_CC0B4 by byte_D41B7's direction of the edge mask: 1 above the screen, 2 below, 4 right, 8 left):
+ * up 17Fh / 182h, up-right 180h / 183h, right 181h / 184h, down-right 161h / 163h, down 160h / 162h */
 int pads4_mark_code(int frame)
 {
-    static const int16_t a95[2][5] = { { 0x160, 0x161, 0x181, 0x17F, 0x180 }, { 0x162, 0x163, 0x184, 0x182, 0x183 } };
+    static const int16_t a95[2][5] = { { 0x17F, 0x180, 0x181, 0x160, 0x161 }, { 0x182, 0x183, 0x184, 0x162, 0x163 } };
     int j, v;
     frame = (int16_t)frame;
     if (!marks94()) return frame;
@@ -499,7 +512,7 @@ void pads4_draw(void)
         }
         if (!fl) code = FR_MARK + (k + 2) * 8;
         else {
-            int up = fl & 2, down = fl & 1, side = fl & 12;
+            int up = fl & 1, down = fl & 2, side = fl & 12;     /* (the rink's y goes up the screen) */
             code = FR_MARK + (k + 2) * 8 + (up ? (side ? 2 : 1) : down ? (side ? 5 : 4) : 3);
         }
         draw_sprite(code, x, y, fl & 8);
