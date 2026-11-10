@@ -62,6 +62,7 @@ int input_pad_count(void);
 const char *input_pad_name(int i);
 
 static ob_sides g_sides;
+static int g_fake[2];                       /* the game's pad 1 / 2 is a pretend controller (no input) */
 static int g_slot[4] = { 0, 1, 2, 3 };    /* each seat's game slot (pads4_map_seats); online the step's pad k is seat k */
 static struct ob_net *g_net;
 static volatile int g_want;         /* game thread asks the main thread to open */
@@ -104,6 +105,7 @@ static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
     input_bind_stick(0, -1);
     input_bind_stick(1, -1);
     pads4_clear();
+    g_fake[0] = g_fake[1] = 0;
     for (m = 0; m < n && m < 4; m++) {
         team[m] = seat[m].team == 1 ? 1 : 2;                /* column 1 Home (cont 1), 0 Away (cont 2) */
         mine[m] = seat[m].owner == g_sides.me;
@@ -138,7 +140,7 @@ static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
         dev = s == 0 ? &ctl1dev : &ctl2dev;
         sides_seat_ctl(team[i] == 1 ? 1 : 0, HomeTeam, VisTeam, t, side);
         /* the other machine's: the records; a pretend pad: no device (the game reads it as no direction, no button) */
-        if (!mine[i] || local[i] >= FAKE_LOCAL) { *dev = 0x10; continue; }
+        if (!mine[i] || local[i] >= FAKE_LOCAL) { *dev = 0x10; g_fake[s] = mine[i]; continue; }
         *dev = sides_dev_for_slot(s, local[i]);
         pad = sides_pad_index(local[i]);
         if (pad >= 0) input_bind_stick(*dev == 2 ? 0 : 1, pad);
@@ -178,6 +180,11 @@ int port_sides_slot_of_seat(int seat)
 {
     if (!g_sides.done) return seat;
     return seat >= 0 && seat < 4 ? g_slot[seat] : -1;
+}
+
+int port_sides_slot_fake(int slot)
+{
+    return slot >= 0 && slot < 2 && g_fake[slot];
 }
 
 static int skip_screen(void)

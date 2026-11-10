@@ -101,6 +101,21 @@ int main(void)
         CHECK(fight_anim_frame(FA_INJURY, 2, 3, &d) == F93_FINJURY, "the injury goes to the bloody frames");
     }
 
+    /* skated past each other: they turn to face each other again */
+    {
+        fight ft;
+        memset(&ft, 0, sizeof ft);
+        ft.f[0] = player(-6, 40, 14, 15, 0);
+        ft.f[1] = player(6, 42, 14, 15, 1);
+        ft.random = rnd;
+        fight_begin(&ft);
+        ft.f[0].x = 20;
+        ft.f[1].x = -20;
+        fight_pass(&ft, 1, NULL, NULL);
+        CHECK(ft.f[0].facedir == 5 && ft.f[1].facedir == 2 && ft.f[0].flip && !ft.f[1].flip, "crossed: facing %d %d",
+              ft.f[0].facedir, ft.f[1].facedir);
+    }
+
     /* whole fights */
     for (n = 0; n < 400; n++) {
         result r = run(1000 + n, 14, 14, 15, 15), again = run(1000 + n, 14, 14, 15, 15);

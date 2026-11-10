@@ -314,6 +314,17 @@ void fight_pass(fight *ft, int elapsed, const int pad[2], void (*accel)(void *ct
         if (ft->f[i].human) fight_input(ft, i, pad ? pad[i] : 8, accel);
         ass_fight(ft, i, elapsed);
     }
+    {
+        /* not 93: two players can skate past each other (two humans, or a big knock back), and then 93 leaves
+         * them back to back. They turn to face each other again. */
+        fighter *a = &ft->f[0], *b = &ft->f[1];
+        if ((a->facedir == 2 && a->x > b->x) || (a->facedir != 2 && a->x < b->x)) {
+            a->facedir = a->facedir == 2 ? 5 : 2;
+            b->facedir = a->facedir ^ 7;
+            a->flip = a->facedir != 2;
+            b->flip = b->facedir != 2;
+        }
+    }
     ft->pencnt -= elapsed;                      /* chkprogress */
     if (ft->pencnt < 0) { ft->events |= FE_OVER; ft->on = 0; }
     for (i = 0; i < 2; i++) ft->f[i].oldframe = ft->f[i].frame;    /* drawn */

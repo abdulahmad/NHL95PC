@@ -23,6 +23,7 @@
 
 #include "../host.h"
 #include "../feel.h"
+#include "../sides.h"
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -184,6 +185,17 @@ static void give_control(uint8_t *p)
     else if (cont2team == team) c2playernum[0] = (short)restore_pl(sc, c2playernum[0]);
 }
 
+/* a fighter someone plays: a game pad has him (pflags bit 3), and it is not the Game page's pretend controller, which
+ * has no input (that fighter fights as the computer's would) */
+static int fighter_human(const uint8_t *p)
+{
+    int sc = P_W(p, P_SCNUM);
+    if (!(P_B(p, P_PFLAGS) & 8)) return 0;
+    if (sc == c1playernum[0] && port_sides_slot_fake(0)) return 0;
+    if (sc == c2playernum[0] && port_sides_slot_fake(1)) return 0;
+    return 1;
+}
+
 /* doinput (patched): during a fight a fighter's pad goes to the fight (93's fightinput) and nobody else skates,
  * changes player or shoots from the pad; after it the fighters stay put until they are sent off. 1: skip doinput. */
 int fight_doinput(uint8_t *p)
@@ -275,7 +287,7 @@ void fight_check(uint8_t *a, uint8_t *b)
         P_B(who[k], P_PFLAGS2) |= 1 | 4;        /* fighting, unavailable */
         ass_insert(who[k], ASS_NOTHING);
         give_control(who[k]);
-        ft.f[k].human = (P_B(who[k], P_PFLAGS) & 8) != 0;
+        ft.f[k].human = fighter_human(who[k]);
         pad_dir[k] = 8;
         pad_new[k] = 0;
     }
@@ -536,7 +548,7 @@ void fight_frame(void)
     {
         int pad[2];
         for (k = 0; k < 2; k++) {
-            ft.f[k].human = (P_B(who[k], P_PFLAGS) & 8) != 0;
+            ft.f[k].human = fighter_human(who[k]);
             pad[k] = pad_dir[k] | pad_new[k] << 4;
             pad_new[k] = 0;
         }
