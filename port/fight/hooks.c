@@ -98,6 +98,7 @@ void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_
  * as two halves (PILE_L, PILE_R: a stick and its gloves each) so the referee can pick them up one at a time. */
 static int gloves, glove_x, glove_y;
 static int pile_on[2], pile_k[2], pile_side[2];  /* per half: still on the ice, whose colours (fighter), home/visitors */
+static int cue = -1, cue_seen, cue_time;        /* the crowd's music cue after a fight, waiting for the penalties */
 static int ref_time;                            /* the referee: frames spent collecting */
 #define PILE_L 1000
 #define PILE_R 1001
@@ -411,6 +412,15 @@ void fight_frame(void)
     if (gmode2 & 1) gloves = 0;         /* a faceoff clears them (93's puckfaceoff2) */
     check_pen_wait();
     pen_no_wait();
+    if (cue >= 0) {                     /* the music starts once the penalty sequence is over, not during it */
+        if (PenBuf[0]) cue_seen = 1;
+        if ((gmode2 & 1) || introskipped) cue = -1;                          /* the faceoff came first: no cue */
+        else if ((cue_seen && !PenBuf[0]) || ++cue_time > 1200) {
+            int n = cue;
+            cue = -1;
+            __asm__ volatile("call " SYM("PlayCrowdSample") : "+a"(n) : : "ecx", "edx", "memory", "cc");
+        }
+    }
     /* the scoreboard box only runs while play is stopped (chkprogress): during the fight it is moved on here */
     if (hold_lines && !(gmode & 1) && ovltimer >= 0 && ovltimer < 0x100) ovltimer++;
     if (!ft.on) return;
@@ -468,7 +478,8 @@ void fight_frame(void)
     }
     if (ft.events & (FE_CHEER | FE_BOO | FE_INJURY)) {
         int n = ft.events & FE_CHEER ? 1 : ft.events & FE_BOO ? 4 : -1;     /* 93: cheer if the visitors lost, boo if home */
-        if (n >= 0) __asm__ volatile("call " SYM("PlayCrowdSample") : "+a"(n) : : "ecx", "edx", "memory", "cc");
+        /* PlayCrowdSample below 6 is the home team's rock cue (music): held until the penalties are called */
+        if (n >= 0) { cue = n; cue_seen = 0; cue_time = 0; }
     }
     if (ft.events & FE_OVER) {
         if (getenv("NHL95_FIGHT_LOG")) fprintf(stderr, "fight: over, winner %d\n", ft.winner);
