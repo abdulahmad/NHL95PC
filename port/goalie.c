@@ -105,7 +105,7 @@ extern signed char *puckc;
 extern int32_t regd0, regd1, regd2, regd3;
 extern int16_t crowdlevel;
 extern short dword_CCA5A[];
-extern uint8_t gmode2;               /* bit 0: a faceoff is on (doinput hands the pad to faceoffinput) */
+extern uint8_t gmode, gmode2;       /* gmode bit 0: play is stopped (whistle to faceoff); gmode2 bit 0: a faceoff is on */
 
 void *goalie_gacc_cont;
 void *goalie_agc_cont;
@@ -253,6 +253,12 @@ int goalie_before_doinput(uint8_t *p, int ctl)
     i = ctl ? 1 : 0;
     /* the game's own input first, as 94G's doinput orders it: a faceoff (faceoffinput), the line-change box
      * (lineinput), a locked player, a fight, and the puck carrier himself (doinput_ispc: B is a pass) */
+    if ((gmode & 1) && !(gmode2 & 1)) {
+        /* after the whistle until the faceoff: doinput's locked path still sends B to changeplayer (a sweep check) */
+        *(int16_t *)&regd1 &= (int16_t)~BUT_B;
+        bhold[i] = 0;
+        return 0;
+    }
     if ((gmode2 & 1) || (P_B(p, P_PFLAGS2) & 0x09) || (P_B(p, P_PFLAGS) & PFALOCK) || *puckc == P_W(p, P_SCNUM)) {
         if (((int16_t)regd3 & BUT_B) && getenv("NHL95_GOALIE_LOG"))
             fprintf(stderr, "goalie: pass-through gmode2 %d pflags2 %02x puckc %d sc %d\n", gmode2, P_B(p, P_PFLAGS2), *puckc, P_W(p, P_SCNUM));
