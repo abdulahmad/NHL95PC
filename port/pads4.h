@@ -33,6 +33,11 @@ void pads4_fake_fill(void);
 /* online: pad k's byte from this machine's controller (8 none); remote pads leave when the session does */
 uint8_t pads4_local_byte(int k);
 void pads4_drop_remote(void);
+/* each game frame before updateplayers (port/fight/hooks.c): pads 3 and 4 keep or pick their players, faceoffs too */
+void pads4_tick(void);
+/* the pad (0: pad 3, 1: pad 4) that has SortCords number sc, or -1; pads4_fake: it is a pretend controller's */
+int pads4_owner(int sc);
+int pads4_fake(int k);
 
 /* Seats to slots. n seats (each: team 1 home / 2 away, kb 1 for the keyboard). out[i]: the game slot of
  * seat i, 0 and 1 the game's own controllers, 2 and 3 pads 3 and 4, -1 none. Slot 0 is the first seat;
