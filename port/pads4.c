@@ -8,10 +8,15 @@
  *   - updateplayers: a player who is not pad 1's or pad 2's goes here; pad 3's or 4's runs doinput (through
  *     whatever the call site calls now, so the manual goalie's hook still sees it) with that pad swapped in:
  *     c1playernum / c2playernum, cont1team / cont2team, lj1 / lj2 and the goalie's B-hold timer.
- *     Under the swap, the other slot's player is the teammate's, so changeplayer never picks him.
+ *     Under the swap, the other slot's player is the teammate's, so that call of changeplayer never picks him.
+ *     Pad 1 and pad 2's own changeplayer is guarded the same way (pads4_guard_on).
  *   - each pad keeps a player of its own: none of pads 1-4 has him, he is on the ice for its team; else it
  *     takes the free skater nearest the puck (changeplayer's rule). Not during a penalty shot.
- *   - GiveControl (a pickup gives the carrier to the team's pad) leaves pad 3's and 4's players alone.
+ *   - GiveControl (a pickup gives the carrier to the team's pad) leaves pad 3's and 4's players alone,
+ *     and with those pads on it also leaves a goalie who is already controlled (94G setd0player).
+ *   - changeplayer never takes a teammate another pad already has (94G chgplayer: joy, or the other
+ *     pad's player). The pass button with the puck loose is that change, so a pass to a human teammate
+ *     and another press of pass cannot switch into him. A CPU teammate still can be taken.
  *   - DrawRinkOverlays: pads 3 and 4 get the star of the game pad they swap into.
  * The pad's byte per record: offline the device's (input.c, read on the game thread with the record),
  * online the step record's (netplay.c), the pretend controllers' none. The game's own code is not changed.
@@ -65,6 +70,45 @@ void pads4_map_seats(int n, const int *team, const int *kb, int *out)
     for (i = 0; i < n && next < 4; i++) if (out[i] < 0 && !kb[i]) out[i] = next++;
 }
 
+int pads4_may_take(int sc, int mine, int joy, const int16_t *humans, int nh)
+{
+    int i;
+    if (sc == mine) return 1;                 /* his own: changeplayer sweep-checks him */
+    if (joy) return 0;                        /* 94G: pflags bit 3, another pad already has him */
+    if (!humans) return 1;
+    for (i = 0; i < nh; i++) if (humans[i] == sc) return 0;   /* his number, even if joy is clear */
+    return 1;
+}
+
+int pads4_switch_pick(int mine, const int16_t *humans, int nh, const pads4_cand *c, int n)
+{
+    unsigned best = 0xFFFFFFFFu;
+    int pick = mine, i;
+    if (!c) return mine;
+    for (i = 0; i < n; i++) {
+        unsigned d;
+        if (c[i].pos <= 0 || c[i].unav || c[i].lock) continue;          /* goalie, leaving, or locked */
+        if (!pads4_may_take(c[i].sc, mine, c[i].joy, humans, nh)) continue;
+        d = c[i].dist2;
+        if (d <= best) { best = d; pick = c[i].sc; }                     /* tie: the later skater */
+    }
+    return pick;
+}
+
+int pads4_pass_switches(int goalie, int joy, int receiver_joy)
+{
+    if (!goalie || !joy) return 0;            /* a skater's pass, or the computer's, does not switch */
+    if (receiver_joy) return 0;               /* the receiver is already a pad's */
+    return 1;
+}
+
+int pads4_give_skip(int owned, int pads_on, int position, int joy)
+{
+    if (owned) return 1;
+    if (pads_on && position == 0 && joy) return 1;
+    return 0;
+}
+
 #ifndef PADS4_TEST
 
 #include "goalie.h"
@@ -90,7 +134,7 @@ void pads4_map_seats(int n, const int *team, const int *kb, int *out)
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
 #define P_B(p, o) (*(uint8_t *)((p) + (o)))
 
-extern char updateplayers[], GiveControl[], DrawRinkOverlays[], DrawRinkObjects[], DrawFrameSprite[];
+extern char updateplayers[], GiveControl[], changeplayer[], DrawRinkOverlays[], DrawRinkObjects[], DrawFrameSprite[];
 extern uint8_t SortCords[];
 extern int16_t c1playernum[], c2playernum[], cont1team, cont2team, lj1, lj2;
 extern int32_t regd0, regd1, regd2, regd3;
@@ -375,8 +419,15 @@ int pads4_fake(int k) { return k >= 0 && k < 2 && pads4.src[k] == PADS4_FAKE; }
 
 int pads4_gc_skip(int sc)
 {
+    int owned, pos = 1, joy = 0;
     sc = (int16_t)sc;
-    return (pads4.team[0] && sc == pads4.player[0]) || (pads4.team[1] && sc == pads4.player[1]);
+    owned = (pads4.team[0] && sc == pads4.player[0]) || (pads4.team[1] && sc == pads4.player[1]);
+    if (sc >= 0 && sc <= 11) {
+        uint8_t *pl = SortCords + sc * 0x80;
+        pos = P_W(pl, P_POSITION);
+        joy = (P_B(pl, P_PFLAGS) & PFJOY) != 0;
+    }
+    return pads4_give_skip(owned, pads4.team[0] || pads4.team[1], pos, joy);
 }
 
 /* GiveControl(ax = player): not pad 3's or 4's (push dword 14h is the 5 bytes moved) */
@@ -690,10 +741,84 @@ static int patch_up(void)
     return 0;
 }
 
+/* changeplayer skips an animation-locked skater, and the matched body cannot grow a joy test.
+ * For the call, that bit is set on teammates this pad must not take and cleared when it returns. */
+static uint8_t guard_sc[6];
+static int guard_n;
+void *pads4_cp_cont;            /* the fights' thunk, or cp_push_stub when fights did not hook it */
+void *pads4_cp_body;            /* changeplayer + 5 (call __CHK), for cp_push_stub */
+
+void pads4_guard_on(uint8_t *p, int ctl)
+{
+    int16_t humans[4];
+    int mine, home, base, i, nh = 0;
+    guard_n = 0;
+    ctl = (int16_t)ctl;
+    mine = ctl ? c2playernum[0] : c1playernum[0];
+    /* the six changeplayer scans: team 1 at 0, anything else at 6 */
+    home = (ctl ? cont2team : cont1team) == 1;
+    if (c1playernum[0] != mine && c1playernum[0] >= 0) humans[nh++] = c1playernum[0];
+    if (c2playernum[0] != mine && c2playernum[0] >= 0) humans[nh++] = c2playernum[0];
+    if (pads4.team[0] && pads4.player[0] != mine && pads4.player[0] >= 0) humans[nh++] = pads4.player[0];
+    if (pads4.team[1] && pads4.player[1] != mine && pads4.player[1] >= 0) humans[nh++] = pads4.player[1];
+    base = home ? 0 : 6;
+    for (i = base; i < base + 6 && guard_n < 6; i++) {
+        uint8_t *pl = SortCords + i * 0x80;
+        int sc = P_W(pl, P_SCNUM), joy = (P_B(pl, P_PFLAGS) & PFJOY) != 0;
+        if (p && pl == p) continue;                     /* the caller: a sweep check must still lock him */
+        if (pads4_may_take(sc, mine, joy, humans, nh)) continue;
+        if (P_B(pl, P_PFLAGS) & PFALOCK) continue;      /* the game already skips him */
+        P_B(pl, P_PFLAGS) |= PFALOCK;
+        guard_sc[guard_n++] = (uint8_t)i;
+    }
+    if (log_on() && guard_n) fprintf(stderr, "pads4: changeplayer leaves %d teammates\n", guard_n);
+}
+
+void pads4_guard_off(void)
+{
+    int i;
+    for (i = 0; i < guard_n; i++) P_B(SortCords + guard_sc[i] * 0x80, P_PFLAGS) &= (uint8_t)~PFALOCK;
+    guard_n = 0;
+}
+
+/* push 28h and enter changeplayer's body, as the fights' thunk does when it is the one installed */
+__attribute__((naked)) static void cp_push_stub(void)
+{
+    __asm__ volatile("push $0x28\n\tjmp *" SYM("pads4_cp_body"));
+}
+
+/* changeplayer (eax player, edx controller). The fights' hook may already sit on the entry. */
+__attribute__((naked)) static void cp_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpush %edx\n\tpush %eax\n\tcall " SYM("pads4_guard_on") "\n\tadd $8, %esp\n\tpopal\n\t"
+        "call *" SYM("pads4_cp_cont") "\n\t"
+        "pushal\n\tcall " SYM("pads4_guard_off") "\n\tpopal\n\tret");
+}
+
+static void hook_changeplayer(void)
+{
+    uint8_t *p = (uint8_t *)changeplayer;
+    static const uint8_t push28[5] = { 0x68, 0x28, 0, 0, 0 };
+    if (p[0] == 0xE9) {                         /* the fights' thunk: it pushes 28h and jumps to the body */
+        int32_t rel;
+        memcpy(&rel, p + 1, 4);
+        pads4_cp_cont = p + 5 + rel;
+    } else if (!memcmp(p, push28, 5)) {
+        pads4_cp_body = p + 5;
+        pads4_cp_cont = (void *)cp_push_stub;
+    } else {
+        fprintf(stderr, "Four players: changeplayer is not the expected code, a pass can switch onto a teammate\n");
+        return;
+    }
+    patch_jmp(changeplayer, (void *)cp_thunk);
+}
+
 void pads4_install(void)
 {
     static const uint8_t push14[5] = { 0x68, 0x14, 0, 0, 0 };
     rom94_load();                                       /* (at start-up: the folder is searched once) */
+    hook_changeplayer();                                /* before the early return: pad 1 and 2 use it too */
     ok_up = patch_up();
     if (!ok_up) { fprintf(stderr, "Four players: updateplayers is not the expected code, pads 3 and 4 do not play\n"); return; }
     ok_gc = !memcmp(GiveControl, push14, 5);

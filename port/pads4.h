@@ -52,4 +52,33 @@ uint8_t pads4_byte(int mask, int pass, int shoot);
  * no other pad's; position and pflags2 are his */
 int pads4_keep(int sc, int team, int position, int pflags2, const int16_t *others, int nothers);
 
+/* 94 Genesis chgplayer: this pad may take sc. Its own player (mine) is allowed even while he is
+ * controlled (joy). Anyone else with joy, or anyone in humans (the other pads' players, -1 unused), is not.
+ * A CPU teammate is neither, so he may be taken. */
+int pads4_may_take(int sc, int mine, int joy, const int16_t *humans, int nh);
+
+/* one skater changeplayer looks at. dist2 is the squared distance to where the puck is going.
+ * joy: pflags bit 3. lock: animation lock. unav: pflags2 bit 2. pos: position (<=0 is a goalie or off the ice). */
+typedef struct pads4_cand {
+    int sc;
+    unsigned dist2;
+    int joy;
+    int lock;
+    int unav;
+    int pos;
+} pads4_cand;
+
+/* who this pad's changeplayer takes. humans are the other pads. The nearest eligible skater wins;
+ * an equal distance keeps the later one. Nobody eligible: mine (the game then sweep-checks when that is
+ * the player it was called for). */
+int pads4_switch_pick(int mine, const int16_t *humans, int nh, const pads4_cand *c, int n);
+
+/* 94 Genesis passto: control follows the pass only for a human goalie, and not onto a receiver who is
+ * already controlled. A skater's pass never switches. goalie/joy/receiver_joy are 0 or 1. */
+int pads4_pass_switches(int goalie, int joy, int receiver_joy);
+
+/* 94 Genesis puckglue setd0player: do not give this carrier to a pad. owned: pad 3 or 4 already has him.
+ * With another pad on (pads_on), a goalie who is already controlled (position 0 and joy) stays put. */
+int pads4_give_skip(int owned, int pads_on, int position, int joy);
+
 #endif

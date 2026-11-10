@@ -46,6 +46,49 @@ int main(void)
     CHECK(pads4_byte(4, 1, 0) == 0x12);
     CHECK(pads4_byte(8, 0, 1) == 0x26);
     CHECK(pads4_byte(2, 1, 1) == 0x44);
+    {   /* 94G chgplayer: his own player, even while controlled; not a teammate another pad has */
+        int16_t humans[2] = { 2, 8 };
+        CHECK(pads4_may_take(0, 0, 1, humans, 2));       /* his own, joy set */
+        CHECK(!pads4_may_take(2, 0, 1, humans, 2));      /* the other human */
+        CHECK(!pads4_may_take(2, 0, 0, humans, 2));      /* his number, joy clear (a whistle) */
+        CHECK(!pads4_may_take(4, 0, 1, humans, 2));      /* joy, not listed */
+        CHECK(pads4_may_take(3, 0, 0, humans, 2));       /* a CPU teammate */
+        CHECK(pads4_may_take(2, 2, 1, humans, 2));       /* that human's own pad */
+    }
+    {   /* pass to the human teammate, then pass again: he is nearest the puck, and must not be taken */
+        int16_t humans[1] = { 2 };
+        pads4_cand c[6] = {
+            { 0, 100, 1, 0, 0, 3 },     /* this pad */
+            { 1, 40, 0, 0, 0, 2 },      /* CPU, closer than him */
+            { 2, 10, 1, 0, 0, 3 },      /* human teammate, just passed to: closest */
+            { 3, 5, 0, 0, 0, 0 },       /* goalie, even closer: not a switch */
+            { 4, 20, 0, 1, 0, 2 },      /* locked */
+            { 5, 15, 0, 0, 1, 2 },      /* leaving */
+        };
+        CHECK(pads4_switch_pick(0, humans, 1, c, 6) == 1);
+    }
+    {   /* every other teammate is a human: stay (the game sweep-checks) */
+        int16_t humans[1] = { 1 };
+        pads4_cand c[2] = { { 0, 80, 1, 0, 0, 2 }, { 1, 10, 1, 0, 0, 2 } };
+        CHECK(pads4_switch_pick(0, humans, 1, c, 2) == 0);
+    }
+    {   /* two CPUs at the same distance: the later one */
+        pads4_cand c[2] = { { 1, 10, 0, 0, 0, 2 }, { 3, 10, 0, 0, 0, 2 } };
+        CHECK(pads4_switch_pick(0, NULL, 0, c, 2) == 3);
+    }
+    CHECK(pads4_switch_pick(4, NULL, 0, NULL, 0) == 4);
+    /* passto: only a human goalie follows the pass, and not onto a controlled receiver */
+    CHECK(!pads4_pass_switches(0, 1, 0));
+    CHECK(!pads4_pass_switches(1, 0, 0));
+    CHECK(!pads4_pass_switches(1, 1, 1));
+    CHECK(pads4_pass_switches(1, 1, 0));
+    /* setd0player: not a pad 3/4 player, and not a controlled goalie while those pads are on */
+    CHECK(pads4_give_skip(1, 0, 2, 0));          /* pad 3 or 4 already has him */
+    CHECK(!pads4_give_skip(0, 0, 0, 1));         /* no extra pads: 95 PC's own check stands */
+    CHECK(pads4_give_skip(0, 1, 0, 1));          /* controlled goalie, pads 3 and 4 on */
+    CHECK(!pads4_give_skip(0, 1, 0, 0));         /* CPU goalie: a game pad may take him */
+    CHECK(!pads4_give_skip(0, 1, 3, 0));         /* CPU skater who picked the puck up */
+    CHECK(!pads4_give_skip(0, 1, 3, 1));         /* a skater's joy is not this check (94G tests the goalie) */
     printf(fails ? "pads4_test: %d failed\n" : "pads4_test: all passed\n", fails);
     return fails != 0;
 }
