@@ -9,9 +9,8 @@ PolyForm Noncommercial License 1.0.0, Copyright (c) 2026 abdulahmad.
 The product name is Overbar.
 
 Third-party files copied into Overbar keep their own licenses and are not
-covered by the PolyForm Noncommercial terms. MIT notice (copyright line
-unchanged): Copyright (c) 2026 The pulseman authors. Full text:
-licenses/MIT-PulseMan.txt.
+covered by the PolyForm Noncommercial terms. MIT full text:
+licenses/MIT-Overbar.txt.
 
 MiSTer filter, gamma, shadow mask and preset data: Filters_MiSTer,
 ShadowMasks_MiSTer, Presets_MiSTer (GPL-3.0 data, loaded at run time).
