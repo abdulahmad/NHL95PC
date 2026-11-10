@@ -65,6 +65,7 @@ cd /path/to/NHL95/game/files        # the directory with NHL.CFG, ALLFILES.TXT a
 The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1` logs every interrupt and port access;
 `NHL95_STATS=1` prints every 2 s how many traps (int, in, out, cli, sti, pushf, popf) the game made by opcode, port and int 21h function, the time spent in them, the game thread's user and kernel CPU time, `video_present` timing and the game's tick rate against the PIT rate; `NHL95_KEYS="ms:Key[/hold] ..."` presses keys at given times (SDL key names);
 `NHL95_AUTOLINE=1` turns on the Game page's Auto line changes (96 PC Auto: CompLine at faceoff for a human team, chk4lc on the fly);
+`NHL95_GOALIE=1` turns on Manual goalie (96 PC: B-hold takes the goalie, A dives, C a save; 94 Genesis movement);
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
 
@@ -94,7 +95,7 @@ volume ramp and frees the voice when the ramp-end interrupt arrives, so the ramp
 unit, as in DOSBox). The interrupt-queue semantics of GF1 register 8Fh and the voice-control acknowledge are modelled.
 
 Debugging: `NHL95_TRACE=1`, `NHL95_STATS=1` (traps, ticks, `video_present` timing), `NHL95_KEYS="ms:Key ms:@x,y ms:@click"` (scripted input),
-`NHL95_AUTOLINE=1`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py` maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last
+`NHL95_AUTOLINE=1`, `NHL95_GOALIE=1`, `NHL95_DUMP`, `NHL95_WAV`; `port/where.py` maps a runtime address (set `NM` to the nm of the toolchain). `CRASH ...` lines come from the last
 exception handler. Without any setting, the program appends to `nhl95-audio.log` next to it while a sound card is in use (refill and interrupt
 timing, slow DOS calls, the music files the game opens, native GUS voice activity), and **Ctrl+F11** records the mixed sound to
 `nhl95-capture-N.wav` (the window title says so): that is how sound problems on a machine are diagnosed without a debugger.
@@ -110,7 +111,7 @@ Not done: digital audio in MT-32 mode (the game plays only music there), fullscr
 ## Next steps (in the order asked for)
 
 1. Finish the SDL2 port against the real data: assets, sound, joystick.
-2. Manual goalie, 3. custom keyboard bindings, 4. four players, 5. rollback netcode. These change game logic, so
+2. custom keyboard bindings, 3. four players, 4. rollback netcode. These change game logic, so
    they belong in C functions of `src/c` that are compiled for the host (the byte-exact build keeps the matched originals). Rollback needs the
    whole game state in one block: the game's data segment is a single contiguous region, so it can be saved and restored once the input
    sampling is separated from the frame step.
