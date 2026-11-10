@@ -32,6 +32,16 @@
 #endif
 
 extern unsigned char curleague;
+extern int lgstate[];                   /* the league's saved mode state: its folder name at +4 */
+
+/* the league open in the game: curleague while the league state is loaded, else the one the desk keeps
+   in lgstate (File > Open on a league; Import / Export / Next League Game are then enabled) */
+static const char *open_league(void)
+{
+    const char *c = (const char *)&curleague;
+    if (c[0]) return c;
+    return (const char *)lgstate + 4;
+}
 extern unsigned char leagueteams[];
 extern unsigned char treeteamnames[];
 extern unsigned char str_floppydrv;
@@ -155,7 +165,7 @@ static int needs_floppy(void)
 
 static int league_host_dir(char *dir, int size)
 {
-    const char *name = (const char *)&curleague;
+    const char *name = open_league();
     if (!name[0]) return -1;
     snprintf(dir, (size_t)size, "%s/%s", g_root[0] ? g_root : game_root(), name);
     return 0;
@@ -204,7 +214,7 @@ static void mount_a(const char *dir)
 static int disk_pending(char *disk, int size)
 {
     char cur[16];
-    const char *name = (const char *)&curleague;
+    const char *name = open_league();
     if (ob_season_disk(&g_season, -1, disk, size) < 0) return 0;
     snprintf(cur, sizeof cur, "%s", name);
     if (strchr(cur, '.')) *strchr(cur, '.') = 0;
@@ -261,7 +271,7 @@ static int with_pack_drive(int team, const char *dir, int (*fn)(const char *from
 static int op_league(void *ud, ob_season_league *l)
 {
     int i;
-    const char *name = (const char *)&curleague;
+    const char *name = open_league();
     (void)ud;
     memset(l, 0, sizeof *l);
     if (!name[0]) return -1;
@@ -325,7 +335,7 @@ static int op_merge(void *ud, int team, const char *dir, const uint32_t *played,
 {
     char floppy[] = "A:";
     char nn[8], db[] = ".DB";
-    const char *league = (const char *)&curleague;
+    const char *league = open_league();
     const char *ext = nn;
     int ngames = 0, r;
     (void)ud;
@@ -401,7 +411,7 @@ static void season_send(void *ud, int to, const void *data, size_t size)
 static void rebuild_bar_if_league(void)
 {
     ob_season_league l;
-    const char *name = (const char *)&curleague;
+    const char *name = open_league();
     int master = is_master_copy() ? 1 : 0, nteam = 0;
     memset(&l, 0, sizeof l);
     if (name[0] && op_league(NULL, &l) == 0) nteam = l.nteam;
@@ -418,7 +428,7 @@ static void diag_log(void)
     const char *lp = getenv("OVERBAR_TEST_LOG");
     ob_season_league l;
     FILE *f;
-    const char *name = (const char *)&curleague;
+    const char *name = open_league();
     static char last[256];
     char line[256];
     int nteam = 0;
