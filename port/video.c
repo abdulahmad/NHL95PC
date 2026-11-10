@@ -5,6 +5,7 @@
 #include "bindings.h"
 #include "overbar_client.h"
 #include "feel.h"
+#include "season.h"
 #include <ctype.h>
 #include <math.h>
 #include <string.h>
@@ -969,7 +970,8 @@ void video_init(void)
     title_refresh();
 }
 
-/* NHL95_DUMP=dir writes a PPM of the screen about twice a second (for testing without a display) */
+/* NHL95_DUMP=dir writes a PPM of the screen about twice a second (for testing without a display).
+ * Call it after the overlay so Season is in the picture. */
 static void dump_frame(int w, int h)
 {
     static int frame, written;
@@ -1035,9 +1037,10 @@ void video_present(void)
             title_refresh();
         }
     }
-    dump_frame(w, h);
     if (overbar_client_open()) overbar_client_draw(argb, w, h, w);
     if (ob_plat_osk_is_open()) ob_plat_osk_draw(argb, w, h, w);
+    dump_frame(w, h);                       /* after the overlay, so NHL95_DUMP shows Season */
+    port_season_tick();
     {
         int vx, vy, vw, vh;
         video_view(&vx, &vy, &vw, &vh);
