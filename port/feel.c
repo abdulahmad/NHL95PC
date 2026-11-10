@@ -4,9 +4,11 @@
  * 95 PC's feel options (port/feel.h). The numbers of 94 Genesis come from NHL94Genesis-C-Port (logic.c playeracc,
  * stopna, doplayeracc; hockey.c DoGameFrame), turned into 60 Hz frames:
  *
- *   - The cartridge runs a game pass every 2 vblanks in play (elapsed 2). Its acceleration is times elapsed, so per
- *     second it is the same at either timing; friction (velocity >> 6), the turn step and the stop step are per pass,
- *     so the cartridge's are half of them per frame. Smooth (the C port's default) runs every vblank, and is the
+ *   - The cartridge runs most passes in one vblank and some in two (its slowdown, elapsed 2): about 51 a second in
+ *     play (NHL94Genesis-C-Port docs/RULES.md: 83% of the waits in play had no lag). Its acceleration is times
+ *     elapsed, so per second it is the same at either timing; the turn step and the stop step are per pass, so the
+ *     cartridge's are 51/60 of them per frame (turn 14 of 16, stop 128 of 150); friction (velocity >> 6 a pass) stays
+ *     >> 6 a frame, the nearest shift. Smooth (the C port's default) runs every vblank, and is the
  *     default here too: Cartridge times only the skating, while the puck, checks and the AI stay at 95 PC's 60 a
  *     second, and Abdul found it felt wrong in play (2026-11-09).
  *   - Positions move by velocity x 17 a vblank on the Genesis and x 16 a frame on 95 PC: 94G speeds are times 17/16
@@ -254,7 +256,7 @@ void feel_stopna(uint8_t *p)
 {
     int step, v;
     if (is_skater(p) && now.stop != FEEL_95PC) {
-        step = now.cartridge ? 75 : 150;                    /* 94G: 96h a pass */
+        step = now.cartridge ? 128 : 150;                   /* 94G: 96h a pass; the cart's ~51 passes a second */
         step = step * scale256(now.stop) / 256;
     } else {
         step = 0xC8 + P_B(p, P_LEGSTR);
@@ -288,7 +290,7 @@ static void apply_constants(void)
 {
     if (friction_ok) {
         /* a skater down keeps 95 PC's slide: its checks and falls are still 95 PC's, made for that friction */
-        int half = now.glide && now.cartridge;
+        int half = 0;   /* the cart's friction (>> 6 a pass at ~51 passes a second) is nearer 6 a frame than 7 */
         uint8_t fall = 9, skate = (uint8_t)(half ? 7 : 6);
         patch_bytes((uint8_t *)updateplayers + FRICTION_FALL + 6, &fall, 1);
         patch_bytes((uint8_t *)updateplayers + FRICTION_SKATE + 6, &skate, 1);
@@ -345,7 +347,7 @@ enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, 
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
-static const char *const timing_names[] = { "Cartridge (30 a second, skating only)", "Smooth (60 a second)" };
+static const char *const timing_names[] = { "Cartridge (about 51 a second, skating only)", "Smooth (60 a second)" };
 static const char *const src_names[] = { "95 PC", "94 Genesis", "94 Genesis, scaled to rink" };
 static const char *const two_names[] = { "95 PC", "94 Genesis" };
 static const char *const onoff_names[] = { "Off", "On" };
@@ -490,7 +492,7 @@ void feel_session_end(void)
 void feel_write_ini(FILE *f)
 {
     if (!g_host || !f) return;
-    fprintf(f, "; the Game page. feel: a preset; feel_timing: 94 Genesis's cartridge timing (30 game passes a second, more glide, slower turns)\n"
+    fprintf(f, "; the Game page. feel: a preset; feel_timing: 94 Genesis's cartridge timing (about 51 game passes a second, its slowdown)\n"
                "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n");
     ob_game_write_ini(g_host, f);
 }
