@@ -294,12 +294,15 @@ static void apply_constants(void)
         patch_bytes((uint8_t *)updateplayers + FRICTION_SKATE + 6, &skate, 1);
     }
     if (ftab_ok) {
-        /* doplayeracc's turn steps: 0, 16, 16, 16, 0, -16, -16, -16. The cartridge's would be half (a step a pass, 30
-         * passes a second), but it steered far too slowly in play (Abdul, 2026-11-09): every timing keeps 95 PC's. */
-        int half = 0, i;
+        /* doplayeracc's turn steps: 0, 16, 16, 16, 0, -16, -16, -16, a step a game pass, the same code and table as
+         * 94G's. The cartridge does not run 30 passes a second in play: most passes take one vblank and some two
+         * (its slowdown; NHL94Genesis-C-Port docs/RULES.md, measured against Genesis Plus GX: 83% of the waits in
+         * play had no lag), about 51 passes a second. So 94G turning with the Cartridge timing is 14 a frame (16 x
+         * 51 / 60, rounded); Smooth (a pass every vblank) is 16, as 95 PC. Half (8) steered far too slowly (Abdul,
+         * 2026-11-09). */
+        int step = now.turn && now.cartridge ? 14 : 16, i;
         for (i = 0; i < 8; i++) {
-            int32_t v = (i == 0 || i == 4) ? 0 : (i < 4 ? 16 : -16);
-            if (half) v /= 2;
+            int32_t v = (i == 0 || i == 4) ? 0 : (i < 4 ? step : -step);
             patch_bytes(&doplayeracc_ftab[i], &v, 4);
         }
     }
