@@ -208,23 +208,73 @@ static void team_ext(char *ext, int size, int team)
     snprintf(ext, (size_t)size, ".%02d", team);
 }
 
-/* one team's floppy set: the seven DBs as .DB and as .NN, PINFO.DB, PLAYER.ID, GAME.SET */
+/* patch the 30-byte entry of `team` in a PINFO.DB (header 20h); also zero the word at 13h when zero_13 */
+static int pinfo_entry(const char *path, int team, unsigned char *entry, int write, int zero_13)
+{
+    FILE *f = fopen(path, write ? "r+b" : "rb");
+    int ok;
+    if (!f) return -1;
+    ok = fseek(f, 0x20 + team * 30, SEEK_SET) == 0;
+    if (ok) ok = write ? fwrite(entry, 1, 30, f) == 30 : fread(entry, 1, 30, f) == 30;
+    if (ok && zero_13) {
+        static const unsigned char z[2] = { 0, 0 };
+        ok = fseek(f, 0x13, SEEK_SET) == 0 && fwrite(z, 1, 2, f) == 2;
+    }
+    fclose(f);
+    return ok ? 0 : -1;
+}
+
+/* exactly the floppy the game's own Export Databases (ExportTeamToFloppy) writes for `team`, so the guest's
+   File > Import Databases > Player takes it: the seven DBs as .NN and .DB, PINFO.DB with the team marked
+   exported (16h = 2, 18h bit 1) and a zero word at 13h, GAME.SET, and PLAYER.ID (team, its entry's name,
+   the league folder, the export count). The host's own PINFO.DB gets the same entry, as the export does. */
 static int copy_team_files(const char *from, const char *to, int team)
 {
-    char nn[8];
-    int i, need = 0;
+    char nn[8], a[512], b[512], pid[512];
+    unsigned char entry[30], tb = (unsigned char)team, dir13[13];
+    const char *league = open_league();
+    FILE *f;
+    int i;
+    if (team < 0 || team >= 26 || !league[0]) return -1;
     team_ext(nn, (int)sizeof nn, team);
     MKDIR(to);
     for (i = 0; i < 7; i++) {
-        int a = copy_named(from, to, k_db[i], ".DB");
-        int b = copy_named(from, to, k_db[i], nn);
-        if (a < 0 || b < 0) return -1;
-        if (a == 0) need = 1;
+        char leaf[32];
+        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
+        join2(a, (int)sizeof a, from, leaf);
+        if (!exists_path(a)) {                       /* no team copy yet: the league's own */
+            snprintf(leaf, sizeof leaf, "%s.DB", k_db[i]);
+            join2(a, (int)sizeof a, from, leaf);
+        }
+        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
+        join2(b, (int)sizeof b, to, leaf);
+        if (copy_file(a, b)) return -1;
+        if (copy_named(from, to, k_db[i], ".DB") < 0) return -1;
     }
-    if (copy_named(from, to, "PINFO", ".DB") < 0) return -1;
-    if (copy_named(from, to, "PLAYER", ".ID") < 0) return -1;
+    join2(a, (int)sizeof a, from, "PINFO.DB");
+    if (pinfo_entry(a, team, entry, 0, 0)) return -1;
+    if (entry[0x16] != 2) {                          /* first export: count it, as the game does */
+        uint32_t n = (uint32_t)entry[0x1A] | (uint32_t)entry[0x1B] << 8 | (uint32_t)entry[0x1C] << 16 |
+                     (uint32_t)entry[0x1D] << 24;
+        n++;
+        entry[0x1A] = (unsigned char)n; entry[0x1B] = (unsigned char)(n >> 8);
+        entry[0x1C] = (unsigned char)(n >> 16); entry[0x1D] = (unsigned char)(n >> 24);
+    }
+    entry[0x16] = 2;
+    entry[0x18] |= 2;
+    join2(b, (int)sizeof b, to, "PINFO.DB");
+    if (copy_file(a, b) || pinfo_entry(b, team, entry, 1, 1)) return -1;
+    if (pinfo_entry(a, team, entry, 1, 0)) return -1;
     if (copy_named(from, to, "GAME", ".SET") < 0) return -1;
-    return need ? 0 : -1;
+    memset(dir13, 0, sizeof dir13);
+    memcpy(dir13, league, strlen(league) < 12 ? strlen(league) : 12);
+    join2(pid, (int)sizeof pid, to, "PLAYER.ID");
+    f = fopen(pid, "wb");
+    if (!f) return -1;
+    i = fwrite(&tb, 1, 1, f) == 1 && fwrite(entry, 1, 11, f) == 11 && fwrite(dir13, 1, 13, f) == 13 &&
+        fwrite(entry + 0x1A, 1, 4, f) == 4;
+    if (fclose(f) || !i) return -1;
+    return 0;
 }
 
 static void unmount_play(void)
@@ -400,11 +450,52 @@ static int op_dir(void *ud, char *dir, int size)
     return league_host_dir(dir, size);
 }
 
+/* the 26 team names (21 bytes each at +5 of every 2E8h-byte record, as ReadTeamNames reads them) from the
+   league's TEAMS.DB: the open league, else the picked team's disk, else the game folder's own. treeteamnames
+   is only loaded inside league screens, so at the desk it would say "Team 5". Read again every ~2 s. */
+static const char *names_tab(void)
+{
+    static char tab[26 * 22];
+    static int age = -1, have;
+    if (age < 0 || ++age >= 120) {
+        char dir[512], path[600], disk[512];
+        FILE *f = NULL;
+        int i;
+        age = 0;
+        if (!league_host_dir(dir, (int)sizeof dir)) {
+            snprintf(path, sizeof path, "%s/TEAMS.DB", dir);
+            f = fopen(path, "rb");
+        }
+        if (!f && ob_season_disk(&g_season, -1, disk, (int)sizeof disk) == 0) {
+            snprintf(path, sizeof path, "%s/TEAMS.DB", disk);
+            f = fopen(path, "rb");
+        }
+        if (!f) {
+            snprintf(path, sizeof path, "%s/TEAMS.DB", g_root[0] ? g_root : game_root());
+            f = fopen(path, "rb");
+        }
+        have = 0;
+        if (f) {
+            have = 1;
+            for (i = 0; i < 26 && have; i++) {
+                char *n = tab + i * 22;
+                memset(n, 0, 22);
+                if (fseek(f, (long)i * 0x2E8 + 5, SEEK_SET) || fread(n, 1, 21, f) != 21) have = 0;
+            }
+            fclose(f);
+        }
+    }
+    return have ? tab : NULL;
+}
+
 /* NULL for CPU so Pick a team only lists humans (host-local + exported remotes) */
 static const char *team_name(void *ud, int team)
 {
+    const char *t;
     (void)ud;
-    if (!team_human(team)) return NULL;
+    if (open_league()[0] && !team_human(team)) return NULL;     /* a guest with no league: the host's list says */
+    t = names_tab();
+    if (t && t[team * 22]) return t + team * 22;
     return (const char *)(treeteamnames + team * 21);
 }
 
@@ -507,7 +598,7 @@ void port_season_setup(ob_host *h)
     ob_season_init(&g_season, &ops, g_work, me, &g_files, season_send, NULL);
     ob_season_set(h, &g_season, 0, NULL);
     ob_season_set_names(h, team_name, NULL);
-    ob_season_set_hint(h, "yours: in the game, File > Import Databases (the disk is in drive A:)");
+    ob_season_set_hint(h, "Load: File > Import Databases > Player");
     g_ready = 1;
 }
 
