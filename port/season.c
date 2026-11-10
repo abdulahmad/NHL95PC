@@ -268,7 +268,8 @@ static int op_league(void *ud, ob_season_league *l)
     snprintf(l->name, sizeof l->name, "%s", name);
     if (strchr(l->name, '.')) *strchr(l->name, '.') = 0;      /* "ABDUL", not the folder ABDUL.LP */
     snprintf(l->id, sizeof l->id, "%s", name);
-    l->master = is_master_copy() ? 1 : 0;
+    /* the room's host: any league open here is the master (players join it); else a copy has none local */
+    l->master = (is_master_copy() || (g_net && ob_net_is_host(g_net))) ? 1 : 0;
     for (i = 0; i < 26 && l->nteam < OB_SEASON_TEAMS; i++) {
         /* host: local humans only (Boston). remote exports (LA) are pickable, not "the host's". */
         if (l->master) {
@@ -500,6 +501,7 @@ void port_season_tick(void)
 {
     if (!g_ready) return;
     rebuild_bar_if_league();
+    if (g_host) ob_season_tick(g_host);
     mount_play();
     diag_log();
 }
