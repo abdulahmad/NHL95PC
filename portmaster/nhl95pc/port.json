@@ -9,9 +9,9 @@
   "attr": {
     "title": "NHL 95 PC",
     "porter": ["abdulahmad"],
-    "desc": "EA Sports NHL 95 for DOS, hosted by Overbar on SDL2. Overlay on Select. Bring your own installed game and CD files. aarch64 native binary is a later build; this zip is the PortMaster layout.",
+    "desc": "EA Sports NHL 95 for DOS, hosted by Overbar on SDL2. Overlay on Select (Online stays listed). Pad moves the desk glove. Bring your own installed game and CD files. Layout zip: the desktop trap host is i386; nhl95pc.aarch64 is a later native HAL build.",
     "desc_md": null,
-    "inst": "Copy the installed NHL 95 folder into nhl95pc/gamedata/ (HOCKEY.EXE and data) and the CD files into nhl95pc/cd/. No ISO.",
+    "inst": "Copy the installed NHL 95 folder into nhl95pc/gamedata/ (HOCKEY.EXE 1,179,067 bytes, SHA-1 3961e0eba6b0338fad1613bb534efafd9406ed4a, plus NHL.CFG and the HD files CFG lists). Copy the CD files into nhl95pc/cd/ (ALLFILES.TXT names). No ISO. This zip is layout-only until nhl95pc.aarch64 exists.",
     "inst_md": null,
     "genres": ["sports"],
     "image": null,

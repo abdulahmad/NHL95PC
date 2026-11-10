@@ -56,7 +56,8 @@ int main(int argc, char **argv)
     trace_on = getenv("NHL95_TRACE") != 0;    stats_init();
 #ifdef _WIN32
     /* PortMaster / Overbar packing leftovers (SDL_RENDER_DRIVER=opengles2, OVERBAR_HANDHELD)
-     * must be gone before SDL_Init: otherwise Windows creates an ES context or kmsdrm fails. */
+     * must be gone before SDL_Init: otherwise Windows creates an ES context or kmsdrm fails.
+     * ob_handheld_env() is also 0 on Win32, so CFW_NAME/PORTMASTER never select GLES2 here. */
     win32_scrub_portmaster_env();
 #endif
     SDL_SetMainReady();

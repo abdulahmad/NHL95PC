@@ -11,6 +11,7 @@
 - F3 95G names for 95 features: done, none to apply. `tools/names/xmatch95.py` on season95 / trade95 / create95 / awards95 found no body pairs (string and label noise only: trophy text, "agility", `hometeam`). The DOS screens keep the PC names. Functions that already share a 95G name (`ExecuteTrade`, `TradePlayers`, `TradeDone`, `BuildTradeRoster`, `FixJerseyNumber`, `SortStandings`, `CalendarScreen`, `StandingsScreen`, `PlayoffTreeScreen`, `BuildFreeAgentList`, `CreatePlayerLoop`) stay.
 - Next layout units: none of the leftover four. Do not merge clib slices, do not fold data slices, do not merge to main.
 - Open PRs: leftover H2–keep stack is merged (#322–#345 on `main`, #324–#346 on `sdl2-port`). H1 #319/#320 already merged. 107-PASS stack is on `main` (#303–#316) and `sdl2-port` (#304–#317). #294–#299 stay merged. Do not close them.
+- PortMaster: Knulli-optimized layout zip on `cursor/overbar-95pc-6801` (`portmaster/`). No aarch64 binary yet (trap host is i386). Do not merge Overbar client work to `main` / `sdl2-port`.
 
 Everything a new person or agent needs to pick this project up. Read this file, then
 [AGENTS.md](AGENTS.md) (standing rules), [SEGMENT_AGENT.md](SEGMENT_AGENT.md) (naming rules),

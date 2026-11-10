@@ -3,7 +3,7 @@
   <game>
     <path>./NHL 95 PC.sh</path>
     <name>NHL 95 PC</name>
-    <desc>EA Sports NHL 95 for DOS, hosted by Overbar. Overlay on Select. Bring your own install and CD files.</desc>
+    <desc>EA Sports NHL 95 for DOS, hosted by Overbar. Overlay on Select (Online stays listed). Pad moves the desk glove. Bring your own install and CD files. Layout zip until the aarch64 native binary exists (desktop trap host is i386).</desc>
     <releasedate>19940930T000000</releasedate>
     <developer>EA Sports</developer>
     <publisher>Electronic Arts</publisher>

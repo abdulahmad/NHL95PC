@@ -69,3 +69,14 @@ run-nhl95.sh
 SDL2-*/
 port/third_party/
 docs/xmatch/
+
+# PortMaster: user-copied DOS install / CD files and a later aarch64 binary
+portmaster/nhl95pc/gamedata/*
+!portmaster/nhl95pc/gamedata/.gitkeep
+portmaster/nhl95pc/cd/*
+!portmaster/nhl95pc/cd/.gitkeep
+portmaster/nhl95pc/conf/*
+!portmaster/nhl95pc/conf/.gitkeep
+portmaster/nhl95pc/nhl95pc.aarch64
+portmaster/nhl95pc/libs.aarch64/*
+!portmaster/nhl95pc/libs.aarch64/.gitkeep

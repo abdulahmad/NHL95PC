@@ -1,5 +1,7 @@
-# Plus has no analog. D-pad moves the desk pointer; A left-click, B right-click.
-# Select+Start quits. Native in-play joystick is a later HAL unit.
+# PortMaster gptk: pad drives the PC glove pointer (desk). Plus has no analog;
+# d-pad is the glove. H left stick is the same mouse. A left-click, B right-click.
+# Select stays unbound so SDL Back opens the Overbar overlay (Online stays listed).
+# Select+Start quits (PortMaster). In-play joystick is a later native HAL unit.
 up = mouse_movement_up
 down = mouse_movement_down
 left = mouse_movement_left
