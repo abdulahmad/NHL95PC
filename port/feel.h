@@ -49,4 +49,7 @@ int feel_fight_box(void);
 int feel_fight_next(void);
 void feel_fight_next_done(void);
 
+/* the Game page's Auto line changes row (port/lines.c): 1 on. 96 PC's Auto state. */
+int feel_auto_lines(void);
+
 #endif
