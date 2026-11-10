@@ -127,14 +127,40 @@ static int stricmp_ascii(const char *a, const char *b)
     return (unsigned char)*a - (unsigned char)*b;
 }
 
+/* the open league's team table: PINFO.DB +20h (26 x 30 bytes, as WriteLeagueInfo writes it). At the desk the
+   exhibition state is loaded and leagueteams may be another league's, so read the league's own file, at most
+   every half second (and at once when the league changes). Falls back to leagueteams while it is being made. */
+static const unsigned char *teams_tab(void)
+{
+    static unsigned char tab[0x30C];
+    static char seen[32];
+    static int age, have;
+    const char *name = open_league();
+    if (!name[0]) return leagueteams;
+    if (strcmp(seen, name) || ++age >= 30) {
+        char path[600];
+        FILE *f;
+        age = 0;
+        snprintf(seen, sizeof seen, "%s", name);
+        snprintf(path, sizeof path, "%s/%s/PINFO.DB", g_root[0] ? g_root : game_root(), name);
+        have = 0;
+        f = fopen(path, "rb");
+        if (f) {
+            if (fseek(f, 0x20, SEEK_SET) == 0 && fread(tab, 1, sizeof tab, f) == sizeof tab) have = 1;
+            fclose(f);
+        }
+    }
+    return have ? tab : leagueteams;
+}
+
 static int team_human(int team)
 {
-    return team >= 0 && team < 26 && leagueteams[team * 30 + 0x17] == 1;
+    return team >= 0 && team < 26 && teams_tab()[team * 30 + 0x17] == 1;
 }
 
 static int team_remote(int team)
 {
-    return team_human(team) && leagueteams[team * 30 + 0x18] == 2;
+    return team_human(team) && teams_tab()[team * 30 + 0x18] == 2;
 }
 
 static int team_local(int team)
@@ -164,7 +190,7 @@ static int needs_floppy(void)
 {
     int i;
     for (i = 0; i < 26; i++)
-        if (team_remote(i) && !(leagueteams[i * 30 + 0x16] & 1))
+        if (team_remote(i) && !(teams_tab()[i * 30 + 0x16] & 1))
             return 1;
     return 0;
 }
@@ -388,7 +414,7 @@ static const char *op_player(void *ud, int team)
     static char name[12];
     (void)ud;
     if (!team_remote(team)) return NULL;
-    memcpy(name, leagueteams + team * 30, 11);
+    memcpy(name, teams_tab() + team * 30, 11);
     name[11] = 0;
     return name[0] ? name : "a player";
 }
