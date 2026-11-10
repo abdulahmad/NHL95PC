@@ -51,5 +51,7 @@ void feel_fight_next_done(void);
 
 /* the Game page's Auto line changes row (port/lines.c): 1 on. 96 PC's Auto state. */
 int feel_auto_lines(void);
+/* the Game page's Manual goalie row (port/goalie.c): 1 on. 96 PC Manual; 94G move/save. */
+int feel_manual_goalie(void);
 
 #endif
