@@ -24,10 +24,6 @@ int main(void)
     eq(goalie_slot(0), 5, "home skater -> home goalie");
     eq(goalie_slot(5), 5, "home goalie");
     eq(goalie_slot(6), 0xB, "away skater -> away goalie");
-    eq(goalie_team_has_puck(-1, 2), 0, "loose puck");
-    eq(goalie_team_has_puck(3, 1), 1, "home carrier, home skater");
-    eq(goalie_team_has_puck(8, 1), 0, "away carrier, home skater");
-    eq(goalie_team_has_puck(8, 7), 1, "away carrier, away skater");
     eq(goalie_slot(11), 0xB, "away goalie");
 
     eq(goalie_in_crease(0, 0xE0), 1, "crease centre");

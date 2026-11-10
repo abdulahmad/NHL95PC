@@ -15,6 +15,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef GOALIE_TEST
@@ -86,12 +87,6 @@ int goalie_bhold(int manual, int on_goalie, int b_new, int b_held, int b_rel, ui
         return GB_WAIT;
     }
     return GB_PASS;
-}
-
-int goalie_team_has_puck(int carrier, int sc)
-{
-    if (carrier < 0 || carrier > 0xB) return 0;
-    return (carrier <= 5) == (sc <= 5);
 }
 
 #ifndef GOALIE_TEST
@@ -256,9 +251,11 @@ int goalie_before_doinput(uint8_t *p, int ctl)
     int i, on, b_new, b_held, b_rel, act;
     if (!feel_manual_goalie() || !p) return 0;
     i = ctl ? 1 : 0;
-    /* the game's own input first: a faceoff (faceoffinput), the line-change box (lineinput), and B while this
-     * team has the puck (a pass or changeplayer, as in 96 PC: the goalie is taken on defence only) */
-    if ((gmode2 & 1) || (P_B(p, P_PFLAGS2) & 0x08) || goalie_team_has_puck(*puckc, P_W(p, P_SCNUM))) {
+    /* the game's own input first, as 94G's doinput orders it: a faceoff (faceoffinput), the line-change box
+     * (lineinput), a locked player, a fight, and the puck carrier himself (doinput_ispc: B is a pass) */
+    if ((gmode2 & 1) || (P_B(p, P_PFLAGS2) & 0x09) || (P_B(p, P_PFLAGS) & PFALOCK) || *puckc == P_W(p, P_SCNUM)) {
+        if (((int16_t)regd3 & BUT_B) && getenv("NHL95_GOALIE_LOG"))
+            fprintf(stderr, "goalie: pass-through gmode2 %d pflags2 %02x puckc %d sc %d\n", gmode2, P_B(p, P_PFLAGS2), *puckc, P_W(p, P_SCNUM));
         bhold[i] = 0;
         return 0;
     }
@@ -273,6 +270,9 @@ int goalie_before_doinput(uint8_t *p, int ctl)
     b_held = ((int16_t)regd3 & BUT_B) != 0;
     b_rel = ((int16_t)regd2 & BUT_B) != 0 && !b_held;
     act = goalie_bhold(1, on, b_new, b_held, b_rel, &bhold[i]);
+    if ((b_new || b_held || b_rel) && getenv("NHL95_GOALIE_LOG"))
+        fprintf(stderr, "goalie: ctl %d sc %d pos %d puckc %d new %d held %d rel %d -> %d (timer %d)\n", ctl, P_W(p, P_SCNUM),
+                P_W(p, P_POSITION), *puckc, b_new, b_held, b_rel, act, bhold[i]);
     if (act == GB_TAKE) return goalie_take(p, ctl);
     if (act == GB_CHANGE) {
         call_ad(changeplayer, p, ctl);
