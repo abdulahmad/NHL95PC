@@ -1007,7 +1007,19 @@ void netplay_main_poll(void)
 /* ---- the Online page's hooks (main thread) and its settings file ---- */
 static void ini_path(char *out, size_t n)
 {
-    char *base = SDL_GetBasePath();
+    const char *env = getenv("NHL95_INI");
+    char *base;
+    if (env && env[0]) {
+        const char *slash = strrchr(env, '/');
+#ifdef _WIN32
+        const char *bslash = strrchr(env, '\\');
+        if (bslash && (!slash || bslash > slash)) slash = bslash;
+#endif
+        if (slash) snprintf(out, n, "%.*shockey-online.ini", (int)(slash - env + 1), env);
+        else snprintf(out, n, "hockey-online.ini");
+        return;
+    }
+    base = SDL_GetBasePath();
     snprintf(out, n, "%shockey-online.ini", base ? base : "");
     SDL_free(base);
 }

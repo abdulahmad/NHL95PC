@@ -49,7 +49,7 @@ static void ob_gl_osd_set(const char *l1, const char *l2, const char *l3) { (voi
 static uint32_t argb[1280 * 1024];
 
 /* ---- the settings: how often the window is drawn, vsync, the numbers on the picture, and how the picture is scaled ----
- * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program and changed from the window's menu or the keys 1-6. */
+ * They are kept in hockey-win32.ini (hockey-linux.ini) next to the program, or $NHL95_INI (PortMaster: conf/). Changed from the window's menu or the keys 1-6. */
 static int present_hz = 60, vsync_on = 0, osd_on, vrr_on = 1;      /* by default: draw each new image, vsync off */
 static int video_ini_missing, overbar_busy;
 static void overbar_capture_host(void);
@@ -300,7 +300,10 @@ static void look(int w, int *pre, float *scan, int *period, int *style)
 
 static void ini_path(char *out, size_t n)
 {
-    char *base = SDL_GetBasePath();
+    const char *env = getenv("NHL95_INI");
+    char *base;
+    if (env && env[0]) { snprintf(out, n, "%s", env); return; }
+    base = SDL_GetBasePath();
     snprintf(out, n, "%s%s", base ? base : "", INI_NAME);
     SDL_free(base);
 }
