@@ -5,6 +5,7 @@
 #include "lines.h"
 #include "goalie.h"
 #include "skill.h"
+#include "lineup.h"
 #include <string.h>
 #include <SDL.h>
 
@@ -268,4 +269,5 @@ void install_overrides(void)
     lines_install();        /* the Game page's Auto line changes (port/lines.c): 96 PC Auto */
     goalie_install();       /* the Game page's Manual goalie (port/goalie.c): 96 PC pad, 94G move/save */
     skill_install();        /* the Game page's Skill level (port/skill.c): 96 PC GAME SETUP LEVEL */
+    lineup_install();       /* Tonight's Lineup KEY.DB / GIPK / findmemblock (port/lineup.c) */
 }
