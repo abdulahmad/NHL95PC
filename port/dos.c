@@ -1,6 +1,7 @@
 /* DOS, BIOS and DPMI services (software interrupts). The game runs as a flat 32-bit program like it did under DOS/4GW. */
 #include "host.h"
 #include "audio.h"
+#include "season.h"
 #include <ctype.h>
 #include <dirent.h>
 #include <errno.h>
@@ -102,6 +103,9 @@ static int host_path(const char *dos, char *out, size_t n)
 {
     static const char *cd;
     struct stat st;
+    int mapped = port_season_map_dos(dos, out, (int)n);
+    if (mapped == 1) return 0;
+    if (mapped == -1) { out[0] = 0; return 0; }
     resolve_in(root(), dos, out, n);
     if (!cd) { cd = getenv("NHL95_CD"); if (!cd) cd = ""; }
     if (*cd && stat(out, &st)) {
@@ -361,6 +365,11 @@ static int int21(ctx_t *c)
     }
     case 0x30: SETAX(c, 0x0005); R(c, EBX) = 0; R(c, ECX) = 0; return 1;      /* DOS 5.0 */
     case 0x36: {                                                /* free disk space: 4 GB of 32 KB clusters */
+        unsigned tc, fc, spc, bps;
+        int letter = (R(c, EDX) & 0xFF) ? 'A' + (int)(R(c, EDX) & 0xFF) - 1 : 'A';
+        if (port_season_diskfree(letter, &tc, &fc, &spc, &bps) == 0) {
+            SETAX(c, spc); R(c, EBX) = fc; R(c, ECX) = bps; R(c, EDX) = tc; return 1;
+        }
         SETAX(c, 64); R(c, EBX) = 60000; R(c, ECX) = 512; R(c, EDX) = 65000; return 1;
     }
     case 0x39: host_path((char *)R(c, EDX), path, sizeof path); if (MKDIR(path)) dos_error(c, errno); else SET_CF(c, 0); return 1;

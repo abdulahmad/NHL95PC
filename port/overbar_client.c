@@ -7,6 +7,7 @@
  */
 #include "overbar_client.h"
 #include "feel.h"
+#include "season.h"
 
 #include <string.h>
 
@@ -23,10 +24,12 @@ void overbar_client_init(ob_profile profile, void (*apply)(ob_host *h))
         feel_register(&host, path);     /* the Game page; before the menu bar is built */
     }
     netplay_online_setup(&host);        /* the Online page (netplay.c); before the menu bar, which greys it out otherwise */
+    port_season_setup(&host);           /* Season: the game's league folder, after Online so the player's name is in */
 }
 
 void overbar_client_free(void)
 {
+    port_season_free();
     ob_host_free(&host);
 }
 

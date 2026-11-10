@@ -32,6 +32,7 @@
 #include "snap.h"
 #include "overbar_client.h"
 #include "feel.h"
+#include "season.h"
 #include <SDL.h>
 #include <time.h>
 
@@ -656,6 +657,7 @@ static void end_net(const char *why)
     if (nh_net) {
         if (ob_net_state(nh_net) == OB_NET_ENDED && ob_net_why(nh_net)[0]) snprintf(nh_why, sizeof nh_why, "%s", ob_net_why(nh_net));
         else if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
+        port_season_unbind_net();
         ob_net_free(nh_net);
         nh_net = NULL;
     } else if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
@@ -705,6 +707,7 @@ void nh_playgame_enter(int32_t *handle)
     g.states = nh_rb ? &rb_states : NULL;
     SDL_LockMutex(nh_lock);
     nh_net = ob_net_new(&nh_cfg, &g, err, sizeof err);
+    if (nh_net) port_season_bind_net(nh_net);
     SDL_UnlockMutex(nh_lock);
     if (!nh_net) { snprintf(nh_why, sizeof nh_why, "%s", err); return; }
     if (getenv("NHL95_NETSIM")) {
@@ -981,6 +984,7 @@ void netplay_main_poll(void)
         if (SDL_TryLockMutex(nh_lock) == 0) {
             since = 0;
             if (nh_net) ob_net_poll(nh_net);
+            port_season_poll();
             SDL_UnlockMutex(nh_lock);
         } else {
             int64_t now = plat_now_ns();
