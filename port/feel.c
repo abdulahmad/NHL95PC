@@ -21,6 +21,7 @@
  * Only skaters get 94G's numbers: goalies and the referee (object 10h) keep 95 PC's. Fatigue stays 95 PC's.
  */
 #include "feel.h"
+#include "skill.h"
 
 #include <stdint.h>
 #include <stdio.h>
@@ -200,15 +201,16 @@ static void playeracc_body(uint8_t *p, int dir)
         y = dirtab_y[i];
         if (P_W(p, P_WALLSIN) != 0 && (P_W(p, P_WALLSIN) ^ (int16_t)x) < 0) x = 0;
         if (P_W(p, P_WALLCOS) != 0 && (P_W(p, P_WALLCOS) ^ (int16_t)y) >= 0) y = 0;
-        d2 = (64 - ((P_B(p, P_WEIGHT) * 8) >> 2) + r94(legstr, 3)) >> 1;
+        d2 = skill_scale_now((64 - ((P_B(p, P_WEIGHT) * 8) >> 2) + r94(legstr, 3)) >> 1);
         x = (x * d2 >> 5) * k / 256;
         y = (y * d2 >> 5) * k / 256;
         W(regd2) = (int16_t)d2;
         regd0 = x;
         regd1 = y;
     } else {
-        x = dirtab[i] * (legstr + 0x30) / 64;
-        y = dirtab_y[i] * (legstr + 0x30) / 64;
+        int ls = skill_scale_now(legstr + 0x30);    /* 96 PC sub_4C860: scale (legstr+30h) before dirtab/64 */
+        x = dirtab[i] * ls / 64;
+        y = dirtab_y[i] * ls / 64;
         if (P_W(p, P_WALLSIN) != 0 && (P_W(p, P_WALLSIN) ^ (int16_t)x) < 0) x = 0;
         if (P_W(p, P_WALLCOS) != 0 && (P_W(p, P_WALLCOS) ^ (int16_t)y) >= 0) y = 0;
         W(regd2) = (int16_t)(0x20 - (P_B(p, P_WEIGHT) >> 3) + legstr);
@@ -230,6 +232,7 @@ static void playeracc_body(uint8_t *p, int dir)
         regd2 = (int32_t)((uint32_t)(P_B(p, P_LEGSPD) * *tmpde_of(p)) >> 12);
         cap = (uint32_t)MaxSpeed[W(regd2)];
     }
+    cap = (uint32_t)skill_scale_now((int)cap);                   /* 96 PC: scale MaxSpeed cap after the lookup */
     regd2 = (int32_t)cap;
     if (P_B(p, P_PFLAGS2) & 0x40) regd2 = (int32_t)cap >> 3;      /* injured: 1/8 */
     if (!((uint32_t)regd3 > (uint32_t)regd2)) {
@@ -352,7 +355,7 @@ static const char *const src_names[] = { "95 PC", "94 Genesis", "94 Genesis, sca
 static const char *const two_names[] = { "95 PC", "94 Genesis" };
 static const char *const onoff_names[] = { "Off", "On" };
 static const char *const fightbox_names[] = { "Moves to the top right", "Hides" };
-static const char *const skill_names[] = { "Pro", "All-Star", "Rookie" };
+static const char *const skill_names[] = { "Rookie", "Pro", "All-Star" };
 
 static const ob_game_opt opts[O_COUNT] = {
     { "feel", "Feel", preset_names, 4, PRESET_ORIGINAL, 1, 0 },
@@ -497,7 +500,7 @@ int feel_manual_goalie(void)
 
 int feel_skill(void)
 {
-    return g_host ? ob_game_get(g_host, O_SKILL) : 1;    /* 96G SRAM default: all-star */
+    return g_host ? ob_game_get(g_host, O_SKILL) : 1;    /* 96 PC LEVEL default: Pro */
 }
 
 void feel_fight_next_done(void)
@@ -528,6 +531,6 @@ void feel_write_ini(FILE *f)
                "; or Smooth (60); each feature: 95 PC, 94 Genesis (as many rink units a second), or 94 Genesis scaled to rink (95 PC's rink is shorter)\n"
                "; auto_lines: 96 PC Auto line changes (CompLine at faceoff for a human team, chk4lc on the fly)\n"
                "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
-               "; skill_level: 96 Genesis OptSkill (pro / all-star / rookie). 96 PC has no skill row; this is the Genesis option\n");
+               "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n");
     ob_game_write_ini(g_host, f);
 }

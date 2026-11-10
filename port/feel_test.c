@@ -24,6 +24,7 @@ void patch_jmp(void *from, void *to) { (void)from; (void)to; }
 void patch_bytes(void *at, const void *bytes, size_t n) { memcpy(at, bytes, n); }
 void settings_save_all(void) {}
 int ob_host_save_ini(const ob_host *h) { (void)h; return 0; }
+int skill_scale_now(int v) { return v; }    /* Pro identity; feel_test is 95 PC playeracc vs the asm */
 
 /* the game's routines: eax = player, edx = direction (Watcom); they keep every register but eax */
 static void call_game(void *fn, void *p, int dir)

@@ -267,5 +267,5 @@ void install_overrides(void)
     fight_install();        /* NHLPA 93's fights (port/fight/hooks.c) */
     lines_install();        /* the Game page's Auto line changes (port/lines.c): 96 PC Auto */
     goalie_install();       /* the Game page's Manual goalie (port/goalie.c): 96 PC pad, 94G move/save */
-    skill_install();        /* the Game page's Skill level (port/skill.c): 96 Genesis OptSkill */
+    skill_install();        /* the Game page's Skill level (port/skill.c): 96 PC GAME SETUP LEVEL */
 }
