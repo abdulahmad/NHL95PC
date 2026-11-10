@@ -5,6 +5,12 @@
 #include <pdhmsg.h>
 #include <SDL.h>
 
+#ifdef NHL95_BUILD
+#define NHL95_BUILD_ID NHL95_BUILD
+#else
+#define NHL95_BUILD_ID "unknown"
+#endif
+
 static HANDLE game_handle;
 static volatile DWORD resume_eip;     /* where the exception handler last let the game continue */
 
@@ -13,6 +19,35 @@ static volatile DWORD resume_eip;     /* where the exception handler last let th
 __attribute__((naked)) static void load_es_stub(void)
 {
     __asm__ volatile("pop %es\n\tret");
+}
+
+/* crash.log next to the exe: the report above plus the game thread's stack, appended, so a crash is not lost when the console closes.
+ * A word of the stack inside the game's code is also given as its retail address (G:xxxxx, as in the asm sources' comments).
+ * Plain Win32 only, like crash_filter. */
+static void crash_log(const char *head, DWORD headlen, const CONTEXT *c)
+{
+    char path[MAX_PATH + 16], line[160];
+    DWORD n, i, k;
+    HANDLE f;
+    const uint32_t *sp = (const uint32_t *)c->Esp;
+    k = GetModuleFileNameA(0, path, MAX_PATH);
+    while (k && path[k - 1] != '\\' && path[k - 1] != '/') k--;
+    lstrcpyA(path + k, "crash.log");
+    f = CreateFileA(path, FILE_APPEND_DATA, FILE_SHARE_READ, 0, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, 0);
+    if (f == INVALID_HANDLE_VALUE) return;
+    n = wsprintfA(line, "---- nhl95pc %s\r\n", NHL95_BUILD_ID);
+    WriteFile(f, line, n, &n, 0);
+    WriteFile(f, head, headlen, &n, 0);
+    if (IN_GAME_CODE(c->Eip)) {
+        n = wsprintfA(line, "eip is game code G:%05lx\r\n", (unsigned long)(c->Eip - (DWORD)sub_10000 + 0x10000));
+        WriteFile(f, line, n, &n, 0);
+    }
+    for (i = 0; i < 96 && !IsBadReadPtr(sp + i, 4); i++) {
+        if (IN_GAME_CODE(sp[i])) n = wsprintfA(line, "esp+%03lx %08lx G:%05lx\r\n", i * 4, (unsigned long)sp[i], (unsigned long)(sp[i] - (DWORD)sub_10000 + 0x10000));
+        else n = wsprintfA(line, "esp+%03lx %08lx\r\n", i * 4, (unsigned long)sp[i]);
+        WriteFile(f, line, n, &n, 0);
+    }
+    CloseHandle(f);
 }
 
 static LONG CALLBACK veh(EXCEPTION_POINTERS *ep)
@@ -49,9 +84,15 @@ static LONG CALLBACK veh(EXCEPTION_POINTERS *ep)
     }
     if (code == EXCEPTION_ACCESS_VIOLATION && ep->ExceptionRecord->ExceptionInformation[1] < 0x10000 && emulate_low_memory(c, ip))
         return EXCEPTION_CONTINUE_EXECUTION;
-    fprintf(stderr, "UNHANDLED exception %08lx eip=%08x bytes=%02x %02x %02x %02x eax=%08x ebx=%08x ecx=%08x edx=%08x esp=%08x cs=%x ds=%x es=%x fs=%x\n",
-            code, (unsigned)c->Eip, ip[0], ip[1], ip[2], ip[3], (unsigned)c->Eax, (unsigned)c->Ebx, (unsigned)c->Ecx, (unsigned)c->Edx, (unsigned)c->Esp,
-            (unsigned)c->SegCs, (unsigned)c->SegDs, (unsigned)c->SegEs, (unsigned)c->SegFs);
+    {
+        char line[400];
+        DWORD n = wsprintfA(line, "UNHANDLED exception %08lx eip=%08lx bytes=%02x %02x %02x %02x eax=%08lx ebx=%08lx ecx=%08lx edx=%08lx esi=%08lx "
+                            "edi=%08lx ebp=%08lx esp=%08lx cs=%lx ds=%lx es=%lx fs=%lx\r\n",
+                            code, c->Eip, ip[0], ip[1], ip[2], ip[3], c->Eax, c->Ebx, c->Ecx, c->Edx, c->Esi, c->Edi, c->Ebp, c->Esp,
+                            c->SegCs, c->SegDs, c->SegEs, c->SegFs);
+        fputs(line, stderr);
+        crash_log(line, n, c);
+    }
     host_exit(1);
     return EXCEPTION_CONTINUE_SEARCH;
 }
@@ -72,6 +113,7 @@ static LONG WINAPI crash_filter(EXCEPTION_POINTERS *ep)
                   IN_GAME_CODE(c->Eip) ? "game code" : "not game code", c->Eax, c->Ebx, c->Ecx, c->Edx, c->Esi, c->Edi, c->Ebp, c->Esp,
                   c->SegCs, c->SegDs, c->SegEs, c->SegFs, c->SegGs, vif, (int)isr_active);
     WriteFile(GetStdHandle(STD_ERROR_HANDLE), line, n, &n, 0);
+    crash_log(line, n, c);
     TerminateProcess(GetCurrentProcess(), 1);           /* not host_exit: it uses the C library */
     return EXCEPTION_EXECUTE_HANDLER;
 }
