@@ -14,10 +14,9 @@
  *   - RunGameFrames runs at most to the end of the record it is on, and says (in edx) how many frames it really ran, so the
  *     code that runs between calls (the pre-game intro's timer and its "press a button to skip" test) sees the same game.
  *
- * The session begins at the start of a new exhibition game (PlayGame), on both machines: the Online page's Host / Connect only
- * arms it, each player starts an exhibition game from the menus as usual, and PlayGame waits there until the other machine is
- * there too. The host's teams, game options, controller sides and both random seeds then go to the guest (the settings blob),
- * and the game goes on from there on both. It ends with that game (PlayGame returns). Everything else stays local.
+ * Host / Connect opens a room at once (port_season_bind_net), so overlay Pick / Sync have the socket before a
+ * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) begins a match in that
+ * room. A loaded game stays local. The match ends with PlayGame; the room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
  *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
@@ -77,7 +76,7 @@ void *nh_peek_cont, *nh_pop_cont, *nh_flush_cont, *nh_rgf_cont, *nh_pg_cont, *nh
 static SDL_mutex *nh_lock;
 static ob_net *nh_net;
 static int nh_ok;                       /* the hooks are in */
-static volatile int nh_armed;           /* Host / Connect was pressed: the next exhibition game is online */
+static volatile int nh_armed;           /* Host / Connect: the room is up; the next new game is a match */
 static ob_online nh_cfg;
 static char nh_why[128];                /* why the last session ended or did not start */
 static volatile int nh_dead, nh_me;     /* the session has ended mid-game; this machine's pad (0 host, 1 guest) */
@@ -650,9 +649,9 @@ static void apply_settings(const nh_settings *s, uint32_t my_dev)
     feel_session_begin(s->game, strnlen(s->game, sizeof s->game));
 }
 
-static void end_net(const char *why)
+static void close_room(const char *why)
 {
-    if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: session ends: %s\n", nh_net && ob_net_why(nh_net)[0] ? ob_net_why(nh_net) : why ? why : "");
+    if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: room ends: %s\n", nh_net && ob_net_why(nh_net)[0] ? ob_net_why(nh_net) : why ? why : "");
     SDL_LockMutex(nh_lock);
     if (nh_net) {
         if (ob_net_state(nh_net) == OB_NET_ENDED && ob_net_why(nh_net)[0]) snprintf(nh_why, sizeof nh_why, "%s", ob_net_why(nh_net));
@@ -664,14 +663,40 @@ static void end_net(const char *why)
     SDL_UnlockMutex(nh_lock);
 }
 
+static void end_match(const char *why)
+{
+    SDL_LockMutex(nh_lock);
+    if (nh_net && ob_net_state(nh_net) == OB_NET_GO) ob_net_match_end(nh_net);
+    if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
+    SDL_UnlockMutex(nh_lock);
+}
+
+static int room_open(char *err, int err_size)
+{
+    char identity[200];
+    ob_net_game g;
+    if (nh_net) return 0;
+    nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
+    snprintf(identity, sizeof identity, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback1" : "lockstep1", (unsigned)(sounddev & 0xFF), (unsigned)musicon);
+    memset(&g, 0, sizeof g);
+    g.identity = identity;
+    g.pads = 2;
+    g.room = 1;
+    g.states = nh_rb ? &rb_states : NULL;
+    SDL_LockMutex(nh_lock);
+    nh_net = ob_net_new(&nh_cfg, &g, err, err_size);
+    if (nh_net) port_season_bind_net(nh_net);
+    SDL_UnlockMutex(nh_lock);
+    return nh_net ? 0 : -1;
+}
+
 /* PlayGame(&saved game handle): the game thread, before the game is loaded */
 void nh_playgame_enter(int32_t *handle)
 {
-    char err[160], identity[200];
+    char err[160];
     nh_settings mine;
     const nh_settings *theirs;
     size_t size = 0;
-    ob_net_game g;
     uint32_t my_dev = ctl1dev;
     int st;
     if (nh_ok && !nh_armed && !nh_selftest && !st_phase && getenv("NHL95_SNAPTEST") && *handle < 0 && gamemode == 0) {
@@ -686,30 +711,26 @@ void nh_playgame_enter(int32_t *handle)
         nh_sim = 1;
         return;
     }
-    if (!nh_armed || !nh_ok) return;
-    if (*handle >= 0 || gamemode != 0) {
-        snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition game");
-        return;                                     /* (still armed for the next one) */
+    if (!nh_ok) return;
+    if (!nh_armed && !nh_net) return;
+    if (*handle >= 0) {
+        snprintf(nh_why, sizeof nh_why, "online play starts with a new game");
+        return;                                     /* loaded games stay local; the room stays */
     }
-    nh_armed = 0;
+    if (gamemode != 0 && gamemode != 1 && gamemode != 2) {
+        snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition, season, or playoff game");
+        return;
+    }
     if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
         snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
         return;
     }
+    if (!nh_net) {
+        if (room_open(err, (int)sizeof err)) { snprintf(nh_why, sizeof nh_why, "%s", err); return; }
+        fprintf(stderr, "online: room listening (Windows may prompt for the firewall)\n");
+    }
     nh_rb = getenv("NHL95_LOCKSTEP") == NULL;
-    snprintf(identity, sizeof identity, "nhl95pc %s %s sound %02x/%u", NHL95_BUILD, nh_rb ? "rollback1" : "lockstep1", (unsigned)(sounddev & 0xFF), (unsigned)musicon);
     make_settings(&mine);
-    memset(&g, 0, sizeof g);
-    g.identity = identity;
-    g.pads = 2;
-    g.settings = &mine;
-    g.settings_size = sizeof mine;
-    g.states = nh_rb ? &rb_states : NULL;
-    SDL_LockMutex(nh_lock);
-    nh_net = ob_net_new(&nh_cfg, &g, err, sizeof err);
-    if (nh_net) port_season_bind_net(nh_net);
-    SDL_UnlockMutex(nh_lock);
-    if (!nh_net) { snprintf(nh_why, sizeof nh_why, "%s", err); return; }
     if (getenv("NHL95_NETSIM")) {
         int d = 0, j = 0, l = 0;
         sscanf(getenv("NHL95_NETSIM"), "%d,%d,%d", &d, &j, &l);
@@ -718,28 +739,52 @@ void nh_playgame_enter(int32_t *handle)
     }
     nh_why[0] = 0;
     nh_want_page = 1;                               /* the Online page shows what it waits for */
-    for (;;) {                                      /* here, not in game code: no interrupt comes in meanwhile */
+    for (;;) {
         SDL_LockMutex(nh_lock);
         st = nh_net ? ob_net_poll(nh_net) : OB_NET_ENDED;
         SDL_UnlockMutex(nh_lock);
         if (st != OB_NET_CONNECTING) break;
         plat_sleep_ms(2);
     }
+    if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
+        ob_net_match m;
+        memset(&m, 0, sizeof m);
+        {
+            int p;
+            for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
+        }
+        m.owner[0] = 0;
+        m.owner[1] = 1;
+        m.delay = -1;
+        m.settings = &mine;
+        m.settings_size = sizeof mine;
+        if (ob_net_match_begin(nh_net, &m, err, (int)sizeof err)) {
+            nh_close_page = 1;
+            snprintf(nh_why, sizeof nh_why, "%s", err);
+            return;
+        }
+    }
+    for (;;) {
+        SDL_LockMutex(nh_lock);
+        st = nh_net ? ob_net_poll(nh_net) : OB_NET_ENDED;
+        SDL_UnlockMutex(nh_lock);
+        if (st == OB_NET_GO || st == OB_NET_ENDED) break;
+        plat_sleep_ms(2);
+    }
     nh_close_page = 1;
-    if (st != OB_NET_GO) { end_net("the session did not start"); return; }
+    if (st != OB_NET_GO) { end_match("the session did not start"); return; }
     SDL_LockMutex(nh_lock);
     theirs = (const nh_settings *)ob_net_settings(nh_net, &size);
     nh_me = (ob_net_my_pads(nh_net) & 1) ? 0 : 1;
     SDL_UnlockMutex(nh_lock);
     if (!theirs || size != sizeof *theirs || theirs->magic != NH_MAGIC || theirs->version != NH_VERSION) {
-        SDL_LockMutex(nh_lock); ob_net_quit(nh_net); SDL_UnlockMutex(nh_lock);
-        end_net("the host's settings are not this version's");
+        end_match("the host's settings are not this version's");
         return;
     }
     save_local();
     apply_settings(theirs, my_dev);
-    /* as MenuNewExhibition did before PlayGame, now with these teams: the game summary, and the teams' rosters from the
-     * league's database (LoadGameTeams) */
+    /* host's teams and options: exhibition did this in MenuNewExhibition; a league game already ran its
+     * pre-game path, then PlayGame, and this applies the host's blob so both copies match */
     game_call(InitGameSummary, 0, 0);
     nh_head = nh_tail = nh_consumed = 0;
     nh_cadence = 0; nh_pending = 0; nh_rgf_carry = 0; nh_loop_mark = 0;
@@ -759,8 +804,8 @@ void nh_playgame_exit(void)
     nh_sim = 0;
     nh_dead = 0; nh_finish = 0;
     if (nh_rb) { int k; for (k = 0; k < RB_SLOTS; k++) snap_free(&rb_snap[k]); memset(rb_gen, 0, sizeof rb_gen); }
-    nh_rb = 0; nh_quiet = 0;
-    end_net("the game is over");
+    nh_quiet = 0;
+    end_match("the game is over");
     restore_local();
 }
 
@@ -905,8 +950,8 @@ static void set_call(uint32_t site, void *to)
 }
 
 /* after install_overrides, before the game thread starts */
-/* NHL95_ONLINE=host|join (a test aid): arms a session on 127.0.0.1 as the Online page's Host / Join would, with NHL95_NETSIM="delay,jitter,loss%"
- * making the link bad. Both machines then start an exhibition game (NHL95_AUTOSKIP does) and the log (stderr) says how it went. */
+/* NHL95_ONLINE=host|join (a test aid): opens a loopback room as Host / Join would (UDP, Windows may prompt).
+ * NHL95_NETSIM="delay,jitter,loss%" makes the link bad. Do not set NHL95_AUTOSKIP for a season (it starts an exhibition). */
 static int watchdog(void *arg)
 {
     (void)arg;
@@ -932,7 +977,12 @@ static void online_env(void)
     nh_cfg.all = 2;
     nh_armed = 1;
     SDL_CreateThread(watchdog, "nh-watch", NULL);
-    fprintf(stderr, "online: armed as %s on port %d\n", e, nh_cfg.port);
+    {
+        char err[160];
+        err[0] = 0;
+        if (room_open(err, (int)sizeof err)) fprintf(stderr, "online: room failed: %s\n", err);
+        else fprintf(stderr, "online: armed as %s on port %d (Windows may prompt for the firewall)\n", e, nh_cfg.port);
+    }
 }
 
 void netplay_install(void)
@@ -1059,16 +1109,15 @@ static int online_start(const ob_online *o, char *msg, int msg_size)
     ini_save(o);
     nh_why[0] = 0;
     nh_armed = 1;
+    if (room_open(msg, msg_size)) { nh_armed = 0; return -1; }
+    fprintf(stderr, "online: room listening (Windows may prompt for the firewall)\n");
     return 0;
 }
 
 static void online_leave(void)
 {
     nh_armed = 0;
-    SDL_LockMutex(nh_lock);
-    if (nh_net) ob_net_quit(nh_net);        /* the game thread sees it end: waiting in PlayGame, or at the next record */
-    SDL_UnlockMutex(nh_lock);
-    snprintf(nh_why, sizeof nh_why, "you left");
+    close_room("you left");
 }
 
 static int online_status(char *line, int size)
@@ -1083,7 +1132,7 @@ static int online_status(char *line, int size)
     SDL_UnlockMutex(nh_lock);
     if (!nh_net) {
         if (nh_armed) {
-            snprintf(line, (size_t)size, "%s%sboth players: start an exhibition game", nh_why[0] ? nh_why : "", nh_why[0] ? "; " : "");
+            snprintf(line, (size_t)size, "%s%sboth players: start the same game", nh_why[0] ? nh_why : "", nh_why[0] ? "; " : "");
             on = 1;
         } else snprintf(line, (size_t)size, "%s", nh_why);
     }
