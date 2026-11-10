@@ -46,6 +46,9 @@ extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
 extern short HomeTeam, VisTeam, crowdlevel, CwdExciteLvl;
 extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
+extern char *penaltynames[], *off_CD354[];      /* by event type (penalty - 9): the name shown, the announcer's file */
+extern char BuildEventLines[], GameSummaryScreen[], PostPenaltyEvent[];
+extern short word_CC0B0[];                      /* the box-time count of a call (chkprogress) */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
 #define P_B(p, o) (*(uint8_t *)((p) + (o)))
@@ -68,6 +71,18 @@ extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour rema
 #define PLAYER(i) (SortCords + (i) * 0x80)
 
 #define PEN_ROUGHING 9                  /* Roughing: its minutes are made 5 while a fight's is waiting (93's Fighting) */
+#define PEN_INST 0xD                    /* the other Roughing (2 minutes): 93's Instigator */
+/* event types (penalty - 9) past 95 PC's 18 (penaltynames / off_CD354 are copied to longer tables): the fight's
+ * penalties are called as Roughing and posted under these */
+#define EV_ROUGHING 0
+#define EV_ROUGHING2 4
+#define EV_FIGHTING 18
+#define EV_FIGHTING_W 19                /* the winner: 93's "Fighting *" */
+#define EV_INSTIGATOR 20
+#define NEV 21
+#define P_SPA 0x38
+#define P_TMPTR 0x6C
+#define T_TMPDST 0x7E
 #define ASS_NOTHING 0                   /* asstab 0: rtss */
 #define ASS_PUCKNOTHING 26
 #define ASS_PENBOX 0xC
@@ -89,15 +104,19 @@ static int ok_check, ok_frame, no_draw;
  * replays (which keep the frame numbers) show it too; his own frame is put back before the next updateplayers. The colours are found once per fight: the 95 PC sprite index whose remapped palette
  * entry is nearest to each 93 colour (team colours among 95 PC's own team-colour indexes, 90h-BFh). */
 #define NFR 1024
-static uint8_t *spr[2][NFR];            /* built frames per fighter, 93 frame number */
-static uint8_t lut[2][64];
+static uint8_t *spr[4][NFR];            /* built frames per slot (fighters 0 / 1, check injuries 2 home / 3 away), 93 frame */
+static uint8_t lut[4][64];
 #define FR_93 0x7000
 static int saved_frame[2], drawing, replay_frame[2], post[2], post_timer;
-void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont, *fight_dto_cont, *fight_rg_cont;
+void *fight_dfs_cont, *fight_cp_cont, *fight_di_cont, *fight_ck_cont, *fight_ro_cont, *fight_dto_cont, *fight_rg_cont, *fight_pp_cont;
 /* 93's glovecords: the dropped gloves on the ice. 93's sprite is one pile with both sticks and glove pairs; it is drawn
  * as two halves (PILE_L, PILE_R: a stick and its gloves each) so the referee can pick them up one at a time. */
 static int gloves, glove_x, glove_y;
 static int pile_on[2], pile_k[2], pile_side[2];  /* per half: still on the ice, whose colours (fighter), home/visitors */
+static int whistled;                            /* play was stopped for this fight's penalties (Stop4Pen) */
+static struct { int team, pnum, from, to; } evmap[4];  /* a penalty to post under another event type */
+static int nevmap, ev_ok;
+static uint8_t *coin[2];                        /* fighters whose major does not take a man off (93's coincidental) */
 static int cue = -1, cue_seen, cue_time;        /* the crowd's music cue after a fight, waiting for the penalties */
 static int ref_time;                            /* the referee: frames spent collecting */
 #define PILE_L 1000
@@ -106,7 +125,7 @@ static int ref_time;                            /* the referee: frames spent col
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
 static uint8_t *build(int k, int n);
-static int watcher[12], watch_t[12], watch_x[12], watch_y[12], nwatch, pen_wait, hold_lines, pen_now;
+static int watcher[12], watch_t[12], watch_x[12], watch_y[12], nwatch, pen_wait, hold_lines;
 static void free_sprites(void);
 static void show_names(void);
 static void make_lut(int k);
@@ -115,6 +134,7 @@ static int8_t fpal_set[NTEAM95][2];             /* a section for this jersey (te
 static int16_t fpal[NTEAM95 + 1][2][48];        /* [NTEAM95]: lines before any section, for every jersey */
 static int team93(int t95);
 static void undraw(void);
+static void start_penalties(int inst);
 static void give_control(uint8_t *p);
 
 /* ---- the game's routines (Watcom: eax, edx) ---- */
@@ -226,6 +246,7 @@ void fight_check(uint8_t *a, uint8_t *b)
     who[1] = b;
     fight_begin(&ft);
     fight_on_now = 1;
+    start_penalties(inst);
     crowdlevel = (short)(crowdlevel + ft.crowd);        /* the crowd gets up for a fight */
     CwdExciteLvl = (short)(CwdExciteLvl + ft.excite);
     if (have_rom) {
@@ -292,29 +313,103 @@ static void release(int hold)
     fight_on_now = 0;
 }
 
-static void end_fight(void)
+static void map_event(const uint8_t *p, int from, int to)
 {
-    int k;
-    release(1);
-    penmintab[PEN_ROUGHING] = 5;        /* 93's Fighting: 5 minutes, put back once both are called */
+    int i, team = (P_B(p, P_PFLAGS) & 0x40) != 0, pn = P_B(p, P_PNUM) & 0x7F;
+    if (!ev_ok) return;
+    for (i = 0; i < nevmap; i++)
+        if (evmap[i].team == team && evmap[i].pnum == pn && evmap[i].from == from) { evmap[i].to = to; return; }
+    if (nevmap < 4) { evmap[nevmap].team = team; evmap[nevmap].pnum = pn; evmap[nevmap].from = from; evmap[nevmap].to = to; nevmap++; }
+}
+
+/* PostPenaltyEvent (eax team, edx player, ebx type): a fight's penalty is posted under its own name */
+int fight_pen_type(int team, int player, int type)
+{
+    int i;
+    for (i = 0; i < nevmap; i++)
+        if (evmap[i].team == team && evmap[i].pnum == (player & 0x7F) && evmap[i].from == type) {
+            type = evmap[i].to;
+            evmap[i] = evmap[--nevmap];
+            break;
+        }
+    return type;
+}
+
+/* 93's checkfight .sf and SetInst: both fighters get Fighting (5 minutes) when the fight starts, and 1 time in 4 with
+ * penalties on (fight_wants' instigator) the first free skater of the instigator's team, not the fighter himself,
+ * gets Instigator (2 minutes). 93 made a fighter the puck owner first, so the call is never delayed: the whistle
+ * blows now (Stop4Pen) and the stoppage waits for the fight (fight_frame holds its count-down). */
+static void start_penalties(int inst)
+{
+    int k, i;
+    nevmap = 0;
+    penmintab[PEN_ROUGHING] = 5;
     pen_wait = 1;
-    for (k = 0; k < 2; k++) add_penalty2(who[k], PEN_ROUGHING);
-    post[0] = post[1] = 1;
-    pen_now = 1;
-    post_timer = 1200;            /* 10 s (counted once per fighter a frame) */
-    /* the whistle now (93 stopped play for the fight's penalties at once), not when the puck is next touched:
-     * the first of the fight's penalties in PenBuf stops play (Stop4Pen, as checkfornewpen would) */
+    for (k = 0; k < 2; k++) {
+        add_penalty2(who[k], PEN_ROUGHING);
+        map_event(who[k], EV_ROUGHING, EV_FIGHTING);
+        coin[k] = who[k];
+    }
+    if (inst == 0 || inst == 1) {
+        uint8_t *f = who[inst];
+        int base = P_W(f, P_SCNUM) < 6 ? 0 : 6;
+        for (i = base; i < base + 6; i++) {
+            uint8_t *q = PLAYER(i);
+            if (q == f || P_W(q, P_POSITION) <= 0 || (P_B(q, P_PFLAGS2) & (0x10 | 4))) continue;
+            add_penalty2(q, PEN_INST);
+            map_event(q, EV_ROUGHING2, EV_INSTIGATOR);
+            break;
+        }
+    }
+    whistled = 0;
     if (!(gmode & 1)) {
-        int i;
         for (i = 0; i < 0x20 && PenBuf[i * 2]; i++) {
             int pl = PenBuf_pl[i * 2] & 0x7F;
             if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl) == who[0] || PLAYER(pl) == who[1])) {
                 int a = i;
                 refsignal = 0x28;
                 __asm__ volatile("call " SYM("Stop4Pen") : "+a"(a) : : "ecx", "edx", "memory", "cc");
+                whistled = 1;
                 break;
             }
         }
+    }
+}
+
+/* the fight is over (93: its penalty count-down ran out, a knockout cut it to 60 / 180 frames): the penalty
+ * sequence starts at once, no second whistle */
+static void end_fight(void)
+{
+    release(1);
+    if (ft.winner >= 0) map_event(who[ft.winner], EV_ROUGHING, EV_FIGHTING_W);
+    post[0] = post[1] = 1;
+    post_timer = 1200;            /* 10 s (counted once per fighter a frame) */
+    if (whistled && Pencntdwn > 0) Pencntdwn = 0;
+    whistled = 0;
+}
+
+/* each frame of a fight: the stoppage's count-downs are held until it is over */
+static void hold_stoppage(void)
+{
+    if (!whistled) return;
+    if (Pencntdwn < 2) Pencntdwn = 2;
+    if (word_CC0B0[0] >= 0 && word_CC0B0[0] < 2) word_CC0B0[0] = 2;
+}
+
+/* a fighter in the box for his major does not leave his team a man short (tmpdst bit 12, as 93's coincidental
+ * majors): set once InProgress has put him there */
+static void mark_coincidental(void)
+{
+    int k;
+    for (k = 0; k < 2; k++) {
+        uint8_t *p = coin[k], *t;
+        int16_t *dst;
+        if (!p) continue;
+        t = *(uint8_t **)(p + P_TMPTR);
+        if (!t) { coin[k] = NULL; continue; }
+        dst = (int16_t *)(t + T_TMPDST) + (P_B(p, P_PNUM) & 0x7F);
+        if (*dst > 0) { *dst = (int16_t)(*dst | 0x1000); coin[k] = NULL; }
+        else if (gmode2 & 1) coin[k] = NULL;    /* the faceoff came and he is not in the box */
     }
 }
 
@@ -328,24 +423,6 @@ static void check_pen_wait(void)
         if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl) == who[0] || PLAYER(pl) == who[1])) left++;
     }
     if (!left) { penmintab[PEN_ROUGHING] = 2; pen_wait = 0; }
-}
-
-/* checkfornewpen gives a called Roughing its pendelaytab wait (0Ah x 32 frames, the camera on the puck): after a
- * fight the penalty sequence (the ref to the box) starts at once instead */
-static void pen_no_wait(void)
-{
-    int i;
-    if (!pen_now || !(gmode & 4)) return;
-    for (i = 0; i < 0x20 && PenBuf[i * 2]; i++) {
-        int pl = PenBuf_pl[i * 2];
-        if (PenBuf[i * 2] == PEN_ROUGHING && (PLAYER(pl & 0x7F) == who[0] || PLAYER(pl & 0x7F) == who[1])) {
-            if (!(pl & 0x80)) return;   /* not counted yet */
-            if (Pencntdwn > 0) Pencntdwn = 0;
-            pen_now = 0;
-            return;
-        }
-    }
-    pen_now = 0;                        /* gone */
 }
 
 /* 93's banner with the two names, in 95 PC's scoreboard box: "#12 Neely / vs. / #7 Probert" */
@@ -410,8 +487,9 @@ void fight_frame(void)
     int k;
     undraw();
     if (gmode2 & 1) gloves = 0;         /* a faceoff clears them (93's puckfaceoff2) */
+    if ((gmode2 & 1) && !ft.on && !post[0] && !post[1]) nevmap = 0;   /* the fight's calls are posted by now */
     check_pen_wait();
-    pen_no_wait();
+    mark_coincidental();
     if (cue >= 0) {                     /* the music starts once the penalty sequence is over, not during it */
         if (PenBuf[0]) cue_seen = 1;
         if ((gmode2 & 1) || introskipped) cue = -1;                          /* the faceoff came first: no cue */
@@ -424,10 +502,11 @@ void fight_frame(void)
     /* the scoreboard box only runs while play is stopped (chkprogress): during the fight it is moved on here */
     if (hold_lines && !(gmode & 1) && ovltimer >= 0 && ovltimer < 0x100) ovltimer++;
     if (!ft.on) return;
-    if (gmode & 1) {                    /* play stopped some other way (a goal, the period): no penalty */
+    if ((gmode & 1) && !whistled) {     /* play stopped some other way (a goal, the period): no penalty */
         release(0);
         return;
     }
+    hold_stoppage();
     for (k = 0; k < 2; k++) {
         fighter *f = &ft.f[k];
         f->x = P_W(who[k], P_XPOS_HI);
@@ -470,11 +549,15 @@ void fight_frame(void)
     }
     if (ft.events & FE_INJURY) {
         /* 93: the loser is hurt (pf2inj, pflags2 bit 6: 95 PC still skates him at 1/8 speed with its stumble, SPA
-         * 8D3h) and setInjuryType takes him out of the lineup */
+         * 8D3h). 93 ran setInjuryType and then wrote his box time over its result (tmpdst $112C): he is out for his
+         * 5 minute major, not for the period or the game. So only its crowd and sound here; the major puts him in
+         * the box. */
         uint8_t *p = who[ft.loser];
-        int a = (int)(uintptr_t)p;
-        P_B(p, P_PFLAGS2) |= 0x40;
-        __asm__ volatile("call " SYM("setInjuryType") : "+a"(a) : : "ecx", "edx", "memory", "cc");
+        int a = 0xA1;
+        P_B(p, P_PFLAGS2) |= 0x40 | 4;
+        if (crowdlevel <= 1000) { crowdlevel = (short)(crowdlevel + 300); if (crowdlevel > 1000) crowdlevel = 1000; }
+        CwdExciteLvl = (short)(CwdExciteLvl + 30);
+        __asm__ volatile("call " SYM("sfx") : "+a"(a) : : "ecx", "edx", "memory", "cc");
     }
     if (ft.events & (FE_CHEER | FE_BOO | FE_INJURY)) {
         int n = ft.events & FE_CHEER ? 1 : ft.events & FE_BOO ? 4 : -1;     /* 93: cheer if the visitors lost, boo if home */
@@ -500,10 +583,12 @@ static int dist(uint32_t a, uint32_t b)
     return dr * dr * 3 + dg * dg * 4 + db * db * 2;
 }
 
-static void make_lut(int k)
+static void make_lut_for(int k, const uint8_t *p);
+static void make_lut(int k) { make_lut_for(k, who[k]); }
+static void make_lut_for(int k, const uint8_t *p)
 {
     uint32_t dac[256], pal[64];
-    int home = P_W(who[k], P_SCNUM) < 6, t95 = home ? HomeTeam : VisTeam, t93;
+    int home = P_W(p, P_SCNUM) < 6, t95 = home ? HomeTeam : VisTeam, t93;
     const uint8_t *remap = home ? byte_DC9D8 : byte_DC8D8;
     int v, sidx;
     if (t95 < 0 || t95 >= NTEAM95) t95 = 0;
@@ -617,6 +702,37 @@ static uint8_t *build(int k, int n)
     return b;
 }
 
+/* 95 PC's check injury (SPA A0Bh) lies on the ice in frames 632-643, 93's (SPAinjury1) in 633-644: the same poses,
+ * 93's with blood. Half the injuries (picked when he goes down) show 93's, in his jersey's colours. */
+#define SPA_INJURY 0xA0B
+static int inj_state[12], inj_saved[12], inj_drawing, inj_lut[2] = { -1, -1 };
+static uint32_t inj_rng = 0x9E3779B9u;
+static void bloody_injuries(void)
+{
+    int i;
+    inj_drawing = 0;
+    if (!have_rom || no_draw || !feel_fights()) return;
+    for (i = 0; i < 12; i++) {
+        uint8_t *p = PLAYER(i);
+        int f = P_W(p, P_FRAME), side, k;
+        if (P_W(p, P_SPA) != SPA_INJURY || (P_B(p, P_PFLAGS2) & 1)) { inj_state[i] = 0; continue; }
+        if (!inj_state[i]) { inj_rng = inj_rng * 1664525u + 1013904223u; inj_state[i] = (inj_rng >> 16 & 1) ? 1 : 2; }
+        if (inj_state[i] != 1 || f < 632 || f > 643) continue;
+        side = P_W(p, P_SCNUM) >= 6;
+        k = 2 + side;
+        if (inj_lut[side] != (side ? VisTeam : HomeTeam)) {      /* the colours once per team */
+            int n;
+            for (n = 0; n < NFR; n++) { free(spr[k][n]); spr[k][n] = NULL; }
+            make_lut_for(k, p);
+            inj_lut[side] = side ? VisTeam : HomeTeam;
+        }
+        if (!spr[k][f + 1] && !(spr[k][f + 1] = build(k, f + 1))) continue;
+        inj_saved[i] = f;
+        P_W(p, P_FRAME) = (int16_t)(FR_93 + k * 0x400 + f + 1);
+        inj_drawing |= 1 << i;
+    }
+}
+
 /* after updateplayers: the fighters show their 93 frame */
 void fight_after(void)
 {
@@ -646,6 +762,7 @@ void fight_after(void)
         else P_B(who[k], P_ATTRIBUTE) &= (uint8_t)~8;
         drawing |= 1 << k;
     }
+    bloody_injuries();
 }
 
 /* before updateplayers: their own frames back, so updateanim carries on as it was */
@@ -655,13 +772,16 @@ static void undraw(void)
     for (k = 0; k < 2; k++)
         if (drawing & 1 << k) P_W(who[k], P_FRAME) = (int16_t)saved_frame[k];
     drawing = 0;
+    for (k = 0; k < 12; k++)
+        if (inj_drawing & 1 << k) P_W(PLAYER(k), P_FRAME) = (int16_t)inj_saved[k];
+    inj_drawing = 0;
 }
 
 /* DrawFrameSprite's frame FR_93 + k x 400h + n: fighter k's 93 frame n. In a replay (sflags bit 7) a punch frame
  * coming up plays the punch, as the live fight did. */
 void *fight_sprite(int code)
 {
-    int k = (code - FR_93) >> 10 & 1, n = code & 0x3FF;
+    int k = (code - FR_93) >> 10 & 3, n = code & 0x3FF;
     if (!have_rom) return NULL;
     if (sflags & 0x80) {
         if (n != replay_frame[k]) {
@@ -684,7 +804,7 @@ void *fight_sprite(int code)
 __attribute__((naked)) static void drawframe_thunk(void)
 {
     __asm__ volatile(
-        "cmpw $0x7000, %ax\n\tjl 1f\n\tcmpw $0x7800, %ax\n\tjge 1f\n\t"
+        "cmpw $0x7000, %ax\n\tjl 1f\n\t"
         "push %esi\n\tpush %edx\n\tpush %ebx\n\tpush %ecx\n\t"
         "movswl %ax, %eax\n\tpush %eax\n\tcall " SYM("fight_sprite") "\n\tadd $4, %esp\n\t"
         "pop %ecx\n\tpop %ebx\n\tpop %edx\n\t"
@@ -719,6 +839,48 @@ void fight_overlays(void)
         __asm__ volatile("push %4\n\tcall " SYM("DrawFrameSprite")
                          : "+a"(code), "+d"(x), "+b"(y) : "c"(0), "r"(side) : "memory", "cc");
     }
+}
+
+/* PostPenaltyEvent (eax team, edx player, ebx event type, ecx minutes, then the stack): the type may change */
+__attribute__((naked)) static void postpen_thunk(void)
+{
+    __asm__ volatile("pushal\n\tpush %ebx\n\tpush %edx\n\tpush %eax\n\tcall " SYM("fight_pen_type") "\n\t"
+                     "add $12, %esp\n\tmov %eax, 16(%esp)\n\tpopal\n\t"
+                     "push $0x2C\n\tjmp *" SYM("fight_pp_cont"));
+}
+
+/* the event names and the announcer's words with the fight's three added: the game's tables are copied to longer
+ * ones and the routines that index them are pointed at the copies (their 4-byte address in the code) */
+static char *pen_names[NEV], *pen_speech[NEV];
+static int retarget(char *fn, size_t n, const void *from, const void *to)
+{
+    size_t i;
+    int hits = 0;
+    uint32_t f = (uint32_t)(uintptr_t)from, t = (uint32_t)(uintptr_t)to;
+    for (i = 0; i + 4 <= n; i++)
+        if (!memcmp(fn + i, &f, 4)) { patch_bytes(fn + i, &t, 4); hits++; i += 3; }
+    return hits;
+}
+
+static void install_pen_names(void)
+{
+    static const uint8_t push2c[5] = { 0x68, 0x2C, 0, 0, 0 };
+    int i;
+    if (memcmp(PostPenaltyEvent, push2c, 5)) return;
+    for (i = 0; i < 18; i++) { pen_names[i] = penaltynames[i]; pen_speech[i] = off_CD354[i]; }
+    pen_names[EV_FIGHTING] = "Fighting";
+    pen_names[EV_FIGHTING_W] = "Fighting *";
+    pen_names[EV_INSTIGATOR] = "Instigator";
+    for (i = 18; i < NEV; i++) pen_speech[i] = off_CD354[EV_ROUGHING];   /* 95 PC has no word for these: "roughing" */
+    if (retarget(BuildEventLines, 0x600, penaltynames, pen_names) < 1) return;
+    if (retarget(PostPenaltyEvent, 0x400, off_CD354, pen_speech) < 1) {
+        retarget(BuildEventLines, 0x600, pen_names, penaltynames);
+        return;
+    }
+    retarget(GameSummaryScreen, 0x2000, penaltynames, pen_names);
+    fight_pp_cont = PostPenaltyEvent + 5;
+    patch_jmp(PostPenaltyEvent, (void *)postpen_thunk);
+    ev_ok = 1;
 }
 
 /* where the referee stands to pick up half h: its middle, from the glove frame's origin (rink y is up) */
@@ -898,6 +1060,7 @@ void fight_install(void)
             fight_ro_cont = DrawRinkOverlays + 5;
             patch_jmp(DrawRinkOverlays, (void *)rinkoverlays_thunk);
         }
+        if (ok_check) install_pen_names();
         if (ok_check && have_rom && !no_draw && !memcmp(assrefgoalpa, push28, 5)) {
             fight_rg_cont = assrefgoalpa + 5;
             patch_jmp(assrefgoalpa, (void *)refgoalpa_thunk);
