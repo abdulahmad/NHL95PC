@@ -16,6 +16,7 @@
 #include "overbar/room.h"
 #include "overbar/season.h"
 #include "overbar/vdrive.h"
+#include "season_floppy.h"
 #include "sides.h"
 
 #include <stdint.h>
@@ -63,14 +64,9 @@ static ob_room g_room;
 static ob_net *g_net;
 static ob_host *g_host;
 static char g_work[260], g_root[260], g_play_dir[260];
-static int g_ready, g_play_on;
+static int g_ready, g_play_on, g_installed_team = -1;
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
-
-/* the seven league databases ExportTeamToFloppy / CopyHumanTeamDBs copy (not NHL names) */
-static const char *const k_db[7] = {
-    "KEY", "CAREER", "ATT", "CARTEAMS", "TEAMS", "SEASON", "SCHEDULE"
-};
 
 static const char *game_root(void)
 {
@@ -78,53 +74,10 @@ static const char *game_root(void)
     return r && r[0] ? r : ".";
 }
 
-static int copy_file(const char *from, const char *to)
-{
-    FILE *in, *out;
-    char buf[4096];
-    size_t n;
-    in = fopen(from, "rb");
-    if (!in) return -1;
-    out = fopen(to, "wb");
-    if (!out) { fclose(in); return -1; }
-    while ((n = fread(buf, 1, sizeof buf, in)) > 0) {
-        if (fwrite(buf, 1, n, out) != n) { fclose(in); fclose(out); return -1; }
-    }
-    fclose(in);
-    fclose(out);
-    return 0;
-}
-
 static int exists_path(const char *p)
 {
     struct stat st;
     return p && p[0] && stat(p, &st) == 0;
-}
-
-static void join2(char *out, int size, const char *dir, const char *name)
-{
-    snprintf(out, (size_t)size, "%s/%s", dir, name);
-}
-
-static int copy_named(const char *from, const char *to, const char *stem, const char *ext)
-{
-    char a[512], b[512], leaf[64];
-    snprintf(leaf, sizeof leaf, "%s%s", stem, ext);
-    join2(a, (int)sizeof a, from, leaf);
-    join2(b, (int)sizeof b, to, leaf);
-    if (!exists_path(a)) return 1;          /* optional */
-    return copy_file(a, b);
-}
-
-static int stricmp_ascii(const char *a, const char *b)
-{
-    for (; *a && *b; a++, b++) {
-        int x = (unsigned char)*a, y = (unsigned char)*b;
-        if (x >= 'a' && x <= 'z') x -= 32;
-        if (y >= 'a' && y <= 'z') y -= 32;
-        if (x != y) return x - y;
-    }
-    return (unsigned char)*a - (unsigned char)*b;
 }
 
 /* the open league's team table: PINFO.DB +20h (26 x 30 bytes, as WriteLeagueInfo writes it). At the desk the
@@ -208,73 +161,22 @@ static void team_ext(char *ext, int size, int team)
     snprintf(ext, (size_t)size, ".%02d", team);
 }
 
-/* patch the 30-byte entry of `team` in a PINFO.DB (header 20h); also zero the word at 13h when zero_13 */
-static int pinfo_entry(const char *path, int team, unsigned char *entry, int write, int zero_13)
-{
-    FILE *f = fopen(path, write ? "r+b" : "rb");
-    int ok;
-    if (!f) return -1;
-    ok = fseek(f, 0x20 + team * 30, SEEK_SET) == 0;
-    if (ok) ok = write ? fwrite(entry, 1, 30, f) == 30 : fread(entry, 1, 30, f) == 30;
-    if (ok && zero_13) {
-        static const unsigned char z[2] = { 0, 0 };
-        ok = fseek(f, 0x13, SEEK_SET) == 0 && fwrite(z, 1, 2, f) == 2;
-    }
-    fclose(f);
-    return ok ? 0 : -1;
-}
-
-/* exactly the floppy the game's own Export Databases (ExportTeamToFloppy) writes for `team`, so the guest's
-   File > Import Databases > Player takes it: the seven DBs as .NN and .DB, PINFO.DB with the team marked
-   exported (16h = 2, 18h bit 1) and a zero word at 13h, GAME.SET, and PLAYER.ID (team, its entry's name,
-   the league folder, the export count). The host's own PINFO.DB gets the same entry, as the export does. */
+/* the floppy Import Databases > Player reads (PLAYER.ID, GAME.SET, both .DB and .NN). */
 static int copy_team_files(const char *from, const char *to, int team)
 {
-    char nn[8], a[512], b[512], pid[512];
-    unsigned char entry[30], tb = (unsigned char)team, dir13[13];
     const char *league = open_league();
-    FILE *f;
-    int i;
     if (team < 0 || team >= 26 || !league[0]) return -1;
-    team_ext(nn, (int)sizeof nn, team);
-    MKDIR(to);
-    for (i = 0; i < 7; i++) {
-        char leaf[32];
-        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
-        join2(a, (int)sizeof a, from, leaf);
-        if (!exists_path(a)) {                       /* no team copy yet: the league's own */
-            snprintf(leaf, sizeof leaf, "%s.DB", k_db[i]);
-            join2(a, (int)sizeof a, from, leaf);
-        }
-        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
-        join2(b, (int)sizeof b, to, leaf);
-        if (copy_file(a, b)) return -1;
-        if (copy_named(from, to, k_db[i], ".DB") < 0) return -1;
-    }
-    join2(a, (int)sizeof a, from, "PINFO.DB");
-    if (pinfo_entry(a, team, entry, 0, 0)) return -1;
-    if (entry[0x16] != 2) {                          /* first export: count it, as the game does */
-        uint32_t n = (uint32_t)entry[0x1A] | (uint32_t)entry[0x1B] << 8 | (uint32_t)entry[0x1C] << 16 |
-                     (uint32_t)entry[0x1D] << 24;
-        n++;
-        entry[0x1A] = (unsigned char)n; entry[0x1B] = (unsigned char)(n >> 8);
-        entry[0x1C] = (unsigned char)(n >> 16); entry[0x1D] = (unsigned char)(n >> 24);
-    }
-    entry[0x16] = 2;
-    entry[0x18] |= 2;
-    join2(b, (int)sizeof b, to, "PINFO.DB");
-    if (copy_file(a, b) || pinfo_entry(b, team, entry, 1, 1)) return -1;
-    if (pinfo_entry(a, team, entry, 1, 0)) return -1;
-    if (copy_named(from, to, "GAME", ".SET") < 0) return -1;
-    memset(dir13, 0, sizeof dir13);
-    memcpy(dir13, league, strlen(league) < 12 ? strlen(league) : 12);
-    join2(pid, (int)sizeof pid, to, "PLAYER.ID");
-    f = fopen(pid, "wb");
-    if (!f) return -1;
-    i = fwrite(&tb, 1, 1, f) == 1 && fwrite(entry, 1, 11, f) == 11 && fwrite(dir13, 1, 13, f) == 13 &&
-        fwrite(entry + 0x1A, 1, 4, f) == 4;
-    if (fclose(f) || !i) return -1;
-    return 0;
+    return season_pack_floppy(from, to, team, league, 1);
+}
+
+static void take_pick_disk(const char *disk, int team)
+{
+    char name[16];
+    if (team < 0 || g_installed_team == team) return;
+    if (season_install_floppy(disk, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return;
+    snprintf((char *)&curleague, 16, "%s", name);
+    snprintf((char *)lgstate + 4, 16, "%s", name);
+    g_installed_team = team;
 }
 
 static void unmount_play(void)
@@ -292,34 +194,32 @@ static void mount_a(const char *dir)
     if (str_floppydrv == '?' || str_floppydrv == 0) str_floppydrv = 'A';
 }
 
-/* a team picked in the room whose league is not the one loaded yet: its disk (0 none) */
-static int disk_pending(char *disk, int size)
+static int net_guest(void)
 {
-    char cur[16];
-    const char *name = open_league();
-    if (ob_season_disk(&g_season, -1, disk, size) < 0) return 0;
-    snprintf(cur, sizeof cur, "%s", name);
-    if (strchr(cur, '.')) *strchr(cur, '.') = 0;
-    return !g_season.roster_league[0] || stricmp_ascii(cur, g_season.roster_league) != 0;
+    return g_net && !ob_net_is_host(g_net);
 }
 
 static void mount_play(void)
 {
-    char dir[512];
+    char dir[512], disk[512];
+    int team;
     /* CreateNewLeague strcpy's curleague, then asks schedule/database (frames tick here),
        then mkdir. ob_vdrive_mount mkdir's, so mounting A: on that path first makes the
-       game's mkdir fail → "Error while creating league!". Only a guest copy (humans, none
-       local) should own A: as the league folder, and only once that folder is already there.
-       A remote team at New League still goes through CopyHumanTeamDBs's floppy write: give
-       it a scratch A: so that does not land in NHL95_ROOT. */
-    {
-        char disk[512];
-        /* a team picked in the room and not loaded yet: its disk is the floppy in A: for Import Databases,
-           whatever league this machine has open (an old one of its own must not take A: from it) */
-        if (disk_pending(disk, (int)sizeof disk)) {
-            if (!g_play_on || strcmp(g_play_dir, disk)) mount_a(disk);
+       game's mkdir fail → "Error while creating league!". A guest's picked disk is A:
+       even if a league of the same name is already open (Import Databases reads A:). */
+    team = ob_season_disk(&g_season, -1, disk, (int)sizeof disk);
+    if (team >= 0) {
+        take_pick_disk(disk, team);
+        if (!g_play_on || strcmp(g_play_dir, disk)) mount_a(disk);
+        return;
+    }
+    if (net_guest()) {
+        if (!league_host_dir(dir, (int)sizeof dir) && exists_path(dir)) {
+            if (!g_play_on || strcmp(g_play_dir, dir)) mount_a(dir);
             return;
         }
+        unmount_play();
+        return;
     }
     if (is_master_copy() && needs_floppy()) {
         char floppy[512];
@@ -361,8 +261,9 @@ static int op_league(void *ud, ob_season_league *l)
     snprintf(l->name, sizeof l->name, "%s", name);
     if (strchr(l->name, '.')) *strchr(l->name, '.') = 0;      /* "ABDUL", not the folder ABDUL.LP */
     snprintf(l->id, sizeof l->id, "%s", name);
-    /* the room's host: any league open here is the master (players join it); else a copy has none local */
-    l->master = (is_master_copy() || (g_net && ob_net_is_host(g_net))) ? 1 : 0;
+    /* in a room only the net host is master (a guest's PINFO still lists the host's local team) */
+    if (g_net) l->master = ob_net_is_host(g_net) ? 1 : 0;
+    else l->master = is_master_copy() ? 1 : 0;
     for (i = 0; i < 26 && l->nteam < OB_SEASON_TEAMS; i++) {
         /* host: local humans only (Boston). remote exports (LA) are pickable, not "the host's". */
         if (l->master) {
@@ -452,23 +353,27 @@ static int op_dir(void *ud, char *dir, int size)
 }
 
 /* the 26 team names (21 bytes each at +5 of every 2E8h-byte record, as ReadTeamNames reads them) from the
-   league's TEAMS.DB: the open league, else the picked team's disk, else the game folder's own. treeteamnames
-   is only loaded inside league screens, so at the desk it would say "Team 5". Read again every ~2 s. */
+   picked team's disk TEAMS.DB, else the open league, else the game folder. treeteamnames is only loaded
+   inside league screens, so at the desk it would say "Team 5". ob_season_disk returns the team index. */
 static const char *names_tab(void)
 {
     static char tab[26 * 22];
-    static int age = -1, have;
+    static int age = -1, have, seen_disk = -2;
+    int disk_team;
+    char disk[512];
+    disk_team = ob_season_disk(&g_season, -1, disk, (int)sizeof disk);
+    if (disk_team != seen_disk) { age = -1; seen_disk = disk_team; }
     if (age < 0 || ++age >= 120) {
-        char dir[512], path[600], disk[512];
+        char dir[512], path[600];
         FILE *f = NULL;
         int i;
         age = 0;
-        if (!league_host_dir(dir, (int)sizeof dir)) {
-            snprintf(path, sizeof path, "%s/TEAMS.DB", dir);
+        if (disk_team >= 0) {
+            snprintf(path, sizeof path, "%s/TEAMS.DB", disk);
             f = fopen(path, "rb");
         }
-        if (!f && ob_season_disk(&g_season, -1, disk, (int)sizeof disk) == 0) {
-            snprintf(path, sizeof path, "%s/TEAMS.DB", disk);
+        if (!f && !league_host_dir(dir, (int)sizeof dir)) {
+            snprintf(path, sizeof path, "%s/TEAMS.DB", dir);
             f = fopen(path, "rb");
         }
         if (!f) {
