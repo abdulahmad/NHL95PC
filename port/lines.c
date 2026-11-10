@@ -38,6 +38,32 @@ int lines_team_gets_compline(int auto_on, int team, int cont1, int cont2)
     return team != cont1 && team != cont2;
 }
 
+int lines_pick94(int home, int diff, int third, int score, int other_line, const int energy[8])
+{
+    /* .hl1: 7 words a row, indexed by the other team's 94G line; rows tied, leading, trailing (3rd period) */
+    static const signed char hl1[3][7] = { { 0, 1, 2, 0, 1, 0, 1 }, { 2, 0, 1, 2, 0, 2, 0 }, { 0, 1, 0, 0, 1, 0, 1 } };
+    static const signed char al1[3][3] = { { 0, 1, 2 }, { 0, 2, 1 }, { 0, 1, 0 } };
+    int row = 0, i, l = 0;
+    if (diff != 0) {
+        int a = diff > 0 ? 4 : 6;
+        return energy[a + 1] > energy[a] ? a + 1 : a;  /* 94G keeps the first when equal (bge) */
+    }
+    if (third && score) row = score > 0 ? 1 : 2;
+    if (home) {
+        int o = other_line;                             /* 95 line -> 94G line: 4th line as the 3rd, PP 4-5 -> 3-4, PK 6-7 -> 5-6 */
+        if (o == 3) o = 2;
+        else if (o >= 4) o--;
+        if (o < 0 || o > 6) o = 0;
+        l = hl1[row][o];
+        if (energy[l] > 0xC00) return l;
+    }
+    for (i = 0; i < 3; i++) {                           /* first line over 3/4 energy, else the last one tried */
+        l = al1[row][i];
+        if (energy[l] > 0xC00) break;
+    }
+    return l;
+}
+
 #ifndef LINES_TEST
 
 extern char SetLCmode[], puckfaceoff[], doinput[], checkob[];
@@ -49,8 +75,13 @@ extern uint32_t gameopts;
 #define P_PFLAGS 0x44
 #define PFJOY 0x08
 
+extern char CompLine[], DrawPanelLine[], getlinee[];
+extern uint8_t hmtmstruct[], awtmstruct[];
+extern int16_t gsp;
+
 void *lines_slc_cont;
-static int ok_slc, ok_face, ok_checkob, ok_chk;
+void *lines_cl_cont;
+static int ok_slc, ok_face, ok_checkob, ok_chk, ok_cl;
 void *lines_chk_cont;
 
 int lines_faceoff_computer(void)
@@ -82,6 +113,54 @@ int lines_after_checkob(uint8_t *p)
     if (!feel_auto_lines() || !feel_auto_fly() || !p) return 0;
     if (!(p[P_PFLAGS] & PFJOY)) return 0;
     return call_chk4lc(p) != 0;
+}
+
+#define T_SCORE 0x10
+#define T_LINE 0x2A
+#define T_TMAP 0x36
+#define T_LCFLAGS 0xD4
+
+static int call_getlinee(uint8_t *t, int line)
+{
+    int r;
+    __asm__ volatile("call *%[fn]" : "=a"(r), "+d"(line) : [fn] "r"(getlinee), "a"(t) : "ecx", "memory", "cc");
+    return (int16_t)r;
+}
+
+static void call_drawpanelline(int side, int line)
+{
+    __asm__ volatile("call *%[fn]" : "+a"(side), "+d"(line) : [fn] "r"(DrawPanelLine) : "ecx", "memory", "cc");
+}
+
+/* 94 Genesis Auto (Faceoffs only): its CompLine rule replaces 95 PC's for both teams */
+int lines_compline94_on(void)
+{
+    return lines_fly_blocked();
+}
+
+void lines_compline94(uint8_t *other, uint8_t *team)
+{
+    int e[8], i, line, score;
+    for (i = 0; i < 8; i++) e[i] = call_getlinee(team, i);
+    score = *(int16_t *)(team + T_SCORE) - *(int16_t *)(other + T_SCORE);
+    line = lines_pick94(team == hmtmstruct, *(int16_t *)(team + T_TMAP) - *(int16_t *)(other + T_TMAP), gsp == 2,
+                       score > 0 ? 1 : score < 0 ? -1 : 0, *(int16_t *)(other + T_LINE), e);
+    if (getenv("NHL95_LINES_LOG"))
+        fprintf(stderr, "compline94 %s other=%d line %d->%d e=%x,%x,%x score=%d gsp=%d\n", team == hmtmstruct ? "home" : "away",
+                *(int16_t *)(other + T_LINE), *(int16_t *)(team + T_LINE), line, e[0], e[1], e[2], score, gsp);
+    *(int16_t *)(team + T_LINE) = (int16_t)line;
+    call_drawpanelline(team == awtmstruct, line);
+    team[T_LCFLAGS] &= (uint8_t)~0x40;
+}
+
+/* CompLine (eax = other team, edx = team) */
+__attribute__((naked)) static void cl_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tcall " SYM("lines_compline94_on") "\n\ttest %eax, %eax\n\tpopal\n\t"
+        "jz 1f\n\t"
+        "pushal\n\tpush %edx\n\tpush %eax\n\tcall " SYM("lines_compline94") "\n\tadd $8, %esp\n\tpopal\n\tret\n"
+        "1:\n\tpush $0x1C\n\tjmp *" SYM("lines_cl_cont"));
 }
 
 __attribute__((naked)) static void chk_thunk(void)
@@ -234,6 +313,7 @@ void lines_install(void)
 {
     static const uint8_t push0c[5] = { 0x68, 0x0C, 0, 0, 0 };
     static const uint8_t push18[5] = { 0x68, 0x18, 0, 0, 0 };
+    static const uint8_t push1c[5] = { 0x68, 0x1C, 0, 0, 0 };
     ok_slc = !memcmp(SetLCmode, push0c, 5);
     if (ok_slc) {
         lines_slc_cont = SetLCmode + 5;
@@ -252,6 +332,13 @@ void lines_install(void)
         patch_jmp((void *)chk4lc, (void *)chk_thunk);
     } else {
         fprintf(stderr, "Auto line changes: chk4lc is not the expected code, Auto still changes computer lines on the fly\n");
+    }
+    ok_cl = !memcmp(CompLine, push1c, 5);
+    if (ok_cl) {
+        lines_cl_cont = CompLine + 5;
+        patch_jmp(CompLine, (void *)cl_thunk);
+    } else {
+        fprintf(stderr, "Auto line changes: CompLine is not the expected code, Auto keeps 95 PC's line order\n");
     }
 }
 
