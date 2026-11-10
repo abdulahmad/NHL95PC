@@ -18,6 +18,7 @@
 
 #include <stdint.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 #ifndef LINES_TEST
@@ -226,8 +227,13 @@ void lines_install(void)
     ok_face = patch_faceoff_lc_on(0) && patch_faceoff_skips(0);        /* both sites of both kinds, or nothing */
     if (ok_face) { patch_faceoff_lc_on(1); patch_faceoff_skips(1); }
     if (!ok_face) fprintf(stderr, "Auto line changes: puckfaceoff is not the expected code, faceoff CompLine stays computer-only\n");
-    ok_checkob = redirect_call(doinput, 1070, checkob, (const void *)checkob_thunk);
-    if (!ok_checkob) fprintf(stderr, "Auto line changes: doinput's checkob is not the expected call, on-the-fly changes stay computer-only\n");
+    /* Not installed: chk4lc on the human puck carrier sent the player being played to the bench (pflags2 bit 3, lineinput's
+     * slow skate) and doinput returned without his input (Abdul's test, 2026-11-10: the carrier stopped or crawled with Auto
+     * on, fine with it off). On-the-fly changes for a human team need the controlled player handed over first. */
+    if (getenv("NHL95_AUTOLINE_FLY")) {
+        ok_checkob = redirect_call(doinput, 1070, checkob, (const void *)checkob_thunk);
+        if (!ok_checkob) fprintf(stderr, "Auto line changes: doinput's checkob is not the expected call, on-the-fly changes stay computer-only\n");
+    }
 }
 
 #endif /* !LINES_TEST */
