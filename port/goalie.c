@@ -113,7 +113,8 @@ static int ok_di, ok_pos, ok_gacc, ok_agc;
 static int16_t call_vtoa(int dx, int dy)
 {
     int16_t r;
-    __asm__ volatile("call *%2" : "=a"(r) : "a"(dx), "d"(dy), "r"(vtoa) : "ecx", "memory", "cc");
+    /* operands by name: "%2" would be dy (EDX), not the routine */
+    __asm__ volatile("call *%[fn]" : "=a"(r), "+d"(dy) : "a"(dx), [fn] "r"(vtoa) : "ecx", "memory", "cc");
     return r;
 }
 
@@ -130,7 +131,7 @@ static void call_ad(void *fn, void *a, int d)
 static int16_t call_restore(int nw, int old)
 {
     int16_t r;
-    __asm__ volatile("call *%2" : "=a"(r) : "a"(nw), "d"(old), "r"(restorepl) : "ecx", "memory", "cc");
+    __asm__ volatile("call *%[fn]" : "=a"(r), "+d"(old) : "a"(nw), [fn] "r"(restorepl) : "ecx", "memory", "cc");
     return r;
 }
 
@@ -275,9 +276,10 @@ __attribute__((naked)) static void di_thunk(void)
 __attribute__((naked)) static void pos0_thunk(void)
 {
     __asm__ volatile(
-        "push %ecx\n\tpush %edx\n\tpush %ebx\n\t"
+        "push %eax\n\tpush %ecx\n\tpush %edx\n\t"
         "push %ebx\n\tcall " SYM("goalie_pos0") "\n\tadd $4, %esp\n\t"
-        "pop %ebx\n\tpop %edx\n\tpop %ecx\n\t"
+        "test %eax, %eax\n\t"           /* the jnz after the patched call: 1 = the goalie's return */
+        "pop %edx\n\tpop %ecx\n\tpop %eax\n\t"
         "ret");
 }
 

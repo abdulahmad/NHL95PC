@@ -86,18 +86,20 @@ __attribute__((naked)) static void slc_thunk(void)
 __attribute__((naked)) static void face_ok_thunk(void)
 {
     __asm__ volatile(
-        "push %ecx\n\tpush %edx\n\tpush %ebx\n\t"
+        "push %eax\n\tpush %ecx\n\tpush %edx\n\t"
         "call " SYM("lines_faceoff_computer") "\n\t"
-        "pop %ebx\n\tpop %edx\n\tpop %ecx\n\t"
+        "test %eax, %eax\n\t"           /* ZF: the patched site's jz; EAX (the team in AX) is kept */
+        "pop %edx\n\tpop %ecx\n\tpop %eax\n\t"
         "ret");
 }
 
 __attribute__((naked)) static void lc_on_thunk(void)
 {
     __asm__ volatile(
-        "push %ecx\n\tpush %edx\n\tpush %ebx\n\t"
+        "push %eax\n\tpush %ecx\n\tpush %edx\n\t"
         "call " SYM("lines_lc_on") "\n\t"
-        "pop %ebx\n\tpop %edx\n\tpop %ecx\n\t"
+        "test %eax, %eax\n\t"           /* ZF: the patched site's jz; EAX (the team in AX) is kept */
+        "pop %edx\n\tpop %ecx\n\tpop %eax\n\t"
         "ret");
 }
 
@@ -115,7 +117,7 @@ __attribute__((naked)) static void checkob_thunk(void)
 }
 
 /* cmp ax, [cont1team] / je  / cmp ax, [cont2team] / je  — both je go to the same skip */
-static int patch_faceoff_skips(void)
+static int patch_faceoff_skips(int apply)
 {
     uint8_t *base = (uint8_t *)puckfaceoff;
     size_t i, n = 1274;
@@ -147,20 +149,18 @@ static int patch_faceoff_skips(void)
         memset(code, 0x90, sizeof code);
         code[0] = 0xE8;
         memcpy(code + 1, &rel, 4);
-        code[5] = 0x85;
-        code[6] = 0xC0;
         jzrel = (int)(skip - (p + 9));
         if (jzrel != (int)r1) continue;
         code[7] = 0x74;
         code[8] = (uint8_t)r1;
-        patch_bytes(p, code, sizeof code);
+        if (apply) patch_bytes(p, code, sizeof code);
         found++;
     }
     return found == 2;
 }
 
 /* test byte [gameopts], 4 / je skip, immediately before the CompLine controller tests (one site has mov ax, [regd0] in between) */
-static int patch_faceoff_lc_on(void)
+static int patch_faceoff_lc_on(int apply)
 {
     uint8_t *base = (uint8_t *)puckfaceoff;
     size_t i, n = 1274;
@@ -175,7 +175,8 @@ static int patch_faceoff_lc_on(void)
         memcpy(&u, p + 2, 4);
         if (u != ga) continue;
         q = p + 9;
-        if (q[0] == 0x66 && q[1] == 0x8B && q[2] == 0x05) q += 6;
+        if (q[0] == 0x66 && q[1] == 0x8B && q[2] == 0x05) q += 7;      /* mov ax, [regd0] */
+        else if (q[0] == 0x66 && q[1] == 0xA1) q += 6;                 /* the same, moffs form */
         if (q[0] != 0x66 || q[1] != 0x3B || q[2] != 0x05) continue;
         memcpy(&u, q + 3, 4);
         if (u != a1) continue;
@@ -183,11 +184,9 @@ static int patch_faceoff_lc_on(void)
         memset(code, 0x90, sizeof code);
         code[0] = 0xE8;
         memcpy(code + 1, &rel, 4);
-        code[5] = 0x84;
-        code[6] = 0xC0;
         code[7] = 0x74;
         code[8] = p[8];
-        patch_bytes(p, code, sizeof code);
+        if (apply) patch_bytes(p, code, sizeof code);
         found++;
     }
     return found == 2;
@@ -224,7 +223,8 @@ void lines_install(void)
     } else {
         fprintf(stderr, "Auto line changes: SetLCmode is not the expected code, the line-change box still opens\n");
     }
-    ok_face = patch_faceoff_lc_on() && patch_faceoff_skips();
+    ok_face = patch_faceoff_lc_on(0) && patch_faceoff_skips(0);        /* both sites of both kinds, or nothing */
+    if (ok_face) { patch_faceoff_lc_on(1); patch_faceoff_skips(1); }
     if (!ok_face) fprintf(stderr, "Auto line changes: puckfaceoff is not the expected code, faceoff CompLine stays computer-only\n");
     ok_checkob = redirect_call(doinput, 1070, checkob, (const void *)checkob_thunk);
     if (!ok_checkob) fprintf(stderr, "Auto line changes: doinput's checkob is not the expected call, on-the-fly changes stay computer-only\n");
