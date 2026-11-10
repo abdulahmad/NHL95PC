@@ -177,61 +177,6 @@ static void season_send(void *ud, int to, const void *data, size_t size)
     if (g_net) ob_net_send(g_net, to, OB_NET_TYPE_SEASON, data, size);
 }
 
-static int first_team(void)
-{
-    ob_season_league l;
-    memset(&l, 0, sizeof l);
-    if (op_league(NULL, &l) || l.nteam <= 0) return 0;
-    return l.team[0];
-}
-
-#ifndef OB_PAGE_SEASON
-static int addon_sync(void *ctx)
-{
-    (void)ctx;
-    ob_season_sync(&g_season, 0);
-    return 1;
-}
-static int addon_export(void *ctx)
-{
-    char path[300];
-    (void)ctx;
-    MKDIR(g_teams);
-    snprintf(path, sizeof path, "%s/team.obt", g_teams);
-    ob_season_pack(&g_season, first_team(), path);
-    return 1;
-}
-static int addon_import(void *ctx)
-{
-    char path[300];
-    (void)ctx;
-    snprintf(path, sizeof path, "%s/team.obt", g_teams);
-    ob_season_import_pack(&g_season, path);
-    return 1;
-}
-static int addon_take(void *ctx)
-{
-    char path[300], back[300];
-    (void)ctx;
-    snprintf(path, sizeof path, "%s/team.obt", g_teams);
-    snprintf(back, sizeof back, "%s/team-back.obt", g_teams);
-    ob_season_take_pack(&g_season, path, back);
-    return 1;
-}
-static int addon_copy(void *ctx)
-{
-    ob_host *h = overbar_client_host();
-    const char *who;
-    char path[300];
-    (void)ctx;
-    who = h && h->online.name[0] ? h->online.name : "player";
-    MKDIR(g_teams);
-    snprintf(path, sizeof path, "%s/team.obt", g_teams);
-    ob_season_pack_copy(&g_season, who, first_team(), path);
-    return 1;
-}
-#endif
-
 void port_season_setup(ob_host *h)
 {
     ob_season_ops ops;
@@ -253,17 +198,8 @@ void port_season_setup(ob_host *h)
     me = h->online.name[0] ? h->online.name : "player";
     ob_files_init(&g_files, files_send, NULL);
     ob_season_init(&g_season, &ops, g_work, me, &g_files, season_send, NULL);
-#ifdef OB_PAGE_SEASON
     ob_season_set(h, &g_season, 0, g_teams);
     ob_season_set_names(h, team_name, NULL);
-#else
-    (void)team_name;
-    ob_host_add_addon(h, OB_ID_ADDON + 0, "Season: Sync league", addon_sync);
-    ob_host_add_addon(h, OB_ID_ADDON + 1, "Season: Export team as a file", addon_export);
-    ob_host_add_addon(h, OB_ID_ADDON + 2, "Season: Import a team file", addon_import);
-    ob_host_add_addon(h, OB_ID_ADDON + 3, "Season: Take a team file", addon_take);
-    ob_host_add_addon(h, OB_ID_ADDON + 4, "Season: Write a first copy", addon_copy);
-#endif
     g_ready = 1;
 }
 
