@@ -235,6 +235,7 @@ void lineup_fit_live(char *dst, char *first, char *last, int maxw)
     lineup_fit(dst, first, last, maxw, name_width);
 }
 
+/* The thunks return in EAX: popal reloads every register from the pushal frame, where EAX is at 28(%esp) (EDI is at 0). */
 __attribute__((naked)) static void open_thunk(void)
 {
     __asm__ volatile(
@@ -242,7 +243,7 @@ __attribute__((naked)) static void open_thunk(void)
         "push %edx\n\tpush %eax\n\t"
         "call " SYM("lineup_open_read") "\n\t"
         "add $8, %esp\n\t"
-        "mov %eax, (%esp)\n\t"
+        "mov %eax, 28(%esp)\n\t"
         "popal\n\t"
         "ret");
 }
@@ -286,7 +287,7 @@ __attribute__((naked)) static void alloc_thunk(void)
         "pushl 44(%esp)\n\t"
         "call " SYM("lineup_named_alloc") "\n\t"
         "add $12, %esp\n\t"
-        "mov %eax, (%esp)\n\t"
+        "mov %eax, 28(%esp)\n\t"
         "popal\n\t"
         "ret");
 }
