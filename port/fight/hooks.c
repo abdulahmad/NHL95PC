@@ -436,12 +436,18 @@ static void check_pen_wait(void)
     if (!left) { penmintab[PEN_ROUGHING] = 2; pen_wait = 0; }
 }
 
-/* 93's banner with the two names, in 95 PC's scoreboard box: "#12 Neely / vs. / #7 Probert" */
+/* 93's banner with the two names, in 95 PC's scoreboard box: "#8 Cam Neely / vs. / #24 Bob Probert" */
 static void name_line(unsigned char *out, const uint8_t *p)
 {
     int side = (P_B(p, P_PFLAGS) & 0x40) != 0, pn = P_B(p, P_PNUM) & 0x7F;
     const unsigned char *r = hmroster + side * 0x444 + pn * 0x27;
-    snprintf((char *)out, 0x3C, "#%d %.20s", hmrosterjersey[side * 0x444 + pn * 0x27], (const char *)r + 0x17);
+    /* first name at +7, last at +17h (BuildEventLines' FormatPlayerName arguments). The box holds about 20 of the
+     * scoreboard font's characters: a longer full name becomes "F. Last", then the last name alone. */
+    int num = hmrosterjersey[side * 0x444 + pn * 0x27];
+    const char *first = (const char *)r + 7, *last = (const char *)r + 0x17;
+    snprintf((char *)out, 0x3C, "#%d %.15s %.20s", num, first, last);
+    if (!first[0] || strlen((char *)out) > 20) snprintf((char *)out, 0x3C, "#%d %c. %.20s", num, first[0], last);
+    if (!first[0] || strlen((char *)out) > 20) snprintf((char *)out, 0x3C, "#%d %.20s", num, last);
 }
 
 static void show_names(void)
