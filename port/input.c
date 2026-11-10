@@ -4,8 +4,10 @@
 #include "audio.h"
 #include "bindings.h"
 #include "overbar_client.h"
+#include "sides.h"
 #include <SDL.h>
 #include <overbar/plat.h>
+#include "mdrt/menu.h"
 
 #define QSIZE 256
 static volatile uint8_t queue[QSIZE];
@@ -330,6 +332,10 @@ void input_event(const SDL_Event *ep)
         if (!getenv("NHL95_JOY")) joy_scan();
         break;
     case SDL_KEYDOWN:
+        if (port_sides_is_open() && !e.key.repeat && e.key.keysym.scancode == SDL_SCANCODE_ESCAPE) {
+            port_sides_pad_input(0, MDRT_MENU_BACK);
+            break;
+        }
         if (!e.key.repeat) { key_physical(e.key.keysym.scancode, 1); intro_skip_start(); }
         break;
     case SDL_KEYUP:
@@ -378,6 +384,7 @@ void input_poll(void)
     cursor_update();
     intro_skip_poll();
     osk_poll();
+    port_sides_poll();
     ob_plat_pump();
     if (quit_requested) host_exit(0);
 }
@@ -389,8 +396,19 @@ void input_poll(void)
  * not there reads as 1 on all of its bits (the axes never time out), which is how the game finds out that it is missing. */
 #define JOY_MIN_READS 20                        /* an axis at its left / top end stays set for 20 reads of the port after the write, at the other end */
 #define JOY_SPAN_READS 200                      /* for 220, in the middle 120: counted in reads, not in time, so the game's calibration does not depend on the speed of the host */
+#define INPUT_PADS 8                            /* every connected controller on the select-sides screen; the game port still has two sticks */
+static struct { int present; SDL_GameController *gc; SDL_Joystick *js; char name[32]; } pads[INPUT_PADS];
+static int npads;
+static int stick_of[2] = { 0, 1 };              /* which pads[] index is stick A / B; -1 none */
 static struct { int present, x, y, b1, b2; SDL_GameController *gc; SDL_Joystick *js; } joy[2];     /* x, y: -1000 to 1000 */
 static int joy_reads;                           /* reads of the port since the last write */
+
+int input_pad_count(void) { return npads; }
+const char *input_pad_name(int i) { return i >= 0 && i < npads ? pads[i].name : ""; }
+void input_bind_stick(int stick, int pad)
+{
+    if (stick >= 0 && stick < 2) stick_of[stick] = pad;
+}
 
 static int pad_button(SDL_GameController *g, int id)       /* a controller button of the bindings: 0-14 buttons, 20 and 21 the triggers */
 {
@@ -410,10 +428,28 @@ static int axis_value(int raw)                  /* SDL axis (-32768..32767) to -
 static void joy_close_all(void)
 {
     int i;
+    for (i = 0; i < INPUT_PADS; i++) {
+        if (pads[i].gc) SDL_GameControllerClose(pads[i].gc);
+        if (pads[i].js) SDL_JoystickClose(pads[i].js);
+        memset(&pads[i], 0, sizeof pads[i]);
+    }
+    npads = 0;
+    memset(joy, 0, sizeof joy);
+}
+
+static void joy_sync(void)                      /* the two game-port sticks follow stick_of[] (select-sides bind) */
+{
+    int i;
     for (i = 0; i < 2; i++) {
-        if (joy[i].gc) SDL_GameControllerClose(joy[i].gc);
-        if (joy[i].js) SDL_JoystickClose(joy[i].js);
-        memset(&joy[i], 0, sizeof joy[i]);
+        int p = stick_of[i];
+        if (joy[i].present && !joy[i].gc && !joy[i].js) continue;    /* NHL95_JOY: a fake stick A */
+        if (p < 0 || p >= npads || !pads[p].present) {
+            memset(&joy[i], 0, sizeof joy[i]);
+            continue;
+        }
+        joy[i].present = 1;
+        joy[i].gc = pads[p].gc;
+        joy[i].js = pads[p].js;
     }
 }
 
@@ -422,21 +458,61 @@ static void joy_scan(void)                      /* at start and when a device is
     int n = SDL_NumJoysticks(), i, k = 0;
     joy_close_all();
     if (getenv("NHL95_NOJOY")) return;                          /* some PCs list odd devices as joysticks */
-    for (i = 0; i < n && k < 2; i++) {
-        if (SDL_IsGameController(i)) joy[k].gc = SDL_GameControllerOpen(i);
-        else joy[k].js = SDL_JoystickOpen(i);
-        if (joy[k].gc || joy[k].js) {
-            joy[k].present = 1;
-            fprintf(stderr, "joystick %c: %s\n", 'A' + k, joy[k].gc ? SDL_GameControllerName(joy[k].gc) : SDL_JoystickName(joy[k].js));
-            k++;
-        }
+    for (i = 0; i < n && k < INPUT_PADS; i++) {
+        const char *name;
+        if (SDL_IsGameController(i)) pads[k].gc = SDL_GameControllerOpen(i);
+        else pads[k].js = SDL_JoystickOpen(i);
+        if (!pads[k].gc && !pads[k].js) continue;
+        pads[k].present = 1;
+        name = pads[k].gc ? SDL_GameControllerName(pads[k].gc) : SDL_JoystickName(pads[k].js);
+        snprintf(pads[k].name, sizeof pads[k].name, "%s", name && name[0] ? name : "Controller");
+        fprintf(stderr, "joystick %d: %s\n", k, pads[k].name);
+        k++;
     }
+    npads = k;
+    if (stick_of[0] >= npads) stick_of[0] = npads ? 0 : -1;
+    if (stick_of[1] >= npads) stick_of[1] = npads > 1 ? 1 : -1;
+    joy_sync();
+}
+
+static int pad_menu(SDL_GameController *g, SDL_Joystick *j)
+{
+    int left = 0, right = 0, ok = 0, back = 0;
+    if (g) {
+        left = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_LEFT)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX) < -16384;
+        right = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_RIGHT)
+            || SDL_GameControllerGetAxis(g, SDL_CONTROLLER_AXIS_LEFTX) > 16384;
+        ok = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A)
+            || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_START);
+        back = SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B)
+            || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_BACK);
+    } else if (j) {
+        Uint8 hat = SDL_JoystickNumHats(j) ? SDL_JoystickGetHat(j, 0) : 0;
+        left = (hat & SDL_HAT_LEFT) || (SDL_JoystickNumAxes(j) > 0 && SDL_JoystickGetAxis(j, 0) < -16384);
+        right = (hat & SDL_HAT_RIGHT) || (SDL_JoystickNumAxes(j) > 0 && SDL_JoystickGetAxis(j, 0) > 16384);
+        ok = SDL_JoystickNumButtons(j) > 0 && SDL_JoystickGetButton(j, 0);
+        back = SDL_JoystickNumButtons(j) > 1 && SDL_JoystickGetButton(j, 1);
+    }
+    return (left ? 1 : 0) | (right ? 2 : 0) | (ok ? 4 : 0) | (back ? 8 : 0);
 }
 
 static void joy_overlay(void)
 {
-    static int prev, back_was;
+    static int prev, back_was, sides_prev[INPUT_PADS];
     int i, btns = 0, back = 0;
+    if (port_sides_is_open()) {
+        for (i = 0; i < npads; i++) {
+            int now = pad_menu(pads[i].gc, pads[i].js), local = 1 + i;
+            if ((now & 1) && !(sides_prev[i] & 1)) port_sides_pad_input(local, MDRT_MENU_LEFT);
+            if ((now & 2) && !(sides_prev[i] & 2)) port_sides_pad_input(local, MDRT_MENU_RIGHT);
+            if ((now & 4) && !(sides_prev[i] & 4)) port_sides_pad_input(local, MDRT_MENU_OK);
+            if ((now & 8) && !(sides_prev[i] & 8)) port_sides_pad_input(local, MDRT_MENU_BACK);
+            sides_prev[i] = now;
+        }
+        return;
+    }
+    memset(sides_prev, 0, sizeof sides_prev);
     for (i = 0; i < 2; i++) {
         SDL_GameController *g = joy[i].gc;
         if (!g) continue;
@@ -468,8 +544,9 @@ static void joy_overlay(void)
 static void joy_update(void)                    /* main thread, every pass of the loop */
 {
     int i;
+    joy_sync();
     joy_overlay();
-    if (overbar_client_open()) return;          /* the game is paused; do not feed the stick */
+    if (overbar_client_open() || port_sides_is_open()) return;          /* the game is paused; do not feed the stick */
     for (i = 0; i < 2; i++) {
         int x = 0, y = 0, b1 = 0, b2 = 0;
         if (joy[i].gc) {

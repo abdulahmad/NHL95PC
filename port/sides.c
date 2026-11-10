@@ -1,0 +1,241 @@
+/* SPDX-License-Identifier: MIT
+ * Copyright (c) 2026 abdulahmad and contributors
+ *
+ * 95 PC hooks for Overbar's one select-sides screen (every connected controller;
+ * online the same module). The drawing, model and SIDES messages stay in Overbar;
+ * apply writes ctl1team / ctl1side / ctl1dev and ctl2*.
+ */
+#include "sides.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#ifndef SIDES_TEST
+#include "host.h"
+#include "overbar_client.h"
+#include "overbar/net.h"
+#include "overbar/plat.h"
+#include "overbar/room.h"
+#include "overbar/sides.h"
+#include "mdrt/menu.h"
+#endif
+
+void sides_seat_ctl(int team, int32_t home, int32_t vis, int32_t *ctl_team, uint32_t *ctl_side)
+{
+    if (team == 1) { *ctl_team = home; *ctl_side = 0; }     /* Home */
+    else { *ctl_team = vis; *ctl_side = 1; }                /* Away */
+}
+
+uint32_t sides_dev_for_slot(int slot, int local)
+{
+    if (local == 0) return 8;               /* keyboard */
+    return slot == 0 ? 2u : 4u;             /* Joystick One / Two: the seat's game-port slot */
+}
+
+int sides_pad_index(int local)
+{
+    return local > 0 ? local - 1 : -1;
+}
+
+unsigned sides_filter_hot(unsigned sc, unsigned teams)
+{
+    /* F1-F4 home, F5-F8 away, F9 home goalie, F10 away (HandleHotKey) */
+    static const int team_of[10] = { 1, 1, 1, 1, 0, 0, 0, 0, 1, 0 };
+    if (sc < 0x3Bu || sc > 0x44u) return sc;
+    if (teams & (1u << team_of[sc - 0x3Bu])) return sc;
+    return 0;
+}
+
+#ifdef SIDES_TEST
+#else
+
+extern int16_t HomeTeam, VisTeam, cont1team, cont2team;
+extern int32_t ctl1team, ctl2team;
+extern uint32_t ctl1side, ctl2side, ctl1dev, ctl2dev, samesideflag;
+extern uint8_t pad1dev, pad2dev;
+extern volatile int quit_requested;
+
+void input_bind_stick(int stick, int pad);
+int input_pad_count(void);
+const char *input_pad_name(int i);
+
+static ob_sides g_sides;
+static struct ob_net *g_net;
+static volatile int g_want;         /* game thread asks the main thread to open */
+static volatile int g_left;         /* BACK in the middle: leave without applying */
+static void add_devices(void);
+
+static uint8_t pad_dev(uint32_t ctl) { return ctl == 1 || ctl == 2 || ctl == 4 || ctl == 8 ? (uint8_t)ctl : 0; }
+static void setup_controllers(void)
+{
+    cont1team = ctl1team < 0 ? 0 : ctl1side == 0 ? 1 : 2;
+    cont2team = ctl2team < 0 ? 0 : ctl2side == 0 ? 1 : 2;
+    samesideflag = ctl1side == ctl2side;
+    pad1dev = pad_dev(ctl1dev);
+    pad2dev = pad_dev(ctl2dev);
+}
+
+static ob_sides_game game95(void)
+{
+    ob_sides_game g;
+    memset(&g, 0, sizeof g);
+    g.teams = 2;
+    g.seats = 2;                    /* 95 PC: two controller slots (96 PC has four) */
+    g.per_team = 2;
+    g.team_name[0] = "Away";
+    g.team_name[1] = "Home";
+    return g;
+}
+
+static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
+{
+    int i, stick = 0;
+    (void)ud;
+    ctl1team = ctl2team = -1;
+    ctl1dev = ctl2dev = 0x10;
+    ctl1side = 0;
+    ctl2side = 1;
+    input_bind_stick(0, -1);
+    input_bind_stick(1, -1);
+    for (i = 0; i < n && i < 2; i++) {
+        int32_t *team = i == 0 ? &ctl1team : &ctl2team;
+        uint32_t *side = i == 0 ? &ctl1side : &ctl2side;
+        uint32_t *dev = i == 0 ? &ctl1dev : &ctl2dev;
+        int pad;
+        sides_seat_ctl(seat[i].team, HomeTeam, VisTeam, team, side);
+        if (seat[i].owner != g_sides.me) { *dev = 0x10; continue; }     /* the other machine's: the records */
+        *dev = sides_dev_for_slot(i, seat[i].local);
+        pad = sides_pad_index(seat[i].local);
+        if (pad >= 0 && stick < 2) input_bind_stick(stick++, pad);
+    }
+    setup_controllers();
+}
+
+static void reinit(struct ob_net *n)
+{
+    ob_sides_game g = game95();
+    g.apply = apply_seats;
+    ob_sides_init(&g_sides, &g, n ? ob_net_me(n) : 0, n ? ob_room_sides_send : NULL, n);
+    ob_plat_room(&g_sides, NULL);
+}
+
+void port_sides_init(void)
+{
+    reinit(NULL);
+}
+
+void port_sides_bind_net(struct ob_net *n)
+{
+    g_net = n;
+    reinit(n);
+    if (n) add_devices();
+}
+
+void port_sides_unbind_net(void)
+{
+    g_net = NULL;
+    reinit(NULL);
+}
+
+struct ob_sides *port_sides_ob(void) { return &g_sides; }
+
+static int skip_screen(void)
+{
+    const char *e = getenv("NHL95_SIDES");
+    if (e && (*e == '0' || *e == 'n' || *e == 'N')) return 1;
+    if (e && *e && *e != '0') return 0;             /* NHL95_SIDES=1: show even under a test aid */
+    if (getenv("NHL95_NOSIDES")) return 1;
+    if (getenv("NHL95_AUTOSKIP")) return 1;
+    if (getenv("NHL95_KEYS")) return 1;
+    if (getenv("NHL95_SNAPTEST")) return 1;
+    return 0;
+}
+
+static void add_devices(void)
+{
+    int i, n = input_pad_count();
+    ob_sides_add(&g_sides, 0, "Keyboard");
+    for (i = 0; i < n; i++) {
+        const char *name = input_pad_name(i);
+        ob_sides_add(&g_sides, 1 + i, name && name[0] ? name : "Controller");
+    }
+}
+
+static void place(int local, int team)
+{
+    if (local < 0 || ob_sides_find(&g_sides, g_sides.me, local) < 0) return;
+    if (team == 0) ob_sides_input(&g_sides, local, MDRT_MENU_LEFT);
+    else if (team == 1) ob_sides_input(&g_sides, local, MDRT_MENU_RIGHT);
+}
+
+static int local_of_dev(uint32_t dev)
+{
+    if (dev == 8) return 0;
+    if (dev == 2) return 1;                         /* Joystick One: first pad until a bind says else */
+    if (dev == 4) return input_pad_count() > 1 ? 2 : 1;
+    return -1;
+}
+
+static void restore_from_ctl(void)
+{
+    if (ctl1team >= 0) place(local_of_dev(ctl1dev), ctl1side == 0 ? 1 : 0);
+    if (ctl2team >= 0) place(local_of_dev(ctl2dev), ctl2side == 0 ? 1 : 0);
+}
+
+void port_sides_poll(void)
+{
+    if (!g_want) return;
+    if (g_sides.open || g_sides.done) return;
+    add_devices();
+    ob_sides_open(&g_sides);
+    restore_from_ctl();
+}
+
+int port_sides_wait(void)
+{
+    if (skip_screen()) return 0;
+    g_left = 0;
+    reinit(g_net);
+    g_want = 1;
+    while (!quit_requested && !g_left && !g_sides.done)
+        plat_sleep_ms(2);
+    g_want = 0;
+    if (!g_sides.done) {
+        ob_sides_close(&g_sides);
+        return 0;
+    }
+    return 1;
+}
+
+int port_sides_is_open(void) { return g_sides.open; }
+
+void port_sides_draw(uint32_t *px, int w, int h, int pitch)
+{
+    ob_plat_room_draw(px, w, h, pitch);
+}
+
+int port_sides_pad_input(int local, int mdrt_input)
+{
+    int r;
+    if (!g_sides.open) return 0;
+    r = ob_sides_input(&g_sides, local, mdrt_input);
+    if (r == 0 && mdrt_input == MDRT_MENU_BACK) g_left = 1;
+    return r ? 1 : (mdrt_input == MDRT_MENU_BACK);
+}
+
+unsigned port_sides_filter_hot(unsigned sc, int machine)
+{
+    static const ob_sides_hotkey key[10] = {
+        { 1u << 0, 1 }, { 1u << 1, 1 }, { 1u << 2, 1 }, { 1u << 3, 1 },
+        { 1u << 4, 0 }, { 1u << 5, 0 }, { 1u << 6, 0 }, { 1u << 7, 0 },
+        { 1u << 8, 1 }, { 1u << 9, 0 }
+    };
+    unsigned teams = ob_sides_teams_of(&g_sides, machine);
+    uint32_t bit;
+    if (sc < 0x3Bu || sc > 0x44u) return sc;
+    bit = 1u << (sc - 0x3Bu);
+    return ob_sides_hotkeys_filter(bit, key, 10, teams) ? sc : 0;
+}
+
+#endif
