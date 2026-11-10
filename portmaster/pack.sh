@@ -34,5 +34,6 @@ if [ -n "$BIN" ]; then
   chmod +x "$STAGE/nhl95pc/nhl95pc.aarch64"
 fi
 mkdir -p "$(dirname "$OUT")"
+rm -f "$OUT"
 (cd "$STAGE" && zip -rq "$OUT" "NHL 95 PC.sh" nhl95pc)
 echo "wrote $OUT"
