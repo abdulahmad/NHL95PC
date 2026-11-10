@@ -312,20 +312,21 @@ static void mount_play(void)
        local) should own A: as the league folder, and only once that folder is already there.
        A remote team at New League still goes through CopyHumanTeamDBs's floppy write: give
        it a scratch A: so that does not land in NHL95_ROOT. */
+    {
+        char disk[512];
+        /* a team picked in the room and not loaded yet: its disk is the floppy in A: for Import Databases,
+           whatever league this machine has open (an old one of its own must not take A: from it) */
+        if (disk_pending(disk, (int)sizeof disk)) {
+            if (!g_play_on || strcmp(g_play_dir, disk)) mount_a(disk);
+            return;
+        }
+    }
     if (is_master_copy() && needs_floppy()) {
         char floppy[512];
         snprintf(floppy, sizeof floppy, "%s/floppy", g_work[0] ? g_work : "overbar-season");
         MKDIR(floppy);
         mount_a(floppy);
         return;
-    }
-    {
-        char disk[512];
-        /* a team picked in the room and not loaded yet: its disk is the floppy in A: for Import Databases */
-        if (!is_master_copy() && disk_pending(disk, (int)sizeof disk)) {
-            if (!g_play_on || strcmp(g_play_dir, disk)) mount_a(disk);
-            return;
-        }
     }
     if (league_host_dir(dir, (int)sizeof dir) || !exists_path(dir) || !has_human() || is_master_copy()) {
         unmount_play();
@@ -493,7 +494,12 @@ static const char *team_name(void *ud, int team)
 {
     const char *t;
     (void)ud;
-    if (open_league()[0] && !team_human(team)) return NULL;     /* a guest with no league: the host's list says */
+    if (team < 0 || team >= 26) return NULL;
+    if (open_league()[0] && !team_human(team)) return NULL;
+    /* a team the host's list does not name is one the host's game cannot add a player to (95 sets players
+       up at New League only), so it is not a team to pick */
+    if (g_net && !ob_net_is_host(g_net) && g_season.roster_have && g_season.roster_kind[team] == OB_SEASON_FREE)
+        return NULL;
     t = names_tab();
     if (t && t[team * 22]) return t + team * 22;
     return (const char *)(treeteamnames + team * 21);
