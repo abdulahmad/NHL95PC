@@ -19,7 +19,7 @@ typedef struct feel_profile {
     int accel;          /* acceleration: FEEL_* */
     int stop;           /* stopping: FEEL_* */
     int glide;          /* 1: 94G's glide (the cartridge's friction per frame: half of 95 PC's) */
-    int turn;           /* 1: 94G's turn rate (the cartridge's: half of 95 PC's per frame) */
+    int turn;           /* 1: 94G's turn rate (Cartridge: 14/16 of 95 PC's per frame, the cart's ~51 passes a second) */
     int cartridge;      /* 94G timing: 1 the cartridge (about 30 passes a second), 0 Smooth (60) */
 } feel_profile;
 
@@ -40,5 +40,13 @@ void feel_session_end(void);
 void feel_playeracc(uint8_t *p, int dir);
 void feel_stopna(uint8_t *p);
 void feel_set_profile(const feel_profile *f);
+
+/* the Game page's Fights row (port/fight/hooks.c): 1 on */
+int feel_fights(void);
+/* the Game page's names box row: 0 the box moves to the top right when a fighter is under it, 1 it hides */
+int feel_fight_box(void);
+/* the Game page's debug row: the next hit that may start a fight does (cleared once it has) */
+int feel_fight_next(void);
+void feel_fight_next_done(void);
 
 #endif

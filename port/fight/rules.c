@@ -236,9 +236,9 @@ static void chkhit(fight *ft, int mi)
     if (!hit) return;
     knock(ft, op, me);
     op->aip = 1;
+    ft->events |= hit == FA_HITHIGH ? FE_PUNCH_HIGH : FE_PUNCH_LOW;    /* 93 is silent on the last punch; heard here */
     if (--op->strength < 0) { lost(ft, mi ^ 1); return; }
     set_spa(op, hit);
-    ft->events |= hit == FA_HITHIGH ? FE_PUNCH_HIGH : FE_PUNCH_LOW;
 }
 
 /* fightinput: a human fighter's pad */

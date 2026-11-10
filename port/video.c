@@ -841,6 +841,15 @@ void video_window_to_game(int wx, int wy, int *gx, int *gy)
 
 void video_mode_size(int *w, int *h) { *w = mode_w; *h = mode_h; }
 
+void video_dac_rgb(uint32_t out[256])
+{
+    int i;
+    for (i = 0; i < 256; i++) {
+        unsigned r = dac[i][0] << 2 | dac[i][0] >> 4, g = dac[i][1] << 2 | dac[i][1] >> 4, b = dac[i][2] << 2 | dac[i][2] >> 4;
+        out[i] = r << 16 | g << 8 | b;
+    }
+}
+
 /* a game screen position in window coordinates (the inverse of video_window_to_game) */
 void video_game_to_window(int gx, int gy, int *wx, int *wy)
 {

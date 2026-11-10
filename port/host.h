@@ -107,6 +107,8 @@ int video_port_out(unsigned port, uint32_t val);
 void video_init(void);
 void video_set_title(const char *title);
 void video_view(int *vx, int *vy, int *vw, int *vh);   /* where the 4:3 picture is in the window (window coordinates) */
+void video_dac_rgb(uint32_t out[256]);                 /* the palette now, 0x00RRGGBB (port/fight/hooks.c)
+ */
 void video_mode_size(int *w, int *h);                  /* the game's current screen size: 640x480 (menus) or 320x200 (play) */
 void video_game_to_window(int gx, int gy, int *wx, int *wy);
 void video_confine_mouse(int on);                      /* fullscreen: the host pointer stays on the 4:3 picture */
