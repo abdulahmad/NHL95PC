@@ -12,5 +12,7 @@ void fight_install(void);                       /* from install_overrides, after
 void fight_check(uint8_t *a, uint8_t *b);       /* after checkcheck in checkcx */
 void fight_frame(void);                         /* each DoGameFrame, before updateplayers */
 void fight_after(void);                         /* and after it */
+/* SortCords number sc is in a fight, or held after it until he is sent off (port/pads4.c: pad 3 or 4 keeps him) */
+int fight_holds(int sc);
 
 #endif

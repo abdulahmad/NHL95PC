@@ -109,7 +109,8 @@ extern uint32_t ctl1side, ctl2side;
 
 int input_pad_byte(int pad);                    /* input.c: an SDL pad's byte now (8: none) */
 int netplay_pad34(int k, uint8_t *out);
-int netplay_session(void);                      /* netplay.c: an online session (the room is up) */         /* netplay.c: pad 3 / 4 of the record being played (1 in a session) */
+int netplay_session(void);
+int fight_holds(int sc);                        /* port/fight/hooks.c */                      /* netplay.c: an online session (the room is up) */         /* netplay.c: pad 3 / 4 of the record being played (1 in a session) */
 uint8_t *goalie_bhold_timer(int i);             /* goalie.c: pad 1's (0) or pad 2's (1) */
 int feel_fake_pads(void);                       /* feel.c: the Game page's pretend controllers */
 
@@ -238,6 +239,7 @@ static void keep_player(int k)
         pads4.player[k] = -1;
         return;
     }
+    if (sc >= 0 && sc <= 11 && fight_holds(sc)) return;   /* his fight is his pad's (93: the fighter stays the player's) */
     if (sc >= 0 && sc <= 11) {
         p = SortCords + sc * 0x80;
         if (pads4_keep(sc, team, P_W(p, P_POSITION), P_B(p, P_PFLAGS2), o, 3)) {
@@ -323,13 +325,20 @@ void pads4_other(uint8_t *p)
 {
     int k, sc = P_W(p, P_SCNUM);
     if (demomode) return;                               /* the attract demo plays its own records */
+    for (k = 0; k < 2; k++)
+        if (pads4.team[k] && pads4.player[k] == sc) { run_pad(k, p); return; }
+}
+
+/* each game frame: so pads 3 and 4 have players at faceoffs too, when updateplayers does not come to .36 */
+void pads4_tick(void)
+{
+    int k;
+    if (demomode) return;
     /* the Game page's pretend controllers when no set-up gave them out (a game started without the select-sides
      * step, or the option turned on during the game): beside the game's own pads, as they play now */
     if (!fake_done && !pads4.team[0] && !pads4.team[1] && !netplay_session() && feel_fake_pads() && (cont1team > 0 || cont2team > 0))
         fake_fill(cont1team > 0 ? cont1team : 0, cont2team > 0 ? cont2team : 0);
     for (k = 0; k < 2; k++) keep_player(k);
-    for (k = 0; k < 2; k++)
-        if (pads4.team[k] && pads4.player[k] == sc) { run_pad(k, p); return; }
 }
 
 /* at updateplayers .36: cmp ax, [c2playernum] / jne .38 (9 bytes), ax the player's SCnum, esi the player */
@@ -342,6 +351,15 @@ __attribute__((naked)) static void up_thunk(void)
         "1:\n\tpushal\n\tpush %esi\n\tcall " SYM("pads4_other") "\n\tadd $4, %esp\n\tpopal\n\t"
         "jmp *" SYM("pads4_after"));
 }
+
+int pads4_owner(int sc)
+{
+    int k;
+    for (k = 0; k < 2; k++) if (pads4.team[k] && sc >= 0 && pads4.player[k] == sc) return k;
+    return -1;
+}
+
+int pads4_fake(int k) { return k >= 0 && k < 2 && pads4.src[k] == PADS4_FAKE; }
 
 int pads4_gc_skip(int sc)
 {

@@ -24,6 +24,7 @@
 #include "../host.h"
 #include "../feel.h"
 #include "../sides.h"
+#include "../pads4.h"
 
 #ifdef _WIN32
 #define SYM(s) "_" s
@@ -127,6 +128,24 @@ static int cue = -1, cue_seen, cue_time;        /* the crowd's music cue after a
 static int ref_time;                            /* the referee: frames spent collecting */
 #define PILE_L 1000
 #define PILE_R 1001
+/* The replay keeps 11 bits of a frame (updatereplay: 7FFh is none), so FR_93 codes do not survive it. The frames a
+ * fighter or a check injury shows are put in the free numbers above 95 PC's last frame (46Dh) instead: FR_RP + slot x
+ * 60h + their place in this list; the replay plays them back the same. */
+#define FR_RP 0x480
+#define FR_RP_END (FR_RP + 4 * 0x60)
+static int fr_idx(int n)
+{
+    if (n >= 354 && n <= 376) return n - 354;           /* F93_FIGHT .. F93_FINJURY + 5 */
+    if (n >= 633 && n <= 644) return 23 + n - 633;      /* the bloody check injury frames */
+    if (n == PILE_L || n == PILE_R) return 35 + n - PILE_L;
+    return -1;
+}
+static int fr_n(int i) { return i < 23 ? 354 + i : i < 35 ? 633 + i - 23 : PILE_L + i - 35; }
+static int fr_code(int k, int n)
+{
+    int i = fr_idx(n);
+    return i >= 0 ? FR_RP + k * 0x60 + i : 0x7000 + k * 0x400 + n;
+}
 #define PILE_SPLIT 50                           /* the column of 93's glove frame between the two halves */
 static int pad_dir[2] = { 8, 8 }, pad_new[2];
 int fight_on_now;
@@ -179,7 +198,7 @@ static int restore_pl(int newpl, int oldpl)
 static void give_control(uint8_t *p)
 {
     int sc = P_W(p, P_SCNUM), team = sc < 6 ? 1 : 2;
-    if (c1playernum[0] == sc || c2playernum[0] == sc) return;
+    if (c1playernum[0] == sc || c2playernum[0] == sc || pads4_owner(sc) >= 0) return;   /* pad 3 or 4 keeps his own */
     if (lastplayer == c2playernum[0] && cont2team == team) c2playernum[0] = (short)restore_pl(sc, c2playernum[0]);
     else if (cont1team == team) c1playernum[0] = (short)restore_pl(sc, c1playernum[0]);
     else if (cont2team == team) c2playernum[0] = (short)restore_pl(sc, c2playernum[0]);
@@ -193,6 +212,7 @@ static int fighter_human(const uint8_t *p)
     if (!(P_B(p, P_PFLAGS) & 8)) return 0;
     if (sc == c1playernum[0] && port_sides_slot_fake(0)) return 0;
     if (sc == c2playernum[0] && port_sides_slot_fake(1)) return 0;
+    if (pads4_owner(sc) >= 0 && pads4_fake(pads4_owner(sc))) return 0;
     return 1;
 }
 
@@ -512,9 +532,18 @@ static void watch(void)
     }
 }
 
+int fight_holds(int sc)
+{
+    int k;
+    for (k = 0; k < 2; k++)
+        if ((ft.on || post[k]) && who[k] && P_W(who[k], P_SCNUM) == sc) return 1;
+    return 0;
+}
+
 void fight_frame(void)
 {
     int k;
+    pads4_tick();
     undraw();
     frame_no++;
     if (gmode2 & 1) gloves = 0;         /* a faceoff clears them (93's puckfaceoff2) */
@@ -771,7 +800,7 @@ static void bloody_injuries(void)
         }
         if (!spr[k][f + 1] && !(spr[k][f + 1] = build(k, f + 1))) continue;
         inj_saved[i] = f;
-        P_W(p, P_FRAME) = (int16_t)(FR_93 + k * 0x400 + f + 1);
+        P_W(p, P_FRAME) = (int16_t)fr_code(k, f + 1);
         inj_drawing |= 1 << i;
     }
 }
@@ -800,7 +829,7 @@ void fight_after(void)
         if (!have_rom || no_draw || n <= 0 || n >= NFR) continue;
         if (!spr[k][n] && !(spr[k][n] = build(k, n))) continue;
         saved_frame[k] = P_W(who[k], P_FRAME);
-        P_W(who[k], P_FRAME) = (int16_t)(FR_93 + k * 0x400 + n);
+        P_W(who[k], P_FRAME) = (int16_t)fr_code(k, n);
         if (ft.f[k].flip) P_B(who[k], P_ATTRIBUTE) |= 8;
         else P_B(who[k], P_ATTRIBUTE) &= (uint8_t)~8;
         drawing |= 1 << k;
@@ -828,6 +857,7 @@ void *fight_sprite(int code)
 {
     int k = (code - FR_93) >> 10 & 3, n = code & 0x3FF;
     if (code >= 0x7F00) return pads4_mark_sprite(code);
+    if (code >= FR_RP && code < FR_RP_END) { k = (code - FR_RP) / 0x60; n = (code - FR_RP) % 0x60; if (n > 36) return NULL; n = fr_n(n); }
     if (!have_rom) return NULL;
     if (sflags & 0x80) {
         if (n != replay_frame[k]) {
@@ -850,7 +880,8 @@ void *fight_sprite(int code)
 __attribute__((naked)) static void drawframe_thunk(void)
 {
     __asm__ volatile(
-        "cmpw $0x7000, %ax\n\tjl 1f\n\t"
+        "cmpw $0x7000, %ax\n\tjge 3f\n\tcmpw $0x480, %ax\n\tjl 1f\n\tcmpw $0x600, %ax\n\tjge 1f\n"
+        "3:\n\t"
         "push %esi\n\tpush %edx\n\tpush %ebx\n\tpush %ecx\n\t"
         "movswl %ax, %eax\n\tpush %eax\n\tcall " SYM("fight_sprite") "\n\tadd $4, %esp\n\t"
         "pop %ecx\n\tpop %ebx\n\tpop %edx\n\t"
@@ -880,7 +911,7 @@ void fight_overlays(void)
     for (h = 0; h < 2; h++) {
         if (!pile_on[h]) continue;
         side = pile_side[h];
-        code = FR_93 + pile_k[h] * 0x400 + (h ? PILE_R : PILE_L);    /* each half in its fighter's colours */
+        code = fr_code(pile_k[h], h ? PILE_R : PILE_L);    /* each half in its fighter's colours */
         x = glove_x; y = glove_y;
         __asm__ volatile("push %4\n\tcall " SYM("DrawFrameSprite")
                          : "+a"(code), "+d"(x), "+b"(y) : "c"(0), "r"(side) : "memory", "cc");
