@@ -30,6 +30,7 @@
 
 #ifndef FEEL_TEST
 #include "host.h"
+#include "ctlrows.h"
 #endif
 
 #ifdef _WIN32
@@ -346,7 +347,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_FAKEPADS, O_FOUR, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_FAKEA, O_CLEAR, O_GBTN, O_SKILL, O_FAKEPADS, O_FOUR, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -372,6 +373,9 @@ static const ob_game_opt opts[O_COUNT] = {
     { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
     { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
+    { "console_fake", "Console fake shot", onoff_names, 2, 0, 1, 3 },
+    { "clear_puck", "Clear puck", onoff_names, 2, 0, 1, 3 },
+    { "goalie_button", "Manual goalie button", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
     { "fake_pads", "Debug: pretend controllers (2 v 2)", onoff_names, 2, 0, 1, 4 },
     { "four_players", "Four players", onoff_names, 2, 1, 1, 4 },
@@ -439,6 +443,7 @@ static void changed(void *ctx, int index, int value)
     profile_from_rows();
 #ifndef FEEL_TEST
     if (!loading) settings_save_all();
+    ctlrows_sync(feel_four_players());
 #endif
 }
 
@@ -489,6 +494,9 @@ void feel_register(ob_host *h, const char *ini_path)
     profile_from_rows();
     (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 int feel_fights(void)
@@ -539,6 +547,35 @@ int feel_four_players(void)
     return opt_now(O_FOUR, 1);
 }
 
+int feel_console_fake(void)
+{
+    return opt_now(O_FAKEA, 0);
+}
+
+int feel_clear_puck(void)
+{
+    return opt_now(O_CLEAR, 0);
+}
+
+int feel_goalie_button(void)
+{
+    return opt_now(O_GBTN, 0);
+}
+
+#ifndef FEEL_TEST
+static void feel_set(int index, int value)
+{
+    if (!g_host) return;
+    if (value < 0) value = 0;
+    if (value > 1) value = 1;
+    ob_game_set(g_host, index, value);
+}
+
+void feel_set_console_fake(int on) { feel_set(O_FAKEA, on ? 1 : 0); }
+void feel_set_clear_puck(int on) { feel_set(O_CLEAR, on ? 1 : 0); }
+void feel_set_goalie_button(int on) { feel_set(O_GBTN, on ? 1 : 0); }
+#endif
+
 void feel_fight_next_done(void)
 {
     if (g_host) ob_game_set(g_host, O_FIGHT_NEXT, 0);
@@ -554,6 +591,9 @@ void feel_session_begin(const char *text, size_t size)
     for (i = 0; i < O_COUNT; i++) g_snap[i] = ob_game_get(g_host, i);
     g_lock = 1;                         /* a menu change now cannot move the rules the other machine still has */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_session_end(void)
@@ -563,6 +603,9 @@ void feel_session_end(void)
     loading = 1;
     ob_game_session_end(g_host);
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_write_ini(FILE *f)
@@ -574,6 +617,9 @@ void feel_write_ini(FILE *f)
                "; auto_lines_when: Faceoffs only (94 Genesis) or On the fly too (96 PC: also during play, your puck carrier included)\n"
                "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
                "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n"
-               "; four_players: Off is the game's own two pads, with 95 PC's stars and arrows. On adds pads 3 and 4\n");
+               "; four_players: Off is the game's own two pads, with 95 PC's stars and arrows. On adds pads 3 and 4\n"
+               "; console_fake: tap A with the puck past the blue line you are attacking (95 Genesis doinput_ispc). Default off\n"
+               "; clear_puck: tap A with the puck past your own blue line (94 Genesis dopass with sflags5 bit 3). Default off\n"
+               "; goalie_button: the Input bindings Manual goalie button takes the goalie at once. Off keeps holding pass\n");
     ob_game_write_ini(g_host, f);
 }

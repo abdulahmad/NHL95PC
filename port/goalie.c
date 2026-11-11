@@ -20,7 +20,9 @@
 
 #ifndef GOALIE_TEST
 #include "feel.h"
+#include "bindings.h"
 #include "host.h"
+int netplay_session(void);
 #endif
 
 #ifdef _WIN32
@@ -67,10 +69,20 @@ int goalie_in_crease(int x, int y)
     return y >= -0x106;
 }
 
-int goalie_bhold(int manual, int on_goalie, int b_new, int b_held, int b_rel, uint8_t *timer)
+/* 95 PC's blue line is 0x58 (assdefo, puckgoalie). 95 Genesis doinput_ispc compares $56 on its own rink:
+ * |y| past that, on the side pflags bit 7 attacks, is the offensive zone. The other end is defensive. */
+int goalie_zone(int y, int attack_up)
+{
+    if (y >= 0x58) return attack_up ? 1 : -1;
+    if (y <= -0x58) return attack_up ? -1 : 1;
+    return 0;
+}
+
+int goalie_bhold(int manual, int on_goalie, int b_new, int b_held, int b_rel, uint8_t *timer, int button_mode)
 {
     if (!manual) return GB_PASS;
     if (on_goalie) return GB_PASS;      /* B leaves the goalie through changeplayer */
+    if (button_mode) return GB_PASS;    /* the mapped button takes him; pass is not a timer */
     if (b_held && *timer) {
         (*timer)--;
         if (*timer == 0) return GB_TAKE;
@@ -95,6 +107,7 @@ extern char doinput[], updateplayers[], goalieacc[], assgoalie[], changeplayer[]
 extern short restorepl(void);
 extern short vtoa(void);
 extern void SetSPA(void);
+extern void SetShotMode(void);
 extern void playeracc(void);
 extern void stopna(void);
 extern uint8_t SortCords[];
@@ -105,12 +118,29 @@ extern signed char *puckc;
 extern int32_t regd0, regd1, regd2, regd3;
 extern int16_t crowdlevel;
 extern short dword_CCA5A[];
-extern uint8_t gmode, gmode2;       /* gmode bit 0: play is stopped (whistle to faceoff); gmode2 bit 0: a faceoff is on */
+extern uint8_t gmode, gmode2, sflags; /* gmode bit 0: play is stopped; gmode2 bit 0: a faceoff; sflags bit 2 pass, bit 3 shot */
+extern int16_t *puckvx, *puckvy;
+extern short lastplayer;
 
 void *goalie_gacc_cont;
 void *goalie_agc_cont;
 static uint8_t bhold[2];
+static volatile int goalie_pending[2];
 static int ok_di, ok_pos, ok_gacc, ok_agc;
+
+void goalie_button_press(int slot)
+{
+    if (slot >= 0 && slot < 2) goalie_pending[slot] = 1;
+}
+
+int goalie_button_pull(int slot)
+{
+    int v;
+    if (slot < 0 || slot > 1) return 0;
+    v = goalie_pending[slot];
+    goalie_pending[slot] = 0;
+    return v;
+}
 
 uint8_t *goalie_bhold_timer(int i) { return &bhold[i ? 1 : 0]; }     /* (pads4.c swaps pads 3 and 4 in) */
 
@@ -248,9 +278,86 @@ int goalie_skip_cpu(uint8_t *p)
     return feel_manual_goalie() && p && (P_B(p, P_PFLAGS) & PFJOY);
 }
 
+static void save_regs(int32_t *s)
+{
+    s[0] = regd0; s[1] = regd1; s[2] = regd2; s[3] = regd3;
+}
+
+static void load_regs(const int32_t *s)
+{
+    regd0 = s[0]; regd1 = s[1]; regd2 = s[2]; regd3 = s[3];
+}
+
+/* 95 Genesis SetShotMode sees GameFlags bit 0 and plays the fake-shot anim; doshot then glides and does not
+ * shoot. 95 PC has no fake-shot SPA, so this is ShotMode's own abort: the slap (3F9/491) becomes the
+ * follow-through (1265/12DD) and the shot mode bit is cleared before doshot can run. */
+static void fake_shot(uint8_t *p)
+{
+    int32_t saved[4];
+    int spa;
+    save_regs(saved);
+    call_ad(SetShotMode, p, 0);
+    sflags = (unsigned char)(sflags & (unsigned char)~8);
+    spa = P_W(p, 0x38);
+    if (spa == 0x491) spa = 0x12DD;
+    else spa = 0x1265;
+    call_ad(SetSPA, p, spa);
+    P_B(p, P_PFLAGS) |= PFALOCK;
+    load_regs(saved);
+}
+
+/* 94 Genesis dopass when sflags5 bit 3 is set: drop the puck and OneTimerPass (a high flip) instead of an
+ * aimed pass. Goalies are on that path (OneTimerGoalieTbl). The puck goes up ice; vz is 94's
+ * sqrt(12 * onetimerheight $12). */
+static void clear_puck(uint8_t *p, int ctl)
+{
+    int32_t saved[4];
+    int up = (P_B(p, P_PFLAGS) & PFGOAL) ? 1 : -1;
+    int goalie = P_W(p, P_POSITION) == 0;
+    save_regs(saved);
+    *puckc = -1;
+    P_W(p, P_NOPUCK) = 0x10;
+    lastplayer = P_W(p, P_SCNUM);
+    if (puckvx) *puckvx = 0;
+    if (puckvy) *puckvy = (int16_t)(up * 0x3000);
+    *(int16_t *)puckvz = 0x0EB0;
+    if (goalie) P_B(p, P_PFLAGS2) |= 0x02;
+    call_ad(SetSPA, p, goalie ? 0x1B9 : 0x389);
+    P_B(p, P_PFLAGS) |= PFALOCK;
+    if (goalie) call_ad(changeplayer, p, ctl);
+    load_regs(saved);
+}
+
+/* A tap (the new A press). 95 Genesis waits for the release and a $F hold timer; that timer is not in the
+ * rollback snapshot, and 95 PC line-changes on the press, so the tap is the press itself. */
+static int atap(uint8_t *p, int ctl)
+{
+    int y, z;
+    if (!p || !(feel_console_fake() || feel_clear_puck())) return 0;
+    if ((gmode & 1) || (gmode2 & 1) || (sflags & 0x0C)) return 0;
+    if (P_B(p, P_PFLAGS) & PFALOCK) return 0;
+    if (P_B(p, P_PFLAGS2) & 0x02) return 0;
+    if (*puckc != P_W(p, P_SCNUM)) return 0;
+    if (((int16_t)regd1 & BUT_A) == 0) return 0;
+    y = *pucky;
+    z = goalie_zone(y, (P_B(p, P_PFLAGS) & PFGOAL) != 0);
+    if (z == 1 && feel_console_fake()) {
+        *(int16_t *)&regd1 &= (int16_t)~BUT_A;
+        fake_shot(p);
+        return 1;
+    }
+    if (z == -1 && feel_clear_puck()) {
+        *(int16_t *)&regd1 &= (int16_t)~BUT_A;
+        clear_puck(p, ctl);
+        return 1;
+    }
+    return 0;
+}
+
 int goalie_before_doinput(uint8_t *p, int ctl)
 {
-    int i, on, b_new, b_held, b_rel, act;
+    int i, on, b_new, b_held, b_rel, act, button;
+    if (atap(p, ctl)) return 1;
     if (!feel_manual_goalie() || !p) return 0;
     i = ctl ? 1 : 0;
     /* the game's own input first, as 94G's doinput orders it: a faceoff (faceoffinput), the line-change box
@@ -274,10 +381,16 @@ int goalie_before_doinput(uint8_t *p, int ctl)
         *(int16_t *)&regd1 &= (int16_t)~BUT_A;
         if (dir < 8 && !(P_B(p, P_PFLAGS) & PFALOCK)) goalie_dive(p, dir);
     }
+    button = feel_goalie_button();
+    if (!button && !netplay_session() && bindings_goalie_mapped()) button = 1;
+    if (button && !on && (P_B(p, P_PFLAGS) & PFJOY)) {
+        int hit = netplay_session() ? ((int16_t)regd0 & 0x80) != 0 : goalie_button_pull(i);
+        if (hit) return goalie_take(p, ctl);
+    }
     b_new = ((int16_t)regd1 & BUT_B) != 0;
     b_held = ((int16_t)regd3 & BUT_B) != 0;
     b_rel = ((int16_t)regd2 & BUT_B) != 0 && !b_held;
-    act = goalie_bhold(1, on, b_new, b_held, b_rel, &bhold[i]);
+    act = goalie_bhold(1, on, b_new, b_held, b_rel, &bhold[i], button);
     if ((b_new || b_held || b_rel) && getenv("NHL95_GOALIE_LOG"))
         fprintf(stderr, "goalie: ctl %d sc %d pos %d puckc %d new %d held %d rel %d -> %d (timer %d)\n", ctl, P_W(p, P_SCNUM),
                 P_W(p, P_POSITION), *puckc, b_new, b_held, b_rel, act, bhold[i]);

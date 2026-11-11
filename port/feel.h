@@ -56,6 +56,12 @@ int feel_auto_fly(void);             /* Auto line changes on the fly (96 PC) as 
 int feel_manual_goalie(void);
 int feel_fake_pads(void);            /* Debug: two pretend controllers, so a 1 v 1 plays as 2 v 2 (pads 3 and 4) */
 int feel_four_players(void);         /* 1: pads 3 and 4 and the 94 stars and arrows. 0: the game's two pads only */
+int feel_console_fake(void);         /* 1: 95 Genesis A-tap fake shot in the offensive zone. Default off. Locked online */
+int feel_clear_puck(void);           /* 1: 94 Genesis A-tap flip out of the defensive zone. Default off. Locked online */
+int feel_goalie_button(void);        /* 1: Manual goalie is its own button. 0: hold pass. Locked online */
+void feel_set_console_fake(int on);
+void feel_set_clear_puck(int on);
+void feel_set_goalie_button(int on);
 /* the Game page's Skill level row (port/skill.c): 0 rookie, 1 pro, 2 all-star.
  * Pro is 1× the current feel; All-Star/Rookie scale off that. */
 int feel_skill(void);

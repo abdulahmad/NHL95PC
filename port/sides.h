@@ -32,10 +32,24 @@ int port_sides_pad_input(int local, int mdrt_input);    /* 1: the screen used it
 /* F1-F8 / F9 / F10: 0 when this machine has no seat on that team. sc is the XT code. */
 unsigned port_sides_filter_hot(unsigned sc, int machine);
 
-/* seat -> the game's ctl* (tests). team 0 Away / 1 Home. local 0 keyboard, 1+ a pad. */
+/* seat -> the game's ctl* (tests). team 0 Away / 1 Home.
+ * local 0 keyboard, SIDES_LOCAL_MOUSE the mouse, 1+ a pad. */
+#define SIDES_LOCAL_MOUSE 16
 void sides_seat_ctl(int team, int32_t home, int32_t vis, int32_t *ctl_team, uint32_t *ctl_side);
 uint32_t sides_dev_for_slot(int slot, int local);       /* slot 0 ctl1, 1 ctl2 */
 int sides_pad_index(int local);                         /* pads[] index, or -1 */
 unsigned sides_filter_hot(unsigned sc, unsigned teams); /* teams bit 0 Away, bit 1 Home */
+
+/* The select-sides picture, the same boxes Overbar draws (ob_sides_draw at the pinned commit).
+ * team -1 is the middle column. sides_drop_team returns -2 when the point is outside the panel. */
+int sides_panel(int w, int h, int teams, int ndev, int *x0, int *y0, int *bw, int *cw);
+int sides_drop_team(int x, int y, int w, int h, int teams, int ndev);
+int sides_device_hit(int x, int y, int index, int team, int w, int h, int teams, int ndev);
+/* presses that take a device from `from` to `to` (-1 middle, 0 away, 1 home). Each step is 0 left, 1 right. */
+int sides_move_inputs(int from, int to, int *out);
+
+/* game pixels. button is an SDL button (1 left, 3 right). what: 0 move, 1 down, 2 up.
+ * Left-drag the Mouse row onto Away, the middle, or Home. 1 when the screen used it. */
+int port_sides_pointer(int x, int y, int button, int what);
 
 #endif

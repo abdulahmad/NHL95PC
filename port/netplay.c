@@ -33,6 +33,8 @@
 #include "snap.h"
 #include "overbar_client.h"
 #include "feel.h"
+#include "bindings.h"
+#include "goalie.h"
 #include "season.h"
 #include "sides.h"
 #include "pads4.h"
@@ -193,6 +195,7 @@ static uint16_t read_pad(int p)                 /* p: the seat; its game slot re
     if (p < 0) return 0;
     if ((p ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
     game_call(ReadControllerPad, (uint32_t)p, (uint32_t)(uintptr_t)&pad);
+    if (goalie_button_pull(p)) pad |= 0x80;          /* Manual goalie: one bit both machines already share */
     game_call(ReadHotKeys, (uint32_t)(uintptr_t)&hot, 0);
     if (hot) {
         unsigned sc = port_sides_filter_hot((unsigned)hot & 0x7Fu, nh_net ? ob_net_me(nh_net) : 0);
@@ -671,6 +674,7 @@ static void make_settings(nh_settings *s)
     s->randseed = rs ? *rs : 0;
     s->pertime = PerTimeTab[0];
     s->clock = tm ? (uint32_t)(tm->tm_hour * 3600 + tm->tm_min * 60 + tm->tm_sec) : 0;
+    if (bindings_goalie_mapped()) feel_set_goalie_button(1);   /* the host's mapping, locked with the other Game rows */
     ob_game_pack(overbar_client_host(), s->game, sizeof s->game);
 }
 
@@ -770,8 +774,8 @@ void nh_playgame_enter(int32_t *handle)
         snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition, season, or playoff game");
         return;
     }
-    if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
-        snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
+    if (my_dev != 1 && my_dev != 2 && my_dev != 4 && my_dev != 8 && my_dev != 0 && my_dev != 0x10) {
+        snprintf(nh_why, sizeof nh_why, "pick the keyboard, the mouse or a joystick for player 1");
         return;
     }
     if (!nh_net) {
