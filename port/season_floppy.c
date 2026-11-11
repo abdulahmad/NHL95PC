@@ -232,3 +232,34 @@ int season_install_floppy(const char *floppy, const char *root, char *league_out
     /* leave PINFO +16h = 2 so File > Import Databases > Player still sees an export */
     return 0;
 }
+
+int season_mark_imported(const char *dir, int team)
+{
+    char path[512];
+    unsigned char entry[30];
+    if (!dir || team < 0 || team >= 26) return -1;
+    join2(path, (int)sizeof path, dir, "PINFO.DB");
+    if (pinfo_entry(path, team, entry, 0, 0, 0)) return -1;
+    entry[0x16] = 1;
+    return pinfo_entry(path, team, entry, 1, 0, 0);
+}
+
+int season_write_player_id(const char *dir, int team, const char *league)
+{
+    char path[512], pid[512];
+    unsigned char entry[30], tb = (unsigned char)team, dir13[13];
+    FILE *f;
+    int ok;
+    if (!dir || !league || !league[0] || team < 0 || team >= 26) return -1;
+    join2(path, (int)sizeof path, dir, "PINFO.DB");
+    if (pinfo_entry(path, team, entry, 0, 0, 0)) return -1;
+    memset(dir13, 0, sizeof dir13);
+    memcpy(dir13, league, strlen(league) < 12 ? strlen(league) : 12);
+    join2(pid, (int)sizeof pid, dir, "PLAYER.ID");
+    f = fopen(pid, "wb");
+    if (!f) return -1;
+    ok = fwrite(&tb, 1, 1, f) == 1 && fwrite(entry, 1, 11, f) == 11 && fwrite(dir13, 1, 13, f) == 13 &&
+         fwrite(entry + 0x1A, 1, 4, f) == 4;
+    if (fclose(f) || !ok) return -1;
+    return 0;
+}

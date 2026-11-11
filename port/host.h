@@ -154,6 +154,7 @@ void input_bind_stick(int stick, int pad);   /* game-port stick 0/1 reads pads[p
 /* online play (netplay.c) */
 void netplay_install(void);                      /* after install_overrides, before the game thread */
 void netplay_main_poll(void);                    /* main thread, every pass of the loop */
+void netplay_pump(void);                         /* game thread: poll the room while waiting (mirrors) */
 int netplay_running(void);                       /* a session drives the game: its clock runs while the overlay is open */
 int netplay_dos_time(int *h, int *m, int *s, int *cs);  /* int 21h/2Ch in a session: the host's time, on by the records run */
 #endif

@@ -12,8 +12,12 @@
 int season_pack_floppy(const char *from, const char *to, int team, const char *league, int touch_src);
 /* 1 if ImportPlayerTeam can open this floppy for team/league. */
 int season_floppy_ready(const char *dir, int team, const char *league);
-/* copy the floppy into root/<league>/ (mkdir), mark the team imported. league_out
- * gets the folder name. 0 ok, -1 fail. */
+/* copy the floppy into root/<league>/ (mkdir). league_out gets the folder name.
+ * 0 ok, -1 fail. PINFO +16h stays 2 (an export) unless season_mark_imported. */
 int season_install_floppy(const char *floppy, const char *root, char *league_out, int league_size);
+/* this machine has imported team: PINFO +16h = 1 so the calendar will not ask. */
+int season_mark_imported(const char *dir, int team);
+/* PLAYER.ID for FindLeagueFloppy / GetLeagueId (team byte, 11-byte name, league, version). */
+int season_write_player_id(const char *dir, int team, const char *league);
 
 #endif

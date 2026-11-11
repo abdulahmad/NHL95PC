@@ -112,6 +112,21 @@ int main(void)
         if (f) fclose(f);
         CHECK(entry[0x16] == 2); /* still an export, so Import Databases > Player takes it */
         CHECK(season_floppy_ready(dest, 5, "FOO.LP"));
+        CHECK(season_mark_imported(dest, 5) == 0);
+        snprintf(srcdb, sizeof srcdb, "%s/PINFO.DB", dest);
+        f = fopen(srcdb, "rb");
+        CHECK(f && fseek(f, 0x20 + 5 * 30, SEEK_SET) == 0 && fread(entry, 1, 30, f) == 30);
+        if (f) fclose(f);
+        CHECK(entry[0x16] == 1); /* calendar: this machine has imported it */
+        CHECK(!season_floppy_ready(dest, 5, "FOO.LP"));
+        CHECK(season_write_player_id(dest, 5, "FOO.LP") == 0);
+        snprintf(srcdb, sizeof srcdb, "%s/PLAYER.ID", dest);
+        f = fopen(srcdb, "rb");
+        CHECK(f && fread(pid, 1, 29, f) == 29);
+        if (f) fclose(f);
+        CHECK(pid[0] == 5);
+        CHECK(!memcmp(pid + 1, "OILERS", 6));
+        CHECK(!memcmp(pid + 12, "FOO.LP", 6));
     }
 
     /* league folder has no GAME.SET (New League writes it in the game folder while gamemode is 0) */

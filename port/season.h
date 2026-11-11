@@ -12,6 +12,7 @@
 #define PORT_SEASON_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 struct ob_host;
 struct ob_net;
@@ -24,6 +25,18 @@ void port_season_poll(void);
 /* overlay is drawn: rebuild the File bar if the league changed, keep A: on the
  * copy used in play, log season lines when OVERBAR_TEST_LOG is set */
 void port_season_tick(void);
+/* WaitTicks: the net host starts a C vs D game as a spectator when both clients are in PlayGame */
+void port_season_idle(void);
+/* 1: this PlayGame is an online season match (the other human is in the room). 0: keep it local. */
+int port_season_want_online(void);
+/* 1: this PlayGame is the host watching C vs D (no A/B post) */
+int port_season_spectating(void);
+/* pad owners for a spectator match: pad 0 and 1 are the two guests. 0 ok, -1 none */
+int port_season_spectate_owners(int8_t owner[16], int npad);
+/* a guest about to PlayGame vs another guest: tell the host to watch */
+void port_season_note_play(void);
+/* after PlayGame of a league match: mark it played, drop mirrors, sync */
+void port_season_after_game(void);
 /* 1: dos is on a virtual drive and *out is the host path; 0: not virtual; -1: virtual, no disk */
 int port_season_map_dos(const char *dos, char *out, int size);
 int port_season_diskfree(int letter, unsigned *total_clusters, unsigned *free_clusters,

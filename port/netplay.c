@@ -17,7 +17,8 @@
  * Host / Connect opens a room at once (port_season_bind_net), so overlay Pick / Sync have the socket before a
  * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) shows Overbar's select-sides
  * screen (every connected controller; the same module online) and then begins a match in that room. A loaded game
- * stays local. The match ends with PlayGame; the room lasts until Leave.
+ * stays local. A season game vs the computer, or two humans on this machine, stays local even if the room is up.
+ * The match ends with PlayGame; the room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
  *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
@@ -770,7 +771,12 @@ void nh_playgame_enter(int32_t *handle)
         snprintf(nh_why, sizeof nh_why, "online play starts with a new exhibition, season, or playoff game");
         return;
     }
-    if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
+    /* a room does not make A vs CPU / A vs B an online game */
+    if (gamemode == 2 && nh_net && !port_season_want_online() && !port_season_spectating()) {
+        port_sides_wait();
+        return;
+    }
+    if (!port_season_spectating() && my_dev != 2 && my_dev != 4 && my_dev != 8) {
         snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
         return;
     }
@@ -797,7 +803,9 @@ void nh_playgame_enter(int32_t *handle)
     }
     nh_close_page = 1;                               /* sides takes the keys; the overlay would swallow them */
     while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
-    if (st == OB_NET_LOBBY) port_sides_wait();      /* same Overbar screen as local; the host's model is the one */
+    if (port_season_want_online() && nh_net && !ob_net_is_host(nh_net)) port_season_note_play();
+    if (st == OB_NET_LOBBY && !port_season_spectating())
+        port_sides_wait();                          /* same Overbar screen as local; the host's model is the one */
     if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
         ob_net_match m;
         memset(&m, 0, sizeof m);
@@ -805,7 +813,9 @@ void nh_playgame_enter(int32_t *handle)
             int p;
             for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
         }
-        if (port_sides_ob() && port_sides_ob()->done)
+        if (port_season_spectating()) {
+            if (port_season_spectate_owners(m.owner, NH_PADS)) { m.owner[0] = 1; m.owner[1] = 2; }
+        } else if (port_sides_ob() && port_sides_ob()->done)
             ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
         else {
             m.owner[0] = 0;
@@ -855,6 +865,10 @@ void nh_playgame_enter(int32_t *handle)
 /* PlayGame has returned: the session's game is over */
 void nh_playgame_exit(void)
 {
+    if (!nh_sim && !nh_take && !nh_dead && !nh_finish) {
+        port_season_after_game();
+        return;
+    }
     if (!nh_net && !nh_sim && !nh_dead && !nh_finish) return;
     if (nh_selftest) { nh_selftest = 0; snap_free(&st_snap); fprintf(stderr, "snaptest: the game is over (phase %d)\n", st_phase); }
     nh_take = 0;
@@ -864,6 +878,16 @@ void nh_playgame_exit(void)
     nh_quiet = 0;
     end_match("the game is over");
     restore_local();
+    port_season_after_game();
+}
+
+void netplay_pump(void)
+{
+    if (!nh_lock) return;
+    SDL_LockMutex(nh_lock);
+    if (nh_net) ob_net_poll(nh_net);
+    port_season_poll();
+    SDL_UnlockMutex(nh_lock);
 }
 
 /* ---- int 21h / 2Ch in a session: the host's time when it began, on by the records run (20 a second) ---- */

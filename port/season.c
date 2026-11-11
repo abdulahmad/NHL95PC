@@ -3,12 +3,12 @@
  *
  * Per-game season hooks. A team flagged for export at New League (+18h == 2) is a
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
- * name ("Edmonton - Bob": the player's name the host typed at New League), and the
- * copy waits as the guest's A: disk for File > Import Databases. No file names. It copies that team's seven DBs + PINFO + PLAYER.ID, not the whole
- * league tree. Virtual A: stays mounted on the copy used in play.
+ * name. The first copy is imported here (no File > Import Databases). Virtual A:
+ * is the other human's mirror when the calendar needs it; no insert-disk box.
  */
 #include "season.h"
 
+#include "host.h"
 #include "overbar_client.h"
 #include "overbar/files.h"
 #include "overbar/net.h"
@@ -26,15 +26,25 @@
 #include <sys/stat.h>
 #ifdef _WIN32
 #include <direct.h>
+#include <io.h>
 #define MKDIR(p) _mkdir(p)
+#define UNLINK(p) _unlink(p)
+#define SYM(s) "_" s
 #else
 #include <unistd.h>
 #define MKDIR(p) mkdir(p, 0777)
+#define UNLINK(p) unlink(p)
+#define SYM(s) s
 #endif
 
-extern unsigned char curleague;
-extern int gamemode;
-extern int lgstate[];                   /* the league's saved mode state: its folder name at +4 */
+#define NH_SEASON_PLAY 10               /* room message: a guest is in PlayGame vs another guest */
+
+extern unsigned char curleague, leaguedbfmt, leaguedbfmt2;
+extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[];
+extern short lggameidx, HomeTeam, VisTeam;
+extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[], PlayGame[];
+extern volatile int intro_skip, quit_requested;
+void MakeTeamDbFmt();
 
 static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
 {
@@ -64,9 +74,12 @@ static ob_room g_room;
 static ob_net *g_net;
 static ob_host *g_host;
 static char g_work[260], g_root[260], g_play_dir[260];
-static int g_ready, g_play_on, g_installed_team = -1;
+static int g_ready, g_play_on, g_installed_team = -1, g_hold_a, g_in_league, g_in_play, g_join_sync, g_hooks;
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
+static volatile int g_spectate;
+static int g_play_home, g_play_vis, g_play_from[OB_NET_MAX_MACHINES], g_nplay;
+void *port_plg_cont;
 
 static const char *game_root(void)
 {
@@ -169,14 +182,30 @@ static int copy_team_files(const char *from, const char *to, int team)
     return season_pack_floppy(from, to, team, league, 1);
 }
 
-static void take_pick_disk(const char *disk, int team)
+static void open_as_league(const char *name, int team)
 {
-    char name[16];
-    if (team < 0 || g_installed_team == team) return;
-    if (season_install_floppy(disk, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return;
+    if (!name || !name[0]) return;
     snprintf((char *)&curleague, 16, "%s", name);
     snprintf((char *)lgstate + 4, 16, "%s", name);
     g_installed_team = team;
+}
+
+static void take_pick_disk(const char *disk, int team)
+{
+    char name[16], dest[512];
+    if (team < 0 || g_installed_team == team) return;
+    if (season_install_floppy(disk, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return;
+    snprintf(dest, sizeof dest, "%s/%s", g_root[0] ? g_root : game_root(), name);
+    season_mark_imported(dest, team);
+    open_as_league(name, team);
+}
+
+static void host_clear_player_id(void)
+{
+    char dir[512], path[600];
+    if (!is_master_copy() || league_host_dir(dir, (int)sizeof dir)) return;
+    snprintf(path, sizeof path, "%s/PLAYER.ID", dir);
+    UNLINK(path);
 }
 
 static void unmount_play(void)
@@ -203,6 +232,8 @@ static void mount_play(void)
 {
     char dir[512], disk[512];
     int team;
+    if (g_hold_a) return;               /* PlayLeagueGame is using A: as the other human's copy */
+    host_clear_player_id();             /* master: GetLeagueId -1 so A vs B stays on the HD */
     /* CreateNewLeague strcpy's curleague, then asks schedule/database (frames tick here),
        then mkdir. ob_vdrive_mount mkdir's, so mounting A: on that path first makes the
        game's mkdir fail → "Error while creating league!". A guest's picked disk is A:
@@ -287,20 +318,40 @@ static int op_copy(void *ud, int team, const char *dir)
     return with_pack_drive(team, dir, copy_team_files);
 }
 
-static int import_into_league(const char *from, const char *to, int team)
-{
-    return copy_team_files(from, to, team);
-}
-
 static int op_import(void *ud, int team, const char *dir)
 {
-    char to[512];
+    char name[16], dest[512];
     (void)ud;
-    if (league_host_dir(to, (int)sizeof to)) return -1;
-    ob_vdrive_mount(&g_vdrive, 'A', dir);
-    if (import_into_league(dir, to, team)) { restore_play(); return -1; }
+    if (team < 0 || team >= 26 || !dir) return -1;
+    if (season_install_floppy(dir, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return -1;
+    snprintf(dest, sizeof dest, "%s/%s", g_root[0] ? g_root : game_root(), name);
+    if (season_mark_imported(dest, team)) return -1;
+    open_as_league(name, team);
     restore_play();
     return 0;
+}
+
+__attribute__((naked)) static int watcall3(void *fn, uint32_t a, uint32_t d, uint32_t b)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %ebx\n\tpopl %ebp\n\tret");
+}
+
+__attribute__((naked)) static void watcall4v(void *fn, uint32_t a, uint32_t d, uint32_t b, uint32_t c)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\tmovl 24(%ebp), %ecx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %ebx\n\tpopl %ebp\n\tret");
+}
+
+__attribute__((naked)) static void call_playgame(int32_t *fh)
+{
+    __asm__ volatile("movl 4(%esp), %eax\n\tcall " SYM("PlayGame") "\n\tret");
 }
 
 /* eax, edx, ebx, ecx, then two stack args; Watcom pops the stack extras */
@@ -484,6 +535,256 @@ static void diag_log(void)
     fputs(line, stderr);
 }
 
+static int team_of_rec(const char *rec)
+{
+    int i;
+    const unsigned char *t = teams_tab();
+    if (!rec) return -1;
+    for (i = 0; i < 26; i++)
+        if (memcmp(t + i * 30, rec, 11) == 0) return i;
+    return -1;
+}
+
+static int machine_of_team(int team)
+{
+    int kind[OB_SEASON_TEAMS], k;
+    char who[OB_SEASON_TEAMS][OB_NET_NAME + 1];
+    if (!g_net || team < 0 || team >= 26) return -1;
+    if (team_local(team)) return ob_net_me(g_net);
+    if (g_season.claim == OB_SEASON_TEAMS + team) return ob_net_me(g_net);
+    if (ob_net_is_host(g_net)) {
+        if (ob_season_roster(&g_season, kind, who)) return -1;
+        if (kind[team] == OB_SEASON_HOSTS) return 0;
+        if (kind[team] != OB_SEASON_OWNED && kind[team] != OB_SEASON_WAITING) return -1;
+        for (k = 0; k < OB_NET_MAX_MACHINES; k++)
+            if ((ob_net_members(g_net) >> k & 1) && who[team][0] &&
+                strcmp(ob_net_name_of(g_net, k), who[team]) == 0)
+                return k;
+        return -1;
+    }
+    if (!g_season.roster_have) return -1;
+    if (g_season.roster_kind[team] == OB_SEASON_HOSTS) return 0;
+    if (g_season.roster_kind[team] == OB_SEASON_OWNED && g_season.roster[team][0]) {
+        for (k = 0; k < OB_NET_MAX_MACHINES; k++)
+            if ((ob_net_members(g_net) >> k & 1) &&
+                strcmp(ob_net_name_of(g_net, k), g_season.roster[team]) == 0)
+                return k;
+    }
+    return -1;
+}
+
+static int wait_mirror(int from, char *dir, int size)
+{
+    while (!quit_requested) {
+        netplay_pump();
+        if (ob_season_mirror(&g_season, from, dir, size)) return 0;
+        plat_sleep_ms(2);
+    }
+    return -1;
+}
+
+static int find_floppy(char *file, char *name, char *dir)
+{
+    return watcall3((void *)FindLeagueFloppy, (uint32_t)(uintptr_t)file, (uint32_t)(uintptr_t)name,
+                    (uint32_t)(uintptr_t)dir);
+}
+
+int port_wait_floppy(char *file, char *name, char *dir)
+{
+    char lg[512], pid[600], mdir[512];
+    const char *lgname = open_league();
+    int team = team_of_rec(name), other, me, mine, r;
+    g_hold_a = 1;
+    if (team < 0) return find_floppy(file, name, dir);
+    me = g_net ? ob_net_me(g_net) : 0;
+    other = machine_of_team(team);
+    mine = g_season.claim >= OB_SEASON_TEAMS ? g_season.claim - OB_SEASON_TEAMS : lgplayteam;
+    if (g_net && other >= 0 && other != me) {
+        unsigned others = ob_net_members(g_net) & ~(1u << me);
+        if (!league_host_dir(lg, (int)sizeof lg) && lgname[0] && mine >= 0 && mine < 26)
+            season_write_player_id(lg, mine, lgname);
+        if (others) ob_season_mirror_send(&g_season, others);
+        if (is_master_copy() && !league_host_dir(lg, (int)sizeof lg)) {
+            snprintf(pid, sizeof pid, "%s/PLAYER.ID", lg);
+            UNLINK(pid);
+        }
+        if (wait_mirror(other, mdir, (int)sizeof mdir) == 0) {
+            mount_a(mdir);
+            return find_floppy(file, name, dir);
+        }
+    }
+    if (!league_host_dir(lg, (int)sizeof lg) && exists_path(lg) && lgname[0]) {
+        season_write_player_id(lg, team, lgname);
+        mount_a(lg);
+        r = find_floppy(file, name, dir);
+        if (is_master_copy()) {
+            snprintf(pid, sizeof pid, "%s/PLAYER.ID", lg);
+            UNLINK(pid);
+        }
+        return r;
+    }
+    return find_floppy(file, name, dir);
+}
+
+__attribute__((naked)) static void wait_floppy_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpushl %ebx\n\tpushl %edx\n\tpushl %eax\n\t"
+        "call " SYM("port_wait_floppy") "\n\taddl $12, %esp\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret");
+}
+
+void port_playleague_enter(void) { g_in_league = 1; g_hold_a = 1; }
+
+void port_playleague_exit(void)
+{
+    g_in_league = 0;
+    port_season_after_game();
+}
+
+__attribute__((naked)) static void playleague_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tcall " SYM("port_playleague_enter") "\n\tpopal\n\t"
+        "pushl $1f\n\tpushl $0xC4\n\tjmp *" SYM("port_plg_cont") "\n"
+        "1:\n\tpushal\n\tcall " SYM("port_playleague_exit") "\n\tpopal\n\tret");
+}
+
+static int entry_push(const char *fn, uint32_t n)
+{
+    const uint8_t *p = (const uint8_t *)fn;
+    uint32_t v;
+    memcpy(&v, p + 1, 4);
+    return p[0] == 0x68 && v == n;
+}
+
+static void install_hooks(void)
+{
+    if (g_hooks) return;
+    if (entry_push(WaitLeagueFloppy, 0x74)) patch_jmp(WaitLeagueFloppy, wait_floppy_entry);
+    if (entry_push(PlayLeagueGame, 0xC4)) {
+        port_plg_cont = PlayLeagueGame + 5;
+        patch_jmp(PlayLeagueGame, playleague_entry);
+    }
+    g_hooks = 1;
+}
+
+static void auto_sync(void)
+{
+    int st;
+    if (!net_guest() || !open_league()[0] || ob_season_busy(&g_season)) return;
+    st = g_season.state;
+    if (st != OB_SEASON_IDLE && st != OB_SEASON_SYNCED && st != OB_SEASON_FAILED) return;
+    if (!g_join_sync || g_season.nplayed > 0) {
+        if (ob_season_sync(&g_season, 0) == 0) g_join_sync = 1;
+    }
+}
+
+static void on_play_msg(void *ud, int from, int type, const void *data, size_t size)
+{
+    const uint8_t *p = data;
+    int16_t home, vis;
+    (void)ud;
+    if (type != NH_SEASON_PLAY || !p || size < 8 || p[0] != 1) return;
+    if (from < 0 || from >= OB_NET_MAX_MACHINES) return;
+    memcpy(&home, p + 2, 2);
+    memcpy(&vis, p + 4, 2);
+    if (!g_play_from[from]) {
+        g_play_from[from] = 1;
+        g_nplay++;
+    }
+    g_play_home = home;
+    g_play_vis = vis;
+    if (g_nplay >= 2 && g_net && ob_net_is_host(g_net) && !g_in_league) g_spectate = 1;
+}
+
+int port_season_want_online(void)
+{
+    int opp, me;
+    if (g_spectate) return 1;
+    if (!g_net || gamemode != 2) return 0;
+    if (!dword_DDD3C) return 0;
+    me = ob_net_me(g_net);
+    opp = machine_of_team(dword_DDD34);
+    if (opp < 0 || opp == me) return 0;
+    return 1;
+}
+
+int port_season_spectating(void) { return g_spectate && g_net && ob_net_is_host(g_net); }
+
+int port_season_spectate_owners(int8_t owner[16], int npad)
+{
+    int a = -1, b = -1, k, n = 0;
+    if (!owner || npad < 2 || !g_net) return -1;
+    for (k = 0; k < npad; k++) owner[k] = -1;
+    for (k = 0; k < OB_NET_MAX_MACHINES; k++)
+        if (g_play_from[k]) {
+            if (n == 0) a = k;
+            else if (n == 1) b = k;
+            n++;
+        }
+    if (a < 0 || b < 0) return -1;
+    if (a > b) { k = a; a = b; b = k; }
+    owner[0] = (int8_t)a;
+    owner[1] = (int8_t)b;
+    return 0;
+}
+
+void port_season_note_play(void)
+{
+    uint8_t msg[8];
+    int16_t home = HomeTeam, vis = VisTeam;
+    if (!g_net || ob_net_is_host(g_net)) return;
+    memset(msg, 0, sizeof msg);
+    msg[0] = 1;
+    msg[1] = (uint8_t)(lgplayteam < 0 ? 0 : lgplayteam);
+    memcpy(msg + 2, &home, 2);
+    memcpy(msg + 4, &vis, 2);
+    memcpy(msg + 6, &lggameidx, 2);
+    ob_net_send(g_net, 0, NH_SEASON_PLAY, msg, sizeof msg);
+}
+
+void port_season_after_game(void)
+{
+    if (g_in_league) return;            /* PlayLeagueGame still posting into savleague1/2 */
+    if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
+    ob_season_mirror_drop(&g_season);
+    g_hold_a = 0;
+    g_spectate = 0;
+    g_nplay = 0;
+    memset(g_play_from, 0, sizeof g_play_from);
+    if (net_guest() && !ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
+    restore_play();
+}
+
+void port_season_idle(void)
+{
+    char d1[512], d2[512];
+    int32_t fh = -1;
+    int mh, mv;
+    const unsigned char *tab;
+    if (!g_ready || g_in_play || g_in_league || !g_spectate || intro_skip) return;
+    if (!g_net || !ob_net_is_host(g_net)) return;
+    netplay_pump();
+    mh = machine_of_team(g_play_home);
+    mv = machine_of_team(g_play_vis);
+    if (mh < 0 || mv < 0 || mh == mv) return;
+    if (!ob_season_mirror(&g_season, mh, d1, (int)sizeof d1)) return;
+    if (!ob_season_mirror(&g_season, mv, d2, (int)sizeof d2)) return;
+    tab = teams_tab();
+    g_in_play = 1;
+    HomeTeam = (int16_t)g_play_home;
+    VisTeam = (int16_t)g_play_vis;
+    gamemode = 2;
+    watcall4v((void *)MakeTeamDbFmt, (uint32_t)(uintptr_t)&leaguedbfmt, (uint32_t)(uintptr_t)d1,
+              (uint32_t)(uintptr_t)tab, (uint32_t)g_play_home);
+    watcall4v((void *)MakeTeamDbFmt, (uint32_t)(uintptr_t)&leaguedbfmt2, (uint32_t)(uintptr_t)d2,
+              (uint32_t)(uintptr_t)tab, (uint32_t)g_play_vis);
+    call_playgame(&fh);
+    g_in_play = 0;
+    port_season_after_game();
+}
+
 void port_season_setup(ob_host *h)
 {
     ob_season_ops ops;
@@ -503,13 +804,14 @@ void port_season_setup(ob_host *h)
     ops.league_dir = op_dir;
     ops.add_human = op_add_human;
     ops.player = op_player;
-    ops.give_as_disk = 1;           /* the picked team is this player's floppy in A: */
+    ops.give_as_disk = 0;           /* pick installs the copy; the calendar opens it */
     me = h->online.name[0] ? h->online.name : "player";
     ob_files_init(&g_files, files_send, NULL);
     ob_season_init(&g_season, &ops, g_work, me, &g_files, season_send, NULL);
     ob_season_set(h, &g_season, 0, NULL);
     ob_season_set_names(h, team_name, NULL);
-    ob_season_set_hint(h, "Load: File > Import Databases > Player");
+    ob_season_set_hint(h, NULL);
+    install_hooks();
     g_ready = 1;
 }
 
@@ -541,7 +843,7 @@ void port_season_unbind_net(void)
 
 void port_season_poll(void)
 {
-    if (g_net) ob_room_poll(&g_room, NULL, NULL);
+    if (g_net) ob_room_poll(&g_room, on_play_msg, NULL);
 }
 
 void port_season_tick(void)
@@ -554,6 +856,7 @@ void port_season_tick(void)
         const char *lp = getenv("OVERBAR_TEST_LOG");
         if (lp && lp[0] && g_net && !ob_net_is_host(g_net) && ++t >= 120) { t = 0; ob_season_teams(&g_season, 0); }
     }
+    auto_sync();
     mount_play();
     diag_log();
 }
