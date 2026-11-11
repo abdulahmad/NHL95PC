@@ -857,6 +857,11 @@ static void install_hooks(void)
     g_hooks = 1;
 }
 
+void port_season_install_hooks(void)
+{
+    install_hooks();
+}
+
 static void auto_sync(void)
 {
     int st;
@@ -969,7 +974,6 @@ void port_season_setup(ob_host *h)
     ob_season_set(h, &g_season, 0, NULL);
     ob_season_set_names(h, team_name, NULL);
     ob_season_set_hint(h, NULL);
-    install_hooks();
     g_ready = 1;
 }
 
