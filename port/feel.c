@@ -30,6 +30,7 @@
 
 #ifndef FEEL_TEST
 #include "host.h"
+#include "ctlrows.h"
 #endif
 
 #ifdef _WIN32
@@ -439,6 +440,7 @@ static void changed(void *ctx, int index, int value)
     profile_from_rows();
 #ifndef FEEL_TEST
     if (!loading) settings_save_all();
+    ctlrows_sync(feel_four_players());
 #endif
 }
 
@@ -489,6 +491,9 @@ void feel_register(ob_host *h, const char *ini_path)
     profile_from_rows();
     (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 int feel_fights(void)
@@ -554,6 +559,9 @@ void feel_session_begin(const char *text, size_t size)
     for (i = 0; i < O_COUNT; i++) g_snap[i] = ob_game_get(g_host, i);
     g_lock = 1;                         /* a menu change now cannot move the rules the other machine still has */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_session_end(void)
@@ -563,6 +571,9 @@ void feel_session_end(void)
     loading = 1;
     ob_game_session_end(g_host);
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_write_ini(FILE *f)

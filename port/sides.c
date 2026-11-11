@@ -32,12 +32,69 @@ void sides_seat_ctl(int team, int32_t home, int32_t vis, int32_t *ctl_team, uint
 uint32_t sides_dev_for_slot(int slot, int local)
 {
     if (local == 0) return 8;               /* keyboard */
+    if (local == SIDES_LOCAL_MOUSE) return 1;   /* mouse */
     return slot == 0 ? 2u : 4u;             /* Joystick One / Two: the seat's game-port slot */
 }
 
 int sides_pad_index(int local)
 {
-    return local > 0 ? local - 1 : -1;
+    if (local <= 0 || local == SIDES_LOCAL_MOUSE) return -1;
+    return local - 1;
+}
+
+/* Overbar's ob_sides_draw (pinned commit): the panel, then team 0 | middle | the other teams. */
+int sides_panel(int w, int h, int teams, int ndev, int *x0, int *y0, int *bw, int *cw)
+{
+    int cols, bh;
+    if (w < 120 || h < 80 || teams < 1) return 0;
+    cols = teams + 1;
+    *bw = w - 16 > 360 ? 360 : w - 16;
+    bh = 40 + (ndev > 0 ? ndev : 1) * 14;
+    if (bh > h - 8) bh = h - 8;
+    *x0 = (w - *bw) / 2;
+    *y0 = (h - bh) / 2;
+    *cw = (*bw - 8) / cols;
+    return bh;
+}
+
+int sides_drop_team(int x, int y, int w, int h, int teams, int ndev)
+{
+    int x0, y0, bw, cw, bh, cols, t, rel;
+    bh = sides_panel(w, h, teams, ndev, &x0, &y0, &bw, &cw);
+    if (!bh || cw < 1) return -2;
+    if (x < x0 || y < y0 || x >= x0 + bw || y >= y0 + bh) return -2;
+    cols = teams + 1;
+    rel = x - (x0 + 4);
+    if (rel < 0) rel = 0;
+    t = rel / cw;
+    if (t >= cols) t = cols - 1;
+    if (teams == 1) return t == 0 ? -1 : 0;
+    if (t <= 0) return 0;
+    if (t == 1) return -1;
+    return t - 1;
+}
+
+int sides_device_hit(int x, int y, int index, int team, int w, int h, int teams, int ndev)
+{
+    int x0, y0, bw, cw, bh, col, rx, ry;
+    bh = sides_panel(w, h, teams, ndev, &x0, &y0, &bw, &cw);
+    if (!bh || index < 0 || cw < 6) return 0;
+    if (teams == 1) col = team < 0 ? 0 : 1;
+    else col = team < 0 ? 1 : team == 0 ? 0 : team + 1;
+    rx = x0 + 4 + col * cw + 2;
+    ry = y0 + 30 + index * 14;
+    return x >= rx && x < rx + (cw - 4) && y >= ry && y < ry + 12;
+}
+
+int sides_move_inputs(int from, int to, int *out)
+{
+    int n = 0;
+    if (!out || from == to) return 0;
+    if (to < 0) { out[n++] = from == 0 ? 1 : 0; return n; }          /* a side back to the middle */
+    if (from < 0) { out[n++] = to == 0 ? 0 : 1; return n; }          /* the middle out to a side */
+    out[n++] = from == 0 ? 1 : 0;                                    /* through the middle */
+    out[n++] = to == 0 ? 0 : 1;
+    return n;
 }
 
 unsigned sides_filter_hot(unsigned sc, unsigned teams)
@@ -116,6 +173,7 @@ static int g_slot[4] = { 0, 1, 2, 3 };    /* each seat's game slot (pads4_map_se
 static struct ob_net *g_net;
 static volatile int g_want;         /* game thread asks the main thread to open */
 static volatile int g_left;         /* BACK in the middle: leave without applying */
+static int drag_on;                 /* the Mouse row is being dragged */
 static void add_devices(void);
 
 static uint8_t pad_dev(uint32_t ctl) { return ctl == 1 || ctl == 2 || ctl == 4 || ctl == 8 ? (uint8_t)ctl : 0; }
@@ -173,7 +231,9 @@ static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
         team[m] = seat[m].team == 1 ? 1 : 2;                /* column 1 Home (cont 1), 0 Away (cont 2) */
         mine[m] = seat[m].owner == g_sides.me;
         local[m] = seat[m].local;
-        kb[m] = mine[m] && local[m] == 0;
+        /* keyboard and mouse are read by the game's own two slots, on every machine the same way
+         * (the host's seat table is the one both sides apply) */
+        kb[m] = local[m] == 0 || local[m] == SIDES_LOCAL_MOUSE;
         count[team[m]]++;
     }
     /* Debug: pretend controllers fill both teams to two (one person: three of them, a 2 v 2) */
@@ -266,6 +326,7 @@ static void add_devices(void)
 {
     int i, n = input_pad_count();
     ob_sides_add(&g_sides, 0, "Keyboard");
+    ob_sides_add(&g_sides, SIDES_LOCAL_MOUSE, "Mouse");
     for (i = 0; i < n; i++) {
         const char *name = input_pad_name(i);
         ob_sides_add(&g_sides, 1 + i, name && name[0] ? name : "Controller");
@@ -282,6 +343,7 @@ static void place(int local, int team)
 static int local_of_dev(uint32_t dev)
 {
     if (dev == 8) return 0;
+    if (dev == 1) return SIDES_LOCAL_MOUSE;
     if (dev == 2) return 1;                         /* Joystick One: first pad until a bind says else */
     if (dev == 4) return input_pad_count() > 1 ? 2 : 1;
     return -1;
@@ -304,6 +366,7 @@ void port_sides_poll(void)
 
 int port_sides_wait(void)
 {
+    drag_on = 0;
     pads4_clear();
     if (skip_screen()) {
         if (!g_net) pads4_fake_fill();                      /* the game's own set-up plus the pretend pads */
@@ -315,6 +378,7 @@ int port_sides_wait(void)
     while (!quit_requested && !g_left && !g_sides.done)
         plat_sleep_ms(2);
     g_want = 0;
+    drag_on = 0;
     if (!g_sides.done) {
         ob_sides_close(&g_sides);
         return 0;
@@ -324,9 +388,70 @@ int port_sides_wait(void)
 
 int port_sides_is_open(void) { return g_sides.open; }
 
+/* drag of the Mouse row: the port draws the rectangle under the cursor; Overbar's row moves on drop */
+static int drag_x, drag_y, drag_x0, drag_y0, drag_moved;
+
+static void box_fill(uint32_t *px, int w, int h, int pitch, int x, int y, int rw, int rh, uint32_t rgb)
+{
+    int i, j;
+    for (j = 0; j < rh; j++) {
+        if (y + j < 0 || y + j >= h) continue;
+        for (i = 0; i < rw; i++)
+            if (x + i >= 0 && x + i < w) px[(size_t)(y + j) * (size_t)pitch + x + i] = rgb;
+    }
+}
+
+static void mouse_move_to(int to)
+{
+    int i = ob_sides_find(&g_sides, g_sides.me, SIDES_LOCAL_MOUSE);
+    int from, step[2], n, k;
+    if (i < 0 || to < -1) return;
+    from = g_sides.d[i].team;
+    n = sides_move_inputs(from, to, step);
+    for (k = 0; k < n; k++)
+        ob_sides_input(&g_sides, SIDES_LOCAL_MOUSE, step[k] ? MDRT_MENU_RIGHT : MDRT_MENU_LEFT);
+}
+
+int port_sides_pointer(int x, int y, int button, int what)
+{
+    int i, w = 0, h = 0, team;
+    if (!g_sides.open) { drag_on = 0; return 0; }
+    video_mode_size(&w, &h);
+    i = ob_sides_find(&g_sides, g_sides.me, SIDES_LOCAL_MOUSE);
+    if (what == 0) {
+        if (!drag_on) return 0;
+        if (x < drag_x0 - 6 || x > drag_x0 + 6 || y < drag_y0 - 6 || y > drag_y0 + 6) drag_moved = 1;
+        drag_x = x; drag_y = y;
+        return 1;
+    }
+    if (button == 3 && what == 1 && i >= 0 &&
+        sides_device_hit(x, y, i, g_sides.d[i].team, w, h, g_sides.g.teams, g_sides.n)) {
+        ob_sides_input(&g_sides, SIDES_LOCAL_MOUSE, MDRT_MENU_BACK);
+        return 1;
+    }
+    if (button != 1) return 0;
+    if (what == 1) {
+        if (i < 0 || !sides_device_hit(x, y, i, g_sides.d[i].team, w, h, g_sides.g.teams, g_sides.n)) return 0;
+        drag_on = 1; drag_moved = 0; drag_x = drag_x0 = x; drag_y = drag_y0 = y;
+        return 1;
+    }
+    if (!drag_on) return 0;
+    drag_on = 0;
+    team = sides_drop_team(x, y, w, h, g_sides.g.teams, g_sides.n);
+    if (!drag_moved && i >= 0 && g_sides.d[i].team >= 0)
+        ob_sides_input(&g_sides, SIDES_LOCAL_MOUSE, MDRT_MENU_OK);   /* a click readies it */
+    else if (drag_moved && team != -2)
+        mouse_move_to(team);
+    return 1;
+}
+
 void port_sides_draw(uint32_t *px, int w, int h, int pitch)
 {
     ob_plat_room_draw(px, w, h, pitch);
+    if (!drag_on || !px) return;
+    /* the row under the cursor; on release it is the one Overbar draws, in the column it was dropped on */
+    box_fill(px, w, h, pitch, drag_x - 36, drag_y - 6, 72, 14, 0xFF303860u);
+    mdrt_menu_text(px, w, h, pitch, drag_x - 15, drag_y - 4, "Mouse", 0xFFFFFFFFu);
 }
 
 int port_sides_pad_input(int local, int mdrt_input)

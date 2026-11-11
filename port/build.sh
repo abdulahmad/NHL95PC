@@ -15,6 +15,6 @@ OVERBAR_SRCS=$(tr -d '\r' < port/overbar/sources.txt | sed 's|^|port/overbar/|')
 gcc -m32 -no-pie -g -O1 -Wall -Wno-format-truncation -DOB_SDL_BASE -Iport/overbar/include -o build/hockey-linux port/host.c port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/bindings.c port/input.c port/shell.c \
   port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c port/soundtest.c -lm port/third_party/nuked-opl3/opl3.c \
   port/overbar_client.c port/season.c port/season_floppy.c port/netplay.c port/snap.c $OVERBAR_SRCS \
-  -DHAVE_MUNT -Ibuild/munt-linux/inc -Iport/third_party/munt/mt32emu/src port/cstart.c port/overrides.c port/osk_hook.c port/feel.c port/lines.c port/goalie.c port/pads4.c port/rom94.c port/skill.c port/sides.c port/lineup.c port/fight/hooks.c port/fight/rules.c port/fight/rom93.c port/fight/punch.c port/plat_linux.c $O $(pkg-config --cflags --libs sdl2) build/munt-linux/libmt32emu.a -lstdc++ -lm -lpthread 2>&1 \
+  -DHAVE_MUNT -Ibuild/munt-linux/inc -Iport/third_party/munt/mt32emu/src port/cstart.c port/overrides.c port/osk_hook.c port/feel.c port/ctlrows.c port/lines.c port/goalie.c port/pads4.c port/rom94.c port/skill.c port/sides.c port/lineup.c port/fight/hooks.c port/fight/rules.c port/fight/rom93.c port/fight/punch.c port/plat_linux.c $O $(pkg-config --cflags --libs sdl2) build/munt-linux/libmt32emu.a -lstdc++ -lm -lpthread 2>&1 \
   | grep -v "warning: \(relocation\|creating\)\|GNU-stack\|NOTE: This"
 test -x build/hockey-linux
