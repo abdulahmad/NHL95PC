@@ -39,10 +39,11 @@ void pads4_tick(void);
 int pads4_owner(int sc);
 int pads4_fake(int k);
 
-/* Seats to slots. n seats (each: team 1 home / 2 away, kb 1 for the keyboard). out[i]: the game slot of
- * seat i, 0 and 1 the game's own controllers, 2 and 3 pads 3 and 4, -1 none. Slot 0 is the first seat;
- * slot 1 the first seat of the other team, else the second seat; a keyboard seat is always a game slot
- * (only the game reads the keyboard pad). With two seats or fewer, seat i is slot i. */
+/* Seats to slots. n seats (each: team 1 home / 2 away, kb 1 for a device the game reads itself:
+ * the keyboard or the mouse). out[i]: the game slot of seat i, 0 and 1 the game's own controllers,
+ * 2 and 3 pads 3 and 4, -1 none. Slot 0 is the first direct device, else the first seat. Slot 1 is
+ * a second direct device (even on the same team), else the first seat of the other team, else the
+ * next seat. A direct device is never pad 3 or 4. With two seats or fewer, seat i is slot i. */
 void pads4_map_seats(int n, const int *team, const int *kb, int *out);
 
 /* the pad byte as the game's ReadJoyPad makes it: direction mask (1 up, 2 down, 4 right, 8 left) and buttons */

@@ -69,9 +69,9 @@ void bindings_save(FILE *f)
     for (a = 0; a < NACT; a++) if (a >= ACT_PASS) fprintf(f, "joy2_%s=%d\n", names[a], bind.joy[1][a]);
 }
 
-/* The keys the game sees for a physical key during a game. An action's game key is sent for the key bound to it; the game's own key of an action
+/* The keys the game sees for a physical key during play. An action's game key is sent for the key bound to it; the game's own key of an action
  * that is bound to another key does not work any more (the numeric pad is the same key as the arrows to the game, so it goes too); every other key
- * goes through. Outside a game (the menus and their text fields) nothing is changed: the caller does not ask. */
+ * goes through. Menus and text fields do not call this: bindings_remap_on is 0 there, so a letter stays that letter. */
 int bindings_kb(int xt, int *out)
 {
     int a, n = 0, matched = 0;
@@ -87,11 +87,42 @@ int bindings_kb(int xt, int *out)
     return -1;
 }
 
+int bindings_button_mask(int pass, int shoot, int hold_down, int own)
+{
+    if (own) {
+        if (hold_down) return 3;                 /* the button of its own: both of the game's buttons */
+        if (pass && shoot) return 0;             /* the chord is not a second Hold */
+        return (pass ? 1 : 0) | (shoot ? 2 : 0);
+    }
+    return (pass ? 1 : 0) | (shoot ? 2 : 0);     /* both together is Hold, as on the Genesis pad */
+}
+
+int bindings_remap_on(int period, int text_field, int in_menu)
+{
+    if (text_field || in_menu) return 0;
+    return period > 0;                           /* 0 is before any game (bss); -1 is no period */
+}
+
+int bindings_button_key(int xt, int *swallow)
+{
+    int a;
+    if (swallow) *swallow = 0;
+    if (!xt) return -1;
+    for (a = ACT_PASS; a <= ACT_HOLD; a++)
+        if (bind.kb[a] && bind.kb[a] == xt) return a;
+    for (a = ACT_PASS; a <= ACT_SHOOT; a++)
+        if (bind.kb[a] != defkeys[a] && (defkeys[a] & 0xFF) == (xt & 0xFF)) {
+            if (swallow) *swallow = 1;
+            return -1;
+        }
+    return -1;
+}
+
 int bindings_mouse(const unsigned char *down)
 {
-    int bits = 0;
-    if (bind.ms[0] && down[bind.ms[0]]) bits |= 1;
-    if (bind.ms[1] && down[bind.ms[1]]) bits |= 2;
-    if (bind.ms[2] && down[bind.ms[2]]) bits |= 3;
-    return bits;
+    int pass = bind.ms[0] && down[bind.ms[0]];
+    int shoot = bind.ms[1] && down[bind.ms[1]];
+    int own = bind.ms[2] != 0;
+    int hold = own && down[bind.ms[2]];
+    return bindings_button_mask(pass, shoot, hold, own);
 }

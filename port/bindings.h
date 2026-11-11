@@ -34,6 +34,15 @@ int bindings_kb(int xt, int *out);
 /* the game's mouse buttons (bit 1 left, 2 right) for the physical buttons that are down (index 1-5) */
 int bindings_mouse(const unsigned char *down);
 
+/* the game's two buttons (bit 0 pass, bit 1 shoot). Both set is Hold / line change.
+ * own: Hold has a button of its own. Then hold_down sets both, and pass together with shoot sets neither. */
+int bindings_button_mask(int pass, int shoot, int hold_down, int own);
+/* 1 when custom keys apply: a period is being played, and this is not a menu or a text field */
+int bindings_remap_on(int period, int text_field, int in_menu);
+/* ACT_PASS .. ACT_HOLD when xt is bound to that button, else -1.
+ * *swallow is set when xt is a default button key that was moved and must not reach the game. */
+int bindings_button_key(int xt, int *swallow);
+
 #ifdef _WIN32
 void bindings_dialog_open(void *parent_hwnd);   /* bindings_win.c */
 #endif
