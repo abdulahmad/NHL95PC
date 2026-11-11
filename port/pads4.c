@@ -109,6 +109,26 @@ int pads4_give_skip(int owned, int pads_on, int position, int joy)
     return 0;
 }
 
+void pads4_arrow_hot(int pin, int vflip, int x0, int y0, int w, int h,
+                     int xmin, int ymin, int xmax, int ymax, int *hx, int *hy)
+{
+    int minr, maxr;
+    if (!hx || !hy) return;
+    *hx = -x0;                                          /* the VDP origin on the draw point */
+    *hy = vflip ? y0 + h : -y0;
+    if (!pin || w <= 0 || h <= 0 || xmin > xmax || ymin > ymax) return;
+    if (vflip) {                                        /* the buffer's rows are the frame turned over */
+        minr = (y0 + h - 1) - ymax;
+        maxr = (y0 + h - 1) - ymin;
+    } else {
+        minr = ymin - y0;
+        maxr = ymax - y0;
+    }
+    if (pin & PADS4_PIN_RIGHT) *hx = xmax - x0;         /* the tip column; a left flip keeps it on the edge */
+    if (pin & PADS4_PIN_UP) *hy = minr;
+    if (pin & PADS4_PIN_DOWN) *hy = maxr;
+}
+
 #ifndef PADS4_TEST
 
 #include "goalie.h"
@@ -157,6 +177,12 @@ int netplay_session(void);
 int fight_holds(int sc);                        /* port/fight/hooks.c */                      /* netplay.c: an online session (the room is up) */         /* netplay.c: pad 3 / 4 of the record being played (1 in a session) */
 uint8_t *goalie_bhold_timer(int i);             /* goalie.c: pad 1's (0) or pad 2's (1) */
 int feel_fake_pads(void);                       /* feel.c: the Game page's pretend controllers */
+int feel_four_players(void);                    /* feel.c: Four players off drops pads 3 and 4 and the 94 stars */
+
+static int four_on(void)
+{
+    return feel_four_players();
+}
 
 pads4_state pads4 = { { 0, 0 }, { -1, -1 }, { 0, 0 }, { 0, 0 }, { PADS4_NONE, PADS4_NONE } };
 
@@ -218,7 +244,7 @@ static void fake_fill(int t1, int t2)
 
 void pads4_fake_fill(void)
 {
-    if (!feel_fake_pads()) return;
+    if (!four_on() || !feel_fake_pads()) return;
     /* as the game's SetupControllers makes cont1team */
     fake_fill(ctl1team < 0 ? 0 : ctl1side == 0 ? 1 : 2, ctl2team < 0 ? 0 : ctl2side == 0 ? 1 : 2);
 }
@@ -389,6 +415,10 @@ void pads4_tick(void)
 {
     int k;
     if (demomode) return;
+    if (!four_on()) {                                   /* the Game page's switch: no extra pads */
+        if (pads4.team[0] || pads4.team[1]) pads4_clear();
+        return;
+    }
     /* the Game page's pretend controllers when no set-up gave them out (a game started without the select-sides
      * step, or the option turned on during the game): beside the game's own pads, as they play now */
     if (!fake_done && !pads4.team[0] && !pads4.team[1] && !netplay_session() && feel_fake_pads() && (cont1team > 0 || cont2team > 0))
@@ -480,20 +510,34 @@ static void mk_make_lut(void)
     mk_lut_ok = 1;
 }
 
-/* as port/fight/hooks.c build(): 16 bytes of header (1, w, h, hot spot), then each row's runs */
-static uint8_t *mk_build(int frame, int vflip)
+/* as port/fight/hooks.c build(): 16 bytes of header (1, w, h, hot spot), then each row's runs.
+ * pin: an arrow's outward tip (pads4_arrow_hot). 0 keeps the origin on the draw point (a star). */
+static uint8_t *mk_build(int frame, int vflip, int pin)
 {
     f93_frame f;
     uint8_t *b, *o;
-    int x, y, i;
+    int x, y, i, xmin, ymin, xmax, ymax, hx, hy, any = 0;
     if (f93_decode(rom94_sprites(), frame, &f) || !f.pix) return NULL;
+    xmin = ymin = 1 << 30;
+    xmax = ymax = -(1 << 30);
+    for (y = 0; y < f.h; y++)
+        for (x = 0; x < f.w; x++)
+            if (f.pix[y * f.w + x]) {
+                int sx = f.x0 + x, sy = f.y0 + y;
+                if (sx < xmin) xmin = sx;
+                if (sy < ymin) ymin = sy;
+                if (sx > xmax) xmax = sx;
+                if (sy > ymax) ymax = sy;
+                any = 1;
+            }
+    pads4_arrow_hot(pin, vflip, f.x0, f.y0, f.w, f.h, any ? xmin : 1, any ? ymin : 1, any ? xmax : 0, any ? ymax : 0, &hx, &hy);
     b = (uint8_t *)calloc(16 + (size_t)f.w * f.h * 2 + 16, 1);
     if (!b) { f93_frame_free(&f); return NULL; }
     b[0] = 1;
     *(int16_t *)(b + 4) = (int16_t)f.w;
     *(int16_t *)(b + 6) = (int16_t)f.h;
-    *(int16_t *)(b + 8) = (int16_t)-f.x0;
-    *(int16_t *)(b + 10) = (int16_t)(vflip ? f.y0 + f.h : -f.y0);   /* flipped about the frame's origin, as the VDP does */
+    *(int16_t *)(b + 8) = (int16_t)hx;
+    *(int16_t *)(b + 10) = (int16_t)hy;              /* vflip turns the rows over; the hot spot follows */
     o = b + 16;
     for (y = 0; y < f.h; y++) {
         const uint8_t *row = f.pix + (vflip ? f.h - 1 - y : y) * f.w;
@@ -523,9 +567,13 @@ void *pads4_mark_sprite(int code)
     if (i < 0 || i >= MK_N || !marks94()) return NULL;
     if (!mk_lut_ok) mk_make_lut();
     if (!mk[i]) {
-        if (i == 32) mk[i] = mk_build(F94_STARPUCK, 0);
-        else if (v == 0) mk[i] = mk_build(star[pad], 0);
-        else if (v <= 5) mk[i] = mk_build(arrow[pad] + (v == 1 || v == 4 ? 0 : v == 2 || v == 5 ? 1 : 2), v >= 4);
+        if (i == 32) mk[i] = mk_build(F94_STARPUCK, 0, 0);
+        else if (v == 0) mk[i] = mk_build(star[pad], 0, 0);
+        else if (v <= 5) {
+            int pin = v == 1 ? PADS4_PIN_UP : v == 4 ? PADS4_PIN_DOWN : v == 3 ? PADS4_PIN_RIGHT
+                : v == 2 ? PADS4_PIN_UP | PADS4_PIN_RIGHT : PADS4_PIN_DOWN | PADS4_PIN_RIGHT;
+            mk[i] = mk_build(arrow[pad] + (v == 1 || v == 4 ? 0 : v == 2 || v == 5 ? 1 : 2), v >= 4, pin);
+        }
     }
     return mk[i];
 }
@@ -545,7 +593,7 @@ int pads4_mark_code(int frame)
     static const int16_t a95[2][5] = { { 0x17F, 0x180, 0x181, 0x160, 0x161 }, { 0x182, 0x183, 0x184, 0x162, 0x163 } };
     int j, v;
     frame = (int16_t)frame;
-    if (!marks94()) return frame;
+    if (!four_on() || !marks94()) return frame;         /* Four players off: 95 PC's own stars and arrows */
     if (frame == 0x185) return FR_MARK;
     if (frame == 0x186) return FR_MARK + 8;
     if (frame == 0x187) return FR_MARK + 32;
@@ -559,7 +607,7 @@ int pads4_mark_code(int frame)
 int pads4_mark_star(int frame)
 {
     frame = (int16_t)frame;
-    if (!marks94()) return frame;
+    if (!four_on() || !marks94()) return frame;
     return frame == 0x185 ? FR_MARK : frame == 0x186 ? FR_MARK + 8 : frame == 0x187 ? FR_MARK + 32 : frame;
 }
 
@@ -610,7 +658,7 @@ static void draw_mark(int k, int team, int x, int y)
 void pads4_draw(void)
 {
     int k;
-    if (dword_CCC9C || pads4_idle()) return;
+    if (!four_on() || dword_CCC9C || pads4_idle()) return;
     for (k = 0; k < 2; k++) {
         int sc = pads4.player[k];
         uint8_t *p;
@@ -647,7 +695,7 @@ void pads4_replay_draw(void)
 {
     long slot;
     int k;
-    if (!replaystart) return;
+    if (!four_on() || !replaystart) return;
     slot = (long)(replayplay - replaystart) >> 7;
     if (slot < 0 || slot >= RP_N) return;
     for (k = 0; k < 2; k++) {

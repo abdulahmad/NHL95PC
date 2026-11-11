@@ -79,12 +79,16 @@ static void setup_controllers(void)
     pad2dev = pad_dev(ctl2dev);
 }
 
+int feel_four_players(void);
+
 static ob_sides_game game95(void)
 {
     ob_sides_game g;
     memset(&g, 0, sizeof g);
     g.teams = 2;
-    g.seats = 4;                    /* the game's two controllers and pads 3 and 4 (pads4.c) */
+    /* offline, Four players off is the game's own two pads. Online both machines keep 4 seats so the
+     * host's model and the guest's copy agree; the match then drops pads 3 and 4 if the host has it off. */
+    g.seats = (g_net || feel_four_players()) ? 4 : 2;
     g.per_team = 2;
     g.team_name[0] = "Away";
     g.team_name[1] = "Home";
@@ -92,6 +96,7 @@ static ob_sides_game game95(void)
 }
 
 int feel_fake_pads(void);
+int feel_four_players(void);
 #define FAKE_LOCAL 100              /* the Game page's pretend controllers (added at the start, not on the screen) */
 
 static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
@@ -114,7 +119,7 @@ static void apply_seats(void *ud, const ob_sides_seat *seat, int n)
         count[team[m]]++;
     }
     /* Debug: pretend controllers fill both teams to two (one person: three of them, a 2 v 2) */
-    if (!g_net && m > 0 && feel_fake_pads()) {
+    if (!g_net && m > 0 && feel_four_players() && feel_fake_pads()) {
         int t;
         for (t = 1; t <= 2; t++)
             while (count[t] < 2 && m < 4) {

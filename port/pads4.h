@@ -81,4 +81,13 @@ int pads4_pass_switches(int goalie, int joy, int receiver_joy);
  * With another pad on (pads_on), a goalie who is already controlled (position 0 and joy) stays put. */
 int pads4_give_skip(int owned, int pads_on, int position, int joy);
 
+/* which edge of an off-screen arrow is the tip (94's frame, drawn at 95 PC's edge point) */
+enum { PADS4_PIN_UP = 1, PADS4_PIN_DOWN = 2, PADS4_PIN_RIGHT = 4 };
+
+/* DrawSprite hot spot. The tile box is x0,y0,w,h; xmin..ymax are the opaque pixels in sprite space
+ * (the VDP origin is 0,0). vflip has already turned the frame over. pin 0 keeps the origin on the
+ * draw point (a star). An arrow's pin puts its outward tip on the draw point so it stays on screen. */
+void pads4_arrow_hot(int pin, int vflip, int x0, int y0, int w, int h,
+                     int xmin, int ymin, int xmax, int ymax, int *hx, int *hy);
+
 #endif

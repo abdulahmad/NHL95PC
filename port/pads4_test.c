@@ -77,6 +77,19 @@ int main(void)
         CHECK(pads4_switch_pick(0, NULL, 0, c, 2) == 3);
     }
     CHECK(pads4_switch_pick(4, NULL, 0, NULL, 0) == 4);
+    {   /* 94 arrow frames (tile box and opaque pixels from the ROM). The tip sits on the draw point. */
+        int hx, hy;
+        pads4_arrow_hot(PADS4_PIN_UP, 0, -13, -7, 24, 24, -13, -7, 10, 16, &hx, &hy);
+        CHECK(hy == 0 && hx == 13);                     /* tip y -7 is row 0; the shaft stays on x 0 */
+        pads4_arrow_hot(PADS4_PIN_DOWN, 1, -13, -7, 24, 24, -13, -7, 10, 16, &hx, &hy);
+        CHECK(hy == 23 && hx == 13);                    /* the same tip, flipped, is the last row */
+        pads4_arrow_hot(PADS4_PIN_RIGHT, 0, -18, -12, 24, 24, -18, -12, 5, 11, &hx, &hy);
+        CHECK(hx == 23 && hy == 12);                    /* tip x 5 is the last column; y stays on the origin */
+        pads4_arrow_hot(PADS4_PIN_UP | PADS4_PIN_RIGHT, 0, -19, -5, 24, 24, -16, -5, 4, 15, &hx, &hy);
+        CHECK(hx == 23 && hy == 0);
+        pads4_arrow_hot(0, 0, -16, -5, 31, 24, -16, -5, 14, 18, &hx, &hy);
+        CHECK(hx == 16 && hy == 5);                     /* a star: the origin stays on the player */
+    }
     /* passto: only a human goalie follows the pass, and not onto a controlled receiver */
     CHECK(!pads4_pass_switches(0, 1, 0));
     CHECK(!pads4_pass_switches(1, 0, 0));

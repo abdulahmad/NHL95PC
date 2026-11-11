@@ -92,6 +92,13 @@ int main(void)
     CHECK(fight_wants(&a, &b, 40, 0, 5, 1, zero, NULL, &inst) && inst == 0, "6 >= 16 - 2 x 5 checks");
     b.fighting = 10; a.fighting = 4;
     CHECK(fight_wants(&a, &b, 40, 10, 0, 1, zero, NULL, &inst) && inst == 1, "b starts it: b's team's instigator (%d)", inst);
+    /* 93's fighting byte is the check nibble with handedness (bit 0) cleared, not aggression */
+    CHECK(fight_rating_byte(0x90) == 0, "checking 9, fighting 0");
+    CHECK(fight_rating_byte(0x9E) == 0xE, "fighting bits 1-3 all set");
+    CHECK(fight_rating_byte(0x0F) == 0xE, "bit 0 is handed, not fighting");
+    CHECK(fight_check_weight(0) == 3 && fight_check_weight(4) == 1, "a knockdown with no fighting rating counts as 3");
+    a.fighting = 0; b.fighting = 0;
+    CHECK(!fight_wants(&a, &b, 80, 20, 20, 1, zero, NULL, &inst), "fighting 0 never meets the floor of 10");
 
     /* the animations */
     {
