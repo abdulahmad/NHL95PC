@@ -26,6 +26,11 @@ int main(void)
         pads4_map_seats(3, t, kb, out);
         CHECK(out[0] == 0 && out[1] == 1 && out[2] == 2);
     }
+    {   /* keyboard and mouse on one team, a pad on the other: both direct devices take the game slots */
+        int t[3] = { 1, 1, 2 }, kb[3] = { 1, 1, 0 };
+        pads4_map_seats(3, t, kb, out);
+        CHECK(out[0] == 0 && out[1] == 1 && out[2] == 2);
+    }
     {   /* away pretend pad, home keyboard, home pretend pad (the debug option, one person) */
         int t[3] = { 2, 1, 1 }, kb[3] = { 0, 1, 0 };
         pads4_map_seats(3, t, kb, out);

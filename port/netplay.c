@@ -803,8 +803,8 @@ void nh_playgame_enter(int32_t *handle)
         port_sides_wait();
         return;
     }
-    if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
-        snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
+    if (my_dev != 1 && my_dev != 2 && my_dev != 4 && my_dev != 8 && my_dev != 0 && my_dev != 0x10) {
+        snprintf(nh_why, sizeof nh_why, "pick the keyboard, the mouse or a joystick for player 1");
         return;
     }
     if (!nh_room) {
