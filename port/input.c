@@ -4,6 +4,7 @@
 #include "pads4.h"
 #include "audio.h"
 #include "bindings.h"
+#include "goalie.h"
 #include "overbar_client.h"
 #include "sides.h"
 #include <SDL.h>
@@ -114,8 +115,9 @@ static int kb_remap(void)
     return bindings_remap_on((int)curperiod, osk_text_wanted, menu);
 }
 
-/* Alt and Space, as the game sees them. Both down is Hold; pass and shoot each hold one. */
-static int btn_down[3], btn_sent;
+/* Alt and Space, as the game sees them. Both down is Hold; pass and shoot each hold one.
+ * key_c_first: C went down while B was up, so a later B on top of C is the fake shot. */
+static int btn_down[3], btn_sent, key_c_first, mouse_c_first, joy_c_first[2];
 
 static void buttons_sync(int mask)
 {
@@ -131,6 +133,16 @@ static void buttons_clear(void)
 {
     buttons_sync(0);
     btn_down[0] = btn_down[1] = btn_down[2] = 0;
+    key_c_first = 0;
+}
+
+extern uint32_t ctl1dev, ctl2dev;
+
+static int slot_of_dev(uint32_t dev)
+{
+    if (ctl1dev == dev) return 0;
+    if (ctl2dev == dev) return 1;
+    return -1;
 }
 
 /* a key of the keyboard: during play the bindings (bindings.c) may send other keys of the game for it */
@@ -143,10 +155,12 @@ static void key_physical(SDL_Scancode s, int down)
         key_xt(xt, down);
         return;
     }
+    if (down && bind.kb[ACT_GOALIE] && bind.kb[ACT_GOALIE] == xt) goalie_button_press(slot_of_dev(8));
     act = bindings_button_key(xt, &swallow);
     if (act >= ACT_PASS && act <= ACT_HOLD) {
         btn_down[act - ACT_PASS] = down ? 1 : 0;
-        buttons_sync(bindings_button_mask(btn_down[0], btn_down[1], btn_down[2], bind.kb[ACT_HOLD] != 0));
+        buttons_sync(bindings_button_mask(btn_down[0], btn_down[1], btn_down[2], bind.kb[ACT_HOLD] != 0,
+            bindings_note_shot(&key_c_first, btn_down[0], btn_down[1])));
         return;
     }
     if (swallow) return;
@@ -418,8 +432,10 @@ void input_event(const SDL_Event *ep)
             port_sides_pointer(gx, gy, btn, e.type == SDL_MOUSEBUTTONDOWN ? 1 : 2);
             break;
         }
-        if (kb_remap()) mouse_buttons = bindings_mouse(mdown);           /* during play: the bindings */
-        else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
+        if (kb_remap()) {
+            mouse_buttons = bindings_mouse(mdown, &mouse_c_first); /* during play: the bindings */
+            if (e.type == SDL_MOUSEBUTTONDOWN && bind.ms[3] && btn == bind.ms[3]) goalie_button_press(slot_of_dev(1));
+        } else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
         if (e.type == SDL_MOUSEBUTTONDOWN) intro_skip_start();
         break;
     }
@@ -658,11 +674,16 @@ static void joy_update(void)                    /* main thread, every pass of th
                 p = pv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X)) : pv >= 2 ? pad_button(g, PAD_ID(pv)) : 0;
                 sh = sv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y)) : sv >= 2 ? pad_button(g, PAD_ID(sv)) : 0;
                 h = hv >= 2 ? pad_button(g, PAD_ID(hv)) : 0;
-                bits = bindings_button_mask(p, sh, h, hv >= 2);               /* own Hold button: both game buttons; the chord does not */
+                bits = bindings_button_mask(p, sh, h, hv >= 2, bindings_note_shot(&joy_c_first[i], p, sh));
                 b1 = (bits & 1) != 0; b2 = (bits & 2) != 0;
                 for (a = ACT_NUMBERS; a < NACT; a++) {                         /* the other keys of the game, from the controller */
                     static unsigned char was[2][NACT];
                     int v = bind.joy[i][a], now = v >= 2 && pad_button(g, PAD_ID(v)) && curperiod != -1, key = act_default_key(a);
+                    if (a == ACT_GOALIE) {
+                        if (now && !was[i][a] && kb_remap()) goalie_button_press(slot_of_dev(i == 0 ? 2u : 4u));
+                        was[i][a] = (unsigned char)now;
+                        continue;
+                    }
                     if (now != was[i][a]) {
                         if (a >= ACT_HOME1 && a <= ACT_HOME4) {                /* the lines of the team this controller plays: home (side 0) or away */
                             int dev = i == 0 ? 2 : 4, side = ctl1dev == (uint32_t)dev ? ctl1side : ctl2dev == (uint32_t)dev ? ctl2side : 0;
