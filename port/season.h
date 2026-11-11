@@ -27,10 +27,13 @@ void port_season_poll(void);
 void port_season_tick(void);
 /* 1: this PlayGame is an online season match (the other human is in the room). 0: keep it local. */
 int port_season_want_online(void);
-/* 1: this PlayGame is two guests (C vs D). The host is not in this game; skip select-sides. */
+/* 1: this PlayGame is two guests (C vs D). They play each other; the season host is not in it. */
 int port_season_guest_vs_guest(void);
-/* a guest about to PlayGame vs another guest: tell the host to begin the match as a relay */
-void port_season_note_play(void);
+/* 1: this machine is home for a C vs D game (it listens; the visitor joins). */
+int port_season_peer_home(void);
+int port_season_peer_opp(void);                  /* the other guest's machine, or -1 */
+void port_season_send_offer(int to, unsigned port, const char *addr);
+int port_season_take_offer(char *addr, int addr_size, int *port);  /* 1: an offer is waiting */
 /* after PlayGame of a league match: mark it played, drop mirrors, sync */
 void port_season_after_game(void);
 /* 1: dos is on a virtual drive and *out is the host path; 0: not virtual; -1: virtual, no disk */

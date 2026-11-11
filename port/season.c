@@ -5,8 +5,8 @@
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
  * name. The first copy is imported here (no File > Import Databases). Virtual A:
  * is the other human's mirror when the calendar needs it; no insert-disk box.
- * C vs D: the two guests PlayGame; the host begins the match from the lobby with
- * those guests' pads and stays at the desk (room relay, not a third player).
+ * C vs D: after Pick, the two guests play each other on their own (a 2-machine
+ * session). The season host's room is only the league / files / invite.
  */
 #include "season.h"
 
@@ -78,7 +78,8 @@ static char g_work[260], g_root[260], g_play_dir[260];
 static int g_ready, g_play_on, g_installed_team = -1, g_hold_a, g_in_league, g_join_sync, g_hooks;
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
-static int g_play_home, g_play_vis, g_play_from[OB_NET_MAX_MACHINES], g_nplay, g_relay, g_sent_play;
+static char g_offer_addr[96];
+static int g_offer_port, g_have_offer;
 void *port_plg_cont;
 
 static const char *game_root(void)
@@ -666,66 +667,19 @@ static void auto_sync(void)
     }
 }
 
-static int guest_owners(int8_t owner[], int npad)
-{
-    int h, v, k;
-    if (!owner || npad < 2 || !g_net) return -1;
-    for (k = 0; k < npad; k++) owner[k] = -1;
-    h = machine_of_team(g_play_home);
-    v = machine_of_team(g_play_vis);
-    if (h <= 0 || v <= 0 || h == v) return -1;
-    owner[0] = (int8_t)h;
-    owner[1] = (int8_t)v;
-    return 0;
-}
-
-static void try_guest_match(void)
-{
-    int8_t owner[OB_NET_MAX_PADS];
-    char err[160];
-    if (!g_net || !ob_net_is_host(g_net) || g_in_league || g_relay || g_nplay < 2) return;
-    if (ob_net_state(g_net) != OB_NET_LOBBY) return;
-    if (guest_owners(owner, OB_NET_MAX_PADS)) return;
-    if (netplay_begin_guest_match((int16_t)g_play_home, (int16_t)g_play_vis, owner, OB_NET_MAX_PADS,
-                                  err, (int)sizeof err)) {
-        if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: guest vs guest did not start: %s\n", err);
-        return;
-    }
-    g_relay = 1;
-    if (getenv("NHL95_ONLINE"))
-        fprintf(stderr, "online: C vs D relay (host stays in the room, not in the game)\n");
-}
-
 static void on_play_msg(void *ud, int from, int type, const void *data, size_t size)
 {
     const uint8_t *p = data;
-    int16_t home, vis;
+    uint16_t port;
     (void)ud;
-    if (type != NH_SEASON_PLAY || !p || size < 1) return;
+    if (type != NH_SEASON_PLAY || !p || size < 11 || p[0] != 1) return;
     if (from < 0 || from >= OB_NET_MAX_MACHINES) return;
-    if (p[0] == 2) {
-        if (g_play_from[from]) {
-            g_play_from[from] = 0;
-            if (g_nplay > 0) g_nplay--;
-        }
-        if (g_relay && g_nplay <= 0) {
-            netplay_end_guest_match();
-            g_relay = 0;
-            g_nplay = 0;
-            memset(g_play_from, 0, sizeof g_play_from);
-            if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: C vs D relay ended\n");
-        }
-        return;
-    }
-    if (p[0] != 1 || size < 8) return;
-    memcpy(&home, p + 2, 2);
-    memcpy(&vis, p + 4, 2);
-    if (!g_play_from[from]) {
-        g_play_from[from] = 1;
-        g_nplay++;
-    }
-    g_play_home = home;
-    g_play_vis = vis;
+    if (ob_net_is_host(g_net)) return;           /* C vs D is the two guests' game */
+    memcpy(&port, p + 8, 2);
+    memset(g_offer_addr, 0, sizeof g_offer_addr);
+    snprintf(g_offer_addr, sizeof g_offer_addr, "%s", (const char *)(p + 10));
+    g_offer_port = port;
+    g_have_offer = 1;
 }
 
 int port_season_want_online(void)
@@ -748,31 +702,52 @@ int port_season_guest_vs_guest(void)
     return opp > 0 && opp != me;
 }
 
-void port_season_note_play(void)
+int port_season_peer_home(void)
 {
-    uint8_t msg[8];
+    int me, opp, home_m;
+    if (!port_season_guest_vs_guest()) return 0;
+    me = ob_net_me(g_net);
+    opp = machine_of_team(dword_DDD34);
+    home_m = machine_of_team(HomeTeam);
+    if (home_m == me) return 1;
+    if (home_m == opp) return 0;
+    return me < opp;
+}
+
+int port_season_peer_opp(void)
+{
+    if (!g_net) return -1;
+    return machine_of_team(dword_DDD34);
+}
+
+void port_season_send_offer(int to, unsigned port, const char *addr)
+{
+    uint8_t msg[10 + 96];
     int16_t home = HomeTeam, vis = VisTeam;
-    if (!g_net || ob_net_is_host(g_net)) return;
+    uint16_t p = (uint16_t)port;
+    if (!g_net || to < 0 || !addr) return;
     memset(msg, 0, sizeof msg);
     msg[0] = 1;
-    msg[1] = (uint8_t)(lgplayteam < 0 ? 0 : lgplayteam);
     memcpy(msg + 2, &home, 2);
     memcpy(msg + 4, &vis, 2);
     memcpy(msg + 6, &lggameidx, 2);
-    g_sent_play = 1;
-    ob_net_send(g_net, 0, NH_SEASON_PLAY, msg, sizeof msg);
+    memcpy(msg + 8, &p, 2);
+    snprintf((char *)(msg + 10), 96, "%s", addr);
+    ob_net_send(g_net, to, NH_SEASON_PLAY, msg, sizeof msg);
+}
+
+int port_season_take_offer(char *addr, int addr_size, int *port)
+{
+    if (!g_have_offer || !addr || addr_size <= 0 || !port) return 0;
+    snprintf(addr, (size_t)addr_size, "%s", g_offer_addr);
+    *port = g_offer_port;
+    return 1;
 }
 
 void port_season_after_game(void)
 {
     if (g_in_league) return;            /* PlayLeagueGame still posting into savleague1/2 */
-    if (g_sent_play && g_net && !ob_net_is_host(g_net)) {
-        uint8_t msg[8];
-        memset(msg, 0, sizeof msg);
-        msg[0] = 2;
-        ob_net_send(g_net, 0, NH_SEASON_PLAY, msg, sizeof msg);
-        g_sent_play = 0;
-    }
+    g_have_offer = 0;
     if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
     ob_season_mirror_drop(&g_season);
     g_hold_a = 0;
@@ -833,17 +808,13 @@ void port_season_unbind_net(void)
 {
     port_sides_unbind_net();
     g_net = NULL;
-    g_relay = 0;
-    g_nplay = 0;
-    g_sent_play = 0;
-    memset(g_play_from, 0, sizeof g_play_from);
+    g_have_offer = 0;
     memset(&g_room, 0, sizeof g_room);
 }
 
 void port_season_poll(void)
 {
     if (g_net) ob_room_poll(&g_room, on_play_msg, NULL);
-    try_guest_match();
 }
 
 void port_season_tick(void)

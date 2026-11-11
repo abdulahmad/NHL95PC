@@ -155,10 +155,6 @@ void input_bind_stick(int stick, int pad);   /* game-port stick 0/1 reads pads[p
 void netplay_install(void);                      /* after install_overrides, before the game thread */
 void netplay_main_poll(void);                    /* main thread, every pass of the loop */
 void netplay_pump(void);                         /* game thread: poll the room while waiting (mirrors) */
-/* nh_lock is held. Host of the room: begin a match whose pads belong to two guests. This machine
- * stays in the lobby and only relays. 0, or -1 with why in err. */
-int netplay_begin_guest_match(int16_t home, int16_t vis, const int8_t *owner, int npad, char *err, int errsz);
-void netplay_end_guest_match(void);              /* nh_lock held: host ends a guest vs guest match */
 int netplay_running(void);                       /* a session drives the game: its clock runs while the overlay is open */
 int netplay_dos_time(int *h, int *m, int *s, int *cs);  /* int 21h/2Ch in a session: the host's time, on by the records run */
 #endif
