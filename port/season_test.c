@@ -229,6 +229,39 @@ int main(void)
         CHECK(season_next_game_pick(t, 3, 0, -1) == 0 && t[3 * 30 + 0x16] == 1);
     }
 
+    /* overlay HELLO / host list: Rangers (controller) stays the host's; an
+     * unclaimed remote (San Jose / dad) is not taken just because a guest connected. */
+    {
+        unsigned char t[26 * 30];
+        int dest[8], n;
+        memset(t, 0, sizeof t);
+        t[21 * 30 + 0x17] = 1;  /* Rangers, host controller */
+        t[21 * 30 + 0x18] = 1;
+        t[21 * 30 + 0x19] = 1;
+        t[4 * 30 + 0x17] = 1;   /* Kings, also host-local */
+        t[4 * 30 + 0x18] = 1;
+        t[12 * 30 + 0x17] = 1;  /* Oilers / bob, remote, claimed on a client */
+        t[12 * 30 + 0x18] = 2;
+        t[16 * 30 + 0x17] = 1;  /* San Jose / dad, remote, nobody has it */
+        t[16 * 30 + 0x18] = 2;
+        n = season_own_teams(t, 26, 1, -1, dest, 8);
+        CHECK(n == 2 && dest[0] == 4 && dest[1] == 21);
+        n = season_own_teams(t, 26, 0, -1, dest, 8);
+        CHECK(n == 0);
+        n = season_own_teams(t, 26, 0, 12, dest, 8);
+        CHECK(n == 1 && dest[0] == 12);
+        n = season_own_teams(t, 26, 0, 16, dest, 8);
+        CHECK(n == 1 && dest[0] == 16);
+        n = season_own_teams(t, 26, 0, 21, dest, 8);
+        CHECK(n == 0); /* guest must not HELLO the host's controller */
+        /* controller still the host's if +18h was exported */
+        t[21 * 30 + 0x18] = 2;
+        n = season_own_teams(t, 26, 1, -1, dest, 8);
+        CHECK(n == 2 && dest[0] == 4 && dest[1] == 21);
+        CHECK(season_own_teams(NULL, 26, 1, -1, dest, 8) == 0);
+        CHECK(season_own_teams(t, 26, 1, -1, NULL, 8) == 0);
+    }
+
     printf(fails ? "season_test: %d failed\n" : "season_test: all passed\n", fails);
     return fails != 0;
 }

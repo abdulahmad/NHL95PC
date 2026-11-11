@@ -30,5 +30,13 @@ int season_player_id(const char *dir, int *team, unsigned *version);
  * machine already picked (-1 none): a client may only import that team; other
  * remotes stay remote. With mine < 0 a client may only take a remote. */
 int season_next_game_pick(unsigned char *teams, int team, int guest, int mine);
+/* Teams this copy reports as its own (a guest's HELLO, the host's overlay list).
+ * 26 records of 30 bytes. master: local humans (+18h != 2) and the controller
+ * (+19h == 1), so Rangers stays the host's even if it was exported. Guest: only
+ * mine (the team already claimed); mine < 0 means none — connecting must not
+ * take leftover remotes. The controller is never a guest's. Returns how many
+ * were written. */
+int season_own_teams(const unsigned char *teams, int nteams, int master, int mine,
+                     int *dest, int cap);
 
 #endif

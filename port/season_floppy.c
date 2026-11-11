@@ -295,6 +295,24 @@ int season_next_game_pick(unsigned char *teams, int team, int guest, int mine)
     return 0;
 }
 
+int season_own_teams(const unsigned char *teams, int nteams, int master, int mine,
+                     int *dest, int cap)
+{
+    int i, n = 0;
+    if (!teams || !dest || cap < 1 || nteams < 1) return 0;
+    if (nteams > 26) nteams = 26;
+    for (i = 0; i < nteams && n < cap; i++) {
+        const unsigned char *rec = teams + i * 30;
+        if (rec[0x17] != 1) continue;
+        if (master) {
+            if (rec[0x18] == 2 && rec[0x19] != 1) continue;
+        } else if (mine < 0 || mine >= 26 || i != mine || rec[0x19] == 1)
+            continue; /* never HELLO the host's controller */
+        dest[n++] = i;
+    }
+    return n;
+}
+
 int season_write_player_id(const char *dir, int team, const char *league)
 {
     char path[512], pid[512];

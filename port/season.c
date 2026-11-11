@@ -6,6 +6,8 @@
  * name. New League asks "remote team for a player on another device?"; Yes
  * auto-exports (no insert-disk). Next League Game shows every team; a client can
  * only take the team it already picked, and that pick imports that team only.
+ * Overlay Season: a guest's HELLO names only that claimed team, so leftover
+ * remotes stay open and the host's controller is never that guest's.
  * Virtual A: is the other human's mirror when the calendar needs it.
  * C vs D: the same File > Export / Import Databases / Merge & Update path as
  * 1994, run in the background whenever the copies need it. Export one team's
@@ -305,7 +307,7 @@ static int with_pack_drive(int team, const char *dir, int (*fn)(const char *from
 
 static int op_league(void *ud, ob_season_league *l)
 {
-    int i;
+    int dest[OB_SEASON_TEAMS], i, mine;
     const char *name = open_league();
     (void)ud;
     memset(l, 0, sizeof *l);
@@ -316,14 +318,11 @@ static int op_league(void *ud, ob_season_league *l)
     /* in a room only the net host is master (a guest's PINFO still lists the host's local team) */
     if (g_net) l->master = ob_net_is_host(g_net) ? 1 : 0;
     else l->master = is_master_copy() ? 1 : 0;
-    for (i = 0; i < 26 && l->nteam < OB_SEASON_TEAMS; i++) {
-        /* host: local humans only (Boston). remote exports (LA) are pickable, not "the host's". */
-        if (l->master) {
-            if (!team_local(i)) continue;
-        } else if (!team_human(i))
-            continue;
-        l->team[l->nteam++] = i;
-    }
+    /* guest HELLO: only the claimed team. Listing every human makes Overbar give
+       leftover remotes (San Jose) and the host's controller (Rangers) to that client. */
+    mine = l->master ? -1 : guest_mine();
+    l->nteam = season_own_teams(teams_tab(), 26, l->master, mine, dest, OB_SEASON_TEAMS);
+    for (i = 0; i < l->nteam; i++) l->team[i] = dest[i];
     return 0;
 }
 

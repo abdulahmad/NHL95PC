@@ -5,7 +5,9 @@
  * export / import / copy / merge. New League asks whether each human is a remote
  * team for a player on another device (Yes auto-exports; No stays on this
  * computer). Next League Game lists every team; a client can only take the team
- * it already picked, and selecting it imports that team only. Overlay Season / File screens come from Overbar
+ * it already picked, and selecting it imports that team only. A guest's overlay
+ * HELLO names only that claimed team: leftover remotes stay selectable, and the
+ * host's own team is not. Overlay Season / File screens come from Overbar
  * (ob_season_set). Export, import, and Merge & Update of team databases run in
  * the background when the copies need them — the player never has to use those
  * File menu items. Pack files, when used, are named after the team — not a
