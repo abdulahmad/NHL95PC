@@ -22,6 +22,9 @@ struct ob_sides *port_sides_ob(void);
 /* game thread: show the screen (every controller on this machine) and wait until
  * it starts or the player leaves. 1: the seat table was applied. 0: left / skipped. */
 int port_sides_wait(void);
+/* league H2H skips the select-sides screen. Same seat table exhibition netplay
+ * applies: pad 0 home, pad 1 away, so F1-F8 and the faceoff box reach a team. */
+void port_sides_h2h_seats(int home_machine, int vis_machine);
 void port_sides_poll(void);                     /* main thread: open, devices, hotplug */
 
 int port_sides_is_open(void);

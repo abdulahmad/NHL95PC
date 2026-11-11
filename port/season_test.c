@@ -230,8 +230,9 @@ int main(void)
         CHECK(season_next_game_pick(t, 3, 0, -1) == 0 && t[3 * 30 + 0x16] == 1);
     }
 
-    /* overlay HELLO / host list: Rangers (controller) stays the host's; an
-     * unclaimed remote (San Jose / dad) is not taken just because a guest connected. */
+    /* overlay HELLO: a claimed remote (Oilers / bob, +18h == 2) is this machine's
+     * team; leftover Rangers (controller) must not be listed or dad can take Edmonton
+     * (WAITING) and the menu says NYR is the host's. */
     {
         unsigned char t[26 * 30];
         int dest[8], n;
@@ -421,6 +422,27 @@ int main(void)
         CHECK(season_fold_team_db(NULL, 16) == -1);
         CHECK(season_fold_team_db(fold, -1) == -1);
         CHECK(season_fold_team_db(fold, 26) == -1);
+        /* one-dir post: both teams' records live in the playing copy's TEAMS.nn */
+        nn[5 * 0x2E8 + 0x28] = 2;
+        nn[16 * 0x2E8 + 0x28] = 3;
+        snprintf(p, sizeof p, "%s/TEAMS.05", fold);
+        write_bytes(p, nn, sizeof nn);
+        CHECK(season_fold_record(fold, 5, 5) == 0);
+        CHECK(season_fold_record(fold, 5, 16) == 0);
+        snprintf(p, sizeof p, "%s/TEAMS.DB", fold);
+        tf = fopen(p, "rb");
+        CHECK(tf && fseek(tf, 5 * 0x2E8, SEEK_SET) == 0 && fread(got, 1, sizeof got, tf) == sizeof got);
+        CHECK(got[0x28] == 2);
+        CHECK(tf && fseek(tf, 16 * 0x2E8, SEEK_SET) == 0 && fread(got, 1, sizeof got, tf) == sizeof got);
+        if (tf) fclose(tf);
+        CHECK(got[0x28] == 3);
+        CHECK(season_spread_teams_db(fold, 5) == 0);
+        CHECK(season_spread_teams_db(fold, 16) == 0);
+        CHECK(season_fold_all(fold) == 0);
+        CHECK(season_fold_record(NULL, 5, 16) == -1);
+        CHECK(season_fold_record(fold, -1, 16) == -1);
+        CHECK(season_spread_teams_db(NULL, 5) == -1);
+        CHECK(season_spread_teams_db(fold, 26) == -1);
     }
 
     printf(fails ? "season_test: %d failed\n" : "season_test: all passed\n", fails);

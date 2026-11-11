@@ -201,9 +201,13 @@ static int is_master_copy(void)
     return locals > 0;
 }
 
-/* the team this guest already picked (overlay claim or the installed copy). -1 none. */
+/* the team this guest already picked (PLAYER.ID, overlay claim, or the installed copy). -1 none. */
 static int guest_mine(void)
 {
+    int pid = -1;
+    char dir[512];
+    if (!league_host_dir(dir, (int)sizeof dir) && season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26)
+        return pid;
     if (g_season.claim >= OB_SEASON_TEAMS) return g_season.claim - OB_SEASON_TEAMS;
     if (g_installed_team >= 0 && g_installed_team < 26) return g_installed_team;
     return -1;
@@ -254,15 +258,15 @@ static int this_machine_team(void);
 static void remember_installed_team(void)
 {
     char dir[512];
-    int pid;
-    if (g_installed_team >= 0 && g_installed_team < 26) return;
+    int pid = -1;
+    if (!league_host_dir(dir, (int)sizeof dir) && season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26) {
+        g_installed_team = pid;
+        return;
+    }
     if (g_season.claim >= OB_SEASON_TEAMS) {
         g_installed_team = g_season.claim - OB_SEASON_TEAMS;
         return;
     }
-    if (league_host_dir(dir, (int)sizeof dir)) return;
-    if (season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26)
-        g_installed_team = pid;
 }
 
 static void write_mine_player_id(void)
@@ -388,10 +392,18 @@ static int op_league(void *ud, ob_season_league *l)
     /* in a room only the net host is master (a guest's PINFO still lists the host's local team) */
     if (g_net) l->master = ob_net_is_host(g_net) ? 1 : 0;
     else l->master = is_master_copy() ? 1 : 0;
-    /* guest HELLO: only the claimed team. Listing every human makes Overbar give
-       leftover remotes (San Jose) and the host's controller (Rangers) to that client. */
-    mine = l->master ? -1 : guest_mine();
-    l->nteam = season_own_teams(teams_tab(), 26, l->master, mine, dest, OB_SEASON_TEAMS);
+    /* HELLO / overlay HOSTS: only this machine's claimed team (PLAYER.ID). A
+     * room host that is not the league owner still has NYR local in PINFO;
+     * listing it makes Overbar say NYR is "the host's". A claimed remote
+     * (+18h == 2) is not in the master list, so Edmonton was WAITING and dad
+     * could take bob's team. */
+    mine = this_machine_team();
+    if (mine < 0) mine = l->master ? -1 : guest_mine();
+    if (mine >= 0) {
+        l->nteam = season_own_teams(teams_tab(), 26, 0, mine, dest, OB_SEASON_TEAMS);
+        if (l->nteam == 0) { dest[0] = mine; l->nteam = 1; }
+    } else
+        l->nteam = season_own_teams(teams_tab(), 26, l->master, -1, dest, OB_SEASON_TEAMS);
     for (i = 0; i < l->nteam; i++) l->team[i] = dest[i];
     return 0;
 }
@@ -495,6 +507,11 @@ static int op_merge(void *ud, int team, const char *dir, const uint32_t *played,
                      (uint32_t)(uintptr_t)ext, (uint32_t)(uintptr_t)db,
                      (uint32_t)team, (uint32_t)(uintptr_t)&ngames);
     restore_play();
+    if (!r) {
+        char dest[512];
+        if (!league_host_dir(dest, (int)sizeof dest))
+            season_spread_teams_db(dest, team);
+    }
     return r ? -1 : 0;
 }
 
@@ -680,11 +697,15 @@ static int mine_team(void)
     return lgplayteam;
 }
 
-/* the team Next League Game should open. Claim first, then the installed copy,
- * then the only local human (the host's controller). -1 means show the grid. */
+/* the team Next League Game should open. PLAYER.ID first (dad/SJ, bob/EDM), then
+ * overlay claim, then the installed copy, then the only local human. A leftover
+ * NYR local must not win over Edmonton on bob's copy. -1 means show the grid. */
 static int this_machine_team(void)
 {
-    int i, n = 0, one = -1;
+    int i, n = 0, one = -1, pid = -1;
+    char dir[512];
+    if (!league_host_dir(dir, (int)sizeof dir) && season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26)
+        return pid;
     if (g_season.claim >= OB_SEASON_TEAMS) return g_season.claim - OB_SEASON_TEAMS;
     if (g_installed_team >= 0 && g_installed_team < 26) return g_installed_team;
     if (net_guest()) return -1;          /* a guest copy still lists the host's local */
@@ -734,6 +755,11 @@ static int import_from_dir(const char *dir)
     lg = open_league();
     if (keep >= 0 && keep < 26 && lg[0])
         season_write_player_id(dest, keep, lg);
+    /* merge already wrote TEAMS.DB. A pack overwrite still has only the incoming
+     * team's posted record; fold this copy's .nn (GP-guarded) so both humans stay. */
+    season_fold_all(dest);
+    if (keep >= 0 && keep < 26) season_spread_teams_db(dest, keep);
+    if (team >= 0 && team < 26 && team != keep) season_spread_teams_db(dest, team);
     return r;
 }
 
@@ -814,10 +840,21 @@ void port_playleague_enter(void)
 static void fold_posted_records(void)
 {
     char dest[512];
-    int a = lgplayteam, b = dword_DDD34;
+    int a = lgplayteam, b = dword_DDD34, src, rec;
     if (league_host_dir(dest, (int)sizeof dest)) return;
-    if (a >= 0 && a < 26) season_fold_team_db(dest, a);
-    if (b >= 0 && b < 26 && b != a) season_fold_team_db(dest, b);
+    /* one-dir PlayLeagueGame posts both teams into the playing copy's TEAMS.nn
+     * (same ext). Each record is at team*0x2E8; pull both from each posted file. */
+    for (src = 0; src < 2; src++) {
+        int file = src ? b : a;
+        if (file < 0 || file >= 26) continue;
+        for (rec = 0; rec < 2; rec++) {
+            int who = rec ? b : a;
+            if (who < 0 || who >= 26) continue;
+            season_fold_record(dest, file, who);
+        }
+    }
+    if (a >= 0 && a < 26) season_spread_teams_db(dest, a);
+    if (b >= 0 && b < 26 && b != a) season_spread_teams_db(dest, b);
 }
 
 void port_playleague_exit(void)
@@ -1329,15 +1366,25 @@ void port_season_install_hooks(void)
     install_hooks();
 }
 
+static void remember_claim(void)
+{
+    int mine = this_machine_team();
+    if (mine < 0 || mine >= 26) return;
+    if (g_season.claim < 0)
+        g_season.claim = OB_SEASON_TEAMS + mine;
+}
+
 static void auto_sync(void)
 {
-    int st;
+    int st, host;
     if (!net_guest() || !open_league()[0] || ob_season_busy(&g_season)) return;
     st = g_season.state;
     if (st != OB_SEASON_IDLE && st != OB_SEASON_SYNCED && st != OB_SEASON_FAILED) return;
-    /* guest export → host MergeTeamDbs / MergeScheduleDb → copy back. File > Merge & Update is this. */
+    /* connect-time merge: guest export → room host MergeTeamDbs → copy back.
+     * a new room (g_join_sync cleared on bind) always syncs; nplayed covers a later game. */
+    host = g_season.host >= 0 ? g_season.host : 0;
     if (!g_join_sync || g_season.nplayed > 0) {
-        if (ob_season_sync(&g_season, 0) == 0) g_join_sync = 1;
+        if (ob_season_sync(&g_season, host) == 0) g_join_sync = 1;
     }
 }
 
@@ -1353,10 +1400,10 @@ static void mail_copies(void)
     lgname = open_league();
     if (!lgname[0]) return;
     me = ob_net_me(g_net);
-    others = ob_net_members(g_net) & ~(1u << me) & ~1u;
+    others = ob_net_members(g_net) & ~(1u << me);
     if (!others) return;
     mine = mine_team();
-    for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
+    for (k = 0; k < OB_NET_MAX_MACHINES; k++) {
         if (k == me || !(ob_net_members(g_net) >> k & 1)) continue;
         if (!ob_season_mirror(&g_season, k, mdir, (int)sizeof mdir)) continue;
         ver = 0;
@@ -1492,16 +1539,18 @@ void port_season_after_game(void)
     if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
     /* export this copy so the other guest can import the result (the return mail) */
     if (net_guest() && g_net) {
-        unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net)) & ~1u;
+        unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net));
         write_mine_player_id();
         if (others) ob_season_mirror_send(&g_season, others);
-        for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
+        for (k = 0; k < OB_NET_MAX_MACHINES; k++) {
             char more[512];
+            if (k == ob_net_me(g_net)) continue;
             if (ob_season_mirror(&g_season, k, more, (int)sizeof more)) import_from_dir(more);
         }
         if (gamemode == 2 && gameresult == 1) fold_posted_records();
         write_mine_player_id();
-        if (!ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
+        if (!ob_season_busy(&g_season))
+            ob_season_sync(&g_season, g_season.host >= 0 ? g_season.host : 0);
     }
     ob_season_mirror_drop(&g_season);
     memset(g_mail, 0, sizeof g_mail);
@@ -1552,6 +1601,7 @@ void port_season_free(void)
 void port_season_bind_net(ob_net *n)
 {
     g_net = n;
+    g_join_sync = 0;
     if (!n) return;
     port_sides_bind_net(n);
     ob_room_init(&g_room, n, port_sides_ob(), NULL);
@@ -1575,6 +1625,7 @@ void port_season_poll(void)
 void port_season_tick(void)
 {
     if (!g_ready) return;
+    remember_claim();
     rebuild_bar_if_league();
     if (g_net && ob_net_is_host(g_net)) {
         int st = ob_net_state(g_net), home_m, vis_m, me = ob_net_me(g_net);

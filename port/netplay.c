@@ -887,6 +887,15 @@ void nh_playgame_enter(int32_t *handle)
     }
     save_local();
     apply_settings(theirs, my_dev);
+    if (port_season_h2h_active()) {
+        int m, home_m = -1, vis_m = -1, nm = ob_net_machines(nh_net);
+        for (m = 0; m < nm; m++) {
+            unsigned pads = ob_net_pads_of(nh_net, m);
+            if (pads & 1u) home_m = m;
+            if (pads & 2u) vis_m = m;
+        }
+        port_sides_h2h_seats(home_m, vis_m);
+    }
     /* host's teams and options: exhibition did this in MenuNewExhibition; a league game already ran its
      * pre-game path, then PlayGame, and this applies the host's blob so both copies match */
     game_call(InitGameSummary, 0, 0);

@@ -28,9 +28,16 @@ int season_ensure_team_dbs(const char *dir, int team);
 int season_write_player_id(const char *dir, int team, const char *league);
 /* read PLAYER.ID: team 0..25, version (the 4 bytes Export writes). 0 ok, -1 none. */
 int season_player_id(const char *dir, int *team, unsigned *version);
-/* PostGameToTeamDb writes TEAMS.nn; StandingsScreen reads TEAMS.DB. Copy that
- * team's 0x2E8 record from TEAMS.nn into TEAMS.DB. 0 ok, -1 missing. */
+/* PostGameToTeamDb writes TEAMS.nn; StandingsScreen reads TEAMS.DB. Copy rec_team's
+ * 0x2E8 record from TEAMS.{src_team} into TEAMS.DB when its GP is not behind. 0 ok, -1 missing. */
+int season_fold_record(const char *dir, int src_team, int rec_team);
+/* same file as the team: TEAMS.nn slot team into TEAMS.DB. */
 int season_fold_team_db(const char *dir, int team);
+/* fold every TEAMS.nn that exists (each team's own record) into TEAMS.DB. 0 if
+ * at least one record moved, -1 none. */
+int season_fold_all(const char *dir);
+/* copy TEAMS.DB over TEAMS.nn so a pack of that team still has every posted record. */
+int season_spread_teams_db(const char *dir, int team);
 /* Next League Game pick (CheckLeagueDiskSync sync=0). 0: this machine can play
  * team — RAM +16h becomes 1 (imported) so "must be imported" stays off. -1:
  * not this machine's pick. guest is 1 on a client. mine is the team this

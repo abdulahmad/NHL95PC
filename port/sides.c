@@ -305,6 +305,31 @@ int port_sides_slot_of_seat(int seat)
     return seat >= 0 && seat < 4 ? g_slot[seat] : -1;
 }
 
+void port_sides_h2h_seats(int home_machine, int vis_machine)
+{
+    ob_sides_seat seat[2];
+    int n, me;
+    if (home_machine < 0 || vis_machine < 0 || home_machine == vis_machine) return;
+    me = g_net ? ob_net_me(g_net) : 0;
+    g_sides.me = me;
+    memset(g_sides.d, 0, sizeof g_sides.d);
+    g_sides.n = 2;
+    g_sides.d[0].owner = (int8_t)home_machine;
+    g_sides.d[0].local = home_machine == me ? 0 : 1;
+    g_sides.d[0].team = 1;              /* Home column */
+    g_sides.d[0].ready = 1;
+    snprintf(g_sides.d[0].name, sizeof g_sides.d[0].name, "Home");
+    g_sides.d[1].owner = (int8_t)vis_machine;
+    g_sides.d[1].local = vis_machine == me ? 0 : 1;
+    g_sides.d[1].team = 0;              /* Away column */
+    g_sides.d[1].ready = 1;
+    snprintf(g_sides.d[1].name, sizeof g_sides.d[1].name, "Away");
+    g_sides.done = 1;
+    g_sides.open = 0;
+    n = ob_sides_seats(&g_sides, seat, 2);
+    if (g_sides.g.apply) g_sides.g.apply(g_sides.g.ud, seat, n);
+}
+
 int port_sides_slot_fake(int slot)
 {
     return slot >= 0 && slot < 2 && g_fake[slot];
