@@ -45,7 +45,7 @@ v2 does not add more overlay rows. It **removes** those clicks until the calenda
 
 **New League: this computer vs another computer.** That is how the host says A and B live here and C and D are for friends. It is setup, not mail. Virtual A: already eats the host’s export write so there is no real floppy.
 
-Online **Host / Connect** stays (one room). Friends do not host their own league. The host’s machine stays in the room even when A/B are not playing (C vs D still needs that machine to start the match and to pass files).
+Online **Host / Connect** stays (one room). Friends do not host their own league. The host’s machine stays in the room even when A/B are not playing: it is the file and button relay, and it starts a C vs D match from the lobby. **The host does not enter the hockey game, spectate it, or sit in PlayGame as a third player.** “Host stays in the room” means the room stays up, not that the host is in the match.
 
 ---
 
@@ -123,17 +123,19 @@ Under the hood (not shown): first copy is installed as a real league on that mac
 
 ### Phase 5 — Two friends play each other
 
-**Player:** Host is connected but sitting on Season/Online (not playing A or B). Client 1 and client 2 both pick **C vs D** on the calendar, play each other online. Afterward that game is gone for them and, once caught up, on the host’s calendar too. Host’s A and B records do not change.
+**Player:** Host is connected, sitting on Season/Online — **not in a hockey game**. Client 1 and client 2 both pick **C vs D** on the calendar and play each other online. The host does not open PlayGame, does not spectate, is not a third pad. Afterward that game is gone for them and, once caught up, on the host’s calendar too. Host’s A and B records do not change.
 
-**Pass:** C vs D is a real online hockey game, not “import D onto C’s PC and play here.”
+**Pass:** C vs D is a real online hockey game between the two clients. The host stayed at the desk the whole time.
+
+**Fail:** any design that requires the host to enter PlayGame, spectate, or be a participant in C vs D.
 
 **Click that dies:** **import the other friend’s team to play them on one computer.**
 
 **Still there:** maybe a Sync click until phase 6.
 
-**Why this is last:** the net host (the season host) is the one who can start a match, and `PlayGame` is what starts it. The host’s machine has to run that game as a spectator and **must not** record it as an A or B result. If spectator play is too big a change, **stop and tell Abdul** after “the two clients can play C vs D on one of their machines with no import” — that matches 1994 mail, still without a filename. True online C vs D is the remaining step.
+**Why this is last:** only the net host can `ob_net_match_begin`. That call runs from the **lobby poll** with pad owners = the two guests. The host never sits in the hockey match. `PlayGame` runs on C and D only.
 
-Friends never Host their own league for this. The season host’s room stays up.
+Friends never Host their own league for this. The season host’s room stays up as a relay.
 
 ### Phase 6 — Calendar only
 
@@ -163,7 +165,7 @@ Friends never Host their own league for this. The season host’s room stays up.
 
 v1 listed `WaitLeagueFloppy`, `savleague2`, `+16h`, `ob_season_mirror_send`. Implementers still do that work; **the player never sees it**. Virtual A:, pick-by-name, #365’s pack, and Overbar’s unused mirror/played are how we remove the clicks, not the product.
 
-Do not bump Overbar off `82363b4` unless phase 5 needs a new generic “host spectates this match” hook. Do not invent filenames. Do not start 96 modem.
+Do not bump Overbar off `82363b4`. Phase 5 does **not** need a spectator hook: the host begins the match from the lobby with 0 pads and only polls / advances the relay. Do not invent filenames. Do not start 96 modem.
 
 Laptop: two copies for phases 0–4; three copies for 5. Firewall warning before the first listen.
 
@@ -177,4 +179,4 @@ Laptop: two copies for phases 0–4; three copies for 5. Firewall warning before
 
 ## Implementation
 
-Abdul said implement, including C vs D with the host in the room. Do not wait. Branch `cursor/seamless-online-season`, PR into `cursor/overbar-95pc-6801`, do not merge that PR.
+Abdul said implement, including C vs D with the host in the room **as a relay, not as a player**. Do not wait. Branch `cursor/seamless-online-season`, PR into `cursor/overbar-95pc-6801`, do not merge that PR.

@@ -18,7 +18,9 @@
  * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) shows Overbar's select-sides
  * screen (every connected controller; the same module online) and then begins a match in that room. A loaded game
  * stays local. A season game vs the computer, or two humans on this machine, stays local even if the room is up.
- * The match ends with PlayGame; the room lasts until Leave.
+ * Two guests (C vs D) play each other: the host begins that match from the lobby with those guests' pads and
+ * stays at the desk, only polling and advancing the relay. The host is not in PlayGame. The match ends with
+ * PlayGame on the guests; the room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
  *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
@@ -468,6 +470,7 @@ static void rb_regions(void)
 }
 
 typedef struct { uint32_t slot, gen; } rb_blob;
+#define RELAY_BLOB 0x594C4552u          /* "RELY": host is not in this game, only relaying */
 
 static size_t rb_save(void *user, void *out, size_t cap)
 {
@@ -475,6 +478,12 @@ static size_t rb_save(void *user, void *out, size_t cap)
     uint32_t slot = rb_next % RB_SLOTS;
     int64_t t0 = plat_now_ns();
     (void)user;
+    if (!nh_sim) {                      /* host at the desk during C vs D: do not snapshot the season desk */
+        uint32_t m = RELAY_BLOB;
+        if (cap < 4) return 4;
+        memcpy(out, &m, 4);
+        return 4;
+    }
     if (cap < sizeof b) return sizeof b;
     { int v0 = vif, bad;
       vif = 0;                                      /* no interrupt changes the game while its state is taken */
@@ -495,6 +504,11 @@ static int rb_load(void *user, const void *in, size_t size)
 {
     rb_blob b;
     (void)user;
+    if (size == 4) {
+        uint32_t m = 0;
+        memcpy(&m, in, 4);
+        return m == RELAY_BLOB ? 0 : -1;
+    }
     if (size != sizeof b) return -1;
     memcpy(&b, in, sizeof b);
     if (b.slot >= RB_SLOTS || rb_gen[b.slot] != b.gen || !rb_snap[b.slot].valid) return -1;
@@ -718,6 +732,62 @@ static void end_match(const char *why)
     SDL_UnlockMutex(nh_lock);
 }
 
+/* nh_lock is held. A guest vs guest match: this machine owns no pads and does not enter PlayGame. */
+int netplay_begin_guest_match(int16_t home, int16_t vis, const int8_t *owner, int npad, char *err, int errsz)
+{
+    nh_settings mine;
+    ob_net_match m;
+    int16_t oh = HomeTeam, ov = VisTeam;
+    uint32_t og = gamemode, o1s = ctl1side, o2s = ctl2side;
+    int32_t o1t = ctl1team, o2t = ctl2team;
+    int p;
+    if (err && errsz > 0) err[0] = 0;
+    if (!nh_net || !ob_net_is_host(nh_net) || ob_net_state(nh_net) != OB_NET_LOBBY) {
+        if (err && errsz > 0) snprintf(err, errsz, "not the host of a room");
+        return -1;
+    }
+    HomeTeam = home;
+    VisTeam = vis;
+    gamemode = 2;
+    ctl1team = home;
+    ctl1side = 0;
+    ctl2team = vis;
+    ctl2side = 1;
+    make_settings(&mine);
+    HomeTeam = oh;
+    VisTeam = ov;
+    gamemode = og;
+    ctl1team = o1t;
+    ctl2team = o2t;
+    ctl1side = o1s;
+    ctl2side = o2s;
+    memset(&m, 0, sizeof m);
+    for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = (owner && p < npad) ? owner[p] : -1;
+    m.delay = -1;
+    m.settings = &mine;
+    m.settings_size = sizeof mine;
+    return ob_net_match_begin(nh_net, &m, err, errsz);
+}
+
+void netplay_end_guest_match(void)
+{
+    if (nh_net && ob_net_is_host(nh_net) && ob_net_state(nh_net) == OB_NET_GO) ob_net_match_end(nh_net);
+}
+
+/* host of a 0-pad match: keep n->cur moving so the star can relay past RING/2 without sitting in PlayGame */
+static void relay_advance(void)
+{
+    uint16_t all[OB_NET_MAX_PADS];
+    int n, r;
+    if (!nh_net || nh_sim || !ob_net_is_host(nh_net) || ob_net_state(nh_net) != OB_NET_GO) return;
+    if (ob_net_my_pads(nh_net) != 0) return;
+    for (n = 0; n < 64; n++) {
+        r = ob_net_frame(nh_net, 1, NULL, all);
+        if (r == OB_NET_RESTART) continue;
+        if (r != OB_NET_RUN) break;
+    }
+}
+
 static int room_open(char *err, int err_size)
 {
     char identity[200];
@@ -772,11 +842,11 @@ void nh_playgame_enter(int32_t *handle)
         return;
     }
     /* a room does not make A vs CPU / A vs B an online game */
-    if (gamemode == 2 && nh_net && !port_season_want_online() && !port_season_spectating()) {
+    if (gamemode == 2 && nh_net && !port_season_want_online()) {
         port_sides_wait();
         return;
     }
-    if (!port_season_spectating() && my_dev != 2 && my_dev != 4 && my_dev != 8) {
+    if (my_dev != 2 && my_dev != 4 && my_dev != 8) {
         snprintf(nh_why, sizeof nh_why, "pick the keyboard or a joystick for player 1 (the mouse can't play online)");
         return;
     }
@@ -803,8 +873,8 @@ void nh_playgame_enter(int32_t *handle)
     }
     nh_close_page = 1;                               /* sides takes the keys; the overlay would swallow them */
     while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
-    if (port_season_want_online() && nh_net && !ob_net_is_host(nh_net)) port_season_note_play();
-    if (st == OB_NET_LOBBY && !port_season_spectating())
+    if (port_season_guest_vs_guest()) port_season_note_play();
+    if (st == OB_NET_LOBBY && !port_season_guest_vs_guest())
         port_sides_wait();                          /* same Overbar screen as local; the host's model is the one */
     if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
         ob_net_match m;
@@ -813,9 +883,7 @@ void nh_playgame_enter(int32_t *handle)
             int p;
             for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
         }
-        if (port_season_spectating()) {
-            if (port_season_spectate_owners(m.owner, NH_PADS)) { m.owner[0] = 1; m.owner[1] = 2; }
-        } else if (port_sides_ob() && port_sides_ob()->done)
+        if (port_sides_ob() && port_sides_ob()->done)
             ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
         else {
             m.owner[0] = 0;
@@ -887,6 +955,7 @@ void netplay_pump(void)
     SDL_LockMutex(nh_lock);
     if (nh_net) ob_net_poll(nh_net);
     port_season_poll();
+    relay_advance();
     SDL_UnlockMutex(nh_lock);
 }
 
@@ -1117,6 +1186,7 @@ void netplay_main_poll(void)
             since = 0;
             if (nh_net) ob_net_poll(nh_net);
             port_season_poll();
+            relay_advance();
             SDL_UnlockMutex(nh_lock);
         } else {
             int64_t now = plat_now_ns();

@@ -7,7 +7,6 @@
 #include "goalie.h"
 #include "skill.h"
 #include "lineup.h"
-#include "season.h"
 #include <string.h>
 #include <SDL.h>
 
@@ -206,7 +205,6 @@ __attribute__((naked)) static void set_deadline_entry(void)         /* SetTickDe
 __attribute__((naked)) static void wait_ticks_entry(void)           /* WaitTicks(ticks): wait until tickcount has passed tickcount + ticks */
 {
     __asm__ volatile(
-        "pushal\n\tcall " SYM("port_season_idle") "\n\tpopal\n\t"
         "movl 4(%esp), %eax\n\t"
         "cmpl $0, " SYM("intro_skip") "\n\t"
         "je 1f\n\t"
