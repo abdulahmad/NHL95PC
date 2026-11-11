@@ -244,6 +244,41 @@ int season_mark_imported(const char *dir, int team)
     return pinfo_entry(path, team, entry, 1, 0, 0);
 }
 
+int season_import_team(const char *from, const char *to, int team)
+{
+    char nn[8], a[512], b[512];
+    unsigned char entry[30];
+    int i;
+    if (!from || !to || team < 0 || team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", team);
+    for (i = 0; i < 7; i++)
+        if (copy_db_pair(from, to, k_db[i], nn)) return -1;
+    join2(a, (int)sizeof a, from, "PINFO.DB");
+    join2(b, (int)sizeof b, to, "PINFO.DB");
+    if (pinfo_entry(a, team, entry, 0, 0, 0)) return -1;
+    if (pinfo_entry(b, team, entry, 1, 0, 0)) return -1;
+    return season_mark_imported(to, team);
+}
+
+int season_player_id(const char *dir, int *team, unsigned *version)
+{
+    char path[512];
+    unsigned char buf[29];
+    FILE *f;
+    if (!dir) return -1;
+    join2(path, (int)sizeof path, dir, "PLAYER.ID");
+    f = fopen(path, "rb");
+    if (!f) return -1;
+    if (fread(buf, 1, 29, f) != 29) { fclose(f); return -1; }
+    fclose(f);
+    if (buf[0] > 25) return -1;
+    if (team) *team = buf[0];
+    if (version)
+        *version = (unsigned)buf[25] | (unsigned)buf[26] << 8 | (unsigned)buf[27] << 16 |
+                   (unsigned)buf[28] << 24;
+    return 0;
+}
+
 int season_write_player_id(const char *dir, int team, const char *league)
 {
     char path[512], pid[512];

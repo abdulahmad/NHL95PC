@@ -5,8 +5,10 @@
  * export / import / copy / merge. Teams marked for export at New League (floppy
  * "played on another computer") are remote slots: a guest Pick a team claims
  * one by name, and the port copies that team's DBs. Overlay Season / File
- * screens come from Overbar (ob_season_set). Pack files, when used, are named
- * after the team — not a typed .obt filename.
+ * screens come from Overbar (ob_season_set). Export, import, and Merge & Update
+ * of team databases run in the background when the copies need them — the
+ * player never has to use those File menu items. Pack files, when used, are
+ * named after the team — not a typed .obt filename.
  */
 #ifndef PORT_SEASON_H
 #define PORT_SEASON_H
@@ -25,15 +27,9 @@ void port_season_poll(void);
 /* overlay is drawn: rebuild the File bar if the league changed, keep A: on the
  * copy used in play, log season lines when OVERBAR_TEST_LOG is set */
 void port_season_tick(void);
-/* 1: this PlayGame is an online season match (the other human is in the room). 0: keep it local. */
+/* 1: host vs a guest in the room (online). 0: local — A vs CPU / A vs B, or C vs D
+ * after export/import onto this machine. */
 int port_season_want_online(void);
-/* 1: this PlayGame is two guests (C vs D). They play each other; the season host is not in it. */
-int port_season_guest_vs_guest(void);
-/* 1: this machine is home for a C vs D game (it listens; the visitor joins). */
-int port_season_peer_home(void);
-int port_season_peer_opp(void);                  /* the other guest's machine, or -1 */
-void port_season_send_offer(int to, unsigned port, const char *addr);
-int port_season_take_offer(char *addr, int addr_size, int *port);  /* 1: an offer is waiting */
 /* after PlayGame of a league match: mark it played, drop mirrors, sync */
 void port_season_after_game(void);
 /* 1: dos is on a virtual drive and *out is the host path; 0: not virtual; -1: virtual, no disk */

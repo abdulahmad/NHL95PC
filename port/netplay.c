@@ -17,9 +17,8 @@
  * Host / Connect opens a room at once (port_season_bind_net), so overlay Pick / Sync have the socket before a
  * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) shows Overbar's select-sides
  * screen (every connected controller; the same module online) and then begins a match in that room. A loaded game
- * stays local. A season game vs the computer, or two humans on this machine, stays local even if the room is up.
- * Two guests (C vs D) play each other on their own after Pick: a 2-machine session between those
- * machines. The season host's room is not that match (it still carries the league and the invite).
+ * stays local. A season game vs the computer, two humans on this machine, or two guests (C vs D after the
+ * game has exported one copy and imported it onto this PC) stays local even if the room is up.
  * The match ends with PlayGame; the season room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
@@ -85,8 +84,8 @@ void *nh_peek_cont, *nh_pop_cont, *nh_flush_cont, *nh_rgf_cont, *nh_pg_cont, *nh
      *nh_inter_cont, *nh_tsl_cont, *nh_sit_cont, *nh_readjoy1, *nh_readjoy2;
 
 static SDL_mutex *nh_lock;
-static ob_net *nh_net;                  /* the hockey match (the season room, or C vs D's own session) */
-static ob_net *nh_room;                 /* Host / Connect season room; C vs D leaves this up */
+static ob_net *nh_net;                  /* the hockey match (same object as the season room) */
+static ob_net *nh_room;                 /* Host / Connect season room */
 static int nh_ok;                       /* the hooks are in */
 static volatile int nh_armed;           /* Host / Connect: the room is up; the next new game is a match */
 static ob_online nh_cfg;
@@ -751,123 +750,6 @@ static void fill_game(ob_net_game *g, char *identity, size_t idsz)
     g->states = nh_rb ? &rb_states : NULL;
 }
 
-/* C vs D: a 2-machine session between the two guests. The season room stays up. */
-static int peer_session(char *err, int errsz)
-{
-    char identity[200], lan[96], offer_addr[96];
-    ob_net_game g;
-    ob_online cfg;
-    ob_net *peer;
-    int st, opp, port, i, offer_port = 0;
-    int64_t last_offer = 0;
-    fill_game(&g, identity, sizeof identity);
-    cfg = nh_cfg;
-    cfg.here = 1;
-    cfg.all = 2;
-    opp = port_season_peer_opp();
-    if (opp <= 0) {
-        if (err && errsz > 0) snprintf(err, errsz, "the other player is not in the room");
-        return -1;
-    }
-    if (port_season_peer_home()) {
-        lan[0] = 0;
-        if (!ob_net_lan_address(lan, (int)sizeof lan) || !lan[0]) snprintf(lan, sizeof lan, "127.0.0.1");
-        cfg.role = 0;
-        cfg.addr[0] = 0;
-        port = nh_cfg.port > 0 ? nh_cfg.port + 1 : OB_NET_PORT_DEFAULT + 1;
-        if (port > 65535) port = OB_NET_PORT_DEFAULT + 1;
-        peer = NULL;
-        for (i = 0; i < 8 && !peer; i++) {
-            cfg.port = port + i;
-            peer = ob_net_new(&cfg, &g, err, errsz);
-        }
-        if (!peer) return -1;
-        SDL_LockMutex(nh_lock);
-        nh_net = peer;
-        SDL_UnlockMutex(nh_lock);
-        fprintf(stderr, "online: C vs D listening on %s:%d (season host is not in this game)\n", lan, cfg.port);
-        for (;;) {
-            SDL_LockMutex(nh_lock);
-            st = poll_nets_locked();
-            if (st == OB_NET_LOBBY && nh_net && ob_net_machines(nh_net) >= 2) break;
-            if (st == OB_NET_ENDED || quit_requested) {
-                if (err && errsz > 0)
-                    snprintf(err, errsz, "%s", nh_net && ob_net_why(nh_net)[0] ? ob_net_why(nh_net) : "the other player did not join");
-                if (nh_net && nh_net != nh_room) { ob_net_free(nh_net); nh_net = nh_room; }
-                SDL_UnlockMutex(nh_lock);
-                return -1;
-            }
-            if (plat_now_ns() - last_offer > 200000000LL) {
-                last_offer = plat_now_ns();
-                port_season_send_offer(opp, (unsigned)cfg.port, lan);
-            }
-            SDL_UnlockMutex(nh_lock);
-            plat_sleep_ms(2);
-        }
-        {
-            nh_settings mine;
-            ob_net_match m;
-            int p;
-            ctl1team = HomeTeam;
-            ctl1side = 0;
-            ctl2team = VisTeam;
-            ctl2side = 1;
-            make_settings(&mine);
-            memset(&m, 0, sizeof m);
-            for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
-            m.owner[0] = 0;
-            m.owner[1] = 1;
-            m.delay = -1;
-            m.settings = &mine;
-            m.settings_size = sizeof mine;
-            if (ob_net_match_begin(nh_net, &m, err, errsz)) {
-                if (nh_net && nh_net != nh_room) { ob_net_free(nh_net); nh_net = nh_room; }
-                SDL_UnlockMutex(nh_lock);
-                return -1;
-            }
-        }
-        SDL_UnlockMutex(nh_lock);
-    } else {
-        for (;;) {
-            int got;
-            SDL_LockMutex(nh_lock);
-            poll_nets_locked();
-            got = port_season_take_offer(offer_addr, (int)sizeof offer_addr, &offer_port);
-            SDL_UnlockMutex(nh_lock);
-            if (got) break;
-            if (quit_requested) {
-                if (err && errsz > 0) snprintf(err, errsz, "the other player did not host");
-                return -1;
-            }
-            plat_sleep_ms(2);
-        }
-        cfg.role = 1;
-        snprintf(cfg.addr, sizeof cfg.addr, "%s", offer_addr);
-        cfg.port = offer_port > 0 ? offer_port : OB_NET_PORT_DEFAULT + 1;
-        peer = ob_net_new(&cfg, &g, err, errsz);
-        if (!peer) return -1;
-        SDL_LockMutex(nh_lock);
-        nh_net = peer;
-        SDL_UnlockMutex(nh_lock);
-    }
-    for (;;) {
-        SDL_LockMutex(nh_lock);
-        st = poll_nets_locked();
-        SDL_UnlockMutex(nh_lock);
-        if (st == OB_NET_GO || st == OB_NET_ENDED) break;
-        if (quit_requested) break;
-        plat_sleep_ms(2);
-    }
-    if (st != OB_NET_GO) {
-        if (err && errsz > 0) snprintf(err, errsz, "the session did not start");
-        SDL_LockMutex(nh_lock);
-        if (nh_net && nh_net != nh_room) { ob_net_free(nh_net); nh_net = nh_room; }
-        SDL_UnlockMutex(nh_lock);
-        return -1;
-    }
-    return 0;
-}
-
 static int room_open(char *err, int err_size)
 {
     char identity[200];
@@ -948,48 +830,40 @@ void nh_playgame_enter(int32_t *handle)
     }
     nh_close_page = 1;                               /* sides takes the keys; the overlay would swallow them */
     while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
-    if (port_season_guest_vs_guest()) {
-        if (peer_session(err, (int)sizeof err)) {
+    if (st == OB_NET_LOBBY)
+        port_sides_wait();                      /* same Overbar screen as local; the host's model is the one */
+    if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
+        ob_net_match m;
+        memset(&m, 0, sizeof m);
+        {
+            int p;
+            for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
+        }
+        if (port_sides_ob() && port_sides_ob()->done)
+            ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
+        else {
+            m.owner[0] = 0;
+            m.owner[1] = 1;
+        }
+        make_settings(&mine);                   /* after sides: ctl* are the seat table */
+        m.delay = -1;
+        m.settings = &mine;
+        m.settings_size = sizeof mine;
+        if (ob_net_match_begin(nh_net, &m, err, (int)sizeof err)) {
+            nh_close_page = 1;
             snprintf(nh_why, sizeof nh_why, "%s", err);
             return;
         }
-        st = OB_NET_GO;
-    } else {
-        if (st == OB_NET_LOBBY)
-            port_sides_wait();                      /* same Overbar screen as local; the host's model is the one */
-        if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
-            ob_net_match m;
-            memset(&m, 0, sizeof m);
-            {
-                int p;
-                for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
-            }
-            if (port_sides_ob() && port_sides_ob()->done)
-                ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
-            else {
-                m.owner[0] = 0;
-                m.owner[1] = 1;
-            }
-            make_settings(&mine);                   /* after sides: ctl* are the seat table */
-            m.delay = -1;
-            m.settings = &mine;
-            m.settings_size = sizeof mine;
-            if (ob_net_match_begin(nh_net, &m, err, (int)sizeof err)) {
-                nh_close_page = 1;
-                snprintf(nh_why, sizeof nh_why, "%s", err);
-                return;
-            }
-        }
-        for (;;) {
-            SDL_LockMutex(nh_lock);
-            st = poll_nets_locked();
-            SDL_UnlockMutex(nh_lock);
-            if (st == OB_NET_GO || st == OB_NET_ENDED) break;
-            plat_sleep_ms(2);
-        }
-        nh_close_page = 1;
-        if (st != OB_NET_GO) { end_match("the session did not start"); return; }
     }
+    for (;;) {
+        SDL_LockMutex(nh_lock);
+        st = poll_nets_locked();
+        SDL_UnlockMutex(nh_lock);
+        if (st == OB_NET_GO || st == OB_NET_ENDED) break;
+        plat_sleep_ms(2);
+    }
+    nh_close_page = 1;
+    if (st != OB_NET_GO) { end_match("the session did not start"); return; }
     SDL_LockMutex(nh_lock);
     theirs = (const nh_settings *)ob_net_settings(nh_net, &size);
     nh_me = (ob_net_my_pads(nh_net) & 1) ? 0 : 1;

@@ -127,6 +127,38 @@ int main(void)
         CHECK(pid[0] == 5);
         CHECK(!memcmp(pid + 1, "OILERS", 6));
         CHECK(!memcmp(pid + 12, "FOO.LP", 6));
+        CHECK(season_player_id(dest, &i, NULL) == 0 && i == 5);
+    }
+
+    /* Import Databases > Player onto another copy (C's team onto D's league) */
+    {
+        char d_league[512], c_disk[512];
+        unsigned char dtab[0x20 + 26 * 30];
+        snprintf(d_league, sizeof d_league, "%s/dee", root);
+        snprintf(c_disk, sizeof c_disk, "%s/cdisk", root);
+        MKDIR(d_league);
+        MKDIR(c_disk);
+        memcpy(dtab, tab, sizeof dtab);
+        memcpy(dtab + 0x20 + 12 * 30, "RANGERS", 7);
+        dtab[0x20 + 12 * 30 + 0x17] = 1;
+        dtab[0x20 + 12 * 30 + 0x18] = 2;
+        snprintf(pinfo, sizeof pinfo, "%s/PINFO.DB", d_league);
+        write_bytes(pinfo, dtab, sizeof dtab);
+        for (i = 0; i < 7; i++) {
+            static const char *n[] = { "KEY", "CAREER", "ATT", "CARTEAMS", "TEAMS", "SEASON", "SCHEDULE" };
+            snprintf(srcdb, sizeof srcdb, "%s/%s.DB", d_league, n[i]);
+            write_bytes(srcdb, "dee", 3);
+        }
+        CHECK(season_pack_floppy(league, c_disk, 5, "FOO.LP", 0) == 0);
+        CHECK(season_player_id(c_disk, &i, NULL) == 0 && i == 5);
+        CHECK(season_import_team(c_disk, d_league, 5) == 0);
+        snprintf(srcdb, sizeof srcdb, "%s/KEY.05", d_league);
+        CHECK(file_size(srcdb) > 0);
+        snprintf(srcdb, sizeof srcdb, "%s/PINFO.DB", d_league);
+        f = fopen(srcdb, "rb");
+        CHECK(f && fseek(f, 0x20 + 5 * 30, SEEK_SET) == 0 && fread(entry, 1, 30, f) == 30);
+        if (f) fclose(f);
+        CHECK(entry[0x16] == 1);
     }
 
     /* league folder has no GAME.SET (New League writes it in the game folder while gamemode is 0) */

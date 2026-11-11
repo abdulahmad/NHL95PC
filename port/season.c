@@ -5,8 +5,12 @@
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
  * name. The first copy is imported here (no File > Import Databases). Virtual A:
  * is the other human's mirror when the calendar needs it; no insert-disk box.
- * C vs D: after Pick, the two guests play each other on their own (a 2-machine
- * session). The season host's room is only the league / files / invite.
+ * C vs D: the same File > Export / Import Databases / Merge & Update path as
+ * 1994, run in the background whenever the copies need it. Export one team's
+ * DBs, import them onto the other machine, merge that copy in, so both teams
+ * live on that PC, then play here (local). The season host is not in that game.
+ * The player never has to click Export, Import, or Merge & Update. Overlay pack
+ * is the same when someone is away.
  */
 #include "season.h"
 
@@ -38,8 +42,6 @@
 #define UNLINK(p) unlink(p)
 #define SYM(s) s
 #endif
-
-#define NH_SEASON_PLAY 10               /* room message: a guest is in PlayGame vs another guest (1 start, 2 done) */
 
 extern unsigned char curleague;
 extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[];
@@ -76,10 +78,9 @@ static ob_net *g_net;
 static ob_host *g_host;
 static char g_work[260], g_root[260], g_play_dir[260];
 static int g_ready, g_play_on, g_installed_team = -1, g_hold_a, g_in_league, g_join_sync, g_hooks;
+static struct { int team; unsigned ver; int have; } g_mail[OB_NET_MAX_MACHINES];
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
-static char g_offer_addr[96];
-static int g_offer_port, g_have_offer;
 void *port_plg_cont;
 
 static const char *game_root(void)
@@ -560,6 +561,33 @@ static int machine_of_team(int team)
     return -1;
 }
 
+static int mine_team(void)
+{
+    if (g_season.claim >= OB_SEASON_TEAMS) return g_season.claim - OB_SEASON_TEAMS;
+    return lgplayteam;
+}
+
+static int team_on_hd(int team)
+{
+    return team >= 0 && team < 26 && (teams_tab()[team * 30 + 0x16] & 1);
+}
+
+/* File > Import Databases > Player, then Merge & Update, without the clicks.
+ * Merge first (into this copy's .DB); only copy the incoming files over if merge
+ * cannot run, so a merged schedule is not overwritten. */
+static int import_from_dir(const char *dir)
+{
+    char dest[512];
+    int team, mine;
+    if (!dir || season_player_id(dir, &team, NULL) || league_host_dir(dest, (int)sizeof dest)) return -1;
+    mine = mine_team();
+    if (team == mine) return 0;
+    if (!exists_path(dest)) return -1;
+    if (op_merge(NULL, team, dir, NULL, 0) == 0)
+        return season_mark_imported(dest, team);
+    return season_import_team(dir, dest, team);
+}
+
 static int wait_mirror(int from, char *dir, int size)
 {
     while (!quit_requested) {
@@ -585,8 +613,8 @@ int port_wait_floppy(char *file, char *name, char *dir)
     if (team < 0) return find_floppy(file, name, dir);
     me = g_net ? ob_net_me(g_net) : 0;
     other = machine_of_team(team);
-    mine = g_season.claim >= OB_SEASON_TEAMS ? g_season.claim - OB_SEASON_TEAMS : lgplayteam;
-    if (g_net && other >= 0 && other != me) {
+    mine = mine_team();
+    if (g_net && other >= 0 && other != me && !team_on_hd(team)) {
         unsigned others = ob_net_members(g_net) & ~(1u << me);
         if (!league_host_dir(lg, (int)sizeof lg) && lgname[0] && mine >= 0 && mine < 26)
             season_write_player_id(lg, mine, lgname);
@@ -595,7 +623,10 @@ int port_wait_floppy(char *file, char *name, char *dir)
             snprintf(pid, sizeof pid, "%s/PLAYER.ID", lg);
             UNLINK(pid);
         }
+        /* the other human's export, as Import Databases > Player reads a floppy: both
+         * teams' DBs are on this machine for the game (C vs D with the host away). */
         if (wait_mirror(other, mdir, (int)sizeof mdir) == 0) {
+            import_from_dir(mdir);
             mount_a(mdir);
             return find_floppy(file, name, dir);
         }
@@ -662,24 +693,46 @@ static void auto_sync(void)
     if (!net_guest() || !open_league()[0] || ob_season_busy(&g_season)) return;
     st = g_season.state;
     if (st != OB_SEASON_IDLE && st != OB_SEASON_SYNCED && st != OB_SEASON_FAILED) return;
+    /* guest export → host MergeTeamDbs / MergeScheduleDb → copy back. File > Merge & Update is this. */
     if (!g_join_sync || g_season.nplayed > 0) {
         if (ob_season_sync(&g_season, 0) == 0) g_join_sync = 1;
     }
 }
 
-static void on_play_msg(void *ud, int from, int type, const void *data, size_t size)
+/* File > Export / Import / Merge & Update, without the clicks: keep other guests' teams on this PC. */
+static void mail_copies(void)
 {
-    const uint8_t *p = data;
-    uint16_t port;
-    (void)ud;
-    if (type != NH_SEASON_PLAY || !p || size < 11 || p[0] != 1) return;
-    if (from < 0 || from >= OB_NET_MAX_MACHINES) return;
-    if (ob_net_is_host(g_net)) return;           /* C vs D is the two guests' game */
-    memcpy(&port, p + 8, 2);
-    memset(g_offer_addr, 0, sizeof g_offer_addr);
-    snprintf(g_offer_addr, sizeof g_offer_addr, "%s", (const char *)(p + 10));
-    g_offer_port = port;
-    g_have_offer = 1;
+    static int age;
+    int me, k, team, mine;
+    unsigned others, ver;
+    char mdir[512], dest[512];
+    const char *lgname;
+    if (!net_guest() || g_in_league || ob_season_busy(&g_season)) return;
+    lgname = open_league();
+    if (!lgname[0]) return;
+    me = ob_net_me(g_net);
+    others = ob_net_members(g_net) & ~(1u << me) & ~1u;
+    if (!others) return;
+    mine = mine_team();
+    for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
+        if (k == me || !(ob_net_members(g_net) >> k & 1)) continue;
+        if (!ob_season_mirror(&g_season, k, mdir, (int)sizeof mdir)) continue;
+        ver = 0;
+        if (season_player_id(mdir, &team, &ver)) continue;
+        if (team == mine) continue;
+        if (g_mail[k].have && g_mail[k].team == team && g_mail[k].ver == ver) continue;
+        if (import_from_dir(mdir) == 0) {
+            g_mail[k].team = team;
+            g_mail[k].ver = ver;
+            g_mail[k].have = 1;
+        }
+    }
+    if (ob_files_busy(&g_files, -1)) return;
+    if (++age < 120) return;
+    age = 0;
+    if (!league_host_dir(dest, (int)sizeof dest) && mine >= 0 && mine < 26)
+        season_write_player_id(dest, mine, lgname);
+    ob_season_mirror_send(&g_season, others);
 }
 
 int port_season_want_online(void)
@@ -690,68 +743,33 @@ int port_season_want_online(void)
     me = ob_net_me(g_net);
     opp = machine_of_team(dword_DDD34);
     if (opp < 0 || opp == me) return 0;
-    return 1;
-}
-
-int port_season_guest_vs_guest(void)
-{
-    int opp, me;
-    if (!g_net || gamemode != 2 || ob_net_is_host(g_net)) return 0;
-    me = ob_net_me(g_net);
-    opp = machine_of_team(dword_DDD34);
-    return opp > 0 && opp != me;
-}
-
-int port_season_peer_home(void)
-{
-    int me, opp, home_m;
-    if (!port_season_guest_vs_guest()) return 0;
-    me = ob_net_me(g_net);
-    opp = machine_of_team(dword_DDD34);
-    home_m = machine_of_team(HomeTeam);
-    if (home_m == me) return 1;
-    if (home_m == opp) return 0;
-    return me < opp;
-}
-
-int port_season_peer_opp(void)
-{
-    if (!g_net) return -1;
-    return machine_of_team(dword_DDD34);
-}
-
-void port_season_send_offer(int to, unsigned port, const char *addr)
-{
-    uint8_t msg[10 + 96];
-    int16_t home = HomeTeam, vis = VisTeam;
-    uint16_t p = (uint16_t)port;
-    if (!g_net || to < 0 || !addr) return;
-    memset(msg, 0, sizeof msg);
-    msg[0] = 1;
-    memcpy(msg + 2, &home, 2);
-    memcpy(msg + 4, &vis, 2);
-    memcpy(msg + 6, &lggameidx, 2);
-    memcpy(msg + 8, &p, 2);
-    snprintf((char *)(msg + 10), 96, "%s", addr);
-    ob_net_send(g_net, to, NH_SEASON_PLAY, msg, sizeof msg);
-}
-
-int port_season_take_offer(char *addr, int addr_size, int *port)
-{
-    if (!g_have_offer || !addr || addr_size <= 0 || !port) return 0;
-    snprintf(addr, (size_t)addr_size, "%s", g_offer_addr);
-    *port = g_offer_port;
+    /* C vs D: both guests. Export one copy, import on this machine, play here. */
+    if (me != 0 && opp != 0) return 0;
     return 1;
 }
 
 void port_season_after_game(void)
 {
+    char dest[512];
+    int mine, k;
     if (g_in_league) return;            /* PlayLeagueGame still posting into savleague1/2 */
-    g_have_offer = 0;
     if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
+    /* export this copy so the other guest can import the result (the return mail) */
+    if (net_guest() && g_net) {
+        unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net)) & ~1u;
+        mine = mine_team();
+        if (!league_host_dir(dest, (int)sizeof dest) && open_league()[0] && mine >= 0 && mine < 26)
+            season_write_player_id(dest, mine, open_league());
+        if (others) ob_season_mirror_send(&g_season, others);
+        for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
+            char mdir[512];
+            if (ob_season_mirror(&g_season, k, mdir, (int)sizeof mdir)) import_from_dir(mdir);
+        }
+        if (!ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
+    }
     ob_season_mirror_drop(&g_season);
+    memset(g_mail, 0, sizeof g_mail);
     g_hold_a = 0;
-    if (net_guest() && !ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
     restore_play();
 }
 
@@ -808,13 +826,13 @@ void port_season_unbind_net(void)
 {
     port_sides_unbind_net();
     g_net = NULL;
-    g_have_offer = 0;
     memset(&g_room, 0, sizeof g_room);
+    memset(g_mail, 0, sizeof g_mail);
 }
 
 void port_season_poll(void)
 {
-    if (g_net) ob_room_poll(&g_room, on_play_msg, NULL);
+    if (g_net) ob_room_poll(&g_room, NULL, NULL);
 }
 
 void port_season_tick(void)
@@ -828,6 +846,7 @@ void port_season_tick(void)
         if (lp && lp[0] && g_net && !ob_net_is_host(g_net) && ++t >= 120) { t = 0; ob_season_teams(&g_season, 0); }
     }
     auto_sync();
+    mail_copies();
     mount_play();
     diag_log();
 }

@@ -17,7 +17,12 @@ int season_floppy_ready(const char *dir, int team, const char *league);
 int season_install_floppy(const char *floppy, const char *root, char *league_out, int league_size);
 /* this machine has imported team: PINFO +16h = 1 so the calendar will not ask. */
 int season_mark_imported(const char *dir, int team);
+/* File > Import Databases > Player onto an existing league: copy team's seven DBs
+ * and its PINFO row from from/ into to/, then mark it imported. 0 ok, -1 fail. */
+int season_import_team(const char *from, const char *to, int team);
 /* PLAYER.ID for FindLeagueFloppy / GetLeagueId (team byte, 11-byte name, league, version). */
 int season_write_player_id(const char *dir, int team, const char *league);
+/* read PLAYER.ID: team 0..25, version (the 4 bytes Export writes). 0 ok, -1 none. */
+int season_player_id(const char *dir, int *team, unsigned *version);
 
 #endif

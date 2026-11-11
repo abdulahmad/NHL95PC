@@ -15,11 +15,11 @@ Host makes a league, once:
 1. **New League** as today. For each human team: **this computer** or **another computer**. That is the only “export” question. A and B = this computer. C and D = another computer (bob, dee, …).
 2. **Online → Host.** Friends **Connect**.
 3. Each friend opens **Season → Pick a team** and chooses **Edmonton - bob** (team name, not a file). After that, that machine *is* that team.
-4. Anyone opens the **calendar** and picks a game. If the other human is in the room, it is an online game. If not, it is vs the computer (or A vs B on the host with two pads). Play. The result is on every copy that needs it. Open the calendar again; that game is gone.
+4. Anyone opens the **calendar** and picks a game. Host vs a friend in the room is online. A vs CPU / A vs B / C vs D after the other team’s DBs are on this PC is local. Play. The result is on every copy that needs it. Open the calendar again; that game is gone.
 
-No **Import Databases**. No **insert a disk**. No **typed filename**. No **Export team as a file** / **Sync league** click on the happy path. Overlay Season is “who has which team,” not a mailroom.
+No **Import Databases**. No **Merge & Update**. No **insert a disk**. No **typed filename**. No **Export team as a file** / **Sync league** click on the happy path. Overlay Season is “who has which team,” not a mailroom.
 
-The original floppy let C import D’s disk and play that game on one PC. The v2 result is the same standings, without that import: C and D play each other **online** while the host’s room is up. (If someone is offline, overlay file take/give can stay as a fallback. Happy path never uses it.)
+The original floppy let you **export** C, **import** onto D, **Merge & Update**, and play both teams on one PC. That is still C vs D. The game now does those three File steps in the background whenever the copies need them. (If someone is offline, overlay file take/give can stay as a fallback. Happy path never uses it.)
 
 ---
 
@@ -35,7 +35,7 @@ Abdul already has create + export. After pick, the guest is told to do the 1994 
 | Overlay **Team 5 / Team 12** instead of Oilers / Rangers on the guest | Pick worked; the guest still does not see the league the host sees. |
 | Later: **insert the other team’s disk** to play a human vs human | Every two-human game, including online, still asks for a floppy even if a copy is already there. |
 | Overlay **Export / Import / Take** a `.obt` | Filenames. The 1994 workaround, still in the room UI. |
-| C vs D meant import the other player’s disk onto this PC | Works in DOS. Not “pick the game on the calendar with your friend connected.” |
+| C vs D meant export / import / Merge & Update by hand | That *is* C vs D. The clicks are the problem, not the databases. |
 
 v2 does not add more overlay rows. It **removes** those clicks until the calendar is the only play action.
 
@@ -45,7 +45,7 @@ v2 does not add more overlay rows. It **removes** those clicks until the calenda
 
 **New League: this computer vs another computer.** That is how the host says A and B live here and C and D are for friends. It is setup, not mail. Virtual A: already eats the host’s export write so there is no real floppy.
 
-Online **Host / Connect** stays (one room) for the league: pick, files, sync. Friends do not host their own **league**. After C and D have taken their teams they play each other **on their own** — a 2-machine hockey session between those two PCs. The season host is not a player, not a spectator, and not the net host of that match.
+Online **Host / Connect** stays (one room) for the league: pick, files, and the background export / import / merge. Friends do not host their own **league**. After C and D have taken their teams they play each other **on their own**: the other team’s databases show up on this PC (export from one, import and Merge & Update on the other), then PlayGame is local, like A vs B. The season host is not a player, not a spectator, and not in that hockey game.
 
 ---
 
@@ -63,7 +63,7 @@ Games:
 - Host, local: A vs CPU, B vs CPU, A vs B (two pads)
 - Online: A vs C, A vs D, B vs C, B vs D
 - Client local: C vs CPU, D vs CPU
-- Online: C vs D (the two clients play each other on their own after pick)
+- Local on one guest PC: C vs D (export / import / Merge & Update in the background, then two pads)
 
 A vs CPU / B vs CPU / A vs B must **not** start an online session just because the room is up.
 
@@ -123,17 +123,17 @@ Under the hood (not shown): first copy is installed as a real league on that mac
 
 ### Phase 5 — Two friends play each other
 
-**Player:** C and D have already Pick’d their teams. They both open **C vs D** on the calendar and play each other. They do not wait for the season host to start or join that hockey game. Afterward that game is gone for them and, once caught up, on the host’s calendar too. Host’s A and B records do not change.
+**Player:** C and D have already Pick’d their teams. One of them opens **C vs D** on the calendar (or they sit at one PC that has both teams). They do not wait for the season host, and they do not click File > Export / Import / Merge & Update. Afterward that game is gone for them and, once caught up, on the host’s calendar too. Host’s A and B records do not change.
 
-**Pass:** C vs D is a real online hockey game **between those two machines**. The season host is not in that match.
+**Pass:** both teams’ databases are on the machine that plays; PlayGame is local (two pads). The season host is not in that match. Export, import, and Merge & Update ran themselves.
 
-**Fail:** any design that requires the season host to enter PlayGame, spectate, begin that match, or be a third pad.
+**Fail:** any design that requires the season host to enter PlayGame, spectate, begin that match, or be a third pad. Any design that makes C vs D a second online hockey session. Any design that still needs a File menu click.
 
-**Click that dies:** **import the other friend’s team to play them on one computer.**
+**Click that dies:** **File > Export Databases, Import Databases, Merge & Update**, and insert-disk for that game.
 
-**Still there:** maybe a Sync click until phase 6.
+**Still there:** maybe a Sync click until phase 6 (the host merge of the result also runs itself when a guest is in the room).
 
-**Why this is last:** after pick they have copies. The hockey game is a 2-machine session they run themselves (home listens, visitor joins). The season room is only how they found each other and how scores get back.
+**Why this is last:** after pick they have copies. The 1994 mail path (export C, import on D, merge, play here) is the game; the room only carries the files. Example: export from C and import into D to get both teams on the same machine.
 
 Friends never Host their own league for this.
 
@@ -156,7 +156,7 @@ Friends never Host their own league for this.
 | 2 | Friend picks a team, plays vs CPU | Import Databases |
 | 3 | Host vs that friend, calendar, online | Insert opponent disk |
 | 4 | Vs CPU still works after that | — |
-| 5 | Two friends play each other online | Import the other team to play locally |
+| 5 | Two friends play C vs D on one PC | Export / Import / Merge & Update clicks |
 | 6 | Same, no Sync click | Sync button |
 
 ---
@@ -165,9 +165,9 @@ Friends never Host their own league for this.
 
 v1 listed `WaitLeagueFloppy`, `savleague2`, `+16h`, `ob_season_mirror_send`. Implementers still do that work; **the player never sees it**. Virtual A:, pick-by-name, #365’s pack, and Overbar’s unused mirror/played are how we remove the clicks, not the product.
 
-Do not bump Overbar off `82363b4`. Phase 5 is a second 2-machine session between C and D, not a spectator hook and not a season-host match_begin. Do not invent filenames. Do not start 96 modem.
+Do not bump Overbar off `82363b4`. Phase 5 is export / import / Merge & Update in the background, then local PlayGame. Not a spectator hook, not a season-host match_begin, not a second online session. Do not invent filenames. Do not start 96 modem.
 
-Laptop: two copies for phases 0–4; three copies for 5. Firewall warning before the first listen.
+Laptop: two copies for phases 0–4; two guest copies (or one PC with both teams) for 5, plus the host if the room is up. Firewall warning before the first listen.
 
 ---
 
@@ -179,4 +179,4 @@ Laptop: two copies for phases 0–4; three copies for 5. Firewall warning before
 
 ## Implementation
 
-Abdul said implement, including C vs D: once they have taken their teams they play on their own against each other. Do not wait. Branch `cursor/seamless-online-season`, PR into `cursor/overbar-95pc-6801`, do not merge that PR.
+Abdul said implement, including C vs D: once they have taken their teams they play on their own against each other. The key is export / import / Merge & Update of the databases, run in the background, never as File menu clicks. Example: export from C and import into D so both teams are on the same machine. Do not wait. Branch `cursor/seamless-online-season`, PR into `cursor/overbar-95pc-6801`, do not merge that PR.
