@@ -248,26 +248,17 @@ static void to_fighter(fighter *f, const uint8_t *p, int away)
     f->yvel = P_W(p, P_YVEL);
     f->facedir = P_W(p, P_FACEDIR) & 7;
     f->human = 0;                       /* set once the controllers are given out (fight_check) */
-    f->fighting = fighting_of(p);               /* 93's fighting nibble, not 95 PC's aggression */
+    f->fighting = fight_rating_byte(P_B(p, P_AGGRESS));  /* attribute byte 12, already on the player */
     f->checking = P_B(p, P_CHECKING) & 0xF;
     f->energy = 0x1000;
     f->away = away;
 }
 
-/* 93 setplayer copies pldcheck & $E into fighting. 95 PC's setplayer never reads that byte: it is attribute
- * record +8 (between shot accuracy and passing), the hole the create-player screen does not fill. Aggression
- * (0x62) is a different rating and is high on star players, so it is not used. */
+/* 95 PC has no fighting byte. Attribute +8 is skipped by setplayer and is a skill byte in the retail
+ * roster (Gretzky 15, Domi 5), not 93's fighting nibble. Aggression is byte 12, copied to the player. */
 static int fighting_of(const uint8_t *p)
 {
-    uint8_t *t, *r;
-    int n;
-    if (!p) return 0;
-    n = (int8_t)P_B(p, P_PNUM);
-    t = *(uint8_t **)(p + 0x6C);                /* tmptr */
-    if (!t || n < 0 || n >= 25) return 0;
-    r = *(uint8_t **)(t + 0xDE);                /* skater ratings, 20 bytes each (setplayer's TMSKRAT) */
-    if (!r) return 0;
-    return fight_rating_byte(r[n * 20 + 8]);
+    return p ? fight_rating_byte(P_B(p, P_AGGRESS)) : 0;
 }
 
 static int can_fight(const uint8_t *p)
