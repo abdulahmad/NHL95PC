@@ -17,9 +17,9 @@
  * Host / Connect opens a room at once (port_season_bind_net), so overlay Pick / Sync have the socket before a
  * game. PlayGame of a new exhibition, season, or playoff (handle < 0, gamemode 0/1/2) shows Overbar's select-sides
  * screen (every connected controller; the same module online) and then begins a match in that room. A loaded game
- * stays local. A season game vs the computer, two humans on this machine, or two guests (C vs D after the
- * game has exported one copy and imported it onto this PC) stays local even if the room is up.
- * The match ends with PlayGame; the season room lasts until Leave.
+ * stays local. A season game vs the computer or two humans on this machine stays local even if the room is up.
+ * Two humans on different machines (C vs D) play in the room: each controls their team; a watching host
+ * only forwards. The match ends with PlayGame; the season room lasts until Leave.
  *
  * In a session (docs/SDL2_PORT.md, "Online play"):
  *   - the engine's random seed (randomd0's `seed`) and the C library's are the host's; Crowd_Noise, which draws from `seed`
@@ -820,39 +820,44 @@ void nh_playgame_enter(int32_t *handle)
         fprintf(stderr, "online: simulating %d ms delay, %d ms jitter, %d%% loss\n", d, j, l);
     }
     nh_why[0] = 0;
-    nh_want_page = 1;                               /* the Online page shows what it waits for */
-    for (;;) {
-        SDL_LockMutex(nh_lock);
-        st = poll_nets_locked();
-        SDL_UnlockMutex(nh_lock);
-        if (st != OB_NET_CONNECTING) break;
-        plat_sleep_ms(2);
-    }
-    nh_close_page = 1;                               /* sides takes the keys; the overlay would swallow them */
-    while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
-    if (st == OB_NET_LOBBY)
-        port_sides_wait();                      /* same Overbar screen as local; the host's model is the one */
-    if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
-        ob_net_match m;
-        memset(&m, 0, sizeof m);
-        {
-            int p;
-            for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
+    if (port_season_h2h_active()) {
+        port_season_h2h_playing();              /* room host begins pad0=home, pad1=away */
+        nh_close_page = 1;
+    } else {
+        nh_want_page = 1;                       /* the Online page shows what it waits for */
+        for (;;) {
+            SDL_LockMutex(nh_lock);
+            st = poll_nets_locked();
+            SDL_UnlockMutex(nh_lock);
+            if (st != OB_NET_CONNECTING) break;
+            plat_sleep_ms(2);
         }
-        if (port_sides_ob() && port_sides_ob()->done)
-            ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
-        else {
-            m.owner[0] = 0;
-            m.owner[1] = 1;
-        }
-        make_settings(&mine);                   /* after sides: ctl* are the seat table */
-        m.delay = -1;
-        m.settings = &mine;
-        m.settings_size = sizeof mine;
-        if (ob_net_match_begin(nh_net, &m, err, (int)sizeof err)) {
-            nh_close_page = 1;
-            snprintf(nh_why, sizeof nh_why, "%s", err);
-            return;
+        nh_close_page = 1;                       /* sides takes the keys; the overlay would swallow them */
+        while (overbar_client_open() && !quit_requested) plat_sleep_ms(2);
+        if (st == OB_NET_LOBBY)
+            port_sides_wait();                  /* same Overbar screen as local; the host's model is the one */
+        if (st == OB_NET_LOBBY && nh_net && ob_net_is_host(nh_net)) {
+            ob_net_match m;
+            memset(&m, 0, sizeof m);
+            {
+                int p;
+                for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
+            }
+            if (port_sides_ob() && port_sides_ob()->done)
+                ob_sides_owners(port_sides_ob(), m.owner, NH_PADS, 1);
+            else {
+                m.owner[0] = 0;
+                m.owner[1] = 1;
+            }
+            make_settings(&mine);               /* after sides: ctl* are the seat table */
+            m.delay = -1;
+            m.settings = &mine;
+            m.settings_size = sizeof mine;
+            if (ob_net_match_begin(nh_net, &m, err, (int)sizeof err)) {
+                nh_close_page = 1;
+                snprintf(nh_why, sizeof nh_why, "%s", err);
+                return;
+            }
         }
     }
     for (;;) {
@@ -889,6 +894,7 @@ void nh_playgame_enter(int32_t *handle)
 /* PlayGame has returned: the session's game is over */
 void nh_playgame_exit(void)
 {
+    if (nh_dead && port_season_h2h_active()) port_season_h2h_abort();
     if (!nh_sim && !nh_take && !nh_dead && !nh_finish) {
         port_season_after_game();
         return;
@@ -911,6 +917,57 @@ void netplay_pump(void)
     SDL_LockMutex(nh_lock);
     poll_nets_locked();
     SDL_UnlockMutex(nh_lock);
+}
+
+int netplay_h2h_begin(int home_machine, int vis_machine, const void *settings, size_t settings_size)
+{
+    ob_net_match m;
+    char err[160];
+    int p, r;
+    if (!nh_lock || !nh_net || !ob_net_is_host(nh_net)) return -1;
+    if (home_machine < 0 || vis_machine < 0 || home_machine == vis_machine) return -1;
+    if (!settings || !settings_size) return -1;
+    memset(&m, 0, sizeof m);
+    for (p = 0; p < OB_NET_MAX_PADS; p++) m.owner[p] = -1;
+    m.owner[0] = (int8_t)home_machine;
+    m.owner[1] = (int8_t)vis_machine;
+    m.delay = -1;
+    m.settings = settings;
+    m.settings_size = settings_size;
+    SDL_LockMutex(nh_lock);
+    if (ob_net_state(nh_net) != OB_NET_LOBBY) {
+        SDL_UnlockMutex(nh_lock);
+        return -1;
+    }
+    r = ob_net_match_begin(nh_net, &m, err, (int)sizeof err);
+    SDL_UnlockMutex(nh_lock);
+    if (r) {
+        snprintf(nh_why, sizeof nh_why, "%s", err);
+        return -1;
+    }
+    return 0;
+}
+
+void netplay_h2h_end(void)
+{
+    if (!nh_lock || !nh_net || !ob_net_is_host(nh_net)) return;
+    if (nh_sim || nh_take) return;
+    SDL_LockMutex(nh_lock);
+    if (ob_net_state(nh_net) == OB_NET_GO) ob_net_match_end(nh_net);
+    SDL_UnlockMutex(nh_lock);
+}
+
+size_t netplay_settings_copy(void *buf, size_t cap)
+{
+    nh_settings s;
+    if (!buf || cap < sizeof s) return 0;
+    make_settings(&s);
+    s.home = HomeTeam;
+    s.vis = VisTeam;
+    if (HomeTeam >= 0) { s.ctl1team = HomeTeam; s.ctl1side = 0; }
+    if (VisTeam >= 0) { s.ctl2team = VisTeam; s.ctl2side = 1; }
+    memcpy(buf, &s, sizeof s);
+    return sizeof s;
 }
 
 /* ---- int 21h / 2Ch in a session: the host's time when it began, on by the records run (20 a second) ---- */

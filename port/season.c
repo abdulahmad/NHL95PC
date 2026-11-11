@@ -9,12 +9,11 @@
  * Overlay Season: a guest's HELLO names only that claimed team, so leftover
  * remotes stay open and the host's controller is never that guest's.
  * Virtual A: is the other human's mirror when the calendar needs it.
- * C vs D: the same File > Export / Import Databases / Merge & Update path as
- * 1994, run in the background whenever the copies need it. Export one team's
- * DBs, import them onto the other machine, merge that copy in, so both teams
- * live on that PC, then play here (local). The season host is not in that game.
- * The player never has to click Export, Import, or Merge & Update. Overlay pack
- * is the same when someone is away.
+ * C vs D: while the connect dialog is open both machines start the same
+ * scheduled game, exchange team packs, and play over the room. The home
+ * machine posts the result; the away machine imports that pack. The player
+ * never has to click Export, Import, or Merge & Update. Overlay pack is the
+ * same when someone is away.
  */
 #include "season.h"
 
@@ -27,6 +26,7 @@
 #include "overbar/season.h"
 #include "overbar/vdrive.h"
 #include "season_floppy.h"
+#include "season_h2h.h"
 #include "sides.h"
 
 #include <stdint.h>
@@ -48,14 +48,20 @@
 #endif
 
 extern unsigned char curleague;
-extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[];
+extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[], gameresult;
 extern short lggameidx, HomeTeam, VisTeam;
+extern unsigned char byte_DDD42, byte_DDD43;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
 extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
-extern char AddHumanTeam[], MergeLeagueFiles[];
+extern char AddHumanTeam[], MergeLeagueFiles[], AskTeamPassword[];
 extern unsigned char exportmsg[], leagueflags;
 extern signed char byte_DE268;
 extern volatile int quit_requested;
+extern int MessageBox(int x, int y, char *msg, int n, int a, int b, int c, int d, int e);
+extern void RestoreDialogBg(void);
+extern void SetDialogColors(int a, int b, int c, int d, int e);
+extern int sub_B2CBE(int key);
+extern void sub_B2DCA(int *x, int *y, int *btn);
 
 static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
 {
@@ -90,7 +96,14 @@ static struct { int team; unsigned ver; int have; } g_mail[OB_NET_MAX_MACHINES];
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
 void *port_plg_cont, *port_cls_cont, *port_chd_cont, *port_lts_cont;
-void *port_aht_cont, *port_mlf_cont;
+void *port_aht_cont, *port_mlf_cont, *port_atp_cont;
+static season_h2h g_h2h_peer[OB_NET_MAX_MACHINES];
+static int g_h2h_have[OB_NET_MAX_MACHINES];
+static uint8_t g_h2h_set[1024];
+static size_t g_h2h_setn;
+static season_h2h g_h2h_local;
+static int g_h2h_opp = -1, g_h2h_home, g_h2h_active, g_h2h_drop, g_h2h_local_have, g_h2h_watch;
+static int g_h2h_home_m = -1, g_h2h_vis_m = -1;
 
 static const char *game_root(void)
 {
@@ -725,6 +738,138 @@ __attribute__((naked)) static int lts_orig_tramp(void)
     __asm__ volatile("pushl $0x2B4\n\tjmp *" SYM("port_lts_cont"));
 }
 
+__attribute__((naked)) static int watcall2(void *fn, uint32_t a, uint32_t d)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %ebp\n\tret");
+}
+
+/* MessageBox: eax, edx, ebx, ecx, then five stack args (callee pops). */
+__attribute__((naked)) static int watcall_mbox(void *fn, uint32_t a, uint32_t d, uint32_t b, uint32_t c,
+                                               uint32_t s0, uint32_t s1, uint32_t s2, uint32_t s3, uint32_t s4)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
+        "pushl 44(%ebp)\n\tpushl 40(%ebp)\n\tpushl 36(%ebp)\n\tpushl 32(%ebp)\n\tpushl 28(%ebp)\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\tmovl 24(%ebp), %ecx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret");
+}
+
+static void h2h_send(const season_h2h *p, const void *extra, size_t n)
+{
+    uint8_t buf[sizeof(season_h2h) + 1024];
+    if (!g_net || !p) return;
+    memcpy(buf, p, sizeof *p);
+    if (!extra || n > 1024) n = 0;
+    if (n) memcpy(buf + sizeof *p, extra, n);
+    ob_net_send(g_net, OB_NET_ALL, SEASON_H2H_TYPE, buf, sizeof *p + n);
+}
+
+static void h2h_fill_mine(season_h2h *o, int kind)
+{
+    season_h2h_fill(o, kind, byte_DDD42, byte_DDD43, lgplayteam, lggameidx, open_league());
+}
+
+static void h2h_clear(void)
+{
+    memset(g_h2h_peer, 0, sizeof g_h2h_peer);
+    memset(g_h2h_have, 0, sizeof g_h2h_have);
+    memset(&g_h2h_local, 0, sizeof g_h2h_local);
+    g_h2h_setn = 0;
+    g_h2h_opp = -1;
+    g_h2h_home = 0;
+    g_h2h_active = 0;
+    g_h2h_drop = 0;
+    g_h2h_local_have = 0;
+    g_h2h_watch = 0;
+    g_h2h_home_m = g_h2h_vis_m = -1;
+}
+
+static void season_h2h_msg(void *ud, int from, int type, const void *data, size_t size)
+{
+    const season_h2h *p;
+    (void)ud;
+    if (type != SEASON_H2H_TYPE || size < sizeof(season_h2h) || !data) return;
+    if (from < 0 || from >= OB_NET_MAX_MACHINES) return;
+    p = (const season_h2h *)data;
+    g_h2h_peer[from] = *p;
+    g_h2h_have[from] = 1;
+    if (p->kind == SEASON_H2H_PLAYING && p->mine == p->home && size > sizeof *p) {
+        size_t n = size - sizeof *p;
+        if (n > sizeof g_h2h_set) n = sizeof g_h2h_set;
+        memcpy(g_h2h_set, (const uint8_t *)data + sizeof *p, n);
+        g_h2h_setn = n;
+    }
+    if (p->kind == SEASON_H2H_GONE) g_h2h_have[from] = 0;
+}
+
+static int h2h_exchange(int from, int opp)
+{
+    char lg[512], mdir[512];
+    const char *lgname = open_league();
+    int mine = mine_team();
+    if (from < 0 || league_host_dir(lg, (int)sizeof lg) || !lgname[0]) return -1;
+    if (mine >= 0 && mine < 26) season_write_player_id(lg, mine, lgname);
+    ob_season_mirror_send(&g_season, 1u << from);
+    if (wait_mirror(from, mdir, (int)sizeof mdir)) return -1;
+    import_from_dir(mdir);
+    if (opp >= 0) season_mark_imported(lg, opp);
+    teams_invalidate();
+    mount_a(lg);
+    return 0;
+}
+
+static int wait_h2h(char *teams, int opp)
+{
+    season_h2h me;
+    char lines[4][SEASON_H2H_LINE], *ptr[4], player[12];
+    unsigned char *rec;
+    int mx = 0, my = 0, btn = 0, i, age = 0, k;
+    rec = (unsigned char *)teams + opp * 30;
+    memcpy(player, rec, 11);
+    player[11] = 0;
+    season_h2h_lines(lines, player);
+    for (i = 0; i < 4; i++) ptr[i] = lines[i];
+    watcall5((void *)SetDialogColors, 0xF9, 0xFA, 0xF8, 0xFA, 0);
+    sub_B2DCA(&btn, &my, &mx);
+    watcall_mbox((void *)MessageBox, (uint32_t)-1, (uint32_t)-1, (uint32_t)(uintptr_t)ptr, 4,
+                 0, 0, (uint32_t)(uintptr_t)&my, (uint32_t)(uintptr_t)&btn, 0);
+    g_h2h_opp = opp;
+    g_h2h_home = lgplayteam == (int)byte_DDD42;
+    h2h_fill_mine(&me, SEASON_H2H_WANT);
+    h2h_send(&me, NULL, 0);
+    while (!quit_requested) {
+        netplay_pump();
+        if (sub_B2CBE(1) || sub_B2CBE(0x1C)) break;
+        h2h_fill_mine(&me, SEASON_H2H_WANT);
+        if (++age >= 12) {
+            age = 0;
+            h2h_send(&me, NULL, 0);
+        }
+        for (k = 0; k < OB_NET_MAX_MACHINES; k++) {
+            if (!g_h2h_have[k]) continue;
+            if (g_h2h_peer[k].kind != SEASON_H2H_WANT && g_h2h_peer[k].kind != SEASON_H2H_PLAYING)
+                continue;
+            if (!season_h2h_same(&me, &g_h2h_peer[k])) continue;
+            if (h2h_exchange(k, opp) == 0) {
+                RestoreDialogBg();
+                g_h2h_active = 1;
+                return 0;
+            }
+        }
+        plat_sleep_ms(16);
+    }
+    h2h_fill_mine(&me, SEASON_H2H_GONE);
+    h2h_send(&me, NULL, 0);
+    RestoreDialogBg();
+    g_h2h_opp = -1;
+    return 4;
+}
+
 int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
 {
     char dest[512];
@@ -738,6 +883,16 @@ int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
         else if (dir && dir[0])
             season_mark_imported(dir, team);
         teams_invalidate();
+    }
+    if (sync && rec && rec[0x17] == 1 && g_net) {
+        int mine = mine_team();
+        if (team_local(team) && mine >= 0 && team_local(mine)) {
+            if (!league_host_dir(dest, (int)sizeof dest) && exists_path(dest)) mount_a(dest);
+            return 0;
+        }
+        if (g_h2h_drop || (probe && gameresult != 1)) return 4;
+        if (probe) return g_h2h_home ? 0 : 4;
+        return wait_h2h(teams, team);
     }
     return watcall5((void *)check_orig_tramp, (uint32_t)(uintptr_t)dir, (uint32_t)(uintptr_t)teams,
                     (uint32_t)team, (uint32_t)sync, (uint32_t)probe);
@@ -841,6 +996,25 @@ __attribute__((naked)) static int aht_orig_tramp(void)
 __attribute__((naked)) static int mlf_orig_tramp(void)
 {
     __asm__ volatile("pushl $0x8C\n\tjmp *" SYM("port_mlf_cont"));
+}
+
+__attribute__((naked)) static int atp_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0xA0\n\tjmp *" SYM("port_atp_cont"));
+}
+
+int port_ask_team_pw(int t, char *ents)
+{
+    if (g_h2h_opp >= 0 && t == g_h2h_opp) return 0;
+    return watcall2((void *)atp_orig_tramp, (uint32_t)t, (uint32_t)(uintptr_t)ents);
+}
+
+__attribute__((naked)) static void atp_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpushl %edx\n\tpushl %eax\n\t"
+        "call " SYM("port_ask_team_pw") "\n\taddl $8, %esp\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret");
 }
 
 static int pinfo_flags13(unsigned *val, int write)
@@ -947,6 +1121,10 @@ static void install_hooks(void)
         port_mlf_cont = MergeLeagueFiles + 5;
         patch_jmp(MergeLeagueFiles, mlf_entry);
     }
+    if (entry_push(AskTeamPassword, 0xA0)) {
+        port_atp_cont = AskTeamPassword + 5;
+        patch_jmp(AskTeamPassword, atp_entry);
+    }
     patch_export_question();
     g_hooks = 1;
 }
@@ -1006,22 +1184,116 @@ static void mail_copies(void)
 
 int port_season_want_online(void)
 {
-    int opp, me;
+    int opp, me, k;
     if (!g_net || gamemode != 2) return 0;
     if (!dword_DDD3C) return 0;
     me = ob_net_me(g_net);
     opp = machine_of_team(dword_DDD34);
-    if (opp < 0 || opp == me) return 0;
-    /* C vs D: both guests. Export one copy, import on this machine, play here. */
-    if (me != 0 && opp != 0) return 0;
-    return 1;
+    if (opp == me) return 0;
+    if (opp >= 0) return 1;
+    if (g_h2h_active) return 1;
+    for (k = 0; k < OB_NET_MAX_MACHINES; k++)
+        if (g_h2h_have[k] && g_h2h_peer[k].mine == (uint8_t)dword_DDD34) return 1;
+    return 0;
+}
+
+int port_season_h2h_active(void)
+{
+    return g_h2h_active;
+}
+
+int port_season_h2h_guest(void)
+{
+    return g_h2h_active && g_net && !ob_net_is_host(g_net);
+}
+
+void port_season_h2h_playing(void)
+{
+    uint8_t extra[1024];
+    size_t n = 0;
+    if (!g_net || !g_h2h_active) return;
+    h2h_fill_mine(&g_h2h_local, SEASON_H2H_PLAYING);
+    g_h2h_local_have = 1;
+    n = netplay_settings_copy(extra, sizeof extra);
+    h2h_send(&g_h2h_local, extra, n);
+}
+
+void port_season_h2h_abort(void)
+{
+    g_h2h_drop = 1;
+}
+
+static int h2h_ready_pair(int *home_m, int *vis_m)
+{
+    season_h2h side[OB_NET_MAX_MACHINES];
+    int who[OB_NET_MAX_MACHINES], n = 0, i, j, me;
+    if (!g_net || !home_m || !vis_m) return 0;
+    me = ob_net_me(g_net);
+    for (i = 0; i < OB_NET_MAX_MACHINES; i++) {
+        if (!g_h2h_have[i] || g_h2h_peer[i].kind != SEASON_H2H_PLAYING) continue;
+        side[n] = g_h2h_peer[i];
+        who[n] = i;
+        n++;
+    }
+    if (g_h2h_local_have && g_h2h_local.kind == SEASON_H2H_PLAYING) {
+        int dup = 0;
+        for (i = 0; i < n; i++) if (who[i] == me) dup = 1;
+        if (!dup && n < OB_NET_MAX_MACHINES) {
+            side[n] = g_h2h_local;
+            who[n] = me;
+            n++;
+        }
+    }
+    for (i = 0; i < n; i++) {
+        for (j = i + 1; j < n; j++) {
+            if (!season_h2h_same(&side[i], &side[j])) continue;
+            *home_m = side[i].mine == side[i].home ? who[i] : who[j];
+            *vis_m = *home_m == who[i] ? who[j] : who[i];
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void port_season_after_game(void)
 {
-    char dest[512];
-    int mine, k;
+    char dest[512], mdir[512];
+    int mine, k, home_m;
+    season_h2h gone;
     if (g_in_league) return;            /* PlayLeagueGame still posting into savleague1/2 */
+    if (g_h2h_active) {
+        h2h_fill_mine(&gone, SEASON_H2H_GONE);
+        h2h_send(&gone, NULL, 0);
+        g_h2h_local_have = 0;
+    }
+    if (g_h2h_active && (g_h2h_drop || gameresult != 1)) {
+        ob_season_mirror_drop(&g_season);
+        memset(g_mail, 0, sizeof g_mail);
+        h2h_clear();
+        g_hold_a = 0;
+        restore_play();
+        return;
+    }
+    if (g_h2h_active && g_h2h_home && g_net) {
+        unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net));
+        mine = mine_team();
+        if (!league_host_dir(dest, (int)sizeof dest) && open_league()[0] && mine >= 0 && mine < 26)
+            season_write_player_id(dest, mine, open_league());
+        if (others) ob_season_mirror_send(&g_season, others);
+        while (!quit_requested && others && ob_season_mirror_sent(&g_season) == 0) {
+            netplay_pump();
+            plat_sleep_ms(2);
+        }
+    }
+    if (g_h2h_active && !g_h2h_home && g_net) {
+        home_m = machine_of_team(byte_DDD42);
+        if (home_m < 0) {
+            for (k = 0; k < OB_NET_MAX_MACHINES; k++)
+                if (g_h2h_have[k] && g_h2h_peer[k].mine == byte_DDD42) home_m = k;
+        }
+        if (home_m >= 0 && wait_mirror(home_m, mdir, (int)sizeof mdir) == 0)
+            import_from_dir(mdir);
+    }
     if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
     /* export this copy so the other guest can import the result (the return mail) */
     if (net_guest() && g_net) {
@@ -1031,13 +1303,14 @@ void port_season_after_game(void)
             season_write_player_id(dest, mine, open_league());
         if (others) ob_season_mirror_send(&g_season, others);
         for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
-            char mdir[512];
-            if (ob_season_mirror(&g_season, k, mdir, (int)sizeof mdir)) import_from_dir(mdir);
+            char more[512];
+            if (ob_season_mirror(&g_season, k, more, (int)sizeof more)) import_from_dir(more);
         }
         if (!ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
     }
     ob_season_mirror_drop(&g_season);
     memset(g_mail, 0, sizeof g_mail);
+    h2h_clear();
     g_hold_a = 0;
     restore_play();
 }
@@ -1096,17 +1369,46 @@ void port_season_unbind_net(void)
     g_net = NULL;
     memset(&g_room, 0, sizeof g_room);
     memset(g_mail, 0, sizeof g_mail);
+    h2h_clear();
 }
 
 void port_season_poll(void)
 {
-    if (g_net) ob_room_poll(&g_room, NULL, NULL);
+    if (g_net) ob_room_poll(&g_room, season_h2h_msg, NULL);
 }
 
 void port_season_tick(void)
 {
     if (!g_ready) return;
     rebuild_bar_if_league();
+    if (g_net && ob_net_is_host(g_net)) {
+        int st = ob_net_state(g_net), home_m, vis_m, me = ob_net_me(g_net);
+        if (st == OB_NET_LOBBY && h2h_ready_pair(&home_m, &vis_m)) {
+            const void *set = g_h2h_set;
+            size_t n = g_h2h_setn;
+            uint8_t local[1024];
+            if (home_m == me) {
+                n = netplay_settings_copy(local, sizeof local);
+                set = local;
+            }
+            if (n && netplay_h2h_begin(home_m, vis_m, set, n) == 0) {
+                g_h2h_home_m = home_m;
+                g_h2h_vis_m = vis_m;
+                g_h2h_watch = home_m != me && vis_m != me;
+            }
+        }
+        if (g_h2h_watch && st == OB_NET_GO) {
+            int hp = (g_h2h_have[g_h2h_home_m] && g_h2h_peer[g_h2h_home_m].kind == SEASON_H2H_PLAYING) ||
+                     (g_h2h_home_m == me && g_h2h_local_have);
+            int vp = (g_h2h_have[g_h2h_vis_m] && g_h2h_peer[g_h2h_vis_m].kind == SEASON_H2H_PLAYING) ||
+                     (g_h2h_vis_m == me && g_h2h_local_have);
+            if (!hp && !vp) {
+                netplay_h2h_end();
+                g_h2h_watch = 0;
+            }
+        }
+        if (g_h2h_watch && st != OB_NET_GO && st != OB_NET_LOBBY) g_h2h_watch = 0;
+    }
     if (g_host) ob_season_tick(g_host);
     {   /* OVERBAR_TEST_LOG: a guest asks for the league list every ~2 s with no page open (headless checks) */
         static int t;

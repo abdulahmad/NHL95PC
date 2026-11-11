@@ -67,7 +67,7 @@ NHL95_BUILD=$(git describe --always --dirty 2>/dev/null || echo unknown)
 $CC -O1 -g -mstackrealign -Wall -Wno-format-truncation -DSDL_MAIN_HANDLED -DNHL95_BUILD="\"$NHL95_BUILD\"" $SDL_CFLAGS \
     -DOB_SDL_BASE -Iport/overbar/include -Ibuild/munt-win/inc -Iport/third_party/munt/mt32emu/src \
     -o "$OUT/hockey-win32.exe" port/host.c port/shell.c port/bindings.c port/bindings_win.c -DHAVE_GL port/stats.c port/emu.c port/ports.c port/dos.c port/video.c port/input.c port/irq.c port/audio.c port/dma.c port/speaker.c port/opl.c port/sb.c port/mpu.c port/gus.c port/sound_ports.c \
-    port/overbar_client.c port/season.c port/season_floppy.c port/netplay.c port/snap.c $OVERBAR_SRCS \
+    port/overbar_client.c port/season.c port/season_floppy.c port/season_h2h.c port/netplay.c port/snap.c $OVERBAR_SRCS \
     port/soundtest.c port/third_party/nuked-opl3/opl3.c -DHAVE_MUNT port/cstart.c \
     port/overrides.c port/osk_hook.c port/feel.c port/lines.c port/goalie.c port/pads4.c port/rom94.c port/skill.c port/sides.c port/lineup.c port/fight/hooks.c port/fight/rules.c port/fight/rom93.c port/fight/punch.c port/plat_win.c "$OUT/icon.o" $(sh port/objorder.sh "$OUT/obj") \
     build/munt-win/libmt32emu.a $SDL_LIBS -lopengl32 -lpdh -lcomctl32 -lgdi32 -lws2_32 -static-libgcc -Wl,-Bstatic -lstdc++ -lpthread -Wl,-Bdynamic -lm -Wl,--subsystem,console \

@@ -157,4 +157,9 @@ void netplay_main_poll(void);                    /* main thread, every pass of t
 void netplay_pump(void);                         /* game thread: poll the room while waiting (mirrors) */
 int netplay_running(void);                       /* a session drives the game: its clock runs while the overlay is open */
 int netplay_dos_time(int *h, int *m, int *s, int *cs);  /* int 21h/2Ch in a session: the host's time, on by the records run */
+/* season C vs D: the room host begins a match those two play; settings from the home team */
+int netplay_h2h_begin(int home_machine, int vis_machine, const void *settings, size_t settings_size);
+/* watching room host: end that match when both players have left it */
+void netplay_h2h_end(void);
+size_t netplay_settings_copy(void *buf, size_t cap);
 #endif

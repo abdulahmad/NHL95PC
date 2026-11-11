@@ -1,5 +1,6 @@
 /* Headless: the floppy Import Databases > Player reads, and installing it as the guest league. */
 #include "season_floppy.h"
+#include "season_h2h.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -260,6 +261,102 @@ int main(void)
         CHECK(n == 2 && dest[0] == 4 && dest[1] == 21);
         CHECK(season_own_teams(NULL, 26, 1, -1, dest, 8) == 0);
         CHECK(season_own_teams(t, 26, 1, -1, NULL, 8) == 0);
+    }
+
+    /* C vs D handshake: same scheduled game, complementary teams, dialog fits. */
+    {
+        season_h2h dad, bob, other;
+        char lines[4][SEASON_H2H_LINE];
+        season_h2h_fill(&dad, SEASON_H2H_WANT, 5, 16, 5, 12, "TESTY.LP");
+        season_h2h_fill(&bob, SEASON_H2H_WANT, 5, 16, 16, 12, "TESTY.LP");
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 16, 13, "TESTY.LP");
+        CHECK(season_h2h_same(&dad, &bob));
+        CHECK(season_h2h_same(&bob, &dad));
+        CHECK(!season_h2h_same(&dad, &dad));
+        CHECK(!season_h2h_same(&dad, &other));
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 5, 12, "TESTY.LP");
+        CHECK(!season_h2h_same(&dad, &other)); /* same mine */
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 4, 12, "TESTY.LP");
+        CHECK(!season_h2h_same(&dad, &other));
+        season_h2h_lines(lines, "bob");
+        CHECK(season_h2h_lines_fit(lines));
+        CHECK(!strcmp(lines[0], "Please connect to"));
+        CHECK(!strcmp(lines[1], "bob"));
+        CHECK(!strcmp(lines[2], "and have them start this game"));
+        CHECK(!strcmp(lines[3], "while this message is open to play."));
+        season_h2h_lines(lines, "this name is way too long to fit");
+        CHECK(strlen(lines[1]) <= 11);
+        CHECK(season_h2h_lines_fit(lines));
+        season_h2h_lines(lines, "");
+        CHECK(!strcmp(lines[1], "the other player"));
+        CHECK(season_h2h_lines_fit(lines));
+    }
+
+    /* two copies exchange team DBs, home posts a result, away takes that pack. */
+    {
+        char dad[512], bob[512], dsk_e[512], dsk_s[512], dsk_r[512], p[512];
+        unsigned char dtab[0x20 + 26 * 30], entry[30], sched[64];
+        int team;
+        snprintf(dad, sizeof dad, "%s/dad.LP", root);
+        snprintf(bob, sizeof bob, "%s/bob.LP", root);
+        snprintf(dsk_e, sizeof dsk_e, "%s/dsk_e", root);
+        snprintf(dsk_s, sizeof dsk_s, "%s/dsk_s", root);
+        snprintf(dsk_r, sizeof dsk_r, "%s/dsk_r", root);
+        MKDIR(dad); MKDIR(bob); MKDIR(dsk_e); MKDIR(dsk_s); MKDIR(dsk_r);
+        memset(dtab, 0, sizeof dtab);
+        memcpy(dtab + 0x20 + 5 * 30, "dad", 3);
+        dtab[0x20 + 5 * 30 + 0x17] = 1;
+        dtab[0x20 + 5 * 30 + 0x18] = 1;
+        memcpy(dtab + 0x20 + 16 * 30, "bob", 3);
+        dtab[0x20 + 16 * 30 + 0x17] = 1;
+        dtab[0x20 + 16 * 30 + 0x18] = 2;
+        dtab[0x20 + 16 * 30 + 0x16] = 2;
+        snprintf(p, sizeof p, "%s/PINFO.DB", dad);
+        write_bytes(p, dtab, sizeof dtab);
+        memcpy(dtab + 0x20 + 5 * 30 + 0x18, "\x02", 1);
+        dtab[0x20 + 5 * 30 + 0x16] = 2;
+        dtab[0x20 + 16 * 30 + 0x18] = 1;
+        dtab[0x20 + 16 * 30 + 0x16] = 1;
+        snprintf(p, sizeof p, "%s/PINFO.DB", bob);
+        write_bytes(p, dtab, sizeof dtab);
+        for (i = 0; i < 7; i++) {
+            static const char *n[] = { "KEY", "CAREER", "ATT", "CARTEAMS", "TEAMS", "SEASON", "SCHEDULE" };
+            char rec[32];
+            snprintf(p, sizeof p, "%s/%s.DB", dad, n[i]);
+            snprintf(rec, sizeof rec, "dad-%s", n[i]);
+            write_bytes(p, rec, strlen(rec) + 1);
+            snprintf(p, sizeof p, "%s/%s.DB", bob, n[i]);
+            snprintf(rec, sizeof rec, "bob-%s", n[i]);
+            write_bytes(p, rec, strlen(rec) + 1);
+        }
+        CHECK(season_pack_floppy(dad, dsk_e, 5, "TESTY.LP", 0) == 0);
+        CHECK(season_pack_floppy(bob, dsk_s, 16, "TESTY.LP", 0) == 0);
+        CHECK(season_import_team(dsk_e, bob, 5) == 0);
+        CHECK(season_import_team(dsk_s, dad, 16) == 0);
+        snprintf(p, sizeof p, "%s/PINFO.DB", dad);
+        f = fopen(p, "rb");
+        CHECK(f && fseek(f, 0x20 + 16 * 30, SEEK_SET) == 0 && fread(entry, 1, 30, f) == 30);
+        if (f) fclose(f);
+        CHECK(entry[0x16] == 1);
+        snprintf(p, sizeof p, "%s/PINFO.DB", bob);
+        f = fopen(p, "rb");
+        CHECK(f && fseek(f, 0x20 + 5 * 30, SEEK_SET) == 0 && fread(entry, 1, 30, f) == 30);
+        if (f) fclose(f);
+        CHECK(entry[0x16] == 1);
+        /* home posts the result into its copy, then the away copy takes that pack */
+        memset(sched, 0, sizeof sched);
+        memcpy(sched, "EDM 4 SJ 2", 10);
+        snprintf(p, sizeof p, "%s/SCHEDULE.DB", dad);
+        write_bytes(p, sched, sizeof sched);
+        snprintf(p, sizeof p, "%s/CAREER.DB", dad);
+        write_bytes(p, "career-after", 13);
+        CHECK(season_pack_floppy(dad, dsk_r, 5, "TESTY.LP", 0) == 0);
+        CHECK(season_import_team(dsk_r, bob, 5) == 0);
+        snprintf(p, sizeof p, "%s/SCHEDULE.DB", dsk_r);
+        CHECK(file_size(p) == (int)sizeof sched);
+        snprintf(p, sizeof p, "%s/CAREER.05", bob);
+        CHECK(file_size(p) == 13);
+        CHECK(season_player_id(dsk_r, &team, NULL) == 0 && team == 5);
     }
 
     printf(fails ? "season_test: %d failed\n" : "season_test: all passed\n", fails);

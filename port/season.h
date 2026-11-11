@@ -33,9 +33,16 @@ void port_season_poll(void);
 /* overlay is drawn: rebuild the File bar if the league changed, keep A: on the
  * copy used in play, log season lines when OVERBAR_TEST_LOG is set */
 void port_season_tick(void);
-/* 1: host vs a guest in the room (online). 0: local — A vs CPU / A vs B, or C vs D
- * after export/import onto this machine. */
+/* 1: this league game is against a human on another machine in the room. */
 int port_season_want_online(void);
+/* 1: this machine is in a two-human calendar game (wait dialog matched). */
+int port_season_h2h_active(void);
+/* a guest of a two-human league game (the room host is not one of the two). */
+int port_season_h2h_guest(void);
+/* this machine has entered PlayGame of that H2H match (room host may begin it). */
+void port_season_h2h_playing(void);
+/* mid-game disconnect: the game does not count. */
+void port_season_h2h_abort(void);
 /* after PlayGame of a league match: mark it played, drop mirrors, sync */
 void port_season_after_game(void);
 /* 1: dos is on a virtual drive and *out is the host path; 0: not virtual; -1: virtual, no disk */
