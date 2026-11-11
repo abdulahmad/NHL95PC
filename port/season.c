@@ -11,13 +11,16 @@
  * remotes stay open and the host's controller is never that guest's.
  * Virtual A: is the other human's mirror when the calendar needs it.
  * C vs D: while the connect dialog is open both machines start the same
- * scheduled game, exchange team packs, and play over the room. The home
- * machine posts the result; the away machine imports that pack. The player
- * never has to click Export, Import, or Merge & Update. Overlay pack is the
- * same when someone is away.
+ * scheduled game, exchange team packs, and play over the room. Both copies
+ * post the result into their own SCHEDULE.nn / TEAMS.nn (and fold TEAMS.nn
+ * into TEAMS.DB for standings). PLAYER.ID stays this machine's team so a
+ * restart does not become the leftover host local. The player never has to
+ * click Export, Import, or Merge & Update. Overlay pack is the same when
+ * someone is away.
  */
 #include "season.h"
 
+#include "audio.h"
 #include "host.h"
 #include "overbar_client.h"
 #include "overbar/files.h"
@@ -179,16 +182,23 @@ static int has_human(void)
     return 0;
 }
 
+static int league_host_dir(char *dir, int size);
+
 /* HD copy that still has a local human. leaguemaster is a team index (0 is valid), not a boolean.
  * In a room only the net host is master: a guest's installed PINFO still lists the host's local
- * teams, which must not make the guest look like the owner. */
+ * teams, which must not make the guest look like the owner. After restart the room is gone;
+ * PLAYER.ID naming one team while PINFO still has two locals is that guest copy, not A vs B. */
 static int is_master_copy(void)
 {
-    int i;
+    int i, pid = -1, locals = 0;
+    char dir[512];
     if (g_net) return ob_net_is_host(g_net);
     for (i = 0; i < 26; i++)
-        if (team_local(i)) return 1;
-    return 0;
+        if (team_local(i)) locals++;
+    if (locals > 1 && !league_host_dir(dir, (int)sizeof dir) &&
+        season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26)
+        return 0;
+    return locals > 0;
 }
 
 /* the team this guest already picked (overlay claim or the installed copy). -1 none. */
@@ -239,15 +249,52 @@ static void take_pick_disk(const char *disk, int team)
     open_as_league(name, team);
 }
 
+static int this_machine_team(void);
+
+static void remember_installed_team(void)
+{
+    char dir[512];
+    int pid;
+    if (g_installed_team >= 0 && g_installed_team < 26) return;
+    if (g_season.claim >= OB_SEASON_TEAMS) {
+        g_installed_team = g_season.claim - OB_SEASON_TEAMS;
+        return;
+    }
+    if (league_host_dir(dir, (int)sizeof dir)) return;
+    if (season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26)
+        g_installed_team = pid;
+}
+
+static void write_mine_player_id(void)
+{
+    char dest[512];
+    int mine;
+    const char *lg;
+    remember_installed_team();
+    mine = this_machine_team();
+    lg = open_league();
+    if (mine < 0 || mine >= 26 || !lg[0] || league_host_dir(dest, (int)sizeof dest)) return;
+    season_write_player_id(dest, mine, lg);
+}
+
 static void host_clear_player_id(void)
 {
     char dir[512], path[600];
-    int i, n = 0;
-    if (!is_master_copy() || league_host_dir(dir, (int)sizeof dir)) return;
-    /* claimed copy, or only one local human: GetLeagueId must keep this
-     * machine's team so Next League Game skips the crest grid. A vs B (two
-     * local humans, no claim) still drops PLAYER.ID so they pick from the grid. */
-    if (g_season.claim >= OB_SEASON_TEAMS) return;
+    int i, n = 0, pid = -1;
+    remember_installed_team();
+    if (league_host_dir(dir, (int)sizeof dir)) return;
+    /* claimed copy, PLAYER.ID, or only one local human: GetLeagueId must keep
+     * this machine's team so Next League Game skips the crest grid. A vs B
+     * (two local humans, no identity) still drops PLAYER.ID so they pick. */
+    if (season_player_id(dir, &pid, NULL) == 0 && pid >= 0 && pid < 26) {
+        if (g_installed_team < 0) g_installed_team = pid;
+        return;
+    }
+    if (g_season.claim >= OB_SEASON_TEAMS || (g_installed_team >= 0 && g_installed_team < 26)) {
+        write_mine_player_id();
+        return;
+    }
+    if (!is_master_copy()) return;
     for (i = 0; i < 26; i++)
         if (team_local(i)) n++;
     if (n <= 1) return;
@@ -671,14 +718,23 @@ static int team_on_hd(int team)
 static int import_from_dir(const char *dir)
 {
     char dest[512];
-    int team, mine;
+    int team, mine, keep = -1, r;
+    const char *lg;
     if (!dir || season_player_id(dir, &team, NULL) || league_host_dir(dest, (int)sizeof dest)) return -1;
-    mine = mine_team();
+    mine = this_machine_team();
+    if (mine < 0) mine = mine_team();
     if (team == mine) return 0;
     if (!exists_path(dest)) return -1;
+    if (mine >= 0 && mine < 26) keep = mine;
+    else season_player_id(dest, &keep, NULL);
     if (op_merge(NULL, team, dir, NULL, 0) == 0)
-        return season_mark_imported(dest, team);
-    return season_import_team(dir, dest, team);
+        r = season_mark_imported(dest, team);
+    else
+        r = season_import_team(dir, dest, team);
+    lg = open_league();
+    if (keep >= 0 && keep < 26 && lg[0])
+        season_write_player_id(dest, keep, lg);
+    return r;
 }
 
 static int wait_mirror(int from, char *dir, int size)
@@ -707,28 +763,31 @@ int port_wait_floppy(char *file, char *name, char *dir)
     me = g_net ? ob_net_me(g_net) : 0;
     other = machine_of_team(team);
     mine = mine_team();
+    if (mine < 0) mine = this_machine_team();
     if (g_net && other >= 0 && other != me && !team_on_hd(team)) {
         unsigned others = ob_net_members(g_net) & ~(1u << me);
         if (!league_host_dir(lg, (int)sizeof lg) && lgname[0] && mine >= 0 && mine < 26)
             season_write_player_id(lg, mine, lgname);
         if (others) ob_season_mirror_send(&g_season, others);
-        if (is_master_copy() && !league_host_dir(lg, (int)sizeof lg)) {
-            snprintf(pid, sizeof pid, "%s/PLAYER.ID", lg);
-            UNLINK(pid);
-        }
         /* the other human's export, as Import Databases > Player reads a floppy: both
          * teams' DBs are on this machine for the game (C vs D with the host away). */
         if (wait_mirror(other, mdir, (int)sizeof mdir) == 0) {
             import_from_dir(mdir);
             mount_a(mdir);
+            write_mine_player_id();
             return find_floppy(file, name, dir);
         }
     }
     if (!league_host_dir(lg, (int)sizeof lg) && exists_path(lg) && lgname[0]) {
+        int keep = -1;
+        season_player_id(lg, &keep, NULL);
+        if (keep < 0) keep = mine;
         season_write_player_id(lg, team, lgname);
         mount_a(lg);
         r = find_floppy(file, name, dir);
-        if (is_master_copy()) {
+        if (keep >= 0 && keep < 26)
+            season_write_player_id(lg, keep, lgname);
+        else if (is_master_copy()) {
             snprintf(pid, sizeof pid, "%s/PLAYER.ID", lg);
             UNLINK(pid);
         }
@@ -747,18 +806,24 @@ __attribute__((naked)) static void wait_floppy_entry(void)
 
 void port_playleague_enter(void)
 {
-    char dest[512];
-    int mine;
     g_in_league = 1;
     g_hold_a = 1;
-    mine = this_machine_team();
-    if (mine >= 0 && !league_host_dir(dest, (int)sizeof dest) && open_league()[0])
-        season_write_player_id(dest, mine, open_league());
+    write_mine_player_id();
+}
+
+static void fold_posted_records(void)
+{
+    char dest[512];
+    int a = lgplayteam, b = dword_DDD34;
+    if (league_host_dir(dest, (int)sizeof dest)) return;
+    if (a >= 0 && a < 26) season_fold_team_db(dest, a);
+    if (b >= 0 && b < 26 && b != a) season_fold_team_db(dest, b);
 }
 
 void port_playleague_exit(void)
 {
     g_in_league = 0;
+    if (gamemode == 2 && gameresult == 1) fold_posted_records();
     port_season_after_game();
 }
 
@@ -917,7 +982,7 @@ static int wait_h2h(char *teams, int opp)
     season_h2h me;
     char lines[4][SEASON_H2H_LINE], *ptr[4], player[12];
     unsigned char *rec;
-    int mx = 0, my = 0, btn = 0, i, age = 0, k, had_net = 0, said = 0;
+    int mx = 0, my = 0, btn = 0, i, age = 0, k, had_net = 0, said = 0, mute;
     unsigned members = 0;
     rec = (unsigned char *)teams + opp * 30;
     memcpy(player, rec, 11);
@@ -928,6 +993,9 @@ static int wait_h2h(char *teams, int opp)
     sub_B2DCA(&btn, &my, &mx);
     watcall_mbox((void *)game_MessageBox, (uint32_t)-1, (uint32_t)-1, (uint32_t)(uintptr_t)ptr, 4,
                  0, 0, (uint32_t)(uintptr_t)&my, (uint32_t)(uintptr_t)&btn, 0);
+    /* game thread is in host C: IRQs do not run, so one note loops. mute it. */
+    mute = audio_muted;
+    audio_muted = 1;
     g_h2h_opp = opp;
     g_h2h_home = lgplayteam == (int)byte_DDD42;
     h2h_want_now(&me);
@@ -972,6 +1040,7 @@ static int wait_h2h(char *teams, int opp)
             if (r == 0) {
                 RestoreDialogBg();
                 g_h2h_active = 1;
+                audio_muted = mute;
                 return 0;
             }
         }
@@ -982,6 +1051,7 @@ static int wait_h2h(char *teams, int opp)
     h2h_send(&me, NULL, 0);
     RestoreDialogBg();
     g_h2h_opp = -1;
+    audio_muted = mute;
     return 4;
 }
 
@@ -1010,7 +1080,9 @@ int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
          * not "Error while updating database!" from FileOpenRW of a missing .nn */
         if (mine >= 0 && team != mine) {
             if (g_h2h_drop || (probe && gameresult != 1)) return 4;
-            if (probe) return g_h2h_home ? 0 : 4;
+            /* both copies post: away probe 4 skipped WriteSchedGame / PostGameToTeamDb
+             * so the calendar stayed unplayed until a later import. */
+            if (probe) return 0;
             return wait_h2h(teams, team);
         }
     }
@@ -1125,7 +1197,10 @@ __attribute__((naked)) static int atp_orig_tramp(void)
 
 int port_ask_team_pw(int t, char *ents)
 {
+    int mine;
     if (g_h2h_opp >= 0 && t == g_h2h_opp) return 0;
+    mine = this_machine_team();
+    if (mine >= 0 && t != mine) return 0;   /* this copy is dad/SJ, not abdul/NYR */
     return watcall2((void *)atp_orig_tramp, (uint32_t)t, (uint32_t)(uintptr_t)ents);
 }
 
@@ -1377,8 +1452,8 @@ static int h2h_ready_pair(int *home_m, int *vis_m)
 
 void port_season_after_game(void)
 {
-    char dest[512], mdir[512];
-    int mine, k, home_m;
+    char mdir[512];
+    int k, home_m;
     season_h2h gone;
     if (g_in_league) return;            /* PlayLeagueGame still posting into savleague1/2 */
     if (g_h2h_active) {
@@ -1396,9 +1471,7 @@ void port_season_after_game(void)
     }
     if (g_h2h_active && g_h2h_home && g_net) {
         unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net));
-        mine = mine_team();
-        if (!league_host_dir(dest, (int)sizeof dest) && open_league()[0] && mine >= 0 && mine < 26)
-            season_write_player_id(dest, mine, open_league());
+        write_mine_player_id();
         if (others) ob_season_mirror_send(&g_season, others);
         while (!quit_requested && others && ob_season_mirror_sent(&g_season) == 0) {
             netplay_pump();
@@ -1414,18 +1487,20 @@ void port_season_after_game(void)
         if (home_m >= 0 && wait_mirror(home_m, mdir, (int)sizeof mdir) == 0)
             import_from_dir(mdir);
     }
+    if (gamemode == 2 && gameresult == 1) fold_posted_records();
+    write_mine_player_id();
     if (gamemode == 2 && lggameidx >= 0) ob_season_played(&g_season, (uint32_t)(uint16_t)lggameidx);
     /* export this copy so the other guest can import the result (the return mail) */
     if (net_guest() && g_net) {
         unsigned others = ob_net_members(g_net) & ~(1u << ob_net_me(g_net)) & ~1u;
-        mine = mine_team();
-        if (!league_host_dir(dest, (int)sizeof dest) && open_league()[0] && mine >= 0 && mine < 26)
-            season_write_player_id(dest, mine, open_league());
+        write_mine_player_id();
         if (others) ob_season_mirror_send(&g_season, others);
         for (k = 1; k < OB_NET_MAX_MACHINES; k++) {
             char more[512];
             if (ob_season_mirror(&g_season, k, more, (int)sizeof more)) import_from_dir(more);
         }
+        if (gamemode == 2 && gameresult == 1) fold_posted_records();
+        write_mine_player_id();
         if (!ob_season_busy(&g_season)) ob_season_sync(&g_season, 0);
     }
     ob_season_mirror_drop(&g_season);

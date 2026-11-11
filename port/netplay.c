@@ -698,10 +698,9 @@ static void apply_settings(const nh_settings *s, uint32_t my_dev)
     feel_session_begin(s->game, strnlen(s->game, sizeof s->game));
 }
 
-static void close_room(const char *why)
+static void close_room_locked(const char *why)
 {
-    if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: room ends: %s\n", nh_room && ob_net_why(nh_room)[0] ? ob_net_why(nh_room) : why ? why : "");
-    SDL_LockMutex(nh_lock);
+    nh_armed = 0;
     if (nh_net && nh_net != nh_room) {
         ob_net_free(nh_net);
         nh_net = NULL;
@@ -714,6 +713,13 @@ static void close_room(const char *why)
         nh_room = NULL;
     } else if (why) snprintf(nh_why, sizeof nh_why, "%s", why);
     nh_net = NULL;
+}
+
+static void close_room(const char *why)
+{
+    if (getenv("NHL95_ONLINE")) fprintf(stderr, "online: room ends: %s\n", nh_room && ob_net_why(nh_room)[0] ? ob_net_why(nh_room) : why ? why : "");
+    SDL_LockMutex(nh_lock);
+    close_room_locked(why);
     SDL_UnlockMutex(nh_lock);
 }
 
@@ -734,6 +740,8 @@ static int poll_nets_locked(void)
     int st = OB_NET_ENDED;
     if (nh_room) st = ob_net_poll(nh_room);
     if (nh_net && nh_net != nh_room) st = ob_net_poll(nh_net);
+    if (nh_room && ob_net_state(nh_room) == OB_NET_ENDED)
+        close_room_locked(ob_net_why(nh_room)[0] ? ob_net_why(nh_room) : "the room ended");
     port_season_poll();
     return nh_net ? ob_net_state(nh_net) : st;
 }
@@ -1261,6 +1269,9 @@ static int online_start(const ob_online *o, char *msg, int msg_size)
     int busy;
     if (!nh_ok) { snprintf(msg, (size_t)msg_size, "the game's code is not as expected"); return -1; }
     SDL_LockMutex(nh_lock);
+    /* leftover lobby after the other machine left: Host/Connect again, not "Leave first" */
+    if (nh_room && ob_net_state(nh_room) != OB_NET_GO)
+        close_room_locked("replaced");
     busy = nh_room != NULL;
     SDL_UnlockMutex(nh_lock);
     if (busy || nh_sim) { snprintf(msg, (size_t)msg_size, "a session is on: Leave it first"); return -1; }

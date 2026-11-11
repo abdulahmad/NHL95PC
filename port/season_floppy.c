@@ -298,6 +298,36 @@ int season_player_id(const char *dir, int *team, unsigned *version)
     return 0;
 }
 
+int season_fold_team_db(const char *dir, int team)
+{
+    char nn[8], src[512], dst[512], leaf[32];
+    unsigned char rec[0x2E8];
+    long off;
+    FILE *f;
+    if (!dir || team < 0 || team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", team);
+    snprintf(leaf, sizeof leaf, "TEAMS%s", nn);
+    join2(src, (int)sizeof src, dir, leaf);
+    join2(dst, (int)sizeof dst, dir, "TEAMS.DB");
+    if (!exists_path(src)) return -1;
+    if (!exists_path(dst)) return copy_file(src, dst);
+    off = (long)team * (long)sizeof rec;
+    f = fopen(src, "rb");
+    if (!f) return -1;
+    if (fseek(f, off, SEEK_SET) != 0 || fread(rec, 1, sizeof rec, f) != sizeof rec) {
+        fclose(f);
+        return -1;
+    }
+    fclose(f);
+    f = fopen(dst, "r+b");
+    if (!f) return -1;
+    if (fseek(f, off, SEEK_SET) != 0 || fwrite(rec, 1, sizeof rec, f) != sizeof rec) {
+        fclose(f);
+        return -1;
+    }
+    return fclose(f) ? -1 : 0;
+}
+
 int season_next_game_pick(unsigned char *teams, int team, int guest, int mine)
 {
     unsigned char *rec;
