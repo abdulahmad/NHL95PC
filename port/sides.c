@@ -3,7 +3,8 @@
  *
  * 95 PC hooks for Overbar's one select-sides screen (every connected controller;
  * online the same module). The drawing, model and SIDES messages stay in Overbar;
- * apply writes ctl1team / ctl1side / ctl1dev and ctl2*.
+ * apply writes ctl1team / ctl1side / ctl1dev and ctl2*. The column headings are
+ * this port's team_name strings: Away / Home plus the game's city.
  */
 #include "sides.h"
 #include "pads4.h"
@@ -48,6 +49,38 @@ unsigned sides_filter_hot(unsigned sc, unsigned teams)
     return 0;
 }
 
+void sides_side_label(char *dst, size_t n, const char *side, const char *city)
+{
+    size_t i = 0, k;
+    if (!dst || n == 0) return;
+    if (n > (size_t)SIDES_LABEL_MAX + 1) n = (size_t)SIDES_LABEL_MAX + 1;
+    if (side)
+        for (k = 0; side[k] && i + 1 < n; k++) dst[i++] = side[k];
+    /* room for the space, one city letter, and the NUL; otherwise keep the side word */
+    if (city && city[0] && i + 2 < n) {
+        dst[i++] = ' ';
+        for (k = 0; city[k] && i + 1 < n; k++) {
+            unsigned char ch = (unsigned char)city[k];
+            dst[i++] = (ch >= 32 && ch < 127) ? (char)ch : '?';
+        }
+    }
+    dst[i] = 0;
+}
+
+const char *sides_city(const char *const *cities, int n, int team)
+{
+    const char *c;
+    if (!cities || team < 0 || team >= n) return 0;
+    c = cities[team];
+    if (!c || !c[0]) return 0;
+    return c;
+}
+
+int sides_names_here(int online, int is_host)
+{
+    return !online || is_host;
+}
+
 #ifdef SIDES_TEST
 #else
 
@@ -56,6 +89,22 @@ extern int32_t ctl1team, ctl2team;
 extern uint32_t ctl1side, ctl2side, ctl1dev, ctl2dev, samesideflag;
 extern uint8_t pad1dev, pad2dev;
 extern volatile int quit_requested;
+extern int teamcitynames[];                /* the game's own cities; each slot is a 32-bit pointer */
+
+static char g_away_label[SIDES_LABEL_MAX + 1];
+static char g_home_label[SIDES_LABEL_MAX + 1];
+
+/* teamcitynames[i] is the address the game stored (DrawControlsDlg casts it the same way). */
+static const char *game_city(int team)
+{
+    const char *c;
+    unsigned p;
+    if (team < 0 || team >= SIDES_NTEAMS) return 0;
+    p = (unsigned)teamcitynames[team];
+    if (!p) return 0;
+    c = (const char *)(uintptr_t)p;
+    return sides_city(&c, 1, 0);
+}
 
 void input_bind_stick(int stick, int pad);
 int input_pad_count(void);
@@ -90,8 +139,17 @@ static ob_sides_game game95(void)
      * host's model and the guest's copy agree; the match then drops pads 3 and 4 if the host has it off. */
     g.seats = (g_net || feel_four_players()) ? 4 : 2;
     g.per_team = 2;
+    /* Overbar draws these as the column headings and, online, the host's STATE sends them.
+     * Away is column 0 (VisTeam), Home is column 1 (HomeTeam): the game's assignment, exhibition
+     * or season. A guest keeps the bare words until that STATE; its own HomeTeam is not the match. */
     g.team_name[0] = "Away";
     g.team_name[1] = "Home";
+    if (sides_names_here(g_net != 0, g_net && ob_net_is_host(g_net))) {
+        sides_side_label(g_away_label, sizeof g_away_label, "Away", game_city(VisTeam));
+        sides_side_label(g_home_label, sizeof g_home_label, "Home", game_city(HomeTeam));
+        g.team_name[0] = g_away_label;
+        g.team_name[1] = g_home_label;
+    }
     return g;
 }
 

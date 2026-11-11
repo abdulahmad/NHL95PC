@@ -2,11 +2,13 @@
  * Copyright (c) 2026 abdulahmad and contributors
  *
  * 95 PC's hook for Overbar's select-sides screen (overbar/sides.h). The screen
- * itself is Overbar's; this file writes the seat table into ctl1 / ctl2.
+ * itself is Overbar's; this file writes the seat table into ctl1 / ctl2 and
+ * the column headings (Away / Home plus the NHL city).
  */
 #ifndef NHL95_SIDES_H
 #define NHL95_SIDES_H
 
+#include <stddef.h>
 #include <stdint.h>
 
 struct ob_sides;
@@ -37,5 +39,20 @@ void sides_seat_ctl(int team, int32_t home, int32_t vis, int32_t *ctl_team, uint
 uint32_t sides_dev_for_slot(int slot, int local);       /* slot 0 ctl1, 1 ctl2 */
 int sides_pad_index(int local);                         /* pads[] index, or -1 */
 unsigned sides_filter_hot(unsigned sc, unsigned teams); /* teams bit 0 Away, bit 1 Home */
+
+/* teamcitynames / teamabbrevs: BOS through ASE. The controls dialog draws these cities. */
+#define SIDES_NTEAMS 28
+/* Overbar stores and sends a column heading of this many characters (OB_SIDES_NAME). */
+#define SIDES_LABEL_MAX 23
+
+/* "Home Boston" / "Away Detroit". A null or empty city keeps the side word.
+ * Longer than SIDES_LABEL_MAX is cut, and a byte outside ASCII becomes '?'. */
+void sides_side_label(char *dst, size_t n, const char *side, const char *city);
+/* cities[team], or NULL when team is outside 0 .. n-1 or that slot is empty.
+ * Exhibition and a season game both index with the game's HomeTeam / VisTeam. */
+const char *sides_city(const char *const *cities, int n, int team);
+/* 1 when this machine's HomeTeam / VisTeam are the match: offline, or the host.
+ * A guest's own teams are not (the host's headings arrive in the sides STATE). */
+int sides_names_here(int online, int is_host);
 
 #endif
