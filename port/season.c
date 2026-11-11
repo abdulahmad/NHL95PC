@@ -5,7 +5,7 @@
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
  * name. New League asks "remote team for a player on another device?"; Yes
  * auto-exports (no insert-disk). Next League Game shows every team; a client can
- * only take remotes, and picking one imports it so "must be imported" stays off.
+ * only take the team it already picked, and that pick imports that team only.
  * Virtual A: is the other human's mirror when the calendar needs it.
  * C vs D: the same File > Export / Import Databases / Merge & Update path as
  * 1994, run in the background whenever the copies need it. Export one team's
@@ -50,7 +50,9 @@ extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[];
 extern short lggameidx, HomeTeam, VisTeam;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
 extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
-extern unsigned char exportmsg[];
+extern char AddHumanTeam[], MergeLeagueFiles[];
+extern unsigned char exportmsg[], leagueflags;
+extern signed char byte_DE268;
 extern volatile int quit_requested;
 
 static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
@@ -86,6 +88,7 @@ static struct { int team; unsigned ver; int have; } g_mail[OB_NET_MAX_MACHINES];
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
 void *port_plg_cont, *port_cls_cont, *port_chd_cont, *port_lts_cont;
+void *port_aht_cont, *port_mlf_cont;
 
 static const char *game_root(void)
 {
@@ -159,23 +162,24 @@ static int has_human(void)
     return 0;
 }
 
-/* HD copy that still has a local human. leaguemaster is a team index (0 is valid), not a boolean. */
+/* HD copy that still has a local human. leaguemaster is a team index (0 is valid), not a boolean.
+ * In a room only the net host is master: a guest's installed PINFO still lists the host's local
+ * teams, which must not make the guest look like the owner. */
 static int is_master_copy(void)
 {
     int i;
+    if (g_net) return ob_net_is_host(g_net);
     for (i = 0; i < 26; i++)
         if (team_local(i)) return 1;
     return 0;
 }
 
-/* CopyHumanTeamDBs still writes a floppy for +18h==2 with +16h bit 0 clear. */
-static int needs_floppy(void)
+/* the team this guest already picked (overlay claim or the installed copy). -1 none. */
+static int guest_mine(void)
 {
-    int i;
-    for (i = 0; i < 26; i++)
-        if (team_remote(i) && !(teams_tab()[i * 30 + 0x16] & 1))
-            return 1;
-    return 0;
+    if (g_season.claim >= OB_SEASON_TEAMS) return g_season.claim - OB_SEASON_TEAMS;
+    if (g_installed_team >= 0 && g_installed_team < 26) return g_installed_team;
+    return -1;
 }
 
 static int league_host_dir(char *dir, int size)
@@ -214,6 +218,7 @@ static void take_pick_disk(const char *disk, int team)
     if (season_install_floppy(disk, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return;
     snprintf(dest, sizeof dest, "%s/%s", g_root[0] ? g_root : game_root(), name);
     season_mark_imported(dest, team);
+    season_write_player_id(dest, team, name);
     open_as_league(name, team);
 }
 
@@ -269,14 +274,13 @@ static void mount_play(void)
         unmount_play();
         return;
     }
-    if (is_master_copy() && needs_floppy()) {
-        char floppy[512];
-        snprintf(floppy, sizeof floppy, "%s/floppy", g_work[0] ? g_work : "overbar-season");
-        MKDIR(floppy);
-        mount_a(floppy);
+    /* host owns the league on HD: do not point A: at a leftover floppy pack.
+     * Merge / Add Team would read that as "an old copy of the league". */
+    if (is_master_copy()) {
+        unmount_play();
         return;
     }
-    if (league_host_dir(dir, (int)sizeof dir) || !exists_path(dir) || !has_human() || is_master_copy()) {
+    if (league_host_dir(dir, (int)sizeof dir) || !exists_path(dir) || !has_human()) {
         unmount_play();
         return;
     }
@@ -727,8 +731,9 @@ int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
     char dest[512];
     unsigned char *rec = (teams && team >= 0 && team < 26) ? (unsigned char *)teams + team * 30 : NULL;
     if (!sync && rec && rec[0x17] == 1) {
-        if (season_next_game_pick((unsigned char *)teams, team, net_guest()))
-            return 4;   /* client vs a host-local: not selectable, no import box */
+        if (season_next_game_pick((unsigned char *)teams, team, net_guest(),
+                                 net_guest() ? guest_mine() : -1))
+            return 4;   /* not this machine's pick: no import box */
         if (!league_host_dir(dest, (int)sizeof dest))
             season_mark_imported(dest, team);
         else if (dir && dir[0])
@@ -791,12 +796,16 @@ void port_league_team_select(char *dir, int *humans, char *names, unsigned char 
                              int mode, char *title, int *picks)
 {
     unsigned char saved[26];
-    int i, hide = (mode == 8 && net_guest() && teams);
+    int i, mine, hide = (mode == 8 && net_guest() && teams);
+    mine = hide ? guest_mine() : -1;
     if (hide) {
         for (i = 0; i < 26; i++) {
             saved[i] = teams[i * 30 + 0x17];
-            /* full 26-crest grid stays; only remotes keep the human name / click */
-            if (saved[i] == 1 && teams[i * 30 + 0x18] != 2)
+            /* full 26-crest grid stays; only this machine's team keeps the name / click */
+            if (saved[i] != 1) continue;
+            if (mine >= 0) {
+                if (i != mine) teams[i * 30 + 0x17] = 0;
+            } else if (teams[i * 30 + 0x18] != 2)
                 teams[i * 30 + 0x17] = 0;
         }
     }
@@ -815,6 +824,84 @@ __attribute__((naked)) static void lts_entry(void)
         "pushl %ecx\n\tpushl %ebx\n\tpushl %edx\n\tpushl %eax\n\t"
         "call " SYM("port_league_team_select") "\n\taddl $28, %esp\n\t"
         "popal\n\tret $12");
+}
+
+__attribute__((naked)) static int watcall0(void *fn)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %ebp\n\tret");
+}
+
+__attribute__((naked)) static int aht_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0x74\n\tjmp *" SYM("port_aht_cont"));
+}
+
+__attribute__((naked)) static int mlf_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0x8C\n\tjmp *" SYM("port_mlf_cont"));
+}
+
+static int pinfo_flags13(unsigned *val, int write)
+{
+    char dest[512], path[600];
+    FILE *f;
+    unsigned char b[2];
+    if (!val || league_host_dir(dest, (int)sizeof dest)) return -1;
+    snprintf(path, sizeof path, "%s/PINFO.DB", dest);
+    f = fopen(path, write ? "r+b" : "rb");
+    if (!f) return -1;
+    if (fseek(f, 0x13, SEEK_SET) != 0) { fclose(f); return -1; }
+    if (!write) {
+        if (fread(b, 1, 2, f) != 2) { fclose(f); return -1; }
+        *val = (unsigned)b[0] | (unsigned)b[1] << 8;
+    } else {
+        b[0] = (unsigned char)*val;
+        b[1] = (unsigned char)(*val >> 8);
+        if (fwrite(b, 1, 2, f) != 2) { fclose(f); return -1; }
+    }
+    fclose(f);
+    return 0;
+}
+
+/* host owns the league: skip "master must be imported" / merge-from-floppy. */
+void port_add_human_team(void)
+{
+    unsigned old = 0, merged = 4;
+    int patched = 0;
+    if (is_master_copy() && pinfo_flags13(&old, 0) == 0 && pinfo_flags13(&merged, 1) == 0)
+        patched = 1;
+    watcall0((void *)aht_orig_tramp);
+    if (patched) {
+        pinfo_flags13(&old, 1);
+        leagueflags = (unsigned char)old;
+        teams_invalidate();
+    }
+}
+
+int port_merge_league(void)
+{
+    if (is_master_copy()) {
+        byte_DE268 = 0;
+        return 0;
+    }
+    return watcall0((void *)mlf_orig_tramp);
+}
+
+__attribute__((naked)) static void aht_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tcall " SYM("port_add_human_team") "\n\t"
+        "popal\n\tret");
+}
+
+__attribute__((naked)) static void mlf_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tcall " SYM("port_merge_league") "\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret");
 }
 
 static void patch_export_question(void)
@@ -852,6 +939,14 @@ static void install_hooks(void)
     if (entry_push(LeagueTeamSelect, 0x2B4)) {
         port_lts_cont = LeagueTeamSelect + 5;
         patch_jmp(LeagueTeamSelect, lts_entry);
+    }
+    if (entry_push(AddHumanTeam, 0x74)) {
+        port_aht_cont = AddHumanTeam + 5;
+        patch_jmp(AddHumanTeam, aht_entry);
+    }
+    if (entry_push(MergeLeagueFiles, 0x8C)) {
+        port_mlf_cont = MergeLeagueFiles + 5;
+        patch_jmp(MergeLeagueFiles, mlf_entry);
     }
     patch_export_question();
     g_hooks = 1;

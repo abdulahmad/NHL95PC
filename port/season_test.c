@@ -186,7 +186,7 @@ int main(void)
 
     /* Next League Game: three humans all marked remote (Yes to export) used to
      * say "must be imported" on host and client. Auto-import the pick; a client
-     * cannot take a host-local team. */
+     * cannot take a host-local team. After overlay pick, only that team imports. */
     {
         unsigned char t[26 * 30];
         memset(t, 0, sizeof t);
@@ -195,30 +195,38 @@ int main(void)
         t[5 * 30 + 0x16] = 1;   /* host-local */
         t[12 * 30 + 0x17] = 1;
         t[12 * 30 + 0x18] = 2;
-        t[12 * 30 + 0x16] = 2;  /* remote */
+        t[12 * 30 + 0x16] = 2;  /* remote (bob) */
         t[18 * 30 + 0x17] = 1;
         t[18 * 30 + 0x18] = 2;
-        t[18 * 30 + 0x16] = 2;  /* remote */
-        CHECK(season_next_game_pick(t, 12, 0) == 0);
+        t[18 * 30 + 0x16] = 2;  /* remote (rad) */
+        CHECK(season_next_game_pick(t, 12, 0, -1) == 0);
         CHECK(t[12 * 30 + 0x16] == 1 && t[12 * 30 + 0x18] == 2);
-        CHECK(season_next_game_pick(t, 5, 1) == -1);
+        CHECK(season_next_game_pick(t, 5, 1, -1) == -1);
         CHECK(t[5 * 30 + 0x16] == 1 && t[5 * 30 + 0x18] == 1);
-        CHECK(season_next_game_pick(t, 18, 1) == 0);
+        CHECK(season_next_game_pick(t, 18, 1, -1) == 0);
         CHECK(t[18 * 30 + 0x16] == 1 && t[18 * 30 + 0x18] == 2);
-        CHECK(season_next_game_pick(t, 5, 0) == 0);
-        CHECK(season_next_game_pick(t, 0, 0) == -1);
-        CHECK(season_next_game_pick(t, 0, 1) == -1);
-        CHECK(season_next_game_pick(NULL, 12, 0) == -1);
-        CHECK(season_next_game_pick(t, -1, 0) == -1);
-        CHECK(season_next_game_pick(t, 26, 0) == -1);
-        /* all three remote, both machines: each pick imports */
+        CHECK(season_next_game_pick(t, 5, 0, -1) == 0);
+        CHECK(season_next_game_pick(t, 0, 0, -1) == -1);
+        CHECK(season_next_game_pick(t, 0, 1, -1) == -1);
+        CHECK(season_next_game_pick(NULL, 12, 0, -1) == -1);
+        CHECK(season_next_game_pick(t, -1, 0, -1) == -1);
+        CHECK(season_next_game_pick(t, 26, 0, -1) == -1);
+        /* client picked bob (12): rad (18) stays remote and not his */
+        t[12 * 30 + 0x16] = 2;
+        t[18 * 30 + 0x16] = 2;
+        CHECK(season_next_game_pick(t, 18, 1, 12) == -1);
+        CHECK(t[18 * 30 + 0x16] == 2 && t[18 * 30 + 0x18] == 2);
+        CHECK(season_next_game_pick(t, 5, 1, 12) == -1);
+        CHECK(season_next_game_pick(t, 12, 1, 12) == 0);
+        CHECK(t[12 * 30 + 0x16] == 1 && t[12 * 30 + 0x18] == 2);
+        /* host may still pick any human */
         memset(t, 0, sizeof t);
         t[1 * 30 + 0x17] = t[2 * 30 + 0x17] = t[3 * 30 + 0x17] = 1;
         t[1 * 30 + 0x18] = t[2 * 30 + 0x18] = t[3 * 30 + 0x18] = 2;
         t[1 * 30 + 0x16] = t[2 * 30 + 0x16] = t[3 * 30 + 0x16] = 2;
-        CHECK(season_next_game_pick(t, 1, 0) == 0 && t[1 * 30 + 0x16] == 1);
-        CHECK(season_next_game_pick(t, 2, 1) == 0 && t[2 * 30 + 0x16] == 1);
-        CHECK(season_next_game_pick(t, 3, 0) == 0 && t[3 * 30 + 0x16] == 1);
+        CHECK(season_next_game_pick(t, 1, 0, -1) == 0 && t[1 * 30 + 0x16] == 1);
+        CHECK(season_next_game_pick(t, 2, 1, -1) == 0 && t[2 * 30 + 0x16] == 1);
+        CHECK(season_next_game_pick(t, 3, 0, -1) == 0 && t[3 * 30 + 0x16] == 1);
     }
 
     printf(fails ? "season_test: %d failed\n" : "season_test: all passed\n", fails);

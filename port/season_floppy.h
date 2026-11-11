@@ -26,8 +26,9 @@ int season_write_player_id(const char *dir, int team, const char *league);
 int season_player_id(const char *dir, int *team, unsigned *version);
 /* Next League Game pick (CheckLeagueDiskSync sync=0). 0: this machine can play
  * team — RAM +16h becomes 1 (imported) so "must be imported" stays off. -1:
- * not this machine's pick (a client vs a host-local, or not a human). guest
- * is 1 on a client: only remotes (+18h == 2) are allowed. */
-int season_next_game_pick(unsigned char *teams, int team, int guest);
+ * not this machine's pick. guest is 1 on a client. mine is the team this
+ * machine already picked (-1 none): a client may only import that team; other
+ * remotes stay remote. With mine < 0 a client may only take a remote. */
+int season_next_game_pick(unsigned char *teams, int team, int guest, int mine);
 
 #endif
