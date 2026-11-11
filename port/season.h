@@ -20,6 +20,9 @@ struct ob_host;
 struct ob_net;
 
 void port_season_setup(struct ob_host *h);
+/* after plat_make_image_writable — not from video_init / port_season_setup,
+ * when .text is still read-only and patch_jmp would crash at startup */
+void port_season_install_hooks(void);
 void port_season_free(void);
 void port_season_bind_net(struct ob_net *n);
 void port_season_unbind_net(void);
