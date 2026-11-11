@@ -359,6 +359,38 @@ int main(void)
         CHECK(season_player_id(dsk_r, &team, NULL) == 0 && team == 5);
     }
 
+    /* Merge writes .DB only. PlayLeagueGame FileOpenRW needs SCHEDULE.nn. */
+    {
+        char onlydb[512], p[512];
+        char rec[16];
+        snprintf(onlydb, sizeof onlydb, "%s/onlydb.LP", root);
+        MKDIR(onlydb);
+        for (i = 0; i < 7; i++) {
+            static const char *n[] = { "KEY", "CAREER", "ATT", "CARTEAMS", "TEAMS", "SEASON", "SCHEDULE" };
+            snprintf(p, sizeof p, "%s/%s.DB", onlydb, n[i]);
+            snprintf(rec, sizeof rec, "db-%s", n[i]);
+            write_bytes(p, rec, strlen(rec) + 1);
+        }
+        CHECK(season_ensure_team_dbs(onlydb, 5) == 0);
+        CHECK(season_ensure_team_dbs(onlydb, 16) == 0);
+        snprintf(p, sizeof p, "%s/SCHEDULE.05", onlydb);
+        snprintf(srcdb, sizeof srcdb, "%s/SCHEDULE.DB", onlydb);
+        CHECK(file_size(p) == file_size(srcdb));
+        snprintf(p, sizeof p, "%s/SCHEDULE.16", onlydb);
+        CHECK(file_size(p) > 0);
+        snprintf(p, sizeof p, "%s/CAREER.05", onlydb);
+        CHECK(file_size(p) > 0);
+        /* .DB stays the source: a later merge is not overwritten */
+        snprintf(p, sizeof p, "%s/SCHEDULE.DB", onlydb);
+        write_bytes(p, "merged-schedule", 16);
+        CHECK(season_ensure_team_dbs(onlydb, 5) == 0);
+        snprintf(p, sizeof p, "%s/SCHEDULE.05", onlydb);
+        CHECK(file_size(p) == 16);
+        CHECK(season_ensure_team_dbs(NULL, 5) == -1);
+        CHECK(season_ensure_team_dbs(onlydb, -1) == -1);
+        CHECK(season_ensure_team_dbs(onlydb, 26) == -1);
+    }
+
     printf(fails ? "season_test: %d failed\n" : "season_test: all passed\n", fails);
     return fails != 0;
 }

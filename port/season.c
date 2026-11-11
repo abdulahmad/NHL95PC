@@ -4,8 +4,9 @@
  * Per-game season hooks. A team flagged for export at New League (+18h == 2) is a
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
  * name. New League asks "remote team for a player on another device?"; Yes
- * auto-exports (no insert-disk). Next League Game shows every team; a client can
- * only take the team it already picked, and that pick imports that team only.
+ * auto-exports (no insert-disk). After a claim, Next League Game writes PLAYER.ID
+ * for this machine's team so GetLeagueId opens that calendar (no team-select
+ * grid). A leftover grid still hides humans that are not this machine's.
  * Overlay Season: a guest's HELLO names only that claimed team, so leftover
  * remotes stay open and the host's controller is never that guest's.
  * Virtual A: is the other human's mirror when the calendar needs it.
@@ -240,7 +241,15 @@ static void take_pick_disk(const char *disk, int team)
 static void host_clear_player_id(void)
 {
     char dir[512], path[600];
+    int i, n = 0;
     if (!is_master_copy() || league_host_dir(dir, (int)sizeof dir)) return;
+    /* claimed copy, or only one local human: GetLeagueId must keep this
+     * machine's team so Next League Game skips the crest grid. A vs B (two
+     * local humans, no claim) still drops PLAYER.ID so they pick from the grid. */
+    if (g_season.claim >= OB_SEASON_TEAMS) return;
+    for (i = 0; i < 26; i++)
+        if (team_local(i)) n++;
+    if (n <= 1) return;
     snprintf(path, sizeof path, "%s/PLAYER.ID", dir);
     UNLINK(path);
 }
@@ -359,6 +368,7 @@ static int op_import(void *ud, int team, const char *dir)
     if (season_install_floppy(dir, g_root[0] ? g_root : game_root(), name, (int)sizeof name)) return -1;
     snprintf(dest, sizeof dest, "%s/%s", g_root[0] ? g_root : game_root(), name);
     if (season_mark_imported(dest, team)) return -1;
+    season_write_player_id(dest, team, name);
     open_as_league(name, team);
     restore_play();
     return 0;
@@ -622,6 +632,33 @@ static int mine_team(void)
     return lgplayteam;
 }
 
+/* the team Next League Game should open. Claim first, then the installed copy,
+ * then the only local human (the host's controller). -1 means show the grid. */
+static int this_machine_team(void)
+{
+    int i, n = 0, one = -1;
+    if (g_season.claim >= OB_SEASON_TEAMS) return g_season.claim - OB_SEASON_TEAMS;
+    if (g_installed_team >= 0 && g_installed_team < 26) return g_installed_team;
+    if (net_guest()) return -1;          /* a guest copy still lists the host's local */
+    for (i = 0; i < 26; i++) {
+        if (!team_local(i)) continue;
+        one = i;
+        n++;
+    }
+    return n == 1 ? one : -1;
+}
+
+/* SCHEDULE.nn and the other six: PlayLeagueGame FileOpenRW. Merge only wrote .DB. */
+static int ready_h2h_files(int mine, int opp)
+{
+    char dest[512];
+    if (league_host_dir(dest, (int)sizeof dest) || !exists_path(dest)) return -1;
+    if (mine >= 0 && mine < 26 && season_ensure_team_dbs(dest, mine)) return -1;
+    if (opp >= 0 && opp < 26 && opp != mine && season_ensure_team_dbs(dest, opp)) return -1;
+    mount_a(dest);
+    return 0;
+}
+
 static int team_on_hd(int team)
 {
     return team >= 0 && team < 26 && (teams_tab()[team * 30 + 0x16] & 1);
@@ -707,7 +744,16 @@ __attribute__((naked)) static void wait_floppy_entry(void)
         "movl %eax, 28(%esp)\n\tpopal\n\tret");
 }
 
-void port_playleague_enter(void) { g_in_league = 1; g_hold_a = 1; }
+void port_playleague_enter(void)
+{
+    char dest[512];
+    int mine;
+    g_in_league = 1;
+    g_hold_a = 1;
+    mine = this_machine_team();
+    if (mine >= 0 && !league_host_dir(dest, (int)sizeof dest) && open_league()[0])
+        season_write_player_id(dest, mine, open_league());
+}
 
 void port_playleague_exit(void)
 {
@@ -819,7 +865,10 @@ static int h2h_exchange(int from, int opp)
     import_from_dir(mdir);
     if (opp >= 0) season_mark_imported(lg, opp);
     teams_invalidate();
-    mount_a(lg);
+    if (ready_h2h_files(mine, opp)) {
+        mount_a(lg);
+        return -1;
+    }
     return 0;
 }
 
@@ -884,15 +933,20 @@ int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
             season_mark_imported(dir, team);
         teams_invalidate();
     }
-    if (sync && rec && rec[0x17] == 1 && g_net) {
+    if (sync && rec && rec[0x17] == 1) {
         int mine = mine_team();
+        /* A vs B on this PC: both local. Copy .nn and use the HD as A:. */
         if (team_local(team) && mine >= 0 && team_local(mine)) {
-            if (!league_host_dir(dest, (int)sizeof dest) && exists_path(dest)) mount_a(dest);
+            ready_h2h_files(mine, team);
             return 0;
         }
-        if (g_h2h_drop || (probe && gameresult != 1)) return 4;
-        if (probe) return g_h2h_home ? 0 : 4;
-        return wait_h2h(teams, team);
+        /* another human, including when the room is not up yet: connect dialog,
+         * not "Error while updating database!" from FileOpenRW of a missing .nn */
+        if (mine >= 0 && team != mine) {
+            if (g_h2h_drop || (probe && gameresult != 1)) return 4;
+            if (probe) return g_h2h_home ? 0 : 4;
+            return wait_h2h(teams, team);
+        }
     }
     return watcall5((void *)check_orig_tramp, (uint32_t)(uintptr_t)dir, (uint32_t)(uintptr_t)teams,
                     (uint32_t)team, (uint32_t)sync, (uint32_t)probe);

@@ -4,8 +4,8 @@
  * Online season hooks for the SDL2 host. The game's league folder is Overbar's
  * export / import / copy / merge. New League asks whether each human is a remote
  * team for a player on another device (Yes auto-exports; No stays on this
- * computer). Next League Game lists every team; a client can only take the team
- * it already picked, and selecting it imports that team only. A guest's overlay
+ * computer). After a claim, Next League Game opens this machine's calendar
+ * (GetLeagueId / PLAYER.ID), not the team-select grid. A guest's overlay
  * HELLO names only that claimed team: leftover remotes stay selectable, and the
  * host's own team is not. Overlay Season / File screens come from Overbar
  * (ob_season_set). Export, import, and Merge & Update of team databases run in

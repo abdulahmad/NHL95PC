@@ -260,6 +260,25 @@ int season_import_team(const char *from, const char *to, int team)
     return season_mark_imported(to, team);
 }
 
+int season_ensure_team_dbs(const char *dir, int team)
+{
+    char nn[8], src[512], dst[512], leaf[32];
+    int i;
+    if (!dir || team < 0 || team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", team);
+    for (i = 0; i < 7; i++) {
+        snprintf(leaf, sizeof leaf, "%s.DB", k_db[i]);
+        join2(src, (int)sizeof src, dir, leaf);
+        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
+        join2(dst, (int)sizeof dst, dir, leaf);
+        if (exists_path(src)) {
+            if (copy_file(src, dst)) return -1;
+        } else if (!exists_path(dst))
+            return -1;
+    }
+    return 0;
+}
+
 int season_player_id(const char *dir, int *team, unsigned *version)
 {
     char path[512];
