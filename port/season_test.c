@@ -418,6 +418,8 @@ int main(void)
         CHECK(tf && fseek(tf, 16 * 0x2E8, SEEK_SET) == 0 && fread(got, 1, sizeof got, tf) == sizeof got);
         if (tf) fclose(tf);
         CHECK(got[0x28] == 1 && got[0x29] == 1);
+        snprintf(p, sizeof p, "%s/TEAMS.05", fold);
+        remove(p);
         CHECK(season_fold_team_db(fold, 5) == -1);
         CHECK(season_fold_team_db(NULL, 16) == -1);
         CHECK(season_fold_team_db(fold, -1) == -1);
