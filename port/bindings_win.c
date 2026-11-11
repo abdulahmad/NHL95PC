@@ -5,6 +5,7 @@
 #include "host.h"
 #include "audio.h"
 #include "bindings.h"
+#include "feel.h"
 #include <SDL.h>
 
 #define DW 560                                  /* the width of the window */
@@ -23,13 +24,14 @@
 #define C_ACCENT RGB(138, 180, 248)
 #define C_WARN RGB(251, 188, 4)
 
-enum { H_CLOSE, H_TAB, H_ROW, H_CHIP, H_MODE, H_RESET, H_CANCEL, H_APPLY };
+enum { H_CLOSE, H_TAB, H_ROW, H_CHIP, H_MODE, H_FAKE, H_RESET, H_CANCEL, H_APPLY };
 typedef struct { RECT r; int kind, arg; } Hit;
 
 static HWND dlg, owner;
 static struct bindings W;                       /* the changes, until Apply */
 static int cur;                                 /* 0 Joystick One, 1 Joystick Two, 2 Keyboard, 3 The Mouse */
 static int own[4];                              /* Hold / change line has a button of its own (else Alt + Space together) */
+static int fake_on;                             /* console fake shot (95 Genesis A tap); applied with the dialog */
 static int listen = -1, pick = -1, hov = -1;    /* the keyboard row that waits for a key, the row that shows its buttons, the button under the pointer */
 static HFONT fui, fsm, fbold, fmono;
 static Hit hit[200];
@@ -43,12 +45,17 @@ static const char *padnames[] = { "A", "B", "X", "Y", "Back", "Guide", "Start", 
 static const char *mnames[6] = { "Not set", "Mouse 1 (left)", "Mouse 2 (right)", "Mouse 3 (middle)", "Mouse 4", "Mouse 5" };
 static const int msv[6] = { 0, SDL_BUTTON_LEFT, SDL_BUTTON_RIGHT, SDL_BUTTON_MIDDLE, SDL_BUTTON_X1, SDL_BUTTON_X2 };
 
-static int *slotp(struct bindings *b, int t, int a) { return t < 2 ? &b->joy[t][a] : t == 2 ? &b->kb[a] : &b->ms[a - ACT_PASS]; }
+static int *slotp(struct bindings *b, int t, int a)
+{
+    if (a == ACT_GOALIE) return t < 2 ? &b->joy[t][a] : t == 2 ? &b->kb[a] : &b->ms[3];
+    return t < 2 ? &b->joy[t][a] : t == 2 ? &b->kb[a] : &b->ms[a - ACT_PASS];
+}
 static int *slot(int t, int a) { return slotp(&W, t, a); }
 
 /* the actions a tab has: the stick and the mouse have no lines for the other team, the mouse only has its buttons */
 static int shown(int t, int a)
 {
+    if (a == ACT_GOALIE) return 1;
     if (t == 3) return a >= ACT_PASS && a <= ACT_HOLD;
     if (t < 2) return a >= ACT_PASS && !(a >= ACT_AWAY1 && a <= ACT_AWAY4);
     return 1;
@@ -284,6 +291,18 @@ static int render(HDC dc, int draw)
     radio(28, y + 30, !own[cur], t, 0);
     radio(28, y + 58, own[cur], "Its own button", 1);
     y += 92 + 12;
+    /* 95 Genesis: tap A in the offensive zone. The Game page keeps the same switch, locked for an online match. */
+    if (draw) {
+        RECT r = { 16, y, DW - 16, y + 64 };
+        fillrr(&r, C_BOX, C_LINE, 10);
+        text(fbold, C_TEXT, 28, y + 4, 400, 24, "Console fake shot", DT_LEFT);
+    }
+    {
+        RECT r = { 20, y + 30, DW - 28, y + 56 };
+        addhit(&r, H_FAKE, fake_on ? 0 : 1);
+        if (draw) text(fui, C_TEXT, 28, y + 30, DW - 56, 26, fake_on ? "On (tap A in the offensive zone)" : "Off", DT_LEFT);
+    }
+    y += 64 + 12;
 
     /* the buttons */
     if (draw) hline(0, DW, y, C_LINE);
@@ -359,6 +378,8 @@ static void apply(void)
     int t;
     for (t = 0; t < 4; t++) if (!own[t]) *slot(t, ACT_HOLD) = 0;
     bind = W;
+    feel_set_console_fake(fake_on);
+    feel_set_goalie_button(W.kb[ACT_GOALIE] || W.ms[3] || W.joy[0][ACT_GOALIE] >= 2 || W.joy[1][ACT_GOALIE] >= 2);
     settings_save_all();
     close_dlg();
 }
@@ -388,6 +409,10 @@ static void click(int x, int y)
     case H_MODE:
         own[cur] = hit[i].arg;
         if (!own[cur]) *slot(cur, ACT_HOLD) = 0;
+        listen = pick = -1;
+        break;
+    case H_FAKE:
+        fake_on = hit[i].arg;
         listen = pick = -1;
         break;
     case H_RESET: reset_tab(); listen = pick = -1; break;
@@ -461,6 +486,7 @@ void bindings_dialog_open(void *parent)
     cur = 2;
     listen = pick = hov = -1;
     own[0] = W.joy[0][ACT_HOLD] != 0; own[1] = W.joy[1][ACT_HOLD] != 0; own[2] = W.kb[ACT_HOLD] != 0; own[3] = W.ms[2] != 0;
+    fake_on = feel_console_fake();
     owner = (HWND)parent;
     if (owner && GetWindowRect(owner, &pr)) { x = pr.left + (pr.right - pr.left - DW) / 2; y = pr.top + 40; if (x < 0) x = 0; }
     dlg = CreateWindowExA(0, "NHL95Bindings", "Input bindings", WS_POPUP, x, y, DW, 600, owner, 0, GetModuleHandle(0), 0);

@@ -6,6 +6,7 @@
 #include "audio.h"
 #include "overbar_client.h"
 #include "sides.h"
+#include "season.h"
 void sound_init(void);
 #include <SDL.h>
 
@@ -82,6 +83,9 @@ int main(int argc, char **argv)
     if (getenv("NHL95_SOUNDTEST")) { extern int soundtest(void); return soundtest(); }
     plat_make_image_writable();
     install_overrides();
+    /* Season hooks patch game .text; they cannot run during video_init (port_season_setup),
+     * when the image is still read-only — that was a startup 0xc0000005 in patch_jmp. */
+    port_season_install_hooks();
     netplay_install();
     plat_install_traps();
     if (getenv("NHL95_CRASHTEST")) { volatile int *p = 0; *p = 1; }      /* checks that a crash is reported */

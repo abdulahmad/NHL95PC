@@ -67,6 +67,7 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_AUTOLINE=1` turns on the Game page's Auto line changes (96 PC Auto: CompLine at faceoff for a human team, chk4lc on the fly);
 `NHL95_GOALIE=1` turns on Manual goalie (96 PC: B-hold takes the goalie, A dives, C a save; 94 Genesis movement);
 `NHL95_SKILL=0-2` sets Skill level (96 Genesis OptSkill: 0 pro, 1 all-star, 2 rookie; 96 PC has no skill row);
+`NHL95_PERIOD=30` (or Game > Debug: 30 second periods) makes every period 30 seconds, for a short online season game;
 `NHL95_NOSIDES=1` (or `NHL95_SIDES=0`) skips Overbar's select-sides screen (every connected controller, the same module online); `NHL95_AUTOSKIP` / `NHL95_KEYS` skip it too;
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.
@@ -169,7 +170,7 @@ How the host knows (`cursor_update` in `port/input.c`):
 
 ### Input bindings
 
-Options > Input bindings... (`port/bindings.c`, `port/bindings_win.c`). Keys are stored as XT scan codes (0x100 added for the extended ones), mouse buttons as SDL numbers, controller buttons as the SDL button plus 2. A key bound to an action sends the game's own key for it; the game's default key of a rebound action stops working. The window is painted by hand (flat dark panel, draggable title bar) and modal: it runs its own message loop in the main thread, so the game stays paused and muted until Apply or Cancel. Hold / change line sends Alt+Space (the Genesis A button). The remap is only on while a game is on (`curperiod != -1`), so menus and text fields keep the normal keys. `NHL95_MENUTRACE=1` prints menu commands and window creation to stderr.
+Options > Input bindings... (`port/bindings.c`, `port/bindings_win.c`). Keys are stored as XT scan codes (0x100 added for the extended ones), mouse buttons as SDL numbers, controller buttons as the SDL button plus 2. A key bound to an action sends the game's own key for it; the game's default key of a rebound action stops working. The window is painted by hand (flat dark panel, draggable title bar) and modal: it runs its own message loop in the main thread, so the game stays paused and muted until Apply or Cancel. Hold / change line sends Alt+Space (the Genesis A button). That chord is the only Hold when Hold has no button of its own; once it does, Shoot+Pass does not also hold or change line. The fake shot is the exception: hold Shoot, then press Pass while Shoot is still down, and the game still sees both buttons so the wind-up fakes as it always did. Manual goalie can be its own button (the Game page's Manual goalie button row, also set when Apply finds one mapped). Pressing it takes the goalie at once; holding pass does that only while the row is off. Console fake shot (same page, default off) is 95 Genesis: a new A with the puck past the blue line you are attacking. Clear puck (default off) is 94 Genesis: a new A past your own blue line, for a skater or a goalie. Both lock with the other Game rows at the start of an online match. The remap is only on during play (a period is running, the picture is the rink, and no menu or text field is up), so menus and text fields keep the normal keys. `NHL95_MENUTRACE=1` prints menu commands and window creation to stderr.
 
 ### MT-32 with digital sound (not finished)
 
@@ -211,8 +212,8 @@ settings then go to the guest: the teams (`HomeTeam`, `VisTeam`), `gamemode` and
 controller sides (`ctl1team`/`ctl1side`, `ctl2team`/`ctl2side`; when the host set up only one player, the guest takes the other team), the
 engine's random seed (`seed`, randomd0) and the C library's (`randseed`), `PerTimeTab[0]` and the host's time of day. Both machines then run
 `InitGameSummary(0)` again (the game summary, and the rosters from the league database for those teams, as `MenuNewExhibition` did) and
-`PlayGame` goes on: the loading, `SetupGame`, the play. The host is pad 1, the guest pad 2; each machine reads its own controller 1 (keyboard,
-stick A or stick B; the mouse can't play online). Once the game is over and its three stars have ended, the rest (the post-game desk) is
+`PlayGame` goes on: the loading, `SetupGame`, the play. The host is pad 1, the guest pad 2; each machine reads its own controller (keyboard, mouse,
+stick A or stick B). The other machine's buttons arrive in the step record. Once the game is over and its three stars have ended, the rest (the post-game desk) is
 local; the session ends when `PlayGame` returns, and each machine's own menu settings are put back. A
 loaded game, a season or the playoffs are not online (the page says so and stays armed for an exhibition game).
 
@@ -237,7 +238,7 @@ keeps running (IRQ 0 is raised) and this machine's pad reads as nothing; the sou
   random numbers or wait only with digital sound). The game's data files are not part of it: rosters that differ show as a desync at once.
 
 **Select sides.** Overbar's one screen (`overbar/sides.h`, hooked in `port/sides.c`) opens on PlayGame of a new exhibition, season, or playoff,
-local and online. Keyboard is device 0; every SDL controller is 1 + its index. Left / Right pick Away or Home, OK ready, the host's OK starts.
+local and online. Keyboard is device 0, the mouse is device 16, and every SDL controller is 1 + its index. Left / Right pick Away or Home; the mouse row is dragged onto Away, the middle, or Home. OK readies a device, the host's OK starts.
 Devices left in the middle do not play. The seat table writes `ctl1*` / `ctl2*` (95 PC has two slots). Online the host's model is the only one
 that changes; guests send devices and presses as `OB_NET_TYPE_SIDES`. `NHL95_NOSIDES=1` keeps the DOS controls dialog's assignment.
 

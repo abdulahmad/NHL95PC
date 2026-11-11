@@ -4,6 +4,7 @@
 #include "pads4.h"
 #include "audio.h"
 #include "bindings.h"
+#include "goalie.h"
 #include "overbar_client.h"
 #include "sides.h"
 #include <SDL.h>
@@ -99,14 +100,71 @@ static void key_xt(int xt, int down)
 
 static void key_event(SDL_Scancode s, int down) { key_xt(xt_scancode(s), down); }
 
-extern int32_t curperiod;                       /* -1 when no game is on */
+extern int32_t curperiod, dword_CCC9C;          /* curperiod: -1 when no game is on; 0 before any game. CCC9C: paused or replaying */
+extern volatile int osk_text_wanted;            /* osk_hook.c: inside EditTextField */
 
-/* a key of the keyboard: during a game the bindings (bindings.c) may send other keys of the game for it */
+/* custom keys only while a period is being played. A menu (the glove loop, the desk, select-sides,
+ * the overlay) and a text field keep the key that was pressed. */
+static int kb_remap(void)
+{
+    int w = 0, h = 0, menu = 0;
+    int64_t ns = game_pointer_ns();
+    video_mode_size(&w, &h);
+    if (port_sides_is_open() || overbar_client_open() || w != 320 || dword_CCC9C) menu = 1;
+    if (ns && plat_now_ns() - ns < 300000000LL) menu = 1;
+    return bindings_remap_on((int)curperiod, osk_text_wanted, menu);
+}
+
+/* Alt and Space, as the game sees them. Both down is Hold; pass and shoot each hold one.
+ * key_c_first: C went down while B was up, so a later B on top of C is the fake shot. */
+static int btn_down[3], btn_sent, key_c_first, mouse_c_first, joy_c_first[2];
+
+static void buttons_sync(int mask)
+{
+    int rel = btn_sent & ~mask, add = mask & ~btn_sent;
+    if (rel & 1) key_xt(0x38, 0);
+    if (rel & 2) key_xt(0x39, 0);
+    if (add & 1) key_xt(0x38, 1);
+    if (add & 2) key_xt(0x39, 1);
+    btn_sent = mask;
+}
+
+static void buttons_clear(void)
+{
+    buttons_sync(0);
+    btn_down[0] = btn_down[1] = btn_down[2] = 0;
+    key_c_first = 0;
+}
+
+extern uint32_t ctl1dev, ctl2dev;
+
+static int slot_of_dev(uint32_t dev)
+{
+    if (ctl1dev == dev) return 0;
+    if (ctl2dev == dev) return 1;
+    return -1;
+}
+
+/* a key of the keyboard: during play the bindings (bindings.c) may send other keys of the game for it */
 static void key_physical(SDL_Scancode s, int down)
 {
-    int xt = xt_scancode(s), out[4], n, i;
+    int xt = xt_scancode(s), out[4], n, i, swallow = 0, act;
     if (!xt) return;
-    n = curperiod != -1 ? bindings_kb(xt, out) : -1;
+    if (!kb_remap()) {
+        if (btn_sent || btn_down[0] || btn_down[1] || btn_down[2]) buttons_clear();
+        key_xt(xt, down);
+        return;
+    }
+    if (down && bind.kb[ACT_GOALIE] && bind.kb[ACT_GOALIE] == xt) goalie_button_press(slot_of_dev(8));
+    act = bindings_button_key(xt, &swallow);
+    if (act >= ACT_PASS && act <= ACT_HOLD) {
+        btn_down[act - ACT_PASS] = down ? 1 : 0;
+        buttons_sync(bindings_button_mask(btn_down[0], btn_down[1], btn_down[2], bind.kb[ACT_HOLD] != 0,
+            bindings_note_shot(&key_c_first, btn_down[0], btn_down[1])));
+        return;
+    }
+    if (swallow) return;
+    n = bindings_kb(xt, out);
     if (n < 0) { key_xt(xt, down); return; }
     for (i = 0; i < n; i++) key_xt(out[i], down);
 }
@@ -346,6 +404,7 @@ void input_event(const SDL_Event *ep)
         int gx, gy;
         if (overbar_client_open()) { overlay_mouse(e.motion.x, e.motion.y, 0); break; }
         video_window_to_game(e.motion.x, e.motion.y, &gx, &gy);
+        if (port_sides_is_open()) port_sides_pointer(gx, gy, 0, 0);
         mouse_x = gx; mouse_y = gy;
         win_x = e.motion.x; win_y = e.motion.y; win_moved = 1;
         break;
@@ -367,8 +426,16 @@ void input_event(const SDL_Event *ep)
             break;
         }
         if (btn >= 1 && btn <= 5) mdown[btn] = e.type == SDL_MOUSEBUTTONDOWN;
-        if (curperiod != -1) mouse_buttons = bindings_mouse(mdown);      /* during a game: the bindings */
-        else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
+        if (port_sides_is_open()) {
+            int gx, gy;
+            video_window_to_game(e.button.x, e.button.y, &gx, &gy);
+            port_sides_pointer(gx, gy, btn, e.type == SDL_MOUSEBUTTONDOWN ? 1 : 2);
+            break;
+        }
+        if (kb_remap()) {
+            mouse_buttons = bindings_mouse(mdown, &mouse_c_first); /* during play: the bindings */
+            if (e.type == SDL_MOUSEBUTTONDOWN && bind.ms[3] && btn == bind.ms[3]) goalie_button_press(slot_of_dev(1));
+        } else mouse_buttons = (mdown[SDL_BUTTON_LEFT] ? 1 : 0) | (mdown[SDL_BUTTON_RIGHT] ? 2 : 0) | (mdown[SDL_BUTTON_MIDDLE] ? 4 : 0);
         if (e.type == SDL_MOUSEBUTTONDOWN) intro_skip_start();
         break;
     }
@@ -603,14 +670,20 @@ static void joy_update(void)                    /* main thread, every pass of th
             if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_UP)) y = -1000;
             if (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_DPAD_DOWN)) y = 1000;
             {
-                int pv = bind.joy[i][ACT_PASS], sv = bind.joy[i][ACT_SHOOT], hv = bind.joy[i][ACT_HOLD], a, p, sh, h;
+                int pv = bind.joy[i][ACT_PASS], sv = bind.joy[i][ACT_SHOOT], hv = bind.joy[i][ACT_HOLD], a, p, sh, h, bits;
                 p = pv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_A) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_X)) : pv >= 2 ? pad_button(g, PAD_ID(pv)) : 0;
                 sh = sv == PAD_DEFAULT ? (SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_B) || SDL_GameControllerGetButton(g, SDL_CONTROLLER_BUTTON_Y)) : sv >= 2 ? pad_button(g, PAD_ID(sv)) : 0;
-                h = hv >= 2 ? pad_button(g, PAD_ID(hv)) : 0;                   /* its own button: both of the game's buttons at once */
-                b1 = p || h; b2 = sh || h;
+                h = hv >= 2 ? pad_button(g, PAD_ID(hv)) : 0;
+                bits = bindings_button_mask(p, sh, h, hv >= 2, bindings_note_shot(&joy_c_first[i], p, sh));
+                b1 = (bits & 1) != 0; b2 = (bits & 2) != 0;
                 for (a = ACT_NUMBERS; a < NACT; a++) {                         /* the other keys of the game, from the controller */
                     static unsigned char was[2][NACT];
                     int v = bind.joy[i][a], now = v >= 2 && pad_button(g, PAD_ID(v)) && curperiod != -1, key = act_default_key(a);
+                    if (a == ACT_GOALIE) {
+                        if (now && !was[i][a] && kb_remap()) goalie_button_press(slot_of_dev(i == 0 ? 2u : 4u));
+                        was[i][a] = (unsigned char)now;
+                        continue;
+                    }
                     if (now != was[i][a]) {
                         if (a >= ACT_HOME1 && a <= ACT_HOME4) {                /* the lines of the team this controller plays: home (side 0) or away */
                             int dev = i == 0 ? 2 : 4, side = ctl1dev == (uint32_t)dev ? ctl1side : ctl2dev == (uint32_t)dev ? ctl2side : 0;

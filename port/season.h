@@ -2,21 +2,30 @@
  * Copyright (c) 2026 abdulahmad and contributors
  *
  * Online season hooks for the SDL2 host. The game's league folder is Overbar's
- * export / import / copy / merge. Teams marked for export at New League (floppy
- * "played on another computer") are remote slots: a guest Pick a team claims
- * one by name, and the port copies that team's DBs. Overlay Season / File
- * screens come from Overbar (ob_season_set). Pack files, when used, are named
- * after the team — not a typed .obt filename.
+ * export / import / copy / merge. New League asks whether each human is a remote
+ * team for a player on another device (Yes auto-exports; No stays on this
+ * computer). After a claim, Next League Game opens this machine's calendar
+ * (GetLeagueId / PLAYER.ID), not the team-select grid. A guest's overlay
+ * HELLO names only that claimed team: leftover remotes stay selectable, and the
+ * host's own team is not. Overlay Season / File screens come from Overbar
+ * (ob_season_set). Export, import, and Merge & Update of team databases run in
+ * the background when the copies need them — the player never has to use those
+ * File menu items. Pack files, when used, are named after the team — not a
+ * typed .obt filename.
  */
 #ifndef PORT_SEASON_H
 #define PORT_SEASON_H
 
 #include <stddef.h>
+#include <stdint.h>
 
 struct ob_host;
 struct ob_net;
 
 void port_season_setup(struct ob_host *h);
+/* after plat_make_image_writable — not from video_init / port_season_setup,
+ * when .text is still read-only and patch_jmp would crash at startup */
+void port_season_install_hooks(void);
 void port_season_free(void);
 void port_season_bind_net(struct ob_net *n);
 void port_season_unbind_net(void);
@@ -24,6 +33,18 @@ void port_season_poll(void);
 /* overlay is drawn: rebuild the File bar if the league changed, keep A: on the
  * copy used in play, log season lines when OVERBAR_TEST_LOG is set */
 void port_season_tick(void);
+/* 1: this league game is against a human on another machine in the room. */
+int port_season_want_online(void);
+/* 1: this machine is in a two-human calendar game (wait dialog matched). */
+int port_season_h2h_active(void);
+/* a guest of a two-human league game (the room host is not one of the two). */
+int port_season_h2h_guest(void);
+/* this machine has entered PlayGame of that H2H match (room host may begin it). */
+void port_season_h2h_playing(void);
+/* mid-game disconnect: the game does not count. */
+void port_season_h2h_abort(void);
+/* after PlayGame of a league match: mark it played, drop mirrors, sync */
+void port_season_after_game(void);
 /* 1: dos is on a virtual drive and *out is the host path; 0: not virtual; -1: virtual, no disk */
 int port_season_map_dos(const char *dos, char *out, int size);
 int port_season_diskfree(int letter, unsigned *total_clusters, unsigned *free_clusters,

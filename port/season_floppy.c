@@ -232,3 +232,189 @@ int season_install_floppy(const char *floppy, const char *root, char *league_out
     /* leave PINFO +16h = 2 so File > Import Databases > Player still sees an export */
     return 0;
 }
+
+int season_mark_imported(const char *dir, int team)
+{
+    char path[512];
+    unsigned char entry[30];
+    if (!dir || team < 0 || team >= 26) return -1;
+    join2(path, (int)sizeof path, dir, "PINFO.DB");
+    if (pinfo_entry(path, team, entry, 0, 0, 0)) return -1;
+    entry[0x16] = 1;
+    return pinfo_entry(path, team, entry, 1, 0, 0);
+}
+
+int season_import_team(const char *from, const char *to, int team)
+{
+    char nn[8], a[512], b[512];
+    unsigned char entry[30];
+    int i;
+    if (!from || !to || team < 0 || team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", team);
+    for (i = 0; i < 7; i++)
+        if (copy_db_pair(from, to, k_db[i], nn)) return -1;
+    join2(a, (int)sizeof a, from, "PINFO.DB");
+    join2(b, (int)sizeof b, to, "PINFO.DB");
+    if (pinfo_entry(a, team, entry, 0, 0, 0)) return -1;
+    if (pinfo_entry(b, team, entry, 1, 0, 0)) return -1;
+    return season_mark_imported(to, team);
+}
+
+int season_ensure_team_dbs(const char *dir, int team)
+{
+    char nn[8], src[512], dst[512], leaf[32];
+    int i;
+    if (!dir || team < 0 || team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", team);
+    for (i = 0; i < 7; i++) {
+        snprintf(leaf, sizeof leaf, "%s.DB", k_db[i]);
+        join2(src, (int)sizeof src, dir, leaf);
+        snprintf(leaf, sizeof leaf, "%s%s", k_db[i], nn);
+        join2(dst, (int)sizeof dst, dir, leaf);
+        if (exists_path(src)) {
+            if (copy_file(src, dst)) return -1;
+        } else if (!exists_path(dst))
+            return -1;
+    }
+    return 0;
+}
+
+int season_player_id(const char *dir, int *team, unsigned *version)
+{
+    char path[512];
+    unsigned char buf[29];
+    FILE *f;
+    if (!dir) return -1;
+    join2(path, (int)sizeof path, dir, "PLAYER.ID");
+    f = fopen(path, "rb");
+    if (!f) return -1;
+    if (fread(buf, 1, 29, f) != 29) { fclose(f); return -1; }
+    fclose(f);
+    if (buf[0] > 25) return -1;
+    if (team) *team = buf[0];
+    if (version)
+        *version = (unsigned)buf[25] | (unsigned)buf[26] << 8 | (unsigned)buf[27] << 16 |
+                   (unsigned)buf[28] << 24;
+    return 0;
+}
+
+int season_fold_record(const char *dir, int src_team, int rec_team)
+{
+    char nn[8], src[512], dst[512], leaf[32];
+    unsigned char rec[0x2E8], have[0x2E8];
+    long off;
+    FILE *f;
+    int gp_src, gp_dst, have_dst;
+    if (!dir || src_team < 0 || src_team >= 26 || rec_team < 0 || rec_team >= 26) return -1;
+    snprintf(nn, sizeof nn, ".%02d", src_team);
+    snprintf(leaf, sizeof leaf, "TEAMS%s", nn);
+    join2(src, (int)sizeof src, dir, leaf);
+    join2(dst, (int)sizeof dst, dir, "TEAMS.DB");
+    if (!exists_path(src)) return -1;
+    if (!exists_path(dst)) return src_team == rec_team ? copy_file(src, dst) : -1;
+    off = (long)rec_team * (long)sizeof rec;
+    f = fopen(src, "rb");
+    if (!f) return -1;
+    if (fseek(f, off, SEEK_SET) != 0 || fread(rec, 1, sizeof rec, f) != sizeof rec) {
+        fclose(f);
+        return -1;
+    }
+    fclose(f);
+    have_dst = 0;
+    f = fopen(dst, "rb");
+    if (f) {
+        if (fseek(f, off, SEEK_SET) == 0 && fread(have, 1, sizeof have, f) == sizeof have)
+            have_dst = 1;
+        fclose(f);
+    }
+    gp_src = rec[0x28] | rec[0x29] << 8;
+    gp_dst = have_dst ? (have[0x28] | have[0x29] << 8) : 0;
+    if (have_dst && gp_src < gp_dst) return -1;
+    f = fopen(dst, "r+b");
+    if (!f) return -1;
+    if (fseek(f, off, SEEK_SET) != 0 || fwrite(rec, 1, sizeof rec, f) != sizeof rec) {
+        fclose(f);
+        return -1;
+    }
+    return fclose(f) ? -1 : 0;
+}
+
+int season_fold_team_db(const char *dir, int team)
+{
+    return season_fold_record(dir, team, team);
+}
+
+int season_fold_all(const char *dir)
+{
+    int t, n = 0;
+    if (!dir) return -1;
+    for (t = 0; t < 26; t++)
+        if (season_fold_team_db(dir, t) == 0) n++;
+    return n ? 0 : -1;
+}
+
+int season_spread_teams_db(const char *dir, int team)
+{
+    char nn[8], src[512], dst[512], leaf[32];
+    if (!dir || team < 0 || team >= 26) return -1;
+    join2(src, (int)sizeof src, dir, "TEAMS.DB");
+    snprintf(nn, sizeof nn, ".%02d", team);
+    snprintf(leaf, sizeof leaf, "TEAMS%s", nn);
+    join2(dst, (int)sizeof dst, dir, leaf);
+    if (!exists_path(src)) return -1;
+    return copy_file(src, dst);
+}
+
+int season_next_game_pick(unsigned char *teams, int team, int guest, int mine)
+{
+    unsigned char *rec;
+    if (!teams || team < 0 || team >= 26) return -1;
+    rec = teams + team * 30;
+    if (rec[0x17] != 1) return -1;
+    if (guest) {
+        if (mine >= 0 && mine < 26) {
+            if (team != mine) return -1;
+        } else if (rec[0x18] != 2)
+            return -1;
+    }
+    rec[0x16] = 1;
+    return 0;
+}
+
+int season_own_teams(const unsigned char *teams, int nteams, int master, int mine,
+                     int *dest, int cap)
+{
+    int i, n = 0;
+    if (!teams || !dest || cap < 1 || nteams < 1) return 0;
+    if (nteams > 26) nteams = 26;
+    for (i = 0; i < nteams && n < cap; i++) {
+        const unsigned char *rec = teams + i * 30;
+        if (rec[0x17] != 1) continue;
+        if (master) {
+            if (rec[0x18] == 2 && rec[0x19] != 1) continue;
+        } else if (mine < 0 || mine >= 26 || i != mine || rec[0x19] == 1)
+            continue; /* never HELLO the host's controller */
+        dest[n++] = i;
+    }
+    return n;
+}
+
+int season_write_player_id(const char *dir, int team, const char *league)
+{
+    char path[512], pid[512];
+    unsigned char entry[30], tb = (unsigned char)team, dir13[13];
+    FILE *f;
+    int ok;
+    if (!dir || !league || !league[0] || team < 0 || team >= 26) return -1;
+    join2(path, (int)sizeof path, dir, "PINFO.DB");
+    if (pinfo_entry(path, team, entry, 0, 0, 0)) return -1;
+    memset(dir13, 0, sizeof dir13);
+    memcpy(dir13, league, strlen(league) < 12 ? strlen(league) : 12);
+    join2(pid, (int)sizeof pid, dir, "PLAYER.ID");
+    f = fopen(pid, "wb");
+    if (!f) return -1;
+    ok = fwrite(&tb, 1, 1, f) == 1 && fwrite(entry, 1, 11, f) == 11 && fwrite(dir13, 1, 13, f) == 13 &&
+         fwrite(entry + 0x1A, 1, 4, f) == 4;
+    if (fclose(f) || !ok) return -1;
+    return 0;
+}

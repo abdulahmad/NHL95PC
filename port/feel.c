@@ -30,6 +30,7 @@
 
 #ifndef FEEL_TEST
 #include "host.h"
+#include "ctlrows.h"
 #endif
 
 #ifdef _WIN32
@@ -45,7 +46,9 @@ extern uint8_t gmode;
 extern uint32_t gameopts;
 extern int32_t regd0, regd1, regd2, regd3;     /* the 68k registers of the Genesis code: .w is the low word */
 extern int32_t doplayeracc_ftab[];
-extern char updateplayers[], stopna[], playeracc[];
+extern char updateplayers[], stopna[], playeracc[], GetPeriodTime[];
+extern int curperiod;
+extern uint16_t PerTimeTab[];
 
 /* Player fields (src/include/structs.h) */
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
@@ -68,6 +71,7 @@ extern char updateplayers[], stopna[], playeracc[];
 #define T_TMPDE 0x46
 
 #define W(r) (*(int16_t *)&(r))                    /* a register's word */
+enum { FEEL_SHORT_PERIOD_SEC = 30 };               /* Game page debug: 30 second periods */
 
 static int16_t *tmpde_of(uint8_t *p)
 {
@@ -323,6 +327,21 @@ __attribute__((naked)) static void stopna_entry(void)
     __asm__ volatile("pushal\n\tpush %eax\n\tcall " SYM("feel_stopna") "\n\tadd $4, %esp\n\tpopal\n\tret");
 }
 
+/* GetPeriodTime: eax = seconds in this period. Debug 30s overrides the 5/10/20 min table. */
+int feel_period_time(void)
+{
+    unsigned p;
+    if (feel_short_periods()) return FEEL_SHORT_PERIOD_SEC;
+    if ((gameopts & 0x200) && curperiod > 3) return (int)(int16_t)PerTimeTab[0];
+    p = (gameopts >> 10) & 3;
+    return (int)(int16_t)PerTimeTab[p];
+}
+
+__attribute__((naked)) static void gpt_entry(void)
+{
+    __asm__ volatile("call " SYM("feel_period_time") "\n\tret");
+}
+
 void feel_install(void)
 {
     static const int32_t ftab[8] = { 0, 16, 16, 16, 0, -16, -16, -16 };
@@ -332,6 +351,7 @@ void feel_install(void)
     if (!ftab_ok) fprintf(stderr, "Feel: doplayeracc's turn table is not the expected one, the turn option is off\n");
     patch_jmp(playeracc, playeracc_entry);
     patch_jmp(stopna, stopna_entry);
+    patch_jmp(GetPeriodTime, gpt_entry);
     apply_constants();
 }
 #else
@@ -346,7 +366,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_FAKEPADS, O_FOUR, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_SHORT_PERIOD, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_FAKEA, O_CLEAR, O_GBTN, O_SKILL, O_FAKEPADS, O_FOUR, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -369,9 +389,13 @@ static const ob_game_opt opts[O_COUNT] = {
     { "fights", "Fights (NHLPA 93's)", onoff_names, 2, 1, 1, 2 },
     { "fight_box", "Names box over the fighters", fightbox_names, 2, 0, 1, 2 },
     { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 1, 2 },
+    { "short_periods", "Debug: 30 second periods", onoff_names, 2, 0, 1, 2 },
     { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
     { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
+    { "console_fake", "Console fake shot", onoff_names, 2, 0, 1, 3 },
+    { "clear_puck", "Clear puck", onoff_names, 2, 0, 1, 3 },
+    { "goalie_button", "Manual goalie button", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
     { "fake_pads", "Debug: pretend controllers (2 v 2)", onoff_names, 2, 0, 1, 4 },
     { "four_players", "Four players", onoff_names, 2, 1, 1, 4 },
@@ -439,6 +463,7 @@ static void changed(void *ctx, int index, int value)
     profile_from_rows();
 #ifndef FEEL_TEST
     if (!loading) settings_save_all();
+    ctlrows_sync(feel_four_players());
 #endif
 }
 
@@ -486,9 +511,15 @@ void feel_register(ob_host *h, const char *ini_path)
         ob_game_set(h, O_SKILL, v);
     }
     if (getenv("NHL95_FOUR")) ob_game_set(h, O_FOUR, atoi(getenv("NHL95_FOUR")) ? 1 : 0);
+    /* NHL95_PERIOD=30: 30 second periods (the Game page's debug row), for a short online season game */
+    if (getenv("NHL95_PERIOD") && atoi(getenv("NHL95_PERIOD")) == FEEL_SHORT_PERIOD_SEC)
+        ob_game_set(h, O_SHORT_PERIOD, 1);
     profile_from_rows();
     (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 int feel_fights(void)
@@ -504,6 +535,13 @@ int feel_fight_box(void)
 int feel_fight_next(void)
 {
     return opt_now(O_FIGHT_NEXT, 0);
+}
+
+int feel_short_periods(void)
+{
+    if (!g_lock && getenv("NHL95_PERIOD") && atoi(getenv("NHL95_PERIOD")) == FEEL_SHORT_PERIOD_SEC)
+        return 1;
+    return opt_now(O_SHORT_PERIOD, 0);
 }
 
 int feel_auto_lines(void)
@@ -539,6 +577,35 @@ int feel_four_players(void)
     return opt_now(O_FOUR, 1);
 }
 
+int feel_console_fake(void)
+{
+    return opt_now(O_FAKEA, 0);
+}
+
+int feel_clear_puck(void)
+{
+    return opt_now(O_CLEAR, 0);
+}
+
+int feel_goalie_button(void)
+{
+    return opt_now(O_GBTN, 0);
+}
+
+#ifndef FEEL_TEST
+static void feel_set(int index, int value)
+{
+    if (!g_host) return;
+    if (value < 0) value = 0;
+    if (value > 1) value = 1;
+    ob_game_set(g_host, index, value);
+}
+
+void feel_set_console_fake(int on) { feel_set(O_FAKEA, on ? 1 : 0); }
+void feel_set_clear_puck(int on) { feel_set(O_CLEAR, on ? 1 : 0); }
+void feel_set_goalie_button(int on) { feel_set(O_GBTN, on ? 1 : 0); }
+#endif
+
 void feel_fight_next_done(void)
 {
     if (g_host) ob_game_set(g_host, O_FIGHT_NEXT, 0);
@@ -554,6 +621,9 @@ void feel_session_begin(const char *text, size_t size)
     for (i = 0; i < O_COUNT; i++) g_snap[i] = ob_game_get(g_host, i);
     g_lock = 1;                         /* a menu change now cannot move the rules the other machine still has */
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_session_end(void)
@@ -563,6 +633,9 @@ void feel_session_end(void)
     loading = 1;
     ob_game_session_end(g_host);
     loading = 0;
+#ifndef FEEL_TEST
+    ctlrows_sync(feel_four_players());
+#endif
 }
 
 void feel_write_ini(FILE *f)
@@ -574,6 +647,10 @@ void feel_write_ini(FILE *f)
                "; auto_lines_when: Faceoffs only (94 Genesis) or On the fly too (96 PC: also during play, your puck carrier included)\n"
                "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
                "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n"
-               "; four_players: Off is the game's own two pads, with 95 PC's stars and arrows. On adds pads 3 and 4\n");
+               "; four_players: Off is the game's own two pads, with 95 PC's stars and arrows. On adds pads 3 and 4\n"
+               "; short_periods: Debug 30 second periods (also NHL95_PERIOD=30), for a short online season game\n"
+               "; console_fake: tap A with the puck past the blue line you are attacking (95 Genesis doinput_ispc). Default off\n"
+               "; clear_puck: tap A with the puck past your own blue line (94 Genesis dopass with sflags5 bit 3). Default off\n"
+               "; goalie_button: the Input bindings Manual goalie button takes the goalie at once. Off keeps holding pass\n");
     ob_game_write_ini(g_host, f);
 }

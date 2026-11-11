@@ -57,14 +57,15 @@ void pads4_map_seats(int n, const int *team, const int *kb, int *out)
         for (i = 0; i < n; i++) out[i] = i;
         return;
     }
-    /* slot 0: a keyboard seat if any (the game reads the keyboard pad itself), else the first seat */
+    /* slot 0: a direct device (keyboard or mouse: the game reads it itself) if any, else the first seat */
     for (i = 0; i < n; i++) if (kb[i]) { first = i; break; }
     if (first < 0) first = 0;
-    /* slot 1: the first seat of the other team, else the next seat */
-    for (i = 0; i < n; i++) if (i != first && team[i] != team[first]) { second = i; break; }
-    if (second < 0) for (i = 0; i < n; i++) if (i != first) { second = i; break; }
-    /* a second keyboard seat cannot be: there is one keyboard. One on the other team takes slot 1 */
-    for (i = 0; i < n; i++) if (kb[i] && i != first && team[i] != team[first]) second = i;
+    /* slot 1: a second direct device, even on the same team (keyboard and mouse), else the other team's first seat */
+    for (i = 0; i < n; i++) if (kb[i] && i != first) { second = i; break; }
+    if (second < 0)
+        for (i = 0; i < n; i++) if (i != first && team[i] != team[first]) { second = i; break; }
+    if (second < 0)
+        for (i = 0; i < n; i++) if (i != first) { second = i; break; }
     out[first] = 0;
     if (second >= 0) out[second] = 1;
     for (i = 0; i < n && next < 4; i++) if (out[i] < 0 && !kb[i]) out[i] = next++;
