@@ -58,7 +58,8 @@ extern char AddHumanTeam[], MergeLeagueFiles[], AskTeamPassword[];
 extern unsigned char exportmsg[], leagueflags;
 extern signed char byte_DE268;
 extern volatile int quit_requested;
-extern int MessageBox(int x, int y, char *msg, int n, int a, int b, int c, int d, int e);
+/* MinGW winuser.h #define MessageBox MessageBoxA. Same as lineup.c fputchar. */
+extern char game_MessageBox[] __asm__(SYM("MessageBox"));
 extern void RestoreDialogBg(void);
 extern void SetDialogColors(int a, int b, int c, int d, int e);
 extern int sub_B2CBE(int key);
@@ -885,7 +886,7 @@ static int wait_h2h(char *teams, int opp)
     for (i = 0; i < 4; i++) ptr[i] = lines[i];
     watcall5((void *)SetDialogColors, 0xF9, 0xFA, 0xF8, 0xFA, 0);
     sub_B2DCA(&btn, &my, &mx);
-    watcall_mbox((void *)MessageBox, (uint32_t)-1, (uint32_t)-1, (uint32_t)(uintptr_t)ptr, 4,
+    watcall_mbox((void *)game_MessageBox, (uint32_t)-1, (uint32_t)-1, (uint32_t)(uintptr_t)ptr, 4,
                  0, 0, (uint32_t)(uintptr_t)&my, (uint32_t)(uintptr_t)&btn, 0);
     g_h2h_opp = opp;
     g_h2h_home = lgplayteam == (int)byte_DDD42;
