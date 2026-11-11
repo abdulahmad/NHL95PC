@@ -3,8 +3,10 @@
  *
  * Per-game season hooks. A team flagged for export at New League (+18h == 2) is a
  * remote player: the host keeps Boston (local) and guests Pick "Los Angeles" by
- * name. The first copy is imported here (no File > Import Databases). Virtual A:
- * is the other human's mirror when the calendar needs it; no insert-disk box.
+ * name. New League asks "remote team for a player on another device?"; Yes
+ * auto-exports (no insert-disk). Next League Game shows every team; a client can
+ * only take remotes, and picking one imports it so "must be imported" stays off.
+ * Virtual A: is the other human's mirror when the calendar needs it.
  * C vs D: the same File > Export / Import Databases / Merge & Update path as
  * 1994, run in the background whenever the copies need it. Export one team's
  * DBs, import them onto the other machine, merge that copy in, so both teams
@@ -47,6 +49,8 @@ extern unsigned char curleague;
 extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[];
 extern short lggameidx, HomeTeam, VisTeam;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
+extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
+extern unsigned char exportmsg[];
 extern volatile int quit_requested;
 
 static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
@@ -81,7 +85,7 @@ static int g_ready, g_play_on, g_installed_team = -1, g_hold_a, g_in_league, g_j
 static struct { int team; unsigned ver; int have; } g_mail[OB_NET_MAX_MACHINES];
 static char g_seen_league[16];
 static int g_seen_master = -1, g_seen_nteam = -1;
-void *port_plg_cont;
+void *port_plg_cont, *port_cls_cont, *port_chd_cont, *port_lts_cont;
 
 static const char *game_root(void)
 {
@@ -98,6 +102,13 @@ static int exists_path(const char *p)
 /* the open league's team table: PINFO.DB +20h (26 x 30 bytes, as WriteLeagueInfo writes it). At the desk the
    exhibition state is loaded and leagueteams may be another league's, so read the league's own file, at most
    every half second (and at once when the league changes). Falls back to leagueteams while it is being made. */
+static int g_teams_gen, g_teams_seen_gen;
+
+static void teams_invalidate(void)
+{
+    g_teams_gen++;
+}
+
 static const unsigned char *teams_tab(void)
 {
     static unsigned char tab[0x30C];
@@ -105,6 +116,10 @@ static const unsigned char *teams_tab(void)
     static int age, have;
     const char *name = open_league();
     if (!name[0]) return leagueteams;
+    if (g_teams_gen != g_teams_seen_gen) {
+        age = 999;
+        g_teams_seen_gen = g_teams_gen;
+    }
     if (strcmp(seen, name) || ++age >= 30) {
         char path[600];
         FILE *f;
@@ -342,6 +357,18 @@ __attribute__((naked)) static int watcall3(void *fn, uint32_t a, uint32_t d, uin
         "popl %ebx\n\tpopl %ebp\n\tret");
 }
 
+/* eax, edx, ebx, ecx, then one stack arg; Watcom pops it */
+__attribute__((naked)) static int watcall5(void *fn, uint32_t a, uint32_t d, uint32_t b, uint32_t c,
+                                           uint32_t s0)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
+        "pushl 28(%ebp)\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\tmovl 24(%ebp), %ecx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret");
+}
+
 /* eax, edx, ebx, ecx, then two stack args; Watcom pops the stack extras */
 __attribute__((naked)) static int watcall6(void *fn, uint32_t a, uint32_t d, uint32_t b, uint32_t c,
                                            uint32_t s0, uint32_t s1)
@@ -349,6 +376,18 @@ __attribute__((naked)) static int watcall6(void *fn, uint32_t a, uint32_t d, uin
     __asm__ volatile(
         "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
         "pushl 32(%ebp)\n\tpushl 28(%ebp)\n\t"
+        "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\tmovl 24(%ebp), %ecx\n\t"
+        "call *8(%ebp)\n\t"
+        "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret");
+}
+
+/* eax, edx, ebx, ecx, then three stack args; Watcom pops them */
+__attribute__((naked)) static int watcall7(void *fn, uint32_t a, uint32_t d, uint32_t b, uint32_t c,
+                                           uint32_t s0, uint32_t s1, uint32_t s2)
+{
+    __asm__ volatile(
+        "pushl %ebp\n\tmovl %esp, %ebp\n\tpushl %ebx\n\tpushl %esi\n\tpushl %edi\n\t"
+        "pushl 36(%ebp)\n\tpushl 32(%ebp)\n\tpushl 28(%ebp)\n\t"
         "movl 12(%ebp), %eax\n\tmovl 16(%ebp), %edx\n\tmovl 20(%ebp), %ebx\n\tmovl 24(%ebp), %ecx\n\t"
         "call *8(%ebp)\n\t"
         "popl %edi\n\tpopl %esi\n\tpopl %ebx\n\tpopl %ebp\n\tret");
@@ -668,6 +707,124 @@ __attribute__((naked)) static void playleague_entry(void)
         "1:\n\tpushal\n\tcall " SYM("port_playleague_exit") "\n\tpopal\n\tret");
 }
 
+__attribute__((naked)) static int check_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0xD8\n\tjmp *" SYM("port_cls_cont"));
+}
+
+__attribute__((naked)) static int copy_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0xE4\n\tjmp *" SYM("port_chd_cont"));
+}
+
+__attribute__((naked)) static int lts_orig_tramp(void)
+{
+    __asm__ volatile("pushl $0x2B4\n\tjmp *" SYM("port_lts_cont"));
+}
+
+int port_check_disk(char *dir, char *teams, int team, int sync, int probe)
+{
+    char dest[512];
+    unsigned char *rec = (teams && team >= 0 && team < 26) ? (unsigned char *)teams + team * 30 : NULL;
+    if (!sync && rec && rec[0x17] == 1) {
+        if (season_next_game_pick((unsigned char *)teams, team, net_guest()))
+            return 4;   /* client vs a host-local: not selectable, no import box */
+        if (!league_host_dir(dest, (int)sizeof dest))
+            season_mark_imported(dest, team);
+        else if (dir && dir[0])
+            season_mark_imported(dir, team);
+        teams_invalidate();
+    }
+    return watcall5((void *)check_orig_tramp, (uint32_t)(uintptr_t)dir, (uint32_t)(uintptr_t)teams,
+                    (uint32_t)team, (uint32_t)sync, (uint32_t)probe);
+}
+
+__attribute__((naked)) static void check_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\t"
+        "pushl 36(%esp)\n\tpushl %ecx\n\tpushl %ebx\n\tpushl %edx\n\tpushl %eax\n\t"
+        "call " SYM("port_check_disk") "\n\taddl $20, %esp\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret $4");
+}
+
+int port_copy_human(char *dir, unsigned char *teams, int which)
+{
+    unsigned char saved[26];
+    char from[512], floppy[512], work[512];
+    const char *lg = open_league();
+    int t, r;
+    if (!lg[0] && dir) lg = dir;
+    snprintf(work, sizeof work, "%s", g_work[0] ? g_work : "overbar-season");
+    MKDIR(work);
+    if (dir && dir[0] && g_root[0] && !strchr(dir, '/') && !strchr(dir, '\\'))
+        snprintf(from, sizeof from, "%s/%s", g_root, dir);
+    else
+        snprintf(from, sizeof from, "%s", dir ? dir : "");
+    for (t = 0; t < 26; t++) {
+        saved[t] = teams ? teams[t * 30 + 0x17] : 0;
+        if (!teams || saved[t] != 1) continue;
+        if (which >= 0 && which != t) continue;
+        if (teams[t * 30 + 0x18] != 2 || (teams[t * 30 + 0x16] & 1)) continue;
+        snprintf(floppy, sizeof floppy, "%s/export-%02d", work, t);
+        MKDIR(floppy);
+        season_pack_floppy(from[0] ? from : dir, floppy, t, lg, 1);
+        teams[t * 30 + 0x17] = 0;    /* original skips insert-disk for remotes */
+    }
+    r = watcall3((void *)copy_orig_tramp, (uint32_t)(uintptr_t)dir, (uint32_t)(uintptr_t)teams,
+                 (uint32_t)which);
+    for (t = 0; t < 26; t++)
+        if (teams) teams[t * 30 + 0x17] = saved[t];
+    teams_invalidate();
+    return r;
+}
+
+__attribute__((naked)) static void copy_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpushl %ebx\n\tpushl %edx\n\tpushl %eax\n\t"
+        "call " SYM("port_copy_human") "\n\taddl $12, %esp\n\t"
+        "movl %eax, 28(%esp)\n\tpopal\n\tret");
+}
+
+void port_league_team_select(char *dir, int *humans, char *names, unsigned char *teams,
+                             int mode, char *title, int *picks)
+{
+    unsigned char saved[26];
+    int i, hide = (mode == 8 && net_guest() && teams);
+    if (hide) {
+        for (i = 0; i < 26; i++) {
+            saved[i] = teams[i * 30 + 0x17];
+            /* full 26-crest grid stays; only remotes keep the human name / click */
+            if (saved[i] == 1 && teams[i * 30 + 0x18] != 2)
+                teams[i * 30 + 0x17] = 0;
+        }
+    }
+    watcall7((void *)lts_orig_tramp, (uint32_t)(uintptr_t)dir, (uint32_t)(uintptr_t)humans,
+             (uint32_t)(uintptr_t)names, (uint32_t)(uintptr_t)teams,
+             (uint32_t)mode, (uint32_t)(uintptr_t)title, (uint32_t)(uintptr_t)picks);
+    if (hide)
+        for (i = 0; i < 26; i++) teams[i * 30 + 0x17] = saved[i];
+}
+
+__attribute__((naked)) static void lts_entry(void)
+{
+    __asm__ volatile(
+        "pushal\n\t"
+        "pushl 44(%esp)\n\tpushl 44(%esp)\n\tpushl 44(%esp)\n\t"
+        "pushl %ecx\n\tpushl %ebx\n\tpushl %edx\n\tpushl %eax\n\t"
+        "call " SYM("port_league_team_select") "\n\taddl $28, %esp\n\t"
+        "popal\n\tret $12");
+}
+
+static void patch_export_question(void)
+{
+    static char q1[] = "Make this a remote team for";
+    static char q2[] = "a player on another device?";
+    *(char **)exportmsg = q1;
+    *(char **)(exportmsg + 8) = q2;
+}
+
 static int entry_push(const char *fn, uint32_t n)
 {
     const uint8_t *p = (const uint8_t *)fn;
@@ -684,6 +841,19 @@ static void install_hooks(void)
         port_plg_cont = PlayLeagueGame + 5;
         patch_jmp(PlayLeagueGame, playleague_entry);
     }
+    if (entry_push(CheckLeagueDiskSync, 0xD8)) {
+        port_cls_cont = CheckLeagueDiskSync + 5;
+        patch_jmp(CheckLeagueDiskSync, check_entry);
+    }
+    if (entry_push(CopyHumanTeamDBs, 0xE4)) {
+        port_chd_cont = CopyHumanTeamDBs + 5;
+        patch_jmp(CopyHumanTeamDBs, copy_entry);
+    }
+    if (entry_push(LeagueTeamSelect, 0x2B4)) {
+        port_lts_cont = LeagueTeamSelect + 5;
+        patch_jmp(LeagueTeamSelect, lts_entry);
+    }
+    patch_export_question();
     g_hooks = 1;
 }
 

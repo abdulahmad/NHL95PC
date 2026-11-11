@@ -2,13 +2,14 @@
  * Copyright (c) 2026 abdulahmad and contributors
  *
  * Online season hooks for the SDL2 host. The game's league folder is Overbar's
- * export / import / copy / merge. Teams marked for export at New League (floppy
- * "played on another computer") are remote slots: a guest Pick a team claims
- * one by name, and the port copies that team's DBs. Overlay Season / File
- * screens come from Overbar (ob_season_set). Export, import, and Merge & Update
- * of team databases run in the background when the copies need them — the
- * player never has to use those File menu items. Pack files, when used, are
- * named after the team — not a typed .obt filename.
+ * export / import / copy / merge. New League asks whether each human is a remote
+ * team for a player on another device (Yes auto-exports; No stays on this
+ * computer). Next League Game lists every team; a client can only take remotes,
+ * and selecting one imports it. Overlay Season / File screens come from Overbar
+ * (ob_season_set). Export, import, and Merge & Update of team databases run in
+ * the background when the copies need them — the player never has to use those
+ * File menu items. Pack files, when used, are named after the team — not a
+ * typed .obt filename.
  */
 #ifndef PORT_SEASON_H
 #define PORT_SEASON_H

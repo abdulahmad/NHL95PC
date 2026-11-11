@@ -279,6 +279,17 @@ int season_player_id(const char *dir, int *team, unsigned *version)
     return 0;
 }
 
+int season_next_game_pick(unsigned char *teams, int team, int guest)
+{
+    unsigned char *rec;
+    if (!teams || team < 0 || team >= 26) return -1;
+    rec = teams + team * 30;
+    if (rec[0x17] != 1) return -1;
+    if (guest && rec[0x18] != 2) return -1;
+    rec[0x16] = 1;
+    return 0;
+}
+
 int season_write_player_id(const char *dir, int team, const char *league)
 {
     char path[512], pid[512];

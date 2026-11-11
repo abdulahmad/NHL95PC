@@ -12,7 +12,7 @@ Tip when written: `eb4048bf`. Import fix #365 is in (`ba75ef97`). Overbar pin **
 
 Host makes a league, once:
 
-1. **New League** as today. For each human team: **this computer** or **another computer**. That is the only “export” question. A and B = this computer. C and D = another computer (bob, dee, …).
+1. **New League** as today. For each human team: **make this a remote team for a player on another device?** Yes = auto-export that team (C, D, …). No = keep it on this computer (A, B). That is the only export question — no floppy, no typed filename.
 2. **Online → Host.** Friends **Connect**.
 3. Each friend opens **Season → Pick a team** and chooses **Edmonton - bob** (team name, not a file). After that, that machine *is* that team.
 4. Anyone opens the **calendar** and picks a game. Host vs a friend in the room is online. A vs CPU / A vs B / C vs D after the other team’s DBs are on this PC is local. Play. The result is on every copy that needs it. Open the calendar again; that game is gone.
@@ -93,9 +93,9 @@ One PR per phase onto `cursor/overbar-95pc-6801`. Laptop proof, then merge. `por
 
 ### Phase 2 — Friend picks a team and can play
 
-**Player:** Host has the room up. Client connects, picks **Edmonton - bob**. Client opens the **calendar as Edmonton** and plays vs the computer. No sports-desk Import.
+**Player:** Host has the room up. Client connects, picks **Edmonton - bob**. **Next League Game** shows every team (the 26-crest grid). Only exported remotes are selectable; picking one imports it. No “must be imported.” Then the calendar as Edmonton, vs the computer. No sports-desk Import.
 
-**Pass:** pick → play C vs CPU (and later D vs CPU) with no Import Databases.
+**Pass:** pick → play C vs CPU (and later D vs CPU) with no Import Databases and no import dialog on the team grid.
 
 **Click that dies:** **File > Import Databases > Player**, and the overlay line that tells you to do that.
 

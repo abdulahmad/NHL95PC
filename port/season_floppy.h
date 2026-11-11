@@ -24,5 +24,10 @@ int season_import_team(const char *from, const char *to, int team);
 int season_write_player_id(const char *dir, int team, const char *league);
 /* read PLAYER.ID: team 0..25, version (the 4 bytes Export writes). 0 ok, -1 none. */
 int season_player_id(const char *dir, int *team, unsigned *version);
+/* Next League Game pick (CheckLeagueDiskSync sync=0). 0: this machine can play
+ * team — RAM +16h becomes 1 (imported) so "must be imported" stays off. -1:
+ * not this machine's pick (a client vs a host-local, or not a human). guest
+ * is 1 on a client: only remotes (+18h == 2) are allowed. */
+int season_next_game_pick(unsigned char *teams, int team, int guest);
 
 #endif
