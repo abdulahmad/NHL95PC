@@ -32,18 +32,28 @@ int main(void)
     eq(goalie_in_crease(0, 0), 0, "centre ice");
 
     t = 0;
-    eq(goalie_bhold(0, 0, 1, 1, 0, &t), GB_PASS, "auto: original changeplayer");
+    eq(goalie_bhold(0, 0, 1, 1, 0, &t, 0), GB_PASS, "auto: original changeplayer");
     t = 0;
-    eq(goalie_bhold(1, 1, 1, 1, 0, &t), GB_PASS, "manual on goalie: leave via changeplayer");
+    eq(goalie_bhold(1, 1, 1, 1, 0, &t, 0), GB_PASS, "manual on goalie: leave via changeplayer");
     t = 0;
-    eq(goalie_bhold(1, 0, 1, 1, 0, &t), GB_WAIT, "manual B press starts the hold");
+    eq(goalie_bhold(1, 0, 1, 1, 0, &t, 0), GB_WAIT, "manual B press starts the hold");
     eq(t, 0x0F, "timer 96 PC 15");
-    eq(goalie_bhold(1, 0, 0, 1, 0, &t), GB_WAIT, "holding");
+    eq(goalie_bhold(1, 0, 0, 1, 0, &t, 0), GB_WAIT, "holding");
     t = 1;
-    eq(goalie_bhold(1, 0, 0, 1, 0, &t), GB_TAKE, "hold ran out: take the goalie");
+    eq(goalie_bhold(1, 0, 0, 1, 0, &t, 0), GB_TAKE, "hold ran out: take the goalie");
     t = 8;
-    eq(goalie_bhold(1, 0, 0, 0, 1, &t), GB_CHANGE, "short B: changeplayer");
+    eq(goalie_bhold(1, 0, 0, 0, 1, &t, 0), GB_CHANGE, "short B: changeplayer");
     eq(t, 0x0F, "timer reset after a short B");
+    t = 0;
+    eq(goalie_bhold(1, 0, 1, 1, 0, &t, 1), GB_PASS, "own goalie button: pass is not a timer");
+    eq(t, 0, "the timer stays unset");
+
+    eq(goalie_zone(0, 1), 0, "neutral");
+    eq(goalie_zone(0x58, 1), 1, "offensive, attacking +Y");
+    eq(goalie_zone(-0x58, 1), -1, "defensive, attacking +Y");
+    eq(goalie_zone(-0x58, 0), 1, "offensive, attacking -Y");
+    eq(goalie_zone(0x58, 0), -1, "defensive, attacking -Y");
+    eq(goalie_zone(0x57, 1), 0, "short of the blue line");
 
     if (fails) {
         fprintf(stderr, "%d failed\n", fails);
