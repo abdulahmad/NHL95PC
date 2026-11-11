@@ -51,7 +51,7 @@
 extern unsigned char curleague;
 extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[], gameresult;
 extern short lggameidx, HomeTeam, VisTeam;
-extern unsigned char byte_DDD42, byte_DDD43;
+extern unsigned char byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
 extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
 extern char AddHumanTeam[], MergeLeagueFiles[], AskTeamPassword[];
@@ -818,7 +818,16 @@ static void h2h_send(const season_h2h *p, const void *extra, size_t n)
 
 static void h2h_fill_mine(season_h2h *o, int kind)
 {
-    season_h2h_fill(o, kind, byte_DDD42, byte_DDD43, lgplayteam, lggameidx, open_league());
+    /* month+day, not CalendarScreen's slot: each copy's SCHEDULE.nn can
+     * number the same Oilers-Sharks night as a different index. */
+    int date = ((int)byte_DDD40 << 8) | (int)byte_DDD41;
+    season_h2h_fill(o, kind, byte_DDD42, byte_DDD43, lgplayteam, date, open_league());
+}
+
+static void h2h_want_now(season_h2h *me)
+{
+    h2h_fill_mine(me, SEASON_H2H_WANT);
+    h2h_send(me, NULL, 0);
 }
 
 static void h2h_clear(void)
@@ -852,20 +861,50 @@ static void season_h2h_msg(void *ud, int from, int type, const void *data, size_
         g_h2h_setn = n;
     }
     if (p->kind == SEASON_H2H_GONE) g_h2h_have[from] = 0;
+    if (getenv("NHL95_ONLINE"))
+        fprintf(stderr, "h2h: from %d kind %u league=%s game=%u home=%u vis=%u mine=%u\n",
+                from, (unsigned)p->kind, p->league, (unsigned)p->game, (unsigned)p->home,
+                (unsigned)p->vis, (unsigned)p->mine);
+}
+
+/* Keep sending WANT while waiting for the pack: if this side matched first, the
+ * other still needs a WANT (the host's first ones were dropped before the guest
+ * was a member). Esc cancels. After ~5 s use the local copy — both claimed
+ * machines already have the league. */
+static int wait_mirror_h2h(int from, char *dir, int size)
+{
+    season_h2h me;
+    int age = 0, waited = 0;
+    while (!quit_requested) {
+        netplay_pump();
+        if (ob_season_mirror(&g_season, from, dir, size)) return 0;
+        if (sub_B2CBE(1) || sub_B2CBE(0x1C)) return -2;
+        if (++age >= 12) {
+            age = 0;
+            h2h_want_now(&me);
+        }
+        if (waited >= 5000) return -1;
+        plat_sleep_ms(2);
+        waited += 2;
+    }
+    return -1;
 }
 
 static int h2h_exchange(int from, int opp)
 {
     char lg[512], mdir[512];
     const char *lgname = open_league();
-    int mine = mine_team();
+    int mine = mine_team(), got;
     if (from < 0 || league_host_dir(lg, (int)sizeof lg) || !lgname[0]) return -1;
     if (mine >= 0 && mine < 26) season_write_player_id(lg, mine, lgname);
     ob_season_mirror_send(&g_season, 1u << from);
-    if (wait_mirror(from, mdir, (int)sizeof mdir)) return -1;
-    import_from_dir(mdir);
-    if (opp >= 0) season_mark_imported(lg, opp);
-    teams_invalidate();
+    got = wait_mirror_h2h(from, mdir, (int)sizeof mdir);
+    if (got == -2) return -2;
+    if (got == 0) {
+        import_from_dir(mdir);
+        if (opp >= 0) season_mark_imported(lg, opp);
+        teams_invalidate();
+    }
     if (ready_h2h_files(mine, opp)) {
         mount_a(lg);
         return -1;
@@ -878,7 +917,8 @@ static int wait_h2h(char *teams, int opp)
     season_h2h me;
     char lines[4][SEASON_H2H_LINE], *ptr[4], player[12];
     unsigned char *rec;
-    int mx = 0, my = 0, btn = 0, i, age = 0, k;
+    int mx = 0, my = 0, btn = 0, i, age = 0, k, had_net = 0, said = 0;
+    unsigned members = 0;
     rec = (unsigned char *)teams + opp * 30;
     memcpy(player, rec, 11);
     player[11] = 0;
@@ -890,27 +930,52 @@ static int wait_h2h(char *teams, int opp)
                  0, 0, (uint32_t)(uintptr_t)&my, (uint32_t)(uintptr_t)&btn, 0);
     g_h2h_opp = opp;
     g_h2h_home = lgplayteam == (int)byte_DDD42;
-    h2h_fill_mine(&me, SEASON_H2H_WANT);
-    h2h_send(&me, NULL, 0);
+    h2h_want_now(&me);
+    had_net = g_net != NULL;
+    members = had_net ? ob_net_members(g_net) : 0;
     while (!quit_requested) {
+        unsigned now_m;
+        int now_net, r = 0;
         netplay_pump();
         if (sub_B2CBE(1) || sub_B2CBE(0x1C)) break;
         h2h_fill_mine(&me, SEASON_H2H_WANT);
-        if (++age >= 12) {
+        now_net = g_net != NULL;
+        now_m = now_net ? ob_net_members(g_net) : 0;
+        /* send as soon as the room is up or someone joins: the first WANT is
+         * dropped if the host opened this dialog before the guest was a member. */
+        if (now_net && (!had_net || now_m != members || ++age >= 12)) {
             age = 0;
+            had_net = now_net;
+            members = now_m;
             h2h_send(&me, NULL, 0);
         }
         for (k = 0; k < OB_NET_MAX_MACHINES; k++) {
             if (!g_h2h_have[k]) continue;
             if (g_h2h_peer[k].kind != SEASON_H2H_WANT && g_h2h_peer[k].kind != SEASON_H2H_PLAYING)
                 continue;
-            if (!season_h2h_same(&me, &g_h2h_peer[k])) continue;
-            if (h2h_exchange(k, opp) == 0) {
+            if (!season_h2h_same(&me, &g_h2h_peer[k])) {
+                if (!said && getenv("NHL95_ONLINE")) {
+                    said = 1;
+                    fprintf(stderr,
+                            "h2h: WANT not the same game (mine %s g=%u h=%u v=%u me=%u / "
+                            "peer %s g=%u h=%u v=%u me=%u kind=%u)\n",
+                            me.league, (unsigned)me.game, (unsigned)me.home, (unsigned)me.vis,
+                            (unsigned)me.mine, g_h2h_peer[k].league, (unsigned)g_h2h_peer[k].game,
+                            (unsigned)g_h2h_peer[k].home, (unsigned)g_h2h_peer[k].vis,
+                            (unsigned)g_h2h_peer[k].mine, (unsigned)g_h2h_peer[k].kind);
+                }
+                continue;
+            }
+            h2h_want_now(&me);          /* they still need ours if we matched first */
+            r = h2h_exchange(k, opp);
+            if (r == -2) break;
+            if (r == 0) {
                 RestoreDialogBg();
                 g_h2h_active = 1;
                 return 0;
             }
         }
+        if (r == -2) break;
         plat_sleep_ms(16);
     }
     h2h_fill_mine(&me, SEASON_H2H_GONE);

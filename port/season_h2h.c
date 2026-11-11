@@ -18,6 +18,19 @@ static void cut_league(char *out, int size, const char *league)
     out[n] = 0;
 }
 
+static int league_same(const char *a, const char *b)
+{
+    int i;
+    if (!a || !b || !a[0] || !b[0]) return 0;
+    for (i = 0; a[i] || b[i]; i++) {
+        unsigned ca = (unsigned char)a[i], cb = (unsigned char)b[i];
+        if (ca >= 'A' && ca <= 'Z') ca += 32;
+        if (cb >= 'A' && cb <= 'Z') cb += 32;
+        if (ca != cb) return 0;
+    }
+    return 1;
+}
+
 int season_h2h_same(const season_h2h *a, const season_h2h *b)
 {
     int a_ok, b_ok;
@@ -25,7 +38,7 @@ int season_h2h_same(const season_h2h *a, const season_h2h *b)
     if (a->game != b->game) return 0;
     if (a->home != b->home || a->vis != b->vis) return 0;
     if (a->home > 25 || a->vis > 25 || a->home == a->vis) return 0;
-    if (strcmp(a->league, b->league) != 0 || !a->league[0]) return 0;
+    if (!league_same(a->league, b->league)) return 0;
     if (a->mine == b->mine) return 0;
     a_ok = a->mine == a->home || a->mine == a->vis;
     b_ok = b->mine == b->home || b->mine == b->vis;

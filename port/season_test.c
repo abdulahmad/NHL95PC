@@ -267,17 +267,22 @@ int main(void)
     {
         season_h2h dad, bob, other;
         char lines[4][SEASON_H2H_LINE];
-        season_h2h_fill(&dad, SEASON_H2H_WANT, 5, 16, 5, 12, "TESTY.LP");
-        season_h2h_fill(&bob, SEASON_H2H_WANT, 5, 16, 16, 12, "TESTY.LP");
-        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 16, 13, "TESTY.LP");
+        /* game is (month<<8)|day, not the per-copy schedule slot. */
+        season_h2h_fill(&dad, SEASON_H2H_WANT, 5, 16, 5, 0x0A06, "TESTY.LP");
+        season_h2h_fill(&bob, SEASON_H2H_WANT, 5, 16, 16, 0x0A06, "TESTY.LP");
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 16, 0x0A14, "TESTY.LP");
         CHECK(season_h2h_same(&dad, &bob));
         CHECK(season_h2h_same(&bob, &dad));
         CHECK(!season_h2h_same(&dad, &dad));
-        CHECK(!season_h2h_same(&dad, &other));
-        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 5, 12, "TESTY.LP");
+        CHECK(!season_h2h_same(&dad, &other)); /* different night */
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 5, 0x0A06, "TESTY.LP");
         CHECK(!season_h2h_same(&dad, &other)); /* same mine */
-        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 4, 12, "TESTY.LP");
+        season_h2h_fill(&other, SEASON_H2H_WANT, 5, 16, 4, 0x0A06, "TESTY.LP");
         CHECK(!season_h2h_same(&dad, &other));
+        season_h2h_fill(&bob, SEASON_H2H_WANT, 5, 16, 16, 0x0A06, "testy.lp");
+        CHECK(season_h2h_same(&dad, &bob)); /* league name case */
+        season_h2h_fill(&bob, SEASON_H2H_WANT, 5, 16, 16, 0x0A06, "TESTY");
+        CHECK(season_h2h_same(&dad, &bob)); /* .LP stripped */
         season_h2h_lines(lines, "bob");
         CHECK(season_h2h_lines_fit(lines));
         CHECK(!strcmp(lines[0], "Please connect to"));

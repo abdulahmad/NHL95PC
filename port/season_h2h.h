@@ -2,8 +2,10 @@
  * Copyright (c) 2026 abdulahmad and contributors
  *
  * Human-vs-human calendar handshake. Two machines that pick the same scheduled
- * game send this while the connect dialog is open. Same league + game + home/vis
- * with complementary teams means they play each other. Type 20 is a game
+ * game send this while the connect dialog is open. Same league + date (month
+ * and day packed in `game`) + home/vis with complementary teams means they
+ * play each other. Do not use CalendarScreen's schedule slot: each copy's
+ * SCHEDULE.nn can number the same night differently. Type 20 is a game
  * message (0..239); Overbar's own types start at 240.
  */
 #ifndef PORT_SEASON_H2H_H
@@ -26,13 +28,14 @@ typedef struct season_h2h {
     uint8_t home;
     uint8_t vis;
     uint8_t mine;
-    uint16_t game;
+    uint16_t game;                          /* (month << 8) | day from the 6-byte schedule record */
     char league[SEASON_H2H_LEAGUE];
 } __attribute__((packed)) season_h2h;
 
 /* 1 when a and b are the two sides of one scheduled game. */
 int season_h2h_same(const season_h2h *a, const season_h2h *b);
-/* fill a WANT/PLAYING/GONE from this machine's pick. league may be "FOO.LP". */
+/* fill a WANT/PLAYING/GONE from this machine's pick. game is (month<<8)|day.
+ * league may be "FOO.LP". */
 void season_h2h_fill(season_h2h *o, int kind, int home, int vis, int mine, int game,
                      const char *league);
 /* four centred MessageBox lines. player is the other human's 11-byte name. */
