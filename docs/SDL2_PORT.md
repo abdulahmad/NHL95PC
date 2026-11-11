@@ -67,6 +67,7 @@ The game's data files are not in this repository. Debug helpers: `NHL95_TRACE=1`
 `NHL95_AUTOLINE=1` turns on the Game page's Auto line changes (96 PC Auto: CompLine at faceoff for a human team, chk4lc on the fly);
 `NHL95_GOALIE=1` turns on Manual goalie (96 PC: B-hold takes the goalie, A dives, C a save; 94 Genesis movement);
 `NHL95_SKILL=0-2` sets Skill level (96 Genesis OptSkill: 0 pro, 1 all-star, 2 rookie; 96 PC has no skill row);
+`NHL95_PERIOD=30` (or Game > Debug: 30 second periods) makes every period 30 seconds, for a short online season game;
 `NHL95_NOSIDES=1` (or `NHL95_SIDES=0`) skips Overbar's select-sides screen (every connected controller, the same module online); `NHL95_AUTOSKIP` / `NHL95_KEYS` skip it too;
 `NHL95_DUMP=/dir` (with `SDL_VIDEODRIVER=dummy`) writes a PPM of the screen about twice a second; `port/where.py ADDR` maps a runtime address
 to the original address and the asm around it.

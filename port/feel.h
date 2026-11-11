@@ -48,6 +48,8 @@ int feel_fight_box(void);
 /* the Game page's debug row: the next hit that may start a fight does (cleared once it has) */
 int feel_fight_next(void);
 void feel_fight_next_done(void);
+/* the Game page's debug row, or NHL95_PERIOD=30: each period is 30 seconds (live and online) */
+int feel_short_periods(void);
 
 /* the Game page's Auto line changes row (port/lines.c): 1 on. 96 PC's Auto state. */
 int feel_auto_lines(void);
