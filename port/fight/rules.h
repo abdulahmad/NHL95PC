@@ -71,6 +71,10 @@ typedef struct fight {
  * the clock running, no faceoff) is the game side's. */
 int fight_wants(const fighter *a, const fighter *b, int chkcnt, int checks_a, int checks_b, int penalties_on,
                 int (*random)(void *ctx, int range), void *ctx, int *instigator);
+/* 93 setplayer: fighting is the roster check byte with bit 0 cleared (handed). 0, 2, 4 ... 14. */
+int fight_rating_byte(int roster_byte);
+/* 93 FallDown: a knockdown adds 1 to ChkCnt, and 2 more when the hitter's fighting rating is 0. */
+int fight_check_weight(int fighting);
 /* checkfight's set-up: face each other, pushed apart, gloves off (fight.f must be filled in) */
 void fight_begin(fight *ft);
 /* one game frame: pad[i] = dpad direction 0-7 (8 none) | FP_* << 4 for a human fighter */

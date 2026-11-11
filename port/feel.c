@@ -346,7 +346,7 @@ void feel_set_profile(const feel_profile *f)
 }
 
 /* ---- the Game page ---- */
-enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_FAKEPADS, O_COUNT };
+enum { O_PRESET, O_TIMING, O_SPEED, O_ACCEL, O_STOP, O_GLIDE, O_TURN, O_FIGHTS, O_FIGHT_BOX, O_FIGHT_NEXT, O_AUTOLINE, O_AUTOFLY, O_GOALIE, O_SKILL, O_FAKEPADS, O_FOUR, O_COUNT };
 enum { PRESET_ORIGINAL, PRESET_94G, PRESET_94G_RINK, PRESET_CUSTOM };
 
 static const char *const preset_names[] = { "Original (95 PC)", "94 Genesis", "94 Genesis, scaled to rink", "Custom" };
@@ -368,12 +368,13 @@ static const ob_game_opt opts[O_COUNT] = {
     { "feel_turning", "Turning", two_names, 2, 0, 1, 1 },
     { "fights", "Fights (NHLPA 93's)", onoff_names, 2, 1, 1, 2 },
     { "fight_box", "Names box over the fighters", fightbox_names, 2, 0, 1, 2 },
-    { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 0, 2 },
+    { "fight_next_check", "Debug: fight on the next check", onoff_names, 2, 0, 1, 2 },
     { "auto_lines", "Auto line changes", onoff_names, 2, 0, 1, 3 },
     { "auto_lines_when", "Auto changes lines", fly_names, 2, 0, 1, 3 },
     { "manual_goalie", "Manual goalie", onoff_names, 2, 0, 1, 3 },
     { "skill_level", "Skill level", skill_names, 3, 1, 1, 3 },
-    { "fake_pads", "Debug: pretend controllers (2 v 2)", onoff_names, 2, 0, 0, 4 },
+    { "fake_pads", "Debug: pretend controllers (2 v 2)", onoff_names, 2, 0, 1, 4 },
+    { "four_players", "Four players", onoff_names, 2, 1, 1, 4 },
 };
 
 /* what a preset sets: speed, accel, stop, glide, turn */
@@ -385,6 +386,16 @@ static const int preset_rows[3][5] = {
 
 static ob_host *g_host;
 static int loading;
+static int g_lock;                          /* an online match: the host's rules, not a live menu change */
+static int g_snap[O_COUNT];
+
+/* the choice the game runs with. During a match that is the snapshot from when it began. */
+static int opt_now(int index, int def)
+{
+    if (!g_host) return def;
+    if (g_lock && index >= 0 && index < O_COUNT) return g_snap[index];
+    return ob_game_get(g_host, index);
+}
 
 static void profile_from_rows(void)
 {
@@ -413,6 +424,11 @@ void settings_save_all(void);
 static void changed(void *ctx, int index, int value)
 {
     (void)ctx;
+    /* physics and rules. The names box only moves a drawing, so it can still change on one machine. */
+    if (g_lock && index != O_FIGHT_BOX) {
+        if (index >= 0 && index < O_COUNT && value != g_snap[index]) ob_game_set(g_host, index, g_snap[index]);
+        return;
+    }
     if (index == O_PRESET && value != PRESET_CUSTOM) {
         int k;
         for (k = 0; k < 5; k++) ob_game_set(g_host, O_SPEED + k, preset_rows[value][k]);
@@ -469,6 +485,7 @@ void feel_register(ob_host *h, const char *ini_path)
         if (v > 2) v = 2;
         ob_game_set(h, O_SKILL, v);
     }
+    if (getenv("NHL95_FOUR")) ob_game_set(h, O_FOUR, atoi(getenv("NHL95_FOUR")) ? 1 : 0);
     profile_from_rows();
     (void)feel_auto_lines();            /* Auto on keeps gameopts bit 2 set before the first faceoff */
     loading = 0;
@@ -476,63 +493,73 @@ void feel_register(ob_host *h, const char *ini_path)
 
 int feel_fights(void)
 {
-    return g_host ? ob_game_get(g_host, O_FIGHTS) : 1;
+    return opt_now(O_FIGHTS, 1);
 }
 
 int feel_fight_box(void)
 {
-    return g_host ? ob_game_get(g_host, O_FIGHT_BOX) : 0;
+    return g_host ? ob_game_get(g_host, O_FIGHT_BOX) : 0;   /* where the names box is drawn: one machine may move it */
 }
 
 int feel_fight_next(void)
 {
-    return g_host ? ob_game_get(g_host, O_FIGHT_NEXT) : 0;
+    return opt_now(O_FIGHT_NEXT, 0);
 }
 
 int feel_auto_lines(void)
 {
-    int on = g_host ? ob_game_get(g_host, O_AUTOLINE) : 0;
+    int on = opt_now(O_AUTOLINE, 0);
     if (on) gameopts |= 4;              /* 96 PC Auto includes line changes on (chk4lc tests this bit) */
     return on;
 }
 
 int feel_auto_fly(void)
 {
-    return g_host ? ob_game_get(g_host, O_AUTOFLY) : 0;
+    return opt_now(O_AUTOFLY, 0);
 }
 
 int feel_fake_pads(void)
 {
-    if (getenv("NHL95_FAKEPADS")) return atoi(getenv("NHL95_FAKEPADS")) != 0;
-    return g_host ? ob_game_get(g_host, O_FAKEPADS) : 0;
+    if (!g_lock && getenv("NHL95_FAKEPADS")) return atoi(getenv("NHL95_FAKEPADS")) != 0;
+    return opt_now(O_FAKEPADS, 0);
 }
 
 int feel_manual_goalie(void)
 {
-    return g_host ? ob_game_get(g_host, O_GOALIE) : 0;
+    return opt_now(O_GOALIE, 0);
 }
 
 int feel_skill(void)
 {
-    return g_host ? ob_game_get(g_host, O_SKILL) : 1;    /* 96 PC LEVEL default: Pro */
+    return opt_now(O_SKILL, 1);         /* 96 PC LEVEL default: Pro */
+}
+
+int feel_four_players(void)
+{
+    return opt_now(O_FOUR, 1);
 }
 
 void feel_fight_next_done(void)
 {
     if (g_host) ob_game_set(g_host, O_FIGHT_NEXT, 0);
+    if (g_lock) g_snap[O_FIGHT_NEXT] = 0;       /* one fight, then off, on both machines */
 }
 
 void feel_session_begin(const char *text, size_t size)
 {
+    int i;
     if (!g_host) return;
     loading = 1;
     ob_game_session_begin(g_host, text, size);
+    for (i = 0; i < O_COUNT; i++) g_snap[i] = ob_game_get(g_host, i);
+    g_lock = 1;                         /* a menu change now cannot move the rules the other machine still has */
     loading = 0;
 }
 
 void feel_session_end(void)
 {
     if (!g_host) return;
+    g_lock = 0;
     loading = 1;
     ob_game_session_end(g_host);
     loading = 0;
@@ -546,6 +573,7 @@ void feel_write_ini(FILE *f)
                "; auto_lines: Auto line changes (every team's lines are set at each faceoff, no line-change box)\n"
                "; auto_lines_when: Faceoffs only (94 Genesis) or On the fly too (96 PC: also during play, your puck carrier included)\n"
                "; manual_goalie: 96 PC Manual (B-hold takes the goalie, A dives, C a save); 94 Genesis move and save anims\n"
-               "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n");
+               "; skill_level: 96 PC GAME SETUP LEVEL (rookie / pro / all-star). Default pro. Computer and skating from 96 PC, not 96 Genesis gravity\n"
+               "; four_players: Off is the game's own two pads, with 95 PC's stars and arrows. On adds pads 3 and 4\n");
     ob_game_write_ini(g_host, f);
 }

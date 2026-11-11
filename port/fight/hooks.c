@@ -32,7 +32,7 @@
 #define SYM(s) s
 #endif
 
-extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[];
+extern char checkcx[], checkcheck[], DoGameFrame[], updateplayers[], FallDown[];
 extern uint8_t SortCords[], puckstruct[];
 extern uint8_t gmode, sflags, puckpflags2;
 extern signed char PenBuf[], PenBuf_pl[], penmintab[];
@@ -95,6 +95,9 @@ extern short word_CC0B0[];                      /* the box-time count of a call 
 static fight ft;
 static uint8_t *who[2];
 static int checks[12], chkcnt, last_gsp = -1;
+static uint8_t *fall_h;
+static int fall_checks = -1;
+void *fight_fd_cont;
 /* checkcheck runs for a pair every frame they touch and impact stays up for frames after a hit: 93's checkfight
  * ran once per hit (chkhit). A pair counts again only after HIT_GAP frames without contact. */
 #define HIT_GAP 30
@@ -235,6 +238,8 @@ int fight_doinput(uint8_t *p)
 }
 
 /* ---- start (93's checkfight) ---- */
+static int fighting_of(const uint8_t *p);
+
 static void to_fighter(fighter *f, const uint8_t *p, int away)
 {
     f->x = P_W(p, P_XPOS_HI);
@@ -243,23 +248,70 @@ static void to_fighter(fighter *f, const uint8_t *p, int away)
     f->yvel = P_W(p, P_YVEL);
     f->facedir = P_W(p, P_FACEDIR) & 7;
     f->human = 0;                       /* set once the controllers are given out (fight_check) */
-    f->fighting = P_B(p, P_AGGRESS) & 0xE;      /* 93's fighting rating is the nibble with bit 0 clear */
+    f->fighting = fighting_of(p);               /* 93's fighting nibble, not 95 PC's aggression */
     f->checking = P_B(p, P_CHECKING) & 0xF;
     f->energy = 0x1000;
     f->away = away;
 }
 
+/* 93 setplayer copies pldcheck & $E into fighting. 95 PC's setplayer never reads that byte: it is attribute
+ * record +8 (between shot accuracy and passing), the hole the create-player screen does not fill. Aggression
+ * (0x62) is a different rating and is high on star players, so it is not used. */
+static int fighting_of(const uint8_t *p)
+{
+    uint8_t *t, *r;
+    int n;
+    if (!p) return 0;
+    n = (int8_t)P_B(p, P_PNUM);
+    t = *(uint8_t **)(p + 0x6C);                /* tmptr */
+    if (!t || n < 0 || n >= 25) return 0;
+    r = *(uint8_t **)(t + 0xDE);                /* skater ratings, 20 bytes each (setplayer's TMSKRAT) */
+    if (!r) return 0;
+    return fight_rating_byte(r[n * 20 + 8]);
+}
+
 static int can_fight(const uint8_t *p)
 {
     int sc = P_W(p, P_SCNUM);
-    return sc >= 0 && sc < 12 && P_W(p, P_POSITION) > 0 && P_W(p, P_IMPACT) >= 10 && !(P_B(p, P_PFLAGS2) & 0x11);
+    /* 93 checkfight: not a goalie, impact 10, not already fighting, not the one who drew the penalty,
+     * and not animation-locked (pfalock, pflags bit 5) */
+    return sc >= 0 && sc < 12 && P_W(p, P_POSITION) > 0 && P_W(p, P_IMPACT) >= 10
+        && !(P_B(p, P_PFLAGS2) & 0x11) && !(P_B(p, P_PFLAGS) & 0x20);
+}
+
+/* FallDown counted a team check (word +24h of the hitter's team) only for a real knockdown, with the clock
+ * running and not in a highlight. 93's ChkCnt moves there, and once more by 2 when his fighting rating is 0. */
+void fight_fall_before(uint8_t *h)
+{
+    uint8_t *t;
+    fall_h = h;
+    fall_checks = -1;
+    if (gsp != last_gsp) { last_gsp = gsp; chkcnt = 0; memset(checks, 0, sizeof checks); }
+    if (!h) return;
+    t = *(uint8_t **)(h + 0x6C);
+    if (!t) return;
+    fall_checks = *(int16_t *)(t + 0x24);
+}
+
+void fight_fall_after(void)
+{
+    uint8_t *h = fall_h, *t;
+    int now, sc;
+    if (!h || fall_checks < 0) return;
+    t = *(uint8_t **)(h + 0x6C);
+    if (!t) return;
+    now = *(int16_t *)(t + 0x24);
+    if (now == fall_checks) return;
+    sc = P_W(h, P_SCNUM);
+    if (sc >= 0 && sc < 12) checks[sc]++;
+    chkcnt += fight_check_weight(fighting_of(h));
 }
 
 void fight_check(uint8_t *a, uint8_t *b)
 {
     int inst, k;
     if (ft.on || post[0] || post[1] || !feel_fights()) return;
-    if (gsp != last_gsp) { last_gsp = gsp; chkcnt = 0; memset(checks, 0, sizeof checks); }
+    if (gsp != last_gsp) { last_gsp = gsp; chkcnt = 0; memset(checks, 0, sizeof checks); } /* a new period: 93 clears ChkCnt */
     {
         int sa = P_W(a, P_SCNUM), sb = P_W(b, P_SCNUM);
         uint32_t *seen, was;
@@ -268,12 +320,9 @@ void fight_check(uint8_t *a, uint8_t *b)
         was = *seen;
         *seen = frame_no ? frame_no : 1;
         if (was && frame_no - was < HIT_GAP) return;                 /* the same hit, still in contact */
-        chkcnt++;
-        checks[sa]++;
-        checks[sb]++;
     }
     if (!can_fight(a) || !can_fight(b)) return;
-    if ((gmode & 1) || (sflags & 0x80) || (puckpflags2 & 1)) return;
+    if ((gmode & 0x11) || (sflags & 0x80) || (puckpflags2 & 1)) return;   /* clock stopped, or a highlight */
     if (((P_B(a, P_PFLAGS) ^ P_B(b, P_PFLAGS)) & 0x40) == 0) return;   /* teammates */
     memset(&ft, 0, sizeof ft);
     to_fighter(&ft.f[0], a, !(P_B(a, P_PFLAGS) & 0x40));
@@ -1067,6 +1116,21 @@ __attribute__((naked)) static void dto_thunk(void)
     __asm__ volatile("pushal\n\tcall " SYM("fight_dto") "\n\tpopal\n\tret");
 }
 
+/* FallDown (eax hitter, edx the player who falls): count the knockdown, then return to the caller */
+__attribute__((naked)) void fight_fall_back(void)
+{
+    __asm__ volatile("pushal\n\tcall " SYM("fight_fall_after") "\n\tpopal\n\tret");
+}
+
+__attribute__((naked)) static void fall_thunk(void)
+{
+    __asm__ volatile(
+        "pushal\n\tpush %eax\n\tcall " SYM("fight_fall_before") "\n\tadd $4, %esp\n\tpopal\n\t"
+        "pushl $" SYM("fight_fall_back") "\n\t"
+        "pushl $0x14\n\t"
+        "jmp *" SYM("fight_fd_cont"));
+}
+
 /* doinput (eax player, edx controller): fight_doinput first */
 __attribute__((naked)) static void doinput_thunk(void)
 {
@@ -1155,5 +1219,9 @@ void fight_install(void)
             fight_di_cont = doinput + 5;
             patch_jmp(doinput, (void *)doinput_thunk);
         } else if (ok_check) fprintf(stderr, "Fights: doinput is not the expected code, the computer plays both fighters\n");
+        if (ok_check && !memcmp(FallDown, push14, 5)) {
+            fight_fd_cont = FallDown + 5;
+            patch_jmp(FallDown, (void *)fall_thunk);
+        } else if (ok_check) fprintf(stderr, "Fights: FallDown is not the expected code, a check is counted on every hit\n");
     }
 }

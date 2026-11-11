@@ -120,6 +120,16 @@ static int set_inst(const fighter *a3, const fighter *a2, int need, int checks_a
     return 1;
 }
 
+int fight_rating_byte(int roster_byte)
+{
+    return roster_byte & 0xE;
+}
+
+int fight_check_weight(int fighting)
+{
+    return fighting == 0 ? 3 : 1;
+}
+
 int fight_wants(const fighter *a, const fighter *b, int chkcnt, int checks_a, int checks_b, int penalties_on,
                 int (*random)(void *ctx, int range), void *ctx, int *instigator)
 {
