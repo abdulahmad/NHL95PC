@@ -508,6 +508,8 @@ vgacopy_bg:
         ret
 ;-----------------------------------------------------------------------------
 ; vgacopy_rect                                                    8C36F  95 PC
+; Hand-written VGA blit: copies a rectangle between video memory areas in
+; write mode 1 (latched copy, all planes at once).
 ;-----------------------------------------------------------------------------
 vgacopy_rect:
         push bp
@@ -613,6 +615,8 @@ vgacopy_rect_src:
         ret
 ;-----------------------------------------------------------------------------
 ; vgadraw_tile                                                    8C463  95 PC
+; Hand-written VGA blit: draws one tile into video memory, latched copy (flag
+; 800h clear) or plane by plane.
 ;-----------------------------------------------------------------------------
 vgadraw_tile:
         push bp
@@ -747,6 +751,8 @@ vgadraw_tile:
         ret
 ;-----------------------------------------------------------------------------
 ; vgaflip                                                         8C58C  95 PC
+; Hand-written VGA page flip: toggles vgapage and points the display start at
+; the other page (0B00h or 4400h).
 ;-----------------------------------------------------------------------------
 vgaflip:
         push bp
@@ -819,6 +825,8 @@ vgaflip:
         ret
 ;-----------------------------------------------------------------------------
 ; vgaload_planes                                                  8C637  95 PC
+; Hand-written VGA upload: writes planar image data into video memory one
+; plane at a time (write mode 0).
 ;-----------------------------------------------------------------------------
 vgaload_planes:
         push bp
@@ -904,6 +912,8 @@ vgaload_planes:
         ret
 ;-----------------------------------------------------------------------------
 ; vgacopy_bgfull                                                  8C6F0  95 PC
+; Hand-written VGA blit: copies the whole background page in write mode 1
+; (latched copy).
 ;-----------------------------------------------------------------------------
 vgacopy_bgfull:
         push bp
@@ -973,6 +983,8 @@ vgacopy_bgfull:
         ret
 ;-----------------------------------------------------------------------------
 ; vgacopy_A40                                                     8C798  95 PC
+; Hand-written VGA blit: latched copy of a fixed-size block (A40h bytes) in
+; write mode 1.
 ;-----------------------------------------------------------------------------
 vgacopy_A40:
         push bp
@@ -1018,6 +1030,7 @@ vgacopy_A40:
         ret
 ;-----------------------------------------------------------------------------
 ; vgacopy_n                                                       8C7F5  95 PC
+; Hand-written VGA blit: latched copy of n bytes in write mode 1.
 ;-----------------------------------------------------------------------------
 vgacopy_n:
         push bp
@@ -1063,6 +1076,8 @@ vgacopy_n:
         ret
 ;-----------------------------------------------------------------------------
 ; vgacopy_pages                                                   8C852  95 PC
+; Hand-written VGA blit: latched copy from one video page to the other in
+; write mode 1.
 ;-----------------------------------------------------------------------------
 vgacopy_pages:
         push bp

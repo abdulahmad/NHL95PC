@@ -24,7 +24,7 @@ extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, sub_B4BA8, SetCli
 extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
 global MenuNewExhibition, MenuNewLeague, MenuAddTeam, MenuAddTeam_common, MenuAddTeam_ret2, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs
-global MenuRebuildDbs_x, MenuMergeUpdateDbs, nullsub_6, MenuMergeLeagueFiles, MenuUpdateTeamDbs, MenuTradePlayers, MenuNextLeagueGame, MenuLeagueHilights
+global MenuRebuildDbs_x, MenuMergeUpdateDbs, MenuMergeUpdateDbs_ret, MenuMergeLeagueFiles, MenuUpdateTeamDbs, MenuTradePlayers, MenuNextLeagueGame, MenuLeagueHilights
 global MenuImportDbs, MenuExportDbs, DemoSetupStub, FreeRinkGfx
 ;-----------------------------------------------------------------------------
 ; MainDeskLoop                                                    31AB5  95 PC
@@ -1967,10 +1967,7 @@ MenuMergeUpdateDbs:
         pop edx
         pop ecx
         pop ebx
-;-----------------------------------------------------------------------------
-; nullsub_6                                                     33468  library
-;-----------------------------------------------------------------------------
-nullsub_6:
+MenuMergeUpdateDbs_ret:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------

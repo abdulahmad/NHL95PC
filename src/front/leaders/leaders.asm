@@ -2183,6 +2183,8 @@ stand_tmpl1:
         db 014h,00h,015h,00h,016h,00h,017h,00h,018h,00h
 ;-----------------------------------------------------------------------------
 ; stand_tmpl2                                                     269F4  95 PC
+; Data, not code: a standings template string in the code segment
+; (disassembled as instructions).
 ;-----------------------------------------------------------------------------
 stand_tmpl2:
         xor al, byte [eax]
@@ -2195,6 +2197,8 @@ CmpConfStandings:
         db 068h,02Ch,00h,00h,00h,0E8h,044h,05Fh,06h,00h,053h,051h,056h,057h
 ;-----------------------------------------------------------------------------
 ; CmpConfStandings_m                                              26A0C  95 PC
+; qsort compare for the conference standings: two team indices into
+; statsteambuf (1Ah bytes a team).
 ;-----------------------------------------------------------------------------
 CmpConfStandings_m:
         push ebp

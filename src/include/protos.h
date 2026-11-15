@@ -821,7 +821,7 @@ void updateplayers(void);  /* engine_core */
 void checkwindow(void);  /* engine_display */
 void updatereplay(void);  /* engine_display */
 void __cdecl sub_96A78(int a);  /* 96A78: EA sound library */
-void sub_7E03F(void);  /* 7E03F */
+void GadgetSoundStub(void);  /* 7E03F */
 void *__cdecl sub_8E908(char *name, int bank);  /* sound library loader 2, stack args */
 void SndLoadFile2(int unused, char *name);  /* 594B2 */
 void ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
@@ -971,7 +971,7 @@ void checkfornewpen(void);  /* 637B5 */
 void skatetopuck(Player *p);  /* 5EB17 */
 void assgoalietopuck(Player *p);  /* 4B5C2 */
 void SteerToTarget(Player *p);  /* 492F9 */
-void sub_4C8BD(Player *p);  /* 4C8BD */
+void BehindNetMateDir(Player *p);  /* 4C8BD */
 void assstarskate(Player *p);  /* 49460 */
 void assfaceoffpl(Player *p);  /* 4D528 */
 void assdefo(Player *p);  /* 49CDD */

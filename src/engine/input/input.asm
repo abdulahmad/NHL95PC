@@ -299,6 +299,10 @@ faceoffinput:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Acheck                             4FFAE  94G logic94.asm, medium confidence
+; start the hold-check animation of player p against player q: lock the
+; animation (pfalock); the normal hold check, or the stick-in-the-air hold
+; check when p has an impact and q is not behind p relative to the goal p
+; shoots at (pfgoal; dy = p's Ypos - q's Ypos, negated when shooting up).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/input/Acheck.c
 %ifdef CBUILD

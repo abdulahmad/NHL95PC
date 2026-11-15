@@ -217,6 +217,8 @@ MenuCallbackTrue:
         ret 0Ch
 ;-----------------------------------------------------------------------------
 ; MenuCallbackTrue2                                               18F86  95 PC
+; Twin of MenuCallbackTrue with a different __CHK frame size; returns 1
+; (Watcom reduced it to a jump into MenuCallbackTrue).
 ;-----------------------------------------------------------------------------
 MenuCallbackTrue2:
         push dword 4

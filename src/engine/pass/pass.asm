@@ -16,6 +16,8 @@ global GetLowestPen, chk4lc, chk4lc_shoot, PassLaneChk, PassLaneChk_ret5a, PassL
 global dopass_ret6, passmode, setpassmode, passtoa0, chk4pass
 ;-----------------------------------------------------------------------------
 ; checkob                            53F8C  94G logic94.asm, medium confidence
+; Genesis comment (logic94.asm): bring up little warning ref if a player on
+; your team is over blue line
 ;-----------------------------------------------------------------------------
 checkob:
         push dword 1Ch
@@ -858,6 +860,10 @@ checkpuckcoll:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; CheckBump                        54990  94G collide94.asm, medium confidence
+; Player p runs into the puck carrier c. One time in 20h (randomd0), with the
+; puck within 28h in y of c and p faster than 1B58h in x or y: c takes a
+; quarter of p's velocity, p stops, sflags bit 6 (sfslock) is set and, while
+; the clock runs, p gets penalty 1Eh (AddPenalty2). Returns 1 then, else 0.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/CheckBump.c
 %ifdef CBUILD
@@ -1316,6 +1322,8 @@ ScatterPass:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; dopass                             54DF4  94G logic94.asm, medium confidence
+; Genesis comment (logic94.asm): pass the puck in passdir, to the best
+; teammate there if any
 ;-----------------------------------------------------------------------------
 dopass:
         push dword 28h
@@ -1613,6 +1621,7 @@ passmode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; setpassmode                        551AF  94G logic94.asm, medium confidence
+; Genesis comment (logic94.asm): initialize pass mode
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/setpassmode.c
 %ifdef CBUILD
@@ -1630,6 +1639,7 @@ setpassmode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; passtoa0                           551CF  94G logic94.asm, medium confidence
+; Genesis comment (logic94.asm): pass puck to player a0
 ;-----------------------------------------------------------------------------
 passtoa0:
         push dword 38h

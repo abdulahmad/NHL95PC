@@ -8,6 +8,10 @@ extern regd0, SetSPA, SortCords
 global a2offsides, ChkTwoLinePass, a2touchpuck, puckflip
 ;-----------------------------------------------------------------------------
 ; a2offsides                         4DCDD  94G logic94.asm, medium confidence
+; Offsides check for p (offsides option on, no penalty shot): the puck is
+; past the blue line (4Eh, toward p's attacking end) while p's team has its
+; offside flag (tmflags bit 4) and play is not stopped (gmode bit 4): call
+; offsides (AddPenalty kind 8), return 1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/offsides/a2offsides.c
 %ifdef CBUILD
@@ -125,6 +129,14 @@ ChkTwoLinePass:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; a2touchpuck                                           4DE14  94G logic94.asm
+; Player p touched the puck. Unless a two-line pass (ChkTwoLinePass) or a
+; stoppage: remember the touch place and player (ltx lty lasttouch). In p's
+; team: a new toucher (pnum) shifts the last-toucher words (+30h -> +32h ->
+; +34h; unless tmflags bit 3 was set, which is just cleared) and a repeat of
+; +34h clears its top byte (-1); the same toucher clears pflags bit 3 of the
+; team. A skater with a position clears gmode2 bit 4. Not offside but a
+; two-line pass: penalty 1Dh on p. With iflags bits 2 and 0 set and a skater
+; of the other side than iflags bit 1: penalty 6 on player icingPlayer.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/offsides/a2touchpuck.c
 %ifdef CBUILD
@@ -259,6 +271,9 @@ a2touchpuck:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; puckflip                                              4DFA4  94G logic94.asm
+; Flip the puck. PC addition: when Xvel + Yvel of p is below 14h the puck is
+; too slow and puckunflip runs instead. Else facedir ^= regd0 & 1, kept in
+; 0-3, SPAcnt = -1 (st SPAcnt) and the puck-flip animation (SPApflip).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/offsides/puckflip.c
 %ifdef CBUILD

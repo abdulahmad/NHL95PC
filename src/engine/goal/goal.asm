@@ -636,6 +636,10 @@ GiveControl:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Setplass                         5B298  94G collide94.asm, medium confidence
+; Set player p's initial assignment from his position: for positions 0-6,
+; assreplace(p, Setplass_alist[position]) (goalie: assgoalie, defence:
+; assdefd, wings: asswingd, centre: asscenterd). Other positions (negative,
+; or above 6 on the PC) are left alone.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/goal/Setplass.c
 %ifdef CBUILD

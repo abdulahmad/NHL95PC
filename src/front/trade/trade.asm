@@ -37,6 +37,14 @@ global TradeHitTest_ret, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop,
 global LoadHomePals
 ;-----------------------------------------------------------------------------
 ; BuildTradeRoster                               3DC2C  95 PC, none confidence
+; Fill list (28 entries of 22 bytes) from the team database named in dir.
+; Entry i gets index i at +2. The 25 skater slots (team record +4Ch) and the
+; 3 goalie slots (+B0h) become entries 0-24 and 25-27. An empty slot (-1)
+; stores a zero position byte; otherwise the key record supplies position
+; (+2), number (+1) and "<initial>. <last name>" (+3 and +13h). Returns 0 or
+; the first file error. Both file handles are closed. The counter i is a
+; plain local that Watcom keeps on the stack (the frame struct holds only the
+; key record, the path and the two handles).
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/BuildTradeRoster.c
 %ifdef CBUILD
@@ -211,6 +219,9 @@ BuildTradeRoster:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeShowStats                                 3DE05  95 PC, none confidence
+; Fade out, load the roster stat screens for cat, show the trade menu, then
+; fade back and redraw the trade screen. list and the other arguments are the
+; trade screen's own. The last stack argument is unused.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeShowStats.c
 %ifdef CBUILD
@@ -379,6 +390,8 @@ TradeShowStats:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; FixJerseyConflict                              3E055  95 PC, none confidence
+; After a trade: gives a traded player a free jersey number when his number
+; is already taken on the new team.
 ;-----------------------------------------------------------------------------
 FixJerseyConflict:
         push dword 670h
@@ -610,6 +623,8 @@ FixJerseyConflict:
         ret
 ;-----------------------------------------------------------------------------
 ; ExecuteTrade                                   3E390  95 PC, none confidence
+; Carries out a trade: swaps the two players between the team databases and
+; fixes jersey numbers.
 ;-----------------------------------------------------------------------------
 ExecuteTrade:
         push dword 68Ch
@@ -881,6 +896,9 @@ ExecuteTrade:
         ret
 ;-----------------------------------------------------------------------------
 ; DrawTradeRow                                   3E7B3  95 PC, none confidence
+; Print the cursor row of trade list side (16h-byte rows, 268h per side):
+; position letter, jersey number and name at x side * 1C0h + 5, y row * line
+; height + 1Dh.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/DrawTradeRow.c
 %ifdef CBUILD
@@ -936,6 +954,11 @@ DrawTradeRow:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadTradeTeamPals                              3E835  95 PC, none confidence
+; For the trade screen load HOMEPALS.BIN (1C0h bytes per team) twice: team
+; t1's palette part to pal+180h and its remap table to homeremap, team t2's
+; palette part to pal+240h and its remap table to awayremap (entries 90h and
+; up shifted by 40h); then the four fixed colours at pal+171h and remap
+; 7Bh-7Eh to themselves.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/LoadTradeTeamPals.c
 %ifdef CBUILD
@@ -1067,6 +1090,10 @@ LoadTradeTeamPals:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; DrawTradeScreen                                3E9CF  95 PC, none confidence
+; Draw the trade menu background, team palettes, four jersey buttons and both
+; roster columns, then display the bitmap with a palette fade. The jersey's
+; primary colour is first the team's palette index, then that entry of
+; jerseyremap.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/DrawTradeScreen.c
 %ifdef CBUILD
@@ -1295,6 +1322,13 @@ DrawTradeScreen:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeHitTest                                   3ECAE  95 PC, none confidence
+; X is tested 4 pixels to the right. A point over the four trade buttons
+; (tradebtnx/y, 3Ah by 28h, stride 8) writes the button into out[slot], or
+; when slot is negative writes slot/2 and sets flag to -1. A point in the
+; roster columns (y at least 1Dh, under byte_D42C3 * 28 rows) writes the side
+; (x past BEh) into slot and the row + 64h into out[slot]. Returns 1 for a
+; hit. The button edges are read in place, and each branch sets hit (Watcom
+; merges the two stores into one).
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeHitTest.c
 %ifdef CBUILD
@@ -1399,6 +1433,11 @@ TradeHitTest_ret:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeDone                                      3EDAA  95 PC, none confidence
+; Trade dialog "done" callback (a-h unused; sel: the selected slots of both
+; sides, byte 0/1 and 2/3): a side with one of its pair picked and not the
+; other is an unequal trade: save palette entries FBh-FEh (DONEPAL buffer),
+; set them to the message colours, show "unequal trade" at the mouse, restore
+; the palette and the mouse position. Otherwise traderesult = 1.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeDone.c
 %ifdef CBUILD
@@ -1532,6 +1571,7 @@ TradeDone:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeCancel                                    3EF27  95 PC, none confidence
+; Trade cancelled: traderesult = -1.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeCancel.c
 %ifdef CBUILD
@@ -1545,6 +1585,8 @@ TradeCancel:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; FindTradeSlot                                  3EF3C  95 PC, none confidence
+; Index of the trade list slot of team side (28 slots of 22 bytes, 268h per
+; team) whose first byte is pl, or -1.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/FindTradeSlot.c
 %ifdef CBUILD
@@ -1587,6 +1629,8 @@ FindTradeSlot:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeScreenLoop                                3EF89  95 PC, none confidence
+; Trade screen main loop: draws both rosters, handles the mouse and the Trade
+; / Done / Cancel buttons.
 ;-----------------------------------------------------------------------------
 TradeScreenLoop:
         push dword 140h
@@ -2859,6 +2903,8 @@ TradeScreenLoop:
         ret 10h
 ;-----------------------------------------------------------------------------
 ; TradeRosterCmp                                 3FEF0  95 PC, none confidence
+; Qsort compare for trade roster rows: same position letter (byte 0) sorts by
+; name (+6), empty rows last, then positions in the order L, C, R, D, others.
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeRosterCmp.c
 %ifdef CBUILD
@@ -2914,6 +2960,19 @@ TradeRosterCmp:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; TradeScreen                                    3FF52  95 PC, none confidence
+; TradeScreen (3FF52, PC only; ends in TradeHitTest_ret): the trade screen of
+; league dir between teams[0] and teams[1]. Fade to the black "Temp" palette,
+; clear the screen bitmap (tradebitmap), save the text state, load the S12
+; font and the lineditp bank ("Shrt" art), reset the cursors and clicks
+; (tradecursor, tradeclick, tradeside -1) and build both trade rosters
+; (BuildTradeRoster into traderoster / +268h, the team records into recs);
+; when both load, sort them (TradeRosterCmp) and run the screen
+; (TradeScreenLoop). Then free the bank, restore the text state and free the
+; font. dir: the league dir; teams: the two teams; b, c, d: passed on to
+; TradeScreenLoop. Result: BuildTradeRoster's error, else TradeScreenLoop's
+; result. Matched under 10.0 GA with the locals declared bank, recs, state,
+; path, r, font, shape (the EXE's slots: shape +620h, b +624h, c +628h, bank
+; +62Ch, font +630h).
 ;-----------------------------------------------------------------------------
 ; C: src/front/trade/TradeHitTest.c (TradeScreen)
 %ifdef CBUILD

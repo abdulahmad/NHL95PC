@@ -1,11 +1,11 @@
 /* Engine player logic: lane to a team-mate behind the net. */
 #include "nhl95.h"
 
-/* sub_4C8BD: with p's predicted spot (position + velocity 512) deep in its own end (|y|
+/* BehindNetMateDir: with p's predicted spot (position + velocity 512) deep in its own end (|y|
  AAh..E8h on p's own side, |x| <= 50h) and its current assignment slot (byte +1Eh + assnum) not 11h: when the
  team's player slot +FAh is set, and regd1.w is within 20 (checked twice - the EXE tests regd1 rather than the
  gaps), regd0.w = vtoa of the gap to that player's predicted spot. */
-void sub_4C8BD(Player *p)
+void BehindNetMateDir(Player *p)
 {
     int y;
     int x;

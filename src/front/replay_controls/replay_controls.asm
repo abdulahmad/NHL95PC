@@ -20,7 +20,7 @@ extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_R
 extern sub_6AF52, sub_6AF97, sub_6B008, sub_8E8A0, sub_96A78, sub_B4BA8, sub_B4CD8, sub_B4FAC
 extern sub_B500C, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
-global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, sub_7E03F, bothneitherstrs, DrawGadgetButton
+global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
 global DrawGadgetButton_ret, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight_jt, ReplaySaveHilight, ReplaySaveHilight_n0
 global ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplaySaveHilight_n3
 ;-----------------------------------------------------------------------------
@@ -407,13 +407,14 @@ GadgetStub0:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; sub_7E03F                                                       7E03F  95 PC
+; GadgetSoundStub                                7E03F  95 PC, low confidence
+; sub_96A78(dword_ED6D0) (EA sound library, one stack argument).
 ;-----------------------------------------------------------------------------
-; C: src/front/replay_controls/sub_7E03F.c
+; C: src/front/replay_controls/GadgetSoundStub.c
 %ifdef CBUILD
-%include "c/front/replay_controls/sub_7E03F.inc"
+%include "c/front/replay_controls/GadgetSoundStub.inc"
 %else
-sub_7E03F:
+GadgetSoundStub:
         push dword 14h
         call __CHK
         push ebx

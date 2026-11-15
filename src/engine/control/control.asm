@@ -104,6 +104,14 @@ findpc_ret5:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; GetHot                             5A425  94G logic94.asm, medium confidence
+; GetHot (5A425; 93G logic93 GetHot): sprite hot spot (stick blade) of player
+; p. regd0/regd1 = the x/y bytes of the hot spot table (HotList/HotList_y, 2
+; bytes per frame) for the player's frame (word 12h, frames outside
+; 0-283h/293h give 0, 0); x is negated when the sprite is X-flipped
+; (attribute bit 3). No result. Storing HotList[f] straight into regd0.w (no
+; temporary) gives the EXE's esi negate (found by tools/permute.py). Also
+; gives the distance that makes reenergizeteam's exit a near jump into
+; findpc's tail, as in the EXE.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (GetHot)
 %ifdef CBUILD

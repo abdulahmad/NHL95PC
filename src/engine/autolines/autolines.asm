@@ -234,6 +234,8 @@ CompLine:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; getlinee_pp                                                     5A288  95 PC
+; Entry into getlinee for the power play / penalty kill line choice (shares
+; getlinee's code).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/autolines/CompLine.c (getlinee_pp)
 %ifdef CBUILD

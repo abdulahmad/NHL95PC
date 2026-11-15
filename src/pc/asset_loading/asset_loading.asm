@@ -241,6 +241,8 @@ LoadPlayerPhotos:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadTransparentRinkEndOverlay                                 13A2F  library
+; Load the transparent rink end bank (TRINKND.PPV, from the CD when fileoncd
+; says so) into rinkendbank and its art 0000 into rinkendart.
 ;-----------------------------------------------------------------------------
 ; C: src/pc/asset_loading/LoadTransparentRinkEndOverlay.c
 %ifdef CBUILD

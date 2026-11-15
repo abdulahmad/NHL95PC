@@ -663,6 +663,10 @@ GameStandingsMenu_player2:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EasnTeamStatsScreen                                             208EF  95 PC
+; The desk's team-stats page. Fill the palette buffer and fade out after the
+; menu remap, draw TeamStatsScreen, and load embpal2 (from the CD when
+; fileoncd 8Eh says so). Pal7 is faded in from the shape itself. keepdesksong
+; stays set so the desk music is not freed. Returns 2.
 ;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/EasnTeamStatsScreen.c
 %ifdef CBUILD
@@ -768,6 +772,8 @@ EasnSkaterStatsScreen:
         db 068h,034h,03h,00h,00h,0E8h
 ;-----------------------------------------------------------------------------
 ; EasnSkaterStatsScreen_m                                         20A4C  95 PC
+; EASN skater stats screen: sets the palette, league stats mode and category,
+; and redraws through LeadersScreen.
 ;-----------------------------------------------------------------------------
 EasnSkaterStatsScreen_m:
         cld
@@ -867,6 +873,7 @@ EasnSkaterStatsScreen_m:
         jmp near EasnGoalieStatsScreen_common
 ;-----------------------------------------------------------------------------
 ; EasnGoalieStatsScreen                                           20BBD  95 PC
+; EASN goalie stats screen (goaliestatscb of the playoff and league menus).
 ;-----------------------------------------------------------------------------
 EasnGoalieStatsScreen:
         push dword 334h
@@ -1095,6 +1102,8 @@ EasnStandingsMenu:
         db 068h,0B4h,03h,00h,00h
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_m                                             20EBC  95 PC
+; EASN standings menu: copies the playoff tree, sets league stats mode and
+; draws the standings through standingscb.
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_m:
         call __CHK
@@ -1221,6 +1230,7 @@ EasnStandingsMenu_m:
         jmp dword [nosplit cs:eax*4+EasnStandingsMenu_jt]
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_standings                                     21093  95 PC
+; EasnStandingsMenu item: the standings page and its menu bar.
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_standings:
         mov eax, dword [standingscb]
@@ -1249,6 +1259,8 @@ EasnStandingsMenu_standings:
         jmp near EasnStandingsMenu_m.4
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_roster                                        210FB  95 PC
+; EasnStandingsMenu item: the team roster page (TeamRosterScreen) and its
+; menu bar.
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_roster:
         xor eax, eax
@@ -1271,6 +1283,7 @@ EasnStandingsMenu_roster:
         jmp near EasnStandingsMenu_m.4
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_player                                        21151  95 PC
+; EasnStandingsMenu item: a goalie's stats card and the player card menu bar.
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_player:
         mov dword [statsredrawcb], edi
@@ -1293,6 +1306,7 @@ EasnStandingsMenu_player:
         jmp near EasnStandingsMenu_m.4
 ;-----------------------------------------------------------------------------
 ; EasnStandingsMenu_player2                                       211A4  95 PC
+; EasnStandingsMenu item: a skater's stats card and the player card menu bar.
 ;-----------------------------------------------------------------------------
 EasnStandingsMenu_player2:
         mov dword [statsredrawcb], SkaterStatsCard

@@ -12,7 +12,7 @@ extern sub_8E8B8, sub_8E908, sub_8F270, sub_8F61D, sub_8F67D, sub_8F7AE, sub_8F8
 extern sub_8FDB2, sub_8FDE5, sub_8FE1C, sub_8FE4F, teamabbrevs, WaitTickDeadline
 global SndLoadFile, sndcb_addesp8_x, SndLoadFile2, Crowd_Noise, CrowdNoiseOff, CrowdFadeOut, CrowdNoiseReset, sfx
 global FreeDigiSample, StopDigiSample, PlayDigiSample, WaitDigiSample, PlayCrowdSample, PlayCrowdSample_ret, PaOneMinuteLeft, PaSpeechBusy
-global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, nullsub_5, PaScoringPeriod, PaNhlIntro
+global PaGoal, PaPlayerNumber, PaPenalty, PaPenaltyShot, PaTonightIntro, PaTonightIntro_ret, PaScoringPeriod, PaNhlIntro
 global PaGoodnight, PaLineups, PaElseNhl, PaHighlightIntro, PaPlayoffResult, PaPlayoffTonight, PaOpenBank, PaPreloadClips
 ;-----------------------------------------------------------------------------
 ; SndLoadFile                                     59493  95 PC, low confidence
@@ -398,6 +398,10 @@ CrowdNoiseReset:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; sfx                               59884  94G middle94.asm, medium confidence
+; Play sound effect id (remembered in lastsfx): while speech plays only 9Ch
+; passes (and in a replay only with oneminsaid); A0h/A1h not on sound devices
+; 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts sample
+; dword_ED7A4; 90h also plays 91h (both on device 4).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/sound/sfx.c
 %ifdef CBUILD
@@ -808,10 +812,7 @@ PaTonightIntro:
 .2:
         pop ecx
         pop ebx
-;-----------------------------------------------------------------------------
-; nullsub_5                                                     59BFB  library
-;-----------------------------------------------------------------------------
-nullsub_5:
+PaTonightIntro_ret:
         ret
 ;-----------------------------------------------------------------------------
 ; PaScoringPeriod                              59BFC  95 PC, medium confidence
@@ -821,9 +822,9 @@ PaScoringPeriod:
         push dword 4
         call __CHK
         cmp byte [musicon], 0
-        je short nullsub_5
+        je short PaTonightIntro_ret
         test byte [gameopts+1], 1
-        je short nullsub_5
+        je short PaTonightIntro_ret
         jmp near SayScoringPeriod
 ;-----------------------------------------------------------------------------
 ; PaNhlIntro                                   59C1D  95 PC, medium confidence
@@ -833,9 +834,9 @@ PaNhlIntro:
         push dword 4
         call __CHK
         cmp byte [musicon], 0
-        je short nullsub_5
+        je short PaTonightIntro_ret
         test byte [gameopts+1], 1
-        je short nullsub_5
+        je short PaTonightIntro_ret
         jmp near SayNhlIntro
 ;-----------------------------------------------------------------------------
 ; PaGoodnight                                  59C3E  95 PC, medium confidence
@@ -845,9 +846,9 @@ PaGoodnight:
         push dword 4
         call __CHK
         cmp byte [musicon], 0
-        je short nullsub_5
+        je short PaTonightIntro_ret
         test byte [gameopts+1], 1
-        je short nullsub_5
+        je short PaTonightIntro_ret
         jmp near SayGoodnight
 ;-----------------------------------------------------------------------------
 ; PaLineups                                    59C5F  95 PC, medium confidence
@@ -857,9 +858,9 @@ PaLineups:
         push dword 4
         call __CHK
         cmp byte [musicon], 0
-        je short nullsub_5
+        je short PaTonightIntro_ret
         test byte [gameopts+1], 1
-        je short nullsub_5
+        je short PaTonightIntro_ret
         jmp near SayLineups
 ;-----------------------------------------------------------------------------
 ; PaElseNhl                                    59C80  95 PC, medium confidence
@@ -869,9 +870,9 @@ PaElseNhl:
         push dword 4
         call __CHK
         cmp byte [musicon], 0
-        je near nullsub_5
+        je near PaTonightIntro_ret
         test byte [gameopts+1], 1
-        je near nullsub_5
+        je near PaTonightIntro_ret
         jmp near SayElseNhl
 %endif ; C
 ;-----------------------------------------------------------------------------

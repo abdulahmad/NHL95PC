@@ -237,6 +237,16 @@ puckshadow:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; puckglue                         56F5A  94G collide94.asm, medium confidence
+; (92 puckstick.glue): player p takes the puck. puckc gets his SCnum a live
+; penalty shot ends when his team's tmpsplayer takes it. The other team's
+; assist slots are cleared and its tmflags bit 3 set. After a faceoff
+; (sflags3 bit 4) count a faceoff won (and one won in the attacking end),
+; raise crowdlevel by 200 (max 1000) and the home crowd's CwdExciteLvl by 10;
+; otherwise play sfx 9Bh . Then the pass completion, clear the pass/shot dir
+; modes (sflags bits 2-3); a goalie checks the shot stat and gets temp5 hold
+; time (5 after SPA 181h, else 8Ch). Falls into setd0player:
+; GiveControl(regd0). The attacking-end count is two increments (if / else
+; if): one `||` test moved the registers of the crowdlevel clamp after it.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/puckglue.c
 %ifdef CBUILD
@@ -337,6 +347,24 @@ puckglue:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; puckgoalie                       57096  94G collide94.asm, medium confidence
+; puckgoalie (57096, Genesis puckgoalie): the puck pk hits goalie p (regd0 /
+; regd1 = the gap from checkpuckcoll_ccx). Nothing during a stoppage (gmode
+; bit 4) or while p's frame is 206h-215h with the puck at height 5 or more.
+; regd2 = the save side: 2 for a low puck (Zpos <= 8), plus 1 unless the
+; direction of the hit relative to facedir has bit 2 (a random direction when
+; it is a multiple of 4), doubled, flipped by 2 with attribute bit 3. A hard
+; shot (|vx| + |vy| above 4268h, or above 1770h during SPA 119Dh-121Dh) from
+; the other team's shooter (shotplayer) from more than 58h out at the right
+; end, with gmode2 bit 4 and no pflags bit 6, is a big save (byte +63h). Then
+; ChkShotStat, a2touchpuck and the save sounds (7Dh / A1h for a fast puck
+; while the clock runs, 9Dh or A3h). A loose puck slow enough for his shotspd
+; (random below ((shotspd * 5 / 4 + 2) << 9) + 2000h) is caught (puck stopped
+; and dropped to height 8, its velocity quartered, puckglue) unless pflags2
+; bit 2 is set; a carried puck is knocked loose (its carrier gets nopuck 14h,
+; lastplayer, the pass / shot dir modes cleared). Otherwise the puck
+; rebounds: height at most 0Ah, p's nopuck 0Ah and temp4 4, the velocity high
+; bytes from half the gap (GetHot when the y gap is 0; the y gap at least 1
+; and against p's Yvel), puckflip. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/puckgoalie.c
 %ifdef CBUILD
@@ -653,6 +681,24 @@ puckgoalie:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; puckstick                        57483  94G collide94.asm, medium confidence
+; puckstick (57483, 93G puckstick; ends in PassLaneChk_ret5a): the puck
+; touches player p's stick (regd0 = the squared distance from
+; checkpuckcoll_ccx). A goalie does nothing during a highlight (gmode bit 4);
+; otherwise his save flag (byte 63h) is cleared and set again when the puck
+; comes from a shot of the other team's shotplayer from beyond 58h, from the
+; far side (by pflags bit 7) and fast (|vy| over 2EE0h, or over 1770h with
+; SPA 119Dh-121Dh), then ChkShotStat. Then pflags bit 0 is cleared. With a
+; carrier (puckc) on the other team, in range (regd0 up to 24h) and p not in
+; SPA 13C5h-14ADh: a skater steals only from a skater and on randomd0(carrier
+; pde + 20h - p's pde, an eighth more against a carrier with pflags bit 3 and
+; p without) up to 2, a goalie always; both get nopuck pde + 14h, lastplayer
+; = the carrier, sflags bits 2-3 cleared, and the stick deflect. Without a
+; carrier (a goalie only within 40h): regd0 = puck speed squared, regd1 =
+; (13000 + 700 * stickhand, no stickhand bonus with gmode2 bit 4) squared;
+; outside SPA 13C5h-14ADh p catches the puck when it is slow enough, or as
+; the pass receiver (passplayer) on randomd0(2): vz cleared, puckglue, and a
+; goalie keeps it below z 8 with vx vy quartered and his save flag set. Else
+; nopuck 8 and the stick deflect: sfx 99h, a2touchpuck, deflect(puck).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/pass/PassLaneChk.c (puckstick)
 %ifdef CBUILD
@@ -947,6 +993,10 @@ puckstick:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetShotMode                        5786E  94G logic94.asm, medium confidence
+; P winds up a shot: pass direction 8 (shot), sflags bit 3; regd0 = direction
+; from p to the attacked goal (x 0, y +/-F0h by pflags bit 7), passspeed =
+; 15, then the slap (SPA 491h, when Findhittype finds a hit type) or wrist
+; shot animation (3F9h).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/SetShotMode.c
 %ifdef CBUILD
@@ -998,6 +1048,13 @@ SetShotMode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ShotMode                           578FA  94G logic94.asm, medium confidence
+; Shot wind-up of p (frame counter SPAnum): from frame 14 shoot (doshot).
+; Without regd0 bit 3 the aim direction (regd0 & 7) becomes passdir. Before
+; frame 10 a release (regd1 bit 4 or 6) ends the wind-up: clear sflags bit 3,
+; flag 20h, and switch the slap SPAs 3F9h/491h/DD3h/E2Bh to their
+; follow-through 1265h/12DDh/ 1355h/138Dh. Otherwise before frame 8 count
+; passspeed and jump to the mirrored frame (14 - SPAnum) for a weak shooter
+; (shotspd < 10) past frame 4 or when regd2 bit 5 is set.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/ShotMode.c
 %ifdef CBUILD
@@ -1112,6 +1169,9 @@ ShotMode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Findhittype                        579FF  94G logic94.asm, medium confidence
+; Type of swing for player p shooting in direction dir. d = (facedir - dir) &
+; 7; returns 1 (backhand) when bit d of F0h (sprite X-flipped, attribute bit
+; 3) or of 1Eh (not flipped) is set, else 0 (forehand).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/Findhittype.c
 %ifdef CBUILD
@@ -1146,6 +1206,9 @@ Findhittype:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; deflect                                             57A3E  94G collide94.asm
+; The puck p is deflected: no carrier (puckc byte -1), random x y velocity
+; -1000h..FFFh, random z velocity 0..FFFh (also left in regd0), then
+; puckflip.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckphys/deflect.c
 %ifdef CBUILD

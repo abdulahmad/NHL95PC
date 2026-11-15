@@ -8,7 +8,7 @@ extern gmode, gmode2, penshotplayer, puckc, pucktemp1, puckvx, puckvy, puckx
 extern pucky, randomd0, regd0, regd1, regd2, regd3, regd4, SetShotMode
 extern SetSPA, sflags, sfx, ShotMode, shotongoal, skateto, skatetopuck, SortCords
 extern threat, vtoa
-global asspuckc, sub_4C8BD, asspuckc_chkdir, assnearest, assshoot, assshoot_ret, assfaceoff, assexit
+global asspuckc, BehindNetMateDir, asspuckc_chkdir, assnearest, assshoot, assshoot_ret, assfaceoff, assexit
 global assfaceoffpl
 ;-----------------------------------------------------------------------------
 ; asspuckc                                              4C6F3  94G logic94.asm
@@ -177,13 +177,18 @@ asspuckc:
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; sub_4C8BD                                                       4C8BD  95 PC
+; BehindNetMateDir                               4C8BD  95 PC, low confidence
+; With p's predicted spot (position + velocity 512) deep in its own end (|y|
+; AAh..E8h on p's own side, |x| <= 50h) and its current assignment slot (byte
+; +1Eh + assnum) not 11h: when the team's player slot +FAh is set, and
+; regd1.w is within 20 (checked twice - the EXE tests regd1 rather than the
+; gaps), regd0.w = vtoa of the gap to that player's predicted spot.
 ;-----------------------------------------------------------------------------
-; C: src/engine/puckcarrier/sub_4C8BD.c
+; C: src/engine/puckcarrier/BehindNetMateDir.c
 %ifdef CBUILD
-%include "c/engine/puckcarrier/sub_4C8BD.inc"
+%include "c/engine/puckcarrier/BehindNetMateDir.inc"
 %else
-sub_4C8BD:
+BehindNetMateDir:
         push dword 18h
         call __CHK
         push ebx
@@ -1240,6 +1245,11 @@ assfaceoff:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assexit                                               4D509  94G logic94.asm
+; assexit (4D509; 93G logic93 assexit): finish the current assignment of
+; player p. Steps to the next entry of the player's 8-deep assignment stack
+; (assnum + 1, wrapped to 0-7) and sets pflags bit 1 ('new assignment') so
+; the assignment dispatcher starts it on the next pass. p: the player. No
+; result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puckcarrier/assshoot.c (assexit)
 %ifdef CBUILD

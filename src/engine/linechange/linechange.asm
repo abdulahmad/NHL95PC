@@ -75,6 +75,10 @@ RequestLineChange:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SetLCmode                          4D9FC  94G logic94.asm, medium confidence
+; Put player p's team into line change mode: only with line changes on
+; (gameopts bit 2) and when the team is not in it already (tmflags bit 1,
+; then set). Clears sflags bits 2-3 (sflags), keeps the joystick on p
+; (pflags2 pf2lcm) and asks for the line change box.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/linechange/SetLCmode.c
 %ifdef CBUILD
@@ -104,6 +108,11 @@ SetLCmode:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; StartFaceoffLineChange                                4DA37  94G logic94.asm
+; start a line change for player p's team before a faceoff. r is the object
+; that waits for the change. Clears pf2lcm, calls SetLCmode(p); when the team
+; went into line change mode (pf2lcm set again): away player (pfteam) ->
+; r->temp2 = 168h and r->temp4 = p's SCnum, home player -> r->temp1 = 258h
+; and r->temp3 = SCnum.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/linechange/StartFaceoffLineChange.c
 %ifdef CBUILD
@@ -136,6 +145,22 @@ StartFaceoffLineChange:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Endfaceoff                         4DA7B  94G logic94.asm, medium confidence
+; Endfaceoff (4DA7B; 93G logic93 / 94G logic94 Endfaceoff "drop the puck:
+; pick the faceoff winner and send the puck off", PC version; ends in
+; ass_popx): stop the sample, play sfx ABh, end the faceoff (gmode2 bits 0
+; and 2, the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds
+; (regd2) are 10h less the first centre's faceoff stance (Endfaceoff_ftab_m1
+; by fofdata2) plus the second's, plus the away centre's faceoff rating less
+; the home centre's (awplattr_b13 / hmplattr_b13 by pnum; the centres are the
+; skaters with position 4): randomd0(21h) below them gives the puck to the
+; away centre (lasttouch, his input fofdata2_w6), else to the home centre
+; (fofdata2_w2). The winner's input bit 0Bh picks the direction (fodir2 with
+; y speed -800h, else fodir1 / +800h); a held direction (bit 3 clear) is used
+; 3 times in 4, else a random one of the 5 around the y direction (mirrored
+; by the sign of the y speed). The puck p gets that velocity (dirtab * 20h,
+; plus the y speed), a random z velocity (below 800h), z 0, loses pflags bit
+; 2 and takes assignment 18h (pucknorm); the referee (SortCords + 16) takes
+; 1Fh and refXvel is set to 500h toward his side. p: the puck. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (Endfaceoff)
 %ifdef CBUILD

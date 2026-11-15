@@ -2049,6 +2049,21 @@ asstakeposition:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; check4bench                                           52BB6  94G logic94.asm
+; 0 when p should stay, 1 when a line change was applied. A joystick player
+; (pflags bit 3) stays while the clock runs. pflags2 bit 4 stays. The
+; penalty-shot player stays, and so does an assignment of 7 or 9 once a
+; penalty shot has started. No pending change (newpos and newpnum both
+; negative) stays. At the start of a period, assignment 27h on the same spot
+; stays, and assignment 29h stays while that team's line-change box is on. A
+; different player, or the same player on 29h or 2Dh during a penalty shot,
+; goes to the bench (assignment 0Bh) unless that is already the assignment or
+; p has the puck: pflags2 bit 2 is set, pflags bit 2 is cleared, temp1 is
+; cleared, and temp5 is cleared while the clock is stopped. Otherwise the
+; change is taken. pflags2 bit 2 and pflags bit 2 are cleared. A non-negative
+; newpos is copied to position when (pnum < 19h) differs from (newpos == 0).
+; Setplass runs. While the clock is stopped and the period is not just
+; starting, temp5 is cleared and assignment 28h (a positive position with the
+; line-change box on) or 27h is inserted. newpnum and newpos become -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/faceoff/check4bench.c
 %ifdef CBUILD

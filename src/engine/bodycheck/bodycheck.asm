@@ -905,6 +905,16 @@ Bcheck:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; holdcheck                        56B79  94G collide94.asm, medium confidence
+; Player a grabbing player b. Not when a is already held (pflags bit 5), is
+; SCnum 16, has no position or pflags2 bit 0 is set; only when b faces a
+; (direction from b to a within one step of b's facedir). Dropping the puck
+; carrier clears sflags bit 3; both skate on at their mean velocity, both get
+; pflags bit 5, a takes SPA 669h and b 651h (88Bh unless b is in 639h). On a
+; quick shot chance (QuickShotChk) with no penalty shot pending, a gets the
+; penalty shot (penshotctl 1 2 -1 by controller) and b a penalty 1Ah, the
+; puck is loose (puckc -1) and b's nopuck 20h; else unless a's checking
+; aggression (checkagr) is over 6, b gets holding (12h when in SPA 651h, else
+; 0Fh). Then collflag -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/bodycheck/holdcheck.c
 %ifdef CBUILD

@@ -1137,6 +1137,7 @@ ShellSortBytes:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadRosterList_fa                                               6D89A  95 PC
+; LoadRosterList entry for the free-agent list.
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/ShellSortBytes.c (LoadRosterList_fa)
 %ifdef CBUILD
@@ -1220,6 +1221,7 @@ LoadRosterList_faloop:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadRosterList_team                                             6D98E  95 PC
+; LoadRosterList entry for a team's roster list.
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/ShellSortBytes.c (LoadRosterList_team)
 %ifdef CBUILD

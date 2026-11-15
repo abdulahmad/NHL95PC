@@ -949,6 +949,8 @@ ass_popx:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ass_skate_temp34                                                4EAE2  95 PC
+; Shared referee tail: skate to the spot in temp3 / temp4 (SkateToSpot), then
+; the assignment exit ass_popx.
 ;-----------------------------------------------------------------------------
 ass_skate_temp34:
         mov ax, word [byte ebx+temp3]

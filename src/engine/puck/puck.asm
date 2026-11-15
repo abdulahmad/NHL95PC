@@ -9,6 +9,22 @@ extern pucky, regd0, regd1, SortCords
 global pucknorm_body, pucknorm, pucknothing, puckunflip
 ;-----------------------------------------------------------------------------
 ; pucknorm_body                                         4D6B4  94G logic94.asm
+; pucknorm_body (4D6B4; 93G logic93 / 94G pucknorm after the new-assignment
+; part, PC version; ends in ass_popx): the puck's normal assignment. Count
+; down the two line-crossing timers (puckcross) and every 5 ticks recompute
+; them (temp1, findpc). A carried puck is pulled a quarter of the way toward
+; its carrier's hot spot (a2touchpuck, GetHot into regd0 / regd1) and takes
+; his velocity. Then the ice / offside / two-line checks (PuckIChk,
+; ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck
+; resets temp2 (78h) and the penalty-shot send count (psendcount); a loose
+; one on a live penalty shot moving back toward the shooter's own end (puckvy
+; by penshotteam and the gmode bit 1 rink flip) for 1Eh ticks ends the shot
+; (EndPenaltyShot). A puck that has stopped (same position as last tick),
+; outside the middle (x A3h, y 10Eh) or with hmtmnear / awtmnear at 14h or
+; less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a
+; moving one resets temp2. A puck almost still on the ice (z speed below
+; 100h, z 0) is put flat (puckunflip); then the collisions (checkpuckcoll).
+; p: the puck. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/referee/assrefwhistle.c (pucknorm_body)
 %ifdef CBUILD
@@ -231,6 +247,8 @@ pucknothing:
         call __CHK
 ;-----------------------------------------------------------------------------
 ; puckunflip                         4D907  94G logic94.asm, medium confidence
+; End of a puck flip: mid-flip (SPAnum 4..11) toggles facedir bit 1; facedir
+; bit 2 set; SPAnum 0, SPAcnt -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/puck/puckunflip.c
 %ifdef CBUILD

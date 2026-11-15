@@ -273,7 +273,7 @@ pucknorm,4D8C7,54,engine/puck,src/engine/puck/pucknorm.c,matched,,
 pucknothing puckunflip,4D8FD,59,engine/puck,src/engine/puck/pucknothing.c,matched,,
 puckunflip,4D907,49,engine/puck,src/engine/puck/puckunflip.c,matched,,
 rtss,4F990,11,engine/shootoutpath,src/engine/shootoutpath/rtss.c,matched,,
-sub_4C8BD,4C8BD,320,engine/puckcarrier,src/engine/puckcarrier/sub_4C8BD.c,matched,,
+BehindNetMateDir,4C8BD,320,engine/puckcarrier,src/engine/puckcarrier/BehindNetMateDir.c,matched,,
 AddPenalty,62CF9,135,engine/penalty,src/engine/penalty/AddPenalty.c,matched,,
 AddPenalty2,62D80,290,engine/penalty,src/engine/penalty/AddPenalty2.c,matched,,
 ClearPenaltyBuffer,63D3C,45,engine/penalty,src/engine/penalty/ClearPenaltyBuffer.c,matched,,
@@ -697,7 +697,7 @@ SaveHilight,7FA10,514,front/highlights,src/front/highlights/SaveHilight.c,matche
 SelectHilight,7FCF8,893,front/highlights,src/front/highlights/SelectHilight.c,nonmatching,,register 4/4
 TeamFromHiName,7FC5C,70,front/highlights,src/front/highlights/TeamFromHiName.c,matched,,
 ViewHilights,80075,167,front/highlights,src/front/highlights/ViewHilights.c,matched,,
-sub_7E03F,7E03F,32,front/replay_controls,src/front/replay_controls/sub_7E03F.c,matched,,
+GadgetSoundStub,7E03F,32,front/replay_controls,src/front/replay_controls/GadgetSoundStub.c,matched,,
 BlitTileMap,33C08,459,front/rink_tiles,src/front/rink_tiles/BlitTileMap.c,nonmatching,"draft: 423 vs 459. Height is stored at esp+14h and width at esp+18h; the original stores height at esp+18h and width at esp+14h. The tile index is masked in edx; the original masks it in eax, then adds the tile base. Do not retry: declaring height before width.",slot 4/5
 LoadCrestsPalette,33F02,251,front/rink_tiles,src/front/rink_tiles/LoadCrestsPalette.c,matched,,
 LoadRink,3377C,1164,front/rink_tiles,src/front/rink_tiles/LoadRink.c,matched,,

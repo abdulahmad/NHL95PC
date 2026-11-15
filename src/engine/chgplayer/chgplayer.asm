@@ -7,6 +7,8 @@ extern puckvy, puckx, pucky, sflags, SortCords, Sweepcheck, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl
 ;-----------------------------------------------------------------------------
 ; SetSPA                                                59D9A  94G logic94.asm
+; Genesis comment (logic94.asm): set sprite animation on struct a3. d1 = new
+; animation
 ;-----------------------------------------------------------------------------
 ; C: src/engine/chgplayer/SetSPA.c
 %ifdef CBUILD
@@ -25,6 +27,8 @@ SetSPA:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SprSort_loop                                                    59DBB  95 PC
+; Entry into SprSort's copy loop (y, or x when sfhor, of each sort object to
+; Ylist).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/chgplayer/SetSPA.c (SprSort_loop)
 %ifdef CBUILD

@@ -399,6 +399,7 @@ LoadClipSlot:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SayClip_body                                                    8460F  95 PC
+; SayClip without its entry checks: queues the named clip.
 ;-----------------------------------------------------------------------------
 ; C: src/front/speech/ShutdownSpeech.c (SayClip_body)
 %ifdef CBUILD
@@ -847,6 +848,7 @@ SayClip:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; SayScoringPeriod_ot2                                            84ACC  95 PC
+; SayScoringPeriod tail: the second-overtime clip.
 ;-----------------------------------------------------------------------------
 ; C: src/front/speech/ShutdownSpeech.c (SayScoringPeriod_ot2)
 %ifdef CBUILD
@@ -857,18 +859,22 @@ SayScoringPeriod_ot2:
         jmp short SayClip
 ;-----------------------------------------------------------------------------
 ; SayScoringPeriod_ot3                                            84AD3  95 PC
+; SayScoringPeriod tail: the third-overtime clip (str_Scor3otpBar).
 ;-----------------------------------------------------------------------------
 SayScoringPeriod_ot3:
         mov eax, str_Scor3otpBar
         jmp short SayClip
 ;-----------------------------------------------------------------------------
 ; SayScoringPeriod_ott                                            84ADA  95 PC
+; SayScoringPeriod tail: the overtime clip (str_ScortotpBar).
 ;-----------------------------------------------------------------------------
 SayScoringPeriod_ott:
         mov eax, str_ScortotpBar
         jmp short SayClip
 ;-----------------------------------------------------------------------------
 ; SayScoringPeriod_reg                                            84AE1  95 PC
+; SayScoringPeriod for a regulation period: picks the 1st, 2nd or 3rd period
+; clip by eax and says it (0 when out of range).
 ;-----------------------------------------------------------------------------
 SayScoringPeriod_reg:
         cmp eax, byte 2

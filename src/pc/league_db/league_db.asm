@@ -1286,6 +1286,8 @@ AttDbPtr:
         ret
 ;-----------------------------------------------------------------------------
 ; AttDbPtr2                                                       6CC19  95 PC
+; Twin of AttDbPtr (pointer ofs bytes into the attdb buffer); Watcom reduced
+; it to a jump into AttDbPtr.
 ;-----------------------------------------------------------------------------
 AttDbPtr2:
         push dword 8

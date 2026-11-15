@@ -769,6 +769,8 @@ SoundCardDlg_epilogue:
         ret
 ;-----------------------------------------------------------------------------
 ; SoundCardDlgLoop_x                                              82D5A  95 PC
+; SoundCardDlgLoop tail: redraws the pressed button (PutBlock) and goes back
+; to polling.
 ;-----------------------------------------------------------------------------
 SoundCardDlgLoop_x:
         test dh, 4

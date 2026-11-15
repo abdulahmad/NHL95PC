@@ -329,7 +329,7 @@ extern void MenuNewLeague(); /* 32FF4 */
 extern void MenuAddTeam_common(); /* 3325B */
 extern void MenuAddTeam_ret2(); /* 332B6 */
 extern void MenuRebuildDbs_x(); /* 333C0 */
-extern void nullsub_6(); /* 33468 */
+extern void MenuMergeUpdateDbs_ret(); /* 33468 */
 extern void DrawCalendarDay(); /* 33FFD */
 extern void ApplyShapePalette(); /* 34789 */
 extern void CalendarScreen(); /* 34821 */
@@ -449,7 +449,7 @@ extern void wallcoll(); /* 587D3 */
 extern void sndcb_addesp8_x(); /* 594AC */
 extern void Crowd_Noise(); /* 594CD */
 extern void PlayCrowdSample_ret(); /* 59A7D */
-extern void nullsub_5(); /* 59BFB */
+extern void PaTonightIntro_ret(); /* 59BFB */
 extern void SprSort_loop(); /* 59DBB */
 extern void SprSort_test(); /* 59DDD */
 extern void changeplayer_ret5(); /* 59FDB */

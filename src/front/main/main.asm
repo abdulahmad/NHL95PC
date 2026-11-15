@@ -2786,6 +2786,8 @@ PlayGame:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assreplace                         11FF4  94G logic94.asm, medium confidence
+; Replace player p's current assignment (asslist[assnum]) with a and set pfna
+; so it starts on the next update.
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/assreplace.c
 %ifdef CBUILD
@@ -2805,6 +2807,8 @@ assreplace:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; assinsert                                             12011  94G logic94.asm
+; Push assignment a on player p's 8-entry assignment ring (assnum - 1, mod
+; 8), so the current one resumes when a ends; then assreplace.
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/assinsert.c
 %ifdef CBUILD

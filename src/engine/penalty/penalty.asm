@@ -55,6 +55,11 @@ GetPeriodTimeRemaining:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AddPenalty                       62CF9  94G penalty94.asm, medium confidence
+; Call penalty pen on player p (AddPenalty2) unless the clock is stopped, p
+; is SCnum 10h or a penalty shot is on. Penalty 6 always goes through; 8
+; (offside) only with the offsides option, 1Dh (two-line pass) only with that
+; option; the others need the penalties option (gameopts bit 0), fewer than 8
+; players in p's team's box (PBnum) and CanRemovePlayer.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/AddPenalty.c
 %ifdef CBUILD
@@ -105,6 +110,13 @@ AddPenalty:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; AddPenalty2                      62D80  94G penalty94.asm, medium confidence
+; Call penalty pen on player p (not in a replay, sflags bit 7, or with
+; word_CBC44): outside a penalty shot raise the banner (penbannertab[pen],
+; timer 50h unless none 6); major penalties (pen >= 7) raise the crowd (+400
+; up to 800; flag 40h side: CwdExciteLvl +20 and sound 7Dh, else A0h). Then
+; the penalty goes into the first free PenBuf slot (pen, SCnum); a penalty
+; with time (penmintab) marks the player (pflags2 bit 4) or, when he already
+; has one, frees the slot again.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/AddPenalty2.c
 %ifdef CBUILD
@@ -682,6 +694,7 @@ InProgress_popx:
         ret
 ;-----------------------------------------------------------------------------
 ; chkprogress_go                                                  63475  95 PC
+; Entry into chkprogress past its first test (PenaltyManager jumps here).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/InProgress.c (chkprogress_go)
 %ifdef CBUILD
@@ -740,6 +753,15 @@ chkprogress_x:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; Stop4Pen                         63543  94G penalty94.asm, medium confidence
+; Stop play for penalty entry n of PenBuf (penalty, player). Unless already
+; stopped (gmode bit 0): pick the faceoff spot fox foy - centre for 7, the
+; last touch (ltx lty) for 3 1Dh, else the puck; for 8 (offside-like) the
+; nearer end dot (y +-4Eh) when inside the blue lines, for 6 the offender's
+; end (y -258h 258h); the penalty shot spot when penshotstart. Clamp x to
+; +-60h and pull deep spots to the end dots (+-60h, y +-B8h); then for every
+; queued penalty move the dot out of the offender's zone (y -3Dh / 3Dh, x
+; +-100). Then Pencntdwn 0, gmode bit 2, the whistle (sfx A4h) and the ref
+; (SetPA 5).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/penalty/Stop4Pen.c
 %ifdef CBUILD

@@ -522,6 +522,14 @@ SetPlList:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; setpersonel                      5BEF4  94G collide94.asm, medium confidence
+; Set the personnel of team t: clear newpos / newpnum of the team's 6 sort
+; objects, build PlList (SetPlList: pnum per wanted player, -1 none, the new
+; positions at PlList+6 = byte_E038A). Pass 1: a wanted player already on the
+; ice keeps his sort object (newpos from the list, newpnum = pnum). Pass 2:
+; each remaining wanted player takes the last free sort object (newpnum < 0),
+; stopping at the first one with a position; a sort object without a position
+; (off the ice) first gets assignment assbenchwait and position 5. Used
+; entries of PlList are set to -1.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (setpersonel)
 %ifdef CBUILD
@@ -729,6 +737,8 @@ StartPer:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; DoGameFrame                       5C1C4  94G hockey94.asm, medium confidence
+; One frame of play: periodic events, player update, rink window, then replay
+; recording (updatereplay, tail call).
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/DoGameFrame.c
 %ifdef CBUILD
@@ -949,6 +959,26 @@ periodicevents:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; updateplayers                     5C40F  94G replay94.asm, medium confidence
+; updateplayers (5C40F, 93G updateplayers; ends in findpc_ret6): run every
+; sort object for a frame. PC first: playsuspended = 1 while the clock is
+; stopped for a highlight (gmode bit 7), or with no replay (gmode2 bit 0), no
+; penalty countdown or queued penalty, overlay state refasslist[...] not 20h
+; / 23h and the overlay idle (ovlseq 0 or 2, ovltimer outside 0-FFh); else 0.
+; Then for the 12 players: the puck distance (vecdist, word 4Eh), direction
+; (vtoa, byte 52h) and the quarter vector squared (word 50h); per team the
+; goalie's SCnum (word FAh) and the nearest available skater (dword 3Eh, word
+; 42h; reset to FFFFh / -1 first). Then for objects 0-10h (players off the
+; ice skipped, object 10h kept): the old position, updateanim, nopuck and
+; word 40h counted down, a goalie's frames on ice (tmglstats word 0) in line
+; change mode; outside the injury / fight anims the velocity: friction (>> 6,
+; >> 9 with pflags bit 0) on the ice, players capped at 3E80h, the move by
+; 10h * v, and gravity on z with a bounce (sfx ABh for slow ones); the
+; controlled players' joypads and doinput, the current assignment's routine
+; (asstab), a goalie without the puck kept out of the posts (x 2Ch-30h, y
+; C1h-C5h on either side), the wall values cleared, checkcoll when it moved
+; (always for the puck), impact counted down by 2 into limpact. Last the puck
+; is kept inside the boards (|x| <= A0h low, y -104h..108h on the ice) while
+; carried, frame 18Ah. No result.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/control/findpc.c (updateplayers)
 %ifdef CBUILD
@@ -3271,6 +3301,9 @@ ResetBench:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; resetplstuff                       5E01A  94G setup94.asm, medium confidence
+; For both teams clear tmflags bit 4, and for the 6 SortCords entries of the
+; team: pflags2 0; a player on the ice (position >= 0) gets SPA 289h, nopuck
+; and impact 0 and pflags bits 0, 2-5 cleared.
 ;-----------------------------------------------------------------------------
 ; C: src/engine/hockey/resetplstuff.c
 %ifdef CBUILD

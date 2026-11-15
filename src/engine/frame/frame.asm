@@ -26,6 +26,7 @@ extern refYvel, xc1, yc1, yleader
 global StartHL2
 ;-----------------------------------------------------------------------------
 ; StartHL2                         69336  94G penalty94.asm, medium confidence
+; A team's line table, 30h bytes
 ;-----------------------------------------------------------------------------
 ; C: src/engine/frame/StartHL2.c
 %ifdef CBUILD

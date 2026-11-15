@@ -4202,6 +4202,8 @@ MenuSaveTheseLines:
         dd str_Teams2
 ;-----------------------------------------------------------------------------
 ; MenuSaveTheseLines_x                                            797FE  95 PC
+; MenuSaveTheseLines tail: builds the team file name (sprintf) and opens it
+; to write the lines.
 ;-----------------------------------------------------------------------------
 MenuSaveTheseLines_x:
         push leaguedbfmt2
