@@ -5,7 +5,7 @@ section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
 extern awtmap, awtmgoalie, gsumheader_b1, gsumheader_b2, gsumheader_b3, gsumheader_b4, byte_C66B4, hmrosterpos
 extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, hmplstats, hmteamrec_skaters, hmteamrec_goalies
-extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
+extern plcareergoals, plcareerpts, plseasongoals, plseasonpts, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
 extern hmlinetab, hmroster, hmrosterjersey, hmscratch, hmshotcnt, hmteamrec, hmtmap, hmtmgoalie
 extern hmtmpdst_m2, HomeTeam, hudpenaway, hudpenhome, leaguedbfmt, leaguedbfmt2, LoadCupFinalSeries, LoadScoreboardGfx
@@ -859,29 +859,29 @@ test byte [gameopts+1], 2	; 1C5D3
 je short .11	; 1C5DA
 xor edx, edx	; 1C5DC
 mov dx, word [dword esp+0D0h]	; 1C5DE
-mov dword [dword eax+dword_DEB74], edx	; 1C5E6
+mov dword [dword eax+plcareergoals], edx	; 1C5E6
 mov ebx, edx	; 1C5EC
 xor edx, edx	; 1C5EE
 mov dx, word [dword esp+0D2h]	; 1C5F0
 add edx, ebx	; 1C5F8
-mov dword [dword eax+dword_DEB78], edx	; 1C5FA
+mov dword [dword eax+plcareerpts], edx	; 1C5FA
 xor edx, edx	; 1C600
 mov dx, word [byte esp+07Eh]	; 1C602
-mov dword [dword eax+dword_DEB7C], edx	; 1C607
+mov dword [dword eax+plseasongoals], edx	; 1C607
 mov ebx, edx	; 1C60D
 xor edx, edx	; 1C60F
 mov dx, word [dword esp+080h]	; 1C611
 .10:
 add edx, ebx	; 1C619
-mov dword [dword eax+dword_DEB80], edx	; 1C61B
+mov dword [dword eax+plseasonpts], edx	; 1C61B
 jmp short .13	; 1C621
 .11:
 xor esi, esi	; 1C623
-mov dword [dword eax+dword_DEB74], esi	; 1C625
+mov dword [dword eax+plcareergoals], esi	; 1C625
 mov edx, esi	; 1C62B
-mov dword [dword eax+dword_DEB78], esi	; 1C62D
+mov dword [dword eax+plcareerpts], esi	; 1C62D
 mov dx, word [dword esp+090h]	; 1C633
-mov dword [dword eax+dword_DEB7C], edx	; 1C63B
+mov dword [dword eax+plseasongoals], edx	; 1C63B
 mov ebx, edx	; 1C641
 xor edx, edx	; 1C643
 mov dx, word [dword esp+092h]	; 1C645

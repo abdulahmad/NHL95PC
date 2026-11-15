@@ -57,15 +57,15 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
             if ((mode & 6) == 0) {
                 if (((unsigned char *)&gameopts)[1] & 2) {
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].first = *(unsigned short *)(buf + 0xC0);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = stat + *(unsigned short *)(buf + 0xC2);
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x70);
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].first = *(unsigned short *)(buf + 0xC0);
+                    ((RosterStats *)plcareergoals + team * 25)[i].first_total = stat + *(unsigned short *)(buf + 0xC2);
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
+                    ((RosterStats *)plcareergoals + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x70);
                 } else {
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first = 0;
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = 0;
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x82);
+                    ((RosterStats *)plcareergoals + team * 25)[i].first = 0;
+                    ((RosterStats *)plcareergoals + team * 25)[i].first_total = 0;
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
+                    ((RosterStats *)plcareergoals + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x82);
                 }
             }
         } else {

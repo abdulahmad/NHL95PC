@@ -9,7 +9,7 @@ extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, 
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
 extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
-extern goalienotebits, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern goalienotebits, sideobjpos, hmplstats_m2, hmplstats, plcareergoals, plcareerpts, plseasongoals, plseasonpts
 extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, dword_E9A9E, rinkobjused_m2, defertab
 extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
@@ -30,7 +30,7 @@ extern str_FmtParenD, str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame
 extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue
 extern UpdateTextOverlay, vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2
-extern rinkobjdefs, penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
+extern rinkobjdefs, penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global GetPeriodTimeRemaining, AddPenalty, AddPenalty2, SetPA, InProgress, InProgress_popebp, InProgress_popx, chkprogress_go
 global chkprogress_x, Stop4Pen, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut, updatePPTeamTime
 global updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot, ShotLaneOpen

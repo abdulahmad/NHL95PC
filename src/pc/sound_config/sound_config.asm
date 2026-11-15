@@ -6,7 +6,7 @@ extern __CHK, __STOSD, acptspr, str_04x, sndcardmissing, byte_D2439, homeremap, 
 extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50
 extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
+extern DrawSelBoxOn, dword_C4CFC, cursndbank, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
 extern lockercancelx, lockercancely, dword_D2350, dword_D2423, dword_D2427, dword_D242B, sndtempbuf, speechchannel
 extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
@@ -793,7 +793,7 @@ call sub_8F1FE	; 82DDA
 .3:
 call sub_8EB93	; 82DDF
 .4:
-mov dword [dword_CCC94], 20h	; 82DE4
+mov dword [cursndbank], 20h	; 82DE4
 xor edi, edi	; 82DEE
 mov dword [dword_D2423], edi	; 82DF0
 .5:
@@ -1120,7 +1120,7 @@ mov eax, esi	; 832A0
 call InitSpeech	; 832A2
 .41:
 xor ecx, ecx	; 832A7
-mov dword [dword_CCC94], ecx	; 832A9
+mov dword [cursndbank], ecx	; 832A9
 mov eax, 1	; 832AF
 add esp, byte 44h	; 832B4
 jmp near SoundCardDlg_epilogue	; 832B7

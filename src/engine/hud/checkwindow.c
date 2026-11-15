@@ -175,7 +175,7 @@ void LoadTeamPPV(short seq)
     if (sub_8DAB8() < ovlmemneed[seq]) return;
     joysampling_save = joysampling;
     joysampling = 0;
-    MakePath(name, fileoncd[dword_CC080[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
+    MakePath(name, fileoncd[ovlartfiles[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
     ovlartbank = sub_8E8A0(name, 0x20);
     for (i = 0; i < sub_90354(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
@@ -370,7 +370,7 @@ void UpdateTextOverlay(void)
         s = (signed char *)ovlscript;
         if (*s == ovlstepidx) {
             FreeMemBlock(ovlartbank);
-            if (byte_CC049[ovlseq]) ovltimer = 0x258;
+            if (ovlseqtimed[ovlseq]) ovltimer = 0x258;
             ovlseq = ovlstep = -1;
             ovlscript = 0;
             return;

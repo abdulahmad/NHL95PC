@@ -7,18 +7,18 @@ extern __CHK, a2touchpuck, Acheck, AddPenalty, AddPenalty2, assexit, assinsert, 
 extern AvgCline, awshotcnt, awtmap, awtmstruct, bannermsg, bannertimer, blockspd, blockspd_y
 extern regd1_b1, c1playernum, c2playernum, camx, camy, CanBlockShot, CanRemovePlayer, changeplayer
 extern clockticks, collflag, CompLine, cont1team, cont2team, CountShotOnGoal, crowdlevel, CwdExciteLvl
-extern dirtab, dirtab_y, doplayeracc, nethit, dword_CCC4E, regd3_m2, regd5_m2, regd0_m3
+extern dirtab, dirtab_y, doplayeracc, nethit, checkinglist_m2, regd3_m2, regd5_m2, regd0_m3
 extern regd1_m3, dword_E9A9E, dword_E9AB6, EndPenaltyShot, fox, foy, gameclock, gameopts
 extern GetHot, GetHotOrStick, GetHotStick, GiveControl, gmode, gmode2, Goal, gsp
 extern hmshotcnt, hmtmap, hmtmstruct, iflags, imul32, lastplayer, lasttouch, ltack
-extern lty, off_CD498, off_CD4A0, onetimerflag, OOlist, OOlistpos, pad1dev, PassCompleted
+extern lty, goaliemenuflags, goaliemenuflags_e02, onetimerflag, OOlist, OOlistpos, pad1dev, PassCompleted
 extern passdir, passplayer, passspeed, PBnum, PenBuf, penshotctl, penshotlive, penshotmode
 extern penshotplayer, penshotstart, PerTimeTotal, PostInjuryEvent, puckc, puckcross, puckcross_m2, puckflip
 extern pucknopuck, puckvx, puckvy, puckvz, puckx, pucky, puckz, QuickShotChk
 extern randomd0, regd0, regd1, regd2, regd3, regd4, RemoveFromLines, restorepl
 extern SetBoxDoorObject, setpersonel, SetSPA, sflags, sflags3, sfx, ShotLaneOpen, shotongoal
 extern shotontarget, shotplayer, shotsets, shotsetz, SortCords, Stop4Pen, sub_93470, threat
-extern vecdist, vtoa, wcradiusx, wcradiusy, word_CBEC2, injurystop, FallDown_pinxr, FallDown_pinxl
+extern vecdist, vtoa, wcradiusx, wcradiusy, refhitcount, injurystop, FallDown_pinxr, FallDown_pinxl
 extern FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, word_E03A0, regd5, lastimpact, xc1
 extern yc1, Ylist, Ylist_m2
 global ToFixed, Sweepcheck, burst, BlockShotDive, TryBlockShot, check4check, checkagr, FacingBoards
@@ -762,7 +762,7 @@ mov edx, 0ED7h	; 53A32
 jmp short .25	; 53A37
 .24:
 movsx eax, bx	; 53A39
-mov edx, dword [nosplit eax*2+dword_CCC4E]	; 53A3C
+mov edx, dword [nosplit eax*2+checkinglist_m2]	; 53A3C
 sar edx, 10h	; 53A43
 .25:
 mov eax, esi	; 53A46
@@ -841,13 +841,13 @@ cmp word [byte ecx+SCnum], byte 10h	; 53B3F
 jne short .31	; 53B44
 test byte [byte esi+pflags], 8	; 53B46
 je near .45	; 53B4A
-mov dx, word [word_CBEC2]	; 53B50
+mov dx, word [refhitcount]	; 53B50
 inc edx	; 53B57
-mov word [word_CBEC2], dx	; 53B58
+mov word [refhitcount], dx	; 53B58
 cmp dx, byte 3	; 53B5F
 jl near .44	; 53B63
 xor edi, edi	; 53B69
-mov word [word_CBEC2], di	; 53B6B
+mov word [refhitcount], di	; 53B6B
 mov edx, 16h	; 53B72
 mov eax, esi	; 53B77
 call AddPenalty	; 53B79
@@ -7862,9 +7862,9 @@ movsx ebx, bx	; 59240
 mov edx, ebx	; 59243
 shl edx, 2	; 59245
 sub edx, ebx	; 59248
-mov ebx, dword [dword ecx+edx*4+off_CD498]	; 5924A
+mov ebx, dword [dword ecx+edx*4+goaliemenuflags]	; 5924A
 mov byte [ebx], 2	; 59251
-mov edx, dword [nosplit edx*4+off_CD4A0]	; 59254
+mov edx, dword [nosplit edx*4+goaliemenuflags_e02]	; 59254
 mov byte [edx], 1	; 5925B
 call setpersonel	; 5925E
 .x:
@@ -7917,9 +7917,9 @@ mov edx, esi	; 592E6
 shl edx, 2	; 592E8
 sub edx, esi	; 592EB
 shl edx, 2	; 592ED
-mov ebx, dword [dword edx+ebx*4+off_CD498]	; 592F0
+mov ebx, dword [dword edx+ebx*4+goaliemenuflags]	; 592F0
 mov byte [ebx], 2	; 592F7
-mov edx, dword [dword edx+off_CD4A0]	; 592FA
+mov edx, dword [dword edx+goaliemenuflags_e02]	; 592FA
 mov byte [edx], 1	; 59300
 call setpersonel	; 59303
 jmp short .3	; 59308
@@ -7978,7 +7978,7 @@ movsx edi, cx	; 5937F
 mov edx, edi	; 59382
 shl edx, 2	; 59384
 sub edx, edi	; 59387
-mov ebx, dword [nosplit edx*4+off_CD4A0]	; 59389
+mov ebx, dword [nosplit edx*4+goaliemenuflags_e02]	; 59389
 mov byte [ebx], 2	; 59390
 mov bx, word [byte eax+038h]	; 59393
 xor bh, bh	; 59397
@@ -7987,7 +7987,7 @@ mov word [esp], bx	; 5939C
 mov ebx, dword [byte esp-02h]	; 593A0
 sar ebx, 10h	; 593A4
 shl ebx, 2	; 593A7
-mov edx, dword [dword ebx+edx*4+off_CD498]	; 593AA
+mov edx, dword [dword ebx+edx*4+goaliemenuflags]	; 593AA
 mov byte [edx], 1	; 593B1
 mov edx, dword [cont1team-2]	; 593B4
 sar edx, 10h	; 593BA

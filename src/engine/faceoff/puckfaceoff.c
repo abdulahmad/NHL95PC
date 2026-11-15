@@ -243,7 +243,7 @@ void puckfaceoff2(Player *p)
         HIWORD(q->Xpos) = q->Yvel = q->Xvel = 0;
         HIWORD(q->Ypos) = -0xEC;
         RefPen = 0;
-        word_E9AAE = penaltysc = -1;
+        penevteam = penaltysc = -1;
         ltx = fox;
         lty = foy;
         ((Player *)sortobj15)->frame = 0x189;

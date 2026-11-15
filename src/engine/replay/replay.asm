@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_67564 progbits alloc exec nowrite align=1
-extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, rinkobjanim, byte_CD418
-extern byte_CD421, byte_CD473, hmrosterpos, awayremap, homeremap, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
+extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, ovlseqtimed, rinkobjanim, dressbystatus
+extern lineslotgroups, lineslotgroupstart, hmrosterpos, awayremap, homeremap, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
 extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
-extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, rinkobjdefs_m2
+extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, dword_CC0B4, rinkobjdefs_m2
 extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
 extern dword_E0230, ovlartbank, regd3_m2, regd0_m3, regd1_m3, dword_E9A9E, lineslotmark, dword_E9C85
-extern dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
+extern linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
 extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
-extern rpl_objstep_m3, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern rpl_objstep_m3, rpl_ysort, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
-extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, off_CD498, off_CD4A0
+extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, goaliemenuflags, goaliemenuflags_e02
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
@@ -25,7 +25,7 @@ extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_903
 extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
-extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, word_E9F12, word_E9F14, rpl_x
+extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
 extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
@@ -648,12 +648,12 @@ movsx ebx, ax	; 67D8F
 mov ecx, dword [nosplit ebx*2+rpl_x_e16]	; 67D92
 sar ecx, 10h	; 67D99
 mov dword [esp+ebx*4], ecx	; 67D9C
-mov dword [nosplit ebx*4+dword_E9FF0], ebx	; 67D9F
+mov dword [nosplit ebx*4+rpl_ysort], ebx	; 67D9F
 inc eax	; 67DA6
 .37:
 cmp ax, 11h	; 67DA7
 jl short ReplayStep.36	; 67DAB
-push dword_E9FF0	; 67DAD
+push rpl_ysort	; 67DAD
 lea eax, [byte esp+04h]	; 67DB2
 push eax	; 67DB6
 push byte 11h	; 67DB7
@@ -959,7 +959,7 @@ je near .42	; 68154
 push byte 0	; 6815A
 mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 6815C
 sar ebx, 10h	; 68163
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68166
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68166
 sar edx, 10h	; 6816D
 mov eax, dword [dword_CC0B4]	; 68170
 sar eax, 10h	; 68175
@@ -1131,7 +1131,7 @@ movsx ecx, ax	; 68379
 movsx eax, si	; 6837C
 mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 6837F
 sar ebx, 10h	; 68386
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68389
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68389
 sar edx, 10h	; 68390
 mov eax, dword [byte ebp-0Ah]	; 68393
 sar eax, 10h	; 68396
@@ -1159,7 +1159,7 @@ push byte 0	; 683DA
 movsx eax, si	; 683DC
 mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 683DF
 sar ebx, 10h	; 683E6
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 683E9
+mov edx, dword [nosplit eax*2+dressedskaters]	; 683E9
 sar edx, 10h	; 683F0
 mov eax, dword [byte ebp-0Ah]	; 683F3
 sar eax, 10h	; 683F6
@@ -1196,7 +1196,7 @@ xor edi, edi	; 68454
 jmp near .68	; 68456
 .50:
 movsx esi, di	; 6845B
-mov si, word [nosplit esi*4+dword_E9FF0]	; 6845E
+mov si, word [nosplit esi*4+rpl_ysort]	; 6845E
 cmp si, byte 0Fh	; 68466
 je near .67	; 6846A
 cmp si, byte 0Eh	; 68470
@@ -1247,7 +1247,7 @@ LD sub, eax, edx	; 6851D
 sar eax, 1	; 6851F
 add eax, ecx	; 68521
 cwde	; 68523
-mov edx, dword [nosplit ebx*2+dword_E9F16]	; 68524
+mov edx, dword [nosplit ebx*2+dressedskaters]	; 68524
 sar edx, 10h	; 6852B
 mov esi, dword [nosplit ebx*2+rpl_y_e16]	; 6852E
 sar esi, 10h	; 68535
@@ -1297,7 +1297,7 @@ mov ebx, dword [dword eax+rpl_jersey-3]	; 685D0
 sar ebx, 18h	; 685D6
 mov edx, dword [nosplit eax*2+rpl_x_e16]	; 685D9
 sar edx, 10h	; 685E0
-mov eax, dword [nosplit eax*2+dword_E9F16]	; 685E3
+mov eax, dword [nosplit eax*2+dressedskaters]	; 685E3
 sar eax, 10h	; 685EA
 mov ecx, dword [byte ebp-014h]	; 685ED
 jmp short .59	; 685F0
@@ -1308,7 +1308,7 @@ mov ebx, dword [dword eax+rpl_jersey-3]	; 685FB
 sar ebx, 18h	; 68601
 mov edx, dword [nosplit eax*2+rpl_x_e16]	; 68604
 sar edx, 10h	; 6860B
-mov eax, dword [nosplit eax*2+dword_E9F16]	; 6860E
+mov eax, dword [nosplit eax*2+dressedskaters]	; 6860E
 sar eax, 10h	; 68615
 mov ecx, 0FFFFFFFFh	; 68618
 .59:
@@ -1324,7 +1324,7 @@ mov ecx, dword [dword eax+rpl_flip-3]	; 68630
 sar ecx, 18h	; 68636
 mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 68639
 sar ebx, 10h	; 68640
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68643
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68643
 sar edx, 10h	; 6864A
 mov eax, dword [nosplit eax*2+rpl_y_e16]	; 6864D
 sar eax, 10h	; 68654

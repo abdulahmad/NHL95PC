@@ -28,8 +28,8 @@ extern str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotof
 extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, str_G5, str_LD, str_RD2
 extern str_LW, str_C6, str_RW, str_XC, str_sp00XXXXXXXXXXXXXXXXX, str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3
 extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
-global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
-global dword_CD9A0, pennametab, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
+global dressbystatus, lineslotgroups, lineslotgroupstart, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
+global starthl2pos, pennametab, goaliemenuflags, goaliemenuflags_e02, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
 global dbg_posnames, penbannertab, replayfollowpl, replaytick, replaysfx
 gsumqcount:
 db 00h,00h,00h,00h
@@ -63,25 +63,25 @@ db 06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h
 db 06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h,06h,00h,00h,00h
 db 06h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 06h,00h,00h,00h,03h,00h,00h,00h,02h,00h,00h,00h
-byte_CD418:
+dressbystatus:
 db 00h,00h,02h,01h,01h,00h
 dword_CD41E:
 db 00h,01h,00h
-byte_CD421:
+lineslotgroups:
 db 00h,03h,06h,09h,0FFh,01h,04h,07h,0Ah,0FFh,02h,05h,08h,0Bh,0FFh,0Ch
 db 0Eh,010h,0FFh,0Dh,0Fh,011h,0FFh,012h,017h,00h,03h,06h,09h,0FFh,013h,018h
 db 01h,04h,07h,0Ah,0FFh,014h,019h,02h,05h,08h,0Bh,0FFh,015h,01Ah,0Ch,0Eh
 db 010h,0FFh,016h,01Bh,0Dh,0Fh,011h,0FFh,01Ch,020h,00h,03h,06h,09h,0FFh,01Dh
 db 021h,01h,04h,07h,0Ah,0FFh,01Eh,022h,0Ch,0Eh,010h,0FFh,01Fh,023h,0Dh,0Fh
 db 011h,0FFh
-byte_CD473:
+lineslotgroupstart:
 db 00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,0Fh,013h,0Fh,013h
 db 0Fh,013h,017h,01Eh,025h,02Ch,032h,017h,01Eh,025h,02Ch,032h,038h,03Fh,046h,04Ch
 db 038h,03Fh,046h,04Ch,00h
-off_CD498:
+goaliemenuflags:
 dd str_sp00XXXXXXXXXXXXXXXXX
 dd str_sp00XXXXXXXXXXXXXXXXX2
-off_CD4A0:
+goaliemenuflags_e02:
 dd str_spNONE
 dd str_sp00XXXXXXXXXXXXXXXXX3
 dd str_sp00XXXXXXXXXXXXXXXXX4
@@ -315,7 +315,7 @@ dd str_LW
 dd str_C6
 dd str_RW
 dd str_XC
-dword_CD9A0:
+starthl2pos:
 db 00h,00h,024h,0FFh,0B0h,0FFh,079h,0FFh,019h,00h,09Ch,0FFh,092h,0FFh,0C9h,0FFh
 db 01Eh,00h,0DCh,0FFh,050h,00h,0B8h,0FFh,00h,00h,0DCh,00h,028h,00h,052h,00h
 db 0C2h,0FFh,048h,00h,06Eh,00h,024h,00h,0F1h,0FFh,09h,00h,0C9h,0FFh,00h,00h

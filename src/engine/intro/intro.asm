@@ -4,14 +4,14 @@ bits 32
 %include "hockey.inc"
 section s_47C31 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, assinsert, assreplace, awscore, awtmap
-extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, byte_CC9B0, byte_CC9E4, byte_CC9E7
+extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, teamrocktune, starskatermin, stargoaliemin
 extern Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F, byte_DFFE2, curevent, goalevent, goalevent_b1
 extern goalevent_b2, goalevent_b3, goalevent_b4, c1playernum, c2playernum, camx, camx_m2, camy
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
 extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
-extern dword_CC9AD, dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
+extern dword_CC9AD, introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
 extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
 extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7
 extern EndPenaltyShot, energywarn, escrequest, EvadePC, EvadePlayers, exitgame, fadeinpending, FadePalette
@@ -40,10 +40,10 @@ extern sub_6B008, sub_8F633, sub_8FFB0, teamabbrevs, textline1, textline2, textl
 extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
 extern word_CBC44, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
-extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
+extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
 extern hmplstats_w2, hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6
 extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
-extern fofdata2_w2, fofdata2_w4, fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
+extern fofdata2_w2, fofdata2_w4, fofdata2_w6, penevteam, word_E9AB0, xc1, yc1, yleader
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
 global ThreeStarsLoop, ThreeStarsLoop_tick, assintrostand, assintroline, AddStar, StarEligible, StarCompare, PickThreeStars
 global StartThreeStars, MoveInDir, SteerToTarget, assstarskate, assthreestars
@@ -131,9 +131,9 @@ mov eax, 0Ah	; 47CE8
 call PlayCrowdSample	; 47CED
 mov eax, dword [HomeTeam-2]	; 47CF2
 sar eax, 10h	; 47CF7
-movsx dx, byte [dword eax+byte_CC9B0]	; 47CFA
+movsx dx, byte [dword eax+teamrocktune]	; 47CFA
 mov dword [byte esp+08h], edx	; 47D02
-mov edi, dword [dword eax+byte_CC9B0-3]	; 47D06
+mov edi, dword [dword eax+teamrocktune-3]	; 47D06
 sar edi, 18h	; 47D0C
 mov di, word [nosplit edi*2+word_CC9CC]	; 47D0F
 cmp dx, byte 1	; 47D17
@@ -660,7 +660,7 @@ mov ecx, 5	; 484A5
 mov eax, edx	; 484AA
 sar edx, 1Fh	; 484AC
 idiv ecx	; 484AF
-mov edx, dword [nosplit edx*4+dword_CC9CE]	; 484B1
+mov edx, dword [nosplit edx*4+introstandanims_m2]	; 484B1
 sar edx, 10h	; 484B8
 mov eax, ebx	; 484BB
 call SetSPA	; 484BD
@@ -1369,7 +1369,7 @@ add eax, ebp	; 48C22
 mov ebp, dword [gameopts]	; 48C24
 shl ebp, 14h	; 48C2A
 shr ebp, 1Eh	; 48C2D
-movsx bx, byte [dword ebp+byte_CC9E4]	; 48C30
+movsx bx, byte [dword ebp+starskatermin]	; 48C30
 cmp bx, word [dword eax+hmglstats_w2]	; 48C38
 jge short .7	; 48C3F
 add esi, byte 19h	; 48C41
@@ -1524,7 +1524,7 @@ add ebx, eax	; 48E13
 mov eax, dword [gameopts]	; 48E15
 shl eax, 14h	; 48E1A
 shr eax, 1Eh	; 48E1D
-movsx ax, byte [dword eax+byte_CC9E7]	; 48E20
+movsx ax, byte [dword eax+stargoaliemin]	; 48E20
 cmp ax, word [dword ebx+hmglstats_w2]	; 48E28
 jg short .16	; 48E2F
 mov edx, dword [dword ebx+hmglstats_w4-2]	; 48E31

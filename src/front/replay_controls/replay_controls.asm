@@ -3,10 +3,10 @@
 bits 32
 %include "hockey.inc"
 section s_7DC8B progbits alloc exec nowrite align=1
-extern __CHK, _dos_getdiskfree_, awteamrec, bgscrollx, bgscrolly, byte_CC9B0, byte_DB7F1, byte_DC267
+extern __CHK, _dos_getdiskfree_, awteamrec, bgscrollx, bgscrolly, teamrocktune, byte_DB7F1, byte_DC267
 extern byte_DC268, camx, camx_m2, camy, cddriveptr, ClearInputQueue, cont2team, crowdlevel
 extern CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, curleague, curperiod, DrawFrameSprite, DrawRinkSideObjects
-extern dword_C66D0, dword_C66D4, dword_CC9AD, dword_CCC94, dword_D8C72, dword_D8C7A, dword_E9F16, rpl_x_e16
+extern dword_C66D0, dword_C66D4, dword_CC9AD, cursndbank, dword_D8C72, dword_D8C7A, dressedskaters, rpl_x_e16
 extern dword_ED6D0, hilightslot, dword_ED6E8, dword_ED6EC, replayspotx, replayspoty, replaynosave, replaybtnarmed
 extern replayptrx, replayptry, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, FadeOutPalCycle
 extern FadePalette, FadePalStep, FatalError, FileClose, FileCreate, fileoncd, FileOpenRead, FileOpenWrite
@@ -48,7 +48,7 @@ push edx	; 7DC97
 push esi	; 7DC98
 push edi	; 7DC99
 sub esp, byte 20h	; 7DC9A
-mov dword [dword_CCC94], 20h	; 7DC9D
+mov dword [cursndbank], 20h	; 7DC9D
 mov eax, dword [HomeTeam-2]	; 7DCA7
 sar eax, 10h	; 7DCAC
 mov dword [byte esp+01Ch], eax	; 7DCAF
@@ -191,7 +191,7 @@ call sub_8F13B	; 7DE3A
 mov dword [rocktunes], eax	; 7DE3F
 mov eax, dword [HomeTeam-2]	; 7DE44
 sar eax, 10h	; 7DE49
-mov eax, dword [dword eax+byte_CC9B0-3]	; 7DE4C
+mov eax, dword [dword eax+teamrocktune-3]	; 7DE4C
 sar eax, 18h	; 7DE52
 xor ecx, ecx	; 7DE55
 mov ebx, dword [nosplit eax*4+teamtunefiles]	; 7DE57
@@ -223,7 +223,7 @@ mov eax, esp	; 7DEAC
 call sub_8F13B	; 7DEAE
 mov dword [rocktunes+8], eax	; 7DEB3
 xor eax, eax	; 7DEB8
-mov dword [dword_CCC94], eax	; 7DEBA
+mov dword [cursndbank], eax	; 7DEBA
 add esp, byte 20h	; 7DEBF
 LoadRockMusic_ret:
 pop edi	; 7DEC2
@@ -899,7 +899,7 @@ mov ebx, dword [dword_ED74C]	; 7E76A
 cmp eax, ebx	; 7E770
 je short .28	; 7E772
 mov eax, ebx	; 7E774
-mov ebx, dword [nosplit ebx*2+dword_E9F16]	; 7E776
+mov ebx, dword [nosplit ebx*2+dressedskaters]	; 7E776
 sar ebx, 10h	; 7E77D
 mov edx, dword [camx-2]	; 7E780
 sar edx, 10h	; 7E786
@@ -1056,7 +1056,7 @@ jl short .2	; 7E967
 cmp eax, byte 0Fh	; 7E969
 jle short .3	; 7E96C
 .2:
-mov ebx, dword [nosplit eax*2+dword_E9F16]	; 7E96E
+mov ebx, dword [nosplit eax*2+dressedskaters]	; 7E96E
 sar ebx, 10h	; 7E975
 sub ebx, edi	; 7E978
 mov edx, dword [nosplit eax*2+rpl_x_e16]	; 7E97A
@@ -1376,7 +1376,7 @@ xor edx, edx	; 7EDC0
 mov dword [dword_ED70C], edx	; 7EDC2
 mov dx, word [dword_ED74C]	; 7EDC8
 mov word [replayfollowpl], dx	; 7EDCF
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 7EDD6
+mov edx, dword [nosplit eax*2+dressedskaters]	; 7EDD6
 sar edx, 10h	; 7EDDD
 mov dword [gadgetptrx], edx	; 7EDE0
 mov eax, dword [nosplit eax*2+rpl_x_e16]	; 7EDE6
@@ -1402,7 +1402,7 @@ jge short .42	; 7EE35
 mov dword [gadgetptry], 0FFFFFF44h	; 7EE37
 .42:
 mov eax, dword [dword_ED74C]	; 7EE41
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 7EE46
+mov edx, dword [nosplit eax*2+dressedskaters]	; 7EE46
 sar edx, 10h	; 7EE4D
 sub edx, dword [gadgetptrx]	; 7EE50
 add edx, 0A0h	; 7EE56

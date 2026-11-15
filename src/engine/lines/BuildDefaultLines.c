@@ -5,7 +5,7 @@
    For each side and each of the 25 roster players (hmroster / awroster status, 0 / 1 not dressed): an offence
    rating (bytes 1, 2, 4, 6, 9, 0Ah, 3, 0Dh of his rating record at hmplattr) and a defence rating (1, 2, 4, 6,
    9, 0Bh, 5, 0Ch, 3, 0Dh); then the players sorted by position and rating into the line tables
-   (SortPlayersByPos, SortNonDefPlayers), the dressed flags (dressflags from byte_CD418 by status) and the
+   (SortPlayersByPos, SortNonDefPlayers), the dressed flags (dressflags from dressbystatus by status) and the
    players in the line slots (hmlinetab / awlinetab, 12h) marked as not dressed spares. No arguments, no
    result. */
 void BuildDefaultLines(void)
@@ -37,7 +37,7 @@ void BuildDefaultLines(void)
         SortPlayersByPos(side, (signed char *)defsort_c + side * 25, def[side], 0x43);
         SortNonDefPlayers(side, offsort_fwd + side * 25, off[side]);
         SortNonDefPlayers(side, (signed char *)defsort_fwd + side * 25, def[side]);
-        for (i = 0; i < 25; i++) dressflags[side * 25 + i] = byte_CD418[hmroster[side * 0x444 + i * 0x27]];
+        for (i = 0; i < 25; i++) dressflags[side * 25 + i] = dressbystatus[hmroster[side * 0x444 + i * 0x27]];
         lt = side ? awlinetab : hmlinetab;
         for (i = 0; i < 0x12; i++) dressflags[side * 25 + *(signed char *)lt++] = 0;
     }
@@ -75,8 +75,8 @@ int CanRemovePlayer(Player *p)
 }
 
 /* SetupTeamLines (658F3, PC only; ends in lines_popx): check side's lines against its dressed players. Count the
-   dressed forwards (defsort_d list, byte_CD418 of the roster status 1) into word_E9F14 and defencemen
-   (offsort_fwd) into word_E9F12, their sum into dword_E9F16; mark every player in a line slot (the 24h skater
+   dressed forwards (defsort_d list, dressbystatus of the roster status 1) into dresseddefs and defencemen
+   (offsort_fwd) into dressedfwds, their sum into dressedskaters; mark every player in a line slot (the 24h skater
    slots of hmlinetab / awlinetab and the two goalie slots +26h / +27h) in lineslotmark and take the undressed
    ones (status 0 / 1) out of the lines (RemoveFromLines); refill an empty goalie slot (24h, PickGoalie forced);
    finally dressflags becomes 1 for the dressed players only. side: 0 home, 1 away. No result. */
@@ -88,19 +88,19 @@ void SetupTeamLines(short side)
     short st;
 
     lt = side ? awlinetab : hmlinetab;
-    word_E9F14 = 0;
+    dresseddefs = 0;
     for (i = 0; i < 25; i++) {
         k = defsort_d[side * 25 + i];
         if (k < 0) break;
-        if (byte_CD418[hmroster[side * 0x444 + k * 0x27]] == 1) word_E9F14++;
+        if (dressbystatus[hmroster[side * 0x444 + k * 0x27]] == 1) dresseddefs++;
     }
-    word_E9F12 = 0;
+    dressedfwds = 0;
     for (i = 0; i < 25; i++) {
         k = offsort_fwd[side * 25 + i];
         if (k < 0) break;
-        if (byte_CD418[hmroster[side * 0x444 + k * 0x27]] == 1) word_E9F12++;
+        if (dressbystatus[hmroster[side * 0x444 + k * 0x27]] == 1) dressedfwds++;
     }
-    *(short *)dword_E9F16 = word_E9F12 + word_E9F14;
+    *(short *)dressedskaters = dressedfwds + dresseddefs;
     for (i = 0; i < 25; i++) lineslotmark[i] = 0;
     for (i = 0; i < 0x24; i++) lineslotmark[((signed char *)lt)[i]] = 1;
     lineslotmark[((signed char *)lt)[0x26]] = lineslotmark[((signed char *)lt)[0x27]] = 1;

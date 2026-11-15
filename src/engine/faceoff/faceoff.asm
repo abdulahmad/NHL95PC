@@ -20,7 +20,7 @@ extern restorepl, ReturnGoalies, SetExitGame, setpersonel, Setplass, setplayer, 
 extern sflags, sflags3, sfx, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15
 extern SprSort, SprSortVert, StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3
 extern textline4, textline5, threat, updateanim, vtoa, penaltysc, word_CBC44, puckfaceoff2_ptab
-extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
+extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, penevteam
 extern xc1, yc1, yleader
 global TakePlayerFromBox, TakePlayerFromBox_ret6, TakePlayerFromBox_ret5, PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace, assleavebox
 global puckfaceoff, puckfaceoff2, assbenchwait, asstakeposition, check4bench, asspsclear, assrefpenshot
@@ -1121,7 +1121,7 @@ mov word [byte eax+Ypos+2], 0FF14h	; 51F54
 mov word [RefPen], dx	; 51F5A
 mov eax, 0FFFFFFFFh	; 51F61
 mov word [penaltysc], ax	; 51F66
-mov word [word_E9AAE], ax	; 51F6C
+mov word [penevteam], ax	; 51F6C
 mov ax, word [fox]	; 51F72
 mov word [ltx], ax	; 51F78
 mov ax, word [foy]	; 51F7E

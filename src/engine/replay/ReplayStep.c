@@ -26,7 +26,7 @@ int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
    17 players' x / y (10 bits, sign-extended) and frame (11 bits, 7FFh none) plus a flag bit, 12 bytes, six
    pairs of nibbles (Fh none), the puck words and nibbles, the camera, the crowd level, ten nibble pairs and
    twenty bytes (FFh none). Update the crowd noise (off at the end or without sound), step back to the frame
-   and sort the 17 players by y (sub_93540 into dword_E9FF0). Result: n, or -1 at an end. */
+   and sort the 17 players by y (sub_93540 into rpl_ysort). Result: n, or -1 at an end. */
 short ReplayStep(short n, short sound)
 {
     int keys[0x11];
@@ -137,9 +137,9 @@ short ReplayStep(short n, short sound)
     replayplay -= 0x80;
     for (i = 0; i < 0x11; i++) {
         keys[i] = rpl_y[i];
-        dword_E9FF0[i] = i;
+        rpl_ysort[i] = i;
     }
-    sub_93540(0x11, keys, dword_E9FF0);
+    sub_93540(0x11, keys, rpl_ysort);
     return n;
 }
 
@@ -155,7 +155,7 @@ short ReplayStep(short n, short sound)
    penalty box counts rpl_pbnum / AF) at the view vx, vy: the penalty box markers, the 18 rink objects
    (rpl_objframe into the photo table, step rpl_objstep) and the two goal-end ones with their backdrops and the door,
    the markers of the controlled players and the carrier in y order with edge arrows, the door, the puck shadow,
-   the 17 objects in the y order of the frame (dword_E9FF0) with jersey numbers, and the end boards. No result. */
+   the 17 objects in the y order of the frame (rpl_ysort) with jersey numbers, and the end boards. No result. */
 void DrawRinkSideObjects(short vx, short vy)
 {
     int ys[3];
@@ -268,7 +268,7 @@ void DrawRinkSideObjects(short vx, short vy)
     if (rpl_puckc != 0x10 && rpl_puckz >= 0)
         DrawFrameSprite(rpl_frame_e14, rpl_x_e14, rpl_puckz * 3 / 2 + rpl_y_e14, 0, 0);
     for (k = 0; k < 0x11; k++) {
-        i = *(short *)&dword_E9FF0[k];
+        i = *(short *)&rpl_ysort[k];
         if (i == 0xF) continue;
         if (i == 0xE) {
             if (rpl_puckc != -1 || rpl_puckz <= 0 || rpl_y[i] >= 0xE8) continue;

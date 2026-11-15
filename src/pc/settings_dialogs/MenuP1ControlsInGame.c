@@ -176,7 +176,7 @@ void MenuP2ControlsInGame(void)
 /* CtlSwapScoreFix: put side's pulled goalie back (tmgoalie negative with a goalie choice in bits 4-7): keep the
  choice (low nibble); not while side trails by 1-2 in the third period with more than 60 seconds left, nor
  while the other team has the puck in a stoppage. Then the goalie is back (high byte 0), the menu shows him
- checked (off_CD498) and "pulled" unchecked (off_CD4A0), setpersonel. */
+ checked (goaliemenuflags) and "pulled" unchecked (goaliemenuflags_e02), setpersonel. */
 void CtlSwapScoreFix(int side)
 {
     Team *t;
@@ -190,8 +190,8 @@ void CtlSwapScoreFix(int side)
     if (d > 0 && d <= 2 && gsp == 2 && gameclock <= 0x3C) return;
     if (!(gmode & 1) && *puckc >= 0 && ((*puckc < 6) ^ side) && (gmode & 8)) return;
     ((unsigned char *)&t->tmgoalie)[1] = 0;
-    *(unsigned char *)((int (*)[3])off_CD4A0)[side][0] = 2;
-    *(unsigned char *)((int (*)[3])off_CD498)[side][(short)(t->tmgoalie & 0xF)] = 1;
+    *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[side][0] = 2;
+    *(unsigned char *)((int (*)[3])goaliemenuflags)[side][(short)(t->tmgoalie & 0xF)] = 1;
     setpersonel(t);
 }
 

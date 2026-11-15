@@ -20,7 +20,7 @@ global otherperiod, floppyok, dbextension, calsel, floppyprobe, calexit, teamsel
 global traderesult, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount, calselday
 global calredraw, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, lgschedrec_b4, gridcelly, gridcellx
 global lgplayeridfile, tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg
-global tradeside, tradebitmap, dword_DE265, palcyclelock, dword_DEB74, statsplayer
+global tradeside, tradebitmap, dword_DE265, palcyclelock, plcareergoals, statsplayer
 global deskbankname, awayremap_eC0, homeremap_eC0, printfbuf, leagueteams, treeteamnames, poseriestext
 global masterpw, savleague1, savleague2, scrolly, scrollx, bgscrollx, bgscrolly8
 global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
@@ -347,5 +347,5 @@ palcyclephase:
 resb 1
 palcycledelay:
 resb 3
-dword_DEB74:
+plcareergoals:
 resb 4

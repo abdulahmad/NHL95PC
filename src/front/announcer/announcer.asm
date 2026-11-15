@@ -6,7 +6,7 @@ bits 32
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
 extern addtimer, str_04x, sndcardmissing, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, oneminsaid, dword_D2350, dword_D2423, dword_D2427, dword_D242B
+extern DrawSelBoxOn, dword_C4CFC, cursndbank, oneminsaid, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern sndtempbuf, str_Cor2, speechchannel, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
 extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
 extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
@@ -197,7 +197,7 @@ jl short InitSpeechSlots.1	; 8348C
 mov eax, dword [speechbank]	; 8348E
 lea edx, [dword ecx-01388h]	; 83493
 mov dword [dword eax+03B68h], edx	; 83499
-mov edx, dword [dword_CCC94]	; 8349F
+mov edx, dword [cursndbank]	; 8349F
 push edx	; 834A5
 push ecx	; 834A6
 push str_Speechbuf	; 834A7
@@ -277,7 +277,7 @@ xor edx, edx	; 835A3
 mov dword [speechchannel], edx	; 835A5
 mov dword [speechcopybuf], ebx	; 835AB
 mov dword [speechcopylen], ecx	; 835B1
-mov ebx, dword [dword_CCC94]	; 835B7
+mov ebx, dword [cursndbank]	; 835B7
 push ebx	; 835BD
 push byte 64h	; 835BE
 push str_Sentence	; 835C0
@@ -285,7 +285,7 @@ call sub_8CCA8	; 835C5
 add esp, byte 0Ch	; 835CA
 mov dword [speechq], eax	; 835CD
 call ResetSpeechQueue	; 835D2
-mov ecx, dword [dword_CCC94]	; 835D7
+mov ecx, dword [cursndbank]	; 835D7
 push ecx	; 835DD
 push dword 110h	; 835DE
 push str_SampleMemMan	; 835E3
@@ -293,7 +293,7 @@ call sub_8CCA8	; 835E8
 add esp, byte 0Ch	; 835ED
 mov dword [samplereq], eax	; 835F0
 call ResetSampleReq	; 835F5
-mov edi, dword [dword_CCC94]	; 835FA
+mov edi, dword [cursndbank]	; 835FA
 push edi	; 83600
 push dword 3B93h	; 83601
 push str_SpeechBank	; 83606

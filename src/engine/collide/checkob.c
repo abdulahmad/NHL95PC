@@ -439,8 +439,8 @@ void ReturnGoalies(void)
     for (; i < 2; i++) {
         if ((((unsigned char *)&t->tmgoalie)[0] & 0xF0) == 0) {
             ((unsigned char *)&t->tmgoalie)[1] = 0;
-            *(unsigned char *)((int (*)[3])off_CD4A0)[i][0] = 2;
-            *(unsigned char *)((int (*)[3])off_CD498)[i][(short)(t->tmgoalie & 0xF)] = 1;
+            *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[i][0] = 2;
+            *(unsigned char *)((int (*)[3])goaliemenuflags)[i][(short)(t->tmgoalie & 0xF)] = 1;
             if (cont1team != i + 1 && cont2team != i + 1)
                 CPgoalie(t, o, *(int *)((char *)&foy - 2) >> 16);
         }

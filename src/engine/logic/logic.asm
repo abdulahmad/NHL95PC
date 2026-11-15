@@ -4,13 +4,13 @@ bits 32
 %include "hockey.inc"
 section s_499D8 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awscore, awtmap, awtmstruct
-extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F
+extern bannermsg, bannertimer, starskatermin, stargoaliemin, Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F
 extern byte_DFFE2, curevent, goalevent, goalevent_b1, goalevent_b2, goalevent_b3, goalevent_b4, c1playernum
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
 extern doorpflags, doortemp1, doplayeracc, doshot, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
-extern dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, hmplstats_m2
+extern introstandanims_m2, assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, hmplstats_m2
 extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, sctemp4, ovlartbank
 extern fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
 extern EvadePlayers, exitgame, fadeinpending, FadePalette, Findhittype, findpc, fodir1, fodir2
@@ -34,10 +34,10 @@ extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
 extern unk_C1B3E, hmplattr, hmglstats, updateanim, vecdist, VisTeam, vtoa, penaltysc
 extern word_CBC44, injurystop, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
-extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, hmplstats_w2
+extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir, hmplstats_w2
 extern hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6, refYpos2
 extern refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, fofdata2_w2, fofdata2_w4
-extern fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
+extern fofdata2_w6, penevteam, word_E9AB0, xc1, yc1, yleader
 global assboxenter, assbenchside, assdefo, assdefd, asswingd, asswingd_skate0, asswingd_skateto, asswingo
 global asswingo_evade, asscenterd, asscentero, donothing, assstanley, assscore, asseben, assleaveice
 global asspenalty, assdopen, assepen, assbench, GoalieToPuckVec, AdjustFacingDirection, assgoalietopuck, ClampYPosition
@@ -3535,7 +3535,7 @@ or byte [byte esi+pflags], 20h	; 4C4B6
 or byte [byte esi+pflags2], 2	; 4C4BA
 mov edx, dword [regd0-2]	; 4C4BE
 sar edx, 10h	; 4C4C4
-mov edx, dword [nosplit edx*2+dword_CCA5A]	; 4C4C7
+mov edx, dword [nosplit edx*2+goaliesave_saveanim_m2]	; 4C4C7
 sar edx, 10h	; 4C4CE
 mov eax, esi	; 4C4D1
 call SetSPA	; 4C4D3
@@ -6793,7 +6793,7 @@ and dh, 0FDh	; 4EB33
 mov byte [byte esi+pflags], dh	; 4EB36
 mov eax, dword [RefPen-2]	; 4EB39
 sar eax, 10h	; 4EB3E
-cmp word [nosplit eax*2+word_CCA9C], byte 0	; 4EB41
+cmp word [nosplit eax*2+refsigdir], byte 0	; 4EB41
 jge near .9	; 4EB4A
 cmp word [RefPen], byte 7	; 4EB50
 jne near .8	; 4EB58
@@ -6910,7 +6910,7 @@ mov eax, esi	; 4ECC7
 call SetSPA	; 4ECC9
 mov eax, dword [RefPen-2]	; 4ECCE
 sar eax, 10h	; 4ECD3
-mov ax, word [nosplit eax*2+word_CCA9C]	; 4ECD6
+mov ax, word [nosplit eax*2+refsigdir]	; 4ECD6
 mov word [regd2], ax	; 4ECDE
 mov cx, word [byte esi+facedir]	; 4ECE4
 cmp ax, cx	; 4ECE8
@@ -6941,7 +6941,7 @@ jne short .17	; 4ED34
 or byte [byte esi+pflags], 20h	; 4ED36
 mov eax, dword [RefPen-2]	; 4ED3A
 sar eax, 10h	; 4ED3F
-mov edx, dword [nosplit eax*2+dword_CCAD8]	; 4ED42
+mov edx, dword [nosplit eax*2+refsigspa_m2]	; 4ED42
 sar edx, 10h	; 4ED49
 mov eax, esi	; 4ED4C
 call SetSPA	; 4ED4E

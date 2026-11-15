@@ -95,10 +95,10 @@ void DecayCrowdLevel(void)
 
 /* DrawRinkObjects (61862, PC only): draw the live rink objects of slots 0-11h (photoptrsf[frame] at x, y; the
    DrawSprite flag is x > C0h). Then slots 13h and 12h (i = 1, 0): a free slot or a frame over 64h first gets
-   the dword_E0220 shape at x 4, y from dword_CD2F8[i], then the live frame is drawn; slot 12h adds the
+   the dword_E0220 shape at x 4, y from sideobjpos[i], then the live frame is drawn; slot 12h adds the
    dword_E0230 shape, slot 13h the penalty-box door (sortobj15, DrawFrameSprite) when gmode bit 7 is set and its
    frame is 362h or more. No arguments, no result. Matched under 10.0 GA with o declared after i and x (the
-   dword_CD2F8 index then goes through eax as in the EXE) and in this file (the near jump to sfxslots_popx). */
+   sideobjpos index then goes through eax as in the EXE) and in this file (the near jump to sfxslots_popx). */
 void DrawRinkObjects(void)
 {
     short i;
@@ -117,9 +117,9 @@ void DrawRinkObjects(void)
         else id = o->frame;
         x = o->x;
         y = o->y;
-        if (id > 0x64 || o->id < 0) DrawSprite(dword_E0220, 4, ((Pt *)dword_CD2F8)[i].y, 0, i, 0);
+        if (id > 0x64 || o->id < 0) DrawSprite(dword_E0220, 4, ((Pt *)sideobjpos)[i].y, 0, i, 0);
         if (id >= 0) DrawSprite(photoptrsf[id], x, y, 0, i, 0);
-        if (i == 0) DrawSprite(dword_E0230, 4, ((Pt *)dword_CD2F8)[i].y, 0, -1, 0);
+        if (i == 0) DrawSprite(dword_E0230, 4, ((Pt *)sideobjpos)[i].y, 0, -1, 0);
         else if ((gmode & 0x80) && ((Player *)sortobj15)->frame >= 0x362)
             DrawFrameSprite(((Player *)sortobj15)->frame, HIWORD(((Player *)sortobj15)->Xpos),
                 HIWORD(((Player *)sortobj15)->Ypos), 0, 0);

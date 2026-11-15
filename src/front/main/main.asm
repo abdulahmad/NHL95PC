@@ -9,7 +9,7 @@ extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, 
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
-extern fadestart_m3, fadestep_m3, fadestart_e1, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
+extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
 extern dword_D4164, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
@@ -2313,7 +2313,7 @@ cmp dword [ovlartbank], byte 0	; 11B09
 jne near .22	; 11B10
 mov ecx, str_PPV	; 11B16
 mov ebx, dword [nosplit eax*4+ovlartnames]	; 11B1B
-mov eax, dword [nosplit eax*4+dword_CC080]	; 11B22
+mov eax, dword [nosplit eax*4+ovlartfiles]	; 11B22
 cmp byte [dword eax+fileoncd], 1	; 11B29
 jne short .18	; 11B30
 mov edx, dword [cddriveptr]	; 11B32
@@ -2558,7 +2558,7 @@ cmp dword [ovlartbank], byte 0	; 11ED8
 jne short .13	; 11EDF
 mov ecx, str_PPV	; 11EE1
 mov ebx, dword [nosplit eax*4+ovlartnames]	; 11EE6
-mov eax, dword [nosplit eax*4+dword_CC080]	; 11EED
+mov eax, dword [nosplit eax*4+ovlartfiles]	; 11EED
 cmp byte [dword eax+fileoncd], 1	; 11EF4
 jne short .9	; 11EFB
 mov edx, dword [cddriveptr]	; 11EFD

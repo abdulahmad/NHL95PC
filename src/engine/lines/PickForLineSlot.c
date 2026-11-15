@@ -12,7 +12,7 @@ short CanFillLineSlot(int side, int slot, int player);
 /* DRAFT under 10.0 GA: 20 differing instructions, original size. The start/position slots and
    two call argument register choices remain. Owner of the lines_popx2 tail (PickExtraSkater). */
 /* PickForLineSlot (64E60, PC only): choose a player for line slot slot of team side (home hmlinetab, away
-   awlinetab). First the players of the slots after slot in its byte_CD421 group (from byte_CD473[slot], up to the
+   awlinetab). First the players of the slots after slot in its lineslotgroups group (from lineslotgroupstart[slot], up to the
    -1 end) that CanFillLineSlot allows. Else by the position letter of the slot's current player (hmrosterpos)
    the first FillDressedSlots result from the side's 25-byte lists: D the E9D50 list for slots 12h-1Bh, else
    E9DB4; C the E9CEC, E9DE6 and E9EAE lists, R E9EAE, E9DE6, E9CEC, L E9DE6, E9EAE, E9CEC (from slot 1Ch on
@@ -30,11 +30,11 @@ short PickForLineSlot(short side, short slot)
     signed char *list;
 
     tab = (signed char *)(side ? awlinetab : hmlinetab);
-    i = start = byte_CD473[slot];
-    while (byte_CD421[i++] != slot);
-    while (byte_CD421[i] >= 0) {
-        p = tab[byte_CD421[i]];
-        if (CanFillLineSlot(side, slot, tab[byte_CD421[i]])) return p;
+    i = start = lineslotgroupstart[slot];
+    while (lineslotgroups[i++] != slot);
+    while (lineslotgroups[i] >= 0) {
+        p = tab[lineslotgroups[i]];
+        if (CanFillLineSlot(side, slot, tab[lineslotgroups[i]])) return p;
         i++;
     }
     pos = hmrosterpos[side * 0x444 + tab[slot] * 39];
@@ -64,9 +64,9 @@ short PickForLineSlot(short side, short slot)
         if (p >= 0) return p;
     }
     i = start;
-    while (byte_CD421[i] != slot) {
-        p = tab[byte_CD421[i]];
-        if (CanFillLineSlot(side, slot, tab[byte_CD421[i]])) return p;
+    while (lineslotgroups[i] != slot) {
+        p = tab[lineslotgroups[i]];
+        if (CanFillLineSlot(side, slot, tab[lineslotgroups[i]])) return p;
         i++;
     }
     if (pos == 'D')
@@ -93,7 +93,7 @@ short PickForLineSlot(short side, short slot)
 }
 
 /* PickExtraSkater (653BE, PC only): fill the extra-skater slots 26h / 27h of team side's line table (home
-   hmlinetab, away awlinetab). A player counts when byte_CD418 of the status byte of that player's 27h-byte
+   hmlinetab, away awlinetab). A player counts when dressbystatus of the status byte of that player's 27h-byte
    roster record (hmroster, 444h per team) is 1. For slot 26h: the player in slot 27h if counted, else the first
    counted one of the side's 25-byte offsort_fwd list (up to a negative entry). Then slot 27h gets the first
    counted player of that list who is not in slot 26h. side, slot: shorts. No result; the exit is
@@ -109,13 +109,13 @@ void PickExtraSkater(short side, short slot)
     list = offsort_fwd + side * 25;
     if (slot == 0x26) {
         p = tab[0x27];
-        if (byte_CD418[hmroster[side * 0x444 + p * 39]] == 1) {
+        if (dressbystatus[hmroster[side * 0x444 + p * 39]] == 1) {
             tab[0x26] = p;
         } else {
             for (i = 0; i < 0x19; i++) {
                 p = list[i];
                 if (p < 0) break;
-                if (byte_CD418[hmroster[side * 0x444 + p * 39]] == 1) {
+                if (dressbystatus[hmroster[side * 0x444 + p * 39]] == 1) {
                     tab[0x26] = p;
                     break;
                 }
@@ -126,7 +126,7 @@ void PickExtraSkater(short side, short slot)
     for (i = 0; i < 0x19; i++) {
         p = list[i];
         if (p < 0) break;
-        if (byte_CD418[hmroster[side * 0x444 + p * 39]] == 1 && p != tab[0x26]) {
+        if (dressbystatus[hmroster[side * 0x444 + p * 39]] == 1 && p != tab[0x26]) {
             tab[0x27] = p;
             break;
         }

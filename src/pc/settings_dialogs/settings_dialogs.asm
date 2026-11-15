@@ -9,7 +9,7 @@ extern hmtmtouch3, dword_ED364, exhsetrects, exhstate, fdlg_cancel, fileoncd, Fr
 extern gamemode, gameopts, GetInputEvent, gmode, gsp, hmscore, hmtmap, hmtmflags
 extern hmtmline, hmtmpde, hmtmstruct, HomeTeam, lcblink, lcboxon, leaguesetimg, leaguesetrects
 extern LoadModeState, LoadSettingsShapes, MakePath, modesetrects, musichandle, musicon, musicslot, na01spr
-extern na03spr, na05spr, off_CD498, off_CD4A0, pad1dev, pg01spr, pg03spr, pg05spr
+extern na03spr, na05spr, goaliemenuflags, goaliemenuflags_e02, pad1dev, pg01spr, pg03spr, pg05spr
 extern pg07spr, pl05spr, pl10spr, pl20spr, pointerspr, postate, ptrupdatefn, puckasslist
 extern puckc, puckstruct, pucktemp1, puckvx, puckvy, puckx, pucky, restorepl
 extern samesideflag, SaveModeState, scpflags2, seriesgameno, setbits, setpersonel, SetSideControls, settingsfile
@@ -3879,14 +3879,14 @@ mov byte [byte eax+039h], 0	; 7CC53
 mov ebx, edx	; 7CC57
 shl edx, 2	; 7CC59
 sub edx, ebx	; 7CC5C
-mov ebx, dword [nosplit edx*4+off_CD4A0]	; 7CC5E
+mov ebx, dword [nosplit edx*4+goaliemenuflags_e02]	; 7CC5E
 mov byte [ebx], 2	; 7CC65
 mov bx, word [byte eax+038h]	; 7CC68
 xor bh, bh	; 7CC6C
 and bl, 0Fh	; 7CC6E
 movsx ebx, bx	; 7CC71
 shl ebx, 2	; 7CC74
-mov edx, dword [dword ebx+edx*4+off_CD498]	; 7CC77
+mov edx, dword [dword ebx+edx*4+goaliemenuflags]	; 7CC77
 mov byte [edx], 1	; 7CC7E
 call setpersonel	; 7CC81
 .x:

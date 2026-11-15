@@ -27,9 +27,9 @@ extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmou
 extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
 extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
-extern VisTeam, penaltysc, word_CBC44, lcsel_aw, word_CBD64, word_CBD66, word_CBEC2, injurystop
+extern VisTeam, penaltysc, word_CBC44, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
 extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
-extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, word_E9AAE, word_E9AB0, rinkobjused
+extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, word_E9AB0, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
 ; C: src/pc/game_saveload/SaveGameState.c
@@ -261,7 +261,7 @@ add eax, byte 2	; 5FE4B
 mov dx, word [ovltimer]	; 5FE4E
 mov word [eax], dx	; 5FE55
 add eax, byte 2	; 5FE58
-mov dx, word [word_CBEC2]	; 5FE5B
+mov dx, word [refhitcount]	; 5FE5B
 mov word [eax], dx	; 5FE62
 add eax, byte 2	; 5FE65
 mov dx, word [fadeinpending]	; 5FE68
@@ -395,7 +395,7 @@ add eax, byte 2	; 60076
 mov dx, word [dword_E9AB6]	; 60079
 mov word [eax], dx	; 60080
 add eax, byte 2	; 60083
-mov dx, word [word_E9AAE]	; 60086
+mov dx, word [penevteam]	; 60086
 mov word [eax], dx	; 6008D
 add eax, byte 2	; 60090
 mov dx, word [periodendtime]	; 60093
@@ -1040,7 +1040,7 @@ mov ax, word [ebx]	; 609B0
 mov word [ovltimer], ax	; 609B3
 add ebx, byte 2	; 609B9
 mov ax, word [ebx]	; 609BC
-mov word [word_CBEC2], ax	; 609BF
+mov word [refhitcount], ax	; 609BF
 add ebx, byte 2	; 609C5
 mov ax, word [ebx]	; 609C8
 mov word [fadeinpending], ax	; 609CB
@@ -1177,7 +1177,7 @@ mov ax, word [ebx]	; 60BC0
 mov word [dword_E9AB6], ax	; 60BC3
 add ebx, byte 2	; 60BC9
 mov ax, word [ebx]	; 60BCC
-mov word [word_E9AAE], ax	; 60BCF
+mov word [penevteam], ax	; 60BCF
 add ebx, byte 2	; 60BD5
 mov ax, word [ebx]	; 60BD8
 mov word [periodendtime], ax	; 60BDB

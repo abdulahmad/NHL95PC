@@ -81,7 +81,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&exitgame);
     *p++ = *(short *)(&gameover);
     *p++ = *(short *)(&ovltimer);
-    *p++ = *(short *)(&word_CBEC2);
+    *p++ = *(short *)(&refhitcount);
     *p++ = *(short *)(&fadeinpending);
     *p++ = *(short *)(&deferpending);
     *p++ = *(short *)(&injurystop);
@@ -126,7 +126,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&curperiod);
     *p++ = *(short *)(&lldispodd);
     *p++ = *(short *)(&dword_E9AB6);
-    *p++ = *(short *)(&word_E9AAE);
+    *p++ = *(short *)(&penevteam);
     *p++ = *(short *)(&periodendtime);
     *p++ = *(short *)(&dword_E9A9E);
     *p++ = *(short *)(&ltack);
@@ -322,7 +322,7 @@ int LoadGameState(int fh)
     exitgame = *p++;
     gameover = *p++;
     ovltimer = *p++;
-    word_CBEC2 = *p++;
+    refhitcount = *p++;
     fadeinpending = *p++;
     deferpending = *p++;
     injurystop = *p++;
@@ -367,7 +367,7 @@ int LoadGameState(int fh)
     curperiod = *p++;
     lldispodd = *p++;
     dword_E9AB6 = *p++;
-    word_E9AAE = *p++;
+    penevteam = *p++;
     periodendtime = *p++;
     dword_E9A9E = *p++;
     ltack = *p++;

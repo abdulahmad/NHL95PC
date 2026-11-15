@@ -4013,3 +4013,32 @@ deskbankname,DC890,SportsDesk: 'EADESK%1d' bank name buffer
 tmpdbpath,EA968,roster editor: path buffer of the temporary databases
 gamelinespal,ECDF4,game line editor: 768-byte saved palette
 crowdsamples,ED374,PlayCrowdSample: samples of cues 6 to 8
+checkinglist_m2,CCC4E,"checkinglist-2: CCStart's check animation table (95G collide95 checkinglist), read by a -5r dword load >> 16"
+goaliesave_saveanim_m2,CCA5A,"goaliesave .saveanim-2: the ten save SPAs by side and height (94G logic94), read as words at +2"
+refhitcount,CBEC2,checkcheck: checks on the referee (SCnum 10h); the third draws penalty 16h. ResetGameVars clears it
+ovlseqtimed,CC049,UpdateTextOverlay: set for the overlay sequences that get the 258h ovltimer
+ovlartfiles,CC080,"file number (fileoncd index) of each overlay sequence's PPV art, beside ovlartnames"
+teamrocktune,CC9B0,by HomeTeam: the rock tune LoadRockMusic loads and the intro variant PreGameIntro uses
+introstandanims_m2,CC9CE,"assintrostand: five standing animations (SPA in the high word of each dword load), -2"
+starskatermin,CC9E4,PickThreeStars: skater stat minimum by period length (gameopts.pertime)
+stargoaliemin,CC9E7,PickThreeStars: goalie shots minimum by period length
+refsigdir,CCA9C,"assrefsignal: direction the referee turns to for each call (RefPen), -1 for none"
+refsigspa_m2,CCAD8,"assrefsignal: signal SPA of each call (RefPen), read as words at +2"
+cursndbank,CCC94,SndLoadFile: the current sound bank the file is loaded into
+sideobjpos,CD2F8,"DrawRinkObjects: x, y of the rink-side objects (slots 12h, 13h)"
+dressbystatus,CD418,BuildDefaultLines: dressflags value for each roster status byte
+lineslotgroups,CD421,"PickForLineSlot: line slots grouped by position, each group ended by -1"
+lineslotgroupstart,CD473,PickForLineSlot: start index in lineslotgroups of each slot's group
+goaliemenuflags,CD498,ShowGoalieBanner / CPgoalie: per side three pointers to the goalie menu item check marks
+goaliemenuflags_e02,CD4A0,goaliemenuflags[2]: the 'pulled goalie / extra attacker' item
+starthl2pos,CD9A0,"StartHL2: x, y start positions of the players for the highlight"
+plcareergoals,DEB74,"per player (10h each, 25 a team): career goals before this game (LoadTeamRoster); ChkScorerMilestone"
+plcareerpts,DEB78,per player +4: career points before this game
+plseasongoals,DEB7C,per player +8: season goals before this game
+plseasonpts,DEB80,per player +0Ch: season points before this game
+dressedfwds,E9F12,BuildDefaultLines / RemoveFromLines: count of dressed forwards (offsort_fwd)
+dresseddefs,E9F14,BuildDefaultLines / RemoveFromLines: count of dressed defencemen (defsort_d)
+dressedskaters,E9F16,dressedfwds + dresseddefs; CanFillLineSlot stops dressing at 18
+linesortidx,E9C88,SortPlayersByPos / SortNonDefPlayers: the 25 roster indices sorted by lineslotmark
+rpl_ysort,E9FF0,ReplayStep: the 17 replay objects' indices sorted by y
+penevteam,E9AAE,"PostPenaltyEvent: team of the running penalty event, picks the wording; -1 after the faceoff"

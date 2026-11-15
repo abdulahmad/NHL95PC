@@ -7,7 +7,7 @@ extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtm
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
 extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
 extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, oneminsaid
-extern dword_CD9A0, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, dword_E9A9E
+extern starthl2pos, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, dword_E9A9E
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
 extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
@@ -317,7 +317,7 @@ mov eax, 14h	; 697F3
 call randomd0	; 697F8
 sub eax, byte 0Ah	; 697FD
 mov dword [dword esp+0100h], eax	; 69800
-mov ax, word [nosplit edx*4+dword_CD9A0]	; 69807
+mov ax, word [nosplit edx*4+starthl2pos]	; 69807
 mov edx, dword [dword esp+0100h]	; 6980F
 add eax, edx	; 69816
 mov word [byte ebx+Xpos+2], ax	; 69818
@@ -343,7 +343,7 @@ jmp short .16	; 6984F
 .15:
 mov eax, 0Ah	; 69851
 .16:
-mov edx, dword [nosplit esi*2+dword_CD9A0]	; 69856
+mov edx, dword [nosplit esi*2+starthl2pos]	; 69856
 sar edx, 10h	; 6985D
 add eax, edx	; 69860
 mov word [byte ebx+Ypos+2], ax	; 69862

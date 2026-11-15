@@ -8,7 +8,7 @@ extern byte_D42C3, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
-extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, dword_CCC94, dword_DC2B8, titlesample
+extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, cursndbank, dword_DC2B8, titlesample
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
@@ -1238,11 +1238,11 @@ add esp, byte 4	; 16D9F
 .43:
 cmp byte [musicon], 0	; 16DA2
 je short .44	; 16DA9
-mov dword [dword_CCC94], 20h	; 16DAB
+mov dword [cursndbank], 20h	; 16DAB
 mov eax, dword [dword_C4CFC]	; 16DB5
 call InitSpeechSlots	; 16DBA
 xor edx, edx	; 16DBF
-mov dword [dword_CCC94], edx	; 16DC1
+mov dword [cursndbank], edx	; 16DC1
 .44:
 call PaOpenBank	; 16DC7
 mov ebx, 10h	; 16DCC

@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_DEB78 nobits alloc noexec write align=1
-global rinkobjs_b3, dword_DEB78, dword_DEB7C, dword_DEB80, ovlstepart, ovlstepart_e21, ovlstepart_e30, rinkobjs
+global rinkobjs_b3, plcareerpts, plseasongoals, plseasonpts, ovlstepart, ovlstepart_e21, ovlstepart_e30, rinkobjs
 global rinkobjs_w2, word_DEF84, word_DEF88
-dword_DEB78:
+plcareerpts:
 resb 4
-dword_DEB7C:
+plseasongoals:
 resb 4
-dword_DEB80:
+plseasonpts:
 resb 788
 rinkobjs:
 resb 2

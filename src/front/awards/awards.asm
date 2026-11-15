@@ -8,7 +8,7 @@ extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, Build
 extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
-extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, dword_CC080
+extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, ovlartfiles
 extern goalienotebits, demoflag, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
@@ -45,9 +45,9 @@ extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, teamabb
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
-extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2
+extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount
 extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
-extern word_E9AAA, word_E9AAE, rinkobjused
+extern word_E9AAA, penevteam, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 PickAwardWinners:
 push dword 41Ch	; 1205D

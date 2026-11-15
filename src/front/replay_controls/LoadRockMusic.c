@@ -11,7 +11,7 @@ int sub_8F13B(char *path);
 
 /* LoadRockMusic (7DC8B, PC only): team 26 and above uses cue row 13. Six team cues, then three random cues that are
  not already on that row and not repeated, then the device bank, the team tune, and ROCKDITI.
- dword_CCC94 is 20h while the banks load and 0 afterwards. */
+ cursndbank is 20h while the banks load and 0 afterwards. */
 void LoadRockMusic(void)
 {
     struct {
@@ -22,7 +22,7 @@ void LoadRockMusic(void)
     int i;
     int slot;
 
-    dword_CCC94 = 0x20;
+    cursndbank = 0x20;
     if ((s.team = *(int *)((char *)&HomeTeam - 2) >> 16) >= 0x1A) s.team = 0x0D;
     i = 0;
     do {
@@ -83,14 +83,14 @@ void LoadRockMusic(void)
     {
         int tune;
 
-        tune = ((signed char *)byte_CC9B0)[*(int *)((char *)&HomeTeam - 2) >> 16];
+        tune = ((signed char *)teamrocktune)[*(int *)((char *)&HomeTeam - 2) >> 16];
         MakePath(s.path, fileoncd[teamtunepathsel[tune]] == 1 ? (char *)cddriveptr : 0,
             (char *)teamtunefiles[tune], 0);
     }
     rocktunes[1] = sub_8F13B(s.path);
     MakePath(s.path, fileoncd[0x161] == 1 ? (char *)cddriveptr : 0, (char *)str_ROCKDITI, 0);
     rocktunes[2] = sub_8F13B(s.path);
-    dword_CCC94 = 0;
+    cursndbank = 0;
 }
 
 /* FreeRockMusic (7DEC8, PC only): release the six team cues, the three random cues and

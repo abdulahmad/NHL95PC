@@ -22,7 +22,7 @@ global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
 global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
 global lcboxon, word_CBD64, word_CBD66, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
-global word_CBEC2, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
+global refhitcount, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
 replaystart:
 dd unk_E0416
 puckx:
@@ -971,7 +971,7 @@ dword_CBEBE:
 db 00h,00h
 ovltimer:
 db 0FFh,0FFh
-word_CBEC2:
+refhitcount:
 db 00h,00h
 fadeinpending:
 db 00h,00h

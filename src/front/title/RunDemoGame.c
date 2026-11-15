@@ -519,9 +519,9 @@ void RunIntro(void)
         if (song4) sub_8D2F0(song4);
     }
     if (musicon) {
-        dword_CCC94 = 0x20;
+        cursndbank = 0x20;
         InitSpeechSlots(dword_C4CFC);
-        dword_CCC94 = 0;
+        cursndbank = 0;
     }
     PaOpenBank();
     FadePalStep(1, (unsigned char *)tgt, 0x10);

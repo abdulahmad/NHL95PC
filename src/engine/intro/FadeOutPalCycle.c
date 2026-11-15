@@ -81,8 +81,8 @@ void PreGameIntro(void)
     Player *p;
 
     PlayCrowdSample(0xA);
-    team = byte_CC9B0[HomeTeam];
-    y = word_CC9CC[byte_CC9B0[HomeTeam]];
+    team = teamrocktune[HomeTeam];
+    y = word_CC9CC[teamrocktune[HomeTeam]];
     LoadTeamPPV((short)(team != 1 ? 4 : 3));
     textline5 = 0;
     textline4 = 0;
@@ -291,9 +291,9 @@ int StartPreGame(int skip)
    team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
    clinched the cup he is the first star (AddStar). A goalie with a shutout (his opponents' score 0; the goalie of
    the three with the most of the first stats word) gets a star when he faced more shots than the period length's
-   minimum (byte_CC9E4). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
+   minimum (starskatermin). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
    stats words set), sorted by StarCompare: a player with more than one point gets a star; at the first one without,
-   the goalies with enough shots (byte_CC9E7) and a goals-against rate (per thousand) of at most 4Bh get stars, then
+   the goalies with enough shots (stargoaliemin) and a goals-against rate (per thousand) of at most 4Bh get stars, then
    the rest of the list in order until there are three. No arguments, no result. */
 void PickThreeStars(void)
 {
@@ -320,7 +320,7 @@ void PickThreeStars(void)
             k = 0;
             if (GSTAT(i, 1)[0] > GSTAT(i, 0)[0]) k = 1;
             if (GSTAT(i, 2)[0] > GSTAT(i, 0)[0] && GSTAT(i, 2)[0] > GSTAT(i, 1)[0]) k = 2;
-            if (GS(i, k)[0] > byte_CC9E4[gameopts.pertime]) stars += AddStar(stars, i, k += 0x19);
+            if (GS(i, k)[0] > starskatermin[gameopts.pertime]) stars += AddStar(stars, i, k += 0x19);
         }
     }
     n = 0;
@@ -339,7 +339,7 @@ void PickThreeStars(void)
             if (stars >= 3) return;
         } else {
             for (k = 0; k < 6; k++) {
-                if (byte_CC9E7[gameopts.pertime] <= GS(k / 3, k % 3)[0] && (GS(k / 3, k % 3)[1] * 0x3E8 + GS(k / 3, k % 3)[0] / 2) / GS(k / 3, k % 3)[0] <= 0x4B) {
+                if (stargoaliemin[gameopts.pertime] <= GS(k / 3, k % 3)[0] && (GS(k / 3, k % 3)[1] * 0x3E8 + GS(k / 3, k % 3)[0] / 2) / GS(k / 3, k % 3)[0] <= 0x4B) {
                     stars += AddStar(stars, k / 3, k % 3 + 0x19);
                     if (stars >= 3) return;
                 }

@@ -78,7 +78,7 @@ void ResetGameVars(void)
     savedmousex = 0;
     bannertimer = 0;
     injurystop = 0;
-    word_CBEC2 = 0;
+    refhitcount = 0;
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;
@@ -108,7 +108,7 @@ void ResetGameVars(void)
     }
     __STOSB(rinkobjused, 0, 0x20);
     dword_E9A9E = 0;
-    word_E9AAE = 0;
+    penevteam = 0;
     dword_E9AB6 = 0;
     NumCwdExciteLvl = 0;
     MaxCwdExciteLvl = 0;

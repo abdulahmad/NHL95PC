@@ -194,7 +194,7 @@ int SetSoundDevice(int dev)
         }
         sub_8EB93();
     }
-    dword_CCC94 = 0x20;
+    cursndbank = 0x20;
     dword_D2423 = 0;
     do {
         switch (dev) {
@@ -317,6 +317,6 @@ int SetSoundDevice(int dev)
         dword_ED7A8 = sub_8CCA8((char *)str_Emmcopybuf, 0x400, 0x20);
         InitSpeech(musicslot, dword_C4CFC, dword_ED7A8, 0x400);
     }
-    dword_CCC94 = 0;
+    cursndbank = 0;
     return 1;
 }

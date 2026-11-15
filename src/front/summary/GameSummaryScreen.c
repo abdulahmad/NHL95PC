@@ -265,9 +265,9 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         } else {
             if (sounddev == 8) MakePath(f.name, fileoncd[0x102] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtsum, 0);
             else MakePath(f.name, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum, 0);
-            dword_CCC94 = 0x20;
+            cursndbank = 0x20;
             f.smp = sub_8F13B(f.name);
-            dword_CCC94 = 0;
+            cursndbank = 0;
             PlayDigiSample(f.smp);
         }
     }

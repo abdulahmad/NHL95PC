@@ -173,9 +173,9 @@ void GameStatsScreen(void)
             MakePath(s.buf, fileoncd[0x102] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtsum2, 0);
         else
             MakePath(s.buf, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum2, 0);
-        dword_CCC94 = 0x20;
+        cursndbank = 0x20;
         smp = sub_8F13B(s.buf);
-        dword_CCC94 = 0;
+        cursndbank = 0;
         PlayDigiSample(smp);
     }
     FadePalStep(0, s.pal, 0x10);

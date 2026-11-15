@@ -41,7 +41,7 @@ void ChkScorerMilestone(void);  /* 62807 */
    set); against a shooter, now and then poke check (SPA 1095h) or dive (SPA 181h, the crowd up). Otherwise play
    the angle: face the puck, move toward the point on the line from the puck through the net (the shot speed and
    ShotLaneOpen pick the depth), or to the post the puck will cross (puckcross), with the save stances for a puck
-   coming at him (dword_CCA5A by side and height, the crowd up) and a stop for a wraparound (assinsert 0Fh). Skate
+   coming at him (goaliesave_saveanim_m2 by side and height, the crowd up) and a stop for a wraparound (assinsert 0Fh). Skate
    there (playeracc) or stop (stopna). p: the goalie. No result. */
 void assgoalie(Player *p)
 {
@@ -276,7 +276,7 @@ void assgoalie(Player *p)
                         }
                         p->pflags |= 0x20;
                         p->pflags2 |= 2;
-                        SetSPA(p, ((short *)dword_CCA5A)[regd0.w + 1]);
+                        SetSPA(p, ((short *)goaliesave_saveanim_m2)[regd0.w + 1]);
                         CROWDUP();
                         regd0.w = pc[0];
                         if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
@@ -425,12 +425,12 @@ play:
 }
 
 /* assrefsignal (4EB04; 93G assrefsignal, PC version; ends in assgoalie_popebp): the referee's call. Not while
-   locked (pflags bit 5). A new assignment (bit 1): for a call without a signal direction (word_CCA9C by RefPen
+   locked (pflags bit 5). A new assignment (bit 1): for a call without a signal direction (refsigdir by RefPen
    negative) post a goal event for a goal call (RefPen 7: the scoring team from the puck's end and the period, its
    scorer and assists, the time left in the period in minutes and seconds) and go on to assignment 21h; else stand
    at (A0h, 0) with temp2 8 (pflags2 bit 5). Then skate to the spot (SkateToSpot) unless within 0Ch in y and not
    more than 14h short in x; there, every 8 ticks (temp1) take the signal stance (SPA A5Bh), stop and turn one step
-   toward the call's direction (word_CCA9C by RefPen); facing it, make the signal (SPA from dword_CCAD8 by RefPen,
+   toward the call's direction (refsigdir by RefPen); facing it, make the signal (SPA from refsigspa_m2 by RefPen,
    locked) and go on to assignment 21h. p: the referee. No result. */
 void assrefsignal(Player *p)
 {
@@ -441,7 +441,7 @@ void assrefsignal(Player *p)
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
-        if (word_CCA9C[RefPen] < 0) {
+        if (refsigdir[RefPen] < 0) {
             if (RefPen == 7) {
                 side = (*pucky < 0) ^ ((gmode & 2) != 0);
                 t = side > 0 ? &awtmstruct : &hmtmstruct;
@@ -470,7 +470,7 @@ void assrefsignal(Player *p)
             if (--p->temp1 >= 0) return;
             p->temp1 += 8;
             SetSPA(p, 0xA5B);
-            regd2.w = word_CCA9C[RefPen];
+            regd2.w = refsigdir[RefPen];
             if (regd2.w != p->facedir) {
                 regd2.w = (regd2.w - p->facedir) & 7;
                 p->facedir = (p->facedir + (regd2.w < 5 ? 1 : -1)) & 7;
@@ -479,7 +479,7 @@ void assrefsignal(Player *p)
             p->Xvel = 0;
             if (regd2.w == p->facedir) {
                 p->pflags |= 0x20;
-                SetSPA(p, ((short *)dword_CCAD8)[RefPen + 1]);
+                SetSPA(p, ((short *)refsigspa_m2)[RefPen + 1]);
                 assreplace(p, 0x21);
             }
             return;

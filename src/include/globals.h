@@ -2782,7 +2782,7 @@ extern short puckfaceoff2_ptab_y[]; /* CBE8E */
 extern signed char apl[]; /* CBEA8 */
 extern int dword_CBEBE[]; /* CBEBE */
 extern short ovltimer; /* CBEC0 */
-extern short word_CBEC2; /* CBEC2 */
+extern short refhitcount; /* CBEC2 */
 extern short fadeinpending; /* CBEC4 */
 extern short injurystop; /* CBEC6 */
 extern short bannermsg; /* CBEC8 */
@@ -2802,9 +2802,9 @@ extern unsigned char unk_CBFC3[]; /* CBFC3 */
 extern unsigned char unk_CBFEB[]; /* CBFEB */
 extern unsigned char unk_CBFFA[]; /* CBFFA */
 extern int ovlscripts[]; /* CC01D */
-extern unsigned char byte_CC049[]; /* CC049 */
+extern unsigned char ovlseqtimed[]; /* CC049 */
 extern short ovlsteptime[]; /* CC054 */
-extern int dword_CC080[]; /* CC080 */
+extern int ovlartfiles[]; /* CC080 */
 extern int goalienotebits; /* CC0AC */
 extern short Pencntdwn2[]; /* CC0B0 */
 extern int dword_CC0B4[]; /* CC0B4 */
@@ -2843,11 +2843,11 @@ extern signed char HotList_y[]; /* CC149 */
 extern signed char HotStickList[]; /* CC7A4 */
 extern signed char HotStickList_y[]; /* CC7A5 */
 extern int dword_CC9AD[]; /* CC9AD */
-extern signed char byte_CC9B0[]; /* CC9B0 */
+extern signed char teamrocktune[]; /* CC9B0 */
 extern short word_CC9CC[]; /* CC9CC */
-extern int dword_CC9CE[]; /* CC9CE */
-extern signed char byte_CC9E4[]; /* CC9E4 */
-extern signed char byte_CC9E7[]; /* CC9E7 */
+extern int introstandanims_m2[]; /* CC9CE */
+extern signed char starskatermin[]; /* CC9E4 */
+extern signed char stargoaliemin[]; /* CC9E7 */
 extern short assstarskate_path[]; /* CC9EA */
 extern short assstarskate_path_y[]; /* CC9EC */
 extern int starordtab[]; /* CCA0A */
@@ -2860,12 +2860,12 @@ extern short asscentero_dedata_xrand[]; /* CCA3A */
 extern short asscentero_dedata_y[]; /* CCA3C */
 extern short asscentero_dedata_yrand[]; /* CCA3E */
 extern int assscore_dancecnt; /* CCA58 */
-extern int dword_CCA5A[]; /* CCA5A */
+extern int goaliesave_saveanim_m2[]; /* CCA5A */
 extern short asspuckc_postab2[]; /* CCA6E */
 extern short asspuckc_postab2_y[]; /* CCA70 */
 extern signed char Endfaceoff_ftab_m1[]; /* CCA95 */
-extern short word_CCA9C[]; /* CCA9C */
-extern int dword_CCAD8[]; /* CCAD8 */
+extern short refsigdir[]; /* CCA9C */
+extern int refsigspa_m2[]; /* CCAD8 */
 extern int ShootoutPathData[]; /* CCB18 */
 extern int ShootoutPathData_y[]; /* CCB1C */
 extern int ShootoutPathData_end[]; /* CCB20 */
@@ -2882,14 +2882,14 @@ extern short FallDown_pinxl2[]; /* CCC1C */
 extern int nethit; /* CCC2C */
 extern short blockspd[]; /* CCC30 */
 extern short blockspd_y[]; /* CCC32 */
-extern int dword_CCC4E[]; /* CCC4E */
+extern int checkinglist_m2[]; /* CCC4E */
 extern short shotsets[]; /* CCC60 */
 extern short shotsetz[]; /* CCC62 */
 extern int digihandle; /* CCC84 */
 extern int crowdsmooth; /* CCC88 */
 extern int crowdvol8; /* CCC8C */
 extern int crowdvol7; /* CCC90 */
-extern int dword_CCC94; /* CCC94 */
+extern int cursndbank; /* CCC94 */
 extern int oneminsaid; /* CCC98 */
 extern int dword_CCC9C; /* CCC9C */
 extern int dword_CCC9D[]; /* CCC9D */
@@ -2908,18 +2908,18 @@ extern signed char rinkobjanim[]; /* CCE00 */
 extern unsigned char rinkobjanim_b1[]; /* CCE01 */
 extern int rinkobjdefs_m2[]; /* CCEF6 */
 extern short rinkobjdefs[]; /* CCEF8 */
-extern int dword_CD2F8[]; /* CD2F8 */
+extern int sideobjpos[]; /* CD2F8 */
 extern int penaltynames[]; /* CD304 */
 extern int gsumqcount; /* CD34C */
 extern int defercount; /* CD350 */
 extern int pennametab[]; /* CD354 */
 extern int penbannertab[]; /* CD39C */
-extern signed char byte_CD418[]; /* CD418 */
+extern signed char dressbystatus[]; /* CD418 */
 extern int dword_CD41E[]; /* CD41E */
-extern signed char byte_CD421[]; /* CD421 */
-extern signed char byte_CD473[]; /* CD473 */
-extern int off_CD498[]; /* CD498 */
-extern int off_CD4A0[]; /* CD4A0 */
+extern signed char lineslotgroups[]; /* CD421 */
+extern signed char lineslotgroupstart[]; /* CD473 */
+extern int goaliemenuflags[]; /* CD498 */
+extern int goaliemenuflags_e02[]; /* CD4A0 */
 extern int ovlmemneed[]; /* CD4B0 */
 extern int bannerstrs[]; /* CD4DC */
 extern unsigned char off_CD4FA[]; /* CD4FA */
@@ -2930,7 +2930,7 @@ extern int dbg_spalist[]; /* CD504 */
 extern int dbg_spanames[]; /* CD6E4 */
 extern int dbg_assnames[]; /* CD8C4 */
 extern int dbg_posnames[]; /* CD984 */
-extern short dword_CD9A0[]; /* CD9A0 */
+extern short starthl2pos[]; /* CD9A0 */
 extern int joycalx[]; /* CD9D0 */
 extern int joycaly[]; /* CD9F4 */
 extern int inputinstalled; /* CDA1C */
@@ -4844,10 +4844,10 @@ extern unsigned char loadpals[]; /* DE26C */
 extern int palcyclelock; /* DEB6C */
 extern unsigned char palcyclephase; /* DEB70 */
 extern unsigned char palcycledelay; /* DEB71 */
-extern int dword_DEB74[]; /* DEB74 */
-extern int dword_DEB78[]; /* DEB78 */
-extern int dword_DEB7C[]; /* DEB7C */
-extern int dword_DEB80[]; /* DEB80 */
+extern int plcareergoals[]; /* DEB74 */
+extern int plcareerpts[]; /* DEB78 */
+extern int plseasongoals[]; /* DEB7C */
+extern int plseasonpts[]; /* DEB80 */
 extern short rinkobjs[]; /* DEE94 */
 extern short rinkobjs_w2[]; /* DEE96 */
 extern unsigned char rinkobjs_b3[]; /* DEE97 */
@@ -5010,7 +5010,7 @@ extern short NumCwdExciteLvl; /* E9AA6 */
 extern short CwdExciteLvl; /* E9AA8 */
 extern short word_E9AAA; /* E9AAA */
 extern short periodendtime; /* E9AAC */
-extern short word_E9AAE; /* E9AAE */
+extern short penevteam; /* E9AAE */
 extern short word_E9AB0; /* E9AB0 */
 extern short ovlsteptimer; /* E9AB2 */
 extern short ovlstepidx; /* E9AB4 */
@@ -5062,7 +5062,7 @@ extern int defertab_a6[]; /* E9BBC */
 extern int defertab_fn[]; /* E9BC0 */
 extern int lineslotmark[]; /* E9C24 */
 extern int dword_E9C85[]; /* E9C85 */
-extern int dword_E9C88[]; /* E9C88 */
+extern int linesortidx[]; /* E9C88 */
 extern unsigned char offsort_c[]; /* E9CEC */
 extern unsigned char defsort_r[]; /* E9D1E */
 extern unsigned char offsort_d[]; /* E9D50 */
@@ -5075,9 +5075,9 @@ extern signed char offsort_fwd[]; /* E9E4A */
 extern unsigned char defsort_l[]; /* E9E7C */
 extern unsigned char offsort_r[]; /* E9EAE */
 extern unsigned char defsort_fwd[]; /* E9EE0 */
-extern short word_E9F12; /* E9F12 */
-extern short word_E9F14; /* E9F14 */
-extern int dword_E9F16[]; /* E9F16 */
+extern short dressedfwds; /* E9F12 */
+extern short dresseddefs; /* E9F14 */
+extern int dressedskaters[]; /* E9F16 */
 extern short rpl_x[]; /* E9F18 */
 extern int rpl_x_e14_m2[]; /* E9F32 */
 extern short rpl_x_e14; /* E9F34 */
@@ -5115,7 +5115,7 @@ extern short rpl_objframe[]; /* E9FB4 */
 extern int rpl_objstep_m3[]; /* E9FD9 */
 extern unsigned char rpl_objstep[]; /* E9FDC */
 extern unsigned char rpl_objstep_b1[]; /* E9FDD */
-extern int dword_E9FF0[]; /* E9FF0 */
+extern int rpl_ysort[]; /* E9FF0 */
 extern int dword_EA034; /* EA034 */
 extern int dword_EA038; /* EA038 */
 extern int dword_EA03C; /* EA03C */

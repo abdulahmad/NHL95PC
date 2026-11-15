@@ -152,9 +152,9 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         k = (pl->pflags & 0x80 ? 0 : 6) + pl->position;
         j = k + k;
         r = randomd0(0x14) - 10;
-        HIWORD(pl->Xpos) = dword_CD9A0[k * 2] + r;
+        HIWORD(pl->Xpos) = starthl2pos[k * 2] + r;
         t = pl->position == 0;
-        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[j + 1];
+        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + starthl2pos[j + 1];
         pl->Xvel = pl->Yvel = 0;
         pl->facedir = vtoa((short)(*puckx - HIWORD(pl->Xpos)), (short)(*pucky - HIWORD(pl->Ypos)));
     }

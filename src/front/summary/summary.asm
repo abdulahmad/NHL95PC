@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_2D346 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, byte_D42C3, cddriveptr, ClearInputQueue, cont2team, crestnames, curleague
-extern DrawGadgetByType, dword_CCC94, hmteamrec_skaters, FadeOutPalCycle, FadePalette, FadePalStep, FileClose, fileoncd
+extern DrawGadgetByType, cursndbank, hmteamrec_skaters, FadeOutPalCycle, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, FileOpenRW, FitPlayerName, fputchar, FreeMemBlock, gameopts, gameresult, gamestatlabels
 extern gsuminitff, hmcrestbmp, hmlinetab, hmpassatt, hmpasscmp, hmroster, hmscore, hmteamrec
 extern hmtmstruct, HomeTeam, joyq_flush, kaufmfont, leaguedbfmt, leaguedbfmt2, leaguedbnames, MakePath
@@ -560,12 +560,12 @@ xor edx, edx	; 2DBA8
 .36:
 lea eax, [dword esp+05D4h]	; 2DBAA
 call MakePath	; 2DBB1
-mov dword [dword_CCC94], 20h	; 2DBB6
+mov dword [cursndbank], 20h	; 2DBB6
 lea eax, [dword esp+05D4h]	; 2DBC0
 call sub_8F13B	; 2DBC7
 mov dword [dword esp+076Ch], eax	; 2DBCC
 xor edx, edx	; 2DBD3
-mov dword [dword_CCC94], edx	; 2DBD5
+mov dword [cursndbank], edx	; 2DBD5
 call PlayDigiSample	; 2DBDB
 .37:
 call ClearInputQueue	; 2DBE0
@@ -2930,12 +2930,12 @@ xor edx, edx	; 2FCE1
 .20:
 lea eax, [byte ebp-034h]	; 2FCE3
 call MakePath	; 2FCE6
-mov dword [dword_CCC94], 20h	; 2FCEB
+mov dword [cursndbank], 20h	; 2FCEB
 lea eax, [byte ebp-034h]	; 2FCF5
 call sub_8F13B	; 2FCF8
 mov dword [byte ebp-014h], eax	; 2FCFD
 xor ecx, ecx	; 2FD00
-mov dword [dword_CCC94], ecx	; 2FD02
+mov dword [cursndbank], ecx	; 2FD02
 call PlayDigiSample	; 2FD08
 .21:
 mov ebx, 10h	; 2FD0D

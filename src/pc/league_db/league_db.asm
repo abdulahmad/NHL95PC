@@ -6,7 +6,7 @@ section s_6BE95 progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, addtimer, attdb, attdb_size, boxfillcolor, boxlitecolor, boxshadecolor
 extern btn_LeagueExists, byte_D416A, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
 extern ctlavailmask, curdbname, dbdirty, dbexistsmsg, DeleteDir, dlgtextbg, dlgtextfg, DrawButtons
-extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CDA24, dword_CDA38, rostereditmode
+extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, cursndbank, dword_CDA24, dword_CDA38, rostereditmode
 extern fascrollbar_len, fascrollbar_thumb, fascrollbar_top, fascrollbar_count, dword_D0C20, dword_EA2B0, falisttop, editptrspr
 extern EditRosters, editrosters_exit, enterheld, facount, FadePalStep, falist, falistsel, FatalError
 extern FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, InitSpeechSlots, inputev, inputinstalled, inputpolldiv
@@ -75,11 +75,11 @@ mov dword [falist], ebx	; 6BF07
 .3:
 cmp byte [musicon], 0	; 6BF0D
 je short .4	; 6BF14
-mov dword [dword_CCC94], 20h	; 6BF16
+mov dword [cursndbank], 20h	; 6BF16
 mov eax, dword [dword_C4CFC]	; 6BF20
 call InitSpeechSlots	; 6BF25
 xor esi, esi	; 6BF2A
-mov dword [dword_CCC94], esi	; 6BF2C
+mov dword [cursndbank], esi	; 6BF2C
 .4:
 mov eax, 2	; 6BF32
 pop ebp	; 6BF37

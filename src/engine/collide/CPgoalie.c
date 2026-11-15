@@ -4,7 +4,7 @@
 /* CPgoalie: computer team t pulls its goalie when no penalty shot
  runs, gsp is 2 (third period), t trails o by 1-2 goals (up to gsp), at most 60 s are left and the puck y is
  on the attacking side (sign flipped by the first SortCords entry's pflags bit 7). The goalie byte gets -1, the
- goalie's menu item is unchecked (2) and "pulled" checked (1) in off_CD498, then setpersonel. */
+ goalie's menu item is unchecked (2) and "pulled" checked (1) in goaliemenuflags, then setpersonel. */
 void CPgoalie(Team *t, Team *o, int y)
 {
     short per;
@@ -21,7 +21,7 @@ void CPgoalie(Team *t, Team *o, int y)
     if ((short)y < 0) return;
     HIBYTE(t->tmgoalie) = -1;
     side = (t == &awtmstruct);
-    *(unsigned char *)((int (*)[3])off_CD498)[side][(short)(t->tmgoalie & 0xF)] = 2;
-    *(unsigned char *)((int (*)[3])off_CD4A0)[side][0] = 1;
+    *(unsigned char *)((int (*)[3])goaliemenuflags)[side][(short)(t->tmgoalie & 0xF)] = 2;
+    *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[side][0] = 1;
     setpersonel(t);
 }

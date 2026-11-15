@@ -59,25 +59,25 @@ void ChkScorerMilestone(void)
             pts = g;
         } else if (gamemode) {
             if (gameopts.fullot) {
-                sum = REC(dword_DEB7C, t, p) + REC(dword_DEB74, t, p);
+                sum = REC(plseasongoals, t, p) + REC(plcareergoals, t, p);
                 if (sum + g == 1) {
                     what = 6;
                     pts = sum + g;
-                } else if ((g += REC(dword_DEB7C, t, p)) >= 50 && g % 50 == 0) {
+                } else if ((g += REC(plseasongoals, t, p)) >= 50 && g % 50 == 0) {
                     what = 2;
                     pts = g;
-                } else if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) {
+                } else if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) {
                     what = 4;
-                } else if ((g += REC(dword_DEB74, t, p)) >= 100 && g % 100 == 0) {
+                } else if ((g += REC(plcareergoals, t, p)) >= 100 && g % 100 == 0) {
                     what = 3;
                     pts = g;
-                } else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) {
+                } else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) {
                     what = 5;
                 }
-            } else if ((g += REC(dword_DEB7C, t, p)) >= 10 && g % 10 == 0) {
+            } else if ((g += REC(plseasongoals, t, p)) >= 10 && g % 10 == 0) {
                 what = 7;
                 pts = g;
-            } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+            } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
                 what = 8;
             }
         }
@@ -85,18 +85,18 @@ void ChkScorerMilestone(void)
     if (gamemode && !what && (p = *(short *)((char *)hmtmtouch2 + (t << 8))) >= 0 && p < 0x19) {
         pts = ASSISTS(t, p) + GOALS(t, p);
         if (gameopts.fullot) {
-            if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) what = 4;
-            else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) what = 5;
-        } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+            if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) what = 4;
+            else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) what = 5;
+        } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
             what = 8;
         }
         if (!what && (p = *(short *)((char *)hmtmtouch3 + (t << 8))) >= 0 && p < 0x19) {
             g = ASSISTS(t, p);
             pts = GOALS(t, p) + g;
             if (gameopts.fullot) {
-                if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) what = 4;
-                else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) what = 5;
-            } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+                if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) what = 4;
+                else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) what = 5;
+            } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
                 what = 8;
             }
         }

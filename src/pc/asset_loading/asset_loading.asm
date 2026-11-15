@@ -25,8 +25,8 @@ extern str_VFN, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8
 extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
-extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2, injurystop, Pencntdwn2
-extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, word_E9AAE
+extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
+extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
@@ -766,7 +766,7 @@ xor ecx, ecx	; 1416F
 mov dword [savedmousex], ecx	; 14171
 mov word [bannertimer], ax	; 14177
 mov word [injurystop], ax	; 1417D
-mov word [word_CBEC2], ax	; 14183
+mov word [refhitcount], ax	; 14183
 mov ecx, edx	; 14189
 mov word [bannermsg], dx	; 1418B
 mov word [ovlstep], dx	; 14192
@@ -810,7 +810,7 @@ mov eax, rinkobjused	; 14226
 call __STOSB	; 1422B
 xor edx, edx	; 14230
 mov word [dword_E9A9E], dx	; 14232
-mov word [word_E9AAE], dx	; 14239
+mov word [penevteam], dx	; 14239
 mov word [dword_E9AB6], dx	; 14240
 mov word [NumCwdExciteLvl], dx	; 14247
 mov word [MaxCwdExciteLvl], dx	; 1424E

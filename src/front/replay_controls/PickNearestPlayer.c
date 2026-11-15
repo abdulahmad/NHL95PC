@@ -1,7 +1,7 @@
 /* Gadgets replay: nearest player to a point. */
 #include "nhl95.h"
 
-#define PX(i) (*(int *)((char *)dword_E9F16 + (i) * 2) >> 16)  /* rpl_x[i], as the top word of a dword */
+#define PX(i) (*(int *)((char *)dressedskaters + (i) * 2) >> 16)  /* rpl_x[i], as the top word of a dword */
 #define PY(i) (*(int *)((char *)rpl_x_e16 + (i) * 2) >> 16)  /* rpl_y[i], likewise */
 
 /* PickNearestPlayer: the object (0-16, skipping 12-15) whose replay position (rpl_x /
