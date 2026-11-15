@@ -50,7 +50,7 @@ void PlayoffTreeScreen(void)
     if (playofftree[0] == 0x1A) off_CF6A3 = 0;
     else off_CF6A3 = (int)DeskSetExit3b;
     sub_B4BA8();
-    if (dword_C65AC == 0) {
+    if (embscupbank == 0) {
         MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
         statsbgshapes = sub_8E83C(path, 0);
         statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
@@ -59,7 +59,7 @@ void PlayoffTreeScreen(void)
         sub_B4BC4(0, 0x280, 0, 0x1E0);
         FreeMemBlock(statsbgshapes);
     } else {
-        statspalshape = sub_B30B4(dword_C65AC, (char *)str_Bkgd2);
+        statspalshape = sub_B30B4(embscupbank, (char *)str_Bkgd2);
         sub_B4BC4(0, 0x280, 0x13, 0x1E0);
         sub_913B4(statspalshape);
         sub_B4BC4(0, 0x280, 0, 0x1E0);
@@ -110,7 +110,7 @@ void PlayoffTreeScreen(void)
             x = 7 - i;
             slot = treecolslots[7 - (i * 2 - 8)];
         }
-        dword_C6DBA[playofftree[slot]] = i;
+        potreeseeds[playofftree[slot]] = i;
         if (i < 4) {
             x = i;
             slot = treecol_Er1[i * 2];
@@ -118,7 +118,7 @@ void PlayoffTreeScreen(void)
             x = 7 - i;
             slot = treecol_Er1[7 - (i * 2 - 8)];
         }
-        dword_C6DBA[playofftree[slot]] = i;
+        potreeseeds[playofftree[slot]] = i;
     }
     y = 0x48;
     for (i = 0; i < 8; i++) {
@@ -130,7 +130,7 @@ void PlayoffTreeScreen(void)
             slot = treecolslots[7 - (i * 2 - 8)];
         }
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
         x2 = ((Pair *)treecolx)[x].a + 0x6A;
@@ -157,7 +157,7 @@ void PlayoffTreeScreen(void)
                 slot = treecol_Wr2[3 - (i * 2 - 4)];
             }
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
             x2 = ((Pair *)treecolx)[x].a + 0x6A;
@@ -175,7 +175,7 @@ void PlayoffTreeScreen(void)
             sub_913B4(statspalshape);
             slot = treecolslots[0x10];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x48, y - 1, buf);
             if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -187,7 +187,7 @@ void PlayoffTreeScreen(void)
             y += 0x10;
             slot = treecolslots[0x11];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x48, y - 1, buf);
             if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -247,7 +247,7 @@ void PlayoffTreeScreen(void)
     if (playofftree[treecolslots[0x30]] < 0x1A && playofftree[treecolslots[0x31]] < 0x1A) {
         slot = treecolslots[0x30];
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(0x1C6, y - 1, buf);
         if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -259,7 +259,7 @@ void PlayoffTreeScreen(void)
         y += 0x10;
         slot = treecolslots[0x31];
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(0x1C6, y - 1, buf);
         if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -282,7 +282,7 @@ void PlayoffTreeScreen(void)
             if (i < 2) slot = treecol_Er2[i * 2];
             else slot = treecol_Er2[3 - (i * 2 - 4)];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x280 - (((Pair *)treecolx)[5 - x].a + 0x64), y, buf);
             x2 = 0x286 - ((Pair *)treecolx)[5 - x].a;
@@ -309,7 +309,7 @@ void PlayoffTreeScreen(void)
             slot = treecol_Er1[7 - (i * 2 - 8)];
         }
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
         x2 = ((Pair *)treecolx)[x].a + 0x6A;

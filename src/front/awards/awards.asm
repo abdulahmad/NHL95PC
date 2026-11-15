@@ -9,7 +9,7 @@ extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, 
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, dword_C513C, dword_C5168, dword_C66D0, dword_C66D4, dword_CC080
-extern goalienotebits, demogame, dword_D8C4C, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
+extern goalienotebits, demogame, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
 extern foy, fputchar, frameaccum, FreeMemBlock, gameclock, gamemode, gameopts, gameover
@@ -20,7 +20,7 @@ extern lcline, lcreqchoice, lcrequest, lcsel, lctimer, leaguedbnames, LoadCupFin
 extern LoadGameState, LoadRink, LoadRockMusic, LoadTeamPalette, MakeGSummaryPath, MakePath, memcpy_, MouseSetPos
 extern mousex, mousey, MusicChanReset, musichandle, musicon, musicslot, NormalizeDressFlags, nullsub_2
 extern numshapes, numshpbank, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263
-extern off_C5267, off_C526F, off_C5273, off_C527B, off_CBED0, ovlseq, ovlstep, ovltimer
+extern off_C5267, off_C526F, off_C5273, off_C527B, ovlartnames, ovlseq, ovlstep, ovltimer
 extern pad1dev, pad2dev, PaPreloadClips, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn
 extern penshotlive, penshotmode, penshotplayer, penshotstart, PeriodOver, photobankf, photobanks, photoptrs
 extern photoptrsf, PlayCrowdSample, PlayDigiSample, PostGameDesk, presidentsteam, PrintFmt1, PrintFmt2, PrintShadowText

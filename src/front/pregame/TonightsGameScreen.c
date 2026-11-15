@@ -96,7 +96,7 @@ int TonightsGameScreen(int home, int away)
         gipk = (char *)sub_8CCA8((char *)str_GIPK, 0xB60, 0x20);
         for (n = 0; n < 2 && !err; n++) {
             for (i = 0; i < 0x1C && !err; i++) {
-                k = ((int (*)[0xBA])dword_DBC7C)[n][i];
+                k = ((int (*)[0xBA])hmteamrec_skaters)[n][i];
                 if (k != -1) err = ReadKeyRec(fh, gipk + (n * 0x1C + i) * 0x34, k);
             }
         }

@@ -18,9 +18,9 @@ global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, str_SfPal1, str_SfPa
 global str_Desk, str_Pal5, str_Pointer2, str_Iff3, str_Pause, str_Menubuff3, str_ArtHart, str_S1
 global str_errd3, str_errd4, str_backslash, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn
 global str_ArtCald, str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, str_Hart, str_ArtRoss2, str_Norris
-global str_Selke, str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, unk_C029A
+global str_Selke, str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, str_StanleyCup
 global str_MostValuablePlayer, str_PointsLeader, str_RegularSeason, str_BestDefenseman, str_BestDefensiveForward, str_BestGoalkeeper, str_BestGoalsAgainstAverage, str_BestRookie
-global str_BestRegularSeasonRecord, str_InThePlayoffs, str_Most3StarSelections, unk_C0379, str_Season2, str_Playoff2, str_MightyDucks, unk_C03C4
+global str_BestRegularSeasonRecord, str_InThePlayoffs, str_Most3StarSelections, str_StanleyCupChampions, str_Season2, str_Playoff2, str_MightyDucks, unk_C03C4
 global unk_C03C6, str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G
 global str_A, str_Pt, BOS, BUF, CGY, CHI, DET, EDM
 global HFD, LA, DAL, MTL, NJ, NYI, NYR, OTT
@@ -29,8 +29,8 @@ global WSH, WPG, ANA, FLA, ASW, ASE, Buffalo, Calgary
 global Chicago, Detroit, Edmonton, Hartford, LosAngeles, Dallas, Montreal, NewJersey
 global NYIslanders, NYRangers, Ottawa, Philadelphia, Pittsburgh, Quebec, StLouis, SanJose
 global TampaBay, Toronto, Vancouver, Washington, Winnipeg, Anaheim, Florida, AllStarsWest
-global AllStarsEast, unk_C06BC, unk_C06C1, unk_C06C6, unk_C06CB, unk_C06D0, unk_C06D5, unk_C06DA
-global unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, str_OT2, str_BOS, str_BUF3, str_CGY
+global AllStarsEast, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005, str_3006
+global str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3, str_CGY
 global str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL, str_NJ
 global str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL, str_SJ
 global str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA, str_ASW
@@ -146,7 +146,7 @@ str_ConnSmythe:
 db 043h,06Fh,06Eh,06Eh,020h,053h,06Dh,079h,074h,068h,065h,00h
 str_EASportsCup:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,020h,043h,075h,070h,00h
-unk_C029A:
+str_StanleyCup:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,00h
 str_MostValuablePlayer:
 db 04Dh,06Fh,073h,074h,020h,056h,061h,06Ch,075h,061h,062h,06Ch,065h,020h,050h,06Ch
@@ -175,7 +175,7 @@ db 069h,06Eh,020h,074h,068h,065h,020h,050h,06Ch,061h,079h,06Fh,066h,066h,073h,00
 str_Most3StarSelections:
 db 04Dh,06Fh,073h,074h,020h,033h,020h,053h,074h,061h,072h,020h,053h,065h,06Ch,065h
 db 063h,074h,069h,06Fh,06Eh,073h,00h
-unk_C0379:
+str_StanleyCupChampions:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,043h,068h,061h
 db 06Dh,070h,069h,06Fh,06Eh,073h,00h
 str_Season2:
@@ -405,27 +405,27 @@ str_NeedKbytesFmt:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,025h,032h,064h,020h,04Bh
 db 062h,079h,074h,065h,073h,00h
-unk_C06BC:
+str_3000:
 db 033h,030h,030h,030h,00h
-unk_C06C1:
+str_3001:
 db 033h,030h,030h,031h,00h
-unk_C06C6:
+str_3002:
 db 033h,030h,030h,032h,00h
-unk_C06CB:
+str_3003:
 db 033h,030h,030h,033h,00h
-unk_C06D0:
+str_3004:
 db 033h,030h,030h,034h,00h
-unk_C06D5:
+str_3005:
 db 033h,030h,030h,035h,00h
-unk_C06DA:
+str_3006:
 db 033h,030h,030h,036h,00h
-unk_C06DF:
+str_3007:
 db 033h,030h,030h,037h,00h
-unk_C06E4:
+str_3008:
 db 033h,030h,030h,038h,00h
-unk_C06E9:
+str_3009:
 db 033h,030h,030h,039h,00h
-unk_C06EE:
+str_300:
 db 033h,030h,030h,020h,00h
 str_OT2:
 db 04Fh,054h,020h,020h,00h

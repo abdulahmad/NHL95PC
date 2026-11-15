@@ -48,7 +48,7 @@ extern unsigned char str_Calder[]; /* C026E */
 extern unsigned char str_Presidents[]; /* C0275 */
 extern unsigned char str_ConnSmythe[]; /* C0280 */
 extern unsigned char str_EASportsCup[]; /* C028C */
-extern unsigned char unk_C029A[]; /* C029A */
+extern unsigned char str_StanleyCup[]; /* C029A */
 extern unsigned char str_MostValuablePlayer[]; /* C02A7 */
 extern unsigned char str_PointsLeader[]; /* C02BC */
 extern unsigned char str_RegularSeason[]; /* C02CA */
@@ -60,7 +60,7 @@ extern unsigned char str_BestRookie[]; /* C032B */
 extern unsigned char str_BestRegularSeasonRecord[]; /* C0337 */
 extern unsigned char str_InThePlayoffs[]; /* C0352 */
 extern unsigned char str_Most3StarSelections[]; /* C0362 */
-extern unsigned char unk_C0379[]; /* C0379 */
+extern unsigned char str_StanleyCupChampions[]; /* C0379 */
 extern unsigned char str_Season2[]; /* C0390 */
 extern unsigned char str_Playoff2[]; /* C0397 */
 extern unsigned char str_ANA[]; /* C039F */
@@ -171,17 +171,17 @@ extern unsigned char str_ErrDiskFree4[]; /* C064C */
 extern unsigned char str_ErrDiskFree5[]; /* C066B */
 extern unsigned char str_GsummaryDb[]; /* C068A */
 extern unsigned char str_NeedKbytesFmt[]; /* C0696 */
-extern unsigned char unk_C06BC[]; /* C06BC */
-extern unsigned char unk_C06C1[]; /* C06C1 */
-extern unsigned char unk_C06C6[]; /* C06C6 */
-extern unsigned char unk_C06CB[]; /* C06CB */
-extern unsigned char unk_C06D0[]; /* C06D0 */
-extern unsigned char unk_C06D5[]; /* C06D5 */
-extern unsigned char unk_C06DA[]; /* C06DA */
-extern unsigned char unk_C06DF[]; /* C06DF */
-extern unsigned char unk_C06E4[]; /* C06E4 */
-extern unsigned char unk_C06E9[]; /* C06E9 */
-extern unsigned char unk_C06EE[]; /* C06EE */
+extern unsigned char str_3000[]; /* C06BC */
+extern unsigned char str_3001[]; /* C06C1 */
+extern unsigned char str_3002[]; /* C06C6 */
+extern unsigned char str_3003[]; /* C06CB */
+extern unsigned char str_3004[]; /* C06D0 */
+extern unsigned char str_3005[]; /* C06D5 */
+extern unsigned char str_3006[]; /* C06DA */
+extern unsigned char str_3007[]; /* C06DF */
+extern unsigned char str_3008[]; /* C06E4 */
+extern unsigned char str_3009[]; /* C06E9 */
+extern unsigned char str_300[]; /* C06EE */
 extern unsigned char str_OT2[]; /* C06F3 */
 extern unsigned char str_BOS[]; /* C06F8 */
 extern unsigned char str_BUF3[]; /* C06FD */
@@ -445,7 +445,7 @@ extern unsigned char str_TeamPenaltyKilling[]; /* C0F22 */
 extern unsigned char str_TeamPowerPlay[]; /* C0F38 */
 extern unsigned char str_TeamPenalties[]; /* C0F49 */
 extern unsigned char str_TeamStandings[]; /* C0F59 */
-extern unsigned char unk_C0F69[]; /* C0F69 */
+extern unsigned char str_spW[]; /* C0F69 */
 extern unsigned char unk_C0F6C[]; /* C0F6C */
 extern unsigned char unk_C0F6F[]; /* C0F6F */
 extern unsigned char str_GF2[]; /* C0F72 */
@@ -507,8 +507,8 @@ extern unsigned char str_ShootingPercentageLeaders[]; /* C1158 */
 extern unsigned char str_GoalsAgainstAverageLeaders[]; /* C1175 */
 extern unsigned char str_GoaltenderWinLeaders[]; /* C1194 */
 extern unsigned char str_SavePercentageLeaders[]; /* C11AC */
-extern unsigned char unk_C11C5[]; /* C11C5 */
-extern unsigned char unk_C11C9[]; /* C11C9 */
+extern unsigned char str_spG[]; /* C11C5 */
+extern unsigned char str_spA[]; /* C11C9 */
 extern unsigned char str_Pt3[]; /* C11CD */
 extern unsigned char unk_C11D1[]; /* C11D1 */
 extern unsigned char str_PP2[]; /* C11D2 */
@@ -520,7 +520,7 @@ extern unsigned char str_Pct6[]; /* C11E8 */
 extern unsigned char str_MIN5[]; /* C11EE */
 extern unsigned char str_GA5[]; /* C11F3 */
 extern unsigned char str_AVG2[]; /* C11F7 */
-extern unsigned char unk_C11FD[]; /* C11FD */
+extern unsigned char str_spW2[]; /* C11FD */
 extern unsigned char unk_C1200[]; /* C1200 */
 extern unsigned char unk_C1203[]; /* C1203 */
 extern unsigned char str_SA4[]; /* C1206 */
@@ -812,7 +812,7 @@ extern unsigned char str_SAV3[]; /* C1923 */
 extern unsigned char str_02d3[]; /* C1927 */
 extern unsigned char str_L1[]; /* C192D */
 extern unsigned char str_L22[]; /* C1930 */
-extern unsigned char unk_C1934[]; /* C1934 */
+extern unsigned char str_A5[]; /* C1934 */
 extern unsigned char unk_C1936[]; /* C1936 */
 extern unsigned char str_Game2[]; /* C1938 */
 extern unsigned char str_Sav2[]; /* C193D */
@@ -1119,11 +1119,11 @@ extern unsigned char str_Rpenshot[]; /* C231A */
 extern unsigned char str_Apswait[]; /* C2323 */
 extern unsigned char str_Abreak[]; /* C232B */
 extern unsigned char str_Error2[]; /* C2332 */
-extern unsigned char unk_C2338[]; /* C2338 */
+extern unsigned char str_G5[]; /* C2338 */
 extern unsigned char str_LD[]; /* C233A */
 extern unsigned char str_RD2[]; /* C233D */
 extern unsigned char str_LW[]; /* C2340 */
-extern unsigned char unk_C2343[]; /* C2343 */
+extern unsigned char str_C6[]; /* C2343 */
 extern unsigned char str_RW[]; /* C2345 */
 extern unsigned char str_XC[]; /* C2348 */
 extern unsigned char str_dbgO[]; /* C234B */
@@ -1211,8 +1211,8 @@ extern unsigned char str_Menubuff[]; /* C2929 */
 extern unsigned char str_TheDatabaseHasNot[]; /* C2932 */
 extern unsigned char str_AreYouSureYou[]; /* C2953 */
 extern unsigned char str_GP9[]; /* C2974 */
-extern unsigned char unk_C2977[]; /* C2977 */
-extern unsigned char unk_C297B[]; /* C297B */
+extern unsigned char str_spG2[]; /* C2977 */
+extern unsigned char str_spA2[]; /* C297B */
 extern unsigned char str_Pt4[]; /* C297F */
 extern unsigned char str_PIM7[]; /* C2983 */
 extern unsigned char unk_C2987[]; /* C2987 */
@@ -1238,7 +1238,7 @@ extern unsigned char str_Faceoffs2[]; /* C2A40 */
 extern unsigned char str_Min6[]; /* C2A49 */
 extern unsigned char str_GA6[]; /* C2A4E */
 extern unsigned char str_GAA5[]; /* C2A53 */
-extern unsigned char unk_C2A59[]; /* C2A59 */
+extern unsigned char str_spW3[]; /* C2A59 */
 extern unsigned char unk_C2A5C[]; /* C2A5C */
 extern unsigned char unk_C2A5F[]; /* C2A5F */
 extern unsigned char str_SO3[]; /* C2A62 */
@@ -1259,7 +1259,7 @@ extern unsigned char str_Goaltending2[]; /* C2AE8 */
 extern unsigned char str_OverAll2[]; /* C2AF4 */
 extern unsigned char str_Cancel6[]; /* C2AFD */
 extern unsigned char str_Create[]; /* C2B04 */
-extern unsigned char unk_C2B0B[]; /* C2B0B */
+extern unsigned char str_X[]; /* C2B0B */
 extern unsigned char str_ErrorsFoundInDatabases[]; /* C2B10 */
 extern unsigned char str_TheForwardLinesAre[]; /* C2B2B */
 extern unsigned char str_TheDefenceLinesAre[]; /* C2B52 */
@@ -1291,7 +1291,7 @@ extern unsigned char str_Shoots[]; /* C2CF4 */
 extern unsigned char str_spL[]; /* C2CFB */
 extern unsigned char str_spR[]; /* C2CFF */
 extern unsigned char str_GloveHand[]; /* C2D03 */
-extern short word_C2D0E; /* C2D0E */
+extern short str_L9; /* C2D0E */
 extern short word_C2D10; /* C2D10 */
 extern unsigned char str_EnterANewRating[]; /* C2D12 */
 extern unsigned char str_RatingRange[]; /* C2D26 */
@@ -1556,7 +1556,7 @@ extern unsigned char str_ASW2[]; /* C3534 */
 extern unsigned char str_ASE2[]; /* C3538 */
 extern unsigned char str_WesternConferenceQuarter[]; /* C353C */
 extern unsigned char str_EasternConferenceQuarter[]; /* C355E */
-extern unsigned char unk_C3580[]; /* C3580 */
+extern unsigned char str_StanleyCupFinals[]; /* C3580 */
 extern unsigned char str_HomeBck[]; /* C3594 */
 extern unsigned char str_VisBck[]; /* C359C */
 extern unsigned char str_HomeNameBck[]; /* C35A3 */
@@ -1592,9 +1592,9 @@ extern unsigned char str_Maindesk2[]; /* C368D */
 extern unsigned char str_Slapshot[]; /* C3696 */
 extern unsigned char str_MT32HOCK[]; /* C369F */
 extern unsigned char str_NHL3[]; /* C36A8 */
-extern unsigned char unk_C36AC[]; /* C36AC */
+extern unsigned char str_R4[]; /* C36AC */
 extern unsigned char str_CantOpenNhlCfg[]; /* C36AF */
-extern unsigned char asc_C36C3[]; /* C36C3 */
+extern unsigned char str_04x[]; /* C36C3 */
 extern unsigned char str_Emmcopybuf[]; /* C36C9 */
 extern unsigned char str_RoughingPen[]; /* C36D4 */
 extern unsigned char str_ChargingPen[]; /* C36E1 */
@@ -1653,26 +1653,26 @@ extern unsigned char str_XBRUCE2[]; /* C38F0 */
 extern unsigned char str_GsummaryDb4[]; /* C38F8 */
 extern unsigned char str_AGameYouRequire[]; /* C3904 */
 extern unsigned char str_DemoNhl[]; /* C3923 */
-extern unsigned char unk_C392C[]; /* C392C */
+extern unsigned char str_H2[]; /* C392C */
 extern unsigned char unk_C392F[]; /* C392F */
 extern unsigned char str_Gsummary3[]; /* C3932 */
-extern unsigned char unk_C393B[]; /* C393B */
+extern unsigned char str_H4[]; /* C393B */
 extern unsigned char unk_C393E[]; /* C393E */
 extern unsigned char unk_C3941[]; /* C3941 */
 extern unsigned char unk_C3944[]; /* C3944 */
 extern unsigned char str_AGameYouRequire2[]; /* C3947 */
 extern unsigned char str_GameSav5[]; /* C3966 */
-extern unsigned char unk_C396F[]; /* C396F */
+extern unsigned char str_H1[]; /* C396F */
 extern unsigned char str_Db4[]; /* C3972 */
 extern unsigned char str_Sav3[]; /* C3976 */
-extern unsigned char unk_C397B[]; /* C397B */
+extern unsigned char str_A32[]; /* C397B */
 extern unsigned char str_Pointer22[]; /* C397E */
 extern unsigned char str_Savegame[]; /* C3986 */
 extern unsigned char str_Prmt[]; /* C398F */
 extern unsigned char str_Dialog[]; /* C3994 */
 extern unsigned char str_Nhl3[]; /* C399B */
 extern unsigned char str_Err1[]; /* C39A0 */
-extern unsigned char unk_C39A8[]; /* C39A8 */
+extern unsigned char str_SDD3[]; /* C39A8 */
 extern unsigned char str_Palette[]; /* C39B3 */
 extern unsigned char str_Embscup[]; /* C39BB */
 extern unsigned char str_Bkgd[]; /* C39C3 */
@@ -1721,7 +1721,7 @@ extern unsigned char str_CantOpenNhlCfg2[]; /* C3B16 */
 extern unsigned char str_ALLFILESTXT[]; /* C3B2A */
 extern unsigned char str_ALLFILESTXT2[]; /* C3B38 */
 extern unsigned char str_CouldNotOpenALLFILES[]; /* C3B45 */
-extern unsigned char asc_C3B67[]; /* C3B67 */
+extern unsigned char str_S9[]; /* C3B67 */
 extern unsigned char str_Coachcut[]; /* C3B6C */
 extern unsigned char str_Scrn4[]; /* C3B75 */
 extern unsigned char str_Pal29[]; /* C3B7A */
@@ -1782,7 +1782,7 @@ extern unsigned char str_TIMES[]; /* C405C */
 extern unsigned char str_CLOSED[]; /* C4068 */
 extern unsigned char str_TIMES2[]; /* C4074 */
 extern unsigned char asc_C4080[]; /* C4080 */
-extern unsigned char asc_C4090[]; /* C4090 */
+extern unsigned char str_2d02d02d[]; /* C4090 */
 extern unsigned char unk_C40A0[]; /* C40A0 */
 extern unsigned char str_Fs[]; /* C40CC */
 extern unsigned char str_Jan2[]; /* C40D0 */
@@ -1813,8 +1813,8 @@ extern unsigned char str_SPACE9d8s8s[]; /* C4228 */
 extern unsigned char str_SPACE66x6[]; /* C4244 */
 extern unsigned char str_SPACE7d66s[]; /* C4268 */
 extern unsigned char asc_C428C[]; /* C428C */
-extern unsigned char asc_C42A4[]; /* C42A4 */
-extern unsigned char asc_C42BC[]; /* C42BC */
+extern unsigned char str_1212s9d8s8s[]; /* C42A4 */
+extern unsigned char str_33d1212s66x66s66s44x[]; /* C42BC */
 extern unsigned char asc_C42E4[]; /* C42E4 */
 extern unsigned char str_MEMMANAGER[]; /* C430C */
 extern unsigned char unk_C4318[]; /* C4318 */
@@ -1831,8 +1831,8 @@ extern unsigned char str_ALIGNFlagIsSet[]; /* C43BC */
 extern unsigned char str_PRIORITY1d[]; /* C43D0 */
 extern unsigned char str_SequenceD[]; /* C43E0 */
 extern unsigned char str_BlockIsPURGABLE[]; /* C43F0 */
-extern unsigned char asc_C4404[]; /* C4404 */
-extern unsigned char asc_C440C[]; /* C440C */
+extern unsigned char str_04x2[]; /* C4404 */
+extern unsigned char str_02x[]; /* C440C */
 extern unsigned char unk_C4414[]; /* C4414 */
 extern unsigned char unk_C4418[]; /* C4418 */
 extern unsigned char asc_C441C[]; /* C441C */
@@ -1875,7 +1875,7 @@ extern unsigned char str_B022d[]; /* C46EC */
 extern unsigned char asc_C46F8[]; /* C46F8 */
 extern unsigned char str_SCREEN2[]; /* C4700 */
 extern unsigned char asc_C470C[]; /* C470C */
-extern unsigned char asc_C471C[]; /* C471C */
+extern unsigned char str_2d02d02d2[]; /* C471C */
 extern unsigned char unk_C472C[]; /* C472C */
 extern unsigned char str_FrameRate3dFrames[]; /* C4730 */
 extern unsigned char str_Width3dHeight3d[]; /* C4760 */
@@ -1937,7 +1937,7 @@ extern unsigned char str_FloatingPointSupportNot[]; /* C4ADC */
 extern unsigned char str_NotEnoughMemoryTo[]; /* C4B00 */
 extern unsigned char str_RATIONALDOS4G[]; /* C4B30 */
 extern unsigned char str_GF1PATCH110[]; /* C4B40 */
-extern unsigned char asc_C4B4C[]; /* C4B4C */
+extern unsigned char str_110[]; /* C4B4C */
 extern unsigned char str_ULTRASND[]; /* C4B50 */
 extern int str_Inf; /* C4B5C */
 extern int str_Nan; /* C4B60 */
@@ -1974,7 +1974,7 @@ extern int joyrec; /* C4E18 */
 extern int palfadedin; /* C4E24 */
 extern int screenw; /* C4E28 */
 extern int screenh; /* C4E2C */
-extern unsigned char unk_C4E30[]; /* C4E30 */
+extern unsigned char blackpal[]; /* C4E30 */
 extern int demomode; /* C5130 */
 extern int dword_C5131[]; /* C5131 */
 extern int dword_C5133[]; /* C5133 */
@@ -2012,13 +2012,13 @@ extern int ctl1side[]; /* C5413 */
 extern int ctl2side; /* C5417 */
 extern unsigned char byte_C541B; /* C541B */
 extern int sounddev; /* C541F */
-extern unsigned char unk_C5423[]; /* C5423 */
-extern unsigned char byte_C5424; /* C5424 */
-extern unsigned char byte_C5425; /* C5425 */
-extern unsigned char byte_C5426; /* C5426 */
-extern unsigned char byte_C5427; /* C5427 */
-extern short word_C5428; /* C5428 */
-extern unsigned char unk_C542E[]; /* C542E */
+extern unsigned char gsumheader[]; /* C5423 */
+extern unsigned char gsumheader_b1; /* C5424 */
+extern unsigned char gsumheader_b2; /* C5425 */
+extern unsigned char gsumheader_b3; /* C5426 */
+extern unsigned char gsumheader_b4; /* C5427 */
+extern short gsumcount; /* C5428 */
+extern unsigned char gsumtail[]; /* C542E */
 extern unsigned char hmgoalcnt; /* C542F */
 extern unsigned char hmshotcnt; /* C5430 */
 extern unsigned char awgoalcnt; /* C5431 */
@@ -2039,21 +2039,21 @@ extern int dword_C56E4[]; /* C56E4 */
 extern int hudclockmin; /* C5704 */
 extern int hudclocksec; /* C5708 */
 extern int hudclockhund; /* C570C */
-extern int dword_C5710; /* C5710 */
-extern int dword_C5714; /* C5714 */
-extern int dword_C5718; /* C5718 */
+extern int panelprevmin; /* C5710 */
+extern int panelprevsec; /* C5714 */
+extern int panelprevhund; /* C5718 */
 extern short hudpenhome[]; /* C571C */
-extern short word_C571E[]; /* C571E */
-extern short word_C5720[]; /* C5720 */
-extern short word_C5722[]; /* C5722 */
+extern short hmpanelpen_time[]; /* C571E */
+extern short hmpanelpen_w4[]; /* C5720 */
+extern short hmpanelpen_w6[]; /* C5722 */
 extern short hudpenaway[]; /* C575C */
-extern short word_C575E[]; /* C575E */
-extern short word_C5760[]; /* C5760 */
-extern short word_C5762[]; /* C5762 */
+extern short awpanelpen_time[]; /* C575E */
+extern short awpanelpen_w4[]; /* C5760 */
+extern short awpanelpen_w6[]; /* C5762 */
 extern int perioddigits[]; /* C579C */
 extern int off_C57C8; /* C57C8 */
 extern int crestnames[]; /* C57CC */
-extern int dword_C583C; /* C583C */
+extern int panelhund; /* C583C */
 extern int deferpending; /* C5840 */
 extern int dword_C5844; /* C5844 */
 extern int dword_C5848; /* C5848 */
@@ -2061,12 +2061,12 @@ extern int hudhomeline; /* C584C */
 extern int hudawayline; /* C5850 */
 extern int dword_C5854; /* C5854 */
 extern int dword_C5858; /* C5858 */
-extern int dword_C585C; /* C585C */
-extern int dword_C5860; /* C5860 */
+extern int hmlinetimer; /* C585C */
+extern int awlinetimer; /* C5860 */
 extern int dword_C5861[]; /* C5861 */
 extern int dword_C5862[]; /* C5862 */
 extern int demoteammode; /* C5886 */
-extern int dword_C588A; /* C588A */
+extern int nhlintrosaid; /* C588A */
 extern unsigned char unk_C588E[]; /* C588E */
 extern unsigned char str_OfficiallyLicensed[]; /* C588F */
 extern unsigned char str_ProductOfThe[]; /* C58A3 */
@@ -2201,7 +2201,7 @@ extern unsigned char str_DougReid[]; /* C634F */
 extern unsigned char str_MottLinn[]; /* C6359 */
 extern unsigned char unk_C6363[]; /* C6363 */
 extern unsigned char unk_C638C[]; /* C638C */
-extern int off_C6399[]; /* C6399 */
+extern int creditpages[]; /* C6399 */
 extern int textgrid; /* C6410 */
 extern int textgridon; /* C6414 */
 extern int textcolor; /* C6418 */
@@ -2221,8 +2221,8 @@ extern unsigned char str_InsufficientDiskSpaceTo[]; /* C652E */
 extern unsigned char str_TheDisplayedStatisticsTo[]; /* C654F */
 extern unsigned char msg_NeedKbytes2[]; /* C6570 */
 extern unsigned char off_C659A[]; /* C659A */
-extern int dword_C65A8; /* C65A8 */
-extern int dword_C65AC; /* C65AC */
+extern int easnfontbuf; /* C65A8 */
+extern int embscupbank; /* C65AC */
 extern int statscategory; /* C65B0 */
 extern int statsteamsel; /* C65B4 */
 extern int statsredrawcb; /* C65B8 */
@@ -2262,7 +2262,7 @@ extern unsigned char mi_PlayoffMode; /* C6777 */
 extern unsigned char str_POTitle[]; /* C6779 */
 extern unsigned char unk_C678E[]; /* C678E */
 extern int dword_C679D[]; /* C679D */
-extern unsigned char byte_C67A9; /* C67A9 */
+extern unsigned char str_Dashes; /* C67A9 */
 extern unsigned char unk_C67B1[]; /* C67B1 */
 extern int dword_C67B9[]; /* C67B9 */
 extern int dword_C67BD[]; /* C67BD */
@@ -2309,13 +2309,13 @@ extern int teamstattitles[]; /* C6B70 */
 extern int teamcolhdrs[]; /* C6B88 */
 extern int leadersortfns[]; /* C6BE8 */
 extern int leadertitles[]; /* C6C14 */
-extern int off_C6C40[]; /* C6C40 */
-extern int off_C6C44[]; /* C6C44 */
-extern int off_C6C48[]; /* C6C48 */
-extern int off_C6C4C[]; /* C6C4C */
-extern int off_C6C50[]; /* C6C50 */
+extern int leadercolhdrs[]; /* C6C40 */
+extern int leadercolhdrs_c1[]; /* C6C44 */
+extern int leadercolhdrs_c2[]; /* C6C48 */
+extern int leadercolhdrs_c3[]; /* C6C4C */
+extern int leadercolhdrs_c4[]; /* C6C50 */
 extern unsigned char off_C6D22[]; /* C6D22 */
-extern short word_C6D24; /* C6D24 */
+extern short potreeround; /* C6D24 */
 extern int dword_C6D26; /* C6D26 */
 extern unsigned char treecolslots[]; /* C6D72 */
 extern unsigned char treecol_Wr2[]; /* C6D7A */
@@ -2323,7 +2323,7 @@ extern unsigned char treecol_Wr3[]; /* C6D82 */
 extern unsigned char treecol_Er3[]; /* C6DA2 */
 extern unsigned char treecol_Er2[]; /* C6DAA */
 extern unsigned char treecol_Er1[]; /* C6DB2 */
-extern int dword_C6DBA[]; /* C6DBA */
+extern int potreeseeds[]; /* C6DBA */
 extern int dword_C6E20[]; /* C6E20 */
 extern short treecolx[]; /* C6E22 */
 extern int treerowy[]; /* C6E32 */
@@ -2683,14 +2683,14 @@ extern unsigned char msg_TradeDeadline[]; /* C8C26 */
 extern unsigned char str_GeneratingRandomSchedule[]; /* C8C30 */
 extern unsigned char str_PleaseWait2[]; /* C8C4C */
 extern unsigned char msg_GenSchedule[]; /* C8C59 */
-extern int dword_C8C61; /* C8C61 */
+extern int playoffbuf; /* C8C61 */
 extern unsigned char str_InsufficientDiskSpaceTo4[]; /* C8C68 */
 extern unsigned char str_ANewLeagueYou[]; /* C8C89 */
 extern unsigned char str_KbytesFreeLine[]; /* C8CA4 */
 extern unsigned char msg_NoDiskSpace[]; /* C8CC8 */
 extern unsigned char str_DiskDriveFullCan[]; /* C8CD4 */
 extern unsigned char msg_DiskFull[]; /* C8D02 */
-extern int dword_C8D06[]; /* C8D06 */
+extern int leaguedbsizes[]; /* C8D06 */
 extern int dword_C9002; /* C9002 */
 extern int simfwdorder[]; /* C900C */
 extern int simdorder[]; /* C905C */
@@ -2789,7 +2789,7 @@ extern short bannermsg; /* CBEC8 */
 extern short bannertimer; /* CBECA */
 extern short ovlseq; /* CBECC */
 extern short ovlstep; /* CBECE */
-extern int off_CBED0[]; /* CBED0 */
+extern int ovlartnames[]; /* CBED0 */
 extern unsigned char unk_CBEFC[]; /* CBEFC */
 extern unsigned char unk_CBF04[]; /* CBF04 */
 extern unsigned char unk_CBF18[]; /* CBF18 */
@@ -2965,22 +2965,22 @@ extern unsigned char str_CentralRegistry[]; /* CDB55 */
 extern unsigned char str_Exit[]; /* CDB6A */
 extern unsigned char unk_CDB6F[]; /* CDB6F */
 extern unsigned char str_LAAtMTL[]; /* CDB75 */
-extern unsigned char unk_CDB84[]; /* CDB84 */
+extern unsigned char str_Dashes2[]; /* CDB84 */
 extern unsigned char str_Player1Controls2[]; /* CDB98 */
 extern unsigned char str_Player2Controls2[]; /* CDBAE */
 extern unsigned char str_ExhibitionSettings[]; /* CDBC4 */
 extern unsigned char modesetlabel[]; /* CDBDC */
 extern unsigned char str_PlayOffSettings2[]; /* CDBF5 */
 extern unsigned char str_SoundSettings[]; /* CDC0B */
-extern unsigned char unk_CDC1E[]; /* CDC1E */
+extern unsigned char str_Dashes3[]; /* CDC1E */
 extern unsigned char unk_CDC34[]; /* CDC34 */
-extern unsigned char unk_CDC47[]; /* CDC47 */
-extern unsigned char unk_CDC60[]; /* CDC60 */
-extern unsigned char unk_CDC79[]; /* CDC79 */
-extern unsigned char unk_CDC80[]; /* CDC80 */
-extern unsigned char unk_CDC97[]; /* CDC97 */
-extern unsigned char unk_CDCB0[]; /* CDCB0 */
-extern unsigned char unk_CDCC9[]; /* CDCC9 */
+extern unsigned char str_sp00XXXXXXXXXXXXXXXXX[]; /* CDC47 */
+extern unsigned char str_sp00XXXXXXXXXXXXXXXXX2[]; /* CDC60 */
+extern unsigned char str_spNONE[]; /* CDC79 */
+extern unsigned char str_VisitingTeamGoalie[]; /* CDC80 */
+extern unsigned char str_sp00XXXXXXXXXXXXXXXXX3[]; /* CDC97 */
+extern unsigned char str_sp00XXXXXXXXXXXXXXXXX4[]; /* CDCB0 */
+extern unsigned char str_spNONE2[]; /* CDCC9 */
 extern unsigned char str_GoalieItemTmpl[]; /* CDCD0 */
 extern unsigned char str_Action[]; /* CDCE9 */
 extern unsigned char str_Game7[]; /* CDCF0 */
@@ -3017,11 +3017,11 @@ extern unsigned char str_Settings4[]; /* CDF04 */
 extern unsigned char str_Statistics5[]; /* CDF0D */
 extern unsigned char str_PlayNextGame[]; /* CDF18 */
 extern unsigned char str_ReturnToSportsCentral2[]; /* CDF2B */
-extern unsigned char unk_CDF44[]; /* CDF44 */
+extern unsigned char str_StatisticsType8[]; /* CDF44 */
 extern unsigned char str_Standings2[]; /* CDF56 */
-extern unsigned char unk_CDF64[]; /* CDF64 */
-extern unsigned char unk_CDF76[]; /* CDF76 */
-extern unsigned char unk_CDF8A[]; /* CDF8A */
+extern unsigned char str_TeamsSortedBy2[]; /* CDF64 */
+extern unsigned char str_PlayersSortedBy2[]; /* CDF76 */
+extern unsigned char str_GoaliesSortedBy2[]; /* CDF8A */
 extern unsigned char str_Scoring[]; /* CDF9E */
 extern unsigned char str_Defense4[]; /* CDFAA */
 extern unsigned char str_PenaltyKilling2[]; /* CDFB6 */
@@ -3148,7 +3148,7 @@ extern unsigned char unk_CF50F[]; /* CF50F */
 extern int dword_CF517; /* CF517 */
 extern int off_CF51F; /* CF51F */
 extern unsigned char unk_CF52F[]; /* CF52F */
-extern unsigned char unk_CF54F[]; /* CF54F */
+extern unsigned char standingsmenubar[]; /* CF54F */
 extern int dword_CF5AB; /* CF5AB */
 extern unsigned char unk_CF5CF[]; /* CF5CF */
 extern int dword_CF5D7; /* CF5D7 */
@@ -3164,17 +3164,17 @@ extern int dword_CF677; /* CF677 */
 extern int off_CF67F; /* CF67F */
 extern unsigned char unk_CF68F[]; /* CF68F */
 extern int off_CF6A3; /* CF6A3 */
-extern unsigned char unk_CF6AF[]; /* CF6AF */
+extern unsigned char rostermenubar[]; /* CF6AF */
 extern int dword_CF70B; /* CF70B */
 extern unsigned char unk_CF72F[]; /* CF72F */
-extern unsigned char unk_CF74F[]; /* CF74F */
-extern unsigned char unk_CF78F[]; /* CF78F */
+extern unsigned char playercardmenubar[]; /* CF74F */
+extern unsigned char teamstatsmenubar[]; /* CF78F */
 extern int dword_CF7CB; /* CF7CB */
-extern unsigned char unk_CF80F[]; /* CF80F */
+extern unsigned char skaterstatsmenubar[]; /* CF80F */
 extern int dword_CF84B; /* CF84B */
-extern unsigned char unk_CF88F[]; /* CF88F */
+extern unsigned char goaliestatsmenubar[]; /* CF88F */
 extern int dword_CF8CB; /* CF8CB */
-extern unsigned char unk_CF90F[]; /* CF90F */
+extern unsigned char playoffmenubar[]; /* CF90F */
 extern unsigned char unk_CF96F[]; /* CF96F */
 extern int off_CF983; /* CF983 */
 extern unsigned char unk_CF9AF[]; /* CF9AF */
@@ -3224,10 +3224,10 @@ extern unsigned char str_Return2[]; /* D0067 */
 extern unsigned char unk_D006E[]; /* D006E */
 extern unsigned char str_FreeAgents2[]; /* D00EE */
 extern unsigned char str_FindPlayer[]; /* D00FE */
-extern unsigned char unk_D010E[]; /* D010E */
-extern unsigned char unk_D0118[]; /* D0118 */
-extern unsigned char unk_D0122[]; /* D0122 */
-extern unsigned char unk_D012E[]; /* D012E */
+extern unsigned char str_Pacific[]; /* D010E */
+extern unsigned char str_Central[]; /* D0118 */
+extern unsigned char str_Northeast[]; /* D0122 */
+extern unsigned char str_Atlantic[]; /* D012E */
 extern unsigned char unk_D0139[]; /* D0139 */
 extern int roster1divmenus[]; /* D0151 */
 extern int menu_r1_freeagents; /* D01CD */
@@ -3252,7 +3252,7 @@ extern unsigned char str_Roster12[]; /* D0422 */
 extern unsigned char str_Roster22[]; /* D042B */
 extern unsigned char str_EditRoster1[]; /* D0434 */
 extern unsigned char str_EditRoster2[]; /* D0442 */
-extern unsigned char unk_D0450[]; /* D0450 */
+extern unsigned char editrostersmenubar[]; /* D0450 */
 extern unsigned char str_Done5[]; /* D04F0 */
 extern unsigned char str_Cancel8[]; /* D04F5 */
 extern unsigned char unk_D04FC[]; /* D04FC */
@@ -3288,12 +3288,12 @@ extern int teamsdb_size; /* D07E3 */
 extern int attdb_size; /* D07E7 */
 extern unsigned char str_C4[]; /* D07EB */
 extern unsigned char str_Ratings[]; /* D0819 */
-extern int off_D0880[]; /* D0880 */
+extern int newskaterratingnames[]; /* D0880 */
 extern int off_D08B9[]; /* D08B9 */
 extern int off_D0A04[]; /* D0A04 */
 extern int off_D0AC2[]; /* D0AC2 */
 extern unsigned char byte_D0AE6[]; /* D0AE6 */
-extern int dword_D0B12; /* D0B12 */
+extern int rostereditmode; /* D0B12 */
 extern int dlgfillcol; /* D0B16 */
 extern int dlgedgecol1; /* D0B1A */
 extern int dlgedgecol2; /* D0B1E */
@@ -3330,14 +3330,14 @@ extern unsigned char str_Player4[]; /* D0ECF */
 extern unsigned char str_Goalie3[]; /* D0ED6 */
 extern unsigned char unk_D0EDD[]; /* D0EDD */
 extern unsigned char str_SavingDatabases[]; /* D0F15 */
-extern unsigned char unk_D0F80[]; /* D0F80 */
-extern unsigned char byte_D0F94; /* D0F94 */
-extern unsigned char unk_D0FA8[]; /* D0FA8 */
-extern unsigned char unk_D0FBC[]; /* D0FBC */
-extern unsigned char unk_D0FD0[]; /* D0FD0 */
-extern unsigned char byte_D0FE0; /* D0FE0 */
-extern unsigned char unk_D0FF0[]; /* D0FF0 */
-extern unsigned char unk_D1000[]; /* D1000 */
+extern unsigned char newskaterdefaults[]; /* D0F80 */
+extern unsigned char newskatershoots; /* D0F94 */
+extern unsigned char skaterratingmin[]; /* D0FA8 */
+extern unsigned char skaterratingmax[]; /* D0FBC */
+extern unsigned char newgoaliedefaults[]; /* D0FD0 */
+extern unsigned char newgoalieglove; /* D0FE0 */
+extern unsigned char goalieratingmin[]; /* D0FF0 */
+extern unsigned char goalieratingmax[]; /* D1000 */
 extern unsigned char str_InsufficientDiskSpace4[]; /* D1010 */
 extern unsigned char str_ToCreateAFree[]; /* D1032 */
 extern unsigned char str_XXXKbytesOfFree[]; /* D1056 */
@@ -3473,8 +3473,8 @@ extern unsigned char str_Playoff[]; /* D20B7 */
 extern unsigned char str_League2[]; /* D20BF */
 extern unsigned char str_ShowLeague[]; /* D20C6 */
 extern unsigned char str_Settings3[]; /* D20D2 */
-extern int dword_D20E0[]; /* D20E0 */
-extern int dword_D2150[]; /* D2150 */
+extern int lockerindex[]; /* D20E0 */
+extern int lockerteams[]; /* D2150 */
 extern int off_D21C0[]; /* D21C0 */
 extern int off_D2230[]; /* D2230 */
 extern int dword_D223C[]; /* D223C */
@@ -3561,7 +3561,7 @@ extern unsigned char str_1ststarCor[]; /* D2782 */
 extern unsigned char str_2ndstarCor[]; /* D278E */
 extern unsigned char unk_D279A[]; /* D279A */
 extern int str_Cor2[]; /* D27A2 */
-extern int dword_D27B2; /* D27B2 */
+extern int speechchannel; /* D27B2 */
 extern unsigned char byte_D27B6; /* D27B6 */
 extern int speechcopylen; /* D27B7 */
 extern int speechinit; /* D27BB */
@@ -3613,8 +3613,8 @@ extern unsigned char msg_POHumanOut[]; /* D2B0C */
 extern unsigned char msg_POTeamOut[]; /* D2B1C */
 extern unsigned char msg_POGenFinal[]; /* D2B34 */
 extern unsigned char btn_POHumanOut[]; /* D2B38 */
-extern int dword_D2B70[]; /* D2B70 */
-extern int dword_D2BEC[]; /* D2BEC */
+extern int poslotx[]; /* D2B70 */
+extern int posloty[]; /* D2BEC */
 extern unsigned char byte_D2C5C[]; /* D2C5C */
 extern unsigned char cddrivestr; /* D2C68 */
 extern int cddriveptr; /* D2C6B */
@@ -4584,7 +4584,7 @@ extern int joyrawbits; /* D8B7C */
 extern unsigned char joyqueue[]; /* D8B80 */
 extern int numshapes[]; /* D8C18 */
 extern int spritedrawcount; /* D8C40 */
-extern int dword_D8C4C[]; /* D8C4C */
+extern int gfxidlist[]; /* D8C4C */
 extern int rinkendbank; /* D8C68 */
 extern int frameaccum; /* D8C6C */
 extern int rinkendart; /* D8C70 */
@@ -4595,7 +4595,7 @@ extern int dword_D8C7A[]; /* D8C7A */
 extern int viewscrollx; /* D8C7C */
 extern int numshpbank; /* D8C80 */
 extern int curperiod; /* D8C84 */
-extern unsigned char byte_D8C88[]; /* D8C88 */
+extern unsigned char fadepalbuf[]; /* D8C88 */
 extern unsigned char cupteam[]; /* D8F88 */
 extern unsigned char presidentsteam[]; /* D9270 */
 extern unsigned char byte_D9299; /* D9299 */
@@ -4632,13 +4632,13 @@ extern unsigned char awplattr[]; /* DAE94 */
 extern unsigned char awplattr_b13[]; /* DAEA7 */
 extern int hmplstats_m2[]; /* DB086 */
 extern short hmplstats[]; /* DB088 */
-extern short word_DB08A[]; /* DB08A */
-extern short word_DB08C[]; /* DB08C */
-extern short word_DB08E[]; /* DB08E */
-extern short word_DB090[]; /* DB090 */
-extern short word_DB092[]; /* DB092 */
-extern short word_DB094; /* DB094 */
-extern short word_DB096[]; /* DB096 */
+extern short hmplstats_w2[]; /* DB08A */
+extern short hmplstats_w4[]; /* DB08C */
+extern short hmplstats_w6[]; /* DB08E */
+extern short hmplstats_w8[]; /* DB090 */
+extern short hmplstats_w10[]; /* DB092 */
+extern short hmplstats_w12; /* DB094 */
+extern short hmplstats_w14[]; /* DB096 */
 extern unsigned char awplstats[]; /* DB218 */
 extern unsigned char hmroster[]; /* DB3A8 */
 extern unsigned char hmrosterjersey[]; /* DB3AD */
@@ -4646,8 +4646,8 @@ extern unsigned char hmrosterpos[]; /* DB3AE */
 extern unsigned char awroster[]; /* DB7EC */
 extern unsigned char byte_DB7F1[]; /* DB7F1 */
 extern unsigned char hmteamrec[]; /* DBC30 */
-extern int dword_DBC7C[]; /* DBC7C */
-extern int dword_DBCE0[]; /* DBCE0 */
+extern int hmteamrec_skaters[]; /* DBC7C */
+extern int hmteamrec_goalies[]; /* DBCE0 */
 extern unsigned char unk_DBD1C[]; /* DBD1C */
 extern unsigned char awteamrec[]; /* DBF18 */
 extern unsigned char hmlinetab[]; /* DC200 */
@@ -4657,12 +4657,12 @@ extern int s1font; /* DC230 */
 extern int schedgameidx; /* DC234 */
 extern int pointerspr; /* DC238 */
 extern int dword_DC23E[]; /* DC23E */
-extern short unk_DC240[]; /* DC240 */
-extern short word_DC242[]; /* DC242 */
-extern short word_DC244[]; /* DC244 */
-extern short word_DC248[]; /* DC248 */
-extern short word_DC24E[]; /* DC24E */
-extern unsigned char unk_DC252[]; /* DC252 */
+extern short hmglstats[]; /* DC240 */
+extern short hmglstats_w2[]; /* DC242 */
+extern short hmglstats_w4[]; /* DC244 */
+extern short hmglstats_w8[]; /* DC248 */
+extern short hmglstats_w14[]; /* DC24E */
+extern unsigned char awglstats[]; /* DC252 */
 extern unsigned char byte_DC264; /* DC264 */
 extern unsigned char byte_DC265; /* DC265 */
 extern unsigned char byte_DC266; /* DC266 */
@@ -4691,7 +4691,7 @@ extern int statsnumgoalies; /* DC6B8 */
 extern int statsskaterorder[]; /* DC6BC */
 extern int statsgoalieorder[]; /* DC720 */
 extern int dword_DC734; /* DC734 */
-extern int dword_DC738; /* DC738 */
+extern int leaguestatsmode; /* DC738 */
 extern int statsgoalieplr[]; /* DC73C */
 extern int statsnumskaters; /* DC750 */
 extern int statsskaterplr[]; /* DC754 */

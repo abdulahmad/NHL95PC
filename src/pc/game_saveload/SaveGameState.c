@@ -196,8 +196,8 @@ int SaveGameState(int fh)
     if (FileWriteAt(fh, PenBuf, -1, 0x42)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, &curevent, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, &goalevent, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, unk_C5423, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, unk_C542E, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, gsumheader, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, gsumtail, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, hudpenhome, -1, 0x40)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, hudpenaway, -1, 0x40)) FatalError((char *)str_ErrSaveGame);
     q = buf;
@@ -218,7 +218,7 @@ int SaveGameState(int fh)
             q = buf;
             n = 0;
         }
-        *(Rec6 *)q = *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2);
+        *(Rec6 *)q = *(Rec6 *)((char *)hmglstats + i / 3 * 9 * 2 + i % 3 * 3 * 2);
         q += 6;
         n += 6;
     }
@@ -449,8 +449,8 @@ int LoadGameState(int fh)
     if (FileReadAt(fh, PenBuf, -1, 0x42)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, &curevent, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, &goalevent, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, unk_C5423, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, unk_C542E, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, gsumheader, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, gsumtail, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, penhome, -1, 0x40)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, penaway, -1, 0x40)) FatalError((char *)str_ErrLoadGame);
     i = n = 0;
@@ -465,7 +465,7 @@ int LoadGameState(int fh)
         n -= 0x10;
     } while (++i < 0x32);
     r = (Rec6 *)q;
-    for (i = 0; i < 6; i++) *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *r++;
+    for (i = 0; i < 6; i++) *(Rec6 *)((char *)hmglstats + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *r++;
     if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
     switch (gamemode) {
     case 0:
@@ -503,7 +503,7 @@ int LoadGameState(int fh)
     hmtmglattr = (int)hmglattr;
     hmtmlines[0] = (int)hmlinetab;
     hmtmplstats = (int)hmplstats;
-    hmtmglstats = (int)unk_DC240;
+    hmtmglstats = (int)hmglstats;
     hmtmroster = (int)hmroster;
     hmtmptrF2 = (int)hmteamrec;
     awtmsort = (int)(SortCords + 6);
@@ -511,7 +511,7 @@ int LoadGameState(int fh)
     awtmglattr = (int)awglattr;
     awtmlines = (int)awlinetab;
     awtmplstats = (int)awplstats;
-    awtmglstats = (int)unk_DC252;
+    awtmglstats = (int)awglstats;
     awtmroster = (int)awroster;
     awtmptrF2 = (int)awteamrec;
     pl = SortCords;

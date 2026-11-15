@@ -163,7 +163,7 @@ void checkwindow(void)
 }
 
 /* LoadTeamPPV (66497, PC only; ends in checkwindow_popebp): start overlay sequence seq when enough memory is free
-   (sub_8DAB8 against ovlmemneed[seq]): with the joystick sampling off, load its PPV art bank (off_CBED0, from the
+   (sub_8DAB8 against ovlmemneed[seq]): with the joystick sampling off, load its PPV art bank (ovlartnames, from the
    CD when fileoncd says so) into ovlartbank and its frames ("%04d") into ovlstepart, then set the overlay
    state: ovlseq, its script (ovlscripts), the first step's timer (ovlsteptime), step index 1 and the first step.
    seq: the overlay. No result. */
@@ -175,7 +175,7 @@ void LoadTeamPPV(short seq)
     if (sub_8DAB8() < ovlmemneed[seq]) return;
     joysampling_save = joysampling;
     joysampling = 0;
-    MakePath(name, fileoncd[dword_CC080[seq]] == 1 ? (char *)cddriveptr : 0, (char *)off_CBED0[seq], (char *)str_PPV);
+    MakePath(name, fileoncd[dword_CC080[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
     ovlartbank = sub_8E8A0(name, 0x20);
     for (i = 0; i < sub_90354(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);

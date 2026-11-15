@@ -62,11 +62,11 @@ int MenuSaveGame(void)
         exhstate[0x5A] |= 0x80;
         ((unsigned char *)&gameopts)[1] |= 0x80;
         WriteModeState(exhstate);
-        if (FileCreate(s.path, &s.h)) FatalError((char *)unk_C392C);
+        if (FileCreate(s.path, &s.h)) FatalError((char *)str_H2);
         if (FileWriteAt(s.h, exhstate, -1, 0x75)) FatalError((char *)unk_C392F);
         MakePath(s.path, 0, (char *)str_Gsummary3, (char *)str_extDB);
         p = sub_8E8A0(s.path, 0);
-        if (FileWriteAt(s.h, (void *)p, -1, sub_92DE0(s.path))) FatalError((char *)unk_C393B);
+        if (FileWriteAt(s.h, (void *)p, -1, sub_92DE0(s.path))) FatalError((char *)str_H4);
         FreeMemBlock(p);
         if (FileWriteAt(s.h, othergames, -1, 0xC)) FatalError((char *)unk_C393E);
         if (FileWriteAt(s.h, otherscores, -1, 0xC)) FatalError((char *)unk_C3941);
@@ -85,7 +85,7 @@ int MenuSaveGame(void)
         SetTickDeadline(0xC8);
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
         MakePath(s.path, (char *)&curleague, (char *)str_GameSav5, 0);
-        if (FileCreate(s.path, &s.h)) FatalError((char *)unk_C396F);
+        if (FileCreate(s.path, &s.h)) FatalError((char *)str_H1);
         if (gamemode == 2) {
             MessageBox(-1, -1, (char *)msg_SavingLeagueGame, 2, 0, 0, 0, 0, 0);
             ((unsigned char *)lgstate)[0x5A] |= 0x80;
@@ -101,7 +101,7 @@ int MenuSaveGame(void)
         SaveGameState(s.h);
         FileClose(&s.h);
         if (CopyFile((char *)str_Gsummary3, (char *)str_Db4, (char *)str_Sav3, (char *)&curleague, (char *)&curleague))
-            FatalError((char *)unk_C397B);
+            FatalError((char *)str_A32);
         WaitTickDeadline();
         RestoreDialogBg();
     }

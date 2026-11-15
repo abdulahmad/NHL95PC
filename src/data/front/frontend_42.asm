@@ -2,38 +2,38 @@
 bits 32
 %include "hockey.inc"
 section s_CEE5F progbits alloc noexec write align=1
-extern DeskGoToReplay, DeskHomeGoalie1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskAwayGoalie1, DeskAwayGoalie2, DeskAwayGoalieNone, unk_CDC47
-extern unk_CDC60, unk_CDC79, unk_CDC97, unk_CDCB0, unk_CDCC9, str_GoToReplay, str_HomeTeam2
+extern DeskGoToReplay, DeskHomeGoalie1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskAwayGoalie1, DeskAwayGoalie2, DeskAwayGoalieNone, str_sp00XXXXXXXXXXXXXXXXX
+extern str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3, str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2, str_GoToReplay, str_HomeTeam2
 global mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, off_CEF23, unk_CEEAF
 global unk_CEF0F, unk_CEF2F
 mi_HomeGoalie1:
-dd unk_CDC47
+dd str_sp00XXXXXXXXXXXXXXXXX
 dd DeskHomeGoalie1
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 00h,00h,00h,00h,023h,00h,00h,00h
 mi_HomeGoalie2:
-dd unk_CDC60
+dd str_sp00XXXXXXXXXXXXXXXXX2
 dd DeskHomeGoalie2
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 00h,00h,00h,00h,036h,00h,00h,00h
 mi_HomeGoalieNone:
-dd unk_CDC79
+dd str_spNONE
 dd DeskHomeGoalieNone
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEEAF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,011h,00h,00h,00h
 mi_AwayGoalie1:
-dd unk_CDC97
+dd str_sp00XXXXXXXXXXXXXXXXX3
 dd DeskAwayGoalie1
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 00h,00h,00h,00h,023h,00h,00h,00h
 mi_AwayGoalie2:
-dd unk_CDCB0
+dd str_sp00XXXXXXXXXXXXXXXXX4
 dd DeskAwayGoalie2
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 00h,00h,00h,00h,036h,00h,00h,00h
 mi_AwayGoalieNone:
-dd unk_CDCC9
+dd str_spNONE2
 dd DeskAwayGoalieNone
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEF0F:

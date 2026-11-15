@@ -38,7 +38,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3);
 /* EditRosters (6E089, PC only): the roster editing screen. Load both roster lists and draw the screen; then follow
    the mouse until editrosters_exit is set: stop a finished song; with the free agent list shown (rosterisfa) the
    up / down buttons and the scroll bar move it (dword_EBCA4, redrawn by DrawEditRosters); in the move mode
-   (dword_D0B12 2) only its two buttons work; a click goes to the menu bar (three levels, as RunMenu; an action gets
+   (rostereditmode 2) only its two buttons work; a click goes to the menu bar (three levels, as RunMenu; an action gets
    the selected items and the pointer position) or to the roster panels (RosterPanelClick). Leaving with unsaved
    changes (dbdirty) asks first ("The database has not been saved..."). bar / n / col1-col3: as RunMenu. Result: 0. */
 int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
@@ -102,7 +102,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             e = GetInputEvent();
             if (e) bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &mx, &my);
         } while (e && !(bits & 2));
-        if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && dword_D0B12 != 2 && bits) {
+        if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
             sub_903F0(editptrspr, oldmx, oldmy);
             k = TrackButtons((int *)unk_D0BB8, 2, mx, my, bits);
             if (k == 0 && dword_EBCA4 > 0) {
@@ -121,7 +121,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             oldmx = mx;
             oldmy = my;
         }
-        if (dword_D0B12 == 2 && bits & 1) {
+        if (rostereditmode == 2 && bits & 1) {
             sub_903F0(editptrspr, oldmx, oldmy);
             TrackButtons((int *)unk_D0B80, 2, mx, my, bits);
             sub_91400(editptrspr, mx, my);
@@ -137,7 +137,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 oldmy = my;
             }
         } else {
-            if (dword_D0B12 == 2) {
+            if (rostereditmode == 2) {
                 sub_903F0(editptrspr, oldmx, oldmy);
             } else if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
                 m = &menus[level][item];

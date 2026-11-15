@@ -7,7 +7,7 @@ extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, byte_ED0F7, byte_ED0
 extern CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1
 extern dlgedgecol2, dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawGameLineJerseys, DrawLineEditorScreen, DrawMenuBar
 extern DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418
-extern dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, dword_DBC7C, dword_DBCE0, editptrspr
+extern dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, hmteamrec_skaters, hmteamrec_goalies, editptrspr
 extern fadeend, fadeend2, FadeOutPalCycle, fadepal, fadepal2, fadestart, fadestart2, fadestep
 extern fadestep2, FatalError, fileoncd, FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, GameDressPlayer
 extern gameopts, GameScratchPlayer, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster, hmrosterjersey

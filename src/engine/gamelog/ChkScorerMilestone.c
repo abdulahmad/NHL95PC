@@ -27,7 +27,7 @@ void RunDeferredCalls(void)
    (DEB74 career goals, DEB78 career points, DEB7C season goals, DEB80 season points; ints) */
 #define REC(a, t, p) (((int (*)[25][4])(a))[t][p][0])
 #define GOALS(t, p) (((short (*)[25][8])hmplstats)[t][p][0])
-#define ASSISTS(t, p) (((short (*)[25][8])word_DB08A)[t][p][0])
+#define ASSISTS(t, p) (((short (*)[25][8])hmplstats_w2)[t][p][0])
 
 /* DRAFT: same size, all but 8 instructions (two t * 400 / p * 16 address pairs use the other two registers);
    see docs/UNSURE.md. */

@@ -12,13 +12,13 @@ global str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_En
 global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies, str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList
 global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, dword_C2CAC, dword_C2CB0, dword_C2CB4
 global dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-global dword_C2CD8, dword_C2CDC, dword_C2CF0, qword_C2CE0, qword_C2CE8, str_GP9, unk_C2977, unk_C297B
+global dword_C2CD8, dword_C2CDC, dword_C2CF0, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
 global str_Pt4, str_PIM7, unk_C2987, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
 global str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3, str_StickHandling2, str_Accuracy2, str_Passing3
 global str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2, str_Faceoffs2, str_Min6, str_GA6
-global str_GAA5, unk_C2A59, unk_C2A5C, unk_C2A5F, str_SO3, str_EN3, str_SA5, str_GloveHand3
+global str_GAA5, str_spW3, unk_C2A5C, unk_C2A5F, str_SO3, str_EN3, str_SA5, str_GloveHand3
 global str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2, str_PenaltyKilling3, str_PowerPlay3, str_Shooting2
-global str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2, str_Cancel6, str_Create, unk_C2B0B, word_C2D0E
+global str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2, str_Cancel6, str_Create, str_X, str_L9
 global word_C2D10
 str_Prez2:
 db 070h,072h,065h,07Ah,032h,00h
@@ -50,9 +50,9 @@ db 020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,065h,078h,069h,074h,03Fh,00h,00h
 db 00h
 str_GP9:
 db 047h,050h,00h
-unk_C2977:
+str_spG2:
 db 020h,020h,047h,00h
-unk_C297B:
+str_spA2:
 db 020h,020h,041h,00h
 str_Pt4:
 db 020h,050h,074h,00h
@@ -106,7 +106,7 @@ str_GA6:
 db 020h,020h,047h,041h,00h
 str_GAA5:
 db 020h,020h,047h,041h,041h,00h
-unk_C2A59:
+str_spW3:
 db 020h,057h,00h
 unk_C2A5C:
 db 020h,04Ch,00h
@@ -148,7 +148,7 @@ str_Cancel6:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
 str_Create:
 db 043h,072h,065h,061h,074h,065h,00h
-unk_C2B0B:
+str_X:
 db 058h,00h,00h,00h,00h
 str_ErrorsFoundInDatabases:
 db 045h,072h,072h,06Fh,072h,073h,020h,066h,06Fh,075h,06Eh,064h,020h,069h,06Eh,020h
@@ -233,7 +233,7 @@ str_spR:
 db 020h,020h,052h,00h
 str_GloveHand:
 db 047h,06Ch,06Fh,076h,065h,020h,048h,061h,06Eh,064h,00h
-word_C2D0E:
+str_L9:
 db 04Ch,00h
 word_C2D10:
 db 052h,00h

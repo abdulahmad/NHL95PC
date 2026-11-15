@@ -58,12 +58,12 @@ global str_Passing2, str_OffensiveAwareness, str_DefensiveAwareness, str_Aggress
 global str_GloveLeft, str_GloveRight, str_StickLeft, str_StickRight, str_PuckControl, str_Speed2, str_Agility2, str_Weight2
 global str_OffensiveAwareness2, str_DefensiveAwareness2, str_GP3, str_W2, str_L4, str_T2, str_SO2, str_EN2
 global str_WesternConference3, str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings
-global unk_C0F69, unk_C0F6C, unk_C0F6F, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5
+global str_spW, unk_C0F6C, unk_C0F6F, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5
 global unk_C0F89, str_ADV, str_PPG3, str_PIM5, str_AVG, str_PTS, str_WINS, str_GP4
 global str_S, str_No, str_GP5, str_C, str_W3, str_L5, str_T3, str_PointLeaders
 global str_GoalLeaders, str_AssistLeaders, str_PowerPlayGoalLeaders, str_ShorthandedGoalLeaders, str_PlusMinusLeaders, str_PenaltyMinuteLeaders, str_ShootingPercentageLeaders, str_GoalsAgainstAverageLeaders
-global str_GoaltenderWinLeaders, str_SavePercentageLeaders, unk_C11C5, unk_C11C9, str_Pt3, unk_C11D1, str_PP2, str_SHG3
-global unk_C11D9, str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, unk_C11FD
+global str_GoaltenderWinLeaders, str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3
+global unk_C11D9, str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2
 global unk_C1200, unk_C1203, str_SA4, str_PCT7, str_NO, str_GP6, str_C2, str_LSSCEDDB
 global str_SCHEDULEDB3, str_GP7, str_W4, str_L6, str_T4, str_D3, str_TwoSpaces, str_Space2
 global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
@@ -71,7 +71,7 @@ global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
 global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, str_wildcard, str_ID
-global str_L1, str_L22, unk_C1934, unk_C1936, str_R3, str_S12
+global str_L1, str_L22, str_A5, unk_C1936, str_R3, str_S12
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
 str_fe1:
@@ -416,7 +416,7 @@ str_TeamPenalties:
 db 020h,054h,065h,061h,06Dh,020h,050h,065h,06Eh,061h,06Ch,074h,069h,065h,073h,00h
 str_TeamStandings:
 db 020h,054h,065h,061h,06Dh,020h,053h,074h,061h,06Eh,064h,069h,06Eh,067h,073h,00h
-unk_C0F69:
+str_spW:
 db 020h,057h,00h
 unk_C0F6C:
 db 020h,04Ch,00h
@@ -555,9 +555,9 @@ db 04Ch,065h,061h,064h,065h,072h,073h,00h
 str_SavePercentageLeaders:
 db 020h,053h,061h,076h,065h,020h,050h,065h,072h,063h,065h,06Eh,074h,061h,067h,065h
 db 020h,04Ch,065h,061h,064h,065h,072h,073h,00h
-unk_C11C5:
+str_spG:
 db 020h,020h,047h,00h
-unk_C11C9:
+str_spA:
 db 020h,020h,041h,00h
 str_Pt3:
 db 020h,050h,074h,00h
@@ -581,7 +581,7 @@ str_GA5:
 db 020h,047h,041h,00h
 str_AVG2:
 db 020h,020h,041h,056h,047h,00h
-unk_C11FD:
+str_spW2:
 db 020h,057h,00h
 unk_C1200:
 db 020h,04Ch,00h
@@ -1174,7 +1174,7 @@ str_L1:
 db 06Ch,031h,00h
 str_L22:
 db 06Ch,032h,00h,00h
-unk_C1934:
+str_A5:
 db 041h,00h
 unk_C1936:
 db 042h,00h

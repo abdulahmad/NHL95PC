@@ -3,7 +3,7 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, deskexit, DiskSpaceShort, dword_C65A8, dword_C65AC, dword_DC6A8, dword_DC6B4, dword_DC738
+extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, dword_DC6A8, dword_DC6B4, leaguestatsmode
 extern exhstate, FadePalStep, fclose_, FileExists, fopen_, fputs_, FreeMemBlock, goaliestatscb
 extern LeadersScreen, lgstate, MessageBox, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode
 extern msg_NeedKbytes2, off_C648E, off_C659A, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
@@ -220,7 +220,7 @@ mov ebx, 1Fh	; 17A64
 mov edx, exhstate+4	; 17A69
 mov eax, statsleague	; 17A6E
 call strncpy_	; 17A73
-cmp dword [dword_DC738], byte 0	; 17A78
+cmp dword [leaguestatsmode], byte 0	; 17A78
 je short .x	; 17A7F
 push unk_DC340	; 17A81
 push dword 100h	; 17A86
@@ -285,7 +285,7 @@ mov edx, exhstate+4	; 17B60
 StatsSel_common:
 mov eax, statsleague	; 17B65
 call strncpy_	; 17B6A
-cmp dword [dword_DC738], byte 0	; 17B6F
+cmp dword [leaguestatsmode], byte 0	; 17B6F
 je short StatsSel_x	; 17B76
 push unk_DC340	; 17B78
 push dword 100h	; 17B7D
@@ -351,7 +351,7 @@ mov ebx, 1Fh	; 17C50
 mov edx, lgstate+4	; 17C55
 mov eax, statsleague	; 17C5A
 call strncpy_	; 17C5F
-cmp dword [dword_DC738], byte 0	; 17C64
+cmp dword [leaguestatsmode], byte 0	; 17C64
 je short .x	; 17C6B
 push unk_DC340	; 17C6D
 push dword 100h	; 17C72
@@ -476,7 +476,7 @@ push edx	; 17E08
 push esi	; 17E09
 mov edx, 5	; 17E0A
 mov dword [statscategory], edx	; 17E0F
-cmp dword [dword_DC738], byte 0	; 17E15
+cmp dword [leaguestatsmode], byte 0	; 17E15
 je near .1	; 17E1C
 push byte 20h	; 17E22
 push dword 300h	; 17E24
@@ -547,7 +547,7 @@ push edx	; 17EEB
 push esi	; 17EEC
 xor edx, edx	; 17EED
 mov dword [statscategory], edx	; 17EEF
-cmp dword [dword_DC738], byte 0	; 17EF5
+cmp dword [leaguestatsmode], byte 0	; 17EF5
 je near .1	; 17EFC
 push byte 20h	; 17F02
 push dword 300h	; 17F04
@@ -618,7 +618,7 @@ push edx	; 17FC8
 push esi	; 17FC9
 mov edx, 1	; 17FCA
 mov dword [statscategory], edx	; 17FCF
-cmp dword [dword_DC738], byte 0	; 17FD5
+cmp dword [leaguestatsmode], byte 0	; 17FD5
 je near .1	; 17FDC
 push byte 20h	; 17FE2
 push dword 300h	; 17FE4
@@ -689,7 +689,7 @@ push edx	; 180AB
 push esi	; 180AC
 mov edx, 2	; 180AD
 mov dword [statscategory], edx	; 180B2
-cmp dword [dword_DC738], byte 0	; 180B8
+cmp dword [leaguestatsmode], byte 0	; 180B8
 je near .1	; 180BF
 push byte 20h	; 180C5
 push dword 300h	; 180C7
@@ -760,7 +760,7 @@ push edx	; 1818E
 push esi	; 1818F
 mov edx, 3	; 18190
 mov dword [statscategory], edx	; 18195
-cmp dword [dword_DC738], byte 0	; 1819B
+cmp dword [leaguestatsmode], byte 0	; 1819B
 je near .1	; 181A2
 push byte 20h	; 181A8
 push dword 300h	; 181AA
@@ -831,7 +831,7 @@ push edx	; 18271
 push esi	; 18272
 mov edx, 4	; 18273
 mov dword [statscategory], edx	; 18278
-cmp dword [dword_DC738], byte 0	; 1827E
+cmp dword [leaguestatsmode], byte 0	; 1827E
 je near .1	; 18285
 push byte 20h	; 1828B
 push dword 300h	; 1828D
@@ -902,7 +902,7 @@ push edx	; 18354
 push esi	; 18355
 xor edx, edx	; 18356
 mov dword [statscategory], edx	; 18358
-cmp dword [dword_DC738], byte 0	; 1835E
+cmp dword [leaguestatsmode], byte 0	; 1835E
 je near .1	; 18365
 push byte 20h	; 1836B
 push dword 300h	; 1836D
@@ -973,7 +973,7 @@ push edx	; 18431
 push esi	; 18432
 mov edx, 1	; 18433
 mov dword [statscategory], edx	; 18438
-cmp dword [dword_DC738], byte 0	; 1843E
+cmp dword [leaguestatsmode], byte 0	; 1843E
 je near .1	; 18445
 push byte 20h	; 1844B
 push dword 300h	; 1844D
@@ -1044,7 +1044,7 @@ push edx	; 18514
 push esi	; 18515
 mov edx, 2	; 18516
 mov dword [statscategory], edx	; 1851B
-cmp dword [dword_DC738], byte 0	; 18521
+cmp dword [leaguestatsmode], byte 0	; 18521
 je near .1	; 18528
 push byte 20h	; 1852E
 push dword 300h	; 18530
@@ -1115,7 +1115,7 @@ push edx	; 185F7
 push esi	; 185F8
 mov edx, 3	; 185F9
 mov dword [statscategory], edx	; 185FE
-cmp dword [dword_DC738], byte 0	; 18604
+cmp dword [leaguestatsmode], byte 0	; 18604
 je near .1	; 1860B
 push byte 20h	; 18611
 push dword 300h	; 18613
@@ -1186,7 +1186,7 @@ push edx	; 186DA
 push esi	; 186DB
 mov edx, 4	; 186DC
 mov dword [statscategory], edx	; 186E1
-cmp dword [dword_DC738], byte 0	; 186E7
+cmp dword [leaguestatsmode], byte 0	; 186E7
 je near .1	; 186EE
 push byte 20h	; 186F4
 push dword 300h	; 186F6
@@ -1257,7 +1257,7 @@ push edx	; 187BD
 push esi	; 187BE
 mov edx, 5	; 187BF
 mov dword [statscategory], edx	; 187C4
-cmp dword [dword_DC738], byte 0	; 187CA
+cmp dword [leaguestatsmode], byte 0	; 187CA
 je near .1	; 187D1
 push byte 20h	; 187D7
 push dword 300h	; 187D9
@@ -1328,7 +1328,7 @@ push edx	; 188A0
 push esi	; 188A1
 mov edx, 6	; 188A2
 mov dword [statscategory], edx	; 188A7
-cmp dword [dword_DC738], byte 0	; 188AD
+cmp dword [leaguestatsmode], byte 0	; 188AD
 je near .1	; 188B4
 push byte 20h	; 188BA
 push dword 300h	; 188BC
@@ -1399,7 +1399,7 @@ push edx	; 18983
 push esi	; 18984
 mov edx, 7	; 18985
 mov dword [statscategory], edx	; 1898A
-cmp dword [dword_DC738], byte 0	; 18990
+cmp dword [leaguestatsmode], byte 0	; 18990
 je near .1	; 18997
 push byte 20h	; 1899D
 push dword 300h	; 1899F
@@ -1470,7 +1470,7 @@ push edx	; 18A66
 push esi	; 18A67
 mov edx, 8	; 18A68
 mov dword [statscategory], edx	; 18A6D
-cmp dword [dword_DC738], byte 0	; 18A73
+cmp dword [leaguestatsmode], byte 0	; 18A73
 je near .1	; 18A7A
 push byte 20h	; 18A80
 push dword 300h	; 18A82
@@ -1541,7 +1541,7 @@ push edx	; 18B49
 push esi	; 18B4A
 mov edx, 9	; 18B4B
 mov dword [statscategory], edx	; 18B50
-cmp dword [dword_DC738], byte 0	; 18B56
+cmp dword [leaguestatsmode], byte 0	; 18B56
 je near .1	; 18B5D
 push byte 20h	; 18B63
 push dword 300h	; 18B65
@@ -1612,7 +1612,7 @@ push edx	; 18C2C
 push esi	; 18C2D
 mov edx, 0Ah	; 18C2E
 mov dword [statscategory], edx	; 18C33
-cmp dword [dword_DC738], byte 0	; 18C39
+cmp dword [leaguestatsmode], byte 0	; 18C39
 je near .1	; 18C40
 push byte 20h	; 18C46
 push dword 300h	; 18C48
@@ -1699,23 +1699,23 @@ push ecx	; 18D3E
 push edx	; 18D3F
 push esi	; 18D40
 push ebp	; 18D41
-mov edx, dword [dword_C65AC]	; 18D42
+mov edx, dword [embscupbank]	; 18D42
 test edx, edx	; 18D48
 je short .1	; 18D4A
 push edx	; 18D4C
 call FreeMemBlock	; 18D4D
 add esp, byte 4	; 18D52
 xor ecx, ecx	; 18D55
-mov dword [dword_C65AC], ecx	; 18D57
+mov dword [embscupbank], ecx	; 18D57
 .1:
-mov esi, dword [dword_C65A8]	; 18D5D
+mov esi, dword [easnfontbuf]	; 18D5D
 test esi, esi	; 18D63
 je short .2	; 18D65
 push esi	; 18D67
 call FreeMemBlock	; 18D68
 add esp, byte 4	; 18D6D
 xor ebp, ebp	; 18D70
-mov dword [dword_C65A8], ebp	; 18D72
+mov dword [easnfontbuf], ebp	; 18D72
 .2:
 xor eax, eax	; 18D78
 jmp near StatsSel_x	; 18D7A

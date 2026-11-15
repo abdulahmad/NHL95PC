@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_20016 progbits alloc exec nowrite align=1
-extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, dword_C65A8, dword_C65AC, dword_C6D26
-extern dword_DC6B4, dword_DC734, dword_DC738, dword_DDD2C, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
+extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, easnfontbuf, embscupbank, dword_C6D26
+extern dword_DC6B4, dword_DC734, leaguestatsmode, dword_DDD2C, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
 extern gamemode, GoalieStatsCard, InitMenuRemap, keepdesksong, LeadersScreen, MakePath, memcpy_, photoremap
 extern playofftree, RunMenu, RunPlayerPickMenu, RunTeamPickMenu, ShowPlayoffTree, SkaterStatsCard, standingscb, StandingsScreen
 extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, statspalshape, statspalvalid, statsplayer
@@ -12,7 +12,7 @@ extern str_easndesk2, str_EASNvfn, str_embpal, str_embpal2, str_embpal3, str_gst
 extern str_keys, str_keys2, str_keys3, str_Pal6, str_Pal7, str_Pal8, str_pstat, str_pstat2
 extern str_pstat3, str_tstat, str_tstat2, str_tstat3, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0
 extern sub_8FFB0, sub_91FE0, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, TeamRosterScreen
-extern TeamStatsScreen, unk_CF54F, unk_CF6AF, unk_CF74F, unk_CF78F, unk_CF80F, unk_CF88F
+extern TeamStatsScreen, standingsmenubar, rostermenubar, playercardmenubar, teamstatsmenubar, skaterstatsmenubar, goaliestatsmenubar
 global GameTeamStatsScreen, GameTeamStatsScreen_common, GameSkaterStatsScreen, GameSkaterStatsScreen_x, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu_jt, GameStandingsMenu
 global GameStandingsMenu_standings, GameStandingsMenu_roster, GameStandingsMenu_player, GameStandingsMenu_player2, EasnTeamStatsScreen, EasnTeamStatsScreen_m, EasnTeamStatsScreen_x, EasnSkaterStatsScreen
 global EasnSkaterStatsScreen_m, EasnGoalieStatsScreen, EasnGoalieStatsScreen_m, EasnGoalieStatsScreen_common, EasnStandingsScreen, EasnStandingsMenu_jt, EasnStandingsMenu, EasnStandingsMenu_m
@@ -32,7 +32,7 @@ push edx	; 20022
 push esi	; 20023
 sub esp, 310h	; 20024
 mov esi, eax	; 2002A
-mov dword [dword_DC738], 1	; 2002C
+mov dword [leaguestatsmode], 1	; 2002C
 mov dword [statscategory], eax	; 20036
 mov dword [statsredrawcb], TeamStatsScreen	; 2003B
 mov eax, esp	; 20045
@@ -54,7 +54,7 @@ push byte 42h	; 2007E
 mov ecx, 41h	; 20080
 mov ebx, 40h	; 20085
 mov edx, 4	; 2008A
-mov eax, unk_CF78F	; 2008F
+mov eax, teamstatsmenubar	; 2008F
 call DrawMenuBar	; 20094
 xor ecx, ecx	; 20099
 mov ebx, str_embpal	; 2009B
@@ -94,7 +94,7 @@ push byte 42h	; 20115
 mov ecx, 41h	; 20117
 mov ebx, 40h	; 2011C
 mov edx, 4	; 20121
-mov eax, unk_CF78F	; 20126
+mov eax, teamstatsmenubar	; 20126
 GameTeamStatsScreen_common:
 call RunMenu	; 2012B
 mov eax, esp	; 20130
@@ -108,7 +108,7 @@ mov edx, esp	; 20147
 mov eax, 1	; 20149
 call FadePalStep	; 2014E
 xor esi, esi	; 20153
-mov dword [dword_DC738], esi	; 20155
+mov dword [leaguestatsmode], esi	; 20155
 mov dword [statsredrawcb], esi	; 2015B
 mov eax, 2	; 20161
 add esp, 310h	; 20166
@@ -133,7 +133,7 @@ push edi	; 2017F
 sub esp, 310h	; 20180
 mov esi, eax	; 20186
 mov edx, 1	; 20188
-mov dword [dword_DC738], edx	; 2018D
+mov dword [leaguestatsmode], edx	; 2018D
 mov dword [statscategory], eax	; 20193
 mov dword [statsredrawcb], LeadersScreen	; 20198
 mov dword [statspalvalid], edx	; 201A2
@@ -157,7 +157,7 @@ push byte 42h	; 201E6
 mov ecx, 41h	; 201E8
 mov ebx, 40h	; 201ED
 mov edx, 4	; 201F2
-mov eax, unk_CF80F	; 201F7
+mov eax, skaterstatsmenubar	; 201F7
 call DrawMenuBar	; 201FC
 xor ecx, ecx	; 20201
 mov ebx, str_embpal	; 20203
@@ -200,7 +200,7 @@ push byte 42h	; 2028B
 mov ecx, 41h	; 2028D
 mov ebx, 40h	; 20292
 mov edx, 4	; 20297
-mov eax, unk_CF80F	; 2029C
+mov eax, skaterstatsmenubar	; 2029C
 call RunMenu	; 202A1
 mov eax, esp	; 202A6
 push eax	; 202A8
@@ -212,7 +212,7 @@ mov ebx, 10h	; 202B7
 mov edx, esp	; 202BC
 mov eax, 1	; 202BE
 call FadePalStep	; 202C3
-mov dword [dword_DC738], edi	; 202C8
+mov dword [leaguestatsmode], edi	; 202C8
 mov dword [statsredrawcb], edi	; 202CE
 mov eax, 2	; 202D4
 add esp, 310h	; 202D9
@@ -237,7 +237,7 @@ push edx	; 202F1
 push esi	; 202F2
 sub esp, 310h	; 202F3
 mov esi, eax	; 202F9
-mov dword [dword_DC738], 1	; 202FB
+mov dword [leaguestatsmode], 1	; 202FB
 mov dword [statscategory], eax	; 20305
 mov dword [statsredrawcb], LeadersScreen	; 2030A
 mov eax, esp	; 20314
@@ -258,7 +258,7 @@ push byte 42h	; 20348
 mov ecx, 41h	; 2034A
 mov ebx, 40h	; 2034F
 mov edx, 4	; 20354
-mov eax, unk_CF88F	; 20359
+mov eax, goaliestatsmenubar	; 20359
 call DrawMenuBar	; 2035E
 xor ecx, ecx	; 20363
 mov ebx, str_embpal	; 20365
@@ -298,7 +298,7 @@ push byte 42h	; 203DF
 mov ecx, 41h	; 203E1
 mov ebx, 40h	; 203E6
 mov edx, 4	; 203EB
-mov eax, unk_CF88F	; 203F0
+mov eax, goaliestatsmenubar	; 203F0
 jmp near GameTeamStatsScreen_common	; 203F5
 %endif ; C
 ; C: src/front/stats_screens/GameStandingsScreen.c
@@ -314,16 +314,16 @@ push edx	; 20406
 sub esp, byte 10h	; 20407
 cmp dword [statsplayoffs], byte 0	; 2040A
 je near .7	; 20411
-mov ebx, dword [dword_C65A8]	; 20417
+mov ebx, dword [easnfontbuf]	; 20417
 test ebx, ebx	; 2041D
 jne short .1	; 2041F
 push ebx	; 20421
 push str_EASNvfn	; 20422
 call sub_8E8A0	; 20427
 add esp, byte 8	; 2042C
-mov dword [dword_C65A8], eax	; 2042F
+mov dword [easnfontbuf], eax	; 2042F
 .1:
-mov ecx, dword [dword_C65AC]	; 20434
+mov ecx, dword [embscupbank]	; 20434
 test ecx, ecx	; 2043A
 jne short .6	; 2043C
 mov eax, dword [statsplayoffs]	; 2043E
@@ -354,7 +354,7 @@ lea eax, [byte esp+04h]	; 2048C
 push eax	; 20490
 call sub_8E83C	; 20491
 add esp, byte 8	; 20496
-mov dword [dword_C65AC], eax	; 20499
+mov dword [embscupbank], eax	; 20499
 .6:
 mov eax, dword [statsteambuf]	; 2049E
 mov edx, statsteamorder	; 204A3
@@ -363,7 +363,7 @@ push byte 42h	; 204AD
 mov ecx, 41h	; 204AF
 mov ebx, 40h	; 204B4
 mov edx, 4	; 204B9
-mov eax, unk_CF54F	; 204BE
+mov eax, standingsmenubar	; 204BE
 call DrawMenuBar	; 204C3
 jmp short .8	; 204C8
 .7:
@@ -373,7 +373,7 @@ push byte 42h	; 204D4
 mov ecx, 41h	; 204D6
 mov ebx, 40h	; 204DB
 mov edx, 4	; 204E0
-mov eax, unk_CF54F	; 204E5
+mov eax, standingsmenubar	; 204E5
 call DrawMenuBar	; 204EA
 mov eax, dword [statsteambuf]	; 204EF
 mov edx, statsteamorder	; 204F4
@@ -406,7 +406,7 @@ push esi	; 20527
 push edi	; 20528
 push ebp	; 20529
 sub esp, 310h	; 2052A
-mov dword [dword_DC738], 1	; 20530
+mov dword [leaguestatsmode], 1	; 20530
 mov eax, dword [standingscb]	; 2053A
 mov dword [statsredrawcb], eax	; 2053F
 xor ebx, ebx	; 20544
@@ -462,7 +462,7 @@ push byte 42h	; 20609
 mov ecx, 41h	; 2060B
 mov ebx, 40h	; 20610
 mov edx, 4	; 20615
-mov eax, unk_CF54F	; 2061A
+mov eax, standingsmenubar	; 2061A
 call DrawMenuBar	; 2061F
 mov dword [statscategory], esi	; 20624
 mov dword [statsteamsel], esi	; 2062A
@@ -502,7 +502,7 @@ push byte 42h	; 206A1
 mov ecx, 41h	; 206A3
 mov ebx, 40h	; 206A8
 mov edx, 4	; 206AD
-mov eax, unk_CF54F	; 206B2
+mov eax, standingsmenubar	; 206B2
 call RunTeamPickMenu	; 206B7
 call FreeDeskBuffers	; 206BC
 mov edi, GoalieStatsCard	; 206C1
@@ -524,13 +524,13 @@ push byte 42h	; 206FC
 mov ecx, 41h	; 206FE
 mov ebx, 40h	; 20703
 mov edx, 4	; 20708
-mov eax, unk_CF54F	; 2070D
+mov eax, standingsmenubar	; 2070D
 call DrawMenuBar	; 20712
 push byte 42h	; 20717
 mov ecx, 41h	; 20719
 mov ebx, 40h	; 2071E
 mov edx, 4	; 20723
-mov eax, unk_CF54F	; 20728
+mov eax, standingsmenubar	; 20728
 call RunTeamPickMenu	; 2072D
 cmp dword [statsplayoffs], byte 0	; 20732
 je short .1	; 20739
@@ -549,13 +549,13 @@ push byte 42h	; 20765
 mov ecx, 41h	; 20767
 mov ebx, 40h	; 2076C
 mov edx, 4	; 20771
-mov eax, unk_CF6AF	; 20776
+mov eax, rostermenubar	; 20776
 call DrawMenuBar	; 2077B
 push byte 42h	; 20780
 mov ecx, 41h	; 20782
 mov ebx, 40h	; 20787
 mov edx, 4	; 2078C
-mov eax, unk_CF6AF	; 20791
+mov eax, rostermenubar	; 20791
 call RunPlayerPickMenu	; 20796
 jmp near GameStandingsMenu.3	; 2079B
 GameStandingsMenu_player:
@@ -568,13 +568,13 @@ push byte 42h	; 207B8
 mov ecx, 41h	; 207BA
 mov ebx, 40h	; 207BF
 mov edx, 2	; 207C4
-mov eax, unk_CF74F	; 207C9
+mov eax, playercardmenubar	; 207C9
 call DrawMenuBar	; 207CE
 push byte 42h	; 207D3
 mov ecx, 41h	; 207D5
 mov ebx, 40h	; 207DA
 mov edx, 2	; 207DF
-mov eax, unk_CF74F	; 207E4
+mov eax, playercardmenubar	; 207E4
 call RunMenu	; 207E9
 jmp near GameStandingsMenu.3	; 207EE
 GameStandingsMenu_player2:
@@ -587,13 +587,13 @@ push byte 42h	; 2080F
 mov ecx, 41h	; 20811
 mov ebx, 40h	; 20816
 mov edx, 2	; 2081B
-mov eax, unk_CF74F	; 20820
+mov eax, playercardmenubar	; 20820
 call DrawMenuBar	; 20825
 push byte 42h	; 2082A
 mov ecx, 41h	; 2082C
 mov ebx, 40h	; 20831
 mov edx, 2	; 20836
-mov eax, unk_CF74F	; 2083B
+mov eax, playercardmenubar	; 2083B
 call RunMenu	; 20840
 mov dword [dword_C6D26], esi	; 20845
 jmp near GameStandingsMenu.3	; 2084B
@@ -631,7 +631,7 @@ mov dword [statsplayerbuf], esi	; 208BA
 mov dword [statsteambuf], esi	; 208C0
 mov dword [statsgoaliebuf], esi	; 208C6
 mov dword [statsskaterbuf], esi	; 208CC
-mov dword [dword_DC738], esi	; 208D2
+mov dword [leaguestatsmode], esi	; 208D2
 mov dword [statsredrawcb], esi	; 208D8
 mov eax, 2	; 208DE
 add esp, 310h	; 208E3
@@ -661,7 +661,7 @@ call sub_8FFB0	; 20910
 add esp, byte 0Ch	; 20915
 mov edx, 1	; 20918
 mov dword [keepdesksong], edx	; 2091D
-mov dword [dword_DC738], edx	; 20923
+mov dword [leaguestatsmode], edx	; 20923
 mov dword [statscategory], esi	; 20929
 mov dword [statsredrawcb], TeamStatsScreen	; 2092F
 call sub_B4BA8	; 20939
@@ -677,7 +677,7 @@ push byte 42h	; 20960
 mov ecx, 41h	; 20962
 mov ebx, 40h	; 20967
 mov edx, 4	; 2096C
-mov eax, unk_CF78F	; 20971
+mov eax, teamstatsmenubar	; 20971
 call DrawMenuBar	; 20976
 xor ecx, ecx	; 2097B
 mov ebx, str_embpal2	; 2097D
@@ -713,7 +713,7 @@ push byte 42h	; 209E9
 mov ecx, 41h	; 209EB
 mov ebx, 40h	; 209F0
 mov edx, 4	; 209F5
-mov eax, unk_CF78F	; 209FA
+mov eax, teamstatsmenubar	; 209FA
 call RunMenu	; 209FF
 mov eax, esp	; 20A04
 push eax	; 20A06
@@ -726,7 +726,7 @@ mov edx, esp	; 20A1B
 mov eax, 1	; 20A1D
 call FadePalStep	; 20A22
 xor edi, edi	; 20A27
-mov dword [dword_DC738], edi	; 20A29
+mov dword [leaguestatsmode], edi	; 20A29
 mov dword [statsredrawcb], edi	; 20A2F
 mov eax, 2	; 20A35
 add esp, 310h	; 20A3A
@@ -755,7 +755,7 @@ push dword 100h	; 20A6A
 push byte 0	; 20A6F
 call sub_8FFB0	; 20A71
 add esp, byte 0Ch	; 20A76
-mov dword [dword_DC738], 1	; 20A79
+mov dword [leaguestatsmode], 1	; 20A79
 mov dword [statscategory], esi	; 20A83
 mov dword [statsredrawcb], LeadersScreen	; 20A89
 call sub_B4BA8	; 20A93
@@ -771,7 +771,7 @@ push byte 42h	; 20ABA
 mov ecx, 41h	; 20ABC
 mov ebx, 40h	; 20AC1
 mov edx, 4	; 20AC6
-mov eax, unk_CF80F	; 20ACB
+mov eax, skaterstatsmenubar	; 20ACB
 call DrawMenuBar	; 20AD0
 xor ecx, ecx	; 20AD5
 mov ebx, str_embpal2	; 20AD7
@@ -807,7 +807,7 @@ push byte 42h	; 20B43
 mov ecx, 41h	; 20B45
 mov ebx, 40h	; 20B4A
 mov edx, 4	; 20B4F
-mov eax, unk_CF80F	; 20B54
+mov eax, skaterstatsmenubar	; 20B54
 call RunMenu	; 20B59
 mov eax, esp	; 20B5E
 push eax	; 20B60
@@ -854,7 +854,7 @@ push dword 100h	; 20BE1
 push byte 0	; 20BE6
 call sub_8FFB0	; 20BE8
 add esp, byte 0Ch	; 20BED
-mov dword [dword_DC738], 1	; 20BF0
+mov dword [leaguestatsmode], 1	; 20BF0
 mov dword [statscategory], esi	; 20BFA
 mov dword [statsredrawcb], LeadersScreen	; 20C00
 call sub_B4BA8	; 20C0A
@@ -870,7 +870,7 @@ push byte 42h	; 20C31
 mov ecx, 41h	; 20C33
 mov ebx, 40h	; 20C38
 mov edx, 4	; 20C3D
-mov eax, unk_CF88F	; 20C42
+mov eax, goaliestatsmenubar	; 20C42
 call DrawMenuBar	; 20C47
 xor ecx, ecx	; 20C4C
 mov ebx, str_embpal2	; 20C4E
@@ -906,7 +906,7 @@ push byte 42h	; 20CBA
 mov ecx, 41h	; 20CBC
 mov ebx, 40h	; 20CC1
 mov edx, 4	; 20CC6
-mov eax, unk_CF88F	; 20CCB
+mov eax, goaliestatsmenubar	; 20CCB
 call RunMenu	; 20CD0
 mov eax, esp	; 20CD5
 push eax	; 20CD7
@@ -946,7 +946,7 @@ push ebp	; 20D5A
 call FreeMemBlock	; 20D5B
 add esp, byte 4	; 20D60
 xor eax, eax	; 20D63
-mov dword [dword_DC738], eax	; 20D65
+mov dword [leaguestatsmode], eax	; 20D65
 mov dword [statsredrawcb], eax	; 20D6A
 mov eax, 2	; 20D6F
 add esp, 310h	; 20D74
@@ -977,16 +977,16 @@ push edx	; 20DA3
 sub esp, byte 10h	; 20DA4
 cmp dword [statsplayoffs], byte 0	; 20DA7
 je near .7	; 20DAE
-mov ebx, dword [dword_C65A8]	; 20DB4
+mov ebx, dword [easnfontbuf]	; 20DB4
 test ebx, ebx	; 20DBA
 jne short .1	; 20DBC
 push ebx	; 20DBE
 push str_EASNvfn	; 20DBF
 call sub_8E8A0	; 20DC4
 add esp, byte 8	; 20DC9
-mov dword [dword_C65A8], eax	; 20DCC
+mov dword [easnfontbuf], eax	; 20DCC
 .1:
-mov ecx, dword [dword_C65AC]	; 20DD1
+mov ecx, dword [embscupbank]	; 20DD1
 test ecx, ecx	; 20DD7
 jne short .6	; 20DD9
 mov eax, dword [statsplayoffs]	; 20DDB
@@ -1017,7 +1017,7 @@ lea eax, [byte esp+04h]	; 20E29
 push eax	; 20E2D
 call sub_8E83C	; 20E2E
 add esp, byte 8	; 20E33
-mov dword [dword_C65AC], eax	; 20E36
+mov dword [embscupbank], eax	; 20E36
 .6:
 mov eax, dword [statsteambuf]	; 20E3B
 mov edx, statsteamorder	; 20E40
@@ -1026,7 +1026,7 @@ push byte 42h	; 20E4A
 mov ecx, 41h	; 20E4C
 mov ebx, 40h	; 20E51
 mov edx, 4	; 20E56
-mov eax, unk_CF54F	; 20E5B
+mov eax, standingsmenubar	; 20E5B
 call DrawMenuBar	; 20E60
 jmp short .8	; 20E65
 .7:
@@ -1036,7 +1036,7 @@ push byte 42h	; 20E71
 mov ecx, 41h	; 20E73
 mov ebx, 40h	; 20E78
 mov edx, 4	; 20E7D
-mov eax, unk_CF54F	; 20E82
+mov eax, standingsmenubar	; 20E82
 call DrawMenuBar	; 20E87
 mov eax, dword [statsteambuf]	; 20E8C
 mov edx, statsteamorder	; 20E91
@@ -1074,7 +1074,7 @@ inc eax	; 20EDD
 cmp eax, byte 1Fh	; 20EDE
 jl short EasnStandingsMenu_m.1	; 20EE1
 mov edx, 1	; 20EE3
-mov dword [dword_DC738], edx	; 20EE8
+mov dword [leaguestatsmode], edx	; 20EE8
 mov eax, dword [standingscb]	; 20EEE
 mov dword [statsredrawcb], eax	; 20EF3
 xor ebx, ebx	; 20EF8
@@ -1127,7 +1127,7 @@ push byte 42h	; 20FAE
 mov ecx, 41h	; 20FB0
 mov ebx, 40h	; 20FB5
 mov edx, 4	; 20FBA
-mov eax, unk_CF54F	; 20FBF
+mov eax, standingsmenubar	; 20FBF
 call DrawMenuBar	; 20FC4
 xor ebp, ebp	; 20FC9
 mov dword [statscategory], ebp	; 20FCB
@@ -1166,7 +1166,7 @@ push byte 42h	; 21045
 mov ecx, 41h	; 21047
 mov ebx, 40h	; 2104C
 mov edx, 4	; 21051
-mov eax, unk_CF54F	; 21056
+mov eax, standingsmenubar	; 21056
 call RunTeamPickMenu	; 2105B
 call FreeDeskBuffers	; 21060
 call sub_B4BA8	; 21065
@@ -1189,13 +1189,13 @@ push byte 42h	; 210A5
 mov ecx, 41h	; 210A7
 mov ebx, 40h	; 210AC
 mov edx, 4	; 210B1
-mov eax, unk_CF54F	; 210B6
+mov eax, standingsmenubar	; 210B6
 call DrawMenuBar	; 210BB
 push byte 42h	; 210C0
 mov ecx, 41h	; 210C2
 mov ebx, 40h	; 210C7
 mov edx, 4	; 210CC
-mov eax, unk_CF54F	; 210D1
+mov eax, standingsmenubar	; 210D1
 call RunTeamPickMenu	; 210D6
 cmp dword [statsplayoffs], byte 0	; 210DB
 je short .1	; 210E2
@@ -1215,13 +1215,13 @@ push byte 42h	; 21116
 mov ecx, 41h	; 21118
 mov ebx, 40h	; 2111D
 mov edx, 4	; 21122
-mov eax, unk_CF6AF	; 21127
+mov eax, rostermenubar	; 21127
 call DrawMenuBar	; 2112C
 push byte 42h	; 21131
 mov ecx, 41h	; 21133
 mov ebx, 40h	; 21138
 mov edx, 4	; 2113D
-mov eax, unk_CF6AF	; 21142
+mov eax, rostermenubar	; 21142
 call RunPlayerPickMenu	; 21147
 jmp near EasnStandingsMenu_m.4	; 2114C
 EasnStandingsMenu_player:
@@ -1234,13 +1234,13 @@ push byte 42h	; 21169
 mov ecx, 41h	; 2116B
 mov ebx, 40h	; 21170
 mov edx, 2	; 21175
-mov eax, unk_CF74F	; 2117A
+mov eax, playercardmenubar	; 2117A
 call DrawMenuBar	; 2117F
 push byte 42h	; 21184
 mov ecx, 41h	; 21186
 mov ebx, 40h	; 2118B
 mov edx, 2	; 21190
-mov eax, unk_CF74F	; 21195
+mov eax, playercardmenubar	; 21195
 call RunMenu	; 2119A
 jmp near EasnStandingsMenu_m.4	; 2119F
 EasnStandingsMenu_player2:
@@ -1255,13 +1255,13 @@ push byte 42h	; 211CC
 mov ecx, 41h	; 211CE
 mov ebx, 40h	; 211D3
 mov edx, 2	; 211D8
-mov eax, unk_CF74F	; 211DD
+mov eax, playercardmenubar	; 211DD
 call DrawMenuBar	; 211E2
 push byte 42h	; 211E7
 mov ecx, 41h	; 211E9
 mov ebx, 40h	; 211EE
 mov edx, 2	; 211F3
-mov eax, unk_CF74F	; 211F8
+mov eax, playercardmenubar	; 211F8
 call RunMenu	; 211FD
 mov dword [dword_C6D26], esi	; 21202
 jmp near EasnStandingsMenu_m.4	; 21208
@@ -1301,7 +1301,7 @@ mov edx, esp	; 21285
 mov eax, 1	; 21287
 call FadePalStep	; 2128C
 xor edi, edi	; 21291
-mov dword [dword_DC738], edi	; 21293
+mov dword [leaguestatsmode], edi	; 21293
 mov dword [statsredrawcb], edi	; 21299
 xor eax, eax	; 2129F
 .2:
@@ -1397,7 +1397,7 @@ push dword 100h	; 2136A
 push byte 0	; 2136F
 call sub_8FFB0	; 21371
 add esp, byte 0Ch	; 21376
-mov dword [dword_DC738], 1	; 21379
+mov dword [leaguestatsmode], 1	; 21379
 mov dword [statscategory], esi	; 21383
 mov dword [statsredrawcb], TeamStatsScreen	; 21389
 call sub_B4BA8	; 21393
@@ -1414,7 +1414,7 @@ push byte 42h	; 213BF
 mov ecx, 41h	; 213C1
 mov ebx, 40h	; 213C6
 mov edx, 4	; 213CB
-mov eax, unk_CF78F	; 213D0
+mov eax, teamstatsmenubar	; 213D0
 call DrawMenuBar	; 213D5
 xor ecx, ecx	; 213DA
 mov ebx, str_embpal3	; 213DC
@@ -1450,7 +1450,7 @@ push byte 42h	; 21448
 mov ecx, 41h	; 2144A
 mov ebx, 40h	; 2144F
 mov edx, 4	; 21454
-mov eax, unk_CF78F	; 21459
+mov eax, teamstatsmenubar	; 21459
 CalTeamStatsScreen_common:
 call RunMenu	; 2145E
 mov eax, esp	; 21463
@@ -1466,7 +1466,7 @@ call FadePalStep	; 21481
 mov dword [dword_DDD2C], 0FFFFFFFFh	; 21486
 call LoadCalendarShapes	; 21490
 xor edi, edi	; 21495
-mov dword [dword_DC738], edi	; 21497
+mov dword [leaguestatsmode], edi	; 21497
 mov dword [statsredrawcb], edi	; 2149D
 xor eax, eax	; 214A3
 add esp, 310h	; 214A5
@@ -1498,7 +1498,7 @@ push dword 100h	; 214CB
 push byte 0	; 214D0
 call sub_8FFB0	; 214D2
 add esp, byte 0Ch	; 214D7
-mov dword [dword_DC738], 1	; 214DA
+mov dword [leaguestatsmode], 1	; 214DA
 mov dword [statscategory], esi	; 214E4
 mov dword [statsredrawcb], LeadersScreen	; 214EA
 call sub_B4BA8	; 214F4
@@ -1515,7 +1515,7 @@ push byte 42h	; 21520
 mov ecx, 41h	; 21522
 mov ebx, 40h	; 21527
 mov edx, 4	; 2152C
-mov eax, unk_CF80F	; 21531
+mov eax, skaterstatsmenubar	; 21531
 call DrawMenuBar	; 21536
 xor ecx, ecx	; 2153B
 mov ebx, str_embpal3	; 2153D
@@ -1551,7 +1551,7 @@ push byte 42h	; 215A9
 mov ecx, 41h	; 215AB
 mov ebx, 40h	; 215B0
 mov edx, 4	; 215B5
-mov eax, unk_CF80F	; 215BA
+mov eax, skaterstatsmenubar	; 215BA
 jmp near CalTeamStatsScreen_common	; 215BF
 %endif ; C
 ; C: src/front/stats_screens/CalTeamStatsScreen.c (CalGoalieStatsScreen)
@@ -1574,7 +1574,7 @@ push dword 100h	; 215DE
 push byte 0	; 215E3
 call sub_8FFB0	; 215E5
 add esp, byte 0Ch	; 215EA
-mov dword [dword_DC738], 1	; 215ED
+mov dword [leaguestatsmode], 1	; 215ED
 mov dword [statscategory], esi	; 215F7
 mov dword [statsredrawcb], LeadersScreen	; 215FD
 call sub_B4BA8	; 21607
@@ -1591,7 +1591,7 @@ push byte 42h	; 21633
 mov ecx, 41h	; 21635
 mov ebx, 40h	; 2163A
 mov edx, 4	; 2163F
-mov eax, unk_CF88F	; 21644
+mov eax, goaliestatsmenubar	; 21644
 call DrawMenuBar	; 21649
 xor ecx, ecx	; 2164E
 mov ebx, str_embpal3	; 21650
@@ -1627,7 +1627,7 @@ push byte 42h	; 216BC
 mov ecx, 41h	; 216BE
 mov ebx, 40h	; 216C3
 mov edx, 4	; 216C8
-mov eax, unk_CF88F	; 216CD
+mov eax, goaliestatsmenubar	; 216CD
 jmp near CalTeamStatsScreen_common	; 216D2
 %endif ; C
 ; C: src/front/stats_screens/CalStandingsScreen.c
@@ -1644,16 +1644,16 @@ sub esp, byte 10h	; 216E4
 call FreeCalendarIfLowMem	; 216E7
 cmp dword [statsplayoffs], byte 0	; 216EC
 je near .7	; 216F3
-mov ebx, dword [dword_C65A8]	; 216F9
+mov ebx, dword [easnfontbuf]	; 216F9
 test ebx, ebx	; 216FF
 jne short .1	; 21701
 push ebx	; 21703
 push str_EASNvfn	; 21704
 call sub_8E8A0	; 21709
 add esp, byte 8	; 2170E
-mov dword [dword_C65A8], eax	; 21711
+mov dword [easnfontbuf], eax	; 21711
 .1:
-mov ecx, dword [dword_C65AC]	; 21716
+mov ecx, dword [embscupbank]	; 21716
 test ecx, ecx	; 2171C
 jne short .6	; 2171E
 mov eax, dword [statsplayoffs]	; 21720
@@ -1684,7 +1684,7 @@ lea eax, [byte esp+04h]	; 2176E
 push eax	; 21772
 call sub_8E83C	; 21773
 add esp, byte 8	; 21778
-mov dword [dword_C65AC], eax	; 2177B
+mov dword [embscupbank], eax	; 2177B
 .6:
 mov eax, dword [statsteambuf]	; 21780
 mov edx, statsteamorder	; 21785
@@ -1693,7 +1693,7 @@ push byte 42h	; 2178F
 mov ecx, 41h	; 21791
 mov ebx, 40h	; 21796
 mov edx, 4	; 2179B
-mov eax, unk_CF54F	; 217A0
+mov eax, standingsmenubar	; 217A0
 call DrawMenuBar	; 217A5
 jmp short .8	; 217AA
 .7:
@@ -1703,7 +1703,7 @@ push byte 42h	; 217B6
 mov ecx, 41h	; 217B8
 mov ebx, 40h	; 217BD
 mov edx, 4	; 217C2
-mov eax, unk_CF54F	; 217C7
+mov eax, standingsmenubar	; 217C7
 call DrawMenuBar	; 217CC
 mov eax, dword [statsteambuf]	; 217D1
 mov edx, statsteamorder	; 217D6
@@ -1743,7 +1743,7 @@ mov dword [dword esp+eax*4+0300h], ebx	; 2181D
 inc eax	; 21824
 cmp eax, byte 1Fh	; 21825
 jl short CalStandingsMenu.1	; 21828
-mov dword [dword_DC738], 1	; 2182A
+mov dword [leaguestatsmode], 1	; 2182A
 mov eax, dword [standingscb]	; 21834
 mov dword [statsredrawcb], eax	; 21839
 xor ebx, ebx	; 2183E
@@ -1796,7 +1796,7 @@ push byte 42h	; 218F9
 mov ecx, 41h	; 218FB
 mov ebx, 40h	; 21900
 mov edx, 4	; 21905
-mov eax, unk_CF54F	; 2190A
+mov eax, standingsmenubar	; 2190A
 call DrawMenuBar	; 2190F
 mov dword [statscategory], esi	; 21914
 mov dword [statsteamsel], esi	; 2191A
@@ -1834,7 +1834,7 @@ push byte 42h	; 2198D
 mov ecx, 41h	; 2198F
 mov ebx, 40h	; 21994
 mov edx, 4	; 21999
-mov eax, unk_CF54F	; 2199E
+mov eax, standingsmenubar	; 2199E
 call RunTeamPickMenu	; 219A3
 call FreeDeskBuffers	; 219A8
 call sub_B4BA8	; 219AD
@@ -1856,13 +1856,13 @@ push byte 42h	; 219E8
 mov ecx, 41h	; 219EA
 mov ebx, 40h	; 219EF
 mov edx, 4	; 219F4
-mov eax, unk_CF54F	; 219F9
+mov eax, standingsmenubar	; 219F9
 call DrawMenuBar	; 219FE
 push byte 42h	; 21A03
 mov ecx, 41h	; 21A05
 mov ebx, 40h	; 21A0A
 mov edx, 4	; 21A0F
-mov eax, unk_CF54F	; 21A14
+mov eax, standingsmenubar	; 21A14
 call RunTeamPickMenu	; 21A19
 cmp dword [statsplayoffs], byte 0	; 21A1E
 je short .1	; 21A25
@@ -1882,13 +1882,13 @@ push byte 42h	; 21A55
 mov ecx, 41h	; 21A57
 mov ebx, 40h	; 21A5C
 mov edx, 4	; 21A61
-mov eax, unk_CF6AF	; 21A66
+mov eax, rostermenubar	; 21A66
 call DrawMenuBar	; 21A6B
 push byte 42h	; 21A70
 mov ecx, 41h	; 21A72
 mov ebx, 40h	; 21A77
 mov edx, 4	; 21A7C
-mov eax, unk_CF6AF	; 21A81
+mov eax, rostermenubar	; 21A81
 call RunPlayerPickMenu	; 21A86
 jmp near CalStandingsMenu.4	; 21A8B
 CalStandingsMenu_player:
@@ -1901,13 +1901,13 @@ push byte 42h	; 21AAC
 mov ecx, 41h	; 21AAE
 mov ebx, 40h	; 21AB3
 mov edx, 2	; 21AB8
-mov eax, unk_CF74F	; 21ABD
+mov eax, playercardmenubar	; 21ABD
 call DrawMenuBar	; 21AC2
 push byte 42h	; 21AC7
 mov ecx, 41h	; 21AC9
 mov ebx, 40h	; 21ACE
 mov edx, 2	; 21AD3
-mov eax, unk_CF74F	; 21AD8
+mov eax, playercardmenubar	; 21AD8
 call RunMenu	; 21ADD
 jmp near CalStandingsMenu.4	; 21AE2
 CalStandingsMenu_player2:
@@ -1920,13 +1920,13 @@ push byte 42h	; 21B02
 mov ecx, 41h	; 21B04
 mov ebx, 40h	; 21B09
 mov edx, 2	; 21B0E
-mov eax, unk_CF74F	; 21B13
+mov eax, playercardmenubar	; 21B13
 call DrawMenuBar	; 21B18
 push byte 42h	; 21B1D
 mov ecx, 41h	; 21B1F
 mov ebx, 40h	; 21B24
 mov edx, 2	; 21B29
-mov eax, unk_CF74F	; 21B2E
+mov eax, playercardmenubar	; 21B2E
 call RunMenu	; 21B33
 mov dword [dword_C6D26], 1	; 21B38
 jmp near CalStandingsMenu.4	; 21B42
@@ -1955,7 +1955,7 @@ mov dword [statsplayerbuf], eax	; 21B92
 mov dword [statsteambuf], eax	; 21B97
 mov dword [statsgoaliebuf], eax	; 21B9C
 mov dword [statsskaterbuf], eax	; 21BA1
-mov dword [dword_DC738], eax	; 21BA6
+mov dword [leaguestatsmode], eax	; 21BA6
 mov dword [statsredrawcb], eax	; 21BAB
 .2:
 mov ebx, dword [dword esp+eax*4+0300h]	; 21BB0

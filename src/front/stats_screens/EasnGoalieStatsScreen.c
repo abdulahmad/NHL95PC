@@ -29,14 +29,14 @@ int EasnGoalieStatsScreen(int cat)
 
     keepdesksong = 1;
     sub_8FFB0(0, 0x100, buf);
-    dword_DC738 = 1;
+    leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
     sub_B4BA8();
     InitMenuRemap(1);
     FadePalStep(1, buf, 0x10);
     LeadersScreen(cat);
-    DrawMenuBar(unk_CF88F, 4, 0x40, 0x41, 0x42);
+    DrawMenuBar(goaliestatsmenubar, 4, 0x40, 0x41, 0x42);
     ext = 0;
     name = (char *)str_embpal2;
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
@@ -46,7 +46,7 @@ int EasnGoalieStatsScreen(int cat)
     statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal7);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
-    RunMenu(unk_CF88F, 4, 0x40, 0x41, 0x42);
+    RunMenu(goaliestatsmenubar, 4, 0x40, 0x41, 0x42);
     sub_8FFB0(0, 0x100, buf);
     if (gamemode != 1) {
         ext2 = 0;
@@ -64,7 +64,7 @@ int EasnGoalieStatsScreen(int cat)
     statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal7) + 0x10;
     FadePalStep(1, buf, 0x10);
     FreeMemBlock(statsbgshapes);
-    dword_DC738 = 0;
+    leaguestatsmode = 0;
     statsredrawcb = 0;
     return 2;
 }

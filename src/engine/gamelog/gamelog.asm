@@ -28,9 +28,9 @@ extern str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str_B4, str_B
 extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix, str_FmtParenD
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1, textline2
-extern textline3, textline4, textline5, unk_C1B49, unk_C5423, unk_C542E, gsumqueue, UpdateTextOverlay
-extern vecdist, VisTeam, word_C5428, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
-extern penbannertab, word_DB08A, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
+extern textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
+extern vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
+extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
 global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote
@@ -563,7 +563,7 @@ push edx	; 61A96
 push esi	; 61A97
 sub esp, byte 4	; 61A98
 mov esi, eax	; 61A9B
-inc word [word_C5428]	; 61A9D
+inc word [gsumcount]	; 61A9D
 mov edx, esp	; 61AA4
 mov eax, gsummarypath	; 61AA6
 call FileOpenRW	; 61AAB
@@ -585,7 +585,7 @@ add esp, byte 4	; 61ADB
 .2:
 mov ecx, 0Bh	; 61ADE
 mov ebx, 0FFFFFFFFh	; 61AE3
-mov edx, unk_C5423	; 61AE8
+mov edx, gsumheader	; 61AE8
 mov eax, dword [esp]	; 61AED
 call FileWriteAt	; 61AF0
 test eax, eax	; 61AF5
@@ -617,7 +617,7 @@ add esp, byte 4	; 61B4B
 .5:
 mov ecx, 0Bh	; 61B4E
 mov ebx, 0FFFFFFFFh	; 61B53
-mov edx, unk_C542E	; 61B58
+mov edx, gsumtail	; 61B58
 mov eax, dword [esp]	; 61B5D
 call FileWriteAt	; 61B60
 test eax, eax	; 61B65
@@ -686,7 +686,7 @@ add esp, byte 4	; 61BE9
 .1:
 mov ecx, 0Bh	; 61BEC
 mov ebx, 0FFFFFFFFh	; 61BF1
-mov edx, unk_C5423	; 61BF6
+mov edx, gsumheader	; 61BF6
 fileio_tail_a:
 mov eax, dword [esp]	; 61BFB
 call FileWriteAt	; 61BFE
@@ -737,7 +737,7 @@ add esp, byte 4	; 61C6F
 .2:
 mov ecx, 0Bh	; 61C72
 mov ebx, 0FFFFFFFFh	; 61C77
-mov edx, unk_C542E	; 61C7C
+mov edx, gsumtail	; 61C7C
 jmp near fileio_tail_a	; 61C81
 %endif ; C
 ; C: src/engine/gamelog/ReadGSumHeader.c (WriteGSumHeader)
@@ -751,7 +751,7 @@ push ebx	; 61C90
 push ecx	; 61C91
 push edx	; 61C92
 sub esp, byte 4	; 61C93
-inc word [word_C5428]	; 61C96
+inc word [gsumcount]	; 61C96
 mov edx, esp	; 61C9D
 mov eax, gsummarypath	; 61C9F
 call FileOpenRW	; 61CA4
@@ -773,7 +773,7 @@ add esp, byte 4	; 61CD4
 .2:
 mov ecx, 0Bh	; 61CD7
 mov ebx, 0FFFFFFFFh	; 61CDC
-mov edx, unk_C5423	; 61CE1
+mov edx, gsumheader	; 61CE1
 mov eax, dword [esp]	; 61CE6
 call FileWriteAt	; 61CE9
 test eax, eax	; 61CEE
@@ -794,7 +794,7 @@ add esp, byte 4	; 61D1C
 .4:
 mov ecx, 0Bh	; 61D1F
 mov ebx, 0FFFFFFFFh	; 61D24
-mov edx, unk_C542E	; 61D29
+mov edx, gsumtail	; 61D29
 mov eax, dword [esp]	; 61D2E
 call FileWriteAt	; 61D31
 test eax, eax	; 61D36
@@ -1729,7 +1729,7 @@ shl edx, 4	; 62889
 add edx, ebx	; 6288C
 mov ecx, dword [dword edx+hmplstats-2]	; 6288E
 sar ecx, 10h	; 62894
-mov ebx, dword [dword edx+word_DB08A-2]	; 62897
+mov ebx, dword [dword edx+hmplstats_w2-2]	; 62897
 sar ebx, 10h	; 6289D
 add ebx, ecx	; 628A0
 cmp ecx, byte 3	; 628A2
@@ -1888,7 +1888,7 @@ shl ebx, 4	; 62A80
 mov edx, edi	; 62A83
 shl edx, 4	; 62A85
 add edx, ebx	; 62A88
-mov ecx, dword [dword edx+word_DB08A-2]	; 62A8A
+mov ecx, dword [dword edx+hmplstats_w2-2]	; 62A8A
 sar ecx, 10h	; 62A90
 mov ebx, dword [dword edx+hmplstats-2]	; 62A93
 sar ebx, 10h	; 62A99
@@ -1960,7 +1960,7 @@ shl ebx, 4	; 62B5A
 mov edx, edi	; 62B5D
 shl edx, 4	; 62B5F
 add edx, ebx	; 62B62
-mov ecx, dword [dword edx+word_DB08A-2]	; 62B64
+mov ecx, dword [dword edx+hmplstats_w2-2]	; 62B64
 sar ecx, 10h	; 62B6A
 mov ebx, dword [dword edx+hmplstats-2]	; 62B6D
 sar ebx, 10h	; 62B73

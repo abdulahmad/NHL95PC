@@ -6,8 +6,8 @@ extern exhfiles, pofiles, lgfiles, StatsSel9394Season, StatsSel9394Playoffs, Sta
 extern NullBlit, CmpPoints, CmpGAA, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
 extern CmpTeamPenalties, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct
 extern CmpGoalieWins, CmpSavePct, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
-extern sub_B5974, sub_B5AC8, unk_C06BC, unk_C06C1, unk_C06C6, unk_C06CB, unk_C06D0, unk_C06D5
-extern unk_C06DA, unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, str_OT2, str_BOS, str_BUF3
+extern sub_B5974, sub_B5AC8, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005
+extern str_3006, str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3
 extern str_CGY, str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL
 extern str_NJ, str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL
 extern str_SJ, str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA
@@ -19,38 +19,38 @@ extern str_Accumulated, str_embnhl, str_embscup, str_careerdb, str_seasondb, str
 extern str_Agility, str_Weight, str_ShotPower, str_Checking2, str_StickHandling, str_Accuracy, str_Passing2, str_OffensiveAwareness
 extern str_DefensiveAwareness, str_Aggressiveness, str_Endurance, str_ShootPassBias, str_Faceoffs, str_GloveLeft, str_GloveRight, str_StickLeft
 extern str_StickRight, str_PuckControl, str_Speed2, str_Agility2, str_Weight2, str_OffensiveAwareness2, str_DefensiveAwareness2, str_WesternConference3
-extern str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings, unk_C0F69
+extern str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings, str_spW
 extern unk_C0F6C, unk_C0F6F, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, unk_C0F89
 extern str_ADV, str_PPG3, str_PIM5, str_AVG, str_PTS, str_WINS, str_PointLeaders, str_GoalLeaders
 extern str_AssistLeaders, str_PowerPlayGoalLeaders, str_ShorthandedGoalLeaders, str_PlusMinusLeaders, str_PenaltyMinuteLeaders, str_ShootingPercentageLeaders, str_GoalsAgainstAverageLeaders, str_GoaltenderWinLeaders
-extern str_SavePercentageLeaders, unk_C11C5, unk_C11C9, str_Pt3, unk_C11D1, str_PP2, str_SHG3, unk_C11D9
-extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, unk_C11FD, unk_C1200
+extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3, unk_C11D9
+extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2, unk_C1200
 extern unk_C1203, str_SA4, str_PCT7, str_LSSCEDDB, str_SCHEDULEDB3, str_InsufficientDiskSpace3
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
 global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, byte_C66B4, mi_9394Season
-global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
+global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, str_Dashes, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
 global treecol_Er2, treecol_Er1
-global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
-global dword_C5714, dword_C5718, dword_C583C, deferpending, dword_C5844, dword_C5848, hudhomeline, hudawayline
-global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, demoteammode, dword_C588A
-global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
+global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, panelprevmin
+global panelprevsec, panelprevhund, panelhund, deferpending, dword_C5844, dword_C5848, hudhomeline, hudawayline
+global dword_C5854, dword_C5858, hmlinetimer, awlinetimer, dword_C5861, dword_C5862, demoteammode, nhlintrosaid
+global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, easnfontbuf, embscupbank
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
 global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
-global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy, divx, divy
+global westconfteams, eastconfteams, dword_C6D26, potreeseeds, dword_C6E20, treerowy, divx, divy
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
 global keepdesksong, songdata, rinktilebm
 global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, off_C56B5, perioddigits, off_C57C8
-global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
+global crestnames, creditpages, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
 global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
 global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
-global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
-global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
+global teamcolhdrs, leadersortfns, leadertitles, leadercolhdrs, leadercolhdrs_c1
+global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
 global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, unk_C588E, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
 global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, unk_C5969, unk_C5996, str_TrademarkOfTheNational, str_LeagueAndIsUsed
 global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, unk_C5A6C, unk_C5A78, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
@@ -75,8 +75,8 @@ global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_G
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
 global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, str_InsufficientDiskSpace, str_ToSaveTheSettings, str_1KbytesFree
 global str_Yes, str_No4, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
-global str_AllTheTeamsAre, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
-global word_C5762, word_C6D24, treecolx, scrpitch
+global str_AllTheTeamsAre, hudpenhome, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, hudpenaway, awpanelpen_time, awpanelpen_w4
+global awpanelpen_w6, potreeround, treecolx, scrpitch
 msg_NeedKbytes:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
@@ -101,46 +101,46 @@ hudclocksec:
 db 00h,00h,00h,00h
 hudclockhund:
 db 00h,00h,00h,00h
-dword_C5710:
+panelprevmin:
 db 063h,00h,00h,00h
-dword_C5714:
+panelprevsec:
 db 063h,00h,00h,00h
-dword_C5718:
+panelprevhund:
 db 063h,00h,00h,00h
 hudpenhome:
 db 0FFh,0FFh
-word_C571E:
+hmpanelpen_time:
 db 00h,00h
-word_C5720:
+hmpanelpen_w4:
 db 00h,00h
-word_C5722:
+hmpanelpen_w6:
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
 hudpenaway:
 db 0FFh,0FFh
-word_C575E:
+awpanelpen_time:
 db 00h,00h
-word_C5760:
+awpanelpen_w4:
 db 00h,00h
-word_C5762:
+awpanelpen_w6:
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
 perioddigits:
-dd unk_C06BC
-dd unk_C06C1
-dd unk_C06C6
-dd unk_C06CB
-dd unk_C06D0
-dd unk_C06D5
-dd unk_C06DA
-dd unk_C06DF
-dd unk_C06E4
-dd unk_C06E9
-dd unk_C06EE
+dd str_3000
+dd str_3001
+dd str_3002
+dd str_3003
+dd str_3004
+dd str_3005
+dd str_3006
+dd str_3007
+dd str_3008
+dd str_3009
+dd str_300
 off_C57C8:
 dd str_OT2
 crestnames:
@@ -172,7 +172,7 @@ dd str_ANA3
 dd str_FLA
 dd str_ASW
 dd str_ASE
-dword_C583C:
+panelhund:
 db 00h,00h,00h,00h
 deferpending:
 db 00h,00h,00h,00h
@@ -188,9 +188,9 @@ dword_C5854:
 db 00h,00h,00h,00h
 dword_C5858:
 db 00h,00h,00h,00h
-dword_C585C:
+hmlinetimer:
 db 00h,00h,00h,00h
-dword_C5860:
+awlinetimer:
 db 00h
 dword_C5861:
 db 00h
@@ -200,7 +200,7 @@ db 00h,09h,0Ah,01h,08h,015h,014h,012h,0Ch,015h,0Ch,016h,0Ah,00h,0Ch,0Ah
 db 014h,015h,0Ch,015h
 demoteammode:
 db 02h,00h,00h,00h
-dword_C588A:
+nhlintrosaid:
 db 01h,00h,00h,00h
 unk_C588E:
 db 00h
@@ -704,7 +704,7 @@ dd str_DougReid
 dd str_MottLinn
 unk_C638C:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-off_C6399:
+creditpages:
 dd unk_C5969
 dd unk_C5B93
 dd unk_C5A78
@@ -797,9 +797,9 @@ dd str_InsufficientDiskSpaceTo
 dd str_TheDisplayedStatisticsTo
 dd msg_NeedKbytes2
 db 00h,00h
-dword_C65A8:
+easnfontbuf:
 db 00h,00h,00h,00h
-dword_C65AC:
+embscupbank:
 db 00h,00h,00h,00h
 statscategory:
 db 00h,00h,00h,00h
@@ -912,7 +912,7 @@ unk_C678E:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 dword_C679D:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
-byte_C67A9:
+str_Dashes:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,00h
 unk_C67B1:
 db 00h,00h,00h,00h,00h,00h,00h,00h
@@ -1086,11 +1086,11 @@ dd str_TeamPowerPlay
 dd str_TeamPenalties
 dd str_TeamStandings
 teamcolhdrs:
-dd unk_C0F69
+dd str_spW
 dd unk_C0F6C
 dd unk_C0F6F
 dd str_GF2
-dd unk_C0F69
+dd str_spW
 dd unk_C0F6C
 dd unk_C0F6F
 dd str_GA4
@@ -1134,48 +1134,48 @@ dd str_ShootingPercentageLeaders
 dd str_GoalsAgainstAverageLeaders
 dd str_GoaltenderWinLeaders
 dd str_SavePercentageLeaders
-off_C6C40:
-dd unk_C11C5
-off_C6C44:
-dd unk_C11C9
-off_C6C48:
+leadercolhdrs:
+dd str_spG
+leadercolhdrs_c1:
+dd str_spA
+leadercolhdrs_c2:
 dd str_Pt3
-off_C6C4C:
+leadercolhdrs_c3:
 dd unk_C11D1
-off_C6C50:
+leadercolhdrs_c4:
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd str_Pt3
-dd unk_C11D1
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd unk_C11D1
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd unk_C11D1
+dd unk_C11D1
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd str_PP2
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd str_SHG3
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd unk_C11D9
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd str_PIM6
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
+dd str_spG
+dd str_spA
 dd str_Pt3
 dd str_Shots5
 dd str_Pct6
@@ -1185,7 +1185,7 @@ dd str_AVG2
 dd unk_C11D1
 dd unk_C11D1
 dd str_MIN5
-dd unk_C11FD
+dd str_spW2
 dd unk_C1200
 dd unk_C1203
 dd unk_C11D1
@@ -1197,7 +1197,7 @@ dd unk_C11D1
 dd str_LSSCEDDB
 off_C6D22 equ $+2
 dd str_SCHEDULEDB3
-word_C6D24:
+potreeround:
 db 070h,0FFh
 dword_C6D26:
 db 00h,00h,00h,00h,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh,01h,05h,09h,0Dh
@@ -1230,7 +1230,7 @@ db 017h,0FFh,0FFh,0FFh,0FFh
 treecol_Er1:
 db 08h
 db 09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
-dword_C6DBA:
+potreeseeds:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
 db 05h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,08h,00h,00h,00h
 db 09h,00h,00h,00h,0Ah,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h

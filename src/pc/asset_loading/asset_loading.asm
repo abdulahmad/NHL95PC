@@ -5,7 +5,7 @@ section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
-extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demogame, dword_D8C4C, SumCwdExciteLvl, dword_E9A9E
+extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demogame, gfxidlist, SumCwdExciteLvl, dword_E9A9E
 extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
@@ -328,7 +328,7 @@ inc esi	; 13B50
 cmp esi, byte 0Ah	; 13B51
 jl short LoadGameGfx.5	; 13B54
 LoadGameGfx_common:
-push dword_D8C4C	; 13B56
+push gfxidlist	; 13B56
 push str_GfxIdList	; 13B5B
 mov ebx, dword [numshpbank]	; 13B60
 push ebx	; 13B66

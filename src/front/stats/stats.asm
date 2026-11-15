@@ -5,7 +5,7 @@ section s_21CDE progbits alloc exec nowrite align=1
 extern __CHK, byte_ED909, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, dword_DC85C
 extern dword_DC860, eastconfname, eastconfteams, fileoncd, FitPlayerName, fputchar, FreeMemBlock, goalieratingnames
 extern j___close_, kaufmfont, leadersortfns, leadertitles, lseek_, mainfont, MakePath, MakeStatsTitle
-extern memcpy_, off_C6A99, off_C6AD1, off_C6C40, off_C6C44, off_C6C48, off_C6C4C, off_C6C50
+extern memcpy_, off_C6A99, off_C6AD1, leadercolhdrs, leadercolhdrs_c1, leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4
 extern open_, OpenStatsSchedule, PrintCenteredText, printfbuf, PrintFmt1, PrintFmt2, PrintOutlinedText, PrintShadowText
 extern qsort_, read_, SetTextColors, skaterratingnames, sprintf_, statsbgnames, statsbgshapes, statsfromleague
 extern statsgoaliebuf, statsgoalieorder, statsgoalieplr, statslabels, statsleague, statsnumgoalies, statsnumskaters, statspalshape
@@ -5678,15 +5678,15 @@ mov esi, edx	; 26426
 shl esi, 2	; 26428
 add esi, edx	; 2642B
 shl esi, 2	; 2642D
-mov ebx, dword [dword esi+off_C6C40]	; 26430
+mov ebx, dword [dword esi+leadercolhdrs]	; 26430
 mov edx, ecx	; 26436
 mov eax, 19Ah	; 26438
 call PrintShadowText	; 2643D
-mov ebx, dword [dword esi+off_C6C44]	; 26442
+mov ebx, dword [dword esi+leadercolhdrs_c1]	; 26442
 mov edx, ecx	; 26448
 mov eax, 1CCh	; 2644A
 call PrintShadowText	; 2644F
-mov ebx, dword [dword esi+off_C6C48]	; 26454
+mov ebx, dword [dword esi+leadercolhdrs_c2]	; 26454
 mov edx, ecx	; 2645A
 mov eax, 1F4h	; 2645C
 call PrintShadowText	; 26461
@@ -5699,7 +5699,7 @@ mov edx, dword [esp]	; 26475
 mov eax, edx	; 26478
 shl eax, 2	; 2647A
 add eax, edx	; 2647D
-mov ebx, dword [nosplit eax*4+off_C6C4C]	; 2647F
+mov ebx, dword [nosplit eax*4+leadercolhdrs_c3]	; 2647F
 mov edx, dword [dword esp+0262h]	; 26486
 sar edx, 10h	; 2648D
 mov eax, 21Ch	; 26490
@@ -5709,7 +5709,7 @@ mov edx, dword [esp]	; 2649A
 mov eax, edx	; 2649D
 shl eax, 2	; 2649F
 add eax, edx	; 264A2
-mov ebx, dword [nosplit eax*4+off_C6C50]	; 264A4
+mov ebx, dword [nosplit eax*4+leadercolhdrs_c4]	; 264A4
 mov edx, dword [dword esp+0262h]	; 264AB
 sar edx, 10h	; 264B2
 mov eax, 24Eh	; 264B5

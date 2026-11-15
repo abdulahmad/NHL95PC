@@ -4,8 +4,8 @@ bits 32
 section s_1431E progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
 extern awpanelspr, clockcolon, clockdigits, curleague, DrawEnergyBar, DrawLineGroupBars, DrawPanelClockDigits, DrawPanelPenalties
-extern dword_C56C4, dword_C56E4, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
-extern dword_C5854, dword_C5858, dword_C585C, dword_C5860, FatalError, gmode, hmlineind, hmpanelspr
+extern dword_C56C4, dword_C56E4, panelprevmin, panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848
+extern dword_C5854, dword_C5858, hmlinetimer, awlinetimer, FatalError, gmode, hmlineind, hmpanelspr
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
 extern j_unlink_, lcboxon, leaguedbnames, linesprites, lseek_, MessageBox, MouseSetPos, msg_NeedKbytes
 extern off_C56B5, rmdir_, scoredigits, SelectRinkBM, SelectScreenBM, sprintf_, str_backslash2, str_dot

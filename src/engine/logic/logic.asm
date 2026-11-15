@@ -9,7 +9,7 @@ extern byte_DFFE2, curevent, goalevent, goalevent_b1, goalevent_b2, goalevent_b3
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
-extern doorpflags, doortemp1, doplayeracc, doshot, dword_C585C, dword_C5860, dword_CBEBE, demogame
+extern doorpflags, doortemp1, doplayeracc, doshot, hmlinetimer, awlinetimer, dword_CBEBE, demogame
 extern dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, hmplstats_m2
 extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, sctemp4, ovlartbank
 extern fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
@@ -32,10 +32,10 @@ extern ShotMode, shotongoal, shotplayer, skateto, skatetopuck, sopathend, sopath
 extern sopathy, SortCords, sortobj15, sounddev, sprintf_, SprSort, starordtab, starpl
 extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, sub_8FFB0
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
-extern unk_C1B3E, hmplattr, unk_DC240, updateanim, vecdist, VisTeam, vtoa, penaltysc
+extern unk_C1B3E, hmplattr, hmglstats, updateanim, vecdist, VisTeam, vtoa, penaltysc
 extern word_CBC44, injurystop, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
-extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, word_DB08A
-extern word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, puckcross2, puckcross6, refYpos2
+extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, hmplstats_w2
+extern hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6, refYpos2
 extern refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, fofdata2_w2, fofdata2_w4
 extern fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global assboxenter, assbenchside, assdefo, assdefd, asswingd, asswingd_skate0, asswingd_skateto, asswingo
@@ -5355,11 +5355,11 @@ mov word [nosplit eax*2+lcboxon], di	; 4D9D5
 test bx, bx	; 4D9DD
 je short .5	; 4D9E0
 xor ebx, ebx	; 4D9E2
-mov dword [dword_C5860], ebx	; 4D9E4
+mov dword [awlinetimer], ebx	; 4D9E4
 jmp near ass_popx	; 4D9EA
 .5:
 xor edx, edx	; 4D9EF
-mov dword [dword_C585C], edx	; 4D9F1
+mov dword [hmlinetimer], edx	; 4D9F1
 jmp near ass_popx	; 4D9F7
 %endif ; C
 ; C: src/engine/logic/SetLCmode.c

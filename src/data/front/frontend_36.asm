@@ -4,9 +4,9 @@ bits 32
 section s_CBED0 progbits alloc noexec write align=1
 extern str_Fanom, str_Goal, str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3
 extern str_Saved2, str_Cross, str_Guilt
-global off_CBED0, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60, unk_CBF85, unk_CBF96
+global ovlartnames, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60, unk_CBF85, unk_CBF96
 global unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
-off_CBED0:
+ovlartnames:
 dd str_Fanom
 dd str_Goal
 dd str_Clap2

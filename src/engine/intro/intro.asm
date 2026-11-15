@@ -10,7 +10,7 @@ extern goalevent_b2, goalevent_b3, goalevent_b4, c1playernum, c2playernum, camx,
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
-extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, dword_C585C, dword_C5860, dword_CBEBE, demogame
+extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demogame
 extern dword_CC9AD, dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
 extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
 extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7
@@ -37,11 +37,11 @@ extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortC
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
 extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8F633, sub_8FFB0, teamabbrevs, textline1, textline2, textline3, textline4
-extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, unk_DC240, sortobj11, updateanim
+extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, hmglstats, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
 extern word_CBC44, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
-extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, puckcross2, puckcross6
+extern hmplstats_w2, hmglstats_w2, hmglstats_w4, hmglstats_w8, hmglstats_w14, hmtmtouch1, puckcross2, puckcross6
 extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
 extern fofdata2_w2, fofdata2_w4, fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
@@ -1338,8 +1338,8 @@ movsx edx, cx	; 48BBF
 mov eax, edx	; 48BC2
 shl eax, 3	; 48BC4
 add eax, edx	; 48BC7
-mov dx, word [nosplit eax*2+word_DC248]	; 48BC9
-cmp dx, word [nosplit eax*2+word_DC242]	; 48BD1
+mov dx, word [nosplit eax*2+hmglstats_w8]	; 48BC9
+cmp dx, word [nosplit eax*2+hmglstats_w2]	; 48BD1
 jle short .5	; 48BD9
 mov esi, 1	; 48BDB
 .5:
@@ -1348,10 +1348,10 @@ mov eax, edx	; 48BE3
 shl eax, 3	; 48BE5
 add eax, edx	; 48BE8
 add eax, eax	; 48BEA
-mov dx, word [dword eax+word_DC24E]	; 48BEC
-cmp dx, word [dword eax+word_DC242]	; 48BF3
+mov dx, word [dword eax+hmglstats_w14]	; 48BEC
+cmp dx, word [dword eax+hmglstats_w2]	; 48BF3
 jle short .6	; 48BFA
-cmp dx, word [dword eax+word_DC248]	; 48BFC
+cmp dx, word [dword eax+hmglstats_w8]	; 48BFC
 jle short .6	; 48C03
 mov esi, 2	; 48C05
 .6:
@@ -1370,7 +1370,7 @@ mov ebp, dword [gameopts]	; 48C24
 shl ebp, 14h	; 48C2A
 shr ebp, 1Eh	; 48C2D
 movsx bx, byte [dword ebp+byte_CC9E4]	; 48C30
-cmp bx, word [dword eax+word_DC242]	; 48C38
+cmp bx, word [dword eax+hmglstats_w2]	; 48C38
 jge short .7	; 48C3F
 add esi, byte 19h	; 48C41
 movsx ebx, si	; 48C44
@@ -1479,7 +1479,7 @@ idiv ebp	; 48D83
 mov eax, edx	; 48D85
 shl eax, 4	; 48D87
 add eax, dword [dword esp+0C8h]	; 48D8A
-mov ebx, dword [dword eax+word_DB08A-2]	; 48D91
+mov ebx, dword [dword eax+hmplstats_w2-2]	; 48D91
 sar ebx, 10h	; 48D97
 mov eax, dword [dword eax+hmplstats-2]	; 48D9A
 sar eax, 10h	; 48DA0
@@ -1525,9 +1525,9 @@ mov eax, dword [gameopts]	; 48E15
 shl eax, 14h	; 48E1A
 shr eax, 1Eh	; 48E1D
 movsx ax, byte [dword eax+byte_CC9E7]	; 48E20
-cmp ax, word [dword ebx+word_DC242]	; 48E28
+cmp ax, word [dword ebx+hmglstats_w2]	; 48E28
 jg short .16	; 48E2F
-mov edx, dword [dword ebx+word_DC244-2]	; 48E31
+mov edx, dword [dword ebx+hmglstats_w4-2]	; 48E31
 sar edx, 10h	; 48E37
 mov eax, edx	; 48E3A
 shl eax, 5	; 48E3C
@@ -1536,7 +1536,7 @@ shl eax, 2	; 48E41
 add eax, edx	; 48E44
 shl eax, 3	; 48E46
 mov dword [dword esp+0C8h], eax	; 48E49
-mov ebx, dword [dword ebx+word_DC242-2]	; 48E50
+mov ebx, dword [dword ebx+hmglstats_w2-2]	; 48E50
 sar ebx, 10h	; 48E56
 mov eax, ebx	; 48E59
 mov edx, ebx	; 48E5B

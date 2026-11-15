@@ -22,7 +22,7 @@ void clearteams(void)
     hmtmglattr = (int)hmglattr;
     hmtmlines[0] = (int)hmlinetab;
     hmtmplstats = (int)hmplstats;
-    hmtmglstats = (int)unk_DC240;
+    hmtmglstats = (int)hmglstats;
     hmtmroster = (int)hmroster;
     hmtmptrF2 = (int)hmteamrec;
     awtmsort = (int)(SortCords + 6);
@@ -30,7 +30,7 @@ void clearteams(void)
     awtmglattr = (int)awglattr;
     awtmlines = (int)awlinetab;
     awtmplstats = (int)awplstats;
-    awtmglstats = (int)unk_DC252;
+    awtmglstats = (int)awglstats;
     awtmroster = (int)awroster;
     awtmptrF2 = (int)awteamrec;
 }

@@ -15,11 +15,11 @@
 #undef assthreestars
 #undef PreGameIntro
 #define REF ((Player *)puckstruct + 2)   /* the referee (E001C) */
-#define GSTAT(t, g) ((short *)((char *)word_DC242 + (t) * 18 + (g) * 6))
+#define GSTAT(t, g) ((short *)((char *)hmglstats_w2 + (t) * 18 + (g) * 6))
 #define PSTAT(t, j) ((short *)((char *)hmplstats + (t) * 0x190 + (j) * 16))
 typedef struct { char c[10]; } StarStr10;
 /* the goalie stats as an indexed array (the base folds into the displacement: [reg+DC242]) */
-#define GS(t, g) (((short (*)[3][3])word_DC242)[t][g])
+#define GS(t, g) (((short (*)[3][3])hmglstats_w2)[t][g])
 int ThreeStarsLoop(void);
 void PickThreeStars(void);
 void StartThreeStars(void);

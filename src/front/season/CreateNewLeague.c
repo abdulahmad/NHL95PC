@@ -24,7 +24,7 @@ int WriteLeagueInfo(char *dir, void *teams, char *pw, int master, int humans, in
    version 0), ask for the league name (up to 8 characters; .LP is added, it becomes curleague), offer to replace
    an existing league of that name, ask which schedule (s.ans) and which database (AskDatabaseChoice), need 2 KB
    free and make the directory. Then read the team names, let the player pick the human teams, size the
-   seven databases (dword_C8D06, copied for each of the 26 teams), clear dword_C9002 when GAMESET exists and
+   seven databases (leaguedbsizes, copied for each of the 26 teams), clear dword_C9002 when GAMESET exists and
    check the space (DiskSpaceShort from entry B6h, 7 entries earlier per team whose bytes 17h and 18h are 1);
    with teams picked, write the league info, copy the seven databases, write the mode state, make the schedule
    (RandomizeSchedule) and copy the human teams' databases. On an error say so; on an error or no teams remove the directory and clear
@@ -92,12 +92,12 @@ void CreateNewLeague(void)
                 for (; quit < 0x1A; quit++) {
                     if (lgteam_17[quit * 30] == 1 && lgteam_17[quit * 30] == lgteam_18[quit * 30]) sz -= 7;
                 }
-                GetLeagueDBSizes(0, dword_C8D06, (char *)dbextension);
+                GetLeagueDBSizes(0, leaguedbsizes, (char *)dbextension);
                 for (quit = 0; quit < 7; quit++)
-                    for (j = 1; j <= 0x1A; j++) dword_C8D06[j * 7 + quit] = dword_C8D06[quit];
+                    for (j = 1; j <= 0x1A; j++) leaguedbsizes[j * 7 + quit] = leaguedbsizes[quit];
                 MakePath(s.path, (char *)&curleague, (char *)str_gameset, 0);
                 if (FileExists(s.path)) dword_C9002 = 0;
-                if ((j = DiskSpaceShort(0, dword_C8D06 + sz)) != 0) {
+                if ((j = DiskSpaceShort(0, leaguedbsizes + sz)) != 0) {
                     sprintf((char *)str_KbytesFreeLine, (char *)str_KbytesFree, j);
                     MessageBox(-1, -1, (char *)msg_NoDiskSpace, 3, 0, 0, (int)&s.x, (int)&s.y, 0x320);
                     err = 1;

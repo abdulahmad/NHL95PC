@@ -6,8 +6,8 @@ extern __CHK, __STOSD, AskDatabaseChoice, awscore, boxfillcolor, boxlitecolor, b
 extern btn_POHumanOut, BuildSavedGameLabels, careerdb, careerdb_size, cddriveptr, CheckGameDiskSpace, ClearInputQueue, confteams
 extern cont2team, CopyFile, CountSeriesWins, ctl1side, ctl1team, ctl2side, ctl2team, ctlavailmask
 extern curleague, dbextension, DeleteDir, DeskHomeLines, DeskVisitorLines, DiskSpaceShort, dlgtextbg, dlgtextfg
-extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C65AC, dword_C6D26, dword_C6DBA, dword_CEDE7
-extern dword_CEE07, dword_D2884, dword_D288C, dword_D2B70, dword_D2BEC, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
+extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, embscupbank, dword_C6D26, potreeseeds, dword_CEDE7
+extern dword_CEE07, dword_D2884, dword_D288C, poslotx, posloty, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
 extern EasnStandingsScreen, EasnTeamStatsScreen, EditPlayoffSettings, exhstate, FadePalStep, FatalError, FileClose, FileExists
 extern fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileWriteAt, fputchar, FreeMemBlock, GameGoalieStatsScreen
 extern gamemode, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent
@@ -32,8 +32,8 @@ extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_913
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, teamabbrevs, teamcitynames, teamconf, teamdivflags, teamstatscb, TextGridOff
 extern TextGridOpen, TextInputDialog, treecol_Er1, treecol_Er2, treecol_Wr2, treecolslots, treecolx, treeteamnames
-extern unk_C3A66, unk_C3AF8, unk_CEE4F, unk_CEEAF, unk_CF90F, unk_D2864, unk_DDCFB, unk_ED7BC
-extern unknown_libname_1, ViewPlayoffHilights, VisTeam, WaitTickDeadline, word_C6D24, WriteModeState
+extern unk_C3A66, unk_C3AF8, unk_CEE4F, unk_CEEAF, playoffmenubar, unk_D2864, unk_DDCFB, unk_ED7BC
+extern unknown_libname_1, ViewPlayoffHilights, VisTeam, WaitTickDeadline, potreeround, WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
 global POSeriesScore, POSeedRound2, POSeedRound2_x30, POSeedRound2_x, POSeedConfFinals, POSeedConfFinals_pair, POSeedConfFinals_x, POSeedFinal
 global POSimSeriesTeamWins, POSimSeries, POPreSimRound1, POPreSimRound2, POPreSimConfFinals, POHandleElimination, POSimSeriesTo, POAfterGame
@@ -94,7 +94,7 @@ mov edx, edi	; 8675E
 mov eax, 1	; 86760
 call FadePalStep	; 86765
 call sub_B4BA8	; 8676A
-mov ebp, dword [dword_C65AC]	; 8676F
+mov ebp, dword [embscupbank]	; 8676F
 test ebp, ebp	; 86775
 jne short .3	; 86777
 xor ecx, ecx	; 86779
@@ -397,7 +397,7 @@ mov ebx, 10h	; 86BE9
 mov edx, esi	; 86BEE
 mov eax, 1	; 86BF0
 call FadePalStep	; 86BF5
-mov ebx, dword [dword_C65AC]	; 86BFA
+mov ebx, dword [embscupbank]	; 86BFA
 test ebx, ebx	; 86C00
 jne short .21	; 86C02
 xor ecx, ecx	; 86C04
@@ -2410,7 +2410,7 @@ push byte 42h	; 88118
 mov ecx, 41h	; 8811A
 mov ebx, 40h	; 8811F
 mov edx, 3	; 88124
-mov eax, unk_CF90F	; 88129
+mov eax, playoffmenubar	; 88129
 call DrawMenuBar	; 8812E
 mov ebx, 10h	; 88133
 mov edx, dword [byte esp+06Ch]	; 88138
@@ -2784,7 +2784,7 @@ push byte 42h	; 885E5
 mov ecx, 41h	; 885E7
 mov ebx, 40h	; 885EC
 mov edx, 3	; 885F1
-mov eax, unk_CF90F	; 885F6
+mov eax, playoffmenubar	; 885F6
 call DrawMenuBar	; 885FB
 mov ebx, 10h	; 88600
 mov edx, dword [byte esp+06Ch]	; 88605
@@ -4045,7 +4045,7 @@ jl short PlayoffModeLoop.15	; 895FE
 mov edx, unk_C3A66	; 89600
 mov eax, treeteamnames+222h	; 89605
 call strcpy_	; 8960A
-mov ecx, dword [dword_C65AC]	; 8960F
+mov ecx, dword [embscupbank]	; 8960F
 test ecx, ecx	; 89615
 jne short .18	; 89617
 mov ebx, str_Embscup	; 89619
@@ -4063,7 +4063,7 @@ lea eax, [byte esp+04h]	; 8963A
 push eax	; 8963E
 call sub_8E83C	; 8963F
 add esp, byte 8	; 89644
-mov dword [dword_C65AC], eax	; 89647
+mov dword [embscupbank], eax	; 89647
 .18:
 cmp dword [byte esp+024h], byte 0	; 8964C
 jne short .19	; 89651
@@ -4151,7 +4151,7 @@ push byte 42h	; 8975F
 mov ecx, 41h	; 89761
 mov ebx, 40h	; 89766
 mov edx, 3	; 8976B
-mov eax, unk_CF90F	; 89770
+mov eax, playoffmenubar	; 89770
 call DrawMenuBar	; 89775
 mov eax, dword [byte esp+020h]	; 8977A
 mov edx, dword [byte eax+044h]	; 8977E
@@ -4161,18 +4161,18 @@ push byte 42h	; 89782
 mov ecx, 41h	; 89784
 mov ebx, 40h	; 89789
 mov edx, 3	; 8978E
-mov eax, unk_CF90F	; 89793
+mov eax, playoffmenubar	; 89793
 call PlayoffTreeMenu	; 89798
 test eax, eax	; 8979D
 jne near .38	; 8979F
-mov eax, dword [dword_C65AC]	; 897A5
+mov eax, dword [embscupbank]	; 897A5
 test eax, eax	; 897AA
 je short .26	; 897AC
 push eax	; 897AE
 call FreeMemBlock	; 897AF
 add esp, byte 4	; 897B4
 xor ebx, ebx	; 897B7
-mov dword [dword_C65AC], ebx	; 897B9
+mov dword [embscupbank], ebx	; 897B9
 .26:
 push byte 20h	; 897BF
 push dword 300h	; 897C1
@@ -4314,7 +4314,7 @@ sub eax, edx	; 899E0
 add eax, eax	; 899E2
 mov edi, dword [byte esp+020h]	; 899E4
 add edi, eax	; 899E8
-cmp dword [dword_C65AC], byte 0	; 899EA
+cmp dword [embscupbank], byte 0	; 899EA
 jne short .37	; 899F1
 xor ecx, ecx	; 899F3
 mov ebx, str_Embscup	; 899F5
@@ -4332,7 +4332,7 @@ lea eax, [byte esp+04h]	; 89A16
 push eax	; 89A1A
 call sub_8E83C	; 89A1B
 add esp, byte 8	; 89A20
-mov dword [dword_C65AC], eax	; 89A23
+mov dword [embscupbank], eax	; 89A23
 .37:
 push byte 20h	; 89A28
 push dword 300h	; 89A2A
@@ -4358,7 +4358,7 @@ push byte 42h	; 89A70
 mov ecx, 41h	; 89A72
 mov ebx, 40h	; 89A77
 mov edx, 3	; 89A7C
-mov eax, unk_CF90F	; 89A81
+mov eax, playoffmenubar	; 89A81
 call DrawMenuBar	; 89A86
 call InputInstall	; 89A8B
 mov edx, dword [byte esp+020h]	; 89A90
@@ -4383,14 +4383,14 @@ sub eax, byte 2	; 89AD0
 push eax	; 89AD3
 call FreeMemBlock	; 89AD4
 add esp, byte 4	; 89AD9
-mov ebx, dword [dword_C65AC]	; 89ADC
+mov ebx, dword [embscupbank]	; 89ADC
 test ebx, ebx	; 89AE2
 je short .39	; 89AE4
 push ebx	; 89AE6
 call FreeMemBlock	; 89AE7
 add esp, byte 4	; 89AEC
 xor esi, esi	; 89AEF
-mov dword [dword_C65AC], esi	; 89AF1
+mov dword [embscupbank], esi	; 89AF1
 .39:
 push byte 20h	; 89AF7
 push dword 300h	; 89AF9
@@ -4442,9 +4442,9 @@ push esi	; 89B75
 push edi	; 89B76
 push ebp	; 89B77
 sub esp, byte 4	; 89B78
-mov edi, dword [nosplit eax*4+dword_D2B70]	; 89B7B
+mov edi, dword [nosplit eax*4+poslotx]	; 89B7B
 mov dword [esp], edi	; 89B82
-mov esi, dword [nosplit eax*4+dword_D2BEC]	; 89B85
+mov esi, dword [nosplit eax*4+posloty]	; 89B85
 add edi, byte 74h	; 89B8C
 cmp eax, byte 1Ch	; 89B8F
 jge short .1	; 89B92
@@ -4723,7 +4723,7 @@ mov dword [dword esp+0B8h], edi	; 89F2E
 mov edx, dword [dword esp+0C4h]	; 89F35
 mov eax, dword [dword esp+0C8h]	; 89F3C
 call POHiliteSlot	; 89F43
-mov eax, dword [word_C6D24-2]	; 89F48
+mov eax, dword [potreeround-2]	; 89F48
 sar eax, 10h	; 89F4D
 mov dword [dword esp+0CCh], eax	; 89F50
 mov ebp, dword [dword esp+0B0h]	; 89F57
@@ -4816,7 +4816,7 @@ jmp near .x	; 8A0A6
 .13:
 cmp ebp, byte 2	; 8A0AB
 jne near .18	; 8A0AE
-mov ecx, dword [dword_C65AC]	; 8A0B4
+mov ecx, dword [embscupbank]	; 8A0B4
 test ecx, ecx	; 8A0BA
 jne short .15	; 8A0BC
 mov ebx, str_Embscup	; 8A0BE
@@ -4831,7 +4831,7 @@ lea eax, [byte esp+034h]	; 8A0DD
 push eax	; 8A0E1
 call sub_8E83C	; 8A0E2
 add esp, byte 8	; 8A0E7
-mov dword [dword_C65AC], eax	; 8A0EA
+mov dword [embscupbank], eax	; 8A0EA
 .15:
 xor ecx, ecx	; 8A0EF
 mov ebx, str_Embpal	; 8A0F1
@@ -4875,12 +4875,12 @@ call FreeMemBlock	; 8A172
 add esp, byte 4	; 8A177
 .18:
 call sub_B4BA8	; 8A17A
-mov eax, dword [word_C6D24-2]	; 8A17F
+mov eax, dword [potreeround-2]	; 8A17F
 sar eax, 10h	; 8A184
 cmp eax, dword [dword esp+0CCh]	; 8A187
 je short .19	; 8A18E
 mov eax, dword [dword esp+0CCh]	; 8A190
-mov word [word_C6D24], ax	; 8A197
+mov word [potreeround], ax	; 8A197
 call DrawPlayoffTree	; 8A19D
 .19:
 mov edx, dword [dword esp+0C4h]	; 8A1A2
@@ -5245,7 +5245,7 @@ push edx	; 8A689
 call sub_B4BC4	; 8A68A
 add esp, byte 10h	; 8A68F
 push str_Bkgd2	; 8A692
-mov ebx, dword [dword_C65AC]	; 8A697
+mov ebx, dword [embscupbank]	; 8A697
 push ebx	; 8A69D
 call sub_B30B4	; 8A69E
 add esp, byte 8	; 8A6A3
@@ -5462,7 +5462,7 @@ movzx si, byte [dword edx+treecolslots]	; 8A981
 movsx edx, cx	; 8A989
 movsx eax, si	; 8A98C
 mov eax, dword [nosplit eax*4+playofftree]	; 8A98F
-mov dword [nosplit eax*4+dword_C6DBA], edx	; 8A996
+mov dword [nosplit eax*4+potreeseeds], edx	; 8A996
 lea eax, [edx+edx]	; 8A99D
 cmp cx, byte 4	; 8A9A0
 jge short .12	; 8A9A4
@@ -5477,7 +5477,7 @@ movzx si, byte [dword edx+treecol_Er1]	; 8A9BA
 movsx edx, cx	; 8A9C2
 movsx eax, si	; 8A9C5
 mov eax, dword [nosplit eax*4+playofftree]	; 8A9C8
-mov dword [nosplit eax*4+dword_C6DBA], edx	; 8A9CF
+mov dword [nosplit eax*4+potreeseeds], edx	; 8A9CF
 inc ecx	; 8A9D6
 .14:
 cmp cx, byte 8	; 8A9D7
@@ -5508,7 +5508,7 @@ call SetTextColors	; 8AA2C
 movsx edi, si	; 8AA31
 shl edi, 2	; 8AA34
 mov eax, dword [dword edi+playofftree]	; 8AA37
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AA3D
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8AA3D
 add eax, 91h	; 8AA44
 push eax	; 8AA49
 push str_fmtcsp	; 8AA4A
@@ -5633,7 +5633,7 @@ call SetTextColors	; 8AC24
 movsx edi, si	; 8AC29
 shl edi, 2	; 8AC2C
 mov eax, dword [dword edi+playofftree]	; 8AC2F
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AC35
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8AC35
 add eax, 91h	; 8AC3C
 push eax	; 8AC41
 push str_fmtcsp	; 8AC42
@@ -5723,7 +5723,7 @@ call SetTextColors	; 8AD9C
 movsx edi, si	; 8ADA1
 shl edi, 2	; 8ADA4
 mov eax, dword [dword edi+playofftree]	; 8ADA7
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8ADAD
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8ADAD
 add eax, 91h	; 8ADB4
 push eax	; 8ADB9
 push str_fmtcsp	; 8ADBA
@@ -5788,7 +5788,7 @@ call SetTextColors	; 8AEA6
 movsx edi, si	; 8AEAB
 shl edi, 2	; 8AEAE
 mov eax, dword [dword edi+playofftree]	; 8AEB1
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8AEB7
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8AEB7
 add eax, 91h	; 8AEBE
 push eax	; 8AEC3
 push str_fmtcsp	; 8AEC4
@@ -6031,7 +6031,7 @@ call SetTextColors	; 8B28A
 movsx edi, si	; 8B28F
 shl edi, 2	; 8B292
 mov eax, dword [dword edi+playofftree]	; 8B295
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B29B
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8B29B
 add eax, 91h	; 8B2A2
 push eax	; 8B2A7
 push str_fmtcsp	; 8B2A8
@@ -6096,7 +6096,7 @@ call SetTextColors	; 8B394
 movsx edi, si	; 8B399
 shl edi, 2	; 8B39C
 mov eax, dword [dword edi+playofftree]	; 8B39F
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B3A5
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8B3A5
 add eax, 91h	; 8B3AC
 push eax	; 8B3B1
 push str_fmtcsp	; 8B3B2
@@ -6212,7 +6212,7 @@ call SetTextColors	; 8B556
 movsx edi, si	; 8B55B
 shl edi, 2	; 8B55E
 mov eax, dword [dword edi+playofftree]	; 8B561
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B567
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8B567
 add eax, 91h	; 8B56E
 push eax	; 8B573
 push str_fmtcsp	; 8B574
@@ -6323,7 +6323,7 @@ call SetTextColors	; 8B6F9
 movsx edi, si	; 8B6FE
 shl edi, 2	; 8B701
 mov eax, dword [dword edi+playofftree]	; 8B704
-mov eax, dword [nosplit eax*4+dword_C6DBA]	; 8B70A
+mov eax, dword [nosplit eax*4+potreeseeds]	; 8B70A
 add eax, 91h	; 8B711
 push eax	; 8B716
 push str_fmtcsp	; 8B717

@@ -25,9 +25,9 @@ extern str_Stan, str_Exben, str_Expen, str_Bench, str_Dopen, str_Goalie2, str_Go
 extern str_Nearest, str_Shoot, str_Passrec, str_3star, str_R3star, str_Fowait, str_Pnorm, str_Pshad
 extern str_Pnothing, str_Pface, str_Pface2, str_Gamemiscon, str_Rfaceoff, str_Rnorm, str_Rcallpen, str_Rpickup
 extern str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotofo, str_Benwait, str_Initper
-extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, unk_C2338, str_LD, str_RD2
-extern str_LW, unk_C2343, str_RW, str_XC, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
-extern unk_CDCB0, unk_CDCC9
+extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, str_G5, str_LD, str_RD2
+extern str_LW, str_C6, str_RW, str_XC, str_sp00XXXXXXXXXXXXXXXXX, str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3
+extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
 global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
 global dword_CD9A0, pennametab, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
 global dbg_posnames, penbannertab, word_CD4FC, replaytick, replaysfx
@@ -79,13 +79,13 @@ db 00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,00h,05h,0Ah,0Fh,013h,0Fh,013h
 db 0Fh,013h,017h,01Eh,025h,02Ch,032h,017h,01Eh,025h,02Ch,032h,038h,03Fh,046h,04Ch
 db 038h,03Fh,046h,04Ch,00h
 off_CD498:
-dd unk_CDC47
-dd unk_CDC60
+dd str_sp00XXXXXXXXXXXXXXXXX
+dd str_sp00XXXXXXXXXXXXXXXXX2
 off_CD4A0:
-dd unk_CDC79
-dd unk_CDC97
-dd unk_CDCB0
-dd unk_CDCC9
+dd str_spNONE
+dd str_sp00XXXXXXXXXXXXXXXXX3
+dd str_sp00XXXXXXXXXXXXXXXXX4
+dd str_spNONE2
 ovlmemneed:
 db 0Dh,0ACh,00h,00h,0CDh,05Ch,00h,00h,0A5h,050h,00h,00h,0AAh,050h,00h,00h
 db 023h,03Ch,00h,00h,07Bh,04Fh,00h,00h,084h,06Dh,00h,00h,0D1h,037h,01h,00h
@@ -308,11 +308,11 @@ dd str_Apswait
 dd str_Abreak
 dd str_Error2
 dbg_posnames:
-dd unk_C2338
+dd str_G5
 dd str_LD
 dd str_RD2
 dd str_LW
-dd unk_C2343
+dd str_C6
 dd str_RW
 dd str_XC
 dword_CD9A0:

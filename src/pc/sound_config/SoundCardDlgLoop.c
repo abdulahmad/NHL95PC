@@ -268,11 +268,11 @@ int SetSoundDevice(int dev)
             musicslot = s.h2;
             setbits[0] = sounddev;
             MakePath(s.path, 0, (char *)str_NHL3, (char *)str_CFG);
-            fp = fopen(s.path, (char *)unk_C36AC);
+            fp = fopen(s.path, (char *)str_R4);
             if (!fp) FatalError((char *)str_CantOpenNhlCfg);
             i = 0;
             while (dev != sounddevids[i]) i++;
-            fprintf(fp, (char *)asc_C36C3, i);
+            fprintf(fp, (char *)str_04x, i);
             fclose(fp);
             if (sounddev == 2 || sounddev == 0x20) {
                 musicon = 1;

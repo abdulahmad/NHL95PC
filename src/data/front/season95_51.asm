@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_D0819 progbits alloc noexec write align=1
-extern str_GP9, unk_C2977, unk_C297B, str_Pt4, str_PIM7, unk_C2987, str_PPG4, str_SHG4
+extern str_GP9, str_spG2, str_spA2, str_Pt4, str_PIM7, unk_C2987, str_PPG4, str_SHG4
 extern str_Shots6, str_Pct8, str_Shoots3, str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3
 extern str_StickHandling2, str_Accuracy2, str_Passing3, str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2
-extern str_Faceoffs2, str_Min6, str_GA6, str_GAA5, unk_C2A59, unk_C2A5C, unk_C2A5F, str_SO3
+extern str_Faceoffs2, str_Min6, str_GA6, str_GAA5, str_spW3, unk_C2A5C, unk_C2A5F, str_SO3
 extern str_EN3, str_SA5, str_GloveHand3, str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2
 extern str_PenaltyKilling3, str_PowerPlay3, str_Shooting2, str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2
-global str_Ratings, byte_D0AE6, dword_D0B12, off_D0880, off_D08B9, off_D09DB, off_D0A04, off_D0AC2
+global str_Ratings, byte_D0AE6, rostereditmode, newskaterratingnames, off_D08B9, newgoalieratingnames, off_D0A04, off_D0AC2
 str_Ratings:
 db 052h,061h,074h,069h,06Eh,067h,073h,03Ah,00h,052h,06Fh,06Fh,06Bh,069h,065h,03Ah
 db 00h,04Eh,061h,06Dh,065h,03Ah,00h
 dd str_GP9
-dd unk_C2977
-dd unk_C297B
+dd str_spG2
+dd str_spA2
 dd str_Pt4
 dd str_PIM7
 dd unk_C2987
@@ -25,7 +25,7 @@ dd str_Pct8
 db 078h,00h,00h,00h,0A0h,00h,00h,00h,0C8h,00h,00h,00h,0F0h,00h,00h,00h
 db 018h,01h,00h,00h,040h,01h,00h,00h,07Ch,01h,00h,00h,0A4h,01h,00h,00h
 db 0CCh,01h,00h,00h,08h,02h,00h,00h
-off_D0880:
+newskaterratingnames:
 dd str_Shoots3
 dd str_Speed3
 dd str_Agility3
@@ -59,7 +59,7 @@ dd str_GP9
 dd str_Min6
 dd str_GA6
 dd str_GAA5
-dd unk_C2A59
+dd str_spW3
 dd unk_C2A5C
 dd unk_C2A5F
 dd str_SO3
@@ -69,7 +69,7 @@ dd str_Pct8
 db 078h,00h,00h,00h,0A0h,00h,00h,00h,0C8h,00h,00h,00h,0F0h,00h,00h,00h
 db 02Ch,01h,00h,00h,054h,01h,00h,00h,07Ch,01h,00h,00h,0A4h,01h,00h,00h
 db 0CCh,01h,00h,00h,0F4h,01h,00h,00h,030h,02h,00h,00h
-off_D09DB:
+newgoalieratingnames:
 dd str_GloveHand3
 dd str_GloveLeft2
 dd str_GloveRight2
@@ -108,5 +108,5 @@ byte_D0AE6:
 db 00h,01h,04h,05h,06h,07h,08h,0Ah,0Bh,045h,06Eh,074h,065h,072h,020h,061h
 db 020h,070h,06Fh,073h,069h,074h,069h,06Fh,06Eh,020h,066h,06Fh,072h,00h,028h,059h
 db 029h,065h,073h,020h,06Fh,072h,020h,028h,04Eh,029h,06Fh,00h
-dword_D0B12:
+rostereditmode:
 db 00h,00h,00h,00h

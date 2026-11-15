@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_CEF43 progbits alloc noexec write align=1
 extern DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskTeamScratches, unk_C67B1, str_VisitingTeam2
-extern str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches, unk_CDF44
+extern str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches, str_StatisticsType8
 global off_CEF43, off_CEF63, unk_CEF6F, unk_CEFEF
 off_CEF43:
 dd DeskHomeLines
@@ -32,6 +32,6 @@ dd DeskTeamScratches
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEFEF:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
-dd unk_CDF44
+dd str_StatisticsType8
 db 00h,00h,00h,00h
 dd unk_C67B1

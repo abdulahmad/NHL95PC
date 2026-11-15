@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_2D346 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, byte_D42C3, cddriveptr, ClearInputQueue, cont2team, crestnames, curleague
-extern DrawGadgetByType, dword_CCC94, dword_DBC7C, FadeOutPalCycle, FadePalette, FadePalStep, FileClose, fileoncd
+extern DrawGadgetByType, dword_CCC94, hmteamrec_skaters, FadeOutPalCycle, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, FileOpenRW, FitPlayerName, fputchar, FreeMemBlock, gameopts, gameresult, gamestatlabels
 extern gsuminitff, hmcrestbmp, hmlinetab, hmpassatt, hmpasscmp, hmroster, hmscore, hmteamrec
 extern hmtmstruct, HomeTeam, joyq_flush, kaufmfont, leaguedbfmt, leaguedbfmt2, leaguedbnames, MakePath
@@ -863,7 +863,7 @@ mov eax, ebp	; 2E0B9
 shl ebp, 5	; 2E0BB
 sub ebp, eax	; 2E0BE
 mov eax, dword [dword esp+07C4h]	; 2E0C0
-mov ebx, dword [dword ebp+eax*4+dword_DBC7C]	; 2E0C7
+mov ebx, dword [dword ebp+eax*4+hmteamrec_skaters]	; 2E0C7
 lea edx, [dword esp+069Ch]	; 2E0CE
 mov eax, dword [dword esp+0764h]	; 2E0D5
 call ReadKeyRec	; 2E0DC

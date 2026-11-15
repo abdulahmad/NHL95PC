@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_27080 progbits alloc exec nowrite align=1
-extern __CHK, cddriveptr, CmpConfStandings, DeskSetExit3b, divisionnames, divx, divy, dword_C65AC
-extern dword_C6D26, dword_C6DBA, dword_C6E20, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
+extern __CHK, cddriveptr, CmpConfStandings, DeskSetExit3b, divisionnames, divx, divy, embscupbank
+extern dword_C6D26, potreeseeds, dword_C6E20, fileoncd, fputchar, FreeMemBlock, j___close_, kaufmfont
 extern LoadLeagueTree, LoadPlayoffModeTree, LoadScheduleDB, lseek_, mainfont, MakePath, MakeStatsTitle, memcpy_
 extern off_CF6A3, open_, OpenStatsSchedule, playofftree, PrintCenteredText, PrintFmt1, PrintFmt2, PrintOutlinedText
 extern PrintShadowText, qsort_, read_, SetTextColors, sprintf_, stand_tmpl1, stand_tmpl2, statsbgnames
@@ -1344,7 +1344,7 @@ jmp short .2	; 27FDE
 mov dword [off_CF6A3], DeskSetExit3b	; 27FE0
 .2:
 call sub_B4BA8	; 27FEA
-cmp dword [dword_C65AC], byte 0	; 27FEF
+cmp dword [embscupbank], byte 0	; 27FEF
 jne near .5	; 27FF6
 mov dword [dword ebp-01CCh], 0	; 27FFC
 mov eax, dword [statsplayoffs]	; 28006
@@ -1398,7 +1398,7 @@ jmp short .6	; 280C8
 .5:
 mov eax, str_Bkgd2	; 280CA
 push eax	; 280CF
-push dword [dword_C65AC]	; 280D0
+push dword [embscupbank]	; 280D0
 call sub_B30B4	; 280D6
 add esp, byte 8	; 280DB
 mov dword [statspalshape], eax	; 280DE
@@ -1681,7 +1681,7 @@ sar eax, 10h	; 284F6
 shl eax, 2	; 284F9
 mov eax, dword [dword eax+playofftree]	; 284FC
 shl eax, 2	; 28502
-mov dword [dword eax+dword_C6DBA], edx	; 28505
+mov dword [dword eax+potreeseeds], edx	; 28505
 cmp word [byte ebp-014h], byte 4	; 2850B
 jge short .22	; 28510
 mov eax, dword [byte ebp-014h]	; 28512
@@ -1715,7 +1715,7 @@ sar eax, 10h	; 28562
 shl eax, 2	; 28565
 mov eax, dword [dword eax+playofftree]	; 28568
 shl eax, 2	; 2856E
-mov dword [dword eax+dword_C6DBA], edx	; 28571
+mov dword [dword eax+potreeseeds], edx	; 28571
 jmp near PlayoffTreeScreen.18	; 28577
 .24:
 mov dword [byte ebp-034h], 48h	; 2857C
@@ -1762,7 +1762,7 @@ sar eax, 10h	; 285FB
 shl eax, 2	; 285FE
 mov eax, dword [dword eax+playofftree]	; 28601
 shl eax, 2	; 28607
-mov eax, dword [dword eax+dword_C6DBA]	; 2860A
+mov eax, dword [dword eax+potreeseeds]	; 2860A
 add eax, 91h	; 28610
 push eax	; 28615
 mov eax, str_C3	; 28616
@@ -1951,7 +1951,7 @@ sar eax, 10h	; 2887C
 shl eax, 2	; 2887F
 mov eax, dword [dword eax+playofftree]	; 28882
 shl eax, 2	; 28888
-mov eax, dword [dword eax+dword_C6DBA]	; 2888B
+mov eax, dword [dword eax+potreeseeds]	; 2888B
 add eax, 91h	; 28891
 push eax	; 28896
 mov eax, str_C3	; 28897
@@ -2067,7 +2067,7 @@ sar eax, 10h	; 28A2C
 shl eax, 2	; 28A2F
 mov eax, dword [dword eax+playofftree]	; 28A32
 shl eax, 2	; 28A38
-mov eax, dword [dword eax+dword_C6DBA]	; 28A3B
+mov eax, dword [dword eax+potreeseeds]	; 28A3B
 add eax, 91h	; 28A41
 push eax	; 28A46
 mov eax, str_C3	; 28A47
@@ -2146,7 +2146,7 @@ sar eax, 10h	; 28B54
 shl eax, 2	; 28B57
 mov eax, dword [dword eax+playofftree]	; 28B5A
 shl eax, 2	; 28B60
-mov eax, dword [dword eax+dword_C6DBA]	; 28B63
+mov eax, dword [dword eax+potreeseeds]	; 28B63
 add eax, 91h	; 28B69
 push eax	; 28B6E
 mov eax, str_C3	; 28B6F
@@ -2435,7 +2435,7 @@ sar eax, 10h	; 28F96
 shl eax, 2	; 28F99
 mov eax, dword [dword eax+playofftree]	; 28F9C
 shl eax, 2	; 28FA2
-mov eax, dword [dword eax+dword_C6DBA]	; 28FA5
+mov eax, dword [dword eax+potreeseeds]	; 28FA5
 add eax, 91h	; 28FAB
 push eax	; 28FB0
 mov eax, str_C3	; 28FB1
@@ -2514,7 +2514,7 @@ sar eax, 10h	; 290BE
 shl eax, 2	; 290C1
 mov eax, dword [dword eax+playofftree]	; 290C4
 shl eax, 2	; 290CA
-mov eax, dword [dword eax+dword_C6DBA]	; 290CD
+mov eax, dword [dword eax+potreeseeds]	; 290CD
 add eax, 91h	; 290D3
 push eax	; 290D8
 mov eax, str_C3	; 290D9
@@ -2672,7 +2672,7 @@ sar eax, 10h	; 292CE
 shl eax, 2	; 292D1
 mov eax, dword [dword eax+playofftree]	; 292D4
 shl eax, 2	; 292DA
-mov eax, dword [dword eax+dword_C6DBA]	; 292DD
+mov eax, dword [dword eax+potreeseeds]	; 292DD
 add eax, 91h	; 292E3
 push eax	; 292E8
 mov eax, str_C3	; 292E9
@@ -2820,7 +2820,7 @@ sar eax, 10h	; 294D3
 shl eax, 2	; 294D6
 mov eax, dword [dword eax+playofftree]	; 294D9
 shl eax, 2	; 294DF
-mov eax, dword [dword eax+dword_C6DBA]	; 294E2
+mov eax, dword [dword eax+potreeseeds]	; 294E2
 add eax, 91h	; 294E8
 push eax	; 294ED
 mov eax, str_C3	; 294EE

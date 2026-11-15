@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8BAAF progbits alloc exec nowrite align=1
-extern __CHK, asc_C3B67, cddriveptr, cddrivestr, FadeOutPalCycle, FadePalette, FatalError, fclose_
+extern __CHK, str_S9, cddriveptr, cddrivestr, FadeOutPalCycle, FadePalette, FatalError, fclose_
 extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts, InputInstall
 extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
@@ -79,7 +79,7 @@ shl edx, 4	; 8BB8C
 mov eax, esp	; 8BB8F
 add eax, edx	; 8BB91
 push eax	; 8BB93
-push asc_C3B67	; 8BB94
+push str_S9	; 8BB94
 push edi	; 8BB99
 call fscanf_	; 8BB9A
 add esp, byte 0Ch	; 8BB9F
@@ -95,7 +95,7 @@ cmp ecx, byte 0FFFFFFFFh	; 8BBB0
 je short .8	; 8BBB3
 lea eax, [dword esp+02250h]	; 8BBB5
 push eax	; 8BBBC
-push asc_C3B67	; 8BBBD
+push str_S9	; 8BBBD
 push esi	; 8BBC2
 call fscanf_	; 8BBC3
 add esp, byte 0Ch	; 8BBC8

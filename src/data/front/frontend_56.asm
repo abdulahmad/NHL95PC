@@ -6,7 +6,7 @@ extern dblistcur, dblisttemp, dblistorig, str_ANA4, str_BOS2, str_BUF4, str_CGY2
 extern str_DAL2, str_DET2, str_EDM2, str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2
 extern str_NYI2, str_NYR2, str_OTT2, str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2
 extern str_TB2, str_TOR2, str_VAN2, str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter
-extern str_EasternConferenceQuarter, unk_C3580, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen
+extern str_EasternConferenceQuarter, str_StanleyCupFinals, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen
 extern str_InterferPen, str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen
 global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC, fadestart, fadestep, fadestart2, fadestep2
 global str_ADLIB, str_MT322, str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND
@@ -24,11 +24,11 @@ global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
 global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
-global settingsfile, dword_D20E0, dword_D2150, dword_D223C, lockerrects
+global settingsfile, lockerindex, lockerteams, dword_D223C, lockerrects
 global dword_D22DC, dword_D22E0
 global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
 global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, str_Cor2
-global dword_D27B2, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
+global speechchannel, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, str_BOS1, str_BOS22
 global str_BOS3, str_HART2, str_BUF22, str_CAL1, str_CAL2, str_CAL3, str_CHIC1, str_CHIC2
@@ -596,7 +596,7 @@ str_ShowLeague:
 db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,00h
 str_Settings3:
 db 020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-dword_D20E0:
+lockerindex:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
 db 06h,00h,00h,00h,07h,00h,00h,00h,09h,00h,00h,00h,0Ah,00h,00h,00h
 db 05h,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h,0Dh,00h,00h,00h
@@ -604,7 +604,7 @@ db 0Eh,00h,00h,00h,0Fh,00h,00h,00h,010h,00h,00h,00h,011h,00h,00h,00h
 db 012h,00h,00h,00h,013h,00h,00h,00h,014h,00h,00h,00h,015h,00h,00h,00h
 db 016h,00h,00h,00h,017h,00h,00h,00h,018h,00h,00h,00h,019h,00h,00h,00h
 db 00h,00h,00h,00h,08h,00h,00h,00h,01Ah,00h,00h,00h,01Bh,00h,00h,00h
-dword_D2150:
+lockerteams:
 db 018h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h
 db 03h,00h,00h,00h,08h,00h,00h,00h,04h,00h,00h,00h,05h,00h,00h,00h
 db 019h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,09h,00h,00h,00h
@@ -644,7 +644,7 @@ dd str_ASE2
 off_D2230:
 dd str_WesternConferenceQuarter
 dd str_EasternConferenceQuarter
-dd unk_C3580
+dd str_StanleyCupFinals
 dword_D223C:
 db 0FFh,0FFh,0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
@@ -884,7 +884,7 @@ db 063h,06Fh,072h,00h
 dd str_1ststarCor
 dd str_2ndstarCor
 dd unk_D279A
-dword_D27B2:
+speechchannel:
 db 00h,00h,00h,00h
 byte_D27B6:
 db 00h

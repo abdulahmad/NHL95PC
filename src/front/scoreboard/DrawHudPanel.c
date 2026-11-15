@@ -32,15 +32,15 @@ void DrawHudPanel(int home, int away, int period, int reset)
         hudclockhund = 0;
     }
     z = 0;
-    dword_C583C = z;
+    panelhund = z;
     dword_C5848 = z;
     dword_C5844 = z;
     hudhomeline = *(int *)((char *)&hmtmline - 2) >> 16;
     hudawayline = *(int *)((char *)&awtmline - 2) >> 16;
     dword_C5858 = z;
     dword_C5854 = z;
-    dword_C5860 = z;
-    dword_C585C = z;
+    awlinetimer = z;
+    hmlinetimer = z;
     SelectScreenBM();
     MakePath(path, fileoncd[0x16D] == 1 ? (char *)cddriveptr : 0, (char *)str_Scrbrd2, (char *)str_PPV);
     bank = sub_8E8A0(path, 0);

@@ -256,7 +256,7 @@ int MenuGameShowPlayerStats(unsigned char *nums, int a, unsigned char side, int 
     int i;
     int s;
 
-    dword_DC734 = dword_DC738 = 1;
+    dword_DC734 = leaguestatsmode = 1;
     statsredrawcb = (int)TeamRosterScreen;
     if (side) statscategory = VisTeam;
     else statscategory = HomeTeam;
@@ -275,7 +275,7 @@ int MenuGameShowPlayerStats(unsigned char *nums, int a, unsigned char side, int 
     RunMenu(unk_CF48F, 2, 0xC0, 0xC1, 0xC2);
     FadePalStep(1, pal, 0x10);
     for (i = 0; i < 0x300; i++) pal[i] = byte_ECDF4[i];
-    dword_DC738 = 0;
+    leaguestatsmode = 0;
     statsredrawcb = 0;
     FreeMemBlock(statsteambuf);
     FreeMemBlock((int)statsgoaliebuf);

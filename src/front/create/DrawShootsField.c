@@ -1,8 +1,8 @@
 /* Create player: the shoots ratings fields. */
 #include "nhl95.h"
 
-/* DrawShootsField: print "Shoots" and L R (byte_D0F94 of the player being created) at y 12Ah,
- then the 14 rating names (off_D0880[1..14]) with their values (rating byte + 5) * 5 below it, in two
+/* DrawShootsField: print "Shoots" and L R (newskatershoots of the player being created) at y 12Ah,
+ then the 14 rating names (newskaterratingnames[1..14]) with their values (rating byte + 5) * 5 below it, in two
  columns (the second, from rating 8, 136h to the right and 68h up). */
 void DrawShootsField(void)
 {
@@ -12,9 +12,9 @@ void DrawShootsField(void)
     unsigned char *rec;
 
     y = 0x12A;
-    rec = &byte_D0F94;
+    rec = &newskatershoots;
     PrintShadowText(0x1E, y, (char *)str_Shoots);
-    PrintShadowText(0xC8, y, byte_D0F94 ? (char *)str_spL : (char *)str_spR);
+    PrintShadowText(0xC8, y, newskatershoots ? (char *)str_spL : (char *)str_spR);
     col = 0;
     i = 1;
     y += 0xD;
@@ -23,15 +23,15 @@ void DrawShootsField(void)
             col = 0x136;
             y -= 0x68;
         }
-        PrintShadowText(col + 0x1E, y, (char *)off_D0880[i]);
+        PrintShadowText(col + 0x1E, y, (char *)newskaterratingnames[i]);
         PrintFmt1(col + 0xC8, y, (char *)str_fmt3d, (rec[i] + 5) * 5);
         y += 0xD;
         i++;
     } while (i < 15);
 }
 
-/* DrawGloveField: the goalie version: "Glove Hand" and L R (byte_D0FE0), then the 10 goalie
- rating names (off_D09DB[1..10]) with their values, the second column from rating 6 (4Eh up). Its end is
+/* DrawGloveField: the goalie version: "Glove Hand" and L R (newgoalieglove), then the 10 goalie
+ rating names (newgoalieratingnames[1..10]) with their values, the second column from rating 6 (4Eh up). Its end is
  DrawShootsField's (shared tail), so both are in this file. */
 void DrawGloveField(void)
 {
@@ -41,9 +41,9 @@ void DrawGloveField(void)
     unsigned char *rec;
 
     y = 0x12A;
-    rec = &byte_D0FE0;
+    rec = &newgoalieglove;
     PrintShadowText(0x1E, y, (char *)str_GloveHand);
-    PrintShadowText(0xC8, y, byte_D0FE0 ? (char *)str_spL : (char *)str_spR);
+    PrintShadowText(0xC8, y, newgoalieglove ? (char *)str_spL : (char *)str_spR);
     col = 0;
     i = 1;
     y += 0xD;
@@ -52,7 +52,7 @@ void DrawGloveField(void)
             col = 0x136;
             y -= 0x4E;
         }
-        PrintShadowText(col + 0x1E, y, (char *)off_D09DB[i]);
+        PrintShadowText(col + 0x1E, y, (char *)newgoalieratingnames[i]);
         PrintFmt1(col + 0xC8, y, (char *)str_fmt3d, (rec[i] + 5) * 5);
         y += 0xD;
         i++;
@@ -63,8 +63,8 @@ typedef struct { char c[16]; } Hdr16;
 typedef struct { char c[20]; } Hdr20;
 
 /* CreatePlayerLoop (704A6, PC only; ends in DrawShootsField_pop): the create-player screen. Fades in through a
-   black "Temp" palette, copies the default ratings into the player being created (goalie: unk_D0FD0 to
-   byte_D0FE0, field 104h; skater: unk_D0F80 to byte_D0F94, field 118h), draws it (DrawCreatePlayer) and puts the
+   black "Temp" palette, copies the default ratings into the player being created (goalie: newgoaliedefaults to
+   newgoalieglove, field 104h; skater: newskaterdefaults to newskatershoots, field 118h), draws it (DrawCreatePlayer) and puts the
    pointer at 140h, F0h. Then the mouse loop: moves redraw the pointer; a click (bits & 2) goes to the rating
    editor (EditGoalieRating / EditSkaterRating with the pointer and the field), redraws the screen when a rating
    changed, else tests the two buttons (TrackButtons, str_Two) and ends on a hit. p: the new player's record (byte
@@ -90,9 +90,9 @@ int CreatePlayerLoop(unsigned char *p)
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (p[2] == 'G') {
         field = 0x104;
-        *(Hdr16 *)&byte_D0FE0 = *(Hdr16 *)unk_D0FD0;
+        *(Hdr16 *)&newgoalieglove = *(Hdr16 *)newgoaliedefaults;
     } else {
-        *(Hdr20 *)&byte_D0F94 = *(Hdr20 *)unk_D0F80;
+        *(Hdr20 *)&newskatershoots = *(Hdr20 *)newskaterdefaults;
     }
     DrawCreatePlayer(p, field);
     oy = 0xF0;

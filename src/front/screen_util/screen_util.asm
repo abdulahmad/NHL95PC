@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1CC3D progbits alloc exec nowrite align=1
-extern __CHK, awlineind, awpanelspr, byte_C67A9, byte_DC8D8, byte_DC9D8, cddriveptr, cliprect_x0
+extern __CHK, awlineind, awpanelspr, str_Dashes, byte_DC8D8, byte_DC9D8, cddriveptr, cliprect_x0
 extern cliprect_x1, cliprect_y0, cliprect_y1, clockdigits, dirtyrectcount, dirtyrectptr, dword_C679D, dword_C67B9
 extern dword_C67BD, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7
 extern dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B
@@ -633,11 +633,11 @@ cmp ecx, byte 4	; 1D478
 jne short .10	; 1D47B
 mov dword [dword_C67B9], 0C5h	; 1D47D
 xor bh, bh	; 1D487
-mov byte [byte_C67A9], bh	; 1D489
+mov byte [str_Dashes], bh	; 1D489
 jmp short .11	; 1D48F
 .10:
 mov dword [dword_C67B9], 0F7h	; 1D491
-mov byte [byte_C67A9], 2Dh	; 1D49B
+mov byte [str_Dashes], 2Dh	; 1D49B
 .11:
 xor edx, edx	; 1D4A2
 mov ebx, 11h	; 1D4A4

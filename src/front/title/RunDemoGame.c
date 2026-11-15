@@ -209,7 +209,7 @@ typedef struct CreditPage { signed char n; int time; char *bank; char *lines[1];
    200). Start the title song (music on and none playing) or load the title sample (MT-32 or AdLib), then play
    the TITLE movie through the cdstream reader and the cmv_player decoder over the screen: 'MVIh' sets up the
    decoder (and a draw bitmap the first time), its palette part and the frame delay; 'MVIf' decodes a frame and
-   draws it with the mask unless late, the first one saying the NHL intro once (dword_C588A) and starting the
+   draws it with the mask unless late, the first one saying the NHL intro once (nhlintrosaid) and starting the
    clock; 'MVIe' counts the end marks (two stop); anything else, or a key or click after 23h frames, stops. Then
    fade out, wait for the song (or stop the sample) and free the mask. Result: the key, -1 at the end of the
    movie, else 0. */
@@ -308,8 +308,8 @@ int TitleScreen(void)
                     sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 }
                 if (first == 1 && ends == 0) {
-                    if (musicon && dword_C588A) {
-                        dword_C588A = 0;
+                    if (musicon && nhlintrosaid) {
+                        nhlintrosaid = 0;
                         PaNhlIntro();
                     }
                     first = 0;
@@ -399,8 +399,8 @@ void RunIntro(void)
     ClearInputQueue();
     sub_B4BA8();
     sub_B392C(0);
-    __STOSB(unk_C4E30, 0, 0x300);
-    sub_B4B88(0, 0x100, unk_C4E30);
+    __STOSB(blackpal, 0, 0x300);
+    sub_B4B88(0, 0x100, blackpal);
     MakePath(path, fileoncd[0x127] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer1, 0);
     bank = sub_8E83C(path, 0);
     memcpy(tgt, (char *)sub_B30B4(bank, (char *)str_Pl2) + 0x10, 0x300);
@@ -561,10 +561,10 @@ void RunIntro(void)
    A block-local int height gives the EXE's byte_D42C3 / line-count load order. Left: the first rand() % 8
    loads the divisor into ecx before sar edx, 1Fh; the EXE loads it after. See docs/UNSURE.md. */
 /* ShowCredits (16F9A, PC only; ends in RunDemoGame_x): the credits. Keep the text state, load the BACKWIN block
-   and the CREDITS bank (from the CD when listed there): its palette (kept for the fade and copied to unk_C4E30)
+   and the CREDITS bank (from the CD when listed there): its palette (kept for the fade and copied to blackpal)
    and BKGD art, drawn after the palette cycle fades out. Start the credits song when there is music, else the
    ADTITLE and ROCKDITI samples (playing the first), fade the palette in and say goodnight. Then show the 29 pages
-   of off_C6399 (from the eighth on in the Kaufmann font): after the first, wait 62h ticks for a click; a page
+   of creditpages (from the eighth on in the Kaufmann font): after the first, wait 62h ticks for a click; a page
    other than unk_C638C restores the backdrop and draws its art (a bank named at +5, its SHP0 shape at a random
    spot) and centres its lines (count at +0, strings from +9) from DAh up by half their height, then waits its
    time (+1) for a click. A click ends the credits: restore the backdrop, fade the music and the palette out,
@@ -598,7 +598,7 @@ void ShowCredits(void)
     bank = sub_8E83C(path, 0);
     p = (unsigned char *)sub_B30B4(bank, (char *)str_Pal4) + 0x10;
     memcpy(pal, p, 0x300);
-    memcpy(unk_C4E30, p, 0x300);
+    memcpy(blackpal, p, 0x300);
     art = sub_B30B4(bank, (char *)str_Bkgd3);
     *(Hdr17 *)bg = *(Hdr17 *)pointerspr;
     ((short *)bg)[2] = 0x135;
@@ -627,7 +627,7 @@ void ShowCredits(void)
     stop = 0;
     for (page = 0; page < 0x1D; page++) {
         if (page == 7) sub_8EA18(kaufmfont);
-        cur = (CreditPage *)off_C6399[page];
+        cur = (CreditPage *)creditpages[page];
         ClearInputQueue();
         if (page != 0) stop = WaitClickTimeout(0x62);
         if (stop) break;

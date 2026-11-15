@@ -36,8 +36,8 @@ global str_Cento, str_Score, str_Stan, str_Exben, str_Expen, str_Bench, str_Dope
 global str_Goalieget, str_Puckc, str_Nearest, str_Shoot, str_Passrec, str_3star, str_R3star, str_Fowait
 global str_Pnorm, str_Pshad, str_Pnothing, str_Pface, str_Pface2, str_Gamemiscon, str_Rfaceoff, str_Rnorm
 global str_Rcallpen, str_Rpickup, str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotofo
-global str_Benwait, str_Initper, str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, unk_C2338
-global str_LD, str_RD2, str_LW, unk_C2343, str_RW, str_XC, str_dbgO, str_dbgDash
+global str_Benwait, str_Initper, str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, str_G5
+global str_LD, str_RD2, str_LW, str_C6, str_RW, str_XC, str_dbgO, str_dbgDash
 global str_dbgL, str_dbgI, str_dbgSpace, str_dbgS, str_newline
 str_EASports:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,00h
@@ -519,7 +519,7 @@ str_Abreak:
 db 061h,062h,072h,065h,061h,06Bh,00h
 str_Error2:
 db 065h,072h,072h,06Fh,072h,00h
-unk_C2338:
+str_G5:
 db 047h,00h
 str_LD:
 db 04Ch,044h,00h
@@ -527,7 +527,7 @@ str_RD2:
 db 052h,044h,00h
 str_LW:
 db 04Ch,057h,00h
-unk_C2343:
+str_C6:
 db 043h,00h
 str_RW:
 db 052h,057h,00h

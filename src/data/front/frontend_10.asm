@@ -26,7 +26,7 @@ global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH,
 global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
 global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
 global str_UltraSound, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3, str_CantOpenNhlCfg
-global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, str_Cor, str_GamemiscS
+global str_04x, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, str_Cor, str_GamemiscS
 global str_EastquadBar, str_EastsemdBar, str_EastfindBar, str_WestquadBar, str_WestsemdBar, str_WestfindBar, str_StanleydBar, str_EastquauBar
 global str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_WestfinuBar, str_StanleyuBar, str_NhlInt, str_ElsenhlInt
 global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
@@ -40,10 +40,10 @@ global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_
 global str_ANA4, str_BOS2, str_BUF4, str_CGY2, str_CHI2, str_DAL2, str_DET2, str_EDM2
 global str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2, str_NYI2, str_NYR2, str_OTT2
 global str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2, str_TB2, str_TOR2, str_VAN2
-global str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter, str_EasternConferenceQuarter, unk_C3580, str_Vs
-global unk_C36AC, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen, str_InterferPen
-global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, unk_C392C
-global unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F, unk_C397B, unk_C39A8
+global str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter, str_EasternConferenceQuarter, str_StanleyCupFinals, str_Vs
+global str_R4, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen, str_InterferPen
+global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, str_H2
+global unk_C392F, str_H4, unk_C393E, unk_C3941, unk_C3944, str_H1, str_A32, str_SDD3
 str_DSBOX:
 db 044h,053h,042h,04Fh,058h,00h,00h,00h
 str_DbBut:
@@ -490,7 +490,7 @@ str_EasternConferenceQuarter:
 db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
 db 073h,00h
-unk_C3580:
+str_StanleyCupFinals:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,046h,069h,06Eh
 db 061h,06Ch,073h,00h
 str_HomeBck:
@@ -563,12 +563,12 @@ str_MT32HOCK:
 db 04Dh,054h,033h,032h,048h,04Fh,043h,04Bh,00h
 str_NHL3:
 db 04Eh,048h,04Ch,00h
-unk_C36AC:
+str_R4:
 db 072h,02Bh,00h
 str_CantOpenNhlCfg:
 db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
 db 063h,066h,067h,00h
-asc_C36C3:
+str_04x:
 db 025h,030h,034h,078h,0Ah,00h
 str_Emmcopybuf:
 db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
@@ -687,13 +687,13 @@ db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,07
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_DemoNhl:
 db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
-unk_C392C:
+str_H2:
 db 068h,032h,00h
 unk_C392F:
 db 068h,033h,00h
 str_Gsummary3:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
-unk_C393B:
+str_H4:
 db 068h,034h,00h
 unk_C393E:
 db 068h,035h,00h
@@ -706,13 +706,13 @@ db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,07
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_GameSav5:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
-unk_C396F:
+str_H1:
 db 068h,031h,00h
 str_Db4:
 db 02Eh,064h,062h,00h
 str_Sav3:
 db 02Eh,073h,061h,076h,00h
-unk_C397B:
+str_A32:
 db 041h,033h,00h
 str_Pointer22:
 db 070h,06Fh,069h,06Eh,074h,065h,072h,00h
@@ -726,5 +726,5 @@ str_Nhl3:
 db 02Eh,06Eh,068h,06Ch,00h
 str_Err1:
 db 065h,072h,072h,031h,00h,00h,00h,00h
-unk_C39A8:
+str_SDD3:
 db 025h,073h,020h,025h,064h,020h,02Dh,020h,025h,064h,00h

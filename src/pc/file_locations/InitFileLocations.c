@@ -34,14 +34,14 @@ void InitFileLocations(void)
     for (;;) {
         if (i >= 0x225 || r == -1) break;
         fileoncd[i] = 1;
-        r = fscanf(fa, (char *)asc_C3B67, names[i]);
+        r = fscanf(fa, (char *)str_S9, names[i]);
         i++;
     }
     fclose(fa);
     r = 0;
     for (;;) {
         if (r == -1) break;
-        r = fscanf(cfg, (char *)asc_C3B67, line);
+        r = fscanf(cfg, (char *)str_S9, line);
         i = 0;
         for (;;) {
             if (i >= 0x225) break;

@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_C8445 progbits alloc noexec write align=1
 extern CalStandingsMenu, CalNextMonth, CalPrevMonth, CalReturn, TeamSelDone, TeamSelCancel, MenuLeagueSettingsEdit, MenuShowLeagueSettings
-extern MenuShowLeagueSettings2, MenuP1ControlsLeague, MenuP2ControlsLeague, unk_C67B1, unk_CDF44, str_Standings2, unk_CDF64, unk_CDF76
-extern unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
+extern MenuShowLeagueSettings2, MenuP1ControlsLeague, MenuP2ControlsLeague, unk_C67B1, str_StatisticsType8, str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2
+extern str_GoaliesSortedBy2, unk_CE96F, unk_CEA2F, unk_CEB2F
 global monthdays, curleague, monthfirstday_m1, monthfirstday, teamselsetslot, calnextslot, calprevslot, unk_C846A
 global str_Player1Controls, str_Player2Controls, str_ShowLeagueSettings, unk_C854F, str_NextMonth, str_PrevMonth, str_ReturnToSportsCentral, calplaymenu
 global str_Play3, str_Game5, str_Statistics2, calmenubar, str_ShowLeagueSettings2, lgsetshowmenu, str_LeagueSettings, lgsetmenu
@@ -19,7 +19,7 @@ monthfirstday:
 db 06h,02h,02h,05h,00h,03h,05h,01h,04h,05h,01h,03h
 unk_C846A:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
-dd unk_CDF44
+dd str_StatisticsType8
 db 00h,00h,00h,00h
 dd unk_C67B1
 db 05h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
@@ -28,17 +28,17 @@ dd str_Standings2
 dd CalStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDF64
+dd str_TeamsSortedBy2
 db 00h,00h,00h,00h
 dd unk_CE96F
 db 05h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_CDF76
+dd str_PlayersSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEA2F
 db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
 db 05Ah,00h,00h,00h
-dd unk_CDF8A
+dd str_GoaliesSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEB2F
 db 03h,00h,00h,00h

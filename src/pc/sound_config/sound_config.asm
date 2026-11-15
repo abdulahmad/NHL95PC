@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_82579 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, acptspr, asc_C36C3, byte_C541B, byte_D2439, byte_DC9D8, byte_DC9DD
+extern __CHK, __STOSD, acptspr, str_04x, byte_C541B, byte_D2439, byte_DC9D8, byte_DC9DD
 extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
 extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, dword_D20E0, dword_D2150, dword_D223C, dword_D22DC, dword_D22E0
-extern dword_D22EC, dword_D22F0, dword_D2350, dword_D2423, dword_D2427, dword_D242B, dword_D2435, dword_D27B2
+extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, lockerindex, lockerteams, dword_D223C, dword_D22DC, dword_D22E0
+extern dword_D22EC, dword_D22F0, dword_D2350, dword_D2423, dword_D2427, dword_D242B, dword_D2435, speechchannel
 extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
@@ -30,7 +30,7 @@ extern sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8EB
 extern sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_97079, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8
-extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr, unk_C36AC, unk_D2403
+extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr, str_R4, unk_D2403
 extern unk_D2413, unk_D249C, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
 global SoundCardDlg_epilogue, SoundCardDlgLoop_x, SetSoundDevice
@@ -987,7 +987,7 @@ mov ebx, str_NHL3	; 830E9
 xor edx, edx	; 830EE
 mov eax, esp	; 830F0
 call MakePath	; 830F2
-mov edx, unk_C36AC	; 830F7
+mov edx, str_R4	; 830F7
 mov eax, esp	; 830FC
 call fopen_	; 830FE
 mov edi, eax	; 83103
@@ -1005,7 +1005,7 @@ inc eax	; 83121
 jmp short SetSoundDevice.25	; 83122
 .26:
 push eax	; 83124
-push asc_C36C3	; 83125
+push str_04x	; 83125
 push edi	; 8312A
 call fprintf_	; 8312B
 add esp, byte 0Ch	; 83130

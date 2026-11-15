@@ -18,7 +18,7 @@ void POSeedFinal(unsigned char *po);
 void DrawPlayoffTree(void);
 
 /* POHandleElimination (88096, PC only; ends in POCreateSchedule_x): after a human team's playoff game decided its
-   series. Redraw the playoff tree and load the embpal bank's BangPal palette. mode 0: just the menu bar (unk_CF90F)
+   series. Redraw the playoff tree and load the embpal bank's BangPal palette. mode 0: just the menu bar (playoffmenubar)
    and fade in. Otherwise load the league's season, career and key databases (leaguedbnames 5, 1, 0) and, for mode
    1 (the human teams are out), ask whether to simulate the rest; if so say so (msg_POGenFinal) and simulate the
    remaining rounds from the current one (+44h: the first round's last four series and the conference finals
@@ -53,7 +53,7 @@ void POHandleElimination(int mode, unsigned char *po)
     s.bank = bank = sub_8E83C(s.ppath, 0);
     s.pal = (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10;
     if (mode == 0) {
-        DrawMenuBar(unk_CF90F, 3, 0x40, 0x41, 0x42);
+        DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
         FadePalStep(0, s.pal, 0x10);
         FreeMemBlock(bank);
         return;
@@ -151,7 +151,7 @@ void POHandleElimination(int mode, unsigned char *po)
     SaveScheduleDB((char *)po);
     dword_C6D26 = z;
     DrawPlayoffTree();
-    DrawMenuBar(unk_CF90F, 3, 0x40, 0x41, 0x42);
+    DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
     FadePalStep(0, s.pal, 0x10);
     FreeMemBlock(s.bank);
 }

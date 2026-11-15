@@ -412,7 +412,7 @@ reset:
 /* RequestLineChange (4D938, PC only; ends in ass_popx): open the line change box for p's team (pflags bit 6 =
    away): the choice 1 through getlchoice gives the line (lcsel 1, lcline), or when there is none lcsel 0 and the
    team's current line (tmline); then the box shows (lctimer 3Ch, lcblink 1, lcblinktime 0Ch, lcboxon 1) and that
-   side's dword_C585C / dword_C5860 is cleared. p: a player of the team. No result. */
+   side's hmlinetimer / awlinetimer is cleared. p: a player of the team. No result. */
 void RequestLineChange(Player *p)
 {
     short side;
@@ -435,8 +435,8 @@ void RequestLineChange(Player *p)
     lcblink[s] = 1;
     lcblinktime[s] = 0xC;
     lcboxon[s] = 1;
-    if (s) dword_C5860 = 0;
-    else dword_C585C = 0;
+    if (s) awlinetimer = 0;
+    else hmlinetimer = 0;
 }
 
 /* Endfaceoff (4DA7B; 93G logic93 / 94G logic94 Endfaceoff "drop the puck: pick the faceoff winner and send the

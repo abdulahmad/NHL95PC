@@ -146,7 +146,7 @@ void Gameloop(void)
                 rinkscrolly += 0x3E8;
                 if (ovlseq != -1 && ovlstep != -1 && !ovlartbank) {
                     MakePath(path, fileoncd[dword_CC080[ovlseq]] == 1 ? (char *)cddriveptr : 0,
-                        (char *)off_CBED0[ovlseq], (char *)str_PPV);
+                        (char *)ovlartnames[ovlseq], (char *)str_PPV);
                     ovlartbank = sub_8E8A0(path, 0x20);
                     for (i = 0; i < sub_90354(ovlartbank); i++) ovlstepart[i] = sub_9035C(ovlartbank, i);
                 }

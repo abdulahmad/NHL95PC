@@ -151,7 +151,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 err = FileWriteAt(s.fhsea, s.sseason, *(int *)(s.key + 0x2C), 0x2F);
                 if (!err) {
                     dp = s.satt;
-                    sp = &byte_D0F94;
+                    sp = &newskatershoots;
                     for (k = 0; k < 0xF; k++) dp[((signed char *)off_D08B9)[k + 3]] = sp[k];
                     RandomizeNewRatings(s.key, s.satt, s.scareer);
                     err = FileWriteAt(s.fhcar, s.scareer, *(int *)(s.key + 0x28), 0x28);
@@ -163,7 +163,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 err = FileWriteAt(s.fhsea, s.gseason, *(int *)(s.key + 0x2C), 0x36);
                 if (!err) {
                     sp = s.gatt;
-                    gp = &byte_D0FE0;
+                    gp = &newgoalieglove;
                     for (k = 0; k < 0xB; k++) sp[((signed char *)off_D0A04)[k + 3]] = gp[k];
                     err = FileWriteAt(s.fhcar, s.gcareer, *(int *)(s.key + 0x28), 0x2C);
                 }

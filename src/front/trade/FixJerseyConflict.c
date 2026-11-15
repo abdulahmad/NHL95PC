@@ -39,7 +39,7 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     sub_8FFB0(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     sub_B392C(0);
-    dword_DC738 = 1;
+    leaguestatsmode = 1;
     statsredrawcb = (int)TeamRosterScreen;
     statscategory = cat;
     statsteambuf = sub_8CCA8((char *)str_Tstat, 0x2A4, 0x20);
@@ -63,7 +63,7 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     FadePalStep(0, (unsigned char *)pal, 0x10);
     RunMenu(unk_C88E2, 2, 0x40, 0x41, 0x42);
     c = 0;
-    dword_DC738 = c;
+    leaguestatsmode = c;
     statsredrawcb = c;
     FreeMemBlock(statsteambuf);
     FreeMemBlock((int)statsgoaliebuf);

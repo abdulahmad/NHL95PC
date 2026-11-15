@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C8C26 progbits alloc noexec write align=1
 extern str_TheTradingDeadlineHas, str_NoMoreTradingIs
-global str_KbytesFreeLine, dword_C8C61, dword_C8D06, dword_C9002, msg_TradeDeadline, msg_GenSchedule, msg_NoDiskSpace, str_GeneratingRandomSchedule
+global str_KbytesFreeLine, playoffbuf, leaguedbsizes, dword_C9002, msg_TradeDeadline, msg_GenSchedule, msg_NoDiskSpace, str_GeneratingRandomSchedule
 global str_PleaseWait2, str_InsufficientDiskSpaceTo4, str_ANewLeagueYou, str_DiskDriveFullCan, msg_DiskFull
 msg_TradeDeadline:
 dd str_TheTradingDeadlineHas
@@ -17,7 +17,7 @@ db 050h,06Ch,065h,061h,073h,065h,020h,077h,061h,069h,074h,02Eh,00h
 msg_GenSchedule:
 dd str_GeneratingRandomSchedule
 dd str_PleaseWait2
-dword_C8C61:
+playoffbuf:
 db 00h,00h,00h,00h,00h,00h,00h
 str_InsufficientDiskSpaceTo4:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
@@ -40,7 +40,7 @@ db 020h,043h,061h,06Eh,020h,06Eh,06Fh,074h,020h,063h,072h,065h,061h,074h,065h,02
 db 061h,020h,06Eh,065h,077h,020h,06Ch,065h,061h,067h,075h,065h,02Eh,00h
 msg_DiskFull:
 dd str_DiskDriveFullCan
-dword_C8D06:
+leaguedbsizes:
 db 026h,00h,00h,00h,01Eh,00h,00h,00h,0Fh,00h,00h,00h,03h,00h,00h,00h
 db 015h,00h,00h,00h,023h,00h,00h,00h,08h,00h,00h,00h,026h,00h,00h,00h
 db 01Eh,00h,00h,00h,0Fh,00h,00h,00h,03h,00h,00h,00h,015h,00h,00h,00h

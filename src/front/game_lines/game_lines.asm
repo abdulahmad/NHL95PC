@@ -9,7 +9,7 @@ extern byte_ECDF4, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA, CareerDbPtr, 
 extern ClearInputQueue, cont2team, crestnames, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2
 extern dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel
 extern dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458, dword_D145C
-extern dword_D1468, dword_D146C, dword_DBC7C, dword_DBCE0, dword_DC734, dword_DC738, editptrspr, exit_
+extern dword_D1468, dword_D146C, hmteamrec_skaters, hmteamrec_goalies, dword_DC734, leaguestatsmode, editptrspr, exit_
 extern fadeend, fadeend2, FadeOutPalCycle, fadepal, fadepal2, FadePalStep, fadestart, fadestart2
 extern fadestep, fadestep2, FatalError, fileoncd, FitPlayerName, fputchar, FreeMemBlock, fullscrbmp
 extern gameopts, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster, hmrosterjersey, hmteamrec
@@ -2194,7 +2194,7 @@ shl eax, 5	; 780BC
 sub eax, edx	; 780BF
 mov edx, eax	; 780C1
 mov eax, dword [dword esp+080h]	; 780C3
-cmp dword [dword edx+eax*4+dword_DBC7C], byte 0	; 780CA
+cmp dword [dword edx+eax*4+hmteamrec_skaters], byte 0	; 780CA
 jge short .5	; 780D2
 mov edx, eax	; 780D4
 shl eax, 2	; 780D6
@@ -2223,7 +2223,7 @@ mov edx, eax	; 78114
 shl eax, 5	; 78116
 sub eax, edx	; 78119
 mov edx, dword [dword esp+080h]	; 7811B
-mov edx, dword [dword eax+edx*4+dword_DBC7C]	; 78122
+mov edx, dword [dword eax+edx*4+hmteamrec_skaters]	; 78122
 xor ebx, ebx	; 78129
 mov eax, esi	; 7812B
 call lseek_	; 7812D
@@ -2292,7 +2292,7 @@ shl eax, 5	; 781FC
 sub eax, edx	; 781FF
 mov edx, eax	; 78201
 mov eax, dword [dword esp+080h]	; 78203
-cmp dword [dword edx+eax*4+dword_DBCE0], byte 0	; 7820A
+cmp dword [dword edx+eax*4+hmteamrec_goalies], byte 0	; 7820A
 jge short .13	; 78212
 lea edx, [byte eax+019h]	; 78214
 mov eax, edx	; 78217
@@ -2322,7 +2322,7 @@ mov edx, eax	; 78257
 shl eax, 5	; 78259
 sub eax, edx	; 7825C
 mov edx, dword [dword esp+080h]	; 7825E
-mov edx, dword [dword eax+edx*4+dword_DBCE0]	; 78265
+mov edx, dword [dword eax+edx*4+hmteamrec_goalies]	; 78265
 xor ebx, ebx	; 7826C
 mov eax, esi	; 7826E
 call lseek_	; 78270
@@ -4354,7 +4354,7 @@ mov ebp, eax	; 79ADC
 mov byte [dword esp+0320h], bl	; 79ADE
 mov esi, ecx	; 79AE5
 mov edx, 1	; 79AE7
-mov dword [dword_DC738], edx	; 79AEC
+mov dword [leaguestatsmode], edx	; 79AEC
 mov dword [dword_DC734], edx	; 79AF2
 mov dword [statsredrawcb], TeamRosterScreen	; 79AF8
 test bl, bl	; 79B02
@@ -4450,7 +4450,7 @@ inc eax	; 79C4D
 cmp eax, 300h	; 79C4E
 jl short MenuGameShowPlayerStats.7	; 79C53
 xor edi, edi	; 79C55
-mov dword [dword_DC738], edi	; 79C57
+mov dword [leaguestatsmode], edi	; 79C57
 mov dword [statsredrawcb], edi	; 79C5D
 mov edx, dword [statsteambuf]	; 79C63
 push edx	; 79C69

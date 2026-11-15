@@ -30,7 +30,7 @@ extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
 extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
 extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
-extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, offsort_d
+extern hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats, offsort_d
 extern defsort_fwd, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, injurystop, Pencntdwn2
 extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, refposition, word_E03A0
 extern regd5, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
@@ -2378,7 +2378,7 @@ mov dword [hmtmplattr], hmplattr	; 5B8E1
 mov dword [hmtmglattr], hmglattr	; 5B8EB
 mov dword [hmtmlines], hmlinetab	; 5B8F5
 mov dword [hmtmplstats], hmplstats	; 5B8FF
-mov dword [hmtmglstats], unk_DC240	; 5B909
+mov dword [hmtmglstats], hmglstats	; 5B909
 mov dword [hmtmroster], hmroster	; 5B913
 mov dword [hmtmptrF2], hmteamrec	; 5B91D
 mov dword [awtmsort], SortCords+300h	; 5B927
@@ -2386,7 +2386,7 @@ mov dword [awtmplattr], awplattr	; 5B931
 mov dword [awtmglattr], awglattr	; 5B93B
 mov dword [awtmlines], awlinetab	; 5B945
 mov dword [awtmplstats], awplstats	; 5B94F
-mov dword [awtmglstats], unk_DC252	; 5B959
+mov dword [awtmglstats], awglstats	; 5B959
 mov dword [awtmroster], awroster	; 5B963
 mov dword [awtmptrF2], awteamrec	; 5B96D
 pop edx	; 5B977

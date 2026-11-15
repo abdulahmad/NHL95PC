@@ -6,9 +6,9 @@ section s_14A20 progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
 extern awpanelspr, awscore, awtmline, awtmstruct, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8
 extern byte_DCA1B, byte_DCAD7, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
-extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, dword_C5710
-extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
-extern dword_C5860, dword_C5861, dword_C5862, demogame, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
+extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, panelprevmin
+extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
+extern awlinetimer, dword_C5861, dword_C5862, demogame, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
 extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult
 extern GetPeriodTime, gmode, hmlineind, hmpanelspr, hmscore, hmtmline, hmtmstruct, HomeTeam
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
@@ -148,7 +148,7 @@ xor eax, ebx	; 14B57
 je short .2	; 14B59
 .1:
 xor ecx, ecx	; 14B5B
-mov dword [dword_C5860], ecx	; 14B5D
+mov dword [awlinetimer], ecx	; 14B5D
 .2:
 movsx eax, dx	; 14B63
 mov dword [hudawayline], eax	; 14B66
@@ -178,7 +178,7 @@ xor eax, ebx	; 14BBC
 je short .5	; 14BBE
 .4:
 xor esi, esi	; 14BC0
-mov dword [dword_C585C], esi	; 14BC2
+mov dword [hmlinetimer], esi	; 14BC2
 .5:
 movsx eax, dx	; 14BC8
 mov dword [hudhomeline], eax	; 14BCB
@@ -241,8 +241,8 @@ mov ecx, eax	; 14C2F
 mov edi, edx	; 14C31
 mov esi, ebx	; 14C33
 xor edx, edx	; 14C35
-mov dword [dword_C585C], edx	; 14C37
-mov dword [dword_C5860], edx	; 14C3D
+mov dword [hmlinetimer], edx	; 14C37
+mov dword [awlinetimer], edx	; 14C3D
 test ax, ax	; 14C43
 je short .1	; 14C46
 mov eax, hudpenaway	; 14C48
@@ -347,7 +347,7 @@ call SelectScreenBM	; 14D01
 cmp dword [hudclockmin], byte 0	; 14D06
 jl near UpdateHudPanel_x	; 14D0D
 mov eax, dword [hudhundstep]	; 14D13
-mov dword [dword_C583C], eax	; 14D18
+mov dword [panelhund], eax	; 14D18
 xor ebx, ebx	; 14D1D
 mov dword [hudhundstep], ebx	; 14D1F
 call TickPanelClock	; 14D25
@@ -355,10 +355,10 @@ test eax, eax	; 14D2A
 je short .1	; 14D2C
 test byte [gmode], 10h	; 14D2E
 jne short .1	; 14D35
-mov edx, dword [dword_C583C]	; 14D37
+mov edx, dword [panelhund]	; 14D37
 mov eax, hudpenhome	; 14D3D
 call TickPanelPenalties	; 14D42
-mov edx, dword [dword_C583C]	; 14D47
+mov edx, dword [panelhund]	; 14D47
 mov eax, hudpenaway	; 14D4D
 call TickPanelPenalties	; 14D52
 .1:
@@ -395,7 +395,7 @@ push byte 4Ah	; 14DD4
 mov ebx, dword [hudhomeline]	; 14DD6
 mov ecx, dword_C56E4	; 14DDC
 mov edx, hmlineind	; 14DE1
-mov eax, dword_C585C	; 14DE6
+mov eax, hmlinetimer	; 14DE6
 call DrawLineGroupBars	; 14DEB
 xor ecx, ecx	; 14DF0
 mov dword [dword_C5854], ecx	; 14DF2
@@ -408,7 +408,7 @@ push byte 4Ah	; 14E0E
 mov ebx, dword [hudhomeline]	; 14E10
 mov ecx, dword_C56E4	; 14E16
 mov edx, hmlineind	; 14E1B
-mov eax, dword_C585C	; 14E20
+mov eax, hmlinetimer	; 14E20
 call DrawLineGroupBars	; 14E25
 xor ebx, ebx	; 14E2A
 mov dword [dword_C5854], ebx	; 14E2C
@@ -426,7 +426,7 @@ mov edx, 48h	; 14E56
 mov eax, hudpenhome	; 14E5B
 call DrawPanelPenalties	; 14E60
 xor eax, eax	; 14E65
-mov dword [dword_C585C], eax	; 14E67
+mov dword [hmlinetimer], eax	; 14E67
 .6:
 cmp word [lcboxon+2], byte 0	; 14E6C
 jne short .7	; 14E74
@@ -439,7 +439,7 @@ push dword 0C1h	; 14E88
 mov ebx, dword [hudawayline]	; 14E8D
 mov ecx, dword_C56C4	; 14E93
 mov edx, awlineind	; 14E98
-mov eax, dword_C5860	; 14E9D
+mov eax, awlinetimer	; 14E9D
 call DrawLineGroupBars	; 14EA2
 xor esi, esi	; 14EA7
 mov dword [dword_C5858], esi	; 14EA9
@@ -452,7 +452,7 @@ push dword 0C1h	; 14EC8
 mov ebx, dword [hudawayline]	; 14ECD
 mov ecx, dword_C56C4	; 14ED3
 mov edx, awlineind	; 14ED8
-mov eax, dword_C5860	; 14EDD
+mov eax, awlinetimer	; 14EDD
 call DrawLineGroupBars	; 14EE2
 xor ecx, ecx	; 14EE7
 mov dword [dword_C5858], ecx	; 14EE9
@@ -470,7 +470,7 @@ mov edx, 0BFh	; 14F13
 mov eax, hudpenaway	; 14F18
 call DrawPanelPenalties	; 14F1D
 xor edx, edx	; 14F22
-mov dword [dword_C5860], edx	; 14F24
+mov dword [awlinetimer], edx	; 14F24
 UpdateHudPanel_x:
 pop ebp	; 14F2A
 pop edi	; 14F2B
@@ -598,11 +598,11 @@ push eax	; 1509A
 call sub_B4CD8	; 1509B
 add esp, byte 0Ch	; 150A0
 mov eax, dword [hudclockmin]	; 150A3
-mov dword [dword_C5710], eax	; 150A8
+mov dword [panelprevmin], eax	; 150A8
 mov eax, dword [hudclocksec]	; 150AD
-mov dword [dword_C5714], eax	; 150B2
+mov dword [panelprevsec], eax	; 150B2
 mov eax, dword [hudclockhund]	; 150B7
-mov dword [dword_C5718], eax	; 150BC
+mov dword [panelprevhund], eax	; 150BC
 jmp near UpdateHudPanel_x	; 150C1
 %endif ; C
 ; C: src/front/scoreboard/DrawHudPanel.c
@@ -639,7 +639,7 @@ xor edx, edx	; 15112
 mov dword [hudclockhund], edx	; 15114
 .1:
 xor ebx, ebx	; 1511A
-mov dword [dword_C583C], ebx	; 1511C
+mov dword [panelhund], ebx	; 1511C
 mov dword [dword_C5848], ebx	; 15122
 mov dword [dword_C5844], ebx	; 15128
 mov eax, dword [hmtmline-2]	; 1512E
@@ -650,8 +650,8 @@ sar eax, 10h	; 15140
 mov dword [hudawayline], eax	; 15143
 mov dword [dword_C5858], ebx	; 15148
 mov dword [dword_C5854], ebx	; 1514E
-mov dword [dword_C5860], ebx	; 15154
-mov dword [dword_C585C], ebx	; 1515A
+mov dword [awlinetimer], ebx	; 15154
+mov dword [hmlinetimer], ebx	; 1515A
 call SelectScreenBM	; 15160
 mov ecx, str_PPV	; 15165
 mov ebx, str_Scrbrd2	; 1516A
@@ -824,11 +824,11 @@ push ecx	; 1537F
 push edx	; 15380
 push esi	; 15381
 mov edx, dword [hudclockmin]	; 15382
-mov dword [dword_C5710], edx	; 15388
+mov dword [panelprevmin], edx	; 15388
 mov edx, dword [hudclocksec]	; 1538E
-mov dword [dword_C5714], edx	; 15394
+mov dword [panelprevsec], edx	; 15394
 mov edx, dword [hudclockhund]	; 1539A
-mov dword [dword_C5718], edx	; 153A0
+mov dword [panelprevhund], edx	; 153A0
 sub edx, eax	; 153A6
 mov dword [hudclockhund], edx	; 153A8
 test edx, edx	; 153AE
@@ -880,7 +880,7 @@ push ebp	; 15419
 mov edx, dword [hudclockmin]	; 1541A
 test edx, edx	; 15420
 jne near .6	; 15422
-cmp edx, dword [dword_C5710]	; 15428
+cmp edx, dword [panelprevmin]	; 15428
 je short .1	; 1542E
 push byte 3	; 15430
 push dword 0AAh	; 15432
@@ -889,7 +889,7 @@ push edi	; 1543D
 call sub_B4CD8	; 1543E
 add esp, byte 0Ch	; 15443
 .1:
-mov eax, dword [dword_C5714]	; 15446
+mov eax, dword [panelprevsec]	; 15446
 mov ebp, dword [hudclocksec]	; 1544B
 cmp eax, ebp	; 15451
 je near .5	; 15453
@@ -922,7 +922,7 @@ call sub_B4CD8	; 1549C
 add esp, byte 0Ch	; 154A1
 .4:
 mov ebx, 0Ah	; 154A4
-mov eax, dword [dword_C5714]	; 154A9
+mov eax, dword [panelprevsec]	; 154A9
 mov edx, eax	; 154AE
 sar edx, 1Fh	; 154B0
 idiv ebx	; 154B3
@@ -942,7 +942,7 @@ call sub_B4CD8	; 154DB
 add esp, byte 0Ch	; 154E0
 .5:
 mov ebx, 0Ah	; 154E3
-mov eax, dword [dword_C5718]	; 154E8
+mov eax, dword [panelprevhund]	; 154E8
 mov edx, eax	; 154ED
 sar edx, 1Fh	; 154EF
 idiv ebx	; 154F2
@@ -960,7 +960,7 @@ mov edi, dword [nosplit eax*4+clockdigits]	; 15516
 push edi	; 1551D
 jmp near .12	; 1551E
 .6:
-mov eax, dword [dword_C5710]	; 15523
+mov eax, dword [panelprevmin]	; 15523
 cmp eax, edx	; 15528
 je near .10	; 1552A
 mov ebx, 0Ah	; 15530
@@ -992,7 +992,7 @@ call sub_B4CD8	; 1557B
 add esp, byte 0Ch	; 15580
 .9:
 mov ebx, 0Ah	; 15583
-mov eax, dword [dword_C5710]	; 15588
+mov eax, dword [panelprevmin]	; 15588
 mov edx, eax	; 1558D
 sar edx, 1Fh	; 1558F
 idiv ebx	; 15592
@@ -1011,7 +1011,7 @@ push ebp	; 155B9
 call sub_B4CD8	; 155BA
 add esp, byte 0Ch	; 155BF
 .10:
-mov eax, dword [dword_C5714]	; 155C2
+mov eax, dword [panelprevsec]	; 155C2
 cmp eax, dword [hudclocksec]	; 155C7
 je near UpdateHudPanel_x	; 155CD
 mov ebx, 0Ah	; 155D3
@@ -1034,7 +1034,7 @@ call sub_B4CD8	; 15605
 add esp, byte 0Ch	; 1560A
 .11:
 mov ebx, 0Ah	; 1560D
-mov eax, dword [dword_C5714]	; 15612
+mov eax, dword [panelprevsec]	; 15612
 mov edx, eax	; 15617
 sar edx, 1Fh	; 15619
 idiv ebx	; 1561C

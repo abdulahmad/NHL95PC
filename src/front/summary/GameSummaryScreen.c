@@ -346,7 +346,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             for (f.i = 0; f.i < 8 && !f.err; f.i++) {
                 f.k = f.linetab[side][f.i + 0x28];
                 if (f.k < 0x64) {
-                    f.err = ReadKeyRec(f.dbfh, f.keyrec, ((int (*)[0xBA])dword_DBC7C)[side][f.k]);
+                    f.err = ReadKeyRec(f.dbfh, f.keyrec, ((int (*)[0xBA])hmteamrec_skaters)[side][f.k]);
                     if (!f.err) {
                         FitPlayerName(f.name, 0, f.keyrec + 0x13, 200);
                         PrintShadowText(0xB4, y, f.name);

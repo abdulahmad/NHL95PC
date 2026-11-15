@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D2864 progbits alloc noexec write align=1
-extern unk_C39A8
+extern str_SDD3
 global msg_PODiskSpace_arg, dword_D2884, dword_D288C, msg_POExists, msg_POSetupError, msg_POSettingUp, msg_PODiskSpace, unk_D2864
 global str_ThereIsAlreadyA3, str_DoYouWantTo7, str_AnErrorWasEncountered, str_SettingUpThePlayoffs, str_PlayoffSeriesHasNot, str_Created, str_PleaseWait3, str_SettingUpPlayOffs
 global str_InsufficientDiskSpaceTo5, str_APlayoffSeriesYou
@@ -12,7 +12,7 @@ db 015h,00h,00h,00h,023h,00h,00h,00h,08h,00h,00h,00h,02h,00h,00h,00h
 dword_D2884:
 db 01h,00h,00h,00h,00h,00h,00h,00h
 dword_D288C:
-dd unk_C39A8
+dd str_SDD3
 str_ThereIsAlreadyA3:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h
 db 020h,061h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,077h,069h,074h,068h

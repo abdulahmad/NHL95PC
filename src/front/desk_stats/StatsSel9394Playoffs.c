@@ -3,7 +3,7 @@
 
 /* StatsSel9394Playoffs: stats menu: switch the source to the 93-94 playoffs (from league or season stats):
  check that item (1) and clear the others (2), copy the exhibition league name to statsleague; in the league
- screens (dword_DC738) fade in the stats palette and redraw the current category (statsredrawcb), then fade out. */
+ screens (leaguestatsmode) fade in the stats palette and redraw the current category (statsredrawcb), then fade out. */
 void StatsSel9394Playoffs(void)
 {
     if (!statsfromleague && statsplayoffs == 1) return;
@@ -13,7 +13,7 @@ void StatsSel9394Playoffs(void)
     if (!statsplayoffs) statsteamsel = 0;
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)exhstate + 4, 0x1F);
-    if (!dword_DC738) return;
+    if (!leaguestatsmode) return;
     sub_8FFB0(0, 0x100, unk_DC340);
     FadePalStep(1, unk_DC340, 0x10);
     statspalvalid = 1;
@@ -28,7 +28,7 @@ void StatsSel9394Playoffs(void)
 
 /* StatsSelLeague: stats menu: switch the source to the league season (unless already there): check that
  item (1) and clear the others (2), copy the league name to statsleague (from lgstate); in the league screens
- (dword_DC738) fade in the stats palette and redraw the current category (statsredrawcb), then fade out. */
+ (leaguestatsmode) fade in the stats palette and redraw the current category (statsredrawcb), then fade out. */
 void StatsSelLeague(void)
 {
     if (statsfromleague == 1 && !statsplayoffs) return;
@@ -38,7 +38,7 @@ void StatsSelLeague(void)
     if (statsplayoffs) statsteamsel = 0;
     statsplayoffs = 0;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
-    if (!dword_DC738) return;
+    if (!leaguestatsmode) return;
     sub_8FFB0(0, 0x100, unk_DC340);
     FadePalStep(1, unk_DC340, 0x10);
     statspalvalid = 1;
@@ -61,7 +61,7 @@ void StatsSelLeaguePlayoffs(void)
     if (!statsplayoffs) statsteamsel = 0;
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
-    if (!dword_DC738) return;
+    if (!leaguestatsmode) return;
     sub_8FFB0(0, 0x100, unk_DC340);
     FadePalStep(1, unk_DC340, 0x10);
     statspalvalid = 1;
@@ -84,7 +84,7 @@ void StatsSelPlayoffMode(void)
     if (!statsplayoffs) statsteamsel = 0;
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)postate + 4, 0x1F);
-    if (!dword_DC738) return;
+    if (!leaguestatsmode) return;
     sub_8FFB0(0, 0x100, unk_DC340);
     FadePalStep(1, unk_DC340, 0x10);
     statspalvalid = 1;
@@ -97,17 +97,17 @@ void StatsSelPlayoffMode(void)
 }
 
 /* FreeDeskBuffers (18D33, PC only; segment 009, the same source file: it ends in StatsSel_x): free the two stats
-   desk buffers dword_C65AC and dword_C65A8 (FreeMemBlock) when they are allocated and clear them. No arguments.
+   desk buffers embscupbank and easnfontbuf (FreeMemBlock) when they are allocated and clear them. No arguments.
    Result: 0. */
 int FreeDeskBuffers(void)
 {
-    if (dword_C65AC) {
-        FreeMemBlock(dword_C65AC);
-        dword_C65AC = 0;
+    if (embscupbank) {
+        FreeMemBlock(embscupbank);
+        embscupbank = 0;
     }
-    if (dword_C65A8) {
-        FreeMemBlock(dword_C65A8);
-        dword_C65A8 = 0;
+    if (easnfontbuf) {
+        FreeMemBlock(easnfontbuf);
+        easnfontbuf = 0;
     }
     return 0;
 }

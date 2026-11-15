@@ -16,7 +16,7 @@ extern dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m
 extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
 extern rpl_objstep_m3, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
-extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, ovlscripts, off_CD498, off_CD4A0
+extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, off_CD498, off_CD4A0
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font

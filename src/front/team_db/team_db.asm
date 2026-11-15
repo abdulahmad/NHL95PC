@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
-extern awtmap, awtmgoalie, byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C66B4, hmrosterpos
-extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, hmplstats, dword_DBC7C, dword_DBCE0
+extern awtmap, awtmgoalie, gsumheader_b1, gsumheader_b2, gsumheader_b3, gsumheader_b4, byte_C66B4, hmrosterpos
+extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, hmplstats, hmteamrec_skaters, hmteamrec_goalies
 extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
 extern hmlinetab, hmroster, hmrosterjersey, hmscratch, hmshotcnt, hmteamrec, hmtmap, hmtmgoalie
@@ -14,10 +14,10 @@ extern str_att, str_backslash3, str_career, str_fe1, str_fe2, str_fe3, str_fe4, 
 extern str_fe7, str_fe8, str_fe9, str_feA, str_feB, str_feB1, str_feB5, str_feB8
 extern str_feC, str_feD, str_feE, str_feF, str_feG, str_feH, str_feI, str_feJ
 extern str_feK, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_GoalieItemTmpl
-extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, unk_C5423
-extern unk_C542E, unk_CEE4F, unk_CEEAF, hmglattr, hmplattr, unk_DC240, unknown_libname_1, VisTeam
-extern word_C5428, word_C571E, word_C5720, word_C5722, word_C575E, word_C5760, word_C5762, word_DB08A
-extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
+extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, gsumheader
+extern gsumtail, unk_CEE4F, unk_CEEAF, hmglattr, hmplattr, hmglstats, unknown_libname_1, VisTeam
+extern gsumcount, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, awpanelpen_time, awpanelpen_w4, awpanelpen_w6, hmplstats_w2
+extern hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14, hmglstats_w2, hmglstats_w4
 global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
 global ResetGoalieMenu, ClearPanelPenalties
 ; C: src/front/team_db/LoadGameTeams.c
@@ -297,13 +297,13 @@ sub esp, byte 4	; 1BF0B
 mov byte [byte_DC268], al	; 1BF0E
 mov byte [byte_DC267], dl	; 1BF13
 mov dword [curperiod], 0FFFFFFFFh	; 1BF19
-mov byte [byte_C5424], al	; 1BF23
-mov byte [byte_C5425], dl	; 1BF28
+mov byte [gsumheader_b1], al	; 1BF23
+mov byte [gsumheader_b2], dl	; 1BF28
 mov al, byte [HomeTeam]	; 1BF2E
-mov byte [byte_C5426], al	; 1BF33
+mov byte [gsumheader_b3], al	; 1BF33
 mov al, byte [VisTeam]	; 1BF38
-mov byte [byte_C5427], al	; 1BF3D
-mov word [word_C5428], 1	; 1BF42
+mov byte [gsumheader_b4], al	; 1BF3D
+mov word [gsumcount], 1	; 1BF42
 xor ah, ah	; 1BF4B
 mov byte [hmgoalcnt], ah	; 1BF4D
 mov byte [hmshotcnt], ah	; 1BF53
@@ -325,7 +325,7 @@ add esp, byte 4	; 1BF92
 .2:
 mov ecx, 0Bh	; 1BF95
 mov ebx, 0FFFFFFFFh	; 1BF9A
-mov edx, unk_C5423	; 1BF9F
+mov edx, gsumheader	; 1BF9F
 mov eax, dword [esp]	; 1BFA4
 call FileWriteAt	; 1BFA7
 test eax, eax	; 1BFAC
@@ -336,7 +336,7 @@ add esp, byte 4	; 1BFBA
 .3:
 mov ecx, 0Bh	; 1BFBD
 mov ebx, 0FFFFFFFFh	; 1BFC2
-mov edx, unk_C542E	; 1BFC7
+mov edx, gsumtail	; 1BFC7
 mov eax, dword [esp]	; 1BFCC
 call FileWriteAt	; 1BFCF
 test eax, eax	; 1BFD4
@@ -350,13 +350,13 @@ call FileClose	; 1BFE7
 xor eax, eax	; 1BFEC
 call LoadGameTeams	; 1BFEE
 xor ebx, ebx	; 1BFF3
-mov word [word_DB096], bx	; 1BFF5
-mov word [word_DB094], bx	; 1BFFC
-mov word [word_DB092], bx	; 1C003
-mov word [word_DB090], bx	; 1C00A
-mov word [word_DB08E], bx	; 1C011
-mov word [word_DB08C], bx	; 1C018
-mov word [word_DB08A], bx	; 1C01F
+mov word [hmplstats_w14], bx	; 1BFF5
+mov word [hmplstats_w12], bx	; 1BFFC
+mov word [hmplstats_w10], bx	; 1C003
+mov word [hmplstats_w8], bx	; 1C00A
+mov word [hmplstats_w6], bx	; 1C011
+mov word [hmplstats_w4], bx	; 1C018
+mov word [hmplstats_w2], bx	; 1C01F
 mov word [hmplstats], bx	; 1C026
 xor ecx, ecx	; 1C02D
 .5:
@@ -383,9 +383,9 @@ inc ecx	; 1C05B
 cmp ecx, byte 2	; 1C05C
 jl short InitGameSummary.5	; 1C05F
 xor esi, esi	; 1C061
-mov word [word_DC244], si	; 1C063
-mov word [word_DC242], si	; 1C06A
-mov word [unk_DC240], si	; 1C071
+mov word [hmglstats_w4], si	; 1C063
+mov word [hmglstats_w2], si	; 1C06A
+mov word [hmglstats], si	; 1C071
 xor ecx, ecx	; 1C078
 .7:
 xor edx, edx	; 1C07A
@@ -397,8 +397,8 @@ add esi, esi	; 1C083
 mov eax, edx	; 1C085
 shl eax, 2	; 1C087
 sub eax, edx	; 1C08A
-lea edi, [dword esi+eax*2+unk_DC240]	; 1C08C
-mov esi, unk_DC240	; 1C093
+lea edi, [dword esi+eax*2+hmglstats]	; 1C08C
+mov esi, hmglstats	; 1C093
 movsd	; 1C098
 movsw	; 1C099
 inc edx	; 1C09B
@@ -741,7 +741,7 @@ shl edi, 4	; 1C44F
 add edi, esi	; 1C452
 shl edi, 2	; 1C454
 lea esi, [eax+edi]	; 1C457
-mov ebx, dword [dword edx+dword_DBC7C]	; 1C45A
+mov ebx, dword [dword edx+hmteamrec_skaters]	; 1C45A
 test ebx, ebx	; 1C460
 jl near .12	; 1C462
 mov ecx, dword [dword esp+0114h]	; 1C468
@@ -921,7 +921,7 @@ add edi, ebx	; 1C6A7
 shl edi, 3	; 1C6A9
 sub edi, ebx	; 1C6AC
 lea esi, [eax+edi]	; 1C6AE
-cmp dword [dword edx+dword_DBCE0], byte 0	; 1C6B1
+cmp dword [dword edx+hmteamrec_goalies], byte 0	; 1C6B1
 jl near .23	; 1C6B8
 push byte 0	; 1C6BE
 push byte 0	; 1C6C0
@@ -933,7 +933,7 @@ lea eax, [dword esp+0FCh]	; 1C6CB
 push eax	; 1C6D2
 lea eax, [byte esp+060h]	; 1C6D3
 push eax	; 1C6D7
-mov ebx, dword [dword edx+dword_DBCE0]	; 1C6D8
+mov ebx, dword [dword edx+hmteamrec_goalies]	; 1C6D8
 push ebx	; 1C6DE
 xor ecx, ecx	; 1C6DF
 mov ebx, dword [byte esp+020h]	; 1C6E1
@@ -1379,12 +1379,12 @@ mov ebx, 0FFFFFFFFh	; 1CBE7
 mov word [nosplit edx*8+hudpenaway], bx	; 1CBEC
 mov word [nosplit edx*8+hudpenhome], bx	; 1CBF4
 xor ecx, ecx	; 1CBFC
-mov word [nosplit edx*8+word_C5762], cx	; 1CBFE
-mov word [nosplit edx*8+word_C5722], cx	; 1CC06
-mov word [nosplit edx*8+word_C5760], cx	; 1CC0E
-mov word [nosplit edx*8+word_C5720], cx	; 1CC16
-mov word [nosplit edx*8+word_C575E], cx	; 1CC1E
-mov word [nosplit edx*8+word_C571E], cx	; 1CC26
+mov word [nosplit edx*8+awpanelpen_w6], cx	; 1CBFE
+mov word [nosplit edx*8+hmpanelpen_w6], cx	; 1CC06
+mov word [nosplit edx*8+awpanelpen_w4], cx	; 1CC0E
+mov word [nosplit edx*8+hmpanelpen_w4], cx	; 1CC16
+mov word [nosplit edx*8+awpanelpen_time], cx	; 1CC1E
+mov word [nosplit edx*8+hmpanelpen_time], cx	; 1CC26
 inc edx	; 1CC2E
 cmp edx, byte 8	; 1CC2F
 jl short ClearPanelPenalties.1	; 1CC32

@@ -11,8 +11,8 @@ extern SetTickDeadline, sprintf_, str_AGameYouRequire, str_AGameYouRequire2, str
 extern str_Err1, str_extDB, str_GameSav5, str_Gsummary3, str_GsummaryDb4, str_Nhl3, str_Pointer22, str_Prmt
 extern str_Sav3, str_Savegame, strcat_, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8
 extern sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400, sub_92CD0
-extern sub_92DE0, sub_B2DCA, sub_B30B4, sub_B4BA8, unk_C392C, unk_C392F, unk_C393B, unk_C393E
-extern unk_C3941, unk_C3944, unk_C396F, unk_C397B, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
+extern sub_92DE0, sub_B2DCA, sub_B30B4, sub_B4BA8, str_H2, unk_C392F, str_H4, unk_C393E
+extern unk_C3941, unk_C3944, str_H1, str_A32, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
 global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
 ; C: src/front/savegame/MenuSaveGame.c
 %ifdef CBUILD
@@ -118,7 +118,7 @@ lea eax, [byte esp+06Ch]	; 85A7B
 call FileCreate	; 85A7F
 test eax, eax	; 85A84
 je short .5	; 85A86
-push unk_C392C	; 85A88
+push str_H2	; 85A88
 call FatalError	; 85A8D
 add esp, byte 4	; 85A92
 .5:
@@ -156,7 +156,7 @@ mov eax, dword [dword esp+098h]	; 85AFF
 call FileWriteAt	; 85B06
 test eax, eax	; 85B0B
 je short .7	; 85B0D
-push unk_C393B	; 85B0F
+push str_H4	; 85B0F
 call FatalError	; 85B14
 add esp, byte 4	; 85B19
 .7:
@@ -245,7 +245,7 @@ lea eax, [byte esp+06Ch]	; 85C61
 call FileCreate	; 85C65
 test eax, eax	; 85C6A
 je short .13	; 85C6C
-push unk_C396F	; 85C6E
+push str_H1	; 85C6E
 call FatalError	; 85C73
 add esp, byte 4	; 85C78
 .13:
@@ -297,7 +297,7 @@ mov eax, str_Gsummary3	; 85D2D
 call CopyFile	; 85D32
 test eax, eax	; 85D37
 je short .16	; 85D39
-push unk_C397B	; 85D3B
+push str_A32	; 85D3B
 call FatalError	; 85D40
 add esp, byte 4	; 85D45
 .16:

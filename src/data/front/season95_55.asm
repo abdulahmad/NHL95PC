@@ -2,27 +2,27 @@
 bits 32
 %include "hockey.inc"
 section s_D0F80 progbits alloc noexec write align=1
-global str_XXXKbytesOfFree, byte_D0F94, byte_D0FE0, off_D1077, unk_D0F80, unk_D0FA8, unk_D0FBC, unk_D0FD0
-global unk_D0FF0, unk_D1000, str_InsufficientDiskSpace4, str_ToCreateAFree
-unk_D0F80:
+global str_XXXKbytesOfFree, newskatershoots, newgoalieglove, off_D1077, newskaterdefaults, skaterratingmin, skaterratingmax, newgoaliedefaults
+global goalieratingmin, goalieratingmax, str_InsufficientDiskSpace4, str_ToCreateAFree
+newskaterdefaults:
 db 01h,07h,07h,09h,07h,07h,07h,07h,07h,07h,07h,07h,07h,05h,07h,00h
 db 00h,00h,00h,00h
-byte_D0F94:
+newskatershoots:
 db 01h,07h,07h,09h,07h,07h,07h,07h,07h,07h,07h,07h,07h,05h,07h,00h
 db 00h,00h,00h,00h
-unk_D0FA8:
+skaterratingmin:
 db 00h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,00h
 db 00h,00h,00h,00h
-unk_D0FBC:
+skaterratingmax:
 db 01h,0Eh,0Eh,0Eh,0Eh,0Dh,0Bh,0Eh,0Eh,0Eh,0Eh,0Eh,0Eh,0Ah,0Eh,00h
 db 00h,00h,00h,00h
-unk_D0FD0:
+newgoaliedefaults:
 db 01h,07h,07h,07h,07h,07h,07h,07h,07h,07h,07h,00h,00h,00h,00h,00h
-byte_D0FE0:
+newgoalieglove:
 db 01h,07h,07h,07h,07h,07h,07h,07h,07h,07h,07h,00h,00h,00h,00h,00h
-unk_D0FF0:
+goalieratingmin:
 db 00h,03h,03h,03h,03h,03h,03h,03h,03h,03h,03h,00h,00h,00h,00h,00h
-unk_D1000:
+goalieratingmax:
 db 01h,0Eh,0Eh,0Eh,0Eh,0Ch,0Bh,0Eh,0Ah,0Eh,0Eh,00h,00h,00h,00h,00h
 str_InsufficientDiskSpace4:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h

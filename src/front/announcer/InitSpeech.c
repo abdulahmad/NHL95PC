@@ -7,7 +7,7 @@ void InitSpeech(unsigned char id, int size, int copybuf, int copylen)
 {
     if (SpeechIsInit()) return;
     byte_D27B6 = id;
-    dword_D27B2 = 0;
+    speechchannel = 0;
     speechcopybuf = copybuf;
     speechcopylen = copylen;
     speechq = sub_8CCA8((char *)str_Sentence, 100, dword_CCC94);

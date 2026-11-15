@@ -4,21 +4,21 @@ bits 32
 %include "hockey.inc"
 section s_6CC20 progbits alloc exec nowrite align=1
 extern __CHK, __CHP, _dos_getdiskfree_, attdb, attdb_size, boxfillcolor, boxlitecolor, boxshadecolor
-extern btn_LeagueExists, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, byte_C4B6C, byte_D0AE6, byte_D0F94, byte_D0FE0
+extern btn_LeagueExists, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, byte_C4B6C, byte_D0AE6, newskatershoots, newgoalieglove
 extern byte_D42C3, byte_EAC86, byte_EAF99, byte_EAFB5, careerdb, careerdb_size, CarTeamRecPtr, carteamsdb
 extern carteamsdb_size, cddriveptr, ClearInputQueue, curdbname, dbdirty, dbexistsmsg, DbLineEditor, DeleteDir
 extern divisionteams, dlgtextbg, dlgtextfg, DrawButtons, DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
 extern DrawMenuItemSel, DrawScrollBar, dword_C2CAC, dword_C2CB0, dword_C2CB4, dword_C2CB8, dword_C2CBC, dword_C2CC0
 extern dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4, dword_C2CD8, dword_C2CDC, dword_C2CF0
-extern dword_C4B69, dword_D0B12, dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_D0CDA
+extern dword_C4B69, rostereditmode, dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_D0CDA
 extern dword_EA2B0, dword_EA994, dword_EAF7C, dword_EBCA4, editptrspr, editrosters_exit, facount, FadePalStep
 extern falist, falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FitPlayerName
 extern fputchar, FreeLeagueDbsMem, FreeMemBlock, fullscrbmp, GetInputEvent, hmteamrec, HomeTeam, InitScrollBar
 extern InputDialog, j_unlink_, kaufmfont, keydb, keydb_size, KeyDbPtr, leaguedbnames, ListDialog
 extern LoadLeagueDbsMem, mainfont, MakePath, memcpy_, memset_, menu_r1_editlines, menu_r1_freeagents, menu_r1_tofa
 extern menu_r1_toroster2, menu_r2_editlines, menu_r2_freeagents, menu_r2_tofa, menu_r2_toroster1, MenuHitTest, MessageBox, mkdir_
-extern mousepollfn, MouseSetPos, msglines, musichandle, musicon, musicslot, nodiskspacemsg, off_D0880
-extern off_D08B9, off_D09DB, off_D0A04, off_D0AC2, off_D1077, pointerspr, PrintCenteredText, PrintFmt1
+extern mousepollfn, MouseSetPos, msglines, musichandle, musicon, musicslot, nodiskspacemsg, newskaterratingnames
+extern off_D08B9, newgoalieratingnames, off_D0A04, off_D0AC2, off_D1077, pointerspr, PrintCenteredText, PrintFmt1
 extern PrintOutlinedText, PrintShadowText, ptrupdatefn, qword_C2CE0, qword_C2CE8, randomd0, RestoreDialogBg, rmdir_
 extern roster1divmenus, roster2divmenus, rosterisfa, rosterjersey, rosterlist, rostersel, rosterslot, rosterstat
 extern rosterteam, rosterteamptr, rosterteamrec, savedbbtns, savepal, seasondb, seasondb_size, SetDrawBitmap
@@ -40,10 +40,10 @@ extern sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_90F38, sub_9121C, sub_91370
 extern sub_913B4, sub_91400, sub_91964, sub_92DE0, sub_932D0, sub_B2CBE, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4F8C, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags
-extern TeamRecPtr, teamsdb, teamsdb_size, TextInputDialog, TrackButtons, TrackScrollBars, unk13_6BF3D, unk_D0450
-extern unk_D05F4, unk_D0B80, unk_D0BB8, unk_D0BF0, unk_D0CA2, unk_D0EDD, unk_D0F80, unk_D0FA8
-extern unk_D0FBC, unk_D0FD0, unk_D0FF0, unk_D1000, unk_EA968, unk_EAC84, unk_EAFB8, unknown_libname_1
-extern VisTeam, word_C2D0E, word_C2D10, WriteLeagueDbsMem
+extern TeamRecPtr, teamsdb, teamsdb_size, TextInputDialog, TrackButtons, TrackScrollBars, unk13_6BF3D, editrostersmenubar
+extern unk_D05F4, unk_D0B80, unk_D0BB8, unk_D0BF0, unk_D0CA2, unk_D0EDD, newskaterdefaults, skaterratingmin
+extern skaterratingmax, newgoaliedefaults, goalieratingmin, goalieratingmax, unk_EA968, unk_EAC84, unk_EAFB8, unknown_libname_1
+extern VisTeam, str_L9, word_C2D10, WriteLeagueDbsMem
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
 global EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, LoadRosterList_faloop, LoadRosterList_team
 global CountSelected, RosterPanelClick, RosterPanelClick_ret, FixJerseyNumber, CopyRoster1Rec, LoadBothRosterLists, LoadRosterList, EditTeamLines
@@ -84,7 +84,7 @@ mov dword [dlgtextfg], ebx	; 6CC80
 mov dword [dlgtextbg], ecx	; 6CC86
 xor ebp, ebp	; 6CC8C
 mov dword [editrosters_exit], ebp	; 6CC8E
-mov dword [dword_D0B12], ebp	; 6CC94
+mov dword [rostereditmode], ebp	; 6CC94
 push byte 20h	; 6CC9A
 push dword 300h	; 6CC9C
 push str_Temp7	; 6CCA1
@@ -185,7 +185,7 @@ push byte 42h	; 6CDED
 mov ecx, 41h	; 6CDEF
 mov ebx, 40h	; 6CDF4
 mov edx, 6	; 6CDF9
-mov eax, unk_D0450	; 6CDFE
+mov eax, editrostersmenubar	; 6CDFE
 call EditRosters	; 6CE03
 call FreeLeagueDbsMem	; 6CE08
 mov eax, dword [editptrspr]	; 6CE0D
@@ -655,7 +655,7 @@ push byte 42h	; 6D328
 mov ecx, 41h	; 6D32A
 mov ebx, 40h	; 6D32F
 mov edx, 5	; 6D334
-mov eax, unk_D0450	; 6D339
+mov eax, editrostersmenubar	; 6D339
 call DrawMenuBar	; 6D33E
 xor ecx, ecx	; 6D343
 mov ebx, str_Prez2	; 6D345
@@ -709,7 +709,7 @@ xor eax, eax	; 6D3E3
 call DrawRosterPanel	; 6D3E5
 mov eax, 1	; 6D3EA
 call DrawRosterPanel	; 6D3EF
-cmp dword [dword_D0B12], byte 2	; 6D3F4
+cmp dword [rostereditmode], byte 2	; 6D3F4
 jne near .4	; 6D3FB
 push byte 1	; 6D401
 mov ecx, 154h	; 6D403
@@ -1613,7 +1613,7 @@ call __CHK	; 6DE51
 push ecx	; 6DE56
 push esi	; 6DE57
 push edi	; 6DE58
-mov dword [dword_D0B12], 2	; 6DE59
+mov dword [rostereditmode], 2	; 6DE59
 mov esi, dword [rosterteamrec]	; 6DE63
 mov ecx, 0BAh	; 6DE69
 mov edi, unk_EAFB8	; 6DE6E
@@ -1913,7 +1913,7 @@ je short .8	; 6E21F
 cmp byte [rosterisfa+1], 1	; 6E221
 jne near .13	; 6E228
 .8:
-cmp dword [dword_D0B12], byte 2	; 6E22E
+cmp dword [rostereditmode], byte 2	; 6E22E
 je near .13	; 6E235
 mov ebp, dword [byte esp+078h]	; 6E23B
 test ebp, ebp	; 6E23F
@@ -1991,7 +1991,7 @@ mov dword [byte esp+064h], eax	; 6E327
 mov eax, dword [byte esp+058h]	; 6E32B
 mov dword [byte esp+060h], eax	; 6E32F
 .13:
-cmp dword [dword_D0B12], byte 2	; 6E333
+cmp dword [rostereditmode], byte 2	; 6E333
 jne short .14	; 6E33A
 test byte [byte esp+078h], 1	; 6E33C
 je short .14	; 6E341
@@ -2059,7 +2059,7 @@ mov edi, dword [pointerspr]	; 6E402
 push edi	; 6E408
 jmp near .47	; 6E409
 .16:
-cmp dword [dword_D0B12], byte 2	; 6E40E
+cmp dword [rostereditmode], byte 2	; 6E40E
 jne short .18	; 6E415
 mov ecx, dword [byte esp+060h]	; 6E417
 push ecx	; 6E41B
@@ -2822,7 +2822,7 @@ push byte 42h	; 6ECC2
 mov ecx, 41h	; 6ECC4
 mov ebx, 40h	; 6ECC9
 mov edx, 5	; 6ECCE
-mov eax, unk_D0450	; 6ECD3
+mov eax, editrostersmenubar	; 6ECD3
 call DrawMenuBar	; 6ECD8
 push byte 41h	; 6ECDD
 push dword 1CDh	; 6ECDF
@@ -4038,12 +4038,12 @@ push edi	; 6FA8B
 push ebp	; 6FA8C
 sub esp, byte 8	; 6FA8D
 mov esi, 12Ah	; 6FA90
-mov dword [byte esp+04h], byte_D0F94	; 6FA95
+mov dword [byte esp+04h], newskatershoots	; 6FA95
 mov ebx, str_Shoots	; 6FA9D
 mov edx, esi	; 6FAA2
 mov eax, 1Eh	; 6FAA4
 call PrintShadowText	; 6FAA9
-cmp byte [byte_D0F94], 0	; 6FAAE
+cmp byte [newskatershoots], 0	; 6FAAE
 je short .1	; 6FAB5
 mov ebx, str_spL	; 6FAB7
 jmp short .2	; 6FABC
@@ -4062,7 +4062,7 @@ jne short .4	; 6FADC
 mov ebp, 136h	; 6FADE
 sub esi, byte 68h	; 6FAE3
 .4:
-mov ebx, dword [nosplit edi*4+off_D0880]	; 6FAE6
+mov ebx, dword [nosplit edi*4+newskaterratingnames]	; 6FAE6
 lea eax, [byte ebp+01Eh]	; 6FAED
 mov edx, esi	; 6FAF0
 call PrintShadowText	; 6FAF2
@@ -4109,12 +4109,12 @@ push edi	; 6FB43
 push ebp	; 6FB44
 sub esp, byte 8	; 6FB45
 mov esi, 12Ah	; 6FB48
-mov dword [byte esp+04h], byte_D0FE0	; 6FB4D
+mov dword [byte esp+04h], newgoalieglove	; 6FB4D
 mov ebx, str_GloveHand	; 6FB55
 mov edx, esi	; 6FB5A
 mov eax, 1Eh	; 6FB5C
 call PrintShadowText	; 6FB61
-cmp byte [byte_D0FE0], 0	; 6FB66
+cmp byte [newgoalieglove], 0	; 6FB66
 je short .1	; 6FB6D
 mov ebx, str_spL	; 6FB6F
 jmp short .2	; 6FB74
@@ -4133,7 +4133,7 @@ jne short .4	; 6FB94
 mov ebp, 136h	; 6FB96
 sub esi, byte 4Eh	; 6FB9B
 .4:
-mov ebx, dword [nosplit edi*4+off_D09DB]	; 6FB9E
+mov ebx, dword [nosplit edi*4+newgoalieratingnames]	; 6FB9E
 lea eax, [byte ebp+01Eh]	; 6FBA5
 mov edx, esi	; 6FBA8
 call PrintShadowText	; 6FBAA
@@ -4170,7 +4170,7 @@ sub esp, byte 4	; 6FBF5
 mov esi, eax	; 6FBF8
 cmp byte [eax], 0	; 6FBFA
 je short .1	; 6FBFD
-mov ax, word [word_C2D0E]	; 6FBFF
+mov ax, word [str_L9]	; 6FBFF
 jmp short .2	; 6FC05
 .1:
 mov ax, word [word_C2D10]	; 6FC07
@@ -4254,7 +4254,7 @@ mov edx, dword [byte esp+04h]	; 6FCF7
 cmp eax, dword [edx]	; 6FCFB
 jle near .7	; 6FCFD
 mov dword [dword esp+098h], 1	; 6FD03
-mov dword [dword esp+094h], byte_D0F94	; 6FD0E
+mov dword [dword esp+094h], newskatershoots	; 6FD0E
 lea edi, [byte esp+040h]	; 6FD19
 mov esi, str_EnterANewRating	; 6FD1D
 movsd	; 6FD22
@@ -4264,7 +4264,7 @@ movsd	; 6FD25
 movsd	; 6FD26
 lea eax, [byte esp+040h]	; 6FD27
 mov dword [msglines], eax	; 6FD2B
-mov edi, unk_D0FBC	; 6FD30
+mov edi, skaterratingmax	; 6FD30
 add edi, ebp	; 6FD35
 xor eax, eax	; 6FD37
 mov al, byte [edi]	; 6FD39
@@ -4273,9 +4273,9 @@ mov ebx, eax	; 6FD3E
 shl ebx, 2	; 6FD40
 add ebx, eax	; 6FD43
 push ebx	; 6FD45
-mov ebx, dword [nosplit ebp*4+off_D0880]	; 6FD46
+mov ebx, dword [nosplit ebp*4+newskaterratingnames]	; 6FD46
 push ebx	; 6FD4D
-mov eax, unk_D0FA8	; 6FD4E
+mov eax, skaterratingmin	; 6FD4E
 add eax, ebp	; 6FD53
 mov dword [dword esp+0A8h], eax	; 6FD55
 xor eax, eax	; 6FD5C
@@ -4293,7 +4293,7 @@ call sprintf_	; 6FD7C
 add esp, byte 14h	; 6FD81
 lea eax, [byte esp+0Ch]	; 6FD84
 mov dword [msglines+4], eax	; 6FD88
-mov esi, byte_D0F94	; 6FD8D
+mov esi, newskatershoots	; 6FD8D
 add esi, ebp	; 6FD92
 test ebp, ebp	; 6FD94
 jne short .3	; 6FD96
@@ -4499,7 +4499,7 @@ mov edx, dword [byte esp+04h]	; 70000
 cmp eax, dword [edx]	; 70004
 jle near .7	; 70006
 mov dword [dword esp+098h], 1	; 7000C
-mov dword [dword esp+094h], byte_D0FE0	; 70017
+mov dword [dword esp+094h], newgoalieglove	; 70017
 lea edi, [byte esp+040h]	; 70022
 mov esi, str_EnterANewRating	; 70026
 movsd	; 7002B
@@ -4509,7 +4509,7 @@ movsd	; 7002E
 movsd	; 7002F
 lea eax, [byte esp+040h]	; 70030
 mov dword [msglines], eax	; 70034
-mov edi, unk_D1000	; 70039
+mov edi, goalieratingmax	; 70039
 add edi, ebp	; 7003E
 xor eax, eax	; 70040
 mov al, byte [edi]	; 70042
@@ -4518,9 +4518,9 @@ mov ebx, eax	; 70047
 shl ebx, 2	; 70049
 add ebx, eax	; 7004C
 push ebx	; 7004E
-mov ebx, dword [nosplit ebp*4+off_D09DB]	; 7004F
+mov ebx, dword [nosplit ebp*4+newgoalieratingnames]	; 7004F
 push ebx	; 70056
-mov eax, unk_D0FF0	; 70057
+mov eax, goalieratingmin	; 70057
 add eax, ebp	; 7005C
 mov dword [dword esp+0A8h], eax	; 7005E
 xor eax, eax	; 70065
@@ -4538,7 +4538,7 @@ call sprintf_	; 70085
 add esp, byte 14h	; 7008A
 lea eax, [byte esp+0Ch]	; 7008D
 mov dword [msglines+4], eax	; 70091
-mov esi, byte_D0FE0	; 70096
+mov esi, newgoalieglove	; 70096
 add esi, ebp	; 7009B
 test ebp, ebp	; 7009D
 jne short .3	; 7009F
@@ -4931,16 +4931,16 @@ call FadePalStep	; 704FF
 cmp byte [byte ebp+02h], 47h	; 70504
 jne short .1	; 70508
 mov dword [byte esp+08h], 104h	; 7050A
-mov edi, byte_D0FE0	; 70512
-mov esi, unk_D0FD0	; 70517
+mov edi, newgoalieglove	; 70512
+mov esi, newgoaliedefaults	; 70517
 movsd	; 7051C
 movsd	; 7051D
 movsd	; 7051E
 movsd	; 7051F
 jmp short .2	; 70520
 .1:
-mov edi, byte_D0F94	; 70522
-mov esi, unk_D0F80	; 70527
+mov edi, newskatershoots	; 70522
+mov esi, newskaterdefaults	; 70527
 movsd	; 7052C
 movsd	; 7052D
 movsd	; 7052E
@@ -5430,7 +5430,7 @@ mov ebx, eax	; 70C38
 test eax, eax	; 70C3A
 jne short .17	; 70C3C
 lea ecx, [dword esp+01A8h]	; 70C3E
-mov esi, byte_D0F94	; 70C45
+mov esi, newskatershoots	; 70C45
 .16:
 mov ebx, dword [dword eax+off_D08B9]	; 70C4A
 sar ebx, 18h	; 70C50
@@ -5474,7 +5474,7 @@ mov ebx, eax	; 70CF9
 test eax, eax	; 70CFB
 jne short .20	; 70CFD
 lea esi, [dword esp+01BCh]	; 70CFF
-mov ecx, byte_D0FE0	; 70D06
+mov ecx, newgoalieglove	; 70D06
 .19:
 mov edx, dword [dword eax+off_D0A04]	; 70D0B
 sar edx, 18h	; 70D11

@@ -3,27 +3,27 @@ bits 32
 %include "hockey.inc"
 section s_D0151 progbits alloc noexec write align=1
 extern ShowFreeAgents, EditTeamLines, CreateFreeAgent, FindPlayer, LineEdDone, MenuLineEdCancel, unk_CFBE8, unk_CFCF2
-extern unk_CFE08, unk_CFF51, unk_D006E, str_FreeAgents2, str_FindPlayer, unk_D010E, unk_D0118, unk_D0122
-extern unk_D012E, unk_D0139
+extern unk_CFE08, unk_CFF51, unk_D006E, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
+extern str_Atlantic, unk_D0139
 global roster1divmenus, roster2divmenus, menu_r1_tofa, menu_r1_toroster2, menu_r2_tofa, menu_r2_toroster1, menu_r1_freeagents, menu_r2_freeagents
 global menu_r1_editlines, menu_r2_editlines, unk_D01F9, str_MoveToFreeAgent, str_MoveToRoster2, str_MoveToRoster1, str_CreateFreeAgent, str_EditTeamLines
-global unk_D031D, unk_D039D, str_File3, str_Roster12, str_Roster22, str_EditRoster1, str_EditRoster2, unk_D0450
+global unk_D031D, unk_D039D, str_File3, str_Roster12, str_Roster22, str_EditRoster1, str_EditRoster2, editrostersmenubar
 global str_Done5, str_Cancel8, unk_D04FC, str_DressPlayer2, str_ScratchPlayer2, unk_D0558
 roster1divmenus:
 dd unk_CFBE8
 db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
 db 023h,00h,00h,00h
-dd unk_D0118
+dd str_Central
 db 00h,00h,00h,00h
 dd unk_CFCF2
 db 06h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h,066h,00h,00h,00h
 db 035h,00h,00h,00h
-dd unk_D0122
+dd str_Northeast
 db 00h,00h,00h,00h
 dd unk_CFE08
 db 07h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,066h,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_D012E
+dd str_Atlantic
 db 00h,00h,00h,00h
 dd unk_CFF51
 db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
@@ -38,23 +38,23 @@ dd FindPlayer
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_D01F9:
 db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
-dd unk_D010E
+dd str_Pacific
 db 00h,00h,00h,00h
 roster2divmenus:
 dd unk_CFBE8
 db 06h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,066h,00h,00h,00h
 db 023h,00h,00h,00h
-dd unk_D0118
+dd str_Central
 db 00h,00h,00h,00h
 dd unk_CFCF2
 db 06h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h,066h,00h,00h,00h
 db 035h,00h,00h,00h
-dd unk_D0122
+dd str_Northeast
 db 00h,00h,00h,00h
 dd unk_CFE08
 db 07h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,066h,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_D012E
+dd str_Atlantic
 db 00h,00h,00h,00h
 dd unk_CFF51
 db 07h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,066h,00h,00h,00h
@@ -128,7 +128,7 @@ str_EditRoster1:
 db 045h,064h,069h,074h,020h,052h,06Fh,073h,074h,065h,072h,020h,031h,00h
 str_EditRoster2:
 db 045h,064h,069h,074h,020h,052h,06Fh,073h,074h,065h,072h,020h,032h,00h
-unk_D0450:
+editrostersmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,020h,00h,00h,00h,012h,00h,00h,00h
 dd str_File3
 db 00h,00h,00h,00h

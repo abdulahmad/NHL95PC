@@ -32,7 +32,7 @@ int j___close(int fh);  /* CRT close thunk */
    player of a team (team byte under 1Ah) with games is read from the key and player databases and kept among the
    20 best by the category's comparator (leadersortfns, an index list sorted with qsort). Then the stats
    background and bar, the title (MakeStatsTitle with leadertitles[cat]) and a row per leader: rank, number,
-   name, team and the category's columns (headers off_C6C40, five per category), or "stats unavailable". cat: the
+   name, team and the category's columns (headers leadercolhdrs, five per category), or "stats unavailable". cat: the
    category. Result 0. */
 int LeadersScreen(int cat)
 {
@@ -171,11 +171,11 @@ int LeadersScreen(int cat)
         PrintShadowText(0x50, y, (char *)str_PLAYER2);
         PrintShadowText(0xFA, y, (char *)str_TEAM);
         PrintShadowText(0x172, y, (char *)str_GP6);
-        PrintShadowText(0x19A, y, ((char *(*)[5])off_C6C40)[cat][0]);
-        PrintShadowText(0x1CC, y, ((char *(*)[5])off_C6C40)[cat][1]);
-        PrintShadowText(0x1F4, y, ((char *(*)[5])off_C6C40)[cat][2]);
-        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, ((char *(*)[5])off_C6C40)[cat][3]);
-        PrintShadowText(0x24E, y, ((char *(*)[5])off_C6C40)[cat][4]);
+        PrintShadowText(0x19A, y, ((char *(*)[5])leadercolhdrs)[cat][0]);
+        PrintShadowText(0x1CC, y, ((char *(*)[5])leadercolhdrs)[cat][1]);
+        PrintShadowText(0x1F4, y, ((char *(*)[5])leadercolhdrs)[cat][2]);
+        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, ((char *(*)[5])leadercolhdrs)[cat][3]);
+        PrintShadowText(0x24E, y, ((char *(*)[5])leadercolhdrs)[cat][4]);
         y += 0x10;
         for (i = 0; i < n; i++) {
             j = order[i];

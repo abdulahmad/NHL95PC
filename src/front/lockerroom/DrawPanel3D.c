@@ -67,7 +67,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
 
     sub_B4BA8();
     sprintf(name, side ? (char *)str_JERSV : (char *)str_JERSH, off_D21C0[team]);
-    team = dword_D20E0[team];
+    team = lockerindex[team];
     f = (side != 0) + 0xA3;
     MakePath(path, fileoncd[team * 2 + f] == 1 ? (char *)cddriveptr : 0, name, 0);
     bank = sub_8E83C(path, 0);
@@ -113,7 +113,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         if (k >= 0x1A && k == hm) k = (hm + 1) % 0x1C;
         k = off_D21C0[k];
         PrintShadowText(((LR[5].l + LR[5].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[5].t + 3, (char *)k);
-        PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[dword_D2150[vis]]);
+        PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[lockerteams[vis]]);
         k2 = (hm + 0x1B) % 0x1C;
         if (k2 >= 0x1A && k2 == vis) k2 = (vis + 0x1B) % 0x1C;
         k2 = off_D21C0[k2];
@@ -122,8 +122,8 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         if (k2 >= 0x1A && k2 == vis) k2 = (vis + 1) % 0x1C;
         k2 = off_D21C0[k2];
         PrintShadowText(((LR[3].l + LR[3].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[3].t + 3, (char *)k2);
-        k2 = 0x12D - fputchar((char *)teamcitynames[dword_D2150[hm]]);
-        PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[dword_D2150[hm]]);
+        k2 = 0x12D - fputchar((char *)teamcitynames[lockerteams[hm]]);
+        PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[lockerteams[hm]]);
     } else {
         for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
         k = (vis + 0x19) % 0x1A;
@@ -134,7 +134,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         if (k == hm) k = (hm + 1) % 0x1A;
         k = off_D21C0[k];
         PrintShadowText(((LR[5].l + LR[5].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[5].t + 3, (char *)k);
-        PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[dword_D2150[vis]]);
+        PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[lockerteams[vis]]);
         k2 = (hm + 0x19) % 0x1A;
         if (k2 == vis) k2 = (vis + 0x19) % 0x1A;
         k2 = off_D21C0[k2];
@@ -143,7 +143,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         if (k2 == vis) k2 = (vis + 1) % 0x1A;
         k2 = off_D21C0[k2];
         PrintShadowText(((LR[3].l + LR[3].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[3].t + 3, (char *)k2);
-        k2 = 0x12D - fputchar((char *)teamcitynames[dword_D2150[hm]]);
-        PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[dword_D2150[hm]]);
+        k2 = 0x12D - fputchar((char *)teamcitynames[lockerteams[hm]]);
+        PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[lockerteams[hm]]);
     }
 }

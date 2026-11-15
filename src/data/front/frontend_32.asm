@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_C88E2 progbits alloc noexec write align=1
-extern unk_C1934, unk_C1936, unk_C67B1, unk_C88C2, str_StatisticsType, str_ReturnTo
+extern str_A5, unk_C1936, unk_C67B1, unk_C88C2, str_StatisticsType, str_ReturnTo
 global teamstartlag, greyramp, dword_C891E, calcolx, calrowy, calendarshapes
 global gridcellbuf, tradebtnx, tradebtny, masteronlymsg, mergeincompletemsg, updateerrmsg
 global exporterrmsg, unequaltrademsg, unk_C88E2, str_TheDatabasesCanOnly, str_OnTheMasterCopy, str_TheMasterControllerFor, str_MustBeImportedFirst, masterctlmsg
@@ -106,7 +106,7 @@ db 00h
 drivebtns:
 db 08h,00h,00h,00h,018h,00h,00h,00h,020h,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_C1934
+dd str_A5
 db 0F8h,0FFh,0FFh,0FFh,018h,00h,00h,00h,020h,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd unk_C1936

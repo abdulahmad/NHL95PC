@@ -4,7 +4,7 @@ bits 32
 section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, byte_DDD40, byte_DE268
 extern careerdb, careerdb_size, confteams, CopyFile, CopyHumanTeamDBs, curleague, dbextension, DeleteDir
-extern DiskFreeBytes, DiskSpaceShort, divisionteams, dword_C5619, dword_C8C61, dword_C8D06, dword_C9002, dword_DDD34
+extern DiskFreeBytes, DiskSpaceShort, divisionteams, dword_C5619, playoffbuf, leaguedbsizes, dword_C9002, dword_DDD34
 extern dword_DDD3C, FileClose, FileExists, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
 extern gameopts, GetLeagueDBSizes, humancount, keydb, keydb_size, leaguedbnames, leagueflags, leaguemaster
 extern leaguesaved, leagueteams, LeagueTeamSelect, lggameidx, lgplayteam, lgstate, lgteam_17, lgteam_18
@@ -3679,7 +3679,7 @@ jmp dword [nosplit cs:eax*4+FinishPlayoffs_jt]	; 448C0
 FinishPlayoffs_r1:
 mov edx, dword [byte esp+040h]	; 448C8
 push edx	; 448CC
-mov eax, dword [dword_C8C61]	; 448CD
+mov eax, dword [playoffbuf]	; 448CD
 mov ecx, dword [byte esp+040h]	; 448D2
 mov edx, esi	; 448D6
 call SimPlayoffRound1	; 448D8
@@ -3690,7 +3690,7 @@ push eax	; 448E9
 mov edx, dword [gameopts]	; 448EA
 shl edx, 11h	; 448F0
 shr edx, 1Dh	; 448F3
-mov eax, dword [dword_C8C61]	; 448F6
+mov eax, dword [playoffbuf]	; 448F6
 mov ecx, ebp	; 448FB
 mov ebx, esi	; 448FD
 call SeedPlayoffRound2	; 448FF
@@ -3699,7 +3699,7 @@ jne near FinishPlayoffs_r4.x	; 44906
 FinishPlayoffs_r2:
 mov ebx, dword [byte esp+040h]	; 4490C
 push ebx	; 44910
-mov eax, dword [dword_C8C61]	; 44911
+mov eax, dword [playoffbuf]	; 44911
 mov ecx, dword [byte esp+040h]	; 44916
 mov ebx, edi	; 4491A
 mov edx, esi	; 4491C
@@ -3711,7 +3711,7 @@ push eax	; 4492F
 mov edx, dword [gameopts]	; 44930
 shl edx, 11h	; 44936
 shr edx, 1Dh	; 44939
-mov eax, dword [dword_C8C61]	; 4493C
+mov eax, dword [playoffbuf]	; 4493C
 mov ecx, ebp	; 44941
 mov ebx, esi	; 44943
 call SeedPlayoffRound3	; 44945
@@ -3720,7 +3720,7 @@ jne near FinishPlayoffs_r4.x	; 4494C
 FinishPlayoffs_r3:
 mov ecx, dword [byte esp+040h]	; 44952
 push ecx	; 44956
-mov eax, dword [dword_C8C61]	; 44957
+mov eax, dword [playoffbuf]	; 44957
 mov ecx, dword [byte esp+040h]	; 4495C
 mov ebx, edi	; 44960
 mov edx, esi	; 44962
@@ -3734,7 +3734,7 @@ push eax	; 4497A
 mov edx, dword [gameopts]	; 4497B
 shl edx, 11h	; 44981
 shr edx, 1Dh	; 44984
-mov eax, dword [dword_C8C61]	; 44987
+mov eax, dword [playoffbuf]	; 44987
 mov ecx, ebp	; 4498C
 mov ebx, esi	; 4498E
 call SeedPlayoffFinal	; 44990
@@ -3743,14 +3743,14 @@ jne near FinishPlayoffs_r4.x	; 44997
 FinishPlayoffs_r4:
 mov edx, dword [byte esp+040h]	; 4499D
 push edx	; 449A1
-mov eax, dword [dword_C8C61]	; 449A2
+mov eax, dword [playoffbuf]	; 449A2
 mov ecx, dword [byte esp+040h]	; 449A7
 mov ebx, edi	; 449AB
 mov edx, esi	; 449AD
 call SimPlayoffFinal	; 449AF
 test eax, eax	; 449B4
 jne near .x	; 449B6
-mov edx, dword [dword_C8C61]	; 449BC
+mov edx, dword [playoffbuf]	; 449BC
 mov ecx, 276h	; 449C2
 mov ebx, 199Ah	; 449C7
 mov eax, dword [esp]	; 449CC
@@ -3873,7 +3873,7 @@ push dword 276h	; 44B2F
 push str_Sch	; 44B34
 call sub_8CCA8	; 44B39
 add esp, byte 0Ch	; 44B3E
-mov dword [dword_C8C61], eax	; 44B41
+mov dword [playoffbuf], eax	; 44B41
 mov ecx, 276h	; 44B46
 mov ebx, 199Ah	; 44B4B
 mov edx, eax	; 44B50
@@ -3888,7 +3888,7 @@ jge near .8	; 44B6C
 mov dword [byte esp+034h], 47Ch	; 44B72
 mov ebx, dword [byte esp+04Ch]	; 44B7A
 push ebx	; 44B7E
-mov eax, dword [dword_C8C61]	; 44B7F
+mov eax, dword [playoffbuf]	; 44B7F
 mov ecx, dword [byte esp+04Ch]	; 44B84
 mov ebx, dword [byte esp+030h]	; 44B88
 mov edx, dword [byte esp+034h]	; 44B8C
@@ -3901,7 +3901,7 @@ push eax	; 44BA3
 mov edx, dword [gameopts]	; 44BA4
 shl edx, 11h	; 44BAA
 shr edx, 1Dh	; 44BAD
-mov eax, dword [dword_C8C61]	; 44BB0
+mov eax, dword [playoffbuf]	; 44BB0
 mov ecx, edi	; 44BB5
 mov ebx, dword [byte esp+034h]	; 44BB7
 call SeedPlayoffRound2	; 44BBB
@@ -3928,7 +3928,7 @@ jge short .9	; 44BFC
 mov dword [byte esp+034h], 498h	; 44BFE
 mov ecx, dword [byte esp+04Ch]	; 44C06
 push ecx	; 44C0A
-mov eax, dword [dword_C8C61]	; 44C0B
+mov eax, dword [playoffbuf]	; 44C0B
 mov ecx, dword [byte esp+04Ch]	; 44C10
 mov ebx, dword [byte esp+030h]	; 44C14
 mov edx, dword [byte esp+034h]	; 44C18
@@ -3941,7 +3941,7 @@ push eax	; 44C2F
 mov edx, dword [gameopts]	; 44C30
 shl edx, 11h	; 44C36
 shr edx, 1Dh	; 44C39
-mov eax, dword [dword_C8C61]	; 44C3C
+mov eax, dword [playoffbuf]	; 44C3C
 mov ecx, edi	; 44C41
 mov ebx, dword [byte esp+034h]	; 44C43
 call SeedPlayoffRound3	; 44C47
@@ -3962,7 +3962,7 @@ jge near .10	; 44C77
 mov dword [byte esp+034h], 4A6h	; 44C7D
 mov ebp, dword [byte esp+04Ch]	; 44C85
 push ebp	; 44C89
-mov eax, dword [dword_C8C61]	; 44C8A
+mov eax, dword [playoffbuf]	; 44C8A
 mov ecx, dword [byte esp+04Ch]	; 44C8F
 mov ebx, dword [byte esp+030h]	; 44C93
 mov edx, dword [byte esp+034h]	; 44C97
@@ -3976,7 +3976,7 @@ push esi	; 44CAF
 mov edx, dword [gameopts]	; 44CB0
 shl edx, 11h	; 44CB6
 shr edx, 1Dh	; 44CB9
-mov eax, dword [dword_C8C61]	; 44CBC
+mov eax, dword [playoffbuf]	; 44CBC
 mov ecx, edi	; 44CC1
 mov ebx, dword [byte esp+038h]	; 44CC3
 call SeedPlayoffFinal	; 44CC7
@@ -4003,7 +4003,7 @@ jge short .11	; 44D0D
 mov dword [byte esp+034h], 4ADh	; 44D0F
 mov ebx, dword [byte esp+04Ch]	; 44D17
 push ebx	; 44D1B
-mov eax, dword [dword_C8C61]	; 44D1C
+mov eax, dword [playoffbuf]	; 44D1C
 mov ecx, dword [byte esp+04Ch]	; 44D21
 mov ebx, dword [byte esp+030h]	; 44D25
 mov edx, dword [byte esp+034h]	; 44D29
@@ -4036,7 +4036,7 @@ mov ebp, eax	; 44D86
 test eax, eax	; 44D88
 jne short .13	; 44D8A
 .12:
-mov edx, dword [dword_C8C61]	; 44D8C
+mov edx, dword [playoffbuf]	; 44D8C
 test edx, edx	; 44D92
 je short .13	; 44D94
 mov ecx, 276h	; 44D96
@@ -4045,14 +4045,14 @@ mov eax, esi	; 44DA0
 call FileWriteAt	; 44DA2
 mov ebp, eax	; 44DA7
 .13:
-mov ebx, dword [dword_C8C61]	; 44DA9
+mov ebx, dword [playoffbuf]	; 44DA9
 test ebx, ebx	; 44DAF
 je short .14	; 44DB1
 push ebx	; 44DB3
 call FreeMemBlock	; 44DB4
 add esp, byte 4	; 44DB9
 xor esi, esi	; 44DBC
-mov dword [dword_C8C61], esi	; 44DBE
+mov dword [playoffbuf], esi	; 44DBE
 .14:
 mov eax, ebp	; 44DC4
 .x:
@@ -4268,7 +4268,7 @@ inc esi	; 45067
 cmp esi, byte 1Ah	; 45068
 jl short CreateNewLeague.8	; 4506B
 mov ebx, dword [dbextension]	; 4506D
-mov edx, dword_C8D06	; 45073
+mov edx, leaguedbsizes	; 45073
 xor eax, eax	; 45078
 call GetLeagueDBSizes	; 4507A
 xor esi, esi	; 4507F
@@ -4279,8 +4279,8 @@ mov eax, edx	; 45086
 shl eax, 3	; 45088
 sub eax, edx	; 4508B
 add eax, esi	; 4508D
-mov ebx, dword [nosplit esi*4+dword_C8D06]	; 4508F
-mov dword [nosplit eax*4+dword_C8D06], ebx	; 45096
+mov ebx, dword [nosplit esi*4+leaguedbsizes]	; 4508F
+mov dword [nosplit eax*4+leaguedbsizes], ebx	; 45096
 inc edx	; 4509D
 cmp edx, byte 1Ah	; 4509E
 jle short CreateNewLeague.12	; 450A1
@@ -4301,7 +4301,7 @@ mov dword [dword_C9002], eax	; 450CD
 .13:
 mov edx, ebp	; 450D2
 shl edx, 2	; 450D4
-add edx, dword_C8D06	; 450D7
+add edx, leaguedbsizes	; 450D7
 xor eax, eax	; 450DD
 call DiskSpaceShort	; 450DF
 test eax, eax	; 450E4

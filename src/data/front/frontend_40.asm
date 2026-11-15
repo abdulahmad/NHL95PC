@@ -16,14 +16,14 @@ global inputqhead, inputpolldiv, dword_CDA38, joybtnheld, enterheld, lastmousebt
 global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
 global menuact_posettings, menuact_pohilights, dword_CE8EB, off_CECFF, off_CED3F, str_File, str_Game6, str_Statistics3
 global str_Open5, unk_CDA6E, str_NewExhibitionGame, str_NewPlayOffSeries, str_NextPlayOffGame, str_PlayOffSettings, str_PlayOffHilights, str_NewLeague
-global str_ImportDatabases, str_ExportDatabases, str_NextLeagueGame, unk_CDB44, str_CentralRegistry, str_Exit, unk_CDB6F, unk_CDB84
-global str_Player1Controls2, str_Player2Controls2, str_ExhibitionSettings, str_PlayOffSettings2, str_SoundSettings, unk_CDC1E, unk_CDC34, unk_CDC47
-global unk_CDC60, unk_CDC79, unk_CDC80, unk_CDC97, unk_CDCB0, unk_CDCC9, str_GoalieItemTmpl, str_Action
+global str_ImportDatabases, str_ExportDatabases, str_NextLeagueGame, unk_CDB44, str_CentralRegistry, str_Exit, unk_CDB6F, str_Dashes2
+global str_Player1Controls2, str_Player2Controls2, str_ExhibitionSettings, str_PlayOffSettings2, str_SoundSettings, str_Dashes3, unk_CDC34, str_sp00XXXXXXXXXXXXXXXXX
+global str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_VisitingTeamGoalie, str_sp00XXXXXXXXXXXXXXXXX3, str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2, str_GoalieItemTmpl, str_Action
 global str_Game7, str_InstantReplay, str_LineEditor, str_Statistics4, str_GameSummary, str_BackToGame, str_SaveGame2, str_SportsDesk
 global str_Exit2, str_GoToReplay, str_HomeTeam2, str_VisitingTeam2, str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches
 global unk_CDDF7, str_MergeLeagueFiles, str_RemoveTeamFromLeague, str_AddTeamToLeague, str_TradePlayers, str_RebuildDataBases, str_MergeAndUpdateTeam, str_UpdateTeamsDataBases
-global str_ChangeLeaguePlaySettings, str_LeagueHilights, str_File2, str_Settings4, str_Statistics5, str_PlayNextGame, str_ReturnToSportsCentral2, unk_CDF44
-global str_Standings2, unk_CDF64, unk_CDF76, unk_CDF8A, str_Scoring, str_Defense4, str_PenaltyKilling2, str_PowerPlay2
+global str_ChangeLeaguePlaySettings, str_LeagueHilights, str_File2, str_Settings4, str_Statistics5, str_PlayNextGame, str_ReturnToSportsCentral2, str_StatisticsType8
+global str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2, str_GoaliesSortedBy2, str_Scoring, str_Defense4, str_PenaltyKilling2, str_PowerPlay2
 global str_Penalties, str_Points, str_Goals, str_Assists2, str_PowerPlayGoals, str_ShorthandedGoals, str_PlusMinus4, str_PenaltyMinutes
 global str_ShootingPercentage, str_GoalsAgainstAverage, str_Wins2, str_SavePercentage, str_StatisticsType, str_LineEditor2, str_Roster, str_PlayerStatistics
 global str_SaveTheseLines, str_UseTheseLines, str_UseOriginalLines, str_UseDefaultLines, str_SaveAsDefaultLines, str_DressPlayer, str_ScratchPlayer, str_ShowPlayerStatistics
@@ -119,7 +119,7 @@ db 04Ch,041h
 db 020h,020h,061h,074h,020h
 db 04Dh,054h
 db 04Ch,020h,02Eh,02Eh,02Eh,00h
-unk_CDB84:
+str_Dashes2:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 db 02Dh,02Dh,02Dh,00h
 str_Player1Controls2:
@@ -142,30 +142,30 @@ db 073h,020h,02Eh,02Eh,02Eh,00h
 str_SoundSettings:
 db 053h,06Fh,075h,06Eh,064h,020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh
 db 02Eh,02Eh,00h
-unk_CDC1E:
+str_Dashes3:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 db 02Dh,02Dh,02Dh,02Dh,02Dh,00h
 unk_CDC34:
 db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,020h,047h,06Fh,061h,06Ch,069h,065h
 db 020h,03h,00h
-unk_CDC47:
+str_sp00XXXXXXXXXXXXXXXXX:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-unk_CDC60:
+str_sp00XXXXXXXXXXXXXXXXX2:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-unk_CDC79:
+str_spNONE:
 db 02h,020h,04Eh,04Fh,04Eh,045h,00h
-unk_CDC80:
+str_VisitingTeamGoalie:
 db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,020h,047h,06Fh
 db 061h,06Ch,069h,065h,020h,03h,00h
-unk_CDC97:
+str_sp00XXXXXXXXXXXXXXXXX3:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-unk_CDCB0:
+str_sp00XXXXXXXXXXXXXXXXX4:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
 db 058h,058h,058h,058h,058h,058h,058h,058h,00h
-unk_CDCC9:
+str_spNONE2:
 db 02h,020h,04Eh,04Fh,04Eh,045h,00h
 str_GoalieItemTmpl:
 db 02h,020h,030h,030h,020h,058h,02Eh,020h,058h,058h,058h,058h,058h,058h,058h,058h
@@ -260,18 +260,18 @@ db 02Eh,02Eh,00h
 str_ReturnToSportsCentral2:
 db 052h,065h,074h,075h,072h,06Eh,020h,054h,06Fh,020h,053h,070h,06Fh,072h,074h,073h
 db 020h,043h,065h,06Eh,074h,072h,061h,06Ch,00h
-unk_CDF44:
+str_StatisticsType8:
 db 053h,074h,061h,074h,069h,073h,074h,069h,063h,073h,020h,054h,079h,070h,065h,020h
 db 03h,00h
 str_Standings2:
 db 053h,074h,061h,06Eh,064h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_CDF64:
+str_TeamsSortedBy2:
 db 054h,065h,061h,06Dh,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h,079h,020h
 db 03h,00h
-unk_CDF76:
+str_PlayersSortedBy2:
 db 050h,06Ch,061h,079h,065h,072h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
 db 079h,020h,03h,00h
-unk_CDF8A:
+str_GoaliesSortedBy2:
 db 047h,06Fh,061h,06Ch,069h,065h,073h,020h,053h,06Fh,072h,074h,065h,064h,020h,042h
 db 079h,020h,03h,00h
 str_Scoring:
@@ -577,7 +577,7 @@ dd str_ExhibitionSettings
 dd MenuExhibitionSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 092h,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDB84
+dd str_Dashes2
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,092h,00h,00h,00h,047h,00h,00h,00h
 dd str_Player1Controls2
@@ -588,7 +588,7 @@ dd str_Player2Controls2
 dd MenuP2ControlsExh
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 092h,00h,00h,00h,06Bh,00h,00h,00h
-dd unk_CDB84
+dd str_Dashes2
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,092h,00h,00h,00h,07Eh,00h,00h,00h
 dd str_SoundSettings
@@ -596,7 +596,7 @@ dd MenuSoundSettings
 db 00h,00h,00h,00h,00h,00h,00h,00h
 statsmenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,08Ch,00h,00h,00h,011h,00h,00h,00h
-dd unk_CDF44
+dd str_StatisticsType8
 db 00h,00h,00h,00h
 dd unk_C67B1
 dword_CE8EB:
@@ -606,17 +606,17 @@ dd str_Standings2
 dd EasnStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDF64
+dd str_TeamsSortedBy2
 db 00h,00h,00h,00h
 dd unk_CE96F
 db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_CDF76
+dd str_PlayersSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEA2F
 db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
 db 05Ah,00h,00h,00h
-dd unk_CDF8A
+dd str_GoaliesSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEB2F
 db 03h,00h,00h,00h
@@ -776,7 +776,7 @@ dd str_Player2Controls2
 dd MenuP2ControlsInGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 0A9h,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDC1E
+dd str_Dashes3
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,0A9h,00h,00h,00h,047h,00h,00h,00h
 dd unk_CDC34

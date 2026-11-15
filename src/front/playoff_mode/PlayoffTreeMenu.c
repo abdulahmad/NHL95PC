@@ -42,7 +42,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
    human team highlighted (POHiliteSlot, its two tree slots; the final has one). An action runs on the second click
    of the selected item, with the dialog colours FBh-FEh set and the pointer save block freed and made again around
    it; result 1 is returned, 4 returns 0, 2 redraws the screen (the EMBSCUP background loaded if needed, the tree,
-   the menu bar, the BangPal fade-in); the tree is redrawn when the action changed the shown round (word_C6D24) and
+   the menu bar, the BangPal fade-in); the tree is redrawn when the action changed the shown round (potreeround) and
    the highlight put back. bar / n / col1-col3: as RunMenu; series: the highlighted series. Result: 1 or 0. */
 int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int series)
 {
@@ -127,7 +127,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     }
                     depth = 0;
                     POHiliteSlot(slot, slot2);
-                    tree = word_C6D24;
+                    tree = potreeround;
                     FreeMemBlock(ptr);
                     pal[0] = 0x18;
                     pal[1] = 0;
@@ -161,9 +161,9 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         return 0;
                     }
                     if (r == 2) {
-                        if (!dword_C65AC) {
+                        if (!embscupbank) {
                             MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-                            dword_C65AC = sub_8E83C(path, 0x20);
+                            embscupbank = sub_8E83C(path, 0x20);
                         }
                         MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
                         bank = sub_8E83C(path, 0);
@@ -176,8 +176,8 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         FreeMemBlock(bank);
                     }
                     sub_B4BA8();
-                    if (word_C6D24 != tree) {
-                        word_C6D24 = tree;
+                    if (potreeround != tree) {
+                        potreeround = tree;
                         DrawPlayoffTree();
                     }
                     POHiliteSlot(slot, slot2);

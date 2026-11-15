@@ -6,16 +6,16 @@ section s_15D6B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awtmstruct
 extern byte_D42C3, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, cddriveptr
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
-extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, dword_C5710
-extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
-extern dword_C5860, dword_C5861, dword_C5862, dword_C588A, demogame, dword_CCC94, dword_DC2B8, dword_DC33C
+extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
+extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
+extern awlinetimer, dword_C5861, dword_C5862, nhlintrosaid, demogame, dword_CCC94, dword_DC2B8, dword_DC33C
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
 extern InitGameSummary, InitSpeechSlots, InputInstall, InputRemove, introskipped, joyq_flush, kaufmfont, lcblink
 extern lcboxon, lcline, linesprites, LoadModeState, LoadRink, LoadRockMusic, LoadScheduleDB, LoadTeamPalette
 extern mainfont, MakePath, memcpy_, memset_, mousebtns, mousepollfn, musichandle, musicon
-extern musicslot, off_C57C8, off_C6399, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
+extern musicslot, off_C57C8, creditpages, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
 extern perioddigits, PerTimeTab, PlayDigiSample, pointerspr, PollKey, rand_, randomd0, ReloadGameGfx
 extern seed, SelectScreenBM, SeriesLength, SetDrawBitmap, SetScreenSize, SetTickDeadline, SetupControllers, SetupDemoGame
 extern ShowLoadingScreen, songdata, sounddev, speechbank, SpeechStopQueue, sprintf_, srand_, StopDigiSample
@@ -31,7 +31,7 @@ extern sub_903F0, sub_9061C, sub_9087C, sub_90D20, sub_9121C, sub_91284, sub_912
 extern sub_91370, sub_913B4, sub_91400, sub_91964, sub_B30B4, sub_B3464, sub_B392C, sub_B3A88
 extern sub_B3AA1, sub_B4B88, sub_B4BA8, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, sub_B4F8C
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
-extern TickDeadlinePassed, TicksSinceLastCall, unk_C4E30, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
+extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
 extern lcsel_aw
 global RunDemoGame, RunDemoGame_x, AnyInputPressed, ReadBE32, TitleScreen, RunIntro, ShowCredits, SetTextColors
 global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridFree
@@ -568,10 +568,10 @@ cmp dword [dword esp+0348h], byte 0	; 164A1
 jne near .32	; 164A9
 cmp byte [musicon], 0	; 164AF
 je short .27	; 164B6
-cmp dword [dword_C588A], byte 0	; 164B8
+cmp dword [nhlintrosaid], byte 0	; 164B8
 je short .27	; 164BF
 xor ebx, ebx	; 164C1
-mov dword [dword_C588A], ebx	; 164C3
+mov dword [nhlintrosaid], ebx	; 164C3
 call PaNhlIntro	; 164C9
 .27:
 xor ecx, ecx	; 164CE
@@ -784,9 +784,9 @@ call sub_B392C	; 16772
 add esp, byte 4	; 16777
 mov ecx, 300h	; 1677A
 xor edx, edx	; 1677F
-mov eax, unk_C4E30	; 16781
+mov eax, blackpal	; 16781
 call __STOSB	; 16786
-push unk_C4E30	; 1678B
+push blackpal	; 1678B
 push dword 100h	; 16790
 push byte 0	; 16795
 call sub_B4B88	; 16797
@@ -1424,7 +1424,7 @@ mov eax, esp	; 17052
 call memcpy_	; 17054
 mov ebx, 300h	; 17059
 mov edx, ecx	; 1705E
-mov eax, unk_C4E30	; 17060
+mov eax, blackpal	; 17060
 call memcpy_	; 17065
 push str_Bkgd3	; 1706A
 push ebp	; 1706F
@@ -1540,7 +1540,7 @@ call sub_8EA18	; 1721B
 add esp, byte 4	; 17220
 .14:
 mov eax, dword [dword esp+0364h]	; 17223
-mov eax, dword [nosplit eax*4+off_C6399]	; 1722A
+mov eax, dword [nosplit eax*4+creditpages]	; 1722A
 mov dword [dword esp+0368h], eax	; 17231
 call ClearInputQueue	; 17238
 cmp dword [dword esp+0364h], byte 0	; 1723D

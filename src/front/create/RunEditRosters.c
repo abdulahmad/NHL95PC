@@ -42,7 +42,7 @@ void RunEditRosters(void)
     dlgtextbg = c42;
     pal = 0;
     editrosters_exit = (int)pal;
-    dword_D0B12 = (int)pal;
+    rostereditmode = (int)pal;
     pal = (unsigned char *)sub_8CCA8((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
@@ -65,7 +65,7 @@ void RunEditRosters(void)
     ((short *)editptrspr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)editptrspr)[3] = ((short *)pointerspr)[3] + 1;
     LoadLeagueDbsMem((char *)str_extDB);
-    EditRosters(unk_D0450, 6, 0x40, 0x41, 0x42);
+    EditRosters(editrostersmenubar, 6, 0x40, 0x41, 0x42);
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
@@ -88,9 +88,9 @@ void RunEditRosters(void)
 }
 
 /* DrawEditRosters (6D2F8, PC only; create-player segment 052, the same source file: it ends in
-   RunEditRosters_ret5): redraw the Edit Rosters screen on the full-screen bitmap: the menu bar (unk_D0450), the
+   RunEditRosters_ret5): redraw the Edit Rosters screen on the full-screen bitmap: the menu bar (editrostersmenubar), the
    prez2 background (palette into savepal, the "ea" art drawn full screen below line 13h), both roster panels
-   (DrawRosterPanel) and, in ratings mode (dword_D0B12 == 2), the ratings box: a dialog frame with bevelled edges,
+   (DrawRosterPanel) and, in ratings mode (rostereditmode == 2), the ratings box: a dialog frame with bevelled edges,
    "Ratings " + the first roster team's name centred, the nine rating names (off_D0AC2) with their values from the
    team record (+2DCh, picked by byte_D0AE6), and the two buttons (unk_D0B80). Then the bitmap is shown
    (sub_9121C). No arguments, no result. */
@@ -105,7 +105,7 @@ void DrawEditRosters(void)
 
     SetDrawBitmap(fullscrbmp);
     SetTextColors(0x40, 0x43);
-    DrawMenuBar(unk_D0450, 5, 0x40, 0x41, 0x42);
+    DrawMenuBar(editrostersmenubar, 5, 0x40, 0x41, 0x42);
     MakePath(buf, fileoncd[0x1C3] == 1 ? (char *)cddriveptr : 0, (char *)str_Prez2, 0);
     bank = sub_8E83C(buf, 0);
     memcpy(savepal, (char *)sub_B30B4(bank, (char *)str_Pal) + 0x10, 0x300);
@@ -116,7 +116,7 @@ void DrawEditRosters(void)
     FreeMemBlock(bank);
     DrawRosterPanel(0);
     DrawRosterPanel(1);
-    if (dword_D0B12 == 2) {
+    if (rostereditmode == 2) {
         DrawDlgFrame(0xB4, 0x8C, 0x1CC, 0x154, 1);
         sub_90D20(0xB4, 0x8C, 0x119, 0xC9, 0x41);
         sub_B4FAC(0xB4, 0x8C, 0x1CB, 0x8C, 0x40);

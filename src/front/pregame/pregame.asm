@@ -4,7 +4,7 @@ bits 32
 section s_29F18 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, boxfillcolor, boxlitecolor, boxshadecolor, byte_D42C3, cddriveptr, ClearInputQueue
 extern cont2team, crestnames, ctl1team, ctl2team, curleague, DrawBevelBox, DrawButtons, DrawGadgetByType
-extern dword_DBC7C, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
+extern hmteamrec_skaters, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
 extern GameLineEditor, gameopts, GetInputEvent, hmlinetab, hmroster, HomeTeam, kaufmfont, leaguedbnames
 extern mainfont, MakePath, memcpy_, MouseSetPos, MusicChanReset2, musichandle, musicon, musicslot
 extern off_CEF43, off_CEF63, PaLineups, PaOpenBank, PaPlayoffTonight, PaPreloadClips, PaTonightIntro, pointerspr
@@ -1151,7 +1151,7 @@ mov edx, eax	; 2AF67
 shl eax, 5	; 2AF69
 sub eax, edx	; 2AF6C
 mov ebx, esi	; 2AF6E
-mov ebx, dword [dword eax+ebx*4+dword_DBC7C]	; 2AF70
+mov ebx, dword [dword eax+ebx*4+hmteamrec_skaters]	; 2AF70
 cmp ebx, byte 0FFFFFFFFh	; 2AF77
 je short .12	; 2AF7A
 mov edx, dword [dword esp+0110h]	; 2AF7C

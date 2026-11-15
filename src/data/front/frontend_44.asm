@@ -5,7 +5,7 @@ section s_CF00B progbits alloc noexec write align=1
 extern DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3b, ShowPlayerStatsItem, OutputCurrentData, GameStandingsMenu, MenuUseTheseLines
 extern MenuLineEdCancel, MenuUseOriginalLines, MenuUseDefaultLines, MenuGameShowPlayerStats, MenuReturnToLineEditor, GameScratchPlayer, GameDressPlayer, MenuSaveDefaultLines
 extern MenuSaveTheseLines, unk_C67B1, str_Action, str_Game7, str_InstantReplay, str_LineEditor, str_Statistics4, str_GameSummary
-extern str_Standings2, unk_CDF64, unk_CDF76, unk_CDF8A, str_LineEditor2, str_Roster, str_PlayerStatistics, str_SaveTheseLines
+extern str_Standings2, str_TeamsSortedBy2, str_PlayersSortedBy2, str_GoaliesSortedBy2, str_LineEditor2, str_Roster, str_PlayerStatistics, str_SaveTheseLines
 extern str_UseTheseLines, str_UseOriginalLines, str_UseDefaultLines, str_SaveAsDefaultLines, str_DressPlayer, str_ScratchPlayer, str_ShowPlayerStatistics, str_LineEditor3
 extern str_PlayerStatistics2, str_Cancel4, str_UseTheseLines2, str_UseOriginalLines2, str_UseDefaultLines2, str_SaveAsDefaultLines2, str_LineEditor4, str_StatisticsType2
 extern str_ReturnTo, str_SportsDesk2, str_ReturnTo2, str_Roster3, str_StatisticsType3, str_TeamRoster, str_OverallStandings, str_ShowTeamRoster
@@ -16,9 +16,9 @@ global dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7, dword_CF
 global dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B, dword_CF8CB, menuact_uselines2, menuact_savedeflines2
 global menuact_gamedress, menuact_gamescratch, menuact_uselines, menuact_savedeflines, menuact_savelines, off_CF51F, off_CF5DF, off_CF61F
 global off_CF67F, off_CF6A3, unk_CF1AF, unk_CF20F, unk_CF28F, unk_CF2CF, unk_CF2EF, unk_CF32F
-global unk_CF3CF, unk_CF42F, unk_CF48F, unk_CF4CF, unk_CF50F, unk_CF52F, unk_CF54F, unk_CF5CF
-global unk_CF5EF, unk_CF62F, unk_CF68F, unk_CF6AF, unk_CF72F, unk_CF74F, unk_CF78F, unk_CF80F
-global unk_CF88F
+global unk_CF3CF, unk_CF42F, unk_CF48F, unk_CF4CF, unk_CF50F, unk_CF52F, standingsmenubar, unk_CF5CF
+global unk_CF5EF, unk_CF62F, unk_CF68F, rostermenubar, unk_CF72F, playercardmenubar, teamstatsmenubar, skaterstatsmenubar
+global goaliestatsmenubar
 dword_CF00B:
 db 02h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
@@ -26,17 +26,17 @@ dd str_Standings2
 dd GameStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDF64
+dd str_TeamsSortedBy2
 db 00h,00h,00h,00h
 dd unk_CE96F
 db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_CDF76
+dd str_PlayersSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEA2F
 db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
 db 05Ah,00h,00h,00h
-dd unk_CDF8A
+dd str_GoaliesSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEB2F
 db 03h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h
@@ -235,7 +235,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,09Ah,00h,00h,00h,012h,00h,00h,00h
 dd str_OutputCurrentData
 dd OutputCurrentData
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF54F:
+standingsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo2
 db 00h,00h,00h,00h
@@ -302,7 +302,7 @@ dd str_ShowTeamRoster
 off_CF6A3:
 dd DeskSetExit3b
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF6AF:
+rostermenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo3
 db 00h,00h,00h,00h
@@ -329,7 +329,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,0FFh,00h,00h,00h,012h,00h,00h,00h
 dd str_ShowPlayerStatisticsAnd
 dd ShowPlayerStatsItem
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF74F:
+playercardmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo4
 db 00h,00h,00h,00h
@@ -340,7 +340,7 @@ dd str_Print
 db 00h,00h,00h,00h
 dd unk_CF52F
 db 01h,00h,00h,00h
-unk_CF78F:
+teamstatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo4
 db 00h,00h,00h,00h
@@ -362,7 +362,7 @@ dd str_Print
 db 00h,00h,00h,00h
 dd unk_CF52F
 db 01h,00h,00h,00h
-unk_CF80F:
+skaterstatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo4
 db 00h,00h,00h,00h
@@ -384,7 +384,7 @@ dd str_Print
 db 00h,00h,00h,00h
 dd unk_CF52F
 db 01h,00h,00h,00h
-unk_CF88F:
+goaliestatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo4
 db 00h,00h,00h,00h

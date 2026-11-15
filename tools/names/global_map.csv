@@ -3653,3 +3653,138 @@ milestonesaid,E024C,ChkScorerMilestone: flag bytes so a milestone is announced o
 milestonesaid_b1,E024D,milestonesaid+1
 milestonesaid_b2,E024E,milestonesaid+2
 milestonesaid_b3,E024F,milestonesaid+3
+blackpal,C4E30,"all-black palette: SetScreenSize sets it around a mode change, RunIntro and ShowCredits fade from it"
+fadepalbuf,D8C88,FadePalette: the scaled palette of each fade step is built here and set
+gsumheader,C5423,"11-byte header of the game summary file (InitGameSummary fills it, WriteGSumHeader writes it)"
+gsumheader_b1,C5424,gsumheader+1
+gsumheader_b2,C5425,gsumheader+2
+gsumheader_b3,C5426,gsumheader+3
+gsumheader_b4,C5427,gsumheader+4
+gsumcount,C5428,gsumheader+5: record count of the game summary file (AppendGSumRecord and WriteGSumHeader add 1)
+gsumtail,C542E,"11-byte block kept at the end of the game summary file (ReadGSumTail, WriteGSumHeader)"
+panelprevmin,C5710,scoreboard panel clock: minutes drawn last frame (DrawPanelClockDigits redraws changed digits only)
+panelprevsec,C5714,scoreboard panel clock: seconds drawn last frame
+panelprevhund,C5718,scoreboard panel clock: hundredths drawn last frame
+hmpanelpen_time,C571E,"home penalty panel list, 8 entries of 4 words (player, time, 2 spare): the time word"
+hmpanelpen_w4,C5720,home penalty panel entry +4
+hmpanelpen_w6,C5722,home penalty panel entry +6
+awpanelpen_time,C575E,visitor penalty panel list: the time word
+awpanelpen_w4,C5760,visitor penalty panel entry +4
+awpanelpen_w6,C5762,visitor penalty panel entry +6
+panelhund,C583C,hundredths elapsed since the last panel update (UpdateHudPanel passes it to TickPanelClock)
+hmlinetimer,C585C,"home line timer of the panel: DrawPanelLine resets it when the line group changes, RequestLineChange and PanelAddPenalty clear it"
+awlinetimer,C5860,visitor line timer of the panel
+nhlintrosaid,C588A,TitleScreen: the NHL intro line was said once with the first movie frame
+creditpages,C6399,ShowCredits: pointers to the 29 credit pages
+embscupbank,C65AC,"loaded EMBSCUP background bank of the playoff screens, freed by FreeDeskBuffers"
+easnfontbuf,C65A8,"loaded EASN.VFN font of the in-game standings screens, freed by FreeDeskBuffers"
+leadercolhdrs,C6C40,"LeadersScreen: column header strings, five per category; first column"
+leadercolhdrs_c1,C6C44,leadercolhdrs+4: second column
+leadercolhdrs_c2,C6C48,leadercolhdrs+8: third column
+leadercolhdrs_c3,C6C4C,leadercolhdrs+0Ch: fourth column
+leadercolhdrs_c4,C6C50,leadercolhdrs+10h: fifth column
+potreeround,C6D24,PlayoffTreeMenu: the round the playoff tree shows; the tree is redrawn when it changes
+potreeseeds,C6DBA,DrawPlayoffTree: seed numbers of the first-round teams
+playoffbuf,C8C61,pointer to the playoff tree buffer (276h bytes) that AdvancePlayoffs and FinishPlayoffs simulate in
+leaguedbsizes,C8D06,CreateNewLeague: sizes of the seven league databases
+ovlartnames,CBED0,LoadTeamPPV: name of the PPV art bank of each overlay sequence
+standingsmenubar,CF54F,menu bar of the standings screens
+rostermenubar,CF6AF,menu bar of the team roster screen reached from the standings (player pick)
+playercardmenubar,CF74F,menu bar of the skater / goalie card screens
+teamstatsmenubar,CF78F,menu bar of the team stats screens
+skaterstatsmenubar,CF80F,menu bar of the skater stats (leaders) screens
+goaliestatsmenubar,CF88F,menu bar of the goalie stats screens
+playoffmenubar,CF90F,menu bar of the playoff mode screen
+editrostersmenubar,D0450,menu bar of the Edit Rosters screen
+newskaterratingnames,D0880,create player: names of the 14 skater ratings (index 1-14)
+newgoalieratingnames,D09DB,create player: names of the 10 goalie ratings (index 1-10)
+skaterratingmin,D0FA8,EditSkaterRating: minimum of each skater rating
+skaterratingmax,D0FBC,EditSkaterRating: maximum of each skater rating
+goalieratingmin,D0FF0,EditGoalieRating: minimum of each goalie rating
+goalieratingmax,D1000,EditGoalieRating: maximum of each goalie rating
+newskaterdefaults,D0F80,CreatePlayerLoop: default ratings copied into a new skater
+newskatershoots,D0F94,"the new skater: shoots L / R byte, right after his ratings"
+newgoaliedefaults,D0FD0,CreatePlayerLoop: default ratings copied into a new goalie
+newgoalieglove,D0FE0,"the new goalie: glove hand L / R byte, right after his ratings"
+rostereditmode,D0B12,roster editor mode (2: CopyRoster1Rec copies the team record into the edit buffer)
+lockerindex,D20E0,LockerRoomScreen: locker index of the home and the visiting team
+lockerteams,D2150,LockerRoomScreen: team of each locker; OK sets HomeTeam / VisTeam from it
+speechchannel,D27B2,"SpeechTimerTick: sound channel of the next speech clip, toggled 0 / 1 per clip"
+poslotx,D2B70,POHiliteSlot: x of each playoff tree slot
+posloty,D2BEC,POHiliteSlot: y of each playoff tree slot
+gfxidlist,D8C4C,graphics id list loaded by LoadGameGfx; DrawSpriteNumber takes the suffix sprite from it
+hmplstats_w2,DB08A,"hmplstats+2: stats word 1 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w4,DB08C,"hmplstats+4: stats word 2 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w6,DB08E,"hmplstats+6: stats word 3 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w8,DB090,"hmplstats+8: stats word 4 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w10,DB092,"hmplstats+10: stats word 5 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w12,DB094,"hmplstats+12: stats word 6 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w14,DB096,"hmplstats+14: stats word 7 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmglstats,DC240,"home goalie game stats, 3 x 6 bytes (words min, sht, sav); clearteams points hmtmglstats here"
+hmglstats_w2,DC242,hmglstats+2: shots word
+hmglstats_w4,DC244,hmglstats+4: saves word
+hmglstats_w8,DC248,hmglstats+8
+hmglstats_w14,DC24E,hmglstats+0Eh
+awglstats,DC252,visitor goalie game stats (hmglstats+12h); clearteams points awtmglstats here
+hmteamrec_skaters,DBC7C,"hmteamrec+4Ch: the 25 skater ids of the team record (LoadGameRoster, LoadTeamRoster)"
+hmteamrec_goalies,DBCE0,hmteamrec+0B0h: the 3 goalie ids of the team record
+leaguestatsmode,DC738,set while the stats screens run from the league (calendar) rather than a game: the stats menus then load their own palettes
+str_G5,C2338,string 'G'
+str_C6,C2343,string 'C'
+str_StanleyCup,C029A,string 'Stanley Cup '
+str_StanleyCupChampions,C0379,string 'Stanley Cup  Champions'
+str_3000,C06BC,string '3000'
+str_3001,C06C1,string '3001'
+str_3002,C06C6,string '3002'
+str_3003,C06CB,string '3003'
+str_3004,C06D0,string '3004'
+str_3005,C06D5,string '3005'
+str_3006,C06DA,string '3006'
+str_3007,C06DF,string '3007'
+str_3008,C06E4,string '3008'
+str_3009,C06E9,string '3009'
+str_300,C06EE,string '300 '
+str_spW,C0F69,string ' W'
+str_spG,C11C5,string '  G'
+str_spA,C11C9,string '  A'
+str_spW2,C11FD,string ' W'
+str_A5,C1934,string 'A'
+str_StanleyCupFinals,C3580,string 'Stanley Cup  Finals'
+str_R4,C36AC,string 'r+'
+str_04x,C36C3,string '%04x '
+str_H2,C392C,string 'h2'
+str_H4,C393B,string 'h4'
+str_H1,C396F,string 'h1'
+str_A32,C397B,string 'A3'
+str_SDD3,C39A8,string '%s %d - %d'
+str_S9,C3B67,string '%s '
+str_Dashes,C67A9,string '-------'
+str_Dashes2,CDB84,string '-------------------'
+str_Dashes3,CDC1E,string '---------------------'
+str_sp00XXXXXXXXXXXXXXXXX,CDC47,string '  00 X. XXXXXXXXXXXXXXXX'
+str_sp00XXXXXXXXXXXXXXXXX2,CDC60,string '  00 X. XXXXXXXXXXXXXXXX'
+str_spNONE,CDC79,string '  NONE'
+str_VisitingTeamGoalie,CDC80,string 'Visiting Team Goalie  '
+str_sp00XXXXXXXXXXXXXXXXX3,CDC97,string '  00 X. XXXXXXXXXXXXXXXX'
+str_sp00XXXXXXXXXXXXXXXXX4,CDCB0,string '  00 X. XXXXXXXXXXXXXXXX'
+str_spNONE2,CDCC9,string '  NONE'
+str_StatisticsType8,CDF44,string 'Statistics Type  '
+str_TeamsSortedBy2,CDF64,string 'Teams Sorted By  '
+str_PlayersSortedBy2,CDF76,string 'Players Sorted By  '
+str_GoaliesSortedBy2,CDF8A,string 'Goalies Sorted By  '
+str_Pacific,D010E,string 'Pacific  '
+str_Central,D0118,string 'Central  '
+str_Northeast,D0122,string 'Northeast  '
+str_Atlantic,D012E,string 'Atlantic  '
+str_spG2,C2977,string '  G'
+str_spA2,C297B,string '  A'
+str_spW3,C2A59,string ' W'
+str_X,C2B0B,string 'X'
+str_L9,C2D0E,string 'L'
+str_2d02d02d,C4090,string '%2d:%02d:%02d'
+str_1212s9d8s8s,C42A4,string '%-12.12s %9d %8s %8s'
+str_33d1212s66x66s66s44x,C42BC,string '%3.3d %-12.12s  %6.6x %6.6s %6.6s %4.4x'
+str_04x2,C4404,string '%04x   '
+str_02x,C440C,string '%02x'
+str_2d02d02d2,C471C,string '%2d:%02d:%02d'
+str_110,C4B4C,string '110'

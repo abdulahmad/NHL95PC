@@ -8,7 +8,7 @@ extern byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, b
 extern byte_DC9D8, byte_DDD40, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
 extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C87C0, dword_C87C8, dword_C87E0
-extern dword_C87E8, dword_DC738, dword_DDD34, dword_DDD3C, dword_DE264, ExportTeamToFloppy, FadePalStep, FileClose
+extern dword_C87E8, leaguestatsmode, dword_DDD34, dword_DDD3C, dword_DE264, ExportTeamToFloppy, FadePalStep, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, GameLineEditor, GetInputEvent, hmlinetab, HomeTeam, humancount, InitMenuRemap, jerseymsg
 extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams
@@ -241,7 +241,7 @@ call FadePalStep	; 3DE5C
 push byte 0	; 3DE61
 call sub_B392C	; 3DE63
 add esp, byte 4	; 3DE68
-mov dword [dword_DC738], 1	; 3DE6B
+mov dword [leaguestatsmode], 1	; 3DE6B
 mov dword [statsredrawcb], TeamRosterScreen	; 3DE75
 xor eax, eax	; 3DE7F
 mov al, byte [byte esp+018h]	; 3DE81
@@ -320,7 +320,7 @@ mov edx, 2	; 3DF90
 mov eax, unk_C88E2	; 3DF95
 call RunMenu	; 3DF9A
 xor ecx, ecx	; 3DF9F
-mov dword [dword_DC738], ecx	; 3DFA1
+mov dword [leaguestatsmode], ecx	; 3DFA1
 mov dword [statsredrawcb], ecx	; 3DFA7
 mov eax, dword [statsteambuf]	; 3DFAD
 push eax	; 3DFB2

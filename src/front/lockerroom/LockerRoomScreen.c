@@ -123,7 +123,7 @@ void DrawLockerRoom(void)
     sub_91400(visbckspr, 0x146, 0x4A);
     sub_91400(homenamebckspr, 0x85, 0x2C);
     sub_91400(visnamebckspr, 0x152, 0x2C);
-    sprintf(name, (char *)str_JERSH, off_D21C0[dword_D20E0[HomeTeam]]);
+    sprintf(name, (char *)str_JERSH, off_D21C0[lockerindex[HomeTeam]]);
     i = HomeTeam * 2 + 0xA3;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
     bank = sub_8E83C(path, 0);
@@ -134,7 +134,7 @@ void DrawLockerRoom(void)
     }
     sub_912C8(sub_B30B4(bank, (char *)str_00002));
     FreeMemBlock(bank);
-    sprintf(name, (char *)str_JERSV, off_D21C0[dword_D20E0[VisTeam]]);
+    sprintf(name, (char *)str_JERSV, off_D21C0[lockerindex[VisTeam]]);
     i = VisTeam * 2 + 0xA4;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
     bank = sub_8E83C(path, 0);
@@ -150,44 +150,44 @@ void DrawLockerRoom(void)
     sub_8EA18(mainfont);
     sub_8E9C0(0x77, 0xFF);
     if (gamemode == 0) {
-        i = (dword_D20E0[HomeTeam] + 0x1B) % 0x1C;
-        if (i >= 0x1A && i == dword_D20E0[VisTeam]) i = (i + 0x1B) % 0x1C;
+        i = (lockerindex[HomeTeam] + 0x1B) % 0x1C;
+        if (i >= 0x1A && i == lockerindex[VisTeam]) i = (i + 0x1B) % 0x1C;
     } else {
-        i = (dword_D20E0[HomeTeam] + 0x19) % 0x1A;
-        if (i == dword_D20E0[VisTeam]) i = (i + 0x19) % 0x1A;
+        i = (lockerindex[HomeTeam] + 0x19) % 0x1A;
+        if (i == lockerindex[VisTeam]) i = (i + 0x19) % 0x1A;
     }
     s = (char *)off_D21C0[i];
     y = LR[2].t + 3;
     x = LR[2].l + LR[2].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
     if (gamemode == 0) {
-        i = (dword_D20E0[HomeTeam] + 1) % 0x1C;
-        if (i >= 0x1A && i == dword_D20E0[VisTeam]) i = (i + 1) % 0x1C;
+        i = (lockerindex[HomeTeam] + 1) % 0x1C;
+        if (i >= 0x1A && i == lockerindex[VisTeam]) i = (i + 1) % 0x1C;
     } else {
-        i = (dword_D20E0[HomeTeam] + 1) % 0x1A;
-        if (i == dword_D20E0[VisTeam]) i = (HomeTeam + 1) % 0x1A;
+        i = (lockerindex[HomeTeam] + 1) % 0x1A;
+        if (i == lockerindex[VisTeam]) i = (HomeTeam + 1) % 0x1A;
     }
     s = (char *)off_D21C0[i];
     y = LR[3].t + 3;
     x = LR[3].l + LR[3].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
     if (gamemode == 0) {
-        i = (dword_D20E0[VisTeam] + 0x1B) % 0x1C;
-        if (i >= 0x1A && i == dword_D20E0[HomeTeam]) i = (i + 0x1B) % 0x1C;
+        i = (lockerindex[VisTeam] + 0x1B) % 0x1C;
+        if (i >= 0x1A && i == lockerindex[HomeTeam]) i = (i + 0x1B) % 0x1C;
     } else {
-        i = (dword_D20E0[VisTeam] + 0x19) % 0x1A;
-        if (i == dword_D20E0[HomeTeam]) i = (i + 0x19) % 0x1A;
+        i = (lockerindex[VisTeam] + 0x19) % 0x1A;
+        if (i == lockerindex[HomeTeam]) i = (i + 0x19) % 0x1A;
     }
     s = (char *)off_D21C0[i];
     y = LR[4].t + 3;
     x = LR[4].l + LR[4].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
     if (gamemode == 0) {
-        i = (dword_D20E0[VisTeam] + 1) % 0x1C;
-        if (i >= 0x1A && i == dword_D20E0[HomeTeam]) i = (i + 1) % 0x1C;
+        i = (lockerindex[VisTeam] + 1) % 0x1C;
+        if (i >= 0x1A && i == lockerindex[HomeTeam]) i = (i + 1) % 0x1C;
     } else {
-        i = (dword_D20E0[VisTeam] + 1) % 0x1A;
-        if (i == dword_D20E0[HomeTeam]) i = (i + 1) % 0x1A;
+        i = (lockerindex[VisTeam] + 1) % 0x1A;
+        if (i == lockerindex[HomeTeam]) i = (i + 1) % 0x1A;
     }
     s = (char *)off_D21C0[i];
     y = LR[5].t + 3;
@@ -240,11 +240,11 @@ void DrawLockerRoom(void)
 }
 
 /* LockerRoomLoop (81C4E, PC only; ends in LockerStub): the locker room. Start from the home and visiting teams'
-   locker indexes (dword_D20E0), draw the mouse pointer (sub_91FE0) over a saved POINTER block and follow it.
+   locker indexes (lockerindex), draw the mouse pointer (sub_91FE0) over a saved POINTER block and follow it.
    A click (event bit 2) on a box (LockerHitTest): 0 / 3 and 2 step the home team forward and back, 1 / 5 and 4
    the visitors (28 teams in exhibition mode, where the two extra teams may not meet themselves, else 26 and the
    teams must differ); each step redraws that side's jersey (DrawLockerJersey with both teams' division flags)
-   and puts the mouse back. 6 (OK) sets HomeTeam / VisTeam (dword_D2150), in exhibition mode writes both
+   and puts the mouse back. 6 (OK) sets HomeTeam / VisTeam (lockerteams), in exhibition mode writes both
    abbreviations into the matchup string, points the controllers at their sides' teams and writes the mode state;
    7 (Cancel) and event bit 4 leave without that. Leaving fades the music and the palette, frees the block and
    waits for the song to stop. Result: 0 after OK, else 3.
@@ -269,8 +269,8 @@ int LockerRoomLoop(void)
     int n;
     unsigned char *ev;
 
-    hm = dword_D20E0[HomeTeam];
-    vis = dword_D20E0[VisTeam];
+    hm = lockerindex[HomeTeam];
+    vis = lockerindex[VisTeam];
     sub_B2DCA(&btn, &ox, &oy);
     x = ox;
     y = oy;
@@ -311,7 +311,7 @@ int LockerRoomLoop(void)
                         hm = (hm + 0x19) % 0x1A;
                         if (hm == vis) hm = (hm + 0x19) % 0x1A;
                     }
-                    DrawLockerJersey(0, hm, teamdivflags[dword_D2150[vis]] | teamdivflags[dword_D2150[hm]], hm, vis);
+                    DrawLockerJersey(0, hm, teamdivflags[lockerteams[vis]] | teamdivflags[lockerteams[hm]], hm, vis);
                     ClearInputQueue();
                     MouseSetPos(x, y);
                     break;
@@ -324,7 +324,7 @@ int LockerRoomLoop(void)
                         hm = (hm + 1) % 0x1A;
                         if (hm == vis) hm = (hm + 1) % 0x1A;
                     }
-                    DrawLockerJersey(0, hm, teamdivflags[dword_D2150[vis]] | teamdivflags[dword_D2150[hm]], hm, vis);
+                    DrawLockerJersey(0, hm, teamdivflags[lockerteams[vis]] | teamdivflags[lockerteams[hm]], hm, vis);
                     ClearInputQueue();
                     MouseSetPos(x, y);
                     break;
@@ -336,7 +336,7 @@ int LockerRoomLoop(void)
                         vis = (vis + 0x19) % 0x1A;
                         if (hm == vis) vis = (vis + 0x19) % 0x1A;
                     }
-                    DrawLockerJersey(1, vis, teamdivflags[dword_D2150[vis]] | teamdivflags[dword_D2150[hm]], hm, vis);
+                    DrawLockerJersey(1, vis, teamdivflags[lockerteams[vis]] | teamdivflags[lockerteams[hm]], hm, vis);
                     ClearInputQueue();
                     MouseSetPos(x, y);
                     break;
@@ -349,13 +349,13 @@ int LockerRoomLoop(void)
                         vis = (vis + 1) % 0x1A;
                         if (hm == vis) vis = (vis + 1) % 0x1A;
                     }
-                    DrawLockerJersey(1, vis, teamdivflags[dword_D2150[vis]] | teamdivflags[dword_D2150[hm]], hm, vis);
+                    DrawLockerJersey(1, vis, teamdivflags[lockerteams[vis]] | teamdivflags[lockerteams[hm]], hm, vis);
                     ClearInputQueue();
                     MouseSetPos(x, y);
                     break;
                 case 6:
-                    HomeTeam = dword_D2150[hm];
-                    VisTeam = dword_D2150[vis];
+                    HomeTeam = lockerteams[hm];
+                    VisTeam = lockerteams[vis];
                     if (gamemode == 0) {
                         p = (char *)off_D21C0[hm];
                         if (p[2] != 0) {

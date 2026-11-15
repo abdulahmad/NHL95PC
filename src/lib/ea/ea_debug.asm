@@ -3,16 +3,16 @@ bits 32
 %include "hockey.inc"
 section s_93938 progbits alloc exec nowrite align=1
 extern _dos_getdate_, _dos_gettime_, _os_handle, _os_handle_0, _os_handle_1, str_DBUGTXT, str_FILES, str_DATES
-extern str_TIMES, str_CLOSED, str_TIMES2, asc_C4080, asc_C4090, str_CS44xDS, str_CS44xDS2, str_Used66xFree
+extern str_TIMES, str_CLOSED, str_TIMES2, asc_C4080, str_2d02d02d, str_CS44xDS, str_CS44xDS2, str_Used66xFree
 extern str_Used7uFree7u, str_NAMESIZEADREND, str_IDXNAMESIZEADR, asc_C41F4, asc_C4200, asc_C4204, str_SPACE9x8s8s, str_SPACE9d8s8s
-extern str_SPACE66x6, str_SPACE7d66s, asc_C428C, asc_C42A4, asc_C42BC, asc_C42E4, str_MEMMANAGER, str_044X00000000
+extern str_SPACE66x6, str_SPACE7d66s, asc_C428C, str_1212s9d8s8s, str_33d1212s66x66s66s44x, asc_C42E4, str_MEMMANAGER, str_044X00000000
 extern str_SYSTEM, str_SPACE3, str_HIGHMemoryBlock, str_LOWMemoryBlock, str_ConventionalMemory, str_RelocatableBlock, str_NonRelocatableBlock, str_ALIGNFlagIsSet
-extern str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, asc_C4404, asc_C440C, asc_C441C, str_FILES2, str_DATES2
+extern str_PRIORITY1d, str_SequenceD, str_BlockIsPURGABLE, str_04x2, str_02x, asc_C441C, str_FILES2, str_DATES2
 extern str_TIMES3, str_HexmemdspOS, str_XxMMAPTXT, str_ErrorDumpingMemoryMap, str_ShapeFileIsInvalid, str_NumDPackedD, str_ThereAreNoShapes, str_44s05x
 extern str_Bad, str_CxCy3d3d, str_NotDrawn, str_Bytes3dRows3d, str_Spacked, str_Packed, str_Unpacked, asc_C45BC
 extern str_ShapeIsInvalidDraw, str_MEMSHPTXT, str_ErrorDumpingShapesList, str_ShapeFileName0, str_ShapeFileSizeLd, str_NumberOfShapesD, str_44s66ld, str_Bytes3dRows3d2
 extern str_XY3d3d, str_033d022X, str_R022d, str_G022d, str_B022d, asc_C46F8, str_SCREEN2, asc_C470C
-extern asc_C471C, byte_D4544, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, dword_D3024
+extern str_2d02d02d2, byte_D4544, byte_EDE7D, DebugPrintf, dword_D2F78, dword_D2F7A, dword_D2F80, dword_D3024
 extern dword_D3044, dword_D3048, dword_D4534, dword_D4548, dword_D457C, dword_D4580, dword_D4584, dword_D4588
 extern dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
 extern dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_EDE6C, dword_EDE70, dword_EDE74, dword_EDE78
@@ -366,7 +366,7 @@ push eax	; 93C32
 xor eax, eax	; 93C33
 mov al, byte [byte esp+010h]	; 93C35
 push eax	; 93C39
-push asc_C4090	; 93C3A
+push str_2d02d02d	; 93C3A
 push ecx	; 93C3F
 call sprintf_	; 93C40
 add esp, byte 14h	; 93C45
@@ -1171,7 +1171,7 @@ je short loc_945D3	; 945CA
 mov eax, asc_C428C	; 945CC
 jmp short loc_945D8	; 945D1
 loc_945D3:
-mov eax, asc_C42A4	; 945D3
+mov eax, str_1212s9d8s8s	; 945D3
 loc_945D8:
 push eax	; 945D8
 lea eax, [dword ebp-082h]	; 945D9
@@ -1210,7 +1210,7 @@ push edx	; 94637
 push edi	; 94638
 cmp dword [dword_D4590], byte 0	; 94639
 je short loc_94649	; 94640
-mov eax, asc_C42BC	; 94642
+mov eax, str_33d1212s66x66s66s44x	; 94642
 jmp short loc_9464E	; 94647
 loc_94649:
 mov eax, asc_C42E4	; 94649
@@ -1983,7 +1983,7 @@ jle near loc_94F91	; 94E62
 loc_94E68:
 mov edi, dword [byte esp+08h]	; 94E68
 push edi	; 94E6C
-push asc_C4404	; 94E6D
+push str_04x2	; 94E6D
 call DebugPrintf	; 94E72
 add esp, byte 8	; 94E77
 xor edi, edi	; 94E7A
@@ -1999,7 +1999,7 @@ loc_94E91:
 xor eax, eax	; 94E91
 mov al, byte [esi]	; 94E93
 push eax	; 94E95
-push asc_C440C	; 94E96
+push str_02x	; 94E96
 call DebugPrintf	; 94E9B
 add esp, byte 8	; 94EA0
 cmp edi, dword [esp]	; 94EA3
@@ -3536,7 +3536,7 @@ push eax	; 9608E
 xor eax, eax	; 9608F
 mov al, byte [byte esp+010h]	; 96091
 push eax	; 96095
-push asc_C471C	; 96096
+push str_2d02d02d2	; 96096
 push ecx	; 9609B
 call sprintf_	; 9609C
 add esp, byte 14h	; 960A1

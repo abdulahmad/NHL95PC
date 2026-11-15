@@ -7,7 +7,7 @@
    over. Scan the 69h playoff games (schedule records from 444h): a game between two scheduled teams one of whom
    is human (teams +17h == 1) that is not yet played means the round goes on. Else, when called for the whole
    day (flags 7, team -1): read the playoff game count (fh +0) and the tree (276h bytes at +199Ah into
-   dword_C8C61, from SCH), and by the count simulate the rest of round 1 / 2 / 3 / the final (SimPlayoffRound1 ..
+   playoffbuf, from SCH), and by the count simulate the rest of round 1 / 2 / 3 / the final (SimPlayoffRound1 ..
    SimPlayoffFinal), seed the next round (SeedPlayoffRound2 / 3 / Final) and, when no human team is left in it,
    finish the playoffs from that round (FinishPlayoffs 3 / 4 / 5); after the final save the season database and
    hold the awards ceremony. Write back the count and the tree, and free the tree. fh: the schedule file; rwfh,
@@ -35,29 +35,29 @@ int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir,
     }
     if (err || busy || flags != 7 || team != -1) goto save;
     if (err = FileReadAt(fh, &n, 0, 2)) return err;
-    dword_C8C61 = sub_8CCA8((char *)str_Sch, 0x276, 0x20);
-    if (err = FileReadAt(fh, (void *)dword_C8C61, 0x199A, 0x276)) goto done;
+    playoffbuf = sub_8CCA8((char *)str_Sch, 0x276, 0x20);
+    if (err = FileReadAt(fh, (void *)playoffbuf, 0x199A, 0x276)) goto done;
     if (n < 0x47C) {
         n = 0x47C;
-        if (err = SimPlayoffRound1(dword_C8C61, rwfh, rdfh, dir, ext)) goto done;
-        if (err = SeedPlayoffRound2(dword_C8C61, gameopts.optbits12, rwfh, (int)teams, &busy)) goto done;
+        if (err = SimPlayoffRound1(playoffbuf, rwfh, rdfh, dir, ext)) goto done;
+        if (err = SeedPlayoffRound2(playoffbuf, gameopts.optbits12, rwfh, (int)teams, &busy)) goto done;
         if (!busy) FinishPlayoffs(fh, rwfh, rdfh, (int)teams, dir, ext, 3);
     } else if (n < 0x498) {
         n = 0x498;
-        if (err = SimPlayoffRound2(dword_C8C61, rwfh, rdfh, dir, ext)) goto done;
-        if (err = SeedPlayoffRound3(dword_C8C61, gameopts.optbits12, rwfh, (int)teams, &busy)) goto done;
+        if (err = SimPlayoffRound2(playoffbuf, rwfh, rdfh, dir, ext)) goto done;
+        if (err = SeedPlayoffRound3(playoffbuf, gameopts.optbits12, rwfh, (int)teams, &busy)) goto done;
         if (!busy) FinishPlayoffs(fh, rwfh, rdfh, (int)teams, dir, ext, 4);
     } else if (n < 0x4A6) {
         n = 0x4A6;
-        if (err = SimPlayoffRound3(dword_C8C61, rwfh, rdfh, dir, ext)) goto done;
-        if (err = SeedPlayoffFinal(dword_C8C61, gameopts.optbits12, rwfh, (int)teams, fh, &busy)) goto done;
+        if (err = SimPlayoffRound3(playoffbuf, rwfh, rdfh, dir, ext)) goto done;
+        if (err = SeedPlayoffFinal(playoffbuf, gameopts.optbits12, rwfh, (int)teams, fh, &busy)) goto done;
         if (!busy) {
             FinishPlayoffs(fh, rwfh, rdfh, (int)teams, dir, ext, 5);
             n = 0x4AD;
         }
     } else if (n < 0x4AD) {
         n = 0x4AD;
-        if (err = SimPlayoffFinal(dword_C8C61, rwfh, rdfh, dir, ext)) goto done;
+        if (err = SimPlayoffFinal(playoffbuf, rwfh, rdfh, dir, ext)) goto done;
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
         sub_932D0(path, seasondb, seasondb_size);
         AwardsCeremony();
@@ -65,11 +65,11 @@ int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir,
     }
     if (err = FileWriteAt(fh, &n, 0, 2)) goto done;
 save:
-    if (dword_C8C61) err = FileWriteAt(fh, (void *)dword_C8C61, 0x199A, 0x276);
+    if (playoffbuf) err = FileWriteAt(fh, (void *)playoffbuf, 0x199A, 0x276);
 done:
-    if (dword_C8C61) {
-        FreeMemBlock(dword_C8C61);
-        dword_C8C61 = 0;
+    if (playoffbuf) {
+        FreeMemBlock(playoffbuf);
+        playoffbuf = 0;
     }
     return err;
 }

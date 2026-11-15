@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
-extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, str_Standings2, unk_CDF64
-extern unk_CDF76, unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
+extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, str_Standings2, str_TeamsSortedBy2
+extern str_PlayersSortedBy2, str_GoaliesSortedBy2, unk_CE96F, unk_CEA2F, unk_CEB2F
 global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, str_ThereIsAlreadyA2, str_DoYouWantTo5, str_InsufficientDiskSpace2, str_ToSaveTheDatabases
 global str_Anaheim, str_Calgary, str_Edmonton, str_LosAngeles, str_SanJose, str_Vancouver, unk_CFBE8, str_Chicago
 global str_Dallas, str_Detroit, str_StLouis, str_Toronto, str_Winnipeg, unk_CFCF2, str_Boston, str_Buffalo
 global str_Hartford, str_Montreal, str_Ottawa, str_Pittsburgh, str_Quebec, unk_CFE08, str_Florida, str_NewJersey
 global str_NYIslanders, str_NYRangers, str_Philadelphia, str_TampaBay, str_Washington, unk_CFF51, str_SaveToGame, str_TemporarySave
-global str_LoadDatabase, str_Return2, unk_D006E, str_FreeAgents2, str_FindPlayer, unk_D010E, unk_D0118, unk_D0122
-global unk_D012E, unk_D0139
+global str_LoadDatabase, str_Return2, unk_D006E, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
+global str_Atlantic, unk_D0139
 dword_CFA4B:
 db 02h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
@@ -18,17 +18,17 @@ dd str_Standings2
 dd EasnStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDF64
+dd str_TeamsSortedBy2
 db 00h,00h,00h,00h
 dd unk_CE96F
 db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_CDF76
+dd str_PlayersSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEA2F
 db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
 db 05Ah,00h,00h,00h
-dd unk_CDF8A
+dd str_GoaliesSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEB2F
 db 03h,00h,00h,00h,00h,02Eh,074h,078h,074h,00h
@@ -251,15 +251,15 @@ str_FreeAgents2:
 db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,073h,020h,02Eh,02Eh,02Eh,00h
 str_FindPlayer:
 db 046h,069h,06Eh,064h,020h,050h,06Ch,061h,079h,065h,072h,020h,02Eh,02Eh,02Eh,00h
-unk_D010E:
+str_Pacific:
 db 050h,061h,063h,069h,066h,069h,063h,020h,03h,00h
-unk_D0118:
+str_Central:
 db 043h,065h,06Eh,074h,072h,061h,06Ch,020h,03h,00h
-unk_D0122:
+str_Northeast:
 db 04Eh,06Fh,072h,074h,068h,065h,061h,073h,074h,020h,03h,00h
-unk_D012E:
+str_Atlantic:
 db 041h,074h,06Ch,061h,06Eh,074h,069h,063h,020h,03h,00h
 unk_D0139:
 db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
-dd unk_D010E
+dd str_Pacific
 db 00h,00h,00h,00h

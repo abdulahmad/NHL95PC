@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D2A6C progbits alloc noexec write align=1
 extern str_YourTeamHasBeen, str_FromThePlayOffs, str_WishToSeeThe, str_OfThePlayOffs, unk_D2A68
-global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, cddrivestr, vtoa_dt, dword_D2B70, dword_D2BEC, cddriveptr
+global msg_POTeamOut_arg, msg_POTeamOut_arg2, byte_D2C5C, cddrivestr, vtoa_dt, poslotx, posloty, cddriveptr
 global msg_POHumanOut, msg_POTeamOut, msg_POGenFinal, str_HaveBeenEliminatedFrom, str_ThePlayOffs, unk_D2AAB, str_WillContinueToThe, str_Series
 global str_YES2, str_NO5, str_GeneratingTheFinalResults, btn_POHumanOut
 msg_POTeamOut_arg:
@@ -52,7 +52,7 @@ dd str_NO5
 db 0F0h,0FFh,0FFh,0FFh,04Eh,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd str_YES2
-dword_D2B70:
+poslotx:
 db 012h,00h,00h,00h,0B5h,00h,00h,00h,05Ah,01h,00h,00h,0FCh,01h,00h,00h
 db 0FCh,01h,00h,00h,05Ah,01h,00h,00h,0B5h,00h,00h,00h,012h,00h,00h,00h
 db 012h,00h,00h,00h,0B5h,00h,00h,00h,05Ah,01h,00h,00h,0FCh,01h,00h,00h
@@ -61,7 +61,7 @@ db 02Eh,00h,00h,00h,0DAh,00h,00h,00h,0DAh,00h,00h,00h,02Eh,00h,00h,00h
 db 03Eh,01h,00h,00h,0EAh,01h,00h,00h,0EAh,01h,00h,00h,03Eh,01h,00h,00h
 db 046h,00h,00h,00h,046h,00h,00h,00h,0C4h,01h,00h,00h,0C4h,01h,00h,00h
 db 04h,01h,00h,00h,04h,01h,00h,00h,04h,01h,00h,00h
-dword_D2BEC:
+posloty:
 db 048h,00h,00h,00h,048h,00h,00h,00h,048h,00h,00h,00h,048h,00h,00h,00h
 db 048h,00h,00h,00h,048h,00h,00h,00h,048h,00h,00h,00h,048h,00h,00h,00h
 db 07Eh,01h,00h,00h,07Eh,01h,00h,00h,07Eh,01h,00h,00h,07Eh,01h,00h,00h

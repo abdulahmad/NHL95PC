@@ -31,9 +31,9 @@ extern strcat_, strcpy_, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, 
 extern sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370
 extern sub_913D0, sub_91400, sub_91964, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4DD4, sub_B4FAC, teamstatscb, treeteamnames
-extern unk_C7805, unk_C7F07, unk_C7F1B, unk_DC240, UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg
-extern VisTeam, WaitLeagueFloppy, word_DB08A, word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB096
-extern word_DC242, word_DC244, word_DDD48, word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
+extern unk_C7805, unk_C7F07, unk_C7F1B, hmglstats, UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg
+extern VisTeam, WaitLeagueFloppy, hmplstats_w2, hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w14
+extern hmglstats_w2, hmglstats_w4, word_DDD48, word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen, CheckLeagueDiskSync
 global MakeTeamDbFmt, PostGameToTeamDb, PlayLeagueGame, TeamGridHitTest, DrawTeamGridName, SaveGridCellBg, RestoreGridCellBg, HighlightGridCell
 global DrawTeamGrid
@@ -2678,25 +2678,25 @@ inc word [edi]	; 3682F
 add ebx, eax	; 36832
 mov ax, word [dword ebx+hmplstats]	; 36834
 add word [byte edi+02h], ax	; 3683B
-mov ax, word [dword ebx+word_DB08A]	; 3683F
+mov ax, word [dword ebx+hmplstats_w2]	; 3683F
 add word [byte edi+04h], ax	; 36846
 mov ax, word [dword ebx+hmplstats]	; 3684A
 mov dx, word [byte edi+06h]	; 36851
 add edx, eax	; 36855
 mov word [byte edi+06h], dx	; 36857
-mov ax, word [dword ebx+word_DB08A]	; 3685B
+mov ax, word [dword ebx+hmplstats_w2]	; 3685B
 mov ecx, edx	; 36862
 add ecx, eax	; 36864
 mov word [byte edi+06h], cx	; 36866
-mov ax, word [dword ebx+word_DB08C]	; 3686A
+mov ax, word [dword ebx+hmplstats_w4]	; 3686A
 add word [byte edi+0Ch], ax	; 36871
-mov ax, word [dword ebx+word_DB08E]	; 36875
+mov ax, word [dword ebx+hmplstats_w6]	; 36875
 add word [byte edi+010h], ax	; 3687C
-mov ax, word [dword ebx+word_DB090]	; 36880
+mov ax, word [dword ebx+hmplstats_w8]	; 36880
 add word [byte edi+08h], ax	; 36887
-mov ax, word [dword ebx+word_DB092]	; 3688B
+mov ax, word [dword ebx+hmplstats_w10]	; 3688B
 add word [byte edi+0Ah], ax	; 36892
-mov ax, word [dword ebx+word_DB096]	; 36896
+mov ax, word [dword ebx+hmplstats_w14]	; 36896
 add word [byte edi+0Eh], ax	; 3689D
 mov ebx, dword [dword esp+0358h]	; 368A1
 lea edx, [dword esp+0360h]	; 368A8
@@ -2774,10 +2774,10 @@ shl edi, 2	; 369C6
 sub edi, dword [dword esp+03F8h]	; 369C9
 add edi, edi	; 369D0
 add edi, eax	; 369D2
-cmp word [dword edi+unk_DC240], byte 0	; 369D4
+cmp word [dword edi+hmglstats], byte 0	; 369D4
 je near .55	; 369DC
 inc word [esi]	; 369E2
-mov edx, dword [dword edi+unk_DC240-2]	; 369E5
+mov edx, dword [dword edi+hmglstats-2]	; 369E5
 sar edx, 10h	; 369EB
 mov eax, edx	; 369EE
 sar edx, 1Fh	; 369F0
@@ -2788,9 +2788,9 @@ xor eax, eax	; 369FC
 mov ax, word [byte esi+0Ch]	; 369FE
 add eax, edx	; 36A02
 mov word [byte esi+0Ch], ax	; 36A04
-mov ax, word [dword edi+word_DC242]	; 36A08
+mov ax, word [dword edi+hmglstats_w2]	; 36A08
 add word [byte esi+012h], ax	; 36A0F
-mov ax, word [dword edi+word_DC244]	; 36A13
+mov ax, word [dword edi+hmglstats_w4]	; 36A13
 add word [byte esi+0Eh], ax	; 36A1A
 mov eax, dword [dword esp+ebp+0409h]	; 36A1E
 sar eax, 18h	; 36A25

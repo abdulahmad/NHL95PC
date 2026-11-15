@@ -42,7 +42,7 @@ void RunEditRosters(void)
     dlgtextbg = c42;
     pal = 0;
     editrosters_exit = (int)pal;
-    dword_D0B12 = (int)pal;
+    rostereditmode = (int)pal;
     pal = (unsigned char *)sub_8CCA8((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
@@ -65,7 +65,7 @@ void RunEditRosters(void)
     ((short *)editptrspr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)editptrspr)[3] = ((short *)pointerspr)[3] + 1;
     LoadLeagueDbsMem((char *)str_extDB);
-    EditRosters(unk_D0450, 6, 0x40, 0x41, 0x42);
+    EditRosters(editrostersmenubar, 6, 0x40, 0x41, 0x42);
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
