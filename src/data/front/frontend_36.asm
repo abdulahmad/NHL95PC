@@ -2,22 +2,22 @@
 bits 32
 %include "hockey.inc"
 section s_CBED0 progbits alloc noexec write align=1
-extern unk_C1AE0, unk_C1AE6, unk_C1AEB, unk_C1AF0, unk_C1AF6, unk_C1AFC, unk_C1B02, unk_C1B07
-extern unk_C1B0C, unk_C1B12, unk_C1B18
+extern str_Fanom, str_Goal, str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3
+extern str_Saved2, str_Cross, str_Guilt
 global off_CBED0, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60, unk_CBF85, unk_CBF96
 global unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 off_CBED0:
-dd unk_C1AE0
-dd unk_C1AE6
-dd unk_C1AEB
-dd unk_C1AF0
-dd unk_C1AF6
-dd unk_C1AFC
-dd unk_C1B02
-dd unk_C1B07
-dd unk_C1B0C
-dd unk_C1B12
-dd unk_C1B18
+dd str_Fanom
+dd str_Goal
+dd str_Clap2
+dd str_Uflag
+dd str_Cflag
+dd str_Siren2
+dd str_Ruff
+dd str_Hook3
+dd str_Saved2
+dd str_Cross
+dd str_Guilt
 unk_CBEFC:
 db 07h,00h,02h,01h,03h,01h,03h,01h
 unk_CBF04:

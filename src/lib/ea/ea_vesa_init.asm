@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_8DF70 progbits alloc exec nowrite align=1
-extern __STOSB, asc_C3DB4, asc_C3DC0, asc_C3DD4, asc_C3E28, asc_C3E38, asc_C3E94, asc_C3E9C
-extern asc_C3ED4, asc_C3F00, byte_EDABB, byte_EDCC0, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7
+extern __STOSB, str_EavesaCom, str_CUtilEavesaCom, str_InitgraphicsEAVESACOM, str_CEavesaDat, str_InitgraphicsNEWVERSIONOF, str_VESA, str_InitgraphicsINITMEMMAN
+extern str_InitgraphicsINVALIDSCREEN, str_VESAVideoBiosDriver, byte_EDABB, byte_EDCC0, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7
 extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, dword_D3024, dword_D3044, dword_D3048, dword_D304C
 extern dword_D3050, dword_D3054, dword_D3058, dword_D30A4, dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0
 extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, dword_D3104, dword_D4108
@@ -20,13 +20,13 @@ push ebx	; 8DF70
 push ecx	; 8DF71
 push edx	; 8DF72
 push esi	; 8DF73
-mov esi, asc_C3DB4	; 8DF74
+mov esi, str_EavesaCom	; 8DF74
 push esi	; 8DF79
 call sub_98A40	; 8DF7A
 add esp, byte 4	; 8DF7F
 test eax, eax	; 8DF82
 jne short loc_8DF8B	; 8DF84
-mov esi, asc_C3DC0	; 8DF86
+mov esi, str_CUtilEavesaCom	; 8DF86
 loc_8DF8B:
 push byte 0	; 8DF8B
 push esi	; 8DF8D
@@ -37,31 +37,31 @@ add esp, byte 10h	; 8DF96
 mov dword [dword_EDCB8], eax	; 8DF99
 cmp eax, byte 0FFFFFFFFh	; 8DF9E
 jne short loc_8DFB0	; 8DFA1
-push asc_C3DD4	; 8DFA3
+push str_InitgraphicsEAVESACOM	; 8DFA3
 call FatalError	; 8DFA8
 add esp, byte 4	; 8DFAD
 loc_8DFB0:
 push byte 0	; 8DFB0
-push asc_C3E28	; 8DFB2
+push str_CEavesaDat	; 8DFB2
 call sub_8E8A0	; 8DFB7
 mov edx, eax	; 8DFBC
 add esp, byte 8	; 8DFBE
 mov esi, eax	; 8DFC1
-mov eax, asc_C3E28	; 8DFC3
+mov eax, str_CEavesaDat	; 8DFC3
 call unlink_	; 8DFC8
 push edx	; 8DFCD
 call sub_8DBC0	; 8DFCE
 add esp, byte 4	; 8DFD3
 cmp eax, 41Ch	; 8DFD6
 je short loc_8DFEA	; 8DFDB
-push asc_C3E38	; 8DFDD
+push str_InitgraphicsNEWVERSIONOF	; 8DFDD
 call FatalError	; 8DFE2
 add esp, byte 4	; 8DFE7
 loc_8DFEA:
 xor edx, edx	; 8DFEA
 mov dword [dword_EDCB8], edx	; 8DFEC
 mov ebx, 4	; 8DFF2
-mov edx, asc_C3E94	; 8DFF7
+mov edx, str_VESA	; 8DFF7
 mov eax, esi	; 8DFFC
 call strncmp_	; 8DFFE
 test eax, eax	; 8E003
@@ -110,7 +110,7 @@ sub esp, byte 8	; 8E083
 mov ebp, dword [byte esp+01Ch]	; 8E086
 cmp dword [dword_D2F80], byte 0	; 8E08A
 jne short loc_8E0A0	; 8E091
-push asc_C3E9C	; 8E093
+push str_InitgraphicsINITMEMMAN	; 8E093
 call FatalError	; 8E098
 add esp, byte 4	; 8E09D
 loc_8E0A0:
@@ -184,7 +184,7 @@ loc_8E18E:
 push ebp	; 8E18E
 mov ebx, dword [byte esp+01Ch]	; 8E18F
 push ebx	; 8E193
-push asc_C3ED4	; 8E194
+push str_InitgraphicsINVALIDSCREEN	; 8E194
 call FatalError	; 8E199
 add esp, byte 0Ch	; 8E19E
 loc_8E1A1:
@@ -192,7 +192,7 @@ test esi, esi	; 8E1A1
 jl near loc_8E29F	; 8E1A3
 cmp dword [dword_EDCB8], byte 0	; 8E1A9
 jne short loc_8E1BF	; 8E1B0
-push asc_C3F00	; 8E1B2
+push str_VESAVideoBiosDriver	; 8E1B2
 call FatalError	; 8E1B7
 add esp, byte 4	; 8E1BC
 loc_8E1BF:

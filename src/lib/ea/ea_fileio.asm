@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B3B00 progbits alloc exec nowrite align=1
-extern asc_D43F4, byte_D4410, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
+extern str_OpenhandleSFILEERROR, byte_D4410, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
 extern dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, FatalError, slowtickcount
 extern sprintf_, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
 global sub_B3B00, sub_B3B19, sub_B3B2E, sub_B3B44, sub_B3B5A, loc_B3B6E, loc_B3BB9, loc_B3BEE
@@ -138,7 +138,7 @@ leave	; B3C51
 ret	; B3C52
 loc_B3C53:
 push dword [byte ebp+08h]	; B3C53
-push asc_D43F4	; B3C56
+push str_OpenhandleSFILEERROR	; B3C56
 call FatalError	; B3C5B
 sub_B3C60:
 push ebp	; B3C60

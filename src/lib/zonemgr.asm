@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_6A033 progbits alloc exec nowrite align=1
-extern __CHK, asc_C2778, asc_C2799, asc_C27C2, byte_D42C3, byte_EA058, dword_EA034, dword_EA038
+extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, byte_EA058, dword_EA034, dword_EA038
 extern dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C, dword_EA050, dword_EA054, dword_EA05C
 extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA074, dword_EA078, dword_EA07C
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
@@ -114,7 +114,7 @@ push edx	; 6A112
 push esi	; 6A113
 cmp dword [dword_EA0AC], byte 0	; 6A114
 jne short loc_6A12A	; 6A11B
-push asc_C2778	; 6A11D
+push str_ZMHiddenWindowNoHiddenWindow	; 6A11D
 call FatalError	; 6A122
 add esp, byte 4	; 6A127
 loc_6A12A:
@@ -152,7 +152,7 @@ push edx	; 6A172
 push esi	; 6A173
 cmp dword [dword_EA0B0], byte 0	; 6A174
 jne short loc_6A18A	; 6A17B
-push asc_C2799	; 6A17D
+push str_ZMBackgroundWindowNo	; 6A17D
 call FatalError	; 6A182
 add esp, byte 4	; 6A187
 loc_6A18A:
@@ -1016,7 +1016,7 @@ shl eax, 2	; 6AA05
 add eax, edx	; 6AA08
 shl eax, 4	; 6AA0A
 push eax	; 6AA0D
-push asc_C27C2	; 6AA0E
+push str_ZONEMGR	; 6AA0E
 call sub_8CCA8	; 6AA13
 add esp, byte 0Ch	; 6AA18
 mov dword [dword_EA088], eax	; 6AA1B

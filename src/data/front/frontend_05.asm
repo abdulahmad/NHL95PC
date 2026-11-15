@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_C1AA4 progbits alloc noexec write align=1
 global tag_pset, tag_aps, tag_apset, tag_gset, tag_ags, tag_agset, str_LoadPic, str_Pal23
-global tag_t, tag_at, tag_pk, tag_ps, tag_gk, tag_gs, unk_C1AE0, unk_C1AE6
-global unk_C1AEB, unk_C1AF0, unk_C1AF6, unk_C1AFC, unk_C1B02, unk_C1B07, unk_C1B0C, unk_C1B12
-global unk_C1B18, str_1st, str_2nd, str_3rd
+global tag_t, tag_at, tag_pk, tag_ps, tag_gk, tag_gs, str_Fanom, str_Goal
+global str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3, str_Saved2, str_Cross
+global str_Guilt, str_1st, str_2nd, str_3rd
 tag_t:
 db 074h,00h
 tag_at:
@@ -34,27 +34,27 @@ str_LoadPic:
 db 06Ch,06Fh,061h,064h,00h
 str_Pal23:
 db 021h,070h,061h,06Ch,00h,00h,00h
-unk_C1AE0:
+str_Fanom:
 db 066h,061h,06Eh,06Fh,06Dh,00h
-unk_C1AE6:
+str_Goal:
 db 067h,06Fh,061h,06Ch,00h
-unk_C1AEB:
+str_Clap2:
 db 063h,06Ch,061h,070h,00h
-unk_C1AF0:
+str_Uflag:
 db 075h,066h,06Ch,061h,067h,00h
-unk_C1AF6:
+str_Cflag:
 db 063h,066h,06Ch,061h,067h,00h
-unk_C1AFC:
+str_Siren2:
 db 073h,069h,072h,065h,06Eh,00h
-unk_C1B02:
+str_Ruff:
 db 072h,075h,066h,066h,00h
-unk_C1B07:
+str_Hook3:
 db 068h,06Fh,06Fh,06Bh,00h
-unk_C1B0C:
+str_Saved2:
 db 073h,061h,076h,065h,064h,00h
-unk_C1B12:
+str_Cross:
 db 063h,072h,06Fh,073h,073h,00h
-unk_C1B18:
+str_Guilt:
 db 067h,075h,069h,06Ch,074h,00h,00h,00h
 str_1st:
 db 031h,073h,074h,00h

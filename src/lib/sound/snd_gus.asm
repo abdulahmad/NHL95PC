@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
-extern __CHK, __GETDS, asc_C4A9C, asc_C4AA1, asc_C4AAA, asc_D53B8, byte_F5320, byte_F5321
+extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_F5320, byte_F5321
 extern cliprect_x0, cliprect_x1, dword_D30A4, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
@@ -169,14 +169,14 @@ loc_A014B:
 mov eax, dword [byte ebp-014h]	; A014B
 cmp dword [eax], byte 0FFFFFFFFh	; A014E
 je near loc_A0215	; A0151
-mov edx, asc_D53B8	; A0157
+mov edx, str_CULTRASNDMIDI	; A0157
 lea eax, [byte ebp-074h]	; A015C
 call strcpy_	; A015F
 mov edx, dword [byte ebp-014h]	; A0164
 add edx, byte 4	; A0167
 lea eax, [byte ebp-074h]	; A016A
 call strcat_	; A016D
-mov edx, asc_C4A9C	; A0172
+mov edx, str_PAT	; A0172
 lea eax, [byte ebp-074h]	; A0177
 call strcat_	; A017A
 lea edx, [dword ebp-0134h]	; A017F
@@ -314,16 +314,16 @@ loc_A0358:
 mov eax, 801h	; A0358
 call sub_AD4DC	; A035D
 mov dword [dword_F55E8], eax	; A0362
-mov eax, asc_C4AA1	; A0367
+mov eax, str_ULTRADIR	; A0367
 call getenv_	; A036C
 mov dword [byte ebp-010h], eax	; A0371
 cmp dword [byte ebp-010h], byte 0	; A0374
 je short loc_A0396	; A0378
 mov edx, dword [byte ebp-010h]	; A037A
-mov eax, asc_D53B8	; A037D
+mov eax, str_CULTRASNDMIDI	; A037D
 call strcpy_	; A0382
-mov edx, asc_C4AAA	; A0387
-mov eax, asc_D53B8	; A038C
+mov edx, str_MIDI	; A0387
+mov eax, str_CULTRASNDMIDI	; A038C
 call strcat_	; A0391
 loc_A0396:
 call sub_A00C1	; A0396

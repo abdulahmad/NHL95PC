@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_8EB5B progbits alloc exec nowrite align=1
-extern __GETDS, _makepath_, _splitpath_, addtimer, asc_C3FA4, asc_C3FA8, asc_C3FB8, asc_C3FC8
-extern asc_C3FCC, asc_C3FD0, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
+extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
+extern str_CFG2, str_VHDR, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
 extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA
 extern dword_D4F64, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
@@ -192,7 +192,7 @@ mov eax, 0FFFFFFFBh	; 8ECD4
 jmp near loc_8EDCB	; 8ECD9
 loc_8ECDE:
 mov ebx, esp	; 8ECDE
-mov edx, asc_C3FA4	; 8ECE0
+mov edx, str_SCN	; 8ECE0
 mov eax, ecx	; 8ECE5
 call sub_8FED2	; 8ECE7
 mov edx, esp	; 8ECEC
@@ -222,7 +222,7 @@ xor eax, eax	; 8ED38
 mov al, byte [byte_F23CD]	; 8ED3A
 push eax	; 8ED3F
 push esi	; 8ED40
-push asc_C3FA8	; 8ED41
+push str_03sFF03dPAT	; 8ED41
 lea eax, [byte esp+0Ch]	; 8ED46
 push eax	; 8ED4A
 call sprintf_	; 8ED4B
@@ -243,7 +243,7 @@ xor eax, eax	; 8ED73
 mov al, byte [dword ebx+byte_F23E0]	; 8ED75
 push eax	; 8ED7B
 push esi	; 8ED7C
-push asc_C3FB8	; 8ED7D
+push str_03sFF03dTIM	; 8ED7D
 lea eax, [byte esp+0Ch]	; 8ED82
 push eax	; 8ED86
 call sprintf_	; 8ED87
@@ -650,7 +650,7 @@ loc_8F19C:
 mov eax, dword [dword_D41CE]	; 8F19C
 mov dword [ecx], eax	; 8F1A1
 mov ebx, esp	; 8F1A3
-mov edx, asc_C3FC8	; 8F1A5
+mov edx, str_KMS2	; 8F1A5
 mov eax, ebp	; 8F1AA
 call sub_8FED2	; 8F1AC
 mov edx, esp	; 8F1B1
@@ -660,7 +660,7 @@ mov dword [byte ecx+04h], eax	; 8F1BD
 test eax, eax	; 8F1C0
 je short loc_8F1F4	; 8F1C2
 mov ebx, esp	; 8F1C4
-mov edx, asc_C3FCC	; 8F1C6
+mov edx, str_CFG2	; 8F1C6
 mov eax, ebp	; 8F1CB
 call sub_8FED2	; 8F1CD
 mov edx, esp	; 8F1D2
@@ -1452,7 +1452,7 @@ mov edx, dword [eax]	; 8F9C7
 cmp edx, 4D524F46h	; 8F9C9
 jne short loc_8FA46	; 8F9CF
 lea ebx, [byte eax+04h]	; 8F9D1
-mov edx, asc_C3FD0	; 8F9D4
+mov edx, str_VHDR	; 8F9D4
 mov eax, ebx	; 8F9D9
 call sub_8FAF2	; 8F9DB
 mov esi, eax	; 8F9E0

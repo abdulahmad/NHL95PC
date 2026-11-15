@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
-extern asc_C3FD8, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, FatalError
+extern str_SavefileblockaOPENFAILEDFOR, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, FatalError
 extern sub_8DBD4, sub_8DBDC, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
 global sub_93308, sub_9333C, sub_93354, sub_9336C, loc_933C7, loc_933CB, loc_933E8, imul32
 global sub_933FB, sub_93470, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
@@ -81,7 +81,7 @@ cmp dword [byte esp+024h], byte 0	; 933AE
 je short loc_933C7	; 933B3
 mov ebp, dword [byte esp+01Ch]	; 933B5
 push ebp	; 933B9
-push asc_C3FD8	; 933BA
+push str_SavefileblockaOPENFAILEDFOR	; 933BA
 call FatalError	; 933BF
 add esp, byte 8	; 933C4
 loc_933C7:

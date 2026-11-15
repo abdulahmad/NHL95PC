@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_C82A5 progbits alloc noexec write align=1
-global str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1, unk_C833D
-global unk_C8345, unk_C834E, unk_C8354, unk_C835A, unk_C835E, unk_C8363, unk_C8368, unk_C836F
-global unk_C8379, unk_C8381, unk_C838A
+global str_EnterPasswordFor, str_VerifyPasswordFor, str_EnterMasterPassword, str_EnterMasterControllerPasswor, str_VerifyMasterControllerPasswo, passkey, passkey_m1, str_January
+global str_February, str_March, str_April, str_May, str_June, str_July, str_August, str_September
+global str_October, str_November, str_December
 str_EnterPasswordFor:
 db 045h,06Eh,074h,065h,072h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h,020h,066h
 db 06Fh,072h,020h,00h
@@ -26,39 +26,39 @@ passkey_m1:
 db 00h
 passkey:
 db 04Eh,048h,04Ch,048h,06Fh,063h,06Bh,065h,079h,00h
-unk_C833D:
+str_January:
 db 04Ah,061h,06Eh,075h,061h,072h,079h,00h
-unk_C8345:
+str_February:
 db 046h,065h,062h,072h,075h,061h,072h,079h,00h
-unk_C834E:
+str_March:
 db 04Dh,061h,072h,063h,068h,00h
-unk_C8354:
+str_April:
 db 041h,070h,072h,069h,06Ch,00h
-unk_C835A:
+str_May:
 db 04Dh,061h,079h,00h
-unk_C835E:
+str_June:
 db 04Ah,075h,06Eh,065h,00h
-unk_C8363:
+str_July:
 db 04Ah,075h,06Ch,079h,00h
-unk_C8368:
+str_August:
 db 041h,075h,067h,075h,073h,074h,00h
-unk_C836F:
+str_September:
 db 053h,065h,070h,074h,065h,06Dh,062h,065h,072h,00h
-unk_C8379:
+str_October:
 db 04Fh,063h,074h,06Fh,062h,065h,072h,00h
-unk_C8381:
+str_November:
 db 04Eh,06Fh,076h,065h,06Dh,062h,065h,072h,00h
-unk_C838A:
+str_December:
 db 044h,065h,063h,065h,06Dh,062h,065h,072h,00h
-dd unk_C833D
-dd unk_C8345
-dd unk_C834E
-dd unk_C8354
-dd unk_C835A
-dd unk_C835E
-dd unk_C8363
-dd unk_C8368
-dd unk_C836F
-dd unk_C8379
-dd unk_C8381
-dd unk_C838A
+dd str_January
+dd str_February
+dd str_March
+dd str_April
+dd str_May
+dd str_June
+dd str_July
+dd str_August
+dd str_September
+dd str_October
+dd str_November
+dd str_December

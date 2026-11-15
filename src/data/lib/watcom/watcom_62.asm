@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D4D0F progbits alloc noexec write align=1
-extern dword_F24C8, nullsub_7, unk_C4864
+extern dword_F24C8, nullsub_7, str_EACSNDFLIBJul28
 global byte_D4D0F, byte_D4D10, byte_D4D59, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4F54, byte_D4F5C
 global byte_D4F5D, byte_D4F5E, dword_D4D11, dword_D4F21, dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38
 global dword_D4F3C, dword_D4F40, dword_D4F4C, dword_D4F50, dword_D4F58, dword_D4F64, dword_D4F8A, dword_D4F8E
@@ -95,7 +95,7 @@ byte_D4F5D:
 db 00h
 byte_D4F5E:
 db 00h,00h
-dd unk_C4864
+dd str_EACSNDFLIBJul28
 dword_D4F64:
 db 00h,00h,00h,00h
 word_D4F68:

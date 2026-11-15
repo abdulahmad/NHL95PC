@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_A1CA2 progbits alloc exec nowrite align=1
 extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_, __Slash_C_, _makepath_
-extern _nfree_, _nmalloc_, _splitpath2_, asc_C4AB7, asc_C4ABC, asc_C4AC1, asc_C4AC6, asc_C4ACE
-extern asc_C4AD2, byte_D4D0F, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
+extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
+extern str_COMMAND, byte_D4D0F, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
 extern sub_9D66B, sub_9D68E, unk_C4AB4, unknown_libname_1
 global sub_A1CA2, sub_A1CC1, sub_A1CF4, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
 global loc_A1D9D, loc_A1DF6, loc_A1DF8, loc_A1E1F, loc_A1E22, loc_A1E42, loc_A1E92, loc_A1EB2
@@ -176,7 +176,7 @@ call __set_errno_	; A1E5B
 mov eax, dword [byte ebp+042h]	; A1E60
 cmp byte [eax], 0	; A1E63
 je short loc_A1EB2	; A1E66
-mov edx, asc_C4AB7	; A1E68
+mov edx, str_Bat	; A1E68
 call stricmp_	; A1E6D
 test eax, eax	; A1E72
 jne short loc_A1E92	; A1E74
@@ -212,7 +212,7 @@ mov ebx, dword [byte ebp+072h]	; A1ED4
 push ds	; A1ED7
 pop es	; A1ED8
 mov edi, edx	; A1ED9
-mov esi, asc_C4ABC	; A1EDB
+mov esi, str_Com	; A1EDB
 xor eax, eax	; A1EE0
 mov edx, dword [byte ebp+07Ah]	; A1EE2
 movsd	; A1EE5
@@ -234,7 +234,7 @@ mov ebx, dword [byte ebp+072h]	; A1F13
 call __set_errno_	; A1F16
 push ds	; A1F1B
 pop es	; A1F1C
-mov esi, asc_C4AC1	; A1F1D
+mov esi, str_Exe	; A1F1D
 push dword [byte ebp+06Eh]	; A1F22
 movsd	; A1F25
 movsb	; A1F26
@@ -247,7 +247,7 @@ cmp dword [eax], byte 1	; A1F3A
 jne near loc_A1FC3	; A1F3D
 mov edi, dword [byte ebp+06Ah]	; A1F43
 xor eax, eax	; A1F46
-mov esi, asc_C4AB7	; A1F48
+mov esi, str_Bat	; A1F48
 call __set_errno_	; A1F4D
 mov eax, dword [byte ebp+07Ah]	; A1F52
 movsd	; A1F55
@@ -273,13 +273,13 @@ call __Slash_C_	; A1F91
 push eax	; A1F96
 cmp byte [byte ebp+07Eh], 0	; A1F97
 je short loc_A1FA4	; A1F9B
-mov eax, asc_C4ACE	; A1F9D
+mov eax, str_CMD	; A1F9D
 jmp short loc_A1FA9	; A1FA2
 loc_A1FA4:
-mov eax, asc_C4AD2	; A1FA4
+mov eax, str_COMMAND	; A1FA4
 loc_A1FA9:
 push eax	; A1FA9
-mov eax, asc_C4AC6	; A1FAA
+mov eax, str_COMSPEC	; A1FAA
 call getenv_	; A1FAF
 push eax	; A1FB4
 push dword [byte ebp-032h]	; A1FB5

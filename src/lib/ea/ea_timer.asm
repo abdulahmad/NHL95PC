@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8E3DC progbits alloc exec nowrite align=1
-extern __GETDS, __STOSD, _dos_getvect_, _dos_setvect_, asc_C3F5C, FatalError, oldint8off, oldint8sel
+extern __GETDS, __STOSD, _dos_getvect_, _dos_setvect_, str_AddtimerLISTFULL, FatalError, oldint8off, oldint8sel
 extern slowtickcount, strncmp_, strncpy_, sub_91FA4, sub_98B30, sub_B3454, sub_B3ABC, tickcount
 extern timercallbacks
 global sub_8E3DC, sub_8E3E4, sub_8E3F8, sub_8E40C, sub_8E424, loc_8E42F, loc_8E440, loc_8E443
@@ -123,7 +123,7 @@ cmp dword [dword eax+timercallbacks], byte 0	; 8E4DE
 je short loc_8E4CB	; 8E4E5
 jmp short loc_8E4D6	; 8E4E7
 loc_8E4E9:
-push asc_C3F5C	; 8E4E9
+push str_AddtimerLISTFULL	; 8E4E9
 call FatalError	; 8E4EE
 sub_8E4F3:
 add esp, byte 4	; 8E4F3

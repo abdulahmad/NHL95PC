@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1B0F3 progbits alloc exec nowrite align=1
-extern __CHK, addtimer, asc_C09BC, asc_C09C5, asc_C09E6, asc_C09F2, bannertimer, CrowdNoiseOff
+extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD, bannertimer, CrowdNoiseOff
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, dword_E0244, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, sub_8CCA8
@@ -26,7 +26,7 @@ push edx	; 1B102
 mov eax, dword [byte esp+0Ch]	; 1B103
 add eax, byte 54h	; 1B107
 push eax	; 1B10A
-push asc_C09BC	; 1B10B
+push str_CDSTREAM	; 1B10B
 call sub_8CCA8	; 1B110
 mov esi, eax	; 1B115
 add esp, byte 0Ch	; 1B117
@@ -109,7 +109,7 @@ jl short loc_1B218	; 1B211
 cmp edx, byte 9	; 1B213
 jle short loc_1B225	; 1B216
 loc_1B218:
-push asc_C09C5	; 1B218
+push str_IllegalSecondaryStreamNumber	; 1B218
 call FatalError	; 1B21D
 add esp, byte 4	; 1B222
 loc_1B225:
@@ -118,7 +118,7 @@ push ecx	; 1B229
 mov eax, dword [byte esp+0Ch]	; 1B22A
 add eax, byte 54h	; 1B22E
 push eax	; 1B231
-push asc_C09E6	; 1B232
+push str_SECCDSTREAM	; 1B232
 call sub_8CCA8	; 1B237
 add esp, byte 0Ch	; 1B23C
 mov edx, dword [byte esp+08h]	; 1B23F
@@ -316,7 +316,7 @@ push ebp	; 1B4A5
 mov eax, dword [dword_DC8A0]	; 1B4A6
 mov edx, dword [byte eax+02Ch]	; 1B4AB
 push edx	; 1B4AE
-push asc_C09F2	; 1B4AF
+push str_IllegalChunkSizeD	; 1B4AF
 call FatalError	; 1B4B4
 add esp, byte 0Ch	; 1B4B9
 loc_1B4BC:

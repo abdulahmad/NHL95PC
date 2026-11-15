@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_D4F96 progbits alloc noexec write align=1
-extern sub_903F0, sub_90698, sub_91370, sub_A2F40, unk_C4914, unk_C491C, unk_C4924, unk_C492C
-extern unk_C4954, unk_C495C, unk_C4976, unk_C498C, unk_C499E, unk_C49AE, unk_C49C0, unk_C49D2
-extern unk_C49DE, unk_C49F0, unk_C4A01, unk_C4A15, unk_C4A29, unk_C4A41, unk_C4A54, unk_C4A65
+extern sub_903F0, sub_90698, sub_91370, sub_A2F40, str_Fsh, str_3sh, str_SHPI, str_SHPM
+extern str_Error0, str_NoSuchFileOr, str_ArgumentListTooBig, str_ExecFormatError, str_BadFileNumber, str_NotEnoughMemory, str_PermissionDenied, str_FileExists
+extern str_CrossDeviceLink, str_InvalidArgument, str_FileTableOverflow, str_TooManyOpenFiles, str_NoSpaceLeftOn, str_ArgumentTooLarge, str_ResultTooLarge, str_ResourceDeadlockWouldOccur
 global byte_D4FE8, byte_D506C, byte_D51DC, dword_D4F96, dword_D4F9A, dword_D4FA0, dword_D4FA4, dword_D4FEB
 global dword_D4FF1, dword_D5008, dword_D500C, dword_D5060, dword_D5064, dword_D5068, dword_D5184, dword_D5194
 global dword_D51D4, off_D516C, off_D517C, off_D518C, off_D51E4, unk_D5010, word_D4FE4, word_D4FE6
@@ -72,13 +72,13 @@ dd sub_90698
 dd sub_91370
 dd sub_A2F40
 off_D517C:
-dd unk_C4914
-dd unk_C491C
+dd str_Fsh
+dd str_3sh
 dword_D5184:
 db 07Bh,00h,00h,00h,01Eh,00h,00h,00h
 off_D518C:
-dd unk_C4924
-dd unk_C492C
+dd str_SHPI
+dd str_SHPM
 dword_D5194:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -93,19 +93,19 @@ db 00h,00h
 byte_D51DC:
 db 00h,00h,00h,00h,0Fh,00h,00h,00h
 off_D51E4:
-dd unk_C4954
-dd unk_C495C
-dd unk_C4976
-dd unk_C498C
-dd unk_C499E
-dd unk_C49AE
-dd unk_C49C0
-dd unk_C49D2
-dd unk_C49DE
-dd unk_C49F0
-dd unk_C4A01
-dd unk_C4A15
-dd unk_C4A29
-dd unk_C4A41
-dd unk_C4A54
-dd unk_C4A65
+dd str_Error0
+dd str_NoSuchFileOr
+dd str_ArgumentListTooBig
+dd str_ExecFormatError
+dd str_BadFileNumber
+dd str_NotEnoughMemory
+dd str_PermissionDenied
+dd str_FileExists
+dd str_CrossDeviceLink
+dd str_InvalidArgument
+dd str_FileTableOverflow
+dd str_TooManyOpenFiles
+dd str_NoSpaceLeftOn
+dd str_ArgumentTooLarge
+dd str_ResultTooLarge
+dd str_ResourceDeadlockWouldOccur

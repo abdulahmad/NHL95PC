@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
-extern __STOSB, asc_C47B8, asc_C47C4, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
+extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
 extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, sub_B3ABC
 global sub_97300, loc_97329, sub_97334, loc_97338, loc_9734A, sub_97350, loc_973BC, loc_973D9
 global loc_97406, loc_97429, loc_97462, loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE
@@ -29,7 +29,7 @@ push esi	; 97303
 push edi	; 97304
 mov esi, eax	; 97305
 mov ebx, 9	; 97307
-mov edx, asc_C47B8	; 9730C
+mov edx, str_Copyright	; 9730C
 call strncmp_	; 97311
 test eax, eax	; 97316
 jne short loc_97329	; 97318
@@ -1392,7 +1392,7 @@ je short loc_98009	; 97FF4
 xor eax, eax	; 97FF6
 mov al, byte [byte ebp+00h]	; 97FF8
 push eax	; 97FFB
-push asc_C47C4	; 97FFC
+push str_UnpackINVALIDPACKCODE	; 97FFC
 call FatalError	; 98001
 add esp, byte 8	; 98006
 loc_98009:

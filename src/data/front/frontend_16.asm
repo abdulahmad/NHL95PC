@@ -3,10 +3,10 @@ bits 32
 %include "hockey.inc"
 section s_C4D18 progbits alloc noexec write align=1
 extern TeamList, str_ArtHart, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn, str_ArtCald
-extern str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, unk_C0243, unk_C0248, unk_C0251, unk_C0258
-extern unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A, unk_C02A7
-extern unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B, unk_C0337
-extern unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, BOS, BUF, CGY
+extern str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, str_Hart, str_ArtRoss2, str_Norris, str_Selke
+extern str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, unk_C029A, str_MostValuablePlayer
+extern str_PointsLeader, str_RegularSeason, str_BestDefenseman, str_BestDefensiveForward, str_BestGoalkeeper, str_BestGoalsAgainstAverage, str_BestRookie, str_BestRegularSeasonRecord
+extern str_InThePlayoffs, str_Most3StarSelections, unk_C0379, str_Season2, str_Playoff2, BOS, BUF, CGY
 extern CHI, DET, EDM, HFD, LA, DAL, MTL, NJ
 extern NYI, NYR, OTT, PHI, PIT, QUE, STL, SJ
 extern TB, TOR, VAN, WSH, WPG, ANA, FLA, ASW
@@ -145,37 +145,37 @@ dd str_ArtConn
 dd str_ArtEasn
 dd str_ArtStan
 awardnames:
-dd unk_C0243
-dd unk_C0248
-dd unk_C0251
-dd unk_C0258
-dd unk_C025E
-dd unk_C0265
-dd unk_C026E
-dd unk_C0275
-dd unk_C0280
-dd unk_C028C
+dd str_Hart
+dd str_ArtRoss2
+dd str_Norris
+dd str_Selke
+dd str_Vezina
+dd str_Jennings
+dd str_Calder
+dd str_Presidents
+dd str_ConnSmythe
+dd str_EASportsCup
 dd unk_C029A
 awardtitles:
-dd unk_C02A7
+dd str_MostValuablePlayer
 db 00h,00h,00h,00h
-dd unk_C02BC
-dd unk_C02CA
-dd unk_C02D9
+dd str_PointsLeader
+dd str_RegularSeason
+dd str_BestDefenseman
 db 00h,00h,00h,00h
-dd unk_C02E9
+dd str_BestDefensiveForward
 db 00h,00h,00h,00h
-dd unk_C0300
+dd str_BestGoalkeeper
 db 00h,00h,00h,00h
-dd unk_C0310
+dd str_BestGoalsAgainstAverage
 db 00h,00h,00h,00h
-dd unk_C032B
+dd str_BestRookie
 db 00h,00h,00h,00h
-dd unk_C0337
+dd str_BestRegularSeasonRecord
 db 00h,00h,00h,00h
-dd unk_C02A7
-dd unk_C0352
-dd unk_C0362
+dd str_MostValuablePlayer
+dd str_InThePlayoffs
+dd str_Most3StarSelections
 db 00h,00h,00h,00h
 dd unk_C0379
 db 00h,00h,00h,00h
@@ -203,8 +203,8 @@ off_C5273:
 dd unk_D98C3
 db 00h,00h,00h,00h
 off_C527B:
-dd unk_C0390
-dd unk_C0397
+dd str_Season2
+dd str_Playoff2
 str_fmtpd:
 db 025h,064h,00h
 str_D02d:

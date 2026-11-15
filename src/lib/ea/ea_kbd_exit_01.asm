@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern asc_C47E8, asc_C47FC, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
+extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_90267, sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0
 extern sub_A1800, sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, sub_B4F8C
@@ -240,7 +240,7 @@ push byte 18h	; 984AA
 mov ecx, 0A0h	; 984AC
 mov ebx, 58h	; 984B1
 mov edx, 50h	; 984B6
-mov eax, asc_C47E8	; 984BB
+mov eax, str_EXITTODOSY	; 984BB
 call sub_981F8	; 984C0
 test eax, eax	; 984C5
 je short loc_984CF	; 984C7
@@ -352,7 +352,7 @@ push byte 18h	; 9862E
 mov ecx, 120h	; 98630
 mov ebx, 58h	; 98635
 mov edx, 10h	; 9863A
-mov eax, asc_C47FC	; 9863F
+mov eax, str_PAUSEPRESSANYKEY	; 9863F
 call sub_981F8	; 98644
 ret	; 98649
 db 00h,00h

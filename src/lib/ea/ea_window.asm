@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8E7A0 progbits alloc exec nowrite align=1
-extern asc_C3F74, asc_C3F80, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
+extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
 extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8, dword_D42CC
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
 extern sub_8CCA8, sub_8CD04, sub_8D728, sub_98D20, sub_98E50, sub_B3B19, sub_B3C60, sub_B3C74
@@ -18,7 +18,7 @@ push ebp	; 8E7A2
 mov ebp, dword [byte esp+010h]	; 8E7A3
 push byte 0	; 8E7A7
 push byte 30h	; 8E7A9
-push asc_C3F74	; 8E7AB
+push str_SUBWINDOW	; 8E7AB
 call sub_8CCA8	; 8E7B0
 mov esi, eax	; 8E7B5
 add esp, byte 0Ch	; 8E7B7
@@ -48,7 +48,7 @@ call sub_98D20	; 8E7FD
 mov dword [byte esi+028h], eax	; 8E802
 test eax, eax	; 8E805
 jne short loc_8E816	; 8E807
-push asc_C3F80	; 8E809
+push str_SubwindowdefadrOUTOFROW	; 8E809
 call FatalError	; 8E80E
 add esp, byte 4	; 8E813
 loc_8E816:

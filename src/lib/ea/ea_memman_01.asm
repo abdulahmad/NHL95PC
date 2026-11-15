@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
-extern asc_C3B98, asc_C3BA0, asc_C3BAC, asc_C3BB0, asc_C3BCC, asc_C3C10, asc_C3C4C, asc_C3C88
-extern asc_C3CB0, asc_C3CF4, asc_C3D38, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
+extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
+extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
 extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
 extern sub_8DB8C, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
@@ -43,7 +43,7 @@ mov dword [byte esi+010h], eax	; 8C9D6
 call sub_8DB8C	; 8C9D9
 mov edi, eax	; 8C9DE
 push byte 0Ch	; 8C9E0
-push asc_C3B98	; 8C9E2
+push str_LOWMEM	; 8C9E2
 add eax, byte 4	; 8C9E7
 push eax	; 8C9EA
 call sub_8E3E4	; 8C9EB
@@ -59,7 +59,7 @@ mov dword [esi], edi	; 8CA14
 call sub_8DB8C	; 8CA16
 mov edi, eax	; 8CA1B
 push byte 0Ch	; 8CA1D
-push asc_C3BA0	; 8CA1F
+push str_HIGHMEM	; 8CA1F
 add eax, byte 4	; 8CA24
 push eax	; 8CA27
 call sub_8E3E4	; 8CA28
@@ -162,7 +162,7 @@ and dword [byte esp+018h], eax	; 8CB25
 call sub_8DB8C	; 8CB29
 mov esi, eax	; 8CB2E
 push byte 0Ch	; 8CB30
-push asc_C3BA0	; 8CB32
+push str_HIGHMEM	; 8CB32
 add eax, byte 4	; 8CB37
 push eax	; 8CB3A
 call sub_8E3E4	; 8CB3B
@@ -176,7 +176,7 @@ mov eax, dword [byte esp+010h]	; 8CB5E
 or ax, 8020h	; 8CB62
 mov dword [byte esi+018h], eax	; 8CB66
 push byte 0Ch	; 8CB69
-push asc_C3BAC	; 8CB6B
+push str_GAP	; 8CB6B
 mov eax, dword [byte edi+04h]	; 8CB70
 add eax, byte 4	; 8CB73
 push eax	; 8CB76
@@ -226,7 +226,7 @@ jne short loc_8CBD2	; 8CBE1
 loc_8CBE3:
 cmp esi, dword [byte edi+04h]	; 8CBE3
 jne short loc_8CBF5	; 8CBE6
-push asc_C3BB0	; 8CBE8
+push str_ReleaseMemoryNotFound	; 8CBE8
 call FatalError	; 8CBED
 add esp, byte 4	; 8CBF2
 loc_8CBF5:
@@ -387,7 +387,7 @@ call sub_8DAB8	; 8CD73
 push eax	; 8CD78
 mov ebp, dword [byte esp+01Ch]	; 8CD79
 push ebp	; 8CD7D
-push asc_C3BCC	; 8CD7E
+push str_ReservememINVALIDSIZE	; 8CD7E
 call FatalError	; 8CD83
 add esp, byte 0Ch	; 8CD88
 jmp near loc_8D0BF	; 8CD8B
@@ -551,7 +551,7 @@ call sub_8DAB8	; 8CF3F
 push eax	; 8CF44
 mov edx, dword [byte esp+01Ch]	; 8CF45
 push edx	; 8CF49
-push asc_C3C10	; 8CF4A
+push str_ReservememOUTOFMEMORY	; 8CF4A
 jmp near loc_8D08F	; 8CF4F
 loc_8CF54:
 test dl, 10h	; 8CF54
@@ -676,7 +676,7 @@ call sub_8DAB8	; 8D07F
 push eax	; 8D084
 mov ebx, dword [byte esp+01Ch]	; 8D085
 push ebx	; 8D089
-push asc_C3C4C	; 8D08A
+push str_ReservememOUTOFMEMORY2	; 8D08A
 loc_8D08F:
 call FatalError	; 8D08F
 add esp, byte 0Ch	; 8D094
@@ -689,7 +689,7 @@ call sub_986E4	; 8D0A5
 add esp, byte 4	; 8D0AA
 mov edi, dword [byte esp+01Ch]	; 8D0AD
 push edi	; 8D0B1
-push asc_C3C88	; 8D0B2
+push str_ReservememINVALIDTYPEFLAGS	; 8D0B2
 call FatalError	; 8D0B7
 add esp, byte 8	; 8D0BC
 loc_8D0BF:
@@ -810,7 +810,7 @@ call sub_8DAB8	; 8D1E5
 push eax	; 8D1EA
 mov ebp, dword [byte esp+018h]	; 8D1EB
 push ebp	; 8D1EF
-push asc_C3CB0	; 8D1F0
+push str_ResizememINVALIDSIZE	; 8D1F0
 call FatalError	; 8D1F5
 add esp, byte 0Ch	; 8D1FA
 jmp near loc_8D29A	; 8D1FD
@@ -872,7 +872,7 @@ je short loc_8D29A	; 8D285
 push ebp	; 8D287
 mov esi, dword [byte esp+018h]	; 8D288
 push esi	; 8D28C
-push asc_C3CF4	; 8D28D
+push str_ResizememblockNOROOMTO	; 8D28D
 call FatalError	; 8D292
 add esp, byte 0Ch	; 8D297
 loc_8D29A:
@@ -898,7 +898,7 @@ mov edx, dword [dword_D2F58]	; 8D2BC
 cmp eax, dword [byte edx+04h]	; 8D2C2
 jne short loc_8D2AE	; 8D2C5
 push ebx	; 8D2C7
-push asc_C3D38	; 8D2C8
+push str_FindmemblockBLOCKNOTFOUND	; 8D2C8
 call FatalError	; 8D2CD
 sub_8D2D2:
 add esp, byte 8	; 8D2D2

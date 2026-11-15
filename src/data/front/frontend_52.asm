@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_D0B16 progbits alloc noexec write align=1
-extern unk_C744C, unk_C7450
+extern str_Yes, str_No4
 global dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2, dword_D0BFC, dword_D0C04
-global dword_D0C10, dword_D0C18, dword_D0C20, unk_D0B76, unk_D0B79, unk_D0B80, unk_D0BB8, unk_D0BF0
+global dword_D0C10, dword_D0C18, dword_D0C20, str_OK, str_Cancel5, unk_D0B80, unk_D0BB8, unk_D0BF0
 global savedbbtns
 dlgfillcol:
 db 041h,00h,00h,00h
@@ -22,17 +22,17 @@ db 0BDh,00h,00h,00h,0A9h,01h,00h,00h,0CAh,00h,00h,00h,0A9h,01h,00h,00h
 db 0D7h,00h,00h,00h,0A9h,01h,00h,00h,0E4h,00h,00h,00h,0A9h,01h,00h,00h
 db 0F1h,00h,00h,00h,0A9h,01h,00h,00h,0FEh,00h,00h,00h,0A9h,01h,00h,00h
 db 0Bh,01h,00h,00h,09Ch,0FFh,0FFh,0FFh,09Ch,0FFh,0FFh,0FFh
-unk_D0B76:
+str_OK:
 db 04Fh,04Bh,00h
-unk_D0B79:
+str_Cancel5:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
 unk_D0B80:
 db 0D2h,00h,00h,00h,036h,01h,00h,00h,048h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_D0B76
+dd str_OK
 db 06Bh,01h,00h,00h,036h,01h,00h,00h,048h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_D0B79
+dd str_Cancel5
 unk_D0BB8:
 db 03Ah,01h,00h,00h,024h,00h,00h,00h,0Ch,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h,00h,00h,00h,00h,03Ah,01h,00h,00h
@@ -53,7 +53,7 @@ db 00h,00h,00h,00h
 savedbbtns:
 db 08h,00h,00h,00h,01Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_C7450
+dd str_No4
 db 0F8h,0FFh,0FFh,0FFh,01Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
-dd unk_C744C
+dd str_Yes

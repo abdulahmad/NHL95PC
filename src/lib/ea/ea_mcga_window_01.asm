@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9A7A0 progbits alloc exec nowrite align=1
-extern _os_handle, asc_C4888, asc_C4894, asc_C48B0, asc_C48C8, FatalError, sub_8CC70, sub_98D20
+extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, sub_8CC70, sub_98D20
 extern sub_B3FC2
 global sub_9A7A0, loc_9A7DB, loc_9A7EF, loc_9A868
 sub_9A7A0:
@@ -17,20 +17,20 @@ add eax, byte 40h	; 9A7B2
 mov ebx, dword [byte esp+01Ch]	; 9A7B5
 push ebx	; 9A7B9
 push eax	; 9A7BA
-push asc_C4888	; 9A7BB
+push str_MCGAWINDOW	; 9A7BB
 call sub_8CC70	; 9A7C0
 add esp, byte 0Ch	; 9A7C5
 mov ebp, eax	; 9A7C8
 test eax, eax	; 9A7CA
 jne short loc_9A7DB	; 9A7CC
-push asc_C4894	; 9A7CE
+push str_WindowdefOUTOFMEMORY	; 9A7CE
 call FatalError	; 9A7D3
 add esp, byte 4	; 9A7D8
 loc_9A7DB:
 mov esi, dword [byte ebp+00h]	; 9A7DB
 test esi, esi	; 9A7DE
 jne short loc_9A7EF	; 9A7E0
-push asc_C48B0	; 9A7E2
+push str_WindowdefBADBLOCK	; 9A7E2
 call FatalError	; 9A7E7
 add esp, byte 4	; 9A7EC
 loc_9A7EF:
@@ -69,7 +69,7 @@ mov esi, dword [byte esp+018h]	; 9A851
 push esi	; 9A855
 mov edi, dword [byte esp+018h]	; 9A856
 push edi	; 9A85A
-push asc_C48C8	; 9A85B
+push str_WindowdefadrOUTOFROW	; 9A85B
 call FatalError	; 9A860
 add esp, byte 0Ch	; 9A865
 loc_9A868:

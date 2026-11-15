@@ -37,12 +37,12 @@ global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
 global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
 global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_F4, unk_C3470
-global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
-global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
-global unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E, unk_C3521, unk_C3524, unk_C3528
-global unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C, unk_C355E, unk_C3580, str_Vs
-global unk_C36AC, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712, unk_C371F
-global unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775, unk_C392C
+global str_ANA4, str_BOS2, str_BUF4, str_CGY2, str_CHI2, str_DAL2, str_DET2, str_EDM2
+global str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2, str_NYI2, str_NYR2, str_OTT2
+global str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2, str_TB2, str_TOR2, str_VAN2
+global str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter, str_EasternConferenceQuarter, unk_C3580, str_Vs
+global unk_C36AC, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen, str_InterferPen
+global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, unk_C392C
 global unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F, unk_C397B, unk_C39A8
 str_DSBOX:
 db 044h,053h,042h,04Fh,058h,00h,00h,00h
@@ -426,67 +426,67 @@ str_Pl10:
 db 070h,06Ch,031h,030h,00h
 str_Pl20:
 db 070h,06Ch,032h,030h,00h,00h
-unk_C34D0:
+str_ANA4:
 db 041h,04Eh,041h,00h
-unk_C34D4:
+str_BOS2:
 db 042h,04Fh,053h,00h
-unk_C34D8:
+str_BUF4:
 db 042h,055h,046h,00h
-unk_C34DC:
+str_CGY2:
 db 043h,047h,059h,00h
-unk_C34E0:
+str_CHI2:
 db 043h,048h,049h,00h
-unk_C34E4:
+str_DAL2:
 db 044h,041h,04Ch,00h
-unk_C34E8:
+str_DET2:
 db 044h,045h,054h,00h
-unk_C34EC:
+str_EDM2:
 db 045h,044h,04Dh,00h
-unk_C34F0:
+str_FLA2:
 db 046h,04Ch,041h,00h
-unk_C34F4:
+str_HFD2:
 db 048h,046h,044h,00h
-unk_C34F8:
+str_LA2:
 db 04Ch,041h,00h
-unk_C34FB:
+str_MTL2:
 db 04Dh,054h,04Ch,00h
-unk_C34FF:
+str_NJ2:
 db 04Eh,04Ah,00h
-unk_C3502:
+str_NYI2:
 db 04Eh,059h,049h,00h
-unk_C3506:
+str_NYR2:
 db 04Eh,059h,052h,00h
-unk_C350A:
+str_OTT2:
 db 04Fh,054h,054h,00h
-unk_C350E:
+str_PHI2:
 db 050h,048h,049h,00h
-unk_C3512:
+str_PIT2:
 db 050h,049h,054h,00h
-unk_C3516:
+str_QUE2:
 db 051h,055h,045h,00h
-unk_C351A:
+str_STL2:
 db 053h,054h,04Ch,00h
-unk_C351E:
+str_SJ2:
 db 053h,04Ah,00h
-unk_C3521:
+str_TB2:
 db 054h,042h,00h
-unk_C3524:
+str_TOR2:
 db 054h,04Fh,052h,00h
-unk_C3528:
+str_VAN2:
 db 056h,041h,04Eh,00h
-unk_C352C:
+str_WSH2:
 db 057h,053h,048h,00h
-unk_C3530:
+str_WPG2:
 db 057h,050h,047h,00h
-unk_C3534:
+str_ASW2:
 db 041h,053h,057h,00h
-unk_C3538:
+str_ASE2:
 db 041h,053h,045h,00h
-unk_C353C:
+str_WesternConferenceQuarter:
 db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
 db 073h,00h
-unk_C355E:
+str_EasternConferenceQuarter:
 db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
 db 073h,00h
@@ -572,33 +572,33 @@ asc_C36C3:
 db 025h,030h,034h,078h,0Ah,00h
 str_Emmcopybuf:
 db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
-unk_C36D4:
+str_RoughingPen:
 db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36E1:
+str_ChargingPen:
 db 063h,068h,061h,072h,067h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36EE:
+str_SlashingPen:
 db 073h,06Ch,061h,073h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36FB:
+str_XcheckPen:
 db 078h,063h,068h,065h,063h,06Bh,02Eh,070h,065h,06Eh,00h
-unk_C3706:
+str_HookingPen:
 db 068h,06Fh,06Fh,06Bh,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3712:
+str_TrippingPen:
 db 074h,072h,069h,070h,070h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C371F:
+str_InterferPen:
 db 069h,06Eh,074h,065h,072h,066h,065h,072h,02Eh,070h,065h,06Eh,00h
-unk_C372C:
+str_HoldingPen:
 db 068h,06Fh,06Ch,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3738:
+str_AbusePen:
 db 061h,062h,075h,073h,065h,02Eh,070h,065h,06Eh,00h
-unk_C3742:
+str_CheckbndPen:
 db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,02Eh,070h,065h,06Eh,00h
-unk_C374F:
+str_BoardingPen:
 db 062h,06Fh,061h,072h,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C375C:
+str_ElbowingPen:
 db 065h,06Ch,062h,06Fh,077h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3769:
+str_HistickPen:
 db 068h,069h,073h,074h,069h,063h,06Bh,02Eh,070h,065h,06Eh,00h
-unk_C3775:
+str_SpearingPen:
 db 073h,070h,065h,061h,072h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_Speechbuf:
 db 073h,070h,065h,065h,063h,068h,062h,075h,066h,00h

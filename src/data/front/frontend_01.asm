@@ -17,10 +17,10 @@ global str_Pioneer3, str_FlaD, str_Pion, str_Pio, str_Eaopen, str_Easports, str_
 global str_Rockditi, str_Shp0, str_OUT, str_NeedKbytesFmt2, str_SfPal1, str_SfPal2, str_PleaseEnterOutputFile, str_Eadesk1d
 global str_Desk, str_Pal5, str_Pointer2, str_Iff3, str_Pause, str_Menubuff3, str_ArtHart, str_S1
 global str_errd3, str_errd4, str_backslash, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn
-global str_ArtCald, str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, unk_C0243, unk_C0248, unk_C0251
-global unk_C0258, unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A
-global unk_C02A7, unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B
-global unk_C0337, unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, str_MightyDucks, unk_C03C4
+global str_ArtCald, str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, str_Hart, str_ArtRoss2, str_Norris
+global str_Selke, str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, unk_C029A
+global str_MostValuablePlayer, str_PointsLeader, str_RegularSeason, str_BestDefenseman, str_BestDefensiveForward, str_BestGoalkeeper, str_BestGoalsAgainstAverage, str_BestRookie
+global str_BestRegularSeasonRecord, str_InThePlayoffs, str_Most3StarSelections, unk_C0379, str_Season2, str_Playoff2, str_MightyDucks, unk_C03C4
 global unk_C03C6, str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G
 global str_A, str_Pt, BOS, BUF, CGY, CHI, DET, EDM
 global HFD, LA, DAL, MTL, NJ, NYI, NYR, OTT
@@ -30,13 +30,13 @@ global Chicago, Detroit, Edmonton, Hartford, LosAngeles, Dallas, Montreal, NewJe
 global NYIslanders, NYRangers, Ottawa, Philadelphia, Pittsburgh, Quebec, StLouis, SanJose
 global TampaBay, Toronto, Vancouver, Washington, Winnipeg, Anaheim, Florida, AllStarsWest
 global AllStarsEast, unk_C06BC, unk_C06C1, unk_C06C6, unk_C06CB, unk_C06D0, unk_C06D5, unk_C06DA
-global unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, unk_C06F3, unk_C06F8, unk_C06FD, unk_C0702
-global unk_C0707, unk_C070C, unk_C0711, unk_C0716, unk_C071B, unk_C0720, unk_C0725, unk_C072A
-global unk_C072F, unk_C0734, unk_C0739, unk_C073E, unk_C0743, unk_C0748, unk_C074D, unk_C0752
-global unk_C0757, unk_C075C, unk_C0761, unk_C0766, unk_C076B, unk_C0770, unk_C0775, unk_C077A
-global unk_C077F, unk_C07A4, unk_C07A6, unk_C07AF, unk_C07B8, unk_C07C1, unk_C07CA, unk_C07D3
-global unk_C07DC, unk_C07E5, unk_C07EE, unk_C07F7, unk_C0800, unk_C0809, unk_C0812, unk_C081B
-global unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, str_rt, str_wt
+global unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, str_OT2, str_BOS, str_BUF3, str_CGY
+global str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL, str_NJ
+global str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL, str_SJ
+global str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA, str_ASW
+global str_ASE, unk_C07A4, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01, str_Credit15
+global str_Credit12, str_Credit08, str_Credit02, str_Credit11, str_Credit05, str_Credit06, str_Credit07, str_Credit18
+global str_Credit14, str_Credit13, str_Credit16, str_Credit00, str_Credit04, str_Credit03, str_rt, str_wt
 str_NoDiskSpaceC:
 db 0Ah,049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,044h,069h
 db 073h,06Bh,020h,053h,070h,061h,063h,065h,020h,066h,072h,065h,065h,020h,06Fh,06Eh
@@ -126,61 +126,61 @@ str_ArtEasn:
 db 065h,061h,073h,06Eh,00h
 str_ArtStan:
 db 073h,074h,061h,06Eh,00h
-unk_C0243:
+str_Hart:
 db 048h,061h,072h,074h,00h
-unk_C0248:
+str_ArtRoss2:
 db 041h,072h,074h,020h,052h,06Fh,073h,073h,00h
-unk_C0251:
+str_Norris:
 db 04Eh,06Fh,072h,072h,069h,073h,00h
-unk_C0258:
+str_Selke:
 db 053h,065h,06Ch,06Bh,065h,00h
-unk_C025E:
+str_Vezina:
 db 056h,065h,07Ah,069h,06Eh,061h,00h
-unk_C0265:
+str_Jennings:
 db 04Ah,065h,06Eh,06Eh,069h,06Eh,067h,073h,00h
-unk_C026E:
+str_Calder:
 db 043h,061h,06Ch,064h,065h,072h,00h
-unk_C0275:
+str_Presidents:
 db 050h,072h,065h,073h,069h,064h,065h,06Eh,074h,073h,00h
-unk_C0280:
+str_ConnSmythe:
 db 043h,06Fh,06Eh,06Eh,020h,053h,06Dh,079h,074h,068h,065h,00h
-unk_C028C:
+str_EASportsCup:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,020h,043h,075h,070h,00h
 unk_C029A:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,00h
-unk_C02A7:
+str_MostValuablePlayer:
 db 04Dh,06Fh,073h,074h,020h,056h,061h,06Ch,075h,061h,062h,06Ch,065h,020h,050h,06Ch
 db 061h,079h,065h,072h,00h
-unk_C02BC:
+str_PointsLeader:
 db 050h,06Fh,069h,06Eh,074h,073h,020h,04Ch,065h,061h,064h,065h,072h,00h
-unk_C02CA:
+str_RegularSeason:
 db 052h,065h,067h,075h,06Ch,061h,072h,020h,053h,065h,061h,073h,06Fh,06Eh,00h
-unk_C02D9:
+str_BestDefenseman:
 db 042h,065h,073h,074h,020h,044h,065h,066h,065h,06Eh,073h,065h,06Dh,061h,06Eh,00h
-unk_C02E9:
+str_BestDefensiveForward:
 db 042h,065h,073h,074h,020h,044h,065h,066h,065h,06Eh,073h,069h,076h,065h,020h,046h
 db 06Fh,072h,077h,061h,072h,064h,00h
-unk_C0300:
+str_BestGoalkeeper:
 db 042h,065h,073h,074h,020h,047h,06Fh,061h,06Ch,06Bh,065h,065h,070h,065h,072h,00h
-unk_C0310:
+str_BestGoalsAgainstAverage:
 db 042h,065h,073h,074h,020h,047h,06Fh,061h,06Ch,073h,020h,041h,067h,061h,069h,06Eh
 db 073h,074h,020h,041h,076h,065h,072h,061h,067h,065h,00h
-unk_C032B:
+str_BestRookie:
 db 042h,065h,073h,074h,020h,052h,06Fh,06Fh,06Bh,069h,065h,00h
-unk_C0337:
+str_BestRegularSeasonRecord:
 db 042h,065h,073h,074h,020h,052h,065h,067h,075h,06Ch,061h,072h,020h,053h,065h,061h
 db 073h,06Fh,06Eh,020h,052h,065h,063h,06Fh,072h,064h,00h
-unk_C0352:
+str_InThePlayoffs:
 db 069h,06Eh,020h,074h,068h,065h,020h,050h,06Ch,061h,079h,06Fh,066h,066h,073h,00h
-unk_C0362:
+str_Most3StarSelections:
 db 04Dh,06Fh,073h,074h,020h,033h,020h,053h,074h,061h,072h,020h,053h,065h,06Ch,065h
 db 063h,074h,069h,06Fh,06Eh,073h,00h
 unk_C0379:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,043h,068h,061h
 db 06Dh,070h,069h,06Fh,06Eh,073h,00h
-unk_C0390:
+str_Season2:
 db 053h,065h,061h,073h,06Fh,06Eh,00h
-unk_C0397:
+str_Playoff2:
 db 050h,06Ch,061h,079h,06Fh,066h,066h,00h
 str_ANA:
 db 041h,04Eh,041h,00h
@@ -427,63 +427,63 @@ unk_C06E9:
 db 033h,030h,030h,039h,00h
 unk_C06EE:
 db 033h,030h,030h,020h,00h
-unk_C06F3:
+str_OT2:
 db 04Fh,054h,020h,020h,00h
-unk_C06F8:
+str_BOS:
 db 042h,04Fh,053h,020h,00h
-unk_C06FD:
+str_BUF3:
 db 042h,055h,046h,020h,00h
-unk_C0702:
+str_CGY:
 db 043h,047h,059h,020h,00h
-unk_C0707:
+str_CHI:
 db 043h,048h,049h,020h,00h
-unk_C070C:
+str_DET:
 db 044h,045h,054h,020h,00h
-unk_C0711:
+str_EDM:
 db 045h,044h,04Dh,020h,00h
-unk_C0716:
+str_HFD:
 db 048h,046h,044h,020h,00h
-unk_C071B:
+str_LA:
 db 04Ch,041h,020h,020h,00h
-unk_C0720:
+str_DAL:
 db 044h,041h,04Ch,020h,00h
-unk_C0725:
+str_MTL:
 db 04Dh,054h,04Ch,020h,00h
-unk_C072A:
+str_NJ:
 db 04Eh,04Ah,020h,020h,00h
-unk_C072F:
+str_NYI:
 db 04Eh,059h,049h,020h,00h
-unk_C0734:
+str_NYR:
 db 04Eh,059h,052h,020h,00h
-unk_C0739:
+str_OTT:
 db 04Fh,054h,054h,020h,00h
-unk_C073E:
+str_PHI:
 db 050h,048h,049h,020h,00h
-unk_C0743:
+str_PIT:
 db 050h,049h,054h,020h,00h
-unk_C0748:
+str_QUE:
 db 051h,055h,045h,020h,00h
-unk_C074D:
+str_STL:
 db 053h,054h,04Ch,020h,00h
-unk_C0752:
+str_SJ:
 db 053h,04Ah,020h,020h,00h
-unk_C0757:
+str_TB:
 db 054h,042h,020h,020h,00h
-unk_C075C:
+str_TOR:
 db 054h,04Fh,052h,020h,00h
-unk_C0761:
+str_VAN:
 db 056h,041h,04Eh,020h,00h
-unk_C0766:
+str_WSH:
 db 057h,053h,048h,020h,00h
-unk_C076B:
+str_WPG:
 db 057h,050h,047h,020h,00h
-unk_C0770:
+str_ANA3:
 db 041h,04Eh,041h,020h,00h
-unk_C0775:
+str_FLA:
 db 046h,04Ch,041h,020h,00h
-unk_C077A:
+str_ASW:
 db 041h,053h,057h,020h,00h
-unk_C077F:
+str_ASE:
 db 041h,053h,045h,020h,00h
 str_Scrbrd2:
 db 073h,063h,072h,062h,072h,064h,032h,00h
@@ -495,45 +495,45 @@ str_Stanley:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,00h
 unk_C07A4:
 db 00h,00h
-unk_C07A6:
+str_Credit19:
 db 063h,072h,065h,064h,069h,074h,031h,039h,00h
-unk_C07AF:
+str_Credit10:
 db 063h,072h,065h,064h,069h,074h,031h,030h,00h
-unk_C07B8:
+str_Credit09:
 db 063h,072h,065h,064h,069h,074h,030h,039h,00h
-unk_C07C1:
+str_Credit17:
 db 063h,072h,065h,064h,069h,074h,031h,037h,00h
-unk_C07CA:
+str_Credit01:
 db 063h,072h,065h,064h,069h,074h,030h,031h,00h
-unk_C07D3:
+str_Credit15:
 db 063h,072h,065h,064h,069h,074h,031h,035h,00h
-unk_C07DC:
+str_Credit12:
 db 063h,072h,065h,064h,069h,074h,031h,032h,00h
-unk_C07E5:
+str_Credit08:
 db 063h,072h,065h,064h,069h,074h,030h,038h,00h
-unk_C07EE:
+str_Credit02:
 db 063h,072h,065h,064h,069h,074h,030h,032h,00h
-unk_C07F7:
+str_Credit11:
 db 063h,072h,065h,064h,069h,074h,031h,031h,00h
-unk_C0800:
+str_Credit05:
 db 063h,072h,065h,064h,069h,074h,030h,035h,00h
-unk_C0809:
+str_Credit06:
 db 063h,072h,065h,064h,069h,074h,030h,036h,00h
-unk_C0812:
+str_Credit07:
 db 063h,072h,065h,064h,069h,074h,030h,037h,00h
-unk_C081B:
+str_Credit18:
 db 063h,072h,065h,064h,069h,074h,031h,038h,00h
-unk_C0824:
+str_Credit14:
 db 063h,072h,065h,064h,069h,074h,031h,034h,00h
-unk_C082D:
+str_Credit13:
 db 063h,072h,065h,064h,069h,074h,031h,033h,00h
-unk_C0836:
+str_Credit16:
 db 063h,072h,065h,064h,069h,074h,031h,036h,00h
-unk_C083F:
+str_Credit00:
 db 063h,072h,065h,064h,069h,074h,030h,030h,00h
-unk_C0848:
+str_Credit04:
 db 063h,072h,065h,064h,069h,074h,030h,034h,00h
-unk_C0851:
+str_Credit03:
 db 063h,072h,065h,064h,069h,074h,030h,033h,00h
 str_Eascrn:
 db 065h,061h,073h,063h,072h,06Eh,00h

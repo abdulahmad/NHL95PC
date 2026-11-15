@@ -7,7 +7,7 @@ section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
 extern addtimer, asc_C36C3, byte_C541B, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
 extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, dword_CCC98, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern dword_D2435, dword_D27A2, dword_D27B2, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
+extern dword_D2435, str_Cor2, dword_D27B2, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
 extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
 extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
 extern ptrupdatefn, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RedrawSoundCardOpts, RemoveTimerCallback
@@ -2900,7 +2900,7 @@ lea eax, [byte esp+02Ch]	; 8525D
 push eax	; 85261
 call sprintf_	; 85262
 add esp, byte 10h	; 85267
-mov edx, dword [nosplit edx*4+dword_D27A2]	; 8526A
+mov edx, dword [nosplit edx*4+str_Cor2]	; 8526A
 mov ebx, 0Dh	; 85271
 mov eax, esp	; 85276
 call strncpy_	; 85278

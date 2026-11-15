@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
-extern asc_C48FC, asc_C4904, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
+extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
 extern fputchar, FreeMemBlock, off_D516C, sub_8CCA8, sub_8FFB0, sub_91FA4, sub_92CD0, sub_A2FD0
 extern sub_A3050, sub_A30D0, sub_B3ABC, sub_B7218
 global sub_9C594, loc_9C5A4, sub_9C5A8, sub_9C5B0, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
@@ -298,7 +298,7 @@ push byte 20h	; 9C924
 mov eax, edi	; 9C926
 call sub_9C8D0	; 9C928
 push eax	; 9C92D
-push asc_C48FC	; 9C92E
+push str_Unpackf	; 9C92E
 call sub_8CCA8	; 9C933
 mov edx, eax	; 9C938
 add esp, byte 0Ch	; 9C93A
@@ -314,7 +314,7 @@ push edx	; 9C950
 push edi	; 9C951
 call sub_B7218	; 9C952
 add esp, byte 0Ch	; 9C957
-push asc_C4904	; 9C95A
+push str_Unpacking	; 9C95A
 call DebugPrintf	; 9C95F
 add esp, byte 4	; 9C964
 jmp short loc_9C97F	; 9C967

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98B30 progbits alloc exec nowrite align=1
-extern abs_, asc_C481C, asc_C4840, asc_C4854, asc_C485C, byte_D4F5C, byte_D4F5D, byte_D4F5E
+extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_D4F5C, byte_D4F5D, byte_D4F5E
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
 extern byte_F234E, dword_D2F60, dword_D4F58, dword_D4F64, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, sub_8CD04
@@ -298,7 +298,7 @@ jb short loc_98DF6	; 98E04
 loc_98E06:
 cmp esi, edx	; 98E06
 je short loc_98E17	; 98E08
-push asc_C481C	; 98E0A
+push str_RemovewindowROWSPACE	; 98E0A
 call FatalError	; 98E0F
 add esp, byte 4	; 98E14
 loc_98E17:
@@ -336,7 +336,7 @@ push ebp	; 98E52
 sub esp, byte 64h	; 98E53
 mov ebp, dword [byte esp+078h]	; 98E56
 mov edi, dword [byte esp+07Ch]	; 98E5A
-push asc_C4840	; 98E5E
+push str_FshVshQfsQvs	; 98E5E
 lea eax, [byte esp+04h]	; 98E63
 push eax	; 98E67
 mov edx, dword [byte esp+07Ch]	; 98E68
@@ -350,12 +350,12 @@ call sub_8D728	; 98E7A
 add esp, byte 4	; 98E7F
 test eax, eax	; 98E82
 jne near loc_98F0A	; 98E84
-mov edx, asc_C4854	; 98E8A
+mov edx, str_Vsh	; 98E8A
 mov eax, esi	; 98E8F
 call stricmp_	; 98E91
 test eax, eax	; 98E96
 je short loc_98EAA	; 98E98
-mov edx, asc_C485C	; 98E9A
+mov edx, str_Qvs	; 98E9A
 mov eax, esi	; 98E9F
 call stricmp_	; 98EA1
 test eax, eax	; 98EA6

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
-extern asc_C3D60, dword_D2F58, dword_D2F64, dword_EDAAC, dword_EDAB0, dword_EDAB4, FatalError, findmemblock
+extern str_GetmemblockNOMEMORYBLOCKS, dword_D2F58, dword_D2F64, dword_EDAAC, dword_EDAB0, dword_EDAB4, FatalError, findmemblock
 extern memlist1, sub_8CD4C, sub_8E3F8, sub_8E44C, sub_986E4, sub_B3ABC, unknown_libname_22
 global sub_8D2F0, sub_8D31C, loc_8D340, sub_8D344, sub_8D35C, loc_8D379, loc_8D38E, sub_8D3A0
 global sub_8D3D4, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, sub_8D468, sub_8D484
@@ -947,7 +947,7 @@ mov ebx, dword [dword_EDAB0]	; 8DB95
 push ebx	; 8DB9B
 call sub_986E4	; 8DB9C
 add esp, byte 4	; 8DBA1
-push asc_C3D60	; 8DBA4
+push str_GetmemblockNOMEMORYBLOCKS	; 8DBA4
 call FatalError	; 8DBA9
 add esp, byte 4	; 8DBAE
 loc_8DBB1:

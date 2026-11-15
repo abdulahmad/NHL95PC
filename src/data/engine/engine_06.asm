@@ -11,33 +11,33 @@ global str_dbgD, str_dbgLbD, str_dbgDRb, str_dbgDS, str_dbgPosVel, str_dbgVz, st
 global str_debError, str_dbgBail, str_statslog, str_fmode_at, str_ErrDumpStats, str_dumpPool, str_dumpTmstructs, str_dumpHex
 global str_dumpSortcords, str_dumpSortLine, str_dumpRule, str_dumpTeamHdrH, str_dumpHome, str_dumpPlHdrH, str_dumpPlLineH, str_dumpGlHdrH
 global str_dumpGlLine, str_dumpTeamHdrA, str_dumpAway, str_dumpPlHdrA, str_dumpPlLineA, str_dumpGlHdrA, unk_C1B3E, unk_C1B49
-global unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B, unk_C1B88, unk_C1B90
-global unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6, unk_C1BE3, unk_C1BEC, unk_C1BF5
-global unk_C1BFE, unk_C1C05, unk_C1C0D, unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38
-global unk_C1C41, unk_C1C47, unk_C1C50, str_B3, str_B4, str_B5, str_B6, str_B7
+global str_Charging, str_Slashing, str_CrossChecking, str_Hooking, str_Tripping, str_Interference, str_Holding, str_HighSticking
+global str_Boarding, str_Elbowing, str_AbuseOfOfficial, str_CheckingFromBehind, str_PenaltyShot2, str_Roughing, str_Charging2, str_Slashing2
+global str_Xcheck, str_Hooking2, str_Tripping2, str_Interfer, str_Holding2, str_Histick, str_Boarding2, str_Elbowing2
+global str_Abuse, str_Checkbnd, str_Penshot, str_B3, str_B4, str_B5, str_B6, str_B7
 global str_B8, str_S8, str_BnReturnGoalie, str_BnPullGoalie, str_BnFaceOff, str_BnTwoLinePass, str_BnOffside, str_BnIcing
-global str_BnPenalty, str_BnPenaltyShot, unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04
-global unk_C1E0C, unk_C1E14, unk_C1E1C, unk_C1E24, unk_C1E2A, unk_C1E31, unk_C1E38, unk_C1E3E
-global unk_C1E44, unk_C1E4C, unk_C1E52, unk_C1E58, unk_C1E5E, unk_C1E63, unk_C1E69, unk_C1E6F
-global unk_C1E75, unk_C1E7B, unk_C1E85, unk_C1E8F, unk_C1E98, unk_C1EA5, unk_C1EB2, unk_C1EBA
-global unk_C1EC2, unk_C1EC8, unk_C1ECD, unk_C1ED3, unk_C1ED9, unk_C1EE1, unk_C1EEA, unk_C1EF4
-global unk_C1EF9, unk_C1F03, unk_C1F0C, unk_C1F14, unk_C1F1D, unk_C1F23, unk_C1F2A, unk_C1F32
-global unk_C1F38, unk_C1F3D, unk_C1F43, unk_C1F4B, unk_C1F50, unk_C1F55, unk_C1F5D, unk_C1F66
-global unk_C1F6F, unk_C1F78, unk_C1F81, unk_C1F89, unk_C1F95, unk_C1FA0, unk_C1FAB, unk_C1FB6
-global unk_C1FC1, unk_C1FCB, unk_C1FD5, unk_C1FE1, unk_C1FE9, unk_C1FF3, unk_C1FFC, unk_C2006
-global unk_C200F, unk_C2019, unk_C2021, unk_C2029, unk_C2035, unk_C203D, unk_C2049, unk_C2053
-global unk_C205F, unk_C206A, unk_C2074, unk_C207C, unk_C2084, unk_C208C, unk_C2094, unk_C209C
-global unk_C20A2, unk_C20AD, unk_C20B8, unk_C20C1, unk_C20CA, unk_C20D1, unk_C20D7, unk_C20DD
-global unk_C20E2, unk_C20E9, unk_C20F4, unk_C20FE, unk_C2109, unk_C2114, unk_C211E, unk_C212A
-global unk_C2136, unk_C2141, unk_C214C, unk_C2157, unk_C2162, unk_C216D, unk_C2179, unk_C2185
-global unk_C218F, unk_C2199, unk_C21A6, unk_C21B3, unk_C21BD, unk_C21C8, unk_C21D3, unk_C21DD
-global unk_C21E6, unk_C21F1, unk_C21F7, unk_C21FC, unk_C2201, unk_C2206, unk_C220C, unk_C2212
-global unk_C2218, unk_C221E, unk_C2224, unk_C2229, unk_C222F, unk_C2235, unk_C223F, unk_C2245
-global unk_C224C, unk_C2256, unk_C225C, unk_C2264, unk_C226A, unk_C2272, unk_C2278, unk_C227F
-global unk_C2286, unk_C228C, unk_C2292, unk_C229B, unk_C22A1, unk_C22A8, unk_C22B3, unk_C22BC
-global unk_C22C2, unk_C22CB, unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22F3, unk_C22F9
-global unk_C2301, unk_C2309, unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338
-global unk_C233A, unk_C233D, unk_C2340, unk_C2343, unk_C2345, unk_C2348, str_dbgO, str_dbgDash
+global str_BnPenalty, str_BnPenaltyShot, str_Gready, str_Gready2, str_Gglover, str_Gglovel, str_Gglovel2, str_Gstickr
+global str_Gstickl, str_Gstackr, str_Gstackl, str_Gdive, str_Gswing, str_Gskate, str_Pflip, str_Glide
+global str_Skatewp, str_Skate, str_Turnl, str_Turnr, str_Stop, str_Passf, str_Passb, str_Shotf
+global str_Shotb, str_Glideback, str_Skateback, str_Sweepchk, str_Shoulderchkl, str_Shoulderchkr, str_Hipchkl, str_Hipchkr
+global str_Burst, str_Hold, str_Hold2, str_Flail, str_Fallfwd, str_Fallback, str_Celebrate, str_Pump
+global str_Wallright, str_Wallleft, str_Faceoff, str_Faceoffr, str_Siren, str_Bglass, str_Stanley2, str_Catch
+global str_Hook, str_Hook2, str_Stumble, str_Fake, str_Flip, str_Injury1, str_Refglide, str_Refskate
+global str_Refturnl, str_Refturnr, str_Refstop, str_Reffallback, str_Armupglide, str_Armupskate, str_Armupturnl, str_Armupturnr
+global str_Armupstop, str_Refpickup, str_Refpointgoa, str_Refdrop, str_Reffowait, str_Refrough, str_Refcharge, str_Refslash
+global str_Refxcheck, str_Refhook, str_Reftrip, str_Refinterfer, str_Refhold, str_Refabuseoff, str_Refbehind, str_Faceoffpoke
+global str_Gwallright, str_Gwallleft, str_Anthem1, str_Anthem2, str_Anthem3, str_Anthem4, str_Anthem5, str_Drink
+global str_Refanthem1, str_Refanthem2, str_Onetimef, str_Onetimeb, str_Getcup, str_Brcup, str_Gvcup, str_Clap
+global str_Stansk, str_Crosscheck, str_Boardback, str_Boardfront, str_Boardright, str_Boardleft, str_Benchcheckr, str_Benchcheckl
+global str_Refpenshot, str_Goaliepoke, str_Goalieknee, str_Gokneehold, str_Gofallback, str_Gofallglove, str_Gofallstick, str_Fakeshotf
+global str_Fakeshotb, str_Fakeonetimef, str_Fakeonetimeb, str_Blockleft, str_Blockright, str_Blockfront, str_Blockknee, str_Refelbow
+global str_Refhistick, str_ERROR, str_Null, str_Defo, str_Defd, str_Wingd, str_Wingo, str_Centd
+global str_Cento, str_Score, str_Stan, str_Exben, str_Expen, str_Bench, str_Dopen, str_Goalie2
+global str_Goalieget, str_Puckc, str_Nearest, str_Shoot, str_Passrec, str_3star, str_R3star, str_Fowait
+global str_Pnorm, str_Pshad, str_Pnothing, str_Pface, str_Pface2, str_Gamemiscon, str_Rfaceoff, str_Rnorm
+global str_Rcallpen, str_Rpickup, str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotofo
+global str_Benwait, str_Initper, str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, unk_C2338
+global str_LD, str_RD2, str_LW, unk_C2343, str_RW, str_XC, str_dbgO, str_dbgDash
 global str_dbgL, str_dbgI, str_dbgSpace, str_dbgS, str_newline
 str_EASports:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,00h
@@ -49,61 +49,61 @@ PenaltyList:
 db 052h,06Fh,075h,067h,068h,069h,06Eh,067h,00h
 unk_C1B49:
 db 00h
-unk_C1B4A:
+str_Charging:
 db 043h,068h,061h,072h,067h,069h,06Eh,067h,00h
-unk_C1B53:
+str_Slashing:
 db 053h,06Ch,061h,073h,068h,069h,06Eh,067h,00h
-unk_C1B5C:
+str_CrossChecking:
 db 043h,072h,06Fh,073h,073h,043h,068h,065h,063h,06Bh,069h,06Eh,067h,00h
-unk_C1B6A:
+str_Hooking:
 db 048h,06Fh,06Fh,06Bh,069h,06Eh,067h,00h
-unk_C1B72:
+str_Tripping:
 db 054h,072h,069h,070h,070h,069h,06Eh,067h,00h
-unk_C1B7B:
+str_Interference:
 db 049h,06Eh,074h,065h,072h,066h,065h,072h,065h,06Eh,063h,065h,00h
-unk_C1B88:
+str_Holding:
 db 048h,06Fh,06Ch,064h,069h,06Eh,067h,00h
-unk_C1B90:
+str_HighSticking:
 db 048h,069h,067h,068h,053h,074h,069h,063h,06Bh,069h,06Eh,067h,00h
-unk_C1B9D:
+str_Boarding:
 db 042h,06Fh,061h,072h,064h,069h,06Eh,067h,00h
-unk_C1BA6:
+str_Elbowing:
 db 045h,06Ch,062h,06Fh,077h,069h,06Eh,067h,00h
-unk_C1BAF:
+str_AbuseOfOfficial:
 db 041h,062h,075h,073h,065h,020h,06Fh,066h,020h,04Fh,066h,066h,069h,063h,069h,061h
 db 06Ch,00h
-unk_C1BC1:
+str_CheckingFromBehind:
 db 043h,068h,065h,063h,06Bh,069h,06Eh,067h,020h,066h,072h,06Fh,06Dh,020h,042h,065h
 db 068h,069h,06Eh,064h,00h
-unk_C1BD6:
+str_PenaltyShot2:
 db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,053h,068h,06Fh,074h,00h
-unk_C1BE3:
+str_Roughing:
 db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,00h
-unk_C1BEC:
+str_Charging2:
 db 063h,068h,061h,072h,067h,069h,06Eh,067h,00h
-unk_C1BF5:
+str_Slashing2:
 db 073h,06Ch,061h,073h,068h,069h,06Eh,067h,00h
-unk_C1BFE:
+str_Xcheck:
 db 078h,063h,068h,065h,063h,06Bh,00h
-unk_C1C05:
+str_Hooking2:
 db 068h,06Fh,06Fh,06Bh,069h,06Eh,067h,00h
-unk_C1C0D:
+str_Tripping2:
 db 074h,072h,069h,070h,070h,069h,06Eh,067h,00h
-unk_C1C16:
+str_Interfer:
 db 069h,06Eh,074h,065h,072h,066h,065h,072h,00h
-unk_C1C1F:
+str_Holding2:
 db 068h,06Fh,06Ch,064h,069h,06Eh,067h,00h
-unk_C1C27:
+str_Histick:
 db 068h,069h,073h,074h,069h,063h,06Bh,00h
-unk_C1C2F:
+str_Boarding2:
 db 062h,06Fh,061h,072h,064h,069h,06Eh,067h,00h
-unk_C1C38:
+str_Elbowing2:
 db 065h,06Ch,062h,06Fh,077h,069h,06Eh,067h,00h
-unk_C1C41:
+str_Abuse:
 db 061h,062h,075h,073h,065h,00h
-unk_C1C47:
+str_Checkbnd:
 db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,00h
-unk_C1C50:
+str_Penshot:
 db 070h,065h,06Eh,073h,068h,06Fh,074h,00h
 str_B3:
 db 042h,033h,00h
@@ -187,351 +187,351 @@ str_Rinkpal:
 db 072h,069h,06Eh,06Bh,070h,061h,06Ch,00h
 str_Pal30:
 db 021h,070h,061h,06Ch,00h,00h
-unk_C1DDC:
+str_Gready:
 db 067h,072h,065h,061h,064h,079h,00h
-unk_C1DE3:
+str_Gready2:
 db 067h,072h,065h,061h,064h,079h,032h,00h
-unk_C1DEB:
+str_Gglover:
 db 067h,067h,06Ch,06Fh,076h,065h,072h,00h
-unk_C1DF3:
+str_Gglovel:
 db 067h,067h,06Ch,06Fh,076h,065h,06Ch,00h
-unk_C1DFB:
+str_Gglovel2:
 db 067h,067h,06Ch,06Fh,076h,065h,06Ch,032h,00h
-unk_C1E04:
+str_Gstickr:
 db 067h,073h,074h,069h,063h,06Bh,072h,00h
-unk_C1E0C:
+str_Gstickl:
 db 067h,073h,074h,069h,063h,06Bh,06Ch,00h
-unk_C1E14:
+str_Gstackr:
 db 067h,073h,074h,061h,063h,06Bh,072h,00h
-unk_C1E1C:
+str_Gstackl:
 db 067h,073h,074h,061h,063h,06Bh,06Ch,00h
-unk_C1E24:
+str_Gdive:
 db 067h,064h,069h,076h,065h,00h
-unk_C1E2A:
+str_Gswing:
 db 067h,073h,077h,069h,06Eh,067h,00h
-unk_C1E31:
+str_Gskate:
 db 067h,073h,06Bh,061h,074h,065h,00h
-unk_C1E38:
+str_Pflip:
 db 070h,066h,06Ch,069h,070h,00h
-unk_C1E3E:
+str_Glide:
 db 067h,06Ch,069h,064h,065h,00h
-unk_C1E44:
+str_Skatewp:
 db 073h,06Bh,061h,074h,065h,077h,070h,00h
-unk_C1E4C:
+str_Skate:
 db 073h,06Bh,061h,074h,065h,00h
-unk_C1E52:
+str_Turnl:
 db 074h,075h,072h,06Eh,06Ch,00h
-unk_C1E58:
+str_Turnr:
 db 074h,075h,072h,06Eh,072h,00h
-unk_C1E5E:
+str_Stop:
 db 073h,074h,06Fh,070h,00h
-unk_C1E63:
+str_Passf:
 db 070h,061h,073h,073h,066h,00h
-unk_C1E69:
+str_Passb:
 db 070h,061h,073h,073h,062h,00h
-unk_C1E6F:
+str_Shotf:
 db 073h,068h,06Fh,074h,066h,00h
-unk_C1E75:
+str_Shotb:
 db 073h,068h,06Fh,074h,062h,00h
-unk_C1E7B:
+str_Glideback:
 db 067h,06Ch,069h,064h,065h,062h,061h,063h,06Bh,00h
-unk_C1E85:
+str_Skateback:
 db 073h,06Bh,061h,074h,065h,062h,061h,063h,06Bh,00h
-unk_C1E8F:
+str_Sweepchk:
 db 073h,077h,065h,065h,070h,063h,068h,06Bh,00h
-unk_C1E98:
+str_Shoulderchkl:
 db 073h,068h,06Fh,075h,06Ch,064h,065h,072h,063h,068h,06Bh,06Ch,00h
-unk_C1EA5:
+str_Shoulderchkr:
 db 073h,068h,06Fh,075h,06Ch,064h,065h,072h,063h,068h,06Bh,072h,00h
-unk_C1EB2:
+str_Hipchkl:
 db 068h,069h,070h,063h,068h,06Bh,06Ch,00h
-unk_C1EBA:
+str_Hipchkr:
 db 068h,069h,070h,063h,068h,06Bh,072h,00h
-unk_C1EC2:
+str_Burst:
 db 062h,075h,072h,073h,074h,00h
-unk_C1EC8:
+str_Hold:
 db 068h,06Fh,06Ch,064h,00h
-unk_C1ECD:
+str_Hold2:
 db 068h,06Fh,06Ch,064h,032h,00h
-unk_C1ED3:
+str_Flail:
 db 066h,06Ch,061h,069h,06Ch,00h
-unk_C1ED9:
+str_Fallfwd:
 db 066h,061h,06Ch,06Ch,066h,077h,064h,00h
-unk_C1EE1:
+str_Fallback:
 db 066h,061h,06Ch,06Ch,062h,061h,063h,06Bh,00h
-unk_C1EEA:
+str_Celebrate:
 db 063h,065h,06Ch,065h,062h,072h,061h,074h,065h,00h
-unk_C1EF4:
+str_Pump:
 db 070h,075h,06Dh,070h,00h
-unk_C1EF9:
+str_Wallright:
 db 077h,061h,06Ch,06Ch,072h,069h,067h,068h,074h,00h
-unk_C1F03:
+str_Wallleft:
 db 077h,061h,06Ch,06Ch,06Ch,065h,066h,074h,00h
-unk_C1F0C:
+str_Faceoff:
 db 066h,061h,063h,065h,06Fh,066h,066h,00h
-unk_C1F14:
+str_Faceoffr:
 db 066h,061h,063h,065h,06Fh,066h,066h,072h,00h
-unk_C1F1D:
+str_Siren:
 db 073h,069h,072h,065h,06Eh,00h
-unk_C1F23:
+str_Bglass:
 db 062h,067h,06Ch,061h,073h,073h,00h
-unk_C1F2A:
+str_Stanley2:
 db 073h,074h,061h,06Eh,06Ch,065h,079h,00h
-unk_C1F32:
+str_Catch:
 db 063h,061h,074h,063h,068h,00h
-unk_C1F38:
+str_Hook:
 db 068h,06Fh,06Fh,06Bh,00h
-unk_C1F3D:
+str_Hook2:
 db 068h,06Fh,06Fh,06Bh,032h,00h
-unk_C1F43:
+str_Stumble:
 db 073h,074h,075h,06Dh,062h,06Ch,065h,00h
-unk_C1F4B:
+str_Fake:
 db 066h,061h,06Bh,065h,00h
-unk_C1F50:
+str_Flip:
 db 066h,06Ch,069h,070h,00h
-unk_C1F55:
+str_Injury1:
 db 069h,06Eh,06Ah,075h,072h,079h,031h,00h
-unk_C1F5D:
+str_Refglide:
 db 072h,065h,066h,067h,06Ch,069h,064h,065h,00h
-unk_C1F66:
+str_Refskate:
 db 072h,065h,066h,073h,06Bh,061h,074h,065h,00h
-unk_C1F6F:
+str_Refturnl:
 db 072h,065h,066h,074h,075h,072h,06Eh,06Ch,00h
-unk_C1F78:
+str_Refturnr:
 db 072h,065h,066h,074h,075h,072h,06Eh,072h,00h
-unk_C1F81:
+str_Refstop:
 db 072h,065h,066h,073h,074h,06Fh,070h,00h
-unk_C1F89:
+str_Reffallback:
 db 072h,065h,066h,066h,061h,06Ch,06Ch,062h,061h,063h,06Bh,00h
-unk_C1F95:
+str_Armupglide:
 db 061h,072h,06Dh,075h,070h,067h,06Ch,069h,064h,065h,00h
-unk_C1FA0:
+str_Armupskate:
 db 061h,072h,06Dh,075h,070h,073h,06Bh,061h,074h,065h,00h
-unk_C1FAB:
+str_Armupturnl:
 db 061h,072h,06Dh,075h,070h,074h,075h,072h,06Eh,06Ch,00h
-unk_C1FB6:
+str_Armupturnr:
 db 061h,072h,06Dh,075h,070h,074h,075h,072h,06Eh,072h,00h
-unk_C1FC1:
+str_Armupstop:
 db 061h,072h,06Dh,075h,070h,073h,074h,06Fh,070h,00h
-unk_C1FCB:
+str_Refpickup:
 db 072h,065h,066h,070h,069h,063h,06Bh,075h,070h,00h
-unk_C1FD5:
+str_Refpointgoa:
 db 072h,065h,066h,070h,06Fh,069h,06Eh,074h,067h,06Fh,061h,00h
-unk_C1FE1:
+str_Refdrop:
 db 072h,065h,066h,064h,072h,06Fh,070h,00h
-unk_C1FE9:
+str_Reffowait:
 db 072h,065h,066h,066h,06Fh,077h,061h,069h,074h,00h
-unk_C1FF3:
+str_Refrough:
 db 072h,065h,066h,072h,06Fh,075h,067h,068h,00h
-unk_C1FFC:
+str_Refcharge:
 db 072h,065h,066h,063h,068h,061h,072h,067h,065h,00h
-unk_C2006:
+str_Refslash:
 db 072h,065h,066h,073h,06Ch,061h,073h,068h,00h
-unk_C200F:
+str_Refxcheck:
 db 072h,065h,066h,078h,063h,068h,065h,063h,06Bh,00h
-unk_C2019:
+str_Refhook:
 db 072h,065h,066h,068h,06Fh,06Fh,06Bh,00h
-unk_C2021:
+str_Reftrip:
 db 072h,065h,066h,074h,072h,069h,070h,00h
-unk_C2029:
+str_Refinterfer:
 db 072h,065h,066h,069h,06Eh,074h,065h,072h,066h,065h,072h,00h
-unk_C2035:
+str_Refhold:
 db 072h,065h,066h,068h,06Fh,06Ch,064h,00h
-unk_C203D:
+str_Refabuseoff:
 db 072h,065h,066h,061h,062h,075h,073h,065h,06Fh,066h,066h,00h
-unk_C2049:
+str_Refbehind:
 db 072h,065h,066h,062h,065h,068h,069h,06Eh,064h,00h
-unk_C2053:
+str_Faceoffpoke:
 db 066h,061h,063h,065h,06Fh,066h,066h,070h,06Fh,06Bh,065h,00h
-unk_C205F:
+str_Gwallright:
 db 067h,077h,061h,06Ch,06Ch,072h,069h,067h,068h,074h,00h
-unk_C206A:
+str_Gwallleft:
 db 067h,077h,061h,06Ch,06Ch,06Ch,065h,066h,074h,00h
-unk_C2074:
+str_Anthem1:
 db 061h,06Eh,074h,068h,065h,06Dh,031h,00h
-unk_C207C:
+str_Anthem2:
 db 061h,06Eh,074h,068h,065h,06Dh,032h,00h
-unk_C2084:
+str_Anthem3:
 db 061h,06Eh,074h,068h,065h,06Dh,033h,00h
-unk_C208C:
+str_Anthem4:
 db 061h,06Eh,074h,068h,065h,06Dh,034h,00h
-unk_C2094:
+str_Anthem5:
 db 061h,06Eh,074h,068h,065h,06Dh,035h,00h
-unk_C209C:
+str_Drink:
 db 064h,072h,069h,06Eh,06Bh,00h
-unk_C20A2:
+str_Refanthem1:
 db 072h,065h,066h,061h,06Eh,074h,068h,065h,06Dh,031h,00h
-unk_C20AD:
+str_Refanthem2:
 db 072h,065h,066h,061h,06Eh,074h,068h,065h,06Dh,032h,00h
-unk_C20B8:
+str_Onetimef:
 db 06Fh,06Eh,065h,074h,069h,06Dh,065h,066h,00h
-unk_C20C1:
+str_Onetimeb:
 db 06Fh,06Eh,065h,074h,069h,06Dh,065h,062h,00h
-unk_C20CA:
+str_Getcup:
 db 067h,065h,074h,063h,075h,070h,00h
-unk_C20D1:
+str_Brcup:
 db 062h,072h,063h,075h,070h,00h
-unk_C20D7:
+str_Gvcup:
 db 067h,076h,063h,075h,070h,00h
-unk_C20DD:
+str_Clap:
 db 063h,06Ch,061h,070h,00h
-unk_C20E2:
+str_Stansk:
 db 073h,074h,061h,06Eh,073h,06Bh,00h
-unk_C20E9:
+str_Crosscheck:
 db 063h,072h,06Fh,073h,073h,063h,068h,065h,063h,06Bh,00h
-unk_C20F4:
+str_Boardback:
 db 062h,06Fh,061h,072h,064h,062h,061h,063h,06Bh,00h
-unk_C20FE:
+str_Boardfront:
 db 062h,06Fh,061h,072h,064h,066h,072h,06Fh,06Eh,074h,00h
-unk_C2109:
+str_Boardright:
 db 062h,06Fh,061h,072h,064h,072h,069h,067h,068h,074h,00h
-unk_C2114:
+str_Boardleft:
 db 062h,06Fh,061h,072h,064h,06Ch,065h,066h,074h,00h
-unk_C211E:
+str_Benchcheckr:
 db 062h,065h,06Eh,063h,068h,063h,068h,065h,063h,06Bh,072h,00h
-unk_C212A:
+str_Benchcheckl:
 db 062h,065h,06Eh,063h,068h,063h,068h,065h,063h,06Bh,06Ch,00h
-unk_C2136:
+str_Refpenshot:
 db 072h,065h,066h,070h,065h,06Eh,073h,068h,06Fh,074h,00h
-unk_C2141:
+str_Goaliepoke:
 db 067h,06Fh,061h,06Ch,069h,065h,070h,06Fh,06Bh,065h,00h
-unk_C214C:
+str_Goalieknee:
 db 067h,06Fh,061h,06Ch,069h,065h,06Bh,06Eh,065h,065h,00h
-unk_C2157:
+str_Gokneehold:
 db 067h,06Fh,06Bh,06Eh,065h,065h,068h,06Fh,06Ch,064h,00h
-unk_C2162:
+str_Gofallback:
 db 067h,06Fh,066h,061h,06Ch,06Ch,062h,061h,063h,06Bh,00h
-unk_C216D:
+str_Gofallglove:
 db 067h,06Fh,066h,061h,06Ch,06Ch,067h,06Ch,06Fh,076h,065h,00h
-unk_C2179:
+str_Gofallstick:
 db 067h,06Fh,066h,061h,06Ch,06Ch,073h,074h,069h,063h,06Bh,00h
-unk_C2185:
+str_Fakeshotf:
 db 066h,061h,06Bh,065h,073h,068h,06Fh,074h,066h,00h
-unk_C218F:
+str_Fakeshotb:
 db 066h,061h,06Bh,065h,073h,068h,06Fh,074h,062h,00h
-unk_C2199:
+str_Fakeonetimef:
 db 066h,061h,06Bh,065h,06Fh,06Eh,065h,074h,069h,06Dh,065h,066h,00h
-unk_C21A6:
+str_Fakeonetimeb:
 db 066h,061h,06Bh,065h,06Fh,06Eh,065h,074h,069h,06Dh,065h,062h,00h
-unk_C21B3:
+str_Blockleft:
 db 062h,06Ch,06Fh,063h,06Bh,06Ch,065h,066h,074h,00h
-unk_C21BD:
+str_Blockright:
 db 062h,06Ch,06Fh,063h,06Bh,072h,069h,067h,068h,074h,00h
-unk_C21C8:
+str_Blockfront:
 db 062h,06Ch,06Fh,063h,06Bh,066h,072h,06Fh,06Eh,074h,00h
-unk_C21D3:
+str_Blockknee:
 db 062h,06Ch,06Fh,063h,06Bh,06Bh,06Eh,065h,065h,00h
-unk_C21DD:
+str_Refelbow:
 db 072h,065h,066h,065h,06Ch,062h,06Fh,077h,00h
-unk_C21E6:
+str_Refhistick:
 db 072h,065h,066h,068h,069h,073h,074h,069h,063h,06Bh,00h
-unk_C21F1:
+str_ERROR:
 db 045h,052h,052h,04Fh,052h,00h
-unk_C21F7:
+str_Null:
 db 06Eh,075h,06Ch,06Ch,00h
-unk_C21FC:
+str_Defo:
 db 064h,065h,066h,06Fh,00h
-unk_C2201:
+str_Defd:
 db 064h,065h,066h,064h,00h
-unk_C2206:
+str_Wingd:
 db 077h,069h,06Eh,067h,064h,00h
-unk_C220C:
+str_Wingo:
 db 077h,069h,06Eh,067h,06Fh,00h
-unk_C2212:
+str_Centd:
 db 063h,065h,06Eh,074h,064h,00h
-unk_C2218:
+str_Cento:
 db 063h,065h,06Eh,074h,06Fh,00h
-unk_C221E:
+str_Score:
 db 073h,063h,06Fh,072h,065h,00h
-unk_C2224:
+str_Stan:
 db 073h,074h,061h,06Eh,00h
-unk_C2229:
+str_Exben:
 db 065h,078h,062h,065h,06Eh,00h
-unk_C222F:
+str_Expen:
 db 065h,078h,070h,065h,06Eh,00h
-unk_C2235:
+str_Bench:
 db 062h,065h,06Eh,063h,068h,00h
 str_pen:
 db 070h,065h,06Eh,00h
-unk_C223F:
+str_Dopen:
 db 064h,06Fh,070h,065h,06Eh,00h
-unk_C2245:
+str_Goalie2:
 db 067h,06Fh,061h,06Ch,069h,065h,00h
-unk_C224C:
+str_Goalieget:
 db 067h,06Fh,061h,06Ch,069h,065h,067h,065h,074h,00h
-unk_C2256:
+str_Puckc:
 db 070h,075h,063h,06Bh,063h,00h
-unk_C225C:
+str_Nearest:
 db 06Eh,065h,061h,072h,065h,073h,074h,00h
-unk_C2264:
+str_Shoot:
 db 073h,068h,06Fh,06Fh,074h,00h
-unk_C226A:
+str_Passrec:
 db 070h,061h,073h,073h,072h,065h,063h,00h
-unk_C2272:
+str_3star:
 db 033h,073h,074h,061h,072h,00h
-unk_C2278:
+str_R3star:
 db 072h,033h,073h,074h,061h,072h,00h
-unk_C227F:
+str_Fowait:
 db 066h,06Fh,077h,061h,069h,074h,00h
-unk_C2286:
+str_Pnorm:
 db 070h,06Eh,06Fh,072h,06Dh,00h
-unk_C228C:
+str_Pshad:
 db 070h,073h,068h,061h,064h,00h
-unk_C2292:
+str_Pnothing:
 db 070h,06Eh,06Fh,074h,068h,069h,06Eh,067h,00h
-unk_C229B:
+str_Pface:
 db 070h,066h,061h,063h,065h,00h
-unk_C22A1:
+str_Pface2:
 db 070h,066h,061h,063h,065h,032h,00h
-unk_C22A8:
+str_Gamemiscon:
 db 067h,061h,06Dh,065h,06Dh,069h,073h,063h,06Fh,06Eh,00h
-unk_C22B3:
+str_Rfaceoff:
 db 072h,066h,061h,063h,065h,06Fh,066h,066h,00h
-unk_C22BC:
+str_Rnorm:
 db 072h,06Eh,06Fh,072h,06Dh,00h
-unk_C22C2:
+str_Rcallpen:
 db 072h,063h,061h,06Ch,06Ch,070h,065h,06Eh,00h
-unk_C22CB:
+str_Rpickup:
 db 072h,070h,069h,063h,06Bh,075h,070h,00h
-unk_C22D3:
+str_Rgotofo:
 db 072h,067h,06Fh,074h,06Fh,066h,06Fh,00h
-unk_C22DB:
+str_Rpointgoal:
 db 072h,070h,06Fh,069h,06Eh,074h,067h,06Fh,061h,06Ch,00h
-unk_C22E6:
+str_Rgetnew:
 db 072h,067h,065h,074h,06Eh,065h,077h,00h
-unk_C22EE:
+str_Anth:
 db 061h,06Eh,074h,068h,00h
-unk_C22F3:
+str_Ranth:
 db 072h,061h,06Eh,074h,068h,00h
-unk_C22F9:
+str_Agotofo:
 db 061h,067h,06Fh,074h,06Fh,066h,06Fh,00h
-unk_C2301:
+str_Benwait:
 db 062h,065h,06Eh,077h,061h,069h,074h,00h
-unk_C2309:
+str_Initper:
 db 069h,06Eh,069h,074h,070h,065h,072h,00h
-unk_C2311:
+str_Pgivecup:
 db 070h,067h,069h,076h,065h,063h,075h,070h,00h
-unk_C231A:
+str_Rpenshot:
 db 072h,070h,065h,06Eh,073h,068h,06Fh,074h,00h
-unk_C2323:
+str_Apswait:
 db 061h,070h,073h,077h,061h,069h,074h,00h
-unk_C232B:
+str_Abreak:
 db 061h,062h,072h,065h,061h,06Bh,00h
-unk_C2332:
+str_Error2:
 db 065h,072h,072h,06Fh,072h,00h
 unk_C2338:
 db 047h,00h
-unk_C233A:
+str_LD:
 db 04Ch,044h,00h
-unk_C233D:
+str_RD2:
 db 052h,044h,00h
-unk_C2340:
+str_LW:
 db 04Ch,057h,00h
 unk_C2343:
 db 043h,00h
-unk_C2345:
+str_RW:
 db 052h,057h,00h
-unk_C2348:
+str_XC:
 db 058h,043h,00h
 str_dbgO:
 db 04Fh,00h

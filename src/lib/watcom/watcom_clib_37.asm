@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D586 progbits alloc exec nowrite align=1
-extern __init_80x87, asc_C4A83, byte_D4B9C, byte_D4B9D, dword_F24CC, loc_9D582, off_D51E4, off_D6600
+extern __init_80x87, str_UnknownError, byte_D4B9C, byte_D4B9D, dword_F24CC, loc_9D582, off_D51E4, off_D6600
 extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, word_D4D04, word_D65FC
 global __init_8087_, loc_9D5A7, sub_9D5B7, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
 global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, sub_9D66B, sub_9D671, strerror_
@@ -126,7 +126,7 @@ jl short loc_9D680	; 9D679
 cmp eax, byte 0Fh	; 9D67B
 jle short loc_9D686	; 9D67E
 loc_9D680:
-mov eax, asc_C4A83	; 9D680
+mov eax, str_UnknownError	; 9D680
 ret	; 9D685
 loc_9D686:
 mov eax, dword [nosplit eax*4+off_D51E4]	; 9D686

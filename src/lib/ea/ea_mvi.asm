@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_96440 progbits alloc exec nowrite align=1
-extern _os_handle_3, asc_C4730, asc_C4760, asc_C4780, asc_C47A4, asc_C47AC, cliprect_x0, cliprect_x1
+extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
 extern sub_8CC70, sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
 extern sub_B3AA1, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
@@ -237,21 +237,21 @@ mov ebx, dword [eax]	; 9669C
 push ebx	; 9669E
 mov ecx, dword [byte eax+08h]	; 9669F
 push ecx	; 966A2
-push asc_C4730	; 966A3
+push str_FrameRate3dFrames	; 966A3
 call DebugPrintf	; 966A8
 add esp, byte 10h	; 966AD
 mov edi, dword [byte esi+010h]	; 966B0
 push edi	; 966B3
 mov ebp, dword [byte esi+0Ch]	; 966B4
 push ebp	; 966B7
-push asc_C4760	; 966B8
+push str_Width3dHeight3d	; 966B8
 call DebugPrintf	; 966BD
 add esp, byte 0Ch	; 966C2
 mov eax, dword [byte esi+014h]	; 966C5
 push eax	; 966C8
 mov edx, dword [byte esi+018h]	; 966C9
 push edx	; 966CC
-push asc_C4780	; 966CD
+push str_Colours3d1stColour	; 966CD
 call DebugPrintf	; 966D2
 add esp, byte 0Ch	; 966D7
 pop ebp	; 966DA
@@ -339,7 +339,7 @@ lea eax, [nosplit ecx*4+00h]	; 96785
 sub eax, ecx	; 9678C
 mov dword [byte esp+04h], eax	; 9678E
 push eax	; 96792
-push asc_C47A4	; 96793
+push str_Mvipal	; 96793
 call sub_8CCA8	; 96798
 add esp, byte 0Ch	; 9679D
 mov edx, edi	; 967A0
@@ -496,7 +496,7 @@ push byte 40h	; 96945
 mov eax, dword [byte esi+0Ch]	; 96947
 imul eax, dword [byte esi+010h]	; 9694A
 push eax	; 9694E
-push asc_C47AC	; 9694F
+push str_DATABUFFER	; 9694F
 call sub_8CC70	; 96954
 add esp, byte 0Ch	; 96959
 mov dword [byte esi+030h], eax	; 9695C

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
-extern _nmalloc_, asc_C3D88, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, dword_EDAB0
+extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, dword_EDAB0
 extern dword_EDAB4, FatalError, int386_, sub_8C990, sub_8CAF4, sub_8DAB8, sub_8DB4C, sub_8DCC0
 extern sub_986B0, sub_986E4, sub_B3F50, unk_EDF04, unknown_libname_22
 global sub_8DCF8, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
@@ -40,7 +40,7 @@ mov dword [dword_D2F60], unk_EDF04	; 8DD4E
 loc_8DD58:
 cmp dword [dword_D2F5C], 0CCh	; 8DD58
 jge short loc_8DD71	; 8DD62
-push asc_C3D88	; 8DD64
+push str_InitmemmanINSUFFICIENTROW	; 8DD64
 call FatalError	; 8DD69
 add esp, byte 4	; 8DD6E
 loc_8DD71:

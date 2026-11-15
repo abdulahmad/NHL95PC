@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, unk_C4004
-extern unk_C4008, unk_C400C, unk_C4010, unk_C4014, unk_C4018, unk_C401C, unk_C4020, unk_C4024
-extern unk_C4028, unk_C402C, unk_C4030
-global asc_D2F46, asc_D43F4, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
+extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, str_Jan
+extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
+extern str_Oct, str_Nov, str_Dec
+global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
 global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, byte_D3064
 global byte_D3068, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7, byte_D41CC
 global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
@@ -120,7 +120,7 @@ db 0FDh,0FEh,0FFh,080h,081h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
 db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,08Dh,08Eh,00h,00h,00h
 saved_ss:
 db 00h,00h
-asc_D2F46:
+str_StackOverflow:
 db 053h,074h,061h,063h,06Bh,020h,04Fh,076h,065h,072h,066h,06Ch,06Fh,077h,021h,0Dh
 db 0Ah,00h
 dword_D2F58:
@@ -785,7 +785,7 @@ dword_D43EC:
 db 00h,00h,00h,00h
 dword_D43F0:
 db 00h,00h,00h,00h
-asc_D43F4:
+str_OpenhandleSFILEERROR:
 db 06Fh,070h,065h,06Eh,068h,061h,06Eh,064h,06Ch,065h,020h,02Dh,020h,025h,073h,020h
 db 046h,049h,04Ch,045h,020h,045h,052h,052h,04Fh,052h,0Dh,00h
 byte_D4410:
@@ -837,18 +837,18 @@ byte_D4546:
 db 08h,02Fh
 dword_D4548:
 db 00h,00h,00h,00h
-dd unk_C4004
-dd unk_C4008
-dd unk_C400C
-dd unk_C4010
-dd unk_C4014
-dd unk_C4018
-dd unk_C401C
-dd unk_C4020
-dd unk_C4024
-dd unk_C4028
-dd unk_C402C
-dd unk_C4030
+dd str_Jan
+dd str_Feb2
+dd str_Mar
+dd str_Apr
+dd str_May2
+dd str_Jun
+dd str_Jul
+dd str_Aug
+dd str_Sep
+dd str_Oct
+dd str_Nov
+dd str_Dec
 dword_D457C:
 db 00h,00h,00h,00h
 dword_D4580:

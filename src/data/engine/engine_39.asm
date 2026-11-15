@@ -2,31 +2,31 @@
 bits 32
 %include "hockey.inc"
 section s_CD34C progbits alloc noexec write align=1
-extern str_pen, unk_C1B49, unk_C1BE3, unk_C1BEC, unk_C1BF5, unk_C1BFE, unk_C1C05, unk_C1C0D
-extern unk_C1C16, unk_C1C1F, unk_C1C27, unk_C1C2F, unk_C1C38, unk_C1C41, unk_C1C47, unk_C1C50
+extern str_pen, unk_C1B49, str_Roughing, str_Charging2, str_Slashing2, str_Xcheck, str_Hooking2, str_Tripping2
+extern str_Interfer, str_Holding2, str_Histick, str_Boarding2, str_Elbowing2, str_Abuse, str_Checkbnd, str_Penshot
 extern str_BnReturnGoalie, str_BnPullGoalie, str_BnFaceOff, str_BnTwoLinePass, str_BnOffside, str_BnIcing, str_BnPenalty, str_BnPenaltyShot
-extern unk_C1DDC, unk_C1DE3, unk_C1DEB, unk_C1DF3, unk_C1DFB, unk_C1E04, unk_C1E0C, unk_C1E14
-extern unk_C1E1C, unk_C1E24, unk_C1E2A, unk_C1E31, unk_C1E38, unk_C1E3E, unk_C1E44, unk_C1E4C
-extern unk_C1E52, unk_C1E58, unk_C1E5E, unk_C1E63, unk_C1E69, unk_C1E6F, unk_C1E75, unk_C1E7B
-extern unk_C1E85, unk_C1E8F, unk_C1E98, unk_C1EA5, unk_C1EB2, unk_C1EBA, unk_C1EC2, unk_C1EC8
-extern unk_C1ECD, unk_C1ED3, unk_C1ED9, unk_C1EE1, unk_C1EEA, unk_C1EF4, unk_C1EF9, unk_C1F03
-extern unk_C1F0C, unk_C1F14, unk_C1F1D, unk_C1F23, unk_C1F2A, unk_C1F32, unk_C1F38, unk_C1F3D
-extern unk_C1F43, unk_C1F4B, unk_C1F50, unk_C1F55, unk_C1F5D, unk_C1F66, unk_C1F6F, unk_C1F78
-extern unk_C1F81, unk_C1F89, unk_C1F95, unk_C1FA0, unk_C1FAB, unk_C1FB6, unk_C1FC1, unk_C1FCB
-extern unk_C1FD5, unk_C1FE1, unk_C1FE9, unk_C1FF3, unk_C1FFC, unk_C2006, unk_C200F, unk_C2019
-extern unk_C2021, unk_C2029, unk_C2035, unk_C203D, unk_C2049, unk_C2053, unk_C205F, unk_C206A
-extern unk_C2074, unk_C207C, unk_C2084, unk_C208C, unk_C2094, unk_C209C, unk_C20A2, unk_C20AD
-extern unk_C20B8, unk_C20C1, unk_C20CA, unk_C20D1, unk_C20D7, unk_C20DD, unk_C20E2, unk_C20E9
-extern unk_C20F4, unk_C20FE, unk_C2109, unk_C2114, unk_C211E, unk_C212A, unk_C2136, unk_C2141
-extern unk_C214C, unk_C2157, unk_C2162, unk_C216D, unk_C2179, unk_C2185, unk_C218F, unk_C2199
-extern unk_C21A6, unk_C21B3, unk_C21BD, unk_C21C8, unk_C21D3, unk_C21DD, unk_C21E6, unk_C21F1
-extern unk_C21F7, unk_C21FC, unk_C2201, unk_C2206, unk_C220C, unk_C2212, unk_C2218, unk_C221E
-extern unk_C2224, unk_C2229, unk_C222F, unk_C2235, unk_C223F, unk_C2245, unk_C224C, unk_C2256
-extern unk_C225C, unk_C2264, unk_C226A, unk_C2272, unk_C2278, unk_C227F, unk_C2286, unk_C228C
-extern unk_C2292, unk_C229B, unk_C22A1, unk_C22A8, unk_C22B3, unk_C22BC, unk_C22C2, unk_C22CB
-extern unk_C22D3, unk_C22DB, unk_C22E6, unk_C22EE, unk_C22F3, unk_C22F9, unk_C2301, unk_C2309
-extern unk_C2311, unk_C231A, unk_C2323, unk_C232B, unk_C2332, unk_C2338, unk_C233A, unk_C233D
-extern unk_C2340, unk_C2343, unk_C2345, unk_C2348, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
+extern str_Gready, str_Gready2, str_Gglover, str_Gglovel, str_Gglovel2, str_Gstickr, str_Gstickl, str_Gstackr
+extern str_Gstackl, str_Gdive, str_Gswing, str_Gskate, str_Pflip, str_Glide, str_Skatewp, str_Skate
+extern str_Turnl, str_Turnr, str_Stop, str_Passf, str_Passb, str_Shotf, str_Shotb, str_Glideback
+extern str_Skateback, str_Sweepchk, str_Shoulderchkl, str_Shoulderchkr, str_Hipchkl, str_Hipchkr, str_Burst, str_Hold
+extern str_Hold2, str_Flail, str_Fallfwd, str_Fallback, str_Celebrate, str_Pump, str_Wallright, str_Wallleft
+extern str_Faceoff, str_Faceoffr, str_Siren, str_Bglass, str_Stanley2, str_Catch, str_Hook, str_Hook2
+extern str_Stumble, str_Fake, str_Flip, str_Injury1, str_Refglide, str_Refskate, str_Refturnl, str_Refturnr
+extern str_Refstop, str_Reffallback, str_Armupglide, str_Armupskate, str_Armupturnl, str_Armupturnr, str_Armupstop, str_Refpickup
+extern str_Refpointgoa, str_Refdrop, str_Reffowait, str_Refrough, str_Refcharge, str_Refslash, str_Refxcheck, str_Refhook
+extern str_Reftrip, str_Refinterfer, str_Refhold, str_Refabuseoff, str_Refbehind, str_Faceoffpoke, str_Gwallright, str_Gwallleft
+extern str_Anthem1, str_Anthem2, str_Anthem3, str_Anthem4, str_Anthem5, str_Drink, str_Refanthem1, str_Refanthem2
+extern str_Onetimef, str_Onetimeb, str_Getcup, str_Brcup, str_Gvcup, str_Clap, str_Stansk, str_Crosscheck
+extern str_Boardback, str_Boardfront, str_Boardright, str_Boardleft, str_Benchcheckr, str_Benchcheckl, str_Refpenshot, str_Goaliepoke
+extern str_Goalieknee, str_Gokneehold, str_Gofallback, str_Gofallglove, str_Gofallstick, str_Fakeshotf, str_Fakeshotb, str_Fakeonetimef
+extern str_Fakeonetimeb, str_Blockleft, str_Blockright, str_Blockfront, str_Blockknee, str_Refelbow, str_Refhistick, str_ERROR
+extern str_Null, str_Defo, str_Defd, str_Wingd, str_Wingo, str_Centd, str_Cento, str_Score
+extern str_Stan, str_Exben, str_Expen, str_Bench, str_Dopen, str_Goalie2, str_Goalieget, str_Puckc
+extern str_Nearest, str_Shoot, str_Passrec, str_3star, str_R3star, str_Fowait, str_Pnorm, str_Pshad
+extern str_Pnothing, str_Pface, str_Pface2, str_Gamemiscon, str_Rfaceoff, str_Rnorm, str_Rcallpen, str_Rpickup
+extern str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotofo, str_Benwait, str_Initper
+extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, unk_C2338, str_LD, str_RD2
+extern str_LW, unk_C2343, str_RW, str_XC, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
 extern unk_CDCB0, unk_CDCC9
 global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, dword_CD4B0, dbg_spalist
 global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
@@ -36,24 +36,24 @@ db 00h,00h,00h,00h
 defercount:
 db 00h,00h,00h,00h
 off_CD354:
-dd unk_C1BE3
+dd str_Roughing
 dd unk_C1B49
-dd unk_C1BEC
-dd unk_C1BF5
-dd unk_C1BE3
-dd unk_C1BFE
-dd unk_C1C05
-dd unk_C1C0D
-dd unk_C1C16
-dd unk_C1C1F
-dd unk_C1C27
-dd unk_C1C2F
-dd unk_C1C38
-dd unk_C1C41
-dd unk_C1C47
-dd unk_C1C2F
-dd unk_C1C38
-dd unk_C1C50
+dd str_Charging2
+dd str_Slashing2
+dd str_Roughing
+dd str_Xcheck
+dd str_Hooking2
+dd str_Tripping2
+dd str_Interfer
+dd str_Holding2
+dd str_Histick
+dd str_Boarding2
+dd str_Elbowing2
+dd str_Abuse
+dd str_Checkbnd
+dd str_Boarding2
+dd str_Elbowing2
+dd str_Penshot
 word_CD39C:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,02h,00h,00h,00h
 db 02h,00h,00h,00h,02h,00h,00h,00h,05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
@@ -138,183 +138,183 @@ db 01Dh,012h,00h,00h,065h,012h,00h,00h,0DDh,012h,00h,00h,055h,013h,00h,00h
 db 08Dh,013h,00h,00h,0C5h,013h,00h,00h,01Dh,014h,00h,00h,075h,014h,00h,00h
 db 0ADh,014h,00h,00h,0E5h,014h,00h,00h,0F9h,014h,00h,00h,0Dh,015h,00h,00h
 dbg_spanames:
-dd unk_C1DDC
-dd unk_C1DE3
-dd unk_C1DEB
-dd unk_C1DF3
-dd unk_C1DFB
-dd unk_C1E04
-dd unk_C1E0C
-dd unk_C1E14
-dd unk_C1E1C
-dd unk_C1E24
-dd unk_C1E2A
-dd unk_C1E31
-dd unk_C1E38
-dd unk_C1E3E
-dd unk_C1E44
-dd unk_C1E4C
-dd unk_C1E52
-dd unk_C1E58
-dd unk_C1E5E
-dd unk_C1E63
-dd unk_C1E69
-dd unk_C1E6F
-dd unk_C1E75
-dd unk_C1E7B
-dd unk_C1E85
-dd unk_C1E8F
-dd unk_C1E98
-dd unk_C1EA5
-dd unk_C1EB2
-dd unk_C1EBA
-dd unk_C1EC2
-dd unk_C1EC8
-dd unk_C1ECD
-dd unk_C1ED3
-dd unk_C1ED9
-dd unk_C1EE1
-dd unk_C1EEA
-dd unk_C1EF4
-dd unk_C1EF9
-dd unk_C1F03
-dd unk_C1F0C
-dd unk_C1F14
-dd unk_C1F1D
-dd unk_C1F23
-dd unk_C1F2A
-dd unk_C1F32
-dd unk_C1F38
-dd unk_C1F3D
-dd unk_C1F43
-dd unk_C1F4B
-dd unk_C1F50
-dd unk_C1F55
-dd unk_C1F5D
-dd unk_C1F66
-dd unk_C1F6F
-dd unk_C1F78
-dd unk_C1F81
-dd unk_C1F89
-dd unk_C1F95
-dd unk_C1FA0
-dd unk_C1FAB
-dd unk_C1FB6
-dd unk_C1FC1
-dd unk_C1FCB
-dd unk_C1FD5
-dd unk_C1FE1
-dd unk_C1FE9
-dd unk_C1FF3
-dd unk_C1FFC
-dd unk_C2006
-dd unk_C200F
-dd unk_C2019
-dd unk_C2021
-dd unk_C2029
-dd unk_C2035
-dd unk_C203D
-dd unk_C2049
-dd unk_C2053
-dd unk_C205F
-dd unk_C206A
-dd unk_C2074
-dd unk_C207C
-dd unk_C2084
-dd unk_C208C
-dd unk_C2094
-dd unk_C209C
-dd unk_C20A2
-dd unk_C20AD
-dd unk_C20B8
-dd unk_C20C1
-dd unk_C20CA
-dd unk_C20D1
-dd unk_C20D7
-dd unk_C20DD
-dd unk_C20E2
-dd unk_C20E9
-dd unk_C20F4
-dd unk_C20FE
-dd unk_C2109
-dd unk_C2114
-dd unk_C211E
-dd unk_C212A
-dd unk_C2136
-dd unk_C2141
-dd unk_C214C
-dd unk_C2157
-dd unk_C2162
-dd unk_C216D
-dd unk_C2179
-dd unk_C2185
-dd unk_C218F
-dd unk_C2199
-dd unk_C21A6
-dd unk_C21B3
-dd unk_C21BD
-dd unk_C21C8
-dd unk_C21D3
-dd unk_C21DD
-dd unk_C21E6
-dd unk_C21F1
+dd str_Gready
+dd str_Gready2
+dd str_Gglover
+dd str_Gglovel
+dd str_Gglovel2
+dd str_Gstickr
+dd str_Gstickl
+dd str_Gstackr
+dd str_Gstackl
+dd str_Gdive
+dd str_Gswing
+dd str_Gskate
+dd str_Pflip
+dd str_Glide
+dd str_Skatewp
+dd str_Skate
+dd str_Turnl
+dd str_Turnr
+dd str_Stop
+dd str_Passf
+dd str_Passb
+dd str_Shotf
+dd str_Shotb
+dd str_Glideback
+dd str_Skateback
+dd str_Sweepchk
+dd str_Shoulderchkl
+dd str_Shoulderchkr
+dd str_Hipchkl
+dd str_Hipchkr
+dd str_Burst
+dd str_Hold
+dd str_Hold2
+dd str_Flail
+dd str_Fallfwd
+dd str_Fallback
+dd str_Celebrate
+dd str_Pump
+dd str_Wallright
+dd str_Wallleft
+dd str_Faceoff
+dd str_Faceoffr
+dd str_Siren
+dd str_Bglass
+dd str_Stanley2
+dd str_Catch
+dd str_Hook
+dd str_Hook2
+dd str_Stumble
+dd str_Fake
+dd str_Flip
+dd str_Injury1
+dd str_Refglide
+dd str_Refskate
+dd str_Refturnl
+dd str_Refturnr
+dd str_Refstop
+dd str_Reffallback
+dd str_Armupglide
+dd str_Armupskate
+dd str_Armupturnl
+dd str_Armupturnr
+dd str_Armupstop
+dd str_Refpickup
+dd str_Refpointgoa
+dd str_Refdrop
+dd str_Reffowait
+dd str_Refrough
+dd str_Refcharge
+dd str_Refslash
+dd str_Refxcheck
+dd str_Refhook
+dd str_Reftrip
+dd str_Refinterfer
+dd str_Refhold
+dd str_Refabuseoff
+dd str_Refbehind
+dd str_Faceoffpoke
+dd str_Gwallright
+dd str_Gwallleft
+dd str_Anthem1
+dd str_Anthem2
+dd str_Anthem3
+dd str_Anthem4
+dd str_Anthem5
+dd str_Drink
+dd str_Refanthem1
+dd str_Refanthem2
+dd str_Onetimef
+dd str_Onetimeb
+dd str_Getcup
+dd str_Brcup
+dd str_Gvcup
+dd str_Clap
+dd str_Stansk
+dd str_Crosscheck
+dd str_Boardback
+dd str_Boardfront
+dd str_Boardright
+dd str_Boardleft
+dd str_Benchcheckr
+dd str_Benchcheckl
+dd str_Refpenshot
+dd str_Goaliepoke
+dd str_Goalieknee
+dd str_Gokneehold
+dd str_Gofallback
+dd str_Gofallglove
+dd str_Gofallstick
+dd str_Fakeshotf
+dd str_Fakeshotb
+dd str_Fakeonetimef
+dd str_Fakeonetimeb
+dd str_Blockleft
+dd str_Blockright
+dd str_Blockfront
+dd str_Blockknee
+dd str_Refelbow
+dd str_Refhistick
+dd str_ERROR
 dbg_assnames:
-dd unk_C21F7
-dd unk_C21FC
-dd unk_C2201
-dd unk_C2206
-dd unk_C220C
-dd unk_C2212
-dd unk_C2218
-dd unk_C221E
-dd unk_C2224
-dd unk_C2229
-dd unk_C222F
-dd unk_C2235
+dd str_Null
+dd str_Defo
+dd str_Defd
+dd str_Wingd
+dd str_Wingo
+dd str_Centd
+dd str_Cento
+dd str_Score
+dd str_Stan
+dd str_Exben
+dd str_Expen
+dd str_Bench
 dd str_pen
-dd unk_C223F
-dd unk_C2245
-dd unk_C224C
-dd unk_C2256
-dd unk_C225C
-dd unk_C2264
-dd unk_C226A
-dd unk_C2272
-dd unk_C2278
-dd unk_C227F
-dd unk_C1F0C
-dd unk_C2286
-dd unk_C228C
-dd unk_C2292
-dd unk_C229B
-dd unk_C22A1
-dd unk_C22A8
-dd unk_C22B3
-dd unk_C22BC
-dd unk_C22C2
-dd unk_C22CB
-dd unk_C22D3
-dd unk_C22DB
-dd unk_C22E6
-dd unk_C22EE
-dd unk_C22F3
-dd unk_C22F9
-dd unk_C2301
-dd unk_C2309
-dd unk_C20CA
-dd unk_C2311
-dd unk_C231A
-dd unk_C2323
-dd unk_C232B
-dd unk_C2332
+dd str_Dopen
+dd str_Goalie2
+dd str_Goalieget
+dd str_Puckc
+dd str_Nearest
+dd str_Shoot
+dd str_Passrec
+dd str_3star
+dd str_R3star
+dd str_Fowait
+dd str_Faceoff
+dd str_Pnorm
+dd str_Pshad
+dd str_Pnothing
+dd str_Pface
+dd str_Pface2
+dd str_Gamemiscon
+dd str_Rfaceoff
+dd str_Rnorm
+dd str_Rcallpen
+dd str_Rpickup
+dd str_Rgotofo
+dd str_Rpointgoal
+dd str_Rgetnew
+dd str_Anth
+dd str_Ranth
+dd str_Agotofo
+dd str_Benwait
+dd str_Initper
+dd str_Getcup
+dd str_Pgivecup
+dd str_Rpenshot
+dd str_Apswait
+dd str_Abreak
+dd str_Error2
 dbg_posnames:
 dd unk_C2338
-dd unk_C233A
-dd unk_C233D
-dd unk_C2340
+dd str_LD
+dd str_RD2
+dd str_LW
 dd unk_C2343
-dd unk_C2345
-dd unk_C2348
+dd str_RW
+dd str_XC
 dword_CD9A0:
 db 00h,00h,024h,0FFh,0B0h,0FFh,079h,0FFh,019h,00h,09Ch,0FFh,092h,0FFh,0C9h,0FFh
 db 01Eh,00h,0DCh,0FFh,050h,00h,0B8h,0FFh,00h,00h,0DCh,00h,028h,00h,052h,00h
