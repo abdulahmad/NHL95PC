@@ -444,7 +444,7 @@ void RequestLineChange(Player *p)
    the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds (regd2) are 10h less the first centre's
    faceoff stance (Endfaceoff_ftab_m1 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
    centre's (awplattr_b13 / hmplattr_b13 by pnum; the centres are the skaters with position 4): randomd0(21h) below
-   them gives the puck to the away centre (lasttouch, his input word_E0396), else to the home centre (word_E0392).
+   them gives the puck to the away centre (lasttouch, his input fofdata2_w6), else to the home centre (fofdata2_w2).
    The winner's input bit 0Bh picks the direction (fodir2 with y speed -800h, else fodir1 / +800h); a held
    direction (bit 3 clear) is used 3 times in 4, else a random one of the 5 around the y direction (mirrored by
    the sign of the y speed). The puck p gets that velocity (dirtab * 20h, plus the y speed), a random z velocity
@@ -462,7 +462,7 @@ void Endfaceoff(Player *p)
     gmode &= 0xFE;
     p->pflags2 &= 0xFE;
     sflags3 |= 0x10;
-    regd2.w = 0x10 - Endfaceoff_ftab_m1[fofdata2[0]] + Endfaceoff_ftab_m1[word_E0394];
+    regd2.w = 0x10 - Endfaceoff_ftab_m1[fofdata2[0]] + Endfaceoff_ftab_m1[fofdata2_w4];
     for (i = 0; i < 6; i++) {
         if (SortCords[i].position == 4) break;
     }
@@ -471,10 +471,10 @@ void Endfaceoff(Player *p)
     }
     regd2.w += awplattr_b13[SortCords[j].pnum * 20] - hmplattr_b13[SortCords[i].pnum * 20];
     if (randomd0(0x21) < regd2.w) {
-        w = word_E0396;
+        w = fofdata2_w6;
         lasttouch = j;
     } else {
-        w = word_E0392;
+        w = fofdata2_w2;
         lasttouch = i;
     }
     if (w & 0x800) {

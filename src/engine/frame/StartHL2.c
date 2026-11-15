@@ -112,7 +112,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     RefStep[0] = -1;
     Pencntdwn = -1;
     RefPen = 0;
-    word_C90D8 = -1;
+    penaltysc = -1;
     ovltimer = -1;
     word_CBC44 = 0;
     bannermsg = -1;

@@ -5,19 +5,19 @@ section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, byte_CC7A4, byte_CC7A5
-global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
-global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
+global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, byte_CCBBA, byte_CCBBB, cupceremony
+global rinkobjanim, rinkobjanim_b1, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, dword_CC9CE
 global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
 global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
-global dword_CCC9E, dword_CCCB8, sublist, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
-global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, ltack
+global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, dword_CD2F8
+global off_CC01D, starordtab, shotsets, sublist_defl, word_CC054, word_CC0B0, lldispodd, ltack
 global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
 global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, blockspd
-global blockspd_y, shotsetz, word_CCCA8, word_CCEF8, Setplass_alist
+global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
 off_CC01D:
 dd unk_CBF18
 dd unk_CBEFC
@@ -384,19 +384,19 @@ dword_CCC9D:
 db 00h
 dword_CCC9E:
 db 00h,00h
-byte_CCCA0:
+cupceremony:
 db 00h
 Setplass_alist:	; alist: initial assignment by position (0Eh assgoalie, 2 assdefd, 3 asswingd, 5 asscenterd)
 db 0Eh,02h,02h,03h,05h,03h,05h
-word_CCCA8:
+restoreteams_pdsttab:
 db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
-dword_CCCB8:
+sublist_m2:
 db 0FEh,0FFh
-sublist:	; 93G sublist: word offsets into unk_CCCC8 of the substitute list per position 0-6 (SetPlList)
+sublist:	; 93G sublist: word offsets into sublist_defl of the substitute list per position 0-6 (SetPlList)
 db 00h,00h,03h,00h,014h,00h,025h,00h,057h,00h,03Eh
-dword_CCCC5:
+sublist_defl_m3:
 db 00h,070h,00h
-unk_CCCC8:
+sublist_defl:
 db 024h,025h,0FFh,0Ch,0Eh,010h,0Ch,015h,01Ah,01Eh,022h,0Dh,0Fh,011h,0Dh,016h
 db 01Bh,01Fh,023h,0FFh,0Dh,0Fh,011h,0Dh,016h,01Bh,01Fh,023h,0Ch,0Eh,010h,0Ch
 db 015h,01Ah,01Eh,022h,0FFh,00h,03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h
@@ -424,9 +424,9 @@ db 06Dh,065h,0Ah,00h
 str_ErrSaveGame:
 db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
 db 065h,0Ah,00h,00h
-byte_CCE00:
+rinkobjanim:
 db 06h
-byte_CCE01:
+rinkobjanim_b1:
 db 00h,01h,02h,01h,02h,00h,06h,03h,04h,05h,04h,05h,03h,07h,06h,07h
 db 08h,07h,08h,07h,06h,0FEh,09h,0Ah,08h,0Bh,0Ch,0Dh,0Eh,0Ch,0Dh,0Eh
 db 0Bh,06h,0Fh,010h,011h,010h,011h,0Fh,08h,012h,013h,014h,013h,012h,013h,014h
@@ -443,9 +443,9 @@ db 05Eh,05Fh,05Eh,05Fh,05Dh,05Ch,0Ah,046h,047h,048h,049h,04Ah,049h,04Bh,049h,04C
 db 046h,0Ah,061h,061h,062h,062h,061h,061h,062h,062h,063h,063h,06h,063h,063h,063h
 db 063h,063h,063h,06h,067h,067h,067h,067h,068h,068h,03h,065h,065h,065h,03h,066h
 db 066h,066h,04h,067h,067h
-dword_CCEF6:
+rinkobjdefs_m2:
 db 067h,067h
-word_CCEF8:
+rinkobjdefs:
 db 047h,00h,013h,00h,00h,00h,038h,01h,013h,00h,00h,00h,051h,00h,014h,00h
 db 07h,00h,02Eh,01h,014h,00h,07h,00h,0A8h,00h,011h,00h,0Eh,00h,0B6h,00h
 db 010h,00h,016h,00h,0E7h,00h,011h,00h,019h,00h,0F9h,00h,011h,00h,022h,00h

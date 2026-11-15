@@ -28,15 +28,15 @@ int PostPenaltyEvent(int team, int player, int pen, int len, int min, int sec, i
     int last;
 
     if ((gmode & 0x10) == 0) {
-        byte_E9AC8 = 2;
-        byte_E9AC9 = team;
-        byte_E9ACA = player;
-        byte_E9ACB = pen;
-        byte_E9ACC = len;
-        byte_E9ACD = curperiod;
-        byte_E9ACE = min;
-        byte_E9ACF = sec;
-        ((GSumEvent *)unk_E9B4C)[gsumqcount] = *(GSumEvent *)&byte_E9AC8;
+        curevent = 2;
+        curevent_b1 = team;
+        curevent_b2 = player;
+        curevent_b3 = pen;
+        curevent_b4 = len;
+        curevent_b5 = curperiod;
+        curevent_b6 = min;
+        curevent_b7 = sec;
+        ((GSumEvent *)gsumqueue)[gsumqcount] = *(GSumEvent *)&curevent;
         if (++gsumqcount >= 8) gsumqcount = gsumqcount - 1;
         if ((*(int *)((char *)&ovltimer - 2) >> 16) == -1 && pen != 0x11) {
             if (team != 0 && randomd0(4) == 0)

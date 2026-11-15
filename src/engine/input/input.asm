@@ -5,7 +5,7 @@ bits 32
 section s_4FCE8 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, byte_CCBBA
-extern byte_CCBBB, byte_E0393, byte_E0397, c1playernum, c2playernum, camx, camy, changeplayer
+extern byte_CCBBB, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
 extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
 extern donothing, doplayeracc, doshot, DrawPanelLine, dword_CC0EC, dword_CC0FA, dword_CCC9C, dword_E0244
 extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
@@ -23,8 +23,8 @@ extern resetplstuff, restorepl, ReturnGoalies, SetExitGame, SetLCmode, setpassmo
 extern setplayer, SetShotMode, SetSPA, SetupPenaltyShot, sflags, sflags3, sfx, ShotMode
 extern shotplayer, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15, SprSort, SprSortVert
 extern StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3, textline4, textline5
-extern threat, updateanim, vecdist, vtoa, word_C90D8, word_CBC44, word_CBC60, word_CBE8C
-extern word_CBE8E, word_CBEC6, word_E0392, word_E0394, word_E0396, word_E0398, word_E039A, word_E9AAE
+extern threat, updateanim, vecdist, vtoa, penaltysc, word_CBC44, word_CBC60, puckfaceoff2_ptab
+extern puckfaceoff2_ptab_y, word_CBEC6, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
 extern xc1, yc1, yleader
 global joyq_pop, joyq_flush, joyq_peek, lineinput, faceoffinput, Acheck, CanBlockShot, CanBlockShot_ret6
 global CanBlockShot_ret5, OppInReach, Holdplayer, lcselect, doinput, getlchoice, lcfound, ReadJoy1

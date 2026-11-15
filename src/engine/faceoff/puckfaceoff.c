@@ -7,14 +7,14 @@
    DRAFT (puckfaceoff2, 10.0 GA): 92 differing, 2,831 of 2,834 bytes. The second controller test as a ternary
    keeps the bool in eax (`sete al / and eax, 0FFh`), but its `inc eax` comes before the cont2team load
    (EXE after it); the -1 chain copies and the zero registers still differ (docs/UNSURE.md). */
-#define word_E0392 word_E0392_decl
-#define word_E039A word_E039A_decl
+#define fofdata2_w2 word_E0392_decl
+#define fofdata_w2 word_E039A_decl
 #include "nhl95.h"
-#undef word_E0392
-#undef word_E039A
+#undef fofdata2_w2
+#undef fofdata_w2
 /* the faceoff input words are unsigned here: the drop stores 8000h as mov ecx, 8000h (a short would sign-extend) */
-extern unsigned short word_E0392;
-extern unsigned short word_E039A;
+extern unsigned short fofdata2_w2;
+extern unsigned short fofdata_w2;
 
 /* puckfaceoff (516E1, 93G puckfaceoff; ends in TakePlayerFromBox_ret6): asstab 1Bh, the faceoff setup ("this is
    where the action starts"). On a new assignment (pflags bit 1): free the puck (a penalty-shot goalie carrying it
@@ -172,11 +172,11 @@ done:
    goalies in their creases. For a penalty shot: move the controllers onto the shooter (restorepl), clear the
    defending goalie, release the other team controller and set the shot up (assreplace 18h, SetupPenaltyShot).
    Otherwise reset the bench and both lines (setpersonel, forcepldata, resetplstuff), and place the 12 players at
-   their faceoff spots (word_CBE8C by line and position through apl, mirrored by side and pulled back by the
+   their faceoff spots (puckfaceoff2_ptab by line and position through apl, mirrored by side and pulled back by the
    faceoff x / y), facing the puck, with their faceoff frames and SPA (a winger with the extra assignment 17h, the
    others 16h), the referee beside the dot dropping the puck (assinsert 1Eh, SPA C57h); human controllers take
    the nearest players (changeplayer) and the drop timer temp1 starts (B4h-12Bh). Later frames count temp1 down:
-   the referee lifts the puck at 11h, the drop meter (word_E0398) fills, and at -1 the faceoff ends (Endfaceoff).
+   the referee lifts the puck at 11h, the drop meter (fofdata) fills, and at -1 the faceoff ends (Endfaceoff).
    p: the object on the assignment. No result. */
 void puckfaceoff2(Player *p)
 {
@@ -243,7 +243,7 @@ void puckfaceoff2(Player *p)
         HIWORD(q->Xpos) = q->Yvel = q->Xvel = 0;
         HIWORD(q->Ypos) = -0xEC;
         RefPen = 0;
-        word_E9AAE = word_C90D8 = -1;
+        word_E9AAE = penaltysc = -1;
         ltx = fox;
         lty = foy;
         ((Player *)sortobj15)->frame = 0x189;
@@ -319,8 +319,8 @@ void puckfaceoff2(Player *p)
                 regd4.w = (regd4.w + 6) << 3;
                 regd4.w = apl[regd4.w + regd1.w];
                 regd4.w += regd4.w;
-                regd0.w = word_CBE8C[regd4.w];
-                regd1.w = word_CBE8E[regd4.w];
+                regd0.w = puckfaceoff2_ptab[regd4.w];
+                regd1.w = puckfaceoff2_ptab_y[regd4.w];
                 if (!(q->pflags & 0x80)) {
                     regd0.w = -regd0.w;
                     regd1.w = -regd1.w;
@@ -390,14 +390,14 @@ void puckfaceoff2(Player *p)
         CenterMouse();
         p->temp1 = randomd0(0x78) + 0xB4;
         fofdata2[0] = 1;
-        word_E0392 = 0x8000;
-        word_E0394 = 4;
-        word_E0396 = 0xA800;
-        word_E0398 = 7;
-        word_E039A = 0x8000;
+        fofdata2_w2 = 0x8000;
+        fofdata2_w4 = 4;
+        fofdata2_w6 = 0xA800;
+        fofdata = 7;
+        fofdata_w2 = 0x8000;
         if (!(gmode & 2)) {
-            byte_E0393 ^= 8;
-            byte_E0397 ^= 8;
+            fofdata2_b3 ^= 8;
+            fofdata2_b7 ^= 8;
         }
         fodir1 = fodir2 = -1;
         return;
@@ -407,6 +407,6 @@ void puckfaceoff2(Player *p)
         if (p->temp1 == 0) return;
         regd0.w = (p->temp1 + 6) >> 3;
         if (regd0.w > 2) return;
-        word_E0398 = 0xA - regd0.w;
+        fofdata = 0xA - regd0.w;
     } else Endfaceoff(p);
 }

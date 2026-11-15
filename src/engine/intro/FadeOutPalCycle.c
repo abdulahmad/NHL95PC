@@ -380,7 +380,7 @@ void StartThreeStars(void)
     FadePalette(1, savepal, 0x10);
     fadeinpending = 1;
     PickThreeStars();
-    byte_E9AC8 = 0xFF;
+    curevent = 0xFF;
     word_CBC44 = 0;
     RefPen = 0;
     refsignal = 0;

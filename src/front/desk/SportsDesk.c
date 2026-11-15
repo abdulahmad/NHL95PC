@@ -159,8 +159,8 @@ void SportsDesk(int mode)
         rnd = 1;
         if (schedgameidx >= 0x47C) rnd = 2;
         if (schedgameidx >= 0x498) rnd = 3;
-        PaPlayoffResult(winner, (schedgameidx - 0x444) % 7 + 1, conf, rnd, ot, byte_CCCA0);
-        byte_CCCA0 = 0;
+        PaPlayoffResult(winner, (schedgameidx - 0x444) % 7 + 1, conf, rnd, ot, cupceremony);
+        cupceremony = 0;
     }
     speech = 0xB4;
     for (;;) {

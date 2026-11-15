@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* QueueGoalieNote: once per goalie (bit tmgoalie, +3 for the visitors, in dword_CC0AC; all 6 done = 3Fh): when
- object word_C90D8 is set, queue the deferred note for its side and roster number (deferpending). Returns 1
+ object penaltysc is set, queue the deferred note for its side and roster number (deferpending). Returns 1
  when queued, as a short (the caller tests ax). */
 short QueueGoalieNote(void)
 {
@@ -11,8 +11,8 @@ short QueueGoalieNote(void)
     int bit;
 
     if (dword_CC0AC == 0x3F) return 0;
-    if (word_C90D8 < 0) return 0;
-    p = &SortCords[word_C90D8];
+    if (penaltysc < 0) return 0;
+    p = &SortCords[penaltysc];
     side = (p->pflags & 0x40) != 0;
     bit = 1 << p->tmptr->tmgoalie;
     if (side) bit <<= 3;

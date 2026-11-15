@@ -3,7 +3,7 @@
 
 /* restoreteams: put both teams' rosters on the bench. For each team:
  tmap = 6 (players allowed on the ice), and every roster player's tmpdst from his roster status byte through
- word_CCCA8. */
+ restoreteams_pdsttab. */
 void restoreteams(void)
 {
     Team *t;
@@ -16,6 +16,6 @@ void restoreteams(void)
         dst = t->tmpdst;
         r = t->tmroster;
         for (k = 0; k < 28; dst++, k++, r += 0x27)
-            *dst = word_CCCA8[*r];
+            *dst = restoreteams_pdsttab[*r];
     }
 }

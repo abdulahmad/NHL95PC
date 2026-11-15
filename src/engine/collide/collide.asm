@@ -19,7 +19,7 @@ extern randomd0, regd0, regd1, regd2, regd3, regd4, RemoveFromLines, restorepl
 extern SetBoxDoorObject, setpersonel, SetSPA, sflags, sflags3, sfx, ShotLaneOpen, shotongoal
 extern shotontarget, shotplayer, shotsets, shotsetz, SortCords, Stop4Pen, sub_93470, threat
 extern vecdist, vtoa, wcradiusx, wcradiusy, word_CBEC2, word_CBEC6, word_CCBCC, word_CCBDC
-extern word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_E03A0, word_E03B8, word_E9B28, xc1
+extern word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, word_E03A0, word_E03B8, lastimpact, xc1
 extern yc1, Ylist, Ylist_m2
 global ToFixed, Sweepcheck, burst, BlockShotDive, TryBlockShot, check4check, checkagr, FacingBoards
 global checkcheck, checkgoalp, checkint, checkob, checkob_ret5a, checkob_ret5, SkillForAnim, ChkDelayedOffside
@@ -1118,7 +1118,7 @@ jle near .6	; 53EBE
 mov edx, ebx	; 53EC4
 mov eax, ecx	; 53EC6
 call FallDown	; 53EC8
-mov dx, word [word_E9B28]	; 53ECD
+mov dx, word [lastimpact]	; 53ECD
 cmp dx, byte 8	; 53ED4
 jl near .6	; 53ED8
 mov eax, dword [puckc]	; 53EDE
@@ -3806,7 +3806,7 @@ and eax, 0FFh	; 55F29
 mov ecx, eax	; 55F2E
 test eax, eax	; 55F30
 jle short .3	; 55F32
-cmp word [word_E9B28], byte 2Dh	; 55F34
+cmp word [lastimpact], byte 2Dh	; 55F34
 jle short .3	; 55F3C
 mov eax, dword [byte esi+044h]	; 55F3E
 sar eax, 18h	; 55F41
@@ -6544,7 +6544,7 @@ call sfx	; 5809C
 .1:
 test dx, dx	; 580A1
 je short .2	; 580A4
-cmp word [word_E9B28], byte 20h	; 580A6
+cmp word [lastimpact], byte 20h	; 580A6
 jle short .2	; 580AE
 mov eax, 2	; 580B0
 call randomd0	; 580B5
@@ -7625,7 +7625,7 @@ jg short .6	; 58F1A
 mov dword [regd4], 5	; 58F1C
 .6:
 mov ax, word [regd4]	; 58F26
-mov word [word_E9B28], ax	; 58F2C
+mov word [lastimpact], ax	; 58F2C
 add word [byte esi+impact], ax	; 58F32
 mov ax, word [regd4]	; 58F36
 add word [byte ecx+impact], ax	; 58F3C

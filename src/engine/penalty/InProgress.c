@@ -91,10 +91,10 @@ void InProgress(void)
                 t = PerTimeTotal - gameclock;
                 if (gameclock < 0x3C && clockticks[0]) t--;
                 PostPenaltyEvent((pl->pflags & 0x40) != 0, pl->pnum, pen - 9, mins, t / 60, t % 60, i);
-                word_C90D8 = PenBuf_pl[i * 2];
+                penaltysc = PenBuf_pl[i * 2];
                 PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
             } else {
-                word_C90D8 = PenBuf_pl[i * 2];
+                penaltysc = PenBuf_pl[i * 2];
                 PenBuf[i * 2] = PenBuf_pl[i * 2] = 0;
                 if ((sflags & 0x80) || word_CBC44) {
                     if (pen != 7) continue;
@@ -132,7 +132,7 @@ void InProgress(void)
         tm->tmpbox[i] = pnum;
         tm->tmpbox[i + 1] = -1;
         assreplace(pl, 0xC);
-        word_C90D8 = pl->SCnum;
+        penaltysc = pl->SCnum;
         break;
     }
     SetPA(pen);

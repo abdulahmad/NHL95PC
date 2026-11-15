@@ -386,7 +386,7 @@ void ChkShotStat(void)
    unavailable (pflags2 bit 2), crowd +300 (PC: only while not over 1000, capped at 1000), CwdExciteLvl +30, sfx
    A1h (93G SFX0D), centre the scroll on him (xc1 / yc1; PC: 50 lower when he is left of camx) and lock it
    (sflags bit 6, sfslock). PC part: a random roll on his roster byte +0Fh (records at Team +0DEh, 14h bytes each)
-   makes the injury serious when over 6 and word_E9B28 is over 2Dh: out for the game (tmpdst -4, roster status 1),
+   makes the injury serious when over 6 and lastimpact is over 2Dh: out for the game (tmpdst -4, roster status 1),
    else for the period (tmpdst -3, roster status 6, and -1 for the event). word_CBEC6 = 1, then the event is
    posted (PostInjuryEvent: side, pnum, kind, minutes and seconds into the period) and he leaves the lines
    (RemoveFromLines). p: the injured player. No result. */
@@ -409,7 +409,7 @@ void setInjuryType(Player *p)
     sflags |= 0x40;
     t = p->tmptr;
     kind = randomd0((*(unsigned char **)((char *)t + 0xDE))[p->pnum * 20 + 0xF] + 8) > 6;
-    if (kind > 0 && word_E9B28 > 0x2D) {
+    if (kind > 0 && lastimpact > 0x2D) {
         t->tmpdst[p->pnum] = -4;
         t->tmroster[p->pnum * 39] = 1;
     } else {

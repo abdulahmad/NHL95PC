@@ -304,7 +304,7 @@ void defaultsprites_0(void)
 
 /* SetPlList (5BBFA, 93G SetPlList; ends in findpc_ret6): build PlList, the roster indexes (pnum) of the
    players team t wants on the ice now, -1 for none, with their positions at PlList+6 (byte_E038A). The tmap
-   positions come from priolist, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
+   positions come from priolist_m1, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
    a penalty shot). Each player comes from the team's line table through the sublist of that position: the
    goalie by tmgoalie, the defence by tmlcnt while the line is below 4, the rest by the line; the extra attacker
    (position 6) is slot 26h. Then, from the last slot down, a listed player in the penalty box or held out
@@ -336,23 +336,23 @@ void SetPlList(Team *t)
         t->tmextra = -1;
     i = t->tmap;
     while (--i >= 0) {
-        pos = priolist[i + g + 1];
-        byte_E038A[i] = priolist[i + g + 1];
+        pos = priolist_m1[i + g + 1];
+        byte_E038A[i] = priolist_m1[i + g + 1];
         if (pos == 0)
-            PlList[i] = lines[((signed char *)unk_CCCC8)[sublist[pos] + t->tmgoalie]];
+            PlList[i] = lines[((signed char *)sublist_defl)[sublist[pos] + t->tmgoalie]];
         else if (pos == 6)
             PlList[i] = lines[0x26];
         else if (!(line >= 4 || pos > 2))       /* this form and line + sublist below give the EXE's registers */
-            PlList[i] = lines[((signed char *)unk_CCCC8)[sublist[pos] + t->tmlcnt]];
+            PlList[i] = lines[((signed char *)sublist_defl)[sublist[pos] + t->tmlcnt]];
         else
-            PlList[i] = lines[((signed char *)unk_CCCC8)[line + sublist[pos]]];
+            PlList[i] = lines[((signed char *)sublist_defl)[line + sublist[pos]]];
     }
     for (i = 5; i >= 0; i--) {
         k = PlList[i];
         if (k < 0) continue;
         pos = byte_E038A[i];
         if (t->tmpdst[k] <= -3 || t->tmpdst[k] > 0 || i >= t->tmap - 2 && !TryAddPlayerToList(t, k, i)) {
-            p = (signed char *)unk_CCCC8 + sublist[pos];
+            p = (signed char *)sublist_defl + sublist[pos];
             do {
                 c = *p++;
                 if (c < 0) {                    /* sublist used up: the side's list */
@@ -471,7 +471,7 @@ void StartPer(void)
         else if (cont2team == 1) c2playernum[0] = 2;
         else if (cont2team == 2) c2playernum[0] = 8;
     }
-    byte_E9AD3 = 0xFF;
+    goalevent = 0xFF;
     bannermsg = -1;
     bannertimer = 0;
     ovltimer = -1;
@@ -750,7 +750,7 @@ frame:
    4B0h), gmode bits 0 and 6, excitement +28h, all 12 players off the joysticks, AddPenalty2 type 2; any other tie
    ends the period (type 1). A decided game: both controlled players and the puck carrier cleared, a puck still in
    assignment 18h gets 1Ah, all players off the joysticks, SetBoxDoorObject(away team leads). For the cup:
-   byte_CCCA0 = 1, gmode bit 7, sortobj15 gets assignment 2Bh and the winning team's skater nearest (-91h, 6) is
+   cupceremony = 1, gmode bit 7, sortobj15 gets assignment 2Bh and the winning team's skater nearest (-91h, 6) is
    picked. Then the winning team's six: skaters celebrate (7; the picked one 8 then 2Ah), the goalie stays, an empty
    slot takes the first player of the team's penalty box list (position 5, 3 for the next ones; assignment 7,
    setplayer, the list shifted down). Then the penalty buffer is cleared, the crowd raised (home win: +3E8h to at
@@ -800,7 +800,7 @@ void clockcont_0(void)
     p = &SortCords[regd1.w < 0 ? 6 : 0];
     SetBoxDoorObject(regd1.w < 0);
     if (regd0.w == 8) {
-        byte_CCCA0 = 1;
+        cupceremony = 1;
         gmode |= 0x80;
         assinsert((Player *)sortobj15, 0x2B);
         dmin = 40000;

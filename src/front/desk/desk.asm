@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_18D7F progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
-extern boxshadecolor, btn_POHumanOut, byte_CCCA0, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
+extern boxshadecolor, btn_POHumanOut, cupceremony, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
 extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
 extern DrawMenuItemSel, dword_C66A4, dword_C66AC, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, dword_DC888
 extern dword_DC88C, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
@@ -798,7 +798,7 @@ cmp dword [schedgameidx], 498h	; 19801
 jl short .20	; 1980B
 mov ecx, 3	; 1980D
 .20:
-mov eax, dword [byte_CCCA0-3]	; 19812
+mov eax, dword [cupceremony-3]	; 19812
 sar eax, 18h	; 19817
 push eax	; 1981A
 push edi	; 1981B
@@ -812,7 +812,7 @@ inc edx	; 19834
 mov eax, esi	; 19835
 call PaPlayoffResult	; 19837
 xor dh, dh	; 1983C
-mov byte [byte_CCCA0], dh	; 1983E
+mov byte [cupceremony], dh	; 1983E
 .21:
 mov dword [dword esp+03E8h], 0B4h	; 19844
 jmp near .34	; 1984F

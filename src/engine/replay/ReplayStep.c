@@ -180,9 +180,9 @@ void DrawRinkSideObjects(short vx, short vy)
         k = word_E9FB4[i];
         if (k >= 0) {
             k *= 3;
-            x = word_CCEF8[k];
-            y = word_CCEF8[++k];
-            f = byte_CCE00[word_CCEF8[++k] + (signed char)byte_E9FDC[i]];
+            x = rinkobjdefs[k];
+            y = rinkobjdefs[++k];
+            f = rinkobjanim[rinkobjdefs[++k] + (signed char)byte_E9FDC[i]];
             DrawSprite(photoptrsf[f], x, y, (short)(x > 0xC0), -1, 0);
         }
     }
@@ -192,9 +192,9 @@ void DrawRinkSideObjects(short vx, short vy)
             f = -1;
         } else {
             k *= 3;
-            x = word_CCEF8[k];
-            y = word_CCEF8[++k];
-            f = byte_CCE00[word_CCEF8[++k] + (signed char)byte_E9FDC[i]];
+            x = rinkobjdefs[k];
+            y = rinkobjdefs[++k];
+            f = rinkobjanim[rinkobjdefs[++k] + (signed char)byte_E9FDC[i]];
         }
         if (f > 0x64 || k < 0) DrawSprite(dword_E0220, 4, (short)(i == 0x12 ? 0x1A5 : 0x12D), 0, (short)(i == 0x13), 0);
         if (f >= 0) DrawSprite(photoptrsf[f], x, y, 0, (short)(i == 0x13), 0);

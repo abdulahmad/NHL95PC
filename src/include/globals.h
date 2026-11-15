@@ -2731,7 +2731,7 @@ extern short Penaltytimer; /* C90D0 */
 extern short refsignal; /* C90D2 */
 extern short RefStep[]; /* C90D4 */
 extern short RefPen; /* C90D6 */
-extern short word_C90D8; /* C90D8 */
+extern short penaltysc; /* C90D8 */
 extern short gsp; /* C90DA */
 extern short gameclock; /* C90DC */
 extern short clockticks[]; /* C90DE */
@@ -2746,8 +2746,8 @@ extern signed char byte_C9142[]; /* C9142 */
 extern signed char byte_C9146; /* C9146 */
 extern int asstab[]; /* C9161 */
 extern unsigned char SPAtab[]; /* C921D */
-extern signed char priolist[]; /* CBC36 */
-extern signed char byte_CBC37[]; /* CBC37 */
+extern signed char priolist_m1[]; /* CBC36 */
+extern signed char priolist[]; /* CBC37 */
 extern int shownumbers; /* CBC3E */
 extern short debugstep; /* CBC42 */
 extern short word_CBC44; /* CBC44 */
@@ -2777,8 +2777,8 @@ extern int coachlinetab[]; /* CBD2E */
 extern unsigned char ds2list[]; /* CBD5A */
 extern short word_CBD64[]; /* CBD64 */
 extern short word_CBD66[]; /* CBD66 */
-extern short word_CBE8C[]; /* CBE8C */
-extern short word_CBE8E[]; /* CBE8E */
+extern short puckfaceoff2_ptab[]; /* CBE8C */
+extern short puckfaceoff2_ptab_y[]; /* CBE8E */
 extern signed char apl[]; /* CBEA8 */
 extern int dword_CBEBE[]; /* CBEBE */
 extern short ovltimer; /* CBEC0 */
@@ -2894,20 +2894,20 @@ extern int dword_CCC98; /* CCC98 */
 extern int dword_CCC9C; /* CCC9C */
 extern int dword_CCC9D[]; /* CCC9D */
 extern int dword_CCC9E[]; /* CCC9E */
-extern signed char byte_CCCA0; /* CCCA0 */
-extern short word_CCCA8[]; /* CCCA8 */
-extern int dword_CCCB8[]; /* CCCB8 */
-extern int dword_CCCC5[]; /* CCCC5 */
-extern unsigned char unk_CCCC8[]; /* CCCC8 */
+extern signed char cupceremony; /* CCCA0 */
+extern short restoreteams_pdsttab[]; /* CCCA8 */
+extern int sublist_m2[]; /* CCCB8 */
+extern int sublist_defl_m3[]; /* CCCC5 */
+extern unsigned char sublist_defl[]; /* CCCC8 */
 extern int dword_CCD4F[]; /* CCD4F */
 extern int doplayeracc_ftab[]; /* CCD78 */
 extern int MaxSpeed[]; /* CCD98 */
 extern unsigned char str_ErrLoadGame[]; /* CCDD8 */
 extern unsigned char str_ErrSaveGame[]; /* CCDEC */
-extern signed char byte_CCE00[]; /* CCE00 */
-extern unsigned char byte_CCE01[]; /* CCE01 */
-extern int dword_CCEF6[]; /* CCEF6 */
-extern short word_CCEF8[]; /* CCEF8 */
+extern signed char rinkobjanim[]; /* CCE00 */
+extern unsigned char rinkobjanim_b1[]; /* CCE01 */
+extern int rinkobjdefs_m2[]; /* CCEF6 */
+extern short rinkobjdefs[]; /* CCEF8 */
 extern int dword_CD2F8[]; /* CD2F8 */
 extern int penaltynames[]; /* CD304 */
 extern int gsumqcount; /* CD34C */
@@ -4848,9 +4848,9 @@ extern int dword_DEB74[]; /* DEB74 */
 extern int dword_DEB78[]; /* DEB78 */
 extern int dword_DEB7C[]; /* DEB7C */
 extern int dword_DEB80[]; /* DEB80 */
-extern short word_DEE94[]; /* DEE94 */
-extern short word_DEE96[]; /* DEE96 */
-extern unsigned char byte_DEE97[]; /* DEE97 */
+extern short rinkobjs[]; /* DEE94 */
+extern short rinkobjs_w2[]; /* DEE96 */
+extern unsigned char rinkobjs_b3[]; /* DEE97 */
 extern short word_DEF84; /* DEF84 */
 extern short word_DEF88; /* DEF88 */
 extern int dword_DEF8C[]; /* DEF8C */
@@ -4954,7 +4954,7 @@ extern short word_E004A; /* E004A */
 extern unsigned char byte_E0072; /* E0072 */
 extern unsigned char byte_E0073; /* E0073 */
 extern unsigned char byte_E0074; /* E0074 */
-extern int dword_E009C; /* E009C */
+extern int SumCwdExciteLvl; /* E009C */
 extern int photoptrsf[]; /* E00A0 */
 extern int dword_E0220; /* E0220 */
 extern int dword_E0230; /* E0230 */
@@ -4973,15 +4973,15 @@ extern unsigned char textline5; /* E0344 */
 extern short lcreqchoice[]; /* E0380 */
 extern signed char PlList[]; /* E0384 */
 extern signed char byte_E038A[]; /* E038A */
-extern int dword_E038E[]; /* E038E */
+extern int fofdata2_m2[]; /* E038E */
 extern short fofdata2[]; /* E0390 */
-extern short word_E0392; /* E0392 */
-extern unsigned char byte_E0393; /* E0393 */
-extern short word_E0394; /* E0394 */
-extern short word_E0396; /* E0396 */
-extern unsigned char byte_E0397; /* E0397 */
-extern short word_E0398; /* E0398 */
-extern short word_E039A; /* E039A */
+extern short fofdata2_w2; /* E0392 */
+extern unsigned char fofdata2_b3; /* E0393 */
+extern short fofdata2_w4; /* E0394 */
+extern short fofdata2_w6; /* E0396 */
+extern unsigned char fofdata2_b7; /* E0397 */
+extern short fofdata; /* E0398 */
+extern short fofdata_w2; /* E039A */
 extern short word_E03A0; /* E03A0 */
 extern int replayplay; /* E03A4 */
 extern int dword_E03A8; /* E03A8 */
@@ -5005,8 +5005,8 @@ extern short word_E9A9C; /* E9A9C */
 extern short dword_E9A9E; /* E9A9E */
 extern short joysampling_save; /* E9AA0 */
 extern short word_E9AA2; /* E9AA2 */
-extern short word_E9AA4; /* E9AA4 */
-extern short word_E9AA6; /* E9AA6 */
+extern short MaxCwdExciteLvl; /* E9AA4 */
+extern short NumCwdExciteLvl; /* E9AA6 */
 extern short CwdExciteLvl; /* E9AA8 */
 extern short word_E9AAA; /* E9AAA */
 extern short periodendtime; /* E9AAC */
@@ -5025,22 +5025,22 @@ extern signed char icingPlayer; /* E9AC1 */
 extern short lasttouch; /* E9AC2 */
 extern short lty; /* E9AC4 */
 extern short ltx; /* E9AC6 */
-extern unsigned char byte_E9AC8; /* E9AC8 */
-extern unsigned char byte_E9AC9; /* E9AC9 */
-extern unsigned char byte_E9ACA; /* E9ACA */
-extern signed char byte_E9ACB; /* E9ACB */
-extern unsigned char byte_E9ACC; /* E9ACC */
-extern unsigned char byte_E9ACD; /* E9ACD */
-extern unsigned char byte_E9ACE; /* E9ACE */
-extern unsigned char byte_E9ACF; /* E9ACF */
-extern unsigned char byte_E9AD0; /* E9AD0 */
-extern unsigned char byte_E9AD1; /* E9AD1 */
-extern unsigned char byte_E9AD2; /* E9AD2 */
-extern unsigned char byte_E9AD3; /* E9AD3 */
-extern unsigned char byte_E9AD4; /* E9AD4 */
-extern unsigned char byte_E9AD5; /* E9AD5 */
-extern unsigned char byte_E9AD6; /* E9AD6 */
-extern unsigned char byte_E9AD7; /* E9AD7 */
+extern unsigned char curevent; /* E9AC8 */
+extern unsigned char curevent_b1; /* E9AC9 */
+extern unsigned char curevent_b2; /* E9ACA */
+extern signed char curevent_b3; /* E9ACB */
+extern unsigned char curevent_b4; /* E9ACC */
+extern unsigned char curevent_b5; /* E9ACD */
+extern unsigned char curevent_b6; /* E9ACE */
+extern unsigned char curevent_b7; /* E9ACF */
+extern unsigned char curevent_b8; /* E9AD0 */
+extern unsigned char curevent_b9; /* E9AD1 */
+extern unsigned char curevent_b10; /* E9AD2 */
+extern unsigned char goalevent; /* E9AD3 */
+extern unsigned char goalevent_b1; /* E9AD4 */
+extern unsigned char goalevent_b2; /* E9AD5 */
+extern unsigned char goalevent_b3; /* E9AD6 */
+extern unsigned char goalevent_b4; /* E9AD7 */
 extern unsigned char OOlist[]; /* E9ADE */
 extern int gwgteam; /* E9AF0 */
 extern int gwgplayer; /* E9AF4 */
@@ -5048,18 +5048,18 @@ extern int startm_m2[]; /* E9AF6 */
 extern short startm[]; /* E9AF8 */
 extern short starpl[]; /* E9AFA */
 extern int seqtimer; /* E9B04 */
-extern short word_E9B28; /* E9B28 */
-extern int dword_E9B2A[]; /* E9B2A */
-extern short word_E9B2C[]; /* E9B2C */
-extern unsigned char unk_E9B4C[]; /* E9B4C */
-extern int dword_E9BA4[]; /* E9BA4 */
-extern int dword_E9BA8[]; /* E9BA8 */
-extern int dword_E9BAC[]; /* E9BAC */
-extern int dword_E9BB0[]; /* E9BB0 */
-extern int dword_E9BB4[]; /* E9BB4 */
-extern int dword_E9BB8[]; /* E9BB8 */
-extern int dword_E9BBC[]; /* E9BBC */
-extern int dword_E9BC0[]; /* E9BC0 */
+extern short lastimpact; /* E9B28 */
+extern int rinkobjused_m2[]; /* E9B2A */
+extern short rinkobjused[]; /* E9B2C */
+extern unsigned char gsumqueue[]; /* E9B4C */
+extern int defertab[]; /* E9BA4 */
+extern int defertab_a1[]; /* E9BA8 */
+extern int defertab_a2[]; /* E9BAC */
+extern int defertab_a3[]; /* E9BB0 */
+extern int defertab_a4[]; /* E9BB4 */
+extern int defertab_a5[]; /* E9BB8 */
+extern int defertab_a6[]; /* E9BBC */
+extern int defertab_fn[]; /* E9BC0 */
 extern int dword_E9C24[]; /* E9C24 */
 extern int dword_E9C85[]; /* E9C85 */
 extern int dword_E9C88[]; /* E9C88 */

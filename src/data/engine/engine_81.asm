@@ -2,19 +2,19 @@
 bits 32
 %include "hockey.inc"
 section s_DEB78 nobits alloc noexec write align=1
-global byte_DEE97, dword_DEB78, dword_DEB7C, dword_DEB80, dword_DEF8C, dword_DEFE0, dword_DF004, word_DEE94
-global word_DEE96, word_DEF84, word_DEF88
+global rinkobjs_b3, dword_DEB78, dword_DEB7C, dword_DEB80, dword_DEF8C, dword_DEFE0, dword_DF004, rinkobjs
+global rinkobjs_w2, word_DEF84, word_DEF88
 dword_DEB78:
 resb 4
 dword_DEB7C:
 resb 4
 dword_DEB80:
 resb 788
-word_DEE94:
+rinkobjs:
 resb 2
-word_DEE96:
+rinkobjs_w2:
 resb 1
-byte_DEE97:
+rinkobjs_b3:
 resb 237
 word_DEF84:
 resb 4

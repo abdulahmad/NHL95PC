@@ -10,7 +10,7 @@ void checkcheck(Player *a, Player *b, short force);
  Skips a neighbour that is out of play (pflags bit 2, pflags2 bit 5) or not a skater / the referee (SCnum
  above 0Bh but not 10h). With the gap within 10h on the axis, the distance squared (regd0) at most 100h and the
  two closing (regd1 = the gap times the relative velocity, >= 0, then / 16): against the other team or the
- referee, regd4 = the impact (regd1 >> 8, at least 5, also word_E9B28) is added to both players' impact and
+ referee, regd4 = the impact (regd1 >> 8, at least 5, also lastimpact) is added to both players' impact and
  sets each one's impactp unless pflags2 bit 0; 14h or more with either of them carrying the puck plays the
  check (newcheck 0); then checkint and checkcheck. Unless collflag is set already, the two bounce off each other
  (the velocity exchange weighted by weight + 8Ch, word_E03B8 the cross term) and collflag is set. While the
@@ -48,7 +48,7 @@ void checkcx(Player *p, short x, short d, short pl)
     if (p->SCnum == 0x10 || o->SCnum == 0x10 || (((unsigned char)p->pflags ^ (unsigned char)o->pflags) & 0x40)) {
         regd4.w = regd1.w >> 8;
         if (regd4.w <= 5) regd4.l = 5;
-        word_E9B28 = regd4.w;
+        lastimpact = regd4.w;
         p->impact += regd4.w;
         o->impact += regd4.w;
         if (!(o->pflags2 & 1)) o->impactp = p->SCnum;

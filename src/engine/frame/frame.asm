@@ -20,7 +20,7 @@ extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, r
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
 extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
-extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, word_C90D8, word_CBC44
+extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
 extern word_CBEC6, hmtmtouch1, awtmtouch1, awtmtouch2, word_DF816, word_DF81A, word_E0022, word_E0028
 extern word_E002A, xc1, yc1, yleader
 global StartHL2
@@ -251,7 +251,7 @@ mov edx, esi	; 696B0
 mov word [Pencntdwn], si	; 696B2
 mov word [RefPen], bx	; 696B9
 mov ecx, esi	; 696C0
-mov word [word_C90D8], si	; 696C2
+mov word [penaltysc], si	; 696C2
 mov word [ovltimer], si	; 696C9
 mov word [word_CBC44], di	; 696D0
 mov word [bannermsg], si	; 696D7

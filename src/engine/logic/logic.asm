@@ -5,14 +5,14 @@ bits 32
 section s_499D8 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awscore, awtmap, awtmstruct
 extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F
-extern byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, c1playernum
+extern byte_DFFE2, curevent, goalevent, goalevent_b1, goalevent_b2, goalevent_b3, goalevent_b4, c1playernum
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
 extern doorpflags, doortemp1, doplayeracc, doshot, dword_C585C, dword_C5860, dword_CBEBE, dword_CC0EC
 extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, hmplstats_m2
 extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, dword_DF848, dword_E0244
-extern dword_E038E, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
+extern fofdata2_m2, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
 extern EvadePlayers, exitgame, fadeinpending, FadePalette, Findhittype, findpc, fodir1, fodir2
 extern fofdata2, FormatPlayerName, fox, foy, frameaccum, FreeMemBlock, gameclock, gameopts
 extern gameover, GetHot, getlchoice, gmode, gmode2, goalieacc, gsp, gwgplayer
@@ -32,12 +32,12 @@ extern ShotMode, shotongoal, shotplayer, skateto, skatetopuck, sopathend, sopath
 extern sopathy, SortCords, sortobj15, sounddev, sprintf_, SprSort, starordtab, starpl
 extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, sub_8FFB0
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
-extern unk_C1B3E, hmplattr, unk_DC240, updateanim, vecdist, VisTeam, vtoa, word_C90D8
+extern unk_C1B3E, hmplattr, unk_DC240, updateanim, vecdist, VisTeam, vtoa, penaltysc
 extern word_CBC44, word_CBEC6, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
 extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, word_DB08A
 extern word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, word_DF816, word_DF81A, word_E0022
-extern word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E0392, word_E0394
-extern word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yleader
+extern word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, fofdata2_w2, fofdata2_w4
+extern fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global assboxenter, assbenchside, assdefo, assdefd, asswingd, asswingd_skate0, asswingd_skateto, asswingo
 global asswingo_evade, asscenterd, asscentero, donothing, assstanley, assscore, asseben, assleaveice
 global asspenalty, assdopen, assepen, assbench, GoalieToPuckVec, AdjustFacingDirection, assgoalietopuck, ClampYPosition
@@ -5442,7 +5442,7 @@ sar eax, 10h	; 4DAB9
 movsx ax, byte [dword eax+Endfaceoff_ftab_m1]	; 4DABC
 mov edx, 10h	; 4DAC4
 sub edx, eax	; 4DAC9
-mov eax, dword [word_E0394-2]	; 4DACB
+mov eax, dword [fofdata2_w4-2]	; 4DACB
 sar eax, 10h	; 4DAD0
 movsx ax, byte [dword eax+Endfaceoff_ftab_m1]	; 4DAD3
 add edx, eax	; 4DADB
@@ -5494,11 +5494,11 @@ mov eax, 21h	; 4DB64
 call randomd0	; 4DB69
 cmp ax, word [regd2]	; 4DB6E
 jge short .7	; 4DB75
-mov ax, word [word_E0396]	; 4DB77
+mov ax, word [fofdata2_w6]	; 4DB77
 mov word [lasttouch], bx	; 4DB7D
 jmp short .8	; 4DB84
 .7:
-mov ax, word [word_E0392]	; 4DB86
+mov ax, word [fofdata2_w2]	; 4DB86
 mov word [lasttouch], dx	; 4DB8C
 .8:
 test ah, 8	; 4DB93
@@ -6986,16 +6986,16 @@ mov eax, ebx	; 4EDD5
 call SetSPA	; 4EDD7
 cmp word [ovltimer], 0ECh	; 4EDDC
 jl near .64	; 4EDE5
-cmp byte [byte_E9AD3], 1	; 4EDEB
+cmp byte [goalevent], 1	; 4EDEB
 jne near .64	; 4EDF2
 xor ebx, ebx	; 4EDF8
-mov bl, byte [byte_E9AD4]	; 4EDFA
+mov bl, byte [goalevent_b1]	; 4EDFA
 xor eax, eax	; 4EE00
-mov al, byte [byte_E9AD5]	; 4EE02
+mov al, byte [goalevent_b2]	; 4EE02
 mov word [esp], ax	; 4EE07
 xor edx, edx	; 4EE0B
-mov dl, byte [byte_E9AD6]	; 4EE0D
-movzx di, byte [byte_E9AD7]	; 4EE13
+mov dl, byte [goalevent_b3]	; 4EE0D
+movzx di, byte [goalevent_b4]	; 4EE13
 xor eax, eax	; 4EE1B
 cmp dx, 0FFh	; 4EE1D
 je short .1	; 4EE22
@@ -7059,7 +7059,7 @@ call PaGoal	; 4EED7
 mov eax, dword [joysampling_save-2]	; 4EEDC
 sar eax, 10h	; 4EEE1
 mov dword [joysampling], eax	; 4EEE4
-mov byte [byte_E9AD3], 0FFh	; 4EEE9
+mov byte [goalevent], 0FFh	; 4EEE9
 cmp word [gsp], byte 3	; 4EEF0
 jl near .64	; 4EEF8
 mov word [ovltimer], 38h	; 4EEFE
@@ -7145,7 +7145,7 @@ jne short .17	; 4F035
 call QueueGoalieNote	; 4F037
 test ax, ax	; 4F03C
 jne near .20	; 4F03F
-mov eax, dword [word_C90D8-2]	; 4F045
+mov eax, dword [penaltysc-2]	; 4F045
 sar eax, 10h	; 4F04A
 shl eax, 7	; 4F04D
 cmp byte [dword eax+byte_DF87F], 0	; 4F050

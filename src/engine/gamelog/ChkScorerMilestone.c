@@ -9,9 +9,9 @@ typedef struct DeferCall {
     void (*fn)(int, int, int, int, int, int, int);
 } DeferCall;
 
-#define Q(i) ((DeferCall *)dword_E9BA4)[i]
+#define Q(i) ((DeferCall *)defertab)[i]
 
-/* RunDeferredCalls: make the defercount queued calls (dword_E9BA4 table: arguments in eax, edx,
+/* RunDeferredCalls: make the defercount queued calls (defertab table: arguments in eax, edx,
  ebx, ecx, then 3 on the stack) in order and empty the queue. */
 void RunDeferredCalls(void)
 {

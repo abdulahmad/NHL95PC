@@ -5,16 +5,16 @@ bits 32
 section s_59D9A progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, asstab, awlinetab, awroster
 extern awscore, awteamrec, awtmglstats, awtmgoalie, awtmlcnt, awtmline, awtmlines, awtmpbox
-extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, byte_CBC37
-extern byte_CC7A4, byte_CC7A5, byte_CCCA0, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
+extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, priolist
+extern byte_CC7A4, byte_CC7A5, cupceremony, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
 extern awtmcoach_d3, awtmcoachflags, awtmcoachmode, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
-extern byte_E9AD3, byte_E9DB4, byte_E9E4A, c1playernum, c2playernum, camx, camx_m2, camy
+extern goalevent, byte_E9DB4, byte_E9E4A, c1playernum, c2playernum, camx, camx_m2, camy
 extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
 extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
 extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
-extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D30BC
+extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, sublist_m2, sublist_defl_m3, dword_CCD4F, dword_D30BC
 extern dword_D30C0, hmplstats, hmtmextra, hmtmnear, hmtmcoachenergy, hmtmplattr, hmtmglattr, awtmnear
-extern awtmcoachenergy, awtmplattr, awtmglattr, dword_E009C, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
+extern awtmcoachenergy, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
 extern EndPenaltyShot, energywarn, exitgame, fadeinpending, fodir1, fodir2, fox, foy
 extern gameclock, gameopts, gameover, gmode, gmode2, gsp, hmlinetab, hmroster
 extern hmscore, hmteamrec, hmtmglstats, hmtmgoalie, hmtmlcnt, hmtmline, hmtmlines, hmtmpbox
@@ -24,16 +24,16 @@ extern lcline, lcrequest, lldisp, lldispodd, ltack, ltx, lty, mousex
 extern mousey, musicon, coachlinetab, onetimerflag, OOlist, OOlistpos, ovlseq, ovltimer
 extern pad1dev, pad2dev, PaOneMinuteLeft, PBnum, PenaltyManager, PenBuf, Pencntdwn, PenGoalStuff
 extern penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, penshottimer
-extern periodendtime, PerTimeTab, PerTimeTotal, PlayCrowdSample, PlList, priolist, puckc, puckcross
+extern periodendtime, PerTimeTab, PerTimeTotal, PlayCrowdSample, PlList, priolist_m1, puckc, puckcross
 extern puckstruct, puckvx, puckvy, puckx, pucky, puckz, randomd0, ReadJoy1
 extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
 extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
-extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, unk_CCCC8
+extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
 extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, unk_E9D50
 extern unk_E9EE0, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, word_CBEC6, word_CC0B0
-extern word_CCCA8, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, word_E0036, word_E03A0
-extern word_E03B8, word_E9AA4, word_E9AA6, word_E9AB0, xc1, yc1, yleader, Ylist
+extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, word_E0036, word_E03A0
+extern word_E03B8, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
 global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6, findpc_ret5, GetHot
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, PenTeamScored, Goal, GiveControl
@@ -2417,7 +2417,7 @@ jmp short .3	; 5B9A2
 .2:
 xor ecx, ecx	; 5B9A4
 mov cl, byte [eax]	; 5B9A6
-mov cx, word [nosplit ecx*2+word_CCCA8]	; 5B9A8
+mov cx, word [nosplit ecx*2+restoreteams_pdsttab]	; 5B9A8
 mov word [edx], cx	; 5B9B0
 add edx, byte 2	; 5B9B3
 inc ebx	; 5B9B6
@@ -2700,21 +2700,21 @@ jl near .13	; 5BC77
 movsx edx, di	; 5BC7D
 mov ebx, dword [byte esp+02h]	; 5BC80
 sar ebx, 10h	; 5BC84
-movsx ax, byte [dword edx+ebx+byte_CBC37]	; 5BC87
+movsx ax, byte [dword edx+ebx+priolist]	; 5BC87
 mov word [byte esp+08h], ax	; 5BC90
-mov al, byte [dword edx+ebx+byte_CBC37]	; 5BC95
+mov al, byte [dword edx+ebx+priolist]	; 5BC95
 mov byte [dword edx+byte_E038A], al	; 5BC9C
 mov eax, dword [byte esp+08h]	; 5BCA2
 test ax, ax	; 5BCA6
 jne short .10	; 5BCA9
 mov ebx, dword [byte esp+06h]	; 5BCAB
 sar ebx, 10h	; 5BCAF
-mov ecx, dword [nosplit ebx*2+dword_CCCB8]	; 5BCB2
+mov ecx, dword [nosplit ebx*2+sublist_m2]	; 5BCB2
 sar ecx, 10h	; 5BCB9
 mov ebx, dword [byte esi+SPA-2]	; 5BCBC
 .7:
 sar ebx, 10h	; 5BCBF
-mov ebx, dword [dword ecx+ebx+dword_CCCC5]	; 5BCC2
+mov ebx, dword [dword ecx+ebx+sublist_defl_m3]	; 5BCC2
 sar ebx, 18h	; 5BCC9
 .8:
 mov al, byte [ebx+ebp]	; 5BCCC
@@ -2733,18 +2733,18 @@ cmp ax, 2	; 5BCEA
 jg short .12	; 5BCEE
 mov ebx, dword [byte esp+06h]	; 5BCF0
 sar ebx, 10h	; 5BCF4
-mov ecx, dword [nosplit ebx*2+dword_CCCB8]	; 5BCF7
+mov ecx, dword [nosplit ebx*2+sublist_m2]	; 5BCF7
 sar ecx, 10h	; 5BCFE
 mov ebx, dword [byte esi+02Ah]	; 5BD01
 jmp short SetPlList.7	; 5BD04
 .12:
 mov edx, dword [byte esp+06h]	; 5BD06
 sar edx, 10h	; 5BD0A
-mov edx, dword [nosplit edx*2+dword_CCCB8]	; 5BD0D
+mov edx, dword [nosplit edx*2+sublist_m2]	; 5BD0D
 sar edx, 10h	; 5BD14
 mov ebx, dword [byte esp+0Ah]	; 5BD17
 sar ebx, 10h	; 5BD1B
-mov ebx, dword [dword edx+ebx+dword_CCCC5]	; 5BD1E
+mov ebx, dword [dword edx+ebx+sublist_defl_m3]	; 5BD1E
 sar ebx, 18h	; 5BD25
 movsx edx, di	; 5BD28
 jmp short SetPlList.8	; 5BD2B
@@ -2780,9 +2780,9 @@ jne near .28	; 5BD8F
 .15:
 mov edx, dword [byte esp+06h]	; 5BD95
 sar edx, 10h	; 5BD99
-mov ecx, dword [nosplit edx*2+dword_CCCB8]	; 5BD9C
+mov ecx, dword [nosplit edx*2+sublist_m2]	; 5BD9C
 sar ecx, 10h	; 5BDA3
-add ecx, unk_CCCC8	; 5BDA6
+add ecx, sublist_defl	; 5BDA6
 .16:
 mov al, byte [ecx]	; 5BDAC
 mov byte [byte esp+010h], al	; 5BDAE
@@ -3053,7 +3053,7 @@ cmp bx, byte 2	; 5C0A1
 jne short .5	; 5C0A5
 mov word [c2playernum], 8	; 5C0A7
 .5:
-mov byte [byte_E9AD3], 0FFh	; 5C0B0
+mov byte [goalevent], 0FFh	; 5C0B0
 mov ebx, 0FFFFFFFFh	; 5C0B7
 mov word [bannermsg], bx	; 5C0BC
 xor ecx, ecx	; 5C0C3
@@ -3175,14 +3175,14 @@ push ecx	; 5C252
 push edx	; 5C253
 push edi	; 5C254
 mov ax, word [CwdExciteLvl]	; 5C255
-cmp ax, word [word_E9AA4]	; 5C25B
+cmp ax, word [MaxCwdExciteLvl]	; 5C25B
 jle short .1	; 5C262
-mov word [word_E9AA4], ax	; 5C264
+mov word [MaxCwdExciteLvl], ax	; 5C264
 .1:
 mov eax, dword [CwdExciteLvl-2]	; 5C26A
 sar eax, 10h	; 5C26F
-add dword [dword_E009C], eax	; 5C272
-inc word [word_E9AA6]	; 5C278
+add dword [SumCwdExciteLvl], eax	; 5C272
+inc word [NumCwdExciteLvl]	; 5C278
 mov cx, word [CwdExciteLvl]	; 5C27F
 dec ecx	; 5C286
 mov word [CwdExciteLvl], cx	; 5C287
@@ -5058,7 +5058,7 @@ and eax, 0FFh	; 5DA09
 call SetBoxDoorObject	; 5DA0E
 cmp word [regd0], byte 8	; 5DA13
 jne near .17	; 5DA1B
-mov byte [byte_CCCA0], 1	; 5DA21
+mov byte [cupceremony], 1	; 5DA21
 or byte [gmode], 80h	; 5DA28
 mov edx, 2Bh	; 5DA2F
 mov eax, sortobj15	; 5DA34

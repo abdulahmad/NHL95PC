@@ -497,9 +497,9 @@ void assrefsignal(Player *p)
    goal-call bytes in other registers; see docs/UNSURE.md. */
 /* assrefgoalpa (4ED7C; 93G assrefgoalpa, PC version; ends in assgoalie_popebp): the referee after a goal or a
    penalty call goes to the puck. Not while locked (pflags bit 5). While the goal overlay runs (ovlseq neither 0 nor
-   2, ovltimer below 100h) hold the signal stance (SPA A5Bh); from ovltimer ECh on, once (byte_E9AD3 1) have the
+   2, ovltimer below 100h) hold the signal stance (SPA A5Bh); from ovltimer ECh on, once (goalevent 1) have the
    announcer call the goal (PaGoal: the scoring team's abbreviation, the number of assists and the jersey numbers of
-   scorer and assistants, byte_E9AD4-E9AD7; input sampling off meanwhile) and in overtime cut the overlay short. With
+   scorer and assistants, goalevent_b1-E9AD7; input sampling off meanwhile) and in overtime cut the overlay short. With
    a penalty pending (PenBuf) just signal. With the puck beyond A0h / 112h go on to assignment 24h. A new
    assignment: at the end of the period (or after an overtime goal, or with word_CBEC6) stop the play (assignment 1Eh,
    the puck 1Bh); else set up the faceoff walk (RefStep 1, PenShotAssign, the signal stance) and react to the call:
@@ -524,11 +524,11 @@ void assrefgoalpa(Player *p)
     if (ovlseq != 2 && ovlseq != 0 && ovltimer >= 0 && ovltimer < 0x100) {
         SetSPA(p, 0xA5B);
         if (ovltimer < 0xEC) return;
-        if (byte_E9AD3 != 1) return;
-        side = byte_E9AD4;
-        sc = byte_E9AD5;
-        a1 = byte_E9AD6;
-        a2 = byte_E9AD7;
+        if (goalevent != 1) return;
+        side = goalevent_b1;
+        sc = goalevent_b2;
+        a1 = goalevent_b3;
+        a2 = goalevent_b4;
         n = 0;
         if (a1 != 0xFF) n = 1;
         if (a2 != 0xFF) n++;
@@ -538,7 +538,7 @@ void assrefgoalpa(Player *p)
         PaGoal((char *)teamabbrevs[team], n, hmrosterjersey[side * 0x444 + sc * 39],
             hmrosterjersey[side * 0x444 + a1 * 39], hmrosterjersey[side * 0x444 + a2 * 39]);
         joysampling = joysampling_save;
-        byte_E9AD3 = 0xFF;
+        goalevent = 0xFF;
         if (gsp >= 3) ovltimer = 0x38;
         return;
     }
@@ -571,8 +571,8 @@ void assrefgoalpa(Player *p)
         SetSPA(p, 0xA5B);
         if (RefPen == 4) {
             if (!QueueGoalieNote()) {
-                if (byte_DF87F[word_C90D8 << 7] && !dword_E9A9E) {
-                    byte_DF87F[word_C90D8 << 7] = 0;
+                if (byte_DF87F[penaltysc << 7] && !dword_E9A9E) {
+                    byte_DF87F[penaltysc << 7] = 0;
                     LoadTeamPPV(8);
                     if (ovlseq != -1) {
                         dword_E9A9E = 1;

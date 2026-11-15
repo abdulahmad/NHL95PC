@@ -5,11 +5,11 @@ bits 32
 section s_1205D progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awardart, awardnames, awardtitles, awardtype
 extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_D42C3
-extern byte_D9299, byte_E024C, byte_E024D, byte_E024F, byte_E9AC8, byte_E9AD3, camx, camx_m2
+extern byte_D9299, byte_E024C, byte_E024D, byte_E024F, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, dword_C513C, dword_C5168, dword_C66D0, dword_C66D4, dword_CC080
-extern dword_CC0AC, dword_CC0EC, dword_D8C4C, dword_D8C72, dword_D8C7A, dword_DEF8C, dword_E009C, dword_E0244
+extern dword_CC0AC, dword_CC0EC, dword_D8C4C, dword_D8C72, dword_D8C7A, dword_DEF8C, SumCwdExciteLvl, dword_E0244
 extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
 extern foy, fputchar, frameaccum, FreeMemBlock, gameclock, gamemode, gameopts, gameover
@@ -45,9 +45,9 @@ extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, teamabb
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, unk_C03C4
 extern unk_C03C6, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690, unk_D96F8
 extern unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
-extern WaitClickTimeout, WaitDigiSample, word_C90D8, word_CBC44, word_CBC60, word_CBE8C, word_CBE8E, word_CBEC2
-extern word_CBEC6, word_CC0B0, word_DEE94, word_E024E, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6
-extern word_E9AAA, word_E9AAE, word_E9B2C
+extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, word_CBC60, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2
+extern word_CBEC6, word_CC0B0, rinkobjs, word_E024E, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
+extern word_E9AAA, word_E9AAE, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 PickAwardWinners:
 push dword 41Ch	; 1205D

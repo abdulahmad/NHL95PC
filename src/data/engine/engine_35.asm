@@ -10,7 +10,7 @@ extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstan
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, puckstruct
 global seed, asstab, sflags, gmode2, pendelaytab
-global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, apl, collflag
+global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist_m1, priolist, apl, collflag
 global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, shownumbers
 global dword_CBEBE, bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, coachlinetab, lastplayer, puckvz, threat, SPAtab
@@ -18,10 +18,10 @@ global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBC
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, shotplayer
 global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
-global RefStep, RefPen, word_C90D8, gsp, gameclock, clockticks, dirtab_y
+global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
 global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
 global lcblinktime, lcsel, word_CBC60, lcline, lctimer
-global lcboxon, word_CBD64, word_CBD66, word_CBE8C, word_CBE8E, ovltimer
+global lcboxon, word_CBD64, word_CBD66, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
 global word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep
 replaystart:
 dd unk_E0416
@@ -109,7 +109,7 @@ db 0FFh
 db 0FFh
 RefPen:
 db 00h,00h
-word_C90D8:
+penaltysc:
 db 0FFh,0FFh
 gsp:
 db 00h,00h
@@ -862,9 +862,9 @@ db 0Ah,00h,069h,04h,0Ah,00h,06Ah,04h,018h,00h,068h,04h,0Ch,00h,0C1h,02h
 db 0F4h,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,0C1h,02h,0Ch,00h,06Bh,04h,0Ah,00h,06Ch,04h,0Ah,00h,06Dh,04h
 db 018h,00h,06Bh,04h,0Ch,00h,0C1h,02h,0F4h
-priolist:
+priolist_m1:
 db 0FFh
-byte_CBC37:
+priolist:
 db 00h,01h,02h,04h,03h,05h,06h
 shownumbers:
 db 00h,00h,00h,00h
@@ -959,9 +959,9 @@ db 00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,05h,00h,05h,00h,018h,00h
 db 01h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,03h,00h,03h,00h
 db 019h,00h,04h,00h,0F1h,0FFh,00h,00h,00h,00h,0BFh,02h,00h,00h,08h,00h
 db 04h,00h,01Eh,00h,00h,00h
-word_CBE8C:
+puckfaceoff2_ptab:
 db 00h,00h
-word_CBE8E:
+puckfaceoff2_ptab_y:
 db 024h,0FFh,0DDh,0FFh,0D3h,0FFh,023h,00h,0D3h,0FFh,0CCh,0FFh,0F6h,0FFh,00h,00h
 db 0F8h,0FFh,034h,00h,0F6h,0FFh,00h,00h,0C9h,0FFh
 apl:
