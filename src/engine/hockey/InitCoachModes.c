@@ -7,26 +7,26 @@
  with tmlcnt 2 and a computer-run away team with line 3, tmlcnt 2. */
 void InitCoachModes(void)
 {
-    byte_DF6E8 = byte_DF7E8 = 0;
-    byte_DF6E6 = 3;
-    byte_DF6E7 = 2;
-    byte_DF7E6 = 3;
-    byte_DF7E7 = 2;
+    hmtmcoachflags = awtmcoachflags = 0;
+    hmtmcoach_d2 = 3;
+    hmtmcoach_d3 = 2;
+    awtmcoach_d2 = 3;
+    awtmcoach_d3 = 2;
     if (curperiod > 3) {
-        dword_DF6EA = 0xD9A;
-        byte_DF6E9 = 2;
-        dword_DF7EA = 0xD9A;
-        byte_DF7E8 = 1;
-        byte_DF7E9 = 8;
+        hmtmcoachenergy = 0xD9A;
+        hmtmcoachmode = 2;
+        awtmcoachenergy = 0xD9A;
+        awtmcoachflags = 1;
+        awtmcoachmode = 8;
     } else if (curperiod == 3) {
         SetCoachMode(0);
         SetCoachMode(1);
     } else {
-        dword_DF6EA = 0xCCC;
-        byte_DF6E9 = 0;
-        dword_DF7EA = 0xCCC;
-        byte_DF7E8 = 0x81;
-        byte_DF7E9 = 1;
+        hmtmcoachenergy = 0xCCC;
+        hmtmcoachmode = 0;
+        awtmcoachenergy = 0xCCC;
+        awtmcoachflags = 0x81;
+        awtmcoachmode = 1;
     }
     hmtmline[0] = hmtmlcnt = awtmline = awtmlcnt = 0;
     if (!gameopts.linechanges) return;

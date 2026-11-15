@@ -4,13 +4,13 @@ bits 32
 %include "hockey.inc"
 section s_614C2 progbits alloc exec nowrite align=1
 extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtmstruct
-extern bannermsg, bannertimer, byte_C9111, byte_C9142, byte_C9146, byte_CCE00, byte_CCE01, byte_DF6E8
-extern byte_DF7E8, byte_E024C, byte_E024D, byte_E9A15, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB
+extern bannermsg, bannertimer, byte_C9111, byte_C9142, byte_C9146, byte_CCE00, byte_CCE01, hmtmcoachflags
+extern awtmcoachflags, byte_E024C, byte_E024D, byte_E9A15, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB
 extern byte_E9ACC, byte_E9ACD, byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
 extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, dword_C9120, dword_CBEBE
-extern dword_CC0AC, dword_CD2F8, dword_DB086, dword_DB088, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
-extern dword_DF646, dword_DF648, dword_E0220, dword_E0230, dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4
+extern dword_CC0AC, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4
 extern dword_E9BA8, dword_E9BAC, dword_E9BB0, dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
@@ -30,7 +30,7 @@ extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltySh
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1, textline2
 extern textline3, textline4, textline5, unk_C1B49, unk_C5423, unk_C542E, unk_E9B4C, UpdateTextOverlay
 extern vecdist, VisTeam, word_C5428, word_C90D8, word_CBC44, word_CBEC6, word_CC0B0, word_CCEF8
-extern word_CD39C, word_DB08A, word_DEE94, word_DF644, word_E9AAE, word_E9B2C, yleader
+extern word_CD39C, word_DB08A, word_DEE94, hmtmtouch1, word_E9AAE, word_E9B2C, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
 global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote
@@ -1011,7 +1011,7 @@ shl ebx, 4	; 61F82
 mov eax, edx	; 61F85
 shl eax, 4	; 61F87
 add eax, ebx	; 61F8A
-mov ebx, dword [dword eax+dword_DB088-2]	; 61F8C
+mov ebx, dword [dword eax+hmplstats-2]	; 61F8C
 sar ebx, 10h	; 61F92
 add ebx, dword [dword eax+dword_DEB7C]	; 61F95
 push ebx	; 61F9B
@@ -1713,7 +1713,7 @@ jne near .17	; 62855
 xor esi, esi	; 6285B
 mov edx, ebp	; 6285D
 shl edx, 8	; 6285F
-mov dx, word [dword edx+word_DF644]	; 62862
+mov dx, word [dword edx+hmtmtouch1]	; 62862
 xor dh, dh	; 62869
 movsx edi, dx	; 6286B
 cmp edi, byte 19h	; 6286E
@@ -1727,7 +1727,7 @@ shl ebx, 4	; 62884
 mov edx, edi	; 62887
 shl edx, 4	; 62889
 add edx, ebx	; 6288C
-mov ecx, dword [dword edx+dword_DB088-2]	; 6288E
+mov ecx, dword [dword edx+hmplstats-2]	; 6288E
 sar ecx, 10h	; 62894
 mov ebx, dword [dword edx+word_DB08A-2]	; 62897
 sar ebx, 10h	; 6289D
@@ -1873,7 +1873,7 @@ test esi, esi	; 62A4C
 jne near .16	; 62A4E
 mov edi, ebp	; 62A54
 shl edi, 8	; 62A56
-mov edi, dword [dword edi+dword_DF646-2]	; 62A59
+mov edi, dword [dword edi+hmtmtouch2-2]	; 62A59
 sar edi, 10h	; 62A5F
 test edi, edi	; 62A62
 jl near .16	; 62A64
@@ -1890,7 +1890,7 @@ shl edx, 4	; 62A85
 add edx, ebx	; 62A88
 mov ecx, dword [dword edx+word_DB08A-2]	; 62A8A
 sar ecx, 10h	; 62A90
-mov ebx, dword [dword edx+dword_DB088-2]	; 62A93
+mov ebx, dword [dword edx+hmplstats-2]	; 62A93
 sar ebx, 10h	; 62A99
 add ebx, ecx	; 62A9C
 test byte [gameopts+1], 2	; 62A9E
@@ -1945,7 +1945,7 @@ test esi, esi	; 62B26
 jne near .16	; 62B28
 mov edi, ebp	; 62B2E
 shl edi, 8	; 62B30
-mov edi, dword [dword edi+dword_DF648-2]	; 62B33
+mov edi, dword [dword edi+hmtmtouch3-2]	; 62B33
 sar edi, 10h	; 62B39
 test edi, edi	; 62B3C
 jl near .16	; 62B3E
@@ -1962,7 +1962,7 @@ shl edx, 4	; 62B5F
 add edx, ebx	; 62B62
 mov ecx, dword [dword edx+word_DB08A-2]	; 62B64
 sar ecx, 10h	; 62B6A
-mov ebx, dword [dword edx+dword_DB088-2]	; 62B6D
+mov ebx, dword [dword edx+hmplstats-2]	; 62B6D
 sar ebx, 10h	; 62B73
 add ebx, ecx	; 62B76
 test byte [gameopts+1], 2	; 62B78

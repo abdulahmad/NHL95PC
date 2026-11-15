@@ -5,15 +5,15 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, assinsert, assreplace, awscore, awtmap
 extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, byte_CC9B0, byte_CC9E4, byte_CC9E7
-extern Endfaceoff_ftab_m1, byte_DACB3, byte_DAEA7, byte_DF87F, byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4
+extern Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F, byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4
 extern byte_E9AD5, byte_E9AD6, byte_E9AD7, c1playernum, c2playernum, camx, camx_m2, camy
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
 extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, dword_C585C, dword_C5860, dword_CBEBE, dword_CC0EC
 extern dword_CC9AD, dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20
-extern dword_D8C72, dword_D8C7A, dword_DB086, dword_DB088, dword_DF642, dword_DF648, dword_DF652, dword_DF748
-extern dword_DF752, dword_DF848, dword_E0244, dword_E038E, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7
+extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
+extern awtmnear, dword_DF848, dword_E0244, dword_E038E, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7
 extern EndPenaltyShot, energywarn, escrequest, EvadePC, EvadePlayers, exitgame, fadeinpending, FadePalette
 extern Findhittype, findpc, fodir1, fodir2, fofdata2, forcepldata, FormatPlayerName, fox
 extern foy, frameaccum, FreeMemBlock, gameclock, gameopts, gameover, gamepal, GetHot
@@ -37,11 +37,11 @@ extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortC
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
 extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8F633, sub_8FFB0, teamabbrevs, textline1, textline2, textline3, textline4
-extern textline5, threat, TicksSinceLastCall, unk_C1B3E, unk_DACA0, unk_DC240, unk_DFD9C, updateanim
+extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, unk_DC240, unk_DFD9C, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, word_C90D8
 extern word_CBC44, word_CBEC6, word_CC9CC, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
-extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, word_DF644, word_DF816, word_DF81A
+extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E004A
 extern word_E0392, word_E0394, word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
@@ -1003,7 +1003,7 @@ pop ecx	; 48838
 pop ebx	; 48839
 ret	; 4883A
 %endif ; C
-; StarCompare: qsort comparator for PickThreeStars; player stat points from dword_DB088, +2 for gwgteam/gwgplayer.
+; StarCompare: qsort comparator for PickThreeStars; player stat points from hmplstats, +2 for gwgteam/gwgplayer.
 StarCompare:
 push dword 28h	; 4883B
 call __CHK	; 48840
@@ -1045,7 +1045,7 @@ sub eax, edx	; 48895
 shl eax, 3	; 48897
 add eax, edx	; 4889A
 shl eax, 4	; 4889C
-add eax, dword_DB088	; 4889F
+add eax, hmplstats	; 4889F
 mov edx, ebp	; 488A4
 shl edx, 4	; 488A6
 add edx, eax	; 488A9
@@ -1056,7 +1056,7 @@ sub eax, ecx	; 488B2
 shl eax, 3	; 488B4
 add eax, ecx	; 488B7
 shl eax, 4	; 488B9
-mov ecx, dword_DB088	; 488BC
+mov ecx, hmplstats	; 488BC
 add ecx, eax	; 488C1
 mov eax, dword [byte esp+04h]	; 488C3
 shl eax, 4	; 488C7
@@ -1167,7 +1167,7 @@ sub eax, edi	; 489E7
 shl eax, 2	; 489E9
 add eax, edi	; 489EC
 shl eax, 2	; 489EE
-mov edx, unk_DACA0	; 489F1
+mov edx, hmplattr	; 489F1
 add edx, eax	; 489F6
 mov eax, ebp	; 489F8
 shl eax, 2	; 489FA
@@ -1180,7 +1180,7 @@ sub eax, ebx	; 48A09
 shl eax, 2	; 48A0B
 add eax, ebx	; 48A0E
 shl eax, 2	; 48A10
-mov ecx, unk_DACA0	; 48A13
+mov ecx, hmplattr	; 48A13
 add ecx, eax	; 48A18
 mov ebx, dword [byte esp+04h]	; 48A1A
 mov eax, ebx	; 48A1E
@@ -1307,7 +1307,7 @@ je short .3	; 48B50
 mov dword [gwgteam], esi	; 48B52
 mov eax, esi	; 48B58
 shl eax, 8	; 48B5A
-mov eax, dword [dword eax+word_DF644-2]	; 48B5D
+mov eax, dword [dword eax+hmtmtouch1-2]	; 48B5D
 sar eax, 10h	; 48B63
 mov dword [gwgplayer], eax	; 48B66
 mov edx, dword [awscore-2]	; 48B6B
@@ -1421,7 +1421,7 @@ sub eax, ebp	; 48CC8
 shl eax, 3	; 48CCA
 add eax, ebp	; 48CCD
 shl eax, 4	; 48CCF
-add eax, dword_DB088	; 48CD2
+add eax, hmplstats	; 48CD2
 shl edx, 4	; 48CD7
 add eax, edx	; 48CDA
 cmp si, byte 1	; 48CDC
@@ -1481,7 +1481,7 @@ shl eax, 4	; 48D87
 add eax, dword [dword esp+0C8h]	; 48D8A
 mov ebx, dword [dword eax+word_DB08A-2]	; 48D91
 sar ebx, 10h	; 48D97
-mov eax, dword [dword eax+dword_DB088-2]	; 48D9A
+mov eax, dword [dword eax+hmplstats-2]	; 48D9A
 sar eax, 10h	; 48DA0
 add eax, ebx	; 48DA3
 cmp eax, byte 1	; 48DA5

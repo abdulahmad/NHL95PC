@@ -222,14 +222,14 @@ void Goal(Player *net)
     }
     if (gmode & 0x10) return;
     i = hmscore[0] - awscore;
-    if (i < -3 && byte_DF6E6 > 1 && cont1team != 1 && cont2team != 1 && !(*(unsigned char *)hmtmgoalie & 1))
+    if (i < -3 && hmtmcoach_d2 > 1 && cont1team != 1 && cont2team != 1 && !(*(unsigned char *)hmtmgoalie & 1))
         *(unsigned char *)hmtmgoalie ^= 1;
-    if (i < -1 && byte_DF6E6 > 1) byte_DF6E6--;
-    if (i < 1 && byte_DF6E7 > 1) byte_DF6E7--;
-    if (i > 3 && byte_DF7E6 > 1 && cont1team != 2 && cont2team != 2 && !(*(unsigned char *)&awtmgoalie & 1))
+    if (i < -1 && hmtmcoach_d2 > 1) hmtmcoach_d2--;
+    if (i < 1 && hmtmcoach_d3 > 1) hmtmcoach_d3--;
+    if (i > 3 && awtmcoach_d2 > 1 && cont1team != 2 && cont2team != 2 && !(*(unsigned char *)&awtmgoalie & 1))
         *(unsigned char *)&awtmgoalie ^= 1;
-    if (i > 1 && byte_DF7E6 > 1) byte_DF7E6--;
-    if (i > -1 && byte_DF7E7 > 1) byte_DF7E7--;
+    if (i > 1 && awtmcoach_d2 > 1) awtmcoach_d2--;
+    if (i > -1 && awtmcoach_d3 > 1) awtmcoach_d3--;
     UpdateCoachModes();
 }
 
@@ -528,12 +528,12 @@ void updateplayers(void)
     dword_CCC9C = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
         && (ovlseq == 2 || !ovlseq || ovltimer < 0 || ovltimer >= 0x100) != 0);
     p = SortCords;
-    word_DF70E = -1;
-    dword_DF652 = 0xFFFF;
-    word_DF656 = -1;
-    word_DF80E = -1;
-    dword_DF752 = 0xFFFF;
-    word_DF756 = -1;
+    hmtmgoaliesc = -1;
+    hmtmnear = 0xFFFF;
+    hmtmnearsc = -1;
+    awtmgoaliesc = -1;
+    awtmnear = 0xFFFF;
+    awtmnearsc = -1;
     for (i = 0; i < 12; i++, p++) {
         t = p->tmptr;
         dx = *puckx - HIWORD(p->Xpos);

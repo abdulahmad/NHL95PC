@@ -8,7 +8,7 @@ extern btn_MasterDB, byte_D42C3, byte_DC267, byte_DC268, byte_DDD40, byte_DDD41,
 extern byte_DDD45, calcolx, calendarshapes, calexit, CalGoalieStatsScreen, calmenubar, calmonth, calnextslot
 extern calprevslot, calrowy, calsel, calselday, calselmonth, CalSkaterStatsScreen, CalStandingsMenu, CalStandingsScreen
 extern CalTeamStatsScreen, cddriveptr, CheckGameDiskSpace, ClearInputQueue, crestnames, curleague, dlgtextbg, dlgtextfg
-extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C7F0B, dword_DB088, dword_DC23E, dword_DDD2C
+extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C7F0B, hmplstats, dword_DC23E, dword_DDD2C
 extern dword_DDD34, dword_DDD3C, dword_DDD44, FadeOutPalCycle, FadePalStep, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLeagueFloppy, firstteammsg, FmtFromLeague
 extern fontcolor, fputchar, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu
@@ -2676,11 +2676,11 @@ shl ebx, 4	; 36829
 shl eax, 4	; 3682C
 inc word [edi]	; 3682F
 add ebx, eax	; 36832
-mov ax, word [dword ebx+dword_DB088]	; 36834
+mov ax, word [dword ebx+hmplstats]	; 36834
 add word [byte edi+02h], ax	; 3683B
 mov ax, word [dword ebx+word_DB08A]	; 3683F
 add word [byte edi+04h], ax	; 36846
-mov ax, word [dword ebx+dword_DB088]	; 3684A
+mov ax, word [dword ebx+hmplstats]	; 3684A
 mov dx, word [byte edi+06h]	; 36851
 add edx, eax	; 36855
 mov word [byte edi+06h], dx	; 36857

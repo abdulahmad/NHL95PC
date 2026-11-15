@@ -2,16 +2,16 @@
 bits 32
 %include "hockey.inc"
 section s_DF7CA nobits alloc noexec write align=1
-global awtmpbox, byte_DF7E6, byte_DF7E7, byte_DF7E8, byte_DF7E9, scpflags2
+global awtmpbox, awtmcoach_d2, awtmcoach_d3, awtmcoachflags, awtmcoachmode, scpflags2
 global byte_DF87F, puckasslist, puckpflags2, byte_DFFA6, doorpflags, byte_DFFE2, byte_E003A, byte_E0072
 global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textline3
-global textline4, textline5, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
-global awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
+global textline4, textline5, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, awtmcoachenergy
+global awtmlines, awtmplattr, awtmglattr, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, dword_DF848, puckstruct
 global sortobj15, dword_E009C, photoptrsf, dword_E0220, dword_E0230
 global dword_E0244, ovlscript, dword_E038E, recbpr, replayplay, dword_E03A8
 global dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, SortCords
-global unk_DFD9C, unk_DFF5E, regd4, word_DF80E, puckcross
+global unk_DFD9C, unk_DFF5E, regd4, awtmgoaliesc, puckcross
 global word_DF816, word_DF81A
 global pucktemp1, pucknopuck
 global doortemp1, word_E0022, word_E0028, word_E002A, word_E002E
@@ -20,21 +20,21 @@ global lcreqchoice, fofdata2, word_E0392, word_E0394, word_E0396, word_E0398
 global word_E039A, word_E03A0, regd2, regd3, word_E03B8, regd0, regd1
 awtmpbox:
 resb 28
-byte_DF7E6:
+awtmcoach_d2:
 resb 1
-byte_DF7E7:
+awtmcoach_d3:
 resb 1
-byte_DF7E8:
+awtmcoachflags:
 resb 1
-byte_DF7E9:
+awtmcoachmode:
 resb 1
-dword_DF7EA:
+awtmcoachenergy:
 resb 4
 awtmlines:
 resb 4
-dword_DF7F2:
+awtmplattr:
 resb 4
-dword_DF7F6:
+awtmglattr:
 resb 4
 awtmplstats:
 resb 4
@@ -46,7 +46,7 @@ awtmptrF2:
 resb 4
 awtmsort:
 resb 4
-word_DF80E:
+awtmgoaliesc:
 resb 4
 puckcross_m2:
 resb 2

@@ -4,14 +4,14 @@ bits 32
 %include "hockey.inc"
 section s_499D8 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awscore, awtmap, awtmstruct
-extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, byte_DACB3, byte_DAEA7, byte_DF87F
+extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, hmplattr_b13, awplattr_b13, byte_DF87F
 extern byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, c1playernum
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
 extern doorpflags, doortemp1, doplayeracc, doshot, dword_C585C, dword_C5860, dword_CBEBE, dword_CC0EC
-extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_DB086
-extern dword_DB088, dword_DF642, dword_DF648, dword_DF652, dword_DF748, dword_DF752, dword_DF848, dword_E0244
+extern dword_CC9CE, dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, hmplstats_m2
+extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, dword_DF848, dword_E0244
 extern dword_E038E, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
 extern EvadePlayers, exitgame, fadeinpending, FadePalette, Findhittype, findpc, fodir1, fodir2
 extern fofdata2, FormatPlayerName, fox, foy, frameaccum, FreeMemBlock, gameclock, gameopts
@@ -32,10 +32,10 @@ extern ShotMode, shotongoal, shotplayer, skateto, skatetopuck, sopathend, sopath
 extern sopathy, SortCords, sortobj15, sounddev, sprintf_, SprSort, starordtab, starpl
 extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, sub_8FFB0
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
-extern unk_C1B3E, unk_DACA0, unk_DC240, updateanim, vecdist, VisTeam, vtoa, word_C90D8
+extern unk_C1B3E, hmplattr, unk_DC240, updateanim, vecdist, VisTeam, vtoa, word_C90D8
 extern word_CBC44, word_CBEC6, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
 extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, word_DB08A
-extern word_DC242, word_DC244, word_DC248, word_DC24E, word_DF644, word_DF816, word_DF81A, word_E0022
+extern word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, word_DF816, word_DF81A, word_E0022
 extern word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E0392, word_E0394
 extern word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global assboxenter, assbenchside, assdefo, assdefd, asswingd, asswingd_skate0, asswingd_skateto, asswingo
@@ -5218,9 +5218,9 @@ movsx edx, si	; 4D854
 .12:
 cmp edx, 10Eh	; 4D857
 jge short .13	; 4D85D
-cmp dword [dword_DF652], byte 14h	; 4D85F
+cmp dword [hmtmnear], byte 14h	; 4D85F
 jle short .13	; 4D866
-cmp dword [dword_DF752], byte 14h	; 4D868
+cmp dword [awtmnear], byte 14h	; 4D868
 jg near pucknorm_body.3	; 4D86F
 .13:
 mov di, word [byte ebx+temp2]	; 4D875
@@ -5478,7 +5478,7 @@ sar esi, 18h	; 4DB29
 mov eax, esi	; 4DB2C
 shl eax, 2	; 4DB2E
 add eax, esi	; 4DB31
-movzx di, byte [nosplit eax*4+byte_DAEA7]	; 4DB33
+movzx di, byte [nosplit eax*4+awplattr_b13]	; 4DB33
 movsx eax, dx	; 4DB3C
 shl eax, 7	; 4DB3F
 mov esi, dword [dword eax+SortCords+44h]	; 4DB42
@@ -5486,7 +5486,7 @@ sar esi, 18h	; 4DB48
 mov eax, esi	; 4DB4B
 shl eax, 2	; 4DB4D
 add eax, esi	; 4DB50
-mov al, byte [nosplit eax*4+byte_DACB3]	; 4DB52
+mov al, byte [nosplit eax*4+hmplattr_b13]	; 4DB52
 xor ah, ah	; 4DB59
 sub edi, eax	; 4DB5B
 add word [regd2], di	; 4DB5D

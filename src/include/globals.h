@@ -2773,7 +2773,7 @@ extern unsigned char unk_CBCEE[]; /* CBCEE */
 extern unsigned char unk_CBCFE[]; /* CBCFE */
 extern unsigned char unk_CBD0E[]; /* CBD0E */
 extern unsigned char unk_CBD1E[]; /* CBD1E */
-extern int off_CBD2E[]; /* CBD2E */
+extern int coachlinetab[]; /* CBD2E */
 extern unsigned char ds2list[]; /* CBD5A */
 extern short word_CBD64[]; /* CBD64 */
 extern short word_CBD66[]; /* CBD66 */
@@ -4624,14 +4624,14 @@ extern unsigned char awlinetab[]; /* DABF0 */
 extern unsigned char awgoalieidx[]; /* DAC14 */
 extern unsigned char awscratch[]; /* DAC18 */
 extern unsigned char gsummarypath; /* DAC20 */
-extern unsigned char unk_DAC40[]; /* DAC40 */
-extern unsigned char unk_DAC70[]; /* DAC70 */
-extern unsigned char unk_DACA0[]; /* DACA0 */
-extern unsigned char byte_DACB3[]; /* DACB3 */
-extern unsigned char unk_DAE94[]; /* DAE94 */
-extern unsigned char byte_DAEA7[]; /* DAEA7 */
-extern int dword_DB086[]; /* DB086 */
-extern short dword_DB088[]; /* DB088 */
+extern unsigned char hmglattr[]; /* DAC40 */
+extern unsigned char awglattr[]; /* DAC70 */
+extern unsigned char hmplattr[]; /* DACA0 */
+extern unsigned char hmplattr_b13[]; /* DACB3 */
+extern unsigned char awplattr[]; /* DAE94 */
+extern unsigned char awplattr_b13[]; /* DAEA7 */
+extern int hmplstats_m2[]; /* DB086 */
+extern short hmplstats[]; /* DB088 */
 extern short word_DB08A[]; /* DB08A */
 extern short word_DB08C[]; /* DB08C */
 extern short word_DB08E[]; /* DB08E */
@@ -4639,7 +4639,7 @@ extern short word_DB090[]; /* DB090 */
 extern short word_DB092[]; /* DB092 */
 extern short word_DB094; /* DB094 */
 extern short word_DB096[]; /* DB096 */
-extern unsigned char unk_DB218[]; /* DB218 */
+extern unsigned char awplstats[]; /* DB218 */
 extern unsigned char hmroster[]; /* DB3A8 */
 extern unsigned char hmrosterjersey[]; /* DB3AD */
 extern unsigned char byte_DB3AE[]; /* DB3AE */
@@ -4865,63 +4865,63 @@ extern short hmpassatt[]; /* DF63A */
 extern unsigned char hmpasscmp[]; /* DF63C */
 extern short hmtmline[]; /* DF63E */
 extern short hmtmlcnt; /* DF640 */
-extern short dword_DF642; /* DF642 */
-extern short word_DF644[]; /* DF644 */
-extern short dword_DF646[]; /* DF646 */
-extern short dword_DF648[]; /* DF648 */
+extern short hmtmextra; /* DF642 */
+extern short hmtmtouch1[]; /* DF644 */
+extern short hmtmtouch2[]; /* DF646 */
+extern short hmtmtouch3[]; /* DF648 */
 extern short hmtmap[]; /* DF64A */
 extern short hmtmgoalie[]; /* DF64C */
-extern unsigned char byte_DF64D[]; /* DF64D */
-extern int dword_DF652; /* DF652 */
-extern short word_DF656; /* DF656 */
+extern unsigned char hmtmgoalie_b1[]; /* DF64D */
+extern int hmtmnear; /* DF652 */
+extern short hmtmnearsc; /* DF656 */
 extern unsigned char hmtmflags[]; /* DF658 */
 extern short hmtmpde[]; /* DF65A */
 extern int hmtmpdst_m2[]; /* DF690 */
 extern short hmtmpdst[]; /* DF692 */
-extern int dword_DF6C2[]; /* DF6C2 */
+extern int hmtmpdst_gl_m2[]; /* DF6C2 */
 extern unsigned char hmtmpbox; /* DF6CA */
-extern unsigned char byte_DF6E6; /* DF6E6 */
-extern unsigned char byte_DF6E7; /* DF6E7 */
-extern unsigned char byte_DF6E8; /* DF6E8 */
-extern unsigned char byte_DF6E9; /* DF6E9 */
-extern int dword_DF6EA; /* DF6EA */
+extern unsigned char hmtmcoach_d2; /* DF6E6 */
+extern unsigned char hmtmcoach_d3; /* DF6E7 */
+extern unsigned char hmtmcoachflags; /* DF6E8 */
+extern unsigned char hmtmcoachmode; /* DF6E9 */
+extern int hmtmcoachenergy; /* DF6EA */
 extern int hmtmlines[]; /* DF6EE */
-extern int dword_DF6F2; /* DF6F2 */
-extern int dword_DF6F6; /* DF6F6 */
+extern int hmtmplattr; /* DF6F2 */
+extern int hmtmglattr; /* DF6F6 */
 extern int hmtmplstats; /* DF6FA */
 extern int hmtmglstats; /* DF6FE */
 extern int hmtmroster; /* DF702 */
 extern int hmtmptrF2; /* DF706 */
 extern int hmtmsort; /* DF70A */
-extern short word_DF70E; /* DF70E */
+extern short hmtmgoaliesc; /* DF70E */
 extern short awscore; /* DF724 */
 extern short awtmline; /* DF73E */
 extern short awtmlcnt; /* DF740 */
-extern short word_DF742; /* DF742 */
-extern short word_DF744; /* DF744 */
-extern short word_DF746; /* DF746 */
-extern short dword_DF748; /* DF748 */
+extern short awtmextra; /* DF742 */
+extern short awtmtouch1; /* DF744 */
+extern short awtmtouch2; /* DF746 */
+extern short awtmtouch3; /* DF748 */
 extern short awtmap; /* DF74A */
 extern short awtmgoalie; /* DF74C */
-extern int dword_DF752; /* DF752 */
-extern short word_DF756; /* DF756 */
+extern int awtmnear; /* DF752 */
+extern short awtmnearsc; /* DF756 */
 extern unsigned char awtmflags; /* DF758 */
 extern short awtmpde[]; /* DF75A */
 extern unsigned char awtmpbox; /* DF7CA */
-extern unsigned char byte_DF7E6; /* DF7E6 */
-extern unsigned char byte_DF7E7; /* DF7E7 */
-extern unsigned char byte_DF7E8; /* DF7E8 */
-extern unsigned char byte_DF7E9; /* DF7E9 */
-extern int dword_DF7EA; /* DF7EA */
+extern unsigned char awtmcoach_d2; /* DF7E6 */
+extern unsigned char awtmcoach_d3; /* DF7E7 */
+extern unsigned char awtmcoachflags; /* DF7E8 */
+extern unsigned char awtmcoachmode; /* DF7E9 */
+extern int awtmcoachenergy; /* DF7EA */
 extern int awtmlines; /* DF7EE */
-extern int dword_DF7F2; /* DF7F2 */
-extern int dword_DF7F6; /* DF7F6 */
+extern int awtmplattr; /* DF7F2 */
+extern int awtmglattr; /* DF7F6 */
 extern int awtmplstats; /* DF7FA */
 extern int awtmglstats; /* DF7FE */
 extern int awtmroster; /* DF802 */
 extern int awtmptrF2; /* DF806 */
 extern int awtmsort; /* DF80A */
-extern short word_DF80E; /* DF80E */
+extern short awtmgoaliesc; /* DF80E */
 extern int puckcross_m2[]; /* DF812 */
 extern short puckcross[]; /* DF814 */
 extern short word_DF816; /* DF816 */

@@ -8,8 +8,8 @@ extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bann
 extern byte_CCE00, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, byte_E024C, byte_E9AC8
 extern byte_E9AD3, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
-extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, dword_CC0AC, dword_DB088, dword_DF6F2
-extern dword_DF6F6, dword_DF7F2, dword_DF7F6, dword_E009C, dword_E9A9E, dword_E9AB6, dword_E9B2A, energywarn
+extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, dword_CC0AC, hmplstats, hmtmplattr
+extern hmtmglattr, awtmplattr, awtmglattr, dword_E009C, dword_E9A9E, dword_E9AB6, dword_E9B2A, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
 extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
 extern GetPeriodTime, gmode, gmode2, gsp, hmlinetab, hmroster, hmteamrec, hmtmglstats
@@ -26,7 +26,7 @@ extern PlList, postate, psendcount, pspathdir, pspathside, puckcross, recbpr, Re
 extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmousey, SaveModeState, seed
 extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, unk_C5423
-extern unk_C542E, unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DC240, unk_DC252
+extern unk_C542E, hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252
 extern VisTeam, word_C90D8, word_CBC44, word_CBC60, word_CBD64, word_CBD66, word_CBEC2, word_CBEC6
 extern word_CC0B0, word_CC10C, word_CCEF8, word_DEE94, word_DEE96, word_DEF84, word_DEF88, word_E024E
 extern word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AAA, word_E9AAE, word_E9AB0, word_E9B2C
@@ -713,7 +713,7 @@ idiv esi	; 60546
 shl edx, 4	; 60548
 lea esi, [edi+edx]	; 6054B
 mov edi, ebx	; 6054E
-lea esi, [dword esi+dword_DB088]	; 60550
+lea esi, [dword esi+hmplstats]	; 60550
 movsd	; 60556
 movsd	; 60557
 movsd	; 60558
@@ -1551,7 +1551,7 @@ idiv ebx	; 6113B
 shl edx, 4	; 6113D
 lea edi, [byte ecx+010h]	; 61140
 mov dword [dword esp+0104h], edi	; 61143
-lea edi, [dword edx+esi+dword_DB088]	; 6114A
+lea edi, [dword edx+esi+hmplstats]	; 6114A
 mov esi, ecx	; 61151
 movsd	; 61153
 movsd	; 61154
@@ -1676,18 +1676,18 @@ call ReplayRecordReset	; 61308
 and byte [sflags], 0EFh	; 6130D
 mov word [fadeinpending], 1	; 61314
 mov dword [hmtmsort], SortCords	; 6131D
-mov dword [dword_DF6F2], unk_DACA0	; 61327
-mov dword [dword_DF6F6], unk_DAC40	; 61331
+mov dword [hmtmplattr], hmplattr	; 61327
+mov dword [hmtmglattr], hmglattr	; 61331
 mov dword [hmtmlines], hmlinetab	; 6133B
-mov dword [hmtmplstats], dword_DB088	; 61345
+mov dword [hmtmplstats], hmplstats	; 61345
 mov dword [hmtmglstats], unk_DC240	; 6134F
 mov dword [hmtmroster], hmroster	; 61359
 mov dword [hmtmptrF2], hmteamrec	; 61363
 mov dword [awtmsort], SortCords+300h	; 6136D
-mov dword [dword_DF7F2], unk_DAE94	; 61377
-mov dword [dword_DF7F6], unk_DAC70	; 61381
+mov dword [awtmplattr], awplattr	; 61377
+mov dword [awtmglattr], awglattr	; 61381
 mov dword [awtmlines], awlinetab	; 6138B
-mov dword [awtmplstats], unk_DB218	; 61395
+mov dword [awtmplstats], awplstats	; 61395
 mov dword [awtmglstats], unk_DC252	; 6139F
 mov dword [awtmroster], awroster	; 613A9
 mov dword [awtmptrF2], awteamrec	; 613B3

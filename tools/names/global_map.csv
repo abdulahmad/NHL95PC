@@ -3442,3 +3442,43 @@ asscentero_dedata_yrand,CCA3E,asscentero_dedata+6: the y random column (94G .ded
 asspuckc_postab2,CCA6E,"94G logic94 asspuckc .postab2: x,y word pairs (FF92,FFEC,6E,FFEC ... on PC; FF9C,FFEC,64,FFEC on 94G); x column"
 asspuckc_postab2_y,CCA70,asspuckc_postab2+2: the y column
 Endfaceoff_ftab_m1,CCA95,"94G logic94 Endfaceoff .ftab-1: dc.b 0,8,10h,0,8,10h (dirtab offsets for the faceoff pull) starts one byte later; the index is 1-based, as -1(a0,d1.w) on 94G"
+hmtmtouch1,DF644,"hmtmstruct+30h = 94G tmtouch1: last touch (pnum), the scorer; StartThreeStars copies it to gwgplayer, StartHL2 clears touch1-3 together"
+hmtmtouch2,DF646,hmtmstruct+32h = 94G tmtouch2: second last touch (first assist); ChkScorerMilestone reads it as an assist pnum
+hmtmtouch3,DF648,hmtmstruct+34h = 94G tmtouch3: third last touch (second assist)
+awtmtouch1,DF744,awtmstruct+30h = 94G tmtouch1 of the visitors
+awtmtouch2,DF746,awtmstruct+32h = 94G tmtouch2 of the visitors
+awtmtouch3,DF748,awtmstruct+34h = 94G tmtouch3 of the visitors
+hmtmnear,DF652,"hmtmstruct+3Eh = 94G tmnear: nearest skater's distance to the puck; updateplayers resets it to FFFFh and keeps the minimum, pucknorm compares both teams' with 14h as 94G compares tmnear of both"
+awtmnear,DF752,awtmstruct+3Eh = 94G tmnear of the visitors
+hmtmnearsc,DF656,hmtmstruct+42h: player index of the skater whose distance is in hmtmnear (updateplayers stores it with the new minimum; -1 none)
+awtmnearsc,DF756,awtmstruct+42h: player index of the visitors' nearest skater
+hmtmgoaliesc,DF70E,hmtmstruct+FAh: player index of the goalie on the ice (updateplayers stores the loop index when position is 0; -1 none)
+awtmgoaliesc,DF80E,awtmstruct+FAh: player index of the visitors' goalie on the ice
+hmtmextra,DF642,"hmtmstruct+tmextra (2Eh): pnum of the extra attacker, -1 with the goalie in; clearteams stores -1"
+awtmextra,DF742,awtmstruct+tmextra (2Eh)
+hmtmgoalie_b1,DF64D,hmtmgoalie+1: the high byte of tmgoalie; SetTeamGoalie ORs FFh into it to make the word negative (goalie pulled)
+hmtmpdst_gl_m2,DF6C2,"hmtmpdst + 2*19h - 2: -5r short-load base of the goalies' tmpdst words (roster 19h up), LoadTeamRoster indexes it [team*100h + goalie*2]"
+hmtmplattr,DF6F2,"hmtmstruct+DEh: pointer to the home skater attribute records (hmplattr, 14h bytes each); setplayer reads a player's record through it"
+awtmplattr,DF7F2,awtmstruct+DEh: pointer to awplattr
+hmtmglattr,DF6F6,"hmtmstruct+E2h: pointer to the home goalie attribute records (hmglattr, 10h bytes each, indexed pnum*10h-190h)"
+awtmglattr,DF7F6,awtmstruct+E2h: pointer to awglattr
+hmplattr,DACA0,"home skater attribute records, 25 x 14h bytes, filled by LoadTeamRoster; clearteams points hmtmplattr here"
+awplattr,DAE94,visitor skater attribute records (hmplattr + 25*14h)
+hmglattr,DAC40,"home goalie attribute records, 3 x 10h bytes, filled by LoadTeamRoster; clearteams points hmtmglattr here"
+awglattr,DAC70,visitor goalie attribute records (hmglattr+30h)
+hmplattr_b13,DACB3,"hmplattr+13h: byte 13h of a skater attribute record, Endfaceoff indexes it [pnum*14h]"
+awplattr_b13,DAEA7,awplattr+13h
+hmplstats,DB088,"home skater game stats, 25 x 10h bytes (words g, a, pen, +/-, ppg, shg, eng, sht); clearteams points hmtmplstats here"
+hmplstats_m2,DB086,hmplstats-2: -5r short-load base
+awplstats,DB218,visitor skater game stats (hmplstats+190h); clearteams points awtmplstats here
+hmtmcoach_d2,DF6E6,"hmtmstruct+D2h: coach AI byte (default 3, raised to 4 by UpdateCoachModes); meaning not traced"
+hmtmcoach_d3,DF6E7,"hmtmstruct+D3h: coach AI byte (default 2, lowered to 1 by UpdateCoachModes); meaning not traced"
+hmtmcoachflags,DF6E8,"hmtmstruct+D4h: coach AI flags (bit 0 computer line changes in CompLine, bits 6 and 7 line change state)"
+hmtmcoachmode,DF6E9,hmtmstruct+D5h: coach AI mode set by SetCoachMode/UpdateCoachModes; CompLine picks its line order row with it
+hmtmcoachenergy,DF6EA,"hmtmstruct+D6h: line energy limit of the coach mode (CCCh, D9Ah, B33h); CompLine compares getlinee with it"
+awtmcoach_d2,DF7E6,awtmstruct+D2h
+awtmcoach_d3,DF7E7,awtmstruct+D3h
+awtmcoachflags,DF7E8,awtmstruct+D4h
+awtmcoachmode,DF7E9,awtmstruct+D5h
+awtmcoachenergy,DF7EA,awtmstruct+D6h
+coachlinetab,CBD2E,"CompLine: pointer per coach mode (tmcoachmode) to its table of 4-byte rows, the lines to try next for each current line"

@@ -13,8 +13,8 @@ void releasepl(Team *tm, short pl)
     tm->tmap++;
     hmtmflags[0] |= 1;
     awtmflags |= 1;
-    byte_DF6E8 |= 0x40;
-    byte_DF7E8 |= 0x40;
+    hmtmcoachflags |= 0x40;
+    awtmcoachflags |= 0x40;
     p->position = priolist[tm->tmap + (tm->tmgoalie < 0)];
     Setplass(p);
     setplayer(p, pl);

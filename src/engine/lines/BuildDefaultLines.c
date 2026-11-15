@@ -3,7 +3,7 @@
 
 /* BuildDefaultLines (64614, PC only; owner of lines_popx): build both teams' default lines from their rosters.
    For each side and each of the 25 roster players (hmroster / awroster status, 0 / 1 not dressed): an offence
-   rating (bytes 1, 2, 4, 6, 9, 0Ah, 3, 0Dh of his rating record at unk_DACA0) and a defence rating (1, 2, 4, 6,
+   rating (bytes 1, 2, 4, 6, 9, 0Ah, 3, 0Dh of his rating record at hmplattr) and a defence rating (1, 2, 4, 6,
    9, 0Bh, 5, 0Ch, 3, 0Dh); then the players sorted by position and rating into the line tables
    (SortPlayersByPos, SortNonDefPlayers), the dressed flags (byte_E9E18 from byte_CD418 by status) and the
    players in the line slots (hmlinetab / awlinetab, 12h) marked as not dressed spares. No arguments, no
@@ -22,7 +22,7 @@ void BuildDefaultLines(void)
             if (!(hmroster + side * 0x444)[i * 0x27] || (hmroster + side * 0x444)[i * 0x27] == 1) {
                 off[side][i] = def[side][i] = -1;
             } else {
-                r = unk_DACA0 + side * 0x1F4 + i * 0x14;
+                r = hmplattr + side * 0x1F4 + i * 0x14;
                 off[side][i] = r[1] + r[2] + r[4] + r[6] + r[9] + r[0xA] + r[3] + r[0xD];
                 def[side][i] = r[1] + r[2] + r[4] + r[6] + r[9] + r[0xB] + r[5] + r[0xC] + r[3] + r[0xD];
             }

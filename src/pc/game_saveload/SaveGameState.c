@@ -208,7 +208,7 @@ int SaveGameState(int fh)
             q = buf;
             n = 0;
         }
-        *(Rec16 *)q = *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16);
+        *(Rec16 *)q = *(Rec16 *)((char *)hmplstats + i / 25 * 25 * 16 + i % 25 * 16);
         q += 0x10;
         n += 0x10;
     }
@@ -461,7 +461,7 @@ int LoadGameState(int fh)
             if (FileReadAt(fh, buf, -1, n)) FatalError((char *)str_ErrLoadGame);
             q = (Rec16 *)buf;
         }
-        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *q++;
+        *(Rec16 *)((char *)hmplstats + i / 25 * 25 * 16 + i % 25 * 16) = *q++;
         n -= 0x10;
     } while (++i < 0x32);
     r = (Rec6 *)q;
@@ -499,18 +499,18 @@ int LoadGameState(int fh)
     sflags &= 0xEF;
     fadeinpending = 1;
     hmtmsort = (int)SortCords;
-    dword_DF6F2 = (int)unk_DACA0;
-    dword_DF6F6 = (int)unk_DAC40;
+    hmtmplattr = (int)hmplattr;
+    hmtmglattr = (int)hmglattr;
     hmtmlines[0] = (int)hmlinetab;
-    hmtmplstats = (int)dword_DB088;
+    hmtmplstats = (int)hmplstats;
     hmtmglstats = (int)unk_DC240;
     hmtmroster = (int)hmroster;
     hmtmptrF2 = (int)hmteamrec;
     awtmsort = (int)(SortCords + 6);
-    dword_DF7F2 = (int)unk_DAE94;
-    dword_DF7F6 = (int)unk_DAC70;
+    awtmplattr = (int)awplattr;
+    awtmglattr = (int)awglattr;
     awtmlines = (int)awlinetab;
-    awtmplstats = (int)unk_DB218;
+    awtmplstats = (int)awplstats;
     awtmglstats = (int)unk_DC252;
     awtmroster = (int)awroster;
     awtmptrF2 = (int)awteamrec;

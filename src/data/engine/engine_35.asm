@@ -13,7 +13,7 @@ global seed, asstab, sflags, gmode2, pendelaytab
 global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist, byte_CBC37, apl, collflag
 global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, shownumbers
 global dword_CBEBE, bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
-global puckz, puckc, camx_m2, off_CBD2E, lastplayer, puckvz, threat, SPAtab
+global puckz, puckc, camx_m2, coachlinetab, lastplayer, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
 global unk_CBCFE, unk_CBD0E, unk_CBD1E, ds2list, wcradiusx, camx, camy, shotplayer
 global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
@@ -923,7 +923,7 @@ unk_CBD0E:
 db 01h,02h,03h,0FFh,02h,03h,00h,0FFh,03h,00h,01h,0FFh,00h,01h,02h,0FFh
 unk_CBD1E:
 db 01h,02h,0FFh,0FFh,00h,02h,0FFh,0FFh,00h,01h,0FFh,0FFh,00h,01h,02h,0FFh
-off_CBD2E:
+coachlinetab:
 dd unk_CBC6E
 dd unk_CBC7E
 dd unk_CBC9E

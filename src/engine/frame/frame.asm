@@ -7,7 +7,7 @@ extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtm
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
 extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
 extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, dword_CCC98
-extern dword_CD9A0, dword_D8C72, dword_D8C7A, dword_DF646, dword_DF648, dword_DF748, dword_E0244, dword_E9A9E
+extern dword_CD9A0, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, dword_E0244, dword_E9A9E
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
 extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
@@ -21,7 +21,7 @@ extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, Set
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
 extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, word_C90D8, word_CBC44
-extern word_CBEC6, word_DF644, word_DF744, word_DF746, word_DF816, word_DF81A, word_E0022, word_E0028
+extern word_CBEC6, hmtmtouch1, awtmtouch1, awtmtouch2, word_DF816, word_DF81A, word_E0022, word_E0028
 extern word_E002A, xc1, yc1, yleader
 global StartHL2
 ; C: src/engine/frame/StartHL2.c
@@ -285,19 +285,19 @@ mov eax, hmtmstruct	; 6976F
 call setpersonel	; 69774
 mov eax, hmtmstruct	; 69779
 call forcepldata	; 6977E
-mov word [dword_DF648], dx	; 69783
+mov word [hmtmtouch3], dx	; 69783
 mov ebx, edx	; 6978A
-mov word [dword_DF646], bx	; 6978C
-mov word [word_DF644], bx	; 69793
+mov word [hmtmtouch2], bx	; 6978C
+mov word [hmtmtouch1], bx	; 69793
 mov eax, awtmstruct	; 6979A
 call reenergizeteam	; 6979F
 mov eax, awtmstruct	; 697A4
 call setpersonel	; 697A9
 mov eax, awtmstruct	; 697AE
 call forcepldata	; 697B3
-mov word [dword_DF748], bx	; 697B8
-mov word [word_DF746], bx	; 697BF
-mov word [word_DF744], bx	; 697C6
+mov word [awtmtouch3], bx	; 697B8
+mov word [awtmtouch2], bx	; 697BF
+mov word [awtmtouch1], bx	; 697C6
 call resetplstuff	; 697CD
 mov ebx, SortCords	; 697D2
 xor edi, edi	; 697D7

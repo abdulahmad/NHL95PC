@@ -41,12 +41,12 @@ void InitGameSummary(int a, int b)
     word_DB08E[0] = 0;
     word_DB08C[0] = 0;
     word_DB08A[0] = 0;
-    dword_DB088[0] = 0;
+    hmplstats[0] = 0;
     t = 0;
     do {
         i = 0;
         do {
-            *(Rec16 *)((char *)dword_DB088 + (t * 25 << 4) + (i << 4)) = *(Rec16 *)dword_DB088;
+            *(Rec16 *)((char *)hmplstats + (t * 25 << 4) + (i << 4)) = *(Rec16 *)hmplstats;
             i++;
         } while (i < 25);
         t++;

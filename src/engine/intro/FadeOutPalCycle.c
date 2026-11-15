@@ -16,7 +16,7 @@
 #undef PreGameIntro
 #define REF ((Player *)puckstruct + 2)   /* the referee (E001C) */
 #define GSTAT(t, g) ((short *)((char *)word_DC242 + (t) * 18 + (g) * 6))
-#define PSTAT(t, j) ((short *)((char *)dword_DB088 + (t) * 0x190 + (j) * 16))
+#define PSTAT(t, j) ((short *)((char *)hmplstats + (t) * 0x190 + (j) * 16))
 typedef struct { char c[10]; } StarStr10;
 /* the goalie stats as an indexed array (the base folds into the displacement: [reg+DC242]) */
 #define GS(t, g) (((short (*)[3][3])word_DC242)[t][g])
@@ -311,7 +311,7 @@ void PickThreeStars(void)
         i = i > 0;
         if (i ^ (lasttouch < 6)) {
             gwgteam = i;
-            gwgplayer = word_DF644[i * 0x80];
+            gwgplayer = hmtmtouch1[i * 0x80];
             if (IsCupClinched(hmscore[0], awscore)) stars += AddStar(stars, i, gwgplayer);
         }
     }
@@ -334,7 +334,7 @@ void PickThreeStars(void)
     qsort(list, n, 4, StarCompare);
     for (i = 0; i < n; i++) {
         k = list[i];
-        if (*(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16)) + *(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16) + 2) > 1) {
+        if (*(short *)((char *)hmplstats + (((k / 25 * 25) << 4) + k % 25 * 16)) + *(short *)((char *)hmplstats + (((k / 25 * 25) << 4) + k % 25 * 16) + 2) > 1) {
             stars += AddStar(stars, k / 25, k % 25);
             if (stars >= 3) return;
         } else {

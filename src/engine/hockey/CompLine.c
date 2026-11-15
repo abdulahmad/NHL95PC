@@ -10,7 +10,7 @@ int LineEnergy(Team *t, int line);
 
 /* CompLine: other is the other team, team is the one changing lines. When the on-ice counts differ, pick
  line 4 or 6, and the next line if its energy is higher and this one is under F33h. Otherwise walk the
- byte list off_CBD2E[team byte D5h] at the current line, four entries, and keep a line whose energy is at
+ byte list coachlinetab[team byte D5h] at the current line, four entries, and keep a line whose energy is at
  most the dword at D6h and better than the line already set. A line under 4 bumps the rotation count.
  Then draw that line and clear bit 6 of the byte at D4h. */
 void CompLine(Team *other, Team *team)
@@ -61,7 +61,7 @@ void CompLine(Team *other, Team *team)
         }
         if (((unsigned char *)team)[0xD5] == 1 && (((unsigned char *)team)[0xD4] & 0x80))
             line += 4;
-        p = ((signed char **)off_CBD2E)[((signed char *)team)[0xD5]] + line * 4;
+        p = ((signed char **)coachlinetab)[((signed char *)team)[0xD5]] + line * 4;
         b = -1;
         saved = team->tmline;
         best = LineEnergy(team, saved);

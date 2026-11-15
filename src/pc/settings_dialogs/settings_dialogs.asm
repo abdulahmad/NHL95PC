@@ -5,7 +5,7 @@ section s_7A13A progbits alloc exec nowrite align=1
 extern __CHK, acptspr, awtmflags, awtmpde, c1playernum, c2playernum, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont1team, cont2team, CrowdNoiseOff, CrowdNoiseReset, ctl1dev, ctl1side
 extern ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, ctldlgalt, ctldlgrects, DrawSettingsHeading
-extern dword_DF648, dword_ED364, exhsetrects, exhstate, fdlg_cancel, fileoncd, FreeMemBlock, gameclock
+extern hmtmtouch3, dword_ED364, exhsetrects, exhstate, fdlg_cancel, fileoncd, FreeMemBlock, gameclock
 extern gamemode, gameopts, GetInputEvent, gmode, gsp, hmscore, hmtmap, hmtmflags
 extern hmtmline, hmtmpde, hmtmstruct, HomeTeam, lcblink, lcboxon, leaguesetimg, leaguesetrects
 extern LoadModeState, LoadSettingsShapes, MakePath, modesetrects, musichandle, musicon, musicslot, na01spr

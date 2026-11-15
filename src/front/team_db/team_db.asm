@@ -4,8 +4,8 @@ bits 32
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
 extern awtmap, awtmgoalie, byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C66B4, byte_DB3AE
-extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, dword_DB088, dword_DBC7C, dword_DBCE0
-extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, dword_DF6C2, FatalError, FileClose, FileCreate
+extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, hmplstats, dword_DBC7C, dword_DBCE0
+extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
 extern hmlinetab, hmroster, hmrosterjersey, hmscratch, hmshotcnt, hmteamrec, hmtmap, hmtmgoalie
 extern hmtmpdst_m2, HomeTeam, hudpenaway, hudpenhome, leaguedbfmt, leaguedbfmt2, LoadCupFinalSeries, LoadScoreboardGfx
@@ -15,7 +15,7 @@ extern str_fe7, str_fe8, str_fe9, str_feA, str_feB, str_feB1, str_feB5, str_feB8
 extern str_feC, str_feD, str_feE, str_feF, str_feG, str_feH, str_feI, str_feJ
 extern str_feK, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_GoalieItemTmpl
 extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, unk_C5423
-extern unk_C542E, unk_CEE4F, unk_CEEAF, unk_DAC40, unk_DACA0, unk_DC240, unknown_libname_1, VisTeam
+extern unk_C542E, unk_CEE4F, unk_CEEAF, hmglattr, hmplattr, unk_DC240, unknown_libname_1, VisTeam
 extern word_C5428, word_C571E, word_C5720, word_C5722, word_C575E, word_C5760, word_C5762, word_DB08A
 extern word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096, word_DC242, word_DC244
 global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
@@ -357,7 +357,7 @@ mov word [word_DB090], bx	; 1C00A
 mov word [word_DB08E], bx	; 1C011
 mov word [word_DB08C], bx	; 1C018
 mov word [word_DB08A], bx	; 1C01F
-mov word [dword_DB088], bx	; 1C026
+mov word [hmplstats], bx	; 1C026
 xor ecx, ecx	; 1C02D
 .5:
 xor edx, edx	; 1C02F
@@ -370,8 +370,8 @@ add eax, ecx	; 1C03B
 shl eax, 4	; 1C03D
 mov esi, edx	; 1C040
 shl esi, 4	; 1C042
-lea edi, [dword esi+eax+dword_DB088]	; 1C045
-mov esi, dword_DB088	; 1C04C
+lea edi, [dword esi+eax+hmplstats]	; 1C045
+mov esi, hmplstats	; 1C04C
 movsd	; 1C051
 movsd	; 1C052
 movsd	; 1C053
@@ -836,7 +836,7 @@ shl esi, 2	; 1C58E
 mov eax, ebp	; 1C591
 shl eax, 2	; 1C593
 add eax, ebp	; 1C596
-lea edi, [dword esi+eax*4+unk_DACA0]	; 1C598
+lea edi, [dword esi+eax*4+hmplattr]	; 1C598
 lea esi, [dword esp+0D4h]	; 1C59F
 movsd	; 1C5A6
 movsd	; 1C5A7
@@ -994,7 +994,7 @@ jmp short LoadTeamRoster.18	; 1C78C
 mov eax, dword [dword esp+0118h]	; 1C78E
 shl eax, 8	; 1C795
 mov edx, ebp	; 1C798
-mov eax, dword [dword eax+edx*2+dword_DF6C2]	; 1C79A
+mov eax, dword [dword eax+edx*2+hmtmpdst_gl_m2]	; 1C79A
 sar eax, 10h	; 1C7A1
 test eax, eax	; 1C7A4
 jle short .21	; 1C7A6
@@ -1012,7 +1012,7 @@ sub eax, edx	; 1C7CC
 shl eax, 4	; 1C7CE
 mov esi, ebp	; 1C7D1
 shl esi, 4	; 1C7D3
-lea edi, [dword esi+eax+unk_DAC40]	; 1C7D6
+lea edi, [dword esi+eax+hmglattr]	; 1C7D6
 lea esi, [dword esp+0E8h]	; 1C7DD
 movsd	; 1C7E4
 movsd	; 1C7E5

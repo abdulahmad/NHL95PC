@@ -6,22 +6,22 @@ section s_59D9A progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, asstab, awlinetab, awroster
 extern awscore, awteamrec, awtmglstats, awtmgoalie, awtmlcnt, awtmline, awtmlines, awtmpbox
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, byte_CBC37
-extern byte_CC7A4, byte_CC7A5, byte_CCCA0, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, byte_DF7E6
-extern byte_DF7E7, byte_DF7E8, byte_DF7E9, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
+extern byte_CC7A4, byte_CC7A5, byte_CCCA0, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
+extern awtmcoach_d3, awtmcoachflags, awtmcoachmode, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
 extern byte_E9AD3, byte_E9DB4, byte_E9E4A, c1playernum, c2playernum, camx, camx_m2, camy
 extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
 extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
 extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
 extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, dword_CCCB8, dword_CCCC5, dword_CCD4F, dword_D30BC
-extern dword_D30C0, dword_DB088, dword_DF642, dword_DF652, dword_DF6EA, dword_DF6F2, dword_DF6F6, dword_DF752
-extern dword_DF7EA, dword_DF7F2, dword_DF7F6, dword_E009C, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
+extern dword_D30C0, hmplstats, hmtmextra, hmtmnear, hmtmcoachenergy, hmtmplattr, hmtmglattr, awtmnear
+extern awtmcoachenergy, awtmplattr, awtmglattr, dword_E009C, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
 extern EndPenaltyShot, energywarn, exitgame, fadeinpending, fodir1, fodir2, fox, foy
 extern gameclock, gameopts, gameover, gmode, gmode2, gsp, hmlinetab, hmroster
 extern hmscore, hmteamrec, hmtmglstats, hmtmgoalie, hmtmlcnt, hmtmline, hmtmlines, hmtmpbox
 extern hmtmplstats, hmtmptrF2, hmtmroster, hmtmsort, hmtmstruct, HotList, HotList_y, IntermissionPC
 extern IsCupClinched, joysampling, joysampling_save, lastplayer, lastsfx, lasttouch, lcblink, lcboxon
 extern lcline, lcrequest, lldisp, lldispodd, ltack, ltx, lty, mousex
-extern mousey, musicon, off_CBD2E, onetimerflag, OOlist, OOlistpos, ovlseq, ovltimer
+extern mousey, musicon, coachlinetab, onetimerflag, OOlist, OOlistpos, ovlseq, ovltimer
 extern pad1dev, pad2dev, PaOneMinuteLeft, PBnum, PenaltyManager, PenBuf, Pencntdwn, PenGoalStuff
 extern penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer, penshotstart, penshotteam, penshottimer
 extern periodendtime, PerTimeTab, PerTimeTotal, PlayCrowdSample, PlList, priolist, puckc, puckcross
@@ -30,9 +30,9 @@ extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
 extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
 extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, unk_CCCC8
-extern unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DC240, unk_DC252, unk_E9D50
+extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, unk_E9D50
 extern unk_E9EE0, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, word_CBEC6, word_CC0B0
-extern word_CCCA8, word_DF656, word_DF70E, word_DF742, word_DF756, word_DF80E, word_E0036, word_E03A0
+extern word_CCCA8, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, word_E0036, word_E03A0
 extern word_E03B8, word_E9AA4, word_E9AA6, word_E9AB0, xc1, yc1, yleader, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
 global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6, findpc_ret5, GetHot
@@ -441,7 +441,7 @@ mov eax, dword [dword ebx+0D2h]	; 5A1AA
 sar eax, 18h	; 5A1B0
 movsx esi, cx	; 5A1B3
 shl esi, 2	; 5A1B6
-mov eax, dword [nosplit eax*4+off_CBD2E]	; 5A1B9
+mov eax, dword [nosplit eax*4+coachlinetab]	; 5A1B9
 add esi, eax	; 5A1C0
 mov ecx, 0FFFFFFFFh	; 5A1C2
 mov ax, word [byte ebx+temp3]	; 5A1C7
@@ -839,12 +839,12 @@ sub ax, word [awscore]	; 5A596
 test edx, edx	; 5A59D
 jne short .3	; 5A59F
 movsx ebx, ax	; 5A5A1
-mov dl, byte [byte_DF6E8]	; 5A5A4
+mov dl, byte [hmtmcoachflags]	; 5A5A4
 and dl, 0FEh	; 5A5AA
 cmp ebx, byte 0FFFFFFFFh	; 5A5AD
 jge short .1	; 5A5B0
-mov byte [byte_DF6E8], dl	; 5A5B2
-mov byte [byte_DF6E9], 5	; 5A5B8
+mov byte [hmtmcoachflags], dl	; 5A5B2
+mov byte [hmtmcoachmode], 5	; 5A5B8
 pop edx	; 5A5BF
 pop ecx	; 5A5C0
 pop ebx	; 5A5C1
@@ -852,31 +852,31 @@ ret	; 5A5C2
 .1:
 cmp ax, 3	; 5A5C3
 jle short .2	; 5A5C7
-mov dword [dword_DF6EA], 0D9Ah	; 5A5C9
-mov byte [byte_DF6E8], dl	; 5A5D3
-mov byte [byte_DF6E9], 4	; 5A5D9
-mov byte [byte_DF6E6], 3	; 5A5E0
-mov byte [byte_DF6E7], 2	; 5A5E7
+mov dword [hmtmcoachenergy], 0D9Ah	; 5A5C9
+mov byte [hmtmcoachflags], dl	; 5A5D3
+mov byte [hmtmcoachmode], 4	; 5A5D9
+mov byte [hmtmcoach_d2], 3	; 5A5E0
+mov byte [hmtmcoach_d3], 2	; 5A5E7
 pop edx	; 5A5EE
 pop ecx	; 5A5EF
 pop ebx	; 5A5F0
 ret	; 5A5F1
 .2:
-mov dword [dword_DF6EA], 0CCCh	; 5A5F2
+mov dword [hmtmcoachenergy], 0CCCh	; 5A5F2
 xor ch, ch	; 5A5FC
-mov byte [byte_DF6E9], ch	; 5A5FE
-mov byte [byte_DF6E8], dl	; 5A604
+mov byte [hmtmcoachmode], ch	; 5A5FE
+mov byte [hmtmcoachflags], dl	; 5A604
 pop edx	; 5A60A
 pop ecx	; 5A60B
 pop ebx	; 5A60C
 ret	; 5A60D
 .3:
-mov dl, byte [byte_DF7E8]	; 5A60E
+mov dl, byte [awtmcoachflags]	; 5A60E
 or dl, 1	; 5A614
 cmp ax, 1	; 5A617
 jle short .4	; 5A61B
-mov byte [byte_DF7E8], dl	; 5A61D
-mov byte [byte_DF7E9], 8	; 5A623
+mov byte [awtmcoachflags], dl	; 5A61D
+mov byte [awtmcoachmode], 8	; 5A623
 pop edx	; 5A62A
 pop ecx	; 5A62B
 pop ebx	; 5A62C
@@ -885,15 +885,15 @@ ret	; 5A62D
 cwde	; 5A62E
 cmp eax, byte 0FFFFFFFDh	; 5A62F
 jge short .5	; 5A632
-mov dword [dword_DF7EA], 0D9Ah	; 5A634
-mov byte [byte_DF7E6], 3	; 5A63E
-mov byte [byte_DF7E7], 2	; 5A645
+mov dword [awtmcoachenergy], 0D9Ah	; 5A634
+mov byte [awtmcoach_d2], 3	; 5A63E
+mov byte [awtmcoach_d3], 2	; 5A645
 jmp short .6	; 5A64C
 .5:
-mov dword [dword_DF7EA], 0CCCh	; 5A64E
+mov dword [awtmcoachenergy], 0CCCh	; 5A64E
 .6:
-mov byte [byte_DF7E8], dl	; 5A658
-mov byte [byte_DF7E9], 1	; 5A65E
+mov byte [awtmcoachflags], dl	; 5A658
+mov byte [awtmcoachmode], 1	; 5A65E
 pop edx	; 5A665
 pop ecx	; 5A666
 pop ebx	; 5A667
@@ -911,23 +911,23 @@ push ecx	; 5A674
 push edx	; 5A675
 push edi	; 5A676
 xor ah, ah	; 5A677
-mov byte [byte_DF7E8], ah	; 5A679
-mov byte [byte_DF6E8], ah	; 5A67F
+mov byte [awtmcoachflags], ah	; 5A679
+mov byte [hmtmcoachflags], ah	; 5A67F
 mov dh, 3	; 5A685
-mov byte [byte_DF6E6], dh	; 5A687
+mov byte [hmtmcoach_d2], dh	; 5A687
 mov bl, 2	; 5A68D
-mov byte [byte_DF6E7], bl	; 5A68F
-mov byte [byte_DF7E6], dh	; 5A695
-mov byte [byte_DF7E7], bl	; 5A69B
+mov byte [hmtmcoach_d3], bl	; 5A68F
+mov byte [awtmcoach_d2], dh	; 5A695
+mov byte [awtmcoach_d3], bl	; 5A69B
 mov edx, dword [curperiod]	; 5A6A1
 cmp edx, byte 3	; 5A6A7
 jle short .1	; 5A6AA
 mov edi, 0D9Ah	; 5A6AC
-mov dword [dword_DF6EA], edi	; 5A6B1
-mov byte [byte_DF6E9], bl	; 5A6B7
-mov dword [dword_DF7EA], edi	; 5A6BD
-mov byte [byte_DF7E8], 1	; 5A6C3
-mov byte [byte_DF7E9], 8	; 5A6CA
+mov dword [hmtmcoachenergy], edi	; 5A6B1
+mov byte [hmtmcoachmode], bl	; 5A6B7
+mov dword [awtmcoachenergy], edi	; 5A6BD
+mov byte [awtmcoachflags], 1	; 5A6C3
+mov byte [awtmcoachmode], 8	; 5A6CA
 jmp short .3	; 5A6D1
 .1:
 jne short .2	; 5A6D3
@@ -938,11 +938,11 @@ call SetCoachMode	; 5A6E1
 jmp short .3	; 5A6E6
 .2:
 mov ecx, 0CCCh	; 5A6E8
-mov dword [dword_DF6EA], ecx	; 5A6ED
-mov byte [byte_DF6E9], ah	; 5A6F3
-mov dword [dword_DF7EA], ecx	; 5A6F9
-mov byte [byte_DF7E8], 81h	; 5A6FF
-mov byte [byte_DF7E9], 1	; 5A706
+mov dword [hmtmcoachenergy], ecx	; 5A6ED
+mov byte [hmtmcoachmode], ah	; 5A6F3
+mov dword [awtmcoachenergy], ecx	; 5A6F9
+mov byte [awtmcoachflags], 81h	; 5A6FF
+mov byte [awtmcoachmode], 1	; 5A706
 .3:
 xor edx, edx	; 5A70D
 mov word [awtmlcnt], dx	; 5A70F
@@ -990,54 +990,54 @@ cmp dword [curperiod], byte 2	; 5A7A4
 jne near .6	; 5A7AB
 cmp word [gameclock], 258h	; 5A7B1
 jg near .6	; 5A7BA
-mov bl, byte [byte_DF6E9]	; 5A7C0
+mov bl, byte [hmtmcoachmode]	; 5A7C0
 xor eax, eax	; 5A7C6
 call SetCoachMode	; 5A7C8
-cmp bl, byte [byte_DF6E9]	; 5A7CD
+cmp bl, byte [hmtmcoachmode]	; 5A7CD
 je short .1	; 5A7D3
-or byte [byte_DF6E8], 40h	; 5A7D5
+or byte [hmtmcoachflags], 40h	; 5A7D5
 .1:
-mov bl, byte [byte_DF7E9]	; 5A7DC
+mov bl, byte [awtmcoachmode]	; 5A7DC
 mov eax, 1	; 5A7E2
 call SetCoachMode	; 5A7E7
-cmp bl, byte [byte_DF7E9]	; 5A7EC
+cmp bl, byte [awtmcoachmode]	; 5A7EC
 je short .2	; 5A7F2
-or byte [byte_DF7E8], 40h	; 5A7F4
+or byte [awtmcoachflags], 40h	; 5A7F4
 .2:
 cmp word [gameclock], 258h	; 5A7FB
 jne near .x	; 5A804
 movsx eax, dx	; 5A80A
 cmp eax, byte 0FFFFFFFFh	; 5A80D
 jge short .4	; 5A810
-mov ah, byte [byte_DF6E6]	; 5A812
+mov ah, byte [hmtmcoach_d2]	; 5A812
 cmp ah, 4	; 5A818
 jae short .3	; 5A81B
 mov bl, ah	; 5A81D
 inc bl	; 5A81F
-mov byte [byte_DF6E6], bl	; 5A821
+mov byte [hmtmcoach_d2], bl	; 5A821
 .3:
-mov bh, byte [byte_DF6E7]	; 5A827
+mov bh, byte [hmtmcoach_d3]	; 5A827
 cmp bh, 1	; 5A82D
 jbe short .4	; 5A830
 mov cl, bh	; 5A832
 dec cl	; 5A834
-mov byte [byte_DF6E7], cl	; 5A836
+mov byte [hmtmcoach_d3], cl	; 5A836
 .4:
 cmp dx, byte 1	; 5A83C
 jle near .x	; 5A840
-mov ch, byte [byte_DF7E6]	; 5A846
+mov ch, byte [awtmcoach_d2]	; 5A846
 cmp ch, 4	; 5A84C
 jae short .5	; 5A84F
 mov al, ch	; 5A851
 inc al	; 5A853
-mov byte [byte_DF7E6], al	; 5A855
+mov byte [awtmcoach_d2], al	; 5A855
 .5:
-mov ah, byte [byte_DF7E7]	; 5A85A
+mov ah, byte [awtmcoach_d3]	; 5A85A
 cmp ah, 1	; 5A860
 jbe near .x	; 5A863
 mov dl, ah	; 5A869
 dec dl	; 5A86B
-mov byte [byte_DF7E7], dl	; 5A86D
+mov byte [awtmcoach_d3], dl	; 5A86D
 pop edx	; 5A873
 pop ecx	; 5A874
 pop ebx	; 5A875
@@ -1045,16 +1045,16 @@ ret	; 5A876
 .6:
 cmp dword [curperiod], byte 3	; 5A877
 jne near .x	; 5A87E
-mov bl, byte [byte_DF6E9]	; 5A884
+mov bl, byte [hmtmcoachmode]	; 5A884
 cmp word [gameclock], byte 3Ch	; 5A88A
 jg short .8	; 5A892
 movsx eax, dx	; 5A894
 cmp eax, byte 0FFFFFFFFh	; 5A897
 jg short .8	; 5A89A
 .7:
-mov dword [dword_DF6EA], 0B33h	; 5A89C
-or byte [byte_DF6E8], 1	; 5A8A6
-mov byte [byte_DF6E9], 6	; 5A8AD
+mov dword [hmtmcoachenergy], 0B33h	; 5A89C
+or byte [hmtmcoachflags], 1	; 5A8A6
+mov byte [hmtmcoachmode], 6	; 5A8AD
 jmp short .11	; 5A8B4
 .8:
 cmp word [gameclock], byte 78h	; 5A8B6
@@ -1069,12 +1069,12 @@ movsx eax, dx	; 5A8D3
 cmp eax, byte 0FFFFFFFFh	; 5A8D6
 jg short .12	; 5A8D9
 .10:
-mov dword [dword_DF6EA], 0B33h	; 5A8DB
-or byte [byte_DF6E8], 1	; 5A8E5
-mov byte [byte_DF6E9], 7	; 5A8EC
+mov dword [hmtmcoachenergy], 0B33h	; 5A8DB
+or byte [hmtmcoachflags], 1	; 5A8E5
+mov byte [hmtmcoachmode], 7	; 5A8EC
 .11:
-mov byte [byte_DF6E6], 4	; 5A8F3
-mov byte [byte_DF6E7], 1	; 5A8FA
+mov byte [hmtmcoach_d2], 4	; 5A8F3
+mov byte [hmtmcoach_d3], 1	; 5A8FA
 jmp near .18	; 5A901
 .12:
 cmp word [gameclock], 12Ch	; 5A906
@@ -1088,41 +1088,41 @@ jg short .17	; 5A922
 movsx eax, dx	; 5A924
 cmp eax, byte 0FFFFFFFFh	; 5A927
 jge short .14	; 5A92A
-mov dword [dword_DF6EA], 0B33h	; 5A92C
-or byte [byte_DF6E8], 1	; 5A936
-mov byte [byte_DF6E9], 0Ah	; 5A93D
+mov dword [hmtmcoachenergy], 0B33h	; 5A92C
+or byte [hmtmcoachflags], 1	; 5A936
+mov byte [hmtmcoachmode], 0Ah	; 5A93D
 jmp short UpdateCoachModes.11	; 5A944
 .14:
 cmp dx, byte 2	; 5A946
 jle short .15	; 5A94A
-mov dword [dword_DF6EA], 0CCCh	; 5A94C
+mov dword [hmtmcoachenergy], 0CCCh	; 5A94C
 jmp short .16	; 5A956
 .15:
-mov dword [dword_DF6EA], 0D9Ah	; 5A958
+mov dword [hmtmcoachenergy], 0D9Ah	; 5A958
 .16:
-and byte [byte_DF6E8], 0FEh	; 5A962
+and byte [hmtmcoachflags], 0FEh	; 5A962
 mov cl, 3	; 5A969
-mov byte [byte_DF6E9], cl	; 5A96B
-mov byte [byte_DF6E6], cl	; 5A971
-mov byte [byte_DF6E7], 2	; 5A977
+mov byte [hmtmcoachmode], cl	; 5A96B
+mov byte [hmtmcoach_d2], cl	; 5A971
+mov byte [hmtmcoach_d3], 2	; 5A977
 jmp short .18	; 5A97E
 .17:
 xor eax, eax	; 5A980
 call SetCoachMode	; 5A982
 .18:
-cmp bl, byte [byte_DF6E9]	; 5A987
+cmp bl, byte [hmtmcoachmode]	; 5A987
 je short .19	; 5A98D
-or byte [byte_DF6E8], 40h	; 5A98F
+or byte [hmtmcoachflags], 40h	; 5A98F
 .19:
-mov bl, byte [byte_DF7E9]	; 5A996
+mov bl, byte [awtmcoachmode]	; 5A996
 cmp word [gameclock], byte 3Ch	; 5A99C
 jg short .21	; 5A9A4
 cmp dx, byte 1	; 5A9A6
 jl short .21	; 5A9AA
 .20:
-mov dword [dword_DF7EA], 0B33h	; 5A9AC
-or byte [byte_DF7E8], 1	; 5A9B6
-mov byte [byte_DF7E9], 6	; 5A9BD
+mov dword [awtmcoachenergy], 0B33h	; 5A9AC
+or byte [awtmcoachflags], 1	; 5A9B6
+mov byte [awtmcoachmode], 6	; 5A9BD
 jmp short .24	; 5A9C4
 .21:
 cmp word [gameclock], byte 78h	; 5A9C6
@@ -1135,12 +1135,12 @@ jg short .25	; 5A9DF
 cmp dx, byte 1	; 5A9E1
 jle short .25	; 5A9E5
 .23:
-mov dword [dword_DF7EA], 0B33h	; 5A9E7
-or byte [byte_DF7E8], 1	; 5A9F1
-mov byte [byte_DF7E9], 7	; 5A9F8
+mov dword [awtmcoachenergy], 0B33h	; 5A9E7
+or byte [awtmcoachflags], 1	; 5A9F1
+mov byte [awtmcoachmode], 7	; 5A9F8
 .24:
-mov byte [byte_DF7E6], 4	; 5A9FF
-mov byte [byte_DF7E7], 1	; 5AA06
+mov byte [awtmcoach_d2], 4	; 5A9FF
+mov byte [awtmcoach_d3], 1	; 5AA06
 jmp near .31	; 5AA0D
 .25:
 cmp word [gameclock], 12Ch	; 5AA12
@@ -1152,32 +1152,32 @@ cmp word [gameclock], 258h	; 5AA23
 jg short .30	; 5AA2C
 cmp dx, byte 1	; 5AA2E
 jle short .27	; 5AA32
-mov dword [dword_DF7EA], 0B33h	; 5AA34
-or byte [byte_DF7E8], 1	; 5AA3E
-mov byte [byte_DF7E9], 0Ah	; 5AA45
+mov dword [awtmcoachenergy], 0B33h	; 5AA34
+or byte [awtmcoachflags], 1	; 5AA3E
+mov byte [awtmcoachmode], 0Ah	; 5AA45
 jmp short UpdateCoachModes.24	; 5AA4C
 .27:
 movsx eax, dx	; 5AA4E
 cmp eax, byte 0FFFFFFFEh	; 5AA51
 jge short .28	; 5AA54
-mov dword [dword_DF7EA], 0CCCh	; 5AA56
-mov byte [byte_DF7E9], 9	; 5AA60
+mov dword [awtmcoachenergy], 0CCCh	; 5AA56
+mov byte [awtmcoachmode], 9	; 5AA60
 jmp short .29	; 5AA67
 .28:
-mov dword [dword_DF7EA], 0D9Ah	; 5AA69
-mov byte [byte_DF7E9], 8	; 5AA73
+mov dword [awtmcoachenergy], 0D9Ah	; 5AA69
+mov byte [awtmcoachmode], 8	; 5AA73
 .29:
-or byte [byte_DF7E8], 1	; 5AA7A
-mov byte [byte_DF7E6], 3	; 5AA81
-mov byte [byte_DF7E7], 2	; 5AA88
+or byte [awtmcoachflags], 1	; 5AA7A
+mov byte [awtmcoach_d2], 3	; 5AA81
+mov byte [awtmcoach_d3], 2	; 5AA88
 jmp short .31	; 5AA8F
 .30:
 mov eax, 1	; 5AA91
 call SetCoachMode	; 5AA96
 .31:
-cmp bl, byte [byte_DF7E9]	; 5AA9B
+cmp bl, byte [awtmcoachmode]	; 5AA9B
 je short .x	; 5AAA1
-or byte [byte_DF7E8], 40h	; 5AAA3
+or byte [awtmcoachflags], 40h	; 5AAA3
 .x:
 pop edx	; 5AAAA
 pop ecx	; 5AAAB
@@ -1653,7 +1653,7 @@ sub cx, word [awscore]	; 5B0D9
 movsx eax, cx	; 5B0E0
 cmp eax, byte 0FFFFFFFDh	; 5B0E3
 jge short .54	; 5B0E6
-cmp byte [byte_DF6E6], 1	; 5B0E8
+cmp byte [hmtmcoach_d2], 1	; 5B0E8
 jbe short .54	; 5B0EF
 cmp word [cont1team], byte 1	; 5B0F1
 je short .54	; 5B0F9
@@ -1669,25 +1669,25 @@ mov byte [hmtmgoalie], dh	; 5B115
 movsx eax, cx	; 5B11B
 cmp eax, byte 0FFFFFFFFh	; 5B11E
 jge short .55	; 5B121
-mov bl, byte [byte_DF6E6]	; 5B123
+mov bl, byte [hmtmcoach_d2]	; 5B123
 cmp bl, 1	; 5B129
 jbe short .55	; 5B12C
 mov bh, bl	; 5B12E
 dec bh	; 5B130
-mov byte [byte_DF6E6], bh	; 5B132
+mov byte [hmtmcoach_d2], bh	; 5B132
 .55:
 cmp cx, byte 1	; 5B138
 jge short .56	; 5B13C
-mov al, byte [byte_DF6E7]	; 5B13E
+mov al, byte [hmtmcoach_d3]	; 5B13E
 cmp al, 1	; 5B143
 jbe short .56	; 5B145
 mov ah, al	; 5B147
 dec ah	; 5B149
-mov byte [byte_DF6E7], ah	; 5B14B
+mov byte [hmtmcoach_d3], ah	; 5B14B
 .56:
 cmp cx, byte 3	; 5B151
 jle short .57	; 5B155
-cmp byte [byte_DF7E6], 1	; 5B157
+cmp byte [awtmcoach_d2], 1	; 5B157
 jbe short .57	; 5B15E
 cmp word [cont1team], byte 2	; 5B160
 je short .57	; 5B168
@@ -1702,22 +1702,22 @@ mov byte [awtmgoalie], bl	; 5B184
 .57:
 cmp cx, byte 1	; 5B18A
 jle short .58	; 5B18E
-mov bh, byte [byte_DF7E6]	; 5B190
+mov bh, byte [awtmcoach_d2]	; 5B190
 cmp bh, 1	; 5B196
 jbe short .58	; 5B199
 mov al, bh	; 5B19B
 dec al	; 5B19D
-mov byte [byte_DF7E6], al	; 5B19F
+mov byte [awtmcoach_d2], al	; 5B19F
 .58:
 movsx eax, cx	; 5B1A4
 cmp eax, byte 0FFFFFFFFh	; 5B1A7
 jle short .59	; 5B1AA
-mov ah, byte [byte_DF7E7]	; 5B1AC
+mov ah, byte [awtmcoach_d3]	; 5B1AC
 cmp ah, 1	; 5B1B2
 jbe short .59	; 5B1B5
 mov dl, ah	; 5B1B7
 dec dl	; 5B1B9
-mov byte [byte_DF7E7], dl	; 5B1BB
+mov byte [awtmcoach_d3], dl	; 5B1BB
 .59:
 call UpdateCoachModes	; 5B1C1
 .60:
@@ -2367,25 +2367,25 @@ jb short clearteams.1	; 5B8A4
 xor edx, edx	; 5B8A6
 mov word [hmtmgoalie], dx	; 5B8A8
 mov ebx, 0FFFFFFFFh	; 5B8AF
-mov word [dword_DF642], bx	; 5B8B4
+mov word [hmtmextra], bx	; 5B8B4
 mov word [awtmgoalie], dx	; 5B8BB
-mov word [word_DF742], bx	; 5B8C2
+mov word [awtmextra], bx	; 5B8C2
 mov ah, 0FFh	; 5B8C9
 mov byte [hmtmpbox], ah	; 5B8CB
 mov byte [awtmpbox], ah	; 5B8D1
 mov dword [hmtmsort], SortCords	; 5B8D7
-mov dword [dword_DF6F2], unk_DACA0	; 5B8E1
-mov dword [dword_DF6F6], unk_DAC40	; 5B8EB
+mov dword [hmtmplattr], hmplattr	; 5B8E1
+mov dword [hmtmglattr], hmglattr	; 5B8EB
 mov dword [hmtmlines], hmlinetab	; 5B8F5
-mov dword [hmtmplstats], dword_DB088	; 5B8FF
+mov dword [hmtmplstats], hmplstats	; 5B8FF
 mov dword [hmtmglstats], unk_DC240	; 5B909
 mov dword [hmtmroster], hmroster	; 5B913
 mov dword [hmtmptrF2], hmteamrec	; 5B91D
 mov dword [awtmsort], SortCords+300h	; 5B927
-mov dword [dword_DF7F2], unk_DAE94	; 5B931
-mov dword [dword_DF7F6], unk_DAC70	; 5B93B
+mov dword [awtmplattr], awplattr	; 5B931
+mov dword [awtmglattr], awglattr	; 5B93B
 mov dword [awtmlines], awlinetab	; 5B945
-mov dword [awtmplstats], unk_DB218	; 5B94F
+mov dword [awtmplstats], awplstats	; 5B94F
 mov dword [awtmglstats], unk_DC252	; 5B959
 mov dword [awtmroster], awroster	; 5B963
 mov dword [awtmptrF2], awteamrec	; 5B96D
@@ -3369,13 +3369,13 @@ xor eax, eax	; 5C4B5
 mov dword [dword_CCC9C], eax	; 5C4B7
 mov esi, SortCords	; 5C4BC
 mov ebx, 0FFFFFFFFh	; 5C4C1
-mov word [word_DF70E], bx	; 5C4C6
+mov word [hmtmgoaliesc], bx	; 5C4C6
 mov edx, 0FFFFh	; 5C4CD
-mov dword [dword_DF652], edx	; 5C4D2
-mov word [word_DF656], bx	; 5C4D8
-mov word [word_DF80E], bx	; 5C4DF
-mov dword [dword_DF752], edx	; 5C4E6
-mov word [word_DF756], bx	; 5C4EC
+mov dword [hmtmnear], edx	; 5C4D2
+mov word [hmtmnearsc], bx	; 5C4D8
+mov word [awtmgoaliesc], bx	; 5C4DF
+mov dword [awtmnear], edx	; 5C4E6
+mov word [awtmnearsc], bx	; 5C4EC
 xor edx, edx	; 5C4F3
 mov dword [byte esp+08h], edx	; 5C4F5
 jmp near .10	; 5C4F9

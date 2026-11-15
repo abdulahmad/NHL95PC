@@ -180,9 +180,9 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
             if (!r && f.played[i]) {
                 k = side * 0x190 + i * 16;
                 ss[0]++;
-                ss[1] += *(short *)((char *)dword_DB088 + k);
+                ss[1] += *(short *)((char *)hmplstats + k);
                 ss[2] += *(short *)((char *)word_DB08A + k);
-                ss[3] += *(short *)((char *)dword_DB088 + k);
+                ss[3] += *(short *)((char *)hmplstats + k);
                 ss[3] += *(short *)((char *)word_DB08A + k);
                 ss[6] += *(short *)((char *)word_DB08C + k);
                 ss[8] += *(short *)((char *)word_DB08E + k);

@@ -153,8 +153,8 @@ box2:
     }
 }
 
-/* PC coach-mode settings in the Team structure (InitCoachModes / SetCoachMode write them as byte_DF6E8 /
-   dword_DF6EA for home, DF7E8 / DF7EA for away): +0D4h flags (bit 6: the coach changes lines on the clock only),
+/* PC coach-mode settings in the Team structure (InitCoachModes / SetCoachMode write them as hmtmcoachflags /
+   hmtmcoachenergy for home, DF7E8 / DF7EA for away): +0D4h flags (bit 6: the coach changes lines on the clock only),
    +0D6h the line energy limit for a computer line change (CCCh, D9Ah when trailing; 93G used a fixed C00h). */
 #define TMCOACHFLAGS(t) (((unsigned char *)(t))[0xD4])
 #define TMLCENERGY(t)   (*(unsigned *)((unsigned char *)(t) + 0xD6))

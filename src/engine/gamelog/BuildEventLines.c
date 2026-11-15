@@ -53,7 +53,7 @@ void BuildEventLines(void)
         pl = byte_E9ACA;
         n = sprintf(buf, (char *)str_S8, (f & 2) ? (char *)str_SHTag : (f & 4) ? (char *)str_PPTag : (char *)unk_C1B49);
         if (gamemode != 0 && !(gmode & 0x10) && pl < 0x19)
-            sprintf(buf + n, (char *)str_FmtParenD, *(short *)((char *)dword_DB088 + side * 400 + pl * 16)
+            sprintf(buf + n, (char *)str_FmtParenD, *(short *)((char *)hmplstats + side * 400 + pl * 16)
                     + *(int *)((char *)dword_DEB7C + side * 400 + pl * 16));
         FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17, buf);

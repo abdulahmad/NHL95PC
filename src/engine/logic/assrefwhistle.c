@@ -359,8 +359,8 @@ void CountPuckThreat(Player *p)
    (PuckIChk, ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck resets temp2 (78h) and the
    penalty-shot send count (psendcount); a loose one on a live penalty shot moving back toward the shooter's
    own end (puckvy by penshotteam and the gmode bit 1 rink flip) for 1Eh ticks ends the shot (EndPenaltyShot). A
-   puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with dword_DF652 /
-   dword_DF752 at 14h or less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a moving one
+   puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with hmtmnear /
+   awtmnear at 14h or less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a moving one
    resets temp2. A puck almost still on the ice (z speed below 100h, z 0) is put flat (puckunflip); then the
    collisions (checkpuckcoll). p: the puck. No result. */
 void pucknorm_body(Player *p)
@@ -401,7 +401,7 @@ reset:
             } else psendcount = 0;
             if (HIWORD(p->Xpos) != HIWORD(p->OldXpos) || HIWORD(p->Ypos) != OLDYPOS(p)) goto reset;
             if ((*puckx < 0 ? -*puckx : *puckx) < 0xA3 && (*pucky < 0 ? -*pucky : *pucky) < 0x10E
-                && dword_DF652 > 0x14 && dword_DF752 > 0x14) goto reset;
+                && hmtmnear > 0x14 && awtmnear > 0x14) goto reset;
             if (--p->temp2 < 0) AddPenalty2(p, 3);
         }
     }
@@ -443,7 +443,7 @@ void RequestLineChange(Player *p)
    puck off", PC version; ends in ass_popx): stop the sample, play sfx ABh, end the faceoff (gmode2 bits 0 and 2,
    the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds (regd2) are 10h less the first centre's
    faceoff stance (Endfaceoff_ftab_m1 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
-   centre's (byte_DAEA7 / byte_DACB3 by pnum; the centres are the skaters with position 4): randomd0(21h) below
+   centre's (awplattr_b13 / hmplattr_b13 by pnum; the centres are the skaters with position 4): randomd0(21h) below
    them gives the puck to the away centre (lasttouch, his input word_E0396), else to the home centre (word_E0392).
    The winner's input bit 0Bh picks the direction (fodir2 with y speed -800h, else fodir1 / +800h); a held
    direction (bit 3 clear) is used 3 times in 4, else a random one of the 5 around the y direction (mirrored by
@@ -469,7 +469,7 @@ void Endfaceoff(Player *p)
     for (j = 6; j < 12; j++) {
         if (SortCords[j].position == 4) break;
     }
-    regd2.w += byte_DAEA7[SortCords[j].pnum * 20] - byte_DACB3[SortCords[i].pnum * 20];
+    regd2.w += awplattr_b13[SortCords[j].pnum * 20] - hmplattr_b13[SortCords[i].pnum * 20];
     if (randomd0(0x21) < regd2.w) {
         w = word_E0396;
         lasttouch = j;

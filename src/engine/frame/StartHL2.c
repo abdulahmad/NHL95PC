@@ -137,15 +137,15 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     reenergizeteam(&hmtmstruct);
     setpersonel(&hmtmstruct);
     forcepldata(&hmtmstruct);
-    dword_DF648[0] = -1;
-    dword_DF646[0] = -1;
-    word_DF644[0] = -1;
+    hmtmtouch3[0] = -1;
+    hmtmtouch2[0] = -1;
+    hmtmtouch1[0] = -1;
     reenergizeteam(&awtmstruct);
     setpersonel(&awtmstruct);
     forcepldata(&awtmstruct);
-    dword_DF748 = -1;
-    word_DF746 = -1;
-    word_DF744 = -1;
+    awtmtouch3 = -1;
+    awtmtouch2 = -1;
+    awtmtouch1 = -1;
     resetplstuff();
     pl = SortCords;
     for (i = 0; i < 0xC; i++, pl++) {

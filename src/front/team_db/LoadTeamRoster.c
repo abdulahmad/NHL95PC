@@ -53,7 +53,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 else
                     hmroster[team * 1092 + i * 39] = byte_C66B4[(-line) * 2];
             }
-            *(struct { unsigned char b[20]; } *)(unk_DACA0 + team * 500 + i * 20) =
+            *(struct { unsigned char b[20]; } *)(hmplattr + team * 500 + i * 20) =
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
             if ((mode & 6) == 0) {
                 if (((unsigned char *)&gameopts)[1] & 2) {
@@ -91,13 +91,13 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 else
                     hmroster[(i + 25) * 39 + team * 1092] = 3;
             } else {
-                gline = *(short *)((char *)dword_DF6C2 + ((i + 1) * 2 + (team << 8)));
+                gline = *(short *)((char *)hmtmpdst_gl_m2 + ((i + 1) * 2 + (team << 8)));
                 if (gline > 0)
                     hmroster[team * 1092 + (i + 25) * 39] = 5;
                 else
                     hmroster[team * 1092 + (i + 25) * 39] = byte_C66B4[(-gline) * 2];
             }
-            *(struct { unsigned char b[16]; } *)(unk_DAC40 + team * 48 + i * 16) =
+            *(struct { unsigned char b[16]; } *)(hmglattr + team * 48 + i * 16) =
                 *(struct { unsigned char b[16]; } *)(buf + 0xD8);
         } else {
             hmroster[team * 1092 + (i + 25) * 39] = 0;
