@@ -47,7 +47,7 @@ int __cdecl TicksSinceLastCall(void);  /* timer library: ticks since the last ca
    items, three after the game, when a playoff game also opens the playoff speech bank and announces the result:
    the winner, game number, conference, round, overtime and final, PaPlayoffResult). Then the cascading menus run
    with the mouse pointer as in MainDeskLoop: a click on an open item with an action calls it (the pointer position
-   passed in dword_DC88C / dword_DC888), an item with a submenu opens it. Result 1 of an action goes back to the
+   passed in deskptrx / deskptry), an item with a submenu opens it. Result 1 of an action goes back to the
    game, 5 ends it (gameresult 2), 2 redraws the desk. In the intermission with no human controller the desk goes
    back to the game by itself after 1500 ticks, and paused in a game with speech on the announcer says he is back
    in a moment after 180 ticks. Going back restores the text state, the mouse, the screen title and the music and
@@ -234,11 +234,11 @@ void SportsDesk(int mode)
                         }
                     }
                     depth = 0;
-                    dword_DC88C = mx;
-                    dword_DC888 = my;
+                    deskptrx = mx;
+                    deskptry = my;
                     r = ((int (*)(void))(*(int *)((char *)menus[level] + (item * sizeof(MenuItem)) + 0x14)))();
-                    mx = dword_DC88C;
-                    my = dword_DC888;
+                    mx = deskptrx;
+                    my = deskptry;
                     menus[1] = menus[2] = menus[3] = 0;
                     bg[0] = bg[1] = bg[2] = bg[3] = 0;
                     sel[1] = sel[2] = sel[3] = 0;

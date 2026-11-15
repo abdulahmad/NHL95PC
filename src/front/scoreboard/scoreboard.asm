@@ -4,8 +4,8 @@ bits 32
 %include "hockey.inc"
 section s_14A20 progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
-extern awpanelspr, awscore, awtmline, awtmstruct, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8
-extern byte_DCA1B, byte_DCAD7, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
+extern awpanelspr, awscore, awtmline, awtmstruct, awayremap, awayremap_e43, awayremap_eFF, homeremap
+extern homeremap_e43, homeremap_eFF, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
 extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
 extern awlinetimer, dword_C5861, dword_C5862, demogame, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
@@ -754,12 +754,12 @@ call sub_8E8A0	; 1529E
 mov esi, eax	; 152A3
 add esp, byte 8	; 152A5
 mov dh, 67h	; 152A8
-mov byte [byte_DCA1B], dh	; 152AA
-mov byte [byte_DC91B], dh	; 152B0
+mov byte [homeremap_e43], dh	; 152AA
+mov byte [awayremap_e43], dh	; 152B0
 mov bh, 0FFh	; 152B6
-mov byte [byte_DC9D7], bh	; 152B8
-mov byte [byte_DCAD7], bh	; 152BE
-push byte_DC9D8	; 152C4
+mov byte [awayremap_eFF], bh	; 152B8
+mov byte [homeremap_eFF], bh	; 152BE
+push homeremap	; 152C4
 call sub_B4DD4	; 152C9
 add esp, byte 4	; 152CE
 push byte 4	; 152D1
@@ -773,7 +773,7 @@ add esp, byte 8	; 152E7
 push eax	; 152EA
 call sub_B4E50	; 152EB
 add esp, byte 0Ch	; 152F0
-push byte_DC8D8	; 152F3
+push awayremap	; 152F3
 call sub_B4DD4	; 152F8
 add esp, byte 4	; 152FD
 push byte 4	; 15300
@@ -787,8 +787,8 @@ push eax	; 15318
 call sub_B4E50	; 15319
 add esp, byte 0Ch	; 1531E
 mov ch, 43h	; 15321
-mov byte [byte_DCA1B], ch	; 15323
-mov byte [byte_DC91B], ch	; 15329
+mov byte [homeremap_e43], ch	; 15323
+mov byte [awayremap_e43], ch	; 15329
 push esi	; 1532F
 call FreeMemBlock	; 15330
 add esp, byte 4	; 15335

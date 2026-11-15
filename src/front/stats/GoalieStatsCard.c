@@ -71,7 +71,7 @@ void GoalieStatsCard(void)
         memcpy(s.name + 5, pl + 0x30, 4);
         v = (((signed char *)pl)[0x31] - 0x30) * 10 + (((signed char *)pl)[0x32] - 0x30);
         s.name[8] = 0;
-        MakePath(s.path, byte_ED909[v] == 1 ? (char *)cddriveptr : 0, s.name, 0);
+        MakePath(s.path, portraitoncd[v] == 1 ? (char *)cddriveptr : 0, s.name, 0);
         bank = sub_8E83C(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
         s.name[4] = 0;

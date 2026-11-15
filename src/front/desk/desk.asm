@@ -5,8 +5,8 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
 extern boxshadecolor, btn_POHumanOut, cupceremony, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
 extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
-extern DrawMenuItemSel, dword_C66A4, dword_C66AC, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, dword_DC888
-extern dword_DC88C, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
+extern DrawMenuItemSel, dword_C66A4, dword_C66AC, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, deskptry
+extern deskptrx, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
 extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, gameopts, gameresult, GameStatsScreen
 extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
 extern InputInstall, InputRemove, InstantReplay, joysampling, LoadPlayerPhotos, LoadRink, MakePath, MenuHitTest
@@ -1061,9 +1061,9 @@ jg short SportsDesk.36	; 19C32
 xor eax, eax	; 19C34
 mov dword [dword esp+0404h], eax	; 19C36
 mov eax, dword [dword esp+03E4h]	; 19C3D
-mov dword [dword_DC88C], eax	; 19C44
+mov dword [deskptrx], eax	; 19C44
 mov eax, dword [dword esp+03E0h]	; 19C49
-mov dword [dword_DC888], eax	; 19C50
+mov dword [deskptry], eax	; 19C50
 mov eax, dword [dword esp+03D0h]	; 19C55
 mov edx, dword [dword esp+03CCh]	; 19C5C
 shl edx, 5	; 19C63
@@ -1071,9 +1071,9 @@ mov eax, dword [dword esp+eax*4+03B4h]	; 19C66
 call dword [byte edx+eax+014h]	; 19C6D
 mov edx, eax	; 19C71
 mov dword [dword esp+03DCh], eax	; 19C73
-mov eax, dword [dword_DC88C]	; 19C7A
+mov eax, dword [deskptrx]	; 19C7A
 mov dword [dword esp+03E4h], eax	; 19C7F
-mov eax, dword [dword_DC888]	; 19C86
+mov eax, dword [deskptry]	; 19C86
 mov dword [dword esp+03E0h], eax	; 19C8B
 xor ebx, ebx	; 19C92
 mov dword [dword esp+03C0h], ebx	; 19C94

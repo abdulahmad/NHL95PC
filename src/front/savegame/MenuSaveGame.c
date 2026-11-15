@@ -49,7 +49,7 @@ int MenuSaveGame(void)
         if (err = DiskSpaceShort(0, s.need)) {
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
             sprintf((char *)str_AGameYouRequire3, (char *)str_AGameYouRequire, err);
-            MessageBox(-1, -1, (char *)msg_NoSaveSpace, 3, 0, 0, (int)&dword_DC88C, (int)&dword_DC888, 0x320);
+            MessageBox(-1, -1, (char *)msg_NoSaveSpace, 3, 0, 0, (int)&deskptrx, (int)&deskptry, 0x320);
             goto done;
         }
         if (demomode) {
@@ -79,7 +79,7 @@ int MenuSaveGame(void)
         if (err = DiskSpaceShort(0, s.need)) {
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
             sprintf((char *)str_AGameYouRequire3, (char *)str_AGameYouRequire2, err);
-            MessageBox(-1, -1, (char *)msg_NoSaveSpace, 3, 0, 0, (int)&dword_DC88C, (int)&dword_DC888, 0x320);
+            MessageBox(-1, -1, (char *)msg_NoSaveSpace, 3, 0, 0, (int)&deskptrx, (int)&deskptry, 0x320);
             goto done;
         }
         SetTickDeadline(0xC8);

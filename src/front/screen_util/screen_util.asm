@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_1CC3D progbits alloc exec nowrite align=1
-extern __CHK, awlineind, awpanelspr, str_Dashes, byte_DC8D8, byte_DC9D8, cddriveptr, cliprect_x0
+extern __CHK, awlineind, awpanelspr, str_Dashes, awayremap, homeremap, cddriveptr, cliprect_x0
 extern cliprect_x1, cliprect_y0, cliprect_y1, clockdigits, dirtyrectcount, dirtyrectptr, dword_C679D, dword_C67B9
 extern dword_C67BD, dword_C891E, dword_CE8EB, dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7
 extern dword_CF5F7, dword_CF617, dword_CF637, dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B
@@ -15,7 +15,7 @@ extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeas
 extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
 extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, sub_6AB7C, sub_8E8A0, sub_90B80
 extern sub_B30B4, sub_B4CD8, sub_B4DD4, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
-extern sub_B5974, sub_B5AC8, unk_DC998, unk_DCA98, vgapage
+extern sub_B5974, sub_B5AC8, awayremap_eC0, homeremap_eC0, vgapage
 global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
 global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
 global SetupStatsSourceMenu_lg, SetupStatsSourceMenu_po, SetupStatsSourceMenu_exh, SetupStatsSourceMenu_all, BuildSavedGameLabels, StrLenToDot, SetScreenTitle_jt, SetScreenTitle
@@ -193,10 +193,10 @@ cmp word [byte esp+018h], byte 0	; 1CE73
 je short .9	; 1CE79
 test dx, dx	; 1CE7B
 je short .6	; 1CE7E
-mov edi, unk_DC998	; 1CE80
+mov edi, awayremap_eC0	; 1CE80
 jmp short .7	; 1CE85
 .6:
-mov edi, unk_DCA98	; 1CE87
+mov edi, homeremap_eC0	; 1CE87
 .7:
 xor edx, edx	; 1CE8C
 .8:
@@ -222,10 +222,10 @@ jl short DrawSprite.8	; 1CED2
 .9:
 cmp word [byte esp+030h], byte 0	; 1CED4
 je short .10	; 1CEDA
-mov eax, byte_DC8D8	; 1CEDC
+mov eax, awayremap	; 1CEDC
 jmp short .11	; 1CEE1
 .10:
-mov eax, byte_DC9D8	; 1CEE3
+mov eax, homeremap	; 1CEE3
 .11:
 push eax	; 1CEE8
 call sub_B4DD4	; 1CEE9
@@ -234,10 +234,10 @@ cmp word [byte esp+018h], byte 0	; 1CEF1
 je short .15	; 1CEF7
 cmp word [byte esp+030h], byte 0	; 1CEF9
 je short .12	; 1CEFF
-mov edi, unk_DC998	; 1CF01
+mov edi, awayremap_eC0	; 1CF01
 jmp short .13	; 1CF06
 .12:
-mov edi, unk_DCA98	; 1CF08
+mov edi, homeremap_eC0	; 1CF08
 .13:
 xor edx, edx	; 1CF0D
 .14:

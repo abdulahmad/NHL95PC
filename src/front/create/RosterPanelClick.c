@@ -27,11 +27,11 @@ void RosterPanelClick(int x, int y)
         row = (y - 0x35) / h;
         rowy = row * h + 0x35;
         if (rosterisfa[side] == 1) {
-            if (dword_EBCA4 + row < facount) {
+            if (falisttop + row < facount) {
                 unsigned char *fa;
 
                 INVERT(side ? 0x15E : 0x23, rowy, 0xF0, h, 0x80);
-                row += dword_EBCA4;
+                row += falisttop;
                 fa = (unsigned char *)falistsel;
                 fa[row] = ~fa[row];
             }

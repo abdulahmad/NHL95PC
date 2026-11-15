@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_85924 progbits alloc exec nowrite align=1
-extern __CHK, cddriveptr, ClearInputQueue, CopyFile, curleague, demomode, DiskSpaceShort, dword_DC888
-extern dword_DC88C, EditTextField, exhstate, FatalError, FileClose, FileCreate, fileoncd, FileWriteAt
+extern __CHK, cddriveptr, ClearInputQueue, CopyFile, curleague, demomode, DiskSpaceShort, deskptry
+extern deskptrx, EditTextField, exhstate, FatalError, FileClose, FileCreate, fileoncd, FileWriteAt
 extern FreeMemBlock, gamemode, gameopts, GetInputEvent, lgstate, LoadModeState, mainfont, MakePath
 extern MessageBox, MouseSetPos, msg_NoSaveSpace, msg_SavingLeagueGame, msg_SavingPlayoffGame, othergames, otherperiod, otherscores
 extern pointerspr, postate, ptrupdatefn, RestoreDialogBg, SaveGameState, SaveLeagueGameRef, SaveModeState, SetDialogColors
@@ -78,8 +78,8 @@ push str_AGameYouRequire3	; 859EB
 call sprintf_	; 859F0
 add esp, byte 0Ch	; 859F5
 push dword 320h	; 859F8
-push dword_DC888	; 859FD
-push dword_DC88C	; 85A02
+push deskptry	; 859FD
+push deskptrx	; 85A02
 push byte 0	; 85A07
 push byte 0	; 85A09
 mov ecx, 3	; 85A0B

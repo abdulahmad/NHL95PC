@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_41B80 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, byte_DDD40, byte_DE268
+extern __CHK, __STOSD, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, lgschedrec, byte_DE268
 extern careerdb, careerdb_size, confteams, CopyFile, CopyHumanTeamDBs, curleague, dbextension, DeleteDir
 extern DiskFreeBytes, DiskSpaceShort, divisionteams, dword_C5619, playoffbuf, leaguedbsizes, dword_C9002, dword_DDD34
 extern dword_DDD3C, FileClose, FileExists, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
@@ -97,7 +97,7 @@ test eax, eax	; 41C5A
 jne short .x	; 41C5C
 mov ecx, 6	; 41C5E
 mov ebx, 0FFFFFFFFh	; 41C63
-mov edx, byte_DDD40	; 41C68
+mov edx, lgschedrec	; 41C68
 mov eax, esi	; 41C6D
 call FileReadAt	; 41C6F
 .x:

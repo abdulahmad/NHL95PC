@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_15D6B progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awtmstruct
-extern byte_D42C3, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, byte_DCAD7, cddriveptr
+extern byte_D42C3, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e43, homeremap_eFF, cddriveptr
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer

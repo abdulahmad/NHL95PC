@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_DC834 nobits alloc noexec write align=1
-global byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8
-global byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA1B, byte_DCA21, byte_DCA28, byte_DCA29
-global byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, byte_DCAD7, menuremap, menuremap2
+global awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e05, homeremap_e07, homeremap_e10
+global homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e43, homeremap_e49, homeremap_e50, homeremap_e51
+global homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, homeremap_eFF, menuremap, menuremap2
 global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
 global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
-global byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43, byte_DDD45, traderoster, tradejersey, tradeslot
-global byte_DE268, loadpals, palcyclephase, palcycledelay, dword_DC85C, dword_DC860, dword_DC868, dword_DC888
-global dword_DC88C, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
+global lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b5, traderoster, tradejersey, tradeslot
+global byte_DE268, loadpals, palcyclephase, palcycledelay, dword_DC85C, dword_DC860, dword_DC868, deskptry
+global deskptrx, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
 global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
 global exhfilenames, pofiles, pofilenames, lgfiles
 global lgfilenames, fdlg_tabexh, fdlg_none, fdlg_tabpo, fdlg_open
@@ -18,10 +18,10 @@ global fdlg_noarrow, hmcrestbmp, vscrestbmp, dlgsavex, dlgsavey, editcurw, editp
 global editbuf, editcuron, edity, editx, dword_DD6A6, rinkwtiles, rinkhtiles, bgscrolly
 global otherperiod, floppyok, dbextension, calsel, floppyprobe, calexit, teamselresult
 global traderesult, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver, humancount, calselday
-global dword_DDD2C, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, dword_DDD44, gridcelly, gridcellx
+global calredraw, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, lgschedrec_b4, gridcelly, gridcellx
 global lgplayeridfile, tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg
-global tradeside, dword_DE264, dword_DE265, palcyclelock, dword_DEB74, statsplayer
-global unk_DC890, unk_DC998, unk_DCA98, printfbuf, leagueteams, treeteamnames, unk_DDCFB
+global tradeside, tradebitmap, dword_DE265, palcyclelock, dword_DEB74, statsplayer
+global unk_DC890, awayremap_eC0, homeremap_eC0, printfbuf, leagueteams, treeteamnames, unk_DDCFB
 global masterpw, savleague1, savleague2, scrolly, scrollx, bgscrollx, bgscrolly8
 global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
 statsplayer:
@@ -35,9 +35,9 @@ dword_DC860:
 resb 8
 dword_DC868:
 resb 32
-dword_DC888:
+deskptry:
 resb 4
-dword_DC88C:
+deskptrx:
 resb 4
 unk_DC890:
 resb 16
@@ -47,51 +47,51 @@ dword_DC8C8:
 resb 8
 dirtyrectptr:
 resb 8
-byte_DC8D8:
+awayremap:
 resb 67
-byte_DC91B:
+awayremap_e43:
 resb 125
-unk_DC998:
+awayremap_eC0:
 resb 63
-byte_DC9D7:
+awayremap_eFF:
 resb 1
-byte_DC9D8:
+homeremap:
 resb 5
-byte_DC9DD:
+homeremap_e05:
 resb 2
-byte_DC9DF:
+homeremap_e07:
 resb 9
-byte_DC9E8:
+homeremap_e10:
 resb 1
-byte_DC9E9:
+homeremap_e11:
 resb 2
-byte_DC9EB:
+homeremap_e13:
 resb 1
-byte_DC9EC:
+homeremap_e14:
 resb 2
-byte_DC9EE:
+homeremap_e16:
 resb 45
-byte_DCA1B:
+homeremap_e43:
 resb 6
-byte_DCA21:
+homeremap_e49:
 resb 7
-byte_DCA28:
+homeremap_e50:
 resb 1
-byte_DCA29:
+homeremap_e51:
 resb 15
-byte_DCA38:
+homeremap_e60:
 resb 96
-unk_DCA98:
+homeremap_eC0:
 resb 59
-byte_DCAD3:
+homeremap_eFB:
 resb 1
-byte_DCAD4:
+homeremap_eFC:
 resb 1
-byte_DCAD5:
+homeremap_eFD:
 resb 1
-byte_DCAD6:
+homeremap_eFE:
 resb 1
-byte_DCAD7:
+homeremap_eFF:
 resb 1281
 menuremap:
 resb 128
@@ -274,7 +274,7 @@ masterpw:
 resb 11
 calselday:
 resb 4
-dword_DDD2C:
+calredraw:
 resb 4
 calselmonth:
 resb 4
@@ -284,17 +284,17 @@ lgplayteam:
 resb 4
 dword_DDD3C:
 resb 4
-byte_DDD40:
+lgschedrec:
 resb 1
-byte_DDD41:
+lgschedrec_b1:
 resb 1
-byte_DDD42:
+lgschedrec_b2:
 resb 1
-byte_DDD43:
+lgschedrec_b3:
 resb 1
-dword_DDD44:
+lgschedrec_b4:
 resb 1
-byte_DDD45:
+lgschedrec_b5:
 resb 1
 lggameidx:
 resb 2
@@ -333,7 +333,7 @@ jerseymsg:
 resb 4
 tradeside:
 resb 4
-dword_DE264:
+tradebitmap:
 resb 1
 dword_DE265:
 resb 3

@@ -47,7 +47,7 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
    database names (leaguedbfmt / leaguedbfmt2), set gameopts.fullot for a regular-season game (index below
    444h; clear for the playoffs), the teams and the controllers, show the pre-game screen (unless there is no
    disk space: 4), install the in-game stats callbacks and play (PlayGame); a finished game keeps the score
-   (dword_DDD44 / byte_DDD45, the schedule record at byte_DDD40). Then post it: load the desk palette, say
+   (lgschedrec_b4 / lgschedrec_b5, the schedule record at lgschedrec). Then post it: load the desk palette, say
    the schedule is being updated, clear the saved game in PINFO.DB, write the game into the schedule(s),
    count the game (regular season: the games-played word; playoffs: UpdatePlayoffSeries on the team files),
    and update the season schedule and post the game to both teams' databases (PostGameToTeamDb). An error
@@ -184,10 +184,10 @@ void PlayLeagueGame(int *fh)
                 err = FileOpenRW(s.path, &s.fhsched1);
                 if (*fh < 0) {
                     if (!err) err = FileReadAt(s.fhsched1, &word_DDD48, 0, 2);
-                    if (!err) err = ReadSchedGame(s.fhsched1, &byte_DDD40, lggameidx);
+                    if (!err) err = ReadSchedGame(s.fhsched1, &lgschedrec, lggameidx);
                     if (!err) {
-                        if (byte_DDD42 == lgplayteam) dword_DDD34 = byte_DDD43;
-                        else dword_DDD34 = byte_DDD42;
+                        if (lgschedrec_b2 == lgplayteam) dword_DDD34 = lgschedrec_b3;
+                        else dword_DDD34 = lgschedrec_b2;
                         dword_DDD3C = -1;
                         if (lgteam_17[dword_DDD34 * 30] == 0) dword_DDD3C = 0;
                     }
@@ -232,16 +232,16 @@ void PlayLeagueGame(int *fh)
                         songdata = 0;
                     }
                     if (*fh >= 0) ShowLoadingScreen();
-                    if (byte_DDD42 == lgplayteam) {
+                    if (lgschedrec_b2 == lgplayteam) {
                         s.side = 0;
                         other = 1;
-                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague1, leagueteams, byte_DDD42);
-                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague2, leagueteams, byte_DDD43);
+                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague1, leagueteams, lgschedrec_b2);
+                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague2, leagueteams, lgschedrec_b3);
                     } else {
                         s.side = 1;
                         other = 0;
-                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague2, leagueteams, byte_DDD42);
-                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague1, leagueteams, byte_DDD43);
+                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague2, leagueteams, lgschedrec_b2);
+                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague1, leagueteams, lgschedrec_b3);
                     }
                     if (leaguedbfmt2 == 0) strcpy((char *)&leaguedbfmt2, (char *)&leaguedbfmt);
                     if (leaguedbfmt == 0) strcpy((char *)&leaguedbfmt, (char *)&leaguedbfmt2);
@@ -251,10 +251,10 @@ void PlayLeagueGame(int *fh)
                     else
                         gameopts.fullot = 0;
                     if (*fh < 0) {
-                        byte_DC268 = byte_DDD40;
-                        byte_DC267 = byte_DDD41;
-                        HomeTeam = byte_DDD42;
-                        VisTeam = byte_DDD43;
+                        byte_DC268 = lgschedrec;
+                        byte_DC267 = lgschedrec_b1;
+                        HomeTeam = lgschedrec_b2;
+                        VisTeam = lgschedrec_b3;
                     }
                     SetupControllers();
                     err = 0;
@@ -275,8 +275,8 @@ void PlayLeagueGame(int *fh)
                         PlayGame(fh);
                         InputInstall();
                         if (gameresult == 1) {
-                            dword_DDD44 = hmscore[0];
-                            byte_DDD45 = awscore;
+                            lgschedrec_b4 = hmscore[0];
+                            lgschedrec_b5 = awscore;
                         }
                     } else
                         gameresult = 2;
@@ -339,8 +339,8 @@ void PlayLeagueGame(int *fh)
                         if (!err) err = FileWriteAt(s.fhinfo, s.info, 6, 0xD);
                         FileClose(&s.fhinfo);
                     }
-                    if (!err) err = WriteSchedGame(s.fhsched1, &byte_DDD40, lggameidx);
-                    if (!err && dword_DDD3C) err = WriteSchedGame(s.fhsched2, &byte_DDD40, lggameidx);
+                    if (!err) err = WriteSchedGame(s.fhsched1, &lgschedrec, lggameidx);
+                    if (!err && dword_DDD3C) err = WriteSchedGame(s.fhsched2, &lgschedrec, lggameidx);
                     if (!err) {
                         if (lggameidx >= 0x444) {
                             MakePath(s.path, (char *)savleague1, (char *)leaguedbnames[4], (char *)str_extxx);

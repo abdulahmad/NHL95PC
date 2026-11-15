@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_8034B progbits alloc exec nowrite align=1
-extern __CHK, acptspr, byte_C541B, byte_DC9D8, byte_DC9DD, byte_DC9DF, byte_DC9E8, byte_DC9E9
-extern byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28, byte_DCA29, byte_DCA38, byte_DCAD3
-extern byte_DCAD4, byte_DCAD5, byte_DCAD6, cddriveptr, chkoffspr, chkonspr, ClearInputQueue, cont2team
+extern __CHK, acptspr, byte_C541B, homeremap, homeremap_e05, homeremap_e07, homeremap_e10, homeremap_e11
+extern homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50, homeremap_e51, homeremap_e60, homeremap_eFB
+extern homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr, chkonspr, ClearInputQueue, cont2team
 extern ctl1side, ctl1team, ctl2side, ctl2team, lockerindex, lockerteams, dword_D223C, dword_D22DC
 extern dword_D22E0, dword_D22EC, dword_D22F0, dword_D2435, FadeOutPalCycle, FadePalStep, fdlg_cancel, fileoncd
 extern fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr, homenamebckspr, HomeTeam
@@ -1344,28 +1344,28 @@ mov dword [dword esp+0350h], ebx	; 81472
 .36:
 mov eax, dword [dword esp+0350h]	; 81479
 mov dl, byte [dword esp+0350h]	; 81480
-mov byte [dword eax+byte_DC9D8], dl	; 81487
+mov byte [dword eax+homeremap], dl	; 81487
 lea ecx, [byte eax+01h]	; 8148D
 mov dword [dword esp+0350h], ecx	; 81490
 cmp ecx, 100h	; 81497
 jl short DrawLockerRoom.36	; 8149D
-mov byte [byte_DC9E8], 2Ch	; 8149F
-mov byte [byte_DC9E9], 1	; 814A6
-mov byte [byte_DC9DF], 2Fh	; 814AD
-mov byte [byte_DC9EB], 32h	; 814B4
-mov byte [byte_DC9EC], 3Ah	; 814BB
-mov byte [byte_DCA29], 6Dh	; 814C2
-mov byte [byte_DCA28], 6Eh	; 814C9
-mov byte [byte_DCA21], 19h	; 814D0
-mov byte [byte_DC9EE], 51h	; 814D7
-mov byte [byte_DCA38], 18h	; 814DE
+mov byte [homeremap_e10], 2Ch	; 8149F
+mov byte [homeremap_e11], 1	; 814A6
+mov byte [homeremap_e07], 2Fh	; 814AD
+mov byte [homeremap_e13], 32h	; 814B4
+mov byte [homeremap_e14], 3Ah	; 814BB
+mov byte [homeremap_e51], 6Dh	; 814C2
+mov byte [homeremap_e50], 6Eh	; 814C9
+mov byte [homeremap_e49], 19h	; 814D0
+mov byte [homeremap_e16], 51h	; 814D7
+mov byte [homeremap_e60], 18h	; 814DE
 mov bh, 7Fh	; 814E5
-mov byte [byte_DC9DD], bh	; 814E7
-mov byte [byte_DCAD3], 7Ch	; 814ED
-mov byte [byte_DCAD4], 7Dh	; 814F4
-mov byte [byte_DCAD5], 7Eh	; 814FB
-mov byte [byte_DCAD6], bh	; 81502
-push byte_DC9D8	; 81508
+mov byte [homeremap_e05], bh	; 814E7
+mov byte [homeremap_eFB], 7Ch	; 814ED
+mov byte [homeremap_eFC], 7Dh	; 814F4
+mov byte [homeremap_eFD], 7Eh	; 814FB
+mov byte [homeremap_eFE], bh	; 81502
+push homeremap	; 81508
 call sub_B4DD4	; 8150D
 add esp, byte 4	; 81512
 add esp, 354h	; 81515

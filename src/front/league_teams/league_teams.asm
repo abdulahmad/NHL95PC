@@ -3,10 +3,10 @@
 bits 32
 %include "hockey.inc"
 section s_408F5 progbits alloc exec nowrite align=1
-extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, byte_DC8D8
-extern byte_DC9D8, byte_DDD40, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
+extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, awayremap
+extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
 extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, dword_C87C0, dword_C87C8
-extern dword_C87E0, dword_C87E8, dword_DDD34, dword_DDD3C, dword_DE264, ExecuteTrade, ExportTeamToFloppy, FileClose
+extern dword_C87E0, dword_C87E8, dword_DDD34, dword_DDD3C, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, humancount, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect
 extern lggameidx, lgplayteam, MakePath, masterpw, memset_, MergeLeagueFiles, MessageBox, msg_AllHuman
@@ -1433,7 +1433,7 @@ test edx, edx	; 41A6C
 jne short .8	; 41A6E
 mov ecx, 6	; 41A70
 mov ebx, 0FFFFFFFFh	; 41A75
-mov edx, byte_DDD40	; 41A7A
+mov edx, lgschedrec	; 41A7A
 mov eax, esi	; 41A7F
 call FileWriteAt	; 41A81
 mov edx, eax	; 41A86

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_20016 progbits alloc exec nowrite align=1
 extern __CHK, calendarshapes, cddriveptr, deskexit, DrawMenuBar, easnfontbuf, embscupbank, dword_C6D26
-extern dword_DC6B4, dword_DC734, leaguestatsmode, dword_DDD2C, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
+extern dword_DC6B4, dword_DC734, leaguestatsmode, calredraw, FadePalStep, fileoncd, FreeDeskBuffers, FreeMemBlock
 extern gamemode, GoalieStatsCard, InitMenuRemap, keepdesksong, LeadersScreen, MakePath, memcpy_, photoremap
 extern playofftree, RunMenu, RunPlayerPickMenu, RunTeamPickMenu, ShowPlayoffTree, SkaterStatsCard, standingscb, StandingsScreen
 extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, statspalshape, statspalvalid, statsplayer
@@ -1463,7 +1463,7 @@ mov ebx, 10h	; 21475
 mov edx, esp	; 2147A
 mov eax, 1	; 2147C
 call FadePalStep	; 21481
-mov dword [dword_DDD2C], 0FFFFFFFFh	; 21486
+mov dword [calredraw], 0FFFFFFFFh	; 21486
 call LoadCalendarShapes	; 21490
 xor edi, edi	; 21495
 mov dword [leaguestatsmode], edi	; 21497
@@ -1973,7 +1973,7 @@ mov ebx, 10h	; 21BD6
 mov edx, esp	; 21BDB
 mov eax, 1	; 21BDD
 call FadePalStep	; 21BE2
-mov dword [dword_DDD2C], 0FFFFFFFFh	; 21BE7
+mov dword [calredraw], 0FFFFFFFFh	; 21BE7
 call LoadCalendarShapes	; 21BF1
 xor eax, eax	; 21BF6
 add esp, 38Ch	; 21BF8

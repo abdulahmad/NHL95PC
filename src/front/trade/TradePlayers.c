@@ -14,7 +14,7 @@ typedef struct { char c[6]; } Str6;
 /* DRAFT: 1551 vs 1551, 359 of 361 instructions: the second city-name index load uses edx where the EXE uses
    eax (the city name through the nm local put the first one in edx, as in the EXE); see docs/UNSURE.md. */
 /* TradePlayers (40183, PC only): trade players between two teams of the current league. Make the 640 x 480
-   trade bitmap (dword_DE264) and use the trade screen's dialog colours. Read the league (as AddHumanTeam: a
+   trade bitmap (tradebitmap) and use the trade screen's dialog colours. Read the league (as AddHumanTeam: a
    saved game in progress stops it, an unmerged league is merged first after asking); then read the schedule's
    game count and the next game: past the trade deadline (a 3 / 16h+ or 4-9 game, or 444h games played) say so.
    With one human team say trading needs two. Else pick the two teams (LeagueTeamSelect), check both passwords,
@@ -51,7 +51,7 @@ void TradePlayers(void)
     s.fh = -1;
     err = 0;
     s.negone = negone_3DC28;
-    dword_DE264 = sub_B4F8C(0x280, 0x1E0, err);
+    tradebitmap = sub_B4F8C(0x280, 0x1E0, err);
     s.fill = dlgfillcol;
     s.edge1 = dlgedgecol1;
     s.edge2 = dlgedgecol2;
@@ -148,5 +148,5 @@ void TradePlayers(void)
     dlgedgecol3 = s.edge3;
     dlgbevelcol1 = s.bev1;
     dlgbevelcol2 = s.bev2;
-    FreeMemBlock(dword_DE264);
+    FreeMemBlock(tradebitmap);
 }

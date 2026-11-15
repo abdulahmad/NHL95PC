@@ -16,7 +16,7 @@ typedef struct { char c[13]; } T13;
 /* SkaterStatsCard (21CDE, PC only): the skater's stats card. Read the player's season and playoff records (the
    stats file of the league or of the playoffs), ratings (ATT.DB) and team abbreviation (the team file, 4Ch
    bytes per team); draw the team's EMB background, then the player's portrait when there is one (PORTR + the
-   portrait code, from the CD when byte_ED909 says so: the photo with its palette, and the bar art PST1, else
+   portrait code, from the CD when portraitoncd says so: the photo with its palette, and the bar art PST1, else
    PST2), the title, name, number and position; the season and playoff rows (games, goals, assists, points,
    penalty minutes, plus / minus, power-play and short-handed goals, shots and the shooting percentage in tenths);
    and the ratings: shooting hand, then the 14 ratings (shown as (r + 5) * 5) in two columns. No arguments.
@@ -84,7 +84,7 @@ int SkaterStatsCard(void)
         bank = (((signed char *)pl)[0x31] - 0x30) * 10;
         v = ((signed char *)pl)[0x32] - 0x30;
         s.name[8] = 0;
-        MakePath(s.path, byte_ED909[bank + v] == 1
+        MakePath(s.path, portraitoncd[bank + v] == 1
             ? (char *)cddriveptr : 0, s.name, 0);
         bank = sub_8E83C(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);

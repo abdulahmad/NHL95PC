@@ -11,7 +11,7 @@ extern divisionteams, dlgtextbg, dlgtextfg, DrawButtons, DrawDlgFrame, DrawMenuB
 extern DrawMenuItemSel, DrawScrollBar, dword_C2CAC, dword_C2CB0, dword_C2CB4, dword_C2CB8, dword_C2CBC, dword_C2CC0
 extern dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4, dword_C2CD8, dword_C2CDC, dword_C2CF0
 extern dword_C4B69, rostereditmode, dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_D0CDA
-extern dword_EA2B0, dword_EA994, dword_EAF7C, dword_EBCA4, editptrspr, editrosters_exit, facount, FadePalStep
+extern dword_EA2B0, dword_EA994, dword_EAF7C, falisttop, editptrspr, editrosters_exit, facount, FadePalStep
 extern falist, falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FitPlayerName
 extern fputchar, FreeLeagueDbsMem, FreeMemBlock, fullscrbmp, GetInputEvent, hmteamrec, HomeTeam, InitScrollBar
 extern InputDialog, j_unlink_, kaufmfont, keydb, keydb_size, KeyDbPtr, leaguedbnames, ListDialog
@@ -441,7 +441,7 @@ cmp esi, byte 1Ch	; 6D0CB
 jl near DrawRosterList.1	; 6D0CE
 jmp near .x	; 6D0D4
 .6:
-mov edi, dword [dword_EBCA4]	; 6D0D9
+mov edi, dword [falisttop]	; 6D0D9
 xor esi, esi	; 6D0DF
 jmp near .11	; 6D0E1
 .7:
@@ -548,7 +548,7 @@ je short .x	; 6D20C
 mov edx, 2	; 6D20E
 mov eax, unk_D0BB8	; 6D213
 call DrawButtons	; 6D218
-mov eax, dword [dword_EBCA4]	; 6D21D
+mov eax, dword [falisttop]	; 6D21D
 mov dword [dword_D0C10], eax	; 6D222
 mov eax, dword [dword_D0BFC]	; 6D227
 sub eax, byte 4	; 6D22C
@@ -1160,7 +1160,7 @@ mov ecx, dword [facount]	; 6D92D
 cmp eax, ecx	; 6D933
 jl short LoadRosterList_faloop.3	; 6D935
 xor edi, edi	; 6D937
-mov dword [dword_EBCA4], edi	; 6D939
+mov dword [falisttop], edi	; 6D939
 cmp ecx, byte 1Ch	; 6D93F
 jg short .5	; 6D942
 mov dword [dword_D0C20], edi	; 6D944
@@ -1345,7 +1345,7 @@ imul ecx, ebx	; 6DB3B
 add ecx, byte 35h	; 6DB3E
 cmp byte [dword esi+rosterisfa], 1	; 6DB41
 jne short .5	; 6DB48
-mov eax, dword [dword_EBCA4]	; 6DB4A
+mov eax, dword [falisttop]	; 6DB4A
 add eax, edi	; 6DB4F
 cmp eax, dword [facount]	; 6DB51
 jge near .8	; 6DB57
@@ -1363,7 +1363,7 @@ mov eax, 23h	; 6DB74
 push eax	; 6DB79
 call sub_90F38	; 6DB7A
 add esp, byte 14h	; 6DB7F
-add edi, dword [dword_EBCA4]	; 6DB82
+add edi, dword [falisttop]	; 6DB82
 mov eax, dword [falistsel]	; 6DB88
 mov dl, byte [edi+eax]	; 6DB8D
 not dl	; 6DB90
@@ -1935,22 +1935,22 @@ call TrackButtons	; 6E273
 mov edx, eax	; 6E278
 test eax, eax	; 6E27A
 jne short .9	; 6E27C
-mov esi, dword [dword_EBCA4]	; 6E27E
+mov esi, dword [falisttop]	; 6E27E
 test esi, esi	; 6E284
 jle short .9	; 6E286
 lea eax, [byte esi-01h]	; 6E288
-mov dword [dword_EBCA4], eax	; 6E28B
+mov dword [falisttop], eax	; 6E28B
 jmp short .10	; 6E290
 .9:
 cmp edx, byte 1	; 6E292
 jne short .11	; 6E295
 mov eax, dword [facount]	; 6E297
 sub eax, byte 1Ch	; 6E29C
-mov edi, dword [dword_EBCA4]	; 6E29F
+mov edi, dword [falisttop]	; 6E29F
 cmp eax, edi	; 6E2A5
 jle short .11	; 6E2A7
 lea ebp, [edi+edx]	; 6E2A9
-mov dword [dword_EBCA4], ebp	; 6E2AC
+mov dword [falisttop], ebp	; 6E2AC
 .10:
 call DrawEditRosters	; 6E2B2
 .11:
@@ -1963,11 +1963,11 @@ mov eax, unk_D0BF0	; 6E2C9
 call TrackScrollBars	; 6E2CE
 test eax, eax	; 6E2D3
 jl short .12	; 6E2D5
-mov eax, dword [dword_EBCA4]	; 6E2D7
+mov eax, dword [falisttop]	; 6E2D7
 mov ebx, dword [dword_D0C10]	; 6E2DC
 cmp eax, ebx	; 6E2E2
 je short .12	; 6E2E4
-mov dword [dword_EBCA4], ebx	; 6E2E6
+mov dword [falisttop], ebx	; 6E2E6
 call DrawEditRosters	; 6E2EC
 .12:
 mov ecx, dword [byte esp+058h]	; 6E2F1
@@ -6304,7 +6304,7 @@ cmp ecx, dword [facount]	; 71781
 jl short SelectMatchingPlayers.7	; 71787
 cmp dword [dword_D0C20], byte 0	; 71789
 je short .9	; 71790
-mov dword [dword_EBCA4], 0FFFFFFFFh	; 71792
+mov dword [falisttop], 0FFFFFFFFh	; 71792
 .9:
 xor ecx, ecx	; 7179C
 jmp near .14	; 7179E
@@ -6349,9 +6349,9 @@ not dl	; 7180B
 mov byte [ecx+eax], dl	; 7180D
 cmp dword [dword_D0C20], byte 0	; 71810
 je short .13	; 71817
-cmp dword [dword_EBCA4], byte 0FFFFFFFFh	; 71819
+cmp dword [falisttop], byte 0FFFFFFFFh	; 71819
 jne short .13	; 71820
-mov dword [dword_EBCA4], ecx	; 71822
+mov dword [falisttop], ecx	; 71822
 .13:
 inc ecx	; 71828
 .14:

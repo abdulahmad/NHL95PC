@@ -37,7 +37,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3);
 
 /* EditRosters (6E089, PC only): the roster editing screen. Load both roster lists and draw the screen; then follow
    the mouse until editrosters_exit is set: stop a finished song; with the free agent list shown (rosterisfa) the
-   up / down buttons and the scroll bar move it (dword_EBCA4, redrawn by DrawEditRosters); in the move mode
+   up / down buttons and the scroll bar move it (falisttop, redrawn by DrawEditRosters); in the move mode
    (rostereditmode 2) only its two buttons work; a click goes to the menu bar (three levels, as RunMenu; an action gets
    the selected items and the pointer position) or to the roster panels (RosterPanelClick). Leaving with unsaved
    changes (dbdirty) asks first ("The database has not been saved..."). bar / n / col1-col3: as RunMenu. Result: 0. */
@@ -105,15 +105,15 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
         if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
             sub_903F0(editptrspr, oldmx, oldmy);
             k = TrackButtons((int *)unk_D0BB8, 2, mx, my, bits);
-            if (k == 0 && dword_EBCA4 > 0) {
-                dword_EBCA4--;
+            if (k == 0 && falisttop > 0) {
+                falisttop--;
                 DrawEditRosters();
-            } else if (k == 1 && facount - 0x1C > dword_EBCA4) {
-                dword_EBCA4 += k;
+            } else if (k == 1 && facount - 0x1C > falisttop) {
+                falisttop += k;
                 DrawEditRosters();
             }
-            if (TrackScrollBars(unk_D0BF0, 1, mx, my, bits) >= 0 && dword_EBCA4 != dword_D0C10) {
-                dword_EBCA4 = dword_D0C10;
+            if (TrackScrollBars(unk_D0BF0, 1, mx, my, bits) >= 0 && falisttop != dword_D0C10) {
+                falisttop = dword_D0C10;
                 DrawEditRosters();
             }
             sub_91400(editptrspr, mx, my);

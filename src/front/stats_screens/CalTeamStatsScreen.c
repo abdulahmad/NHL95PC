@@ -48,7 +48,7 @@ int CalTeamStatsScreen(int cat)
     RunMenu(teamstatsmenubar, 4, 0x40, 0x41, 0x42);
     sub_8FFB0(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    dword_DDD2C = -1;
+    calredraw = -1;
     LoadCalendarShapes();
     z = 0;
     leaguestatsmode = z;
@@ -89,7 +89,7 @@ int CalSkaterStatsScreen(int cat)
     RunMenu(skaterstatsmenubar, 4, 0x40, 0x41, 0x42);
     sub_8FFB0(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    dword_DDD2C = -1;
+    calredraw = -1;
     LoadCalendarShapes();
     z = 0;
     leaguestatsmode = z;
@@ -129,7 +129,7 @@ int CalGoalieStatsScreen(int cat)
     RunMenu(goaliestatsmenubar, 4, 0x40, 0x41, 0x42);
     sub_8FFB0(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    dword_DDD2C = -1;
+    calredraw = -1;
     LoadCalendarShapes();
     z = 0;
     leaguestatsmode = z;
@@ -235,7 +235,7 @@ int CalStandingsMenu(void)
     for (i = 0; i < 0x1F; i++) playofftree[i] = s.tree[i];
     sub_8FFB0(0, 0x100, s.pal);
     FadePalStep(1, s.pal, 0x10);
-    dword_DDD2C = -1;
+    calredraw = -1;
     LoadCalendarShapes();
     return 0;
 }

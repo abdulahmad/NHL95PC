@@ -15,7 +15,7 @@ typedef struct Hdr17 { char c[17]; } Hdr17;
    it saves straight to that team's slot list (SaveHilight 0 home, 1 away; "no room" box on failure). Else the
    save-to dialog: the gadget panel and button 7 redrawn, a pointer save buffer the size of the pointer
    (POINTER19), HilightSaveToDlg, the pointer at (EEh, 8Ah) in a 4Bh..96h window; a click inside x 4Eh-D8h on one
-   of the four rows (y 50h-5Eh, 61h-6Fh, 72h-80h, 83h-91h) picks dword_ED6D4 = 0-3 and ends the loop. The row
+   of the four rows (y 50h-5Eh, 61h-6Fh, 72h-80h, 83h-91h) picks hilightslot = 0-3 and ends the loop. The row
    gets a bevel frame, then 0: home, 1: away, 2: home else away (SaveHilight), 3: cancel. A failed save shows
    the "no room" box and reloads the gadget art (GADGET6 / GAD1). Last the rink scroll is nudged, the pointer goes
    back to (x, y) and a failure is reported once more (box at -1, -1), the pointer buffer freed and the full screen
@@ -69,7 +69,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     ((short *)p)[2] = ((short *)pointerspr)[2];
     ((short *)p)[3] = ((short *)pointerspr)[3];
     HilightSaveToDlg();
-    dword_ED6D4 = 3;
+    hilightslot = 3;
     gadgetptrx = 0xEE;
     gadgetptry = 0x8A;
     sub_B2E1B(0, 0x4B, 0x136, 0x96);
@@ -85,10 +85,10 @@ void ReplaySaveHilight(int unused, int x, int y)
         r = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(ev, &gadgetptrx, &gadgetptry);
         if (r & 2) {
             if (!(gadgetptrx < 0x4E || gadgetptrx > 0xD8)) {
-                if (gadgetptry >= 0x50 && gadgetptry <= 0x5E) dword_ED6D4 = 0;
-                else if (gadgetptry >= 0x61 && gadgetptry <= 0x6F) dword_ED6D4 = 1;
-                else if (gadgetptry >= 0x72 && gadgetptry <= 0x80) dword_ED6D4 = 2;
-                else if (gadgetptry >= 0x83 && gadgetptry <= 0x91) dword_ED6D4 = 3;
+                if (gadgetptry >= 0x50 && gadgetptry <= 0x5E) hilightslot = 0;
+                else if (gadgetptry >= 0x61 && gadgetptry <= 0x6F) hilightslot = 1;
+                else if (gadgetptry >= 0x72 && gadgetptry <= 0x80) hilightslot = 2;
+                else if (gadgetptry >= 0x83 && gadgetptry <= 0x91) hilightslot = 3;
                 else r = 0;
             } else {
                 r = 0;
@@ -100,14 +100,14 @@ void ReplaySaveHilight(int unused, int x, int y)
     }
     SetTickDeadline(0x64);
     sub_B4BC4(0, 0x140, 0, 0xC8);
-    sub_B4FAC(0x4E, dword_ED6D4 * 0x11 + 0x50, 0x4E, dword_ED6D4 * 0x11 + 0x5E, 0x10);
-    sub_B4FAC(0x4E, dword_ED6D4 * 0x11 + 0x50, 0xD8, dword_ED6D4 * 0x11 + 0x50, 0x10);
-    sub_B4FAC(0x4F, dword_ED6D4 * 0x11 + 0x5E, 0xD8, dword_ED6D4 * 0x11 + 0x5E, 0x59);
-    sub_B4FAC(0xD8, dword_ED6D4 * 0x11 + 0x51, 0xD8, dword_ED6D4 * 0x11 + 0x5E, 0x59);
-    sub_B5DB0(0xD8, dword_ED6D4 * 0x11 + 0x50, 0x13);
-    sub_B5DB0(0x4E, dword_ED6D4 * 0x11 + 0x5E, 0x13);
+    sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0x4E, hilightslot * 0x11 + 0x5E, 0x10);
+    sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0xD8, hilightslot * 0x11 + 0x50, 0x10);
+    sub_B4FAC(0x4F, hilightslot * 0x11 + 0x5E, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
+    sub_B4FAC(0xD8, hilightslot * 0x11 + 0x51, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
+    sub_B5DB0(0xD8, hilightslot * 0x11 + 0x50, 0x13);
+    sub_B5DB0(0x4E, hilightslot * 0x11 + 0x5E, 0x13);
     sub_91370(pointerspr, gadgetptrx, gadgetptry);
-    switch (dword_ED6D4) {
+    switch (hilightslot) {
     case 0:
         r = SaveHilight(0);
         break;

@@ -12,7 +12,7 @@ void DrawScrollBar(int *sb);
 
 /* DrawRosterList: 28 rows of a team roster, or the free-agent list when rosterisfa[side] is 1.
  Each row is jersey, position and the fitted name. A selected row is inverted. An empty team
- slot ends the list. The free-agent list starts at dword_EBCA4 and, when dword_D0C20 is set,
+ slot ends the list. The free-agent list starts at falisttop and, when dword_D0C20 is set,
  draws its buttons and scroll thumb. x and y are the first row; side is 0 or 1. */
 void DrawRosterList(int x, int y, int side)
 {
@@ -40,7 +40,7 @@ void DrawRosterList(int x, int y, int side)
                 i = 0x1C;
         }
     } else {
-        n = dword_EBCA4;
+        n = falisttop;
         for (i = 0; i < 0x1C && n < facount; n++, i++) {
             off = n * 0x1B;
             sprintf(buf, (char *)str_fmt2d, falist[off + 1]);
@@ -54,7 +54,7 @@ void DrawRosterList(int x, int y, int side)
         }
         if (dword_D0C20) {
             DrawButtons((Button *)unk_D0BB8, 2);
-            dword_D0C10 = dword_EBCA4;
+            dword_D0C10 = falisttop;
             dword_D0C04 = (unsigned)((dword_D0BFC - 4) * *(volatile int *)&dword_D0C10)
                 / (unsigned)dword_D0C18;
             DrawScrollBar((int *)unk_D0BF0);

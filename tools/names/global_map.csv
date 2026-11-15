@@ -3788,3 +3788,47 @@ str_04x2,C4404,string '%04x   '
 str_02x,C440C,string '%02x'
 str_2d02d02d2,C471C,string '%2d:%02d:%02d'
 str_110,C4B4C,string '110'
+deskptrx,DC88C,SportsDesk: pointer x passed to the menu action that was clicked
+deskptry,DC888,SportsDesk: pointer y passed to the menu action that was clicked
+awayremap,DC8D8,"256-byte colour remap table of the visiting team (LoadTeamPalette builds it from AWAYPALS.BIN, DrawSprite loads it)"
+homeremap,DC9D8,256-byte colour remap table of the home team (LoadTeamPalette builds it from HOMEPALS.BIN)
+awayremap_e43,DC91B,awayremap+43h: entry 43h of the visitors' remap table
+awayremap_eC0,DC998,awayremap+C0h: entry C0h of the visitors' remap table
+awayremap_eFF,DC9D7,awayremap+FFh: entry FFh of the visitors' remap table
+homeremap_e05,DC9DD,homeremap+5h: entry 5h of the home remap table
+homeremap_e07,DC9DF,homeremap+7h: entry 7h of the home remap table
+homeremap_e10,DC9E8,homeremap+10h: entry 10h of the home remap table
+homeremap_e11,DC9E9,homeremap+11h: entry 11h of the home remap table
+homeremap_e13,DC9EB,homeremap+13h: entry 13h of the home remap table
+homeremap_e14,DC9EC,homeremap+14h: entry 14h of the home remap table
+homeremap_e16,DC9EE,homeremap+16h: entry 16h of the home remap table
+homeremap_e43,DCA1B,homeremap+43h: entry 43h of the home remap table
+homeremap_e49,DCA21,homeremap+49h: entry 49h of the home remap table
+homeremap_e50,DCA28,homeremap+50h: entry 50h of the home remap table
+homeremap_e51,DCA29,homeremap+51h: entry 51h of the home remap table
+homeremap_e60,DCA38,homeremap+60h: entry 60h of the home remap table
+homeremap_eC0,DCA98,homeremap+C0h: entry C0h of the home remap table
+homeremap_eFB,DCAD3,homeremap+FBh: entry FBh of the home remap table
+homeremap_eFC,DCAD4,homeremap+FCh: entry FCh of the home remap table
+homeremap_eFD,DCAD5,homeremap+FDh: entry FDh of the home remap table
+homeremap_eFE,DCAD6,homeremap+FEh: entry FEh of the home remap table
+homeremap_eFF,DCAD7,homeremap+FFh: entry FFh of the home remap table
+calredraw,DDD2C,CalendarScreen: set to redraw the month
+lgschedrec,DDD40,PlayLeagueGame: the schedule record of the league game being played
+lgschedrec_b1,DDD41,lgschedrec+1
+lgschedrec_b2,DDD42,lgschedrec+2
+lgschedrec_b3,DDD43,lgschedrec+3
+lgschedrec_b4,DDD44,lgschedrec+4: a finished game keeps the first score here
+lgschedrec_b5,DDD45,lgschedrec+5: the second score
+tradebitmap,DE264,the 640 x 480 bitmap of the trade screen (TradePlayers makes it)
+falisttop,EBCA4,roster editor: first shown entry of the free-agent list
+hilightslot,ED6D4,"ReplaySaveHilight: the highlight slot row picked, 0-3"
+replayspotx,ED6F0,instant replay: x of the spot the camera follows
+replayspoty,ED6F4,instant replay: y of the spot the camera follows
+replayfollowpl,CD4FC,"instant replay: the player the camera follows, -1 for a free spot"
+replayptrx,ED704,instant replay: rink x under the pointer
+replayptry,ED708,instant replay: rink y under the pointer
+replaybtnarmed,ED6FC,"ReplayControlLoop: a press arms the buttons, a release disarms them"
+replaynosave,ED6F8,"instant replay: the save highlight button is off (exhibition, no human team, or no disk space)"
+replayfrac,ED758,instant replay: fraction of a replay step kept between passes (twentieths)
+portraitoncd,ED909,player cards: 1 when the portrait of the player is read from the CD

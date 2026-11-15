@@ -48,7 +48,7 @@ void sub_8FB8E(int song, int handle, int chan, int vol);  /* music library: play
    (that game selected, its sides set for the next game), else that of today's game. Draw the menu bar (Return
    and the month arrows, calnextslot / calprevslot off at the season's ends) and the month (DrawCalendarDay), play
    the CALENDAR song and set the palette. Then follow the mouse as in MainDeskLoop: an item with an action runs it
-   (result 1 leaves the calendar at once with 0; a new month or dword_DDD2C redraws the month); a click on a day
+   (result 1 leaves the calendar at once with 0; a new month or calredraw redraws the month); a click on a day
    of the month with an unplayed game of the team selects it (any such game while today's schedule index is
    below 444h, after that only the first unplayed one): its day is drawn again with the old selection's day,
    its sides are set, and a second click on the selected game leaves the calendar. Restore the game stats
@@ -127,7 +127,7 @@ int CalendarScreen(char *dir, char *ext, int team)
     SetDialogColors(0x0C, 0xC0, 0x67, 0xC0, 0xFF);
     ngames = 0;
     calsel = -1;
-    dword_DDD2C = calexit = 0;
+    calredraw = calexit = 0;
     font = mainfont;
     MakePath(path, fileoncd[0x1C1] == 1 ? (char *)cddriveptr : 0, (char *)str_Calendar, 0);
     calendarshapes = sub_8E83C(path, 0x20);
@@ -257,12 +257,12 @@ int CalendarScreen(char *dir, char *ext, int team)
                             DrawMenuBar(calmenubar, 3, c1, c2, c3);
                             DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
                         }
-                        if (dword_DDD2C) {
+                        if (calredraw) {
                             sub_B4BA8();
                             DrawMenuBar(calmenubar, 3, c1, c2, c3);
                             DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
                             ApplyShapePalette(calendarshapes);
-                            dword_DDD2C = 0;
+                            calredraw = 0;
                         }
                         shown = calmonth;
                     } else {

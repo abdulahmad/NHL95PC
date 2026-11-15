@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_65CA8 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, rinkobjanim, byte_CD418
-extern byte_CD421, byte_CD473, hmrosterpos, byte_DC8D8, byte_DC9D8, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
+extern byte_CD421, byte_CD473, hmrosterpos, awayremap, homeremap, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
 extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
@@ -26,7 +26,7 @@ extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_903
 extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
-extern rinkobjdefs, word_CD4FC, rinkobjs, refYpos2, reftemp3, word_E9F12, word_E9F14, rpl_x
+extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, word_E9F12, word_E9F14, rpl_x
 extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global DitherRect, checkwindow, checkwindow_popebp, checkwindow_popx, LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, UpdateTextOverlay
@@ -1835,7 +1835,7 @@ xor eax, eax	; 67435
 add edx, 0C0h	; 67437
 .4:
 mov bl, byte [edx+eax]	; 6743D
-mov byte [dword eax+byte_DC9D8], bl	; 67440
+mov byte [dword eax+homeremap], bl	; 67440
 inc eax	; 67446
 cmp eax, 100h	; 67447
 jl short LoadTeamPalette.4	; 6744C
@@ -1877,7 +1877,7 @@ xor eax, eax	; 674B2
 add edx, 0C0h	; 674B4
 .8:
 mov bl, byte [edx+eax]	; 674BA
-mov byte [dword eax+byte_DC8D8], bl	; 674BD
+mov byte [dword eax+awayremap], bl	; 674BD
 inc eax	; 674C3
 cmp eax, 90h	; 674C4
 jl short LoadTeamPalette.8	; 674C9
@@ -1885,7 +1885,7 @@ mov eax, 90h	; 674CB
 .9:
 mov bl, byte [edx+eax]	; 674D0
 add bl, 40h	; 674D3
-mov byte [dword eax+byte_DC8D8], bl	; 674D6
+mov byte [dword eax+awayremap], bl	; 674D6
 inc eax	; 674DC
 cmp eax, 100h	; 674DD
 jl short LoadTeamPalette.9	; 674E2

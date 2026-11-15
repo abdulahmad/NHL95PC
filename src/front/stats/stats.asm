@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_21CDE progbits alloc exec nowrite align=1
-extern __CHK, byte_ED909, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, dword_DC85C
+extern __CHK, portraitoncd, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, dword_DC85C
 extern dword_DC860, eastconfname, eastconfteams, fileoncd, FitPlayerName, fputchar, FreeMemBlock, goalieratingnames
 extern j___close_, kaufmfont, leadersortfns, leadertitles, lseek_, mainfont, MakePath, MakeStatsTitle
 extern memcpy_, off_C6A99, off_C6AD1, leadercolhdrs, leadercolhdrs_c1, leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4
@@ -204,7 +204,7 @@ xor bl, bl	; 21F43
 mov byte [byte esp+08h], bl	; 21F45
 xor ecx, ecx	; 21F49
 mov ebx, esp	; 21F4B
-cmp byte [dword edx+eax+byte_ED909], 1	; 21F4D
+cmp byte [dword edx+eax+portraitoncd], 1	; 21F4D
 jne short .5	; 21F55
 mov edx, dword [cddriveptr]	; 21F57
 jmp short .6	; 21F5D
@@ -813,7 +813,7 @@ xor bl, bl	; 227DC
 mov byte [byte esp+08h], bl	; 227DE
 xor ecx, ecx	; 227E2
 mov ebx, esp	; 227E4
-cmp byte [dword edx+eax*2+byte_ED909], 1	; 227E6
+cmp byte [dword edx+eax*2+portraitoncd], 1	; 227E6
 jne short .5	; 227EE
 mov edx, dword [cddriveptr]	; 227F0
 jmp short .6	; 227F6

@@ -4,12 +4,12 @@ bits 32
 %include "hockey.inc"
 section s_33FFD progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _fstrcspn_, AskTeamPassword, awlinetab, awscore, awtmgoalie, awtmlines
-extern btn_MasterDB, byte_D42C3, byte_DC267, byte_DC268, byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43
-extern byte_DDD45, calcolx, calendarshapes, calexit, CalGoalieStatsScreen, calmenubar, calmonth, calnextslot
+extern btn_MasterDB, byte_D42C3, byte_DC267, byte_DC268, lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3
+extern lgschedrec_b5, calcolx, calendarshapes, calexit, CalGoalieStatsScreen, calmenubar, calmonth, calnextslot
 extern calprevslot, calrowy, calsel, calselday, calselmonth, CalSkaterStatsScreen, CalStandingsMenu, CalStandingsScreen
 extern CalTeamStatsScreen, cddriveptr, CheckGameDiskSpace, ClearInputQueue, crestnames, curleague, dlgtextbg, dlgtextfg
-extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C7F0B, hmplstats, dword_DC23E, dword_DDD2C
-extern dword_DDD34, dword_DDD3C, dword_DDD44, FadeOutPalCycle, FadePalStep, FileClose, FileExists, fileoncd
+extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C7F0B, hmplstats, dword_DC23E, calredraw
+extern dword_DDD34, dword_DDD3C, lgschedrec_b4, FadeOutPalCycle, FadePalStep, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLeagueFloppy, firstteammsg, FmtFromLeague
 extern fontcolor, fputchar, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu
 extern GameStandingsScreen, GameTeamStatsScreen, GetInputEvent, GetLeagueId, goaliestatscb, gridcellbuf, gridcellx, gridcelly
@@ -793,7 +793,7 @@ mov word [dword esp+07B8h], dx	; 3495F
 mov dword [calsel], 0FFFFFFFFh	; 34967
 xor edx, edx	; 34971
 mov dword [calexit], edx	; 34973
-mov dword [dword_DDD2C], edx	; 34979
+mov dword [calredraw], edx	; 34979
 mov eax, dword [mainfont]	; 3497F
 mov dword [dword esp+07ACh], eax	; 34984
 xor ecx, ecx	; 3498B
@@ -1365,7 +1365,7 @@ mov ebx, dword [dword esp+07B8h]	; 352B6
 lea edx, [dword esp+06A0h]	; 352BD
 call DrawCalendarDay	; 352C4
 .43:
-cmp dword [dword_DDD2C], byte 0	; 352C9
+cmp dword [calredraw], byte 0	; 352C9
 je short .44	; 352D0
 call sub_B4BA8	; 352D2
 mov eax, dword [dword esp+07A0h]	; 352D7
@@ -1391,7 +1391,7 @@ call DrawCalendarDay	; 35331
 mov eax, dword [calendarshapes]	; 35336
 call ApplyShapePalette	; 3533B
 xor ecx, ecx	; 35340
-mov dword [dword_DDD2C], ecx	; 35342
+mov dword [calredraw], ecx	; 35342
 .44:
 mov ax, word [calmonth]	; 35348
 mov word [dword esp+07D0h], ax	; 3534E
@@ -3275,7 +3275,7 @@ test esi, esi	; 370B9
 jne short .28	; 370BB
 mov ebx, dword [lggameidx-2]	; 370BD
 sar ebx, 10h	; 370C3
-mov edx, byte_DDD40	; 370C6
+mov edx, lgschedrec	; 370C6
 mov eax, dword [byte esp+06Ch]	; 370CB
 call ReadSchedGame	; 370CF
 mov esi, eax	; 370D4
@@ -3283,12 +3283,12 @@ mov esi, eax	; 370D4
 test esi, esi	; 370D6
 jne short .30	; 370D8
 xor eax, eax	; 370DA
-mov al, byte [byte_DDD42]	; 370DC
+mov al, byte [lgschedrec_b2]	; 370DC
 mov edx, dword [lgplayteam]	; 370E1
 cmp eax, edx	; 370E7
 jne short .29	; 370E9
 xor eax, edx	; 370EB
-mov al, byte [byte_DDD43]	; 370ED
+mov al, byte [lgschedrec_b3]	; 370ED
 .29:
 mov dword [dword_DDD34], eax	; 370F2
 mov dword [dword_DDD3C], 0FFFFFFFFh	; 370F7
@@ -3437,7 +3437,7 @@ jl short .40	; 372F9
 call ShowLoadingScreen	; 372FB
 .40:
 xor ecx, ecx	; 37300
-mov cl, byte [byte_DDD42]	; 37302
+mov cl, byte [lgschedrec_b2]	; 37302
 cmp ecx, dword [lgplayteam]	; 37308
 jne short .41	; 3730E
 xor ebx, ebx	; 37310
@@ -3448,7 +3448,7 @@ mov edx, savleague1	; 37320
 mov eax, leaguedbfmt	; 37325
 call MakeTeamDbFmt	; 3732A
 xor ecx, ecx	; 3732F
-mov cl, byte [byte_DDD43]	; 37331
+mov cl, byte [lgschedrec_b3]	; 37331
 mov ebx, leagueteams	; 37337
 mov edx, savleague2	; 3733C
 jmp short .42	; 37341
@@ -3460,7 +3460,7 @@ mov edx, savleague2	; 37352
 mov eax, leaguedbfmt	; 37357
 call MakeTeamDbFmt	; 3735C
 xor ecx, ecx	; 37361
-mov cl, byte [byte_DDD43]	; 37363
+mov cl, byte [lgschedrec_b3]	; 37363
 mov ebx, leagueteams	; 37369
 mov edx, savleague1	; 3736E
 .42:
@@ -3490,15 +3490,15 @@ and byte [gameopts+1], 0FDh	; 373CE
 .46:
 cmp dword [edi], byte 0	; 373D5
 jge short .47	; 373D8
-mov al, byte [byte_DDD40]	; 373DA
+mov al, byte [lgschedrec]	; 373DA
 mov byte [byte_DC268], al	; 373DF
-mov al, byte [byte_DDD41]	; 373E4
+mov al, byte [lgschedrec_b1]	; 373E4
 mov byte [byte_DC267], al	; 373E9
 xor eax, eax	; 373EE
-mov al, byte [byte_DDD42]	; 373F0
+mov al, byte [lgschedrec_b2]	; 373F0
 mov word [HomeTeam], ax	; 373F5
 xor eax, eax	; 373FB
-mov al, byte [byte_DDD43]	; 373FD
+mov al, byte [lgschedrec_b3]	; 373FD
 mov word [VisTeam], ax	; 37402
 .47:
 call SetupControllers	; 37408
@@ -3536,9 +3536,9 @@ call InputInstall	; 3748F
 cmp dword [gameresult], byte 1	; 37494
 jne short .51	; 3749B
 mov al, byte [hmscore]	; 3749D
-mov byte [dword_DDD44], al	; 374A2
+mov byte [lgschedrec_b4], al	; 374A2
 mov al, byte [awscore]	; 374A7
-mov byte [byte_DDD45], al	; 374AC
+mov byte [lgschedrec_b5], al	; 374AC
 jmp short .51	; 374B1
 .50:
 mov dword [gameresult], 2	; 374B3
@@ -3769,7 +3769,7 @@ test esi, esi	; 377B2
 jne short .66	; 377B4
 mov ebx, dword [lggameidx-2]	; 377B6
 sar ebx, 10h	; 377BC
-mov edx, byte_DDD40	; 377BF
+mov edx, lgschedrec	; 377BF
 mov eax, dword [byte esp+06Ch]	; 377C4
 call WriteSchedGame	; 377C8
 mov esi, eax	; 377CD
@@ -3780,7 +3780,7 @@ cmp dword [dword_DDD3C], byte 0	; 377D3
 je short .67	; 377DA
 mov ebx, dword [lggameidx-2]	; 377DC
 sar ebx, 10h	; 377E2
-mov edx, byte_DDD40	; 377E5
+mov edx, lgschedrec	; 377E5
 mov eax, dword [byte esp+05Ch]	; 377EA
 call WriteSchedGame	; 377EE
 mov esi, eax	; 377F3

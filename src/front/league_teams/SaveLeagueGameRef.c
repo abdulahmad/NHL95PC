@@ -25,7 +25,7 @@ int SaveLeagueGameRef(int fh)
     if (!err) err = FileWriteAt(fh, &lggameidx, -1, 4);
     if (!err) err = FileWriteAt(fh, savleague1, -1, 0xD);
     if (!err) err = FileWriteAt(fh, savleague2, -1, 0xD);
-    if (!err) err = FileWriteAt(fh, &byte_DDD40, -1, 6);
+    if (!err) err = FileWriteAt(fh, &lgschedrec, -1, 6);
     mark = -1;
     *(T6 *)saved = *(T6 *)str_saved;
     if (!err) {

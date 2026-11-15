@@ -2923,7 +2923,7 @@ extern int off_CD4A0[]; /* CD4A0 */
 extern int ovlmemneed[]; /* CD4B0 */
 extern int bannerstrs[]; /* CD4DC */
 extern unsigned char off_CD4FA[]; /* CD4FA */
-extern short word_CD4FC; /* CD4FC */
+extern short replayfollowpl; /* CD4FC */
 extern short replaytick; /* CD4FE */
 extern short replaysfx; /* CD500 */
 extern int dbg_spalist[]; /* CD504 */
@@ -4702,35 +4702,35 @@ extern unsigned char statsplayer[]; /* DC834 */
 extern int dword_DC85C; /* DC85C */
 extern int dword_DC860; /* DC860 */
 extern int dword_DC868[]; /* DC868 */
-extern int dword_DC888; /* DC888 */
-extern int dword_DC88C; /* DC88C */
+extern int deskptry; /* DC888 */
+extern int deskptrx; /* DC88C */
 extern unsigned char unk_DC890[]; /* DC890 */
 extern int dword_DC8A0[]; /* DC8A0 */
 extern int dword_DC8C8; /* DC8C8 */
 extern int dirtyrectptr[]; /* DC8D0 */
-extern unsigned char byte_DC8D8[]; /* DC8D8 */
-extern unsigned char byte_DC91B; /* DC91B */
-extern unsigned char unk_DC998[]; /* DC998 */
-extern unsigned char byte_DC9D7; /* DC9D7 */
-extern unsigned char byte_DC9D8[]; /* DC9D8 */
-extern unsigned char byte_DC9DD; /* DC9DD */
-extern unsigned char byte_DC9DF; /* DC9DF */
-extern unsigned char byte_DC9E8; /* DC9E8 */
-extern unsigned char byte_DC9E9; /* DC9E9 */
-extern unsigned char byte_DC9EB; /* DC9EB */
-extern unsigned char byte_DC9EC; /* DC9EC */
-extern unsigned char byte_DC9EE; /* DC9EE */
-extern unsigned char byte_DCA1B; /* DCA1B */
-extern unsigned char byte_DCA21; /* DCA21 */
-extern unsigned char byte_DCA28; /* DCA28 */
-extern unsigned char byte_DCA29; /* DCA29 */
-extern unsigned char byte_DCA38; /* DCA38 */
-extern unsigned char unk_DCA98[]; /* DCA98 */
-extern unsigned char byte_DCAD3; /* DCAD3 */
-extern unsigned char byte_DCAD4; /* DCAD4 */
-extern unsigned char byte_DCAD5; /* DCAD5 */
-extern unsigned char byte_DCAD6; /* DCAD6 */
-extern unsigned char byte_DCAD7; /* DCAD7 */
+extern unsigned char awayremap[]; /* DC8D8 */
+extern unsigned char awayremap_e43; /* DC91B */
+extern unsigned char awayremap_eC0[]; /* DC998 */
+extern unsigned char awayremap_eFF; /* DC9D7 */
+extern unsigned char homeremap[]; /* DC9D8 */
+extern unsigned char homeremap_e05; /* DC9DD */
+extern unsigned char homeremap_e07; /* DC9DF */
+extern unsigned char homeremap_e10; /* DC9E8 */
+extern unsigned char homeremap_e11; /* DC9E9 */
+extern unsigned char homeremap_e13; /* DC9EB */
+extern unsigned char homeremap_e14; /* DC9EC */
+extern unsigned char homeremap_e16; /* DC9EE */
+extern unsigned char homeremap_e43; /* DCA1B */
+extern unsigned char homeremap_e49; /* DCA21 */
+extern unsigned char homeremap_e50; /* DCA28 */
+extern unsigned char homeremap_e51; /* DCA29 */
+extern unsigned char homeremap_e60; /* DCA38 */
+extern unsigned char homeremap_eC0[]; /* DCA98 */
+extern unsigned char homeremap_eFB; /* DCAD3 */
+extern unsigned char homeremap_eFC; /* DCAD4 */
+extern unsigned char homeremap_eFD; /* DCAD5 */
+extern unsigned char homeremap_eFE; /* DCAD6 */
+extern unsigned char homeremap_eFF; /* DCAD7 */
 extern unsigned char menuremap[]; /* DCFD8 */
 extern unsigned char menuremap2[]; /* DD058 */
 extern unsigned char printfbuf[]; /* DD0D8 */
@@ -4809,17 +4809,17 @@ extern unsigned char unk_DDCFB[]; /* DDCFB */
 extern unsigned char savedname; /* DDD10 */
 extern unsigned char masterpw[]; /* DDD1D */
 extern int calselday; /* DDD28 */
-extern int dword_DDD2C; /* DDD2C */
+extern int calredraw; /* DDD2C */
 extern int calselmonth; /* DDD30 */
 extern int dword_DDD34; /* DDD34 */
 extern int lgplayteam; /* DDD38 */
 extern int dword_DDD3C; /* DDD3C */
-extern unsigned char byte_DDD40; /* DDD40 */
-extern unsigned char byte_DDD41; /* DDD41 */
-extern unsigned char byte_DDD42; /* DDD42 */
-extern unsigned char byte_DDD43; /* DDD43 */
-extern unsigned char dword_DDD44; /* DDD44 */
-extern unsigned char byte_DDD45; /* DDD45 */
+extern unsigned char lgschedrec; /* DDD40 */
+extern unsigned char lgschedrec_b1; /* DDD41 */
+extern unsigned char lgschedrec_b2; /* DDD42 */
+extern unsigned char lgschedrec_b3; /* DDD43 */
+extern unsigned char lgschedrec_b4; /* DDD44 */
+extern unsigned char lgschedrec_b5; /* DDD45 */
 extern short lggameidx; /* DDD46 */
 extern short word_DDD48; /* DDD48 */
 extern short word_DDD4A; /* DDD4A */
@@ -4837,7 +4837,7 @@ extern unsigned char tradejersey[]; /* DDD8D */
 extern unsigned char tradeslot[]; /* DDD8E */
 extern int jerseymsg; /* DE25C */
 extern int tradeside; /* DE260 */
-extern int dword_DE264; /* DE264 */
+extern int tradebitmap; /* DE264 */
 extern int dword_DE265[]; /* DE265 */
 extern signed char byte_DE268; /* DE268 */
 extern unsigned char loadpals[]; /* DE26C */
@@ -5179,7 +5179,7 @@ extern unsigned char byte_EAFB5[]; /* EAFB5 */
 extern unsigned char unk_EAFB8[]; /* EAFB8 */
 extern int dbdirty; /* EBC68 */
 extern int msglines[]; /* EBC74 */
-extern int dword_EBCA4; /* EBCA4 */
+extern int falisttop; /* EBCA4 */
 extern int editptrspr; /* EBE9C */
 extern int editrosters_exit; /* EBEA0 */
 extern int dblistcur[]; /* EC6B8 */
@@ -5210,26 +5210,26 @@ extern int dword_ED374[]; /* ED374 */
 extern int rocktunes[]; /* ED380 */
 extern int rockrandcues[]; /* ED38C */
 extern int dword_ED6D0; /* ED6D0 */
-extern int dword_ED6D4; /* ED6D4 */
+extern int hilightslot; /* ED6D4 */
 extern int gadgetfile; /* ED6D8 */
 extern int gadgetptry; /* ED6DC */
 extern int gadgetptrx; /* ED6E0 */
 extern int gadgetshape; /* ED6E4 */
 extern int dword_ED6E8; /* ED6E8 */
 extern int dword_ED6EC; /* ED6EC */
-extern int dword_ED6F0; /* ED6F0 */
-extern int dword_ED6F4; /* ED6F4 */
-extern int dword_ED6F8; /* ED6F8 */
-extern int dword_ED6FC; /* ED6FC */
+extern int replayspotx; /* ED6F0 */
+extern int replayspoty; /* ED6F4 */
+extern int replaynosave; /* ED6F8 */
+extern int replaybtnarmed; /* ED6FC */
 extern int hilightfont; /* ED700 */
-extern int dword_ED704; /* ED704 */
-extern int dword_ED708; /* ED708 */
+extern int replayptrx; /* ED704 */
+extern int replayptry; /* ED708 */
 extern int dword_ED70C; /* ED70C */
 extern int dword_ED74C; /* ED74C */
 extern int dword_ED750; /* ED750 */
 extern int dword_ED754; /* ED754 */
 extern int dword_ED756[]; /* ED756 */
-extern short word_ED758; /* ED758 */
+extern short replayfrac; /* ED758 */
 extern int pl20spr; /* ED75C */
 extern int pl05spr; /* ED760 */
 extern int pl10spr; /* ED764 */
@@ -5254,7 +5254,7 @@ extern int speechq; /* ED7AC */
 extern int speechcopybuf; /* ED7B8 */
 extern unsigned char unk_ED7BC[]; /* ED7BC */
 extern unsigned char fileoncd[]; /* ED7CC */
-extern unsigned char byte_ED909[]; /* ED909 */
+extern unsigned char portraitoncd[]; /* ED909 */
 extern int vgapage; /* EDA04 */
 extern int memlist1[]; /* EDA08 */
 extern int memlist0[]; /* EDA0C */

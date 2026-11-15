@@ -220,23 +220,23 @@ void DrawLockerRoom(void)
         if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
     }
     FadePalStep(0, (unsigned char *)pal, 0x10);
-    for (i = 0; i < 0x100; i++) byte_DC9D8[i] = i;
-    byte_DC9E8 = 0x2C;
-    byte_DC9E9 = 1;
-    byte_DC9DF = 0x2F;
-    byte_DC9EB = 0x32;
-    byte_DC9EC = 0x3A;
-    byte_DCA29 = 0x6D;
-    byte_DCA28 = 0x6E;
-    byte_DCA21 = 0x19;
-    byte_DC9EE = 0x51;
-    byte_DCA38 = 0x18;
-    byte_DC9DD = 0x7F;
-    byte_DCAD3 = 0x7C;
-    byte_DCAD4 = 0x7D;
-    byte_DCAD5 = 0x7E;
-    (&byte_DCAD5)[1] = 0x7F;
-    sub_B4DD4(byte_DC9D8);
+    for (i = 0; i < 0x100; i++) homeremap[i] = i;
+    homeremap_e10 = 0x2C;
+    homeremap_e11 = 1;
+    homeremap_e07 = 0x2F;
+    homeremap_e13 = 0x32;
+    homeremap_e14 = 0x3A;
+    homeremap_e51 = 0x6D;
+    homeremap_e50 = 0x6E;
+    homeremap_e49 = 0x19;
+    homeremap_e16 = 0x51;
+    homeremap_e60 = 0x18;
+    homeremap_e05 = 0x7F;
+    homeremap_eFB = 0x7C;
+    homeremap_eFC = 0x7D;
+    homeremap_eFD = 0x7E;
+    (&homeremap_eFD)[1] = 0x7F;
+    sub_B4DD4(homeremap);
 }
 
 /* LockerRoomLoop (81C4E, PC only; ends in LockerStub): the locker room. Start from the home and visiting teams'

@@ -152,7 +152,7 @@ void LoadRosterList(int side)
         BuildFreeAgentList();
         ShellSortBytes(falist, facount, 0x1B, (int (*)(void *, void *))ComparePlayerEntry);
         for (i = 0; i < facount; i++) ((char *)falistsel)[i] = 0;
-        dword_EBCA4 = 0;
+        falisttop = 0;
         if (facount <= 0x1C) dword_D0C20 = 0;
         else {
             dword_D0C20 = -1;

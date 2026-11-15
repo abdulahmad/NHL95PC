@@ -28,7 +28,7 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     (void)unused;
     (void)unused2;
     tm = teams;
-    SetDrawBitmap(dword_DE264);
+    SetDrawBitmap(tradebitmap);
     MakePath(path1, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl2, 0);
     bank = sub_8E83C(path1, 0);
     sub_91370(sub_B30B4(bank, (char *)str_Bkgd9), 0, 0);
@@ -46,8 +46,8 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
     memcpy(pal, (unsigned char *)shape + 0x10, 0x300);
     FreeMemBlock(statsbgshapes);
     LoadTradeTeamPals(tm[0], tm[1], pal);
-    traderemap1[0] = (int)byte_DC9D8;
-    traderemap2 = (int)byte_DC8D8;
+    traderemap1[0] = (int)homeremap;
+    traderemap2 = (int)awayremap;
     for (i = 0; i < 4; i++) {
         t = i >> 1;
         memcpy(unk_D12C8, (unsigned char *)traderemap1[t] + 0x90, 0x30);
@@ -72,7 +72,7 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
         }
     }
     sub_B4BA8();
-    sub_9121C(*(int *)(dword_DE264 + 0x2C));
+    sub_9121C(*(int *)(tradebitmap + 0x2C));
     FadePalStep(0, spal, 0x10);
     FreeMemBlock((int)spal);
 }

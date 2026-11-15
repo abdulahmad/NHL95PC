@@ -30,7 +30,7 @@ extern str_LW, str_C6, str_RW, str_XC, str_sp00XXXXXXXXXXXXXXXXX, str_sp00XXXXXX
 extern str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2
 global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
 global dword_CD9A0, pennametab, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
-global dbg_posnames, penbannertab, word_CD4FC, replaytick, replaysfx
+global dbg_posnames, penbannertab, replayfollowpl, replaytick, replaysfx
 gsumqcount:
 db 00h,00h,00h,00h
 defercount:
@@ -100,7 +100,7 @@ dd str_BnIcing
 dd str_BnPenalty
 off_CD4FA equ $+2
 dd str_BnPenaltyShot
-word_CD4FC:
+replayfollowpl:
 db 0FFh,0FFh
 replaytick:
 db 01h,00h

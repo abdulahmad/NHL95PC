@@ -4,17 +4,17 @@ bits 32
 section s_EC6B8 nobits alloc noexec write align=1
 global lineedpanel, fadepal, fadepal2, byte_ECDF4, gmroster, gmrosterjersey, gmrosterslot, byte_ED0F7
 global byte_ED0F8, byte_ED0F9, byte_ED0FA, fileoncd
-global byte_ED909
+global portraitoncd
 global dblistcur, dblisttemp
 global dblisttempnames, dblistorig
 global blitclipright, blitclipbottom, blitcliptop, blitclipleft, leaguesetimg, setbits, dword_ED364, rockteamcues
-global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, dword_ED6D4, gadgetfile
-global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8
-global dword_ED6FC, hilightfont, dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
+global dword_ED374, rocktunes, rockrandcues, dword_ED6D0, hilightslot, gadgetfile
+global gadgetptry, gadgetptrx, gadgetshape, dword_ED6E8, dword_ED6EC, replayspotx, replayspoty, replaynosave
+global replaybtnarmed, hilightfont, replayptrx, replayptry, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754
 global dword_ED756, pl20spr, pl05spr, pl10spr, pg07spr, na05spr, pg01spr, acptspr
 global na03spr, pg03spr, chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, homebckspr
 global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, speechq, speechbank, samplereq
-global speechcopybuf, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, word_ED758
+global speechcopybuf, vgapage, memlist1, memlist0, curdbname, unk_ED7BC, replayfrac
 dblistcur:
 resb 4
 resb 4
@@ -85,7 +85,7 @@ rockrandcues:
 resb 836
 dword_ED6D0:
 resb 4
-dword_ED6D4:
+hilightslot:
 resb 4
 gadgetfile:
 resb 4
@@ -99,19 +99,19 @@ dword_ED6E8:
 resb 4
 dword_ED6EC:
 resb 4
-dword_ED6F0:
+replayspotx:
 resb 4
-dword_ED6F4:
+replayspoty:
 resb 4
-dword_ED6F8:
+replaynosave:
 resb 4
-dword_ED6FC:
+replaybtnarmed:
 resb 4
 hilightfont:
 resb 4
-dword_ED704:
+replayptrx:
 resb 4
-dword_ED708:
+replayptry:
 resb 4
 dword_ED70C:
 resb 64
@@ -123,7 +123,7 @@ dword_ED754:
 resb 2
 dword_ED756:
 resb 2
-word_ED758:
+replayfrac:
 resb 4
 pl20spr:
 resb 4
@@ -223,7 +223,7 @@ resb 12
 resb 2
 resb 2
 resb 1
-byte_ED909:
+portraitoncd:
 resb 30
 resb 4
 resb 2

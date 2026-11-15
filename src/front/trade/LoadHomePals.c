@@ -3,8 +3,8 @@
 
 /* LoadHomePals: load HOMEPALS.BIN (1C0h bytes per team: C0h palette bytes, then the 100h-byte remap table) and set
  palette entries 80h-FFh: home's palette part, vis's palette part, with the four fixed colours FBh-FEh
- (18h,0,0 2Ah,0,0 3Bh,12h,0 3Bh,3Bh,3Bh); home's remap table goes to byte_DC9D8, vis's to
- byte_DC8D8 (entries 90h and up shifted by 40h). */
+ (18h,0,0 2Ah,0,0 3Bh,12h,0 3Bh,3Bh,3Bh); home's remap table goes to homeremap, vis's to
+ awayremap (entries 90h and up shifted by 40h). */
 void LoadHomePals(int home, int vis)
 {
     unsigned char pal[0x180];
@@ -18,12 +18,12 @@ void LoadHomePals(int home, int vis)
     s = buf + home * 0x1C0;
     for (i = 0; i < 0xC0; i++) pal[i] = s[i];
     s += 0xC0;
-    for (i = 0; i < 0x100; i++) byte_DC9D8[i] = s[i];
+    for (i = 0; i < 0x100; i++) homeremap[i] = s[i];
     s = buf + vis * 0x1C0;
     for (i = 0; i < 0xC0; i++) pal[0xC0 + i] = s[i];
     s += 0xC0;
-    for (i = 0; i < 0x90; i++) byte_DC8D8[i] = s[i];
-    for (i = 0x90; i < 0x100; i++) byte_DC8D8[i] = s[i] + 0x40;
+    for (i = 0; i < 0x90; i++) awayremap[i] = s[i];
+    for (i = 0x90; i < 0x100; i++) awayremap[i] = s[i] + 0x40;
     FreeMemBlock((int)buf);
     pal[0x171] = 0x18;
     pal[0x172] = 0;

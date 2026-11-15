@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_82579 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, acptspr, str_04x, byte_C541B, byte_D2439, byte_DC9D8, byte_DC9DD
-extern byte_DC9DF, byte_DC9E8, byte_DC9E9, byte_DC9EB, byte_DC9EC, byte_DC9EE, byte_DCA21, byte_DCA28
-extern byte_DCA29, byte_DCA38, byte_DCAD3, byte_DCAD4, byte_DCAD5, byte_DCAD6, cddriveptr, chkoffspr
+extern __CHK, __STOSD, acptspr, str_04x, byte_C541B, byte_D2439, homeremap, homeremap_e05
+extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50
+extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
 extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, lockerindex, lockerteams, dword_D223C, dword_D22DC, dword_D22E0
 extern dword_D22EC, dword_D22F0, dword_D2350, dword_D2423, dword_D2427, dword_D242B, dword_D2435, speechchannel

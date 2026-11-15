@@ -63,12 +63,12 @@ extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
 int __cdecl TicksSinceLastCall(void);
 
 /* InstantReplay (7E0FA, PC only; ends in DrawGadgetButton_ret): the instant replay. The save button stays off
-   (dword_ED6F8) in exhibition or without a human team. Show the control panel (GADGET6 / GADGET5 PPV, from the CD
+   (replaynosave) in exhibition or without a human team. Show the control panel (GADGET6 / GADGET5 PPV, from the CD
    when listed; buttons 6 and 2 lit, the pointer at 100h, BCh), keep the camera, view, crowd level, rewind the
    replay to its first frame and draw it (DrawRinkSideObjects), fade the game palette in. Then each pass: the
-   controls (ReplayControlLoop) give the step, the fraction kept in word_ED758 (twentieths), ReplayStep moves the
-   replay (with sound when playing); the camera follows the chosen spot (dword_ED6F0 / ED6F4) or player
-   (word_CD4FC), clamped, the rink is redrawn with the cursor on the spot or player (the pointer moved onto a
+   controls (ReplayControlLoop) give the step, the fraction kept in replayfrac (twentieths), ReplayStep moves the
+   replay (with sound when playing); the camera follows the chosen spot (replayspotx / ED6F4) or player
+   (replayfollowpl), clamped, the rink is redrawn with the cursor on the spot or player (the pointer moved onto a
    newly picked player). On quit: stop the crowd noise and the replay sounds, restore the camera, view and crowd,
    fade the saved palette in, free the panel and, when mode is 0, restore the 640 x 480 screen. No result. */
 /* DRAFT (10.0 GA, 22 differing here, same size): the saved crowd level, camera y, view y, camera x and view x
@@ -87,8 +87,8 @@ void InstantReplay(int mode)
     short ocx;
     short ox;
 
-    if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) dword_ED6F8 = 1;
-    else dword_ED6F8 = 0;
+    if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) replaynosave = 1;
+    else replaynosave = 0;
     dword_ED754 = 0x44;
     dword_ED750 = 8;
     gadgetptrx = 0x100;
@@ -97,7 +97,7 @@ void InstantReplay(int mode)
     MouseSetPos(gadgetptrx, gadgetptry);
     SelectScreenBM();
     sub_B4BC4(0, 0x140, 0, 0x20);
-    if (dword_ED6F8)
+    if (replaynosave)
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
     else
         MakePath(path, fileoncd[0x96] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget5, (char *)str_PPV);
@@ -114,10 +114,10 @@ void InstantReplay(int mode)
     oy = viewscrolly;
     ocl = crowdlevel;
     dword_ED70C = 0;
-    word_CD4FC = -1;
+    replayfollowpl = -1;
     dword_ED6EC = dword_ED74C = -1;
-    dword_ED6FC = 0;
-    word_ED758 = 0;
+    replaybtnarmed = 0;
+    replayfrac = 0;
     rinkscrollx += 0x3E8;
     rinkscrolly += 0x3E8;
     replayplay = ReplayFirstFrame();
@@ -147,23 +147,23 @@ void InstantReplay(int mode)
     for (;;) {
         SelectScreenBM();
         if (!ReplayControlLoop(&step)) break;
-        word_ED758 += step * 6;
-        step = word_ED758 / 0x14;
-        word_ED758 = word_ED758 % 0x14;
+        replayfrac += step * 6;
+        step = replayfrac / 0x14;
+        replayfrac = replayfrac % 0x14;
         step = ReplayStep(step, (dword_ED754 & 0x3F) == 0x10);
         SelectRinkBM();
         if (dword_ED70C) {
-            camx = dword_ED6F0;
-            camy = dword_ED6F4;
+            camx = replayspotx;
+            camy = replayspoty;
             if (camx > 0x20) camx = 0x20;
             else if (camx < -0x20) camx = -0x20;
             if (camy > 0xEC) camy = 0xEC;
             else if (camy < -0xBC) camy = -0xBC;
-            dword_ED6F0 = camx;
-            dword_ED6F4 = camy;
-        } else if (word_CD4FC >= 0) {
-            camx = rpl_x[word_CD4FC];
-            camy = rpl_y[word_CD4FC];
+            replayspotx = camx;
+            replayspoty = camy;
+        } else if (replayfollowpl >= 0) {
+            camx = rpl_x[replayfollowpl];
+            camy = rpl_y[replayfollowpl];
             if (camx > 0x20) camx = 0x20;
             else if (camx < -0x20) camx = -0x20;
             if (camy > 0xEC) camy = 0xEC;
@@ -185,9 +185,9 @@ void InstantReplay(int mode)
         if (gadgetptry < 0xA8) {
             if (dword_ED74C == -1) {
                 dword_ED6EC = dword_ED74C;
-                dword_ED704 = camx + gadgetptrx - 0xA0;
-                dword_ED708 = camy - gadgetptry + 0x54;
-                DrawFrameSprite(0x188, (short)dword_ED704 + 1, (short)dword_ED708 + 1, 0, 0);
+                replayptrx = camx + gadgetptrx - 0xA0;
+                replayptry = camy - gadgetptry + 0x54;
+                DrawFrameSprite(0x188, (short)replayptrx + 1, (short)replayptry + 1, 0, 0);
             } else {
                 DrawFrameSprite(0x188, rpl_x[dword_ED74C] + 1, rpl_y[dword_ED74C] + 1, 0, 1);
                 if (dword_ED6EC != dword_ED74C) {
@@ -223,9 +223,9 @@ void __cdecl sub_B500C(int art, int x, int y);  /* graphics library: draw art */
 void ReplaySaveHilight(int unused, int x, int y);
 
 /* ReplayControlLoop (7E9AC, PC only; ends in DrawGadgetButton_ret): one pass of the replay controls. Read the
-   pointer events (the pointer kept on the 320 x 200 screen) until a click; a press arms the buttons (dword_ED6FC),
-   a release disarms them. An armed click on a gadget (GadgetHitTest; 7 not while dword_ED6F8) gives its bit; the
-   pointer over the rink (above A8h) gives the rink point (dword_ED704 / ED708). Buttons: 1 / 20h rewind / fast
+   pointer events (the pointer kept on the 320 x 200 screen) until a click; a press arms the buttons (replaybtnarmed),
+   a release disarms them. An armed click on a gadget (GadgetHitTest; 7 not while replaynosave) gives its bit; the
+   pointer over the rink (above A8h) gives the rink point (replayptrx / ED708). Buttons: 1 / 20h rewind / fast
    forward (*step times -4 / 4), 2 / 8 step back / forward (every fifth call with the step, -1 / 1), 4 pause, 10h
    play (*step), 40h camera back to the puck, 80h save (ReplaySaveHilight after the redraw), 100h quit (result 0).
    A click on the rink picks the nearest player (PickNearestPlayer) or a free spot for the camera, moving the
@@ -261,17 +261,17 @@ int ReplayControlLoop(int *step)
         if (gadgetptry >= 0xC8) gadgetptry = 0xC7;
         if (ev & 2) break;
     }
-    if ((unsigned char)ev & 1) dword_ED6FC = 1;
-    else if ((unsigned char)ev & 2) dword_ED6FC = 0;
-    if (dword_ED6FC) {
-        if (!GadgetHitTest(gadgetptrx, gadgetptry, &hit) || dword_ED6F8 && hit == 7) hit = 0;
+    if ((unsigned char)ev & 1) replaybtnarmed = 1;
+    else if ((unsigned char)ev & 2) replaybtnarmed = 0;
+    if (replaybtnarmed) {
+        if (!GadgetHitTest(gadgetptrx, gadgetptry, &hit) || replaynosave && hit == 7) hit = 0;
         else hit = 1 << hit;
     } else {
         hit = 0;
     }
     if (gadgetptry < 0xA8) {
-        dword_ED704 = camx + gadgetptrx - 0xA0;
-        dword_ED708 = camy - gadgetptry + 0x54;
+        replayptrx = camx + gadgetptrx - 0xA0;
+        replayptry = camy - gadgetptry + 0x54;
     }
     a = dword_ED754 & 0x54;
     b = dword_ED754 & 0x40;
@@ -281,7 +281,7 @@ int ReplayControlLoop(int *step)
         d = 0;
         break;
     case 0x10:
-        if ((dword_ED754 & 0x3F) != 0x10) word_ED758 = 0;
+        if ((dword_ED754 & 0x3F) != 0x10) replayfrac = 0;
         dword_ED754 = dword_ED754 & 0x40 | 0x10;
         d = *step;
         break;
@@ -305,7 +305,7 @@ int ReplayControlLoop(int *step)
         } else {
             dword_ED6E8 = 0;
             d = -1;
-            word_ED758 = -0xE;
+            replayfrac = -0xE;
         }
         dword_ED754 = dword_ED754 & 0x40 | 6;
         break;
@@ -321,7 +321,7 @@ int ReplayControlLoop(int *step)
         } else {
             dword_ED6E8 = 0;
             d = 1;
-            word_ED758 = 0xE;
+            replayfrac = 0xE;
         }
         dword_ED754 = dword_ED754 & 0x40 | 0xC;
         break;
@@ -330,7 +330,7 @@ int ReplayControlLoop(int *step)
         dword_ED70C = 0;
         d = 0;
         dword_ED6EC = dword_ED74C = -1;
-        word_CD4FC = -1;
+        replayfollowpl = -1;
         break;
     case 0x80:
         dword_ED754 = b | 0x84;
@@ -339,27 +339,27 @@ int ReplayControlLoop(int *step)
         return 0;
     default:
         if (gadgetptry < 0xA8) {
-            dword_ED74C = PickNearestPlayer(dword_ED704, dword_ED708);
+            dword_ED74C = PickNearestPlayer(replayptrx, replayptry);
             if (ev & 2) {
                 if (dword_ED74C == -1) {
                     dword_ED70C = 1;
                     dword_ED6EC = -1;
-                    word_CD4FC = -1;
-                    dword_ED6F0 = dword_ED704;
-                    dword_ED6F4 = dword_ED708;
-                    gadgetptrx = dword_ED6F0;
-                    gadgetptry = dword_ED6F4;
+                    replayfollowpl = -1;
+                    replayspotx = replayptrx;
+                    replayspoty = replayptry;
+                    gadgetptrx = replayspotx;
+                    gadgetptry = replayspoty;
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
                     else if (gadgetptrx < -0x20) gadgetptrx = -0x20;
                     if (gadgetptry > 0xEC) gadgetptry = 0xEC;
                     else if (gadgetptry < -0xBC) gadgetptry = -0xBC;
-                    gadgetptrx = dword_ED6F0 - gadgetptrx + 0xA0;
-                    gadgetptry = gadgetptry - dword_ED6F4 + 0x54;
+                    gadgetptrx = replayspotx - gadgetptrx + 0xA0;
+                    gadgetptry = gadgetptry - replayspoty + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                 } else {
                     dword_ED70C = 0;
-                    word_CD4FC = dword_ED74C;
+                    replayfollowpl = dword_ED74C;
                     gadgetptrx = rpl_x[dword_ED74C];
                     gadgetptry = rpl_y[dword_ED74C];
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
@@ -403,7 +403,7 @@ int ReplayControlLoop(int *step)
         if (gadgetptry >= 0xA8) sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
     if (dword_ED754 & 0x80) {
-        dword_ED6FC = 0;
+        replaybtnarmed = 0;
         ReplaySaveHilight(0, gadgetptrx, gadgetptry);
         ClearInputQueue();
         dword_ED754 = 4;

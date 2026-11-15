@@ -7,7 +7,7 @@ extern __CHK, _dos_getdiskfree_, addtimer, attdb, attdb_size, boxfillcolor, boxl
 extern btn_LeagueExists, byte_D416A, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
 extern ctlavailmask, curdbname, dbdirty, dbexistsmsg, DeleteDir, dlgtextbg, dlgtextfg, DrawButtons
 extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CDA24, dword_CDA38, rostereditmode
-extern dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_EA2B0, dword_EBCA4, editptrspr
+extern dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_EA2B0, falisttop, editptrspr
 extern EditRosters, editrosters_exit, enterheld, facount, FadePalStep, falist, falistsel, FatalError
 extern FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, InitSpeechSlots, inputev, inputinstalled, inputpolldiv
 extern inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld, joycalactive, joycalposthook

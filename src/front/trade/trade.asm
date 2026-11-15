@@ -4,11 +4,11 @@ bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, awlinetab, btn_MasterDB, btn_TradeStats, btn_WrongDisk
-extern byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8
-extern byte_DC9D8, byte_DDD40, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
+extern byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_D42C3, awayremap
+extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
 extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C87C0, dword_C87C8, dword_C87E0
-extern dword_C87E8, leaguestatsmode, dword_DDD34, dword_DDD3C, dword_DE264, ExportTeamToFloppy, FadePalStep, FileClose
+extern dword_C87E8, leaguestatsmode, dword_DDD34, dword_DDD3C, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, GameLineEditor, GetInputEvent, hmlinetab, HomeTeam, humancount, InitMenuRemap, jerseymsg
 extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams
@@ -968,7 +968,7 @@ xor eax, eax	; 3E8A3
 add edx, 0C0h	; 3E8A5
 .4:
 mov bl, byte [edx+eax]	; 3E8AB
-mov byte [dword eax+byte_DC9D8], bl	; 3E8AE
+mov byte [dword eax+homeremap], bl	; 3E8AE
 inc eax	; 3E8B4
 cmp eax, 100h	; 3E8B5
 jl short LoadTradeTeamPals.4	; 3E8BA
@@ -1009,7 +1009,7 @@ xor eax, eax	; 3E91C
 add edx, 0C0h	; 3E91E
 .8:
 mov bl, byte [edx+eax]	; 3E924
-mov byte [dword eax+byte_DC8D8], bl	; 3E927
+mov byte [dword eax+awayremap], bl	; 3E927
 inc eax	; 3E92D
 cmp eax, 90h	; 3E92E
 jl short LoadTradeTeamPals.8	; 3E933
@@ -1017,7 +1017,7 @@ mov eax, 90h	; 3E935
 .9:
 mov bl, byte [edx+eax]	; 3E93A
 add bl, 40h	; 3E93D
-mov byte [dword eax+byte_DC8D8], bl	; 3E940
+mov byte [dword eax+awayremap], bl	; 3E940
 inc eax	; 3E946
 cmp eax, 100h	; 3E947
 jl short LoadTradeTeamPals.9	; 3E94C
@@ -1061,7 +1061,7 @@ sub esp, byte 38h	; 3E9DC
 mov ebp, edx	; 3E9DF
 mov esi, ebx	; 3E9E1
 mov edi, dword [byte esp+050h]	; 3E9E3
-mov edx, dword [dword_DE264]	; 3E9E7
+mov edx, dword [tradebitmap]	; 3E9E7
 push edx	; 3E9ED
 call SetDrawBitmap	; 3E9EE
 add esp, byte 4	; 3E9F3
@@ -1148,8 +1148,8 @@ mov edx, dword [byte edi+04h]	; 3EB06
 mov eax, dword [edi]	; 3EB09
 mov ebx, esi	; 3EB0B
 call LoadTradeTeamPals	; 3EB0D
-mov dword [traderemap1], byte_DC9D8	; 3EB12
-mov dword [traderemap2], byte_DC8D8	; 3EB1C
+mov dword [traderemap1], homeremap	; 3EB12
+mov dword [traderemap2], awayremap	; 3EB1C
 xor esi, esi	; 3EB26
 .3:
 mov ecx, esi	; 3EB28
@@ -1253,7 +1253,7 @@ inc edi	; 3EC68
 cmp edi, byte 2	; 3EC69
 jl near DrawTradeScreen.4	; 3EC6C
 call sub_B4BA8	; 3EC72
-mov eax, dword [dword_DE264]	; 3EC77
+mov eax, dword [tradebitmap]	; 3EC77
 mov ecx, dword [byte eax+02Ch]	; 3EC7C
 push ecx	; 3EC7F
 call sub_9121C	; 3EC80
@@ -2907,7 +2907,7 @@ call FadePalStep	; 3FFAE
 push edi	; 3FFB3
 call FreeMemBlock	; 3FFB4
 add esp, byte 4	; 3FFB9
-mov edx, dword [dword_DE264]	; 3FFBC
+mov edx, dword [tradebitmap]	; 3FFBC
 push edx	; 3FFC2
 call SetDrawBitmap	; 3FFC3
 add esp, byte 4	; 3FFC8
@@ -3043,7 +3043,7 @@ push dword 1E0h	; 401B3
 push dword 280h	; 401B8
 call sub_B4F8C	; 401BD
 add esp, byte 0Ch	; 401C2
-mov dword [dword_DE264], eax	; 401C5
+mov dword [tradebitmap], eax	; 401C5
 mov eax, dword [dlgfillcol]	; 401CA
 mov dword [dword esp+0BCh], eax	; 401CF
 mov eax, dword [dlgedgecol1]	; 401D6
@@ -3393,7 +3393,7 @@ mov eax, dword [dword esp+0C0h]	; 4075E
 mov dword [dlgbevelcol1], eax	; 40765
 mov eax, dword [dword esp+0D0h]	; 4076A
 mov dword [dlgbevelcol2], eax	; 40771
-mov ebx, dword [dword_DE264]	; 40776
+mov ebx, dword [tradebitmap]	; 40776
 push ebx	; 4077C
 call FreeMemBlock	; 4077D
 add esp, byte 4	; 40782
@@ -3453,7 +3453,7 @@ xor eax, eax	; 40805
 add edx, 0C0h	; 40807
 .4:
 mov bl, byte [edx+eax]	; 4080D
-mov byte [dword eax+byte_DC9D8], bl	; 40810
+mov byte [dword eax+homeremap], bl	; 40810
 inc eax	; 40816
 cmp eax, 100h	; 40817
 jl short LoadHomePals.4	; 4081C
@@ -3473,7 +3473,7 @@ xor eax, eax	; 4083F
 add edx, 0C0h	; 40841
 .6:
 mov bl, byte [edx+eax]	; 40847
-mov byte [dword eax+byte_DC8D8], bl	; 4084A
+mov byte [dword eax+awayremap], bl	; 4084A
 inc eax	; 40850
 cmp eax, 90h	; 40851
 jl short LoadHomePals.6	; 40856
@@ -3481,7 +3481,7 @@ mov eax, 90h	; 40858
 .7:
 mov bl, byte [edx+eax]	; 4085D
 add bl, 40h	; 40860
-mov byte [dword eax+byte_DC8D8], bl	; 40863
+mov byte [dword eax+awayremap], bl	; 40863
 inc eax	; 40869
 cmp eax, 100h	; 4086A
 jl short LoadHomePals.7	; 4086F
