@@ -2,7 +2,7 @@
 #define IsCupClinched IsCupClinched_decl
 #include "nhl95.h"
 #undef IsCupClinched
-int IsCupClinched(short home, short away);  /* 15C30: clockcont_0 passes the scores as shorts */
+int IsCupClinched(short home, short away);  /* 15C30: clockcont passes the scores as shorts */
 #define PUCK ((Player *)puckstruct)
 #define TW(t, o) (*(short *)((char *)(t) + (o)))  /* team word at offset o (Goal: 1Ah 1Eh 22h 30h 32h 34h) */
 typedef struct SkStat { short g, a, pen, pm, ppg, shg, eng, sht; } SkStat;  /* tmplstats entry */
@@ -743,7 +743,7 @@ frame:
     ((signed char *)p)[0x46] = 4;
 }
 
-/* clockcont_0 (5D852, 93G clockcont_0; ends in findpc_ret5): end of a period, also entered from
+/* clockcont (5D852, 93G clockcont; ends in findpc_ret5): end of a period, also entered from
    puckfaceoff. The puck gets assignment 18h. Periods 1-2 (gsp < 2) just end the period (AddPenalty2 type 1 on the
    puck). Later: regd0 = 7 (score), 8 when the result clinches the cup (IsCupClinched); regd1 = hmscore - awscore.
    A tie in overtime (gsp 3) with fullot on ends the game: clear the penalty buffer, crowd up 384h (to at most
@@ -756,7 +756,7 @@ frame:
    setplayer, the list shifted down). Then the penalty buffer is cleared, the crowd raised (home win: +3E8h to at
    most 5DCh, +320h more for the cup; else at least 320h), gmode bits 0 and 6, excitement +28h, and AddPenalty2
    type 2 (p past the six). No result. */
-void clockcont_0(void)
+void clockcont(void)
 {
     Player *p;
     Team *t;
