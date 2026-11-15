@@ -5,7 +5,7 @@ bits 32
 section s_47C31 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assexit, assinsert, assreplace, awscore, awtmap
 extern awtmstruct, bannermsg, bannertimer, bgscrollx, bgscrolly, byte_CC9B0, byte_CC9E4, byte_CC9E7
-extern byte_CCA95, byte_DACB3, byte_DAEA7, byte_DF87F, byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4
+extern Endfaceoff_ftab_m1, byte_DACB3, byte_DAEA7, byte_DF87F, byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4
 extern byte_E9AD5, byte_E9AD6, byte_E9AD7, c1playernum, c2playernum, camx, camx_m2, camy
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
@@ -39,8 +39,8 @@ extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, 
 extern sub_6B008, sub_8F633, sub_8FFB0, teamabbrevs, textline1, textline2, textline3, textline4
 extern textline5, threat, TicksSinceLastCall, unk_C1B3E, unk_DACA0, unk_DC240, unk_DFD9C, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, word_C90D8
-extern word_CBC44, word_CBEC6, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
-extern word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
+extern word_CBC44, word_CBEC6, word_CC9CC, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
 extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, word_DF644, word_DF816, word_DF81A
 extern word_E0022, word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E004A
 extern word_E0392, word_E0394, word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yleader

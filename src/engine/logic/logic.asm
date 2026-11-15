@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_499D8 progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, awscore, awtmap, awtmstruct
-extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, byte_CCA95, byte_DACB3, byte_DAEA7, byte_DF87F
+extern bannermsg, bannertimer, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, byte_DACB3, byte_DAEA7, byte_DF87F
 extern byte_DFFE2, byte_E9AC8, byte_E9AD3, byte_E9AD4, byte_E9AD5, byte_E9AD6, byte_E9AD7, c1playernum
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
@@ -33,8 +33,8 @@ extern sopathy, SortCords, sortobj15, sounddev, sprintf_, SprSort, starordtab, s
 extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, sub_8FFB0
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
 extern unk_C1B3E, unk_DACA0, unk_DC240, updateanim, vecdist, VisTeam, vtoa, word_C90D8
-extern word_CBC44, word_CBEC6, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C, word_CCA1E
-extern word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C, word_DB08A
+extern word_CBC44, word_CBEC6, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
+extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, word_DB08A
 extern word_DC242, word_DC244, word_DC248, word_DC24E, word_DF644, word_DF816, word_DF81A, word_E0022
 extern word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E0392, word_E0394
 extern word_E0396, word_E9AAE, word_E9AB0, xc1, yc1, yleader
@@ -891,25 +891,25 @@ jne short .7	; 4A496
 .6:
 mov word [byte ebx+temp5], dx	; 4A498
 movsx edx, dx	; 4A49C
-mov ax, word [nosplit edx*2+word_CCA1A]	; 4A49F
+mov ax, word [nosplit edx*2+asswingo_dedata_xrand]	; 4A49F
 add eax, eax	; 4A4A7
 cwde	; 4A4A9
 call randomd0	; 4A4AA
-sub ax, word [nosplit edx*2+word_CCA1A]	; 4A4AF
-mov cx, word [nosplit edx*2+word_CCA18]	; 4A4B7
+sub ax, word [nosplit edx*2+asswingo_dedata_xrand]	; 4A4AF
+mov cx, word [nosplit edx*2+asswingo_dedata]	; 4A4B7
 add ecx, eax	; 4A4BF
 xor eax, eax	; 4A4C1
 mov al, byte [byte ebx+059h]	; 4A4C3
 add ecx, eax	; 4A4C6
 mov word [byte ebx+temp3], cx	; 4A4C8
-mov ax, word [nosplit edx*2+word_CCA1E]	; 4A4CC
+mov ax, word [nosplit edx*2+asswingo_dedata_yrand]	; 4A4CC
 add eax, eax	; 4A4D4
 cwde	; 4A4D6
 call randomd0	; 4A4D7
-mov di, word [nosplit edx*2+word_CCA1E]	; 4A4DC
+mov di, word [nosplit edx*2+asswingo_dedata_yrand]	; 4A4DC
 mov ecx, eax	; 4A4E4
 sub ecx, edi	; 4A4E6
-mov ax, word [nosplit edx*2+word_CCA1C]	; 4A4E8
+mov ax, word [nosplit edx*2+asswingo_dedata_y]	; 4A4E8
 add ecx, eax	; 4A4F0
 mov word [byte ebx+temp4], cx	; 4A4F2
 .7:
@@ -1131,20 +1131,20 @@ jne short .7	; 4A78B
 .6:
 mov word [byte ebx+temp5], dx	; 4A78D
 movsx edx, dx	; 4A791
-mov ax, word [nosplit edx*2+word_CCA3A]	; 4A794
+mov ax, word [nosplit edx*2+asscentero_dedata_xrand]	; 4A794
 add eax, eax	; 4A79C
 cwde	; 4A79E
 call randomd0	; 4A79F
-sub ax, word [nosplit edx*2+word_CCA3A]	; 4A7A4
-mov cx, word [nosplit edx*2+word_CCA38]	; 4A7AC
+sub ax, word [nosplit edx*2+asscentero_dedata_xrand]	; 4A7A4
+mov cx, word [nosplit edx*2+asscentero_dedata]	; 4A7AC
 add eax, ecx	; 4A7B4
 mov word [byte ebx+temp3], ax	; 4A7B6
-mov ax, word [nosplit edx*2+word_CCA3E]	; 4A7BA
+mov ax, word [nosplit edx*2+asscentero_dedata_yrand]	; 4A7BA
 add eax, eax	; 4A7C2
 cwde	; 4A7C4
 call randomd0	; 4A7C5
-sub ax, word [nosplit edx*2+word_CCA3E]	; 4A7CA
-mov dx, word [nosplit edx*2+word_CCA3C]	; 4A7D2
+sub ax, word [nosplit edx*2+asscentero_dedata_yrand]	; 4A7CA
+mov dx, word [nosplit edx*2+asscentero_dedata_y]	; 4A7D2
 add eax, edx	; 4A7DA
 mov word [byte ebx+temp4], ax	; 4A7DC
 .7:
@@ -3842,9 +3842,9 @@ add eax, eax	; 4C822
 mov word [regd0], ax	; 4C824
 mov eax, dword [regd0-2]	; 4C82A
 sar eax, 10h	; 4C82F
-mov dx, word [nosplit eax*2+word_CCA70]	; 4C832
+mov dx, word [nosplit eax*2+asspuckc_postab2_y]	; 4C832
 mov word [regd1], dx	; 4C83A
-mov ax, word [nosplit eax*2+word_CCA6E]	; 4C841
+mov ax, word [nosplit eax*2+asspuckc_postab2]	; 4C841
 mov word [regd0], ax	; 4C849
 test byte [byte ebx+pflags], 80h	; 4C84F
 jne short .11	; 4C853
@@ -5439,12 +5439,12 @@ and byte [byte ecx+pflags2], 0FEh	; 4DAA9
 or byte [sflags3], 10h	; 4DAAD
 mov eax, dword [fofdata2-2]	; 4DAB4
 sar eax, 10h	; 4DAB9
-movsx ax, byte [dword eax+byte_CCA95]	; 4DABC
+movsx ax, byte [dword eax+Endfaceoff_ftab_m1]	; 4DABC
 mov edx, 10h	; 4DAC4
 sub edx, eax	; 4DAC9
 mov eax, dword [word_E0394-2]	; 4DACB
 sar eax, 10h	; 4DAD0
-movsx ax, byte [dword eax+byte_CCA95]	; 4DAD3
+movsx ax, byte [dword eax+Endfaceoff_ftab_m1]	; 4DAD3
 add edx, eax	; 4DADB
 mov word [regd2], dx	; 4DADD
 xor edx, edx	; 4DAE4

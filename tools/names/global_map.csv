@@ -3431,3 +3431,14 @@ str_GF1PATCH110,C4B40,"""GF1PATCH110"" string literal"
 str_ULTRASND,C4B50,"""ULTRASND"" string literal"
 str_Inf,C4B5C,"""inf"" string literal"
 str_Nan,C4B60,"""nan"" string literal"
+asswingo_dedata,CCA18,"94G logic94 asswingo .dedata: x, x random, y, y random per skating zone (words, values retuned on PC); x column"
+asswingo_dedata_xrand,CCA1A,asswingo_dedata+2: the x random column (94G .dedata)
+asswingo_dedata_y,CCA1C,asswingo_dedata+4: the y column (94G .dedata)
+asswingo_dedata_yrand,CCA1E,asswingo_dedata+6: the y random column (94G .dedata)
+asscentero_dedata,CCA38,"94G logic94 asscentero .dedata: x, x random, y, y random per skating zone (words); x column"
+asscentero_dedata_xrand,CCA3A,asscentero_dedata+2: the x random column (94G .dedata)
+asscentero_dedata_y,CCA3C,asscentero_dedata+4: the y column (94G .dedata)
+asscentero_dedata_yrand,CCA3E,asscentero_dedata+6: the y random column (94G .dedata)
+asspuckc_postab2,CCA6E,"94G logic94 asspuckc .postab2: x,y word pairs (FF92,FFEC,6E,FFEC ... on PC; FF9C,FFEC,64,FFEC on 94G); x column"
+asspuckc_postab2_y,CCA70,asspuckc_postab2+2: the y column
+Endfaceoff_ftab_m1,CCA95,"94G logic94 Endfaceoff .ftab-1: dc.b 0,8,10h,0,8,10h (dirtab offsets for the faceoff pull) starts one byte later; the index is 1-based, as -1(a0,d1.w) on 94G"

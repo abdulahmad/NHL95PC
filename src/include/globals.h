@@ -2851,19 +2851,19 @@ extern signed char byte_CC9E7[]; /* CC9E7 */
 extern short word_CC9EA[]; /* CC9EA */
 extern short word_CC9EC[]; /* CC9EC */
 extern int starordtab[]; /* CCA0A */
-extern short word_CCA18[]; /* CCA18 */
-extern short word_CCA1A[]; /* CCA1A */
-extern short word_CCA1C[]; /* CCA1C */
-extern short word_CCA1E[]; /* CCA1E */
-extern short word_CCA38[]; /* CCA38 */
-extern short word_CCA3A[]; /* CCA3A */
-extern short word_CCA3C[]; /* CCA3C */
-extern short word_CCA3E[]; /* CCA3E */
+extern short asswingo_dedata[]; /* CCA18 */
+extern short asswingo_dedata_xrand[]; /* CCA1A */
+extern short asswingo_dedata_y[]; /* CCA1C */
+extern short asswingo_dedata_yrand[]; /* CCA1E */
+extern short asscentero_dedata[]; /* CCA38 */
+extern short asscentero_dedata_xrand[]; /* CCA3A */
+extern short asscentero_dedata_y[]; /* CCA3C */
+extern short asscentero_dedata_yrand[]; /* CCA3E */
 extern int dword_CCA58; /* CCA58 */
 extern int dword_CCA5A[]; /* CCA5A */
-extern short word_CCA6E[]; /* CCA6E */
-extern short word_CCA70[]; /* CCA70 */
-extern signed char byte_CCA95[]; /* CCA95 */
+extern short asspuckc_postab2[]; /* CCA6E */
+extern short asspuckc_postab2_y[]; /* CCA70 */
+extern signed char Endfaceoff_ftab_m1[]; /* CCA95 */
 extern short word_CCA9C[]; /* CCA9C */
 extern int dword_CCAD8[]; /* CCAD8 */
 extern int dword_CCB18[]; /* CCB18 */

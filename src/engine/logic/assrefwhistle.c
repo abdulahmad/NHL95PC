@@ -148,7 +148,7 @@ void asswingd(Player *p)
    clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the defensive winger
    (assignment 3) when the other team has the puck. The puck's zone (its y plus the y velocity / 40h, toward the
    attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal line; 4 while offside,
-   tmflags bit 4) picks a spot from word_CCA18 (x, x range, y, y range per zone): a new zone, or 1 in 80h ticks,
+   tmflags bit 4) picks a spot from asswingo_dedata (x, x range, y, y range per zone): a new zone, or 1 in 80h ticks,
    picks a random spot into temp3 (+ aioff) / temp4. Skate there (x mirrored for the right wing, both for the
    other end, pflags bit 7) with EvadePC. p: the winger. No result. */
 void asswingo(Player *p)
@@ -190,8 +190,8 @@ void asswingo(Player *p)
         }
         if (d != p->temp5 || !(regd0.w = randomd0(0x80))) {
             p->temp5 = d;
-            p->temp3 = word_CCA18[d] + (randomd0(word_CCA1A[d] * 2) - word_CCA1A[d]) + p->aioff;
-            p->temp4 = randomd0(word_CCA1E[d] * 2) - word_CCA1E[d] + word_CCA1C[d];
+            p->temp3 = asswingo_dedata[d] + (randomd0(asswingo_dedata_xrand[d] * 2) - asswingo_dedata_xrand[d]) + p->aioff;
+            p->temp4 = randomd0(asswingo_dedata_yrand[d] * 2) - asswingo_dedata_yrand[d] + asswingo_dedata_y[d];
         }
     }
     regd0.w = p->temp3;
@@ -210,7 +210,7 @@ void asswingo(Player *p)
    new assignment (bit 1) sets the high byte of temp5 to -1, clears temp1 and sets temp2 8. Every aioff ticks (the
    high byte of temp1) switch to the defensive centre (assignment 5) when the other team has the puck. The puck's
    zone (its y toward the attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal
-   line; 4 while offside, tmflags bit 4) picks a spot from word_CCA38 (x, x range, y, y range per zone): a new
+   line; 4 while offside, tmflags bit 4) picks a spot from asscentero_dedata (x, x range, y, y range per zone): a new
    zone, or 1 in 80h ticks, picks a random spot into temp3 / temp4. Skate there (y mirrored for the other end,
    pflags bit 7) with EvadePC. p: the centre. No result. */
 void asscentero(Player *p)
@@ -248,8 +248,8 @@ void asscentero(Player *p)
         }
         if (d != p->temp5 || !(regd0.w = randomd0(0x80))) {
             p->temp5 = d;
-            p->temp3 = randomd0(word_CCA3A[d] * 2) - word_CCA3A[d] + word_CCA38[d];
-            p->temp4 = randomd0(word_CCA3E[d] * 2) - word_CCA3E[d] + word_CCA3C[d];
+            p->temp3 = randomd0(asscentero_dedata_xrand[d] * 2) - asscentero_dedata_xrand[d] + asscentero_dedata[d];
+            p->temp4 = randomd0(asscentero_dedata_yrand[d] * 2) - asscentero_dedata_yrand[d] + asscentero_dedata_y[d];
         }
     }
     regd0.w = p->temp3;
@@ -442,7 +442,7 @@ void RequestLineChange(Player *p)
 /* Endfaceoff (4DA7B; 93G logic93 / 94G logic94 Endfaceoff "drop the puck: pick the faceoff winner and send the
    puck off", PC version; ends in ass_popx): stop the sample, play sfx ABh, end the faceoff (gmode2 bits 0 and 2,
    the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds (regd2) are 10h less the first centre's
-   faceoff stance (byte_CCA95 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
+   faceoff stance (Endfaceoff_ftab_m1 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
    centre's (byte_DAEA7 / byte_DACB3 by pnum; the centres are the skaters with position 4): randomd0(21h) below
    them gives the puck to the away centre (lasttouch, his input word_E0396), else to the home centre (word_E0392).
    The winner's input bit 0Bh picks the direction (fodir2 with y speed -800h, else fodir1 / +800h); a held
@@ -462,7 +462,7 @@ void Endfaceoff(Player *p)
     gmode &= 0xFE;
     p->pflags2 &= 0xFE;
     sflags3 |= 0x10;
-    regd2.w = 0x10 - byte_CCA95[fofdata2[0]] + byte_CCA95[word_E0394];
+    regd2.w = 0x10 - Endfaceoff_ftab_m1[fofdata2[0]] + Endfaceoff_ftab_m1[word_E0394];
     for (i = 0; i < 6; i++) {
         if (SortCords[i].position == 4) break;
     }

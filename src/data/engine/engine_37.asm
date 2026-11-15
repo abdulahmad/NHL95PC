@@ -5,7 +5,7 @@ section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, byte_CC7A4, byte_CC7A5
-global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
+global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
 global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
@@ -14,8 +14,8 @@ global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CC
 global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, dword_CCCB8, sublist, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
 global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, ltack
-global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
-global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
+global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
 global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, blockspd
 global blockspd_y, shotsetz, word_CCCA8, word_CCEF8, Setplass_alist
 off_CC01D:
@@ -273,22 +273,22 @@ dd str_1st
 dd str_2nd
 dd str_3rd
 db 00h,00h
-word_CCA18:
+asswingo_dedata:
 db 064h,00h
-word_CCA1A:
+asswingo_dedata_xrand:
 db 014h,00h
-word_CCA1C:
+asswingo_dedata_y:
 db 0C0h,0FFh
-word_CCA1E:
+asswingo_dedata_yrand:
 db 0Ah,00h,078h,00h,014h,00h,032h,00h,05h,00h,037h,00h,032h,00h,0BEh,00h
 db 014h,00h,064h,00h,01Eh,00h,0DAh,00h,014h,00h
-word_CCA38:
+asscentero_dedata:
 db 00h,00h
-word_CCA3A:
+asscentero_dedata_xrand:
 db 046h,00h
-word_CCA3C:
+asscentero_dedata_y:
 db 0C0h,0FFh
-word_CCA3E:
+asscentero_dedata_yrand:
 db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
 db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
 dword_CCA58:
@@ -296,13 +296,13 @@ db 00h,00h
 dword_CCA5A:
 db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
 db 0D5h,011h,09Dh,011h
-word_CCA6E:
+asspuckc_postab2:
 db 092h,0FFh
-word_CCA70:
+asspuckc_postab2_y:
 db 0ECh,0FFh,06Eh,00h,0ECh,0FFh,07Eh,0FFh,024h,00h,01Eh,00h,024h,00h,082h,00h
 db 024h,00h,0E2h,0FFh,024h,00h,0CEh,0FFh,0CCh,00h,00h,00h,0BCh,00h,01Eh,00h
 db 0C6h,00h,028h,00h,0C6h
-byte_CCA95:
+Endfaceoff_ftab_m1:
 db 00h,00h,08h,010h,00h,08h,010h
 word_CCA9C:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
