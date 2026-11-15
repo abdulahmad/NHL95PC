@@ -4,7 +4,7 @@ bits 32
 section s_8FFD4 progbits alloc exec nowrite align=1
 extern __CMain, __FiniRtns, __InitRtns, _Extender, _ExtenderSubtype, _osmajor, _osminor, dword_D41F4
 extern _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr, kaufmfont
-extern unk_10003, stackarea, word_D41F8, _psp, __no87, _Envptr_w4
+extern ___begtext, stackarea, word_D41F8, _psp, __no87, _Envptr_w4
 global start, __saved_DS, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
 global loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B, loc_9014C
 global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, sub_90267
@@ -60,7 +60,7 @@ db 067h,068h,074h,073h,020h,072h	; 90033 push 72207374h
 db 065h,073h, loc_900A1-($+3)
 jb short loc_900B4	; 9003C
 db 065h,064h,02Eh,08Dh,040h,00h	; 9003E lea eax,[eax]
-dd unk_10003
+dd ___begtext
 __saved_DS:
 add byte [eax], al	; 90048
 loc_9004A:

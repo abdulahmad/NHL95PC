@@ -1,5 +1,5 @@
 pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_game_names,confidence,evidence,segment,method
-00010000,sub_10000,___begtext,PC-new,,,,high,Watcom BEGTEXT: the int3 / jmp at the first code address; the port uses it as the base of the game image,watcom_begtext,manual-trace
+00010000,sub_10000,begtext_forever,PC-new,,,,high,Watcom BEGTEXT: the int3 / jmp forever loop at the first code address (Watcom's label is forever); the port uses it as the base of the game image,watcom_begtext,manual-trace
 00010010,sub_10010,GetMemListHead,PC-new,,,,low,returns dword_EDA08 when eax != 0 else dword_EDA0C (heads of the two runtime memory block lists walked by GetMemStats),main_startup,manual-trace
 0001002A,sub_1002A,GetMemStats,PC-new,,,,medium,"walks the memory block list from GetMemListHead(1) (next at +20h) and returns total, free, used and largest block through four pointers; main_ refuses to start ('Insufficient memory available.') when the total is below 1E5D70h",main_startup,manual-trace
 000106C8,sub_106C8,DiskFreeBytes,PC-new,,,,high,"_dos_getdiskfree_(drive) -> clusters * sectors * bytes; FatalError 'error getting disk space free' on failure (main_, CreateNewLeague, WriteModeState)",main_startup,manual-trace

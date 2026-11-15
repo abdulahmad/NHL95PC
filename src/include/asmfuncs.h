@@ -4,8 +4,8 @@
 #ifndef ASMFUNCS_H
 #define ASMFUNCS_H
 
-extern void ___begtext(); /* 10000 */
-extern void unk_10003(); /* 10003 */
+extern void begtext_forever(); /* 10000 */
+extern void ___begtext(); /* 10003 */
 extern void main_x(); /* 106BF */
 extern void ReadKeyboardPad(); /* 1086A */
 extern void ReadJoyPad(); /* 109A1 */
