@@ -6,7 +6,7 @@ section s_51115 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
 extern fofdata2_b7, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
-extern checkwindow, clockcont, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
+extern checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
 extern doshot, DrawPanelLine, demoflag, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
 extern EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1, fodir2, fofdata2, forcepldata
 extern fox, foy, FreeMemBlock, gameclock, gameopts, gmode, gmode2, gsp
@@ -563,7 +563,7 @@ pop ebx	; 516DF
 ret	; 516E0
 %endif ; C
 ; puckfaceoff: (asstab 1Bh, puck assignment at a stoppage, 'this is where the action
-; starts'): end of period (clockcont), penalties (Stop4Pen), computer line choice (CompLine, setpersonel),
+; starts'): end of period (clockcont_0), penalties (Stop4Pen), computer line choice (CompLine, setpersonel),
 ; ReturnGoalies, restorepl, then the faceoff set-up. PC adds the penalty shot (PenShotStart) and ForceStartLineup.
 puckfaceoff:
 push dword 28h	; 516E1
@@ -622,7 +622,7 @@ jne short .6	; 5178E
 mov ax, word [hmscore]	; 51790
 cmp ax, word [awscore]	; 51796
 je short .6	; 5179D
-call clockcont	; 5179F
+call clockcont_0	; 5179F
 jmp near .34	; 517A4
 .6:
 test byte [gmode], 8	; 517A9

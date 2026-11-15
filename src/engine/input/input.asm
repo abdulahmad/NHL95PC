@@ -6,7 +6,7 @@ section s_4FCE8 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, assonetimer_blade
 extern assonetimer_blade_y, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
-extern checkob, checkwindow, clockcont, clockticks, CompLine, cont1team, cont2team, crowdlevel
+extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
 extern donothing, doplayeracc, doshot, DrawPanelLine, demoflag, dword_CC0FA, playsuspended, ovlartbank
 extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
 extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts

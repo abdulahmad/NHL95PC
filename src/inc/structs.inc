@@ -74,7 +74,7 @@ tmline     equ 2Ah   ; tsize w; getlchoice adds tmline*4 to the choice index; lc
 tmlcnt     equ 2Ch   ; tsize w; none; lcfound/lcselect: when the new line is < 4 it is incremented and wrapped at 3 (even-strength line rotation count)
 tmextra    equ 2Eh   ; tsize w; none; SetPlList: pnum of the extra attacker (position 6) it lists, -1 with the goalie in
 tmap       equ 36h   ; tsize w; getlchoice/lcselect: other tmap - own tmap selects the even short-handed power-play choices
-tmscore    equ 10h   ; tsize w; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont compare hmscore with awscore
+tmscore    equ 10h   ; tsize w; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore with awscore
 tmpde      equ 46h   ; tsize w array; (energy word per roster player, 1000h = full); burst subtracts 0CCh from [tmptr+pnum*2+46h]; reenergizeteam refills 1000h
 tmpdst     equ 7Eh   ; tsize w array; (-2 bench -1 ice 0+ box): word per roster player: -2 bench, -1 on ice (setplayer, forcepldata), >0 penalty box time; restoreteams sets all to -2; ResetBench counts >0 into PBnum
 tmlines    equ 0DAh  ; tsize d; none; pointer to the team's line table (clearteams: home hmlinetab, away awlinetab); getlinee and setpersonel read it
