@@ -35,7 +35,7 @@ One object per line:
 ## Consume
 
 ```
-python3 tools/equiv/check.py src/engine/logic/SkateToSpot.c --func SkateToSpot --seg engine/logic --play-snaps dumps.jsonl --force --budget 600
+python3 tools/equiv/check.py src/engine/referee/SkateToSpot.c --func SkateToSpot --seg engine/logic --play-snaps dumps.jsonl --force --budget 600
 ```
 
 `--play-snaps` runs after the seeded / mutated / callers cases. Re-check **only still-NR names**. Budget-starved names (`DrawListItems`, `SeedPlayoffRound3`, `ExportTeamToFloppy`, `InstantReplay`, `ListDialog`) keep `--budget 600`.

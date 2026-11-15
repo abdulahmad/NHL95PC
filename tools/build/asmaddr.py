@@ -43,11 +43,11 @@ def _listing(path):
     if not (os.path.isfile(lst) and os.path.getmtime(lst) >= os.path.getmtime(path)
             and all(os.path.getmtime(lst) >= os.path.getmtime(i) for i in glob.glob(os.path.join(SRC, 'inc', '*.inc')))):
         os.makedirs(CACHE, exist_ok=True)
-        r = subprocess.run([NASM, '-O0', '-f', 'elf32', '-I', os.path.join(SRC, 'inc') + '/', '-l', lst + '.tmp',
+        r = subprocess.run([NASM, '-O0', '-f', 'elf32', '-I', os.path.join(SRC, 'inc') + '/', '-l', lst + '.%d.tmp' % os.getpid(),
                             '-o', os.devnull, path], capture_output=True, text=True)
         if r.returncode:
             raise SystemExit('asmaddr: nasm failed on %s:\n%s' % (path, r.stderr))
-        os.replace(lst + '.tmp', lst)
+        os.replace(lst + '.%d.tmp' % os.getpid(), lst)
     return lst
 
 

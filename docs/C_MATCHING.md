@@ -18,9 +18,9 @@ build/obj → tools/build/link_src.py → build/HOCKEY.EXE → sha1 check (the s
 * `<segment>` is the stem of the asm file (`engine/hockey`); `<Func>` is the asm label of the first function.
 * In the asm, the function is wrapped (by `tools/match/cc.py mark`):
   ```
-  ; C: src/c/engine/hockey/SetSPA.c
+  ; C: src/c/engine/chgplayer/SetSPA.c
   %ifdef CBUILD
-  %include "c/engine/hockey/SetSPA.inc"
+  %include "c/engine/chgplayer/SetSPA.inc"
   %else
   SetSPA:
   push dword 4	; 59D9A

@@ -1,0 +1,69 @@
+# Source cleanup phase 2 (2026-11-15): one file per subject. Input of tools/build/split_modules.py.
+# Only text moves; make fullcheck must print MATCH twice after it. File names follow 94G / 95G where a twin exists.
+
+# engine/logic.asm: skater assignments stay; the rest by subject (94G logic94)
+cut GoalieToPuckVec engine/goalie Goalie assignments: where the goalie stands, when he comes out for the puck, puck threat (94G logic94).
+cut asspuckc engine/puckcarrier Puck carrier assignments: carry, pass or shoot, nearest player, faceoff entry (94G logic94).
+cut pucknorm_body engine/puck Puck state routines: normal, nothing, unflip (94G logic94).
+cut RequestLineChange engine/linechange Line changes on the fly and at faceoffs (94G logic94).
+cut a2offsides engine/offsides Offsides and two-line pass at the blue and red lines, the puck flip (94G logic94).
+cut assrefatdot engine/referee Referee assignments: follow play, whistle, signals, puck drop (PC only).
+cut rtss engine/shootoutpath Shootout skate paths and the penalty shooter (94G shootoutpath94).
+
+# engine/collide.asm (94G collide94 / logic94)
+rename engine/collide engine/checking Body checks: sweep check, burst, shot blocks, check aggression and the check decision (94G collide94 / logic94).
+cut checkob engine/pass Passing: open-man check, pass lanes, the pass itself and the computer's pass decision (94G logic94).
+cut chk4shot engine/shoot Shooting decision, offsides check after a shot, shot stats, injuries (94G logic94).
+cut NetCollide engine/bodycheck Net collisions, falls, body and hold checks (94G collide94).
+cut puckbody engine/puckphys Puck physics: puck against bodies, sticks and goalies, shot modes, deflections, the shot (94G collide94 / logic94).
+cut newcheck engine/collide Collision tests: players, boards, goal, the wall bounce (94G collide94).
+cut CPgoalie engine/goaliepull Computer goalie control and pulling the goalie (94G logic94).
+
+# engine/hockey.asm (94G hockey94 / chgplayer94)
+rename engine/hockey engine/chgplayer Animation set and the controlled player change (94G chgplayer94).
+cut AvgCline engine/autolines Computer line choice: line energy and the next line (94G penalty94).
+cut findpc engine/control Who the pad controls: nearest player, hot player, stick (94G logic94).
+cut SetCoachMode engine/coach Coach modes (PC only).
+cut PenTeamScored engine/goal Goal scored: control, pass assignment, team energy, team resets (95G goal95).
+cut GetPeriodTime engine/hockey The game loop: clock, periods, frame, crowd, sprite sort, intermission, game over (94G hockey94).
+
+# front/create.asm (95G create95)
+rename front/create front/rosters Edit rosters: roster lists, roster panel, jersey numbers (95G create95).
+cut ErrorScreenWait front/dbcheck Database checks and their error screens (PC only).
+cut SplitPlayerName front/create Create player: names, ratings, shoots / glove, the create screen (95G create95).
+cut MoveToFreeAgents front/roster_edit Roster moves: free agents, release, temporary databases, player search (95G create95).
+
+# front/playoff_mode.asm
+cut PlayoffModeLoop front/playoff_menu Playoff mode screens: the mode loop, the tree menu, side controls (PC only).
+
+# front/stats.asm (95G stats95)
+rename front/stats front/stats_cards Skater and goalie stats cards (95G stats95).
+cut CmpTeamStandings front/team_stats Team stats screen and its sort orders (95G stats95).
+cut PlayerFromMouseY front/roster_screen Team roster screen (95G stats95).
+cut CmpGoals front/leaders League leaders screen and its sort orders (95G stats95).
+
+# pc/settings_dialogs.asm
+rename pc/settings_dialogs pc/league_settings League and playoff settings dialogs (PC only).
+cut SettingsStub pc/mode_settings Mode settings dialog (PC only).
+cut MenuExhibitionSettings pc/exh_settings Exhibition settings dialog (PC only).
+cut DrawCtlBoxOn pc/controls_dlg Controls dialogs: who plays which team, for exhibition, league, playoffs and in game (PC only).
+
+# front/calendar.asm
+cut CheckLeagueDiskSync front/league_game Playing a league game from the calendar: disk check, team database, the game (PC only).
+cut TeamGridHitTest front/team_grid Team grid (PC only).
+
+# front/season.asm (95G season95)
+cut BuildPlayoffs front/season_playoffs Season playoffs: seeds, standings sort, rounds; new league (95G season95).
+
+# front/lines.asm
+cut FadePalStep front/fade Palette fades and clipped blits (PC only).
+
+# pc/database_merge.asm
+cut ExportTeamToFloppy pc/floppy_export Team export and import on floppy, master league import (PC only).
+
+# front/announcer.asm
+rename front/announcer front/speech Speech engine: sample slots, the speech bank, sample memory (PC only).
+cut PenaltyLenClip front/announcer Announcer: which clip to say and when (PC only).
+
+# front/replay_controls.asm
+cut HilightSaveToDlg front/highlights Saved highlights: save, list, play (PC only).

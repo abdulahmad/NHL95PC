@@ -9,15 +9,15 @@
   python3 tools/match/cc.py unmark  src/c/<module>/<Func>.c [--func F]   remove the markers again (asm block stays)
   python3 tools/match/cc.py check                                    toolchain present? (exit 0/1; used by the Makefile)
 
-Layout: a C file lives next to its module's asm (src/engine/hockey/SetSPA.c with
+Layout: a C file lives next to its module's asm (src/engine/chgplayer/SetSPA.c with
 src/engine/hockey/hockey.asm; src/front/menu/RunMenu.c with src/front/menu/menu.asm;
 src/pc/file_utils with file_utils.asm). Lib slices sit under src/lib/<family>/. The C
 replaces the block of that asm that starts at label <Func>. In the asm the block is wrapped
 like this (`mark` writes it):
 
-    ; C: src/engine/hockey/SetSPA.c
+    ; C: src/engine/chgplayer/SetSPA.c
     %ifdef CBUILD
-    %include "c/engine/hockey/SetSPA.inc"
+    %include "c/engine/chgplayer/SetSPA.inc"
     %else
     SetSPA:
     ... the original asm, unchanged (the fallback build without the compiler) ...

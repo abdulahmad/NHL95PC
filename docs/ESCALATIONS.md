@@ -78,7 +78,7 @@ hand-asm. cc.py's TextTargets now names a tail in a context copy from another se
 `EditTextField` (`src/c/pc/dialogs/EditTextField.c`, lane 1) is 36 differing, cause
 `register 31/35`. The round that cut it from 62 reduced 21 `goto`s to 4. The ones left rotate the
 loop the way the EXE's block order does (the key poll is the test, the handlers are the body).
-`LeadersScreen` (`src/c/front/stats/LeadersScreen.c`, lane 1) uses `goto done` for the
+`LeadersScreen` (`src/c/front/leaders/LeadersScreen.c`, lane 1) uses `goto done` for the
 same kind of rotation and is 84 differing.
 
 **Recommended ruling:** do not mark either while a `goto` is still in the function. A `goto` is an
@@ -118,7 +118,7 @@ loop) before this comes back. Until that shape exists, leave the draft. Do not h
 
 ## OpenSpeechBank, stack layout
 
-`OpenSpeechBank` (`src/c/front/announcer/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
+`OpenSpeechBank` (`src/c/front/speech/OpenSpeechBank.c`, lane 2) is 11 differing, same size. The
 frame that matches the EXE puts the `int` locals and the `short nsamples` in a fixed order (`w1`
 before `fh`, `unsigned short type`, `int c`). That order is ordinary GA slot assignment
 ([WCC_INTERNALS.md](WCC_INTERNALS.md)), not a non-idiomatic shape. What is left is the first header
@@ -143,8 +143,8 @@ compiles to the EXE bytes only through an extra variable whose one job is to cha
 | CreateFreeAgent | `front/create/CreateFreeAgent.c` (2) | `carsize = careerdb_size + 0x2C; s.sizes[1] = carsize;`, a temporary on one of six parallel size stores | 0 / 5 |
 | POInitSchedule | `front/playoff_mode/POCreateSchedule.c` (2) | `sched = po + 0x1998; g = sched;` (sched is used for nothing else) and `day` in one of the two twin date loops | 0 / 6 |
 | LockerRoomLoop | `front/lockerroom/LockerRoomScreen.c` (2) | `n = hm + 1; hm = n % 0x1A;` through n, dead since the pointer block; a new int instead scores 23 | 0 / 2 |
-| wallcoll | `engine/collide/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
-| PassLaneChk | `engine/collide/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |
+| wallcoll | `engine/pass/dopass.c` (1) | the limit through the sound short s or t (dead), with goto slow removed; patch only, the committed draft is clean | 0 / 11 |
+| PassLaneChk | `engine/pass/PassLaneChk.c` (2) | p's y through an int py that only breaks a savings tie (committed; still 2 differing) | 2 / 17 |
 
 Why a copy works: the register allocator sorts conflicts by savings with an unstable Shell sort, so when temporaries
 tie (CreateFreeAgent: the goalie loop's index pair and byte tie at savings 30 / 20 with about ten others), adding

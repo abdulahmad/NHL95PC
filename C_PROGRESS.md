@@ -249,28 +249,28 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | CalStandingsScreen | 216D7 | 279 | matched | [CalStandingsScreen.c](src/front/stats_screens/CalStandingsScreen.c) | same 279 bytes. dword_C65AC is tested in edx and copied to ecx for MakePath; the original tests it in ecx and that zero is the extension. Same split as GameStandingsScreen. Do not retry one MakePath per branch. |
 | CalStandingsMenu | 217FE | 1030 | matched | [CalTeamStatsScreen.c](src/front/stats_screens/CalTeamStatsScreen.c) |  |
 | DrawPhotoWithPal | 21C04 | 218 | matched | [DrawPhotoWithPal.c](src/front/stats_screens/DrawPhotoWithPal.c) | register allocation only: the second statspalvalid read lands in eax/ecx/edx, the EXE uses ebx |
-| SkaterStatsCard | 21CDE | 2211 | nonmatching | [SkaterStatsCard.c](src/front/stats/SkaterStatsCard.c) |  |
-| GoalieStatsCard | 22581 | 2141 | matched | [GoalieStatsCard.c](src/front/stats/GoalieStatsCard.c) |  |
-| CmpTeamStandings | 22DDE | 336 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) |  |
-| CmpTeamScoring | 22F2E | 291 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) |  |
-| CmpTeamDefense | 23051 | 220 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) |  |
-| CmpTeamPP | 2312D | 394 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) | draft (in CmpTeamStandings.c): keys and record compares match; d = q8*pA - p8*qA spills the two products to [esp]/[esp+4], original [esp+4]/[esp]. See UNSURE. |
-| CmpTeamPK | 232B7 | 384 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) | draft (in CmpTeamStandings.c, kept first so the shared epilogue stays in CmpTeamPK): same ratio slot swap as CmpTeamPP. See UNSURE. |
-| CmpTeamPenalties | 23437 | 352 | matched | [CmpTeamStandings.c](src/front/stats/CmpTeamStandings.c) |  |
-| TeamStatsScreen | 235BE | 3733 | nonmatching | [TeamStatsScreen.c](src/front/stats/TeamStatsScreen.c) | draft (own file): 3742 vs 3733, 172 lines (scalar slots, shared key tails). See docs/UNSURE.md. |
-| PlayerFromMouseY | 24453 | 143 | matched | [PlayerFromMouseY.c](src/front/stats/PlayerFromMouseY.c) |  |
-| TeamRosterScreen | 244E2 | 3170 | matched | [TeamRosterScreen.c](src/front/stats/TeamRosterScreen.c) | draft (own file): 3169 vs 3170, 37 lines (spilled scalar slot order, one copy register pick). See docs/UNSURE.md. |
-| CmpGoals | 25144 | 243 | matched | [CmpGoals.c](src/front/stats/CmpGoals.c) |  |
-| CmpAssists | 25237 | 238 | matched | [CmpAssists.c](src/front/stats/CmpAssists.c) |  |
-| CmpPPGoals | 25325 | 275 | matched | [CmpPPGoals.c](src/front/stats/CmpPPGoals.c) |  |
-| CmpSHGoals | 25438 | 275 | matched | [CmpSHGoals.c](src/front/stats/CmpSHGoals.c) |  |
-| CmpPlusMinus | 2554B | 247 | matched | [CmpPlusMinus.c](src/front/stats/CmpPlusMinus.c) |  |
-| CmpPIM | 25642 | 275 | matched | [CmpPIM.c](src/front/stats/CmpPIM.c) |  |
-| CmpShootPct | 25755 | 277 | matched | [CmpShootPct.c](src/front/stats/CmpShootPct.c) | draft: season record is mov edx,[statsskaterbuf]; add eax,edx (277). C copies the index first (mov edx,eax; mov eax,[buf]; add eax,edx, 278). Operand order and if/else did not flip that add. Do not retry those. |
-| CmpGoalieWins | 2586A | 342 | matched | [CmpGoalieWins.c](src/front/stats/CmpGoalieWins.c) |  |
-| CmpSavePct | 259C0 | 310 | matched | [CmpSavePct.c](src/front/stats/CmpSavePct.c) |  |
-| LeadersScreen | 25B24 | 3782 | matched | [LeadersScreen.c](src/front/stats/LeadersScreen.c) | first pass (Ghidra): 3,561 of 3,782 bytes |
-| TeamFromMouse | 26B5A | 1318 | matched | [TeamFromMouse.c](src/front/stats/TeamFromMouse.c) |  |
+| SkaterStatsCard | 21CDE | 2211 | nonmatching | [SkaterStatsCard.c](src/front/stats_cards/SkaterStatsCard.c) |  |
+| GoalieStatsCard | 22581 | 2141 | matched | [GoalieStatsCard.c](src/front/stats_cards/GoalieStatsCard.c) |  |
+| CmpTeamStandings | 22DDE | 336 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) |  |
+| CmpTeamScoring | 22F2E | 291 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) |  |
+| CmpTeamDefense | 23051 | 220 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) |  |
+| CmpTeamPP | 2312D | 394 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) | draft (in CmpTeamStandings.c): keys and record compares match; d = q8*pA - p8*qA spills the two products to [esp]/[esp+4], original [esp+4]/[esp]. See UNSURE. |
+| CmpTeamPK | 232B7 | 384 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) | draft (in CmpTeamStandings.c, kept first so the shared epilogue stays in CmpTeamPK): same ratio slot swap as CmpTeamPP. See UNSURE. |
+| CmpTeamPenalties | 23437 | 352 | matched | [CmpTeamStandings.c](src/front/team_stats/CmpTeamStandings.c) |  |
+| TeamStatsScreen | 235BE | 3733 | nonmatching | [TeamStatsScreen.c](src/front/team_stats/TeamStatsScreen.c) | draft (own file): 3742 vs 3733, 172 lines (scalar slots, shared key tails). See docs/UNSURE.md. |
+| PlayerFromMouseY | 24453 | 143 | matched | [PlayerFromMouseY.c](src/front/roster_screen/PlayerFromMouseY.c) |  |
+| TeamRosterScreen | 244E2 | 3170 | matched | [TeamRosterScreen.c](src/front/roster_screen/TeamRosterScreen.c) | draft (own file): 3169 vs 3170, 37 lines (spilled scalar slot order, one copy register pick). See docs/UNSURE.md. |
+| CmpGoals | 25144 | 243 | matched | [CmpGoals.c](src/front/leaders/CmpGoals.c) |  |
+| CmpAssists | 25237 | 238 | matched | [CmpAssists.c](src/front/leaders/CmpAssists.c) |  |
+| CmpPPGoals | 25325 | 275 | matched | [CmpPPGoals.c](src/front/leaders/CmpPPGoals.c) |  |
+| CmpSHGoals | 25438 | 275 | matched | [CmpSHGoals.c](src/front/leaders/CmpSHGoals.c) |  |
+| CmpPlusMinus | 2554B | 247 | matched | [CmpPlusMinus.c](src/front/leaders/CmpPlusMinus.c) |  |
+| CmpPIM | 25642 | 275 | matched | [CmpPIM.c](src/front/leaders/CmpPIM.c) |  |
+| CmpShootPct | 25755 | 277 | matched | [CmpShootPct.c](src/front/leaders/CmpShootPct.c) | draft: season record is mov edx,[statsskaterbuf]; add eax,edx (277). C copies the index first (mov edx,eax; mov eax,[buf]; add eax,edx, 278). Operand order and if/else did not flip that add. Do not retry those. |
+| CmpGoalieWins | 2586A | 342 | matched | [CmpGoalieWins.c](src/front/leaders/CmpGoalieWins.c) |  |
+| CmpSavePct | 259C0 | 310 | matched | [CmpSavePct.c](src/front/leaders/CmpSavePct.c) |  |
+| LeadersScreen | 25B24 | 3782 | matched | [LeadersScreen.c](src/front/leaders/LeadersScreen.c) | first pass (Ghidra): 3,561 of 3,782 bytes |
+| TeamFromMouse | 26B5A | 1318 | matched | [TeamFromMouse.c](src/front/leaders/TeamFromMouse.c) |  |
 | StandingsScreen | 27080 | 2015 | matched | [StandingsScreen.c](src/front/playoff/StandingsScreen.c) |  |
 | HighlightTreeSlot | 2785F | 868 | matched | [HighlightTreeSlot.c](src/front/playoff/HighlightTreeSlot.c) |  |
 | MoveTreeHighlight | 27BC3 | 113 | matched | [MoveTreeHighlight.c](src/front/playoff/MoveTreeHighlight.c) |  |
@@ -363,16 +363,16 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | ApplyShapePalette | 34789 | 46 | matched | [ApplyShapePalette.c](src/front/calendar/ApplyShapePalette.c) |  |
 | SetGameSides | 347B7 | 106 | matched | [SetGameSides.c](src/front/calendar/SetGameSides.c) | draft: g*6 shifted in eax (mov eax,ebx) vs edx. Declaration order unchanged. games += g*6 kept the pointer in edx but widened the byte with movzx edi and push edi (103). Do not retry those. |
 | CalendarScreen | 34821 | 6040 | nonmatching | [CalendarScreen.c](src/front/calendar/CalendarScreen.c) | first pass (Ghidra): 6,036 of 6,040 bytes, 505 differing (parameter homing: the EXE pushes dir, keeps ext in edi) |
-| CheckLeagueDiskSync | 35FB9 | 590 | matched | [CheckLeagueDiskSync.c](src/front/calendar/CheckLeagueDiskSync.c) | draft: 598 vs 590. team*30 reloads the stack slot. dir is in ebp and the error in edi (original edi and ebp), so the league id is copied to edx and the team byte is read into al. Do not retry declaration order, a separate file pointer, or dropping volatile on the team index. |
-| MakeTeamDbFmt | 36207 | 102 | matched | [MakeTeamDbFmt.c](src/front/calendar/MakeTeamDbFmt.c) |  |
-| PostGameToTeamDb | 3626D | 2342 | nonmatching | [PostGameToTeamDb.c](src/front/calendar/PostGameToTeamDb.c) | draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md. |
-| PlayLeagueGame | 36B93 | 4095 | nonmatching | [PlayLeagueGame.c](src/front/calendar/PlayLeagueGame.c) | first pass (Ghidra): 4,095 of 4,095 bytes, 28 differing (an extra mov edx, eax after FileOpenRW; the opponent pick register) |
-| TeamGridHitTest | 37B92 | 193 | matched | [TeamGridHitTest.c](src/front/calendar/TeamGridHitTest.c) | team declared last (found by tools/match/permute.py) |
-| DrawTeamGridName | 37C53 | 279 | matched | [DrawTeamGridName.c](src/front/calendar/DrawTeamGridName.c) | register allocation: asm keeps the row in a stack slot and the column in edi (no order of the 5 locals matches) |
-| SaveGridCellBg | 37D6A | 241 | matched | [SaveGridCellBg.c](src/front/calendar/SaveGridCellBg.c) |  |
-| RestoreGridCellBg | 37E5B | 75 | matched | [RestoreGridCellBg.c](src/front/calendar/RestoreGridCellBg.c) |  |
-| HighlightGridCell | 37EA6 | 276 | matched | [HighlightGridCell.c](src/front/calendar/HighlightGridCell.c) | register / stack slots of the 8 frame corner temporaries differ; logic matches |
-| DrawTeamGrid | 37FBA | 303 | matched | [DrawTeamGrid.c](src/front/calendar/DrawTeamGrid.c) |  |
+| CheckLeagueDiskSync | 35FB9 | 590 | matched | [CheckLeagueDiskSync.c](src/front/league_game/CheckLeagueDiskSync.c) | draft: 598 vs 590. team*30 reloads the stack slot. dir is in ebp and the error in edi (original edi and ebp), so the league id is copied to edx and the team byte is read into al. Do not retry declaration order, a separate file pointer, or dropping volatile on the team index. |
+| MakeTeamDbFmt | 36207 | 102 | matched | [MakeTeamDbFmt.c](src/front/league_game/MakeTeamDbFmt.c) |  |
+| PostGameToTeamDb | 3626D | 2342 | nonmatching | [PostGameToTeamDb.c](src/front/league_game/PostGameToTeamDb.c) | draft (own file): 2421 vs 2342, 291 lines (one more spill slot, the result in edx). See docs/UNSURE.md. |
+| PlayLeagueGame | 36B93 | 4095 | nonmatching | [PlayLeagueGame.c](src/front/league_game/PlayLeagueGame.c) | first pass (Ghidra): 4,095 of 4,095 bytes, 28 differing (an extra mov edx, eax after FileOpenRW; the opponent pick register) |
+| TeamGridHitTest | 37B92 | 193 | matched | [TeamGridHitTest.c](src/front/team_grid/TeamGridHitTest.c) | team declared last (found by tools/match/permute.py) |
+| DrawTeamGridName | 37C53 | 279 | matched | [DrawTeamGridName.c](src/front/team_grid/DrawTeamGridName.c) | register allocation: asm keeps the row in a stack slot and the column in edi (no order of the 5 locals matches) |
+| SaveGridCellBg | 37D6A | 241 | matched | [SaveGridCellBg.c](src/front/team_grid/SaveGridCellBg.c) |  |
+| RestoreGridCellBg | 37E5B | 75 | matched | [RestoreGridCellBg.c](src/front/team_grid/RestoreGridCellBg.c) |  |
+| HighlightGridCell | 37EA6 | 276 | matched | [HighlightGridCell.c](src/front/team_grid/HighlightGridCell.c) | register / stack slots of the 8 frame corner temporaries differ; logic matches |
+| DrawTeamGrid | 37FBA | 303 | matched | [DrawTeamGrid.c](src/front/team_grid/DrawTeamGrid.c) |  |
 | ChooseLeagueController | 380E9 | 669 | matched | [ChooseLeagueController.c](src/front/league_setup/ChooseLeagueController.c) | draft: 669 vs 669. The body matches. jctime loads list into ecx and names into esi; the original uses edi and ebp. Parm [eax][edx][ecx][ebx] and copying x before y places those homes. The verify buffer is declared first so the password slots stay put. Do not retry an inner block for y, a local team pointer, or an aux body for the frees. |
 | AskExportToFloppy | 38386 | 306 | matched | [AskExportToFloppy.c](src/front/league_setup/AskExportToFloppy.c) |  |
 | BuildStandingsGrid | 384B8 | 1645 | nonmatching | [BuildStandingsGrid.c](src/front/league_setup/BuildStandingsGrid.c) |  |
@@ -393,17 +393,17 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | MergeLeagueFiles | 3B25A | 1622 | matched | [UpdateTeamDbs.c](src/pc/database_merge/UpdateTeamDbs.c) |  |
 | MergeUpdateDbs | 3B8B0 | 282 | matched | [MergeUpdateDbs.c](src/pc/database_merge/MergeUpdateDbs.c) |  |
 | RebuildLeagueDbs | 3B9CA | 445 | matched | [UpdateTeamDbs.c](src/pc/database_merge/UpdateTeamDbs.c) |  |
-| ExportTeamToFloppy | 3BB87 | 1929 | nonmatching | [ExportTeamToFloppy.c](src/pc/database_merge/ExportTeamToFloppy.c) |  |
-| CopyLeagueFiles | 3C310 | 159 | matched | [CopyLeagueFiles.c](src/pc/database_merge/CopyLeagueFiles.c) |  |
-| ImportMasterLeague | 3C3AF | 819 | matched | [ImportMasterLeague.c](src/pc/database_merge/ImportMasterLeague.c) |  |
-| ImportPlayerTeam | 3C6E2 | 2169 | matched | [ImportMasterLeague.c](src/pc/database_merge/ImportMasterLeague.c) |  |
-| ImportDbs | 3CF5B | 429 | matched | [ImportDbs.c](src/pc/database_merge/ImportDbs.c) |  |
-| ExportDbs | 3D108 | 869 | matched | [ImportMasterLeague.c](src/pc/database_merge/ImportMasterLeague.c) |  |
-| SelectFloppyDrive | 3D46D | 551 | matched | [SelectFloppyDrive.c](src/pc/database_merge/SelectFloppyDrive.c) | draft: 551 vs 551. file is in edi. name lands in ebp and the found flag in esi (original keeps name in esi and the flag in ebp). The drive loop reloads the index into edx, then copies it to eax and incs; the original stores floppyok through edx and uses lea eax,[edx+1]. Declaration order, register, and a char* flag did not swap ebp/esi. |
-| FindLeagueFloppy | 3D694 | 443 | matched | [FindLeagueFloppy.c](src/pc/database_merge/FindLeagueFloppy.c) |  |
-| WaitLeagueFloppy | 3D84F | 142 | matched | [WaitLeagueFloppy.c](src/pc/database_merge/WaitLeagueFloppy.c) | draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx |
-| ReadLeagueInfo | 3D8DD | 476 | matched | [ReadLeagueInfo.c](src/pc/database_merge/ReadLeagueInfo.c) | register allocation only: teams (edx) and b (ecx) swap between ebp and the stack slot at +44h |
-| ReadTeamNames | 3DAB9 | 136 | matched | [ReadTeamNames.c](src/pc/database_merge/ReadTeamNames.c) |  |
+| ExportTeamToFloppy | 3BB87 | 1929 | nonmatching | [ExportTeamToFloppy.c](src/pc/floppy_export/ExportTeamToFloppy.c) |  |
+| CopyLeagueFiles | 3C310 | 159 | matched | [CopyLeagueFiles.c](src/pc/floppy_export/CopyLeagueFiles.c) |  |
+| ImportMasterLeague | 3C3AF | 819 | matched | [ImportMasterLeague.c](src/pc/floppy_export/ImportMasterLeague.c) |  |
+| ImportPlayerTeam | 3C6E2 | 2169 | matched | [ImportMasterLeague.c](src/pc/floppy_export/ImportMasterLeague.c) |  |
+| ImportDbs | 3CF5B | 429 | matched | [ImportDbs.c](src/pc/floppy_export/ImportDbs.c) |  |
+| ExportDbs | 3D108 | 869 | matched | [ImportMasterLeague.c](src/pc/floppy_export/ImportMasterLeague.c) |  |
+| SelectFloppyDrive | 3D46D | 551 | matched | [SelectFloppyDrive.c](src/pc/floppy_export/SelectFloppyDrive.c) | draft: 551 vs 551. file is in edi. name lands in ebp and the found flag in esi (original keeps name in esi and the flag in ebp). The drive loop reloads the index into edx, then copies it to eax and incs; the original stores floppyok through edx and uses lea eax,[edx+1]. Declaration order, register, and a char* flag did not swap ebp/esi. |
+| FindLeagueFloppy | 3D694 | 443 | matched | [FindLeagueFloppy.c](src/pc/floppy_export/FindLeagueFloppy.c) |  |
+| WaitLeagueFloppy | 3D84F | 142 | matched | [WaitLeagueFloppy.c](src/pc/floppy_export/WaitLeagueFloppy.c) | draft: file/name params in edi/esi swapped, local order and MessageBox result kept in eax not edx |
+| ReadLeagueInfo | 3D8DD | 476 | matched | [ReadLeagueInfo.c](src/pc/floppy_export/ReadLeagueInfo.c) | register allocation only: teams (edx) and b (ecx) swap between ebp and the stack slot at +44h |
+| ReadTeamNames | 3DAB9 | 136 | matched | [ReadTeamNames.c](src/pc/floppy_export/ReadTeamNames.c) |  |
 | LoadNhlCfg | 3DB41 | 231 | matched | [LoadNhlCfg.c](src/pc/config_cfg/LoadNhlCfg.c) |  |
 | BuildTradeRoster | 3DC2C | 473 | matched | [BuildTradeRoster.c](src/front/trade/BuildTradeRoster.c) | draft: 473 vs 473. The fill loop keeps the index in ebx and stores it through al; the original keeps the index in eax and reloads the byte into dl. Do not retry: a separate unsigned char is the same ebx/al pair. Storing the index directly reloads eax (477 bytes). An aux that reloads dl parks list in edi; passing list in esi pushes the incoming args and shifts the frame. |
 | TradeShowStats | 3DE05 | 592 | context | [FixJerseyConflict.c](src/front/trade/FixJerseyConflict.c) | compile context; matched in src/front/trade/TradeShowStats.c |
@@ -436,28 +436,28 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | LoadLeagueGameRef | 41B80 | 249 | matched | [LoadLeagueGameRef.c](src/front/season/LoadLeagueGameRef.c) |  |
 | DateKey | 41C79 | 34 | matched | [DateKey.c](src/front/season/DateKey.c) | original keeps day in edx and builds the month in ebx (lea ebx,[eax+0Ch] / mov ebx,eax); this draft moves day to ebx. 10-min cap |
 | NormalizeDate | 41C9B | 41 | matched | [NormalizeDate.c](src/front/season/NormalizeDate.c) |  |
-| UpdateSeasonSchedule | 41CC4 | 672 | context | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) | compile context; matched in src/front/season/UpdateSeasonSchedule.c |
+| UpdateSeasonSchedule | 41CC4 | 672 | context | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) | compile context; matched in src/front/season/UpdateSeasonSchedule.c |
 | UpdateSeasonSchedule | 41CC4 | 672 | matched | [UpdateSeasonSchedule.c](src/front/season/UpdateSeasonSchedule.c) | draft: 672 vs 672 (best of 5). The frame, opens, database loads, the 0/1 playoff test and both calls match. ext is in ebp and err in esi (original esi and ebp), so careerdb reloads through that freed register instead of edi. Do not retry an int or char* copy of ext (homes swap, ext stays in ebp), making err a pointer (655), or folding play into the if. |
 | UpdatePlayoffSeries | 41F64 | 671 | matched | [UpdatePlayoffSeries.c](src/front/season/UpdatePlayoffSeries.c) |  |
 | SeriesLength | 42221 | 116 | nonmatching | [SeriesLength.c](src/front/season/SeriesLength.c) | 116 vs 116. Loop, jump table and case bodies match. The shared mov eax,esi / pop esi / pop edx / pop ecx / ret is after mov esi,5 (ja and the other returns jump forward to +57). The EXE falls out of mov esi,1 into that epilogue at +39 and later cases jump back. Do not retry: Watcom sinks this multi-predecessor return onto the first conditional fall-through (best-of-5); a return glued to case 0 folds to mov eax,1 or jumps to an epilogue at the end. |
 | RandomizeSchedule | 42295 | 924 | nonmatching | [RandomizeSchedule.c](src/front/season/RandomizeSchedule.c) |  |
 | SimScheduleDay | 42631 | 634 | matched | [SimScheduleDay.c](src/front/season/SimScheduleDay.c) |  |
 | BuildPlayoffs | 428AB | 783 | matched | [UpdateSeasonSchedule.c](src/front/season/UpdateSeasonSchedule.c) |  |
-| GetPlayoffSeeds | 42BBA | 496 | matched | [GetPlayoffSeeds.c](src/front/season/GetPlayoffSeeds.c) |  |
+| GetPlayoffSeeds | 42BBA | 496 | matched | [GetPlayoffSeeds.c](src/front/season_playoffs/GetPlayoffSeeds.c) |  |
 | SortStandings | 42DAA | 367 | matched | [UpdateSeasonSchedule.c](src/front/season/UpdateSeasonSchedule.c) | draft (UpdateSeasonSchedule.c): 365 vs 367, temp allocation. See UNSURE. |
-| SwapInt | 42F19 | 41 | matched | [SwapInt.c](src/front/season/SwapInt.c) |  |
-| SetSeriesTeams | 42F42 | 171 | matched | [SetSeriesTeams.c](src/front/season/SetSeriesTeams.c) |  |
-| SeedPlayoffRound1 | 42FED | 1623 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) |  |
-| SimPlayoffRound1 | 43644 | 275 | nonmatching | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) |  |
-| SeedPlayoffRound2 | 43757 | 1769 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) | same size, 12 differing lines: month slot, one sum order; see docs/UNSURE.md |
-| SimPlayoffRound2 | 43E40 | 267 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) |  |
-| SeedPlayoffRound3 | 43F4B | 1131 | nonmatching | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) | same size, first pass: EXE frame one dword larger (spilled buf + 1F8h); see docs/UNSURE.md |
-| SimPlayoffRound3 | 443B6 | 275 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) |  |
-| SeedPlayoffFinal | 444C9 | 733 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) | same size, 14 differing lines; EXE tail is UpdateSeasonSchedule_pop3 (cannot be marked here); see docs/UNSURE.md |
-| SimPlayoffFinal | 447A6 | 227 | matched | [SimPlayoffRound1.c](src/front/season/SimPlayoffRound1.c) | draft: same size; team index is bl (original cl) and i+1 is lea ecx,[eax+1] (original inc eax). A while loop moved the compare above the index load. Do not retry the while. |
-| FinishPlayoffs | 44899 | 424 | matched | [FinishPlayoffs.c](src/front/season/FinishPlayoffs.c) |  |
-| AdvancePlayoffs | 44A41 | 910 | matched | [AdvancePlayoffs.c](src/front/season/AdvancePlayoffs.c) |  |
-| CreateNewLeague | 44DCF | 1203 | nonmatching | [CreateNewLeague.c](src/front/season/CreateNewLeague.c) |  |
+| SwapInt | 42F19 | 41 | matched | [SwapInt.c](src/front/season_playoffs/SwapInt.c) |  |
+| SetSeriesTeams | 42F42 | 171 | matched | [SetSeriesTeams.c](src/front/season_playoffs/SetSeriesTeams.c) |  |
+| SeedPlayoffRound1 | 42FED | 1623 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) |  |
+| SimPlayoffRound1 | 43644 | 275 | nonmatching | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) |  |
+| SeedPlayoffRound2 | 43757 | 1769 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) | same size, 12 differing lines: month slot, one sum order; see docs/UNSURE.md |
+| SimPlayoffRound2 | 43E40 | 267 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) |  |
+| SeedPlayoffRound3 | 43F4B | 1131 | nonmatching | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) | same size, first pass: EXE frame one dword larger (spilled buf + 1F8h); see docs/UNSURE.md |
+| SimPlayoffRound3 | 443B6 | 275 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) |  |
+| SeedPlayoffFinal | 444C9 | 733 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) | same size, 14 differing lines; EXE tail is UpdateSeasonSchedule_pop3 (cannot be marked here); see docs/UNSURE.md |
+| SimPlayoffFinal | 447A6 | 227 | matched | [SimPlayoffRound1.c](src/front/season_playoffs/SimPlayoffRound1.c) | draft: same size; team index is bl (original cl) and i+1 is lea ecx,[eax+1] (original inc eax). A while loop moved the compare above the index load. Do not retry the while. |
+| FinishPlayoffs | 44899 | 424 | matched | [FinishPlayoffs.c](src/front/season_playoffs/FinishPlayoffs.c) |  |
+| AdvancePlayoffs | 44A41 | 910 | matched | [AdvancePlayoffs.c](src/front/season_playoffs/AdvancePlayoffs.c) |  |
+| CreateNewLeague | 44DCF | 1203 | nonmatching | [CreateNewLeague.c](src/front/season_playoffs/CreateNewLeague.c) |  |
 | RandMod | 45282 | 36 | matched | [RandMod.c](src/front/simgame/RandMod.c) |  |
 | SimAddPair | 452A6 | 31 | matched | [SimAddPair.c](src/front/simgame/SimAddPair.c) | original keeps pairs in edx and the count in esi; this draft swaps them (with or without a count local). 10-min cap |
 | SimulateGame | 452C5 | 9868 | nonmatching | [SimulateGame.c](src/front/simgame/SimulateGame.c) | first pass (Ghidra): 9,902 of 9,868 bytes, 721 differing (scalar slots, register picks) |
@@ -482,59 +482,59 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | assboxenter | 499D8 | 490 | matched | [assboxenter.c](src/engine/logic/assboxenter.c) |  |
 | assbenchside | 49BC2 | 283 | matched | [assbenchside.c](src/engine/logic/assbenchside.c) |  |
 | assdefo | 49CDD | 349 | matched | [assdefo.c](src/engine/logic/assdefo.c) |  |
-| assdefd | 49E3A | 876 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| asswingd | 4A1A6 | 413 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| asswingo | 4A343 | 503 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
+| assdefd | 49E3A | 876 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| asswingd | 4A1A6 | 413 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| asswingo | 4A343 | 503 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
 | asscenterd | 4A53A | 290 | matched | [asscenterd.c](src/engine/logic/asscenterd.c) |  |
-| asscentero | 4A65C | 434 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
+| asscentero | 4A65C | 434 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
 | donothing | 4A80E | 36 | matched | [donothing.c](src/engine/logic/donothing.c) |  |
 | assstanley | 4A832 | 221 | matched | [assstanley.c](src/engine/logic/assstanley.c) |  |
 | assscore | 4A90F | 435 | matched | [assscore.c](src/engine/logic/assscore.c) |  |
 | asseben | 4AAC2 | 197 | matched | [asseben.c](src/engine/logic/asseben.c) | 1 register: slot+2 goes through ebx in the asm (mov ebx,edx / add ebx,2), C adds in edx; rest matches |
 | assleaveice | 4AB87 | 548 | matched | [assleaveice.c](src/engine/logic/assleaveice.c) |  |
-| asspenalty | 4ADAB | 592 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
+| asspenalty | 4ADAB | 592 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
 | assdopen | 4AFFB | 50 | matched | [assdopen.c](src/engine/logic/assdopen.c) |  |
 | assepen | 4B02D | 255 | matched | [assepen.c](src/engine/logic/assepen.c) | draft: pflags update is mov cl,dl / or cl,4 / mov ch,cl / and ch,0EDh (255). C ors dl in place (239). A signed char g = f|4 then g&0xED still ors dl in place. Do not retry that. |
 | assbench | 4B12C | 827 | matched | [assbench.c](src/engine/logic/assbench.c) |  |
-| GoalieToPuckVec | 4B467 | 130 | matched | [GoalieToPuckVec.c](src/engine/logic/GoalieToPuckVec.c) |  |
-| AdjustFacingDirection | 4B4E9 | 217 | matched | [AdjustFacingDirection.c](src/engine/logic/AdjustFacingDirection.c) |  |
-| assgoalietopuck | 4B5C2 | 306 | matched | [assgoalietopuck.c](src/engine/logic/assgoalietopuck.c) | register allocation: x / |y| land in ecx / ebx (EXE ebx / ecx plus an eax copy of |y|) and the EXE also saves edi; declaration-order search found no match |
-| ClampYPosition | 4B6F4 | 128 | matched | [ClampYPosition.c](src/engine/logic/ClampYPosition.c) |  |
-| assgoalie | 4B774 | 3774 | nonmatching | [assgoalie.c](src/engine/logic/assgoalie.c) | draft in its own file (ends in ass_popx; a match belongs in assrefwhistle.c): 3718 vs 3774, 230 lines: the regd1 stores around the facing turn, register picks, the epilogue. See docs/UNSURE.md. |
-| CountPuckThreat | 4C632 | 193 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| asspuckc | 4C6F3 | 458 | matched | [asspuckc.c](src/engine/logic/asspuckc.c) |  |
-| sub_4C8BD | 4C8BD | 320 | matched | [sub_4C8BD.c](src/engine/logic/sub_4C8BD.c) |  |
-| asspuckc_chkdir | 4C9FD | 846 | matched | [asspuckc_chkdir.c](src/engine/logic/asspuckc_chkdir.c) |  |
-| assnearest | 4CD4B | 1709 | matched | [assgoalie.c](src/engine/logic/assgoalie.c) | draft in assgoalie.c: same size, 7 lines (the |regd1 - pucky| test negates a copy, the EXE in place). See docs/UNSURE.md. |
-| assshoot | 4D3F8 | 248 | matched | [assshoot.c](src/engine/logic/assshoot.c) | draft: 242 vs 248. The pfna clear is and bl,0FDh; the original copies bl to ah first. The word at +4Ch is counted in ax (original di), so edi is not saved. A separate byte local moved the and into al. Do not retry that. |
-| assfaceoff | 4D4F0 | 25 | matched | [assshoot.c](src/engine/logic/assshoot.c) | first pass from Ghidra (assshoot.c): falls through into assexit (a tail call to the next function) and returns through assshoot_ret, so assshoot, assfaceoff and assexit are one file; marked --end assexit |
-| assexit | 4D509 | 31 | matched | [assshoot.c](src/engine/logic/assshoot.c) | moved from its own file into assshoot.c after assfaceoff, which falls into it |
-| assfaceoffpl | 4D528 | 396 | matched | [assfaceoffpl.c](src/engine/logic/assfaceoffpl.c) |  |
-| pucknorm_body | 4D6B4 | 531 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| pucknorm | 4D8C7 | 54 | matched | [pucknorm.c](src/engine/logic/pucknorm.c) |  |
-| pucknothing puckunflip | 4D8FD | 59 | matched | [pucknothing.c](src/engine/logic/pucknothing.c) |  |
-| puckunflip | 4D907 | 49 | matched | [puckunflip.c](src/engine/logic/puckunflip.c) |  |
-| RequestLineChange | 4D938 | 196 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| SetLCmode | 4D9FC | 59 | matched | [SetLCmode.c](src/engine/logic/SetLCmode.c) |  |
-| StartFaceoffLineChange | 4DA37 | 68 | matched | [StartFaceoffLineChange.c](src/engine/logic/StartFaceoffLineChange.c) |  |
-| Endfaceoff | 4DA7B | 610 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| a2offsides | 4DCDD | 116 | matched | [a2offsides.c](src/engine/logic/a2offsides.c) |  |
-| ChkTwoLinePass | 4DD51 | 195 | matched | [ChkTwoLinePass.c](src/engine/logic/ChkTwoLinePass.c) | draft: same size; lasttouch stays in si and the side test is xor edx,ebx. C keeps lasttouch in bx and compares. Writing ^ instead of != dropped the esi save (190 vs 195). Do not retry that. |
-| a2touchpuck | 4DE14 | 400 | matched | [a2touchpuck.c](src/engine/logic/a2touchpuck.c) |  |
-| puckflip | 4DFA4 | 83 | matched | [puckflip.c](src/engine/logic/puckflip.c) |  |
-| assrefatdot | 4DFF7 | 198 | matched | [assrefatdot.c](src/engine/logic/assrefatdot.c) |  |
-| assreffollow | 4E0BD | 469 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| SkateToSpot | 4E292 | 1160 | nonmatching | [SkateToSpot.c](src/engine/logic/SkateToSpot.c) |  |
-| CrowdOnStoppage | 4E71A | 469 | matched | [CrowdOnStoppage.c](src/engine/logic/CrowdOnStoppage.c) |  |
-| assrefwhistle | 4E8EF | 499 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| assrefsignal | 4EB04 | 632 | matched | [assgoalie.c](src/engine/logic/assgoalie.c) | draft in assgoalie.c: 631 vs 632, 33 lines (team pointer / time left swap ebx / ecx). See docs/UNSURE.md. |
-| assrefgoalpa | 4ED7C | 2115 | nonmatching | [assgoalie.c](src/engine/logic/assgoalie.c) | draft in assgoalie.c: same size, 143 lines (the goal-call shorts spill differently, the shared assreplace exit). See docs/UNSURE.md. |
-| assrefdrop | 4F5BF | 529 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| assrefgoalline | 4F7D0 | 448 | matched | [assrefwhistle.c](src/engine/logic/assrefwhistle.c) |  |
-| rtss | 4F990 | 11 | matched | [rtss.c](src/engine/logic/rtss.c) |  |
-| NextPathPoint | 4F99B | 84 | matched | [NextPathPoint.c](src/engine/logic/NextPathPoint.c) |  |
-| StartShootoutPath | 4F9EF | 249 | matched | [StartShootoutPath.c](src/engine/logic/StartShootoutPath.c) |  |
-| asspenshooter | 4FAE8 | 512 | matched | [asspenshooter.c](src/engine/logic/asspenshooter.c) | register allocation only: EXE loads the puckc pointer into edx for the first test (C: eax); everything else matches |
+| GoalieToPuckVec | 4B467 | 130 | matched | [GoalieToPuckVec.c](src/engine/goalie/GoalieToPuckVec.c) |  |
+| AdjustFacingDirection | 4B4E9 | 217 | matched | [AdjustFacingDirection.c](src/engine/goalie/AdjustFacingDirection.c) |  |
+| assgoalietopuck | 4B5C2 | 306 | matched | [assgoalietopuck.c](src/engine/goalie/assgoalietopuck.c) | register allocation: x / |y| land in ecx / ebx (EXE ebx / ecx plus an eax copy of |y|) and the EXE also saves edi; declaration-order search found no match |
+| ClampYPosition | 4B6F4 | 128 | matched | [ClampYPosition.c](src/engine/goalie/ClampYPosition.c) |  |
+| assgoalie | 4B774 | 3774 | nonmatching | [assgoalie.c](src/engine/goalie/assgoalie.c) | draft in its own file (ends in ass_popx; a match belongs in assrefwhistle.c): 3718 vs 3774, 230 lines: the regd1 stores around the facing turn, register picks, the epilogue. See docs/UNSURE.md. |
+| CountPuckThreat | 4C632 | 193 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| asspuckc | 4C6F3 | 458 | matched | [asspuckc.c](src/engine/puckcarrier/asspuckc.c) |  |
+| sub_4C8BD | 4C8BD | 320 | matched | [sub_4C8BD.c](src/engine/puckcarrier/sub_4C8BD.c) |  |
+| asspuckc_chkdir | 4C9FD | 846 | matched | [asspuckc_chkdir.c](src/engine/puckcarrier/asspuckc_chkdir.c) |  |
+| assnearest | 4CD4B | 1709 | matched | [assgoalie.c](src/engine/goalie/assgoalie.c) | draft in assgoalie.c: same size, 7 lines (the |regd1 - pucky| test negates a copy, the EXE in place). See docs/UNSURE.md. |
+| assshoot | 4D3F8 | 248 | matched | [assshoot.c](src/engine/puckcarrier/assshoot.c) | draft: 242 vs 248. The pfna clear is and bl,0FDh; the original copies bl to ah first. The word at +4Ch is counted in ax (original di), so edi is not saved. A separate byte local moved the and into al. Do not retry that. |
+| assfaceoff | 4D4F0 | 25 | matched | [assshoot.c](src/engine/puckcarrier/assshoot.c) | first pass from Ghidra (assshoot.c): falls through into assexit (a tail call to the next function) and returns through assshoot_ret, so assshoot, assfaceoff and assexit are one file; marked --end assexit |
+| assexit | 4D509 | 31 | matched | [assshoot.c](src/engine/puckcarrier/assshoot.c) | moved from its own file into assshoot.c after assfaceoff, which falls into it |
+| assfaceoffpl | 4D528 | 396 | matched | [assfaceoffpl.c](src/engine/puckcarrier/assfaceoffpl.c) |  |
+| pucknorm_body | 4D6B4 | 531 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| pucknorm | 4D8C7 | 54 | matched | [pucknorm.c](src/engine/puck/pucknorm.c) |  |
+| pucknothing puckunflip | 4D8FD | 59 | matched | [pucknothing.c](src/engine/puck/pucknothing.c) |  |
+| puckunflip | 4D907 | 49 | matched | [puckunflip.c](src/engine/puck/puckunflip.c) |  |
+| RequestLineChange | 4D938 | 196 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| SetLCmode | 4D9FC | 59 | matched | [SetLCmode.c](src/engine/linechange/SetLCmode.c) |  |
+| StartFaceoffLineChange | 4DA37 | 68 | matched | [StartFaceoffLineChange.c](src/engine/linechange/StartFaceoffLineChange.c) |  |
+| Endfaceoff | 4DA7B | 610 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| a2offsides | 4DCDD | 116 | matched | [a2offsides.c](src/engine/offsides/a2offsides.c) |  |
+| ChkTwoLinePass | 4DD51 | 195 | matched | [ChkTwoLinePass.c](src/engine/offsides/ChkTwoLinePass.c) | draft: same size; lasttouch stays in si and the side test is xor edx,ebx. C keeps lasttouch in bx and compares. Writing ^ instead of != dropped the esi save (190 vs 195). Do not retry that. |
+| a2touchpuck | 4DE14 | 400 | matched | [a2touchpuck.c](src/engine/offsides/a2touchpuck.c) |  |
+| puckflip | 4DFA4 | 83 | matched | [puckflip.c](src/engine/offsides/puckflip.c) |  |
+| assrefatdot | 4DFF7 | 198 | matched | [assrefatdot.c](src/engine/referee/assrefatdot.c) |  |
+| assreffollow | 4E0BD | 469 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| SkateToSpot | 4E292 | 1160 | nonmatching | [SkateToSpot.c](src/engine/referee/SkateToSpot.c) |  |
+| CrowdOnStoppage | 4E71A | 469 | matched | [CrowdOnStoppage.c](src/engine/referee/CrowdOnStoppage.c) |  |
+| assrefwhistle | 4E8EF | 499 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| assrefsignal | 4EB04 | 632 | matched | [assgoalie.c](src/engine/goalie/assgoalie.c) | draft in assgoalie.c: 631 vs 632, 33 lines (team pointer / time left swap ebx / ecx). See docs/UNSURE.md. |
+| assrefgoalpa | 4ED7C | 2115 | nonmatching | [assgoalie.c](src/engine/goalie/assgoalie.c) | draft in assgoalie.c: same size, 143 lines (the goal-call shorts spill differently, the shared assreplace exit). See docs/UNSURE.md. |
+| assrefdrop | 4F5BF | 529 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| assrefgoalline | 4F7D0 | 448 | matched | [assrefwhistle.c](src/engine/referee/assrefwhistle.c) |  |
+| rtss | 4F990 | 11 | matched | [rtss.c](src/engine/shootoutpath/rtss.c) |  |
+| NextPathPoint | 4F99B | 84 | matched | [NextPathPoint.c](src/engine/shootoutpath/NextPathPoint.c) |  |
+| StartShootoutPath | 4F9EF | 249 | matched | [StartShootoutPath.c](src/engine/shootoutpath/StartShootoutPath.c) |  |
+| asspenshooter | 4FAE8 | 512 | matched | [asspenshooter.c](src/engine/shootoutpath/asspenshooter.c) | register allocation only: EXE loads the puckc pointer into edx for the first test (C: eax); everything else matches |
 | joyq_pop | 4FCE8 | 95 | matched | [joyq_pop.c](src/engine/input/joyq_pop.c) | draft: asm saves ebx/ecx/edx/esi and keeps count in edx (eax untouched until end; maybe returns joysampling) |
 | joyq_flush | 4FD47 | 27 | matched | [joyq_flush.c](src/engine/input/joyq_flush.c) |  |
 | joyq_peek | 4FD62 | 44 | matched | [joyq_peek.c](src/engine/input/joyq_peek.c) |  |
@@ -569,66 +569,66 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | check4bench | 52BB6 | 506 | matched | [check4bench.c](src/engine/faceoff/check4bench.c) |  |
 | asspsclear | 52DB0 | 512 | matched | [asspsclear.c](src/engine/faceoff/asspsclear.c) |  |
 | assrefpenshot | 52FB0 | 740 | matched | [assrefpenshot.c](src/engine/faceoff/assrefpenshot.c) | draft: 737 vs 740. Prologue matches and the pfna clear is mov dh, dl. The hidden puck reloads the zero into ax (original dx), so the five stores address through edx. The countdown is add al, 8 (original mov ah, ch; add ah, 8). Do not retry a function-level int, an unnamed reload, or a second pflags shape. |
-| ToFixed | 53294 | 14 | matched | [ToFixed.c](src/engine/collide/ToFixed.c) |  |
-| Sweepcheck | 532A2 | 27 | matched | [Sweepcheck.c](src/engine/collide/Sweepcheck.c) |  |
-| burst | 532BD | 202 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| BlockShotDive | 53387 | 308 | matched | [BlockShotDive.c](src/engine/collide/BlockShotDive.c) |  |
-| TryBlockShot | 534BB | 124 | matched | [TryBlockShot.c](src/engine/collide/TryBlockShot.c) | registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap |
-| check4check | 53537 | 360 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| checkagr | 5369F | 238 | matched | [checkagr.c](src/engine/collide/checkagr.c) |  |
-| FacingBoards | 5378D | 159 | matched | [FacingBoards.c](src/engine/collide/FacingBoards.c) |  |
-| checkcheck | 5382C | 1209 | nonmatching | [checkcheck.c](src/engine/collide/checkcheck.c) |  |
-| checkgoalp | 53CE5 | 389 | nonmatching | [checkgoalp.c](src/engine/collide/checkgoalp.c) | C hoists the wcradiusy load above the SCnum 12 test and swaps esi / edi for p / SCnum; rest of the logic matches |
-| checkint | 53E6A | 290 | matched | [checkint.c](src/engine/collide/checkint.c) |  |
-| checkob | 53F8C | 424 | nonmatching | [checkob.c](src/engine/collide/checkob.c) | draft: 424 vs 424. The far-side player test is cmp ecx,esi / jg; the original is cmp esi,ecx / jl. Do not retry: writing the limit on the left of < hoists that lea out of the loop. |
-| SkillForAnim | 54134 | 150 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| ChkDelayedOffside | 541CA | 192 | matched | [ChkDelayedOffside.c](src/engine/collide/ChkDelayedOffside.c) | tail: je to the shared xor eax,eax vs jne / xor eax,edx (192=192). Inverting the if merged every return into one exit (208). Do not invert again |
-| checkpuckcoll_ccx | 5428A | 1570 | nonmatching | [PassLaneChk.c](src/engine/collide/PassLaneChk.c) | draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md. |
-| checkpuckcoll | 548AC | 228 | matched | [checkpuckcoll.c](src/engine/collide/checkpuckcoll.c) |  |
-| CheckBump | 54990 | 195 | matched | [CheckBump.c](src/engine/collide/CheckBump.c) |  |
-| GetLowestPen | 54A53 | 166 | matched | [checkob.c](src/engine/collide/checkob.c) | unsigned short result, short sum and prev (found by tools/match/permute.py) |
-| chk4lc | 54AF9 | 272 | matched | [checkob.c](src/engine/collide/checkob.c) | draft (checkob.c): 273 vs 272, gameclock in di (original ax) in the energy arm. See UNSURE. |
-| PassLaneChk | 54C09 | 346 | nonmatching | [PassLaneChk.c](src/engine/collide/PassLaneChk.c) | draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx. |
-| ScatterPass | 54D63 | 145 | matched | [ScatterPass.c](src/engine/collide/ScatterPass.c) |  |
-| dopass | 54DF4 | 858 | nonmatching | [dopass.c](src/engine/collide/dopass.c) |  |
-| passmode | 5514E | 97 | matched | [passmode.c](src/engine/collide/passmode.c) |  |
-| setpassmode | 551AF | 32 | matched | [setpassmode.c](src/engine/collide/setpassmode.c) |  |
-| passtoa0 | 551CF | 708 | nonmatching | [passtoa0.c](src/engine/collide/passtoa0.c) |  |
-| chk4pass | 55493 | 881 | matched | [checkob.c](src/engine/collide/checkob.c) | draft: 881 vs 881 in checkob.c, every statement in place; register picks only (puck pointer temps and the opponent loop in edx / ecx in the EXE). See docs/UNSURE.md. |
-| chk4shot | 55804 | 561 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| CompShoot | 55A35 | 106 | matched | [CompShoot.c](src/engine/collide/CompShoot.c) |  |
-| ChkOffsides | 55A9F | 464 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| MarkTwoLinePlayers | 55C6F | 185 | matched | [MarkTwoLinePlayers.c](src/engine/collide/MarkTwoLinePlayers.c) |  |
-| ChkShotStat | 55D28 | 330 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| setInjuryType | 55E72 | 427 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| NetCollide | 5601D | 702 | nonmatching | [PassLaneChk.c](src/engine/collide/PassLaneChk.c) | draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE. |
-| FallDown | 562DB | 1913 | matched | [FallDown.c](src/engine/collide/FallDown.c) |  |
-| Bcheck | 56A54 | 293 | matched | [Bcheck.c](src/engine/collide/Bcheck.c) |  |
-| holdcheck | 56B79 | 397 | matched | [holdcheck.c](src/engine/collide/holdcheck.c) |  |
-| puckbody | 56D06 | 332 | matched | [puckbody.c](src/engine/collide/puckbody.c) |  |
-| PuckIChk | 56E52 | 125 | matched | [PuckIChk.c](src/engine/collide/PuckIChk.c) | draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx |
-| puckshadow | 56ECF | 139 | matched | [puckshadow.c](src/engine/collide/puckshadow.c) |  |
-| puckglue | 56F5A | 316 | matched | [puckglue.c](src/engine/collide/puckglue.c) | 2 regs: asm reads regd0 byte before loading puckc (C loads puckc first); second pucky read in ecx (C eax); crowdlevel clamp needs old level in ax and new in bx (C merges them; same pattern as wallcollb) |
-| puckgoalie | 57096 | 1005 | matched | [puckgoalie.c](src/engine/collide/puckgoalie.c) |  |
-| puckstick | 57483 | 1003 | matched | [PassLaneChk.c](src/engine/collide/PassLaneChk.c) |  |
-| SetShotMode | 5786E | 140 | matched | [SetShotMode.c](src/engine/collide/SetShotMode.c) | draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6 |
-| ShotMode | 578FA | 261 | matched | [ShotMode.c](src/engine/collide/ShotMode.c) |  |
-| Findhittype | 579FF | 63 | matched | [Findhittype.c](src/engine/collide/Findhittype.c) |  |
-| deflect | 57A3E | 90 | matched | [deflect.c](src/engine/collide/deflect.c) |  |
-| shotdiradj | 57A98 | 371 | nonmatching | [dopass.c](src/engine/collide/dopass.c) |  |
-| doshot | 57C0B | 1145 | nonmatching | [dopass.c](src/engine/collide/dopass.c) | same size, 58 differing lines: EXE spills the divisor 3 (frame one dword larger); see docs/UNSURE.md |
+| ToFixed | 53294 | 14 | matched | [ToFixed.c](src/engine/checking/ToFixed.c) |  |
+| Sweepcheck | 532A2 | 27 | matched | [Sweepcheck.c](src/engine/checking/Sweepcheck.c) |  |
+| burst | 532BD | 202 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| BlockShotDive | 53387 | 308 | matched | [BlockShotDive.c](src/engine/checking/BlockShotDive.c) |  |
+| TryBlockShot | 534BB | 124 | matched | [TryBlockShot.c](src/engine/checking/TryBlockShot.c) | registers only: original p in ecx, n in ebx, gmode2 temp in edx; this draft p in ebx, n in edx. 10-min cap |
+| check4check | 53537 | 360 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| checkagr | 5369F | 238 | matched | [checkagr.c](src/engine/checking/checkagr.c) |  |
+| FacingBoards | 5378D | 159 | matched | [FacingBoards.c](src/engine/checking/FacingBoards.c) |  |
+| checkcheck | 5382C | 1209 | nonmatching | [checkcheck.c](src/engine/checking/checkcheck.c) |  |
+| checkgoalp | 53CE5 | 389 | nonmatching | [checkgoalp.c](src/engine/checking/checkgoalp.c) | C hoists the wcradiusy load above the SCnum 12 test and swaps esi / edi for p / SCnum; rest of the logic matches |
+| checkint | 53E6A | 290 | matched | [checkint.c](src/engine/checking/checkint.c) |  |
+| checkob | 53F8C | 424 | nonmatching | [checkob.c](src/engine/pass/checkob.c) | draft: 424 vs 424. The far-side player test is cmp ecx,esi / jg; the original is cmp esi,ecx / jl. Do not retry: writing the limit on the left of < hoists that lea out of the loop. |
+| SkillForAnim | 54134 | 150 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| ChkDelayedOffside | 541CA | 192 | matched | [ChkDelayedOffside.c](src/engine/pass/ChkDelayedOffside.c) | tail: je to the shared xor eax,eax vs jne / xor eax,edx (192=192). Inverting the if merged every return into one exit (208). Do not invert again |
+| checkpuckcoll_ccx | 5428A | 1570 | nonmatching | [PassLaneChk.c](src/engine/pass/PassLaneChk.c) | draft: 1570 vs 1570 in PassLaneChk.c, every statement in place. The EXE keeps reach / half size / box size in edi and speed / |dy| / box limit in esi; the draft swaps them (the variable with more uses gets esi). See docs/UNSURE.md. |
+| checkpuckcoll | 548AC | 228 | matched | [checkpuckcoll.c](src/engine/pass/checkpuckcoll.c) |  |
+| CheckBump | 54990 | 195 | matched | [CheckBump.c](src/engine/pass/CheckBump.c) |  |
+| GetLowestPen | 54A53 | 166 | matched | [checkob.c](src/engine/pass/checkob.c) | unsigned short result, short sum and prev (found by tools/match/permute.py) |
+| chk4lc | 54AF9 | 272 | matched | [checkob.c](src/engine/pass/checkob.c) | draft (checkob.c): 273 vs 272, gameclock in di (original ax) in the energy arm. See UNSURE. |
+| PassLaneChk | 54C09 | 346 | nonmatching | [PassLaneChk.c](src/engine/pass/PassLaneChk.c) | draft: 344 vs 346. The side copy is mov esi,edi (original mov edx,edi), so the team-mate y stays in edx. The other gap is inc esi versus lea eax,[esi+1]. Do not retry: declaring limit first produced movzx edi; declaring oy before side did not move the copy to edx. |
+| ScatterPass | 54D63 | 145 | matched | [ScatterPass.c](src/engine/pass/ScatterPass.c) |  |
+| dopass | 54DF4 | 858 | nonmatching | [dopass.c](src/engine/pass/dopass.c) |  |
+| passmode | 5514E | 97 | matched | [passmode.c](src/engine/pass/passmode.c) |  |
+| setpassmode | 551AF | 32 | matched | [setpassmode.c](src/engine/pass/setpassmode.c) |  |
+| passtoa0 | 551CF | 708 | nonmatching | [passtoa0.c](src/engine/pass/passtoa0.c) |  |
+| chk4pass | 55493 | 881 | matched | [checkob.c](src/engine/pass/checkob.c) | draft: 881 vs 881 in checkob.c, every statement in place; register picks only (puck pointer temps and the opponent loop in edx / ecx in the EXE). See docs/UNSURE.md. |
+| chk4shot | 55804 | 561 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| CompShoot | 55A35 | 106 | matched | [CompShoot.c](src/engine/shoot/CompShoot.c) |  |
+| ChkOffsides | 55A9F | 464 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| MarkTwoLinePlayers | 55C6F | 185 | matched | [MarkTwoLinePlayers.c](src/engine/shoot/MarkTwoLinePlayers.c) |  |
+| ChkShotStat | 55D28 | 330 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| setInjuryType | 55E72 | 427 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| NetCollide | 5601D | 702 | nonmatching | [PassLaneChk.c](src/engine/pass/PassLaneChk.c) | draft (PassLaneChk.c): 714 vs 700, first pass. See UNSURE. |
+| FallDown | 562DB | 1913 | matched | [FallDown.c](src/engine/bodycheck/FallDown.c) |  |
+| Bcheck | 56A54 | 293 | matched | [Bcheck.c](src/engine/bodycheck/Bcheck.c) |  |
+| holdcheck | 56B79 | 397 | matched | [holdcheck.c](src/engine/bodycheck/holdcheck.c) |  |
+| puckbody | 56D06 | 332 | matched | [puckbody.c](src/engine/puckphys/puckbody.c) |  |
+| PuckIChk | 56E52 | 125 | matched | [PuckIChk.c](src/engine/puckphys/PuckIChk.c) | draft: asm keeps |x| work in ebx (saves ebx, frame 8); ours saves edx |
+| puckshadow | 56ECF | 139 | matched | [puckshadow.c](src/engine/puckphys/puckshadow.c) |  |
+| puckglue | 56F5A | 316 | matched | [puckglue.c](src/engine/puckphys/puckglue.c) | 2 regs: asm reads regd0 byte before loading puckc (C loads puckc first); second pucky read in ecx (C eax); crowdlevel clamp needs old level in ax and new in bx (C merges them; same pattern as wallcollb) |
+| puckgoalie | 57096 | 1005 | matched | [puckgoalie.c](src/engine/puckphys/puckgoalie.c) |  |
+| puckstick | 57483 | 1003 | matched | [PassLaneChk.c](src/engine/pass/PassLaneChk.c) |  |
+| SetShotMode | 5786E | 140 | matched | [SetShotMode.c](src/engine/puckphys/SetShotMode.c) | draft: vtoa result copied to edx before the regd0 store; asm stores ax then movsx edx,ax after word_C90A6 |
+| ShotMode | 578FA | 261 | matched | [ShotMode.c](src/engine/puckphys/ShotMode.c) |  |
+| Findhittype | 579FF | 63 | matched | [Findhittype.c](src/engine/puckphys/Findhittype.c) |  |
+| deflect | 57A3E | 90 | matched | [deflect.c](src/engine/puckphys/deflect.c) |  |
+| shotdiradj | 57A98 | 371 | nonmatching | [dopass.c](src/engine/pass/dopass.c) |  |
+| doshot | 57C0B | 1145 | nonmatching | [dopass.c](src/engine/pass/dopass.c) | same size, 58 differing lines: EXE spills the divisor 3 (frame one dword larger); see docs/UNSURE.md |
 | newcheck | 58084 | 113 | matched | [newcheck.c](src/engine/collide/newcheck.c) |  |
 | checkcoll | 580F5 | 468 | matched | [checkcoll.c](src/engine/collide/checkcoll.c) | draft: 479 vs 468. x is saved in edi and y in esi. The original saves x in esi and y in edi, so the swap needs a third mov. Do not retry: short parameters, or copying x then y into locals (saves ebp, cookie 18h). |
 | checkwallcoll | 582C9 | 481 | nonmatching | [checkwallcoll.c](src/engine/collide/checkwallcoll.c) | draft: 470 vs 481. xlim reloads in edx (original ecx). The x test negates that limit in ecx and compares dx with cx; the original negates it in edx, reloads x, and compares with regd4 in memory. Do not retry: non-volatile limits sign-extend the radii and spill y. Declaring ylim before xlim swaps the two stack slots. |
 | checkgoal | 584AA | 809 | nonmatching | [checkgoal.c](src/engine/collide/checkgoal.c) | draft: 809 vs 809, 192/203 instructions; bounce temp and zero registers. See UNSURE. |
-| wallcoll | 587D3 | 940 | nonmatching | [dopass.c](src/engine/collide/dopass.c) | same size, 8 differing lines (two are the owner-tail jumps); see docs/UNSURE.md |
+| wallcoll | 587D3 | 940 | nonmatching | [dopass.c](src/engine/pass/dopass.c) | same size, 8 differing lines (two are the owner-tail jumps); see docs/UNSURE.md |
 | wallcollb | 58B7F | 355 | matched | [wallcollb.c](src/engine/collide/wallcollb.c) | register pressure: asm saves ecx/edx/edi (Zpos/Yvel kept in cx, half Yvel in di, crowdlevel in dx/cx); C keeps everything in eax and saves only ebx/edx; tried local orders |
 | checkplcoll | 58CE2 | 229 | nonmatching | [checkplcoll.c](src/engine/collide/checkplcoll.c) | stack slots: asm spills x (word) at [esp] and y at [esp+4]; C swaps the two slots; rest matches |
 | checkcx | 58DC7 | 1024 | nonmatching | [checkcx.c](src/engine/collide/checkcx.c) |  |
-| CPgoalie | 591C7 | 158 | matched | [CPgoalie.c](src/engine/collide/CPgoalie.c) |  |
-| ChkGoalies | 59265 | 237 | matched | [ChkGoalies.c](src/engine/collide/ChkGoalies.c) | draft: other-team pointer stays in edx (original esi). Declaring it first did not swap. Do not retry declaration order. |
-| ReturnGoalies | 59352 | 163 | matched | [checkob.c](src/engine/collide/checkob.c) |  |
-| ChkPullGoalieLate | 593F5 | 158 | matched | [ChkPullGoalieLate.c](src/engine/collide/ChkPullGoalieLate.c) |  |
+| CPgoalie | 591C7 | 158 | matched | [CPgoalie.c](src/engine/goaliepull/CPgoalie.c) |  |
+| ChkGoalies | 59265 | 237 | matched | [ChkGoalies.c](src/engine/goaliepull/ChkGoalies.c) | draft: other-team pointer stays in edx (original esi). Declaring it first did not swap. Do not retry declaration order. |
+| ReturnGoalies | 59352 | 163 | matched | [checkob.c](src/engine/pass/checkob.c) |  |
+| ChkPullGoalieLate | 593F5 | 158 | matched | [ChkPullGoalieLate.c](src/engine/goaliepull/ChkPullGoalieLate.c) |  |
 | SndLoadFile SndLoadFile2 | 59493 | 58 | matched | [SndLoadFile.c](src/engine/sound/SndLoadFile.c) |  |
 | Crowd_Noise | 594CD | 635 | matched | [Crowd_Noise.c](src/engine/sound/Crowd_Noise.c) |  |
 | CrowdNoiseOff | 59748 | 155 | matched | [CrowdNoiseOff.c](src/engine/sound/CrowdNoiseOff.c) |  |
@@ -651,58 +651,58 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | PaPlayoffTonight | 59D16 | 62 | matched | [PaPlayoffTonight.c](src/engine/sound/PaPlayoffTonight.c) |  |
 | PaOpenBank | 59D54 | 29 | matched | [PaOpenBank.c](src/engine/sound/PaOpenBank.c) |  |
 | PaPreloadClips | 59D71 | 41 | matched | [PaPreloadClips.c](src/engine/sound/PaPreloadClips.c) |  |
-| SetSPA | 59D9A | 33 | matched | [SetSPA.c](src/engine/hockey/SetSPA.c) |  |
-| SprSort_loop | 59DBB | 174 | matched | [SetSPA.c](src/engine/hockey/SetSPA.c) |  |
-| changeplayer | 59E69 | 376 | nonmatching | [changeplayer.c](src/engine/hockey/changeplayer.c) | Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5) |
-| restorepl | 59FE1 | 90 | matched | [restorepl.c](src/engine/hockey/restorepl.c) |  |
-| AvgCline | 5A03B | 104 | matched | [AvgCline.c](src/engine/hockey/AvgCline.c) |  |
-| CompLine | 5A0A3 | 485 | matched | [CompLine.c](src/engine/hockey/CompLine.c) | draft: 482 vs 485. other is in esi and the line is in ecx when the pointer copy is declared first. diff stays in ax, not di. The flag byte is in al, not ah. The first getlinee widens with movsx esi,cx / mov edx,esi. line+1 is lea edx,[esi+1] then inc ecx, not a copy incremented in edi. The saved line is at esp+4 and the best energy at esp+0. The side bool is and eax,0xff, not xor ah,ah / cwde. tmlcnt is incremented in eax. Do not retry a stack struct for those two slots (it pushes ebp). |
-| getlinee_pp | 5A288 | 102 | matched | [CompLine.c](src/engine/hockey/CompLine.c) |  |
-| TeamLineEnergy | 5A2EE | 30 | matched | [CompLine.c](src/engine/hockey/CompLine.c) | in CompLine.c before getlinee, marked --end getlinee: it falls through into getlinee's entry (a tail call to the next function) |
-| getlinee | 5A30C | 53 | matched | [CompLine.c](src/engine/hockey/CompLine.c) | draft (CompLine.c; split as in the EXE: entry after TeamLineEnergy, getlinee_pp / getlinee_sum before it): register picks (the EXE keeps line in ecx and loads the line table into edx in the 6-and-up arm) |
-| findpc | 5A341 | 228 | matched | [findpc.c](src/engine/hockey/findpc.c) | body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (Goal, SetPlList ...): they belong in this file; reenergizeteam already matches here because frag resolves the jump to the unique tail bytes of the draft |
-| GetHot | 5A425 | 136 | matched | [findpc.c](src/engine/hockey/findpc.c) | regd0.w = HotList[f] with no temporary (found by tools/match/permute.py) |
-| GetHotStick | 5A4AD | 135 | matched | [GetHotStick.c](src/engine/hockey/GetHotStick.c) | 1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches |
-| GetHotOrStick | 5A534 | 77 | matched | [GetHotOrStick.c](src/engine/hockey/GetHotOrStick.c) |  |
-| SetCoachMode | 5A581 | 232 | matched | [SetCoachMode.c](src/engine/hockey/SetCoachMode.c) | 1 spot: away side compares d with cwde/eax (asm) where C copies it to ebx (movsx); rest matches. Returns d (short) |
-| InitCoachModes | 5A669 | 275 | matched | [InitCoachModes.c](src/engine/hockey/InitCoachModes.c) |  |
-| UpdateCoachModes | 5A77C | 818 | matched | [UpdateCoachModes.c](src/engine/hockey/UpdateCoachModes.c) | draft: 818 vs 818 (best of 4). Every instruction matches except the duplicated line count: mov bh,3 where the original is mov cl,3. A named unsigned char, a chained assignment, a reload, a block scope and ~1 stay on bh. An int or short for that 3 is mov eax,3 and shifts the period-2 byte temps. Naming the period-2 decrement stores in place (dec bl). Do not retry those. |
-| PenTeamScored | 5AAAE | 136 | matched | [PenTeamScored.c](src/engine/hockey/PenTeamScored.c) |  |
-| Goal | 5AB36 | 1688 | matched | [findpc.c](src/engine/hockey/findpc.c) | draft: 1688 vs 1688 in calcpuckcross.c. Left: the PP goal stat index in edx (EXE eax) and the goalie lookup loading tmgoalie before tmlines. See docs/UNSURE.md. |
-| GiveControl | 5B1CE | 202 | matched | [GiveControl.c](src/engine/hockey/GiveControl.c) | 3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail) |
-| Setplass | 5B298 | 45 | matched | [Setplass.c](src/engine/hockey/Setplass.c) |  |
-| setplayer | 5B2C5 | 1377 | nonmatching | [changeplayer.c](src/engine/hockey/changeplayer.c) | same size, 106 differing lines: team pointer in esi (EXE ecx); see docs/UNSURE.md |
-| reenergizeteam | 5B826 | 91 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
-| clearteams | 5B881 | 249 | matched | [clearteams.c](src/engine/hockey/clearteams.c) |  |
-| restoreteams | 5B97A | 87 | matched | [restoreteams.c](src/engine/hockey/restoreteams.c) |  |
+| SetSPA | 59D9A | 33 | matched | [SetSPA.c](src/engine/chgplayer/SetSPA.c) |  |
+| SprSort_loop | 59DBB | 174 | matched | [SetSPA.c](src/engine/chgplayer/SetSPA.c) |  |
+| changeplayer | 59E69 | 376 | nonmatching | [changeplayer.c](src/engine/chgplayer/changeplayer.c) | Same instructions and branch layout (370 bytes), only allocation differs: the original spills cont at [esp+4] (px [esp], py [esp+8]) and uses edx for the 6-player counter, ebx/ecx for dx/dy, si for SCnum, cx for c1/c2playernum; this draft puts cont at [esp+8] and the counter in ecx. Declaration order (120 permutations) does not change it. File also hosts setplayer / DrawRinkOverlays (share changeplayer_ret5) |
+| restorepl | 59FE1 | 90 | matched | [restorepl.c](src/engine/chgplayer/restorepl.c) |  |
+| AvgCline | 5A03B | 104 | matched | [AvgCline.c](src/engine/autolines/AvgCline.c) |  |
+| CompLine | 5A0A3 | 485 | matched | [CompLine.c](src/engine/autolines/CompLine.c) | draft: 482 vs 485. other is in esi and the line is in ecx when the pointer copy is declared first. diff stays in ax, not di. The flag byte is in al, not ah. The first getlinee widens with movsx esi,cx / mov edx,esi. line+1 is lea edx,[esi+1] then inc ecx, not a copy incremented in edi. The saved line is at esp+4 and the best energy at esp+0. The side bool is and eax,0xff, not xor ah,ah / cwde. tmlcnt is incremented in eax. Do not retry a stack struct for those two slots (it pushes ebp). |
+| getlinee_pp | 5A288 | 102 | matched | [CompLine.c](src/engine/autolines/CompLine.c) |  |
+| TeamLineEnergy | 5A2EE | 30 | matched | [CompLine.c](src/engine/autolines/CompLine.c) | in CompLine.c before getlinee, marked --end getlinee: it falls through into getlinee's entry (a tail call to the next function) |
+| getlinee | 5A30C | 53 | matched | [CompLine.c](src/engine/autolines/CompLine.c) | draft (CompLine.c; split as in the EXE: entry after TeamLineEnergy, getlinee_pp / getlinee_sum before it): register picks (the EXE keeps line in ecx and loads the line table into edx in the 6-and-up arm) |
+| findpc | 5A341 | 228 | matched | [findpc.c](src/engine/control/findpc.c) | body 2 bytes short: the original keeps x in ebx and side in ecx and stores x with 16-bit mov bx,dx; this draft swaps the two registers and uses mov ebx,edx (declaration order did not change it). Its pop/ret tail (calcpuckcross_ret5/6) is shared by ~14 engine_core functions (Goal, SetPlList ...): they belong in this file; reenergizeteam already matches here because frag resolves the jump to the unique tail bytes of the draft |
+| GetHot | 5A425 | 136 | matched | [findpc.c](src/engine/control/findpc.c) | regd0.w = HotList[f] with no temporary (found by tools/match/permute.py) |
+| GetHotStick | 5A4AD | 135 | matched | [GetHotStick.c](src/engine/control/GetHotStick.c) | 1 register: the X-flip negate goes through a fresh esi (mov esi,ebx / neg esi), same open issue as GetHot; rest matches |
+| GetHotOrStick | 5A534 | 77 | matched | [GetHotOrStick.c](src/engine/control/GetHotOrStick.c) |  |
+| SetCoachMode | 5A581 | 232 | matched | [SetCoachMode.c](src/engine/coach/SetCoachMode.c) | 1 spot: away side compares d with cwde/eax (asm) where C copies it to ebx (movsx); rest matches. Returns d (short) |
+| InitCoachModes | 5A669 | 275 | matched | [InitCoachModes.c](src/engine/coach/InitCoachModes.c) |  |
+| UpdateCoachModes | 5A77C | 818 | matched | [UpdateCoachModes.c](src/engine/coach/UpdateCoachModes.c) | draft: 818 vs 818 (best of 4). Every instruction matches except the duplicated line count: mov bh,3 where the original is mov cl,3. A named unsigned char, a chained assignment, a reload, a block scope and ~1 stay on bh. An int or short for that 3 is mov eax,3 and shifts the period-2 byte temps. Naming the period-2 decrement stores in place (dec bl). Do not retry those. |
+| PenTeamScored | 5AAAE | 136 | matched | [PenTeamScored.c](src/engine/goal/PenTeamScored.c) |  |
+| Goal | 5AB36 | 1688 | matched | [findpc.c](src/engine/control/findpc.c) | draft: 1688 vs 1688 in calcpuckcross.c. Left: the PP goal stat index in edx (EXE eax) and the goalie lookup loading tmgoalie before tmlines. See docs/UNSURE.md. |
+| GiveControl | 5B1CE | 202 | matched | [GiveControl.c](src/engine/goal/GiveControl.c) | 3 bytes short, same branch layout: the original loads regd1 into cx on the pad-1-first path and into si on the pad-2-first path (push esi, __CHK 14h) and keeps c2playernum in bx; this draft uses one register for both. Without the c2 local the layout breaks (no cross-jump into the pad 2 tail) |
+| Setplass | 5B298 | 45 | matched | [Setplass.c](src/engine/goal/Setplass.c) |  |
+| setplayer | 5B2C5 | 1377 | nonmatching | [changeplayer.c](src/engine/chgplayer/changeplayer.c) | same size, 106 differing lines: team pointer in esi (EXE ecx); see docs/UNSURE.md |
+| reenergizeteam | 5B826 | 91 | matched | [findpc.c](src/engine/control/findpc.c) |  |
+| clearteams | 5B881 | 249 | matched | [clearteams.c](src/engine/goal/clearteams.c) |  |
+| restoreteams | 5B97A | 87 | matched | [restoreteams.c](src/engine/goal/restoreteams.c) |  |
 | GetPeriodTime | 5B9D1 | 54 | matched | [GetPeriodTime.c](src/engine/hockey/GetPeriodTime.c) |  |
 | ResetClock | 5BA07 | 71 | matched | [ResetClock.c](src/engine/hockey/ResetClock.c) | 2 bytes long: the original keeps the clockticks zero in edx (only push edx, __CHK 8); every variant tried (temp, chained stores, PerTimeTotal/2, int temp) zeroes ebx and saves it too (__CHK 0Ch). Maybe randomd0/GetPeriodTime were declared with other types in the original file |
 | ClearSortCords | 5BA4E | 59 | matched | [ClearSortCords.c](src/engine/hockey/ClearSortCords.c) |  |
-| defaultsprites_0 | 5BA89 | 277 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
+| defaultsprites_0 | 5BA89 | 277 | matched | [findpc.c](src/engine/control/findpc.c) |  |
 | TryAddPlayerToList | 5BB9E | 92 | matched | [TryAddPlayerToList.c](src/engine/hockey/TryAddPlayerToList.c) | same size, register choice only: the original computes &tmpdst[pl] in edx (add edx,eax) and indexes PlList[slot] with edx; this draft uses eax for both. Tried a tmpdst pointer, < -2, int i, nested if: no change or worse |
-| SetPlList | 5BBFA | 762 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
-| setpersonel | 5BEF4 | 284 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
-| StartPer | 5C010 | 436 | matched | [findpc.c](src/engine/hockey/findpc.c) | 3 bytes short: the original keeps cont1team in si and cont2team in bx (push ebx), then reuses ebx for -1, ecx for 0 (bannertimer, crowdlevel) and builds fox with xor edi,edi / xor edi,edx; this draft reloads the globals into ax. Locals for the two teams did not change it |
+| SetPlList | 5BBFA | 762 | matched | [findpc.c](src/engine/control/findpc.c) |  |
+| setpersonel | 5BEF4 | 284 | matched | [findpc.c](src/engine/control/findpc.c) |  |
+| StartPer | 5C010 | 436 | matched | [findpc.c](src/engine/control/findpc.c) | 3 bytes short: the original keeps cont1team in si and cont2team in bx (push ebx), then reuses ebx for -1, ecx for 0 (bannertimer, crowdlevel) and builds fox with xor edi,edi / xor edi,edx; this draft reloads the globals into ax. Locals for the two teams did not change it |
 | DoGameFrame | 5C1C4 | 30 | matched | [DoGameFrame.c](src/engine/hockey/DoGameFrame.c) |  |
 | RestoreBenchEnergy | 5C1E2 | 102 | matched | [RestoreBenchEnergy.c](src/engine/hockey/RestoreBenchEnergy.c) |  |
 | updatecrowdf | 5C248 | 186 | matched | [updatecrowdf.c](src/engine/hockey/updatecrowdf.c) | 2 bytes short, only the randomd0 result register: the original widens it with movsx edx,ax and compares edx, this draft does cwde / eax. Tried int/short r, n reused, if/switch/return, a sound-number local. The (1000-crowdlevel)/4 clamp needs int t then short n = t |
 | periodicevents | 5C302 | 269 | matched | [periodicevents.c](src/engine/hockey/periodicevents.c) | draft: (signed char)--lldisp matches test dl,dl. The add is add al,18h (2) vs add bl,18h (3). A second byte local copied before the test. Do not retry those. |
-| updateplayers | 5C40F | 1760 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
-| updateanim | 5CAEF | 566 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
+| updateplayers | 5C40F | 1760 | matched | [findpc.c](src/engine/control/findpc.c) |  |
+| updateanim | 5CAEF | 566 | matched | [findpc.c](src/engine/control/findpc.c) |  |
 | freezewindow | 5CD25 | 42 | matched | [freezewindow.c](src/engine/hockey/freezewindow.c) |  |
 | cleargamevars | 5CD4F | 195 | matched | [cleargamevars.c](src/engine/hockey/cleargamevars.c) |  |
-| DrawRinkOverlays | 5CE12 | 2533 | nonmatching | [changeplayer.c](src/engine/hockey/changeplayer.c) | 4 bytes short, 105 differing lines: y1 / clip temp slots, arrow index hoisted; see docs/UNSURE.md |
+| DrawRinkOverlays | 5CE12 | 2533 | nonmatching | [changeplayer.c](src/engine/chgplayer/changeplayer.c) | 4 bytes short, 105 differing lines: y1 / clip temp slots, arrow index hoisted; see docs/UNSURE.md |
 | setupice | 5D7F7 | 91 | matched | [setupice.c](src/engine/hockey/setupice.c) |  |
-| clockcont_0 | 5D852 | 958 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
+| clockcont_0 | 5D852 | 958 | matched | [findpc.c](src/engine/control/findpc.c) |  |
 | ClockTick | 5DC10 | 347 | matched | [ClockTick.c](src/engine/hockey/ClockTick.c) | register allocation: C needs esi as well (asm gets by with ebx/ecx/edx/edi); the gameclock check order also differs |
-| SprSort SprSortVert | 5DD6B | 51 | matched | [SetSPA.c](src/engine/hockey/SetSPA.c) |  |
+| SprSort SprSortVert | 5DD6B | 51 | matched | [SetSPA.c](src/engine/chgplayer/SetSPA.c) |  |
 | GameOver | 5DD9E | 30 | matched | [GameOver.c](src/engine/hockey/GameOver.c) |  |
 | SetExitGame | 5DDBC | 30 | matched | [SetExitGame.c](src/engine/hockey/SetExitGame.c) |  |
 | SetupTeamForIntermission | 5DDDA | 104 | matched | [SetupTeamForIntermission.c](src/engine/hockey/SetupTeamForIntermission.c) |  |
 | Intermission | 5DE42 | 46 | matched | [Intermission.c](src/engine/hockey/Intermission.c) |  |
 | PeriodOver_sp | 5DE70 | 54 | matched | [PeriodOver_sp.c](src/engine/hockey/PeriodOver_sp.c) |  |
 | PeriodOver | 5DEA6 | 224 | matched | [PeriodOver.c](src/engine/hockey/PeriodOver.c) |  |
-| ResetBench | 5DF86 | 148 | matched | [findpc.c](src/engine/hockey/findpc.c) |  |
+| ResetBench | 5DF86 | 148 | matched | [findpc.c](src/engine/control/findpc.c) |  |
 | resetplstuff | 5E01A | 108 | matched | [resetplstuff.c](src/engine/hockey/resetplstuff.c) |  |
 | StartGame | 5E086 | 42 | matched | [StartGame.c](src/engine/hockey/StartGame.c) |  |
 | forceteams forcepldata | 5E0B0 | 189 | matched | [forceteams.c](src/engine/hockey/forceteams.c) |  |
@@ -823,32 +823,32 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | CarTeamRecPtr | 6CB6B | 37 | matched | [CarTeamRecPtr.c](src/pc/league_db/CarTeamRecPtr.c) |  |
 | TeamRecPtr | 6CB90 | 39 | matched | [TeamRecPtr.c](src/pc/league_db/TeamRecPtr.c) |  |
 | KeyDbPtr SeasonDbPtr SeasonDbPtr2 CareerDbPtr CareerDbPtr2 AttDbPtr AttDbPtr2 | 6CBB7 | 105 | matched | [KeyDbPtr.c](src/pc/league_db/KeyDbPtr.c) |  |
-| RunEditRosters | 6CC20 | 731 | matched | [RunEditRosters.c](src/front/create/RunEditRosters.c) |  |
-| RunEditRosters | 6CC20 | 731 | context | [ShellSortBytes.c](src/front/create/ShellSortBytes.c) | compile context; matched in src/front/create/RunEditRosters.c |
-| DrawRosterTitle | 6CEFB | 116 | matched | [DrawRosterTitle.c](src/front/create/DrawRosterTitle.c) | draft: x/y params in esi/edi swapped vs asm |
-| DrawRosterList | 6CF6F | 743 | matched | [DrawRosterList.c](src/front/create/DrawRosterList.c) |  |
-| DrawDatabaseName | 6D256 | 67 | matched | [DrawDatabaseName.c](src/front/create/DrawDatabaseName.c) |  |
-| DrawRosterPanel | 6D299 | 95 | matched | [DrawRosterPanel.c](src/front/create/DrawRosterPanel.c) |  |
-| DrawEditRosters | 6D2F8 | 707 | matched | [RunEditRosters.c](src/front/create/RunEditRosters.c) |  |
-| EditRostersReturn | 6D5BB | 21 | matched | [EditRostersReturn.c](src/front/create/EditRostersReturn.c) |  |
-| SelectRosterTeam | 6D5D0 | 267 | nonmatching | [RunEditRosters.c](src/front/create/RunEditRosters.c) | draft (RunEditRosters.c): 267 vs 267, ebx/edx swapped in the new team item clear. See UNSURE. |
-| ShowFreeAgents | 6D6DB | 176 | matched | [RunEditRosters.c](src/front/create/RunEditRosters.c) |  |
-| ComparePlayerEntry | 6D78B | 98 | matched | [ComparePlayerEntry.c](src/front/create/ComparePlayerEntry.c) |  |
-| ShellSortBytes | 6D7ED | 173 | matched | [ShellSortBytes.c](src/front/create/ShellSortBytes.c) |  |
-| LoadRosterList_fa | 6D89A | 244 | matched | [ShellSortBytes.c](src/front/create/ShellSortBytes.c) |  |
-| LoadRosterList_team | 6D98E | 250 | matched | [ShellSortBytes.c](src/front/create/ShellSortBytes.c) |  |
-| CountSelected | 6DA88 | 59 | matched | [CountSelected.c](src/front/create/CountSelected.c) | original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap |
-| RosterPanelClick | 6DAC3 | 507 | nonmatching | [RosterPanelClick.c](src/front/create/RosterPanelClick.c) | draft: 507 vs 507. The free-agent toggle folds falistsel into edi (add edi,eax / mov al,[edi]) where the original is mov dl,[edi+eax]. A named pointer and a split byte local still fold. Do not retry fa[row] = ~fa[row] or bit = ~fa[row]. |
-| FixJerseyNumber | 6DCBE | 398 | matched | [RosterPanelClick.c](src/front/create/RosterPanelClick.c) | draft (RosterPanelClick.c): 399 vs 398, loop register pair. See UNSURE. |
-| CopyRoster1Rec | 6DE4C | 50 | matched | [CopyRoster1Rec.c](src/front/create/CopyRoster1Rec.c) |  |
-| LoadRosterList LoadBothRosterLists | 6DE7E | 136 | matched | [ShellSortBytes.c](src/front/create/ShellSortBytes.c) |  |
-| EditTeamLines | 6DF06 | 387 | matched | [RunEditRosters.c](src/front/create/RunEditRosters.c) |  |
-| EditRosters | 6E089 | 2604 | nonmatching | [EditRosters.c](src/front/create/EditRosters.c) | draft (own file): 2581 vs 2604, 382 lines (register picks). See docs/UNSURE.md. |
-| ErrorScreenWait | 6EAB5 | 480 | matched | [ErrorScreenWait.c](src/front/create/ErrorScreenWait.c) |  |
-| DrawDBErrorsScreen | 6EC95 | 164 | matched | [DrawDBErrorsScreen.c](src/front/create/DrawDBErrorsScreen.c) |  |
-| ShowDBError | 6ED39 | 86 | matched | [ShowDBError.c](src/front/create/ShowDBError.c) |  |
-| CheckTeamLines | 6ED8F | 501 | matched | [CheckTeamLines.c](src/front/create/CheckTeamLines.c) |  |
-| CheckDatabases | 6EF84 | 469 | matched | [CheckDatabases.c](src/front/create/CheckDatabases.c) | draft: 463 vs 469. skaters is zeroed in edi and defense in ebp, back to back. The original zeros skaters in ebp, stores goalies, zeros the index, stores forwards, then zeros defense in edi. The skater id is a scaled load into eax. The original is shl eax,2 / add eax,esi / mov ecx,[eax+4Ch] / mov eax,ecx. Do not retry: a line pointer swaps ebp and edi; without it the scans are cmp [edx+esi+disp] (451 bytes). rec+i*4+4Ch, line=rec+i*4, off=i<<2, and slot+=i<<2 all fold into the scaled load. |
+| RunEditRosters | 6CC20 | 731 | matched | [RunEditRosters.c](src/front/rosters/RunEditRosters.c) |  |
+| RunEditRosters | 6CC20 | 731 | context | [ShellSortBytes.c](src/front/rosters/ShellSortBytes.c) | compile context; matched in src/front/rosters/RunEditRosters.c |
+| DrawRosterTitle | 6CEFB | 116 | matched | [DrawRosterTitle.c](src/front/rosters/DrawRosterTitle.c) | draft: x/y params in esi/edi swapped vs asm |
+| DrawRosterList | 6CF6F | 743 | matched | [DrawRosterList.c](src/front/rosters/DrawRosterList.c) |  |
+| DrawDatabaseName | 6D256 | 67 | matched | [DrawDatabaseName.c](src/front/rosters/DrawDatabaseName.c) |  |
+| DrawRosterPanel | 6D299 | 95 | matched | [DrawRosterPanel.c](src/front/rosters/DrawRosterPanel.c) |  |
+| DrawEditRosters | 6D2F8 | 707 | matched | [RunEditRosters.c](src/front/rosters/RunEditRosters.c) |  |
+| EditRostersReturn | 6D5BB | 21 | matched | [EditRostersReturn.c](src/front/rosters/EditRostersReturn.c) |  |
+| SelectRosterTeam | 6D5D0 | 267 | nonmatching | [RunEditRosters.c](src/front/rosters/RunEditRosters.c) | draft (RunEditRosters.c): 267 vs 267, ebx/edx swapped in the new team item clear. See UNSURE. |
+| ShowFreeAgents | 6D6DB | 176 | matched | [RunEditRosters.c](src/front/rosters/RunEditRosters.c) |  |
+| ComparePlayerEntry | 6D78B | 98 | matched | [ComparePlayerEntry.c](src/front/rosters/ComparePlayerEntry.c) |  |
+| ShellSortBytes | 6D7ED | 173 | matched | [ShellSortBytes.c](src/front/rosters/ShellSortBytes.c) |  |
+| LoadRosterList_fa | 6D89A | 244 | matched | [ShellSortBytes.c](src/front/rosters/ShellSortBytes.c) |  |
+| LoadRosterList_team | 6D98E | 250 | matched | [ShellSortBytes.c](src/front/rosters/ShellSortBytes.c) |  |
+| CountSelected | 6DA88 | 59 | matched | [CountSelected.c](src/front/rosters/CountSelected.c) | original keeps the list pointer in edx and the count in eax; this draft swaps them. 10-min cap |
+| RosterPanelClick | 6DAC3 | 507 | nonmatching | [RosterPanelClick.c](src/front/rosters/RosterPanelClick.c) | draft: 507 vs 507. The free-agent toggle folds falistsel into edi (add edi,eax / mov al,[edi]) where the original is mov dl,[edi+eax]. A named pointer and a split byte local still fold. Do not retry fa[row] = ~fa[row] or bit = ~fa[row]. |
+| FixJerseyNumber | 6DCBE | 398 | matched | [RosterPanelClick.c](src/front/rosters/RosterPanelClick.c) | draft (RosterPanelClick.c): 399 vs 398, loop register pair. See UNSURE. |
+| CopyRoster1Rec | 6DE4C | 50 | matched | [CopyRoster1Rec.c](src/front/rosters/CopyRoster1Rec.c) |  |
+| LoadRosterList LoadBothRosterLists | 6DE7E | 136 | matched | [ShellSortBytes.c](src/front/rosters/ShellSortBytes.c) |  |
+| EditTeamLines | 6DF06 | 387 | matched | [RunEditRosters.c](src/front/rosters/RunEditRosters.c) |  |
+| EditRosters | 6E089 | 2604 | nonmatching | [EditRosters.c](src/front/rosters/EditRosters.c) | draft (own file): 2581 vs 2604, 382 lines (register picks). See docs/UNSURE.md. |
+| ErrorScreenWait | 6EAB5 | 480 | matched | [ErrorScreenWait.c](src/front/dbcheck/ErrorScreenWait.c) |  |
+| DrawDBErrorsScreen | 6EC95 | 164 | matched | [DrawDBErrorsScreen.c](src/front/dbcheck/DrawDBErrorsScreen.c) |  |
+| ShowDBError | 6ED39 | 86 | matched | [ShowDBError.c](src/front/dbcheck/ShowDBError.c) |  |
+| CheckTeamLines | 6ED8F | 501 | matched | [CheckTeamLines.c](src/front/dbcheck/CheckTeamLines.c) |  |
+| CheckDatabases | 6EF84 | 469 | matched | [CheckDatabases.c](src/front/dbcheck/CheckDatabases.c) | draft: 463 vs 469. skaters is zeroed in edi and defense in ebp, back to back. The original zeros skaters in ebp, stores goalies, zeros the index, stores forwards, then zeros defense in edi. The skater id is a scaled load into eax. The original is shl eax,2 / add eax,esi / mov ecx,[eax+4Ch] / mov eax,ecx. Do not retry: a line pointer swaps ebp and edi; without it the scans are cmp [edx+esi+disp] (451 bytes). rec+i*4+4Ch, line=rec+i*4, off=i<<2, and slot+=i<<2 all fold into the scaled load. |
 | SplitPlayerName | 6F159 | 323 | matched | [SplitPlayerName.c](src/front/create/SplitPlayerName.c) | same 323. stop/first/last match at esp+0/+4/+8 as one struct. Name is in edi (original ecx), so the copy count stays in ebx (original edx). Do not retry an aux that forces ecx. |
 | MoveToOtherRoster | 6F29C | 1041 | nonmatching | [MoveToOtherRoster.c](src/front/create/MoveToOtherRoster.c) |  |
 | RatingToFloat | 6F6AD | 39 | matched | [RatingToFloat.c](src/front/create/RatingToFloat.c) |  |
@@ -862,14 +862,14 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | DrawCreatePlayer | 7025B | 587 | matched | [DrawCreatePlayer.c](src/front/create/DrawCreatePlayer.c) |  |
 | CreatePlayerLoop | 704A6 | 572 | matched | [DrawShootsField.c](src/front/create/DrawShootsField.c) | draft (DrawShootsField.c): 590 vs 572, p spilled / event in two registers. See UNSURE. |
 | CreateFreeAgent | 706E2 | 1963 | matched | [CreateFreeAgent.c](src/front/create/CreateFreeAgent.c) |  |
-| MoveToFreeAgents | 70E8D | 438 | matched | [MoveToFreeAgents.c](src/front/create/MoveToFreeAgents.c) | Hex-Rays draft (slot order fixed: ntried, moved, nsel, other); left: the asm computes side/other from one cmp in al (setne al; and eax,0FFh; mov esi,eax; sete al), C uses setne dl / movzx and a second cmp, 437 vs 438 bytes; msglines stores are address-immediate only |
-| RemovePlayerFromTeam | 71043 | 149 | matched | [RemovePlayerFromTeam.c](src/front/create/RemovePlayerFromTeam.c) |  |
-| LoadTempDatabases | 710D8 | 388 | matched | [LoadTempDatabases.c](src/front/create/LoadTempDatabases.c) |  |
-| DeleteTempDatabases | 7125C | 215 | matched | [DeleteTempDatabases.c](src/front/create/DeleteTempDatabases.c) |  |
-| SwapSelectedPlayers | 71333 | 861 | nonmatching | [SwapSelectedPlayers.c](src/front/create/SwapSelectedPlayers.c) |  |
-| SelectMatchingPlayers | 71690 | 429 | matched | [SelectMatchingPlayers.c](src/front/create/SelectMatchingPlayers.c) |  |
-| SetRosterTeamMenus | 7183D | 292 | nonmatching | [SetRosterTeamMenus.c](src/front/create/SetRosterTeamMenus.c) |  |
-| FindPlayer | 71961 | 1451 | matched | [FindPlayer.c](src/front/create/FindPlayer.c) |  |
+| MoveToFreeAgents | 70E8D | 438 | matched | [MoveToFreeAgents.c](src/front/roster_edit/MoveToFreeAgents.c) | Hex-Rays draft (slot order fixed: ntried, moved, nsel, other); left: the asm computes side/other from one cmp in al (setne al; and eax,0FFh; mov esi,eax; sete al), C uses setne dl / movzx and a second cmp, 437 vs 438 bytes; msglines stores are address-immediate only |
+| RemovePlayerFromTeam | 71043 | 149 | matched | [RemovePlayerFromTeam.c](src/front/roster_edit/RemovePlayerFromTeam.c) |  |
+| LoadTempDatabases | 710D8 | 388 | matched | [LoadTempDatabases.c](src/front/roster_edit/LoadTempDatabases.c) |  |
+| DeleteTempDatabases | 7125C | 215 | matched | [DeleteTempDatabases.c](src/front/roster_edit/DeleteTempDatabases.c) |  |
+| SwapSelectedPlayers | 71333 | 861 | nonmatching | [SwapSelectedPlayers.c](src/front/roster_edit/SwapSelectedPlayers.c) |  |
+| SelectMatchingPlayers | 71690 | 429 | matched | [SelectMatchingPlayers.c](src/front/roster_edit/SelectMatchingPlayers.c) |  |
+| SetRosterTeamMenus | 7183D | 292 | nonmatching | [SetRosterTeamMenus.c](src/front/roster_edit/SetRosterTeamMenus.c) |  |
+| FindPlayer | 71961 | 1451 | matched | [FindPlayer.c](src/front/roster_edit/FindPlayer.c) |  |
 | InputDialog | 71F0C | 1010 | matched | [InputDialog.c](src/pc/database_dialogs/InputDialog.c) |  |
 | LoadDbDialogShapes | 7230B | 385 | matched | [LoadDbDialogShapes.c](src/pc/database_dialogs/LoadDbDialogShapes.c) |  |
 | ScanDbFiles | 7248C | 377 | matched | [LoadDbDialogShapes.c](src/pc/database_dialogs/LoadDbDialogShapes.c) |  |
@@ -894,12 +894,12 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | CmpRosterSkaters | 75931 | 262 | matched | [CmpRosterSkaters.c](src/front/lines/CmpRosterSkaters.c) |  |
 | CmpRosterGoalies MenuRegSeasonStats MenuPlayoffStats | 75A37 | 448 | matched | [CmpRosterGoalies.c](src/front/lines/CmpRosterGoalies.c) |  |
 | ShowRosterStats | 75BF7 | 2098 | nonmatching | [ShowRosterStats.c](src/front/lines/ShowRosterStats.c) | draft: 2097 vs 2098, every statement in place; three register picks (goalie copy team record eax / edx, playoff skater add, goalie row 34h product). See docs/UNSURE.md. |
-| FadePalStep | 76429 | 242 | matched | [FadePalStep.c](src/front/lines/FadePalStep.c) |  |
-| FadePalStepSlow | 7651B | 249 | matched | [FadePalStep.c](src/front/lines/FadePalStep.c) |  |
-| SetPalette768 | 76614 | 74 | matched | [SetPalette768.c](src/front/lines/SetPalette768.c) |  |
-| RandLfsrByte | 7665E | 47 | matched | [RandLfsrByte.c](src/front/lines/RandLfsrByte.c) | original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap |
-| BlitClipRect | 7668D | 173 | matched | [BlitClipRect.c](src/front/lines/BlitClipRect.c) | x in esi and y in edi (original x in edi and y in esi); in-place add matches. 5 attempts |
-| PrintLineEdStatus | 76771 | 95 | matched | [PrintLineEdStatus.c](src/front/lines/PrintLineEdStatus.c) |  |
+| FadePalStep | 76429 | 242 | matched | [FadePalStep.c](src/front/fade/FadePalStep.c) |  |
+| FadePalStepSlow | 7651B | 249 | matched | [FadePalStep.c](src/front/fade/FadePalStep.c) |  |
+| SetPalette768 | 76614 | 74 | matched | [SetPalette768.c](src/front/fade/SetPalette768.c) |  |
+| RandLfsrByte | 7665E | 47 | matched | [RandLfsrByte.c](src/front/fade/RandLfsrByte.c) | original does byte ops (dl = bit, dh = *s shr 1, bl = dh ^ B8h, push ebx too); this draft widens to 32 bits. 10-min cap |
+| BlitClipRect | 7668D | 173 | matched | [BlitClipRect.c](src/front/fade/BlitClipRect.c) | x in esi and y in edi (original x in edi and y in esi); in-place add matches. 5 attempts |
+| PrintLineEdStatus | 76771 | 95 | matched | [PrintLineEdStatus.c](src/front/fade/PrintLineEdStatus.c) |  |
 | GameLineEditor | 767D0 | 707 | matched | [GameLineEditor.c](src/front/game_lines/GameLineEditor.c) |  |
 | GameRosterCmp | 76A93 | 98 | matched | [GameRosterCmp.c](src/front/game_lines/GameRosterCmp.c) |  |
 | GameLineEditorLoop | 76AF5 | 5242 | nonmatching | [GameLineEditorLoop.c](src/front/game_lines/GameLineEditorLoop.c) | first pass (Ghidra): 5,243 of 5,242 bytes, 384 differing (49 with frame offsets masked: item*20h spilled in the EXE) |
@@ -924,55 +924,55 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | GameDressPlayer | 79F41 | 214 | matched | [GameDressPlayer.c](src/front/game_lines/GameDressPlayer.c) |  |
 | BlitJerseyDigit | 7A017 | 130 | matched | [BlitJerseyDigit.c](src/front/game_lines/BlitJerseyDigit.c) | order only: asm stores the colour byte before loading the 5th (stack) arg; C loads the arg first. Rest matches |
 | MakeJerseyShape | 7A099 | 161 | matched | [MakeJerseyShape.c](src/front/game_lines/MakeJerseyShape.c) |  |
-| LeagueSettingsDlg | 7A13A | 194 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| MenuPlayoffSettings | 7A1FC | 160 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| EditPlayoffSettings | 7A29C | 153 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| MenuLeagueSettingsEdit | 7A335 | 106 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| MenuShowLeagueSettings | 7A39F | 101 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| MenuShowLeagueSettings2 | 7A404 | 378 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| DrawLeagueSetDlgSel | 7A57E | 303 | matched | [DrawLeagueSetDlgSel.c](src/pc/settings_dialogs/DrawLeagueSetDlgSel.c) |  |
-| SetLeagueSetImage | 7A6AD | 16 | matched | [SetLeagueSetImage.c](src/pc/settings_dialogs/SetLeagueSetImage.c) |  |
-| DrawLeagueSetDlg | 7A6BD | 434 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| LeagueOptsToBits | 7A88E | 314 | matched | [LeagueOptsToBits.c](src/pc/settings_dialogs/LeagueOptsToBits.c) |  |
-| LeagueSetHitTest | 7A9C8 | 226 | matched | [LeagueSetHitTest.c](src/pc/settings_dialogs/LeagueSetHitTest.c) |  |
-| DrawLeagueSetChecks | 7AAAA | 391 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| LeagueSetViewLoop | 7AC31 | 418 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| LeagueSetEditLoop | 7ADD3 | 1481 | matched | [LeagueSettingsDlg.c](src/pc/settings_dialogs/LeagueSettingsDlg.c) |  |
-| SettingsStub | 7B39C | 11 | matched | [SettingsStub.c](src/pc/settings_dialogs/SettingsStub.c) |  |
-| MenuModeSettings | 7B3A7 | 325 | matched | [MenuModeSettings.c](src/pc/settings_dialogs/MenuModeSettings.c) |  |
-| DrawModeSetDlg | 7B4EC | 280 | matched | [DrawModeSetDlg.c](src/pc/settings_dialogs/DrawModeSetDlg.c) |  |
-| ModeOptsToBits | 7B604 | 304 | matched | [ModeOptsToBits.c](src/pc/settings_dialogs/ModeOptsToBits.c) |  |
-| ModeSetHitTest | 7B734 | 138 | matched | [ModeSetHitTest.c](src/pc/settings_dialogs/ModeSetHitTest.c) |  |
-| DrawModeSetChecks | 7B7BE | 136 | matched | [DrawModeSetChecks.c](src/pc/settings_dialogs/DrawModeSetChecks.c) |  |
-| ModeSetViewLoop | 7B846 | 418 | matched | [MenuModeSettings.c](src/pc/settings_dialogs/MenuModeSettings.c) |  |
-| ModeSetEditLoop | 7B9E8 | 1235 | matched | [MenuModeSettings.c](src/pc/settings_dialogs/MenuModeSettings.c) |  |
-| MenuExhibitionSettings | 7BEBB | 155 | matched | [MenuExhibitionSettings.c](src/pc/settings_dialogs/MenuExhibitionSettings.c) |  |
-| ExhOptsToBits | 7BF56 | 355 | matched | [MenuExhibitionSettings.c](src/pc/settings_dialogs/MenuExhibitionSettings.c) |  |
-| DrawExhSetChecks | 7C0B9 | 243 | matched | [MenuExhibitionSettings.c](src/pc/settings_dialogs/MenuExhibitionSettings.c) |  |
-| DrawExhSetDlg | 7C1AC | 225 | matched | [DrawExhSetDlg.c](src/pc/settings_dialogs/DrawExhSetDlg.c) |  |
-| ExhSetHitTest | 7C28D | 138 | matched | [ExhSetHitTest.c](src/pc/settings_dialogs/ExhSetHitTest.c) |  |
-| ExhSetEditLoop | 7C317 | 1339 | matched | [MenuExhibitionSettings.c](src/pc/settings_dialogs/MenuExhibitionSettings.c) |  |
-| DrawCtlBoxOn | 7C852 | 175 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| DrawCtlBoxOff | 7C901 | 146 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c); ends in DrawCtlBoxOn's DrawCtlBox_common |
-| MenuP1ControlsExh | 7C993 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): a tail call, jmp short ControlsDlgExh |
-| MenuP2ControlsExh ControlsDlgExh | 7C9A1 | 178 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| MenuP1ControlsLeague | 7CA53 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): jmp short ControlsDlgLeague |
-| MenuP2ControlsLeague ControlsDlgLeague | 7CA61 | 150 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| MenuP1ControlsInGame ControlsDlgInGame | 7CAF7 | 168 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| MenuP2ControlsInGame | 7CB9F | 20 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| CtlSwapScoreFix | 7CBB3 | 215 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| CtlSwapTeamFlag | 7CC8A | 91 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| ReassignCtlPlayer | 7CCE5 | 444 | nonmatching | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| ClearCtlBlink | 7CEA1 | 280 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| ControlsDlgInGame_side | 7CFB9 | 382 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| MenuP1ControlsPlayoff | 7D137 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): jmp short ControlsDlgPlayoff |
-| MenuP2ControlsPlayoff ControlsDlgPlayoff | 7D145 | 271 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| DrawControlsDlg | 7D254 | 412 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| DrawControlsOpts | 7D3F0 | 559 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| CtlDlgHitTest | 7D61F | 82 | matched | [CtlDlgHitTest.c](src/pc/settings_dialogs/CtlDlgHitTest.c) |  |
-| DrawCtlBoxes | 7D671 | 64 | matched | [DrawCtlBoxes.c](src/pc/settings_dialogs/DrawCtlBoxes.c) |  |
-| ControlsDlgLoop | 7D6B1 | 1206 | matched | [MenuP1ControlsInGame.c](src/pc/settings_dialogs/MenuP1ControlsInGame.c) |  |
-| SetCtlTeams | 7DB67 | 292 | matched | [SetCtlTeams.c](src/pc/settings_dialogs/SetCtlTeams.c) |  |
+| LeagueSettingsDlg | 7A13A | 194 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| MenuPlayoffSettings | 7A1FC | 160 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| EditPlayoffSettings | 7A29C | 153 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| MenuLeagueSettingsEdit | 7A335 | 106 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| MenuShowLeagueSettings | 7A39F | 101 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| MenuShowLeagueSettings2 | 7A404 | 378 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| DrawLeagueSetDlgSel | 7A57E | 303 | matched | [DrawLeagueSetDlgSel.c](src/pc/league_settings/DrawLeagueSetDlgSel.c) |  |
+| SetLeagueSetImage | 7A6AD | 16 | matched | [SetLeagueSetImage.c](src/pc/league_settings/SetLeagueSetImage.c) |  |
+| DrawLeagueSetDlg | 7A6BD | 434 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| LeagueOptsToBits | 7A88E | 314 | matched | [LeagueOptsToBits.c](src/pc/league_settings/LeagueOptsToBits.c) |  |
+| LeagueSetHitTest | 7A9C8 | 226 | matched | [LeagueSetHitTest.c](src/pc/league_settings/LeagueSetHitTest.c) |  |
+| DrawLeagueSetChecks | 7AAAA | 391 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| LeagueSetViewLoop | 7AC31 | 418 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| LeagueSetEditLoop | 7ADD3 | 1481 | matched | [LeagueSettingsDlg.c](src/pc/league_settings/LeagueSettingsDlg.c) |  |
+| SettingsStub | 7B39C | 11 | matched | [SettingsStub.c](src/pc/mode_settings/SettingsStub.c) |  |
+| MenuModeSettings | 7B3A7 | 325 | matched | [MenuModeSettings.c](src/pc/mode_settings/MenuModeSettings.c) |  |
+| DrawModeSetDlg | 7B4EC | 280 | matched | [DrawModeSetDlg.c](src/pc/mode_settings/DrawModeSetDlg.c) |  |
+| ModeOptsToBits | 7B604 | 304 | matched | [ModeOptsToBits.c](src/pc/mode_settings/ModeOptsToBits.c) |  |
+| ModeSetHitTest | 7B734 | 138 | matched | [ModeSetHitTest.c](src/pc/mode_settings/ModeSetHitTest.c) |  |
+| DrawModeSetChecks | 7B7BE | 136 | matched | [DrawModeSetChecks.c](src/pc/mode_settings/DrawModeSetChecks.c) |  |
+| ModeSetViewLoop | 7B846 | 418 | matched | [MenuModeSettings.c](src/pc/mode_settings/MenuModeSettings.c) |  |
+| ModeSetEditLoop | 7B9E8 | 1235 | matched | [MenuModeSettings.c](src/pc/mode_settings/MenuModeSettings.c) |  |
+| MenuExhibitionSettings | 7BEBB | 155 | matched | [MenuExhibitionSettings.c](src/pc/exh_settings/MenuExhibitionSettings.c) |  |
+| ExhOptsToBits | 7BF56 | 355 | matched | [MenuExhibitionSettings.c](src/pc/exh_settings/MenuExhibitionSettings.c) |  |
+| DrawExhSetChecks | 7C0B9 | 243 | matched | [MenuExhibitionSettings.c](src/pc/exh_settings/MenuExhibitionSettings.c) |  |
+| DrawExhSetDlg | 7C1AC | 225 | matched | [DrawExhSetDlg.c](src/pc/exh_settings/DrawExhSetDlg.c) |  |
+| ExhSetHitTest | 7C28D | 138 | matched | [ExhSetHitTest.c](src/pc/exh_settings/ExhSetHitTest.c) |  |
+| ExhSetEditLoop | 7C317 | 1339 | matched | [MenuExhibitionSettings.c](src/pc/exh_settings/MenuExhibitionSettings.c) |  |
+| DrawCtlBoxOn | 7C852 | 175 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| DrawCtlBoxOff | 7C901 | 146 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c); ends in DrawCtlBoxOn's DrawCtlBox_common |
+| MenuP1ControlsExh | 7C993 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): a tail call, jmp short ControlsDlgExh |
+| MenuP2ControlsExh ControlsDlgExh | 7C9A1 | 178 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| MenuP1ControlsLeague | 7CA53 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): jmp short ControlsDlgLeague |
+| MenuP2ControlsLeague ControlsDlgLeague | 7CA61 | 150 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| MenuP1ControlsInGame ControlsDlgInGame | 7CAF7 | 168 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| MenuP2ControlsInGame | 7CB9F | 20 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| CtlSwapScoreFix | 7CBB3 | 215 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| CtlSwapTeamFlag | 7CC8A | 91 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| ReassignCtlPlayer | 7CCE5 | 444 | nonmatching | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| ClearCtlBlink | 7CEA1 | 280 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| ControlsDlgInGame_side | 7CFB9 | 382 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| MenuP1ControlsPlayoff | 7D137 | 14 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) | first pass from Ghidra matched (MenuP1ControlsInGame.c): jmp short ControlsDlgPlayoff |
+| MenuP2ControlsPlayoff ControlsDlgPlayoff | 7D145 | 271 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| DrawControlsDlg | 7D254 | 412 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| DrawControlsOpts | 7D3F0 | 559 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| CtlDlgHitTest | 7D61F | 82 | matched | [CtlDlgHitTest.c](src/pc/controls_dlg/CtlDlgHitTest.c) |  |
+| DrawCtlBoxes | 7D671 | 64 | matched | [DrawCtlBoxes.c](src/pc/controls_dlg/DrawCtlBoxes.c) |  |
+| ControlsDlgLoop | 7D6B1 | 1206 | matched | [MenuP1ControlsInGame.c](src/pc/controls_dlg/MenuP1ControlsInGame.c) |  |
+| SetCtlTeams | 7DB67 | 292 | matched | [SetCtlTeams.c](src/pc/controls_dlg/SetCtlTeams.c) |  |
 | LoadRockMusic | 7DC8B | 573 | matched | [LoadRockMusic.c](src/front/replay_controls/LoadRockMusic.c) | draft: 577 vs 573. The cue loops, the random retry, and the tune banks match. The zero cue is xor ebp instead of xor esi, so ebp is pushed and the cookie is 3Ch. team*3 reloads the stack slot instead of copying it through edx, and the accepted cue id stays in eax instead of edx. |
 | FreeRockMusic | 7DEC8 | 134 | matched | [LoadRockMusic.c](src/front/replay_controls/LoadRockMusic.c) | draft: 133 vs 134. The three free loops match. The exit jumps to LoadRockMusic's pop ebp; the original pops ebp and then jumps to LoadRockMusic_ret. Do not retry until the LoadRockMusic draft stops pushing ebp. |
 | DrawGadgetByType | 7DF4E | 228 | matched | [DrawGadgetByType.c](src/front/replay_controls/DrawGadgetByType.c) |  |
@@ -985,14 +985,14 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | ReplayControlLoop | 7E9AC | 1777 | matched | [DrawGadgetButton.c](src/front/replay_controls/DrawGadgetButton.c) | own file (4 bytes over: own epilogue), 37 differing lines; match belongs in DrawGadgetButton.c; see docs/UNSURE.md |
 | ReplaySaveHilight | 7F0AF | 1653 | nonmatching | [ReplaySaveHilight.c](src/front/replay_controls/ReplaySaveHilight.c) | draft: 1649 vs 1653, every statement in place; register picks (old pointer x / y in esi / ecx, EXE ecx / esi). See docs/UNSURE.md. |
 | HilightSaveToDlg | 7F724 | 748 | matched | [DrawGadgetButton.c](src/front/replay_controls/DrawGadgetButton.c) | draft (own file; belongs with DrawGadgetButton.c): 749 vs 748, loop counter in a register (original on the stack). See UNSURE. |
-| SaveHilight | 7FA10 | 514 | matched | [SaveHilight.c](src/front/replay_controls/SaveHilight.c) |  |
-| NudgeRinkScroll | 7FC12 | 31 | matched | [NudgeRinkScroll.c](src/front/replay_controls/NudgeRinkScroll.c) |  |
-| CmpInt | 7FC31 | 43 | matched | [CmpInt.c](src/front/replay_controls/CmpInt.c) |  |
-| TeamFromHiName | 7FC5C | 70 | matched | [TeamFromHiName.c](src/front/replay_controls/TeamFromHiName.c) |  |
-| FormatHilightDesc | 7FCA2 | 86 | matched | [FormatHilightDesc.c](src/front/replay_controls/FormatHilightDesc.c) |  |
-| SelectHilight | 7FCF8 | 893 | nonmatching | [SelectHilight.c](src/front/replay_controls/SelectHilight.c) |  |
-| ViewHilights | 80075 | 167 | matched | [ViewHilights.c](src/front/replay_controls/ViewHilights.c) |  |
-| PlayHilight | 8011C | 559 | matched | [PlayHilight.c](src/front/replay_controls/PlayHilight.c) | the replay offset added with no temporary (found by tools/match/permute.py) |
+| SaveHilight | 7FA10 | 514 | matched | [SaveHilight.c](src/front/highlights/SaveHilight.c) |  |
+| NudgeRinkScroll | 7FC12 | 31 | matched | [NudgeRinkScroll.c](src/front/highlights/NudgeRinkScroll.c) |  |
+| CmpInt | 7FC31 | 43 | matched | [CmpInt.c](src/front/highlights/CmpInt.c) |  |
+| TeamFromHiName | 7FC5C | 70 | matched | [TeamFromHiName.c](src/front/highlights/TeamFromHiName.c) |  |
+| FormatHilightDesc | 7FCA2 | 86 | matched | [FormatHilightDesc.c](src/front/highlights/FormatHilightDesc.c) |  |
+| SelectHilight | 7FCF8 | 893 | nonmatching | [SelectHilight.c](src/front/highlights/SelectHilight.c) |  |
+| ViewHilights | 80075 | 167 | matched | [ViewHilights.c](src/front/highlights/ViewHilights.c) |  |
+| PlayHilight | 8011C | 559 | matched | [PlayHilight.c](src/front/highlights/PlayHilight.c) | the replay offset added with no temporary (found by tools/match/permute.py) |
 | LoadSettingsShapes | 8034B | 434 | matched | [LoadSettingsShapes.c](src/front/lockerroom/LoadSettingsShapes.c) |  |
 | DrawSettingsHeading | 8050F | 181 | matched | [DrawSettingsHeading.c](src/front/lockerroom/DrawSettingsHeading.c) |  |
 | SetModeMenuLabels | 805C4 | 190 | matched | [SetModeMenuLabels.c](src/front/lockerroom/SetModeMenuLabels.c) |  |
@@ -1011,54 +1011,54 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | RedrawSoundCardOpts | 82805 | 281 | matched | [RedrawSoundCardOpts.c](src/pc/sound_config/RedrawSoundCardOpts.c) |  |
 | SoundCardDlgLoop | 8291E | 1116 | matched | [SoundCardDlgLoop.c](src/pc/sound_config/SoundCardDlgLoop.c) |  |
 | SetSoundDevice | 82D7A | 1346 | matched | [SoundCardDlgLoop.c](src/pc/sound_config/SoundCardDlgLoop.c) |  |
-| SpeechTimerTick | 832BC | 265 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| ClearSpeechSlot | 833C5 | 53 | matched | [ClearSpeechSlot.c](src/front/announcer/ClearSpeechSlot.c) |  |
-| ResetSpeechQueue | 833FA | 95 | matched | [ResetSpeechQueue.c](src/front/announcer/ResetSpeechQueue.c) | memset(-1) compiles to memset_ with ebx count; asm calls __STOSD (ecx 14h dwords) - need the C form that emits __STOSD |
-| InitSpeechSlots | 83459 | 199 | matched | [InitSpeechSlots.c](src/front/announcer/InitSpeechSlots.c) |  |
-| ResetSampleReq | 83520 | 90 | matched | [ResetSampleReq.c](src/front/announcer/ResetSampleReq.c) |  |
-| InitSpeech | 8357A | 194 | matched | [InitSpeech.c](src/front/announcer/InitSpeech.c) |  |
-| ShutdownSpeech | 8363C | 142 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SpeechIsInit | 836CA | 26 | matched | [SpeechIsInit.c](src/front/announcer/SpeechIsInit.c) |  |
-| SpeechBusy | 836E4 | 45 | matched | [SpeechBusy.c](src/front/announcer/SpeechBusy.c) |  |
-| SpeechIdle | 83711 | 45 | matched | [SpeechIdle.c](src/front/announcer/SpeechIdle.c) |  |
-| MusicChanReset2 SpeechStopQueue | 8373E | 78 | matched | [MusicChanReset2.c](src/front/announcer/MusicChanReset2.c) |  |
-| MusicChanCmd3 | 8378C | 28 | matched | [MusicChanCmd3.c](src/front/announcer/MusicChanCmd3.c) |  |
-| MusicChanReset | 837A8 | 49 | matched | [MusicChanReset.c](src/front/announcer/MusicChanReset.c) |  |
-| Swap16 | 837D9 | 34 | matched | [Swap16.c](src/front/announcer/Swap16.c) |  |
-| ReadBE24 | 837FB | 100 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| ReadCString | 8385F | 56 | matched | [ReadCString.c](src/front/announcer/ReadCString.c) |  |
-| OpenSpeechBank | 83897 | 816 | nonmatching | [OpenSpeechBank.c](src/front/announcer/OpenSpeechBank.c) | unsigned fh, short type, size after got (found by tools/match/permute.py) |
-| SpeechSlotSize | 83BC7 | 44 | matched | [SpeechSlotSize.c](src/front/announcer/SpeechSlotSize.c) |  |
-| ReadSpeechSample | 83BF3 | 187 | matched | [OpenSpeechBank.c](src/front/announcer/OpenSpeechBank.c) |  |
-| LoadSpeechSlot | 83CAE | 202 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| PlaceSpeechSlot | 83D78 | 186 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| StrEqNoCase | 83E32 | 59 | matched | [StrEqNoCase.c](src/front/announcer/StrEqNoCase.c) | original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap |
-| FindFreeSpeechSlot | 83E6D | 63 | matched | [FindFreeSpeechSlot.c](src/front/announcer/FindFreeSpeechSlot.c) | registers only: speechbank in ebx in the original, ecx here. 10-min cap |
-| FindLoadedSpeechSlot | 83EAC | 63 | matched | [FindLoadedSpeechSlot.c](src/front/announcer/FindLoadedSpeechSlot.c) | registers only: speechbank in ebx in the original, ecx here. 10-min cap |
-| FindSpeechSlot | 83EEB | 74 | matched | [FindSpeechSlot.c](src/front/announcer/FindSpeechSlot.c) |  |
-| SpeechSlotLoaded | 83F35 | 44 | matched | [SpeechSlotLoaded.c](src/front/announcer/SpeechSlotLoaded.c) |  |
-| IsSampleRequested | 83F61 | 78 | matched | [IsSampleRequested.c](src/front/announcer/IsSampleRequested.c) |  |
-| RequestSample | 83FAF | 135 | matched | [RequestSample.c](src/front/announcer/RequestSample.c) |  |
-| FreeUnrequestedSamples | 84036 | 115 | matched | [FreeUnrequestedSamples.c](src/front/announcer/FreeUnrequestedSamples.c) | draft: asm copies the result to ebx (mov ebx,ecx) before the count update; ours returns ecx |
-| MoveSampleMem | 840A9 | 124 | matched | [OpenSpeechBank.c](src/front/announcer/OpenSpeechBank.c) |  |
-| CompactSpeechSlot | 84125 | 224 | matched | [OpenSpeechBank.c](src/front/announcer/OpenSpeechBank.c) |  |
-| MakeSampleRoom | 84205 | 106 | matched | [MakeSampleRoom.c](src/front/announcer/MakeSampleRoom.c) |  |
-| EnsureSampleRoom | 8426F | 15 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| CompactSpeechMem | 8427E | 60 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
+| SpeechTimerTick | 832BC | 265 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| ClearSpeechSlot | 833C5 | 53 | matched | [ClearSpeechSlot.c](src/front/speech/ClearSpeechSlot.c) |  |
+| ResetSpeechQueue | 833FA | 95 | matched | [ResetSpeechQueue.c](src/front/speech/ResetSpeechQueue.c) | memset(-1) compiles to memset_ with ebx count; asm calls __STOSD (ecx 14h dwords) - need the C form that emits __STOSD |
+| InitSpeechSlots | 83459 | 199 | matched | [InitSpeechSlots.c](src/front/speech/InitSpeechSlots.c) |  |
+| ResetSampleReq | 83520 | 90 | matched | [ResetSampleReq.c](src/front/speech/ResetSampleReq.c) |  |
+| InitSpeech | 8357A | 194 | matched | [InitSpeech.c](src/front/speech/InitSpeech.c) |  |
+| ShutdownSpeech | 8363C | 142 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SpeechIsInit | 836CA | 26 | matched | [SpeechIsInit.c](src/front/speech/SpeechIsInit.c) |  |
+| SpeechBusy | 836E4 | 45 | matched | [SpeechBusy.c](src/front/speech/SpeechBusy.c) |  |
+| SpeechIdle | 83711 | 45 | matched | [SpeechIdle.c](src/front/speech/SpeechIdle.c) |  |
+| MusicChanReset2 SpeechStopQueue | 8373E | 78 | matched | [MusicChanReset2.c](src/front/speech/MusicChanReset2.c) |  |
+| MusicChanCmd3 | 8378C | 28 | matched | [MusicChanCmd3.c](src/front/speech/MusicChanCmd3.c) |  |
+| MusicChanReset | 837A8 | 49 | matched | [MusicChanReset.c](src/front/speech/MusicChanReset.c) |  |
+| Swap16 | 837D9 | 34 | matched | [Swap16.c](src/front/speech/Swap16.c) |  |
+| ReadBE24 | 837FB | 100 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| ReadCString | 8385F | 56 | matched | [ReadCString.c](src/front/speech/ReadCString.c) |  |
+| OpenSpeechBank | 83897 | 816 | nonmatching | [OpenSpeechBank.c](src/front/speech/OpenSpeechBank.c) | unsigned fh, short type, size after got (found by tools/match/permute.py) |
+| SpeechSlotSize | 83BC7 | 44 | matched | [SpeechSlotSize.c](src/front/speech/SpeechSlotSize.c) |  |
+| ReadSpeechSample | 83BF3 | 187 | matched | [OpenSpeechBank.c](src/front/speech/OpenSpeechBank.c) |  |
+| LoadSpeechSlot | 83CAE | 202 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| PlaceSpeechSlot | 83D78 | 186 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| StrEqNoCase | 83E32 | 59 | matched | [StrEqNoCase.c](src/front/speech/StrEqNoCase.c) | original widens each char (movsx) before and 0DFh; this draft does the and on bytes. 10-min cap |
+| FindFreeSpeechSlot | 83E6D | 63 | matched | [FindFreeSpeechSlot.c](src/front/speech/FindFreeSpeechSlot.c) | registers only: speechbank in ebx in the original, ecx here. 10-min cap |
+| FindLoadedSpeechSlot | 83EAC | 63 | matched | [FindLoadedSpeechSlot.c](src/front/speech/FindLoadedSpeechSlot.c) | registers only: speechbank in ebx in the original, ecx here. 10-min cap |
+| FindSpeechSlot | 83EEB | 74 | matched | [FindSpeechSlot.c](src/front/speech/FindSpeechSlot.c) |  |
+| SpeechSlotLoaded | 83F35 | 44 | matched | [SpeechSlotLoaded.c](src/front/speech/SpeechSlotLoaded.c) |  |
+| IsSampleRequested | 83F61 | 78 | matched | [IsSampleRequested.c](src/front/speech/IsSampleRequested.c) |  |
+| RequestSample | 83FAF | 135 | matched | [RequestSample.c](src/front/speech/RequestSample.c) |  |
+| FreeUnrequestedSamples | 84036 | 115 | matched | [FreeUnrequestedSamples.c](src/front/speech/FreeUnrequestedSamples.c) | draft: asm copies the result to ebx (mov ebx,ecx) before the count update; ours returns ecx |
+| MoveSampleMem | 840A9 | 124 | matched | [OpenSpeechBank.c](src/front/speech/OpenSpeechBank.c) |  |
+| CompactSpeechSlot | 84125 | 224 | matched | [OpenSpeechBank.c](src/front/speech/OpenSpeechBank.c) |  |
+| MakeSampleRoom | 84205 | 106 | matched | [MakeSampleRoom.c](src/front/speech/MakeSampleRoom.c) |  |
+| EnsureSampleRoom | 8426F | 15 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| CompactSpeechMem | 8427E | 60 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
 | PenaltyLenClip | 842BA | 76 | matched | [PenaltyLenClip.c](src/front/announcer/PenaltyLenClip.c) | switch tree and blocks match; original keeps len in ebx and out in eax (out moved early), this draft the reverse. 10-min cap |
 | PlayoffRoundClipD | 84306 | 137 | matched | [PlayoffRoundClipD.c](src/front/announcer/PlayoffRoundClipD.c) |  |
 | PlayoffRoundClipU | 8438F | 137 | matched | [PlayoffRoundClipU.c](src/front/announcer/PlayoffRoundClipU.c) |  |
-| QueueSpeechClip | 84418 | 289 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) | draft (ShutdownSpeech.c): 293 vs 289, slot/free/pointer registers and two stack slots. See UNSURE. |
-| LoadClipSlot | 84539 | 214 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayClip_body | 8460F | 72 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayScorePeriod | 84657 | 93 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayNhlIntro SayGoodnight SayLineups SayNowBack FreeNowBack SayBackMoment FreeBackMoment SayCoachClip FreeCoachClip FreeClip SayElseNhl | 846B4 | 282 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayHighlightIntro | 847CE | 319 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayPlayoffResult | 8490D | 351 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
-| SayTheGame | 84A6C | 17 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) | in ShutdownSpeech.c after SayClip's definition; its jmp short reaches SayClip's moved entry (found by tools/module_try.py) |
-| SayScoringPeriod | 84A7D | 49 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) | in ShutdownSpeech.c; its pieces SayScoringPeriod_ot2 .. _reg (a block of their own) follow SayClip's entry (found by tools/module_try.py) |
-| SayClip | 84AAE | 30 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) | in ShutdownSpeech.c (the speech / announcer module, segments 060-062) right after LoadClipSlot; Watcom splits it as the EXE does: entry 84AAE after SayScoringPeriod, body SayClip_body after LoadClipSlot (found by tools/module_try.py) |
-| SayScoringPeriod_ot2 | 84ACC | 65 | matched | [ShutdownSpeech.c](src/front/announcer/ShutdownSpeech.c) |  |
+| QueueSpeechClip | 84418 | 289 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) | draft (ShutdownSpeech.c): 293 vs 289, slot/free/pointer registers and two stack slots. See UNSURE. |
+| LoadClipSlot | 84539 | 214 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayClip_body | 8460F | 72 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayScorePeriod | 84657 | 93 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayNhlIntro SayGoodnight SayLineups SayNowBack FreeNowBack SayBackMoment FreeBackMoment SayCoachClip FreeCoachClip FreeClip SayElseNhl | 846B4 | 282 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayHighlightIntro | 847CE | 319 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayPlayoffResult | 8490D | 351 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
+| SayTheGame | 84A6C | 17 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) | in ShutdownSpeech.c after SayClip's definition; its jmp short reaches SayClip's moved entry (found by tools/module_try.py) |
+| SayScoringPeriod | 84A7D | 49 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) | in ShutdownSpeech.c; its pieces SayScoringPeriod_ot2 .. _reg (a block of their own) follow SayClip's entry (found by tools/module_try.py) |
+| SayClip | 84AAE | 30 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) | in ShutdownSpeech.c (the speech / announcer module, segments 060-062) right after LoadClipSlot; Watcom splits it as the EXE does: entry 84AAE after SayScoringPeriod, body SayClip_body after LoadClipSlot (found by tools/module_try.py) |
+| SayScoringPeriod_ot2 | 84ACC | 65 | matched | [ShutdownSpeech.c](src/front/speech/ShutdownSpeech.c) |  |
 | SayTonightIntro | 84B0D | 299 | matched | [SayTonightIntro.c](src/front/announcer/SayTonightIntro.c) |  |
 | SayPlayoffTonight | 84C38 | 421 | matched | [SayPlayoffTonight.c](src/front/announcer/SayPlayoffTonight.c) |  |
 | RequestTimeClips | 84DDD | 207 | matched | [RequestTimeClips.c](src/front/announcer/RequestTimeClips.c) |  |
@@ -1098,13 +1098,13 @@ Library segments stay asm and are not counted: 109 more `__CHK` functions in `li
 | LoadScheduleDB | 891B2 | 113 | matched | [LoadScheduleDB.c](src/front/playoff_mode/LoadScheduleDB.c) |  |
 | SaveScheduleDB | 89223 | 69 | matched | [LoadScheduleDB.c](src/front/playoff_mode/LoadScheduleDB.c) |  |
 | PlayoffModeLoop | 89268 | 2292 | matched | [POSeedRound2.c](src/front/playoff_mode/POSeedRound2.c) |  |
-| POReturnZero | 89B5C | 13 | matched | [POReturnZero.c](src/front/playoff_mode/POReturnZero.c) |  |
+| POReturnZero | 89B5C | 13 | matched | [POReturnZero.c](src/front/playoff_menu/POReturnZero.c) |  |
 | POHiliteSlot | 89B69 | 105 | matched | [POCreateSchedule.c](src/front/playoff_mode/POCreateSchedule.c) | y2 as a ?: (found by tools/match/permute.py) |
-| PlayoffTreeMenu | 89BD2 | 2688 | nonmatching | [PlayoffTreeMenu.c](src/front/playoff_mode/PlayoffTreeMenu.c) | draft (own file): 2820 vs 2688, 619 lines (register picks from the pointer block on). See docs/UNSURE.md. |
+| PlayoffTreeMenu | 89BD2 | 2688 | nonmatching | [PlayoffTreeMenu.c](src/front/playoff_menu/PlayoffTreeMenu.c) | draft (own file): 2820 vs 2688, 619 lines (register picks from the pointer block on). See docs/UNSURE.md. |
 | DrawPlayoffTree | 8A652 | 4617 | matched | [POSeedRound2.c](src/front/playoff_mode/POSeedRound2.c) | draft: 4616 vs 4617, only the first seed loop differs (i and the playofftree read in eax / edx, swapped). See docs/UNSURE.md. |
-| SetSideControls | 8B85B | 212 | matched | [SetSideControls.c](src/front/playoff_mode/SetSideControls.c) |  |
-| WriteCurModeState | 8B92F | 62 | matched | [WriteCurModeState.c](src/front/playoff_mode/WriteCurModeState.c) |  |
-| ClearPlayerFromLines | 8B96D | 322 | matched | [ClearPlayerFromLines.c](src/front/playoff_mode/ClearPlayerFromLines.c) |  |
+| SetSideControls | 8B85B | 212 | matched | [SetSideControls.c](src/front/playoff_menu/SetSideControls.c) |  |
+| WriteCurModeState | 8B92F | 62 | matched | [WriteCurModeState.c](src/front/playoff_menu/WriteCurModeState.c) |  |
+| ClearPlayerFromLines | 8B96D | 322 | matched | [ClearPlayerFromLines.c](src/front/playoff_menu/ClearPlayerFromLines.c) |  |
 | InitFileLocations | 8BAAF | 358 | matched | [InitFileLocations.c](src/pc/file_locations/InitFileLocations.c) |  |
 | CoachCutScene | 8BC15 | 710 | matched | [CoachCutScene.c](src/pc/file_locations/CoachCutScene.c) |  |
 | PlayMVI | 8BEDB | 732 | matched | [PlayMVI.c](src/engine/asm_helpers/PlayMVI.c) |  |

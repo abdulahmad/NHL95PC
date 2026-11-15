@@ -19,7 +19,7 @@ ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cc, permute
 
-WARM = ['src/engine/collide/ChkPullGoalieLate.c', 'src/front/menu/CmpPoints.c',
+WARM = ['src/engine/goaliepull/ChkPullGoalieLate.c', 'src/front/menu/CmpPoints.c',
         'src/front/playoff/PlayoffTreeHitTest.c', 'src/engine/lines/BuildDefaultLines.c']
 
 

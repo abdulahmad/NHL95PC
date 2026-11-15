@@ -7,7 +7,7 @@ debugger commands and loads the dumps into check.py --play-snaps.
   python3 tools/equiv/snapshot_dosbox.py queue
   python3 tools/equiv/snapshot_dosbox.py script SkateToSpot > build/equiv/snapshots/SkateToSpot.dbg
   python3 tools/equiv/snapshot_dosbox.py load dumps.jsonl
-  python3 tools/equiv/check.py src/engine/logic/SkateToSpot.c --func SkateToSpot --seg engine/logic --play-snaps dumps.jsonl --force --budget 600
+  python3 tools/equiv/check.py src/engine/referee/SkateToSpot.c --func SkateToSpot --seg engine/logic --play-snaps dumps.jsonl --force --budget 600
 
 Dump format (JSONL, one hit per line): function, regs (eax..ebp), args (dwords above the
 return address), pages {linear_page_hex: hex-or-base64 of 4 KB}. See docs/SNAPSHOTS.md.
