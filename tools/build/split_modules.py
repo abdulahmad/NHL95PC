@@ -20,7 +20,7 @@ What it changes:
                          CBUILD=1 build first)
   src/**/*.c             a C file follows the asm file that holds the file's own function; its `%include "c/..."`
                          and `; C: src/...` lines and tools/match/c_functions.csv follow it
-  src/segments.txt, segmap95pc.json   the code rows
+  src/segments.txt, segmap*.json      the code rows
 It refuses a cut that a short jump or a local label (Routine.local) would cross.
 """
 import argparse, csv, glob, json, os, re, subprocess, sys
@@ -39,7 +39,7 @@ def git(*a):
 
 
 def read_rows():
-    return [l.split() for l in open(os.path.join(SRC, 'segments.txt')) if l[:1] in '12']
+    return [l.split() for l in open(os.path.join(SRC, 'segments.txt')) if l[:1].isdigit()]
 
 
 def parse(path):
@@ -174,7 +174,7 @@ def main():
         allglob_old.update(glb); allext_old[m] = ext
     dataglob = set()
     for r in rows:
-        if r[0] == '2': dataglob.update(parse(os.path.join(SRC, r[5]))[2])
+        if r[0] != '1': dataglob.update(parse(os.path.join(SRC, r[5]))[2])
 
     def inc_tokens(body):
         t = set()
@@ -187,7 +187,8 @@ def main():
         return t
 
     incnames = set()
-    for f in ('structs.inc', 'x86enc.inc'):
+    for f in ('structs.inc', 'x86enc.inc', 'hockey.inc'):
+        if not os.path.isfile(os.path.join(SRC, 'inc', f)): continue
         incnames.update(TOK.findall(re.sub(r';.*', '', open(os.path.join(SRC, 'inc', f)).read())))
     uses = {}
     for m, st, en, body, oms, om in new:
@@ -255,22 +256,24 @@ def main():
     newcode = ['1 %05X %05X %d %s %s' % (st, en, en - st, oldmod.get(st, m.replace('/', '_')), '%s/%s.asm' % (m, os.path.basename(m)))
                for m, (st, en, txt) in out.items()]
     newcode = ['%s %s' % (l.rsplit(' ', 1)[0], path_of(m, PATHNEW)) for l, m in zip(newcode, out)]
-    data = [' '.join(r) for r in rows if r[0] == '2']
+    data = [' '.join(r) for r in rows if r[0] != '1']
     open(os.path.join(SRC, 'segments.txt'), 'w').write('\n'.join(hdrl + newcode + data) + '\n')
-    sm = json.load(open(os.path.join(ROOT, 'segmap95pc.json')))
+    smp = glob.glob(os.path.join(ROOT, 'segmap*.json'))[0]
+    sm = json.load(open(smp))
     base = sm['cseg01'][0]
-    off = base['file_start'] - base['start']
+    off = base['file_start'] - base['start'] if 'file_start' in base else None
     oldseg = {s['start']: s for s in sm['cseg01']}
     lst = []
     for m, (st, en, txt) in out.items():
         s = dict(oldseg.get(st, {}))
-        s.update(obj=1, start=st, end=en, module=s.get('module', m.replace('/', '_')), file_start=st + off, file_end=en + off,
-                 file_bytes=en - st, size=en - st)
+        s.update(obj=1, start=st, end=en, module=s.get('module', m.replace('/', '_')))
+        if off is not None: s.update(file_start=st + off, file_end=en + off, file_bytes=en - st, size=en - st)
+        if 'file' in base: s['file'] = path_of(m, PATHNEW)
         if st not in oldseg:
             s.update(desc=HEADER.get(m, '').replace('|', ' '), conf='subject split (cleanup phase 2)', group=m.split('/')[0])
         lst.append(s)
     sm['cseg01'] = lst
-    json.dump(sm, open(os.path.join(ROOT, 'segmap95pc.json'), 'w'), indent=1)
+    json.dump(sm, open(smp, 'w'), indent=1)
     if cmove:
         for f in git('ls-files').split('\n'):
             if not f.endswith(('.asm', '.md', '.csv', '.txt', '.c', '.h', '.py', '.json')): continue
@@ -280,6 +283,7 @@ def main():
             t2 = pat.sub(lambda x: cmove[x.group(1)], t)
             if t2 != t: open(p, 'w', encoding='latin1').write(t2)
     cf = os.path.join(ROOT, 'tools/match/c_functions.csv')
+    if not os.path.isfile(cf): return
     R = list(csv.DictReader(open(cf, newline='')))
     for r in R:
         fn = r['function'].split()[0]
