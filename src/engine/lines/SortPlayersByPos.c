@@ -8,7 +8,7 @@ void SortPlayersByPos(short side, signed char *out, short *keys, char pos)
 
     for (i = 0; i < 0x19; i++) {
         dword_E9C88[i] = i;
-        if (byte_DB3AE[side * 0x444 + i * 0x27] != pos) lineslotmark[i] = -1;
+        if (hmrosterpos[side * 0x444 + i * 0x27] != pos) lineslotmark[i] = -1;
         else lineslotmark[i] = keys[i];
     }
     sub_93540(0x19, lineslotmark, dword_E9C88);

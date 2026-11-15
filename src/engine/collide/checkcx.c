@@ -13,7 +13,7 @@ void checkcheck(Player *a, Player *b, short force);
  referee, regd4 = the impact (regd1 >> 8, at least 5, also lastimpact) is added to both players' impact and
  sets each one's impactp unless pflags2 bit 0; 14h or more with either of them carrying the puck plays the
  check (newcheck 0); then checkint and checkcheck. Unless collflag is set already, the two bounce off each other
- (the velocity exchange weighted by weight + 8Ch, word_E03B8 the cross term) and collflag is set. While the
+ (the velocity exchange weighted by weight + 8Ch, regd5 the cross term) and collflag is set. While the
  clock runs, team-mates that bump turn: when the hit comes from where a player is heading (temp3 / temp4, or
  standing still facing it), temp2 (low byte) = that direction + 2 and doplayeracc, for p unless pflags bit 3
  and then for pl the same way (its test reads p's velocity, as the EXE does). No result.
@@ -60,16 +60,16 @@ void checkcx(Player *p, short x, short d, short pl)
     regd4.w = regd1.w;
     if ((signed char)collflag < 0) return;
     regd0.l = d * dvx - dx * dvy;
-    word_E03B8 = regd0.l >> 4;
+    regd5 = regd0.l >> 4;
     regd0.w = p->weight + 0x8C;
     regd1.w = o->weight + 0x8C;
     word_E03A0 = 0;
     regd1.w += regd0.w;
     regd0.l = regd4.w * regd0.w / regd1.w;
     regd1.l = regd0.l;
-    t = (word_E03B8 * d + regd0.l * dx) >> 4;
+    t = (regd5 * d + regd0.l * dx) >> 4;
     p->Xvel = o->Xvel + t;
-    t = (regd0.l * d - word_E03B8 * dx) >> 4;
+    t = (regd0.l * d - regd5 * dx) >> 4;
     p->Yvel = o->Yvel + t;
     o->Xvel += (short)(dx * regd1.l >> 4);
     o->Yvel += (short)(d * regd1.l >> 4);

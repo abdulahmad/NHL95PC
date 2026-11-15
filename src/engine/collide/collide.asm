@@ -5,10 +5,10 @@ bits 32
 section s_53294 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, Acheck, AddPenalty, AddPenalty2, assexit, assinsert, assreplace
 extern AvgCline, awshotcnt, awtmap, awtmstruct, bannermsg, bannertimer, blockspd, blockspd_y
-extern byte_E03C1, c1playernum, c2playernum, camx, camy, CanBlockShot, CanRemovePlayer, changeplayer
+extern regd1_b1, c1playernum, c2playernum, camx, camy, CanBlockShot, CanRemovePlayer, changeplayer
 extern clockticks, collflag, CompLine, cont1team, cont2team, CountShotOnGoal, crowdlevel, CwdExciteLvl
-extern dirtab, dirtab_y, doplayeracc, nethit, dword_CCC4E, dword_E03AE, dword_E03B6, dword_E03B9
-extern dword_E03BD, dword_E9A9E, dword_E9AB6, EndPenaltyShot, fox, foy, gameclock, gameopts
+extern dirtab, dirtab_y, doplayeracc, nethit, dword_CCC4E, regd3_m2, regd5_m2, regd0_m3
+extern regd1_m3, dword_E9A9E, dword_E9AB6, EndPenaltyShot, fox, foy, gameclock, gameopts
 extern GetHot, GetHotOrStick, GetHotStick, GiveControl, gmode, gmode2, Goal, gsp
 extern hmshotcnt, hmtmap, hmtmstruct, iflags, imul32, lastplayer, lasttouch, ltack
 extern lty, off_CD498, off_CD4A0, onetimerflag, OOlist, OOlistpos, pad1dev, PassCompleted
@@ -19,7 +19,7 @@ extern randomd0, regd0, regd1, regd2, regd3, regd4, RemoveFromLines, restorepl
 extern SetBoxDoorObject, setpersonel, SetSPA, sflags, sflags3, sfx, ShotLaneOpen, shotongoal
 extern shotontarget, shotplayer, shotsets, shotsetz, SortCords, Stop4Pen, sub_93470, threat
 extern vecdist, vtoa, wcradiusx, wcradiusy, word_CBEC2, injurystop, FallDown_pinxr, FallDown_pinxl
-extern FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, word_E03A0, word_E03B8, lastimpact, xc1
+extern FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, word_E03A0, regd5, lastimpact, xc1
 extern yc1, Ylist, Ylist_m2
 global ToFixed, Sweepcheck, burst, BlockShotDive, TryBlockShot, check4check, checkagr, FacingBoards
 global checkcheck, checkgoalp, checkint, checkob, checkob_ret5a, checkob_ret5, SkillForAnim, ChkDelayedOffside
@@ -3323,7 +3323,7 @@ mov word [regd4], 1	; 558F5
 jmp near .13	; 558FE
 .6:
 call vtoa	; 55903
-mov word [word_E03B8], ax	; 55908
+mov word [regd5], ax	; 55908
 cmp word [byte ecx+SCnum], byte 6	; 5590E
 jge short .7	; 55913
 mov eax, 6	; 55915
@@ -3357,7 +3357,7 @@ sar edx, 10h	; 55970
 mov eax, dword [regd0-2]	; 55973
 sar eax, 10h	; 55978
 call vtoa	; 5597B
-cmp ax, word [word_E03B8]	; 55980
+cmp ax, word [regd5]	; 55980
 jne short .11	; 55987
 mov dx, word [regd4]	; 55989
 add edx, edx	; 55990
@@ -5488,10 +5488,10 @@ test eax, eax	; 57453
 jl short .32	; 57455
 neg word [regd1]	; 57457
 .32:
-mov eax, dword [dword_E03B9]	; 5745E
+mov eax, dword [regd0_m3]	; 5745E
 sar eax, 19h	; 57463
 mov byte [byte ecx+0Dh], al	; 57466
-mov eax, dword [dword_E03BD]	; 57469
+mov eax, dword [regd1_m3]	; 57469
 sar eax, 19h	; 5746E
 mov byte [byte ecx+0Fh], al	; 57471
 mov eax, ecx	; 57474
@@ -6730,12 +6730,12 @@ mov word [regd4], ax	; 58310
 mov eax, 40h	; 58316
 mov edx, dword [esp]	; 5831B
 sub eax, edx	; 5831E
-mov word [word_E03B8], ax	; 58320
+mov word [regd5], ax	; 58320
 cmp di, ax	; 58326
 jle short .1	; 58329
 mov edx, eax	; 5832B
 neg edx	; 5832D
-mov word [word_E03B8], dx	; 5832F
+mov word [regd5], dx	; 5832F
 cmp di, dx	; 58336
 jl near .4	; 58339
 .1:
@@ -6754,7 +6754,7 @@ mov ax, word [regd4]	; 5836B
 mov edx, dword [byte esp+08h]	; 58371
 sub edx, eax	; 58375
 mov word [regd1], dx	; 58377
-mov ax, word [word_E03B8]	; 5837E
+mov ax, word [regd5]	; 5837E
 mov edx, edi	; 58384
 sub edx, eax	; 58386
 mov word [regd0], dx	; 58388
@@ -6792,7 +6792,7 @@ jmp short .4	; 583F8
 movsx ecx, di	; 583FA
 mov ebx, dword [byte esp+06h]	; 583FD
 sar ebx, 10h	; 58401
-cmp ax, word [word_E03B8]	; 58404
+cmp ax, word [regd5]	; 58404
 sete al	; 5840B
 and eax, 0FFh	; 5840E
 add eax, byte 0Ch	; 58413
@@ -6877,11 +6877,11 @@ jl near .x	; 5850C
 sub ax, word [byte edi+06h]	; 58512
 mov dx, word [wcradiusy]	; 58516
 add edx, byte 2	; 5851D
-mov word [word_E03B8], dx	; 58520
+mov word [regd5], dx	; 58520
 cmp ax, dx	; 58527
 jg near .x	; 5852A
 neg edx	; 58530
-mov word [word_E03B8], dx	; 58532
+mov word [regd5], dx	; 58532
 cmp ax, dx	; 58539
 jl near .x	; 5853C
 mov dx, word [byte esi+07Eh]	; 58542
@@ -6932,14 +6932,14 @@ test edx, edx	; 585DE
 je near .10	; 585E0
 jle short .5	; 585E6
 mov word [regd0], 100h	; 585E8
-neg word [word_E03B8]	; 585F1
+neg word [regd5]	; 585F1
 .5:
-add word [word_E03B8], ax	; 585F8
+add word [regd5], ax	; 585F8
 mov edx, dword [esi]	; 585FF
 sub edx, dword [byte esi+OldXpos]	; 58601
 sar edx, 8	; 58604
 mov dword [regd3], edx	; 58607
-mov ecx, dword [word_E03B8-2]	; 5860D
+mov ecx, dword [regd5-2]	; 5860D
 sar ecx, 10h	; 58613
 mov edx, dword [regd3-2]	; 58616
 sar edx, 10h	; 5861C
@@ -6949,10 +6949,10 @@ sar ecx, 10h	; 58628
 mov eax, edx	; 5862B
 sar edx, 1Fh	; 5862D
 idiv ecx	; 58630
-mov dword [word_E03B8], eax	; 58632
+mov dword [regd5], eax	; 58632
 cmp eax, 10000h	; 58637
 jae near .10	; 5863C
-sub bx, word [word_E03B8]	; 58642
+sub bx, word [regd5]	; 58642
 mov ax, word [regd4]	; 58649
 cmp bx, ax	; 5864F
 jl near .10	; 58652
@@ -7169,7 +7169,7 @@ mov eax, 0A7h	; 58940
 cwde	; 58945
 call sfx	; 58946
 .9:
-mov eax, dword [dword_E03AE]	; 5894B
+mov eax, dword [regd3_m2]	; 5894B
 sar eax, 16h	; 58950
 mov cx, word [regd3]	; 58953
 sub ecx, eax	; 5895A
@@ -7617,7 +7617,7 @@ xor eax, edx	; 58EFE
 test al, 40h	; 58F00
 je near .11	; 58F02
 .5:
-mov eax, dword [byte_E03C1-3]	; 58F08
+mov eax, dword [regd1_b1-3]	; 58F08
 sar eax, 18h	; 58F0D
 mov word [regd4], ax	; 58F10
 cmp ax, 5	; 58F16
@@ -7678,7 +7678,7 @@ sub edx, eax	; 58FD7
 mov dword [regd0], edx	; 58FD9
 mov eax, edx	; 58FDF
 sar eax, 4	; 58FE1
-mov word [word_E03B8], ax	; 58FE4
+mov word [regd5], ax	; 58FE4
 xor eax, eax	; 58FEA
 mov al, byte [byte esi+weight]	; 58FEC
 add eax, 8Ch	; 58FEF
@@ -7703,7 +7703,7 @@ sar edx, 1Fh	; 5903E
 idiv ebp	; 59041
 mov dword [regd0], eax	; 59043
 mov dword [regd1], eax	; 59048
-mov edx, dword [word_E03B8-2]	; 5904D
+mov edx, dword [regd5-2]	; 5904D
 sar edx, 10h	; 59053
 imul edx, ebx	; 59056
 imul eax, edi	; 59059
@@ -7714,7 +7714,7 @@ mov dx, word [byte ecx+Xvel]	; 59064
 mov eax, dword [esp]	; 59068
 add edx, eax	; 5906B
 mov word [byte esi+Xvel], dx	; 5906D
-mov eax, dword [word_E03B8-2]	; 59071
+mov eax, dword [regd5-2]	; 59071
 sar eax, 10h	; 59076
 imul eax, edi	; 59079
 mov edx, dword [regd0]	; 5907C

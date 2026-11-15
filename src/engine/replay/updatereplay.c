@@ -5,7 +5,7 @@
    (gmode bit 4), every second tick (replaytick) append one replay frame at recbpr (in reverse mode, gmode2 bit 2,
    first step back with ReplayPrevFrame): per sort object a dword of y (10 bits), x (10 bits, shifted 10), the word
    at +12h (11 bits, shifted 20) and bit 11 of the word at +54h; the frame byte (+5Eh) of the 12 players; the six
-   position pairs as nibbles (Fh for off the ice); the puck height, byte_DFFA6, the two sound effect bytes
+   position pairs as nibbles (Fh for off the ice); the puck height, doorZpos2, the two sound effect bytes
    (replaysfx, lastsfx, then both -1), the controlled player numbers and the puck carrier, the penalty box nibbles
    (PBnum), camx (byte), camy and crowdlevel (words), the ten rink objects' frames as nibbles and the twenty
    object bytes of rinkobjs. When the buffer (9600h bytes from replaystart) is full it wraps (sflags bit 4). On
@@ -47,7 +47,7 @@ void updatereplay(void)
         *recbpr++ = *(unsigned char *)&regd0;
     }
     *recbpr++ = *(unsigned char *)puckz;
-    *recbpr++ = byte_DFFA6;
+    *recbpr++ = doorZpos2;
     *recbpr++ = replaysfx;
     *recbpr++ = lastsfx;
     replaysfx = lastsfx = -1;

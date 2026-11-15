@@ -449,7 +449,7 @@ void RequestLineChange(Player *p)
    direction (bit 3 clear) is used 3 times in 4, else a random one of the 5 around the y direction (mirrored by
    the sign of the y speed). The puck p gets that velocity (dirtab * 20h, plus the y speed), a random z velocity
    (below 800h), z 0, loses pflags bit 2 and takes assignment 18h (pucknorm); the referee (SortCords + 16) takes
-   1Fh and word_E0028 is set to 500h toward his side. p: the puck. No result. */
+   1Fh and refXvel is set to 500h toward his side. p: the puck. No result. */
 void Endfaceoff(Player *p)
 {
     short j;
@@ -503,7 +503,7 @@ void Endfaceoff(Player *p)
     p->pflags &= 0xFB;
     assreplace(p, 0x18);
     assreplace(&SortCords[16], 0x1F);
-    word_E0028 = HIWORD(SortCords[16].Xpos) > 0 ? 0x500 : -0x500;
+    refXvel = HIWORD(SortCords[16].Xpos) > 0 ? 0x500 : -0x500;
 }
 
 /* assreffollow (4E0BD; 93G hockey93 assreffollow?, PC version; ends in ass_popx / asswingd_skateto): the

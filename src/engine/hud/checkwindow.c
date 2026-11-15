@@ -86,9 +86,9 @@ void checkwindow(void)
         if ((gmode & 4) && Pencntdwn < 0 || RefStep[0] > 0) {
             p = &SortCords[0x10];
             xc1 = HIWORD(p->Xpos);
-            yc1 = word_E0022;
+            yc1 = refYpos2;
             regd2.w = xc1 - camx;
-            regd3.w = word_E0046 - camx;
+            regd3.w = reftemp3 - camx;
             if ((regd2.w ^ regd3.w) < 0) xc1 = camx;
             else if (ABSW(regd2.w) > ABSW(regd3.w)) xc1 = p->temp3;
             regd2.w = yc1 - camy;

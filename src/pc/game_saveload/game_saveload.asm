@@ -5,7 +5,7 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
-extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, byte_E024C, curevent
+extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
 extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, goalienotebits, hmplstats, hmtmplattr
@@ -28,7 +28,7 @@ extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopat
 extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, unk_C5423
 extern unk_C542E, hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252
 extern VisTeam, penaltysc, word_CBC44, lcsel_aw, word_CBD64, word_CBD66, word_CBEC2, injurystop
-extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, word_E024E
+extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
 extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, word_E9AAE, word_E9AB0, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
@@ -467,10 +467,10 @@ add eax, byte 2	; 601AE
 mov dx, word [goalienotebits]	; 601B1
 mov word [eax], dx	; 601B8
 add eax, byte 2	; 601BB
-mov dx, word [byte_E024C]	; 601BE
+mov dx, word [milestonesaid]	; 601BE
 mov word [eax], dx	; 601C5
 add eax, byte 2	; 601C8
-mov dx, word [word_E024E]	; 601CB
+mov dx, word [milestonesaid_b2]	; 601CB
 mov word [eax], dx	; 601D2
 add eax, byte 2	; 601D5
 mov dx, word [gamemode]	; 601D8
@@ -1252,10 +1252,10 @@ movsx eax, word [ebx]	; 60CE3
 mov dword [goalienotebits], eax	; 60CE6
 add ebx, byte 2	; 60CEB
 mov ax, word [ebx]	; 60CEE
-mov word [byte_E024C], ax	; 60CF1
+mov word [milestonesaid], ax	; 60CF1
 add ebx, byte 2	; 60CF7
 mov ax, word [ebx]	; 60CFA
-mov word [word_E024E], ax	; 60CFD
+mov word [milestonesaid_b2], ax	; 60CFD
 add ebx, byte 2	; 60D03
 movsx eax, word [ebx]	; 60D06
 mov dword [gamemode], eax	; 60D09

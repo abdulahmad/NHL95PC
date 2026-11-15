@@ -13,7 +13,7 @@ extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, D
 extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, dword_C585C, dword_C5860, dword_CBEBE, demogame
 extern dword_CC9AD, dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
 extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
-extern awtmnear, dword_DF848, ovlartbank, fofdata2_m2, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7
+extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7
 extern EndPenaltyShot, energywarn, escrequest, EvadePC, EvadePlayers, exitgame, fadeinpending, FadePalette
 extern Findhittype, findpc, fodir1, fodir2, fofdata2, forcepldata, FormatPlayerName, fox
 extern foy, frameaccum, FreeMemBlock, gameclock, gameopts, gameover, gamepal, GetHot
@@ -37,12 +37,12 @@ extern skatetopuck, SkateToSpot, sopathend, sopathpoint, sopathx, sopathy, SortC
 extern sounddev, SpeechStopQueue, sprintf_, spritedrawcount, SprSort, starordtab, starpl, startm
 extern startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_6ADA7, sub_6AF52, sub_6AF97
 extern sub_6B008, sub_8F633, sub_8FFB0, teamabbrevs, textline1, textline2, textline3, textline4
-extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, unk_DC240, unk_DFD9C, updateanim
+extern textline5, threat, TicksSinceLastCall, unk_C1B3E, hmplattr, unk_DC240, sortobj11, updateanim
 extern UpdateHudPanel, vecdist, viewscrollx, viewscrolly, VisTeam, vtoa, WaitTickDeadline, penaltysc
 extern word_CBC44, injurystop, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 extern asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
-extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, word_DF816, word_DF81A
-extern word_E0022, word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, word_E004A
+extern word_DB08A, word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, puckcross2, puckcross6
+extern refYpos2, refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, reftemp5
 extern fofdata2_w2, fofdata2_w4, fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global FadeOutPalCycle, PreGameIntro, PreGameIntro_scroll, PreGameIntro_frameloop, PreGameIntro_end, PreGameIntro_popebp, PreGameIntro_popx, StartPreGame
 global ThreeStarsLoop, ThreeStarsLoop_tick, assintrostand, assintroline, AddStar, StarEligible, StarCompare, PickThreeStars
@@ -182,7 +182,7 @@ call setpersonel	; 47DDF
 mov eax, awtmstruct	; 47DE4
 call forcepldata	; 47DE9
 call resetplstuff	; 47DEE
-mov ebx, unk_DFD9C	; 47DF3
+mov ebx, sortobj11	; 47DF3
 mov dword [byte esp+0Ch], esi	; 47DF8
 jmp near .16	; 47DFC
 .1:
@@ -308,23 +308,23 @@ mov edx, 1Ah	; 47F8F
 mov eax, puckstruct	; 47F94
 call assreplace	; 47F99
 mov eax, dword [byte esp+08h]	; 47F9E
-mov word [word_E0042], ax	; 47FA2
+mov word [reftemp1], ax	; 47FA2
 mov eax, 8Eh	; 47FA8
 mov word [SortCords+802h], ax	; 47FAD
-mov word [word_E0046], ax	; 47FB3
+mov word [reftemp3], ax	; 47FB3
 mov eax, 2	; 47FB9
 call randomd0	; 47FBE
 add word [SortCords+802h], ax	; 47FC3
-mov word [word_E0022], cx	; 47FCA
-mov word [word_E0048], cx	; 47FD1
+mov word [refYpos2], cx	; 47FCA
+mov word [reftemp4], cx	; 47FD1
 mov word [SortCords+836h], 4	; 47FD8
-mov word [word_E002A], cx	; 47FE1
-mov word [word_E0028], cx	; 47FE8
-mov word [word_E004A], di	; 47FEF
+mov word [refYvel], cx	; 47FE1
+mov word [refXvel], cx	; 47FE8
+mov word [reftemp5], di	; 47FEF
 xor edx, edx	; 47FF6
 mov eax, SortCords+800h	; 47FF8
 call SetSPA	; 47FFD
-mov word [word_E002E], 289h	; 48002
+mov word [refframe], 289h	; 48002
 mov edx, 26h	; 4800B
 mov eax, SortCords+800h	; 48010
 call assreplace	; 48015
@@ -704,7 +704,7 @@ jmp short .2	; 4850E
 .1:
 mov ebx, eax	; 48510
 shl ebx, 7	; 48512
-mov ebx, dword [dword ebx+dword_DF848]	; 48515
+mov ebx, dword [dword ebx+sctemp4]	; 48515
 sar ebx, 10h	; 4851B
 cmp ebx, byte 0FFFFFF9Ch	; 4851E
 jne near .x	; 48521
@@ -1737,18 +1737,18 @@ mov edx, 19h	; 49160
 mov eax, ebx	; 49165
 call assreplace	; 49167
 xor ecx, ecx	; 4916C
-mov word [word_E0042], cx	; 4916E
+mov word [reftemp1], cx	; 4916E
 mov edi, 0FFFFFF38h	; 49175
 mov word [SortCords+802h], di	; 4917A
-mov word [word_E0046], di	; 49181
-mov word [word_E0022], cx	; 49188
-mov word [word_E0048], cx	; 4918F
-mov word [word_E002A], cx	; 49196
-mov word [word_E0028], cx	; 4919D
+mov word [reftemp3], di	; 49181
+mov word [refYpos2], cx	; 49188
+mov word [reftemp4], cx	; 4918F
+mov word [refYvel], cx	; 49196
+mov word [refXvel], cx	; 4919D
 xor edx, edx	; 491A4
 mov eax, SortCords+800h	; 491A6
 call SetSPA	; 491AB
-mov word [word_E002E], 0FFFFh	; 491B0
+mov word [refframe], 0FFFFh	; 491B0
 mov edx, 15h	; 491B9
 mov eax, SortCords+800h	; 491BE
 call assreplace	; 491C3

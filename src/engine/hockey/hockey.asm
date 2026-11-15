@@ -7,14 +7,14 @@ extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, asstab, awlinetab,
 extern awscore, awteamrec, awtmglstats, awtmgoalie, awtmlcnt, awtmline, awtmlines, awtmpbox
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, priolist
 extern HotStickList, HotStickList_y, cupceremony, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
-extern awtmcoach_d3, awtmcoachflags, awtmcoachmode, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
+extern awtmcoach_d3, awtmcoachflags, awtmcoachmode, refasslist, refweight, reflegstr, reflegspd, byte_E038A
 extern goalevent, defsort_d, offsort_fwd, c1playernum, c2playernum, camx, camx_m2, camy
 extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
 extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
 extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
 extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, sublist_m2, sublist_defl_m3, dword_CCD4F, dword_D30BC
 extern dword_D30C0, hmplstats, hmtmextra, hmtmnear, hmtmcoachenergy, hmtmplattr, hmtmglattr, awtmnear
-extern awtmcoachenergy, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E03A8, dword_E03AE, dword_E9A9E, dword_E9AB6
+extern awtmcoachenergy, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E03A8, regd3_m2, dword_E9A9E, dword_E9AB6
 extern EndPenaltyShot, energywarn, exitgame, fadeinpending, fodir1, fodir2, fox, foy
 extern gameclock, gameopts, gameover, gmode, gmode2, gsp, hmlinetab, hmroster
 extern hmscore, hmteamrec, hmtmglstats, hmtmgoalie, hmtmlcnt, hmtmline, hmtmlines, hmtmpbox
@@ -32,8 +32,8 @@ extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCord
 extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
 extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, offsort_d
 extern defsort_fwd, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, injurystop, Pencntdwn2
-extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, word_E0036, word_E03A0
-extern word_E03B8, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
+extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, refposition, word_E03A0
+extern regd5, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
 global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6, findpc_ret5, GetHot
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, PenTeamScored, Goal, GiveControl
@@ -2594,11 +2594,11 @@ cmp bx, byte 11h	; 5BB59
 jne near defaultsprites_0.1	; 5BB5D
 mov word [SortCords+836h], 2	; 5BB63
 mov ebx, 0FFFFFFFFh	; 5BB6C
-mov word [word_E0036], bx	; 5BB71
-mov byte [byte_E0072], 7	; 5BB78
+mov word [refposition], bx	; 5BB71
+mov byte [refweight], 7	; 5BB78
 mov ah, 0Fh	; 5BB7F
-mov byte [byte_E0073], ah	; 5BB81
-mov byte [byte_E0074], ah	; 5BB87
+mov byte [reflegstr], ah	; 5BB81
+mov byte [reflegspd], ah	; 5BB87
 mov word [RefStep], bx	; 5BB8D
 call SprSort	; 5BB94
 jmp near findpc_ret5	; 5BB99
@@ -3322,9 +3322,9 @@ push esi	; 5C41C
 push edi	; 5C41D
 push ebp	; 5C41E
 sub esp, byte 0Ch	; 5C41F
-mov eax, dword [word_E0036]	; 5C422
+mov eax, dword [refposition]	; 5C422
 sar eax, 10h	; 5C427
-movsx ax, byte [dword eax+byte_E003A]	; 5C42A
+movsx ax, byte [dword eax+refasslist]	; 5C42A
 mov dword [byte esp+08h], eax	; 5C432
 mov ah, byte [gmode]	; 5C436
 test ah, 1	; 5C43C
@@ -4042,7 +4042,7 @@ push edx	; 5CD5A
 xor edx, edx	; 5CD5B
 mov dword [dword_E03A8], edx	; 5CD5D
 mov dword [word_E03A0], edx	; 5CD63
-mov dword [word_E03B8], edx	; 5CD69
+mov dword [regd5], edx	; 5CD69
 mov dword [regd4], edx	; 5CD6F
 mov dword [regd3], edx	; 5CD75
 mov dword [regd2], edx	; 5CD7B

@@ -4642,7 +4642,7 @@ extern short word_DB096[]; /* DB096 */
 extern unsigned char awplstats[]; /* DB218 */
 extern unsigned char hmroster[]; /* DB3A8 */
 extern unsigned char hmrosterjersey[]; /* DB3AD */
-extern unsigned char byte_DB3AE[]; /* DB3AE */
+extern unsigned char hmrosterpos[]; /* DB3AE */
 extern unsigned char awroster[]; /* DB7EC */
 extern unsigned char byte_DB7F1[]; /* DB7F1 */
 extern unsigned char hmteamrec[]; /* DBC30 */
@@ -4924,12 +4924,12 @@ extern int awtmsort; /* DF80A */
 extern short awtmgoaliesc; /* DF80E */
 extern int puckcross_m2[]; /* DF812 */
 extern short puckcross[]; /* DF814 */
-extern short word_DF816; /* DF816 */
-extern short word_DF81A; /* DF81A */
-extern int dword_DF848[]; /* DF848 */
+extern short puckcross2; /* DF816 */
+extern short puckcross6; /* DF81A */
+extern int sctemp4[]; /* DF848 */
 extern unsigned char scpflags2[]; /* DF861 */
 extern unsigned char byte_DF87F[]; /* DF87F */
-extern unsigned char unk_DFD9C[]; /* DFD9C */
+extern unsigned char sortobj11[]; /* DFD9C */
 extern int puckstruct[]; /* DFF1C */
 extern unsigned char puckasslist[]; /* DFF3A */
 extern short pucktemp1; /* DFF42 */
@@ -4937,33 +4937,33 @@ extern short pucknopuck; /* DFF5A */
 extern unsigned char unk_DFF5E[]; /* DFF5E */
 extern unsigned char puckpflags2; /* DFF61 */
 extern int sortobj15[]; /* DFF9C */
-extern unsigned char byte_DFFA6; /* DFFA6 */
+extern unsigned char doorZpos2; /* DFFA6 */
 extern short doortemp1; /* DFFC2 */
 extern unsigned char doorpflags; /* DFFE0 */
 extern unsigned char byte_DFFE2; /* DFFE2 */
-extern short word_E0022; /* E0022 */
-extern short word_E0028; /* E0028 */
-extern short word_E002A; /* E002A */
-extern short word_E002E; /* E002E */
-extern short word_E0036; /* E0036 */
-extern signed char byte_E003A[]; /* E003A */
-extern short word_E0042; /* E0042 */
-extern short word_E0046; /* E0046 */
-extern short word_E0048; /* E0048 */
-extern short word_E004A; /* E004A */
-extern unsigned char byte_E0072; /* E0072 */
-extern unsigned char byte_E0073; /* E0073 */
-extern unsigned char byte_E0074; /* E0074 */
+extern short refYpos2; /* E0022 */
+extern short refXvel; /* E0028 */
+extern short refYvel; /* E002A */
+extern short refframe; /* E002E */
+extern short refposition; /* E0036 */
+extern signed char refasslist[]; /* E003A */
+extern short reftemp1; /* E0042 */
+extern short reftemp3; /* E0046 */
+extern short reftemp4; /* E0048 */
+extern short reftemp5; /* E004A */
+extern unsigned char refweight; /* E0072 */
+extern unsigned char reflegstr; /* E0073 */
+extern unsigned char reflegspd; /* E0074 */
 extern int SumCwdExciteLvl; /* E009C */
 extern int photoptrsf[]; /* E00A0 */
 extern int dword_E0220; /* E0220 */
 extern int dword_E0230; /* E0230 */
 extern int ovlartbank; /* E0244 */
 extern int ovlscript; /* E0248 */
-extern short byte_E024C[]; /* E024C */
-extern unsigned char byte_E024D[]; /* E024D */
-extern short word_E024E; /* E024E */
-extern unsigned char byte_E024F; /* E024F */
+extern short milestonesaid[]; /* E024C */
+extern unsigned char milestonesaid_b1[]; /* E024D */
+extern short milestonesaid_b2; /* E024E */
+extern unsigned char milestonesaid_b3; /* E024F */
 extern unsigned char textline1; /* E0250 */
 extern unsigned char textline2; /* E028C */
 extern unsigned char textline3; /* E02C8 */
@@ -4985,12 +4985,12 @@ extern short fofdata_w2; /* E039A */
 extern short word_E03A0; /* E03A0 */
 extern int replayplay; /* E03A4 */
 extern int dword_E03A8; /* E03A8 */
-extern int dword_E03AE; /* E03AE */
-extern int dword_E03B6[]; /* E03B6 */
-extern short word_E03B8; /* E03B8 */
-extern int dword_E03B9; /* E03B9 */
-extern int dword_E03BD; /* E03BD */
-extern signed char byte_E03C1; /* E03C1 */
+extern int regd3_m2; /* E03AE */
+extern int regd5_m2[]; /* E03B6 */
+extern short regd5; /* E03B8 */
+extern int regd0_m3; /* E03B9 */
+extern int regd1_m3; /* E03BD */
+extern signed char regd1_b1; /* E03C1 */
 extern unsigned char hilightrec[]; /* E03C4 */
 extern unsigned char unk_E0416[]; /* E0416 */
 extern int PenBuf_m5[]; /* E9A11 */

@@ -5,7 +5,7 @@ bits 32
 section s_614C2 progbits alloc exec nowrite align=1
 extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtmstruct
 extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
-extern awtmcoachflags, byte_E024C, byte_E024D, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
+extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
 extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
@@ -1705,9 +1705,9 @@ setne dl	; 62836
 and edx, 0FFh	; 62839
 xor ebp, edx	; 6283F
 lea edx, [byte ebp+ebp+00h]	; 62841
-cmp byte [dword edx+byte_E024C], 0	; 62845
+cmp byte [dword edx+milestonesaid], 0	; 62845
 je short .1	; 6284C
-cmp byte [dword edx+byte_E024D], 0	; 6284E
+cmp byte [dword edx+milestonesaid_b1], 0	; 6284E
 jne near .17	; 62855
 .1:
 xor esi, esi	; 6285B

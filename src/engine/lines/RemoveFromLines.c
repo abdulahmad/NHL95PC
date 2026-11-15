@@ -25,14 +25,14 @@ void RemoveFromLines(short side, short pnum)
     short r2;
 
     lt = (signed char *)(side ? awlinetab : hmlinetab);
-    if (byte_DB3AE[side * 0x444 + pnum * 0x27] == 'D') {
+    if (hmrosterpos[side * 0x444 + pnum * 0x27] == 'D') {
         word_E9F14 = 0;
         for (i = 0; i < 0x19; i++) {
             r = defsort_d[i + side * 0x19];
             if (r < 0) break;
             if (byte_CD418[hmroster[side * 0x444 + r * 0x27]] == 1) word_E9F14++;
         }
-    } else if (byte_DB3AE[side * 0x444 + pnum * 0x27] != 'G') {
+    } else if (hmrosterpos[side * 0x444 + pnum * 0x27] != 'G') {
         word_E9F12 = 0;
         for (i = 0; i < 0x19; i++) {
             r2 = offsort_fwd[side * 0x19 + i];

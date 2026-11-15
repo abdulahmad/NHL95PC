@@ -21,8 +21,8 @@ extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, Set
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
 extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
-extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, word_DF816, word_DF81A, word_E0022, word_E0028
-extern word_E002A, xc1, yc1, yleader
+extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
+extern refYvel, xc1, yc1, yleader
 global StartHL2
 ; C: src/engine/frame/StartHL2.c
 %ifdef CBUILD
@@ -265,8 +265,8 @@ mov word [injurystop], si	; 696F9
 mov word [crowdlevel], si	; 69700
 xor esi, esi	; 69707
 mov dword [crowdsmooth], esi	; 69709
-mov word [word_DF81A], ax	; 6970F
-mov word [word_DF816], ax	; 69715
+mov word [puckcross6], ax	; 6970F
+mov word [puckcross2], ax	; 69715
 call setupice	; 6971B
 call SprSortVert	; 69720
 xor ebx, edx	; 69725
@@ -396,11 +396,11 @@ mov edx, 19h	; 69941
 mov eax, ebx	; 69946
 call assreplace	; 69948
 mov word [SortCords+802h], 0FF88h	; 6994D
-mov word [word_E0022], di	; 69956
+mov word [refYpos2], di	; 69956
 mov esi, 2	; 6995D
 mov word [SortCords+836h], si	; 69962
-mov word [word_E002A], di	; 69969
-mov word [word_E0028], di	; 69970
+mov word [refYvel], di	; 69969
+mov word [refXvel], di	; 69970
 mov edx, 1Fh	; 69977
 mov eax, SortCords+800h	; 6997C
 call assreplace	; 69981

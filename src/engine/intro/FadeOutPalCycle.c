@@ -63,7 +63,7 @@ void FadeOutPalCycle(void)
 /* PreGameIntro (47CD6, PC only): set up the pre-game skate: the crowd sample, the home team's power play colours
    (LoadTeamPPV), the text lines, period, seed (mixed with both teams), the 1800-tick sequence timer and no
    controlled players; both teams' energy, lines and players (reenergizeteam, setpersonel, forcepldata); then the
-   six players of each team (walking down from unk_DFD9C): the ones not dressed (position 0) stand at the centre
+   six players of each team (walking down from sortobj11): the ones not dressed (position 0) stand at the centre
    line facing their end, the others skate in from five random lanes by their side, all with the skate-in
    assignment (25h); the puck held at the boards (1Ah) and the referee at centre ice (26h). Two game frames and a
    sprite sort, the camera and view at the start, the text overlay closed and the HUD panel redrawn. No arguments
@@ -105,7 +105,7 @@ void PreGameIntro(void)
     setpersonel(&awtmstruct);
     forcepldata(&awtmstruct);
     resetplstuff();
-    p = (Player *)unk_DFD9C;
+    p = (Player *)sortobj11;
     for (side = 0; side < 2; side++) {
         for (i = 0; i < 5; i++) used[i] = 0;
         for (i = 0; i < 6; i++, p--) {
@@ -150,18 +150,18 @@ void PreGameIntro(void)
     ((Player *)puckstruct)->Xvel = 0;
     ((Player *)puckstruct)->Yvel = 0;
     assreplace((Player *)puckstruct, 0x1A);
-    word_E0042 = team;
+    reftemp1 = team;
     HIWORD((REF)->Xpos) = 0x8E;
-    word_E0046 = 0x8E;
+    reftemp3 = 0x8E;
     HIWORD((REF)->Xpos) += randomd0(2);
     HIWORD((REF)->Ypos) = 0;
-    word_E0048 = 0;
+    reftemp4 = 0;
     (REF)->facedir = 4;
-    word_E002A = 0;
-    word_E0028 = 0;
-    word_E004A = y;
+    refYvel = 0;
+    refXvel = 0;
+    reftemp5 = y;
     SetSPA(REF, 0);
-    word_E002E = 0x289;
+    refframe = 0x289;
     assreplace(REF, 0x26);
     RefStep[0] = 0;
     sflags |= 0x40;
@@ -433,14 +433,14 @@ void StartThreeStars(void)
     q->Xvel = 0;
     q->Yvel = 0;
     assreplace(q, 0x19);
-    word_E0042 = 0;
-    word_E0046 = HIWORD(SortCords[0x10].Xpos) = -0xC8;
-    word_E0022 = 0;
-    word_E0048 = 0;
-    word_E002A = 0;
-    word_E0028 = 0;
+    reftemp1 = 0;
+    reftemp3 = HIWORD(SortCords[0x10].Xpos) = -0xC8;
+    refYpos2 = 0;
+    reftemp4 = 0;
+    refYvel = 0;
+    refXvel = 0;
     SetSPA(&SortCords[0x10], 0);
-    word_E002E = -1;
+    refframe = -1;
     assreplace(&SortCords[0x10], 0x15);
     RefStep[0] = 0;
     sflags |= 0x40;

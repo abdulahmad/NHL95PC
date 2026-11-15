@@ -5,7 +5,7 @@ bits 32
 section s_1205D progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awardart, awardnames, awardtitles, awardtype
 extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_D42C3
-extern byte_D9299, byte_E024C, byte_E024D, byte_E024F, curevent, goalevent, camx, camx_m2
+extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, dword_C513C, dword_C5168, dword_C66D0, dword_C66D4, dword_CC080
@@ -46,7 +46,7 @@ extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, t
 extern unk_C03C6, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690, unk_D96F8
 extern unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2
-extern injurystop, Pencntdwn2, rinkobjs, word_E024E, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
+extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
 extern word_E9AAA, word_E9AAE, rinkobjused
 global PickAwardWinners, PickAwardWinners_x, ShowAwardScreens, DrawAwardsSummary, AwardsCeremony
 PickAwardWinners:

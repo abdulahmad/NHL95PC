@@ -292,7 +292,7 @@ done:
    team is short-handed on the gmode2 bit 6 side (gmode2 bit 5) with opponents near the puck (threat; 1 in 4), or
    behind with under 4 seconds left. Else the odds start at 20h less his shooting sense (spodds): from farther
    than 100 (10000 squared) they are 16 times longer; with the net empty 1; else they double for each opposing
-   skater in the shot line (vtoa from the puck, word_E03B8), and a pulled goalie (pflags2 bit 1) makes them 1. A
+   skater in the shot line (vtoa from the puck, regd5), and a pulled goalie (pflags2 bit 1) makes them 1. A
    roll of 8 or less (randomd0) shoots when the puck is in front of the net he attacks (0 to E8h; on a penalty
    shot from 74h in) and not while gmode2 bit 7. p: the carrier. Result: 1 when he shot (CompShoot), else 0. */
 short chk4shot(Player *p)
@@ -312,7 +312,7 @@ short chk4shot(Player *p)
         regd4.w = 1;
         goto roll;
     }
-    word_E03B8 = vtoa(regd0.w, regd1.w);
+    regd5 = vtoa(regd0.w, regd1.w);
     q = &SortCords[p->SCnum < 6 ? 6 : 0];
     regd3.w = 6;
     do {
@@ -321,7 +321,7 @@ short chk4shot(Player *p)
         } else {
             regd0.w = HIWORD(q->Xpos) - *puckx;
             regd1.w = HIWORD(q->Ypos) - *pucky;
-            if (vtoa(regd0.w, regd1.w) == word_E03B8) regd4.w += regd4.w;
+            if (vtoa(regd0.w, regd1.w) == regd5) regd4.w += regd4.w;
         }
         q++;
     } while (--regd3.w);

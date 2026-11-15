@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_67564 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, rinkobjanim, byte_CD418
-extern byte_CD421, byte_CD473, byte_DB3AE, byte_DC8D8, byte_DC9D8, rinkobjs_b3, hmtmgoalie_b1, byte_DFFA6
-extern byte_E03C1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
+extern byte_CD421, byte_CD473, hmrosterpos, byte_DC8D8, byte_DC9D8, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
+extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, rinkobjdefs_m2
 extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
-extern dword_E0230, ovlartbank, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, lineslotmark, dword_E9C85
+extern dword_E0230, ovlartbank, regd3_m2, regd0_m3, regd1_m3, dword_E9A9E, lineslotmark, dword_E9C85
 extern dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
 extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
 extern rpl_objstep_m3, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
@@ -25,7 +25,7 @@ extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_903
 extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
-extern rinkobjdefs, word_CD4FC, rinkobjs, word_E0022, word_E0046, word_E9F12, word_E9F14, rpl_x
+extern rinkobjdefs, word_CD4FC, rinkobjs, refYpos2, reftemp3, word_E9F12, word_E9F14, rpl_x
 extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
 extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
@@ -204,7 +204,7 @@ mov byte [eax], dl	; 6775F
 mov eax, dword [recbpr]	; 67761
 lea ebx, [byte eax+01h]	; 67766
 mov dword [recbpr], ebx	; 67769
-mov dl, byte [byte_DFFA6]	; 6776F
+mov dl, byte [doorZpos2]	; 6776F
 mov byte [eax], dl	; 67775
 mov eax, dword [recbpr]	; 67777
 lea ebx, [byte eax+01h]	; 6777C
@@ -415,12 +415,12 @@ and bh, 3	; 67A3B
 mov word [regd1], bx	; 67A3E
 add edx, byte 4	; 67A45
 mov dword [replayplay], edx	; 67A48
-mov dl, byte [byte_E03C1]	; 67A4E
+mov dl, byte [regd1_b1]	; 67A4E
 test dl, 2	; 67A54
 je short .13	; 67A57
 mov dh, dl	; 67A59
 or dh, 0FCh	; 67A5B
-mov byte [byte_E03C1], dh	; 67A5E
+mov byte [regd1_b1], dh	; 67A5E
 .13:
 movsx edx, ax	; 67A64
 mov bx, word [regd1]	; 67A67
@@ -429,12 +429,12 @@ sar dword [regd0], 0Ah	; 67A76
 mov dx, word [regd0]	; 67A7D
 and dh, 3	; 67A84
 mov word [regd1], dx	; 67A87
-mov bl, byte [byte_E03C1]	; 67A8E
+mov bl, byte [regd1_b1]	; 67A8E
 test bl, 2	; 67A94
 je short .14	; 67A97
 mov bh, bl	; 67A99
 or bh, 0FCh	; 67A9B
-mov byte [byte_E03C1], bh	; 67A9E
+mov byte [regd1_b1], bh	; 67A9E
 .14:
 movsx edx, ax	; 67AA4
 mov bx, word [regd1]	; 67AA7
@@ -450,7 +450,7 @@ mov word [regd1], 0FFFFh	; 67AD5
 movsx edx, ax	; 67ADE
 mov bx, word [regd1]	; 67AE1
 mov word [nosplit edx*2+rpl_frame], bx	; 67AE8
-test byte [dword_E03BD], 8	; 67AF0
+test byte [regd1_m3], 8	; 67AF0
 setne dl	; 67AF7
 and edx, 0FFh	; 67AFA
 mov bl, dl	; 67B00
@@ -494,7 +494,7 @@ sar edx, 18h	; 67B74
 mov bl, dl	; 67B77
 movsx edx, ax	; 67B79
 mov byte [nosplit edx*2+rpl_pos], bl	; 67B7C
-mov edx, dword [dword_E03B9]	; 67B83
+mov edx, dword [regd0_m3]	; 67B83
 sar edx, 1Ch	; 67B89
 and edx, byte 0Fh	; 67B8C
 mov byte [regd1], dl	; 67B8F
@@ -540,7 +540,7 @@ mov eax, dword [regd1-3]	; 67C13
 sar eax, 18h	; 67C18
 .26:
 mov byte [rpl_c1player], al	; 67C1B
-mov eax, dword [dword_E03B9]	; 67C20
+mov eax, dword [regd0_m3]	; 67C20
 sar eax, 1Ch	; 67C25
 and eax, byte 0Fh	; 67C28
 mov byte [regd1], al	; 67C2B
@@ -565,7 +565,7 @@ mov al, byte [eax]	; 67C66
 mov byte [regd0], al	; 67C68
 and al, 0Fh	; 67C6D
 mov byte [rpl_pbnum], al	; 67C6F
-mov eax, dword [dword_E03B9]	; 67C74
+mov eax, dword [regd0_m3]	; 67C74
 sar eax, 1Ch	; 67C79
 and eax, byte 0Fh	; 67C7C
 mov byte [rpl_pbnum_b1], al	; 67C7F

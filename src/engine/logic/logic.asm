@@ -11,8 +11,8 @@ extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
 extern doorpflags, doortemp1, doplayeracc, doshot, dword_C585C, dword_C5860, dword_CBEBE, demogame
 extern dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, hmplstats_m2
-extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, dword_DF848, ovlartbank
-extern fofdata2_m2, dword_E03AE, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
+extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, sctemp4, ovlartbank
+extern fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
 extern EvadePlayers, exitgame, fadeinpending, FadePalette, Findhittype, findpc, fodir1, fodir2
 extern fofdata2, FormatPlayerName, fox, foy, frameaccum, FreeMemBlock, gameclock, gameopts
 extern gameover, GetHot, getlchoice, gmode, gmode2, goalieacc, gsp, gwgplayer
@@ -35,8 +35,8 @@ extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threa
 extern unk_C1B3E, hmplattr, unk_DC240, updateanim, vecdist, VisTeam, vtoa, penaltysc
 extern word_CBC44, injurystop, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand
 extern asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C, word_DB08A
-extern word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, word_DF816, word_DF81A, word_E0022
-extern word_E0028, word_E002A, word_E002E, word_E0042, word_E0046, word_E0048, fofdata2_w2, fofdata2_w4
+extern word_DC242, word_DC244, word_DC248, word_DC24E, hmtmtouch1, puckcross2, puckcross6, refYpos2
+extern refXvel, refYvel, refframe, reftemp1, reftemp3, reftemp4, fofdata2_w2, fofdata2_w4
 extern fofdata2_w6, word_E9AAE, word_E9AB0, xc1, yc1, yleader
 global assboxenter, assbenchside, assdefo, assdefd, asswingd, asswingd_skate0, asswingd_skateto, asswingo
 global asswingo_evade, asscenterd, asscentero, donothing, assstanley, assscore, asseben, assleaveice
@@ -3484,7 +3484,7 @@ call randomd0	; 4C3FC
 .131:
 mov word [regd3], ax	; 4C401
 .132:
-mov eax, dword [dword_E03AE]	; 4C407
+mov eax, dword [regd3_m2]	; 4C407
 sar eax, 12h	; 4C40C
 mov word [regd0], ax	; 4C40F
 test byte [byte esi+055h], 8	; 4C415
@@ -5088,8 +5088,8 @@ push edx	; 4D6C0
 push esi	; 4D6C1
 push edi	; 4D6C2
 mov ebx, eax	; 4D6C3
-dec word [word_DF816]	; 4D6C5
-dec word [word_DF81A]	; 4D6CC
+dec word [puckcross2]	; 4D6C5
+dec word [puckcross6]	; 4D6CC
 mov si, word [byte eax+026h]	; 4D6D3
 dec esi	; 4D6D7
 mov word [byte eax+026h], si	; 4D6D8
@@ -5579,7 +5579,7 @@ jmp short .15	; 4DCCB
 .14:
 mov eax, 0FFFFFB00h	; 4DCCD
 .15:
-mov word [word_E0028], ax	; 4DCD2
+mov word [refXvel], ax	; 4DCD2
 jmp near ass_popx	; 4DCD8
 %endif ; C
 ; C: src/engine/logic/a2offsides.c

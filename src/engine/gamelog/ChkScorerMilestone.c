@@ -48,7 +48,7 @@ void ChkScorerMilestone(void)
     int pts;
 
     t = (*pucky < 0) ^ ((gmode & gmdir) != 0);
-    if (((unsigned char *)byte_E024C)[t * 2] && byte_E024D[t * 2]) return;
+    if (((unsigned char *)milestonesaid)[t * 2] && milestonesaid_b1[t * 2]) return;
     what = 0;
     p = (short)(hmtmtouch1[t * 128] & 0xFF);
     if (p < 0x19) {

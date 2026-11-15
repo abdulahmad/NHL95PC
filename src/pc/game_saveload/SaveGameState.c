@@ -150,8 +150,8 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&hudhundaccum);
     *p++ = *(short *)(&frameaccum);
     *p++ = *(short *)(&goalienotebits);
-    *p++ = *(short *)(&byte_E024C);
-    *p++ = *(short *)(&word_E024E);
+    *p++ = *(short *)(&milestonesaid);
+    *p++ = *(short *)(&milestonesaid_b2);
     *p++ = *(short *)(&gamemode);
     ((char *)p)[0] = *(char *)(&byte_DC268);
     ((char *)p)[1] = *(char *)(&byte_DC267);
@@ -391,8 +391,8 @@ int LoadGameState(int fh)
     hudhundaccum = *p++;
     frameaccum = *p++;
     goalienotebits = *p++;
-    byte_E024C[0] = *p++;
-    word_E024E = *p++;
+    milestonesaid[0] = *p++;
+    milestonesaid_b2 = *p++;
     gamemode = *p++;
     *(char *)&byte_DC268 = ((char *)p)[0];
     *(char *)&byte_DC267 = ((char *)p)[1];

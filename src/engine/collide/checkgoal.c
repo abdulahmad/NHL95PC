@@ -8,7 +8,7 @@
 
 /* checkgoal (584AA; 93G hockey93 checkgoal, "look for coll with goal/net"): object p against goal g at offset
    x, y (the 68k d2 / d3). Over the goal (z above 0Dh) nothing; a player goes to checkgoalp. For the puck inside
-   the goal box (half width wcradiusx + 10h in regd4, half depth wcradiusy + 2 in word_E03B8): coming down from
+   the goal box (half width wcradiusx + 10h in regd4, half depth wcradiusy + 2 in regd5): coming down from
    above the frame (old z 0Dh+) it is put back on top and its z velocity bounced; else the carrier loses it
    (nopuck 8, pfgoal from the side of the ice he was on) and the crossing point of the box edge is worked out
    (regd0 the side, regd1 / regd3 the y / x travel). Through the mouth below the bar (z not 0Dh, inside half
@@ -38,10 +38,10 @@ void checkgoal(Player *p, Player *g, short x, short y)
     regd4.w = -regd4.w;
     if (x < regd4.w) return;
     y -= HIWORD(g->Ypos);
-    word_E03B8 = wcradiusy + 2;
-    if (y > word_E03B8) return;
-    word_E03B8 = -word_E03B8;
-    if (y < word_E03B8) return;
+    regd5 = wcradiusy + 2;
+    if (y > regd5) return;
+    regd5 = -regd5;
+    if (y < regd5) return;
     if (OLDZ(p) >= 0xD) {
         HIWORD(p->Zpos) = OLDZ(p);
         if ((y = p->Zvel) < 0) {
@@ -68,13 +68,13 @@ void checkgoal(Player *p, Player *g, short x, short y)
     if (regd1.l != 0) {
         if (regd1.l > 0) {
             regd0.w = 0x100;
-            word_E03B8 = -word_E03B8;
+            regd5 = -regd5;
         }
-        word_E03B8 += y;
+        regd5 += y;
         regd3.l = (p->Xpos - p->OldXpos) >> 8;
-        *(int *)&word_E03B8 = word_E03B8 * regd3.w / regd1.w;
-        if (*(unsigned *)&word_E03B8 < 0x10000) {
-            x -= word_E03B8;
+        *(int *)&regd5 = regd5 * regd3.w / regd1.w;
+        if (*(unsigned *)&regd5 < 0x10000) {
+            x -= regd5;
             if (x >= regd4.w) {
                 regd4.w = -regd4.w;
                 if (x <= regd4.w) {

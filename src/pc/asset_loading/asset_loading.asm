@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
-extern byte_E024C, byte_E024D, byte_E024F, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
+extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
 extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demogame, dword_D8C4C, SumCwdExciteLvl, dword_E9A9E
 extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
@@ -26,7 +26,7 @@ extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FC
 extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2, injurystop, Pencntdwn2
-extern rinkobjs, word_E024E, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, word_E9AAE
+extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, word_E9AAE
 extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
@@ -721,10 +721,10 @@ mov byte [goalevent], ah	; 1406D
 xor edx, edx	; 14073
 mov dword [goalienotebits], edx	; 14075
 xor dh, dh	; 1407B
-mov byte [byte_E024F], dh	; 1407D
-mov byte [word_E024E], dh	; 14083
-mov byte [byte_E024D], dh	; 14089
-mov byte [byte_E024C], dh	; 1408F
+mov byte [milestonesaid_b3], dh	; 1407D
+mov byte [milestonesaid_b2], dh	; 14083
+mov byte [milestonesaid_b1], dh	; 14089
+mov byte [milestonesaid], dh	; 1408F
 mov edx, 0FFFFFFFFh	; 14095
 mov word [ovltimer], dx	; 1409A
 mov word [penaltysc], dx	; 140A1

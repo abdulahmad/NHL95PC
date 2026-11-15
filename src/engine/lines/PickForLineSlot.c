@@ -13,7 +13,7 @@ short CanFillLineSlot(int side, int slot, int player);
    two call argument register choices remain. Owner of the lines_popx2 tail (PickExtraSkater). */
 /* PickForLineSlot (64E60, PC only): choose a player for line slot slot of team side (home hmlinetab, away
    awlinetab). First the players of the slots after slot in its byte_CD421 group (from byte_CD473[slot], up to the
-   -1 end) that CanFillLineSlot allows. Else by the position letter of the slot's current player (byte_DB3AE)
+   -1 end) that CanFillLineSlot allows. Else by the position letter of the slot's current player (hmrosterpos)
    the first FillDressedSlots result from the side's 25-byte lists: D the E9D50 list for slots 12h-1Bh, else
    E9DB4; C the E9CEC, E9DE6 and E9EAE lists, R E9EAE, E9DE6, E9CEC, L E9DE6, E9EAE, E9CEC (from slot 1Ch on
    E9D82, E9E7C and E9D1E instead). Else the group's players from its start up to slot, then the first player
@@ -37,7 +37,7 @@ short PickForLineSlot(short side, short slot)
         if (CanFillLineSlot(side, slot, tab[byte_CD421[i]])) return p;
         i++;
     }
-    pos = byte_DB3AE[side * 0x444 + tab[slot] * 39];
+    pos = hmrosterpos[side * 0x444 + tab[slot] * 39];
     if (pos == 'D') {
         r = FillDressedSlots(slot < 0x1C && slot >= 0x12 ? (signed char *)offsort_d + side * 25 : defsort_d + side * 25, side, slot);
         if (r >= 0) return r;

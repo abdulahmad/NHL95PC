@@ -37,10 +37,10 @@ void ResetGameVars(void)
     curevent = 0xFF;
     goalevent = 0xFF;
     goalienotebits = 0;
-    byte_E024F = 0;
-    *(unsigned char *)&word_E024E = 0;
-    byte_E024D[0] = 0;
-    *(unsigned char *)byte_E024C = 0;
+    milestonesaid_b3 = 0;
+    *(unsigned char *)&milestonesaid_b2 = 0;
+    milestonesaid_b1[0] = 0;
+    *(unsigned char *)milestonesaid = 0;
     ovltimer = -1;
     penaltysc = -1;
     RefStep[0] = -1;

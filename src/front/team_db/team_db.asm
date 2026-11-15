@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
-extern awtmap, awtmgoalie, byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C66B4, byte_DB3AE
+extern awtmap, awtmgoalie, byte_C5424, byte_C5425, byte_C5426, byte_C5427, byte_C66B4, hmrosterpos
 extern byte_DC267, byte_DC268, cont2team, curleague, curperiod, hmplstats, dword_DBC7C, dword_DBCE0
 extern dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
@@ -765,7 +765,7 @@ call ReadPlayerRecs	; 1C4A5
 mov al, byte [byte esp+049h]	; 1C4AA
 mov byte [dword esi+hmrosterjersey], al	; 1C4AE
 mov al, byte [byte esp+04Ah]	; 1C4B4
-mov byte [dword esi+byte_DB3AE], al	; 1C4B8
+mov byte [dword esi+hmrosterpos], al	; 1C4B8
 mov ebx, hmroster	; 1C4BE
 add ebx, edi	; 1C4C3
 add ebx, dword [dword esp+0FCh]	; 1C4C5
@@ -943,7 +943,7 @@ call ReadPlayerRecs	; 1C6ED
 mov al, byte [byte esp+049h]	; 1C6F2
 mov byte [dword esi+hmrosterjersey], al	; 1C6F6
 mov al, byte [byte esp+04Ah]	; 1C6FC
-mov byte [dword esi+byte_DB3AE], al	; 1C700
+mov byte [dword esi+hmrosterpos], al	; 1C700
 mov ebx, hmroster	; 1C706
 add ebx, dword [dword esp+0F8h]	; 1C70B
 add ebx, edi	; 1C712

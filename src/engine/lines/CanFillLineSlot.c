@@ -10,7 +10,7 @@
  above 6. Defence pairs (0Ch-11h) are the same with word_E9F14 and a limit of one.
  Slots 12h-1Bh and 1Ch-23h then scan a window that skips the slot itself and its pair
  (slot+5 or slot+4). Returns 0 when the player is already in that window, else 1.
- The position byte read for the window choice is byte_DB3AE. */
+ The position byte read for the window choice is hmrosterpos. */
 int CanFillLineSlot(short side, short slot, short player)
 {
     signed char *tab;
@@ -34,7 +34,7 @@ zero:
     }
     if (st == 2 && dressflags[sidev * 25 + (short)player] != 2)
         goto zero;
-    pos = byte_DB3AE[(short)side * 0x444 + (short)player * 39];
+    pos = hmrosterpos[(short)side * 0x444 + (short)player * 39];
     {
     short i;
     short n;
@@ -125,14 +125,14 @@ short FillDressedSlots(signed char *list, short side, short slot)
         if (!(short)CanFillLineSlot(side, slot, r)) continue;
         if (dressflags[side * 0x19 + r] == 2) {
             if (*(short *)dword_E9F16 >= 0x12) continue;
-            if (byte_DB3AE[side * 0x444 + r * 0x27] != 'D' && word_E9F12 >= 0xC) continue;
+            if (hmrosterpos[side * 0x444 + r * 0x27] != 'D' && word_E9F12 >= 0xC) continue;
             hmroster[side * 0x444 + r * 0x27] = 3;
             lt = (signed char *)(side ? awlinetab : hmlinetab);
             for (k = 0x28; k < 0x30; k++)
                 if (lt[k] == r) lt[k] = 0x64;
             dressflags[side * 0x19 + r] = 1;
             (*(short *)dword_E9F16)++;
-            if (byte_DB3AE[side * 0x444 + r * 0x27] == 'D') word_E9F14++;
+            if (hmrosterpos[side * 0x444 + r * 0x27] == 'D') word_E9F14++;
             else word_E9F12++;
         }
         return r;

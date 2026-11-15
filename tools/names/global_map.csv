@@ -3624,3 +3624,32 @@ assstarskate_path_y,CC9EC,assstarskate_path+2: the y column
 ShootoutPathData,CCB18,"NextPathPoint: shootout skate path points, 3 dwords each (x, y, end); 94G ShootoutPath1-7 hold x,y words"
 ShootoutPathData_y,CCB1C,ShootoutPathData+4: the y column
 ShootoutPathData_end,CCB20,ShootoutPathData+8: the end column
+puckcross2,DF816,"95G puckcross2 (puckcross+2, top entry frames): pucknorm counts it down, StartHL2 sets it as 95G st (puckcross2).w"
+puckcross6,DF81A,"95G puckcross6 (puckcross+6, bottom entry frames): pucknorm counts it down with puckcross2"
+regd5,E03B8,"Watcom static for the ported 68k d5: checkwallcoll keeps the y limit from wcradiusy in it as 95G d5 (move.w #$138,d5 / sub.w (wcradiusy).w,d5); sits between regd4 and regd0"
+regd5_m2,E03B6,regd5-2: -5r short-load base
+regd3_m2,E03AE,regd3-2: -5r short-load base (also the high word of regd2)
+regd0_m3,E03B9,regd0-3: -5r byte-load base
+regd1_m3,E03BD,"regd1-3: -5r byte-load base; as a byte it is regd0+1, the high byte of the regd0 word (test 8)"
+regd1_b1,E03C1,regd1+1: the high byte of the regd1 word
+refYpos2,E0022,"SortCords entry 16, the referee: Ypos+2, the integer y (absolute field, as puckpflags2 / doortemp1)"
+refXvel,E0028,"SortCords entry 16, the referee: Xvel (absolute field, as puckpflags2 / doortemp1)"
+refYvel,E002A,"SortCords entry 16, the referee: Yvel (absolute field, as puckpflags2 / doortemp1)"
+refframe,E002E,"SortCords entry 16, the referee: frame (absolute field, as puckpflags2 / doortemp1)"
+refposition,E0036,"SortCords entry 16, the referee: position (absolute field, as puckpflags2 / doortemp1)"
+refasslist,E003A,"SortCords entry 16, the referee: asslist, indexed by his assnum (absolute field, as puckpflags2 / doortemp1)"
+reftemp1,E0042,"SortCords entry 16, the referee: temp1 (absolute field, as puckpflags2 / doortemp1)"
+reftemp3,E0046,"SortCords entry 16, the referee: temp3 (absolute field, as puckpflags2 / doortemp1)"
+reftemp4,E0048,"SortCords entry 16, the referee: temp4 (absolute field, as puckpflags2 / doortemp1)"
+reftemp5,E004A,"SortCords entry 16, the referee: temp5 (absolute field, as puckpflags2 / doortemp1)"
+refweight,E0072,"SortCords entry 16, the referee: weight (absolute field, as puckpflags2 / doortemp1)"
+reflegstr,E0073,"SortCords entry 16, the referee: legstr (absolute field, as puckpflags2 / doortemp1)"
+reflegspd,E0074,"SortCords entry 16, the referee: legspd (absolute field, as puckpflags2 / doortemp1)"
+sctemp4,DF848,SortCords+temp4: assintroline walks the 12 players with stride 80h
+sortobj11,DFD9C,"SortCords entry 11 (SortCords+580h), the last player; PreGameIntro walks down from it"
+doorZpos2,DFFA6,sortobj15+Zpos+2: recorded by updatereplay
+hmrosterpos,DB3AE,"hmroster entry (27h bytes) +6: the position letter (D, C, L, R, G), as hmrosterjersey is +5"
+milestonesaid,E024C,ChkScorerMilestone: flag bytes so a milestone is announced once; ResetGameVars clears the four
+milestonesaid_b1,E024D,milestonesaid+1
+milestonesaid_b2,E024E,milestonesaid+2
+milestonesaid_b3,E024F,milestonesaid+3

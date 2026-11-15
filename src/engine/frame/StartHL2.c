@@ -122,8 +122,8 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     injurystop = 0;
     crowdlevel = 0;
     crowdsmooth = 0;
-    word_DF81A = -1;
-    word_DF816 = -1;
+    puckcross6 = -1;
+    puckcross2 = -1;
     setupice();
     SprSortVert();
     camy = 0;

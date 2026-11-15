@@ -33,7 +33,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             ReadPlayerRecs(f1, f2, f3, f4, *(int *)((char *)dword_DBC7C + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
                 buf + 0x6C, 0x2F, buf + 0x9C, n4);
             hmrosterjersey[team * 1092 + i * 39] = buf[0x39];
-            byte_DB3AE[team * 1092 + i * 39] = buf[0x3A];
+            hmrosterpos[team * 1092 + i * 39] = buf[0x3A];
             p = hmroster + team * 1092 + i * 39;
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
@@ -77,7 +77,7 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
             ReadPlayerRecs(f1, f2, f3, 0, *(int *)((char *)dword_DBCE0 + team * 744 + i * 4), buf + 0x38, buf + 0xD8, 0x10,
                 buf, 0x36, 0, 0);
             hmrosterjersey[team * 1092 + (i + 25) * 39] = buf[0x39];
-            byte_DB3AE[team * 1092 + (i + 25) * 39] = buf[0x3A];
+            hmrosterpos[team * 1092 + (i + 25) * 39] = buf[0x3A];
             p = hmroster + team * 1092 + (i + 25) * 39;
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);

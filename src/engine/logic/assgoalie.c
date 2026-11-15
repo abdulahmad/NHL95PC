@@ -264,7 +264,7 @@ void assgoalie(Player *p)
                                 else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 7 : 1;
                                 else regd3.w = randomd0(2);
                             }
-                            regd0.w = dword_E03AE >> 0x12;
+                            regd0.w = regd3_m2 >> 0x12;
                             if (p->attribute & 8) regd0.w = regd0.w == 0;
                             if (regd3.w >= 4) regd3.w = 7 - regd3.w;
                             if (regd3.w >= 2 && *(short *)puckz < 0xA && *(short *)puckvz < 0x800) {
