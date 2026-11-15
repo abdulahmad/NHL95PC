@@ -85,10 +85,10 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
     }
     mx = oldmx = (menus[0]->x1 + menus[0]->x2) / 2;
     my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
-    sub_91400(editptrspr, oldmx, oldmy);
-    sub_91370(pointerspr, oldmx, oldmy);
+    GrabBlock(editptrspr, oldmx, oldmy);
+    DrawArt(pointerspr, oldmx, oldmy);
     FadePalStep(0, savepal, 0x10);
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
     MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
@@ -103,7 +103,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
             if (e) bits = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &mx, &my);
         } while (e && !(bits & 2));
         if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
-            sub_903F0(editptrspr, oldmx, oldmy);
+            PutBlock(editptrspr, oldmx, oldmy);
             k = TrackButtons((int *)btn_RosterList, 2, mx, my, bits);
             if (k == 0 && falisttop > 0) {
                 falisttop--;
@@ -116,37 +116,37 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 falisttop = fascrollbar_top;
                 DrawEditRosters();
             }
-            sub_91400(editptrspr, mx, my);
-            sub_91370(pointerspr, mx, my);
+            GrabBlock(editptrspr, mx, my);
+            DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
         }
         if (rostereditmode == 2 && bits & 1) {
-            sub_903F0(editptrspr, oldmx, oldmy);
+            PutBlock(editptrspr, oldmx, oldmy);
             TrackButtons((int *)btn_EditRosters, 2, mx, my, bits);
-            sub_91400(editptrspr, mx, my);
-            sub_91370(pointerspr, mx, my);
+            GrabBlock(editptrspr, mx, my);
+            DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
         } else if (!(bits & 2)) {
             if (mx != oldmx || my != oldmy) {
-                sub_903F0(editptrspr, oldmx, oldmy);
-                sub_91400(editptrspr, mx, my);
-                sub_91370(pointerspr, mx, my);
+                PutBlock(editptrspr, oldmx, oldmy);
+                GrabBlock(editptrspr, mx, my);
+                DrawArt(pointerspr, mx, my);
                 oldmx = mx;
                 oldmy = my;
             }
         } else {
             if (rostereditmode == 2) {
-                sub_903F0(editptrspr, oldmx, oldmy);
+                PutBlock(editptrspr, oldmx, oldmy);
             } else if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
                 m = &menus[level][item];
                 if (m->on1) {
                     if (item == sel[level]) {
-                        sub_903F0(editptrspr, oldmx, oldmy);
+                        PutBlock(editptrspr, oldmx, oldmy);
                         for (i = 2; i >= 0; i--) {
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][0] = pos[i][1] = 0;
                                 FreeMemBlock(bg[i]);
                             }
@@ -166,12 +166,12 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                         my = oldmy;
                         ClearInputQueue();
                     } else {
-                        sub_903F0(editptrspr, oldmx, oldmy);
+                        PutBlock(editptrspr, oldmx, oldmy);
                         if (depth != level) {
                             for (i = depth; i > level; i--) {
                                 sel[i] = 0;
                                 if (bg[i]) {
-                                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                    PutBlock(bg[i], pos[i][0], pos[i][1]);
                                     pos[i][0] = pos[i][1] = 0;
                                     FreeMemBlock(bg[i]);
                                     bg[i] = 0;
@@ -188,12 +188,12 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                             pos[level][1], c1, c2, col3);
                     }
                 } else if (m->on2) {
-                    sub_903F0(editptrspr, oldmx, oldmy);
+                    PutBlock(editptrspr, oldmx, oldmy);
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][0] = pos[i][1] = 0;
                                 FreeMemBlock(bg[i]);
                                 bg[i] = 0;
@@ -216,18 +216,18 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                     pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                     w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                     h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                    bg[depth] = sub_8CCA8((char *)str_Menubuff, 0x11 + (w << 2) * h, 0);
+                    bg[depth] = AllocMemBlock((char *)str_Menubuff, 0x11 + (w << 2) * h, 0);
                     *(EdHdr17 *)bg[depth] = *(EdHdr17 *)pointerspr;
                     ((short *)bg[depth])[2] = w;
                     ((short *)bg[depth])[3] = h;
-                    sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                    GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                     DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], c1,
                         c2, col3);
                     sel[depth] = 0;
                     DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], c1,
                         c2, col3);
                 } else {
-                    sub_903F0(editptrspr, oldmx, oldmy);
+                    PutBlock(editptrspr, oldmx, oldmy);
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                         pos[level][1], c1, c2, col3);
                     sel[level] = item;
@@ -235,10 +235,10 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                         pos[level][1], c1, c2, col3);
                 }
             } else {
-                sub_903F0(editptrspr, oldmx, oldmy);
+                PutBlock(editptrspr, oldmx, oldmy);
                 for (i = 2; i >= 0; i--) {
                     if (bg[i]) {
-                        sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                        PutBlock(bg[i], pos[i][0], pos[i][1]);
                         pos[i][0] = pos[i][1] = 0;
                         FreeMemBlock(bg[i]);
                     }
@@ -253,15 +253,15 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 }
                 RosterPanelClick(mx, my);
             }
-            sub_91400(editptrspr, oldmx, oldmy);
-            sub_903F0(editptrspr, oldmx, oldmy);
-            sub_91400(editptrspr, mx, my);
-            sub_91370(pointerspr, mx, my);
+            GrabBlock(editptrspr, oldmx, oldmy);
+            PutBlock(editptrspr, oldmx, oldmy);
+            GrabBlock(editptrspr, mx, my);
+            DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
         }
         if (editrosters_exit == -1) {
-            sub_903F0(editptrspr, oldmx, oldmy);
+            PutBlock(editptrspr, oldmx, oldmy);
             if (dbdirty) {
                 msglines[0] = (int)str_TheDatabaseHasNot;
                 msglines[1] = (int)str_AreYouSureYou;

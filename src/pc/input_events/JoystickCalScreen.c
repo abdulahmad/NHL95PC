@@ -16,7 +16,7 @@ typedef struct { char b[17]; } Hdr17;                  /* the shape header the p
  taken, so the bank stays in esi for the two side calls (merged by Watcom) and the puck shape in esi for the
  17-byte header copy (a struct copy: movsd x4, movsb). The puck shape reuses the shape slot; the button exit
  does not clear the mask. The two draws index with s.cur and prev is set after them (the EXE reloads s.cur
- into esi after sub_91370). The abort test reads the stick's byte of the pad word into an unsigned char
+ into esi after DrawArt). The abort test reads the stick's byte of the pad word into an unsigned char
  (buttons): the conversion is one more register conflict before the puck size product, which puts the width
  read in edx and the height read in eax (with an int local, or the test on the expression, they swap).
  JoystickCalScreen: calibrate one stick. mask is the joyenablemask bit, shift selects that
@@ -42,23 +42,23 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     ((void (*)(void))joycalprehook)();
     if (side) sub_B387E();
     else sub_B384E();
-    sub_8E9C0(0, 0);
+    TextSetColors(0, 0);
     buttons = sub_B3464() >> shift;
     if ((buttons & 0x30) == 0) {
-        sub_8E9E8(state);
-        sub_8EA18((int)unk_D45D8);
+        TextSaveState(state);
+        TextSetFont((int)unk_D45D8);
         sub_B4BA8();
-        sub_B392C(0);
+        ClearScreen(0);
         memset(pal, 0, 0x300);
-        sub_B4B88(0, 0x100, pal);
-        s.bank = sub_8E83C((char *)str_Joycal, 0);
-        sub_9121C(sub_B30B4(s.bank, (char *)str_Scrn3));
-        if (side) s.shape = sub_B30B4(s.bank, (char *)str_Rite);
-        else s.shape = sub_B30B4(s.bank, (char *)str_Left);
-        sub_913B4(s.shape);
-        memcpy(pal, (unsigned char *)sub_B30B4(s.bank, (char *)str_Pal24) + 0x10, 0x300);
-        s.shape = sub_B30B4(s.bank, (char *)str_Puck);
-        back = (unsigned char *)sub_8CCA8((char *)str_PuckBack, ((short *)s.shape)[2] * ((short *)s.shape)[3] + 0x11, 0);
+        VgaSetPalette(0, 0x100, pal);
+        s.bank = LoadBank((char *)str_Joycal, 0);
+        sub_9121C(FindShape(s.bank, (char *)str_Scrn3));
+        if (side) s.shape = FindShape(s.bank, (char *)str_Rite);
+        else s.shape = FindShape(s.bank, (char *)str_Left);
+        DrawShape(s.shape);
+        memcpy(pal, (unsigned char *)FindShape(s.bank, (char *)str_Pal24) + 0x10, 0x300);
+        s.shape = FindShape(s.bank, (char *)str_Puck);
+        back = (unsigned char *)AllocMemBlock((char *)str_PuckBack, ((short *)s.shape)[2] * ((short *)s.shape)[3] + 0x11, 0);
         *(Hdr17 *)back = *(Hdr17 *)s.shape;
         FadePalStep(0, pal, 0x10);
         prev = -1;
@@ -72,16 +72,16 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
             s.cur = sub_B340B(s.cur);
             if (s.cur == prev) continue;
             sub_B4C61();
-            if (prev != -1) sub_910E0((int)back, joycalx[prev], joycaly[prev]);
-            sub_91400((int)back, joycalx[s.cur], joycaly[s.cur]);
-            sub_91370(s.shape, joycalx[s.cur], joycaly[s.cur]);
+            if (prev != -1) DrawArtOpaque((int)back, joycalx[prev], joycaly[prev]);
+            GrabBlock((int)back, joycalx[s.cur], joycaly[s.cur]);
+            DrawArt(s.shape, joycalx[s.cur], joycaly[s.cur]);
             prev = s.cur;
-            sub_91964((char *)unk_C27F5, 0, 0x14);
+            PrintString((char *)unk_C27F5, 0, 0x14);
         }
         FreeMemBlock((int)back);
         FreeMemBlock(s.bank);
         FadePalStep(1, pal, 0x10);
-        sub_8EA00(state);
+        TextRestoreState(state);
     } else
         *(int *)&joyenablemask &= ~mask;
     ((void (*)(void))joycalposthook)();

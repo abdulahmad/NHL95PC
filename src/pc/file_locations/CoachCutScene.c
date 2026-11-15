@@ -27,12 +27,12 @@ int CoachCutScene(void)
     FadeOutPalCycle();
     InputInstall();
     MakePath(s.path, fileoncd[0x1E6] == 1 ? (char *)cddriveptr : 0, (char *)str_Coachcut, 0);
-    bank = sub_8E83C(s.path, 0);
-    sub_8FFB0(0, 0x100, s.pal);
+    bank = LoadBank(s.path, 0);
+    SetPalette(0, 0x100, s.pal);
     FadePalette(1, s.pal, 0x10);
     sub_B4BA8();
-    sub_9061C(sub_B30B4(bank, (char *)str_Scrn4));
-    memcpy(s.pal, (unsigned char *)sub_B30B4(bank, (char *)str_Pal29) + 0x10, 0x300);
+    DrawBitmap(FindShape(bank, (char *)str_Scrn4));
+    memcpy(s.pal, (unsigned char *)FindShape(bank, (char *)str_Pal29) + 0x10, 0x300);
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x21F] == 1 ? (char *)cddriveptr : 0, (char *)str_Coach, (char *)str_Iff13);
@@ -52,7 +52,7 @@ int CoachCutScene(void)
         if (musicon && (((unsigned char *)&gameopts)[1] & 1))
             while (SpeechBusy());
         r = PlayMVI(s.path, 0x161, 0x54);
-        sub_8FFB0(0, 0x100, s.pal);
+        SetPalette(0, 0x100, s.pal);
         FadePalette(1, s.pal, 0x10);
         if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
             MusicChanReset2();
@@ -64,7 +64,7 @@ int CoachCutScene(void)
             songdata = 0;
         }
     } else {
-        sub_8FFB0(0, 0x100, s.pal);
+        SetPalette(0, 0x100, s.pal);
         FadePalette(1, s.pal, 0x10);
         if (musicon && songdata) {
             sub_8D2F0(songdata);

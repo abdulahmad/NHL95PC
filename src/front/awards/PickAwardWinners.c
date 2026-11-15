@@ -10,22 +10,22 @@
 #define PickAwardWinners PickAwardWinners_decl
 #define ShowAwardScreens ShowAwardScreens_decl
 #define sub_9035C sub_9035C_decl
-#define sub_8F1FE sub_8F1FE_decl
-#define sub_8F13B sub_8F13B_decl
+#define FreeSample sub_8F1FE_decl
+#define LoadSample sub_8F13B_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
 #define GetTicks GetTicks_decl
 #include "nhl95.h"
-#undef sub_8F1FE
-#undef sub_8F13B
+#undef FreeSample
+#undef LoadSample
 #undef sub_8F98F
 #undef sub_8FB8E
 #undef PickAwardWinners
 #undef ShowAwardScreens
 #undef sub_9035C
 #undef GetTicks
-void sub_8F1FE(void *smp);
-void *sub_8F13B(char *path);
+void FreeSample(void *smp);
+void *LoadSample(char *path);
 int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 
@@ -299,8 +299,8 @@ int ShowAwardScreens(void)
         SetTextColors(awardtextcolors[k], 0);
         GetTicks();
         MakePath(buf, fileoncd[awardartfiles[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
-        bank = sub_8E83C(buf, 0);
-        sub_9061C(sub_9035C(bank, 1));
+        bank = LoadBank(buf, 0);
+        DrawBitmap(sub_9035C(bank, 1));
         y = 0x76;
         if (awardtype[k] == 2) {
             if (k == 0xA) strcpy(buf, (char *)cupteam);
@@ -402,11 +402,11 @@ int ShowAwardScreens(void)
         }
         x = 0x1FE - (fputchar((char *)awardtitles[k * 2]) >> 1);
         PrintShadowText(x, y, (char *)awardtitles[k * 2]);
-        FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_Pal3) + 0x10, 0x10);
+        FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_Pal3) + 0x10, 0x10);
         FreeMemBlock(bank);
         key = WaitClickTimeout(0x2710);
-        pal = sub_8CCA8((char *)str_Palmem, 0x300, 0);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palmem, 0x300, 0);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
     }
@@ -487,8 +487,8 @@ void AwardsCeremony(void)
     int done;
 
     ClearInputQueue();
-    pal = (unsigned char *)sub_8CCA8((char *)str_Palmem, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Palmem, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x32);
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
@@ -498,13 +498,13 @@ void AwardsCeremony(void)
         sub_8D2F0(songdata);
         songdata = 0;
     }
-    sub_8E9E8(s.text);
-    sub_8EA18(kaufmfont);
+    TextSaveState(s.text);
+    TextSetFont(kaufmfont);
     MakePath(s.path, fileoncd[0x1DE] == 1 ? (char *)cddriveptr : 0, (char *)str_Awardsi, 0);
-    bank = sub_8E83C(s.path, 0);
-    sub_9061C(sub_B30B4(bank, (char *)str_Scrn));
-    sub_9061C(sub_B30B4(bank, (char *)str_Titl));
-    memcpy(pal, (unsigned char *)sub_B30B4(bank, (char *)str_Pal3) + 0x10, 0x300);
+    bank = LoadBank(s.path, 0);
+    DrawBitmap(FindShape(bank, (char *)str_Scrn));
+    DrawBitmap(FindShape(bank, (char *)str_Titl));
+    memcpy(pal, (unsigned char *)FindShape(bank, (char *)str_Pal3) + 0x10, 0x300);
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x220] == 1 ? (char *)cddriveptr : 0, (char *)str_Awards, (char *)str_Iff);
@@ -515,7 +515,7 @@ void AwardsCeremony(void)
             MakePath(s.path, fileoncd[0xFA] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtafan, 0);
         else
             MakePath(s.path, fileoncd[0x18] == 1 ? (char *)cddriveptr : 0, (char *)str_Adafan, 0);
-        smp = sub_8F13B(s.path);
+        smp = LoadSample(s.path);
         PlayDigiSample(smp);
     }
     FadePalStep(0, pal, 0x10);
@@ -523,7 +523,7 @@ void AwardsCeremony(void)
         WaitDigiSample();
         FadePalStep(1, pal, 0x10);
         StopDigiSample();
-        sub_8F1FE(smp);
+        FreeSample(smp);
     } else if (musicon) {
         done = 0;
         while (!done && sub_8FC8A(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
@@ -549,28 +549,28 @@ void AwardsCeremony(void)
             MakePath(s.path, fileoncd[0xFC] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtawards, 0);
         else
             MakePath(s.path, fileoncd[0x1A] == 1 ? (char *)cddriveptr : 0, (char *)str_Adawards, 0);
-        smp = sub_8F13B(s.path);
+        smp = LoadSample(s.path);
         PlayDigiSample(smp);
     }
     if (!r) {
         if (ShowAwardScreens() < 3) {
             MakePath(s.path, fileoncd[0x1DE] == 1 ? (char *)cddriveptr : 0, (char *)str_Awardsi, 0);
-            bank2 = sub_8E83C(s.path, 0);
+            bank2 = LoadBank(s.path, 0);
             ClearInputQueue();
             sub_B4BA8();
             SetTextColors(1, 0);
-            sub_9061C(sub_B30B4(bank2, (char *)str_Scrn));
-            sub_9061C(sub_B30B4(bank2, (char *)str_Summ));
+            DrawBitmap(FindShape(bank2, (char *)str_Scrn));
+            DrawBitmap(FindShape(bank2, (char *)str_Summ));
             DrawAwardsSummary();
             sub_B4BA8();
-            pal2 = (unsigned char *)sub_B30B4(bank2, (char *)str_Pal3) + 0x10;
+            pal2 = (unsigned char *)FindShape(bank2, (char *)str_Pal3) + 0x10;
             FadePalStep(0, pal2, 0x10);
             WaitClickTimeout(0x2328);
             FadePalStep(1, pal2, 0x10);
             FreeMemBlock(bank2);
         }
         sub_B4BA8();
-        sub_B392C(0);
+        ClearScreen(0);
     }
     if (musicon) {
         sub_8FCDF(musichandle, 3, 0x78);
@@ -581,7 +581,7 @@ void AwardsCeremony(void)
         songdata = 0;
     } else {
         StopDigiSample();
-        sub_8F1FE(smp);
+        FreeSample(smp);
     }
-    sub_8EA00(s.text);
+    TextRestoreState(s.text);
 }

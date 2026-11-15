@@ -12,7 +12,7 @@ void FormatPlayerName(char *out, char *prefix, short num, char *first, char *las
     int len;
     int n;
 
-    sub_8EA18(scor2font);
+    TextSetFont(scor2font);
     sprintf(out, (char *)str_FmtNumFirstLast, prefix, n = num, first, last, suffix);
     if (fputchar(out) > 124) {
         sprintf(out, (char *)str_FmtNumInitialLast, prefix, n, (signed char)*first, last, suffix);
@@ -28,5 +28,5 @@ void FormatPlayerName(char *out, char *prefix, short num, char *first, char *las
             }
         }
     }
-    sub_8EA18(s1font);
+    TextSetFont(s1font);
 }

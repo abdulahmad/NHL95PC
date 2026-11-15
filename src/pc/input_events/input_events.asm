@@ -11,11 +11,11 @@ extern KeyDbPtr, lastinputdir, lastmousebtns, lastmousex, lastmousey, leaguedbna
 extern memset_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, musicon, PollKey
 extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRosters, scrpitch, seasondb, seasondb_size
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
-extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, sub_8CCA8, sub_8D2F0
-extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_90D20, sub_910E0
-extern sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_B29F0
-extern sub_B2CBE, sub_B2F22, sub_B30B4, sub_B30F4, sub_B340B, sub_B3464, sub_B384E, sub_B387E
-extern sub_B392C, sub_B39D0, sub_B4B88, sub_B4BA8, sub_B4C61, sub_B4FAC, TeamRecPtr, teamsdb
+extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, sub_8D2F0
+extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
+extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, sub_B29F0
+extern KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, sub_B3464, sub_B384E, sub_B387E
+extern ClearScreen, sub_B39D0, VgaSetPalette, sub_B4BA8, sub_B4C61, sub_B4FAC, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, unk_D45D8
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
@@ -43,7 +43,7 @@ call sub_B384E	; 6B0C7
 .2:
 push byte 0	; 6B0CC
 push byte 0	; 6B0CE
-call sub_8E9C0	; 6B0D0
+call TextSetColors	; 6B0D0
 add esp, byte 8	; 6B0D5
 call sub_B3464	; 6B0D8
 mov cl, byte [dword esp+0360h]	; 6B0DD
@@ -52,14 +52,14 @@ test al, 30h	; 6B0E6
 jne near .9	; 6B0E8
 lea eax, [dword esp+0300h]	; 6B0EE
 push eax	; 6B0F5
-call sub_8E9E8	; 6B0F6
+call TextSaveState	; 6B0F6
 add esp, byte 4	; 6B0FB
 push unk_D45D8	; 6B0FE
-call sub_8EA18	; 6B103
+call TextSetFont	; 6B103
 add esp, byte 4	; 6B108
 call sub_B4BA8	; 6B10B
 push byte 0	; 6B110
-call sub_B392C	; 6B112
+call ClearScreen	; 6B112
 add esp, byte 4	; 6B117
 mov ebx, 300h	; 6B11A
 xor edx, edx	; 6B11F
@@ -69,17 +69,17 @@ mov eax, esp	; 6B128
 push eax	; 6B12A
 push dword 100h	; 6B12B
 push byte 0	; 6B130
-call sub_B4B88	; 6B132
+call VgaSetPalette	; 6B132
 add esp, byte 0Ch	; 6B137
 push byte 0	; 6B13A
 push str_Joycal	; 6B13C
-call sub_8E83C	; 6B141
+call LoadBank	; 6B141
 mov esi, eax	; 6B146
 add esp, byte 8	; 6B148
 mov dword [dword esp+0340h], eax	; 6B14B
 push str_Scrn3	; 6B152
 push eax	; 6B157
-call sub_B30B4	; 6B158
+call FindShape	; 6B158
 add esp, byte 8	; 6B15D
 push eax	; 6B160
 call sub_9121C	; 6B161
@@ -92,17 +92,17 @@ jmp short .4	; 6B178
 push str_Left	; 6B17A
 .4:
 push esi	; 6B17F
-call sub_B30B4	; 6B180
+call FindShape	; 6B180
 add esp, byte 8	; 6B185
 mov dword [dword esp+0344h], eax	; 6B188
 mov ebp, dword [dword esp+0344h]	; 6B18F
 push ebp	; 6B196
-call sub_913B4	; 6B197
+call DrawShape	; 6B197
 add esp, byte 4	; 6B19C
 push str_Pal24	; 6B19F
 mov eax, dword [dword esp+0344h]	; 6B1A4
 push eax	; 6B1AB
-call sub_B30B4	; 6B1AC
+call FindShape	; 6B1AC
 add esp, byte 8	; 6B1B1
 lea edx, [byte eax+010h]	; 6B1B4
 mov ebx, 300h	; 6B1B7
@@ -111,7 +111,7 @@ call memcpy_	; 6B1BE
 push str_Puck	; 6B1C3
 mov edx, dword [dword esp+0344h]	; 6B1C8
 push edx	; 6B1CF
-call sub_B30B4	; 6B1D0
+call FindShape	; 6B1D0
 mov esi, eax	; 6B1D5
 add esp, byte 8	; 6B1D7
 mov dword [dword esp+0344h], eax	; 6B1DA
@@ -124,7 +124,7 @@ imul eax, edx	; 6B1EF
 add eax, byte 11h	; 6B1F2
 push eax	; 6B1F5
 push str_PuckBack	; 6B1F6
-call sub_8CCA8	; 6B1FB
+call AllocMemBlock	; 6B1FB
 add esp, byte 0Ch	; 6B200
 mov ebp, eax	; 6B203
 mov edi, eax	; 6B205
@@ -168,7 +168,7 @@ push ecx	; 6B28B
 mov edi, dword [nosplit esi*4+joycalx]	; 6B28C
 push edi	; 6B293
 push ebp	; 6B294
-call sub_910E0	; 6B295
+call DrawArtOpaque	; 6B295
 add esp, byte 0Ch	; 6B29A
 .7:
 mov esi, dword [dword esp+0348h]	; 6B29D
@@ -177,7 +177,7 @@ push eax	; 6B2AB
 mov edx, dword [nosplit esi*4+joycalx]	; 6B2AC
 push edx	; 6B2B3
 push ebp	; 6B2B4
-call sub_91400	; 6B2B5
+call GrabBlock	; 6B2B5
 add esp, byte 0Ch	; 6B2BA
 mov ebx, dword [nosplit esi*4+joycaly]	; 6B2BD
 push ebx	; 6B2C4
@@ -185,13 +185,13 @@ mov ecx, dword [nosplit esi*4+joycalx]	; 6B2C5
 push ecx	; 6B2CC
 mov esi, dword [dword esp+034Ch]	; 6B2CD
 push esi	; 6B2D4
-call sub_91370	; 6B2D5
+call DrawArt	; 6B2D5
 add esp, byte 0Ch	; 6B2DA
 mov esi, dword [dword esp+0348h]	; 6B2DD
 push byte 14h	; 6B2E4
 push byte 0	; 6B2E6
 push unk_C27F5	; 6B2E8
-call sub_91964	; 6B2ED
+call PrintString	; 6B2ED
 add esp, byte 0Ch	; 6B2F2
 jmp near JoystickCalScreen.5	; 6B2F5
 .8:
@@ -208,7 +208,7 @@ mov eax, 1	; 6B31A
 call FadePalStep	; 6B31F
 lea eax, [dword esp+0300h]	; 6B324
 push eax	; 6B32B
-call sub_8EA00	; 6B32C
+call TextRestoreState	; 6B32C
 add esp, byte 4	; 6B331
 jmp short .10	; 6B334
 .9:
@@ -495,7 +495,7 @@ mov ebp, ebx	; 6B5F6
 mov dword [byte esp+08h], ecx	; 6B5F8
 push dword 0FFh	; 6B5FC
 push ebx	; 6B601
-call sub_8E9C0	; 6B602
+call TextSetColors	; 6B602
 add esp, byte 8	; 6B607
 xor edx, edx	; 6B60A
 mov eax, ebp	; 6B60C
@@ -586,7 +586,7 @@ jne short .1	; 6B6E4
 push dword 0FFh	; 6B6E6
 mov edi, dword [byte esp+028h]	; 6B6EB
 push edi	; 6B6EF
-call sub_8E9C0	; 6B6F0
+call TextSetColors	; 6B6F0
 add esp, byte 8	; 6B6F5
 xor edx, edx	; 6B6F8
 mov eax, edi	; 6B6FA
@@ -604,7 +604,7 @@ jmp short .2	; 6B71B
 push dword 0FFh	; 6B71D
 mov edx, dword [byte esp+020h]	; 6B722
 push edx	; 6B726
-call sub_8E9C0	; 6B727
+call TextSetColors	; 6B727
 add esp, byte 8	; 6B72C
 xor edx, edx	; 6B72F
 mov eax, dword [byte esp+01Ch]	; 6B731
@@ -631,7 +631,7 @@ jne short .4	; 6B771
 push dword 0FFh	; 6B773
 mov eax, dword [byte esp+028h]	; 6B778
 push eax	; 6B77C
-call sub_8E9C0	; 6B77D
+call TextSetColors	; 6B77D
 add esp, byte 8	; 6B782
 xor edx, edx	; 6B785
 mov eax, dword [byte esp+024h]	; 6B787
@@ -649,7 +649,7 @@ jmp short .5	; 6B7A9
 push dword 0FFh	; 6B7AB
 mov ebx, dword [byte esp+020h]	; 6B7B0
 push ebx	; 6B7B4
-call sub_8E9C0	; 6B7B5
+call TextSetColors	; 6B7B5
 add esp, byte 8	; 6B7BA
 xor edx, edx	; 6B7BD
 mov eax, dword [byte esp+01Ch]	; 6B7BF
@@ -698,7 +698,7 @@ inc eax	; 6B824
 push eax	; 6B825
 push esi	; 6B826
 push edi	; 6B827
-call sub_90D20	; 6B828
+call FillRect	; 6B828
 add esp, byte 14h	; 6B82D
 mov ebx, dword [byte esp+014h]	; 6B830
 push ebx	; 6B834
@@ -801,7 +801,7 @@ push esi	; 6B8FB
 push ecx	; 6B8FC
 lea eax, [byte esp+08h]	; 6B8FD
 push eax	; 6B901
-call sub_91964	; 6B902
+call PrintString	; 6B902
 PrintMenuTextGrey_common:
 add esp, byte 0Ch	; 6B907
 PrintMenuTextGrey_ret:
@@ -886,12 +886,12 @@ push edx	; 6B9AC
 push ebx	; 6B9AD
 push ebp	; 6B9AE
 push edi	; 6B9AF
-call sub_90D20	; 6B9B0
+call FillRect	; 6B9B0
 add esp, byte 14h	; 6B9B5
 push dword 0FFh	; 6B9B8
 mov edx, dword [byte esp+04h]	; 6B9BD
 push edx	; 6B9C1
-call sub_8E9C0	; 6B9C2
+call TextSetColors	; 6B9C2
 add esp, byte 8	; 6B9C7
 xor edx, edx	; 6B9CA
 mov eax, dword [esp]	; 6B9CC
@@ -1241,80 +1241,80 @@ mov dword [eax], 3	; 6BD6F
 mov byte [byte eax+05h], 0	; 6BD75
 mov byte [byte eax+04h], 0	; 6BD79
 push byte 1Dh	; 6BD7D
-call sub_B2CBE	; 6BD7F
+call KeyDown	; 6BD7F
 add esp, byte 4	; 6BD84
 push byte 47h	; 6BD87
-call sub_B2CBE	; 6BD89
+call KeyDown	; 6BD89
 add esp, byte 4	; 6BD8E
 test eax, eax	; 6BD91
 je short .1	; 6BD93
 or byte [byte esi+05h], 9	; 6BD95
 .1:
 push byte 49h	; 6BD99
-call sub_B2CBE	; 6BD9B
+call KeyDown	; 6BD9B
 add esp, byte 4	; 6BDA0
 test eax, eax	; 6BDA3
 je short .2	; 6BDA5
 or byte [byte esi+05h], 5	; 6BDA7
 .2:
 push byte 4Fh	; 6BDAB
-call sub_B2CBE	; 6BDAD
+call KeyDown	; 6BDAD
 add esp, byte 4	; 6BDB2
 test eax, eax	; 6BDB5
 je short .3	; 6BDB7
 or byte [byte esi+05h], 0Ah	; 6BDB9
 .3:
 push byte 51h	; 6BDBD
-call sub_B2CBE	; 6BDBF
+call KeyDown	; 6BDBF
 add esp, byte 4	; 6BDC4
 test eax, eax	; 6BDC7
 je short .4	; 6BDC9
 or byte [byte esi+05h], 6	; 6BDCB
 .4:
 push byte 48h	; 6BDCF
-call sub_B2CBE	; 6BDD1
+call KeyDown	; 6BDD1
 add esp, byte 4	; 6BDD6
 test eax, eax	; 6BDD9
 je short .5	; 6BDDB
 or byte [byte esi+05h], 1	; 6BDDD
 .5:
 push byte 4Dh	; 6BDE1
-call sub_B2CBE	; 6BDE3
+call KeyDown	; 6BDE3
 add esp, byte 4	; 6BDE8
 test eax, eax	; 6BDEB
 je short .6	; 6BDED
 or byte [byte esi+05h], 4	; 6BDEF
 .6:
 push byte 50h	; 6BDF3
-call sub_B2CBE	; 6BDF5
+call KeyDown	; 6BDF5
 add esp, byte 4	; 6BDFA
 test eax, eax	; 6BDFD
 je short .7	; 6BDFF
 or byte [byte esi+05h], 2	; 6BE01
 .7:
 push byte 4Bh	; 6BE05
-call sub_B2CBE	; 6BE07
+call KeyDown	; 6BE07
 add esp, byte 4	; 6BE0C
 test eax, eax	; 6BE0F
 je short .8	; 6BE11
 or byte [byte esi+05h], 8	; 6BE13
 .8:
 push byte 39h	; 6BE17
-call sub_B2CBE	; 6BE19
+call KeyDown	; 6BE19
 add esp, byte 4	; 6BE1E
 test eax, eax	; 6BE21
 je short .9	; 6BE23
 or byte [byte esi+04h], 8	; 6BE25
 .9:
 push byte 1	; 6BE29
-call sub_B2CBE	; 6BE2B
+call KeyDown	; 6BE2B
 add esp, byte 4	; 6BE30
 test eax, eax	; 6BE33
 je short .10	; 6BE35
 or byte [byte esi+04h], 4	; 6BE37
 .10:
 push byte 1Ch	; 6BE3B
-call sub_B2CBE	; 6BE3D
+call KeyDown	; 6BE3D
 add esp, byte 4	; 6BE42
 test eax, eax	; 6BE45
 je short .11	; 6BE47

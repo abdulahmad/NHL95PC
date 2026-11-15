@@ -29,7 +29,7 @@ extern puckstruct, puckvx, puckvy, puckx, pucky, puckz, randomd0, ReadJoy1
 extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
 extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
-extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
+extern SPAtab, SortIndices, sub_B340B, SetClipWindow, sublist, Sweepcheck, threat, sublist_defl
 extern hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats, offsort_d
 extern defsort_fwd, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, injurystop, Pencntdwn2
 extern restoreteams_pdsttab, hmtmnearpl, hmtmgoaliesc, awtmextra, awtmnearpl, awtmgoaliesc, refposition, word_E03A0
@@ -4172,7 +4172,7 @@ mov ecx, dword [dword_D30C0]	; 5CF33
 push ecx	; 5CF39
 mov esi, dword [dword_D30BC]	; 5CF3A
 push esi	; 5CF40
-call sub_B4BC4	; 5CF41
+call SetClipWindow	; 5CF41
 add esp, byte 10h	; 5CF46
 .9:
 xor edi, edi	; 5CF49
@@ -4219,7 +4219,7 @@ push eax	; 5CFB9
 lea eax, [byte ebp-030h]	; 5CFBA
 push eax	; 5CFBD
 push byte 3	; 5CFBE
-call sub_93540	; 5CFC0
+call SortIndices	; 5CFC0
 add esp, byte 0Ch	; 5CFC5
 xor edx, edx	; 5CFC8
 mov word [byte ebp-0Ch], dx	; 5CFCA
@@ -4733,7 +4733,7 @@ mov eax, dword [dword_D30C0]	; 5D5A5
 push eax	; 5D5AA
 mov edx, dword [dword_D30BC]	; 5D5AB
 push edx	; 5D5B1
-call sub_B4BC4	; 5D5B2
+call SetClipWindow	; 5D5B2
 add esp, byte 10h	; 5D5B7
 .62:
 mov eax, dword [camy-2]	; 5D5BA

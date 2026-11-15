@@ -22,8 +22,8 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
-extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
+extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, sub_90354, FillRect
+extern sub_90EC0, PrintString, SortIndices, FindShape, sub_B340B, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
@@ -80,7 +80,7 @@ jl short SortPlayersByPos.1	; 64519
 push linesortidx	; 6451B
 push lineslotmark	; 64520
 push byte 19h	; 64525
-call sub_93540	; 64527
+call SortIndices	; 64527
 add esp, byte 0Ch	; 6452C
 xor eax, eax	; 6452F
 .4:
@@ -153,7 +153,7 @@ jl short SortNonDefPlayers.1	; 645CD
 push linesortidx	; 645CF
 push lineslotmark	; 645D4
 push byte 19h	; 645D9
-call sub_93540	; 645DB
+call SortIndices	; 645DB
 add esp, byte 0Ch	; 645E0
 xor eax, eax	; 645E3
 .4:

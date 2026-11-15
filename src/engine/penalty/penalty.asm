@@ -27,7 +27,7 @@ extern setplayer, sflags, sflags3, sfx, shotongoal, shotontarget, SortCords, sor
 extern sprintf_, str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str_B4, str_B5, str_B6
 extern str_B7, str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix
 extern str_FmtParenD, str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD
-extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1
+extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue
 extern UpdateTextOverlay, vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2
 extern rinkobjdefs, penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader

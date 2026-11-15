@@ -21,9 +21,9 @@ extern songdata, SortCords, sounddev, sprintf_, StartGame, StartPreGame, StopDig
 extern str_04d, str_Adafan, str_Adawards, str_Awards, str_Awardsi, str_Awasong, str_D00_D49, str_D00D49
 extern str_D50_D99, str_D50D99, str_F000149, str_GfxIdList, str_HILIGHT, str_Iff, str_Mtafan, str_Mtawards
 extern str_Numshp, str_Pal3, str_Palmem, str_PPV, str_Scrn, str_Summ, str_Titl, str_Trinknd
-extern str_VFN, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
-extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, textline1, textline2
+extern str_VFN, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
+extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette
+extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
 extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
@@ -124,7 +124,7 @@ lea eax, [byte esp+010h]	; 13936
 push eax	; 1393A
 mov ebx, dword [photobankf]	; 1393B
 push ebx	; 13941
-call sub_B30B4	; 13942
+call FindShape	; 13942
 add esp, byte 8	; 13947
 mov dword [nosplit esi*4+photoptrsf], eax	; 1394A
 inc esi	; 13951
@@ -252,7 +252,7 @@ add esp, byte 8	; 13A6F
 mov dword [rinkendbank], eax	; 13A72
 push str_0000	; 13A77
 push eax	; 13A7C
-call sub_B30B4	; 13A7D
+call FindShape	; 13A7D
 add esp, byte 8	; 13A82
 mov dword [rinkendart], eax	; 13A85
 add esp, byte 10h	; 13A8A
@@ -321,7 +321,7 @@ lea eax, [byte esp+010h]	; 13B35
 push eax	; 13B39
 mov edx, dword [numshpbank]	; 13B3A
 push edx	; 13B40
-call sub_B30B4	; 13B41
+call FindShape	; 13B41
 add esp, byte 8	; 13B46
 mov dword [nosplit esi*4+numshapes], eax	; 13B49
 inc esi	; 13B50
@@ -338,7 +338,7 @@ call ClearPanelPenalties	; 13B6F
 call LoadTransparentRinkEndOverlay	; 13B74
 push dword 0FFh	; 13B79
 push byte 4	; 13B7E
-call sub_8E9C0	; 13B80
+call TextSetColors	; 13B80
 add esp, byte 8	; 13B85
 call LoadPlayerPhotos	; 13B88
 call nullsub_2	; 13B8D
@@ -412,7 +412,7 @@ lea eax, [byte esp+010h]	; 13C53
 push eax	; 13C57
 mov edx, dword [numshpbank]	; 13C58
 push edx	; 13C5E
-call sub_B30B4	; 13C5F
+call FindShape	; 13C5F
 add esp, byte 8	; 13C64
 mov dword [nosplit esi*4+numshapes], eax	; 13C67
 inc esi	; 13C6E
@@ -619,7 +619,7 @@ je short .3	; 13F45
 push savepal	; 13F47
 push dword 100h	; 13F4C
 push byte 0	; 13F51
-call sub_8FFB0	; 13F53
+call SetPalette	; 13F53
 add esp, byte 0Ch	; 13F58
 mov ebx, 10h	; 13F5B
 mov edx, savepal	; 13F60

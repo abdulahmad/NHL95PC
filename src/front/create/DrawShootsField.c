@@ -85,8 +85,8 @@ int CreatePlayerLoop(unsigned char *p)
 
     field = 0x118;
     done = 0;
-    pal = sub_8CCA8((char *)str_Temp, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Temp, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (p[2] == 'G') {
         field = 0x104;
@@ -96,8 +96,8 @@ int CreatePlayerLoop(unsigned char *p)
     }
     DrawCreatePlayer(p, field);
     oy = 0xF0;
-    sub_91400(editptrspr, ox = 0x140, oy);
-    sub_91370(pointerspr, ox, oy);
+    GrabBlock(editptrspr, ox = 0x140, oy);
+    DrawArt(pointerspr, ox, oy);
     FadePalStep(0, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     MouseSetPos(x = ox, y = oy);
@@ -111,22 +111,22 @@ int CreatePlayerLoop(unsigned char *p)
         } while (ev && !(bits & 2));
         if (!(bits & 2)) {
             if (ox != x || oy != y) {
-                sub_903F0(editptrspr, ox, oy);
-                sub_91400(editptrspr, x, y);
-                sub_91370(pointerspr, x, y);
+                PutBlock(editptrspr, ox, oy);
+                GrabBlock(editptrspr, x, y);
+                DrawArt(pointerspr, x, y);
                 ox = x;
                 oy = y;
             }
         } else {
-            sub_903F0(editptrspr, ox, oy);
+            PutBlock(editptrspr, ox, oy);
             if (p[2] == 'G') r = EditGoalieRating(&x, &y, &field);
             else r = EditSkaterRating(&x, &y, &field);
             if (r)
                 DrawCreatePlayer(p, field);
             else if ((result = TrackButtons((int *)str_Two, 2, x, y, bits)) >= 0)
                 done = 1;
-            sub_91400(editptrspr, x, y);
-            sub_91370(pointerspr, x, y);
+            GrabBlock(editptrspr, x, y);
+            DrawArt(pointerspr, x, y);
             ox = x;
             oy = y;
         }

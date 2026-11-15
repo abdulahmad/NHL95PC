@@ -31,7 +31,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
 int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *gdir);
 
 /* DRAFT (10.0 GA, 4,096 vs 4,095 bytes): the opponent pick is an if / else (the EXE's lgplayteam in edx,
-   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = sub_8E83C(...) is stored after the
+   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = LoadBank(...) is stored after the
    `add esp, 8` (the EXE stores it first, at [esp+70h]), and a few short-lived loads take other registers
    (dword_DDD34 for the second sprintf in ecx, EXE eax: the extra byte; lgplayteam, songdata). The frame
    struct follows the EXE's esp offsets (0 to 90h). No goto: the game loop is guarded by `if (s.ok)` (same code). */
@@ -95,7 +95,7 @@ void PlayLeagueGame(int *fh)
     s.pwfail = 0;
     s.ok = 0;
     lggameidx = -1;
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
     if (*fh >= 0) LoadLeagueGameRef(*fh);
     err = LeagueCheckStub((char *)&curleague, 3);
     do {
@@ -107,7 +107,7 @@ void PlayLeagueGame(int *fh)
             strcpy(s.name, (char *)&curleague);
             s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
             if (leagueflags & 0xC) {
-                sub_B2DCA(&s.btn, &s.my, &s.mx);
+                MouseRead(&s.btn, &s.my, &s.mx);
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
                 if (leagueflags & 8) {
                     msg_MergeNeeded_e01 = (int)s.name;
@@ -156,9 +156,9 @@ void PlayLeagueGame(int *fh)
             }
             if (!err) s.ok = -1;
         }
-        s.pal = (unsigned char *)sub_8CCA8((char *)str_Pal18, 0x300, 0x20);
+        s.pal = (unsigned char *)AllocMemBlock((char *)str_Pal18, 0x300, 0x20);
         if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-        sub_8FFB0(0, 0x100, s.pal);
+        SetPalette(0, 0x100, s.pal);
         FadePalStep(1, s.pal, 0x10);
         FreeMemBlock((int)s.pal);
         if (musicon && songdata) {
@@ -218,8 +218,8 @@ void PlayLeagueGame(int *fh)
                 }
                 if (!err) {
                     if (*fh >= 0) {
-                        pal = (unsigned char *)sub_8CCA8((char *)str_Temp5, 0x300, 0x20);
-                        sub_8FFB0(0, 0x100, pal);
+                        pal = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);
+                        SetPalette(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);
                         FreeMemBlock((int)pal);
                     }
@@ -283,23 +283,23 @@ void PlayLeagueGame(int *fh)
                 }
                 if (!err && gameresult == 1) {
                     s.game = lggameidx;
-                    sub_B392C(0);
+                    ClearScreen(0);
                     MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk2, 0);
-                    s.bank = sub_8E83C(s.path, 0);
-                    sub_B4B88(0, 0x100, (unsigned char *)(sub_B30B4(s.bank, (char *)str_Pal17) + 0x10));
+                    s.bank = LoadBank(s.path, 0);
+                    VgaSetPalette(0, 0x100, (unsigned char *)(FindShape(s.bank, (char *)str_Pal17) + 0x10));
                     FreeMemBlock(s.bank);
                     s.num[0] = 0x17;
                     s.num[1] = 0x17;
                     s.num[2] = 0x17;
-                    sub_B4B88(0xF8, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xF8, 1, (unsigned char *)s.num);
                     s.num[0] = 0x2A;
                     s.num[1] = 0x2A;
                     s.num[2] = 0x2A;
-                    sub_B4B88(0xF9, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xF9, 1, (unsigned char *)s.num);
                     s.num[0] = 0x3F;
                     s.num[1] = 0x3F;
                     s.num[2] = 0x3F;
-                    sub_B4B88(0xFA, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xFA, 1, (unsigned char *)s.num);
                     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
                     if (dword_DDD3C) {
                         err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, dword_DDD34, -1, -1);
@@ -378,18 +378,18 @@ void PlayLeagueGame(int *fh)
                         }
                     }
                     RestoreDialogBg();
-                    sub_B392C(0);
+                    ClearScreen(0);
                 }
                 if (err && !s.pwfail && err != 4) {
-                    sub_B2DCA(&s.btn, &s.my, &s.mx);
+                    MouseRead(&s.btn, &s.my, &s.mx);
                     MessageBox(-1, -1, (char *)msg_DbUpdateError, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
                 }
                 if (dword_DDD3C) FileClose(&s.fhsched2);
                 FileClose(&s.fhsched1);
             }
-            s.pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp5, 0x300, 0x20);
+            s.pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);
             if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-            sub_8FFB0(0, 0x100, s.pal2);
+            SetPalette(0, 0x100, s.pal2);
             FadePalStep(1, s.pal2, 0x10);
             FreeMemBlock((int)s.pal2);
             if (musicon && songdata) {
@@ -405,5 +405,5 @@ void PlayLeagueGame(int *fh)
             MakePath(s.path, (char *)&curleague, (char *)str_GAME, (char *)str_SAV);
         } while (lggameidx >= 0 && !err && !FileExists(s.path));
     }
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
 }

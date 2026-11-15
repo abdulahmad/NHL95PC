@@ -39,8 +39,8 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     s.lines_slot = (int)lines;
     s.names_slot = (int)names;
     s.mode_slot = mode;
-    pal = (unsigned char *)sub_8CCA8((char *)str_Pal27, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Pal27, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     if (musicon && songdata) {
@@ -80,11 +80,11 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     dlgtextfg = c0;
     dlgtextbg = c1;
     sub_B4BA8();
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     MouseSetPos(0x140, 0xC8);
     MakePath(s.path, fileoncd[0xE8] == 1 ? (char *)cddriveptr : 0, (char *)str_Lineditp3, 0);
-    bank = sub_8E83C(s.path, 0);
-    shape = sub_B30B4(bank, (char *)str_Shrt3);
+    bank = LoadBank(s.path, 0);
+    shape = FindShape(bank, (char *)str_Shrt3);
     FadeOutPalCycle();
     DrawLineEditorScreen(team, shape, 0, s.names_slot, s.mode_slot);
     LoadGameRoster(team);

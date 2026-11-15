@@ -1139,6 +1139,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C94C,__CHK,__CHK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_01,flirt
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
+0008CCA8,sub_8CCA8,AllocMemBlock,PC-new,,,,medium,"memory manager: allocate a named block (name, size, flags), e.g. the 320 KB 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock",ea_memman_01,manual-trace
 0008CD4C,sub_8CD4C,reservemem,PC-new,,,,high,"prints its own name: ""reservemem - INVALID SIZE REQUESTED"", ""reservemem - OUT OF MEMORY""",ea_memman_01,manual-trace
 0008D2A0,sub_8D2A0,findmemblock,PC-new,,,,high,EA memory manager name from its own FatalError string asc_C3D38 'findmemblock - BLOCK NOT FOUND (%p)': walks the block list from dword_D2F58 (+20h links) for the descriptor whose address field equals the stack argument and whose flags+19h bit 7 is clear,ea_memman_01,manual-trace
 0008D2D8,jctime,FreeMemBlock,PC-new,watcom_clib,,,high,"was a FLIRT misidentification (Watcom 'jctime', 23-byte collapsed body, name_map_94 method flirt): it is cdecl free(p) of the EA memory manager, findmemblock(p) then sub_8D2F0 (lock, unlink the descriptor unless flags+19h bit 7, return it to the free descriptor list, unlock); every caller passes a buffer it then drops (FreeDeskBuffers, ShutdownSpeech, LoadCrestsPalette); it sits between ea_memman_01 and ea_memman_02",watcom_clib_02,manual-trace
@@ -1167,11 +1168,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008E5AC,sub_8E5AC,InstallTimer,PC-new,,,,high,"clears timercallbacks (__STOSD 8 dwords); unless a vector is already saved: masks IRQ0/1, saves _dos_getvect_(8) in oldint8off/oldint8sel, programs PIT channel 0 divisor 2E9Ch (out 40h 9Ch,2Eh = 100 Hz), sets TimerISR, registers RestoreTimer with atexit (sub_B3454), then falls into UnmaskTimerKbdIrq; called once from main_ (10248)",ea_timer,manual-trace
 0008E614,sub_8E614,UnmaskTimerKbdIrq,PC-new,,,,high,"in al,21h / and al,0FCh / out 21h: unmasks IRQ0 and IRQ1; tail of InstallTimer, called by RestoreTimer",ea_timer,manual-trace
 0008E7A0,sub_8E7A0,subwindowdefadr,PC-new,,,,high,"prints its own name: ""subwindowdefadr - OUT OF ROW SPACE""",ea_window,manual-trace
+0008E83C,sub_8E83C,LoadBank,PC-new,,,,medium,"graphics library: load an art bank file (path, flags), returns the bank",ea_window,manual-trace
+0008E9C0,sub_8E9C0,TextSetColors,PC-new,,,,medium,text library: set the foreground and background text colours,ea_window,manual-trace
+0008E9E8,sub_8E9E8,TextSaveState,PC-new,,,,medium,text library: save the text state (40h bytes),ea_window,manual-trace
+0008EA00,sub_8EA00,TextRestoreState,PC-new,,,,medium,text library: restore the text state,ea_window,manual-trace
+0008EA18,sub_8EA18,TextSetFont,PC-new,,,,medium,text library: set the current font,ea_window,manual-trace
 0008EAEC,_dos_getdate_,_dos_getdate_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_06,flirt
 0008EB07,_dos_gettime_,_dos_gettime_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 26 bytes),watcom_clib_06,flirt
 0008EB21,sub_8EB21,sub_8EB21,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 6 bytes),watcom_clib_06,flirt
 0008EB27,rand_,rand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 36 bytes),watcom_clib_06,flirt
 0008EB4B,srand_,srand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_06,flirt
+0008F13B,sub_8F13B,LoadSample,PC-new,,,,medium,"sound library: load the sample file at path, returns its handle",ea_sound_hl_01,manual-trace
+0008F1FE,sub_8F1FE,FreeSample,PC-new,,,,medium,sound library: free a sample loaded by LoadSample,ea_sound_hl_01,manual-trace
+0008FFB0,sub_8FFB0,SetPalette,PC-new,,,,medium,"graphics library: set palette colours (first, count, rgb)",ea_sound_hl_01,manual-trace
 0008FFD4,start,start,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 725 bytes),watcom_clib_07,flirt
 000902A0,sub_902A0,__GETDS,PC-new,,,,high,"Watcom cstart __GETDS: o16 mov ds,[cs:__saved_DS] (the word at loc_90048 in the cstart code) / ret, right after cstart's int 21h/4Ch exit; called first by interrupt handlers (TimerISR, the GUS, MPU-401 and EACSNDF IRQ handlers, the input_joystick_misc handler at B300C)",watcom_clib_07,manual-trace
 000902B0,__STOSB,__STOSB,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_07,flirt
@@ -1179,6 +1188,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090392,strcpy_,strcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_08,flirt
 000903B1,strcat_,strcat_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 55 bytes),watcom_clib_08,flirt
 000903E8,j_unlink_,j_unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_08,flirt
+000903F0,sub_903F0,PutBlock,PC-new,,,,medium,"graphics library: put a saved screen block back (buf, x, y)",ea_gfx_01,manual-trace
+0009061C,sub_9061C,DrawBitmap,PC-new,,,,medium,graphics library: draw a bitmap,ea_gfx_01,manual-trace
 000909E0,strnicmp_,strnicmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_09,flirt
 00090AC4,fputchar,fputchar,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_10,flirt
 00090AD7,mem_putc_,mem_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_10,flirt
@@ -1195,7 +1206,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090CA8,lseek_,lseek_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 65 bytes),watcom_clib_12,flirt
 00090CEA,_dos_read_,_dos_read_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 42 bytes),watcom_clib_12,flirt
 00090D14,_dos_write_,_dos_write_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 7 bytes),watcom_clib_12,flirt
+00090D20,sub_90D20,FillRect,PC-new,,,,medium,"graphics library: fill a rectangle (x, y, w, h, colour)",ea_gfx_05,manual-trace
+00090F38,sub_90F38,XorBar,PC-new,,,,medium,graphics library: xor a bar on the screen (selection highlight of the stats and standings grids),ea_gfx_05,manual-trace
+000910E0,sub_910E0,DrawArtOpaque,PC-new,,,,medium,"graphics library: draw art at x, y without transparency",ea_gfx_05,manual-trace
 00091350,memset_,memset_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 24 bytes),watcom_clib_13,flirt
+00091370,sub_91370,DrawArt,PC-new,,,,medium,"graphics library: draw art at x, y",ea_gfx_06,manual-trace
+000913B4,sub_913B4,DrawShape,PC-new,,,,medium,graphics library: draw a shape at its own position,ea_gfx_06,manual-trace
+00091400,sub_91400,GrabBlock,PC-new,,,,medium,"graphics library: grab a screen rectangle into a block (buf, x, y)",ea_gfx_06,manual-trace
+00091964,sub_91964,PrintString,PC-new,,,,medium,"graphics library: print a string at x, y in the current font and colours",ea_gfx_06,manual-trace
 00091984,_nmalloc_,_nmalloc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 227 bytes),watcom_clib_14,flirt
 00091A67,_nfree_,_nfree_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 94 bytes),watcom_clib_14,flirt
 00091AC5,strlen_,strlen_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 25 bytes),watcom_clib_14,flirt
@@ -1224,15 +1242,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00092D21,stricmp_,stricmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 57 bytes),watcom_clib_17,flirt
 00092D5A,unlink_,unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_17,flirt
 00092D7C,unknown_libname_4,unknown_libname_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_17,flirt
+00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
 00092EF9,_fstrcspn_,_fstrcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 73 bytes),watcom_clib_18,flirt
 000930A7,mkdir_,mkdir_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_19,flirt
 000930C6,cget_file_,cget_file_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 78 bytes),watcom_clib_19,flirt
 00093114,uncget_file_,uncget_file_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_19,flirt
 0009311C,vfscanf_,vfscanf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 39 bytes),watcom_clib_19,flirt
 00093143,fscanf_,fscanf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 33 bytes),watcom_clib_19,flirt
+000931FC,sub_931FC,DrawArtMasked,PC-new,,,,medium,"graphics library: draw art at x, y masked (line editor slots)",ea_gfx_12,manual-trace
 00093284,strcspn_,strcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_20,flirt
+000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
 0009336C,sub_9336C,savefileblocka,PC-new,,,,high,"prints its own name: ""savefileblocka - OPEN FAILED FOR FILE <%s>""",ea_fileblock,manual-trace
 000933F0,sub_933F0,imul32,PC-new,,,,medium,EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx); skatetopuck squares x and y with it,ea_fileblock,manual-trace
+00093540,sub_93540,SortIndices,PC-new,,,,medium,"sort library: sort n indices by their keys (n, keys, idx)",ea_fileblock,manual-trace
 000935E0,sub_935E0,DebugPrintf,PC-new,,,,high,vsprintf into a 100h stack buffer and pass it to sub_936C0 only when dword_D4534 >= 2 (debug level); DebugMonitor/DumpStatsLog use it for their debug text,ea_fileblock,manual-trace
 00096185,fprintf_,fprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 33 bytes),watcom_clib_21,flirt
 000961B0,strupr_,strupr_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_21,flirt
@@ -1441,8 +1463,13 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B285F,__Bin2String,__Bin2String,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 106 bytes),watcom_clib_53,flirt
 000B297E,sub_B297E,sub_B297E,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 2 bytes),watcom_clib_54,flirt
 000B2980,frexp_,frexp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 111 bytes),watcom_clib_54,flirt
+000B2CBE,sub_B2CBE,KeyDown,PC-new,,,,medium,keyboard library: is this key down,input_keyboard_02,manual-trace
 000B2CD8,sub_B2CD8,FatalError,PC-new,,,,medium,"fatal-error exit, never returns: drops its return address, optionally shows a message (sub_93170 + WaitKey), shuts down and jumps through bailout_vec; callers push short code strings like 'e1' [reviewed: body re-read]",input_keyboard_02,manual-trace
 000B2DB4,sub_B2DB4,MouseSetPos,PC-new,,,,medium,"input_mouse lib: stores the two stack args as the mouse x/y (D302C/D3030), read back by sub_B2DCA",input_mouse,manual-trace
+000B2DCA,sub_B2DCA,MouseRead,PC-new,,,,medium,"mouse library: read buttons and position (btn, y, x)",input_mouse,manual-trace
+000B2E1B,sub_B2E1B,SetViewRect,PC-new,,,,medium,"graphics library: set the view rectangle (x, y, w, h)",input_mouse,manual-trace
+000B30B4,sub_B30B4,FindShape,PC-new,,,,medium,"graphics library: find the named art in a bank (bank, name), returns its pointer; 243 calls",input_joystick_misc,manual-trace
+000B392C,sub_B392C,ClearScreen,PC-new,,,,medium,graphics library: clear the screen to a colour,input_joystick_misc,manual-trace
 000B395C,sub_B395C,GetTicks,PC-new,,,,high,returns tickcount (the 100 Hz TimerISR count),input_joystick_misc,manual-trace
 000B3962,sub_B3962,TicksSince,PC-new,,,,high,cdecl: returns tickcount minus the stack argument,input_joystick_misc,manual-trace
 000B396E,sub_B396E,TicksSinceLastCall,PC-new,,,,high,"returns tickcount - ticklast and stores tickcount in ticklast (frontend_desk, gamesave_io GameLoop)",input_joystick_misc,manual-trace
@@ -1455,14 +1482,18 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
 000B3B5A,sub_B3B5A,openhandle,PC-new,,,,high,"prints its own name: ""openhandle - %s FILE ERROR""",ea_fileio,manual-trace
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,middle94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B4B88,sub_B4B88,VgaSetPalette,PC-new,,,,medium,"video library: set DAC entries (first, count, rgb)",video_bios_vga,manual-trace
+000B4BC4,sub_B4BC4,SetClipWindow,PC-new,,,,medium,"video library: set the clip window (x1, x2, y1, y2)",video_bios_vga,manual-trace
+000B4DD4,sub_B4DD4,SetColorRemap,PC-new,,,,medium,graphics library: set the colour remap table the blitters use,vga_blitters,manual-trace
 000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace
+000B4F8C,sub_B4F8C,CreateBitmap,PC-new,,,,medium,"graphics library: create a bitmap (w, h, flags)",vga_blitters,manual-trace
 000B52B4,sub_B52B4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5584,sub_B5584,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B56B8,sub_B56B8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5974,sub_B5974,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5AC8,sub_B5AC8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5D80,sub_B5D80,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B5DB0,sub_B5DB0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B5DB0,sub_B5DB0,PlotPixel,PC-new,,,,medium,"graphics library: plot a pixel (x, y, colour)",vesa_banked_blit,manual-trace
 000B5E00,sub_B5E00,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B5E04,sub_B5E04,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B5EA7,sub_B5EA7,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched

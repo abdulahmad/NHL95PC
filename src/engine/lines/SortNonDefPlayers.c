@@ -14,7 +14,7 @@ void SortNonDefPlayers(short side, signed char *out, short *keys)
         if (c == 'D') lineslotmark[i] = -1;
         else lineslotmark[i] = keys[i];
     }
-    sub_93540(0x19, lineslotmark, linesortidx);
+    SortIndices(0x19, lineslotmark, linesortidx);
     for (i = 0; i < 0x19; i++) /* low byte read 68k-style: dword at -3, sar 18h */
         out[i] = lineslotmark[i] < 0 ? -1 : *(int *)((char *)&linesortidx[i] - 3) >> 24;
 }

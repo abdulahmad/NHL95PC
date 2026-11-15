@@ -7,8 +7,8 @@ extern fileoncd, FreeMemBlock, GetInputEvent, GetTicks, MakePath, ptrupdatefn, r
 extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles, scrollx, scrolly
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
 extern str_Til, str_TILES, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52
-extern sub_6AF97, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4, sub_92DE0
-extern sub_92EE4, sub_B30B4, sub_B4F8C, deskbankname
+extern sub_6AF97, AllocMemBlock, sub_8DBC0, LoadBank, sub_8E8A0, SetPalette, DrawShape, GetFileSize
+extern sub_92EE4, FindShape, CreateBitmap, deskbankname
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ; C: src/front/rink_tiles/LoadRink.c
 %ifdef CBUILD
@@ -61,7 +61,7 @@ jne short .3	; 337FB
 push ecx	; 337FD
 push dword 250h	; 337FE
 push dword 180h	; 33803
-call sub_B4F8C	; 33808
+call CreateBitmap	; 33808
 add esp, byte 0Ch	; 3380D
 mov dword [rinktilebm], eax	; 33810
 mov dword [currink], 0FFFFFFFFh	; 33815
@@ -82,7 +82,7 @@ call MakePath	; 33847
 push byte 0	; 3384C
 lea eax, [byte esp+04h]	; 3384E
 push eax	; 33852
-call sub_8E83C	; 33853
+call LoadBank	; 33853
 mov esi, eax	; 33858
 add esp, byte 8	; 3385A
 mov word [rinkhtiles], 4Ah	; 3385D
@@ -93,10 +93,10 @@ call SetDrawBitmap	; 33875
 add esp, byte 4	; 3387A
 push str_Rink2	; 3387D
 push esi	; 33882
-call sub_B30B4	; 33883
+call FindShape	; 33883
 add esp, byte 8	; 33888
 push eax	; 3388B
-call sub_913B4	; 3388C
+call DrawShape	; 3388C
 add esp, byte 4	; 33891
 push esi	; 33894
 call FreeMemBlock	; 33895
@@ -120,7 +120,7 @@ mov eax, esp	; 338CD
 call MakePath	; 338CF
 mov eax, esp	; 338D4
 push eax	; 338D6
-call sub_92DE0	; 338D7
+call GetFileSize	; 338D7
 add esp, byte 4	; 338DC
 mov word [byte esp+01Ch], ax	; 338DF
 movsx esi, ax	; 338E4
@@ -143,7 +143,7 @@ mov eax, dword [byte esp+01Eh]	; 3390E
 sar eax, 10h	; 33912
 push eax	; 33915
 push str_TILES	; 33916
-call sub_8CCA8	; 3391B
+call AllocMemBlock	; 3391B
 add esp, byte 0Ch	; 33920
 mov dword [byte esp+010h], eax	; 33923
 push eax	; 33927
@@ -265,7 +265,7 @@ jne short .14	; 33AB3
 push esi	; 33AB5
 push dword 250h	; 33AB6
 push dword 180h	; 33ABB
-call sub_B4F8C	; 33AC0
+call CreateBitmap	; 33AC0
 add esp, byte 0Ch	; 33AC5
 mov dword [rinkbm], eax	; 33AC8
 .14:
@@ -675,7 +675,7 @@ mov eax, esp	; 33F16
 push eax	; 33F18
 push dword 100h	; 33F19
 push byte 0	; 33F1E
-call sub_8FFB0	; 33F20
+call SetPalette	; 33F20
 add esp, byte 0Ch	; 33F25
 mov ebx, 10h	; 33F28
 mov edx, esp	; 33F2D
@@ -710,12 +710,12 @@ call FreeMemBlock	; 33F8E
 add esp, byte 4	; 33F93
 push byte 0	; 33F96
 push deskbankname	; 33F98
-call sub_8E83C	; 33F9D
+call LoadBank	; 33F9D
 add esp, byte 8	; 33FA2
 mov esi, eax	; 33FA5
 push str_Pal16	; 33FA7
 push eax	; 33FAC
-call sub_B30B4	; 33FAD
+call FindShape	; 33FAD
 add esp, byte 8	; 33FB2
 lea ebx, [byte eax+010h]	; 33FB5
 xor eax, eax	; 33FB8

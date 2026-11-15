@@ -84,7 +84,7 @@ void Gameloop(void)
             if (fadeinpending) {
                 joysampling_save = joysampling;
                 joysampling = 0;
-                sub_8FFB0(0, 0x100, savepal);
+                SetPalette(0, 0x100, savepal);
                 FadePalette(1, savepal, 0x10);
                 FlushGSumQueue();
                 joysampling = joysampling_save;
@@ -127,8 +127,8 @@ void Gameloop(void)
                 StopDigiSample();
                 SpeechStopQueue();
                 FlushGSumQueue();
-                sub_8EA18(s1font);
-                sub_8FFB0(0, 0x100, savepal);
+                TextSetFont(s1font);
+                SetPalette(0, 0x100, savepal);
                 FadePalette(1, savepal, 0x10);
                 SetScreenSize(0x280, 0x1E0);
                 SportsDesk(0);

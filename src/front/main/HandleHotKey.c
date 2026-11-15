@@ -56,7 +56,7 @@ int HandleHotKey(int key)
             savedmousex = mousex;
             savedmousey = mousey;
         }
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
         CrowdFadeOut();
         if (musicon) MusicChanReset();
@@ -69,7 +69,7 @@ int HandleHotKey(int key)
         InputRemove();
         if (pad1dev[0] == 1 || pad2dev == 1) {
             MouseSetPos(savedmousex, savedmousey);
-            sub_B2E1B(0, 0, 0x140, 0xC8);
+            SetViewRect(0, 0, 0x140, 0xC8);
         }
         fadeinpending = 1;
         DrawHudPanel(HomeTeam, VisTeam, curperiod, 0);
@@ -114,7 +114,7 @@ void SetFullPalette(unsigned char *pal)
 
     for (i = 0, o = 0; i < 0x100; i += 0x80, o += 0x180) {
         sub_B4C84();
-        sub_B4B88(i, 0x80, pal + o);
+        VgaSetPalette(i, 0x80, pal + o);
     }
 }
 

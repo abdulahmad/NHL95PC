@@ -109,9 +109,9 @@ int CalendarScreen(char *dir, char *ext, int team)
     c2 = 0x0C;
     c3 = 0x67;
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
         while (sub_8FC8A(musicslot, 3) == 0) ;
@@ -130,12 +130,12 @@ int CalendarScreen(char *dir, char *ext, int team)
     calredraw = calexit = 0;
     font = mainfont;
     MakePath(path, fileoncd[0x1C1] == 1 ? (char *)cddriveptr : 0, (char *)str_Calendar, 0);
-    calendarshapes = sub_8E83C(path, 0x20);
+    calendarshapes = LoadBank(path, 0x20);
     MakePath(path, fileoncd[0x1C2] == 1 ? (char *)cddriveptr : 0, (char *)str_Callogo, 0);
-    logos = sub_8E83C(path, 0x20);
+    logos = LoadBank(path, 0x20);
     for (i = 0; i < 0x100; i++) remap[i] = (unsigned char)i;
-    sub_B4DD4(remap);
-    for (i = 0; i < 0x1A; i++) crests[i] = sub_B30B4(logos, (char *)crestnames[i]);
+    SetColorRemap(remap);
+    for (i = 0; i < 0x1A; i++) crests[i] = FindShape(logos, (char *)crestnames[i]);
     MakePath(path, dir, (char *)leaguedbnames[6], ext);
     if ((r = FileOpenRead(path, &fh)) == 0) r = FileReadAt(fh, &today, 0, 2);
     if (r == 0) {
@@ -201,15 +201,15 @@ int CalendarScreen(char *dir, char *ext, int team)
         }
         ApplyShapePalette(calendarshapes);
         size = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
-        ptr = hdr = sub_8CCA8((char *)str_Pointer8, size, 0x20);
+        ptr = hdr = AllocMemBlock((char *)str_Pointer8, size, 0x20);
         *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
         ((short *)hdr)[2] = ((short *)pointerspr)[2] + 1;
         ((short *)hdr)[3] = ((short *)pointerspr)[3] + 1;
-        sub_B2DCA(&btn, &oldmx, &oldmy);
+        MouseRead(&btn, &oldmx, &oldmy);
         mx = oldmx;
         my = oldmy;
-        sub_91400(hdr, oldmx, oldmy);
-        sub_91370(pointerspr, oldmx, oldmy);
+        GrabBlock(hdr, oldmx, oldmy);
+        DrawArt(pointerspr, oldmx, oldmy);
         ClearInputQueue();
         do {
             bits = 0;
@@ -219,9 +219,9 @@ int CalendarScreen(char *dir, char *ext, int team)
             } while (e && !(bits & 2));
             if (!(bits & 2)) {
                 if (mx == oldmx && my == oldmy) continue;
-                sub_903F0(ptr, oldmx, oldmy);
-                sub_91400(ptr, mx, my);
-                sub_91370(pointerspr, mx, my);
+                PutBlock(ptr, oldmx, oldmy);
+                GrabBlock(ptr, mx, my);
+                DrawArt(pointerspr, mx, my);
                 oldmx = mx;
                 oldmy = my;
                 continue;
@@ -230,17 +230,17 @@ int CalendarScreen(char *dir, char *ext, int team)
                 if (menus[level][item].on1) {
                     if (item == sel[level]) {
                         /* the second click on the selected item: close the dropdowns and run it */
-                        sub_903F0(ptr, oldmx, oldmy);
+                        PutBlock(ptr, oldmx, oldmy);
                         for (i = depth; i >= 0; i--) {
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][1] = pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
                             }
                         }
                         depth = 0;
                         r = ((int (*)(void))menus[level][item].on1)();
-                        sub_B4DD4(remap);
+                        SetColorRemap(remap);
                         menus[1] = 0;
                         nitems[1] = sel[1] = bg[1] = bg[0] = 0;
                         if (r == 1) {
@@ -266,12 +266,12 @@ int CalendarScreen(char *dir, char *ext, int team)
                         }
                         shown = calmonth;
                     } else {
-                        sub_903F0(ptr, oldmx, oldmy);
+                        PutBlock(ptr, oldmx, oldmy);
                         if (depth != level) {
                             for (i = depth; i > level; i--) {
                                 sel[i] = 0;
                                 if (bg[i]) {
-                                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                    PutBlock(bg[i], pos[i][0], pos[i][1]);
                                     pos[i][0] = pos[i][1] = 0;
                                     FreeMemBlock(bg[i]);
                                     bg[i] = 0;
@@ -289,12 +289,12 @@ int CalendarScreen(char *dir, char *ext, int team)
                     }
                 } else if (menus[level][item].on2) {
                     /* open the submenu */
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 FreeMemBlock(bg[i]);
                                 pos[i][1] = pos[i][0] = 0;
                                 bg[i] = 0;
@@ -316,21 +316,21 @@ int CalendarScreen(char *dir, char *ext, int team)
                     pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                     w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                     h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                    bg[depth] = sub_8CCA8((char *)str_Menubuff5, w * 4 * h + 0x11, 0x20);
+                    bg[depth] = AllocMemBlock((char *)str_Menubuff5, w * 4 * h + 0x11, 0x20);
                     *(Hdr17 *)bg[depth] = *(Hdr17 *)pointerspr;
                     ((short *)bg[depth])[2] = w;
                     ((short *)bg[depth])[3] = h;
-                    sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                    GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                     DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], c1, c2, c3);
                     sel[depth] = 0;
                     DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], c1, c2, c3);
                 } else {
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][1] = pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
                                 bg[i] = 0;
@@ -347,12 +347,12 @@ int CalendarScreen(char *dir, char *ext, int team)
                         c1, c2, c3);
                 }
             } else {
-                sub_903F0(ptr, oldmx, oldmy);
+                PutBlock(ptr, oldmx, oldmy);
                 if (depth != 0) {
                     /* a click outside the menus closes the dropdowns */
                     for (i = depth; i >= 0; i--) {
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][1] = pos[i][0] = 0;
                             FreeMemBlock(bg[i]);
                         }
@@ -393,7 +393,7 @@ int CalendarScreen(char *dir, char *ext, int team)
                                         y1 = calrowy[k / 7] - 2;
                                         x2 = calcolx[k % 7] + 0x4D;
                                         y2 = calrowy[k / 7] + 0x3F;
-                                        sub_B4BC4(x1, x2, y1, y2);
+                                        SetClipWindow(x1, x2, y1, y2);
                                     }
                                     DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font,
                                         calendarshapes);
@@ -407,20 +407,20 @@ int CalendarScreen(char *dir, char *ext, int team)
                                     y1 = calrowy[k / 7] - 2;
                                     x2 = calcolx[k % 7] + 0x4D;
                                     y2 = calrowy[k / 7] + 0x3F;
-                                    sub_B4BC4(x1, x2, y1, y2);
+                                    SetClipWindow(x1, x2, y1, y2);
                                 }
                                 DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
-                                sub_B4BC4(0, 0x280, 0, 0x1E0);
+                                SetClipWindow(0, 0x280, 0, 0x1E0);
                             }
                         }
                     }
                     calsel = newsel;
                 }
             }
-            sub_91400(ptr, oldmx, oldmy);
-            sub_903F0(ptr, oldmx, oldmy);
-            sub_91400(ptr, mx, my);
-            if (calexit == 0) sub_91370(pointerspr, mx, my);
+            GrabBlock(ptr, oldmx, oldmy);
+            PutBlock(ptr, oldmx, oldmy);
+            GrabBlock(ptr, mx, my);
+            if (calexit == 0) DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
         } while (calexit == 0);

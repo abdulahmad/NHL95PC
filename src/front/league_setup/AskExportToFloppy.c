@@ -15,7 +15,7 @@ void AskExportToFloppy(unsigned char *teams, unsigned char *orig, int mode, int 
     unsigned char *t;
     int r;
 
-    sub_B2DCA(&i, &y, &x);
+    MouseRead(&i, &y, &x);
     for (i = 0; i < 0x1A; i++) {
         if (((mode & 1) && teams[i * 30 + 0x17] == 1 && teams[i * 30 + 0x18] == 2)
             || ((mode & 2) && teams[i * 15 + i * 15 + 0x17] == 1 && orig[i * 15 + i * 15 + 0x17] == 0)) {

@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_1AC25 progbits alloc exec nowrite align=1
-extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, sub_8CCA8, sub_8CCC4, sub_9132C, sub_B3ABC
-extern sub_B4F8C
+extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, sub_8CCC4, sub_9132C, sub_B3ABC
+extern CreateBitmap
 global sub_1AC25, loc_1AC96, sub_1AC9A, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, sub_1ACF1
 global loc_1AD12, sub_1AD16, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, sub_1AE6B, loc_1AEE2
 global loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB, loc_1AFEF, sub_1B002, loc_1B029
@@ -184,7 +184,7 @@ mov dword [esp], eax	; 1ADC3
 push byte 0	; 1ADC6
 push eax	; 1ADC8
 push str_CmvPalette	; 1ADC9
-call sub_8CCA8	; 1ADCE
+call AllocMemBlock	; 1ADCE
 add esp, byte 0Ch	; 1ADD3
 mov dword [byte edi+01Ch], eax	; 1ADD6
 xor eax, eax	; 1ADD9
@@ -206,7 +206,7 @@ mov esi, dword [byte ebp+08h]	; 1ADF6
 push esi	; 1ADF9
 mov edi, dword [byte ebp+04h]	; 1ADFA
 push edi	; 1ADFD
-call sub_B4F8C	; 1ADFE
+call CreateBitmap	; 1ADFE
 add esp, byte 0Ch	; 1AE03
 mov dword [byte ebp+020h], eax	; 1AE06
 push byte 0	; 1AE09
@@ -214,7 +214,7 @@ mov eax, dword [byte ebp+08h]	; 1AE0B
 push eax	; 1AE0E
 mov edx, dword [byte ebp+04h]	; 1AE0F
 push edx	; 1AE12
-call sub_B4F8C	; 1AE13
+call CreateBitmap	; 1AE13
 add esp, byte 0Ch	; 1AE18
 mov dword [byte ebp+024h], eax	; 1AE1B
 push byte 0	; 1AE1E
@@ -222,7 +222,7 @@ mov ebx, dword [byte ebp+08h]	; 1AE20
 push ebx	; 1AE23
 mov ecx, dword [byte ebp+04h]	; 1AE24
 push ecx	; 1AE27
-call sub_B4F8C	; 1AE28
+call CreateBitmap	; 1AE28
 add esp, byte 0Ch	; 1AE2D
 mov dword [byte ebp+028h], eax	; 1AE30
 mov edx, dword [byte ebp+020h]	; 1AE33

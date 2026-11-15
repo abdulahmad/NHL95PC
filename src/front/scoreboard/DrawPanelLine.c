@@ -86,10 +86,10 @@ void DrawEnergyBar(int level, int x)
         c1 = 0x67;
         c2 = 0;
     }
-    sub_90D20(x + 9 - level, 0x1A, level, 3, c1);
-    sub_90D20(x2 = x + 0x10, 0x1A, level, 3, c1);
-    sub_90D20(++x, 0x1A, w2 = 8 - level, 3, c2);
-    sub_90D20(level += x2, 0x1A, w2, 3, c2);
+    FillRect(x + 9 - level, 0x1A, level, 3, c1);
+    FillRect(x2 = x + 0x10, 0x1A, level, 3, c1);
+    FillRect(++x, 0x1A, w2 = 8 - level, 3, c2);
+    FillRect(level += x2, 0x1A, w2, 3, c2);
 }
 
 /* DrawPanelPenalties (15995, PC only; segment 006, ends in DrawPanelLine_x): draw the first four entries of a

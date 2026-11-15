@@ -121,14 +121,14 @@ void CreateFreeAgent(int a, int *mx, int *my)
     if (k < 0) return;
     s.key[1] = k;
     s.key[0] = 0xFF;
-    pal = pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal2);
+    pal = pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp, 0x300, 0x20);
+    SetPalette(0, 0x100, pal2);
     if (CreatePlayerLoop(s.key) >= 1) {
         unsigned char *sp;
         unsigned char *gp;
 
         FadePalStep(1, pal, 0x10);
-        sub_B392C(0);
+        ClearScreen(0);
         WriteLeagueDbsMem((char *)str_TMP);
         MakePath((char *)tmpdbpath, 0, (char *)leaguedbnames[0], (char *)str_TMP);
         err = FileOpenWrite((char *)tmpdbpath, &s.fhkey);

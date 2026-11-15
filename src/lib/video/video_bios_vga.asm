@@ -30,7 +30,7 @@ global loc_B49A7, loc_B49B7, loc_B49BA, sub_B49C0, loc_B49D4, loc_B49DD, loc_B49
 global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
 global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, sub_B4AA4
 global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
-global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, sub_B4B88, loc_B4BA0, sub_B4BA8, sub_B4BC4
+global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, VgaSetPalette, loc_B4BA0, sub_B4BA8, SetClipWindow
 global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, sub_B4C33, loc_B4C48, loc_B4C4F
 global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
 global sub_B4CB4
@@ -1287,7 +1287,7 @@ LD xor, ebx, ebx	; B4B79
 int 10h	; B4B7B
 mov dword [dword_D3024], 0	; B4B7D
 ret	; B4B87
-sub_B4B88:
+VgaSetPalette:
 push ebp	; B4B88
 LD mov, ebp, esp	; B4B89
 push esi	; B4B8B
@@ -1318,7 +1318,7 @@ LD mov, edi, edx	; B4BBD
 LD mov, esi, eax	; B4BBF
 ret	; B4BC1
 db 00h,00h
-sub_B4BC4:
+SetClipWindow:
 mov eax, dword [byte esp+04h]	; B4BC4
 mov edx, dword [byte esp+08h]	; B4BC8
 mov ecx, dword [byte esp+0Ch]	; B4BCC

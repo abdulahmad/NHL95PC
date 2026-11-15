@@ -13,10 +13,10 @@ extern scoutcatnames, SetDialogColors, SetTextColors, ShowLoadingScreen, songdat
 extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_Def, str_extDB
 extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
-extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, sub_8CCA8, sub_8D2F0
-extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
-extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
-extern sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, teamabbrevs, teamconf
+extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, sub_8D2F0
+extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A
+extern sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
+extern SetViewRect, FindShape, ClearScreen, sub_B4BA8, SetClipWindow, sub_B4FAC, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
 PreGameScreen_jt:
@@ -53,7 +53,7 @@ call SetTextColors	; 29F80
 push byte 20h	; 29F85
 push dword 300h	; 29F87
 push str_Apal	; 29F8C
-call sub_8CCA8	; 29F91
+call AllocMemBlock	; 29F91
 add esp, byte 0Ch	; 29F96
 mov dword [dword esp+0644h], eax	; 29F99
 mov al, byte [dword esp+0670h]	; 29FA0
@@ -99,7 +99,7 @@ call sub_B4BA8	; 2A034
 push byte 20h	; 2A039
 push dword 300h	; 2A03B
 push str_Pal10	; 2A040
-call sub_8CCA8	; 2A045
+call AllocMemBlock	; 2A045
 add esp, byte 0Ch	; 2A04A
 mov esi, eax	; 2A04D
 cmp byte [musicon], 0	; 2A04F
@@ -114,7 +114,7 @@ call sub_8FCDF	; 2A070
 push esi	; 2A075
 push dword 100h	; 2A076
 push byte 0	; 2A07B
-call sub_8FFB0	; 2A07D
+call SetPalette	; 2A07D
 add esp, byte 0Ch	; 2A082
 mov ebx, 10h	; 2A085
 mov edx, esi	; 2A08A
@@ -146,11 +146,11 @@ mov eax, dword [mainfont]	; 2A0E4
 mov dword [dword esp+0648h], eax	; 2A0E9
 lea eax, [dword esp+05D0h]	; 2A0F0
 push eax	; 2A0F7
-call sub_8E9E8	; 2A0F8
+call TextSaveState	; 2A0F8
 add esp, byte 4	; 2A0FD
 mov eax, dword [dword esp+0648h]	; 2A100
 push eax	; 2A107
-call sub_8EA18	; 2A108
+call TextSetFont	; 2A108
 add esp, byte 4	; 2A10D
 xor ecx, ecx	; 2A110
 mov ebx, str_Arena	; 2A112
@@ -166,12 +166,12 @@ call MakePath	; 2A131
 push byte 0	; 2A136
 lea eax, [dword esp+0614h]	; 2A138
 push eax	; 2A13F
-call sub_8E83C	; 2A140
+call LoadBank	; 2A140
 mov esi, eax	; 2A145
 add esp, byte 8	; 2A147
 push str_Pal11	; 2A14A
 push eax	; 2A14F
-call sub_B30B4	; 2A150
+call FindShape	; 2A150
 add esp, byte 8	; 2A155
 lea edx, [byte eax+010h]	; 2A158
 mov ebx, 300h	; 2A15B
@@ -179,17 +179,17 @@ mov eax, dword [dword esp+0644h]	; 2A160
 call memcpy_	; 2A167
 push str_Rink	; 2A16C
 push esi	; 2A171
-call sub_B30B4	; 2A172
+call FindShape	; 2A172
 mov edi, eax	; 2A177
 add esp, byte 8	; 2A179
 push dword 1E0h	; 2A17C
 push byte 0	; 2A181
 push dword 280h	; 2A183
 push byte 0	; 2A188
-call sub_B4BC4	; 2A18A
+call SetClipWindow	; 2A18A
 add esp, byte 10h	; 2A18F
 push edi	; 2A192
-call sub_9061C	; 2A193
+call DrawBitmap	; 2A193
 add esp, byte 4	; 2A198
 push esi	; 2A19B
 call FreeMemBlock	; 2A19C
@@ -208,7 +208,7 @@ call MakePath	; 2A1C5
 push byte 0	; 2A1CA
 lea eax, [dword esp+0614h]	; 2A1CC
 push eax	; 2A1D3
-call sub_8E83C	; 2A1D4
+call LoadBank	; 2A1D4
 mov esi, eax	; 2A1D9
 add esp, byte 8	; 2A1DB
 xor eax, eax	; 2A1DE
@@ -216,30 +216,30 @@ mov al, byte [dword esp+066Ch]	; 2A1E0
 mov edx, dword [nosplit eax*4+crestnames]	; 2A1E7
 push edx	; 2A1EE
 push esi	; 2A1EF
-call sub_B30B4	; 2A1F0
+call FindShape	; 2A1F0
 add esp, byte 8	; 2A1F5
 push byte 6Dh	; 2A1F8
 push byte 3Ch	; 2A1FA
 push eax	; 2A1FC
-call sub_91370	; 2A1FD
+call DrawArt	; 2A1FD
 add esp, byte 0Ch	; 2A202
 xor eax, eax	; 2A205
 mov al, byte [dword esp+0670h]	; 2A207
 mov ebx, dword [nosplit eax*4+crestnames]	; 2A20E
 push ebx	; 2A215
 push esi	; 2A216
-call sub_B30B4	; 2A217
+call FindShape	; 2A217
 add esp, byte 8	; 2A21C
 push byte 6Dh	; 2A21F
 push dword 1E5h	; 2A221
 push eax	; 2A226
-call sub_91370	; 2A227
+call DrawArt	; 2A227
 add esp, byte 0Ch	; 2A22C
 push esi	; 2A22F
 call FreeMemBlock	; 2A230
 add esp, byte 4	; 2A235
 push ebp	; 2A238
-call sub_8EA18	; 2A239
+call TextSetFont	; 2A239
 add esp, byte 4	; 2A23E
 lea eax, [byte esp+01Ah]	; 2A241
 push eax	; 2A245
@@ -269,7 +269,7 @@ push byte 5	; 2A29B
 push dword 1AEh	; 2A29D
 push dword 0CFh	; 2A2A2
 push byte 6Eh	; 2A2A7
-call sub_90D20	; 2A2A9
+call FillRect	; 2A2A9
 add esp, byte 14h	; 2A2AE
 mov esi, dword [boxlitecolor]	; 2A2B1
 push esi	; 2A2B7
@@ -303,7 +303,7 @@ push dword 1AEh	; 2A314
 lea ebp, [byte edi+05h]	; 2A319
 push ebp	; 2A31C
 push byte 6Eh	; 2A31D
-call sub_90D20	; 2A31F
+call FillRect	; 2A31F
 add esp, byte 14h	; 2A324
 mov eax, dword [boxlitecolor]	; 2A327
 push eax	; 2A32C
@@ -418,7 +418,7 @@ mov eax, 0FAh	; 2A4B0
 call SetTextColors	; 2A4B5
 mov ebx, dword [dword esp+0648h]	; 2A4BA
 push ebx	; 2A4C1
-call sub_8EA18	; 2A4C2
+call TextSetFont	; 2A4C2
 add esp, byte 4	; 2A4C7
 cmp dword [menuact_homelines], byte 0	; 2A4CA
 jne short .18	; 2A4D1
@@ -464,7 +464,7 @@ add eax, byte 11h	; 2A577
 push byte 20h	; 2A57A
 push eax	; 2A57C
 push str_Pointer4	; 2A57D
-call sub_8CCA8	; 2A582
+call AllocMemBlock	; 2A582
 mov dword [dword esp+0648h], eax	; 2A587
 add esp, byte 0Ch	; 2A58E
 mov dword [dword esp+0660h], eax	; 2A591
@@ -492,7 +492,7 @@ push dword 1E0h	; 2A5DA
 push dword 280h	; 2A5DF
 push ebp	; 2A5E4
 push ebp	; 2A5E5
-call sub_B2E1B	; 2A5E6
+call SetViewRect	; 2A5E6
 add esp, byte 10h	; 2A5EB
 mov ecx, dword [dword esp+0634h]	; 2A5EE
 push ecx	; 2A5F5
@@ -504,13 +504,13 @@ push ebp	; 2A606
 push ebp	; 2A607
 mov eax, dword [dword esp+0644h]	; 2A608
 push eax	; 2A60F
-call sub_91400	; 2A610
+call GrabBlock	; 2A610
 add esp, byte 0Ch	; 2A615
 push ebp	; 2A618
 push ebp	; 2A619
 mov edx, dword [pointerspr]	; 2A61A
 push edx	; 2A620
-call sub_91370	; 2A621
+call DrawArt	; 2A621
 add esp, byte 0Ch	; 2A626
 call ClearInputQueue	; 2A629
 cmp byte [musicon], 0	; 2A62E
@@ -629,7 +629,7 @@ push esi	; 2A7E4
 push ebp	; 2A7E5
 mov ecx, dword [dword esp+0668h]	; 2A7E6
 push ecx	; 2A7ED
-call sub_903F0	; 2A7EE
+call PutBlock	; 2A7EE
 add esp, byte 0Ch	; 2A7F3
 mov esi, dword [dword esp+0634h]	; 2A7F6
 push esi	; 2A7FD
@@ -637,7 +637,7 @@ mov edi, dword [dword esp+0634h]	; 2A7FE
 push edi	; 2A805
 mov ebp, dword [dword esp+0668h]	; 2A806
 push ebp	; 2A80D
-call sub_91400	; 2A80E
+call GrabBlock	; 2A80E
 add esp, byte 0Ch	; 2A813
 mov eax, dword [dword esp+0634h]	; 2A816
 push eax	; 2A81D
@@ -657,7 +657,7 @@ push esi	; 2A857
 push ebp	; 2A858
 mov edx, dword [dword esp+0668h]	; 2A859
 push edx	; 2A860
-call sub_903F0	; 2A861
+call PutBlock	; 2A861
 add esp, byte 0Ch	; 2A866
 mov ebx, dword [dword esp+064Ch]	; 2A869
 push ebx	; 2A870
@@ -687,7 +687,7 @@ jne near PreGameScreen_homelines.3	; 2A8CF
 push byte 20h	; 2A8D5
 push dword 4B011h	; 2A8D7
 push str_Screen	; 2A8DC
-call sub_8CCA8	; 2A8E1
+call AllocMemBlock	; 2A8E1
 mov ebp, eax	; 2A8E6
 add esp, byte 0Ch	; 2A8E8
 mov esi, dword [pointerspr]	; 2A8EB
@@ -702,7 +702,7 @@ mov word [byte eax+06h], 1E0h	; 2A8FE
 push byte 0	; 2A904
 push byte 0	; 2A906
 push eax	; 2A908
-call sub_91400	; 2A909
+call GrabBlock	; 2A909
 add esp, byte 0Ch	; 2A90E
 mov ecx, 3	; 2A911
 mov ebx, pregamelinesmenubar	; 2A916
@@ -727,7 +727,7 @@ jne near .3	; 2A96B
 push byte 20h	; 2A971
 push dword 4B011h	; 2A973
 push str_Screen	; 2A978
-call sub_8CCA8	; 2A97D
+call AllocMemBlock	; 2A97D
 mov ebp, eax	; 2A982
 add esp, byte 0Ch	; 2A984
 mov esi, dword [pointerspr]	; 2A987
@@ -742,7 +742,7 @@ mov word [byte eax+06h], 1E0h	; 2A99A
 push byte 0	; 2A9A0
 push byte 0	; 2A9A2
 push eax	; 2A9A4
-call sub_91400	; 2A9A5
+call GrabBlock	; 2A9A5
 add esp, byte 0Ch	; 2A9AA
 mov ecx, 3	; 2A9AD
 mov ebx, pregamelinesmenubar	; 2A9B2
@@ -753,13 +753,13 @@ call GameLineEditor	; 2A9BE
 push byte 20h	; 2A9C3
 push dword 300h	; 2A9C5
 push str_Pal10	; 2A9CA
-call sub_8CCA8	; 2A9CF
+call AllocMemBlock	; 2A9CF
 mov esi, eax	; 2A9D4
 add esp, byte 0Ch	; 2A9D6
 push eax	; 2A9D9
 push dword 100h	; 2A9DA
 push byte 0	; 2A9DF
-call sub_8FFB0	; 2A9E1
+call SetPalette	; 2A9E1
 add esp, byte 0Ch	; 2A9E6
 mov ebx, 10h	; 2A9E9
 mov edx, esi	; 2A9EE
@@ -771,7 +771,7 @@ add esp, byte 4	; 2AA00
 push byte 0	; 2AA03
 push byte 0	; 2AA05
 push ebp	; 2AA07
-call sub_903F0	; 2AA08
+call PutBlock	; 2AA08
 add esp, byte 0Ch	; 2AA0D
 push ebp	; 2AA10
 call FreeMemBlock	; 2AA11
@@ -792,7 +792,7 @@ mov edi, dword [dword esp+0634h]	; 2AA48
 push edi	; 2AA4F
 mov ebp, dword [dword esp+0668h]	; 2AA50
 push ebp	; 2AA57
-call sub_91400	; 2AA58
+call GrabBlock	; 2AA58
 add esp, byte 0Ch	; 2AA5D
 cmp dword [dword esp+0664h], byte 0	; 2AA60
 jne short .6	; 2AA68
@@ -803,7 +803,7 @@ push ebx	; 2AA79
 mov ecx, dword [pointerspr]	; 2AA7A
 push ecx	; 2AA80
 .5:
-call sub_91370	; 2AA81
+call DrawArt	; 2AA81
 add esp, byte 0Ch	; 2AA86
 .6:
 mov ebp, dword [dword esp+0630h]	; 2AA89
@@ -854,7 +854,7 @@ jne short PreGameScreen_homelines.11	; 2AB3D
 .12:
 lea eax, [dword esp+05D0h]	; 2AB3F
 push eax	; 2AB46
-call sub_8EA00	; 2AB47
+call TextRestoreState	; 2AB47
 add esp, byte 4	; 2AB4C
 mov edx, dword [dword esp+0644h]	; 2AB4F
 push edx	; 2AB56
@@ -911,7 +911,7 @@ call ClearInputQueue	; 2ABFF
 xor ebp, ebp	; 2AC04
 call sub_B4BA8	; 2AC06
 push ebp	; 2AC0B
-call sub_B392C	; 2AC0C
+call ClearScreen	; 2AC0C
 add esp, byte 4	; 2AC11
 xor ecx, ecx	; 2AC14
 mov ebx, str_Ctlogo	; 2AC16
@@ -927,7 +927,7 @@ call MakePath	; 2AC35
 push byte 0	; 2AC3A
 lea eax, [dword esp+0CCh]	; 2AC3C
 push eax	; 2AC43
-call sub_8E83C	; 2AC44
+call LoadBank	; 2AC44
 mov dword [dword esp+0104h], eax	; 2AC49
 add esp, byte 8	; 2AC50
 mov eax, dword [HomeTeam-2]	; 2AC53
@@ -936,7 +936,7 @@ mov ebx, dword [nosplit eax*4+crestnames]	; 2AC5B
 push ebx	; 2AC62
 mov ecx, dword [dword esp+0100h]	; 2AC63
 push ecx	; 2AC6A
-call sub_B30B4	; 2AC6B
+call FindShape	; 2AC6B
 mov dword [dword esp+0F4h], eax	; 2AC70
 add esp, byte 8	; 2AC77
 mov eax, dword [byte eax+02h]	; 2AC7A
@@ -950,7 +950,7 @@ mov dword [dword esp+0110h], eax	; 2AC93
 push byte 20h	; 2AC9A
 push eax	; 2AC9C
 push str_Logohome	; 2AC9D
-call sub_8CCA8	; 2ACA2
+call AllocMemBlock	; 2ACA2
 add esp, byte 0Ch	; 2ACA7
 mov dword [dword esp+0E0h], eax	; 2ACAA
 mov edi, eax	; 2ACB1
@@ -964,13 +964,13 @@ push byte 0	; 2ACBF
 push byte 0	; 2ACC1
 mov edi, dword [dword esp+0F4h]	; 2ACC3
 push edi	; 2ACCA
-call sub_903F0	; 2ACCB
+call PutBlock	; 2ACCB
 add esp, byte 0Ch	; 2ACD0
 push byte 0	; 2ACD3
 push byte 0	; 2ACD5
 mov eax, dword [dword esp+0E8h]	; 2ACD7
 push eax	; 2ACDE
-call sub_91400	; 2ACDF
+call GrabBlock	; 2ACDF
 add esp, byte 0Ch	; 2ACE4
 mov eax, dword [VisTeam-2]	; 2ACE7
 sar eax, 10h	; 2ACEC
@@ -978,7 +978,7 @@ mov edx, dword [nosplit eax*4+crestnames]	; 2ACEF
 push edx	; 2ACF6
 mov ebx, dword [dword esp+0100h]	; 2ACF7
 push ebx	; 2ACFE
-call sub_B30B4	; 2ACFF
+call FindShape	; 2ACFF
 mov dword [dword esp+0F4h], eax	; 2AD04
 add esp, byte 8	; 2AD0B
 mov edx, dword [byte eax+02h]	; 2AD0E
@@ -991,7 +991,7 @@ mov dword [dword esp+0110h], eax	; 2AD20
 push byte 20h	; 2AD27
 push eax	; 2AD29
 push str_Logoaway	; 2AD2A
-call sub_8CCA8	; 2AD2F
+call AllocMemBlock	; 2AD2F
 add esp, byte 0Ch	; 2AD34
 mov dword [dword esp+0E4h], eax	; 2AD37
 mov edi, eax	; 2AD3E
@@ -1005,13 +1005,13 @@ push byte 0	; 2AD4C
 push byte 0	; 2AD4E
 mov esi, dword [dword esp+0F4h]	; 2AD50
 push esi	; 2AD57
-call sub_903F0	; 2AD58
+call PutBlock	; 2AD58
 add esp, byte 0Ch	; 2AD5D
 push byte 0	; 2AD60
 push byte 0	; 2AD62
 mov edi, dword [dword esp+0ECh]	; 2AD64
 push edi	; 2AD6B
-call sub_91400	; 2AD6C
+call GrabBlock	; 2AD6C
 add esp, byte 0Ch	; 2AD71
 mov eax, dword [dword esp+0FCh]	; 2AD74
 push eax	; 2AD7B
@@ -1031,18 +1031,18 @@ call MakePath	; 2ADA5
 push byte 0	; 2ADAA
 lea eax, [dword esp+0CCh]	; 2ADAC
 push eax	; 2ADB3
-call sub_8E83C	; 2ADB4
+call LoadBank	; 2ADB4
 mov esi, eax	; 2ADB9
 add esp, byte 8	; 2ADBB
 mov dword [dword esp+0F0h], eax	; 2ADBE
 push str_Bkgd4	; 2ADC5
 push eax	; 2ADCA
-call sub_B30B4	; 2ADCB
+call FindShape	; 2ADCB
 add esp, byte 8	; 2ADD0
 mov dword [dword esp+0100h], eax	; 2ADD3
 push str_Pal12	; 2ADDA
 push esi	; 2ADDF
-call sub_B30B4	; 2ADE0
+call FindShape	; 2ADE0
 add esp, byte 8	; 2ADE5
 add eax, byte 10h	; 2ADE8
 mov dword [dword esp+0108h], eax	; 2ADEB
@@ -1060,38 +1060,38 @@ call MakePath	; 2AE13
 push byte 0	; 2AE18
 lea eax, [dword esp+0CCh]	; 2AE1A
 push eax	; 2AE21
-call sub_8E83C	; 2AE22
+call LoadBank	; 2AE22
 mov esi, eax	; 2AE27
 add esp, byte 8	; 2AE29
 mov dword [dword esp+0F8h], eax	; 2AE2C
 push str_Def	; 2AE33
 push eax	; 2AE38
-call sub_B30B4	; 2AE39
+call FindShape	; 2AE39
 add esp, byte 8	; 2AE3E
 mov dword [dword esp+094h], eax	; 2AE41
 push str_Fowa	; 2AE48
 push esi	; 2AE4D
-call sub_B30B4	; 2AE4E
+call FindShape	; 2AE4E
 add esp, byte 8	; 2AE53
 mov dword [dword esp+098h], eax	; 2AE56
 push str_Scra	; 2AE5D
 push esi	; 2AE62
-call sub_B30B4	; 2AE63
+call FindShape	; 2AE63
 add esp, byte 8	; 2AE68
 mov dword [dword esp+0B0h], eax	; 2AE6B
 push str_Tlu	; 2AE72
 push esi	; 2AE77
-call sub_B30B4	; 2AE78
+call FindShape	; 2AE78
 add esp, byte 8	; 2AE7D
 mov dword [dword esp+0B8h], eax	; 2AE80
 push str_Top	; 2AE87
 push esi	; 2AE8C
-call sub_B30B4	; 2AE8D
+call FindShape	; 2AE8D
 add esp, byte 8	; 2AE92
 mov dword [dword esp+0BCh], eax	; 2AE95
 lea eax, [byte esp+054h]	; 2AE9C
 push eax	; 2AEA0
-call sub_8E9E8	; 2AEA1
+call TextSaveState	; 2AEA1
 add esp, byte 4	; 2AEA6
 mov ecx, str_VFN	; 2AEA9
 mov ebx, str_Indus030	; 2AEAE
@@ -1111,7 +1111,7 @@ call sub_8E8A0	; 2AED4
 add esp, byte 8	; 2AED9
 mov dword [dword esp+0F4h], eax	; 2AEDC
 push eax	; 2AEE3
-call sub_8EA18	; 2AEE4
+call TextSetFont	; 2AEE4
 add esp, byte 4	; 2AEE9
 xor edx, edx	; 2AEEC
 mov eax, 40h	; 2AEEE
@@ -1133,7 +1133,7 @@ jne near .16	; 2AF25
 push byte 20h	; 2AF2B
 push dword 0B60h	; 2AF2D
 push str_GIPK	; 2AF32
-call sub_8CCA8	; 2AF37
+call AllocMemBlock	; 2AF37
 add esp, byte 0Ch	; 2AF3C
 mov dword [dword esp+010Ch], eax	; 2AF3F
 mov dword [dword esp+0110h], ebp	; 2AF46
@@ -1231,27 +1231,27 @@ push dword 1E0h	; 2B091
 push dword 8Ch	; 2B096
 push dword 280h	; 2B09B
 push dword 80h	; 2B0A0
-call sub_B4BC4	; 2B0A5
+call SetClipWindow	; 2B0A5
 add esp, byte 10h	; 2B0AA
 mov ebx, dword [dword esp+0100h]	; 2B0AD
 push ebx	; 2B0B4
-call sub_9061C	; 2B0B5
+call DrawBitmap	; 2B0B5
 add esp, byte 4	; 2B0BA
 push dword 8Ch	; 2B0BD
 push ebp	; 2B0C2
 push dword 80h	; 2B0C3
 push ebp	; 2B0C8
-call sub_B4BC4	; 2B0C9
+call SetClipWindow	; 2B0C9
 add esp, byte 10h	; 2B0CE
 mov ecx, dword [dword esp+0100h]	; 2B0D1
 push ecx	; 2B0D8
-call sub_9061C	; 2B0D9
+call DrawBitmap	; 2B0D9
 add esp, byte 4	; 2B0DE
 push dword 1E0h	; 2B0E1
 push ebp	; 2B0E6
 push dword 80h	; 2B0E7
 push ebp	; 2B0EC
-call sub_B4BC4	; 2B0ED
+call SetClipWindow	; 2B0ED
 add esp, byte 10h	; 2B0F2
 jmp short .22	; 2B0F5
 .21:
@@ -1259,11 +1259,11 @@ push dword 1E0h	; 2B0F7
 push ebp	; 2B0FC
 push dword 280h	; 2B0FD
 push ebp	; 2B102
-call sub_B4BC4	; 2B103
+call SetClipWindow	; 2B103
 add esp, byte 10h	; 2B108
 mov edx, dword [dword esp+0100h]	; 2B10B
 push edx	; 2B112
-call sub_9061C	; 2B113
+call DrawBitmap	; 2B113
 add esp, byte 4	; 2B118
 .22:
 lea eax, [dword esp+011Ch]	; 2B11B
@@ -1278,7 +1278,7 @@ push dword 1E0h	; 2B13F
 push byte 0	; 2B144
 push dword 280h	; 2B146
 push byte 0	; 2B14B
-call sub_B4BC4	; 2B14D
+call SetClipWindow	; 2B14D
 add esp, byte 10h	; 2B152
 push byte 50h	; 2B155
 push byte 3Dh	; 2B157
@@ -1294,7 +1294,7 @@ push dword 154h	; 2B17C
 push byte 0	; 2B181
 push dword 280h	; 2B183
 push byte 0	; 2B188
-call sub_B4BC4	; 2B18A
+call SetClipWindow	; 2B18A
 add esp, byte 10h	; 2B18F
 movzx edi, byte [byte_D42C3]	; 2B192
 add edi, 0A6h	; 2B199
@@ -1401,17 +1401,17 @@ push dword 1E0h	; 2B2E4
 push dword 8Ch	; 2B2E9
 push dword 280h	; 2B2EE
 push dword 80h	; 2B2F3
-call sub_B4BC4	; 2B2F8
+call SetClipWindow	; 2B2F8
 add esp, byte 10h	; 2B2FD
 mov edx, dword [dword esp+0100h]	; 2B300
 push edx	; 2B307
-call sub_9061C	; 2B308
+call DrawBitmap	; 2B308
 add esp, byte 4	; 2B30D
 push dword 1E0h	; 2B310
 push dword 8Ch	; 2B315
 push dword 80h	; 2B31A
 push byte 0	; 2B31F
-call sub_B4BC4	; 2B321
+call SetClipWindow	; 2B321
 add esp, byte 10h	; 2B326
 lea eax, [dword esp+011Ch]	; 2B329
 push eax	; 2B330
@@ -1432,7 +1432,7 @@ push dword 1E0h	; 2B368
 push byte 0	; 2B36D
 push dword 280h	; 2B36F
 push byte 0	; 2B374
-call sub_B4BC4	; 2B376
+call SetClipWindow	; 2B376
 add esp, byte 10h	; 2B37B
 movzx edi, byte [byte_D42C3]	; 2B37E
 add edi, 0A6h	; 2B385
@@ -1531,17 +1531,17 @@ push dword 1E0h	; 2B4BC
 push dword 8Ch	; 2B4C1
 push dword 280h	; 2B4C6
 push dword 80h	; 2B4CB
-call sub_B4BC4	; 2B4D0
+call SetClipWindow	; 2B4D0
 add esp, byte 10h	; 2B4D5
 mov esi, dword [dword esp+0100h]	; 2B4D8
 push esi	; 2B4DF
-call sub_9061C	; 2B4E0
+call DrawBitmap	; 2B4E0
 add esp, byte 4	; 2B4E5
 push dword 1E0h	; 2B4E8
 push dword 8Ch	; 2B4ED
 push dword 80h	; 2B4F2
 push byte 0	; 2B4F7
-call sub_B4BC4	; 2B4F9
+call SetClipWindow	; 2B4F9
 add esp, byte 10h	; 2B4FE
 lea eax, [dword esp+011Ch]	; 2B501
 push eax	; 2B508
@@ -1562,7 +1562,7 @@ push dword 1E0h	; 2B540
 push byte 0	; 2B545
 push dword 280h	; 2B547
 push byte 0	; 2B54C
-call sub_B4BC4	; 2B54E
+call SetClipWindow	; 2B54E
 add esp, byte 10h	; 2B553
 movzx edi, byte [byte_D42C3]	; 2B556
 add edi, byte 7Eh	; 2B55D
@@ -1677,7 +1677,7 @@ mov eax, 1	; 2B6EA
 call FadePalStep	; 2B6EF
 call sub_B4BA8	; 2B6F4
 push byte 0	; 2B6F9
-call sub_B392C	; 2B6FB
+call ClearScreen	; 2B6FB
 add esp, byte 4	; 2B700
 cmp byte [musicon], 0	; 2B703
 je short .52	; 2B70A
@@ -1703,7 +1703,7 @@ call ShowLoadingScreen	; 2B747
 .53:
 lea eax, [byte esp+054h]	; 2B74C
 push eax	; 2B750
-call sub_8EA00	; 2B751
+call TextRestoreState	; 2B751
 add esp, byte 4	; 2B756
 mov ecx, dword [dword esp+0F4h]	; 2B759
 push ecx	; 2B760

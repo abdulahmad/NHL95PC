@@ -44,19 +44,19 @@ void DrawHudPanel(int home, int away, int period, int reset)
     SelectScreenBM();
     MakePath(path, fileoncd[0x16D] == 1 ? (char *)cddriveptr : 0, (char *)str_Scrbrd2, (char *)str_PPV);
     bank = sub_8E8A0(path, 0);
-    sub_B4CF2(sub_B30B4(bank, (char *)str_Srb3));
+    sub_B4CF2(FindShape(bank, (char *)str_Srb3));
     DrawPanelScore(0, *(int *)((char *)&hmscore - 2) >> 16);
     DrawPanelScore(1, *(int *)((char *)&awscore - 2) >> 16);
     SelectScreenBM();
     DrawPanelClock();
     if (period == 0) {
-        sub_B4CD8(sub_B30B4(bank, (char *)hudotname), 0x98, 0x16);
+        sub_B4CD8(FindShape(bank, (char *)hudotname), 0x98, 0x16);
     } else {
         int p;
 
         p = period % 100;
-        sub_B4CD8(sub_B30B4(bank, (char *)perioddigits[p / 10]), 0x98, 0x16);
-        sub_B4CD8(sub_B30B4(bank, (char *)perioddigits[p % 10]), 0xA0, 0x16);
+        sub_B4CD8(FindShape(bank, (char *)perioddigits[p / 10]), 0x98, 0x16);
+        sub_B4CD8(FindShape(bank, (char *)perioddigits[p % 10]), 0xA0, 0x16);
     }
 
     FreeMemBlock(bank);
@@ -66,11 +66,11 @@ void DrawHudPanel(int home, int away, int period, int reset)
     awayremap_e43 = 0x67;
     awayremap_eFF = 0xFF;
     homeremap_eFF = 0xFF;
-    sub_B4DD4(homeremap);
+    SetColorRemap(homeremap);
     reset = home;
-    sub_B4E50(sub_B30B4(bank, (char *)crestnames[reset]), 4, 4);
-    sub_B4DD4(awayremap);
-    sub_B4E50(sub_B30B4(bank, (char *)crestnames[away]), 0x11C, 4);
+    sub_B4E50(FindShape(bank, (char *)crestnames[reset]), 4, 4);
+    SetColorRemap(awayremap);
+    sub_B4E50(FindShape(bank, (char *)crestnames[away]), 0x11C, 4);
     homeremap_e43 = 0x43;
     awayremap_e43 = 0x43;
     FreeMemBlock(bank);

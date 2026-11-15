@@ -13,7 +13,7 @@ void PrintMenuText(int x, int y, char *s)
     PrintShadowText(x, y, buf);
 }
 
-/* PrintMenuTextGrey: the same without the shadow (the greyed item, sub_91964). */
+/* PrintMenuTextGrey: the same without the shadow (the greyed item, PrintString). */
 void PrintMenuTextGrey(int x, int y, char *s)
 {
     char buf[80];
@@ -21,7 +21,7 @@ void PrintMenuTextGrey(int x, int y, char *s)
 
     for (i = 0; s[i] && i < 0x4F; i++) buf[i] = s[i];
     buf[i] = s[i];
-    sub_91964(buf, x, y);
+    PrintString(buf, x, y);
 }
 
 /* PrintMenuTextAlt: the same through the other text printer (sub_92CD0). */

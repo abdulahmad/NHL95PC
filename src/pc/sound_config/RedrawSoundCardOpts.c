@@ -13,14 +13,14 @@ void RedrawSoundCardOpts(void)
         else DrawSelBoxOff((Rect4 *)soundcardrects + i);
     }
     r = (Rect4 *)soundcardrects;
-    sub_8E9C0(0xF8, 0xFF);
-    if (!(sndcardmissing & 1)) sub_91964((char *)str_PCSpeaker, r->l + 0x18, r->t + 0x13);
+    TextSetColors(0xF8, 0xFF);
+    if (!(sndcardmissing & 1)) PrintString((char *)str_PCSpeaker, r->l + 0x18, r->t + 0x13);
     r++;
-    if (!(sndcardmissing & 2)) sub_91964((char *)str_SoundBlaster, r->l + 0x0E, r->t + 0x13);
+    if (!(sndcardmissing & 2)) PrintString((char *)str_SoundBlaster, r->l + 0x0E, r->t + 0x13);
     r++;
-    if (!(sndcardmissing & 4)) sub_91964((char *)str_ADLib, r->l + 0x29, r->t + 0x13);
+    if (!(sndcardmissing & 4)) PrintString((char *)str_ADLib, r->l + 0x29, r->t + 0x13);
     r++;
-    if (!(sndcardmissing & 8)) sub_91964((char *)str_MT32, r->l + 0x28, r->t + 0x13);
+    if (!(sndcardmissing & 8)) PrintString((char *)str_MT32, r->l + 0x28, r->t + 0x13);
     r += 2;
-    if (!(sndcardmissing & 0x20)) sub_91964((char *)str_UltraSound, r->l + 0x18, r->t + 0x13);
+    if (!(sndcardmissing & 0x20)) PrintString((char *)str_UltraSound, r->l + 0x18, r->t + 0x13);
 }

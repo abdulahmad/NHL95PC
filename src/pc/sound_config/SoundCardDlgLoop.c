@@ -7,15 +7,15 @@
 #define sub_8EB5B sub_8EB5B_decl
 #define sub_8EB93 sub_8EB93_decl
 #define sub_8ECC0 sub_8ECC0_decl
-#define sub_8F13B sub_8F13B_decl
-#define sub_8F1FE sub_8F1FE_decl
+#define LoadSample sub_8F13B_decl
+#define FreeSample sub_8F1FE_decl
 #include "nhl95.h"
 #undef sub_97079
 #undef sub_8EB5B
 #undef sub_8EB93
 #undef sub_8ECC0
-#undef sub_8F13B
-#undef sub_8F1FE
+#undef LoadSample
+#undef FreeSample
 #undef SoundCardDlgLoop
 #undef SetSoundDevice
 #undef sub_8F98F
@@ -30,8 +30,8 @@ int sub_97079(int dev);                       /* sound library: open a driver, -
 void sub_8EB5B(void);
 void sub_8EB93(void);
 void sub_8ECC0(char *drv, char *port);        /* sound library: driver and port names */
-int sub_8F13B(char *path);                    /* sound library: load a sample */
-void sub_8F1FE(int sample);                   /* sound library: free a sample */
+int LoadSample(char *path);                    /* sound library: load a sample */
+void FreeSample(int sample);                   /* sound library: free a sample */
 typedef struct { char b[0x11]; } SprHdr;
 
 /* SoundCardDlgLoop (8291E, PC only; owner of the SoundCardDlg_epilogue tail SetSoundDevice ends in): run the
@@ -56,7 +56,7 @@ int SoundCardDlgLoop(void)
     int t;  /* the size, the event and the song: one variable keeps the song in eax (a separate one copies it to esi) */
 
     t = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bg = sub_8CCA8((char *)str_Pointer21, t, 0);
+    bg = AllocMemBlock((char *)str_Pointer21, t, 0);
     *(SprHdr *)bg = *(SprHdr *)pointerspr;
     ((short *)bg)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bg)[3] = ((short *)pointerspr)[3] + 1;
@@ -64,12 +64,12 @@ int SoundCardDlgLoop(void)
         FreeMemBlock(sndtempbuf);
         sndtempbuf = 0;
     }
-    sub_B2DCA(&s.ev, &s.mx, &s.my);
+    MouseRead(&s.ev, &s.mx, &s.my);
     s.x = s.mx;
     s.y = s.my;
     sub_B4BA8();
-    sub_91400(bg, s.x - 4, s.y);
-    sub_91370(pointerspr, s.x - 4, s.y);
+    GrabBlock(bg, s.x - 4, s.y);
+    DrawArt(pointerspr, s.x - 4, s.y);
     ClearInputQueue();
     for (;;) {
         s.ev = 0;
@@ -79,14 +79,14 @@ int SoundCardDlgLoop(void)
         }
         if (!(s.ev & 2) && !(s.ev & 4)) {
             if (s.x != s.mx || s.y != s.my) {
-                sub_903F0(bg, s.mx - 4, s.my);
-                sub_91400(bg, s.x - 4, s.y);
-                sub_91370(pointerspr, s.x - 4, s.y);
+                PutBlock(bg, s.mx - 4, s.my);
+                GrabBlock(bg, s.x - 4, s.y);
+                DrawArt(pointerspr, s.x - 4, s.y);
                 s.mx = s.x;
                 s.my = s.y;
             }
         } else if (s.ev & 2) {
-            sub_903F0(bg, s.mx - 4, s.my);
+            PutBlock(bg, s.mx - 4, s.my);
             if (SoundCardHitTest(s.x, s.y, &s.hit)) {
                 s.hit = 1 << s.hit;
                 if (!(s.hit & setbits[0]) && (s.hit & *(int *)&sndcardmissing)) {
@@ -139,18 +139,18 @@ int SoundCardDlgLoop(void)
                     RedrawSoundCardOpts();
                 }
             }
-            sub_91400(bg, s.x - 4, s.y);
-            sub_91370(pointerspr, s.x - 4, s.y);
+            GrabBlock(bg, s.x - 4, s.y);
+            DrawArt(pointerspr, s.x - 4, s.y);
             s.mx = s.x;
             s.my = s.y;
         } else if (s.ev & 4) {
-            sub_903F0(bg, s.mx - 4, s.my);
+            PutBlock(bg, s.mx - 4, s.my);
             FreeMemBlock(bg);
             return 0;
         } else {
-            sub_903F0(bg, s.mx - 4, s.my);
-            sub_91400(bg, s.x - 4, s.y);
-            sub_91370(pointerspr, s.x - 4, s.y);
+            PutBlock(bg, s.mx - 4, s.my);
+            GrabBlock(bg, s.x - 4, s.y);
+            DrawArt(pointerspr, s.x - 4, s.y);
             s.mx = s.x;
             s.my = s.y;
         }
@@ -190,7 +190,7 @@ int SetSoundDevice(int dev)
             FreeMemBlock(dword_ED7A8);
             dword_ED7A8 = 0;
         } else if (sounddev == 4) {
-            sub_8F1FE(dword_ED7A4);
+            FreeSample(dword_ED7A4);
         }
         sub_8EB93();
     }
@@ -250,17 +250,17 @@ int SetSoundDevice(int dev)
             sub_8ECC0(s.drv, s.port);
             if (dev == 4) {
                 MakePath(s.path, fileoncd[0x18F] == 1 ? (char *)cddriveptr : 0, (char *)str_Slapshot, 0);
-                dword_ED7A4 = sub_8F13B(s.path);
+                dword_ED7A4 = LoadSample(s.path);
             }
             if (dev == 8 && !dword_D2350) {
                 MessageBox(-1, -1, (char *)msg_InitMT32, 2, 0, 0, (int)&s.x, (int)&s.y, 0);
                 MakePath(s.path, fileoncd[0xF7] == 1 ? (char *)cddriveptr : 0, (char *)str_MT32HOCK, 0);
-                t = sub_8F13B(s.path);
+                t = LoadSample(s.path);
                 dword_D2350 = -1;
                 sounddev = 8;
                 PlayDigiSample((void *)t);
                 WaitDigiSample();
-                sub_8F1FE(t);
+                FreeSample(t);
                 RestoreDialogBg();
             }
             sounddev = dev;
@@ -297,7 +297,7 @@ int SetSoundDevice(int dev)
                     break;
                 }
                 s.ev = 0;
-                sub_B2DCA(&s.btn, &s.x, &s.y);
+                MouseRead(&s.btn, &s.x, &s.y);
                 MessageBox(-1, -1, (char *)msg_NoSoundCard, 3, 0, 0, (int)&s.x, (int)&s.y, 0);
                 do {
                     if ((e = GetInputEvent()) != 0)
@@ -314,7 +314,7 @@ int SetSoundDevice(int dev)
         }
     } while (!dword_D2423);
     if (sounddev == 2 || sounddev == 0x20) {
-        dword_ED7A8 = sub_8CCA8((char *)str_Emmcopybuf, 0x400, 0x20);
+        dword_ED7A8 = AllocMemBlock((char *)str_Emmcopybuf, 0x400, 0x20);
         InitSpeech(musicslot, dword_C4CFC, dword_ED7A8, 0x400);
     }
     cursndbank = 0;

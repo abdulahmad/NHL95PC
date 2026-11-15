@@ -111,11 +111,11 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
     c41 = 0x41;
     c42 = 0x42;
     depth = 0;
-    sub_8E9E8(textstate);
-    sub_8EA18(mainfont);
+    TextSaveState(textstate);
+    TextSetFont(mainfont);
     sub_B4BA8();
     for (i = 0; i < 0x100; i++) remap[i] = i;
-    sub_B4DD4(remap);
+    SetColorRemap(remap);
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0);
     if (mode & 1) {
         err = 0;
@@ -127,8 +127,8 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
     }
     if (err == 0 && (mode != 8 || *humans != 1 ? 1 : 0)) {
         sub_8FCDF(musichandle, 3, 100);
-        pal = (unsigned char *)sub_8CCA8((char *)str_Pal19, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, pal);
+        pal = (unsigned char *)AllocMemBlock((char *)str_Pal19, 0x300, 0x20);
+        SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
         FreeMemBlock((int)pal);
         if (musicon && songdata) {
@@ -136,15 +136,15 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
             sub_8D2F0(songdata);
             songdata = 0;
         }
-        copy = (unsigned char *)sub_8CCA8((char *)str_TPI, 0x30C, 0x20);
+        copy = (unsigned char *)AllocMemBlock((char *)str_TPI, 0x30C, 0x20);
         memcpy(copy, teams, 0x30C);
         MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl, 0);
-        bank = sub_8E83C(path, 0);
-        art = sub_B30B4(bank, (char *)str_Bkgd8);
+        bank = LoadBank(path, 0);
+        art = FindShape(bank, (char *)str_Bkgd8);
         sub_B4BA8();
-        sub_B392C(0);
+        ClearScreen(0);
         SetTextColors(0x40, 0x43);
-        sub_91370(art, 0, 0);
+        DrawArt(art, 0, 0);
         DrawTeamGrid(copy, title, (unsigned char *)grid, art);
         if (mode & 1) {
             *(unsigned char **)&teamselsetslot = lgsetmenu;
@@ -166,7 +166,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         if (mode == 1) n = 0;
         else n = *humans;
         size = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
-        ptr = sub_8CCA8((char *)str_Pointer9, size, 0x20);
+        ptr = AllocMemBlock((char *)str_Pointer9, size, 0x20);
         *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
         ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
         ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
@@ -176,14 +176,14 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
             if (songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
         }
         MakePath(path, fileoncd[0x1AD] == 1 ? (char *)cddriveptr : 0, (char *)str_Tspal, 0);
-        palbank = sub_8E83C(path, 0);
-        FadePalStep(0, (unsigned char *)sub_B30B4(palbank, (char *)str_Pal20) + 0x10, 0x10);
+        palbank = LoadBank(path, 0);
+        FadePalStep(0, (unsigned char *)FindShape(palbank, (char *)str_Pal20) + 0x10, 0x10);
         FreeMemBlock(palbank);
-        sub_B2DCA(&hit, &oldmx, &oldmy);
+        MouseRead(&hit, &oldmx, &oldmy);
         mx = oldmx;
         my = oldmy;
-        sub_91400(ptr, oldmx - 4, oldmy);
-        sub_91370(pointerspr, oldmx - 4, oldmy);
+        GrabBlock(ptr, oldmx - 4, oldmy);
+        DrawArt(pointerspr, oldmx - 4, oldmy);
         ClearInputQueue();
         done = 0;
         teamselresult = 0;
@@ -195,9 +195,9 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
             } while (e && !(bits & 2));
             if (!(bits & 2)) {
                 if (mx == oldmx && my == oldmy) continue;
-                sub_903F0(ptr, oldmx - 4, oldmy);
-                sub_91400(ptr, mx - 4, my);
-                sub_91370(pointerspr, mx - 4, my);
+                PutBlock(ptr, oldmx - 4, oldmy);
+                GrabBlock(ptr, mx - 4, my);
+                DrawArt(pointerspr, mx - 4, my);
                 oldmx = mx;
                 oldmy = my;
                 continue;
@@ -206,10 +206,10 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                 if (menus[level][item].on1) {
                     if (item == sel[level]) {
                         /* the second click on the selected item: close the dropdowns and run it */
-                        sub_903F0(ptr, oldmx - 4, oldmy);
+                        PutBlock(ptr, oldmx - 4, oldmy);
                         for (i = 1; i >= 0; i--) {
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][1] = pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
                             }
@@ -218,9 +218,9 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                         ((void (*)(void))menus[level][item].on1)();
                         if (teamselresult == -1) {
                             picks[cur] = -1;
-                            pal = (unsigned char *)sub_8CCA8((char *)str_Pal19, 0x300, 0x20);
+                            pal = (unsigned char *)AllocMemBlock((char *)str_Pal19, 0x300, 0x20);
                             if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
-                            sub_8FFB0(0, 0x100, pal);
+                            SetPalette(0, 0x100, pal);
                             FadePalStep(1, pal, 0x10);
                             FreeMemBlock((int)pal);
                             done = -1;
@@ -238,7 +238,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                         my = oldmy;
                         ClearInputQueue();
                     } else {
-                        sub_903F0(ptr, oldmx - 4, oldmy);
+                        PutBlock(ptr, oldmx - 4, oldmy);
                         DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                             c40, c41, c42);
                         sel[level] = item;
@@ -247,12 +247,12 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                     }
                 } else if (menus[level][item].on2) {
                     /* open the submenu */
-                    sub_903F0(ptr, oldmx - 4, oldmy);
+                    PutBlock(ptr, oldmx - 4, oldmy);
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][0] = 0;
                                 pos[i][1] = 0;
                                 FreeMemBlock(bg[i]);
@@ -275,16 +275,16 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                     pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                     w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                     h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                    bg[depth] = sub_8CCA8((char *)str_Menubuff6, w * 4 * h + 0x11, 0x20);
+                    bg[depth] = AllocMemBlock((char *)str_Menubuff6, w * 4 * h + 0x11, 0x20);
                     *(Hdr17 *)bg[depth] = *(Hdr17 *)pointerspr;
                     ((short *)bg[depth])[2] = w;
                     ((short *)bg[depth])[3] = h;
-                    sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                    GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                     DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], c40, c41, c42);
                     sel[depth] = 0;
                     DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], c40, c41, c42);
                 } else {
-                    sub_903F0(ptr, oldmx - 4, oldmy);
+                    PutBlock(ptr, oldmx - 4, oldmy);
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                         c40, c41, c42);
                     sel[level] = item;
@@ -292,12 +292,12 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                         c40, c41, c42);
                 }
             } else {
-                sub_903F0(ptr, oldmx - 4, oldmy);
+                PutBlock(ptr, oldmx - 4, oldmy);
                 if (depth != 0) {
                     /* a click outside the menus closes the dropdowns */
                     for (i = 1; i >= 0; i--) {
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = 0;
                             pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
@@ -409,10 +409,10 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                     }
                 }
             }
-            sub_91400(ptr, oldmx - 4, oldmy);
-            sub_903F0(ptr, oldmx - 4, oldmy);
-            sub_91400(ptr, mx - 4, my);
-            if (done == 0) sub_91370(pointerspr, mx - 4, my);
+            GrabBlock(ptr, oldmx - 4, oldmy);
+            PutBlock(ptr, oldmx - 4, oldmy);
+            GrabBlock(ptr, mx - 4, my);
+            if (done == 0) DrawArt(pointerspr, mx - 4, my);
             oldmx = mx;
             oldmy = my;
         } while (done == 0);
@@ -434,5 +434,5 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
             }
         }
     }
-    sub_8EA00(textstate);
+    TextRestoreState(textstate);
 }

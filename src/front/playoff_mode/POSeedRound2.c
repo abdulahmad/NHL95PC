@@ -110,30 +110,30 @@ int CreatePlayoffs(void)
     dlgtextfg = 0x40;
     dlgtextbg = 0x43;
     SaveModeState(exhstate);
-    pal = p = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)p);
+    pal = p = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)p);
     FadePalStep(1, (unsigned char *)p, 0x10);
     sub_B4BA8();
     if (!embscupbank) {
         MakePath(s.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-        p = sub_8E83C(s.path, 0);
-        sub_B4BC4(0, 0x280, 0, 0x1E0);
-        sub_913B4(sub_B30B4(p, (char *)str_Bkgd));
+        p = LoadBank(s.path, 0);
+        SetClipWindow(0, 0x280, 0, 0x1E0);
+        DrawShape(FindShape(p, (char *)str_Bkgd));
         FreeMemBlock(p);
     } else {
-        sub_9121C(sub_B30B4(embscupbank, (char *)str_Bkgd));
+        sub_9121C(FindShape(embscupbank, (char *)str_Bkgd));
     }
     MakePath(s.path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
-    bank = sub_8E83C(s.path, 0);
-    FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10, 0x10);
-    sub_8E9C0(0x40, 0x41);
+    bank = LoadBank(s.path, 0);
+    FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10, 0x10);
+    TextSetColors(0x40, 0x41);
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0x43);
     rgb[0] = rgb[1] = rgb[2] = 0x3F;
-    sub_8FFB0(3, 1, orgb);
-    sub_B4B88(3, 1, rgb);
+    SetPalette(3, 1, orgb);
+    VgaSetPalette(3, 1, rgb);
     r = TextInputDialog((char *)str_PleaseEnterNewPlay, s.name.c, 8, 0x36, 0, 0, 0, 0, 5);
-    sub_B4B88(3, 1, orgb);
-    sub_B2DCA(&s.btn, &s.x, &s.y);
+    VgaSetPalette(3, 1, orgb);
+    MouseRead(&s.btn, &s.x, &s.y);
     if (r == 0x1B || !s.name.c[0]) {
         FreeMemBlock(bank);
         FreeMemBlock(pal);
@@ -190,17 +190,17 @@ int CreatePlayoffs(void)
                 }
             }
             if (!r && LockerRoomScreen() != 3) {
-                sub_8FFB0(0, 0x100, (unsigned char *)pal);
+                SetPalette(0, 0x100, (unsigned char *)pal);
                 FadePalStep(1, (unsigned char *)pal, 0x10);
                 if (!embscupbank) {
                     MakePath(s.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-                    bank2 = sub_8E83C(s.path, 0);
-                    sub_9121C(sub_B30B4(bank2, (char *)str_Bkgd));
+                    bank2 = LoadBank(s.path, 0);
+                    sub_9121C(FindShape(bank2, (char *)str_Bkgd));
                     FreeMemBlock(bank2);
                 } else {
-                    sub_9121C(sub_B30B4(embscupbank, (char *)str_Bkgd));
+                    sub_9121C(FindShape(embscupbank, (char *)str_Bkgd));
                 }
-                FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10, 0x10);
+                FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10, 0x10);
                 FreeMemBlock(bank);
                 FreeMemBlock(pal);
                 POSeedTeams(s.seeds);
@@ -239,8 +239,8 @@ int CreatePlayoffs(void)
             }
         }
     }
-    pal = sub_8CCA8((char *)str_Temp2, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Temp2, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     LoadModeState(exhstate);
@@ -586,13 +586,13 @@ int POAfterGame(unsigned char *p)
     s[5] = awscore;
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
     seasondb = (unsigned char *)sub_8E8A0(f.path, 0x20);
-    seasondb_size = sub_92DE0(f.path);
+    seasondb_size = GetFileSize(f.path);
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[1], (char *)str_extDB);
     careerdb = (unsigned char *)sub_8E8A0(f.path, 0x20);
-    careerdb_size = sub_92DE0(f.path);
+    careerdb_size = GetFileSize(f.path);
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[0], (char *)str_extDB);
     keydb = (unsigned char *)sub_8E8A0(f.path, 0x20);
-    keydb_size = sub_92DE0(f.path);
+    keydb_size = GetFileSize(f.path);
     if (idx < 8) {
         for (w = 0; w < 8; w++)
             if (w != idx) POSimSeriesTo(p, w, gn);
@@ -716,7 +716,7 @@ int POAfterGame(unsigned char *p)
         strcpy((char *)poseriestext, (char *)poseriesbuf);
     }
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
-    sub_932D0(f.path, seasondb, seasondb_size);
+    WriteFile(f.path, seasondb, seasondb_size);
     if (seasondb) FreeMemBlock((int)seasondb);
     if (careerdb) FreeMemBlock((int)careerdb);
     if (keydb) FreeMemBlock((int)keydb);
@@ -829,8 +829,8 @@ int PlayoffModeLoop(int *fh)
         FreeMemBlock(f.sched - 2);
         f.sched = 0;
         if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-        pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         if (musicon && songdata) {
@@ -868,8 +868,8 @@ int PlayoffModeLoop(int *fh)
             f.r = POAfterGame((unsigned char *)f.sched);
             SaveScheduleDB((char *)f.sched);
         }
-        pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         InputInstall();
@@ -893,11 +893,11 @@ int PlayoffModeLoop(int *fh)
     strcpy((char *)treeteamnames + 0x222, (char *)str_space4);
     if (!embscupbank) {
         MakePath(f.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-        embscupbank = sub_8E83C(f.path, 0x20);
+        embscupbank = LoadBank(f.path, 0x20);
     }
     if (!f.stopped && musicon) sub_8FCDF(musichandle, 3, 0x64);
-    pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     if (!f.stopped && musicon) {
@@ -920,12 +920,12 @@ int PlayoffModeLoop(int *fh)
             FreeMemBlock(embscupbank);
             embscupbank = 0;
         }
-        pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         SetDialogColors(0x41, 0x40, 0x42, 0x40, 0x43);
         sub_910B0(0);
-        sub_B4B88(0, 0x100, (unsigned char *)pal);
+        VgaSetPalette(0, 0x100, (unsigned char *)pal);
         if (!CheckGameDiskSpace()) {
             FadePalStep(1, (unsigned char *)pal, 1);
             FreeMemBlock(pal);
@@ -978,10 +978,10 @@ int PlayoffModeLoop(int *fh)
         g = (unsigned char *)f.sched + (*(int *)(f.sched + 0x40) + 0x444) * 6;
         if (!embscupbank) {
             MakePath(f.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-            embscupbank = sub_8E83C(f.path, 0x20);
+            embscupbank = LoadBank(f.path, 0x20);
         }
-        pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         dword_C6D26 = 0;
@@ -997,8 +997,8 @@ int PlayoffModeLoop(int *fh)
         FreeMemBlock(embscupbank);
         embscupbank = 0;
     }
-    pal = sub_8CCA8((char *)str_Palette, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     SetupStatsSourceMenu(0);
@@ -1041,46 +1041,46 @@ void DrawPlayoffTree(void)
     midl = 0;
     mf = mainfont;
     kf = kaufmfont;
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(sub_B30B4(embscupbank, (char *)str_Bkgd2));
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(FindShape(embscupbank, (char *)str_Bkgd2));
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     if (dword_C6D26 == 1) {
         MakePath(f.path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
-        bank = sub_8E83C(f.path, 0);
-        sub_B4B88(0, 0x100, (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10);
+        bank = LoadBank(f.path, 0);
+        VgaSetPalette(0, 0x100, (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10);
         FreeMemBlock(bank);
         dword_C6D26 = 0;
     }
     CountSeriesWins(playofftree, f.wins, 1);
     SetTextColors(0x40, 0x43);
     if (playofftree[treecolslots[0]] > 0x19) {
-        sub_8EA18(kf);
+        TextSetFont(kf);
         *(TreeStr34 *)f.buf = *(TreeStr34 *)str_PlayoffsHaveNotBeen;
         PrintOutlinedText(0x140 - (fputchar(f.buf) >> 1), 0xF0, f.buf);
-        sub_8EA18(mf);
+        TextSetFont(mf);
         return;
     }
     MakePath(f.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar2, 0);
-    bank = sub_8E83C(f.path, 0);
-    art = sub_B30B4(bank, (char *)str_Rst1);
-    sub_91370(art, 0, 0x1A);
-    art = sub_B30B4(bank, (char *)str_Rst2);
-    sub_91370(art, 0xF, 0x192);
+    bank = LoadBank(f.path, 0);
+    art = FindShape(bank, (char *)str_Rst1);
+    DrawArt(art, 0, 0x1A);
+    art = FindShape(bank, (char *)str_Rst2);
+    DrawArt(art, 0xF, 0x192);
     FreeMemBlock(bank);
     MakePath(f.path, fileoncd[0x16E] == 1 ? (char *)cddriveptr : 0, (char *)str_Scuparrw, 0);
-    arrows = sub_8E83C(f.path, 0);
+    arrows = LoadBank(f.path, 0);
     TextGridOpen();
-    sub_8E9E8(f.state);
-    sub_8EA18(mf);
+    TextSaveState(f.state);
+    TextSetFont(mf);
     SetTextColors(0x40, 0x43);
     strcpy(f.buf, (char *)str_POTitle);
     PrintCenteredText(0x16, f.buf);
-    sub_8EA18(kf);
+    TextSetFont(kf);
     *(TreeStr19 *)f.buf = *(TreeStr19 *)str_WesternConference;
     PrintOutlinedText(0x140 - (fputchar(f.buf) >> 1), 0x2F, f.buf);
     *(TreeStr19 *)f.buf = *(TreeStr19 *)str_EasternConference;
     PrintOutlinedText(0x140 - (fputchar(f.buf) >> 1), 0x1A7, f.buf);
-    sub_8EA18(mf);
+    TextSetFont(mf);
     for (i = 0; i < 8; i++) {
         if (i < 4) {
             x = i;
@@ -1125,7 +1125,7 @@ void DrawPlayoffTree(void)
     y += 0x3F;
     if (playofftree[treecol_Wr2[0]] < 0x1A && playofftree[treecol_Wr2[1]] < 0x1A && playofftree[treecol_Wr2[2]] < 0x1A
         && playofftree[treecol_Wr2[3]] < 0x1A) {
-        sub_913B4(sub_B30B4(arrows, (char *)str_Aup1));
+        DrawShape(FindShape(arrows, (char *)str_Aup1));
         for (i = 0; i < 4; i++) {
             if (i < 2) {
                 x = i + 4;
@@ -1149,7 +1149,7 @@ void DrawPlayoffTree(void)
         }
         y += 0x3D;
         if (playofftree[treecolslots[0x10]] < 0x1A && playofftree[treecolslots[0x11]] < 0x1A) {
-            sub_913B4(sub_B30B4(arrows, (char *)str_Aup2));
+            DrawShape(FindShape(arrows, (char *)str_Aup2));
             slot = treecolslots[0x10];
             SetTextColors(0x40, 0x43);
             sprintf(f.buf, (char *)str_fmtcsp, potreeseeds[playofftree[slot]] + 0x91);
@@ -1179,9 +1179,9 @@ void DrawPlayoffTree(void)
         y += 0x4D;
     }
     if (playofftree[treecolslots[0x18]] < 0x1A) {
-        sub_913B4(sub_B30B4(arrows, (char *)str_Aup3));
+        DrawShape(FindShape(arrows, (char *)str_Aup3));
         midl = 1;
-        sub_913B4(sub_B30B4(arrows, (char *)str_Midl));
+        DrawShape(FindShape(arrows, (char *)str_Midl));
         SetTextColors(0x40, 0x43);
         *(TreeStr3 *)f.buf = *(TreeStr3 *)str_space5;
         slot = treecolslots[0x18];
@@ -1197,8 +1197,8 @@ void DrawPlayoffTree(void)
         PrintShadowText(0x16C, y - 4, f.buf);
     }
     if (playofftree[treecolslots[0x28]] < 0x1A) {
-        sub_913B4(sub_B30B4(arrows, (char *)str_Adn3));
-        if (!midl) sub_913B4(sub_B30B4(arrows, (char *)str_Midl));
+        DrawShape(FindShape(arrows, (char *)str_Adn3));
+        if (!midl) DrawShape(FindShape(arrows, (char *)str_Midl));
         y += 0x10;
         SetTextColors(0x40, 0x43);
         *(TreeStr3 *)f.buf = *(TreeStr3 *)str_space5;
@@ -1240,7 +1240,7 @@ void DrawPlayoffTree(void)
         sprintf(f.buf, (char *)str_D, f.wins[slot]);
         PrintShadowText(0x230, y - 1, f.buf);
         y += 0x3D;
-        sub_913B4(sub_B30B4(arrows, (char *)str_Adn2));
+        DrawShape(FindShape(arrows, (char *)str_Adn2));
     } else {
         y += 0x4D;
     }
@@ -1265,7 +1265,7 @@ void DrawPlayoffTree(void)
             if (i == 1) y += 0x10;
         }
         y += 0x3D;
-        sub_913B4(sub_B30B4(arrows, (char *)str_Adn1));
+        DrawShape(FindShape(arrows, (char *)str_Adn1));
     } else {
         y += 0x4D;
     }
@@ -1293,5 +1293,5 @@ void DrawPlayoffTree(void)
     }
     TextGridOff();
     FreeMemBlock(arrows);
-    sub_8EA00(f.state);
+    TextRestoreState(f.state);
 }

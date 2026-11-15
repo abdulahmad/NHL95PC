@@ -9,7 +9,7 @@ int DeskReturnConfirm(void)
     int y;
     int r;
 
-    sub_B2DCA(&x, &y, &r);
+    MouseRead(&x, &y, &r);
     switch ((unsigned)gamemode) {
     case 0:
         msg_DeskExit = (int)str_ReturningToSportsCentral;

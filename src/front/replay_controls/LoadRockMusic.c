@@ -1,13 +1,13 @@
 /* Gadgets: load the team rock cues and the three tune banks. */
 #define LoadRockMusic LoadRockMusic_decl
-#define sub_8F13B sub_8F13B_decl
+#define LoadSample sub_8F13B_decl
 #define FreeRockMusic FreeRockMusic_decl
 #include "nhl95.h"
 #undef LoadRockMusic
-#undef sub_8F13B
+#undef LoadSample
 #undef FreeRockMusic
 
-int sub_8F13B(char *path);
+int LoadSample(char *path);
 
 /* LoadRockMusic (7DC8B, PC only): team 26 and above uses cue row 13. Six team cues, then three random cues that are
  not already on that row and not repeated, then the device bank, the team tune, and ROCKDITI.
@@ -36,7 +36,7 @@ void LoadRockMusic(void)
         if (cue >= 0) {
             MakePath(s.path, fileoncd[rockcuepathsel[cue]] == 1 ? (char *)cddriveptr : 0,
                 (char *)rockcuefiles[cue], 0);
-            rockteamcues[i] = sub_8F13B(s.path);
+            rockteamcues[i] = LoadSample(s.path);
         } else {
             slot = 0;
             rockteamcues[i] = slot;
@@ -70,7 +70,7 @@ void LoadRockMusic(void)
         s.picked[i] = rockcuepool[slot];
         MakePath(s.path, fileoncd[rockcuepathsel[rockcuepool[slot]]] == 1 ? (char *)cddriveptr : 0,
             (char *)rockcuefiles[rockcuepool[slot]], 0);
-        rockrandcues[i] = sub_8F13B(s.path);
+        rockrandcues[i] = LoadSample(s.path);
         i++;
     } while (i < 3);
     if (sounddev == 8)
@@ -79,7 +79,7 @@ void LoadRockMusic(void)
         MakePath(s.path, fileoncd[0x166] == 1 ? (char *)cddriveptr : 0, (char *)str_SBROCKU, 0);
     else
         MakePath(s.path, fileoncd[0x1F] == 1 ? (char *)cddriveptr : 0, (char *)str_ADROCKU, 0);
-    rocktunes[0] = sub_8F13B(s.path);
+    rocktunes[0] = LoadSample(s.path);
     {
         int tune;
 
@@ -87,9 +87,9 @@ void LoadRockMusic(void)
         MakePath(s.path, fileoncd[teamtunepathsel[tune]] == 1 ? (char *)cddriveptr : 0,
             (char *)teamtunefiles[tune], 0);
     }
-    rocktunes[1] = sub_8F13B(s.path);
+    rocktunes[1] = LoadSample(s.path);
     MakePath(s.path, fileoncd[0x161] == 1 ? (char *)cddriveptr : 0, (char *)str_ROCKDITI, 0);
-    rocktunes[2] = sub_8F13B(s.path);
+    rocktunes[2] = LoadSample(s.path);
     cursndbank = 0;
 }
 
@@ -101,19 +101,19 @@ void FreeRockMusic(void)
 
     for (i = 0; i < 6; i++) {
         if (rockteamcues[i]) {
-            sub_8F1FE(rockteamcues[i]);
+            FreeSample(rockteamcues[i]);
             rockteamcues[i] = 0;
         }
     }
     for (i = 0; i < 3; i++) {
         if (rockrandcues[i]) {
-            sub_8F1FE(rockrandcues[i]);
+            FreeSample(rockrandcues[i]);
             rockrandcues[i] = 0;
         }
     }
     for (i = 0; i < 3; i++) {
         if (rocktunes[i]) {
-            sub_8F1FE(rocktunes[i]);
+            FreeSample(rocktunes[i]);
             rocktunes[i] = 0;
         }
     }

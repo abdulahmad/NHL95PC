@@ -8,10 +8,10 @@ int StatsMenuTeamPenalties(void)
 {
     statscategory = 4;
     if (leaguestatsmode) {
-        sfpal1 = sub_8CCA8((char *)str_SfPal1, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)sfpal1);
-        sfpal2 = sub_8CCA8((char *)str_SfPal2, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)sfpal2);
+        sfpal1 = AllocMemBlock((char *)str_SfPal1, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)sfpal1);
+        sfpal2 = AllocMemBlock((char *)str_SfPal2, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)sfpal2);
         FadePalStep(1, (unsigned char *)sfpal1, 0x10);
         FreeMemBlock(sfpal1);
         statsmenuresult = TeamStatsScreen(4);

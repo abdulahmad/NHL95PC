@@ -19,10 +19,10 @@ extern str_Lockroom, str_MT32, str_Na01, str_Na03, str_Na05, str_Off, str_On, st
 extern str_PCSpeaker, str_Pg01, str_Pg03, str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20
 extern str_Playoff, str_PlayoffTree2, str_Pointer20, str_Return, str_Room, str_Settings, str_Settings3, str_ShowLeague
 extern str_Sound4, str_SoundBlaster, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound, str_VisBck, str_VisitingTeam
-extern str_VisNameBck, str_Vs, strcpy_, strncpy_, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0
-extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91400, sub_91964, sub_91FE0
-extern sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames
+extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, TextSetColors
+extern TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette
+extern PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, GrabBlock, PrintString, sub_91FE0
+extern MouseRead, FindShape, VgaSetPalette, sub_B4BA8, SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
 global LoadSettingsShapes, DrawSettingsHeading_jt, DrawSettingsHeading, DrawSettingsHeading_n0, DrawSettingsHeading_n1, SetModeMenuLabels, DrawPanel3D, DrawPanel3D_ret
 global LockerRoomScreen, LockerStub, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop_jt, LockerRoomLoop, LockerRoomLoop_n2
@@ -55,90 +55,90 @@ call MakePath	; 80384
 push byte 0	; 80389
 lea eax, [byte esp+04h]	; 8038B
 push eax	; 8038F
-call sub_8E83C	; 80390
+call LoadBank	; 80390
 add esp, byte 8	; 80395
 mov dword [settingsfile], eax	; 80398
 push str_On	; 8039D
 push eax	; 803A2
-call sub_B30B4	; 803A3
+call FindShape	; 803A3
 add esp, byte 8	; 803A8
 mov dword [chkonspr], eax	; 803AB
 push str_Off	; 803B0
 mov ebx, dword [settingsfile]	; 803B5
 push ebx	; 803BB
-call sub_B30B4	; 803BC
+call FindShape	; 803BC
 add esp, byte 8	; 803C1
 mov dword [chkoffspr], eax	; 803C4
 push str_Acpt	; 803C9
 mov ecx, dword [settingsfile]	; 803CE
 push ecx	; 803D4
-call sub_B30B4	; 803D5
+call FindShape	; 803D5
 add esp, byte 8	; 803DA
 mov dword [acptspr], eax	; 803DD
 push str_Canc	; 803E2
 mov esi, dword [settingsfile]	; 803E7
 push esi	; 803ED
-call sub_B30B4	; 803EE
+call FindShape	; 803EE
 add esp, byte 8	; 803F3
 mov dword [fdlg_cancel], eax	; 803F6
 push str_Na01	; 803FB
 mov edi, dword [settingsfile]	; 80400
 push edi	; 80406
-call sub_B30B4	; 80407
+call FindShape	; 80407
 add esp, byte 8	; 8040C
 mov dword [na01spr], eax	; 8040F
 push str_Na03	; 80414
 mov ebp, dword [settingsfile]	; 80419
 push ebp	; 8041F
-call sub_B30B4	; 80420
+call FindShape	; 80420
 add esp, byte 8	; 80425
 mov dword [na03spr], eax	; 80428
 push str_Na05	; 8042D
 mov eax, dword [settingsfile]	; 80432
 push eax	; 80437
-call sub_B30B4	; 80438
+call FindShape	; 80438
 add esp, byte 8	; 8043D
 mov dword [na05spr], eax	; 80440
 push str_Pg01	; 80445
 mov edx, dword [settingsfile]	; 8044A
 push edx	; 80450
-call sub_B30B4	; 80451
+call FindShape	; 80451
 add esp, byte 8	; 80456
 mov dword [pg01spr], eax	; 80459
 push str_Pg03	; 8045E
 mov ebx, dword [settingsfile]	; 80463
 push ebx	; 80469
-call sub_B30B4	; 8046A
+call FindShape	; 8046A
 add esp, byte 8	; 8046F
 mov dword [pg03spr], eax	; 80472
 push str_Pg05	; 80477
 mov ecx, dword [settingsfile]	; 8047C
 push ecx	; 80482
-call sub_B30B4	; 80483
+call FindShape	; 80483
 add esp, byte 8	; 80488
 mov dword [pg05spr], eax	; 8048B
 push str_Pg07	; 80490
 mov esi, dword [settingsfile]	; 80495
 push esi	; 8049B
-call sub_B30B4	; 8049C
+call FindShape	; 8049C
 add esp, byte 8	; 804A1
 mov dword [pg07spr], eax	; 804A4
 push str_Pl05	; 804A9
 mov edi, dword [settingsfile]	; 804AE
 push edi	; 804B4
-call sub_B30B4	; 804B5
+call FindShape	; 804B5
 add esp, byte 8	; 804BA
 mov dword [pl05spr], eax	; 804BD
 push str_Pl10	; 804C2
 mov ebp, dword [settingsfile]	; 804C7
 push ebp	; 804CD
-call sub_B30B4	; 804CE
+call FindShape	; 804CE
 add esp, byte 8	; 804D3
 mov dword [pl10spr], eax	; 804D6
 push str_Pl20	; 804DB
 mov eax, dword [settingsfile]	; 804E0
 push eax	; 804E5
-call sub_B30B4	; 804E6
+call FindShape	; 804E6
 add esp, byte 8	; 804EB
 mov dword [pl20spr], eax	; 804EE
 .x:
@@ -174,16 +174,16 @@ mov dword [byte esp+040h], ebx	; 80523
 mov ebp, ecx	; 80527
 mov eax, esp	; 80529
 push eax	; 8052B
-call sub_8E9E8	; 8052C
+call TextSaveState	; 8052C
 add esp, byte 4	; 80531
 mov edx, dword [s1font]	; 80534
 push edx	; 8053A
-call sub_8EA18	; 8053B
+call TextSetFont	; 8053B
 add esp, byte 4	; 80540
 push dword 0FFh	; 80543
 mov ebx, dword [byte esp+058h]	; 80548
 push ebx	; 8054C
-call sub_8E9C0	; 8054D
+call TextSetColors	; 8054D
 add esp, byte 8	; 80552
 add edi, byte 16h	; 80555
 mov eax, dword [byte esp+040h]	; 80558
@@ -223,12 +223,12 @@ sub esi, byte 2Fh	; 8059F
 push esi	; 805A2
 push str_League2	; 805A3
 .5:
-call sub_91964	; 805A8
+call PrintString	; 805A8
 add esp, byte 0Ch	; 805AD
 .6:
 mov eax, esp	; 805B0
 push eax	; 805B2
-call sub_8EA00	; 805B3
+call TextRestoreState	; 805B3
 add esp, byte 4	; 805B8
 add esp, byte 44h	; 805BB
 pop ebp	; 805BE
@@ -327,7 +327,7 @@ inc eax	; 806A8
 push eax	; 806A9
 push edx	; 806AA
 push edi	; 806AB
-call sub_90D20	; 806AC
+call FillRect	; 806AC
 add esp, byte 14h	; 806B1
 push byte 77h	; 806B4
 push esi	; 806B6
@@ -371,26 +371,26 @@ mov eax, edi	; 8070F
 add eax, byte 2	; 80711
 mov dword [byte esp+0Ch], eax	; 80714
 push eax	; 80718
-call sub_B5DB0	; 80719
+call PlotPixel	; 80719
 add esp, byte 0Ch	; 8071E
 push byte 77h	; 80721
 add esi, byte 3	; 80723
 push esi	; 80726
 add edi, byte 3	; 80727
 push edi	; 8072A
-call sub_B5DB0	; 8072B
+call PlotPixel	; 8072B
 add esp, byte 0Ch	; 80730
 push byte 62h	; 80733
 mov eax, dword [byte esp+04h]	; 80735
 push eax	; 80739
 push edi	; 8073A
-call sub_B5DB0	; 8073B
+call PlotPixel	; 8073B
 add esp, byte 0Ch	; 80740
 push byte 62h	; 80743
 push esi	; 80745
 mov edx, dword [byte esp+0Ch]	; 80746
 push edx	; 8074A
-call sub_B5DB0	; 8074B
+call PlotPixel	; 8074B
 add esp, byte 0Ch	; 80750
 push byte 62h	; 80753
 mov eax, dword [byte esp+014h]	; 80755
@@ -399,7 +399,7 @@ mov dword [byte esp+0Ch], eax	; 8075C
 push eax	; 80760
 mov ecx, dword [byte esp+0Ch]	; 80761
 push ecx	; 80765
-call sub_B5DB0	; 80766
+call PlotPixel	; 80766
 add esp, byte 0Ch	; 8076B
 push byte 62h	; 8076E
 mov eax, dword [byte esp+014h]	; 80770
@@ -407,68 +407,68 @@ sub eax, byte 3	; 80774
 mov dword [byte esp+010h], eax	; 80777
 push eax	; 8077B
 push edi	; 8077C
-call sub_B5DB0	; 8077D
+call PlotPixel	; 8077D
 add esp, byte 0Ch	; 80782
 push byte 77h	; 80785
 mov edx, dword [byte esp+0Ch]	; 80787
 push edx	; 8078B
 push edi	; 8078C
-call sub_B5DB0	; 8078D
+call PlotPixel	; 8078D
 add esp, byte 0Ch	; 80792
 push byte 77h	; 80795
 mov ebx, dword [byte esp+010h]	; 80797
 push ebx	; 8079B
 mov ecx, dword [byte esp+0Ch]	; 8079C
 push ecx	; 807A0
-call sub_B5DB0	; 807A1
+call PlotPixel	; 807A1
 add esp, byte 0Ch	; 807A6
 push byte 77h	; 807A9
 mov edi, dword [byte esp+04h]	; 807AB
 push edi	; 807AF
 lea edi, [byte ebp-03h]	; 807B0
 push edi	; 807B3
-call sub_B5DB0	; 807B4
+call PlotPixel	; 807B4
 add esp, byte 0Ch	; 807B9
 push byte 77h	; 807BC
 push esi	; 807BE
 sub ebp, byte 2	; 807BF
 push ebp	; 807C2
-call sub_B5DB0	; 807C3
+call PlotPixel	; 807C3
 add esp, byte 0Ch	; 807C8
 push byte 62h	; 807CB
 mov eax, dword [byte esp+04h]	; 807CD
 push eax	; 807D1
 push ebp	; 807D2
-call sub_B5DB0	; 807D3
+call PlotPixel	; 807D3
 add esp, byte 0Ch	; 807D8
 push byte 62h	; 807DB
 push esi	; 807DD
 push edi	; 807DE
-call sub_B5DB0	; 807DF
+call PlotPixel	; 807DF
 add esp, byte 0Ch	; 807E4
 push byte 62h	; 807E7
 mov edx, dword [byte esp+0Ch]	; 807E9
 push edx	; 807ED
 push edi	; 807EE
-call sub_B5DB0	; 807EF
+call PlotPixel	; 807EF
 add esp, byte 0Ch	; 807F4
 push byte 62h	; 807F7
 mov ebx, dword [byte esp+010h]	; 807F9
 push ebx	; 807FD
 push ebp	; 807FE
-call sub_B5DB0	; 807FF
+call PlotPixel	; 807FF
 add esp, byte 0Ch	; 80804
 push byte 77h	; 80807
 mov ecx, dword [byte esp+0Ch]	; 80809
 push ecx	; 8080D
 push ebp	; 8080E
-call sub_B5DB0	; 8080F
+call PlotPixel	; 8080F
 add esp, byte 0Ch	; 80814
 push byte 77h	; 80817
 mov esi, dword [byte esp+010h]	; 80819
 push esi	; 8081D
 push edi	; 8081E
-call sub_B5DB0	; 8081F
+call PlotPixel	; 8081F
 add esp, byte 0Ch	; 80824
 .1:
 add esp, byte 14h	; 80827
@@ -505,7 +505,7 @@ mov eax, esp	; 8086C
 push eax	; 8086E
 push dword 100h	; 8086F
 push byte 0	; 80874
-call sub_8FFB0	; 80876
+call SetPalette	; 80876
 add esp, byte 0Ch	; 8087B
 mov ebx, 10h	; 8087E
 mov edx, esp	; 80883
@@ -532,18 +532,18 @@ mov dword [songdata], esi	; 808C8
 call ShowLoadingScreen	; 808CE
 lea eax, [dword esp+0300h]	; 808D3
 push eax	; 808DA
-call sub_8E9E8	; 808DB
+call TextSaveState	; 808DB
 add esp, byte 4	; 808E0
 push byte 20h	; 808E3
 push dword 1B811h	; 808E5
 push str_HomeBck	; 808EA
-call sub_8CCA8	; 808EF
+call AllocMemBlock	; 808EF
 add esp, byte 0Ch	; 808F4
 mov dword [homebckspr], eax	; 808F7
 push byte 20h	; 808FC
 push dword 1A6F9h	; 808FE
 push str_VisBck	; 80903
-call sub_8CCA8	; 80908
+call AllocMemBlock	; 80908
 add esp, byte 0Ch	; 8090D
 mov dword [visbckspr], eax	; 80910
 mov esi, dword [pointerspr]	; 80915
@@ -571,13 +571,13 @@ mov word [byte eax+06h], 15Bh	; 8095D
 push byte 20h	; 80963
 push dword 0A07h	; 80965
 push str_HomeNameBck	; 8096A
-call sub_8CCA8	; 8096F
+call AllocMemBlock	; 8096F
 add esp, byte 0Ch	; 80974
 mov dword [homenamebckspr], eax	; 80977
 push byte 20h	; 8097C
 push dword 0A07h	; 8097E
 push str_VisNameBck	; 80983
-call sub_8CCA8	; 80988
+call AllocMemBlock	; 80988
 add esp, byte 0Ch	; 8098D
 mov dword [visnamebckspr], eax	; 80990
 mov esi, dword [pointerspr]	; 80995
@@ -605,7 +605,7 @@ mov word [byte eax+06h], 0Fh	; 809DD
 push byte 20h	; 809E3
 push dword 35C7h	; 809E5
 push str_TitleBck	; 809EA
-call sub_8CCA8	; 809EF
+call AllocMemBlock	; 809EF
 add esp, byte 0Ch	; 809F4
 mov dword [titlebckspr], eax	; 809F7
 mov esi, dword [pointerspr]	; 809FC
@@ -644,7 +644,7 @@ call FreeMemBlock	; 80A6D
 add esp, byte 4	; 80A72
 lea eax, [dword esp+0300h]	; 80A75
 push eax	; 80A7C
-call sub_8EA00	; 80A7D
+call TextRestoreState	; 80A7D
 add esp, byte 4	; 80A82
 cmp dword [gamemode], byte 0	; 80A85
 jne short .4	; 80A8C
@@ -692,12 +692,12 @@ call MakePath	; 80AE0
 push byte 0	; 80AE5
 lea eax, [dword esp+0304h]	; 80AE7
 push eax	; 80AEE
-call sub_8E83C	; 80AEF
+call LoadBank	; 80AEF
 add esp, byte 8	; 80AF4
 mov esi, eax	; 80AF7
 push str_P01	; 80AF9
 push eax	; 80AFE
-call sub_B30B4	; 80AFF
+call FindShape	; 80AFF
 add esp, byte 8	; 80B04
 lea edx, [byte eax+010h]	; 80B07
 xor ebx, ebx	; 80B0A
@@ -731,7 +731,7 @@ jl short DrawLockerRoom.3	; 80B59
 call FadeOutPalCycle	; 80B5B
 push str_Room	; 80B60
 push esi	; 80B65
-call sub_B30B4	; 80B66
+call FindShape	; 80B66
 add esp, byte 8	; 80B6B
 push eax	; 80B6E
 call sub_912C8	; 80B6F
@@ -764,31 +764,31 @@ push byte 11h	; 80BE0
 push byte 2Dh	; 80BE2
 mov ecx, dword [titlebckspr]	; 80BE4
 push ecx	; 80BEA
-call sub_91400	; 80BEB
+call GrabBlock	; 80BEB
 add esp, byte 0Ch	; 80BF0
 push byte 45h	; 80BF3
 push byte 0Ah	; 80BF5
 mov esi, dword [homebckspr]	; 80BF7
 push esi	; 80BFD
-call sub_91400	; 80BFE
+call GrabBlock	; 80BFE
 add esp, byte 0Ch	; 80C03
 push byte 4Ah	; 80C06
 push dword 146h	; 80C08
 mov edi, dword [visbckspr]	; 80C0D
 push edi	; 80C13
-call sub_91400	; 80C14
+call GrabBlock	; 80C14
 add esp, byte 0Ch	; 80C19
 push byte 2Ch	; 80C1C
 push dword 85h	; 80C1E
 mov ebp, dword [homenamebckspr]	; 80C23
 push ebp	; 80C29
-call sub_91400	; 80C2A
+call GrabBlock	; 80C2A
 add esp, byte 0Ch	; 80C2F
 push byte 2Ch	; 80C32
 push dword 152h	; 80C34
 mov eax, dword [visnamebckspr]	; 80C39
 push eax	; 80C3E
-call sub_91400	; 80C3F
+call GrabBlock	; 80C3F
 add esp, byte 0Ch	; 80C44
 mov eax, dword [HomeTeam-2]	; 80C47
 sar eax, 10h	; 80C4C
@@ -819,12 +819,12 @@ call MakePath	; 80CAC
 push byte 0	; 80CB1
 lea eax, [dword esp+0304h]	; 80CB3
 push eax	; 80CBA
-call sub_8E83C	; 80CBB
+call LoadBank	; 80CBB
 add esp, byte 8	; 80CC0
 mov esi, eax	; 80CC3
 push str_P01	; 80CC5
 push eax	; 80CCA
-call sub_B30B4	; 80CCB
+call FindShape	; 80CCB
 add esp, byte 8	; 80CD0
 lea edx, [byte eax+010h]	; 80CD3
 mov dword [dword esp+0350h], 240h	; 80CD6
@@ -850,7 +850,7 @@ cmp ecx, 300h	; 80D1B
 jl short DrawLockerRoom.11	; 80D21
 push str_00002	; 80D23
 push esi	; 80D28
-call sub_B30B4	; 80D29
+call FindShape	; 80D29
 add esp, byte 8	; 80D2E
 push eax	; 80D31
 call sub_912C8	; 80D32
@@ -887,12 +887,12 @@ call MakePath	; 80DA8
 push byte 0	; 80DAD
 lea eax, [dword esp+0304h]	; 80DAF
 push eax	; 80DB6
-call sub_8E83C	; 80DB7
+call LoadBank	; 80DB7
 add esp, byte 8	; 80DBC
 mov esi, eax	; 80DBF
 push str_P01	; 80DC1
 push eax	; 80DC6
-call sub_B30B4	; 80DC7
+call FindShape	; 80DC7
 add esp, byte 8	; 80DCC
 lea edx, [byte eax+010h]	; 80DCF
 mov dword [dword esp+0350h], 180h	; 80DD2
@@ -918,7 +918,7 @@ cmp ebx, 240h	; 80E17
 jl short DrawLockerRoom.16	; 80E1D
 push str_00002	; 80E1F
 push esi	; 80E24
-call sub_B30B4	; 80E25
+call FindShape	; 80E25
 add esp, byte 8	; 80E2A
 push eax	; 80E2D
 call sub_912C8	; 80E2E
@@ -948,7 +948,7 @@ lea edx, [byte edi+01h]	; 80E85
 push edx	; 80E88
 lea eax, [byte ebp+01h]	; 80E89
 push eax	; 80E8C
-call sub_90D20	; 80E8D
+call FillRect	; 80E8D
 add esp, byte 14h	; 80E92
 mov eax, dword [dword esp+0350h]	; 80E95
 inc eax	; 80E9C
@@ -957,11 +957,11 @@ cmp eax, byte 6	; 80EA4
 jl short DrawLockerRoom.19	; 80EA7
 mov ebx, dword [mainfont]	; 80EA9
 push ebx	; 80EAF
-call sub_8EA18	; 80EB0
+call TextSetFont	; 80EB0
 add esp, byte 4	; 80EB5
 push dword 0FFh	; 80EB8
 push byte 77h	; 80EBD
-call sub_8E9C0	; 80EBF
+call TextSetColors	; 80EBF
 add esp, byte 8	; 80EC4
 cmp dword [gamemode], byte 0	; 80EC7
 jne short .20	; 80ECE
@@ -1267,7 +1267,7 @@ mov edx, esi	; 8134B
 call PrintShadowText	; 8134D
 mov esi, dword [kaufmfont]	; 81352
 push esi	; 81358
-call sub_8EA18	; 81359
+call TextSetFont	; 81359
 add esp, byte 4	; 8135E
 cmp dword [gamemode], byte 1	; 81361
 jne short .32	; 81368
@@ -1308,7 +1308,7 @@ mov edx, 12h	; 813DF
 call PrintOutlinedText	; 813E4
 mov eax, dword [mainfont]	; 813E9
 push eax	; 813EE
-call sub_8EA18	; 813EF
+call TextSetFont	; 813EF
 add esp, byte 4	; 813F4
 cmp byte [musicon], 0	; 813F7
 je short .35	; 813FE
@@ -1366,7 +1366,7 @@ mov byte [homeremap_eFC], 7Dh	; 814F4
 mov byte [homeremap_eFD], 7Eh	; 814FB
 mov byte [homeremap_eFE], bh	; 81502
 push homeremap	; 81508
-call sub_B4DD4	; 8150D
+call SetColorRemap	; 8150D
 add esp, byte 4	; 81512
 add esp, 354h	; 81515
 jmp near LockerStub	; 8151B
@@ -1456,12 +1456,12 @@ call MakePath	; 815F4
 push byte 0	; 815F9
 lea eax, [byte ebp-060h]	; 815FB
 push eax	; 815FE
-call sub_8E83C	; 815FF
+call LoadBank	; 815FF
 add esp, byte 8	; 81604
 mov dword [byte ebp-04h], eax	; 81607
 push str_P01	; 8160A
 push eax	; 8160F
-call sub_B30B4	; 81610
+call FindShape	; 81610
 add esp, byte 8	; 81615
 lea edx, [byte eax+010h]	; 81618
 mov esi, dword [dword ebp-0124h]	; 8161B
@@ -1509,13 +1509,13 @@ push byte 4Ah	; 8168C
 push dword 146h	; 8168E
 mov ecx, dword [visbckspr]	; 81693
 push ecx	; 81699
-call sub_910E0	; 8169A
+call DrawArtOpaque	; 8169A
 add esp, byte 0Ch	; 8169F
 push byte 2Ch	; 816A2
 push dword 152h	; 816A4
 mov esi, dword [visnamebckspr]	; 816A9
 push esi	; 816AF
-call sub_910E0	; 816B0
+call DrawArtOpaque	; 816B0
 add esp, byte 0Ch	; 816B5
 lea eax, [dword ebp-0120h]	; 816B8
 push eax	; 816BE
@@ -1527,25 +1527,25 @@ push byte 45h	; 816C8
 push byte 0Ah	; 816CA
 mov edx, dword [homebckspr]	; 816CC
 push edx	; 816D2
-call sub_910E0	; 816D3
+call DrawArtOpaque	; 816D3
 add esp, byte 0Ch	; 816D8
 push byte 2Ch	; 816DB
 push dword 85h	; 816DD
 mov ebx, dword [homenamebckspr]	; 816E2
 push ebx	; 816E8
-call sub_910E0	; 816E9
+call DrawArtOpaque	; 816E9
 add esp, byte 0Ch	; 816EE
 lea eax, [dword ebp-0120h]	; 816F1
 push eax	; 816F7
 push byte 40h	; 816F8
 push dword 0C0h	; 816FA
 .14:
-call sub_B4B88	; 816FF
+call VgaSetPalette	; 816FF
 add esp, byte 0Ch	; 81704
 push str_00002	; 81707
 mov eax, dword [byte ebp-04h]	; 8170C
 push eax	; 8170F
-call sub_B30B4	; 81710
+call FindShape	; 81710
 add esp, byte 8	; 81715
 push eax	; 81718
 call sub_912C8	; 81719
@@ -1556,7 +1556,7 @@ call FreeMemBlock	; 81725
 add esp, byte 4	; 8172A
 push dword 0FFh	; 8172D
 push byte 77h	; 81732
-call sub_8E9C0	; 81734
+call TextSetColors	; 81734
 add esp, byte 8	; 81739
 mov edx, 62h	; 8173C
 mov eax, 77h	; 81741
@@ -1567,11 +1567,11 @@ push byte 11h	; 81754
 push byte 2Dh	; 81756
 mov ecx, dword [titlebckspr]	; 81758
 push ecx	; 8175E
-call sub_910E0	; 8175F
+call DrawArtOpaque	; 8175F
 add esp, byte 0Ch	; 81764
 mov esi, dword [kaufmfont]	; 81767
 push esi	; 8176D
-call sub_8EA18	; 8176E
+call TextSetFont	; 8176E
 add esp, byte 4	; 81773
 mov eax, dword [byte ebp-08h]	; 81776
 mov esi, dword [nosplit eax*4+poroundnameidx]	; 81779
@@ -1590,7 +1590,7 @@ mov edx, 12h	; 817A2
 call PrintOutlinedText	; 817A7
 mov eax, dword [mainfont]	; 817AC
 push eax	; 817B1
-call sub_8EA18	; 817B2
+call TextSetFont	; 817B2
 add esp, byte 4	; 817B7
 .15:
 cmp dword [gamemode], byte 0	; 817BA
@@ -1614,7 +1614,7 @@ lea edx, [byte ebx+01h]	; 817F3
 push edx	; 817F6
 lea eax, [byte ecx+01h]	; 817F7
 push eax	; 817FA
-call sub_90D20	; 817FB
+call FillRect	; 817FB
 add esp, byte 14h	; 81800
 inc esi	; 81803
 cmp esi, byte 6	; 81804
@@ -1796,7 +1796,7 @@ lea edx, [byte ebx+01h]	; 81A29
 push edx	; 81A2C
 lea eax, [byte ecx+01h]	; 81A2D
 push eax	; 81A30
-call sub_90D20	; 81A31
+call FillRect	; 81A31
 add esp, byte 14h	; 81A36
 inc esi	; 81A39
 cmp esi, byte 6	; 81A3A
@@ -1992,7 +1992,7 @@ lea eax, [dword esp+0318h]	; 81C92
 push eax	; 81C99
 lea eax, [dword esp+030Ch]	; 81C9A
 push eax	; 81CA1
-call sub_B2DCA	; 81CA2
+call MouseRead	; 81CA2
 add esp, byte 0Ch	; 81CA7
 mov eax, dword [dword esp+0314h]	; 81CAA
 mov dword [dword esp+030Ch], eax	; 81CB1
@@ -2011,7 +2011,7 @@ add eax, byte 11h	; 81CE1
 push byte 20h	; 81CE4
 push eax	; 81CE6
 push str_Pointer20	; 81CE7
-call sub_8CCA8	; 81CEC
+call AllocMemBlock	; 81CEC
 add esp, byte 0Ch	; 81CF1
 mov dword [dword esp+0318h], eax	; 81CF4
 mov esi, dword [pointerspr]	; 81CFB
@@ -2035,7 +2035,7 @@ mov edx, dword [dword esp+0310h]	; 81D2E
 sub edx, byte 4	; 81D35
 push edx	; 81D38
 push eax	; 81D39
-call sub_91400	; 81D3A
+call GrabBlock	; 81D3A
 add esp, byte 0Ch	; 81D3F
 mov ebx, dword [dword esp+0308h]	; 81D42
 push ebx	; 81D49
@@ -2080,7 +2080,7 @@ sub eax, byte 4	; 81DE2
 push eax	; 81DE5
 mov eax, dword [dword esp+0320h]	; 81DE6
 push eax	; 81DED
-call sub_903F0	; 81DEE
+call PutBlock	; 81DEE
 add esp, byte 0Ch	; 81DF3
 mov edx, dword [dword esp+0308h]	; 81DF6
 push edx	; 81DFD
@@ -2089,7 +2089,7 @@ sub eax, byte 4	; 81E05
 push eax	; 81E08
 mov ebx, dword [dword esp+0320h]	; 81E09
 push ebx	; 81E10
-call sub_91400	; 81E11
+call GrabBlock	; 81E11
 add esp, byte 0Ch	; 81E16
 mov ecx, dword [dword esp+0308h]	; 81E19
 push ecx	; 81E20
@@ -2116,7 +2116,7 @@ sub eax, byte 4	; 81E79
 push eax	; 81E7C
 mov ebx, dword [dword esp+0320h]	; 81E7D
 push ebx	; 81E84
-call sub_903F0	; 81E85
+call PutBlock	; 81E85
 add esp, byte 0Ch	; 81E8A
 lea ebx, [dword esp+0300h]	; 81E8D
 mov edx, dword [dword esp+0308h]	; 81E94
@@ -2238,7 +2238,7 @@ sub eax, byte 4	; 8201A
 push eax	; 8201D
 mov eax, dword [dword esp+0320h]	; 8201E
 push eax	; 82025
-call sub_91400	; 82026
+call GrabBlock	; 82026
 add esp, byte 0Ch	; 8202B
 mov edx, dword [dword esp+0308h]	; 8202E
 push edx	; 82035
@@ -2413,7 +2413,7 @@ mov eax, esp	; 8229D
 push eax	; 8229F
 push dword 100h	; 822A0
 push byte 0	; 822A5
-call sub_8FFB0	; 822A7
+call SetPalette	; 822A7
 add esp, byte 0Ch	; 822AC
 mov ebx, 10h	; 822AF
 mov edx, esp	; 822B4
@@ -2459,7 +2459,7 @@ mov eax, esp	; 82342
 push eax	; 82344
 push dword 100h	; 82345
 push byte 0	; 8234A
-call sub_8FFB0	; 8234C
+call SetPalette	; 8234C
 add esp, byte 0Ch	; 82351
 mov ebx, 10h	; 82354
 mov edx, esp	; 82359
@@ -2503,7 +2503,7 @@ mov eax, esp	; 823E3
 push eax	; 823E5
 push dword 100h	; 823E6
 push byte 0	; 823EB
-call sub_8FFB0	; 823ED
+call SetPalette	; 823ED
 add esp, byte 0Ch	; 823F2
 mov ebx, 10h	; 823F5
 mov edx, esp	; 823FA

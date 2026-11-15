@@ -14,7 +14,7 @@ extern statsplayoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMod
 extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeasonTitle, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_LineNames
 extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
 extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, sub_6AB7C, sub_8E8A0, sub_90B80
-extern sub_B30B4, sub_B4CD8, sub_B4DD4, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
+extern FindShape, sub_B4CD8, SetColorRemap, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
 extern sub_B5974, sub_B5AC8, awayremap_eC0, homeremap_eC0, vgapage
 global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
 global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
@@ -83,13 +83,13 @@ add esp, byte 0Ch	; 1CCFC
 push str_Visp	; 1CCFF
 mov edi, dword [scrbrdshapes]	; 1CD04
 push edi	; 1CD0A
-call sub_B30B4	; 1CD0B
+call FindShape	; 1CD0B
 add esp, byte 8	; 1CD10
 mov dword [awpanelspr], eax	; 1CD13
 push str_Homp	; 1CD18
 mov ebp, dword [scrbrdshapes]	; 1CD1D
 push ebp	; 1CD23
-call sub_B30B4	; 1CD24
+call FindShape	; 1CD24
 add esp, byte 8	; 1CD29
 mov dword [hmpanelspr], eax	; 1CD2C
 push linesprites	; 1CD31
@@ -228,7 +228,7 @@ jmp short .11	; 1CEE1
 mov eax, homeremap	; 1CEE3
 .11:
 push eax	; 1CEE8
-call sub_B4DD4	; 1CEE9
+call SetColorRemap	; 1CEE9
 add esp, byte 4	; 1CEEE
 cmp word [byte esp+018h], byte 0	; 1CEF1
 je short .15	; 1CEF7

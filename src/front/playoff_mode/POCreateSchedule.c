@@ -37,13 +37,13 @@ int POCreateSchedule(int *teams, char *dir)
     if (teamconf[HomeTeam] != teamconf[VisTeam]) {
         MakePath(dbpath, dir, (char *)leaguedbnames[5], (char *)str_extDB);
         seasondb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        seasondb_size = sub_92DE0(dbpath);
+        seasondb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[1], (char *)str_extDB);
         careerdb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        careerdb_size = sub_92DE0(dbpath);
+        careerdb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[0], (char *)str_extDB);
         keydb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        keydb_size = sub_92DE0(dbpath);
+        keydb_size = GetFileSize(dbpath);
         POPreSimRound1(po, HomeTeam, VisTeam);
         POSeedRound2(po);
         POPreSimRound2(po, HomeTeam, VisTeam);
@@ -51,7 +51,7 @@ int POCreateSchedule(int *teams, char *dir)
         POPreSimConfFinals(po, HomeTeam, VisTeam);
         POSeedFinal(po);
         MakePath(dbpath, dir, (char *)leaguedbnames[5], (char *)str_extDB);
-        sub_932D0(dbpath, seasondb, seasondb_size);
+        WriteFile(dbpath, seasondb, seasondb_size);
         if (seasondb) FreeMemBlock((int)seasondb);
         if (careerdb) FreeMemBlock((int)careerdb);
         if (keydb) FreeMemBlock((int)keydb);
@@ -61,7 +61,7 @@ int POCreateSchedule(int *teams, char *dir)
     for (n = 0, s = po + 0x1998; s[2] != HomeTeam || s[3] != VisTeam; n += 7, s += 0x2A);
     *(int *)(po + 0x40) = n;
     *(int *)(po + 0x44) = n / 7;
-    size = sub_92DE0(path);
+    size = GetFileSize(path);
     if (FileOpenWrite(path, &fh)) {
         po -= 2;
         r = 1;

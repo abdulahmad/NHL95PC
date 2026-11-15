@@ -25,12 +25,12 @@ extern str_On, str_P01, str_PC, str_PCBEEP, str_PCBEEP2, str_PCSpeaker, str_Pg01
 extern str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20, str_Playoff, str_PlayoffTree2, str_Pointer20
 extern str_Pointer21, str_Return, str_Room, str_SBDAC, str_SBDAC2, str_Settings, str_Settings3, str_ShowLeague
 extern str_Slapshot, str_Sound4, str_SoundBlaster, str_SoundBlaster2, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound
-extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, sub_8CCA8
-extern sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8EB5B, sub_8EB93
-extern sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A
-extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91370
-extern sub_91400, sub_91964, sub_91FE0, sub_97079, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8
-extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
+extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock
+extern sub_8D2F0, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, sub_8EB5B, sub_8EB93
+extern sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A
+extern sub_8FCDF, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
+extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, sub_B4BA8
+extern SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
 extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
 global SoundCardDlg_epilogue, SoundCardDlgLoop_x, SetSoundDevice
@@ -54,14 +54,14 @@ jne short .2	; 82598
 push byte 0	; 8259A
 push dword 4E200h	; 8259C
 push str_Temp8	; 825A1
-call sub_8CCA8	; 825A6
+call AllocMemBlock	; 825A6
 add esp, byte 0Ch	; 825AB
 mov dword [sndtempbuf], eax	; 825AE
 .2:
 push byte 0	; 825B3
 push dword 5F11h	; 825B5
 push str_Buffer	; 825BA
-call sub_8CCA8	; 825BF
+call AllocMemBlock	; 825BF
 mov ebp, eax	; 825C4
 add esp, byte 0Ch	; 825C6
 mov esi, dword [pointerspr]	; 825C9
@@ -76,7 +76,7 @@ mov word [byte eax+06h], 0BEh	; 825DC
 push byte 13h	; 825E2
 push byte 0Ah	; 825E4
 push eax	; 825E6
-call sub_91400	; 825E7
+call GrabBlock	; 825E7
 add esp, byte 0Ch	; 825EC
 call DrawSoundCardDlg	; 825EF
 call DrawSoundCardOpts	; 825F4
@@ -84,7 +84,7 @@ call SoundCardDlgLoop	; 825F9
 push byte 13h	; 825FE
 push byte 0Ah	; 82600
 push ebp	; 82602
-call sub_903F0	; 82603
+call PutBlock	; 82603
 add esp, byte 0Ch	; 82608
 push ebp	; 8260B
 call FreeMemBlock	; 8260C
@@ -124,14 +124,14 @@ call MakePath	; 8264E
 push byte 0	; 82653
 lea eax, [byte esp+04h]	; 82655
 push eax	; 82659
-call sub_8E83C	; 8265A
+call LoadBank	; 8265A
 mov esi, eax	; 8265F
 add esp, byte 8	; 82661
 push byte 13h	; 82664
 push byte 0Ah	; 82666
 push str_Dbx2	; 82668
 push eax	; 8266D
-call sub_B30B4	; 8266E
+call FindShape	; 8266E
 add esp, byte 8	; 82673
 push eax	; 82676
 call sub_91284	; 82677
@@ -180,7 +180,7 @@ jl short DrawSoundCardOpts.1	; 826D5
 mov esi, soundcardrects	; 826D7
 push dword 0FFh	; 826DC
 push dword 0F8h	; 826E1
-call sub_8E9C0	; 826E6
+call TextSetColors	; 826E6
 add esp, byte 8	; 826EB
 test byte [sndcardmissing], 1	; 826EE
 jne short .4	; 826F5
@@ -191,7 +191,7 @@ mov eax, dword [soundcardrects]	; 82700
 add eax, byte 18h	; 82705
 push eax	; 82708
 push str_PCSpeaker	; 82709
-call sub_91964	; 8270E
+call PrintString	; 8270E
 add esp, byte 0Ch	; 82713
 .4:
 add esi, byte 10h	; 82716
@@ -204,7 +204,7 @@ mov eax, dword [esi]	; 82729
 add eax, byte 0Eh	; 8272B
 push eax	; 8272E
 push str_SoundBlaster	; 8272F
-call sub_91964	; 82734
+call PrintString	; 82734
 add esp, byte 0Ch	; 82739
 .5:
 add esi, byte 10h	; 8273C
@@ -217,7 +217,7 @@ mov eax, dword [esi]	; 8274F
 add eax, byte 29h	; 82751
 push eax	; 82754
 push str_ADLib	; 82755
-call sub_91964	; 8275A
+call PrintString	; 8275A
 add esp, byte 0Ch	; 8275F
 .6:
 add esi, byte 10h	; 82762
@@ -230,7 +230,7 @@ mov eax, dword [esi]	; 82775
 add eax, byte 28h	; 82777
 push eax	; 8277A
 push str_MT32	; 8277B
-call sub_91964	; 82780
+call PrintString	; 82780
 add esp, byte 0Ch	; 82785
 .7:
 add esi, byte 20h	; 82788
@@ -243,7 +243,7 @@ mov eax, dword [esi]	; 8279B
 add eax, byte 18h	; 8279D
 push eax	; 827A0
 push str_UltraSound	; 827A1
-call sub_91964	; 827A6
+call PrintString	; 827A6
 add esp, byte 0Ch	; 827AB
 .x:
 pop esi	; 827AE
@@ -323,7 +323,7 @@ jl short RedrawSoundCardOpts.1	; 82840
 mov esi, soundcardrects	; 82842
 push dword 0FFh	; 82847
 push dword 0F8h	; 8284C
-call sub_8E9C0	; 82851
+call TextSetColors	; 82851
 add esp, byte 8	; 82856
 test byte [sndcardmissing], 1	; 82859
 jne short .4	; 82860
@@ -334,7 +334,7 @@ mov eax, dword [soundcardrects]	; 8286B
 add eax, byte 18h	; 82870
 push eax	; 82873
 push str_PCSpeaker	; 82874
-call sub_91964	; 82879
+call PrintString	; 82879
 add esp, byte 0Ch	; 8287E
 .4:
 add esi, byte 10h	; 82881
@@ -347,7 +347,7 @@ mov eax, dword [esi]	; 82894
 add eax, byte 0Eh	; 82896
 push eax	; 82899
 push str_SoundBlaster	; 8289A
-call sub_91964	; 8289F
+call PrintString	; 8289F
 add esp, byte 0Ch	; 828A4
 .5:
 add esi, byte 10h	; 828A7
@@ -360,7 +360,7 @@ mov eax, dword [esi]	; 828BA
 add eax, byte 29h	; 828BC
 push eax	; 828BF
 push str_ADLib	; 828C0
-call sub_91964	; 828C5
+call PrintString	; 828C5
 add esp, byte 0Ch	; 828CA
 .6:
 add esi, byte 10h	; 828CD
@@ -373,7 +373,7 @@ mov eax, dword [esi]	; 828E0
 add eax, byte 28h	; 828E2
 push eax	; 828E5
 push str_MT32	; 828E6
-call sub_91964	; 828EB
+call PrintString	; 828EB
 add esp, byte 0Ch	; 828F0
 .7:
 add esi, byte 20h	; 828F3
@@ -386,7 +386,7 @@ mov eax, dword [esi]	; 82906
 add eax, byte 18h	; 82908
 push eax	; 8290B
 push str_UltraSound	; 8290C
-call sub_91964	; 82911
+call PrintString	; 82911
 add esp, byte 0Ch	; 82916
 .x:
 pop esi	; 82919
@@ -421,7 +421,7 @@ add edx, byte 11h	; 82947
 push byte 0	; 8294A
 push edx	; 8294C
 push str_Pointer21	; 8294D
-call sub_8CCA8	; 82952
+call AllocMemBlock	; 82952
 add esp, byte 0Ch	; 82957
 mov ebp, eax	; 8295A
 mov esi, dword [pointerspr]	; 8295C
@@ -454,7 +454,7 @@ lea eax, [byte esp+038h]	; 829A7
 push eax	; 829AB
 lea eax, [byte esp+02Ch]	; 829AC
 push eax	; 829B0
-call sub_B2DCA	; 829B1
+call MouseRead	; 829B1
 add esp, byte 0Ch	; 829B6
 mov eax, dword [byte esp+034h]	; 829B9
 mov dword [byte esp+02Ch], eax	; 829BD
@@ -467,7 +467,7 @@ mov eax, dword [byte esp+030h]	; 829D3
 sub eax, byte 4	; 829D7
 push eax	; 829DA
 push ebp	; 829DB
-call sub_91400	; 829DC
+call GrabBlock	; 829DC
 add esp, byte 0Ch	; 829E1
 mov edi, dword [byte esp+028h]	; 829E4
 push edi	; 829E8
@@ -476,7 +476,7 @@ sub eax, byte 4	; 829ED
 push eax	; 829F0
 mov eax, dword [pointerspr]	; 829F1
 push eax	; 829F6
-call sub_91370	; 829F7
+call DrawArt	; 829F7
 add esp, byte 0Ch	; 829FC
 call ClearInputQueue	; 829FF
 .2:
@@ -512,7 +512,7 @@ sub eax, byte 4	; 82A58
 SoundCardDlgLoop_poll:
 push eax	; 82A5B
 push ebp	; 82A5C
-call sub_903F0	; 82A5D
+call PutBlock	; 82A5D
 add esp, byte 0Ch	; 82A62
 mov ecx, dword [byte esp+028h]	; 82A65
 push ecx	; 82A69
@@ -520,7 +520,7 @@ mov eax, dword [byte esp+030h]	; 82A6A
 sub eax, byte 4	; 82A6E
 push eax	; 82A71
 push ebp	; 82A72
-call sub_91400	; 82A73
+call GrabBlock	; 82A73
 add esp, byte 0Ch	; 82A78
 mov esi, dword [byte esp+028h]	; 82A7B
 push esi	; 82A7F
@@ -530,7 +530,7 @@ push eax	; 82A87
 mov edi, dword [pointerspr]	; 82A88
 push edi	; 82A8E
 .1:
-call sub_91370	; 82A8F
+call DrawArt	; 82A8F
 add esp, byte 0Ch	; 82A94
 mov eax, dword [byte esp+02Ch]	; 82A97
 mov dword [byte esp+034h], eax	; 82A9B
@@ -547,7 +547,7 @@ mov ebx, dword [byte esp+030h]	; 82AC0
 push ebx	; 82AC4
 push eax	; 82AC5
 push ebp	; 82AC6
-call sub_903F0	; 82AC7
+call PutBlock	; 82AC7
 add esp, byte 0Ch	; 82ACC
 lea ebx, [byte esp+020h]	; 82ACF
 mov edx, dword [byte esp+028h]	; 82AD3
@@ -709,7 +709,7 @@ mov eax, dword [byte esp+030h]	; 82D11
 sub eax, byte 4	; 82D15
 push eax	; 82D18
 push ebp	; 82D19
-call sub_91400	; 82D1A
+call GrabBlock	; 82D1A
 add esp, byte 0Ch	; 82D1F
 mov eax, dword [byte esp+028h]	; 82D22
 push eax	; 82D26
@@ -744,7 +744,7 @@ mov edx, dword [byte esp+030h]	; 82D5F
 push edx	; 82D63
 push eax	; 82D64
 push ebp	; 82D65
-call sub_903F0	; 82D66
+call PutBlock	; 82D66
 add esp, byte 0Ch	; 82D6B
 jmp short SoundCardDlgLoop_next	; 82D6E
 .1:
@@ -789,7 +789,7 @@ jmp short .3	; 82DCE
 cmp ecx, byte 4	; 82DD0
 jne short .3	; 82DD3
 mov eax, dword [dword_ED7A4]	; 82DD5
-call sub_8F1FE	; 82DDA
+call FreeSample	; 82DDA
 .3:
 call sub_8EB93	; 82DDF
 .4:
@@ -927,7 +927,7 @@ xor edx, edx	; 83012
 mov eax, esp	; 83014
 call MakePath	; 83016
 mov eax, esp	; 8301B
-call sub_8F13B	; 8301D
+call LoadSample	; 8301D
 mov dword [dword_ED7A4], eax	; 83022
 .18:
 cmp esi, byte 8	; 83027
@@ -959,14 +959,14 @@ xor edx, edx	; 83079
 mov eax, esp	; 8307B
 call MakePath	; 8307D
 mov eax, esp	; 83082
-call sub_8F13B	; 83084
+call LoadSample	; 83084
 mov edx, eax	; 83089
 mov dword [dword_D2350], 0FFFFFFFFh	; 8308B
 mov dword [sounddev], 8	; 83095
 call PlayDigiSample	; 8309F
 call WaitDigiSample	; 830A4
 mov eax, edx	; 830A9
-call sub_8F1FE	; 830AB
+call FreeSample	; 830AB
 call RestoreDialogBg	; 830B0
 .21:
 mov dword [sounddev], esi	; 830B5
@@ -1061,7 +1061,7 @@ lea eax, [byte esp+038h]	; 831D2
 push eax	; 831D6
 lea eax, [byte esp+040h]	; 831D7
 push eax	; 831DB
-call sub_B2DCA	; 831DC
+call MouseRead	; 831DC
 add esp, byte 0Ch	; 831E1
 push byte 0	; 831E4
 lea eax, [byte esp+034h]	; 831E6
@@ -1109,7 +1109,7 @@ jne short .41	; 83271
 push byte 20h	; 83273
 push dword 400h	; 83275
 push str_Emmcopybuf	; 8327A
-call sub_8CCA8	; 8327F
+call AllocMemBlock	; 8327F
 add esp, byte 0Ch	; 83284
 mov dword [dword_ED7A8], eax	; 83287
 mov edx, dword [dword_C4CFC]	; 8328C

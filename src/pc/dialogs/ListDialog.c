@@ -95,15 +95,15 @@ int ListDialog(char **items, int n, char *title, unsigned align, int marks, char
     DrawBevelRect(s.lx, s.ly, s.maxw, s.lh, dlgtextbg, boxshadecolor, boxlitecolor);
     DrawListItems(items, s.lx, s.ly, s.maxw, s.top, cur, s.shown, s.align, marks, flags);
     sz = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
-    s.bg2 = s.bg = sub_8CCA8((char *)str_Pointer6, sz, 0x20);
+    s.bg2 = s.bg = AllocMemBlock((char *)str_Pointer6, sz, 0x20);
     *(SprHdr *)s.bg = *(SprHdr *)pointerspr;
     ((short *)s.bg)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)s.bg)[3] = ((short *)pointerspr)[3] + 1;
-    sub_B2DCA(&s.i, &s.mx, &s.my);
+    MouseRead(&s.i, &s.mx, &s.my);
     s.x = s.mx;
     s.y = s.my;
-    sub_91400(s.bg, s.mx, s.my);
-    sub_91370(pointerspr, s.mx, s.my);
+    GrabBlock(s.bg, s.mx, s.my);
+    DrawArt(pointerspr, s.mx, s.my);
     ClearInputQueue();
     n = 0;
     do {
@@ -114,13 +114,13 @@ int ListDialog(char **items, int n, char *title, unsigned align, int marks, char
         } while (e && !(s.bits & 2));
         if (s.bits == 0) {
             if (s.x == s.mx && s.y == s.my) continue;
-            sub_903F0(s.bg2, s.mx, s.my);
-            sub_91400(s.bg2, s.x, s.y);
-            sub_91370(pointerspr, s.x, s.y);
+            PutBlock(s.bg2, s.mx, s.my);
+            GrabBlock(s.bg2, s.x, s.y);
+            DrawArt(pointerspr, s.x, s.y);
             s.mx = s.x;
             s.my = s.y;
         } else {
-            sub_903F0(s.bg2, s.mx, s.my);
+            PutBlock(s.bg2, s.mx, s.my);
             if (s.bits & 2) {
                 if ((s.i = ListHitTest(s.x, s.y, s.lx, s.ly, s.maxw, s.shown)) >= 0) {
                     s.old = cur;
@@ -136,13 +136,13 @@ int ListDialog(char **items, int n, char *title, unsigned align, int marks, char
                 s.top = listscroll[8];
                 DrawListItems(items, s.lx, s.ly, s.maxw, s.top, cur, s.shown, s.align, marks, flags);
             }
-            sub_91400(s.bg2, s.x, s.y);
-            sub_91370(pointerspr, s.x, s.y);
+            GrabBlock(s.bg2, s.x, s.y);
+            DrawArt(pointerspr, s.x, s.y);
             s.mx = s.x;
             s.my = s.y;
         }
     } while (!n);
-    sub_903F0(s.bg2, s.mx, s.my);
+    PutBlock(s.bg2, s.mx, s.my);
     FreeMemBlock(s.bg2);
     RestoreDialogBg();
     return cur;

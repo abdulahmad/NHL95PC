@@ -62,7 +62,7 @@ void CreateNewLeague(void)
     j = TextInputDialog((char *)str_EnterLeagueName, s.name, 8, 0x30, 0, 0, 0, 0, 5);
     s.r = j;
     if (s.name[0] && j != 0x1B) {
-        sub_B2DCA(&s.r, &s.x, &s.y);
+        MouseRead(&s.r, &s.x, &s.y);
         strcat(s.name, (char *)str_extLP);
         strcpy((char *)&curleague, s.name);
         if (!unknown_libname_1(s.name, 0x10, s.ft)) {
@@ -119,7 +119,7 @@ void CreateNewLeague(void)
         }
         if (err || s.sel < 0) {
             if (err) {
-                sub_B2DCA(&s.r, &s.x, &s.y);
+                MouseRead(&s.r, &s.x, &s.y);
                 MessageBox(-1, -1, (char *)msg_CreateError, 1, 0, 0, (int)&s.x, (int)&s.y, -1);
             }
             ((unsigned char *)lgstate)[4] = 0;

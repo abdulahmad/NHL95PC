@@ -6,7 +6,7 @@
 void RestoreGridCellBg(int unused1, int unused2)
 {
     if (gridcellbuf) {
-        sub_903F0(gridcellbuf, gridcellx, gridcelly);
+        PutBlock(gridcellbuf, gridcellx, gridcelly);
         FreeMemBlock(gridcellbuf);
         gridcellbuf = 0;
     }

@@ -8,5 +8,5 @@ void LoadCalendarShapes(void)
 
     if (calendarshapes) return;
     MakePath(path, fileoncd[0x1C1] == 1 ? (char *)cddriveptr : 0, (char *)str_calendar, 0);
-    calendarshapes = sub_8E83C(path, 0x20);
+    calendarshapes = LoadBank(path, 0x20);
 }

@@ -38,16 +38,16 @@ void ReplaySaveHilight(int unused, int x, int y)
         if (ctl1team[0] >= 0) r = SaveHilight(HomeTeam == ctl1team[0] ? HomeTeam ^ ctl1team[0] : 1);
         else r = SaveHilight(HomeTeam == ctl2team ? HomeTeam ^ ctl2team : 1);
         if (r) {
-            sub_8E9E8(st);
-            sub_8EA18(mainfont);
+            TextSaveState(st);
+            TextSetFont(mainfont);
             SetTickDeadline(0x1F4);
             SetDialogColors(0x14, 0x59, 0x11, 0x59, 0);
             MessageBox(0, 0, (char *)msg_NoHilightSpace, 3, 0, 0, 0, 0, 0);
-            sub_8EA00(st);
+            TextRestoreState(st);
             FreeMemBlock(gadgetfile);
             MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
             gadgetfile = sub_8E8A0(path, 0);
-            gadgetshape = sub_B30B4(gadgetfile, (char *)str_Gad1);
+            gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
             WaitTickDeadline();
             RestoreDialogBg();
         } else {
@@ -56,15 +56,15 @@ void ReplaySaveHilight(int unused, int x, int y)
         return;
     }
     SelectScreenBM();
-    sub_B4BC4(0xC2, 0xF0, 0, 0x20);
+    SetClipWindow(0xC2, 0xF0, 0, 0x20);
     sub_B500C(gadgetshape, 0, 0);
     DrawGadgetButton(7);
     sub_B4BA8();
-    sub_B4BC4(0, 0x140, 0, 0xC8);
+    SetClipWindow(0, 0x140, 0, 0xC8);
     w = ((short *)pointerspr)[2];
     w *= ((short *)pointerspr)[3];
     n = w + 0x11;
-    p = (unsigned char *)sub_8CCA8((char *)str_Pointer19, n, 0x20);
+    p = (unsigned char *)AllocMemBlock((char *)str_Pointer19, n, 0x20);
     *(Hdr17 *)p = *(Hdr17 *)pointerspr;
     ((short *)p)[2] = ((short *)pointerspr)[2];
     ((short *)p)[3] = ((short *)pointerspr)[3];
@@ -72,10 +72,10 @@ void ReplaySaveHilight(int unused, int x, int y)
     hilightslot = 3;
     gadgetptrx = 0xEE;
     gadgetptry = 0x8A;
-    sub_B2E1B(0, 0x4B, 0x136, 0x96);
+    SetViewRect(0, 0x4B, 0x136, 0x96);
     MouseSetPos(0xEE, 0x8A);
-    sub_91400((int)p, 0xEE, 0x8A);
-    sub_91370(pointerspr, 0xEE, 0x8A);
+    GrabBlock((int)p, 0xEE, 0x8A);
+    DrawArt(pointerspr, 0xEE, 0x8A);
     ClearInputQueue();
     r = 0;
     while (!(r & 2)) {
@@ -94,19 +94,19 @@ void ReplaySaveHilight(int unused, int x, int y)
                 r = 0;
             }
         }
-        sub_91370((int)p, ox, oy);
-        sub_91400((int)p, gadgetptrx, gadgetptry);
-        sub_91370(pointerspr, gadgetptrx, gadgetptry);
+        DrawArt((int)p, ox, oy);
+        GrabBlock((int)p, gadgetptrx, gadgetptry);
+        DrawArt(pointerspr, gadgetptrx, gadgetptry);
     }
     SetTickDeadline(0x64);
-    sub_B4BC4(0, 0x140, 0, 0xC8);
+    SetClipWindow(0, 0x140, 0, 0xC8);
     sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0x4E, hilightslot * 0x11 + 0x5E, 0x10);
     sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0xD8, hilightslot * 0x11 + 0x50, 0x10);
     sub_B4FAC(0x4F, hilightslot * 0x11 + 0x5E, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
     sub_B4FAC(0xD8, hilightslot * 0x11 + 0x51, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
-    sub_B5DB0(0xD8, hilightslot * 0x11 + 0x50, 0x13);
-    sub_B5DB0(0x4E, hilightslot * 0x11 + 0x5E, 0x13);
-    sub_91370(pointerspr, gadgetptrx, gadgetptry);
+    PlotPixel(0xD8, hilightslot * 0x11 + 0x50, 0x13);
+    PlotPixel(0x4E, hilightslot * 0x11 + 0x5E, 0x13);
+    DrawArt(pointerspr, gadgetptrx, gadgetptry);
     switch (hilightslot) {
     case 0:
         r = SaveHilight(0);
@@ -128,7 +128,7 @@ void ReplaySaveHilight(int unused, int x, int y)
         FreeMemBlock(gadgetfile);
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
         gadgetfile = sub_8E8A0(path, 0);
-        gadgetshape = sub_B30B4(gadgetfile, (char *)str_Gad1);
+        gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
         WaitTickDeadline();
         RestoreDialogBg();
     } else {
@@ -146,7 +146,7 @@ void ReplaySaveHilight(int unused, int x, int y)
         WaitTickDeadline();
         RestoreDialogBg();
     }
-    sub_B4BC4(0, 0x140, 0, 0xC8);
+    SetClipWindow(0, 0x140, 0, 0xC8);
     FreeMemBlock((int)p);
-    sub_B2E1B(0, 0, 0x140, 0xC1);
+    SetViewRect(0, 0, 0x140, 0xC1);
 }

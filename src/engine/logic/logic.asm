@@ -30,7 +30,7 @@ extern regd1, regd2, regd3, regd4, RemoveFromLines, savepal, seqtimer, SetBoxDoo
 extern Setplass, setplayer, SetShotMode, SetSPA, sflags, sflags3, sfx, ShotLaneOpen
 extern ShotMode, shotongoal, shotplayer, skateto, skatetopuck, sopathend, sopathpoint, sopathx
 extern sopathy, SortCords, sortobj15, sounddev, sprintf_, SprSort, starordtab, starpl
-extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, sub_8FFB0
+extern startm, startm_m2, StopDigiSample, stopna, str_EASports, str_StarFmt, sub_8F633, SetPalette
 extern teamabbrevs, textline1, textline2, textline3, textline4, textline5, threat, ThreeStarsLoop
 extern unk_C1B3E, hmplattr, hmglstats, updateanim, vecdist, VisTeam, vtoa, penaltysc
 extern word_CBC44, injurystop, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y, asswingo_dedata_yrand

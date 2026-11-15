@@ -29,15 +29,15 @@ int DrawLeagueSetDlgSel(void)
         else dir = 0;
         MakePath(path, dir, name, ext);
     }
-    img = sub_8E83C(path, 0);
-    sub_91284(sub_B30B4(img, (char *)str_Dbox2), 0x0A, 0x13);
+    img = LoadBank(path, 0);
+    sub_91284(FindShape(img, (char *)str_Dbox2), 0x0A, 0x13);
     FreeMemBlock(img);
-    sub_8E9C0(0xF8, 0xFF);
+    TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {
-        sub_91964((char *)str_Music, 0x68, 0xAA);
-        sub_91964((char *)str_Sound, 0x68, 0xC0);
+        PrintString((char *)str_Music, 0x68, 0xAA);
+        PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) sub_91964((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     DrawSettingsHeading(0x0A, 0x13, leaguesetimg[0] ? 5 : 3, gamemode, 0xFA);
     sub_B4BA8();
     return 0;

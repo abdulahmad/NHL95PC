@@ -14,7 +14,7 @@ void LoadCupFinalSeries(void)
 
     f = teamdivflags[HomeTeam] | teamdivflags[VisTeam];
     if ((f & 3) && (f & 0xC)) {
-        cupseries = sub_8CCA8((char *)str_Stanley, 0x2A, 0x20);
+        cupseries = AllocMemBlock((char *)str_Stanley, 0x2A, 0x20);
         LoadScheduleDB((int *)&db);
         f = (int)db + 2;                        /* skip the database header word (f reused) */
         db = (char *)f;

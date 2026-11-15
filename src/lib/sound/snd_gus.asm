@@ -6,11 +6,11 @@ extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_
 extern cliprect_x0, cliprect_x1, dword_D30A4, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
-extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, sub_91964
+extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, PrintString
 extern sub_AA210, sub_AA300, sub_AAB5C, sub_AAC48, sub_AB79C, sub_AC0CC, sub_AC6E8, sub_AD298
 extern sub_AD4DC, sub_AD6F4, sub_AE9EB, sub_AEA23, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33
 extern sub_AEFA2, sub_AEFC9, sub_AEFEA, sub_AF076, sub_AF0D5, sub_AF112, sub_AF198, sub_AF1A4
-extern sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428, sub_B4BC4, sub_B6F84, unk_D5382, unk_D5408
+extern sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428, SetClipWindow, sub_B6F84, unk_D5382, unk_D5408
 extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
 global sub_9FFCA, loc_A004D, sub_A0064, sub_A00C1, loc_A00F7, loc_A0102, loc_A0107, loc_A0124
@@ -2206,7 +2206,7 @@ inc eax	; A182C
 push eax	; A182D
 mov edi, dword [byte esp+014h]	; A182E
 push edi	; A1832
-call sub_91964	; A1833
+call PrintString	; A1833
 add esp, byte 0Ch	; A1838
 pop edi	; A183B
 pop esi	; A183C
@@ -2232,6 +2232,6 @@ push byte 0	; A1863
 mov ebx, dword [dword_D30A4]	; A1865
 push ebx	; A186B
 push byte 0	; A186C
-call sub_B4BC4	; A186E
+call SetClipWindow	; A186E
 add esp, byte 10h	; A1873
 ret	; A1876

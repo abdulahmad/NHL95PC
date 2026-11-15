@@ -4,13 +4,13 @@
 #define ReloadGameGfx ReloadGameGfx_decl
 #define Gameloop GameLoop_decl
 #define sub_8F98F sub_8F98F_decl
-#define sub_8F13B sub_8F13B_decl
+#define LoadSample sub_8F13B_decl
 #define TitleScreen TitleScreen_decl
 #define RunIntro RunIntro_decl
 #define TickDeadlinePassed TickDeadlinePassed_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
 #define sub_9087C sub_9087C_decl
-#define sub_8F1FE sub_8F1FE_decl
+#define FreeSample sub_8F1FE_decl
 #define sub_912C8 sub_912C8_decl
 #define sub_1B0F3 sub_1B0F3_decl
 #define sub_1B1C2 sub_1B1C2_decl
@@ -35,13 +35,13 @@
 #undef ReloadGameGfx
 #undef Gameloop
 #undef sub_8F98F
-#undef sub_8F13B
+#undef LoadSample
 #undef TitleScreen
 #undef RunIntro
 #undef TickDeadlinePassed
 #undef TicksSinceLastCall
 #undef sub_9087C
-#undef sub_8F1FE
+#undef FreeSample
 #undef sub_912C8
 #undef sub_1B0F3
 #undef sub_1B1C2
@@ -66,7 +66,7 @@ void RunIntro(void);
 int TickDeadlinePassed(void);
 int TicksSinceLastCall(void);
 void __cdecl sub_9087C(int frame, int x, int y);       /* graphics library: draw a frame */
-void sub_8F1FE(int sample);                            /* sound library: free a sample */
+void FreeSample(int sample);                            /* sound library: free a sample */
 void __cdecl sub_912C8(int art);                       /* graphics library: set the palette from an art block */
 int __cdecl sub_1B0F3(int size, int chunk, int flags);  /* cdstream: create a reader */
 void __cdecl sub_1B1C2(int stream, char *path);         /* cdstream: open a file */
@@ -99,7 +99,7 @@ void LoadRockMusic(void);
 void ReloadGameGfx(void);
 void Gameloop(void);
 int sub_8F98F(char *path);  /* sound library: load a song */
-int sub_8F13B(char *path);  /* sound library: load a digitized sample */
+int LoadSample(char *path);  /* sound library: load a digitized sample */
 
 typedef struct ExhRec { unsigned char b[0x75]; } ExhRec;
 
@@ -239,17 +239,17 @@ int TitleScreen(void)
     bmp = 0;
     ClearInputQueue();
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     MakePath(path, fileoncd[0x68] == 1 ? (char *)cddriveptr : 0, (char *)str_Eascrn, 0);
-    bank = sub_8E83C(path, 0);
-    memcpy(pal, (char *)sub_B30B4(bank, (char *)str_Pal4) + 0x10, 0x300);
+    bank = LoadBank(path, 0);
+    memcpy(pal, (char *)FindShape(bank, (char *)str_Pal4) + 0x10, 0x300);
     for (i = 0; i < 0x300; i++) {
         if (pal[i] < 0x3B) pal[i] = pal[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_9121C(sub_B30B4(bank, (char *)str_Scrn2));
-    m = (unsigned char *)sub_B30B4(bank, (char *)str_Msk1);
-    mask = (unsigned char *)sub_8CCA8((char *)str_MASK, 0x9C51, 0x20);
+    sub_9121C(FindShape(bank, (char *)str_Scrn2));
+    m = (unsigned char *)FindShape(bank, (char *)str_Msk1);
+    mask = (unsigned char *)AllocMemBlock((char *)str_MASK, 0x9C51, 0x20);
     *(struct { unsigned char b[17]; } *)mask = *(struct { unsigned char b[17]; } *)m;
     *(short *)(mask + 4) = 0xC8;
     *(short *)(mask + 6) = 0xC8;
@@ -263,7 +263,7 @@ int TitleScreen(void)
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Mttitle, (char *)str_KMS);
         else
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Adtitle, (char *)str_KMS);
-        titlesample = sub_8F13B(path);
+        titlesample = LoadSample(path);
     }
     MakePath(path, fileoncd[0x24] == 1 ? (char *)cddriveptr : 0, (char *)str_Title, (char *)str_Cmv);
     stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
@@ -319,13 +319,13 @@ int TitleScreen(void)
             case 0x4D564968:
                 sub_1AD16(dec);
                 sub_1B092(dec);
-                if (!bmp) bmp = sub_B4F8C(sub_1B09F(dec), sub_1B0AD(dec), 0);
+                if (!bmp) bmp = CreateBitmap(sub_1B09F(dec), sub_1B0AD(dec), 0);
                 SetDrawBitmap(bmp);
                 sub_9121C((int)mask);
                 sub_B4BA8();
                 sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 memcpy(pal + sub_1B0C9(dec) * 3, (void *)sub_1B0E5(dec), sub_1B0D7(dec) * 3);
-                sub_B4B88(0, 0x100, (unsigned char *)pal);
+                VgaSetPalette(0, 0x100, (unsigned char *)pal);
                 delay = 100 / sub_1B0BB(dec);
                 break;
             case 0x4D564965:
@@ -360,7 +360,7 @@ int TitleScreen(void)
         songdata = 0;
     } else {
         StopDigiSample();
-        sub_8F1FE(titlesample);
+        FreeSample(titlesample);
     }
     FreeMemBlock((int)mask);
     return key;
@@ -398,17 +398,17 @@ void RunIntro(void)
     if (musicon) sub_8D2F0(*(int *)((char *)speechbank + 0x3B60));
     ClearInputQueue();
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     __STOSB(blackpal, 0, 0x300);
-    sub_B4B88(0, 0x100, blackpal);
+    VgaSetPalette(0, 0x100, blackpal);
     MakePath(path, fileoncd[0x127] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer1, 0);
-    bank = sub_8E83C(path, 0);
-    memcpy(tgt, (char *)sub_B30B4(bank, (char *)str_Pl2) + 0x10, 0x300);
-    memcpy(pal, (char *)sub_B30B4(bank, (char *)str_Pl1) + 0x10, 0x300);
-    sub_9121C(sub_B30B4(bank, (char *)str_Bkgd3));
+    bank = LoadBank(path, 0);
+    memcpy(tgt, (char *)FindShape(bank, (char *)str_Pl2) + 0x10, 0x300);
+    memcpy(pal, (char *)FindShape(bank, (char *)str_Pl1) + 0x10, 0x300);
+    sub_9121C(FindShape(bank, (char *)str_Bkgd3));
     FreeMemBlock(bank);
     MakePath(path, fileoncd[0x128] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, 0);
-    bank2 = sub_8E83C(path, 0);
+    bank2 = LoadBank(path, 0);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x12C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer4, (char *)str_Iff2);
         song4 = sub_8F98F(path);
@@ -439,15 +439,15 @@ void RunIntro(void)
         }
         SetTickDeadline(2);
         WaitTickDeadline();
-        if (changed) sub_B4B88(0, 0x100, (unsigned char *)pal);
+        if (changed) VgaSetPalette(0, 0x100, (unsigned char *)pal);
     }
     SetTickDeadline(wait);
     WaitTickDeadline();
     for (i = 1; i < 5; i++) {
         sprintf(path, (char *)str_FlaD, i);
-        shapes[i] = sub_B30B4(bank2, path);
+        shapes[i] = FindShape(bank2, path);
     }
-    shapes[0] = sub_B30B4(bank2, (char *)str_Pion);
+    shapes[0] = FindShape(bank2, (char *)str_Pion);
     changed = 1;
     while (changed) {
         changed = 0;
@@ -459,15 +459,15 @@ void RunIntro(void)
         }
         SetTickDeadline(5);
         WaitTickDeadline();
-        if (changed) sub_B4B88(0, 0x100, (unsigned char *)pal);
+        if (changed) VgaSetPalette(0, 0x100, (unsigned char *)pal);
     }
     memset(pal, 0x3F, 0x300);
-    memcpy(tgt, (char *)sub_B30B4(bank2, (char *)str_Pio) + 0x10, 0x300);
+    memcpy(tgt, (char *)FindShape(bank2, (char *)str_Pio) + 0x10, 0x300);
     SetTickDeadline(0x50);
     WaitTickDeadline();
     if (musicon && song3) sub_8FB8E(song3, musichandle, 2, 0x7F);
-    for (i = 1; i < 5; i++) sub_913B4(shapes[i]);
-    sub_B4B88(0, 0x100, (unsigned char *)pal);
+    for (i = 1; i < 5; i++) DrawShape(shapes[i]);
+    VgaSetPalette(0, 0x100, (unsigned char *)pal);
     sub_9121C(shapes[0]);
     FreeMemBlock(bank2);
     changed = 1;
@@ -482,7 +482,7 @@ void RunIntro(void)
         }
         SetTickDeadline(5);
         WaitTickDeadline();
-        if (changed) sub_B4B88(0, 0x100, (unsigned char *)pal);
+        if (changed) VgaSetPalette(0, 0x100, (unsigned char *)pal);
     }
     SetTickDeadline(0x28);
     WaitTickDeadline();
@@ -496,7 +496,7 @@ void RunIntro(void)
         pal[i * 3 + 2] = pal[i * 3 + 1] = pal[i * 3] = 0x3F;
         SetTickDeadline(2);
         WaitTickDeadline();
-        sub_B4B88(0, 0x100, (unsigned char *)pal);
+        VgaSetPalette(0, 0x100, (unsigned char *)pal);
     }
     SetTickDeadline(0xC8);
     WaitTickDeadline();
@@ -529,9 +529,9 @@ void RunIntro(void)
     srand(t.hsecond);
     do {
         MakePath(path, fileoncd[0x67] == 1 ? (char *)cddriveptr : 0, (char *)str_Eaopen, 0);
-        bank = sub_8E83C(path, 0);
-        memcpy(pal, (char *)sub_B30B4(bank, (char *)str_Pal4) + 0x10, 0x300);
-        sub_912C8(sub_B30B4(bank, (char *)str_Scrn2));
+        bank = LoadBank(path, 0);
+        memcpy(pal, (char *)FindShape(bank, (char *)str_Pal4) + 0x10, 0x300);
+        sub_912C8(FindShape(bank, (char *)str_Scrn2));
         FreeMemBlock(bank);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1DC] == 1 ? (char *)cddriveptr : 0, (char *)str_Easports, (char *)str_Iff2);
@@ -549,10 +549,10 @@ void RunIntro(void)
         }
         FadePalStep(1, (unsigned char *)pal, 0x10);
         sub_B4BA8();
-        sub_B392C(0);
+        ClearScreen(0);
     } while (!TitleScreen() && !RunDemoGame());
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     PaOpenBank();
     demomode = demoflag = 0;
 }
@@ -590,23 +590,23 @@ void ShowCredits(void)
 
     TextGridFree();
     PaOpenBank();
-    sub_8E9E8(st);
-    sub_8EA18(mainfont);
+    TextSaveState(st);
+    TextSetFont(mainfont);
     SetTextColors(0x7F, 0);
-    bg = sub_8CCA8((char *)str_Backwin, 0x19337, 0);
+    bg = AllocMemBlock((char *)str_Backwin, 0x19337, 0);
     MakePath(path, fileoncd[0x21D] == 1 ? (char *)cddriveptr : 0, (char *)str_Credits, 0);
-    bank = sub_8E83C(path, 0);
-    p = (unsigned char *)sub_B30B4(bank, (char *)str_Pal4) + 0x10;
+    bank = LoadBank(path, 0);
+    p = (unsigned char *)FindShape(bank, (char *)str_Pal4) + 0x10;
     memcpy(pal, p, 0x300);
     memcpy(blackpal, p, 0x300);
-    art = sub_B30B4(bank, (char *)str_Bkgd3);
+    art = FindShape(bank, (char *)str_Bkgd3);
     *(Hdr17 *)bg = *(Hdr17 *)pointerspr;
     ((short *)bg)[2] = 0x135;
     ((short *)bg)[3] = 0x14E;
     FadeOutPalCycle();
-    sub_9061C(art);
+    DrawBitmap(art);
     FreeMemBlock(bank);
-    sub_91400(bg, 0x14A, 0x3F);
+    GrabBlock(bg, 0x14A, 0x3F);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1E1] == 1 ? (char *)cddriveptr : 0, (char *)str_Credits, (char *)str_Iff2);
         wait = sub_8F98F(path);
@@ -617,16 +617,16 @@ void ShowCredits(void)
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Adtitle, (char *)str_KMS);
         else
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Adtitle, (char *)str_KMS);
-        sample1 = sub_8F13B(path);
+        sample1 = LoadSample(path);
         MakePath(path, fileoncd[0x161] == 1 ? (char *)cddriveptr : 0, (char *)str_Rockditi, (char *)str_KMS);
-        sample2 = sub_8F13B(path);
+        sample2 = LoadSample(path);
         PlayDigiSample((void *)sample1);
     }
     FadePalStep(0, pal, 0x10);
     PaGoodnight();
     stop = 0;
     for (page = 0; page < 0x1D; page++) {
-        if (page == 7) sub_8EA18(kaufmfont);
+        if (page == 7) TextSetFont(kaufmfont);
         cur = (CreditPage *)creditpages[page];
         ClearInputQueue();
         if (page != 0) stop = WaitClickTimeout(0x62);
@@ -634,13 +634,13 @@ void ShowCredits(void)
         if (cur == (CreditPage *)unk_C638C) continue;
         if (*cur->bank != 0) {
             MakePath(path, fileoncd[0x21E] == 1 ? (char *)cddriveptr : 0, cur->bank, 0);
-            bank = sub_8E83C(path, 0);
-            art = sub_B30B4(bank, (char *)str_Shp0);
-            sub_903F0(bg, 0x14A, 0x3F);
-            sub_91370(art, rand() % 8 + 0x85, rand() % 8 + 0x6A);
+            bank = LoadBank(path, 0);
+            art = FindShape(bank, (char *)str_Shp0);
+            PutBlock(bg, 0x14A, 0x3F);
+            DrawArt(art, rand() % 8 + 0x85, rand() % 8 + 0x6A);
             FreeMemBlock(bank);
         } else {
-            sub_903F0(bg, 0x14A, 0x3F);
+            PutBlock(bg, 0x14A, 0x3F);
         }
         wait = cur->time;
         {
@@ -655,7 +655,7 @@ void ShowCredits(void)
         ClearInputQueue();
         if (WaitClickTimeout(wait)) break;
     }
-    sub_903F0(bg, 0x14A, 0x3F);
+    PutBlock(bg, 0x14A, 0x3F);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     SpeechStopQueue();
     FadePalStep(1, pal, 0x10);
@@ -665,11 +665,11 @@ void ShowCredits(void)
         songdata = 0;
     } else {
         StopDigiSample();
-        sub_8F1FE(sample1);
-        sub_8F1FE(sample2);
+        FreeSample(sample1);
+        FreeSample(sample2);
     }
-    sub_8EA00(st);
+    TextRestoreState(st);
     FreeMemBlock(bg);
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
 }

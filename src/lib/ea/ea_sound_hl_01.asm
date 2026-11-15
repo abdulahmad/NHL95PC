@@ -20,8 +20,8 @@ global sub_8EE43, sub_8EE4F, loc_8EE8B, loc_8EE90, loc_8EED5, loc_8EEF5, loc_8EE
 global loc_8EF36, loc_8EF43, loc_8EF47, loc_8EF4A, sub_8EF50, loc_8EF56, loc_8EF6D, sub_8EF76
 global sub_8EF91, loc_8EF98, loc_8EFB1, sub_8EFBB, loc_8EFDB, loc_8F008, loc_8F011, loc_8F01B
 global loc_8F01C, loc_8F029, loc_8F02B, loc_8F05C, loc_8F074, loc_8F095, loc_8F0A5, loc_8F0AB
-global loc_8F0B5, loc_8F0CF, sub_8F0D7, loc_8F0E7, loc_8F0EB, sub_8F114, loc_8F127, sub_8F13B
-global loc_8F151, loc_8F158, loc_8F19C, loc_8F1F2, loc_8F1F4, loc_8F1F7, loc_8F1F8, sub_8F1FE
+global loc_8F0B5, loc_8F0CF, sub_8F0D7, loc_8F0E7, loc_8F0EB, sub_8F114, loc_8F127, LoadSample
+global loc_8F151, loc_8F158, loc_8F19C, loc_8F1F2, loc_8F1F4, loc_8F1F7, loc_8F1F8, FreeSample
 global loc_8F244, sub_8F247, loc_8F24D, loc_8F262, sub_8F270, sub_8F27A, loc_8F2D7, loc_8F2F8
 global loc_8F38D, loc_8F3F3, loc_8F413, loc_8F420, loc_8F42B, sub_8F433, loc_8F43D, loc_8F447
 global loc_8F44F, sub_8F451, loc_8F45B, loc_8F47E, loc_8F47F, loc_8F48A, sub_8F48F, loc_8F4A0
@@ -38,7 +38,7 @@ global sub_8FB8E, sub_8FBE5, loc_8FC2E, loc_8FC31, sub_8FC37, sub_8FC8A, loc_8FC
 global sub_8FCAC, loc_8FCDC, sub_8FCDF, loc_8FCF8, loc_8FD5F, sub_8FD67, loc_8FD82, sub_8FD84
 global loc_8FDAE, sub_8FDB2, loc_8FDE1, sub_8FDE5, loc_8FE18, sub_8FE1C, loc_8FE4B, sub_8FE4F
 global loc_8FE7F, sub_8FE83, sub_8FE89, loc_8FEAD, loc_8FEBE, loc_8FEC2, sub_8FED2, sub_8FF1E
-global loc_8FF39, sub_8FF3E, loc_8FF59, sub_8FF5E, sub_8FF7C, sub_8FFB0, loc_8FFCB
+global loc_8FF39, sub_8FF3E, loc_8FF59, sub_8FF5E, sub_8FF7C, SetPalette, loc_8FFCB
 sub_8EB5B:
 push ebx	; 8EB5B
 push ecx	; 8EB5C
@@ -82,7 +82,7 @@ mov eax, edx	; 8EBBB
 shl eax, 2	; 8EBBD
 sub eax, edx	; 8EBC0
 mov eax, dword [nosplit eax*8+dword_EDCFC]	; 8EBC2
-call sub_8F1FE	; 8EBC9
+call FreeSample	; 8EBC9
 inc edx	; 8EBCE
 cmp edx, byte 0Dh	; 8EBCF
 jl short loc_8EBBB	; 8EBD2
@@ -612,7 +612,7 @@ add esp, byte 4	; 8F133
 mov eax, dword [byte eax+010h]	; 8F136
 pop ds	; 8F139
 ret	; 8F13A
-sub_8F13B:
+LoadSample:
 push ebx	; 8F13B
 push ecx	; 8F13C
 push edx	; 8F13D
@@ -685,7 +685,7 @@ pop edx	; 8F1FA
 pop ecx	; 8F1FB
 pop ebx	; 8F1FC
 ret	; 8F1FD
-sub_8F1FE:
+FreeSample:
 push ebx	; 8F1FE
 push edx	; 8F1FF
 mov edx, eax	; 8F200
@@ -932,7 +932,7 @@ pop ebx	; 8F48D
 ret	; 8F48E
 sub_8F48F:
 push ebx	; 8F48F
-call sub_8F13B	; 8F490
+call LoadSample	; 8F490
 test eax, eax	; 8F495
 je short loc_8F4A0	; 8F497
 xor ebx, ebx	; 8F499
@@ -940,7 +940,7 @@ call sub_8F4A7	; 8F49B
 loc_8F4A0:
 pop ebx	; 8F4A0
 ret	; 8F4A1
-call sub_8F13B	; 8F4A2
+call LoadSample	; 8F4A2
 sub_8F4A7:
 push ecx	; 8F4A7
 push esi	; 8F4A8
@@ -2068,7 +2068,7 @@ add eax, edx	; 8FFAB
 pop edx	; 8FFAD
 pop ebx	; 8FFAE
 ret	; 8FFAF
-sub_8FFB0:
+SetPalette:
 push ebp	; 8FFB0
 LD mov, ebp, esp	; 8FFB1
 push edi	; 8FFB3

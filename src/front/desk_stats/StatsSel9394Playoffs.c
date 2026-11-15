@@ -14,7 +14,7 @@ void StatsSel9394Playoffs(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)exhstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, statsscreenpal);
+    SetPalette(0, 0x100, statsscreenpal);
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
@@ -39,7 +39,7 @@ void StatsSelLeague(void)
     statsplayoffs = 0;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, statsscreenpal);
+    SetPalette(0, 0x100, statsscreenpal);
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
@@ -62,7 +62,7 @@ void StatsSelLeaguePlayoffs(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, statsscreenpal);
+    SetPalette(0, 0x100, statsscreenpal);
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;
@@ -85,7 +85,7 @@ void StatsSelPlayoffMode(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)postate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, statsscreenpal);
+    SetPalette(0, 0x100, statsscreenpal);
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;

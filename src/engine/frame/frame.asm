@@ -19,7 +19,7 @@ extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep,
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
-extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
+extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, SetPalette
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
 extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
 extern refYvel, xc1, yc1, yleader
@@ -532,7 +532,7 @@ mov dword [joysampling], ecx	; 69B64
 push savepal	; 69B6A
 push dword 100h	; 69B6F
 push ecx	; 69B74
-call sub_8FFB0	; 69B75
+call SetPalette	; 69B75
 add esp, byte 0Ch	; 69B7A
 mov ebx, 10h	; 69B7D
 mov edx, savepal	; 69B82
@@ -648,7 +648,7 @@ mov dword [oneminsaid], ecx	; 69D25
 push savepal	; 69D2B
 push dword 100h	; 69D30
 push ecx	; 69D35
-call sub_8FFB0	; 69D36
+call SetPalette	; 69D36
 add esp, byte 0Ch	; 69D3B
 mov ebx, 10h	; 69D3E
 mov edx, savepal	; 69D43

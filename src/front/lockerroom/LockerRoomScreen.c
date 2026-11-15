@@ -29,7 +29,7 @@ int LockerRoomScreen(void)
 
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x64);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     if (musicon && songdata) {
         int slot;
@@ -41,24 +41,24 @@ int LockerRoomScreen(void)
         songdata = 0;
     }
     ShowLoadingScreen();
-    sub_8E9E8(buf + 0x300);
-    homebckspr = sub_8CCA8((char *)str_HomeBck, 0x1B811, 0x20);
-    visbckspr = sub_8CCA8((char *)str_VisBck, 0x1A6F9, 0x20);
+    TextSaveState(buf + 0x300);
+    homebckspr = AllocMemBlock((char *)str_HomeBck, 0x1B811, 0x20);
+    visbckspr = AllocMemBlock((char *)str_VisBck, 0x1A6F9, 0x20);
     *(Hdr17 *)homebckspr = *(Hdr17 *)pointerspr;
     *(Hdr17 *)visbckspr = *(Hdr17 *)pointerspr;
     ((short *)homebckspr)[2] = 0x140;
     ((short *)visbckspr)[2] = 0x138;
     ((short *)homebckspr)[3] = 0x160;
     ((short *)visbckspr)[3] = 0x15B;
-    homenamebckspr = sub_8CCA8((char *)str_HomeNameBck, 0xA07, 0x20);
-    visnamebckspr = sub_8CCA8((char *)str_VisNameBck, 0xA07, 0x20);
+    homenamebckspr = AllocMemBlock((char *)str_HomeNameBck, 0xA07, 0x20);
+    visnamebckspr = AllocMemBlock((char *)str_VisNameBck, 0xA07, 0x20);
     *(Hdr17 *)homenamebckspr = *(Hdr17 *)pointerspr;
     *(Hdr17 *)visnamebckspr = *(Hdr17 *)pointerspr;
     ((short *)homenamebckspr)[2] = 0xAA;
     ((short *)visnamebckspr)[2] = 0xAA;
     ((short *)homenamebckspr)[3] = 0xF;
     ((short *)visnamebckspr)[3] = 0xF;
-    titlebckspr = sub_8CCA8((char *)str_TitleBck, 0x35C7, 0x20);
+    titlebckspr = AllocMemBlock((char *)str_TitleBck, 0x35C7, 0x20);
     *(Hdr17 *)titlebckspr = *(Hdr17 *)pointerspr;
     ((short *)titlebckspr)[2] = 0x226;
     ((short *)titlebckspr)[3] = 0x19;
@@ -69,7 +69,7 @@ int LockerRoomScreen(void)
     FreeMemBlock(visnamebckspr);
     FreeMemBlock(homebckspr);
     FreeMemBlock(visbckspr);
-    sub_8EA00(buf + 0x300);
+    TextRestoreState(buf + 0x300);
     if (gamemode == 0)
         r = 2;
     else
@@ -79,7 +79,7 @@ int LockerRoomScreen(void)
 
 /* DrawLockerRoom (80AA4, PC only; ends in LockerStub): draw the locker room. Load LOCKROOM (from the CD when
    listed): its palette entries 0-167h brightened (+5, at most 3Fh, the rest as they are), the palette cycle faded
-   out, the ROOM art; the frame panels (DrawPanel3D) and the background plates saved (sub_91400). Both teams'
+   out, the ROOM art; the frame panels (DrawPanel3D) and the background plates saved (GrabBlock). Both teams'
    jersey banks (JERSH / JERSV + the team file name; palette entries 240h-2FFh home, 180h-23Fh visitors,
    brightened) and their art (00002). The four neighbour plates are cleared and labelled with the teams before and
    after each side (28 teams in exhibition, where an all-star team equal to the other side is skipped; else 26),
@@ -103,8 +103,8 @@ void DrawLockerRoom(void)
 
     sub_B4BA8();
     MakePath(path, fileoncd[0xE9] == 1 ? (char *)cddriveptr : 0, (char *)str_Lockroom, 0);
-    bank = sub_8E83C(path, 0);
-    src = (signed char *)sub_B30B4(bank, (char *)str_P01) + 0x10;
+    bank = LoadBank(path, 0);
+    src = (signed char *)FindShape(bank, (char *)str_P01) + 0x10;
     for (i = 0; i < 0x180; i++) {
         if (i < 0x168) {
             if (src[i] < 0x3B) pal[i] = src[i] + 5;
@@ -114,41 +114,41 @@ void DrawLockerRoom(void)
         }
     }
     FadeOutPalCycle();
-    sub_912C8(sub_B30B4(bank, (char *)str_Room));
+    sub_912C8(FindShape(bank, (char *)str_Room));
     FreeMemBlock(bank);
     DrawPanel3D(0, 0x1A7, 0x27F, 0x1E0, 1);
     for (i = 2; i < 8; i++) DrawPanel3D(LR[i].l, LR[i].t, LR[i].r, LR[i].b, 0);
-    sub_91400(titlebckspr, 0x2D, 0x11);
-    sub_91400(homebckspr, 0xA, 0x45);
-    sub_91400(visbckspr, 0x146, 0x4A);
-    sub_91400(homenamebckspr, 0x85, 0x2C);
-    sub_91400(visnamebckspr, 0x152, 0x2C);
+    GrabBlock(titlebckspr, 0x2D, 0x11);
+    GrabBlock(homebckspr, 0xA, 0x45);
+    GrabBlock(visbckspr, 0x146, 0x4A);
+    GrabBlock(homenamebckspr, 0x85, 0x2C);
+    GrabBlock(visnamebckspr, 0x152, 0x2C);
     sprintf(name, (char *)str_JERSH, jerseyabbrevs[lockerindex[HomeTeam]]);
     i = HomeTeam * 2 + 0xA3;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
-    bank = sub_8E83C(path, 0);
-    src = (signed char *)sub_B30B4(bank, (char *)str_P01) + 0x10;
+    bank = LoadBank(path, 0);
+    src = (signed char *)FindShape(bank, (char *)str_P01) + 0x10;
     for (i = 0x240; i < 0x300; i++) {
         if (src[i] < 0x3B) pal[i] = src[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_912C8(sub_B30B4(bank, (char *)str_00002));
+    sub_912C8(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
     sprintf(name, (char *)str_JERSV, jerseyabbrevs[lockerindex[VisTeam]]);
     i = VisTeam * 2 + 0xA4;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
-    bank = sub_8E83C(path, 0);
-    src = (signed char *)sub_B30B4(bank, (char *)str_P01) + 0x10;
+    bank = LoadBank(path, 0);
+    src = (signed char *)FindShape(bank, (char *)str_P01) + 0x10;
     for (i = 0x180; i < 0x240; i++) {
         if (src[i] < 0x3B) pal[i] = src[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_912C8(sub_B30B4(bank, (char *)str_00002));
+    sub_912C8(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
     SetTextColors(0x77, 0x62);
-    for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
-    sub_8EA18(mainfont);
-    sub_8E9C0(0x77, 0xFF);
+    for (i = 2; i < 6; i++) FillRect(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
+    TextSetFont(mainfont);
+    TextSetColors(0x77, 0xFF);
     if (gamemode == 0) {
         i = (lockerindex[HomeTeam] + 0x1B) % 0x1C;
         if (i >= 0x1A && i == lockerindex[VisTeam]) i = (i + 0x1B) % 0x1C;
@@ -205,7 +205,7 @@ void DrawLockerRoom(void)
     cy = LR[4].b + 5;
     cx = LR[4].l + LR[5].r >> 1;
     PrintShadowText(cx - (fputchar((char *)str_VisitingTeam) >> 1) + 2, cy, (char *)str_VisitingTeam);
-    sub_8EA18(kaufmfont);
+    TextSetFont(kaufmfont);
     if (gamemode == 1) {
         i = teamdivflags[VisTeam] | teamdivflags[HomeTeam];
         s = (char *)poroundnames[poroundnameidx[i]];
@@ -213,7 +213,7 @@ void DrawLockerRoom(void)
     } else {
         PrintOutlinedText((0x280 - fputchar((char *)str_ExhibitionGame)) / 2, 0x12, (char *)str_ExhibitionGame);
     }
-    sub_8EA18(mainfont);
+    TextSetFont(mainfont);
     if (musicon && !songdata) {
         MakePath(path, fileoncd[0x1DD] == 1 ? (char *)cddriveptr : 0, (char *)str_Jersey, (char *)str_Iff11);
         songdata = sub_8F98F(path);
@@ -236,7 +236,7 @@ void DrawLockerRoom(void)
     homeremap_eFC = 0x7D;
     homeremap_eFD = 0x7E;
     (&homeremap_eFD)[1] = 0x7F;
-    sub_B4DD4(homeremap);
+    SetColorRemap(homeremap);
 }
 
 /* LockerRoomLoop (81C4E, PC only; ends in LockerStub): the locker room. Start from the home and visiting teams'
@@ -271,16 +271,16 @@ int LockerRoomLoop(void)
 
     hm = lockerindex[HomeTeam];
     vis = lockerindex[VisTeam];
-    sub_B2DCA(&btn, &ox, &oy);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer20, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer20, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
+    GrabBlock(bm, x - 4, y);
     sub_91FE0(pointerspr, x - 4, y);
     ClearInputQueue();
     for (;;) {
@@ -293,14 +293,14 @@ int LockerRoomLoop(void)
         }
         if (!(btn & 2) && !(btn & 4)) {
             if (x != ox || y != oy) {
-                sub_903F0(bm, ox - 4, oy);
-                sub_91400(bm, x - 4, y);
+                PutBlock(bm, ox - 4, oy);
+                GrabBlock(bm, x - 4, y);
                 sub_91FE0(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
         } else if (btn & 2) {
-            sub_903F0(bm, ox - 4, oy);
+            PutBlock(bm, ox - 4, oy);
             if (LockerHitTest(x, y, &hit)) {
                 switch (hit) {
                 case 2:
@@ -382,7 +382,7 @@ int LockerRoomLoop(void)
                     }
                     WriteCurModeState();
                     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-                    sub_8FFB0(0, 0x100, buf);
+                    SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
@@ -393,7 +393,7 @@ int LockerRoomLoop(void)
                     return 0;
                 case 7:
                     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-                    sub_8FFB0(0, 0x100, buf);
+                    SetPalette(0, 0x100, buf);
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
@@ -404,13 +404,13 @@ int LockerRoomLoop(void)
                     return 3;
                 }
             }
-            sub_91400(bm, x - 4, y);
+            GrabBlock(bm, x - 4, y);
             sub_91FE0(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         } else {
             if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-            sub_8FFB0(0, 0x100, buf);
+            SetPalette(0, 0x100, buf);
             FadePalStep(1, buf, 0x10);
             FreeMemBlock(bm);
             if (musicon && songdata) {

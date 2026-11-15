@@ -72,11 +72,11 @@ int SkaterStatsCard(void)
     sub_B4BA8();
     sprintf((char *)printfbuf, (char *)str_fmtEmb, s.abbr);
     MakePath(s.path, fileoncd[pl[0] + 0x70] == 1 ? (char *)cddriveptr : 0, (char *)printfbuf, 0);
-    statsbgshapes = sub_8E83C(s.path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(s.path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     if (pl[0x30]) {
         *(T6 *)s.name = *(T6 *)str_PORTR;
@@ -86,7 +86,7 @@ int SkaterStatsCard(void)
         s.name[8] = 0;
         MakePath(s.path, portraitoncd[bank + v] == 1
             ? (char *)cddriveptr : 0, s.name, 0);
-        bank = sub_8E83C(s.path, 0);
+        bank = LoadBank(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
         s.name[4] = 0;
         art = sub_B30BB(bank, s.name);
@@ -95,24 +95,24 @@ int SkaterStatsCard(void)
             DrawPhotoWithPal((unsigned char *)sub_B30BB(bank, s.name) + 0x10, art, 0x21, 0x26);
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
-            statsbgshapes = sub_8E83C(s.path, 0);
-            sub_913B4(statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst1));
+            statsbgshapes = LoadBank(s.path, 0);
+            DrawShape(statspalshape = FindShape(statsbgshapes, (char *)str_Pst1));
         } else {
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
-            statsbgshapes = sub_8E83C(s.path, 0);
-            sub_913B4(statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst22));
+            statsbgshapes = LoadBank(s.path, 0);
+            DrawShape(statspalshape = FindShape(statsbgshapes, (char *)str_Pst22));
         }
         FreeMemBlock(statsbgshapes);
     } else {
         MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
-        statsbgshapes = sub_8E83C(s.path, 0);
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst22);
-        sub_913B4(statspalshape);
+        statsbgshapes = LoadBank(s.path, 0);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Pst22);
+        DrawShape(statspalshape);
         FreeMemBlock(statsbgshapes);
     }
-    sub_8E9E8(s.text);
-    sub_8EA18(t.kaufm);
+    TextSaveState(s.text);
+    TextSetFont(t.kaufm);
     SetTextColors(0x40, 0x43);
     *(T13 *)printfbuf = *(T13 *)str_PlayerStats;
     PrintOutlinedText(0x140 - (fputchar((char *)printfbuf) >> 1), 0x52, (char *)printfbuf);
@@ -136,7 +136,7 @@ int SkaterStatsCard(void)
         break;
     }
     PrintCenteredText(0xB2, (char *)printfbuf);
-    sub_8EA18(t.mainf);
+    TextSetFont(t.mainf);
     t.y = 0xF3;
     PrintShadowText(0x82, (short)t.y, (char *)str_GP2);
     PrintShadowText(0xAA, (short)t.y, (char *)str_G2);
@@ -188,7 +188,7 @@ int SkaterStatsCard(void)
         PrintFmt1((short)(t.x + 0x10E), (short)t.y, (char *)str_fmt3d, (short)v);
         t.y += 0xD;
     }
-    sub_8EA00(s.text);
+    TextRestoreState(s.text);
     TextGridOff();
     return t.result;
 }

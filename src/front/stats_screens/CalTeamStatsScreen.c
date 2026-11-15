@@ -26,7 +26,7 @@ int CalTeamStatsScreen(int cat)
     char *ext;
     int z;
 
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)TeamStatsScreen;
@@ -41,12 +41,12 @@ int CalTeamStatsScreen(int cat)
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
     else dir = 0;
     MakePath((char *)buf + 0x300, dir, name, ext);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal8);
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal8);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     RunMenu(teamstatsmenubar, 4, 0x40, 0x41, 0x42);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     calredraw = -1;
     LoadCalendarShapes();
@@ -67,7 +67,7 @@ int CalSkaterStatsScreen(int cat)
     char *ext;
     int z;
 
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
@@ -82,12 +82,12 @@ int CalSkaterStatsScreen(int cat)
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
     else dir = 0;
     MakePath((char *)buf + 0x300, dir, name, ext);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal8);
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal8);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     RunMenu(skaterstatsmenubar, 4, 0x40, 0x41, 0x42);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     calredraw = -1;
     LoadCalendarShapes();
@@ -107,7 +107,7 @@ int CalGoalieStatsScreen(int cat)
     char *ext;
     int z;
 
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
@@ -122,12 +122,12 @@ int CalGoalieStatsScreen(int cat)
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
     else dir = 0;
     MakePath((char *)buf + 0x300, dir, name, ext);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal8);
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal8);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     RunMenu(goaliestatsmenubar, 4, 0x40, 0x41, 0x42);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     calredraw = -1;
     LoadCalendarShapes();
@@ -160,23 +160,23 @@ int CalStandingsMenu(void)
     statsteamsel = 0;
     statscategory = 0;
     statsplayer[2] = 0;
-    sub_8FFB0(0, 0x100, s.pal);
+    SetPalette(0, 0x100, s.pal);
     FadePalStep(1, s.pal, 0x10);
     FreeCalendarIfLowMem();
     z = 0;
     dword_C6D26 = z;
     InitMenuRemap(1);
-    statsteambuf = sub_8CCA8((char *)str_tstat3, 0x2A4, 0x20);
-    statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_keys3, 0x5B0, 0x20);
-    statsskaterbuf = (unsigned char *)sub_8CCA8((char *)str_pstat3, 0x497, 0x20);
-    statsgoaliebuf = (unsigned char *)sub_8CCA8((char *)str_gstat3, 0x10E, 0x20);
+    statsteambuf = AllocMemBlock((char *)str_tstat3, 0x2A4, 0x20);
+    statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_keys3, 0x5B0, 0x20);
+    statsskaterbuf = (unsigned char *)AllocMemBlock((char *)str_pstat3, 0x497, 0x20);
+    statsgoaliebuf = (unsigned char *)AllocMemBlock((char *)str_gstat3, 0x10E, 0x20);
     ((void (*)(int))standingscb)(0);
     DrawMenuBar(standingsmenubar, 4, 0x40, 0x41, 0x42);
     statscategory = z;
     statsteamsel = z;
     MakePath(s.path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_embpal3, 0);
-    statsbgshapes = sub_8E83C(s.path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal8);
+    statsbgshapes = LoadBank(s.path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal8);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     ((void (*)(void *, int, int, int, int))RunTeamPickMenu)(standingsmenubar, 4, 0x40, 0x41, 0x42);
@@ -233,7 +233,7 @@ int CalStandingsMenu(void)
     leaguestatsmode = z;
     statsredrawcb = z;
     for (i = 0; i < 0x1F; i++) playofftree[i] = s.tree[i];
-    sub_8FFB0(0, 0x100, s.pal);
+    SetPalette(0, 0x100, s.pal);
     FadePalStep(1, s.pal, 0x10);
     calredraw = -1;
     LoadCalendarShapes();

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_90B50 progbits alloc exec nowrite align=1
-extern sub_B30B4, sub_B30BB
+extern FindShape, sub_B30BB
 global sub_90B50, loc_90B64, loc_90B7B, sub_90B80, loc_90B94, loc_90BAB
 sub_90B50:
 push esi	; 90B50
@@ -41,7 +41,7 @@ je short loc_90BAB	; 90B92
 loc_90B94:
 push esi	; 90B94
 push ebp	; 90B95
-call sub_B30B4	; 90B96
+call FindShape	; 90B96
 add esp, byte 8	; 90B9B
 mov dword [edi], eax	; 90B9E
 add edi, byte 4	; 90BA0

@@ -9,9 +9,9 @@ extern MessageBox, MouseSetPos, msg_NoSaveSpace, msg_SavingLeagueGame, msg_Savin
 extern pointerspr, postate, ptrupdatefn, RestoreDialogBg, SaveGameState, SaveLeagueGameRef, SaveModeState, SetDialogColors
 extern SetTickDeadline, sprintf_, str_AGameYouRequire, str_AGameYouRequire2, str_AGameYouRequire3, str_Db4, str_DemoNhl, str_Dialog
 extern str_Err1, str_extDB, str_GameSav5, str_Gsummary3, str_GsummaryDb4, str_Nhl3, str_Pointer22, str_Prmt
-extern str_Sav3, str_Savegame, strcat_, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8
-extern sub_8EA00, sub_8EA18, sub_903F0, sub_910E0, sub_91284, sub_91370, sub_91400, sub_92CD0
-extern sub_92DE0, sub_B2DCA, sub_B30B4, sub_B4BA8, str_H2, str_h3, str_H4, str_h5
+extern str_Sav3, str_Savegame, strcat_, AllocMemBlock, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern TextRestoreState, TextSetFont, PutBlock, DrawArtOpaque, sub_91284, DrawArt, GrabBlock, sub_92CD0
+extern GetFileSize, MouseRead, FindShape, sub_B4BA8, str_H2, str_h3, str_H4, str_h5
 extern str_h6, str_h7, str_H1, str_A32, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
 global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
 ; C: src/front/savegame/MenuSaveGame.c
@@ -30,11 +30,11 @@ push ebp	; 85933
 sub esp, 9Ch	; 85934
 mov eax, esp	; 8593A
 push eax	; 8593C
-call sub_8E9E8	; 8593D
+call TextSaveState	; 8593D
 add esp, byte 4	; 85942
 mov edx, dword [mainfont]	; 85945
 push edx	; 8594B
-call sub_8EA18	; 8594C
+call TextSetFont	; 8594C
 add esp, byte 4	; 85951
 xor ecx, ecx	; 85954
 mov ebx, str_GsummaryDb4	; 85956
@@ -104,7 +104,7 @@ test eax, eax	; 85A46
 je short .4	; 85A48
 mov eax, esp	; 85A4A
 push eax	; 85A4C
-call sub_8EA00	; 85A4D
+call TextRestoreState	; 85A4D
 add esp, byte 4	; 85A52
 xor ebp, ebp	; 85A55
 jmp near .18	; 85A57
@@ -147,7 +147,7 @@ add esp, byte 8	; 85AE4
 mov edi, eax	; 85AE7
 lea eax, [byte esp+06Ch]	; 85AE9
 push eax	; 85AED
-call sub_92DE0	; 85AEE
+call GetFileSize	; 85AEE
 add esp, byte 4	; 85AF3
 mov ecx, eax	; 85AF6
 mov ebx, 0FFFFFFFFh	; 85AF8
@@ -306,7 +306,7 @@ call RestoreDialogBg	; 85D4D
 .17:
 mov eax, esp	; 85D52
 push eax	; 85D54
-call sub_8EA00	; 85D55
+call TextRestoreState	; 85D55
 add esp, byte 4	; 85D5A
 .18:
 mov eax, ebp	; 85D5D
@@ -347,7 +347,7 @@ mov dword [byte esp+07Ch], eax	; 85D9D
 push byte 20h	; 85DA1
 push eax	; 85DA3
 push str_Pointer22	; 85DA4
-call sub_8CCA8	; 85DA9
+call AllocMemBlock	; 85DA9
 add esp, byte 0Ch	; 85DAE
 mov ebp, eax	; 85DB1
 mov esi, dword [pointerspr]	; 85DB3
@@ -364,7 +364,7 @@ lea eax, [byte esp+07Ch]	; 85DCA
 push eax	; 85DCE
 lea eax, [dword esp+084h]	; 85DCF
 push eax	; 85DD6
-call sub_B2DCA	; 85DD7
+call MouseRead	; 85DD7
 add esp, byte 0Ch	; 85DDC
 mov eax, dword [byte esp+078h]	; 85DDF
 mov dword [byte esp+070h], eax	; 85DE3
@@ -375,7 +375,7 @@ mov ecx, dword [byte esp+07Ch]	; 85DF3
 push ecx	; 85DF7
 mov esi, ebp	; 85DF8
 push esi	; 85DFA
-call sub_91400	; 85DFB
+call GrabBlock	; 85DFB
 add esp, byte 0Ch	; 85E00
 mov edi, dword [byte esp+074h]	; 85E03
 push edi	; 85E07
@@ -399,12 +399,12 @@ call MakePath	; 85E3A
 push byte 0	; 85E3F
 lea eax, [byte esp+08h]	; 85E41
 push eax	; 85E45
-call sub_8E83C	; 85E46
+call LoadBank	; 85E46
 add esp, byte 8	; 85E4B
 mov dword [dword esp+088h], eax	; 85E4E
 push str_Prmt	; 85E55
 push eax	; 85E5A
-call sub_B30B4	; 85E5B
+call FindShape	; 85E5B
 mov dword [dword esp+08Ch], eax	; 85E60
 add esp, byte 8	; 85E67
 mov dword [dword esp+090h], eax	; 85E6A
@@ -420,7 +420,7 @@ mov dword [byte esp+07Ch], eax	; 85E8D
 push byte 20h	; 85E91
 push eax	; 85E93
 push str_Dialog	; 85E94
-call sub_8CCA8	; 85E99
+call AllocMemBlock	; 85E99
 mov ebx, eax	; 85E9E
 add esp, byte 0Ch	; 85EA0
 mov dword [dword esp+08Ch], eax	; 85EA3
@@ -452,17 +452,17 @@ sub edi, eax	; 85EF0
 push edi	; 85EF2
 push esi	; 85EF3
 push ebx	; 85EF4
-call sub_91400	; 85EF5
+call GrabBlock	; 85EF5
 add esp, byte 0Ch	; 85EFA
 push edi	; 85EFD
 push esi	; 85EFE
 mov ecx, dword [dword esp+08Ch]	; 85EFF
 push ecx	; 85F06
-call sub_910E0	; 85F07
+call DrawArtOpaque	; 85F07
 add esp, byte 0Ch	; 85F0C
 push dword 0F8h	; 85F0F
 push dword 0FAh	; 85F14
-call sub_8E9C0	; 85F19
+call TextSetColors	; 85F19
 add esp, byte 8	; 85F1E
 mov eax, dword [dword esp+084h]	; 85F21
 mov eax, dword [byte eax+06h]	; 85F28
@@ -490,7 +490,7 @@ push eax	; 85F6E
 mov edx, dword [byte esp+07Ch]	; 85F6F
 push edx	; 85F73
 push ebp	; 85F74
-call sub_910E0	; 85F75
+call DrawArtOpaque	; 85F75
 add esp, byte 0Ch	; 85F7A
 .3:
 mov eax, dword [esp]	; 85F7D
@@ -527,7 +527,7 @@ push edi	; 85FDE
 push esi	; 85FDF
 mov eax, dword [dword esp+094h]	; 85FE0
 push eax	; 85FE7
-call sub_910E0	; 85FE8
+call DrawArtOpaque	; 85FE8
 add esp, byte 0Ch	; 85FED
 mov edx, dword [dword esp+08Ch]	; 85FF0
 push edx	; 85FF7
@@ -536,7 +536,7 @@ add esp, byte 4	; 85FFD
 push str_Err1	; 86000
 mov ebx, dword [dword esp+08Ch]	; 86005
 push ebx	; 8600C
-call sub_B30B4	; 8600D
+call FindShape	; 8600D
 mov dword [dword esp+08Ch], eax	; 86012
 add esp, byte 8	; 86019
 mov dword [dword esp+090h], eax	; 8601C
@@ -552,7 +552,7 @@ mov dword [byte esp+07Ch], eax	; 8603F
 push byte 20h	; 86043
 push eax	; 86045
 push str_Dialog	; 86046
-call sub_8CCA8	; 8604B
+call AllocMemBlock	; 8604B
 mov ebx, eax	; 86050
 add esp, byte 0Ch	; 86052
 mov dword [dword esp+08Ch], eax	; 86055
@@ -584,7 +584,7 @@ sub edi, eax	; 860A2
 push edi	; 860A4
 push esi	; 860A5
 push ebx	; 860A6
-call sub_91400	; 860A7
+call GrabBlock	; 860A7
 add esp, byte 0Ch	; 860AC
 push edi	; 860AF
 push esi	; 860B0
@@ -612,7 +612,7 @@ jne short SaveGameNameDlg.5	; 860EC
 mov byte [edx], 0	; 860EE
 push dword 0F9h	; 860F1
 push dword 0FAh	; 860F6
-call sub_8E9C0	; 860FB
+call TextSetColors	; 860FB
 add esp, byte 8	; 86100
 push edi	; 86103
 push esi	; 86104
@@ -628,7 +628,7 @@ add esp, byte 8	; 86126
 push dword 0FEh	; 86129
 push dword 181h	; 8612E
 push ebp	; 86133
-call sub_91400	; 86134
+call GrabBlock	; 86134
 add esp, byte 0Ch	; 86139
 push dword 0FEh	; 8613C
 push dword 181h	; 86141
@@ -670,14 +670,14 @@ push ecx	; 861B9
 mov esi, dword [byte esp+07Ch]	; 861BA
 push esi	; 861BE
 push ebp	; 861BF
-call sub_903F0	; 861C0
+call PutBlock	; 861C0
 add esp, byte 0Ch	; 861C5
 mov edi, dword [dword esp+080h]	; 861C8
 push edi	; 861CF
 mov eax, dword [byte esp+074h]	; 861D0
 push eax	; 861D4
 push ebp	; 861D5
-call sub_91400	; 861D6
+call GrabBlock	; 861D6
 add esp, byte 0Ch	; 861DB
 mov edx, dword [dword esp+080h]	; 861DE
 push edx	; 861E5
@@ -686,7 +686,7 @@ push ebx	; 861EA
 mov ecx, dword [pointerspr]	; 861EB
 push ecx	; 861F1
 .11:
-call sub_91370	; 861F2
+call DrawArt	; 861F2
 add esp, byte 0Ch	; 861F7
 mov eax, dword [byte esp+070h]	; 861FA
 mov dword [byte esp+078h], eax	; 861FE
@@ -709,7 +709,7 @@ push ebx	; 86249
 mov ecx, dword [byte esp+07Ch]	; 8624A
 push ecx	; 8624E
 push ebp	; 8624F
-call sub_903F0	; 86250
+call PutBlock	; 86250
 add esp, byte 0Ch	; 86255
 mov edx, dword [dword esp+090h]	; 86258
 mov edx, dword [byte edx+02h]	; 8625F
@@ -733,7 +733,7 @@ push edi	; 86292
 push esi	; 86293
 mov esi, dword [dword esp+094h]	; 86294
 push esi	; 8629B
-call sub_910E0	; 8629C
+call DrawArtOpaque	; 8629C
 add esp, byte 0Ch	; 862A1
 push esi	; 862A4
 call FreeMemBlock	; 862A5
@@ -760,7 +760,7 @@ push ecx	; 862F6
 mov esi, dword [byte esp+07Ch]	; 862F7
 push esi	; 862FB
 push ebp	; 862FC
-call sub_903F0	; 862FD
+call PutBlock	; 862FD
 add esp, byte 0Ch	; 86302
 mov edx, dword [dword esp+090h]	; 86305
 mov edx, dword [byte edx+02h]	; 8630C
@@ -784,7 +784,7 @@ push edi	; 8633F
 push esi	; 86340
 mov edi, dword [dword esp+094h]	; 86341
 push edi	; 86348
-call sub_910E0	; 86349
+call DrawArtOpaque	; 86349
 add esp, byte 0Ch	; 8634E
 push edi	; 86351
 call FreeMemBlock	; 86352
@@ -810,14 +810,14 @@ push esi	; 86395
 mov edi, dword [byte esp+07Ch]	; 86396
 push edi	; 8639A
 push ebp	; 8639B
-call sub_903F0	; 8639C
+call PutBlock	; 8639C
 add esp, byte 0Ch	; 863A1
 mov eax, dword [dword esp+080h]	; 863A4
 push eax	; 863AB
 mov edx, dword [byte esp+074h]	; 863AC
 push edx	; 863B0
 push ebp	; 863B1
-call sub_91400	; 863B2
+call GrabBlock	; 863B2
 add esp, byte 0Ch	; 863B7
 mov ebx, dword [dword esp+080h]	; 863BA
 push ebx	; 863C1
@@ -832,7 +832,7 @@ push edi	; 863D7
 mov eax, dword [byte esp+07Ch]	; 863D8
 push eax	; 863DC
 push ebp	; 863DD
-call sub_903F0	; 863DE
+call PutBlock	; 863DE
 add esp, byte 0Ch	; 863E3
 mov edx, dword [dword esp+090h]	; 863E6
 mov edx, dword [byte edx+02h]	; 863ED
@@ -856,7 +856,7 @@ push edi	; 86420
 push esi	; 86421
 mov edx, dword [dword esp+094h]	; 86422
 push edx	; 86429
-call sub_910E0	; 8642A
+call DrawArtOpaque	; 8642A
 add esp, byte 0Ch	; 8642F
 mov ebx, dword [dword esp+08Ch]	; 86432
 push ebx	; 86439
@@ -865,7 +865,7 @@ add esp, byte 4	; 8643F
 push str_Prmt	; 86442
 mov ecx, dword [dword esp+08Ch]	; 86447
 push ecx	; 8644E
-call sub_B30B4	; 8644F
+call FindShape	; 8644F
 mov dword [dword esp+08Ch], eax	; 86454
 add esp, byte 8	; 8645B
 mov dword [dword esp+090h], eax	; 8645E
@@ -880,7 +880,7 @@ mov dword [byte esp+07Ch], eax	; 8647A
 push byte 20h	; 8647E
 push eax	; 86480
 push str_Dialog	; 86481
-call sub_8CCA8	; 86486
+call AllocMemBlock	; 86486
 mov ebx, eax	; 8648B
 add esp, byte 0Ch	; 8648D
 mov dword [dword esp+08Ch], eax	; 86490
@@ -912,13 +912,13 @@ sub edi, eax	; 864DD
 push edi	; 864DF
 push esi	; 864E0
 push ebx	; 864E1
-call sub_91400	; 864E2
+call GrabBlock	; 864E2
 add esp, byte 0Ch	; 864E7
 push edi	; 864EA
 push esi	; 864EB
 mov eax, dword [dword esp+08Ch]	; 864EC
 push eax	; 864F3
-call sub_910E0	; 864F4
+call DrawArtOpaque	; 864F4
 add esp, byte 0Ch	; 864F9
 mov eax, dword [dword esp+084h]	; 864FC
 mov eax, dword [byte eax+06h]	; 86503
@@ -933,7 +933,7 @@ push edx	; 8651E
 mov ebx, dword [byte esp+07Ch]	; 8651F
 push ebx	; 86523
 push ebp	; 86524
-call sub_91400	; 86525
+call GrabBlock	; 86525
 add esp, byte 0Ch	; 8652A
 .17:
 xor eax, eax	; 8652D
@@ -953,7 +953,7 @@ add eax, dword [esp]	; 86542
 mov byte [eax], 0	; 86545
 push dword 0F8h	; 86548
 push dword 0FAh	; 8654D
-call sub_8E9C0	; 86552
+call TextSetColors	; 86552
 add esp, byte 8	; 86557
 push byte 1	; 8655A
 push byte 0	; 8655C
@@ -974,7 +974,7 @@ push ebx	; 8658C
 mov ecx, dword [byte esp+07Ch]	; 8658D
 push ecx	; 86591
 push ebp	; 86592
-call sub_903F0	; 86593
+call PutBlock	; 86593
 add esp, byte 0Ch	; 86598
 mov edx, dword [dword esp+090h]	; 8659B
 mov edx, dword [byte edx+02h]	; 865A2
@@ -998,7 +998,7 @@ push edi	; 865D5
 push esi	; 865D6
 mov esi, dword [dword esp+094h]	; 865D7
 push esi	; 865DE
-call sub_910E0	; 865DF
+call DrawArtOpaque	; 865DF
 add esp, byte 0Ch	; 865E4
 push esi	; 865E7
 call FreeMemBlock	; 865E8

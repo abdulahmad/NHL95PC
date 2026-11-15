@@ -60,7 +60,7 @@ int FindLeagueFloppy(char *file, char *name, char *dir)
         if (notfound) {
             FmtFromLeague(s.fmt, pname, pfile);
             *(int *)(notforlgmsg + 4) = (int)s.fmt;
-            sub_B2DCA(&s.drive, &s.y, &s.x);
+            MouseRead(&s.drive, &s.y, &s.x);
             s.result = MessageBox(-1, -1, (char *)notforlgmsg, 6, 0, 0, (int)&s.y, (int)&s.x, -1);
             if (s.result) notfound = 0;
         }

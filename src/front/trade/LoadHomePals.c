@@ -37,5 +37,5 @@ void LoadHomePals(int home, int vis)
     pal[0x17A] = 0x3B;
     pal[0x17B] = 0x3B;
     pal[0x17C] = 0x3B;
-    sub_B4B88(0x80, 0x80, pal);
+    VgaSetPalette(0x80, 0x80, pal);
 }

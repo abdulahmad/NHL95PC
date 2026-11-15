@@ -17,28 +17,28 @@ void DrawPanel3D(int x1, int y1, int x2, int y2, int corners)
     int yc;
     int xc;
 
-    sub_90D20(x1, y1, x2 - x1 + 1, y2 - y1 + 1, 0x70);
+    FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, 0x70);
     sub_B4FAC(x1, y1, x2, y1, 0x77);
     sub_B4FAC(x1, y1, x1, y2, 0x77);
     sub_B4FAC(x2, y1, x2, y2, 0x62);
     sub_B4FAC(x1, y2, x2, y2, 0x62);
     if (corners) {
-        sub_B5DB0(xa = x1 + 2, ya = y1 + 2, 0x77);
-        sub_B5DB0(x1 += 3, y1 += 3, 0x77);
-        sub_B5DB0(x1, ya, 0x62);
-        sub_B5DB0(xa, y1, 0x62);
-        sub_B5DB0(xa, yb = y2 - 2, 0x62);
-        sub_B5DB0(x1, yc = y2 - 3, 0x62);
-        sub_B5DB0(x1, yb, 0x77);
-        sub_B5DB0(xa, yc, 0x77);
-        sub_B5DB0(xc = x2 - 3, ya, 0x77);
-        sub_B5DB0(x2 -= 2, y1, 0x77);
-        sub_B5DB0(x2, ya, 0x62);
-        sub_B5DB0(xc, y1, 0x62);
-        sub_B5DB0(xc, yb, 0x62);
-        sub_B5DB0(x2, yc, 0x62);
-        sub_B5DB0(x2, yb, 0x77);
-        sub_B5DB0(xc, yc, 0x77);
+        PlotPixel(xa = x1 + 2, ya = y1 + 2, 0x77);
+        PlotPixel(x1 += 3, y1 += 3, 0x77);
+        PlotPixel(x1, ya, 0x62);
+        PlotPixel(xa, y1, 0x62);
+        PlotPixel(xa, yb = y2 - 2, 0x62);
+        PlotPixel(x1, yc = y2 - 3, 0x62);
+        PlotPixel(x1, yb, 0x77);
+        PlotPixel(xa, yc, 0x77);
+        PlotPixel(xc = x2 - 3, ya, 0x77);
+        PlotPixel(x2 -= 2, y1, 0x77);
+        PlotPixel(x2, ya, 0x62);
+        PlotPixel(xc, y1, 0x62);
+        PlotPixel(xc, yb, 0x62);
+        PlotPixel(x2, yc, 0x62);
+        PlotPixel(x2, yb, 0x77);
+        PlotPixel(xc, yc, 0x77);
     }
 }
 
@@ -70,8 +70,8 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
     team = lockerindex[team];
     f = (side != 0) + 0xA3;
     MakePath(path, fileoncd[team * 2 + f] == 1 ? (char *)cddriveptr : 0, name, 0);
-    bank = sub_8E83C(path, 0);
-    src = (signed char *)sub_B30B4(bank, (char *)str_P01) + 0x10;
+    bank = LoadBank(path, 0);
+    src = (signed char *)FindShape(bank, (char *)str_P01) + 0x10;
     if (side) {
         for (i = 0; i < 0xC0; i++) {
             if ((src + i)[0x180] < 0x3B) pal[i] = (src + i)[0x180] + 5;
@@ -84,27 +84,27 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         }
     }
     if (side) {
-        sub_910E0(visbckspr, 0x146, 0x4A);
-        sub_910E0(visnamebckspr, 0x152, 0x2C);
-        sub_B4B88(0x80, 0x40, pal);
+        DrawArtOpaque(visbckspr, 0x146, 0x4A);
+        DrawArtOpaque(visnamebckspr, 0x152, 0x2C);
+        VgaSetPalette(0x80, 0x40, pal);
     } else {
-        sub_910E0(homebckspr, 0xA, 0x45);
-        sub_910E0(homenamebckspr, 0x85, 0x2C);
-        sub_B4B88(0xC0, 0x40, pal);
+        DrawArtOpaque(homebckspr, 0xA, 0x45);
+        DrawArtOpaque(homenamebckspr, 0x85, 0x2C);
+        VgaSetPalette(0xC0, 0x40, pal);
     }
-    sub_912C8(sub_B30B4(bank, (char *)str_00002));
+    sub_912C8(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
-    sub_8E9C0(0x77, 0xFF);
+    TextSetColors(0x77, 0xFF);
     SetTextColors(0x77, 0x62);
     if (gamemode == 1) {
-        sub_910E0(titlebckspr, 0x2D, 0x11);
-        sub_8EA18(kaufmfont);
+        DrawArtOpaque(titlebckspr, 0x2D, 0x11);
+        TextSetFont(kaufmfont);
         s = (char *)poroundnames[poroundnameidx[divs]];
         PrintOutlinedText((0x280 - fputchar(s)) / 2, 0x12, s);
-        sub_8EA18(mainfont);
+        TextSetFont(mainfont);
     }
     if (gamemode == 0) {
-        for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
+        for (i = 2; i < 6; i++) FillRect(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
         k = (vis + 0x1B) % 0x1C;
         if (k >= 0x1A && k == hm) k = (hm + 0x1B) % 0x1C;
         k = jerseyabbrevs[k];
@@ -125,7 +125,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         k2 = 0x12D - fputchar((char *)teamcitynames[lockerteams[hm]]);
         PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[lockerteams[hm]]);
     } else {
-        for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
+        for (i = 2; i < 6; i++) FillRect(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
         k = (vis + 0x19) % 0x1A;
         if (k == hm) k = (hm + 0x19) % 0x1A;
         k = jerseyabbrevs[k];

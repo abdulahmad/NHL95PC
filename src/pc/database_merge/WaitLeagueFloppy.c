@@ -14,7 +14,7 @@ int WaitLeagueFloppy(char *file, char *name, char *dir)
 
     FmtFromLeague(buf, name, file);
     msg_InsertDisk_arg = (int)buf;
-    sub_B2DCA(&btn, &y, &x);
+    MouseRead(&btn, &y, &x);
     r = MessageBox(-1, -1, (char *)msg_InsertDisk, 4, 0, 0, (int)&y, (int)&x, -1);
     if (r != 4) r = FindLeagueFloppy(file, name, dir);
     return r == 4 ? -1 : r;

@@ -20,12 +20,12 @@ void LoadGameGfx(void)
     numshpbank = sub_8E8A0(path, 0x20);
     for (i = 0; i < 10; i++) {
         sprintf(name, (char *)str_04d, i);
-        numshapes[i] = sub_B30B4(numshpbank, name);
+        numshapes[i] = FindShape(numshpbank, name);
     }
     sub_90B80(numshpbank, (char *)str_GfxIdList, gfxidlist);
     ClearPanelPenalties();
     LoadTransparentRinkEndOverlay();
-    sub_8E9C0(4, 0xFF);
+    TextSetColors(4, 0xFF);
     LoadPlayerPhotos();
     nullsub_2();
     fadeinpending = 1;
@@ -46,12 +46,12 @@ void ReloadGameGfx(void)
     numshpbank = sub_8E8A0(path, 0x20);
     for (i = 0; i < 10; i++) {
         sprintf(name, (char *)str_04d, i);
-        numshapes[i] = sub_B30B4(numshpbank, name);
+        numshapes[i] = FindShape(numshpbank, name);
     }
     sub_90B80(numshpbank, (char *)str_GfxIdList, gfxidlist);
     ClearPanelPenalties();
     LoadTransparentRinkEndOverlay();
-    sub_8E9C0(4, 0xFF);
+    TextSetColors(4, 0xFF);
     LoadPlayerPhotos();
     nullsub_2();
     fadeinpending = 1;

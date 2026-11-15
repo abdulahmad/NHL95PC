@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D4F96 progbits alloc noexec write align=1
-extern sub_903F0, sub_90698, sub_91370, sub_A2F40, str_Fsh, str_3sh, str_SHPI, str_SHPM
+extern PutBlock, sub_90698, DrawArt, sub_A2F40, str_Fsh, str_3sh, str_SHPI, str_SHPM
 extern str_Error0, str_NoSuchFileOr, str_ArgumentListTooBig, str_ExecFormatError, str_BadFileNumber, str_NotEnoughMemory, str_PermissionDenied, str_FileExists
 extern str_CrossDeviceLink, str_InvalidArgument, str_FileTableOverflow, str_TooManyOpenFiles, str_NoSpaceLeftOn, str_ArgumentTooLarge, str_ResultTooLarge, str_ResourceDeadlockWouldOccur
 global byte_D4FE8, byte_D506C, byte_D51DC, dword_D4F96, dword_D4F9A, dword_D4FA0, dword_D4FA4, dword_D4FEB
@@ -67,9 +67,9 @@ db 01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h
 db 01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h
 db 01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,01h,00h,00h
 off_D516C:
-dd sub_903F0
+dd PutBlock
 dd sub_90698
-dd sub_91370
+dd DrawArt
 dd sub_A2F40
 off_D517C:
 dd str_Fsh

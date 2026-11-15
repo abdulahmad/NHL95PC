@@ -38,10 +38,10 @@ extern str_GameSav2, str_GfxIdList, str_GP, str_HILIGHT, str_Iff, str_L, str_Mig
 extern str_Mtafan, str_Mtawards, str_Numshp, str_Pal3, str_Palmem, str_Pct, str_PIM, str_PlusMinus
 extern str_PPG, str_PPV, str_Pt, str_Scrn, str_SHG, str_Shots, str_SO, str_SS
 extern str_Summ, str_T, str_Titl, str_Trinknd, str_VFN, str_W, strcat_, strcpy_
-extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2F0
-extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE
-extern sub_8F633, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C
-extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, teamabbrevs, textline1
+extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0
+extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
+extern sub_8F633, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette, sub_90354, sub_9035C
+extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
@@ -625,7 +625,7 @@ call MakePath	; 128A6
 push byte 0	; 128AB
 lea eax, [byte esp+04h]	; 128AD
 push eax	; 128B1
-call sub_8E83C	; 128B2
+call LoadBank	; 128B2
 add esp, byte 8	; 128B7
 mov dword [byte esp+02Ch], eax	; 128BA
 push byte 1	; 128BE
@@ -633,7 +633,7 @@ push eax	; 128C0
 call sub_9035C	; 128C1
 add esp, byte 8	; 128C6
 push eax	; 128C9
-call sub_9061C	; 128CA
+call DrawBitmap	; 128CA
 add esp, byte 4	; 128CF
 mov ebp, 76h	; 128D2
 mov eax, dword [byte esp+038h]	; 128D7
@@ -1291,7 +1291,7 @@ call PrintShadowText	; 130E9
 push str_Pal3	; 130EE
 mov edx, dword [byte esp+030h]	; 130F3
 push edx	; 130F7
-call sub_B30B4	; 130F8
+call FindShape	; 130F8
 add esp, byte 8	; 130FD
 lea edx, [byte eax+010h]	; 13100
 mov ebx, 10h	; 13103
@@ -1307,13 +1307,13 @@ mov edi, eax	; 13126
 push byte 0	; 13128
 push dword 300h	; 1312A
 push str_Palmem	; 1312F
-call sub_8CCA8	; 13134
+call AllocMemBlock	; 13134
 mov esi, eax	; 13139
 add esp, byte 0Ch	; 1313B
 push eax	; 1313E
 push dword 100h	; 1313F
 push byte 0	; 13144
-call sub_8FFB0	; 13146
+call SetPalette	; 13146
 add esp, byte 0Ch	; 1314B
 mov ebx, 10h	; 1314E
 mov edx, esi	; 13153
@@ -1488,13 +1488,13 @@ call ClearInputQueue	; 13333
 push byte 20h	; 13338
 push dword 300h	; 1333A
 push str_Palmem	; 1333F
-call sub_8CCA8	; 13344
+call AllocMemBlock	; 13344
 add esp, byte 0Ch	; 13349
 mov esi, eax	; 1334C
 push eax	; 1334E
 push dword 100h	; 1334F
 push byte 0	; 13354
-call sub_8FFB0	; 13356
+call SetPalette	; 13356
 add esp, byte 0Ch	; 1335B
 cmp byte [musicon], 0	; 1335E
 je short .1	; 13365
@@ -1529,11 +1529,11 @@ mov dword [songdata], ebp	; 133CE
 .3:
 mov eax, esp	; 133D4
 push eax	; 133D6
-call sub_8E9E8	; 133D7
+call TextSaveState	; 133D7
 add esp, byte 4	; 133DC
 mov eax, dword [kaufmfont]	; 133DF
 push eax	; 133E4
-call sub_8EA18	; 133E5
+call TextSetFont	; 133E5
 add esp, byte 4	; 133EA
 xor ecx, ecx	; 133ED
 mov ebx, str_Awardsi	; 133EF
@@ -1549,26 +1549,26 @@ call MakePath	; 1340B
 push byte 0	; 13410
 lea eax, [byte esp+044h]	; 13412
 push eax	; 13416
-call sub_8E83C	; 13417
+call LoadBank	; 13417
 mov ebp, eax	; 1341C
 add esp, byte 8	; 1341E
 push str_Scrn	; 13421
 push eax	; 13426
-call sub_B30B4	; 13427
+call FindShape	; 13427
 add esp, byte 8	; 1342C
 push eax	; 1342F
-call sub_9061C	; 13430
+call DrawBitmap	; 13430
 add esp, byte 4	; 13435
 push str_Titl	; 13438
 push ebp	; 1343D
-call sub_B30B4	; 1343E
+call FindShape	; 1343E
 add esp, byte 8	; 13443
 push eax	; 13446
-call sub_9061C	; 13447
+call DrawBitmap	; 13447
 add esp, byte 4	; 1344C
 push str_Pal3	; 1344F
 push ebp	; 13454
-call sub_B30B4	; 13455
+call FindShape	; 13455
 add esp, byte 8	; 1345A
 lea edx, [byte eax+010h]	; 1345D
 mov ebx, 300h	; 13460
@@ -1632,7 +1632,7 @@ xor edx, edx	; 1352B
 lea eax, [byte esp+040h]	; 1352D
 call MakePath	; 13531
 lea eax, [byte esp+040h]	; 13536
-call sub_8F13B	; 1353A
+call LoadSample	; 1353A
 mov edi, eax	; 1353F
 call PlayDigiSample	; 13541
 .13:
@@ -1651,7 +1651,7 @@ mov eax, 1	; 13572
 call FadePalStep	; 13577
 call StopDigiSample	; 1357C
 mov eax, edi	; 13581
-call sub_8F1FE	; 13583
+call FreeSample	; 13583
 jmp near .20	; 13588
 .14:
 cmp byte [musicon], 0	; 1358D
@@ -1760,7 +1760,7 @@ xor edx, edx	; 136F3
 lea eax, [byte esp+040h]	; 136F5
 call MakePath	; 136F9
 lea eax, [byte esp+040h]	; 136FE
-call sub_8F13B	; 13702
+call LoadSample	; 13702
 mov edi, eax	; 13707
 call PlayDigiSample	; 13709
 .28:
@@ -1783,7 +1783,7 @@ call MakePath	; 13742
 push byte 0	; 13747
 lea eax, [byte esp+044h]	; 13749
 push eax	; 1374D
-call sub_8E83C	; 1374E
+call LoadBank	; 1374E
 mov esi, eax	; 13753
 add esp, byte 8	; 13755
 call ClearInputQueue	; 13758
@@ -1793,23 +1793,23 @@ mov eax, 1	; 13764
 call SetTextColors	; 13769
 push str_Scrn	; 1376E
 push esi	; 13773
-call sub_B30B4	; 13774
+call FindShape	; 13774
 add esp, byte 8	; 13779
 push eax	; 1377C
-call sub_9061C	; 1377D
+call DrawBitmap	; 1377D
 add esp, byte 4	; 13782
 push str_Summ	; 13785
 push esi	; 1378A
-call sub_B30B4	; 1378B
+call FindShape	; 1378B
 add esp, byte 8	; 13790
 push eax	; 13793
-call sub_9061C	; 13794
+call DrawBitmap	; 13794
 add esp, byte 4	; 13799
 call DrawAwardsSummary	; 1379C
 call sub_B4BA8	; 137A1
 push str_Pal3	; 137A6
 push esi	; 137AB
-call sub_B30B4	; 137AC
+call FindShape	; 137AC
 add esp, byte 8	; 137B1
 lea ebp, [byte eax+010h]	; 137B4
 mov ebx, 10h	; 137B7
@@ -1828,7 +1828,7 @@ add esp, byte 4	; 137E6
 .31:
 call sub_B4BA8	; 137E9
 push byte 0	; 137EE
-call sub_B392C	; 137F0
+call ClearScreen	; 137F0
 add esp, byte 4	; 137F5
 .32:
 cmp byte [musicon], 0	; 137F8
@@ -1857,11 +1857,11 @@ jmp short .36	; 13846
 .35:
 call StopDigiSample	; 13848
 mov eax, edi	; 1384D
-call sub_8F1FE	; 1384F
+call FreeSample	; 1384F
 .36:
 mov eax, esp	; 13854
 push eax	; 13856
-call sub_8EA00	; 13857
+call TextRestoreState	; 13857
 add esp, byte 4	; 1385C
 add esp, byte 50h	; 1385F
 jmp near PickAwardWinners_x	; 13862

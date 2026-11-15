@@ -4,7 +4,7 @@ bits 32
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, dword_D30A4, dword_D30A8
 extern dword_D30C4, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, sub_8CC8C, sub_8D2F0
-extern sub_8DBD4, sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8
+extern sub_8DBD4, SetPalette, sub_91538, sub_932EC, FindShape, sub_B3A88, sub_B3AA1, sub_B4BA8
 global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
 global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
 sub_9D090:
@@ -68,7 +68,7 @@ call strncpy_	; 9D172
 mov dword [byte esi+01Ch], 330h	; 9D177
 push str_Pal31	; 9D17E
 push esi	; 9D183
-call sub_B30B4	; 9D184
+call FindShape	; 9D184
 add esp, byte 8	; 9D189
 mov dword [eax], 22h	; 9D18C
 mov word [byte eax+04h], 100h	; 9D192
@@ -81,11 +81,11 @@ add eax, byte 10h	; 9D1B6
 push eax	; 9D1B9
 push dword 100h	; 9D1BA
 push byte 0	; 9D1BF
-call sub_8FFB0	; 9D1C1
+call SetPalette	; 9D1C1
 add esp, byte 0Ch	; 9D1C6
 push str_Snap2	; 9D1C9
 push esi	; 9D1CE
-call sub_B30B4	; 9D1CF
+call FindShape	; 9D1CF
 add esp, byte 8	; 9D1D4
 mov edx, dword [dword ebp+dword_D5184]	; 9D1D7
 and edx, 0FFh	; 9D1DD

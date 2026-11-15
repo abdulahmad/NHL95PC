@@ -5,17 +5,17 @@ section s_91370 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
 extern dword_D30A8, dword_D30C8, dword_D30D0, dword_D3104, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
 extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, fontcolor
-extern loc_91260, off_D42A4, sub_8E9D4, sub_903F0, sub_B3ABC, sub_B4BC4, sub_B5D80, sub_B5E00
+extern loc_91260, off_D42A4, sub_8E9D4, PutBlock, sub_B3ABC, SetClipWindow, sub_B5D80, sub_B5E00
 extern sub_B69E4, sub_B6B3F
-global sub_91370, loc_91391, sub_913B4, sub_913D0, sub_91400, loc_9142B, loc_9148A, loc_914E6
+global DrawArt, loc_91391, DrawShape, sub_913D0, GrabBlock, loc_9142B, loc_9148A, loc_914E6
 global loc_914FD, loc_91520, loc_91531, sub_91538, sub_91554, sub_91580, loc_915E7, loc_91616
 global loc_9161C, loc_91637, loc_9163D, loc_91655, loc_91660, loc_91679, loc_9167B, loc_9169F
 global loc_916A1, loc_91722, loc_9174E, loc_91765, loc_91787, loc_91790, loc_917A4, loc_917B8
 global loc_917CD, loc_917E2, loc_917F7, loc_9180C, loc_91821, loc_91836, loc_9184B, loc_91860
 global loc_91866, loc_91871, loc_91893, loc_91899, loc_918A9, loc_918BF, loc_918DB, loc_918EC
 global loc_918EF, loc_918FB, loc_9191A, loc_91921, loc_91922, loc_91940, loc_91946, loc_91950
-global loc_9195D, sub_91964
-sub_91370:
+global loc_9195D, PrintString
+DrawArt:
 mov edx, dword [byte esp+04h]	; 91370
 mov ebx, dword [byte esp+08h]	; 91374
 mov eax, dword [byte esp+0Ch]	; 91378
@@ -32,12 +32,12 @@ mov dword [dword_D43E4], loc_91260	; 91391
 push eax	; 9139B
 push ebx	; 9139C
 push edx	; 9139D
-call sub_903F0	; 9139E
+call PutBlock	; 9139E
 add esp, byte 0Ch	; 913A3
 mov dword [dword_D43E4], sub_B3ABC	; 913A6
 ret	; 913B0
 db 08Dh,040h,00h
-sub_913B4:
+DrawShape:
 mov edx, dword [byte esp+04h]	; 913B4
 mov eax, dword [byte edx+0Ch]	; 913B8
 sar eax, 10h	; 913BB
@@ -46,7 +46,7 @@ mov eax, dword [byte edx+0Ah]	; 913BF
 sar eax, 10h	; 913C2
 push eax	; 913C5
 push edx	; 913C6
-call sub_91370	; 913C7
+call DrawArt	; 913C7
 add esp, byte 0Ch	; 913CC
 ret	; 913CF
 sub_913D0:
@@ -62,11 +62,11 @@ mov ebx, dword [byte esp+0Ch]	; 913E7
 sub ebx, eax	; 913EB
 push ebx	; 913ED
 push edx	; 913EE
-call sub_91370	; 913EF
+call DrawArt	; 913EF
 add esp, byte 0Ch	; 913F4
 ret	; 913F7
 db 00h,00h,00h,00h,00h,00h,00h,00h
-sub_91400:
+GrabBlock:
 push esi	; 91400
 push edi	; 91401
 push ebp	; 91402
@@ -183,7 +183,7 @@ mov eax, dword [byte edx+0Ah]	; 91543
 sar eax, 10h	; 91546
 push eax	; 91549
 push edx	; 9154A
-call sub_91400	; 9154B
+call GrabBlock	; 9154B
 add esp, byte 0Ch	; 91550
 ret	; 91553
 sub_91554:
@@ -199,7 +199,7 @@ mov ebx, dword [byte esp+0Ch]	; 9156B
 sub ebx, eax	; 9156F
 push ebx	; 91571
 push edx	; 91572
-call sub_91400	; 91573
+call GrabBlock	; 91573
 add esp, byte 0Ch	; 91578
 ret	; 9157B
 db 00h,00h,00h,00h
@@ -316,7 +316,7 @@ add eax, ecx	; 916DE
 push eax	; 916E0
 mov eax, dword [byte esp+03Ch]	; 916E1
 push eax	; 916E5
-call sub_B4BC4	; 916E6
+call SetClipWindow	; 916E6
 add esp, byte 10h	; 916EB
 push ebp	; 916EE
 mov eax, dword [byte esp+034h]	; 916EF
@@ -324,7 +324,7 @@ sub eax, edi	; 916F3
 push eax	; 916F5
 mov edx, dword [byte esp+030h]	; 916F6
 push edx	; 916FA
-call sub_91370	; 916FB
+call DrawArt	; 916FB
 add esp, byte 0Ch	; 91700
 mov ebx, dword [dword_D30A8]	; 91703
 push ebx	; 91709
@@ -332,7 +332,7 @@ push byte 0	; 9170A
 mov ecx, dword [dword_D30A4]	; 9170C
 push ecx	; 91712
 push byte 0	; 91713
-call sub_B4BC4	; 91715
+call SetClipWindow	; 91715
 add esp, byte 10h	; 9171A
 jmp near loc_91946	; 9171D
 loc_91722:
@@ -573,7 +573,7 @@ pop ebp	; 91960
 pop edi	; 91961
 pop esi	; 91962
 ret	; 91963
-sub_91964:
+PrintString:
 mov edx, dword [byte esp+0Ch]	; 91964
 push edx	; 91968
 mov ebx, dword [byte esp+0Ch]	; 91969

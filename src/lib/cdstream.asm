@@ -5,8 +5,8 @@ section s_1B0F3 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECCDSTREAM, str_IllegalChunkSizeD, bannertimer, CrowdNoiseOff
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
-extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, sub_8CCA8
-extern sub_8DAB8, sub_8EA18, sub_91FA4, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3
+extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
+extern sub_8DAB8, TextSetFont, sub_91FA4, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3
 global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
 global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
 global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
@@ -27,7 +27,7 @@ mov eax, dword [byte esp+0Ch]	; 1B103
 add eax, byte 54h	; 1B107
 push eax	; 1B10A
 push str_CDSTREAM	; 1B10B
-call sub_8CCA8	; 1B110
+call AllocMemBlock	; 1B110
 mov esi, eax	; 1B115
 add esp, byte 0Ch	; 1B117
 mov eax, dword [byte esp+08h]	; 1B11A
@@ -119,7 +119,7 @@ mov eax, dword [byte esp+0Ch]	; 1B22A
 add eax, byte 54h	; 1B22E
 push eax	; 1B231
 push str_SECCDSTREAM	; 1B232
-call sub_8CCA8	; 1B237
+call AllocMemBlock	; 1B237
 add esp, byte 0Ch	; 1B23C
 mov edx, dword [byte esp+08h]	; 1B23F
 mov dword [byte eax+020h], edx	; 1B243
@@ -813,7 +813,7 @@ mov dword [joysampling], edi	; 1BA56
 call joyq_flush	; 1BA5C
 mov ebp, dword [s1font]	; 1BA61
 push ebp	; 1BA67
-call sub_8EA18	; 1BA68
+call TextSetFont	; 1BA68
 add esp, byte 4	; 1BA6D
 mov word [scrpitch], 50h	; 1BA70
 call FreeRinkGfx	; 1BA79

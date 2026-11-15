@@ -30,17 +30,17 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     int z;
 
     sub_B4BA8();
-    pal = sub_8CCA8((char *)str_Temp6, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Temp6, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
-    sub_B392C(0);
+    ClearScreen(0);
     leaguestatsmode = 1;
     statsredrawcb = (int)TeamRosterScreen;
     statscategory = cat;
-    statsteambuf = sub_8CCA8((char *)str_Tstat, 0x2A4, 0x20);
-    statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys2, 0x5B0, 0x20);
-    statsskaterbuf = (unsigned char *)sub_8CCA8((char *)str_Pstat2, 0x497, 0x20);
-    statsgoaliebuf = (unsigned char *)sub_8CCA8((char *)str_Gstat2, 0x10E, 0x20);
+    statsteambuf = AllocMemBlock((char *)str_Tstat, 0x2A4, 0x20);
+    statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_Keys2, 0x5B0, 0x20);
+    statsskaterbuf = (unsigned char *)AllocMemBlock((char *)str_Pstat2, 0x497, 0x20);
+    statsgoaliebuf = (unsigned char *)AllocMemBlock((char *)str_Gstat2, 0x10E, 0x20);
     ext = 0;
     name = (char *)str_Embpal3;
     if (fileoncd[0x8E] == 1)
@@ -48,8 +48,8 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     else
         dir = 0;
     MakePath(path, dir, name, ext);
-    bank = sub_8E83C(path, 0);
-    shape = sub_B30B4(bank, (char *)str_Pal21);
+    bank = LoadBank(path, 0);
+    shape = FindShape(bank, (char *)str_Pal21);
     memcpy((unsigned char *)pal, (char *)shape + 0x10, 0x300);
     FreeMemBlock(bank);
     InitMenuRemap(1);
@@ -71,7 +71,7 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     statsskaterbuf = (unsigned char *)z;
     sub_B4BA8();
     FadePalStep(1, (unsigned char *)pal, 0x10);
-    sub_B392C(z);
+    ClearScreen(z);
     FreeMemBlock(pal);
     DrawTradeScreen(list, s0, s2, s1, s3, b3, b2);
 }

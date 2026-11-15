@@ -93,20 +93,20 @@ void InstantReplay(int mode)
     dword_ED750 = 8;
     gadgetptrx = 0x100;
     gadgetptry = 0xBC;
-    sub_B2E1B(0, 0, 0x140, 0xC1);
+    SetViewRect(0, 0, 0x140, 0xC1);
     MouseSetPos(gadgetptrx, gadgetptry);
     SelectScreenBM();
-    sub_B4BC4(0, 0x140, 0, 0x20);
+    SetClipWindow(0, 0x140, 0, 0x20);
     if (replaynosave)
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
     else
         MakePath(path, fileoncd[0x96] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget5, (char *)str_PPV);
     gadgetfile = sub_8E8A0(path, 0);
-    gadgetshape = sub_B30B4(gadgetfile, (char *)str_Gad1);
+    gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
     sub_B4CD8(gadgetshape, 0, 0);
     DrawGadgetButton(6);
     DrawGadgetButton(2);
-    sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+    DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     dword_C66D0 = dword_C66D4 = 1;
     ocx = camx;
     ocy = camy;
@@ -212,7 +212,7 @@ void InstantReplay(int mode)
     crowdlevel = ocl;
     crowdsmooth = ocl;
     dword_C66D0 = dword_C66D4 = 1;
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     FreeMemBlock(gadgetfile);
     sub_B4BA8();
@@ -393,14 +393,14 @@ int ReplayControlLoop(int *step)
             else if (x1 > 0x140) x1 = 0x140;
             if (y1 < 0) y1 = 0;
             else if (y1 > 0x20) y1 = 0x20;
-            sub_B4BC4(oldx, x1, oldy, y1);
+            SetClipWindow(oldx, x1, oldy, y1);
         }
         sub_B500C(gadgetshape, 0, 0);
-        if (oldbits == dword_ED754) sub_B4BC4(0, 0x140, 0, 0x20);
+        if (oldbits == dword_ED754) SetClipWindow(0, 0x140, 0, 0x20);
         for (hit = 0; hit < 9; hit++) {
             if (dword_ED754 & 1 << hit) DrawGadgetButton(hit);
         }
-        if (gadgetptry >= 0xA8) sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+        if (gadgetptry >= 0xA8) DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
     if (dword_ED754 & 0x80) {
         replaybtnarmed = 0;
@@ -408,10 +408,10 @@ int ReplayControlLoop(int *step)
         ClearInputQueue();
         dword_ED754 = 4;
         SelectScreenBM();
-        sub_B4BC4(0, 0x140, 0, 0x20);
+        SetClipWindow(0, 0x140, 0, 0x20);
         sub_B4CD8(gadgetshape, 0, 0);
         DrawGadgetButton(2);
-        sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+        DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
     *step = d;
     return 1;
@@ -420,8 +420,8 @@ int ReplayControlLoop(int *step)
 typedef struct { char *s[2]; } StrPair;
 
 /* HilightSaveToDlg (7F724, PC only; highlights segment 058, the same source file: it ends in
-   DrawGadgetButton_ret): draw the "Save To" box of the highlight saver: save the text state (sub_8E9E8), the
-   highlight font, the box (sub_90D20, two sub_93000 frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
+   DrawGadgetButton_ret): draw the "Save To" box of the highlight saver: save the text state (TextSaveState), the
+   highlight font, the box (FillRect, two sub_93000 frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
    apart from 4Eh, 50h), then "Save To", "Hilights Reel" and the choices (home and away team names from the team
    records, then "Both Teams" / "Neither Team" from bothneitherstrs) centred in the buttons, first in colour 10h
    one pixel down and right as the shadow, then in 59h. No arguments, no result.
@@ -437,9 +437,9 @@ void HilightSaveToDlg(void)
     struct { int i; } count;
 
     both = *(StrPair *)bothneitherstrs;
-    sub_8E9E8(state);
-    sub_8EA18(hilightfont);
-    sub_90D20(0, 0x4B, 0x140, 0x4C, 0x14);
+    TextSaveState(state);
+    TextSetFont(hilightfont);
+    FillRect(0, 0x4B, 0x140, 0x4C, 0x14);
     sub_93000(1, 0x4C, 0x13E, 0x95, 9);
     sub_93000(2, 0x4D, 0x13D, 0x96, 0x10);
     x = 0x4E;
@@ -449,21 +449,21 @@ void HilightSaveToDlg(void)
         sub_B4FAC(x, y, x2 = x + 0x8A, y, 0x59);
         sub_B4FAC(x + 1, y2, x2, y2, 0x10);
         sub_B4FAC(x2, y + 1, x2, y2, 0x10);
-        sub_B5DB0(x2, y, 0x13);
-        sub_B5DB0(x, y2, 0x13);
+        PlotPixel(x2, y, 0x13);
+        PlotPixel(x, y2, 0x13);
     }
     fontcolor = 0x10;
-    sub_91964((char *)str_SaveTo, 0xE, 0x6D);
-    sub_91964((char *)str_HilightsReel, 0xDF, 0x6D);
-    sub_91964((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x52, 0x54);
-    sub_91964((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x52, 0x65);
-    sub_91964(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x52, 0x76);
-    sub_91964(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x52, 0x87);
+    PrintString((char *)str_SaveTo, 0xE, 0x6D);
+    PrintString((char *)str_HilightsReel, 0xDF, 0x6D);
+    PrintString((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x52, 0x54);
+    PrintString((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x52, 0x65);
+    PrintString(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x52, 0x76);
+    PrintString(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x52, 0x87);
     fontcolor = 0x59;
-    sub_91964((char *)str_SaveTo, 0xD, 0x6C);
-    sub_91964((char *)str_HilightsReel, 0xDE, 0x6C);
-    sub_91964((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x51, 0x53);
-    sub_91964((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x51, 0x64);
-    sub_91964(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x51, 0x75);
-    sub_91964(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x51, 0x86);
+    PrintString((char *)str_SaveTo, 0xD, 0x6C);
+    PrintString((char *)str_HilightsReel, 0xDE, 0x6C);
+    PrintString((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x51, 0x53);
+    PrintString((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x51, 0x64);
+    PrintString(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x51, 0x75);
+    PrintString(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x51, 0x86);
 }

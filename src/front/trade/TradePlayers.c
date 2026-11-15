@@ -51,7 +51,7 @@ void TradePlayers(void)
     s.fh = -1;
     err = 0;
     s.negone = negone_3DC28;
-    tradebitmap = sub_B4F8C(0x280, 0x1E0, err);
+    tradebitmap = CreateBitmap(0x280, 0x1E0, err);
     s.fill = dlgfillcol;
     s.edge1 = dlgedgecol1;
     s.edge2 = dlgedgecol2;
@@ -71,7 +71,7 @@ void TradePlayers(void)
                 &leagueflags, &leaguesaved, (char *)&savedname);
         if (!err) {
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             strcpy(s.name, (char *)&curleague);
             s.name[strcspn(s.name, (char *)&str_dot)] = 0;
             if (leaguesaved) {
@@ -100,16 +100,16 @@ void TradePlayers(void)
         if (!err && s.ngames < 0x4AD) err = ReadSchedGame(s.fh, s.game, s.ngames);
         FileClose(&s.fh);
         if (!err && (s.game[0] == 3 && s.game[1] >= 0x16 || s.game[0] > 3 && s.game[0] < 0xA || s.ngames >= 0x444)) {
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             MessageBox(-1, -1, (char *)msg_TradeDeadline, 2, 0, 0, (int)&s.x, (int)&s.y, -1);
             err = -1;
         }
         if (!err) {
             if (humancount == 1) {
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-                sub_B2DCA(&s.btn, &s.x, &s.y);
+                MouseRead(&s.btn, &s.x, &s.y);
                 MessageBox(-1, -1, (char *)msg_OneHuman, 2, err, err, (int)&s.x, (int)&s.y, -1);
             } else {
                 LeagueTeamSelect((char *)&curleague, &humancount, treeteamnames, leagueteams, 0x10,
@@ -136,7 +136,7 @@ void TradePlayers(void)
                     if (!r) err = ExecuteTrade((char *)&curleague, s.sel, (unsigned char *)&s.negone);
                 }
                 if (err) {
-                    sub_B2DCA(&s.btn, &s.x, &s.y);
+                    MouseRead(&s.btn, &s.x, &s.y);
                     MessageBox(-1, -1, (char *)msg_TradeError, 1, 0, 0, (int)&s.x, (int)&s.y, -1);
                 }
             }

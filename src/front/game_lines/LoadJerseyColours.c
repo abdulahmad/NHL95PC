@@ -46,5 +46,5 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst)
     jerseypalslot2 = 0xFD;
     jerseypalslot3 = 0xFE;
     FreeMemBlock((int)buf);
-    sub_B4DD4(jerseyremap);
+    SetColorRemap(jerseyremap);
 }

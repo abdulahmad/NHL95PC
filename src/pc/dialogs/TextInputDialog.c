@@ -62,13 +62,13 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
     SaveDialogBg(x, y, minw, h);
     SetTextColors(dlgtextfg, dlgtextbg);
     DrawBevelRect(x, y, minw, h, boxfillcolor, boxlitecolor, boxshadecolor);
-    sub_8E9C0(dlgtextfg, dlgtextbg);
+    TextSetColors(dlgtextfg, dlgtextbg);
     ty = y + 7;
     PrintShadowText((minw - fputchar(prompt)) / 2 + x, ty, prompt);
     x += (minw - w) / 2;
     DrawBevelRect(x, y + 0x1F, w, 0x12, dlgtextbg, boxshadecolor, boxlitecolor);
-    sub_8E9C0(dlgtextfg, dlgtextbg);
-    while (sub_B2CBE(1) || sub_B2CBE(0x1C));
+    TextSetColors(dlgtextfg, dlgtextbg);
+    while (KeyDown(1) || KeyDown(0x1C));
     ClearInputQueue();
     if (numeric) {
         do {
@@ -88,7 +88,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
         if (required && !*buf && r != 0x1B) ok = 0;
         } while (!ok);
     }
-    while (sub_B2CBE(1) || sub_B2CBE(0x1C));
+    while (KeyDown(1) || KeyDown(0x1C));
     ClearInputQueue();
     RestoreDialogBg();
     InputInstall();

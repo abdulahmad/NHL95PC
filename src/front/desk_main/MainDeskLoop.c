@@ -79,7 +79,7 @@ int MainDeskLoop(void)
     pos[0][0] = pos[0][1] = 0;
     mx = oldmx = (mainmenubar[0] + mainmenubar[2]) / 2;
     my = oldmy = (mainmenubar[1] + mainmenubar[3]) / 2;
-    sub_B2E1B(0, 0, 0x27C, 0x1E0);
+    SetViewRect(0, 0, 0x27C, 0x1E0);
     MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     SetSideControls();
@@ -92,7 +92,7 @@ int MainDeskLoop(void)
     {
         int size;
         size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-        ptr = sub_8CCA8((char *)str_Pointer7, size, 0x20);
+        ptr = AllocMemBlock((char *)str_Pointer7, size, 0x20);
         *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
         ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
         ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
@@ -108,16 +108,16 @@ int MainDeskLoop(void)
         songdata = sub_8F98F(path);
     }
     MakePath(path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk, 0);
-    bank = sub_8E83C(path, 0);
+    bank = LoadBank(path, 0);
     FadeOutPalCycle();
     sub_B4BA8();
-    sub_9061C(sub_B30B4(bank, (char *)str_Desk2));
+    DrawBitmap(FindShape(bank, (char *)str_Desk2));
     DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
-    sub_91400(ptr, oldmx, oldmy);
-    sub_91370(pointerspr, oldmx, oldmy);
+    GrabBlock(ptr, oldmx, oldmy);
+    DrawArt(pointerspr, oldmx, oldmy);
     scrpitch = 0x50;
     if (musicon && songdata && gameopts.music) sub_8FB8E(songdata, musichandle, 3, 0x4C);
-    FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_Pal15) + 0x10, 0x10);
+    FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10, 0x10);
     FreeMemBlock(bank);
     ClearInputQueue();
     for (;;) {
@@ -129,9 +129,9 @@ int MainDeskLoop(void)
         if (!(bits & 2)) {
             if (mx == oldmx && my == oldmy) continue;
             sub_B4BA8();
-            sub_903F0(ptr, oldmx, oldmy);
-            sub_91400(ptr, mx, my);
-            sub_91370(pointerspr, mx, my);
+            PutBlock(ptr, oldmx, oldmy);
+            GrabBlock(ptr, mx, my);
+            DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
             continue;
@@ -141,11 +141,11 @@ int MainDeskLoop(void)
             if (m->on1) {
                 if (item == sel[level]) {
                     int size;
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     for (i = depth; i > 0; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                         }
@@ -156,7 +156,7 @@ int MainDeskLoop(void)
                     r = ((int (*)(int *))menus[level][item].on1)(&fh);
                     FileClose(&fh);
                     size = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-                    ptr = sub_8CCA8((char *)str_Pointer7, size, 0x20);
+                    ptr = AllocMemBlock((char *)str_Pointer7, size, 0x20);
                     *(Hdr17 *)ptr = *(Hdr17 *)pointerspr;
                     ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
                     ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
@@ -194,12 +194,12 @@ int MainDeskLoop(void)
                             }
                             songdata = sub_8F98F(path);
                         }
-                        sub_B4BC4(0, 0x280, 0, 0x1E0);
+                        SetClipWindow(0, 0x280, 0, 0x1E0);
                         MakePath(path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk, 0);
-                        bank = sub_8E83C(path, 0);
-                        sub_9061C(sub_B30B4(bank, (char *)str_Desk2));
+                        bank = LoadBank(path, 0);
+                        DrawBitmap(FindShape(bank, (char *)str_Desk2));
                         DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
-                        pal = (unsigned char *)sub_B30B4(bank, (char *)str_Pal15) + 0x10;
+                        pal = (unsigned char *)FindShape(bank, (char *)str_Pal15) + 0x10;
                         if (musicon && newsong == 1 && gameopts.music && songdata)
                             sub_8FB8E(songdata, musichandle, 3, 0x4C);
                         FadePalStep(0, pal, 0x10);
@@ -209,12 +209,12 @@ int MainDeskLoop(void)
                     MouseSetPos(oldmx, oldmy);
                     ClearInputQueue();
                 } else {
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][0] = pos[i][1] = 0;
                                 FreeMemBlock(bg[i]);
                                 bg[i] = 0;
@@ -231,12 +231,12 @@ int MainDeskLoop(void)
                         pos[level][1], 0xFA, 0xF9, 0xF8);
                 }
             } else if (m->on2) {
-                sub_903F0(ptr, oldmx, oldmy);
+                PutBlock(ptr, oldmx, oldmy);
                 if (depth != level) {
                     for (i = depth; i > level; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                             bg[i] = 0;
@@ -259,23 +259,23 @@ int MainDeskLoop(void)
                 i = depth;
                 w = menus[i][nitems[i] - 1].x2 - menus[i][0].x1 + 1;
                 h = menus[i][nitems[i] - 1].y2 - menus[i][0].y1 + 1;
-                bg[i] = sub_8CCA8((char *)str_Menubuff4, w * h + 0x11, 0x20);
+                bg[i] = AllocMemBlock((char *)str_Menubuff4, w * h + 0x11, 0x20);
                 *(Hdr17 *)bg[i] = *(Hdr17 *)pointerspr;
                 ((short *)bg[i])[2] = w;
                 ((short *)bg[i])[3] = h;
-                sub_91400(bg[i], pos[i][0], pos[i][1]);
+                GrabBlock(bg[i], pos[i][0], pos[i][1]);
                 DrawMenuDropdown(menus[i], nitems[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
                 sel[i] = 0;
                 DrawMenuItemNorm(menus[i], pos[i][0], pos[i][1], 0xFA, 0xF9, 0xF8);
             } else {
-                sub_903F0(ptr, oldmx, oldmy);
+                PutBlock(ptr, oldmx, oldmy);
             }
         } else {
-            sub_903F0(ptr, oldmx, oldmy);
+            PutBlock(ptr, oldmx, oldmy);
             for (i = depth; i > 0; i--) {
                 sel[i] = 0;
                 if (bg[i]) {
-                    sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                    PutBlock(bg[i], pos[i][0], pos[i][1]);
                     pos[i][0] = pos[i][1] = 0;
                     FreeMemBlock(bg[i]);
                 }
@@ -286,8 +286,8 @@ int MainDeskLoop(void)
             sel[1] = sel[2] = sel[3] = 0;
             nitems[1] = nitems[2] = nitems[3] = 0;
         }
-        sub_91400(ptr, mx, my);
-        sub_91370(pointerspr, mx, my);
+        GrabBlock(ptr, mx, my);
+        DrawArt(pointerspr, mx, my);
         oldmx = mx;
         oldmy = my;
     }
@@ -457,8 +457,8 @@ int MenuNewExhibition(int *fh)
     if (!(r & 4)) {
         SetupStatsSourceMenu(1);
         if (*fh >= 0) {
-            pal = (unsigned char *)sub_8CCA8((char *)str_Palette2, 0x300, 0x20);
-            sub_8FFB0(0, 0x100, pal);
+            pal = (unsigned char *)AllocMemBlock((char *)str_Palette2, 0x300, 0x20);
+            SetPalette(0, 0x100, pal);
             if (musicon && songdata)
                 sub_8FCDF(musichandle, 3, 0x64);
             FadePalStep(1, pal, 0x10);
@@ -475,10 +475,10 @@ int MenuNewExhibition(int *fh)
         PlayGame(fh);
         SetupStatsSourceMenu(0);
     }
-    pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
+    pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x19);
-    sub_8FFB0(0, 0x100, pal2);
+    SetPalette(0, 0x100, pal2);
     FadePalStep(1, pal2, 0x10);
     FreeMemBlock((int)pal2);
     if (musicon && songdata) {
@@ -514,8 +514,8 @@ int MenuLeagueSettings(void)
     LoadModeState(lgstate);
     if (!((int (*)(void))CheckMasterPassword)()) ok = -1;
     if (byte_DE268) {
-        pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, pal);
+        pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+        SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
         FreeMemBlock((int)pal);
         r = 2;

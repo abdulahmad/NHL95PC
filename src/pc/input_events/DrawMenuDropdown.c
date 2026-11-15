@@ -20,21 +20,21 @@ void DrawMenuDropdown(MenuItem *m, int n, int x, int y, int col1, int col2, int 
 
     DrawMenuBox(m->x1 + x, m->y1 + y, m[n - 1].x2 + x, m[n - 1].y2 + y, col1, col2, col3);
     if (!m->on1 && !m->on2) {
-        sub_8E9C0(col3, 0xFF);
+        TextSetColors(col3, 0xFF);
         SetTextColors(col3, 0);
         PrintMenuTextGrey(m->x1 + 3 + x, m->y1 + 2 + y, m->text);
     } else {
-        sub_8E9C0(col1, 0xFF);
+        TextSetColors(col1, 0xFF);
         SetTextColors(col1, 0);
         PrintMenuText(m->x1 + 3 + x, m->y1 + 2 + y, m->text);
     }
     for (i = 1; i < n; i++) {
         if (!m[i].on1 && !m[i].on2) {
-            sub_8E9C0(col3, 0xFF);
+            TextSetColors(col3, 0xFF);
             SetTextColors(col3, 0);
             PrintMenuTextGrey(m[i].x1 + 3 + x, m[i].y1 + 1 + y, m[i].text);
         } else {
-            sub_8E9C0(col1, 0xFF);
+            TextSetColors(col1, 0xFF);
             SetTextColors(col1, 0);
             PrintMenuText(m[i].x1 + 3 + x, m[i].y1 + 1 + y, m[i].text);
         }
@@ -45,7 +45,7 @@ void DrawMenuDropdown(MenuItem *m, int n, int x, int y, int col1, int col2, int 
  (the light side), bottom and right edges in col3. */
 void DrawMenuBox(int x1, int y1, int x2, int y2, int col1, int col2, int col3)
 {
-    sub_90D20(x1, y1, x2 - x1 + 1, y2 - y1 + 1, col2);
+    FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, col2);
     sub_B4FAC(x1, y1, x2 - 1, y1, col1);
     sub_B4FAC(x1, y1, x1, y2 - 1, col1);
     sub_B4FAC(x2, y1 + 1, x2, y2, col3);

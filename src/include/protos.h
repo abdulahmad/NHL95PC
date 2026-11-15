@@ -204,7 +204,7 @@ void PaPenaltyShot(char *team, int num, int min, int sec);
 int SayPenaltyShot(char *team, int num, int min, int sec);  /* 8511E */
 int SpeechIdle(void);  /* 83711 */
 void WaitKeyRelease(int key);
-int __cdecl sub_B2CBE(int key);  /* keyboard library: key down? */
+int __cdecl KeyDown(int key);  /* keyboard library: key down? */
 void __cdecl sub_B3A24(void);  /* keyboard library */
 unsigned char RandLfsrByte(unsigned char *s);  /* 7665E */
 void BlitClipRect(int x, int y, int w, int h);  /* 7668D */
@@ -218,7 +218,7 @@ void DrawButtons(Button *b, int n);  /* 30AE2 */
 void DrawButton(Button *b);  /* 30B16 */
 void PaHighlightIntro(int home, int vis);  /* 59CA9 */
 void SetListItemColors(int sel, int item);  /* 30209 */
-void __cdecl sub_8E9C0(int fg, int bg);  /* graphics library: set text colours */
+void __cdecl TextSetColors(int fg, int bg);  /* graphics library: set text colours */
 void PlayDigiSample(void *s);  /* 599B9 */
 void StopDigiSample(void);  /* 59981 */
 int sub_8F270(void *s, int a);  /* sound library: start sample */
@@ -269,7 +269,7 @@ int LoadClipSlot(char *name);  /* 84539 */
 void MakeGSummaryPath(void);  /* 1C807 */
 void InitGameSummary(int a, int b);  /* 1BEFD */
 void RestoreGridCellBg(int unused1, int unused2);  /* 37E5B */
-void __cdecl sub_903F0(int buf, int x, int y);  /* graphics library: put a saved block */
+void __cdecl PutBlock(int buf, int x, int y);  /* graphics library: put a saved block */
 void RestoreDialogBg(void);  /* 30F12 */
 void PenaltyLenClip(int len, char *out);  /* 842BA */
 int sprintf(char *d, const char *fmt, ...);  /* Watcom CRT sprintf_ */
@@ -286,7 +286,7 @@ int CtlDlgHitTest(int x, int y, int *hit);  /* 7D61F */
 int SoundCardHitTest(int x, int y, int *hit);  /* 827B3 */
 int GadgetHitTest(int x, int y, int *hit);  /* 7E8E5 */
 void PrintShadowText(int x, int y, char *s);  /* 175E2 */
-void __cdecl sub_91964(char *s, int x, int y);  /* graphics library: print a string */
+void __cdecl PrintString(char *s, int x, int y);  /* graphics library: print a string */
 void GrowToButton(int *b, int *w, int *h);  /* 30F5F */
 void chkatop(void);  /* 639A4 */
 void ResetGoalieMenu(void);  /* 1CB7F */
@@ -335,7 +335,7 @@ int FileOpenWrite(char *name, int *h);  /* 1453E */
 int SaveHilight(int team);  /* 7FA10 */
 void SetPalette768(unsigned char *pal);  /* 76614 */
 void __cdecl sub_B4C84(void);  /* video library: wait for retrace */
-void __cdecl sub_B4B88(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
+void __cdecl VgaSetPalette(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
 int ShowDBError(int *sel, int *state, int msg, int arg);  /* 6ED39 */
 void __cdecl sub_B4BA8(void);  /* video library */
 void __cdecl sub_9121C(int buf);  /* graphics library */
@@ -383,20 +383,20 @@ void SetPenaltyStrength(void);  /* 510A9 */
 void MakeSampleRoom(void);  /* 84205 */
 void LoadTransparentRinkEndOverlay(void);  /* 13A2F */
 int __cdecl sub_8E8A0(char *path, int flags);  /* graphics library: load bank */
-int __cdecl sub_B30B4(int bank, char *name);  /* graphics library: find art */
+int __cdecl FindShape(int bank, char *name);  /* graphics library: find art */
 void PrintLineEdStatus(int x, int y, char *s);  /* 76771 */
-void __cdecl sub_90D20(int x, int y, int w, int h, int col);  /* graphics library: fill rect */
+void __cdecl FillRect(int x, int y, int w, int h, int col);  /* graphics library: fill rect */
 int GetLeagueDBSizes(char *drive, int *kb, char *ext);  /* 149BF */
 unsigned unknown_libname_1(const char *path, unsigned attr, void *ft);  /* Watcom CRT _dos_findfirst */
 void DeskReloadGame(void);  /* 1A534 */
 void LoadRink(int team);
 void LoadPlayerPhotos(void);
-void __cdecl sub_8FFB0(int first, int count, unsigned char *pal);  /* graphics library: set palette */
+void __cdecl SetPalette(int first, int count, unsigned char *pal);  /* graphics library: set palette */
 void FadePalStep(int dir, unsigned char *pal, int steps);
 void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n);  /* 78500 */
 void DbLineEditorLoop(int lines, int shape, int team, int zero, int buttons, int n, int bank);  /* 73A18 */
 void DbLineEditor(unsigned char team, int lines, int buttons, int n);  /* 737E1 */
-void __cdecl sub_9061C(int bm);  /* graphics library: draw a bitmap */
+void __cdecl DrawBitmap(int bm);  /* graphics library: draw a bitmap */
 void CalNextMonth(void);  /* 34691 */
 void CalPrevMonth(void);
 void CalPrevMonth(void);  /* 346FE */
@@ -410,14 +410,14 @@ int IsSampleRequested(char *name);
 int a2offsides(Player *p);  /* 4DCDD */
 void AddPenalty(Player *p, short pen);
 void DrawSoundCardDlg(void);  /* 8261C */
-int __cdecl sub_8E83C(char *path, int flags);  /* graphics library: load bank */
+int __cdecl LoadBank(char *path, int flags);  /* graphics library: load bank */
 void __cdecl sub_91284(int art, int x, int y);  /* graphics library: draw art */
 void InitMenuRemap(int mode);  /* 1FAA7 */
 int LoadShapeByTag(char *path, char *tag);  /* 1FDFE */
 void MakeStatsTitle(char *dst, char *suffix);  /* 1FF86 */
-void __cdecl sub_B4DD4(unsigned char *remap);  /* graphics library: set colour remap */
+void __cdecl SetColorRemap(unsigned char *remap);  /* graphics library: set colour remap */
 int AskDatabaseChoice(void);  /* 2FDD1 */
-void __cdecl sub_B2DCA(int *btn, int *y, int *x);  /* mouse library: read state */
+void __cdecl MouseRead(int *btn, int *y, int *x);  /* mouse library: read state */
 void AskLeftRight(unsigned char *left, char *prompt);  /* 6FBE8 */
 char InputDialog(int *lines, int n, char *buf, int len, int a, int b, int c, int d, int e);
 void releasepl(Team *tm, short pl);  /* 6392A */
@@ -445,7 +445,7 @@ int ExhSetHitTest(int x, int y, int *hit);  /* 7C28D */
 int ModeSetHitTest(int x, int y, int *hit);  /* 7B734 */
 int MenuMergeLeagueFiles(void);  /* 33469 */
 int MergeLeagueFiles(void);
-int __cdecl sub_8CCA8(char *name, int size, int flags);  /* file library: load file */
+int __cdecl AllocMemBlock(char *name, int size, int flags);  /* file library: load file */
 int CupSeriesWinner(unsigned char *s, unsigned games);  /* 15CE1 */
 void DrawModeSetChecks(void);  /* 7B7BE */
 void BlitTileMap(unsigned char *shape, unsigned char *tiles, int x0, short y, short x, short flags);  /* 33C08 */
@@ -457,9 +457,9 @@ void SetScreenSize(int w, int h);
 void MusicChanReset(void);
 void sub_8F633(void);  /* sound library: stop */
 void sub_1BAF3(int ticks);
-void __cdecl sub_8EA18(int font);  /* text library: set font */
-void __cdecl sub_8E9E8(void *state);  /* text library: save the text state (40h bytes) */
-void __cdecl sub_8EA00(void *state);  /* text library: restore the text state */
+void __cdecl TextSetFont(int font);  /* text library: set font */
+void __cdecl TextSaveState(void *state);  /* text library: save the text state (40h bytes) */
+void __cdecl TextRestoreState(void *state);  /* text library: restore the text state */
 void DrawSettingsHeading(int x, int y, int n, int mode, int colour);  /* 8050F */
 void DrawPanel3D(int x1, int y1, int x2, int y2, int corners);  /* 80682 */
 void IntermissionDesk(void);
@@ -470,12 +470,12 @@ void CrowdNoiseOff(void);  /* 59748 */
 void sub_8FDB2(int card, int voice, int vol);  /* sound library: set voice volume */
 void sub_8FE4F(int card, int voice, int what);  /* sound library: voice control */
 void RenderTextLine(int x, int y, char *s);  /* 174D8 */
-int __cdecl sub_B4F8C(int w, int h, int flags);  /* graphics library: create bitmap */
+int __cdecl CreateBitmap(int w, int h, int flags);  /* graphics library: create bitmap */
 void __cdecl sub_B3A88(void *save);  /* graphics library: save draw state */
 void __cdecl SetDrawBitmap(int bmp);
-void __cdecl sub_B392C(int col);  /* graphics library: clear */
+void __cdecl ClearScreen(int col);  /* graphics library: clear */
 void __cdecl sub_B3AA1(void *save);  /* graphics library: restore draw state */
-void __cdecl sub_91370(int art, int x, int y);  /* graphics library: draw art */
+void __cdecl DrawArt(int art, int x, int y);  /* graphics library: draw art */
 void __cdecl sub_9132C(int bmp);  /* graphics library: free bitmap */
 int FacingBoards(Player *p);  /* 5378D */
 short QueueGoalieNote(void);  /* 62C37 */
@@ -499,7 +499,7 @@ int SelectHilight(char *name, int *idx, unsigned char *league, int a, int b);
 void PlayHilight(void);
 void PenShotStart(short side);  /* 511B4 */
 void SaveDialogBg(int x, int y, int w, int h);  /* 30E66 */
-void __cdecl sub_91400(int buf, int x, int y);  /* graphics library: grab screen rect */
+void __cdecl GrabBlock(int buf, int x, int y);  /* graphics library: grab screen rect */
 int SetupDemoGame(void);  /* 13FA7 */
 void BuildDefaultLines(void);
 void SetupTeamLines(short side);
@@ -514,7 +514,7 @@ void DoGameFrame(void);
 void MarkTwoLinePlayers(Player *pk);  /* 55C6F */
 int QuickShotChk(Player *p);  /* 6427F */
 void SortNonDefPlayers(short side, signed char *out, short *keys);  /* 6455F */
-void __cdecl sub_93540(int n, int *keys, int *idx);  /* sort library */
+void __cdecl SortIndices(int n, int *keys, int *idx);  /* sort library */
 void SortPlayersByPos(short side, signed char *out, short *keys, char pos);  /* 644A8 */
 void LoadCupFinalSeries(void);  /* 15B76 */
 int LoadScheduleDB(int *db);  /* 891B2 */
@@ -647,7 +647,7 @@ int CmpRosterGoalies(int *a, int *b);  /* 75A37 */
 void LoadTempDatabases(void);  /* 710D8 */
 void WriteLeagueDbsMem(char *dir);  /* 6C96C */
 void FreeLeagueDbsMem(void);
-int __cdecl sub_92DE0(char *path);
+int __cdecl GetFileSize(char *path);
 int PreloadAnnouncerClips(char *home, char *vis);  /* 8579E */
 void OpenSpeechBank(char *path, int n);  /* 83897 */
 void QueuePenaltyType(void);
@@ -688,7 +688,7 @@ long lseek(int fh, long pos, int how);
 void SelectMatchingPlayers(char *first, char *last, int side);  /* 71690 */
 char *strlwr(char *s);
 void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side);  /* 78366 */
-void __cdecl sub_931FC(int art, int x, int y); /* graphics library: draw art (masked) */
+void __cdecl DrawArtMasked(int art, int x, int y); /* graphics library: draw art (masked) */
 
 int CmpTeamStandings(int *a, int *b);  /* 22DDE */
 int CmpTeamScoring(int *a, int *b);  /* 22F2E */
@@ -699,7 +699,7 @@ int CmpTeamPenalties(int *a, int *b);  /* 23437 */
 
 void BuildTeamRosterList(int team, unsigned char *list, unsigned char **rec);  /* 6C043 */
 
-void __cdecl sub_910E0(int art, int x, int y);  /* graphics library: draw art (opaque) */
+void __cdecl DrawArtOpaque(int art, int x, int y);  /* graphics library: draw art (opaque) */
 
 int SimPlayoffRound1(int buf, int a, int b, char *dir, char *ext);  /* 43644 */
 int SimPlayoffRound2(int buf, int a, int b, char *dir, char *ext);  /* 43E40 */
@@ -709,7 +709,7 @@ int SeedPlayoffRound2(int buf, int series, int a, int c, int *out);  /* 43757 */
 int SeedPlayoffRound3(int buf, int series, int a, int c, int *out);  /* 43F4B */
 int SeedPlayoffFinal(int buf, int series, int a, int c, int fh, int *out);  /* 444C9 */
 void AwardsCeremony(void);  /* 13320 */
-void __cdecl sub_932D0(char *path, void *buf, int size);  /* file library: write file */
+void __cdecl WriteFile(char *path, void *buf, int size);  /* file library: write file */
 int FinishPlayoffs(int fh, int a, int b, int c, char *dir, char *ext, int round);  /* 44899 */
 
 void MoveToFreeAgents(int *mode, int *x, int *y);  /* 70E8D */
@@ -862,10 +862,10 @@ int ReadTeamNames(char *path, char *out, int full);  /* 3DAB9 */
 void TakePlayerFromBox(Player *p);  /* 51115 */
 short PickForLineSlot(short side, short slot);  /* 64E60 */
 void RefillLineSlots(short side, short slot, short from, short to, short step);  /* 6552E */
-void __cdecl sub_B4BC4(int x1, int x2, int y1, int y2);  /* video library: clip window */
+void __cdecl SetClipWindow(int x1, int x2, int y1, int y2);  /* video library: clip window */
 void __cdecl sub_B4C33(void);  /* video library */
 void __cdecl initgraphics(int w, int h);  /* video library: set mode size */
-void __cdecl sub_B2E1B(int x, int y, int w, int h);  /* graphics library: view rect */
+void __cdecl SetViewRect(int x, int y, int w, int h);  /* graphics library: view rect */
 void SetScreenSize(int w, int h);  /* 10E9F */
 int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt);  /* 5F04E */
 void DrawShootsField(void);  /* 6FA7D */
@@ -925,12 +925,12 @@ void TradeDone(int a, int b, int c, int d, int e, int f, int g, int h, unsigned 
 void ClockTick(void);  /* 5DC10 */
 int CopyLeagueFiles(char *src, char *dst);  /* 3C310 */
 int ReadLeagueInfo(char *dir, void *teams, char *pw, short *b, void *a, void *d, int *saved, char *name);  /* 3D8DD */
-void __cdecl sub_B5DB0(int x, int y, int c);  /* graphics library: plot a pixel */
+void __cdecl PlotPixel(int x, int y, int c);  /* graphics library: plot a pixel */
 void DrawBevelBox(int x1, int y1, int x2, int y2, int studs);  /* 29D00 */
 void PaPlayoffResult(int team, int game, unsigned conf, unsigned round, int ot, int final);  /* 59CDD */
 int PickNearestPlayer(int x, int y);  /* 7E93E */
 void DrawGadgetByType(unsigned type, unsigned char state, int b, int *shp, int c, int d);  /* 7DF4E */
-void __cdecl sub_913B4(int shape);  /* graphics library: draw a shape */
+void __cdecl DrawShape(int shape);  /* graphics library: draw a shape */
 void AddDirtyRect(short x, short y, short w, short h);  /* 1D02F */
 int GameDressPlayer(unsigned char *nums, int a, unsigned char side, int *sel, int art, int b, int c, int d, int e, int f);  /* 79F41 */
 int ScratchPlayer(unsigned char *nums, int ignored, unsigned char side, int *sel, int art, int zero, int buttons, int extra, int u1, int u2);  /* 75770 */

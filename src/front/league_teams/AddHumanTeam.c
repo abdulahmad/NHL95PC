@@ -49,7 +49,7 @@ void AddHumanTeam(void)
         if (!err) {
             strcpy(s.name, (char *)&curleague);
             s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
-            sub_B2DCA(&s.btn, &s.y, &s.x);
+            MouseRead(&s.btn, &s.y, &s.x);
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, err);
             if (leaguesaved) {
                 msg_SavedGame_arg = (int)s.name;
@@ -68,17 +68,17 @@ void AddHumanTeam(void)
         }
     } while (shown);
     if (byte_DE268) {
-        sub_B392C(shown);
+        ClearScreen(shown);
         MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_easndesk, 0);
-        bank = sub_8E83C(s.path, 0);
-        sub_B4B88(0, 0x100, (unsigned char *)sub_B30B4(bank, (char *)str_bangpal) + 0x10);
+        bank = LoadBank(s.path, 0);
+        VgaSetPalette(0, 0x100, (unsigned char *)FindShape(bank, (char *)str_bangpal) + 0x10);
         FreeMemBlock(bank);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x17;
-        sub_B4B88(0xF8, 1, s.rgb);
+        VgaSetPalette(0xF8, 1, s.rgb);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x2A;
-        sub_B4B88(0xF9, 1, s.rgb);
+        VgaSetPalette(0xF9, 1, s.rgb);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x3F;
-        sub_B4B88(0xFA, 1, s.rgb);
+        VgaSetPalette(0xFA, 1, s.rgb);
     }
     if (err) return;
     if (humancount < 0x1A) {
@@ -94,7 +94,7 @@ void AddHumanTeam(void)
             (char *)&savedname)) return;
         CopyHumanTeamDBs((char *)&curleague, leagueteams, -1);
     } else {
-        sub_B2DCA(&s.btn, &s.y, &s.x);
+        MouseRead(&s.btn, &s.y, &s.x);
         MessageBox(-1, -1, (char *)msg_AllHuman, 1, err, err, (int)&s.y, (int)&s.x, -1);
     }
 }
@@ -129,7 +129,7 @@ void RemoveHumanTeam(void)
         if (!err) {
             strcpy(s.name, (char *)&curleague);
             s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
-            sub_B2DCA(&s.btn, &s.y, &s.x);
+            MouseRead(&s.btn, &s.y, &s.x);
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, err);
             if (leaguesaved) {
                 msg_SavedGame_arg = (int)s.name;
@@ -148,17 +148,17 @@ void RemoveHumanTeam(void)
         }
     } while (shown);
     if (byte_DE268) {
-        sub_B392C(shown);
+        ClearScreen(shown);
         MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_easndesk, 0);
-        bank = sub_8E83C(s.path, 0);
-        sub_B4B88(0, 0x100, (unsigned char *)sub_B30B4(bank, (char *)str_bangpal) + 0x10);
+        bank = LoadBank(s.path, 0);
+        VgaSetPalette(0, 0x100, (unsigned char *)FindShape(bank, (char *)str_bangpal) + 0x10);
         FreeMemBlock(bank);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x17;
-        sub_B4B88(0xF8, 1, s.rgb);
+        VgaSetPalette(0xF8, 1, s.rgb);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x2A;
-        sub_B4B88(0xF9, 1, s.rgb);
+        VgaSetPalette(0xF9, 1, s.rgb);
         s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x3F;
-        sub_B4B88(0xFA, 1, s.rgb);
+        VgaSetPalette(0xFA, 1, s.rgb);
     }
     if (err) return;
     if (humancount > 1) {
@@ -174,7 +174,7 @@ void RemoveHumanTeam(void)
             (char *)&savedname);
     } else {
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, err);
-        sub_B2DCA(&s.btn, &s.y, &s.x);
+        MouseRead(&s.btn, &s.y, &s.x);
         MessageBox(-1, -1, (char *)msg_OneHuman, 2, err, err, (int)&s.y, (int)&s.x, -1);
     }
 }

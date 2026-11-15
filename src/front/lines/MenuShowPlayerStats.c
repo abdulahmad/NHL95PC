@@ -28,9 +28,9 @@ int MenuShowPlayerStats(unsigned char *nums, int ignored, unsigned char side, in
     char buf[32];
     int z;
 
-    statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys3, 0x5B0, 0);
-    rosterpstat = (unsigned char *)sub_8CCA8((char *)str_Pstat3, 0x497, 0);
-    rostergstat = (unsigned char *)sub_8CCA8((char *)str_Gstat3, 0x10E, 0);
+    statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_Keys3, 0x5B0, 0);
+    rosterpstat = (unsigned char *)AllocMemBlock((char *)str_Pstat3, 0x497, 0);
+    rostergstat = (unsigned char *)AllocMemBlock((char *)str_Gstat3, 0x10E, 0);
     ShowRosterStats(0xC0, 0xC1, 0xC2, 0xC3);
     RunMenu(rosterstatsmenubar, 2, 0xC0, 0xC1, 0xC2);
     FreeMemBlock((int)rostergstat);
@@ -41,16 +41,16 @@ int MenuShowPlayerStats(unsigned char *nums, int ignored, unsigned char side, in
     rostergstat = (unsigned char *)z;
     rosterpstat = (unsigned char *)z;
     SetDrawBitmap(fullscrbmp);
-    sub_B392C(z);
+    ClearScreen(z);
     DrawLineEditorScreen(side, art, zero, buttons, extra);
     DrawLineJerseys(nums, art, side);
     sub_B4BA8();
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
     if (*(volatile int *)sel >= 0) {
         if (rosterstat[side * 0x2F4 + *sel * 27] == 2)
-            sub_8E9C0(0x7E, 0xC1);
+            TextSetColors(0x7E, 0xC1);
         else
-            sub_8E9C0(0xC0, 0xC1);
+            TextSetColors(0xC0, 0xC1);
         sprintf(buf, (char *)str_C2dS2, rosterlist[side * 0x2F4 + *sel * 27],
                 rosterjersey[side * 0x2F4 + *sel * 27], rosterlist + side * 0x2F4 + *sel * 27 + 8);
         PrintLineEdStatus(0x1FA, *sel * 13 + 0x16, buf);
@@ -79,7 +79,7 @@ int ScratchPlayer(unsigned char *nums, int ignored, unsigned char side, int *sel
     }
     rosterstat[side * 0x2F4 + *sel * 27] = 2;
     DrawLineJerseys(nums, art, side);
-    sub_8E9C0(0xFD, 0xC1);
+    TextSetColors(0xFD, 0xC1);
     sprintf(buf, (char *)str_C2dS2, rosterlist[side * 0x2F4 + *sel * 27],
             rosterjersey[side * 0x2F4 + *sel * 27],
             rosterlist + side * 0x2F4 + *sel * 27 + 8);
@@ -103,7 +103,7 @@ int DressPlayer(unsigned char *nums, int ignored, unsigned char side, int *sel, 
     (void)u2;
     rosterstat[side * 0x2F4 + *sel * 27] = 3;
     DrawLineJerseys(nums, art, side);
-    sub_8E9C0(0xC0, 0xC1);
+    TextSetColors(0xC0, 0xC1);
     sprintf(buf, (char *)str_C2dS2, rosterlist[side * 0x2F4 + *sel * 27],
             rosterjersey[side * 0x2F4 + *sel * 27],
             rosterlist + side * 0x2F4 + *sel * 27 + 8);

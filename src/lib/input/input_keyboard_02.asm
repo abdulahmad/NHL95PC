@@ -10,7 +10,7 @@ extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
 global sub_B29F0, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
 global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
 global loc_B2BED, unk_B2C00, sub_B2C01, loc_B2C3B, sub_B2C4A, loc_B2C68, loc_B2C6D, loc_B2C85
-global loc_B2CAC, sub_B2CBE, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
+global loc_B2CAC, KeyDown, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
 sub_B29F0:
 cmp word [word_D2D6E], byte 0	; B29F0
 jne near loc_B2A9A	; B29F8
@@ -259,7 +259,7 @@ or al, byte [byte_D2D12]	; B2CB3
 and al, 1	; B2CB9
 LD or, eax, eax	; B2CBB
 ret	; B2CBD
-sub_B2CBE:
+KeyDown:
 push ebp	; B2CBE
 LD mov, ebp, esp	; B2CBF
 mov ebx, dword [byte ebp+08h]	; B2CC1

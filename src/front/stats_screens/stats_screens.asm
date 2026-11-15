@@ -10,8 +10,8 @@ extern statsbgnames, statsbgshapes, statscategory, statsgoaliebuf, statspal, sta
 extern statsplayerbuf, statsplayoffs, statsredrawcb, statsskaterbuf, statsteambuf, statsteamorder, statsteamsel, str_calendar
 extern str_easndesk2, str_EASNvfn, str_embpal, str_embpal2, str_embpal3, str_gstat, str_gstat2, str_gstat3
 extern str_keys, str_keys2, str_keys3, str_Pal6, str_Pal7, str_Pal8, str_pstat, str_pstat2
-extern str_pstat3, str_tstat, str_tstat2, str_tstat3, sub_8CCA8, sub_8DAB8, sub_8E83C, sub_8E8A0
-extern sub_8FFB0, sub_91FE0, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4DD4, TeamRosterScreen
+extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, sub_8DAB8, LoadBank, sub_8E8A0
+extern SetPalette, sub_91FE0, FindShape, ClearScreen, VgaSetPalette, sub_B4BA8, SetColorRemap, TeamRosterScreen
 extern TeamStatsScreen, standingsmenubar, rostermenubar, playercardmenubar, teamstatsmenubar, skaterstatsmenubar, goaliestatsmenubar
 global GameTeamStatsScreen, GameTeamStatsScreen_common, GameSkaterStatsScreen, GameSkaterStatsScreen_x, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu_jt, GameStandingsMenu
 global GameStandingsMenu_standings, GameStandingsMenu_roster, GameStandingsMenu_player, GameStandingsMenu_player2, EasnTeamStatsScreen, EasnTeamStatsScreen_m, EasnTeamStatsScreen_x, EasnSkaterStatsScreen
@@ -39,7 +39,7 @@ mov eax, esp	; 20045
 push eax	; 20047
 push dword 100h	; 20048
 push byte 0	; 2004D
-call sub_8FFB0	; 2004F
+call SetPalette	; 2004F
 add esp, byte 0Ch	; 20054
 mov ebx, 10h	; 20057
 mov edx, esp	; 2005C
@@ -70,12 +70,12 @@ call MakePath	; 200BA
 push byte 0	; 200BF
 lea eax, [dword esp+0304h]	; 200C1
 push eax	; 200C8
-call sub_8E83C	; 200C9
+call LoadBank	; 200C9
 add esp, byte 8	; 200CE
 mov dword [statsbgshapes], eax	; 200D1
 push str_Pal6	; 200D6
 push eax	; 200DB
-call sub_B30B4	; 200DC
+call FindShape	; 200DC
 add esp, byte 8	; 200E1
 mov dword [statspalshape], eax	; 200E4
 lea edx, [byte eax+010h]	; 200E9
@@ -101,7 +101,7 @@ mov eax, esp	; 20130
 push eax	; 20132
 push dword 100h	; 20133
 push byte 0	; 20138
-call sub_8FFB0	; 2013A
+call SetPalette	; 2013A
 add esp, byte 0Ch	; 2013F
 mov ebx, 10h	; 20142
 mov edx, esp	; 20147
@@ -142,7 +142,7 @@ mov dword [statspal], eax	; 201AA
 push eax	; 201AF
 push dword 100h	; 201B0
 push byte 0	; 201B5
-call sub_8FFB0	; 201B7
+call SetPalette	; 201B7
 add esp, byte 0Ch	; 201BC
 mov ebx, 10h	; 201BF
 mov edx, esp	; 201C4
@@ -173,12 +173,12 @@ call MakePath	; 20222
 push byte 0	; 20227
 lea eax, [dword esp+0304h]	; 20229
 push eax	; 20230
-call sub_8E83C	; 20231
+call LoadBank	; 20231
 add esp, byte 8	; 20236
 mov dword [statsbgshapes], eax	; 20239
 push str_Pal6	; 2023E
 push eax	; 20243
-call sub_B30B4	; 20244
+call FindShape	; 20244
 add esp, byte 8	; 20249
 mov dword [statspalshape], eax	; 2024C
 lea edx, [byte eax+010h]	; 20251
@@ -206,7 +206,7 @@ mov eax, esp	; 202A6
 push eax	; 202A8
 push dword 100h	; 202A9
 push edi	; 202AE
-call sub_8FFB0	; 202AF
+call SetPalette	; 202AF
 add esp, byte 0Ch	; 202B4
 mov ebx, 10h	; 202B7
 mov edx, esp	; 202BC
@@ -244,7 +244,7 @@ mov eax, esp	; 20314
 push eax	; 20316
 push dword 100h	; 20317
 push byte 0	; 2031C
-call sub_8FFB0	; 2031E
+call SetPalette	; 2031E
 add esp, byte 0Ch	; 20323
 mov ebx, 10h	; 20326
 mov edx, esp	; 2032B
@@ -274,12 +274,12 @@ call MakePath	; 20384
 push byte 0	; 20389
 lea eax, [dword esp+0304h]	; 2038B
 push eax	; 20392
-call sub_8E83C	; 20393
+call LoadBank	; 20393
 add esp, byte 8	; 20398
 mov dword [statsbgshapes], eax	; 2039B
 push str_Pal6	; 203A0
 push eax	; 203A5
-call sub_B30B4	; 203A6
+call FindShape	; 203A6
 add esp, byte 8	; 203AB
 mov dword [statspalshape], eax	; 203AE
 lea edx, [byte eax+010h]	; 203B3
@@ -352,7 +352,7 @@ call MakePath	; 20485
 push byte 0	; 2048A
 lea eax, [byte esp+04h]	; 2048C
 push eax	; 20490
-call sub_8E83C	; 20491
+call LoadBank	; 20491
 add esp, byte 8	; 20496
 mov dword [embscupbank], eax	; 20499
 .6:
@@ -418,7 +418,7 @@ mov eax, esp	; 2055A
 push eax	; 2055C
 push dword 100h	; 2055D
 push ebx	; 20562
-call sub_8FFB0	; 20563
+call SetPalette	; 20563
 add esp, byte 0Ch	; 20568
 mov ebx, 10h	; 2056B
 mov edx, esp	; 20570
@@ -426,7 +426,7 @@ mov eax, 1	; 20572
 call FadePalStep	; 20577
 call sub_B4BA8	; 2057C
 push byte 0	; 20581
-call sub_B392C	; 20583
+call ClearScreen	; 20583
 add esp, byte 4	; 20588
 xor esi, esi	; 2058B
 mov dword [dword_C6D26], esi	; 2058D
@@ -435,25 +435,25 @@ call InitMenuRemap	; 20598
 push byte 20h	; 2059D
 push dword 2A4h	; 2059F
 push str_tstat	; 205A4
-call sub_8CCA8	; 205A9
+call AllocMemBlock	; 205A9
 add esp, byte 0Ch	; 205AE
 mov dword [statsteambuf], eax	; 205B1
 push byte 20h	; 205B6
 push dword 5B0h	; 205B8
 push str_keys	; 205BD
-call sub_8CCA8	; 205C2
+call AllocMemBlock	; 205C2
 add esp, byte 0Ch	; 205C7
 mov dword [statsplayerbuf], eax	; 205CA
 push byte 20h	; 205CF
 push dword 497h	; 205D1
 push str_pstat	; 205D6
-call sub_8CCA8	; 205DB
+call AllocMemBlock	; 205DB
 add esp, byte 0Ch	; 205E0
 mov dword [statsskaterbuf], eax	; 205E3
 push byte 20h	; 205E8
 push dword 10Eh	; 205EA
 push str_gstat	; 205EF
-call sub_8CCA8	; 205F4
+call AllocMemBlock	; 205F4
 add esp, byte 0Ch	; 205F9
 mov dword [statsgoaliebuf], eax	; 205FC
 xor eax, eax	; 20601
@@ -480,19 +480,19 @@ call MakePath	; 20651
 push byte 0	; 20656
 lea eax, [dword esp+0304h]	; 20658
 push eax	; 2065F
-call sub_8E83C	; 20660
+call LoadBank	; 20660
 add esp, byte 8	; 20665
 mov dword [statsbgshapes], eax	; 20668
 push str_Pal6	; 2066D
 push eax	; 20672
-call sub_B30B4	; 20673
+call FindShape	; 20673
 add esp, byte 8	; 20678
 mov dword [statspalshape], eax	; 2067B
 add eax, byte 10h	; 20680
 push eax	; 20683
 push dword 100h	; 20684
 push byte 0	; 20689
-call sub_B4B88	; 2068B
+call VgaSetPalette	; 2068B
 add esp, byte 0Ch	; 20690
 mov eax, dword [statsbgshapes]	; 20693
 push eax	; 20698
@@ -604,7 +604,7 @@ mov eax, esp	; 20858
 push eax	; 2085A
 push dword 100h	; 2085B
 push esi	; 20860
-call sub_8FFB0	; 20861
+call SetPalette	; 20861
 add esp, byte 0Ch	; 20866
 mov ebx, 10h	; 20869
 mov edx, esp	; 2086E
@@ -657,7 +657,7 @@ mov eax, esp	; 20906
 push eax	; 20908
 push dword 100h	; 20909
 push byte 0	; 2090E
-call sub_8FFB0	; 20910
+call SetPalette	; 20910
 add esp, byte 0Ch	; 20915
 mov edx, 1	; 20918
 mov dword [keepdesksong], edx	; 2091D
@@ -693,12 +693,12 @@ call MakePath	; 2099C
 push byte 0	; 209A1
 lea eax, [dword esp+0304h]	; 209A3
 push eax	; 209AA
-call sub_8E83C	; 209AB
+call LoadBank	; 209AB
 add esp, byte 8	; 209B0
 mov dword [statsbgshapes], eax	; 209B3
 push str_Pal7	; 209B8
 push eax	; 209BD
-call sub_B30B4	; 209BE
+call FindShape	; 209BE
 add esp, byte 8	; 209C3
 mov dword [statspalshape], eax	; 209C6
 lea edx, [byte eax+010h]	; 209CB
@@ -719,7 +719,7 @@ mov eax, esp	; 20A04
 push eax	; 20A06
 push dword 100h	; 20A07
 push byte 0	; 20A0C
-call sub_8FFB0	; 20A0E
+call SetPalette	; 20A0E
 add esp, byte 0Ch	; 20A13
 mov ebx, 10h	; 20A16
 mov edx, esp	; 20A1B
@@ -753,7 +753,7 @@ mov eax, esp	; 20A67
 push eax	; 20A69
 push dword 100h	; 20A6A
 push byte 0	; 20A6F
-call sub_8FFB0	; 20A71
+call SetPalette	; 20A71
 add esp, byte 0Ch	; 20A76
 mov dword [leaguestatsmode], 1	; 20A79
 mov dword [statscategory], esi	; 20A83
@@ -787,12 +787,12 @@ call MakePath	; 20AF6
 push byte 0	; 20AFB
 lea eax, [dword esp+0304h]	; 20AFD
 push eax	; 20B04
-call sub_8E83C	; 20B05
+call LoadBank	; 20B05
 add esp, byte 8	; 20B0A
 mov dword [statsbgshapes], eax	; 20B0D
 push str_Pal7	; 20B12
 push eax	; 20B17
-call sub_B30B4	; 20B18
+call FindShape	; 20B18
 add esp, byte 8	; 20B1D
 mov dword [statspalshape], eax	; 20B20
 lea edx, [byte eax+010h]	; 20B25
@@ -813,7 +813,7 @@ mov eax, esp	; 20B5E
 push eax	; 20B60
 push dword 100h	; 20B61
 push byte 0	; 20B66
-call sub_8FFB0	; 20B68
+call SetPalette	; 20B68
 add esp, byte 0Ch	; 20B6D
 cmp dword [gamemode], byte 1	; 20B70
 je short .4	; 20B77
@@ -852,7 +852,7 @@ mov eax, esp	; 20BDE
 push eax	; 20BE0
 push dword 100h	; 20BE1
 push byte 0	; 20BE6
-call sub_8FFB0	; 20BE8
+call SetPalette	; 20BE8
 add esp, byte 0Ch	; 20BED
 mov dword [leaguestatsmode], 1	; 20BF0
 mov dword [statscategory], esi	; 20BFA
@@ -886,12 +886,12 @@ call MakePath	; 20C6D
 push byte 0	; 20C72
 lea eax, [dword esp+0304h]	; 20C74
 push eax	; 20C7B
-call sub_8E83C	; 20C7C
+call LoadBank	; 20C7C
 add esp, byte 8	; 20C81
 mov dword [statsbgshapes], eax	; 20C84
 push str_Pal7	; 20C89
 push eax	; 20C8E
-call sub_B30B4	; 20C8F
+call FindShape	; 20C8F
 add esp, byte 8	; 20C94
 mov dword [statspalshape], eax	; 20C97
 lea edx, [byte eax+010h]	; 20C9C
@@ -912,7 +912,7 @@ mov eax, esp	; 20CD5
 push eax	; 20CD7
 push dword 100h	; 20CD8
 push byte 0	; 20CDD
-call sub_8FFB0	; 20CDF
+call SetPalette	; 20CDF
 add esp, byte 0Ch	; 20CE4
 cmp dword [gamemode], byte 1	; 20CE7
 je near EasnGoalieStatsScreen_common.2	; 20CEE
@@ -928,12 +928,12 @@ call MakePath	; 20D11
 push byte 0	; 20D16
 lea eax, [dword esp+0304h]	; 20D18
 push eax	; 20D1F
-call sub_8E83C	; 20D20
+call LoadBank	; 20D20
 add esp, byte 8	; 20D25
 mov dword [statsbgshapes], eax	; 20D28
 push str_Pal7	; 20D2D
 push eax	; 20D32
-call sub_B30B4	; 20D33
+call FindShape	; 20D33
 add esp, byte 8	; 20D38
 add eax, byte 10h	; 20D3B
 mov dword [statspalshape], eax	; 20D3E
@@ -1015,7 +1015,7 @@ call MakePath	; 20E22
 push byte 0	; 20E27
 lea eax, [byte esp+04h]	; 20E29
 push eax	; 20E2D
-call sub_8E83C	; 20E2E
+call LoadBank	; 20E2E
 add esp, byte 8	; 20E33
 mov dword [embscupbank], eax	; 20E36
 .6:
@@ -1089,7 +1089,7 @@ mov eax, esp	; 20F1C
 push eax	; 20F1E
 push dword 100h	; 20F1F
 push ebx	; 20F24
-call sub_8FFB0	; 20F25
+call SetPalette	; 20F25
 add esp, byte 0Ch	; 20F2A
 mov ebx, 10h	; 20F2D
 mov edx, esp	; 20F32
@@ -1100,25 +1100,25 @@ call InitMenuRemap	; 20F3D
 push byte 20h	; 20F42
 push dword 2A4h	; 20F44
 push str_tstat2	; 20F49
-call sub_8CCA8	; 20F4E
+call AllocMemBlock	; 20F4E
 add esp, byte 0Ch	; 20F53
 mov dword [statsteambuf], eax	; 20F56
 push byte 20h	; 20F5B
 push dword 5B0h	; 20F5D
 push str_keys2	; 20F62
-call sub_8CCA8	; 20F67
+call AllocMemBlock	; 20F67
 add esp, byte 0Ch	; 20F6C
 mov dword [statsplayerbuf], eax	; 20F6F
 push byte 20h	; 20F74
 push dword 497h	; 20F76
 push str_pstat2	; 20F7B
-call sub_8CCA8	; 20F80
+call AllocMemBlock	; 20F80
 add esp, byte 0Ch	; 20F85
 mov dword [statsskaterbuf], eax	; 20F88
 push byte 20h	; 20F8D
 push dword 10Eh	; 20F8F
 push str_gstat2	; 20F94
-call sub_8CCA8	; 20F99
+call AllocMemBlock	; 20F99
 add esp, byte 0Ch	; 20F9E
 mov dword [statsgoaliebuf], eax	; 20FA1
 xor eax, eax	; 20FA6
@@ -1146,12 +1146,12 @@ call MakePath	; 20FF8
 push byte 0	; 20FFD
 lea eax, [dword esp+0380h]	; 20FFF
 push eax	; 21006
-call sub_8E83C	; 21007
+call LoadBank	; 21007
 add esp, byte 8	; 2100C
 mov dword [statsbgshapes], eax	; 2100F
 push str_Pal7	; 21014
 push eax	; 21019
-call sub_B30B4	; 2101A
+call FindShape	; 2101A
 add esp, byte 8	; 2101F
 mov dword [statspalshape], eax	; 21022
 lea edx, [byte eax+010h]	; 21027
@@ -1294,7 +1294,7 @@ mov eax, esp	; 2126F
 push eax	; 21271
 push dword 100h	; 21272
 push edx	; 21277
-call sub_8FFB0	; 21278
+call SetPalette	; 21278
 add esp, byte 0Ch	; 2127D
 mov ebx, 10h	; 21280
 mov edx, esp	; 21285
@@ -1367,7 +1367,7 @@ call MakePath	; 21330
 push byte 20h	; 21335
 lea eax, [byte esp+04h]	; 21337
 push eax	; 2133B
-call sub_8E83C	; 2133C
+call LoadBank	; 2133C
 add esp, byte 8	; 21341
 mov dword [calendarshapes], eax	; 21344
 .x:
@@ -1395,7 +1395,7 @@ mov eax, esp	; 21367
 push eax	; 21369
 push dword 100h	; 2136A
 push byte 0	; 2136F
-call sub_8FFB0	; 21371
+call SetPalette	; 21371
 add esp, byte 0Ch	; 21376
 mov dword [leaguestatsmode], 1	; 21379
 mov dword [statscategory], esi	; 21383
@@ -1430,12 +1430,12 @@ call MakePath	; 213FB
 push byte 0	; 21400
 lea eax, [dword esp+0304h]	; 21402
 push eax	; 21409
-call sub_8E83C	; 2140A
+call LoadBank	; 2140A
 add esp, byte 8	; 2140F
 mov dword [statsbgshapes], eax	; 21412
 push str_Pal8	; 21417
 push eax	; 2141C
-call sub_B30B4	; 2141D
+call FindShape	; 2141D
 add esp, byte 8	; 21422
 mov dword [statspalshape], eax	; 21425
 lea edx, [byte eax+010h]	; 2142A
@@ -1457,7 +1457,7 @@ mov eax, esp	; 21463
 push eax	; 21465
 push dword 100h	; 21466
 push byte 0	; 2146B
-call sub_8FFB0	; 2146D
+call SetPalette	; 2146D
 add esp, byte 0Ch	; 21472
 mov ebx, 10h	; 21475
 mov edx, esp	; 2147A
@@ -1496,7 +1496,7 @@ mov eax, esp	; 214C8
 push eax	; 214CA
 push dword 100h	; 214CB
 push byte 0	; 214D0
-call sub_8FFB0	; 214D2
+call SetPalette	; 214D2
 add esp, byte 0Ch	; 214D7
 mov dword [leaguestatsmode], 1	; 214DA
 mov dword [statscategory], esi	; 214E4
@@ -1531,12 +1531,12 @@ call MakePath	; 2155C
 push byte 0	; 21561
 lea eax, [dword esp+0304h]	; 21563
 push eax	; 2156A
-call sub_8E83C	; 2156B
+call LoadBank	; 2156B
 add esp, byte 8	; 21570
 mov dword [statsbgshapes], eax	; 21573
 push str_Pal8	; 21578
 push eax	; 2157D
-call sub_B30B4	; 2157E
+call FindShape	; 2157E
 add esp, byte 8	; 21583
 mov dword [statspalshape], eax	; 21586
 lea edx, [byte eax+010h]	; 2158B
@@ -1572,7 +1572,7 @@ mov eax, esp	; 215DB
 push eax	; 215DD
 push dword 100h	; 215DE
 push byte 0	; 215E3
-call sub_8FFB0	; 215E5
+call SetPalette	; 215E5
 add esp, byte 0Ch	; 215EA
 mov dword [leaguestatsmode], 1	; 215ED
 mov dword [statscategory], esi	; 215F7
@@ -1607,12 +1607,12 @@ call MakePath	; 2166F
 push byte 0	; 21674
 lea eax, [dword esp+0304h]	; 21676
 push eax	; 2167D
-call sub_8E83C	; 2167E
+call LoadBank	; 2167E
 add esp, byte 8	; 21683
 mov dword [statsbgshapes], eax	; 21686
 push str_Pal8	; 2168B
 push eax	; 21690
-call sub_B30B4	; 21691
+call FindShape	; 21691
 add esp, byte 8	; 21696
 mov dword [statspalshape], eax	; 21699
 lea edx, [byte eax+010h]	; 2169E
@@ -1682,7 +1682,7 @@ call MakePath	; 21767
 push byte 0	; 2176C
 lea eax, [byte esp+04h]	; 2176E
 push eax	; 21772
-call sub_8E83C	; 21773
+call LoadBank	; 21773
 add esp, byte 8	; 21778
 mov dword [embscupbank], eax	; 2177B
 .6:
@@ -1755,7 +1755,7 @@ mov eax, esp	; 21854
 push eax	; 21856
 push dword 100h	; 21857
 push ebx	; 2185C
-call sub_8FFB0	; 2185D
+call SetPalette	; 2185D
 add esp, byte 0Ch	; 21862
 mov ebx, 10h	; 21865
 mov edx, esp	; 2186A
@@ -1769,25 +1769,25 @@ call InitMenuRemap	; 21888
 push byte 20h	; 2188D
 push dword 2A4h	; 2188F
 push str_tstat3	; 21894
-call sub_8CCA8	; 21899
+call AllocMemBlock	; 21899
 add esp, byte 0Ch	; 2189E
 mov dword [statsteambuf], eax	; 218A1
 push byte 20h	; 218A6
 push dword 5B0h	; 218A8
 push str_keys3	; 218AD
-call sub_8CCA8	; 218B2
+call AllocMemBlock	; 218B2
 add esp, byte 0Ch	; 218B7
 mov dword [statsplayerbuf], eax	; 218BA
 push byte 20h	; 218BF
 push dword 497h	; 218C1
 push str_pstat3	; 218C6
-call sub_8CCA8	; 218CB
+call AllocMemBlock	; 218CB
 add esp, byte 0Ch	; 218D0
 mov dword [statsskaterbuf], eax	; 218D3
 push byte 20h	; 218D8
 push dword 10Eh	; 218DA
 push str_gstat3	; 218DF
-call sub_8CCA8	; 218E4
+call AllocMemBlock	; 218E4
 add esp, byte 0Ch	; 218E9
 mov dword [statsgoaliebuf], eax	; 218EC
 xor eax, eax	; 218F1
@@ -1814,12 +1814,12 @@ call MakePath	; 21941
 push byte 0	; 21946
 lea eax, [dword esp+0380h]	; 21948
 push eax	; 2194F
-call sub_8E83C	; 21950
+call LoadBank	; 21950
 add esp, byte 8	; 21955
 mov dword [statsbgshapes], eax	; 21958
 push str_Pal8	; 2195D
 push eax	; 21962
-call sub_B30B4	; 21963
+call FindShape	; 21963
 add esp, byte 8	; 21968
 mov dword [statspalshape], eax	; 2196B
 lea edx, [byte eax+010h]	; 21970
@@ -1967,7 +1967,7 @@ mov eax, esp	; 21BC4
 push eax	; 21BC6
 push dword 100h	; 21BC7
 push byte 0	; 21BCC
-call sub_8FFB0	; 21BCE
+call SetPalette	; 21BCE
 add esp, byte 0Ch	; 21BD3
 mov ebx, 10h	; 21BD6
 mov edx, esp	; 21BDB
@@ -2008,7 +2008,7 @@ mov eax, esp	; 21C42
 push eax	; 21C44
 push dword 100h	; 21C45
 push edx	; 21C4A
-call sub_8FFB0	; 21C4B
+call SetPalette	; 21C4B
 add esp, byte 0Ch	; 21C50
 .2:
 lea eax, [dword esp+0CCh]	; 21C53
@@ -2036,7 +2036,7 @@ inc eax	; 21C7E
 cmp edx, 0A5h	; 21C7F
 jl short DrawPhotoWithPal.5	; 21C85
 push photoremap	; 21C87
-call sub_B4DD4	; 21C8C
+call SetColorRemap	; 21C8C
 add esp, byte 4	; 21C91
 mov ebx, dword [statspalvalid]	; 21C94
 test ebx, ebx	; 21C9A
@@ -2051,7 +2051,7 @@ mov eax, esp	; 21CB1
 push eax	; 21CB3
 push dword 100h	; 21CB4
 push ebx	; 21CB9
-call sub_B4B88	; 21CBA
+call VgaSetPalette	; 21CBA
 add esp, byte 0Ch	; 21CBF
 .8:
 push ebp	; 21CC2

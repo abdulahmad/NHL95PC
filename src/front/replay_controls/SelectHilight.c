@@ -15,7 +15,7 @@ int ListDialog(char **items, int n, char *title, int a, int b, unsigned char *ma
    idx: gets the chosen highlight; dir: the league directory; multi, marks: as above. Result: 0, an I/O error,
    or -1 when nothing was chosen.
    DRAFT (10.0 GA): 893 vs 893. The counter and the two table pointers are plain locals declared i, tbl, strs (i's
-   address is taken for sub_B2DCA, so the city loop stores i + 1 from a register as the EXE does), and both
+   address is taken for MouseRead, so the city loop stores i + 1 from a register as the EXE does), and both
    failures set err = -1 before the one return err. Left: the two FreeMemBlock pushes load into esi / ebp (EXE
    eax / edx). */
 int SelectHilight(char *name, int *idx, unsigned char *dir, int multi, unsigned char **marks)
@@ -61,14 +61,14 @@ int SelectHilight(char *name, int *idx, unsigned char *dir, int multi, unsigned 
         if (r >= 0) {
             MakePath(name, 0, (char *)teamabbrevs[s.teams[r]], (char *)str_HI2);
             MakePath(s.path, (char *)dir, name, 0);
-            size = sub_92DE0(s.path);
+            size = GetFileSize(s.path);
             err = FileOpenRead(s.path, &s.fh);
             if (!err) {
                 n = size / 0x9652;
-                tbl = (char **)sub_8CCA8((char *)str_HLTL, n * 4, 0x20);
-                strs = (char *)sub_8CCA8((char *)str_HLT, n * 0x51, 0x20);
+                tbl = (char **)AllocMemBlock((char *)str_HLTL, n * 4, 0x20);
+                strs = (char *)AllocMemBlock((char *)str_HLT, n * 0x51, 0x20);
                 if (multi) {
-                    *marks = (unsigned char *)sub_8CCA8((char *)str_HLTS, n, 0x20);
+                    *marks = (unsigned char *)AllocMemBlock((char *)str_HLTS, n, 0x20);
                     for (i = 0; i < n && !err; i++) (*marks)[i] = 0;
                 }
                 for (i = 0; i < n && !err; i++) {
@@ -87,7 +87,7 @@ int SelectHilight(char *name, int *idx, unsigned char *dir, int multi, unsigned 
             FileClose(&s.fh);
         } else err = -1;
     } else {
-        sub_B2DCA(&i, &s.y, &s.x);
+        MouseRead(&i, &s.y, &s.x);
         MessageBox(-1, -1, (char *)msg_NoHilights, 1, 0, 0, (int)&s.y, (int)&s.x, -1);
         err = -1;
     }

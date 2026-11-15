@@ -46,7 +46,7 @@ void __cdecl sub_B5AC8(SprHdr *s, int x, int y);
 
 /* DrawSprite (1CD73, PC only): draw sprite spr with its hot spot (+8h / +0Ah) at x, y, mirrored when flip. Nothing
    is drawn when it lies wholly outside cliprect; it is clipped when it crosses it. With pal not negative the
-   colour remap (sub_B4DD4, awayremap for pal, else homeremap) is loaded unless it is already the current one
+   colour remap (SetColorRemap, awayremap for pal, else homeremap) is loaded unless it is already the current one
    (lastsprremap = pal + flip * 2); mirrored, the remap's 16-byte groups are flipped (bytes 0/4 and 1/3) around
    the load. The rectangle is recorded (sub_6AB7C, spritedrawcount), and if the sprite's flag byte is set one of
    eight blitters draws it (clipped / remapped / mirrored). spr: the sprite header; unused: not read. */
@@ -101,7 +101,7 @@ void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
                     p[i + 4] = s.t1[4];
                 }
             }
-            sub_B4DD4(pal ? awayremap : homeremap);
+            SetColorRemap(pal ? awayremap : homeremap);
             if (s.flip) {
                 p = pal ? awayremap_eC0 : homeremap_eC0;
                 for (i = 0; i < 0x40; i += 0x10) {

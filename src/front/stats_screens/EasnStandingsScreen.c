@@ -18,7 +18,7 @@ int EasnStandingsScreen(void)
                 MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
             else
                 MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
-            embscupbank = sub_8E83C(path, 0);
+            embscupbank = LoadBank(path, 0);
         }
         ShowPlayoffTree(statsteambuf, (int)statsteamorder);
         DrawMenuBar(standingsmenubar, 4, 0x40, 0x41, 0x42);

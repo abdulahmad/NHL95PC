@@ -21,11 +21,11 @@ extern speechbank, sprintf_, str_3dKbytesOfFree2, str_C4, str_Current2, str_Curr
 extern str_dot, str_EnterANewDatabase, str_ErrorGettingDiskSpace, str_extDB, str_fmt2d, str_FreeAgents, str_Joycal, str_Left
 extern str_LEFTJOYSTICK, str_Pal24, str_Pointer11, str_Puck, str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_S5
 extern str_SaveAsGameDatabases, str_SavingDatabases, str_Scrn3, str_space, str_Temp7, str_XXXKbytesOfFree2, strcat_, strcpy_
-extern strlen_, strupr_, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8
-extern sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_90F38, sub_910E0
-extern sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_932D0
-extern sub_B29F0, sub_B2CBE, sub_B2F22, sub_B30B4, sub_B30F4, sub_B340B, sub_B3464, sub_B384E
-extern sub_B387E, sub_B392C, sub_B39D0, sub_B4B88, sub_B4BA8, sub_B4C61, sub_B4F8C, sub_B4FAC
+extern strlen_, strupr_, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern TextRestoreState, TextSetFont, sub_8FC8A, sub_8FCDF, SetPalette, FillRect, XorBar, DrawArtOpaque
+extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, WriteFile
+extern sub_B29F0, KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, sub_B3464, sub_B384E
+extern sub_B387E, ClearScreen, sub_B39D0, VgaSetPalette, sub_B4BA8, sub_B4C61, CreateBitmap, sub_B4FAC
 extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, unk_D45D8
 extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
@@ -343,7 +343,7 @@ add esp, byte 8	; 6C1D0
 mov dword [seasondb], eax	; 6C1D3
 mov eax, esp	; 6C1D8
 push eax	; 6C1DA
-call sub_92DE0	; 6C1DB
+call GetFileSize	; 6C1DB
 add esp, byte 4	; 6C1E0
 mov dword [seasondb_size], eax	; 6C1E3
 mov ebx, dword [leaguedbnames+4]	; 6C1E8
@@ -359,7 +359,7 @@ add esp, byte 8	; 6C205
 mov dword [careerdb], eax	; 6C208
 mov eax, esp	; 6C20D
 push eax	; 6C20F
-call sub_92DE0	; 6C210
+call GetFileSize	; 6C210
 add esp, byte 4	; 6C215
 mov dword [careerdb_size], eax	; 6C218
 mov ebx, dword [leaguedbnames+0Ch]	; 6C21D
@@ -375,7 +375,7 @@ add esp, byte 8	; 6C23A
 mov dword [carteamsdb], eax	; 6C23D
 mov eax, esp	; 6C242
 push eax	; 6C244
-call sub_92DE0	; 6C245
+call GetFileSize	; 6C245
 add esp, byte 4	; 6C24A
 mov dword [carteamsdb_size], eax	; 6C24D
 mov ebx, dword [leaguedbnames]	; 6C252
@@ -391,7 +391,7 @@ add esp, byte 8	; 6C26F
 mov dword [keydb], eax	; 6C272
 mov eax, esp	; 6C277
 push eax	; 6C279
-call sub_92DE0	; 6C27A
+call GetFileSize	; 6C27A
 add esp, byte 4	; 6C27F
 mov dword [keydb_size], eax	; 6C282
 mov ebx, dword [leaguedbnames+10h]	; 6C287
@@ -407,7 +407,7 @@ add esp, byte 8	; 6C2A4
 mov dword [teamsdb], eax	; 6C2A7
 mov eax, esp	; 6C2AC
 push eax	; 6C2AE
-call sub_92DE0	; 6C2AF
+call GetFileSize	; 6C2AF
 add esp, byte 4	; 6C2B4
 mov dword [teamsdb_size], eax	; 6C2B7
 mov ebx, dword [leaguedbnames+8]	; 6C2BC
@@ -423,7 +423,7 @@ add esp, byte 8	; 6C2D9
 mov dword [attdb], eax	; 6C2DC
 mov eax, esp	; 6C2E1
 push eax	; 6C2E3
-call sub_92DE0	; 6C2E4
+call GetFileSize	; 6C2E4
 add esp, byte 4	; 6C2E9
 mov dword [attdb_size], eax	; 6C2EC
 add esp, byte 20h	; 6C2F1
@@ -872,7 +872,7 @@ mov esi, dword [seasondb]	; 6C847
 push esi	; 6C84D
 lea eax, [byte esp+034h]	; 6C84E
 push eax	; 6C852
-call sub_932D0	; 6C853
+call WriteFile	; 6C853
 add esp, byte 0Ch	; 6C858
 mov ebx, dword [leaguedbnames+4]	; 6C85B
 mov ecx, dword [dword esp+09Ch]	; 6C861
@@ -885,7 +885,7 @@ mov eax, dword [careerdb]	; 6C87A
 push eax	; 6C87F
 lea eax, [byte esp+034h]	; 6C880
 push eax	; 6C884
-call sub_932D0	; 6C885
+call WriteFile	; 6C885
 add esp, byte 0Ch	; 6C88A
 mov ebx, dword [leaguedbnames+0Ch]	; 6C88D
 mov ecx, dword [dword esp+09Ch]	; 6C893
@@ -898,7 +898,7 @@ mov ebx, dword [carteamsdb]	; 6C8AC
 push ebx	; 6C8B2
 lea eax, [byte esp+034h]	; 6C8B3
 push eax	; 6C8B7
-call sub_932D0	; 6C8B8
+call WriteFile	; 6C8B8
 add esp, byte 0Ch	; 6C8BD
 mov ebx, dword [leaguedbnames]	; 6C8C0
 mov ecx, dword [dword esp+09Ch]	; 6C8C6
@@ -911,7 +911,7 @@ mov esi, dword [keydb]	; 6C8DF
 push esi	; 6C8E5
 lea eax, [byte esp+034h]	; 6C8E6
 push eax	; 6C8EA
-call sub_932D0	; 6C8EB
+call WriteFile	; 6C8EB
 add esp, byte 0Ch	; 6C8F0
 mov ebx, dword [leaguedbnames+10h]	; 6C8F3
 mov ecx, dword [dword esp+09Ch]	; 6C8F9
@@ -924,7 +924,7 @@ mov eax, dword [teamsdb]	; 6C912
 push eax	; 6C917
 lea eax, [byte esp+034h]	; 6C918
 push eax	; 6C91C
-call sub_932D0	; 6C91D
+call WriteFile	; 6C91D
 add esp, byte 0Ch	; 6C922
 mov ebx, dword [leaguedbnames+8]	; 6C925
 mov ecx, dword [dword esp+09Ch]	; 6C92B
@@ -937,7 +937,7 @@ mov ebx, dword [attdb]	; 6C944
 push ebx	; 6C94A
 lea eax, [byte esp+034h]	; 6C94B
 push eax	; 6C94F
-call sub_932D0	; 6C950
+call WriteFile	; 6C950
 add esp, byte 0Ch	; 6C955
 xor ecx, ecx	; 6C958
 mov dword [dbdirty], ecx	; 6C95A
@@ -976,7 +976,7 @@ mov ebx, dword [seasondb]	; 6C999
 push ebx	; 6C99F
 lea eax, [byte esp+08h]	; 6C9A0
 push eax	; 6C9A4
-call sub_932D0	; 6C9A5
+call WriteFile	; 6C9A5
 add esp, byte 0Ch	; 6C9AA
 mov ebx, dword [leaguedbnames+4]	; 6C9AD
 mov ecx, esi	; 6C9B3
@@ -989,7 +989,7 @@ mov edi, dword [careerdb]	; 6C9C5
 push edi	; 6C9CB
 lea eax, [byte esp+08h]	; 6C9CC
 push eax	; 6C9D0
-call sub_932D0	; 6C9D1
+call WriteFile	; 6C9D1
 add esp, byte 0Ch	; 6C9D6
 mov ebx, dword [leaguedbnames+0Ch]	; 6C9D9
 mov ecx, esi	; 6C9DF
@@ -1002,7 +1002,7 @@ mov eax, dword [carteamsdb]	; 6C9F1
 push eax	; 6C9F6
 lea eax, [byte esp+08h]	; 6C9F7
 push eax	; 6C9FB
-call sub_932D0	; 6C9FC
+call WriteFile	; 6C9FC
 add esp, byte 0Ch	; 6CA01
 mov ebx, dword [leaguedbnames]	; 6CA04
 mov ecx, esi	; 6CA0A
@@ -1015,7 +1015,7 @@ mov ebx, dword [keydb]	; 6CA1C
 push ebx	; 6CA22
 lea eax, [byte esp+08h]	; 6CA23
 push eax	; 6CA27
-call sub_932D0	; 6CA28
+call WriteFile	; 6CA28
 add esp, byte 0Ch	; 6CA2D
 mov ebx, dword [leaguedbnames+10h]	; 6CA30
 mov ecx, esi	; 6CA36
@@ -1028,7 +1028,7 @@ mov edi, dword [teamsdb]	; 6CA48
 push edi	; 6CA4E
 lea eax, [byte esp+08h]	; 6CA4F
 push eax	; 6CA53
-call sub_932D0	; 6CA54
+call WriteFile	; 6CA54
 add esp, byte 0Ch	; 6CA59
 mov ebx, dword [leaguedbnames+8]	; 6CA5C
 mov ecx, esi	; 6CA62
@@ -1041,7 +1041,7 @@ mov eax, dword [attdb]	; 6CA74
 push eax	; 6CA79
 lea eax, [byte esp+08h]	; 6CA7A
 push eax	; 6CA7E
-call sub_932D0	; 6CA7F
+call WriteFile	; 6CA7F
 add esp, byte 0Ch	; 6CA84
 add esp, byte 20h	; 6CA87
 jmp near BuildFreeAgentList_ret	; 6CA8A

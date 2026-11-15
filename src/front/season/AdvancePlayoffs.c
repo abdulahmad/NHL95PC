@@ -35,7 +35,7 @@ int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir,
     }
     if (err || busy || flags != 7 || team != -1) goto save;
     if (err = FileReadAt(fh, &n, 0, 2)) return err;
-    playoffbuf = sub_8CCA8((char *)str_Sch, 0x276, 0x20);
+    playoffbuf = AllocMemBlock((char *)str_Sch, 0x276, 0x20);
     if (err = FileReadAt(fh, (void *)playoffbuf, 0x199A, 0x276)) goto done;
     if (n < 0x47C) {
         n = 0x47C;
@@ -59,7 +59,7 @@ int AdvancePlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir,
         n = 0x4AD;
         if (err = SimPlayoffFinal(playoffbuf, rwfh, rdfh, dir, ext)) goto done;
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
-        sub_932D0(path, seasondb, seasondb_size);
+        WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
         byte_DE268 = -1;
     }

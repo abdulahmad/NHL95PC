@@ -27,8 +27,8 @@ void LoadTeamPalette(int home, int vis, unsigned char *pal)
     for (i = 0x90; i < 0x100; i++) awayremap[i] = s[i] + 0x40;
     FreeMemBlock((int)buf);
     MakePath(path, fileoncd[0x15F] == 1 ? (char *)cddriveptr : 0, (char *)str_Rinkpal, 0);
-    buf = (unsigned char *)sub_8E83C(path, 0);
-    s = (unsigned char *)sub_B30B4((int)buf, (char *)str_Pal30) + 0x10;
+    buf = (unsigned char *)LoadBank(path, 0);
+    s = (unsigned char *)FindShape((int)buf, (char *)str_Pal30) + 0x10;
     for (i = 0; i < 0x180; i++) pal[i] = s[i];
     for (i = 0x2F1; i < 0x300; i++) pal[i] = s[i];
     FreeMemBlock((int)buf);

@@ -89,18 +89,18 @@ int ImportMasterLeague(void)
     FileClose(&s.rwfh);
     if (!err) err = CopyHumanTeamDBs((char *)&curleague, leagueteams, -1);
     if (err) {
-        sub_B2DCA(&s.i, &s.y, &s.x);
+        MouseRead(&s.i, &s.y, &s.x);
         MessageBox(-1, -1, (char *)updateerrmsg, 2, 0, 0, (int)&s.y, (int)&s.x, -1);
     }
     if (err) DeleteDir(s.name);
     goto fail;
 exists:
-    sub_B2DCA(&s.i, &s.y, &s.x);
+    MouseRead(&s.i, &s.y, &s.x);
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
     MessageBox(-1, -1, (char *)lgexistsmsg, 2, 0, 0, (int)&s.y, (int)&s.x, -1);
 fail:
     if (err) {
-        sub_B2DCA(&s.i, &s.y, &s.x);
+        MouseRead(&s.i, &s.y, &s.x);
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
         MessageBox(-1, -1, (char *)importerrmsg, 1, 0, 0, (int)&s.y, (int)&s.x, -1);
     }
@@ -170,7 +170,7 @@ int ImportPlayerTeam(void)
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, err);
         insavegamemsg[0] = (int)s.lname;
         insavegamemsg[2] = (int)s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)insavegamemsg, 5, err, err, (int)&s.my, (int)&s.btn, -1);
         goto done;
     }
@@ -184,7 +184,7 @@ int ImportPlayerTeam(void)
             err = ReadLeagueInfo((char *)&curleague, leagueteams, (char *)masterpw, (short *)&leaguemaster, &humancount,
                 &leagueflags, &leaguesaved, (char *)&savedname);
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, again);
-            sub_B2DCA(&s.mx, &s.my, &s.btn);
+            MouseRead(&s.mx, &s.my, &s.btn);
             if (leagueflags & 0xC) {
                 *(char **)(playerdbsmsg + 4) = s.name;
                 if (MessageBox(-1, -1, (char *)playerdbsmsg, 4, (int)btn_MasterDB, 2, (int)&s.my, (int)&s.btn, -1)) {
@@ -208,7 +208,7 @@ int ImportPlayerTeam(void)
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
         notexportedmsg[0] = (int)s.lname;
         notexportedmsg[2] = (int)s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)notexportedmsg, 3, 0, 0, (int)&s.my, (int)&s.btn, -1);
         goto fail;
     }
@@ -216,7 +216,7 @@ int ImportPlayerTeam(void)
         t = s.team;
         if (*(unsigned *)(s.entry + 0x1A) < *(unsigned *)((char *)lgteamver + t * 30)) {
             *(char **)(oldcopymsg + 8) = s.name;
-            sub_B2DCA(&s.mx, &s.my, &s.btn);
+            MouseRead(&s.mx, &s.my, &s.btn);
             MessageBox(-1, -1, (char *)oldcopymsg, 3, 0, 0, (int)&s.my, (int)&s.btn, -1);
             goto fail;
         }
@@ -224,7 +224,7 @@ int ImportPlayerTeam(void)
             if (d != t) {
                 *(char **)(lgexistsformsg + 4) = s.name;
                 *(unsigned char **)(lgexistsformsg + 0xC) = leagueteams + d * 30;
-                sub_B2DCA(&s.mx, &s.my, &s.btn);
+                MouseRead(&s.mx, &s.my, &s.btn);
                 MessageBox(-1, -1, (char *)lgexistsformsg, 4, 0, 0, (int)&s.my, (int)&s.btn, -1);
                 goto fail;
             }
@@ -295,7 +295,7 @@ fail:
 done:
     RestoreDialogBg();
     if (err) {
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)importerrmsg, 1, 0, 0, (int)&s.my, (int)&s.btn, -1);
     }
     return err;
@@ -336,7 +336,7 @@ void ExportDbs(void)
             strcpy(s.name, (char *)&curleague);
             s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, shown);
-            sub_B2DCA(&s.btn, &s.y, &s.x);
+            MouseRead(&s.btn, &s.y, &s.x);
             if (leagueflags & 0xC) {
                 ((int *)playerdbsmsg)[1] = (int)s.name;
                 s.btn = MessageBox(-1, -1, (char *)playerdbsmsg, 4, (int)btn_MasterDB, 2, (int)&s.y, (int)&s.x,
@@ -367,7 +367,7 @@ void ExportDbs(void)
     if (s.t >= 0 && lgteamflags[s.t * 30] == 2) {
         forceexportmsg[0] = (int)s.name;
         forceexportmsg[2] = (int)(leagueteams + s.t * 30);
-        sub_B2DCA(&s.btn, &s.y, &s.x);
+        MouseRead(&s.btn, &s.y, &s.x);
         s.btn = MessageBox(-1, -1, (char *)forceexportmsg, 4, (int)forceexportbtns, 2, (int)&s.y, (int)&s.x, -1);
         err = -1;
         if (!s.btn) err = AskMasterPassword(leaguemaster, (char *)leagueteams, (char *)masterpw);

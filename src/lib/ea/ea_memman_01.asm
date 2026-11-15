@@ -7,7 +7,7 @@ extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLO
 extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
 extern getmemblock, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
-global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, sub_8CCA8
+global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, AllocMemBlock
 global sub_8CCC4, sub_8CCE0, sub_8CD04, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
 global loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A, loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA
 global loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82, loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4
@@ -301,7 +301,7 @@ call sub_8CD04	; 8CC9D
 add esp, byte 10h	; 8CCA2
 ret	; 8CCA5
 db 08Bh,0C0h
-sub_8CCA8:
+AllocMemBlock:
 push byte 1	; 8CCA8
 mov edx, dword [byte esp+010h]	; 8CCAA
 push edx	; 8CCAE

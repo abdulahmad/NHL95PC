@@ -19,7 +19,7 @@ int EasnTeamStatsScreen(int cat)
     char *ext;
     int z;
 
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     one = 1;
     keepdesksong = one;
     leaguestatsmode = one;
@@ -35,12 +35,12 @@ int EasnTeamStatsScreen(int cat)
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
     else dir = 0;
     MakePath((char *)buf + 0x300, dir, name, ext);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal7);
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal7);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     RunMenu(teamstatsmenubar, 4, 0x40, 0x41, 0x42);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
     z = 0;
     leaguestatsmode = z;

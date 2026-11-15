@@ -22,8 +22,8 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
-extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
+extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, sub_90354, FillRect
+extern sub_90EC0, PrintString, SortIndices, FindShape, sub_B340B, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
@@ -664,7 +664,7 @@ mov eax, esp	; 6652D
 push eax	; 6652F
 mov ebp, dword [ovlartbank]	; 66530
 push ebp	; 66536
-call sub_B30B4	; 66537
+call FindShape	; 66537
 add esp, byte 8	; 6653C
 mov dword [nosplit esi*4+ovlstepart], eax	; 6653F
 inc esi	; 66546
@@ -799,7 +799,7 @@ sar eax, 10h	; 66703
 push eax	; 66706
 movsx eax, si	; 66707
 push eax	; 6670A
-call sub_B4BC4	; 6670B
+call SetClipWindow	; 6670B
 add esp, byte 10h	; 66710
 .5:
 mov si, word [scrollx]	; 66713
@@ -878,7 +878,7 @@ push eax	; 66812
 movsx ebp, si	; 66813
 sub ebp, byte 4	; 66816
 push ebp	; 66819
-call sub_90D20	; 6681A
+call FillRect	; 6681A
 add esp, byte 14h	; 6681F
 push byte 0	; 66822
 push byte 4Bh	; 66824
@@ -886,7 +886,7 @@ push byte 4	; 66826
 mov edx, dword [byte esp+014h]	; 66828
 push edx	; 6682C
 push ebp	; 6682D
-call sub_90D20	; 6682E
+call FillRect	; 6682E
 add esp, byte 14h	; 66833
 push byte 0	; 66836
 push byte 4Bh	; 66838
@@ -896,7 +896,7 @@ push ebx	; 66840
 mov eax, dword [byte esp+032h]	; 66841
 sar eax, 10h	; 66845
 push eax	; 66848
-call sub_90D20	; 66849
+call FillRect	; 66849
 add esp, byte 14h	; 6684E
 push byte 0	; 66851
 push byte 4	; 66853
@@ -905,7 +905,7 @@ mov eax, dword [byte esp+01Eh]	; 6685A
 sar eax, 10h	; 6685E
 push eax	; 66861
 push ebp	; 66862
-call sub_90D20	; 66863
+call FillRect	; 66863
 add esp, byte 14h	; 66868
 .10:
 test di, di	; 6686B
@@ -922,7 +922,7 @@ push eax	; 66887
 mov eax, dword [byte esp+032h]	; 66888
 sar eax, 10h	; 6688C
 push eax	; 6688F
-call sub_B4BC4	; 66890
+call SetClipWindow	; 66890
 add esp, byte 10h	; 66895
 jmp near .33	; 66898
 .11:
@@ -1095,11 +1095,11 @@ add word [byte esp+01Ch], byte 0Fh	; 66AF0
 mov ecx, dword [scor3font]	; 66AF6
 push ecx	; 66AFC
 add esi, byte 3Eh	; 66AFD
-call sub_8EA18	; 66B00
+call TextSetFont	; 66B00
 add esp, byte 4	; 66B05
 push dword 0FFh	; 66B08
 push byte 25h	; 66B0D
-call sub_8E9C0	; 66B0F
+call TextSetColors	; 66B0F
 add esp, byte 8	; 66B14
 mov edi, dword [byte esp+01Ch]	; 66B17
 cmp byte [textline3], 0	; 66B1B
@@ -1118,7 +1118,7 @@ movsx edx, si	; 66B42
 sub edx, eax	; 66B45
 push edx	; 66B47
 push textline3	; 66B48
-call sub_91964	; 66B4D
+call PrintString	; 66B4D
 add esp, byte 0Ch	; 66B52
 .24:
 cmp byte [textline1], 0	; 66B55
@@ -1137,7 +1137,7 @@ movsx edx, si	; 66B7C
 sub edx, eax	; 66B7F
 push edx	; 66B81
 push textline1	; 66B82
-call sub_91964	; 66B87
+call PrintString	; 66B87
 add esp, byte 0Ch	; 66B8C
 .25:
 cmp byte [textline2], 0	; 66B8F
@@ -1156,7 +1156,7 @@ movsx edx, si	; 66BB6
 sub edx, eax	; 66BB9
 push edx	; 66BBB
 push textline2	; 66BBC
-call sub_91964	; 66BC1
+call PrintString	; 66BC1
 add esp, byte 0Ch	; 66BC6
 .26:
 cmp byte [textline4], 0	; 66BC9
@@ -1175,7 +1175,7 @@ movsx edx, si	; 66BF0
 sub edx, eax	; 66BF3
 push edx	; 66BF5
 push textline4	; 66BF6
-call sub_91964	; 66BFB
+call PrintString	; 66BFB
 add esp, byte 0Ch	; 66C00
 .27:
 cmp byte [textline5], 0	; 66C03
@@ -1194,16 +1194,16 @@ movsx edx, si	; 66C2A
 sub edx, eax	; 66C2D
 push edx	; 66C2F
 push textline5	; 66C30
-call sub_91964	; 66C35
+call PrintString	; 66C35
 add esp, byte 0Ch	; 66C3A
 .28:
 mov edi, dword [scor2font]	; 66C3D
 push edi	; 66C43
-call sub_8EA18	; 66C44
+call TextSetFont	; 66C44
 add esp, byte 4	; 66C49
 push dword 0FFh	; 66C4C
 push byte 27h	; 66C51
-call sub_8E9C0	; 66C53
+call TextSetColors	; 66C53
 add esp, byte 8	; 66C58
 mov edi, dword [byte esp+01Ch]	; 66C5B
 cmp byte [textline3], 0	; 66C5F
@@ -1222,7 +1222,7 @@ movsx edx, si	; 66C86
 sub edx, eax	; 66C89
 push edx	; 66C8B
 push textline3	; 66C8C
-call sub_91964	; 66C91
+call PrintString	; 66C91
 add esp, byte 0Ch	; 66C96
 .29:
 cmp byte [textline1], 0	; 66C99
@@ -1241,7 +1241,7 @@ movsx edx, si	; 66CC0
 sub edx, eax	; 66CC3
 push edx	; 66CC5
 push textline1	; 66CC6
-call sub_91964	; 66CCB
+call PrintString	; 66CCB
 add esp, byte 0Ch	; 66CD0
 .30:
 cmp byte [textline2], 0	; 66CD3
@@ -1260,7 +1260,7 @@ movsx edx, si	; 66CFA
 sub edx, eax	; 66CFD
 push edx	; 66CFF
 push textline2	; 66D00
-call sub_91964	; 66D05
+call PrintString	; 66D05
 add esp, byte 0Ch	; 66D0A
 .31:
 cmp byte [textline4], 0	; 66D0D
@@ -1279,7 +1279,7 @@ movsx edx, si	; 66D34
 sub edx, eax	; 66D37
 push edx	; 66D39
 push textline4	; 66D3A
-call sub_91964	; 66D3F
+call PrintString	; 66D3F
 add esp, byte 0Ch	; 66D44
 .32:
 cmp byte [textline5], 0	; 66D47
@@ -1298,7 +1298,7 @@ movsx edx, si	; 66D6E
 sub edx, eax	; 66D71
 push edx	; 66D73
 push textline5	; 66D74
-call sub_91964	; 66D79
+call PrintString	; 66D79
 add esp, byte 0Ch	; 66D7E
 .33:
 mov si, word [cliprect_x0]	; 66D81
@@ -1485,7 +1485,7 @@ add eax, 9Eh	; 67017
 mov word [byte esp+020h], ax	; 6701C
 mov edx, dword [scor3font]	; 67021
 push edx	; 67027
-call sub_8EA18	; 67028
+call TextSetFont	; 67028
 add esp, byte 4	; 6702D
 movsx ebp, di	; 67030
 shl ebp, 2	; 67033
@@ -1525,7 +1525,7 @@ mov dword [byte esp+018h], eax	; 670B2
 push eax	; 670B6
 push edi	; 670B7
 push edx	; 670B8
-call sub_90D20	; 670B9
+call FillRect	; 670B9
 add esp, byte 14h	; 670BE
 push byte 9	; 670C1
 mov ecx, dword [byte esp+010h]	; 670C3
@@ -1545,7 +1545,7 @@ mov eax, dword [byte esp+018h]	; 670EA
 sub eax, byte 4	; 670EE
 mov dword [byte esp+020h], eax	; 670F1
 push eax	; 670F5
-call sub_90D20	; 670F6
+call FillRect	; 670F6
 add esp, byte 14h	; 670FB
 push byte 0	; 670FE
 push byte 9	; 67100
@@ -1553,7 +1553,7 @@ push byte 4	; 67102
 push edi	; 67104
 mov ebx, dword [byte esp+020h]	; 67105
 push ebx	; 67109
-call sub_90D20	; 6710A
+call FillRect	; 6710A
 add esp, byte 14h	; 6710F
 push byte 0	; 67112
 push byte 9	; 67114
@@ -1561,7 +1561,7 @@ push byte 4	; 67116
 push edi	; 67118
 mov ecx, dword [byte esp+014h]	; 67119
 push ecx	; 6711D
-call sub_90D20	; 6711E
+call FillRect	; 6711E
 add esp, byte 14h	; 67123
 push byte 0	; 67126
 push byte 4	; 67128
@@ -1571,11 +1571,11 @@ mov eax, dword [byte esp+0Ch]	; 6712F
 push eax	; 67133
 mov edx, dword [byte esp+020h]	; 67134
 push edx	; 67138
-call sub_90D20	; 67139
+call FillRect	; 67139
 add esp, byte 14h	; 6713E
 push dword 0FFh	; 67141
 push byte 25h	; 67146
-call sub_8E9C0	; 67148
+call TextSetColors	; 67148
 add esp, byte 8	; 6714D
 mov eax, esi	; 67150
 add eax, 2	; 67152
@@ -1590,22 +1590,22 @@ mov dword [byte esp+04h], eax	; 6716A
 push eax	; 6716E
 mov ecx, dword [dword ebp+bannerstrs]	; 6716F
 push ecx	; 67175
-call sub_91964	; 67176
+call PrintString	; 67176
 add esp, byte 0Ch	; 6717B
 mov eax, dword [scor2font]	; 6717E
 push eax	; 67183
-call sub_8EA18	; 67184
+call TextSetFont	; 67184
 add esp, byte 4	; 67189
 push dword 0FFh	; 6718C
 push byte 27h	; 67191
-call sub_8E9C0	; 67193
+call TextSetColors	; 67193
 add esp, byte 8	; 67198
 push edi	; 6719B
 mov edx, dword [byte esp+04h]	; 6719C
 push edx	; 671A0
 mov ebx, dword [dword ebp+bannerstrs]	; 671A1
 push ebx	; 671A7
-call sub_91964	; 671A8
+call PrintString	; 671A8
 add esp, byte 0Ch	; 671AD
 sub esi, byte 4	; 671B0
 sub word [byte esp+01Ch], byte 4	; 671B3
@@ -1906,12 +1906,12 @@ call MakePath	; 67509
 push byte 0	; 6750E
 lea eax, [byte esp+04h]	; 67510
 push eax	; 67514
-call sub_8E83C	; 67515
+call LoadBank	; 67515
 add esp, byte 8	; 6751A
 mov ebp, eax	; 6751D
 push str_Pal30	; 6751F
 push eax	; 67524
-call sub_B30B4	; 67525
+call FindShape	; 67525
 add esp, byte 8	; 6752A
 lea edx, [byte eax+010h]	; 6752D
 xor eax, eax	; 67530

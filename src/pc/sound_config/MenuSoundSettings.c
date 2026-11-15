@@ -11,16 +11,16 @@ int MenuSoundSettings(int a, int b)
 {
     int bm;
 
-    if (!musicon || !songdata) sndtempbuf = sub_8CCA8((char *)str_Temp8, 0x4E200, 0);
-    bm = sub_8CCA8((char *)str_Buffer, 0x5F11, 0);
+    if (!musicon || !songdata) sndtempbuf = AllocMemBlock((char *)str_Temp8, 0x4E200, 0);
+    bm = AllocMemBlock((char *)str_Buffer, 0x5F11, 0);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0x80;
     ((short *)bm)[3] = 0xBE;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawSoundCardDlg();
     DrawSoundCardOpts();
     SoundCardDlgLoop();
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     return 0;
 }

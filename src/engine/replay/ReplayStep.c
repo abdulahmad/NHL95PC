@@ -26,7 +26,7 @@ int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
    17 players' x / y (10 bits, sign-extended) and frame (11 bits, 7FFh none) plus a flag bit, 12 bytes, six
    pairs of nibbles (Fh none), the puck words and nibbles, the camera, the crowd level, ten nibble pairs and
    twenty bytes (FFh none). Update the crowd noise (off at the end or without sound), step back to the frame
-   and sort the 17 players by y (sub_93540 into rpl_ysort). Result: n, or -1 at an end. */
+   and sort the 17 players by y (SortIndices into rpl_ysort). Result: n, or -1 at an end. */
 short ReplayStep(short n, short sound)
 {
     int keys[0x11];
@@ -139,7 +139,7 @@ short ReplayStep(short n, short sound)
         keys[i] = rpl_y[i];
         rpl_ysort[i] = i;
     }
-    sub_93540(0x11, keys, rpl_ysort);
+    SortIndices(0x11, keys, rpl_ysort);
     return n;
 }
 
@@ -207,7 +207,7 @@ void DrawRinkSideObjects(short vx, short vy)
     }
     if (camy < -0xB0) {
         y1 = cliprect_y1;
-        sub_B4BC4(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
+        SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
     }
     for (i = 0; i < 3; i++) {
         ys[i] = 0;
@@ -216,7 +216,7 @@ void DrawRinkSideObjects(short vx, short vy)
     if (rpl_puckc != -1) ys[2] = rpl_y[rpl_puckc];
     if (rpl_c1player >= 0) ys[0] = rpl_y[rpl_c1player];
     if (rpl_c2player >= 0) ys[1] = rpl_y[rpl_c2player];
-    sub_93540(3, ys, ord);
+    SortIndices(3, ys, ord);
     for (k = 0; k < 3; k++) {
         i = ord[k];
         if (i == 2) {
@@ -294,7 +294,7 @@ void DrawRinkSideObjects(short vx, short vy)
     }
     if (rpl_y_e14 <= -0xE8 && rpl_y_e14 >= -0xEC && ABS(rpl_x_e14) <= 0x14 && rpl_puckz >= 0xD)
         DrawFrameSprite(rpl_frame_e14, rpl_x_e14, rpl_puckz * 3 / 2 + rpl_y_e14, 0, 0);
-    if (camy < -0xB0) sub_B4BC4(dword_D30BC, dword_D30C0, cliprect_y0, y1);
+    if (camy < -0xB0) SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, y1);
     if (camy < -0x90) DrawRinkEndArt();
     if (rpl_y_e15 < 0 && rpl_frame_e15 >= 0x22A && rpl_frame_e15 <= 0x237)
         DrawFrameSprite(rpl_frame_e15, rpl_x_e15, rpl_y_e15, 0, 0);

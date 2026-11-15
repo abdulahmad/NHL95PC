@@ -27,7 +27,7 @@ int AskTeamPassword(int t, char *ents)
         p = e + 0xB;
         EncryptPassword(p, t);
         if (strcmp(p, pw) != 0) {
-            sub_B2DCA(&btn, &mx, &my);
+            MouseRead(&btn, &mx, &my);
             MessageBox(-1, -1, (char *)msg_WrongPassword, 1, 0, 0, (int)&mx, (int)&my, -1);
             res = -1;
         }
@@ -60,7 +60,7 @@ int AskMasterPassword(int t, char *names, char *key)
         if (TextInputDialog(prompt, pw, 10, 0x3C, 0, 0, 0, 0, 6) == 0x1B) return -1;
         EncryptPassword(key, t);
         if (strcmp((char *)masterpw, pw) != 0) {
-            sub_B2DCA(&btn, &mx, &my);
+            MouseRead(&btn, &mx, &my);
             MessageBox(-1, -1, (char *)msg_WrongPassword, 1, 0, 0, (int)&mx, (int)&my, -1);
             res = -1;
         }

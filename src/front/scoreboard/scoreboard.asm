@@ -19,8 +19,8 @@ extern msg_GameDiskSpace, hudotname, PaPreloadClips, penaltydigits, perioddigits
 extern randomd0, ReloadGameGfx, rmdir_, scoredigits, seed, SelectRinkBM, SelectScreenBM, SeriesLength
 extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprintf_, str_backslash2, str_Crests4, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
-extern str_star, strcat_, strcpy_, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
-extern sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
+extern str_star, strcat_, strcpy_, AllocMemBlock, sub_8E8A0, FillRect, FindShape, sub_B3464
+extern sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
 extern unknown_libname_2, VisTeam, lcsel_aw
 global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x
 global DrawPanelClock, DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties
@@ -673,7 +673,7 @@ add esp, byte 8	; 15199
 mov dword [byte esp+014h], eax	; 1519C
 push str_Srb3	; 151A0
 push eax	; 151A5
-call sub_B30B4	; 151A6
+call FindShape	; 151A6
 add esp, byte 8	; 151AB
 push eax	; 151AE
 call sub_B4CF2	; 151AF
@@ -711,7 +711,7 @@ idiv ebx	; 15219
 mov edx, dword [nosplit eax*4+perioddigits]	; 1521B
 push edx	; 15222
 push edi	; 15223
-call sub_B30B4	; 15224
+call FindShape	; 15224
 add esp, byte 8	; 15229
 push eax	; 1522C
 call sub_B4CD8	; 1522D
@@ -727,7 +727,7 @@ mov ebx, dword [nosplit edx*4+perioddigits]	; 1524A
 push ebx	; 15251
 .5:
 push edi	; 15252
-call sub_B30B4	; 15253
+call FindShape	; 15253
 add esp, byte 8	; 15258
 push eax	; 1525B
 call sub_B4CD8	; 1525C
@@ -760,7 +760,7 @@ mov bh, 0FFh	; 152B6
 mov byte [awayremap_eFF], bh	; 152B8
 mov byte [homeremap_eFF], bh	; 152BE
 push homeremap	; 152C4
-call sub_B4DD4	; 152C9
+call SetColorRemap	; 152C9
 add esp, byte 4	; 152CE
 push byte 4	; 152D1
 push byte 4	; 152D3
@@ -768,20 +768,20 @@ mov eax, dword [byte esp+08h]	; 152D5
 mov edi, dword [nosplit eax*4+crestnames]	; 152D9
 push edi	; 152E0
 push esi	; 152E1
-call sub_B30B4	; 152E2
+call FindShape	; 152E2
 add esp, byte 8	; 152E7
 push eax	; 152EA
 call sub_B4E50	; 152EB
 add esp, byte 0Ch	; 152F0
 push awayremap	; 152F3
-call sub_B4DD4	; 152F8
+call SetColorRemap	; 152F8
 add esp, byte 4	; 152FD
 push byte 4	; 15300
 push dword 11Ch	; 15302
 mov ebp, dword [nosplit ebp*4+crestnames]	; 15307
 push ebp	; 1530E
 push esi	; 1530F
-call sub_B30B4	; 15310
+call FindShape	; 15310
 add esp, byte 8	; 15315
 push eax	; 15318
 call sub_B4E50	; 15319
@@ -1171,7 +1171,7 @@ push byte 1Ah	; 15759
 lea eax, [byte edi+09h]	; 1575B
 sub eax, esi	; 1575E
 push eax	; 15760
-call sub_90D20	; 15761
+call FillRect	; 15761
 add esp, byte 14h	; 15766
 mov eax, dword [byte esp+08h]	; 15769
 push eax	; 1576D
@@ -1181,7 +1181,7 @@ push byte 1Ah	; 15771
 lea eax, [byte edi+010h]	; 15773
 mov dword [byte esp+010h], eax	; 15776
 push eax	; 1577A
-call sub_90D20	; 1577B
+call FillRect	; 1577B
 add esp, byte 14h	; 15780
 push ebp	; 15783
 push byte 3	; 15784
@@ -1192,7 +1192,7 @@ push eax	; 15791
 push byte 1Ah	; 15792
 inc edi	; 15794
 push edi	; 15795
-call sub_90D20	; 15796
+call FillRect	; 15796
 add esp, byte 14h	; 1579B
 push ebp	; 1579E
 push byte 3	; 1579F
@@ -1201,7 +1201,7 @@ push ecx	; 157A5
 push byte 1Ah	; 157A6
 add esi, dword [byte esp+010h]	; 157A8
 push esi	; 157AC
-call sub_90D20	; 157AD
+call FillRect	; 157AD
 add esp, byte 14h	; 157B2
 add esp, byte 0Ch	; 157B5
 jmp near DrawPanelLine_x	; 157B8
@@ -1323,7 +1323,7 @@ mov edx, dword [byte esp+048h]	; 15913
 add edx, byte 15h	; 15917
 sub edx, esi	; 1591A
 push edx	; 1591C
-call sub_90D20	; 1591D
+call FillRect	; 1591D
 add esp, byte 14h	; 15922
 mov edx, dword [byte esp+024h]	; 15925
 push edx	; 15929
@@ -1334,7 +1334,7 @@ mov edx, dword [byte esp+048h]	; 1592E
 add edx, byte 20h	; 15932
 mov dword [byte esp+010h], edx	; 15935
 push edx	; 15939
-call sub_90D20	; 1593A
+call FillRect	; 1593A
 add esp, byte 14h	; 1593F
 mov ecx, dword [byte esp+020h]	; 15942
 push ecx	; 15946
@@ -1347,7 +1347,7 @@ push edi	; 15955
 mov edx, dword [byte esp+048h]	; 15956
 inc edx	; 1595A
 push edx	; 1595B
-call sub_90D20	; 1595C
+call FillRect	; 1595C
 add esp, byte 14h	; 15961
 mov edx, dword [byte esp+020h]	; 15964
 push edx	; 15968
@@ -1357,7 +1357,7 @@ push ebx	; 1596F
 push edi	; 15970
 add esi, dword [byte esp+010h]	; 15971
 push esi	; 15975
-call sub_90D20	; 15976
+call FillRect	; 15976
 add esp, byte 14h	; 1597B
 inc ebp	; 1597E
 add edi, byte 6	; 1597F
@@ -1573,7 +1573,7 @@ je short .2	; 15BB1
 push byte 20h	; 15BB3
 push byte 2Ah	; 15BB5
 push str_Stanley	; 15BB7
-call sub_8CCA8	; 15BBC
+call AllocMemBlock	; 15BBC
 add esp, byte 0Ch	; 15BC1
 mov dword [cupseries], eax	; 15BC4
 mov eax, esp	; 15BC9

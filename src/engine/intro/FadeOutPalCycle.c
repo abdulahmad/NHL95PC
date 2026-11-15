@@ -258,7 +258,7 @@ int ThreeStarsLoop(void)
         ovlseq = -1;
     }
     if (escrequest) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
         CrowdFadeOut();
         StopDigiSample();
@@ -267,7 +267,7 @@ int ThreeStarsLoop(void)
         return -1;
     }
     if (introskipped) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
     }
     StopDigiSample();
@@ -376,7 +376,7 @@ void StartThreeStars(void)
     per = curperiod;
     joysampling = 0;
     joyq_flush();
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     fadeinpending = 1;
     PickThreeStars();

@@ -7,8 +7,8 @@
 #define GameSummaryScreen GameSummaryScreen_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
 #define sub_913D0 sub_913D0_decl
-#define sub_8F13B sub_8F13B_decl
-#define sub_8F1FE sub_8F1FE_decl
+#define LoadSample sub_8F13B_decl
+#define FreeSample sub_8F1FE_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
 #define gsuminitff gsuminitff_decl
@@ -19,16 +19,16 @@ struct SummaryHandles { int first, second; };
 #undef GameSummaryScreen
 #undef ReadGSummaryRec
 #undef sub_913D0
-#undef sub_8F13B
-#undef sub_8F1FE
+#undef LoadSample
+#undef FreeSample
 #undef sub_8F98F
 #undef sub_8FB8E
 
 int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unused);
 int ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
 void __cdecl sub_913D0(int shape, int x, int y);
-void *sub_8F13B(char *path);
-void sub_8F1FE(void *smp);
+void *LoadSample(char *path);
+void FreeSample(void *smp);
 int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 
@@ -169,24 +169,24 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         f.i = n + 1;
     } while (f.i < 2);
     sub_B4BA8();
-    sub_8E9E8(f.state);
+    TextSaveState(f.state);
     MakePath(f.name, fileoncd[0x21A] == 1 ? (char *)cddriveptr : 0, (char *)str_Indus0302, (char *)str_VFN);
     f.font = sub_8E8A0(f.name, 0x20);
-    sub_8EA18(f.font);
+    TextSetFont(f.font);
 
     /* The crests, each copied into its own bitmap. */
     MakePath(f.path, fileoncd[0x59] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctlogo2, 0);
-    bank = sub_8E83C(f.path, 0);
-    crest = sub_B30B4(bank, (char *)crestnames[HomeTeam]);
-    hmcrestbmp[0] = sub_B4F8C(*(short *)(crest + 4), *(short *)(crest + 6), 0x20);
+    bank = LoadBank(f.path, 0);
+    crest = FindShape(bank, (char *)crestnames[HomeTeam]);
+    hmcrestbmp[0] = CreateBitmap(*(short *)(crest + 4), *(short *)(crest + 6), 0x20);
     SetDrawBitmap(hmcrestbmp[0]);
-    sub_903F0(crest, 0, 0);
+    PutBlock(crest, 0, 0);
     *(short *)(*(int *)(hmcrestbmp[0] + 0x2C) + 8) = *(short *)(crest + 8);
     *(short *)(*(int *)(hmcrestbmp[0] + 0x2C) + 0xA) = *(short *)(crest + 0xA);
-    crest = sub_B30B4(bank, (char *)crestnames[VisTeam]);
-    vscrestbmp = sub_B4F8C(*(short *)(crest + 4), *(short *)(crest + 6), 0x20);
+    crest = FindShape(bank, (char *)crestnames[VisTeam]);
+    vscrestbmp = CreateBitmap(*(short *)(crest + 4), *(short *)(crest + 6), 0x20);
     SetDrawBitmap(vscrestbmp);
-    sub_903F0(crest, 0, 0);
+    PutBlock(crest, 0, 0);
     *(short *)(*(int *)(vscrestbmp + 0x2C) + 8) = *(short *)(crest + 8);
     *(short *)(*(int *)(vscrestbmp + 0x2C) + 0xA) = *(short *)(crest + 0xA);
     sub_B4BA8();
@@ -194,31 +194,31 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
 
     /* The background, its palette and the title art of the mode. */
     MakePath(f.path, fileoncd[0x58] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctbkgd2, 0);
-    f.bkbank = bank = sub_8E83C(f.path, 0);
-    f.bkgd = sub_B30B4(bank, (char *)str_Bkgd5);
-    f.pal = (unsigned char *)sub_B30B4(bank, (char *)str_Pal13) + 0x10;
+    f.bkbank = bank = LoadBank(f.path, 0);
+    f.bkgd = FindShape(bank, (char *)str_Bkgd5);
+    f.pal = (unsigned char *)FindShape(bank, (char *)str_Pal13) + 0x10;
     if (mode & 3) {
         MakePath(f.path, fileoncd[0x5B] == 1 ? (char *)cddriveptr : 0, (char *)str_Cttitle2, 0);
-        f.titlebank = bank = sub_8E83C(f.path, 0);
-        f.gad[8] = sub_B30B4(bank, (char *)str_Summ2);
-        f.gad[2] = sub_B30B4(bank, (char *)str_OtShape);
-        f.gad[4] = sub_B30B4(bank, (char *)str_Per1);
-        f.gad[5] = sub_B30B4(bank, (char *)str_Per2);
-        f.gad[6] = sub_B30B4(bank, (char *)str_Per3);
-        f.gad[10] = sub_B30B4(bank, (char *)str_Top2);
+        f.titlebank = bank = LoadBank(f.path, 0);
+        f.gad[8] = FindShape(bank, (char *)str_Summ2);
+        f.gad[2] = FindShape(bank, (char *)str_OtShape);
+        f.gad[4] = FindShape(bank, (char *)str_Per1);
+        f.gad[5] = FindShape(bank, (char *)str_Per2);
+        f.gad[6] = FindShape(bank, (char *)str_Per3);
+        f.gad[10] = FindShape(bank, (char *)str_Top2);
     } else if (mode & 0x1C) {
         MakePath(f.path, fileoncd[0x5A] == 1 ? (char *)cddriveptr : 0, (char *)str_Cttitle12, 0);
-        f.titlebank = bank = sub_8E83C(f.path, 0);
-        f.gad[0] = sub_B30B4(bank, (char *)str_Def2);
-        f.gad[1] = sub_B30B4(bank, (char *)str_Fowa2);
-        f.gad[7] = sub_B30B4(bank, (char *)str_Scra2);
-        f.gad[9] = sub_B30B4(bank, (char *)str_Tlu2);
-        f.gad[10] = sub_B30B4(bank, (char *)str_Top2);
+        f.titlebank = bank = LoadBank(f.path, 0);
+        f.gad[0] = FindShape(bank, (char *)str_Def2);
+        f.gad[1] = FindShape(bank, (char *)str_Fowa2);
+        f.gad[7] = FindShape(bank, (char *)str_Scra2);
+        f.gad[9] = FindShape(bank, (char *)str_Tlu2);
+        f.gad[10] = FindShape(bank, (char *)str_Top2);
     } else if (mode & 0x20) {
         MakePath(f.path, fileoncd[0x5C] == 1 ? (char *)cddriveptr : 0, (char *)str_Cttitle3, 0);
-        f.titlebank = bank = sub_8E83C(f.path, 0);
-        f.gad[3] = sub_B30B4(bank, (char *)str_Ots);
-        f.gad[11] = sub_B30B4(bank, (char *)str_Colm);
+        f.titlebank = bank = LoadBank(f.path, 0);
+        f.gad[3] = FindShape(bank, (char *)str_Ots);
+        f.gad[11] = FindShape(bank, (char *)str_Colm);
     }
     SetTextColors(0x40, 0);
 
@@ -266,7 +266,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             if (sounddev == 8) MakePath(f.name, fileoncd[0x102] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtsum, 0);
             else MakePath(f.name, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum, 0);
             cursndbank = 0x20;
-            f.smp = sub_8F13B(f.name);
+            f.smp = LoadSample(f.name);
             cursndbank = 0;
             PlayDigiSample(f.smp);
         }
@@ -276,7 +276,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     f.linetab[0] = hmlinetab;
     f.linetab[1] = awlinetab;
     if (!(mode & 0x24)) {
-        sub_913B4(f.bkgd);
+        DrawShape(f.bkgd);
         if (mode & 3) {
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
             sub_913D0(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
@@ -300,12 +300,12 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             if (!f.err) f.err = ReadTeamRec(f.teamfh, f.recs[1], f.vis);
             FileClose(&f.teamfh);
             if (!f.err) {
-                if (f.i) sub_B4BC4(0x72, 0x280, 0x8C, 0x1E0);
-                else sub_B4BC4(0, 0x280, 0, 0x1E0);
+                if (f.i) SetClipWindow(0x72, 0x280, 0x8C, 0x1E0);
+                else SetClipWindow(0, 0x280, 0, 0x1E0);
                 FadeOutPalCycle();
-                sub_913B4(f.bkgd);
+                DrawShape(f.bkgd);
                 DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
-                sub_B4BC4(0, 0x280, 0, 0x1E0);
+                SetClipWindow(0, 0x280, 0, 0x1E0);
                 strcpy(f.name, (char *)f.recs[1] + 0x1A);
                 PrintShadowText(0x74, 0xD2, f.name);
                 sprintf(f.name, (char *)str_D6, f.score[1]);
@@ -338,8 +338,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         /* The extras of each team (line table bytes 28h-2Fh, 64h or more for none). */
         for (side = 0; side < 2; side++) {
             if (side) FadePalStep(1, f.pal, 0x10);
-            sub_B392C(0);
-            sub_913B4(f.bkgd);
+            ClearScreen(0);
+            DrawShape(f.bkgd);
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
             sub_913D0(*(int *)(hmcrestbmp[side] + 0x2C), 0x3D, 0x50);
             y = byte_D42C3 + 0x78;
@@ -363,7 +363,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
 
     if (f.done != -1) {
         /* Keep the records the mode shows (and every end of f.period), count the periods and the f.goals. */
-        f.evbuf = (unsigned char *)sub_8CCA8((char *)str_EVNT, ((f.nev * 4 - f.nev) * 4 - f.nev) + 1, 0x20);
+        f.evbuf = (unsigned char *)AllocMemBlock((char *)str_EVNT, ((f.nev * 4 - f.nev) * 4 - f.nev) + 1, 0x20);
         f.nshown = 0;
         f.i = 0;
         f.nperiods = 0;
@@ -380,7 +380,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             }
             f.i++;
         } while (!f.err && f.i <= f.nev);
-        f.prds = (unsigned char **)sub_8CCA8((char *)str_PRDS, f.nperiods * 4 + 1, 0x20);
+        f.prds = (unsigned char **)AllocMemBlock((char *)str_PRDS, f.nperiods * 4 + 1, 0x20);
         f.firstpa = 1;
         f.i = 0;
         j = 0;
@@ -405,7 +405,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         f.i = f.scored = 0;
         f.penalties = 0;
         while (!f.err && !f.done && f.i < f.nshown && f.key < 2) {
-            sub_B4BC4(0, 0x280, 0, 0x1E0);
+            SetClipWindow(0, 0x280, 0, 0x1E0);
             ev = f.evbuf + ((f.i * 4 - f.i) * 4 - f.i);
             switch (*ev++) {
             case 1:
@@ -568,11 +568,11 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                         FadePalette(1, f.pal, 0x10);
                         f.fadein = 1;
                         f.newperiod = 0;
-                        sub_B4BC4(0, 0x280, 0x8C, 0x1E0);
+                        SetClipWindow(0, 0x280, 0x8C, 0x1E0);
                     } else {
-                        sub_B4BC4(0x80, 0x280, 0x8C, 0x1E0);
+                        SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
                     }
-                    sub_913B4(f.bkgd);
+                    DrawShape(f.bkgd);
                     if (mode & 3) {
                         DrawGadgetByType(mode, f.period, (int)f.pal, f.gad, f.nperiods, (int)f.goals);
                         sub_913D0(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
@@ -604,20 +604,20 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         StopDigiSample();
     }
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     if (f.prds) FreeMemBlock((int)f.prds);
     if (f.evbuf) FreeMemBlock((int)f.evbuf);
     FileClose(&f.seasonfh[1]);
     FileClose(&f.seasonfh[0]);
     FileClose(&f.dbfh);
     FileClose(&f.gsumfh);
-    sub_8EA00(f.state);
+    TextRestoreState(f.state);
     FreeMemBlock(f.font);
     FreeMemBlock(f.titlebank);
     FreeMemBlock(f.bkbank);
     FreeMemBlock(hmcrestbmp[0]);
     FreeMemBlock(vscrestbmp);
-    if (f.smp) sub_8F1FE(f.smp);
+    if (f.smp) FreeSample(f.smp);
     f.done = 0;
     if (f.key == 3) f.done = 4;
     return f.done;

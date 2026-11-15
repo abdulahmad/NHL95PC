@@ -232,7 +232,7 @@ int __cdecl sub_B340B(int fl);
 /* DrawRinkOverlays (5CE12, PC only; ends in changeplayer_ret5): draw the rink layer above the objects for the
    view at vx, vy (viewscrollx / viewscrolly). With the penalty boxes in view, a marker per player in each box
    (up to three a side); then DrawRinkObjects. The markers of the two controlled players and the puck carrier,
-   in y order (sub_93540): a player off the screen gets an edge arrow (sub_B340B picks it from the edge bits 1 / 2
+   in y order (SortIndices): a player off the screen gets an edge arrow (sub_B340B picks it from the edge bits 1 / 2
    bottom / top, 4 / 8 right / left). The penalty box door (sortobj15) and the puck, then the 17 objects in
    OOlist order with their jersey numbers (always for the controlled players and the carrier, else when
    shownumbers is set) and the puck again where it passes in front of the goal; the end boards art (clipped to
@@ -272,7 +272,7 @@ void DrawRinkOverlays(short vx, short vy)
     DrawRinkObjects();
     if (camy < -0xB0) {
         y1 = cliprect_y1;
-        sub_B4BC4(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
+        SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, 0x244);
     }
     for (i = 0; i < 3; i++) {
         ys[i] = 0;
@@ -282,7 +282,7 @@ void DrawRinkOverlays(short vx, short vy)
     if (c >= 0) ys[2] = HIWORD(SortCords[c].Ypos);
     if (c1 >= 0) ys[0] = HIWORD(SortCords[c1].Ypos);
     if (c2 >= 0) ys[1] = HIWORD(SortCords[c2].Ypos);
-    sub_93540(3, ys, ord);
+    SortIndices(3, ys, ord);
     for (k = 0; k < 3; k++) {
         i = ord[k];
         if (i == 2) {
@@ -367,7 +367,7 @@ void DrawRinkOverlays(short vx, short vy)
     }
     if (*pucky <= -0xE8 && *pucky >= -0xEC && ABS(*puckx) <= 0x14 && (z = *(short *)puckz) >= 0xD)
         DrawFrameSprite(((Player *)puckstruct)->frame, *puckx, z * 3 / 2 + *pucky, 0, 0);
-    if (camy < -0xB0) sub_B4BC4(dword_D30BC, dword_D30C0, cliprect_y0, y1);
+    if (camy < -0xB0) SetClipWindow(dword_D30BC, dword_D30C0, cliprect_y0, y1);
     if (camy < -0x90) DrawRinkEndArt();
     q = (Player *)sortobj15;
     if (HIWORD(q->Ypos) < 0 && q->frame >= 0x22A && q->frame <= 0x237)

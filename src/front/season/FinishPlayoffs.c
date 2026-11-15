@@ -27,7 +27,7 @@ int FinishPlayoffs(int fh, int a, int b, int c, char *dir, char *ext, int round)
         if ((r = SimPlayoffFinal(playoffbuf, a, b, dir, ext)) != 0) break;
         if ((r = FileWriteAt(fh, (void *)playoffbuf, 0x199A, 0x276)) != 0) break;
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
-        sub_932D0(path, seasondb, seasondb_size);
+        WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
         byte_DE268 = -1;
         mark = 0x4AD;

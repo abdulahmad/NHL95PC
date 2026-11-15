@@ -19,9 +19,9 @@ extern str_fel2, str_GameSav3, str_GameSet3, str_Gsummary, str_GsummaryDb3, str_
 extern str_Gtpo, str_LAAtMTL, str_League, str_LeagueCalled, str_LP, str_Lp, str_Lp2, str_LpGameSav
 extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_OpenBut
 extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
-extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, sub_8CCA8
-extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_91370
-extern sub_91400, sub_91964, sub_92CD0, sub_B2DCA, sub_B30B4, sub_B3CC8, sub_B4BA8, sub_B4FAC
+extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
+extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt
+extern GrabBlock, PrintString, sub_92CD0, MouseRead, FindShape, sub_B3CC8, sub_B4BA8, sub_B4FAC
 extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
 global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
@@ -59,78 +59,78 @@ call MakePath	; 2B7FC
 push byte 0	; 2B801
 lea eax, [byte esp+04h]	; 2B803
 push eax	; 2B807
-call sub_8E83C	; 2B808
+call LoadBank	; 2B808
 add esp, byte 8	; 2B80D
 mov dword [fdlgshapes], eax	; 2B810
 push str_None	; 2B815
 push eax	; 2B81A
-call sub_B30B4	; 2B81B
+call FindShape	; 2B81B
 add esp, byte 8	; 2B820
 mov dword [fdlg_none], eax	; 2B823
 push str_Del	; 2B828
 mov ebx, dword [fdlgshapes]	; 2B82D
 push ebx	; 2B833
-call sub_B30B4	; 2B834
+call FindShape	; 2B834
 add esp, byte 8	; 2B839
 mov dword [fdlg_del], eax	; 2B83C
 push str_Open	; 2B841
 mov ecx, dword [fdlgshapes]	; 2B846
 push ecx	; 2B84C
-call sub_B30B4	; 2B84D
+call FindShape	; 2B84D
 add esp, byte 8	; 2B852
 mov dword [fdlg_open], eax	; 2B855
 push str_Can	; 2B85A
 mov esi, dword [fdlgshapes]	; 2B85F
 push esi	; 2B865
-call sub_B30B4	; 2B866
+call FindShape	; 2B866
 add esp, byte 8	; 2B86B
 mov dword [fdlg_cancel], eax	; 2B86E
 push str_Noar	; 2B873
 mov edi, dword [fdlgshapes]	; 2B878
 push edi	; 2B87E
-call sub_B30B4	; 2B87F
+call FindShape	; 2B87F
 add esp, byte 8	; 2B884
 mov dword [fdlg_noarrow], eax	; 2B887
 push str_Up	; 2B88C
 mov ebp, dword [fdlgshapes]	; 2B891
 push ebp	; 2B897
-call sub_B30B4	; 2B898
+call FindShape	; 2B898
 add esp, byte 8	; 2B89D
 mov dword [fdlg_up], eax	; 2B8A0
 push str_Down	; 2B8A5
 mov eax, dword [fdlgshapes]	; 2B8AA
 push eax	; 2B8AF
-call sub_B30B4	; 2B8B0
+call FindShape	; 2B8B0
 add esp, byte 8	; 2B8B5
 mov dword [fdlg_down], eax	; 2B8B8
 push str_Arro	; 2B8BD
 mov edx, dword [fdlgshapes]	; 2B8C2
 push edx	; 2B8C8
-call sub_B30B4	; 2B8C9
+call FindShape	; 2B8C9
 add esp, byte 8	; 2B8CE
 mov dword [fdlg_arrow], eax	; 2B8D1
 push str_Gtno	; 2B8D6
 mov ebx, dword [fdlgshapes]	; 2B8DB
 push ebx	; 2B8E1
-call sub_B30B4	; 2B8E2
+call FindShape	; 2B8E2
 add esp, byte 8	; 2B8E7
 mov dword [fdlg_tabnone], eax	; 2B8EA
 push str_Gtex	; 2B8EF
 mov ecx, dword [fdlgshapes]	; 2B8F4
 push ecx	; 2B8FA
-call sub_B30B4	; 2B8FB
+call FindShape	; 2B8FB
 add esp, byte 8	; 2B900
 mov dword [fdlg_tabexh], eax	; 2B903
 push str_Gtlp	; 2B908
 mov esi, dword [fdlgshapes]	; 2B90D
 push esi	; 2B913
-call sub_B30B4	; 2B914
+call FindShape	; 2B914
 add esp, byte 8	; 2B919
 mov dword [fdlg_tablp], eax	; 2B91C
 push str_Gtpo	; 2B921
 mov edi, dword [fdlgshapes]	; 2B926
 push edi	; 2B92C
-call sub_B30B4	; 2B92D
+call FindShape	; 2B92D
 add esp, byte 8	; 2B932
 mov dword [fdlg_tabpo], eax	; 2B935
 .2:
@@ -161,7 +161,7 @@ call ScanSavedGames	; 2B956
 push byte 20h	; 2B95B
 push dword 0B825h	; 2B95D
 push str_Buf	; 2B962
-call sub_8CCA8	; 2B967
+call AllocMemBlock	; 2B967
 mov ebp, eax	; 2B96C
 add esp, byte 0Ch	; 2B96E
 mov esi, dword [pointerspr]	; 2B971
@@ -176,7 +176,7 @@ mov word [byte eax+06h], 0C6h	; 2B984
 push byte 13h	; 2B98A
 push byte 0Ah	; 2B98C
 push eax	; 2B98E
-call sub_91400	; 2B98F
+call GrabBlock	; 2B98F
 add esp, byte 0Ch	; 2B994
 call LoadFileDlgShapes	; 2B997
 call DrawFileDlg	; 2B99C
@@ -186,7 +186,7 @@ mov esi, eax	; 2B9AB
 push byte 13h	; 2B9AD
 push byte 0Ah	; 2B9AF
 push ebp	; 2B9B1
-call sub_910E0	; 2B9B2
+call DrawArtOpaque	; 2B9B2
 add esp, byte 0Ch	; 2B9B7
 push ebp	; 2B9BA
 call FreeMemBlock	; 2B9BB
@@ -445,53 +445,53 @@ push edi	; 2BD24
 push ebp	; 2BD25
 push dword 0FFh	; 2BD26
 push dword 0F8h	; 2BD2B
-call sub_8E9C0	; 2BD30
+call TextSetColors	; 2BD30
 add esp, byte 8	; 2BD35
 cmp dword [fdlgtab], byte 0	; 2BD38
 jge near .1	; 2BD3F
 push dword 0C0h	; 2BD45
 push byte 2Ah	; 2BD4A
 push str_Open2	; 2BD4C
-call sub_91964	; 2BD51
+call PrintString	; 2BD51
 add esp, byte 0Ch	; 2BD56
 push dword 0C0h	; 2BD59
 push byte 6Bh	; 2BD5E
 push str_Delete	; 2BD60
-call sub_91964	; 2BD65
+call PrintString	; 2BD65
 add esp, byte 0Ch	; 2BD6A
 push dword 0FFh	; 2BD6D
 push dword 0FAh	; 2BD72
-call sub_8E9C0	; 2BD77
+call TextSetColors	; 2BD77
 add esp, byte 8	; 2BD7C
 push dword 0C0h	; 2BD7F
 push dword 0B8h	; 2BD84
 push str_Done	; 2BD89
-call sub_91964	; 2BD8E
+call PrintString	; 2BD8E
 add esp, byte 0Ch	; 2BD93
 push dword 0FFh	; 2BD96
 push dword 0F8h	; 2BD9B
-call sub_8E9C0	; 2BDA0
+call TextSetColors	; 2BDA0
 add esp, byte 8	; 2BDA5
 push byte 4Ch	; 2BDA8
 push dword 0A7h	; 2BDAA
 push str_Exhibition	; 2BDAF
-call sub_91964	; 2BDB4
+call PrintString	; 2BDB4
 add esp, byte 0Ch	; 2BDB9
 push byte 64h	; 2BDBC
 push dword 0ABh	; 2BDBE
 push str_Playoffs	; 2BDC3
-call sub_91964	; 2BDC8
+call PrintString	; 2BDC8
 add esp, byte 0Ch	; 2BDCD
 push byte 7Ch	; 2BDD0
 push dword 0B0h	; 2BDD2
 push str_League	; 2BDD7
-call sub_91964	; 2BDDC
+call PrintString	; 2BDDC
 add esp, byte 0Ch	; 2BDE1
 push byte 46h	; 2BDE4
 push byte 18h	; 2BDE6
 mov edx, dword [fdlg_noarrow]	; 2BDE8
 push edx	; 2BDEE
-call sub_91370	; 2BDEF
+call DrawArt	; 2BDEF
 add esp, byte 0Ch	; 2BDF4
 push byte 4Bh	; 2BDF7
 push dword 0A3h	; 2BDF9
@@ -504,7 +504,7 @@ jne short .2	; 2BE11
 push byte 7Ch	; 2BE13
 push dword 0B0h	; 2BE15
 push str_League	; 2BE1A
-call sub_91964	; 2BE1F
+call PrintString	; 2BE1F
 add esp, byte 0Ch	; 2BE24
 .2:
 test byte [fdlgmask], 40h	; 2BE27
@@ -512,7 +512,7 @@ jne short .3	; 2BE2E
 push byte 64h	; 2BE30
 push dword 0ABh	; 2BE32
 push str_Playoffs	; 2BE37
-call sub_91964	; 2BE3C
+call PrintString	; 2BE3C
 add esp, byte 0Ch	; 2BE41
 .3:
 test byte [fdlgmask], 20h	; 2BE44
@@ -538,7 +538,7 @@ push byte 18h	; 2BE81
 mov ecx, dword [fdlg_arrow]	; 2BE83
 push ecx	; 2BE89
 .6:
-call sub_91370	; 2BE8A
+call DrawArt	; 2BE8A
 add esp, byte 0Ch	; 2BE8F
 mov eax, dword [fdlgtab]	; 2BE92
 cmp eax, byte 1	; 2BE97
@@ -567,7 +567,7 @@ push dword 0A3h	; 2BED1
 mov edi, dword [fdlg_tablp]	; 2BED6
 push edi	; 2BEDC
 .10:
-call sub_91370	; 2BEDD
+call DrawArt	; 2BEDD
 add esp, byte 0Ch	; 2BEE2
 jmp near LoadFileDlgShapes_x	; 2BEE5
 %endif ; C
@@ -797,7 +797,7 @@ push ebx	; 2C15F
 push esi	; 2C160
 lea eax, [byte esp+08h]	; 2C161
 push eax	; 2C165
-call sub_91964	; 2C166
+call PrintString	; 2C166
 add esp, byte 0Ch	; 2C16B
 add esp, byte 40h	; 2C16E
 pop esi	; 2C171
@@ -841,14 +841,14 @@ call MakePath	; 2C1C3
 push byte 0	; 2C1C8
 lea eax, [byte esp+04h]	; 2C1CA
 push eax	; 2C1CE
-call sub_8E83C	; 2C1CF
+call LoadBank	; 2C1CF
 mov esi, eax	; 2C1D4
 add esp, byte 8	; 2C1D6
 push byte 13h	; 2C1D9
 push byte 0Ah	; 2C1DB
 push str_Dbox	; 2C1DD
 push eax	; 2C1E2
-call sub_B30B4	; 2C1E3
+call FindShape	; 2C1E3
 add esp, byte 8	; 2C1E8
 push eax	; 2C1EB
 call sub_91284	; 2C1EC
@@ -879,7 +879,7 @@ jl near DrawFileDlg_x	; 2C267
 or word [fdlgmask], 20Ch	; 2C26D
 push dword 0FFh	; 2C276
 push dword 0FAh	; 2C27B
-call sub_8E9C0	; 2C280
+call TextSetColors	; 2C280
 add esp, byte 8	; 2C285
 mov esi, dword [fdlgtab]	; 2C288
 mov esi, dword [nosplit esi*4+fdlgfilelists]	; 2C28E
@@ -905,7 +905,7 @@ lea eax, [byte edi+013h]	; 2C2D6
 push eax	; 2C2D9
 lea eax, [byte ebp+0Ah]	; 2C2DA
 push eax	; 2C2DD
-call sub_90D20	; 2C2DE
+call FillRect	; 2C2DE
 add esp, byte 14h	; 2C2E3
 mov ecx, dword [byte esi+08h]	; 2C2E6
 mov edi, 0Ah	; 2C2E9
@@ -1065,7 +1065,7 @@ sub esp, byte 8	; 2C47B
 mov edi, eax	; 2C47E
 push dword 0FFh	; 2C480
 push dword 0FAh	; 2C485
-call sub_8E9C0	; 2C48A
+call TextSetColors	; 2C48A
 add esp, byte 8	; 2C48F
 xor esi, esi	; 2C492
 .1:
@@ -1086,7 +1086,7 @@ lea edx, [byte ebx+013h]	; 2C4BE
 push edx	; 2C4C1
 lea eax, [byte ecx+0Ah]	; 2C4C2
 push eax	; 2C4C5
-call sub_90D20	; 2C4C6
+call FillRect	; 2C4C6
 add esp, byte 14h	; 2C4CB
 inc esi	; 2C4CE
 cmp esi, byte 6	; 2C4CF
@@ -1108,7 +1108,7 @@ lea eax, [byte edi+016h]	; 2C4FF
 push eax	; 2C502
 lea eax, [byte ebp+0Dh]	; 2C503
 push eax	; 2C506
-call sub_90D20	; 2C507
+call FillRect	; 2C507
 add esp, byte 14h	; 2C50C
 xor eax, eax	; 2C50F
 mov dword [byte esp+04h], eax	; 2C511
@@ -1167,7 +1167,7 @@ lea eax, [byte ecx+016h]	; 2C5A5
 push eax	; 2C5A8
 lea eax, [byte esi+0Dh]	; 2C5A9
 push eax	; 2C5AC
-call sub_90D20	; 2C5AD
+call FillRect	; 2C5AD
 add esp, byte 14h	; 2C5B2
 mov ebx, dword [fdlgrects+94h]	; 2C5B5
 add ebx, byte 13h	; 2C5BB
@@ -1200,7 +1200,7 @@ lea eax, [byte ecx+013h]	; 2C60E
 push eax	; 2C611
 lea eax, [byte edx+0Ah]	; 2C612
 push eax	; 2C615
-call sub_90D20	; 2C616
+call FillRect	; 2C616
 add esp, byte 14h	; 2C61B
 mov ebx, dword [dword ebp+fdlgrects+0A4h]	; 2C61E
 add ebx, byte 10h	; 2C624
@@ -1226,7 +1226,7 @@ lea eax, [byte ebx+013h]	; 2C661
 push eax	; 2C664
 lea eax, [byte ecx+0Ah]	; 2C665
 push eax	; 2C668
-call sub_90D20	; 2C669
+call FillRect	; 2C669
 add esp, byte 14h	; 2C66E
 cmp dword [edi], byte 6	; 2C671
 jg short DrawFileDlgList_n1.1	; 2C674
@@ -1331,7 +1331,7 @@ push byte 18h	; 2C797
 mov ebx, dword [fdlg_arrow]	; 2C799
 push ebx	; 2C79F
 .4:
-call sub_91370	; 2C7A0
+call DrawArt	; 2C7A0
 add esp, byte 0Ch	; 2C7A5
 mov eax, dword [fdlgtab]	; 2C7A8
 cmp eax, byte 1	; 2C7AD
@@ -1360,7 +1360,7 @@ push dword 0A3h	; 2C7E1
 mov esi, dword [fdlg_tablp]	; 2C7E6
 push esi	; 2C7EC
 .8:
-call sub_91370	; 2C7ED
+call DrawArt	; 2C7ED
 add esp, byte 0Ch	; 2C7F2
 .9:
 mov eax, dword [byte esp+04h]	; 2C7F5
@@ -1390,7 +1390,7 @@ lea eax, [byte esp+018h]	; 2C821
 push eax	; 2C825
 lea eax, [byte esp+0Ch]	; 2C826
 push eax	; 2C82A
-call sub_B2DCA	; 2C82B
+call MouseRead	; 2C82B
 add esp, byte 0Ch	; 2C830
 mov eax, dword [byte esp+014h]	; 2C833
 mov dword [byte esp+0Ch], eax	; 2C837
@@ -1409,7 +1409,7 @@ add eax, byte 11h	; 2C85E
 push byte 20h	; 2C861
 push eax	; 2C863
 push str_Pointer5	; 2C864
-call sub_8CCA8	; 2C869
+call AllocMemBlock	; 2C869
 add esp, byte 0Ch	; 2C86E
 mov dword [byte esp+01Ch], eax	; 2C871
 mov esi, dword [pointerspr]	; 2C875
@@ -1433,7 +1433,7 @@ mov edx, dword [byte esp+010h]	; 2C8A5
 sub edx, byte 4	; 2C8A9
 push edx	; 2C8AC
 push eax	; 2C8AD
-call sub_91400	; 2C8AE
+call GrabBlock	; 2C8AE
 add esp, byte 0Ch	; 2C8B3
 mov ecx, dword [byte esp+08h]	; 2C8B6
 push ecx	; 2C8BA
@@ -1442,7 +1442,7 @@ sub eax, byte 4	; 2C8BF
 push eax	; 2C8C2
 mov esi, dword [pointerspr]	; 2C8C3
 push esi	; 2C8C9
-call sub_91370	; 2C8CA
+call DrawArt	; 2C8CA
 add esp, byte 0Ch	; 2C8CF
 mov esi, dword [fdlgtab]	; 2C8D2
 mov esi, dword [nosplit esi*4+fdlgfilelists]	; 2C8D8
@@ -1478,7 +1478,7 @@ sub eax, byte 4	; 2C936
 push eax	; 2C939
 mov ecx, dword [byte esp+024h]	; 2C93A
 push ecx	; 2C93E
-call sub_903F0	; 2C93F
+call PutBlock	; 2C93F
 add esp, byte 0Ch	; 2C944
 mov edi, dword [byte esp+08h]	; 2C947
 push edi	; 2C94B
@@ -1487,7 +1487,7 @@ sub eax, byte 4	; 2C950
 push eax	; 2C953
 mov eax, dword [byte esp+024h]	; 2C954
 push eax	; 2C958
-call sub_91400	; 2C959
+call GrabBlock	; 2C959
 add esp, byte 0Ch	; 2C95E
 mov edx, dword [byte esp+08h]	; 2C961
 push edx	; 2C965
@@ -1497,7 +1497,7 @@ push eax	; 2C96D
 mov ebx, dword [pointerspr]	; 2C96E
 push ebx	; 2C974
 .5:
-call sub_91370	; 2C975
+call DrawArt	; 2C975
 add esp, byte 0Ch	; 2C97A
 mov eax, dword [byte esp+0Ch]	; 2C97D
 mov dword [byte esp+014h], eax	; 2C981
@@ -1512,7 +1512,7 @@ sub eax, byte 4	; 2C99B
 push eax	; 2C99E
 mov ebx, dword [byte esp+024h]	; 2C99F
 push ebx	; 2C9A3
-call sub_910E0	; 2C9A4
+call DrawArtOpaque	; 2C9A4
 add esp, byte 0Ch	; 2C9A9
 test byte [byte esp+04h], 1	; 2C9AC
 je near .28	; 2C9B1
@@ -1662,7 +1662,7 @@ sub eax, byte 4	; 2CB4F
 push eax	; 2CB52
 mov edx, dword [byte esp+024h]	; 2CB53
 push edx	; 2CB57
-call sub_91400	; 2CB58
+call GrabBlock	; 2CB58
 add esp, byte 0Ch	; 2CB5D
 mov ebx, dword [byte esp+08h]	; 2CB60
 push ebx	; 2CB64
@@ -1729,7 +1729,7 @@ push dword 0BFh	; 2CC2F
 push byte 20h	; 2CC34
 mov esi, dword [fdlg_cancel]	; 2CC36
 push esi	; 2CC3C
-call sub_91370	; 2CC3D
+call DrawArt	; 2CC3D
 add esp, byte 0Ch	; 2CC42
 mov edi, dword [byte esp+01Ch]	; 2CC45
 push edi	; 2CC49
@@ -1743,7 +1743,7 @@ push byte 46h	; 2CC59
 push byte 18h	; 2CC5B
 mov ecx, dword [fdlg_up]	; 2CC5D
 push ecx	; 2CC63
-call sub_91370	; 2CC64
+call DrawArt	; 2CC64
 add esp, byte 0Ch	; 2CC69
 mov edi, dword [byte esi+08h]	; 2CC6C
 test edi, edi	; 2CC6F
@@ -1758,7 +1758,7 @@ push byte 46h	; 2CC84
 push byte 18h	; 2CC86
 mov edx, dword [fdlg_down]	; 2CC88
 push edx	; 2CC8E
-call sub_91370	; 2CC8F
+call DrawArt	; 2CC8F
 add esp, byte 0Ch	; 2CC94
 mov eax, dword [byte esi+0Ch]	; 2CC97
 inc eax	; 2CC9A
@@ -1828,7 +1828,7 @@ push dword 0BFh	; 2CD4F
 push byte 20h	; 2CD54
 mov ebp, dword [fdlg_open]	; 2CD56
 push ebp	; 2CD5C
-call sub_91370	; 2CD5D
+call DrawArt	; 2CD5D
 add esp, byte 0Ch	; 2CD62
 mov eax, dword [byte esp+01Ch]	; 2CD65
 push eax	; 2CD69
@@ -1841,7 +1841,7 @@ push dword 0BFh	; 2CD7C
 push byte 20h	; 2CD81
 mov eax, dword [fdlg_del]	; 2CD83
 push eax	; 2CD88
-call sub_91370	; 2CD89
+call DrawArt	; 2CD89
 add esp, byte 0Ch	; 2CD8E
 mov eax, dword [fdlgtab]	; 2CD91
 mov eax, dword [nosplit eax*4+fdlgfilelists]	; 2CD96
@@ -1866,7 +1866,7 @@ push dword 0BFh	; 2CDD0
 push byte 20h	; 2CDD5
 mov edi, dword [fdlg_none]	; 2CDD7
 push edi	; 2CDDD
-call sub_91370	; 2CDDE
+call DrawArt	; 2CDDE
 add esp, byte 0Ch	; 2CDE3
 jmp near RunFileDlg.26	; 2CDE6
 .49:

@@ -12,9 +12,9 @@ extern str_Adn12, str_Adn22, str_Adn32, str_Aup12, str_Aup22, str_Aup32, str_Bkg
 extern str_Conference, str_D3, str_Eastern, str_EasternConference2, str_Embpal2, str_fmt2d, str_fmt3d, str_fmtPct
 extern str_fmtPct0, str_GA2, str_GF, str_GP7, str_L6, str_Midl2, str_P, str_Pal9
 extern str_Pct4, str_PlayoffsHaveNotBeen2, str_Pst27, str_Pstatbar8, str_Rst12, str_Rst22, str_Scuparrw2, str_Standings
-extern str_T4, str_Team, str_TwoSpaces, str_W4, str_Western, str_WesternConference2, strcat_, sub_8E83C
-extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_91044, sub_91370, sub_913B4, sub_B30B4, sub_B4B88
-extern sub_B4BA8, sub_B4BC4, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
+extern str_T4, str_Team, str_TwoSpaces, str_W4, str_Western, str_WesternConference2, strcat_, LoadBank
+extern TextSaveState, TextRestoreState, TextSetFont, sub_91044, DrawArt, DrawShape, FindShape, VgaSetPalette
+extern sub_B4BA8, SetClipWindow, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
 extern treecol_Wr2, treecol_Wr3, treecolslots, treecolx, treerowy, treeteamnames
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
 ; C: src/front/playoff/StandingsScreen.c
@@ -172,29 +172,29 @@ call MakePath	; 2727C
 push byte 0	; 27281
 lea eax, [byte ebp-074h]	; 27283
 push eax	; 27286
-call sub_8E83C	; 27287
+call LoadBank	; 27287
 add esp, byte 8	; 2728C
 mov dword [statsbgshapes], eax	; 2728F
 mov eax, str_Bkgd2	; 27294
 push eax	; 27299
 push dword [statsbgshapes]	; 2729A
-call sub_B30B4	; 272A0
+call FindShape	; 272A0
 add esp, byte 8	; 272A5
 mov dword [statspalshape], eax	; 272A8
 push dword 1E0h	; 272AD
 push byte 13h	; 272B2
 push dword 280h	; 272B4
 push byte 0	; 272B9
-call sub_B4BC4	; 272BB
+call SetClipWindow	; 272BB
 add esp, byte 10h	; 272C0
 push dword [statspalshape]	; 272C3
-call sub_913B4	; 272C9
+call DrawShape	; 272C9
 add esp, byte 4	; 272CE
 push dword 1E0h	; 272D1
 push byte 0	; 272D6
 push dword 280h	; 272D8
 push byte 0	; 272DD
-call sub_B4BC4	; 272DF
+call SetClipWindow	; 272DF
 add esp, byte 10h	; 272E4
 push dword [statsbgshapes]	; 272E7
 call FreeMemBlock	; 272ED
@@ -218,19 +218,19 @@ call MakePath	; 2733F
 push byte 0	; 27344
 lea eax, [byte ebp-074h]	; 27346
 push eax	; 27349
-call sub_8E83C	; 2734A
+call LoadBank	; 2734A
 add esp, byte 8	; 2734F
 mov dword [statsbgshapes], eax	; 27352
 mov eax, str_Pst27	; 27357
 push eax	; 2735C
 push dword [statsbgshapes]	; 2735D
-call sub_B30B4	; 27363
+call FindShape	; 27363
 add esp, byte 8	; 27368
 mov dword [statspalshape], eax	; 2736B
 push byte 1Ch	; 27370
 push byte 0	; 27372
 push dword [statspalshape]	; 27374
-call sub_91370	; 2737A
+call DrawArt	; 2737A
 add esp, byte 0Ch	; 2737F
 push dword [statsbgshapes]	; 27382
 call FreeMemBlock	; 27388
@@ -238,10 +238,10 @@ add esp, byte 4	; 2738D
 call TextGridOpen	; 27390
 lea eax, [dword ebp-0E8h]	; 27395
 push eax	; 2739B
-call sub_8E9E8	; 2739C
+call TextSaveState	; 2739C
 add esp, byte 4	; 273A1
 push dword [byte ebp-0Ch]	; 273A4
-call sub_8EA18	; 273A7
+call TextSetFont	; 273A7
 add esp, byte 4	; 273AC
 mov edx, 43h	; 273AF
 mov eax, 40h	; 273B4
@@ -327,7 +327,7 @@ mov ebx, esi	; 274C1
 mov edx, edi	; 274C3
 call PrintShadowText	; 274C5
 push dword [byte ebp-08h]	; 274CA
-call sub_8EA18	; 274CD
+call TextSetFont	; 274CD
 add esp, byte 4	; 274D2
 mov edx, 43h	; 274D5
 mov eax, 40h	; 274DA
@@ -590,7 +590,7 @@ jmp near StandingsScreen.14	; 27834
 call TextGridOff	; 27839
 lea eax, [dword ebp-0E8h]	; 2783E
 push eax	; 27844
-call sub_8EA00	; 27845
+call TextRestoreState	; 27845
 add esp, byte 4	; 2784A
 mov dword [byte ebp-038h], 0	; 2784D
 mov eax, dword [byte ebp-038h]	; 27854
@@ -1367,29 +1367,29 @@ call MakePath	; 2804F
 push byte 0	; 28054
 lea eax, [byte ebp-05Ch]	; 28056
 push eax	; 28059
-call sub_8E83C	; 2805A
+call LoadBank	; 2805A
 add esp, byte 8	; 2805F
 mov dword [statsbgshapes], eax	; 28062
 mov eax, str_Bkgd2	; 28067
 push eax	; 2806C
 push dword [statsbgshapes]	; 2806D
-call sub_B30B4	; 28073
+call FindShape	; 28073
 add esp, byte 8	; 28078
 mov dword [statspalshape], eax	; 2807B
 push dword 1E0h	; 28080
 push byte 13h	; 28085
 push dword 280h	; 28087
 push byte 0	; 2808C
-call sub_B4BC4	; 2808E
+call SetClipWindow	; 2808E
 add esp, byte 10h	; 28093
 push dword [statspalshape]	; 28096
-call sub_913B4	; 2809C
+call DrawShape	; 2809C
 add esp, byte 4	; 280A1
 push dword 1E0h	; 280A4
 push byte 0	; 280A9
 push dword 280h	; 280AB
 push byte 0	; 280B0
-call sub_B4BC4	; 280B2
+call SetClipWindow	; 280B2
 add esp, byte 10h	; 280B7
 push dword [statsbgshapes]	; 280BA
 call FreeMemBlock	; 280C0
@@ -1399,23 +1399,23 @@ jmp short .6	; 280C8
 mov eax, str_Bkgd2	; 280CA
 push eax	; 280CF
 push dword [embscupbank]	; 280D0
-call sub_B30B4	; 280D6
+call FindShape	; 280D6
 add esp, byte 8	; 280DB
 mov dword [statspalshape], eax	; 280DE
 push dword 1E0h	; 280E3
 push byte 13h	; 280E8
 push dword 280h	; 280EA
 push byte 0	; 280EF
-call sub_B4BC4	; 280F1
+call SetClipWindow	; 280F1
 add esp, byte 10h	; 280F6
 push dword [statspalshape]	; 280F9
-call sub_913B4	; 280FF
+call DrawShape	; 280FF
 add esp, byte 4	; 28104
 push dword 1E0h	; 28107
 push byte 0	; 2810C
 push dword 280h	; 2810E
 push byte 0	; 28113
-call sub_B4BC4	; 28115
+call SetClipWindow	; 28115
 add esp, byte 10h	; 2811A
 .6:
 cmp dword [dword_C6D26], byte 1	; 2811D
@@ -1439,13 +1439,13 @@ call MakePath	; 28174
 push byte 0	; 28179
 lea eax, [byte ebp-05Ch]	; 2817B
 push eax	; 2817E
-call sub_8E83C	; 2817F
+call LoadBank	; 2817F
 add esp, byte 8	; 28184
 mov dword [statsbgshapes], eax	; 28187
 mov eax, str_Pal9	; 2818C
 push eax	; 28191
 push dword [statsbgshapes]	; 28192
-call sub_B30B4	; 28198
+call FindShape	; 28198
 add esp, byte 8	; 2819D
 mov dword [statspalshape], eax	; 281A0
 cmp dword [statspalvalid], byte 1	; 281A5
@@ -1462,7 +1462,7 @@ add eax, byte 10h	; 281CD
 push eax	; 281D0
 push dword 100h	; 281D1
 push byte 0	; 281D6
-call sub_B4B88	; 281D8
+call VgaSetPalette	; 281D8
 add esp, byte 0Ch	; 281DD
 .10:
 push dword [statsbgshapes]	; 281E0
@@ -1483,7 +1483,7 @@ shl eax, 2	; 28220
 cmp dword [dword eax+playofftree], byte 19h	; 28223
 jle short .12	; 2822A
 push dword [byte ebp-03Ch]	; 2822C
-call sub_8EA18	; 2822F
+call TextSetFont	; 2822F
 add esp, byte 4	; 28234
 mov ecx, 8	; 28237
 lea edi, [dword ebp-0F0h]	; 2823C
@@ -1504,7 +1504,7 @@ mov ebx, esi	; 28270
 mov edx, edi	; 28272
 call PrintOutlinedText	; 28274
 push dword [byte ebp-02Ch]	; 28279
-call sub_8EA18	; 2827C
+call TextSetFont	; 2827C
 add esp, byte 4	; 28281
 jmp near .x	; 28284
 .12:
@@ -1527,30 +1527,30 @@ call MakePath	; 282D3
 push byte 0	; 282D8
 lea eax, [byte ebp-05Ch]	; 282DA
 push eax	; 282DD
-call sub_8E83C	; 282DE
+call LoadBank	; 282DE
 add esp, byte 8	; 282E3
 mov dword [statsbgshapes], eax	; 282E6
 mov eax, str_Rst12	; 282EB
 push eax	; 282F0
 push dword [statsbgshapes]	; 282F1
-call sub_B30B4	; 282F7
+call FindShape	; 282F7
 add esp, byte 8	; 282FC
 mov dword [statspalshape], eax	; 282FF
 push byte 1Ah	; 28304
 push byte 0	; 28306
 push dword [statspalshape]	; 28308
-call sub_91370	; 2830E
+call DrawArt	; 2830E
 add esp, byte 0Ch	; 28313
 mov eax, str_Rst22	; 28316
 push eax	; 2831B
 push dword [statsbgshapes]	; 2831C
-call sub_B30B4	; 28322
+call FindShape	; 28322
 add esp, byte 8	; 28327
 mov dword [statspalshape], eax	; 2832A
 push dword 192h	; 2832F
 push byte 0Fh	; 28334
 push dword [statspalshape]	; 28336
-call sub_91370	; 2833C
+call DrawArt	; 2833C
 add esp, byte 0Ch	; 28341
 push dword [statsbgshapes]	; 28344
 call FreeMemBlock	; 2834A
@@ -1574,16 +1574,16 @@ call MakePath	; 2839C
 push byte 0	; 283A1
 lea eax, [byte ebp-05Ch]	; 283A3
 push eax	; 283A6
-call sub_8E83C	; 283A7
+call LoadBank	; 283A7
 add esp, byte 8	; 283AC
 mov dword [statsbgshapes], eax	; 283AF
 call TextGridOpen	; 283B4
 lea eax, [dword ebp-09Ch]	; 283B9
 push eax	; 283BF
-call sub_8E9E8	; 283C0
+call TextSaveState	; 283C0
 add esp, byte 4	; 283C5
 push dword [byte ebp-02Ch]	; 283C8
-call sub_8EA18	; 283CB
+call TextSetFont	; 283CB
 add esp, byte 4	; 283D0
 mov edx, str_Standings	; 283D3
 lea eax, [dword ebp-0F0h]	; 283D8
@@ -1592,7 +1592,7 @@ lea edx, [dword ebp-0F0h]	; 283E3
 mov eax, 16h	; 283E9
 call PrintCenteredText	; 283EE
 push dword [byte ebp-03Ch]	; 283F3
-call sub_8EA18	; 283F6
+call TextSetFont	; 283F6
 add esp, byte 4	; 283FB
 lea edi, [dword ebp-0F0h]	; 283FE
 mov esi, str_WesternConference2	; 28404
@@ -1637,7 +1637,7 @@ mov ebx, esi	; 28475
 mov edx, edi	; 28477
 call PrintOutlinedText	; 28479
 push dword [byte ebp-02Ch]	; 2847E
-call sub_8EA18	; 28481
+call TextSetFont	; 28481
 add esp, byte 4	; 28486
 mov dword [byte ebp-014h], 0	; 28489
 .17:
@@ -1901,11 +1901,11 @@ jmp near .64	; 287D1
 mov eax, str_Aup12	; 287D6
 push eax	; 287DB
 push dword [statsbgshapes]	; 287DC
-call sub_B30B4	; 287E2
+call FindShape	; 287E2
 add esp, byte 8	; 287E7
 mov dword [statspalshape], eax	; 287EA
 push dword [statspalshape]	; 287EF
-call sub_913B4	; 287F5
+call DrawShape	; 287F5
 add esp, byte 4	; 287FA
 mov word [byte ebp-014h], 0	; 287FD
 .45:
@@ -2050,11 +2050,11 @@ jmp near .63	; 289E3
 mov eax, str_Aup22	; 289E8
 push eax	; 289ED
 push dword [statsbgshapes]	; 289EE
-call sub_B30B4	; 289F4
+call FindShape	; 289F4
 add esp, byte 8	; 289F9
 mov dword [statspalshape], eax	; 289FC
 push dword [statspalshape]	; 28A01
-call sub_913B4	; 28A07
+call DrawShape	; 28A07
 add esp, byte 4	; 28A0C
 xor eax, eax	; 28A0F
 mov al, byte [treecolslots+10h]	; 28A11
@@ -2227,21 +2227,21 @@ jge near .70	; 28C76
 mov eax, str_Aup32	; 28C7C
 push eax	; 28C81
 push dword [statsbgshapes]	; 28C82
-call sub_B30B4	; 28C88
+call FindShape	; 28C88
 add esp, byte 8	; 28C8D
 mov dword [statspalshape], eax	; 28C90
 push dword [statspalshape]	; 28C95
-call sub_913B4	; 28C9B
+call DrawShape	; 28C9B
 add esp, byte 4	; 28CA0
 mov dword [byte ebp-038h], 1	; 28CA3
 mov eax, str_Midl2	; 28CAA
 push eax	; 28CAF
 push dword [statsbgshapes]	; 28CB0
-call sub_B30B4	; 28CB6
+call FindShape	; 28CB6
 add esp, byte 8	; 28CBB
 mov dword [statspalshape], eax	; 28CBE
 push dword [statspalshape]	; 28CC3
-call sub_913B4	; 28CC9
+call DrawShape	; 28CC9
 add esp, byte 4	; 28CCE
 mov edx, 43h	; 28CD1
 mov eax, 40h	; 28CD6
@@ -2321,22 +2321,22 @@ jge near .76	; 28DE7
 mov eax, str_Adn32	; 28DED
 push eax	; 28DF2
 push dword [statsbgshapes]	; 28DF3
-call sub_B30B4	; 28DF9
+call FindShape	; 28DF9
 add esp, byte 8	; 28DFE
 mov dword [statspalshape], eax	; 28E01
 push dword [statspalshape]	; 28E06
-call sub_913B4	; 28E0C
+call DrawShape	; 28E0C
 add esp, byte 4	; 28E11
 cmp dword [byte ebp-038h], byte 0	; 28E14
 jne short .71	; 28E18
 mov eax, str_Midl2	; 28E1A
 push eax	; 28E1F
 push dword [statsbgshapes]	; 28E20
-call sub_B30B4	; 28E26
+call FindShape	; 28E26
 add esp, byte 8	; 28E2B
 mov dword [statspalshape], eax	; 28E2E
 push dword [statspalshape]	; 28E33
-call sub_913B4	; 28E39
+call DrawShape	; 28E39
 add esp, byte 4	; 28E3E
 .71:
 add dword [byte ebp-034h], byte 10h	; 28E41
@@ -2585,11 +2585,11 @@ add dword [byte ebp-034h], byte 3Dh	; 291C5
 mov eax, str_Adn22	; 291C9
 push eax	; 291CE
 push dword [statsbgshapes]	; 291CF
-call sub_B30B4	; 291D5
+call FindShape	; 291D5
 add esp, byte 8	; 291DA
 mov dword [statspalshape], eax	; 291DD
 push dword [statspalshape]	; 291E2
-call sub_913B4	; 291E8
+call DrawShape	; 291E8
 add esp, byte 4	; 291ED
 jmp short .86	; 291F0
 .85:
@@ -2767,11 +2767,11 @@ add dword [byte ebp-034h], byte 3Dh	; 29428
 mov eax, str_Adn12	; 2942C
 push eax	; 29431
 push dword [statsbgshapes]	; 29432
-call sub_B30B4	; 29438
+call FindShape	; 29438
 add esp, byte 8	; 2943D
 mov dword [statspalshape], eax	; 29440
 push dword [statspalshape]	; 29445
-call sub_913B4	; 2944B
+call DrawShape	; 2944B
 add esp, byte 4	; 29450
 jmp short .106	; 29453
 .105:
@@ -2932,7 +2932,7 @@ call FreeMemBlock	; 29661
 add esp, byte 4	; 29666
 lea eax, [dword ebp-09Ch]	; 29669
 push eax	; 2966F
-call sub_8EA00	; 29670
+call TextRestoreState	; 29670
 add esp, byte 4	; 29675
 .x:
 mov esp, ebp	; 29678

@@ -15,7 +15,7 @@ void DrawMenuBar(void *bar, int n, int col1, int col2, int col3)
 {
     int i;
 
-    sub_8E9C0(col1, 0xFF);
+    TextSetColors(col1, 0xFF);
     SetTextColors(col1, 0);
     for (i = 0; i < n; i++) {
         DrawMenuBox(((BarItem *)bar)[i].x1, 0, ((BarItem *)bar)[i].x2, ((BarItem *)bar)[i].y2, col1, col2, col3);

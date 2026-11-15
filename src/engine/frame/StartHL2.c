@@ -217,7 +217,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         if (fadeinpending) {
             joysampling_save = joysampling;
             joysampling = 0;
-            sub_8FFB0(0, 0x100, savepal);
+            SetPalette(0, 0x100, savepal);
             FadePalette(1, savepal, 0x10);
             joysampling = joysampling_save;
         }
@@ -253,7 +253,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     ovlseq = -1;
     demomode = 0;
     oneminsaid = 0;
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     CrowdFadeOut();
     crowdlevel = 0;

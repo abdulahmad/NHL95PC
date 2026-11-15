@@ -179,7 +179,7 @@ void LoadTeamPPV(short seq)
     ovlartbank = sub_8E8A0(name, 0x20);
     for (i = 0; i < sub_90354(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
-        ovlstepart[i] = sub_B30B4(ovlartbank, name);
+        ovlstepart[i] = FindShape(ovlartbank, name);
     }
     joysampling = joysampling_save;
     ovlseq = seq;
@@ -236,7 +236,7 @@ void DrawTextOverlay(void)
         x2 += (short)((short)cliprect_x0 - scrollx);
         y += (short)((short)cliprect_y0 - scrolly);
         y2 += (short)((short)cliprect_y0 - scrolly);
-        sub_B4BC4(x, x2, y, y2);
+        SetClipWindow(x, x2, y, y2);
     }
     x = scrollx + 0xC;
     if (gsp == 4) x += 0xAC;
@@ -252,13 +252,13 @@ void DrawTextOverlay(void)
         DitherRect(x, y, x2 - x, y2 - y, 9);
     }
     if (d == 0 || w >= 0x3E) {
-        sub_90D20(x - 4, y - 4, 0x83, 4, 0);
-        sub_90D20(x - 4, y, 4, 0x4B, 0);
-        sub_90D20(x2, y, 4, 0x4B, 0);
-        sub_90D20(x - 4, y2, 0x83, 4, 0);
+        FillRect(x - 4, y - 4, 0x83, 4, 0);
+        FillRect(x - 4, y, 4, 0x4B, 0);
+        FillRect(x2, y, 4, 0x4B, 0);
+        FillRect(x - 4, y2, 0x83, 4, 0);
     }
     if (d < 0) {
-        sub_B4BC4(x0s, x1s, y0s, y1s);
+        SetClipWindow(x0s, x1s, y0s, y1s);
     } else if (ovlseq != -1 && ovlstep != -1) {
         if (ovlseq == 0xA && ovlstep > 0x10) {
             sub_B500C(ovlstepart_e30, x, y);
@@ -301,45 +301,45 @@ void DrawTextOverlay(void)
             y += 0xF;
         }
         x += 0x3E;
-        sub_8EA18(scor3font);
-        sub_8E9C0(0x25, 0xFF);
+        TextSetFont(scor3font);
+        TextSetColors(0x25, 0xFF);
         d = y;
-        if (textline3) sub_91964((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
+        if (textline3) PrintString((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
         if (textline1) {
             d += h;
-            sub_91964((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
+            PrintString((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
         }
         if (textline2) {
             d += h;
-            sub_91964((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
+            PrintString((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
         }
         if (textline4) {
             d += h;
-            sub_91964((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
+            PrintString((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
         }
         if (textline5) {
             d += h;
-            sub_91964((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
+            PrintString((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
         }
-        sub_8EA18(scor2font);
-        sub_8E9C0(0x27, 0xFF);
+        TextSetFont(scor2font);
+        TextSetColors(0x27, 0xFF);
         d = y;
-        if (textline3) sub_91964((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
+        if (textline3) PrintString((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
         if (textline1) {
             d += h;
-            sub_91964((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
+            PrintString((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
         }
         if (textline2) {
             d += h;
-            sub_91964((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
+            PrintString((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
         }
         if (textline4) {
             d += h;
-            sub_91964((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
+            PrintString((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
         }
         if (textline5) {
             d += h;
-            sub_91964((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
+            PrintString((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
         }
     }
     x = (short)cliprect_x0 + 8;
@@ -404,7 +404,7 @@ void DrawCallBanner(short n)
     x = scrollx + 0xC;
     y = scrolly + 0x95;
     y2 = scrolly + 0x9E;
-    sub_8EA18(scor3font);
+    TextSetFont(scor3font);
     w = fputchar((char *)bannerstrs[n]) + 4;
     x2 = w + x;
     d = cliprect_x0 - scrollx;
@@ -414,19 +414,19 @@ void DrawCallBanner(short n)
     y += d;
     y2 += d;
     w += 8;
-    sub_90D20(x, y, x2 - x, y2 - y, 0x10);
+    FillRect(x, y, x2 - x, y2 - y, 0x10);
     DitherRect(x, y, x2 - x, y2 - y, 9);
-    sub_90D20(x - 4, y - 4, w, 4, 0);
-    sub_90D20(x - 4, y, 4, 9, 0);
-    sub_90D20(x2, y, 4, 9, 0);
-    sub_90D20(x - 4, y2, w, 4, 0);
-    sub_8E9C0(0x25, 0xFF);
+    FillRect(x - 4, y - 4, w, 4, 0);
+    FillRect(x - 4, y, 4, 9, 0);
+    FillRect(x2, y, 4, 9, 0);
+    FillRect(x - 4, y2, w, 4, 0);
+    TextSetColors(0x25, 0xFF);
     x2 = x + 2;                     /* x2 is free now: the text x of both passes */
     y2 = y + 1;
-    sub_91964((char *)bannerstrs[n], x2, y2);
-    sub_8EA18(scor2font);
-    sub_8E9C0(0x27, 0xFF);
-    sub_91964((char *)bannerstrs[n], x2, y2);
+    PrintString((char *)bannerstrs[n], x2, y2);
+    TextSetFont(scor2font);
+    TextSetColors(0x27, 0xFF);
+    PrintString((char *)bannerstrs[n], x2, y2);
     x -= 4;
     y -= 4;
     sub_6AB7C(spritedrawcount++, x, y, x + w, y + 0x11);

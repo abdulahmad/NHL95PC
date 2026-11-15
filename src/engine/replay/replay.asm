@@ -21,8 +21,8 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
-extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
+extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, sub_90354, FillRect
+extern sub_90EC0, PrintString, SortIndices, FindShape, sub_B340B, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
@@ -657,7 +657,7 @@ push rpl_ysort	; 67DAD
 lea eax, [byte esp+04h]	; 67DB2
 push eax	; 67DB6
 push byte 11h	; 67DB7
-call sub_93540	; 67DB9
+call SortIndices	; 67DB9
 add esp, byte 0Ch	; 67DBE
 mov eax, esi	; 67DC1
 add esp, byte 48h	; 67DC3
@@ -900,7 +900,7 @@ mov ebx, dword [dword_D30C0]	; 6809E
 push ebx	; 680A4
 mov ecx, dword [dword_D30BC]	; 680A5
 push ecx	; 680AB
-call sub_B4BC4	; 680AC
+call SetClipWindow	; 680AC
 add esp, byte 10h	; 680B1
 .24:
 xor esi, esi	; 680B4
@@ -943,7 +943,7 @@ push eax	; 68125
 lea eax, [byte ebp-028h]	; 68126
 push eax	; 68129
 push byte 3	; 6812A
-call sub_93540	; 6812C
+call SortIndices	; 6812C
 add esp, byte 0Ch	; 68131
 xor edi, edi	; 68134
 jmp near .43	; 68136
@@ -1448,7 +1448,7 @@ mov edi, dword [dword_D30C0]	; 687D2
 push edi	; 687D8
 mov eax, dword [dword_D30BC]	; 687D9
 push eax	; 687DE
-call sub_B4BC4	; 687DF
+call SetClipWindow	; 687DF
 add esp, byte 10h	; 687E4
 .72:
 mov eax, dword [camy-2]	; 687E7

@@ -15,7 +15,7 @@ void ImportDbs(void)
     int r;
 
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
-    sub_B2DCA(&t, &x, &y);
+    MouseRead(&t, &x, &y);
     t = MessageBox(-1, -1, (char *)importtypemsg, 2, (int)importtypebtns, 2, (int)&x, (int)&y, -1);
     if (t >= 0) {
         r = MessageBox(-1, -1, (char *)importdiskmsg, 2, 0, 0, (int)&x, (int)&y, -1);

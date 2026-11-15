@@ -6,7 +6,7 @@ extern dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8, dword_D2FFC, dword_D3
 extern dword_D3038, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
 extern off_D306C, off_D3070, off_D3074, sub_B3454, word_D3004, word_D3006, word_D3008
 global sub_B2D38, loc_B2D57, loc_B2D5E, sub_B2D74, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
-global sub_B2DCA, sub_B2DEF, sub_B2E1B, sub_B2E43, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
+global MouseRead, sub_B2DEF, SetViewRect, sub_B2E43, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
 global loc_B2EEA, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22, loc_B2F7C, loc_B3006
 sub_B2D38:
 LD xor, eax, eax	; B2D38
@@ -64,7 +64,7 @@ mov dword [mousex], eax	; B2DBD
 mov dword [mousey], edx	; B2DC2
 leave	; B2DC8
 ret	; B2DC9
-sub_B2DCA:
+MouseRead:
 push ebp	; B2DCA
 LD mov, ebp, esp	; B2DCB
 call sub_B2E43	; B2DCD
@@ -95,7 +95,7 @@ mov dword [dword_D2FF0], eax	; B2E0E
 mov dword [dword_D2FF8], edx	; B2E13
 leave	; B2E19
 ret	; B2E1A
-sub_B2E1B:
+SetViewRect:
 push ebp	; B2E1B
 LD mov, ebp, esp	; B2E1C
 mov eax, dword [byte ebp+08h]	; B2E1E
@@ -194,7 +194,7 @@ push dword [dword_D3048]	; B2F7C
 push dword [dword_D3044]	; B2F82
 push byte 0	; B2F88
 push byte 0	; B2F8A
-call sub_B2E1B	; B2F8C
+call SetViewRect	; B2F8C
 mov eax, dword [dword_D3048]	; B2F91
 shr eax, 2	; B2F96
 mov dword [mousex], eax	; B2F99

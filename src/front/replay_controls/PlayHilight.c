@@ -36,7 +36,7 @@ void PlayHilight(void)
     } while (i < 0x1C);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x64);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
         int slot;
@@ -58,9 +58,9 @@ void PlayHilight(void)
     else
         LoadRink(HomeTeam);
     InstantReplay(0);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
-    sub_8EA18(s1font);
+    TextSetFont(s1font);
     sub_1BAB1();
     FreeMemBlock(rinkendbank);
     FreeMemBlock(scrbrdshapes);

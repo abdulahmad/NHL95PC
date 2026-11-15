@@ -1248,7 +1248,7 @@ extern void loc_8F0E7(); /* 8F0E7 */
 extern void loc_8F0EB(); /* 8F0EB */
 extern void sub_8F114(); /* 8F114 */
 extern void loc_8F127(); /* 8F127 */
-extern void sub_8F13B(); /* 8F13B */
+extern void LoadSample(); /* 8F13B */
 extern void loc_8F151(); /* 8F151 */
 extern void loc_8F158(); /* 8F158 */
 extern void loc_8F19C(); /* 8F19C */
@@ -1256,7 +1256,7 @@ extern void loc_8F1F2(); /* 8F1F2 */
 extern void loc_8F1F4(); /* 8F1F4 */
 extern void loc_8F1F7(); /* 8F1F7 */
 extern void loc_8F1F8(); /* 8F1F8 */
-extern void sub_8F1FE(); /* 8F1FE */
+extern void FreeSample(); /* 8F1FE */
 extern void loc_8F244(); /* 8F244 */
 extern void sub_8F247(); /* 8F247 */
 extern void loc_8F24D(); /* 8F24D */
@@ -1522,7 +1522,7 @@ extern void loc_90F0F(); /* 90F0F */
 extern void loc_90F28(); /* 90F28 */
 extern void loc_90F29(); /* 90F29 */
 extern void sub_90F2C(); /* 90F2C */
-extern void sub_90F38(); /* 90F38 */
+extern void XorBar(); /* 90F38 */
 extern void loc_90F7D(); /* 90F7D */
 extern void loc_90FC1(); /* 90FC1 */
 extern void loc_91004(); /* 91004 */

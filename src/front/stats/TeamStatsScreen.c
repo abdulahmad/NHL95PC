@@ -64,8 +64,8 @@ int TeamStatsScreen(int page)
     unsigned char *p;
     int kf;
 
-    statsteamrecs = (unsigned char *)sub_8CCA8((char *)str_Teams, 0x7B8, 0x20);
-    if (page > 1) statssortkeys = (int *)sub_8CCA8((char *)str_Addsort, 0x68, 0x20);
+    statsteamrecs = (unsigned char *)AllocMemBlock((char *)str_Teams, 0x7B8, 0x20);
+    if (page > 1) statssortkeys = (int *)AllocMemBlock((char *)str_Addsort, 0x68, 0x20);
     MakePath(f.path, (char *)statsleague, (char *)statsteamdbs[statsfromleague], 0);
     fh = open(f.path, 0x200);
     recsize = statsfromleague == 0 ? 0x4C : 0x2E8;
@@ -163,29 +163,29 @@ int TeamStatsScreen(int page)
         MakePath(f.path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
     else
         MakePath(f.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
-    statsbgshapes = sub_8E83C(f.path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(f.path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     MakePath(f.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar5, 0);
-    statsbgshapes = sub_8E83C(f.path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst24);
-    sub_91370(statspalshape, 0, 0x1C);
+    statsbgshapes = LoadBank(f.path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pst24);
+    DrawArt(statspalshape, 0, 0x1C);
     FreeMemBlock(statsbgshapes);
-    sub_8E9E8(f.state);
-    sub_8EA18(kf);
+    TextSaveState(f.state);
+    TextSetFont(kf);
     TextGridOpen();
     SetTextColors(0x40, 0x43);
     MakeStatsTitle(f.title, (char *)teamstattitles[page]);
     PrintOutlinedText(0x12C - (fputchar(f.title) >> 1), 0x31, f.title);
     if (!n) {
-        sub_8EA18(kf);
+        TextSetFont(kf);
         PrintCenteredText(0xEB, (char *)str_StatsUnavailable);
-        sub_8EA18(mf);
+        TextSetFont(mf);
     } else {
-        sub_8EA18(mf);
+        TextSetFont(mf);
         y = 0x5C;
         if (page == 5) {
             PrintShadowText(0xA0 - (fputchar((char *)westconfname) >> 1), y, (char *)westconfname);
@@ -278,7 +278,7 @@ int TeamStatsScreen(int page)
         }
     }
     TextGridOff();
-    sub_8EA00(f.state);
+    TextRestoreState(f.state);
     if (page > 1) FreeMemBlock((int)statssortkeys);
     FreeMemBlock((int)statsteamrecs);
     return 0;

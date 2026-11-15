@@ -3,16 +3,16 @@ bits 32
 %include "hockey.inc"
 section s_90D20 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
-extern dword_D4108, dword_D43E4, FreeMemBlock, sub_8D2F0, removewindow, sub_B392C, sub_B3A88, sub_B3AA1
+extern dword_D4108, dword_D43E4, FreeMemBlock, sub_8D2F0, removewindow, ClearScreen, sub_B3A88, sub_B3AA1
 extern sub_B3ABC, sub_B3FB0, sub_B4BA8, sub_B5E00, sub_B6665, sub_B677D, sub_B6887, sub_B693C
-global sub_90D20, loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71
+global FillRect, loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71
 global loc_90E82, loc_90EA5, loc_90EAD, loc_90EB8, sub_90EC0, loc_90EE1, loc_90EF0, loc_90F00
-global loc_90F0F, loc_90F28, loc_90F29, sub_90F2C, sub_90F38, loc_90F7D, loc_90FC1, loc_91004
+global loc_90F0F, loc_90F28, loc_90F29, sub_90F2C, XorBar, loc_90F7D, loc_90FC1, loc_91004
 global loc_91015, loc_91030, loc_9103D, sub_91044, loc_91065, loc_91074, loc_91084, loc_91093
-global loc_910AC, sub_910B0, sub_910E0, loc_9110B, loc_91165, loc_911CE, loc_911E6, loc_91209
+global loc_910AC, sub_910B0, DrawArtOpaque, loc_9110B, loc_91165, loc_911CE, loc_911E6, loc_91209
 global loc_91212, sub_9121C, sub_91238, loc_91260, loc_91274, loc_9127E, loc_91283, sub_91284
 global loc_912A5, sub_912C8, sub_912E4, sub_91310, sub_9132C
-sub_90D20:
+FillRect:
 push esi	; 90D20
 push edi	; 90D21
 push ebp	; 90D22
@@ -198,7 +198,7 @@ push edx	; 90F1C
 push eax	; 90F1D
 push ecx	; 90F1E
 push esi	; 90F1F
-call sub_90D20	; 90F20
+call FillRect	; 90F20
 add esp, byte 14h	; 90F25
 loc_90F28:
 pop esi	; 90F28
@@ -213,7 +213,7 @@ xor byte [eax], bl	; 90F32
 inc eax	; 90F34
 jmp short sub_90F2C	; 90F35
 db 090h
-sub_90F38:
+XorBar:
 push esi	; 90F38
 push edi	; 90F39
 push ebp	; 90F3A
@@ -347,7 +347,7 @@ push edx	; 910A0
 push eax	; 910A1
 push ecx	; 910A2
 push esi	; 910A3
-call sub_90F38	; 910A4
+call XorBar	; 910A4
 add esp, byte 14h	; 910A9
 loc_910AC:
 pop esi	; 910AC
@@ -362,7 +362,7 @@ add esp, byte 4	; 910BB
 call sub_B4BA8	; 910BE
 mov edx, dword [byte esp+064h]	; 910C3
 push edx	; 910C7
-call sub_B392C	; 910C8
+call ClearScreen	; 910C8
 add esp, byte 4	; 910CD
 mov eax, esp	; 910D0
 push eax	; 910D2
@@ -371,7 +371,7 @@ add esp, byte 4	; 910D8
 add esp, byte 60h	; 910DB
 ret	; 910DE
 db 00h
-sub_910E0:
+DrawArtOpaque:
 push esi	; 910E0
 push edi	; 910E1
 push ebp	; 910E2
@@ -486,7 +486,7 @@ mov eax, dword [byte edx+0Ah]	; 91227
 sar eax, 10h	; 9122A
 push eax	; 9122D
 push edx	; 9122E
-call sub_910E0	; 9122F
+call DrawArtOpaque	; 9122F
 add esp, byte 0Ch	; 91234
 ret	; 91237
 sub_91238:
@@ -502,7 +502,7 @@ mov ebx, dword [byte esp+0Ch]	; 9124F
 sub ebx, eax	; 91253
 push ebx	; 91255
 push edx	; 91256
-call sub_910E0	; 91257
+call DrawArtOpaque	; 91257
 add esp, byte 0Ch	; 9125C
 ret	; 9125F
 loc_91260:
@@ -542,7 +542,7 @@ mov dword [dword_D43E4], loc_91260	; 912A5
 push eax	; 912AF
 push ebx	; 912B0
 push edx	; 912B1
-call sub_910E0	; 912B2
+call DrawArtOpaque	; 912B2
 add esp, byte 0Ch	; 912B7
 mov dword [dword_D43E4], sub_B3ABC	; 912BA
 ret	; 912C4

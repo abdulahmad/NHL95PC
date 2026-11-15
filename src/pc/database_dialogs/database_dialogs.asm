@@ -14,9 +14,9 @@ extern savefname, seasondb, seasondb_size, str_Arro2, str_Buf2, str_Can2, str_CU
 extern str_Db3, str_DbBut, str_Dbcu, str_Dbdialog, str_Dbno, str_Dbor, str_Dbtm, str_Dbx
 extern str_DBX2, str_Del2, str_Delete2, str_Done2, str_Down2, str_DSBOX, str_extDB, str_Noar2
 extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Original2, str_Pdbx
-extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, sub_8CCA8, sub_8E83C
-extern sub_8E8A0, sub_8E9C0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_91370, sub_91400
-extern sub_91964, sub_92CD0, sub_92DE0, sub_B2CBE, sub_B2DCA, sub_B30B4, sub_B4BA8, sub_B4FAC
+extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMemBlock, LoadBank
+extern sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt, GrabBlock
+extern PrintString, sub_92CD0, GetFileSize, KeyDown, MouseRead, FindShape, sub_B4BA8, sub_B4FAC
 extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
@@ -116,7 +116,7 @@ add ebx, byte 11h	; 72009
 push byte 0	; 7200C
 push ebx	; 7200E
 push str_DSBOX	; 7200F
-call sub_8CCA8	; 72014
+call AllocMemBlock	; 72014
 mov edx, eax	; 72019
 add esp, byte 0Ch	; 7201B
 mov dword [byte esp+050h], eax	; 7201E
@@ -138,7 +138,7 @@ push eax	; 72049
 mov ebx, dword [byte esp+058h]	; 7204A
 push ebx	; 7204E
 push edx	; 7204F
-call sub_91400	; 72050
+call GrabBlock	; 72050
 add esp, byte 0Ch	; 72055
 push byte 0	; 72058
 mov ecx, dword [byte esp+068h]	; 7205A
@@ -305,12 +305,12 @@ test esi, esi	; 7226A
 je short InputDialog.13	; 7226C
 .18:
 push byte 1	; 7226E
-call sub_B2CBE	; 72270
+call KeyDown	; 72270
 add esp, byte 4	; 72275
 test eax, eax	; 72278
 jne short InputDialog.18	; 7227A
 push byte 1Ch	; 7227C
-call sub_B2CBE	; 7227E
+call KeyDown	; 7227E
 add esp, byte 4	; 72283
 test eax, eax	; 72286
 jne short InputDialog.18	; 72288
@@ -321,7 +321,7 @@ mov edx, dword [byte esp+058h]	; 72294
 push edx	; 72298
 mov ebx, dword [byte esp+058h]	; 72299
 push ebx	; 7229D
-call sub_903F0	; 7229E
+call PutBlock	; 7229E
 add esp, byte 0Ch	; 722A3
 mov ecx, dword [byte esp+050h]	; 722A6
 push ecx	; 722AA
@@ -394,78 +394,78 @@ call MakePath	; 72344
 push byte 0	; 72349
 lea eax, [byte esp+04h]	; 7234B
 push eax	; 7234F
-call sub_8E83C	; 72350
+call LoadBank	; 72350
 add esp, byte 8	; 72355
 mov dword [fdlgshapes], eax	; 72358
 push str_None2	; 7235D
 push eax	; 72362
-call sub_B30B4	; 72363
+call FindShape	; 72363
 add esp, byte 8	; 72368
 mov dword [fdlg_none], eax	; 7236B
 push str_Del2	; 72370
 mov ebx, dword [fdlgshapes]	; 72375
 push ebx	; 7237B
-call sub_B30B4	; 7237C
+call FindShape	; 7237C
 add esp, byte 8	; 72381
 mov dword [fdlg_del], eax	; 72384
 push str_Open3	; 72389
 mov ecx, dword [fdlgshapes]	; 7238E
 push ecx	; 72394
-call sub_B30B4	; 72395
+call FindShape	; 72395
 add esp, byte 8	; 7239A
 mov dword [fdlg_open], eax	; 7239D
 push str_Can2	; 723A2
 mov esi, dword [fdlgshapes]	; 723A7
 push esi	; 723AD
-call sub_B30B4	; 723AE
+call FindShape	; 723AE
 add esp, byte 8	; 723B3
 mov dword [fdlg_cancel], eax	; 723B6
 push str_Noar2	; 723BB
 mov edi, dword [fdlgshapes]	; 723C0
 push edi	; 723C6
-call sub_B30B4	; 723C7
+call FindShape	; 723C7
 add esp, byte 8	; 723CC
 mov dword [fdlg_noarrow], eax	; 723CF
 push str_Up2	; 723D4
 mov ebp, dword [fdlgshapes]	; 723D9
 push ebp	; 723DF
-call sub_B30B4	; 723E0
+call FindShape	; 723E0
 add esp, byte 8	; 723E5
 mov dword [fdlg_up], eax	; 723E8
 push str_Down2	; 723ED
 mov eax, dword [fdlgshapes]	; 723F2
 push eax	; 723F7
-call sub_B30B4	; 723F8
+call FindShape	; 723F8
 add esp, byte 8	; 723FD
 mov dword [fdlg_down], eax	; 72400
 push str_Arro2	; 72405
 mov edx, dword [fdlgshapes]	; 7240A
 push edx	; 72410
-call sub_B30B4	; 72411
+call FindShape	; 72411
 add esp, byte 8	; 72416
 mov dword [fdlg_arrow], eax	; 72419
 push str_Dbno	; 7241E
 mov ebx, dword [fdlgshapes]	; 72423
 push ebx	; 72429
-call sub_B30B4	; 7242A
+call FindShape	; 7242A
 add esp, byte 8	; 7242F
 mov dword [fdlg_tabnone], eax	; 72432
 push str_Dbcu	; 72437
 mov ecx, dword [fdlgshapes]	; 7243C
 push ecx	; 72442
-call sub_B30B4	; 72443
+call FindShape	; 72443
 add esp, byte 8	; 72448
 mov dword [fdlg_tabexh], eax	; 7244B
 push str_Dbtm	; 72450
 mov esi, dword [fdlgshapes]	; 72455
 push esi	; 7245B
-call sub_B30B4	; 7245C
+call FindShape	; 7245C
 add esp, byte 8	; 72461
 mov dword [fdlg_tablp], eax	; 72464
 push str_Dbor	; 72469
 mov edi, dword [fdlgshapes]	; 7246E
 push edi	; 72474
-call sub_B30B4	; 72475
+call FindShape	; 72475
 add esp, byte 8	; 7247A
 mov dword [fdlg_tabpo], eax	; 7247D
 .2:
@@ -609,53 +609,53 @@ push esi	; 72612
 push ebp	; 72613
 push dword 0FFh	; 72614
 push dword 0F8h	; 72619
-call sub_8E9C0	; 7261E
+call TextSetColors	; 7261E
 add esp, byte 8	; 72623
 cmp dword [fdlgtab], byte 0	; 72626
 jge near .1	; 7262D
 push dword 0C0h	; 72633
 push byte 2Dh	; 72638
 push str_Open4	; 7263A
-call sub_91964	; 7263F
+call PrintString	; 7263F
 add esp, byte 0Ch	; 72644
 push dword 0C0h	; 72647
 push byte 6Eh	; 7264C
 push str_Delete2	; 7264E
-call sub_91964	; 72653
+call PrintString	; 72653
 add esp, byte 0Ch	; 72658
 push dword 0FFh	; 7265B
 push dword 0FAh	; 72660
-call sub_8E9C0	; 72665
+call TextSetColors	; 72665
 add esp, byte 8	; 7266A
 push dword 0C0h	; 7266D
 push dword 0B5h	; 72672
 push str_Done2	; 72677
-call sub_91964	; 7267C
+call PrintString	; 7267C
 add esp, byte 0Ch	; 72681
 push dword 0FFh	; 72684
 push dword 0F8h	; 72689
-call sub_8E9C0	; 7268E
+call TextSetColors	; 7268E
 add esp, byte 8	; 72693
 push byte 4Ch	; 72696
 push dword 0B1h	; 72698
 push str_Current4	; 7269D
-call sub_91964	; 726A2
+call PrintString	; 726A2
 add esp, byte 0Ch	; 726A7
 push byte 64h	; 726AA
 push dword 0B1h	; 726AC
 push str_Original2	; 726B1
-call sub_91964	; 726B6
+call PrintString	; 726B6
 add esp, byte 0Ch	; 726BB
 push byte 7Ch	; 726BE
 push dword 0A7h	; 726C0
 push str_Temporary	; 726C5
-call sub_91964	; 726CA
+call PrintString	; 726CA
 add esp, byte 0Ch	; 726CF
 push byte 46h	; 726D2
 push byte 18h	; 726D4
 mov ebp, dword [fdlg_noarrow]	; 726D6
 push ebp	; 726DC
-call sub_91370	; 726DD
+call DrawArt	; 726DD
 add esp, byte 0Ch	; 726E2
 jmp near .x	; 726E5
 .1:
@@ -664,7 +664,7 @@ jne short .2	; 726F1
 push byte 7Ch	; 726F3
 push dword 0A7h	; 726F5
 push str_Temporary	; 726FA
-call sub_91964	; 726FF
+call PrintString	; 726FF
 add esp, byte 0Ch	; 72704
 .2:
 test byte [fdlgmask], 40h	; 72707
@@ -672,7 +672,7 @@ jne short .3	; 7270E
 push byte 64h	; 72710
 push dword 0B1h	; 72712
 push str_Original2	; 72717
-call sub_91964	; 7271C
+call PrintString	; 7271C
 add esp, byte 0Ch	; 72721
 .3:
 test byte [fdlgmask], 20h	; 72724
@@ -710,24 +710,24 @@ push dword 0A3h	; 7277A
 mov ebx, dword [fdlg_tablp]	; 7277F
 push ebx	; 72785
 .8:
-call sub_91370	; 72786
+call DrawArt	; 72786
 add esp, byte 0Ch	; 7278B
 .9:
 cmp dword [fdlgtab], byte 2	; 7278E
 jne short .10	; 72795
 push dword 0FFh	; 72797
 push dword 0FAh	; 7279C
-call sub_8E9C0	; 727A1
+call TextSetColors	; 727A1
 add esp, byte 8	; 727A6
 .10:
 push dword 0C0h	; 727A9
 push byte 6Eh	; 727AE
 push str_Delete2	; 727B0
-call sub_91964	; 727B5
+call PrintString	; 727B5
 add esp, byte 0Ch	; 727BA
 push dword 0FFh	; 727BD
 push dword 0F8h	; 727C2
-call sub_8E9C0	; 727C7
+call TextSetColors	; 727C7
 add esp, byte 8	; 727CC
 .x:
 pop ebp	; 727CF
@@ -774,14 +774,14 @@ call MakePath	; 72822
 push byte 0	; 72827
 lea eax, [byte esp+04h]	; 72829
 push eax	; 7282D
-call sub_8E83C	; 7282E
+call LoadBank	; 7282E
 mov esi, eax	; 72833
 add esp, byte 8	; 72835
 push byte 13h	; 72838
 push byte 0Ah	; 7283A
 push str_Pdbx	; 7283C
 push eax	; 72841
-call sub_B30B4	; 72842
+call FindShape	; 72842
 add esp, byte 8	; 72847
 push eax	; 7284A
 call sub_91284	; 7284B
@@ -812,7 +812,7 @@ jl near DrawDbDialog_n1.1	; 728C6
 or word [fdlgmask], 204h	; 728CC
 push dword 0FFh	; 728D5
 push dword 0FAh	; 728DA
-call sub_8E9C0	; 728DF
+call TextSetColors	; 728DF
 add esp, byte 8	; 728E4
 mov esi, dword [fdlgtab]	; 728E7
 mov esi, dword [nosplit esi*4+dbtablists]	; 728ED
@@ -825,7 +825,7 @@ push eax	; 72905
 mov eax, dword [byte esi+04h]	; 72906
 mov edi, dword [byte esi+eax*4+010h]	; 72909
 push edi	; 7290D
-call sub_91964	; 7290E
+call PrintString	; 7290E
 add esp, byte 0Ch	; 72913
 push dword 0F8h	; 72916
 mov eax, dword [dbdlgrects+0ACh]	; 7291B
@@ -842,7 +842,7 @@ lea eax, [byte ebp+013h]	; 72939
 push eax	; 7293C
 lea eax, [byte edx+0Ah]	; 7293D
 push eax	; 72940
-call sub_90D20	; 72941
+call FillRect	; 72941
 add esp, byte 14h	; 72946
 mov edi, dword [byte esi+08h]	; 72949
 mov ebp, 0Ah	; 7294C
@@ -859,7 +859,7 @@ push eax	; 7296B
 mov eax, edi	; 7296C
 mov edx, dword [byte esi+eax*4+010h]	; 7296E
 push edx	; 72972
-call sub_91964	; 72973
+call PrintString	; 72973
 add esp, byte 0Ch	; 72978
 inc edi	; 7297B
 inc ebp	; 7297C
@@ -1005,7 +1005,7 @@ sub esp, byte 8	; 72AD6
 mov edi, eax	; 72AD9
 push dword 0FFh	; 72ADB
 push dword 0FAh	; 72AE0
-call sub_8E9C0	; 72AE5
+call TextSetColors	; 72AE5
 add esp, byte 8	; 72AEA
 xor esi, esi	; 72AED
 .1:
@@ -1026,7 +1026,7 @@ lea edx, [byte ebx+013h]	; 72B19
 push edx	; 72B1C
 lea eax, [byte ecx+0Ah]	; 72B1D
 push eax	; 72B20
-call sub_90D20	; 72B21
+call FillRect	; 72B21
 add esp, byte 14h	; 72B26
 inc esi	; 72B29
 cmp esi, byte 6	; 72B2A
@@ -1089,7 +1089,7 @@ lea eax, [byte edx+016h]	; 72BC7
 push eax	; 72BCA
 lea eax, [byte ebx+0Dh]	; 72BCB
 push eax	; 72BCE
-call sub_90D20	; 72BCF
+call FillRect	; 72BCF
 add esp, byte 14h	; 72BD4
 mov ebx, dword [dbdlgrects+94h]	; 72BD7
 add ebx, byte 13h	; 72BDD
@@ -1122,7 +1122,7 @@ lea eax, [byte edx+013h]	; 72C30
 push eax	; 72C33
 lea eax, [byte ebx+0Ah]	; 72C34
 push eax	; 72C37
-call sub_90D20	; 72C38
+call FillRect	; 72C38
 add esp, byte 14h	; 72C3D
 mov ebx, dword [dword ebp+dbdlgrects+0A4h]	; 72C40
 add ebx, byte 10h	; 72C46
@@ -1148,7 +1148,7 @@ lea eax, [byte ecx+013h]	; 72C83
 push eax	; 72C86
 lea eax, [byte esi+0Ah]	; 72C87
 push eax	; 72C8A
-call sub_90D20	; 72C8B
+call FillRect	; 72C8B
 add esp, byte 14h	; 72C90
 cmp dword [edi], byte 6	; 72C93
 jg short DrawDbList_n1.1	; 72C96
@@ -1266,7 +1266,7 @@ push dword 0A3h	; 72DC7
 mov ecx, dword [fdlg_tablp]	; 72DCC
 push ecx	; 72DD2
 .6:
-call sub_91370	; 72DD3
+call DrawArt	; 72DD3
 add esp, byte 0Ch	; 72DD8
 .7:
 mov eax, dword [byte esp+04h]	; 72DDB
@@ -1295,7 +1295,7 @@ lea eax, [byte esp+018h]	; 72E05
 push eax	; 72E09
 lea eax, [byte esp+0Ch]	; 72E0A
 push eax	; 72E0E
-call sub_B2DCA	; 72E0F
+call MouseRead	; 72E0F
 add esp, byte 0Ch	; 72E14
 mov eax, dword [byte esp+014h]	; 72E17
 mov dword [byte esp+0Ch], eax	; 72E1B
@@ -1314,7 +1314,7 @@ add eax, byte 11h	; 72E42
 push byte 20h	; 72E45
 push eax	; 72E47
 push str_Pointer12	; 72E48
-call sub_8CCA8	; 72E4D
+call AllocMemBlock	; 72E4D
 add esp, byte 0Ch	; 72E52
 mov ebp, eax	; 72E55
 mov esi, dword [pointerspr]	; 72E57
@@ -1338,7 +1338,7 @@ mov edx, dword [byte esp+010h]	; 72E87
 sub edx, byte 4	; 72E8B
 push edx	; 72E8E
 push eax	; 72E8F
-call sub_91400	; 72E90
+call GrabBlock	; 72E90
 add esp, byte 0Ch	; 72E95
 mov ecx, dword [byte esp+08h]	; 72E98
 push ecx	; 72E9C
@@ -1347,7 +1347,7 @@ sub eax, byte 4	; 72EA1
 push eax	; 72EA4
 mov esi, dword [pointerspr]	; 72EA5
 push esi	; 72EAB
-call sub_91370	; 72EAC
+call DrawArt	; 72EAC
 add esp, byte 0Ch	; 72EB1
 mov esi, dword [fdlgtab]	; 72EB4
 mov esi, dword [nosplit esi*4+dbtablists]	; 72EBA
@@ -1382,7 +1382,7 @@ mov eax, dword [byte esp+018h]	; 72F14
 sub eax, byte 4	; 72F18
 push eax	; 72F1B
 push ebp	; 72F1C
-call sub_903F0	; 72F1D
+call PutBlock	; 72F1D
 add esp, byte 0Ch	; 72F22
 mov edi, dword [byte esp+08h]	; 72F25
 push edi	; 72F29
@@ -1390,7 +1390,7 @@ mov eax, dword [byte esp+010h]	; 72F2A
 sub eax, byte 4	; 72F2E
 push eax	; 72F31
 push ebp	; 72F32
-call sub_91400	; 72F33
+call GrabBlock	; 72F33
 add esp, byte 0Ch	; 72F38
 mov eax, dword [byte esp+08h]	; 72F3B
 push eax	; 72F3F
@@ -1400,7 +1400,7 @@ push eax	; 72F47
 mov edx, dword [pointerspr]	; 72F48
 push edx	; 72F4E
 .5:
-call sub_91370	; 72F4F
+call DrawArt	; 72F4F
 add esp, byte 0Ch	; 72F54
 mov eax, dword [byte esp+0Ch]	; 72F57
 mov dword [byte esp+014h], eax	; 72F5B
@@ -1414,7 +1414,7 @@ mov eax, dword [byte esp+018h]	; 72F71
 sub eax, byte 4	; 72F75
 push eax	; 72F78
 push ebp	; 72F79
-call sub_910E0	; 72F7A
+call DrawArtOpaque	; 72F7A
 add esp, byte 0Ch	; 72F7F
 test byte [byte esp+04h], 1	; 72F82
 je near .14	; 72F87
@@ -1575,7 +1575,7 @@ push dword 0BFh	; 73184
 push byte 23h	; 73189
 mov ebx, dword [fdlg_cancel]	; 7318B
 push ebx	; 73191
-call sub_91370	; 73192
+call DrawArt	; 73192
 add esp, byte 0Ch	; 73197
 .19:
 push ebp	; 7319A
@@ -1588,7 +1588,7 @@ push byte 46h	; 731AA
 push byte 18h	; 731AC
 mov edi, dword [fdlg_up]	; 731AE
 push edi	; 731B4
-call sub_91370	; 731B5
+call DrawArt	; 731B5
 add esp, byte 0Ch	; 731BA
 cmp dword [byte esi+08h], byte 0	; 731BD
 je short .21	; 731C1
@@ -1602,7 +1602,7 @@ push byte 18h	; 731D2
 mov ecx, dword [fdlg_noarrow]	; 731D4
 push ecx	; 731DA
 .22:
-call sub_91370	; 731DB
+call DrawArt	; 731DB
 add esp, byte 0Ch	; 731E0
 jmp near .42	; 731E3
 .23:
@@ -1610,7 +1610,7 @@ push byte 46h	; 731E8
 push byte 18h	; 731EA
 mov edx, dword [fdlg_down]	; 731EC
 push edx	; 731F2
-call sub_91370	; 731F3
+call DrawArt	; 731F3
 add esp, byte 0Ch	; 731F8
 mov eax, dword [byte esi+0Ch]	; 731FB
 inc eax	; 731FE
@@ -1691,7 +1691,7 @@ push dword 0BFh	; 732D1
 push byte 23h	; 732D6
 mov eax, dword [fdlg_open]	; 732D8
 push eax	; 732DD
-call sub_91370	; 732DE
+call DrawArt	; 732DE
 add esp, byte 0Ch	; 732E3
 push ebp	; 732E6
 call FreeMemBlock	; 732E7
@@ -1708,7 +1708,7 @@ push dword 0BFh	; 7330B
 push byte 23h	; 73310
 mov ecx, dword [fdlg_del]	; 73312
 push ecx	; 73318
-call sub_91370	; 73319
+call DrawArt	; 73319
 add esp, byte 0Ch	; 7331E
 mov eax, dword [fdlgtab]	; 73321
 mov eax, dword [nosplit eax*4+dbtablists]	; 73326
@@ -1751,7 +1751,7 @@ mov eax, dword [byte esp+010h]	; 7339A
 sub eax, byte 4	; 7339E
 push eax	; 733A1
 push ebp	; 733A2
-call sub_91400	; 733A3
+call GrabBlock	; 733A3
 add esp, byte 0Ch	; 733A8
 mov ecx, dword [byte esp+08h]	; 733AB
 push ecx	; 733AF
@@ -1853,7 +1853,7 @@ add esp, byte 8	; 73492
 mov dword [seasondb], eax	; 73495
 mov eax, esp	; 7349A
 push eax	; 7349C
-call sub_92DE0	; 7349D
+call GetFileSize	; 7349D
 add esp, byte 4	; 734A2
 mov dword [seasondb_size], eax	; 734A5
 mov ebx, dword [leaguedbnames+4]	; 734AA
@@ -1869,7 +1869,7 @@ add esp, byte 8	; 734C7
 mov dword [careerdb], eax	; 734CA
 mov eax, esp	; 734CF
 push eax	; 734D1
-call sub_92DE0	; 734D2
+call GetFileSize	; 734D2
 add esp, byte 4	; 734D7
 mov dword [careerdb_size], eax	; 734DA
 mov ebx, dword [leaguedbnames+0Ch]	; 734DF
@@ -1885,7 +1885,7 @@ add esp, byte 8	; 734FC
 mov dword [carteamsdb], eax	; 734FF
 mov eax, esp	; 73504
 push eax	; 73506
-call sub_92DE0	; 73507
+call GetFileSize	; 73507
 add esp, byte 4	; 7350C
 mov dword [carteamsdb_size], eax	; 7350F
 mov ebx, dword [leaguedbnames]	; 73514
@@ -1901,7 +1901,7 @@ add esp, byte 8	; 73531
 mov dword [keydb], eax	; 73534
 mov eax, esp	; 73539
 push eax	; 7353B
-call sub_92DE0	; 7353C
+call GetFileSize	; 7353C
 add esp, byte 4	; 73541
 mov dword [keydb_size], eax	; 73544
 mov ebx, dword [leaguedbnames+10h]	; 73549
@@ -1917,7 +1917,7 @@ add esp, byte 8	; 73566
 mov dword [teamsdb], eax	; 73569
 mov eax, esp	; 7356E
 push eax	; 73570
-call sub_92DE0	; 73571
+call GetFileSize	; 73571
 add esp, byte 4	; 73576
 mov dword [teamsdb_size], eax	; 73579
 mov ebx, dword [leaguedbnames+8]	; 7357E
@@ -1933,7 +1933,7 @@ add esp, byte 8	; 7359B
 mov dword [attdb], eax	; 7359E
 mov eax, esp	; 735A3
 push eax	; 735A5
-call sub_92DE0	; 735A6
+call GetFileSize	; 735A6
 add esp, byte 4	; 735AB
 mov dword [attdb_size], eax	; 735AE
 xor edx, edx	; 735B3
@@ -2067,7 +2067,7 @@ call ScanDbFiles	; 73716
 push byte 20h	; 7371B
 push dword 0BC03h	; 7371D
 push str_Buf2	; 73722
-call sub_8CCA8	; 73727
+call AllocMemBlock	; 73727
 mov ebp, eax	; 7372C
 add esp, byte 0Ch	; 7372E
 mov dword [esp], eax	; 73731
@@ -2083,7 +2083,7 @@ mov word [byte eax+06h], 0C6h	; 73747
 push byte 13h	; 7374D
 push byte 0Ah	; 7374F
 push eax	; 73751
-call sub_91400	; 73752
+call GrabBlock	; 73752
 add esp, byte 0Ch	; 73757
 call LoadDbDialogShapes	; 7375A
 call DrawDbDialog	; 7375F
@@ -2094,7 +2094,7 @@ jne short .1	; 73770
 push byte 13h	; 73772
 push byte 0Ah	; 73774
 push ebp	; 73776
-call sub_910E0	; 73777
+call DrawArtOpaque	; 73777
 add esp, byte 0Ch	; 7377C
 .1:
 mov edx, dword [fdlgshapes]	; 7377F

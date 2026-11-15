@@ -14,7 +14,7 @@ void DrawModeSetChecks(void)
             i++;
             r += 2;
         }
-        if (setbits[0] & (1 << i)) sub_903F0(chkonspr, r->l + 10, r->t + 0x13);
-        else sub_903F0(chkoffspr, r->l + 10, r->t + 0x13);
+        if (setbits[0] & (1 << i)) PutBlock(chkonspr, r->l + 10, r->t + 0x13);
+        else PutBlock(chkoffspr, r->l + 10, r->t + 0x13);
     }
 }

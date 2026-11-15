@@ -10,7 +10,7 @@ extern ShowPlayerStatsItem, sprintf_, statscategory, statsgoaliebuf, statsgoalie
 extern statspal, statspalvalid, statsplayer, statsplayerbuf, statsplayoffs, statsskaterbuf, statsskaterorder, statsskaterplr
 extern statsteambuf, statsteamorder, statsteamsel, str_9394PlayOffs, str_9394Season, str_LgPlayoffsTitle, str_LgSeasonTitle, str_menubuff
 extern str_PointerMenu, str_POTitle, str_sfh, str_shape, strcat_, strlen_, strncpy_, StrPrefixDiffers
-extern sub_8CCA8, sub_903F0, sub_90F38, sub_91370, sub_91400, sub_91964, sub_B2E1B, sub_B4DD4
+extern AllocMemBlock, PutBlock, XorBar, DrawArt, GrabBlock, PrintString, SetViewRect, SetColorRemap
 extern TeamFromMouse
 global RunMenu, RunMenu_ret4, RunTeamPickMenu, RunPlayerPickMenu, InitMenuRemap, TextPrintf, TextPrintf2, CmpPoints
 global CmpGAA, LoadShapeByTag, LoadShapeByTag_x, MakeStatsTitle
@@ -52,7 +52,7 @@ add eax, byte 11h	; 1D75A
 push byte 20h	; 1D75D
 push eax	; 1D75F
 push str_PointerMenu	; 1D760
-call sub_8CCA8	; 1D765
+call AllocMemBlock	; 1D765
 mov ebx, eax	; 1D76A
 add esp, byte 0Ch	; 1D76C
 mov dword [dword esp+084h], eax	; 1D76F
@@ -98,20 +98,20 @@ push eax	; 1D7E8
 mov ebp, dword [dword esp+08Ch]	; 1D7E9
 push ebp	; 1D7F0
 push ebx	; 1D7F1
-call sub_91400	; 1D7F2
+call GrabBlock	; 1D7F2
 add esp, byte 0Ch	; 1D7F7
 mov eax, edi	; 1D7FA
 push eax	; 1D7FC
 push ebp	; 1D7FD
 mov ebx, dword [pointerspr]	; 1D7FE
 push ebx	; 1D804
-call sub_91370	; 1D805
+call DrawArt	; 1D805
 add esp, byte 0Ch	; 1D80A
 push dword 1E0h	; 1D80D
 push dword 280h	; 1D812
 push byte 0	; 1D817
 push byte 0	; 1D819
-call sub_B2E1B	; 1D81B
+call SetViewRect	; 1D81B
 add esp, byte 10h	; 1D820
 mov ecx, edi	; 1D823
 push ecx	; 1D825
@@ -148,14 +148,14 @@ mov esi, dword [dword esp+08Ch]	; 1D884
 push esi	; 1D88B
 mov edi, dword [dword esp+08Ch]	; 1D88C
 push edi	; 1D893
-call sub_903F0	; 1D894
+call PutBlock	; 1D894
 add esp, byte 0Ch	; 1D899
 mov ebp, dword [byte esp+070h]	; 1D89C
 push ebp	; 1D8A0
 mov eax, dword [byte esp+078h]	; 1D8A1
 push eax	; 1D8A5
 push edi	; 1D8A6
-call sub_91400	; 1D8A7
+call GrabBlock	; 1D8A7
 add esp, byte 0Ch	; 1D8AC
 mov ebx, dword [byte esp+070h]	; 1D8AF
 push ebx	; 1D8B3
@@ -164,7 +164,7 @@ push ecx	; 1D8B8
 mov esi, dword [pointerspr]	; 1D8B9
 push esi	; 1D8BF
 .5:
-call sub_91370	; 1D8C0
+call DrawArt	; 1D8C0
 add esp, byte 0Ch	; 1D8C5
 mov eax, dword [byte esp+074h]	; 1D8C8
 mov dword [dword esp+088h], eax	; 1D8CC
@@ -204,7 +204,7 @@ mov edi, dword [dword esp+08Ch]	; 1D951
 push edi	; 1D958
 mov ebp, dword [dword esp+08Ch]	; 1D959
 push ebp	; 1D960
-call sub_903F0	; 1D961
+call PutBlock	; 1D961
 add esp, byte 0Ch	; 1D966
 mov esi, 3	; 1D969
 jmp short .9	; 1D96E
@@ -219,7 +219,7 @@ push ecx	; 1D981
 mov eax, dword [byte esp+esi*8+0Ch]	; 1D982
 push eax	; 1D986
 push ebx	; 1D987
-call sub_903F0	; 1D988
+call PutBlock	; 1D988
 add esp, byte 0Ch	; 1D98D
 xor ebx, ebx	; 1D990
 mov dword [byte esp+esi*8+0Ch], ebx	; 1D992
@@ -274,7 +274,7 @@ mov esi, dword [dword esp+08Ch]	; 1DA45
 push esi	; 1DA4C
 mov edi, dword [dword esp+08Ch]	; 1DA4D
 push edi	; 1DA54
-call sub_903F0	; 1DA55
+call PutBlock	; 1DA55
 add esp, byte 0Ch	; 1DA5A
 mov ebp, dword [dword esp+0A4h]	; 1DA5D
 push ebp	; 1DA64
@@ -314,7 +314,7 @@ mov edi, dword [dword esp+08Ch]	; 1DAD2
 push edi	; 1DAD9
 mov ebp, dword [dword esp+08Ch]	; 1DADA
 push ebp	; 1DAE1
-call sub_903F0	; 1DAE2
+call PutBlock	; 1DAE2
 add esp, byte 0Ch	; 1DAE7
 mov eax, dword [dword esp+090h]	; 1DAEA
 cmp eax, dword [byte esp+06Ch]	; 1DAF1
@@ -335,7 +335,7 @@ push edx	; 1DB14
 mov ebx, dword [byte esp+esi*8+0Ch]	; 1DB15
 push ebx	; 1DB19
 push eax	; 1DB1A
-call sub_903F0	; 1DB1B
+call PutBlock	; 1DB1B
 add esp, byte 0Ch	; 1DB20
 xor eax, eax	; 1DB23
 mov dword [byte esp+esi*8+0Ch], eax	; 1DB25
@@ -443,7 +443,7 @@ imul eax, edx	; 1DC75
 add eax, byte 11h	; 1DC78
 push eax	; 1DC7B
 push str_menubuff	; 1DC7C
-call sub_8CCA8	; 1DC81
+call AllocMemBlock	; 1DC81
 add esp, byte 0Ch	; 1DC86
 mov dword [byte esp+ebp*4+048h], eax	; 1DC89
 mov esi, dword [pointerspr]	; 1DC8D
@@ -466,7 +466,7 @@ mov ecx, dword [byte esp+eax+0Ch]	; 1DCBE
 push ecx	; 1DCC2
 mov esi, dword [byte esp+ebp*4+050h]	; 1DCC3
 push esi	; 1DCC7
-call sub_91400	; 1DCC8
+call GrabBlock	; 1DCC8
 add esp, byte 0Ch	; 1DCCD
 mov edi, dword [dword esp+0A4h]	; 1DCD0
 push edi	; 1DCD7
@@ -500,7 +500,7 @@ mov edi, dword [dword esp+08Ch]	; 1DD3C
 push edi	; 1DD43
 mov ebp, dword [dword esp+08Ch]	; 1DD44
 push ebp	; 1DD4B
-call sub_903F0	; 1DD4C
+call PutBlock	; 1DD4C
 add esp, byte 0Ch	; 1DD51
 mov eax, dword [dword esp+0A4h]	; 1DD54
 push eax	; 1DD5B
@@ -546,7 +546,7 @@ mov ebp, dword [dword esp+08Ch]	; 1DDDD
 push ebp	; 1DDE4
 mov eax, dword [dword esp+08Ch]	; 1DDE5
 push eax	; 1DDEC
-call sub_903F0	; 1DDED
+call PutBlock	; 1DDED
 add esp, byte 0Ch	; 1DDF2
 mov esi, 3	; 1DDF5
 jmp short .26	; 1DDFA
@@ -561,7 +561,7 @@ push ebx	; 1DE0D
 mov ecx, dword [byte esp+esi*8+0Ch]	; 1DE0E
 push ecx	; 1DE12
 push edx	; 1DE13
-call sub_903F0	; 1DE14
+call PutBlock	; 1DE14
 add esp, byte 0Ch	; 1DE19
 xor edx, edx	; 1DE1C
 mov dword [byte esp+esi*8+0Ch], edx	; 1DE1E
@@ -597,7 +597,7 @@ push ebp	; 1DE84
 mov eax, dword [dword esp+08Ch]	; 1DE85
 push eax	; 1DE8C
 .27:
-call sub_91400	; 1DE8D
+call GrabBlock	; 1DE8D
 add esp, byte 0Ch	; 1DE92
 mov eax, dword [dword esp+08Ch]	; 1DE95
 push eax	; 1DE9C
@@ -605,7 +605,7 @@ mov edx, dword [dword esp+08Ch]	; 1DE9D
 push edx	; 1DEA4
 mov ebx, dword [dword esp+08Ch]	; 1DEA5
 push ebx	; 1DEAC
-call sub_903F0	; 1DEAD
+call PutBlock	; 1DEAD
 add esp, byte 0Ch	; 1DEB2
 mov ecx, dword [byte esp+070h]	; 1DEB5
 push ecx	; 1DEB9
@@ -613,7 +613,7 @@ mov esi, dword [byte esp+078h]	; 1DEBA
 push esi	; 1DEBE
 mov edi, dword [dword esp+08Ch]	; 1DEBF
 push edi	; 1DEC6
-call sub_91400	; 1DEC7
+call GrabBlock	; 1DEC7
 add esp, byte 0Ch	; 1DECC
 mov ebp, dword [byte esp+070h]	; 1DECF
 push ebp	; 1DED3
@@ -674,7 +674,7 @@ add eax, byte 11h	; 1DF7B
 push byte 20h	; 1DF7E
 push eax	; 1DF80
 push str_PointerMenu	; 1DF81
-call sub_8CCA8	; 1DF86
+call AllocMemBlock	; 1DF86
 add esp, byte 0Ch	; 1DF8B
 mov dword [dword esp+08Ch], eax	; 1DF8E
 mov esi, dword [pointerspr]	; 1DF95
@@ -787,7 +787,7 @@ push byte 0Dh	; 1E0D7
 push dword 140h	; 1E0D9
 push esi	; 1E0DE
 push ebx	; 1E0DF
-call sub_90F38	; 1E0E0
+call XorBar	; 1E0E0
 add esp, byte 14h	; 1E0E5
 jmp short .10	; 1E0E8
 .9:
@@ -805,19 +805,19 @@ mov edi, dword [dword esp+094h]	; 1E110
 push edi	; 1E117
 mov ebp, dword [dword esp+094h]	; 1E118
 push ebp	; 1E11F
-call sub_91400	; 1E120
+call GrabBlock	; 1E120
 add esp, byte 0Ch	; 1E125
 push esi	; 1E128
 push edi	; 1E129
 mov ebx, dword [pointerspr]	; 1E12A
 push ebx	; 1E130
-call sub_91370	; 1E131
+call DrawArt	; 1E131
 add esp, byte 0Ch	; 1E136
 push dword 1E0h	; 1E139
 push dword 280h	; 1E13E
 push byte 0	; 1E143
 push byte 0	; 1E145
-call sub_B2E1B	; 1E147
+call SetViewRect	; 1E147
 add esp, byte 10h	; 1E14C
 push esi	; 1E14F
 push edi	; 1E150
@@ -837,7 +837,7 @@ push eax	; 1E17A
 mov edx, dword [byte esp+esi*8+0Ch]	; 1E17B
 push edx	; 1E17F
 push ebp	; 1E180
-call sub_903F0	; 1E181
+call PutBlock	; 1E181
 add esp, byte 0Ch	; 1E186
 xor ecx, ecx	; 1E189
 mov dword [byte esp+esi*8+0Ch], ecx	; 1E18B
@@ -872,7 +872,7 @@ mov edi, dword [dword esp+094h]	; 1E1E2
 push edi	; 1E1E9
 mov ebp, dword [dword esp+094h]	; 1E1EA
 push ebp	; 1E1F1
-call sub_91400	; 1E1F2
+call GrabBlock	; 1E1F2
 add esp, byte 0Ch	; 1E1F7
 .16:
 mov eax, dword [byte esp+07Ch]	; 1E1FA
@@ -890,7 +890,7 @@ mov esi, dword [dword esp+094h]	; 1E227
 push esi	; 1E22E
 mov edi, dword [dword esp+094h]	; 1E22F
 push edi	; 1E236
-call sub_903F0	; 1E237
+call PutBlock	; 1E237
 add esp, byte 0Ch	; 1E23C
 mov ebp, dword [byte esp+078h]	; 1E23F
 push ebp	; 1E243
@@ -898,7 +898,7 @@ mov eax, dword [dword esp+080h]	; 1E244
 push eax	; 1E24B
 push edi	; 1E24C
 .18:
-call sub_91400	; 1E24D
+call GrabBlock	; 1E24D
 add esp, byte 0Ch	; 1E252
 mov ebx, dword [byte esp+078h]	; 1E255
 push ebx	; 1E259
@@ -906,7 +906,7 @@ mov ecx, dword [dword esp+080h]	; 1E25A
 push ecx	; 1E261
 mov esi, dword [pointerspr]	; 1E262
 push esi	; 1E268
-call sub_91370	; 1E269
+call DrawArt	; 1E269
 add esp, byte 0Ch	; 1E26E
 mov eax, dword [byte esp+07Ch]	; 1E271
 mov dword [dword esp+090h], eax	; 1E275
@@ -979,7 +979,7 @@ mov edi, dword [dword esp+094h]	; 1E37B
 push edi	; 1E382
 mov ebp, dword [dword esp+094h]	; 1E383
 push ebp	; 1E38A
-call sub_903F0	; 1E38B
+call PutBlock	; 1E38B
 add esp, byte 0Ch	; 1E390
 mov esi, 3	; 1E393
 jmp short .25	; 1E398
@@ -994,7 +994,7 @@ push edx	; 1E3AB
 mov ebx, dword [byte esp+esi*8+0Ch]	; 1E3AC
 push ebx	; 1E3B0
 push eax	; 1E3B1
-call sub_903F0	; 1E3B2
+call PutBlock	; 1E3B2
 add esp, byte 0Ch	; 1E3B7
 xor eax, eax	; 1E3BA
 mov dword [byte esp+esi*8+0Ch], eax	; 1E3BC
@@ -1087,7 +1087,7 @@ push byte 0Dh	; 1E4C9
 push dword 140h	; 1E4CB
 push esi	; 1E4D0
 push ebx	; 1E4D1
-call sub_90F38	; 1E4D2
+call XorBar	; 1E4D2
 add esp, byte 14h	; 1E4D7
 jmp short .35	; 1E4DA
 .34:
@@ -1201,7 +1201,7 @@ push byte 0Dh	; 1E629
 push dword 140h	; 1E62B
 push esi	; 1E630
 push ebx	; 1E631
-call sub_90F38	; 1E632
+call XorBar	; 1E632
 add esp, byte 14h	; 1E637
 jmp short .47	; 1E63A
 .46:
@@ -1230,7 +1230,7 @@ mov esi, dword [dword esp+094h]	; 1E68C
 push esi	; 1E693
 mov edi, dword [dword esp+094h]	; 1E694
 push edi	; 1E69B
-call sub_903F0	; 1E69C
+call PutBlock	; 1E69C
 add esp, byte 0Ch	; 1E6A1
 mov ebp, dword [dword esp+0B0h]	; 1E6A4
 push ebp	; 1E6AB
@@ -1272,7 +1272,7 @@ mov edi, dword [dword esp+094h]	; 1E71E
 push edi	; 1E725
 mov ebp, dword [dword esp+094h]	; 1E726
 push ebp	; 1E72D
-call sub_903F0	; 1E72E
+call PutBlock	; 1E72E
 add esp, byte 0Ch	; 1E733
 mov eax, dword [dword esp+098h]	; 1E736
 cmp eax, dword [byte esp+06Ch]	; 1E73D
@@ -1293,7 +1293,7 @@ push ebx	; 1E760
 mov ecx, dword [byte esp+esi*8+0Ch]	; 1E761
 push ecx	; 1E765
 push edx	; 1E766
-call sub_903F0	; 1E767
+call PutBlock	; 1E767
 add esp, byte 0Ch	; 1E76C
 xor edx, edx	; 1E76F
 mov dword [byte esp+esi*8+0Ch], edx	; 1E771
@@ -1401,7 +1401,7 @@ imul eax, edx	; 1E8C9
 add eax, byte 11h	; 1E8CC
 push eax	; 1E8CF
 push str_menubuff	; 1E8D0
-call sub_8CCA8	; 1E8D5
+call AllocMemBlock	; 1E8D5
 add esp, byte 0Ch	; 1E8DA
 mov dword [byte esp+ebp*4+048h], eax	; 1E8DD
 mov esi, dword [pointerspr]	; 1E8E1
@@ -1424,7 +1424,7 @@ mov ebx, dword [byte esp+eax+0Ch]	; 1E918
 push ebx	; 1E91C
 mov ecx, dword [byte esp+ebp*4+050h]	; 1E91D
 push ecx	; 1E921
-call sub_91400	; 1E922
+call GrabBlock	; 1E922
 add esp, byte 0Ch	; 1E927
 mov esi, dword [dword esp+0B0h]	; 1E92A
 push esi	; 1E931
@@ -1457,7 +1457,7 @@ mov edi, dword [dword esp+094h]	; 1E992
 push edi	; 1E999
 mov ebp, dword [dword esp+094h]	; 1E99A
 push ebp	; 1E9A1
-call sub_903F0	; 1E9A2
+call PutBlock	; 1E9A2
 add esp, byte 0Ch	; 1E9A7
 mov eax, dword [dword esp+0B0h]	; 1E9AA
 push eax	; 1E9B1
@@ -1495,7 +1495,7 @@ mov ebp, dword [dword esp+094h]	; 1EA18
 push ebp	; 1EA1F
 mov eax, dword [dword esp+094h]	; 1EA20
 push eax	; 1EA27
-call sub_903F0	; 1EA28
+call PutBlock	; 1EA28
 add esp, byte 0Ch	; 1EA2D
 lea ebx, [byte esp+074h]	; 1EA30
 mov edx, dword [byte esp+078h]	; 1EA34
@@ -1572,7 +1572,7 @@ push byte 0Dh	; 1EB0F
 push dword 140h	; 1EB11
 push esi	; 1EB16
 push ebx	; 1EB17
-call sub_90F38	; 1EB18
+call XorBar	; 1EB18
 add esp, byte 14h	; 1EB1D
 mov eax, dword [byte esp+074h]	; 1EB20
 mov dword [byte esp+070h], eax	; 1EB24
@@ -1636,7 +1636,7 @@ push byte 0Dh	; 1EBCA
 push dword 140h	; 1EBCC
 push esi	; 1EBD1
 push ebx	; 1EBD2
-call sub_90F38	; 1EBD3
+call XorBar	; 1EBD3
 add esp, byte 14h	; 1EBD8
 jmp near .85	; 1EBDB
 .73:
@@ -1667,7 +1667,7 @@ push eax	; 1EC3B
 mov edx, dword [byte esp+esi*8+0Ch]	; 1EC3C
 push edx	; 1EC40
 push edi	; 1EC41
-call sub_903F0	; 1EC42
+call PutBlock	; 1EC42
 add esp, byte 0Ch	; 1EC47
 xor ecx, ecx	; 1EC4A
 mov dword [byte esp+esi*8+0Ch], ecx	; 1EC4C
@@ -1718,7 +1718,7 @@ push edi	; 1ECE3
 push ebp	; 1ECE4
 mov ecx, dword [dword esp+094h]	; 1ECE5
 push ecx	; 1ECEC
-call sub_903F0	; 1ECED
+call PutBlock	; 1ECED
 add esp, byte 0Ch	; 1ECF2
 mov esi, 3	; 1ECF5
 jmp short .84	; 1ECFA
@@ -1733,7 +1733,7 @@ push ecx	; 1ED0D
 mov eax, dword [byte esp+esi*8+0Ch]	; 1ED0E
 push eax	; 1ED12
 push ebx	; 1ED13
-call sub_903F0	; 1ED14
+call PutBlock	; 1ED14
 add esp, byte 0Ch	; 1ED19
 xor ebx, ebx	; 1ED1C
 mov dword [byte esp+esi*8+0Ch], ebx	; 1ED1E
@@ -1812,7 +1812,7 @@ add eax, byte 11h	; 1EE13
 push byte 20h	; 1EE16
 push eax	; 1EE18
 push str_PointerMenu	; 1EE19
-call sub_8CCA8	; 1EE1E
+call AllocMemBlock	; 1EE1E
 add esp, byte 0Ch	; 1EE23
 mov dword [dword esp+088h], eax	; 1EE26
 mov esi, dword [pointerspr]	; 1EE2D
@@ -1954,7 +1954,7 @@ push byte 0Dh	; 1EFC8
 push dword 280h	; 1EFCA
 push eax	; 1EFCF
 push byte 0	; 1EFD0
-call sub_90F38	; 1EFD2
+call XorBar	; 1EFD2
 add esp, byte 14h	; 1EFD7
 mov ecx, dword [dword esp+090h]	; 1EFDA
 push ecx	; 1EFE1
@@ -1962,20 +1962,20 @@ mov esi, dword [dword esp+090h]	; 1EFE2
 push esi	; 1EFE9
 mov edi, dword [dword esp+090h]	; 1EFEA
 push edi	; 1EFF1
-call sub_91400	; 1EFF2
+call GrabBlock	; 1EFF2
 add esp, byte 0Ch	; 1EFF7
 mov ebp, dword [dword esp+090h]	; 1EFFA
 push ebp	; 1F001
 push esi	; 1F002
 mov edx, dword [pointerspr]	; 1F003
 push edx	; 1F009
-call sub_91370	; 1F00A
+call DrawArt	; 1F00A
 add esp, byte 0Ch	; 1F00F
 push dword 1E0h	; 1F012
 push dword 280h	; 1F017
 push byte 0	; 1F01C
 push byte 0	; 1F01E
-call sub_B2E1B	; 1F020
+call SetViewRect	; 1F020
 add esp, byte 10h	; 1F025
 push ebp	; 1F028
 push esi	; 1F029
@@ -2011,14 +2011,14 @@ mov esi, dword [dword esp+090h]	; 1F087
 push esi	; 1F08E
 mov edi, dword [dword esp+090h]	; 1F08F
 push edi	; 1F096
-call sub_903F0	; 1F097
+call PutBlock	; 1F097
 add esp, byte 0Ch	; 1F09C
 mov ebp, dword [byte esp+074h]	; 1F09F
 push ebp	; 1F0A3
 mov eax, dword [byte esp+07Ch]	; 1F0A4
 push eax	; 1F0A8
 push edi	; 1F0A9
-call sub_91400	; 1F0AA
+call GrabBlock	; 1F0AA
 add esp, byte 0Ch	; 1F0AF
 mov ebx, dword [byte esp+074h]	; 1F0B2
 push ebx	; 1F0B6
@@ -2027,7 +2027,7 @@ push ecx	; 1F0BB
 mov esi, dword [pointerspr]	; 1F0BC
 push esi	; 1F0C2
 .16:
-call sub_91370	; 1F0C3
+call DrawArt	; 1F0C3
 add esp, byte 0Ch	; 1F0C8
 mov eax, dword [byte esp+078h]	; 1F0CB
 mov dword [dword esp+08Ch], eax	; 1F0CF
@@ -2067,7 +2067,7 @@ mov edi, dword [dword esp+090h]	; 1F154
 push edi	; 1F15B
 mov ebp, dword [dword esp+090h]	; 1F15C
 push ebp	; 1F163
-call sub_903F0	; 1F164
+call PutBlock	; 1F164
 add esp, byte 0Ch	; 1F169
 mov esi, 3	; 1F16C
 jmp short .20	; 1F171
@@ -2082,7 +2082,7 @@ push eax	; 1F184
 mov edx, dword [byte esp+esi*8+0Ch]	; 1F185
 push edx	; 1F189
 push edi	; 1F18A
-call sub_903F0	; 1F18B
+call PutBlock	; 1F18B
 add esp, byte 0Ch	; 1F190
 xor ecx, ecx	; 1F193
 mov dword [byte esp+esi*8+0Ch], ecx	; 1F195
@@ -2146,7 +2146,7 @@ push byte 0Dh	; 1F243
 push dword 280h	; 1F245
 push eax	; 1F24A
 push byte 0	; 1F24B
-call sub_90F38	; 1F24D
+call XorBar	; 1F24D
 add esp, byte 14h	; 1F252
 mov eax, dword [byte esp+06Ch]	; 1F255
 mov edx, dword [byte esp+068h]	; 1F259
@@ -2276,7 +2276,7 @@ push byte 0Dh	; 1F3DE
 push dword 280h	; 1F3E0
 push eax	; 1F3E5
 push byte 0	; 1F3E6
-call sub_90F38	; 1F3E8
+call XorBar	; 1F3E8
 add esp, byte 14h	; 1F3ED
 mov ecx, dword [dword esp+090h]	; 1F3F0
 push ecx	; 1F3F7
@@ -2296,7 +2296,7 @@ mov esi, dword [dword esp+090h]	; 1F429
 push esi	; 1F430
 mov edi, dword [dword esp+090h]	; 1F431
 push edi	; 1F438
-call sub_903F0	; 1F439
+call PutBlock	; 1F439
 add esp, byte 0Ch	; 1F43E
 mov ebp, dword [dword esp+0ACh]	; 1F441
 push ebp	; 1F448
@@ -2339,7 +2339,7 @@ mov ebp, dword [dword esp+090h]	; 1F4BB
 push ebp	; 1F4C2
 mov eax, dword [dword esp+090h]	; 1F4C3
 push eax	; 1F4CA
-call sub_903F0	; 1F4CB
+call PutBlock	; 1F4CB
 add esp, byte 0Ch	; 1F4D0
 mov eax, dword [dword esp+098h]	; 1F4D3
 cmp eax, dword [byte esp+06Ch]	; 1F4DA
@@ -2360,7 +2360,7 @@ push ebx	; 1F4FD
 mov ecx, dword [byte esp+esi*8+0Ch]	; 1F4FE
 push ecx	; 1F502
 push edx	; 1F503
-call sub_903F0	; 1F504
+call PutBlock	; 1F504
 add esp, byte 0Ch	; 1F509
 xor edx, edx	; 1F50C
 mov dword [byte esp+esi*8+0Ch], edx	; 1F50E
@@ -2469,7 +2469,7 @@ imul eax, edx	; 1F665
 add eax, byte 11h	; 1F668
 push eax	; 1F66B
 push str_menubuff	; 1F66C
-call sub_8CCA8	; 1F671
+call AllocMemBlock	; 1F671
 add esp, byte 0Ch	; 1F676
 mov dword [byte esp+ebp*4+048h], eax	; 1F679
 mov esi, dword [pointerspr]	; 1F67D
@@ -2492,7 +2492,7 @@ mov ebx, dword [byte esp+eax+0Ch]	; 1F6B1
 push ebx	; 1F6B5
 mov ecx, dword [byte esp+ebp*4+050h]	; 1F6B6
 push ecx	; 1F6BA
-call sub_91400	; 1F6BB
+call GrabBlock	; 1F6BB
 add esp, byte 0Ch	; 1F6C0
 mov esi, dword [dword esp+0ACh]	; 1F6C3
 push esi	; 1F6CA
@@ -2525,7 +2525,7 @@ mov ebp, dword [dword esp+090h]	; 1F72B
 push ebp	; 1F732
 mov eax, dword [dword esp+090h]	; 1F733
 push eax	; 1F73A
-call sub_903F0	; 1F73B
+call PutBlock	; 1F73B
 add esp, byte 0Ch	; 1F740
 mov edx, dword [dword esp+0ACh]	; 1F743
 push edx	; 1F74A
@@ -2555,7 +2555,7 @@ mov edi, dword [dword esp+090h]	; 1F798
 push edi	; 1F79F
 mov ebp, dword [dword esp+090h]	; 1F7A0
 push ebp	; 1F7A7
-call sub_903F0	; 1F7A8
+call PutBlock	; 1F7A8
 add esp, byte 0Ch	; 1F7AD
 lea ebx, [byte esp+070h]	; 1F7B0
 mov edx, dword [byte esp+074h]	; 1F7B4
@@ -2576,7 +2576,7 @@ push eax	; 1F7E1
 mov edx, dword [byte esp+esi*8+0Ch]	; 1F7E2
 push edx	; 1F7E6
 push edi	; 1F7E7
-call sub_903F0	; 1F7E8
+call PutBlock	; 1F7E8
 add esp, byte 0Ch	; 1F7ED
 xor ecx, ecx	; 1F7F0
 mov dword [byte esp+esi*8+0Ch], ecx	; 1F7F2
@@ -2632,7 +2632,7 @@ push byte 0Dh	; 1F88D
 push dword 280h	; 1F88F
 push eax	; 1F894
 push byte 0	; 1F895
-call sub_90F38	; 1F897
+call XorBar	; 1F897
 add esp, byte 14h	; 1F89C
 mov eax, dword [byte esp+070h]	; 1F89F
 mov dword [dword esp+094h], eax	; 1F8A3
@@ -2660,7 +2660,7 @@ push byte 0Dh	; 1F8E0
 push dword 280h	; 1F8E2
 push eax	; 1F8E7
 push byte 0	; 1F8E8
-call sub_90F38	; 1F8EA
+call XorBar	; 1F8EA
 add esp, byte 14h	; 1F8EF
 jmp near .68	; 1F8F2
 .58:
@@ -2677,7 +2677,7 @@ push eax	; 1F90F
 mov edx, dword [byte esp+esi*8+0Ch]	; 1F910
 push edx	; 1F914
 push ecx	; 1F915
-call sub_903F0	; 1F916
+call PutBlock	; 1F916
 add esp, byte 0Ch	; 1F91B
 xor ecx, ecx	; 1F91E
 mov dword [byte esp+esi*8+0Ch], ecx	; 1F920
@@ -2739,7 +2739,7 @@ jmp near RunPlayerPickMenu.25	; 1F9DC
 push esi	; 1F9E1
 push edi	; 1F9E2
 push ebp	; 1F9E3
-call sub_903F0	; 1F9E4
+call PutBlock	; 1F9E4
 add esp, byte 0Ch	; 1F9E9
 mov esi, 3	; 1F9EC
 jmp short .67	; 1F9F1
@@ -2754,7 +2754,7 @@ push eax	; 1FA04
 mov edx, dword [byte esp+esi*8+0Ch]	; 1FA05
 push edx	; 1FA09
 push edi	; 1FA0A
-call sub_903F0	; 1FA0B
+call PutBlock	; 1FA0B
 add esp, byte 0Ch	; 1FA10
 xor ecx, ecx	; 1FA13
 mov dword [byte esp+esi*8+0Ch], ecx	; 1FA15
@@ -2790,7 +2790,7 @@ mov ebp, dword [byte esp+07Ch]	; 1FA71
 push ebp	; 1FA75
 mov eax, dword [dword esp+090h]	; 1FA76
 push eax	; 1FA7D
-call sub_91400	; 1FA7E
+call GrabBlock	; 1FA7E
 add esp, byte 0Ch	; 1FA83
 mov edx, dword [byte esp+074h]	; 1FA86
 push edx	; 1FA8A
@@ -2843,7 +2843,7 @@ cmp ebx, 80h	; 1FB03
 jl short InitMenuRemap.4	; 1FB09
 .5:
 push menuremap	; 1FB0B
-call sub_B4DD4	; 1FB10
+call SetColorRemap	; 1FB10
 add esp, byte 4	; 1FB15
 pop edx	; 1FB18
 pop ecx	; 1FB19
@@ -2867,7 +2867,7 @@ add esp, byte 0Ch	; 1FB35
 push edx	; 1FB38
 push esi	; 1FB39
 push printfbuf	; 1FB3A
-call sub_91964	; 1FB3F
+call PrintString	; 1FB3F
 add esp, byte 0Ch	; 1FB44
 pop esi	; 1FB47
 ret	; 1FB48
@@ -2887,7 +2887,7 @@ add esp, byte 10h	; 1FB68
 push edx	; 1FB6B
 push esi	; 1FB6C
 push printfbuf	; 1FB6D
-call sub_91964	; 1FB72
+call PrintString	; 1FB72
 add esp, byte 0Ch	; 1FB77
 pop edi	; 1FB7A
 pop esi	; 1FB7B
@@ -3200,7 +3200,7 @@ shl esi, 3	; 1FE5D
 push byte 20h	; 1FE60
 push esi	; 1FE62
 push str_sfh	; 1FE63
-call sub_8CCA8	; 1FE68
+call AllocMemBlock	; 1FE68
 add esp, byte 0Ch	; 1FE6D
 mov ebp, eax	; 1FE70
 mov ecx, esi	; 1FE72
@@ -3269,7 +3269,7 @@ lea ebp, [byte eax+011h]	; 1FF35
 push byte 20h	; 1FF38
 push ebp	; 1FF3A
 push str_shape	; 1FF3B
-call sub_8CCA8	; 1FF40
+call AllocMemBlock	; 1FF40
 mov esi, eax	; 1FF45
 add esp, byte 0Ch	; 1FF47
 mov dword [byte esp+028h], eax	; 1FF4A

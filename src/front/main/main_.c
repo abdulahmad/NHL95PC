@@ -130,8 +130,8 @@ void main_(void)
     SetScreenSize(0x280, 0x1E0);
     sub_6A9CE(0x64);
     MakePath(s.path, fileoncd[0x13A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pointer3, 0);
-    pntrshapes = sub_8E83C(s.path, 0);
-    pointerspr = sub_B30B4(pntrshapes, (char *)str_Pntr);
+    pntrshapes = LoadBank(s.path, 0);
+    pointerspr = FindShape(pntrshapes, (char *)str_Pntr);
     MakePath(s.path, fileoncd[0x162] == 1 ? (char *)cddriveptr : 0, (char *)str_S1, (char *)str_VFN);
     mainfont = s1font = sub_8E8A0(s.path, 0x20);
     MakePath(s.path, fileoncd[0x169] == 1 ? (char *)cddriveptr : 0, (char *)str_Scor2b, (char *)str_VFN);
@@ -140,7 +140,7 @@ void main_(void)
     scor3font = sub_8E8A0(s.path, 0x20);
     MakePath(s.path, fileoncd[0x1C4] == 1 ? (char *)cddriveptr : 0, (char *)str_Kaufm020, (char *)str_VFN);
     kaufmfont = sub_8E8A0(s.path, 0x20);
-    sub_8EA18(s1font);
+    TextSetFont(s1font);
     LoadModeState(exhstate);
     LoadNhlCfg();
     RunIntro();
@@ -181,9 +181,9 @@ void main_(void)
     _dos_gettime(&s.t);
     srand(s.t.hsecond);
     MainDeskLoop();
-    pal = sub_8CCA8((char *)str_Temp3, 0x300, 0x20);
+    pal = AllocMemBlock((char *)str_Temp3, 0x300, 0x20);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
         while (!sub_8FC8A(musicslot, 3));

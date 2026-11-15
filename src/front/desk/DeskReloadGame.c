@@ -7,7 +7,7 @@ void DeskReloadGame(void)
 {
     LoadRink(HomeTeam >= 0x1A ? 0xC : HomeTeam);
     LoadPlayerPhotos();
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     dword_C66D0 = dword_C66D4 = 1;
 }

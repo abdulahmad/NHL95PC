@@ -1,19 +1,19 @@
 /* Game setup: other-game simulation and the end-of-game team stats screen. */
 #define sub_913D0 sub_913D0_decl
-#define sub_8F13B sub_8F13B_decl
-#define sub_8F1FE sub_8F1FE_decl
+#define LoadSample sub_8F13B_decl
+#define FreeSample sub_8F1FE_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
 #include "nhl95.h"
 #undef sub_913D0
-#undef sub_8F13B
-#undef sub_8F1FE
+#undef LoadSample
+#undef FreeSample
 #undef sub_8F98F
 #undef sub_8FB8E
 
 void __cdecl sub_913D0(int shape, int x, int y);
-void *sub_8F13B(char *path);
-void sub_8F1FE(void *smp);
+void *LoadSample(char *path);
+void FreeSample(void *smp);
 int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 
@@ -90,23 +90,23 @@ void GameStatsScreen(void)
     s.teams[1] = VisTeam;
     ClearInputQueue();
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     s.buf[2] = s.buf[1] = s.buf[0] = 0;
-    for (i = 0; i < 0x100; i++) sub_B4B88(i, 1, s.buf);
+    for (i = 0; i < 0x100; i++) VgaSetPalette(i, 1, s.buf);
     MakePath(s.buf, fileoncd[0x58] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctbkgd3, 0);
-    bank = sub_8E83C(s.buf, 0);
-    memcpy(s.pal, (unsigned char *)sub_B30B4(bank, (char *)str_Pal14) + 0x10, 0x300);
-    sub_913B4(sub_B30B4(bank, (char *)str_Bkgd6));
+    bank = LoadBank(s.buf, 0);
+    memcpy(s.pal, (unsigned char *)FindShape(bank, (char *)str_Pal14) + 0x10, 0x300);
+    DrawShape(FindShape(bank, (char *)str_Bkgd6));
     FreeMemBlock(bank);
     MakePath(s.buf, fileoncd[0x5C] == 1 ? (char *)cddriveptr : 0, (char *)str_Cttitle32, 0);
-    bank = sub_8E83C(s.buf, 0);
-    sub_913B4(sub_B30B4(bank, (char *)str_Colm2));
-    sub_913B4(sub_B30B4(bank, (char *)str_Gsta));
+    bank = LoadBank(s.buf, 0);
+    DrawShape(FindShape(bank, (char *)str_Colm2));
+    DrawShape(FindShape(bank, (char *)str_Gsta));
     FreeMemBlock(bank);
     MakePath(s.buf, fileoncd[0x59] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctlogo3, 0);
-    logos = sub_8E83C(s.buf, 0);
-    sub_8E9E8(s.text);
-    sub_8EA18(kaufmfont);
+    logos = LoadBank(s.buf, 0);
+    TextSaveState(s.text);
+    TextSetFont(kaufmfont);
     SetTextColors(0x40, 0);
     y = 0xB0;
     for (i = 0; i < 0xC; i++) {
@@ -115,7 +115,7 @@ void GameStatsScreen(void)
         y += 0x18;
     }
     for (i = 0; i < 2; i++) {
-        shape = sub_B30B4(logos, (char *)crestnames[s.teams[i]]);
+        shape = FindShape(logos, (char *)crestnames[s.teams[i]]);
         sub_913D0(shape, i ? 0x212 : 0x40, 0x4E);
         col = i * 455;
         name = (char *)hmteamrec + i * 0x2E8 + 0x1A;
@@ -174,7 +174,7 @@ void GameStatsScreen(void)
         else
             MakePath(s.buf, fileoncd[0x21] == 1 ? (char *)cddriveptr : 0, (char *)str_Adsum2, 0);
         cursndbank = 0x20;
-        smp = sub_8F13B(s.buf);
+        smp = LoadSample(s.buf);
         cursndbank = 0;
         PlayDigiSample(smp);
     }
@@ -192,8 +192,8 @@ void GameStatsScreen(void)
         }
     } else {
         StopDigiSample();
-        sub_8F1FE(smp);
+        FreeSample(smp);
     }
-    sub_8EA00(s.text);
+    TextRestoreState(s.text);
     FreeMemBlock(logos);
 }

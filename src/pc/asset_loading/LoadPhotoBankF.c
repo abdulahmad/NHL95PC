@@ -14,7 +14,7 @@ void LoadPhotoBankF(void)
     photobankf = sub_8E8A0(path, 0x20);
     for (i = 0; i < 105; i++) {
         sprintf(name, (char *)str_04d, i);
-        photoptrsf[i] = sub_B30B4(photobankf, name);
+        photoptrsf[i] = FindShape(photobankf, name);
     }
 }
 

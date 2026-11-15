@@ -5,11 +5,11 @@ section s_8E7A0 progbits alloc exec nowrite align=1
 extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
 extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8, dword_D42CC
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
-extern sub_8CCA8, sub_8CD04, sub_8D728, sub_98D20, sub_98E50, sub_B3B19, sub_B3C60, sub_B3C74
+extern AllocMemBlock, sub_8CD04, sub_8D728, sub_98D20, sub_98E50, sub_B3B19, sub_B3C60, sub_B3C74
 extern sub_B3FC2
-global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, sub_8E83C, loc_8E853, loc_8E868, sub_8E86A
+global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, LoadBank, loc_8E853, loc_8E868, sub_8E86A
 global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, sub_8E920
-global loc_8E963, loc_8E991, loc_8E9B4, sub_8E9C0, sub_8E9D4, sub_8E9E8, sub_8EA00, sub_8EA18
+global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, sub_8E9D4, TextSaveState, TextRestoreState, TextSetFont
 global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
 subwindowdefadr:
 push esi	; 8E7A0
@@ -19,7 +19,7 @@ mov ebp, dword [byte esp+010h]	; 8E7A3
 push byte 0	; 8E7A7
 push byte 30h	; 8E7A9
 push str_SUBWINDOW	; 8E7AB
-call sub_8CCA8	; 8E7B0
+call AllocMemBlock	; 8E7B0
 mov esi, eax	; 8E7B5
 add esp, byte 0Ch	; 8E7B7
 mov edi, eax	; 8E7BA
@@ -74,7 +74,7 @@ dd sub_98E50-$-4
 add esp, byte 0Ch	; 8E837
 leave	; 8E83A
 ret	; 8E83B
-sub_8E83C:
+LoadBank:
 push ebp	; 8E83C
 LD mov, ebp, esp	; 8E83D
 mov eax, 1	; 8E83F
@@ -227,7 +227,7 @@ pop edi	; 8E9B7
 pop esi	; 8E9B8
 ret	; 8E9B9
 db 00h,00h,00h,00h,00h,00h
-sub_8E9C0:
+TextSetColors:
 mov eax, dword [byte esp+04h]	; 8E9C0
 mov dword [fontcolor], eax	; 8E9C4
 mov eax, dword [byte esp+08h]	; 8E9C9
@@ -241,7 +241,7 @@ mov eax, dword [byte esp+08h]	; 8E9DD
 mov dword [dword_D42B4], eax	; 8E9E1
 ret	; 8E9E6
 db 090h
-sub_8E9E8:
+TextSaveState:
 push esi	; 8E9E8
 push edi	; 8E9E9
 mov ecx, 10h	; 8E9EA
@@ -252,7 +252,7 @@ pop edi	; 8E9FA
 pop esi	; 8E9FB
 ret	; 8E9FC
 db 08Dh,040h,00h
-sub_8EA00:
+TextRestoreState:
 push esi	; 8EA00
 push edi	; 8EA01
 mov ecx, 10h	; 8EA02
@@ -263,7 +263,7 @@ pop edi	; 8EA12
 pop esi	; 8EA13
 ret	; 8EA14
 db 08Dh,040h,00h
-sub_8EA18:
+TextSetFont:
 mov edx, dword [byte esp+04h]	; 8EA18
 mov eax, edx	; 8EA1C
 mov dword [off_D42A4], edx	; 8EA1E

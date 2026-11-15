@@ -17,10 +17,10 @@ extern sflags3, songdata, SortCords, sounddev, str_BKGD, str_BKGD2, str_BKGD3, s
 extern str_Dbox2, str_Dbox3, str_Dbox4, str_Dbox5, str_DigitizedSpeech, str_DigitizedSpeech2, str_DigitizedSpeech3, str_JoystickOne
 extern str_JoystickTwo, str_Music, str_Music2, str_Music3, str_OneS, str_PlayerImg, str_Pointer15, str_Pointer16
 extern str_Pointer17, str_Pointer18, str_Setting3, str_Setting4, str_Setting5, str_Setting6, str_Setting7, str_Sound
-extern str_Sound2, str_Sound3, str_TheKeyboard, str_TheMouse, str_TwoS, sub_8CCA8, sub_8E83C, sub_8E9C0
-extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0
-extern sub_90D20, sub_91284, sub_91370, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440
-extern sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4, sub_B4FAC, teamcitynames, dlggreys
+extern str_Sound2, str_Sound3, str_TheKeyboard, str_TheMouse, str_TwoS, AllocMemBlock, LoadBank, TextSetColors
+extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, PutBlock
+extern FillRect, sub_91284, DrawArt, GrabBlock, PrintString, sub_91FE0, DrawArtMasked, sub_96440
+extern MouseRead, FindShape, VgaSetPalette, sub_B4BA8, SetColorRemap, sub_B4FAC, teamcitynames, dlggreys
 extern ctlboxrect1, ctlboxrect2, VisTeam, WriteCurModeState, WriteModeState
 global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
 global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
@@ -54,7 +54,7 @@ call sub_B4BA8	; 7A163
 push byte 20h	; 7A168
 push dword 1436Bh	; 7A16A
 push str_BKGD	; 7A16F
-call sub_8CCA8	; 7A174
+call AllocMemBlock	; 7A174
 mov ebp, eax	; 7A179
 add esp, byte 0Ch	; 7A17B
 mov esi, dword [pointerspr]	; 7A17E
@@ -69,7 +69,7 @@ mov word [byte eax+06h], 152h	; 7A191
 push byte 13h	; 7A197
 push byte 0Ah	; 7A199
 push eax	; 7A19B
-call sub_91400	; 7A19C
+call GrabBlock	; 7A19C
 add esp, byte 0Ch	; 7A1A1
 xor eax, eax	; 7A1A4
 call DrawLeagueSetDlg	; 7A1A6
@@ -79,7 +79,7 @@ call LeagueSetEditLoop	; 7A1B5
 push byte 13h	; 7A1BA
 push byte 0Ah	; 7A1BC
 push ebp	; 7A1BE
-call sub_903F0	; 7A1BF
+call PutBlock	; 7A1BF
 add esp, byte 0Ch	; 7A1C4
 push ebp	; 7A1C7
 call FreeMemBlock	; 7A1C8
@@ -123,7 +123,7 @@ call sub_B4BA8	; 7A211
 push byte 20h	; 7A216
 push dword 1436Bh	; 7A218
 push str_BKGD	; 7A21D
-call sub_8CCA8	; 7A222
+call AllocMemBlock	; 7A222
 mov ebp, eax	; 7A227
 add esp, byte 0Ch	; 7A229
 mov esi, dword [pointerspr]	; 7A22C
@@ -138,7 +138,7 @@ mov word [byte eax+06h], 152h	; 7A23F
 push byte 13h	; 7A245
 push byte 0Ah	; 7A247
 push eax	; 7A249
-call sub_91400	; 7A24A
+call GrabBlock	; 7A24A
 add esp, byte 0Ch	; 7A24F
 mov eax, 1	; 7A252
 call DrawLeagueSetDlg	; 7A257
@@ -150,7 +150,7 @@ SettingsDlgClose:
 push byte 13h	; 7A268
 push byte 0Ah	; 7A26A
 push ebp	; 7A26C
-call sub_903F0	; 7A26D
+call PutBlock	; 7A26D
 add esp, byte 0Ch	; 7A272
 push ebp	; 7A275
 call FreeMemBlock	; 7A276
@@ -182,7 +182,7 @@ call sub_B4BA8	; 7A2B1
 push byte 20h	; 7A2B6
 push dword 1436Bh	; 7A2B8
 push str_BKGD	; 7A2BD
-call sub_8CCA8	; 7A2C2
+call AllocMemBlock	; 7A2C2
 mov ebp, eax	; 7A2C7
 add esp, byte 0Ch	; 7A2C9
 mov esi, dword [pointerspr]	; 7A2CC
@@ -197,7 +197,7 @@ mov word [byte eax+06h], 152h	; 7A2DF
 push byte 13h	; 7A2E5
 push byte 0Ah	; 7A2E7
 push eax	; 7A2E9
-call sub_91400	; 7A2EA
+call GrabBlock	; 7A2EA
 add esp, byte 0Ch	; 7A2EF
 mov eax, exhstate	; 7A2F2
 call SaveModeState	; 7A2F7
@@ -232,7 +232,7 @@ call LoadSettingsShapes	; 7A34A
 push byte 20h	; 7A34F
 push dword 1436Bh	; 7A351
 push str_BKGD	; 7A356
-call sub_8CCA8	; 7A35B
+call AllocMemBlock	; 7A35B
 mov ebp, eax	; 7A360
 add esp, byte 0Ch	; 7A362
 mov esi, dword [pointerspr]	; 7A365
@@ -247,7 +247,7 @@ mov word [byte eax+06h], 152h	; 7A378
 push byte 13h	; 7A37E
 push byte 0Ah	; 7A380
 push eax	; 7A382
-call sub_91400	; 7A383
+call GrabBlock	; 7A383
 add esp, byte 0Ch	; 7A388
 call DrawLeagueSetDlgSel	; 7A38B
 call LeagueOptsToBits	; 7A390
@@ -271,7 +271,7 @@ call LoadSettingsShapes	; 7A3AF
 push byte 20h	; 7A3B4
 push dword 1436Bh	; 7A3B6
 push str_BKGD	; 7A3BB
-call sub_8CCA8	; 7A3C0
+call AllocMemBlock	; 7A3C0
 mov ebp, eax	; 7A3C5
 add esp, byte 0Ch	; 7A3C7
 mov esi, dword [pointerspr]	; 7A3CA
@@ -286,7 +286,7 @@ mov word [byte eax+06h], 152h	; 7A3DD
 push byte 13h	; 7A3E3
 push byte 0Ah	; 7A3E5
 push eax	; 7A3E7
-call sub_91400	; 7A3E8
+call GrabBlock	; 7A3E8
 add esp, byte 0Ch	; 7A3ED
 call DrawLeagueSetDlgSel	; 7A3F0
 call LeagueOptsToBits	; 7A3F5
@@ -323,12 +323,12 @@ call MakePath	; 7A43D
 push byte 0	; 7A442
 lea eax, [byte esp+04h]	; 7A444
 push eax	; 7A448
-call sub_8E83C	; 7A449
+call LoadBank	; 7A449
 mov dword [byte esp+028h], eax	; 7A44E
 add esp, byte 8	; 7A452
 push str_Dbox2	; 7A455
 push eax	; 7A45A
-call sub_B30B4	; 7A45B
+call FindShape	; 7A45B
 mov ebp, eax	; 7A460
 add esp, byte 8	; 7A462
 mov edx, dword [byte eax+02h]	; 7A465
@@ -342,7 +342,7 @@ add eax, byte 11h	; 7A476
 push byte 20h	; 7A479
 push eax	; 7A47B
 push str_BKGD	; 7A47C
-call sub_8CCA8	; 7A481
+call AllocMemBlock	; 7A481
 add esp, byte 0Ch	; 7A486
 mov dword [byte esp+024h], eax	; 7A489
 mov edi, eax	; 7A48D
@@ -355,12 +355,12 @@ movsb	; 7A495
 push byte 13h	; 7A496
 push byte 0Ah	; 7A498
 push eax	; 7A49A
-call sub_91400	; 7A49B
+call GrabBlock	; 7A49B
 add esp, byte 0Ch	; 7A4A0
 push byte 13h	; 7A4A3
 push byte 0Ah	; 7A4A5
 push ebp	; 7A4A7
-call sub_91370	; 7A4A8
+call DrawArt	; 7A4A8
 add esp, byte 0Ch	; 7A4AD
 mov ebx, dword [byte esp+020h]	; 7A4B0
 push ebx	; 7A4B4
@@ -368,19 +368,19 @@ call FreeMemBlock	; 7A4B5
 add esp, byte 4	; 7A4BA
 push dword 0FFh	; 7A4BD
 push dword 0F8h	; 7A4C2
-call sub_8E9C0	; 7A4C7
+call TextSetColors	; 7A4C7
 add esp, byte 8	; 7A4CC
 cmp dword [sounddev], byte 10h	; 7A4CF
 jne short .3	; 7A4D6
 push dword 0AAh	; 7A4D8
 push byte 68h	; 7A4DD
 push str_Music	; 7A4DF
-call sub_91964	; 7A4E4
+call PrintString	; 7A4E4
 add esp, byte 0Ch	; 7A4E9
 push dword 0C0h	; 7A4EC
 push byte 68h	; 7A4F1
 push str_Sound	; 7A4F3
-call sub_91964	; 7A4F8
+call PrintString	; 7A4F8
 add esp, byte 0Ch	; 7A4FD
 .3:
 cmp byte [musicon], 0	; 7A500
@@ -388,7 +388,7 @@ jne short .4	; 7A507
 push dword 0D6h	; 7A509
 push byte 68h	; 7A50E
 push str_DigitizedSpeech	; 7A510
-call sub_91964	; 7A515
+call PrintString	; 7A515
 add esp, byte 0Ch	; 7A51A
 .4:
 push dword 0FAh	; 7A51D
@@ -403,7 +403,7 @@ push byte 13h	; 7A546
 push byte 0Ah	; 7A548
 mov esi, dword [byte esp+02Ch]	; 7A54A
 push esi	; 7A54E
-call sub_903F0	; 7A54F
+call PutBlock	; 7A54F
 add esp, byte 0Ch	; 7A554
 push esi	; 7A557
 call FreeMemBlock	; 7A558
@@ -456,14 +456,14 @@ call MakePath	; 7A5D6
 push byte 0	; 7A5DB
 lea eax, [byte ebp-020h]	; 7A5DD
 push eax	; 7A5E0
-call sub_8E83C	; 7A5E1
+call LoadBank	; 7A5E1
 mov esi, eax	; 7A5E6
 add esp, byte 8	; 7A5E8
 push byte 13h	; 7A5EB
 push byte 0Ah	; 7A5ED
 push str_Dbox2	; 7A5EF
 push eax	; 7A5F4
-call sub_B30B4	; 7A5F5
+call FindShape	; 7A5F5
 add esp, byte 8	; 7A5FA
 push eax	; 7A5FD
 call sub_91284	; 7A5FE
@@ -473,19 +473,19 @@ call FreeMemBlock	; 7A607
 add esp, byte 4	; 7A60C
 push dword 0FFh	; 7A60F
 push dword 0F8h	; 7A614
-call sub_8E9C0	; 7A619
+call TextSetColors	; 7A619
 add esp, byte 8	; 7A61E
 cmp dword [sounddev], byte 10h	; 7A621
 jne short .4	; 7A628
 push dword 0AAh	; 7A62A
 push byte 68h	; 7A62F
 push str_Music	; 7A631
-call sub_91964	; 7A636
+call PrintString	; 7A636
 add esp, byte 0Ch	; 7A63B
 push dword 0C0h	; 7A63E
 push byte 68h	; 7A643
 push str_Sound	; 7A645
-call sub_91964	; 7A64A
+call PrintString	; 7A64A
 add esp, byte 0Ch	; 7A64F
 .4:
 cmp byte [musicon], 0	; 7A652
@@ -493,7 +493,7 @@ jne short .5	; 7A659
 push dword 0D6h	; 7A65B
 push byte 68h	; 7A660
 push str_DigitizedSpeech	; 7A662
-call sub_91964	; 7A667
+call PrintString	; 7A667
 add esp, byte 0Ch	; 7A66C
 .5:
 push dword 0FAh	; 7A66F
@@ -558,7 +558,7 @@ mov byte [dword esp+0F7h], 43h	; 7A702
 .2:
 mov eax, esp	; 7A70A
 push eax	; 7A70C
-call sub_B4DD4	; 7A70D
+call SetColorRemap	; 7A70D
 add esp, byte 4	; 7A712
 xor ecx, ecx	; 7A715
 mov ebx, str_Setting3	; 7A717
@@ -574,17 +574,17 @@ call MakePath	; 7A736
 push byte 0	; 7A73B
 lea eax, [dword esp+0104h]	; 7A73D
 push eax	; 7A744
-call sub_8E83C	; 7A745
+call LoadBank	; 7A745
 mov edi, eax	; 7A74A
 add esp, byte 8	; 7A74C
 push byte 13h	; 7A74F
 push byte 0Ah	; 7A751
 push str_Dbox2	; 7A753
 push eax	; 7A758
-call sub_B30B4	; 7A759
+call FindShape	; 7A759
 add esp, byte 8	; 7A75E
 push eax	; 7A761
-call sub_931FC	; 7A762
+call DrawArtMasked	; 7A762
 add esp, byte 0Ch	; 7A767
 push edi	; 7A76A
 call FreeMemBlock	; 7A76B
@@ -598,19 +598,19 @@ jmp short .6	; 7A77E
 push dword 0FFh	; 7A780
 push dword 0F8h	; 7A785
 .6:
-call sub_8E9C0	; 7A78A
+call TextSetColors	; 7A78A
 add esp, byte 8	; 7A78F
 cmp dword [sounddev], byte 10h	; 7A792
 jne short .7	; 7A799
 push dword 0AAh	; 7A79B
 push byte 68h	; 7A7A0
 push str_Music	; 7A7A2
-call sub_91964	; 7A7A7
+call PrintString	; 7A7A7
 add esp, byte 0Ch	; 7A7AC
 push dword 0C0h	; 7A7AF
 push byte 68h	; 7A7B4
 push str_Sound	; 7A7B6
-call sub_91964	; 7A7BB
+call PrintString	; 7A7BB
 add esp, byte 0Ch	; 7A7C0
 .7:
 cmp byte [musicon], 0	; 7A7C3
@@ -618,7 +618,7 @@ jne short .8	; 7A7CA
 push dword 0D6h	; 7A7CC
 push byte 68h	; 7A7D1
 push str_DigitizedSpeech	; 7A7D3
-call sub_91964	; 7A7D8
+call PrintString	; 7A7D8
 add esp, byte 0Ch	; 7A7DD
 .8:
 mov ebx, dword [gamemode]	; 7A7E0
@@ -1054,7 +1054,7 @@ sub esp, byte 14h	; 7AC41
 push dlggreys	; 7AC44
 push byte 4	; 7AC49
 push dword 0F7h	; 7AC4B
-call sub_B4B88	; 7AC50
+call VgaSetPalette	; 7AC50
 add esp, byte 0Ch	; 7AC55
 lea eax, [byte esp+0Ch]	; 7AC58
 push eax	; 7AC5C
@@ -1062,7 +1062,7 @@ lea eax, [byte esp+014h]	; 7AC5D
 push eax	; 7AC61
 lea eax, [byte esp+08h]	; 7AC62
 push eax	; 7AC66
-call sub_B2DCA	; 7AC67
+call MouseRead	; 7AC67
 add esp, byte 0Ch	; 7AC6C
 mov eax, dword [byte esp+010h]	; 7AC6F
 mov dword [byte esp+08h], eax	; 7AC73
@@ -1081,7 +1081,7 @@ add eax, byte 11h	; 7AC9A
 push byte 20h	; 7AC9D
 push eax	; 7AC9F
 push str_Pointer15	; 7ACA0
-call sub_8CCA8	; 7ACA5
+call AllocMemBlock	; 7ACA5
 add esp, byte 0Ch	; 7ACAA
 mov ebp, eax	; 7ACAD
 mov esi, dword [pointerspr]	; 7ACAF
@@ -1105,7 +1105,7 @@ mov edx, dword [byte esp+0Ch]	; 7ACDF
 sub edx, byte 4	; 7ACE3
 push edx	; 7ACE6
 push eax	; 7ACE7
-call sub_91400	; 7ACE8
+call GrabBlock	; 7ACE8
 add esp, byte 0Ch	; 7ACED
 mov ebx, dword [byte esp+04h]	; 7ACF0
 push ebx	; 7ACF4
@@ -1114,7 +1114,7 @@ sub eax, byte 4	; 7ACF9
 push eax	; 7ACFC
 mov ecx, dword [pointerspr]	; 7ACFD
 push ecx	; 7AD03
-call sub_91370	; 7AD04
+call DrawArt	; 7AD04
 add esp, byte 0Ch	; 7AD09
 call ClearInputQueue	; 7AD0C
 .1:
@@ -1146,7 +1146,7 @@ mov eax, dword [byte esp+014h]	; 7AD53
 sub eax, byte 4	; 7AD57
 push eax	; 7AD5A
 push ebp	; 7AD5B
-call sub_903F0	; 7AD5C
+call PutBlock	; 7AD5C
 add esp, byte 0Ch	; 7AD61
 mov esi, dword [byte esp+04h]	; 7AD64
 push esi	; 7AD68
@@ -1154,7 +1154,7 @@ mov eax, dword [byte esp+0Ch]	; 7AD69
 sub eax, byte 4	; 7AD6D
 push eax	; 7AD70
 push ebp	; 7AD71
-call sub_91400	; 7AD72
+call GrabBlock	; 7AD72
 add esp, byte 0Ch	; 7AD77
 mov edi, dword [byte esp+04h]	; 7AD7A
 push edi	; 7AD7E
@@ -1163,7 +1163,7 @@ sub eax, byte 4	; 7AD83
 push eax	; 7AD86
 mov eax, dword [pointerspr]	; 7AD87
 push eax	; 7AD8C
-call sub_91370	; 7AD8D
+call DrawArt	; 7AD8D
 add esp, byte 0Ch	; 7AD92
 mov eax, dword [byte esp+08h]	; 7AD95
 mov dword [byte esp+010h], eax	; 7AD99
@@ -1177,7 +1177,7 @@ mov eax, dword [byte esp+014h]	; 7ADAF
 sub eax, byte 4	; 7ADB3
 push eax	; 7ADB6
 push ebp	; 7ADB7
-call sub_903F0	; 7ADB8
+call PutBlock	; 7ADB8
 add esp, byte 0Ch	; 7ADBD
 push ebp	; 7ADC0
 call FreeMemBlock	; 7ADC1
@@ -1205,7 +1205,7 @@ je short .1	; 7ADE8
 push dlggreys	; 7ADEA
 push byte 4	; 7ADEF
 push dword 0F7h	; 7ADF1
-call sub_B4B88	; 7ADF6
+call VgaSetPalette	; 7ADF6
 add esp, byte 0Ch	; 7ADFB
 .1:
 lea eax, [byte esp+010h]	; 7ADFE
@@ -1214,7 +1214,7 @@ lea eax, [byte esp+018h]	; 7AE03
 push eax	; 7AE07
 lea eax, [byte esp+0Ch]	; 7AE08
 push eax	; 7AE0C
-call sub_B2DCA	; 7AE0D
+call MouseRead	; 7AE0D
 add esp, byte 0Ch	; 7AE12
 mov eax, dword [byte esp+014h]	; 7AE15
 mov dword [byte esp+0Ch], eax	; 7AE19
@@ -1237,7 +1237,7 @@ add eax, byte 11h	; 7AE4F
 push byte 20h	; 7AE52
 push eax	; 7AE54
 push str_Pointer15	; 7AE55
-call sub_8CCA8	; 7AE5A
+call AllocMemBlock	; 7AE5A
 add esp, byte 0Ch	; 7AE5F
 mov ebp, eax	; 7AE62
 mov esi, dword [pointerspr]	; 7AE64
@@ -1261,7 +1261,7 @@ mov edx, dword [byte esp+010h]	; 7AE94
 sub edx, byte 4	; 7AE98
 push edx	; 7AE9B
 push eax	; 7AE9C
-call sub_91400	; 7AE9D
+call GrabBlock	; 7AE9D
 add esp, byte 0Ch	; 7AEA2
 mov ebx, dword [byte esp+08h]	; 7AEA5
 push ebx	; 7AEA9
@@ -1270,7 +1270,7 @@ sub eax, byte 4	; 7AEAE
 push eax	; 7AEB1
 mov ecx, dword [pointerspr]	; 7AEB2
 push ecx	; 7AEB8
-call sub_91370	; 7AEB9
+call DrawArt	; 7AEB9
 add esp, byte 0Ch	; 7AEBE
 call ClearInputQueue	; 7AEC1
 .2:
@@ -1302,7 +1302,7 @@ mov eax, dword [byte esp+018h]	; 7AF0B
 sub eax, byte 4	; 7AF0F
 push eax	; 7AF12
 push ebp	; 7AF13
-call sub_903F0	; 7AF14
+call PutBlock	; 7AF14
 add esp, byte 0Ch	; 7AF19
 mov ecx, dword [byte esp+08h]	; 7AF1C
 push ecx	; 7AF20
@@ -1310,7 +1310,7 @@ mov eax, dword [byte esp+010h]	; 7AF21
 sub eax, byte 4	; 7AF25
 push eax	; 7AF28
 push ebp	; 7AF29
-call sub_91400	; 7AF2A
+call GrabBlock	; 7AF2A
 add esp, byte 0Ch	; 7AF2F
 mov esi, dword [byte esp+08h]	; 7AF32
 push esi	; 7AF36
@@ -1320,7 +1320,7 @@ push eax	; 7AF3E
 mov edi, dword [pointerspr]	; 7AF3F
 push edi	; 7AF45
 .6:
-call sub_91370	; 7AF46
+call DrawArt	; 7AF46
 add esp, byte 0Ch	; 7AF4B
 mov eax, dword [byte esp+0Ch]	; 7AF4E
 mov dword [byte esp+014h], eax	; 7AF52
@@ -1337,7 +1337,7 @@ mov esi, dword [byte esp+010h]	; 7AF77
 push esi	; 7AF7B
 push eax	; 7AF7C
 push ebp	; 7AF7D
-call sub_903F0	; 7AF7E
+call PutBlock	; 7AF7E
 add esp, byte 0Ch	; 7AF83
 mov ebx, esp	; 7AF86
 mov edx, dword [byte esp+08h]	; 7AF88
@@ -1624,14 +1624,14 @@ mov ecx, dword [byte esp+010h]	; 7B350
 push ecx	; 7B354
 push eax	; 7B355
 push ebp	; 7B356
-call sub_903F0	; 7B357
+call PutBlock	; 7B357
 jmp short LeagueSetEditLoop.32	; 7B35C
 .39:
 mov edi, dword [byte esp+010h]	; 7B35E
 push edi	; 7B362
 push eax	; 7B363
 push ebp	; 7B364
-call sub_903F0	; 7B365
+call PutBlock	; 7B365
 add esp, byte 0Ch	; 7B36A
 mov eax, dword [byte esp+08h]	; 7B36D
 push eax	; 7B371
@@ -1639,7 +1639,7 @@ mov eax, dword [byte esp+010h]	; 7B372
 sub eax, byte 4	; 7B376
 push eax	; 7B379
 push ebp	; 7B37A
-call sub_91400	; 7B37B
+call GrabBlock	; 7B37B
 add esp, byte 0Ch	; 7B380
 mov edx, dword [byte esp+08h]	; 7B383
 push edx	; 7B387
@@ -1677,7 +1677,7 @@ call LoadSettingsShapes	; 7B3BC
 push byte 20h	; 7B3C1
 push dword 0E935h	; 7B3C3
 push str_BKGD2	; 7B3C8
-call sub_8CCA8	; 7B3CD
+call AllocMemBlock	; 7B3CD
 add esp, byte 0Ch	; 7B3D2
 mov ebp, eax	; 7B3D5
 mov esi, dword [pointerspr]	; 7B3D7
@@ -1692,7 +1692,7 @@ mov word [byte eax+06h], 101h	; 7B3EA
 push byte 13h	; 7B3F0
 push byte 0Ah	; 7B3F2
 push eax	; 7B3F4
-call sub_91400	; 7B3F5
+call GrabBlock	; 7B3F5
 add esp, byte 0Ch	; 7B3FA
 call DrawModeSetDlg	; 7B3FD
 call ModeOptsToBits	; 7B402
@@ -1706,7 +1706,7 @@ call ModeSetEditLoop	; 7B417
 push byte 13h	; 7B41C
 push byte 0Ah	; 7B41E
 push ebp	; 7B420
-call sub_903F0	; 7B421
+call PutBlock	; 7B421
 add esp, byte 0Ch	; 7B426
 test byte [gameopts], 4	; 7B429
 jne short .7	; 7B430
@@ -1810,14 +1810,14 @@ call MakePath	; 7B53E
 push byte 0	; 7B543
 lea eax, [byte esp+04h]	; 7B545
 push eax	; 7B549
-call sub_8E83C	; 7B54A
+call LoadBank	; 7B54A
 mov esi, eax	; 7B54F
 add esp, byte 8	; 7B551
 push byte 13h	; 7B554
 push byte 0Ah	; 7B556
 push str_Dbox3	; 7B558
 push eax	; 7B55D
-call sub_B30B4	; 7B55E
+call FindShape	; 7B55E
 add esp, byte 8	; 7B563
 push eax	; 7B566
 call sub_91284	; 7B567
@@ -1827,19 +1827,19 @@ call FreeMemBlock	; 7B570
 add esp, byte 4	; 7B575
 push dword 0FFh	; 7B578
 push dword 0F8h	; 7B57D
-call sub_8E9C0	; 7B582
+call TextSetColors	; 7B582
 add esp, byte 8	; 7B587
 cmp dword [sounddev], byte 10h	; 7B58A
 jne short .5	; 7B591
 push dword 0AAh	; 7B593
 push byte 60h	; 7B598
 push str_Music2	; 7B59A
-call sub_91964	; 7B59F
+call PrintString	; 7B59F
 add esp, byte 0Ch	; 7B5A4
 push dword 0C0h	; 7B5A7
 push byte 60h	; 7B5AC
 push str_Sound2	; 7B5AE
-call sub_91964	; 7B5B3
+call PrintString	; 7B5B3
 add esp, byte 0Ch	; 7B5B8
 .5:
 cmp byte [musicon], 0	; 7B5BB
@@ -1847,7 +1847,7 @@ jne short .6	; 7B5C2
 push dword 0D6h	; 7B5C4
 push byte 60h	; 7B5C9
 push str_DigitizedSpeech2	; 7B5CB
-call sub_91964	; 7B5D0
+call PrintString	; 7B5D0
 add esp, byte 0Ch	; 7B5D5
 .6:
 call sub_B4BA8	; 7B5D8
@@ -1938,19 +1938,19 @@ mov dword [setbits], edx	; 7B6C0
 call DrawModeSetChecks	; 7B6C6
 push dword 0FFh	; 7B6CB
 push dword 0F8h	; 7B6D0
-call sub_8E9C0	; 7B6D5
+call TextSetColors	; 7B6D5
 add esp, byte 8	; 7B6DA
 cmp dword [sounddev], byte 10h	; 7B6DD
 jne short .7	; 7B6E4
 push dword 0AAh	; 7B6E6
 push byte 60h	; 7B6EB
 push str_Music2	; 7B6ED
-call sub_91964	; 7B6F2
+call PrintString	; 7B6F2
 add esp, byte 0Ch	; 7B6F7
 push dword 0C0h	; 7B6FA
 push byte 60h	; 7B6FF
 push str_Sound2	; 7B701
-call sub_91964	; 7B706
+call PrintString	; 7B706
 add esp, byte 0Ch	; 7B70B
 .7:
 cmp byte [musicon], 0	; 7B70E
@@ -1958,7 +1958,7 @@ jne short .8	; 7B715
 push dword 0D6h	; 7B717
 push byte 60h	; 7B71C
 push str_DigitizedSpeech2	; 7B71E
-call sub_91964	; 7B723
+call PrintString	; 7B723
 add esp, byte 0Ch	; 7B728
 .8:
 call sub_B4BA8	; 7B72B
@@ -2076,7 +2076,7 @@ push eax	; 7B81E
 mov ebp, dword [chkoffspr]	; 7B81F
 push ebp	; 7B825
 .4:
-call sub_903F0	; 7B826
+call PutBlock	; 7B826
 add esp, byte 0Ch	; 7B82B
 mov edx, dword [esp]	; 7B82E
 inc edx	; 7B831
@@ -2109,7 +2109,7 @@ sub esp, byte 14h	; 7B856
 push dlggreys	; 7B859
 push byte 4	; 7B85E
 push dword 0F7h	; 7B860
-call sub_B4B88	; 7B865
+call VgaSetPalette	; 7B865
 add esp, byte 0Ch	; 7B86A
 lea eax, [byte esp+0Ch]	; 7B86D
 push eax	; 7B871
@@ -2117,7 +2117,7 @@ lea eax, [byte esp+014h]	; 7B872
 push eax	; 7B876
 lea eax, [byte esp+08h]	; 7B877
 push eax	; 7B87B
-call sub_B2DCA	; 7B87C
+call MouseRead	; 7B87C
 add esp, byte 0Ch	; 7B881
 mov eax, dword [byte esp+010h]	; 7B884
 mov dword [byte esp+08h], eax	; 7B888
@@ -2136,7 +2136,7 @@ add eax, byte 11h	; 7B8AF
 push byte 20h	; 7B8B2
 push eax	; 7B8B4
 push str_Pointer16	; 7B8B5
-call sub_8CCA8	; 7B8BA
+call AllocMemBlock	; 7B8BA
 add esp, byte 0Ch	; 7B8BF
 mov ebp, eax	; 7B8C2
 mov esi, dword [pointerspr]	; 7B8C4
@@ -2160,7 +2160,7 @@ mov edx, dword [byte esp+0Ch]	; 7B8F4
 sub edx, byte 4	; 7B8F8
 push edx	; 7B8FB
 push eax	; 7B8FC
-call sub_91400	; 7B8FD
+call GrabBlock	; 7B8FD
 add esp, byte 0Ch	; 7B902
 mov ebx, dword [byte esp+04h]	; 7B905
 push ebx	; 7B909
@@ -2169,7 +2169,7 @@ sub eax, byte 4	; 7B90E
 push eax	; 7B911
 mov ecx, dword [pointerspr]	; 7B912
 push ecx	; 7B918
-call sub_91370	; 7B919
+call DrawArt	; 7B919
 add esp, byte 0Ch	; 7B91E
 call ClearInputQueue	; 7B921
 .1:
@@ -2201,7 +2201,7 @@ mov eax, dword [byte esp+014h]	; 7B968
 sub eax, byte 4	; 7B96C
 push eax	; 7B96F
 push ebp	; 7B970
-call sub_903F0	; 7B971
+call PutBlock	; 7B971
 add esp, byte 0Ch	; 7B976
 mov esi, dword [byte esp+04h]	; 7B979
 push esi	; 7B97D
@@ -2209,7 +2209,7 @@ mov eax, dword [byte esp+0Ch]	; 7B97E
 sub eax, byte 4	; 7B982
 push eax	; 7B985
 push ebp	; 7B986
-call sub_91400	; 7B987
+call GrabBlock	; 7B987
 add esp, byte 0Ch	; 7B98C
 mov edi, dword [byte esp+04h]	; 7B98F
 push edi	; 7B993
@@ -2218,7 +2218,7 @@ sub eax, byte 4	; 7B998
 push eax	; 7B99B
 mov eax, dword [pointerspr]	; 7B99C
 push eax	; 7B9A1
-call sub_91370	; 7B9A2
+call DrawArt	; 7B9A2
 add esp, byte 0Ch	; 7B9A7
 mov eax, dword [byte esp+08h]	; 7B9AA
 mov dword [byte esp+010h], eax	; 7B9AE
@@ -2232,7 +2232,7 @@ mov eax, dword [byte esp+014h]	; 7B9C4
 sub eax, byte 4	; 7B9C8
 push eax	; 7B9CB
 push ebp	; 7B9CC
-call sub_903F0	; 7B9CD
+call PutBlock	; 7B9CD
 add esp, byte 0Ch	; 7B9D2
 push ebp	; 7B9D5
 call FreeMemBlock	; 7B9D6
@@ -2258,7 +2258,7 @@ sub esp, byte 1Ch	; 7B9F8
 push dlggreys	; 7B9FB
 push byte 4	; 7BA00
 push dword 0F7h	; 7BA02
-call sub_B4B88	; 7BA07
+call VgaSetPalette	; 7BA07
 add esp, byte 0Ch	; 7BA0C
 lea eax, [byte esp+010h]	; 7BA0F
 push eax	; 7BA13
@@ -2266,7 +2266,7 @@ lea eax, [byte esp+018h]	; 7BA14
 push eax	; 7BA18
 lea eax, [byte esp+0Ch]	; 7BA19
 push eax	; 7BA1D
-call sub_B2DCA	; 7BA1E
+call MouseRead	; 7BA1E
 add esp, byte 0Ch	; 7BA23
 mov eax, dword [byte esp+014h]	; 7BA26
 mov dword [byte esp+0Ch], eax	; 7BA2A
@@ -2289,7 +2289,7 @@ add eax, byte 11h	; 7BA60
 push byte 20h	; 7BA63
 push eax	; 7BA65
 push str_Pointer16	; 7BA66
-call sub_8CCA8	; 7BA6B
+call AllocMemBlock	; 7BA6B
 add esp, byte 0Ch	; 7BA70
 mov ebp, eax	; 7BA73
 mov esi, dword [pointerspr]	; 7BA75
@@ -2313,7 +2313,7 @@ mov edx, dword [byte esp+010h]	; 7BAA5
 sub edx, byte 4	; 7BAA9
 push edx	; 7BAAC
 push eax	; 7BAAD
-call sub_91400	; 7BAAE
+call GrabBlock	; 7BAAE
 add esp, byte 0Ch	; 7BAB3
 mov ebx, dword [byte esp+08h]	; 7BAB6
 push ebx	; 7BABA
@@ -2322,7 +2322,7 @@ sub eax, byte 4	; 7BABF
 push eax	; 7BAC2
 mov ecx, dword [pointerspr]	; 7BAC3
 push ecx	; 7BAC9
-call sub_91370	; 7BACA
+call DrawArt	; 7BACA
 add esp, byte 0Ch	; 7BACF
 call ClearInputQueue	; 7BAD2
 .1:
@@ -2355,7 +2355,7 @@ sub eax, byte 4	; 7BB20
 .5:
 push eax	; 7BB23
 push ebp	; 7BB24
-call sub_903F0	; 7BB25
+call PutBlock	; 7BB25
 add esp, byte 0Ch	; 7BB2A
 .6:
 mov eax, dword [byte esp+08h]	; 7BB2D
@@ -2364,7 +2364,7 @@ mov eax, dword [byte esp+010h]	; 7BB32
 sub eax, byte 4	; 7BB36
 push eax	; 7BB39
 push ebp	; 7BB3A
-call sub_91400	; 7BB3B
+call GrabBlock	; 7BB3B
 add esp, byte 0Ch	; 7BB40
 mov edx, dword [byte esp+08h]	; 7BB43
 push edx	; 7BB47
@@ -2373,7 +2373,7 @@ sub eax, byte 4	; 7BB4C
 push eax	; 7BB4F
 mov ebx, dword [pointerspr]	; 7BB50
 push ebx	; 7BB56
-call sub_91370	; 7BB57
+call DrawArt	; 7BB57
 add esp, byte 0Ch	; 7BB5C
 mov eax, dword [byte esp+0Ch]	; 7BB5F
 mov dword [byte esp+014h], eax	; 7BB63
@@ -2390,7 +2390,7 @@ mov esi, dword [byte esp+010h]	; 7BB88
 push esi	; 7BB8C
 push eax	; 7BB8D
 push ebp	; 7BB8E
-call sub_903F0	; 7BB8F
+call PutBlock	; 7BB8F
 add esp, byte 0Ch	; 7BB94
 mov ebx, esp	; 7BB97
 mov edx, dword [byte esp+08h]	; 7BB99
@@ -2450,7 +2450,7 @@ push dword 0F8h	; 7BC41
 push byte 37h	; 7BC46
 mov ebx, dword [acptspr]	; 7BC48
 push ebx	; 7BC4E
-call sub_903F0	; 7BC4F
+call PutBlock	; 7BC4F
 add esp, byte 0Ch	; 7BC54
 mov bl, byte [setbits]	; 7BC57
 test bl, 1	; 7BC5D
@@ -2599,7 +2599,7 @@ push dword 81h	; 7BE7C
 mov edx, dword [fdlg_cancel]	; 7BE81
 push edx	; 7BE87
 .25:
-call sub_903F0	; 7BE88
+call PutBlock	; 7BE88
 add esp, byte 0Ch	; 7BE8D
 .26:
 push ebp	; 7BE90
@@ -2638,7 +2638,7 @@ call LoadSettingsShapes	; 7BECB
 push byte 20h	; 7BED0
 push dword 10AA5h	; 7BED2
 push str_BKGD3	; 7BED7
-call sub_8CCA8	; 7BEDC
+call AllocMemBlock	; 7BEDC
 mov ebp, eax	; 7BEE1
 add esp, byte 0Ch	; 7BEE3
 mov esi, dword [pointerspr]	; 7BEE6
@@ -2653,7 +2653,7 @@ mov word [byte eax+06h], 129h	; 7BEF9
 push byte 13h	; 7BEFF
 push byte 0Ah	; 7BF01
 push eax	; 7BF03
-call sub_91400	; 7BF04
+call GrabBlock	; 7BF04
 add esp, byte 0Ch	; 7BF09
 call sub_B4BA8	; 7BF0C
 call DrawExhSetDlg	; 7BF11
@@ -2662,7 +2662,7 @@ call ExhSetEditLoop	; 7BF1B
 push byte 13h	; 7BF20
 push byte 0Ah	; 7BF22
 push ebp	; 7BF24
-call sub_903F0	; 7BF25
+call PutBlock	; 7BF25
 add esp, byte 0Ch	; 7BF2A
 push ebp	; 7BF2D
 call FreeMemBlock	; 7BF2E
@@ -2779,14 +2779,14 @@ or byte [setbits+1], 8	; 7C049
 call DrawExhSetChecks	; 7C050
 push dword 0FFh	; 7C055
 push dword 0F8h	; 7C05A
-call sub_8E9C0	; 7C05F
+call TextSetColors	; 7C05F
 add esp, byte 8	; 7C064
 cmp byte [musicon], 0	; 7C067
 jne short .12	; 7C06E
 push dword 0D6h	; 7C070
 push byte 60h	; 7C075
 push str_DigitizedSpeech3	; 7C077
-call sub_91964	; 7C07C
+call PrintString	; 7C07C
 add esp, byte 0Ch	; 7C081
 .12:
 cmp dword [sounddev], byte 10h	; 7C084
@@ -2794,12 +2794,12 @@ jne short .x	; 7C08B
 push dword 0AAh	; 7C08D
 push byte 60h	; 7C092
 push str_Music3	; 7C094
-call sub_91964	; 7C099
+call PrintString	; 7C099
 add esp, byte 0Ch	; 7C09E
 push dword 0C0h	; 7C0A1
 push byte 60h	; 7C0A6
 push str_Sound3	; 7C0A8
-call sub_91964	; 7C0AD
+call PrintString	; 7C0AD
 add esp, byte 0Ch	; 7C0B2
 .x:
 pop edx	; 7C0B5
@@ -2856,7 +2856,7 @@ push eax	; 7C11A
 mov ebp, dword [chkoffspr]	; 7C11B
 push ebp	; 7C121
 .4:
-call sub_903F0	; 7C122
+call PutBlock	; 7C122
 add esp, byte 0Ch	; 7C127
 mov edx, dword [esp]	; 7C12A
 inc edx	; 7C12D
@@ -2904,7 +2904,7 @@ push eax	; 7C194
 mov ecx, dword [pl05spr]	; 7C195
 push ecx	; 7C19B
 .8:
-call sub_903F0	; 7C19C
+call PutBlock	; 7C19C
 add esp, byte 0Ch	; 7C1A1
 .9:
 add esp, byte 4	; 7C1A4
@@ -2937,14 +2937,14 @@ call MakePath	; 7C1DE
 push byte 0	; 7C1E3
 lea eax, [byte esp+04h]	; 7C1E5
 push eax	; 7C1E9
-call sub_8E83C	; 7C1EA
+call LoadBank	; 7C1EA
 mov esi, eax	; 7C1EF
 add esp, byte 8	; 7C1F1
 push byte 13h	; 7C1F4
 push byte 0Ah	; 7C1F6
 push str_Dbox4	; 7C1F8
 push eax	; 7C1FD
-call sub_B30B4	; 7C1FE
+call FindShape	; 7C1FE
 add esp, byte 8	; 7C203
 push eax	; 7C206
 call sub_91284	; 7C207
@@ -2957,12 +2957,12 @@ jne short .3	; 7C21F
 push dword 0AAh	; 7C221
 push byte 60h	; 7C226
 push str_Music3	; 7C228
-call sub_91964	; 7C22D
+call PrintString	; 7C22D
 add esp, byte 0Ch	; 7C232
 push dword 0C0h	; 7C235
 push byte 60h	; 7C23A
 push str_Sound3	; 7C23C
-call sub_91964	; 7C241
+call PrintString	; 7C241
 add esp, byte 0Ch	; 7C246
 .3:
 cmp byte [musicon], 0	; 7C249
@@ -2970,7 +2970,7 @@ jne short .4	; 7C250
 push dword 0D6h	; 7C252
 push byte 60h	; 7C257
 push str_DigitizedSpeech3	; 7C259
-call sub_91964	; 7C25E
+call PrintString	; 7C25E
 add esp, byte 0Ch	; 7C263
 .4:
 push dword 0FAh	; 7C266
@@ -3064,7 +3064,7 @@ sub esp, byte 18h	; 7C327
 push dlggreys	; 7C32A
 push byte 4	; 7C32F
 push dword 0F7h	; 7C331
-call sub_B4B88	; 7C336
+call VgaSetPalette	; 7C336
 add esp, byte 0Ch	; 7C33B
 lea eax, [byte esp+010h]	; 7C33E
 push eax	; 7C342
@@ -3072,7 +3072,7 @@ lea eax, [byte esp+018h]	; 7C343
 push eax	; 7C347
 lea eax, [byte esp+0Ch]	; 7C348
 push eax	; 7C34C
-call sub_B2DCA	; 7C34D
+call MouseRead	; 7C34D
 add esp, byte 0Ch	; 7C352
 mov eax, dword [byte esp+014h]	; 7C355
 mov dword [byte esp+0Ch], eax	; 7C359
@@ -3091,7 +3091,7 @@ add eax, byte 11h	; 7C380
 push byte 20h	; 7C383
 push eax	; 7C385
 push str_Pointer17	; 7C386
-call sub_8CCA8	; 7C38B
+call AllocMemBlock	; 7C38B
 add esp, byte 0Ch	; 7C390
 mov ebp, eax	; 7C393
 mov esi, dword [pointerspr]	; 7C395
@@ -3115,7 +3115,7 @@ mov edx, dword [byte esp+010h]	; 7C3C5
 sub edx, byte 4	; 7C3C9
 push edx	; 7C3CC
 push eax	; 7C3CD
-call sub_91400	; 7C3CE
+call GrabBlock	; 7C3CE
 add esp, byte 0Ch	; 7C3D3
 mov ebx, dword [byte esp+08h]	; 7C3D6
 push ebx	; 7C3DA
@@ -3124,7 +3124,7 @@ sub eax, byte 4	; 7C3DF
 push eax	; 7C3E2
 mov ecx, dword [pointerspr]	; 7C3E3
 push ecx	; 7C3E9
-call sub_91370	; 7C3EA
+call DrawArt	; 7C3EA
 add esp, byte 0Ch	; 7C3EF
 mov esi, dword [gameopts]	; 7C3F2
 shl esi, 19h	; 7C3F8
@@ -3159,7 +3159,7 @@ mov eax, dword [byte esp+018h]	; 7C448
 sub eax, byte 4	; 7C44C
 push eax	; 7C44F
 push ebp	; 7C450
-call sub_903F0	; 7C451
+call PutBlock	; 7C451
 add esp, byte 0Ch	; 7C456
 mov edx, dword [byte esp+08h]	; 7C459
 push edx	; 7C45D
@@ -3167,7 +3167,7 @@ mov eax, dword [byte esp+010h]	; 7C45E
 sub eax, byte 4	; 7C462
 push eax	; 7C465
 push ebp	; 7C466
-call sub_91400	; 7C467
+call GrabBlock	; 7C467
 add esp, byte 0Ch	; 7C46C
 mov ebx, dword [byte esp+08h]	; 7C46F
 push ebx	; 7C473
@@ -3177,7 +3177,7 @@ push eax	; 7C47B
 mov ecx, dword [pointerspr]	; 7C47C
 push ecx	; 7C482
 .5:
-call sub_91370	; 7C483
+call DrawArt	; 7C483
 add esp, byte 0Ch	; 7C488
 mov eax, dword [byte esp+0Ch]	; 7C48B
 mov dword [byte esp+014h], eax	; 7C48F
@@ -3194,7 +3194,7 @@ mov ebx, dword [byte esp+010h]	; 7C4B4
 push ebx	; 7C4B8
 push eax	; 7C4B9
 push ebp	; 7C4BA
-call sub_903F0	; 7C4BB
+call PutBlock	; 7C4BB
 add esp, byte 0Ch	; 7C4C0
 mov ebx, esp	; 7C4C3
 mov edx, dword [byte esp+08h]	; 7C4C5
@@ -3254,7 +3254,7 @@ push dword 120h	; 7C576
 push byte 37h	; 7C57B
 mov ebx, dword [acptspr]	; 7C57D
 push ebx	; 7C583
-call sub_903F0	; 7C584
+call PutBlock	; 7C584
 add esp, byte 0Ch	; 7C589
 mov bl, byte [setbits]	; 7C58C
 test bl, 1	; 7C592
@@ -3396,7 +3396,7 @@ push dword 81h	; 7C78A
 mov edx, dword [fdlg_cancel]	; 7C78F
 push edx	; 7C795
 .24:
-call sub_903F0	; 7C796
+call PutBlock	; 7C796
 add esp, byte 0Ch	; 7C79B
 .25:
 push ebp	; 7C79E
@@ -3447,7 +3447,7 @@ mov edx, dword [byte esp+010h]	; 7C814
 push edx	; 7C818
 push eax	; 7C819
 push ebp	; 7C81A
-call sub_903F0	; 7C81B
+call PutBlock	; 7C81B
 add esp, byte 0Ch	; 7C820
 mov ebx, dword [byte esp+08h]	; 7C823
 push ebx	; 7C827
@@ -3455,7 +3455,7 @@ mov eax, dword [byte esp+010h]	; 7C828
 sub eax, byte 4	; 7C82C
 push eax	; 7C82F
 push ebp	; 7C830
-call sub_91400	; 7C831
+call GrabBlock	; 7C831
 add esp, byte 0Ch	; 7C836
 mov ecx, dword [byte esp+08h]	; 7C839
 push ecx	; 7C83D
@@ -3641,7 +3641,7 @@ mov ebp, eax	; 7C9C3
 push byte 20h	; 7C9C5
 push dword 8C31h	; 7C9C7
 push str_BKGD4	; 7C9CC
-call sub_8CCA8	; 7C9D1
+call AllocMemBlock	; 7C9D1
 add esp, byte 0Ch	; 7C9D6
 mov dword [esp], eax	; 7C9D9
 mov esi, dword [pointerspr]	; 7C9DC
@@ -3656,7 +3656,7 @@ mov word [byte eax+06h], 0ECh	; 7C9EF
 push byte 13h	; 7C9F5
 push byte 0Ah	; 7C9F7
 push eax	; 7C9F9
-call sub_91400	; 7C9FA
+call GrabBlock	; 7C9FA
 add esp, byte 0Ch	; 7C9FF
 cmp dword [gamemode], byte 2	; 7CA02
 sete al	; 7CA09
@@ -3670,7 +3670,7 @@ push byte 13h	; 7CA24
 push byte 0Ah	; 7CA26
 mov ebx, dword [byte esp+08h]	; 7CA28
 push ebx	; 7CA2C
-call sub_903F0	; 7CA2D
+call PutBlock	; 7CA2D
 add esp, byte 0Ch	; 7CA32
 mov ecx, dword [esp]	; 7CA35
 push ecx	; 7CA38
@@ -3714,7 +3714,7 @@ push eax	; 7CA80
 push byte 20h	; 7CA81
 push dword 8C31h	; 7CA83
 push str_BKGD4	; 7CA88
-call sub_8CCA8	; 7CA8D
+call AllocMemBlock	; 7CA8D
 mov ebp, eax	; 7CA92
 add esp, byte 0Ch	; 7CA94
 mov esi, dword [pointerspr]	; 7CA97
@@ -3729,7 +3729,7 @@ mov word [byte eax+06h], 0ECh	; 7CAAA
 push byte 13h	; 7CAB0
 push byte 0Ah	; 7CAB2
 push eax	; 7CAB4
-call sub_91400	; 7CAB5
+call GrabBlock	; 7CAB5
 add esp, byte 0Ch	; 7CABA
 xor eax, eax	; 7CABD
 call DrawControlsDlg	; 7CABF
@@ -3740,7 +3740,7 @@ call ControlsDlgLoop	; 7CACF
 push byte 13h	; 7CAD4
 push byte 0Ah	; 7CAD6
 push ebp	; 7CAD8
-call sub_903F0	; 7CAD9
+call PutBlock	; 7CAD9
 add esp, byte 0Ch	; 7CADE
 push ebp	; 7CAE1
 call FreeMemBlock	; 7CAE2
@@ -3773,7 +3773,7 @@ mov dword [byte esp+04h], edx	; 7CB1A
 push byte 20h	; 7CB1E
 push dword 8C31h	; 7CB20
 push str_BKGD4	; 7CB25
-call sub_8CCA8	; 7CB2A
+call AllocMemBlock	; 7CB2A
 mov dword [byte esp+0Ch], eax	; 7CB2F
 add esp, byte 0Ch	; 7CB33
 mov dword [byte esp+08h], eax	; 7CB36
@@ -3789,7 +3789,7 @@ mov word [byte eax+06h], 0ECh	; 7CB4D
 push byte 13h	; 7CB53
 push byte 0Ah	; 7CB55
 push eax	; 7CB57
-call sub_91400	; 7CB58
+call GrabBlock	; 7CB58
 add esp, byte 0Ch	; 7CB5D
 xor eax, eax	; 7CB60
 call DrawControlsDlg	; 7CB62
@@ -3801,7 +3801,7 @@ push byte 13h	; 7CB75
 push byte 0Ah	; 7CB77
 mov ecx, dword [byte esp+08h]	; 7CB79
 push ecx	; 7CB7D
-call sub_903F0	; 7CB7E
+call PutBlock	; 7CB7E
 add esp, byte 0Ch	; 7CB83
 mov eax, ebp	; 7CB86
 shl eax, 2	; 7CB88
@@ -4347,7 +4347,7 @@ push eax	; 7D167
 push byte 20h	; 7D168
 push dword 8C31h	; 7D16A
 push str_BKGD4	; 7D16F
-call sub_8CCA8	; 7D174
+call AllocMemBlock	; 7D174
 mov ebp, eax	; 7D179
 add esp, byte 0Ch	; 7D17B
 mov dword [byte esp+04h], eax	; 7D17E
@@ -4363,7 +4363,7 @@ mov word [byte eax+06h], 0ECh	; 7D195
 push byte 13h	; 7D19B
 push byte 0Ah	; 7D19D
 push eax	; 7D19F
-call sub_91400	; 7D1A0
+call GrabBlock	; 7D1A0
 add esp, byte 0Ch	; 7D1A5
 mov eax, 1	; 7D1A8
 call DrawControlsDlg	; 7D1AD
@@ -4374,7 +4374,7 @@ call ControlsDlgLoop	; 7D1BD
 push byte 13h	; 7D1C2
 push byte 0Ah	; 7D1C4
 push ebp	; 7D1C6
-call sub_903F0	; 7D1C7
+call PutBlock	; 7D1C7
 add esp, byte 0Ch	; 7D1CC
 mov eax, dword [esp]	; 7D1CF
 shl eax, 2	; 7D1D2
@@ -4449,7 +4449,7 @@ mov byte [dword esp+0F7h], 43h	; 7D29F
 .2:
 mov eax, esp	; 7D2A7
 push eax	; 7D2A9
-call sub_B4DD4	; 7D2AA
+call SetColorRemap	; 7D2AA
 add esp, byte 4	; 7D2AF
 xor ecx, ecx	; 7D2B2
 mov ebx, str_PlayerImg	; 7D2B4
@@ -4465,17 +4465,17 @@ call MakePath	; 7D2D3
 push byte 0	; 7D2D8
 lea eax, [dword esp+0104h]	; 7D2DA
 push eax	; 7D2E1
-call sub_8E83C	; 7D2E2
+call LoadBank	; 7D2E2
 mov edi, eax	; 7D2E7
 add esp, byte 8	; 7D2E9
 push byte 13h	; 7D2EC
 push byte 0Ah	; 7D2EE
 push str_Dbox5	; 7D2F0
 push eax	; 7D2F5
-call sub_B30B4	; 7D2F6
+call FindShape	; 7D2F6
 add esp, byte 8	; 7D2FB
 push eax	; 7D2FE
-call sub_931FC	; 7D2FF
+call DrawArtMasked	; 7D2FF
 add esp, byte 0Ch	; 7D304
 push edi	; 7D307
 call FreeMemBlock	; 7D308
@@ -4489,7 +4489,7 @@ jmp short .6	; 7D31B
 push dword 0FFh	; 7D31D
 push dword 0FAh	; 7D322
 .6:
-call sub_8E9C0	; 7D327
+call TextSetColors	; 7D327
 add esp, byte 8	; 7D32C
 mov edi, dword [ctldlgrects]	; 7D32F
 add edi, byte 0Bh	; 7D335
@@ -4508,7 +4508,7 @@ push edx	; 7D361
 push eax	; 7D362
 push esi	; 7D363
 push edi	; 7D364
-call sub_90D20	; 7D365
+call FillRect	; 7D365
 add esp, byte 14h	; 7D36A
 push esi	; 7D36D
 add edi, byte 3	; 7D36E
@@ -4517,7 +4517,7 @@ mov eax, dword [HomeTeam-2]	; 7D372
 sar eax, 10h	; 7D377
 mov edx, dword [nosplit eax*4+teamcitynames]	; 7D37A
 push edx	; 7D381
-call sub_91964	; 7D382
+call PrintString	; 7D382
 add esp, byte 0Ch	; 7D387
 mov edi, dword [ctldlgrects+10h]	; 7D38A
 add edi, byte 0Bh	; 7D390
@@ -4536,7 +4536,7 @@ push edx	; 7D3BC
 push eax	; 7D3BD
 push esi	; 7D3BE
 push edi	; 7D3BF
-call sub_90D20	; 7D3C0
+call FillRect	; 7D3C0
 add esp, byte 14h	; 7D3C5
 push esi	; 7D3C8
 add edi, byte 3	; 7D3C9
@@ -4545,7 +4545,7 @@ mov eax, dword [VisTeam-2]	; 7D3CD
 sar eax, 10h	; 7D3D2
 mov ebx, dword [nosplit eax*4+teamcitynames]	; 7D3D5
 push ebx	; 7D3DC
-call sub_91964	; 7D3DD
+call PrintString	; 7D3DD
 add esp, byte 0Ch	; 7D3E2
 add esp, 120h	; 7D3E5
 jmp near ControlsDlg_ret0	; 7D3EB
@@ -4573,7 +4573,7 @@ jmp short .2	; 7D412
 push dword 0FFh	; 7D414
 push dword 0FAh	; 7D419
 .2:
-call sub_8E9C0	; 7D41E
+call TextSetColors	; 7D41E
 add esp, byte 8	; 7D423
 test esi, esi	; 7D426
 jne short .3	; 7D428
@@ -4586,7 +4586,7 @@ push byte 20h	; 7D435
 push byte 4Ah	; 7D437
 push str_TwoS	; 7D439
 .4:
-call sub_91964	; 7D43E
+call PrintString	; 7D43E
 add esp, byte 0Ch	; 7D443
 xor ebx, ebx	; 7D446
 mov dword [setbits], ebx	; 7D448
@@ -4678,7 +4678,7 @@ jmp short .13	; 7D565
 push dword 0FFh	; 7D567
 push dword 0F8h	; 7D56C
 .13:
-call sub_8E9C0	; 7D571
+call TextSetColors	; 7D571
 add esp, byte 8	; 7D576
 test byte [dword_ED364], 4	; 7D579
 jne short .14	; 7D580
@@ -4689,7 +4689,7 @@ mov eax, dword [ctldlgrects+20h]	; 7D58B
 add eax, byte 19h	; 7D590
 push eax	; 7D593
 push str_TheMouse	; 7D594
-call sub_91964	; 7D599
+call PrintString	; 7D599
 add esp, byte 0Ch	; 7D59E
 .14:
 test byte [dword_ED364], 8	; 7D5A1
@@ -4701,7 +4701,7 @@ mov eax, dword [ctldlgrects+30h]	; 7D5B3
 add eax, byte 12h	; 7D5B8
 push eax	; 7D5BB
 push str_JoystickOne	; 7D5BC
-call sub_91964	; 7D5C1
+call PrintString	; 7D5C1
 add esp, byte 0Ch	; 7D5C6
 .15:
 test byte [dword_ED364], 10h	; 7D5C9
@@ -4713,7 +4713,7 @@ mov eax, dword [ctldlgrects+40h]	; 7D5DB
 add eax, byte 11h	; 7D5E0
 push eax	; 7D5E3
 push str_JoystickTwo	; 7D5E4
-call sub_91964	; 7D5E9
+call PrintString	; 7D5E9
 add esp, byte 0Ch	; 7D5EE
 .16:
 test byte [dword_ED364], 20h	; 7D5F1
@@ -4725,7 +4725,7 @@ mov eax, dword [ctldlgrects+50h]	; 7D607
 add eax, byte 0Fh	; 7D60C
 push eax	; 7D60F
 push str_TheKeyboard	; 7D610
-call sub_91964	; 7D615
+call PrintString	; 7D615
 jmp near ControlsDlg_ret0C	; 7D61A
 %endif ; C
 ; C: src/pc/settings_dialogs/CtlDlgHitTest.c
@@ -4821,7 +4821,7 @@ lea eax, [byte esp+01Ch]	; 7D6CA
 push eax	; 7D6CE
 lea eax, [byte esp+010h]	; 7D6CF
 push eax	; 7D6D3
-call sub_B2DCA	; 7D6D4
+call MouseRead	; 7D6D4
 add esp, byte 0Ch	; 7D6D9
 mov eax, dword [byte esp+018h]	; 7D6DC
 mov dword [byte esp+010h], eax	; 7D6E0
@@ -4839,7 +4839,7 @@ add eax, byte 11h	; 7D702
 push byte 20h	; 7D705
 push eax	; 7D707
 push str_Pointer18	; 7D708
-call sub_8CCA8	; 7D70D
+call AllocMemBlock	; 7D70D
 add esp, byte 0Ch	; 7D712
 mov ebp, eax	; 7D715
 mov esi, dword [pointerspr]	; 7D717
@@ -4863,7 +4863,7 @@ mov edx, dword [byte esp+014h]	; 7D747
 sub edx, byte 4	; 7D74B
 push edx	; 7D74E
 push eax	; 7D74F
-call sub_91400	; 7D750
+call GrabBlock	; 7D750
 add esp, byte 0Ch	; 7D755
 mov ebx, dword [byte esp+0Ch]	; 7D758
 push ebx	; 7D75C
@@ -4872,7 +4872,7 @@ sub eax, byte 4	; 7D761
 push eax	; 7D764
 mov ecx, dword [pointerspr]	; 7D765
 push ecx	; 7D76B
-call sub_91370	; 7D76C
+call DrawArt	; 7D76C
 add esp, byte 0Ch	; 7D771
 call ClearInputQueue	; 7D774
 .1:
@@ -4908,7 +4908,7 @@ sub eax, byte 4	; 7D7CD
 .5:
 push eax	; 7D7D0
 push ebp	; 7D7D1
-call sub_903F0	; 7D7D2
+call PutBlock	; 7D7D2
 add esp, byte 0Ch	; 7D7D7
 .6:
 mov eax, dword [byte esp+0Ch]	; 7D7DA
@@ -4917,7 +4917,7 @@ mov eax, dword [byte esp+014h]	; 7D7DF
 sub eax, byte 4	; 7D7E3
 push eax	; 7D7E6
 push ebp	; 7D7E7
-call sub_91400	; 7D7E8
+call GrabBlock	; 7D7E8
 add esp, byte 0Ch	; 7D7ED
 mov edx, dword [byte esp+0Ch]	; 7D7F0
 push edx	; 7D7F4
@@ -4926,7 +4926,7 @@ sub eax, byte 4	; 7D7F9
 push eax	; 7D7FC
 mov ebx, dword [pointerspr]	; 7D7FD
 push ebx	; 7D803
-call sub_91370	; 7D804
+call DrawArt	; 7D804
 add esp, byte 0Ch	; 7D809
 mov eax, dword [byte esp+010h]	; 7D80C
 mov dword [byte esp+018h], eax	; 7D810
@@ -4943,7 +4943,7 @@ mov esi, dword [byte esp+014h]	; 7D835
 push esi	; 7D839
 push eax	; 7D83A
 push ebp	; 7D83B
-call sub_903F0	; 7D83C
+call PutBlock	; 7D83C
 add esp, byte 0Ch	; 7D841
 lea ebx, [byte esp+04h]	; 7D844
 mov edx, dword [byte esp+0Ch]	; 7D848
@@ -5166,7 +5166,7 @@ mov ecx, dword [byte esp+014h]	; 7DB49
 push ecx	; 7DB4D
 push eax	; 7DB4E
 push ebp	; 7DB4F
-call sub_903F0	; 7DB50
+call PutBlock	; 7DB50
 add esp, byte 0Ch	; 7DB55
 jmp near ControlsDlgLoop.19	; 7DB58
 .31:

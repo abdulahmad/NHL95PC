@@ -28,7 +28,7 @@ int EasnGoalieStatsScreen(int cat)
     char *ext2;
 
     keepdesksong = 1;
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
@@ -42,12 +42,12 @@ int EasnGoalieStatsScreen(int cat)
     if (fileoncd[0x8E] == 1) dir = (char *)cddriveptr;
     else dir = 0;
     MakePath((char *)buf + 0x300, dir, name, ext);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal7);
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal7);
     FadePalStep(0, (unsigned char *)statspalshape + 0x10, 0x10);
     FreeMemBlock(statsbgshapes);
     RunMenu(goaliestatsmenubar, 4, 0x40, 0x41, 0x42);
-    sub_8FFB0(0, 0x100, buf);
+    SetPalette(0, 0x100, buf);
     if (gamemode != 1) {
         ext2 = 0;
         name2 = (char *)str_easndesk2;
@@ -60,8 +60,8 @@ int EasnGoalieStatsScreen(int cat)
         else dir2 = 0;
     }
     MakePath((char *)buf + 0x300, dir2, name2, ext2);
-    statsbgshapes = sub_8E83C((char *)buf + 0x300, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal7) + 0x10;
+    statsbgshapes = LoadBank((char *)buf + 0x300, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pal7) + 0x10;
     FadePalStep(1, buf, 0x10);
     FreeMemBlock(statsbgshapes);
     leaguestatsmode = 0;

@@ -39,7 +39,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         c1 = jerseyremap[byte_D11BC[teams[tradeside] * 4]];                                                       \
         c2 = byte_D12DE;                                                                                          \
         MakeJerseyShape(jerseyremap, tradejersey[tradeside * 0x268 + tradecursor[tradeside] * 0x16], c1, c2);     \
-        sub_B4DD4(jerseyremap);                                                                                   \
+        SetColorRemap(jerseyremap);                                                                                   \
         sub_91FE0(art, mx - 0x1C, my - 0x20);                                                                     \
     }
 
@@ -112,7 +112,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         picked[i].c[1] = 0xFF;
     while (++i < 4);
     DrawTradeScreen((int)recs, art, bar, font, n, picked[0].c, teams);
-    ptrart = sub_B30B4(bank, (char *)str_Pntr2);
+    ptrart = FindShape(bank, (char *)str_Pntr2);
     menus[0] = bar;
     nitems[0] = n;
     menus[1] = menus[2] = menus[3] = 0;
@@ -121,14 +121,14 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
     pos[0][0] = pos[0][1] = 0;
     menuact_gamedress = menuact_gamescratch = 0;
     k = ((((short *)ptrart)[2] << 2) + 4) * (((short *)ptrart)[3] + 1) + 0x11;
-    ptr = sub_8CCA8((char *)str_Pointer10, k, 0x20);
+    ptr = AllocMemBlock((char *)str_Pointer10, k, 0x20);
     *(TrHdr17 *)ptr = *(TrHdr17 *)ptrart;
     ((short *)ptr)[2] = ((short *)ptrart)[2] + 1;
     ((short *)ptr)[3] = ((short *)ptrart)[3] + 1;
-    sub_B2DCA(&i, &oldmx, &oldmy);
+    MouseRead(&i, &oldmx, &oldmy);
     mx = oldmx;
     my = oldmy;
-    sub_91400(ptr, PTRX(oldmx), PTRY(oldmy));
+    GrabBlock(ptr, PTRX(oldmx), PTRY(oldmy));
     sub_91FE0(pointerspr, oldmx - 3, oldmy);
     ClearInputQueue();
     traderesult = 0;
@@ -140,8 +140,8 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         } while (e && !(bits & 2));
         if (!(bits & 2)) {
             if (mx != oldmx || my != oldmy) {
-                sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
-                sub_91400(ptr, PTRX(mx), PTRY(my));
+                PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
+                GrabBlock(ptr, PTRX(mx), PTRY(my));
                 DRAGJERSEY();
                 sub_91FE0(pointerspr, mx - 3, my);
                 oldmx = mx;
@@ -151,10 +151,10 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
             if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
                 if (menus[level][item].on1) {
                     if (item == sel[level]) {
-                        sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
+                        PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                         for (i = n; i >= 0; i--) {
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][0] = pos[i][1] = 0;
                                 FreeMemBlock(bg[i]);
                             }
@@ -177,7 +177,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         my = oldmy;
                         ClearInputQueue();
                     } else {
-                        sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
+                        PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                         DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                             pos[level][1], col1, col2, col3);
                         sel[level] = item;
@@ -185,12 +185,12 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                             pos[level][1], col1, col2, col3);
                     }
                 } else if (menus[level][item].on2) {
-                    sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
+                    PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                     if (depth != level) {
                         for (i = depth; i > level; i--) {
                             sel[i] = 0;
                             if (bg[i]) {
-                                sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                                PutBlock(bg[i], pos[i][0], pos[i][1]);
                                 pos[i][1] = 0;
                                 pos[i][0] = 0;
                                 FreeMemBlock(bg[i]);
@@ -215,18 +215,18 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         + pos[depth - 1][1];
                     w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                     h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                    bg[depth] = sub_8CCA8((char *)str_Menubuff7, w * 4 * h + 0x11, 0x20);
+                    bg[depth] = AllocMemBlock((char *)str_Menubuff7, w * 4 * h + 0x11, 0x20);
                     *(TrHdr17 *)bg[depth] = *(TrHdr17 *)pointerspr;
                     ((short *)bg[depth])[2] = w;
                     ((short *)bg[depth])[3] = h;
-                    sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                    GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                     DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1],
                         col1, col2, col3);
                     sel[depth] = 0;
                     DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1],
                         col1, col2, col3);
                 } else {
-                    sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
+                    PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                     sel[level] = item;
@@ -234,11 +234,11 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         pos[level][1], col1, col2, col3);
                 }
             } else {
-                sub_903F0(ptr, PTRX(oldmx), PTRY(oldmy));
+                PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                 if (TradeHitTest(mx, my, tradeclick, &tradeside, &flag)) {
                     for (i = n; i >= 0; i--) {
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                         }
@@ -256,12 +256,12 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                         if (flag) {
                             if (*p != 0xFF) {
                                 if (cursor != -1 && *p != cursor) {
-                                    sub_8E9C0(0x40, 0x41);
+                                    TextSetColors(0x40, 0x41);
                                     DrawTradeRow(tradeside);
                                 }
                                 p = slots + click;
                                 tradecursor[tradeside] = FindTradeSlot(tradeside, *p);
-                                sub_8E9C0(0x42, 0x41);
+                                TextSetColors(0x42, 0x41);
                                 DrawTradeRow(tradeside);
                                 *p = 0xFF;
                                 picked[click].c[1] = 0xFF;
@@ -279,7 +279,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                                         slots[click + 2] = 0xFF;
                                         picked[click + 2].c[1] = 0xFF;
                                     }
-                                    sub_8E9C0(0x40, 0x41);
+                                    TextSetColors(0x40, 0x41);
                                     DrawTradeRow(tradeside);
                                     tradeside = tradecursor[tradeside] = -1;
                                     r = -1;
@@ -294,7 +294,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                                     slots[click - 2] = 0xFF;
                                     picked[click - 2].c[1] = 0xFF;
                                 }
-                                sub_8E9C0(0x40, 0x41);
+                                TextSetColors(0x40, 0x41);
                                 DrawTradeRow(tradeside);
                                 tradeside = tradecursor[tradeside] = -1;
                                 r = -1;
@@ -306,24 +306,24 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                                 c1 = jerseyremap[byte_D11BC[teams[i >> 1] * 4]];
                                 c2 = byte_D12DE;
                                 MakeJerseyShape(jerseyremap, picked[i].c[1], c1, c2);
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, tradebtnx[i * 2], tradebtny[i * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, tradebtnx[i * 2], tradebtny[i * 2]);
                             }
                         }
                     } else if (tradeclick[tradeside] >= 0x64) {
                         tradeclick[tradeside] -= 0x64;
                         if (traderoster[tradeside * 0x268 + tradeclick[tradeside] * 0x16]) {
                             if (tradecursor[tradeside] == tradeclick[tradeside]) {
-                                sub_8E9C0(0x40, 0x41);
+                                TextSetColors(0x40, 0x41);
                                 DrawTradeRow(tradeside);
                                 tradeside = tradecursor[tradeside] = -1;
                             } else {
                                 if (tradecursor[tradeside] != -1) {
-                                    sub_8E9C0(0x40, 0x41);
+                                    TextSetColors(0x40, 0x41);
                                     DrawTradeRow(tradeside);
                                 }
                                 tradecursor[tradeside] = tradeclick[tradeside];
-                                sub_8E9C0(0x42, 0x41);
+                                TextSetColors(0x42, 0x41);
                                 DrawTradeRow(tradeside);
                             }
                         }
@@ -331,7 +331,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                 }
             }
             if (!traderesult) {
-                sub_91400(ptr, PTRX(mx), PTRY(my));
+                GrabBlock(ptr, PTRX(mx), PTRY(my));
                 DRAGJERSEY();
                 sub_91FE0(pointerspr, mx - 3, my);
                 oldmx = mx;

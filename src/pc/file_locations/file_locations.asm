@@ -7,8 +7,8 @@ extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts,
 extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
-extern strcat_, stricmp_, sub_8D2F0, sub_8E83C, sub_8F98F, sub_8FC8A, sub_8FFB0, sub_9061C
-extern sub_B30B4, sub_B4BA8, str_ModeR, WaitClickTimeout
+extern strcat_, stricmp_, sub_8D2F0, LoadBank, sub_8F98F, sub_8FC8A, SetPalette, DrawBitmap
+extern FindShape, sub_B4BA8, str_ModeR, WaitClickTimeout
 global InitFileLocations, CoachCutScene
 ; C: src/pc/file_locations/InitFileLocations.c
 %ifdef CBUILD
@@ -160,14 +160,14 @@ call MakePath	; 8BC56
 push byte 0	; 8BC5B
 lea eax, [dword esp+0304h]	; 8BC5D
 push eax	; 8BC64
-call sub_8E83C	; 8BC65
+call LoadBank	; 8BC65
 mov esi, eax	; 8BC6A
 add esp, byte 8	; 8BC6C
 mov eax, esp	; 8BC6F
 push eax	; 8BC71
 push dword 100h	; 8BC72
 push byte 0	; 8BC77
-call sub_8FFB0	; 8BC79
+call SetPalette	; 8BC79
 add esp, byte 0Ch	; 8BC7E
 mov ebx, 10h	; 8BC81
 mov edx, esp	; 8BC86
@@ -176,14 +176,14 @@ call FadePalette	; 8BC8D
 call sub_B4BA8	; 8BC92
 push str_Scrn4	; 8BC97
 push esi	; 8BC9C
-call sub_B30B4	; 8BC9D
+call FindShape	; 8BC9D
 add esp, byte 8	; 8BCA2
 push eax	; 8BCA5
-call sub_9061C	; 8BCA6
+call DrawBitmap	; 8BCA6
 add esp, byte 4	; 8BCAB
 push str_Pal29	; 8BCAE
 push esi	; 8BCB3
-call sub_B30B4	; 8BCB4
+call FindShape	; 8BCB4
 add esp, byte 8	; 8BCB9
 lea edx, [byte eax+010h]	; 8BCBC
 mov ebx, 300h	; 8BCBF
@@ -271,7 +271,7 @@ mov eax, esp	; 8BDEA
 push eax	; 8BDEC
 push dword 100h	; 8BDED
 push byte 0	; 8BDF2
-call sub_8FFB0	; 8BDF4
+call SetPalette	; 8BDF4
 add esp, byte 0Ch	; 8BDF9
 mov ebx, 10h	; 8BDFC
 mov edx, esp	; 8BE01
@@ -310,7 +310,7 @@ mov eax, esp	; 8BE76
 push eax	; 8BE78
 push dword 100h	; 8BE79
 push byte 0	; 8BE7E
-call sub_8FFB0	; 8BE80
+call SetPalette	; 8BE80
 add esp, byte 0Ch	; 8BE85
 mov ebx, 10h	; 8BE88
 mov edx, esp	; 8BE8D

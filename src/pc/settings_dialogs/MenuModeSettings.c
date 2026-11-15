@@ -22,16 +22,16 @@ int MenuModeSettings(void)
 
     sub_B4BA8();
     LoadSettingsShapes();
-    bm = sub_8CCA8((char *)str_BKGD2, 0xE935, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD2, 0xE935, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xD6;
     ((short *)bm)[3] = 0x101;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawModeSetDlg();
     ModeOptsToBits();
     if (gamemode == 2) ModeSetViewLoop();
     else ModeSetEditLoop();
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     if (!gameopts.linechanges) {
         lcboxon[0] = lcboxon[1] = lcblink[0] = lcblink[1] = 0;
         for (i = 0; i < 0xC; i++) scpflags2[i * 0x80] &= ~8;
@@ -69,18 +69,18 @@ short ModeSetViewLoop(void)
     int n;
     unsigned char *ev;
 
-    sub_B4B88(0xF7, 4, dlggreys);
-    sub_B2DCA(&btn, &ox, &oy);
+    VgaSetPalette(0xF7, 4, dlggreys);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer16, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer16, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
-    sub_91370(pointerspr, x - 4, y);
+    GrabBlock(bm, x - 4, y);
+    DrawArt(pointerspr, x - 4, y);
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -92,13 +92,13 @@ short ModeSetViewLoop(void)
         }
         if (btn != 0) break;
         if (x == ox && y == oy) continue;
-        sub_903F0(bm, ox - 4, oy);
-        sub_91400(bm, x - 4, y);
-        sub_91370(pointerspr, x - 4, y);
+        PutBlock(bm, ox - 4, oy);
+        GrabBlock(bm, x - 4, y);
+        DrawArt(pointerspr, x - 4, y);
         ox = x;
         oy = y;
     }
-    sub_903F0(bm, ox - 4, oy);
+    PutBlock(bm, ox - 4, oy);
     FreeMemBlock(bm);
     return 0;
 }
@@ -124,19 +124,19 @@ short ModeSetEditLoop(void)
     int n;
     unsigned char *ev;
 
-    sub_B4B88(0xF7, 4, dlggreys);
-    sub_B2DCA(&btn, &ox, &oy);
+    VgaSetPalette(0xF7, 4, dlggreys);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     sub_B4BA8();
     oldmusic = gameopts.music;
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer16, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer16, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
-    sub_91370(pointerspr, x - 4, y);
+    GrabBlock(bm, x - 4, y);
+    DrawArt(pointerspr, x - 4, y);
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -148,14 +148,14 @@ short ModeSetEditLoop(void)
         }
         if (!(btn & 6)) {
             if (x != ox || y != oy) {
-                sub_903F0(bm, ox - 4, oy);
-                sub_91400(bm, x - 4, y);
-                sub_91370(pointerspr, x - 4, y);
+                PutBlock(bm, ox - 4, oy);
+                GrabBlock(bm, x - 4, y);
+                DrawArt(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
         } else if (btn & 2) {
-            sub_903F0(bm, ox - 4, oy);
+            PutBlock(bm, ox - 4, oy);
             if (ModeSetHitTest(x, y, &hit)) {
                 if (hit < 0x12) {
                     if (hit % 2) {
@@ -173,7 +173,7 @@ short ModeSetEditLoop(void)
                 } else if (hit == 0x12) {
                     int sfx;  /* declared here: at the top the then-branch copies it into eax */
 
-                    sub_903F0(acptspr, 0x37, 0xF8);
+                    PutBlock(acptspr, 0x37, 0xF8);
                     gameopts.optbit0 = (setbits[0] & 1) != 0;
                     gameopts.offsides = (setbits[0] & 2) != 0;
                     gameopts.linechanges = (setbits[0] & 4) != 0;
@@ -208,23 +208,23 @@ short ModeSetEditLoop(void)
                     FreeMemBlock(bm);
                     return 0;
                 } else {
-                    sub_903F0(fdlg_cancel, 0x81, 0xF8);
+                    PutBlock(fdlg_cancel, 0x81, 0xF8);
                     FreeMemBlock(bm);
                     return 0;
                 }
             }
-            sub_91400(bm, x - 4, y);
-            sub_91370(pointerspr, x - 4, y);
+            GrabBlock(bm, x - 4, y);
+            DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         } else if (btn & 4) {
-            sub_903F0(bm, ox - 4, oy);
+            PutBlock(bm, ox - 4, oy);
             FreeMemBlock(bm);
             return 0;
         } else {
-            sub_903F0(bm, ox - 4, oy);
-            sub_91400(bm, x - 4, y);
-            sub_91370(pointerspr, x - 4, y);
+            PutBlock(bm, ox - 4, oy);
+            GrabBlock(bm, x - 4, y);
+            DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         }

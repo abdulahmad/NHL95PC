@@ -32,7 +32,7 @@ int SetupGame(void)
     ResetGameVars();
     introskipped = s;
     if (s) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
     }
     if (gameopts.linechanges || !introskipped) PlacePlayersAtStart();

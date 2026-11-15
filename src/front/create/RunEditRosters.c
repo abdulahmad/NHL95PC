@@ -43,24 +43,24 @@ void RunEditRosters(void)
     pal = 0;
     editrosters_exit = (int)pal;
     rostereditmode = (int)pal;
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp7, 0x300, 0x20);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
     sub_B4BA8();
     dword_EA2B0 = mainfont;
-    sub_8EA18(dword_EA2B0);
-    sub_8E9E8(s.state);
+    TextSetFont(dword_EA2B0);
+    TextSaveState(s.state);
     if (musicon && songdata) {
         while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
-    fullscrbmp = sub_B4F8C(0x280, 0x1E0, 0x20);
+    fullscrbmp = CreateBitmap(0x280, 0x1E0, 0x20);
     sz = ((*(int *)(pointerspr + 2) >> 16) + 1) * ((*(int *)(pointerspr + 4) >> 16) + 1) + 0x11;
-    editptrspr = sub_8CCA8((char *)str_Pointer11, sz, 0x20);
+    editptrspr = AllocMemBlock((char *)str_Pointer11, sz, 0x20);
     *(Hdr17 *)editptrspr = *(Hdr17 *)pointerspr;
     ((short *)editptrspr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)editptrspr)[3] = ((short *)pointerspr)[3] + 1;
@@ -70,10 +70,10 @@ void RunEditRosters(void)
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    sub_8EA00(s.state);
+    TextRestoreState(s.state);
     FreeMemBlock(fullscrbmp);
     boxfillcolor = s.fill;
     boxlitecolor = s.lite;
@@ -107,24 +107,24 @@ void DrawEditRosters(void)
     SetTextColors(0x40, 0x43);
     DrawMenuBar(editrostersmenubar, 5, 0x40, 0x41, 0x42);
     MakePath(buf, fileoncd[0x1C3] == 1 ? (char *)cddriveptr : 0, (char *)str_Prez2, 0);
-    bank = sub_8E83C(buf, 0);
-    memcpy(savepal, (char *)sub_B30B4(bank, (char *)str_Pal) + 0x10, 0x300);
-    shape = sub_B30B4(bank, (char *)str_ea);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(shape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    bank = LoadBank(buf, 0);
+    memcpy(savepal, (char *)FindShape(bank, (char *)str_Pal) + 0x10, 0x300);
+    shape = FindShape(bank, (char *)str_ea);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(shape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(bank);
     DrawRosterPanel(0);
     DrawRosterPanel(1);
     if (rostereditmode == 2) {
         DrawDlgFrame(0xB4, 0x8C, 0x1CC, 0x154, 1);
-        sub_90D20(0xB4, 0x8C, 0x119, 0xC9, 0x41);
+        FillRect(0xB4, 0x8C, 0x119, 0xC9, 0x41);
         sub_B4FAC(0xB4, 0x8C, 0x1CB, 0x8C, 0x40);
         sub_B4FAC(0xB4, 0x8C, 0xB4, 0x153, 0x40);
         sub_B4FAC(0x1CC, 0x8D, 0x1CC, 0x154, 0x42);
         sub_B4FAC(0xB5, 0x154, 0x1CC, 0x154, 0x42);
-        sub_B5DB0(0xB4, 0x154, 0x41);
-        sub_B5DB0(0x1CC, 0x8C, 0x41);
+        PlotPixel(0xB4, 0x154, 0x41);
+        PlotPixel(0x1CC, 0x8C, 0x41);
         strcpy(buf, (char *)str_Ratings);
         strcat(buf, (char *)&str_space);
         strcat(buf, (char *)rosterteamrec[0] + 0x1A);
@@ -259,7 +259,7 @@ void EditTeamLines(int *which)
     ((TeamRec2E8 *)hmteamrec)[side] = *(TeamRec2E8 *)rosterteamrec[side];
     DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)dblinesmenubar, 3);
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     *(TeamRec2E8 *)hmteamrec = tmp;
     if (!side) HomeTeam = old;
     else VisTeam = old;

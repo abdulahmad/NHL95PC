@@ -14,7 +14,7 @@ void StatsSel9394Season(void)
     statsplayoffs = 0;
     strncpy((char *)statsleague, (char *)exhstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, statsscreenpal);
+    SetPalette(0, 0x100, statsscreenpal);
     FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
     statspal = (int)statsscreenpal;

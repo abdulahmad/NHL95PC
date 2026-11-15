@@ -13,7 +13,7 @@ extern monthdays_m1, msg_CreateError, msg_CreatingLeague, msg_DiskFull, msg_GenS
 extern rand_, ReadSchedGame, ReadTeamNames, ReadTeamRec, RestoreDialogBg, savedname, savleague1, savleague2
 extern seasondb, seasondb_size, SeriesWinner, SetDialogColors, SimulateGame, sprintf_, str_EnterLeagueName, str_extDB
 extern str_extLP, str_gameset, str_KbytesFree, str_KbytesFreeLine, str_Sch, str_sche, str_SelHumanTeams, strcat_
-extern strcpy_, sub_8CCA8, sub_8E8A0, sub_92DE0, sub_932D0, sub_B2DCA, teamdivflags, teamdivision
+extern strcpy_, AllocMemBlock, sub_8E8A0, GetFileSize, WriteFile, MouseRead, teamdivflags, teamdivision
 extern teamdivslot, TextInputDialog, treeteamnames, unknown_libname_1, word_DDD48, word_DDD4A, WriteLeagueInfo, WriteModeState
 extern WriteSchedGame, WriteTeamRec
 global LoadLeagueGameRef, DateKey, NormalizeDate, UpdateSeasonSchedule, UpdateSeasonSchedule_pop3, UpdatePlayoffSeries, SeriesLength_jt, SeriesLength
@@ -235,7 +235,7 @@ add esp, byte 8	; 41DA0
 mov dword [seasondb], eax	; 41DA3
 mov eax, esp	; 41DA8
 push eax	; 41DAA
-call sub_92DE0	; 41DAB
+call GetFileSize	; 41DAB
 add esp, byte 4	; 41DB0
 mov dword [seasondb_size], eax	; 41DB3
 mov ebx, dword [leaguedbnames+4]	; 41DB8
@@ -251,7 +251,7 @@ add esp, byte 8	; 41DD5
 mov dword [careerdb], eax	; 41DD8
 mov eax, esp	; 41DDD
 push eax	; 41DDF
-call sub_92DE0	; 41DE0
+call GetFileSize	; 41DE0
 add esp, byte 4	; 41DE5
 mov dword [careerdb_size], eax	; 41DE8
 mov ebx, dword [leaguedbnames]	; 41DED
@@ -267,7 +267,7 @@ add esp, byte 8	; 41E0A
 mov dword [keydb], eax	; 41E0D
 mov eax, esp	; 41E12
 push eax	; 41E14
-call sub_92DE0	; 41E15
+call GetFileSize	; 41E15
 add esp, byte 4	; 41E1A
 mov dword [keydb_size], eax	; 41E1D
 .4:
@@ -335,7 +335,7 @@ mov ebx, dword [seasondb]	; 41ECB
 push ebx	; 41ED1
 lea eax, [byte esp+08h]	; 41ED2
 push eax	; 41ED6
-call sub_932D0	; 41ED7
+call WriteFile	; 41ED7
 add esp, byte 0Ch	; 41EDC
 .11:
 mov ecx, dword [seasondb]	; 41EDF
@@ -1142,7 +1142,7 @@ jmp near .10	; 428E6
 push byte 20h	; 428EB
 push dword 276h	; 428ED
 push str_sche	; 428F2
-call sub_8CCA8	; 428F7
+call AllocMemBlock	; 428F7
 add esp, byte 0Ch	; 428FC
 mov esi, eax	; 428FF
 xor edx, edx	; 42901
@@ -1307,7 +1307,7 @@ mov ecx, dword [seasondb]	; 42B55
 push ecx	; 42B5B
 lea eax, [byte esp+07Ch]	; 42B5C
 push eax	; 42B60
-call sub_932D0	; 42B61
+call WriteFile	; 42B61
 add esp, byte 0Ch	; 42B66
 call AwardsCeremony	; 42B69
 mov byte [byte_DE268], 0FFh	; 42B6E
@@ -3768,7 +3768,7 @@ mov ecx, dword [seasondb]	; 449F6
 push ecx	; 449FC
 lea eax, [byte esp+0Ch]	; 449FD
 push eax	; 44A01
-call sub_932D0	; 44A02
+call WriteFile	; 44A02
 add esp, byte 0Ch	; 44A07
 call AwardsCeremony	; 44A0A
 mov byte [byte_DE268], 0FFh	; 44A0F
@@ -3871,7 +3871,7 @@ jne near .x	; 44B27
 push byte 20h	; 44B2D
 push dword 276h	; 44B2F
 push str_Sch	; 44B34
-call sub_8CCA8	; 44B39
+call AllocMemBlock	; 44B39
 add esp, byte 0Ch	; 44B3E
 mov dword [playoffbuf], eax	; 44B41
 mov ecx, 276h	; 44B46
@@ -4022,7 +4022,7 @@ mov edi, dword [seasondb]	; 44D54
 push edi	; 44D5A
 lea eax, [byte esp+08h]	; 44D5B
 push eax	; 44D5F
-call sub_932D0	; 44D60
+call WriteFile	; 44D60
 add esp, byte 0Ch	; 44D65
 call AwardsCeremony	; 44D68
 mov byte [byte_DE268], 0FFh	; 44D6D
@@ -4138,7 +4138,7 @@ lea eax, [byte esp+068h]	; 44EC2
 push eax	; 44EC6
 lea eax, [byte esp+070h]	; 44EC7
 push eax	; 44ECB
-call sub_B2DCA	; 44ECC
+call MouseRead	; 44ECC
 add esp, byte 0Ch	; 44ED1
 mov edx, str_extLP	; 44ED4
 lea eax, [byte esp+04Ch]	; 44ED9
@@ -4402,7 +4402,7 @@ lea eax, [byte esp+068h]	; 45217
 push eax	; 4521B
 lea eax, [byte esp+070h]	; 4521C
 push eax	; 45220
-call sub_B2DCA	; 45221
+call MouseRead	; 45221
 add esp, byte 0Ch	; 45226
 push byte 0FFFFFFFFh	; 45229
 lea eax, [byte esp+064h]	; 4522B

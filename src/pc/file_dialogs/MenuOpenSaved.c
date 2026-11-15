@@ -38,16 +38,16 @@ int MenuOpenSaved(int a, int b)
     int i;
 
     ScanSavedGames();
-    bm = sub_8CCA8((char *)str_Buf, 0xB825, 0x20);
+    bm = AllocMemBlock((char *)str_Buf, 0xB825, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xEE;
     ((short *)bm)[3] = 0xC6;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     LoadFileDlgShapes();
     DrawFileDlg();
     DrawFileDlgTabs();
     r = RunFileDlg();
-    sub_910E0(bm, 0xA, 0x13);
+    DrawArtOpaque(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(fdlgshapes);
     fdlgshapes = 0;

@@ -67,7 +67,7 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
                 }
             }
         } else {
-            sub_B2DCA(&s.mx, &s.my, &s.btn);
+            MouseRead(&s.mx, &s.my, &s.btn);
             MessageBox(-1, -1, (char *)firstteammsg, 2, 0, 0, (int)&s.my, (int)&s.btn, -1);
             err = 4;
         }
@@ -78,7 +78,7 @@ int CheckLeagueDiskSync(char *dir, char *teams, int team, int sync, int probe)
         *(char **)(leaguediskmsg + 4) = s.league;
         strcpy(s.teamname, rec);
         *(char **)(leaguediskmsg + 12) = s.teamname;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)leaguediskmsg, 5, 0, 0, (int)&s.my, (int)&s.btn, -1);
     }
     return err;

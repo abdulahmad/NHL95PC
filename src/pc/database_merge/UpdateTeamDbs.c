@@ -53,7 +53,7 @@ void UpdateTeamDbs(void)
     s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
     if (!err && leaguesaved) {
         msg_SavedGame_arg = (int)s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)msg_SavedGame, 3, err, err, (int)&s.my, (int)&s.btn, -1);
         shown = -1;
     }
@@ -72,12 +72,12 @@ void UpdateTeamDbs(void)
         else {
             *(char **)(mergestatemsg + 4) = s.name;
             *(char **)(mergestatemsg + 8) = (char *)str_HasNotBeenMerged;
-            sub_B2DCA(&s.mx, &s.my, &s.btn);
+            MouseRead(&s.mx, &s.my, &s.btn);
             MessageBox(-1, -1, (char *)mergestatemsg, 3, io, io, (int)&s.my, (int)&s.btn, -1);
         }
     }
     if (io) {
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)updateerrmsg, 2, 0, 0, (int)&s.my, (int)&s.btn, -1);
     }
 done:
@@ -129,15 +129,15 @@ int MergeLeagueFiles(void)
     s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
     if (leaguesaved) {
         msg_SavedGame_arg = (int)s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)msg_SavedGame, 3, r, r, (int)&s.my, (int)&s.btn, -1);
     } else if (lgteamflags[leaguemaster * 30] == 2) {
         *(char **)(masterctlmsg + 4) = s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)masterctlmsg, 3, r, r, (int)&s.my, (int)&s.btn, -1);
     } else if (lgplayeridfile) {
         *(char **)(masteronlymsg + 8) = s.name;
-        sub_B2DCA(&s.mx, &s.my, &s.btn);
+        MouseRead(&s.mx, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)masteronlymsg, 3, r, r, (int)&s.my, (int)&s.btn, -1);
     } else if (!(leagueflags & 4)) {
         if (!r) {
@@ -205,7 +205,7 @@ int MergeLeagueFiles(void)
         }
         RestoreDialogBg();
         FileClose(&s.fh);
-        sub_B2DCA(&s.i, &s.my, &s.btn);
+        MouseRead(&s.i, &s.my, &s.btn);
         if (err == 4) {
             if (*(int *)&leagueflags == 8)
                 MessageBox(-1, -1, (char *)mergeincompletemsg, 3, 0, 0, (int)&s.my, (int)&s.btn, -1);
@@ -215,7 +215,7 @@ int MergeLeagueFiles(void)
     } else {
         *(char **)(mergestatemsg + 4) = s.name;
         *(char **)(mergestatemsg + 8) = (char *)str_IsAlreadyMerged;
-        sub_B2DCA(&s.i, &s.my, &s.btn);
+        MouseRead(&s.i, &s.my, &s.btn);
         MessageBox(-1, -1, (char *)mergestatemsg, 3, r, r, (int)&s.my, (int)&s.btn, -1);
     }
 done:
@@ -266,7 +266,7 @@ void RebuildLeagueDbs(void)
             err = CopyHumanTeamDBs((char *)&curleague, leagueteams, -1);
         }
         if (err != 0) {
-            sub_B2DCA(&s.mx, &s.my, &s.btn);
+            MouseRead(&s.mx, &s.my, &s.btn);
             MessageBox(-1, -1, (char *)updateerrmsg, 2, 0, 0, (int)&s.my, (int)&s.btn, -1);
         }
     }

@@ -5,10 +5,10 @@ section s_B4CD8 progbits alloc exec nowrite align=1
 extern byte_D42E4, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30BC, dword_D30C0, dword_D30CC, dword_D30D0
 extern sub_9A7A0, sub_9B498, sub_B40E2
 global sub_B4CD8, sub_B4CF2, loc_B4D0C, loc_B4D1A, loc_B4D3C, loc_B4D49, loc_B4D53, loc_B4D5B
-global loc_B4D7A, loc_B4D80, loc_B4D9E, loc_B4DA5, loc_B4DAD, sub_B4DD4, sub_B4DEC, loc_B4E17
+global loc_B4D7A, loc_B4D80, loc_B4D9E, loc_B4DA5, loc_B4DAD, SetColorRemap, sub_B4DEC, loc_B4E17
 global loc_B4E23, sub_B4E50, loc_B4E84, loc_B4E92, loc_B4EB4, loc_B4EC1, loc_B4ED4, loc_B4EDC
 global loc_B4EFB, loc_B4F01, loc_B4F1F, loc_B4F26, loc_B4F2A, loc_B4F3C, loc_B4F40, SetDrawBitmap
-global sub_B4F8C, sub_B4FA6, sub_B4FAC, loc_B4FE6, sub_B4FE8, sub_B500C, loc_B5040, loc_B5072
+global CreateBitmap, sub_B4FA6, sub_B4FAC, loc_B4FE6, sub_B4FE8, sub_B500C, loc_B5040, loc_B5072
 global loc_B5077, loc_B509C, loc_B50CA, loc_B50EC, loc_B50F2, loc_B5104, loc_B512F, loc_B513D
 global loc_B514A, loc_B515D, loc_B5175, loc_B5178, loc_B5183, loc_B5189, loc_B5193, loc_B519B
 global loc_B51BD, loc_B51C8, loc_B51CD, loc_B51D3, loc_B51D6, loc_B51E1, loc_B51FE, loc_B520E
@@ -148,7 +148,7 @@ LD or, ecx, ecx	; B4DCA
 jg short loc_B4DA5	; B4DCC
 jmp near loc_B4D3C	; B4DCE
 db 00h
-sub_B4DD4:
+SetColorRemap:
 push ebp	; B4DD4
 LD mov, ebp, esp	; B4DD5
 push esi	; B4DD7
@@ -348,7 +348,7 @@ LD mov, edi, edx	; B4F84
 LD mov, esi, eax	; B4F86
 ret	; B4F88
 db 00h,00h,00h
-sub_B4F8C:
+CreateBitmap:
 mov eax, dword [byte esp+04h]	; B4F8C
 mov edx, dword [byte esp+08h]	; B4F90
 mov ebx, dword [byte esp+0Ch]	; B4F94

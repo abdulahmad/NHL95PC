@@ -27,7 +27,7 @@ extern sflags, sflags3, sfx, shotongoal, shotontarget, SortCords, sortobj15, spr
 extern str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str_B4, str_B5, str_B6, str_B7
 extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix, str_FmtParenD
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
-extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1, textline2
+extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1, textline2
 extern textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
 extern vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
 extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
@@ -819,7 +819,7 @@ mov word [byte esp+018h], bx	; 61D5E
 mov ebp, ecx	; 61D63
 mov edx, dword [scor2font]	; 61D65
 push edx	; 61D6B
-call sub_8EA18	; 61D6C
+call TextSetFont	; 61D6C
 add esp, byte 4	; 61D71
 mov ebx, dword [byte esp+030h]	; 61D74
 push ebx	; 61D78
@@ -921,7 +921,7 @@ add esp, byte 18h	; 61E7F
 .3:
 mov eax, dword [s1font]	; 61E82
 push eax	; 61E87
-call sub_8EA18	; 61E88
+call TextSetFont	; 61E88
 add esp, byte 4	; 61E8D
 add esp, byte 1Ch	; 61E90
 pop ebp	; 61E93

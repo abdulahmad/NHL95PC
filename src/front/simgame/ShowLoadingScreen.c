@@ -19,15 +19,15 @@ void ShowLoadingScreen(void)
     int k;
 
     if (loadscreenon) return;
-    sub_8FFB0(0, 0x100, loadpals);
+    SetPalette(0, 0x100, loadpals);
     FadePalStep(1, loadpals, 8);
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     if (sub_8DAB8() <= 0x222E0) return;
     memset(loadpals, 0, 0x900);
     MakePath(path, fileoncd[0x222] == 1 ? (char *)cddriveptr : 0, (char *)str_LoadPic, 0);
-    bank = sub_8E83C(path, 0);
-    src = (char *)sub_B30B4(bank, (char *)str_Pal23) + 0x10;
+    bank = LoadBank(path, 0);
+    src = (char *)FindShape(bank, (char *)str_Pal23) + 0x10;
     memcpy(pal, src, 0x300);
     memcpy(pal2, src, 0x300);
     memcpy(pal3, src, 0x300);
@@ -45,8 +45,8 @@ void ShowLoadingScreen(void)
         pal3[i * 3 + 1] = pal[j * 3 + 1];
         pal3[i * 3 + 2] = pal[j * 3 + 2];
     }
-    pic = sub_B30B4(bank, (char *)str_LoadPic);
-    sub_910E0(pic, 0x64, 0x4B);
+    pic = FindShape(bank, (char *)str_LoadPic);
+    DrawArtOpaque(pic, 0x64, 0x4B);
     FreeMemBlock(bank);
     palcyclelock = 1;
     palcyclephase = 0;

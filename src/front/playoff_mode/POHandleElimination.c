@@ -50,8 +50,8 @@ void POHandleElimination(int mode, unsigned char *po)
     dword_C6D26 = 0;
     DrawPlayoffTree();
     MakePath(s.ppath, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
-    s.bank = bank = sub_8E83C(s.ppath, 0);
-    s.pal = (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10;
+    s.bank = bank = LoadBank(s.ppath, 0);
+    s.pal = (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10;
     if (mode == 0) {
         DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
         FadePalStep(0, s.pal, 0x10);
@@ -61,13 +61,13 @@ void POHandleElimination(int mode, unsigned char *po)
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
     seasondb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-    seasondb_size = sub_92DE0(s.path);
+    seasondb_size = GetFileSize(s.path);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[1], (char *)str_extDB);
     careerdb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-    careerdb_size = sub_92DE0(s.path);
+    careerdb_size = GetFileSize(s.path);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[0], (char *)str_extDB);
     keydb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-    keydb_size = sub_92DE0(s.path);
+    keydb_size = GetFileSize(s.path);
     if (mode == 1) {
         FadePalStep(0, s.pal, 0x10);
         if (MessageBox(-1, -1, (char *)msg_POHumanOut, 4, (int)btn_POHumanOut, 2, (int)&s.x, (int)&s.y, -1) != 0) {
@@ -137,7 +137,7 @@ void POHandleElimination(int mode, unsigned char *po)
     }
     FadePalStep(1, s.pal, 0x10);
     MakePath(s.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
-    sub_932D0(s.path, seasondb, seasondb_size);
+    WriteFile(s.path, seasondb, seasondb_size);
     if (seasondb) FreeMemBlock((int)seasondb);
     if (careerdb) FreeMemBlock((int)careerdb);
     if (keydb) FreeMemBlock((int)keydb);

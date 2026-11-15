@@ -4,9 +4,9 @@ bits 32
 section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
-extern sub_8CC70, sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
-extern sub_B3AA1, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
-extern sub_B4F8C, sub_B5E00, sub_B6DF7
+extern sub_8CC70, AllocMemBlock, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
+extern sub_B3AA1, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, SetClipWindow
+extern CreateBitmap, sub_B5E00, sub_B6DF7
 global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
 global loc_965A4, loc_965CB, loc_965D4, sub_965DC, sub_96690, sub_966E4, loc_967AE, loc_967C3
 global sub_96844, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
@@ -200,7 +200,7 @@ mov eax, dword [dword esp+088h]	; 9664F
 add eax, ebp	; 96656
 push eax	; 96658
 push ebp	; 96659
-call sub_B4BC4	; 9665A
+call SetClipWindow	; 9665A
 add esp, byte 10h	; 9665F
 mov edx, dword [byte esp+07Ch]	; 96662
 mov eax, edi	; 96666
@@ -340,7 +340,7 @@ sub eax, ecx	; 9678C
 mov dword [byte esp+04h], eax	; 9678E
 push eax	; 96792
 push str_Mvipal	; 96793
-call sub_8CCA8	; 96798
+call AllocMemBlock	; 96798
 add esp, byte 0Ch	; 9679D
 mov edx, edi	; 967A0
 mov dword [byte edx+01Ch], eax	; 967A2
@@ -381,21 +381,21 @@ push byte 0	; 967FF
 mov ebx, dword [byte esp+01Ch]	; 96801
 push ebx	; 96805
 push ebp	; 96806
-call sub_B4F8C	; 96807
+call CreateBitmap	; 96807
 add esp, byte 0Ch	; 9680C
 mov dword [byte edi+034h], eax	; 9680F
 push byte 0	; 96812
 mov ecx, dword [byte esp+01Ch]	; 96814
 push ecx	; 96818
 push ebp	; 96819
-call sub_B4F8C	; 9681A
+call CreateBitmap	; 9681A
 add esp, byte 0Ch	; 9681F
 mov dword [byte edi+038h], eax	; 96822
 push byte 0	; 96825
 mov esi, dword [byte esp+01Ch]	; 96827
 push esi	; 9682B
 push ebp	; 9682C
-call sub_B4F8C	; 9682D
+call CreateBitmap	; 9682D
 add esp, byte 0Ch	; 96832
 mov dword [byte edi+03Ch], eax	; 96835
 add esp, byte 1Ch	; 96838

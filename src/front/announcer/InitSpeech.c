@@ -10,11 +10,11 @@ void InitSpeech(unsigned char id, int size, int copybuf, int copylen)
     speechchannel = 0;
     speechcopybuf = copybuf;
     speechcopylen = copylen;
-    speechq = sub_8CCA8((char *)str_Sentence, 100, cursndbank);
+    speechq = AllocMemBlock((char *)str_Sentence, 100, cursndbank);
     ResetSpeechQueue();
-    samplereq = (unsigned char *)sub_8CCA8((char *)str_SampleMemMan, 0x110, cursndbank);
+    samplereq = (unsigned char *)AllocMemBlock((char *)str_SampleMemMan, 0x110, cursndbank);
     ResetSampleReq();
-    speechbank = (SpeechSlot *)sub_8CCA8((char *)str_SpeechBank, 0x3B93, cursndbank);
+    speechbank = (SpeechSlot *)AllocMemBlock((char *)str_SpeechBank, 0x3B93, cursndbank);
     InitSpeechSlots(size);
     addtimer((void (*)(void))SpeechTimerTick);
     speechinit = 1;

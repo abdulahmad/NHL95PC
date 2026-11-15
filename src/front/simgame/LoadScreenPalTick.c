@@ -15,6 +15,6 @@ void LoadScreenPalTick(void)
     palcycledelay = 3;
     palcyclephase = (palcyclephase + 1) % 3;
     sub_B4C61();
-    sub_B4B88(0, 0x100, loadpals + palcyclephase * 0x300);
+    VgaSetPalette(0, 0x100, loadpals + palcyclephase * 0x300);
     palcyclelock = 0;
 }

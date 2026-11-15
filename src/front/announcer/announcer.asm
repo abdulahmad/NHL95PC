@@ -25,10 +25,10 @@ extern str_Rnk, str_SampleMemMan, str_SBDAC, str_SBDAC2, str_Scor1otpBar, str_Sc
 extern str_Scor3otpBar, str_Scor3perBar, str_ScortotpBar, str_SecondsCor, str_Sentence, str_Slapshot, str_SoundBlaster2, str_SpeechBank
 extern str_Speechbuf, str_SS5, str_SSS, str_StanleydBar, str_StanleyuBar, str_TakeynowBar, str_Tea, str_ThegameBar
 extern str_TonightBar, str_ULTRASOUND, str_VIV, str_WestfindBar, str_WestfinuBar, str_WestquadBar, str_WestquauBar, str_WestsemdBar
-extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4
-extern sub_8EB5B, sub_8EB93, sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5
-extern sub_8FC37, sub_8FC8A, sub_8FCAC, sub_8FCDF, sub_903F0, sub_91370, sub_91400, sub_97079
-extern sub_98028, sub_B2DCA, sub_B4BA8, str_R4, sndselbox1, sndselbox2, msg_NoSoundCard, WaitDigiSample
+extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, AllocMemBlock, sub_8D2F0, sub_8DBD4
+extern sub_8EB5B, sub_8EB93, sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5
+extern sub_8FC37, sub_8FC8A, sub_8FCAC, sub_8FCDF, PutBlock, DrawArt, GrabBlock, sub_97079
+extern sub_98028, MouseRead, sub_B4BA8, str_R4, sndselbox1, sndselbox2, msg_NoSoundCard, WaitDigiSample
 extern WaitTickDeadline
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
@@ -281,7 +281,7 @@ mov ebx, dword [cursndbank]	; 835B7
 push ebx	; 835BD
 push byte 64h	; 835BE
 push str_Sentence	; 835C0
-call sub_8CCA8	; 835C5
+call AllocMemBlock	; 835C5
 add esp, byte 0Ch	; 835CA
 mov dword [speechq], eax	; 835CD
 call ResetSpeechQueue	; 835D2
@@ -289,7 +289,7 @@ mov ecx, dword [cursndbank]	; 835D7
 push ecx	; 835DD
 push dword 110h	; 835DE
 push str_SampleMemMan	; 835E3
-call sub_8CCA8	; 835E8
+call AllocMemBlock	; 835E8
 add esp, byte 0Ch	; 835ED
 mov dword [samplereq], eax	; 835F0
 call ResetSampleReq	; 835F5
@@ -297,7 +297,7 @@ mov edi, dword [cursndbank]	; 835FA
 push edi	; 83600
 push dword 3B93h	; 83601
 push str_SpeechBank	; 83606
-call sub_8CCA8	; 8360B
+call AllocMemBlock	; 8360B
 add esp, byte 0Ch	; 83610
 mov dword [speechbank], eax	; 83613
 mov eax, esi	; 83618
