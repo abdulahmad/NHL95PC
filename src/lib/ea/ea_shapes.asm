@@ -10,7 +10,7 @@ extern sub_8D2F0, sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, sub_971F8, sub_972
 extern sub_A2610, sub_A27C4, sub_A28F0, sub_A2AB8, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
 global sub_98B30, sub_98BEC, sub_98D20, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
-global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, sub_98DD8, loc_98DF6, loc_98E06
+global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, removewindow, loc_98DF6, loc_98E06
 global loc_98E17, loc_98E36, loc_98E47, sub_98E50, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
 global loc_98F44, sub_98F46, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
 global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
@@ -271,7 +271,7 @@ pop esi	; 98DD4
 pop ecx	; 98DD5
 ret	; 98DD6
 db 090h
-sub_98DD8:
+removewindow:
 push ebx	; 98DD8
 push ecx	; 98DD9
 push edx	; 98DDA

@@ -6,7 +6,7 @@ extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECC
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, dword_E0244, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, sub_8CCA8
-extern sub_8DAB8, sub_8EA18, sub_91FA4, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3
+extern sub_8DAB8, sub_8EA18, sub_91FA4, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3
 global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
 global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
 global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
@@ -188,7 +188,7 @@ lea edx, [byte eax+018h]	; 1B2FD
 push edx	; 1B300
 mov ebp, dword [byte eax+048h]	; 1B301
 push ebp	; 1B304
-call sub_B3B5A	; 1B305
+call openhandle	; 1B305
 add esp, byte 10h	; 1B30A
 mov eax, dword [dword_DC8A0]	; 1B30D
 mov edx, dword [byte eax+034h]	; 1B312

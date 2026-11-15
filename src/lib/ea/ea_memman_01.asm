@@ -5,10 +5,10 @@ section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
 extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
 extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
-extern sub_8DB8C, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
+extern getmemblock, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
 global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, sub_8CCA8
-global sub_8CCC4, sub_8CCE0, sub_8CD04, sub_8CD4C, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
+global sub_8CCC4, sub_8CCE0, sub_8CD04, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
 global loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A, loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA
 global loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82, loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4
 global loc_8CFBD, loc_8D022, loc_8D035, loc_8D03D, loc_8D08F, loc_8D097, loc_8D0BF, loc_8D0C1
@@ -40,7 +40,7 @@ dec eax	; 8C9CE
 mov dword [byte esi+0Ch], eax	; 8C9CF
 mov eax, dword [byte esp+024h]	; 8C9D2
 mov dword [byte esi+010h], eax	; 8C9D6
-call sub_8DB8C	; 8C9D9
+call getmemblock	; 8C9D9
 mov edi, eax	; 8C9DE
 push byte 0Ch	; 8C9E0
 push str_LOWMEM	; 8C9E2
@@ -56,7 +56,7 @@ mov eax, dword [byte esp+010h]	; 8CA0A
 or ah, 80h	; 8CA0E
 mov dword [byte edi+018h], eax	; 8CA11
 mov dword [esi], edi	; 8CA14
-call sub_8DB8C	; 8CA16
+call getmemblock	; 8CA16
 mov edi, eax	; 8CA1B
 push byte 0Ch	; 8CA1D
 push str_HIGHMEM	; 8CA1F
@@ -159,7 +159,7 @@ mov eax, edx	; 8CB1F
 not eax	; 8CB21
 and ebp, eax	; 8CB23
 and dword [byte esp+018h], eax	; 8CB25
-call sub_8DB8C	; 8CB29
+call getmemblock	; 8CB29
 mov esi, eax	; 8CB2E
 push byte 0Ch	; 8CB30
 push str_HIGHMEM	; 8CB32
@@ -357,7 +357,7 @@ mov esi, dword [byte esp+01Ch]	; 8CD20
 push esi	; 8CD24
 mov edi, dword [byte esp+01Ch]	; 8CD25
 push edi	; 8CD29
-call sub_8CD4C	; 8CD2A
+call reservemem	; 8CD2A
 mov esi, eax	; 8CD2F
 add esp, byte 10h	; 8CD31
 mov ebp, dword [dword_EDAB0]	; 8CD34
@@ -370,7 +370,7 @@ pop edi	; 8CD46
 pop esi	; 8CD47
 ret	; 8CD48
 db 08Dh,040h,00h
-sub_8CD4C:
+reservemem:
 push esi	; 8CD4C
 push edi	; 8CD4D
 push ebp	; 8CD4E
@@ -477,7 +477,7 @@ jmp short loc_8CE43	; 8CE66
 loc_8CE68:
 cmp edx, dword [esp]	; 8CE68
 jl short loc_8CEC9	; 8CE6B
-call sub_8DB8C	; 8CE6D
+call getmemblock	; 8CE6D
 mov esi, eax	; 8CE72
 mov eax, dword [byte esp+01Ch]	; 8CE74
 mov dword [byte esi+018h], eax	; 8CE78
@@ -605,7 +605,7 @@ jmp short loc_8CF84	; 8CFBB
 loc_8CFBD:
 cmp ebx, dword [esp]	; 8CFBD
 jl short loc_8D022	; 8CFC0
-call sub_8DB8C	; 8CFC2
+call getmemblock	; 8CFC2
 mov esi, eax	; 8CFC7
 mov eax, dword [byte esp+01Ch]	; 8CFC9
 mov dword [byte esi+018h], eax	; 8CFCD

@@ -864,7 +864,7 @@ short PickForLineSlot(short side, short slot);  /* 64E60 */
 void RefillLineSlots(short side, short slot, short from, short to, short step);  /* 6552E */
 void __cdecl sub_B4BC4(int x1, int x2, int y1, int y2);  /* video library: clip window */
 void __cdecl sub_B4C33(void);  /* video library */
-void __cdecl sub_8E080(int w, int h);  /* video library: set mode size */
+void __cdecl initgraphics(int w, int h);  /* video library: set mode size */
 void __cdecl sub_B2E1B(int x, int y, int w, int h);  /* graphics library: view rect */
 void SetScreenSize(int w, int h);  /* 10E9F */
 int avdgoal_box(Player *p, int x1, int x2, int y, int *ps, int *pt);  /* 5F04E */

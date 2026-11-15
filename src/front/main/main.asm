@@ -34,8 +34,8 @@ extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_Che
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, sub_6A9CE
-extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2F0, sub_8DF54, sub_8E080
-extern sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
+extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2F0, sub_8DF54, initgraphics
+extern subwindowdefadr, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
 extern sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C, sub_B29F0, sub_B2CBE
 extern sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4, sub_B30F4, sub_B33DB, sub_B3464, sub_B392C
 extern sub_B3A24, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, teamabbrevs
@@ -241,7 +241,7 @@ mov dword [dword_C4CFC], 30D40h	; 1022C
 .7:
 push dword 1E0h	; 10236
 push dword 280h	; 1023B
-call sub_8E080	; 10240
+call initgraphics	; 10240
 add esp, byte 8	; 10245
 call InstallTimer	; 10248
 xor eax, eax	; 1024D
@@ -270,7 +270,7 @@ push dword 140h	; 102A6
 push dword 0A8h	; 102AB
 push byte 0	; 102B0
 push dword_D30D4	; 102B2
-call sub_8E7A0	; 102B7
+call subwindowdefadr	; 102B7
 add esp, byte 14h	; 102BC
 mov dword [screenbm], eax	; 102BF
 mov edx, 1E0h	; 102C4
@@ -1362,7 +1362,7 @@ add esp, byte 4	; 10F0A
 call sub_B4C33	; 10F0D
 push edi	; 10F12
 push esi	; 10F13
-call sub_8E080	; 10F14
+call initgraphics	; 10F14
 add esp, byte 8	; 10F19
 push unk_C4E30	; 10F1C
 push dword 100h	; 10F21

@@ -4,7 +4,7 @@ bits 32
 section s_93308 progbits alloc exec nowrite align=1
 extern str_SavefileblockaOPENFAILEDFOR, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, FatalError
 extern sub_8DBD4, sub_8DBDC, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
-global sub_93308, sub_9333C, sub_93354, sub_9336C, loc_933C7, loc_933CB, loc_933E8, imul32
+global sub_93308, sub_9333C, sub_93354, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
 global sub_933FB, sub_93470, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
 global sub_93540, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
 global loc_93622, sub_9362C, loc_93671, loc_936A4, unk_936AC, sub_936C0, loc_936E8, loc_93705
@@ -25,7 +25,7 @@ lea eax, [byte esp+04h]	; 93325
 push eax	; 93329
 mov ecx, dword [byte esp+034h]	; 9332A
 push ecx	; 9332E
-call sub_9336C	; 9332F
+call savefileblocka	; 9332F
 add esp, byte 0Ch	; 93334
 add esp, byte 28h	; 93337
 ret	; 9333A
@@ -36,7 +36,7 @@ mov edx, dword [byte esp+0Ch]	; 9333E
 push edx	; 93342
 mov ebx, dword [byte esp+0Ch]	; 93343
 push ebx	; 93347
-call sub_9336C	; 93348
+call savefileblocka	; 93348
 add esp, byte 0Ch	; 9334D
 ret	; 93350
 db 08Dh,040h,00h
@@ -46,11 +46,11 @@ mov edx, dword [byte esp+0Ch]	; 93356
 push edx	; 9335A
 mov ebx, dword [byte esp+0Ch]	; 9335B
 push ebx	; 9335F
-call sub_9336C	; 93360
+call savefileblocka	; 93360
 add esp, byte 0Ch	; 93365
 ret	; 93368
 db 08Dh,040h,00h
-sub_9336C:
+savefileblocka:
 push esi	; 9336C
 push edi	; 9336D
 push ebp	; 9336E

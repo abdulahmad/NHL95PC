@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90D20 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
-extern dword_D4108, dword_D43E4, FreeMemBlock, sub_8D2F0, sub_98DD8, sub_B392C, sub_B3A88, sub_B3AA1
+extern dword_D4108, dword_D43E4, FreeMemBlock, sub_8D2F0, removewindow, sub_B392C, sub_B3A88, sub_B3AA1
 extern sub_B3ABC, sub_B3FB0, sub_B4BA8, sub_B5E00, sub_B6665, sub_B677D, sub_B6887, sub_B693C
 global sub_90D20, loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71
 global loc_90E82, loc_90EA5, loc_90EAD, loc_90EB8, sub_90EC0, loc_90EE1, loc_90EF0, loc_90F00
@@ -581,7 +581,7 @@ mov edx, dword [byte esp+04h]	; 91310
 mov eax, dword [edx]	; 91314
 mov eax, dword [byte eax+028h]	; 91316
 sub eax, byte 8	; 91319
-call sub_98DD8	; 9131C
+call removewindow	; 9131C
 push edx	; 91321
 call sub_8D2F0	; 91322
 add esp, byte 4	; 91327
@@ -591,7 +591,7 @@ sub_9132C:
 mov edx, dword [byte esp+04h]	; 9132C
 mov eax, dword [byte edx+028h]	; 91330
 sub eax, byte 8	; 91333
-call sub_98DD8	; 91336
+call removewindow	; 91336
 push edx	; 9133B
 call FreeMemBlock	; 9133C
 add esp, byte 4	; 91341

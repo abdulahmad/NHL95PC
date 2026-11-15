@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
 extern str_GetmemblockNOMEMORYBLOCKS, dword_D2F58, dword_D2F64, dword_EDAAC, dword_EDAB0, dword_EDAB4, FatalError, findmemblock
-extern memlist1, sub_8CD4C, sub_8E3F8, sub_8E44C, sub_986E4, sub_B3ABC, unknown_libname_22
+extern memlist1, reservemem, sub_8E3F8, sub_8E44C, sub_986E4, sub_B3ABC, unknown_libname_22
 global sub_8D2F0, sub_8D31C, loc_8D340, sub_8D344, sub_8D35C, loc_8D379, loc_8D38E, sub_8D3A0
 global sub_8D3D4, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, sub_8D468, sub_8D484
 global sub_8D494, sub_8D4B0, sub_8D4E8, loc_8D521, loc_8D53A, loc_8D542, sub_8D548, sub_8D558
@@ -14,7 +14,7 @@ global loc_8D85F, loc_8D861, loc_8D874, loc_8D87F, loc_8D88C, loc_8D898, loc_8D8
 global loc_8D93F, loc_8D946, loc_8D94E, sub_8D958, sub_8D990, loc_8D9A6, loc_8D9AC, loc_8D9C0
 global loc_8D9CA, loc_8D9D6, loc_8D9E6, loc_8DA16, loc_8DA6E, loc_8DA8F, sub_8DA98, loc_8DAAD
 global sub_8DAB8, sub_8DAE4, loc_8DB05, loc_8DB12, sub_8DB20, sub_8DB2C, loc_8DB39, loc_8DB42
-global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, sub_8DB8C, loc_8DBB1, sub_8DBC0
+global loc_8DB49, sub_8DB4C, loc_8DB60, loc_8DB6D, sub_8DB78, getmemblock, loc_8DBB1, sub_8DBC0
 global sub_8DBD4, sub_8DBDC
 sub_8D2F0:
 mov edx, dword [dword_EDAB0]	; 8D2F0
@@ -409,7 +409,7 @@ mov edx, dword [byte ebp+014h]	; 8D6B2
 push edx	; 8D6B5
 lea eax, [byte esp+0Ch]	; 8D6B6
 push eax	; 8D6BA
-call sub_8CD4C	; 8D6BB
+call reservemem	; 8D6BB
 add esp, byte 10h	; 8D6C0
 mov dword [byte esp+010h], eax	; 8D6C3
 test eax, eax	; 8D6C7
@@ -482,7 +482,7 @@ push edx	; 8D758
 mov ebx, dword [byte edi+014h]	; 8D759
 push ebx	; 8D75C
 push ebp	; 8D75D
-call sub_8CD4C	; 8D75E
+call reservemem	; 8D75E
 mov esi, eax	; 8D763
 add esp, byte 10h	; 8D765
 test eax, eax	; 8D768
@@ -520,7 +520,7 @@ push edx	; 8D7B7
 mov ebx, dword [byte eax+014h]	; 8D7B8
 push ebx	; 8D7BB
 push ebp	; 8D7BC
-call sub_8CD4C	; 8D7BD
+call reservemem	; 8D7BD
 mov esi, eax	; 8D7C2
 add esp, byte 10h	; 8D7C4
 mov ebp, dword [esp]	; 8D7C7
@@ -940,7 +940,7 @@ mov dword [byte edx+020h], eax	; 8DB81
 mov dword [dword_EDAAC], edx	; 8DB84
 ret	; 8DB8A
 db 090h
-sub_8DB8C:
+getmemblock:
 cmp dword [dword_EDAAC], byte 0	; 8DB8C
 jne short loc_8DBB1	; 8DB93
 mov ebx, dword [dword_EDAB0]	; 8DB95

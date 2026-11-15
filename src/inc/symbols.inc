@@ -739,7 +739,7 @@
 ;  8CCA8  sub_8CCA8                                lib/ea/ea_memman_01.asm                      41
 ;  8CCC4  sub_8CCC4                                lib/ea/ea_memman_01.asm                      2
 ;  8CD04  sub_8CD04                                lib/ea/ea_memman_01.asm                      3
-;  8CD4C  sub_8CD4C                                lib/ea/ea_memman_01.asm                      1
+;  8CD4C  reservemem                               lib/ea/ea_memman_01.asm                      1
 ;  8D144  sub_8D144                                lib/ea/ea_memman_01.asm                      1
 ;  8D15C  sub_8D15C                                lib/ea/ea_memman_01.asm                      1
 ;  8D2A0  findmemblock                             lib/ea/ea_memman_01.asm                      2
@@ -755,7 +755,7 @@
 ;  8DAB8  sub_8DAB8                                lib/ea/ea_memman_02.asm                      8
 ;  8DB4C  sub_8DB4C                                lib/ea/ea_memman_02.asm                      1
 ;  8DB78  sub_8DB78                                lib/ea/ea_memman_02.asm                      1
-;  8DB8C  sub_8DB8C                                lib/ea/ea_memman_02.asm                      1
+;  8DB8C  getmemblock                              lib/ea/ea_memman_02.asm                      1
 ;  8DBC0  sub_8DBC0                                lib/ea/ea_memman_02.asm                      3
 ;  8DBD4  sub_8DBD4                                lib/ea/ea_memman_02.asm                      6
 ;  8DBDC  sub_8DBDC                                lib/ea/ea_memman_02.asm                      2
@@ -767,7 +767,7 @@
 ;  8DC9C  int386_                                  lib/dos4gw/dos4gw_dpmi_glue_01.asm           2
 ;  8DCC0  sub_8DCC0                                lib/ea/ea_memman_03.asm                      1
 ;  8DF54  sub_8DF54                                lib/ea/ea_memman_init.asm                    1
-;  8E080  sub_8E080                                lib/ea/ea_vesa_init.asm                      1
+;  8E080  initgraphics                             lib/ea/ea_vesa_init.asm                      1
 ;  8E3C0  nullsub_2                                lib/watcom/watcom_clib_05.asm                2
 ;  8E3C4  _os_handle                               lib/watcom/watcom_clib_05.asm                3
 ;  8E3CC  _os_handle_0                             lib/watcom/watcom_clib_05.asm                2
@@ -779,7 +779,7 @@
 ;  8E4C0  addtimer                                 lib/ea/ea_timer.asm                          7
 ;  8E4F8  RemoveTimerCallback                      lib/ea/ea_timer.asm                          6
 ;  8E5AC  InstallTimer                             lib/ea/ea_timer.asm                          1
-;  8E7A0  sub_8E7A0                                lib/ea/ea_window.asm                         1
+;  8E7A0  subwindowdefadr                          lib/ea/ea_window.asm                         1
 ;  8E83C  sub_8E83C                                lib/ea/ea_window.asm                         33
 ;  8E870  unk_8E870                                lib/ea/ea_window.asm                         1
 ;  8E8A0  sub_8E8A0                                lib/ea/ea_window.asm                         27
@@ -952,7 +952,7 @@
 ;  972E5  sub_972E5                                lib/sound/eacsndf_core.asm                   1
 ;  972F0  _os_handle_3                             lib/watcom/watcom_clib_23.asm                3
 ;  9762C  sub_9762C                                lib/ea/ea_unpack.asm                         1
-;  97EB8  sub_97EB8                                lib/ea/ea_unpack.asm                         1
+;  97EB8  unpack                                   lib/ea/ea_unpack.asm                         1
 ;  98028  sub_98028                                lib/ea/ea_unpack.asm                         1
 ;  9805E  _fmemmove_                               lib/watcom/watcom_clib_24.asm                1
 ;  9812F  itoa_                                    lib/watcom/watcom_clib_24.asm                2
@@ -981,7 +981,7 @@
 ;  98AF3  _dos_getvect_                            lib/dos4gw/dos4gw_dpmi_glue_03.asm           2
 ;  98B30  sub_98B30                                lib/ea/ea_shapes.asm                         1
 ;  98D20  sub_98D20                                lib/ea/ea_shapes.asm                         2
-;  98DD8  sub_98DD8                                lib/ea/ea_shapes.asm                         1
+;  98DD8  removewindow                             lib/ea/ea_shapes.asm                         1
 ;  98E50  sub_98E50                                lib/ea/ea_shapes.asm                         1
 ;  98F11  sub_98F11                                lib/ea/ea_shapes.asm                         1
 ;  98F46  sub_98F46                                lib/ea/ea_shapes.asm                         1
@@ -1339,7 +1339,7 @@
 ;  B3B19  sub_B3B19                                lib/ea/ea_fileio.asm                         3
 ;  B3B2E  sub_B3B2E                                lib/ea/ea_fileio.asm                         1
 ;  B3B44  sub_B3B44                                lib/ea/ea_fileio.asm                         1
-;  B3B5A  sub_B3B5A                                lib/ea/ea_fileio.asm                         2
+;  B3B5A  openhandle                               lib/ea/ea_fileio.asm                         2
 ;  B3C60  sub_B3C60                                lib/ea/ea_fileio.asm                         7
 ;  B3C70  sub_B3C70                                lib/ea/ea_fileio.asm                         1
 ;  B3C74  sub_B3C74                                lib/ea/ea_fileio.asm                         6

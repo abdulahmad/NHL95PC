@@ -5,7 +5,7 @@ section s_B3B00 progbits alloc exec nowrite align=1
 extern str_OpenhandleSFILEERROR, byte_D4410, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
 extern dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, FatalError, slowtickcount
 extern sprintf_, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
-global sub_B3B00, sub_B3B19, sub_B3B2E, sub_B3B44, sub_B3B5A, loc_B3B6E, loc_B3BB9, loc_B3BEE
+global sub_B3B00, sub_B3B19, sub_B3B2E, sub_B3B44, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
 global loc_B3C2B, loc_B3C53, sub_B3C60, loc_B3C6E, sub_B3C70, sub_B3C74, loc_B3C76, loc_B3C85
 global loc_B3C9C, loc_B3CAF, loc_B3CB1, sub_B3CB3, sub_B3CC8, loc_B3CF4, loc_B3D02, loc_B3D08
 global loc_B3D0A, loc_B3D22, loc_B3D26, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, sub_B3D74
@@ -47,7 +47,7 @@ add esp, byte 0FFFFFFF8h	; B3B47
 mov dword [byte ebp-04h], 0	; B3B4A
 mov dword [byte ebp-08h], 3C00h	; B3B51
 jmp short loc_B3B6E	; B3B58
-sub_B3B5A:
+openhandle:
 push ebp	; B3B5A
 LD mov, ebp, esp	; B3B5B
 add esp, byte 0FFFFFFF8h	; B3B5D

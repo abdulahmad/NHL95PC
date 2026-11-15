@@ -1139,8 +1139,10 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C94C,__CHK,__CHK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_01,flirt
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
+0008CD4C,sub_8CD4C,reservemem,PC-new,,,,high,"prints its own name: ""reservemem - INVALID SIZE REQUESTED"", ""reservemem - OUT OF MEMORY""",ea_memman_01,manual-trace
 0008D2A0,sub_8D2A0,findmemblock,PC-new,,,,high,EA memory manager name from its own FatalError string asc_C3D38 'findmemblock - BLOCK NOT FOUND (%p)': walks the block list from dword_D2F58 (+20h links) for the descriptor whose address field equals the stack argument and whose flags+19h bit 7 is clear,ea_memman_01,manual-trace
 0008D2D8,jctime,FreeMemBlock,PC-new,watcom_clib,,,high,"was a FLIRT misidentification (Watcom 'jctime', 23-byte collapsed body, name_map_94 method flirt): it is cdecl free(p) of the EA memory manager, findmemblock(p) then sub_8D2F0 (lock, unlink the descriptor unless flags+19h bit 7, return it to the free descriptor list, unlock); every caller passes a buffer it then drops (FreeDeskBuffers, ShutdownSpeech, LoadCrestsPalette); it sits between ea_memman_01 and ea_memman_02",watcom_clib_02,manual-trace
+0008DB8C,sub_8DB8C,getmemblock,PC-new,,,,high,"prints its own name: ""getmemblock - NO MEMORY BLOCKS LEFT""",ea_memman_02,manual-trace
 0008DBE4,const type_info::raw_name(void),const type_info::raw_name(void),library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_03,flirt
 0008DBF4,_dos_getdrive_,_dos_getdrive_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 20 bytes),watcom_clib_03,flirt
 0008DC08,_dos_setdrive_,_dos_setdrive_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 20 bytes),watcom_clib_03,flirt
@@ -1150,6 +1152,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DC57,_exit_,_exit_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 22 bytes),watcom_clib_03,flirt
 0008DC6E,_dos_getdiskfree_,_dos_getdiskfree_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_03,flirt
 0008DC9C,int386_,int386_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),dos4gw_dpmi_glue_01,flirt
+0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
+0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
 0008E3C0,nullsub_2,nullsub_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_05,flirt
 0008E3C4,_os_handle,_os_handle,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
 0008E3CC,_os_handle_0,_os_handle_0,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
@@ -1162,6 +1166,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008E554,sub_8E554,RestoreTimer,PC-new,,,,high,"when a vector is saved: masks IRQ0/1, _dos_setvect_(8) back to oldint8off/oldint8sel, PIT channel 0 divisor 0 (18.2 Hz), clears the saved vector, unmasks; the atexit handler InstallTimer registers",ea_timer,manual-trace
 0008E5AC,sub_8E5AC,InstallTimer,PC-new,,,,high,"clears timercallbacks (__STOSD 8 dwords); unless a vector is already saved: masks IRQ0/1, saves _dos_getvect_(8) in oldint8off/oldint8sel, programs PIT channel 0 divisor 2E9Ch (out 40h 9Ch,2Eh = 100 Hz), sets TimerISR, registers RestoreTimer with atexit (sub_B3454), then falls into UnmaskTimerKbdIrq; called once from main_ (10248)",ea_timer,manual-trace
 0008E614,sub_8E614,UnmaskTimerKbdIrq,PC-new,,,,high,"in al,21h / and al,0FCh / out 21h: unmasks IRQ0 and IRQ1; tail of InstallTimer, called by RestoreTimer",ea_timer,manual-trace
+0008E7A0,sub_8E7A0,subwindowdefadr,PC-new,,,,high,"prints its own name: ""subwindowdefadr - OUT OF ROW SPACE""",ea_window,manual-trace
 0008EAEC,_dos_getdate_,_dos_getdate_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_06,flirt
 0008EB07,_dos_gettime_,_dos_gettime_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 26 bytes),watcom_clib_06,flirt
 0008EB21,sub_8EB21,sub_8EB21,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 6 bytes),watcom_clib_06,flirt
@@ -1226,6 +1231,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009311C,vfscanf_,vfscanf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 39 bytes),watcom_clib_19,flirt
 00093143,fscanf_,fscanf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 33 bytes),watcom_clib_19,flirt
 00093284,strcspn_,strcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_20,flirt
+0009336C,sub_9336C,savefileblocka,PC-new,,,,high,"prints its own name: ""savefileblocka - OPEN FAILED FOR FILE <%s>""",ea_fileblock,manual-trace
 000933F0,sub_933F0,imul32,PC-new,,,,medium,EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx); skatetopuck squares x and y with it,ea_fileblock,manual-trace
 000935E0,sub_935E0,DebugPrintf,PC-new,,,,high,vsprintf into a 100h stack buffer and pass it to sub_936C0 only when dword_D4534 >= 2 (debug level); DebugMonitor/DumpStatsLog use it for their debug text,ea_fileblock,manual-trace
 00096185,fprintf_,fprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 33 bytes),watcom_clib_21,flirt
@@ -1246,6 +1252,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000972DD,sub_972DD,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972E5,sub_972E5,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972F0,_os_handle_3,_os_handle_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_23,flirt
+00097EB8,sub_97EB8,unpack,PC-new,,,,high,"prints its own name: ""unpack - INVALID PACK CODE (%x)""",ea_unpack,manual-trace
 0009805E,_fmemmove_,_fmemmove_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 98 bytes),watcom_clib_24,flirt
 000980E5,utoa_,utoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 74 bytes),watcom_clib_24,flirt
 0009812F,itoa_,itoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_24,flirt
@@ -1268,6 +1275,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00098A9F,strncmp_,strncmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 41 bytes),watcom_clib_28,flirt
 00098AC8,_dos_setvect_,_dos_setvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 43 bytes),dos4gw_dpmi_glue_03,flirt
 00098AF3,_dos_getvect_,_dos_getvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 52 bytes),dos4gw_dpmi_glue_03,flirt
+00098DD8,sub_98DD8,removewindow,PC-new,,,,high,"prints its own name: ""removewindow - ROW SPACE CORRUPTED""",ea_shapes,manual-trace
 00099A12,copypart_,copypart_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 51 bytes),watcom_clib_30,flirt
 00099A45,_splitpath_,_splitpath_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 157 bytes),watcom_clib_30,flirt
 00099AE2,pickup_,pickup_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 18 bytes),watcom_clib_30,flirt
@@ -1445,6 +1453,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B39B7,sub_B39B7,WaitTicks,PC-new,,,,high,cdecl: busy-waits until tickcount reaches tickcount-at-entry + the stack argument; no caller in the EXE,input_joystick_misc,manual-trace
 000B39ED,sub_B39ED,PollKey,PC-new,,,,medium,jmp through the keyboard read vector off_D42A0 (returns 0 when no key); DebugMonitor's non-stepping key read,input_joystick_misc,manual-trace
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
+000B3B5A,sub_B3B5A,openhandle,PC-new,,,,high,"prints its own name: ""openhandle - %s FILE ERROR""",ea_fileio,manual-trace
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,middle94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
 000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace
 000B52B4,sub_B52B4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched

@@ -5,7 +5,7 @@ section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
 extern sub_8CC70, sub_8CCA8, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
-extern sub_B3AA1, sub_B3ABC, sub_B3B5A, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
+extern sub_B3AA1, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, sub_B4BC4
 extern sub_B4F8C, sub_B5E00, sub_B6DF7
 global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
 global loc_965A4, loc_965CB, loc_965D4, sub_965DC, sub_96690, sub_966E4, loc_967AE, loc_967C3
@@ -464,7 +464,7 @@ push eax	; 968E3
 lea eax, [dword esp+0320h]	; 968E4
 push eax	; 968EB
 push ebp	; 968EC
-call sub_B3B5A	; 968ED
+call openhandle	; 968ED
 add esp, byte 10h	; 968F2
 mov ecx, dword [dword esp+0318h]	; 968F5
 test ecx, ecx	; 968FC

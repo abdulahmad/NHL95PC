@@ -2,7 +2,7 @@
 #define sub_8DF54 sub_8DF54_decl
 #define InstallTimer InstallTimer_decl
 #define sub_B3036 sub_B3036_decl
-#define sub_8E7A0 sub_8E7A0_decl
+#define subwindowdefadr sub_8E7A0_decl
 #define sub_6A9CE sub_6A9CE_decl
 #define LoadNhlCfg LoadNhlCfg_decl
 #define RunIntro RunIntro_decl
@@ -13,7 +13,7 @@
 #undef sub_8DF54
 #undef InstallTimer
 #undef sub_B3036
-#undef sub_8E7A0
+#undef subwindowdefadr
 #undef sub_6A9CE
 #undef LoadNhlCfg
 #undef RunIntro
@@ -38,7 +38,7 @@ void srand(unsigned seed);                     /* Watcom CRT srand_ */
 void __cdecl sub_8DF54(int a, int b);          /* memory library: set up */
 void InstallTimer(void);
 void __cdecl sub_B3036(int (*fn)(void));       /* DOS critical error handler */
-int __cdecl sub_8E7A0(void *buf, int a, int w, int h, int flags);
+int __cdecl subwindowdefadr(void *buf, int a, int w, int h, int flags);
 void sub_6A9CE(int n);
 void LoadNhlCfg(void);
 void RunIntro(void);
@@ -115,7 +115,7 @@ void main_(void)
     }
     if (s.mem[3] > 0x3EF000) dword_C4CFC = 0xC3500;
     else dword_C4CFC = 0x30D40;
-    sub_8E080(0x280, 0x1E0);
+    initgraphics(0x280, 0x1E0);
     InstallTimer();
     joysampling = 0;
     addtimer(SampleInputTick);
@@ -126,7 +126,7 @@ void main_(void)
     sub_B3036(CritErrHandler);
     InitFileLocations();
     SetScreenSize(0x140, 0xC8);
-    screenbm = sub_8E7A0(&dword_D30D4, 0, 0xA8, 0x140, 0x20);
+    screenbm = subwindowdefadr(&dword_D30D4, 0, 0xA8, 0x140, 0x20);
     SetScreenSize(0x280, 0x1E0);
     sub_6A9CE(0x64);
     MakePath(s.path, fileoncd[0x13A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pointer3, 0);

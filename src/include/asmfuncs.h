@@ -920,7 +920,7 @@ extern void sub_8CC8C(); /* 8CC8C */
 extern void sub_8CCC4(); /* 8CCC4 */
 extern void sub_8CCE0(); /* 8CCE0 */
 extern void sub_8CD04(); /* 8CD04 */
-extern void sub_8CD4C(); /* 8CD4C */
+extern void reservemem(); /* 8CD4C */
 extern void loc_8CD90(); /* 8CD90 */
 extern void loc_8CDDC(); /* 8CDDC */
 extern void loc_8CDEE(); /* 8CDEE */
@@ -1049,7 +1049,7 @@ extern void sub_8DB4C(); /* 8DB4C */
 extern void loc_8DB60(); /* 8DB60 */
 extern void loc_8DB6D(); /* 8DB6D */
 extern void sub_8DB78(); /* 8DB78 */
-extern void sub_8DB8C(); /* 8DB8C */
+extern void getmemblock(); /* 8DB8C */
 extern void loc_8DBB1(); /* 8DBB1 */
 extern void sub_8DBC0(); /* 8DBC0 */
 extern void sub_8DBDC(); /* 8DBDC */
@@ -1063,7 +1063,7 @@ extern void sub_8DCC0(); /* 8DCC0 */
 extern void loc_8DCC5(); /* 8DCC5 */
 extern void loc_8DCD6(); /* 8DCD6 */
 extern void loc_8DCD9(); /* 8DCD9 */
-extern void sub_8DCF8(); /* 8DCF8 */
+extern void initmemman(); /* 8DCF8 */
 extern void loc_8DD2F(); /* 8DD2F */
 extern void loc_8DD58(); /* 8DD58 */
 extern void loc_8DD71(); /* 8DD71 */
@@ -1152,7 +1152,7 @@ extern void sub_8E6CC(); /* 8E6CC */
 extern void sub_8E714(); /* 8E714 */
 extern void sub_8E738(); /* 8E738 */
 extern void sub_8E780(); /* 8E780 */
-extern void sub_8E7A0(); /* 8E7A0 */
+extern void subwindowdefadr(); /* 8E7A0 */
 extern void loc_8E816(); /* 8E816 */
 extern void sub_8E81C(); /* 8E81C */
 extern void loc_8E82B(); /* 8E82B */
@@ -1865,7 +1865,7 @@ extern void sub_932EC(); /* 932EC */
 extern void sub_93308(); /* 93308 */
 extern void sub_9333C(); /* 9333C */
 extern void sub_93354(); /* 93354 */
-extern void sub_9336C(); /* 9336C */
+extern void savefileblocka(); /* 9336C */
 extern void loc_933C7(); /* 933C7 */
 extern void loc_933CB(); /* 933CB */
 extern void loc_933E8(); /* 933E8 */
@@ -2481,7 +2481,7 @@ extern void loc_97E7D(); /* 97E7D */
 extern void loc_97E9E(); /* 97E9E */
 extern void loc_97EA4(); /* 97EA4 */
 extern void loc_97EAD(); /* 97EAD */
-extern void sub_97EB8(); /* 97EB8 */
+extern void unpack(); /* 97EB8 */
 extern void loc_97EE1(); /* 97EE1 */
 extern void loc_97F3C(); /* 97F3C */
 extern void loc_97F49(); /* 97F49 */
@@ -2589,7 +2589,7 @@ extern void loc_98DB7(); /* 98DB7 */
 extern void loc_98DC3(); /* 98DC3 */
 extern void loc_98DCD(); /* 98DCD */
 extern void loc_98DCF(); /* 98DCF */
-extern void sub_98DD8(); /* 98DD8 */
+extern void removewindow(); /* 98DD8 */
 extern void loc_98DF6(); /* 98DF6 */
 extern void loc_98E06(); /* 98E06 */
 extern void loc_98E17(); /* 98E17 */
@@ -6191,7 +6191,7 @@ extern void sub_B3B00(); /* B3B00 */
 extern void sub_B3B19(); /* B3B19 */
 extern void sub_B3B2E(); /* B3B2E */
 extern void sub_B3B44(); /* B3B44 */
-extern void sub_B3B5A(); /* B3B5A */
+extern void openhandle(); /* B3B5A */
 extern void loc_B3B6E(); /* B3B6E */
 extern void loc_B3BB9(); /* B3BB9 */
 extern void loc_B3BEE(); /* B3BEE */

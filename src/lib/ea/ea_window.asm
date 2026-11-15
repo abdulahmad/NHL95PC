@@ -7,11 +7,11 @@ extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
 extern sub_8CCA8, sub_8CD04, sub_8D728, sub_98D20, sub_98E50, sub_B3B19, sub_B3C60, sub_B3C74
 extern sub_B3FC2
-global sub_8E7A0, loc_8E816, sub_8E81C, loc_8E82B, sub_8E83C, loc_8E853, loc_8E868, sub_8E86A
+global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, sub_8E83C, loc_8E853, loc_8E868, sub_8E86A
 global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, sub_8E920
 global loc_8E963, loc_8E991, loc_8E9B4, sub_8E9C0, sub_8E9D4, sub_8E9E8, sub_8EA00, sub_8EA18
 global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
-sub_8E7A0:
+subwindowdefadr:
 push esi	; 8E7A0
 push edi	; 8E7A1
 push ebp	; 8E7A2

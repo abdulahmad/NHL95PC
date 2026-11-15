@@ -10,7 +10,7 @@ extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D3
 extern dword_D4F4C, dword_D4F50, dword_EDABA, dword_EDCB8, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, sub_8DBC0, sub_8E8A0, sub_98A40, sub_B3ABC, sub_B3E98, sub_B3FC2, sub_B4BA8
 extern sub_B5E00, sub_B5EA7, sub_B5EB8, unk_EDAB8, unk_EDBB8, unlink_, word_EDBCA
-global sub_8DF70, loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, sub_8E080, loc_8E0A0
+global sub_8DF70, loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, initgraphics, loc_8E0A0
 global loc_8E0AE, loc_8E0C6, loc_8E0D5, loc_8E0DE, loc_8E0FA, loc_8E113, loc_8E12F, loc_8E148
 global loc_8E161, loc_8E17A, loc_8E18E, loc_8E1A1, loc_8E1BF, loc_8E1D4, loc_8E1E3, loc_8E1FD
 global loc_8E237, loc_8E24F, loc_8E254, loc_8E25F, loc_8E271, loc_8E27F, loc_8E28B, loc_8E295
@@ -102,7 +102,7 @@ pop ecx	; 8E07C
 pop ebx	; 8E07D
 ret	; 8E07E
 db 090h
-sub_8E080:
+initgraphics:
 push esi	; 8E080
 push edi	; 8E081
 push ebp	; 8E082
