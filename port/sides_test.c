@@ -103,7 +103,7 @@ int main(void)
     eqU(sides_filter_hot(0x44, 2), 0, "F10 dropped without an away seat");
     eqU(sides_filter_hot(0x0F, 0), 0x0F, "Tab is not a team key");
 
-    /* teamcitynames order (frontend_16.asm): 0 Boston, 4 Detroit, 11 NY Islanders,
+    /* teamcitynames order (desk_main_main.asm): 0 Boston, 4 Detroit, 11 NY Islanders,
      * 26 West All Stars, 27 East All Stars. Exhibition and a season game both index
      * this table with VisTeam / HomeTeam; only which index is home changes. */
     {

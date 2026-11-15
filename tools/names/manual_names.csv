@@ -713,7 +713,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0006D256,sub_6D256,DrawDatabaseName,PC-new,,,,high,"""DATABASE : "" + upper-cased current database name, centred",database_save,manual-trace
 0006D299,sub_6D299,DrawRosterPanel,PC-new,,,,high,"(side): DrawRosterTitle, DrawRosterList and DrawDatabaseName for the left or right panel",database_save,manual-trace
 0006D2F8,sub_6D2F8,DrawEditRosters,PC-new,,,,medium,"redraws the Edit Rosters screen (prez2 background and palette, both roster panels with 'Ratings:' and jersey numbers); called after every roster change and from database_dialogs",create_player,manual-trace
-0006D5BB,sub_6D5BB,EditRostersReturn,PC-new,,,,high,'Return' menu item (frontend_46 menu table): sets editrosters_exit to -1,create_player,manual-trace
+0006D5BB,sub_6D5BB,EditRostersReturn,PC-new,,,,high,'Return' menu item (league_db_strings_1 menu table): sets editrosters_exit to -1,create_player,manual-trace
 0006D5D0,sub_6D5D0,SelectRosterTeam,PC-new,,,,high,"division-submenu team item: puts the picked team (divisionteams[div][slot]) in rosterteam[side], re-enables the previous team's item and 'Free Agents ...', disables the new one, enables 'Edit Team Lines ...', reloads the list (LoadRosterList) and redraws",create_player,manual-trace
 0006D6DB,sub_6D6DB,ShowFreeAgents,PC-new,,,,high,"'Free Agents ...' menu item: rosterteam[side] = FFh, rosterisfa[side] = 1, disables the item and 'Edit Team Lines ...', LoadRosterList and redraw",create_player,manual-trace
 0006D78B,sub_6D78B,ComparePlayerEntry,PC-new,,,,medium,"sort compare for 1Bh-byte list entries: by position byte (L, C, R, D order, empty last), then strcmp of the name at +0Bh",create_player,manual-trace

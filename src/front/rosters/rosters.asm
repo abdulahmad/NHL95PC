@@ -832,7 +832,7 @@ DrawEditRosters:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; EditRostersReturn                                               6D5BB  95 PC
-; 'Return' menu item (frontend_46 menu table): sets editrosters_exit to -1
+; 'Return' menu item (league_db_strings_1 menu table): sets editrosters_exit to -1
 ;-----------------------------------------------------------------------------
 ; C: src/front/rosters/EditRostersReturn.c
 %ifdef CBUILD
