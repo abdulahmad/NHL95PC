@@ -11,10 +11,10 @@ void SortNonDefPlayers(short side, signed char *out, short *keys)
     for (i = 0; i < 0x19; i++) {
         dword_E9C88[i] = i;
         c = byte_DB3AE[side * 0x444 + i * 0x27];
-        if (c == 'D') dword_E9C24[i] = -1;
-        else dword_E9C24[i] = keys[i];
+        if (c == 'D') lineslotmark[i] = -1;
+        else lineslotmark[i] = keys[i];
     }
-    sub_93540(0x19, dword_E9C24, dword_E9C88);
+    sub_93540(0x19, lineslotmark, dword_E9C88);
     for (i = 0; i < 0x19; i++) /* low byte read 68k-style: dword at -3, sar 18h */
-        out[i] = dword_E9C24[i] < 0 ? -1 : *(int *)((char *)&dword_E9C88[i] - 3) >> 24;
+        out[i] = lineslotmark[i] < 0 ? -1 : *(int *)((char *)&dword_E9C88[i] - 3) >> 24;
 }

@@ -209,7 +209,7 @@ one:
    (asspassrec). Once someone has the puck or the wait (the high byte of temp1) is past -19h: a pass to p is
    completed (PassCompleted), passplayer cleared, the assignment left (pflags bit 0 off, assexit, onetimerflag 0).
    Else, armed (onetimerflag): in the one-timer wind-up (SPA DD3h / E2Bh) a press of button 4 or 6 (regd1) early in
-   it locks the swing (SPA 1355h / 138Dh, sflags bit 3 off, onetimerflag 0); the stick blade (byte_CCBBA by facing,
+   it locks the swing (SPA 1355h / 138Dh, sflags bit 3 off, onetimerflag 0); the stick blade (assonetimer_blade by facing,
    mirrored by the x-flip attribute bit 3) is measured against the puck: close enough the swing steps on
    (SPAcnt 0, updateanim), and within 64h (90h while the wait is under -10) the shot goes (passdir at most 8,
    passspeed shotspd / 2 + 1Eh, frame 4, team one-timers +1 at +18h, crowd +64h, a2touchpuck, doshot,
@@ -246,8 +246,8 @@ void assonetimer(Player *p)
         p->nopuck = 5;
         regd0.w = p->facedir & 7;
         if (p->attribute & 8) regd0.w = (8 - regd0.w) & 7;
-        regd1.w = byte_CCBBB[regd0.w * 2];
-        regd0.w = byte_CCBBA[regd0.w * 2];
+        regd1.w = assonetimer_blade_y[regd0.w * 2];
+        regd0.w = assonetimer_blade[regd0.w * 2];
         if (p->attribute & 8) regd0.w = -regd0.w;
         d = (short)(HIWORD(p->Xpos) + regd0.w - *puckx);
         c = (short)(regd1.w + HIWORD(p->Ypos) - *pucky);

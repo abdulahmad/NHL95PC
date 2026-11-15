@@ -28,14 +28,14 @@ extern str_Rgotofo, str_Rpointgoal, str_Rgetnew, str_Anth, str_Ranth, str_Agotof
 extern str_Pgivecup, str_Rpenshot, str_Apswait, str_Abreak, str_Error2, unk_C2338, str_LD, str_RD2
 extern str_LW, unk_C2343, str_RW, str_XC, unk_CDC47, unk_CDC60, unk_CDC79, unk_CDC97
 extern unk_CDCB0, unk_CDCC9
-global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, dword_CD4B0, dbg_spalist
-global dword_CD9A0, off_CD354, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
-global dbg_posnames, word_CD39C, word_CD4FC, replaytick, replaysfx
+global byte_CD418, byte_CD421, byte_CD473, gsumqcount, defercount, dword_CD41E, ovlmemneed, dbg_spalist
+global dword_CD9A0, pennametab, off_CD498, off_CD4A0, bannerstrs, off_CD4FA, dbg_spanames, dbg_assnames
+global dbg_posnames, penbannertab, word_CD4FC, replaytick, replaysfx
 gsumqcount:
 db 00h,00h,00h,00h
 defercount:
 db 00h,00h,00h,00h
-off_CD354:
+pennametab:
 dd str_Roughing
 dd unk_C1B49
 dd str_Charging2
@@ -54,7 +54,7 @@ dd str_Checkbnd
 dd str_Boarding2
 dd str_Elbowing2
 dd str_Penshot
-word_CD39C:
+penbannertab:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,02h,00h,00h,00h
 db 02h,00h,00h,00h,02h,00h,00h,00h,05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 04h,00h,00h,00h,06h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,06h,00h,00h,00h
@@ -86,7 +86,7 @@ dd unk_CDC79
 dd unk_CDC97
 dd unk_CDCB0
 dd unk_CDCC9
-dword_CD4B0:
+ovlmemneed:
 db 0Dh,0ACh,00h,00h,0CDh,05Ch,00h,00h,0A5h,050h,00h,00h,0AAh,050h,00h,00h
 db 023h,03Ch,00h,00h,07Bh,04Fh,00h,00h,084h,06Dh,00h,00h,0D1h,037h,01h,00h
 db 0D5h,0D0h,01h,00h,075h,0C4h,00h,00h,0C5h,0C7h,01h,00h

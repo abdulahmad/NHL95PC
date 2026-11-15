@@ -6,8 +6,8 @@ section s_69336 progbits alloc exec nowrite align=1
 extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtmstruct
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
 extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
-extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, dword_CCC98
-extern dword_CD9A0, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, dword_E0244, dword_E9A9E
+extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, oneminsaid
+extern dword_CD9A0, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, dword_E9A9E
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
 extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
@@ -21,7 +21,7 @@ extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, Set
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
 extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
-extern word_CBEC6, hmtmtouch1, awtmtouch1, awtmtouch2, word_DF816, word_DF81A, word_E0022, word_E0028
+extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, word_DF816, word_DF81A, word_E0022, word_E0028
 extern word_E002A, xc1, yc1, yleader
 global StartHL2
 ; C: src/engine/frame/StartHL2.c
@@ -40,7 +40,7 @@ push edx	; 6934A
 push ebx	; 6934B
 mov ebp, ecx	; 6934C
 xor edx, edx	; 6934E
-mov dword [dword_CCC98], edx	; 69350
+mov dword [oneminsaid], edx	; 69350
 mov ax, word [gameover]	; 69356
 mov dword [dword esp+0F8h], eax	; 6935C
 mov ax, word [HomeTeam]	; 69363
@@ -123,7 +123,7 @@ mov eax, dword [ovlseq-2]	; 6949A
 sar eax, 10h	; 6949F
 cmp eax, byte 0FFFFFFFFh	; 694A2
 je short .3	; 694A5
-mov ebx, dword [dword_E0244]	; 694A7
+mov ebx, dword [ovlartbank]	; 694A7
 push ebx	; 694AD
 call FreeMemBlock	; 694AE
 add esp, byte 4	; 694B3
@@ -261,7 +261,7 @@ mov word [ovlseq], si	; 696E7
 xor ecx, esi	; 696EE
 mov word [bannertimer], cx	; 696F0
 xor esi, esi	; 696F7
-mov word [word_CBEC6], si	; 696F9
+mov word [injurystop], si	; 696F9
 mov word [crowdlevel], si	; 69700
 xor esi, esi	; 69707
 mov dword [crowdsmooth], esi	; 69709
@@ -633,7 +633,7 @@ mov eax, dword [ovlseq-2]	; 69CE7
 sar eax, 10h	; 69CEC
 cmp eax, byte 0FFFFFFFFh	; 69CEF
 je short .27	; 69CF2
-mov ebx, dword [dword_E0244]	; 69CF4
+mov ebx, dword [ovlartbank]	; 69CF4
 push ebx	; 69CFA
 call FreeMemBlock	; 69CFB
 add esp, byte 4	; 69D00
@@ -644,7 +644,7 @@ mov word [ovlstep], di	; 69D0F
 mov word [ovlseq], di	; 69D16
 xor ecx, ecx	; 69D1D
 mov dword [demomode], ecx	; 69D1F
-mov dword [dword_CCC98], ecx	; 69D25
+mov dword [oneminsaid], ecx	; 69D25
 push savepal	; 69D2B
 push dword 100h	; 69D30
 push ecx	; 69D35

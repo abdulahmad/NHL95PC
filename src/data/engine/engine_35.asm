@@ -10,8 +10,8 @@ extern assnearest, asspassrec, asspenalty, asspuckc, assscore, assshoot, assstan
 extern asswingo, puckfaceoff, puckfaceoff2, pucknorm, pucknothing, puckshadow, rtss
 extern unk_DFF5E, unk_E0416, puckstruct
 global seed, asstab, sflags, gmode2, pendelaytab
-global byte_C9111, penmintab, byte_C9142, byte_C9146, priolist_m1, priolist, apl, collflag
-global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, dword_C9120, shownumbers
+global pendelaytab_e13, penmintab, pendelay2tab, pendelay2tab_e4, priolist_m1, priolist, apl, collflag
+global dirtab, wcradiusy, yleader, sflags3, cont2team, HomeTeam, penmintab_m3, shownumbers
 global dword_CBEBE, bannertimer, puckvx, gmode, replaystart, puckx, pucky, puckvy
 global puckz, puckc, camx_m2, coachlinetab, lastplayer, puckvz, threat, SPAtab
 global unk_CBC6E, unk_CBC7E, unk_CBC9E, unk_CBCAE, unk_CBCBE, unk_CBCCE, unk_CBCDE, unk_CBCEE
@@ -20,9 +20,9 @@ global passdir, passspeed, passplayer, xc1, yc1, fox, foy, fodir1
 global fodir2, c1playernum, c2playernum, cont1team, VisTeam, Pencntdwn, Penaltytimer, refsignal
 global RefStep, RefPen, penaltysc, gsp, gameclock, clockticks, dirtab_y
 global debugstep, word_CBC44, exitgame, gameover, PerTimeTab, energywarn, lcblink
-global lcblinktime, lcsel, word_CBC60, lcline, lctimer
+global lcblinktime, lcsel, lcsel_aw, lcline, lctimer
 global lcboxon, word_CBD64, word_CBD66, puckfaceoff2_ptab, puckfaceoff2_ptab_y, ovltimer
-global word_CBEC2, fadeinpending, word_CBEC6, bannermsg, ovlseq, ovlstep
+global word_CBEC2, fadeinpending, injurystop, bannermsg, ovlseq, ovlstep
 replaystart:
 dd unk_E0416
 puckx:
@@ -127,16 +127,16 @@ db 021h,043h
 db 0CDh,0ABh
 pendelaytab:
 db 00h,0Ah,0Ah,03h,01h,00h,01h,01h,01h,0Ah,0Ah,04h,04h
-byte_C9111:
+pendelaytab_e13:
 db 04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,04h,01h
-dword_C9120:
+penmintab_m3:
 db 00h,01h,01h
 penmintab:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,02h,00h,02h,02h,02h,02h,02h
 db 02h,02h,02h,02h,02h,02h,0FFh,05h,05h,05h,00h,00h,00h,00h,00h
-byte_C9142:
+pendelay2tab:
 db 00h,02h,02h,02h
-byte_C9146:
+pendelay2tab_e4:
 db 02h,00h,02h,04h,02h,06h,02h,02h,02h,02h,02h,02h,02h,02h,02h,02h
 db 02h,02h,02h,02h,02h,02h,02h,00h,02h,02h,02h
 asstab:
@@ -889,7 +889,7 @@ db 00h,00h
 db 00h,00h
 lcsel:
 db 00h,00h
-word_CBC60:
+lcsel_aw:
 db 00h,00h
 lcline:
 db 00h,00h
@@ -975,7 +975,7 @@ word_CBEC2:
 db 00h,00h
 fadeinpending:
 db 00h,00h
-word_CBEC6:
+injurystop:
 db 00h,00h
 bannermsg:
 db 0FFh,0FFh

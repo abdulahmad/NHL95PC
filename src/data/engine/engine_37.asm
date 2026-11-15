@@ -4,21 +4,21 @@ bits 32
 section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
-global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, byte_CC7A4, byte_CC7A5
-global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, byte_CCBBA, byte_CCBBB, cupceremony
-global rinkobjanim, rinkobjanim_b1, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
+global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, HotStickList, HotStickList_y
+global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, assonetimer_blade, assonetimer_blade_y, cupceremony
+global rinkobjanim, rinkobjanim_b1, dword_CC080, goalienotebits, dword_CC0B4, lastsfx, photobankf, demogame
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, dword_CC9CE
-global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
-global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
+global assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, nethit, dword_CCC4E
+global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, oneminsaid, dword_CCC9C, dword_CCC9D
 global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, dword_CD2F8
-global off_CC01D, starordtab, shotsets, sublist_defl, word_CC054, word_CC0B0, lldispodd, ltack
-global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
+global crowdlevel, word_CC10C, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
 global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, word_CCA9C
-global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, blockspd
+global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
-off_CC01D:
+ovlscripts:
 dd unk_CBF18
 dd unk_CBEFC
 dd unk_CBF04
@@ -32,7 +32,7 @@ dd unk_CBFEB
 dd unk_CBFFA
 byte_CC049:
 db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
-word_CC054:
+ovlsteptime:
 db 0Ch,00h,00h,00h,08h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
 db 0Ch,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
 db 08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
@@ -40,9 +40,9 @@ dword_CC080:
 db 091h,00h,00h,00h,097h,00h,00h,00h,052h,00h,00h,00h,0AEh,01h,00h,00h
 db 047h,00h,00h,00h,0D4h,01h,00h,00h,0D5h,01h,00h,00h,0D6h,01h,00h,00h
 db 0D7h,01h,00h,00h,0D8h,01h,00h,00h,0D9h,01h,00h,00h
-dword_CC0AC:
+goalienotebits:
 db 00h,00h,00h,00h
-word_CC0B0:
+Pencntdwn2:
 db 0FFh,0FFh,085h,01h
 dword_CC0B4:
 db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
@@ -60,7 +60,7 @@ crowdlevel:
 db 00h,00h
 photobankf:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_CC0EC:
+demogame:
 db 00h,00h,00h,00h
 introskipped:
 db 00h,00h,00h,00h
@@ -213,9 +213,9 @@ db 0FFh,014h,0F2h,0F9h,0F7h,0F9h,0F1h,0E7h,0FEh,0DDh,0FAh,0FCh,03h,0FEh,02h,0F9h
 db 03h,0FFh,03h,09h,00h,06h,04h,0Bh,00h,0Bh,00h,010h,0FDh,00h,0FEh,00h
 db 0FCh,0FFh,0FEh,05h,0FEh,03h,0FDh,01h,0FCh,0FDh,0FCh,0FEh,0FCh,0FEh,0FCh,0FAh
 db 01h,0F8h,03h,0FCh,01h,0FEh,0FEh,0FEh,0FEh,0FEh,0FEh
-byte_CC7A4:
+HotStickList:
 db 01h
-byte_CC7A5:
+HotStickList_y:
 db 05h,011h,011h,0EDh,015h,05h,03h,0Fh,0Bh,0F3h,017h,08h,02h,0F6h,07h,0Ch
 db 01Bh,09h,0FDh,0F0h,09h,0Dh,010h,02h,0FAh,0EDh,010h,0Eh,0Ch,0FBh,0FAh,0F0h
 db 015h,0Ah,01h,0F7h,0FFh,0FFh,014h,0F1h,05h,0F7h,03h,0Eh,019h,0ECh,0Eh,0FEh
@@ -263,9 +263,9 @@ byte_CC9E4:
 db 0Ah,0Fh,014h
 byte_CC9E7:
 db 0Ah,014h,028h
-word_CC9EA:
+assstarskate_path:
 db 089h,0FFh
-word_CC9EC:
+assstarskate_path_y:
 db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
 db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
 starordtab:
@@ -291,7 +291,7 @@ db 0C0h,0FFh
 asscentero_dedata_yrand:
 db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
 db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
-dword_CCA58:
+assscore_dancecnt:
 db 00h,00h
 dword_CCA5A:
 db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
@@ -314,11 +314,11 @@ db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
 db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
 db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_CCB18:
+ShootoutPathData:
 db 028h,00h,00h,00h
-dword_CCB1C:
+ShootoutPathData_y:
 db 078h,00h,00h,00h
-dword_CCB20:
+ShootoutPathData_end:
 db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
 db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
 db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
@@ -331,24 +331,24 @@ db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
 db 04h,05h,0FFh,0FFh,05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
 db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh
 db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,07h,06h,0FFh,0FFh
-byte_CCBBA:
+assonetimer_blade:
 db 0FAh
-byte_CCBBB:
+assonetimer_blade_y:
 db 0Ch,0Eh,0Ch,013h,0FEh,0Fh,0F9h,06h,0F5h,0F6h,0F4h,0EFh,0F9h,0EEh,04h,00h
 db 00h
-word_CCBCC:
+FallDown_pinxr:
 db 098h,00h,098h,00h,08Dh,00h,08Dh,00h,09Dh,00h,09Dh,00h,096h,00h,099h,00h
-word_CCBDC:
+FallDown_pinxl:
 db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh,070h,0FFh,070h,0FFh
-word_CCBEC:
+FallDown_pinyt:
 db 0FEh,00h,0FEh,00h,03h,01h,03h,01h,06h,01h,01h,01h,01h,01h,01h,01h
-word_CCBFC:
+FallDown_pinyb:
 db 0F6h,0FEh,0F6h,0FEh,0F6h,0FEh,0FDh,0FEh,0FDh,0FEh,0F6h,0FEh,0F6h,0FEh,0F6h,0FEh
-word_CCC0C:
+FallDown_pinxr2:
 db 099h,00h,099h,00h,090h,00h,090h,00h,09Bh,00h,09Bh,00h,09Eh,00h,09Eh,00h
-word_CCC1C:
+FallDown_pinxl2:
 db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh
-dword_CCC2C:
+nethit:
 db 00h,00h,00h,00h
 ; Shot-block slide speeds, eight facings. blockspd is X and blockspd_y is Y, the next short.
 ; The short index is the facing doubled. An axis facing is ±4242 and 0; a diagonal is ±3000 on both.
@@ -376,7 +376,7 @@ crowdvol7:
 db 00h,00h,00h,00h
 dword_CCC94:
 db 00h,00h,00h,00h
-dword_CCC98:
+oneminsaid:
 db 00h,00h,00h,00h
 dword_CCC9C:
 db 00h

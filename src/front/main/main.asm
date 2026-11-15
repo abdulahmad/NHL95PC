@@ -10,7 +10,7 @@ extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoi
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
 extern dword_C5131, dword_C5133, dword_C5135, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
-extern dword_D4164, dword_D8C4C, dword_D8C72, dword_D8C7A, dword_DEF8C, dword_E0244, dword_E9A9E, escrequest
+extern dword_D4164, dword_D8C4C, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
 extern gameover, gamepal, gameresult, gmode, gsp, HomeTeam, hudclockhund, hudclockmin
@@ -2309,7 +2309,7 @@ mov edx, dword [ovlstep-2]	; 11AF7
 sar edx, 10h	; 11AFD
 cmp edx, byte 0FFFFFFFFh	; 11B00
 je near .22	; 11B03
-cmp dword [dword_E0244], byte 0	; 11B09
+cmp dword [ovlartbank], byte 0	; 11B09
 jne near .22	; 11B10
 mov ecx, str_PPV	; 11B16
 mov ebx, dword [nosplit eax*4+off_CBED0]	; 11B1B
@@ -2328,19 +2328,19 @@ lea eax, [byte esp+04h]	; 11B45
 push eax	; 11B49
 call sub_8E8A0	; 11B4A
 add esp, byte 8	; 11B4F
-mov dword [dword_E0244], eax	; 11B52
+mov dword [ovlartbank], eax	; 11B52
 xor esi, esi	; 11B57
 jmp short .21	; 11B59
 .20:
 push esi	; 11B5B
-mov ebp, dword [dword_E0244]	; 11B5C
+mov ebp, dword [ovlartbank]	; 11B5C
 push ebp	; 11B62
 call sub_9035C	; 11B63
 add esp, byte 8	; 11B68
-mov dword [nosplit esi*4+dword_DEF8C], eax	; 11B6B
+mov dword [nosplit esi*4+ovlstepart], eax	; 11B6B
 inc esi	; 11B72
 .21:
-mov edi, dword [dword_E0244]	; 11B73
+mov edi, dword [ovlartbank]	; 11B73
 push edi	; 11B79
 call sub_90354	; 11B7A
 add esp, byte 4	; 11B7F
@@ -2554,7 +2554,7 @@ mov edx, dword [ovlstep-2]	; 11EC6
 sar edx, 10h	; 11ECC
 cmp edx, byte 0FFFFFFFFh	; 11ECF
 je near .13	; 11ED2
-cmp dword [dword_E0244], byte 0	; 11ED8
+cmp dword [ovlartbank], byte 0	; 11ED8
 jne short .13	; 11EDF
 mov ecx, str_PPV	; 11EE1
 mov ebx, dword [nosplit eax*4+off_CBED0]	; 11EE6
@@ -2573,19 +2573,19 @@ lea eax, [byte esp+04h]	; 11F10
 push eax	; 11F14
 call sub_8E8A0	; 11F15
 add esp, byte 8	; 11F1A
-mov dword [dword_E0244], eax	; 11F1D
+mov dword [ovlartbank], eax	; 11F1D
 xor esi, esi	; 11F22
 jmp short .12	; 11F24
 .11:
 push esi	; 11F26
-mov edx, dword [dword_E0244]	; 11F27
+mov edx, dword [ovlartbank]	; 11F27
 push edx	; 11F2D
 call sub_9035C	; 11F2E
 add esp, byte 8	; 11F33
-mov dword [nosplit esi*4+dword_DEF8C], eax	; 11F36
+mov dword [nosplit esi*4+ovlstepart], eax	; 11F36
 inc esi	; 11F3D
 .12:
-mov eax, dword [dword_E0244]	; 11F3E
+mov eax, dword [ovlartbank]	; 11F3E
 push eax	; 11F43
 call sub_90354	; 11F44
 add esp, byte 4	; 11F49

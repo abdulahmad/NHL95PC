@@ -1,11 +1,11 @@
 /* Gadgets replay: nearest player to a point. */
 #include "nhl95.h"
 
-#define PX(i) (*(int *)((char *)dword_E9F16 + (i) * 2) >> 16)  /* word_E9F18[i], as the top word of a dword */
-#define PY(i) (*(int *)((char *)dword_E9F38 + (i) * 2) >> 16)  /* word_E9F3A[i], likewise */
+#define PX(i) (*(int *)((char *)dword_E9F16 + (i) * 2) >> 16)  /* rpl_x[i], as the top word of a dword */
+#define PY(i) (*(int *)((char *)rpl_x_e16 + (i) * 2) >> 16)  /* rpl_y[i], likewise */
 
-/* PickNearestPlayer: the object (0-16, skipping 12-15) whose replay position (word_E9F18 /
- word_E9F3A) is nearest to x, y and within distance 10 (squared distance up to 100). Returns it, or -1. */
+/* PickNearestPlayer: the object (0-16, skipping 12-15) whose replay position (rpl_x /
+ rpl_y) is nearest to x, y and within distance 10 (squared distance up to 100). Returns it, or -1. */
 int PickNearestPlayer(int x, int y)
 {
     int best;

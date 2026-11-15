@@ -5,18 +5,18 @@ bits 32
 section s_644A8 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, rinkobjanim, byte_CD418
 extern byte_CD421, byte_CD473, byte_DB3AE, byte_DC8D8, byte_DC9D8, rinkobjs_b3, hmtmgoalie_b1, byte_DFFA6
-extern byte_E03C1, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B
-extern byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD
+extern byte_E03C1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
+extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, rinkobjdefs_m2
-extern dword_CD41E, dword_CD4B0, dword_D30BC, dword_D30C0, dword_DEF8C, dword_DEFE0, dword_DF004, dword_E0220
-extern dword_E0230, dword_E0244, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, dword_E9C24, dword_E9C85
-extern dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38, dword_E9F54, dword_E9F56, dword_E9F5A
-extern dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98, dword_E9FA5, dword_E9FA8, dword_E9FAA
-extern dword_E9FD9, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
+extern dword_E0230, ovlartbank, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, lineslotmark, dword_E9C85
+extern dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
+extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
+extern rpl_objstep_m3, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
-extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, off_CC01D, off_CD498, off_CD4A0
+extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, ovlscripts, off_CD498, off_CD4A0
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
@@ -24,11 +24,11 @@ extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprin
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
 extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
 extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
-extern textline1, textline2, textline3, textline4, textline5, hmplattr, unk_E9CEC, unk_E9D1E
-extern unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_CC054, word_CC0B0
-extern rinkobjdefs, word_CD4FC, rinkobjs, word_E0022, word_E0046, word_E9F12, word_E9F14, word_E9F18
-extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9, word_E9FB0
-extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
+extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
+extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
+extern rinkobjdefs, word_CD4FC, rinkobjs, word_E0022, word_E0046, word_E9F12, word_E9F14, rpl_x
+extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
+extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global SortPlayersByPos, SortNonDefPlayers, BuildDefaultLines, lines_popx, CanFillLineSlot, lines_addesp10_x, FillDressedSlots, PickForLineSlot
 global lines_popx2, PickGoalie, PickExtraSkater, RefillLineSlots, RemoveFromLines, SetupTeamLines, NormalizeDressFlags, CanRemovePlayer
 ; C: src/engine/lines/SortPlayersByPos.c
@@ -67,18 +67,18 @@ sub edx, eax	; 644EE
 mov dl, byte [dword edx+esi+byte_DB3AE]	; 644F0
 cmp dl, byte [byte esp+04h]	; 644F7
 je short .2	; 644FB
-mov dword [dword ebx+dword_E9C24], 0FFFFFFFFh	; 644FD
+mov dword [dword ebx+lineslotmark], 0FFFFFFFFh	; 644FD
 jmp short .3	; 64507
 .2:
 mov edx, eax	; 64509
 movsx edx, word [edi+edx*2]	; 6450B
-mov dword [dword ebx+dword_E9C24], edx	; 6450F
+mov dword [dword ebx+lineslotmark], edx	; 6450F
 .3:
 inc eax	; 64515
 cmp eax, byte 19h	; 64516
 jl short SortPlayersByPos.1	; 64519
 push dword_E9C88	; 6451B
-push dword_E9C24	; 64520
+push lineslotmark	; 64520
 push byte 19h	; 64525
 call sub_93540	; 64527
 add esp, byte 0Ch	; 6452C
@@ -86,7 +86,7 @@ xor eax, eax	; 6452F
 .4:
 mov edx, eax	; 64531
 shl edx, 2	; 64533
-cmp dword [dword edx+dword_E9C24], byte 0	; 64536
+cmp dword [dword edx+lineslotmark], byte 0	; 64536
 jge short .5	; 6453D
 mov edx, 0FFFFFFFFh	; 6453F
 jmp short .6	; 64544
@@ -140,18 +140,18 @@ mov dl, byte [dword edx+esi+byte_DB3AE]	; 645A1
 xor dh, dh	; 645A8
 cmp dx, byte 44h	; 645AA
 jne short .2	; 645AE
-mov dword [dword ebx+dword_E9C24], 0FFFFFFFFh	; 645B0
+mov dword [dword ebx+lineslotmark], 0FFFFFFFFh	; 645B0
 jmp short .3	; 645BA
 .2:
 mov edx, eax	; 645BC
 movsx edx, word [byte ebp+edx*2+00h]	; 645BE
-mov dword [dword ebx+dword_E9C24], edx	; 645C3
+mov dword [dword ebx+lineslotmark], edx	; 645C3
 .3:
 inc eax	; 645C9
 cmp eax, byte 19h	; 645CA
 jl short SortNonDefPlayers.1	; 645CD
 push dword_E9C88	; 645CF
-push dword_E9C24	; 645D4
+push lineslotmark	; 645D4
 push byte 19h	; 645D9
 call sub_93540	; 645DB
 add esp, byte 0Ch	; 645E0
@@ -159,7 +159,7 @@ xor eax, eax	; 645E3
 .4:
 mov edx, eax	; 645E5
 shl edx, 2	; 645E7
-cmp dword [dword edx+dword_E9C24], byte 0	; 645EA
+cmp dword [dword edx+lineslotmark], byte 0	; 645EA
 jge short .5	; 645F1
 mov edx, 0FFFFFFFFh	; 645F3
 jmp short .6	; 645F8
@@ -344,25 +344,25 @@ sub eax, edi	; 6484E
 shl eax, 3	; 64850
 add eax, edi	; 64853
 mov dword [dword esp+0C8h], eax	; 64855
-mov edx, unk_E9D50	; 6485C
+mov edx, offsort_d	; 6485C
 add edx, eax	; 64861
 mov ecx, 44h	; 64863
 mov ebx, dword [dword esp+0CCh]	; 64868
 mov eax, edi	; 6486F
 call SortPlayersByPos	; 64871
-mov edx, unk_E9EAE	; 64876
+mov edx, offsort_r	; 64876
 add edx, dword [dword esp+0C8h]	; 6487B
 mov ecx, 52h	; 64882
 mov ebx, dword [dword esp+0CCh]	; 64887
 mov eax, edi	; 6488E
 call SortPlayersByPos	; 64890
-mov edx, unk_E9DE6	; 64895
+mov edx, offsort_l	; 64895
 add edx, dword [dword esp+0C8h]	; 6489A
 mov ecx, 4Ch	; 648A1
 mov ebx, dword [dword esp+0CCh]	; 648A6
 mov eax, edi	; 648AD
 call SortPlayersByPos	; 648AF
-mov edx, unk_E9CEC	; 648B4
+mov edx, offsort_c	; 648B4
 add edx, dword [dword esp+0C8h]	; 648B9
 mov ecx, 43h	; 648C0
 mov ebx, dword [dword esp+0CCh]	; 648C5
@@ -370,36 +370,36 @@ mov eax, edi	; 648CC
 call SortPlayersByPos	; 648CE
 mov eax, esp	; 648D3
 add ebp, eax	; 648D5
-mov edx, byte_E9DB4	; 648D7
+mov edx, defsort_d	; 648D7
 add edx, dword [dword esp+0C8h]	; 648DC
 mov ecx, 44h	; 648E3
 mov ebx, ebp	; 648E8
 mov eax, edi	; 648EA
 call SortPlayersByPos	; 648EC
-mov edx, unk_E9D1E	; 648F1
+mov edx, defsort_r	; 648F1
 add edx, dword [dword esp+0C8h]	; 648F6
 mov ecx, 52h	; 648FD
 mov ebx, ebp	; 64902
 mov eax, edi	; 64904
 call SortPlayersByPos	; 64906
-mov edx, unk_E9E7C	; 6490B
+mov edx, defsort_l	; 6490B
 add edx, dword [dword esp+0C8h]	; 64910
 mov ecx, 4Ch	; 64917
 mov ebx, ebp	; 6491C
 mov eax, edi	; 6491E
 call SortPlayersByPos	; 64920
-mov edx, unk_E9D82	; 64925
+mov edx, defsort_c	; 64925
 add edx, dword [dword esp+0C8h]	; 6492A
 mov ecx, 43h	; 64931
 mov ebx, ebp	; 64936
 mov eax, edi	; 64938
 call SortPlayersByPos	; 6493A
-mov edx, byte_E9E4A	; 6493F
+mov edx, offsort_fwd	; 6493F
 add edx, dword [dword esp+0C8h]	; 64944
 mov ebx, dword [dword esp+0CCh]	; 6494B
 mov eax, edi	; 64952
 call SortNonDefPlayers	; 64954
-mov edx, unk_E9EE0	; 64959
+mov edx, defsort_fwd	; 64959
 add edx, dword [dword esp+0C8h]	; 6495E
 mov ebx, ebp	; 64965
 mov eax, edi	; 64967
@@ -428,7 +428,7 @@ shl eax, 3	; 649A2
 add eax, ecx	; 649A5
 add edi, eax	; 649A7
 mov al, byte [dword ebp+byte_CD418]	; 649A9
-mov byte [dword edi+byte_E9E18], al	; 649AF
+mov byte [dword edi+dressflags], al	; 649AF
 inc edx	; 649B5
 .8:
 cmp dx, byte 19h	; 649B6
@@ -451,7 +451,7 @@ shl eax, 3	; 649DB
 add ecx, eax	; 649DE
 movsx eax, byte [ebx]	; 649E0
 inc ebx	; 649E3
-mov byte [dword ecx+eax+byte_E9E18], 0	; 649E4
+mov byte [dword ecx+eax+dressflags], 0	; 649E4
 inc edx	; 649EC
 .12:
 cmp dx, byte 12h	; 649ED
@@ -521,7 +521,7 @@ sub eax, edx	; 64A8B
 shl eax, 3	; 64A8D
 add eax, edx	; 64A90
 add eax, dword [byte esp+08h]	; 64A92
-cmp byte [dword eax+byte_E9E18], 2	; 64A96
+cmp byte [dword eax+dressflags], 2	; 64A96
 jne short CanFillLineSlot.3	; 64A9D
 .5:
 movsx edx, si	; 64A9F
@@ -744,7 +744,7 @@ add eax, ecx	; 64CE1
 mov edi, dword [byte esp+02h]	; 64CE3
 sar edi, 10h	; 64CE7
 lea esi, [eax+edi]	; 64CEA
-cmp byte [dword esi+byte_E9E18], 0	; 64CED
+cmp byte [dword esi+dressflags], 0	; 64CED
 je near .10	; 64CF4
 mov edx, dword [byte esp+06h]	; 64CFA
 sar edx, 10h	; 64CFE
@@ -753,7 +753,7 @@ mov eax, ecx	; 64D03
 call CanFillLineSlot	; 64D05
 test ax, ax	; 64D0A
 je near .10	; 64D0D
-cmp byte [dword esi+byte_E9E18], 2	; 64D13
+cmp byte [dword esi+dressflags], 2	; 64D13
 jne near .9	; 64D1A
 cmp word [dword_E9F16], byte 12h	; 64D20
 jge near .10	; 64D28
@@ -820,7 +820,7 @@ shl eax, 3	; 64DD6
 add eax, esi	; 64DD9
 mov ecx, dword [byte esp+02h]	; 64DDB
 sar ecx, 10h	; 64DDF
-mov byte [dword ecx+eax+byte_E9E18], 1	; 64DE2
+mov byte [dword ecx+eax+dressflags], 1	; 64DE2
 mov edx, esi	; 64DEA
 shl esi, 4	; 64DEC
 add esi, edx	; 64DEF
@@ -935,7 +935,7 @@ cmp si, byte 1Ch	; 64F2F
 jge short .8	; 64F33
 cmp si, byte 12h	; 64F35
 jl short .8	; 64F39
-add eax, unk_E9D50	; 64F3B
+add eax, offsort_d	; 64F3B
 jmp short .9	; 64F40
 .8:
 mov edx, dword [byte esp-02h]	; 64F42
@@ -945,7 +945,7 @@ shl eax, 2	; 64F4B
 sub eax, edx	; 64F4E
 shl eax, 3	; 64F50
 add eax, edx	; 64F53
-add eax, byte_E9DB4	; 64F55
+add eax, defsort_d	; 64F55
 .9:
 mov edx, ecx	; 64F5A
 .10:
@@ -960,10 +960,10 @@ cmp cx, byte 43h	; 64F71
 jne near .18	; 64F75
 cmp si, byte 1Ch	; 64F7B
 jge short .13	; 64F7F
-add eax, unk_E9CEC	; 64F81
+add eax, offsort_c	; 64F81
 jmp short .14	; 64F86
 .13:
-add eax, unk_E9D82	; 64F88
+add eax, defsort_c	; 64F88
 .14:
 call FillDressedSlots	; 64F8D
 test ax, ax	; 64F92
@@ -978,10 +978,10 @@ shl eax, 3	; 64FA8
 add eax, edx	; 64FAB
 cmp si, byte 1Ch	; 64FAD
 jge short .15	; 64FB1
-add eax, unk_E9DE6	; 64FB3
+add eax, offsort_l	; 64FB3
 jmp short .16	; 64FB8
 .15:
-add eax, unk_E9E7C	; 64FBA
+add eax, defsort_l	; 64FBA
 .16:
 mov ebx, ecx	; 64FBF
 call FillDressedSlots	; 64FC1
@@ -997,20 +997,20 @@ shl eax, 3	; 64FDC
 add eax, ecx	; 64FDF
 cmp si, byte 1Ch	; 64FE1
 jge short .17	; 64FE5
-add eax, unk_E9EAE	; 64FE7
+add eax, offsort_r	; 64FE7
 jmp near PickForLineSlot.9	; 64FEC
 .17:
-add eax, unk_E9D1E	; 64FF1
+add eax, defsort_r	; 64FF1
 jmp near PickForLineSlot.9	; 64FF6
 .18:
 cmp cx, byte 52h	; 64FFB
 jne near .25	; 64FFF
 cmp si, byte 1Ch	; 65005
 jge short .19	; 65009
-add eax, unk_E9EAE	; 6500B
+add eax, offsort_r	; 6500B
 jmp short .20	; 65010
 .19:
-add eax, unk_E9D1E	; 65012
+add eax, defsort_r	; 65012
 .20:
 call FillDressedSlots	; 65017
 test ax, ax	; 6501C
@@ -1025,10 +1025,10 @@ shl eax, 3	; 65036
 add eax, edx	; 65039
 cmp si, byte 1Ch	; 6503B
 jge short .21	; 6503F
-add eax, unk_E9DE6	; 65041
+add eax, offsort_l	; 65041
 jmp short .22	; 65046
 .21:
-add eax, unk_E9E7C	; 65048
+add eax, defsort_l	; 65048
 .22:
 mov ebx, ecx	; 6504D
 call FillDressedSlots	; 6504F
@@ -1044,10 +1044,10 @@ shl eax, 3	; 6506E
 add eax, edx	; 65071
 cmp si, byte 1Ch	; 65073
 jge short .23	; 65077
-add eax, unk_E9CEC	; 65079
+add eax, offsort_c	; 65079
 jmp short .24	; 6507E
 .23:
-add eax, unk_E9D82	; 65080
+add eax, defsort_c	; 65080
 .24:
 mov ebx, ecx	; 65085
 jmp near PickForLineSlot.10	; 65087
@@ -1056,10 +1056,10 @@ cmp cx, byte 4Ch	; 6508C
 jne near .31	; 65090
 cmp si, byte 1Ch	; 65096
 jge short .26	; 6509A
-add eax, unk_E9DE6	; 6509C
+add eax, offsort_l	; 6509C
 jmp short .27	; 650A1
 .26:
-add eax, unk_E9E7C	; 650A3
+add eax, defsort_l	; 650A3
 .27:
 call FillDressedSlots	; 650A8
 test ax, ax	; 650AD
@@ -1074,10 +1074,10 @@ shl eax, 3	; 650C7
 add eax, ecx	; 650CA
 cmp si, byte 1Ch	; 650CC
 jge short .28	; 650D0
-add eax, unk_E9EAE	; 650D2
+add eax, offsort_r	; 650D2
 jmp short .29	; 650D7
 .28:
-add eax, unk_E9D1E	; 650D9
+add eax, defsort_r	; 650D9
 .29:
 mov edx, ecx	; 650DE
 call FillDressedSlots	; 650E0
@@ -1093,10 +1093,10 @@ shl eax, 3	; 650FF
 add eax, ecx	; 65102
 cmp si, byte 1Ch	; 65104
 jge short .30	; 65108
-add eax, unk_E9CEC	; 6510A
+add eax, offsort_c	; 6510A
 jmp near PickForLineSlot.9	; 6510F
 .30:
-add eax, unk_E9D82	; 65114
+add eax, defsort_c	; 65114
 jmp near PickForLineSlot.9	; 65119
 .31:
 mov ecx, dword [byte esp+04h]	; 6511E
@@ -1131,7 +1131,7 @@ shl eax, 2	; 6517C
 sub eax, edx	; 6517F
 shl eax, 3	; 65181
 add eax, edx	; 65184
-add eax, unk_E9D50	; 65186
+add eax, offsort_d	; 65186
 jmp short .37	; 6518B
 .34:
 mov edx, dword [byte esp-02h]	; 6518D
@@ -1141,7 +1141,7 @@ shl eax, 2	; 65196
 sub eax, edx	; 65199
 shl eax, 3	; 6519B
 add eax, edx	; 6519E
-add eax, byte_E9DB4	; 651A0
+add eax, defsort_d	; 651A0
 jmp short .37	; 651A5
 .35:
 cmp si, byte 1Ch	; 651A7
@@ -1153,7 +1153,7 @@ shl eax, 2	; 651B6
 sub eax, edx	; 651B9
 shl eax, 3	; 651BB
 add eax, edx	; 651BE
-add eax, byte_E9E4A	; 651C0
+add eax, offsort_fwd	; 651C0
 jmp short .37	; 651C5
 .36:
 mov edx, dword [byte esp-02h]	; 651C7
@@ -1163,7 +1163,7 @@ shl eax, 2	; 651D0
 sub eax, edx	; 651D3
 shl eax, 3	; 651D5
 add eax, edx	; 651D8
-add eax, unk_E9EE0	; 651DA
+add eax, defsort_fwd	; 651DA
 .37:
 mov ebp, eax	; 651DF
 xor ecx, ecx	; 651E1
@@ -1198,7 +1198,7 @@ shl eax, 2	; 65231
 sub eax, edx	; 65234
 shl eax, 3	; 65236
 add eax, edx	; 65239
-add eax, byte_E9E4A	; 6523B
+add eax, offsort_fwd	; 6523B
 jmp short .44	; 65240
 .41:
 mov edx, dword [byte esp-02h]	; 65242
@@ -1208,7 +1208,7 @@ shl eax, 2	; 6524B
 sub eax, edx	; 6524E
 shl eax, 3	; 65250
 add eax, edx	; 65253
-add eax, unk_E9EE0	; 65255
+add eax, defsort_fwd	; 65255
 jmp short .44	; 6525A
 .42:
 cmp si, byte 1Ch	; 6525C
@@ -1220,7 +1220,7 @@ shl eax, 2	; 6526B
 sub eax, edx	; 6526E
 shl eax, 3	; 65270
 add eax, edx	; 65273
-add eax, unk_E9D50	; 65275
+add eax, offsort_d	; 65275
 jmp short .44	; 6527A
 .43:
 mov edx, dword [byte esp-02h]	; 6527C
@@ -1230,7 +1230,7 @@ shl eax, 2	; 65285
 sub eax, edx	; 65288
 shl eax, 3	; 6528A
 add eax, edx	; 6528D
-add eax, byte_E9DB4	; 6528F
+add eax, defsort_d	; 6528F
 .44:
 mov ebp, eax	; 65294
 xor ecx, ecx	; 65296
@@ -1384,7 +1384,7 @@ shl eax, 2	; 653EC
 sub eax, ecx	; 653EF
 shl eax, 3	; 653F1
 add eax, ecx	; 653F4
-mov ebp, byte_E9E4A	; 653F6
+mov ebp, offsort_fwd	; 653F6
 add ebp, eax	; 653FB
 cmp bx, byte 26h	; 653FD
 jne near .7	; 65401
@@ -1452,7 +1452,7 @@ shl eax, 2	; 654B1
 sub eax, edx	; 654B4
 shl eax, 3	; 654B6
 add eax, edx	; 654B9
-mov ebp, byte_E9E4A	; 654BB
+mov ebp, offsort_fwd	; 654BB
 add ebp, eax	; 654C0
 xor edx, edx	; 654C2
 jmp short .10	; 654C4
@@ -1527,7 +1527,7 @@ sub eax, ebx	; 6556D
 shl eax, 3	; 6556F
 add eax, ebx	; 65572
 xor dl, dl	; 65574
-mov byte [dword ecx+eax+byte_E9E18], dl	; 65576
+mov byte [dword ecx+eax+dressflags], dl	; 65576
 .3:
 cmp di, word [byte esp+04h]	; 6557D
 jge short .x	; 65582
@@ -1549,7 +1549,7 @@ sub eax, ebx	; 655AC
 shl eax, 3	; 655AE
 add eax, ebx	; 655B1
 xor dh, dh	; 655B3
-mov byte [dword ecx+eax+byte_E9E18], dh	; 655B5
+mov byte [dword ecx+eax+dressflags], dh	; 655B5
 .4:
 inc edi	; 655BC
 add esi, dword [byte esp+018h]	; 655BD
@@ -1611,7 +1611,7 @@ shl eax, 3	; 65648
 add eax, ebx	; 6564B
 mov edx, dword [byte esp+0Ah]	; 6564D
 sar edx, 10h	; 65651
-movsx ax, byte [dword edx+eax+byte_E9DB4]	; 65654
+movsx ax, byte [dword edx+eax+defsort_d]	; 65654
 test ax, ax	; 6565D
 jl near .10	; 65660
 mov edx, ebx	; 65666
@@ -1654,7 +1654,7 @@ shl eax, 3	; 656D9
 lea edx, [ebx+eax]	; 656DC
 mov eax, dword [byte esp+0Ah]	; 656DF
 sar eax, 10h	; 656E3
-movsx ax, byte [dword edx+eax+byte_E9E4A]	; 656E6
+movsx ax, byte [dword edx+eax+offsort_fwd]	; 656E6
 test ax, ax	; 656EF
 jl short .10	; 656F2
 mov edx, ebx	; 656F4
@@ -1876,7 +1876,7 @@ sub edx, edi	; 6592B
 shl edx, 3	; 6592D
 add edx, edi	; 65930
 movsx eax, cx	; 65932
-movsx dx, byte [dword edx+eax+byte_E9DB4]	; 65935
+movsx dx, byte [dword edx+eax+defsort_d]	; 65935
 test dx, dx	; 6593E
 jl short .6	; 65941
 mov ebx, edi	; 65943
@@ -1913,7 +1913,7 @@ sub eax, edi	; 65997
 shl eax, 3	; 65999
 add eax, edi	; 6599C
 movsx edx, cx	; 6599E
-movsx dx, byte [dword edx+eax+byte_E9E4A]	; 659A1
+movsx dx, byte [dword edx+eax+offsort_fwd]	; 659A1
 test dx, dx	; 659AA
 jl short .10	; 659AD
 mov ebx, edi	; 659AF
@@ -1948,7 +1948,7 @@ jmp short .12	; 65A07
 .11:
 movsx eax, cx	; 65A09
 xor edx, edx	; 65A0C
-mov dword [nosplit eax*4+dword_E9C24], edx	; 65A0E
+mov dword [nosplit eax*4+lineslotmark], edx	; 65A0E
 inc ecx	; 65A15
 .12:
 cmp cx, byte 19h	; 65A16
@@ -1959,7 +1959,7 @@ jmp short .14	; 65A23
 .13:
 movsx eax, cx	; 65A25
 movsx eax, byte [eax+ebp]	; 65A28
-mov dword [nosplit eax*4+dword_E9C24], edi	; 65A2C
+mov dword [nosplit eax*4+lineslotmark], edi	; 65A2C
 inc ecx	; 65A33
 .14:
 cmp cx, byte 24h	; 65A34
@@ -1967,10 +1967,10 @@ jl short SetupTeamLines.13	; 65A38
 mov eax, dword [byte ebp+024h]	; 65A3A
 sar eax, 18h	; 65A3D
 mov ebx, 1	; 65A40
-mov dword [nosplit eax*4+dword_E9C24], ebx	; 65A45
+mov dword [nosplit eax*4+lineslotmark], ebx	; 65A45
 mov eax, dword [byte ebp+023h]	; 65A4C
 sar eax, 18h	; 65A4F
-mov dword [nosplit eax*4+dword_E9C24], ebx	; 65A52
+mov dword [nosplit eax*4+lineslotmark], ebx	; 65A52
 xor ecx, ecx	; 65A59
 jmp short .18	; 65A5B
 .15:
@@ -1989,7 +1989,7 @@ shl eax, 3	; 65A79
 sub eax, edx	; 65A7C
 mov al, byte [dword edi+eax+hmroster]	; 65A7E
 xor ah, ah	; 65A85
-cmp dword [nosplit edx*4+dword_E9C24], byte 0	; 65A87
+cmp dword [nosplit edx*4+lineslotmark], byte 0	; 65A87
 je short .17	; 65A8F
 test ax, ax	; 65A91
 je short .16	; 65A94
@@ -2046,7 +2046,7 @@ sub eax, ebx	; 65B0E
 shl eax, 3	; 65B10
 add eax, ebx	; 65B13
 movsx edx, cx	; 65B15
-cmp byte [dword edx+eax+byte_E9E18], 1	; 65B18
+cmp byte [dword edx+eax+dressflags], 1	; 65B18
 sete dl	; 65B20
 movsx ebx, si	; 65B23
 mov eax, ebx	; 65B26
@@ -2055,7 +2055,7 @@ sub eax, ebx	; 65B2B
 shl eax, 3	; 65B2D
 add ebx, eax	; 65B30
 movsx eax, cx	; 65B32
-mov byte [dword ebx+eax+byte_E9E18], dl	; 65B35
+mov byte [dword ebx+eax+dressflags], dl	; 65B35
 inc ecx	; 65B3C
 .24:
 cmp cx, byte 19h	; 65B3D
@@ -2073,14 +2073,14 @@ push ebx	; 65B52
 push edx	; 65B53
 xor eax, eax	; 65B54
 .1:
-mov dh, byte [dword eax+byte_E9E18]	; 65B56
+mov dh, byte [dword eax+dressflags]	; 65B56
 cmp dh, 1	; 65B5C
 sete dl	; 65B5F
-mov byte [dword eax+byte_E9E18], dl	; 65B62
-mov bl, byte [dword eax+byte_E9E31]	; 65B68
+mov byte [dword eax+dressflags], dl	; 65B62
+mov bl, byte [dword eax+dressflags_aw]	; 65B68
 cmp bl, 1	; 65B6E
 sete dl	; 65B71
-mov byte [dword eax+byte_E9E31], dl	; 65B74
+mov byte [dword eax+dressflags_aw], dl	; 65B74
 inc eax	; 65B7A
 cmp eax, byte 19h	; 65B7B
 jl short NormalizeDressFlags.1	; 65B7E
@@ -2119,7 +2119,7 @@ sub eax, esi	; 65BB8
 shl eax, 3	; 65BBA
 add esi, eax	; 65BBD
 movsx eax, dx	; 65BBF
-movsx bx, byte [dword esi+eax+byte_E9DB4]	; 65BC2
+movsx bx, byte [dword esi+eax+defsort_d]	; 65BC2
 test bx, bx	; 65BCB
 jl short .6	; 65BCE
 movsx ax, byte [byte ebp+047h]	; 65BD0
@@ -2172,7 +2172,7 @@ sub eax, ebp	; 65C41
 shl eax, 3	; 65C43
 add eax, ebp	; 65C46
 movsx esi, dx	; 65C48
-movsx bx, byte [dword esi+eax+byte_E9E4A]	; 65C4B
+movsx bx, byte [dword esi+eax+offsort_fwd]	; 65C4B
 test bx, bx	; 65C54
 jl short .12	; 65C57
 mov esi, ebp	; 65C59

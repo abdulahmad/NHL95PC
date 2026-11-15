@@ -5,18 +5,18 @@ bits 32
 section s_65CA8 progbits alloc exec nowrite align=1
 extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, rinkobjanim, byte_CD418
 extern byte_CD421, byte_CD473, byte_DB3AE, byte_DC8D8, byte_DC9D8, rinkobjs_b3, hmtmgoalie_b1, byte_DFFA6
-extern byte_E03C1, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B
-extern byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD
+extern byte_E03C1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
+extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
 extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, rinkobjdefs_m2
-extern dword_CD41E, dword_CD4B0, dword_D30BC, dword_D30C0, dword_DEF8C, dword_DEFE0, dword_DF004, dword_E0220
-extern dword_E0230, dword_E0244, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, dword_E9C24, dword_E9C85
-extern dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38, dword_E9F54, dword_E9F56, dword_E9F5A
-extern dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98, dword_E9FA5, dword_E9FA8, dword_E9FAA
-extern dword_E9FD9, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
+extern dword_E0230, ovlartbank, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, lineslotmark, dword_E9C85
+extern dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
+extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
+extern rpl_objstep_m3, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
-extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, off_CC01D, off_CD498, off_CD4A0
+extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, ovlscripts, off_CD498, off_CD4A0
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
@@ -24,11 +24,11 @@ extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprin
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
 extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
 extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
-extern textline1, textline2, textline3, textline4, textline5, hmplattr, unk_E9CEC, unk_E9D1E
-extern unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_CC054, word_CC0B0
-extern rinkobjdefs, word_CD4FC, rinkobjs, word_E0022, word_E0046, word_E9F12, word_E9F14, word_E9F18
-extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9, word_E9FB0
-extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
+extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
+extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
+extern rinkobjdefs, word_CD4FC, rinkobjs, word_E0022, word_E0046, word_E9F12, word_E9F14, rpl_x
+extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
+extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global DitherRect, checkwindow, checkwindow_popebp, checkwindow_popx, LoadTeamPPV, DrawTextOverlay, CloseTextOverlay, UpdateTextOverlay
 global DrawCallBanner, ShowGoalieBanner, SetTeamGoalie, LoadTeamPalette
 ; C: src/engine/hud/DitherRect.c
@@ -627,7 +627,7 @@ mov edi, eax	; 664AA
 movsx esi, ax	; 664AC
 shl esi, 2	; 664AF
 call sub_8DAB8	; 664B2
-cmp eax, dword [dword esi+dword_CD4B0]	; 664B7
+cmp eax, dword [dword esi+ovlmemneed]	; 664B7
 jl near .5	; 664BD
 mov ax, word [joysampling]	; 664C3
 mov word [joysampling_save], ax	; 664C9
@@ -650,7 +650,7 @@ lea eax, [byte esp+04h]	; 66504
 push eax	; 66508
 call sub_8E8A0	; 66509
 add esp, byte 8	; 6650E
-mov dword [dword_E0244], eax	; 66511
+mov dword [ovlartbank], eax	; 66511
 xor esi, esi	; 66516
 jmp short .4	; 66518
 .3:
@@ -662,14 +662,14 @@ call sprintf_	; 66525
 add esp, byte 0Ch	; 6652A
 mov eax, esp	; 6652D
 push eax	; 6652F
-mov ebp, dword [dword_E0244]	; 66530
+mov ebp, dword [ovlartbank]	; 66530
 push ebp	; 66536
 call sub_B30B4	; 66537
 add esp, byte 8	; 6653C
-mov dword [nosplit esi*4+dword_DEF8C], eax	; 6653F
+mov dword [nosplit esi*4+ovlstepart], eax	; 6653F
 inc esi	; 66546
 .4:
-mov ecx, dword [dword_E0244]	; 66547
+mov ecx, dword [ovlartbank]	; 66547
 push ecx	; 6654D
 call sub_90354	; 6654E
 add esp, byte 4	; 66553
@@ -680,9 +680,9 @@ sar eax, 10h	; 6655F
 mov dword [joysampling], eax	; 66562
 mov word [ovlseq], di	; 66567
 movsx eax, di	; 6656E
-mov edx, dword [nosplit eax*4+off_CC01D]	; 66571
+mov edx, dword [nosplit eax*4+ovlscripts]	; 66571
 mov dword [ovlscript], edx	; 66578
-mov ax, word [nosplit eax*4+word_CC054]	; 6657E
+mov ax, word [nosplit eax*4+ovlsteptime]	; 6657E
 mov word [ovlsteptimer], ax	; 66586
 mov word [ovlstepidx], 1	; 6658C
 mov eax, dword [ovlscript]	; 66595
@@ -943,7 +943,7 @@ sar edi, 10h	; 668D7
 push edi	; 668DA
 movsx ebp, si	; 668DB
 push ebp	; 668DE
-mov ebx, dword [dword_DF004]	; 668DF
+mov ebx, dword [ovlstepart_e30]	; 668DF
 push ebx	; 668E5
 call sub_B500C	; 668E6
 add esp, byte 0Ch	; 668EB
@@ -953,7 +953,7 @@ add ebp, byte 11h	; 668F2
 push ebp	; 668F5
 mov eax, dword [ovlstep-2]	; 668F6
 sar eax, 10h	; 668FB
-mov ecx, dword [nosplit eax*4+dword_DEF8C]	; 668FE
+mov ecx, dword [nosplit eax*4+ovlstepart]	; 668FE
 push ecx	; 66905
 jmp short .14	; 66906
 .12:
@@ -969,7 +969,7 @@ sar ebp, 10h	; 66929
 push ebp	; 6692C
 movsx edi, si	; 6692D
 push edi	; 66930
-mov eax, dword [dword_DEFE0]	; 66931
+mov eax, dword [ovlstepart_e21]	; 66931
 push eax	; 66936
 call sub_B500C	; 66937
 add esp, byte 0Ch	; 6693C
@@ -978,7 +978,7 @@ push ebp	; 66942
 push edi	; 66943
 mov eax, dword [ovlstep-2]	; 66944
 sar eax, 10h	; 66949
-mov edx, dword [nosplit eax*4+dword_DEF8C]	; 6694C
+mov edx, dword [nosplit eax*4+ovlstepart]	; 6694C
 push edx	; 66953
 jmp short .14	; 66954
 .13:
@@ -989,7 +989,7 @@ movsx eax, si	; 6695E
 push eax	; 66961
 mov eax, dword [ovlstep-2]	; 66962
 sar eax, 10h	; 66967
-mov ebp, dword [nosplit eax*4+dword_DEF8C]	; 6696A
+mov ebp, dword [nosplit eax*4+ovlstepart]	; 6696A
 push ebp	; 66971
 .14:
 call sub_B500C	; 66972
@@ -1413,7 +1413,7 @@ movsx bx, byte [ebx]	; 66F01
 mov cx, word [ovlstepidx]	; 66F05
 cmp bx, cx	; 66F0C
 jne short .8	; 66F0F
-mov ecx, dword [dword_E0244]	; 66F11
+mov ecx, dword [ovlartbank]	; 66F11
 push ecx	; 66F17
 call FreeMemBlock	; 66F18
 add esp, byte 4	; 66F1D
@@ -1437,7 +1437,7 @@ mov ebx, dword [ovlstepidx-2]	; 66F62
 sar ebx, 10h	; 66F68
 movsx ax, byte [ebx+eax]	; 66F6B
 mov word [ovlstep], ax	; 66F70
-mov ax, word [nosplit edx*4+word_CC054]	; 66F76
+mov ax, word [nosplit edx*4+ovlsteptime]	; 66F76
 mov word [ovlsteptimer], ax	; 66F7E
 jmp near checkwindow_popx	; 66F84
 .9:

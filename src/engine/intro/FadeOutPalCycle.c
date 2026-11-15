@@ -254,7 +254,7 @@ int ThreeStarsLoop(void)
     }
     joysampling = 0;
     if (ovlseq != -1) {
-        FreeMemBlock(dword_E0244);
+        FreeMemBlock(ovlartbank);
         ovlseq = -1;
     }
     if (escrequest) {
@@ -275,12 +275,12 @@ int ThreeStarsLoop(void)
     return 0;
 }
 
-/* StartPreGame (4830E, PC only): start the game's pre-game skate unless dword_CC0EC is set (then result 0): the
+/* StartPreGame (4830E, PC only): start the game's pre-game skate unless demogame is set (then result 0): the
    intro set-up (PreGameIntro) unless skip, the crowd noise reset, then the skate itself (ThreeStarsLoop, which it
    falls into). skip: leave the set-up out. Result: ThreeStarsLoop's. */
 int StartPreGame(int skip)
 {
-    if (dword_CC0EC) return 0;
+    if (demogame) return 0;
     if (!(short)skip) PreGameIntro();
     CrowdNoiseReset();
     return ThreeStarsLoop();
@@ -357,7 +357,7 @@ void PickThreeStars(void)
 /* Matched under 10.0 GA: the parking loop tests at the bottom once q is set before the for.
    The intro and three-stars routines share the epilogue in ThreeStarsLoop. */
 /* StartThreeStars (48F0B, PC only; ends in PreGameIntro_popx): the three stars ceremony after the game (not in the
-   demo, dword_CC0EC). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
+   demo, demogame). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
    (PickThreeStars). Clear the line change and penalty signals, the banner and the text overlay (freeing its art),
    the text lines, end the period count (curperiod -1) and the game-over flags, stop the clock (gmode bit 0 on, bit 7
    off), run the sequence for 2EE0h ticks, release the controllers and empty the penalty boxes. Park the twelve
@@ -372,7 +372,7 @@ void StartThreeStars(void)
     int per;
     int i;
 
-    if (dword_CC0EC) return;
+    if (demogame) return;
     per = curperiod;
     joysampling = 0;
     joyq_flush();
@@ -386,7 +386,7 @@ void StartThreeStars(void)
     refsignal = 0;
     Penaltytimer = 0;
     bannertimer = 0;
-    word_CBEC6 = 0;
+    injurystop = 0;
     lcboxon[1] = 0;
     lcboxon[0] = 0;
     lcblink[1] = 0;
@@ -395,7 +395,7 @@ void StartThreeStars(void)
     energywarn[0] = 0;
     lcrequest[1] = 0;
     lcrequest[0] = 0;
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     ovlseq = ovlstep = bannermsg = -1;
     textline3 = textline1 = textline2 = textline4 = textline5 = 0;
     curperiod = -1;

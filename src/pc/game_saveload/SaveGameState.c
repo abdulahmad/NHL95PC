@@ -84,7 +84,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&word_CBEC2);
     *p++ = *(short *)(&fadeinpending);
     *p++ = *(short *)(&deferpending);
-    *p++ = *(short *)(&word_CBEC6);
+    *p++ = *(short *)(&injurystop);
     *p++ = *(short *)(&word_E9AB0);
     *p++ = *(short *)(&bannermsg);
     *p++ = *(short *)(&bannertimer);
@@ -108,7 +108,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&lcblinktime);
     *p++ = *(short *)((char *)&lcblinktime + 2);
     *p++ = *(short *)(&lcsel);
-    *p++ = *(short *)(&word_CBC60);
+    *p++ = *(short *)(&lcsel_aw);
     *p++ = *(short *)(&lcline);
     *p++ = *(short *)((char *)&lcline + 2);
     *p++ = *(short *)(&lctimer);
@@ -146,10 +146,10 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&hudclockmin);
     *p++ = *(short *)(&hudclocksec);
     *p++ = *(short *)(&hudclockhund);
-    *p++ = *(short *)(&word_CC0B0);
+    *p++ = *(short *)(&Pencntdwn2);
     *p++ = *(short *)(&hudhundaccum);
     *p++ = *(short *)(&frameaccum);
-    *p++ = *(short *)(&dword_CC0AC);
+    *p++ = *(short *)(&goalienotebits);
     *p++ = *(short *)(&byte_E024C);
     *p++ = *(short *)(&word_E024E);
     *p++ = *(short *)(&gamemode);
@@ -325,7 +325,7 @@ int LoadGameState(int fh)
     word_CBEC2 = *p++;
     fadeinpending = *p++;
     deferpending = *p++;
-    word_CBEC6 = *p++;
+    injurystop = *p++;
     word_E9AB0 = *p++;
     bannermsg = *p++;
     bannertimer = *p++;
@@ -349,7 +349,7 @@ int LoadGameState(int fh)
     lcblinktime[0] = *p++;
     *(short *)((char *)&lcblinktime + 2) = *p++;
     lcsel[0] = *p++;
-    word_CBC60[0] = *p++;
+    lcsel_aw[0] = *p++;
     lcline[0] = *p++;
     *(short *)((char *)&lcline + 2) = *p++;
     lctimer[0] = *p++;
@@ -387,10 +387,10 @@ int LoadGameState(int fh)
     hudclockmin = *p++;
     hudclocksec = *p++;
     hudclockhund = *p++;
-    word_CC0B0[0] = *p++;
+    Pencntdwn2[0] = *p++;
     hudhundaccum = *p++;
     frameaccum = *p++;
-    dword_CC0AC = *p++;
+    goalienotebits = *p++;
     byte_E024C[0] = *p++;
     word_E024E = *p++;
     gamemode = *p++;
@@ -492,7 +492,7 @@ int LoadGameState(int fh)
     LoadGameGfx();
     __STOSD(photobanks, 0, 0x17);
     photobankf = 0;
-    if (ovlseq != -1 && ovlstep != -1) ovlscript = off_CC01D[ovlseq];
+    if (ovlseq != -1 && ovlstep != -1) ovlscript = ovlscripts[ovlseq];
     BuildEventLines();
     recbpr = replaystart;
     ReplayRecordReset();

@@ -36,7 +36,7 @@ void ResetGameVars(void)
 {
     curevent = 0xFF;
     goalevent = 0xFF;
-    dword_CC0AC = 0;
+    goalienotebits = 0;
     byte_E024F = 0;
     *(unsigned char *)&word_E024E = 0;
     byte_E024D[0] = 0;
@@ -45,7 +45,7 @@ void ResetGameVars(void)
     penaltysc = -1;
     RefStep[0] = -1;
     Pencntdwn = -1;
-    word_CC0B0[0] = -1;
+    Pencntdwn2[0] = -1;
     threat = 0;
     passplayer = 0;
     passspeed = 0;
@@ -72,12 +72,12 @@ void ResetGameVars(void)
     lctimer[0] = 0;
     lcline[1] = 0;
     lcline[0] = 0;
-    word_CBC60[0] = 0;
+    lcsel_aw[0] = 0;
     lcsel[0] = 0;
     savedmousey = 0;
     savedmousex = 0;
     bannertimer = 0;
-    word_CBEC6 = 0;
+    injurystop = 0;
     word_CBEC2 = 0;
     bannermsg = -1;
     ovlstep = -1;

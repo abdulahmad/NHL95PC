@@ -4,19 +4,19 @@ bits 32
 %include "hockey.inc"
 section s_614C2 progbits alloc exec nowrite align=1
 extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtmstruct
-extern bannermsg, bannertimer, byte_C9111, byte_C9142, byte_C9146, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
-extern awtmcoachflags, byte_E024C, byte_E024D, byte_E9A15, curevent, curevent_b1, curevent_b2, curevent_b3
+extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
+extern awtmcoachflags, byte_E024C, byte_E024D, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
-extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, dword_C9120, dword_CBEBE
-extern dword_CC0AC, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
-extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, dword_E9A14, dword_E9A9E, rinkobjused_m2, defertab
+extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
+extern goalienotebits, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, dword_E9A9E, rinkobjused_m2, defertab
 extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
 extern hmrosterjersey, hmscore, hmteamrec, hmtmap, hmtmflags, hmtmgoalie, hmtmlines, hmtmstruct
 extern HomeTeam, joysampling, joysampling_save, lastsfx, LoadTeamPPV, lseek_, ltx, lty
-extern MenuCallbackTrue, MenuCallbackTrue2, musicon, off_CD354, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
+extern MenuCallbackTrue, MenuCallbackTrue2, musicon, pennametab, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
 extern PaPenalty, PaPenaltyShot, PaSpeechBusy, PBnum, penaltynames, Penaltytimer, PenBuf, PenBuf_m5
 extern PenBuf_pl, Pencntdwn, pendelaytab, penmintab, penshotfox, penshotfoy, penshotlive, penshotmode
 extern penshotplayer, penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photoptrsf
@@ -29,8 +29,8 @@ extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumI
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
 extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1, textline2
 extern textline3, textline4, textline5, unk_C1B49, unk_C5423, unk_C542E, gsumqueue, UpdateTextOverlay
-extern vecdist, VisTeam, word_C5428, penaltysc, word_CBC44, word_CBEC6, word_CC0B0, rinkobjdefs
-extern word_CD39C, word_DB08A, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
+extern vecdist, VisTeam, word_C5428, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
+extern penbannertab, word_DB08A, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
 global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote
@@ -1574,7 +1574,7 @@ mov word [word_E9AAE], cx	; 626BE
 mov edi, dword [byte esp+020h]	; 626C5
 test edi, edi	; 626C9
 je short .15	; 626CB
-mov cl, byte [nosplit edi*2+byte_E9A15]	; 626CD
+mov cl, byte [nosplit edi*2+PenBuf_pl_m2]	; 626CD
 and cl, 1Fh	; 626D4
 cmp cl, 6	; 626D7
 setl cl	; 626DA
@@ -1593,7 +1593,7 @@ mov eax, dword [byte esp+028h]	; 626F3
 push eax	; 626F7
 mov ecx, dword [byte esp+028h]	; 626F8
 push ecx	; 626FC
-mov ecx, dword [nosplit ebx*4+off_CD354]	; 626FD
+mov ecx, dword [nosplit ebx*4+pennametab]	; 626FD
 mov ebx, dword [byte esp+018h]	; 62704
 mov edi, ebx	; 62708
 shl edi, 4	; 6270A
@@ -2040,7 +2040,7 @@ push ebx	; 62C41
 push ecx	; 62C42
 push edx	; 62C43
 push esi	; 62C44
-cmp dword [dword_CC0AC], byte 3Fh	; 62C45
+cmp dword [goalienotebits], byte 3Fh	; 62C45
 jne short .2	; 62C4C
 .1:
 xor eax, eax	; 62C4E
@@ -2070,12 +2070,12 @@ test ebx, ebx	; 62C8C
 je short .3	; 62C8E
 shl edx, 3	; 62C90
 .3:
-mov ebx, dword [dword_CC0AC]	; 62C93
+mov ebx, dword [goalienotebits]	; 62C93
 test edx, ebx	; 62C99
 jne short QueueGoalieNote.1	; 62C9B
 mov ecx, ebx	; 62C9D
 or ecx, edx	; 62C9F
-mov dword [dword_CC0AC], ecx	; 62CA1
+mov dword [goalienotebits], ecx	; 62CA1
 push byte 0	; 62CA7
 push byte 0	; 62CA9
 push byte 0	; 62CAB

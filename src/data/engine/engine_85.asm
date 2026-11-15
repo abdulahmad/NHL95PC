@@ -9,7 +9,7 @@ global textline4, textline5, PlList, byte_E038A, fofdata2_b3, fofdata2_b7, byte_
 global awtmlines, awtmplattr, awtmglattr, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
 global puckcross_m2, dword_DF848, puckstruct
 global sortobj15, SumCwdExciteLvl, photoptrsf, dword_E0220, dword_E0230
-global dword_E0244, ovlscript, fofdata2_m2, recbpr, replayplay, dword_E03A8
+global ovlartbank, ovlscript, fofdata2_m2, recbpr, replayplay, dword_E03A8
 global dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, SortCords
 global unk_DFD9C, unk_DFF5E, regd4, awtmgoaliesc, puckcross
 global word_DF816, word_DF81A
@@ -159,7 +159,7 @@ dword_E0220:
 resb 16
 dword_E0230:
 resb 20
-dword_E0244:
+ovlartbank:
 resb 4
 ovlscript:
 resb 4

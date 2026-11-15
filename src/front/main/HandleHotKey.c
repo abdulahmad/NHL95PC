@@ -124,7 +124,7 @@ void SetFullPalette(unsigned char *pal)
    resumed game (file *fh) loads the cup final series (unless gameopts bit 9), the game state, closes the file,
    rebuilds the lines and goalie menu and, unless the game was being left (exitgame -1), shows the sports desk
    (result 2: back), then returns to the rink: screen 140h x C8h, the mouse, the HUD panel, an overlay's PPV art
-   (loaded once into dword_E0244, its frames into dword_DEF8C) and the play-by-play clips. Then run the game
+   (loaded once into ovlartbank, its frames into ovlstepart) and the play-by-play clips. Then run the game
    (Gameloop); a league game that ended (gamemode, result 1) clears gameopts bit 15 and deletes the league's
    GAME.SAV. Back to the 280h x 1E0h desk screen. fh: the saved-game file handle (-1 for a new game).
    No result. */
@@ -177,11 +177,11 @@ void PlayGame(int *fh)
         DrawHudPanel(HomeTeam, VisTeam, curperiod, 0);
         rinkscrollx += 0x3E8;
         rinkscrolly += 0x3E8;
-        if (ovlseq != -1 && ovlstep != -1 && !dword_E0244) {
+        if (ovlseq != -1 && ovlstep != -1 && !ovlartbank) {
             MakePath(path, fileoncd[dword_CC080[ovlseq]] == 1 ? (char *)cddriveptr : 0, (char *)off_CBED0[ovlseq],
                 (char *)str_PPV);
-            dword_E0244 = sub_8E8A0(path, 0x20);
-            for (i = 0; i < sub_90354(dword_E0244); i++) dword_DEF8C[i] = sub_9035C(dword_E0244, i);
+            ovlartbank = sub_8E8A0(path, 0x20);
+            for (i = 0; i < sub_90354(ovlartbank); i++) ovlstepart[i] = sub_9035C(ovlartbank, i);
         }
         PaPreloadClips(teamabbrevs[HomeTeam], teamabbrevs[VisTeam]);
     }

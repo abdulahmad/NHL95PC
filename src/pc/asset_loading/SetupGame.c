@@ -36,6 +36,6 @@ int SetupGame(void)
         FadePalette(1, savepal, 0x10);
     }
     if (gameopts.linechanges || !introskipped) PlacePlayersAtStart();
-    if (!dword_CC0EC && !introskipped) fadeinpending = 0;
+    if (!demogame && !introskipped) fadeinpending = 0;
     return 0;
 }

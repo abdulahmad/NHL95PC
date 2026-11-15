@@ -3537,3 +3537,90 @@ rinkobjused_m2,E9B2A,rinkobjused-2: -5r short-load base
 lastimpact,E9B28,"strength of the last player collision (checkcx stores the impact); checkint, newcheck and setInjuryType compare it"
 penaltysc,C90D8,"sort object number of the player the referee's call is about, -1 none: InProgress sets it from the penalty buffer, QueueGoalieNote and assrefgoalpa read it"
 cupceremony,CCCA0,1 while the cup presentation runs after the final (findpc sets it; SportsDesk and clockcont_0 test it)
+rpl_x,E9F18,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: x per object (17 words); PickNearestPlayer searches it"
+rpl_x_e14,E9F34,rpl_x+2*14: x of object 14
+rpl_x_e15,E9F36,rpl_x+2*15: x of object 15
+rpl_x_e16,E9F38,rpl_x+2*16: x of object 16
+rpl_x_e14_m2,E9F32,rpl_x_e14-2: -5r short-load base
+rpl_y,E9F3A,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: y per object (17 words)"
+rpl_y_e14,E9F56,rpl_y+2*14: y of object 14
+rpl_y_e15,E9F58,rpl_y+2*15: y of object 15
+rpl_y_e16,E9F5A,rpl_y+2*16: y of object 16
+rpl_y_e14_m2,E9F54,rpl_y_e14-2: -5r short-load base
+rpl_frame,E9F5C,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: frame per object (17 words)"
+rpl_frame_e14,E9F78,rpl_frame+2*14: frame of object 14
+rpl_frame_e15,E9F7A,rpl_frame+2*15: frame of object 15
+rpl_frame_e14_m2,E9F76,rpl_frame_e14-2: -5r short-load base
+rpl_flip,E9F7E,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: flip byte per object (17 bytes)"
+rpl_flip_m3,E9F7B,rpl_flip-3: -5r byte-load base
+rpl_jersey,E9F8F,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: jersey byte per player (12 bytes)"
+rpl_jersey_m3,E9F8C,rpl_jersey-3: -5r byte-load base
+rpl_pos,E9F9B,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: position byte per player (12 bytes)"
+rpl_pos_b1,E9F9C,rpl_pos+1
+rpl_pos_m3,E9F98,rpl_pos-3: -5r byte-load base
+rpl_puckz,E9FA7,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: puck height"
+rpl_puckz_m2,E9FA5,rpl_puckz-2: -5r short-load base
+rpl_c1player,E9FAB,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: controlled player of pad 1"
+rpl_c2player,E9FAC,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: controlled player of pad 2"
+rpl_c1player_m3,E9FA8,rpl_c1player-3: -5r byte-load base
+rpl_puckc,E9FAD,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: puck carrier"
+rpl_puckc_m3,E9FAA,rpl_puckc-3: -5r byte-load base
+rpl_pbnum,E9FAE,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: penalty box count, first team"
+rpl_pbnum_b1,E9FAF,"rpl_pbnum+1: penalty box count, second team"
+rpl_camx,E9FB0,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: camera x (ReplayStep stores it with camx)"
+rpl_camy,E9FB2,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: camera y"
+rpl_objframe,E9FB4,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: frame per rink object (18 words)"
+rpl_objstep,E9FDC,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: animation step per rink object"
+rpl_objstep_b1,E9FDD,rpl_objstep+1
+rpl_objstep_m3,E9FD9,rpl_objstep-3: -5r byte-load base
+offsort_d,E9D50,"BuildDefaultLines: 25 bytes per team, roster players of position D sorted by the first rating table (SortPlayersByPos 'D')"
+offsort_r,E9EAE,"BuildDefaultLines: 25 bytes per team, roster players of position R sorted by the first rating table"
+offsort_l,E9DE6,"BuildDefaultLines: 25 bytes per team, roster players of position L sorted by the first rating table"
+offsort_c,E9CEC,"BuildDefaultLines: 25 bytes per team, roster players of position C sorted by the first rating table"
+defsort_d,E9DB4,"BuildDefaultLines: 25 bytes per team, roster players of position D sorted by the second rating table"
+defsort_r,E9D1E,"BuildDefaultLines: 25 bytes per team, roster players of position R sorted by the second rating table"
+defsort_l,E9E7C,"BuildDefaultLines: 25 bytes per team, roster players of position L sorted by the second rating table"
+defsort_c,E9D82,"BuildDefaultLines: 25 bytes per team, roster players of position C sorted by the second rating table"
+offsort_fwd,E9E4A,"BuildDefaultLines: 25 bytes per team, roster players other than defencemen sorted by the first rating table (SortNonDefPlayers)"
+defsort_fwd,E9EE0,"BuildDefaultLines: 25 bytes per team, roster players other than defencemen sorted by the second rating table (SortNonDefPlayers)"
+dressflags,E9E18,"dressed flag per roster player, 25 per team (BuildDefaultLines sets, NormalizeDressFlags makes them 0/1, CanFillLineSlot tests 2)"
+dressflags_aw,E9E31,dressflags+25: the visitors
+lineslotmark,E9C24,"25 dwords: 1 for each player found in a line slot (BuildDefaultLines, SetupTeamLines, the sorts)"
+pendelaytab_e13,C9111,"pendelaytab+0Dh: entry 13, checkfornewpen uses it for a penalty shot"
+penmintab_m3,C9120,penmintab-3: -5r byte-load base
+pendelay2tab,C9142,"checkfornewpen: second delay per penalty, x 32 frames, the minimum for Pencntdwn2"
+pendelay2tab_e4,C9146,"pendelay2tab+4: entry 4, used for a penalty shot"
+Pencntdwn2,CC0B0,"second penalty-call countdown: checkfornewpen raises it from pendelay2tab, chkprogress counts it down and sets gmode2 bit 2 at the end"
+PenBuf_m2,E9A14,PenBuf-2: -5r short-load base
+PenBuf_pl_m2,E9A15,PenBuf_pl-2: the player byte of the entry before (PostPenaltyEvent)
+pennametab,CD354,"pointer to the name of each penalty (Roughing, Charging, Slashing ...) for the penalty event text"
+penbannertab,CD39C,"AddPenalty2: call banner message per penalty (dword each, -1 none)"
+ovlscripts,CC01D,pointer to the step script of each text overlay sequence (ovlseq)
+ovlsteptime,CC054,frames per step of each overlay sequence (dword per ovlseq; ovlsteptimer is loaded from it)
+ovlmemneed,CD4B0,free memory each overlay sequence needs before LoadTeamPPV loads its art
+ovlartbank,E0244,"the loaded art bank of the running overlay sequence (LoadTeamPPV loads it, Gameloop/PlayGame free it)"
+ovlstepart,DEF8C,"art pointer per overlay step, drawn by DrawTextOverlay"
+ovlstepart_e21,DEFE0,ovlstepart+4*21
+ovlstepart_e30,DF004,ovlstepart+4*30
+goalienotebits,CC0AC,"QueueGoalieNote: one bit per goalie already noted (bit tmgoalie, +3 for the visitors; 3Fh = all done)"
+demogame,CC0EC,"set while the title screen demo game runs (RunDemoGame); the pre-game skate, three stars and opening lineup are skipped"
+injurystop,CBEC6,set by setInjuryType when a player is hurt: the referee stops play and the call countdown is 140h; cleared at the next faceoff
+nethit,CCC2C,"set when a player hits the goal net or post (checkgoalp, checkgoal): wallcoll then skips the hard-hit sound and keeps him outside the net"
+oneminsaid,CCC98,SayOneMinuteLeft: the one minute left clip was queued this period; StartHL2 clears it
+assscore_dancecnt,CCA58,"assscore: count of the scorer celebration, restarted by the scorer"
+lcsel_aw,CBC60,"lcsel+2: the visitors; also lcline-2, the -5r short-load base in lineinput"
+FallDown_pinxr,CCBCC,"FallDown/NetCollide: by facing, x where a player pinned on the right boards is put"
+FallDown_pinxl,CCBDC,"FallDown/NetCollide: by facing, x on the left boards"
+FallDown_pinyt,CCBEC,"FallDown/NetCollide: by facing, y behind the top goal line"
+FallDown_pinyb,CCBFC,"FallDown/NetCollide: by facing, y behind the bottom goal line"
+FallDown_pinxr2,CCC0C,"FallDown/NetCollide: by facing, x on the right boards at the benches (frame 1027h)"
+FallDown_pinxl2,CCC1C,"FallDown/NetCollide: by facing, x on the left boards at the benches (frame 1055h)"
+assonetimer_blade,CCBBA,"assonetimer: stick blade offset by facing, x,y byte pairs; x column"
+assonetimer_blade_y,CCBBB,assonetimer_blade+1: the y column
+HotStickList,CC7A4,"GetHotStick: stick hot spot per stick frame, x,y byte pairs (as HotList for GetHot); x column"
+HotStickList_y,CC7A5,HotStickList+1: the y column
+assstarskate_path,CC9EA,"assstarskate: 4-point skate path, x,y word pairs, one set per side; x column"
+assstarskate_path_y,CC9EC,assstarskate_path+2: the y column
+ShootoutPathData,CCB18,"NextPathPoint: shootout skate path points, 3 dwords each (x, y, end); 94G ShootoutPath1-7 hold x,y words"
+ShootoutPathData_y,CCB1C,ShootoutPathData+4: the y column
+ShootoutPathData_end,CCB20,ShootoutPathData+8: the end column

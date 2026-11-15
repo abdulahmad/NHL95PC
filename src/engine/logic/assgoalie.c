@@ -501,7 +501,7 @@ void assrefsignal(Player *p)
    announcer call the goal (PaGoal: the scoring team's abbreviation, the number of assists and the jersey numbers of
    scorer and assistants, goalevent_b1-E9AD7; input sampling off meanwhile) and in overtime cut the overlay short. With
    a penalty pending (PenBuf) just signal. With the puck beyond A0h / 112h go on to assignment 24h. A new
-   assignment: at the end of the period (or after an overtime goal, or with word_CBEC6) stop the play (assignment 1Eh,
+   assignment: at the end of the period (or after an overtime goal, or with injurystop) stop the play (assignment 1Eh,
    the puck 1Bh); else set up the faceoff walk (RefStep 1, PenShotAssign, the signal stance) and react to the call:
    a penalty to a goalie (RefPen 4: the goalie note, else the team's PPV overlay), a goal (RefPen 7: in the
    shoot-out end the game, else ChkScorerMilestone), others the crowd (CrowdOnStoppage). Then, with no deferred call:
@@ -552,7 +552,7 @@ void assrefgoalpa(Player *p)
         return;
     }
     if (p->pflags & 2) {
-        if (word_CBEC6 || !gameclock && !clockticks[0] || gsp == 3 && hmscore[0] != awscore) {
+        if (injurystop || !gameclock && !clockticks[0] || gsp == 3 && hmscore[0] != awscore) {
             RefStep[0] = -1;
             if (ovltimer == 0x100) ovltimer = 0x258;
             assreplace((Player *)puckstruct, 0x1B);

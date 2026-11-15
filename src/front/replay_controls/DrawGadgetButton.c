@@ -162,8 +162,8 @@ void InstantReplay(int mode)
             dword_ED6F0 = camx;
             dword_ED6F4 = camy;
         } else if (word_CD4FC >= 0) {
-            camx = word_E9F18[word_CD4FC];
-            camy = word_E9F3A[word_CD4FC];
+            camx = rpl_x[word_CD4FC];
+            camy = rpl_y[word_CD4FC];
             if (camx > 0x20) camx = 0x20;
             else if (camx < -0x20) camx = -0x20;
             if (camy > 0xEC) camy = 0xEC;
@@ -189,10 +189,10 @@ void InstantReplay(int mode)
                 dword_ED708 = camy - gadgetptry + 0x54;
                 DrawFrameSprite(0x188, (short)dword_ED704 + 1, (short)dword_ED708 + 1, 0, 0);
             } else {
-                DrawFrameSprite(0x188, word_E9F18[dword_ED74C] + 1, word_E9F3A[dword_ED74C] + 1, 0, 1);
+                DrawFrameSprite(0x188, rpl_x[dword_ED74C] + 1, rpl_y[dword_ED74C] + 1, 0, 1);
                 if (dword_ED6EC != dword_ED74C) {
-                    gadgetptrx = word_E9F18[dword_ED74C] - camx + 0xA0;
-                    gadgetptry = camy - word_E9F3A[dword_ED74C] + 0x54;
+                    gadgetptrx = rpl_x[dword_ED74C] - camx + 0xA0;
+                    gadgetptry = camy - rpl_y[dword_ED74C] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                     dword_ED6EC = dword_ED74C;
@@ -360,14 +360,14 @@ int ReplayControlLoop(int *step)
                 } else {
                     dword_ED70C = 0;
                     word_CD4FC = dword_ED74C;
-                    gadgetptrx = word_E9F18[dword_ED74C];
-                    gadgetptry = word_E9F3A[dword_ED74C];
+                    gadgetptrx = rpl_x[dword_ED74C];
+                    gadgetptry = rpl_y[dword_ED74C];
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
                     else if (gadgetptrx < -0x20) gadgetptrx = -0x20;
                     if (gadgetptry > 0xEC) gadgetptry = 0xEC;
                     else if (gadgetptry < -0xBC) gadgetptry = -0xBC;
-                    gadgetptrx = word_E9F18[dword_ED74C] - gadgetptrx + 0xA0;
-                    gadgetptry = gadgetptry - word_E9F3A[dword_ED74C] + 0x54;
+                    gadgetptrx = rpl_x[dword_ED74C] - gadgetptrx + 0xA0;
+                    gadgetptry = gadgetptry - rpl_y[dword_ED74C] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                     dword_ED6EC = dword_ED74C;

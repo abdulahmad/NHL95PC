@@ -4,10 +4,10 @@ bits 32
 %include "hockey.inc"
 section s_4FCE8 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
-extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, byte_CCBBA
-extern byte_CCBBB, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
+extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, assonetimer_blade
+extern assonetimer_blade_y, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
 extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
-extern donothing, doplayeracc, doshot, DrawPanelLine, dword_CC0EC, dword_CC0FA, dword_CCC9C, dword_E0244
+extern donothing, doplayeracc, doshot, DrawPanelLine, demogame, dword_CC0FA, dword_CCC9C, ovlartbank
 extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
 extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts
 extern gmode, gmode2, gsp, hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline
@@ -23,8 +23,8 @@ extern resetplstuff, restorepl, ReturnGoalies, SetExitGame, SetLCmode, setpassmo
 extern setplayer, SetShotMode, SetSPA, SetupPenaltyShot, sflags, sflags3, sfx, ShotMode
 extern shotplayer, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15, SprSort, SprSortVert
 extern StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3, textline4, textline5
-extern threat, updateanim, vecdist, vtoa, penaltysc, word_CBC44, word_CBC60, puckfaceoff2_ptab
-extern puckfaceoff2_ptab_y, word_CBEC6, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
+extern threat, updateanim, vecdist, vtoa, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab
+extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
 extern xc1, yc1, yleader
 global joyq_pop, joyq_flush, joyq_peek, lineinput, faceoffinput, Acheck, CanBlockShot, CanBlockShot_ret6
 global CanBlockShot_ret5, OppInReach, Holdplayer, lcselect, doinput, getlchoice, lcfound, ReadJoy1
@@ -176,7 +176,7 @@ sar edx, 1Fh	; 4FE50
 idiv edi	; 4FE53
 mov word [dword ebx+lcsel], dx	; 4FE55
 movsx ebx, si	; 4FE5C
-mov edx, dword [nosplit ebx*2+word_CBC60]	; 4FE5F
+mov edx, dword [nosplit ebx*2+lcsel_aw]	; 4FE5F
 sar edx, 10h	; 4FE66
 mov dx, word [nosplit edx*2+linenext]	; 4FE69
 mov word [nosplit ebx*2+lcline], dx	; 4FE71
@@ -1432,9 +1432,9 @@ mov word [regd0], ax	; 50C3F
 .9:
 mov eax, dword [regd0-2]	; 50C45
 sar eax, 10h	; 50C4A
-movsx dx, byte [nosplit eax*2+byte_CCBBB]	; 50C4D
+movsx dx, byte [nosplit eax*2+assonetimer_blade_y]	; 50C4D
 mov word [regd1], dx	; 50C56
-movsx ax, byte [nosplit eax*2+byte_CCBBA]	; 50C5D
+movsx ax, byte [nosplit eax*2+assonetimer_blade]	; 50C5D
 mov word [regd0], ax	; 50C66
 test byte [byte ebx+055h], 8	; 50C6C
 je short .10	; 50C70

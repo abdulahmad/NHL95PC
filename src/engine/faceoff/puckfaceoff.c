@@ -186,7 +186,7 @@ void puckfaceoff2(Player *p)
     int d;
 
     if (p->pflags & 2) {
-        if (--p->temp5 > 0 && !dword_CC0EC && !introskipped && !word_CBEC6) {
+        if (--p->temp5 > 0 && !demogame && !introskipped && !injurystop) {
             if (gsp || clockticks[0] || gameclock != PerTimeTotal) {
                 if (RefStep[0] >= 0) return;
                 if (ovltimer >= 0) return;
@@ -194,7 +194,7 @@ void puckfaceoff2(Player *p)
             }
         }
         p->pflags &= 0xFD;
-        if (introskipped && ovlseq != -1) FreeMemBlock(dword_E0244);
+        if (introskipped && ovlseq != -1) FreeMemBlock(ovlartbank);
         penshotstart = 0;
         joysampling_save = joysampling;
         joysampling = 0;
@@ -203,12 +203,12 @@ void puckfaceoff2(Player *p)
         ovltimer = ovlseq = ovlstep = bannermsg = -1;
         bannertimer = 0;
         textline3 = textline1 = textline2 = textline4 = textline5 = 0;
-        if (!dword_CC0EC && !gsp && gameclock == PerTimeTotal && !clockticks[0] && !introskipped) fadeinpending = 0;
-        else if (dword_CC0EC || introskipped || word_CBEC6) fadeinpending = 1;
-        else fadeinpending = word_CBEC6;
+        if (!demogame && !gsp && gameclock == PerTimeTotal && !clockticks[0] && !introskipped) fadeinpending = 0;
+        else if (demogame || introskipped || injurystop) fadeinpending = 1;
+        else fadeinpending = injurystop;
         RefStep[0] = -1;
         introskipped = 0;
-        word_CBEC6 = 0;
+        injurystop = 0;
         sflags &= 0xFE;
         sflags3 &= 0xFE;
         iflags = 0;

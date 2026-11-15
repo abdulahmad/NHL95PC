@@ -5,7 +5,7 @@ section s_688A4 progbits alloc exec nowrite align=1
 extern __CHK, AllInPlace, awgoalcnt, awscore, awshotcnt, awtmap, awtmgoalie, awtmplstats
 extern awtmstruct, bailout_vec, c1playernum, c2playernum, camx, camx_m2, camy, clockticks
 extern cont1team, cont2team, dbg_assnames, dbg_posnames, dbg_spalist, dbg_spanames, DebugPrintf, debugstep
-extern dword_E9A14, exitgame, fclose_, fopen_, fprintf_, frameaccum, gameclock, gamemode
+extern PenBuf_m2, exitgame, fclose_, fopen_, fprintf_, frameaccum, gameclock, gamemode
 extern gameover, gmode, gmode2, gsp, hmgoalcnt, hmscore, hmshotcnt, hmtmap
 extern hmtmgoalie, hmtmpdst_m2, hmtmplstats, hmtmstruct, hudhundaccum, joyq_flush, Penaltytimer, PenBuf
 extern PenBuf_pl, Pencntdwn, penshotctl, penshotlive, penshotmode, penshotplayer, penshotpnum, penshotstart

@@ -4,10 +4,10 @@ bits 32
 %include "hockey.inc"
 section s_51115 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
-extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, byte_CCBBA, byte_CCBBB, fofdata2_b3
+extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
 extern fofdata2_b7, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
 extern checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
-extern doshot, DrawPanelLine, dword_CC0EC, dword_CC0FA, dword_E0244, dword_E9A9E, Endfaceoff, energywarn
+extern doshot, DrawPanelLine, demogame, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
 extern EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1, fodir2, fofdata2, forcepldata
 extern fox, foy, FreeMemBlock, gameclock, gameopts, gmode, gmode2, gsp
 extern hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline, hmtmpdst, hmtmstruct, iflags
@@ -20,7 +20,7 @@ extern restorepl, ReturnGoalies, SetExitGame, setpersonel, Setplass, setplayer, 
 extern sflags, sflags3, sfx, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15
 extern SprSort, SprSortVert, StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3
 extern textline4, textline5, threat, updateanim, vtoa, penaltysc, word_CBC44, puckfaceoff2_ptab
-extern puckfaceoff2_ptab_y, word_CBEC6, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
+extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, word_E9AAE
 extern xc1, yc1, yleader
 global TakePlayerFromBox, TakePlayerFromBox_ret6, TakePlayerFromBox_ret5, PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace, assleavebox
 global puckfaceoff, puckfaceoff2, assbenchwait, asstakeposition, check4bench, asspsclear, assrefpenshot
@@ -167,7 +167,7 @@ ForceStartLineup:
 push dword 8	; 5125F
 call __CHK	; 51264
 push edx	; 51269
-cmp dword [dword_CC0EC], byte 0	; 5126A
+cmp dword [demogame], byte 0	; 5126A
 jne short .x	; 51271
 cmp word [gsp], byte 0	; 51273
 jne short .x	; 5127B
@@ -922,11 +922,11 @@ dec edx	; 51BFB
 mov word [byte esi+temp5], dx	; 51BFC
 test dx, dx	; 51C00
 jle near .2	; 51C03
-cmp dword [dword_CC0EC], byte 0	; 51C09
+cmp dword [demogame], byte 0	; 51C09
 jne short .2	; 51C10
 cmp dword [introskipped], byte 0	; 51C12
 jne short .2	; 51C19
-cmp word [word_CBEC6], byte 0	; 51C1B
+cmp word [injurystop], byte 0	; 51C1B
 jne short .2	; 51C23
 cmp word [gsp], byte 0	; 51C25
 jne short .1	; 51C2D
@@ -951,7 +951,7 @@ mov eax, dword [ovlseq-2]	; 51C7E
 sar eax, 10h	; 51C83
 cmp eax, byte 0FFFFFFFFh	; 51C86
 je short .3	; 51C89
-mov edi, dword [dword_E0244]	; 51C8B
+mov edi, dword [ovlartbank]	; 51C8B
 push edi	; 51C91
 call FreeMemBlock	; 51C92
 add esp, byte 4	; 51C97
@@ -985,7 +985,7 @@ xor cl, cl	; 51D0E
 mov byte [textline1], cl	; 51D10
 xor ch, ch	; 51D16
 mov byte [textline3], ch	; 51D18
-cmp dword [dword_CC0EC], byte 0	; 51D1E
+cmp dword [demogame], byte 0	; 51D1E
 jne short .4	; 51D25
 cmp word [gsp], byte 0	; 51D27
 jne short .4	; 51D2F
@@ -1000,11 +1000,11 @@ xor edx, edx	; 51D53
 mov word [fadeinpending], dx	; 51D55
 jmp short .7	; 51D5C
 .4:
-cmp dword [dword_CC0EC], byte 0	; 51D5E
+cmp dword [demogame], byte 0	; 51D5E
 jne short .5	; 51D65
 cmp dword [introskipped], byte 0	; 51D67
 jne short .5	; 51D6E
-mov cx, word [word_CBEC6]	; 51D70
+mov cx, word [injurystop]	; 51D70
 test cx, cx	; 51D77
 je short .6	; 51D7A
 .5:
@@ -1017,7 +1017,7 @@ mov word [RefStep], 0FFFFh	; 51D8E
 xor ebp, ebp	; 51D97
 mov dword [introskipped], ebp	; 51D99
 xor ecx, ecx	; 51D9F
-mov word [word_CBEC6], cx	; 51DA1
+mov word [injurystop], cx	; 51DA1
 and byte [sflags], 0FEh	; 51DA8
 and byte [sflags3], 0FEh	; 51DAF
 xor dl, dl	; 51DB6

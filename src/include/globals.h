@@ -2739,11 +2739,11 @@ extern short dirtab[]; /* C90E0 */
 extern short dirtab_y[]; /* C90E2 */
 extern int seed[]; /* C9100 */
 extern signed char pendelaytab[]; /* C9104 */
-extern signed char byte_C9111; /* C9111 */
-extern int dword_C9120[]; /* C9120 */
+extern signed char pendelaytab_e13; /* C9111 */
+extern int penmintab_m3[]; /* C9120 */
 extern signed char penmintab[]; /* C9123 */
-extern signed char byte_C9142[]; /* C9142 */
-extern signed char byte_C9146; /* C9146 */
+extern signed char pendelay2tab[]; /* C9142 */
+extern signed char pendelay2tab_e4; /* C9146 */
 extern int asstab[]; /* C9161 */
 extern unsigned char SPAtab[]; /* C921D */
 extern signed char priolist_m1[]; /* CBC36 */
@@ -2758,7 +2758,7 @@ extern short energywarn[]; /* CBC52 */
 extern short lcblink[]; /* CBC56 */
 extern short lcblinktime[]; /* CBC5A */
 extern short lcsel[]; /* CBC5E */
-extern short word_CBC60[]; /* CBC60 */
+extern short lcsel_aw[]; /* CBC60 */
 extern short lcline[]; /* CBC62 */
 extern short lctimer[]; /* CBC66 */
 extern short lcboxon[]; /* CBC6A */
@@ -2784,7 +2784,7 @@ extern int dword_CBEBE[]; /* CBEBE */
 extern short ovltimer; /* CBEC0 */
 extern short word_CBEC2; /* CBEC2 */
 extern short fadeinpending; /* CBEC4 */
-extern short word_CBEC6; /* CBEC6 */
+extern short injurystop; /* CBEC6 */
 extern short bannermsg; /* CBEC8 */
 extern short bannertimer; /* CBECA */
 extern short ovlseq; /* CBECC */
@@ -2801,12 +2801,12 @@ extern unsigned char unk_CBFA9[]; /* CBFA9 */
 extern unsigned char unk_CBFC3[]; /* CBFC3 */
 extern unsigned char unk_CBFEB[]; /* CBFEB */
 extern unsigned char unk_CBFFA[]; /* CBFFA */
-extern int off_CC01D[]; /* CC01D */
+extern int ovlscripts[]; /* CC01D */
 extern unsigned char byte_CC049[]; /* CC049 */
-extern short word_CC054[]; /* CC054 */
+extern short ovlsteptime[]; /* CC054 */
 extern int dword_CC080[]; /* CC080 */
-extern int dword_CC0AC; /* CC0AC */
-extern short word_CC0B0[]; /* CC0B0 */
+extern int goalienotebits; /* CC0AC */
+extern short Pencntdwn2[]; /* CC0B0 */
 extern int dword_CC0B4[]; /* CC0B4 */
 extern short lldispodd; /* CC0D8 */
 extern unsigned char lldisp; /* CC0D9 */
@@ -2814,7 +2814,7 @@ extern short ltack; /* CC0DA */
 extern short lastsfx; /* CC0DC */
 extern short crowdlevel; /* CC0DE */
 extern int photobankf; /* CC0E0 */
-extern int dword_CC0EC; /* CC0EC */
+extern int demogame; /* CC0EC */
 extern int introskipped; /* CC0F0 */
 extern int onetimerflag; /* CC0F4 */
 extern int shotongoal; /* CC0F8 */
@@ -2840,16 +2840,16 @@ extern int pspathside; /* CC140 */
 extern int pspathdir; /* CC144 */
 extern signed char HotList[]; /* CC148 */
 extern signed char HotList_y[]; /* CC149 */
-extern signed char byte_CC7A4[]; /* CC7A4 */
-extern signed char byte_CC7A5[]; /* CC7A5 */
+extern signed char HotStickList[]; /* CC7A4 */
+extern signed char HotStickList_y[]; /* CC7A5 */
 extern int dword_CC9AD[]; /* CC9AD */
 extern signed char byte_CC9B0[]; /* CC9B0 */
 extern short word_CC9CC[]; /* CC9CC */
 extern int dword_CC9CE[]; /* CC9CE */
 extern signed char byte_CC9E4[]; /* CC9E4 */
 extern signed char byte_CC9E7[]; /* CC9E7 */
-extern short word_CC9EA[]; /* CC9EA */
-extern short word_CC9EC[]; /* CC9EC */
+extern short assstarskate_path[]; /* CC9EA */
+extern short assstarskate_path_y[]; /* CC9EC */
 extern int starordtab[]; /* CCA0A */
 extern short asswingo_dedata[]; /* CCA18 */
 extern short asswingo_dedata_xrand[]; /* CCA1A */
@@ -2859,27 +2859,27 @@ extern short asscentero_dedata[]; /* CCA38 */
 extern short asscentero_dedata_xrand[]; /* CCA3A */
 extern short asscentero_dedata_y[]; /* CCA3C */
 extern short asscentero_dedata_yrand[]; /* CCA3E */
-extern int dword_CCA58; /* CCA58 */
+extern int assscore_dancecnt; /* CCA58 */
 extern int dword_CCA5A[]; /* CCA5A */
 extern short asspuckc_postab2[]; /* CCA6E */
 extern short asspuckc_postab2_y[]; /* CCA70 */
 extern signed char Endfaceoff_ftab_m1[]; /* CCA95 */
 extern short word_CCA9C[]; /* CCA9C */
 extern int dword_CCAD8[]; /* CCAD8 */
-extern int dword_CCB18[]; /* CCB18 */
-extern int dword_CCB1C[]; /* CCB1C */
-extern int dword_CCB20[]; /* CCB20 */
+extern int ShootoutPathData[]; /* CCB18 */
+extern int ShootoutPathData_y[]; /* CCB1C */
+extern int ShootoutPathData_end[]; /* CCB20 */
 extern short linenext[]; /* CCB4A */
 extern signed char lchoicetab[]; /* CCB5A */
-extern signed char byte_CCBBA[]; /* CCBBA */
-extern signed char byte_CCBBB[]; /* CCBBB */
-extern short word_CCBCC[]; /* CCBCC */
-extern short word_CCBDC[]; /* CCBDC */
-extern short word_CCBEC[]; /* CCBEC */
-extern short word_CCBFC[]; /* CCBFC */
-extern short word_CCC0C[]; /* CCC0C */
-extern short word_CCC1C[]; /* CCC1C */
-extern int dword_CCC2C; /* CCC2C */
+extern signed char assonetimer_blade[]; /* CCBBA */
+extern signed char assonetimer_blade_y[]; /* CCBBB */
+extern short FallDown_pinxr[]; /* CCBCC */
+extern short FallDown_pinxl[]; /* CCBDC */
+extern short FallDown_pinyt[]; /* CCBEC */
+extern short FallDown_pinyb[]; /* CCBFC */
+extern short FallDown_pinxr2[]; /* CCC0C */
+extern short FallDown_pinxl2[]; /* CCC1C */
+extern int nethit; /* CCC2C */
 extern short blockspd[]; /* CCC30 */
 extern short blockspd_y[]; /* CCC32 */
 extern int dword_CCC4E[]; /* CCC4E */
@@ -2890,7 +2890,7 @@ extern int crowdsmooth; /* CCC88 */
 extern int crowdvol8; /* CCC8C */
 extern int crowdvol7; /* CCC90 */
 extern int dword_CCC94; /* CCC94 */
-extern int dword_CCC98; /* CCC98 */
+extern int oneminsaid; /* CCC98 */
 extern int dword_CCC9C; /* CCC9C */
 extern int dword_CCC9D[]; /* CCC9D */
 extern int dword_CCC9E[]; /* CCC9E */
@@ -2912,15 +2912,15 @@ extern int dword_CD2F8[]; /* CD2F8 */
 extern int penaltynames[]; /* CD304 */
 extern int gsumqcount; /* CD34C */
 extern int defercount; /* CD350 */
-extern int off_CD354[]; /* CD354 */
-extern int word_CD39C[]; /* CD39C */
+extern int pennametab[]; /* CD354 */
+extern int penbannertab[]; /* CD39C */
 extern signed char byte_CD418[]; /* CD418 */
 extern int dword_CD41E[]; /* CD41E */
 extern signed char byte_CD421[]; /* CD421 */
 extern signed char byte_CD473[]; /* CD473 */
 extern int off_CD498[]; /* CD498 */
 extern int off_CD4A0[]; /* CD4A0 */
-extern int dword_CD4B0[]; /* CD4B0 */
+extern int ovlmemneed[]; /* CD4B0 */
 extern int bannerstrs[]; /* CD4DC */
 extern unsigned char off_CD4FA[]; /* CD4FA */
 extern short word_CD4FC; /* CD4FC */
@@ -4853,9 +4853,9 @@ extern short rinkobjs_w2[]; /* DEE96 */
 extern unsigned char rinkobjs_b3[]; /* DEE97 */
 extern short word_DEF84; /* DEF84 */
 extern short word_DEF88; /* DEF88 */
-extern int dword_DEF8C[]; /* DEF8C */
-extern int dword_DEFE0; /* DEFE0 */
-extern int dword_DF004; /* DF004 */
+extern int ovlstepart[]; /* DEF8C */
+extern int ovlstepart_e21; /* DEFE0 */
+extern int ovlstepart_e30; /* DF004 */
 extern int savedmousex; /* DF00C */
 extern int savedmousey; /* DF010 */
 extern unsigned char savepal[]; /* DF014 */
@@ -4958,7 +4958,7 @@ extern int SumCwdExciteLvl; /* E009C */
 extern int photoptrsf[]; /* E00A0 */
 extern int dword_E0220; /* E0220 */
 extern int dword_E0230; /* E0230 */
-extern int dword_E0244; /* E0244 */
+extern int ovlartbank; /* E0244 */
 extern int ovlscript; /* E0248 */
 extern short byte_E024C[]; /* E024C */
 extern unsigned char byte_E024D[]; /* E024D */
@@ -4994,8 +4994,8 @@ extern signed char byte_E03C1; /* E03C1 */
 extern unsigned char hilightrec[]; /* E03C4 */
 extern unsigned char unk_E0416[]; /* E0416 */
 extern int PenBuf_m5[]; /* E9A11 */
-extern int dword_E9A14[]; /* E9A14 */
-extern unsigned char byte_E9A15[]; /* E9A15 */
+extern int PenBuf_m2[]; /* E9A14 */
+extern unsigned char PenBuf_pl_m2[]; /* E9A15 */
 extern signed char PenBuf[]; /* E9A16 */
 extern signed char PenBuf_pl[]; /* E9A17 */
 extern int Ylist_m2[]; /* E9A56 */
@@ -5060,61 +5060,61 @@ extern int defertab_a4[]; /* E9BB4 */
 extern int defertab_a5[]; /* E9BB8 */
 extern int defertab_a6[]; /* E9BBC */
 extern int defertab_fn[]; /* E9BC0 */
-extern int dword_E9C24[]; /* E9C24 */
+extern int lineslotmark[]; /* E9C24 */
 extern int dword_E9C85[]; /* E9C85 */
 extern int dword_E9C88[]; /* E9C88 */
-extern unsigned char unk_E9CEC[]; /* E9CEC */
-extern unsigned char unk_E9D1E[]; /* E9D1E */
-extern unsigned char unk_E9D50[]; /* E9D50 */
-extern unsigned char unk_E9D82[]; /* E9D82 */
-extern signed char byte_E9DB4[]; /* E9DB4 */
-extern unsigned char unk_E9DE6[]; /* E9DE6 */
-extern unsigned char byte_E9E18[]; /* E9E18 */
-extern unsigned char byte_E9E31[]; /* E9E31 */
-extern signed char byte_E9E4A[]; /* E9E4A */
-extern unsigned char unk_E9E7C[]; /* E9E7C */
-extern unsigned char unk_E9EAE[]; /* E9EAE */
-extern unsigned char unk_E9EE0[]; /* E9EE0 */
+extern unsigned char offsort_c[]; /* E9CEC */
+extern unsigned char defsort_r[]; /* E9D1E */
+extern unsigned char offsort_d[]; /* E9D50 */
+extern unsigned char defsort_c[]; /* E9D82 */
+extern signed char defsort_d[]; /* E9DB4 */
+extern unsigned char offsort_l[]; /* E9DE6 */
+extern unsigned char dressflags[]; /* E9E18 */
+extern unsigned char dressflags_aw[]; /* E9E31 */
+extern signed char offsort_fwd[]; /* E9E4A */
+extern unsigned char defsort_l[]; /* E9E7C */
+extern unsigned char offsort_r[]; /* E9EAE */
+extern unsigned char defsort_fwd[]; /* E9EE0 */
 extern short word_E9F12; /* E9F12 */
 extern short word_E9F14; /* E9F14 */
 extern int dword_E9F16[]; /* E9F16 */
-extern short word_E9F18[]; /* E9F18 */
-extern int dword_E9F32[]; /* E9F32 */
-extern short dword_E9F34; /* E9F34 */
-extern short word_E9F36; /* E9F36 */
-extern int dword_E9F38[]; /* E9F38 */
-extern short word_E9F3A[]; /* E9F3A */
-extern int dword_E9F54[]; /* E9F54 */
-extern short dword_E9F56; /* E9F56 */
-extern short word_E9F58; /* E9F58 */
-extern int dword_E9F5A[]; /* E9F5A */
-extern short word_E9F5C[]; /* E9F5C */
-extern int dword_E9F76[]; /* E9F76 */
-extern short dword_E9F78; /* E9F78 */
-extern short word_E9F7A; /* E9F7A */
-extern int dword_E9F7B[]; /* E9F7B */
-extern unsigned char byte_E9F7E[]; /* E9F7E */
-extern int dword_E9F8C[]; /* E9F8C */
-extern unsigned char byte_E9F8F[]; /* E9F8F */
-extern int dword_E9F98[]; /* E9F98 */
-extern unsigned char byte_E9F9B[]; /* E9F9B */
-extern unsigned char byte_E9F9C[]; /* E9F9C */
-extern int dword_E9FA5[]; /* E9FA5 */
-extern short word_E9FA7; /* E9FA7 */
-extern int dword_E9FA8[]; /* E9FA8 */
+extern short rpl_x[]; /* E9F18 */
+extern int rpl_x_e14_m2[]; /* E9F32 */
+extern short rpl_x_e14; /* E9F34 */
+extern short rpl_x_e15; /* E9F36 */
+extern int rpl_x_e16[]; /* E9F38 */
+extern short rpl_y[]; /* E9F3A */
+extern int rpl_y_e14_m2[]; /* E9F54 */
+extern short rpl_y_e14; /* E9F56 */
+extern short rpl_y_e15; /* E9F58 */
+extern int rpl_y_e16[]; /* E9F5A */
+extern short rpl_frame[]; /* E9F5C */
+extern int rpl_frame_e14_m2[]; /* E9F76 */
+extern short rpl_frame_e14; /* E9F78 */
+extern short rpl_frame_e15; /* E9F7A */
+extern int rpl_flip_m3[]; /* E9F7B */
+extern unsigned char rpl_flip[]; /* E9F7E */
+extern int rpl_jersey_m3[]; /* E9F8C */
+extern unsigned char rpl_jersey[]; /* E9F8F */
+extern int rpl_pos_m3[]; /* E9F98 */
+extern unsigned char rpl_pos[]; /* E9F9B */
+extern unsigned char rpl_pos_b1[]; /* E9F9C */
+extern int rpl_puckz_m2[]; /* E9FA5 */
+extern short rpl_puckz; /* E9FA7 */
+extern int rpl_c1player_m3[]; /* E9FA8 */
 extern short word_E9FA9; /* E9FA9 */
-extern int dword_E9FAA[]; /* E9FAA */
-extern signed char byte_E9FAB; /* E9FAB */
-extern signed char byte_E9FAC; /* E9FAC */
-extern signed char byte_E9FAD; /* E9FAD */
-extern signed char byte_E9FAE; /* E9FAE */
-extern signed char byte_E9FAF; /* E9FAF */
-extern short word_E9FB0; /* E9FB0 */
-extern short word_E9FB2; /* E9FB2 */
-extern short word_E9FB4[]; /* E9FB4 */
-extern int dword_E9FD9[]; /* E9FD9 */
-extern unsigned char byte_E9FDC[]; /* E9FDC */
-extern unsigned char byte_E9FDD[]; /* E9FDD */
+extern int rpl_puckc_m3[]; /* E9FAA */
+extern signed char rpl_c1player; /* E9FAB */
+extern signed char rpl_c2player; /* E9FAC */
+extern signed char rpl_puckc; /* E9FAD */
+extern signed char rpl_pbnum; /* E9FAE */
+extern signed char rpl_pbnum_b1; /* E9FAF */
+extern short rpl_camx; /* E9FB0 */
+extern short rpl_camy; /* E9FB2 */
+extern short rpl_objframe[]; /* E9FB4 */
+extern int rpl_objstep_m3[]; /* E9FD9 */
+extern unsigned char rpl_objstep[]; /* E9FDC */
+extern unsigned char rpl_objstep_b1[]; /* E9FDD */
 extern int dword_E9FF0[]; /* E9FF0 */
 extern int dword_EA034; /* EA034 */
 extern int dword_EA038; /* EA038 */

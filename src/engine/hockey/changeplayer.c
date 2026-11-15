@@ -221,8 +221,8 @@ void setplayer(Player *p, short n)
 /* the overlay frames (shorts read the -5r way): one marker per tracked object from CC0B2 (controller 1, 2, the
    puck carrier) and the edge arrows from CC0B8 (one row of eight per controller; d is the direction 1-8, the
    byte offset summed after the call as in the EXE) */
-#define MARKFRAME(j) (((short *)((char *)word_CC0B0 + 2))[j])
-#define ARROWFRAME(j, d) (*(short *)((char *)word_CC0B0 + 6 + (d) * 2 + ((j) << 4)))
+#define MARKFRAME(j) (((short *)((char *)Pencntdwn2 + 2))[j])
+#define ARROWFRAME(j, d) (*(short *)((char *)Pencntdwn2 + 6 + (d) * 2 + ((j) << 4)))
 #define OOBYTE(i) (*(int *)(OOlist + (i) - 3) >> 24)
 int __cdecl sub_B340B(int fl);
 

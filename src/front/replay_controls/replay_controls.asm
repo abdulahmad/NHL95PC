@@ -6,7 +6,7 @@ section s_7DC8B progbits alloc exec nowrite align=1
 extern __CHK, _dos_getdiskfree_, awteamrec, bgscrollx, bgscrolly, byte_CC9B0, byte_DB7F1, byte_DC267
 extern byte_DC268, camx, camx_m2, camy, cddriveptr, ClearInputQueue, cont2team, crowdlevel
 extern CrowdNoiseOff, crowdsmooth, ctl1team, ctl2team, curleague, curperiod, DrawFrameSprite, DrawRinkSideObjects
-extern dword_C66D0, dword_C66D4, dword_CC9AD, dword_CCC94, dword_D8C72, dword_D8C7A, dword_E9F16, dword_E9F38
+extern dword_C66D0, dword_C66D4, dword_CC9AD, dword_CCC94, dword_D8C72, dword_D8C7A, dword_E9F16, rpl_x_e16
 extern dword_ED6D0, dword_ED6D4, dword_ED6E8, dword_ED6EC, dword_ED6F0, dword_ED6F4, dword_ED6F8, dword_ED6FC
 extern dword_ED704, dword_ED708, dword_ED70C, dword_ED74C, dword_ED750, dword_ED754, dword_ED756, FadeOutPalCycle
 extern FadePalette, FadePalStep, FatalError, FileClose, FileCreate, fileoncd, FileOpenRead, FileOpenWrite
@@ -30,7 +30,7 @@ extern sub_90D20, sub_91370, sub_913B4, sub_91400, sub_91964, sub_92DE0, sub_930
 extern sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, sub_B4CD8, sub_B4FAC, sub_B500C
 extern sub_B5DB0, teamabbrevs, teamcitynames, teamrockcuetbl, teamtunefiles, teamtunepathsel, TicksSinceLastCall, unk_C3447
 extern unk_C3470, unknown_libname_1, unknown_libname_2, viewscrollx, viewscrolly, VisTeam, WaitTickDeadline, word_CD4FC
-extern word_E9F18, word_E9F3A, word_ED758
+extern rpl_x, rpl_y, word_ED758
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, sub_7E03F, bothneitherstrs, DrawGadgetButton
 global DrawGadgetButton_ret, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight_jt, ReplaySaveHilight, ReplaySaveHilight_n0
 global ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplaySaveHilight_n3, HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName
@@ -772,9 +772,9 @@ cmp word [word_CD4FC], byte 0	; 7E55D
 jl near .21	; 7E565
 mov eax, dword [word_CD4FC-2]	; 7E56B
 sar eax, 10h	; 7E570
-mov dx, word [nosplit eax*2+word_E9F18]	; 7E573
+mov dx, word [nosplit eax*2+rpl_x]	; 7E573
 mov word [camx], dx	; 7E57B
-mov ax, word [nosplit eax*2+word_E9F3A]	; 7E582
+mov ax, word [nosplit eax*2+rpl_y]	; 7E582
 mov word [camy], ax	; 7E58A
 cmp dx, byte 20h	; 7E590
 jle short .18	; 7E594
@@ -885,10 +885,10 @@ jmp near .28	; 7E738
 .26:
 push byte 1	; 7E73D
 mov eax, edx	; 7E73F
-mov dx, word [nosplit edx*2+word_E9F3A]	; 7E741
+mov dx, word [nosplit edx*2+rpl_y]	; 7E741
 inc edx	; 7E749
 movsx ebx, dx	; 7E74A
-mov ax, word [nosplit eax*2+word_E9F18]	; 7E74D
+mov ax, word [nosplit eax*2+rpl_x]	; 7E74D
 inc eax	; 7E755
 movsx edx, ax	; 7E756
 xor ecx, ecx	; 7E759
@@ -906,7 +906,7 @@ sar edx, 10h	; 7E786
 sub ebx, edx	; 7E789
 add ebx, 0A0h	; 7E78B
 mov dword [gadgetptrx], ebx	; 7E791
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7E797
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 7E797
 sar eax, 10h	; 7E79E
 mov edx, dword [camy-2]	; 7E7A1
 sar edx, 10h	; 7E7A7
@@ -1059,7 +1059,7 @@ jle short .3	; 7E96C
 mov ebx, dword [nosplit eax*2+dword_E9F16]	; 7E96E
 sar ebx, 10h	; 7E975
 sub ebx, edi	; 7E978
-mov edx, dword [nosplit eax*2+dword_E9F38]	; 7E97A
+mov edx, dword [nosplit eax*2+rpl_x_e16]	; 7E97A
 sar edx, 10h	; 7E981
 sub edx, ebp	; 7E984
 imul ebx, ebx	; 7E986
@@ -1379,7 +1379,7 @@ mov word [word_CD4FC], dx	; 7EDCF
 mov edx, dword [nosplit eax*2+dword_E9F16]	; 7EDD6
 sar edx, 10h	; 7EDDD
 mov dword [gadgetptrx], edx	; 7EDE0
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7EDE6
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 7EDE6
 sar eax, 10h	; 7EDED
 mov dword [gadgetptry], eax	; 7EDF0
 cmp edx, byte 20h	; 7EDF5
@@ -1407,7 +1407,7 @@ sar edx, 10h	; 7EE4D
 sub edx, dword [gadgetptrx]	; 7EE50
 add edx, 0A0h	; 7EE56
 mov dword [gadgetptrx], edx	; 7EE5C
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 7EE62
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 7EE62
 sar eax, 10h	; 7EE69
 mov edx, dword [gadgetptry]	; 7EE6C
 sub edx, eax	; 7EE72

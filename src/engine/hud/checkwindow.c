@@ -163,28 +163,28 @@ void checkwindow(void)
 }
 
 /* LoadTeamPPV (66497, PC only; ends in checkwindow_popebp): start overlay sequence seq when enough memory is free
-   (sub_8DAB8 against dword_CD4B0[seq]): with the joystick sampling off, load its PPV art bank (off_CBED0, from the
-   CD when fileoncd says so) into dword_E0244 and its frames ("%04d") into dword_DEF8C, then set the overlay
-   state: ovlseq, its script (off_CC01D), the first step's timer (word_CC054), step index 1 and the first step.
+   (sub_8DAB8 against ovlmemneed[seq]): with the joystick sampling off, load its PPV art bank (off_CBED0, from the
+   CD when fileoncd says so) into ovlartbank and its frames ("%04d") into ovlstepart, then set the overlay
+   state: ovlseq, its script (ovlscripts), the first step's timer (ovlsteptime), step index 1 and the first step.
    seq: the overlay. No result. */
 void LoadTeamPPV(short seq)
 {
     char name[0x10];
     int i;
 
-    if (sub_8DAB8() < dword_CD4B0[seq]) return;
+    if (sub_8DAB8() < ovlmemneed[seq]) return;
     joysampling_save = joysampling;
     joysampling = 0;
     MakePath(name, fileoncd[dword_CC080[seq]] == 1 ? (char *)cddriveptr : 0, (char *)off_CBED0[seq], (char *)str_PPV);
-    dword_E0244 = sub_8E8A0(name, 0x20);
-    for (i = 0; i < sub_90354(dword_E0244); i++) {
+    ovlartbank = sub_8E8A0(name, 0x20);
+    for (i = 0; i < sub_90354(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
-        dword_DEF8C[i] = sub_B30B4(dword_E0244, name);
+        ovlstepart[i] = sub_B30B4(ovlartbank, name);
     }
     joysampling = joysampling_save;
     ovlseq = seq;
-    ovlscript = off_CC01D[seq];
-    ovlsteptimer = ((int *)word_CC054)[seq];
+    ovlscript = ovlscripts[seq];
+    ovlsteptimer = ((int *)ovlsteptime)[seq];
     ovlstepidx = 1;
     ovlstep = ((signed char *)ovlscript)[1];
 }
@@ -193,8 +193,8 @@ void LoadTeamPPV(short seq)
    (moved right during the shootout, gsp 4). ovltimer slides it: under 10h it grows from the corner (the clip
    window shrinks to the box, k = timer, 42h / 2Ah * k / 16) and from 258h it shrinks again. The banner is cut
    (bannermsg -1). The box is saved and dithered (sub_90EC0, DitherRect 9) while it slides or without an overlay
-   script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (dword_DEF8C) is
-   drawn, for sequence 0Ah after step 10h over dword_DF004 and for sequence 8 steps 12h-14h below dword_DEFE0; at
+   script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (ovlstepart) is
+   drawn, for sequence 0Ah after step 10h over ovlstepart_e30 and for sequence 8 steps 12h-14h below ovlstepart_e21; at
    sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from crowdlevel over 2EEh, 3B6h and 47Eh.
    Without one, the text lines 3, 1, 2, 4, 5 centred, line spacing by how many there are, twice (scor3font in 25h,
    then scor2font in 27h). Then the box is marked for redraw (sub_6AB7C). No arguments, no result. */
@@ -261,13 +261,13 @@ void DrawTextOverlay(void)
         sub_B4BC4(x0s, x1s, y0s, y1s);
     } else if (ovlseq != -1 && ovlstep != -1) {
         if (ovlseq == 0xA && ovlstep > 0x10) {
-            sub_B500C(dword_DF004, x, y);
-            sub_B500C(dword_DEF8C[ovlstep], x + 0x11, y + 0x1F);
+            sub_B500C(ovlstepart_e30, x, y);
+            sub_B500C(ovlstepart[ovlstep], x + 0x11, y + 0x1F);
         } else if (ovlseq == 8 && ovlstep >= 0x12 && ovlstep <= 0x14) {
-            sub_B500C(dword_DEFE0, x, y);
-            sub_B500C(dword_DEF8C[ovlstep], x, y + 0x3C);
+            sub_B500C(ovlstepart_e21, x, y);
+            sub_B500C(ovlstepart[ovlstep], x, y + 0x3C);
         } else {
-            sub_B500C(dword_DEF8C[ovlstep], x, y);
+            sub_B500C(ovlstepart[ovlstep], x, y);
         }
         if (ovlseq == 0 && ovlstep == 2) {
             y += 0x23;
@@ -369,7 +369,7 @@ void UpdateTextOverlay(void)
         if (--ovlsteptimer >= 0) return;
         s = (signed char *)ovlscript;
         if (*s == ovlstepidx) {
-            FreeMemBlock(dword_E0244);
+            FreeMemBlock(ovlartbank);
             if (byte_CC049[ovlseq]) ovltimer = 0x258;
             ovlseq = ovlstep = -1;
             ovlscript = 0;
@@ -377,7 +377,7 @@ void UpdateTextOverlay(void)
         }
         ovlstepidx++;
         ovlstep = s[ovlstepidx];
-        ovlsteptimer = ((int *)word_CC054)[ovlseq];
+        ovlsteptimer = ((int *)ovlsteptime)[ovlseq];
         return;
     }
     if (ovltimer < 0x100 || ovltimer >= 0x258) ovltimer++;

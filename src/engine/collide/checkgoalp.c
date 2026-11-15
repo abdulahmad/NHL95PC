@@ -10,7 +10,7 @@ short CheckBump(Player *p, Player *c);
  from the goal (dy = y - g y, dx = x - g x) must be on the near side of the net (net 12: dy + wcradiusy >= -34,
  else dy - wcradiusy < 34) and |dx| - wcradiusx < 64; regd0 = -dy, regd1 = dx. Inside the post ellipse (dx^2 4
  and dx^2 4 + 2 dy^2 up to 256) and not bumping it (CheckBump, skipped for 16): regd0 regd1 become the unit
- vector * 256 (vecdist + 1, clamped to -255..255) and the player bounces off it (wallcoll, dword_CCC2C = 1).
+ vector * 256 (vecdist + 1, clamped to -255..255) and the player bounces off it (wallcoll, nethit = 1).
  CheckBump is declared short in this file (the EXE tests ax), and the radii are plain short reads (each arm
  reloads its own; the W() form was hoisted above the SCnum 12 test).
  DRAFT (10.0 GA, 389 vs 389): `y * y + y * y` keeps d = x*x >> 2 in a saved register (the EXE's 4-byte
@@ -44,6 +44,6 @@ void checkgoalp(Player *p, Player *g, short x, short y)
     regd1.w = (W(regd1) << 8) / len;
     if (regd1.w > 255) regd1.w = 255;
     if (W(regd1) < -255) regd1.w = -255;
-    dword_CCC2C = 1;
+    nethit = 1;
     wallcoll(p);
 }

@@ -4,7 +4,7 @@ bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
 extern __CHK, byte_D2439, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, dword_CCC94
-extern dword_CCC98, dword_D2427, dword_ED374, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
+extern oneminsaid, dword_D2427, dword_ED374, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
 extern SayPlayerNumber, SayPlayoffResult, SayPlayoffTonight, SayScoringPeriod, SayTonightIntro, SetTickDeadline, sounddev, SpeechBusy
@@ -382,7 +382,7 @@ cmp edx, 9Ch	; 598A1
 jne near .x	; 598A7
 test byte [gmode], 10h	; 598AD
 je short .1	; 598B4
-cmp dword [dword_CCC98], byte 0	; 598B6
+cmp dword [oneminsaid], byte 0	; 598B6
 je near .x	; 598BD
 .1:
 mov ecx, dword [sounddev]	; 598C3

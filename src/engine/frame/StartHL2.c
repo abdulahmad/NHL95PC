@@ -43,7 +43,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     int t;
     Player *pl;
 
-    dword_CCC98 = 0;
+    oneminsaid = 0;
     sgameover = gameover;
     p = save;
     *p++ = HomeTeam;
@@ -72,7 +72,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     HomeTeam = home;
     VisTeam = vis;
     LoadGameTeams(2);
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     LoadTeamPalette(HomeTeam, VisTeam, gamepal);
     LoadPlayerPhotos();
     awtmgoalie = 0;
@@ -119,7 +119,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     ovlstep = -1;
     ovlseq = -1;
     bannertimer = 0;
-    word_CBEC6 = 0;
+    injurystop = 0;
     crowdlevel = 0;
     crowdsmooth = 0;
     word_DF81A = -1;
@@ -247,12 +247,12 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         if (regd1.w & 0x10 || regd1.w & 0x20) break;
     }
     joysampling = 0;
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;
     demomode = 0;
-    dword_CCC98 = 0;
+    oneminsaid = 0;
     sub_8FFB0(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     CrowdFadeOut();

@@ -6,9 +6,9 @@ section s_59D9A progbits alloc exec nowrite align=1
 extern __CHK, AddPenalty, AddPenalty2, assinsert, assreplace, asstab, awlinetab, awroster
 extern awscore, awteamrec, awtmglstats, awtmgoalie, awtmlcnt, awtmline, awtmlines, awtmpbox
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, priolist
-extern byte_CC7A4, byte_CC7A5, cupceremony, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
+extern HotStickList, HotStickList_y, cupceremony, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmcoach_d2
 extern awtmcoach_d3, awtmcoachflags, awtmcoachmode, byte_E003A, byte_E0072, byte_E0073, byte_E0074, byte_E038A
-extern goalevent, byte_E9DB4, byte_E9E4A, c1playernum, c2playernum, camx, camx_m2, camy
+extern goalevent, defsort_d, offsort_fwd, c1playernum, c2playernum, camx, camx_m2, camy
 extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
 extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
 extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
@@ -30,8 +30,8 @@ extern ReadJoy2, recbpr, RefStep, regd0, regd1, regd2, regd3, regd4
 extern ReplayRecordReset, replaystart, rinkscrollx, rinkscrolly, SetBoxDoorObject, SetPenaltyStrength, Setplass_alist, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, sortobj15
 extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
-extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, unk_E9D50
-extern unk_E9EE0, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, word_CBEC6, word_CC0B0
+extern hmglattr, awglattr, hmplattr, awplattr, awplstats, unk_DC240, unk_DC252, offsort_d
+extern defsort_fwd, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, injurystop, Pencntdwn2
 extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, word_E0036, word_E03A0
 extern word_E03B8, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
@@ -781,9 +781,9 @@ db 081h,0E8h,0B4h,01h,00h,00h	; 5A4F3 sub eax,1B4h
 db 081h,0E8h,096h,01h,00h,00h	; 5A4F9 sub eax,196h
 add eax, eax	; 5A4FF
 cwde	; 5A501
-movsx bx, byte [dword eax+byte_CC7A4]	; 5A502
+movsx bx, byte [dword eax+HotStickList]	; 5A502
 mov word [regd0], bx	; 5A50A
-movsx ax, byte [dword eax+byte_CC7A5]	; 5A511
+movsx ax, byte [dword eax+HotStickList_y]	; 5A511
 mov word [regd1], ax	; 5A519
 test byte [byte edx+055h], 8	; 5A51F
 je short .x	; 5A523
@@ -2811,7 +2811,7 @@ shl edx, 2	; 5BDEF
 sub edx, ebx	; 5BDF2
 shl edx, 3	; 5BDF4
 add edx, ebx	; 5BDF7
-add edx, unk_E9D50	; 5BDF9
+add edx, offsort_d	; 5BDF9
 jmp short .23	; 5BDFF
 .19:
 movsx ebx, ax	; 5BE01
@@ -2820,7 +2820,7 @@ shl edx, 2	; 5BE06
 sub edx, ebx	; 5BE09
 shl edx, 3	; 5BE0B
 add edx, ebx	; 5BE0E
-add edx, byte_E9E4A	; 5BE10
+add edx, offsort_fwd	; 5BE10
 jmp short .23	; 5BE16
 .20:
 cmp bx, byte 1	; 5BE18
@@ -2834,7 +2834,7 @@ shl edx, 2	; 5BE29
 sub edx, ebx	; 5BE2C
 shl edx, 3	; 5BE2E
 add edx, ebx	; 5BE31
-add edx, byte_E9DB4	; 5BE33
+add edx, defsort_d	; 5BE33
 jmp short .23	; 5BE39
 .22:
 movsx ebx, dx	; 5BE3B
@@ -2843,7 +2843,7 @@ shl edx, 2	; 5BE40
 sub edx, ebx	; 5BE43
 shl edx, 3	; 5BE45
 add edx, ebx	; 5BE48
-add edx, unk_E9EE0	; 5BE4A
+add edx, defsort_fwd	; 5BE4A
 .23:
 mov dword [esp], edx	; 5BE50
 xor ecx, ecx	; 5BE53
@@ -4391,7 +4391,7 @@ push byte 0	; 5D1B2
 movsx ebx, ax	; 5D1B4
 movsx edx, cx	; 5D1B7
 movsx eax, di	; 5D1BA
-mov eax, dword [nosplit eax*2+word_CC0B0]	; 5D1BD
+mov eax, dword [nosplit eax*2+Pencntdwn2]	; 5D1BD
 sar eax, 10h	; 5D1C4
 xor ecx, ecx	; 5D1C7
 .28:

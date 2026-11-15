@@ -8,7 +8,7 @@ extern byte_D42C3, byte_DC8D8, byte_DC91B, byte_DC9D7, byte_DC9D8, byte_DCA1B, b
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, dword_C5710
 extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
-extern dword_C5860, dword_C5861, dword_C5862, dword_C588A, dword_CC0EC, dword_CCC94, dword_DC2B8, dword_DC33C
+extern dword_C5860, dword_C5861, dword_C5862, dword_C588A, demogame, dword_CCC94, dword_DC2B8, dword_DC33C
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
@@ -32,7 +32,7 @@ extern sub_91370, sub_913B4, sub_91400, sub_91964, sub_B30B4, sub_B3464, sub_B39
 extern sub_B3AA1, sub_B4B88, sub_B4BA8, sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, sub_B4F8C
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
 extern TickDeadlinePassed, TicksSinceLastCall, unk_C4E30, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
-extern word_CBC60
+extern lcsel_aw
 global RunDemoGame, RunDemoGame_x, AnyInputPressed, ReadBE32, TitleScreen, RunIntro, ShowCredits, SetTextColors
 global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridFree
 global TextGridOff, TextGridPut
@@ -159,10 +159,10 @@ call LoadRockMusic	; 15F37
 call ReloadGameGfx	; 15F3C
 call FadeOutPalCycle	; 15F41
 mov ebp, 1	; 15F46
-mov dword [dword_CC0EC], ebp	; 15F4B
+mov dword [demogame], ebp	; 15F4B
 call SetupDemoGame	; 15F51
 xor eax, eax	; 15F56
-mov dword [dword_CC0EC], eax	; 15F58
+mov dword [demogame], eax	; 15F58
 mov dword [introskipped], eax	; 15F5D
 mov dword [gameresult], eax	; 15F62
 mov edx, 0C8h	; 15F67
@@ -1362,7 +1362,7 @@ call sub_B392C	; 16F74
 add esp, byte 4	; 16F79
 call PaOpenBank	; 16F7C
 xor ebp, ebp	; 16F81
-mov dword [dword_CC0EC], ebp	; 16F83
+mov dword [demogame], ebp	; 16F83
 mov dword [demomode], ebp	; 16F89
 add esp, 64Ch	; 16F8F
 jmp near RunDemoGame_x	; 16F95

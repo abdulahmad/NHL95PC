@@ -553,7 +553,7 @@ void assreffollow(Player *p)
 }
 
 /* assrefwhistle (4E8EF; 93G hockey93 assrefwhistle?, PC version): referee p blows the whistle. Not while he is
-   locked (pflags bit 5). A new assignment (pflags bit 1): when the play is over (word_CBEC6, the clock at 0, or a
+   locked (pflags bit 5). A new assignment (pflags bit 1): when the play is over (injurystop, the clock at 0, or a
    tied shootout-period game gsp 3 decided), end the stoppage (RefStep -1, overlay timer 100h -> 258h) and hand the
    puck and p their next assignments (1Bh, 1Eh); else start the whistle (RefStep 1, PenShotAssign, spot A0h, 0 in
    temp3 / temp4, SPA A5Bh) unless the crowd reacts (CrowdOnStoppage). Then skate to the spot (SkateToSpot) until
@@ -565,7 +565,7 @@ void assrefwhistle(Player *p)
 
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
-        if (word_CBEC6 || (!gameclock && !clockticks[0]) || (gsp == 3 && hmscore[0] != awscore)) {
+        if (injurystop || (!gameclock && !clockticks[0]) || (gsp == 3 && hmscore[0] != awscore)) {
             RefStep[0] = -1;
             if (ovltimer == 0x100) ovltimer = 0x258;
             assreplace((Player *)puckstruct, 0x1B);

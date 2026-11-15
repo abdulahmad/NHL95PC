@@ -6,7 +6,7 @@ bits 32
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
 extern addtimer, asc_C36C3, byte_C541B, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, dword_CCC98, dword_D2350, dword_D2423, dword_D2427, dword_D242B
+extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, oneminsaid, dword_D2350, dword_D2423, dword_D2427, dword_D242B
 extern dword_D2435, str_Cor2, dword_D27B2, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
 extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
 extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
@@ -3082,7 +3082,7 @@ call EnsureSampleRoom	; 854E1
 mov eax, str_OneleftCor	; 854E6
 call QueueSpeechClip	; 854EB
 mov ebx, 1	; 854F0
-mov dword [dword_CCC98], ebx	; 854F5
+mov dword [oneminsaid], ebx	; 854F5
 mov eax, dword [speechq]	; 854FB
 mov dword [byte eax+060h], ebx	; 85500
 mov eax, ebx	; 85503

@@ -67,12 +67,12 @@ int PostPenaltyEvent(int team, int player, int pen, int len, int min, int sec, i
                 idx = 1;
                 word_E9AAE = team;
             }
-            if (who && (((((signed char *)byte_E9A15)[who * 2] & 0x1F) < 6) ^ team) != 0)
+            if (who && (((((signed char *)PenBuf_pl_m2)[who * 2] & 0x1F) < 6) ^ team) != 0)
                 cnt = idx + 1;
             else
                 cnt = idx;
             PaPenalty((char *)teamabbrevs[side],
-                      hmrosterjersey[team * 0x444 + player * 39], len, (char *)off_CD354[pen],
+                      hmrosterjersey[team * 0x444 + player * 39], len, (char *)pennametab[pen],
                       min, sec, idx, cnt, last);
             if (last) word_E9AAE = -1;
         }

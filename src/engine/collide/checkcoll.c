@@ -14,7 +14,7 @@ void checkcoll(Player *p, short x, short y)
     short i;
     short pl;
 
-    dword_CCC2C = 0;
+    nethit = 0;
     collflag = 0;
     if (sflags & 0x80) {
         pl = y;

@@ -4,19 +4,19 @@ bits 32
 %include "hockey.inc"
 section s_62CD7 progbits alloc exec nowrite align=1
 extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtmstruct
-extern bannermsg, bannertimer, byte_C9111, byte_C9142, byte_C9146, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
-extern awtmcoachflags, byte_E024C, byte_E024D, byte_E9A15, curevent, curevent_b1, curevent_b2, curevent_b3
+extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
+extern awtmcoachflags, byte_E024C, byte_E024D, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
 extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
-extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, dword_C9120, dword_CBEBE
-extern dword_CC0AC, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
-extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, dword_E9A14, dword_E9A9E, rinkobjused_m2, defertab
+extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
+extern goalienotebits, dword_CD2F8, hmplstats_m2, hmplstats, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
+extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, dword_E9A9E, rinkobjused_m2, defertab
 extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
 extern hmrosterjersey, hmscore, hmteamrec, hmtmap, hmtmflags, hmtmgoalie, hmtmlines, hmtmstruct
 extern HomeTeam, joysampling, joysampling_save, lastsfx, LoadTeamPPV, lseek_, ltx, lty
-extern MenuCallbackTrue, MenuCallbackTrue2, musicon, off_CD354, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
+extern MenuCallbackTrue, MenuCallbackTrue2, musicon, pennametab, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
 extern PaPenalty, PaPenaltyShot, PaSpeechBusy, PBnum, penaltynames, Penaltytimer, PenBuf, PenBuf_m5
 extern PenBuf_pl, Pencntdwn, pendelaytab, penmintab, penshotfox, penshotfoy, penshotlive, penshotmode
 extern penshotplayer, penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photoptrsf
@@ -29,8 +29,8 @@ extern str_B7, str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str
 extern str_FmtParenD, str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD
 extern str_SHTag, str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, unk_C1B49, unk_C5423, unk_C542E, gsumqueue
-extern UpdateTextOverlay, vecdist, VisTeam, word_C5428, penaltysc, word_CBC44, word_CBEC6, word_CC0B0
-extern rinkobjdefs, word_CD39C, word_DB08A, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
+extern UpdateTextOverlay, vecdist, VisTeam, word_C5428, penaltysc, word_CBC44, injurystop, Pencntdwn2
+extern rinkobjdefs, penbannertab, word_DB08A, rinkobjs, hmtmtouch1, word_E9AAE, rinkobjused, yleader
 global GetPeriodTimeRemaining, AddPenalty, AddPenalty2, SetPA, InProgress, InProgress_popebp, InProgress_popx, chkprogress_go
 global chkprogress_x, Stop4Pen, checkfornewpen, releasepl, chkatop, updatepentime_ut_chk, updatepentime_ut, updatePPTeamTime
 global updatepentime, PenaltyManager, chkprogress, UpdatePowerPlayFlags, ClearPenaltyBuffer, PenGoalStuff, SetupPenaltyShot, ShotLaneOpen
@@ -116,9 +116,9 @@ movsx edx, cx	; 62DB4
 shl edx, 2	; 62DB7
 mov eax, dword [bannermsg-2]	; 62DBA
 sar eax, 10h	; 62DBF
-cmp eax, dword [dword edx+word_CD39C]	; 62DC2
+cmp eax, dword [dword edx+penbannertab]	; 62DC2
 jge short .1	; 62DC8
-mov ax, word [dword edx+word_CD39C]	; 62DCA
+mov ax, word [dword edx+penbannertab]	; 62DCA
 mov word [bannermsg], ax	; 62DD1
 mov eax, dword [bannermsg-2]	; 62DD7
 sar eax, 10h	; 62DDC
@@ -336,7 +336,7 @@ je short .12	; 63073
 dec edx	; 63075
 .12:
 movsx eax, si	; 63076
-mov ebx, dword [nosplit eax*2+dword_E9A14]	; 63079
+mov ebx, dword [nosplit eax*2+PenBuf_m2]	; 63079
 sar ebx, 18h	; 63080
 shl ebx, 7	; 63083
 mov ecx, SortCords	; 63086
@@ -690,7 +690,7 @@ cmp byte [dword edx+penmintab], 0	; 634D7
 je short chkprogress_go.2	; 634DE
 or byte [gmode2], 4	; 634E0
 mov edi, 0FFFFFFFFh	; 634E7
-mov word [word_CC0B0], di	; 634EC
+mov word [Pencntdwn2], di	; 634EC
 mov word [word_CBC44], 1	; 634F3
 mov edx, dword [puckc]	; 634FC
 mov byte [edx], 0FFh	; 63502
@@ -953,7 +953,7 @@ cmp ax, word [Pencntdwn]	; 638A6
 jle short .6	; 638AD
 mov word [Pencntdwn], ax	; 638AF
 .6:
-cmp word [word_CBEC6], byte 0	; 638B5
+cmp word [injurystop], byte 0	; 638B5
 je short .7	; 638BD
 mov word [Pencntdwn], 140h	; 638BF
 .7:
@@ -961,20 +961,20 @@ cmp dword [penshotstart], byte 0	; 638C8
 je short .8	; 638CF
 cmp bl, 5	; 638D1
 jne short .8	; 638D4
-movsx ax, byte [byte_C9146]	; 638D6
+movsx ax, byte [pendelay2tab_e4]	; 638D6
 shl eax, 5	; 638DE
-movsx bx, byte [byte_C9111]	; 638E1
+movsx bx, byte [pendelaytab_e13]	; 638E1
 shl ebx, 5	; 638E9
 mov word [Pencntdwn], bx	; 638EC
 jmp short .9	; 638F3
 .8:
 movsx eax, bl	; 638F5
-movsx ax, byte [dword eax+byte_C9142]	; 638F8
+movsx ax, byte [dword eax+pendelay2tab]	; 638F8
 shl eax, 5	; 63900
 .9:
-cmp ax, word [word_CC0B0]	; 63903
+cmp ax, word [Pencntdwn2]	; 63903
 jle short .10	; 6390A
-mov word [word_CC0B0], ax	; 6390C
+mov word [Pencntdwn2], ax	; 6390C
 .10:
 inc edx	; 63912
 .11:
@@ -1267,12 +1267,12 @@ push edi	; 63C19
 test byte [gmode], 1	; 63C1A
 je near chkprogress_x	; 63C21
 call UpdateTextOverlay	; 63C27
-mov dx, word [word_CC0B0]	; 63C2C
+mov dx, word [Pencntdwn2]	; 63C2C
 test dx, dx	; 63C33
 jl short .1	; 63C36
 mov ebx, edx	; 63C38
 dec ebx	; 63C3A
-mov word [word_CC0B0], bx	; 63C3B
+mov word [Pencntdwn2], bx	; 63C3B
 test bx, bx	; 63C42
 jge short .1	; 63C45
 or byte [gmode2], 4	; 63C47

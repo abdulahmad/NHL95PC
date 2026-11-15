@@ -8,7 +8,7 @@ extern awpanelspr, awscore, awtmline, awtmstruct, byte_DC8D8, byte_DC91B, byte_D
 extern byte_DCA1B, byte_DCAD7, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
 extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, dword_C5710
 extern dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848, dword_C5854, dword_C5858, dword_C585C
-extern dword_C5860, dword_C5861, dword_C5862, dword_CC0EC, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
+extern dword_C5860, dword_C5861, dword_C5862, demogame, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
 extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult
 extern GetPeriodTime, gmode, hmlineind, hmpanelspr, hmscore, hmtmline, hmtmstruct, HomeTeam
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
@@ -21,7 +21,7 @@ extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprint
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
 extern str_star, strcat_, strcpy_, sub_8CCA8, sub_8E8A0, sub_90D20, sub_B30B4, sub_B3464
 extern sub_B4CD8, sub_B4CF2, sub_B4DD4, sub_B4E50, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
-extern unknown_libname_2, VisTeam, word_CBC60
+extern unknown_libname_2, VisTeam, lcsel_aw
 global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x
 global DrawPanelClock, DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties
 global LoadCupFinalSeries, IsCupClinched, CupSeriesWinner

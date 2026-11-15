@@ -15,9 +15,9 @@
    width - 1) is a Goal; off a post (PC: the shot flag gmode2 bit 4 is cleared instead of ChkShotStat) the
    crowd goes up by 500 (PC: up to 1200 and only while the clock runs), sfx ACh, random deflection velocities,
    puckflip, the penalty shot ends (EndPenaltyShot) and the one-timer / shot-on-goal flags clear. A side or back
-   entry bounces off as a wall (wallcoll, dword_CCC2C = 1). No result.
+   entry bounces off as a wall (wallcoll, nethit = 1). No result.
    No gotos: the side entry is the fall-through after the nested tests, and each wall exit is its own
-   `dword_CCC2C = 1; wallcoll(p); return;` (Watcom cross-jumps them into the last one); that block order also
+   `nethit = 1; wallcoll(p); return;` (Watcom cross-jumps them into the last one); that block order also
    gives the EXE's ecx / edx / edi zeros.
    DRAFT: 1 differing, 810 vs 809. The z bounce negates in edx and halves through bx without a
    sign-extension (here movsx edx, ax for the int z). See docs/UNSURE.md. */
@@ -80,13 +80,13 @@ void checkgoal(Player *p, Player *g, short x, short y)
                 if (x <= regd4.w) {
                     regd1.w = 0;
                     if ((regd3.w = HIWORD(p->Ypos) ^ regd0.w) < 0) {
-                        dword_CCC2C = 1;
+                        nethit = 1;
                         wallcoll(p);
                         return;
                     }
                     regd0.w = -regd0.w;
                     if (p->pflags & pfgoal) {
-                        dword_CCC2C = 1;
+                        nethit = 1;
                         wallcoll(p);
                         return;
                     }
@@ -126,6 +126,6 @@ void checkgoal(Player *p, Player *g, short x, short y)
     regd1.w = 0x100;
     x = HIWORD(p->Xpos) - HIWORD(p->OldXpos);
     if (x >= 0) regd1.w = 0xFF00;
-    dword_CCC2C = 1;
+    nethit = 1;
     wallcoll(p);
 }

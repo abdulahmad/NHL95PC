@@ -310,7 +310,7 @@ void defaultsprites_0(void)
    (position 6) is slot 26h. Then, from the last slot down, a listed player in the penalty box or held out
    (tmpdst > 0 or <= -3), or in one of the last two slots one that TryAddPlayerToList refuses (already listed),
    is replaced by the first one TryAddPlayerToList takes from his position's sublist, then from the side's
-   25-byte list for defence or forwards (unk_E9D50 / byte_E9E4A, from line 6 on byte_E9DB4 / unk_E9EE0, always
+   25-byte list for defence or forwards (offsort_d / offsort_fwd, from line 6 on defsort_d / defsort_fwd, always
    the first pair for position 6), then any roster index from 18h down to 1. tmextra gets the pnum listed for
    position 6 (-1 with the goalie in). No result. */
 void SetPlList(Team *t)
@@ -359,11 +359,11 @@ void SetPlList(Team *t)
                     side = (t == &awtmstruct);
                     /* an int sum (multiple first) is add reg, offset as in the EXE; list + side * 25 loads the offset */
                     if (pos == 6 || line < 6) {
-                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)unk_E9D50);
-                        else q = (signed char *)(side * 25 + (int)byte_E9E4A);
+                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)offsort_d);
+                        else q = (signed char *)(side * 25 + (int)offsort_fwd);
                     } else {
-                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)byte_E9DB4);
-                        else q = (signed char *)(side * 25 + (int)unk_E9EE0);
+                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)defsort_d);
+                        else q = (signed char *)(side * 25 + (int)defsort_fwd);
                     }
                     k = 0;
                     do {

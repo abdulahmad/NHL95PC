@@ -2,29 +2,29 @@
 bits 32
 %include "hockey.inc"
 section s_E9A11 nobits alloc noexec write align=1
-global Ylist_m2, PBnum, byte_E9A15, PenBuf, PenBuf_pl
+global Ylist_m2, PBnum, PenBuf_pl_m2, PenBuf, PenBuf_pl
 global iflags, icingPlayer, curevent, curevent_b1, curevent_b2, curevent_b3, curevent_b4, curevent_b5
 global curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent, goalevent_b1, goalevent_b2
-global goalevent_b3, goalevent_b4, OOlist, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A
-global byte_E9F7E, byte_E9F8F, byte_E9F9B, byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE
-global byte_E9FAF, byte_E9FDC, byte_E9FDD, PenBuf_m5, dword_E9A14, dword_E9A9E, dword_E9AB6
+global goalevent_b3, goalevent_b4, OOlist, defsort_d, dressflags, dressflags_aw, offsort_fwd
+global rpl_flip, rpl_jersey, rpl_pos, rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum
+global rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1, PenBuf_m5, PenBuf_m2, dword_E9A9E, dword_E9AB6
 global dword_E9AB7, gwgteam, gwgplayer, startm_m2, seqtimer
 global rinkobjused_m2, defertab, defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6
-global defertab_fn, dword_E9C24, dword_E9C85, dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38
-global dword_E9F54, dword_E9F56, dword_E9F5A, dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98
-global dword_E9FA5, dword_E9FA8, dword_E9FAA, dword_E9FD9, dword_E9FF0, ltx, gsumqueue, unk_E9CEC
-global unk_E9D1E, unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, Ylist
+global defertab_fn, lineslotmark, dword_E9C85, dword_E9C88, dword_E9F16, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16
+global rpl_y_e14_m2, rpl_y_e14, rpl_y_e16, rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3
+global rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3, rpl_objstep_m3, dword_E9FF0, ltx, gsumqueue, offsort_c
+global defsort_r, offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, Ylist
 global OOlistpos, word_E9A9C, joysampling_save, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, CwdExciteLvl, word_E9AAA
 global periodendtime, word_E9AAE, word_E9AB0, ovlsteptimer, ovlstepidx, PerTimeTotal, lj2, lj1
 global lasttouch, lty, startm, starpl, lastimpact, rinkobjused, word_E9F12, word_E9F14
-global word_E9F18, word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9
-global word_E9FB0, word_E9FB2, word_E9FB4
+global rpl_x, rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9
+global rpl_camx, rpl_camy, rpl_objframe
 PenBuf_m5:
 resb 2
 resb 1
-dword_E9A14:
+PenBuf_m2:
 resb 1
-byte_E9A15:
+PenBuf_pl_m2:
 resb 1
 PenBuf:
 resb 1
@@ -161,35 +161,35 @@ defertab_a6:
 resb 4
 defertab_fn:
 resb 100
-dword_E9C24:
+lineslotmark:
 resb 97
 dword_E9C85:
 resb 3
 dword_E9C88:
 resb 100
-unk_E9CEC:
+offsort_c:
 resb 50
-unk_E9D1E:
+defsort_r:
 resb 50
-unk_E9D50:
+offsort_d:
 resb 50
-unk_E9D82:
+defsort_c:
 resb 50
-byte_E9DB4:
+defsort_d:
 resb 50
-unk_E9DE6:
+offsort_l:
 resb 50
-byte_E9E18:
+dressflags:
 resb 25
-byte_E9E31:
+dressflags_aw:
 resb 25
-byte_E9E4A:
+offsort_fwd:
 resb 50
-unk_E9E7C:
+defsort_l:
 resb 50
-unk_E9EAE:
+offsort_r:
 resb 50
-unk_E9EE0:
+defsort_fwd:
 resb 50
 word_E9F12:
 resb 2
@@ -197,79 +197,79 @@ word_E9F14:
 resb 2
 dword_E9F16:
 resb 2
-word_E9F18:
+rpl_x:
 resb 26
-dword_E9F32:
+rpl_x_e14_m2:
 resb 2
-dword_E9F34:
+rpl_x_e14:
 resb 2
-word_E9F36:
+rpl_x_e15:
 resb 2
-dword_E9F38:
+rpl_x_e16:
 resb 2
-word_E9F3A:
+rpl_y:
 resb 26
-dword_E9F54:
+rpl_y_e14_m2:
 resb 2
-dword_E9F56:
+rpl_y_e14:
 resb 2
-word_E9F58:
+rpl_y_e15:
 resb 2
-dword_E9F5A:
+rpl_y_e16:
 resb 2
-word_E9F5C:
+rpl_frame:
 resb 26
-dword_E9F76:
+rpl_frame_e14_m2:
 resb 2
-dword_E9F78:
+rpl_frame_e14:
 resb 2
-word_E9F7A:
+rpl_frame_e15:
 resb 1
-dword_E9F7B:
+rpl_flip_m3:
 resb 3
-byte_E9F7E:
+rpl_flip:
 resb 14
-dword_E9F8C:
+rpl_jersey_m3:
 resb 3
-byte_E9F8F:
+rpl_jersey:
 resb 9
-dword_E9F98:
+rpl_pos_m3:
 resb 3
-byte_E9F9B:
+rpl_pos:
 resb 1
-byte_E9F9C:
+rpl_pos_b1:
 resb 9
-dword_E9FA5:
+rpl_puckz_m2:
 resb 2
-word_E9FA7:
+rpl_puckz:
 resb 1
-dword_E9FA8:
+rpl_c1player_m3:
 resb 1
 word_E9FA9:
 resb 1
-dword_E9FAA:
+rpl_puckc_m3:
 resb 1
-byte_E9FAB:
+rpl_c1player:
 resb 1
-byte_E9FAC:
+rpl_c2player:
 resb 1
-byte_E9FAD:
+rpl_puckc:
 resb 1
-byte_E9FAE:
+rpl_pbnum:
 resb 1
-byte_E9FAF:
+rpl_pbnum_b1:
 resb 1
-word_E9FB0:
+rpl_camx:
 resb 2
-word_E9FB2:
+rpl_camy:
 resb 2
-word_E9FB4:
+rpl_objframe:
 resb 37
-dword_E9FD9:
+rpl_objstep_m3:
 resb 3
-byte_E9FDC:
+rpl_objstep:
 resb 1
-byte_E9FDD:
+rpl_objstep_b1:
 resb 19
 dword_E9FF0:
 resb 68
