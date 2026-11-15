@@ -3,30 +3,30 @@ bits 32
 %include "hockey.inc"
 section s_C4D18 progbits alloc noexec write align=1
 extern TeamList, str_ArtHart, str_ArtRoss, str_ArtNorr, str_ArtSelk, str_ArtVezi, str_ArtJenn, str_ArtCald
-extern str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, unk_C0243, unk_C0248, unk_C0251, unk_C0258
-extern unk_C025E, unk_C0265, unk_C026E, unk_C0275, unk_C0280, unk_C028C, unk_C029A, unk_C02A7
-extern unk_C02BC, unk_C02CA, unk_C02D9, unk_C02E9, unk_C0300, unk_C0310, unk_C032B, unk_C0337
-extern unk_C0352, unk_C0362, unk_C0379, unk_C0390, unk_C0397, BOS, BUF, CGY
+extern str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, str_Hart, str_ArtRoss2, str_Norris, str_Selke
+extern str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, str_StanleyCup, str_MostValuablePlayer
+extern str_PointsLeader, str_RegularSeason, str_BestDefenseman, str_BestDefensiveForward, str_BestGoalkeeper, str_BestGoalsAgainstAverage, str_BestRookie, str_BestRegularSeasonRecord
+extern str_InThePlayoffs, str_Most3StarSelections, str_StanleyCupChampions, str_Season2, str_Playoff2, BOS, BUF, CGY
 extern CHI, DET, EDM, HFD, LA, DAL, MTL, NJ
 extern NYI, NYR, OTT, PHI, PIT, QUE, STL, SJ
 extern TB, TOR, VAN, WSH, WPG, ANA, FLA, ASW
 extern ASE, Buffalo, Calgary, Chicago, Detroit, Edmonton, Hartford, LosAngeles
 extern Dallas, Montreal, NewJersey, NYIslanders, NYRangers, Ottawa, Philadelphia, Pittsburgh
 extern Quebec, StLouis, SanJose, TampaBay, Toronto, Vancouver, Washington, Winnipeg
-extern Anaheim, Florida, AllStarsWest, AllStarsEast, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
-extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
-global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype, keydirtab
-global byte_C541B, byte_C5424
-global byte_C5425, byte_C5426, byte_C5427, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
+extern Anaheim, Florida, AllStarsWest, AllStarsEast, awardstats5, awardstats4, awardstats8, awardstats2
+extern awardstats1, awardstats9, awardstats3, awardstats0, awardstats6
+global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, fadeendlvl, awardtype, keydirtab
+global sndcardmissing, gsumheader_b1
+global gsumheader_b2, gsumheader_b3, gsumheader_b4, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, demomode
-global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168
+global fadestart_m3, fadestep_m3, fadestart_e1, awardtextcolors, awardartfiles
 global postate
 global lgstate
 global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
-global ctl2side, sounddev, awardart, awardnames, awardtitles, off_C524F, off_C5253, off_C5257
-global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, teamabbrevs
-global off_C5441, teamcitynames, unk_C4E30, str_fmtpd, exhstate, unk_C5423, unk_C542E
-global word_C5428
+global ctl2side, sounddev, awardart, awardnames, awardtitles, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02
+global awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, teamabbrevs
+global off_C5441, teamcitynames, blackpal, str_fmtpd, exhstate, gsumheader, gsumtail
+global gsumcount
 joyqtick:
 db 00h,00h,00h,00h
 pad1dev:
@@ -65,7 +65,7 @@ screenw:
 db 080h,02h,00h,00h
 screenh:
 db 0E0h,01h,00h,00h
-unk_C4E30:
+blackpal:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -116,19 +116,19 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 demomode:
 db 00h
-dword_C5131:
+fadestart_m3:
 db 00h,00h
-dword_C5133:
+fadestep_m3:
 db 00h,01h
-dword_C5135:
+fadestart_e1:
 db 0Fh,01h,0FFh
-byte_C5138:
+fadeendlvl:
 db 011h,0FFh,00h,00h
-dword_C513C:
+awardtextcolors:
 db 0E9h,00h,00h,00h,09Dh,00h,00h,00h,01h,00h,00h,00h,0ACh,00h,00h,00h
 db 0C4h,00h,00h,00h,0C2h,00h,00h,00h,0E3h,00h,00h,00h,062h,00h,00h,00h
 db 04h,00h,00h,00h,05Bh,00h,00h,00h,014h,00h,00h,00h
-dword_C5168:
+awardartfiles:
 db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
 db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
 db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
@@ -145,66 +145,66 @@ dd str_ArtConn
 dd str_ArtEasn
 dd str_ArtStan
 awardnames:
-dd unk_C0243
-dd unk_C0248
-dd unk_C0251
-dd unk_C0258
-dd unk_C025E
-dd unk_C0265
-dd unk_C026E
-dd unk_C0275
-dd unk_C0280
-dd unk_C028C
-dd unk_C029A
+dd str_Hart
+dd str_ArtRoss2
+dd str_Norris
+dd str_Selke
+dd str_Vezina
+dd str_Jennings
+dd str_Calder
+dd str_Presidents
+dd str_ConnSmythe
+dd str_EASportsCup
+dd str_StanleyCup
 awardtitles:
-dd unk_C02A7
+dd str_MostValuablePlayer
 db 00h,00h,00h,00h
-dd unk_C02BC
-dd unk_C02CA
-dd unk_C02D9
+dd str_PointsLeader
+dd str_RegularSeason
+dd str_BestDefenseman
 db 00h,00h,00h,00h
-dd unk_C02E9
+dd str_BestDefensiveForward
 db 00h,00h,00h,00h
-dd unk_C0300
+dd str_BestGoalkeeper
 db 00h,00h,00h,00h
-dd unk_C0310
+dd str_BestGoalsAgainstAverage
 db 00h,00h,00h,00h
-dd unk_C032B
+dd str_BestRookie
 db 00h,00h,00h,00h
-dd unk_C0337
+dd str_BestRegularSeasonRecord
 db 00h,00h,00h,00h
-dd unk_C02A7
-dd unk_C0352
-dd unk_C0362
+dd str_MostValuablePlayer
+dd str_InThePlayoffs
+dd str_Most3StarSelections
 db 00h,00h,00h,00h
-dd unk_C0379
+dd str_StanleyCupChampions
 db 00h,00h,00h,00h
 awardtype:
 db 01h,01h,01h,01h,00h,00h,01h,02h,01h
 db 01h,02h
-off_C524F:
-dd unk_D9921
-off_C5253:
-dd unk_D9894
-off_C5257:
-dd unk_D9865
-off_C525B:
-dd unk_D98F2
-off_C525F:
-dd unk_D9800
-off_C5263:
-dd unk_D97CA
-off_C5267:
-dd unk_D9950
+awardstatsptrs:
+dd awardstats0
+awardstatsptrs_e01:
+dd awardstats1
+awardstatsptrs_e02:
+dd awardstats2
+awardstatsptrs_e03:
+dd awardstats3
+awardstatsptrs_e04:
+dd awardstats4
+awardstatsptrs_e05:
+dd awardstats5
+awardstatsptrs_e06:
+dd awardstats6
 db 00h,00h,00h,00h
-off_C526F:
-dd unk_D9836
-off_C5273:
-dd unk_D98C3
+awardstatsptrs_e08:
+dd awardstats8
+awardstatsptrs_e09:
+dd awardstats9
 db 00h,00h,00h,00h
-off_C527B:
-dd unk_C0390
-dd unk_C0397
+awardscopenames:
+dd str_Season2
+dd str_Playoff2
 str_fmtpd:
 db 025h,064h,00h
 str_D02d:
@@ -280,23 +280,23 @@ ctl1side:
 db 00h,00h,00h,00h
 ctl2side:
 db 01h,00h,00h,00h
-byte_C541B:
+sndcardmissing:
 db 0FFh,00h,00h,00h
 sounddev:
 db 010h,00h,00h,00h
-unk_C5423:
+gsumheader:
 db 00h
-byte_C5424:
+gsumheader_b1:
 db 00h
-byte_C5425:
+gsumheader_b2:
 db 00h
-byte_C5426:
+gsumheader_b3:
 db 00h
-byte_C5427:
+gsumheader_b4:
 db 00h
-word_C5428:
+gsumcount:
 db 00h,00h,00h,00h,00h,00h
-unk_C542E:
+gsumtail:
 db 04h
 hmgoalcnt:
 db 00h

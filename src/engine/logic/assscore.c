@@ -6,7 +6,7 @@
 /* assscore: celebrate a goal. The scorer drops the puck (puckc -1; a puck in assignment 18h
  goes to 1Ah). Not while flag 20h or heading to the bench (check4bench). A new assignment (bit 1): a random wait
  temp1 (0-119), temp2 = 8 and the spot temp3 temp4: -50h 0 in gmode bit 7, else x +-100 by the camera side and
- the camera y (55 lower on the left); the scorer (shotplayer) restarts the dance count dword_CCA58. When temp1
+ the camera y (55 lower on the left); the scorer (shotplayer) restarts the dance count assscore_dancecnt. When temp1
  runs out: flag 20h, a new wait and SPA 731h - the scorer SPA 769h, up to 3 in a row (or at random) with no wait,
  then count reset and a wait of at least 30. Else, unless pflags bit 3, skate to the spot. */
 void assscore(Player *p)
@@ -32,7 +32,7 @@ void assscore(Player *p)
             p->temp4 = camy;
             if (camx < 0) p->temp4 = camy - 0x37;
         }
-        if (p->SCnum == shotplayer) dword_CCA58 = 0;
+        if (p->SCnum == shotplayer) assscore_dancecnt = 0;
     }
     if (--p->temp1 < 0) {
         p->pflags |= 0x20;
@@ -40,11 +40,11 @@ void assscore(Player *p)
         p->temp1 = randomd0(0x78);
         if (p->SCnum == shotplayer) {
             regd1.w = 0x769;
-            if (!dword_CCA58 || (dword_CCA58 < 3 && !randomd0(2))) {
+            if (!assscore_dancecnt || (assscore_dancecnt < 3 && !randomd0(2))) {
                 p->temp1 = 0;
-                dword_CCA58++;
+                assscore_dancecnt++;
             } else {
-                dword_CCA58 = 0;
+                assscore_dancecnt = 0;
                 p->temp1 = p->temp1 > 0x1E ? p->temp1 : 0x1E;
             }
         }

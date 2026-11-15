@@ -6,93 +6,93 @@ extern exhfiles, pofiles, lgfiles, StatsSel9394Season, StatsSel9394Playoffs, Sta
 extern NullBlit, CmpPoints, CmpGAA, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
 extern CmpTeamPenalties, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct
 extern CmpGoalieWins, CmpSavePct, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
-extern sub_B5974, sub_B5AC8, unk_C06BC, unk_C06C1, unk_C06C6, unk_C06CB, unk_C06D0, unk_C06D5
-extern unk_C06DA, unk_C06DF, unk_C06E4, unk_C06E9, unk_C06EE, unk_C06F3, unk_C06F8, unk_C06FD
-extern unk_C0702, unk_C0707, unk_C070C, unk_C0711, unk_C0716, unk_C071B, unk_C0720, unk_C0725
-extern unk_C072A, unk_C072F, unk_C0734, unk_C0739, unk_C073E, unk_C0743, unk_C0748, unk_C074D
-extern unk_C0752, unk_C0757, unk_C075C, unk_C0761, unk_C0766, unk_C076B, unk_C0770, unk_C0775
-extern unk_C077A, unk_C077F, unk_C07A4, unk_C07A6, unk_C07AF, unk_C07B8, unk_C07C1, unk_C07CA
-extern unk_C07D3, unk_C07DC, unk_C07E5, unk_C07EE, unk_C07F7, unk_C0800, unk_C0809, unk_C0812
-extern unk_C081B, unk_C0824, unk_C082D, unk_C0836, unk_C083F, unk_C0848, unk_C0851, unk_C0B68
-extern unk_C0B79, unk_C0B8A, unk_C0B9D, unk_C0BAF, unk_C0BB7, unk_C0BC0, unk_C0BCC, unk_C0BD8
-extern unk_C0BE4, str_embnhl, str_embscup, str_careerdb, str_seasondb, str_carteamsdb, str_teamsdb, unk_C0CB0
-extern unk_C0CB6, unk_C0CBE, unk_C0CC5, unk_C0CD0, unk_C0CD9, unk_C0CE7, unk_C0CF0, unk_C0CF8
-extern unk_C0D0C, unk_C0D20, unk_C0D2F, unk_C0D39, unk_C0D49, unk_C0DEC, unk_C0DF7, unk_C0E03
-extern unk_C0E0E, unk_C0E1A, unk_C0E27, unk_C0E2D, unk_C0E35, unk_C0E3C, unk_C0E50, unk_C0EE0
-extern unk_C0EF3, unk_C0F06, unk_C0F14, unk_C0F22, unk_C0F38, unk_C0F49, unk_C0F59, unk_C0F69
-extern unk_C0F6C, unk_C0F6F, unk_C0F72, unk_C0F76, unk_C0F7A, unk_C0F7E, unk_C0F83, unk_C0F89
-extern unk_C0F8A, unk_C0F8E, unk_C0F92, unk_C0F97, unk_C0F9D, unk_C0FA1, unk_C10CC, unk_C10DB
-extern unk_C10E9, unk_C10F9, unk_C1112, unk_C112C, unk_C1140, unk_C1158, unk_C1175, unk_C1194
-extern unk_C11AC, unk_C11C5, unk_C11C9, unk_C11CD, unk_C11D1, unk_C11D2, unk_C11D5, unk_C11D9
-extern unk_C11DE, unk_C11E2, unk_C11E8, unk_C11EE, unk_C11F3, unk_C11F7, unk_C11FD, unk_C1200
-extern unk_C1203, unk_C1206, unk_C120B, unk_C126C, unk_C1276, unk_C5654
+extern sub_B5974, sub_B5AC8, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005
+extern str_3006, str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3
+extern str_CGY, str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL
+extern str_NJ, str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL
+extern str_SJ, str_TB, str_TOR, str_VAN, str_WSH, str_WPG, str_ANA3, str_FLA
+extern str_ASW, str_ASE, unk_C07A4, str_Credit19, str_Credit10, str_Credit09, str_Credit17, str_Credit01
+extern str_Credit15, str_Credit12, str_Credit08, str_Credit02, str_Credit11, str_Credit05, str_Credit06, str_Credit07
+extern str_Credit18, str_Credit14, str_Credit13, str_Credit16, str_Credit00, str_Credit04, str_Credit03, str_PacificDivision
+extern str_CentralDivision, str_NortheastDivision, str_AtlanticDivision, str_Season3, str_Playoff3, str_RegSeason, str_Playoff4, str_Actual
+extern str_Accumulated, str_embnhl, str_embscup, str_careerdb, str_seasondb, str_carteamsdb, str_teamsdb, str_Speed
+extern str_Agility, str_Weight, str_ShotPower, str_Checking2, str_StickHandling, str_Accuracy, str_Passing2, str_OffensiveAwareness
+extern str_DefensiveAwareness, str_Aggressiveness, str_Endurance, str_ShootPassBias, str_Faceoffs, str_GloveLeft, str_GloveRight, str_StickLeft
+extern str_StickRight, str_PuckControl, str_Speed2, str_Agility2, str_Weight2, str_OffensiveAwareness2, str_DefensiveAwareness2, str_WesternConference3
+extern str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings, str_spW
+extern str_SpL4, str_SpT, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, unk_C0F89
+extern str_ADV, str_PPG3, str_PIM5, str_AVG, str_PTS, str_WINS, str_PointLeaders, str_GoalLeaders
+extern str_AssistLeaders, str_PowerPlayGoalLeaders, str_ShorthandedGoalLeaders, str_PlusMinusLeaders, str_PenaltyMinuteLeaders, str_ShootingPercentageLeaders, str_GoalsAgainstAverageLeaders, str_GoaltenderWinLeaders
+extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3, str_PlusMinus5
+extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2, str_SpL5
+extern str_SpT2, str_SA4, str_PCT7, str_LSSCEDDB, str_SCHEDULEDB3, str_InsufficientDiskSpace3
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
 global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmtEmb, str_Bkgd2, str_EASNvfn
 global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, byte_C66B4, mi_9394Season
-global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, byte_C67A9, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
+global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, str_Dashes, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
 global treecol_Er2, treecol_Er1
-global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, dword_C5710
-global dword_C5714, dword_C5718, dword_C583C, deferpending, dword_C5844, dword_C5848, hudhomeline, hudawayline
-global dword_C5854, dword_C5858, dword_C585C, dword_C5860, dword_C5861, dword_C5862, demoteammode, dword_C588A
-global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, dword_C65A8, dword_C65AC
+global scoutcatidx, desksongalt, awlineenergies, hmlineenergies, hudclockmin, hudclocksec, hudclockhund, panelprevmin
+global panelprevsec, panelprevhund, panelhund, deferpending, hmpanellines, awpanellines, hudhomeline, hudawayline
+global hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, demomatchups_m1, demomatchups, demoteammode, nhlintrosaid
+global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, easnfontbuf, embscupbank
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
-global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
+global standingsmenucb, hlplayedmask, msg_DeskExit, msg_DeskExit_e02, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
-global westconfteams, eastconfteams, dword_C6D26, dword_C6DBA, dword_C6E20, treerowy, divx, divy
+global westconfteams, eastconfteams, dword_C6D26, potreeseeds, dword_C6E20, treerowy, divx, divy
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
 global keepdesksong, songdata, rinktilebm
-global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, off_C56B5, perioddigits, off_C57C8
-global crestnames, off_C6399, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
-global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
-global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
-global teamcolhdrs, leadersortfns, leadertitles, off_C6C40, off_C6C44
-global off_C6C48, off_C6C4C, off_C6C50, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
-global gamestatlabels, setdiskmsg, dbchoicelines, unk_C56A1, unk_C588E, unk_C588F, unk_C58A3, unk_C58B2
-global unk_C58CA, unk_C58EA, unk_C590D, unk_C592F, unk_C5969, unk_C5996, unk_C59B3, unk_C59D4
-global unk_C59F5, unk_C5A0D, unk_C5A2B, unk_C5A4E, unk_C5A6C, unk_C5A78, unk_C5AA5, unk_C5AC8
-global unk_C5AE8, unk_C5AF5, unk_C5B13, unk_C5B35, unk_C5B54, unk_C5B72, unk_C5B93, unk_C5BC0
-global unk_C5BE3, unk_C5C0B, unk_C5C33, unk_C5C48, unk_C5C68, unk_C5C89, unk_C5CA1, unk_C5CB6
-global unk_C5CCD, unk_C5CD9, unk_C5CE3, unk_C5CF4, unk_C5D11, unk_C5D32, unk_C5D40, unk_C5D51
-global unk_C5D6A, unk_C5D75, unk_C5D85, unk_C5D9A, unk_C5DA8, unk_C5DB3, unk_C5DC8, unk_C5DD6
-global unk_C5DE1, unk_C5DF6, unk_C5E03, unk_C5E0E, unk_C5E23, unk_C5E32, unk_C5E39, unk_C5E4E
-global unk_C5E58, unk_C5E5F, unk_C5E74, unk_C5E82, unk_C5E99, unk_C5EAE, unk_C5EC1, unk_C5ECA
-global unk_C5EDF, unk_C5EEC, unk_C5EFD, unk_C5F12, unk_C5F21, unk_C5F32, unk_C5F47, unk_C5F55
-global unk_C5F6E, unk_C5F83, unk_C5F8C, unk_C5F98, unk_C5FAD, unk_C5FC1, unk_C5FD4, unk_C5FE9
-global unk_C5FF5, unk_C600D, unk_C6022, unk_C602D, unk_C603F, unk_C6054, unk_C6060, unk_C6069
-global unk_C607E, unk_C6087, unk_C6092, unk_C609E, unk_C60A7, unk_C60B1, unk_C60BD, unk_C60C7
-global unk_C60D7, unk_C6110, unk_C6125, unk_C6133, unk_C613F, unk_C6150, unk_C615B, unk_C6173
-global unk_C6189, unk_C619A, unk_C61CB, unk_C61DD, unk_C61E9, unk_C61FC, unk_C620F, unk_C6220
-global unk_C6232, unk_C6263, unk_C6279, unk_C6289, unk_C6299, unk_C62A8, unk_C62C4, unk_C62D3
-global unk_C62FC, unk_C630F, unk_C631F, unk_C632F, unk_C633D, unk_C634F, unk_C6359, unk_C6363
-global unk_C638C, unk_C6440, unk_C6467, unk_C6496, unk_C6499, unk_C64D1, unk_C64F5, unk_C64F9
-global unk_C652A, unk_C652E, unk_C654F, statsleague, unk_C665D, unk_C678E, unk_C67B1, photoremap
+global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, msg_GameDiskSpace, perioddigits, hudotname
+global crestnames, creditpages, msg_FileExists, msg_StatsDiskSpace, menutext_statsleague, menuact_statsleague, menutext_statslgplayoffs, menuact_statslgplayoffs
+global menutext_statsplayoff, menuact_statsplayoff, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
+global skaterratingnames, skatercardattrs_m3, goalieratingnames, goaliecardattrs_m3, teamsortfns, westconfname, eastconfname, teamstattitles
+global teamcolhdrs, leadersortfns, leadertitles, leadercolhdrs, leadercolhdrs_c1
+global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02
+global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, unk_C588E, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
+global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, unk_C5969, unk_C5996, str_TrademarkOfTheNational, str_LeagueAndIsUsed
+global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, unk_C5A6C, unk_C5A78, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
+global str_Association, str_NHLPANationalHockeyLeague, str_PlayersAssociationAndThe, str_OfTheNHLPAAre, str_TheNHLPAAndAre, str_LicenseByElectronicArts, unk_C5B93, str_EASportsTheEA
+global str_IfItSIn, str_AreTrademarksOfElectronic, unk_C5C33, str_ThisHasBeenA, str_ThePIONEERPRODUCTIONSGroup, str_ElectronicArtsCanada, unk_C5CA1, str_OriginalGameConcept
+global str_JimSimmons, str_ScottOrr, str_RichardHilleman, unk_C5CF4, str_OriginalPCVersionGame, str_DaveWarfield, str_RichardHilleman2, unk_C5D51
+global str_LanceWall, str_LeadProgrammer, unk_C5D85, str_VictoriaWong, str_Programmer, unk_C5DB3, str_RobertPenner, str_Programmer2
+global unk_C5DE1, str_KurtKennett, str_Programmer3, unk_C5E0E, str_GerardDeSouza, str_Artist, unk_C5E39, str_PhilChow
+global str_Artist2, unk_C5E5F, str_KentMaclagan, str_Artist3DAnimations, unk_C5E99, str_MichaelJSokyrka, str_Composer, unk_C5ECA
+global str_AlanStewart, str_AudioProgrammer, unk_C5EFD, str_IainMacanulty, str_AudioProgrammer2, unk_C5F32, str_SerenaMcCabe, str_AdministrativeAssistant
+global unk_C5F6E, str_RodHigo, str_LeadTester, unk_C5F98, str_RichardRadarMul, str_AssistantProducer, unk_C5FD4, str_FosterHall
+global str_DirectorOfDevelopment, unk_C600D, str_KenSayler, str_ProducerDesign, unk_C603F, str_HannoLemke, str_Producer, unk_C6069
+global str_Testers, str_PaulSmith, str_JohnBrydon, str_TonyLam, str_DavidLee, str_QASupport, str_JonBruce, str_JohnSantamaria
+global unk_C60D7, str_RosterVerification, str_DaveWarfield2, str_JohnBrydon2, str_ProductManager, str_ChipLange, str_RatingsByJohnRosasco, str_AndNeilSmithOf
+global str_NewYorkRangers, unk_C619A, str_AudioTechnician, str_SteveRoyea, str_AudioProgrammers, str_PaulChernikhowsky, str_JasonLeeSteere, str_AdvancedGravis
+global unk_C6232, str_SportsDeskAnnouncer, str_MichaelDonovan, str_RinkAnnouncer, str_BruceJamieson, str_PlayerProfilePhotographs, str_SteveBabineau, unk_C62D3
+global str_VideoProvidedBy, str_NHLProductions, str_SpecialThanks, str_ScottJackson, str_CatherineOBrien, str_DougReid, str_MottLinn, unk_C6363
+global unk_C638C, str_TheFileYouSpecified, str_DoYouWantTo, str_No3, btn_FileExists, str_TheStatsWereSuccessfully, msg_StatsWritten, str_ERROROutputFileWas
+global msg_OutputFileError, str_InsufficientDiskSpaceTo, str_TheDisplayedStatisticsTo, statsleague, str_MayLoseThisGame, unk_C678E, unk_C67B1, photoremap
 global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_PenaltyKilling, str_PowerPlay
-global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, unk_C7088
+global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, str_ConfirmDeletionOfThe
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
 global str_gsPassing, str_gsOneTimers, str_gsPPMinutes, str_gsPPShots, str_gsOffFaceoffs, str_InsufficientDiskSpace, str_ToSaveTheSettings, str_1KbytesFree
-global unk_C744C, unk_C7450, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
-global unk_C74EF, hudpenhome, word_C571E, word_C5720, word_C5722, hudpenaway, word_C575E, word_C5760
-global word_C5762, word_C6D24, treecolx, scrpitch
+global str_Yes, str_No4, str_DoYouWishToUse, str_CurrentDbOr, str_OriginalNHLDb, str_Current, str_Original, dbchoicebtns
+global str_AllTheTeamsAre, hudpenhome, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, hudpenaway, awpanelpen_time, awpanelpen_w4
+global awpanelpen_w6, potreeround, treecolx, scrpitch
 msg_NeedKbytes:
 db 070h,06Ch,061h,079h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h,02Ch,020h,079h
 db 06Fh,075h,020h,072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h
 db 079h,074h,065h,073h,020h,020h,020h,00h
-unk_C56A1:
+str_OfFreeDiskSpace:
 db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h
 db 063h,065h,02Eh,00h
-off_C56B5:
-dd unk_C5654
+msg_GameDiskSpace:
+dd str_InsufficientDiskSpace3
 dd msg_NeedKbytes
-dd unk_C56A1
+dd str_OfFreeDiskSpace
 db 00h,00h,00h
-dword_C56C4:
+awlineenergies:
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
-dword_C56E4:
+hmlineenergies:
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 hudclockmin:
@@ -101,129 +101,129 @@ hudclocksec:
 db 00h,00h,00h,00h
 hudclockhund:
 db 00h,00h,00h,00h
-dword_C5710:
+panelprevmin:
 db 063h,00h,00h,00h
-dword_C5714:
+panelprevsec:
 db 063h,00h,00h,00h
-dword_C5718:
+panelprevhund:
 db 063h,00h,00h,00h
 hudpenhome:
 db 0FFh,0FFh
-word_C571E:
+hmpanelpen_time:
 db 00h,00h
-word_C5720:
+hmpanelpen_w4:
 db 00h,00h
-word_C5722:
+hmpanelpen_w6:
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
 hudpenaway:
 db 0FFh,0FFh
-word_C575E:
+awpanelpen_time:
 db 00h,00h
-word_C5760:
+awpanelpen_w4:
 db 00h,00h
-word_C5762:
+awpanelpen_w6:
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FFh,0FFh,00h,00h,00h,00h
 db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h
 perioddigits:
-dd unk_C06BC
-dd unk_C06C1
-dd unk_C06C6
-dd unk_C06CB
-dd unk_C06D0
-dd unk_C06D5
-dd unk_C06DA
-dd unk_C06DF
-dd unk_C06E4
-dd unk_C06E9
-dd unk_C06EE
-off_C57C8:
-dd unk_C06F3
+dd str_3000
+dd str_3001
+dd str_3002
+dd str_3003
+dd str_3004
+dd str_3005
+dd str_3006
+dd str_3007
+dd str_3008
+dd str_3009
+dd str_300
+hudotname:
+dd str_OT2
 crestnames:
-dd unk_C06F8
-dd unk_C06FD
-dd unk_C0702
-dd unk_C0707
-dd unk_C070C
-dd unk_C0711
-dd unk_C0716
-dd unk_C071B
-dd unk_C0720
-dd unk_C0725
-dd unk_C072A
-dd unk_C072F
-dd unk_C0734
-dd unk_C0739
-dd unk_C073E
-dd unk_C0743
-dd unk_C0748
-dd unk_C074D
-dd unk_C0752
-dd unk_C0757
-dd unk_C075C
-dd unk_C0761
-dd unk_C0766
-dd unk_C076B
-dd unk_C0770
-dd unk_C0775
-dd unk_C077A
-dd unk_C077F
-dword_C583C:
+dd str_BOS
+dd str_BUF3
+dd str_CGY
+dd str_CHI
+dd str_DET
+dd str_EDM
+dd str_HFD
+dd str_LA
+dd str_DAL
+dd str_MTL
+dd str_NJ
+dd str_NYI
+dd str_NYR
+dd str_OTT
+dd str_PHI
+dd str_PIT
+dd str_QUE
+dd str_STL
+dd str_SJ
+dd str_TB
+dd str_TOR
+dd str_VAN
+dd str_WSH
+dd str_WPG
+dd str_ANA3
+dd str_FLA
+dd str_ASW
+dd str_ASE
+panelhund:
 db 00h,00h,00h,00h
 deferpending:
 db 00h,00h,00h,00h
-dword_C5844:
+hmpanellines:
 db 00h,00h,00h,00h
-dword_C5848:
+awpanellines:
 db 00h,00h,00h,00h
 hudhomeline:
 db 00h,00h,00h,00h
 hudawayline:
 db 00h,00h,00h,00h
-dword_C5854:
+hmpanelpens:
 db 00h,00h,00h,00h
-dword_C5858:
+awpanelpens:
 db 00h,00h,00h,00h
-dword_C585C:
+hmlinetimer:
 db 00h,00h,00h,00h
-dword_C5860:
+awlinetimer:
 db 00h
-dword_C5861:
+demomatchups_m1:
 db 00h
-dword_C5862:
+demomatchups:
 db 00h,00h,08h,011h,04h,012h,02h,015h,014h,03h,0Fh,016h,0Ch,015h,0Ch,0Bh
 db 00h,09h,0Ah,01h,08h,015h,014h,012h,0Ch,015h,0Ch,016h,0Ah,00h,0Ch,0Ah
 db 014h,015h,0Ch,015h
 demoteammode:
 db 02h,00h,00h,00h
-dword_C588A:
+nhlintrosaid:
 db 01h,00h,00h,00h
 unk_C588E:
 db 00h
-unk_C588F:
+str_OfficiallyLicensed:
 db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
 db 073h,065h,064h,00h
-unk_C58A3:
+str_ProductOfThe:
 db 050h,072h,06Fh,064h,075h,063h,074h,020h,06Fh,066h,020h,074h,068h,065h,00h
-unk_C58B2:
+str_NationalHockeyLeague:
 db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
 db 04Ch,065h,061h,067h,075h,065h,02Eh,00h
-unk_C58CA:
+str_NationalHockeyLeagueNHL:
 db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
 db 04Ch,065h,061h,067h,075h,065h,02Ch,020h,04Eh,048h,04Ch,020h,061h,06Eh,064h,00h
-unk_C58EA:
+str_TheLogoOfThe:
 db 074h,068h,065h,020h,06Ch,06Fh,067h,06Fh,020h,06Fh,066h,020h,074h,068h,065h,020h
 db 04Eh,048h,04Ch,020h,061h,072h,065h,020h,072h,065h,067h,069h,073h,074h,065h,072h
 db 065h,064h,00h
-unk_C590D:
+str_TrademarksOfTheNational:
 db 074h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh,066h,020h,074h,068h
 db 065h,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h
 db 079h,00h
-unk_C592F:
+str_LeagueAndAreUsed:
 db 04Ch,065h,061h,067h,075h,065h,020h,061h,06Eh,064h,020h,061h,072h,065h,020h,075h
 db 073h,065h,064h,020h,075h,06Eh,064h,065h,072h,020h,06Ch,069h,063h,065h,06Eh,073h
 db 065h,00h
@@ -233,478 +233,478 @@ db 074h,073h,020h,049h,06Eh,063h,02Eh,00h
 unk_C5969:
 db 09h,0DCh,00h,00h,00h
 dd unk_C07A4
-dd unk_C588F
-dd unk_C58A3
-dd unk_C58B2
+dd str_OfficiallyLicensed
+dd str_ProductOfThe
+dd str_NationalHockeyLeague
 dd unk_C588E
-dd unk_C58CA
-dd unk_C58EA
-dd unk_C590D
-dd unk_C592F
+dd str_NationalHockeyLeagueNHL
+dd str_TheLogoOfThe
+dd str_TrademarksOfTheNational
+dd str_LeagueAndAreUsed
 dd CreditsList
 unk_C5996:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,0A8h,020h,069h,073h,020h
 db 061h,020h,072h,065h,067h,069h,073h,074h,065h,072h,065h,064h,00h
-unk_C59B3:
+str_TrademarkOfTheNational:
 db 054h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,020h,06Fh,066h,020h,074h,068h,065h
 db 020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h
 db 00h
-unk_C59D4:
+str_LeagueAndIsUsed:
 db 04Ch,065h,061h,067h,075h,065h,020h,061h,06Eh,064h,020h,069h,073h,020h,075h,073h
 db 065h,064h,020h,075h,06Eh,064h,065h,072h,020h,06Ch,069h,063h,065h,06Eh,063h,065h
 db 00h
-unk_C59F5:
+str_ByElectronicArtsInc:
 db 062h,079h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h
 db 074h,073h,020h,049h,06Eh,063h,02Eh,00h
-unk_C5A0D:
+str_TeamNamesAndLogos:
 db 054h,065h,061h,06Dh,020h,04Eh,061h,06Dh,065h,073h,020h,061h,06Eh,064h,020h,06Ch
 db 06Fh,067h,06Fh,073h,020h,064h,065h,070h,069h,063h,074h,065h,064h,00h
-unk_C5A2B:
+str_AreOfficiallyLicensed:
 db 061h,072h,065h,020h,04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch
 db 069h,063h,065h,06Eh,073h,065h,064h,020h,054h,072h,061h,064h,065h,06Dh,061h,072h
 db 06Bh,073h,00h
-unk_C5A4E:
+str_OfTheNationalHockey:
 db 06Fh,066h,020h,074h,068h,065h,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h
 db 048h,06Fh,063h,06Bh,065h,079h,020h,04Ch,065h,061h,067h,075h,065h,00h
 unk_C5A6C:
 db 0A9h,020h,04Eh,048h,04Ch,020h,031h,039h,039h,034h,02Eh,00h
 unk_C5A78:
 db 09h,0DCh,00h,00h,00h
-dd unk_C07A6
+dd str_Credit19
 dd unk_C5996
-dd unk_C59B3
-dd unk_C59D4
-dd unk_C59F5
+dd str_TrademarkOfTheNational
+dd str_LeagueAndIsUsed
+dd str_ByElectronicArtsInc
 dd unk_C588E
-dd unk_C5A0D
-dd unk_C5A2B
-dd unk_C5A4E
+dd str_TeamNamesAndLogos
+dd str_AreOfficiallyLicensed
+dd str_OfTheNationalHockey
 dd unk_C5A6C
-unk_C5AA5:
+str_OfficiallyLicensedProductOf:
 db 04Fh,066h,066h,069h,063h,069h,061h,06Ch,06Ch,079h,020h,04Ch,069h,063h,065h,06Eh
 db 073h,065h,064h,020h,050h,072h,06Fh,064h,075h,063h,074h,020h,06Fh,066h,020h,074h
 db 068h,065h,00h
-unk_C5AC8:
+str_NationalHockeyLeaguePlayers:
 db 04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h,048h,06Fh,063h,06Bh,065h,079h,020h
 db 04Ch,065h,061h,067h,075h,065h,020h,050h,06Ch,061h,079h,065h,072h,073h,027h,00h
-unk_C5AE8:
+str_Association:
 db 041h,073h,073h,06Fh,063h,069h,061h,074h,069h,06Fh,06Eh,02Eh,00h
-unk_C5AF5:
+str_NHLPANationalHockeyLeague:
 db 04Eh,048h,04Ch,050h,041h,02Ch,020h,04Eh,061h,074h,069h,06Fh,06Eh,061h,06Ch,020h
 db 048h,06Fh,063h,06Bh,065h,079h,020h,04Ch,065h,061h,067h,075h,065h,00h
-unk_C5B13:
+str_PlayersAssociationAndThe:
 db 050h,06Ch,061h,079h,065h,072h,073h,027h,020h,041h,073h,073h,06Fh,063h,069h,061h
 db 074h,069h,06Fh,06Eh,020h,061h,06Eh,064h,020h,074h,068h,065h,020h,06Ch,06Fh,067h
 db 06Fh,00h
-unk_C5B35:
+str_OfTheNHLPAAre:
 db 06Fh,066h,020h,074h,068h,065h,020h,04Eh,048h,04Ch,050h,041h,020h,061h,072h,065h
 db 020h,054h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh,066h,00h
-unk_C5B54:
+str_TheNHLPAAndAre:
 db 074h,068h,065h,020h,04Eh,048h,04Ch,050h,041h,020h,061h,06Eh,064h,020h,061h,072h
 db 065h,020h,075h,073h,065h,064h,02Ch,020h,075h,06Eh,064h,065h,072h,00h
-unk_C5B72:
+str_LicenseByElectronicArts:
 db 06Ch,069h,063h,065h,06Eh,073h,065h,02Ch,020h,062h,079h,020h,045h,06Ch,065h,063h
 db 074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h,049h,06Eh,063h,02Eh
 db 00h
 unk_C5B93:
 db 09h,0FAh,00h,00h,00h
-dd unk_C07AF
-dd unk_C5AA5
-dd unk_C5AC8
-dd unk_C5AE8
+dd str_Credit10
+dd str_OfficiallyLicensedProductOf
+dd str_NationalHockeyLeaguePlayers
+dd str_Association
 dd unk_C588E
-dd unk_C5AF5
-dd unk_C5B13
-dd unk_C5B35
-dd unk_C5B54
-dd unk_C5B72
-unk_C5BC0:
+dd str_NHLPANationalHockeyLeague
+dd str_PlayersAssociationAndThe
+dd str_OfTheNHLPAAre
+dd str_TheNHLPAAndAre
+dd str_LicenseByElectronicArts
+str_EASportsTheEA:
 db 045h,041h,020h,053h,070h,06Fh,072h,074h,073h,02Ch,020h,074h,068h,065h,020h,045h
 db 041h,020h,053h,070h,06Fh,072h,074h,073h,020h,04Ch,06Fh,067h,06Fh,02Ch,020h,061h
 db 06Eh,064h,00h
-unk_C5BE3:
+str_IfItSIn:
 db 022h,049h,066h,020h,069h,074h,027h,073h,020h,069h,06Eh,020h,074h,068h,065h,020h
 db 067h,061h,06Dh,065h,02Ch,020h,069h,074h,027h,073h,020h,069h,06Eh,020h,074h,068h
 db 065h,020h,067h,061h,06Dh,065h,022h,00h
-unk_C5C0B:
+str_AreTrademarksOfElectronic:
 db 061h,072h,065h,020h,074h,072h,061h,064h,065h,06Dh,061h,072h,06Bh,073h,020h,06Fh
 db 066h,020h,045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h
 db 073h,02Ch,020h,049h,06Eh,063h,02Eh,00h
 unk_C5C33:
 db 03h,078h,00h,00h,00h
-dd unk_C07B8
-dd unk_C5BC0
-dd unk_C5BE3
-dd unk_C5C0B
-unk_C5C48:
+dd str_Credit09
+dd str_EASportsTheEA
+dd str_IfItSIn
+dd str_AreTrademarksOfElectronic
+str_ThisHasBeenA:
 db 054h,068h,069h,073h,020h,068h,061h,073h,020h,062h,065h,065h,06Eh,020h,061h,020h
 db 070h,072h,065h,073h,065h,06Eh,074h,061h,074h,069h,06Fh,06Eh,020h,062h,079h,00h
-unk_C5C68:
+str_ThePIONEERPRODUCTIONSGroup:
 db 074h,068h,065h,020h,050h,049h,04Fh,04Eh,045h,045h,052h,020h,050h,052h,04Fh,044h
 db 055h,043h,054h,049h,04Fh,04Eh,053h,020h,067h,072h,06Fh,075h,070h,020h,06Fh,066h
 db 00h
-unk_C5C89:
+str_ElectronicArtsCanada:
 db 045h,06Ch,065h,063h,074h,072h,06Fh,06Eh,069h,063h,020h,041h,072h,074h,073h,020h
 db 043h,061h,06Eh,061h,064h,061h,02Eh,00h
 unk_C5CA1:
 db 03h,078h,00h,00h,00h
-dd unk_C07C1
-dd unk_C5C48
-dd unk_C5C68
-dd unk_C5C89
-unk_C5CB6:
+dd str_Credit17
+dd str_ThisHasBeenA
+dd str_ThePIONEERPRODUCTIONSGroup
+dd str_ElectronicArtsCanada
+str_OriginalGameConcept:
 db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,047h,061h,06Dh,065h,020h,043h,06Fh
 db 06Eh,063h,065h,070h,074h,03Ah,00h
-unk_C5CCD:
+str_JimSimmons:
 db 04Ah,069h,06Dh,020h,053h,069h,06Dh,06Dh,06Fh,06Eh,073h,00h
-unk_C5CD9:
+str_ScottOrr:
 db 053h,063h,06Fh,074h,074h,020h,04Fh,072h,072h,00h
-unk_C5CE3:
+str_RichardHilleman:
 db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
 db 00h
 unk_C5CF4:
 db 05h,078h,00h,00h,00h
 dd unk_C07A4
-dd unk_C5CB6
+dd str_OriginalGameConcept
 dd unk_C588E
-dd unk_C5CCD
-dd unk_C5CD9
-dd unk_C5CE3
-unk_C5D11:
+dd str_JimSimmons
+dd str_ScottOrr
+dd str_RichardHilleman
+str_OriginalPCVersionGame:
 db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,020h,050h,043h,020h,056h,065h,072h,073h
 db 069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,020h,044h,065h,073h,069h,067h,06Eh,03Ah
 db 00h
-unk_C5D32:
+str_DaveWarfield:
 db 044h,061h,076h,065h,020h,057h,061h,072h,066h,069h,065h,06Ch,064h,00h
-unk_C5D40:
+str_RichardHilleman2:
 db 052h,069h,063h,068h,061h,072h,064h,020h,048h,069h,06Ch,06Ch,065h,06Dh,061h,06Eh
 db 00h
 unk_C5D51:
 db 04h,078h,00h,00h,00h
 dd unk_C07A4
-dd unk_C5D11
+dd str_OriginalPCVersionGame
 dd unk_C588E
-dd unk_C5D32
-dd unk_C5D40
-unk_C5D6A:
+dd str_DaveWarfield
+dd str_RichardHilleman2
+str_LanceWall:
 db 04Ch,061h,06Eh,063h,065h,020h,057h,061h,06Ch,06Ch,00h
-unk_C5D75:
+str_LeadProgrammer:
 db 04Ch,065h,061h,064h,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
 unk_C5D85:
 db 03h,078h,00h,00h,00h
-dd unk_C07CA
-dd unk_C5D6A
+dd str_Credit01
+dd str_LanceWall
 dd unk_C588E
-dd unk_C5D75
-unk_C5D9A:
+dd str_LeadProgrammer
+str_VictoriaWong:
 db 056h,069h,063h,074h,06Fh,072h,069h,061h,020h,057h,06Fh,06Eh,067h,00h
-unk_C5DA8:
+str_Programmer:
 db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
 unk_C5DB3:
 db 03h,078h,00h,00h,00h
-dd unk_C07D3
-dd unk_C5D9A
+dd str_Credit15
+dd str_VictoriaWong
 dd unk_C588E
-dd unk_C5DA8
-unk_C5DC8:
+dd str_Programmer
+str_RobertPenner:
 db 052h,06Fh,062h,065h,072h,074h,020h,050h,065h,06Eh,06Eh,065h,072h,00h
-unk_C5DD6:
+str_Programmer2:
 db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
 unk_C5DE1:
 db 03h,078h,00h,00h,00h
-dd unk_C07DC
-dd unk_C5DC8
+dd str_Credit12
+dd str_RobertPenner
 dd unk_C588E
-dd unk_C5DD6
-unk_C5DF6:
+dd str_Programmer2
+str_KurtKennett:
 db 04Bh,075h,072h,074h,020h,04Bh,065h,06Eh,06Eh,065h,074h,074h,00h
-unk_C5E03:
+str_Programmer3:
 db 050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h,00h
 unk_C5E0E:
 db 03h,078h,00h,00h,00h
-dd unk_C07E5
-dd unk_C5DF6
+dd str_Credit08
+dd str_KurtKennett
 dd unk_C588E
-dd unk_C5E03
-unk_C5E23:
+dd str_Programmer3
+str_GerardDeSouza:
 db 047h,065h,072h,061h,072h,064h,020h,044h,065h,053h,06Fh,075h,07Ah,061h,00h
-unk_C5E32:
+str_Artist:
 db 041h,072h,074h,069h,073h,074h,00h
 unk_C5E39:
 db 03h,078h,00h,00h,00h
-dd unk_C07EE
-dd unk_C5E23
+dd str_Credit02
+dd str_GerardDeSouza
 dd unk_C588E
-dd unk_C5E32
-unk_C5E4E:
+dd str_Artist
+str_PhilChow:
 db 050h,068h,069h,06Ch,020h,043h,068h,06Fh,077h,00h
-unk_C5E58:
+str_Artist2:
 db 041h,072h,074h,069h,073h,074h,00h
 unk_C5E5F:
 db 03h,078h,00h,00h,00h
-dd unk_C07F7
-dd unk_C5E4E
+dd str_Credit11
+dd str_PhilChow
 dd unk_C588E
-dd unk_C5E58
-unk_C5E74:
+dd str_Artist2
+str_KentMaclagan:
 db 04Bh,065h,06Eh,074h,020h,04Dh,061h,063h,06Ch,061h,067h,061h,06Eh,00h
-unk_C5E82:
+str_Artist3DAnimations:
 db 041h,072h,074h,069h,073h,074h,020h,02Fh,020h,033h,044h,020h,041h,06Eh,069h,06Dh
 db 061h,074h,069h,06Fh,06Eh,073h,00h
 unk_C5E99:
 db 03h,078h,00h,00h,00h
-dd unk_C0800
-dd unk_C5E74
+dd str_Credit05
+dd str_KentMaclagan
 dd unk_C588E
-dd unk_C5E82
-unk_C5EAE:
+dd str_Artist3DAnimations
+str_MichaelJSokyrka:
 db 04Dh,069h,063h,068h,061h,065h,06Ch,020h,04Ah,02Eh,020h,053h,06Fh,06Bh,079h,072h
 db 06Bh,061h,00h
-unk_C5EC1:
+str_Composer:
 db 043h,06Fh,06Dh,070h,06Fh,073h,065h,072h,00h
 unk_C5ECA:
 db 03h,078h,00h,00h,00h
-dd unk_C0809
-dd unk_C5EAE
+dd str_Credit06
+dd str_MichaelJSokyrka
 dd unk_C588E
-dd unk_C5EC1
-unk_C5EDF:
+dd str_Composer
+str_AlanStewart:
 db 041h,06Ch,061h,06Eh,020h,053h,074h,065h,077h,061h,072h,074h,00h
-unk_C5EEC:
+str_AudioProgrammer:
 db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
 db 00h
 unk_C5EFD:
 db 03h,078h,00h,00h,00h
-dd unk_C0812
-dd unk_C5EDF
+dd str_Credit07
+dd str_AlanStewart
 dd unk_C588E
-dd unk_C5EEC
-unk_C5F12:
+dd str_AudioProgrammer
+str_IainMacanulty:
 db 049h,061h,069h,06Eh,020h,04Dh,061h,063h,061h,06Eh,075h,06Ch,074h,079h,00h
-unk_C5F21:
+str_AudioProgrammer2:
 db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
 db 00h
 unk_C5F32:
 db 03h,078h,00h,00h,00h
-dd unk_C081B
-dd unk_C5F12
+dd str_Credit18
+dd str_IainMacanulty
 dd unk_C588E
-dd unk_C5F21
-unk_C5F47:
+dd str_AudioProgrammer2
+str_SerenaMcCabe:
 db 053h,065h,072h,065h,06Eh,061h,020h,04Dh,063h,043h,061h,062h,065h,00h
-unk_C5F55:
+str_AdministrativeAssistant:
 db 041h,064h,06Dh,069h,06Eh,069h,073h,074h,072h,061h,074h,069h,076h,065h,020h,041h
 db 073h,073h,069h,073h,074h,061h,06Eh,074h,00h
 unk_C5F6E:
 db 03h,078h,00h,00h,00h
-dd unk_C0824
-dd unk_C5F47
+dd str_Credit14
+dd str_SerenaMcCabe
 dd unk_C588E
-dd unk_C5F55
-unk_C5F83:
+dd str_AdministrativeAssistant
+str_RodHigo:
 db 052h,06Fh,064h,020h,048h,069h,067h,06Fh,00h
-unk_C5F8C:
+str_LeadTester:
 db 04Ch,065h,061h,064h,020h,054h,065h,073h,074h,065h,072h,00h
 unk_C5F98:
 db 03h,078h,00h,00h,00h
-dd unk_C082D
-dd unk_C5F83
+dd str_Credit13
+dd str_RodHigo
 dd unk_C588E
-dd unk_C5F8C
-unk_C5FAD:
+dd str_LeadTester
+str_RichardRadarMul:
 db 052h,069h,063h,068h,061h,072h,064h,020h,028h,052h,061h,064h,061h,072h,029h,020h
 db 04Dh,075h,06Ch,00h
-unk_C5FC1:
+str_AssistantProducer:
 db 041h,073h,073h,069h,073h,074h,061h,06Eh,074h,020h,050h,072h,06Fh,064h,075h,063h
 db 065h,072h,00h
 unk_C5FD4:
 db 03h,078h,00h,00h,00h
-dd unk_C0836
-dd unk_C5FAD
+dd str_Credit16
+dd str_RichardRadarMul
 dd unk_C588E
-dd unk_C5FC1
-unk_C5FE9:
+dd str_AssistantProducer
+str_FosterHall:
 db 046h,06Fh,073h,074h,065h,072h,020h,048h,061h,06Ch,06Ch,00h
-unk_C5FF5:
+str_DirectorOfDevelopment:
 db 044h,069h,072h,065h,063h,074h,06Fh,072h,020h,06Fh,066h,020h,044h,065h,076h,065h
 db 06Ch,06Fh,070h,06Dh,065h,06Eh,074h,00h
 unk_C600D:
 db 03h,078h,00h,00h,00h
-dd unk_C083F
-dd unk_C5FE9
+dd str_Credit00
+dd str_FosterHall
 dd unk_C588E
-dd unk_C5FF5
-unk_C6022:
+dd str_DirectorOfDevelopment
+str_KenSayler:
 db 04Bh,065h,06Eh,020h,053h,061h,079h,06Ch,065h,072h,00h
-unk_C602D:
+str_ProducerDesign:
 db 050h,072h,06Fh,064h,075h,063h,065h,072h,020h,026h,020h,044h,065h,073h,069h,067h
 db 06Eh,00h
 unk_C603F:
 db 03h,078h,00h,00h,00h
-dd unk_C0848
-dd unk_C6022
+dd str_Credit04
+dd str_KenSayler
 dd unk_C588E
-dd unk_C602D
-unk_C6054:
+dd str_ProducerDesign
+str_HannoLemke:
 db 048h,061h,06Eh,06Eh,06Fh,020h,04Ch,065h,06Dh,06Bh,065h,00h
-unk_C6060:
+str_Producer:
 db 050h,072h,06Fh,064h,075h,063h,065h,072h,00h
 unk_C6069:
 db 03h,078h,00h,00h,00h
-dd unk_C0851
-dd unk_C6054
+dd str_Credit03
+dd str_HannoLemke
 dd unk_C588E
-dd unk_C6060
-unk_C607E:
+dd str_Producer
+str_Testers:
 db 054h,065h,073h,074h,065h,072h,073h,03Ah,00h
-unk_C6087:
+str_PaulSmith:
 db 050h,061h,075h,06Ch,020h,053h,06Dh,069h,074h,068h,00h
-unk_C6092:
+str_JohnBrydon:
 db 04Ah,06Fh,068h,06Eh,020h,042h,072h,079h,064h,06Fh,06Eh,00h
-unk_C609E:
+str_TonyLam:
 db 054h,06Fh,06Eh,079h,020h,04Ch,061h,06Dh,00h
-unk_C60A7:
+str_DavidLee:
 db 044h,061h,076h,069h,064h,020h,04Ch,065h,065h,00h
-unk_C60B1:
+str_QASupport:
 db 051h,041h,020h,053h,075h,070h,070h,06Fh,072h,074h,03Ah,00h
-unk_C60BD:
+str_JonBruce:
 db 04Ah,06Fh,06Eh,020h,042h,072h,075h,063h,065h,00h
-unk_C60C7:
+str_JohnSantamaria:
 db 04Ah,06Fh,068h,06Eh,020h,053h,061h,06Eh,074h,061h,06Dh,061h,072h,069h,061h,00h
 unk_C60D7:
 db 0Ch,0B4h,00h,00h,00h
-dd unk_C07C1
-dd unk_C607E
+dd str_Credit17
+dd str_Testers
 dd unk_C588E
-dd unk_C6087
-dd unk_C6092
-dd unk_C609E
-dd unk_C60A7
+dd str_PaulSmith
+dd str_JohnBrydon
+dd str_TonyLam
+dd str_DavidLee
 dd unk_C588E
 dd unk_C588E
-dd unk_C60B1
+dd str_QASupport
 dd unk_C588E
-dd unk_C60BD
-dd unk_C60C7
-unk_C6110:
+dd str_JonBruce
+dd str_JohnSantamaria
+str_RosterVerification:
 db 052h,06Fh,073h,074h,065h,072h,020h,056h,065h,072h,069h,066h,069h,063h,061h,074h
 db 069h,06Fh,06Eh,03Ah,00h
-unk_C6125:
+str_DaveWarfield2:
 db 044h,061h,076h,065h,020h,057h,061h,072h,066h,069h,065h,06Ch,064h,00h
-unk_C6133:
+str_JohnBrydon2:
 db 04Ah,06Fh,068h,06Eh,020h,042h,072h,079h,064h,06Fh,06Eh,00h
-unk_C613F:
+str_ProductManager:
 db 050h,072h,06Fh,064h,075h,063h,074h,020h,04Dh,061h,06Eh,061h,067h,065h,072h,03Ah
 db 00h
-unk_C6150:
+str_ChipLange:
 db 043h,068h,069h,070h,020h,04Ch,061h,06Eh,067h,065h,00h
-unk_C615B:
+str_RatingsByJohnRosasco:
 db 052h,061h,074h,069h,06Eh,067h,073h,020h,062h,079h,020h,04Ah,06Fh,068h,06Eh,020h
 db 052h,06Fh,073h,061h,073h,063h,06Fh,00h
-unk_C6173:
+str_AndNeilSmithOf:
 db 061h,06Eh,064h,020h,04Eh,065h,069h,06Ch,020h,053h,06Dh,069h,074h,068h,020h,06Fh
 db 066h,020h,074h,068h,065h,00h
-unk_C6189:
+str_NewYorkRangers:
 db 04Eh,065h,077h,020h,059h,06Fh,072h,06Bh,020h,052h,061h,06Eh,067h,065h,072h,073h
 db 00h
 unk_C619A:
 db 0Ah,0B4h,00h,00h,00h
 dd unk_C07A4
-dd unk_C6110
-dd unk_C6125
-dd unk_C6133
+dd str_RosterVerification
+dd str_DaveWarfield2
+dd str_JohnBrydon2
 dd unk_C588E
-dd unk_C613F
-dd unk_C6150
+dd str_ProductManager
+dd str_ChipLange
 dd unk_C588E
-dd unk_C615B
-dd unk_C6173
-dd unk_C6189
-unk_C61CB:
+dd str_RatingsByJohnRosasco
+dd str_AndNeilSmithOf
+dd str_NewYorkRangers
+str_AudioTechnician:
 db 041h,075h,064h,069h,06Fh,020h,054h,065h,063h,068h,06Eh,069h,063h,069h,061h,06Eh
 db 03Ah,00h
-unk_C61DD:
+str_SteveRoyea:
 db 053h,074h,065h,076h,065h,020h,052h,06Fh,079h,065h,061h,00h
-unk_C61E9:
+str_AudioProgrammers:
 db 041h,075h,064h,069h,06Fh,020h,050h,072h,06Fh,067h,072h,061h,06Dh,06Dh,065h,072h
 db 073h,03Ah,00h
-unk_C61FC:
+str_PaulChernikhowsky:
 db 050h,061h,075h,06Ch,020h,043h,068h,065h,072h,06Eh,069h,06Bh,068h,06Fh,077h,073h
 db 06Bh,079h,00h
-unk_C620F:
+str_JasonLeeSteere:
 db 04Ah,061h,073h,06Fh,06Eh,020h,04Ch,065h,065h,02Dh,053h,074h,065h,065h,072h,065h
 db 00h
-unk_C6220:
+str_AdvancedGravis:
 db 028h,041h,064h,076h,061h,06Eh,063h,065h,064h,020h,047h,072h,061h,076h,069h,073h
 db 029h,00h
 unk_C6232:
 db 0Ah,0B4h,00h,00h,00h
 dd unk_C07A4
-dd unk_C61CB
-dd unk_C61DD
+dd str_AudioTechnician
+dd str_SteveRoyea
 dd unk_C588E
 dd unk_C588E
-dd unk_C61E9
+dd str_AudioProgrammers
 dd unk_C588E
-dd unk_C61FC
+dd str_PaulChernikhowsky
 dd unk_C588E
-dd unk_C620F
-dd unk_C6220
-unk_C6263:
+dd str_JasonLeeSteere
+dd str_AdvancedGravis
+str_SportsDeskAnnouncer:
 db 053h,070h,06Fh,072h,074h,073h,044h,065h,073h,06Bh,020h,041h,06Eh,06Eh,06Fh,075h
 db 06Eh,063h,065h,072h,03Ah,00h
-unk_C6279:
+str_MichaelDonovan:
 db 04Dh,069h,063h,068h,061h,065h,06Ch,020h,044h,06Fh,06Eh,06Fh,076h,061h,06Eh,00h
-unk_C6289:
+str_RinkAnnouncer:
 db 052h,069h,06Eh,06Bh,020h,041h,06Eh,06Eh,06Fh,075h,06Eh,063h,065h,072h,03Ah,00h
-unk_C6299:
+str_BruceJamieson:
 db 042h,072h,075h,063h,065h,020h,04Ah,061h,06Dh,069h,065h,073h,06Fh,06Eh,00h
-unk_C62A8:
+str_PlayerProfilePhotographs:
 db 050h,06Ch,061h,079h,065h,072h,020h,050h,072h,06Fh,066h,069h,06Ch,065h,020h,050h
 db 068h,06Fh,074h,06Fh,067h,072h,061h,070h,068h,073h,03Ah,00h
-unk_C62C4:
+str_SteveBabineau:
 db 053h,074h,065h,076h,065h,020h,042h,061h,062h,069h,06Eh,065h,061h,075h,00h
 unk_C62D3:
 db 08h,0B4h,00h,00h,00h
-dd unk_C07C1
-dd unk_C6263
-dd unk_C6279
+dd str_Credit17
+dd str_SportsDeskAnnouncer
+dd str_MichaelDonovan
 dd unk_C588E
-dd unk_C6289
-dd unk_C6299
+dd str_RinkAnnouncer
+dd str_BruceJamieson
 dd unk_C588E
-dd unk_C62A8
-dd unk_C62C4
-unk_C62FC:
+dd str_PlayerProfilePhotographs
+dd str_SteveBabineau
+str_VideoProvidedBy:
 db 056h,069h,064h,065h,06Fh,020h,050h,072h,06Fh,076h,069h,064h,065h,064h,020h,042h
 db 079h,03Ah,00h
-unk_C630F:
+str_NHLProductions:
 db 04Eh,048h,04Ch,020h,050h,072h,06Fh,064h,075h,063h,074h,069h,06Fh,06Eh,073h,00h
-unk_C631F:
+str_SpecialThanks:
 db 053h,070h,065h,063h,069h,061h,06Ch,020h,054h,068h,061h,06Eh,06Bh,073h,03Ah,00h
-unk_C632F:
+str_ScottJackson:
 db 053h,063h,06Fh,074h,074h,020h,04Ah,061h,063h,06Bh,073h,06Fh,06Eh,00h
-unk_C633D:
+str_CatherineOBrien:
 db 043h,061h,074h,068h,065h,072h,069h,06Eh,065h,020h,04Fh,027h,042h,072h,069h,065h
 db 06Eh,00h
-unk_C634F:
+str_DougReid:
 db 044h,06Fh,075h,067h,020h,052h,065h,069h,064h,00h
-unk_C6359:
+str_MottLinn:
 db 04Dh,06Fh,074h,074h,020h,04Ch,069h,06Eh,06Eh,00h
 unk_C6363:
 db 08h,0B4h,00h,00h,00h
-dd unk_C07C1
-dd unk_C62FC
-dd unk_C630F
+dd str_Credit17
+dd str_VideoProvidedBy
+dd str_NHLProductions
 dd unk_C588E
-dd unk_C631F
-dd unk_C632F
-dd unk_C633D
-dd unk_C634F
-dd unk_C6359
+dd str_SpecialThanks
+dd str_ScottJackson
+dd str_CatherineOBrien
+dd str_DougReid
+dd str_MottLinn
 unk_C638C:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-off_C6399:
+creditpages:
 dd unk_C5969
 dd unk_C5B93
 dd unk_C5A78
@@ -747,44 +747,44 @@ textoutlinedx:
 db 0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 textoutlinedy:
 db 00h,00h,00h,00h,00h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,01h,00h,00h,00h
-unk_C6440:
+str_TheFileYouSpecified:
 db 054h,068h,065h,020h,066h,069h,06Ch,065h,020h,079h,06Fh,075h,020h,073h,070h,065h
 db 063h,069h,066h,069h,065h,064h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,065h
 db 078h,069h,073h,074h,073h,021h,00h
-unk_C6467:
+str_DoYouWantTo:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,06Fh
 db 076h,065h,072h,077h,072h,069h,074h,065h,020h,074h,068h,065h,020h,06Fh,06Ch,064h
 db 020h,066h,069h,06Ch,065h,03Fh,00h
-off_C648E:
-dd unk_C6440
-dd unk_C6467
-unk_C6496:
+msg_FileExists:
+dd str_TheFileYouSpecified
+dd str_DoYouWantTo
+str_No3:
 db 04Eh,06Fh,00h
-unk_C6499:
+btn_FileExists:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_C6496
+dd str_No3
 db 0F0h,0FFh,0FFh,0FFh,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
-dd unk_C744C
-unk_C64D1:
+dd str_Yes
+str_TheStatsWereSuccessfully:
 db 054h,068h,065h,020h,073h,074h,061h,074h,073h,020h,077h,065h,072h,065h,020h,073h
 db 075h,063h,063h,065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h
 db 074h,065h,06Eh,00h
-unk_C64F5:
-dd unk_C64D1
-unk_C64F9:
+msg_StatsWritten:
+dd str_TheStatsWereSuccessfully
+str_ERROROutputFileWas:
 db 045h,052h,052h,04Fh,052h,020h,03Ah,020h,04Fh,075h,074h,070h,075h,074h,020h,066h
 db 069h,06Ch,065h,020h,077h,061h,073h,020h,06Eh,06Fh,074h,020h,073h,075h,063h,063h
 db 065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h,074h,065h,06Eh
 db 00h
-unk_C652A:
-dd unk_C64F9
-unk_C652E:
+msg_OutputFileError:
+dd str_ERROROutputFileWas
+str_InsufficientDiskSpaceTo:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,020h,070h,072h,069h,06Eh,074h
 db 00h
-unk_C654F:
+str_TheDisplayedStatisticsTo:
 db 074h,068h,065h,020h,064h,069h,073h,070h,06Ch,061h,079h,065h,064h,020h,073h,074h
 db 061h,074h,069h,073h,074h,069h,063h,073h,020h,074h,06Fh,02Ch,020h,079h,06Fh,075h
 db 00h
@@ -792,14 +792,14 @@ msg_NeedKbytes2:
 db 072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h,079h,074h,065h
 db 073h,020h,06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h
 db 070h,061h,063h,065h,02Eh,020h,020h,020h,020h,00h
-off_C659A:
-dd unk_C652E
-dd unk_C654F
+msg_StatsDiskSpace:
+dd str_InsufficientDiskSpaceTo
+dd str_TheDisplayedStatisticsTo
 dd msg_NeedKbytes2
 db 00h,00h
-dword_C65A8:
+easnfontbuf:
 db 00h,00h,00h,00h
-dword_C65AC:
+embscupbank:
 db 00h,00h,00h,00h
 statscategory:
 db 00h,00h,00h,00h
@@ -836,7 +836,7 @@ db 020h,070h,06Ch,061h,079h,06Fh,066h,066h,020h,074h,072h,065h,065h,00h
 str_ExitingTheGame:
 db 045h,078h,069h,074h,069h,06Eh,067h,020h,074h,068h,065h,020h,067h,061h,06Dh,065h
 db 00h
-unk_C665D:
+str_MayLoseThisGame:
 db 06Dh,061h,079h,020h,06Ch,06Fh,073h,065h,020h,074h,068h,069h,073h,020h,067h,061h
 db 06Dh,065h,027h,073h,020h,064h,061h,074h,061h,02Eh,00h
 str_DoYouWishToReturn:
@@ -845,10 +845,10 @@ db 065h,074h,075h,072h,06Eh,03Fh,00h
 str_DoYouWishToExit:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,065h
 db 078h,069h,074h,03Fh,00h
-dword_C66A4:
+msg_DeskExit:
 db 00h,00h,00h,00h
-dd unk_C665D
-dword_C66AC:
+dd str_MayLoseThisGame
+msg_DeskExit_e02:
 db 00h,00h,00h,00h
 dword_C66B0:
 db 0Dh,00h,00h,00h
@@ -912,7 +912,7 @@ unk_C678E:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
 dword_C679D:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh
-byte_C67A9:
+str_Dashes:
 db 02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,02Dh,00h
 unk_C67B1:
 db 00h,00h,00h,00h,00h,00h,00h,00h
@@ -931,24 +931,24 @@ db 0F7h,00h,00h,00h,035h,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,0F7h,00h,00h,00h,047h,00h,00h,00h
-off_C6821:
+menutext_statsleague:
 dd mi_LeagueSeason
-off_C6825:
+menuact_statsleague:
 dd StatsSelLeague
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 0F7h,00h,00h,00h,059h,00h,00h,00h
-off_C6841:
+menutext_statslgplayoffs:
 dd mi_LeaguePlayoffs
-off_C6845:
+menuact_statslgplayoffs:
 dd StatsSelLeaguePlayoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 0F7h,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,0F7h,00h,00h,00h,07Eh,00h,00h,00h
-off_C6881:
+menutext_statsplayoff:
 dd mi_PlayoffMode
-off_C6885:
+menuact_statsplayoff:
 dd StatsSelPlayoffMode
 db 00h,00h,00h,00h,00h,00h,00h,00h
 str_SeasonSfx:
@@ -959,17 +959,17 @@ db 066h,073h,00h
 str_PlayOffsSfx:
 db 022h,020h,050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,073h,00h,00h,00h,00h
 divisionnames:
-dd unk_C0B68
-dd unk_C0B79
-dd unk_C0B8A
-dd unk_C0B9D
+dd str_PacificDivision
+dd str_CentralDivision
+dd str_NortheastDivision
+dd str_AtlanticDivision
 statslabels:
-dd unk_C0BAF
-dd unk_C0BB7
-dd unk_C0BC0
-dd unk_C0BCC
-dd unk_C0BD8
-dd unk_C0BE4
+dd str_Season3
+dd str_Playoff3
+dd str_RegSeason
+dd str_Playoff4
+dd str_Actual
+dd str_Accumulated
 statsbgnames:
 dd str_embnhl
 dd str_embscup
@@ -1028,34 +1028,34 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 statspalvalid:
 db 00h,00h,00h,00h
 skaterratingnames:
-dd unk_C0CB0
-dd unk_C0CB6
-dd unk_C0CBE
-dd unk_C0CC5
-dd unk_C0CD0
-dd unk_C0CD9
-dd unk_C0CE7
-dd unk_C0CF0
-dd unk_C0CF8
-dd unk_C0D0C
-dd unk_C0D20
-dd unk_C0D2F
-dd unk_C0D39
-off_C6A99 equ $+1
-dd unk_C0D49
+dd str_Speed
+dd str_Agility
+dd str_Weight
+dd str_ShotPower
+dd str_Checking2
+dd str_StickHandling
+dd str_Accuracy
+dd str_Passing2
+dd str_OffensiveAwareness
+dd str_DefensiveAwareness
+dd str_Aggressiveness
+dd str_Endurance
+dd str_ShootPassBias
+skatercardattrs_m3 equ $+1
+dd str_Faceoffs
 db 01h,02h,03h,04h,05h,06h,07h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,013h,00h,00h
 goalieratingnames:
-dd unk_C0DEC
-dd unk_C0DF7
-dd unk_C0E03
-dd unk_C0E0E
-dd unk_C0E1A
-dd unk_C0E27
-dd unk_C0E2D
-dd unk_C0E35
-dd unk_C0E3C
-off_C6AD1 equ $+1
-dd unk_C0E50
+dd str_GloveLeft
+dd str_GloveRight
+dd str_StickLeft
+dd str_StickRight
+dd str_PuckControl
+dd str_Speed2
+dd str_Agility2
+dd str_Weight2
+dd str_OffensiveAwareness2
+goaliecardattrs_m3 equ $+1
+dd str_DefensiveAwareness2
 db 01h,02h,03h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h
 teamsortfns:
 dd CmpTeamScoring
@@ -1075,39 +1075,39 @@ db 09h,00h,00h,00h,01h,00h,00h,00h,016h,00h,00h,00h,0Bh,00h,00h,00h
 db 019h,00h,00h,00h,0Eh,00h,00h,00h,010h,00h,00h,00h,013h,00h,00h,00h
 db 06h,00h,00h,00h,0Dh,00h,00h,00h
 westconfname:
-dd unk_C0EE0
+dd str_WesternConference3
 eastconfname:
-dd unk_C0EF3
+dd str_EasternConference3
 teamstattitles:
-dd unk_C0F06
-dd unk_C0F14
-dd unk_C0F22
-dd unk_C0F38
-dd unk_C0F49
-dd unk_C0F59
+dd str_TeamScoring
+dd str_TeamDefense
+dd str_TeamPenaltyKilling
+dd str_TeamPowerPlay
+dd str_TeamPenalties
+dd str_TeamStandings
 teamcolhdrs:
-dd unk_C0F69
-dd unk_C0F6C
-dd unk_C0F6F
-dd unk_C0F72
-dd unk_C0F69
-dd unk_C0F6C
-dd unk_C0F6F
-dd unk_C0F76
-dd unk_C0F7A
-dd unk_C0F7E
-dd unk_C0F83
+dd str_spW
+dd str_SpL4
+dd str_SpT
+dd str_GF2
+dd str_spW
+dd str_SpL4
+dd str_SpT
+dd str_GA4
+dd str_TSH
+dd str_PPGA
+dd str_PCT5
 dd unk_C0F89
-dd unk_C0F8A
-dd unk_C0F8E
-dd unk_C0F83
+dd str_ADV
+dd str_PPG3
+dd str_PCT5
 dd unk_C0F89
-dd unk_C0F92
-dd unk_C0F97
+dd str_PIM5
+dd str_AVG
 dd unk_C0F89
 dd unk_C0F89
-dd unk_C0F9D
-dd unk_C0FA1
+dd str_PTS
+dd str_WINS
 dd unk_C0F89
 dd unk_C0F89
 leadersortfns:
@@ -1123,81 +1123,81 @@ dd CmpGAA
 dd CmpGoalieWins
 dd CmpSavePct
 leadertitles:
-dd unk_C10CC
-dd unk_C10DB
-dd unk_C10E9
-dd unk_C10F9
-dd unk_C1112
-dd unk_C112C
-dd unk_C1140
-dd unk_C1158
-dd unk_C1175
-dd unk_C1194
-dd unk_C11AC
-off_C6C40:
-dd unk_C11C5
-off_C6C44:
-dd unk_C11C9
-off_C6C48:
-dd unk_C11CD
-off_C6C4C:
+dd str_PointLeaders
+dd str_GoalLeaders
+dd str_AssistLeaders
+dd str_PowerPlayGoalLeaders
+dd str_ShorthandedGoalLeaders
+dd str_PlusMinusLeaders
+dd str_PenaltyMinuteLeaders
+dd str_ShootingPercentageLeaders
+dd str_GoalsAgainstAverageLeaders
+dd str_GoaltenderWinLeaders
+dd str_SavePercentageLeaders
+leadercolhdrs:
+dd str_spG
+leadercolhdrs_c1:
+dd str_spA
+leadercolhdrs_c2:
+dd str_Pt3
+leadercolhdrs_c3:
 dd unk_C11D1
-off_C6C50:
+leadercolhdrs_c4:
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11D1
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
+dd str_spG
+dd str_spA
+dd str_Pt3
 dd unk_C11D1
 dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11D2
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11D5
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11D9
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11DE
-dd unk_C11D1
-dd unk_C11C5
-dd unk_C11C9
-dd unk_C11CD
-dd unk_C11E2
-dd unk_C11E8
-dd unk_C11EE
-dd unk_C11F3
-dd unk_C11F7
+dd str_spG
+dd str_spA
+dd str_Pt3
 dd unk_C11D1
 dd unk_C11D1
-dd unk_C11EE
-dd unk_C11FD
-dd unk_C1200
-dd unk_C1203
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd str_PP2
 dd unk_C11D1
-dd unk_C11EE
-dd unk_C11F3
-dd unk_C1206
-dd unk_C120B
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd str_SHG3
 dd unk_C11D1
-dd unk_C126C
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd str_PlusMinus5
+dd unk_C11D1
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd str_PIM6
+dd unk_C11D1
+dd str_spG
+dd str_spA
+dd str_Pt3
+dd str_Shots5
+dd str_Pct6
+dd str_MIN5
+dd str_GA5
+dd str_AVG2
+dd unk_C11D1
+dd unk_C11D1
+dd str_MIN5
+dd str_spW2
+dd str_SpL5
+dd str_SpT2
+dd unk_C11D1
+dd str_MIN5
+dd str_GA5
+dd str_SA4
+dd str_PCT7
+dd unk_C11D1
+dd str_LSSCEDDB
 off_C6D22 equ $+2
-dd unk_C1276
-word_C6D24:
+dd str_SCHEDULEDB3
+potreeround:
 db 070h,0FFh
 dword_C6D26:
 db 00h,00h,00h,00h,00h,02h,04h,06h,08h,0Ah,0Ch,0Eh,01h,05h,09h,0Dh
@@ -1230,7 +1230,7 @@ db 017h,0FFh,0FFh,0FFh,0FFh
 treecol_Er1:
 db 08h
 db 09h,0Ah,0Bh,0Ch,0Dh,0Eh,0Fh
-dword_C6DBA:
+potreeseeds:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
 db 05h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,08h,00h,00h,00h
 db 09h,00h,00h,00h,0Ah,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h
@@ -1302,11 +1302,11 @@ scoutcatidx:
 db 00h,01h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h,00h
 fdlgshapes:
 db 00h,00h,00h,00h
-off_C6F7C:
+fdlgfilelists:
 dd lgfiles
-off_C6F80:
+fdlgfilelists_e01:
 dd pofiles
-off_C6F84:
+fdlgfilelists_e02:
 dd exhfiles
 fdlgrects:
 db 0Eh,00h,00h,00h
@@ -1337,7 +1337,7 @@ db 066h,00h,00h,00h,025h,00h,00h,00h,06Bh,00h,00h,00h,082h,00h,00h,00h
 db 076h,00h,00h,00h,025h,00h,00h,00h,07Bh,00h,00h,00h,082h,00h,00h,00h
 db 086h,00h,00h,00h,025h,00h,00h,00h,08Bh,00h,00h,00h,082h,00h,00h,00h
 db 096h,00h,00h,00h
-unk_C7088:
+str_ConfirmDeletionOfThe:
 db 043h,06Fh,06Eh,066h,069h,072h,06Dh,020h,044h,065h,06Ch,065h,074h,069h,06Fh,06Eh
 db 020h,06Fh,066h,020h,074h,068h,065h,00h
 str_ExhibitionGameCalled:
@@ -1349,7 +1349,7 @@ str_PlayOffSeriesCalled:
 db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,053h,065h,072h,069h,065h,073h,020h
 db 043h,061h,06Ch,06Ch,065h,064h,03Ah,00h
 delmsgbox:
-dd unk_C7088
+dd str_ConfirmDeletionOfThe
 db 00h,00h,00h,00h
 db 00h,00h,00h,00h,00h
 str_NoScoring:
@@ -1484,9 +1484,9 @@ rinkscrollx:
 db 00h,00h,00h,00h
 rinkscrolly:
 db 00h,00h,00h,00h
-unk_C744C:
+str_Yes:
 db 059h,065h,073h,00h
-unk_C7450:
+str_No4:
 db 04Eh,06Fh,00h
 str_DoYouWishToUse:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,075h
@@ -1512,6 +1512,6 @@ dd str_Current
 db 0F0h,0FFh,0FFh,0FFh,050h,00h,00h,00h,060h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
 dd str_Original
-unk_C74EF:
+str_AllTheTeamsAre:
 db 041h,06Ch,06Ch,020h,074h,068h,065h,020h,074h,065h,061h,06Dh,073h,020h,061h,072h
 db 065h,020h,061h,06Ch,072h,065h,061h,064h,079h,020h,068h,075h,06Dh,061h,06Eh,00h

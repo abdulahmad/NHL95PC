@@ -54,7 +54,7 @@
 extern unsigned char curleague;
 extern int gamemode, lgplayteam, dword_DDD34, dword_DDD3C, lgstate[], gameresult;
 extern short lggameidx, HomeTeam, VisTeam;
-extern unsigned char byte_DDD40, byte_DDD41, byte_DDD42, byte_DDD43;
+extern unsigned char lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3;
 extern char WaitLeagueFloppy[], FindLeagueFloppy[], PlayLeagueGame[];
 extern char CheckLeagueDiskSync[], CopyHumanTeamDBs[], LeagueTeamSelect[];
 extern char AddHumanTeam[], MergeLeagueFiles[], AskTeamPassword[];
@@ -65,8 +65,8 @@ extern volatile int quit_requested;
 extern char game_MessageBox[] __asm__(SYM("MessageBox"));
 extern void RestoreDialogBg(void);
 extern void SetDialogColors(int a, int b, int c, int d, int e);
-extern int sub_B2CBE(int key);
-extern void sub_B2DCA(int *x, int *y, int *btn);
+extern int KeyDown(int key);
+extern void MouseRead(int *x, int *y, int *btn);
 
 static int real_league(const char *n)    /* "HIHI.LP", not "" nor the exhibition's "." */
 {
@@ -922,8 +922,8 @@ static void h2h_fill_mine(season_h2h *o, int kind)
 {
     /* month+day, not CalendarScreen's slot: each copy's SCHEDULE.nn can
      * number the same Oilers-Sharks night as a different index. */
-    int date = ((int)byte_DDD40 << 8) | (int)byte_DDD41;
-    season_h2h_fill(o, kind, byte_DDD42, byte_DDD43, lgplayteam, date, open_league());
+    int date = ((int)lgschedrec << 8) | (int)lgschedrec_b1;
+    season_h2h_fill(o, kind, lgschedrec_b2, lgschedrec_b3, lgplayteam, date, open_league());
 }
 
 static void h2h_want_now(season_h2h *me)
@@ -980,7 +980,7 @@ static int wait_mirror_h2h(int from, char *dir, int size)
     while (!quit_requested) {
         netplay_pump();
         if (ob_season_mirror(&g_season, from, dir, size)) return 0;
-        if (sub_B2CBE(1) || sub_B2CBE(0x1C)) return -2;
+        if (KeyDown(1) || KeyDown(0x1C)) return -2;
         if (++age >= 12) {
             age = 0;
             h2h_want_now(&me);
@@ -1027,14 +1027,14 @@ static int wait_h2h(char *teams, int opp)
     season_h2h_lines(lines, player);
     for (i = 0; i < 4; i++) ptr[i] = lines[i];
     watcall5((void *)SetDialogColors, 0xF9, 0xFA, 0xF8, 0xFA, 0);
-    sub_B2DCA(&btn, &my, &mx);
+    MouseRead(&btn, &my, &mx);
     watcall_mbox((void *)game_MessageBox, (uint32_t)-1, (uint32_t)-1, (uint32_t)(uintptr_t)ptr, 4,
                  0, 0, (uint32_t)(uintptr_t)&my, (uint32_t)(uintptr_t)&btn, 0);
     /* game thread is in host C: IRQs do not run, so one note loops. mute it. */
     mute = audio_muted;
     audio_muted = 1;
     g_h2h_opp = opp;
-    g_h2h_home = lgplayteam == (int)byte_DDD42;
+    g_h2h_home = lgplayteam == (int)lgschedrec_b2;
     h2h_want_now(&me);
     had_net = g_net != NULL;
     members = had_net ? ob_net_members(g_net) : 0;
@@ -1042,7 +1042,7 @@ static int wait_h2h(char *teams, int opp)
         unsigned now_m;
         int now_net, r = 0;
         netplay_pump();
-        if (sub_B2CBE(1) || sub_B2CBE(0x1C)) break;
+        if (KeyDown(1) || KeyDown(0x1C)) break;
         h2h_fill_mine(&me, SEASON_H2H_WANT);
         now_net = g_net != NULL;
         now_m = now_net ? ob_net_members(g_net) : 0;
@@ -1526,10 +1526,10 @@ void port_season_after_game(void)
         }
     }
     if (g_h2h_active && !g_h2h_home && g_net) {
-        home_m = machine_of_team(byte_DDD42);
+        home_m = machine_of_team(lgschedrec_b2);
         if (home_m < 0) {
             for (k = 0; k < OB_NET_MAX_MACHINES; k++)
-                if (g_h2h_have[k] && g_h2h_peer[k].mine == byte_DDD42) home_m = k;
+                if (g_h2h_have[k] && g_h2h_peer[k].mine == lgschedrec_b2) home_m = k;
         }
         if (home_m >= 0 && wait_mirror(home_m, mdir, (int)sizeof mdir) == 0)
             import_from_dir(mdir);

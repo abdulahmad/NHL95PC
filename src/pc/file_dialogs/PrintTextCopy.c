@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* PrintTextCopy: copy s into a local buffer (64 bytes) and print the copy at x, y
- (sub_91964). */
+ (PrintString). */
 void PrintTextCopy(char *s, int x, int y)
 {
     char buf[64];
@@ -10,5 +10,5 @@ void PrintTextCopy(char *s, int x, int y)
 
     for (i = 0; s[i] != 0; i++) buf[i] = s[i];
     buf[i] = 0;
-    sub_91964(buf, x, y);
+    PrintString(buf, x, y);
 }

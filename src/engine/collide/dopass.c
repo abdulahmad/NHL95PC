@@ -296,9 +296,9 @@ void doshot(Player *p)
    / ADh by speed when loose and low, else AFh / A5h / A7h at random); the speed along the wall loses 3/128, the
    velocity is turned back, a carried or far (|y| > E8h) puck ends a penalty shot, and the one-timer and shot
    flags clear. A player bounces only when moving into the wall (regd2 up to 3E8h): a hard hit (-1000h or less,
-   impact 0Ah or more, not dword_CCC2C) plays B1h, the speed across is quartered and at least 3E8h back; with
-   dword_CCC2C set (a goal-net hit) a player stopped at the side posts (|old x| 18h) or past the net's back keeps
-   its old position on that axis. Then dword_CCC2C and an upward Zvel clear. No result. */
+   impact 0Ah or more, not nethit) plays B1h, the speed across is quartered and at least 3E8h back; with
+   nethit set (a goal-net hit) a player stopped at the side posts (|old x| 18h) or past the net's back keeps
+   its old position on that axis. Then nethit and an upward Zvel clear. No result. */
 /* DRAFT (10.0 GA, 11 differing, same size): no goto (each board-sound arm calls sfx itself; Watcom merges the two
    calls) and the goal-net y limit in its own lim. Left: the puck branch's Yvel sum lands in eax (EXE edx), a tie
    of the unstable sort. With the limit in the dead sound short s (or t) instead of lim, and the puck branch's
@@ -320,14 +320,14 @@ void wallcoll(Player *p)
         gmode2 &= 0xEF;
         passplayer = -1;
         if (regd2.w >= 0) {
-            dword_CCC2C = 0;
+            nethit = 0;
             return;
         }
         regd2.w >>= 2;
         if (regd2.w <= -0x400) {
             p->Zvel = -randomd0(0x800);
             puckflip(p);
-            if (!dword_CCC2C) {
+            if (!nethit) {
                 t = (regd2.w >> 10) + 4;
                 if (t < 0) t = 0;
                 if ((unsigned short)HIWORD(p->Zpos) <= 0xA) {
@@ -357,15 +357,15 @@ void wallcoll(Player *p)
         shotongoal = onetimerflag = 0;
     } else {
         if (regd2.w > 0x3E8) {
-            dword_CCC2C = 0;
+            nethit = 0;
             return;
         }
-        if (regd2.w <= -0x1000 && p->impact >= 0xA && !dword_CCC2C) sfx(0xB1);
+        if (regd2.w <= -0x1000 && p->impact >= 0xA && !nethit) sfx(0xB1);
         regd2.w >>= 2;
         if (regd2.w >= -0x384) regd2.w = -0x3E8;
         p->Xvel = (regd0.w * regd3.w - regd1.w * regd2.w) >> 8;
         p->Yvel = (regd1.w * regd3.w + regd0.w * regd2.w) >> 8;
-        if (dword_CCC2C) {
+        if (nethit) {
             if (HIWORD(p->OldXpos) <= -0x18 && p->Xvel > 0 || HIWORD(p->OldXpos) >= 0x18 && p->Xvel < 0) {
                 p->Xvel = 0;
                 HIWORD(p->Xpos) = HIWORD(p->OldXpos);
@@ -377,6 +377,6 @@ void wallcoll(Player *p)
             }
         }
     }
-    dword_CCC2C = 0;
+    nethit = 0;
     if (p->Zvel > 0) p->Zvel = 0;
 }

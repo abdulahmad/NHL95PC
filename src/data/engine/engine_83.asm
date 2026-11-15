@@ -2,34 +2,34 @@
 bits 32
 %include "hockey.inc"
 section s_DF63E nobits alloc noexec write align=1
-global byte_DF64D, hmtmflags, hmtmpbox, byte_DF6E6, byte_DF6E7, byte_DF6E8, byte_DF6E9, awtmflags
-global dword_DF642, dword_DF646, dword_DF648, dword_DF652, hmtmpdst_m2, dword_DF6C2, dword_DF6EA, hmtmlines
-global dword_DF6F2, dword_DF6F6, hmtmplstats, hmtmglstats, hmtmroster, hmtmptrF2, hmtmsort
+global hmtmgoalie_b1, hmtmflags, hmtmpbox, hmtmcoach_d2, hmtmcoach_d3, hmtmcoachflags, hmtmcoachmode, awtmflags
+global hmtmextra, hmtmtouch2, hmtmtouch3, hmtmnear, hmtmpdst_m2, hmtmpdst_gl_m2, hmtmcoachenergy, hmtmlines
+global hmtmplattr, hmtmglattr, hmtmplstats, hmtmglstats, hmtmroster, hmtmptrF2, hmtmsort
 global awtmstruct
-global dword_DF748, dword_DF752, hmtmline, hmtmlcnt, word_DF644, hmtmap, hmtmgoalie
-global word_DF656, hmtmpde, hmtmpdst, word_DF70E, awscore, awtmline, awtmlcnt, word_DF742
-global word_DF744, word_DF746, awtmap, awtmgoalie, word_DF756
+global awtmtouch3, awtmnear, hmtmline, hmtmlcnt, hmtmtouch1, hmtmap, hmtmgoalie
+global hmtmnearpl, hmtmpde, hmtmpdst, hmtmgoaliesc, awscore, awtmline, awtmlcnt, awtmextra
+global awtmtouch1, awtmtouch2, awtmap, awtmgoalie, awtmnearpl
 hmtmline:
 resb 2
 hmtmlcnt:
 resb 2
-dword_DF642:
+hmtmextra:
 resb 2
-word_DF644:
+hmtmtouch1:
 resb 2
-dword_DF646:
+hmtmtouch2:
 resb 2
-dword_DF648:
+hmtmtouch3:
 resb 2
 hmtmap:
 resb 2
 hmtmgoalie:
 resb 1
-byte_DF64D:
+hmtmgoalie_b1:
 resb 5
-dword_DF652:
+hmtmnear:
 resb 4
-word_DF656:
+hmtmnearpl:
 resb 2
 hmtmflags:
 resb 2
@@ -39,25 +39,25 @@ hmtmpdst_m2:
 resb 2
 hmtmpdst:
 resb 48
-dword_DF6C2:
+hmtmpdst_gl_m2:
 resb 8
 hmtmpbox:
 resb 28
-byte_DF6E6:
+hmtmcoach_d2:
 resb 1
-byte_DF6E7:
+hmtmcoach_d3:
 resb 1
-byte_DF6E8:
+hmtmcoachflags:
 resb 1
-byte_DF6E9:
+hmtmcoachmode:
 resb 1
-dword_DF6EA:
+hmtmcoachenergy:
 resb 4
 hmtmlines:
 resb 4
-dword_DF6F2:
+hmtmplattr:
 resb 4
-dword_DF6F6:
+hmtmglattr:
 resb 4
 hmtmplstats:
 resb 4
@@ -69,7 +69,7 @@ hmtmptrF2:
 resb 4
 hmtmsort:
 resb 4
-word_DF70E:
+hmtmgoaliesc:
 resb 4
 resb 2
 awtmstruct:
@@ -88,21 +88,21 @@ awtmline:
 resb 2
 awtmlcnt:
 resb 2
-word_DF742:
+awtmextra:
 resb 2
-word_DF744:
+awtmtouch1:
 resb 2
-word_DF746:
+awtmtouch2:
 resb 2
-dword_DF748:
+awtmtouch3:
 resb 2
 awtmap:
 resb 2
 awtmgoalie:
 resb 6
-dword_DF752:
+awtmnear:
 resb 4
-word_DF756:
+awtmnearpl:
 resb 2
 awtmflags:
 resb 2

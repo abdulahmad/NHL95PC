@@ -121,7 +121,7 @@ int OppInReach(Player *p)
    highlighted choice (lcsel into regd2, lcfound) and closes the box (lcblink, lcboxon 0); else the choice cycles
    every 60 frames (lctimer; two choices on the special lines above 3, else four; lcline steps through linenext)
    and blinks every 12 (lcblinktime, lcblink). Then a joystick player that is not animation-locked or fighting
-   (and with dword_CCC9C clear) skates (doplayeracc with the direction in regd0). p: the player. No result. */
+   (and with playsuspended clear) skates (doplayeracc with the direction in regd0). p: the player. No result. */
 void lineinput(Player *p)
 {
     Team *t;
@@ -151,7 +151,7 @@ void lineinput(Player *p)
         lcblinktime[side] += 0xC;
         lcblink[side] = lcblink[side] == 0;
     }
-    if (!(p->pflags & pfjoy) || dword_CCC9C || (p->pflags & pfalock) || (p->pflags2 & 1)) return;
+    if (!(p->pflags & pfjoy) || playsuspended || (p->pflags & pfalock) || (p->pflags2 & 1)) return;
     doplayeracc(p, regd0.w);
 }
 
@@ -209,7 +209,7 @@ one:
    (asspassrec). Once someone has the puck or the wait (the high byte of temp1) is past -19h: a pass to p is
    completed (PassCompleted), passplayer cleared, the assignment left (pflags bit 0 off, assexit, onetimerflag 0).
    Else, armed (onetimerflag): in the one-timer wind-up (SPA DD3h / E2Bh) a press of button 4 or 6 (regd1) early in
-   it locks the swing (SPA 1355h / 138Dh, sflags bit 3 off, onetimerflag 0); the stick blade (byte_CCBBA by facing,
+   it locks the swing (SPA 1355h / 138Dh, sflags bit 3 off, onetimerflag 0); the stick blade (assonetimer_blade by facing,
    mirrored by the x-flip attribute bit 3) is measured against the puck: close enough the swing steps on
    (SPAcnt 0, updateanim), and within 64h (90h while the wait is under -10) the shot goes (passdir at most 8,
    passspeed shotspd / 2 + 1Eh, frame 4, team one-timers +1 at +18h, crowd +64h, a2touchpuck, doshot,
@@ -246,8 +246,8 @@ void assonetimer(Player *p)
         p->nopuck = 5;
         regd0.w = p->facedir & 7;
         if (p->attribute & 8) regd0.w = (8 - regd0.w) & 7;
-        regd1.w = byte_CCBBB[regd0.w * 2];
-        regd0.w = byte_CCBBA[regd0.w * 2];
+        regd1.w = assonetimer_blade_y[regd0.w * 2];
+        regd0.w = assonetimer_blade[regd0.w * 2];
         if (p->attribute & 8) regd0.w = -regd0.w;
         d = (short)(HIWORD(p->Xpos) + regd0.w - *puckx);
         c = (short)(regd1.w + HIWORD(p->Ypos) - *pucky);

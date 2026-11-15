@@ -7,10 +7,10 @@
 void DrawDBErrorsScreen(int *sel, int *line, int *first)
 {
     SetDrawBitmap(fullscrbmp);
-    sub_B392C(0x41);
-    DrawMenuBar(unk_D0450, 5, 0x40, 0x41, 0x42);
-    sub_90D20(0, 0x13, 0x280, 0x1CD, 0x41);
-    DrawButtons((Button *)unk_D0CA2, 2);
+    ClearScreen(0x41);
+    DrawMenuBar(editrostersmenubar, 5, 0x40, 0x41, 0x42);
+    FillRect(0, 0x13, 0x280, 0x1CD, 0x41);
+    DrawButtons((Button *)btn_DBError, 2);
     *sel = 0;
     if (*first) {
         PrintCenteredText(*line * 13 + 0x1F, (char *)str_ErrorsFoundInDatabases);

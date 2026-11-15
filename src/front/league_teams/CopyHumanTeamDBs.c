@@ -62,7 +62,7 @@ int CopyHumanTeamDBs(char *dir, unsigned char *teams, int which)
                 tp = s.teams + s.t * 30;
                 strcpy(s.name, (char *)tp);
                 msg_InsertDisk_arg = (int)s.name;
-                sub_B2DCA(&s.btn, &s.y, &s.x);
+                MouseRead(&s.btn, &s.y, &s.x);
                 r = MessageBox(-1, -1, (char *)msg_InsertDisk, 4, 0, 0, (int)&s.y, (int)&s.x, -1);
                 if (!r) r = SelectFloppyDrive((int)dir, (int)tp);
                 if (!r) {
@@ -73,7 +73,7 @@ int CopyHumanTeamDBs(char *dir, unsigned char *teams, int which)
                         if (stricmp((char *)s.teams + s.t * 30, s.name) || stricmp(dir, s.lg)) {
                             FmtFromLeague(s.msg, s.name, s.lg);
                             msg_WrongDisk_arg = (int)s.msg;
-                            sub_B2DCA(&s.btn, &s.y, &s.x);
+                            MouseRead(&s.btn, &s.y, &s.x);
                             s.btn = MessageBox(-1, -1, (char *)msg_WrongDisk, 3, (int)btn_WrongDisk, 2, (int)&s.y,
                                 (int)&s.x, -1);
                             if (s.btn == 1 || s.btn < 0) s.retry = 1;

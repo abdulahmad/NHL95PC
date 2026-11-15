@@ -5,11 +5,11 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
-extern byte_CCE00, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, byte_E024C, byte_E9AC8
-extern byte_E9AD3, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
+extern rinkobjanim, byte_DC264, byte_DC265, byte_DC266, byte_DC267, byte_DC268, milestonesaid, curevent
+extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
-extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, dword_CC0AC, dword_DB088, dword_DF6F2
-extern dword_DF6F6, dword_DF7F2, dword_DF7F6, dword_E009C, dword_E9A9E, dword_E9AB6, dword_E9B2A, energywarn
+extern curperiod, CwdExciteLvl, deferpending, dword_C66D0, dword_C66D4, goalienotebits, hmplstats, hmtmplattr
+extern hmtmglattr, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E9A9E, dword_E9AB6, rinkobjused_m2, energywarn
 extern exhstate, exitgame, fadeinpending, FatalError, FileReadAt, FileWriteAt, fodir1, fodir2
 extern fofdata2, fox, foy, frameaccum, gameclock, gamemode, gameover, gamepal
 extern GetPeriodTime, gmode, gmode2, gsp, hmlinetab, hmroster, hmteamrec, hmtmglstats
@@ -17,7 +17,7 @@ extern hmtmlines, hmtmplstats, hmtmptrF2, hmtmroster, hmtmsort, hmtmstruct, Home
 extern hudclockmin, hudclocksec, hudhundaccum, hudhundstep, hudpenaway, hudpenhome, iflags, lastplayer
 extern lastsfx, lasttouch, lcblink, lcblinktime, lcboxon, lcline, lcreqchoice, lcrequest
 extern lcsel, lctimer, lgstate, lj1, lj2, lldispodd, LoadGameGfx, LoadGameTeams
-extern LoadModeState, LoadRockMusic, LoadTeamPalette, ltack, ltx, lty, MouseSetPos, off_CC01D
+extern LoadModeState, LoadRockMusic, LoadTeamPalette, ltack, ltx, lty, MouseSetPos, ovlscripts
 extern onetimerflag, OOlist, OOlistpos, ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer
 extern ovltimer, pad1dev, pad2dev, passdir, passplayer, passspeed, PBnum, Penaltytimer
 extern PenBuf, Pencntdwn, penshotctl, penshotfox, penshotfoy, penshotlive, penshotmode, penshotplayer
@@ -25,11 +25,11 @@ extern penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerT
 extern PlList, postate, psendcount, pspathdir, pspathside, puckcross, recbpr, RefPen
 extern refsignal, RefStep, ReplayRecordReset, replaystart, savedmousex, savedmousey, SaveModeState, seed
 extern sflags, sflags3, shotongoal, shotontarget, shotplayer, shownumbers, sopathend, sopathpoint
-extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, unk_C5423
-extern unk_C542E, unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94, unk_DB218, unk_DC240, unk_DC252
-extern VisTeam, word_C90D8, word_CBC44, word_CBC60, word_CBD64, word_CBD66, word_CBEC2, word_CBEC6
-extern word_CC0B0, word_CC10C, word_CCEF8, word_DEE94, word_DEE96, word_DEF84, word_DEF88, word_E024E
-extern word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AAA, word_E9AAE, word_E9AB0, word_E9B2C
+extern sopathx, sopathy, SortCords, SprSort, str_ErrLoadGame, str_ErrSaveGame, threat, gsumheader
+extern gsumtail, hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats
+extern VisTeam, penaltysc, word_CBC44, lcsel_aw, word_CBD64, word_CBD66, refhitcount, injurystop
+extern Pencntdwn2, word_CC10C, rinkobjdefs, rinkobjs, rinkobjs_w2, word_DEF84, word_DEF88, milestonesaid_b2
+extern word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam, word_E9AB0, rinkobjused
 extern xc1, yc1, yleader
 global SaveGameState, SaveGameState_popx, LoadGameState
 ; C: src/pc/game_saveload/SaveGameState.c
@@ -234,7 +234,7 @@ add eax, byte 2	; 5FDD6
 mov dx, word [RefPen]	; 5FDD9
 mov word [eax], dx	; 5FDE0
 add eax, byte 2	; 5FDE3
-mov dx, word [word_C90D8]	; 5FDE6
+mov dx, word [penaltysc]	; 5FDE6
 mov word [eax], dx	; 5FDED
 add eax, byte 2	; 5FDF0
 mov dx, word [gsp]	; 5FDF3
@@ -261,7 +261,7 @@ add eax, byte 2	; 5FE4B
 mov dx, word [ovltimer]	; 5FE4E
 mov word [eax], dx	; 5FE55
 add eax, byte 2	; 5FE58
-mov dx, word [word_CBEC2]	; 5FE5B
+mov dx, word [refhitcount]	; 5FE5B
 mov word [eax], dx	; 5FE62
 add eax, byte 2	; 5FE65
 mov dx, word [fadeinpending]	; 5FE68
@@ -270,7 +270,7 @@ add eax, byte 2	; 5FE72
 mov dx, word [deferpending]	; 5FE75
 mov word [eax], dx	; 5FE7C
 add eax, byte 2	; 5FE7F
-mov dx, word [word_CBEC6]	; 5FE82
+mov dx, word [injurystop]	; 5FE82
 mov word [eax], dx	; 5FE89
 add eax, byte 2	; 5FE8C
 mov dx, word [word_E9AB0]	; 5FE8F
@@ -341,7 +341,7 @@ add eax, byte 2	; 5FF8C
 mov dx, word [lcsel]	; 5FF8F
 mov word [eax], dx	; 5FF96
 add eax, byte 2	; 5FF99
-mov dx, word [word_CBC60]	; 5FF9C
+mov dx, word [lcsel_aw]	; 5FF9C
 mov word [eax], dx	; 5FFA3
 add eax, byte 2	; 5FFA6
 mov dx, word [lcline]	; 5FFA9
@@ -395,7 +395,7 @@ add eax, byte 2	; 60076
 mov dx, word [dword_E9AB6]	; 60079
 mov word [eax], dx	; 60080
 add eax, byte 2	; 60083
-mov dx, word [word_E9AAE]	; 60086
+mov dx, word [penevteam]	; 60086
 mov word [eax], dx	; 6008D
 add eax, byte 2	; 60090
 mov dx, word [periodendtime]	; 60093
@@ -425,13 +425,13 @@ add eax, byte 2	; 600F8
 mov dx, word [CwdExciteLvl]	; 600FB
 mov word [eax], dx	; 60102
 add eax, byte 2	; 60105
-mov dx, word [word_E9AA4]	; 60108
+mov dx, word [MaxCwdExciteLvl]	; 60108
 mov word [eax], dx	; 6010F
 add eax, byte 2	; 60112
-mov dx, word [word_E9AA6]	; 60115
+mov dx, word [NumCwdExciteLvl]	; 60115
 mov word [eax], dx	; 6011C
 add eax, byte 2	; 6011F
-mov dx, word [dword_E009C]	; 60122
+mov dx, word [SumCwdExciteLvl]	; 60122
 mov word [eax], dx	; 60129
 add eax, byte 2	; 6012C
 mov dx, word [ctl1team]	; 6012F
@@ -455,7 +455,7 @@ add eax, byte 2	; 6017A
 mov dx, word [hudclockhund]	; 6017D
 mov word [eax], dx	; 60184
 add eax, byte 2	; 60187
-mov dx, word [word_CC0B0]	; 6018A
+mov dx, word [Pencntdwn2]	; 6018A
 mov word [eax], dx	; 60191
 add eax, byte 2	; 60194
 mov dx, word [hudhundaccum]	; 60197
@@ -464,13 +464,13 @@ add eax, byte 2	; 601A1
 mov dx, word [frameaccum]	; 601A4
 mov word [eax], dx	; 601AB
 add eax, byte 2	; 601AE
-mov dx, word [dword_CC0AC]	; 601B1
+mov dx, word [goalienotebits]	; 601B1
 mov word [eax], dx	; 601B8
 add eax, byte 2	; 601BB
-mov dx, word [byte_E024C]	; 601BE
+mov dx, word [milestonesaid]	; 601BE
 mov word [eax], dx	; 601C5
 add eax, byte 2	; 601C8
-mov dx, word [word_E024E]	; 601CB
+mov dx, word [milestonesaid_b2]	; 601CB
 mov word [eax], dx	; 601D2
 add eax, byte 2	; 601D5
 mov dx, word [gamemode]	; 601D8
@@ -507,10 +507,10 @@ xor ebp, ebp	; 60249
 mov ecx, ebp	; 6024B
 shl ecx, 2	; 6024D
 sub ecx, ebp	; 60250
-mov dx, word [nosplit ecx*4+word_DEE94]	; 60252
+mov dx, word [nosplit ecx*4+rinkobjs]	; 60252
 mov word [eax], dx	; 6025A
 add eax, byte 2	; 6025D
-mov dx, word [nosplit ecx*4+word_DEE96]	; 60260
+mov dx, word [nosplit ecx*4+rinkobjs_w2]	; 60260
 mov word [eax], dx	; 60268
 add eax, byte 2	; 6026B
 inc ebp	; 6026E
@@ -611,7 +611,7 @@ add esp, byte 4	; 603F5
 .15:
 mov ecx, 0Bh	; 603F8
 mov ebx, 0FFFFFFFFh	; 603FD
-mov edx, byte_E9AC8	; 60402
+mov edx, curevent	; 60402
 mov eax, dword [esp]	; 60407
 call FileWriteAt	; 6040A
 test eax, eax	; 6040F
@@ -622,7 +622,7 @@ add esp, byte 4	; 6041D
 .16:
 mov ecx, 0Bh	; 60420
 mov ebx, 0FFFFFFFFh	; 60425
-mov edx, byte_E9AD3	; 6042A
+mov edx, goalevent	; 6042A
 mov eax, dword [esp]	; 6042F
 call FileWriteAt	; 60432
 test eax, eax	; 60437
@@ -633,7 +633,7 @@ add esp, byte 4	; 60445
 .17:
 mov ecx, 0Bh	; 60448
 mov ebx, 0FFFFFFFFh	; 6044D
-mov edx, unk_C5423	; 60452
+mov edx, gsumheader	; 60452
 mov eax, dword [esp]	; 60457
 call FileWriteAt	; 6045A
 test eax, eax	; 6045F
@@ -644,7 +644,7 @@ add esp, byte 4	; 6046D
 .18:
 mov ecx, 0Bh	; 60470
 mov ebx, 0FFFFFFFFh	; 60475
-mov edx, unk_C542E	; 6047A
+mov edx, gsumtail	; 6047A
 mov eax, dword [esp]	; 6047F
 call FileWriteAt	; 60482
 test eax, eax	; 60487
@@ -713,7 +713,7 @@ idiv esi	; 60546
 shl edx, 4	; 60548
 lea esi, [edi+edx]	; 6054B
 mov edi, ebx	; 6054E
-lea esi, [dword esi+dword_DB088]	; 60550
+lea esi, [dword esi+hmplstats]	; 60550
 movsd	; 60556
 movsd	; 60557
 movsd	; 60558
@@ -760,7 +760,7 @@ sub eax, edx	; 605BF
 add eax, eax	; 605C1
 lea esi, [edi+eax]	; 605C3
 mov edi, ebx	; 605C6
-lea esi, [dword esi+unk_DC240]	; 605C8
+lea esi, [dword esi+hmglstats]	; 605C8
 movsd	; 605CE
 movsw	; 605CF
 add ebx, byte 6	; 605D1
@@ -1013,7 +1013,7 @@ mov ax, word [ebx]	; 60945
 mov word [RefPen], ax	; 60948
 add ebx, byte 2	; 6094E
 mov ax, word [ebx]	; 60951
-mov word [word_C90D8], ax	; 60954
+mov word [penaltysc], ax	; 60954
 add ebx, byte 2	; 6095A
 mov ax, word [ebx]	; 6095D
 mov word [gsp], ax	; 60960
@@ -1040,7 +1040,7 @@ mov ax, word [ebx]	; 609B0
 mov word [ovltimer], ax	; 609B3
 add ebx, byte 2	; 609B9
 mov ax, word [ebx]	; 609BC
-mov word [word_CBEC2], ax	; 609BF
+mov word [refhitcount], ax	; 609BF
 add ebx, byte 2	; 609C5
 mov ax, word [ebx]	; 609C8
 mov word [fadeinpending], ax	; 609CB
@@ -1049,7 +1049,7 @@ movsx eax, word [ebx]	; 609D4
 mov dword [deferpending], eax	; 609D7
 add ebx, byte 2	; 609DC
 mov ax, word [ebx]	; 609DF
-mov word [word_CBEC6], ax	; 609E2
+mov word [injurystop], ax	; 609E2
 add ebx, byte 2	; 609E8
 mov ax, word [ebx]	; 609EB
 mov word [word_E9AB0], ax	; 609EE
@@ -1123,7 +1123,7 @@ mov ax, word [ebx]	; 60AED
 mov word [lcsel], ax	; 60AF0
 add ebx, byte 2	; 60AF6
 mov ax, word [ebx]	; 60AF9
-mov word [word_CBC60], ax	; 60AFC
+mov word [lcsel_aw], ax	; 60AFC
 add ebx, byte 2	; 60B02
 mov ax, word [ebx]	; 60B05
 mov word [lcline], ax	; 60B08
@@ -1177,7 +1177,7 @@ mov ax, word [ebx]	; 60BC0
 mov word [dword_E9AB6], ax	; 60BC3
 add ebx, byte 2	; 60BC9
 mov ax, word [ebx]	; 60BCC
-mov word [word_E9AAE], ax	; 60BCF
+mov word [penevteam], ax	; 60BCF
 add ebx, byte 2	; 60BD5
 mov ax, word [ebx]	; 60BD8
 mov word [periodendtime], ax	; 60BDB
@@ -1210,13 +1210,13 @@ mov ax, word [ebx]	; 60C45
 mov word [CwdExciteLvl], ax	; 60C48
 add ebx, byte 2	; 60C4E
 mov ax, word [ebx]	; 60C51
-mov word [word_E9AA4], ax	; 60C54
+mov word [MaxCwdExciteLvl], ax	; 60C54
 add ebx, byte 2	; 60C5A
 mov ax, word [ebx]	; 60C5D
-mov word [word_E9AA6], ax	; 60C60
+mov word [NumCwdExciteLvl], ax	; 60C60
 add ebx, byte 2	; 60C66
 movsx eax, word [ebx]	; 60C69
-mov dword [dword_E009C], eax	; 60C6C
+mov dword [SumCwdExciteLvl], eax	; 60C6C
 add ebx, byte 2	; 60C71
 movsx eax, word [ebx]	; 60C74
 mov dword [ctl1team], eax	; 60C77
@@ -1240,7 +1240,7 @@ movsx eax, word [ebx]	; 60CB6
 mov dword [hudclockhund], eax	; 60CB9
 add ebx, byte 2	; 60CBE
 mov ax, word [ebx]	; 60CC1
-mov word [word_CC0B0], ax	; 60CC4
+mov word [Pencntdwn2], ax	; 60CC4
 add ebx, byte 2	; 60CCA
 movsx eax, word [ebx]	; 60CCD
 mov dword [hudhundaccum], eax	; 60CD0
@@ -1249,13 +1249,13 @@ movsx eax, word [ebx]	; 60CD8
 mov dword [frameaccum], eax	; 60CDB
 add ebx, byte 2	; 60CE0
 movsx eax, word [ebx]	; 60CE3
-mov dword [dword_CC0AC], eax	; 60CE6
+mov dword [goalienotebits], eax	; 60CE6
 add ebx, byte 2	; 60CEB
 mov ax, word [ebx]	; 60CEE
-mov word [byte_E024C], ax	; 60CF1
+mov word [milestonesaid], ax	; 60CF1
 add ebx, byte 2	; 60CF7
 mov ax, word [ebx]	; 60CFA
-mov word [word_E024E], ax	; 60CFD
+mov word [milestonesaid_b2], ax	; 60CFD
 add ebx, byte 2	; 60D03
 movsx eax, word [ebx]	; 60D06
 mov dword [gamemode], eax	; 60D09
@@ -1288,7 +1288,7 @@ add esp, byte 4	; 60D66
 mov ebx, esp	; 60D69
 mov ecx, 20h	; 60D6B
 xor edx, edx	; 60D70
-mov eax, word_E9B2C	; 60D72
+mov eax, rinkobjused	; 60D72
 call __STOSB	; 60D77
 mov dword [dword esp+010Ch], 10h	; 60D7C
 xor edx, edx	; 60D87
@@ -1299,7 +1299,7 @@ mov esi, eax	; 60D97
 shl esi, 2	; 60D99
 sub esi, eax	; 60D9C
 shl esi, 2	; 60D9E
-add esi, word_DEE94	; 60DA1
+add esi, rinkobjs	; 60DA1
 mov ax, word [ebx]	; 60DA7
 mov word [esi], ax	; 60DAA
 movsx edi, ax	; 60DAD
@@ -1320,11 +1320,11 @@ mov cl, dl	; 60DD6
 mov edx, 1	; 60DD8
 shl edx, cl	; 60DDD
 mov eax, dword [dword esp+0100h]	; 60DDF
-mov eax, dword [dword eax+word_E9B2C-2]	; 60DE6
+mov eax, dword [dword eax+rinkobjused-2]	; 60DE6
 sar eax, 10h	; 60DEC
 or eax, edx	; 60DEF
 mov edx, dword [dword esp+0100h]	; 60DF1
-mov word [dword edx+word_E9B2C], ax	; 60DF8
+mov word [dword edx+rinkobjused], ax	; 60DF8
 add ebx, byte 2	; 60DFF
 mov ax, word [ebx]	; 60E02
 mov word [byte esi+02h], ax	; 60E05
@@ -1334,23 +1334,23 @@ jl short .15	; 60E0E
 mov eax, edi	; 60E10
 shl edi, 2	; 60E12
 sub edi, eax	; 60E15
-mov ax, word [nosplit edi*2+word_CCEF8]	; 60E17
+mov ax, word [nosplit edi*2+rinkobjdefs]	; 60E17
 mov word [byte esi+05h], ax	; 60E1F
 inc edi	; 60E23
-mov ax, word [nosplit edi*2+word_CCEF8]	; 60E24
+mov ax, word [nosplit edi*2+rinkobjdefs]	; 60E24
 mov word [byte esi+07h], ax	; 60E2C
 inc edi	; 60E30
-mov ax, word [nosplit edi*2+word_CCEF8]	; 60E31
+mov ax, word [nosplit edi*2+rinkobjdefs]	; 60E31
 mov word [byte esi+09h], ax	; 60E39
 mov eax, dword [byte esi+07h]	; 60E3D
 sar eax, 10h	; 60E40
-mov al, byte [dword eax+byte_CCE00]	; 60E43
+mov al, byte [dword eax+rinkobjanim]	; 60E43
 mov byte [byte esi+0Bh], al	; 60E49
 mov eax, dword [byte esi+07h]	; 60E4C
 sar eax, 10h	; 60E4F
 mov edx, dword [esi]	; 60E52
 sar edx, 18h	; 60E54
-mov al, byte [dword edx+eax+byte_CCE00]	; 60E57
+mov al, byte [dword edx+eax+rinkobjanim]	; 60E57
 mov byte [byte esi+04h], al	; 60E5E
 .15:
 mov ecx, dword [dword esp+010Ch]	; 60E61
@@ -1442,7 +1442,7 @@ add esp, byte 4	; 60FA6
 .16:
 mov ecx, 0Bh	; 60FA9
 mov ebx, 0FFFFFFFFh	; 60FAE
-mov edx, byte_E9AC8	; 60FB3
+mov edx, curevent	; 60FB3
 mov eax, ebp	; 60FB8
 call FileReadAt	; 60FBA
 test eax, eax	; 60FBF
@@ -1453,7 +1453,7 @@ add esp, byte 4	; 60FCD
 .17:
 mov ecx, 0Bh	; 60FD0
 mov ebx, 0FFFFFFFFh	; 60FD5
-mov edx, byte_E9AD3	; 60FDA
+mov edx, goalevent	; 60FDA
 mov eax, ebp	; 60FDF
 call FileReadAt	; 60FE1
 test eax, eax	; 60FE6
@@ -1464,7 +1464,7 @@ add esp, byte 4	; 60FF4
 .18:
 mov ecx, 0Bh	; 60FF7
 mov ebx, 0FFFFFFFFh	; 60FFC
-mov edx, unk_C5423	; 61001
+mov edx, gsumheader	; 61001
 mov eax, ebp	; 61006
 call FileReadAt	; 61008
 test eax, eax	; 6100D
@@ -1475,7 +1475,7 @@ add esp, byte 4	; 6101B
 .19:
 mov ecx, 0Bh	; 6101E
 mov ebx, 0FFFFFFFFh	; 61023
-mov edx, unk_C542E	; 61028
+mov edx, gsumtail	; 61028
 mov eax, ebp	; 6102D
 call FileReadAt	; 6102F
 test eax, eax	; 61034
@@ -1551,7 +1551,7 @@ idiv ebx	; 6113B
 shl edx, 4	; 6113D
 lea edi, [byte ecx+010h]	; 61140
 mov dword [dword esp+0104h], edi	; 61143
-lea edi, [dword edx+esi+dword_DB088]	; 6114A
+lea edi, [dword edx+esi+hmplstats]	; 6114A
 mov esi, ecx	; 61151
 movsd	; 61153
 movsd	; 61154
@@ -1585,7 +1585,7 @@ mov ebx, edx	; 611B3
 shl ebx, 2	; 611B5
 sub ebx, edx	; 611B8
 add ebp, byte 6	; 611BA
-lea edi, [dword edi+ebx*2+unk_DC240]	; 611BD
+lea edi, [dword edi+ebx*2+hmglstats]	; 611BD
 movsd	; 611C4
 movsw	; 611C5
 mov esi, dword [dword esp+010Ch]	; 611C7
@@ -1666,7 +1666,7 @@ mov edx, dword [ovlstep-2]	; 612E0
 sar edx, 10h	; 612E6
 cmp edx, ebx	; 612E9
 je short .35	; 612EB
-mov eax, dword [nosplit eax*4+off_CC01D]	; 612ED
+mov eax, dword [nosplit eax*4+ovlscripts]	; 612ED
 mov dword [ovlscript], eax	; 612F4
 .35:
 call BuildEventLines	; 612F9
@@ -1676,19 +1676,19 @@ call ReplayRecordReset	; 61308
 and byte [sflags], 0EFh	; 6130D
 mov word [fadeinpending], 1	; 61314
 mov dword [hmtmsort], SortCords	; 6131D
-mov dword [dword_DF6F2], unk_DACA0	; 61327
-mov dword [dword_DF6F6], unk_DAC40	; 61331
+mov dword [hmtmplattr], hmplattr	; 61327
+mov dword [hmtmglattr], hmglattr	; 61331
 mov dword [hmtmlines], hmlinetab	; 6133B
-mov dword [hmtmplstats], dword_DB088	; 61345
-mov dword [hmtmglstats], unk_DC240	; 6134F
+mov dword [hmtmplstats], hmplstats	; 61345
+mov dword [hmtmglstats], hmglstats	; 6134F
 mov dword [hmtmroster], hmroster	; 61359
 mov dword [hmtmptrF2], hmteamrec	; 61363
 mov dword [awtmsort], SortCords+300h	; 6136D
-mov dword [dword_DF7F2], unk_DAE94	; 61377
-mov dword [dword_DF7F6], unk_DAC70	; 61381
+mov dword [awtmplattr], awplattr	; 61377
+mov dword [awtmglattr], awglattr	; 61381
 mov dword [awtmlines], awlinetab	; 6138B
-mov dword [awtmplstats], unk_DB218	; 61395
-mov dword [awtmglstats], unk_DC252	; 6139F
+mov dword [awtmplstats], awplstats	; 61395
+mov dword [awtmglstats], awglstats	; 6139F
 mov dword [awtmroster], awroster	; 613A9
 mov dword [awtmptrF2], awteamrec	; 613B3
 mov ebx, SortCords	; 613BD

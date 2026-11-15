@@ -24,8 +24,8 @@ void DrawMenuItemSel(MenuItem *m, int x, int y, int col, int selfill, int normfi
     h = m->y2 - m->y1 - (m->y1 == 0);
     x += m->x1 + 1;
     y = y + m->y1 + (m->y1 == 0);
-    sub_90D20(x, y, w, h, selfill);
-    sub_8E9C0(col, 0xFF);
+    FillRect(x, y, w, h, selfill);
+    TextSetColors(col, 0xFF);
     SetTextColors(col, 0);
     PrintMenuText(x + 2, y + 1, m->text);
 }
@@ -43,8 +43,8 @@ void DrawMenuItemNorm(MenuItem *m, int x, int y, int col, int selfill, int normf
     h = m->y2 - m->y1 - (m->y1 == 0);
     x += m->x1 + 1;
     y = y + m->y1 + (m->y1 == 0);
-    sub_90D20(x, y, w, h, normfill);
-    sub_8E9C0(col, 0xFF);
+    FillRect(x, y, w, h, normfill);
+    TextSetColors(col, 0xFF);
     SetTextColors(col, 0);
     PrintMenuText(x + 2, y + 1, m->text);
 }

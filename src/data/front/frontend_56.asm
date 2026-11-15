@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_D1084 progbits alloc noexec write align=1
-extern dblistcur, dblisttemp, dblistorig, unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0
-extern unk_C34E4, unk_C34E8, unk_C34EC, unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF
-extern unk_C3502, unk_C3506, unk_C350A, unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E
-extern unk_C3521, unk_C3524, unk_C3528, unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C
-extern unk_C355E, unk_C3580, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712
-extern unk_C371F, unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775
+extern dblistcur, dblisttemp, dblistorig, str_ANA4, str_BOS2, str_BUF4, str_CGY2, str_CHI2
+extern str_DAL2, str_DET2, str_EDM2, str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2
+extern str_NYI2, str_NYR2, str_OTT2, str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2
+extern str_TB2, str_TOR2, str_VAN2, str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter
+extern str_EasternConferenceQuarter, str_StanleyCupFinals, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen
+extern str_InterferPen, str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen
 global str_HilightDescFmt, str_Exhibition2, str_Playoff, str_League2, str_ShowLeague, str_Settings3, str_PCBEEP, str_SBDAC, fadestart, fadestep, fadestart2, fadestep2
 global str_ADLIB, str_MT322, str_SBDAC2, str_PCBEEP2, str_SoundBlaster2, str_Adlib, str_MT323, str_ULTRASOUND
 global str_SS5, str_PauseCor, str_AtCor, str_1minuteCor, str_MinutesCor, str_1secondCor, str_SecondsCor, str_PennumCor
@@ -16,7 +16,7 @@ global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBa
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
 global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, jerseyremap
-global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
+global byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
@@ -24,24 +24,24 @@ global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
 global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
-global settingsfile, dword_D20E0, dword_D2150, dword_D223C, lockerrects
-global dword_D22DC, dword_D22E0
-global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
-global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, dword_D27A2
-global dword_D27B2, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
-global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
-global unk_D1190, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, unk_D19F0, unk_D19F5
-global unk_D19FA, unk_D19FF, unk_D1A05, unk_D1A0A, unk_D1A0F, unk_D1A14, unk_D1A19, unk_D1A1F
-global unk_D1A25, unk_D1A2B, unk_D1A30, unk_D1A35, unk_D1A39, unk_D1A3F, unk_D1A45, unk_D1A4B
-global unk_D1A4F, unk_D1A53, unk_D1A58, unk_D1A5D, unk_D1A62, unk_D1A68, unk_D1A6E, unk_D1A72
-global unk_D1A76, unk_D1A7A, unk_D1A80, unk_D1A86, unk_D1A8B, unk_D1A92, unk_D1A99, unk_D1AA0
-global unk_D1AA7, unk_D1AAB, unk_D1AAF, unk_D1AB3, unk_D1AB7, unk_D1ABC, unk_D1AC1, unk_D1AC6
-global unk_D1ACB, unk_D1ACF, unk_D1AD4, unk_D1AD9, unk_D1ADE, unk_D1AE2, unk_D1AE7, unk_D1AEC
-global unk_D1AF1, unk_D1AF6, unk_D1AFC, unk_D1B02, unk_D1CD3, unk_D1CDA, unk_D1EE0, unk_D1EFB
-global unk_D1F0A, unk_D1F34, msg_NoHilights, unk_D1F4F, unk_D1F6B, unk_D1F8D, unk_D1FC3, unk_D1FDF
-global unk_D1FFF, unk_D2028, unk_D2034, unk_D2050, str_PC, unk_D2403, unk_D2413, unk_D2452
-global unk_D2463, unk_D249C, unk_D24A8, unk_D24C4, unk_D2782, unk_D278E, unk_D279A, unk_D27C4
-global unk_D27D3, unk_D27E0, unk_D27FF, unk_D2841
+global settingsfile, lockerindex, lockerteams, poroundnameidx, lockerrects
+global lockeracceptx, lockeraccepty
+global lockercancelx, lockercancely, dword_D2350, soundcardrects, dword_D2423
+global dword_D2427, digidriver, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
+global speechchannel, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
+global jerseyabbrevs, poroundnames, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
+global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, dlggreys, ctlboxrect1, ctlboxrect2, str_BOS1, str_BOS22
+global str_BOS3, str_HART2, str_BUF22, str_CAL1, str_CAL2, str_CAL3, str_CHIC1, str_CHIC2
+global str_CHIC3, str_DET1, str_DET22, str_ED1, str_HART1, str_HART22, str_HART3, str_LA1
+global str_LA4, str_MON1, str_MON2, str_MON3, str_HART23, str_NJER2, str_LI2, str_LI3
+global str_NY3, str_PHIL1, str_PHIL2, str_CGY22, str_PITTS1, str_PITTS2, str_PITTS3, str_PITTS4
+global str_QU1, str_SL1, str_SL2, str_SL3, str_SHK1, str_SHK2, str_MON12, str_MON32
+global str_LA42, str_SHK7, str_SHK8, str_BOS23, str_TB22, str_TOR1, str_TOR22, str_VAN1
+global str_VAN3, str_WASH3, str_WINN2, str_ROCKDITI2, str_CANADA, str_USA, str_InsufficientDiskSpaceTo2, str_SaveHilights
+global str_CurrentHilightNotSaved, str_ThereAreNoHilights, msg_NoHilights, str_ThereIsNotEnogh, str_TheFloppyDiskFor, str_SelectLessHilightsOr, str_ThereIsNotEnogh2, str_TheHardDiskFor
+global str_TrySelectingLessHilights, str_TheHilight, str_AlreadyExists, str_ExportingHilights, str_PC, sndselbox1, sndselbox2, str_CouldNotFindA
+global str_CardInThisMachine, msg_NoSoundCard, str_InitializingTheMT32Card, str_PleaseWait, str_1ststarCor, str_2ndstarCor, unk_D279A, str_SavingCurrent
+global str_LeagueGame, str_PlayOffGame, str_InsufficientDiskSpaceTo3, str_OfFreeDiskSpace2
 dbdlgrects:
 db 0Eh,00h,00h,00h
 db 033h,00h,00h,00h
@@ -75,12 +75,12 @@ dbtablists:
 dd dblistcur
 dd dblistorig
 dd dblisttemp
-unk_D1190:
+str_ConfirmDeletionOfThe2:
 db 043h,06Fh,06Eh,066h,069h,072h,06Dh,020h,064h,065h,06Ch,065h,074h,069h,06Fh,06Eh
 db 020h,06Fh,066h,020h,074h,068h,065h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 03Ah,00h
 deldbmsg:
-dd unk_D1190
+dd str_ConfirmDeletionOfThe2
 db 00h,00h,00h,00h,00h,00h
 byte_D11BC:
 db 0ADh,00h,00h,00h,0ADh,00h,00h,00h,0AAh,00h,00h,00h,0B0h,00h,00h,00h
@@ -132,13 +132,13 @@ db 0C6h,0C7h,0C8h,0C9h,0CAh,0CBh,0CCh,0CDh,0CEh,0CFh,0D0h,0D1h,0D2h,0D3h,0D4h,0D
 db 0D6h,0D7h,0D8h,0D9h,0DAh,0DBh,0DCh,0DDh,0DEh,0DFh,0E0h,0E1h,0E2h,0E3h,0E4h,0E5h
 db 0E6h,0E7h,0E8h,0E9h,0EAh,0EBh,0ECh,0EDh,0EEh,0EFh,0F0h,0F1h,0F2h,0F3h,0F4h,0F5h
 db 0F6h,0F7h,0F8h,0F9h,0FAh
-byte_D1333:
+jerseypalslot0:
 db 0FBh
-byte_D1334:
+jerseypalslot1:
 db 0FCh
-byte_D1335:
+jerseypalslot2:
 db 0FDh
-byte_D1336:
+jerseypalslot3:
 db 0FEh,0FFh
 lineslotx:
 db 047h,00h,00h,00h
@@ -218,7 +218,7 @@ db 022h,01h,00h,00h,0C0h,00h,00h,00h,012h,01h,00h,00h,0D1h,00h,00h,00h
 db 022h,01h,00h,00h,035h,00h,00h,00h,035h,01h,00h,00h,066h,00h,00h,00h
 db 045h,01h,00h,00h,07Fh,00h,00h,00h,035h,01h,00h,00h,0B0h,00h,00h,00h
 db 045h,01h,00h,00h
-unk_D16A0:
+dlggreys:
 db 00h,00h,00h,014h,014h,014h,02Eh,02Eh,02Eh,03Fh,03Fh,03Fh
 modesetrects:
 db 018h,00h,00h,00h
@@ -289,176 +289,176 @@ db 08Fh,00h,00h,00h,07Ch,00h,00h,00h,0A0h,00h,00h,00h
 db 01Bh,00h,00h,00h
 db 0A4h,00h,00h,00h,07Ch,00h,00h,00h,0B5h,00h,00h,00h,01Bh,00h,00h,00h
 db 0B9h,00h,00h,00h,07Ch,00h,00h,00h,0CAh,00h,00h,00h
-unk_D19CC:
+ctlboxrect1:
 db 0Eh,00h,00h,00h,0D4h,00h,00h,00h,03Fh,00h,00h,00h,0E4h,00h,00h,00h
-unk_D19DC:
+ctlboxrect2:
 db 058h,00h,00h,00h,0D4h,00h,00h,00h,089h,00h,00h,00h,0E4h,00h,00h,00h
 ctldlgalt:
 db 00h,00h,00h,00h
-unk_D19F0:
+str_BOS1:
 db 042h,04Fh,053h,031h,00h
-unk_D19F5:
+str_BOS22:
 db 042h,04Fh,053h,032h,00h
-unk_D19FA:
+str_BOS3:
 db 042h,04Fh,053h,033h,00h
-unk_D19FF:
+str_HART2:
 db 048h,041h,052h,054h,032h,00h
-unk_D1A05:
+str_BUF22:
 db 042h,055h,046h,032h,00h
-unk_D1A0A:
+str_CAL1:
 db 043h,041h,04Ch,031h,00h
-unk_D1A0F:
+str_CAL2:
 db 043h,041h,04Ch,032h,00h
-unk_D1A14:
+str_CAL3:
 db 043h,041h,04Ch,033h,00h
-unk_D1A19:
+str_CHIC1:
 db 043h,048h,049h,043h,031h,00h
-unk_D1A1F:
+str_CHIC2:
 db 043h,048h,049h,043h,032h,00h
-unk_D1A25:
+str_CHIC3:
 db 043h,048h,049h,043h,033h,00h
-unk_D1A2B:
+str_DET1:
 db 044h,045h,054h,031h,00h
-unk_D1A30:
+str_DET22:
 db 044h,045h,054h,032h,00h
-unk_D1A35:
+str_ED1:
 db 045h,044h,031h,00h
-unk_D1A39:
+str_HART1:
 db 048h,041h,052h,054h,031h,00h
-unk_D1A3F:
+str_HART22:
 db 048h,041h,052h,054h,032h,00h
-unk_D1A45:
+str_HART3:
 db 048h,041h,052h,054h,033h,00h
-unk_D1A4B:
+str_LA1:
 db 04Ch,041h,031h,00h
-unk_D1A4F:
+str_LA4:
 db 04Ch,041h,034h,00h
-unk_D1A53:
+str_MON1:
 db 04Dh,04Fh,04Eh,031h,00h
-unk_D1A58:
+str_MON2:
 db 04Dh,04Fh,04Eh,032h,00h
-unk_D1A5D:
+str_MON3:
 db 04Dh,04Fh,04Eh,033h,00h
-unk_D1A62:
+str_HART23:
 db 048h,041h,052h,054h,032h,00h
-unk_D1A68:
+str_NJER2:
 db 04Eh,04Ah,045h,052h,032h,00h
-unk_D1A6E:
+str_LI2:
 db 04Ch,049h,032h,00h
-unk_D1A72:
+str_LI3:
 db 04Ch,049h,033h,00h
-unk_D1A76:
+str_NY3:
 db 04Eh,059h,033h,00h
-unk_D1A7A:
+str_PHIL1:
 db 050h,048h,049h,04Ch,031h,00h
-unk_D1A80:
+str_PHIL2:
 db 050h,048h,049h,04Ch,032h,00h
-unk_D1A86:
+str_CGY22:
 db 043h,047h,059h,032h,00h
-unk_D1A8B:
+str_PITTS1:
 db 050h,049h,054h,054h,053h,031h,00h
-unk_D1A92:
+str_PITTS2:
 db 050h,049h,054h,054h,053h,032h,00h
-unk_D1A99:
+str_PITTS3:
 db 050h,049h,054h,054h,053h,033h,00h
-unk_D1AA0:
+str_PITTS4:
 db 050h,049h,054h,054h,053h,034h,00h
-unk_D1AA7:
+str_QU1:
 db 051h,055h,031h,00h
-unk_D1AAB:
+str_SL1:
 db 053h,04Ch,031h,00h
-unk_D1AAF:
+str_SL2:
 db 053h,04Ch,032h,00h
-unk_D1AB3:
+str_SL3:
 db 053h,04Ch,033h,00h
-unk_D1AB7:
+str_SHK1:
 db 053h,048h,04Bh,031h,00h
-unk_D1ABC:
+str_SHK2:
 db 053h,048h,04Bh,032h,00h
-unk_D1AC1:
+str_MON12:
 db 04Dh,04Fh,04Eh,031h,00h
-unk_D1AC6:
+str_MON32:
 db 04Dh,04Fh,04Eh,033h,00h
-unk_D1ACB:
+str_LA42:
 db 04Ch,041h,034h,00h
-unk_D1ACF:
+str_SHK7:
 db 053h,048h,04Bh,037h,00h
-unk_D1AD4:
+str_SHK8:
 db 053h,048h,04Bh,038h,00h
-unk_D1AD9:
+str_BOS23:
 db 042h,04Fh,053h,032h,00h
-unk_D1ADE:
+str_TB22:
 db 054h,042h,032h,00h
-unk_D1AE2:
+str_TOR1:
 db 054h,04Fh,052h,031h,00h
-unk_D1AE7:
+str_TOR22:
 db 054h,04Fh,052h,032h,00h
-unk_D1AEC:
+str_VAN1:
 db 056h,041h,04Eh,031h,00h
-unk_D1AF1:
+str_VAN3:
 db 056h,041h,04Eh,033h,00h
-unk_D1AF6:
+str_WASH3:
 db 057h,041h,053h,048h,033h,00h
-unk_D1AFC:
+str_WINN2:
 db 057h,049h,04Eh,04Eh,032h,00h
-unk_D1B02:
+str_ROCKDITI2:
 db 052h,04Fh,043h,04Bh,044h,049h,054h,049h,00h
 rockcuefiles:
-dd unk_D19F0
-dd unk_D19F5
-dd unk_D19FA
-dd unk_D19FF
-dd unk_D1A05
-dd unk_D1A0A
-dd unk_D1A0F
-dd unk_D1A14
-dd unk_D1A19
-dd unk_D1A1F
-dd unk_D1A25
-dd unk_D1A2B
-dd unk_D1A30
-dd unk_D1A35
-dd unk_D1A39
-dd unk_D1A3F
-dd unk_D1A45
-dd unk_D1A4B
-dd unk_D1A4F
-dd unk_D1A53
-dd unk_D1A58
-dd unk_D1A5D
-dd unk_D1A62
-dd unk_D1A68
-dd unk_D1A6E
-dd unk_D1A72
-dd unk_D1A76
-dd unk_D1A7A
-dd unk_D1A80
-dd unk_D1A86
-dd unk_D1A8B
-dd unk_D1A92
-dd unk_D1A99
-dd unk_D1AA0
-dd unk_D1AA7
-dd unk_D1AAB
-dd unk_D1AAF
-dd unk_D1AB3
-dd unk_D1AB7
-dd unk_D1ABC
-dd unk_D1AC1
-dd unk_D1AC6
-dd unk_D1ACB
-dd unk_D1ACF
-dd unk_D1AD4
-dd unk_D1AD9
-dd unk_D1ADE
-dd unk_D1AE2
-dd unk_D1AE7
-dd unk_D1AEC
-dd unk_D1AF1
-dd unk_D1AF6
-dd unk_D1AFC
+dd str_BOS1
+dd str_BOS22
+dd str_BOS3
+dd str_HART2
+dd str_BUF22
+dd str_CAL1
+dd str_CAL2
+dd str_CAL3
+dd str_CHIC1
+dd str_CHIC2
+dd str_CHIC3
+dd str_DET1
+dd str_DET22
+dd str_ED1
+dd str_HART1
+dd str_HART22
+dd str_HART3
+dd str_LA1
+dd str_LA4
+dd str_MON1
+dd str_MON2
+dd str_MON3
+dd str_HART23
+dd str_NJER2
+dd str_LI2
+dd str_LI3
+dd str_NY3
+dd str_PHIL1
+dd str_PHIL2
+dd str_CGY22
+dd str_PITTS1
+dd str_PITTS2
+dd str_PITTS3
+dd str_PITTS4
+dd str_QU1
+dd str_SL1
+dd str_SL2
+dd str_SL3
+dd str_SHK1
+dd str_SHK2
+dd str_MON12
+dd str_MON32
+dd str_LA42
+dd str_SHK7
+dd str_SHK8
+dd str_BOS23
+dd str_TB22
+dd str_TOR1
+dd str_TOR22
+dd str_VAN1
+dd str_VAN3
+dd str_WASH3
+dd str_WINN2
 teamrockcuetbl equ $+1
-dd unk_D1B02
+dd str_ROCKDITI2
 db 01h,00h,02h,0FFh,01Fh,01h,04h,0Fh,0Fh,04h,01Fh,0FFh,05h,07h,05h,07h
 db 06h,06h,08h,0Ah,09h,08h,01Fh,02Bh,0Bh,0Ch,0Ah,0FFh,01Fh,0Ch,0Dh,01h
 db 01h,0FFh,01Fh,0FFh,0Eh,010h,0Fh,010h,01Fh,0Eh,011h,011h,0Ah,07h,0FFh,012h
@@ -476,13 +476,13 @@ db 02Ch,00h,00h,00h,035h,00h,00h,00h,011h,00h,00h,00h,012h,00h,00h,00h
 db 013h,00h,00h,00h,015h,00h,00h,00h,01Ch,00h,00h,00h,01Eh,00h,00h,00h
 db 020h,00h,00h,00h,025h,00h,00h,00h,02Eh,00h,00h,00h,02Fh,00h,00h,00h
 db 032h,00h,00h,00h,034h,00h,00h,00h
-unk_D1CD3:
+str_CANADA:
 db 043h,041h,04Eh,041h,044h,041h,00h
-unk_D1CDA:
+str_USA:
 db 055h,053h,041h,00h
 teamtunefiles:
-dd unk_D1CD3
-dd unk_D1CDA
+dd str_CANADA
+dd str_USA
 teamtunepathsel:
 db 042h,00h,00h,00h,0B0h,01h,00h,00h
 rockcuepathsel:
@@ -524,62 +524,62 @@ db 08h,00h,00h,00h,0ECh,00h,00h,00h,0B9h,00h,00h,00h,0Bh,01h,00h,00h
 db 0C1h,00h,00h,00h,0D2h,02h,00h,00h,07h,00h,00h,00h,00h,00h,00h,00h
 db 0C6h,00h,00h,00h,0B9h,00h,00h,00h,0E5h,00h,00h,00h,0C1h,00h,00h,00h
 db 0C6h,02h,00h,00h,06h,00h,00h,00h,08h,00h,00h,00h
-unk_D1EE0:
+str_InsufficientDiskSpaceTo2:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,00h
-unk_D1EFB:
+str_SaveHilights:
 db 073h,061h,076h,065h,020h,068h,069h,06Ch,069h,067h,068h,074h,073h,02Eh,00h
-unk_D1F0A:
+str_CurrentHilightNotSaved:
 db 043h,075h,072h,072h,065h,06Eh,074h,020h,068h,069h,06Ch,069h,067h,068h,074h,020h
 db 06Eh,06Fh,074h,020h,073h,061h,076h,065h,064h,02Eh,00h
 msg_NoHilightSpace:
-dd unk_D1EE0
-dd unk_D1EFB
-dd unk_D1F0A
+dd str_InsufficientDiskSpaceTo2
+dd str_SaveHilights
+dd str_CurrentHilightNotSaved
 db 00h,00h,00h
-unk_D1F34:
+str_ThereAreNoHilights:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,020h,068h,069h,06Ch
 db 069h,067h,068h,074h,073h,021h,00h
 msg_NoHilights:
-dd unk_D1F34
-unk_D1F4F:
+dd str_ThereAreNoHilights
+str_ThereIsNotEnogh:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,074h,020h,065h,06Eh,06Fh
 db 067h,068h,020h,073h,070h,061h,063h,065h,020h,06Fh,06Eh,00h
-unk_D1F6B:
+str_TheFloppyDiskFor:
 db 074h,068h,065h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,069h,073h,06Bh,020h
 db 066h,06Fh,072h,020h,074h,068h,065h,020h,068h,069h,06Ch,069h,067h,068h,074h,073h
 db 021h,00h
-unk_D1F8D:
+str_SelectLessHilightsOr:
 db 053h,065h,06Ch,065h,063h,074h,020h,06Ch,065h,073h,073h,020h,068h,069h,06Ch,069h
 db 067h,068h,074h,073h,020h,06Fh,072h,020h,067h,065h,074h,020h,061h,06Eh,06Fh,074h
 db 068h,065h,072h,020h,064h,069h,073h,06Bh,02Eh,00h
-dd unk_D1F4F
-dd unk_D1F6B
-dd unk_D1F8D
-unk_D1FC3:
+dd str_ThereIsNotEnogh
+dd str_TheFloppyDiskFor
+dd str_SelectLessHilightsOr
+str_ThereIsNotEnogh2:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,06Eh,06Fh,074h,020h,065h,06Eh,06Fh
 db 067h,068h,020h,073h,070h,061h,063h,065h,020h,06Fh,06Eh,00h
-unk_D1FDF:
+str_TheHardDiskFor:
 db 074h,068h,065h,020h,068h,061h,072h,064h,020h,064h,069h,073h,06Bh,020h,066h,06Fh
 db 072h,020h,074h,068h,065h,020h,068h,069h,06Ch,069h,067h,068h,074h,073h,021h,00h
-unk_D1FFF:
+str_TrySelectingLessHilights:
 db 054h,072h,079h,020h,073h,065h,06Ch,065h,063h,074h,069h,06Eh,067h,020h,06Ch,065h
 db 073h,073h,020h,068h,069h,06Ch,069h,067h,068h,074h,073h,02Eh,00h
-dd unk_D1FC3
-dd unk_D1FDF
-dd unk_D1FFF
-unk_D2028:
+dd str_ThereIsNotEnogh2
+dd str_TheHardDiskFor
+dd str_TrySelectingLessHilights
+str_TheHilight:
 db 054h,068h,065h,020h,068h,069h,06Ch,069h,067h,068h,074h,00h
-unk_D2034:
+str_AlreadyExists:
 db 061h,06Ch,072h,065h,061h,064h,079h,020h,065h,078h,069h,073h,074h,073h,02Eh,00h
-dd unk_D2028
+dd str_TheHilight
 db 00h,00h,00h,00h
-dd unk_D2034
-unk_D2050:
+dd str_AlreadyExists
+str_ExportingHilights:
 db 045h,078h,070h,06Fh,072h,074h,069h,06Eh,067h,020h,068h,069h,06Ch,069h,067h,068h
 db 074h,073h,00h,049h,06Dh,070h,06Fh,072h,074h,069h,06Eh,067h,020h,068h,069h,06Ch
 db 069h,067h,068h,074h,073h,00h
-dd unk_D2050
+dd str_ExportingHilights
 str_HilightDescFmt:
 db 025h,064h,020h,025h,064h,02Ch,020h,025h,073h,020h,076h,073h,020h,025h,073h,02Ch
 db 020h,050h,065h,072h,069h,06Fh,064h,020h,025h,064h,02Ch,020h,054h,069h,06Dh,065h
@@ -596,7 +596,7 @@ str_ShowLeague:
 db 053h,068h,06Fh,077h,020h,04Ch,065h,061h,067h,075h,065h,00h
 str_Settings3:
 db 020h,053h,065h,074h,074h,069h,06Eh,067h,073h,020h,02Eh,02Eh,02Eh,00h
-dword_D20E0:
+lockerindex:
 db 01h,00h,00h,00h,02h,00h,00h,00h,03h,00h,00h,00h,04h,00h,00h,00h
 db 06h,00h,00h,00h,07h,00h,00h,00h,09h,00h,00h,00h,0Ah,00h,00h,00h
 db 05h,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h,0Dh,00h,00h,00h
@@ -604,7 +604,7 @@ db 0Eh,00h,00h,00h,0Fh,00h,00h,00h,010h,00h,00h,00h,011h,00h,00h,00h
 db 012h,00h,00h,00h,013h,00h,00h,00h,014h,00h,00h,00h,015h,00h,00h,00h
 db 016h,00h,00h,00h,017h,00h,00h,00h,018h,00h,00h,00h,019h,00h,00h,00h
 db 00h,00h,00h,00h,08h,00h,00h,00h,01Ah,00h,00h,00h,01Bh,00h,00h,00h
-dword_D2150:
+lockerteams:
 db 018h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h,02h,00h,00h,00h
 db 03h,00h,00h,00h,08h,00h,00h,00h,04h,00h,00h,00h,05h,00h,00h,00h
 db 019h,00h,00h,00h,06h,00h,00h,00h,07h,00h,00h,00h,09h,00h,00h,00h
@@ -612,40 +612,40 @@ db 0Ah,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h,0Dh,00h,00h,00h
 db 0Eh,00h,00h,00h,0Fh,00h,00h,00h,010h,00h,00h,00h,011h,00h,00h,00h
 db 012h,00h,00h,00h,013h,00h,00h,00h,014h,00h,00h,00h,015h,00h,00h,00h
 db 016h,00h,00h,00h,017h,00h,00h,00h,01Ah,00h,00h,00h,01Bh,00h,00h,00h
-off_D21C0:
-dd unk_C34D0
-dd unk_C34D4
-dd unk_C34D8
-dd unk_C34DC
-dd unk_C34E0
-dd unk_C34E4
-dd unk_C34E8
-dd unk_C34EC
-dd unk_C34F0
-dd unk_C34F4
-dd unk_C34F8
-dd unk_C34FB
-dd unk_C34FF
-dd unk_C3502
-dd unk_C3506
-dd unk_C350A
-dd unk_C350E
-dd unk_C3512
-dd unk_C3516
-dd unk_C351A
-dd unk_C351E
-dd unk_C3521
-dd unk_C3524
-dd unk_C3528
-dd unk_C352C
-dd unk_C3530
-dd unk_C3534
-dd unk_C3538
-off_D2230:
-dd unk_C353C
-dd unk_C355E
-dd unk_C3580
-dword_D223C:
+jerseyabbrevs:
+dd str_ANA4
+dd str_BOS2
+dd str_BUF4
+dd str_CGY2
+dd str_CHI2
+dd str_DAL2
+dd str_DET2
+dd str_EDM2
+dd str_FLA2
+dd str_HFD2
+dd str_LA2
+dd str_MTL2
+dd str_NJ2
+dd str_NYI2
+dd str_NYR2
+dd str_OTT2
+dd str_PHI2
+dd str_PIT2
+dd str_QUE2
+dd str_STL2
+dd str_SJ2
+dd str_TB2
+dd str_TOR2
+dd str_VAN2
+dd str_WSH2
+dd str_WPG2
+dd str_ASW2
+dd str_ASE2
+poroundnames:
+dd str_WesternConferenceQuarter
+dd str_EasternConferenceQuarter
+dd str_StanleyCupFinals
+poroundnameidx:
 db 0FFh,0FFh,0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
@@ -670,13 +670,13 @@ db 0C4h,01h,00h,00h
 db 0BDh,01h,00h,00h
 db 0B0h,01h,00h,00h
 db 0ECh,01h,00h,00h,0C4h,01h,00h,00h
-dword_D22DC:
+lockeracceptx:
 db 01Bh,02h,00h,00h
-dword_D22E0:
+lockeraccepty:
 db 0B7h,01h,00h,00h,06Bh,02h,00h,00h,0CBh,01h,00h,00h
-dword_D22EC:
+lockercancelx:
 db 015h,00h,00h,00h
-dword_D22F0:
+lockercancely:
 db 0B7h,01h,00h,00h,065h,00h,00h,00h,0CBh,01h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -710,15 +710,15 @@ db 059h,00h,00h,00h,0Eh,00h,00h,00h,05Dh,00h,00h,00h,071h,00h,00h,00h
 db 06Eh,00h,00h,00h,0Eh,00h,00h,00h,087h,00h,00h,00h,071h,00h,00h,00h
 db 098h,00h,00h,00h,0Eh,00h,00h,00h,072h,00h,00h,00h,071h,00h,00h,00h
 db 083h,00h,00h,00h
-unk_D2403:
+sndselbox1:
 db 09h,00h,00h,00h,0A4h,00h,00h,00h,03Ah,00h,00h,00h,0B4h,00h,00h,00h
-unk_D2413:
+sndselbox2:
 db 045h,00h,00h,00h,0A4h,00h,00h,00h,076h,00h,00h,00h,0B4h,00h,00h,00h
 dword_D2423:
 db 00h,00h,00h,00h
 dword_D2427:
 db 0FFh,0FFh,0FFh,0FFh
-dword_D242B:
+digidriver:
 db 0FFh
 db 0FFh,0FFh,0FFh
 musicslot:
@@ -727,17 +727,17 @@ musicon:
 db 00h
 musichandle:
 db 00h,00h,00h,00h
-dword_D2435:
+sndtempbuf:
 db 00h,00h,00h,00h
-byte_D2439:
+crowddriver:
 db 00h
 sounddevids:
 db 010h,00h,00h,00h,01h,00h,00h,00h,04h,00h,00h,00h,02h,00h,00h,00h
 db 08h,00h,00h,00h,020h,00h,00h,00h
-unk_D2452:
+str_CouldNotFindA:
 db 043h,06Fh,075h,06Ch,064h,020h,06Eh,06Fh,074h,020h,066h,069h,06Eh,064h,020h,061h
 db 00h
-unk_D2463:
+str_CardInThisMachine:
 db 063h,061h,072h,064h,020h,069h,06Eh,020h,074h,068h,069h,073h,020h,06Dh,061h,063h
 db 068h,069h,06Eh,065h,021h,00h
 str_SoundBlaster2:
@@ -748,19 +748,19 @@ str_MT323:
 db 04Dh,054h,033h,032h,00h
 str_ULTRASOUND:
 db 055h,04Ch,054h,052h,041h,053h,04Fh,055h,04Eh,044h,00h
-unk_D249C:
-dd unk_D2452
+msg_NoSoundCard:
+dd str_CouldNotFindA
 sndcardname:
 db 00h,00h,00h,00h
-dd unk_D2463
-unk_D24A8:
+dd str_CardInThisMachine
+str_InitializingTheMT32Card:
 db 049h,06Eh,069h,074h,069h,061h,06Ch,069h,07Ah,069h,06Eh,067h,020h,074h,068h,065h
 db 020h,04Dh,054h,033h,032h,020h,063h,061h,072h,064h,02Eh,00h
-unk_D24C4:
+str_PleaseWait:
 db 050h,06Ch,065h,061h,073h,065h,020h,077h,061h,069h,074h,02Eh,00h
 msg_InitMT32:
-dd unk_D24A8
-dd unk_D24C4
+dd str_InitializingTheMT32Card
+dd str_PleaseWait
 db 00h,00h,00h
 str_SS5:
 db 025h,073h,02Eh,025h,073h,00h
@@ -855,36 +855,36 @@ db 073h,063h,06Fh,072h,074h,06Fh,074h,070h,02Eh,062h,061h,072h,00h
 str_ThegameBar:
 db 074h,068h,065h,067h,061h,06Dh,065h,02Eh,062h,061h,072h,00h
 penaltyclips:
-dd unk_C36D4
-dd unk_C36E1
-dd unk_C36EE
-dd unk_C36FB
-dd unk_C3706
-dd unk_C3712
-dd unk_C371F
-dd unk_C372C
-dd unk_C3738
-dd unk_C3742
-dd unk_C374F
-dd unk_C375C
-dd unk_C3769
-dd unk_C3775
+dd str_RoughingPen
+dd str_ChargingPen
+dd str_SlashingPen
+dd str_XcheckPen
+dd str_HookingPen
+dd str_TrippingPen
+dd str_InterferPen
+dd str_HoldingPen
+dd str_AbusePen
+dd str_CheckbndPen
+dd str_BoardingPen
+dd str_ElbowingPen
+dd str_HistickPen
+dd str_SpearingPen
 scorperclips:
 dd str_Scor1perBar
 dd str_Scor2perBar
 dd str_Scor3perBar
-unk_D2782:
+str_1ststarCor:
 db 031h,073h,074h,073h,074h,061h,072h,02Eh,063h,06Fh,072h,00h
-unk_D278E:
+str_2ndstarCor:
 db 032h,06Eh,064h,073h,074h,061h,072h,02Eh,063h,06Fh,072h,00h
 unk_D279A:
 db 033h,072h,064h,073h,074h,061h,072h,02Eh
-dword_D27A2:
+str_Cor2:
 db 063h,06Fh,072h,00h
-dd unk_D2782
-dd unk_D278E
+dd str_1ststarCor
+dd str_2ndstarCor
 dd unk_D279A
-dword_D27B2:
+speechchannel:
 db 00h,00h,00h,00h
 byte_D27B6:
 db 00h
@@ -894,30 +894,30 @@ speechinit:
 db 00h,00h,00h,00h
 str_VIV:
 db 02Eh,056h,049h,056h,00h
-unk_D27C4:
+str_SavingCurrent:
 db 053h,061h,076h,069h,06Eh,067h,020h,043h,075h,072h,072h,065h,06Eh,074h,00h
-unk_D27D3:
+str_LeagueGame:
 db 04Ch,065h,061h,067h,075h,065h,020h,047h,061h,06Dh,065h,02Eh,00h
-unk_D27E0:
+str_PlayOffGame:
 db 050h,06Ch,061h,079h,02Dh,04Fh,066h,066h,020h,047h,061h,06Dh,065h,02Eh,00h
 msg_SavingLeagueGame:
-dd unk_D27C4
-dd unk_D27D3
+dd str_SavingCurrent
+dd str_LeagueGame
 msg_SavingPlayoffGame:
-dd unk_D27C4
-dd unk_D27E0
-unk_D27FF:
+dd str_SavingCurrent
+dd str_PlayOffGame
+str_InsufficientDiskSpaceTo3:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,074h,06Fh,020h,073h,061h,076h,065h,00h
 str_AGameYouRequire3:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,020h,058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,020h
 db 020h,00h
-unk_D2841:
+str_OfFreeDiskSpace2:
 db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h
 db 063h,065h,02Eh,00h
 msg_NoSaveSpace:
-dd unk_D27FF
+dd str_InsufficientDiskSpaceTo3
 dd str_AGameYouRequire3
-dd unk_D2841
+dd str_OfFreeDiskSpace2
 db 00h,00h,00h

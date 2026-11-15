@@ -5,13 +5,13 @@ section s_903F0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
 extern dword_D4108, dword_D43E4, sub_B3ABC, sub_B5E00, sub_B5F0F, sub_B608B, sub_B6217, sub_B63AC
 extern sub_B6423, sub_B65B8
-global sub_903F0, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
-global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, sub_9061C
+global PutBlock, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
+global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, DrawBitmap
 global sub_90638, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, sub_90698, loc_906B9
 global sub_906DC, sub_90720, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
 global loc_90808, loc_90825, sub_9082F, sub_90838, sub_9087C, loc_908A9, loc_908EA, loc_90906
 global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, sub_9099C
-sub_903F0:
+PutBlock:
 push esi	; 903F0
 push edi	; 903F1
 push ebp	; 903F2
@@ -202,7 +202,7 @@ pop edi	; 90618
 pop esi	; 90619
 ret	; 9061A
 db 090h
-sub_9061C:
+DrawBitmap:
 mov edx, dword [byte esp+04h]	; 9061C
 mov eax, dword [byte edx+0Ch]	; 90620
 sar eax, 10h	; 90623
@@ -211,7 +211,7 @@ mov eax, dword [byte edx+0Ah]	; 90627
 sar eax, 10h	; 9062A
 push eax	; 9062D
 push edx	; 9062E
-call sub_903F0	; 9062F
+call PutBlock	; 9062F
 add esp, byte 0Ch	; 90634
 ret	; 90637
 sub_90638:
@@ -227,7 +227,7 @@ mov ebx, dword [byte esp+0Ch]	; 9064F
 sub ebx, eax	; 90653
 push ebx	; 90655
 push edx	; 90656
-call sub_903F0	; 90657
+call PutBlock	; 90657
 add esp, byte 0Ch	; 9065C
 loc_9065F:
 ret	; 9065F
@@ -275,7 +275,7 @@ mov dword [dword_D43E4], loc_90660	; 906B9
 push eax	; 906C3
 push ebx	; 906C4
 push edx	; 906C5
-call sub_903F0	; 906C6
+call PutBlock	; 906C6
 add esp, byte 0Ch	; 906CB
 mov dword [dword_D43E4], sub_B3ABC	; 906CE
 ret	; 906D8

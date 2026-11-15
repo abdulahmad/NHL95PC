@@ -7,8 +7,8 @@ extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks,
 extern musicslot, ReadBE32, rinkbm, saved_ss, screenbm, scrollx, scrolly, scrpitch
 extern seed, SetDrawBitmap, SetTickDeadline, songdata, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
 extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_90D20, sub_910E0
-extern sub_B4B88, sub_B4BA8, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, sub_8FB8E, SndQuery, sub_8FCDF, FillRect, DrawArtOpaque
+extern VgaSetPalette, sub_B4BA8, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
 global PlayMVI, stub_8C1B7, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, stub_8C1F7, stub_8C202, stub_8C20D
 global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
 ; PlayMVI(eax=path, edx=x, ebx=y) -> eax key. (CD movie player).
@@ -111,7 +111,7 @@ mov ecx, dword [byte esp+01Ch]	; 8BFFD
 push ecx	; 8C001
 mov eax, dword [byte esp+08h]	; 8C002
 push eax	; 8C006
-call sub_910E0	; 8C007
+call DrawArtOpaque	; 8C007
 add esp, byte 0Ch	; 8C00C
 .4:
 cmp dword [byte esp+028h], byte 0	; 8C00F
@@ -148,7 +148,7 @@ mov ecx, dword [byte esp+020h]	; 8C075
 push ecx	; 8C079
 mov eax, dword [byte esp+028h]	; 8C07A
 push eax	; 8C07E
-call sub_90D20	; 8C07F
+call FillRect	; 8C07F
 add esp, byte 14h	; 8C084
 mov eax, edi	; 8C087
 call sub_1B0E5	; 8C089
@@ -159,7 +159,7 @@ push eax	; 8C096
 mov eax, edi	; 8C097
 call sub_1B0C9	; 8C099
 push eax	; 8C09E
-call sub_B4B88	; 8C09F
+call VgaSetPalette	; 8C09F
 add esp, byte 0Ch	; 8C0A4
 mov eax, edi	; 8C0A7
 call sub_1B0BB	; 8C0A9
@@ -235,7 +235,7 @@ jne short .10	; 8C173
 mov eax, dword [musicslot-3]	; 8C175
 sar eax, 18h	; 8C17A
 mov edx, 3	; 8C17D
-call sub_8FC8A	; 8C182
+call SndQuery	; 8C182
 test eax, eax	; 8C187
 jne short .10	; 8C189
 mov eax, 0Ah	; 8C18B

@@ -63,12 +63,12 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
     l = s.bw * 4;
     l = (l + 4) * (s.h + 4) + 0x11;
     t = 0;  /* a named 0 finishes the size before the push; a literal 0 is pushed between the multiply and +11h */
-    m = sub_8CCA8((char *)str_DSBOX, l, t);
+    m = AllocMemBlock((char *)str_DSBOX, l, t);
     s.mem = m;
     *(SprHdr *)m = *(SprHdr *)pointerspr;
     *(short *)(m + 4) = s.bw + 1;
     *(short *)(m + 6) = s.h + 4;
-    sub_91400(m, s.ax, s.y);
+    GrabBlock(m, s.ax, s.y);
     DrawDlgFrame(s.x, s.y, s.x + s.w - 1, s.y + s.h - 1, 0);
     s.y += 8;
     for (i = 0; i < n; i++) {
@@ -114,9 +114,9 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
             }
         } while (!done);
     }
-    while (sub_B2CBE(1) || sub_B2CBE(0x1C));
+    while (KeyDown(1) || KeyDown(0x1C));
     ClearInputQueue();
-    sub_903F0(s.mem, s.ax, s.y0);
+    PutBlock(s.mem, s.ax, s.y0);
     FreeMemBlock(s.mem);
     for (l = strlen(buf); l > 0; l--) {
         if (buf[l - 1] != ' ') break;

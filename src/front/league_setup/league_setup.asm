@@ -11,11 +11,11 @@ extern passkey_m1, pointerspr, ptrupdatefn, pwmismatchmsg, ReadTeamRec, removete
 extern savedname, SaveGridCellBg, SetDialogColors, SetTextColors, songdata, str_Bkgd8, str_Embnhl, str_EnterMasterControllerPasswor
 extern str_EnterMasterPassword, str_EnterPasswordFor, str_extDB, str_Iff10, str_Leaguetm2, str_Menubuff6, str_MightyDucksOfAnaheim3, str_Pal19
 extern str_Pal20, str_PLST, str_Pointer9, str_PTLS, str_TPI, str_Tspal, str_VerifyMasterControllerPasswo, str_VerifyPasswordFor
-extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, sub_8CCA8
-extern sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
-extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, sub_B2DCA, sub_B30B4, sub_B392C
-extern sub_B4BA8, sub_B4DD4, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, unk_C1900
-extern unk_C7592, unk_C7965, yesnobtns
+extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, AllocMemBlock
+extern sub_8D2F0, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
+extern sub_8FCDF, SetPalette, PutBlock, DrawArt, GrabBlock, MouseRead, FindShape, ClearScreen
+extern sub_B4BA8, SetColorRemap, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
+extern msg_NameTaken, msg_WrongPassword, yesnobtns
 global ChooseLeagueController, AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, WriteSeasonRec_common
 global ReadGoalieSeasonRec, ReadGoalieSeasonRec_common, WriteGoalieSeasonRec, WriteSchedGame, WriteSchedGame_common, WriteTeamRec, ReadDbRec4Ch, ReadLeagueTeamEntry
 global WriteLeagueTeamEntry, ReadDbRec28h, ReadDbRec2Ch, AskTeamPassword, AskTeamPassword_ret, AskMasterPassword, EncryptPassword, MergeTeamRecDelta
@@ -40,7 +40,7 @@ shl esi, 2	; 38115
 push byte 20h	; 38118
 push esi	; 3811A
 push str_PLST	; 3811B
-call sub_8CCA8	; 38120
+call AllocMemBlock	; 38120
 add esp, byte 0Ch	; 38125
 mov dword [dword esp+0E4h], eax	; 38128
 mov ebx, esi	; 3812F
@@ -55,7 +55,7 @@ sub esi, edx	; 38149
 push byte 20h	; 3814B
 push esi	; 3814D
 push str_PTLS	; 3814E
-call sub_8CCA8	; 38153
+call AllocMemBlock	; 38153
 add esp, byte 0Ch	; 38158
 mov dword [dword esp+0E0h], eax	; 3815B
 mov ebx, esi	; 38162
@@ -244,7 +244,7 @@ lea eax, [byte esp+08h]	; 383A3
 push eax	; 383A7
 lea eax, [byte esp+010h]	; 383A8
 push eax	; 383AC
-call sub_B2DCA	; 383AD
+call MouseRead	; 383AD
 add esp, byte 0Ch	; 383B2
 xor edx, edx	; 383B5
 mov dword [byte esp+08h], edx	; 383B7
@@ -781,11 +781,11 @@ xor edi, edi	; 38B9A
 mov dword [dword esp+0284h], edi	; 38B9C
 lea eax, [dword esp+0154h]	; 38BA3
 push eax	; 38BAA
-call sub_8E9E8	; 38BAB
+call TextSaveState	; 38BAB
 add esp, byte 4	; 38BB0
 mov ebp, dword [mainfont]	; 38BB3
 push ebp	; 38BB9
-call sub_8EA18	; 38BBA
+call TextSetFont	; 38BBA
 add esp, byte 4	; 38BBF
 call sub_B4BA8	; 38BC2
 mov dword [dword esp+028Ch], edi	; 38BC7
@@ -799,7 +799,7 @@ cmp edx, 100h	; 38BE9
 jl short LeagueTeamSelect.1	; 38BEF
 mov eax, esp	; 38BF1
 push eax	; 38BF3
-call sub_B4DD4	; 38BF4
+call SetColorRemap	; 38BF4
 add esp, byte 4	; 38BF9
 push byte 0	; 38BFC
 mov ecx, 40h	; 38BFE
@@ -857,13 +857,13 @@ call sub_8FCDF	; 38CC9
 push byte 20h	; 38CCE
 push dword 300h	; 38CD0
 push str_Pal19	; 38CD5
-call sub_8CCA8	; 38CDA
+call AllocMemBlock	; 38CDA
 mov esi, eax	; 38CDF
 add esp, byte 0Ch	; 38CE1
 push eax	; 38CE4
 push dword 100h	; 38CE5
 push byte 0	; 38CEA
-call sub_8FFB0	; 38CEC
+call SetPalette	; 38CEC
 add esp, byte 0Ch	; 38CF1
 mov ebx, 10h	; 38CF4
 mov edx, esi	; 38CF9
@@ -880,7 +880,7 @@ je short .9	; 38D1E
 mov eax, dword [musicslot-3]	; 38D20
 sar eax, 18h	; 38D25
 mov edx, 3	; 38D28
-call sub_8FC8A	; 38D2D
+call SndQuery	; 38D2D
 test eax, eax	; 38D32
 je short LeagueTeamSelect.8	; 38D34
 mov edi, dword [songdata]	; 38D36
@@ -893,7 +893,7 @@ mov dword [songdata], ebp	; 38D47
 push byte 20h	; 38D4D
 push dword 30Ch	; 38D4F
 push str_TPI	; 38D54
-call sub_8CCA8	; 38D59
+call AllocMemBlock	; 38D59
 add esp, byte 0Ch	; 38D5E
 mov ebp, eax	; 38D61
 mov ebx, 30Ch	; 38D63
@@ -913,18 +913,18 @@ call MakePath	; 38D95
 push byte 0	; 38D9A
 lea eax, [dword esp+0198h]	; 38D9C
 push eax	; 38DA3
-call sub_8E83C	; 38DA4
+call LoadBank	; 38DA4
 add esp, byte 8	; 38DA9
 mov dword [dword esp+024Ch], eax	; 38DAC
 push str_Bkgd8	; 38DB3
 push eax	; 38DB8
-call sub_B30B4	; 38DB9
+call FindShape	; 38DB9
 mov esi, eax	; 38DBE
 add esp, byte 8	; 38DC0
 mov dword [dword esp+025Ch], eax	; 38DC3
 call sub_B4BA8	; 38DCA
 push byte 0	; 38DCF
-call sub_B392C	; 38DD1
+call ClearScreen	; 38DD1
 add esp, byte 4	; 38DD6
 mov edx, 43h	; 38DD9
 mov eax, 40h	; 38DDE
@@ -932,7 +932,7 @@ call SetTextColors	; 38DE3
 push byte 0	; 38DE8
 push byte 0	; 38DEA
 push esi	; 38DEC
-call sub_91370	; 38DED
+call DrawArt	; 38DED
 add esp, byte 0Ch	; 38DF2
 mov ecx, esi	; 38DF5
 lea ebx, [dword esp+01B4h]	; 38DF7
@@ -1003,7 +1003,7 @@ add eax, byte 11h	; 38F1D
 push byte 20h	; 38F20
 push eax	; 38F22
 push str_Pointer9	; 38F23
-call sub_8CCA8	; 38F28
+call AllocMemBlock	; 38F28
 add esp, byte 0Ch	; 38F2D
 mov dword [dword esp+0280h], eax	; 38F30
 mov esi, dword [pointerspr]	; 38F37
@@ -1062,12 +1062,12 @@ call MakePath	; 38FF1
 push byte 0	; 38FF6
 lea eax, [dword esp+0198h]	; 38FF8
 push eax	; 38FFF
-call sub_8E83C	; 39000
+call LoadBank	; 39000
 mov esi, eax	; 39005
 add esp, byte 8	; 39007
 push str_Pal20	; 3900A
 push eax	; 3900F
-call sub_B30B4	; 39010
+call FindShape	; 39010
 add esp, byte 8	; 39015
 lea edx, [byte eax+010h]	; 39018
 mov ebx, 10h	; 3901B
@@ -1082,7 +1082,7 @@ lea eax, [dword esp+0240h]	; 39038
 push eax	; 3903F
 lea eax, [dword esp+0248h]	; 39040
 push eax	; 39047
-call sub_B2DCA	; 39048
+call MouseRead	; 39048
 add esp, byte 0Ch	; 3904D
 mov eax, dword [dword esp+023Ch]	; 39050
 mov dword [dword esp+0234h], eax	; 39057
@@ -1094,7 +1094,7 @@ sub eax, byte 4	; 39074
 push eax	; 39077
 mov ebx, dword [dword esp+0288h]	; 39078
 push ebx	; 3907F
-call sub_91400	; 39080
+call GrabBlock	; 39080
 add esp, byte 0Ch	; 39085
 mov ecx, dword [dword esp+0238h]	; 39088
 push ecx	; 3908F
@@ -1103,7 +1103,7 @@ sub eax, byte 4	; 39097
 push eax	; 3909A
 mov esi, dword [pointerspr]	; 3909B
 push esi	; 390A1
-call sub_91370	; 390A2
+call DrawArt	; 390A2
 add esp, byte 0Ch	; 390A7
 call ClearInputQueue	; 390AA
 xor edi, edi	; 390AF
@@ -1142,7 +1142,7 @@ sub eax, byte 4	; 39122
 push eax	; 39125
 mov esi, dword [dword esp+0288h]	; 39126
 push esi	; 3912D
-call sub_903F0	; 3912E
+call PutBlock	; 3912E
 add esp, byte 0Ch	; 39133
 mov edi, dword [dword esp+0230h]	; 39136
 push edi	; 3913D
@@ -1150,7 +1150,7 @@ mov eax, dword [dword esp+0238h]	; 3913E
 sub eax, byte 4	; 39145
 push eax	; 39148
 push esi	; 39149
-call sub_91400	; 3914A
+call GrabBlock	; 3914A
 add esp, byte 0Ch	; 3914F
 jmp near .76	; 39152
 .28:
@@ -1187,7 +1187,7 @@ push esi	; 391EC
 push edx	; 391ED
 mov edi, dword [dword esp+0288h]	; 391EE
 push edi	; 391F5
-call sub_903F0	; 391F6
+call PutBlock	; 391F6
 add esp, byte 0Ch	; 391FB
 mov dword [dword esp+028Ch], 1	; 391FE
 jmp short .31	; 39209
@@ -1203,7 +1203,7 @@ push ecx	; 39229
 mov eax, dword [dword esp+esi*8+01D4h]	; 3922A
 push eax	; 39231
 push ebx	; 39232
-call sub_903F0	; 39233
+call PutBlock	; 39233
 add esp, byte 0Ch	; 39238
 xor ebx, ebx	; 3923B
 mov dword [dword esp+esi*8+01D0h], ebx	; 3923D
@@ -1235,7 +1235,7 @@ mov dword [eax], 0FFFFFFFFh	; 392B2
 push byte 20h	; 392B8
 push dword 300h	; 392BA
 push str_Pal19	; 392BF
-call sub_8CCA8	; 392C4
+call AllocMemBlock	; 392C4
 add esp, byte 0Ch	; 392C9
 mov esi, eax	; 392CC
 cmp byte [musicon], 0	; 392CE
@@ -1250,7 +1250,7 @@ call sub_8FCDF	; 392EF
 push esi	; 392F4
 push dword 100h	; 392F5
 push byte 0	; 392FA
-call sub_8FFB0	; 392FC
+call SetPalette	; 392FC
 add esp, byte 0Ch	; 39301
 mov ebx, 10h	; 39304
 mov edx, esi	; 39309
@@ -1326,7 +1326,7 @@ push esi	; 39427
 push edx	; 39428
 mov edi, dword [dword esp+0288h]	; 39429
 push edi	; 39430
-call sub_903F0	; 39431
+call PutBlock	; 39431
 add esp, byte 0Ch	; 39436
 mov eax, dword [dword esp+026Ch]	; 39439
 push eax	; 39440
@@ -1364,7 +1364,7 @@ push edi	; 394DB
 push edx	; 394DC
 mov eax, dword [dword esp+0288h]	; 394DD
 push eax	; 394E4
-call sub_903F0	; 394E5
+call PutBlock	; 394E5
 add esp, byte 0Ch	; 394EA
 mov eax, dword [dword esp+0284h]	; 394ED
 cmp eax, dword [dword esp+0228h]	; 394F4
@@ -1385,7 +1385,7 @@ push edx	; 39531
 mov ebx, dword [dword esp+edi*8+01D4h]	; 39532
 push ebx	; 39539
 push eax	; 3953A
-call sub_903F0	; 3953B
+call PutBlock	; 3953B
 add esp, byte 0Ch	; 39540
 xor eax, eax	; 39543
 mov dword [dword esp+edi*8+01D0h], eax	; 39545
@@ -1498,7 +1498,7 @@ imul eax, edx	; 3973C
 add eax, byte 11h	; 3973F
 push eax	; 39742
 push str_Menubuff6	; 39743
-call sub_8CCA8	; 39748
+call AllocMemBlock	; 39748
 add esp, byte 0Ch	; 3974D
 mov edx, dword [dword esp+027Ch]	; 39750
 mov dword [dword esp+edx+0210h], eax	; 39757
@@ -1524,7 +1524,7 @@ push edi	; 397AC
 mov eax, dword [dword esp+0284h]	; 397AD
 mov edx, dword [dword esp+eax+0218h]	; 397B4
 push edx	; 397BB
-call sub_91400	; 397BC
+call GrabBlock	; 397BC
 add esp, byte 0Ch	; 397C1
 mov ebx, dword [dword esp+026Ch]	; 397C4
 push ebx	; 397CB
@@ -1562,7 +1562,7 @@ push edi	; 39871
 push edx	; 39872
 mov eax, dword [dword esp+0288h]	; 39873
 push eax	; 3987A
-call sub_903F0	; 3987B
+call PutBlock	; 3987B
 add esp, byte 0Ch	; 39880
 mov edx, dword [dword esp+026Ch]	; 39883
 push edx	; 3988A
@@ -1602,7 +1602,7 @@ push ebx	; 39929
 push edx	; 3992A
 mov ecx, dword [dword esp+0288h]	; 3992B
 push ecx	; 39932
-call sub_903F0	; 39933
+call PutBlock	; 39933
 add esp, byte 0Ch	; 39938
 cmp dword [dword esp+0284h], byte 0	; 3993B
 je near .54	; 39943
@@ -1620,7 +1620,7 @@ mov edx, dword [dword esp+ecx*8+01D4h]	; 3996F
 push edx	; 39976
 mov ebx, dword [dword esp+edi+0218h]	; 39977
 push ebx	; 3997E
-call sub_903F0	; 3997F
+call PutBlock	; 3997F
 add esp, byte 0Ch	; 39984
 xor ecx, ecx	; 39987
 mov dword [dword esp+esi*8+01D0h], ecx	; 39989
@@ -1874,7 +1874,7 @@ mov edx, str_MightyDucksOfAnaheim3	; 39D72
 .61:
 lea eax, [dword esp+0100h]	; 39D77
 call strcat_	; 39D7E
-mov edx, unk_C1900	; 39D83
+mov edx, str_qmark	; 39D83
 lea eax, [dword esp+0100h]	; 39D88
 call strcat_	; 39D8F
 mov edi, dword [dword esp+02A8h]	; 39D94
@@ -1935,7 +1935,7 @@ push eax	; 39E44
 push byte 0	; 39E45
 push byte 0	; 39E47
 mov ecx, 1	; 39E49
-mov ebx, unk_C7592	; 39E4E
+mov ebx, msg_NameTaken	; 39E4E
 mov edx, 0FFFFFFFFh	; 39E53
 mov eax, edx	; 39E58
 call MessageBox	; 39E5A
@@ -2097,7 +2097,7 @@ sub eax, byte 4	; 3A07A
 push eax	; 3A07D
 mov edx, dword [dword esp+0288h]	; 3A07E
 push edx	; 3A085
-call sub_91400	; 3A086
+call GrabBlock	; 3A086
 add esp, byte 0Ch	; 3A08B
 mov ebx, dword [dword esp+0238h]	; 3A08E
 push ebx	; 3A095
@@ -2106,7 +2106,7 @@ sub eax, byte 4	; 3A09D
 push eax	; 3A0A0
 mov ecx, dword [dword esp+0288h]	; 3A0A1
 push ecx	; 3A0A8
-call sub_903F0	; 3A0A9
+call PutBlock	; 3A0A9
 add esp, byte 0Ch	; 3A0AE
 mov esi, dword [dword esp+0230h]	; 3A0B1
 push esi	; 3A0B8
@@ -2115,7 +2115,7 @@ sub eax, byte 4	; 3A0C0
 push eax	; 3A0C3
 mov edi, dword [dword esp+0288h]	; 3A0C4
 push edi	; 3A0CB
-call sub_91400	; 3A0CC
+call GrabBlock	; 3A0CC
 add esp, byte 0Ch	; 3A0D1
 cmp dword [dword esp+0260h], byte 0	; 3A0D4
 jne short .77	; 3A0DC
@@ -2127,7 +2127,7 @@ sub eax, byte 4	; 3A0ED
 push eax	; 3A0F0
 mov ebx, dword [pointerspr]	; 3A0F1
 push ebx	; 3A0F7
-call sub_91370	; 3A0F8
+call DrawArt	; 3A0F8
 add esp, byte 0Ch	; 3A0FD
 .77:
 mov eax, dword [dword esp+0234h]	; 3A100
@@ -2207,7 +2207,7 @@ jl short LeagueTeamSelect.82	; 3A231
 .84:
 lea eax, [dword esp+0154h]	; 3A233
 push eax	; 3A23A
-call sub_8EA00	; 3A23B
+call TextRestoreState	; 3A23B
 add esp, byte 4	; 3A240
 add esp, 290h	; 3A243
 pop ebp	; 3A249
@@ -2409,7 +2409,7 @@ lea eax, [byte esp+068h]	; 3A429
 push eax	; 3A42D
 lea eax, [byte esp+070h]	; 3A42E
 push eax	; 3A432
-call sub_B2DCA	; 3A433
+call MouseRead	; 3A433
 add esp, byte 0Ch	; 3A438
 push byte 0FFFFFFFFh	; 3A43B
 lea eax, [byte esp+064h]	; 3A43D
@@ -2419,7 +2419,7 @@ push eax	; 3A446
 push byte 0	; 3A447
 push byte 0	; 3A449
 mov ecx, 1	; 3A44B
-mov ebx, unk_C7965	; 3A450
+mov ebx, msg_WrongPassword	; 3A450
 mov edx, 0FFFFFFFFh	; 3A455
 mov eax, edx	; 3A45A
 call MessageBox	; 3A45C
@@ -2509,7 +2509,7 @@ lea eax, [byte esp+068h]	; 3A531
 push eax	; 3A535
 lea eax, [byte esp+070h]	; 3A536
 push eax	; 3A53A
-call sub_B2DCA	; 3A53B
+call MouseRead	; 3A53B
 add esp, byte 0Ch	; 3A540
 push byte 0FFFFFFFFh	; 3A543
 lea eax, [byte esp+064h]	; 3A545
@@ -2519,7 +2519,7 @@ push eax	; 3A54E
 push byte 0	; 3A54F
 push byte 0	; 3A551
 mov ecx, 1	; 3A553
-mov ebx, unk_C7965	; 3A558
+mov ebx, msg_WrongPassword	; 3A558
 mov edx, 0FFFFFFFFh	; 3A55D
 mov eax, edx	; 3A562
 call MessageBox	; 3A564

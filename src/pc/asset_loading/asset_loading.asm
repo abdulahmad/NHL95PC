@@ -3,9 +3,9 @@ bits 32
 %include "hockey.inc"
 section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
-extern byte_E024C, byte_E024D, byte_E024F, byte_E9AC8, byte_E9AD3, cddriveptr, ClearInputQueue, ClearPanelPenalties
+extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
-extern DrawHudPanel, dword_C66D0, dword_C66D4, dword_CC0AC, dword_CC0EC, dword_D8C4C, dword_E009C, dword_E9A9E
+extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, dword_E9A9E
 extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
@@ -21,13 +21,13 @@ extern songdata, SortCords, sounddev, sprintf_, StartGame, StartPreGame, StopDig
 extern str_04d, str_Adafan, str_Adawards, str_Awards, str_Awardsi, str_Awasong, str_D00_D49, str_D00D49
 extern str_D50_D99, str_D50D99, str_F000149, str_GfxIdList, str_HILIGHT, str_Iff, str_Mtafan, str_Mtawards
 extern str_Numshp, str_Pal3, str_Palmem, str_PPV, str_Scrn, str_Summ, str_Titl, str_Trinknd
-extern str_VFN, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00
-extern sub_8EA18, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0
-extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, textline1, textline2
+extern str_VFN, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
+extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
+extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
-extern word_C90D8, word_CBC44, word_CBC60, word_CBE8C, word_CBE8E, word_CBEC2, word_CBEC6, word_CC0B0
-extern word_DEE94, word_E024E, word_E9A9C, word_E9AA2, word_E9AA4, word_E9AA6, word_E9AAA, word_E9AAE
-extern word_E9B2C
+extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
+extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
+extern rinkobjused
 global IndexPhotoBank, IndexPhotoBank_x, LoadPhotoBankF, LoadPhotoBankF_x, LoadPlayerPhotos, LoadTransparentRinkEndOverlay, LoadGameGfx, LoadGameGfx_common
 global ReloadGameGfx, PlacePlayersAtStart, SetupGame, SetupDemoGame, ResetGameVars, FileExists
 ; C: src/pc/asset_loading/IndexPhotoBank.c
@@ -124,7 +124,7 @@ lea eax, [byte esp+010h]	; 13936
 push eax	; 1393A
 mov ebx, dword [photobankf]	; 1393B
 push ebx	; 13941
-call sub_B30B4	; 13942
+call FindShape	; 13942
 add esp, byte 8	; 13947
 mov dword [nosplit esi*4+photoptrsf], eax	; 1394A
 inc esi	; 13951
@@ -252,7 +252,7 @@ add esp, byte 8	; 13A6F
 mov dword [rinkendbank], eax	; 13A72
 push str_0000	; 13A77
 push eax	; 13A7C
-call sub_B30B4	; 13A7D
+call FindShape	; 13A7D
 add esp, byte 8	; 13A82
 mov dword [rinkendart], eax	; 13A85
 add esp, byte 10h	; 13A8A
@@ -321,14 +321,14 @@ lea eax, [byte esp+010h]	; 13B35
 push eax	; 13B39
 mov edx, dword [numshpbank]	; 13B3A
 push edx	; 13B40
-call sub_B30B4	; 13B41
+call FindShape	; 13B41
 add esp, byte 8	; 13B46
 mov dword [nosplit esi*4+numshapes], eax	; 13B49
 inc esi	; 13B50
 cmp esi, byte 0Ah	; 13B51
 jl short LoadGameGfx.5	; 13B54
 LoadGameGfx_common:
-push dword_D8C4C	; 13B56
+push gfxidlist	; 13B56
 push str_GfxIdList	; 13B5B
 mov ebx, dword [numshpbank]	; 13B60
 push ebx	; 13B66
@@ -338,7 +338,7 @@ call ClearPanelPenalties	; 13B6F
 call LoadTransparentRinkEndOverlay	; 13B74
 push dword 0FFh	; 13B79
 push byte 4	; 13B7E
-call sub_8E9C0	; 13B80
+call TextSetColors	; 13B80
 add esp, byte 8	; 13B85
 call LoadPlayerPhotos	; 13B88
 call nullsub_2	; 13B8D
@@ -412,7 +412,7 @@ lea eax, [byte esp+010h]	; 13C53
 push eax	; 13C57
 mov edx, dword [numshpbank]	; 13C58
 push edx	; 13C5E
-call sub_B30B4	; 13C5F
+call FindShape	; 13C5F
 add esp, byte 8	; 13C64
 mov dword [nosplit esi*4+numshapes], eax	; 13C67
 inc esi	; 13C6E
@@ -426,7 +426,7 @@ call __CHK	; 13C7E
 push ebx	; 13C83
 push ecx	; 13C84
 push edx	; 13C85
-cmp dword [dword_CC0EC], byte 0	; 13C86
+cmp dword [demoflag], byte 0	; 13C86
 jne near .x	; 13C8D
 call forceteams	; 13C93
 xor edx, edx	; 13C98
@@ -474,9 +474,9 @@ add eax, eax	; 13D4D
 mov word [regd4], ax	; 13D4F
 mov eax, dword [regd4-2]	; 13D55
 sar eax, 10h	; 13D5A
-mov dx, word [nosplit eax*2+word_CBE8C]	; 13D5D
+mov dx, word [nosplit eax*2+puckfaceoff2_ptab]	; 13D5D
 mov word [regd0], dx	; 13D65
-mov ax, word [nosplit eax*2+word_CBE8E]	; 13D6C
+mov ax, word [nosplit eax*2+puckfaceoff2_ptab_y]	; 13D6C
 mov word [regd1], ax	; 13D74
 test byte [byte ebx+044h], 80h	; 13D7A
 jne short .4	; 13D7E
@@ -619,7 +619,7 @@ je short .3	; 13F45
 push savepal	; 13F47
 push dword 100h	; 13F4C
 push byte 0	; 13F51
-call sub_8FFB0	; 13F53
+call SetPalette	; 13F53
 add esp, byte 0Ch	; 13F58
 mov ebx, 10h	; 13F5B
 mov edx, savepal	; 13F60
@@ -633,7 +633,7 @@ jne short .5	; 13F7F
 .4:
 call PlacePlayersAtStart	; 13F81
 .5:
-cmp dword [dword_CC0EC], byte 0	; 13F86
+cmp dword [demoflag], byte 0	; 13F86
 jne short .6	; 13F8D
 cmp dword [introskipped], byte 0	; 13F8F
 jne short .6	; 13F96
@@ -693,7 +693,7 @@ xor edi, edi	; 14026
 mov word [gsp], di	; 14028
 call ResetGameVars	; 1402F
 mov dword [introskipped], edx	; 14034
-cmp dword [dword_CC0EC], byte 0	; 1403A
+cmp dword [demoflag], byte 0	; 1403A
 jne short .3	; 14041
 test edx, edx	; 14043
 jne short .3	; 14045
@@ -716,21 +716,21 @@ push edx	; 14062
 push esi	; 14063
 push edi	; 14064
 mov ah, 0FFh	; 14065
-mov byte [byte_E9AC8], ah	; 14067
-mov byte [byte_E9AD3], ah	; 1406D
+mov byte [curevent], ah	; 14067
+mov byte [goalevent], ah	; 1406D
 xor edx, edx	; 14073
-mov dword [dword_CC0AC], edx	; 14075
+mov dword [goalienotebits], edx	; 14075
 xor dh, dh	; 1407B
-mov byte [byte_E024F], dh	; 1407D
-mov byte [word_E024E], dh	; 14083
-mov byte [byte_E024D], dh	; 14089
-mov byte [byte_E024C], dh	; 1408F
+mov byte [milestonesaid_b3], dh	; 1407D
+mov byte [milestonesaid_b2], dh	; 14083
+mov byte [milestonesaid_b1], dh	; 14089
+mov byte [milestonesaid], dh	; 1408F
 mov edx, 0FFFFFFFFh	; 14095
 mov word [ovltimer], dx	; 1409A
-mov word [word_C90D8], dx	; 140A1
+mov word [penaltysc], dx	; 140A1
 mov word [RefStep], dx	; 140A8
 mov word [Pencntdwn], dx	; 140AF
-mov word [word_CC0B0], dx	; 140B6
+mov word [Pencntdwn2], dx	; 140B6
 xor eax, eax	; 140BD
 mov word [threat], ax	; 140BF
 mov word [passplayer], ax	; 140C5
@@ -758,15 +758,15 @@ mov word [lctimer+2], ax	; 14143
 mov word [lctimer], ax	; 14149
 mov word [lcline+2], ax	; 1414F
 mov word [lcline], ax	; 14155
-mov word [word_CBC60], ax	; 1415B
+mov word [lcsel_aw], ax	; 1415B
 mov word [lcsel], ax	; 14161
 xor ebx, ebx	; 14167
 mov dword [savedmousey], ebx	; 14169
 xor ecx, ecx	; 1416F
 mov dword [savedmousex], ecx	; 14171
 mov word [bannertimer], ax	; 14177
-mov word [word_CBEC6], ax	; 1417D
-mov word [word_CBEC2], ax	; 14183
+mov word [injurystop], ax	; 1417D
+mov word [refhitcount], ax	; 14183
 mov ecx, edx	; 14189
 mov word [bannermsg], dx	; 1418B
 mov word [ovlstep], dx	; 14192
@@ -794,7 +794,7 @@ mov eax, ebx	; 141F4
 shl eax, 2	; 141F6
 sub eax, ebx	; 141F9
 shl eax, 2	; 141FB
-mov edx, word_DEE94	; 141FE
+mov edx, rinkobjs	; 141FE
 add edx, eax	; 14203
 mov word [edx], 0FFFFh	; 14205
 mov eax, 28h	; 1420A
@@ -806,18 +806,18 @@ cmp ebx, byte 14h	; 1421A
 jl short ResetGameVars.1	; 1421D
 mov ecx, 20h	; 1421F
 xor edx, edx	; 14224
-mov eax, word_E9B2C	; 14226
+mov eax, rinkobjused	; 14226
 call __STOSB	; 1422B
 xor edx, edx	; 14230
 mov word [dword_E9A9E], dx	; 14232
-mov word [word_E9AAE], dx	; 14239
+mov word [penevteam], dx	; 14239
 mov word [dword_E9AB6], dx	; 14240
-mov word [word_E9AA6], dx	; 14247
-mov word [word_E9AA4], dx	; 1424E
+mov word [NumCwdExciteLvl], dx	; 14247
+mov word [MaxCwdExciteLvl], dx	; 1424E
 mov word [word_E9AA2], dx	; 14255
 mov word [word_E9AAA], dx	; 1425C
 xor ecx, ecx	; 14263
-mov dword [dword_E009C], ecx	; 14265
+mov dword [SumCwdExciteLvl], ecx	; 14265
 mov word [word_E9A9C], 0FFFFh	; 1426B
 call StartGame	; 14274
 mov dword [curperiod], 1	; 14279

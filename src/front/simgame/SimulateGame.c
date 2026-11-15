@@ -161,18 +161,18 @@ int SimulateGame(char *dir, char *ext, int n, unsigned char *game, int rwfh, int
     game[5] = game[4] = 0;
     ot = 0;
     for (i = 0; i < 2; i++) {
-        f.t[i] = (TeamRec *)sub_8CCA8((char *)tag_t, 0x2E8, 0x20);
-        f.at[i] = (unsigned char *)sub_8CCA8((char *)tag_at, 0x4C, 0x20);
-        f.pk[i] = (unsigned char **)sub_8CCA8((char *)tag_pk, 100, 0x20);
-        f.ps[i] = (unsigned short **)sub_8CCA8((char *)tag_ps, 100, 0x20);
-        f.pset[i] = (unsigned short **)sub_8CCA8((char *)tag_pset, 100, 0x20);
-        f.aps[i] = (unsigned short **)sub_8CCA8((char *)tag_aps, 100, 0x20);
-        f.apset[i] = (unsigned short **)sub_8CCA8((char *)tag_apset, 100, 0x20);
-        f.gk[i] = (unsigned char **)sub_8CCA8((char *)tag_gk, 0xC, 0x20);
-        f.gs[i] = (unsigned short **)sub_8CCA8((char *)tag_gs, 0xC, 0x20);
-        f.gset[i] = (unsigned short **)sub_8CCA8((char *)tag_gset, 0xC, 0x20);
-        f.ags[i] = (unsigned short **)sub_8CCA8((char *)tag_ags, 0xC, 0x20);
-        f.agset[i] = (unsigned short **)sub_8CCA8((char *)tag_agset, 0xC, 0x20);
+        f.t[i] = (TeamRec *)AllocMemBlock((char *)tag_t, 0x2E8, 0x20);
+        f.at[i] = (unsigned char *)AllocMemBlock((char *)tag_at, 0x4C, 0x20);
+        f.pk[i] = (unsigned char **)AllocMemBlock((char *)tag_pk, 100, 0x20);
+        f.ps[i] = (unsigned short **)AllocMemBlock((char *)tag_ps, 100, 0x20);
+        f.pset[i] = (unsigned short **)AllocMemBlock((char *)tag_pset, 100, 0x20);
+        f.aps[i] = (unsigned short **)AllocMemBlock((char *)tag_aps, 100, 0x20);
+        f.apset[i] = (unsigned short **)AllocMemBlock((char *)tag_apset, 100, 0x20);
+        f.gk[i] = (unsigned char **)AllocMemBlock((char *)tag_gk, 0xC, 0x20);
+        f.gs[i] = (unsigned short **)AllocMemBlock((char *)tag_gs, 0xC, 0x20);
+        f.gset[i] = (unsigned short **)AllocMemBlock((char *)tag_gset, 0xC, 0x20);
+        f.ags[i] = (unsigned short **)AllocMemBlock((char *)tag_ags, 0xC, 0x20);
+        f.agset[i] = (unsigned short **)AllocMemBlock((char *)tag_agset, 0xC, 0x20);
     }
     err = 0;
     for (i = 0; i < 2 && !err; i++) {

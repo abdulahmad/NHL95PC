@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_D544C progbits alloc noexec write align=1
 extern sub_A2ADC
-global asc_D544C, byte_D545C, byte_D54DC, byte_D6074, dword_D5562, dword_D5566, dword_D5670, dword_D5674
+global str_SHPI2, byte_D545C, byte_D54DC, byte_D6074, dword_D5562, dword_D5566, dword_D5670, dword_D5674
 global dword_D5678, dword_D5D78, dword_D6178, dword_D6578, off_D5668, off_D566C, off_D567C, off_D5742
 global unk_D5744, unk_D5748, unk_D574E, unk_D5756, unk_D5760, unk_D576C, unk_D577A, unk_D578A
 global unk_D579C, unk_D57B0, unk_D57C6, unk_D57DE, unk_D57F8, unk_D5814, unk_D5832, unk_D5852
@@ -11,7 +11,7 @@ global unk_D5874, unk_D5898, unk_D58BE, unk_D58E6, unk_D5910, unk_D593C, unk_D59
 global unk_D59CC, unk_D5A00, unk_D5A36, unk_D5A6E, unk_D5AA8, unk_D5AE4, unk_D5B22, unk_D5B62
 global unk_D5BA4, unk_D5BE8, unk_D5C2E, unk_D5C76, unk_D5CC0, unk_D5D0C, unk_D5D5A, unk_D5DAA
 global unk_D5DFC, unk_D5E50, unk_D5EA6, unk_D5EFE, unk_D5F58, unk_D5FB4, unk_D6012
-asc_D544C:
+str_SHPI2:
 db 053h,048h,050h,049h,00h,00h,00h,00h,00h,00h,00h,00h,053h,050h,049h,054h
 byte_D545C:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

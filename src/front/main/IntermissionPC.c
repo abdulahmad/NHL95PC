@@ -7,7 +7,7 @@
 void IntermissionPC(void)
 {
     if (exitgame != -1) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
         SetScreenSize(0x280, 0x1E0);
         CrowdFadeOut();
@@ -16,7 +16,7 @@ void IntermissionPC(void)
         StopDigiSample();
         sub_1BAF3(0x222E0);
     }
-    sub_8EA18(s1font);
+    TextSetFont(s1font);
     IntermissionDesk();
     curperiod++;
 }

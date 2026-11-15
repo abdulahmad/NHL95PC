@@ -20,9 +20,9 @@ int ErrorScreenWait(int msg, int arg, char *title, int type)
     oy = *(int *)arg;
     y = oy;
     MouseSetPos(ox, oy);
-    sub_91400(editptrspr, ox, oy);
-    sub_91370(pointerspr, ox, oy);
-    while (sub_B2CBE(1) || sub_B2CBE(0x1C))
+    GrabBlock(editptrspr, ox, oy);
+    DrawArt(pointerspr, ox, oy);
+    while (KeyDown(1) || KeyDown(0x1C))
         ;
     ClearInputQueue();
     done = 0;
@@ -36,28 +36,28 @@ int ErrorScreenWait(int msg, int arg, char *title, int type)
                 result = -1;
                 done = -1;
             } else if (bits & 3) {
-                sub_903F0(editptrspr, ox, oy);
+                PutBlock(editptrspr, ox, oy);
                 if (type > 0) {
                     result = TrackButtons((int *)title, type, x, y, bits);
                     if (result >= 0) done = -1;
                 } else if (bits & 2)
                     done = -1;
-                sub_91400(editptrspr, ox, oy);
-                sub_91370(pointerspr, ox, oy);
+                GrabBlock(editptrspr, ox, oy);
+                DrawArt(pointerspr, ox, oy);
             }
             if (ox != x || oy != y) {
-                sub_903F0(editptrspr, ox, oy);
-                sub_91400(editptrspr, x, y);
-                sub_91370(pointerspr, x, y);
+                PutBlock(editptrspr, ox, oy);
+                GrabBlock(editptrspr, x, y);
+                DrawArt(pointerspr, x, y);
                 ox = x;
                 oy = y;
             }
         }
     } while (done == 0);
-    while (sub_B2CBE(1) || sub_B2CBE(0x1C))
+    while (KeyDown(1) || KeyDown(0x1C))
         ;
     ClearInputQueue();
-    sub_903F0(editptrspr, ox, oy);
+    PutBlock(editptrspr, ox, oy);
     ClearInputQueue();
     MouseSetPos(x, y);
     *(int *)msg = x;

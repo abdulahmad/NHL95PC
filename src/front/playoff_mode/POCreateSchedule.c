@@ -37,13 +37,13 @@ int POCreateSchedule(int *teams, char *dir)
     if (teamconf[HomeTeam] != teamconf[VisTeam]) {
         MakePath(dbpath, dir, (char *)leaguedbnames[5], (char *)str_extDB);
         seasondb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        seasondb_size = sub_92DE0(dbpath);
+        seasondb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[1], (char *)str_extDB);
         careerdb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        careerdb_size = sub_92DE0(dbpath);
+        careerdb_size = GetFileSize(dbpath);
         MakePath(dbpath, dir, (char *)leaguedbnames[0], (char *)str_extDB);
         keydb = (unsigned char *)sub_8E8A0(dbpath, 0x20);
-        keydb_size = sub_92DE0(dbpath);
+        keydb_size = GetFileSize(dbpath);
         POPreSimRound1(po, HomeTeam, VisTeam);
         POSeedRound2(po);
         POPreSimRound2(po, HomeTeam, VisTeam);
@@ -51,7 +51,7 @@ int POCreateSchedule(int *teams, char *dir)
         POPreSimConfFinals(po, HomeTeam, VisTeam);
         POSeedFinal(po);
         MakePath(dbpath, dir, (char *)leaguedbnames[5], (char *)str_extDB);
-        sub_932D0(dbpath, seasondb, seasondb_size);
+        WriteFile(dbpath, seasondb, seasondb_size);
         if (seasondb) FreeMemBlock((int)seasondb);
         if (careerdb) FreeMemBlock((int)careerdb);
         if (keydb) FreeMemBlock((int)keydb);
@@ -61,7 +61,7 @@ int POCreateSchedule(int *teams, char *dir)
     for (n = 0, s = po + 0x1998; s[2] != HomeTeam || s[3] != VisTeam; n += 7, s += 0x2A);
     *(int *)(po + 0x40) = n;
     *(int *)(po + 0x44) = n / 7;
-    size = sub_92DE0(path);
+    size = GetFileSize(path);
     if (FileOpenWrite(path, &fh)) {
         po -= 2;
         r = 1;
@@ -227,7 +227,7 @@ void POSimSeries(unsigned char *s, unsigned games)
 }
 
 /* POHiliteSlot (89B69, PC only; ends in POCreateSchedule_x): highlight slot n of the playoff tree: a double frame
-   (sub_92F50, colour 80h) 74h wide at the slot position (dword_D2B70 / dword_D2BEC), 1Fh high for the 28
+   (sub_92F50, colour 80h) 74h wide at the slot position (poslotx / posloty), 1Fh high for the 28
    first-round slots and 3Ch for the later ones, with a second frame one pixel outside it. n: the slot.
    unused: a value the callers pass and it ignores. No result. */
 void POHiliteSlot(int n, int unused)
@@ -237,8 +237,8 @@ void POHiliteSlot(int n, int unused)
     int x;
     int y;
 
-    x = dword_D2B70[n];
-    y = dword_D2BEC[n];
+    x = poslotx[n];
+    y = posloty[n];
     x2 = x + 0x74;
     y2 = n < 0x1C ? y + 0x1F : y + 0x3C;
     sub_92F50(x, y, x2, y2, 0x80);

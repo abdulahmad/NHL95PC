@@ -108,7 +108,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     col1 = 0xC0;
     col2 = 0xC1;
     col3 = 0xC2;
-    blk = sub_B30B4(bank, (char *)str_Pntr3);
+    blk = FindShape(bank, (char *)str_Pntr3);
     menus[0] = buttons;
     nitems[0] = n;
     menus[1] = menus[2] = menus[3] = 0;
@@ -117,7 +117,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     pos[0][0] = pos[0][1] = 0;
     menuact_dbscratch = menuact_dbdress = 0;
     r = (((short *)blk)[2] + 1) * (((short *)blk)[3] + 1) + 0x11;
-    ptr = sub_8CCA8((char *)str_Pointer13, r, 0x20);
+    ptr = AllocMemBlock((char *)str_Pointer13, r, 0x20);
     *(LeHdr17 *)ptr = *(LeHdr17 *)blk;
     ((short *)ptr)[2] = ((short *)blk)[2] + 1;
     ((short *)ptr)[3] = ((short *)blk)[3] + 1;
@@ -136,10 +136,10 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
         if (lines[0x28 + i] != 100 && rosterstat[RREC(slot)] == 3)
             rosterstat[RREC(slot)] = 2;
     }
-    pal = (unsigned char *)sub_8CCA8((char *)str_Pal25, 0x300, 0x20);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Pal25, 0x300, 0x20);
     MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal4, 0);
-    blk = sub_8E83C(path, 0);
-    memcpy(pal, (unsigned char *)sub_B30B4(blk, (char *)str_Pal26) + 0x10, 0x300);
+    blk = LoadBank(path, 0);
+    memcpy(pal, (unsigned char *)FindShape(blk, (char *)str_Pal26) + 0x10, 0x300);
     FreeMemBlock(blk);
     LoadJerseyColours(team, bank, pal);
     c1 = byte_D11BC[rosterteam[team] * 4];
@@ -147,16 +147,16 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
     c2 = byte_D12DE;
     DrawLineJerseys(nums.slot, art, team);
     MakePath(path, fileoncd[0x21B] == 1 ? (char *)cddriveptr : 0, (char *)str_Lelogo, 0);
-    blk = sub_8E83C(path, 0);
-    memcpy(pal + 0x25E, (unsigned char *)sub_B30B4(blk, (char *)str_Pal26) + 0x26E, 0x93);
+    blk = LoadBank(path, 0);
+    memcpy(pal + 0x25E, (unsigned char *)FindShape(blk, (char *)str_Pal26) + 0x26E, 0x93);
     FreeMemBlock(blk);
     FadePalStep(0, pal, 0x10);
-    sub_91400(editptrspr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
-    sub_91400(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+    GrabBlock(editptrspr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+    GrabBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
     sub_91FE0(pointerspr, oldmx - 3, oldmy);
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
     MouseSetPos(oldmx, oldmy);
-    sub_B2DCA(&i, &i, &i);
+    MouseRead(&i, &i, &i);
     ClearInputQueue();
     for (;;) {
         bits = 0;
@@ -167,13 +167,13 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
         if (!(bits & 2)) {
             if (oldmx != mx || oldmy != my) {
                 /* moved: the saved block and the picked player's jersey follow the pointer */
-                sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
-                sub_91400(ptr, mx < 0x1C ? 0 : mx - 0x1C, my < 0x20 ? 0 : my - 0x20);
+                PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+                GrabBlock(ptr, mx < 0x1C ? 0 : mx - 0x1C, my < 0x20 ? 0 : my - 0x20);
                 if (my > menus[0]->y2 && mx < 500 && pick != -1
                     && (!menus[1] || !MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item))
                     && rosterstat[RREC(pick)] != 2) {
                     MakeJerseyShape(jerseyremap, rosterjersey[RREC(pick)], c1, c2);
-                    sub_B4DD4(jerseyremap);
+                    SetColorRemap(jerseyremap);
                     sub_91FE0(art, mx - 0x1C, my - 0x20);
                 }
                 sub_91FE0(pointerspr, mx - 3, my);
@@ -188,10 +188,10 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
             if ((*(int *)((char *)menus[level] + itemoffset + 0x14))) {
                 if (item == sel[level]) {
                     /* the second click on the selected item: close the dropdowns and run the action */
-                    sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+                    PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                     for (i = 3; i >= 0; i--) {
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                         }
@@ -213,7 +213,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                     ClearInputQueue();
                 } else {
                     /* another item of the same menu: move the selection */
-                    sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+                    PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                     DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1],
                         col1, col2, col3);
                     sel[level] = item;
@@ -222,12 +222,12 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                 }
             } else if ((*(int *)((char *)menus[level] + itemoffset + 0x18))) {
                 /* an item with a submenu: close the deeper dropdowns, select it and open its dropdown */
-                sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+                PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                 if (depth != level) {
                     for (i = depth; i > level; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                             bg[i] = 0;
@@ -249,17 +249,17 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                 pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                 w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                 h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                bg[depth] = sub_8CCA8((char *)str_Menubuff8, w * 4 * h + 0x11, 0x20);
+                bg[depth] = AllocMemBlock((char *)str_Menubuff8, w * 4 * h + 0x11, 0x20);
                 *(LeHdr17 *)bg[depth] = *(LeHdr17 *)pointerspr;
                 ((short *)bg[depth])[2] = w;
                 ((short *)bg[depth])[3] = h;
-                sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                 DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], col1, col2, col3);
                 sel[depth] = 0;
                 DrawMenuItemNorm((struct MenuItem *)menus[depth], pos[depth][0], pos[depth][1], col1, col2, col3);
             } else {
                 /* an item without action or submenu: select it */
-                sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+                PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
                 DrawMenuItemSel((struct MenuItem *)&menus[level][sel[level]], pos[level][0], pos[level][1], col1,
                     col2, col3);
                 sel[level] = item;
@@ -268,11 +268,11 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
             }
         } else {
             /* a click on a slot or a roster row closes the menus first */
-            sub_903F0(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
+            PutBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
             if (LineEdHitTest(mx, my, &hit)) {
                 for (i = 3; i >= 0; i--) {
                     if (bg[i]) {
-                        sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                        PutBlock(bg[i], pos[i][0], pos[i][1]);
                         pos[i][0] = pos[i][1] = 0;
                         FreeMemBlock(bg[i]);
                     }
@@ -284,7 +284,7 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                 nitems[1] = nitems[2] = nitems[3] = 0;
                 if (hit < 100 && pick != -1 && rosterstat[RREC(pick)] != 2) {
                     /* a line slot: put the picked player there when his position fits */
-                    sub_8E9C0(0xC0, 0xC1);
+                    TextSetColors(0xC0, 0xC1);
                     if (hit < 0xC) {
                         if (rosterlist[RREC(pick)] == 'C' || rosterlist[RREC(pick)] == 'L'
                             || rosterlist[RREC(pick)] == 'R') {
@@ -301,8 +301,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, lineslotx[(i * 3 + k) * 2], linesloty[(i * 3 + k) * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, lineslotx[(i * 3 + k) * 2], linesloty[(i * 3 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x12) {
@@ -320,8 +320,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, dword_D1398[(i * 2 + k) * 2], dword_D139C[(i * 2 + k) * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, dword_D1398[(i * 2 + k) * 2], dword_D139C[(i * 2 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x1C) {
@@ -339,8 +339,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, dword_D13C8[(i * 5 + k) * 2], dword_D13CC[(i * 5 + k) * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, dword_D13C8[(i * 5 + k) * 2], dword_D13CC[(i * 5 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x24) {
@@ -358,8 +358,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, dword_D1418[(i * 4 + k) * 2], dword_D141C[(i * 4 + k) * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, dword_D1418[(i * 4 + k) * 2], dword_D141C[(i * 4 + k) * 2]);
                             }
                         }
                     } else if (hit < 0x26) {
@@ -375,8 +375,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, dword_D1458[k * 2], dword_D145C[k * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, dword_D1458[k * 2], dword_D145C[k * 2]);
                             }
                         }
                     } else {
@@ -392,8 +392,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                                     for (j = 0; j < 0x90; j++) jerseyremap[j] = c2;
                                     for (j = 0xC0; j < 0xF0; j++) jerseyremap[j] = c2;
                                 }
-                                sub_B4DD4(jerseyremap);
-                                sub_931FC(art, dword_D1468[k * 2], dword_D146C[k * 2]);
+                                SetColorRemap(jerseyremap);
+                                DrawArtMasked(art, dword_D1468[k * 2], dword_D146C[k * 2]);
                             }
                         }
                     }
@@ -403,8 +403,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                     if (rosterstat[RREC(hit)]
                         && (rosterstat[RREC(hit)] == 4 || rosterstat[RREC(hit)] == 3 || rosterstat[RREC(hit)] == 2)) {
                         if (pick != -1) {
-                            if (rosterstat[RREC(pick)] == 2) sub_8E9C0(0xFC, 0xC1);
-                            else sub_8E9C0(0xC3, 0xC1);
+                            if (rosterstat[RREC(pick)] == 2) TextSetColors(0xFC, 0xC1);
+                            else TextSetColors(0xC3, 0xC1);
                             sprintf(buf, (char *)str_C2dS2, rosterlist[RREC(pick)],
                                 rosterjersey[RREC(pick)], rosterlist + team * 0x2F4 + pick * 27 + 8);
                             PrintLineEdStatus(0x1FA, pick * 13 + 0x16, buf);
@@ -412,8 +412,8 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                         pick = hit;
                         menuact_dbdress = (int)DressPlayer;
                         menuact_dbscratch = (int)ScratchPlayer;
-                        if (rosterstat[RREC(hit)] == 2) sub_8E9C0(0xFD, 0xC1);
-                        else sub_8E9C0(0xC0, 0xC1);
+                        if (rosterstat[RREC(hit)] == 2) TextSetColors(0xFD, 0xC1);
+                        else TextSetColors(0xC0, 0xC1);
                         sprintf(buf, (char *)str_C2dS2, rosterlist[RREC(pick)],
                             rosterjersey[RREC(pick)], rosterlist + team * 0x2F4 + pick * 27 + 8);
                         PrintLineEdStatus(0x1FA, pick * 13 + 0x16, buf);
@@ -421,12 +421,12 @@ int DbLineEditorLoop(unsigned char *lines, int art, unsigned char team, int zero
                 }
             }
         }
-        sub_91400(ptr, mx < 0x1C ? 0 : mx - 0x1C, my < 0x20 ? 0 : my - 0x20);
+        GrabBlock(ptr, mx < 0x1C ? 0 : mx - 0x1C, my < 0x20 ? 0 : my - 0x20);
         if (my > menus[0]->y2 && mx < 500 && pick != -1
             && (!menus[1] || !MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item))
             && rosterstat[RREC(pick)] != 2) {
             MakeJerseyShape(jerseyremap, rosterjersey[RREC(pick)], c1, c2);
-            sub_B4DD4(jerseyremap);
+            SetColorRemap(jerseyremap);
             sub_91FE0(art, mx - 0x1C, my - 0x20);
         }
         sub_91FE0(pointerspr, mx - 3, my);

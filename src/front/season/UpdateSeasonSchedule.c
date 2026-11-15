@@ -56,13 +56,13 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     if (!err) {
         MakePath(s.path, dir, (char *)leaguedbnames[5], ext);
         seasondb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        seasondb_size = sub_92DE0(s.path);
+        seasondb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[1], ext);
         careerdb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        careerdb_size = sub_92DE0(s.path);
+        careerdb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[0], ext);
         keydb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        keydb_size = sub_92DE0(s.path);
+        keydb_size = GetFileSize(s.path);
     }
     if (!err && day > 0) {
         if (day <= 0x444) {
@@ -77,7 +77,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     }
     if (!err && seasondb) {
         MakePath(s.path, dir, (char *)leaguedbnames[5], ext);
-        sub_932D0(s.path, seasondb, seasondb_size);
+        WriteFile(s.path, seasondb, seasondb_size);
     }
     if (seasondb) FreeMemBlock((int)seasondb);
     if (careerdb) FreeMemBlock((int)careerdb);
@@ -113,7 +113,7 @@ int BuildPlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, c
 
     human = 0;
     if ((r = GetPlayoffSeeds(seeds, fh, rwfh)) != 0) return r;
-    buf = (unsigned char *)sub_8CCA8((char *)str_sche, 0x276, 0x20);
+    buf = (unsigned char *)AllocMemBlock((char *)str_sche, 0x276, 0x20);
     for (i = 0; i < 0x69; i++) {
         q = buf + i * 6;
         q[0] = q[1] = q[2] = q[3] = q[4] = q[5] = 0xFF;
@@ -141,7 +141,7 @@ int BuildPlayoffs(int fh, int rwfh, int rdfh, unsigned char *teams, char *dir, c
         && !(err = SimPlayoffFinal((int)buf, rwfh, rdfh, dir, ext))
         && !(err = FileWriteAt(fh, buf, 0x199A, 0x276))) {
         MakePath(path, dir, (char *)leaguedbnames[5], ext);
-        sub_932D0(path, seasondb, seasondb_size);
+        WriteFile(path, seasondb, seasondb_size);
         AwardsCeremony();
         byte_DE268 = -1;
         n = 0x4AD;

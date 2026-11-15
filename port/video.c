@@ -788,23 +788,23 @@ int video_int10(ctx_t *c)
 }
 
 /* ---- the game's VESA probe: what the external VESA detection program used to leave in a file ---- */
-extern uint8_t unk_EDBB8[256], unk_EDAB8[256], byte_EDCC0[0x1B];
-extern uint32_t dword_EDCB8;
+extern uint8_t vesainfo[256], vesamodeinfo[256], vesamodeok[0x1B];
+extern uint32_t vesapresent;
 
 void video_fill_vesa_tables(void)
 {
-    memset(unk_EDBB8, 0, 256);
-    memcpy(unk_EDBB8, "VESA", 4);
-    *(uint16_t *)(unk_EDBB8 + 4) = 0x0102;
-    *(uint16_t *)(unk_EDBB8 + 0x12) = 64;
-    memset(unk_EDAB8, 0, 256);
-    *(uint16_t *)unk_EDAB8 = 0x1B;
-    unk_EDAB8[2] = 7;                           /* window A: relocatable, readable, writable */
-    *(uint16_t *)(unk_EDAB8 + 4) = 64;          /* granularity in KB */
-    *(uint16_t *)(unk_EDAB8 + 6) = 64;
-    *(uint16_t *)(unk_EDAB8 + 8) = 0xA000;
-    memset(byte_EDCC0, 1, sizeof byte_EDCC0);   /* every mode 100h-107h is available */
-    dword_EDCB8 = 1;
+    memset(vesainfo, 0, 256);
+    memcpy(vesainfo, "VESA", 4);
+    *(uint16_t *)(vesainfo + 4) = 0x0102;
+    *(uint16_t *)(vesainfo + 0x12) = 64;
+    memset(vesamodeinfo, 0, 256);
+    *(uint16_t *)vesamodeinfo = 0x1B;
+    vesamodeinfo[2] = 7;                           /* window A: relocatable, readable, writable */
+    *(uint16_t *)(vesamodeinfo + 4) = 64;          /* granularity in KB */
+    *(uint16_t *)(vesamodeinfo + 6) = 64;
+    *(uint16_t *)(vesamodeinfo + 8) = 0xA000;
+    memset(vesamodeok, 1, sizeof vesamodeok);   /* every mode 100h-107h is available */
+    vesapresent = 1;
 }
 
 /* window position to game screen position (the window is scaled and letter-boxed) */

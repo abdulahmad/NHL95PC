@@ -2,47 +2,47 @@
 bits 32
 %include "hockey.inc"
 section s_C7DEA progbits alloc noexec write align=1
-extern unk_C744C, unk_C7450, unk_C7DA9, unk_C7DBE, unk_C7DD4
-global msg_MasterDB_arg, msg_MasterDB, unk_C7DFA, unk_C7E10, unk_C7E27, playerdbsmsg, btn_MasterDB
-global unk_C7E86, unk_C7E9B, unk_C7EB9, unk_C7EE2
+extern str_Yes, str_No4, str_MasterDatabasesFor, str_MustBeMergedFirst, str_DoYouWantTo4
+global msg_MasterDB_arg, msg_MasterDB, str_PlayersDatabasesFor, str_MustBeUpdatedFirst, str_DoYouWantTo6, playerdbsmsg, btn_MasterDB
+global str_MasterDatabasesFor2, str_MustBeCompletelyMerged, str_PlayersDatabasesMustBe, str_DoYouWishTo
 msg_MasterDB:
-dd unk_C7DA9
+dd str_MasterDatabasesFor
 msg_MasterDB_arg:
 db 00h,00h,00h,00h
-dd unk_C7DBE
-dd unk_C7DD4
-unk_C7DFA:
+dd str_MustBeMergedFirst
+dd str_DoYouWantTo4
+str_PlayersDatabasesFor:
 db 050h,06Ch,061h,079h,065h,072h,073h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 073h,020h,066h,06Fh,072h,00h
-unk_C7E10:
+str_MustBeUpdatedFirst:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,075h,070h,064h,061h,074h,065h,064h,020h
 db 066h,069h,072h,073h,074h,021h,00h
-unk_C7E27:
+str_DoYouWantTo6:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,075h
 db 070h,064h,061h,074h,065h,03Fh,00h
 playerdbsmsg:
-dd unk_C7DFA
+dd str_PlayersDatabasesFor
 db 00h,00h,00h,00h
-dd unk_C7E10
-dd unk_C7E27
+dd str_MustBeUpdatedFirst
+dd str_DoYouWantTo6
 btn_MasterDB:
 db 010h,00h,00h,00h,05Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
-dd unk_C744C
+dd str_Yes
 db 0F0h,0FFh,0FFh,0FFh,05Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,06h,00h,00h,00h
-dd unk_C7450
-unk_C7E86:
+dd str_No4
+str_MasterDatabasesFor2:
 db 04Dh,061h,073h,074h,065h,072h,020h,064h,061h,074h,061h,062h,061h,073h,065h,073h
 db 020h,066h,06Fh,072h,00h
-unk_C7E9B:
+str_MustBeCompletelyMerged:
 db 06Dh,075h,073h,074h,020h,062h,065h,020h,063h,06Fh,06Dh,070h,06Ch,065h,074h,065h
 db 06Ch,079h,020h,06Dh,065h,072h,067h,065h,064h,020h,061h,06Eh,064h,00h
-unk_C7EB9:
+str_PlayersDatabasesMustBe:
 db 070h,06Ch,061h,079h,065h,072h,073h,020h,064h,061h,074h,061h,062h,061h,073h,065h
 db 073h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,075h,070h,064h,061h,074h,065h
 db 064h,020h,066h,069h,072h,073h,074h,021h,00h
-unk_C7EE2:
+str_DoYouWishTo:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,064h
 db 06Fh,020h,06Dh,065h,072h,067h,065h,020h,061h,06Eh,064h,020h,075h,070h,064h,061h
 db 074h,065h,03Fh,02Eh,00h

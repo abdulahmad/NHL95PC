@@ -58,20 +58,20 @@ int CheckRosterComplete(int x, int y, int team)
         char *pl;
 
         if (skaters < 0x12) {
-            if (0x12 - skaters == 1) pl = (char *)unk_C311D;
+            if (0x12 - skaters == 1) pl = (char *)str_dot2;
             else pl = (char *)str_S6;
             sprintf((char *)buf, fmt, buf + 0x6C, 0x12 - skaters, buf + 0x64, pl);
         } else if (skaters > 0x12) {
-            if (skaters - 0x12 == 1) pl = (char *)unk_C311D;
+            if (skaters - 0x12 == 1) pl = (char *)str_dot2;
             else pl = (char *)str_S6;
             sprintf((char *)buf, fmt, buf + 0x54, skaters - 0x12, buf + 0x64, pl);
         }
         if (*(int *)(buf + 0x74) < 2) {
-            if (2 - *(int *)(buf + 0x74) == 1) pl = (char *)unk_C311D;
+            if (2 - *(int *)(buf + 0x74) == 1) pl = (char *)str_dot2;
             else pl = (char *)str_S6;
             sprintf((char *)buf + 0x1C, fmt, buf + 0x6C, 2 - *(int *)(buf + 0x74), buf + 0x5C, pl);
         } else if (*(int *)(buf + 0x74) > 2) {
-            if (*(int *)(buf + 0x74) - 2 == 1) pl = (char *)unk_C311D;
+            if (*(int *)(buf + 0x74) - 2 == 1) pl = (char *)str_dot2;
             else pl = (char *)str_S6;
             sprintf((char *)buf + 0x1C, fmt, buf + 0x54, *(int *)(buf + 0x74) - 2, buf + 0x5C, pl);
         }

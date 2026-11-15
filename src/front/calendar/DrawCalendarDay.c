@@ -10,7 +10,7 @@
 #undef DrawCalendarDay
 #undef sub_913D0
 
-void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than sub_91370) */
+void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
 
 /* DrawCalendarDay (33FFD, PC only): draw a month of the calendar screen for team. Draws the bkgd art and the
    month art "<mm>9<y>" (93 for October to December, 94 after) from bank, team's crest at 26h, 3Fh, and the Home /
@@ -44,19 +44,19 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
     char *cn;
 
     (void)unused;
-    boxr = sub_B30B4(bank, (char *)str_Boxr);
-    boxb = sub_B30B4(bank, (char *)str_Boxb);
-    sub_9061C(sub_B30B4(bank, (char *)str_Bkgd7));
+    boxr = FindShape(bank, (char *)str_Boxr);
+    boxb = FindShape(bank, (char *)str_Boxb);
+    DrawBitmap(FindShape(bank, (char *)str_Bkgd7));
     sprintf(name, (char *)str_02d9D, month + 1, (month < 9) + 3);
-    sub_9061C(sub_B30B4(bank, name));
+    DrawBitmap(FindShape(bank, name));
     cn = ((char **)crestnames)[team];
     name[0] = '!';
     name[1] = cn[0];
     name[2] = cn[1];
     name[3] = cn[2];
     sub_913D0(crests[team], 0x26, 0x3F);
-    sub_8E9E8(state);
-    sub_8EA18(font);
+    TextSaveState(state);
+    TextSetFont(font);
     fontcolor = 0xC0;
     {
         int hx;
@@ -71,10 +71,10 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
             hy = calrowy[5] + 5;
         }
         fontcolor = 0xB6;
-        sub_91964((char *)str_Home, hx, hy);
+        PrintString((char *)str_Home, hx, hy);
         fontcolor = 0xB7;
         hy += 0xC;
-        sub_91964((char *)str_Away, hx, hy);
+        PrintString((char *)str_Away, hx, hy);
     }
     for (i = 0; i < monthdays[month]; ) {
         d = monthfirstday[month] + i;
@@ -84,9 +84,9 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
         dy = calrowy[dy] + 1;
         sprintf(name, (char *)str_D8, ++i);
         fontcolor = 0xC0;
-        sub_91964(name, dx, dy);
+        PrintString(name, dx, dy);
         fontcolor = 0xFF;
-        sub_91964(name, dx - 1, dy - 1);
+        PrintString(name, dx - 1, dy - 1);
     }
     sel = -1;
     for (i = 0; i < ngames; i++) {
@@ -117,25 +117,25 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
         }
         g = games + i * 6;
         if (g[4] == 0xFF || g[5] == 0xFF) {
-            sub_91370(box, x, y);
-            sub_91370(crests[opp], x, y);
+            DrawArt(box, x, y);
+            DrawArt(crests[opp], x, y);
             sprintf(name, (char *)str_D8, games[i * 6 + 1]);
             fontcolor = 0xFF;
-            sub_91964(name, x + 4, y + 1);
+            PrintString(name, x + 4, y + 1);
             fontcolor = 0xC0;
-            sub_91964(name, x + 3, y);
+            PrintString(name, x + 3, y);
         } else {
-            sub_91370(crests[opp], x, y);
+            DrawArt(crests[opp], x, y);
             sprintf(name, (char *)str_D8, g[1]);
             fontcolor = 0xC0;
-            sub_91964(name, x + 4, y + 1);
+            PrintString(name, x + 4, y + 1);
             fontcolor = 0xFF;
-            sub_91964(name, x + 3, y);
-            sub_91370(box, x, y);
+            PrintString(name, x + 3, y);
+            DrawArt(box, x, y);
             fontcolor = 0xFF;
-            sub_91964(score, x + 0x27 - (fputchar(score) >> 1), y + 0x31);
+            PrintString(score, x + 0x27 - (fputchar(score) >> 1), y + 0x31);
             fontcolor = 0xC0;
-            sub_91964(score, x + 0x26 - (fputchar(score) >> 1), y + 0x30);
+            PrintString(score, x + 0x26 - (fputchar(score) >> 1), y + 0x30);
         }
         if (games[i * 6] == calselmonth && games[i * 6 + 1] == calselday) sel = i;
     }
@@ -156,5 +156,5 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
         sub_B4FAC(x - 1, y2, x2, y2, 0xBB);
         sub_B4FAC(x, y2 - 1, x2 - 1, y2 - 1, 0xBB);
     }
-    sub_8EA00(state);
+    TextRestoreState(state);
 }

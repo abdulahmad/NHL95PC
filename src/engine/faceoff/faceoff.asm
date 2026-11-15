@@ -4,10 +4,10 @@ bits 32
 %include "hockey.inc"
 section s_51115 progbits alloc exec nowrite align=1
 extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmflags
-extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, byte_CCBBA, byte_CCBBB, byte_E0393
-extern byte_E0397, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
+extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
+extern fofdata2_b7, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
 extern checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
-extern doshot, DrawPanelLine, dword_CC0EC, dword_CC0FA, dword_E0244, dword_E9A9E, Endfaceoff, energywarn
+extern doshot, DrawPanelLine, demoflag, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
 extern EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1, fodir2, fofdata2, forcepldata
 extern fox, foy, FreeMemBlock, gameclock, gameopts, gmode, gmode2, gsp
 extern hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline, hmtmpdst, hmtmstruct, iflags
@@ -19,8 +19,8 @@ extern refsignal, RefStep, regd0, regd1, regd2, regd4, ResetBench, resetplstuff
 extern restorepl, ReturnGoalies, SetExitGame, setpersonel, Setplass, setplayer, SetSPA, SetupPenaltyShot
 extern sflags, sflags3, sfx, skateto, skatetopuck, SkateToSpot, SortCords, sortobj15
 extern SprSort, SprSortVert, StartFaceoffLineChange, Stop4Pen, StopDigiSample, textline1, textline2, textline3
-extern textline4, textline5, threat, updateanim, vtoa, word_C90D8, word_CBC44, word_CBE8C
-extern word_CBE8E, word_CBEC6, word_E0392, word_E0394, word_E0396, word_E0398, word_E039A, word_E9AAE
+extern textline4, textline5, threat, updateanim, vtoa, penaltysc, word_CBC44, puckfaceoff2_ptab
+extern puckfaceoff2_ptab_y, injurystop, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata, fofdata_w2, penevteam
 extern xc1, yc1, yleader
 global TakePlayerFromBox, TakePlayerFromBox_ret6, TakePlayerFromBox_ret5, PenShotStart, ForceStartLineup, PenShotAssign, AllInPlace, assleavebox
 global puckfaceoff, puckfaceoff2, assbenchwait, asstakeposition, check4bench, asspsclear, assrefpenshot
@@ -167,7 +167,7 @@ ForceStartLineup:
 push dword 8	; 5125F
 call __CHK	; 51264
 push edx	; 51269
-cmp dword [dword_CC0EC], byte 0	; 5126A
+cmp dword [demoflag], byte 0	; 5126A
 jne short .x	; 51271
 cmp word [gsp], byte 0	; 51273
 jne short .x	; 5127B
@@ -922,11 +922,11 @@ dec edx	; 51BFB
 mov word [byte esi+temp5], dx	; 51BFC
 test dx, dx	; 51C00
 jle near .2	; 51C03
-cmp dword [dword_CC0EC], byte 0	; 51C09
+cmp dword [demoflag], byte 0	; 51C09
 jne short .2	; 51C10
 cmp dword [introskipped], byte 0	; 51C12
 jne short .2	; 51C19
-cmp word [word_CBEC6], byte 0	; 51C1B
+cmp word [injurystop], byte 0	; 51C1B
 jne short .2	; 51C23
 cmp word [gsp], byte 0	; 51C25
 jne short .1	; 51C2D
@@ -951,7 +951,7 @@ mov eax, dword [ovlseq-2]	; 51C7E
 sar eax, 10h	; 51C83
 cmp eax, byte 0FFFFFFFFh	; 51C86
 je short .3	; 51C89
-mov edi, dword [dword_E0244]	; 51C8B
+mov edi, dword [ovlartbank]	; 51C8B
 push edi	; 51C91
 call FreeMemBlock	; 51C92
 add esp, byte 4	; 51C97
@@ -985,7 +985,7 @@ xor cl, cl	; 51D0E
 mov byte [textline1], cl	; 51D10
 xor ch, ch	; 51D16
 mov byte [textline3], ch	; 51D18
-cmp dword [dword_CC0EC], byte 0	; 51D1E
+cmp dword [demoflag], byte 0	; 51D1E
 jne short .4	; 51D25
 cmp word [gsp], byte 0	; 51D27
 jne short .4	; 51D2F
@@ -1000,11 +1000,11 @@ xor edx, edx	; 51D53
 mov word [fadeinpending], dx	; 51D55
 jmp short .7	; 51D5C
 .4:
-cmp dword [dword_CC0EC], byte 0	; 51D5E
+cmp dword [demoflag], byte 0	; 51D5E
 jne short .5	; 51D65
 cmp dword [introskipped], byte 0	; 51D67
 jne short .5	; 51D6E
-mov cx, word [word_CBEC6]	; 51D70
+mov cx, word [injurystop]	; 51D70
 test cx, cx	; 51D77
 je short .6	; 51D7A
 .5:
@@ -1017,7 +1017,7 @@ mov word [RefStep], 0FFFFh	; 51D8E
 xor ebp, ebp	; 51D97
 mov dword [introskipped], ebp	; 51D99
 xor ecx, ecx	; 51D9F
-mov word [word_CBEC6], cx	; 51DA1
+mov word [injurystop], cx	; 51DA1
 and byte [sflags], 0FEh	; 51DA8
 and byte [sflags3], 0FEh	; 51DAF
 xor dl, dl	; 51DB6
@@ -1120,8 +1120,8 @@ mov word [byte eax+Xpos+2], dx	; 51F50
 mov word [byte eax+Ypos+2], 0FF14h	; 51F54
 mov word [RefPen], dx	; 51F5A
 mov eax, 0FFFFFFFFh	; 51F61
-mov word [word_C90D8], ax	; 51F66
-mov word [word_E9AAE], ax	; 51F6C
+mov word [penaltysc], ax	; 51F66
+mov word [penevteam], ax	; 51F6C
 mov ax, word [fox]	; 51F72
 mov word [ltx], ax	; 51F78
 mov ax, word [foy]	; 51F7E
@@ -1316,9 +1316,9 @@ add eax, eax	; 5226E
 mov word [regd4], ax	; 52270
 mov eax, dword [regd4-2]	; 52276
 sar eax, 10h	; 5227B
-mov dx, word [nosplit eax*2+word_CBE8C]	; 5227E
+mov dx, word [nosplit eax*2+puckfaceoff2_ptab]	; 5227E
 mov word [regd0], dx	; 52286
-mov ax, word [nosplit eax*2+word_CBE8E]	; 5228D
+mov ax, word [nosplit eax*2+puckfaceoff2_ptab_y]	; 5228D
 mov word [regd1], ax	; 52295
 test byte [byte ebx+pflags], 80h	; 5229B
 jne short .32	; 5229F
@@ -1579,15 +1579,15 @@ add eax, 0B4h	; 52615
 mov word [byte esi+temp1], ax	; 5261A
 mov word [fofdata2], 1	; 5261E
 mov ecx, 8000h	; 52627
-mov word [word_E0392], cx	; 5262C
-mov word [word_E0394], 4	; 52633
-mov word [word_E0396], 0A800h	; 5263C
-mov word [word_E0398], 7	; 52645
-mov word [word_E039A], cx	; 5264E
+mov word [fofdata2_w2], cx	; 5262C
+mov word [fofdata2_w4], 4	; 52633
+mov word [fofdata2_w6], 0A800h	; 5263C
+mov word [fofdata], 7	; 52645
+mov word [fofdata_w2], cx	; 5264E
 test byte [gmode], 2	; 52655
 jne short .63	; 5265C
-xor byte [byte_E0393], 8	; 5265E
-xor byte [byte_E0397], 8	; 52665
+xor byte [fofdata2_b3], 8	; 5265E
+xor byte [fofdata2_b7], 8	; 52665
 .63:
 mov ebx, 0FFFFFFFFh	; 5266C
 mov word [fodir2], bx	; 52671
@@ -1616,7 +1616,7 @@ cmp ax, 2	; 526C4
 jg near TakePlayerFromBox_ret6	; 526C8
 mov edx, 0Ah	; 526CE
 sub edx, eax	; 526D3
-mov word [word_E0398], dx	; 526D5
+mov word [fofdata], dx	; 526D5
 jmp near TakePlayerFromBox_ret6	; 526DC
 .66:
 mov eax, esi	; 526E1
@@ -1726,9 +1726,9 @@ add eax, eax	; 52828
 mov word [regd4], ax	; 5282A
 mov eax, dword [regd4-2]	; 52830
 sar eax, 10h	; 52835
-mov dx, word [nosplit eax*2+word_CBE8C]	; 52838
+mov dx, word [nosplit eax*2+puckfaceoff2_ptab]	; 52838
 mov word [regd0], dx	; 52840
-mov ax, word [nosplit eax*2+word_CBE8E]	; 52847
+mov ax, word [nosplit eax*2+puckfaceoff2_ptab_y]	; 52847
 mov word [regd1], ax	; 5284F
 test byte [byte ebx+pflags], 80h	; 52855
 jne short .5	; 52859

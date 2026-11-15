@@ -2,39 +2,39 @@
 bits 32
 %include "hockey.inc"
 section s_DF7CA nobits alloc noexec write align=1
-global awtmpbox, byte_DF7E6, byte_DF7E7, byte_DF7E8, byte_DF7E9, scpflags2
-global byte_DF87F, puckasslist, puckpflags2, byte_DFFA6, doorpflags, byte_DFFE2, byte_E003A, byte_E0072
-global byte_E0073, byte_E0074, byte_E024C, byte_E024D, byte_E024F, textline1, textline2, textline3
-global textline4, textline5, PlList, byte_E038A, byte_E0393, byte_E0397, byte_E03C1, dword_DF7EA
-global awtmlines, dword_DF7F2, dword_DF7F6, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
-global puckcross_m2, dword_DF848, puckstruct
-global sortobj15, dword_E009C, photoptrsf, dword_E0220, dword_E0230
-global dword_E0244, ovlscript, dword_E038E, recbpr, replayplay, dword_E03A8
-global dword_E03AE, dword_E03B6, dword_E03B9, dword_E03BD, SortCords
-global unk_DFD9C, unk_DFF5E, regd4, word_DF80E, puckcross
-global word_DF816, word_DF81A
+global awtmpbox, awtmcoach_d2, awtmcoach_d3, awtmcoachflags, awtmcoachmode, scpflags2
+global byte_DF87F, puckasslist, puckpflags2, doorZpos2, doorpflags, byte_DFFE2, refasslist, refweight
+global reflegstr, reflegspd, milestonesaid, milestonesaid_b1, milestonesaid_b3, textline1, textline2, textline3
+global textline4, textline5, PlList, byte_E038A, fofdata2_b3, fofdata2_b7, regd1_b1, awtmcoachenergy
+global awtmlines, awtmplattr, awtmglattr, awtmplstats, awtmglstats, awtmroster, awtmptrF2, awtmsort
+global puckcross_m2, sctemp4, puckstruct
+global sortobj15, SumCwdExciteLvl, photoptrsf, dword_E0220, dword_E0230
+global ovlartbank, ovlscript, fofdata2_m2, recbpr, replayplay, dword_E03A8
+global regd3_m2, regd5_m2, regd0_m3, regd1_m3, SortCords
+global sortobj11, unk_DFF5E, regd4, awtmgoaliesc, puckcross
+global puckcross2, puckcross6
 global pucktemp1, pucknopuck
-global doortemp1, word_E0022, word_E0028, word_E002A, word_E002E
-global word_E0036, word_E0042, word_E0046, word_E0048, word_E004A, word_E024E, lcrequest
-global lcreqchoice, fofdata2, word_E0392, word_E0394, word_E0396, word_E0398
-global word_E039A, word_E03A0, regd2, regd3, word_E03B8, regd0, regd1
+global doortemp1, refYpos2, refXvel, refYvel, refframe
+global refposition, reftemp1, reftemp3, reftemp4, reftemp5, milestonesaid_b2, lcrequest
+global lcreqchoice, fofdata2, fofdata2_w2, fofdata2_w4, fofdata2_w6, fofdata
+global fofdata_w2, word_E03A0, regd2, regd3, regd5, regd0, regd1
 awtmpbox:
 resb 28
-byte_DF7E6:
+awtmcoach_d2:
 resb 1
-byte_DF7E7:
+awtmcoach_d3:
 resb 1
-byte_DF7E8:
+awtmcoachflags:
 resb 1
-byte_DF7E9:
+awtmcoachmode:
 resb 1
-dword_DF7EA:
+awtmcoachenergy:
 resb 4
 awtmlines:
 resb 4
-dword_DF7F2:
+awtmplattr:
 resb 4
-dword_DF7F6:
+awtmglattr:
 resb 4
 awtmplstats:
 resb 4
@@ -46,16 +46,16 @@ awtmptrF2:
 resb 4
 awtmsort:
 resb 4
-word_DF80E:
+awtmgoaliesc:
 resb 4
 puckcross_m2:
 resb 2
 puckcross:
 resb 2
-word_DF816:
+puckcross2:
 resb 1
 resb 3
-word_DF81A:
+puckcross6:
 resb 1
 resb 1
 SortCords:
@@ -64,7 +64,7 @@ resb 2
 resb 2
 resb 20
 resb 18
-dword_DF848:
+sctemp4:
 resb 2
 resb 16
 resb 6
@@ -74,7 +74,7 @@ resb 30
 byte_DF87F:
 resb 669
 resb 640
-unk_DFD9C:
+sortobj11:
 resb 128
 resb 2
 resb 4
@@ -110,7 +110,7 @@ resb 2
 resb 2
 resb 2
 resb 4
-byte_DFFA6:
+doorZpos2:
 resb 6
 resb 2
 resb 20
@@ -124,34 +124,34 @@ resb 14
 resb 44
 resb 2
 resb 4
-word_E0022:
+refYpos2:
 resb 6
-word_E0028:
+refXvel:
 resb 2
-word_E002A:
+refYvel:
 resb 4
-word_E002E:
+refframe:
 resb 8
-word_E0036:
+refposition:
 resb 4
-byte_E003A:
+refasslist:
 resb 8
-word_E0042:
+reftemp1:
 resb 4
-word_E0046:
+reftemp3:
 resb 2
-word_E0048:
+reftemp4:
 resb 2
-word_E004A:
+reftemp5:
 resb 8
 resb 32
-byte_E0072:
+refweight:
 resb 1
-byte_E0073:
+reflegstr:
 resb 1
-byte_E0074:
+reflegspd:
 resb 40
-dword_E009C:
+SumCwdExciteLvl:
 resb 4
 photoptrsf:
 resb 384
@@ -159,17 +159,17 @@ dword_E0220:
 resb 16
 dword_E0230:
 resb 20
-dword_E0244:
+ovlartbank:
 resb 4
 ovlscript:
 resb 4
-byte_E024C:
+milestonesaid:
 resb 1
-byte_E024D:
+milestonesaid_b1:
 resb 1
-word_E024E:
+milestonesaid_b2:
 resb 1
-byte_E024F:
+milestonesaid_b3:
 resb 1
 textline1:
 resb 60
@@ -192,23 +192,23 @@ PlList:
 resb 6
 byte_E038A:
 resb 4
-dword_E038E:
+fofdata2_m2:
 resb 2
 fofdata2:
 resb 2
-word_E0392:
+fofdata2_w2:
 resb 1
-byte_E0393:
+fofdata2_b3:
 resb 1
-word_E0394:
+fofdata2_w4:
 resb 2
-word_E0396:
+fofdata2_w6:
 resb 1
-byte_E0397:
+fofdata2_b7:
 resb 1
-word_E0398:
+fofdata:
 resb 2
-word_E039A:
+fofdata_w2:
 resb 2
 recbpr:
 resb 4
@@ -221,26 +221,26 @@ resb 2
 resb 2
 regd2:
 resb 2
-dword_E03AE:
+regd3_m2:
 resb 2
 regd3:
 resb 2
 resb 2
 regd4:
 resb 2
-dword_E03B6:
+regd5_m2:
 resb 2
-word_E03B8:
+regd5:
 resb 1
-dword_E03B9:
+regd0_m3:
 resb 1
 resb 2
 regd0:
 resb 1
-dword_E03BD:
+regd1_m3:
 resb 1
 resb 2
 regd1:
 resb 1
-byte_E03C1:
+regd1_b1:
 resb 3

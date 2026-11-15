@@ -4,7 +4,7 @@ bits 32
 section s_9AFB0 progbits alloc exec nowrite align=1
 extern __qwrite_, __set_errno_, __SetIOMode_, _nfree_, _nmalloc_, dword_EDF00, dword_F24C8, isatty_
 extern loc_9B544, loc_9B565, loc_9B589, loc_9B5A9, loc_9B5C9, loc_9B61A, loc_9B66B, loc_9B6B3
-extern loc_9B6F7, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, word_D4CE4
+extern loc_9B6F7, lseek_, memset_, tell_, unk_D4D18, unk_D4F20, _psp
 global tolower_, loc_9AFBD, __allocfp_, loc_9AFE6, loc_9AFED, loc_9B00A, loc_9B00D, loc_9B02F
 global loc_9B054, loc_9B060, __freefp_, loc_9B070, loc_9B081, loc_9B09B, loc_9B09F, loc_9B0A0
 global loc_9B0BB, __update_buffer_, loc_9B0E9, fseek_, loc_9B125, loc_9B12F, loc_9B138, loc_9B140
@@ -302,7 +302,7 @@ pop ecx	; 9B229
 pop ebx	; 9B22A
 ret	; 9B22B
 sub_9B22C:
-mov eax, dword [word_D4CE4]	; 9B22C
+mov eax, dword [_psp]	; 9B22C
 ret	; 9B231
 __flush_:
 push ebx	; 9B232

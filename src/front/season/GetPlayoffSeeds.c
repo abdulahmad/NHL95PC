@@ -5,7 +5,7 @@
  of the 12 teams of the first conference (confteams) and sort them by standings (SortStandings: points = 2 x wins
  (+29h) + ties (+2Bh), wins, goals for (+2Ch), goals against (+2Eh)); unless the top two come from both
  divisions (teamdivflags or-ed 3), the best team of the other division moves up to seed 2. The same for the 14
- teams of the second conference (dword_C5619, seeds + 38h, divisions 0Ch). b unused. Returns 0 or the read
+ teams of the second conference (poconf2teams, seeds + 38h, divisions 0Ch). b unused. Returns 0 or the read
  error. */
 int GetPlayoffSeeds(int *seeds, int b, int fd)
 {
@@ -37,9 +37,9 @@ int GetPlayoffSeeds(int *seeds, int b, int fd)
         seeds[1] = t;
     }
     for (i = 0; i < 14; i++) {
-        r = ReadTeamRec(fd, rec, dword_C5619[i]);
+        r = ReadTeamRec(fd, rec, poconf2teams[i]);
         if (r) return r;
-        seeds[i + 14] = dword_C5619[i];
+        seeds[i + 14] = poconf2teams[i];
         pts[i] = rec[0x29] * 2 + rec[0x2B];
         wins[i] = rec[0x29];
         gf[i] = *(unsigned short *)(rec + 0x2C);

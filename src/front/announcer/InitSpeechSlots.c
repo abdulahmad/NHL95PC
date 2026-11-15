@@ -9,7 +9,7 @@ void InitSpeechSlots(int size)
 
     for (i = 0; i < 400; i++) ClearSpeechSlot((unsigned char *)&speechbank[i]);
     *(int *)((char *)speechbank + 0x3B68) = size - 0x1388;
-    *(int *)((char *)speechbank + 0x3B60) = sub_8CC70((char *)str_Speechbuf, size, dword_CCC94);
+    *(int *)((char *)speechbank + 0x3B60) = sub_8CC70((char *)str_Speechbuf, size, cursndbank);
     *(int *)((char *)speechbank + 0x3B64) = sub_8DBD4(*(int *)((char *)speechbank + 0x3B60));
     *(int *)((char *)speechbank + 0x3B6C) = 0;
     *(int *)((char *)speechbank + 0x3B74) = 0;

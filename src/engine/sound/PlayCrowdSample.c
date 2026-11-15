@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* PlayCrowdSample: play crowd cue n. Below 6: the rock cue rockteamcues[n] when loaded (then
- n becomes 12, nothing more), else a random cue 6-8. Cues 6-8 play dword_ED374[n], 9-11 leaguesetimg[n] (the
+ n becomes 12, nothing more), else a random cue 6-8. Cues 6-8 play crowdsamples[n], 9-11 leaguesetimg[n] (the
  tables as the original indexes them); 12 and up play nothing. */
 void PlayCrowdSample(int n)
 {
@@ -14,7 +14,7 @@ void PlayCrowdSample(int n)
             n = (rand() & 0x7FFF) % 3 + 6;
         }
     }
-    if (n < 9) PlayDigiSample((void *)dword_ED374[n]);
+    if (n < 9) PlayDigiSample((void *)crowdsamples[n]);
     else if (n < 12) PlayDigiSample((void *)leaguesetimg[n]);
 }
 

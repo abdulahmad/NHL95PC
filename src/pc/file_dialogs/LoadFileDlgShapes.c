@@ -23,19 +23,19 @@ void LoadFileDlgShapes(void)
 
     if (!fdlgshapes) {
         MakePath(path, fileoncd[0x1C6] == 1 ? (char *)cddriveptr : 0, (char *)str_OpenBut, 0);
-        fdlgshapes = sub_8E83C(path, 0);
-        fdlg_none = sub_B30B4(fdlgshapes, (char *)str_None);
-        fdlg_del = sub_B30B4(fdlgshapes, (char *)str_Del);
-        fdlg_open = sub_B30B4(fdlgshapes, (char *)str_Open);
-        fdlg_cancel = sub_B30B4(fdlgshapes, (char *)str_Can);
-        fdlg_noarrow = sub_B30B4(fdlgshapes, (char *)str_Noar);
-        fdlg_up = sub_B30B4(fdlgshapes, (char *)str_Up);
-        fdlg_down = sub_B30B4(fdlgshapes, (char *)str_Down);
-        fdlg_arrow = sub_B30B4(fdlgshapes, (char *)str_Arro);
-        fdlg_tabnone = sub_B30B4(fdlgshapes, (char *)str_Gtno);
-        fdlg_tabexh = sub_B30B4(fdlgshapes, (char *)str_Gtex);
-        fdlg_tablp = sub_B30B4(fdlgshapes, (char *)str_Gtlp);
-        fdlg_tabpo = sub_B30B4(fdlgshapes, (char *)str_Gtpo);
+        fdlgshapes = LoadBank(path, 0);
+        fdlg_none = FindShape(fdlgshapes, (char *)str_None);
+        fdlg_del = FindShape(fdlgshapes, (char *)str_Del);
+        fdlg_open = FindShape(fdlgshapes, (char *)str_Open);
+        fdlg_cancel = FindShape(fdlgshapes, (char *)str_Can);
+        fdlg_noarrow = FindShape(fdlgshapes, (char *)str_Noar);
+        fdlg_up = FindShape(fdlgshapes, (char *)str_Up);
+        fdlg_down = FindShape(fdlgshapes, (char *)str_Down);
+        fdlg_arrow = FindShape(fdlgshapes, (char *)str_Arro);
+        fdlg_tabnone = FindShape(fdlgshapes, (char *)str_Gtno);
+        fdlg_tabexh = FindShape(fdlgshapes, (char *)str_Gtex);
+        fdlg_tablp = FindShape(fdlgshapes, (char *)str_Gtlp);
+        fdlg_tabpo = FindShape(fdlgshapes, (char *)str_Gtpo);
     }
 }
 
@@ -45,38 +45,38 @@ void LoadFileDlgShapes(void)
  are the exhibition, playoff and league sprites. */
 void DrawFileDlgTabs(void)
 {
-    sub_8E9C0(0xF8, 0xFF);
+    TextSetColors(0xF8, 0xFF);
     if (fdlgtab < 0) {
-        sub_91964((char *)str_Open2, 0x2A, 0xC0);
-        sub_91964((char *)str_Delete, 0x6B, 0xC0);
-        sub_8E9C0(0xFA, 0xFF);
-        sub_91964((char *)str_Done, 0xB8, 0xC0);
-        sub_8E9C0(0xF8, 0xFF);
-        sub_91964((char *)str_Exhibition, 0xA7, 0x4C);
-        sub_91964((char *)str_Playoffs, 0xAB, 0x64);
-        sub_91964((char *)str_League, 0xB0, 0x7C);
-        sub_91370(fdlg_noarrow, 0x18, 0x46);
-        sub_91370(fdlg_tabnone, 0xA3, 0x4B);
+        PrintString((char *)str_Open2, 0x2A, 0xC0);
+        PrintString((char *)str_Delete, 0x6B, 0xC0);
+        TextSetColors(0xFA, 0xFF);
+        PrintString((char *)str_Done, 0xB8, 0xC0);
+        TextSetColors(0xF8, 0xFF);
+        PrintString((char *)str_Exhibition, 0xA7, 0x4C);
+        PrintString((char *)str_Playoffs, 0xAB, 0x64);
+        PrintString((char *)str_League, 0xB0, 0x7C);
+        DrawArt(fdlg_noarrow, 0x18, 0x46);
+        DrawArt(fdlg_tabnone, 0xA3, 0x4B);
     } else {
         if ((fdlgmask[0] & 0x80) == 0)
-            sub_91964((char *)str_League, 0xB0, 0x7C);
+            PrintString((char *)str_League, 0xB0, 0x7C);
         if ((fdlgmask[0] & 0x40) == 0)
-            sub_91964((char *)str_Playoffs, 0xAB, 0x64);
+            PrintString((char *)str_Playoffs, 0xAB, 0x64);
         if ((fdlgmask[0] & 0x20) == 0)
             sub_92CD0((char *)str_Exhibition, 0xA7, 0x4C);
-        if (*(int *)off_C6F7C[fdlgtab] <= 6)
-            sub_91370(fdlg_noarrow, 0x18, 0x46);
+        if (*(int *)fdlgfilelists[fdlgtab] <= 6)
+            DrawArt(fdlg_noarrow, 0x18, 0x46);
         else
-            sub_91370(fdlg_arrow, 0x18, 0x46);
+            DrawArt(fdlg_arrow, 0x18, 0x46);
         switch (fdlgtab) {
         case 0:
-            sub_91370(fdlg_tabexh, 0xA3, 0x4B);
+            DrawArt(fdlg_tabexh, 0xA3, 0x4B);
             break;
         case 1:
-            sub_91370(fdlg_tabpo, 0xA3, 0x4B);
+            DrawArt(fdlg_tabpo, 0xA3, 0x4B);
             break;
         case 2:
-            sub_91370(fdlg_tablp, 0xA3, 0x4B);
+            DrawArt(fdlg_tablp, 0xA3, 0x4B);
             break;
         }
     }
@@ -204,8 +204,8 @@ void DrawFileDlg(void)
 
     sub_B4BA8();
     MakePath(path, fileoncd[0x63] == 1 ? (char *)cddriveptr : 0, (char *)str_Dialogbx, 0);
-    bank = sub_8E83C(path, 0);
-    sub_91284(sub_B30B4(bank, (char *)str_Dbox), 0xA, 0x13);
+    bank = LoadBank(path, 0);
+    sub_91284(FindShape(bank, (char *)str_Dbox), 0xA, 0x13);
     FreeMemBlock(bank);
     *(int *)fdlgmask = 0x10;
     fdlgtab = -1;
@@ -223,10 +223,10 @@ void DrawFileDlg(void)
     }
     if (fdlgtab < 0) return;
     *(short *)fdlgmask |= 0x20C;
-    sub_8E9C0(0xFA, 0xFF);
-    l = (FileList *)off_C6F7C[fdlgtab];
+    TextSetColors(0xFA, 0xFF);
+    l = (FileList *)fdlgfilelists[fdlgtab];
     PrintTextCopy(l->names[l->sel], ((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x13);
-    sub_90D20(((FRect *)fdlgrects)[0xA].x1 + 0xA, ((FRect *)fdlgrects)[0xA].y1 + 0x13,
+    FillRect(((FRect *)fdlgrects)[0xA].x1 + 0xA, ((FRect *)fdlgrects)[0xA].y1 + 0x13,
         ((FRect *)fdlgrects)[0xA].x2 - ((FRect *)fdlgrects)[0xA].x1 + 1,
         ((FRect *)fdlgrects)[0xA].y2 - ((FRect *)fdlgrects)[0xA].y1 + 1, 0xF8);
     for (i = l->top, j = 0xA; i <= l->bottom; i++, j++)
@@ -272,13 +272,13 @@ int DrawFileDlgList(FileList *l)
     int x2;
     int y2;
 
-    sub_8E9C0(0xFA, 0xFF);
+    TextSetColors(0xFA, 0xFF);
     for (i = 0; i < 6; i++)
-        sub_90D20(((FRect *)fdlgrects)[0xA + i].x1 + 0xA, ((FRect *)fdlgrects)[0xA + i].y1 + 0x13,
+        FillRect(((FRect *)fdlgrects)[0xA + i].x1 + 0xA, ((FRect *)fdlgrects)[0xA + i].y1 + 0x13,
             ((FRect *)fdlgrects)[0xA + i].x2 - ((FRect *)fdlgrects)[0xA + i].x1 + 1,
             ((FRect *)fdlgrects)[0xA + i].y2 - ((FRect *)fdlgrects)[0xA + i].y1 + 1, 0xF9);
     if (!l) {
-        sub_90D20(((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x16,
+        FillRect(((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x16,
             ((FRect *)fdlgrects)[9].x2 - ((FRect *)fdlgrects)[9].x1 - 5,
             ((FRect *)fdlgrects)[9].y2 - ((FRect *)fdlgrects)[9].y1 - 5, 0xF8);
         r = 0;
@@ -293,20 +293,20 @@ int DrawFileDlgList(FileList *l)
                 ((FRect *)fdlgrects)[0xA + i].y1 + 0x10);
     }
     if (l->count > 0) {
-        sub_90D20(((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x16,
+        FillRect(((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x16,
             ((FRect *)fdlgrects)[9].x2 - ((FRect *)fdlgrects)[9].x1 - 5,
             ((FRect *)fdlgrects)[9].y2 - ((FRect *)fdlgrects)[9].y1 - 5, 0xF8);
         PrintTextCopy(l->names[l->sel], ((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x13);
     }
     if (l->sel >= l->top && l->sel <= l->bottom) {
         i = l->sel - l->top;
-        sub_90D20(((FRect *)fdlgrects)[0xA + i].x1 + 0xA, ((FRect *)fdlgrects)[0xA + i].y1 + 0x13,
+        FillRect(((FRect *)fdlgrects)[0xA + i].x1 + 0xA, ((FRect *)fdlgrects)[0xA + i].y1 + 0x13,
             ((FRect *)fdlgrects)[0xA + i].x2 - ((FRect *)fdlgrects)[0xA + i].x1,
             ((FRect *)fdlgrects)[0xA + i].y2 - ((FRect *)fdlgrects)[0xA + i].y1, 0xF8);
         PrintTextCopy(l->names[l->top + i], ((FRect *)fdlgrects)[0xA + i].x1 + 0xA,
             ((FRect *)fdlgrects)[0xA + i].y1 + 0x10);
     }
-    sub_90D20(((FRect *)fdlgrects)[8].x1 + 0xA, ((FRect *)fdlgrects)[8].y1 + 0x13,
+    FillRect(((FRect *)fdlgrects)[8].x1 + 0xA, ((FRect *)fdlgrects)[8].y1 + 0x13,
         ((FRect *)fdlgrects)[8].x2 - ((FRect *)fdlgrects)[8].x1 + 1,
         ((FRect *)fdlgrects)[8].y2 - ((FRect *)fdlgrects)[8].y1 + 1, 0xF9);
     if (l->count <= 6) {
@@ -330,19 +330,19 @@ int DrawFileDlgList(FileList *l)
         sub_B4FAC(x2, y + 1, x2, y2, 0xF8);
         sub_B4FAC(x + 1, y2, x2, y2, 0xF8);
     }
-    if (*(int *)off_C6F7C[fdlgtab] <= 6)
-        sub_91370(fdlg_noarrow, 0x18, 0x46);
+    if (*(int *)fdlgfilelists[fdlgtab] <= 6)
+        DrawArt(fdlg_noarrow, 0x18, 0x46);
     else
-        sub_91370(fdlg_arrow, 0x18, 0x46);
+        DrawArt(fdlg_arrow, 0x18, 0x46);
     switch (fdlgtab) {
     case 0:
-        sub_91370(fdlg_tabexh, 0xA3, 0x4B);
+        DrawArt(fdlg_tabexh, 0xA3, 0x4B);
         break;
     case 1:
-        sub_91370(fdlg_tabpo, 0xA3, 0x4B);
+        DrawArt(fdlg_tabpo, 0xA3, 0x4B);
         break;
     case 2:
-        sub_91370(fdlg_tablp, 0xA3, 0x4B);
+        DrawArt(fdlg_tablp, 0xA3, 0x4B);
         break;
     }
 done:
@@ -352,7 +352,7 @@ done:
 typedef struct { char c[17]; } Hdr17;
 
 /* RunFileDlg (2C801, PC only; ends in DrawFileDlg_x): run the saved-games dialog with the mouse pointer (a
-   POINTER block holds the screen under it) on the list of the shown tab (off_C6F7C[fdlgtab]). Button 1 held on the
+   POINTER block holds the screen under it) on the list of the shown tab (fdlgfilelists[fdlgtab]). Button 1 held on the
    scroll bar (box 8, when fdlgmask enables it) drags the shown rows with the pointer (the first event only starts
    the drag); a move too small to scroll a row is kept (from dragy) until it adds up. A click (event bit 2) on an
    enabled box: the arrows scroll one row, the bar brings the clicked position into view, the three tabs switch the
@@ -381,18 +381,18 @@ int RunFileDlg(void)
 
     drag = 0;
     slow = 0;
-    sub_B2DCA(&btn, &ox, &oy);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer5, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer5, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
-    sub_91370(pointerspr, x - 4, y);
-    l = (FileList *)off_C6F7C[fdlgtab];
+    GrabBlock(bm, x - 4, y);
+    DrawArt(pointerspr, x - 4, y);
+    l = (FileList *)fdlgfilelists[fdlgtab];
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -405,15 +405,15 @@ int RunFileDlg(void)
         if (btn == 0) {
             if (x != ox || y != oy) {
                 sub_B4BA8();
-                sub_903F0(bm, ox - 4, oy);
-                sub_91400(bm, x - 4, y);
-                sub_91370(pointerspr, x - 4, y);
+                PutBlock(bm, ox - 4, oy);
+                GrabBlock(bm, x - 4, y);
+                DrawArt(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
             continue;
         }
-        sub_910E0(bm, ox - 4, oy);
+        DrawArtOpaque(bm, ox - 4, oy);
         if ((btn & 1) && (fdlgmask[1] & 1)) {
             if (ox != x || oy != y) {
                 if (FileDlgHitTest(x, y, &hit) && hit == 8) {
@@ -470,11 +470,11 @@ int RunFileDlg(void)
                 if (hit & *(int *)fdlgmask) {
                     switch (hit) {
                     case 0x10:
-                        sub_91370(fdlg_cancel, 0x20, 0xBF);
+                        DrawArt(fdlg_cancel, 0x20, 0xBF);
                         FreeMemBlock(bm);
                         return 0;
                     case 1:
-                        sub_91370(fdlg_up, 0x18, 0x46);
+                        DrawArt(fdlg_up, 0x18, 0x46);
                         if (l->top != 0) {
                             l->top--;
                             l->bottom--;
@@ -482,7 +482,7 @@ int RunFileDlg(void)
                         }
                         break;
                     case 2:
-                        sub_91370(fdlg_down, 0x18, 0x46);
+                        DrawArt(fdlg_down, 0x18, 0x46);
                         if (l->bottom + 1 < l->count) {
                             l->top++;
                             l->bottom++;
@@ -514,31 +514,31 @@ int RunFileDlg(void)
                         break;
                     case 0x20:
                         fdlgtab = 0;
-                        l = (FileList *)off_C6F7C[0];
+                        l = (FileList *)fdlgfilelists[0];
                         DrawFileDlgList(l);
                         break;
                     case 0x40:
                         fdlgtab = 1;
-                        l = (FileList *)off_C6F7C[1];
+                        l = (FileList *)fdlgfilelists[1];
                         DrawFileDlgList(l);
                         break;
                     case 0x80:
                         fdlgtab = 2;
-                        l = (FileList *)off_C6F7C[2];
+                        l = (FileList *)fdlgfilelists[2];
                         DrawFileDlgList(l);
                         break;
                     case 4:
-                        sub_91370(fdlg_open, 0x20, 0xBF);
+                        DrawArt(fdlg_open, 0x20, 0xBF);
                         FreeMemBlock(bm);
                         return SelectSavedFile();
                     case 8:
-                        sub_91370(fdlg_del, 0x20, 0xBF);
-                        DeleteSavedGame((FileList *)off_C6F7C[fdlgtab]);
+                        DrawArt(fdlg_del, 0x20, 0xBF);
+                        DeleteSavedGame((FileList *)fdlgfilelists[fdlgtab]);
                         MouseSetPos(x, y);
                         if (fdlgtab < 0) l = 0;
-                        else l = (FileList *)off_C6F7C[fdlgtab];
+                        else l = (FileList *)fdlgfilelists[fdlgtab];
                         DrawFileDlgList(l);
-                        sub_91370(fdlg_none, 0x20, 0xBF);
+                        DrawArt(fdlg_none, 0x20, 0xBF);
                         break;
                     default:
                         FileDlgHitTest(x, y, &hit);
@@ -552,8 +552,8 @@ int RunFileDlg(void)
             FreeMemBlock(bm);
             return 0;
         }
-        sub_91400(bm, x - 4, y);
-        sub_91370(pointerspr, x - 4, y);
+        GrabBlock(bm, x - 4, y);
+        DrawArt(pointerspr, x - 4, y);
         ox = x;
         oy = y;
     }

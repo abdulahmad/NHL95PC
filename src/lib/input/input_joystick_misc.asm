@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B300C progbits alloc exec nowrite align=1
-extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7
+extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1
 extern dword_D2C84, dword_D3090, dword_D3096, dword_D30A4, dword_D4158, dword_D415C, dword_D4160, dword_D4164
 extern dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
@@ -11,22 +11,22 @@ extern dword_D41AF, dword_D41B3, dword_D41FC, dword_D4200, dword_D4204, dword_D4
 extern dword_D4214, dword_D4218, dword_D421C, dword_D4220, dword_D4224, dword_D4228, dword_D422C, dword_D4230
 extern dword_D4234, dword_D4238, dword_D423C, dword_D4240, dword_D4248, dword_D424C, dword_D4250, dword_D4254
 extern dword_D4258, dword_D425C, dword_D4260, dword_D4264, dword_D4268, dword_D426C, dword_D4270, dword_D4274
-extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, off_D42A0, sub_90D20, sub_9864C
+extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, off_D42A0, FillRect, sub_9864C
 extern sub_98664, tickcount, tickdeadline, ticklast, unk_8E870, word_D3094, word_D309A
-global sub_B300C, sub_B3010, sub_B3036, loc_B3089, sub_B308B, loc_B30B0, sub_B30B4, sub_B30BB
+global sub_B300C, sub_B3010, sub_B3036, loc_B3089, sub_B308B, loc_B30B0, FindShape, sub_B30BB
 global loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, sub_B30F4, loc_B3115, loc_B3129, loc_B3132
 global loc_B3156, sub_B3168, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31D0, loc_B31DB
 global loc_B3207, loc_B3219, loc_B322F, loc_B3258, loc_B3277, loc_B3285, loc_B32A3, loc_B32BE
 global loc_B32E9, loc_B32FB, loc_B3311, loc_B333A, loc_B3346, loc_B3365, loc_B3373, loc_B3391
 global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, sub_B33DB, sub_B340B, sub_B3421
-global loc_B3430, loc_B3449, sub_B3454, sub_B345D, sub_B3464, loc_B3471, loc_B34B1, loc_B34B5
+global loc_B3430, loc_B3449, sub_B3454, sub_B345D, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
 global loc_B34C7, loc_B34CB, loc_B34CF, loc_B34D3, loc_B34E4, loc_B34F1, loc_B34FE, loc_B3509
 global loc_B3518, loc_B3532, loc_B3548, loc_B3573, loc_B3593, loc_B35A1, loc_B35B5, loc_B35CC
 global loc_B35E6, loc_B35FC, loc_B3627, loc_B3630, loc_B3650, loc_B365E, loc_B3672, loc_B3689
 global loc_B369C, loc_B36A5, loc_B36B3, loc_B36CD, loc_B36E3, loc_B370E, loc_B372E, loc_B373C
 global loc_B3750, loc_B3767, loc_B3781, loc_B3797, loc_B37C2, loc_B37CB, loc_B37EB, loc_B37F9
 global loc_B380D, loc_B3824, loc_B3838, loc_B3845, sub_B384E, sub_B387E, sub_B38AE, loc_B38BD
-global loc_B38DC, loc_B38FB, loc_B391A, sub_B392C, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks
+global loc_B38DC, loc_B38FB, loc_B391A, ClearScreen, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks
 global SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks, loc_B39C3, sub_B39D0, loc_B39DE, loc_B39EC
 global PollKey, sub_B39F3, loc_B3A01, loc_B3A07, WaitKey, sub_B3A24, sub_B3A2F, loc_B3A47
 global loc_B3A59, loc_B3A70, sub_B3A88, sub_B3AA1, sub_B3ABC, loc_B3ADF
@@ -96,7 +96,7 @@ loc_B30B0:
 popa	; B30B0
 ret	; B30B1
 db 00h,00h
-sub_B30B4:
+FindShape:
 mov ebx, unk_8E870	; B30B4
 jmp short loc_B30BD	; B30B9
 sub_B30BB:
@@ -366,7 +366,7 @@ push ebp	; B340B
 LD mov, ebp, esp	; B340C
 mov ebx, dword [byte ebp+08h]	; B340E
 and ebx, byte 0Fh	; B3411
-mov al, byte [dword ebx+byte_D41B7]	; B3414
+mov al, byte [dword ebx+joyedgedir]	; B3414
 LD xor, ah, ah	; B341A
 movzx eax, ax	; B341C
 leave	; B341F
@@ -395,7 +395,7 @@ jmp near atexit_	; B3458
 sub_B345D:
 LD xor, eax, eax	; B345D
 call exit_	; B345F
-sub_B3464:
+ReadJoyRaw:
 mov bl, byte [joyenablemask]	; B3464
 LD or, bl, bl	; B346A
 jne short loc_B3471	; B346C
@@ -756,7 +756,7 @@ sub ax, byte 1Fh	; B3924
 cwde	; B3928
 ret	; B3929
 db 00h,00h
-sub_B392C:
+ClearScreen:
 mov eax, dword [byte esp+04h]	; B392C
 push eax	; B3930
 mov edx, dword [cliprect_y1]	; B3931
@@ -769,7 +769,7 @@ push edx	; B394C
 push eax	; B394D
 push ebx	; B394E
 push ecx	; B394F
-call sub_90D20	; B3950
+call FillRect	; B3950
 add sp, byte 14h	; B3955
 ret	; B3959
 db 00h,00h

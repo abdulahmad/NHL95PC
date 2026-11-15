@@ -4,13 +4,13 @@ bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, addtimer, awardtype, awardwinners
-extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_C5138, byte_D416A, byte_D8C88
+extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, fadeendlvl, byte_D416A, fadepalbuf
 extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
-extern dword_C5131, dword_C5133, dword_C5135, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
-extern dword_D4164, dword_D8C4C, dword_D8C72, dword_D8C7A, dword_DEF8C, dword_E0244, dword_E9A9E, escrequest
+extern fadestart_m3, fadestep_m3, fadestart_e1, ovlartfiles, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
+extern dword_D4164, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
 extern gameover, gamepal, gameresult, gmode, gsp, HomeTeam, hudclockhund, hudclockmin
@@ -21,8 +21,8 @@ extern joyrec, joysampling, joysampling_save, JoystickCalScreen, kaufmfont, keyd
 extern lcrequest, leaguedbnames, LoadCupFinalSeries, LoadGameGfx, LoadGameState, LoadModeState, LoadNhlCfg, LoadRink
 extern LoadRockMusic, LoadTeamPalette, MainDeskLoop, mainfont, MakeGSummaryPath, MakePath, memlist0, memlist1
 extern mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicChanReset, musichandle, musicon
-extern musicslot, NormalizeDressFlags, numshapes, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F
-extern off_C5263, off_C5267, off_C526F, off_C5273, off_CBED0, ovlseq, ovlstep, pad1dev
+extern musicslot, NormalizeDressFlags, numshapes, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04
+extern awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, ovlartnames, ovlseq, ovlstep, pad1dev
 extern pad2dev, palfadedin, PaPreloadClips, penshotlive, PeriodOver, photoptrs, PlayCrowdSample, pntrshapes
 extern pointerspr, PollKey, PostGameDesk, presidentsteam, printf_, ReadGoalieSeasonRec, ReadKeyRec, ReadSeasonRec
 extern ReadTeamNames, ReadTeamRec, recbpr, replaystart, ResetGoalieMenu, rinkendart, rinkhtiles, rinkscrollx
@@ -34,13 +34,13 @@ extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_Che
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, sub_6A9CE
-extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2F0, sub_8DF54, sub_8E080
-extern sub_8E7A0, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C, sub_B29F0, sub_B2CBE
-extern sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4, sub_B30F4, sub_B33DB, sub_B3464, sub_B392C
-extern sub_B3A24, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, teamabbrevs
-extern TicksSinceLastCall, treeteamnames, unk_C4E30, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
-extern unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly
+extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0, sub_8DF54, initgraphics
+extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
+extern sub_8F984, SndQuery, sub_8FCDF, SetPalette, sub_90354, sub_9035C, sub_B29F0, KeyDown
+extern SetViewRect, sub_B2F22, sub_B3036, FindShape, sub_B30F4, sub_B33DB, ReadJoyRaw, ClearScreen
+extern sub_B3A24, sub_B4B58, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C33, sub_B4C84, teamabbrevs
+extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
+extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
 extern VisTeam, vtoa, WaitTickDeadline, word_CBC44
 global GetMemListHead, GetMemStats, main_, main_x, DiskFreeBytes, SetupControllers, ReadKeyboardPad, ReadJoyPad
 global ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize, IntermissionPC, DrawSpriteNumber
@@ -241,7 +241,7 @@ mov dword [dword_C4CFC], 30D40h	; 1022C
 .7:
 push dword 1E0h	; 10236
 push dword 280h	; 1023B
-call sub_8E080	; 10240
+call initgraphics	; 10240
 add esp, byte 8	; 10245
 call InstallTimer	; 10248
 xor eax, eax	; 1024D
@@ -270,7 +270,7 @@ push dword 140h	; 102A6
 push dword 0A8h	; 102AB
 push byte 0	; 102B0
 push dword_D30D4	; 102B2
-call sub_8E7A0	; 102B7
+call subwindowdefadr	; 102B7
 add esp, byte 14h	; 102BC
 mov dword [screenbm], eax	; 102BF
 mov edx, 1E0h	; 102C4
@@ -292,12 +292,12 @@ call MakePath	; 102FB
 push byte 0	; 10300
 lea eax, [byte esp+03Ch]	; 10302
 push eax	; 10306
-call sub_8E83C	; 10307
+call LoadBank	; 10307
 add esp, byte 8	; 1030C
 mov dword [pntrshapes], eax	; 1030F
 push str_Pntr	; 10314
 push eax	; 10319
-call sub_B30B4	; 1031A
+call FindShape	; 1031A
 add esp, byte 8	; 1031F
 mov dword [pointerspr], eax	; 10322
 mov ecx, str_VFN	; 10327
@@ -371,7 +371,7 @@ add esp, byte 8	; 1040C
 mov dword [kaufmfont], eax	; 1040F
 mov edx, dword [s1font]	; 10414
 push edx	; 1041A
-call sub_8EA18	; 1041B
+call TextSetFont	; 1041B
 add esp, byte 4	; 10420
 mov eax, exhstate	; 10423
 call LoadModeState	; 10428
@@ -498,7 +498,7 @@ call MainDeskLoop	; 10604
 push byte 20h	; 10609
 push dword 300h	; 1060B
 push str_Temp3	; 10610
-call sub_8CCA8	; 10615
+call AllocMemBlock	; 10615
 add esp, byte 0Ch	; 1061A
 mov esi, eax	; 1061D
 cmp byte [musicon], 0	; 1061F
@@ -513,7 +513,7 @@ call sub_8FCDF	; 10640
 push esi	; 10645
 push dword 100h	; 10646
 push byte 0	; 1064B
-call sub_8FFB0	; 1064D
+call SetPalette	; 1064D
 add esp, byte 0Ch	; 10652
 mov ebx, 10h	; 10655
 mov edx, esi	; 1065A
@@ -527,7 +527,7 @@ je short .35	; 10676
 mov eax, dword [musicslot-3]	; 10678
 sar eax, 18h	; 1067D
 mov edx, 3	; 10680
-call sub_8FC8A	; 10685
+call SndQuery	; 10685
 test eax, eax	; 1068A
 je short main_.34	; 1068C
 mov edx, dword [songdata]	; 1068E
@@ -715,56 +715,56 @@ sub esp, byte 4	; 1086D
 xor edx, edx	; 10870
 mov dword [esp], edx	; 10872
 push byte 48h	; 10875
-call sub_B2CBE	; 10877
+call KeyDown	; 10877
 add esp, byte 4	; 1087C
 test eax, eax	; 1087F
 je short .1	; 10881
 mov dword [esp], 1	; 10883
 .1:
 push byte 50h	; 1088A
-call sub_B2CBE	; 1088C
+call KeyDown	; 1088C
 add esp, byte 4	; 10891
 test eax, eax	; 10894
 je short .2	; 10896
 or byte [esp], 2	; 10898
 .2:
 push byte 4Bh	; 1089C
-call sub_B2CBE	; 1089E
+call KeyDown	; 1089E
 add esp, byte 4	; 108A3
 test eax, eax	; 108A6
 je short .3	; 108A8
 or byte [esp], 8	; 108AA
 .3:
 push byte 4Dh	; 108AE
-call sub_B2CBE	; 108B0
+call KeyDown	; 108B0
 add esp, byte 4	; 108B5
 test eax, eax	; 108B8
 je short .4	; 108BA
 or byte [esp], 4	; 108BC
 .4:
 push byte 47h	; 108C0
-call sub_B2CBE	; 108C2
+call KeyDown	; 108C2
 add esp, byte 4	; 108C7
 test eax, eax	; 108CA
 je short .5	; 108CC
 or byte [esp], 9	; 108CE
 .5:
 push byte 49h	; 108D2
-call sub_B2CBE	; 108D4
+call KeyDown	; 108D4
 add esp, byte 4	; 108D9
 test eax, eax	; 108DC
 je short .6	; 108DE
 or byte [esp], 5	; 108E0
 .6:
 push byte 51h	; 108E4
-call sub_B2CBE	; 108E6
+call KeyDown	; 108E6
 add esp, byte 4	; 108EB
 test eax, eax	; 108EE
 je short .7	; 108F0
 or byte [esp], 6	; 108F2
 .7:
 push byte 4Fh	; 108F6
-call sub_B2CBE	; 108F8
+call KeyDown	; 108F8
 add esp, byte 4	; 108FD
 test eax, eax	; 10900
 je short .8	; 10902
@@ -775,23 +775,23 @@ mov eax, dword [dword eax+keydirtab-3]	; 1090B
 sar eax, 18h	; 10911
 mov dword [esp], eax	; 10914
 push byte 52h	; 10917
-call sub_B2CBE	; 10919
+call KeyDown	; 10919
 add esp, byte 4	; 1091E
 test eax, eax	; 10921
 je short .9	; 10923
 push byte 1Ch	; 10925
-call sub_B2CBE	; 10927
+call KeyDown	; 10927
 add esp, byte 4	; 1092C
 test eax, eax	; 1092F
 jne short .10	; 10931
 .9:
 push byte 38h	; 10933
-call sub_B2CBE	; 10935
+call KeyDown	; 10935
 add esp, byte 4	; 1093A
 test eax, eax	; 1093D
 je short .11	; 1093F
 push byte 39h	; 10941
-call sub_B2CBE	; 10943
+call KeyDown	; 10943
 add esp, byte 4	; 10948
 test eax, eax	; 1094B
 je short .11	; 1094D
@@ -800,12 +800,12 @@ or byte [esp], 40h	; 1094F
 jmp short .15	; 10953
 .11:
 push byte 52h	; 10955
-call sub_B2CBE	; 10957
+call KeyDown	; 10957
 add esp, byte 4	; 1095C
 test eax, eax	; 1095F
 jne short .12	; 10961
 push byte 38h	; 10963
-call sub_B2CBE	; 10965
+call KeyDown	; 10965
 add esp, byte 4	; 1096A
 test eax, eax	; 1096D
 je short .13	; 1096F
@@ -814,12 +814,12 @@ or byte [esp], 10h	; 10971
 jmp short .15	; 10975
 .13:
 push byte 1Ch	; 10977
-call sub_B2CBE	; 10979
+call KeyDown	; 10979
 add esp, byte 4	; 1097E
 test eax, eax	; 10981
 jne short .14	; 10983
 push byte 39h	; 10985
-call sub_B2CBE	; 10987
+call KeyDown	; 10987
 add esp, byte 4	; 1098C
 test eax, eax	; 1098F
 je short .15	; 10991
@@ -968,7 +968,7 @@ mov esi, eax	; 10ACD
 xor ah, ah	; 10ACF
 mov byte [esp], ah	; 10AD1
 push byte 1	; 10AD4
-call sub_B2CBE	; 10AD6
+call KeyDown	; 10AD6
 add esp, byte 4	; 10ADB
 test eax, eax	; 10ADE
 je short .1	; 10AE0
@@ -976,12 +976,12 @@ mov byte [esp], 1	; 10AE2
 jmp near .15	; 10AE6
 .1:
 push byte 1Dh	; 10AEB
-call sub_B2CBE	; 10AED
+call KeyDown	; 10AED
 add esp, byte 4	; 10AF2
 test eax, eax	; 10AF5
 je short .3	; 10AF7
 push byte 1Fh	; 10AF9
-call sub_B2CBE	; 10AFB
+call KeyDown	; 10AFB
 add esp, byte 4	; 10B00
 test eax, eax	; 10B03
 je short .2	; 10B05
@@ -989,7 +989,7 @@ mov byte [esp], 1Fh	; 10B07
 jmp near .15	; 10B0B
 .2:
 push byte 32h	; 10B10
-call sub_B2CBE	; 10B12
+call KeyDown	; 10B12
 add esp, byte 4	; 10B17
 test eax, eax	; 10B1A
 je near .15	; 10B1C
@@ -997,7 +997,7 @@ mov byte [esp], 32h	; 10B22
 jmp near .15	; 10B26
 .3:
 push byte 3Bh	; 10B2B
-call sub_B2CBE	; 10B2D
+call KeyDown	; 10B2D
 add esp, byte 4	; 10B32
 test eax, eax	; 10B35
 je short .4	; 10B37
@@ -1005,7 +1005,7 @@ mov byte [esp], 3Bh	; 10B39
 jmp near .15	; 10B3D
 .4:
 push byte 3Ch	; 10B42
-call sub_B2CBE	; 10B44
+call KeyDown	; 10B44
 add esp, byte 4	; 10B49
 test eax, eax	; 10B4C
 je short .5	; 10B4E
@@ -1013,7 +1013,7 @@ mov byte [esp], 3Ch	; 10B50
 jmp near .15	; 10B54
 .5:
 push byte 3Dh	; 10B59
-call sub_B2CBE	; 10B5B
+call KeyDown	; 10B5B
 add esp, byte 4	; 10B60
 test eax, eax	; 10B63
 je short .6	; 10B65
@@ -1021,7 +1021,7 @@ mov byte [esp], 3Dh	; 10B67
 jmp near .15	; 10B6B
 .6:
 push byte 3Eh	; 10B70
-call sub_B2CBE	; 10B72
+call KeyDown	; 10B72
 add esp, byte 4	; 10B77
 test eax, eax	; 10B7A
 je short .7	; 10B7C
@@ -1029,7 +1029,7 @@ mov byte [esp], 3Eh	; 10B7E
 jmp near .15	; 10B82
 .7:
 push byte 3Fh	; 10B87
-call sub_B2CBE	; 10B89
+call KeyDown	; 10B89
 add esp, byte 4	; 10B8E
 test eax, eax	; 10B91
 je short .8	; 10B93
@@ -1037,7 +1037,7 @@ mov byte [esp], 3Fh	; 10B95
 jmp near .15	; 10B99
 .8:
 push byte 40h	; 10B9E
-call sub_B2CBE	; 10BA0
+call KeyDown	; 10BA0
 add esp, byte 4	; 10BA5
 test eax, eax	; 10BA8
 je short .9	; 10BAA
@@ -1045,7 +1045,7 @@ mov byte [esp], 40h	; 10BAC
 jmp near .15	; 10BB0
 .9:
 push byte 41h	; 10BB5
-call sub_B2CBE	; 10BB7
+call KeyDown	; 10BB7
 add esp, byte 4	; 10BBC
 test eax, eax	; 10BBF
 je short .10	; 10BC1
@@ -1053,7 +1053,7 @@ mov byte [esp], 41h	; 10BC3
 jmp near .15	; 10BC7
 .10:
 push byte 42h	; 10BCC
-call sub_B2CBE	; 10BCE
+call KeyDown	; 10BCE
 add esp, byte 4	; 10BD3
 test eax, eax	; 10BD6
 je short .11	; 10BD8
@@ -1061,7 +1061,7 @@ mov byte [esp], 42h	; 10BDA
 jmp short .15	; 10BDE
 .11:
 push byte 43h	; 10BE0
-call sub_B2CBE	; 10BE2
+call KeyDown	; 10BE2
 add esp, byte 4	; 10BE7
 test eax, eax	; 10BEA
 je short .12	; 10BEC
@@ -1069,7 +1069,7 @@ mov byte [esp], 43h	; 10BEE
 jmp short .15	; 10BF2
 .12:
 push byte 44h	; 10BF4
-call sub_B2CBE	; 10BF6
+call KeyDown	; 10BF6
 add esp, byte 4	; 10BFB
 test eax, eax	; 10BFE
 je short .13	; 10C00
@@ -1077,7 +1077,7 @@ mov byte [esp], 44h	; 10C02
 jmp short .15	; 10C06
 .13:
 push byte 0Fh	; 10C08
-call sub_B2CBE	; 10C0A
+call KeyDown	; 10C0A
 add esp, byte 4	; 10C0F
 test eax, eax	; 10C12
 je short .14	; 10C14
@@ -1085,7 +1085,7 @@ mov byte [esp], 0Fh	; 10C16
 jmp short .15	; 10C1A
 .14:
 push byte 13h	; 10C1C
-call sub_B2CBE	; 10C1E
+call KeyDown	; 10C1E
 add esp, byte 4	; 10C23
 test eax, eax	; 10C26
 je short .15	; 10C28
@@ -1137,27 +1137,27 @@ xor ah, ah	; 10C8A
 mov byte [esp], ah	; 10C8C
 mov byte [edi], ah	; 10C8F
 push byte 1	; 10C91
-call sub_B2CBE	; 10C93
+call KeyDown	; 10C93
 add esp, byte 4	; 10C98
 test eax, eax	; 10C9B
 jne near .6	; 10C9D
 push byte 52h	; 10CA3
-call sub_B2CBE	; 10CA5
+call KeyDown	; 10CA5
 add esp, byte 4	; 10CAA
 test eax, eax	; 10CAD
 jne short .1	; 10CAF
 push byte 38h	; 10CB1
-call sub_B2CBE	; 10CB3
+call KeyDown	; 10CB3
 add esp, byte 4	; 10CB8
 test eax, eax	; 10CBB
 jne short .1	; 10CBD
 push byte 1Ch	; 10CBF
-call sub_B2CBE	; 10CC1
+call KeyDown	; 10CC1
 add esp, byte 4	; 10CC6
 test eax, eax	; 10CC9
 jne short .1	; 10CCB
 push byte 39h	; 10CCD
-call sub_B2CBE	; 10CCF
+call KeyDown	; 10CCF
 add esp, byte 4	; 10CD4
 test eax, eax	; 10CD7
 je short .3	; 10CD9
@@ -1174,7 +1174,7 @@ jne short .4	; 10CF5
 test dl, 4	; 10CF7
 je short .8	; 10CFA
 .4:
-call sub_B3464	; 10CFC
+call ReadJoyRaw	; 10CFC
 test al, 30h	; 10D01
 je short .7	; 10D03
 .5:
@@ -1195,12 +1195,12 @@ test byte [mousebtns], 3	; 10D2C
 jne short ReadSkipKeys.5	; 10D33
 .9:
 push byte 1Dh	; 10D35
-call sub_B2CBE	; 10D37
+call KeyDown	; 10D37
 add esp, byte 4	; 10D3C
 test eax, eax	; 10D3F
 je short .11	; 10D41
 push byte 1Fh	; 10D43
-call sub_B2CBE	; 10D45
+call KeyDown	; 10D45
 add esp, byte 4	; 10D4A
 test eax, eax	; 10D4D
 je short .10	; 10D4F
@@ -1208,7 +1208,7 @@ mov byte [esp], 1Fh	; 10D51
 jmp short .12	; 10D55
 .10:
 push byte 32h	; 10D57
-call sub_B2CBE	; 10D59
+call KeyDown	; 10D59
 add esp, byte 4	; 10D5E
 test eax, eax	; 10D61
 je short .12	; 10D63
@@ -1216,7 +1216,7 @@ mov byte [esp], 32h	; 10D65
 jmp short .12	; 10D69
 .11:
 push byte 0Fh	; 10D6B
-call sub_B2CBE	; 10D6D
+call KeyDown	; 10D6D
 add esp, byte 4	; 10D72
 test eax, eax	; 10D75
 je short .12	; 10D77
@@ -1290,7 +1290,7 @@ jne short .2	; 10E40
 test byte [pad2dev], 6	; 10E42
 je short .3	; 10E49
 .2:
-call sub_B3464	; 10E4B
+call ReadJoyRaw	; 10E4B
 mov dword [joyrawbits], eax	; 10E50
 .3:
 mov eax, esi	; 10E55
@@ -1339,10 +1339,10 @@ jne short .1	; 10EB8
 cmp edi, dword [screenh]	; 10EBA
 je near .x	; 10EC0
 .1:
-push unk_C4E30	; 10EC6
+push blackpal	; 10EC6
 push dword 100h	; 10ECB
 push byte 0	; 10ED0
-call sub_B4B88	; 10ED2
+call VgaSetPalette	; 10ED2
 add esp, byte 0Ch	; 10ED7
 call sub_B4BA8	; 10EDA
 mov ecx, dword [screenh]	; 10EDF
@@ -1351,10 +1351,10 @@ push byte 0	; 10EE6
 mov ebp, dword [screenw]	; 10EE8
 push ebp	; 10EEE
 push byte 0	; 10EEF
-call sub_B4BC4	; 10EF1
+call SetClipWindow	; 10EF1
 add esp, byte 10h	; 10EF6
 push byte 0	; 10EF9
-call sub_B392C	; 10EFB
+call ClearScreen	; 10EFB
 add esp, byte 4	; 10F00
 push byte 28h	; 10F03
 call SetTickDeadline	; 10F05
@@ -1362,27 +1362,27 @@ add esp, byte 4	; 10F0A
 call sub_B4C33	; 10F0D
 push edi	; 10F12
 push esi	; 10F13
-call sub_8E080	; 10F14
+call initgraphics	; 10F14
 add esp, byte 8	; 10F19
-push unk_C4E30	; 10F1C
+push blackpal	; 10F1C
 push dword 100h	; 10F21
 push byte 0	; 10F26
-call sub_B4B88	; 10F28
+call VgaSetPalette	; 10F28
 add esp, byte 0Ch	; 10F2D
 push edi	; 10F30
 push byte 0	; 10F31
 push esi	; 10F33
 push byte 0	; 10F34
-call sub_B4BC4	; 10F36
+call SetClipWindow	; 10F36
 add esp, byte 10h	; 10F3B
 push byte 0	; 10F3E
-call sub_B392C	; 10F40
+call ClearScreen	; 10F40
 add esp, byte 4	; 10F45
 push edi	; 10F48
 push esi	; 10F49
 push byte 0	; 10F4A
 push byte 0	; 10F4C
-call sub_B2E1B	; 10F4E
+call SetViewRect	; 10F4E
 add esp, byte 10h	; 10F53
 mov dword [screenw], esi	; 10F56
 mov dword [screenh], edi	; 10F5C
@@ -1412,7 +1412,7 @@ je short .3	; 10F85
 push savepal	; 10F87
 push dword 100h	; 10F8C
 push byte 0	; 10F91
-call sub_8FFB0	; 10F93
+call SetPalette	; 10F93
 add esp, byte 0Ch	; 10F98
 mov ebx, 10h	; 10F9B
 mov edx, savepal	; 10FA0
@@ -1435,7 +1435,7 @@ call sub_1BAF3	; 10FE2
 .3:
 mov edx, dword [s1font]	; 10FE7
 push edx	; 10FED
-call sub_8EA18	; 10FEE
+call TextSetFont	; 10FEE
 add esp, byte 4	; 10FF3
 call IntermissionDesk	; 10FF6
 inc dword [curperiod]	; 10FFB
@@ -1515,7 +1515,7 @@ add esi, byte 8	; 110BD
 movsx edx, si	; 110C0
 mov eax, dword [byte esp+0Ah]	; 110C3
 sar eax, 10h	; 110C7
-mov eax, dword [nosplit eax*4+dword_D8C4C]	; 110CA
+mov eax, dword [nosplit eax*4+gfxidlist]	; 110CA
 xor ecx, ecx	; 110D1
 mov ebx, edi	; 110D3
 call DrawSprite	; 110D5
@@ -1595,7 +1595,7 @@ push esi	; 1116E
 mov esi, eax	; 1116F
 .1:
 push esi	; 11171
-call sub_B2CBE	; 11172
+call KeyDown	; 11172
 add esp, byte 4	; 11177
 test eax, eax	; 1117A
 je short .2	; 1117C
@@ -1704,7 +1704,7 @@ mov dword [savedmousey], eax	; 112B3
 push savepal	; 112B8
 push dword 100h	; 112BD
 push byte 0	; 112C2
-call sub_8FFB0	; 112C4
+call SetPalette	; 112C4
 add esp, byte 0Ch	; 112C9
 mov ebx, 10h	; 112CC
 mov edx, savepal	; 112D1
@@ -1740,7 +1740,7 @@ push dword 0C8h	; 11345
 push dword 140h	; 1134A
 push byte 0	; 1134F
 push byte 0	; 11351
-call sub_B2E1B	; 11353
+call SetViewRect	; 11353
 add esp, byte 10h	; 11358
 .16:
 mov word [fadeinpending], 1	; 1135B
@@ -1921,7 +1921,7 @@ lea eax, [edi+ebp]	; 1156D
 push eax	; 11570
 push dword 80h	; 11571
 push esi	; 11576
-call sub_B4B88	; 11577
+call VgaSetPalette	; 11577
 add esp, byte 0Ch	; 1157C
 add esi, 80h	; 1157F
 add edi, 180h	; 11585
@@ -1971,18 +1971,18 @@ jmp near .x	; 115F3
 .7:
 mov ecx, 300h	; 115F8
 xor edx, edx	; 115FD
-mov eax, byte_D8C88	; 115FF
+mov eax, fadepalbuf	; 115FF
 call __STOSB	; 11604
-mov eax, byte_D8C88	; 11609
+mov eax, fadepalbuf	; 11609
 jmp short FadePalette.6	; 1160E
 .8:
 mov al, byte [esp]	; 11610
 dec al	; 11613
-mov byte [dword_C5135], al	; 11615
+mov byte [fadestart_e1], al	; 11615
 mov al, byte [esp]	; 1161A
 inc al	; 1161D
-mov byte [byte_C5138], al	; 1161F
-mov ecx, dword [dword edi+dword_C5131]	; 11624
+mov byte [fadeendlvl], al	; 1161F
+mov ecx, dword [dword edi+fadestart_m3]	; 11624
 sar ecx, 18h	; 1162A
 mov ebp, dword [esp]	; 1162D
 jmp short .11	; 11630
@@ -1994,17 +1994,17 @@ imul edx, ecx	; 11638
 mov eax, edx	; 1163B
 sar edx, 1Fh	; 1163D
 idiv ebp	; 11640
-mov byte [dword ebx+byte_D8C88], al	; 11642
+mov byte [dword ebx+fadepalbuf], al	; 11642
 inc ebx	; 11648
 cmp ebx, 300h	; 11649
 jl short FadePalette.10	; 1164F
-mov eax, byte_D8C88	; 11651
+mov eax, fadepalbuf	; 11651
 call SetFullPalette	; 11656
-mov eax, dword [dword edi+dword_C5133]	; 1165B
+mov eax, dword [dword edi+fadestep_m3]	; 1165B
 sar eax, 18h	; 11661
 add ecx, eax	; 11664
 .11:
-mov eax, dword [dword edi+byte_C5138-3]	; 11666
+mov eax, dword [dword edi+fadeendlvl-3]	; 11666
 sar eax, 18h	; 1166C
 cmp ecx, eax	; 1166F
 jne short FadePalette.9	; 11671
@@ -2123,7 +2123,7 @@ mov dword [joysampling], ebx	; 117F8
 push savepal	; 117FE
 push dword 100h	; 11803
 push ebx	; 11808
-call sub_8FFB0	; 11809
+call SetPalette	; 11809
 add esp, byte 0Ch	; 1180E
 mov ebx, 10h	; 11811
 mov edx, savepal	; 11816
@@ -2249,12 +2249,12 @@ call SpeechStopQueue	; 119E6
 call FlushGSumQueue	; 119EB
 mov ecx, dword [s1font]	; 119F0
 push ecx	; 119F6
-call sub_8EA18	; 119F7
+call TextSetFont	; 119F7
 add esp, byte 4	; 119FC
 push savepal	; 119FF
 push dword 100h	; 11A04
 push byte 0	; 11A09
-call sub_8FFB0	; 11A0B
+call SetPalette	; 11A0B
 add esp, byte 0Ch	; 11A10
 mov ebx, 10h	; 11A13
 mov edx, savepal	; 11A18
@@ -2309,11 +2309,11 @@ mov edx, dword [ovlstep-2]	; 11AF7
 sar edx, 10h	; 11AFD
 cmp edx, byte 0FFFFFFFFh	; 11B00
 je near .22	; 11B03
-cmp dword [dword_E0244], byte 0	; 11B09
+cmp dword [ovlartbank], byte 0	; 11B09
 jne near .22	; 11B10
 mov ecx, str_PPV	; 11B16
-mov ebx, dword [nosplit eax*4+off_CBED0]	; 11B1B
-mov eax, dword [nosplit eax*4+dword_CC080]	; 11B22
+mov ebx, dword [nosplit eax*4+ovlartnames]	; 11B1B
+mov eax, dword [nosplit eax*4+ovlartfiles]	; 11B22
 cmp byte [dword eax+fileoncd], 1	; 11B29
 jne short .18	; 11B30
 mov edx, dword [cddriveptr]	; 11B32
@@ -2328,19 +2328,19 @@ lea eax, [byte esp+04h]	; 11B45
 push eax	; 11B49
 call sub_8E8A0	; 11B4A
 add esp, byte 8	; 11B4F
-mov dword [dword_E0244], eax	; 11B52
+mov dword [ovlartbank], eax	; 11B52
 xor esi, esi	; 11B57
 jmp short .21	; 11B59
 .20:
 push esi	; 11B5B
-mov ebp, dword [dword_E0244]	; 11B5C
+mov ebp, dword [ovlartbank]	; 11B5C
 push ebp	; 11B62
 call sub_9035C	; 11B63
 add esp, byte 8	; 11B68
-mov dword [nosplit esi*4+dword_DEF8C], eax	; 11B6B
+mov dword [nosplit esi*4+ovlstepart], eax	; 11B6B
 inc esi	; 11B72
 .21:
-mov edi, dword [dword_E0244]	; 11B73
+mov edi, dword [ovlartbank]	; 11B73
 push edi	; 11B79
 call sub_90354	; 11B7A
 add esp, byte 4	; 11B7F
@@ -2554,11 +2554,11 @@ mov edx, dword [ovlstep-2]	; 11EC6
 sar edx, 10h	; 11ECC
 cmp edx, byte 0FFFFFFFFh	; 11ECF
 je near .13	; 11ED2
-cmp dword [dword_E0244], byte 0	; 11ED8
+cmp dword [ovlartbank], byte 0	; 11ED8
 jne short .13	; 11EDF
 mov ecx, str_PPV	; 11EE1
-mov ebx, dword [nosplit eax*4+off_CBED0]	; 11EE6
-mov eax, dword [nosplit eax*4+dword_CC080]	; 11EED
+mov ebx, dword [nosplit eax*4+ovlartnames]	; 11EE6
+mov eax, dword [nosplit eax*4+ovlartfiles]	; 11EED
 cmp byte [dword eax+fileoncd], 1	; 11EF4
 jne short .9	; 11EFB
 mov edx, dword [cddriveptr]	; 11EFD
@@ -2573,19 +2573,19 @@ lea eax, [byte esp+04h]	; 11F10
 push eax	; 11F14
 call sub_8E8A0	; 11F15
 add esp, byte 8	; 11F1A
-mov dword [dword_E0244], eax	; 11F1D
+mov dword [ovlartbank], eax	; 11F1D
 xor esi, esi	; 11F22
 jmp short .12	; 11F24
 .11:
 push esi	; 11F26
-mov edx, dword [dword_E0244]	; 11F27
+mov edx, dword [ovlartbank]	; 11F27
 push edx	; 11F2D
 call sub_9035C	; 11F2E
 add esp, byte 8	; 11F33
-mov dword [nosplit esi*4+dword_DEF8C], eax	; 11F36
+mov dword [nosplit esi*4+ovlstepart], eax	; 11F36
 inc esi	; 11F3D
 .12:
-mov eax, dword [dword_E0244]	; 11F3E
+mov eax, dword [ovlartbank]	; 11F3E
 push eax	; 11F43
 call sub_90354	; 11F44
 add esp, byte 4	; 11F49

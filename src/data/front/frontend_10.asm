@@ -8,7 +8,7 @@ global str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Cu
 global str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_Pal25, str_Lineditp2
 global str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4, str_Pal26, str_Lelogo, str_Menubuff8, str_C2dS2
 global str_S2dSS, str_Keys3, str_Pstat3, str_Gstat3, str_SRoster, str_Pos2, str_Name2, str_G4
-global str_A4, str_PT2, str_Shots4, str_PIM4, asc_C3164, str_Min4, str_GAA4, str_GA3
+global str_A4, str_PT2, str_Shots4, str_PIM4, str_PlusMinus7, str_Min4, str_GAA4, str_GA3
 global str_SA3, str_PCT2, str_Pal27, str_Lineditp3, str_Shrt3, str_Pntr4, str_Pointer14, str_Embpal5
 global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, str_EmbS, str_HOMEPALS3, str_Bkgd10
 global str_Forward, str_Line1, str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2
@@ -26,24 +26,24 @@ global str_VisNameBck, str_TitleBck, str_Lockroom, str_P01, str_Room, str_JERSH,
 global str_Accept, str_Cancel2, str_HomeTeam, str_VisitingTeam, str_ExhibitionGame, str_Iff11, str_Jersey, str_Pointer20
 global str_Temp8, str_Buffer, str_Sound4, str_Dbx2, str_PCSpeaker, str_SoundBlaster, str_ADLib, str_MT32
 global str_UltraSound, str_Pointer21, str_Iff12, str_Maindesk2, str_Slapshot, str_MT32HOCK, str_NHL3, str_CantOpenNhlCfg
-global asc_C36C3, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, str_Cor, str_GamemiscS
+global str_04x, str_Emmcopybuf, str_Speechbuf, str_Sentence, str_SampleMemMan, str_SpeechBank, str_Cor, str_GamemiscS
 global str_EastquadBar, str_EastsemdBar, str_EastfindBar, str_WestquadBar, str_WestsemdBar, str_WestfindBar, str_StanleydBar, str_EastquauBar
 global str_EastsemuBar, str_EastfinuBar, str_WestquauBar, str_WestsemuBar, str_WestfinuBar, str_StanleyuBar, str_NhlInt, str_ElsenhlInt
 global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
 global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl
 global str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4, str_Sav3, str_Pointer22, str_Savegame, str_Prmt
 global str_Dialog, str_Nhl3, str_Err1, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
-global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
+global str_dot2, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
-global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
-global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_F4, unk_C3470
-global unk_C34D0, unk_C34D4, unk_C34D8, unk_C34DC, unk_C34E0, unk_C34E4, unk_C34E8, unk_C34EC
-global unk_C34F0, unk_C34F4, unk_C34F8, unk_C34FB, unk_C34FF, unk_C3502, unk_C3506, unk_C350A
-global unk_C350E, unk_C3512, unk_C3516, unk_C351A, unk_C351E, unk_C3521, unk_C3524, unk_C3528
-global unk_C352C, unk_C3530, unk_C3534, unk_C3538, unk_C353C, unk_C355E, unk_C3580, str_Vs
-global unk_C36AC, unk_C36D4, unk_C36E1, unk_C36EE, unk_C36FB, unk_C3706, unk_C3712, unk_C371F
-global unk_C372C, unk_C3738, unk_C3742, unk_C374F, unk_C375C, unk_C3769, unk_C3775, unk_C392C
-global unk_C392F, unk_C393B, unk_C393E, unk_C3941, unk_C3944, unk_C396F, unk_C397B, unk_C39A8
+global str_dot3, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
+global str_BothTeams, str_NeitherTeams, str_K1, str_backslash4, str_F12, str_F3, str_F4, str_dot4
+global str_ANA4, str_BOS2, str_BUF4, str_CGY2, str_CHI2, str_DAL2, str_DET2, str_EDM2
+global str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2, str_NYI2, str_NYR2, str_OTT2
+global str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2, str_TB2, str_TOR2, str_VAN2
+global str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter, str_EasternConferenceQuarter, str_StanleyCupFinals, str_Vs
+global str_R4, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen, str_InterferPen
+global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, str_H2
+global str_h3, str_H4, str_h5, str_h6, str_h7, str_H1, str_A32, str_SDD3
 str_DSBOX:
 db 044h,053h,042h,04Fh,058h,00h,00h,00h
 str_DbBut:
@@ -126,7 +126,7 @@ str_C2dS2:
 db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
 str_S2dSS:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
-unk_C311D:
+str_dot2:
 db 02Eh,00h
 str_S6:
 db 073h,02Eh,00h
@@ -156,7 +156,7 @@ str_Shots4:
 db 053h,068h,06Fh,074h,073h,00h
 str_PIM4:
 db 050h,049h,04Dh,00h
-asc_C3164:
+str_PlusMinus7:
 db 020h,02Bh,02Fh,02Dh,00h
 str_C5:
 db 025h,063h,00h
@@ -252,7 +252,7 @@ str_Attackers:
 db 061h,074h,074h,061h,063h,06Bh,065h,072h,073h,00h
 str_S2dSS2:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
-unk_C3283:
+str_dot3:
 db 02Eh,00h
 str_S7:
 db 073h,02Eh,00h
@@ -375,7 +375,7 @@ str_HilightsReel:
 db 048h,069h,06Ch,069h,067h,068h,074h,073h,020h,052h,065h,065h,06Ch,00h
 str_K1:
 db 06Bh,031h,00h
-unk_C3447:
+str_backslash4:
 db 05Ch,00h
 str_HI:
 db 02Eh,048h,049h,00h
@@ -388,7 +388,7 @@ str_F3:
 db 066h,033h,00h
 str_F4:
 db 066h,034h,00h,00h,00h
-unk_C3470:
+str_dot4:
 db 02Eh,00h
 str_HLTL:
 db 048h,04Ch,054h,04Ch,00h
@@ -426,71 +426,71 @@ str_Pl10:
 db 070h,06Ch,031h,030h,00h
 str_Pl20:
 db 070h,06Ch,032h,030h,00h,00h
-unk_C34D0:
+str_ANA4:
 db 041h,04Eh,041h,00h
-unk_C34D4:
+str_BOS2:
 db 042h,04Fh,053h,00h
-unk_C34D8:
+str_BUF4:
 db 042h,055h,046h,00h
-unk_C34DC:
+str_CGY2:
 db 043h,047h,059h,00h
-unk_C34E0:
+str_CHI2:
 db 043h,048h,049h,00h
-unk_C34E4:
+str_DAL2:
 db 044h,041h,04Ch,00h
-unk_C34E8:
+str_DET2:
 db 044h,045h,054h,00h
-unk_C34EC:
+str_EDM2:
 db 045h,044h,04Dh,00h
-unk_C34F0:
+str_FLA2:
 db 046h,04Ch,041h,00h
-unk_C34F4:
+str_HFD2:
 db 048h,046h,044h,00h
-unk_C34F8:
+str_LA2:
 db 04Ch,041h,00h
-unk_C34FB:
+str_MTL2:
 db 04Dh,054h,04Ch,00h
-unk_C34FF:
+str_NJ2:
 db 04Eh,04Ah,00h
-unk_C3502:
+str_NYI2:
 db 04Eh,059h,049h,00h
-unk_C3506:
+str_NYR2:
 db 04Eh,059h,052h,00h
-unk_C350A:
+str_OTT2:
 db 04Fh,054h,054h,00h
-unk_C350E:
+str_PHI2:
 db 050h,048h,049h,00h
-unk_C3512:
+str_PIT2:
 db 050h,049h,054h,00h
-unk_C3516:
+str_QUE2:
 db 051h,055h,045h,00h
-unk_C351A:
+str_STL2:
 db 053h,054h,04Ch,00h
-unk_C351E:
+str_SJ2:
 db 053h,04Ah,00h
-unk_C3521:
+str_TB2:
 db 054h,042h,00h
-unk_C3524:
+str_TOR2:
 db 054h,04Fh,052h,00h
-unk_C3528:
+str_VAN2:
 db 056h,041h,04Eh,00h
-unk_C352C:
+str_WSH2:
 db 057h,053h,048h,00h
-unk_C3530:
+str_WPG2:
 db 057h,050h,047h,00h
-unk_C3534:
+str_ASW2:
 db 041h,053h,057h,00h
-unk_C3538:
+str_ASE2:
 db 041h,053h,045h,00h
-unk_C353C:
+str_WesternConferenceQuarter:
 db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
 db 073h,00h
-unk_C355E:
+str_EasternConferenceQuarter:
 db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
 db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
 db 073h,00h
-unk_C3580:
+str_StanleyCupFinals:
 db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,046h,069h,06Eh
 db 061h,06Ch,073h,00h
 str_HomeBck:
@@ -563,42 +563,42 @@ str_MT32HOCK:
 db 04Dh,054h,033h,032h,048h,04Fh,043h,04Bh,00h
 str_NHL3:
 db 04Eh,048h,04Ch,00h
-unk_C36AC:
+str_R4:
 db 072h,02Bh,00h
 str_CantOpenNhlCfg:
 db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
 db 063h,066h,067h,00h
-asc_C36C3:
+str_04x:
 db 025h,030h,034h,078h,0Ah,00h
 str_Emmcopybuf:
 db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
-unk_C36D4:
+str_RoughingPen:
 db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36E1:
+str_ChargingPen:
 db 063h,068h,061h,072h,067h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36EE:
+str_SlashingPen:
 db 073h,06Ch,061h,073h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C36FB:
+str_XcheckPen:
 db 078h,063h,068h,065h,063h,06Bh,02Eh,070h,065h,06Eh,00h
-unk_C3706:
+str_HookingPen:
 db 068h,06Fh,06Fh,06Bh,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3712:
+str_TrippingPen:
 db 074h,072h,069h,070h,070h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C371F:
+str_InterferPen:
 db 069h,06Eh,074h,065h,072h,066h,065h,072h,02Eh,070h,065h,06Eh,00h
-unk_C372C:
+str_HoldingPen:
 db 068h,06Fh,06Ch,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3738:
+str_AbusePen:
 db 061h,062h,075h,073h,065h,02Eh,070h,065h,06Eh,00h
-unk_C3742:
+str_CheckbndPen:
 db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,02Eh,070h,065h,06Eh,00h
-unk_C374F:
+str_BoardingPen:
 db 062h,06Fh,061h,072h,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C375C:
+str_ElbowingPen:
 db 065h,06Ch,062h,06Fh,077h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
-unk_C3769:
+str_HistickPen:
 db 068h,069h,073h,074h,069h,063h,06Bh,02Eh,070h,065h,06Eh,00h
-unk_C3775:
+str_SpearingPen:
 db 073h,070h,065h,061h,072h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_Speechbuf:
 db 073h,070h,065h,065h,063h,068h,062h,075h,066h,00h
@@ -687,32 +687,32 @@ db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,07
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_DemoNhl:
 db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
-unk_C392C:
+str_H2:
 db 068h,032h,00h
-unk_C392F:
+str_h3:
 db 068h,033h,00h
 str_Gsummary3:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
-unk_C393B:
+str_H4:
 db 068h,034h,00h
-unk_C393E:
+str_h5:
 db 068h,035h,00h
-unk_C3941:
+str_h6:
 db 068h,036h,00h
-unk_C3944:
+str_h7:
 db 068h,037h,00h
 str_AGameYouRequire2:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
 db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_GameSav5:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
-unk_C396F:
+str_H1:
 db 068h,031h,00h
 str_Db4:
 db 02Eh,064h,062h,00h
 str_Sav3:
 db 02Eh,073h,061h,076h,00h
-unk_C397B:
+str_A32:
 db 041h,033h,00h
 str_Pointer22:
 db 070h,06Fh,069h,06Eh,074h,065h,072h,00h
@@ -726,5 +726,5 @@ str_Nhl3:
 db 02Eh,06Eh,068h,06Ch,00h
 str_Err1:
 db 065h,072h,072h,031h,00h,00h,00h,00h
-unk_C39A8:
+str_SDD3:
 db 025h,073h,020h,025h,064h,020h,02Dh,020h,025h,064h,00h

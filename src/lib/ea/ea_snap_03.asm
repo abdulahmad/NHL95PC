@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D521 progbits alloc exec nowrite align=1
-extern byte_D4D06, dword_D5194, dword_D51D4, word_D51D8, word_D51DA
+extern _Extender, dword_D5194, dword_D51D4, word_D51D8, word_D51DA
 global sub_9D521, loc_9D548, loc_9D55B, sub_9D55C, sub_9D57D, loc_9D582
 sub_9D521:
 mov cl, 7	; 9D521
@@ -12,7 +12,7 @@ push ds	; 9D52D
 o16 mov ds, word [word_D51D8]	; 9D52E
 int 21h	; 9D535
 pop ds	; 9D537
-cmp byte [byte_D4D06], 3	; 9D538
+cmp byte [_Extender], 3	; 9D538
 jl short loc_9D548	; 9D53F
 call sub_9D55C	; 9D541
 jmp short loc_9D55B	; 9D546

@@ -1,7 +1,7 @@
 /* Announcer: one minute left. */
 #include "nhl95.h"
 
-/* SayOneMinuteLeft: when speech is up and idle: queue the "one minute left" clip, mark it said (dword_CCC98) and
+/* SayOneMinuteLeft: when speech is up and idle: queue the "one minute left" clip, mark it said (oneminsaid) and
  start the queue; returns 1, else 0. */
 int SayOneMinuteLeft(void)
 {
@@ -12,7 +12,7 @@ int SayOneMinuteLeft(void)
     RequestSample((char *)str_OneleftCor);
     EnsureSampleRoom();
     QueueSpeechClip((char *)str_OneleftCor);
-    dword_CCC98 = 1;
+    oneminsaid = 1;
     ((int *)speechq)[0x60 / 4] = 1;
     return 1;
 }

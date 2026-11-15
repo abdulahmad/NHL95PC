@@ -15,11 +15,11 @@
 #undef assthreestars
 #undef PreGameIntro
 #define REF ((Player *)puckstruct + 2)   /* the referee (E001C) */
-#define GSTAT(t, g) ((short *)((char *)word_DC242 + (t) * 18 + (g) * 6))
-#define PSTAT(t, j) ((short *)((char *)dword_DB088 + (t) * 0x190 + (j) * 16))
+#define GSTAT(t, g) ((short *)((char *)hmglstats_w2 + (t) * 18 + (g) * 6))
+#define PSTAT(t, j) ((short *)((char *)hmplstats + (t) * 0x190 + (j) * 16))
 typedef struct { char c[10]; } StarStr10;
 /* the goalie stats as an indexed array (the base folds into the displacement: [reg+DC242]) */
-#define GS(t, g) (((short (*)[3][3])word_DC242)[t][g])
+#define GS(t, g) (((short (*)[3][3])hmglstats_w2)[t][g])
 int ThreeStarsLoop(void);
 void PickThreeStars(void);
 void StartThreeStars(void);
@@ -63,7 +63,7 @@ void FadeOutPalCycle(void)
 /* PreGameIntro (47CD6, PC only): set up the pre-game skate: the crowd sample, the home team's power play colours
    (LoadTeamPPV), the text lines, period, seed (mixed with both teams), the 1800-tick sequence timer and no
    controlled players; both teams' energy, lines and players (reenergizeteam, setpersonel, forcepldata); then the
-   six players of each team (walking down from unk_DFD9C): the ones not dressed (position 0) stand at the centre
+   six players of each team (walking down from sortobj11): the ones not dressed (position 0) stand at the centre
    line facing their end, the others skate in from five random lanes by their side, all with the skate-in
    assignment (25h); the puck held at the boards (1Ah) and the referee at centre ice (26h). Two game frames and a
    sprite sort, the camera and view at the start, the text overlay closed and the HUD panel redrawn. No arguments
@@ -81,8 +81,8 @@ void PreGameIntro(void)
     Player *p;
 
     PlayCrowdSample(0xA);
-    team = byte_CC9B0[HomeTeam];
-    y = word_CC9CC[byte_CC9B0[HomeTeam]];
+    team = teamrocktune[HomeTeam];
+    y = word_CC9CC[teamrocktune[HomeTeam]];
     LoadTeamPPV((short)(team != 1 ? 4 : 3));
     textline5 = 0;
     textline4 = 0;
@@ -105,7 +105,7 @@ void PreGameIntro(void)
     setpersonel(&awtmstruct);
     forcepldata(&awtmstruct);
     resetplstuff();
-    p = (Player *)unk_DFD9C;
+    p = (Player *)sortobj11;
     for (side = 0; side < 2; side++) {
         for (i = 0; i < 5; i++) used[i] = 0;
         for (i = 0; i < 6; i++, p--) {
@@ -150,18 +150,18 @@ void PreGameIntro(void)
     ((Player *)puckstruct)->Xvel = 0;
     ((Player *)puckstruct)->Yvel = 0;
     assreplace((Player *)puckstruct, 0x1A);
-    word_E0042 = team;
+    reftemp1 = team;
     HIWORD((REF)->Xpos) = 0x8E;
-    word_E0046 = 0x8E;
+    reftemp3 = 0x8E;
     HIWORD((REF)->Xpos) += randomd0(2);
     HIWORD((REF)->Ypos) = 0;
-    word_E0048 = 0;
+    reftemp4 = 0;
     (REF)->facedir = 4;
-    word_E002A = 0;
-    word_E0028 = 0;
-    word_E004A = y;
+    refYvel = 0;
+    refXvel = 0;
+    reftemp5 = y;
     SetSPA(REF, 0);
-    word_E002E = 0x289;
+    refframe = 0x289;
     assreplace(REF, 0x26);
     RefStep[0] = 0;
     sflags |= 0x40;
@@ -254,11 +254,11 @@ int ThreeStarsLoop(void)
     }
     joysampling = 0;
     if (ovlseq != -1) {
-        FreeMemBlock(dword_E0244);
+        FreeMemBlock(ovlartbank);
         ovlseq = -1;
     }
     if (escrequest) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
         CrowdFadeOut();
         StopDigiSample();
@@ -267,7 +267,7 @@ int ThreeStarsLoop(void)
         return -1;
     }
     if (introskipped) {
-        sub_8FFB0(0, 0x100, savepal);
+        SetPalette(0, 0x100, savepal);
         FadePalette(1, savepal, 0x10);
     }
     StopDigiSample();
@@ -275,12 +275,12 @@ int ThreeStarsLoop(void)
     return 0;
 }
 
-/* StartPreGame (4830E, PC only): start the game's pre-game skate unless dword_CC0EC is set (then result 0): the
+/* StartPreGame (4830E, PC only): start the game's pre-game skate unless demoflag is set (then result 0): the
    intro set-up (PreGameIntro) unless skip, the crowd noise reset, then the skate itself (ThreeStarsLoop, which it
    falls into). skip: leave the set-up out. Result: ThreeStarsLoop's. */
 int StartPreGame(int skip)
 {
-    if (dword_CC0EC) return 0;
+    if (demoflag) return 0;
     if (!(short)skip) PreGameIntro();
     CrowdNoiseReset();
     return ThreeStarsLoop();
@@ -291,9 +291,9 @@ int StartPreGame(int skip)
    team touched the puck last, the winning team's scorer (tmpsplayer) is the game-winning scorer, and when the goal
    clinched the cup he is the first star (AddStar). A goalie with a shutout (his opponents' score 0; the goalie of
    the three with the most of the first stats word) gets a star when he faced more shots than the period length's
-   minimum (byte_CC9E4). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
+   minimum (starskatermin). Then the skaters with stats (not position 0 or 2; a position 1 player only with one of the
    stats words set), sorted by StarCompare: a player with more than one point gets a star; at the first one without,
-   the goalies with enough shots (byte_CC9E7) and a goals-against rate (per thousand) of at most 4Bh get stars, then
+   the goalies with enough shots (stargoaliemin) and a goals-against rate (per thousand) of at most 4Bh get stars, then
    the rest of the list in order until there are three. No arguments, no result. */
 void PickThreeStars(void)
 {
@@ -311,7 +311,7 @@ void PickThreeStars(void)
         i = i > 0;
         if (i ^ (lasttouch < 6)) {
             gwgteam = i;
-            gwgplayer = word_DF644[i * 0x80];
+            gwgplayer = hmtmtouch1[i * 0x80];
             if (IsCupClinched(hmscore[0], awscore)) stars += AddStar(stars, i, gwgplayer);
         }
     }
@@ -320,7 +320,7 @@ void PickThreeStars(void)
             k = 0;
             if (GSTAT(i, 1)[0] > GSTAT(i, 0)[0]) k = 1;
             if (GSTAT(i, 2)[0] > GSTAT(i, 0)[0] && GSTAT(i, 2)[0] > GSTAT(i, 1)[0]) k = 2;
-            if (GS(i, k)[0] > byte_CC9E4[gameopts.pertime]) stars += AddStar(stars, i, k += 0x19);
+            if (GS(i, k)[0] > starskatermin[gameopts.pertime]) stars += AddStar(stars, i, k += 0x19);
         }
     }
     n = 0;
@@ -334,12 +334,12 @@ void PickThreeStars(void)
     qsort(list, n, 4, StarCompare);
     for (i = 0; i < n; i++) {
         k = list[i];
-        if (*(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16)) + *(short *)((char *)dword_DB088 + (((k / 25 * 25) << 4) + k % 25 * 16) + 2) > 1) {
+        if (*(short *)((char *)hmplstats + (((k / 25 * 25) << 4) + k % 25 * 16)) + *(short *)((char *)hmplstats + (((k / 25 * 25) << 4) + k % 25 * 16) + 2) > 1) {
             stars += AddStar(stars, k / 25, k % 25);
             if (stars >= 3) return;
         } else {
             for (k = 0; k < 6; k++) {
-                if (byte_CC9E7[gameopts.pertime] <= GS(k / 3, k % 3)[0] && (GS(k / 3, k % 3)[1] * 0x3E8 + GS(k / 3, k % 3)[0] / 2) / GS(k / 3, k % 3)[0] <= 0x4B) {
+                if (stargoaliemin[gameopts.pertime] <= GS(k / 3, k % 3)[0] && (GS(k / 3, k % 3)[1] * 0x3E8 + GS(k / 3, k % 3)[0] / 2) / GS(k / 3, k % 3)[0] <= 0x4B) {
                     stars += AddStar(stars, k / 3, k % 3 + 0x19);
                     if (stars >= 3) return;
                 }
@@ -357,7 +357,7 @@ void PickThreeStars(void)
 /* Matched under 10.0 GA: the parking loop tests at the bottom once q is set before the for.
    The intro and three-stars routines share the epilogue in ThreeStarsLoop. */
 /* StartThreeStars (48F0B, PC only; ends in PreGameIntro_popx): the three stars ceremony after the game (not in the
-   demo, dword_CC0EC). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
+   demo, demoflag). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
    (PickThreeStars). Clear the line change and penalty signals, the banner and the text overlay (freeing its art),
    the text lines, end the period count (curperiod -1) and the game-over flags, stop the clock (gmode bit 0 on, bit 7
    off), run the sequence for 2EE0h ticks, release the controllers and empty the penalty boxes. Park the twelve
@@ -372,21 +372,21 @@ void StartThreeStars(void)
     int per;
     int i;
 
-    if (dword_CC0EC) return;
+    if (demoflag) return;
     per = curperiod;
     joysampling = 0;
     joyq_flush();
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     fadeinpending = 1;
     PickThreeStars();
-    byte_E9AC8 = 0xFF;
+    curevent = 0xFF;
     word_CBC44 = 0;
     RefPen = 0;
     refsignal = 0;
     Penaltytimer = 0;
     bannertimer = 0;
-    word_CBEC6 = 0;
+    injurystop = 0;
     lcboxon[1] = 0;
     lcboxon[0] = 0;
     lcblink[1] = 0;
@@ -395,7 +395,7 @@ void StartThreeStars(void)
     energywarn[0] = 0;
     lcrequest[1] = 0;
     lcrequest[0] = 0;
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     ovlseq = ovlstep = bannermsg = -1;
     textline3 = textline1 = textline2 = textline4 = textline5 = 0;
     curperiod = -1;
@@ -433,14 +433,14 @@ void StartThreeStars(void)
     q->Xvel = 0;
     q->Yvel = 0;
     assreplace(q, 0x19);
-    word_E0042 = 0;
-    word_E0046 = HIWORD(SortCords[0x10].Xpos) = -0xC8;
-    word_E0022 = 0;
-    word_E0048 = 0;
-    word_E002A = 0;
-    word_E0028 = 0;
+    reftemp1 = 0;
+    reftemp3 = HIWORD(SortCords[0x10].Xpos) = -0xC8;
+    refYpos2 = 0;
+    reftemp4 = 0;
+    refYvel = 0;
+    refXvel = 0;
     SetSPA(&SortCords[0x10], 0);
-    word_E002E = -1;
+    refframe = -1;
     assreplace(&SortCords[0x10], 0x15);
     RefStep[0] = 0;
     sflags |= 0x40;

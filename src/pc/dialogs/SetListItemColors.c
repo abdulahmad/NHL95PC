@@ -14,5 +14,5 @@ void SetListItemColors(int sel, int item)
         fg = dlgtextfg;
         bg = dlgtextbg;
     }
-    sub_8E9C0(fg, bg);
+    TextSetColors(fg, bg);
 }

@@ -16,7 +16,7 @@
 #define DATA_LO 0xC0000u        /* the game's data object (orig addresses: sources/segments.txt, object 2) */
 #define DATA_HI 0xFAB90u
 
-extern uint8_t unk_C0000[], byte_D8C88[], unk_F7B88[];
+extern uint8_t __nullarea[], fadepalbuf[], stackarea[];
 static char *stack_base;
 
 void snap_set_stack_base(void *base) { stack_base = (char *)base; }
@@ -30,14 +30,14 @@ int snap_regions(snap_region *r, int max)
 #if defined(_WIN32)
     /* the Windows link folds the game's sections into .data and .bss behind the host's own, in the game's order, so the data is found by its
      * symbols, not by its original address */
-    r[n].p = (uint8_t *)unk_C0000;
+    r[n].p = (uint8_t *)__nullarea;
     r[n].n = 0xD8B68u - DATA_LO;
     n++;
-    r[n].p = (uint8_t *)(byte_D8C88) - (0xD8C88u - 0xD8B68u);
-    r[n].n = (size_t)(((uint8_t *)unk_F7B88 + (DATA_HI - 0xF7B88u)) - (uint8_t *)r[n].p);
+    r[n].p = (uint8_t *)(fadepalbuf) - (0xD8C88u - 0xD8B68u);
+    r[n].n = (size_t)(((uint8_t *)stackarea + (DATA_HI - 0xF7B88u)) - (uint8_t *)r[n].p);
     n++;
 #else
-    r[n].p = (uint8_t *)sub_10000 + (DATA_LO - 0x10000);
+    r[n].p = (uint8_t *)begtext_forever + (DATA_LO - 0x10000);
     r[n].n = DATA_HI - DATA_LO;
     n++;
 #endif

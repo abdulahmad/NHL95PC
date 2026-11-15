@@ -24,14 +24,14 @@ void WriteScreenTextFile(char *base)
     r = !FileExists(name) ? DiskSpaceShort(0, need) : 0;
     if (r) {
         sprintf((char *)msg_NeedKbytes2, (char *)str_NeedKbytesFmt2, r);
-        MessageBox(-1, -1, (char *)off_C659A, 3, 0, 0, (int)&x, (int)&y, 0x320);
+        MessageBox(-1, -1, (char *)msg_StatsDiskSpace, 3, 0, 0, (int)&x, (int)&y, 0x320);
         return;
     }
     line[0x65] = 0;
     fp = fopen(name, (char *)str_rt);
     if (fp) {
         fclose(fp);
-        if (MessageBox(-1, -1, (char *)off_C648E, 2, (int)unk_C6499, 2, (int)&x, (int)&y, -1) != 1) return;
+        if (MessageBox(-1, -1, (char *)msg_FileExists, 2, (int)btn_FileExists, 2, (int)&x, (int)&y, -1) != 1) return;
     }
     fp = fopen(name, (char *)str_wt);
     if (fp) {
@@ -44,8 +44,8 @@ void WriteScreenTextFile(char *base)
             s += 0x64;
         }
         fclose(fp);
-        MessageBox(-1, -1, (char *)unk_C64F5, 1, 0, 0, (int)&x, (int)&y, -1);
+        MessageBox(-1, -1, (char *)msg_StatsWritten, 1, 0, 0, (int)&x, (int)&y, -1);
     } else {
-        MessageBox(-1, -1, (char *)unk_C652A, 1, 0, 0, (int)&x, (int)&y, -1);
+        MessageBox(-1, -1, (char *)msg_OutputFileError, 1, 0, 0, (int)&x, (int)&y, -1);
     }
 }

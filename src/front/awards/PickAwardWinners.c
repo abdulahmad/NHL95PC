@@ -10,22 +10,22 @@
 #define PickAwardWinners PickAwardWinners_decl
 #define ShowAwardScreens ShowAwardScreens_decl
 #define sub_9035C sub_9035C_decl
-#define sub_8F1FE sub_8F1FE_decl
-#define sub_8F13B sub_8F13B_decl
+#define FreeSample sub_8F1FE_decl
+#define LoadSample sub_8F13B_decl
 #define sub_8F98F sub_8F98F_decl
 #define sub_8FB8E sub_8FB8E_decl
 #define GetTicks GetTicks_decl
 #include "nhl95.h"
-#undef sub_8F1FE
-#undef sub_8F13B
+#undef FreeSample
+#undef LoadSample
 #undef sub_8F98F
 #undef sub_8FB8E
 #undef PickAwardWinners
 #undef ShowAwardScreens
 #undef sub_9035C
 #undef GetTicks
-void sub_8F1FE(void *smp);
-void *sub_8F13B(char *path);
+void FreeSample(void *smp);
+void *LoadSample(char *path);
 int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
 
@@ -65,7 +65,7 @@ typedef struct GSeasonRec {
     unsigned char p16[0x1A];
     unsigned short g30, g32, g34; /* 30 32 34: summed for award 9 */
 } GSeasonRec;                     /* goalie season record, 36h bytes */
-#define AWST(n) (((unsigned char **)off_C524F)[n])   /* stats record of award n's winner */
+#define AWST(n) (((unsigned char **)awardstatsptrs)[n])   /* stats record of award n's winner */
 #define AWKEY(n) (((KeyRec *)awardwinners)[n])       /* key record of award n's winner */
 
 
@@ -77,8 +77,8 @@ typedef struct GSeasonRec {
    word 18h (then the fewest of word 12h), ties to fewer games; per goalie (key indexes at +B0h): award 4 most of
    word 2 (then the most of word 14h), 5 with 19h games the lowest word 10h (then the most of word 0Ch). Award 9
    goes to the best sum of words 28h-2Ch (skaters) or 30h-34h (goalies), fewer games on a tie; it keeps the
-   winner's record in unk_D98C3 / unk_D9794 and awardtype[9] says which (a goalie winner keeps the last skater's
-   key, as in the EXE). Each winner's key record goes to awardwinners[n], the stats to *off_C524F[n]. Returns the
+   winner's record in awardstats9 / awardstats9g and awardtype[9] says which (a goalie winner keeps the last skater's
+   key, as in the EXE). Each winner's key record goes to awardwinners[n], the stats to *awardstatsptrs[n]. Returns the
    first error (0 = ok). */
 int PickAwardWinners(void)
 {
@@ -206,8 +206,8 @@ int PickAwardWinners(void)
             }
             if (!f.found[9] || mine > v || mine == v && g > f.season.gp) {
                 AWKEY(9) = f.key;
-                *(SeasonRec *)unk_D98C3 = f.season;
-                AWST(9) = unk_D98C3;
+                *(SeasonRec *)awardstats9 = f.season;
+                AWST(9) = awardstats9;
                 awardtype[9] = 1;
                 f.found[9] = 0xFF;
             }
@@ -252,8 +252,8 @@ int PickAwardWinners(void)
             }
             if (!f.found[9] || mine > v || mine == v && g > f.gseason.gp) {
                 AWKEY(9) = f.key;
-                *(GSeasonRec *)unk_D9794 = f.gseason;
-                AWST(9) = unk_D9794;
+                *(GSeasonRec *)awardstats9g = f.gseason;
+                AWST(9) = awardstats9g;
                 awardtype[9] = 0;
                 f.found[9] = 0xFF;
             }
@@ -296,11 +296,11 @@ int ShowAwardScreens(void)
     key = 0;
     ClearInputQueue();
     for (k = key; k < 0xB && key != 3; k++) {
-        SetTextColors(dword_C513C[k], 0);
+        SetTextColors(awardtextcolors[k], 0);
         GetTicks();
-        MakePath(buf, fileoncd[dword_C5168[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
-        bank = sub_8E83C(buf, 0);
-        sub_9061C(sub_9035C(bank, 1));
+        MakePath(buf, fileoncd[awardartfiles[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
+        bank = LoadBank(buf, 0);
+        DrawBitmap(sub_9035C(bank, 1));
         y = 0x76;
         if (awardtype[k] == 2) {
             if (k == 0xA) strcpy(buf, (char *)cupteam);
@@ -312,9 +312,9 @@ int ShowAwardScreens(void)
                 if (k == 0xA) strcpy(buf, (char *)cupteam + 5);
                 else strcpy(buf, (char *)presidentsteam + 5);
                 if (!strnicmp(buf, (char *)str_Cal, 3) || !strnicmp(buf, (char *)str_Flo, 3))
-                    strcat(buf, (char *)unk_C03C4);
+                    strcat(buf, (char *)str_ctl07);
                 else
-                    strcat(buf, (char *)unk_C03C6);
+                    strcat(buf, (char *)str_ctl06);
                 x = 0x1FE - (fputchar(buf) >> 1);
                 PrintShadowText(x, y, buf);
             }
@@ -327,9 +327,9 @@ int ShowAwardScreens(void)
             if (!strnicmp(buf, (char *)str_ANA, 3)) {
                 *(Str25 *)buf = *(Str25 *)str_MightyDucks;
             } else if (awardwinners[k * 0x34] == 2 || awardwinners[k * 0x34] == 0x18 || awardwinners[k * 0x34] == 0x19) {
-                strcat(buf, (char *)unk_C03C4);
+                strcat(buf, (char *)str_ctl07);
             } else {
-                strcat(buf, (char *)unk_C03C6);
+                strcat(buf, (char *)str_ctl06);
             }
             x = 0x1FE - (fputchar(buf) >> 1);
             y += byte_D42C3;
@@ -347,10 +347,10 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_EN);
                 PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
-                s = ss = (unsigned short *)off_C524F[k];
+                s = ss = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[6]);
                     PrintFmt2(x, y + byte_D42C3 * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
@@ -374,10 +374,10 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_SHG);
                 PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
-                s = gs = (unsigned short *)off_C524F[k];
+                s = gs = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[1]);
                     PrintFmt1(x, y + byte_D42C3 * 2, (char *)str_fmtpd, s[2]);
@@ -402,11 +402,11 @@ int ShowAwardScreens(void)
         }
         x = 0x1FE - (fputchar((char *)awardtitles[k * 2]) >> 1);
         PrintShadowText(x, y, (char *)awardtitles[k * 2]);
-        FadePalStep(0, (unsigned char *)sub_B30B4(bank, (char *)str_Pal3) + 0x10, 0x10);
+        FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_Pal3) + 0x10, 0x10);
         FreeMemBlock(bank);
         key = WaitClickTimeout(0x2710);
-        pal = sub_8CCA8((char *)str_Palmem, 0x300, 0);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Palmem, 0x300, 0);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
     }
@@ -444,9 +444,9 @@ void DrawAwardsSummary(void)
             } else {
                 strcpy(s.buf, k == 0xA ? (char *)cupteam + 5 : (char *)presidentsteam + 5);
                 if (!strnicmp(s.buf, (char *)str_Cal, 3) || !strnicmp(s.buf, (char *)str_Flo, 3))
-                    strcat(s.buf, (char *)unk_C03C4);
+                    strcat(s.buf, (char *)str_ctl07);
                 else
-                    strcat(s.buf, (char *)unk_C03C6);
+                    strcat(s.buf, (char *)str_ctl06);
                 PrintShadowText(0x190, y, s.buf);
             }
         } else {
@@ -456,9 +456,9 @@ void DrawAwardsSummary(void)
             if (!strnicmp(s.buf, (char *)str_ANA, 3)) {
                 *(Str25 *)s.buf = *(Str25 *)str_MightyDucks;
             } else if (awardwinners[k * 52] == 2 || awardwinners[k * 52] == 0x18 || awardwinners[k * 52] == 0x19) {
-                strcat(s.buf, (char *)unk_C03C4);
+                strcat(s.buf, (char *)str_ctl07);
             } else {
-                strcat(s.buf, (char *)unk_C03C6);
+                strcat(s.buf, (char *)str_ctl06);
             }
             PrintShadowText(0x190, y, s.buf);
         }
@@ -487,24 +487,24 @@ void AwardsCeremony(void)
     int done;
 
     ClearInputQueue();
-    pal = (unsigned char *)sub_8CCA8((char *)str_Palmem, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Palmem, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x32);
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }
-    sub_8E9E8(s.text);
-    sub_8EA18(kaufmfont);
+    TextSaveState(s.text);
+    TextSetFont(kaufmfont);
     MakePath(s.path, fileoncd[0x1DE] == 1 ? (char *)cddriveptr : 0, (char *)str_Awardsi, 0);
-    bank = sub_8E83C(s.path, 0);
-    sub_9061C(sub_B30B4(bank, (char *)str_Scrn));
-    sub_9061C(sub_B30B4(bank, (char *)str_Titl));
-    memcpy(pal, (unsigned char *)sub_B30B4(bank, (char *)str_Pal3) + 0x10, 0x300);
+    bank = LoadBank(s.path, 0);
+    DrawBitmap(FindShape(bank, (char *)str_Scrn));
+    DrawBitmap(FindShape(bank, (char *)str_Titl));
+    memcpy(pal, (unsigned char *)FindShape(bank, (char *)str_Pal3) + 0x10, 0x300);
     FreeMemBlock(bank);
     if (musicon && !songdata) {
         MakePath(s.path, fileoncd[0x220] == 1 ? (char *)cddriveptr : 0, (char *)str_Awards, (char *)str_Iff);
@@ -515,7 +515,7 @@ void AwardsCeremony(void)
             MakePath(s.path, fileoncd[0xFA] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtafan, 0);
         else
             MakePath(s.path, fileoncd[0x18] == 1 ? (char *)cddriveptr : 0, (char *)str_Adafan, 0);
-        smp = sub_8F13B(s.path);
+        smp = LoadSample(s.path);
         PlayDigiSample(smp);
     }
     FadePalStep(0, pal, 0x10);
@@ -523,15 +523,15 @@ void AwardsCeremony(void)
         WaitDigiSample();
         FadePalStep(1, pal, 0x10);
         StopDigiSample();
-        sub_8F1FE(smp);
+        FreeSample(smp);
     } else if (musicon) {
         done = 0;
-        while (!done && sub_8FC8A(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
+        while (!done && SndQuery(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
         sub_8FCDF(musichandle, 3, 0x32);
         FadePalStep(1, pal, 0x10);
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         if (songdata) sub_8D2F0(songdata);
         songdata = 0;
     } else {
@@ -549,39 +549,39 @@ void AwardsCeremony(void)
             MakePath(s.path, fileoncd[0xFC] == 1 ? (char *)cddriveptr : 0, (char *)str_Mtawards, 0);
         else
             MakePath(s.path, fileoncd[0x1A] == 1 ? (char *)cddriveptr : 0, (char *)str_Adawards, 0);
-        smp = sub_8F13B(s.path);
+        smp = LoadSample(s.path);
         PlayDigiSample(smp);
     }
     if (!r) {
         if (ShowAwardScreens() < 3) {
             MakePath(s.path, fileoncd[0x1DE] == 1 ? (char *)cddriveptr : 0, (char *)str_Awardsi, 0);
-            bank2 = sub_8E83C(s.path, 0);
+            bank2 = LoadBank(s.path, 0);
             ClearInputQueue();
             sub_B4BA8();
             SetTextColors(1, 0);
-            sub_9061C(sub_B30B4(bank2, (char *)str_Scrn));
-            sub_9061C(sub_B30B4(bank2, (char *)str_Summ));
+            DrawBitmap(FindShape(bank2, (char *)str_Scrn));
+            DrawBitmap(FindShape(bank2, (char *)str_Summ));
             DrawAwardsSummary();
             sub_B4BA8();
-            pal2 = (unsigned char *)sub_B30B4(bank2, (char *)str_Pal3) + 0x10;
+            pal2 = (unsigned char *)FindShape(bank2, (char *)str_Pal3) + 0x10;
             FadePalStep(0, pal2, 0x10);
             WaitClickTimeout(0x2328);
             FadePalStep(1, pal2, 0x10);
             FreeMemBlock(bank2);
         }
         sub_B4BA8();
-        sub_B392C(0);
+        ClearScreen(0);
     }
     if (musicon) {
         sub_8FCDF(musichandle, 3, 0x78);
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         if (songdata) sub_8D2F0(songdata);
         songdata = 0;
     } else {
         StopDigiSample();
-        sub_8F1FE(smp);
+        FreeSample(smp);
     }
-    sub_8EA00(s.text);
+    TextRestoreState(s.text);
 }

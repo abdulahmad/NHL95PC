@@ -9,6 +9,6 @@ void PrintLineEdStatus(int x, int y, char *s)
 
     if (fputchar(s) + x > 0x26B) w = 0x26B - x;
     else w = fputchar(s);
-    sub_90D20(x, y + 2, w, 0xB, dlgfillcol);
-    sub_91964(s, x, y);
+    FillRect(x, y + 2, w, 0xB, dlgfillcol);
+    PrintString(s, x, y);
 }

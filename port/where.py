@@ -10,7 +10,7 @@ nm = subprocess.run([os.environ.get('NM', 'nm'), exe], capture_output=True, text
 base = None
 for l in nm.split('\n'):
     p = l.split()
-    if len(p) == 3 and p[2] in ('sub_10000', '_sub_10000'):
+    if len(p) == 3 and p[2] in ('begtext_forever', '_sub_10000'):
         base = int(p[0], 16) - 0x10000
 a = int(sys.argv[1], 16)
 orig = a - base

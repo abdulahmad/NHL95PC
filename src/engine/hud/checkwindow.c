@@ -86,9 +86,9 @@ void checkwindow(void)
         if ((gmode & 4) && Pencntdwn < 0 || RefStep[0] > 0) {
             p = &SortCords[0x10];
             xc1 = HIWORD(p->Xpos);
-            yc1 = word_E0022;
+            yc1 = refYpos2;
             regd2.w = xc1 - camx;
-            regd3.w = word_E0046 - camx;
+            regd3.w = reftemp3 - camx;
             if ((regd2.w ^ regd3.w) < 0) xc1 = camx;
             else if (ABSW(regd2.w) > ABSW(regd3.w)) xc1 = p->temp3;
             regd2.w = yc1 - camy;
@@ -163,28 +163,28 @@ void checkwindow(void)
 }
 
 /* LoadTeamPPV (66497, PC only; ends in checkwindow_popebp): start overlay sequence seq when enough memory is free
-   (sub_8DAB8 against dword_CD4B0[seq]): with the joystick sampling off, load its PPV art bank (off_CBED0, from the
-   CD when fileoncd says so) into dword_E0244 and its frames ("%04d") into dword_DEF8C, then set the overlay
-   state: ovlseq, its script (off_CC01D), the first step's timer (word_CC054), step index 1 and the first step.
+   (sub_8DAB8 against ovlmemneed[seq]): with the joystick sampling off, load its PPV art bank (ovlartnames, from the
+   CD when fileoncd says so) into ovlartbank and its frames ("%04d") into ovlstepart, then set the overlay
+   state: ovlseq, its script (ovlscripts), the first step's timer (ovlsteptime), step index 1 and the first step.
    seq: the overlay. No result. */
 void LoadTeamPPV(short seq)
 {
     char name[0x10];
     int i;
 
-    if (sub_8DAB8() < dword_CD4B0[seq]) return;
+    if (sub_8DAB8() < ovlmemneed[seq]) return;
     joysampling_save = joysampling;
     joysampling = 0;
-    MakePath(name, fileoncd[dword_CC080[seq]] == 1 ? (char *)cddriveptr : 0, (char *)off_CBED0[seq], (char *)str_PPV);
-    dword_E0244 = sub_8E8A0(name, 0x20);
-    for (i = 0; i < sub_90354(dword_E0244); i++) {
+    MakePath(name, fileoncd[ovlartfiles[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
+    ovlartbank = sub_8E8A0(name, 0x20);
+    for (i = 0; i < sub_90354(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
-        dword_DEF8C[i] = sub_B30B4(dword_E0244, name);
+        ovlstepart[i] = FindShape(ovlartbank, name);
     }
     joysampling = joysampling_save;
     ovlseq = seq;
-    ovlscript = off_CC01D[seq];
-    ovlsteptimer = ((int *)word_CC054)[seq];
+    ovlscript = ovlscripts[seq];
+    ovlsteptimer = ((int *)ovlsteptime)[seq];
     ovlstepidx = 1;
     ovlstep = ((signed char *)ovlscript)[1];
 }
@@ -193,8 +193,8 @@ void LoadTeamPPV(short seq)
    (moved right during the shootout, gsp 4). ovltimer slides it: under 10h it grows from the corner (the clip
    window shrinks to the box, k = timer, 42h / 2Ah * k / 16) and from 258h it shrinks again. The banner is cut
    (bannermsg -1). The box is saved and dithered (sub_90EC0, DitherRect 9) while it slides or without an overlay
-   script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (dword_DEF8C) is
-   drawn, for sequence 0Ah after step 10h over dword_DF004 and for sequence 8 steps 12h-14h below dword_DEFE0; at
+   script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (ovlstepart) is
+   drawn, for sequence 0Ah after step 10h over ovlstepart_e30 and for sequence 8 steps 12h-14h below ovlstepart_e21; at
    sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from crowdlevel over 2EEh, 3B6h and 47Eh.
    Without one, the text lines 3, 1, 2, 4, 5 centred, line spacing by how many there are, twice (scor3font in 25h,
    then scor2font in 27h). Then the box is marked for redraw (sub_6AB7C). No arguments, no result. */
@@ -236,7 +236,7 @@ void DrawTextOverlay(void)
         x2 += (short)((short)cliprect_x0 - scrollx);
         y += (short)((short)cliprect_y0 - scrolly);
         y2 += (short)((short)cliprect_y0 - scrolly);
-        sub_B4BC4(x, x2, y, y2);
+        SetClipWindow(x, x2, y, y2);
     }
     x = scrollx + 0xC;
     if (gsp == 4) x += 0xAC;
@@ -252,22 +252,22 @@ void DrawTextOverlay(void)
         DitherRect(x, y, x2 - x, y2 - y, 9);
     }
     if (d == 0 || w >= 0x3E) {
-        sub_90D20(x - 4, y - 4, 0x83, 4, 0);
-        sub_90D20(x - 4, y, 4, 0x4B, 0);
-        sub_90D20(x2, y, 4, 0x4B, 0);
-        sub_90D20(x - 4, y2, 0x83, 4, 0);
+        FillRect(x - 4, y - 4, 0x83, 4, 0);
+        FillRect(x - 4, y, 4, 0x4B, 0);
+        FillRect(x2, y, 4, 0x4B, 0);
+        FillRect(x - 4, y2, 0x83, 4, 0);
     }
     if (d < 0) {
-        sub_B4BC4(x0s, x1s, y0s, y1s);
+        SetClipWindow(x0s, x1s, y0s, y1s);
     } else if (ovlseq != -1 && ovlstep != -1) {
         if (ovlseq == 0xA && ovlstep > 0x10) {
-            sub_B500C(dword_DF004, x, y);
-            sub_B500C(dword_DEF8C[ovlstep], x + 0x11, y + 0x1F);
+            sub_B500C(ovlstepart_e30, x, y);
+            sub_B500C(ovlstepart[ovlstep], x + 0x11, y + 0x1F);
         } else if (ovlseq == 8 && ovlstep >= 0x12 && ovlstep <= 0x14) {
-            sub_B500C(dword_DEFE0, x, y);
-            sub_B500C(dword_DEF8C[ovlstep], x, y + 0x3C);
+            sub_B500C(ovlstepart_e21, x, y);
+            sub_B500C(ovlstepart[ovlstep], x, y + 0x3C);
         } else {
-            sub_B500C(dword_DEF8C[ovlstep], x, y);
+            sub_B500C(ovlstepart[ovlstep], x, y);
         }
         if (ovlseq == 0 && ovlstep == 2) {
             y += 0x23;
@@ -301,45 +301,45 @@ void DrawTextOverlay(void)
             y += 0xF;
         }
         x += 0x3E;
-        sub_8EA18(scor3font);
-        sub_8E9C0(0x25, 0xFF);
+        TextSetFont(scor3font);
+        TextSetColors(0x25, 0xFF);
         d = y;
-        if (textline3) sub_91964((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
+        if (textline3) PrintString((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
         if (textline1) {
             d += h;
-            sub_91964((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
+            PrintString((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
         }
         if (textline2) {
             d += h;
-            sub_91964((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
+            PrintString((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
         }
         if (textline4) {
             d += h;
-            sub_91964((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
+            PrintString((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
         }
         if (textline5) {
             d += h;
-            sub_91964((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
+            PrintString((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
         }
-        sub_8EA18(scor2font);
-        sub_8E9C0(0x27, 0xFF);
+        TextSetFont(scor2font);
+        TextSetColors(0x27, 0xFF);
         d = y;
-        if (textline3) sub_91964((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
+        if (textline3) PrintString((char *)&textline3, x - fputchar((char *)&textline3) / 2, y);
         if (textline1) {
             d += h;
-            sub_91964((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
+            PrintString((char *)&textline1, x - fputchar((char *)&textline1) / 2, d);
         }
         if (textline2) {
             d += h;
-            sub_91964((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
+            PrintString((char *)&textline2, x - fputchar((char *)&textline2) / 2, d);
         }
         if (textline4) {
             d += h;
-            sub_91964((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
+            PrintString((char *)&textline4, x - fputchar((char *)&textline4) / 2, d);
         }
         if (textline5) {
             d += h;
-            sub_91964((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
+            PrintString((char *)&textline5, x - fputchar((char *)&textline5) / 2, d);
         }
     }
     x = (short)cliprect_x0 + 8;
@@ -369,15 +369,15 @@ void UpdateTextOverlay(void)
         if (--ovlsteptimer >= 0) return;
         s = (signed char *)ovlscript;
         if (*s == ovlstepidx) {
-            FreeMemBlock(dword_E0244);
-            if (byte_CC049[ovlseq]) ovltimer = 0x258;
+            FreeMemBlock(ovlartbank);
+            if (ovlseqtimed[ovlseq]) ovltimer = 0x258;
             ovlseq = ovlstep = -1;
             ovlscript = 0;
             return;
         }
         ovlstepidx++;
         ovlstep = s[ovlstepidx];
-        ovlsteptimer = ((int *)word_CC054)[ovlseq];
+        ovlsteptimer = ((int *)ovlsteptime)[ovlseq];
         return;
     }
     if (ovltimer < 0x100 || ovltimer >= 0x258) ovltimer++;
@@ -404,7 +404,7 @@ void DrawCallBanner(short n)
     x = scrollx + 0xC;
     y = scrolly + 0x95;
     y2 = scrolly + 0x9E;
-    sub_8EA18(scor3font);
+    TextSetFont(scor3font);
     w = fputchar((char *)bannerstrs[n]) + 4;
     x2 = w + x;
     d = cliprect_x0 - scrollx;
@@ -414,19 +414,19 @@ void DrawCallBanner(short n)
     y += d;
     y2 += d;
     w += 8;
-    sub_90D20(x, y, x2 - x, y2 - y, 0x10);
+    FillRect(x, y, x2 - x, y2 - y, 0x10);
     DitherRect(x, y, x2 - x, y2 - y, 9);
-    sub_90D20(x - 4, y - 4, w, 4, 0);
-    sub_90D20(x - 4, y, 4, 9, 0);
-    sub_90D20(x2, y, 4, 9, 0);
-    sub_90D20(x - 4, y2, w, 4, 0);
-    sub_8E9C0(0x25, 0xFF);
+    FillRect(x - 4, y - 4, w, 4, 0);
+    FillRect(x - 4, y, 4, 9, 0);
+    FillRect(x2, y, 4, 9, 0);
+    FillRect(x - 4, y2, w, 4, 0);
+    TextSetColors(0x25, 0xFF);
     x2 = x + 2;                     /* x2 is free now: the text x of both passes */
     y2 = y + 1;
-    sub_91964((char *)bannerstrs[n], x2, y2);
-    sub_8EA18(scor2font);
-    sub_8E9C0(0x27, 0xFF);
-    sub_91964((char *)bannerstrs[n], x2, y2);
+    PrintString((char *)bannerstrs[n], x2, y2);
+    TextSetFont(scor2font);
+    TextSetColors(0x27, 0xFF);
+    PrintString((char *)bannerstrs[n], x2, y2);
     x -= 4;
     y -= 4;
     sub_6AB7C(spritedrawcount++, x, y, x + w, y + 0x11);

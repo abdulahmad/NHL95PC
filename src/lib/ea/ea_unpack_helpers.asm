@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A2F40 progbits alloc exec nowrite align=1
 extern _FtoS_, byte_D42E4, dword_D30C8, dword_D43E4, forcedecpt_, sub_90354, sub_9035C, sub_90373
-extern sub_903F0, sub_B01B0, sub_B026C, sub_B3ABC, sub_B763B
+extern PutBlock, sub_B01B0, sub_B026C, sub_B3ABC, sub_B763B
 global sub_A2F40, loc_A2F61, sub_A2F84, sub_A2FD0, loc_A3006, loc_A3015, loc_A3024, loc_A302C
 global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, sub_A30D0, sub_A30F8, loc_A3105
 global loc_A312B, loc_A312C, loc_A313F, loc_A3172, loc_A317C, loc_A3189, loc_A3196, loc_A3199
@@ -25,7 +25,7 @@ mov dword [dword_D43E4], sub_B01B0	; A2F61
 push eax	; A2F6B
 push ebx	; A2F6C
 push edx	; A2F6D
-call sub_903F0	; A2F6E
+call PutBlock	; A2F6E
 add esp, byte 0Ch	; A2F73
 mov dword [dword_D43E4], sub_B3ABC	; A2F76
 ret	; A2F80

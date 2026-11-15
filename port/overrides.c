@@ -10,9 +10,9 @@
 #include <string.h>
 #include <SDL.h>
 
-extern char __hook387[], __unhook387[], sub_9D352[], sub_8DF70[], sub_B3E98[], sub_B3ED8[], sub_B3F50[], __delay_init_[], __delay_[];
-extern uint32_t dword_F24CC;
-extern char SetTickDeadline[], WaitTicks[], ShowLoadingScreen[], sub_8FC8A[];
+extern char __hook387[], __unhook387[], InitFpuFlags[], ProbeVesa[], SaveTextMode[], RestoreTextMode[], DetectCPU[], __delay_init_[], __delay_[];
+extern uint32_t delaycount;
+extern char SetTickDeadline[], WaitTicks[], ShowLoadingScreen[], SndQuery[];
 
 /* The Watcom delay(): __delay_init_ counts how many int 21h / 2Ch (get time) calls fit in one second, __delay_(ms) makes that many
  * per millisecond. Every one of them is a trap here (about 4 us on Windows): two seconds of start-up spent faulting, and the timer
@@ -25,7 +25,7 @@ extern char SetTickDeadline[], WaitTicks[], ShowLoadingScreen[], sub_8FC8A[];
 
 void host_delay_init(void)
 {
-    dword_F24CC = 1000000;
+    delaycount = 1000000;
 }
 
 void host_delay(unsigned ms)
@@ -44,9 +44,9 @@ __attribute__((naked)) static void delay_entry(void)
 {
     __asm__ volatile("pushal\n\tpush %eax\n\tcall " SYM("host_delay") "\n\tadd $4, %esp\n\tpopal\n\tret");
 }
-extern uint32_t dword_D305C, dword_D3060;
-extern uint8_t byte_D3064, byte_D3068;
-extern uint8_t byte_D4B9C, byte_D51DC;
+extern uint32_t cpuinfo_d0, cpuinfo_d1;
+extern uint8_t cpuinfo_b0, cpuinfo_b1;
+extern uint8_t __8087, __real87;
 
 void patch_bytes(void *at, const void *bytes, size_t n)
 {
@@ -73,39 +73,39 @@ void patch_jmp(void *from, void *to)
 /* The start-up code that sets up the floating point emulator: only its two flags are kept (80387 present). */
 static void init_fpu_flags(void)
 {
-    byte_D4B9C = 3;
-    byte_D51DC = 1;
+    __8087 = 3;
+    __real87 = 1;
 }
 
 /* CPU detection: the original toggles the alignment-check flag to tell a 486 from a 386, and leaves it set, which makes every
  * unaligned access fault on Linux. Report a 486 in protected mode instead. */
 static void detect_cpu(void)
 {
-    dword_D305C = 1;
-    dword_D3060 = 1;
-    byte_D3068 = 1;
-    byte_D3064 = 1;
+    cpuinfo_d0 = 1;
+    cpuinfo_d1 = 1;
+    cpuinfo_b1 = 1;
+    cpuinfo_b0 = 1;
 }
 
 #ifdef _WIN32
-/* __setenvp_ builds the environment table (environ, dword_D5444, and a flag byte per entry, dword_D5448) by reading the environment
+/* __setenvp_ builds the environment table (environ, _environ, and a flag byte per entry, ___env_mask) by reading the environment
  * block through FS and ES loaded with the DOS/4GW environment selector. FS must keep pointing at the Windows thread information
  * block, so the host builds the same table from the flat block. The sound drivers find the cards through BLASTER and ULTRASND
  * there. Nothing in the game adds variables, so the table can stay in static storage. */
 extern char __setenvp_[];
-extern uint32_t dword_D4D09, dword_D5444, dword_D5448;
+extern uint32_t _Envptr, _environ, ___env_mask;
 
 void host_setenvp(void)
 {
     static char *env[65];
     static uint8_t flags[64];
-    char *p = (char *)dword_D4D09;
+    char *p = (char *)_Envptr;
     int n = 0;
-    if (dword_D5444) return;
+    if (_environ) return;
     for (; *p && n < 64; p += strlen(p) + 1) env[n++] = p;
     env[n] = 0;
-    dword_D5444 = (uint32_t)env;
-    dword_D5448 = (uint32_t)flags;
+    _environ = (uint32_t)env;
+    ___env_mask = (uint32_t)flags;
 }
 
 /* the original keeps every register */
@@ -121,7 +121,7 @@ __attribute__((naked)) static void setenvp_entry(void)
  * 4 MT-32, 5 Ultrasound) and a second, digital one (3 Sound Blaster, 6 Ultrasound), and `musicon`, set for the Sound Blaster and the Ultrasound,
  * is what lets the rest of the game play digital music, speech and effects. `sounddev` stays 8 for the MT-32, so everything the game picks by it
  * (the MT*.KMS songs for the MIDI music, the MT-32 setup) stays the MT-32's. This changes, once, when the game starts (the code is checked first):
- *   - the MT-32 branch of SetSoundDevice sets the second driver to 3 (the Sound Blaster's digital driver) and byte_D2439 (the digital driver
+ *   - the MT-32 branch of SetSoundDevice sets the second driver to 3 (the Sound Blaster's digital driver) and crowddriver (the digital driver
  *     the crowd noise uses) as the Sound Blaster branch does;
  *   - its scene is MT32DIGI, a scene file made here: the MT-32 patch map (PCFF002.PAT) and the digital timbres (PCFF001.TIM, which brings
  *     PCFF001.DIG): the CD's MT32SBDA.SCN names the Sound Blaster's patch map and silences the MIDI music;
@@ -151,12 +151,12 @@ static int make_scene_file(void)
 
 static void mt32_digital(void)
 {
-    uint8_t *p = (uint8_t *)sub_10000 + (0x82EEC - 0x10000);       /* mov edx, str_MT322 */
-    uint8_t *q = (uint8_t *)sub_10000 + (0x82F12 - 0x10000);       /* mov dword [dword_D242B], -1 */
-    uint8_t *r = (uint8_t *)sub_10000 + (0x82F1C - 0x10000);       /* xor dh, dh / mov byte [byte_D2439], dh */
-    uint8_t *t1 = (uint8_t *)sub_10000 + (0x82DA8 - 0x10000);      /* cmp ecx, 2 / je (the old device: stop the speech) */
-    uint8_t *t2 = (uint8_t *)sub_10000 + (0x83140 - 0x10000);      /* cmp ecx, 2 / je (musicon) */
-    uint8_t *t3 = (uint8_t *)sub_10000 + (0x83269 - 0x10000);      /* cmp edx, 2 / je (start the speech) */
+    uint8_t *p = (uint8_t *)begtext_forever + (0x82EEC - 0x10000);       /* mov edx, str_MT322 */
+    uint8_t *q = (uint8_t *)begtext_forever + (0x82F12 - 0x10000);       /* mov dword [digidriver], -1 */
+    uint8_t *r = (uint8_t *)begtext_forever + (0x82F1C - 0x10000);       /* xor dh, dh / mov byte [crowddriver], dh */
+    uint8_t *t1 = (uint8_t *)begtext_forever + (0x82DA8 - 0x10000);      /* cmp ecx, 2 / je (the old device: stop the speech) */
+    uint8_t *t2 = (uint8_t *)begtext_forever + (0x83140 - 0x10000);      /* cmp ecx, 2 / je (musicon) */
+    uint8_t *t3 = (uint8_t *)begtext_forever + (0x83269 - 0x10000);      /* cmp edx, 2 / je (start the speech) */
     static const uint8_t cmp_cl[4] = { 0x83, 0xF9, 0x02, 0x74 }, cmp_dl[4] = { 0x83, 0xFA, 0x02, 0x74 };
     static const uint8_t test_cl[4] = { 0xF6, 0xC1, 0x2A, 0x75 }, test_dl[4] = { 0xF6, 0xC2, 0x2A, 0x75 };     /* test cl, 2Ah / jne: 2, 8 or 20h */
     uint32_t v;
@@ -173,7 +173,7 @@ static void mt32_digital(void)
     patch_bytes(p + 1, &v, 4);
     v = 3;
     patch_bytes(q + 6, &v, 4);
-    code[0] = 0xC6; code[1] = 0x05; memcpy(code + 2, r + 4, 4); code[6] = 0x01; code[7] = 0x90;      /* mov byte [byte_D2439], 1 / nop */
+    code[0] = 0xC6; code[1] = 0x05; memcpy(code + 2, r + 4, 4); code[6] = 0x01; code[7] = 0x90;      /* mov byte [crowddriver], 1 / nop */
     patch_bytes(r, code, 8);
     if (!getenv("NHL95_MT32_NOMUSICON")) {          /* experiment */
         patch_bytes(t1, test_cl, 4);
@@ -219,7 +219,7 @@ __attribute__((naked)) static void wait_ticks_entry(void)           /* WaitTicks
         "ret");
 }
 
-/* sub_8FC8A(handle, 3): has the digital music of this handle finished? The pioneer, EA Sports and title screens wait for their music to end; while
+/* SndQuery(handle, 3): has the digital music of this handle finished? The pioneer, EA Sports and title screens wait for their music to end; while
  * intro_skip is set it has (the screen then stops the music itself). Otherwise the original, copied. */
 __attribute__((naked)) static void music_done_entry(void)
 {
@@ -229,7 +229,7 @@ __attribute__((naked)) static void music_done_entry(void)
         "movl $1, %eax\n\t"
         "ret\n"
         "1:\n\t"
-        "cmpl " SYM("dword_D4F64") ", %eax\n\t"
+        "cmpl " SYM("sndhandlecount") ", %eax\n\t"
         "jge 2f\n\t"
         "testl %eax, %eax\n\t"
         "jge 3f\n"
@@ -240,7 +240,7 @@ __attribute__((naked)) static void music_done_entry(void)
         "shll $16, %edx\n\t"
         "addl $9, %edx\n\t"
         "andl $0xFF, %eax\n\t"
-        "jmp " SYM("sub_971F8"));
+        "jmp " SYM("SndDriverCall"));
 }
 
 void osk_hook_install(void);
@@ -249,18 +249,18 @@ void install_overrides(void)
 #ifdef _WIN32
     patch_jmp(__setenvp_, setenvp_entry);
 #endif
-    patch_jmp(sub_B3F50, detect_cpu);
-    patch_jmp(sub_9D352, init_fpu_flags);
+    patch_jmp(DetectCPU, detect_cpu);
+    patch_jmp(InitFpuFlags, init_fpu_flags);
     stub_zero(__hook387);       /* the Watcom floating point emulator is not needed: the host CPU has an FPU */
     stub_zero(__unhook387);
-    patch_jmp(sub_8DF70, video_fill_vesa_tables);      /* the VESA probe (the game ran an external program for it) */
-    stub_zero(sub_B3E98);       /* save the text mode and the BIOS data area */
-    stub_zero(sub_B3ED8);       /* restore them */
+    patch_jmp(ProbeVesa, video_fill_vesa_tables);      /* the VESA probe (the game ran an external program for it) */
+    stub_zero(SaveTextMode);       /* save the text mode and the BIOS data area */
+    stub_zero(RestoreTextMode);       /* restore them */
     patch_jmp(__delay_init_, delay_init_entry);
     patch_jmp(__delay_, delay_entry);
     patch_jmp(SetTickDeadline, set_deadline_entry);
     patch_jmp(WaitTicks, wait_ticks_entry);
-    patch_jmp(sub_8FC8A, music_done_entry);
+    patch_jmp(SndQuery, music_done_entry);
     if (!getenv("NHL95_LOADSCREEN")) stub_zero(ShowLoadingScreen);      /* the loading picture and its palette cycling are not needed on a modern machine */
     mt32_digital();
     install_flag_traps();

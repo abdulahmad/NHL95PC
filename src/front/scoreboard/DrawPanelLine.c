@@ -5,17 +5,17 @@
 
 /* DrawPanelLine: draw the line indicator of team side (away when set) for line on the screen bitmap:
  crossing between the forward lines (< 4), the extra lines (< 6) and the rest resets that side's line timer
- (dword_C5860 away, dword_C585C home); store the line (hudawayline hudhomeline) and draw its sprite
+ (awlinetimer away, hmlinetimer home); store the line (hudawayline hudhomeline) and draw its sprite
  (linesprites) at FBh 2Ah, 14h. */
 void DrawPanelLine(int side, int line)
 {
     SelectScreenBM();
     if ((short)side) {
-        if (((hudawayline < 4) ^ ((short)line < 4)) || ((hudawayline < 6) ^ ((short)line < 6))) dword_C5860 = 0;
+        if (((hudawayline < 4) ^ ((short)line < 4)) || ((hudawayline < 6) ^ ((short)line < 6))) awlinetimer = 0;
         hudawayline = (short)line;
         PUTSPRITE(linesprites[hudawayline], 0xFB, 0x14);
     } else {
-        if (((hudhomeline < 4) ^ ((short)line < 4)) || ((hudhomeline < 6) ^ ((short)line < 6))) dword_C585C = 0;
+        if (((hudhomeline < 4) ^ ((short)line < 4)) || ((hudhomeline < 6) ^ ((short)line < 6))) hmlinetimer = 0;
         hudhomeline = (short)line;
         PUTSPRITE(linesprites[hudhomeline], 0x2A, 0x14);
     }
@@ -29,7 +29,7 @@ typedef struct PenSlot { short pl, min, sec, hund; } PenSlot;
 /* TickPanelPenalties (15655, PC only; segment 006, the same source file: it ends in DrawPanelLine_x): run the
    first two penalties of a panel list down by hund hundredths (borrowing from the seconds and the minutes); an
    expired one is cleared and freed (player -1). Then pack the list: every used entry after a free one moves up.
-   pens: the list (hudpenhome or hudpenaway); hund: hundredths elapsed (UpdateHudPanel passes dword_C583C).
+   pens: the list (hudpenhome or hudpenaway); hund: hundredths elapsed (UpdateHudPanel passes panelhund).
    No result. */
 void TickPanelPenalties(PenSlot *pens, int hund)
 {
@@ -86,10 +86,10 @@ void DrawEnergyBar(int level, int x)
         c1 = 0x67;
         c2 = 0;
     }
-    sub_90D20(x + 9 - level, 0x1A, level, 3, c1);
-    sub_90D20(x2 = x + 0x10, 0x1A, level, 3, c1);
-    sub_90D20(++x, 0x1A, w2 = 8 - level, 3, c2);
-    sub_90D20(level += x2, 0x1A, w2, 3, c2);
+    FillRect(x + 9 - level, 0x1A, level, 3, c1);
+    FillRect(x2 = x + 0x10, 0x1A, level, 3, c1);
+    FillRect(++x, 0x1A, w2 = 8 - level, 3, c2);
+    FillRect(level += x2, 0x1A, w2, 3, c2);
 }
 
 /* DrawPanelPenalties (15995, PC only; segment 006, ends in DrawPanelLine_x): draw the first four entries of a

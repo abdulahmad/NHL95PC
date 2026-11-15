@@ -3,9 +3,9 @@
 
 /* RemoveFromLines (655CC, PC only): take roster player pnum of team side (0 home, 1 away) out of the team's line
    table (hmlinetab / awlinetab) and refill every slot that held him. For a defenceman ('D' in his roster record,
-   byte +6 of the 27h-byte entries, 444h per team) first count the dressed defencemen (dressed list byte_E9DB4,
-   19h per team) whose roster status byte has byte_CD418 set into word_E9F14; for a forward (not 'G') the same for
-   the forwards (byte_E9E4A) into word_E9F12. The table is 4 lines of 3 forwards, 3 pairs of defence, two power
+   byte +6 of the 27h-byte entries, 444h per team) first count the dressed defencemen (dressed list defsort_d,
+   19h per team) whose roster status byte has dressbystatus set into dresseddefs; for a forward (not 'G') the same for
+   the forwards (offsort_fwd) into dressedfwds. The table is 4 lines of 3 forwards, 3 pairs of defence, two power
    play units (2 x 5) and two penalty kill units (2 x 4) (RefillLineSlots), two goalie slots (PickGoalie) and two
    extra-skater slots (PickExtraSkater). side: the team; pnum: the roster index. No result.
    DRAFT (10.0 GA, 59 differing, 811 vs 807): one dressed-list entry local per counting loop (r, r2: each ranks
@@ -25,19 +25,19 @@ void RemoveFromLines(short side, short pnum)
     short r2;
 
     lt = (signed char *)(side ? awlinetab : hmlinetab);
-    if (byte_DB3AE[side * 0x444 + pnum * 0x27] == 'D') {
-        word_E9F14 = 0;
+    if (hmrosterpos[side * 0x444 + pnum * 0x27] == 'D') {
+        dresseddefs = 0;
         for (i = 0; i < 0x19; i++) {
-            r = byte_E9DB4[i + side * 0x19];
+            r = defsort_d[i + side * 0x19];
             if (r < 0) break;
-            if (byte_CD418[hmroster[side * 0x444 + r * 0x27]] == 1) word_E9F14++;
+            if (dressbystatus[hmroster[side * 0x444 + r * 0x27]] == 1) dresseddefs++;
         }
-    } else if (byte_DB3AE[side * 0x444 + pnum * 0x27] != 'G') {
-        word_E9F12 = 0;
+    } else if (hmrosterpos[side * 0x444 + pnum * 0x27] != 'G') {
+        dressedfwds = 0;
         for (i = 0; i < 0x19; i++) {
-            r2 = byte_E9E4A[side * 0x19 + i];
+            r2 = offsort_fwd[side * 0x19 + i];
             if (r2 < 0) break;
-            if (byte_CD418[hmroster[side * 0x444 + r2 * 0x27]] == 1) word_E9F12++;
+            if (dressbystatus[hmroster[side * 0x444 + r2 * 0x27]] == 1) dressedfwds++;
         }
     }
     k = 0;

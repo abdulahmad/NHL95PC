@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
-extern byte_D42E4, dword_D30C8, dword_D43E4, sub_910E0, sub_92CD0, sub_B3ABC, sub_B6D47, vsprintf_
-global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, sub_931FC, loc_9321D, sub_93240
+extern byte_D42E4, dword_D30C8, dword_D43E4, DrawArtOpaque, sub_92CD0, sub_B3ABC, sub_B6D47, vsprintf_
+global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
 sub_93170:
 sub esp, 104h	; 93170
 lea eax, [dword esp+0114h]	; 93176
@@ -47,7 +47,7 @@ cmp eax, ecx	; 931F7
 jb short loc_931E4	; 931F9
 loc_931FB:
 ret	; 931FB
-sub_931FC:
+DrawArtMasked:
 mov edx, dword [byte esp+04h]	; 931FC
 mov ebx, dword [byte esp+08h]	; 93200
 mov eax, dword [byte esp+0Ch]	; 93204
@@ -64,7 +64,7 @@ mov dword [dword_D43E4], sub_931D0	; 9321D
 push eax	; 93227
 push ebx	; 93228
 push edx	; 93229
-call sub_910E0	; 9322A
+call DrawArtOpaque	; 9322A
 add esp, byte 0Ch	; 9322F
 mov dword [dword_D43E4], sub_B3ABC	; 93232
 ret	; 9323C
@@ -78,7 +78,7 @@ mov eax, dword [byte edx+0Ah]	; 9324B
 sar eax, 10h	; 9324E
 push eax	; 93251
 push edx	; 93252
-call sub_931FC	; 93253
+call DrawArtMasked	; 93253
 add esp, byte 0Ch	; 93258
 ret	; 9325B
 mov edx, dword [byte esp+04h]	; 9325C
@@ -93,6 +93,6 @@ mov ebx, dword [byte esp+0Ch]	; 93273
 sub ebx, eax	; 93277
 push ebx	; 93279
 push edx	; 9327A
-call sub_931FC	; 9327B
+call DrawArtMasked	; 9327B
 add esp, byte 0Ch	; 93280
 ret	; 93283

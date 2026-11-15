@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D307 progbits alloc exec nowrite align=1
-extern __cnvs2d_, loc_A313F, off_D5668, off_D566C, sub_9D352, word_D65FC
+extern __cnvs2d_, loc_A313F, off_D5668, off_D566C, InitFpuFlags, word_D65FC
 global __setEFGfmt_, __sys_init_387_emulator, loc_9D333, loc_9D33C
 __setEFGfmt_:
 push ebx	; 9D307
@@ -29,7 +29,7 @@ inc ebp	; 9D332
 loc_9D333:
 or ebp, ebp	; 9D333
 je short loc_9D33C	; 9D335
-call sub_9D352	; 9D337
+call InitFpuFlags	; 9D337
 loc_9D33C:
 wait	; 9D33C
 fninit	; 9D33D

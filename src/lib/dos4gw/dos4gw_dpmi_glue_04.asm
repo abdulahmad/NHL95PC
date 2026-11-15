@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9AA66 progbits alloc exec nowrite align=1
-extern __brk_, __unlink_, _nfree_, byte_D4D06, byte_D4D07, byte_D4D08, dword_D43E8, dword_D4CD8
+extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, byte_D4D08, dword_D43E8, _curbrk
 extern dword_D5670, dword_D5674, dword_F58E0, word_F58E2
 global __FreeDPMIBlocks_, loc_9AA71, loc_9AAAF, loc_9AABF, __ReAllocDPMIBlock_, loc_9AADD, loc_9AB45, loc_9AB97
 global loc_9AB9B, loc_9AB9E, loc_9ABA6, loc_9ABA8, __LinkUpNewMHeap_, loc_9ABBB, loc_9ABC4, loc_9ABC8
@@ -204,7 +204,7 @@ je short loc_9AC6B	; 9AC2C
 mov edx, dword [byte edx+024h]	; 9AC2E
 mov ebx, dword [edx]	; 9AC31
 add ebx, edx	; 9AC33
-mov ah, byte [byte_D4D06]	; 9AC35
+mov ah, byte [_Extender]	; 9AC35
 add ebx, byte 4	; 9AC3B
 cmp ah, 2	; 9AC3E
 jb short loc_9AC5E	; 9AC41
@@ -216,9 +216,9 @@ xor eax, eax	; 9AC51
 mov eax, ds	; 9AC53
 lsl eax, eax	; 9AC55
 inc eax	; 9AC58
-mov dword [dword_D4CD8], eax	; 9AC59
+mov dword [_curbrk], eax	; 9AC59
 loc_9AC5E:
-cmp ebx, dword [dword_D4CD8]	; 9AC5E
+cmp ebx, dword [_curbrk]	; 9AC5E
 jne short loc_9AC6B	; 9AC64
 mov eax, dword [edx]	; 9AC66
 pop edx	; 9AC68
@@ -333,13 +333,13 @@ loc_9AD52:
 xor eax, eax	; 9AD52
 jmp short loc_9AD3A	; 9AD54
 loc_9AD56:
-cmp dword [dword_D4CD8], byte 0FFFFFFFEh	; 9AD56
+cmp dword [_curbrk], byte 0FFFFFFFEh	; 9AD56
 je short loc_9AD52	; 9AD5D
 mov eax, esp	; 9AD5F
 call __AdjustAmount_	; 9AD61
 test eax, eax	; 9AD66
 je short loc_9AD3A	; 9AD68
-cmp byte [byte_D4D06], 1	; 9AD6A
+cmp byte [_Extender], 1	; 9AD6A
 jne short loc_9AD8A	; 9AD71
 mov eax, dword [esp]	; 9AD73
 call RationalAlloc_	; 9AD76
@@ -395,12 +395,12 @@ push edx	; 9ADF4
 push esi	; 9ADF5
 push ebp	; 9ADF6
 push eax	; 9ADF7
-cmp byte [byte_D4D06], 1	; 9ADF8
+cmp byte [_Extender], 1	; 9ADF8
 jne short loc_9AE0A	; 9ADFF
-cmp byte [byte_D4D07], 0	; 9AE01
+cmp byte [_ExtenderSubtype], 0	; 9AE01
 je short loc_9AE13	; 9AE08
 loc_9AE0A:
-cmp byte [byte_D4D06], 9	; 9AE0A
+cmp byte [_Extender], 9	; 9AE0A
 jne short loc_9AE20	; 9AE11
 loc_9AE13:
 mov eax, dword [esp]	; 9AE13
@@ -413,13 +413,13 @@ loc_9AE29:
 xor eax, eax	; 9AE29
 jmp near loc_9AF2D	; 9AE2B
 loc_9AE30:
-cmp dword [dword_D4CD8], byte 0FFFFFFFEh	; 9AE30
+cmp dword [_curbrk], byte 0FFFFFFFEh	; 9AE30
 je short loc_9AE29	; 9AE37
 mov eax, esp	; 9AE39
 call __AdjustAmount_	; 9AE3B
 test eax, eax	; 9AE40
 je near loc_9AF2D	; 9AE42
-mov bl, byte [byte_D4D06]	; 9AE48
+mov bl, byte [_Extender]	; 9AE48
 cmp bl, 2	; 9AE4E
 jb short loc_9AE6E	; 9AE51
 cmp bl, 8	; 9AE53
@@ -430,10 +430,10 @@ xor eax, eax	; 9AE61
 mov eax, ds	; 9AE63
 lsl eax, eax	; 9AE65
 inc eax	; 9AE68
-mov dword [dword_D4CD8], eax	; 9AE69
+mov dword [_curbrk], eax	; 9AE69
 loc_9AE6E:
 mov edx, dword [esp]	; 9AE6E
-mov ecx, dword [dword_D4CD8]	; 9AE71
+mov ecx, dword [_curbrk]	; 9AE71
 add edx, ecx	; 9AE77
 cmp edx, ecx	; 9AE79
 jae short loc_9AE82	; 9AE7B
@@ -531,12 +531,12 @@ pop edx	; 9AF4A
 pop ebx	; 9AF4B
 ret	; 9AF4C
 loc_9AF4D:
-cmp byte [byte_D4D06], 1	; 9AF4D
+cmp byte [_Extender], 1	; 9AF4D
 jne short loc_9AF5F	; 9AF54
-cmp byte [byte_D4D07], 0	; 9AF56
+cmp byte [_ExtenderSubtype], 0	; 9AF56
 je short loc_9AF68	; 9AF5D
 loc_9AF5F:
-cmp byte [byte_D4D06], 9	; 9AF5F
+cmp byte [_Extender], 9	; 9AF5F
 jne short loc_9AF6D	; 9AF66
 loc_9AF68:
 add edx, byte 8	; 9AF68

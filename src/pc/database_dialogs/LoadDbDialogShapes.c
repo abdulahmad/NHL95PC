@@ -9,19 +9,19 @@ void LoadDbDialogShapes(void)
 
     if (!fdlgshapes) {
         MakePath(path, fileoncd[0x1C7] == 1 ? (char *)cddriveptr : 0, (char *)str_DbBut, 0);
-        fdlgshapes = sub_8E83C(path, 0);
-        fdlg_none = sub_B30B4(fdlgshapes, (char *)str_None2);
-        fdlg_del = sub_B30B4(fdlgshapes, (char *)str_Del2);
-        fdlg_open = sub_B30B4(fdlgshapes, (char *)str_Open3);
-        fdlg_cancel = sub_B30B4(fdlgshapes, (char *)str_Can2);
-        fdlg_noarrow = sub_B30B4(fdlgshapes, (char *)str_Noar2);
-        fdlg_up = sub_B30B4(fdlgshapes, (char *)str_Up2);
-        fdlg_down = sub_B30B4(fdlgshapes, (char *)str_Down2);
-        fdlg_arrow = sub_B30B4(fdlgshapes, (char *)str_Arro2);
-        fdlg_tabnone = sub_B30B4(fdlgshapes, (char *)str_Dbno);
-        fdlg_tabexh = sub_B30B4(fdlgshapes, (char *)str_Dbcu);
-        fdlg_tablp = sub_B30B4(fdlgshapes, (char *)str_Dbtm);
-        fdlg_tabpo = sub_B30B4(fdlgshapes, (char *)str_Dbor);
+        fdlgshapes = LoadBank(path, 0);
+        fdlg_none = FindShape(fdlgshapes, (char *)str_None2);
+        fdlg_del = FindShape(fdlgshapes, (char *)str_Del2);
+        fdlg_open = FindShape(fdlgshapes, (char *)str_Open3);
+        fdlg_cancel = FindShape(fdlgshapes, (char *)str_Can2);
+        fdlg_noarrow = FindShape(fdlgshapes, (char *)str_Noar2);
+        fdlg_up = FindShape(fdlgshapes, (char *)str_Up2);
+        fdlg_down = FindShape(fdlgshapes, (char *)str_Down2);
+        fdlg_arrow = FindShape(fdlgshapes, (char *)str_Arro2);
+        fdlg_tabnone = FindShape(fdlgshapes, (char *)str_Dbno);
+        fdlg_tabexh = FindShape(fdlgshapes, (char *)str_Dbcu);
+        fdlg_tablp = FindShape(fdlgshapes, (char *)str_Dbtm);
+        fdlg_tabpo = FindShape(fdlgshapes, (char *)str_Dbor);
     }
 }
 
@@ -101,8 +101,8 @@ void DrawDbDialog(void)
 
     sub_B4BA8();
     MakePath(path, fileoncd[0x1C8] == 1 ? (char *)cddriveptr : 0, (char *)str_Dbdialog, 0);
-    bank = sub_8E83C(path, 0);
-    sub_91284(sub_B30B4(bank, (char *)str_Pdbx), 10, 0x13);
+    bank = LoadBank(path, 0);
+    sub_91284(FindShape(bank, (char *)str_Pdbx), 10, 0x13);
     FreeMemBlock(bank);
     FDLGMASKD = 0x10;
     fdlgtab = -1;
@@ -120,13 +120,13 @@ void DrawDbDialog(void)
     }
     if (fdlgtab < 0) return;
     FDLGMASKW |= 0x204;
-    sub_8E9C0(0xFA, 0xFF);
+    TextSetColors(0xFA, 0xFF);
     list = (int *)dbtablists[fdlgtab];
-    sub_91964((char *)list[list[1] + 4], DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x13);
-    sub_90D20(DBRECT[10].x1 + 0xA, DBRECT[10].y1 + 0x13, DBRECT[10].x2 - DBRECT[10].x1 + 1,
+    PrintString((char *)list[list[1] + 4], DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x13);
+    FillRect(DBRECT[10].x1 + 0xA, DBRECT[10].y1 + 0x13, DBRECT[10].x2 - DBRECT[10].x1 + 1,
               DBRECT[10].y2 - DBRECT[10].y1 + 1, 0xF8);
     for (i = list[2], row = 10; i <= list[3]; i++, row++)
-        sub_91964((char *)list[i + 4], DBRECT[row].x1 + 0xA, DBRECT[row].y1 + 0x10);
+        PrintString((char *)list[i + 4], DBRECT[row].x1 + 0xA, DBRECT[row].y1 + 0x10);
     if (list[0] > 6) {
         FDLGMASKW |= 0xFF03;
         x = DBRECT[8].x1 + 0xA;
@@ -163,9 +163,9 @@ int DrawDbList(int *list)
     int x;
     int y2;
 
-    sub_8E9C0(0xFA, 0xFF);
+    TextSetColors(0xFA, 0xFF);
     for (i = 0; i < 6; i++)
-        sub_90D20(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1 + 1,
+        FillRect(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1 + 1,
                   DBRECT[10 + i].y2 - DBRECT[10 + i].y1 + 1, 0xF9);
     if (list == NULL) return 0;
     if (list[0] <= 6) {
@@ -176,17 +176,17 @@ int DrawDbList(int *list)
             PrintTextCopy((char *)list[list[2] + i + 4], DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x10);
     }
     if (list[0] > 0) {
-        sub_90D20(DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x16, DBRECT[9].x2 - DBRECT[9].x1 - 5,
+        FillRect(DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x16, DBRECT[9].x2 - DBRECT[9].x1 - 5,
                   DBRECT[9].y2 - DBRECT[9].y1 - 5, 0xF8);
         PrintTextCopy((char *)list[list[1] + 4], DBRECT[9].x1 + 0xD, DBRECT[9].y1 + 0x13);
     }
     if (list[1] >= list[2] && list[1] <= list[3]) {
         i = list[1] - list[2];
-        sub_90D20(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1,
+        FillRect(DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x13, DBRECT[10 + i].x2 - DBRECT[10 + i].x1,
                   DBRECT[10 + i].y2 - DBRECT[10 + i].y1, 0xF8);
         PrintTextCopy((char *)list[list[2] + i + 4], DBRECT[10 + i].x1 + 0xA, DBRECT[10 + i].y1 + 0x10);
     }
-    sub_90D20(DBRECT[8].x1 + 0xA, DBRECT[8].y1 + 0x13, DBRECT[8].x2 - DBRECT[8].x1 + 1,
+    FillRect(DBRECT[8].x1 + 0xA, DBRECT[8].y1 + 0x13, DBRECT[8].x2 - DBRECT[8].x1 + 1,
               DBRECT[8].y2 - DBRECT[8].y1 + 1, 0xF9);
     if (list[0] <= 6) {
         FDLGMASKW &= 0x6FC;
@@ -211,13 +211,13 @@ int DrawDbList(int *list)
     }
     switch ((unsigned)fdlgtab) {
     case 0:
-        sub_91370(fdlg_tabexh, 0xA3, 0x4B);
+        DrawArt(fdlg_tabexh, 0xA3, 0x4B);
         break;
     case 1:
-        sub_91370(fdlg_tabpo, 0xA3, 0x4B);
+        DrawArt(fdlg_tabpo, 0xA3, 0x4B);
         break;
     case 2:
-        sub_91370(fdlg_tablp, 0xA3, 0x4B);
+        DrawArt(fdlg_tablp, 0xA3, 0x4B);
         break;
     }
 }
@@ -249,17 +249,17 @@ int DbDialogLoop(void)
     unsigned char *ev;
 
     drag = 0;
-    sub_B2DCA(&btn, &ox, &oy);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer12, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer12, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
-    sub_91370(pointerspr, x - 4, y);
+    GrabBlock(bm, x - 4, y);
+    DrawArt(pointerspr, x - 4, y);
     list = (int *)dbtablists[fdlgtab];
     ClearInputQueue();
     for (;;) {
@@ -273,15 +273,15 @@ int DbDialogLoop(void)
         if (btn == 0) {
             if (x != ox || y != oy) {
                 sub_B4BA8();
-                sub_903F0(bm, ox - 4, oy);
-                sub_91400(bm, x - 4, y);
-                sub_91370(pointerspr, x - 4, y);
+                PutBlock(bm, ox - 4, oy);
+                GrabBlock(bm, x - 4, y);
+                DrawArt(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
             continue;
         }
-        sub_910E0(bm, ox - 4, oy);
+        DrawArtOpaque(bm, ox - 4, oy);
         if ((btn & 1) && (fdlgmask[1] & 1)) {
             if (ox != y || y != oy) {
                 if (DbDialogHitTest(x, y, &hit) && hit == 8) {
@@ -324,26 +324,26 @@ int DbDialogLoop(void)
                 if (hit & FDLGMASKD) {
                     switch (hit) {
                     case 0x10:
-                        sub_91370(fdlg_cancel, 0x23, 0xBF);
+                        DrawArt(fdlg_cancel, 0x23, 0xBF);
                         FreeMemBlock(bm);
                         return 0;
                     case 1:
-                        sub_91370(fdlg_up, 0x18, 0x46);
+                        DrawArt(fdlg_up, 0x18, 0x46);
                         if (list[2] != 0) {
                             list[2]--;
                             list[3]--;
                             DrawDbList(list);
                         }
-                        sub_91370(fdlg_noarrow, 0x18, 0x46);
+                        DrawArt(fdlg_noarrow, 0x18, 0x46);
                         break;
                     case 2:
-                        sub_91370(fdlg_down, 0x18, 0x46);
+                        DrawArt(fdlg_down, 0x18, 0x46);
                         if (list[3] + 1 < list[0]) {
                             list[2]++;
                             list[3]++;
                             DrawDbList(list);
                         }
-                        sub_91370(fdlg_noarrow, 0x18, 0x46);
+                        DrawArt(fdlg_noarrow, 0x18, 0x46);
                         break;
                     case 0x100:
                         pos = (y - 0x13 - DBRECT[8].y1) * list[0] / 0x20;
@@ -389,19 +389,19 @@ int DbDialogLoop(void)
                         DrawDbList(list);
                         break;
                     case 4:
-                        sub_91370(fdlg_open, 0x23, 0xBF);
+                        DrawArt(fdlg_open, 0x23, 0xBF);
                         FreeMemBlock(bm);
                         OpenSelectedDb();
                         LoadBothRosterLists();
                         DrawEditRosters();
                         return 1;
                     case 8:
-                        sub_91370(fdlg_del, 0x23, 0xBF);
+                        DrawArt(fdlg_del, 0x23, 0xBF);
                         DeleteSelectedDb((int *)dbtablists[fdlgtab]);
                         if (fdlgtab < 0) list = 0;
                         else list = (int *)dbtablists[fdlgtab];
                         DrawDbList(list);
-                        sub_91370(fdlg_none, 0x23, 0xBF);
+                        DrawArt(fdlg_none, 0x23, 0xBF);
                         break;
                     default:
                         FileDlgHitTest(x, y, &hit);
@@ -415,8 +415,8 @@ int DbDialogLoop(void)
             FreeMemBlock(bm);
             return 0;
         }
-        sub_91400(bm, x - 4, y);
-        sub_91370(pointerspr, x - 4, y);
+        GrabBlock(bm, x - 4, y);
+        DrawArt(pointerspr, x - 4, y);
         ox = x;
         oy = y;
     }
@@ -474,15 +474,15 @@ void MenuOpenDatabase(void)
     int bm;
 
     ScanDbFiles();
-    bm = sub_8CCA8((char *)str_Buf2, 0xBC03, 0x20);
+    bm = AllocMemBlock((char *)str_Buf2, 0xBC03, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xF3;
     ((short *)bm)[3] = 0xC6;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     LoadDbDialogShapes();
     DrawDbDialog();
     DrawDbDialogButtons();
-    if (!DbDialogLoop()) sub_910E0(bm, 0xA, 0x13);
+    if (!DbDialogLoop()) DrawArtOpaque(bm, 0xA, 0x13);
     FreeMemBlock(fdlgshapes);
     fdlgshapes = 0;
     FreeMemBlock(bm);

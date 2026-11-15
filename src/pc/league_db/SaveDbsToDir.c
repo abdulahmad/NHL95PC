@@ -86,16 +86,16 @@ void SaveDbsToDir(char *dir, char *ext)
         return;
     }
     MakePath(s.path, dir, (char *)leaguedbnames[5], s.ext);
-    sub_932D0(s.path, seasondb, seasondb_size);
+    WriteFile(s.path, seasondb, seasondb_size);
     MakePath(s.path, dir, (char *)leaguedbnames[1], s.ext);
-    sub_932D0(s.path, careerdb, careerdb_size);
+    WriteFile(s.path, careerdb, careerdb_size);
     MakePath(s.path, dir, (char *)leaguedbnames[3], s.ext);
-    sub_932D0(s.path, carteamsdb, carteamsdb_size);
+    WriteFile(s.path, carteamsdb, carteamsdb_size);
     MakePath(s.path, dir, (char *)leaguedbnames[0], s.ext);
-    sub_932D0(s.path, keydb, keydb_size);
+    WriteFile(s.path, keydb, keydb_size);
     MakePath(s.path, dir, (char *)leaguedbnames[4], s.ext);
-    sub_932D0(s.path, teamsdb, teamsdb_size);
+    WriteFile(s.path, teamsdb, teamsdb_size);
     MakePath(s.path, dir, (char *)leaguedbnames[2], s.ext);
-    sub_932D0(s.path, attdb, attdb_size);
+    WriteFile(s.path, attdb, attdb_size);
     dbdirty = 0;
 }

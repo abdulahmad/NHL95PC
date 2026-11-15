@@ -31,7 +31,7 @@ name list ends at Checking from Behind and Penalty Shot), and any fight frames.
   so their AI keeps off them, and the puck gets 26 (`pucknothing`). Watchers: 93's `afwatch` has no 95 PC slot,
   so the first version gives them nothing (they glide to a stop and face `xc1`/`yc1` through the puck's bit).
 - **Penalties**: `AddPenalty2(p, pen)` (penalty.asm 102) puts the penalty in `PenBuf`. `penmintab` has 5-minute
-  entries at 23 to 25, but there is no name or banner for Fighting. The name tables (`word_CD39C` banner
+  entries at 23 to 25, but there is no name or banner for Fighting. The name tables (`penbannertab` banner
   index, the names in data engine_06) need two new entries, Fighting and Instigator, or the first version uses
   Roughing (2 minutes) as a stand-in. `Stop4Pen` stops play (gmode bit 0, whistle, faceoff spot).
 - **Injury**: `setInjuryType` (collide.asm 3756) and `FallDown` (4113). 95 PC's injured player leaves the game

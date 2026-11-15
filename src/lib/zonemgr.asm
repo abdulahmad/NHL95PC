@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_6A033 progbits alloc exec nowrite align=1
-extern __CHK, asc_C2778, asc_C2799, asc_C27C2, byte_D42C3, byte_EA058, dword_EA034, dword_EA038
+extern __CHK, str_ZMHiddenWindowNoHiddenWindow, str_ZMBackgroundWindowNo, str_ZONEMGR, byte_D42C3, byte_EA058, dword_EA034, dword_EA038
 extern dword_EA03C, dword_EA040, dword_EA044, dword_EA048, dword_EA04C, dword_EA050, dword_EA054, dword_EA05C
 extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA074, dword_EA078, dword_EA07C
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
 extern dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4, dword_EA0B8, dword_EA0BC, dword_EA0C4
 extern dword_EA0C8, dword_EA0CC, dword_EA0D0, FatalError, fputchar, FreeMemBlock, memset_, SetDrawBitmap
-extern sub_8CCA8, sub_903F0, sub_B4BA8, sub_B4BC4, sub_B4FAC
+extern AllocMemBlock, PutBlock, sub_B4BA8, SetClipWindow, sub_B4FAC
 global sub_6A033, sub_6A044, sub_6A057, sub_6A068, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4
 global sub_6A0DE, sub_6A0F6, sub_6A106, loc_6A12A, loc_6A13E, loc_6A149, sub_6A156, sub_6A166
 global loc_6A18A, sub_6A1A0, sub_6A1D6, sub_6A234, sub_6A27A, sub_6A2BC, sub_6A2C7, sub_6A335
@@ -114,7 +114,7 @@ push edx	; 6A112
 push esi	; 6A113
 cmp dword [dword_EA0AC], byte 0	; 6A114
 jne short loc_6A12A	; 6A11B
-push asc_C2778	; 6A11D
+push str_ZMHiddenWindowNoHiddenWindow	; 6A11D
 call FatalError	; 6A122
 add esp, byte 4	; 6A127
 loc_6A12A:
@@ -131,7 +131,7 @@ mov esi, dword [eax]	; 6A144
 push esi	; 6A146
 push byte 0	; 6A147
 loc_6A149:
-call sub_B4BC4	; 6A149
+call SetClipWindow	; 6A149
 add esp, byte 10h	; 6A14E
 pop esi	; 6A151
 pop edx	; 6A152
@@ -152,7 +152,7 @@ push edx	; 6A172
 push esi	; 6A173
 cmp dword [dword_EA0B0], byte 0	; 6A174
 jne short loc_6A18A	; 6A17B
-push asc_C2799	; 6A17D
+push str_ZMBackgroundWindowNo	; 6A17D
 call FatalError	; 6A182
 add esp, byte 4	; 6A187
 loc_6A18A:
@@ -206,7 +206,7 @@ push edx	; 6A202
 mov eax, dword [eax]	; 6A203
 add eax, esi	; 6A205
 push eax	; 6A207
-call sub_B4BC4	; 6A208
+call SetClipWindow	; 6A208
 add esp, byte 10h	; 6A20D
 mov ebp, dword [dword_EA0BC]	; 6A210
 push ebp	; 6A216
@@ -215,7 +215,7 @@ push eax	; 6A21C
 mov eax, dword [dword_EA0AC]	; 6A21D
 mov edx, dword [byte eax+02Ch]	; 6A222
 push edx	; 6A225
-call sub_903F0	; 6A226
+call PutBlock	; 6A226
 add esp, byte 0Ch	; 6A22B
 pop ebp	; 6A22E
 pop esi	; 6A22F
@@ -233,7 +233,7 @@ push dword 0A8h	; 6A241
 push byte 0	; 6A246
 push dword 140h	; 6A248
 push byte 0	; 6A24D
-call sub_B4BC4	; 6A24F
+call SetClipWindow	; 6A24F
 add esp, byte 10h	; 6A254
 mov edx, dword [dword_EA0BC]	; 6A257
 push edx	; 6A25D
@@ -242,7 +242,7 @@ push ebx	; 6A264
 mov eax, dword [dword_EA0AC]	; 6A265
 mov ecx, dword [byte eax+02Ch]	; 6A26A
 push ecx	; 6A26D
-call sub_903F0	; 6A26E
+call PutBlock	; 6A26E
 add esp, byte 0Ch	; 6A273
 pop edx	; 6A276
 pop ecx	; 6A277
@@ -364,7 +364,7 @@ mov ecx, dword [byte eax+04h]	; 6A38B
 push ecx	; 6A38E
 mov esi, dword [eax]	; 6A38F
 push esi	; 6A391
-call sub_B4BC4	; 6A392
+call SetClipWindow	; 6A392
 add esp, byte 10h	; 6A397
 mov edi, dword [dword_EA0BC]	; 6A39A
 push edi	; 6A3A0
@@ -373,7 +373,7 @@ push ebp	; 6A3A7
 mov eax, dword [dword_EA0B0]	; 6A3A8
 mov edx, dword [byte eax+02Ch]	; 6A3AD
 push edx	; 6A3B0
-call sub_903F0	; 6A3B1
+call PutBlock	; 6A3B1
 add esp, byte 0Ch	; 6A3B6
 loc_6A3B9:
 pop ebp	; 6A3B9
@@ -1016,8 +1016,8 @@ shl eax, 2	; 6AA05
 add eax, edx	; 6AA08
 shl eax, 4	; 6AA0A
 push eax	; 6AA0D
-push asc_C27C2	; 6AA0E
-call sub_8CCA8	; 6AA13
+push str_ZONEMGR	; 6AA0E
+call AllocMemBlock	; 6AA13
 add esp, byte 0Ch	; 6AA18
 mov dword [dword_EA088], eax	; 6AA1B
 mov dword [dword_EA084], eax	; 6AA20
@@ -1539,7 +1539,7 @@ push ecx	; 6AF8A
 push edx	; 6AF8B
 push ebx	; 6AF8C
 push eax	; 6AF8D
-call sub_B4BC4	; 6AF8E
+call SetClipWindow	; 6AF8E
 add esp, byte 10h	; 6AF93
 ret	; 6AF96
 sub_6AF97:
@@ -1618,6 +1618,6 @@ mov ebp, dword [dword_EA038]	; 6B079
 push ebp	; 6B07F
 mov eax, dword [dword_EA034]	; 6B080
 push eax	; 6B085
-call sub_B4BC4	; 6B086
+call SetClipWindow	; 6B086
 add esp, byte 10h	; 6B08B
 jmp near loc_6A3B9	; 6B08E

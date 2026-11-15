@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_98B30 progbits alloc exec nowrite align=1
-extern abs_, asc_C481C, asc_C4840, asc_C4854, asc_C485C, byte_D4F5C, byte_D4F5D, byte_D4F5E
+extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_D4F5C, byte_D4F5D, byte_D4F5E
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
-extern byte_F234E, dword_D2F60, dword_D4F58, dword_D4F64, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
-extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, sub_8CD04
-extern sub_8D2F0, sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, sub_971F8, sub_9722E, sub_A2000
+extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
+extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
+extern sub_8D2F0, sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
 extern sub_A2610, sub_A27C4, sub_A28F0, sub_A2AB8, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
 global sub_98B30, sub_98BEC, sub_98D20, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
-global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, sub_98DD8, loc_98DF6, loc_98E06
+global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, removewindow, loc_98DF6, loc_98E06
 global loc_98E17, loc_98E36, loc_98E47, sub_98E50, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
 global loc_98F44, sub_98F46, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
 global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
@@ -271,7 +271,7 @@ pop esi	; 98DD4
 pop ecx	; 98DD5
 ret	; 98DD6
 db 090h
-sub_98DD8:
+removewindow:
 push ebx	; 98DD8
 push ecx	; 98DD9
 push edx	; 98DDA
@@ -298,7 +298,7 @@ jb short loc_98DF6	; 98E04
 loc_98E06:
 cmp esi, edx	; 98E06
 je short loc_98E17	; 98E08
-push asc_C481C	; 98E0A
+push str_RemovewindowROWSPACE	; 98E0A
 call FatalError	; 98E0F
 add esp, byte 4	; 98E14
 loc_98E17:
@@ -336,7 +336,7 @@ push ebp	; 98E52
 sub esp, byte 64h	; 98E53
 mov ebp, dword [byte esp+078h]	; 98E56
 mov edi, dword [byte esp+07Ch]	; 98E5A
-push asc_C4840	; 98E5E
+push str_FshVshQfsQvs	; 98E5E
 lea eax, [byte esp+04h]	; 98E63
 push eax	; 98E67
 mov edx, dword [byte esp+07Ch]	; 98E68
@@ -350,12 +350,12 @@ call sub_8D728	; 98E7A
 add esp, byte 4	; 98E7F
 test eax, eax	; 98E82
 jne near loc_98F0A	; 98E84
-mov edx, asc_C4854	; 98E8A
+mov edx, str_Vsh	; 98E8A
 mov eax, esi	; 98E8F
 call stricmp_	; 98E91
 test eax, eax	; 98E96
 je short loc_98EAA	; 98E98
-mov edx, asc_C485C	; 98E9A
+mov edx, str_Qvs	; 98E9A
 mov eax, esi	; 98E9F
 call stricmp_	; 98EA1
 test eax, eax	; 98EA6
@@ -381,7 +381,7 @@ push ebp	; 98ECF
 push eax	; 98ED0
 lea eax, [byte esp+0Ch]	; 98ED1
 push eax	; 98ED5
-call sub_8CD04	; 98ED6
+call AllocMemBlockEx	; 98ED6
 mov edi, eax	; 98EDB
 add esp, byte 10h	; 98EDD
 mov ecx, dword [eax]	; 98EE0
@@ -415,7 +415,7 @@ test ah, ah	; 98F18
 jne short loc_98F44	; 98F1A
 cmp word [word_D4F88], byte 0	; 98F1C
 jne short loc_98F44	; 98F24
-cmp dword [dword_D4F64], byte 0	; 98F26
+cmp dword [sndhandlecount], byte 0	; 98F26
 je short loc_98F44	; 98F2D
 mov dl, ah	; 98F2F
 inc dl	; 98F31
@@ -458,7 +458,7 @@ add eax, byte 32h	; 98F86
 add edx, eax	; 98F89
 xor eax, eax	; 98F8B
 mov al, byte [byte ebx+010h]	; 98F8D
-call sub_971F8	; 98F90
+call SndDriverCall	; 98F90
 test esi, esi	; 98F95
 jg short loc_98FA5	; 98F97
 mov eax, dword [byte ebx+0Ch]	; 98F99
@@ -476,7 +476,7 @@ jl short loc_98FD7	; 98FB4
 xor eax, eax	; 98FB6
 mov al, byte [dword_D4F96]	; 98FB8
 mov edx, 8	; 98FBD
-call sub_971F8	; 98FC2
+call SndDriverCall	; 98FC2
 test eax, eax	; 98FC7
 je short loc_98FD7	; 98FC9
 xor eax, eax	; 98FCB
@@ -494,7 +494,7 @@ call sub_971DB	; 98FE7
 loc_98FEC:
 inc ecx	; 98FEC
 loc_98FED:
-cmp ecx, dword [dword_D4F64]	; 98FED
+cmp ecx, dword [sndhandlecount]	; 98FED
 jl short loc_98FDB	; 98FF3
 call sub_99822	; 98FF5
 cmp dword [dword_D4F8A], byte 0	; 98FFA
@@ -562,7 +562,7 @@ jl short loc_990C4	; 990A1
 xor eax, eax	; 990A3
 mov al, byte [dword_D4F96]	; 990A5
 mov edx, 8	; 990AA
-call sub_971F8	; 990AF
+call SndDriverCall	; 990AF
 test eax, eax	; 990B4
 je short loc_990C4	; 990B6
 xor eax, eax	; 990B8

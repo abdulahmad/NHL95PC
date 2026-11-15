@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* releasepl: a penalty is over for team tm: the first free SortCords slot of the team (position < 0) comes
- back with the position priolist[tmap (+1 with the goalie pulled)], tmap + 1; both teams' line flags are
+ back with the position priolist_m1[tmap (+1 with the goalie pulled)], tmap + 1; both teams' line flags are
  set. The slot is filled with roster player pl (setplayer) and flagged pflags2 bit 2. */
 void releasepl(Team *tm, short pl)
 {
@@ -13,9 +13,9 @@ void releasepl(Team *tm, short pl)
     tm->tmap++;
     hmtmflags[0] |= 1;
     awtmflags |= 1;
-    byte_DF6E8 |= 0x40;
-    byte_DF7E8 |= 0x40;
-    p->position = priolist[tm->tmap + (tm->tmgoalie < 0)];
+    hmtmcoachflags |= 0x40;
+    awtmcoachflags |= 0x40;
+    p->position = priolist_m1[tm->tmap + (tm->tmgoalie < 0)];
     Setplass(p);
     setplayer(p, pl);
     p->pflags2 |= 4;

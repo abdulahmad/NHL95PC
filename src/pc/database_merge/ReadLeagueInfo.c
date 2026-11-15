@@ -23,7 +23,7 @@ int ReadLeagueInfo(char *dir, void *teams, char *pw, short *b, void *a, void *d,
         lg[_fstrcspn(lg, (char *)&str_dot)] = 0;
         *(char **)(lgreaderrmsg + 4) = lg;
         SetDialogColors(0xB, 0x11, 5, 0x11, 0);
-        sub_B2DCA(&mx, &my, &btn);
+        MouseRead(&mx, &my, &btn);
         MessageBox(-1, -1, (char *)lgreaderrmsg, 2, 0, 0, (int)&my, (int)&btn, -1);
     } else {
         err = FileOpenRead(path, &fh);

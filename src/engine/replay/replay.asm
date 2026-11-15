@@ -2,32 +2,32 @@
 bits 32
 %include "hockey.inc"
 section s_67564 progbits alloc exec nowrite align=1
-extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, byte_CC049, byte_CCE00, byte_CD418
-extern byte_CD421, byte_CD473, byte_DB3AE, byte_DC8D8, byte_DC9D8, byte_DEE97, byte_DF64D, byte_DFFA6
-extern byte_E03C1, byte_E9DB4, byte_E9E18, byte_E9E31, byte_E9E4A, byte_E9F7E, byte_E9F8F, byte_E9F9B
-extern byte_E9F9C, byte_E9FAB, byte_E9FAC, byte_E9FAD, byte_E9FAE, byte_E9FAF, byte_E9FDC, byte_E9FDD
+extern __CHK, awlinetab, bannermsg, bannerstrs, bannertimer, ovlseqtimed, rinkobjanim, dressbystatus
+extern lineslotgroups, lineslotgroupstart, hmrosterpos, awayremap, homeremap, rinkobjs_b3, hmtmgoalie_b1, doorZpos2
+extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rpl_jersey, rpl_pos
+extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
-extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, dword_CC080, dword_CC0B4, dword_CCEF6
-extern dword_CD41E, dword_CD4B0, dword_D30BC, dword_D30C0, dword_DEF8C, dword_DEFE0, dword_DF004, dword_E0220
-extern dword_E0230, dword_E0244, dword_E03AE, dword_E03B9, dword_E03BD, dword_E9A9E, dword_E9C24, dword_E9C85
-extern dword_E9C88, dword_E9F16, dword_E9F32, dword_E9F34, dword_E9F38, dword_E9F54, dword_E9F56, dword_E9F5A
-extern dword_E9F76, dword_E9F78, dword_E9F7B, dword_E9F8C, dword_E9F98, dword_E9FA5, dword_E9FA8, dword_E9FAA
-extern dword_E9FD9, dword_E9FF0, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
+extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, markframes_e1, rinkobjdefs_m2
+extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
+extern dword_E0230, ovlartbank, regd3_m2, regd0_m3, regd1_m3, dword_E9A9E, lineslotmark, dword_E9C85
+extern linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
+extern rpl_frame_e14_m2, rpl_frame_e14, rpl_flip_m3, rpl_jersey_m3, rpl_pos_m3, rpl_puckz_m2, rpl_c1player_m3, rpl_puckc_m3
+extern rpl_objstep_m3, rpl_ysort, dword_ED74C, fileoncd, fox, foy, fputchar, FreeMemBlock
 extern gameclock, gmode, gmode2, gsp, hmlinetab, hmroster, hmtmgoalie, hmtmstruct
-extern joysampling, joysampling_save, lastsfx, MakePath, off_CBED0, off_CC01D, off_CD498, off_CD4A0
+extern joysampling, joysampling_save, lastsfx, MakePath, ovlartnames, ovlscripts, goaliemenuflags, goaliemenuflags_e02
 extern ovlscript, ovlseq, ovlstep, ovlstepidx, ovlsteptimer, ovltimer, PBnum, Pencntdwn
 extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8EA18, sub_90354, sub_90D20
-extern sub_90EC0, sub_91964, sub_93540, sub_B30B4, sub_B340B, sub_B4BC4, sub_B500C, sub_B5D80
-extern textline1, textline2, textline3, textline4, textline5, unk_DACA0, unk_E9CEC, unk_E9D1E
-extern unk_E9D50, unk_E9D82, unk_E9DE6, unk_E9E7C, unk_E9EAE, unk_E9EE0, word_CC054, word_CC0B0
-extern word_CCEF8, word_CD4FC, word_DEE94, word_E0022, word_E0046, word_E9F12, word_E9F14, word_E9F18
-extern word_E9F36, word_E9F3A, word_E9F58, word_E9F5C, word_E9F7A, word_E9FA7, word_E9FA9, word_E9FB0
-extern word_E9FB2, word_E9FB4, xc1, yc1, yleader
+extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, sub_90354, FillRect
+extern sub_90EC0, PrintString, SortIndices, FindShape, sub_B340B, SetClipWindow, sub_B500C, sub_B5D80
+extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
+extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
+extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
+extern rpl_x_e15, rpl_y, rpl_y_e15, rpl_frame, rpl_frame_e15, rpl_puckz, word_E9FA9, rpl_camx
+extern rpl_camy, rpl_objframe, xc1, yc1, yleader
 global ReplayRecordReset, ReplayFirstFrame, ReplayPrevFrame, updatereplay, ReplayStep, ReplayStep_popx, DrawRinkSideObjects
 ; C: src/engine/replay/ReplayRecordReset.c
 %ifdef CBUILD
@@ -204,7 +204,7 @@ mov byte [eax], dl	; 6775F
 mov eax, dword [recbpr]	; 67761
 lea ebx, [byte eax+01h]	; 67766
 mov dword [recbpr], ebx	; 67769
-mov dl, byte [byte_DFFA6]	; 6776F
+mov dl, byte [doorZpos2]	; 6776F
 mov byte [eax], dl	; 67775
 mov eax, dword [recbpr]	; 67777
 lea ebx, [byte eax+01h]	; 6777C
@@ -267,13 +267,13 @@ lea ebx, [byte ecx+ecx+01h]	; 67862
 mov eax, ebx	; 67866
 shl eax, 2	; 67868
 sub eax, ebx	; 6786B
-mov al, byte [nosplit eax*4+byte_DEE97]	; 6786D
+mov al, byte [nosplit eax*4+rinkobjs_b3]	; 6786D
 and al, 0Fh	; 67874
 mov byte [esp], al	; 67876
 mov eax, ecx	; 67879
 shl eax, 2	; 6787B
 sub eax, ecx	; 6787E
-mov al, byte [nosplit eax*8+byte_DEE97]	; 67880
+mov al, byte [nosplit eax*8+rinkobjs_b3]	; 67880
 and al, 0Fh	; 67887
 shl al, 4	; 67889
 mov bl, byte [esp]	; 6788C
@@ -298,7 +298,7 @@ shl ebx, 2	; 678B8
 mov eax, dword [recbpr]	; 678BB
 lea ecx, [byte eax+01h]	; 678C0
 mov dword [recbpr], ecx	; 678C3
-mov bl, byte [dword ebx+word_DEE94]	; 678C9
+mov bl, byte [dword ebx+rinkobjs]	; 678C9
 mov byte [eax], bl	; 678CF
 inc edx	; 678D1
 .18:
@@ -415,30 +415,30 @@ and bh, 3	; 67A3B
 mov word [regd1], bx	; 67A3E
 add edx, byte 4	; 67A45
 mov dword [replayplay], edx	; 67A48
-mov dl, byte [byte_E03C1]	; 67A4E
+mov dl, byte [regd1_b1]	; 67A4E
 test dl, 2	; 67A54
 je short .13	; 67A57
 mov dh, dl	; 67A59
 or dh, 0FCh	; 67A5B
-mov byte [byte_E03C1], dh	; 67A5E
+mov byte [regd1_b1], dh	; 67A5E
 .13:
 movsx edx, ax	; 67A64
 mov bx, word [regd1]	; 67A67
-mov word [nosplit edx*2+word_E9F18], bx	; 67A6E
+mov word [nosplit edx*2+rpl_x], bx	; 67A6E
 sar dword [regd0], 0Ah	; 67A76
 mov dx, word [regd0]	; 67A7D
 and dh, 3	; 67A84
 mov word [regd1], dx	; 67A87
-mov bl, byte [byte_E03C1]	; 67A8E
+mov bl, byte [regd1_b1]	; 67A8E
 test bl, 2	; 67A94
 je short .14	; 67A97
 mov bh, bl	; 67A99
 or bh, 0FCh	; 67A9B
-mov byte [byte_E03C1], bh	; 67A9E
+mov byte [regd1_b1], bh	; 67A9E
 .14:
 movsx edx, ax	; 67AA4
 mov bx, word [regd1]	; 67AA7
-mov word [nosplit edx*2+word_E9F3A], bx	; 67AAE
+mov word [nosplit edx*2+rpl_y], bx	; 67AAE
 sar dword [regd0], 0Ah	; 67AB6
 mov dx, word [regd0]	; 67ABD
 and dh, 7	; 67AC4
@@ -449,13 +449,13 @@ mov word [regd1], 0FFFFh	; 67AD5
 .15:
 movsx edx, ax	; 67ADE
 mov bx, word [regd1]	; 67AE1
-mov word [nosplit edx*2+word_E9F5C], bx	; 67AE8
-test byte [dword_E03BD], 8	; 67AF0
+mov word [nosplit edx*2+rpl_frame], bx	; 67AE8
+test byte [regd1_m3], 8	; 67AF0
 setne dl	; 67AF7
 and edx, 0FFh	; 67AFA
 mov bl, dl	; 67B00
 movsx edx, ax	; 67B02
-mov byte [dword edx+byte_E9F7E], bl	; 67B05
+mov byte [dword edx+rpl_flip], bl	; 67B05
 inc eax	; 67B0B
 .16:
 cmp ax, 11h	; 67B0C
@@ -468,7 +468,7 @@ movsx ebx, ax	; 67B20
 lea edi, [byte edx+01h]	; 67B23
 mov dword [replayplay], edi	; 67B26
 mov dl, byte [edx]	; 67B2C
-mov byte [dword ebx+byte_E9F8F], dl	; 67B2E
+mov byte [dword ebx+rpl_jersey], dl	; 67B2E
 inc eax	; 67B34
 .18:
 cmp ax, 0Ch	; 67B35
@@ -493,8 +493,8 @@ sar edx, 18h	; 67B74
 .21:
 mov bl, dl	; 67B77
 movsx edx, ax	; 67B79
-mov byte [nosplit edx*2+byte_E9F9B], bl	; 67B7C
-mov edx, dword [dword_E03B9]	; 67B83
+mov byte [nosplit edx*2+rpl_pos], bl	; 67B7C
+mov edx, dword [regd0_m3]	; 67B83
 sar edx, 1Ch	; 67B89
 and edx, byte 0Fh	; 67B8C
 mov byte [regd1], dl	; 67B8F
@@ -508,7 +508,7 @@ sar edx, 18h	; 67BA7
 .23:
 mov bl, dl	; 67BAA
 movsx edx, ax	; 67BAC
-mov byte [nosplit edx*2+byte_E9F9C], bl	; 67BAF
+mov byte [nosplit edx*2+rpl_pos_b1], bl	; 67BAF
 inc eax	; 67BB6
 .24:
 cmp ax, 6	; 67BB7
@@ -517,7 +517,7 @@ mov eax, dword [replayplay]	; 67BBD
 lea edx, [byte eax+01h]	; 67BC2
 mov dword [replayplay], edx	; 67BC5
 movsx ax, byte [eax]	; 67BCB
-mov word [word_E9FA7], ax	; 67BCF
+mov word [rpl_puckz], ax	; 67BCF
 mov eax, edx	; 67BD5
 inc edx	; 67BD7
 mov dword [replayplay], edx	; 67BD8
@@ -539,8 +539,8 @@ jmp short .26	; 67C11
 mov eax, dword [regd1-3]	; 67C13
 sar eax, 18h	; 67C18
 .26:
-mov byte [byte_E9FAB], al	; 67C1B
-mov eax, dword [dword_E03B9]	; 67C20
+mov byte [rpl_c1player], al	; 67C1B
+mov eax, dword [regd0_m3]	; 67C20
 sar eax, 1Ch	; 67C25
 and eax, byte 0Fh	; 67C28
 mov byte [regd1], al	; 67C2B
@@ -552,32 +552,32 @@ jmp short .28	; 67C39
 mov eax, dword [regd1-3]	; 67C3B
 sar eax, 18h	; 67C40
 .28:
-mov byte [byte_E9FAC], al	; 67C43
+mov byte [rpl_c2player], al	; 67C43
 mov eax, dword [replayplay]	; 67C48
 lea edx, [byte eax+01h]	; 67C4D
 mov dword [replayplay], edx	; 67C50
 mov al, byte [eax]	; 67C56
-mov byte [byte_E9FAD], al	; 67C58
+mov byte [rpl_puckc], al	; 67C58
 mov eax, edx	; 67C5D
 inc edx	; 67C5F
 mov dword [replayplay], edx	; 67C60
 mov al, byte [eax]	; 67C66
 mov byte [regd0], al	; 67C68
 and al, 0Fh	; 67C6D
-mov byte [byte_E9FAE], al	; 67C6F
-mov eax, dword [dword_E03B9]	; 67C74
+mov byte [rpl_pbnum], al	; 67C6F
+mov eax, dword [regd0_m3]	; 67C74
 sar eax, 1Ch	; 67C79
 and eax, byte 0Fh	; 67C7C
-mov byte [byte_E9FAF], al	; 67C7F
+mov byte [rpl_pbnum_b1], al	; 67C7F
 mov eax, edx	; 67C84
 inc edx	; 67C86
 mov dword [replayplay], edx	; 67C87
 movsx ax, byte [eax]	; 67C8D
-mov word [word_E9FB0], ax	; 67C91
+mov word [rpl_camx], ax	; 67C91
 mov word [camx], ax	; 67C97
 mov eax, edx	; 67C9D
 mov dx, word [edx]	; 67C9F
-mov word [word_E9FB2], dx	; 67CA2
+mov word [rpl_camy], dx	; 67CA2
 mov word [camy], dx	; 67CA9
 add eax, byte 2	; 67CB0
 mov dword [replayplay], eax	; 67CB3
@@ -599,10 +599,10 @@ mov dl, byte [regd0]	; 67CE9
 sar edx, 4	; 67CEF
 mov bl, dl	; 67CF2
 movsx edx, ax	; 67CF4
-mov byte [nosplit edx*2+byte_E9FDC], bl	; 67CF7
+mov byte [nosplit edx*2+rpl_objstep], bl	; 67CF7
 mov bl, byte [regd0]	; 67CFE
 and bl, 0Fh	; 67D04
-mov byte [nosplit edx*2+byte_E9FDD], bl	; 67D07
+mov byte [nosplit edx*2+rpl_objstep_b1], bl	; 67D07
 inc eax	; 67D0E
 .30:
 cmp ax, 0Ah	; 67D0F
@@ -622,7 +622,7 @@ mov word [regd0], 0FFFFh	; 67D3A
 .32:
 movsx edx, ax	; 67D43
 mov bx, word [regd0]	; 67D46
-mov word [nosplit edx*2+word_E9FB4], bx	; 67D4D
+mov word [nosplit edx*2+rpl_objframe], bx	; 67D4D
 inc eax	; 67D55
 .33:
 cmp ax, 14h	; 67D56
@@ -645,19 +645,19 @@ sub dword [replayplay], 80h	; 67D83
 jmp short .37	; 67D8D
 .36:
 movsx ebx, ax	; 67D8F
-mov ecx, dword [nosplit ebx*2+dword_E9F38]	; 67D92
+mov ecx, dword [nosplit ebx*2+rpl_x_e16]	; 67D92
 sar ecx, 10h	; 67D99
 mov dword [esp+ebx*4], ecx	; 67D9C
-mov dword [nosplit ebx*4+dword_E9FF0], ebx	; 67D9F
+mov dword [nosplit ebx*4+rpl_ysort], ebx	; 67D9F
 inc eax	; 67DA6
 .37:
 cmp ax, 11h	; 67DA7
 jl short ReplayStep.36	; 67DAB
-push dword_E9FF0	; 67DAD
+push rpl_ysort	; 67DAD
 lea eax, [byte esp+04h]	; 67DB2
 push eax	; 67DB6
 push byte 11h	; 67DB7
-call sub_93540	; 67DB9
+call SortIndices	; 67DB9
 add esp, byte 0Ch	; 67DBE
 mov eax, esi	; 67DC1
 add esp, byte 48h	; 67DC3
@@ -704,7 +704,7 @@ mov eax, 17Eh	; 67E26
 call DrawFrameSprite	; 67E2B
 inc esi	; 67E30
 .2:
-movsx ax, byte [byte_E9FAE]	; 67E31
+movsx ax, byte [rpl_pbnum]	; 67E31
 cmp si, ax	; 67E39
 jge short .3	; 67E3C
 cmp si, byte 3	; 67E3E
@@ -716,7 +716,7 @@ cmp eax, byte 0FFFFFFB5h	; 67E4C
 jle short .7	; 67E4F
 cmp word [camy], 0B1h	; 67E51
 jge short .7	; 67E5A
-mov eax, dword [byte_E9FAF-3]	; 67E5C
+mov eax, dword [rpl_pbnum_b1-3]	; 67E5C
 sar eax, 18h	; 67E61
 dec eax	; 67E64
 cmp eax, byte 2	; 67E65
@@ -744,24 +744,24 @@ xor esi, esi	; 67E99
 jmp near .10	; 67E9B
 .8:
 movsx eax, si	; 67EA0
-mov di, word [nosplit eax*2+word_E9FB4]	; 67EA3
+mov di, word [nosplit eax*2+rpl_objframe]	; 67EA3
 test di, di	; 67EAB
 jl short .9	; 67EAE
 imul edi, byte 3	; 67EB0
 movsx edx, di	; 67EB3
-mov dx, word [nosplit edx*2+word_CCEF8]	; 67EB6
+mov dx, word [nosplit edx*2+rinkobjdefs]	; 67EB6
 mov word [byte ebp-0Ch], dx	; 67EBE
 inc edi	; 67EC2
 movsx edx, di	; 67EC3
-mov dx, word [nosplit edx*2+word_CCEF8]	; 67EC6
+mov dx, word [nosplit edx*2+rinkobjdefs]	; 67EC6
 mov word [byte ebp-04h], dx	; 67ECE
 inc edi	; 67ED2
 movsx edx, di	; 67ED3
-mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67ED6
+mov edx, dword [nosplit edx*2+rinkobjdefs_m2]	; 67ED6
 sar edx, 10h	; 67EDD
-mov eax, dword [dword eax+byte_E9FDC-3]	; 67EE0
+mov eax, dword [dword eax+rpl_objstep-3]	; 67EE0
 sar eax, 18h	; 67EE6
-movsx ax, byte [dword edx+eax+byte_CCE00]	; 67EE9
+movsx ax, byte [dword edx+eax+rinkobjanim]	; 67EE9
 mov word [byte ebp-08h], ax	; 67EF2
 push byte 0	; 67EF6
 push byte 0FFFFFFFFh	; 67EF8
@@ -786,7 +786,7 @@ mov esi, 13h	; 67F31
 jmp near .23	; 67F36
 .11:
 movsx eax, si	; 67F3B
-mov di, word [nosplit eax*2+word_E9FB4]	; 67F3E
+mov di, word [nosplit eax*2+rpl_objframe]	; 67F3E
 test di, di	; 67F46
 jge short .12	; 67F49
 mov word [byte ebp-08h], 0FFFFh	; 67F4B
@@ -794,19 +794,19 @@ jmp short .13	; 67F51
 .12:
 imul edi, byte 3	; 67F53
 movsx edx, di	; 67F56
-mov dx, word [nosplit edx*2+word_CCEF8]	; 67F59
+mov dx, word [nosplit edx*2+rinkobjdefs]	; 67F59
 mov word [byte ebp-0Ch], dx	; 67F61
 inc edi	; 67F65
 movsx edx, di	; 67F66
-mov dx, word [nosplit edx*2+word_CCEF8]	; 67F69
+mov dx, word [nosplit edx*2+rinkobjdefs]	; 67F69
 mov word [byte ebp-04h], dx	; 67F71
 inc edi	; 67F75
 movsx edx, di	; 67F76
-mov edx, dword [nosplit edx*2+dword_CCEF6]	; 67F79
+mov edx, dword [nosplit edx*2+rinkobjdefs_m2]	; 67F79
 sar edx, 10h	; 67F80
-mov eax, dword [dword eax+byte_E9FDC-3]	; 67F83
+mov eax, dword [dword eax+rpl_objstep-3]	; 67F83
 sar eax, 18h	; 67F89
-movsx ax, byte [dword edx+eax+byte_CCE00]	; 67F8C
+movsx ax, byte [dword edx+eax+rinkobjanim]	; 67F8C
 mov word [byte ebp-08h], ax	; 67F95
 .13:
 cmp word [byte ebp-08h], byte 64h	; 67F99
@@ -869,14 +869,14 @@ mov edx, 4	; 68031
 call DrawSprite	; 68036
 jmp short .22	; 6803B
 .21:
-mov ax, word [word_E9F7A]	; 6803D
+mov ax, word [rpl_frame_e15]	; 6803D
 mov word [byte ebp-08h], ax	; 68043
 cmp ax, 362h	; 68047
 jl short .22	; 6804B
 push byte 0	; 6804D
-mov ebx, dword [word_E9F58-2]	; 6804F
+mov ebx, dword [rpl_y_e15-2]	; 6804F
 sar ebx, 10h	; 68055
-mov edx, dword [word_E9F36-2]	; 68058
+mov edx, dword [rpl_x_e15-2]	; 68058
 sar edx, 10h	; 6805E
 mov eax, dword [byte ebp-0Ah]	; 68061
 sar eax, 10h	; 68064
@@ -900,7 +900,7 @@ mov ebx, dword [dword_D30C0]	; 6809E
 push ebx	; 680A4
 mov ecx, dword [dword_D30BC]	; 680A5
 push ecx	; 680AB
-call sub_B4BC4	; 680AC
+call SetClipWindow	; 680AC
 add esp, byte 10h	; 680B1
 .24:
 xor esi, esi	; 680B4
@@ -914,27 +914,27 @@ inc esi	; 680C5
 .26:
 cmp si, byte 3	; 680C6
 jl short DrawRinkSideObjects.25	; 680CA
-mov eax, dword [byte_E9FAD-3]	; 680CC
+mov eax, dword [rpl_puckc-3]	; 680CC
 sar eax, 18h	; 680D1
 cmp eax, byte 0FFFFFFFFh	; 680D4
 je short .27	; 680D7
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 680D9
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 680D9
 sar eax, 10h	; 680E0
 mov dword [byte ebp-020h], eax	; 680E3
 .27:
-cmp byte [byte_E9FAB], 0	; 680E6
+cmp byte [rpl_c1player], 0	; 680E6
 jl short .28	; 680ED
-mov eax, dword [byte_E9FAB-3]	; 680EF
+mov eax, dword [rpl_c1player-3]	; 680EF
 sar eax, 18h	; 680F4
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 680F7
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 680F7
 sar eax, 10h	; 680FE
 mov dword [byte ebp-028h], eax	; 68101
 .28:
-cmp byte [byte_E9FAC], 0	; 68104
+cmp byte [rpl_c2player], 0	; 68104
 jl short .29	; 6810B
-mov eax, dword [byte_E9FAC-3]	; 6810D
+mov eax, dword [rpl_c2player-3]	; 6810D
 sar eax, 18h	; 68112
-mov eax, dword [nosplit eax*2+dword_E9F38]	; 68115
+mov eax, dword [nosplit eax*2+rpl_x_e16]	; 68115
 sar eax, 10h	; 6811C
 mov dword [byte ebp-024h], eax	; 6811F
 .29:
@@ -943,7 +943,7 @@ push eax	; 68125
 lea eax, [byte ebp-028h]	; 68126
 push eax	; 68129
 push byte 3	; 6812A
-call sub_93540	; 6812C
+call SortIndices	; 6812C
 add esp, byte 0Ch	; 68131
 xor edi, edi	; 68134
 jmp near .43	; 68136
@@ -952,26 +952,26 @@ movsx esi, di	; 6813B
 mov si, word [byte ebp+esi*4-034h]	; 6813E
 cmp si, byte 2	; 68143
 jne short .31	; 68147
-mov eax, dword [byte_E9FAD-3]	; 68149
+mov eax, dword [rpl_puckc-3]	; 68149
 sar eax, 18h	; 6814E
 cmp eax, byte 0FFFFFFFFh	; 68151
 je near .42	; 68154
 push byte 0	; 6815A
-mov ebx, dword [nosplit eax*2+dword_E9F38]	; 6815C
+mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 6815C
 sar ebx, 10h	; 68163
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68166
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68166
 sar edx, 10h	; 6816D
-mov eax, dword [dword_CC0B4]	; 68170
+mov eax, dword [markframes_e1]	; 68170
 sar eax, 10h	; 68175
 xor ecx, ecx	; 68178
 jmp near .41	; 6817A
 .31:
 test si, si	; 6817F
 je short .32	; 68182
-mov al, byte [byte_E9FAC]	; 68184
+mov al, byte [rpl_c2player]	; 68184
 jmp short .33	; 68189
 .32:
-mov al, byte [byte_E9FAB]	; 6818B
+mov al, byte [rpl_c1player]	; 6818B
 .33:
 cbw	; 68190
 mov word [byte ebp-08h], ax	; 68192
@@ -980,13 +980,13 @@ jl near .42	; 68199
 mov eax, dword [byte ebp-0Ah]	; 6819F
 sar eax, 10h	; 681A2
 add eax, eax	; 681A5
-mov edx, dword [dword eax+word_E9F5C-2]	; 681A7
+mov edx, dword [dword eax+rpl_frame-2]	; 681A7
 sar edx, 10h	; 681AD
 cmp edx, byte 0FFFFFFFFh	; 681B0
 je near .42	; 681B3
-mov dx, word [dword eax+word_E9F18]	; 681B9
+mov dx, word [dword eax+rpl_x]	; 681B9
 mov word [byte ebp-0Ch], dx	; 681C0
-mov ax, word [dword eax+word_E9F3A]	; 681C4
+mov ax, word [dword eax+rpl_y]	; 681C4
 mov word [byte ebp-04h], ax	; 681CB
 xor eax, eax	; 681CF
 mov word [byte ebp-08h], ax	; 681D1
@@ -1093,7 +1093,7 @@ call sub_B340B	; 682FF
 add esp, byte 4	; 68304
 movsx edx, si	; 68307
 shl edx, 4	; 6830A
-mov eax, dword [dword edx+eax*2+dword_CC0B4]	; 6830D
+mov eax, dword [dword edx+eax*2+markframes_e1]	; 6830D
 sar eax, 10h	; 68314
 mov ecx, dword [byte ebp-01Ch]	; 68317
 mov ebx, dword [byte ebp-018h]	; 6831A
@@ -1106,7 +1106,7 @@ sar ebx, 10h	; 68327
 mov edx, dword [byte ebp-0Eh]	; 6832A
 sar edx, 10h	; 6832D
 movsx eax, si	; 68330
-mov eax, dword [nosplit eax*2+word_CC0B0]	; 68333
+mov eax, dword [nosplit eax*2+Pencntdwn2]	; 68333
 sar eax, 10h	; 6833A
 xor ecx, ecx	; 6833D
 .41:
@@ -1117,21 +1117,21 @@ inc edi	; 68344
 cmp di, byte 3	; 68345
 jl near DrawRinkSideObjects.30	; 68349
 mov esi, 0Fh	; 6834F
-mov ax, word [word_E9F7A]	; 68354
+mov ax, word [rpl_frame_e15]	; 68354
 mov word [byte ebp-08h], ax	; 6835A
 cmp ax, 284h	; 6835E
 jl short .44	; 68362
 cmp ax, 288h	; 68364
 jg short .44	; 68368
 push byte 0	; 6836A
-cmp word [word_E9F36], byte 0	; 6836C
+cmp word [rpl_x_e15], byte 0	; 6836C
 setl al	; 68374
 xor ah, ah	; 68377
 movsx ecx, ax	; 68379
 movsx eax, si	; 6837C
-mov ebx, dword [nosplit eax*2+dword_E9F38]	; 6837F
+mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 6837F
 sar ebx, 10h	; 68386
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68389
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68389
 sar edx, 10h	; 68390
 mov eax, dword [byte ebp-0Ah]	; 68393
 sar eax, 10h	; 68396
@@ -1139,15 +1139,15 @@ jmp short .47	; 68399
 .44:
 cmp word [byte ebp-08h], 189h	; 6839B
 jne short .45	; 683A1
-mov eax, dword [word_E9FA7-2]	; 683A3
+mov eax, dword [rpl_puckz-2]	; 683A3
 sar eax, 10h	; 683A8
 cmp eax, 0FFFFFF00h	; 683AB
 jle short .45	; 683B0
-cmp byte [byte_E9FAD], 10h	; 683B2
+cmp byte [rpl_puckc], 10h	; 683B2
 jne short .46	; 683B9
 .45:
 movsx eax, si	; 683BB
-cmp word [nosplit eax*2+word_E9F3A], byte 0	; 683BE
+cmp word [nosplit eax*2+rpl_y], byte 0	; 683BE
 jl short .48	; 683C7
 mov ecx, dword [byte ebp-08h]	; 683C9
 cmp cx, 22Ah	; 683CC
@@ -1157,9 +1157,9 @@ jg short .48	; 683D8
 .46:
 push byte 0	; 683DA
 movsx eax, si	; 683DC
-mov ebx, dword [nosplit eax*2+dword_E9F38]	; 683DF
+mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 683DF
 sar ebx, 10h	; 683E6
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 683E9
+mov edx, dword [nosplit eax*2+dressedskaters]	; 683E9
 sar edx, 10h	; 683F0
 mov eax, dword [byte ebp-0Ah]	; 683F3
 sar eax, 10h	; 683F6
@@ -1167,14 +1167,14 @@ xor ecx, ecx	; 683F9
 .47:
 call DrawFrameSprite	; 683FB
 .48:
-cmp byte [byte_E9FAD], 10h	; 68400
+cmp byte [rpl_puckc], 10h	; 68400
 je short .49	; 68407
-cmp word [word_E9FA7], byte 0	; 68409
+cmp word [rpl_puckz], byte 0	; 68409
 jl short .49	; 68411
 push byte 0	; 68413
-mov ebx, dword [dword_E9F56-2]	; 68415
+mov ebx, dword [rpl_y_e14-2]	; 68415
 sar ebx, 10h	; 6841B
-mov edx, dword [word_E9FA7-2]	; 6841E
+mov edx, dword [rpl_puckz-2]	; 6841E
 sar edx, 10h	; 68424
 mov eax, edx	; 68427
 shl eax, 2	; 68429
@@ -1185,9 +1185,9 @@ LD sub, eax, edx	; 68433
 sar eax, 1	; 68435
 add eax, ebx	; 68437
 movsx ebx, ax	; 68439
-mov edx, dword [dword_E9F34-2]	; 6843C
+mov edx, dword [rpl_x_e14-2]	; 6843C
 sar edx, 10h	; 68442
-mov eax, dword [dword_E9F78-2]	; 68445
+mov eax, dword [rpl_frame_e14-2]	; 68445
 sar eax, 10h	; 6844A
 xor ecx, ecx	; 6844D
 call DrawFrameSprite	; 6844F
@@ -1196,47 +1196,47 @@ xor edi, edi	; 68454
 jmp near .68	; 68456
 .50:
 movsx esi, di	; 6845B
-mov si, word [nosplit esi*4+dword_E9FF0]	; 6845E
+mov si, word [nosplit esi*4+rpl_ysort]	; 6845E
 cmp si, byte 0Fh	; 68466
 je near .67	; 6846A
 cmp si, byte 0Eh	; 68470
 jne near .54	; 68474
-mov eax, dword [byte_E9FAD-3]	; 6847A
+mov eax, dword [rpl_puckc-3]	; 6847A
 sar eax, 18h	; 6847F
 cmp eax, byte 0FFFFFFFFh	; 68482
 jne near .67	; 68485
-cmp word [word_E9FA7], byte 0	; 6848B
+cmp word [rpl_puckz], byte 0	; 6848B
 jle near .67	; 68493
 movsx eax, si	; 68499
 add eax, eax	; 6849C
-cmp word [dword eax+word_E9F3A], 0E8h	; 6849E
+cmp word [dword eax+rpl_y], 0E8h	; 6849E
 jge near .67	; 684A7
-mov edx, dword [dword eax+word_E9F3A-2]	; 684AD
+mov edx, dword [dword eax+rpl_y-2]	; 684AD
 sar edx, 10h	; 684B3
 cmp edx, 0FFFFFF18h	; 684B6
 jg short .53	; 684BC
 cmp edx, 0FFFFFF10h	; 684BE
 jl short .53	; 684C4
-cmp word [dword eax+word_E9F18], byte 0	; 684C6
+cmp word [dword eax+rpl_x], byte 0	; 684C6
 jge short .51	; 684CE
-mov eax, dword [dword eax+word_E9F18-2]	; 684D0
+mov eax, dword [dword eax+rpl_x-2]	; 684D0
 sar eax, 10h	; 684D6
 neg eax	; 684D9
 jmp short .52	; 684DB
 .51:
-mov eax, dword [dword eax+word_E9F18-2]	; 684DD
+mov eax, dword [dword eax+rpl_x-2]	; 684DD
 sar eax, 10h	; 684E3
 .52:
 cmp eax, byte 14h	; 684E6
 jg short .53	; 684E9
-cmp word [word_E9FA7], byte 0Dh	; 684EB
+cmp word [rpl_puckz], byte 0Dh	; 684EB
 jl near .67	; 684F3
 .53:
 push byte 0	; 684F9
 movsx ebx, si	; 684FB
-mov ecx, dword [nosplit ebx*2+dword_E9F38]	; 684FE
+mov ecx, dword [nosplit ebx*2+rpl_x_e16]	; 684FE
 sar ecx, 10h	; 68505
-mov edx, dword [word_E9FA7-2]	; 68508
+mov edx, dword [rpl_puckz-2]	; 68508
 sar edx, 10h	; 6850E
 mov eax, edx	; 68511
 shl eax, 2	; 68513
@@ -1247,9 +1247,9 @@ LD sub, eax, edx	; 6851D
 sar eax, 1	; 6851F
 add eax, ecx	; 68521
 cwde	; 68523
-mov edx, dword [nosplit ebx*2+dword_E9F16]	; 68524
+mov edx, dword [nosplit ebx*2+dressedskaters]	; 68524
 sar edx, 10h	; 6852B
-mov esi, dword [nosplit ebx*2+dword_E9F5A]	; 6852E
+mov esi, dword [nosplit ebx*2+rpl_y_e16]	; 6852E
 sar esi, 10h	; 68535
 xor ecx, ecx	; 68538
 mov ebx, eax	; 6853A
@@ -1259,56 +1259,56 @@ jmp near .66	; 6853E
 cmp si, byte 0Ch	; 68543
 jge short .55	; 68547
 movsx eax, si	; 68549
-cmp byte [dword eax+byte_E9F9B], 0	; 6854C
+cmp byte [dword eax+rpl_pos], 0	; 6854C
 jl near .67	; 68553
 .55:
 movsx eax, si	; 68559
-mov eax, dword [nosplit eax*2+dword_E9F5A]	; 6855C
+mov eax, dword [nosplit eax*2+rpl_y_e16]	; 6855C
 sar eax, 10h	; 68563
 cmp eax, byte 0FFFFFFFFh	; 68566
 je near .60	; 68569
 cmp si, byte 0Ch	; 6856F
 jge near .60	; 68573
-mov eax, dword [byte_E9FAD-3]	; 68579
+mov eax, dword [rpl_puckc-3]	; 68579
 sar eax, 18h	; 6857E
 cmp eax, byte 0FFFFFFFFh	; 68581
 je short .56	; 68584
-movsx ax, byte [byte_E9FAD]	; 68586
+movsx ax, byte [rpl_puckc]	; 68586
 cmp si, ax	; 6858E
 je short .57	; 68591
 .56:
-movsx ax, byte [byte_E9FAB]	; 68593
+movsx ax, byte [rpl_c1player]	; 68593
 cmp si, ax	; 6859B
 je short .57	; 6859E
-movsx ax, byte [byte_E9FAC]	; 685A0
+movsx ax, byte [rpl_c2player]	; 685A0
 cmp si, ax	; 685A8
 je short .57	; 685AB
 movsx eax, si	; 685AD
 cmp eax, dword [dword_ED74C]	; 685B0
 je short .57	; 685B6
-cmp si, word [word_CD4FC]	; 685B8
+cmp si, word [replayfollowpl]	; 685B8
 jne short .58	; 685BF
 .57:
 movsx eax, si	; 685C1
-mov edx, dword [dword eax+byte_E9F9B-3]	; 685C4
+mov edx, dword [dword eax+rpl_pos-3]	; 685C4
 sar edx, 18h	; 685CA
 mov dword [byte ebp-014h], edx	; 685CD
-mov ebx, dword [dword eax+byte_E9F8F-3]	; 685D0
+mov ebx, dword [dword eax+rpl_jersey-3]	; 685D0
 sar ebx, 18h	; 685D6
-mov edx, dword [nosplit eax*2+dword_E9F38]	; 685D9
+mov edx, dword [nosplit eax*2+rpl_x_e16]	; 685D9
 sar edx, 10h	; 685E0
-mov eax, dword [nosplit eax*2+dword_E9F16]	; 685E3
+mov eax, dword [nosplit eax*2+dressedskaters]	; 685E3
 sar eax, 10h	; 685EA
 mov ecx, dword [byte ebp-014h]	; 685ED
 jmp short .59	; 685F0
 .58:
 cmp dword [shownumbers], byte 0	; 685F2
 je short .60	; 685F9
-mov ebx, dword [dword eax+byte_E9F8F-3]	; 685FB
+mov ebx, dword [dword eax+rpl_jersey-3]	; 685FB
 sar ebx, 18h	; 68601
-mov edx, dword [nosplit eax*2+dword_E9F38]	; 68604
+mov edx, dword [nosplit eax*2+rpl_x_e16]	; 68604
 sar edx, 10h	; 6860B
-mov eax, dword [nosplit eax*2+dword_E9F16]	; 6860E
+mov eax, dword [nosplit eax*2+dressedskaters]	; 6860E
 sar eax, 10h	; 68615
 mov ecx, 0FFFFFFFFh	; 68618
 .59:
@@ -1320,44 +1320,44 @@ xor ah, ah	; 68629
 cwde	; 6862B
 push eax	; 6862C
 movsx eax, si	; 6862D
-mov ecx, dword [dword eax+byte_E9F7E-3]	; 68630
+mov ecx, dword [dword eax+rpl_flip-3]	; 68630
 sar ecx, 18h	; 68636
-mov ebx, dword [nosplit eax*2+dword_E9F38]	; 68639
+mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 68639
 sar ebx, 10h	; 68640
-mov edx, dword [nosplit eax*2+dword_E9F16]	; 68643
+mov edx, dword [nosplit eax*2+dressedskaters]	; 68643
 sar edx, 10h	; 6864A
-mov eax, dword [nosplit eax*2+dword_E9F5A]	; 6864D
+mov eax, dword [nosplit eax*2+rpl_y_e16]	; 6864D
 sar eax, 10h	; 68654
 call DrawFrameSprite	; 68657
 cmp si, byte 0Ch	; 6865C
 jne near .67	; 68660
-cmp byte [byte_E9FAD], 10h	; 68666
+cmp byte [rpl_puckc], 10h	; 68666
 je near .67	; 6866D
-cmp word [dword_E9F34], byte 0	; 68673
+cmp word [rpl_x_e14], byte 0	; 68673
 jge short .61	; 6867B
-mov eax, dword [dword_E9F34-2]	; 6867D
+mov eax, dword [rpl_x_e14-2]	; 6867D
 sar eax, 10h	; 68682
 neg eax	; 68685
 jmp short .62	; 68687
 .61:
-mov eax, dword [dword_E9F34-2]	; 68689
+mov eax, dword [rpl_x_e14-2]	; 68689
 sar eax, 10h	; 6868E
 .62:
 cmp eax, byte 6	; 68691
 jne short .63	; 68694
-cmp word [dword_E9F56], 0F0h	; 68696
+cmp word [rpl_y_e14], 0F0h	; 68696
 je short .65	; 6869F
 .63:
 movsx eax, si	; 686A1
 add eax, eax	; 686A4
-mov dx, word [dword_E9F56]	; 686A6
-cmp dx, word [dword eax+word_E9F3A]	; 686AD
+mov dx, word [rpl_y_e14]	; 686A6
+cmp dx, word [dword eax+rpl_y]	; 686AD
 jl short .67	; 686B4
-cmp word [word_E9FA7], byte 0Dh	; 686B6
+cmp word [rpl_puckz], byte 0Dh	; 686B6
 jl short .67	; 686BE
-mov eax, dword [dword eax+word_E9F18-2]	; 686C0
+mov eax, dword [dword eax+rpl_x-2]	; 686C0
 sar eax, 10h	; 686C6
-mov edx, dword [dword_E9F34-2]	; 686C9
+mov edx, dword [rpl_x_e14-2]	; 686C9
 sar edx, 10h	; 686CF
 sub edx, eax	; 686D2
 mov eax, edx	; 686D4
@@ -1369,7 +1369,7 @@ cmp eax, byte 15h	; 686DC
 jge short .67	; 686DF
 .65:
 push byte 0	; 686E1
-mov edx, dword [word_E9FA7-2]	; 686E3
+mov edx, dword [rpl_puckz-2]	; 686E3
 sar edx, 10h	; 686E9
 mov eax, edx	; 686EC
 shl eax, 2	; 686EE
@@ -1378,13 +1378,13 @@ mov edx, eax	; 686F3
 sar edx, 1Fh	; 686F5
 LD sub, eax, edx	; 686F8
 sar eax, 1	; 686FA
-mov edx, dword [dword_E9F56-2]	; 686FC
+mov edx, dword [rpl_y_e14-2]	; 686FC
 sar edx, 10h	; 68702
 add eax, edx	; 68705
 movsx ebx, ax	; 68707
-mov edx, dword [dword_E9F34-2]	; 6870A
+mov edx, dword [rpl_x_e14-2]	; 6870A
 sar edx, 10h	; 68710
-mov eax, dword [dword_E9F78-2]	; 68713
+mov eax, dword [rpl_frame_e14-2]	; 68713
 sar eax, 10h	; 68718
 xor ecx, ecx	; 6871B
 .66:
@@ -1394,28 +1394,28 @@ inc edi	; 68722
 .68:
 cmp di, byte 11h	; 68723
 jl near DrawRinkSideObjects.50	; 68727
-mov eax, dword [dword_E9F56-2]	; 6872D
+mov eax, dword [rpl_y_e14-2]	; 6872D
 sar eax, 10h	; 68732
 cmp eax, 0FFFFFF18h	; 68735
 jg near .71	; 6873A
 cmp eax, 0FFFFFF14h	; 68740
 jl short .71	; 68745
-cmp word [dword_E9F34], byte 0	; 68747
+cmp word [rpl_x_e14], byte 0	; 68747
 jge short .69	; 6874F
-mov eax, dword [dword_E9F34-2]	; 68751
+mov eax, dword [rpl_x_e14-2]	; 68751
 sar eax, 10h	; 68756
 neg eax	; 68759
 jmp short .70	; 6875B
 .69:
-mov eax, dword [dword_E9F34-2]	; 6875D
+mov eax, dword [rpl_x_e14-2]	; 6875D
 sar eax, 10h	; 68762
 .70:
 cmp eax, byte 14h	; 68765
 jg short .71	; 68768
-cmp word [word_E9FA7], byte 0Dh	; 6876A
+cmp word [rpl_puckz], byte 0Dh	; 6876A
 jl short .71	; 68772
 push byte 0	; 68774
-mov edx, dword [word_E9FA7-2]	; 68776
+mov edx, dword [rpl_puckz-2]	; 68776
 sar edx, 10h	; 6877C
 mov eax, edx	; 6877F
 shl eax, 2	; 68781
@@ -1424,13 +1424,13 @@ mov edx, eax	; 68786
 sar edx, 1Fh	; 68788
 LD sub, eax, edx	; 6878B
 sar eax, 1	; 6878D
-mov edx, dword [dword_E9F56-2]	; 6878F
+mov edx, dword [rpl_y_e14-2]	; 6878F
 sar edx, 10h	; 68795
 add eax, edx	; 68798
 movsx ebx, ax	; 6879A
-mov edx, dword [dword_E9F34-2]	; 6879D
+mov edx, dword [rpl_x_e14-2]	; 6879D
 sar edx, 10h	; 687A3
-mov eax, dword [dword_E9F78-2]	; 687A6
+mov eax, dword [rpl_frame_e14-2]	; 687A6
 sar eax, 10h	; 687AB
 xor ecx, ecx	; 687AE
 call DrawFrameSprite	; 687B0
@@ -1448,7 +1448,7 @@ mov edi, dword [dword_D30C0]	; 687D2
 push edi	; 687D8
 mov eax, dword [dword_D30BC]	; 687D9
 push eax	; 687DE
-call sub_B4BC4	; 687DF
+call SetClipWindow	; 687DF
 add esp, byte 10h	; 687E4
 .72:
 mov eax, dword [camy-2]	; 687E7
@@ -1457,35 +1457,35 @@ cmp eax, 0FFFFFF70h	; 687EF
 jge short .73	; 687F4
 call DrawRinkEndArt	; 687F6
 .73:
-cmp word [word_E9F58], byte 0	; 687FB
+cmp word [rpl_y_e15], byte 0	; 687FB
 jge short .74	; 68803
-mov si, word [word_E9F7A]	; 68805
+mov si, word [rpl_frame_e15]	; 68805
 cmp si, 22Ah	; 6880C
 jl short .74	; 68811
 cmp si, 237h	; 68813
 jg short .74	; 68818
 push byte 0	; 6881A
-mov ebx, dword [word_E9F58-2]	; 6881C
+mov ebx, dword [rpl_y_e15-2]	; 6881C
 sar ebx, 10h	; 68822
-mov edx, dword [word_E9F36-2]	; 68825
+mov edx, dword [rpl_x_e15-2]	; 68825
 sar edx, 10h	; 6882B
-mov eax, dword [word_E9F7A-2]	; 6882E
+mov eax, dword [rpl_frame_e15-2]	; 6882E
 sar eax, 10h	; 68833
 xor ecx, ecx	; 68836
 call DrawFrameSprite	; 68838
 .74:
-mov ebx, dword [dword_E9F56-2]	; 6883D
+mov ebx, dword [rpl_y_e14-2]	; 6883D
 sar ebx, 10h	; 68843
 cmp ebx, 0FFFFFEF8h	; 68846
 jge short .75	; 6884C
-mov eax, dword [byte_E9FAD-3]	; 6884E
+mov eax, dword [rpl_puckc-3]	; 6884E
 sar eax, 18h	; 68853
 cmp eax, byte 0FFFFFFFFh	; 68856
 jne short .75	; 68859
-cmp word [word_E9FA7], byte 0	; 6885B
+cmp word [rpl_puckz], byte 0	; 6885B
 jl short .75	; 68863
 push byte 0	; 68865
-mov edx, dword [word_E9FA7-2]	; 68867
+mov edx, dword [rpl_puckz-2]	; 68867
 sar edx, 10h	; 6886D
 mov eax, edx	; 68870
 shl eax, 2	; 68872
@@ -1496,9 +1496,9 @@ LD sub, eax, edx	; 6887C
 sar eax, 1	; 6887E
 add eax, ebx	; 68880
 movsx ebx, ax	; 68882
-mov edx, dword [dword_E9F34-2]	; 68885
+mov edx, dword [rpl_x_e14-2]	; 68885
 sar edx, 10h	; 6888B
-mov eax, dword [dword_E9F78-2]	; 6888E
+mov eax, dword [rpl_frame_e14-2]	; 6888E
 sar eax, 10h	; 68893
 xor ecx, ecx	; 68896
 call DrawFrameSprite	; 68898

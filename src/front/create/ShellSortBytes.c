@@ -42,38 +42,38 @@ void RunEditRosters(void)
     dlgtextbg = c42;
     pal = 0;
     editrosters_exit = (int)pal;
-    dword_D0B12 = (int)pal;
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp7, 0x300, 0x20);
+    rostereditmode = (int)pal;
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
     sub_B4BA8();
     dword_EA2B0 = mainfont;
-    sub_8EA18(dword_EA2B0);
-    sub_8E9E8(s.state);
+    TextSetFont(dword_EA2B0);
+    TextSaveState(s.state);
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
-    fullscrbmp = sub_B4F8C(0x280, 0x1E0, 0x20);
+    fullscrbmp = CreateBitmap(0x280, 0x1E0, 0x20);
     sz = ((*(int *)(pointerspr + 2) >> 16) + 1) * ((*(int *)(pointerspr + 4) >> 16) + 1) + 0x11;
-    editptrspr = sub_8CCA8((char *)str_Pointer11, sz, 0x20);
+    editptrspr = AllocMemBlock((char *)str_Pointer11, sz, 0x20);
     *(Hdr17 *)editptrspr = *(Hdr17 *)pointerspr;
     ((short *)editptrspr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)editptrspr)[3] = ((short *)pointerspr)[3] + 1;
     LoadLeagueDbsMem((char *)str_extDB);
-    EditRosters(unk_D0450, 6, 0x40, 0x41, 0x42);
+    EditRosters(editrostersmenubar, 6, 0x40, 0x41, 0x42);
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    sub_8EA00(s.state);
+    TextRestoreState(s.state);
     FreeMemBlock(fullscrbmp);
     boxfillcolor = s.fill;
     boxlitecolor = s.lite;
@@ -81,7 +81,7 @@ void RunEditRosters(void)
     dlgtextfg = s.fg;
     dlgtextbg = s.bg;
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -147,16 +147,16 @@ void LoadRosterList(int side)
         facount = 0;
         for (i = 0; i < n; i++)
             if (keydb[i * 0x34] == 0xFF) facount++;
-        falist = (unsigned char *)sub_8CCA8((char *)str_Uar, facount * 0x1B, 0);
-        falistsel = sub_8CCA8((char *)str_Uarm, facount, 0);
+        falist = (unsigned char *)AllocMemBlock((char *)str_Uar, facount * 0x1B, 0);
+        falistsel = AllocMemBlock((char *)str_Uarm, facount, 0);
         BuildFreeAgentList();
         ShellSortBytes(falist, facount, 0x1B, (int (*)(void *, void *))ComparePlayerEntry);
         for (i = 0; i < facount; i++) ((char *)falistsel)[i] = 0;
-        dword_EBCA4 = 0;
+        falisttop = 0;
         if (facount <= 0x1C) dword_D0C20 = 0;
         else {
             dword_D0C20 = -1;
-            InitScrollBar((int *)unk_D0BF0, 0x1C, facount);
+            InitScrollBar((int *)fascrollbar, 0x1C, facount);
         }
         if (side == 0) menu_r1_tofa = 0;
         else menu_r2_tofa = 0;

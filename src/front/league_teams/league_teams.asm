@@ -3,10 +3,10 @@
 bits 32
 %include "hockey.inc"
 section s_408F5 progbits alloc exec nowrite align=1
-extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, byte_DC8D8
-extern byte_DC9D8, byte_DDD40, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
-extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, dword_C87C0, dword_C87C8
-extern dword_C87E0, dword_C87E8, dword_DDD34, dword_DDD3C, dword_DE264, ExecuteTrade, ExportTeamToFloppy, FileClose
+extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, awayremap
+extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
+extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, menuwidth_trade1, menutext_trade1
+extern menuwidth_trade2, menutext_trade2, dword_DDD34, dword_DDD3C, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, humancount, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect
 extern lggameidx, lgplayteam, MakePath, masterpw, memset_, MergeLeagueFiles, MessageBox, msg_AllHuman
@@ -16,8 +16,8 @@ extern ReadTeamNames, RestoreDialogBg, savedname, savleague1, savleague2, Select
 extern str_bangpal, str_dot, str_easndesk, str_extBIN, str_extDB, str_extID, str_extLP, str_extnum
 extern str_extxx, str_floppydrv, str_FromLeague, str_HOMEPALS, str_LLSN, str_LLST, str_PINFO, str_PLAYER
 extern str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_star, str_Statistics, strcat_
-extern strcpy_, strcspn_, stricmp_, strncpy_, sub_8CCA8, sub_8E83C, sub_8E8A0, sub_B2DCA
-extern sub_B30B4, sub_B392C, sub_B4B88, sub_B4F8C, teamcitynames, TradeScreen, treeteamnames, unknown_libname_1
+extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0, MouseRead
+extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, unknown_libname_1
 extern unknown_libname_2, word_DDD48, word_DDD4A, WriteLeagueTeamEntry
 global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub
 global GetLeagueId, WriteLeagueInfo, MsgCopyingDatabases, CopyHumanTeamDBs, SaveLeagueGameRef
@@ -74,7 +74,7 @@ lea eax, [byte esp+038h]	; 40989
 push eax	; 4098D
 lea eax, [byte esp+040h]	; 4098E
 push eax	; 40992
-call sub_B2DCA	; 40993
+call MouseRead	; 40993
 add esp, byte 0Ch	; 40998
 push esi	; 4099B
 mov ecx, 0FAh	; 4099C
@@ -130,7 +130,7 @@ jne near AddHumanTeam.1	; 40A40
 cmp byte [byte_DE268], 0	; 40A46
 je near .8	; 40A4D
 push edi	; 40A53
-call sub_B392C	; 40A54
+call ClearScreen	; 40A54
 add esp, byte 4	; 40A59
 xor ecx, ecx	; 40A5C
 mov ebx, str_easndesk	; 40A5E
@@ -146,18 +146,18 @@ call MakePath	; 40A78
 push byte 0	; 40A7D
 lea eax, [byte esp+04h]	; 40A7F
 push eax	; 40A83
-call sub_8E83C	; 40A84
+call LoadBank	; 40A84
 mov edi, eax	; 40A89
 add esp, byte 8	; 40A8B
 push str_bangpal	; 40A8E
 push eax	; 40A93
-call sub_B30B4	; 40A94
+call FindShape	; 40A94
 add esp, byte 8	; 40A99
 add eax, byte 10h	; 40A9C
 push eax	; 40A9F
 push dword 100h	; 40AA0
 push byte 0	; 40AA5
-call sub_B4B88	; 40AA7
+call VgaSetPalette	; 40AA7
 add esp, byte 0Ch	; 40AAC
 push edi	; 40AAF
 call FreeMemBlock	; 40AB0
@@ -170,7 +170,7 @@ lea eax, [byte esp+040h]	; 40AC6
 push eax	; 40ACA
 push byte 1	; 40ACB
 push dword 0F8h	; 40ACD
-call sub_B4B88	; 40AD2
+call VgaSetPalette	; 40AD2
 add esp, byte 0Ch	; 40AD7
 mov bl, 2Ah	; 40ADA
 mov byte [byte esp+040h], bl	; 40ADC
@@ -180,7 +180,7 @@ lea eax, [byte esp+040h]	; 40AE8
 push eax	; 40AEC
 push byte 1	; 40AED
 push dword 0F9h	; 40AEF
-call sub_B4B88	; 40AF4
+call VgaSetPalette	; 40AF4
 add esp, byte 0Ch	; 40AF9
 mov ch, 3Fh	; 40AFC
 mov byte [byte esp+040h], ch	; 40AFE
@@ -190,7 +190,7 @@ lea eax, [byte esp+040h]	; 40B0A
 push eax	; 40B0E
 push byte 1	; 40B0F
 push dword 0FAh	; 40B11
-call sub_B4B88	; 40B16
+call VgaSetPalette	; 40B16
 add esp, byte 0Ch	; 40B1B
 .8:
 test esi, esi	; 40B1E
@@ -247,7 +247,7 @@ lea eax, [byte esp+038h]	; 40BE9
 push eax	; 40BED
 lea eax, [byte esp+040h]	; 40BEE
 push eax	; 40BF2
-call sub_B2DCA	; 40BF3
+call MouseRead	; 40BF3
 add esp, byte 0Ch	; 40BF8
 push byte 0FFFFFFFFh	; 40BFB
 lea eax, [byte esp+034h]	; 40BFD
@@ -325,7 +325,7 @@ lea eax, [byte esp+038h]	; 40CBD
 push eax	; 40CC1
 lea eax, [byte esp+044h]	; 40CC2
 push eax	; 40CC6
-call sub_B2DCA	; 40CC7
+call MouseRead	; 40CC7
 add esp, byte 0Ch	; 40CCC
 push esi	; 40CCF
 mov ecx, 0FAh	; 40CD0
@@ -381,7 +381,7 @@ jne near RemoveHumanTeam.1	; 40D74
 cmp byte [byte_DE268], 0	; 40D7A
 je near .8	; 40D81
 push edi	; 40D87
-call sub_B392C	; 40D88
+call ClearScreen	; 40D88
 add esp, byte 4	; 40D8D
 xor ecx, ecx	; 40D90
 mov ebx, str_easndesk	; 40D92
@@ -397,18 +397,18 @@ call MakePath	; 40DAC
 push byte 0	; 40DB1
 lea eax, [byte esp+04h]	; 40DB3
 push eax	; 40DB7
-call sub_8E83C	; 40DB8
+call LoadBank	; 40DB8
 mov edi, eax	; 40DBD
 add esp, byte 8	; 40DBF
 push str_bangpal	; 40DC2
 push eax	; 40DC7
-call sub_B30B4	; 40DC8
+call FindShape	; 40DC8
 add esp, byte 8	; 40DCD
 add eax, byte 10h	; 40DD0
 push eax	; 40DD3
 push dword 100h	; 40DD4
 push byte 0	; 40DD9
-call sub_B4B88	; 40DDB
+call VgaSetPalette	; 40DDB
 add esp, byte 0Ch	; 40DE0
 push edi	; 40DE3
 call FreeMemBlock	; 40DE4
@@ -421,7 +421,7 @@ lea eax, [byte esp+040h]	; 40DFA
 push eax	; 40DFE
 push byte 1	; 40DFF
 push dword 0F8h	; 40E01
-call sub_B4B88	; 40E06
+call VgaSetPalette	; 40E06
 add esp, byte 0Ch	; 40E0B
 mov bl, 2Ah	; 40E0E
 mov byte [byte esp+040h], bl	; 40E10
@@ -431,7 +431,7 @@ lea eax, [byte esp+040h]	; 40E1C
 push eax	; 40E20
 push byte 1	; 40E21
 push dword 0F9h	; 40E23
-call sub_B4B88	; 40E28
+call VgaSetPalette	; 40E28
 add esp, byte 0Ch	; 40E2D
 mov ch, 3Fh	; 40E30
 mov byte [byte esp+040h], ch	; 40E32
@@ -441,7 +441,7 @@ lea eax, [byte esp+040h]	; 40E3E
 push eax	; 40E42
 push byte 1	; 40E43
 push dword 0FAh	; 40E45
-call sub_B4B88	; 40E4A
+call VgaSetPalette	; 40E4A
 add esp, byte 0Ch	; 40E4F
 .8:
 test esi, esi	; 40E52
@@ -498,7 +498,7 @@ lea eax, [byte esp+038h]	; 40F1F
 push eax	; 40F23
 lea eax, [byte esp+044h]	; 40F24
 push eax	; 40F28
-call sub_B2DCA	; 40F29
+call MouseRead	; 40F29
 add esp, byte 0Ch	; 40F2E
 push byte 0FFFFFFFFh	; 40F31
 lea eax, [byte esp+034h]	; 40F33
@@ -571,7 +571,7 @@ lea eax, [byte esp+018h]	; 40FFF
 push eax	; 41003
 lea eax, [byte esp+020h]	; 41004
 push eax	; 41008
-call sub_B2DCA	; 41009
+call MouseRead	; 41009
 add esp, byte 0Ch	; 4100E
 push byte 0FFFFFFFFh	; 41011
 lea eax, [byte esp+014h]	; 41013
@@ -601,7 +601,7 @@ jne near .6	; 4105D
 cmp byte [byte_DE268], 0	; 41063
 je short .5	; 4106A
 push edi	; 4106C
-call sub_B392C	; 4106D
+call ClearScreen	; 4106D
 add esp, byte 4	; 41072
 mov bh, 17h	; 41075
 mov byte [byte esp+01Ch], bh	; 41077
@@ -611,7 +611,7 @@ lea eax, [byte esp+01Ch]	; 41083
 push eax	; 41087
 push byte 1	; 41088
 push dword 0F8h	; 4108A
-call sub_B4B88	; 4108F
+call VgaSetPalette	; 4108F
 add esp, byte 0Ch	; 41094
 mov al, 2Ah	; 41097
 mov byte [byte esp+01Ch], al	; 41099
@@ -621,7 +621,7 @@ lea eax, [byte esp+01Ch]	; 410A5
 push eax	; 410A9
 push byte 1	; 410AA
 push dword 0F9h	; 410AC
-call sub_B4B88	; 410B1
+call VgaSetPalette	; 410B1
 add esp, byte 0Ch	; 410B6
 mov dh, 3Fh	; 410B9
 mov byte [byte esp+01Ch], dh	; 410BB
@@ -631,7 +631,7 @@ lea eax, [byte esp+01Ch]	; 410C7
 push eax	; 410CB
 push byte 1	; 410CC
 push dword 0FAh	; 410CE
-call sub_B4B88	; 410D3
+call VgaSetPalette	; 410D3
 add esp, byte 0Ch	; 410D8
 .5:
 push byte 0	; 410DB
@@ -648,7 +648,7 @@ mov esi, eax	; 41107
 cmp byte [byte_DE268], 0	; 41109
 je short .6	; 41110
 push byte 0	; 41112
-call sub_B392C	; 41114
+call ClearScreen	; 41114
 add esp, byte 4	; 41119
 xor ch, ch	; 4111C
 mov byte [byte esp+01Ch], ch	; 4111E
@@ -658,19 +658,19 @@ lea eax, [byte esp+01Ch]	; 4112A
 push eax	; 4112E
 push byte 1	; 4112F
 push dword 0F8h	; 41131
-call sub_B4B88	; 41136
+call VgaSetPalette	; 41136
 add esp, byte 0Ch	; 4113B
 lea eax, [byte esp+01Ch]	; 4113E
 push eax	; 41142
 push byte 1	; 41143
 push dword 0F9h	; 41145
-call sub_B4B88	; 4114A
+call VgaSetPalette	; 4114A
 add esp, byte 0Ch	; 4114F
 lea eax, [byte esp+01Ch]	; 41152
 push eax	; 41156
 push byte 1	; 41157
 push dword 0FAh	; 41159
-call sub_B4B88	; 4115E
+call VgaSetPalette	; 4115E
 add esp, byte 0Ch	; 41163
 .6:
 mov eax, esi	; 41166
@@ -767,7 +767,7 @@ shl esi, 2	; 41237
 push byte 20h	; 4123A
 push esi	; 4123C
 push str_LLST	; 4123D
-call sub_8CCA8	; 41242
+call AllocMemBlock	; 41242
 add esp, byte 0Ch	; 41247
 mov edx, dword [esp]	; 4124A
 mov dword [edx], eax	; 4124D
@@ -781,7 +781,7 @@ mov esi, eax	; 4125F
 push byte 20h	; 41261
 push eax	; 41263
 push str_LLSN	; 41264
-call sub_8CCA8	; 41269
+call AllocMemBlock	; 41269
 add esp, byte 0Ch	; 4126E
 mov dword [edi], eax	; 41271
 mov ebx, esi	; 41273
@@ -1117,7 +1117,7 @@ lea eax, [dword esp+0A4h]	; 4161A
 push eax	; 41621
 lea eax, [dword esp+0ACh]	; 41622
 push eax	; 41629
-call sub_B2DCA	; 4162A
+call MouseRead	; 4162A
 add esp, byte 0Ch	; 4162F
 push byte 0FFFFFFFFh	; 41632
 lea eax, [dword esp+0A0h]	; 41634
@@ -1189,7 +1189,7 @@ lea eax, [dword esp+0A4h]	; 41739
 push eax	; 41740
 lea eax, [dword esp+0ACh]	; 41741
 push eax	; 41748
-call sub_B2DCA	; 41749
+call MouseRead	; 41749
 add esp, byte 0Ch	; 4174E
 push byte 0FFFFFFFFh	; 41751
 lea eax, [dword esp+0A0h]	; 41753
@@ -1433,7 +1433,7 @@ test edx, edx	; 41A6C
 jne short .8	; 41A6E
 mov ecx, 6	; 41A70
 mov ebx, 0FFFFFFFFh	; 41A75
-mov edx, byte_DDD40	; 41A7A
+mov edx, lgschedrec	; 41A7A
 mov eax, esi	; 41A7F
 call FileWriteAt	; 41A81
 mov edx, eax	; 41A86

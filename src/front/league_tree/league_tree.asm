@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, FileClose, FileOpenRead, fputchar, FreeMemBlock
 extern leaguedbnames, lgstate, MakePath, playofftree, playofftree_p1, PlayoffTreeScreen, pochampion, ReadSchedGame
 extern ReadTeamNames, statsfromleague, statsleague, str_extDB, str_LSSCHED, str_space, str_Space2, strcat_
-extern strcmp_, strcpy_, strlen_, sub_8E8A0, sub_90D20, sub_B4FAC, sub_B5DB0, teamcitynames
+extern strcmp_, strcpy_, strlen_, sub_8E8A0, FillRect, sub_B4FAC, PlotPixel, teamcitynames
 extern treeteamnames
 global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule, LoadLeagueTree, FitPlayerName, DrawBevelBox
 ; C: src/front/league_tree/LoadPlayoffModeTree.c
@@ -602,7 +602,7 @@ inc eax	; 29D2B
 push eax	; 29D2C
 push esi	; 29D2D
 push edi	; 29D2E
-call sub_90D20	; 29D2F
+call FillRect	; 29D2F
 add esp, byte 14h	; 29D34
 mov ebx, dword [boxlitecolor]	; 29D37
 push ebx	; 29D3D
@@ -651,7 +651,7 @@ mov eax, edi	; 29DAB
 add eax, byte 2	; 29DAD
 mov dword [byte esp+0Ch], eax	; 29DB0
 push eax	; 29DB4
-call sub_B5DB0	; 29DB5
+call PlotPixel	; 29DB5
 add esp, byte 0Ch	; 29DBA
 mov ebx, dword [boxlitecolor]	; 29DBD
 push ebx	; 29DC3
@@ -659,21 +659,21 @@ add esi, byte 3	; 29DC4
 push esi	; 29DC7
 add edi, byte 3	; 29DC8
 push edi	; 29DCB
-call sub_B5DB0	; 29DCC
+call PlotPixel	; 29DCC
 add esp, byte 0Ch	; 29DD1
 mov ecx, dword [boxshadecolor]	; 29DD4
 push ecx	; 29DDA
 mov eax, dword [byte esp+04h]	; 29DDB
 push eax	; 29DDF
 push edi	; 29DE0
-call sub_B5DB0	; 29DE1
+call PlotPixel	; 29DE1
 add esp, byte 0Ch	; 29DE6
 mov edx, dword [boxshadecolor]	; 29DE9
 push edx	; 29DEF
 push esi	; 29DF0
 mov ebx, dword [byte esp+0Ch]	; 29DF1
 push ebx	; 29DF5
-call sub_B5DB0	; 29DF6
+call PlotPixel	; 29DF6
 add esp, byte 0Ch	; 29DFB
 mov ecx, dword [boxshadecolor]	; 29DFE
 push ecx	; 29E04
@@ -683,7 +683,7 @@ mov dword [byte esp+0Ch], eax	; 29E0C
 push eax	; 29E10
 mov edx, dword [byte esp+0Ch]	; 29E11
 push edx	; 29E15
-call sub_B5DB0	; 29E16
+call PlotPixel	; 29E16
 add esp, byte 0Ch	; 29E1B
 mov ebx, dword [boxshadecolor]	; 29E1E
 push ebx	; 29E24
@@ -692,14 +692,14 @@ sub eax, byte 3	; 29E29
 mov dword [byte esp+010h], eax	; 29E2C
 push eax	; 29E30
 push edi	; 29E31
-call sub_B5DB0	; 29E32
+call PlotPixel	; 29E32
 add esp, byte 0Ch	; 29E37
 mov eax, dword [boxlitecolor]	; 29E3A
 push eax	; 29E3F
 mov edx, dword [byte esp+0Ch]	; 29E40
 push edx	; 29E44
 push edi	; 29E45
-call sub_B5DB0	; 29E46
+call PlotPixel	; 29E46
 add esp, byte 0Ch	; 29E4B
 mov ebx, dword [boxlitecolor]	; 29E4E
 push ebx	; 29E54
@@ -707,7 +707,7 @@ mov ecx, dword [byte esp+010h]	; 29E55
 push ecx	; 29E59
 mov edi, dword [byte esp+0Ch]	; 29E5A
 push edi	; 29E5E
-call sub_B5DB0	; 29E5F
+call PlotPixel	; 29E5F
 add esp, byte 0Ch	; 29E64
 mov eax, dword [boxlitecolor]	; 29E67
 push eax	; 29E6C
@@ -715,55 +715,55 @@ mov edx, dword [byte esp+04h]	; 29E6D
 push edx	; 29E71
 lea edi, [byte ebp-03h]	; 29E72
 push edi	; 29E75
-call sub_B5DB0	; 29E76
+call PlotPixel	; 29E76
 add esp, byte 0Ch	; 29E7B
 mov ebx, dword [boxlitecolor]	; 29E7E
 push ebx	; 29E84
 push esi	; 29E85
 sub ebp, byte 2	; 29E86
 push ebp	; 29E89
-call sub_B5DB0	; 29E8A
+call PlotPixel	; 29E8A
 add esp, byte 0Ch	; 29E8F
 mov ecx, dword [boxshadecolor]	; 29E92
 push ecx	; 29E98
 mov eax, dword [byte esp+04h]	; 29E99
 push eax	; 29E9D
 push ebp	; 29E9E
-call sub_B5DB0	; 29E9F
+call PlotPixel	; 29E9F
 add esp, byte 0Ch	; 29EA4
 mov edx, dword [boxshadecolor]	; 29EA7
 push edx	; 29EAD
 push esi	; 29EAE
 push edi	; 29EAF
-call sub_B5DB0	; 29EB0
+call PlotPixel	; 29EB0
 add esp, byte 0Ch	; 29EB5
 mov ebx, dword [boxshadecolor]	; 29EB8
 push ebx	; 29EBE
 mov ecx, dword [byte esp+0Ch]	; 29EBF
 push ecx	; 29EC3
 push edi	; 29EC4
-call sub_B5DB0	; 29EC5
+call PlotPixel	; 29EC5
 add esp, byte 0Ch	; 29ECA
 mov esi, dword [boxshadecolor]	; 29ECD
 push esi	; 29ED3
 mov eax, dword [byte esp+010h]	; 29ED4
 push eax	; 29ED8
 push ebp	; 29ED9
-call sub_B5DB0	; 29EDA
+call PlotPixel	; 29EDA
 add esp, byte 0Ch	; 29EDF
 mov edx, dword [boxlitecolor]	; 29EE2
 push edx	; 29EE8
 mov ebx, dword [byte esp+0Ch]	; 29EE9
 push ebx	; 29EED
 push ebp	; 29EEE
-call sub_B5DB0	; 29EEF
+call PlotPixel	; 29EEF
 add esp, byte 0Ch	; 29EF4
 mov ecx, dword [boxlitecolor]	; 29EF7
 push ecx	; 29EFD
 mov esi, dword [byte esp+010h]	; 29EFE
 push esi	; 29F02
 push edi	; 29F03
-call sub_B5DB0	; 29F04
+call PlotPixel	; 29F04
 add esp, byte 0Ch	; 29F09
 .x:
 add esp, byte 14h	; 29F0C

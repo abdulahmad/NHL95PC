@@ -3,7 +3,7 @@
 
 /* AskTeamPassword: up to 3 times ask "Enter password for <team name>" (team t of the 30-byte team
  entries ents: name, password at +0Bh; 10 characters) and compare it with the team's password (decrypted for the
- check with EncryptPassword and encrypted again); a wrong one shows the message unk_C7965 at the mouse. Returns
+ check with EncryptPassword and encrypted again); a wrong one shows the message msg_WrongPassword at the mouse. Returns
  0 when right, -1 when wrong three times or cancelled (Esc). */
 int AskTeamPassword(int t, char *ents)
 {
@@ -27,8 +27,8 @@ int AskTeamPassword(int t, char *ents)
         p = e + 0xB;
         EncryptPassword(p, t);
         if (strcmp(p, pw) != 0) {
-            sub_B2DCA(&btn, &mx, &my);
-            MessageBox(-1, -1, (char *)unk_C7965, 1, 0, 0, (int)&mx, (int)&my, -1);
+            MouseRead(&btn, &mx, &my);
+            MessageBox(-1, -1, (char *)msg_WrongPassword, 1, 0, 0, (int)&mx, (int)&my, -1);
             res = -1;
         }
         EncryptPassword(ents + t * 30 + 0xB, t);
@@ -40,7 +40,7 @@ int AskTeamPassword(int t, char *ents)
 
 /* AskMasterPassword: up to 3 times ask "<team name> enter master password" (team t of names, 30
  bytes each; 10 characters) and compare it with the league master password (masterpw, decrypted for the check
- with EncryptPassword(key, t) and encrypted again); a wrong one shows the message unk_C7965 at the mouse. Returns
+ with EncryptPassword(key, t) and encrypted again); a wrong one shows the message msg_WrongPassword at the mouse. Returns
  0 when right, -1 when wrong three times or cancelled (Esc). */
 int AskMasterPassword(int t, char *names, char *key)
 {
@@ -60,8 +60,8 @@ int AskMasterPassword(int t, char *names, char *key)
         if (TextInputDialog(prompt, pw, 10, 0x3C, 0, 0, 0, 0, 6) == 0x1B) return -1;
         EncryptPassword(key, t);
         if (strcmp((char *)masterpw, pw) != 0) {
-            sub_B2DCA(&btn, &mx, &my);
-            MessageBox(-1, -1, (char *)unk_C7965, 1, 0, 0, (int)&mx, (int)&my, -1);
+            MouseRead(&btn, &mx, &my);
+            MessageBox(-1, -1, (char *)msg_WrongPassword, 1, 0, 0, (int)&mx, (int)&my, -1);
             res = -1;
         }
         EncryptPassword(key, t);

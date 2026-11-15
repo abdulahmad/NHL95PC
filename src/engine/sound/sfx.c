@@ -2,14 +2,14 @@
 #include "nhl95.h"
 
 /* sfx: play sound effect id (remembered in lastsfx): while speech plays only 9Ch passes (and in a replay only
- with dword_CCC98); A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts
+ with oneminsaid); A0h/A1h not on sound devices 4/8; 7Dh raises crowdlevel by 500; AAh on device 4 starts
  sample dword_ED7A4; 90h also plays 91h (both on device 4). */
 void sfx(int id)
 {
     lastsfx = id;
     if (PaSpeechBusy()) {
         if (id != 0x9C) return;
-        if (gmode & 0x10 && !dword_CCC98) return;
+        if (gmode & 0x10 && !oneminsaid) return;
     }
     if (sounddev == 8 || sounddev == 4) {
         if (id == 0xA0 || id == 0xA1) return;

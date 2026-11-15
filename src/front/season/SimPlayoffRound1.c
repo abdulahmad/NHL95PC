@@ -64,13 +64,13 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     if (!err) {
         MakePath(s.path, dir, (char *)leaguedbnames[5], ext);
         seasondb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        seasondb_size = sub_92DE0(s.path);
+        seasondb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[1], ext);
         careerdb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        careerdb_size = sub_92DE0(s.path);
+        careerdb_size = GetFileSize(s.path);
         MakePath(s.path, dir, (char *)leaguedbnames[0], ext);
         keydb = (unsigned char *)sub_8E8A0(s.path, 0x20);
-        keydb_size = sub_92DE0(s.path);
+        keydb_size = GetFileSize(s.path);
     }
     if (!err && day > 0) {
         if (day <= 0x444) {
@@ -85,7 +85,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
     }
     if (!err && seasondb) {
         MakePath(s.path, dir, (char *)leaguedbnames[5], ext);
-        sub_932D0(s.path, seasondb, seasondb_size);
+        WriteFile(s.path, seasondb, seasondb_size);
     }
     if (seasondb) FreeMemBlock((int)seasondb);
     if (careerdb) FreeMemBlock((int)careerdb);

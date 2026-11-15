@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98801 progbits alloc exec nowrite align=1
-extern __ExpandDGROUP_, _nfree_, byte_D4D06, byte_D4D07, byte_F24C4, dword_D43E8
+extern __ExpandDGROUP_, _nfree_, _Extender, _ExtenderSubtype, byte_F24C4, dword_D43E8
 global _nexpand_, loc_98811, __HeapManager_expand_, loc_98850, loc_9885A, loc_98876, loc_98889, loc_988B8
 global loc_988C0, loc_988C3, loc_988CA, loc_988D7, loc_988E6, loc_9891A, loc_98955, loc_98960
 global loc_98967, loc_9899C, loc_989A4, loc_989A7, loc_989AE, loc_989BD, loc_989BF, loc_989C8
@@ -194,12 +194,12 @@ ret	; 989C7
 loc_989C8:
 cmp eax, byte 1	; 989C8
 je short loc_98A21	; 989CB
-cmp byte [byte_D4D06], 1	; 989CD
+cmp byte [_Extender], 1	; 989CD
 jne short loc_989DF	; 989D4
-cmp byte [byte_D4D07], 0	; 989D6
+cmp byte [_ExtenderSubtype], 0	; 989D6
 je short loc_989E8	; 989DD
 loc_989DF:
-cmp byte [byte_D4D06], 9	; 989DF
+cmp byte [_Extender], 9	; 989DF
 jne short loc_989EC	; 989E6
 loc_989E8:
 xor edx, edx	; 989E8

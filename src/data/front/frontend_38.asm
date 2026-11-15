@@ -2,25 +2,25 @@
 bits 32
 %include "hockey.inc"
 section s_CD304 progbits alloc noexec write align=1
-extern PenaltyList, unk_C1B49, unk_C1B4A, unk_C1B53, unk_C1B5C, unk_C1B6A, unk_C1B72, unk_C1B7B
-extern unk_C1B88, unk_C1B90, unk_C1B9D, unk_C1BA6, unk_C1BAF, unk_C1BC1, unk_C1BD6
+extern PenaltyList, unk_C1B49, str_Charging, str_Slashing, str_CrossChecking, str_Hooking, str_Tripping, str_Interference
+extern str_Holding, str_HighSticking, str_Boarding, str_Elbowing, str_AbuseOfOfficial, str_CheckingFromBehind, str_PenaltyShot2
 global penaltynames
 penaltynames:
 dd PenaltyList
 dd unk_C1B49
-dd unk_C1B4A
-dd unk_C1B53
+dd str_Charging
+dd str_Slashing
 dd PenaltyList
-dd unk_C1B5C
-dd unk_C1B6A
-dd unk_C1B72
-dd unk_C1B7B
-dd unk_C1B88
-dd unk_C1B90
-dd unk_C1B9D
-dd unk_C1BA6
-dd unk_C1BAF
-dd unk_C1BC1
-dd unk_C1B9D
-dd unk_C1BA6
-dd unk_C1BD6
+dd str_CrossChecking
+dd str_Hooking
+dd str_Tripping
+dd str_Interference
+dd str_Holding
+dd str_HighSticking
+dd str_Boarding
+dd str_Elbowing
+dd str_AbuseOfOfficial
+dd str_CheckingFromBehind
+dd str_Boarding
+dd str_Elbowing
+dd str_PenaltyShot2

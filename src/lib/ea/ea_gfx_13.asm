@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_932D0 progbits alloc exec nowrite align=1
 extern sub_93308
-global sub_932D0, sub_932EC
-sub_932D0:
+global WriteFile, sub_932EC
+WriteFile:
 push byte 1	; 932D0
 mov edx, dword [byte esp+010h]	; 932D2
 push edx	; 932D6

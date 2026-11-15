@@ -34,18 +34,18 @@ void IndexPhotoBank(int b)
 
 void ResetGameVars(void)
 {
-    byte_E9AC8 = 0xFF;
-    byte_E9AD3 = 0xFF;
-    dword_CC0AC = 0;
-    byte_E024F = 0;
-    *(unsigned char *)&word_E024E = 0;
-    byte_E024D[0] = 0;
-    *(unsigned char *)byte_E024C = 0;
+    curevent = 0xFF;
+    goalevent = 0xFF;
+    goalienotebits = 0;
+    milestonesaid_b3 = 0;
+    *(unsigned char *)&milestonesaid_b2 = 0;
+    milestonesaid_b1[0] = 0;
+    *(unsigned char *)milestonesaid = 0;
     ovltimer = -1;
-    word_C90D8 = -1;
+    penaltysc = -1;
     RefStep[0] = -1;
     Pencntdwn = -1;
-    word_CC0B0[0] = -1;
+    Pencntdwn2[0] = -1;
     threat = 0;
     passplayer = 0;
     passspeed = 0;
@@ -72,13 +72,13 @@ void ResetGameVars(void)
     lctimer[0] = 0;
     lcline[1] = 0;
     lcline[0] = 0;
-    word_CBC60[0] = 0;
+    lcsel_aw[0] = 0;
     lcsel[0] = 0;
     savedmousey = 0;
     savedmousex = 0;
     bannertimer = 0;
-    word_CBEC6 = 0;
-    word_CBEC2 = 0;
+    injurystop = 0;
+    refhitcount = 0;
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;
@@ -100,21 +100,21 @@ void ResetGameVars(void)
 
         i = 0;
         do {
-            p = (char *)word_DEE94 + i * 12;
+            p = (char *)rinkobjs + i * 12;
             *(short *)p = -1;
             *(p + 2) = randomd0(0x28) + 0x3C;
             i++;
         } while (i < 20);
     }
-    __STOSB(word_E9B2C, 0, 0x20);
+    __STOSB(rinkobjused, 0, 0x20);
     dword_E9A9E = 0;
-    word_E9AAE = 0;
+    penevteam = 0;
     dword_E9AB6 = 0;
-    word_E9AA6 = 0;
-    word_E9AA4 = 0;
+    NumCwdExciteLvl = 0;
+    MaxCwdExciteLvl = 0;
     word_E9AA2 = 0;
     word_E9AAA = 0;
-    dword_E009C = 0;
+    SumCwdExciteLvl = 0;
     word_E9A9C = -1;
     StartGame();
     curperiod = 1;

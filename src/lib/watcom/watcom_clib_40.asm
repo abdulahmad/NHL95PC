@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2AC8 progbits alloc exec nowrite align=1
-extern __fatal_runtime_error_, asc_C4ADC, dword_D5670, dword_D5674
+extern __fatal_runtime_error_, str_FloatingPointSupportNot, dword_D5670, dword_D5674
 global abs_, loc_A2ACE, sub_A2ACF, sub_A2ADC, unk_A2AEE, ultoa_, loc_A2B28, loc_A2B48
 global ltoa_, loc_A2B6E, toupper_, loc_A2B84, sub_A2B85
 abs_:
@@ -17,7 +17,7 @@ ret	; A2AD9
 db 00h,00h
 sub_A2ADC:
 push edx	; A2ADC
-mov eax, asc_C4ADC	; A2ADD
+mov eax, str_FloatingPointSupportNot	; A2ADD
 mov edx, 1	; A2AE2
 call __fatal_runtime_error_	; A2AE7
 pop edx	; A2AEC

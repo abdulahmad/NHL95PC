@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_AF6D3 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D00, dword_D4D09, dword_D5444
-extern dword_D5448, dword_D5674, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
-extern dword_D86B0, memset_, strcpy_, strlen_, word_D4D0D, word_D8694, word_D869A, word_D86A0
+extern __set_doserrno_, __set_errno_, _dosretax_, _nfree_, _nmalloc_, dword_D4D00, _Envptr, _environ
+extern ___env_mask, dword_D5674, dword_D8690, dword_D8696, dword_D869C, dword_D86A2, dword_D86A8, dword_D86AC
+extern dword_D86B0, memset_, strcpy_, strlen_, _Envptr_w4, word_D8694, word_D869A, word_D86A0
 extern word_D86A6, word_D86B4, word_D86B6
 global __setenvp_, loc_AF6FE, loc_AF703, loc_AF711, loc_AF716, loc_AF71F, loc_AF752, loc_AF761
 global loc_AF772, loc_AF797, loc_AF79E, stpcpy_, loc_AF7A8, loc_AF7B4, __cenvarg_, loc_AF7CD
@@ -21,13 +21,13 @@ push esi	; AF6D6
 push edi	; AF6D7
 push es	; AF6D8
 push fs	; AF6D9
-cmp dword [dword_D5444], byte 0	; AF6DB
+cmp dword [_environ], byte 0	; AF6DB
 jne near loc_AF79E	; AF6E2
-mov fs, word [word_D4D0D]	; AF6E8
+mov fs, word [_Envptr_w4]	; AF6E8
 xor ecx, ecx	; AF6EE
 xor dl, dl	; AF6F0
 mov eax, fs	; AF6F2
-mov edi, dword [dword_D4D09]	; AF6F4
+mov edi, dword [_Envptr]	; AF6F4
 mov es, eax	; AF6FA
 mov eax, edi	; AF6FC
 loc_AF6FE:
@@ -61,7 +61,7 @@ add eax, ecx	; AF738
 call _nmalloc_	; AF73A
 test eax, eax	; AF73F
 je short loc_AF797	; AF741
-mov dword [dword_D5444], eax	; AF743
+mov dword [_environ], eax	; AF743
 xor esi, esi	; AF748
 mov eax, fs	; AF74A
 xor ecx, ecx	; AF74C
@@ -70,7 +70,7 @@ mov eax, edi	; AF750
 loc_AF752:
 cmp byte [es:eax], 0	; AF752
 je short loc_AF772	; AF756
-mov edx, dword [dword_D5444]	; AF758
+mov edx, dword [_environ]	; AF758
 mov dword [ecx+edx], ebx	; AF75E
 loc_AF761:
 mov dl, byte [es:eax]	; AF761
@@ -83,12 +83,12 @@ add ecx, byte 4	; AF76C
 inc esi	; AF76F
 jmp short loc_AF752	; AF770
 loc_AF772:
-mov edx, dword [dword_D5444]	; AF772
+mov edx, dword [_environ]	; AF772
 mov dword [ecx+edx], 0	; AF778
 add ecx, byte 4	; AF77F
 add edx, ecx	; AF782
 mov ebx, esi	; AF784
-mov dword [dword_D5448], edx	; AF786
+mov dword [___env_mask], edx	; AF786
 mov eax, edx	; AF78C
 xor edx, edx	; AF78E
 call memset_	; AF790
@@ -127,7 +127,7 @@ mov edi, edx	; AF7BE
 mov dword [byte ebp-04h], ebx	; AF7C0
 test edx, edx	; AF7C3
 jne short loc_AF7CD	; AF7C5
-mov edi, dword [dword_D5444]	; AF7C7
+mov edi, dword [_environ]	; AF7C7
 loc_AF7CD:
 xor ebx, ebx	; AF7CD
 test edi, edi	; AF7CF

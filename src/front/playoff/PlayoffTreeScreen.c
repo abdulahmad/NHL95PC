@@ -50,58 +50,58 @@ void PlayoffTreeScreen(void)
     if (playofftree[0] == 0x1A) off_CF6A3 = 0;
     else off_CF6A3 = (int)DeskSetExit3b;
     sub_B4BA8();
-    if (dword_C65AC == 0) {
+    if (embscupbank == 0) {
         MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
-        statsbgshapes = sub_8E83C(path, 0);
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-        sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-        sub_913B4(statspalshape);
-        sub_B4BC4(0, 0x280, 0, 0x1E0);
+        statsbgshapes = LoadBank(path, 0);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+        SetClipWindow(0, 0x280, 0x13, 0x1E0);
+        DrawShape(statspalshape);
+        SetClipWindow(0, 0x280, 0, 0x1E0);
         FreeMemBlock(statsbgshapes);
     } else {
-        statspalshape = sub_B30B4(dword_C65AC, (char *)str_Bkgd2);
-        sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-        sub_913B4(statspalshape);
-        sub_B4BC4(0, 0x280, 0, 0x1E0);
+        statspalshape = FindShape(embscupbank, (char *)str_Bkgd2);
+        SetClipWindow(0, 0x280, 0x13, 0x1E0);
+        DrawShape(statspalshape);
+        SetClipWindow(0, 0x280, 0, 0x1E0);
     }
     if (dword_C6D26 == 1) {
         MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal2, 0);
-        statsbgshapes = sub_8E83C(path, 0);
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pal9);
+        statsbgshapes = LoadBank(path, 0);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Pal9);
         if (statspalvalid == 1) memcpy((void *)statspal, (void *)(statspalshape + 0x10), 0x300);
-        else sub_B4B88(0, 0x100, (unsigned char *)statspalshape + 0x10);
+        else VgaSetPalette(0, 0x100, (unsigned char *)statspalshape + 0x10);
         FreeMemBlock(statsbgshapes);
         dword_C6D26 = 0;
     }
     CountSeriesWins(playofftree, wins, 0);
     SetTextColors(0x40, 0x43);
     if (playofftree[treecolslots[0]] > 0x19) {
-        sub_8EA18(kf);
+        TextSetFont(kf);
         *(TreeStr34b *)buf = *(TreeStr34b *)str_PlayoffsHaveNotBeen2;
         PrintOutlinedText(0x140 - (fputchar(buf) >> 1), 0xF0, buf);
-        sub_8EA18(mf);
+        TextSetFont(mf);
         return;
     }
     MakePath(path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar8, 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Rst12);
-    sub_91370(statspalshape, 0, 0x1A);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Rst22);
-    sub_91370(statspalshape, 0xF, 0x192);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Rst12);
+    DrawArt(statspalshape, 0, 0x1A);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Rst22);
+    DrawArt(statspalshape, 0xF, 0x192);
     FreeMemBlock(statsbgshapes);
     MakePath(path, fileoncd[0x16E] == 1 ? (char *)cddriveptr : 0, (char *)str_Scuparrw2, 0);
-    statsbgshapes = sub_8E83C(path, 0);
+    statsbgshapes = LoadBank(path, 0);
     TextGridOpen();
-    sub_8E9E8(state);
-    sub_8EA18(mf);
+    TextSaveState(state);
+    TextSetFont(mf);
     MakeStatsTitle(buf, (char *)str_Standings);
     PrintCenteredText(0x16, buf);
-    sub_8EA18(kf);
+    TextSetFont(kf);
     *(TreeStr19b *)buf = *(TreeStr19b *)str_WesternConference2;
     PrintOutlinedText(0x140 - (fputchar(buf) >> 1), 0x2F, buf);
     *(TreeStr19b *)buf = *(TreeStr19b *)str_EasternConference2;
     PrintOutlinedText(0x140 - (fputchar(buf) >> 1), 0x1A7, buf);
-    sub_8EA18(mf);
+    TextSetFont(mf);
     for (i = 0; i < 8; i++) {
         if (i < 4) {
             x = i;
@@ -110,7 +110,7 @@ void PlayoffTreeScreen(void)
             x = 7 - i;
             slot = treecolslots[7 - (i * 2 - 8)];
         }
-        dword_C6DBA[playofftree[slot]] = i;
+        potreeseeds[playofftree[slot]] = i;
         if (i < 4) {
             x = i;
             slot = treecol_Er1[i * 2];
@@ -118,7 +118,7 @@ void PlayoffTreeScreen(void)
             x = 7 - i;
             slot = treecol_Er1[7 - (i * 2 - 8)];
         }
-        dword_C6DBA[playofftree[slot]] = i;
+        potreeseeds[playofftree[slot]] = i;
     }
     y = 0x48;
     for (i = 0; i < 8; i++) {
@@ -130,7 +130,7 @@ void PlayoffTreeScreen(void)
             slot = treecolslots[7 - (i * 2 - 8)];
         }
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
         x2 = ((Pair *)treecolx)[x].a + 0x6A;
@@ -146,8 +146,8 @@ void PlayoffTreeScreen(void)
     y += 0x3F;
     if (playofftree[treecol_Wr2[0]] < 0x1A && playofftree[treecol_Wr2[1]] < 0x1A && playofftree[treecol_Wr2[2]] < 0x1A
         && playofftree[treecol_Wr2[3]] < 0x1A) {
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Aup12);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Aup12);
+        DrawShape(statspalshape);
         for (i = 0; i < 4; i++) {
             if (i < 2) {
                 x = i + 4;
@@ -157,7 +157,7 @@ void PlayoffTreeScreen(void)
                 slot = treecol_Wr2[3 - (i * 2 - 4)];
             }
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
             x2 = ((Pair *)treecolx)[x].a + 0x6A;
@@ -171,11 +171,11 @@ void PlayoffTreeScreen(void)
         }
         y += 0x3D;
         if (playofftree[treecolslots[0x10]] < 0x1A && playofftree[treecolslots[0x11]] < 0x1A) {
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Aup22);
-            sub_913B4(statspalshape);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Aup22);
+            DrawShape(statspalshape);
             slot = treecolslots[0x10];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x48, y - 1, buf);
             if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -187,7 +187,7 @@ void PlayoffTreeScreen(void)
             y += 0x10;
             slot = treecolslots[0x11];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x48, y - 1, buf);
             if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -202,11 +202,11 @@ void PlayoffTreeScreen(void)
         y += 0x4D;
     }
     if (playofftree[treecolslots[0x18]] < 0x1A) {
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Aup32);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Aup32);
+        DrawShape(statspalshape);
         midl = 1;
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Midl2);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Midl2);
+        DrawShape(statspalshape);
         SetTextColors(0x40, 0x43);
         *(TreeStr3b *)buf = *(TreeStr3b *)str_TwoSpaces;
         slot = treecolslots[0x18];
@@ -222,11 +222,11 @@ void PlayoffTreeScreen(void)
         PrintShadowText(0x16C, y - 4, buf);
     }
     if (playofftree[treecolslots[0x28]] < 0x1A) {
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Adn32);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Adn32);
+        DrawShape(statspalshape);
         if (midl == 0) {
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Midl2);
-            sub_913B4(statspalshape);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Midl2);
+            DrawShape(statspalshape);
         }
         y += 0x10;
         SetTextColors(0x40, 0x43);
@@ -247,7 +247,7 @@ void PlayoffTreeScreen(void)
     if (playofftree[treecolslots[0x30]] < 0x1A && playofftree[treecolslots[0x31]] < 0x1A) {
         slot = treecolslots[0x30];
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(0x1C6, y - 1, buf);
         if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -259,7 +259,7 @@ void PlayoffTreeScreen(void)
         y += 0x10;
         slot = treecolslots[0x31];
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(0x1C6, y - 1, buf);
         if (playofftree[treecolslots[0x18]] == playofftree[slot] || playofftree[treecolslots[0x28]] == playofftree[slot])
@@ -269,8 +269,8 @@ void PlayoffTreeScreen(void)
         sprintf(buf, (char *)str_D3, wins[slot]);
         PrintShadowText(0x230, y - 1, buf);
         y += 0x3D;
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Adn22);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Adn22);
+        DrawShape(statspalshape);
     } else {
         y += 0x4D;
     }
@@ -282,7 +282,7 @@ void PlayoffTreeScreen(void)
             if (i < 2) slot = treecol_Er2[i * 2];
             else slot = treecol_Er2[3 - (i * 2 - 4)];
             SetTextColors(0x40, 0x43);
-            sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+            sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
             strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
             PrintShadowText(0x280 - (((Pair *)treecolx)[5 - x].a + 0x64), y, buf);
             x2 = 0x286 - ((Pair *)treecolx)[5 - x].a;
@@ -295,8 +295,8 @@ void PlayoffTreeScreen(void)
             if (i == 1) y += 0x10;
         }
         y += 0x3D;
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Adn12);
-        sub_913B4(statspalshape);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Adn12);
+        DrawShape(statspalshape);
     } else {
         y += 0x4D;
     }
@@ -309,7 +309,7 @@ void PlayoffTreeScreen(void)
             slot = treecol_Er1[7 - (i * 2 - 8)];
         }
         SetTextColors(0x40, 0x43);
-        sprintf(buf, (char *)str_C3, dword_C6DBA[playofftree[slot]] + 0x91);
+        sprintf(buf, (char *)str_C3, potreeseeds[playofftree[slot]] + 0x91);
         strcat(buf, (char *)treeteamnames + playofftree[slot] * 21);
         PrintShadowText(((Pair *)treecolx)[x].a, y, buf);
         x2 = ((Pair *)treecolx)[x].a + 0x6A;
@@ -324,5 +324,5 @@ void PlayoffTreeScreen(void)
     }
     TextGridOff();
     FreeMemBlock(statsbgshapes);
-    sub_8EA00(state);
+    TextRestoreState(state);
 }

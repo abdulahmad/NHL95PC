@@ -42,38 +42,38 @@ void RunEditRosters(void)
     dlgtextbg = c42;
     pal = 0;
     editrosters_exit = (int)pal;
-    dword_D0B12 = (int)pal;
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp7, 0x300, 0x20);
+    rostereditmode = (int)pal;
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp7, 0x300, 0x20);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
     sub_B4BA8();
     dword_EA2B0 = mainfont;
-    sub_8EA18(dword_EA2B0);
-    sub_8E9E8(s.state);
+    TextSetFont(dword_EA2B0);
+    TextSaveState(s.state);
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
-    fullscrbmp = sub_B4F8C(0x280, 0x1E0, 0x20);
+    fullscrbmp = CreateBitmap(0x280, 0x1E0, 0x20);
     sz = ((*(int *)(pointerspr + 2) >> 16) + 1) * ((*(int *)(pointerspr + 4) >> 16) + 1) + 0x11;
-    editptrspr = sub_8CCA8((char *)str_Pointer11, sz, 0x20);
+    editptrspr = AllocMemBlock((char *)str_Pointer11, sz, 0x20);
     *(Hdr17 *)editptrspr = *(Hdr17 *)pointerspr;
     ((short *)editptrspr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)editptrspr)[3] = ((short *)pointerspr)[3] + 1;
     LoadLeagueDbsMem((char *)str_extDB);
-    EditRosters(unk_D0450, 6, 0x40, 0x41, 0x42);
+    EditRosters(editrostersmenubar, 6, 0x40, 0x41, 0x42);
     FreeLeagueDbsMem();
     FreeMemBlock(editptrspr);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x32);
-    sub_8FFB0(0, 0x100, pal);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
-    sub_8EA00(s.state);
+    TextRestoreState(s.state);
     FreeMemBlock(fullscrbmp);
     boxfillcolor = s.fill;
     boxlitecolor = s.lite;
@@ -81,18 +81,18 @@ void RunEditRosters(void)
     dlgtextfg = s.fg;
     dlgtextbg = s.bg;
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
 }
 
 /* DrawEditRosters (6D2F8, PC only; create-player segment 052, the same source file: it ends in
-   RunEditRosters_ret5): redraw the Edit Rosters screen on the full-screen bitmap: the menu bar (unk_D0450), the
+   RunEditRosters_ret5): redraw the Edit Rosters screen on the full-screen bitmap: the menu bar (editrostersmenubar), the
    prez2 background (palette into savepal, the "ea" art drawn full screen below line 13h), both roster panels
-   (DrawRosterPanel) and, in ratings mode (dword_D0B12 == 2), the ratings box: a dialog frame with bevelled edges,
-   "Ratings " + the first roster team's name centred, the nine rating names (off_D0AC2) with their values from the
-   team record (+2DCh, picked by byte_D0AE6), and the two buttons (unk_D0B80). Then the bitmap is shown
+   (DrawRosterPanel) and, in ratings mode (rostereditmode == 2), the ratings box: a dialog frame with bevelled edges,
+   "Ratings " + the first roster team's name centred, the nine rating names (teamratingnames) with their values from the
+   team record (+2DCh, picked by teamratingidx), and the two buttons (btn_EditRosters). Then the bitmap is shown
    (sub_9121C). No arguments, no result. */
 void DrawEditRosters(void)
 {
@@ -105,26 +105,26 @@ void DrawEditRosters(void)
 
     SetDrawBitmap(fullscrbmp);
     SetTextColors(0x40, 0x43);
-    DrawMenuBar(unk_D0450, 5, 0x40, 0x41, 0x42);
+    DrawMenuBar(editrostersmenubar, 5, 0x40, 0x41, 0x42);
     MakePath(buf, fileoncd[0x1C3] == 1 ? (char *)cddriveptr : 0, (char *)str_Prez2, 0);
-    bank = sub_8E83C(buf, 0);
-    memcpy(savepal, (char *)sub_B30B4(bank, (char *)str_Pal) + 0x10, 0x300);
-    shape = sub_B30B4(bank, (char *)str_ea);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(shape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    bank = LoadBank(buf, 0);
+    memcpy(savepal, (char *)FindShape(bank, (char *)str_Pal) + 0x10, 0x300);
+    shape = FindShape(bank, (char *)str_ea);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(shape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(bank);
     DrawRosterPanel(0);
     DrawRosterPanel(1);
-    if (dword_D0B12 == 2) {
+    if (rostereditmode == 2) {
         DrawDlgFrame(0xB4, 0x8C, 0x1CC, 0x154, 1);
-        sub_90D20(0xB4, 0x8C, 0x119, 0xC9, 0x41);
+        FillRect(0xB4, 0x8C, 0x119, 0xC9, 0x41);
         sub_B4FAC(0xB4, 0x8C, 0x1CB, 0x8C, 0x40);
         sub_B4FAC(0xB4, 0x8C, 0xB4, 0x153, 0x40);
         sub_B4FAC(0x1CC, 0x8D, 0x1CC, 0x154, 0x42);
         sub_B4FAC(0xB5, 0x154, 0x1CC, 0x154, 0x42);
-        sub_B5DB0(0xB4, 0x154, 0x41);
-        sub_B5DB0(0x1CC, 0x8C, 0x41);
+        PlotPixel(0xB4, 0x154, 0x41);
+        PlotPixel(0x1CC, 0x8C, 0x41);
         strcpy(buf, (char *)str_Ratings);
         strcat(buf, (char *)&str_space);
         strcat(buf, (char *)rosterteamrec[0] + 0x1A);
@@ -133,13 +133,13 @@ void DrawEditRosters(void)
         y = 0xB0;
         i = 0;
         do {
-            PrintShadowText(0xD2, y, (char *)off_D0AC2[i]);
-            sprintf(buf, (char *)str_fmt2d, vals[byte_D0AE6[i]]);
+            PrintShadowText(0xD2, y, (char *)teamratingnames[i]);
+            sprintf(buf, (char *)str_fmt2d, vals[teamratingidx[i]]);
             PrintShadowText(0x1A9, y, buf);
             i++;
             y += 0xD;
         } while (i < 9);
-        DrawButtons((Button *)unk_D0B80, 2);
+        DrawButtons((Button *)btn_EditRosters, 2);
     }
     sub_B4BA8();
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
@@ -229,7 +229,7 @@ typedef struct TeamRec2E8 { int d[0xBA]; } TeamRec2E8;  /* a team record (hmteam
 /* EditTeamLines (6DF06, PC only; segment 052, ends in RunEditRosters_ret5): the "Edit Team Lines" item of a
    roster menu (side 0 when *which is 3). The side's game team (HomeTeam / VisTeam) becomes the roster's team and
    its game team record is replaced by the roster's record (rosterteamrec) while the line editor (DbLineEditor, on
-   the record's lines at +0BCh, unk_D05F4, 3) runs; the free-agent lists are freed first (falistsel, falist). Then
+   the record's lines at +0BCh, dblinesmenubar, 3) runs; the free-agent lists are freed first (falistsel, falist). Then
    the screen is cleared, the record copy goes back (into the home record, hmteamrec, for either side), the team
    is restored, a roster that shows the free agents on the other side is reloaded (LoadRosterList), and the editor
    is redrawn (DrawEditRosters) and faded in (savepal). which: the menu callback argument. No result. */
@@ -257,9 +257,9 @@ void EditTeamLines(int *which)
     }
     tmp = ((TeamRec2E8 *)hmteamrec)[side];
     ((TeamRec2E8 *)hmteamrec)[side] = *(TeamRec2E8 *)rosterteamrec[side];
-    DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)unk_D05F4, 3);
+    DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)dblinesmenubar, 3);
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     *(TeamRec2E8 *)hmteamrec = tmp;
     if (!side) HomeTeam = old;
     else VisTeam = old;

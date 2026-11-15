@@ -25,7 +25,7 @@ int LocateTeamDbCopy(unsigned char *tab, int i, char *file, char *hddir, char *f
         GetLeagueId(flopdir, id);
         if (r != 4 && *id < *(unsigned *)(e + 0x1A)) {
             *(char **)(oldcopymsg + 8) = file;
-            sub_B2DCA(&btn, &mx, &my);
+            MouseRead(&btn, &mx, &my);
             MessageBox(-1, -1, (char *)oldcopymsg, 3, 0, 0, (int)&mx, (int)&my, -1);
             r = -1;
         }

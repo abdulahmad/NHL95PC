@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_AA210 progbits alloc exec nowrite align=1
-extern asc_C4B40, asc_C4B4C, byte_D7A2C, byte_D7A3C, byte_D7AEC, byte_D877A, byte_D87D8, byte_D89E0
+extern str_GF1PATCH110, str_110, byte_D7A2C, byte_D7A3C, byte_D7AEC, byte_D877A, byte_D87D8, byte_D89E0
 extern byte_F5978, byte_F5979, byte_F597A, byte_F59F8, byte_F59F9, byte_F5A00, byte_F5A01, byte_F5A04
 extern byte_F5C0B, byte_F79A4, byte_F79A5, byte_F79A6, byte_F79A7, byte_F79A8, dword_D7A28, dword_D7ABC
 extern dword_D87DC, dword_D87E0, dword_D89D8, dword_F59FC, dword_F6016, dword_F6116, inp_, inpw_
@@ -101,7 +101,7 @@ pop ebx	; AA271
 pop ebp	; AA272
 ret	; AA273
 loc_AA274:
-mov edx, asc_C4B40	; AA274
+mov edx, str_GF1PATCH110	; AA274
 mov ebx, 8	; AA279
 mov eax, esi	; AA27E
 call strncmp_	; AA280
@@ -117,7 +117,7 @@ pop ebx	; AA29A
 pop ebp	; AA29B
 ret	; AA29C
 loc_AA29D:
-mov edx, asc_C4B4C	; AA29D
+mov edx, str_110	; AA29D
 lea eax, [byte esi+08h]	; AA2A2
 call strcmp_	; AA2A5
 test eax, eax	; AA2AA

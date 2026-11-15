@@ -1,7 +1,7 @@
 /* Create player: roster list click. */
 #include "nhl95.h"
 
-#define INVERT ((void (__cdecl *)(int x, int y, int w, int h, int col))sub_90F38)
+#define INVERT ((void (__cdecl *)(int x, int y, int w, int h, int col))XorBar)
 
 /* RosterPanelClick: x in the left list (23h..113h) is side 0, x in the right list (15Eh..24Eh)
  is side 1. A y in the 28 rows under 35h, each byte_D42C3 tall, toggles that row. A free-agent
@@ -27,11 +27,11 @@ void RosterPanelClick(int x, int y)
         row = (y - 0x35) / h;
         rowy = row * h + 0x35;
         if (rosterisfa[side] == 1) {
-            if (dword_EBCA4 + row < facount) {
+            if (falisttop + row < facount) {
                 unsigned char *fa;
 
                 INVERT(side ? 0x15E : 0x23, rowy, 0xF0, h, 0x80);
-                row += dword_EBCA4;
+                row += falisttop;
                 fa = (unsigned char *)falistsel;
                 fa[row] = ~fa[row];
             }

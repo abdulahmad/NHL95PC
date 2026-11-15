@@ -32,7 +32,7 @@ int j___close(int fh);  /* CRT close thunk */
    player of a team (team byte under 1Ah) with games is read from the key and player databases and kept among the
    20 best by the category's comparator (leadersortfns, an index list sorted with qsort). Then the stats
    background and bar, the title (MakeStatsTitle with leadertitles[cat]) and a row per leader: rank, number,
-   name, team and the category's columns (headers off_C6C40, five per category), or "stats unavailable". cat: the
+   name, team and the category's columns (headers leadercolhdrs, five per category), or "stats unavailable". cat: the
    category. Result 0. */
 int LeadersScreen(int cat)
 {
@@ -60,10 +60,10 @@ int LeadersScreen(int cat)
     int kf;
 
     n = 0;
-    statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys, 0x444, 0x20);
-    if (cat < 8) statsskaterbuf = (unsigned char *)sub_8CCA8((char *)str_Pstat, 0x3DB, 0x20);
-    else statsgoaliebuf = (unsigned char *)sub_8CCA8((char *)str_Gstat, 0x46E, 0x20);
-    if (cat == 7) statssortkeys = (int *)sub_8CCA8((char *)str_Addsort2, 0x54, 0x20);
+    statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_Keys, 0x444, 0x20);
+    if (cat < 8) statsskaterbuf = (unsigned char *)AllocMemBlock((char *)str_Pstat, 0x3DB, 0x20);
+    else statsgoaliebuf = (unsigned char *)AllocMemBlock((char *)str_Gstat, 0x46E, 0x20);
+    if (cat == 7) statssortkeys = (int *)AllocMemBlock((char *)str_Addsort2, 0x54, 0x20);
     if (cat == 8 || cat == 10 || cat == 5 || cat == 7) {
         MakePath(path, (char *)&statsleague, (char *)statsteamdbs[statsfromleague], 0);
         fh = open(path, 0x200);
@@ -142,28 +142,28 @@ int LeadersScreen(int cat)
     kf = kaufmfont;
     sub_B4BA8();
     MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     MakePath(path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar7, 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst26);
-    sub_91370(statspalshape, 0, 0x1C);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pst26);
+    DrawArt(statspalshape, 0, 0x1C);
     FreeMemBlock(statsbgshapes);
-    sub_8E9E8(txt);
-    sub_8EA18(kf);
+    TextSaveState(txt);
+    TextSetFont(kf);
     TextGridOpen();
     SetTextColors(0x40, 0x43);
     MakeStatsTitle(title, (char *)leadertitles[cat]);
     PrintOutlinedText(300 - (fputchar(title) >> 1), 0x31, title);
-    sub_8EA18(mf);
+    TextSetFont(mf);
     if (n == 0) {
-        sub_8EA18(kf);
+        TextSetFont(kf);
         PrintCenteredText(0xEB, (char *)str_StatsUnavailable2);
-        sub_8EA18(mf);
+        TextSetFont(mf);
     } else {
         y = 0x5C;
         PrintShadowText(0xA, y, (char *)str_POS);
@@ -171,11 +171,11 @@ int LeadersScreen(int cat)
         PrintShadowText(0x50, y, (char *)str_PLAYER2);
         PrintShadowText(0xFA, y, (char *)str_TEAM);
         PrintShadowText(0x172, y, (char *)str_GP6);
-        PrintShadowText(0x19A, y, ((char *(*)[5])off_C6C40)[cat][0]);
-        PrintShadowText(0x1CC, y, ((char *(*)[5])off_C6C40)[cat][1]);
-        PrintShadowText(0x1F4, y, ((char *(*)[5])off_C6C40)[cat][2]);
-        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, ((char *(*)[5])off_C6C40)[cat][3]);
-        PrintShadowText(0x24E, y, ((char *(*)[5])off_C6C40)[cat][4]);
+        PrintShadowText(0x19A, y, ((char *(*)[5])leadercolhdrs)[cat][0]);
+        PrintShadowText(0x1CC, y, ((char *(*)[5])leadercolhdrs)[cat][1]);
+        PrintShadowText(0x1F4, y, ((char *(*)[5])leadercolhdrs)[cat][2]);
+        if (cat != 9 || statsplayoffs != 1) PrintShadowText(0x21C, y, ((char *(*)[5])leadercolhdrs)[cat][3]);
+        PrintShadowText(0x24E, y, ((char *(*)[5])leadercolhdrs)[cat][4]);
         y += 0x10;
         for (i = 0; i < n; i++) {
             j = order[i];
@@ -234,7 +234,7 @@ int LeadersScreen(int cat)
         }
     }
     TextGridOff();
-    sub_8EA00(txt);
+    TextRestoreState(txt);
     if (cat == 7) FreeMemBlock((int)statssortkeys);
     if (cat < 8) FreeMemBlock((int)statsskaterbuf);
     else FreeMemBlock((int)statsgoaliebuf);

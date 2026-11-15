@@ -4,6 +4,6 @@
 /* WaitKeyRelease: wait until key is released (polling the keyboard), then flush (sub_B3A24). */
 void WaitKeyRelease(int key)
 {
-    while (sub_B2CBE(key)) PollKey();
+    while (KeyDown(key)) PollKey();
     sub_B3A24();
 }

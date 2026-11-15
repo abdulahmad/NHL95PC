@@ -66,26 +66,26 @@ int CheckGameRosterComplete(unsigned char team, int x, int y)
             char *pl;
 
             if (skaters < 0x12) {
-                if (0x12 - skaters == 1) pl = (char *)unk_C3283;
+                if (0x12 - skaters == 1) pl = (char *)str_dot3;
                 else pl = (char *)str_S7;
                 sprintf((char *)buf + 0x1C, (char *)fmt, buf + 0x78, 0x12 - skaters, buf + 0x70, pl);
                 *(int *)(buf + 0x54 + lines * 4) = (int)(buf + 0x1C);
                 lines++;
             } else if (skaters > 0x12) {
-                if (skaters - 0x12 == 1) pl = (char *)unk_C3283;
+                if (skaters - 0x12 == 1) pl = (char *)str_dot3;
                 else pl = (char *)str_S7;
                 sprintf((char *)buf + 0x1C, (char *)fmt, buf + 0x60, skaters - 0x12, buf + 0x70, pl);
                 *(int *)(buf + 0x54 + lines * 4) = (int)(buf + 0x1C);
                 lines++;
             }
             if (goals < 2) {
-                if (2 - goals == 1) pl = (char *)unk_C3283;
+                if (2 - goals == 1) pl = (char *)str_dot3;
                 else pl = (char *)str_S7;
                 sprintf((char *)buf, (char *)fmt, buf + 0x78, 2 - goals, buf + 0x68, pl);
                 *(int *)(buf + 0x54 + lines * 4) = (int)buf;
                 lines++;
             } else if (goals > 2) {
-                if (goals - 2 == 1) pl = (char *)unk_C3283;
+                if (goals - 2 == 1) pl = (char *)str_dot3;
                 else pl = (char *)str_S7;
                 sprintf((char *)buf, (char *)fmt, buf + 0x60, goals - 2, buf + 0x68, pl);
                 *(int *)(buf + 0x54 + lines * 4) = (int)buf;

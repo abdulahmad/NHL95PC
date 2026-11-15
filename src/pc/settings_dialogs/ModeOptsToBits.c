@@ -12,11 +12,11 @@ void ModeOptsToBits(void)
         | ((sounddev & 0x10) ? 0 : gameopts.sfx << 7)
         | ((sounddev & 0x22) ? gameopts.speech << 8 : 0);
     DrawModeSetChecks();
-    sub_8E9C0(0xF8, 0xFF);
+    TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {
-        sub_91964((char *)str_Music2, 0x60, 0xAA);
-        sub_91964((char *)str_Sound2, 0x60, 0xC0);
+        PrintString((char *)str_Music2, 0x60, 0xAA);
+        PrintString((char *)str_Sound2, 0x60, 0xC0);
     }
-    if (musicon == 0) sub_91964((char *)str_DigitizedSpeech2, 0x60, 0xD6);
+    if (musicon == 0) PrintString((char *)str_DigitizedSpeech2, 0x60, 0xD6);
     sub_B4BA8();
 }

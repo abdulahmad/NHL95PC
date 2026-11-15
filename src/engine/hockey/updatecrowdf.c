@@ -2,8 +2,8 @@
 #include "nhl95.h"
 
 /* updatecrowdf: once a second (from periodicevents): crowd excitement bookkeeping. The PC version
- differs from (which steps the crowd animation): word_E9AA4 keeps the peak CwdExciteLvl, dword_E009C
- the sum and word_E9AA6 the count (an average for the stats), then CwdExciteLvl decays by 1 (not below 0).
+ differs from (which steps the crowd animation): MaxCwdExciteLvl keeps the peak CwdExciteLvl, SumCwdExciteLvl
+ the sum and NumCwdExciteLvl the count (an average for the stats), then CwdExciteLvl decays by 1 (not below 0).
  While the clock is stopped (gmode gmclock) and the crowd is loud (crowdlevel > 258h), a random crowd
  sound: 1 in max((3E8h - crowdlevel) 4, 25) for sfx A6h, the same for sfx 96h. */
 void updatecrowdf(void)
@@ -11,9 +11,9 @@ void updatecrowdf(void)
     int t;
     int n;
 
-    if (CwdExciteLvl > word_E9AA4) word_E9AA4 = CwdExciteLvl;  /* peak */
-    dword_E009C += CwdExciteLvl;                /* sum */
-    word_E9AA6++;                               /* count */
+    if (CwdExciteLvl > MaxCwdExciteLvl) MaxCwdExciteLvl = CwdExciteLvl;  /* peak */
+    SumCwdExciteLvl += CwdExciteLvl;                /* sum */
+    NumCwdExciteLvl++;                               /* count */
     if (--CwdExciteLvl < 0) CwdExciteLvl = 0;
     if ((gmode & gmclock) && crowdlevel > 0x258) {
         t = (1000 - crowdlevel) / 4;

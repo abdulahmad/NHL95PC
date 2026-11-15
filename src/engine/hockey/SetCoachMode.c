@@ -16,40 +16,40 @@ short SetCoachMode(int away)
     d = hmscore[0] - awscore;
     if (away == 0) {
         di = d;
-        f = byte_DF6E8 & 0xFE;
+        f = hmtmcoachflags & 0xFE;
         if (di < -1) {
-            byte_DF6E8 = f;
-            byte_DF6E9 = 5;
+            hmtmcoachflags = f;
+            hmtmcoachmode = 5;
             return d;
         }
         if (d > 3) {
-            dword_DF6EA = 0xD9A;
-            byte_DF6E8 = f;
-            byte_DF6E9 = 4;
-            byte_DF6E6 = 3;
-            byte_DF6E7 = 2;
+            hmtmcoachenergy = 0xD9A;
+            hmtmcoachflags = f;
+            hmtmcoachmode = 4;
+            hmtmcoach_d2 = 3;
+            hmtmcoach_d3 = 2;
             return d;
         }
-        dword_DF6EA = 0xCCC;
-        byte_DF6E9 = 0;
-        byte_DF6E8 = f;
+        hmtmcoachenergy = 0xCCC;
+        hmtmcoachmode = 0;
+        hmtmcoachflags = f;
         return d;
     }
-    f = byte_DF7E8 | 1;
+    f = awtmcoachflags | 1;
     if (d > 1) {
-        byte_DF7E8 = f;
-        byte_DF7E9 = 8;
+        awtmcoachflags = f;
+        awtmcoachmode = 8;
         return d;
     }
     dw = d;
     if (dw < -3) {
-        dword_DF7EA = 0xD9A;
-        byte_DF7E6 = 3;
-        byte_DF7E7 = 2;
+        awtmcoachenergy = 0xD9A;
+        awtmcoach_d2 = 3;
+        awtmcoach_d3 = 2;
     } else {
-        dword_DF7EA = 0xCCC;
+        awtmcoachenergy = 0xCCC;
     }
-    byte_DF7E8 = f;
-    byte_DF7E9 = 1;
+    awtmcoachflags = f;
+    awtmcoachmode = 1;
     return dw;
 }

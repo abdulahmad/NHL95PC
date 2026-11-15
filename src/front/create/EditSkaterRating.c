@@ -11,11 +11,11 @@ typedef struct { char c[0x14]; } Msg20;
    and computes every product in v's register (ebx). Pushing each product through the dead v
    (`v = (*p + 5) * 5`, as `*field -= (v = ...) - s.old`) gives 30 / 28, but that is dead-variable reuse
    (ESCALATE, not kept). Also left: the min pointer is loaded into eax (EXE edx, after clearing eax), which lets
-   the &byte_D0F94 / &byte_D0FE0 constant stay in edx for p. See docs/UNSURE.md. */
+   the &newskatershoots / &newgoalieglove constant stay in edx for p. See docs/UNSURE.md. */
 /* EditSkaterRating (6FC60, PC only): a click at *x / *y on the create-player screen's skater ratings (15 rows of
    0Dh pixels from y 12Ah, rows 8-14 in a second column 136h to the right; the value cell spans C8h-E4h). Row 0
    (shoots) asks left or right; another row asks for a new value (shown as (r + 5) * 5) between its minimum
-   and maximum (unk_D0FA8 / unk_D0FBC, the range with its name from off_D0880). Lowering a rating gives the
+   and maximum (skaterratingmin / skaterratingmax, the range with its name from newskaterratingnames). Lowering a rating gives the
    points back to *field, raising one takes them from it (or says there are not enough units); rows 3 and 0Dh
    are free. Result: 1 when a row was hit, else 0. */
 int EditSkaterRating(int *x, int *y, int *field)
@@ -47,13 +47,13 @@ int EditSkaterRating(int *x, int *y, int *field)
         }
         if (s.colx + 0xC8 <= *x && s.colx + 0xE4 > *x && *y >= s.rowy && s.rowy + 0xD > *y) {
             s.done = 1;
-            s.base = &byte_D0F94;
+            s.base = &newskatershoots;
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
-            maxp = unk_D0FBC + i;
-            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FA8 + i) + 5) * 5, off_D0880[i], (*maxp + 5) * 5);
+            maxp = skaterratingmax + i;
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = skaterratingmin + i) + 5) * 5, newskaterratingnames[i], (*maxp + 5) * 5);
             msglines[1] = (int)s.range;
-            p = &byte_D0F94 + i;
+            p = &newskatershoots + i;
             if (i == 0) {
                 AskLeftRight(p, (char *)str_ShootsLeftOrRight);
             } else {
@@ -89,8 +89,8 @@ int EditSkaterRating(int *x, int *y, int *field)
 }
 
 /* EditGoalieRating (6FF69, PC only; ends in EditSkaterRating_tail): EditSkaterRating for the create-player
-   screen's goalie ratings: rows 6-14 in the second column (36h higher), the ranges in unk_D0FF0 / unk_D1000 with
-   their names in off_D09DB, the values in byte_D0FE0; row 0 (glove hand) asks left or right; rows 0 and 8 are
+   screen's goalie ratings: rows 6-14 in the second column (36h higher), the ranges in goalieratingmin / goalieratingmax with
+   their names in newgoalieratingnames, the values in newgoalieglove; row 0 (glove hand) asks left or right; rows 0 and 8 are
    free. Result: 1 when a row was hit, else 0. */
 int EditGoalieRating(int *x, int *y, int *field)
 {
@@ -122,13 +122,13 @@ int EditGoalieRating(int *x, int *y, int *field)
         }
         if (s.colx + 0xC8 <= *x && s.colx + 0xE4 > *x && *y >= s.rowy && s.rowy + 0xD > *y) {
             s.done = 1;
-            s.base = &byte_D0FE0;
+            s.base = &newgoalieglove;
             *(Msg20 *)s.msg = *(Msg20 *)str_EnterANewRating;
             msglines[0] = (int)s.msg;
-            maxp = unk_D1000 + i;
-            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = unk_D0FF0 + i) + 5) * 5, off_D09DB[i], (*maxp + 5) * 5);
+            maxp = goalieratingmax + i;
+            sprintf(s.range, (char *)str_RatingRange, (*(s.minp = goalieratingmin + i) + 5) * 5, newgoalieratingnames[i], (*maxp + 5) * 5);
             msglines[1] = (int)s.range;
-            p = &byte_D0FE0 + i;
+            p = &newgoalieglove + i;
             if (i == 0) {
                 AskLeftRight(p, (char *)str_GloveHandLeftOr);
             } else {

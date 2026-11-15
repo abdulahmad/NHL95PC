@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_981AD progbits alloc exec nowrite align=1
-extern asc_C47E8, asc_C47FC, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
-extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
-extern sub_90267, sub_90D20, sub_910E0, sub_9132C, sub_91400, sub_93000, sub_9C5A8, sub_9C5B0
-extern sub_A1800, sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, sub_B4F8C
+extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
+extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
+extern sub_90267, FillRect, DrawArtOpaque, sub_9132C, GrabBlock, sub_93000, sub_9C5A8, sub_9C5B0
+extern sub_A1800, sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, CreateBitmap
 extern sub_B6F84, unk_D45D8
 global sub_981AD, sub_981B0, sub_981D4, sub_981F8, loc_983B1, loc_983BB, loc_983DB, loc_983F1
 global sub_984A8, loc_984CF, sub_984D0, sub_9862C, sub_9864C, sub_98664, sub_9867E
@@ -26,7 +26,7 @@ push ebp	; 981BF
 push edi	; 981C0
 mov edx, dword [byte esi+02Ch]	; 981C1
 push edx	; 981C4
-call sub_91400	; 981C5
+call GrabBlock	; 981C5
 add esp, byte 0Ch	; 981CA
 pop ebp	; 981CD
 pop edi	; 981CE
@@ -47,7 +47,7 @@ push ebp	; 981E3
 push edi	; 981E4
 mov edx, dword [byte esi+02Ch]	; 981E5
 push edx	; 981E8
-call sub_910E0	; 981E9
+call DrawArtOpaque	; 981E9
 add esp, byte 0Ch	; 981EE
 pop ebp	; 981F1
 pop edi	; 981F2
@@ -79,7 +79,7 @@ mov ebx, dword [dword esp+0D4h]	; 98251
 push ebx	; 98258
 mov ecx, dword [dword esp+0B8h]	; 98259
 push ecx	; 98260
-call sub_B4F8C	; 98261
+call CreateBitmap	; 98261
 mov esi, eax	; 98266
 add esp, byte 0Ch	; 98268
 mov dword [dword esp+0ACh], eax	; 9826B
@@ -89,10 +89,10 @@ call sub_B3A88	; 98275
 add esp, byte 4	; 9827A
 lea eax, [byte esp+060h]	; 9827D
 push eax	; 98281
-call sub_8E9E8	; 98282
+call TextSaveState	; 98282
 add esp, byte 4	; 98287
 push unk_D45D8	; 9828A
-call sub_8EA18	; 9828F
+call TextSetFont	; 9828F
 add esp, byte 4	; 98294
 mov edi, dword [dword esp+0B8h]	; 98297
 add edi, dword [dword esp+0D0h]	; 9829E
@@ -130,7 +130,7 @@ mov ecx, dword [dword esp+0C4h]	; 9831F
 push ecx	; 98326
 mov esi, dword [dword esp+0C4h]	; 98327
 push esi	; 9832E
-call sub_90D20	; 9832F
+call FillRect	; 9832F
 add esp, byte 14h	; 98334
 push dword 0A80000h	; 98337
 call sub_9C5B0	; 9833C
@@ -153,7 +153,7 @@ push dword 0FCFCFCh	; 9836D
 call sub_9C5B0	; 98372
 add esp, byte 4	; 98377
 push eax	; 9837A
-call sub_8E9C0	; 9837B
+call TextSetColors	; 9837B
 add esp, byte 8	; 98380
 mov eax, dword [dword esp+0B8h]	; 98383
 add eax, byte 9	; 9838A
@@ -210,7 +210,7 @@ call sub_981D4	; 98447
 call dword [off_D3074]	; 9844C
 lea eax, [byte esp+060h]	; 98452
 push eax	; 98456
-call sub_8EA00	; 98457
+call TextRestoreState	; 98457
 add esp, byte 4	; 9845C
 mov eax, esp	; 9845F
 push eax	; 98461
@@ -240,7 +240,7 @@ push byte 18h	; 984AA
 mov ecx, 0A0h	; 984AC
 mov ebx, 58h	; 984B1
 mov edx, 50h	; 984B6
-mov eax, asc_C47E8	; 984BB
+mov eax, str_EXITTODOSY	; 984BB
 call sub_981F8	; 984C0
 test eax, eax	; 984C5
 je short loc_984CF	; 984C7
@@ -262,7 +262,7 @@ add esp, byte 4	; 984F5
 push byte 0	; 984F8
 push byte 0Ah	; 984FA
 push dword 140h	; 984FC
-call sub_B4F8C	; 98501
+call CreateBitmap	; 98501
 mov esi, eax	; 98506
 add esp, byte 0Ch	; 98508
 mov eax, esp	; 9850B
@@ -271,10 +271,10 @@ call sub_B3A88	; 9850E
 add esp, byte 4	; 98513
 lea eax, [byte esp+060h]	; 98516
 push eax	; 9851A
-call sub_8E9E8	; 9851B
+call TextSaveState	; 9851B
 add esp, byte 4	; 98520
 push unk_D45D8	; 98523
-call sub_8EA18	; 98528
+call TextSetFont	; 98528
 add esp, byte 4	; 9852D
 push esi	; 98530
 call SetDrawBitmap	; 98531
@@ -300,14 +300,14 @@ push byte 0Ah	; 9857B
 push dword 140h	; 9857D
 push dword 0BEh	; 98582
 push byte 0	; 98587
-call sub_90D20	; 98589
+call FillRect	; 98589
 add esp, byte 14h	; 9858E
 push byte 0	; 98591
 push dword 0FCFCFCh	; 98593
 call sub_9C5B0	; 98598
 add esp, byte 4	; 9859D
 push eax	; 985A0
-call sub_8E9C0	; 985A1
+call TextSetColors	; 985A1
 add esp, byte 8	; 985A6
 push dword 0BFh	; 985A9
 mov ebx, dword [dword esp+0B0h]	; 985AE
@@ -327,7 +327,7 @@ call sub_981D4	; 985E3
 call dword [off_D3074]	; 985E8
 lea eax, [byte esp+060h]	; 985EE
 push eax	; 985F2
-call sub_8EA00	; 985F3
+call TextRestoreState	; 985F3
 add esp, byte 4	; 985F8
 mov eax, esp	; 985FB
 push eax	; 985FD
@@ -352,7 +352,7 @@ push byte 18h	; 9862E
 mov ecx, 120h	; 98630
 mov ebx, 58h	; 98635
 mov edx, 10h	; 9863A
-mov eax, asc_C47FC	; 9863F
+mov eax, str_PAUSEPRESSANYKEY	; 9863F
 call sub_981F8	; 98644
 ret	; 98649
 db 00h,00h

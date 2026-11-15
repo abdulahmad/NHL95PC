@@ -12,21 +12,21 @@ int MergeUpdateDbs(void)
     r = MergeLeagueFiles();
     if (leaguesaved == 0 && lgteamflags[leaguemaster * 30] != 2 && lgplayeridfile == 0) {
         if (r) {
-            sub_B392C(lgplayeridfile);
+            ClearScreen(lgplayeridfile);
             rgb[2] = rgb[1] = rgb[0] = 0x17;
-            sub_B4B88(0xF8, 1, rgb);
+            VgaSetPalette(0xF8, 1, rgb);
             rgb[2] = rgb[1] = rgb[0] = 0x2A;
-            sub_B4B88(0xF9, 1, rgb);
+            VgaSetPalette(0xF9, 1, rgb);
             rgb[2] = rgb[1] = rgb[0] = 0x3F;
-            sub_B4B88(0xFA, 1, rgb);
+            VgaSetPalette(0xFA, 1, rgb);
         }
         UpdateTeamDbs();
         if (r) {
-            sub_B392C(0);
+            ClearScreen(0);
             rgb[2] = rgb[1] = rgb[0] = 0;
-            sub_B4B88(0xF8, 1, rgb);
-            sub_B4B88(0xF9, 1, rgb);
-            sub_B4B88(0xFA, 1, rgb);
+            VgaSetPalette(0xF8, 1, rgb);
+            VgaSetPalette(0xF9, 1, rgb);
+            VgaSetPalette(0xFA, 1, rgb);
         }
     }
     return r;

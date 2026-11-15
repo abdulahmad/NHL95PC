@@ -33,10 +33,10 @@ void ChooseLeagueController(unsigned char *teams, int n, int y, int x)
     xpos = x;
     ypos = y;
     bytes = n * 4;
-    list = (char **)sub_8CCA8((char *)str_PLST, bytes, 0x20);
+    list = (char **)AllocMemBlock((char *)str_PLST, bytes, 0x20);
     memset(list, 0, bytes);
     bytes = n * 11;
-    names = (char *)sub_8CCA8((char *)str_PTLS, bytes, 0x20);
+    names = (char *)AllocMemBlock((char *)str_PTLS, bytes, 0x20);
     memset(names, 0, bytes);
     k = 0;
     for (i = 0; i < 0x1A; i++) {

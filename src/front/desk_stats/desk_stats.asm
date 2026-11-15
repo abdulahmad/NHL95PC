@@ -3,14 +3,14 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, deskexit, DiskSpaceShort, dword_C65A8, dword_C65AC, dword_DC6A8, dword_DC6B4, dword_DC738
+extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, statsmenuresult, dword_DC6B4, leaguestatsmode
 extern exhstate, FadePalStep, fclose_, FileExists, fopen_, fputs_, FreeMemBlock, goaliestatscb
 extern LeadersScreen, lgstate, MessageBox, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode
-extern msg_NeedKbytes2, off_C648E, off_C659A, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
+extern msg_NeedKbytes2, msg_FileExists, msg_StatsDiskSpace, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
 extern statscategory, statsfromleague, statsleague, statspal, statspalvalid, statsplayer, statsplayoffs, statsredrawcb
 extern statsteamsel, str_NeedKbytesFmt2, str_OUT, str_rt, str_SfPal1, str_SfPal2, str_wt, strcat_
-extern strcmp_, strcpy_, strncpy_, sub_8CCA8, sub_8FFB0, teamstatscb, TeamStatsScreen, textgrid
-extern unk_C6499, unk_C64F5, unk_C652A, unk_DC340
+extern strcmp_, strcpy_, strncpy_, AllocMemBlock, SetPalette, teamstatscb, TeamStatsScreen, textgrid
+extern btn_FileExists, msg_StatsWritten, msg_OutputFileError, statsscreenpal
 global WriteScreenTextFile, DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3_body, DeskSetExit_ret1, StatsSel9394Season, StatsSel9394Playoffs
 global StatsSel_common, StatsSel_x, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode, StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense
 global StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals, StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals
@@ -65,7 +65,7 @@ push eax	; 178A7
 push byte 0	; 178A8
 push byte 0	; 178AA
 mov ecx, 3	; 178AC
-mov ebx, off_C659A	; 178B1
+mov ebx, msg_StatsDiskSpace	; 178B1
 jmp near .7	; 178B6
 .3:
 xor ah, ah	; 178BB
@@ -82,9 +82,9 @@ push eax	; 178E1
 lea eax, [dword esp+090h]	; 178E2
 push eax	; 178E9
 push byte 2	; 178EA
-push unk_C6499	; 178EC
+push btn_FileExists	; 178EC
 mov ecx, 2	; 178F1
-mov ebx, off_C648E	; 178F6
+mov ebx, msg_FileExists	; 178F6
 mov edx, 0FFFFFFFFh	; 178FB
 mov eax, edx	; 17900
 call MessageBox	; 17902
@@ -124,7 +124,7 @@ push eax	; 1796F
 push byte 0	; 17970
 push byte 0	; 17972
 mov ecx, 1	; 17974
-mov ebx, unk_C64F5	; 17979
+mov ebx, msg_StatsWritten	; 17979
 jmp short .7	; 1797E
 .6:
 push byte 0FFFFFFFFh	; 17980
@@ -135,7 +135,7 @@ push eax	; 17991
 push edi	; 17992
 push edi	; 17993
 mov ecx, 1	; 17994
-mov ebx, unk_C652A	; 17999
+mov ebx, msg_OutputFileError	; 17999
 .7:
 mov edx, 0FFFFFFFFh	; 1799E
 mov eax, edx	; 179A3
@@ -220,26 +220,26 @@ mov ebx, 1Fh	; 17A64
 mov edx, exhstate+4	; 17A69
 mov eax, statsleague	; 17A6E
 call strncpy_	; 17A73
-cmp dword [dword_DC738], byte 0	; 17A78
+cmp dword [leaguestatsmode], byte 0	; 17A78
 je short .x	; 17A7F
-push unk_DC340	; 17A81
+push statsscreenpal	; 17A81
 push dword 100h	; 17A86
 push ebp	; 17A8B
-call sub_8FFB0	; 17A8C
+call SetPalette	; 17A8C
 add esp, byte 0Ch	; 17A91
 mov ebx, 10h	; 17A94
-mov edx, unk_DC340	; 17A99
+mov edx, statsscreenpal	; 17A99
 mov eax, 1	; 17A9E
 call FadePalStep	; 17AA3
 mov dword [statspalvalid], 1	; 17AA8
-mov dword [statspal], unk_DC340	; 17AB2
+mov dword [statspal], statsscreenpal	; 17AB2
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17ABC
 mov eax, dword [statscategory]	; 17AC6
 call dword [statsredrawcb]	; 17ACB
 mov dword [statspalvalid], ebp	; 17AD1
 mov dword [statspal], ebp	; 17AD7
 mov ebx, 10h	; 17ADD
-mov edx, unk_DC340	; 17AE2
+mov edx, statsscreenpal	; 17AE2
 xor eax, eax	; 17AE7
 call FadePalStep	; 17AE9
 .x:
@@ -285,19 +285,19 @@ mov edx, exhstate+4	; 17B60
 StatsSel_common:
 mov eax, statsleague	; 17B65
 call strncpy_	; 17B6A
-cmp dword [dword_DC738], byte 0	; 17B6F
+cmp dword [leaguestatsmode], byte 0	; 17B6F
 je short StatsSel_x	; 17B76
-push unk_DC340	; 17B78
+push statsscreenpal	; 17B78
 push dword 100h	; 17B7D
 push byte 0	; 17B82
-call sub_8FFB0	; 17B84
+call SetPalette	; 17B84
 add esp, byte 0Ch	; 17B89
 mov ebx, 10h	; 17B8C
-mov edx, unk_DC340	; 17B91
+mov edx, statsscreenpal	; 17B91
 mov eax, ebp	; 17B96
 call FadePalStep	; 17B98
 mov dword [statspalvalid], ebp	; 17B9D
-mov dword [statspal], unk_DC340	; 17BA3
+mov dword [statspal], statsscreenpal	; 17BA3
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17BAD
 mov eax, dword [statscategory]	; 17BB7
 call dword [statsredrawcb]	; 17BBC
@@ -305,7 +305,7 @@ xor esi, esi	; 17BC2
 mov dword [statspalvalid], esi	; 17BC4
 mov dword [statspal], esi	; 17BCA
 mov ebx, 10h	; 17BD0
-mov edx, unk_DC340	; 17BD5
+mov edx, statsscreenpal	; 17BD5
 xor eax, eax	; 17BDA
 call FadePalStep	; 17BDC
 StatsSel_x:
@@ -351,26 +351,26 @@ mov ebx, 1Fh	; 17C50
 mov edx, lgstate+4	; 17C55
 mov eax, statsleague	; 17C5A
 call strncpy_	; 17C5F
-cmp dword [dword_DC738], byte 0	; 17C64
+cmp dword [leaguestatsmode], byte 0	; 17C64
 je short .x	; 17C6B
-push unk_DC340	; 17C6D
+push statsscreenpal	; 17C6D
 push dword 100h	; 17C72
 push ebp	; 17C77
-call sub_8FFB0	; 17C78
+call SetPalette	; 17C78
 add esp, byte 0Ch	; 17C7D
 mov ebx, 10h	; 17C80
-mov edx, unk_DC340	; 17C85
+mov edx, statsscreenpal	; 17C85
 mov eax, 1	; 17C8A
 call FadePalStep	; 17C8F
 mov dword [statspalvalid], 1	; 17C94
-mov dword [statspal], unk_DC340	; 17C9E
+mov dword [statspal], statsscreenpal	; 17C9E
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17CA8
 mov eax, dword [statscategory]	; 17CB2
 call dword [statsredrawcb]	; 17CB7
 mov dword [statspalvalid], ebp	; 17CBD
 mov dword [statspal], ebp	; 17CC3
 mov ebx, 10h	; 17CC9
-mov edx, unk_DC340	; 17CCE
+mov edx, statsscreenpal	; 17CCE
 xor eax, eax	; 17CD3
 call FadePalStep	; 17CD5
 .x:
@@ -476,29 +476,29 @@ push edx	; 17E08
 push esi	; 17E09
 mov edx, 5	; 17E0A
 mov dword [statscategory], edx	; 17E0F
-cmp dword [dword_DC738], byte 0	; 17E15
+cmp dword [leaguestatsmode], byte 0	; 17E15
 je near .1	; 17E1C
 push byte 20h	; 17E22
 push dword 300h	; 17E24
 push str_SfPal1	; 17E29
-call sub_8CCA8	; 17E2E
+call AllocMemBlock	; 17E2E
 add esp, byte 0Ch	; 17E33
 mov dword [sfpal1], eax	; 17E36
 push eax	; 17E3B
 push dword 100h	; 17E3C
 push byte 0	; 17E41
-call sub_8FFB0	; 17E43
+call SetPalette	; 17E43
 add esp, byte 0Ch	; 17E48
 push byte 20h	; 17E4B
 push dword 300h	; 17E4D
 push str_SfPal2	; 17E52
-call sub_8CCA8	; 17E57
+call AllocMemBlock	; 17E57
 add esp, byte 0Ch	; 17E5C
 mov dword [sfpal2], eax	; 17E5F
 push eax	; 17E64
 push dword 100h	; 17E65
 push byte 0	; 17E6A
-call sub_8FFB0	; 17E6C
+call SetPalette	; 17E6C
 add esp, byte 0Ch	; 17E71
 mov edx, dword [sfpal1]	; 17E74
 mov ebx, 10h	; 17E7A
@@ -510,7 +510,7 @@ call FreeMemBlock	; 17E90
 add esp, byte 4	; 17E95
 mov eax, 5	; 17E98
 call TeamStatsScreen	; 17E9D
-mov dword [dword_DC6A8], eax	; 17EA2
+mov dword [statsmenuresult], eax	; 17EA2
 mov edx, dword [sfpal2]	; 17EA7
 mov ebx, 10h	; 17EAD
 xor eax, eax	; 17EB2
@@ -519,7 +519,7 @@ mov esi, dword [sfpal2]	; 17EB9
 push esi	; 17EBF
 call FreeMemBlock	; 17EC0
 add esp, byte 4	; 17EC5
-mov eax, dword [dword_DC6A8]	; 17EC8
+mov eax, dword [statsmenuresult]	; 17EC8
 pop esi	; 17ECD
 pop edx	; 17ECE
 pop ecx	; 17ECF
@@ -547,29 +547,29 @@ push edx	; 17EEB
 push esi	; 17EEC
 xor edx, edx	; 17EED
 mov dword [statscategory], edx	; 17EEF
-cmp dword [dword_DC738], byte 0	; 17EF5
+cmp dword [leaguestatsmode], byte 0	; 17EF5
 je near .1	; 17EFC
 push byte 20h	; 17F02
 push dword 300h	; 17F04
 push str_SfPal1	; 17F09
-call sub_8CCA8	; 17F0E
+call AllocMemBlock	; 17F0E
 add esp, byte 0Ch	; 17F13
 mov dword [sfpal1], eax	; 17F16
 push eax	; 17F1B
 push dword 100h	; 17F1C
 push byte 0	; 17F21
-call sub_8FFB0	; 17F23
+call SetPalette	; 17F23
 add esp, byte 0Ch	; 17F28
 push byte 20h	; 17F2B
 push dword 300h	; 17F2D
 push str_SfPal2	; 17F32
-call sub_8CCA8	; 17F37
+call AllocMemBlock	; 17F37
 add esp, byte 0Ch	; 17F3C
 mov dword [sfpal2], eax	; 17F3F
 push eax	; 17F44
 push dword 100h	; 17F45
 push byte 0	; 17F4A
-call sub_8FFB0	; 17F4C
+call SetPalette	; 17F4C
 add esp, byte 0Ch	; 17F51
 mov edx, dword [sfpal1]	; 17F54
 mov ebx, 10h	; 17F5A
@@ -581,7 +581,7 @@ call FreeMemBlock	; 17F70
 add esp, byte 4	; 17F75
 xor eax, eax	; 17F78
 call TeamStatsScreen	; 17F7A
-mov dword [dword_DC6A8], eax	; 17F7F
+mov dword [statsmenuresult], eax	; 17F7F
 mov edx, dword [sfpal2]	; 17F84
 mov ebx, 10h	; 17F8A
 xor eax, eax	; 17F8F
@@ -590,7 +590,7 @@ mov esi, dword [sfpal2]	; 17F96
 push esi	; 17F9C
 call FreeMemBlock	; 17F9D
 add esp, byte 4	; 17FA2
-mov eax, dword [dword_DC6A8]	; 17FA5
+mov eax, dword [statsmenuresult]	; 17FA5
 pop esi	; 17FAA
 pop edx	; 17FAB
 pop ecx	; 17FAC
@@ -618,29 +618,29 @@ push edx	; 17FC8
 push esi	; 17FC9
 mov edx, 1	; 17FCA
 mov dword [statscategory], edx	; 17FCF
-cmp dword [dword_DC738], byte 0	; 17FD5
+cmp dword [leaguestatsmode], byte 0	; 17FD5
 je near .1	; 17FDC
 push byte 20h	; 17FE2
 push dword 300h	; 17FE4
 push str_SfPal1	; 17FE9
-call sub_8CCA8	; 17FEE
+call AllocMemBlock	; 17FEE
 add esp, byte 0Ch	; 17FF3
 mov dword [sfpal1], eax	; 17FF6
 push eax	; 17FFB
 push dword 100h	; 17FFC
 push byte 0	; 18001
-call sub_8FFB0	; 18003
+call SetPalette	; 18003
 add esp, byte 0Ch	; 18008
 push byte 20h	; 1800B
 push dword 300h	; 1800D
 push str_SfPal2	; 18012
-call sub_8CCA8	; 18017
+call AllocMemBlock	; 18017
 add esp, byte 0Ch	; 1801C
 mov dword [sfpal2], eax	; 1801F
 push eax	; 18024
 push dword 100h	; 18025
 push byte 0	; 1802A
-call sub_8FFB0	; 1802C
+call SetPalette	; 1802C
 add esp, byte 0Ch	; 18031
 mov edx, dword [sfpal1]	; 18034
 mov ebx, 10h	; 1803A
@@ -652,7 +652,7 @@ call FreeMemBlock	; 18050
 add esp, byte 4	; 18055
 mov eax, 1	; 18058
 call TeamStatsScreen	; 1805D
-mov dword [dword_DC6A8], eax	; 18062
+mov dword [statsmenuresult], eax	; 18062
 mov edx, dword [sfpal2]	; 18067
 mov ebx, 10h	; 1806D
 xor eax, eax	; 18072
@@ -661,7 +661,7 @@ mov esi, dword [sfpal2]	; 18079
 push esi	; 1807F
 call FreeMemBlock	; 18080
 add esp, byte 4	; 18085
-mov eax, dword [dword_DC6A8]	; 18088
+mov eax, dword [statsmenuresult]	; 18088
 pop esi	; 1808D
 pop edx	; 1808E
 pop ecx	; 1808F
@@ -689,29 +689,29 @@ push edx	; 180AB
 push esi	; 180AC
 mov edx, 2	; 180AD
 mov dword [statscategory], edx	; 180B2
-cmp dword [dword_DC738], byte 0	; 180B8
+cmp dword [leaguestatsmode], byte 0	; 180B8
 je near .1	; 180BF
 push byte 20h	; 180C5
 push dword 300h	; 180C7
 push str_SfPal1	; 180CC
-call sub_8CCA8	; 180D1
+call AllocMemBlock	; 180D1
 add esp, byte 0Ch	; 180D6
 mov dword [sfpal1], eax	; 180D9
 push eax	; 180DE
 push dword 100h	; 180DF
 push byte 0	; 180E4
-call sub_8FFB0	; 180E6
+call SetPalette	; 180E6
 add esp, byte 0Ch	; 180EB
 push byte 20h	; 180EE
 push dword 300h	; 180F0
 push str_SfPal2	; 180F5
-call sub_8CCA8	; 180FA
+call AllocMemBlock	; 180FA
 add esp, byte 0Ch	; 180FF
 mov dword [sfpal2], eax	; 18102
 push eax	; 18107
 push dword 100h	; 18108
 push byte 0	; 1810D
-call sub_8FFB0	; 1810F
+call SetPalette	; 1810F
 add esp, byte 0Ch	; 18114
 mov edx, dword [sfpal1]	; 18117
 mov ebx, 10h	; 1811D
@@ -723,7 +723,7 @@ call FreeMemBlock	; 18133
 add esp, byte 4	; 18138
 mov eax, 2	; 1813B
 call TeamStatsScreen	; 18140
-mov dword [dword_DC6A8], eax	; 18145
+mov dword [statsmenuresult], eax	; 18145
 mov edx, dword [sfpal2]	; 1814A
 mov ebx, 10h	; 18150
 xor eax, eax	; 18155
@@ -732,7 +732,7 @@ mov esi, dword [sfpal2]	; 1815C
 push esi	; 18162
 call FreeMemBlock	; 18163
 add esp, byte 4	; 18168
-mov eax, dword [dword_DC6A8]	; 1816B
+mov eax, dword [statsmenuresult]	; 1816B
 pop esi	; 18170
 pop edx	; 18171
 pop ecx	; 18172
@@ -760,29 +760,29 @@ push edx	; 1818E
 push esi	; 1818F
 mov edx, 3	; 18190
 mov dword [statscategory], edx	; 18195
-cmp dword [dword_DC738], byte 0	; 1819B
+cmp dword [leaguestatsmode], byte 0	; 1819B
 je near .1	; 181A2
 push byte 20h	; 181A8
 push dword 300h	; 181AA
 push str_SfPal1	; 181AF
-call sub_8CCA8	; 181B4
+call AllocMemBlock	; 181B4
 add esp, byte 0Ch	; 181B9
 mov dword [sfpal1], eax	; 181BC
 push eax	; 181C1
 push dword 100h	; 181C2
 push byte 0	; 181C7
-call sub_8FFB0	; 181C9
+call SetPalette	; 181C9
 add esp, byte 0Ch	; 181CE
 push byte 20h	; 181D1
 push dword 300h	; 181D3
 push str_SfPal2	; 181D8
-call sub_8CCA8	; 181DD
+call AllocMemBlock	; 181DD
 add esp, byte 0Ch	; 181E2
 mov dword [sfpal2], eax	; 181E5
 push eax	; 181EA
 push dword 100h	; 181EB
 push byte 0	; 181F0
-call sub_8FFB0	; 181F2
+call SetPalette	; 181F2
 add esp, byte 0Ch	; 181F7
 mov edx, dword [sfpal1]	; 181FA
 mov ebx, 10h	; 18200
@@ -794,7 +794,7 @@ call FreeMemBlock	; 18216
 add esp, byte 4	; 1821B
 mov eax, 3	; 1821E
 call TeamStatsScreen	; 18223
-mov dword [dword_DC6A8], eax	; 18228
+mov dword [statsmenuresult], eax	; 18228
 mov edx, dword [sfpal2]	; 1822D
 mov ebx, 10h	; 18233
 xor eax, eax	; 18238
@@ -803,7 +803,7 @@ mov esi, dword [sfpal2]	; 1823F
 push esi	; 18245
 call FreeMemBlock	; 18246
 add esp, byte 4	; 1824B
-mov eax, dword [dword_DC6A8]	; 1824E
+mov eax, dword [statsmenuresult]	; 1824E
 pop esi	; 18253
 pop edx	; 18254
 pop ecx	; 18255
@@ -831,29 +831,29 @@ push edx	; 18271
 push esi	; 18272
 mov edx, 4	; 18273
 mov dword [statscategory], edx	; 18278
-cmp dword [dword_DC738], byte 0	; 1827E
+cmp dword [leaguestatsmode], byte 0	; 1827E
 je near .1	; 18285
 push byte 20h	; 1828B
 push dword 300h	; 1828D
 push str_SfPal1	; 18292
-call sub_8CCA8	; 18297
+call AllocMemBlock	; 18297
 add esp, byte 0Ch	; 1829C
 mov dword [sfpal1], eax	; 1829F
 push eax	; 182A4
 push dword 100h	; 182A5
 push byte 0	; 182AA
-call sub_8FFB0	; 182AC
+call SetPalette	; 182AC
 add esp, byte 0Ch	; 182B1
 push byte 20h	; 182B4
 push dword 300h	; 182B6
 push str_SfPal2	; 182BB
-call sub_8CCA8	; 182C0
+call AllocMemBlock	; 182C0
 add esp, byte 0Ch	; 182C5
 mov dword [sfpal2], eax	; 182C8
 push eax	; 182CD
 push dword 100h	; 182CE
 push byte 0	; 182D3
-call sub_8FFB0	; 182D5
+call SetPalette	; 182D5
 add esp, byte 0Ch	; 182DA
 mov edx, dword [sfpal1]	; 182DD
 mov ebx, 10h	; 182E3
@@ -865,7 +865,7 @@ call FreeMemBlock	; 182F9
 add esp, byte 4	; 182FE
 mov eax, 4	; 18301
 call TeamStatsScreen	; 18306
-mov dword [dword_DC6A8], eax	; 1830B
+mov dword [statsmenuresult], eax	; 1830B
 mov edx, dword [sfpal2]	; 18310
 mov ebx, 10h	; 18316
 xor eax, eax	; 1831B
@@ -874,7 +874,7 @@ mov esi, dword [sfpal2]	; 18322
 push esi	; 18328
 call FreeMemBlock	; 18329
 add esp, byte 4	; 1832E
-mov eax, dword [dword_DC6A8]	; 18331
+mov eax, dword [statsmenuresult]	; 18331
 pop esi	; 18336
 pop edx	; 18337
 pop ecx	; 18338
@@ -902,29 +902,29 @@ push edx	; 18354
 push esi	; 18355
 xor edx, edx	; 18356
 mov dword [statscategory], edx	; 18358
-cmp dword [dword_DC738], byte 0	; 1835E
+cmp dword [leaguestatsmode], byte 0	; 1835E
 je near .1	; 18365
 push byte 20h	; 1836B
 push dword 300h	; 1836D
 push str_SfPal1	; 18372
-call sub_8CCA8	; 18377
+call AllocMemBlock	; 18377
 add esp, byte 0Ch	; 1837C
 mov dword [sfpal1], eax	; 1837F
 push eax	; 18384
 push dword 100h	; 18385
 push byte 0	; 1838A
-call sub_8FFB0	; 1838C
+call SetPalette	; 1838C
 add esp, byte 0Ch	; 18391
 push byte 20h	; 18394
 push dword 300h	; 18396
 push str_SfPal2	; 1839B
-call sub_8CCA8	; 183A0
+call AllocMemBlock	; 183A0
 add esp, byte 0Ch	; 183A5
 mov dword [sfpal2], eax	; 183A8
 push eax	; 183AD
 push dword 100h	; 183AE
 push byte 0	; 183B3
-call sub_8FFB0	; 183B5
+call SetPalette	; 183B5
 add esp, byte 0Ch	; 183BA
 mov edx, dword [sfpal1]	; 183BD
 mov ebx, 10h	; 183C3
@@ -936,7 +936,7 @@ call FreeMemBlock	; 183D9
 add esp, byte 4	; 183DE
 xor eax, eax	; 183E1
 call LeadersScreen	; 183E3
-mov dword [dword_DC6A8], eax	; 183E8
+mov dword [statsmenuresult], eax	; 183E8
 mov edx, dword [sfpal2]	; 183ED
 mov ebx, 10h	; 183F3
 xor eax, eax	; 183F8
@@ -945,7 +945,7 @@ mov esi, dword [sfpal2]	; 183FF
 push esi	; 18405
 call FreeMemBlock	; 18406
 add esp, byte 4	; 1840B
-mov eax, dword [dword_DC6A8]	; 1840E
+mov eax, dword [statsmenuresult]	; 1840E
 pop esi	; 18413
 pop edx	; 18414
 pop ecx	; 18415
@@ -973,29 +973,29 @@ push edx	; 18431
 push esi	; 18432
 mov edx, 1	; 18433
 mov dword [statscategory], edx	; 18438
-cmp dword [dword_DC738], byte 0	; 1843E
+cmp dword [leaguestatsmode], byte 0	; 1843E
 je near .1	; 18445
 push byte 20h	; 1844B
 push dword 300h	; 1844D
 push str_SfPal1	; 18452
-call sub_8CCA8	; 18457
+call AllocMemBlock	; 18457
 add esp, byte 0Ch	; 1845C
 mov dword [sfpal1], eax	; 1845F
 push eax	; 18464
 push dword 100h	; 18465
 push byte 0	; 1846A
-call sub_8FFB0	; 1846C
+call SetPalette	; 1846C
 add esp, byte 0Ch	; 18471
 push byte 20h	; 18474
 push dword 300h	; 18476
 push str_SfPal2	; 1847B
-call sub_8CCA8	; 18480
+call AllocMemBlock	; 18480
 add esp, byte 0Ch	; 18485
 mov dword [sfpal2], eax	; 18488
 push eax	; 1848D
 push dword 100h	; 1848E
 push byte 0	; 18493
-call sub_8FFB0	; 18495
+call SetPalette	; 18495
 add esp, byte 0Ch	; 1849A
 mov edx, dword [sfpal1]	; 1849D
 mov ebx, 10h	; 184A3
@@ -1007,7 +1007,7 @@ call FreeMemBlock	; 184B9
 add esp, byte 4	; 184BE
 mov eax, 1	; 184C1
 call LeadersScreen	; 184C6
-mov dword [dword_DC6A8], eax	; 184CB
+mov dword [statsmenuresult], eax	; 184CB
 mov edx, dword [sfpal2]	; 184D0
 mov ebx, 10h	; 184D6
 xor eax, eax	; 184DB
@@ -1016,7 +1016,7 @@ mov esi, dword [sfpal2]	; 184E2
 push esi	; 184E8
 call FreeMemBlock	; 184E9
 add esp, byte 4	; 184EE
-mov eax, dword [dword_DC6A8]	; 184F1
+mov eax, dword [statsmenuresult]	; 184F1
 pop esi	; 184F6
 pop edx	; 184F7
 pop ecx	; 184F8
@@ -1044,29 +1044,29 @@ push edx	; 18514
 push esi	; 18515
 mov edx, 2	; 18516
 mov dword [statscategory], edx	; 1851B
-cmp dword [dword_DC738], byte 0	; 18521
+cmp dword [leaguestatsmode], byte 0	; 18521
 je near .1	; 18528
 push byte 20h	; 1852E
 push dword 300h	; 18530
 push str_SfPal1	; 18535
-call sub_8CCA8	; 1853A
+call AllocMemBlock	; 1853A
 add esp, byte 0Ch	; 1853F
 mov dword [sfpal1], eax	; 18542
 push eax	; 18547
 push dword 100h	; 18548
 push byte 0	; 1854D
-call sub_8FFB0	; 1854F
+call SetPalette	; 1854F
 add esp, byte 0Ch	; 18554
 push byte 20h	; 18557
 push dword 300h	; 18559
 push str_SfPal2	; 1855E
-call sub_8CCA8	; 18563
+call AllocMemBlock	; 18563
 add esp, byte 0Ch	; 18568
 mov dword [sfpal2], eax	; 1856B
 push eax	; 18570
 push dword 100h	; 18571
 push byte 0	; 18576
-call sub_8FFB0	; 18578
+call SetPalette	; 18578
 add esp, byte 0Ch	; 1857D
 mov edx, dword [sfpal1]	; 18580
 mov ebx, 10h	; 18586
@@ -1078,7 +1078,7 @@ call FreeMemBlock	; 1859C
 add esp, byte 4	; 185A1
 mov eax, 2	; 185A4
 call LeadersScreen	; 185A9
-mov dword [dword_DC6A8], eax	; 185AE
+mov dword [statsmenuresult], eax	; 185AE
 mov edx, dword [sfpal2]	; 185B3
 mov ebx, 10h	; 185B9
 xor eax, eax	; 185BE
@@ -1087,7 +1087,7 @@ mov esi, dword [sfpal2]	; 185C5
 push esi	; 185CB
 call FreeMemBlock	; 185CC
 add esp, byte 4	; 185D1
-mov eax, dword [dword_DC6A8]	; 185D4
+mov eax, dword [statsmenuresult]	; 185D4
 pop esi	; 185D9
 pop edx	; 185DA
 pop ecx	; 185DB
@@ -1115,29 +1115,29 @@ push edx	; 185F7
 push esi	; 185F8
 mov edx, 3	; 185F9
 mov dword [statscategory], edx	; 185FE
-cmp dword [dword_DC738], byte 0	; 18604
+cmp dword [leaguestatsmode], byte 0	; 18604
 je near .1	; 1860B
 push byte 20h	; 18611
 push dword 300h	; 18613
 push str_SfPal1	; 18618
-call sub_8CCA8	; 1861D
+call AllocMemBlock	; 1861D
 add esp, byte 0Ch	; 18622
 mov dword [sfpal1], eax	; 18625
 push eax	; 1862A
 push dword 100h	; 1862B
 push byte 0	; 18630
-call sub_8FFB0	; 18632
+call SetPalette	; 18632
 add esp, byte 0Ch	; 18637
 push byte 20h	; 1863A
 push dword 300h	; 1863C
 push str_SfPal2	; 18641
-call sub_8CCA8	; 18646
+call AllocMemBlock	; 18646
 add esp, byte 0Ch	; 1864B
 mov dword [sfpal2], eax	; 1864E
 push eax	; 18653
 push dword 100h	; 18654
 push byte 0	; 18659
-call sub_8FFB0	; 1865B
+call SetPalette	; 1865B
 add esp, byte 0Ch	; 18660
 mov edx, dword [sfpal1]	; 18663
 mov ebx, 10h	; 18669
@@ -1149,7 +1149,7 @@ call FreeMemBlock	; 1867F
 add esp, byte 4	; 18684
 mov eax, 3	; 18687
 call LeadersScreen	; 1868C
-mov dword [dword_DC6A8], eax	; 18691
+mov dword [statsmenuresult], eax	; 18691
 mov edx, dword [sfpal2]	; 18696
 mov ebx, 10h	; 1869C
 xor eax, eax	; 186A1
@@ -1158,7 +1158,7 @@ mov esi, dword [sfpal2]	; 186A8
 push esi	; 186AE
 call FreeMemBlock	; 186AF
 add esp, byte 4	; 186B4
-mov eax, dword [dword_DC6A8]	; 186B7
+mov eax, dword [statsmenuresult]	; 186B7
 pop esi	; 186BC
 pop edx	; 186BD
 pop ecx	; 186BE
@@ -1186,29 +1186,29 @@ push edx	; 186DA
 push esi	; 186DB
 mov edx, 4	; 186DC
 mov dword [statscategory], edx	; 186E1
-cmp dword [dword_DC738], byte 0	; 186E7
+cmp dword [leaguestatsmode], byte 0	; 186E7
 je near .1	; 186EE
 push byte 20h	; 186F4
 push dword 300h	; 186F6
 push str_SfPal1	; 186FB
-call sub_8CCA8	; 18700
+call AllocMemBlock	; 18700
 add esp, byte 0Ch	; 18705
 mov dword [sfpal1], eax	; 18708
 push eax	; 1870D
 push dword 100h	; 1870E
 push byte 0	; 18713
-call sub_8FFB0	; 18715
+call SetPalette	; 18715
 add esp, byte 0Ch	; 1871A
 push byte 20h	; 1871D
 push dword 300h	; 1871F
 push str_SfPal2	; 18724
-call sub_8CCA8	; 18729
+call AllocMemBlock	; 18729
 add esp, byte 0Ch	; 1872E
 mov dword [sfpal2], eax	; 18731
 push eax	; 18736
 push dword 100h	; 18737
 push byte 0	; 1873C
-call sub_8FFB0	; 1873E
+call SetPalette	; 1873E
 add esp, byte 0Ch	; 18743
 mov edx, dword [sfpal1]	; 18746
 mov ebx, 10h	; 1874C
@@ -1220,7 +1220,7 @@ call FreeMemBlock	; 18762
 add esp, byte 4	; 18767
 mov eax, 4	; 1876A
 call LeadersScreen	; 1876F
-mov dword [dword_DC6A8], eax	; 18774
+mov dword [statsmenuresult], eax	; 18774
 mov edx, dword [sfpal2]	; 18779
 mov ebx, 10h	; 1877F
 xor eax, eax	; 18784
@@ -1229,7 +1229,7 @@ mov esi, dword [sfpal2]	; 1878B
 push esi	; 18791
 call FreeMemBlock	; 18792
 add esp, byte 4	; 18797
-mov eax, dword [dword_DC6A8]	; 1879A
+mov eax, dword [statsmenuresult]	; 1879A
 pop esi	; 1879F
 pop edx	; 187A0
 pop ecx	; 187A1
@@ -1257,29 +1257,29 @@ push edx	; 187BD
 push esi	; 187BE
 mov edx, 5	; 187BF
 mov dword [statscategory], edx	; 187C4
-cmp dword [dword_DC738], byte 0	; 187CA
+cmp dword [leaguestatsmode], byte 0	; 187CA
 je near .1	; 187D1
 push byte 20h	; 187D7
 push dword 300h	; 187D9
 push str_SfPal1	; 187DE
-call sub_8CCA8	; 187E3
+call AllocMemBlock	; 187E3
 add esp, byte 0Ch	; 187E8
 mov dword [sfpal1], eax	; 187EB
 push eax	; 187F0
 push dword 100h	; 187F1
 push byte 0	; 187F6
-call sub_8FFB0	; 187F8
+call SetPalette	; 187F8
 add esp, byte 0Ch	; 187FD
 push byte 20h	; 18800
 push dword 300h	; 18802
 push str_SfPal2	; 18807
-call sub_8CCA8	; 1880C
+call AllocMemBlock	; 1880C
 add esp, byte 0Ch	; 18811
 mov dword [sfpal2], eax	; 18814
 push eax	; 18819
 push dword 100h	; 1881A
 push byte 0	; 1881F
-call sub_8FFB0	; 18821
+call SetPalette	; 18821
 add esp, byte 0Ch	; 18826
 mov edx, dword [sfpal1]	; 18829
 mov ebx, 10h	; 1882F
@@ -1291,7 +1291,7 @@ call FreeMemBlock	; 18845
 add esp, byte 4	; 1884A
 mov eax, 5	; 1884D
 call LeadersScreen	; 18852
-mov dword [dword_DC6A8], eax	; 18857
+mov dword [statsmenuresult], eax	; 18857
 mov edx, dword [sfpal2]	; 1885C
 mov ebx, 10h	; 18862
 xor eax, eax	; 18867
@@ -1300,7 +1300,7 @@ mov esi, dword [sfpal2]	; 1886E
 push esi	; 18874
 call FreeMemBlock	; 18875
 add esp, byte 4	; 1887A
-mov eax, dword [dword_DC6A8]	; 1887D
+mov eax, dword [statsmenuresult]	; 1887D
 pop esi	; 18882
 pop edx	; 18883
 pop ecx	; 18884
@@ -1328,29 +1328,29 @@ push edx	; 188A0
 push esi	; 188A1
 mov edx, 6	; 188A2
 mov dword [statscategory], edx	; 188A7
-cmp dword [dword_DC738], byte 0	; 188AD
+cmp dword [leaguestatsmode], byte 0	; 188AD
 je near .1	; 188B4
 push byte 20h	; 188BA
 push dword 300h	; 188BC
 push str_SfPal1	; 188C1
-call sub_8CCA8	; 188C6
+call AllocMemBlock	; 188C6
 add esp, byte 0Ch	; 188CB
 mov dword [sfpal1], eax	; 188CE
 push eax	; 188D3
 push dword 100h	; 188D4
 push byte 0	; 188D9
-call sub_8FFB0	; 188DB
+call SetPalette	; 188DB
 add esp, byte 0Ch	; 188E0
 push byte 20h	; 188E3
 push dword 300h	; 188E5
 push str_SfPal2	; 188EA
-call sub_8CCA8	; 188EF
+call AllocMemBlock	; 188EF
 add esp, byte 0Ch	; 188F4
 mov dword [sfpal2], eax	; 188F7
 push eax	; 188FC
 push dword 100h	; 188FD
 push byte 0	; 18902
-call sub_8FFB0	; 18904
+call SetPalette	; 18904
 add esp, byte 0Ch	; 18909
 mov edx, dword [sfpal1]	; 1890C
 mov ebx, 10h	; 18912
@@ -1362,7 +1362,7 @@ call FreeMemBlock	; 18928
 add esp, byte 4	; 1892D
 mov eax, 6	; 18930
 call LeadersScreen	; 18935
-mov dword [dword_DC6A8], eax	; 1893A
+mov dword [statsmenuresult], eax	; 1893A
 mov edx, dword [sfpal2]	; 1893F
 mov ebx, 10h	; 18945
 xor eax, eax	; 1894A
@@ -1371,7 +1371,7 @@ mov esi, dword [sfpal2]	; 18951
 push esi	; 18957
 call FreeMemBlock	; 18958
 add esp, byte 4	; 1895D
-mov eax, dword [dword_DC6A8]	; 18960
+mov eax, dword [statsmenuresult]	; 18960
 pop esi	; 18965
 pop edx	; 18966
 pop ecx	; 18967
@@ -1399,29 +1399,29 @@ push edx	; 18983
 push esi	; 18984
 mov edx, 7	; 18985
 mov dword [statscategory], edx	; 1898A
-cmp dword [dword_DC738], byte 0	; 18990
+cmp dword [leaguestatsmode], byte 0	; 18990
 je near .1	; 18997
 push byte 20h	; 1899D
 push dword 300h	; 1899F
 push str_SfPal1	; 189A4
-call sub_8CCA8	; 189A9
+call AllocMemBlock	; 189A9
 add esp, byte 0Ch	; 189AE
 mov dword [sfpal1], eax	; 189B1
 push eax	; 189B6
 push dword 100h	; 189B7
 push byte 0	; 189BC
-call sub_8FFB0	; 189BE
+call SetPalette	; 189BE
 add esp, byte 0Ch	; 189C3
 push byte 20h	; 189C6
 push dword 300h	; 189C8
 push str_SfPal2	; 189CD
-call sub_8CCA8	; 189D2
+call AllocMemBlock	; 189D2
 add esp, byte 0Ch	; 189D7
 mov dword [sfpal2], eax	; 189DA
 push eax	; 189DF
 push dword 100h	; 189E0
 push byte 0	; 189E5
-call sub_8FFB0	; 189E7
+call SetPalette	; 189E7
 add esp, byte 0Ch	; 189EC
 mov edx, dword [sfpal1]	; 189EF
 mov ebx, 10h	; 189F5
@@ -1433,7 +1433,7 @@ call FreeMemBlock	; 18A0B
 add esp, byte 4	; 18A10
 mov eax, 7	; 18A13
 call LeadersScreen	; 18A18
-mov dword [dword_DC6A8], eax	; 18A1D
+mov dword [statsmenuresult], eax	; 18A1D
 mov edx, dword [sfpal2]	; 18A22
 mov ebx, 10h	; 18A28
 xor eax, eax	; 18A2D
@@ -1442,7 +1442,7 @@ mov esi, dword [sfpal2]	; 18A34
 push esi	; 18A3A
 call FreeMemBlock	; 18A3B
 add esp, byte 4	; 18A40
-mov eax, dword [dword_DC6A8]	; 18A43
+mov eax, dword [statsmenuresult]	; 18A43
 pop esi	; 18A48
 pop edx	; 18A49
 pop ecx	; 18A4A
@@ -1470,29 +1470,29 @@ push edx	; 18A66
 push esi	; 18A67
 mov edx, 8	; 18A68
 mov dword [statscategory], edx	; 18A6D
-cmp dword [dword_DC738], byte 0	; 18A73
+cmp dword [leaguestatsmode], byte 0	; 18A73
 je near .1	; 18A7A
 push byte 20h	; 18A80
 push dword 300h	; 18A82
 push str_SfPal1	; 18A87
-call sub_8CCA8	; 18A8C
+call AllocMemBlock	; 18A8C
 add esp, byte 0Ch	; 18A91
 mov dword [sfpal1], eax	; 18A94
 push eax	; 18A99
 push dword 100h	; 18A9A
 push byte 0	; 18A9F
-call sub_8FFB0	; 18AA1
+call SetPalette	; 18AA1
 add esp, byte 0Ch	; 18AA6
 push byte 20h	; 18AA9
 push dword 300h	; 18AAB
 push str_SfPal2	; 18AB0
-call sub_8CCA8	; 18AB5
+call AllocMemBlock	; 18AB5
 add esp, byte 0Ch	; 18ABA
 mov dword [sfpal2], eax	; 18ABD
 push eax	; 18AC2
 push dword 100h	; 18AC3
 push byte 0	; 18AC8
-call sub_8FFB0	; 18ACA
+call SetPalette	; 18ACA
 add esp, byte 0Ch	; 18ACF
 mov edx, dword [sfpal1]	; 18AD2
 mov ebx, 10h	; 18AD8
@@ -1504,7 +1504,7 @@ call FreeMemBlock	; 18AEE
 add esp, byte 4	; 18AF3
 mov eax, 8	; 18AF6
 call LeadersScreen	; 18AFB
-mov dword [dword_DC6A8], eax	; 18B00
+mov dword [statsmenuresult], eax	; 18B00
 mov edx, dword [sfpal2]	; 18B05
 mov ebx, 10h	; 18B0B
 xor eax, eax	; 18B10
@@ -1513,7 +1513,7 @@ mov esi, dword [sfpal2]	; 18B17
 push esi	; 18B1D
 call FreeMemBlock	; 18B1E
 add esp, byte 4	; 18B23
-mov eax, dword [dword_DC6A8]	; 18B26
+mov eax, dword [statsmenuresult]	; 18B26
 pop esi	; 18B2B
 pop edx	; 18B2C
 pop ecx	; 18B2D
@@ -1541,29 +1541,29 @@ push edx	; 18B49
 push esi	; 18B4A
 mov edx, 9	; 18B4B
 mov dword [statscategory], edx	; 18B50
-cmp dword [dword_DC738], byte 0	; 18B56
+cmp dword [leaguestatsmode], byte 0	; 18B56
 je near .1	; 18B5D
 push byte 20h	; 18B63
 push dword 300h	; 18B65
 push str_SfPal1	; 18B6A
-call sub_8CCA8	; 18B6F
+call AllocMemBlock	; 18B6F
 add esp, byte 0Ch	; 18B74
 mov dword [sfpal1], eax	; 18B77
 push eax	; 18B7C
 push dword 100h	; 18B7D
 push byte 0	; 18B82
-call sub_8FFB0	; 18B84
+call SetPalette	; 18B84
 add esp, byte 0Ch	; 18B89
 push byte 20h	; 18B8C
 push dword 300h	; 18B8E
 push str_SfPal2	; 18B93
-call sub_8CCA8	; 18B98
+call AllocMemBlock	; 18B98
 add esp, byte 0Ch	; 18B9D
 mov dword [sfpal2], eax	; 18BA0
 push eax	; 18BA5
 push dword 100h	; 18BA6
 push byte 0	; 18BAB
-call sub_8FFB0	; 18BAD
+call SetPalette	; 18BAD
 add esp, byte 0Ch	; 18BB2
 mov edx, dword [sfpal1]	; 18BB5
 mov ebx, 10h	; 18BBB
@@ -1575,7 +1575,7 @@ call FreeMemBlock	; 18BD1
 add esp, byte 4	; 18BD6
 mov eax, 9	; 18BD9
 call LeadersScreen	; 18BDE
-mov dword [dword_DC6A8], eax	; 18BE3
+mov dword [statsmenuresult], eax	; 18BE3
 mov edx, dword [sfpal2]	; 18BE8
 mov ebx, 10h	; 18BEE
 xor eax, eax	; 18BF3
@@ -1584,7 +1584,7 @@ mov esi, dword [sfpal2]	; 18BFA
 push esi	; 18C00
 call FreeMemBlock	; 18C01
 add esp, byte 4	; 18C06
-mov eax, dword [dword_DC6A8]	; 18C09
+mov eax, dword [statsmenuresult]	; 18C09
 pop esi	; 18C0E
 pop edx	; 18C0F
 pop ecx	; 18C10
@@ -1612,29 +1612,29 @@ push edx	; 18C2C
 push esi	; 18C2D
 mov edx, 0Ah	; 18C2E
 mov dword [statscategory], edx	; 18C33
-cmp dword [dword_DC738], byte 0	; 18C39
+cmp dword [leaguestatsmode], byte 0	; 18C39
 je near .1	; 18C40
 push byte 20h	; 18C46
 push dword 300h	; 18C48
 push str_SfPal1	; 18C4D
-call sub_8CCA8	; 18C52
+call AllocMemBlock	; 18C52
 add esp, byte 0Ch	; 18C57
 mov dword [sfpal1], eax	; 18C5A
 push eax	; 18C5F
 push dword 100h	; 18C60
 push byte 0	; 18C65
-call sub_8FFB0	; 18C67
+call SetPalette	; 18C67
 add esp, byte 0Ch	; 18C6C
 push byte 20h	; 18C6F
 push dword 300h	; 18C71
 push str_SfPal2	; 18C76
-call sub_8CCA8	; 18C7B
+call AllocMemBlock	; 18C7B
 add esp, byte 0Ch	; 18C80
 mov dword [sfpal2], eax	; 18C83
 push eax	; 18C88
 push dword 100h	; 18C89
 push byte 0	; 18C8E
-call sub_8FFB0	; 18C90
+call SetPalette	; 18C90
 add esp, byte 0Ch	; 18C95
 mov edx, dword [sfpal1]	; 18C98
 mov ebx, 10h	; 18C9E
@@ -1646,7 +1646,7 @@ call FreeMemBlock	; 18CB4
 add esp, byte 4	; 18CB9
 mov eax, 0Ah	; 18CBC
 call LeadersScreen	; 18CC1
-mov dword [dword_DC6A8], eax	; 18CC6
+mov dword [statsmenuresult], eax	; 18CC6
 mov edx, dword [sfpal2]	; 18CCB
 mov ebx, 10h	; 18CD1
 xor eax, eax	; 18CD6
@@ -1655,7 +1655,7 @@ mov esi, dword [sfpal2]	; 18CDD
 push esi	; 18CE3
 call FreeMemBlock	; 18CE4
 add esp, byte 4	; 18CE9
-mov eax, dword [dword_DC6A8]	; 18CEC
+mov eax, dword [statsmenuresult]	; 18CEC
 pop esi	; 18CF1
 pop edx	; 18CF2
 pop ecx	; 18CF3
@@ -1699,23 +1699,23 @@ push ecx	; 18D3E
 push edx	; 18D3F
 push esi	; 18D40
 push ebp	; 18D41
-mov edx, dword [dword_C65AC]	; 18D42
+mov edx, dword [embscupbank]	; 18D42
 test edx, edx	; 18D48
 je short .1	; 18D4A
 push edx	; 18D4C
 call FreeMemBlock	; 18D4D
 add esp, byte 4	; 18D52
 xor ecx, ecx	; 18D55
-mov dword [dword_C65AC], ecx	; 18D57
+mov dword [embscupbank], ecx	; 18D57
 .1:
-mov esi, dword [dword_C65A8]	; 18D5D
+mov esi, dword [easnfontbuf]	; 18D5D
 test esi, esi	; 18D63
 je short .2	; 18D65
 push esi	; 18D67
 call FreeMemBlock	; 18D68
 add esp, byte 4	; 18D6D
 xor ebp, ebp	; 18D70
-mov dword [dword_C65A8], ebp	; 18D72
+mov dword [easnfontbuf], ebp	; 18D72
 .2:
 xor eax, eax	; 18D78
 jmp near StatsSel_x	; 18D7A

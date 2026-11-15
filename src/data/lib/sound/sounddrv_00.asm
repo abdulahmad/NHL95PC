@@ -2,6 +2,6 @@
 bits 32
 %include "hockey.inc"
 section s_C0000 progbits alloc noexec write align=1
-global unk_C0000
-unk_C0000:
+global __nullarea
+__nullarea:
 db 01h,01h,01h,00h

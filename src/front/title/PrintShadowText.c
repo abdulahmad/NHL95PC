@@ -6,8 +6,8 @@
 void PrintShadowText(int x, int y, char *s)
 {
     fontcolor = textshadow;
-    sub_91964(s, x + 1, y + 1);
+    PrintString(s, x + 1, y + 1);
     fontcolor = textcolor;
-    sub_91964(s, x, y);
+    PrintString(s, x, y);
     TextGridPut(x, y, s);
 }

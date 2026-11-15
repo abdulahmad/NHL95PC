@@ -63,12 +63,12 @@ extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
 int __cdecl TicksSinceLastCall(void);
 
 /* InstantReplay (7E0FA, PC only; ends in DrawGadgetButton_ret): the instant replay. The save button stays off
-   (dword_ED6F8) in exhibition or without a human team. Show the control panel (GADGET6 / GADGET5 PPV, from the CD
+   (replaynosave) in exhibition or without a human team. Show the control panel (GADGET6 / GADGET5 PPV, from the CD
    when listed; buttons 6 and 2 lit, the pointer at 100h, BCh), keep the camera, view, crowd level, rewind the
    replay to its first frame and draw it (DrawRinkSideObjects), fade the game palette in. Then each pass: the
-   controls (ReplayControlLoop) give the step, the fraction kept in word_ED758 (twentieths), ReplayStep moves the
-   replay (with sound when playing); the camera follows the chosen spot (dword_ED6F0 / ED6F4) or player
-   (word_CD4FC), clamped, the rink is redrawn with the cursor on the spot or player (the pointer moved onto a
+   controls (ReplayControlLoop) give the step, the fraction kept in replayfrac (twentieths), ReplayStep moves the
+   replay (with sound when playing); the camera follows the chosen spot (replayspotx / ED6F4) or player
+   (replayfollowpl), clamped, the rink is redrawn with the cursor on the spot or player (the pointer moved onto a
    newly picked player). On quit: stop the crowd noise and the replay sounds, restore the camera, view and crowd,
    fade the saved palette in, free the panel and, when mode is 0, restore the 640 x 480 screen. No result. */
 /* DRAFT (10.0 GA, 22 differing here, same size): the saved crowd level, camera y, view y, camera x and view x
@@ -87,26 +87,26 @@ void InstantReplay(int mode)
     short ocx;
     short ox;
 
-    if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) dword_ED6F8 = 1;
-    else dword_ED6F8 = 0;
+    if (gamemode == 0 || ctl1team[0] < 0 && ctl2team < 0) replaynosave = 1;
+    else replaynosave = 0;
     dword_ED754 = 0x44;
     dword_ED750 = 8;
     gadgetptrx = 0x100;
     gadgetptry = 0xBC;
-    sub_B2E1B(0, 0, 0x140, 0xC1);
+    SetViewRect(0, 0, 0x140, 0xC1);
     MouseSetPos(gadgetptrx, gadgetptry);
     SelectScreenBM();
-    sub_B4BC4(0, 0x140, 0, 0x20);
-    if (dword_ED6F8)
+    SetClipWindow(0, 0x140, 0, 0x20);
+    if (replaynosave)
         MakePath(path, fileoncd[0x223] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget6, (char *)str_PPV);
     else
         MakePath(path, fileoncd[0x96] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget5, (char *)str_PPV);
     gadgetfile = sub_8E8A0(path, 0);
-    gadgetshape = sub_B30B4(gadgetfile, (char *)str_Gad1);
+    gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
     sub_B4CD8(gadgetshape, 0, 0);
     DrawGadgetButton(6);
     DrawGadgetButton(2);
-    sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+    DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     dword_C66D0 = dword_C66D4 = 1;
     ocx = camx;
     ocy = camy;
@@ -114,10 +114,10 @@ void InstantReplay(int mode)
     oy = viewscrolly;
     ocl = crowdlevel;
     dword_ED70C = 0;
-    word_CD4FC = -1;
+    replayfollowpl = -1;
     dword_ED6EC = dword_ED74C = -1;
-    dword_ED6FC = 0;
-    word_ED758 = 0;
+    replaybtnarmed = 0;
+    replayfrac = 0;
     rinkscrollx += 0x3E8;
     rinkscrolly += 0x3E8;
     replayplay = ReplayFirstFrame();
@@ -147,23 +147,23 @@ void InstantReplay(int mode)
     for (;;) {
         SelectScreenBM();
         if (!ReplayControlLoop(&step)) break;
-        word_ED758 += step * 6;
-        step = word_ED758 / 0x14;
-        word_ED758 = word_ED758 % 0x14;
+        replayfrac += step * 6;
+        step = replayfrac / 0x14;
+        replayfrac = replayfrac % 0x14;
         step = ReplayStep(step, (dword_ED754 & 0x3F) == 0x10);
         SelectRinkBM();
         if (dword_ED70C) {
-            camx = dword_ED6F0;
-            camy = dword_ED6F4;
+            camx = replayspotx;
+            camy = replayspoty;
             if (camx > 0x20) camx = 0x20;
             else if (camx < -0x20) camx = -0x20;
             if (camy > 0xEC) camy = 0xEC;
             else if (camy < -0xBC) camy = -0xBC;
-            dword_ED6F0 = camx;
-            dword_ED6F4 = camy;
-        } else if (word_CD4FC >= 0) {
-            camx = word_E9F18[word_CD4FC];
-            camy = word_E9F3A[word_CD4FC];
+            replayspotx = camx;
+            replayspoty = camy;
+        } else if (replayfollowpl >= 0) {
+            camx = rpl_x[replayfollowpl];
+            camy = rpl_y[replayfollowpl];
             if (camx > 0x20) camx = 0x20;
             else if (camx < -0x20) camx = -0x20;
             if (camy > 0xEC) camy = 0xEC;
@@ -185,14 +185,14 @@ void InstantReplay(int mode)
         if (gadgetptry < 0xA8) {
             if (dword_ED74C == -1) {
                 dword_ED6EC = dword_ED74C;
-                dword_ED704 = camx + gadgetptrx - 0xA0;
-                dword_ED708 = camy - gadgetptry + 0x54;
-                DrawFrameSprite(0x188, (short)dword_ED704 + 1, (short)dword_ED708 + 1, 0, 0);
+                replayptrx = camx + gadgetptrx - 0xA0;
+                replayptry = camy - gadgetptry + 0x54;
+                DrawFrameSprite(0x188, (short)replayptrx + 1, (short)replayptry + 1, 0, 0);
             } else {
-                DrawFrameSprite(0x188, word_E9F18[dword_ED74C] + 1, word_E9F3A[dword_ED74C] + 1, 0, 1);
+                DrawFrameSprite(0x188, rpl_x[dword_ED74C] + 1, rpl_y[dword_ED74C] + 1, 0, 1);
                 if (dword_ED6EC != dword_ED74C) {
-                    gadgetptrx = word_E9F18[dword_ED74C] - camx + 0xA0;
-                    gadgetptry = camy - word_E9F3A[dword_ED74C] + 0x54;
+                    gadgetptrx = rpl_x[dword_ED74C] - camx + 0xA0;
+                    gadgetptry = camy - rpl_y[dword_ED74C] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                     dword_ED6EC = dword_ED74C;
@@ -212,7 +212,7 @@ void InstantReplay(int mode)
     crowdlevel = ocl;
     crowdsmooth = ocl;
     dword_C66D0 = dword_C66D4 = 1;
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     FreeMemBlock(gadgetfile);
     sub_B4BA8();
@@ -223,9 +223,9 @@ void __cdecl sub_B500C(int art, int x, int y);  /* graphics library: draw art */
 void ReplaySaveHilight(int unused, int x, int y);
 
 /* ReplayControlLoop (7E9AC, PC only; ends in DrawGadgetButton_ret): one pass of the replay controls. Read the
-   pointer events (the pointer kept on the 320 x 200 screen) until a click; a press arms the buttons (dword_ED6FC),
-   a release disarms them. An armed click on a gadget (GadgetHitTest; 7 not while dword_ED6F8) gives its bit; the
-   pointer over the rink (above A8h) gives the rink point (dword_ED704 / ED708). Buttons: 1 / 20h rewind / fast
+   pointer events (the pointer kept on the 320 x 200 screen) until a click; a press arms the buttons (replaybtnarmed),
+   a release disarms them. An armed click on a gadget (GadgetHitTest; 7 not while replaynosave) gives its bit; the
+   pointer over the rink (above A8h) gives the rink point (replayptrx / ED708). Buttons: 1 / 20h rewind / fast
    forward (*step times -4 / 4), 2 / 8 step back / forward (every fifth call with the step, -1 / 1), 4 pause, 10h
    play (*step), 40h camera back to the puck, 80h save (ReplaySaveHilight after the redraw), 100h quit (result 0).
    A click on the rink picks the nearest player (PickNearestPlayer) or a free spot for the camera, moving the
@@ -261,17 +261,17 @@ int ReplayControlLoop(int *step)
         if (gadgetptry >= 0xC8) gadgetptry = 0xC7;
         if (ev & 2) break;
     }
-    if ((unsigned char)ev & 1) dword_ED6FC = 1;
-    else if ((unsigned char)ev & 2) dword_ED6FC = 0;
-    if (dword_ED6FC) {
-        if (!GadgetHitTest(gadgetptrx, gadgetptry, &hit) || dword_ED6F8 && hit == 7) hit = 0;
+    if ((unsigned char)ev & 1) replaybtnarmed = 1;
+    else if ((unsigned char)ev & 2) replaybtnarmed = 0;
+    if (replaybtnarmed) {
+        if (!GadgetHitTest(gadgetptrx, gadgetptry, &hit) || replaynosave && hit == 7) hit = 0;
         else hit = 1 << hit;
     } else {
         hit = 0;
     }
     if (gadgetptry < 0xA8) {
-        dword_ED704 = camx + gadgetptrx - 0xA0;
-        dword_ED708 = camy - gadgetptry + 0x54;
+        replayptrx = camx + gadgetptrx - 0xA0;
+        replayptry = camy - gadgetptry + 0x54;
     }
     a = dword_ED754 & 0x54;
     b = dword_ED754 & 0x40;
@@ -281,7 +281,7 @@ int ReplayControlLoop(int *step)
         d = 0;
         break;
     case 0x10:
-        if ((dword_ED754 & 0x3F) != 0x10) word_ED758 = 0;
+        if ((dword_ED754 & 0x3F) != 0x10) replayfrac = 0;
         dword_ED754 = dword_ED754 & 0x40 | 0x10;
         d = *step;
         break;
@@ -305,7 +305,7 @@ int ReplayControlLoop(int *step)
         } else {
             dword_ED6E8 = 0;
             d = -1;
-            word_ED758 = -0xE;
+            replayfrac = -0xE;
         }
         dword_ED754 = dword_ED754 & 0x40 | 6;
         break;
@@ -321,7 +321,7 @@ int ReplayControlLoop(int *step)
         } else {
             dword_ED6E8 = 0;
             d = 1;
-            word_ED758 = 0xE;
+            replayfrac = 0xE;
         }
         dword_ED754 = dword_ED754 & 0x40 | 0xC;
         break;
@@ -330,7 +330,7 @@ int ReplayControlLoop(int *step)
         dword_ED70C = 0;
         d = 0;
         dword_ED6EC = dword_ED74C = -1;
-        word_CD4FC = -1;
+        replayfollowpl = -1;
         break;
     case 0x80:
         dword_ED754 = b | 0x84;
@@ -339,35 +339,35 @@ int ReplayControlLoop(int *step)
         return 0;
     default:
         if (gadgetptry < 0xA8) {
-            dword_ED74C = PickNearestPlayer(dword_ED704, dword_ED708);
+            dword_ED74C = PickNearestPlayer(replayptrx, replayptry);
             if (ev & 2) {
                 if (dword_ED74C == -1) {
                     dword_ED70C = 1;
                     dword_ED6EC = -1;
-                    word_CD4FC = -1;
-                    dword_ED6F0 = dword_ED704;
-                    dword_ED6F4 = dword_ED708;
-                    gadgetptrx = dword_ED6F0;
-                    gadgetptry = dword_ED6F4;
+                    replayfollowpl = -1;
+                    replayspotx = replayptrx;
+                    replayspoty = replayptry;
+                    gadgetptrx = replayspotx;
+                    gadgetptry = replayspoty;
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
                     else if (gadgetptrx < -0x20) gadgetptrx = -0x20;
                     if (gadgetptry > 0xEC) gadgetptry = 0xEC;
                     else if (gadgetptry < -0xBC) gadgetptry = -0xBC;
-                    gadgetptrx = dword_ED6F0 - gadgetptrx + 0xA0;
-                    gadgetptry = gadgetptry - dword_ED6F4 + 0x54;
+                    gadgetptrx = replayspotx - gadgetptrx + 0xA0;
+                    gadgetptry = gadgetptry - replayspoty + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                 } else {
                     dword_ED70C = 0;
-                    word_CD4FC = dword_ED74C;
-                    gadgetptrx = word_E9F18[dword_ED74C];
-                    gadgetptry = word_E9F3A[dword_ED74C];
+                    replayfollowpl = dword_ED74C;
+                    gadgetptrx = rpl_x[dword_ED74C];
+                    gadgetptry = rpl_y[dword_ED74C];
                     if (gadgetptrx > 0x20) gadgetptrx = 0x20;
                     else if (gadgetptrx < -0x20) gadgetptrx = -0x20;
                     if (gadgetptry > 0xEC) gadgetptry = 0xEC;
                     else if (gadgetptry < -0xBC) gadgetptry = -0xBC;
-                    gadgetptrx = word_E9F18[dword_ED74C] - gadgetptrx + 0xA0;
-                    gadgetptry = gadgetptry - word_E9F3A[dword_ED74C] + 0x54;
+                    gadgetptrx = rpl_x[dword_ED74C] - gadgetptrx + 0xA0;
+                    gadgetptry = gadgetptry - rpl_y[dword_ED74C] + 0x54;
                     if (gadgetptry > 0xA7) gadgetptry = 0xA7;
                     MouseSetPos(gadgetptrx, gadgetptry);
                     dword_ED6EC = dword_ED74C;
@@ -393,25 +393,25 @@ int ReplayControlLoop(int *step)
             else if (x1 > 0x140) x1 = 0x140;
             if (y1 < 0) y1 = 0;
             else if (y1 > 0x20) y1 = 0x20;
-            sub_B4BC4(oldx, x1, oldy, y1);
+            SetClipWindow(oldx, x1, oldy, y1);
         }
         sub_B500C(gadgetshape, 0, 0);
-        if (oldbits == dword_ED754) sub_B4BC4(0, 0x140, 0, 0x20);
+        if (oldbits == dword_ED754) SetClipWindow(0, 0x140, 0, 0x20);
         for (hit = 0; hit < 9; hit++) {
             if (dword_ED754 & 1 << hit) DrawGadgetButton(hit);
         }
-        if (gadgetptry >= 0xA8) sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+        if (gadgetptry >= 0xA8) DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
     if (dword_ED754 & 0x80) {
-        dword_ED6FC = 0;
+        replaybtnarmed = 0;
         ReplaySaveHilight(0, gadgetptrx, gadgetptry);
         ClearInputQueue();
         dword_ED754 = 4;
         SelectScreenBM();
-        sub_B4BC4(0, 0x140, 0, 0x20);
+        SetClipWindow(0, 0x140, 0, 0x20);
         sub_B4CD8(gadgetshape, 0, 0);
         DrawGadgetButton(2);
-        sub_91370(pointerspr, gadgetptrx, gadgetptry - 0xA8);
+        DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }
     *step = d;
     return 1;
@@ -420,8 +420,8 @@ int ReplayControlLoop(int *step)
 typedef struct { char *s[2]; } StrPair;
 
 /* HilightSaveToDlg (7F724, PC only; highlights segment 058, the same source file: it ends in
-   DrawGadgetButton_ret): draw the "Save To" box of the highlight saver: save the text state (sub_8E9E8), the
-   highlight font, the box (sub_90D20, two sub_93000 frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
+   DrawGadgetButton_ret): draw the "Save To" box of the highlight saver: save the text state (TextSaveState), the
+   highlight font, the box (FillRect, two sub_93000 frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
    apart from 4Eh, 50h), then "Save To", "Hilights Reel" and the choices (home and away team names from the team
    records, then "Both Teams" / "Neither Team" from bothneitherstrs) centred in the buttons, first in colour 10h
    one pixel down and right as the shadow, then in 59h. No arguments, no result.
@@ -437,9 +437,9 @@ void HilightSaveToDlg(void)
     struct { int i; } count;
 
     both = *(StrPair *)bothneitherstrs;
-    sub_8E9E8(state);
-    sub_8EA18(hilightfont);
-    sub_90D20(0, 0x4B, 0x140, 0x4C, 0x14);
+    TextSaveState(state);
+    TextSetFont(hilightfont);
+    FillRect(0, 0x4B, 0x140, 0x4C, 0x14);
     sub_93000(1, 0x4C, 0x13E, 0x95, 9);
     sub_93000(2, 0x4D, 0x13D, 0x96, 0x10);
     x = 0x4E;
@@ -449,21 +449,21 @@ void HilightSaveToDlg(void)
         sub_B4FAC(x, y, x2 = x + 0x8A, y, 0x59);
         sub_B4FAC(x + 1, y2, x2, y2, 0x10);
         sub_B4FAC(x2, y + 1, x2, y2, 0x10);
-        sub_B5DB0(x2, y, 0x13);
-        sub_B5DB0(x, y2, 0x13);
+        PlotPixel(x2, y, 0x13);
+        PlotPixel(x, y2, 0x13);
     }
     fontcolor = 0x10;
-    sub_91964((char *)str_SaveTo, 0xE, 0x6D);
-    sub_91964((char *)str_HilightsReel, 0xDF, 0x6D);
-    sub_91964((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x52, 0x54);
-    sub_91964((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x52, 0x65);
-    sub_91964(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x52, 0x76);
-    sub_91964(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x52, 0x87);
+    PrintString((char *)str_SaveTo, 0xE, 0x6D);
+    PrintString((char *)str_HilightsReel, 0xDF, 0x6D);
+    PrintString((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x52, 0x54);
+    PrintString((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x52, 0x65);
+    PrintString(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x52, 0x76);
+    PrintString(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x52, 0x87);
     fontcolor = 0x59;
-    sub_91964((char *)str_SaveTo, 0xD, 0x6C);
-    sub_91964((char *)str_HilightsReel, 0xDE, 0x6C);
-    sub_91964((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x51, 0x53);
-    sub_91964((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x51, 0x64);
-    sub_91964(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x51, 0x75);
-    sub_91964(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x51, 0x86);
+    PrintString((char *)str_SaveTo, 0xD, 0x6C);
+    PrintString((char *)str_HilightsReel, 0xDE, 0x6C);
+    PrintString((char *)hmteamrec + 5, (0x85 - fputchar((char *)hmteamrec + 5)) / 2 + 0x51, 0x53);
+    PrintString((char *)awteamrec + 5, (0x85 - fputchar((char *)awteamrec + 5)) / 2 + 0x51, 0x64);
+    PrintString(both.s[0], (0x85 - fputchar(both.s[0])) / 2 + 0x51, 0x75);
+    PrintString(both.s[1], (0x85 - fputchar(both.s[1])) / 2 + 0x51, 0x86);
 }

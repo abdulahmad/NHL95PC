@@ -153,8 +153,8 @@ box2:
     }
 }
 
-/* PC coach-mode settings in the Team structure (InitCoachModes / SetCoachMode write them as byte_DF6E8 /
-   dword_DF6EA for home, DF7E8 / DF7EA for away): +0D4h flags (bit 6: the coach changes lines on the clock only),
+/* PC coach-mode settings in the Team structure (InitCoachModes / SetCoachMode write them as hmtmcoachflags /
+   hmtmcoachenergy for home, DF7E8 / DF7EA for away): +0D4h flags (bit 6: the coach changes lines on the clock only),
    +0D6h the line energy limit for a computer line change (CCCh, D9Ah when trailing; 93G used a fixed C00h). */
 #define TMCOACHFLAGS(t) (((unsigned char *)(t))[0xD4])
 #define TMLCENERGY(t)   (*(unsigned *)((unsigned char *)(t) + 0xD6))
@@ -292,7 +292,7 @@ done:
    team is short-handed on the gmode2 bit 6 side (gmode2 bit 5) with opponents near the puck (threat; 1 in 4), or
    behind with under 4 seconds left. Else the odds start at 20h less his shooting sense (spodds): from farther
    than 100 (10000 squared) they are 16 times longer; with the net empty 1; else they double for each opposing
-   skater in the shot line (vtoa from the puck, word_E03B8), and a pulled goalie (pflags2 bit 1) makes them 1. A
+   skater in the shot line (vtoa from the puck, regd5), and a pulled goalie (pflags2 bit 1) makes them 1. A
    roll of 8 or less (randomd0) shoots when the puck is in front of the net he attacks (0 to E8h; on a penalty
    shot from 74h in) and not while gmode2 bit 7. p: the carrier. Result: 1 when he shot (CompShoot), else 0. */
 short chk4shot(Player *p)
@@ -312,7 +312,7 @@ short chk4shot(Player *p)
         regd4.w = 1;
         goto roll;
     }
-    word_E03B8 = vtoa(regd0.w, regd1.w);
+    regd5 = vtoa(regd0.w, regd1.w);
     q = &SortCords[p->SCnum < 6 ? 6 : 0];
     regd3.w = 6;
     do {
@@ -321,7 +321,7 @@ short chk4shot(Player *p)
         } else {
             regd0.w = HIWORD(q->Xpos) - *puckx;
             regd1.w = HIWORD(q->Ypos) - *pucky;
-            if (vtoa(regd0.w, regd1.w) == word_E03B8) regd4.w += regd4.w;
+            if (vtoa(regd0.w, regd1.w) == regd5) regd4.w += regd4.w;
         }
         q++;
     } while (--regd3.w);
@@ -386,8 +386,8 @@ void ChkShotStat(void)
    unavailable (pflags2 bit 2), crowd +300 (PC: only while not over 1000, capped at 1000), CwdExciteLvl +30, sfx
    A1h (93G SFX0D), centre the scroll on him (xc1 / yc1; PC: 50 lower when he is left of camx) and lock it
    (sflags bit 6, sfslock). PC part: a random roll on his roster byte +0Fh (records at Team +0DEh, 14h bytes each)
-   makes the injury serious when over 6 and word_E9B28 is over 2Dh: out for the game (tmpdst -4, roster status 1),
-   else for the period (tmpdst -3, roster status 6, and -1 for the event). word_CBEC6 = 1, then the event is
+   makes the injury serious when over 6 and lastimpact is over 2Dh: out for the game (tmpdst -4, roster status 1),
+   else for the period (tmpdst -3, roster status 6, and -1 for the event). injurystop = 1, then the event is
    posted (PostInjuryEvent: side, pnum, kind, minutes and seconds into the period) and he leaves the lines
    (RemoveFromLines). p: the injured player. No result. */
 void setInjuryType(Player *p)
@@ -409,7 +409,7 @@ void setInjuryType(Player *p)
     sflags |= 0x40;
     t = p->tmptr;
     kind = randomd0((*(unsigned char **)((char *)t + 0xDE))[p->pnum * 20 + 0xF] + 8) > 6;
-    if (kind > 0 && word_E9B28 > 0x2D) {
+    if (kind > 0 && lastimpact > 0x2D) {
         t->tmpdst[p->pnum] = -4;
         t->tmroster[p->pnum * 39] = 1;
     } else {
@@ -417,7 +417,7 @@ void setInjuryType(Player *p)
         t->tmroster[p->pnum * 39] = 6;
         kind = -1;
     }
-    word_CBEC6 = 1;
+    injurystop = 1;
     left = PerTimeTotal - gameclock;
     if (gameclock < 60 && clockticks[0]) left--;
     ((int (*)(int, int, int, int, int, int, int))PostInjuryEvent)((p->pflags & pfteam) != 0, p->pnum, kind, left / 60, left % 60, 0, 0);
@@ -439,8 +439,8 @@ void ReturnGoalies(void)
     for (; i < 2; i++) {
         if ((((unsigned char *)&t->tmgoalie)[0] & 0xF0) == 0) {
             ((unsigned char *)&t->tmgoalie)[1] = 0;
-            *(unsigned char *)((int (*)[3])off_CD4A0)[i][0] = 2;
-            *(unsigned char *)((int (*)[3])off_CD498)[i][(short)(t->tmgoalie & 0xF)] = 1;
+            *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[i][0] = 2;
+            *(unsigned char *)((int (*)[3])goaliemenuflags)[i][(short)(t->tmgoalie & 0xF)] = 1;
             if (cont1team != i + 1 && cont2team != i + 1)
                 CPgoalie(t, o, *(int *)((char *)&foy - 2) >> 16);
         }

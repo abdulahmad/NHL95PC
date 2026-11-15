@@ -6,7 +6,7 @@
  * Retail CBUILD=0 still draws the three pages after KEY.DB fails: xor ebp at
  * 2AFFB clears err, FitPlayerName reads [esp+10Ch]+13h, FreeMemBlock of that
  * slot at 2B6B0. The slot is only written after a successful open and
- * sub_8CCA8 (2AF3F). On DOS the leftover was usually not a host C-string and
+ * AllocMemBlock (2AF3F). On DOS the leftover was usually not a host C-string and
  * findmemblock rarely ran. The port's bump heap starts at 0x10000000, so the
  * leftover is a host pointer (Abdul's banner (10010060)) and last-name bytes
  * are fragments of that heap (.TIM, WINDOW, GAP).
@@ -17,7 +17,7 @@
  * MATCH src/ stays. Hooks:
  *   FileOpenRead — retry KEY.DB as cwd KEY.DB, then leaguedbfmt/"key"
  *   TonightsGameScreen — still allocate GIPK when the open failed
- *   sub_8CCA8 — zero a GIPK block so unread slots are empty names
+ *   AllocMemBlock — zero a GIPK block so unread slots are empty names
  *   FitPlayerName — cap the copy at LINEUP_NAME_MAX
  *   FreeMemBlock — skip a pointer findmemblock would FatalError on
  */
@@ -167,13 +167,13 @@ int lineup_ea_has(const void *p, const void *lists)
 
 #ifndef LINEUP_TEST
 
-extern char FileOpenRead[], FitPlayerName[], FreeMemBlock[], sub_8CCA8[], TonightsGameScreen[];
+extern char FileOpenRead[], FitPlayerName[], FreeMemBlock[], AllocMemBlock[], TonightsGameScreen[];
 extern char _dos_open_[];
 extern unsigned char leaguedbfmt, leaguedbfmt2;
-extern int dword_D2F58;
+extern int memblocklist;
 
 /* handwritten cdecl (ea_memman_01.asm): name, size, flags, 1 → descriptor; [desc] is the block. */
-extern void *__attribute__((cdecl)) sub_8CD04(char *name, int size, int flags, int one);
+extern void *__attribute__((cdecl)) AllocMemBlockEx(char *name, int size, int flags, int one);
 
 static void *free_cont;
 static int ok_open, ok_fit, ok_free, ok_alloc, ok_always;
@@ -202,14 +202,14 @@ int lineup_open_read(const char *name, int *h)
 int lineup_should_free(const void *p)
 {
     if (!p) return 0;
-    if (lineup_ea_has(p, (const void *)(uintptr_t)(unsigned)dword_D2F58)) return 1;
+    if (lineup_ea_has(p, (const void *)(uintptr_t)(unsigned)memblocklist)) return 1;
     fprintf(stderr, "Tonight's Lineup: skip FreeMemBlock %p (not an EA block)\n", p);
     return 0;
 }
 
 void *lineup_named_alloc(char *name, int size, int flags)
 {
-    void *desc = sub_8CD04(name, size, flags, 1);
+    void *desc = AllocMemBlockEx(name, size, flags, 1);
     void *data;
     if (!desc) return 0;
     data = *(void **)desc;
@@ -220,7 +220,7 @@ void *lineup_named_alloc(char *name, int size, int flags)
 /* Retail 90AC4 (watcom_clib_10.asm). Do not take the linker symbol fputchar: MinGW stdio.h's
  * int fputchar(int) is _fputchar and wins over the game's NASM label. Same GAME_ADDR pattern as emu.c. */
 #define FPUTCHAR_EA 0x90AC4u
-#define GAME_FPUTCHAR ((void *)((uint8_t *)sub_10000 + (FPUTCHAR_EA - 0x10000u)))
+#define GAME_FPUTCHAR ((void *)((uint8_t *)begtext_forever + (FPUTCHAR_EA - 0x10000u)))
 
 static int name_width(const char *s)
 {
@@ -326,14 +326,14 @@ void lineup_install(void)
         fprintf(stderr, "Tonight's Lineup: FreeMemBlock is not the expected code, unknown blocks still fatal\n");
     }
 
-    ok_alloc = check_bytes((uint8_t *)sub_8CCA8, alloc7, 7);
-    if (ok_alloc) patch_jmp(sub_8CCA8, (void *)alloc_thunk);
-    else fprintf(stderr, "Tonight's Lineup: sub_8CCA8 is not the expected code, GIPK is not zeroed\n");
+    ok_alloc = check_bytes((uint8_t *)AllocMemBlock, alloc7, 7);
+    if (ok_alloc) patch_jmp(AllocMemBlock, (void *)alloc_thunk);
+    else fprintf(stderr, "Tonight's Lineup: AllocMemBlock is not the expected code, GIPK is not zeroed\n");
 
     ok_always = check_bytes(always, skip8, 8);
     if (ok_always) {
         static const uint8_t nops[6] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-        patch_bytes(always + 2, nops, 6);   /* keep test ebp; fall through to sub_8CCA8 GIPK */
+        patch_bytes(always + 2, nops, 6);   /* keep test ebp; fall through to AllocMemBlock GIPK */
     } else {
         fprintf(stderr, "Tonight's Lineup: TonightsGameScreen KEY skip is not the expected code, GIPK still skipped on a failed open\n");
     }

@@ -9,8 +9,8 @@ void PrintCenteredText(int y, char *s)
 
     x = (0x280 - fputchar(s)) / 2;
     fontcolor = textshadow;
-    sub_91964(s, x + 1, y + 1);
+    PrintString(s, x + 1, y + 1);
     fontcolor = textcolor;
-    sub_91964(s, x, y);
+    PrintString(s, x, y);
     TextGridPut(x, y, s);
 }

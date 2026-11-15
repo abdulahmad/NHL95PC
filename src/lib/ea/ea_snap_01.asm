@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_9D090 progbits alloc exec nowrite align=1
-extern _os_handle, asc_C4934, asc_C493C, asc_C4944, asc_C494C, dword_D2F84, dword_D30A4, dword_D30A8
+extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, dword_D30A4, dword_D30A8
 extern dword_D30C4, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, sub_8CC8C, sub_8D2F0
-extern sub_8DBD4, sub_8FFB0, sub_91538, sub_932EC, sub_B30B4, sub_B3A88, sub_B3AA1, sub_B4BA8
+extern sub_8DBD4, SetPalette, sub_91538, sub_932EC, FindShape, sub_B3A88, sub_B3AA1, sub_B4BA8
 global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
 global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
 sub_9D090:
@@ -34,7 +34,7 @@ mov dword [dword esp+0B8h], eax	; 9D0DC
 xor esi, esi	; 9D0E3
 push byte 20h	; 9D0E5
 push eax	; 9D0E7
-push asc_C4934	; 9D0E8
+push str_SHAPE2	; 9D0E8
 call sub_8CC8C	; 9D0ED
 add esp, byte 0Ch	; 9D0F2
 mov dword [dword esp+0B4h], eax	; 9D0F5
@@ -54,21 +54,21 @@ mov dword [byte esi+04h], eax	; 9D130
 mov dword [byte esi+08h], 2	; 9D133
 lea eax, [byte esi+0Ch]	; 9D13A
 mov ebx, 4	; 9D13D
-mov edx, asc_C493C	; 9D142
+mov edx, str_Snap	; 9D142
 call strncpy_	; 9D147
 lea eax, [byte esi+010h]	; 9D14C
 mov ebx, 4	; 9D14F
-mov edx, asc_C4944	; 9D154
+mov edx, str_Pal31	; 9D154
 call strncpy_	; 9D159
 mov dword [byte esi+014h], 20h	; 9D15E
 lea eax, [byte esi+018h]	; 9D165
 mov ebx, 4	; 9D168
-mov edx, asc_C494C	; 9D16D
+mov edx, str_Snap2	; 9D16D
 call strncpy_	; 9D172
 mov dword [byte esi+01Ch], 330h	; 9D177
-push asc_C4944	; 9D17E
+push str_Pal31	; 9D17E
 push esi	; 9D183
-call sub_B30B4	; 9D184
+call FindShape	; 9D184
 add esp, byte 8	; 9D189
 mov dword [eax], 22h	; 9D18C
 mov word [byte eax+04h], 100h	; 9D192
@@ -81,11 +81,11 @@ add eax, byte 10h	; 9D1B6
 push eax	; 9D1B9
 push dword 100h	; 9D1BA
 push byte 0	; 9D1BF
-call sub_8FFB0	; 9D1C1
+call SetPalette	; 9D1C1
 add esp, byte 0Ch	; 9D1C6
-push asc_C494C	; 9D1C9
+push str_Snap2	; 9D1C9
 push esi	; 9D1CE
-call sub_B30B4	; 9D1CF
+call FindShape	; 9D1CF
 add esp, byte 8	; 9D1D4
 mov edx, dword [dword ebp+dword_D5184]	; 9D1D7
 and edx, 0FFh	; 9D1DD

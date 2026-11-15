@@ -14,7 +14,7 @@ typedef struct { char c[6]; } Str6;
 /* DRAFT: 1551 vs 1551, 359 of 361 instructions: the second city-name index load uses edx where the EXE uses
    eax (the city name through the nm local put the first one in edx, as in the EXE); see docs/UNSURE.md. */
 /* TradePlayers (40183, PC only): trade players between two teams of the current league. Make the 640 x 480
-   trade bitmap (dword_DE264) and use the trade screen's dialog colours. Read the league (as AddHumanTeam: a
+   trade bitmap (tradebitmap) and use the trade screen's dialog colours. Read the league (as AddHumanTeam: a
    saved game in progress stops it, an unmerged league is merged first after asking); then read the schedule's
    game count and the next game: past the trade deadline (a 3 / 16h+ or 4-9 game, or 444h games played) say so.
    With one human team say trading needs two. Else pick the two teams (LeagueTeamSelect), check both passwords,
@@ -51,7 +51,7 @@ void TradePlayers(void)
     s.fh = -1;
     err = 0;
     s.negone = negone_3DC28;
-    dword_DE264 = sub_B4F8C(0x280, 0x1E0, err);
+    tradebitmap = CreateBitmap(0x280, 0x1E0, err);
     s.fill = dlgfillcol;
     s.edge1 = dlgedgecol1;
     s.edge2 = dlgedgecol2;
@@ -71,7 +71,7 @@ void TradePlayers(void)
                 &leagueflags, &leaguesaved, (char *)&savedname);
         if (!err) {
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             strcpy(s.name, (char *)&curleague);
             s.name[strcspn(s.name, (char *)&str_dot)] = 0;
             if (leaguesaved) {
@@ -100,16 +100,16 @@ void TradePlayers(void)
         if (!err && s.ngames < 0x4AD) err = ReadSchedGame(s.fh, s.game, s.ngames);
         FileClose(&s.fh);
         if (!err && (s.game[0] == 3 && s.game[1] >= 0x16 || s.game[0] > 3 && s.game[0] < 0xA || s.ngames >= 0x444)) {
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-            sub_B2DCA(&s.btn, &s.x, &s.y);
+            MouseRead(&s.btn, &s.x, &s.y);
             MessageBox(-1, -1, (char *)msg_TradeDeadline, 2, 0, 0, (int)&s.x, (int)&s.y, -1);
             err = -1;
         }
         if (!err) {
             if (humancount == 1) {
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
-                sub_B2DCA(&s.btn, &s.x, &s.y);
+                MouseRead(&s.btn, &s.x, &s.y);
                 MessageBox(-1, -1, (char *)msg_OneHuman, 2, err, err, (int)&s.x, (int)&s.y, -1);
             } else {
                 LeagueTeamSelect((char *)&curleague, &humancount, treeteamnames, leagueteams, 0x10,
@@ -122,21 +122,21 @@ void TradePlayers(void)
                         nm = (char *)teamcitynames[s.sel[0]];
                         strcat(s.msg1, nm);
                         strcat(s.msg1, (char *)str_Statistics);
-                        dword_C87C8 = (int)s.msg1;
+                        menutext_trade1 = (int)s.msg1;
                         *(Str6 *)s.msg2 = *(Str6 *)str_Show;
                         nm = (char *)teamcitynames[s.sel[1]];
                         strcat(s.msg2, nm);
                         strcat(s.msg2, (char *)str_Statistics);
-                        dword_C87E8 = (int)s.msg2;
+                        menutext_trade2 = (int)s.msg2;
                         s.x = fputchar(s.msg1);
                         s.y = fputchar(s.msg2);
-                        dword_C87C0 = dword_C87E0 = (s.y < s.x ? s.x : s.y) + 6;
+                        menuwidth_trade1 = menuwidth_trade2 = (s.y < s.x ? s.x : s.y) + 6;
                         r = TradeScreen((char *)&curleague, s.sel, (int)&s.negone, (int)btn_TradeStats, 3);
                     }
                     if (!r) err = ExecuteTrade((char *)&curleague, s.sel, (unsigned char *)&s.negone);
                 }
                 if (err) {
-                    sub_B2DCA(&s.btn, &s.x, &s.y);
+                    MouseRead(&s.btn, &s.x, &s.y);
                     MessageBox(-1, -1, (char *)msg_TradeError, 1, 0, 0, (int)&s.x, (int)&s.y, -1);
                 }
             }
@@ -148,5 +148,5 @@ void TradePlayers(void)
     dlgedgecol3 = s.edge3;
     dlgbevelcol1 = s.bev1;
     dlgbevelcol2 = s.bev2;
-    FreeMemBlock(dword_DE264);
+    FreeMemBlock(tradebitmap);
 }

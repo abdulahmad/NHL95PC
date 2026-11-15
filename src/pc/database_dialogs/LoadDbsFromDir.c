@@ -10,21 +10,21 @@ void LoadDbsFromDir(char *dir, char *ext)
     FreeLeagueDbsMem();
     MakePath(path, dir, (char *)leaguedbnames[5], ext);
     seasondb = (unsigned char *)sub_8E8A0(path, 0x20);
-    seasondb_size = sub_92DE0(path);
+    seasondb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[1], ext);
     careerdb = (unsigned char *)sub_8E8A0(path, 0x20);
-    careerdb_size = sub_92DE0(path);
+    careerdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[3], ext);
     carteamsdb = (unsigned char *)sub_8E8A0(path, 0x20);
-    carteamsdb_size = sub_92DE0(path);
+    carteamsdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[0], ext);
     keydb = (unsigned char *)sub_8E8A0(path, 0x20);
-    keydb_size = sub_92DE0(path);
+    keydb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[4], ext);
     teamsdb = (unsigned char *)sub_8E8A0(path, 0x20);
-    teamsdb_size = sub_92DE0(path);
+    teamsdb_size = GetFileSize(path);
     MakePath(path, dir, (char *)leaguedbnames[2], ext);
     attdb = (unsigned char *)sub_8E8A0(path, 0x20);
-    attdb_size = sub_92DE0(path);
+    attdb_size = GetFileSize(path);
     dbdirty = 0;
 }

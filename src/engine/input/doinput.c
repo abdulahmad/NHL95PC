@@ -13,7 +13,7 @@ short lcselect(Player *p, int n);
  it took, then the request. Then: faceoff (gmode2 bit 0) -> faceoffinput; line change mode (pflags2 bit 3) ->
  lineinput; during the intro (puck assignment 1Ch, no penalty shot) B or C skips it (introskipped). Only a
  player under joystick control (pflags bit 3) goes on. Locked (pflags bit 5, not carrying the puck,
- dword_CCC9C clear): B changes player; the pass receiver keeps his one-timer direction (passdir from the d-pad);
+ playsuspended clear): B changes player; the pass receiver keeps his one-timer direction (passdir from the d-pad);
  otherwise with the puck loose, C pressed and the pass receiver a team-mate skater who is not under control
  (and not pflags2 bit 2), control moves to him (restorepl for the right pad) for a one-timer (onetimerflag).
  The puck carrier: checkob, then passmode / ShotMode while those modes are on, B setpassmode, A SetLCmode (no
@@ -51,7 +51,7 @@ void doinput(Player *p, short ctl)
     if (!(p->pflags & 8)) return;
     if (p->pflags & 0x20) {
         if (*puckc == p->SCnum) return;
-        if (dword_CCC9C) return;
+        if (playsuspended) return;
         if (regd1.w & 0x10) {
             changeplayer(p, ctl);
             return;
@@ -98,7 +98,7 @@ void doinput(Player *p, short ctl)
         }
         goto acc;
     }
-    if (dword_CCC9C) return;
+    if (playsuspended) return;
     if (regd1.w & 0x40) {
         Holdplayer(p);
         return;
@@ -119,7 +119,7 @@ void doinput(Player *p, short ctl)
             changeplayer(p, ctl);
             return;
         }
-        if (!dword_CCC9C) doplayeracc(p, regd0.w);
+        if (!playsuspended) doplayeracc(p, regd0.w);
         return;
     }
     if (*puckc < 0 && (regd1.w & 0x20) && passplayer >= 0 && (passplayer < 6) == (p->SCnum < 6)
@@ -136,7 +136,7 @@ void doinput(Player *p, short ctl)
         burst(p);
         return;
     }
-    if (dword_CCC9C) return;
+    if (playsuspended) return;
 acc:
     doplayeracc(p, regd0.w);
 }

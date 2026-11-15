@@ -83,7 +83,7 @@ tmsort     equ 0F6h  ; tsize d; pointer to the team's first SortCords entry (hom
 tmflags    equ 44h   ; tsize b; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (tmflags(a2))
 tmpptime   equ 08h   ; tsize w; (power-play seconds): updatePPTeamTime adds 1 for the team on the power play (gmode2 bits 5/6)
 tmATOP     equ 0Eh   ; tsize w; (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line
-tmgoalie   equ 38h   ; tsize w; (goalie 1/2/none): releasepl picks the priolist row by its sign
+tmgoalie   equ 38h   ; tsize w; (goalie 1/2/none): releasepl picks the priolist_m1 row by its sign
 tmpbox     equ 0B6h  ; tsize b array; (penalty box list: roster indexes, ends with a negative byte): updatepentime_ut walks it and shifts it down
 tmshots    equ 00h   ; tsize w; team shots: the stats.log dump (DumpStatsLog) prints it under 'shts'
 tmppg      equ 02h   ; tsize w; power-play goals: DumpStatsLog 'ppg' column

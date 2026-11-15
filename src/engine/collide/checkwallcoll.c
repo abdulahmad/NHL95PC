@@ -26,11 +26,11 @@ void checkwallcoll(Player *p, short x, short y)
     ylim = 0x108;
     ylim -= wcradiusy;
     regd4.w = 0x40 - xlim;
-    ry0 = word_E03B8 = 0x40 - ylim;
-    if (y <= word_E03B8 || y >= (word_E03B8 = -word_E03B8)) {
+    ry0 = regd5 = 0x40 - ylim;
+    if (y <= regd5 || y >= (regd5 = -regd5)) {
         if (x < regd4.w || x > (regd4.w = -regd4.w)) {
             regd1.w = x - regd4.w;
-            regd0.w = y - word_E03B8;
+            regd0.w = y - regd5;
             regd3.w = vecdist(W(regd0), W(regd1));
             regd1.w = -regd1.w;
             if (regd3.w >= 0x40) {
@@ -39,7 +39,7 @@ void checkwallcoll(Player *p, short x, short y)
                 wallcollb(p);
             }
         } else
-            checkgoal(p, &SortCords[ry0 == word_E03B8 ? 0x0D : 0x0C], x, y);
+            checkgoal(p, &SortCords[ry0 == regd5 ? 0x0D : 0x0C], x, y);
     }
     regd0.w = p->Wallsin | p->Wallcos;
     if (regd0.w != 0) return;

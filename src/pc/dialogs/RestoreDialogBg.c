@@ -5,7 +5,7 @@
 void RestoreDialogBg(void)
 {
     if (dlgsavebuf) {
-        sub_903F0(dlgsavebuf, dlgsavex, dlgsavey);
+        PutBlock(dlgsavebuf, dlgsavex, dlgsavey);
         FreeMemBlock(dlgsavebuf);
         dlgsavebuf = 0;
     }

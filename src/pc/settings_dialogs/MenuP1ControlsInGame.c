@@ -115,15 +115,15 @@ int ControlsDlgExh(int side)
 {
     int buf;
 
-    buf = sub_8CCA8((char *)str_BKGD4, 0x8C31, 0x20);
+    buf = AllocMemBlock((char *)str_BKGD4, 0x8C31, 0x20);
     *(Hdr17 *)buf = *(Hdr17 *)pointerspr;
     *(short *)(buf + 4) = 0x98;
     *(short *)(buf + 6) = 0xEC;
-    sub_91400(buf, 0xA, 0x13);
+    GrabBlock(buf, 0xA, 0x13);
     DrawControlsDlg(gamemode == 2);
     DrawControlsOpts(side);
     ControlsDlgLoop(side);
-    sub_903F0(buf, 0xA, 0x13);
+    PutBlock(buf, 0xA, 0x13);
     FreeMemBlock(buf);
     ctldlgalt = 0;
     return 0;
@@ -147,15 +147,15 @@ int ControlsDlgLeague(int side)
 {
     int buf;
 
-    buf = sub_8CCA8((char *)str_BKGD4, 0x8C31, 0x20);
+    buf = AllocMemBlock((char *)str_BKGD4, 0x8C31, 0x20);
     *(Hdr17 *)buf = *(Hdr17 *)pointerspr;
     *(short *)(buf + 4) = 0x98;
     *(short *)(buf + 6) = 0xEC;
-    sub_91400(buf, 0xA, 0x13);
+    GrabBlock(buf, 0xA, 0x13);
     DrawControlsDlg(0);
     DrawControlsOpts(side);
     ControlsDlgLoop(side);
-    sub_903F0(buf, 0xA, 0x13);
+    PutBlock(buf, 0xA, 0x13);
     FreeMemBlock(buf);
     ctldlgalt = 0;
     return 0;
@@ -176,7 +176,7 @@ void MenuP2ControlsInGame(void)
 /* CtlSwapScoreFix: put side's pulled goalie back (tmgoalie negative with a goalie choice in bits 4-7): keep the
  choice (low nibble); not while side trails by 1-2 in the third period with more than 60 seconds left, nor
  while the other team has the puck in a stoppage. Then the goalie is back (high byte 0), the menu shows him
- checked (off_CD498) and "pulled" unchecked (off_CD4A0), setpersonel. */
+ checked (goaliemenuflags) and "pulled" unchecked (goaliemenuflags_e02), setpersonel. */
 void CtlSwapScoreFix(int side)
 {
     Team *t;
@@ -190,8 +190,8 @@ void CtlSwapScoreFix(int side)
     if (d > 0 && d <= 2 && gsp == 2 && gameclock <= 0x3C) return;
     if (!(gmode & 1) && *puckc >= 0 && ((*puckc < 6) ^ side) && (gmode & 8)) return;
     ((unsigned char *)&t->tmgoalie)[1] = 0;
-    *(unsigned char *)((int (*)[3])off_CD4A0)[side][0] = 2;
-    *(unsigned char *)((int (*)[3])off_CD498)[side][(short)(t->tmgoalie & 0xF)] = 1;
+    *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[side][0] = 2;
+    *(unsigned char *)((int (*)[3])goaliemenuflags)[side][(short)(t->tmgoalie & 0xF)] = 1;
     setpersonel(t);
 }
 
@@ -323,15 +323,15 @@ int ControlsDlgInGame(int side)
     int old2;
 
     result = 0;
-    buf = bkgd = sub_8CCA8((char *)str_BKGD4, 0x8C31, 0x20);
+    buf = bkgd = AllocMemBlock((char *)str_BKGD4, 0x8C31, 0x20);
     *(Hdr17 *)buf = *(Hdr17 *)pointerspr;
     *(short *)(buf + 4) = 0x98;
     *(short *)(buf + 6) = 0xEC;
-    sub_91400(buf, 0xA, 0x13);
+    GrabBlock(buf, 0xA, 0x13);
     DrawControlsDlg(0);
     DrawControlsOpts(side);
     ControlsDlgLoop(side);
-    sub_903F0(buf, 0xA, 0x13);
+    PutBlock(buf, 0xA, 0x13);
     if (ctl1team[side] < 0) team = 0;
     else if (ctl1side[side] == 0) team = 1;
     else team = 2;
@@ -381,15 +381,15 @@ int ControlsDlgPlayoff(int side)
     int buf;
     int team;
 
-    buf = sub_8CCA8((char *)str_BKGD4, 0x8C31, 0x20);
+    buf = AllocMemBlock((char *)str_BKGD4, 0x8C31, 0x20);
     *(Hdr17 *)buf = *(Hdr17 *)pointerspr;
     *(short *)(buf + 4) = 0x98;
     *(short *)(buf + 6) = 0xEC;
-    sub_91400(buf, 0xA, 0x13);
+    GrabBlock(buf, 0xA, 0x13);
     DrawControlsDlg(1);
     DrawControlsOpts(side);
     ControlsDlgLoop(side);
-    sub_903F0(buf, 0xA, 0x13);
+    PutBlock(buf, 0xA, 0x13);
     if (ctl1team[side] < 0) team = 0;
     else if (ctl1side[side] == 0) team = 1;
     else team = 2;
@@ -426,25 +426,25 @@ void DrawControlsDlg(int alt)
         remap[0xF8] = 0x42;
         remap[0xF7] = 0x43;
     }
-    sub_B4DD4((unsigned char *)remap);
+    SetColorRemap((unsigned char *)remap);
     MakePath(path, fileoncd[0x138] == 1 ? (char *)cddriveptr : 0, (char *)str_PlayerImg, 0);
-    bank = sub_8E83C(path, 0);
-    sub_931FC(sub_B30B4(bank, (char *)str_Dbox5), 0xA, 0x13);
+    bank = LoadBank(path, 0);
+    DrawArtMasked(FindShape(bank, (char *)str_Dbox5), 0xA, 0x13);
     FreeMemBlock(bank);
-    if (alt) sub_8E9C0(0x40, 0xFF);
-    else sub_8E9C0(0xFA, 0xFF);
+    if (alt) TextSetColors(0x40, 0xFF);
+    else TextSetColors(0xFA, 0xFF);
     x = ctldlgrects[0] + 0xB;
     y = ctldlgrects[1] + 0x14;
     w = ctldlgrects[2] + 0xA - x;
     h = ctldlgrects[3] + 0x13 - y;
-    sub_90D20(x, y, w, h, remap[0xF9]);
-    sub_91964((char *)teamcitynames[HomeTeam], x + 3, y);
+    FillRect(x, y, w, h, remap[0xF9]);
+    PrintString((char *)teamcitynames[HomeTeam], x + 3, y);
     x = ctldlgrects[4] + 0xB;
     y = ctldlgrects[5] + 0x14;
     w = ctldlgrects[6] + 0xA - x;
     h = ctldlgrects[7] + 0x13 - y;
-    sub_90D20(x, y, w, h, remap[0xF9]);
-    sub_91964((char *)teamcitynames[VisTeam], x + 3, y);
+    FillRect(x, y, w, h, remap[0xF9]);
+    PrintString((char *)teamcitynames[VisTeam], x + 3, y);
 }
 
 /* DrawControlsOpts (7D3F0, PC only): the controls dialog's choices for controller side: the title (ONE / TWO),
@@ -461,10 +461,10 @@ void DrawControlsOpts(int side)
     int *r;
     unsigned char away;
 
-    if (ctldlgalt) sub_8E9C0(0x40, 0xFF);
-    else sub_8E9C0(0xFA, 0xFF);
-    if (!side) sub_91964((char *)str_OneS, 0x4A, 0x20);
-    else sub_91964((char *)str_TwoS, 0x4A, 0x20);
+    if (ctldlgalt) TextSetColors(0x40, 0xFF);
+    else TextSetColors(0xFA, 0xFF);
+    if (!side) PrintString((char *)str_OneS, 0x4A, 0x20);
+    else PrintString((char *)str_TwoS, 0x4A, 0x20);
     setbits[0] = 0;
     setbits[1] = AVAIL->joy1 << 3 | (AVAIL->mouse << 2 | 0x1C3) | AVAIL->joy2 << 4 | AVAIL->keys << 5;
     if (ctl1dev[side == 0] != 0x10) setbits[1] &= ~(ctl1dev[side == 0] << 2);
@@ -482,12 +482,12 @@ void DrawControlsOpts(int side)
         if (setbits[0] & bit) DrawCtlBoxOn(r);
         else DrawCtlBoxOff(r);
     }
-    if (ctldlgalt) sub_8E9C0(0x42, 0xFF);
-    else sub_8E9C0(0xF8, 0xFF);
-    if (!(setbits[1] & 4)) sub_91964((char *)str_TheMouse, ctldlgrects[8] + 0x19, ctldlgrects[9] + 0x14);
-    if (!(setbits[1] & 8)) sub_91964((char *)str_JoystickOne, ctldlgrects[0xC] + 0x12, ctldlgrects[0xD] + 0x14);
-    if (!(setbits[1] & 0x10)) sub_91964((char *)str_JoystickTwo, ctldlgrects[0x10] + 0x11, ctldlgrects[0x11] + 0x14);
-    if (!(setbits[1] & 0x20)) sub_91964((char *)str_TheKeyboard, ctldlgrects[0x14] + 0xF, ctldlgrects[0x15] + 0x14);
+    if (ctldlgalt) TextSetColors(0x42, 0xFF);
+    else TextSetColors(0xF8, 0xFF);
+    if (!(setbits[1] & 4)) PrintString((char *)str_TheMouse, ctldlgrects[8] + 0x19, ctldlgrects[9] + 0x14);
+    if (!(setbits[1] & 8)) PrintString((char *)str_JoystickOne, ctldlgrects[0xC] + 0x12, ctldlgrects[0xD] + 0x14);
+    if (!(setbits[1] & 0x10)) PrintString((char *)str_JoystickTwo, ctldlgrects[0x10] + 0x11, ctldlgrects[0x11] + 0x14);
+    if (!(setbits[1] & 0x20)) PrintString((char *)str_TheKeyboard, ctldlgrects[0x14] + 0xF, ctldlgrects[0x15] + 0x14);
 }
 
 /* ControlsDlgLoop (7D6B1, PC only): run the controls dialog for controller side with the mouse pointer (its
@@ -510,16 +510,16 @@ int ControlsDlgLoop(int side)
     int save;
     unsigned char *ev;
 
-    sub_B2DCA(&btn, &ox, &oy);
+    MouseRead(&btn, &ox, &oy);
     mx = ox;
     my = oy;
     sz = ((*(int *)(pointerspr + 2) >> 16) + 1) * ((*(int *)(pointerspr + 4) >> 16) + 1) + 0x11;
-    save = sub_8CCA8((char *)str_Pointer18, sz, 0x20);
+    save = AllocMemBlock((char *)str_Pointer18, sz, 0x20);
     *(Hdr17 *)save = *(Hdr17 *)pointerspr;
     *(short *)(save + 4) = *(short *)(pointerspr + 4) + 1;
     *(short *)(save + 6) = *(short *)(pointerspr + 6) + 1;
-    sub_91400(save, mx - 4, my);
-    sub_91370(pointerspr, mx - 4, my);
+    GrabBlock(save, mx - 4, my);
+    DrawArt(pointerspr, mx - 4, my);
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -529,14 +529,14 @@ int ControlsDlgLoop(int side)
         }
         if (!(btn & 2) && !(btn & 4)) {
             if (mx != ox || my != oy) {
-                sub_903F0(save, ox - 4, oy);
-                sub_91400(save, mx - 4, my);
-                sub_91370(pointerspr, mx - 4, my);
+                PutBlock(save, ox - 4, oy);
+                GrabBlock(save, mx - 4, my);
+                DrawArt(pointerspr, mx - 4, my);
                 ox = mx;
                 oy = my;
             }
         } else if (btn & 2) {
-            sub_903F0(save, ox - 4, oy);
+            PutBlock(save, ox - 4, oy);
             if (CtlDlgHitTest(mx, my, &hit)) {
                 hit = 1 << hit;
                 if (!(hit & setbits[0]) && (hit & setbits[1])) {
@@ -549,11 +549,11 @@ int ControlsDlgLoop(int side)
                     case 0x20: setbits[0] = setbits[0] & ~0x7C | 0x20; break;
                     case 0x40: setbits[0] = setbits[0] & ~0x7C | 0x40; break;
                     case 0x100:
-                        DrawCtlBoxOn((int *)unk_D19DC);
+                        DrawCtlBoxOn((int *)ctlboxrect2);
                         FreeMemBlock(save);
                         return 0;
                     case 0x80:
-                        DrawCtlBoxOn((int *)unk_D19CC);
+                        DrawCtlBoxOn((int *)ctlboxrect1);
                         ctl1dev[side] = setbits[0] >> 2;
                         if (setbits[0] == 0x41) {
                             ctl1team[side] = -1;
@@ -598,18 +598,18 @@ int ControlsDlgLoop(int side)
                     DrawCtlBoxes();
                 }
             }
-            sub_91400(save, mx - 4, my);
-            sub_91370(pointerspr, mx - 4, my);
+            GrabBlock(save, mx - 4, my);
+            DrawArt(pointerspr, mx - 4, my);
             ox = mx;
             oy = my;
         } else if (btn & 4) {
-            sub_903F0(save, ox - 4, oy);
+            PutBlock(save, ox - 4, oy);
             FreeMemBlock(save);
             return 0;
         } else {
-            sub_903F0(save, ox - 4, oy);
-            sub_91400(save, mx - 4, my);
-            sub_91370(pointerspr, mx - 4, my);
+            PutBlock(save, ox - 4, oy);
+            GrabBlock(save, mx - 4, my);
+            DrawArt(pointerspr, mx - 4, my);
             ox = mx;
             oy = my;
         }

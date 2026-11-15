@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A3274 progbits alloc exec nowrite align=1
-extern __GETDS, _dos_setvect_, asc_C4B30, byte_D65F8, byte_D65F9, dword_D4D11, unk_D657C, unk_F58E4
+extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, byte_D65F8, byte_D65F9, dword_D4D11, unk_D657C, unk_F58E4
 global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
 global sub_A35EC, sub_A3610, sub_A365C, sub_A3680, loc_A369A, loc_A3706, loc_A370C, loc_A3732
@@ -4349,7 +4349,7 @@ jne short loc_A650C	; A6505
 test dx, dx	; A6507
 je short loc_A6558	; A650A
 loc_A650C:
-mov esi, asc_C4B30	; A650C
+mov esi, str_RATIONALDOS4G	; A650C
 mov eax, 0A00h	; A6511
 push es	; A6516
 int 31h	; A6517
