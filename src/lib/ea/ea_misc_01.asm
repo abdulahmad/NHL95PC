@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9B498 progbits alloc exec nowrite align=1
-extern dword_D30C8, sub_90D20, sub_B5DB0, sub_B704C, unk_9B470
+extern dword_D30C8, FillRect, PlotPixel, sub_B704C, unk_9B470
 global sub_9B498, loc_9B4B9, loc_9B544, loc_9B565, loc_9B589, loc_9B58C, loc_9B5A9, loc_9B5AC
 global loc_9B5C9, loc_9B5E1, loc_9B61A, loc_9B632, loc_9B66B, loc_9B67E, loc_9B6B3, loc_9B6C6
 global loc_9B6F7, loc_9B706
@@ -63,7 +63,7 @@ push byte 1	; 9B551
 push esi	; 9B553
 push ebp	; 9B554
 push edi	; 9B555
-call sub_90D20	; 9B556
+call FillRect	; 9B556
 add esp, byte 14h	; 9B55B
 add esp, byte 2Ch	; 9B55E
 pop ebp	; 9B561
@@ -80,7 +80,7 @@ push esi	; 9B575
 push byte 1	; 9B576
 push eax	; 9B578
 push edi	; 9B579
-call sub_90D20	; 9B57A
+call FillRect	; 9B57A
 add esp, byte 14h	; 9B57F
 add esp, byte 2Ch	; 9B582
 pop ebp	; 9B585
@@ -99,7 +99,7 @@ push ebp	; 9B59B
 push edi	; 9B59C
 inc ebp	; 9B59D
 dec edi	; 9B59E
-call sub_B5DB0	; 9B59F
+call PlotPixel	; 9B59F
 add esp, byte 0Ch	; 9B5A4
 jmp short loc_9B58C	; 9B5A7
 loc_9B5A9:
@@ -114,7 +114,7 @@ push ebp	; 9B5BB
 push edi	; 9B5BC
 inc ebp	; 9B5BD
 inc edi	; 9B5BE
-call sub_B5DB0	; 9B5BF
+call PlotPixel	; 9B5BF
 add esp, byte 0Ch	; 9B5C4
 jmp short loc_9B5AC	; 9B5C7
 loc_9B5C9:
@@ -136,7 +136,7 @@ push ecx	; 9B5F4
 push edi	; 9B5F5
 lea eax, [byte ecx+01h]	; 9B5F6
 mov dword [byte esp+024h], eax	; 9B5F9
-call sub_B5DB0	; 9B5FD
+call PlotPixel	; 9B5FD
 add esp, byte 0Ch	; 9B602
 add ebp, dword [byte esp+014h]	; 9B605
 test ebp, 0FFFF0000h	; 9B609
@@ -163,7 +163,7 @@ push ecx	; 9B645
 push edi	; 9B646
 lea eax, [byte ecx+01h]	; 9B647
 mov dword [byte esp+028h], eax	; 9B64A
-call sub_B5DB0	; 9B64E
+call PlotPixel	; 9B64E
 add esp, byte 0Ch	; 9B653
 add ebp, dword [byte esp+08h]	; 9B656
 test ebp, 0FFFF0000h	; 9B65A
@@ -185,7 +185,7 @@ mov ecx, dword [byte esp+028h]	; 9B688
 push ecx	; 9B68C
 push ebp	; 9B68D
 push edi	; 9B68E
-call sub_B5DB0	; 9B68F
+call PlotPixel	; 9B68F
 add esp, byte 0Ch	; 9B694
 dec edi	; 9B697
 mov eax, dword [byte esp+010h]	; 9B698
@@ -210,7 +210,7 @@ mov edx, dword [byte esp+028h]	; 9B6CC
 push edx	; 9B6D0
 push ebp	; 9B6D1
 push edi	; 9B6D2
-call sub_B5DB0	; 9B6D3
+call PlotPixel	; 9B6D3
 add esp, byte 0Ch	; 9B6D8
 inc edi	; 9B6DB
 mov eax, dword [byte esp+0Ch]	; 9B6DC
@@ -226,7 +226,7 @@ mov ebx, dword [byte esp+028h]	; 9B6F7
 push ebx	; 9B6FB
 push ebp	; 9B6FC
 push edi	; 9B6FD
-call sub_B5DB0	; 9B6FE
+call PlotPixel	; 9B6FE
 add esp, byte 0Ch	; 9B703
 loc_9B706:
 add esp, byte 2Ch	; 9B706

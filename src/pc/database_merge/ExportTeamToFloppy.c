@@ -91,7 +91,7 @@ int ExportTeamToFloppy(char *dir, char *ext, char *ext2, int team, unsigned char
             if (s.diff) {
                 FmtFromLeague(s.msg, s.id, s.lgname);
                 msg_WrongDisk_arg = (int)s.msg;
-                sub_B2DCA(&s.btn, &s.my, &s.mx);
+                MouseRead(&s.btn, &s.my, &s.mx);
                 s.btn = MessageBox(-1, -1, (char *)msg_WrongDisk, 3, (int)btn_WrongDisk, 2, (int)&s.my, (int)&s.mx, -1);
                 if (!s.btn) s.done = -1;
                 else err = -1;
@@ -101,7 +101,7 @@ int ExportTeamToFloppy(char *dir, char *ext, char *ext2, int team, unsigned char
                     err = WaitLeagueFloppy(dir, t, 1);
                     if (err > 0) {
                         err = 0;
-                        sub_B2DCA(&s.i, &s.my, &s.mx);
+                        MouseRead(&s.i, &s.my, &s.mx);
                         s.btn = MessageBox(-1, -1, (char *)newfloppymsg, 2, (int)newfloppybtns, 2, (int)&s.my, (int)&s.mx, -1);
                         if (!s.btn) {
                             s.entry[0x16] = 1;
@@ -180,7 +180,7 @@ int ExportTeamToFloppy(char *dir, char *ext, char *ext2, int team, unsigned char
             t[0x16] = 1;
             t[0x18] |= 1;
             WriteLeagueTeamEntry(s.fh2, t, s.team);
-            sub_B2DCA(&s.i, &s.my, &s.mx);
+            MouseRead(&s.i, &s.my, &s.mx);
             MessageBox(-1, -1, (char *)exporterrmsg, 2, 0, 0, (int)&s.my, (int)&s.mx, -1);
             }
         } else {
@@ -188,7 +188,7 @@ int ExportTeamToFloppy(char *dir, char *ext, char *ext2, int team, unsigned char
             s.lname[_fstrcspn(s.lname, (char *)&str_dot)] = 0;
             forceexportmsg[0] = (int)s.lname;
             forceexportmsg[2] = (int)t;
-            sub_B2DCA(&s.i, &s.my, &s.mx);
+            MouseRead(&s.i, &s.my, &s.mx);
             MessageBox(-1, -1, (char *)forceexportmsg, 3, 0, 0, (int)&s.my, (int)&s.mx, -1);
         }
     }

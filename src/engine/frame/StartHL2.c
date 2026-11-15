@@ -43,7 +43,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     int t;
     Player *pl;
 
-    dword_CCC98 = 0;
+    oneminsaid = 0;
     sgameover = gameover;
     p = save;
     *p++ = HomeTeam;
@@ -72,7 +72,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     HomeTeam = home;
     VisTeam = vis;
     LoadGameTeams(2);
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     LoadTeamPalette(HomeTeam, VisTeam, gamepal);
     LoadPlayerPhotos();
     awtmgoalie = 0;
@@ -112,18 +112,18 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     RefStep[0] = -1;
     Pencntdwn = -1;
     RefPen = 0;
-    word_C90D8 = -1;
+    penaltysc = -1;
     ovltimer = -1;
     word_CBC44 = 0;
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;
     bannertimer = 0;
-    word_CBEC6 = 0;
+    injurystop = 0;
     crowdlevel = 0;
     crowdsmooth = 0;
-    word_DF81A = -1;
-    word_DF816 = -1;
+    puckcross6 = -1;
+    puckcross2 = -1;
     setupice();
     SprSortVert();
     camy = 0;
@@ -137,24 +137,24 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     reenergizeteam(&hmtmstruct);
     setpersonel(&hmtmstruct);
     forcepldata(&hmtmstruct);
-    dword_DF648[0] = -1;
-    dword_DF646[0] = -1;
-    word_DF644[0] = -1;
+    hmtmtouch3[0] = -1;
+    hmtmtouch2[0] = -1;
+    hmtmtouch1[0] = -1;
     reenergizeteam(&awtmstruct);
     setpersonel(&awtmstruct);
     forcepldata(&awtmstruct);
-    dword_DF748 = -1;
-    word_DF746 = -1;
-    word_DF744 = -1;
+    awtmtouch3 = -1;
+    awtmtouch2 = -1;
+    awtmtouch1 = -1;
     resetplstuff();
     pl = SortCords;
     for (i = 0; i < 0xC; i++, pl++) {
         k = (pl->pflags & 0x80 ? 0 : 6) + pl->position;
         j = k + k;
         r = randomd0(0x14) - 10;
-        HIWORD(pl->Xpos) = dword_CD9A0[k * 2] + r;
+        HIWORD(pl->Xpos) = starthl2pos[k * 2] + r;
         t = pl->position == 0;
-        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + dword_CD9A0[j + 1];
+        HIWORD(pl->Ypos) = (randomd0(pl->position == 0 ? 4 : 0x14) - t ? 4 : 0xA) + starthl2pos[j + 1];
         pl->Xvel = pl->Yvel = 0;
         pl->facedir = vtoa((short)(*puckx - HIWORD(pl->Xpos)), (short)(*pucky - HIWORD(pl->Ypos)));
     }
@@ -217,7 +217,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         if (fadeinpending) {
             joysampling_save = joysampling;
             joysampling = 0;
-            sub_8FFB0(0, 0x100, savepal);
+            SetPalette(0, 0x100, savepal);
             FadePalette(1, savepal, 0x10);
             joysampling = joysampling_save;
         }
@@ -247,13 +247,13 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
         if (regd1.w & 0x10 || regd1.w & 0x20) break;
     }
     joysampling = 0;
-    if (ovlseq != -1) FreeMemBlock(dword_E0244);
+    if (ovlseq != -1) FreeMemBlock(ovlartbank);
     bannermsg = -1;
     ovlstep = -1;
     ovlseq = -1;
     demomode = 0;
-    dword_CCC98 = 0;
-    sub_8FFB0(0, 0x100, savepal);
+    oneminsaid = 0;
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     CrowdFadeOut();
     crowdlevel = 0;

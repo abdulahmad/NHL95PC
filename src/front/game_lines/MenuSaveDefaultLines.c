@@ -256,26 +256,26 @@ int MenuGameShowPlayerStats(unsigned char *nums, int a, unsigned char side, int 
     int i;
     int s;
 
-    dword_DC734 = dword_DC738 = 1;
+    dword_DC734 = leaguestatsmode = 1;
     statsredrawcb = (int)TeamRosterScreen;
     if (side) statscategory = VisTeam;
     else statscategory = HomeTeam;
-    statsteambuf = sub_8CCA8((char *)str_Tstat2, 0x2A4, 0x20);
-    statsplayerbuf = (unsigned char *)sub_8CCA8((char *)str_Keys4, 0x5B0, 0x20);
-    statsskaterbuf = (unsigned char *)sub_8CCA8((char *)str_Pstat4, 0x497, 0x20);
-    statsgoaliebuf = (unsigned char *)sub_8CCA8((char *)str_Gstat4, 0x10E, 0x20);
-    sub_8FFB0(0, 0x100, byte_ECDF4);
-    for (i = 0; i < 0x300; i++) pal[i] = byte_ECDF4[i];
+    statsteambuf = AllocMemBlock((char *)str_Tstat2, 0x2A4, 0x20);
+    statsplayerbuf = (unsigned char *)AllocMemBlock((char *)str_Keys4, 0x5B0, 0x20);
+    statsskaterbuf = (unsigned char *)AllocMemBlock((char *)str_Pstat4, 0x497, 0x20);
+    statsgoaliebuf = (unsigned char *)AllocMemBlock((char *)str_Gstat4, 0x10E, 0x20);
+    SetPalette(0, 0x100, gamelinespal);
+    for (i = 0; i < 0x300; i++) pal[i] = gamelinespal[i];
     FadePalStep(1, pal, 0x10);
     if (side) TeamRosterScreen(VisTeam);
     else TeamRosterScreen(HomeTeam);
-    DrawMenuBar(unk_CF48F, 2, 0xC0, 0xC1, 0xC2);
-    for (i = 0; i < 0x300; i++) pal[i] = byte_ECDF4[i];
+    DrawMenuBar(gameplstatsmenubar, 2, 0xC0, 0xC1, 0xC2);
+    for (i = 0; i < 0x300; i++) pal[i] = gamelinespal[i];
     FadePalStep(0, pal, 0x10);
-    RunMenu(unk_CF48F, 2, 0xC0, 0xC1, 0xC2);
+    RunMenu(gameplstatsmenubar, 2, 0xC0, 0xC1, 0xC2);
     FadePalStep(1, pal, 0x10);
-    for (i = 0; i < 0x300; i++) pal[i] = byte_ECDF4[i];
-    dword_DC738 = 0;
+    for (i = 0; i < 0x300; i++) pal[i] = gamelinespal[i];
+    leaguestatsmode = 0;
     statsredrawcb = 0;
     FreeMemBlock(statsteambuf);
     FreeMemBlock((int)statsgoaliebuf);
@@ -286,8 +286,8 @@ int MenuGameShowPlayerStats(unsigned char *nums, int a, unsigned char side, int 
     DrawGameLineJerseys(nums, art, side);
     s = *sel;
     if (s >= 0) {
-        if (hmroster[gmrosterslot[s * 22] * 39 + side * 0x444] == 2) sub_8E9C0(0xFD, 0xC1);
-        else sub_8E9C0(0xC0, 0xC1);
+        if (hmroster[gmrosterslot[s * 22] * 39 + side * 0x444] == 2) TextSetColors(0xFD, 0xC1);
+        else TextSetColors(0xC0, 0xC1);
         sprintf(buf, (char *)str_C2dS3, gmroster[*sel * 22], gmrosterjersey[*sel * 22], gmroster + *sel * 22 + 3);
         PrintLineEdStatus(0x1FA, *sel * 13 + 0x16, buf);
     }
@@ -320,7 +320,7 @@ int GameScratchPlayer(unsigned char *nums, int a, unsigned char side, int *sel, 
     }
     hmroster[gmrosterslot[*sel * 22] * 39 + side * 0x444] = 2;
     DrawGameLineJerseys(nums, art, side);
-    sub_8E9C0(0xFC, 0xC1);
+    TextSetColors(0xFC, 0xC1);
     sprintf(buf, (char *)str_C2dS3, gmroster[*sel * 22], gmrosterjersey[*sel * 22], gmroster + *sel * 22 + 3);
     PrintLineEdStatus(0x1FA, *sel * 13 + 0x16, buf);
     return 0;

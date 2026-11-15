@@ -65,22 +65,22 @@ void LoadRink(int rink)
         rinktilebm = 0;
     }
     if (!rinktilebm) {
-        rinktilebm = sub_B4F8C(0x180, 0x250, 0);
+        rinktilebm = CreateBitmap(0x180, 0x250, 0);
         currink = -1;
     }
     if (rink != currink) {
         MakePath(path, fileoncd[0x15B] == 1 ? (char *)cddriveptr : 0, (char *)str_Rink2, 0);
-        t = sub_8E83C(path, 0);
+        t = LoadBank(path, 0);
         rinkhtiles = 0x4A;
         rinkwtiles = 0x30;
         SetDrawBitmap(rinktilebm);
-        sub_913B4(sub_B30B4(t, (char *)str_Rink2));
+        DrawShape(FindShape(t, (char *)str_Rink2));
         FreeMemBlock(t);
         MakePath(path, fileoncd[rinkfileidx[rink] + 1] == 1 ? (char *)cddriveptr : 0, (char *)rinkarenas + (t = rink * 12), (char *)str_Til);
-        size = sub_92DE0(path);
+        size = GetFileSize(path);
         t = size;
         if (t % 64) FatalError((char *)str_InvalidFileSize, path, t);
-        tiles = sub_8CCA8((char *)str_TILES, size, 0);
+        tiles = AllocMemBlock((char *)str_TILES, size, 0);
         if (!sub_92EE4(path, tiles)) FatalError((char *)str_ErrorLoadingFile, path);
         MakePath(path, fileoncd[rinkfileidx[rink]] == 1 ? (char *)cddriveptr : 0, (char *)rinkarenas + (t = rink * 12), (char *)str_Map);
         smap = sub_8E8A0(path, 0);
@@ -98,7 +98,7 @@ void LoadRink(int rink)
     SHAPE(t)->type = n;
     SHAPE(t)->rest = n;
     SHAPE(rinktilebm)->x0 = SHAPE(rinktilebm)->y0 = SHAPE(rinktilebm)->x1 = SHAPE(rinktilebm)->y1 = 0;
-    if (!(t = rinkbm)) rinkbm = sub_B4F8C(0x180, 0x250, t);
+    if (!(t = rinkbm)) rinkbm = CreateBitmap(0x180, 0x250, t);
     SHAPE(rinkbm)->w = rinkwtiles << 3;
     SHAPE(rinkbm)->h = rinkhtiles << 3;
     t = rinkbm;

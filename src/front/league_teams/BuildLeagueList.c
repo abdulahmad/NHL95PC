@@ -41,10 +41,10 @@ int BuildLeagueList(char ***list, char **names, int flags)
     }
     if (n) {
         size = n * 4;
-        *list = (char **)sub_8CCA8((char *)str_LLST, size, 0x20);
+        *list = (char **)AllocMemBlock((char *)str_LLST, size, 0x20);
         memset(*list, 0, size);
         i = n * 9;
-        *names = (char *)sub_8CCA8((char *)str_LLSN, i, 0x20);
+        *names = (char *)AllocMemBlock((char *)str_LLSN, i, 0x20);
         memset(*names, 0, i);
         cnt = n;
         for (i = 0; i < cnt; i++) {

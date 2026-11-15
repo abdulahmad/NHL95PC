@@ -4,11 +4,11 @@ bits 32
 section s_1431E progbits alloc exec nowrite align=1
 extern __CHK, _dos_close_, _dos_creat_, _dos_getdiskfree_, _dos_open_, _dos_read_, _dos_write_, awlineind
 extern awpanelspr, clockcolon, clockdigits, curleague, DrawEnergyBar, DrawLineGroupBars, DrawPanelClockDigits, DrawPanelPenalties
-extern dword_C56C4, dword_C56E4, dword_C5710, dword_C5714, dword_C5718, dword_C583C, dword_C5844, dword_C5848
-extern dword_C5854, dword_C5858, dword_C585C, dword_C5860, FatalError, gmode, hmlineind, hmpanelspr
+extern awlineenergies, hmlineenergies, panelprevmin, panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines
+extern hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, FatalError, gmode, hmlineind, hmpanelspr
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome
 extern j_unlink_, lcboxon, leaguedbnames, linesprites, lseek_, MessageBox, MouseSetPos, msg_NeedKbytes
-extern off_C56B5, rmdir_, scoredigits, SelectRinkBM, SelectScreenBM, sprintf_, str_backslash2, str_dot
+extern msg_GameDiskSpace, rmdir_, scoredigits, SelectRinkBM, SelectScreenBM, sprintf_, str_backslash2, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_star, strcat_, strcpy_, sub_B4CD8
 extern sub_B4CF2, TeamLineEnergy, TickPanelClock, TickPanelPenalties, unknown_libname_1, unknown_libname_2
 global MakePath, DeleteFiles, DeleteDir, FileOpenRead, FileOpenRead_x, FileOpenWrite, FileOpenRW, FileCreate
@@ -676,7 +676,7 @@ push eax	; 14996
 push byte 0	; 14997
 push byte 0	; 14999
 mov ecx, 3	; 1499B
-mov ebx, off_C56B5	; 149A0
+mov ebx, msg_GameDiskSpace	; 149A0
 mov edx, 0FFFFFFFFh	; 149A5
 mov eax, edx	; 149AA
 call MessageBox	; 149AC

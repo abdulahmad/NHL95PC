@@ -4,33 +4,33 @@ bits 32
 %include "hockey.inc"
 section s_614C2 progbits alloc exec nowrite align=1
 extern __CHK, assinsert, assreplace, awgoalcnt, awscore, awtmap, awtmflags, awtmstruct
-extern bannermsg, bannertimer, byte_C9111, byte_C9142, byte_C9146, byte_CCE00, byte_CCE01, byte_DF6E8
-extern byte_DF7E8, byte_E024C, byte_E024D, byte_E9A15, byte_E9AC8, byte_E9AC9, byte_E9ACA, byte_E9ACB
-extern byte_E9ACC, byte_E9ACD, byte_E9ACE, byte_E9ACF, byte_E9AD0, byte_E9AD1, byte_E9AD2, byte_E9AD3
+extern bannermsg, bannertimer, pendelaytab_e13, pendelay2tab, pendelay2tab_e4, rinkobjanim, rinkobjanim_b1, hmtmcoachflags
+extern awtmcoachflags, milestonesaid, milestonesaid_b1, PenBuf_pl_m2, curevent, curevent_b1, curevent_b2, curevent_b3
+extern curevent_b4, curevent_b5, curevent_b6, curevent_b7, curevent_b8, curevent_b9, curevent_b10, goalevent
 extern c1playernum, c2playernum, CanRemovePlayer, clockticks, CloseTextOverlay, cont1team, cont2team, crowdlevel
-extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, dword_C9120, dword_CBEBE
-extern dword_CC0AC, dword_CD2F8, dword_DB086, dword_DB088, dword_DEB74, dword_DEB78, dword_DEB7C, dword_DEB80
-extern dword_DF646, dword_DF648, dword_E0220, dword_E0230, dword_E9A14, dword_E9A9E, dword_E9B2A, dword_E9BA4
-extern dword_E9BA8, dword_E9BAC, dword_E9BB0, dword_E9BB4, dword_E9BB8, dword_E9BBC, dword_E9BC0, FatalError
+extern curperiod, CwdExciteLvl, defercount, deferpending, DrawFrameSprite, DrawSprite, penmintab_m3, dword_CBEBE
+extern goalienotebits, sideobjpos, hmplstats_m2, hmplstats, plcareergoals, plcareerpts, plseasongoals, plseasonpts
+extern hmtmtouch2, hmtmtouch3, dword_E0220, dword_E0230, PenBuf_m2, dword_E9A9E, rinkobjused_m2, defertab
+extern defertab_a1, defertab_a2, defertab_a3, defertab_a4, defertab_a5, defertab_a6, defertab_fn, FatalError
 extern FileClose, FileOpenRW, FileWriteAt, fox, foy, fputchar, gameclock, gamemode
 extern gameopts, gmode, gmode2, gsp, gsummarypath, gsumqcount, hmgoalcnt, hmroster
 extern hmrosterjersey, hmscore, hmteamrec, hmtmap, hmtmflags, hmtmgoalie, hmtmlines, hmtmstruct
 extern HomeTeam, joysampling, joysampling_save, lastsfx, LoadTeamPPV, lseek_, ltx, lty
-extern MenuCallbackTrue, MenuCallbackTrue2, musicon, off_CD354, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
+extern MenuCallbackTrue, MenuCallbackTrue2, musicon, pennametab, ovlseq, ovltimer, PanelAddPenalty, PanelRemovePenalty
 extern PaPenalty, PaPenaltyShot, PaSpeechBusy, PBnum, penaltynames, Penaltytimer, PenBuf, PenBuf_m5
 extern PenBuf_pl, Pencntdwn, pendelaytab, penmintab, penshotfox, penshotfoy, penshotlive, penshotmode
 extern penshotplayer, penshotpnum, penshotstart, penshotteam, penshottimer, periodendtime, PerTimeTotal, photoptrsf
-extern PlayCrowdSample, priolist, puckc, puckstruct, pucktemp1, puckvx, puckvy, puckvz
+extern PlayCrowdSample, priolist_m1, puckc, puckstruct, pucktemp1, puckvx, puckvy, puckvz
 extern puckx, pucky, puckz, randomd0, RefPen, refsignal, RefStep, regd1
 extern regd2, regd3, restorepl, s1font, scor2font, scpflags2, Setplass, setplayer
 extern sflags, sflags3, sfx, shotongoal, shotontarget, SortCords, sortobj15, sprintf_
 extern str_02d02dSInjury, str_02d02dSPenalty, str_Assists, str_B3, str_B4, str_B5, str_B6, str_B7
 extern str_B8, str_DMinutes, str_FmtClockEvent, str_FmtNumFirstLast, str_FmtNumInitialLast, str_FmtNumName, str_FmtNumNameSuffix, str_FmtParenD
 extern str_GameMisconduct, str_GoneFor1Period, str_GoneForTheGame, str_PenaltyShot, str_PPTag, str_S8, str_ServedByD, str_SHTag
-extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, sub_8EA18, teamabbrevs, textline1, textline2
-extern textline3, textline4, textline5, unk_C1B49, unk_C5423, unk_C542E, unk_E9B4C, UpdateTextOverlay
-extern vecdist, VisTeam, word_C5428, word_C90D8, word_CBC44, word_CBEC6, word_CC0B0, word_CCEF8
-extern word_CD39C, word_DB08A, word_DEE94, word_DF644, word_E9AAE, word_E9B2C, yleader
+extern str_ToBeTakenBy, str_Unassisted, strcpy_, strlen_, TextSetFont, teamabbrevs, textline1, textline2
+extern textline3, textline4, textline5, unk_C1B49, gsumheader, gsumtail, gsumqueue, UpdateTextOverlay
+extern vecdist, VisTeam, gsumcount, penaltysc, word_CBC44, injurystop, Pencntdwn2, rinkobjdefs
+extern penbannertab, hmplstats_w2, rinkobjs, hmtmtouch1, penevteam, rinkobjused, yleader
 global SetRinkObject, SetBoxDoorObject, DecayCrowdLevel, sfxslots_popx, DrawRinkObjects, QueueDeferredCall, RunDeferredCalls, fileio_popebpx
 global AppendGSumRecord, FlushGSumQueue, ReadGSumHeader, fileio_tail_a, fileio_tail_b, fileio_tail_c, ReadGSumTail, WriteGSumHeader
 global FormatPlayerName, BuildEventLines, PostGoalEvent, PostPenaltyEvent, PostInjuryEvent, NullCallback0C, ChkScorerMilestone, QueueGoalieNote
@@ -50,7 +50,7 @@ mov ebx, eax	; 614D2
 shl ebx, 2	; 614D4
 sub ebx, eax	; 614D7
 shl ebx, 2	; 614D9
-add ebx, word_DEE94	; 614DC
+add ebx, rinkobjs	; 614DC
 mov word [ebx], dx	; 614E2
 mov eax, edx	; 614E5
 sar edx, 1Fh	; 614E7
@@ -66,28 +66,28 @@ idiv ecx	; 61501
 mov cl, dl	; 61503
 mov edx, 1	; 61505
 shl edx, cl	; 6150A
-mov eax, dword [dword edi+word_E9B2C-2]	; 6150C
+mov eax, dword [dword edi+rinkobjused-2]	; 6150C
 sar eax, 10h	; 61512
 or eax, edx	; 61515
-mov word [dword edi+word_E9B2C], ax	; 61517
+mov word [dword edi+rinkobjused], ax	; 61517
 mov eax, esi	; 6151E
 shl esi, 2	; 61520
 sub esi, eax	; 61523
-mov ax, word [nosplit esi*2+word_CCEF8]	; 61525
+mov ax, word [nosplit esi*2+rinkobjdefs]	; 61525
 mov word [byte ebx+05h], ax	; 6152D
 inc esi	; 61531
-mov ax, word [nosplit esi*2+word_CCEF8]	; 61532
+mov ax, word [nosplit esi*2+rinkobjdefs]	; 61532
 mov word [byte ebx+07h], ax	; 6153A
 inc esi	; 6153E
-mov ax, word [nosplit esi*2+word_CCEF8]	; 6153F
+mov ax, word [nosplit esi*2+rinkobjdefs]	; 6153F
 mov word [byte ebx+09h], ax	; 61547
 mov eax, dword [byte ebx+07h]	; 6154B
 sar eax, 10h	; 6154E
-mov al, byte [dword eax+byte_CCE00]	; 61551
+mov al, byte [dword eax+rinkobjanim]	; 61551
 mov byte [byte ebx+0Bh], al	; 61557
 mov eax, dword [byte ebx+07h]	; 6155A
 sar eax, 10h	; 6155D
-mov al, byte [dword eax+byte_CCE01]	; 61560
+mov al, byte [dword eax+rinkobjanim_b1]	; 61560
 mov byte [byte ebx+04h], al	; 61566
 mov byte [byte ebx+02h], 0Ch	; 61569
 mov byte [byte ebx+03h], 1	; 6156D
@@ -170,7 +170,7 @@ mov eax, edx	; 61631
 shl eax, 2	; 61633
 sub eax, edx	; 61636
 shl eax, 2	; 61638
-mov ebx, word_DEE94	; 6163B
+mov ebx, rinkobjs	; 6163B
 add ebx, eax	; 61640
 cmp word [ebx], byte 0	; 61642
 jge near .10	; 61646
@@ -218,7 +218,7 @@ sar edx, 1Fh	; 616D2
 shl edx, 4	; 616D5
 LD sbb, eax, edx	; 616D8
 sar eax, 4	; 616DA
-mov edi, dword [nosplit eax*2+dword_E9B2A]	; 616DD
+mov edi, dword [nosplit eax*2+rinkobjused_m2]	; 616DD
 sar edi, 10h	; 616E4
 mov ecx, 10h	; 616E7
 mov eax, ebx	; 616EC
@@ -267,7 +267,7 @@ mov eax, dword [byte ebx+07h]	; 61758
 sar eax, 10h	; 6175B
 mov edx, dword [ebx]	; 6175E
 sar edx, 18h	; 61760
-mov al, byte [dword edx+eax+byte_CCE00]	; 61763
+mov al, byte [dword edx+eax+rinkobjanim]	; 61763
 mov byte [byte ebx+04h], al	; 6176A
 jmp near .19	; 6176D
 .13:
@@ -279,7 +279,7 @@ test ax, ax	; 61782
 je short .14	; 61785
 mov eax, dword [byte ebx+07h]	; 61787
 sar eax, 10h	; 6178A
-mov al, byte [dword eax+byte_CCE01]	; 6178D
+mov al, byte [dword eax+rinkobjanim_b1]	; 6178D
 mov byte [byte ebx+04h], al	; 61793
 mov byte [byte ebx+02h], 0Ch	; 61796
 mov byte [byte ebx+03h], 1	; 6179A
@@ -302,10 +302,10 @@ mov cl, dl	; 617C6
 mov edx, 1	; 617C8
 shl edx, cl	; 617CD
 not edx	; 617CF
-mov eax, dword [dword edi+word_E9B2C-2]	; 617D1
+mov eax, dword [dword edi+rinkobjused-2]	; 617D1
 sar eax, 10h	; 617D7
 and eax, edx	; 617DA
-mov word [dword edi+word_E9B2C], ax	; 617DC
+mov word [dword edi+rinkobjused], ax	; 617DC
 mov word [ebx], 0FFFFh	; 617E3
 mov edx, dword [crowdlevel-2]	; 617E8
 sar edx, 10h	; 617EE
@@ -369,7 +369,7 @@ push edi	; 61870
 push ebp	; 61871
 mov ebp, esp	; 61872
 sub esp, byte 10h	; 61874
-mov esi, word_DEE94	; 61877
+mov esi, rinkobjs	; 61877
 xor edi, edi	; 6187C
 jmp short .3	; 6187E
 .1:
@@ -421,7 +421,7 @@ jge short .8	; 61903
 push byte 0	; 61905
 movsx eax, di	; 61907
 push eax	; 6190A
-mov ebx, dword [nosplit eax*4+dword_CD2F8]	; 6190B
+mov ebx, dword [nosplit eax*4+sideobjpos]	; 6190B
 sar ebx, 10h	; 61912
 mov eax, dword [dword_E0220]	; 61915
 xor ecx, ecx	; 6191A
@@ -448,7 +448,7 @@ jne short .10	; 61956
 push byte 0	; 61958
 push byte 0FFFFFFFFh	; 6195A
 movsx eax, di	; 6195C
-mov ebx, dword [nosplit eax*4+dword_CD2F8]	; 6195F
+mov ebx, dword [nosplit eax*4+sideobjpos]	; 6195F
 sar ebx, 10h	; 61966
 mov eax, dword [dword_E0230]	; 61969
 xor ecx, ecx	; 6196E
@@ -490,18 +490,18 @@ push esi	; 619D2
 mov esi, eax	; 619D3
 mov eax, dword [defercount]	; 619D5
 shl eax, 5	; 619DA
-mov dword [dword eax+dword_E9BC0], esi	; 619DD
-mov dword [dword eax+dword_E9BA4], edx	; 619E3
-mov dword [dword eax+dword_E9BA8], ebx	; 619E9
-mov dword [dword eax+dword_E9BAC], ecx	; 619EF
+mov dword [dword eax+defertab_fn], esi	; 619DD
+mov dword [dword eax+defertab], edx	; 619E3
+mov dword [dword eax+defertab_a1], ebx	; 619E9
+mov dword [dword eax+defertab_a2], ecx	; 619EF
 mov edx, dword [byte esp+08h]	; 619F5
-mov dword [dword eax+dword_E9BB0], edx	; 619F9
+mov dword [dword eax+defertab_a3], edx	; 619F9
 mov edx, dword [byte esp+0Ch]	; 619FF
-mov dword [dword eax+dword_E9BB4], edx	; 61A03
+mov dword [dword eax+defertab_a4], edx	; 61A03
 mov edx, dword [byte esp+010h]	; 61A09
-mov dword [dword eax+dword_E9BB8], edx	; 61A0D
+mov dword [dword eax+defertab_a5], edx	; 61A0D
 mov edx, dword [byte esp+014h]	; 61A13
-mov dword [dword eax+dword_E9BBC], edx	; 61A17
+mov dword [dword eax+defertab_a6], edx	; 61A17
 inc dword [defercount]	; 61A1D
 pop esi	; 61A23
 ret 10h	; 61A24
@@ -524,17 +524,17 @@ jmp short .2	; 61A39
 .1:
 mov esi, edi	; 61A3B
 shl esi, 5	; 61A3D
-mov ebx, dword [dword esi+dword_E9BBC]	; 61A40
+mov ebx, dword [dword esi+defertab_a6]	; 61A40
 push ebx	; 61A46
-mov ecx, dword [dword esi+dword_E9BB8]	; 61A47
+mov ecx, dword [dword esi+defertab_a5]	; 61A47
 push ecx	; 61A4D
-mov ebp, dword [dword esi+dword_E9BB4]	; 61A4E
+mov ebp, dword [dword esi+defertab_a4]	; 61A4E
 push ebp	; 61A54
-mov ecx, dword [dword esi+dword_E9BB0]	; 61A55
-mov ebx, dword [dword esi+dword_E9BAC]	; 61A5B
-mov edx, dword [dword esi+dword_E9BA8]	; 61A61
-mov eax, dword [dword esi+dword_E9BA4]	; 61A67
-call dword [dword esi+dword_E9BC0]	; 61A6D
+mov ecx, dword [dword esi+defertab_a3]	; 61A55
+mov ebx, dword [dword esi+defertab_a2]	; 61A5B
+mov edx, dword [dword esi+defertab_a1]	; 61A61
+mov eax, dword [dword esi+defertab]	; 61A67
+call dword [dword esi+defertab_fn]	; 61A6D
 inc edi	; 61A73
 .2:
 cmp edi, dword [defercount]	; 61A74
@@ -563,7 +563,7 @@ push edx	; 61A96
 push esi	; 61A97
 sub esp, byte 4	; 61A98
 mov esi, eax	; 61A9B
-inc word [word_C5428]	; 61A9D
+inc word [gsumcount]	; 61A9D
 mov edx, esp	; 61AA4
 mov eax, gsummarypath	; 61AA6
 call FileOpenRW	; 61AAB
@@ -585,7 +585,7 @@ add esp, byte 4	; 61ADB
 .2:
 mov ecx, 0Bh	; 61ADE
 mov ebx, 0FFFFFFFFh	; 61AE3
-mov edx, unk_C5423	; 61AE8
+mov edx, gsumheader	; 61AE8
 mov eax, dword [esp]	; 61AED
 call FileWriteAt	; 61AF0
 test eax, eax	; 61AF5
@@ -617,7 +617,7 @@ add esp, byte 4	; 61B4B
 .5:
 mov ecx, 0Bh	; 61B4E
 mov ebx, 0FFFFFFFFh	; 61B53
-mov edx, unk_C542E	; 61B58
+mov edx, gsumtail	; 61B58
 mov eax, dword [esp]	; 61B5D
 call FileWriteAt	; 61B60
 test eax, eax	; 61B65
@@ -652,7 +652,7 @@ shl eax, 2	; 61B97
 sub eax, edx	; 61B9A
 shl eax, 2	; 61B9C
 sub eax, edx	; 61B9F
-add eax, unk_E9B4C	; 61BA1
+add eax, gsumqueue	; 61BA1
 call AppendGSumRecord	; 61BA6
 inc edx	; 61BAB
 .2:
@@ -686,7 +686,7 @@ add esp, byte 4	; 61BE9
 .1:
 mov ecx, 0Bh	; 61BEC
 mov ebx, 0FFFFFFFFh	; 61BF1
-mov edx, unk_C5423	; 61BF6
+mov edx, gsumheader	; 61BF6
 fileio_tail_a:
 mov eax, dword [esp]	; 61BFB
 call FileWriteAt	; 61BFE
@@ -737,7 +737,7 @@ add esp, byte 4	; 61C6F
 .2:
 mov ecx, 0Bh	; 61C72
 mov ebx, 0FFFFFFFFh	; 61C77
-mov edx, unk_C542E	; 61C7C
+mov edx, gsumtail	; 61C7C
 jmp near fileio_tail_a	; 61C81
 %endif ; C
 ; C: src/engine/gamelog/ReadGSumHeader.c (WriteGSumHeader)
@@ -751,7 +751,7 @@ push ebx	; 61C90
 push ecx	; 61C91
 push edx	; 61C92
 sub esp, byte 4	; 61C93
-inc word [word_C5428]	; 61C96
+inc word [gsumcount]	; 61C96
 mov edx, esp	; 61C9D
 mov eax, gsummarypath	; 61C9F
 call FileOpenRW	; 61CA4
@@ -773,7 +773,7 @@ add esp, byte 4	; 61CD4
 .2:
 mov ecx, 0Bh	; 61CD7
 mov ebx, 0FFFFFFFFh	; 61CDC
-mov edx, unk_C5423	; 61CE1
+mov edx, gsumheader	; 61CE1
 mov eax, dword [esp]	; 61CE6
 call FileWriteAt	; 61CE9
 test eax, eax	; 61CEE
@@ -794,7 +794,7 @@ add esp, byte 4	; 61D1C
 .4:
 mov ecx, 0Bh	; 61D1F
 mov ebx, 0FFFFFFFFh	; 61D24
-mov edx, unk_C542E	; 61D29
+mov edx, gsumtail	; 61D29
 mov eax, dword [esp]	; 61D2E
 call FileWriteAt	; 61D31
 test eax, eax	; 61D36
@@ -819,7 +819,7 @@ mov word [byte esp+018h], bx	; 61D5E
 mov ebp, ecx	; 61D63
 mov edx, dword [scor2font]	; 61D65
 push edx	; 61D6B
-call sub_8EA18	; 61D6C
+call TextSetFont	; 61D6C
 add esp, byte 4	; 61D71
 mov ebx, dword [byte esp+030h]	; 61D74
 push ebx	; 61D78
@@ -921,7 +921,7 @@ add esp, byte 18h	; 61E7F
 .3:
 mov eax, dword [s1font]	; 61E82
 push eax	; 61E87
-call sub_8EA18	; 61E88
+call TextSetFont	; 61E88
 add esp, byte 4	; 61E8D
 add esp, byte 1Ch	; 61E90
 pop ebp	; 61E93
@@ -949,10 +949,10 @@ mov byte [textline4], ah	; 61EB4
 mov byte [textline2], ah	; 61EBA
 mov byte [textline1], ah	; 61EC0
 mov byte [textline3], ah	; 61EC6
-mov cl, byte [byte_E9AC8]	; 61ECC
+mov cl, byte [curevent]	; 61ECC
 cmp cl, 1	; 61ED2
 jne near .8	; 61ED5
-movzx esi, byte [byte_E9AC9]	; 61EDB
+movzx esi, byte [curevent_b1]	; 61EDB
 mov edx, esi	; 61EE2
 shl edx, 2	; 61EE4
 sub edx, esi	; 61EE7
@@ -964,19 +964,19 @@ add edx, hmteamrec	; 61EF3
 add edx, byte 1Ah	; 61EF9
 push edx	; 61EFC
 xor eax, eax	; 61EFD
-mov al, byte [byte_E9AD0]	; 61EFF
+mov al, byte [curevent_b8]	; 61EFF
 push eax	; 61F04
 xor eax, eax	; 61F05
-mov al, byte [byte_E9ACF]	; 61F07
+mov al, byte [curevent_b7]	; 61F07
 push eax	; 61F0C
 push str_FmtClockEvent	; 61F0D
 push textline3	; 61F12
 call sprintf_	; 61F17
 add esp, byte 14h	; 61F1C
 xor eax, eax	; 61F1F
-mov al, byte [byte_E9ACD]	; 61F21
+mov al, byte [curevent_b5]	; 61F21
 xor edx, edx	; 61F26
-mov dl, byte [byte_E9ACA]	; 61F28
+mov dl, byte [curevent_b2]	; 61F28
 test al, 2	; 61F2E
 je short .1	; 61F30
 mov eax, str_SHTag	; 61F32
@@ -1011,9 +1011,9 @@ shl ebx, 4	; 61F82
 mov eax, edx	; 61F85
 shl eax, 4	; 61F87
 add eax, ebx	; 61F8A
-mov ebx, dword [dword eax+dword_DB088-2]	; 61F8C
+mov ebx, dword [dword eax+hmplstats-2]	; 61F8C
 sar ebx, 10h	; 61F92
-add ebx, dword [dword eax+dword_DEB7C]	; 61F95
+add ebx, dword [dword eax+plseasongoals]	; 61F95
 push ebx	; 61F9B
 push str_FmtParenD	; 61F9C
 lea eax, [byte esp+08h]	; 61FA1
@@ -1048,7 +1048,7 @@ mov edx, unk_C1B49	; 61FEA
 mov eax, textline1	; 61FEF
 call FormatPlayerName	; 61FF4
 xor edx, edx	; 61FF9
-mov dl, byte [byte_E9ACB]	; 61FFB
+mov dl, byte [curevent_b3]	; 61FFB
 cmp edx, 0FFh	; 62001
 jne short .5	; 62007
 push str_Unassisted	; 62009
@@ -1079,7 +1079,7 @@ mov eax, textline4	; 62059
 call FormatPlayerName	; 6205E
 .6:
 xor edx, edx	; 62063
-mov dl, byte [byte_E9ACC]	; 62065
+mov dl, byte [curevent_b4]	; 62065
 cmp edx, 0FFh	; 6206B
 je near .14	; 62071
 push unk_C1B49	; 62077
@@ -1110,10 +1110,10 @@ jmp near .14	; 620C4
 .8:
 cmp cl, 2	; 620C9
 jne near .11	; 620CC
-movzx esi, byte [byte_E9AC9]	; 620D2
+movzx esi, byte [curevent_b1]	; 620D2
 xor edx, edx	; 620D9
-mov dl, byte [byte_E9ACA]	; 620DB
-cmp byte [byte_E9ACB], 11h	; 620E1
+mov dl, byte [curevent_b2]	; 620DB
+cmp byte [curevent_b3], 11h	; 620E1
 jne near .9	; 620E8
 mov edx, dword [penshotteam]	; 620EE
 mov eax, edx	; 620F4
@@ -1126,10 +1126,10 @@ sub eax, edx	; 62103
 add eax, hmteamrec	; 62105
 push eax	; 6210A
 xor eax, eax	; 6210B
-mov al, byte [byte_E9ACF]	; 6210D
+mov al, byte [curevent_b7]	; 6210D
 push eax	; 62112
 xor eax, eax	; 62113
-mov al, byte [byte_E9ACE]	; 62115
+mov al, byte [curevent_b6]	; 62115
 push eax	; 6211A
 push str_FmtClockEvent	; 6211B
 push textline3	; 62120
@@ -1185,10 +1185,10 @@ sub eax, ebx	; 621B0
 add eax, hmteamrec	; 621B2
 push eax	; 621B7
 xor eax, eax	; 621B8
-mov al, byte [byte_E9ACF]	; 621BA
+mov al, byte [curevent_b7]	; 621BA
 push eax	; 621BF
 xor eax, eax	; 621C0
-mov al, byte [byte_E9ACE]	; 621C2
+mov al, byte [curevent_b6]	; 621C2
 push eax	; 621C7
 push str_02d02dSPenalty	; 621C8
 push textline3	; 621CD
@@ -1220,11 +1220,11 @@ mov edx, unk_C1B49	; 62217
 mov eax, textline1	; 6221C
 call FormatPlayerName	; 62221
 xor eax, eax	; 62226
-mov al, byte [byte_E9ACB]	; 62228
+mov al, byte [curevent_b3]	; 62228
 mov edx, dword [nosplit eax*4+penaltynames]	; 6222D
 mov eax, textline2	; 62234
 call strcpy_	; 62239
-movzx edi, byte [byte_E9ACC]	; 6223E
+movzx edi, byte [curevent_b4]	; 6223E
 cmp edi, 0FFh	; 62245
 jne short .10	; 6224B
 mov edi, textline4	; 6224D
@@ -1244,10 +1244,10 @@ jmp near .14	; 62273
 .11:
 cmp cl, 3	; 62278
 jne near .14	; 6227B
-movzx esi, byte [byte_E9AC9]	; 62281
+movzx esi, byte [curevent_b1]	; 62281
 xor edx, edx	; 62288
-mov dl, byte [byte_E9ACA]	; 6228A
-mov edi, dword [byte_E9ACB-3]	; 62290
+mov dl, byte [curevent_b2]	; 6228A
+mov edi, dword [curevent_b3-3]	; 62290
 sar edi, 18h	; 62296
 mov eax, esi	; 62299
 shl eax, 2	; 6229B
@@ -1259,10 +1259,10 @@ sub eax, ebx	; 622A8
 add eax, hmteamrec	; 622AA
 push eax	; 622AF
 xor eax, eax	; 622B0
-mov al, byte [byte_E9ACE]	; 622B2
+mov al, byte [curevent_b6]	; 622B2
 push eax	; 622B7
 xor eax, eax	; 622B8
-mov al, byte [byte_E9ACD]	; 622BA
+mov al, byte [curevent_b5]	; 622BA
 push eax	; 622BF
 push str_02d02dSInjury	; 622C0
 push textline3	; 622C5
@@ -1315,20 +1315,20 @@ call __CHK	; 62348
 push esi	; 6234D
 push edi	; 6234E
 push eax	; 6234F
-mov byte [byte_E9AC8], 1	; 62350
+mov byte [curevent], 1	; 62350
 mov al, byte [esp]	; 62357
-mov byte [byte_E9AC9], al	; 6235A
-mov byte [byte_E9ACA], dl	; 6235F
-mov byte [byte_E9ACB], bl	; 62365
-mov byte [byte_E9ACC], cl	; 6236B
+mov byte [curevent_b1], al	; 6235A
+mov byte [curevent_b2], dl	; 6235F
+mov byte [curevent_b3], bl	; 62365
+mov byte [curevent_b4], cl	; 6236B
 mov al, byte [byte esp+010h]	; 62371
-mov byte [byte_E9ACD], al	; 62375
+mov byte [curevent_b5], al	; 62375
 mov al, byte [curperiod]	; 6237A
-mov byte [byte_E9ACE], al	; 6237F
+mov byte [curevent_b6], al	; 6237F
 mov al, byte [byte esp+014h]	; 62384
-mov byte [byte_E9ACF], al	; 62388
+mov byte [curevent_b7], al	; 62388
 mov al, byte [byte esp+018h]	; 6238D
-mov byte [byte_E9AD0], al	; 62391
+mov byte [curevent_b8], al	; 62391
 mov eax, dword [esp]	; 62396
 shl eax, 8	; 62399
 mov dx, word [dword eax+hmtmgoalie]	; 6239C
@@ -1337,7 +1337,7 @@ and dl, 1	; 623A5
 movsx edx, dx	; 623A8
 mov eax, dword [dword eax+hmtmlines]	; 623AB
 mov al, byte [byte edx+eax+024h]	; 623B1
-mov byte [byte_E9AD1], al	; 623B5
+mov byte [curevent_b9], al	; 623B5
 cmp dword [esp], byte 0	; 623BA
 sete al	; 623BE
 and eax, 0FFh	; 623C1
@@ -1352,7 +1352,7 @@ and eax, 0FFh	; 623DE
 shl eax, 8	; 623E3
 mov eax, dword [dword eax+hmtmlines]	; 623E6
 mov al, byte [byte edx+eax+024h]	; 623EC
-mov byte [byte_E9AD2], al	; 623F0
+mov byte [curevent_b10], al	; 623F0
 test byte [gmode], 10h	; 623F5
 jne short .3	; 623FC
 mov edx, dword [gsumqcount]	; 623FE
@@ -1361,8 +1361,8 @@ shl eax, 2	; 62406
 sub eax, edx	; 62409
 shl eax, 2	; 6240B
 sub eax, edx	; 6240E
-lea edi, [dword eax+unk_E9B4C]	; 62410
-mov esi, byte_E9AC8	; 62416
+lea edi, [dword eax+gsumqueue]	; 62410
+mov esi, curevent	; 62416
 movsd	; 6241B
 movsd	; 6241C
 movsw	; 6241D
@@ -1402,8 +1402,8 @@ mov ax, word [joysampling]	; 62481
 mov word [joysampling_save], ax	; 62487
 xor edx, edx	; 6248D
 mov dword [joysampling], edx	; 6248F
-mov edi, byte_E9AD3	; 62495
-mov esi, byte_E9AC8	; 6249A
+mov edi, goalevent	; 62495
+mov esi, curevent	; 6249A
 movsd	; 6249F
 movsd	; 624A0
 movsw	; 624A1
@@ -1431,27 +1431,27 @@ push edx	; 624C7
 mov edx, ecx	; 624C8
 test byte [gmode], 10h	; 624CA
 jne near .18	; 624D1
-mov byte [byte_E9AC8], 2	; 624D7
+mov byte [curevent], 2	; 624D7
 mov al, byte [byte esp+04h]	; 624DE
-mov byte [byte_E9AC9], al	; 624E2
+mov byte [curevent_b1], al	; 624E2
 mov al, byte [esp]	; 624E7
-mov byte [byte_E9ACA], al	; 624EA
-mov byte [byte_E9ACB], bl	; 624EF
-mov byte [byte_E9ACC], dl	; 624F5
+mov byte [curevent_b2], al	; 624EA
+mov byte [curevent_b3], bl	; 624EF
+mov byte [curevent_b4], dl	; 624F5
 mov al, byte [curperiod]	; 624FB
-mov byte [byte_E9ACD], al	; 62500
+mov byte [curevent_b5], al	; 62500
 mov al, byte [byte esp+018h]	; 62505
-mov byte [byte_E9ACE], al	; 62509
+mov byte [curevent_b6], al	; 62509
 mov al, byte [byte esp+01Ch]	; 6250E
-mov byte [byte_E9ACF], al	; 62512
+mov byte [curevent_b7], al	; 62512
 mov ecx, dword [gsumqcount]	; 62517
 mov eax, ecx	; 6251D
 shl eax, 2	; 6251F
 sub eax, ecx	; 62522
 shl eax, 2	; 62524
 sub eax, ecx	; 62527
-lea edi, [dword eax+unk_E9B4C]	; 62529
-mov esi, byte_E9AC8	; 6252F
+lea edi, [dword eax+gsumqueue]	; 62529
+mov esi, curevent	; 6252F
 movsd	; 62534
 movsd	; 62535
 movsw	; 62536
@@ -1560,7 +1560,7 @@ cmp dword [byte esp+020h], byte 0	; 62690
 sete al	; 62695
 mov ebp, eax	; 62698
 and ebp, 0FFh	; 6269A
-mov eax, dword [word_E9AAE-2]	; 626A0
+mov eax, dword [penevteam-2]	; 626A0
 sar eax, 10h	; 626A5
 cmp eax, dword [byte esp+04h]	; 626A8
 jne short .13	; 626AC
@@ -1569,12 +1569,12 @@ jmp short .14	; 626B3
 .13:
 mov eax, 1	; 626B5
 mov ecx, dword [byte esp+04h]	; 626BA
-mov word [word_E9AAE], cx	; 626BE
+mov word [penevteam], cx	; 626BE
 .14:
 mov edi, dword [byte esp+020h]	; 626C5
 test edi, edi	; 626C9
 je short .15	; 626CB
-mov cl, byte [nosplit edi*2+byte_E9A15]	; 626CD
+mov cl, byte [nosplit edi*2+PenBuf_pl_m2]	; 626CD
 and cl, 1Fh	; 626D4
 cmp cl, 6	; 626D7
 setl cl	; 626DA
@@ -1593,7 +1593,7 @@ mov eax, dword [byte esp+028h]	; 626F3
 push eax	; 626F7
 mov ecx, dword [byte esp+028h]	; 626F8
 push ecx	; 626FC
-mov ecx, dword [nosplit ebx*4+off_CD354]	; 626FD
+mov ecx, dword [nosplit ebx*4+pennametab]	; 626FD
 mov ebx, dword [byte esp+018h]	; 62704
 mov edi, ebx	; 62708
 shl edi, 4	; 6270A
@@ -1614,7 +1614,7 @@ mov edx, edi	; 62738
 call PaPenalty	; 6273A
 test ebp, ebp	; 6273F
 je short .17	; 62741
-mov word [word_E9AAE], 0FFFFh	; 62743
+mov word [penevteam], 0FFFFh	; 62743
 .17:
 mov eax, dword [joysampling_save-2]	; 6274C
 sar eax, 10h	; 62751
@@ -1638,23 +1638,23 @@ push esi	; 6276E
 push edi	; 6276F
 test byte [gmode], 10h	; 62770
 jne short .2	; 62777
-mov byte [byte_E9AC8], 3	; 62779
-mov byte [byte_E9AC9], al	; 62780
-mov byte [byte_E9ACA], dl	; 62785
-mov byte [byte_E9ACB], bl	; 6278B
+mov byte [curevent], 3	; 62779
+mov byte [curevent_b1], al	; 62780
+mov byte [curevent_b2], dl	; 62785
+mov byte [curevent_b3], bl	; 6278B
 mov al, byte [curperiod]	; 62791
-mov byte [byte_E9ACC], al	; 62796
-mov byte [byte_E9ACD], cl	; 6279B
+mov byte [curevent_b4], al	; 62796
+mov byte [curevent_b5], cl	; 6279B
 mov al, byte [byte esp+0Ch]	; 627A1
-mov byte [byte_E9ACE], al	; 627A5
+mov byte [curevent_b6], al	; 627A5
 mov edx, dword [gsumqcount]	; 627AA
 mov eax, edx	; 627B0
 shl eax, 2	; 627B2
 sub eax, edx	; 627B5
 shl eax, 2	; 627B7
 sub eax, edx	; 627BA
-lea edi, [dword eax+unk_E9B4C]	; 627BC
-mov esi, byte_E9AC8	; 627C2
+lea edi, [dword eax+gsumqueue]	; 627BC
+mov esi, curevent	; 627C2
 movsd	; 627C7
 movsd	; 627C8
 movsw	; 627C9
@@ -1705,15 +1705,15 @@ setne dl	; 62836
 and edx, 0FFh	; 62839
 xor ebp, edx	; 6283F
 lea edx, [byte ebp+ebp+00h]	; 62841
-cmp byte [dword edx+byte_E024C], 0	; 62845
+cmp byte [dword edx+milestonesaid], 0	; 62845
 je short .1	; 6284C
-cmp byte [dword edx+byte_E024D], 0	; 6284E
+cmp byte [dword edx+milestonesaid_b1], 0	; 6284E
 jne near .17	; 62855
 .1:
 xor esi, esi	; 6285B
 mov edx, ebp	; 6285D
 shl edx, 8	; 6285F
-mov dx, word [dword edx+word_DF644]	; 62862
+mov dx, word [dword edx+hmtmtouch1]	; 62862
 xor dh, dh	; 62869
 movsx edi, dx	; 6286B
 cmp edi, byte 19h	; 6286E
@@ -1727,9 +1727,9 @@ shl ebx, 4	; 62884
 mov edx, edi	; 62887
 shl edx, 4	; 62889
 add edx, ebx	; 6288C
-mov ecx, dword [dword edx+dword_DB088-2]	; 6288E
+mov ecx, dword [dword edx+hmplstats-2]	; 6288E
 sar ecx, 10h	; 62894
-mov ebx, dword [dword edx+word_DB08A-2]	; 62897
+mov ebx, dword [dword edx+hmplstats_w2-2]	; 62897
 sar ebx, 10h	; 6289D
 add ebx, ecx	; 628A0
 cmp ecx, byte 3	; 628A2
@@ -1743,9 +1743,9 @@ cmp dword [gamemode], byte 0	; 628B3
 je near .10	; 628BA
 test byte [gameopts+1], 2	; 628C0
 je near .8	; 628C7
-mov eax, dword [dword edx+dword_DEB7C]	; 628CD
+mov eax, dword [dword edx+plseasongoals]	; 628CD
 mov dword [esp], eax	; 628D3
-mov eax, dword [dword edx+dword_DEB74]	; 628D6
+mov eax, dword [dword edx+plcareergoals]	; 628D6
 add dword [esp], eax	; 628DC
 mov eax, dword [esp]	; 628DF
 add eax, ecx	; 628E2
@@ -1755,7 +1755,7 @@ mov esi, 6	; 628E9
 mov ebx, eax	; 628EE
 jmp near .10	; 628F0
 .4:
-add ecx, dword [dword edx+dword_DEB7C]	; 628F5
+add ecx, dword [dword edx+plseasongoals]	; 628F5
 cmp ecx, byte 32h	; 628FB
 jl short .5	; 628FE
 mov dword [esp], 32h	; 62900
@@ -1778,7 +1778,7 @@ mov dword [esp], edx	; 6292B
 mov edx, edi	; 6292E
 shl edx, 4	; 62930
 add edx, dword [esp]	; 62933
-add ebx, dword [dword edx+dword_DEB80]	; 62936
+add ebx, dword [dword edx+plseasonpts]	; 62936
 cmp ebx, byte 64h	; 6293C
 jl short .6	; 6293F
 mov dword [esp], 64h	; 62941
@@ -1800,7 +1800,7 @@ shl edx, 4	; 6296C
 mov eax, edi	; 6296F
 shl eax, 4	; 62971
 add edx, eax	; 62974
-add ecx, dword [dword edx+dword_DEB74]	; 62976
+add ecx, dword [dword edx+plcareergoals]	; 62976
 cmp ecx, byte 64h	; 6297C
 jl short .7	; 6297F
 mov dword [esp], 64h	; 62981
@@ -1821,7 +1821,7 @@ add edx, ebp	; 629AA
 shl edx, 4	; 629AC
 mov ecx, edi	; 629AF
 shl ecx, 4	; 629B1
-add ebx, dword [dword ecx+edx+dword_DEB78]	; 629B4
+add ebx, dword [dword ecx+edx+plcareerpts]	; 629B4
 cmp ebx, byte 64h	; 629BB
 jl near .10	; 629BE
 mov ecx, 64h	; 629C4
@@ -1834,7 +1834,7 @@ jne short .10	; 629D4
 mov esi, 5	; 629D6
 jmp short .10	; 629DB
 .8:
-add ecx, dword [dword edx+dword_DEB7C]	; 629DD
+add ecx, dword [dword edx+plseasongoals]	; 629DD
 cmp ecx, byte 0Ah	; 629E3
 jl short .9	; 629E6
 mov dword [esp], 0Ah	; 629E8
@@ -1855,7 +1855,7 @@ lea ecx, [edx+ebp]	; 62A11
 shl ecx, 4	; 62A14
 mov edx, edi	; 62A17
 shl edx, 4	; 62A19
-add ebx, dword [dword ecx+edx+dword_DEB80]	; 62A1C
+add ebx, dword [dword ecx+edx+plseasonpts]	; 62A1C
 cmp ebx, byte 14h	; 62A23
 jl short .10	; 62A26
 mov ecx, 14h	; 62A28
@@ -1873,7 +1873,7 @@ test esi, esi	; 62A4C
 jne near .16	; 62A4E
 mov edi, ebp	; 62A54
 shl edi, 8	; 62A56
-mov edi, dword [dword edi+dword_DF646-2]	; 62A59
+mov edi, dword [dword edi+hmtmtouch2-2]	; 62A59
 sar edi, 10h	; 62A5F
 test edi, edi	; 62A62
 jl near .16	; 62A64
@@ -1888,14 +1888,14 @@ shl ebx, 4	; 62A80
 mov edx, edi	; 62A83
 shl edx, 4	; 62A85
 add edx, ebx	; 62A88
-mov ecx, dword [dword edx+word_DB08A-2]	; 62A8A
+mov ecx, dword [dword edx+hmplstats_w2-2]	; 62A8A
 sar ecx, 10h	; 62A90
-mov ebx, dword [dword edx+dword_DB088-2]	; 62A93
+mov ebx, dword [dword edx+hmplstats-2]	; 62A93
 sar ebx, 10h	; 62A99
 add ebx, ecx	; 62A9C
 test byte [gameopts+1], 2	; 62A9E
 je short .12	; 62AA5
-add ebx, dword [dword edx+dword_DEB80]	; 62AA7
+add ebx, dword [dword edx+plseasonpts]	; 62AA7
 cmp ebx, byte 64h	; 62AAD
 jl short .11	; 62AB0
 mov ecx, 64h	; 62AB2
@@ -1916,7 +1916,7 @@ add edx, ebp	; 62AD5
 shl edx, 4	; 62AD7
 mov ecx, edi	; 62ADA
 shl ecx, 4	; 62ADC
-add ebx, dword [dword ecx+edx+dword_DEB78]	; 62ADF
+add ebx, dword [dword ecx+edx+plcareerpts]	; 62ADF
 cmp ebx, byte 64h	; 62AE6
 jl short .13	; 62AE9
 mov ecx, 64h	; 62AEB
@@ -1929,7 +1929,7 @@ jne short .13	; 62AFB
 mov esi, 5	; 62AFD
 jmp short .13	; 62B02
 .12:
-add ebx, dword [dword edx+dword_DEB80]	; 62B04
+add ebx, dword [dword edx+plseasonpts]	; 62B04
 cmp ebx, byte 14h	; 62B0A
 jl short .13	; 62B0D
 mov ecx, 14h	; 62B0F
@@ -1945,7 +1945,7 @@ test esi, esi	; 62B26
 jne near .16	; 62B28
 mov edi, ebp	; 62B2E
 shl edi, 8	; 62B30
-mov edi, dword [dword edi+dword_DF648-2]	; 62B33
+mov edi, dword [dword edi+hmtmtouch3-2]	; 62B33
 sar edi, 10h	; 62B39
 test edi, edi	; 62B3C
 jl near .16	; 62B3E
@@ -1960,14 +1960,14 @@ shl ebx, 4	; 62B5A
 mov edx, edi	; 62B5D
 shl edx, 4	; 62B5F
 add edx, ebx	; 62B62
-mov ecx, dword [dword edx+word_DB08A-2]	; 62B64
+mov ecx, dword [dword edx+hmplstats_w2-2]	; 62B64
 sar ecx, 10h	; 62B6A
-mov ebx, dword [dword edx+dword_DB088-2]	; 62B6D
+mov ebx, dword [dword edx+hmplstats-2]	; 62B6D
 sar ebx, 10h	; 62B73
 add ebx, ecx	; 62B76
 test byte [gameopts+1], 2	; 62B78
 je short .15	; 62B7F
-add ebx, dword [dword edx+dword_DEB80]	; 62B81
+add ebx, dword [dword edx+plseasonpts]	; 62B81
 cmp ebx, byte 64h	; 62B87
 jl short .14	; 62B8A
 mov ecx, 64h	; 62B8C
@@ -1988,7 +1988,7 @@ lea ecx, [edx+ebp]	; 62BAF
 shl ecx, 4	; 62BB2
 mov edx, edi	; 62BB5
 shl edx, 4	; 62BB7
-add ebx, dword [dword ecx+edx+dword_DEB78]	; 62BBA
+add ebx, dword [dword ecx+edx+plcareerpts]	; 62BBA
 cmp ebx, byte 64h	; 62BC1
 jl short .16	; 62BC4
 mov ecx, 64h	; 62BC6
@@ -2001,7 +2001,7 @@ jne short .16	; 62BD6
 mov esi, 5	; 62BD8
 jmp short .16	; 62BDD
 .15:
-add ebx, dword [dword edx+dword_DEB80]	; 62BDF
+add ebx, dword [dword edx+plseasonpts]	; 62BDF
 cmp ebx, byte 14h	; 62BE5
 jl short .16	; 62BE8
 mov ecx, 14h	; 62BEA
@@ -2040,7 +2040,7 @@ push ebx	; 62C41
 push ecx	; 62C42
 push edx	; 62C43
 push esi	; 62C44
-cmp dword [dword_CC0AC], byte 3Fh	; 62C45
+cmp dword [goalienotebits], byte 3Fh	; 62C45
 jne short .2	; 62C4C
 .1:
 xor eax, eax	; 62C4E
@@ -2050,9 +2050,9 @@ pop ecx	; 62C52
 pop ebx	; 62C53
 ret	; 62C54
 .2:
-cmp word [word_C90D8], byte 0	; 62C55
+cmp word [penaltysc], byte 0	; 62C55
 jl short QueueGoalieNote.1	; 62C5D
-mov eax, dword [word_C90D8-2]	; 62C5F
+mov eax, dword [penaltysc-2]	; 62C5F
 sar eax, 10h	; 62C64
 shl eax, 7	; 62C67
 add eax, SortCords	; 62C6A
@@ -2070,12 +2070,12 @@ test ebx, ebx	; 62C8C
 je short .3	; 62C8E
 shl edx, 3	; 62C90
 .3:
-mov ebx, dword [dword_CC0AC]	; 62C93
+mov ebx, dword [goalienotebits]	; 62C93
 test edx, ebx	; 62C99
 jne short QueueGoalieNote.1	; 62C9B
 mov ecx, ebx	; 62C9D
 or ecx, edx	; 62C9F
-mov dword [dword_CC0AC], ecx	; 62CA1
+mov dword [goalienotebits], ecx	; 62CA1
 push byte 0	; 62CA7
 push byte 0	; 62CA9
 push byte 0	; 62CAB

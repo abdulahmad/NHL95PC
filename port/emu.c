@@ -17,7 +17,7 @@ static const struct { uint32_t addr; uint8_t kind; } flagops[] = {
 #include "flagops.h"
 };
 #define NFLAGOPS (int)(sizeof flagops / sizeof *flagops)
-#define GAME_ADDR(orig) ((uint8_t *)sub_10000 + ((orig) - 0x10000))
+#define GAME_ADDR(orig) ((uint8_t *)begtext_forever + ((orig) - 0x10000))
 
 /* EventToPointer (0x6B4BB), which every menu of the game calls each time round its loop to move the pointer: how the host knows that the game is
  * drawing a pointer of its own. Its first instruction, push dword 1Ch, becomes an int3 that notes the time and is emulated. */
@@ -28,7 +28,7 @@ extern volatile int intro_skip, intro_title;
 #define MAIN_HOOK 0x31AB5u                       /* MainDeskLoop: the main menu begins */
 static volatile int64_t main_seen_ns;
 #define PLAY_HOOK 0x2A892u                       /* PreGameScreen, after TrackButtons: NHL95_AUTOSKIP presses Play (the scouting report) */
-extern int32_t off_CEF63;
+extern int32_t menuact_visitorlines;
 extern char PreGameScreen_play[];
 #define INPUT_HOOK 0x6B391u                      /* GetInputEvent: the menus ask for an event every time round their loop, even when there is none */
 static volatile int64_t ptr_hook_ns;
@@ -60,7 +60,7 @@ void install_flag_traps(void)
 /* the instruction an int3 at ip replaced, or -1 */
 static int flagop_kind(const uint8_t *ip)
 {
-    uint32_t orig = (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000;
+    uint32_t orig = (uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000;
     int lo = 0, hi = NFLAGOPS - 1;
     while (lo <= hi) {
         int mid = (lo + hi) / 2;
@@ -113,7 +113,7 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
 {
     int kind;
     {
-        uint32_t at = (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000;
+        uint32_t at = (uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000;
         if (at == SPEECH_HOOK || at == TITLE_HOOK) {         /* a screen of the splash sequence begins: a skip of the one before ends */
             intro_skip = 0;
             if (at == TITLE_HOOK) intro_title = 1;
@@ -122,20 +122,20 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
             return 5;
         }
     }
-    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == MAIN_HOOK) {         /* push dword 0CCh */
+    if ((uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000 == MAIN_HOOK) {         /* push dword 0CCh */
         main_seen_ns = plat_now_ns();
         fprintf(stderr, "autostart: the main menu begins\n");
         R(c, ESP) -= 4;
         *(uint32_t *)R(c, ESP) = *(uint32_t *)(ip + 1);
         return 5;
     }
-    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PLAY_HOOK) {      /* mov edx, eax: TrackButtons answers "Play" (index 0, or 1 when the table is shifted) */
-        { static int n; if (n++ < 3) fprintf(stderr, "autostart: Play pressed on the scouting report (off_CEF63 %d)\n", (int)off_CEF63); }
-        R(c, EAX) = off_CEF63 ? 1 : 0;
+    if ((uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000 == PLAY_HOOK) {      /* mov edx, eax: TrackButtons answers "Play" (index 0, or 1 when the table is shifted) */
+        { static int n; if (n++ < 3) fprintf(stderr, "autostart: Play pressed on the scouting report (menuact_visitorlines %d)\n", (int)menuact_visitorlines); }
+        R(c, EAX) = menuact_visitorlines ? 1 : 0;
         R(c, EDX) = R(c, EAX);
         return 2;
     }
-    if ((uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == PTR_HOOK || (uint32_t)(ip - (uint8_t *)sub_10000) + 0x10000 == INPUT_HOOK) {     /* push dword 1Ch, push dword 0Ch */
+    if ((uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000 == PTR_HOOK || (uint32_t)(ip - (uint8_t *)begtext_forever) + 0x10000 == INPUT_HOOK) {     /* push dword 1Ch, push dword 0Ch */
         ptr_hook_ns = plat_now_ns();
         if (autostart_fired && *(uint32_t *)R(c, ESP) == (uint32_t)(uintptr_t)GAME_ADDR(0x2A795)) {      /* PreGameScreen waits for a click on Play: take its Play exit instead */
             fprintf(stderr, "autostart: Play pressed on the scouting report\n");
@@ -153,7 +153,7 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
                 last = ptr_hook_ns;
                 fprintf(stderr, "autostart: GetInputEvent called from");
                 for (i = 0; i < 400 && k < 14; i++)
-                    if (sp[i] >= (uint32_t)(uintptr_t)sub_10000 && sp[i] < (uint32_t)(uintptr_t)sub_10000 + 0xB0000) { fprintf(stderr, " %05X", (unsigned)(sp[i] - (uint32_t)(uintptr_t)sub_10000 + 0x10000)); k++; }
+                    if (sp[i] >= (uint32_t)(uintptr_t)begtext_forever && sp[i] < (uint32_t)(uintptr_t)begtext_forever + 0xB0000) { fprintf(stderr, " %05X", (unsigned)(sp[i] - (uint32_t)(uintptr_t)begtext_forever + 0x10000)); k++; }
                 fprintf(stderr, "\n");
             }
         }

@@ -9,9 +9,9 @@ typedef struct DeferCall {
     void (*fn)(int, int, int, int, int, int, int);
 } DeferCall;
 
-#define Q(i) ((DeferCall *)dword_E9BA4)[i]
+#define Q(i) ((DeferCall *)defertab)[i]
 
-/* RunDeferredCalls: make the defercount queued calls (dword_E9BA4 table: arguments in eax, edx,
+/* RunDeferredCalls: make the defercount queued calls (defertab table: arguments in eax, edx,
  ebx, ecx, then 3 on the stack) in order and empty the queue. */
 void RunDeferredCalls(void)
 {
@@ -29,7 +29,7 @@ typedef struct { char c[15]; } T15;
 typedef struct { char c[16]; } T16;
 
 /* BuildEventLines (61E99, PC only; ends in fileio_popebpx, RunDeferredCalls' exit): build the five text lines of
-   the event in byte_E9AC8 on (type, side, player, then per type). 1, a goal: the time and the team; the scorer
+   the event in curevent on (type, side, player, then per type). 1, a goal: the time and the team; the scorer
    with a short-handed / power-play tag and, outside exhibition games and game mode bit 10h, the goals so far;
    "unassisted" or the one or two assists. 2, a penalty: for a penalty shot (11h) "PENALTY SHOT" / "TO BE TAKEN
    BY" and the shooter (penshotteam, penshotpnum); else the player, the penalty name (penaltynames) and the
@@ -45,19 +45,19 @@ void BuildEventLines(void)
     int n;
 
     textline3 = textline1 = textline2 = textline4 = textline5 = 0;
-    if (byte_E9AC8 == 1) {
-        side = byte_E9AC9;
-        sprintf((char *)&textline3, (char *)str_FmtClockEvent, byte_E9ACF, byte_E9AD0,
+    if (curevent == 1) {
+        side = curevent_b1;
+        sprintf((char *)&textline3, (char *)str_FmtClockEvent, curevent_b7, curevent_b8,
                 (char *)hmteamrec + side * 0x2E8 + 0x1A);
-        f = byte_E9ACD;
-        pl = byte_E9ACA;
+        f = curevent_b5;
+        pl = curevent_b2;
         n = sprintf(buf, (char *)str_S8, (f & 2) ? (char *)str_SHTag : (f & 4) ? (char *)str_PPTag : (char *)unk_C1B49);
         if (gamemode != 0 && !(gmode & 0x10) && pl < 0x19)
-            sprintf(buf + n, (char *)str_FmtParenD, *(short *)((char *)dword_DB088 + side * 400 + pl * 16)
-                    + *(int *)((char *)dword_DEB7C + side * 400 + pl * 16));
+            sprintf(buf + n, (char *)str_FmtParenD, *(short *)((char *)hmplstats + side * 400 + pl * 16)
+                    + *(int *)((char *)plseasongoals + side * 400 + pl * 16));
         FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17, buf);
-        pl = (unsigned char)byte_E9ACB;
+        pl = (unsigned char)curevent_b3;
         if (pl == 0xFF) {
             sprintf((char *)&textline2, (char *)str_Unassisted);
         } else {
@@ -66,16 +66,16 @@ void BuildEventLines(void)
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                              (char *)unk_C1B49);
         }
-        pl = byte_E9ACC;
+        pl = curevent_b4;
         if (pl != 0xFF)
             FormatPlayerName((char *)&textline5, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                              (char *)unk_C1B49);
-    } else if (byte_E9AC8 == 2) {
-        side = byte_E9AC9;
-        pl = byte_E9ACA;
-        if (byte_E9ACB == 0x11) {
-            sprintf((char *)&textline3, (char *)str_FmtClockEvent, byte_E9ACE, byte_E9ACF,
+    } else if (curevent == 2) {
+        side = curevent_b1;
+        pl = curevent_b2;
+        if (curevent_b3 == 0x11) {
+            sprintf((char *)&textline3, (char *)str_FmtClockEvent, curevent_b6, curevent_b7,
                     (char *)hmteamrec + penshotteam * 0x2E8);
             *(T13 *)&textline1 = *(T13 *)str_PenaltyShot;
             *(T15 *)&textline2 = *(T15 *)str_ToBeTakenBy;
@@ -83,23 +83,23 @@ void BuildEventLines(void)
                              (char *)hmroster + penshotteam * 0x444 + penshotpnum * 0x27 + 7,
                              (char *)hmroster + penshotteam * 0x444 + penshotpnum * 0x27 + 0x17, (char *)unk_C1B49);
         } else {
-            sprintf((char *)&textline3, (char *)str_02d02dSPenalty, byte_E9ACE, byte_E9ACF,
+            sprintf((char *)&textline3, (char *)str_02d02dSPenalty, curevent_b6, curevent_b7,
                     (char *)hmteamrec + side * 0x2E8);
             FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                              (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                              (char *)unk_C1B49);
-            strcpy((char *)&textline2, (char *)penaltynames[(unsigned char)byte_E9ACB]);
-            n = byte_E9ACC;
+            strcpy((char *)&textline2, (char *)penaltynames[(unsigned char)curevent_b3]);
+            n = curevent_b4;
             if (n == 0xFF)
                 *(T16 *)&textline4 = *(T16 *)str_GameMisconduct;
             else
                 sprintf((char *)&textline4, (char *)str_DMinutes, n);
         }
-    } else if (byte_E9AC8 == 3) {
-        side = byte_E9AC9;
-        pl = byte_E9ACA;
-        n = byte_E9ACB;
-        sprintf((char *)&textline3, (char *)str_02d02dSInjury, byte_E9ACD, byte_E9ACE, (char *)hmteamrec + side * 0x2E8);
+    } else if (curevent == 3) {
+        side = curevent_b1;
+        pl = curevent_b2;
+        n = curevent_b3;
+        sprintf((char *)&textline3, (char *)str_02d02dSInjury, curevent_b5, curevent_b6, (char *)hmteamrec + side * 0x2E8);
         FormatPlayerName((char *)&textline1, (char *)unk_C1B49, hmrosterjersey[side * 0x444 + pl * 0x27],
                          (char *)hmroster + side * 0x444 + pl * 0x27 + 7, (char *)hmroster + side * 0x444 + pl * 0x27 + 0x17,
                          (char *)unk_C1B49);

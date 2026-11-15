@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_B3E4A progbits alloc exec nowrite align=1
-extern byte_D3064, byte_D3068, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, byte_D545C, byte_D54DC
-extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D3024, dword_D305C, dword_D3060
+extern cpuinfo_b0, cpuinfo_b1, byte_D4F44, byte_D4F45, byte_D4F48, byte_D4FE8, byte_D545C, byte_D54DC
+extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D3024, cpuinfo_d0, cpuinfo_d1
 extern dword_D30A4, dword_D30A8, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
 extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
 extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, loc_B4D0C
 extern mousepollfn, off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, sub_B39D0, TicksSince
 extern word_D4F46, word_D4FE4, word_D4FE6, word_D4FE9
-global sub_B3E4A, sub_B3E98, loc_B3ED7, sub_B3ED8, loc_B3F23, loc_B3F3D, loc_B3F4B, sub_B3F50
+global sub_B3E4A, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
 global loc_B3FAC, sub_B3FB0, sub_B3FC2, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
 global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
 global sub_B40BF, loc_B40D1, sub_B40D4, sub_B40E2, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
@@ -30,7 +30,7 @@ global loc_B49A7, loc_B49B7, loc_B49BA, sub_B49C0, loc_B49D4, loc_B49DD, loc_B49
 global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
 global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, sub_B4AA4
 global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
-global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, sub_B4B88, loc_B4BA0, sub_B4BA8, sub_B4BC4
+global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, VgaSetPalette, loc_B4BA0, sub_B4BA8, SetClipWindow
 global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, sub_B4C33, loc_B4C48, loc_B4C4F
 global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
 global sub_B4CB4
@@ -49,7 +49,7 @@ mov edx, dword [dword_D4F34]	; B3E85
 mov esi, dword [dword_D4F38]	; B3E8B
 mov edi, dword [dword_D4F3C]	; B3E91
 ret	; B3E97
-sub_B3E98:
+SaveTextMode:
 cmp byte [byte_D4F44], 0	; B3E98
 jne short loc_B3ED7	; B3E9F
 mov ah, 0Fh	; B3EA1
@@ -61,12 +61,12 @@ mov ax, word [044Ah]	; B3EB4
 mov word [word_D4F46], ax	; B3EBA
 mov al, byte [0484h]	; B3EC0
 mov byte [byte_D4F48], al	; B3EC5
-push sub_B3ED8	; B3ECA
+push RestoreTextMode	; B3ECA
 call sub_B3454	; B3ECF
 add esp, byte 4	; B3ED4
 loc_B3ED7:
 ret	; B3ED7
-sub_B3ED8:
+RestoreTextMode:
 pusha	; B3ED8
 cmp byte [byte_D4F44], 0	; B3ED9
 je short loc_B3F4B	; B3EE0
@@ -104,9 +104,9 @@ loc_B3F4B:
 popa	; B3F4B
 ret	; B3F4C
 db 00h,00h,00h
-sub_B3F50:
+DetectCPU:
 pushfw	; B3F50
-mov dword [dword_D305C], 1	; B3F52
+mov dword [cpuinfo_d0], 1	; B3F52
 pushfw	; B3F5C
 pop bx	; B3F5E
 or bx, 7000h	; B3F60
@@ -116,10 +116,10 @@ pushfw	; B3F69
 pop bx	; B3F6B
 and bx, 7000h	; B3F6D
 je short loc_B3FAC	; B3F72
-mov dword [dword_D3060], 1	; B3F74
+mov dword [cpuinfo_d1], 1	; B3F74
 smsw eax	; B3F7E
 and ax, byte 1	; B3F81
-mov byte [byte_D3068], al	; B3F85
+mov byte [cpuinfo_b1], al	; B3F85
 LD mov, edx, esp	; B3F8A
 and esp, byte 0FFFFFFFCh	; B3F8C
 pushf	; B3F8F
@@ -133,7 +133,7 @@ pop eax	; B3F9B
 LD xor, eax, ecx	; B3F9C
 shr eax, 12h	; B3F9E
 and ax, byte 1	; B3FA1
-mov byte [byte_D3064], al	; B3FA5
+mov byte [cpuinfo_b0], al	; B3FA5
 LD mov, esp, edx	; B3FAA
 loc_B3FAC:
 popfw	; B3FAC
@@ -1287,7 +1287,7 @@ LD xor, ebx, ebx	; B4B79
 int 10h	; B4B7B
 mov dword [dword_D3024], 0	; B4B7D
 ret	; B4B87
-sub_B4B88:
+VgaSetPalette:
 push ebp	; B4B88
 LD mov, ebp, esp	; B4B89
 push esi	; B4B8B
@@ -1318,7 +1318,7 @@ LD mov, edi, edx	; B4BBD
 LD mov, esi, eax	; B4BBF
 ret	; B4BC1
 db 00h,00h
-sub_B4BC4:
+SetClipWindow:
 mov eax, dword [byte esp+04h]	; B4BC4
 mov edx, dword [byte esp+08h]	; B4BC8
 mov ecx, dword [byte esp+0Ch]	; B4BCC

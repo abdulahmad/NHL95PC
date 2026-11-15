@@ -31,15 +31,15 @@ int LeagueSettingsDlg(void)
     seriesgameno = 0;
     LoadSettingsShapes();
     sub_B4BA8();
-    bm = sub_8CCA8((char *)str_BKGD, 0x1436B, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
     ((short *)bm)[3] = 0x152;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawLeagueSetDlg(0);
     LeagueOptsToBits();
     LeagueSetEditLoop(1);
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -55,15 +55,15 @@ int MenuPlayoffSettings(void)
 
     LoadSettingsShapes();
     sub_B4BA8();
-    bm = sub_8CCA8((char *)str_BKGD, 0x1436B, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
     ((short *)bm)[3] = 0x152;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawLeagueSetDlg(1);
     LeagueOptsToBits();
     LeagueSetEditLoop(0);
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -79,11 +79,11 @@ int EditPlayoffSettings(void)
 
     LoadSettingsShapes();
     sub_B4BA8();
-    bm = sub_8CCA8((char *)str_BKGD, 0x1436B, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
     ((short *)bm)[3] = 0x152;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     SaveModeState(exhstate);
     LoadModeState(postate);
     DrawLeagueSetDlg(0);
@@ -91,7 +91,7 @@ int EditPlayoffSettings(void)
     LeagueSetEditLoop(1);
     WriteModeState(postate);
     LoadModeState(exhstate);
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -106,15 +106,15 @@ int MenuLeagueSettingsEdit(void)
 
     sub_B4BA8();
     LoadSettingsShapes();
-    bm = sub_8CCA8((char *)str_BKGD, 0x1436B, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
     ((short *)bm)[3] = 0x152;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawLeagueSetDlgSel();
     LeagueOptsToBits();
     LeagueSetEditLoop(1);
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -128,15 +128,15 @@ int MenuShowLeagueSettings(void)
     int bm;
 
     LoadSettingsShapes();
-    bm = sub_8CCA8((char *)str_BKGD, 0x1436B, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
     ((short *)bm)[3] = 0x152;
-    sub_91400(bm, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
     DrawLeagueSetDlgSel();
     LeagueOptsToBits();
     LeagueSetViewLoop();
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -160,24 +160,24 @@ int MenuShowLeagueSettings2(void)
     LoadSettingsShapes();
     sub_B4BA8();
     MakePath(path, fileoncd[0x175] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting5, 0);
-    bank = sub_8E83C(path, 0);
-    box = sub_B30B4(bank, (char *)str_Dbox2);
+    bank = LoadBank(path, 0);
+    box = FindShape(bank, (char *)str_Dbox2);
     sz = (((short *)box)[2] + 1) * (((short *)box)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_BKGD, sz, 0x20);
+    bm = AllocMemBlock((char *)str_BKGD, sz, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)box;
-    sub_91400(bm, 0xA, 0x13);
-    sub_91370(box, 0xA, 0x13);
+    GrabBlock(bm, 0xA, 0x13);
+    DrawArt(box, 0xA, 0x13);
     FreeMemBlock(bank);
-    sub_8E9C0(0xF8, 0xFF);
+    TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {
-        sub_91964((char *)str_Music, 0x68, 0xAA);
-        sub_91964((char *)str_Sound, 0x68, 0xC0);
+        PrintString((char *)str_Music, 0x68, 0xAA);
+        PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) sub_91964((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     DrawSettingsHeading(0xA, 0x13, 5, gamemode, 0xFA);
     LeagueOptsToBits();
     LeagueSetViewLoop();
-    sub_903F0(bm, 0xA, 0x13);
+    PutBlock(bm, 0xA, 0x13);
     FreeMemBlock(bm);
     FreeMemBlock(settingsfile);
     settingsfile = 0;
@@ -206,18 +206,18 @@ void DrawLeagueSetDlg(int playoffs)
         remap[0xF8] = 0x42;
         remap[0xF7] = 0x43;
     }
-    sub_B4DD4(remap);
+    SetColorRemap(remap);
     MakePath(path, fileoncd[0x173] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting3, 0);
-    bank = sub_8E83C(path, 0);
-    sub_931FC(sub_B30B4(bank, (char *)str_Dbox2), 0xA, 0x13);
+    bank = LoadBank(path, 0);
+    DrawArtMasked(FindShape(bank, (char *)str_Dbox2), 0xA, 0x13);
     FreeMemBlock(bank);
-    if (playoffs) sub_8E9C0(0x42, 0xFF);
-    else sub_8E9C0(0xF8, 0xFF);
+    if (playoffs) TextSetColors(0x42, 0xFF);
+    else TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {
-        sub_91964((char *)str_Music, 0x68, 0xAA);
-        sub_91964((char *)str_Sound, 0x68, 0xC0);
+        PrintString((char *)str_Music, 0x68, 0xAA);
+        PrintString((char *)str_Sound, 0x68, 0xC0);
     }
-    if (!musicon) sub_91964((char *)str_DigitizedSpeech, 0x68, 0xD6);
+    if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     if (gamemode == 1) {
         if (seriesgameno >= 5) sub_91FE0(na05spr, 0x85, 0x125);
         else if (seriesgameno >= 3) sub_91FE0(na03spr, 0x85, 0x125);
@@ -291,18 +291,18 @@ short LeagueSetViewLoop(void)
     int n;
     unsigned char *ev;
 
-    sub_B4B88(0xF7, 4, unk_D16A0);
-    sub_B2DCA(&s.btn, &s.ox, &s.oy);
+    VgaSetPalette(0xF7, 4, dlggreys);
+    MouseRead(&s.btn, &s.ox, &s.oy);
     s.x = s.ox;
     s.y = s.oy;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer15, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer15, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, s.x - 4, s.y);
-    sub_91370(pointerspr, s.x - 4, s.y);
+    GrabBlock(bm, s.x - 4, s.y);
+    DrawArt(pointerspr, s.x - 4, s.y);
     ClearInputQueue();
     for (;;) {
         s.btn = 0;
@@ -314,13 +314,13 @@ short LeagueSetViewLoop(void)
         }
         if (s.btn != 0) break;
         if (s.x == s.ox && s.y == s.oy) continue;
-        sub_903F0(bm, s.ox - 4, s.oy);
-        sub_91400(bm, s.x - 4, s.y);
-        sub_91370(pointerspr, s.x - 4, s.y);
+        PutBlock(bm, s.ox - 4, s.oy);
+        GrabBlock(bm, s.x - 4, s.y);
+        DrawArt(pointerspr, s.x - 4, s.y);
         s.ox = s.x;
         s.oy = s.y;
     }
-    sub_903F0(bm, s.ox - 4, s.oy);
+    PutBlock(bm, s.ox - 4, s.oy);
     FreeMemBlock(bm);
     return 0;
 }
@@ -343,19 +343,19 @@ short LeagueSetEditLoop(int mode)
     int n;
     unsigned char *ev;
 
-    if (mode) sub_B4B88(0xF7, 4, unk_D16A0);
-    sub_B2DCA(&btn, &ox, &oy);
+    if (mode) VgaSetPalette(0xF7, 4, dlggreys);
+    MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
     oldmusic = gameopts.music;
     sub_B4BA8();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
-    bm = sub_8CCA8((char *)str_Pointer15, n, 0x20);
+    bm = AllocMemBlock((char *)str_Pointer15, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
-    sub_91400(bm, x - 4, y);
-    sub_91370(pointerspr, x - 4, y);
+    GrabBlock(bm, x - 4, y);
+    DrawArt(pointerspr, x - 4, y);
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -367,14 +367,14 @@ short LeagueSetEditLoop(int mode)
         }
         if (!(btn & 6)) {
             if (x != ox || y != oy) {
-                sub_903F0(bm, ox - 4, oy);
-                sub_91400(bm, x - 4, y);
-                sub_91370(pointerspr, x - 4, y);
+                PutBlock(bm, ox - 4, oy);
+                GrabBlock(bm, x - 4, y);
+                DrawArt(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
         } else if (btn & 2) {
-            sub_903F0(bm, ox - 4, oy);
+            PutBlock(bm, ox - 4, oy);
             if (LeagueSetHitTest(x, y, &hit)) {
                 if (hit < 0x12) {
                     if (hit % 2) {
@@ -433,11 +433,11 @@ short LeagueSetEditLoop(int mode)
                         break;
                     }
                     if (gameopts.music) {
-                        if (musicon && songdata && !oldmusic && sub_8FC8A(musicslot, 3))
+                        if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
                             sub_8FB8E(songdata, musichandle, 3, 0x7F);
                         sub_8F979();
                     } else {
-                        if (musicon && songdata && !sub_8FC8A(musicslot, 3))
+                        if (musicon && songdata && !SndQuery(musicslot, 3))
                             sub_8FCDF(musichandle, 3, 0x64);
                         sub_8F984();
                     }
@@ -454,17 +454,17 @@ short LeagueSetEditLoop(int mode)
                 DrawLeagueSetChecks();
             }
             sub_96440(bm, x - 4, y);
-            sub_91370(pointerspr, x - 4, y);
+            DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         } else if (btn & 4) {
-            sub_903F0(bm, ox - 4, oy);
+            PutBlock(bm, ox - 4, oy);
             FreeMemBlock(bm);
             return 0;
         } else {
-            sub_903F0(bm, ox - 4, oy);
-            sub_91400(bm, x - 4, y);
-            sub_91370(pointerspr, x - 4, y);
+            PutBlock(bm, ox - 4, oy);
+            GrabBlock(bm, x - 4, y);
+            DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         }

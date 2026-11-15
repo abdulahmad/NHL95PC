@@ -4,8 +4,8 @@
 #ifndef ASMFUNCS_H
 #define ASMFUNCS_H
 
-extern void sub_10000(); /* 10000 */
-extern void unk_10003(); /* 10003 */
+extern void begtext_forever(); /* 10000 */
+extern void ___begtext(); /* 10003 */
 extern void main_x(); /* 106BF */
 extern void ReadKeyboardPad(); /* 1086A */
 extern void ReadJoyPad(); /* 109A1 */
@@ -919,8 +919,8 @@ extern void sub_8CC5C(); /* 8CC5C */
 extern void sub_8CC8C(); /* 8CC8C */
 extern void sub_8CCC4(); /* 8CCC4 */
 extern void sub_8CCE0(); /* 8CCE0 */
-extern void sub_8CD04(); /* 8CD04 */
-extern void sub_8CD4C(); /* 8CD4C */
+extern void AllocMemBlockEx(); /* 8CD04 */
+extern void reservemem(); /* 8CD4C */
 extern void loc_8CD90(); /* 8CD90 */
 extern void loc_8CDDC(); /* 8CDDC */
 extern void loc_8CDEE(); /* 8CDEE */
@@ -1049,7 +1049,7 @@ extern void sub_8DB4C(); /* 8DB4C */
 extern void loc_8DB60(); /* 8DB60 */
 extern void loc_8DB6D(); /* 8DB6D */
 extern void sub_8DB78(); /* 8DB78 */
-extern void sub_8DB8C(); /* 8DB8C */
+extern void getmemblock(); /* 8DB8C */
 extern void loc_8DBB1(); /* 8DBB1 */
 extern void sub_8DBC0(); /* 8DBC0 */
 extern void sub_8DBDC(); /* 8DBDC */
@@ -1063,7 +1063,7 @@ extern void sub_8DCC0(); /* 8DCC0 */
 extern void loc_8DCC5(); /* 8DCC5 */
 extern void loc_8DCD6(); /* 8DCD6 */
 extern void loc_8DCD9(); /* 8DCD9 */
-extern void sub_8DCF8(); /* 8DCF8 */
+extern void initmemman(); /* 8DCF8 */
 extern void loc_8DD2F(); /* 8DD2F */
 extern void loc_8DD58(); /* 8DD58 */
 extern void loc_8DD71(); /* 8DD71 */
@@ -1074,7 +1074,7 @@ extern void loc_8DF06(); /* 8DF06 */
 extern void sub_8DF28(); /* 8DF28 */
 extern void sub_8DF3C(); /* 8DF3C */
 extern void sub_8DF54(); /* 8DF54 */
-extern void sub_8DF70(); /* 8DF70 */
+extern void ProbeVesa(); /* 8DF70 */
 extern void loc_8DF8B(); /* 8DF8B */
 extern void loc_8DFB0(); /* 8DFB0 */
 extern void loc_8DFEA(); /* 8DFEA */
@@ -1152,7 +1152,7 @@ extern void sub_8E6CC(); /* 8E6CC */
 extern void sub_8E714(); /* 8E714 */
 extern void sub_8E738(); /* 8E738 */
 extern void sub_8E780(); /* 8E780 */
-extern void sub_8E7A0(); /* 8E7A0 */
+extern void subwindowdefadr(); /* 8E7A0 */
 extern void loc_8E816(); /* 8E816 */
 extern void sub_8E81C(); /* 8E81C */
 extern void loc_8E82B(); /* 8E82B */
@@ -1248,7 +1248,7 @@ extern void loc_8F0E7(); /* 8F0E7 */
 extern void loc_8F0EB(); /* 8F0EB */
 extern void sub_8F114(); /* 8F114 */
 extern void loc_8F127(); /* 8F127 */
-extern void sub_8F13B(); /* 8F13B */
+extern void LoadSample(); /* 8F13B */
 extern void loc_8F151(); /* 8F151 */
 extern void loc_8F158(); /* 8F158 */
 extern void loc_8F19C(); /* 8F19C */
@@ -1256,7 +1256,7 @@ extern void loc_8F1F2(); /* 8F1F2 */
 extern void loc_8F1F4(); /* 8F1F4 */
 extern void loc_8F1F7(); /* 8F1F7 */
 extern void loc_8F1F8(); /* 8F1F8 */
-extern void sub_8F1FE(); /* 8F1FE */
+extern void FreeSample(); /* 8F1FE */
 extern void loc_8F244(); /* 8F244 */
 extern void sub_8F247(); /* 8F247 */
 extern void loc_8F24D(); /* 8F24D */
@@ -1381,7 +1381,7 @@ extern void sub_8FF5E(); /* 8FF5E */
 extern void sub_8FF7C(); /* 8FF7C */
 extern void loc_8FFCB(); /* 8FFCB */
 extern void start(); /* 8FFD4 */
-extern void loc_90048(); /* 90048 */
+extern void __saved_DS(); /* 90048 */
 extern void loc_9004A(); /* 9004A */
 extern void loc_9004E(); /* 9004E */
 extern void loc_90066(); /* 90066 */
@@ -1522,7 +1522,7 @@ extern void loc_90F0F(); /* 90F0F */
 extern void loc_90F28(); /* 90F28 */
 extern void loc_90F29(); /* 90F29 */
 extern void sub_90F2C(); /* 90F2C */
-extern void sub_90F38(); /* 90F38 */
+extern void XorBar(); /* 90F38 */
 extern void loc_90F7D(); /* 90F7D */
 extern void loc_90FC1(); /* 90FC1 */
 extern void loc_91004(); /* 91004 */
@@ -1865,7 +1865,7 @@ extern void sub_932EC(); /* 932EC */
 extern void sub_93308(); /* 93308 */
 extern void sub_9333C(); /* 9333C */
 extern void sub_93354(); /* 93354 */
-extern void sub_9336C(); /* 9336C */
+extern void savefileblocka(); /* 9336C */
 extern void loc_933C7(); /* 933C7 */
 extern void loc_933CB(); /* 933CB */
 extern void loc_933E8(); /* 933E8 */
@@ -2342,7 +2342,7 @@ extern void sub_971BE(); /* 971BE */
 extern void loc_971D7(); /* 971D7 */
 extern void sub_971DB(); /* 971DB */
 extern void loc_971F4(); /* 971F4 */
-extern void sub_971F8(); /* 971F8 */
+extern void SndDriverCall(); /* 971F8 */
 extern void sub_9720B(); /* 9720B */
 extern void loc_9722C(); /* 9722C */
 extern void sub_9722E(); /* 9722E */
@@ -2481,7 +2481,7 @@ extern void loc_97E7D(); /* 97E7D */
 extern void loc_97E9E(); /* 97E9E */
 extern void loc_97EA4(); /* 97EA4 */
 extern void loc_97EAD(); /* 97EAD */
-extern void sub_97EB8(); /* 97EB8 */
+extern void unpack(); /* 97EB8 */
 extern void loc_97EE1(); /* 97EE1 */
 extern void loc_97F3C(); /* 97F3C */
 extern void loc_97F49(); /* 97F49 */
@@ -2589,7 +2589,7 @@ extern void loc_98DB7(); /* 98DB7 */
 extern void loc_98DC3(); /* 98DC3 */
 extern void loc_98DCD(); /* 98DCD */
 extern void loc_98DCF(); /* 98DCF */
-extern void sub_98DD8(); /* 98DD8 */
+extern void removewindow(); /* 98DD8 */
 extern void loc_98DF6(); /* 98DF6 */
 extern void loc_98E06(); /* 98E06 */
 extern void loc_98E17(); /* 98E17 */
@@ -3305,7 +3305,7 @@ extern void sub_9D2E0(); /* 9D2E0 */
 extern void loc_9D303(); /* 9D303 */
 extern void loc_9D333(); /* 9D333 */
 extern void loc_9D33C(); /* 9D33C */
-extern void sub_9D352(); /* 9D352 */
+extern void InitFpuFlags(); /* 9D352 */
 extern void loc_9D3A4(); /* 9D3A4 */
 extern void loc_9D3C8(); /* 9D3C8 */
 extern void loc_9D3F0(); /* 9D3F0 */
@@ -6191,7 +6191,7 @@ extern void sub_B3B00(); /* B3B00 */
 extern void sub_B3B19(); /* B3B19 */
 extern void sub_B3B2E(); /* B3B2E */
 extern void sub_B3B44(); /* B3B44 */
-extern void sub_B3B5A(); /* B3B5A */
+extern void openhandle(); /* B3B5A */
 extern void loc_B3B6E(); /* B3B6E */
 extern void loc_B3BB9(); /* B3BB9 */
 extern void loc_B3BEE(); /* B3BEE */
@@ -6226,13 +6226,13 @@ extern void loc_B3DDD(); /* B3DDD */
 extern void loc_B3DF1(); /* B3DF1 */
 extern void sub_B3DFC(); /* B3DFC */
 extern void sub_B3E4A(); /* B3E4A */
-extern void sub_B3E98(); /* B3E98 */
+extern void SaveTextMode(); /* B3E98 */
 extern void loc_B3ED7(); /* B3ED7 */
-extern void sub_B3ED8(); /* B3ED8 */
+extern void RestoreTextMode(); /* B3ED8 */
 extern void loc_B3F23(); /* B3F23 */
 extern void loc_B3F3D(); /* B3F3D */
 extern void loc_B3F4B(); /* B3F4B */
-extern void sub_B3F50(); /* B3F50 */
+extern void DetectCPU(); /* B3F50 */
 extern void loc_B3FAC(); /* B3FAC */
 extern void sub_B3FB0(); /* B3FB0 */
 extern void sub_B3FC2(); /* B3FC2 */

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D71F0 progbits alloc noexec write align=1
-extern byte_D6CE0, byte_D6E24, byte_D6F68, byte_D70AC, unk_C4B50
+extern byte_D6CE0, byte_D6E24, byte_D6F68, byte_D70AC, str_ULTRASND
 global byte_D7618, byte_D7619, byte_D781C, byte_D7A2C, byte_D7A3C, byte_D7AEC, byte_D7B18, byte_D7B58
 global byte_D7B5C, byte_D7D70, byte_D7DB0, byte_D7DB4, byte_D7FC8, byte_D8008, byte_D800C, byte_D8220
 global byte_D8260, byte_D8264, byte_D849C, byte_D84A0, byte_D86C8, byte_D877A, byte_D87D8, byte_D89E0
@@ -1011,7 +1011,7 @@ db 00h,00h
 word_D84C6:
 db 00h,00h,00h,080h,0Bh,00h
 dword_D84CC:
-dd unk_C4B50
+dd str_ULTRASND
 dword_D84D0:
 db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h
 db 02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h

@@ -8,8 +8,8 @@ void PrintOutlinedText(int x, int y, char *s)
     int i;
 
     fontcolor = textshadow;
-    for (i = 0; i < 4; i++) sub_91964(s, x + textoutlinedx[i], y + textoutlinedy[i]);
+    for (i = 0; i < 4; i++) PrintString(s, x + textoutlinedx[i], y + textoutlinedy[i]);
     fontcolor = textcolor;
-    sub_91964(s, x, y);
+    PrintString(s, x, y);
     TextGridPut(x, y, s);
 }

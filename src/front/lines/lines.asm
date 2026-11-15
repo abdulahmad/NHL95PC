@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_737AA progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, asc_C3164, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
+extern __CHK, __STOSB, str_PlusMinus7, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
 extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA
 extern CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1
 extern dlgedgecol2, dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawGameLineJerseys, DrawLineEditorScreen, DrawMenuBar
 extern DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418
-extern dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, dword_DBC7C, dword_DBCE0, editptrspr
+extern dword_D141C, dword_D1458, dword_D145C, dword_D1468, dword_D146C, hmteamrec_skaters, hmteamrec_goalies, editptrspr
 extern fadeend, fadeend2, FadeOutPalCycle, fadepal, fadepal2, fadestart, fadestart2, fadestep
 extern fadestep2, FatalError, fileoncd, FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, GameDressPlayer
 extern gameopts, GameScratchPlayer, GetInputEvent, gmroster, gmrosterjersey, gmrosterslot, hmroster, hmrosterjersey
@@ -27,10 +27,10 @@ extern str_Lelogo, str_Lelogo2, str_Lineditp2, str_Lineditp3, str_Menubuff8, str
 extern str_No2, str_Pal25, str_Pal26, str_Pal27, str_Pal28, str_PCT2, str_PIM4, str_Pntr3
 extern str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6
 extern str_SA3, str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_W6, strcmp_
-extern stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
-extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_9121C, sub_913B4
-extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
-extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, unk_C311D, unk_D075E, unknown_libname_1
+extern stub_8C218, AllocMemBlock, sub_8D2F0, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
+extern SndQuery, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, sub_9121C, DrawShape
+extern GrabBlock, PrintString, sub_91FE0, DrawArtMasked, MouseRead, SetViewRect, FindShape, ClearScreen
+extern VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C84, SetColorRemap, str_dot2, rosterstatsmenubar, unknown_libname_1
 extern vgapage, VisTeam
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
@@ -66,13 +66,13 @@ mov dword [byte esp+024h], ecx	; 737FD
 push byte 20h	; 73801
 push dword 300h	; 73803
 push str_Pal25	; 73808
-call sub_8CCA8	; 7380D
+call AllocMemBlock	; 7380D
 mov esi, eax	; 73812
 add esp, byte 0Ch	; 73814
 push eax	; 73817
 push dword 100h	; 73818
 push byte 0	; 7381D
-call sub_8FFB0	; 7381F
+call SetPalette	; 7381F
 add esp, byte 0Ch	; 73824
 mov ebx, 10h	; 73827
 mov edx, esi	; 7382C
@@ -113,7 +113,7 @@ push dword 1E0h	; 738CC
 push byte 0	; 738D1
 push dword 280h	; 738D3
 push byte 0	; 738D8
-call sub_B4BC4	; 738DA
+call SetClipWindow	; 738DA
 add esp, byte 10h	; 738DF
 xor ecx, ecx	; 738E2
 mov ebx, str_Lineditp2	; 738E4
@@ -129,12 +129,12 @@ call MakePath	; 738FE
 push byte 0	; 73903
 lea eax, [byte esp+04h]	; 73905
 push eax	; 73909
-call sub_8E83C	; 7390A
+call LoadBank	; 7390A
 mov edi, eax	; 7390F
 add esp, byte 8	; 73911
 push str_Shrt2	; 73914
 push eax	; 73919
-call sub_B30B4	; 7391A
+call FindShape	; 7391A
 mov esi, eax	; 7391F
 add esp, byte 8	; 73921
 mov ebx, dword [byte esp+024h]	; 73924
@@ -150,7 +150,7 @@ call sub_B4BA8	; 73942
 mov edx, dword [fullscrbmp]	; 73947
 mov ecx, dword [byte edx+02Ch]	; 7394D
 push ecx	; 73950
-call sub_9061C	; 73951
+call DrawBitmap	; 73951
 add esp, byte 4	; 73956
 push edi	; 73959
 mov eax, dword [byte esp+028h]	; 7395A
@@ -251,7 +251,7 @@ mov dword [byte ebp+05Ah], 0C2h	; 73A53
 push str_Pntr3	; 73A5A
 mov edx, dword [dword ebp+092h]	; 73A5F
 push edx	; 73A65
-call sub_B30B4	; 73A66
+call FindShape	; 73A66
 mov dword [byte ebp+046h], eax	; 73A6B
 add esp, byte 8	; 73A6E
 mov eax, dword [dword ebp+08Ah]	; 73A71
@@ -287,7 +287,7 @@ add eax, byte 11h	; 73AD3
 push byte 20h	; 73AD6
 push eax	; 73AD8
 push str_Pointer13	; 73AD9
-call sub_8CCA8	; 73ADE
+call AllocMemBlock	; 73ADE
 add esp, byte 0Ch	; 73AE3
 mov dword [byte ebp+066h], eax	; 73AE6
 mov edi, eax	; 73AE9
@@ -410,7 +410,7 @@ jl short DbLineEditorLoop.3	; 73C1E
 push byte 20h	; 73C20
 push dword 300h	; 73C22
 push str_Pal25	; 73C27
-call sub_8CCA8	; 73C2C
+call AllocMemBlock	; 73C2C
 add esp, byte 0Ch	; 73C31
 mov dword [byte ebp+04Ah], eax	; 73C34
 xor ecx, ecx	; 73C37
@@ -427,12 +427,12 @@ call MakePath	; 73C54
 push byte 0	; 73C59
 lea eax, [byte ebp-05Eh]	; 73C5B
 push eax	; 73C5E
-call sub_8E83C	; 73C5F
+call LoadBank	; 73C5F
 mov dword [byte ebp+046h], eax	; 73C64
 add esp, byte 8	; 73C67
 push str_Pal26	; 73C6A
 push eax	; 73C6F
-call sub_B30B4	; 73C70
+call FindShape	; 73C70
 add esp, byte 8	; 73C75
 lea edx, [byte eax+010h]	; 73C78
 mov ebx, 300h	; 73C7B
@@ -476,12 +476,12 @@ call MakePath	; 73D01
 push byte 0	; 73D06
 lea eax, [byte ebp-05Eh]	; 73D08
 push eax	; 73D0B
-call sub_8E83C	; 73D0C
+call LoadBank	; 73D0C
 mov dword [byte ebp+046h], eax	; 73D11
 add esp, byte 8	; 73D14
 push str_Pal26	; 73D17
 push eax	; 73D1C
-call sub_B30B4	; 73D1D
+call FindShape	; 73D1D
 add esp, byte 8	; 73D22
 lea edx, [dword eax+026Eh]	; 73D25
 mov eax, dword [byte ebp+04Ah]	; 73D2B
@@ -514,7 +514,7 @@ lea eax, [byte esi-01Ch]	; 73D6E
 push eax	; 73D71
 mov eax, dword [editptrspr]	; 73D72
 push eax	; 73D77
-call sub_91400	; 73D78
+call GrabBlock	; 73D78
 add esp, byte 0Ch	; 73D7D
 cmp edi, byte 20h	; 73D80
 jge short .13	; 73D83
@@ -534,7 +534,7 @@ lea eax, [byte esi-01Ch]	; 73D96
 push eax	; 73D99
 mov edx, dword [byte ebp+066h]	; 73D9A
 push edx	; 73D9D
-call sub_91400	; 73D9E
+call GrabBlock	; 73D9E
 add esp, byte 0Ch	; 73DA3
 push edi	; 73DA6
 lea eax, [byte esi-03h]	; 73DA7
@@ -547,7 +547,7 @@ push dword 1E0h	; 73DBA
 push dword 280h	; 73DBF
 push byte 0	; 73DC4
 push byte 0	; 73DC6
-call sub_B2E1B	; 73DC8
+call SetViewRect	; 73DC8
 add esp, byte 10h	; 73DCD
 push edi	; 73DD0
 push esi	; 73DD1
@@ -557,7 +557,7 @@ lea eax, [byte ebp+042h]	; 73DDA
 push eax	; 73DDD
 push eax	; 73DDE
 push eax	; 73DDF
-call sub_B2DCA	; 73DE0
+call MouseRead	; 73DE0
 add esp, byte 0Ch	; 73DE5
 call ClearInputQueue	; 73DE8
 jmp near .28	; 73DED
@@ -575,7 +575,7 @@ sub esi, byte 1Ch	; 73DFF
 push esi	; 73E02
 mov ebx, dword [byte ebp+066h]	; 73E03
 push ebx	; 73E06
-call sub_903F0	; 73E07
+call PutBlock	; 73E07
 add esp, byte 0Ch	; 73E0C
 mov ecx, dword [byte ebp+03Ah]	; 73E0F
 cmp ecx, byte 20h	; 73E12
@@ -597,7 +597,7 @@ lea eax, [byte esi-01Ch]	; 73E2B
 push eax	; 73E2E
 mov edi, dword [byte ebp+066h]	; 73E2F
 push edi	; 73E32
-call sub_91400	; 73E33
+call GrabBlock	; 73E33
 add esp, byte 0Ch	; 73E38
 mov eax, dword [byte ebp+03Ah]	; 73E3B
 mov edx, dword [byte ebp-0Eh]	; 73E3E
@@ -652,7 +652,7 @@ mov dl, byte [dword eax+rosterjersey]	; 73EC8
 mov eax, jerseyremap	; 73ECE
 call MakeJerseyShape	; 73ED3
 push jerseyremap	; 73ED8
-call sub_B4DD4	; 73EDD
+call SetColorRemap	; 73EDD
 add esp, byte 4	; 73EE2
 mov eax, dword [byte ebp+03Ah]	; 73EE5
 sub eax, byte 20h	; 73EE8
@@ -745,7 +745,7 @@ sub esi, byte 1Ch	; 73FC8
 push esi	; 73FCB
 mov esi, dword [byte ebp+066h]	; 73FCC
 push esi	; 73FCF
-call sub_903F0	; 73FD0
+call PutBlock	; 73FD0
 add esp, byte 0Ch	; 73FD5
 mov dword [byte ebp+042h], 3	; 73FD8
 jmp short .38	; 73FDF
@@ -760,7 +760,7 @@ push edi	; 73FF2
 mov ebx, dword [byte ebp+ebx*8-07Eh]	; 73FF3
 push ebx	; 73FF7
 push esi	; 73FF8
-call sub_903F0	; 73FF9
+call PutBlock	; 73FF9
 add esp, byte 0Ch	; 73FFE
 mov eax, dword [byte ebp+042h]	; 74001
 xor esi, esi	; 74004
@@ -833,7 +833,7 @@ sub esi, byte 1Ch	; 740B8
 push esi	; 740BB
 mov esi, dword [byte ebp+066h]	; 740BC
 push esi	; 740BF
-call sub_903F0	; 740C0
+call PutBlock	; 740C0
 add esp, byte 0Ch	; 740C5
 mov edi, dword [byte ebp+05Ah]	; 740C8
 push edi	; 740CB
@@ -885,7 +885,7 @@ sub esi, byte 1Ch	; 74140
 push esi	; 74143
 mov ecx, dword [byte ebp+066h]	; 74144
 push ecx	; 74147
-call sub_903F0	; 74148
+call PutBlock	; 74148
 add esp, byte 0Ch	; 7414D
 mov eax, dword [byte ebp+06Ah]	; 74150
 cmp eax, dword [byte ebp+036h]	; 74153
@@ -905,7 +905,7 @@ push ebx	; 74175
 mov ecx, dword [byte ebp+edx*8-07Eh]	; 74176
 push ecx	; 7417A
 push edi	; 7417B
-call sub_903F0	; 7417C
+call PutBlock	; 7417C
 add esp, byte 0Ch	; 74181
 mov eax, dword [byte ebp+042h]	; 74184
 mov dword [byte ebp+eax*8-07Ah], esi	; 74187
@@ -1018,7 +1018,7 @@ imul eax, edx	; 742BF
 add eax, byte 11h	; 742C2
 push eax	; 742C5
 push str_Menubuff8	; 742C6
-call sub_8CCA8	; 742CB
+call AllocMemBlock	; 742CB
 add esp, byte 0Ch	; 742D0
 mov edx, dword [byte ebp+062h]	; 742D3
 mov dword [byte edx+ebp+02h], eax	; 742D6
@@ -1044,7 +1044,7 @@ push edi	; 7430C
 mov eax, dword [byte ebp+062h]	; 7430D
 mov edx, dword [byte eax+ebp+02h]	; 74310
 push edx	; 74314
-call sub_91400	; 74315
+call GrabBlock	; 74315
 add esp, byte 0Ch	; 7431A
 mov ebx, dword [byte ebp+05Ah]	; 7431D
 push ebx	; 74320
@@ -1092,7 +1092,7 @@ sub esi, byte 1Ch	; 74388
 push esi	; 7438B
 mov ecx, dword [byte ebp+066h]	; 7438C
 push ecx	; 7438F
-call sub_903F0	; 74390
+call PutBlock	; 74390
 add esp, byte 0Ch	; 74395
 mov esi, dword [byte ebp+05Ah]	; 74398
 push esi	; 7439B
@@ -1135,7 +1135,7 @@ sub esi, byte 1Ch	; 743F7
 push esi	; 743FA
 mov ecx, dword [byte ebp+066h]	; 743FB
 push ecx	; 743FE
-call sub_903F0	; 743FF
+call PutBlock	; 743FF
 add esp, byte 0Ch	; 74404
 lea ebx, [byte ebp+02Eh]	; 74407
 mov edx, dword [byte ebp+03Ah]	; 7440A
@@ -1156,7 +1156,7 @@ push ebx	; 74437
 mov ecx, dword [byte ebp+ecx*8-07Eh]	; 74438
 push ecx	; 7443C
 push edx	; 7443D
-call sub_903F0	; 7443E
+call PutBlock	; 7443E
 add esp, byte 0Ch	; 74443
 mov eax, dword [byte ebp+042h]	; 74446
 xor edi, edi	; 74449
@@ -1209,7 +1209,7 @@ cmp byte [dword esi+eax+rosterstat], 2	; 744CC
 je near .116	; 744D4
 push dword 0C1h	; 744DA
 push dword 0C0h	; 744DF
-call sub_8E9C0	; 744E4
+call TextSetColors	; 744E4
 add esp, byte 8	; 744E9
 mov edx, dword [byte ebp+026h]	; 744EC
 mov eax, edx	; 744EF
@@ -1330,7 +1330,7 @@ cmp eax, 0F0h	; 74631
 jl short DbLineEditorLoop.74	; 74636
 .75:
 push jerseyremap	; 74638
-call sub_B4DD4	; 7463D
+call SetColorRemap	; 7463D
 add esp, byte 4	; 74642
 mov edx, dword [byte ebp+042h]	; 74645
 mov eax, edx	; 74648
@@ -1343,7 +1343,7 @@ mov edi, dword [nosplit eax*8+lineslotx]	; 74659
 push edi	; 74660
 mov eax, dword [dword ebp-0B6h]	; 74661
 push eax	; 74667
-call sub_931FC	; 74668
+call DrawArtMasked	; 74668
 add esp, byte 0Ch	; 7466D
 inc esi	; 74670
 cmp esi, byte 3	; 74671
@@ -1451,7 +1451,7 @@ cmp eax, 0F0h	; 74798
 jl short DbLineEditorLoop.82	; 7479D
 .83:
 push jerseyremap	; 7479F
-call sub_B4DD4	; 747A4
+call SetColorRemap	; 747A4
 add esp, byte 4	; 747A9
 mov eax, dword [byte ebp+042h]	; 747AC
 add eax, eax	; 747AF
@@ -1462,7 +1462,7 @@ mov edx, dword [nosplit eax*8+dword_D1398]	; 747BB
 push edx	; 747C2
 mov ebx, dword [dword ebp-0B6h]	; 747C3
 push ebx	; 747C9
-call sub_931FC	; 747CA
+call DrawArtMasked	; 747CA
 add esp, byte 0Ch	; 747CF
 inc esi	; 747D2
 cmp esi, byte 2	; 747D3
@@ -1575,7 +1575,7 @@ cmp eax, 0F0h	; 74908
 jl short DbLineEditorLoop.90	; 7490D
 .91:
 push jerseyremap	; 7490F
-call sub_B4DD4	; 74914
+call SetColorRemap	; 74914
 add esp, byte 4	; 74919
 mov edx, dword [byte ebp+042h]	; 7491C
 mov eax, edx	; 7491F
@@ -1588,7 +1588,7 @@ mov ebx, dword [nosplit eax*8+dword_D13C8]	; 74930
 push ebx	; 74937
 mov ecx, dword [dword ebp-0B6h]	; 74938
 push ecx	; 7493E
-call sub_931FC	; 7493F
+call DrawArtMasked	; 7493F
 add esp, byte 0Ch	; 74944
 inc esi	; 74947
 cmp esi, byte 5	; 74948
@@ -1696,7 +1696,7 @@ cmp eax, 0F0h	; 74A73
 jl short DbLineEditorLoop.98	; 74A78
 .99:
 push jerseyremap	; 74A7A
-call sub_B4DD4	; 74A7F
+call SetColorRemap	; 74A7F
 add esp, byte 4	; 74A84
 mov eax, dword [byte ebp+042h]	; 74A87
 shl eax, 2	; 74A8A
@@ -1707,7 +1707,7 @@ mov edi, dword [nosplit eax*8+dword_D1418]	; 74A97
 push edi	; 74A9E
 mov eax, dword [dword ebp-0B6h]	; 74A9F
 push eax	; 74AA5
-call sub_931FC	; 74AA6
+call DrawArtMasked	; 74AA6
 add esp, byte 0Ch	; 74AAB
 inc esi	; 74AAE
 cmp esi, byte 4	; 74AAF
@@ -1792,7 +1792,7 @@ cmp eax, 0F0h	; 74B9E
 jl short DbLineEditorLoop.106	; 74BA3
 .107:
 push jerseyremap	; 74BA5
-call sub_B4DD4	; 74BAA
+call SetColorRemap	; 74BAA
 add esp, byte 4	; 74BAF
 mov edi, dword [nosplit esi*8+dword_D145C]	; 74BB2
 push edi	; 74BB9
@@ -1800,7 +1800,7 @@ mov edx, dword [nosplit esi*8+dword_D1458]	; 74BBA
 push edx	; 74BC1
 mov ebx, dword [dword ebp-0B6h]	; 74BC2
 push ebx	; 74BC8
-call sub_931FC	; 74BC9
+call DrawArtMasked	; 74BC9
 add esp, byte 0Ch	; 74BCE
 inc esi	; 74BD1
 cmp esi, byte 2	; 74BD2
@@ -1884,7 +1884,7 @@ cmp eax, 0F0h	; 74CB9
 jl short DbLineEditorLoop.114	; 74CBE
 .115:
 push jerseyremap	; 74CC0
-call sub_B4DD4	; 74CC5
+call SetColorRemap	; 74CC5
 add esp, byte 4	; 74CCA
 mov edx, dword [nosplit esi*8+dword_D146C]	; 74CCD
 push edx	; 74CD4
@@ -1892,7 +1892,7 @@ mov ebx, dword [nosplit esi*8+dword_D1468]	; 74CD5
 push ebx	; 74CDC
 mov ecx, dword [dword ebp-0B6h]	; 74CDD
 push ecx	; 74CE3
-call sub_931FC	; 74CE4
+call DrawArtMasked	; 74CE4
 add esp, byte 0Ch	; 74CE9
 inc esi	; 74CEC
 cmp esi, byte 2	; 74CED
@@ -1955,7 +1955,7 @@ jmp short .119	; 74D95
 push dword 0C1h	; 74D97
 push dword 0C3h	; 74D9C
 .119:
-call sub_8E9C0	; 74DA1
+call TextSetColors	; 74DA1
 add esp, byte 8	; 74DA6
 xor edx, edx	; 74DA9
 mov dl, byte [byte ebp+072h]	; 74DAB
@@ -2026,7 +2026,7 @@ jmp short .122	; 74E74
 push dword 0C1h	; 74E76
 push dword 0C0h	; 74E7B
 .122:
-call sub_8E9C0	; 74E80
+call TextSetColors	; 74E80
 add esp, byte 8	; 74E85
 xor edx, edx	; 74E88
 mov dl, byte [byte ebp+072h]	; 74E8A
@@ -2090,7 +2090,7 @@ lea eax, [byte ebx-01Ch]	; 74F1D
 push eax	; 74F20
 mov ecx, dword [byte ebp+066h]	; 74F21
 push ecx	; 74F24
-call sub_91400	; 74F25
+call GrabBlock	; 74F25
 add esp, byte 0Ch	; 74F2A
 mov eax, dword [byte ebp+03Ah]	; 74F2D
 mov edx, dword [byte ebp-0Eh]	; 74F30
@@ -2146,7 +2146,7 @@ mov dl, byte [dword eax+rosterjersey]	; 74FBB
 mov eax, jerseyremap	; 74FC1
 call MakeJerseyShape	; 74FC6
 push jerseyremap	; 74FCB
-call sub_B4DD4	; 74FD0
+call SetColorRemap	; 74FD0
 add esp, byte 4	; 74FD5
 mov eax, dword [byte ebp+03Ah]	; 74FD8
 sub eax, byte 20h	; 74FDB
@@ -2245,7 +2245,7 @@ cmp eax, 0F0h	; 750DE
 jl short DrawLineJerseys.4	; 750E3
 .5:
 push jerseyremap	; 750E5
-call sub_B4DD4	; 750EA
+call SetColorRemap	; 750EA
 add esp, byte 4	; 750EF
 mov edx, dword [nosplit esi*8+linesloty]	; 750F2
 push edx	; 750F9
@@ -2253,7 +2253,7 @@ mov ebx, dword [nosplit esi*8+lineslotx]	; 750FA
 push ebx	; 75101
 mov ecx, dword [byte esp+028h]	; 75102
 push ecx	; 75106
-call sub_931FC	; 75107
+call DrawArtMasked	; 75107
 add esp, byte 0Ch	; 7510C
 inc esi	; 7510F
 cmp esi, byte 28h	; 75110
@@ -2293,7 +2293,7 @@ mov edi, 0C3h	; 75161
 .9:
 push dword 0C1h	; 75166
 push edi	; 7516B
-call sub_8E9C0	; 7516C
+call TextSetColors	; 7516C
 add esp, byte 8	; 75171
 xor edx, edx	; 75174
 mov dl, byte [byte esp+02Ch]	; 75176
@@ -2428,7 +2428,7 @@ mov eax, 12h	; 752C3
 sub eax, ebp	; 752C8
 cmp eax, byte 1	; 752CA
 jne short .5	; 752CD
-mov eax, unk_C311D	; 752CF
+mov eax, str_dot2	; 752CF
 jmp short .6	; 752D4
 .5:
 mov eax, str_S6	; 752D6
@@ -2446,7 +2446,7 @@ jle short .11	; 752F2
 lea eax, [byte ebp-012h]	; 752F4
 cmp eax, byte 1	; 752F7
 jne short .8	; 752FA
-mov eax, unk_C311D	; 752FC
+mov eax, str_dot2	; 752FC
 jmp short .9	; 75301
 .8:
 mov eax, str_S6	; 75303
@@ -2472,7 +2472,7 @@ mov eax, 2	; 7532E
 sub eax, dword [byte esp+07Ch]	; 75333
 cmp eax, byte 1	; 75337
 jne short .12	; 7533A
-mov eax, unk_C311D	; 7533C
+mov eax, str_dot2	; 7533C
 jmp short .13	; 75341
 .12:
 mov eax, str_S6	; 75343
@@ -2490,7 +2490,7 @@ jle short .18	; 75364
 sub eax, byte 2	; 75366
 cmp eax, byte 1	; 75369
 jne short .15	; 7536C
-mov eax, unk_C311D	; 7536E
+mov eax, str_dot2	; 7536E
 jmp short .16	; 75373
 .15:
 mov eax, str_S6	; 75375
@@ -2707,19 +2707,19 @@ mov esi, ecx	; 75584
 push byte 0	; 75586
 push dword 5B0h	; 75588
 push str_Keys3	; 7558D
-call sub_8CCA8	; 75592
+call AllocMemBlock	; 75592
 add esp, byte 0Ch	; 75597
 mov dword [statsplayerbuf], eax	; 7559A
 push byte 0	; 7559F
 push dword 497h	; 755A1
 push str_Pstat3	; 755A6
-call sub_8CCA8	; 755AB
+call AllocMemBlock	; 755AB
 add esp, byte 0Ch	; 755B0
 mov dword [rosterpstat], eax	; 755B3
 push byte 0	; 755B8
 push dword 10Eh	; 755BA
 push str_Gstat3	; 755BF
-call sub_8CCA8	; 755C4
+call AllocMemBlock	; 755C4
 add esp, byte 0Ch	; 755C9
 mov dword [rostergstat], eax	; 755CC
 mov ecx, 0C3h	; 755D1
@@ -2731,7 +2731,7 @@ push dword 0C2h	; 755EA
 mov ecx, 0C1h	; 755EF
 mov ebx, 0C0h	; 755F4
 mov edx, 2	; 755F9
-mov eax, unk_D075E	; 755FE
+mov eax, rosterstatsmenubar	; 755FE
 call RunMenu	; 75603
 mov edx, dword [rostergstat]	; 75608
 push edx	; 7560E
@@ -2754,7 +2754,7 @@ push ebx	; 7564F
 call SetDrawBitmap	; 75650
 add esp, byte 4	; 75655
 push edi	; 75658
-call sub_B392C	; 75659
+call ClearScreen	; 75659
 add esp, byte 4	; 7565E
 mov ecx, dword [byte esp+040h]	; 75661
 push ecx	; 75665
@@ -2798,7 +2798,7 @@ jmp short .2	; 756DA
 push dword 0C1h	; 756DC
 push dword 0C0h	; 756E1
 .2:
-call sub_8E9C0	; 756E6
+call TextSetColors	; 756E6
 add esp, byte 8	; 756EB
 movzx edi, byte [byte esp+020h]	; 756EE
 mov eax, edi	; 756F3
@@ -2912,7 +2912,7 @@ mov eax, edi	; 757F9
 call DrawLineJerseys	; 757FB
 push dword 0C1h	; 75800
 push dword 0FDh	; 75805
-call sub_8E9C0	; 7580A
+call TextSetColors	; 7580A
 add esp, byte 8	; 7580F
 mov ebx, rosterlist	; 75812
 add ebx, ebp	; 75817
@@ -2976,7 +2976,7 @@ mov eax, edi	; 758AD
 call DrawLineJerseys	; 758AF
 push dword 0C1h	; 758B4
 push dword 0C0h	; 758B9
-call sub_8E9C0	; 758BE
+call TextSetColors	; 758BE
 add esp, byte 8	; 758C3
 mov ebx, rosterlist	; 758C6
 add ebx, ebp	; 758CB
@@ -3431,7 +3431,7 @@ push edi	; 75D97
 call SetDrawBitmap	; 75D98
 add esp, byte 4	; 75D9D
 push byte 0	; 75DA0
-call sub_B392C	; 75DA2
+call ClearScreen	; 75DA2
 add esp, byte 4	; 75DA7
 xor eax, eax	; 75DAA
 mov al, byte [lineedpanel]	; 75DAC
@@ -3460,46 +3460,46 @@ call MakePath	; 75DFA
 push byte 0	; 75DFF
 lea eax, [byte esp+07Ch]	; 75E01
 push eax	; 75E05
-call sub_8E83C	; 75E06
+call LoadBank	; 75E06
 mov esi, eax	; 75E0B
 add esp, byte 8	; 75E0D
 push str_Bkgd2	; 75E10
 push eax	; 75E15
-call sub_B30B4	; 75E16
+call FindShape	; 75E16
 mov edi, eax	; 75E1B
 add esp, byte 8	; 75E1D
 push dword 1E0h	; 75E20
 push byte 13h	; 75E25
 push dword 280h	; 75E27
 push byte 0	; 75E2C
-call sub_B4BC4	; 75E2E
+call SetClipWindow	; 75E2E
 add esp, byte 10h	; 75E33
 push edi	; 75E36
-call sub_913B4	; 75E37
+call DrawShape	; 75E37
 add esp, byte 4	; 75E3C
 push dword 1E0h	; 75E3F
 push byte 0	; 75E44
 push dword 280h	; 75E46
 push byte 0	; 75E4B
-call sub_B4BC4	; 75E4D
+call SetClipWindow	; 75E4D
 add esp, byte 10h	; 75E52
 push esi	; 75E55
 call FreeMemBlock	; 75E56
 add esp, byte 4	; 75E5B
 lea eax, [byte esp+010h]	; 75E5E
 push eax	; 75E62
-call sub_8E9E8	; 75E63
+call TextSaveState	; 75E63
 add esp, byte 4	; 75E68
 mov eax, dword [mainfont]	; 75E6B
 push eax	; 75E70
-call sub_8EA18	; 75E71
+call TextSetFont	; 75E71
 add esp, byte 4	; 75E76
 mov edx, dword [byte esp+04h]	; 75E79
 push edx	; 75E7D
 mov ecx, dword [byte esp+0Ch]	; 75E7E
 mov ebx, dword [byte esp+010h]	; 75E82
 mov edx, 2	; 75E86
-mov eax, unk_D075E	; 75E8B
+mov eax, rosterstatsmenubar	; 75E8B
 call DrawMenuBar	; 75E90
 mov edx, dword [esp]	; 75E95
 mov eax, dword [byte esp+0Ch]	; 75E98
@@ -3553,7 +3553,7 @@ mov ebx, str_PIM4	; 75F73
 mov edx, 30h	; 75F78
 mov eax, 1E8h	; 75F7D
 call PrintShadowText	; 75F82
-mov ebx, asc_C3164	; 75F87
+mov ebx, str_PlusMinus7	; 75F87
 mov edx, 30h	; 75F8C
 mov eax, 210h	; 75F91
 call PrintShadowText	; 75F96
@@ -3874,7 +3874,7 @@ call sub_9121C	; 76408
 add esp, byte 4	; 7640D
 lea eax, [byte esp+010h]	; 76410
 push eax	; 76414
-call sub_8EA00	; 76415
+call TextRestoreState	; 76415
 add esp, byte 4	; 7641A
 xor eax, eax	; 7641D
 add esp, 0A8h	; 7641F
@@ -3931,7 +3931,7 @@ call __STOSB	; 76495
 mov eax, fadepal	; 7649A
 call SetPalette768	; 7649F
 push byte 0	; 764A4
-call sub_B392C	; 764A6
+call ClearScreen	; 764A6
 add esp, byte 4	; 764AB
 jmp short FadePalStep_ret	; 764AE
 .7:
@@ -4024,7 +4024,7 @@ call __STOSB	; 76584
 mov eax, fadepal2	; 76589
 call SetPalette768	; 7658E
 push byte 0	; 76593
-call sub_B392C	; 76595
+call ClearScreen	; 76595
 add esp, byte 4	; 7659A
 jmp near FadePalStep_ret	; 7659D
 .7:
@@ -4087,7 +4087,7 @@ lea eax, [edi+ebp]	; 76631
 push eax	; 76634
 push dword 80h	; 76635
 push esi	; 7663A
-call sub_B4B88	; 7663B
+call VgaSetPalette	; 7663B
 add esp, byte 0Ch	; 76640
 add esi, 80h	; 76643
 add edi, 180h	; 76649
@@ -4248,12 +4248,12 @@ push eax	; 767B2
 lea eax, [byte ebp+02h]	; 767B3
 push eax	; 767B6
 push esi	; 767B7
-call sub_90D20	; 767B8
+call FillRect	; 767B8
 add esp, byte 14h	; 767BD
 push ebp	; 767C0
 push esi	; 767C1
 push edi	; 767C2
-call sub_91964	; 767C3
+call PrintString	; 767C3
 add esp, byte 0Ch	; 767C8
 pop ebp	; 767CB
 pop edi	; 767CC

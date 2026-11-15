@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_97300 progbits alloc exec nowrite align=1
-extern __STOSB, asc_C47B8, asc_C47C4, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
+extern __STOSB, str_Copyright, str_UnpackINVALIDPACKCODE, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0
 extern dword_EDEF4, dword_EDEF8, FatalError, off_D3088, off_D308C, strncmp_, sub_B3ABC
 global sub_97300, loc_97329, sub_97334, loc_97338, loc_9734A, sub_97350, loc_973BC, loc_973D9
 global loc_97406, loc_97429, loc_97462, loc_97481, loc_974AF, loc_974B8, loc_974C3, loc_974CE
@@ -18,7 +18,7 @@ global sub_97BB8, loc_97BE4, loc_97BEF, loc_97C10, loc_97C24, sub_97C2C, loc_97C
 global loc_97C96, loc_97CA2, loc_97CAD, loc_97CB8, loc_97CBD, loc_97CBF, loc_97CCF, loc_97CD3
 global sub_97CE0, loc_97D13, loc_97D40, loc_97D5A, loc_97D63, loc_97D87, loc_97D92, loc_97DAA
 global loc_97DB3, loc_97DDA, loc_97DE9, loc_97E10, loc_97E19, loc_97E60, loc_97E6F, loc_97E7D
-global loc_97E9E, loc_97EA4, loc_97EAD, sub_97EB8, loc_97EE1, loc_97F3C, loc_97F49, loc_97F64
+global loc_97E9E, loc_97EA4, loc_97EAD, unpack, loc_97EE1, loc_97F3C, loc_97F49, loc_97F64
 global loc_97F7D, loc_97F8D, loc_97F9F, loc_97FB1, loc_97FBE, loc_97FCB, loc_97FE1, loc_97FEF
 global loc_98009, loc_9801E, sub_98028, sub_98044
 sub_97300:
@@ -29,7 +29,7 @@ push esi	; 97303
 push edi	; 97304
 mov esi, eax	; 97305
 mov ebx, 9	; 97307
-mov edx, asc_C47B8	; 9730C
+mov edx, str_Copyright	; 9730C
 call strncmp_	; 97311
 test eax, eax	; 97316
 jne short loc_97329	; 97318
@@ -1270,7 +1270,7 @@ pop edi	; 97EB4
 pop esi	; 97EB5
 pop ecx	; 97EB6
 ret	; 97EB7
-sub_97EB8:
+unpack:
 push esi	; 97EB8
 push edi	; 97EB9
 push ebp	; 97EBA
@@ -1392,7 +1392,7 @@ je short loc_98009	; 97FF4
 xor eax, eax	; 97FF6
 mov al, byte [byte ebp+00h]	; 97FF8
 push eax	; 97FFB
-push asc_C47C4	; 97FFC
+push str_UnpackINVALIDPACKCODE	; 97FFC
 call FatalError	; 98001
 add esp, byte 8	; 98006
 loc_98009:
@@ -1421,7 +1421,7 @@ mov ebx, dword [byte esp+010h]	; 9802F
 push ebx	; 98033
 mov ecx, dword [byte esp+010h]	; 98034
 push ecx	; 98038
-call sub_97EB8	; 98039
+call unpack	; 98039
 add esp, byte 10h	; 9803E
 ret	; 98041
 db 08Bh,0C0h
@@ -1433,6 +1433,6 @@ mov ebx, dword [byte esp+010h]	; 9804B
 push ebx	; 9804F
 mov ecx, dword [byte esp+010h]	; 98050
 push ecx	; 98054
-call sub_97EB8	; 98055
+call unpack	; 98055
 add esp, byte 10h	; 9805A
 ret	; 9805D

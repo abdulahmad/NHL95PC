@@ -30,7 +30,7 @@ void FadePalStep(int dir, unsigned char *pal, int steps)
         }
         __STOSB(fadepal, 0, 0x300);
         SetPalette768(fadepal);
-        sub_B392C(0);
+        ClearScreen(0);
         return;
     }
     fadestart[1] = steps - 1;
@@ -59,7 +59,7 @@ void FadePalStepSlow(int dir, unsigned char *pal, int steps)
         }
         __STOSB(fadepal2, 0, 0x300);
         SetPalette768(fadepal2);
-        sub_B392C(0);
+        ClearScreen(0);
         return;
     }
     fadestart2[1] = steps - 1;

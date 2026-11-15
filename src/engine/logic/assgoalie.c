@@ -41,7 +41,7 @@ void ChkScorerMilestone(void);  /* 62807 */
    set); against a shooter, now and then poke check (SPA 1095h) or dive (SPA 181h, the crowd up). Otherwise play
    the angle: face the puck, move toward the point on the line from the puck through the net (the shot speed and
    ShotLaneOpen pick the depth), or to the post the puck will cross (puckcross), with the save stances for a puck
-   coming at him (dword_CCA5A by side and height, the crowd up) and a stop for a wraparound (assinsert 0Fh). Skate
+   coming at him (goaliesave_saveanim_m2 by side and height, the crowd up) and a stop for a wraparound (assinsert 0Fh). Skate
    there (playeracc) or stop (stopna). p: the goalie. No result. */
 void assgoalie(Player *p)
 {
@@ -264,7 +264,7 @@ void assgoalie(Player *p)
                                 else if (a == 3 || a == 7) regd3.w = ABS(regd0.w) >= ABS(regd1.w) ? 7 : 1;
                                 else regd3.w = randomd0(2);
                             }
-                            regd0.w = dword_E03AE >> 0x12;
+                            regd0.w = regd3_m2 >> 0x12;
                             if (p->attribute & 8) regd0.w = regd0.w == 0;
                             if (regd3.w >= 4) regd3.w = 7 - regd3.w;
                             if (regd3.w >= 2 && *(short *)puckz < 0xA && *(short *)puckvz < 0x800) {
@@ -276,7 +276,7 @@ void assgoalie(Player *p)
                         }
                         p->pflags |= 0x20;
                         p->pflags2 |= 2;
-                        SetSPA(p, ((short *)dword_CCA5A)[regd0.w + 1]);
+                        SetSPA(p, ((short *)goaliesave_saveanim_m2)[regd0.w + 1]);
                         CROWDUP();
                         regd0.w = pc[0];
                         if (ABS(*pucky) > 0xDC) regd0.w = *puckx > 0 ? 0x18 : -0x18;
@@ -425,12 +425,12 @@ play:
 }
 
 /* assrefsignal (4EB04; 93G assrefsignal, PC version; ends in assgoalie_popebp): the referee's call. Not while
-   locked (pflags bit 5). A new assignment (bit 1): for a call without a signal direction (word_CCA9C by RefPen
+   locked (pflags bit 5). A new assignment (bit 1): for a call without a signal direction (refsigdir by RefPen
    negative) post a goal event for a goal call (RefPen 7: the scoring team from the puck's end and the period, its
    scorer and assists, the time left in the period in minutes and seconds) and go on to assignment 21h; else stand
    at (A0h, 0) with temp2 8 (pflags2 bit 5). Then skate to the spot (SkateToSpot) unless within 0Ch in y and not
    more than 14h short in x; there, every 8 ticks (temp1) take the signal stance (SPA A5Bh), stop and turn one step
-   toward the call's direction (word_CCA9C by RefPen); facing it, make the signal (SPA from dword_CCAD8 by RefPen,
+   toward the call's direction (refsigdir by RefPen); facing it, make the signal (SPA from refsigspa_m2 by RefPen,
    locked) and go on to assignment 21h. p: the referee. No result. */
 void assrefsignal(Player *p)
 {
@@ -441,7 +441,7 @@ void assrefsignal(Player *p)
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
         p->pflags &= 0xFD;
-        if (word_CCA9C[RefPen] < 0) {
+        if (refsigdir[RefPen] < 0) {
             if (RefPen == 7) {
                 side = (*pucky < 0) ^ ((gmode & 2) != 0);
                 t = side > 0 ? &awtmstruct : &hmtmstruct;
@@ -470,7 +470,7 @@ void assrefsignal(Player *p)
             if (--p->temp1 >= 0) return;
             p->temp1 += 8;
             SetSPA(p, 0xA5B);
-            regd2.w = word_CCA9C[RefPen];
+            regd2.w = refsigdir[RefPen];
             if (regd2.w != p->facedir) {
                 regd2.w = (regd2.w - p->facedir) & 7;
                 p->facedir = (p->facedir + (regd2.w < 5 ? 1 : -1)) & 7;
@@ -479,7 +479,7 @@ void assrefsignal(Player *p)
             p->Xvel = 0;
             if (regd2.w == p->facedir) {
                 p->pflags |= 0x20;
-                SetSPA(p, ((short *)dword_CCAD8)[RefPen + 1]);
+                SetSPA(p, ((short *)refsigspa_m2)[RefPen + 1]);
                 assreplace(p, 0x21);
             }
             return;
@@ -497,11 +497,11 @@ void assrefsignal(Player *p)
    goal-call bytes in other registers; see docs/UNSURE.md. */
 /* assrefgoalpa (4ED7C; 93G assrefgoalpa, PC version; ends in assgoalie_popebp): the referee after a goal or a
    penalty call goes to the puck. Not while locked (pflags bit 5). While the goal overlay runs (ovlseq neither 0 nor
-   2, ovltimer below 100h) hold the signal stance (SPA A5Bh); from ovltimer ECh on, once (byte_E9AD3 1) have the
+   2, ovltimer below 100h) hold the signal stance (SPA A5Bh); from ovltimer ECh on, once (goalevent 1) have the
    announcer call the goal (PaGoal: the scoring team's abbreviation, the number of assists and the jersey numbers of
-   scorer and assistants, byte_E9AD4-E9AD7; input sampling off meanwhile) and in overtime cut the overlay short. With
+   scorer and assistants, goalevent_b1-E9AD7; input sampling off meanwhile) and in overtime cut the overlay short. With
    a penalty pending (PenBuf) just signal. With the puck beyond A0h / 112h go on to assignment 24h. A new
-   assignment: at the end of the period (or after an overtime goal, or with word_CBEC6) stop the play (assignment 1Eh,
+   assignment: at the end of the period (or after an overtime goal, or with injurystop) stop the play (assignment 1Eh,
    the puck 1Bh); else set up the faceoff walk (RefStep 1, PenShotAssign, the signal stance) and react to the call:
    a penalty to a goalie (RefPen 4: the goalie note, else the team's PPV overlay), a goal (RefPen 7: in the
    shoot-out end the game, else ChkScorerMilestone), others the crowd (CrowdOnStoppage). Then, with no deferred call:
@@ -524,11 +524,11 @@ void assrefgoalpa(Player *p)
     if (ovlseq != 2 && ovlseq != 0 && ovltimer >= 0 && ovltimer < 0x100) {
         SetSPA(p, 0xA5B);
         if (ovltimer < 0xEC) return;
-        if (byte_E9AD3 != 1) return;
-        side = byte_E9AD4;
-        sc = byte_E9AD5;
-        a1 = byte_E9AD6;
-        a2 = byte_E9AD7;
+        if (goalevent != 1) return;
+        side = goalevent_b1;
+        sc = goalevent_b2;
+        a1 = goalevent_b3;
+        a2 = goalevent_b4;
         n = 0;
         if (a1 != 0xFF) n = 1;
         if (a2 != 0xFF) n++;
@@ -538,7 +538,7 @@ void assrefgoalpa(Player *p)
         PaGoal((char *)teamabbrevs[team], n, hmrosterjersey[side * 0x444 + sc * 39],
             hmrosterjersey[side * 0x444 + a1 * 39], hmrosterjersey[side * 0x444 + a2 * 39]);
         joysampling = joysampling_save;
-        byte_E9AD3 = 0xFF;
+        goalevent = 0xFF;
         if (gsp >= 3) ovltimer = 0x38;
         return;
     }
@@ -552,7 +552,7 @@ void assrefgoalpa(Player *p)
         return;
     }
     if (p->pflags & 2) {
-        if (word_CBEC6 || !gameclock && !clockticks[0] || gsp == 3 && hmscore[0] != awscore) {
+        if (injurystop || !gameclock && !clockticks[0] || gsp == 3 && hmscore[0] != awscore) {
             RefStep[0] = -1;
             if (ovltimer == 0x100) ovltimer = 0x258;
             assreplace((Player *)puckstruct, 0x1B);
@@ -571,8 +571,8 @@ void assrefgoalpa(Player *p)
         SetSPA(p, 0xA5B);
         if (RefPen == 4) {
             if (!QueueGoalieNote()) {
-                if (byte_DF87F[word_C90D8 << 7] && !dword_E9A9E) {
-                    byte_DF87F[word_C90D8 << 7] = 0;
+                if (byte_DF87F[penaltysc << 7] && !dword_E9A9E) {
+                    byte_DF87F[penaltysc << 7] = 0;
                     LoadTeamPPV(8);
                     if (ovlseq != -1) {
                         dword_E9A9E = 1;

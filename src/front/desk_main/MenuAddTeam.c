@@ -18,8 +18,8 @@ int MenuAddTeam(void)
     SetupStatsSourceMenu(0);
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     return 2;
@@ -37,8 +37,8 @@ int MenuRemoveTeam(void)
     SetupStatsSourceMenu(0);
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     return 2;
@@ -71,8 +71,8 @@ int MenuMergeUpdateDbs(void)
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
     if (r) {
-        pal = sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         return 2;
@@ -94,8 +94,8 @@ int MenuMergeLeagueFiles(void)
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
     if (r) {
-        pal = sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-        sub_8FFB0(0, 0x100, (unsigned char *)pal);
+        pal = AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+        SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         return 2;
@@ -128,8 +128,8 @@ int MenuTradePlayers(void)
     SetupStatsSourceMenu(0);
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     return 2;
@@ -164,8 +164,8 @@ int MenuNextLeagueGame(int *fh)
     SetupStatsSourceMenu(0);
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
-    pal = sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)pal);
+    pal = AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     return 2;
@@ -211,8 +211,8 @@ int MenuExportDbs(void)
     SetupStatsSourceMenu(0);
     SaveModeState((unsigned char *)lgstate);
     LoadModeState(exhstate);
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     return 2;
@@ -273,8 +273,8 @@ int MenuNewLeague(void)
         menusub_lgmgr = 0;
     }
     LoadModeState(exhstate);
-    pal = (unsigned char *)sub_8CCA8((char *)str_Temp4, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, pal);
+    pal = (unsigned char *)AllocMemBlock((char *)str_Temp4, 0x300, 0x20);
+    SetPalette(0, 0x100, pal);
     if (musicon && songdata)
         sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
@@ -282,7 +282,7 @@ int MenuNewLeague(void)
     if (musicon && songdata) {
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }

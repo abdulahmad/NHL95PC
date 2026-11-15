@@ -3,7 +3,7 @@
 
 /* LoadScoreboardGfx: load the scoreboard shape bank SCRBRD1.PPV (from the CD when it is
  there) into scrbrdshapes and look up its shapes by name lists (sub_90B80): the score, clock and penalty
- digits, the away home line indicators, the away home panels ("visp" "homp", sub_B30B4) and the line
+ digits, the away home line indicators, the away home panels ("visp" "homp", FindShape) and the line
  sprites. */
 void LoadScoreboardGfx(void)
 {
@@ -16,7 +16,7 @@ void LoadScoreboardGfx(void)
     sub_90B80(scrbrdshapes, (char *)str_LineCodes2, penaltydigits);
     sub_90B80(scrbrdshapes, (char *)str_VisLineTags, (int *)awlineind);
     sub_90B80(scrbrdshapes, (char *)str_HomeLineTags, (int *)hmlineind);
-    awpanelspr = sub_B30B4(scrbrdshapes, (char *)str_Visp);
-    hmpanelspr = sub_B30B4(scrbrdshapes, (char *)str_Homp);
+    awpanelspr = FindShape(scrbrdshapes, (char *)str_Visp);
+    hmpanelspr = FindShape(scrbrdshapes, (char *)str_Homp);
     sub_90B80(scrbrdshapes, (char *)str_LineNames, linesprites);
 }

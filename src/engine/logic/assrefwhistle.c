@@ -148,7 +148,7 @@ void asswingd(Player *p)
    clears temp1 and sets temp2 8. Every aioff ticks (the high byte of temp1) switch to the defensive winger
    (assignment 3) when the other team has the puck. The puck's zone (its y plus the y velocity / 40h, toward the
    attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal line; 4 while offside,
-   tmflags bit 4) picks a spot from word_CCA18 (x, x range, y, y range per zone): a new zone, or 1 in 80h ticks,
+   tmflags bit 4) picks a spot from asswingo_dedata (x, x range, y, y range per zone): a new zone, or 1 in 80h ticks,
    picks a random spot into temp3 (+ aioff) / temp4. Skate there (x mirrored for the right wing, both for the
    other end, pflags bit 7) with EvadePC. p: the winger. No result. */
 void asswingo(Player *p)
@@ -190,8 +190,8 @@ void asswingo(Player *p)
         }
         if (d != p->temp5 || !(regd0.w = randomd0(0x80))) {
             p->temp5 = d;
-            p->temp3 = word_CCA18[d] + (randomd0(word_CCA1A[d] * 2) - word_CCA1A[d]) + p->aioff;
-            p->temp4 = randomd0(word_CCA1E[d] * 2) - word_CCA1E[d] + word_CCA1C[d];
+            p->temp3 = asswingo_dedata[d] + (randomd0(asswingo_dedata_xrand[d] * 2) - asswingo_dedata_xrand[d]) + p->aioff;
+            p->temp4 = randomd0(asswingo_dedata_yrand[d] * 2) - asswingo_dedata_yrand[d] + asswingo_dedata_y[d];
         }
     }
     regd0.w = p->temp3;
@@ -210,7 +210,7 @@ void asswingo(Player *p)
    new assignment (bit 1) sets the high byte of temp5 to -1, clears temp1 and sets temp2 8. Every aioff ticks (the
    high byte of temp1) switch to the defensive centre (assignment 5) when the other team has the puck. The puck's
    zone (its y toward the attacked end: 0 before the far blue line, 4 neutral, 8 in the zone, 0Ch below the goal
-   line; 4 while offside, tmflags bit 4) picks a spot from word_CCA38 (x, x range, y, y range per zone): a new
+   line; 4 while offside, tmflags bit 4) picks a spot from asscentero_dedata (x, x range, y, y range per zone): a new
    zone, or 1 in 80h ticks, picks a random spot into temp3 / temp4. Skate there (y mirrored for the other end,
    pflags bit 7) with EvadePC. p: the centre. No result. */
 void asscentero(Player *p)
@@ -248,8 +248,8 @@ void asscentero(Player *p)
         }
         if (d != p->temp5 || !(regd0.w = randomd0(0x80))) {
             p->temp5 = d;
-            p->temp3 = randomd0(word_CCA3A[d] * 2) - word_CCA3A[d] + word_CCA38[d];
-            p->temp4 = randomd0(word_CCA3E[d] * 2) - word_CCA3E[d] + word_CCA3C[d];
+            p->temp3 = randomd0(asscentero_dedata_xrand[d] * 2) - asscentero_dedata_xrand[d] + asscentero_dedata[d];
+            p->temp4 = randomd0(asscentero_dedata_yrand[d] * 2) - asscentero_dedata_yrand[d] + asscentero_dedata_y[d];
         }
     }
     regd0.w = p->temp3;
@@ -359,8 +359,8 @@ void CountPuckThreat(Player *p)
    (PuckIChk, ChkOffsides, MarkTwoLinePlayers). While the clock runs: a carried puck resets temp2 (78h) and the
    penalty-shot send count (psendcount); a loose one on a live penalty shot moving back toward the shooter's
    own end (puckvy by penshotteam and the gmode bit 1 rink flip) for 1Eh ticks ends the shot (EndPenaltyShot). A
-   puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with dword_DF652 /
-   dword_DF752 at 14h or less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a moving one
+   puck that has stopped (same position as last tick), outside the middle (x A3h, y 10Eh) or with hmtmnear /
+   awtmnear at 14h or less, counts temp2 down and at 0 calls a delay of game (AddPenalty2 3); a moving one
    resets temp2. A puck almost still on the ice (z speed below 100h, z 0) is put flat (puckunflip); then the
    collisions (checkpuckcoll). p: the puck. No result. */
 void pucknorm_body(Player *p)
@@ -401,7 +401,7 @@ reset:
             } else psendcount = 0;
             if (HIWORD(p->Xpos) != HIWORD(p->OldXpos) || HIWORD(p->Ypos) != OLDYPOS(p)) goto reset;
             if ((*puckx < 0 ? -*puckx : *puckx) < 0xA3 && (*pucky < 0 ? -*pucky : *pucky) < 0x10E
-                && dword_DF652 > 0x14 && dword_DF752 > 0x14) goto reset;
+                && hmtmnear > 0x14 && awtmnear > 0x14) goto reset;
             if (--p->temp2 < 0) AddPenalty2(p, 3);
         }
     }
@@ -412,7 +412,7 @@ reset:
 /* RequestLineChange (4D938, PC only; ends in ass_popx): open the line change box for p's team (pflags bit 6 =
    away): the choice 1 through getlchoice gives the line (lcsel 1, lcline), or when there is none lcsel 0 and the
    team's current line (tmline); then the box shows (lctimer 3Ch, lcblink 1, lcblinktime 0Ch, lcboxon 1) and that
-   side's dword_C585C / dword_C5860 is cleared. p: a player of the team. No result. */
+   side's hmlinetimer / awlinetimer is cleared. p: a player of the team. No result. */
 void RequestLineChange(Player *p)
 {
     short side;
@@ -435,21 +435,21 @@ void RequestLineChange(Player *p)
     lcblink[s] = 1;
     lcblinktime[s] = 0xC;
     lcboxon[s] = 1;
-    if (s) dword_C5860 = 0;
-    else dword_C585C = 0;
+    if (s) awlinetimer = 0;
+    else hmlinetimer = 0;
 }
 
 /* Endfaceoff (4DA7B; 93G logic93 / 94G logic94 Endfaceoff "drop the puck: pick the faceoff winner and send the
    puck off", PC version; ends in ass_popx): stop the sample, play sfx ABh, end the faceoff (gmode2 bits 0 and 2,
    the clock bit of gmode, p's pflags2 bit 0; sflags3 bit 4). The odds (regd2) are 10h less the first centre's
-   faceoff stance (byte_CCA95 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
-   centre's (byte_DAEA7 / byte_DACB3 by pnum; the centres are the skaters with position 4): randomd0(21h) below
-   them gives the puck to the away centre (lasttouch, his input word_E0396), else to the home centre (word_E0392).
+   faceoff stance (Endfaceoff_ftab_m1 by fofdata2) plus the second's, plus the away centre's faceoff rating less the home
+   centre's (awplattr_b13 / hmplattr_b13 by pnum; the centres are the skaters with position 4): randomd0(21h) below
+   them gives the puck to the away centre (lasttouch, his input fofdata2_w6), else to the home centre (fofdata2_w2).
    The winner's input bit 0Bh picks the direction (fodir2 with y speed -800h, else fodir1 / +800h); a held
    direction (bit 3 clear) is used 3 times in 4, else a random one of the 5 around the y direction (mirrored by
    the sign of the y speed). The puck p gets that velocity (dirtab * 20h, plus the y speed), a random z velocity
    (below 800h), z 0, loses pflags bit 2 and takes assignment 18h (pucknorm); the referee (SortCords + 16) takes
-   1Fh and word_E0028 is set to 500h toward his side. p: the puck. No result. */
+   1Fh and refXvel is set to 500h toward his side. p: the puck. No result. */
 void Endfaceoff(Player *p)
 {
     short j;
@@ -462,19 +462,19 @@ void Endfaceoff(Player *p)
     gmode &= 0xFE;
     p->pflags2 &= 0xFE;
     sflags3 |= 0x10;
-    regd2.w = 0x10 - byte_CCA95[fofdata2[0]] + byte_CCA95[word_E0394];
+    regd2.w = 0x10 - Endfaceoff_ftab_m1[fofdata2[0]] + Endfaceoff_ftab_m1[fofdata2_w4];
     for (i = 0; i < 6; i++) {
         if (SortCords[i].position == 4) break;
     }
     for (j = 6; j < 12; j++) {
         if (SortCords[j].position == 4) break;
     }
-    regd2.w += byte_DAEA7[SortCords[j].pnum * 20] - byte_DACB3[SortCords[i].pnum * 20];
+    regd2.w += awplattr_b13[SortCords[j].pnum * 20] - hmplattr_b13[SortCords[i].pnum * 20];
     if (randomd0(0x21) < regd2.w) {
-        w = word_E0396;
+        w = fofdata2_w6;
         lasttouch = j;
     } else {
-        w = word_E0392;
+        w = fofdata2_w2;
         lasttouch = i;
     }
     if (w & 0x800) {
@@ -503,7 +503,7 @@ void Endfaceoff(Player *p)
     p->pflags &= 0xFB;
     assreplace(p, 0x18);
     assreplace(&SortCords[16], 0x1F);
-    word_E0028 = HIWORD(SortCords[16].Xpos) > 0 ? 0x500 : -0x500;
+    refXvel = HIWORD(SortCords[16].Xpos) > 0 ? 0x500 : -0x500;
 }
 
 /* assreffollow (4E0BD; 93G hockey93 assreffollow?, PC version; ends in ass_popx / asswingd_skateto): the
@@ -553,7 +553,7 @@ void assreffollow(Player *p)
 }
 
 /* assrefwhistle (4E8EF; 93G hockey93 assrefwhistle?, PC version): referee p blows the whistle. Not while he is
-   locked (pflags bit 5). A new assignment (pflags bit 1): when the play is over (word_CBEC6, the clock at 0, or a
+   locked (pflags bit 5). A new assignment (pflags bit 1): when the play is over (injurystop, the clock at 0, or a
    tied shootout-period game gsp 3 decided), end the stoppage (RefStep -1, overlay timer 100h -> 258h) and hand the
    puck and p their next assignments (1Bh, 1Eh); else start the whistle (RefStep 1, PenShotAssign, spot A0h, 0 in
    temp3 / temp4, SPA A5Bh) unless the crowd reacts (CrowdOnStoppage). Then skate to the spot (SkateToSpot) until
@@ -565,7 +565,7 @@ void assrefwhistle(Player *p)
 
     if (p->pflags & 0x20) return;
     if (p->pflags & 2) {
-        if (word_CBEC6 || (!gameclock && !clockticks[0]) || (gsp == 3 && hmscore[0] != awscore)) {
+        if (injurystop || (!gameclock && !clockticks[0]) || (gsp == 3 && hmscore[0] != awscore)) {
             RefStep[0] = -1;
             if (ovltimer == 0x100) ovltimer = 0x258;
             assreplace((Player *)puckstruct, 0x1B);

@@ -1,7 +1,7 @@
 /* Misc dialogs: bevelled rectangle. */
 #include "nhl95.h"
 
-/* DrawBevelRect: fill the w x h rectangle at x, y with colour fill (sub_90D20), then draw its
+/* DrawBevelRect: fill the w x h rectangle at x, y with colour fill (FillRect), then draw its
  left and top edges in colour light and its bottom and right edges in colour dark (sub_B4FAC lines). */
 void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark)
 {
@@ -10,7 +10,7 @@ void DrawBevelRect(int x, int y, int w, int h, int fill, int light, int dark)
 
     x2 = x + w - 1;
     y2 = y + h - 1;
-    sub_90D20(x, y, w, h, fill);
+    FillRect(x, y, w, h, fill);
     sub_B4FAC(x, y, x, y2, light);
     sub_B4FAC(x, y, x2, y, light);
     sub_B4FAC(x, y2, x2, y2, dark);

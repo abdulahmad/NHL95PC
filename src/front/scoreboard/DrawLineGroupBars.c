@@ -69,10 +69,10 @@ void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x)
             color2 = 0;
         }
         w = energy[i] / 200;
-        sub_90D20(x + 0x15 - w, row, w, 3, color);
-        sub_90D20(x1 = x + 0x20, row, w, 3, color);
-        sub_90D20(x + 1, row, w2 = 0x14 - w, 3, color2);
-        sub_90D20(x1 + w, row, w2, 3, color2);
+        FillRect(x + 0x15 - w, row, w, 3, color);
+        FillRect(x1 = x + 0x20, row, w, 3, color);
+        FillRect(x + 1, row, w2 = 0x14 - w, 3, color2);
+        FillRect(x1 + w, row, w2, 3, color2);
         i++;
         row += 6;
     }

@@ -156,7 +156,7 @@ typedef struct Team {
     unsigned char pad_34[0x1];
     signed char tmast2;          /* 035h (assist 2, st): puckglue sets it to -1 in the other team's structure */
     short tmap;                  /* 036h; getlchoice/lcselect: other tmap - own tmap selects the even short-handed power-play choices */
-    short tmgoalie;              /* 038h (goalie 1/2/none): releasepl picks the priolist row by its sign */
+    short tmgoalie;              /* 038h (goalie 1/2/none): releasepl picks the priolist_m1 row by its sign */
     unsigned char pad_3A[0xA];
     signed char tmflags;         /* 044h; lineinput: bit 0 'start lc mode' cleared before opening the box; lcfound/lcselect clear bit 1 (tmflags(a2)) */
     unsigned char pad_45[0x1];

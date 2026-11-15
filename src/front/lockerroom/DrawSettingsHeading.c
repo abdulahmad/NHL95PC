@@ -8,9 +8,9 @@ void DrawSettingsHeading(int x, int y, int n, int mode, int colour)
 {
     char state[0x40];
 
-    sub_8E9E8(state);
-    sub_8EA18(s1font);
-    sub_8E9C0(colour, 0xFF);
+    TextSaveState(state);
+    TextSetFont(s1font);
+    TextSetColors(colour, 0xFF);
     y += 0x16;
     switch (n) {
     case 3:
@@ -24,14 +24,14 @@ void DrawSettingsHeading(int x, int y, int n, int mode, int colour)
     }
     switch (mode) {
     case 0:
-        sub_91964((char *)str_Exhibition2, x - 0x41, y);
+        PrintString((char *)str_Exhibition2, x - 0x41, y);
         break;
     case 1:
-        sub_91964((char *)str_Playoff, x - 0x32, y);
+        PrintString((char *)str_Playoff, x - 0x32, y);
         break;
     case 2:
-        sub_91964((char *)str_League2, x - 0x2F, y);
+        PrintString((char *)str_League2, x - 0x2F, y);
         break;
     }
-    sub_8EA00(state);
+    TextRestoreState(state);
 }

@@ -161,11 +161,11 @@ extern int32_t regd0, regd1, regd2, regd3;
 extern int16_t *puckx, *pucky, *puckvx, *puckvy;
 extern signed char *puckc;
 extern uint8_t gmode, gmode2;
-extern int penshotmode, penshotlive, dword_CCC9C;
-extern int16_t word_CC0B0[];
+extern int penshotmode, penshotlive, playsuspended;
+extern int16_t Pencntdwn2[];
 extern int demomode;
 extern int puckstruct[];
-extern uint8_t puckasslist[], byte_DC9D8[];
+extern uint8_t puckasslist[], homeremap[];
 extern void *fight_dfs_cont;
 extern int viewscrollx, viewscrolly;
 extern int32_t ctl1team, ctl2team;
@@ -500,7 +500,7 @@ static void mk_make_lut(void)
     for (v = 1; v < 32; v++) {
         int best = 0, bd = 1 << 30;
         for (i = 0; i < 0x90; i++) {                    /* not the team colours: a star keeps its colour on any team */
-            uint32_t a = dac[byte_DC9D8[i]], b = pal[v];
+            uint32_t a = dac[homeremap[i]], b = pal[v];
             int dr = (int)(a >> 16 & 255) - (int)(b >> 16 & 255), dg = (int)(a >> 8 & 255) - (int)(b >> 8 & 255), db = (int)(a & 255) - (int)(b & 255);
             int d = dr * dr * 3 + dg * dg * 4 + db * db * 2;
             if (d < bd) { bd = d; best = i; }
@@ -585,8 +585,8 @@ static void mk_free(void)
     mk_lut_ok = 0;                                      /* colours again for the next game's palette */
 }
 
-/* 95 PC's own frames (word_CC0B0): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2
- * (dword_CC0B4 by byte_D41B7's direction of the edge mask: 1 above the screen, 2 below, 4 right, 8 left):
+/* 95 PC's own frames (Pencntdwn2): pad 1's star 185h, pad 2's 186h, the puck carrier's 187h; the arrows of pad 1 and 2
+ * (markframes_e1 by joyedgedir's direction of the edge mask: 1 above the screen, 2 below, 4 right, 8 left):
  * up 17Fh / 182h, up-right 180h / 183h, right 181h / 184h, down-right 161h / 163h, down 160h / 162h */
 int pads4_mark_code(int frame)
 {
@@ -643,7 +643,7 @@ static void draw_mark(int k, int team, int x, int y)
             else if (x < vx - 0xC0) { x = vx - 0xC0; fl = 8; }
         }
         if (!marks94()) {                               /* 95 PC's: the star of the game pad it swaps into; no arrow */
-            if (!fl) draw_sprite(word_CC0B0[1 + slot], x, y, 0);
+            if (!fl) draw_sprite(Pencntdwn2[1 + slot], x, y, 0);
             return;
         }
         if (!fl) code = FR_MARK + (k + 2) * 8;
@@ -658,7 +658,7 @@ static void draw_mark(int k, int team, int x, int y)
 void pads4_draw(void)
 {
     int k;
-    if (!four_on() || dword_CCC9C || pads4_idle()) return;
+    if (!four_on() || playsuspended || pads4_idle()) return;
     for (k = 0; k < 2; k++) {
         int sc = pads4.player[k];
         uint8_t *p;
@@ -674,15 +674,15 @@ void pads4_draw(void)
 #define RP_N (0x9600 / 0x80)
 extern uint8_t *replaystart, *recbpr, *replayplay;
 extern uint8_t sflags;
-extern int16_t word_E9F18[], word_E9F3A[], word_E9F5C[];
-extern char DrawRinkSideObjects[], sub_93540[];
+extern int16_t rpl_x[], rpl_y[], rpl_frame[];
+extern char DrawRinkSideObjects[], SortIndices[];
 static int8_t rp_team[2];
 
 static void rp_record(void)
 {
     long slot;
     int k;
-    if ((sflags & 0x80) || dword_CCC9C || !replaystart) return;
+    if ((sflags & 0x80) || playsuspended || !replaystart) return;
     slot = (long)(recbpr - replaystart) >> 7;
     if (slot < 0 || slot >= RP_N) return;
     for (k = 0; k < 2; k++) {
@@ -700,16 +700,16 @@ void pads4_replay_draw(void)
     if (slot < 0 || slot >= RP_N) return;
     for (k = 0; k < 2; k++) {
         int sc = rp_pl[slot][k];
-        if (!rp_team[k] || sc < 0 || sc > 11 || word_E9F5C[sc] == -1) continue;
-        draw_mark(k, rp_team[k], word_E9F18[sc], word_E9F3A[sc]);
+        if (!rp_team[k] || sc < 0 || sc > 11 || rpl_frame[sc] == -1) continue;
+        draw_mark(k, rp_team[k], rpl_x[sc], rpl_y[sc]);
     }
 }
 
-/* DrawRinkSideObjects' sub_93540 (the depth order of its three stars): then pads 3 and 4's */
+/* DrawRinkSideObjects' SortIndices (the depth order of its three stars): then pads 3 and 4's */
 __attribute__((naked)) static void rp_thunk(void)
 {
     __asm__ volatile(
-        "call " SYM("sub_93540") "\n\t"
+        "call " SYM("SortIndices") "\n\t"
         "pushal\n\tcall " SYM("pads4_replay_draw") "\n\tpopal\n\tret");
 }
 
@@ -720,7 +720,7 @@ __attribute__((naked)) static void dro_thunk(void)
         "pushal\n\tcall " SYM("pads4_draw") "\n\tpopal\n\tret");
 }
 
-/* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + word_CC0B0] /
+/* DrawRinkOverlays .27 / .28: the one DrawFrameSprite of the stars and arrows (mov eax, [eax*2 + Pencntdwn2] /
  * sar eax, 10h / xor ecx, ecx / call DrawFrameSprite; the arrow and puck paths jump to the call) */
 static int patch_marks(char *fn, size_t n, void (*thunk)(void))
 {
@@ -733,7 +733,7 @@ static int patch_marks(char *fn, size_t n, void (*thunk)(void))
         if (c[0] != 0xE8 || c[-2] != 0x31 || c[-1] != 0xC9 || c[-5] != 0xC1 || c[-4] != 0xF8 || c[-3] != 0x10) continue;
         if (c[-12] != 0x8B || c[-11] != 0x04 || c[-10] != 0x45) continue;
         memcpy(&a, c - 9, 4);
-        if (a != (uint32_t)(uintptr_t)word_CC0B0) continue;
+        if (a != (uint32_t)(uintptr_t)Pencntdwn2) continue;
         memcpy(&rel, c + 1, 4);
         if ((uintptr_t)c + 5 + (uintptr_t)(intptr_t)rel != (uintptr_t)DrawFrameSprite) return 0;
         rel = (int32_t)((uintptr_t)thunk - ((uintptr_t)c + 5));
@@ -878,7 +878,7 @@ void pads4_install(void)
     }
     ok_draw = redirect_call(DrawRinkOverlays, 400, DrawRinkObjects, (const void *)dro_thunk);
     if (!ok_draw) fprintf(stderr, "Four players: DrawRinkOverlays is not the expected code, pads 3 and 4 have no star\n");
-    if (!redirect_call(DrawRinkSideObjects, 0x400, sub_93540, (const void *)rp_thunk))
+    if (!redirect_call(DrawRinkSideObjects, 0x400, SortIndices, (const void *)rp_thunk))
         fprintf(stderr, "Four players: DrawRinkSideObjects is not the expected code, replays show no star for pads 3 and 4\n");
     if (!patch_marks(DrawRinkSideObjects, 0x700, star_thunk))
         fprintf(stderr, "Four players: the replay's star call is not the expected code, it keeps 95 PC's stars\n");

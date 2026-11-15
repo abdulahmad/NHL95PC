@@ -6,7 +6,7 @@
  random lane temp3 (0-3) and clears threat. Every aioff frames (countdown in byte +27h, reload byte +59h):
  check the opposition (checkob); on a shot on goal within y 70h hand over to assignment 2Eh; else try a line
  change, a shot and a pass (chk4lc chk4shot chk4pass), stopping at the first that acts. Then skate to the
- lane point (word_CCA6E word_CCA70 pair temp3 + 6, or position - 1 with gmode2 bit 7; mirrored by end), picking
+ lane point (asspuckc_postab2 asspuckc_postab2_y pair temp3 + 6, or position - 1 with gmode2 bit 7; mirrored by end), picking
  a new random lane when within 12 of it, with asspuckc_chkdir as the evade routine. */
 void asspuckc(Player *p)
 {
@@ -47,8 +47,8 @@ void asspuckc(Player *p)
     if (gmode2 & 0x80) regd0.w = p->position - 1;
     else regd0.w = p->temp3 + 6;
     regd0.w = regd0.w + regd0.w;
-    regd1.w = word_CCA70[regd0.w];
-    regd0.w = word_CCA6E[regd0.w];
+    regd1.w = asspuckc_postab2_y[regd0.w];
+    regd0.w = asspuckc_postab2[regd0.w];
     if (!(p->pflags & 0x80)) {
         regd0.w = -regd0.w;
         regd1.w = -regd1.w;

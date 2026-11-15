@@ -5,8 +5,8 @@ section s_45282 progbits alloc exec nowrite align=1
 extern __CHK, addtimer, CareerDbPtr, CareerDbPtr2, cddriveptr, FadePalStep, fileoncd, FreeMemBlock
 extern gameopts, KeyDbPtr, loadpals, loadscreenon, MakePath, memcpy_, memset_, palcycledelay
 extern palcyclelock, palcyclephase, rand_, ReadDbRec4Ch, ReadTeamRec, seasondb, SeasonDbPtr, SeasonDbPtr2
-extern SetTickDeadline, simdorder, simfwdorder, str_LoadPic, str_Pal23, sub_8CCA8, sub_8DAB8, sub_8E83C
-extern sub_8FFB0, sub_910E0, sub_B30B4, sub_B392C, sub_B4B88, sub_B4BA8, sub_B4C61, tag_ags
+extern SetTickDeadline, simdorder, simfwdorder, str_LoadPic, str_Pal23, AllocMemBlock, sub_8DAB8, LoadBank
+extern SetPalette, DrawArtOpaque, FindShape, ClearScreen, VgaSetPalette, sub_B4BA8, sub_B4C61, tag_ags
 extern tag_agset, tag_aps, tag_apset, tag_at, tag_gk, tag_gs, tag_gset, tag_pk
 extern tag_ps, tag_pset, tag_t, WaitTickDeadline, WriteTeamRec
 global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick, ShowLoadingScreen
@@ -102,74 +102,74 @@ mov dword [dword esp+01D0h], eax	; 4537E
 push byte 20h	; 45385
 push dword 2E8h	; 45387
 push tag_t	; 4538C
-call sub_8CCA8	; 45391
+call AllocMemBlock	; 45391
 add esp, byte 0Ch	; 45396
 mov ebp, dword [dword esp+01D0h]	; 45399
 mov dword [dword esp+ebp*4+016Ch], eax	; 453A0
 push byte 20h	; 453A7
 push byte 4Ch	; 453A9
 push tag_at	; 453AB
-call sub_8CCA8	; 453B0
+call AllocMemBlock	; 453B0
 add esp, byte 0Ch	; 453B5
 mov dword [dword esp+ebp*4+0164h], eax	; 453B8
 push byte 20h	; 453BF
 push byte 64h	; 453C1
 push tag_pk	; 453C3
-call sub_8CCA8	; 453C8
+call AllocMemBlock	; 453C8
 add esp, byte 0Ch	; 453CD
 mov dword [dword esp+ebp*4+017Ch], eax	; 453D0
 push byte 20h	; 453D7
 push byte 64h	; 453D9
 push tag_ps	; 453DB
-call sub_8CCA8	; 453E0
+call AllocMemBlock	; 453E0
 add esp, byte 0Ch	; 453E5
 mov dword [dword esp+ebp*4+0154h], eax	; 453E8
 push byte 20h	; 453EF
 push byte 64h	; 453F1
 push tag_pset	; 453F3
-call sub_8CCA8	; 453F8
+call AllocMemBlock	; 453F8
 add esp, byte 0Ch	; 453FD
 mov dword [dword esp+ebp*4+015Ch], eax	; 45400
 push byte 20h	; 45407
 push byte 64h	; 45409
 push tag_aps	; 4540B
-call sub_8CCA8	; 45410
+call AllocMemBlock	; 45410
 add esp, byte 0Ch	; 45415
 mov dword [dword esp+ebp*4+012Ch], eax	; 45418
 push byte 20h	; 4541F
 push byte 64h	; 45421
 push tag_apset	; 45423
-call sub_8CCA8	; 45428
+call AllocMemBlock	; 45428
 add esp, byte 0Ch	; 4542D
 mov dword [dword esp+ebp*4+0104h], eax	; 45430
 push byte 20h	; 45437
 push byte 0Ch	; 45439
 push tag_gk	; 4543B
-call sub_8CCA8	; 45440
+call AllocMemBlock	; 45440
 add esp, byte 0Ch	; 45445
 mov dword [dword esp+ebp*4+0134h], eax	; 45448
 push byte 20h	; 4544F
 push byte 0Ch	; 45451
 push tag_gs	; 45453
-call sub_8CCA8	; 45458
+call AllocMemBlock	; 45458
 add esp, byte 0Ch	; 4545D
 mov dword [dword esp+ebp*4+0124h], eax	; 45460
 push byte 20h	; 45467
 push byte 0Ch	; 45469
 push tag_gset	; 4546B
-call sub_8CCA8	; 45470
+call AllocMemBlock	; 45470
 add esp, byte 0Ch	; 45475
 mov dword [dword esp+ebp*4+010Ch], eax	; 45478
 push byte 20h	; 4547F
 push byte 0Ch	; 45481
 push tag_ags	; 45483
-call sub_8CCA8	; 45488
+call AllocMemBlock	; 45488
 add esp, byte 0Ch	; 4548D
 mov dword [dword esp+ebp*4+014Ch], eax	; 45490
 push byte 20h	; 45497
 push byte 0Ch	; 45499
 push tag_agset	; 4549B
-call sub_8CCA8	; 454A0
+call AllocMemBlock	; 454A0
 add esp, byte 0Ch	; 454A5
 mov dword [dword esp+ebp*4+0114h], eax	; 454A8
 lea ebx, [byte ebp+01h]	; 454AF
@@ -2686,7 +2686,7 @@ add eax, loadpals	; 479C8
 push eax	; 479CD
 push dword 100h	; 479CE
 push byte 0	; 479D3
-call sub_B4B88	; 479D5
+call VgaSetPalette	; 479D5
 add esp, byte 0Ch	; 479DA
 xor ecx, ecx	; 479DD
 mov dword [palcyclelock], ecx	; 479DF
@@ -2715,7 +2715,7 @@ jne near .x	; 47A06
 push loadpals	; 47A0C
 push dword 100h	; 47A11
 push edx	; 47A16
-call sub_8FFB0	; 47A17
+call SetPalette	; 47A17
 add esp, byte 0Ch	; 47A1C
 mov ebx, 8	; 47A1F
 mov edx, loadpals	; 47A24
@@ -2723,7 +2723,7 @@ mov eax, 1	; 47A29
 call FadePalStep	; 47A2E
 call sub_B4BA8	; 47A33
 push byte 0	; 47A38
-call sub_B392C	; 47A3A
+call ClearScreen	; 47A3A
 add esp, byte 4	; 47A3F
 call sub_8DAB8	; 47A42
 cmp eax, 222E0h	; 47A47
@@ -2746,12 +2746,12 @@ call MakePath	; 47A84
 push byte 0	; 47A89
 lea eax, [dword esp+0904h]	; 47A8B
 push eax	; 47A92
-call sub_8E83C	; 47A93
+call LoadBank	; 47A93
 add esp, byte 8	; 47A98
 mov edi, eax	; 47A9B
 push str_Pal23	; 47A9D
 push eax	; 47AA2
-call sub_B30B4	; 47AA3
+call FindShape	; 47AA3
 add esp, byte 8	; 47AA8
 lea ecx, [byte eax+010h]	; 47AAB
 mov ebx, 300h	; 47AAE
@@ -2816,12 +2816,12 @@ cmp edx, 90h	; 47B6C
 jl short ShowLoadingScreen.6	; 47B72
 push str_LoadPic	; 47B74
 push edi	; 47B79
-call sub_B30B4	; 47B7A
+call FindShape	; 47B7A
 add esp, byte 8	; 47B7F
 push byte 4Bh	; 47B82
 push byte 64h	; 47B84
 push eax	; 47B86
-call sub_910E0	; 47B87
+call DrawArtOpaque	; 47B87
 add esp, byte 0Ch	; 47B8C
 push edi	; 47B8F
 call FreeMemBlock	; 47B90

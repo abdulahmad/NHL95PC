@@ -56,7 +56,7 @@ void checkcheck(Player *p, Player *q, short force)
                 && (ABS(q->Xvel) < 0x1F4 && ABS(q->Yvel) < 0x1F4 || (vtoa(q->Xvel, q->Yvel) - p->facedir + 2) & 3))
                 v = 0xED7;
             else
-                v = *(int *)((char *)dword_CCC4E + rel * 2) >> 16;
+                v = *(int *)((char *)checkinglist_m2 + rel * 2) >> 16;
             SetSPA(p, v);
             if (q->position != 0 && force >= 0x14) {
                 if (p->pflags & 8) rel = 0xA0;
@@ -68,8 +68,8 @@ void checkcheck(Player *p, Player *q, short force)
                 } else {
                     if (q->SCnum == 0x10) {
                         if (p->pflags & 8) {
-                            if (++word_CBEC2 >= 3) {
-                                word_CBEC2 = 0;
+                            if (++refhitcount >= 3) {
+                                refhitcount = 0;
                                 AddPenalty(p, 0x16);
                             }
                             FallDown(p, q);

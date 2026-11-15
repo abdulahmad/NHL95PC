@@ -6,7 +6,7 @@
 void assintroline(Player *p);
 
 /* assintroline: the intro skate. Flag 20h does nothing. temp5 == -100 waits until every
- player on the line (12 slots at dword_DF848) is also waiting, then holds seqtimer at 10.
+ player on the line (12 slots at sctemp4) is also waiting, then holds seqtimer at 10.
  Otherwise temp5 counts down; while it is still positive the player sometimes shifts and
  plays SPA 0DABh or 0DC3h. At zero, flag bit 1 sets the spot (temp3 -15), SPA 0A5Bh and
  the crowd. Close and slow: step temp1, turn toward the spot, then SPA 0C57h. Far: skateto
@@ -24,7 +24,7 @@ void assintroline(Player *p)
         i = 0;
         goto test;
     wait:
-        if ((*(int *)((char *)dword_DF848 + (i << 7)) >> 16) != -100) return;
+        if ((*(int *)((char *)sctemp4 + (i << 7)) >> 16) != -100) return;
         i++;
     test:
         if (i < 12) goto wait;

@@ -7,7 +7,7 @@
  * name the same buttons): B held ~15 frames takes that team's goalie (SCnum 5 / 0xB); a short B
  * is changeplayer; on the goalie, A+direction dives (SPAgdive), C a 94G save stance, d-pad moves.
  * Save, movement and animations from 94 Genesis (logic94 goalieacc / goaliesave / assgoaliectrl):
- * a human in his crease faces the puck and stops when idle; C uses 95 PC's dword_CCA5A (the same
+ * a human in his crease faces the puck and stops when idle; C uses 95 PC's goaliesave_saveanim_m2 (the same
  * save SPAs assgoalie already plays). 95 PC's SPAgready / SPAgskate / SPAgdive are those 94G
  * anims under 95 PC's SPA numbers. MATCH src stays.
  */
@@ -104,7 +104,7 @@ extern int puckz, puckvz;           /* addresses of the puck's z words (globals.
 extern signed char *puckc;
 extern int32_t regd0, regd1, regd2, regd3;
 extern int16_t crowdlevel;
-extern short dword_CCA5A[];
+extern short goaliesave_saveanim_m2[];
 extern uint8_t gmode, gmode2;       /* gmode bit 0: play is stopped (whistle to faceoff); gmode2 bit 0: a faceoff is on */
 
 void *goalie_gacc_cont;
@@ -186,7 +186,7 @@ void goalie_save(uint8_t *p)
     if (*(int16_t *)puckz > 8 || *(int16_t *)puckvz > 0x800) i = 7;  /* 94G high save */
     else i = 5;
     if (P_B(p, P_ATTR) & 8) i ^= 1;
-    call_ad(SetSPA, p, dword_CCA5A[i]);
+    call_ad(SetSPA, p, goaliesave_saveanim_m2[i]);
     P_B(p, P_PFLAGS2) |= PF2AIP;
     crowdlevel = (int16_t)(crowdlevel + 0x96);
 }

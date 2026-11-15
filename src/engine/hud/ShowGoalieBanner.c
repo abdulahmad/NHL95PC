@@ -6,7 +6,7 @@
 /* ShowGoalieBanner: when team side is a human team (cont1team cont2team = side + 1) during a
  game and its goalie is set (tmgoalie top 12 bits not FF0h): toggle the goalie: banner message 1 (goalie in,
  tmgoalie >= 0, i.e. pulled) or 0, shown 80 frames unless a higher message is up. A pulled goalie's menu flag
- (off_CD498 by goalie number) goes 2, the "extra attacker" flag (off_CD4A0) 1 and tmgoalie gets FFF0h; else the
+ (goaliemenuflags by goalie number) goes 2, the "extra attacker" flag (goaliemenuflags_e02) 1 and tmgoalie gets FFF0h; else the
  reverse with the goalie number kept. Then setpersonel. */
 void ShowGoalieBanner(short side)
 {
@@ -26,12 +26,12 @@ void ShowGoalieBanner(short side)
         bannertimer = 0x50;
     }
     if (g < 0) {
-        *(unsigned char *)*(int *)((char *)off_CD4A0 + side * 12) = 2;
-        f = *(unsigned char **)((char *)off_CD498 + side * 12 + ((&hmtmstruct)[side].tmgoalie = (&hmtmstruct)[side].tmgoalie & 0xF) * 4);
+        *(unsigned char *)*(int *)((char *)goaliemenuflags_e02 + side * 12) = 2;
+        f = *(unsigned char **)((char *)goaliemenuflags + side * 12 + ((&hmtmstruct)[side].tmgoalie = (&hmtmstruct)[side].tmgoalie & 0xF) * 4);
     } else {
-        **(unsigned char **)((char *)off_CD498 + side * 12 + (g & 0xF) * 4) = 2;
+        **(unsigned char **)((char *)goaliemenuflags + side * 12 + (g & 0xF) * 4) = 2;
         (&hmtmstruct)[side].tmgoalie |= 0xFFF0;
-        f = (unsigned char *)*(int *)((char *)off_CD4A0 + side * 12);
+        f = (unsigned char *)*(int *)((char *)goaliemenuflags_e02 + side * 12);
     }
     *f = 1;
     setpersonel(&(&hmtmstruct)[side]);

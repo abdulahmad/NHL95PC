@@ -2,15 +2,15 @@
 bits 32
 %include "hockey.inc"
 section s_9FFCA progbits alloc exec nowrite align=1
-extern __CHK, __GETDS, asc_C4A9C, asc_C4AA1, asc_C4AAA, asc_D53B8, byte_F5320, byte_F5321
+extern __CHK, __GETDS, str_PAT, str_ULTRADIR, str_MIDI, str_CULTRASNDMIDI, byte_F5320, byte_F5321
 extern cliprect_x0, cliprect_x1, dword_D30A4, dword_D30A8, dword_D4F9A, dword_D53A0, dword_D53A4, dword_D53A8
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
-extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, sub_91964
+extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, PrintString
 extern sub_AA210, sub_AA300, sub_AAB5C, sub_AAC48, sub_AB79C, sub_AC0CC, sub_AC6E8, sub_AD298
 extern sub_AD4DC, sub_AD6F4, sub_AE9EB, sub_AEA23, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33
 extern sub_AEFA2, sub_AEFC9, sub_AEFEA, sub_AF076, sub_AF0D5, sub_AF112, sub_AF198, sub_AF1A4
-extern sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428, sub_B4BC4, sub_B6F84, unk_D5382, unk_D5408
+extern sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428, SetClipWindow, sub_B6F84, unk_D5382, unk_D5408
 extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
 global sub_9FFCA, loc_A004D, sub_A0064, sub_A00C1, loc_A00F7, loc_A0102, loc_A0107, loc_A0124
@@ -169,14 +169,14 @@ loc_A014B:
 mov eax, dword [byte ebp-014h]	; A014B
 cmp dword [eax], byte 0FFFFFFFFh	; A014E
 je near loc_A0215	; A0151
-mov edx, asc_D53B8	; A0157
+mov edx, str_CULTRASNDMIDI	; A0157
 lea eax, [byte ebp-074h]	; A015C
 call strcpy_	; A015F
 mov edx, dword [byte ebp-014h]	; A0164
 add edx, byte 4	; A0167
 lea eax, [byte ebp-074h]	; A016A
 call strcat_	; A016D
-mov edx, asc_C4A9C	; A0172
+mov edx, str_PAT	; A0172
 lea eax, [byte ebp-074h]	; A0177
 call strcat_	; A017A
 lea edx, [dword ebp-0134h]	; A017F
@@ -314,16 +314,16 @@ loc_A0358:
 mov eax, 801h	; A0358
 call sub_AD4DC	; A035D
 mov dword [dword_F55E8], eax	; A0362
-mov eax, asc_C4AA1	; A0367
+mov eax, str_ULTRADIR	; A0367
 call getenv_	; A036C
 mov dword [byte ebp-010h], eax	; A0371
 cmp dword [byte ebp-010h], byte 0	; A0374
 je short loc_A0396	; A0378
 mov edx, dword [byte ebp-010h]	; A037A
-mov eax, asc_D53B8	; A037D
+mov eax, str_CULTRASNDMIDI	; A037D
 call strcpy_	; A0382
-mov edx, asc_C4AAA	; A0387
-mov eax, asc_D53B8	; A038C
+mov edx, str_MIDI	; A0387
+mov eax, str_CULTRASNDMIDI	; A038C
 call strcat_	; A0391
 loc_A0396:
 call sub_A00C1	; A0396
@@ -2206,7 +2206,7 @@ inc eax	; A182C
 push eax	; A182D
 mov edi, dword [byte esp+014h]	; A182E
 push edi	; A1832
-call sub_91964	; A1833
+call PrintString	; A1833
 add esp, byte 0Ch	; A1838
 pop edi	; A183B
 pop esi	; A183C
@@ -2232,6 +2232,6 @@ push byte 0	; A1863
 mov ebx, dword [dword_D30A4]	; A1865
 push ebx	; A186B
 push byte 0	; A186C
-call sub_B4BC4	; A186E
+call SetClipWindow	; A186E
 add esp, byte 10h	; A1873
 ret	; A1876

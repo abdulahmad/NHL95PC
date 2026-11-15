@@ -31,7 +31,7 @@ int UpdateSeasonSchedule(char *dir, char *ext, int day, unsigned char *teams, in
 int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *gdir);
 
 /* DRAFT (10.0 GA, 4,096 vs 4,095 bytes): the opponent pick is an if / else (the EXE's lgplayteam in edx,
-   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = sub_8E83C(...) is stored after the
+   `xor eax, edx` and the dword_DDD34 reload after the join). Left: s.bank = LoadBank(...) is stored after the
    `add esp, 8` (the EXE stores it first, at [esp+70h]), and a few short-lived loads take other registers
    (dword_DDD34 for the second sprintf in ecx, EXE eax: the extra byte; lgplayteam, songdata). The frame
    struct follows the EXE's esp offsets (0 to 90h). No goto: the game loop is guarded by `if (s.ok)` (same code). */
@@ -47,7 +47,7 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
    database names (leaguedbfmt / leaguedbfmt2), set gameopts.fullot for a regular-season game (index below
    444h; clear for the playoffs), the teams and the controllers, show the pre-game screen (unless there is no
    disk space: 4), install the in-game stats callbacks and play (PlayGame); a finished game keeps the score
-   (dword_DDD44 / byte_DDD45, the schedule record at byte_DDD40). Then post it: load the desk palette, say
+   (lgschedrec_b4 / lgschedrec_b5, the schedule record at lgschedrec). Then post it: load the desk palette, say
    the schedule is being updated, clear the saved game in PINFO.DB, write the game into the schedule(s),
    count the game (regular season: the games-played word; playoffs: UpdatePlayoffSeries on the team files),
    and update the season schedule and post the game to both teams' databases (PostGameToTeamDb). An error
@@ -95,7 +95,7 @@ void PlayLeagueGame(int *fh)
     s.pwfail = 0;
     s.ok = 0;
     lggameidx = -1;
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
     if (*fh >= 0) LoadLeagueGameRef(*fh);
     err = LeagueCheckStub((char *)&curleague, 3);
     do {
@@ -107,11 +107,11 @@ void PlayLeagueGame(int *fh)
             strcpy(s.name, (char *)&curleague);
             s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
             if (leagueflags & 0xC) {
-                sub_B2DCA(&s.btn, &s.my, &s.mx);
+                MouseRead(&s.btn, &s.my, &s.mx);
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
                 if (leagueflags & 8) {
-                    dword_C7F0B = (int)s.name;
-                    s.btn = MessageBox(-1, -1, (char *)unk_C7F07, 5, (int)unk_C7F1B, 2, (int)&s.my, (int)&s.mx, -1);
+                    msg_MergeNeeded_e01 = (int)s.name;
+                    s.btn = MessageBox(-1, -1, (char *)msg_MergeNeeded, 5, (int)btn_MergeNeeded, 2, (int)&s.my, (int)&s.mx, -1);
                 } else {
                     ((int *)playerdbsmsg)[1] = (int)s.name;
                     s.btn = MessageBox(-1, -1, (char *)playerdbsmsg, 4, (int)btn_MasterDB, 2, (int)&s.my, (int)&s.mx,
@@ -156,15 +156,15 @@ void PlayLeagueGame(int *fh)
             }
             if (!err) s.ok = -1;
         }
-        s.pal = (unsigned char *)sub_8CCA8((char *)str_Pal18, 0x300, 0x20);
+        s.pal = (unsigned char *)AllocMemBlock((char *)str_Pal18, 0x300, 0x20);
         if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-        sub_8FFB0(0, 0x100, s.pal);
+        SetPalette(0, 0x100, s.pal);
         FadePalStep(1, s.pal, 0x10);
         FreeMemBlock((int)s.pal);
         if (musicon && songdata) {
             do
                 slot = musicslot;
-            while (sub_8FC8A(slot, 3) == 0);
+            while (SndQuery(slot, 3) == 0);
             sub_8D2F0(songdata);
             songdata = 0;
         }
@@ -184,10 +184,10 @@ void PlayLeagueGame(int *fh)
                 err = FileOpenRW(s.path, &s.fhsched1);
                 if (*fh < 0) {
                     if (!err) err = FileReadAt(s.fhsched1, &word_DDD48, 0, 2);
-                    if (!err) err = ReadSchedGame(s.fhsched1, &byte_DDD40, lggameidx);
+                    if (!err) err = ReadSchedGame(s.fhsched1, &lgschedrec, lggameidx);
                     if (!err) {
-                        if (byte_DDD42 == lgplayteam) dword_DDD34 = byte_DDD43;
-                        else dword_DDD34 = byte_DDD42;
+                        if (lgschedrec_b2 == lgplayteam) dword_DDD34 = lgschedrec_b3;
+                        else dword_DDD34 = lgschedrec_b2;
                         dword_DDD3C = -1;
                         if (lgteam_17[dword_DDD34 * 30] == 0) dword_DDD3C = 0;
                     }
@@ -218,8 +218,8 @@ void PlayLeagueGame(int *fh)
                 }
                 if (!err) {
                     if (*fh >= 0) {
-                        pal = (unsigned char *)sub_8CCA8((char *)str_Temp5, 0x300, 0x20);
-                        sub_8FFB0(0, 0x100, pal);
+                        pal = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);
+                        SetPalette(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);
                         FreeMemBlock((int)pal);
                     }
@@ -227,21 +227,21 @@ void PlayLeagueGame(int *fh)
                         sub_8FCDF(musichandle, 3, 0x64);
                         do
                             slot = musicslot;
-                        while (sub_8FC8A(slot, 3) == 0);
+                        while (SndQuery(slot, 3) == 0);
                         sub_8D2F0(songdata);
                         songdata = 0;
                     }
                     if (*fh >= 0) ShowLoadingScreen();
-                    if (byte_DDD42 == lgplayteam) {
+                    if (lgschedrec_b2 == lgplayteam) {
                         s.side = 0;
                         other = 1;
-                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague1, leagueteams, byte_DDD42);
-                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague2, leagueteams, byte_DDD43);
+                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague1, leagueteams, lgschedrec_b2);
+                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague2, leagueteams, lgschedrec_b3);
                     } else {
                         s.side = 1;
                         other = 0;
-                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague2, leagueteams, byte_DDD42);
-                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague1, leagueteams, byte_DDD43);
+                        MakeTeamDbFmt((char *)&leaguedbfmt, (char *)savleague2, leagueteams, lgschedrec_b2);
+                        MakeTeamDbFmt((char *)&leaguedbfmt2, (char *)savleague1, leagueteams, lgschedrec_b3);
                     }
                     if (leaguedbfmt2 == 0) strcpy((char *)&leaguedbfmt2, (char *)&leaguedbfmt);
                     if (leaguedbfmt == 0) strcpy((char *)&leaguedbfmt, (char *)&leaguedbfmt2);
@@ -251,10 +251,10 @@ void PlayLeagueGame(int *fh)
                     else
                         gameopts.fullot = 0;
                     if (*fh < 0) {
-                        byte_DC268 = byte_DDD40;
-                        byte_DC267 = byte_DDD41;
-                        HomeTeam = byte_DDD42;
-                        VisTeam = byte_DDD43;
+                        byte_DC268 = lgschedrec;
+                        byte_DC267 = lgschedrec_b1;
+                        HomeTeam = lgschedrec_b2;
+                        VisTeam = lgschedrec_b3;
                     }
                     SetupControllers();
                     err = 0;
@@ -275,31 +275,31 @@ void PlayLeagueGame(int *fh)
                         PlayGame(fh);
                         InputInstall();
                         if (gameresult == 1) {
-                            dword_DDD44 = hmscore[0];
-                            byte_DDD45 = awscore;
+                            lgschedrec_b4 = hmscore[0];
+                            lgschedrec_b5 = awscore;
                         }
                     } else
                         gameresult = 2;
                 }
                 if (!err && gameresult == 1) {
                     s.game = lggameidx;
-                    sub_B392C(0);
+                    ClearScreen(0);
                     MakePath(s.path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk2, 0);
-                    s.bank = sub_8E83C(s.path, 0);
-                    sub_B4B88(0, 0x100, (unsigned char *)(sub_B30B4(s.bank, (char *)str_Pal17) + 0x10));
+                    s.bank = LoadBank(s.path, 0);
+                    VgaSetPalette(0, 0x100, (unsigned char *)(FindShape(s.bank, (char *)str_Pal17) + 0x10));
                     FreeMemBlock(s.bank);
                     s.num[0] = 0x17;
                     s.num[1] = 0x17;
                     s.num[2] = 0x17;
-                    sub_B4B88(0xF8, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xF8, 1, (unsigned char *)s.num);
                     s.num[0] = 0x2A;
                     s.num[1] = 0x2A;
                     s.num[2] = 0x2A;
-                    sub_B4B88(0xF9, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xF9, 1, (unsigned char *)s.num);
                     s.num[0] = 0x3F;
                     s.num[1] = 0x3F;
                     s.num[2] = 0x3F;
-                    sub_B4B88(0xFA, 1, (unsigned char *)s.num);
+                    VgaSetPalette(0xFA, 1, (unsigned char *)s.num);
                     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
                     if (dword_DDD3C) {
                         err = CheckLeagueDiskSync((char *)&curleague, (char *)leagueteams, dword_DDD34, -1, -1);
@@ -339,8 +339,8 @@ void PlayLeagueGame(int *fh)
                         if (!err) err = FileWriteAt(s.fhinfo, s.info, 6, 0xD);
                         FileClose(&s.fhinfo);
                     }
-                    if (!err) err = WriteSchedGame(s.fhsched1, &byte_DDD40, lggameidx);
-                    if (!err && dword_DDD3C) err = WriteSchedGame(s.fhsched2, &byte_DDD40, lggameidx);
+                    if (!err) err = WriteSchedGame(s.fhsched1, &lgschedrec, lggameidx);
+                    if (!err && dword_DDD3C) err = WriteSchedGame(s.fhsched2, &lgschedrec, lggameidx);
                     if (!err) {
                         if (lggameidx >= 0x444) {
                             MakePath(s.path, (char *)savleague1, (char *)leaguedbnames[4], (char *)str_extxx);
@@ -378,24 +378,24 @@ void PlayLeagueGame(int *fh)
                         }
                     }
                     RestoreDialogBg();
-                    sub_B392C(0);
+                    ClearScreen(0);
                 }
                 if (err && !s.pwfail && err != 4) {
-                    sub_B2DCA(&s.btn, &s.my, &s.mx);
-                    MessageBox(-1, -1, (char *)unk_C7805, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
+                    MouseRead(&s.btn, &s.my, &s.mx);
+                    MessageBox(-1, -1, (char *)msg_DbUpdateError, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
                 }
                 if (dword_DDD3C) FileClose(&s.fhsched2);
                 FileClose(&s.fhsched1);
             }
-            s.pal2 = (unsigned char *)sub_8CCA8((char *)str_Temp5, 0x300, 0x20);
+            s.pal2 = (unsigned char *)AllocMemBlock((char *)str_Temp5, 0x300, 0x20);
             if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
-            sub_8FFB0(0, 0x100, s.pal2);
+            SetPalette(0, 0x100, s.pal2);
             FadePalStep(1, s.pal2, 0x10);
             FreeMemBlock((int)s.pal2);
             if (musicon && songdata) {
                 do
                     slot = musicslot;
-                while (sub_8FC8A(slot, 3) == 0);
+                while (SndQuery(slot, 3) == 0);
                 sub_8D2F0(songdata);
                 songdata = 0;
             }
@@ -405,5 +405,5 @@ void PlayLeagueGame(int *fh)
             MakePath(s.path, (char *)&curleague, (char *)str_GAME, (char *)str_SAV);
         } while (lggameidx >= 0 && !err && !FileExists(s.path));
     }
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    SetViewRect(0, 0, 0x280, 0x1E0);
 }

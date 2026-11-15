@@ -478,7 +478,7 @@ MenuCallbackTrue MenuCallbackTrue2,18F74,25,front/desk,src/front/desk/MenuCallba
 OutputCurrentData,18D7F,196,front/desk,src/front/desk/OutputCurrentData.c,matched,,
 PlayRandomHighlight,18F8D,305,front/desk,src/front/desk/PlayRandomHighlight.c,matched,,
 PostGameDesk,1920F,334,front/desk,src/front/desk/PostGameDesk.c,matched,,
-SportsDesk,1935D,4567,front/desk,src/front/desk/SportsDesk.c,nonmatching,"first pass (Ghidra, MainDeskLoop menu loop): 3,422 of 4,567 bytes, code still missing",register 107/194
+SportsDesk,1935D,4567,front/desk,src/front/desk/SportsDesk.c,nonmatching,"first pass (Ghidra, MainDeskLoop menu loop): 3,422 of 4,567 bytes, code still missing",slot 100/263
 CopyGameSettings,32C9E,267,front/desk_main,src/front/desk_main/CopyGameSettings.c,matched,,
 DemoSetupStub,3371C,11,front/desk_main,src/front/desk_main/DemoSetupStub.c,matched,,
 FreeRinkGfx,33727,85,front/desk_main,src/front/desk_main/FreeRinkGfx.c,matched,,

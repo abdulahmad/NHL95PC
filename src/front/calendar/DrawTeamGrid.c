@@ -17,15 +17,15 @@ void DrawTeamGrid(unsigned char *teams, char *title, unsigned char *grid, int ar
     strcpy(buf, title);
     PrintCenteredText(0x28, buf);
     MakePath(buf, fileoncd[0x1C2] == 1 ? (char *)cddriveptr : 0, (char *)str_Callogo2, 0);
-    bank = sub_8E83C(buf, 0);
-    for (r = 0; r < 0x1A; r++) crests[r] = sub_B30B4(bank, (char *)crestnames[r]);
+    bank = LoadBank(buf, 0);
+    for (r = 0; r < 0x1A; r++) crests[r] = FindShape(bank, (char *)crestnames[r]);
     for (r = 0; r < 4; r++) {
         for (j = 0; j < 7; j++) {
             t = (grid + r * 7)[j];
             if (t == 0x63) break;
             if (r < 2) x = j * 85 + 0x40;
             else x = j * 85 + 0x16;
-            sub_91370(crests[t], x, r * 92 + 0x58);
+            DrawArt(crests[t], x, r * 92 + 0x58);
             if (teams[t * 30 + 0x17] == 1) DrawTeamGridName(t, teams, arg4, grid);
         }
     }

@@ -59,18 +59,18 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
     qsort(statsskaterorder, n, 4, (int (*)(const void *, const void *))CmpRosterSkaters);
     qsort(statsgoalieorder, m, 4, (int (*)(const void *, const void *))CmpRosterGoalies);
     SetDrawBitmap(fullscrbmp);
-    sub_B392C(0);
+    ClearScreen(0);
     sprintf(f.buf, (char *)str_fmtEmb, rosterteamrec[lineedpanel]);
     MakePath(f.path, fileoncd[rosterteam[lineedpanel] + 0x70] == 1 ? (char *)cddriveptr : 0, f.buf, 0);
-    bank = sub_8E83C(f.path, 0);
-    art = sub_B30B4(bank, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(art);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    bank = LoadBank(f.path, 0);
+    art = FindShape(bank, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(art);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(bank);
-    sub_8E9E8(f.state);
-    sub_8EA18(mainfont);
-    DrawMenuBar(unk_D075E, 2, c0, c1, c2);
+    TextSaveState(f.state);
+    TextSetFont(mainfont);
+    DrawMenuBar(rosterstatsmenubar, 2, c0, c1, c2);
     SetTextColors(c0, c3);
     sprintf(f.buf, (char *)str_SRoster, rosterteamrec[lineedpanel] + 5);
     PrintCenteredText(0x19, f.buf);
@@ -83,7 +83,7 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
     PrintShadowText(0x186, 0x30, (char *)str_PT2);
     PrintShadowText(0x1AE, 0x30, (char *)str_Shots4);
     PrintShadowText(0x1E8, 0x30, (char *)str_PIM4);
-    PrintShadowText(0x210, 0x30, (char *)asc_C3164);
+    PrintShadowText(0x210, 0x30, (char *)str_PlusMinus7);
     for (i = 0, y = 0x40; i < n; y += 0xD, i++) {
         idx = statsskaterorder[i];
         p = statsplayerbuf + statsskaterplr[idx] * 0x34;
@@ -139,6 +139,6 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
     }
     sub_B4BA8();
     sub_9121C(*(int *)(fullscrbmp + 0x2C));
-    sub_8EA00(f.state);
+    TextRestoreState(f.state);
     return 0;
 }

@@ -6,8 +6,8 @@ section s_69336 progbits alloc exec nowrite align=1
 extern __CHK, assreplace, awlinetab, awscore, awtmap, awtmgoalie, awtmline, awtmstruct
 extern bannermsg, bannertimer, bgscrollx, bgscrolly, c1playernum, c2playernum, camx, camx_m2
 extern camy, ClearPenaltyBuffer, clockticks, cont1team, cont2team, Crowd_Noise, CrowdFadeOut, crowdlevel
-extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, dword_CCC98
-extern dword_CD9A0, dword_D8C72, dword_D8C7A, dword_DF646, dword_DF648, dword_DF748, dword_E0244, dword_E9A9E
+extern crowdsmooth, curperiod, CwdExciteLvl, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, oneminsaid
+extern starthl2pos, dword_D8C72, dword_D8C7A, hmtmtouch2, hmtmtouch3, awtmtouch3, ovlartbank, dword_E9A9E
 extern energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette, FlushGSumQueue, forcepldata
 extern FreeMemBlock, gameclock, gameopts, gameover, gamepal, gmode, gmode2, gsp
 extern hmlinetab, hmscore, hmtmap, hmtmgoalie, hmtmline, hmtmstruct, HomeTeam, hudclockhund
@@ -19,10 +19,10 @@ extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep,
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
-extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, sub_8FFB0
-extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, word_C90D8, word_CBC44
-extern word_CBEC6, word_DF644, word_DF744, word_DF746, word_DF816, word_DF81A, word_E0022, word_E0028
-extern word_E002A, xc1, yc1, yleader
+extern StopDigiSample, sub_1BAF3, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8F633, SetPalette
+extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, word_CBC44
+extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
+extern refYvel, xc1, yc1, yleader
 global StartHL2
 ; C: src/engine/frame/StartHL2.c
 %ifdef CBUILD
@@ -40,7 +40,7 @@ push edx	; 6934A
 push ebx	; 6934B
 mov ebp, ecx	; 6934C
 xor edx, edx	; 6934E
-mov dword [dword_CCC98], edx	; 69350
+mov dword [oneminsaid], edx	; 69350
 mov ax, word [gameover]	; 69356
 mov dword [dword esp+0F8h], eax	; 6935C
 mov ax, word [HomeTeam]	; 69363
@@ -123,7 +123,7 @@ mov eax, dword [ovlseq-2]	; 6949A
 sar eax, 10h	; 6949F
 cmp eax, byte 0FFFFFFFFh	; 694A2
 je short .3	; 694A5
-mov ebx, dword [dword_E0244]	; 694A7
+mov ebx, dword [ovlartbank]	; 694A7
 push ebx	; 694AD
 call FreeMemBlock	; 694AE
 add esp, byte 4	; 694B3
@@ -251,7 +251,7 @@ mov edx, esi	; 696B0
 mov word [Pencntdwn], si	; 696B2
 mov word [RefPen], bx	; 696B9
 mov ecx, esi	; 696C0
-mov word [word_C90D8], si	; 696C2
+mov word [penaltysc], si	; 696C2
 mov word [ovltimer], si	; 696C9
 mov word [word_CBC44], di	; 696D0
 mov word [bannermsg], si	; 696D7
@@ -261,12 +261,12 @@ mov word [ovlseq], si	; 696E7
 xor ecx, esi	; 696EE
 mov word [bannertimer], cx	; 696F0
 xor esi, esi	; 696F7
-mov word [word_CBEC6], si	; 696F9
+mov word [injurystop], si	; 696F9
 mov word [crowdlevel], si	; 69700
 xor esi, esi	; 69707
 mov dword [crowdsmooth], esi	; 69709
-mov word [word_DF81A], ax	; 6970F
-mov word [word_DF816], ax	; 69715
+mov word [puckcross6], ax	; 6970F
+mov word [puckcross2], ax	; 69715
 call setupice	; 6971B
 call SprSortVert	; 69720
 xor ebx, edx	; 69725
@@ -285,19 +285,19 @@ mov eax, hmtmstruct	; 6976F
 call setpersonel	; 69774
 mov eax, hmtmstruct	; 69779
 call forcepldata	; 6977E
-mov word [dword_DF648], dx	; 69783
+mov word [hmtmtouch3], dx	; 69783
 mov ebx, edx	; 6978A
-mov word [dword_DF646], bx	; 6978C
-mov word [word_DF644], bx	; 69793
+mov word [hmtmtouch2], bx	; 6978C
+mov word [hmtmtouch1], bx	; 69793
 mov eax, awtmstruct	; 6979A
 call reenergizeteam	; 6979F
 mov eax, awtmstruct	; 697A4
 call setpersonel	; 697A9
 mov eax, awtmstruct	; 697AE
 call forcepldata	; 697B3
-mov word [dword_DF748], bx	; 697B8
-mov word [word_DF746], bx	; 697BF
-mov word [word_DF744], bx	; 697C6
+mov word [awtmtouch3], bx	; 697B8
+mov word [awtmtouch2], bx	; 697BF
+mov word [awtmtouch1], bx	; 697C6
 call resetplstuff	; 697CD
 mov ebx, SortCords	; 697D2
 xor edi, edi	; 697D7
@@ -317,7 +317,7 @@ mov eax, 14h	; 697F3
 call randomd0	; 697F8
 sub eax, byte 0Ah	; 697FD
 mov dword [dword esp+0100h], eax	; 69800
-mov ax, word [nosplit edx*4+dword_CD9A0]	; 69807
+mov ax, word [nosplit edx*4+starthl2pos]	; 69807
 mov edx, dword [dword esp+0100h]	; 6980F
 add eax, edx	; 69816
 mov word [byte ebx+Xpos+2], ax	; 69818
@@ -343,7 +343,7 @@ jmp short .16	; 6984F
 .15:
 mov eax, 0Ah	; 69851
 .16:
-mov edx, dword [nosplit esi*2+dword_CD9A0]	; 69856
+mov edx, dword [nosplit esi*2+starthl2pos]	; 69856
 sar edx, 10h	; 6985D
 add eax, edx	; 69860
 mov word [byte ebx+Ypos+2], ax	; 69862
@@ -396,11 +396,11 @@ mov edx, 19h	; 69941
 mov eax, ebx	; 69946
 call assreplace	; 69948
 mov word [SortCords+802h], 0FF88h	; 6994D
-mov word [word_E0022], di	; 69956
+mov word [refYpos2], di	; 69956
 mov esi, 2	; 6995D
 mov word [SortCords+836h], si	; 69962
-mov word [word_E002A], di	; 69969
-mov word [word_E0028], di	; 69970
+mov word [refYvel], di	; 69969
+mov word [refXvel], di	; 69970
 mov edx, 1Fh	; 69977
 mov eax, SortCords+800h	; 6997C
 call assreplace	; 69981
@@ -532,7 +532,7 @@ mov dword [joysampling], ecx	; 69B64
 push savepal	; 69B6A
 push dword 100h	; 69B6F
 push ecx	; 69B74
-call sub_8FFB0	; 69B75
+call SetPalette	; 69B75
 add esp, byte 0Ch	; 69B7A
 mov ebx, 10h	; 69B7D
 mov edx, savepal	; 69B82
@@ -633,7 +633,7 @@ mov eax, dword [ovlseq-2]	; 69CE7
 sar eax, 10h	; 69CEC
 cmp eax, byte 0FFFFFFFFh	; 69CEF
 je short .27	; 69CF2
-mov ebx, dword [dword_E0244]	; 69CF4
+mov ebx, dword [ovlartbank]	; 69CF4
 push ebx	; 69CFA
 call FreeMemBlock	; 69CFB
 add esp, byte 4	; 69D00
@@ -644,11 +644,11 @@ mov word [ovlstep], di	; 69D0F
 mov word [ovlseq], di	; 69D16
 xor ecx, ecx	; 69D1D
 mov dword [demomode], ecx	; 69D1F
-mov dword [dword_CCC98], ecx	; 69D25
+mov dword [oneminsaid], ecx	; 69D25
 push savepal	; 69D2B
 push dword 100h	; 69D30
 push ecx	; 69D35
-call sub_8FFB0	; 69D36
+call SetPalette	; 69D36
 add esp, byte 0Ch	; 69D3B
 mov ebx, 10h	; 69D3E
 mov edx, savepal	; 69D43

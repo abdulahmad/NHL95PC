@@ -18,9 +18,9 @@ extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, Se
 extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standingscb, standingsmenucb, str_Desk2, str_Easndesk
 extern str_fee2, str_fee3, str_fee4, str_Game, str_GameSav4, str_GameSet4, str_Iff8, str_LAAtMTL
 extern str_Maindesk, str_Menubuff4, str_Pal15, str_Palette2, str_Pointer7, str_Set, str_Temp4, str_Tonights2
-extern strcat_, strcpy_, strncpy_, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8F963, sub_8F96E
-extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0
-extern sub_9061C, sub_91370, sub_91400, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, teamabbrevs
+extern strcat_, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, sub_8F963, sub_8F96E
+extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, PutBlock
+extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, sub_B4BA8, SetClipWindow, teamabbrevs
 extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
 global MenuNewExhibition, MenuNewLeague, MenuAddTeam, MenuAddTeam_common, MenuAddTeam_ret2, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs
@@ -84,7 +84,7 @@ push dword 1E0h	; 31B73
 push dword 27Ch	; 31B78
 push ebx	; 31B7D
 push ebx	; 31B7E
-call sub_B2E1B	; 31B7F
+call SetViewRect	; 31B7F
 add esp, byte 10h	; 31B84
 mov ebp, dword [dword esp+098h]	; 31B87
 push ebp	; 31B8E
@@ -113,7 +113,7 @@ add eax, byte 11h	; 31BF9
 push byte 20h	; 31BFC
 push eax	; 31BFE
 push str_Pointer7	; 31BFF
-call sub_8CCA8	; 31C04
+call AllocMemBlock	; 31C04
 add esp, byte 0Ch	; 31C09
 mov dword [dword esp+090h], eax	; 31C0C
 mov esi, dword [pointerspr]	; 31C13
@@ -183,7 +183,7 @@ call MakePath	; 31CEA
 push byte 0	; 31CEF
 lea eax, [byte esp+024h]	; 31CF1
 push eax	; 31CF5
-call sub_8E83C	; 31CF6
+call LoadBank	; 31CF6
 mov esi, eax	; 31CFB
 add esp, byte 8	; 31CFD
 mov ebp, eax	; 31D00
@@ -191,10 +191,10 @@ call FadeOutPalCycle	; 31D02
 call sub_B4BA8	; 31D07
 push str_Desk2	; 31D0C
 push esi	; 31D11
-call sub_B30B4	; 31D12
+call FindShape	; 31D12
 add esp, byte 8	; 31D17
 push eax	; 31D1A
-call sub_9061C	; 31D1B
+call DrawBitmap	; 31D1B
 add esp, byte 4	; 31D20
 push dword 0F8h	; 31D23
 mov ecx, 0F9h	; 31D28
@@ -208,7 +208,7 @@ mov edx, dword [dword esp+098h]	; 31D47
 push edx	; 31D4E
 mov ebx, dword [dword esp+098h]	; 31D4F
 push ebx	; 31D56
-call sub_91400	; 31D57
+call GrabBlock	; 31D57
 add esp, byte 0Ch	; 31D5C
 mov ecx, dword [dword esp+098h]	; 31D5F
 push ecx	; 31D66
@@ -216,7 +216,7 @@ mov esi, dword [dword esp+098h]	; 31D67
 push esi	; 31D6E
 mov edi, dword [pointerspr]	; 31D6F
 push edi	; 31D75
-call sub_91370	; 31D76
+call DrawArt	; 31D76
 add esp, byte 0Ch	; 31D7B
 mov word [scrpitch], 50h	; 31D7E
 cmp byte [musicon], 0	; 31D87
@@ -233,7 +233,7 @@ call sub_8FB8E	; 31DB2
 .10:
 push str_Pal15	; 31DB7
 push ebp	; 31DBC
-call sub_B30B4	; 31DBD
+call FindShape	; 31DBD
 add esp, byte 8	; 31DC2
 lea edx, [byte eax+010h]	; 31DC5
 mov ebx, 10h	; 31DC8
@@ -272,14 +272,14 @@ mov edi, dword [dword esp+098h]	; 31E3D
 push edi	; 31E44
 mov ebp, dword [dword esp+098h]	; 31E45
 push ebp	; 31E4C
-call sub_903F0	; 31E4D
+call PutBlock	; 31E4D
 add esp, byte 0Ch	; 31E52
 mov eax, dword [dword esp+084h]	; 31E55
 push eax	; 31E5C
 mov edx, dword [dword esp+08Ch]	; 31E5D
 push edx	; 31E64
 push ebp	; 31E65
-call sub_91400	; 31E66
+call GrabBlock	; 31E66
 add esp, byte 0Ch	; 31E6B
 mov ecx, dword [dword esp+084h]	; 31E6E
 push ecx	; 31E75
@@ -288,7 +288,7 @@ push esi	; 31E7D
 mov edi, dword [pointerspr]	; 31E7E
 push edi	; 31E84
 .15:
-call sub_91370	; 31E85
+call DrawArt	; 31E85
 add esp, byte 0Ch	; 31E8A
 mov eax, dword [dword esp+088h]	; 31E8D
 mov dword [dword esp+094h], eax	; 31E94
@@ -328,7 +328,7 @@ mov eax, dword [dword esp+098h]	; 31F1F
 push eax	; 31F26
 mov edx, dword [dword esp+098h]	; 31F27
 push edx	; 31F2E
-call sub_903F0	; 31F2F
+call PutBlock	; 31F2F
 add esp, byte 0Ch	; 31F34
 mov esi, dword [dword esp+09Ch]	; 31F37
 jmp short .19	; 31F3E
@@ -345,7 +345,7 @@ push eax	; 31F57
 mov edx, dword [byte esp+esi*8+04h]	; 31F58
 push edx	; 31F5C
 push ecx	; 31F5D
-call sub_903F0	; 31F5E
+call PutBlock	; 31F5E
 add esp, byte 0Ch	; 31F63
 xor ecx, ecx	; 31F66
 mov dword [byte esp+esi*8+04h], ecx	; 31F68
@@ -388,7 +388,7 @@ add eax, byte 11h	; 31FE0
 push byte 20h	; 31FE3
 push eax	; 31FE5
 push str_Pointer7	; 31FE6
-call sub_8CCA8	; 31FEB
+call AllocMemBlock	; 31FEB
 mov edx, eax	; 31FF0
 add esp, byte 0Ch	; 31FF2
 mov dword [dword esp+090h], eax	; 31FF5
@@ -440,7 +440,7 @@ call sub_8FCDF	; 3209C
 mov eax, dword [musicslot-3]	; 320A1
 sar eax, 18h	; 320A6
 mov edx, 3	; 320A9
-call sub_8FC8A	; 320AE
+call SndQuery	; 320AE
 test eax, eax	; 320B3
 je short MainDeskLoop.20	; 320B5
 mov ebp, dword [songdata]	; 320B7
@@ -496,7 +496,7 @@ push dword 1E0h	; 32169
 push byte 0	; 3216E
 push dword 280h	; 32170
 push byte 0	; 32175
-call sub_B4BC4	; 32177
+call SetClipWindow	; 32177
 add esp, byte 10h	; 3217C
 xor ecx, ecx	; 3217F
 mov ebx, str_Easndesk	; 32181
@@ -512,16 +512,16 @@ call MakePath	; 3219D
 push byte 0	; 321A2
 lea eax, [byte esp+024h]	; 321A4
 push eax	; 321A8
-call sub_8E83C	; 321A9
+call LoadBank	; 321A9
 mov esi, eax	; 321AE
 add esp, byte 8	; 321B0
 mov ebp, eax	; 321B3
 push str_Desk2	; 321B5
 push eax	; 321BA
-call sub_B30B4	; 321BB
+call FindShape	; 321BB
 add esp, byte 8	; 321C0
 push eax	; 321C3
-call sub_9061C	; 321C4
+call DrawBitmap	; 321C4
 add esp, byte 4	; 321C9
 push dword 0F8h	; 321CC
 mov ecx, 0F9h	; 321D1
@@ -531,7 +531,7 @@ mov eax, dword [byte esp+034h]	; 321DF
 call DrawMenuBar	; 321E3
 push str_Pal15	; 321E8
 push esi	; 321ED
-call sub_B30B4	; 321EE
+call FindShape	; 321EE
 add esp, byte 8	; 321F3
 lea esi, [byte eax+010h]	; 321F6
 cmp byte [musicon], 0	; 321F9
@@ -574,7 +574,7 @@ mov ecx, dword [dword esp+098h]	; 32279
 push ecx	; 32280
 mov esi, dword [dword esp+098h]	; 32281
 push esi	; 32288
-call sub_903F0	; 32289
+call PutBlock	; 32289
 add esp, byte 0Ch	; 3228E
 mov eax, dword [dword esp+09Ch]	; 32291
 cmp eax, dword [byte esp+07Ch]	; 32298
@@ -595,7 +595,7 @@ push edx	; 322BB
 mov ebx, dword [byte esp+esi*8+04h]	; 322BC
 push ebx	; 322C0
 push eax	; 322C1
-call sub_903F0	; 322C2
+call PutBlock	; 322C2
 add esp, byte 0Ch	; 322C7
 xor eax, eax	; 322CA
 mov dword [byte esp+esi*8+04h], eax	; 322CC
@@ -654,7 +654,7 @@ mov esi, dword [dword esp+098h]	; 32380
 push esi	; 32387
 mov edi, dword [dword esp+098h]	; 32388
 push edi	; 3238F
-call sub_903F0	; 32390
+call PutBlock	; 32390
 add esp, byte 0Ch	; 32395
 mov eax, dword [dword esp+09Ch]	; 32398
 cmp eax, dword [byte esp+07Ch]	; 3239F
@@ -675,7 +675,7 @@ push edx	; 323C2
 mov ebx, dword [byte esp+esi*8+04h]	; 323C3
 push ebx	; 323C7
 push eax	; 323C8
-call sub_903F0	; 323C9
+call PutBlock	; 323C9
 add esp, byte 0Ch	; 323CE
 xor eax, eax	; 323D1
 mov dword [byte esp+esi*8+04h], eax	; 323D3
@@ -779,7 +779,7 @@ imul eax, edx	; 32520
 add eax, byte 11h	; 32523
 push eax	; 32526
 push str_Menubuff4	; 32527
-call sub_8CCA8	; 3252C
+call AllocMemBlock	; 3252C
 add esp, byte 0Ch	; 32531
 mov dword [byte esp+ebp*4+050h], eax	; 32534
 mov esi, dword [pointerspr]	; 32538
@@ -802,7 +802,7 @@ mov ebx, dword [byte esp+eax+04h]	; 32569
 push ebx	; 3256D
 mov ecx, dword [byte esp+ebp*4+058h]	; 3256E
 push ecx	; 32572
-call sub_91400	; 32573
+call GrabBlock	; 32573
 add esp, byte 0Ch	; 32578
 push dword 0F8h	; 3257B
 push dword 0F9h	; 32580
@@ -832,7 +832,7 @@ mov edx, dword [dword esp+098h]	; 325E9
 push edx	; 325F0
 mov ebx, dword [dword esp+098h]	; 325F1
 push ebx	; 325F8
-call sub_903F0	; 325F9
+call PutBlock	; 325F9
 add esp, byte 0Ch	; 325FE
 jmp near .53	; 32601
 .49:
@@ -842,7 +842,7 @@ mov ebx, dword [dword esp+098h]	; 3260E
 push ebx	; 32615
 mov ecx, dword [dword esp+098h]	; 32616
 push ecx	; 3261D
-call sub_903F0	; 3261E
+call PutBlock	; 3261E
 add esp, byte 0Ch	; 32623
 mov esi, dword [dword esp+09Ch]	; 32626
 jmp short .52	; 3262D
@@ -859,7 +859,7 @@ push ebx	; 32646
 mov ecx, dword [byte esp+esi*8+04h]	; 32647
 push ecx	; 3264B
 push edx	; 3264C
-call sub_903F0	; 3264D
+call PutBlock	; 3264D
 add esp, byte 0Ch	; 32652
 xor edx, edx	; 32655
 mov dword [byte esp+esi*8+04h], edx	; 32657
@@ -895,7 +895,7 @@ mov ebp, dword [dword esp+08Ch]	; 326B5
 push ebp	; 326BC
 mov eax, dword [dword esp+098h]	; 326BD
 push eax	; 326C4
-call sub_91400	; 326C5
+call GrabBlock	; 326C5
 add esp, byte 0Ch	; 326CA
 mov edx, dword [dword esp+084h]	; 326CD
 push edx	; 326D4
@@ -1469,13 +1469,13 @@ jl near .6	; 32E50
 push byte 20h	; 32E56
 push dword 300h	; 32E58
 push str_Palette2	; 32E5D
-call sub_8CCA8	; 32E62
+call AllocMemBlock	; 32E62
 add esp, byte 0Ch	; 32E67
 mov edi, eax	; 32E6A
 push eax	; 32E6C
 push dword 100h	; 32E6D
 push byte 0	; 32E72
-call sub_8FFB0	; 32E74
+call SetPalette	; 32E74
 add esp, byte 0Ch	; 32E79
 cmp byte [musicon], 0	; 32E7C
 je short .3	; 32E83
@@ -1501,7 +1501,7 @@ je short .5	; 32ECC
 mov eax, dword [musicslot-3]	; 32ECE
 sar eax, 18h	; 32ED3
 mov edx, 3	; 32ED6
-call sub_8FC8A	; 32EDB
+call SndQuery	; 32EDB
 test eax, eax	; 32EE0
 je short MenuNewExhibition.4	; 32EE2
 mov edx, dword [songdata]	; 32EE4
@@ -1521,7 +1521,7 @@ call SetupStatsSourceMenu	; 32F09
 push byte 20h	; 32F0E
 push dword 300h	; 32F10
 push str_Temp4	; 32F15
-call sub_8CCA8	; 32F1A
+call AllocMemBlock	; 32F1A
 add esp, byte 0Ch	; 32F1F
 mov esi, eax	; 32F22
 cmp byte [musicon], 0	; 32F24
@@ -1536,7 +1536,7 @@ call sub_8FCDF	; 32F45
 push esi	; 32F4A
 push dword 100h	; 32F4B
 push byte 0	; 32F50
-call sub_8FFB0	; 32F52
+call SetPalette	; 32F52
 add esp, byte 0Ch	; 32F57
 mov ebx, 10h	; 32F5A
 mov edx, esi	; 32F5F
@@ -1553,7 +1553,7 @@ je short .10	; 32F84
 mov eax, dword [musicslot-3]	; 32F86
 sar eax, 18h	; 32F8B
 mov edx, 3	; 32F8E
-call sub_8FC8A	; 32F93
+call SndQuery	; 32F93
 test eax, eax	; 32F98
 je short MenuNewExhibition.9	; 32F9A
 mov edi, dword [songdata]	; 32F9C
@@ -1666,13 +1666,13 @@ call LoadModeState	; 33173
 push byte 20h	; 33178
 push dword 300h	; 3317A
 push str_Temp4	; 3317F
-call sub_8CCA8	; 33184
+call AllocMemBlock	; 33184
 add esp, byte 0Ch	; 33189
 mov esi, eax	; 3318C
 push eax	; 3318E
 push dword 100h	; 3318F
 push byte 0	; 33194
-call sub_8FFB0	; 33196
+call SetPalette	; 33196
 add esp, byte 0Ch	; 3319B
 cmp byte [musicon], 0	; 3319E
 je short .12	; 331A5
@@ -1698,7 +1698,7 @@ je near MenuAddTeam_ret2	; 331F2
 mov eax, dword [musicslot-3]	; 331F8
 sar eax, 18h	; 331FD
 mov edx, 3	; 33200
-call sub_8FC8A	; 33205
+call SndQuery	; 33205
 test eax, eax	; 3320A
 je short MenuNewLeague.13	; 3320C
 mov ecx, dword [songdata]	; 3320E
@@ -1737,13 +1737,13 @@ call LoadModeState	; 33271
 push byte 20h	; 33276
 push dword 300h	; 33278
 push str_Temp4	; 3327D
-call sub_8CCA8	; 33282
+call AllocMemBlock	; 33282
 mov esi, eax	; 33287
 add esp, byte 0Ch	; 33289
 push eax	; 3328C
 push dword 100h	; 3328D
 push byte 0	; 33292
-call sub_8FFB0	; 33294
+call SetPalette	; 33294
 add esp, byte 0Ch	; 33299
 mov ebx, 10h	; 3329C
 mov edx, esi	; 332A1
@@ -1803,13 +1803,13 @@ je short .2	; 33332
 push byte 20h	; 33334
 push dword 300h	; 33336
 push str_Temp4	; 3333B
-call sub_8CCA8	; 33340
+call AllocMemBlock	; 33340
 mov esi, eax	; 33345
 add esp, byte 0Ch	; 33347
 push eax	; 3334A
 push dword 100h	; 3334B
 push byte 0	; 33350
-call sub_8FFB0	; 33352
+call SetPalette	; 33352
 add esp, byte 0Ch	; 33357
 mov ebx, 10h	; 3335A
 mov edx, esi	; 3335F
@@ -1877,13 +1877,13 @@ je short .1	; 33416
 push byte 20h	; 33418
 push dword 300h	; 3341A
 push str_Temp4	; 3341F
-call sub_8CCA8	; 33424
+call AllocMemBlock	; 33424
 mov esi, eax	; 33429
 add esp, byte 0Ch	; 3342B
 push eax	; 3342E
 push dword 100h	; 3342F
 push byte 0	; 33434
-call sub_8FFB0	; 33436
+call SetPalette	; 33436
 add esp, byte 0Ch	; 3343B
 mov ebx, 10h	; 3343E
 mov edx, esi	; 33443
@@ -1933,13 +1933,13 @@ je short .1	; 334A8
 push byte 20h	; 334AA
 push dword 300h	; 334AC
 push str_Temp4	; 334B1
-call sub_8CCA8	; 334B6
+call AllocMemBlock	; 334B6
 mov esi, eax	; 334BB
 add esp, byte 0Ch	; 334BD
 push eax	; 334C0
 push dword 100h	; 334C1
 push byte 0	; 334C6
-call sub_8FFB0	; 334C8
+call SetPalette	; 334C8
 add esp, byte 0Ch	; 334CD
 mov ebx, 10h	; 334D0
 mov edx, esi	; 334D5
@@ -2050,13 +2050,13 @@ call LoadModeState	; 3361D
 push byte 20h	; 33622
 push dword 300h	; 33624
 push str_Temp4	; 33629
-call sub_8CCA8	; 3362E
+call AllocMemBlock	; 3362E
 mov esi, eax	; 33633
 add esp, byte 0Ch	; 33635
 push eax	; 33638
 push dword 100h	; 33639
 push byte 0	; 3363E
-call sub_8FFB0	; 33640
+call SetPalette	; 33640
 add esp, byte 0Ch	; 33645
 mov ebx, 10h	; 33648
 mov edx, esi	; 3364D

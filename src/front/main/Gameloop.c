@@ -84,7 +84,7 @@ void Gameloop(void)
             if (fadeinpending) {
                 joysampling_save = joysampling;
                 joysampling = 0;
-                sub_8FFB0(0, 0x100, savepal);
+                SetPalette(0, 0x100, savepal);
                 FadePalette(1, savepal, 0x10);
                 FlushGSumQueue();
                 joysampling = joysampling_save;
@@ -127,8 +127,8 @@ void Gameloop(void)
                 StopDigiSample();
                 SpeechStopQueue();
                 FlushGSumQueue();
-                sub_8EA18(s1font);
-                sub_8FFB0(0, 0x100, savepal);
+                TextSetFont(s1font);
+                SetPalette(0, 0x100, savepal);
                 FadePalette(1, savepal, 0x10);
                 SetScreenSize(0x280, 0x1E0);
                 SportsDesk(0);
@@ -144,11 +144,11 @@ void Gameloop(void)
                 DrawHudPanel(HomeTeam, VisTeam, curperiod, 0);
                 rinkscrollx += 0x3E8;
                 rinkscrolly += 0x3E8;
-                if (ovlseq != -1 && ovlstep != -1 && !dword_E0244) {
-                    MakePath(path, fileoncd[dword_CC080[ovlseq]] == 1 ? (char *)cddriveptr : 0,
-                        (char *)off_CBED0[ovlseq], (char *)str_PPV);
-                    dword_E0244 = sub_8E8A0(path, 0x20);
-                    for (i = 0; i < sub_90354(dword_E0244); i++) dword_DEF8C[i] = sub_9035C(dword_E0244, i);
+                if (ovlseq != -1 && ovlstep != -1 && !ovlartbank) {
+                    MakePath(path, fileoncd[ovlartfiles[ovlseq]] == 1 ? (char *)cddriveptr : 0,
+                        (char *)ovlartnames[ovlseq], (char *)str_PPV);
+                    ovlartbank = sub_8E8A0(path, 0x20);
+                    for (i = 0; i < sub_90354(ovlartbank); i++) ovlstepart[i] = sub_9035C(ovlartbank, i);
                 }
                 joysampling = joysampling_save;
                 joyq_flush();

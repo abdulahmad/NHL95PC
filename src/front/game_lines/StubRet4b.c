@@ -9,5 +9,5 @@ void StubRet4b(int a, int b, int c, int d, int e)
 {
     int dbg = 0;
 
-    if (dbg) sub_91964((char *)a, b, c);
+    if (dbg) PrintString((char *)a, b, c);
 }

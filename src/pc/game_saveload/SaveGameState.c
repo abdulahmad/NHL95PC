@@ -72,7 +72,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&refsignal);
     *p++ = *(short *)(&RefStep);
     *p++ = *(short *)(&RefPen);
-    *p++ = *(short *)(&word_C90D8);
+    *p++ = *(short *)(&penaltysc);
     *p++ = *(short *)(&gsp);
     *p++ = *(short *)(&gameclock);
     *p++ = *(short *)(&clockticks);
@@ -81,10 +81,10 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&exitgame);
     *p++ = *(short *)(&gameover);
     *p++ = *(short *)(&ovltimer);
-    *p++ = *(short *)(&word_CBEC2);
+    *p++ = *(short *)(&refhitcount);
     *p++ = *(short *)(&fadeinpending);
     *p++ = *(short *)(&deferpending);
-    *p++ = *(short *)(&word_CBEC6);
+    *p++ = *(short *)(&injurystop);
     *p++ = *(short *)(&word_E9AB0);
     *p++ = *(short *)(&bannermsg);
     *p++ = *(short *)(&bannertimer);
@@ -108,7 +108,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&lcblinktime);
     *p++ = *(short *)((char *)&lcblinktime + 2);
     *p++ = *(short *)(&lcsel);
-    *p++ = *(short *)(&word_CBC60);
+    *p++ = *(short *)(&lcsel_aw);
     *p++ = *(short *)(&lcline);
     *p++ = *(short *)((char *)&lcline + 2);
     *p++ = *(short *)(&lctimer);
@@ -126,7 +126,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&curperiod);
     *p++ = *(short *)(&lldispodd);
     *p++ = *(short *)(&dword_E9AB6);
-    *p++ = *(short *)(&word_E9AAE);
+    *p++ = *(short *)(&penevteam);
     *p++ = *(short *)(&periodendtime);
     *p++ = *(short *)(&dword_E9A9E);
     *p++ = *(short *)(&ltack);
@@ -136,9 +136,9 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&word_E9AAA);
     *p++ = *(short *)(&word_E9AA2);
     *p++ = *(short *)(&CwdExciteLvl);
-    *p++ = *(short *)(&word_E9AA4);
-    *p++ = *(short *)(&word_E9AA6);
-    *p++ = *(short *)(&dword_E009C);
+    *p++ = *(short *)(&MaxCwdExciteLvl);
+    *p++ = *(short *)(&NumCwdExciteLvl);
+    *p++ = *(short *)(&SumCwdExciteLvl);
     *p++ = *(short *)(&ctl1team);
     *p++ = *(short *)(&ctl2team);
     *p++ = *(short *)(&ctl1dev);
@@ -146,12 +146,12 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&hudclockmin);
     *p++ = *(short *)(&hudclocksec);
     *p++ = *(short *)(&hudclockhund);
-    *p++ = *(short *)(&word_CC0B0);
+    *p++ = *(short *)(&Pencntdwn2);
     *p++ = *(short *)(&hudhundaccum);
     *p++ = *(short *)(&frameaccum);
-    *p++ = *(short *)(&dword_CC0AC);
-    *p++ = *(short *)(&byte_E024C);
-    *p++ = *(short *)(&word_E024E);
+    *p++ = *(short *)(&goalienotebits);
+    *p++ = *(short *)(&milestonesaid);
+    *p++ = *(short *)(&milestonesaid_b2);
     *p++ = *(short *)(&gamemode);
     ((char *)p)[0] = *(char *)(&byte_DC268);
     ((char *)p)[1] = *(char *)(&byte_DC267);
@@ -165,8 +165,8 @@ int SaveGameState(int fh)
     p = (short *)buf;
     for (i = 0; i < 0x14; i++) {
         n = i * 3;
-        *p++ = word_DEE94[n * 2];
-        *p++ = word_DEE96[n * 2];
+        *p++ = rinkobjs[n * 2];
+        *p++ = rinkobjs_w2[n * 2];
     }
     *p++ = *(short *)(&ovlseq);
     *p++ = *(short *)(&ovlstep);
@@ -194,10 +194,10 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&pspathdir);
     if (FileWriteAt(fh, buf, -1, 0x80)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, PenBuf, -1, 0x42)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, &byte_E9AC8, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, &byte_E9AD3, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, unk_C5423, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
-    if (FileWriteAt(fh, unk_C542E, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, &curevent, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, &goalevent, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, gsumheader, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
+    if (FileWriteAt(fh, gsumtail, -1, 0xB)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, hudpenhome, -1, 0x40)) FatalError((char *)str_ErrSaveGame);
     if (FileWriteAt(fh, hudpenaway, -1, 0x40)) FatalError((char *)str_ErrSaveGame);
     q = buf;
@@ -208,7 +208,7 @@ int SaveGameState(int fh)
             q = buf;
             n = 0;
         }
-        *(Rec16 *)q = *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16);
+        *(Rec16 *)q = *(Rec16 *)((char *)hmplstats + i / 25 * 25 * 16 + i % 25 * 16);
         q += 0x10;
         n += 0x10;
     }
@@ -218,7 +218,7 @@ int SaveGameState(int fh)
             q = buf;
             n = 0;
         }
-        *(Rec6 *)q = *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2);
+        *(Rec6 *)q = *(Rec6 *)((char *)hmglstats + i / 3 * 9 * 2 + i % 3 * 3 * 2);
         q += 6;
         n += 6;
     }
@@ -226,11 +226,11 @@ int SaveGameState(int fh)
     return 0;
 }
 
-/* a rink object slot as LoadGameState rebuilds it (12 bytes at word_DEE94) */
+/* a rink object slot as LoadGameState rebuilds it (12 bytes at rinkobjs) */
 typedef struct LRinkObj {
     short id;           /* photo object, -1 free */
     short ts;           /* timer and step bytes */
-    signed char frame;  /* byte_CCE00[base + step] */
+    signed char frame;  /* rinkobjanim[base + step] */
     short x;
     short y;
     short base;         /* the object's first frame index */
@@ -246,8 +246,8 @@ typedef struct { int d[2]; } Rec8;
 /* LoadGameState (60612, PC only; ends in SaveGameState_popx): read back what SaveGameState wrote to the open
    saved-game file fh (each read failing is fatal: str_ErrLoadGame, the first str_ErrSaveGame): the controller
    sides, the 17 sort objects, both team structures and line tables, the three 80h-byte blocks of packed words
-   (the 20 rink objects are rebuilt from their ids: the photo-in-use bits word_E9B2C, position and frames from
-   word_CCEF8 / byte_CCE00), the penalty buffer and records, the player and goalie game stats. Then set the game
+   (the 20 rink objects are rebuilt from their ids: the photo-in-use bits rinkobjused, position and frames from
+   rinkobjdefs / rinkobjanim), the penalty buffer and records, the player and goalie game stats. Then set the game
    up again: the mouse to the centre for a mouse controller, the mode state of gamemode, the period length, the
    teams, palette, music and graphics (all photo banks reloaded), the overlay script, the event lines, the replay,
    the team structures' pointers, the sort objects' fixed fields and the y order, the HUD penalty records.
@@ -313,7 +313,7 @@ int LoadGameState(int fh)
     refsignal = *p++;
     RefStep[0] = *p++;
     RefPen = *p++;
-    word_C90D8 = *p++;
+    penaltysc = *p++;
     gsp = *p++;
     gameclock = *p++;
     clockticks[0] = *p++;
@@ -322,10 +322,10 @@ int LoadGameState(int fh)
     exitgame = *p++;
     gameover = *p++;
     ovltimer = *p++;
-    word_CBEC2 = *p++;
+    refhitcount = *p++;
     fadeinpending = *p++;
     deferpending = *p++;
-    word_CBEC6 = *p++;
+    injurystop = *p++;
     word_E9AB0 = *p++;
     bannermsg = *p++;
     bannertimer = *p++;
@@ -349,7 +349,7 @@ int LoadGameState(int fh)
     lcblinktime[0] = *p++;
     *(short *)((char *)&lcblinktime + 2) = *p++;
     lcsel[0] = *p++;
-    word_CBC60[0] = *p++;
+    lcsel_aw[0] = *p++;
     lcline[0] = *p++;
     *(short *)((char *)&lcline + 2) = *p++;
     lctimer[0] = *p++;
@@ -367,7 +367,7 @@ int LoadGameState(int fh)
     curperiod = *p++;
     lldispodd = *p++;
     dword_E9AB6 = *p++;
-    word_E9AAE = *p++;
+    penevteam = *p++;
     periodendtime = *p++;
     dword_E9A9E = *p++;
     ltack = *p++;
@@ -377,9 +377,9 @@ int LoadGameState(int fh)
     word_E9AAA = *p++;
     word_E9AA2 = *p++;
     CwdExciteLvl = *p++;
-    word_E9AA4 = *p++;
-    word_E9AA6 = *p++;
-    dword_E009C = *p++;
+    MaxCwdExciteLvl = *p++;
+    NumCwdExciteLvl = *p++;
+    SumCwdExciteLvl = *p++;
     ctl1team[0] = *p++;
     ctl2team = *p++;
     ctl1dev[0] = *p++;
@@ -387,12 +387,12 @@ int LoadGameState(int fh)
     hudclockmin = *p++;
     hudclocksec = *p++;
     hudclockhund = *p++;
-    word_CC0B0[0] = *p++;
+    Pencntdwn2[0] = *p++;
     hudhundaccum = *p++;
     frameaccum = *p++;
-    dword_CC0AC = *p++;
-    byte_E024C[0] = *p++;
-    word_E024E = *p++;
+    goalienotebits = *p++;
+    milestonesaid[0] = *p++;
+    milestonesaid_b2 = *p++;
     gamemode = *p++;
     *(char *)&byte_DC268 = ((char *)p)[0];
     *(char *)&byte_DC267 = ((char *)p)[1];
@@ -404,22 +404,22 @@ int LoadGameState(int fh)
     onetimerflag = ((signed char *)p)[1];
     if (FileReadAt(fh, buf, -1, 0x80)) FatalError((char *)str_ErrLoadGame);
     p = (short *)buf;
-    __STOSB(word_E9B2C, 0, 0x20);
+    __STOSB(rinkobjused, 0, 0x20);
     i = 0x10;
     for (i = 0; i < 0x14; i++) {
-        o = (LRinkObj *)((char *)word_DEE94 + i * 12);
+        o = (LRinkObj *)((char *)rinkobjs + i * 12);
         o->id = *p;
         id = o->id;
-        word_E9B2C[id / 16] |= 1 << id % 16;
+        rinkobjused[id / 16] |= 1 << id % 16;
         p++;
         o->ts = *p++;
         if (id >= 0) {
             id *= 3;
-            o->x = word_CCEF8[id];
-            o->y = word_CCEF8[++id];
-            o->base = word_CCEF8[++id];
-            o->first = byte_CCE00[o->base];
-            o->frame = byte_CCE00[o->base + (o->ts >> 8)];
+            o->x = rinkobjdefs[id];
+            o->y = rinkobjdefs[++id];
+            o->base = rinkobjdefs[++id];
+            o->first = rinkobjanim[o->base];
+            o->frame = rinkobjanim[o->base + (o->ts >> 8)];
         }
     }
     ovlseq = *p++;
@@ -447,10 +447,10 @@ int LoadGameState(int fh)
     pspathside = *p++;
     pspathdir = *p++;
     if (FileReadAt(fh, PenBuf, -1, 0x42)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, &byte_E9AC8, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, &byte_E9AD3, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, unk_C5423, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
-    if (FileReadAt(fh, unk_C542E, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, &curevent, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, &goalevent, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, gsumheader, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
+    if (FileReadAt(fh, gsumtail, -1, 0xB)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, penhome, -1, 0x40)) FatalError((char *)str_ErrLoadGame);
     if (FileReadAt(fh, penaway, -1, 0x40)) FatalError((char *)str_ErrLoadGame);
     i = n = 0;
@@ -461,11 +461,11 @@ int LoadGameState(int fh)
             if (FileReadAt(fh, buf, -1, n)) FatalError((char *)str_ErrLoadGame);
             q = (Rec16 *)buf;
         }
-        *(Rec16 *)((char *)dword_DB088 + i / 25 * 25 * 16 + i % 25 * 16) = *q++;
+        *(Rec16 *)((char *)hmplstats + i / 25 * 25 * 16 + i % 25 * 16) = *q++;
         n -= 0x10;
     } while (++i < 0x32);
     r = (Rec6 *)q;
-    for (i = 0; i < 6; i++) *(Rec6 *)((char *)unk_DC240 + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *r++;
+    for (i = 0; i < 6; i++) *(Rec6 *)((char *)hmglstats + i / 3 * 9 * 2 + i % 3 * 3 * 2) = *r++;
     if (pad1dev[0] == 1 || pad2dev == 1) MouseSetPos(0xA0, 0x64);
     switch (gamemode) {
     case 0:
@@ -492,26 +492,26 @@ int LoadGameState(int fh)
     LoadGameGfx();
     __STOSD(photobanks, 0, 0x17);
     photobankf = 0;
-    if (ovlseq != -1 && ovlstep != -1) ovlscript = off_CC01D[ovlseq];
+    if (ovlseq != -1 && ovlstep != -1) ovlscript = ovlscripts[ovlseq];
     BuildEventLines();
     recbpr = replaystart;
     ReplayRecordReset();
     sflags &= 0xEF;
     fadeinpending = 1;
     hmtmsort = (int)SortCords;
-    dword_DF6F2 = (int)unk_DACA0;
-    dword_DF6F6 = (int)unk_DAC40;
+    hmtmplattr = (int)hmplattr;
+    hmtmglattr = (int)hmglattr;
     hmtmlines[0] = (int)hmlinetab;
-    hmtmplstats = (int)dword_DB088;
-    hmtmglstats = (int)unk_DC240;
+    hmtmplstats = (int)hmplstats;
+    hmtmglstats = (int)hmglstats;
     hmtmroster = (int)hmroster;
     hmtmptrF2 = (int)hmteamrec;
     awtmsort = (int)(SortCords + 6);
-    dword_DF7F2 = (int)unk_DAE94;
-    dword_DF7F6 = (int)unk_DAC70;
+    awtmplattr = (int)awplattr;
+    awtmglattr = (int)awglattr;
     awtmlines = (int)awlinetab;
-    awtmplstats = (int)unk_DB218;
-    awtmglstats = (int)unk_DC252;
+    awtmplstats = (int)awplstats;
+    awtmglstats = (int)awglstats;
     awtmroster = (int)awroster;
     awtmptrF2 = (int)awteamrec;
     pl = SortCords;

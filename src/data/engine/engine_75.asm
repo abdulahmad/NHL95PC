@@ -2,20 +2,20 @@
 bits 32
 %include "hockey.inc"
 section s_DAC40 nobits alloc noexec write align=1
-global byte_DACB3, byte_DAEA7, dword_DB086, dword_DB088, unk_DAC40, unk_DAC70, unk_DACA0, unk_DAE94
-unk_DAC40:
+global hmplattr_b13, awplattr_b13, hmplstats_m2, hmplstats, hmglattr, awglattr, hmplattr, awplattr
+hmglattr:
 resb 48
-unk_DAC70:
+awglattr:
 resb 48
-unk_DACA0:
+hmplattr:
 resb 19
-byte_DACB3:
+hmplattr_b13:
 resb 481
-unk_DAE94:
+awplattr:
 resb 19
-byte_DAEA7:
+awplattr_b13:
 resb 479
-dword_DB086:
+hmplstats_m2:
 resb 2
-dword_DB088:
+hmplstats:
 resb 2

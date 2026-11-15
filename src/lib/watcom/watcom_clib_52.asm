@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B2220 progbits alloc exec nowrite align=1
-extern __Bin2String, __CmpBigInt, __Rnd2Int, dword_C4B5C, dword_C4B60, dword_C4C90, dword_C4C94, dword_C4C98
+extern __Bin2String, __CmpBigInt, __Rnd2Int, str_Inf, str_Nan, dword_C4C90, dword_C4C94, dword_C4C98
 extern dword_C4C9C, frexp_, modf_, qword_C4B64, qword_C4C80, qword_C4C88, qword_C4CAA, unk_C4CA8
 global __Nan_Inf_, loc_B2258, loc_B228B, loc_B2291, loc_B229A, loc_B229C, floor_, loc_B22D3
 global _Scale_, loc_B2306, _Scale10V_, loc_B234C, loc_B2369, loc_B236D, loc_B2394, loc_B23AE
@@ -46,10 +46,10 @@ xor bh, bh	; B2277
 and ebx, 0FFFFh	; B2279
 or edx, ebx	; B227F
 jne short loc_B228B	; B2281
-mov edx, dword [dword_C4B5C]	; B2283
+mov edx, dword [str_Inf]	; B2283
 jmp short loc_B2291	; B2289
 loc_B228B:
-mov edx, dword [dword_C4B60]	; B228B
+mov edx, dword [str_Nan]	; B228B
 loc_B2291:
 mov dword [eax], edx	; B2291
 mov eax, 1	; B2293

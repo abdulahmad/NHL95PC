@@ -57,14 +57,14 @@ int SelectFloppyDrive(char *file, char *name)
             }
         }
         if (floppyok[0] == 0 && floppyok[1] == 0) {
-            sub_B2DCA(&s.drive, &s.y, &s.x);
+            MouseRead(&s.drive, &s.y, &s.x);
             s.result = MessageBox(-1, -1, (char *)insertfloppymsg, 1, 0, 0, (int)&s.y, (int)&s.x, -1);
         }
     } while (floppyok[0] == 0 && floppyok[1] == 0 && s.result != 4);
     floppyprobe = 0;
     if (!found && s.result != 4) {
         if (floppyok[0] != 0 && floppyok[1] != 0) {
-            sub_B2DCA(&s.drive, &s.y, &s.x);
+            MouseRead(&s.drive, &s.y, &s.x);
             str_floppydrv = MessageBox(-1, -1, (char *)whichdrivemsg, 1, (int)drivebtns, 2, (int)&s.y, (int)&s.x, -1) + 0x41;
         } else if (floppyok[0] != 0)
             str_floppydrv = 0x41;

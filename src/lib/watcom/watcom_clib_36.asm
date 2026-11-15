@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_9D4A7 progbits alloc exec nowrite align=1
-extern __unhook387, byte_D4D06, byte_D4D08, byte_D51DC, dword_D41F4, sub_9D521, sub_9D55C, word_D41F8
+extern __unhook387, _Extender, byte_D4D08, __real87, dword_D41F4, sub_9D521, sub_9D55C, word_D41F8
 extern word_D51DA
 global __sys_fini_387_emulator, loc_9D4B1, loc_9D4C9, loc_9D4E2, loc_9D4F2, loc_9D506, loc_9D516
 __sys_fini_387_emulator:
-cmp byte [byte_D51DC], 1	; 9D4A7
+cmp byte [__real87], 1	; 9D4A7
 je short loc_9D4B1	; 9D4AE
 ret	; 9D4B0
 loc_9D4B1:
 push ecx	; 9D4B1
 push ebx	; 9D4B2
 push edx	; 9D4B3
-mov al, byte [byte_D4D06]	; 9D4B4
+mov al, byte [_Extender]	; 9D4B4
 cmp byte [byte_D4D08], 0	; 9D4B9
 je short loc_9D4C9	; 9D4C0
 call sub_9D55C	; 9D4C2
@@ -47,7 +47,7 @@ cmp al, 1	; 9D50D
 je short loc_9D516	; 9D50F
 call sub_9D521	; 9D511
 loc_9D516:
-mov byte [byte_D51DC], 0	; 9D516
+mov byte [__real87], 0	; 9D516
 pop edx	; 9D51D
 pop ebx	; 9D51E
 pop ecx	; 9D51F

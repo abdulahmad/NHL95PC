@@ -34,13 +34,13 @@ extern int trace_on;
 #define TRACE(...) do { if (trace_on) fprintf(stderr, __VA_ARGS__); } while (0)
 
 /* The game's code section: traps outside it are not the game's. */
-extern char sub_10000[];
+extern char begtext_forever[];
 struct snap_region;
 /* dos.c: the regions a state of the game holds besides its data (snap.h): DOS memory in use, DPMI blocks, the tables
  * that say which are in use. Appends to r[n..]; the new count, or -1 when max is too small */
 int dos_snap_regions(struct snap_region *r, int n, int max);
 #define GAME_CODE_SIZE 0xB8000u
-#define IN_GAME_CODE(p) ((uintptr_t)(p) >= (uintptr_t)sub_10000 && (uintptr_t)(p) < (uintptr_t)sub_10000 + GAME_CODE_SIZE)
+#define IN_GAME_CODE(p) ((uintptr_t)(p) >= (uintptr_t)begtext_forever && (uintptr_t)(p) < (uintptr_t)begtext_forever + GAME_CODE_SIZE)
 
 void host_exit(int code);
 void install_overrides(void);

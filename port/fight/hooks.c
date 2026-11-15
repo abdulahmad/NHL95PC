@@ -48,10 +48,10 @@ extern short c1playernum[], c2playernum[], cont1team, cont2team, lastplayer;
 extern uint32_t gameopts;
 extern int16_t gsp, xc1, yc1;
 extern short HomeTeam, VisTeam, crowdlevel, CwdExciteLvl;
-extern uint8_t byte_DC9D8[256], byte_DC8D8[256];       /* the sprite colour remaps: home, visitors */
-extern char *penaltynames[], *off_CD354[];      /* by event type (penalty - 9): the name shown, the announcer's file */
+extern uint8_t homeremap[256], awayremap[256];       /* the sprite colour remaps: home, visitors */
+extern char *penaltynames[], *pennametab[];      /* by event type (penalty - 9): the name shown, the announcer's file */
 extern char BuildEventLines[], GameSummaryScreen[], PostPenaltyEvent[];
-extern short word_CC0B0[];                      /* the box-time count of a call (chkprogress) */
+extern short Pencntdwn2[];                      /* the box-time count of a call (chkprogress) */
 
 #define P_W(p, o) (*(int16_t *)((p) + (o)))
 #define P_B(p, o) (*(uint8_t *)((p) + (o)))
@@ -75,7 +75,7 @@ extern short word_CC0B0[];                      /* the box-time count of a call 
 
 #define PEN_ROUGHING 9                  /* Roughing: its minutes are made 5 while a fight's is waiting (93's Fighting) */
 #define PEN_INST 0xD                    /* the other Roughing (2 minutes): 93's Instigator */
-/* event types (penalty - 9) past 95 PC's 18 (penaltynames / off_CD354 are copied to longer tables): the fight's
+/* event types (penalty - 9) past 95 PC's 18 (penaltynames / pennametab are copied to longer tables): the fight's
  * penalties are called as Roughing and posted under these */
 #define EV_ROUGHING 0
 #define EV_ROUGHING2 4
@@ -477,7 +477,7 @@ static void hold_stoppage(void)
 {
     if (!whistled) return;
     if (Pencntdwn < 2) Pencntdwn = 2;
-    if (word_CC0B0[0] >= 0 && word_CC0B0[0] < 2) word_CC0B0[0] = 2;
+    if (Pencntdwn2[0] >= 0 && Pencntdwn2[0] < 2) Pencntdwn2[0] = 2;
 }
 
 /* a fighter in the box for his major does not leave his team a man short (tmpdst bit 12, as 93's coincidental
@@ -690,7 +690,7 @@ static void make_lut_for(int k, const uint8_t *p)
 {
     uint32_t dac[256], pal[64];
     int home = P_W(p, P_SCNUM) < 6, t95 = home ? HomeTeam : VisTeam, t93;
-    const uint8_t *remap = home ? byte_DC9D8 : byte_DC8D8;
+    const uint8_t *remap = home ? homeremap : awayremap;
     int v, sidx;
     if (t95 < 0 || t95 >= NTEAM95) t95 = 0;
     t93 = team93(t95);
@@ -984,13 +984,13 @@ static void install_pen_names(void)
     static const uint8_t push2c[5] = { 0x68, 0x2C, 0, 0, 0 };
     int i;
     if (memcmp(PostPenaltyEvent, push2c, 5)) return;
-    for (i = 0; i < 18; i++) { pen_names[i] = penaltynames[i]; pen_speech[i] = off_CD354[i]; }
+    for (i = 0; i < 18; i++) { pen_names[i] = penaltynames[i]; pen_speech[i] = pennametab[i]; }
     pen_names[EV_FIGHTING] = "Fighting";
     pen_names[EV_FIGHTING_W] = "Fighting *";
     pen_names[EV_INSTIGATOR] = "Instigator";
-    for (i = 18; i < NEV; i++) pen_speech[i] = off_CD354[EV_ROUGHING];   /* 95 PC has no word for these: "roughing" */
+    for (i = 18; i < NEV; i++) pen_speech[i] = pennametab[EV_ROUGHING];   /* 95 PC has no word for these: "roughing" */
     if (retarget(BuildEventLines, 0x600, penaltynames, pen_names) < 1) return;
-    if (retarget(PostPenaltyEvent, 0x400, off_CD354, pen_speech) < 1) {
+    if (retarget(PostPenaltyEvent, 0x400, pennametab, pen_speech) < 1) {
         retarget(BuildEventLines, 0x600, pen_names, penaltynames);
         return;
     }

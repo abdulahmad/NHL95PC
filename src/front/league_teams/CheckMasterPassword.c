@@ -35,7 +35,7 @@ int CheckMasterPassword(void)
             if ((leagueflags & 4) == 0) {
                 msg_MasterDB_arg = (int)s.name;
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, err);
-                sub_B2DCA(&s.btn, &s.y, &s.x);
+                MouseRead(&s.btn, &s.y, &s.x);
                 s.btn = MessageBox(-1, -1, (char *)msg_MasterDB, 4, (int)btn_MasterDB, 2,
                     (int)&s.y, (int)&s.x, -1);
                 if (!s.btn) {
@@ -48,22 +48,22 @@ int CheckMasterPassword(void)
     } while (shown);
     if (!err) {
         if (byte_DE268) {
-            sub_B392C(shown);
+            ClearScreen(shown);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x17;
-            sub_B4B88(0xF8, 1, s.rgb);
+            VgaSetPalette(0xF8, 1, s.rgb);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x2A;
-            sub_B4B88(0xF9, 1, s.rgb);
+            VgaSetPalette(0xF9, 1, s.rgb);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0x3F;
-            sub_B4B88(0xFA, 1, s.rgb);
+            VgaSetPalette(0xFA, 1, s.rgb);
         }
         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
         err = AskMasterPassword(leaguemaster, (char *)leagueteams, (char *)masterpw);
         if (byte_DE268) {
-            sub_B392C(0);
+            ClearScreen(0);
             s.rgb[2] = s.rgb[1] = s.rgb[0] = 0;
-            sub_B4B88(0xF8, 1, s.rgb);
-            sub_B4B88(0xF9, 1, s.rgb);
-            sub_B4B88(0xFA, 1, s.rgb);
+            VgaSetPalette(0xF8, 1, s.rgb);
+            VgaSetPalette(0xF9, 1, s.rgb);
+            VgaSetPalette(0xFA, 1, s.rgb);
         }
     }
     return err;

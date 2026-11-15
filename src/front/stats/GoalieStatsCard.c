@@ -44,7 +44,7 @@ void GoalieStatsCard(void)
     kaufm = kaufmfont;
     MakePath(s.path, (char *)statsleague, (char *)statsplayerdbs[statsfromleague], 0);
     fh = open(s.path, 0x200);
-    lseek(fh, !statsfromleague ? dword_DC85C : dword_DC860, 0);
+    lseek(fh, !statsfromleague ? statsfilepos : lgstatsfilepos, 0);
     read(fh, s.season, 0x36);
     j___close(fh);
     MakePath(s.path, (char *)statsleague, (char *)str_AttDb, 0);
@@ -60,19 +60,19 @@ void GoalieStatsCard(void)
     sub_B4BA8();
     sprintf((char *)printfbuf, (char *)str_fmtEmb, s.abbr);
     MakePath(s.path, fileoncd[pl[0] + 0x70] == 1 ? (char *)cddriveptr : 0, (char *)printfbuf, 0);
-    statsbgshapes = sub_8E83C(s.path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(s.path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     if (pl[0x30]) {
         *(T6 *)s.name = *(T6 *)str_PORTR2;
         memcpy(s.name + 5, pl + 0x30, 4);
         v = (((signed char *)pl)[0x31] - 0x30) * 10 + (((signed char *)pl)[0x32] - 0x30);
         s.name[8] = 0;
-        MakePath(s.path, byte_ED909[v] == 1 ? (char *)cddriveptr : 0, s.name, 0);
-        bank = sub_8E83C(s.path, 0);
+        MakePath(s.path, portraitoncd[v] == 1 ? (char *)cddriveptr : 0, s.name, 0);
+        bank = LoadBank(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
         s.name[4] = 0;
         art = sub_B30BB(bank, s.name);
@@ -81,27 +81,27 @@ void GoalieStatsCard(void)
             DrawPhotoWithPal((unsigned char *)sub_B30BB(bank, s.name) + 0x10, art, 0x21, 0x26);
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar4, 0);
-            statsbgshapes = sub_8E83C(s.path, 0);
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst12);
-            sub_913B4(statspalshape);
+            statsbgshapes = LoadBank(s.path, 0);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Pst12);
+            DrawShape(statspalshape);
         } else {
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar4, 0);
-            statsbgshapes = sub_8E83C(s.path, 0);
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst23);
-            sub_913B4(statspalshape);
+            statsbgshapes = LoadBank(s.path, 0);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Pst23);
+            DrawShape(statspalshape);
         }
         FreeMemBlock(statsbgshapes);
     } else {
         MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar4, 0);
-        statsbgshapes = sub_8E83C(s.path, 0);
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst23);
-        sub_913B4(statspalshape);
+        statsbgshapes = LoadBank(s.path, 0);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Pst23);
+        DrawShape(statspalshape);
         FreeMemBlock(statsbgshapes);
     }
     TextGridOpen();
-    sub_8E9E8(s.text);
-    sub_8EA18(kaufm);
+    TextSaveState(s.text);
+    TextSetFont(kaufm);
     SetTextColors(0x40, 0x43);
     *(T13 *)printfbuf = *(T13 *)str_PlayerStats2;
     PrintOutlinedText(0x140 - (fputchar((char *)printfbuf) >> 1), 0x52, (char *)printfbuf);
@@ -110,7 +110,7 @@ void GoalieStatsCard(void)
     PrintCenteredText(0x98, (char *)printfbuf);
     sprintf((char *)printfbuf, (char *)str_DGoalie, pl[1]);
     PrintCenteredText(0xB2, (char *)printfbuf);
-    sub_8EA18(mainf);
+    TextSetFont(mainf);
     y = 0xF3;
     PrintShadowText(0x82, (short)y, (char *)str_GP3);
     PrintShadowText(0xAA, (short)y, (char *)str_Min2);
@@ -161,10 +161,10 @@ void GoalieStatsCard(void)
             y -= (i + 1) * 0xD;
         }
         PrintShadowText((short)(x + 0x14), (short)y, (char *)goalieratingnames[i]);
-        v = (attrp[((signed char *)off_C6AD1)[i + 3]] + 5) * 5;
+        v = (attrp[((signed char *)goaliecardattrs_m3)[i + 3]] + 5) * 5;
         PrintFmt1((short)(x + 0x104), (short)y, (char *)str_fmt3d, (short)v);
         y += 0xD;
     }
-    sub_8EA00(s.text);
+    TextRestoreState(s.text);
     TextGridOff();
 }

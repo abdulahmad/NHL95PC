@@ -17,8 +17,8 @@ void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side)
     c2 = byte_D12DE;
     for (i = 0; i < 0x28; i++) {
         MakeJerseyShape(jerseyremap, nums[i], c1, c2);
-        sub_B4DD4(jerseyremap);
-        sub_931FC(art, lineslotx[i * 2], linesloty[i * 2]);
+        SetColorRemap(jerseyremap);
+        DrawArtMasked(art, lineslotx[i * 2], linesloty[i * 2]);
     }
     for (i = 0; i < 0x1C; i++) {
         if (!hmroster[side * 0x444 + gmrosterslot[i * 22] * 39]) return;
@@ -29,7 +29,7 @@ void DrawGameLineJerseys(unsigned char *nums, int art, unsigned char side)
         case 3: case 4: col = 0xC3; break;
         case 1: case 5: case 6: case 8: col = 0xC2; break;
         }
-        sub_8E9C0(col, 0xC1);
+        TextSetColors(col, 0xC1);
         sprintf(buf, (char *)str_C2dS3, gmroster[i * 22], gmrosterjersey[i * 22], gmroster + i * 22 + 3);
         PrintLineEdStatus(0x1FA, i * 13 + 0x16, buf);
     }

@@ -22,7 +22,7 @@ void LoadNhlCfg(void)
     fclose(fp);
     for (i = 0; i < 4; i++) {
         buf[2] = buf[1] = buf[0] = greyramp[i];
-        sub_B4B88(i, 1, (unsigned char *)buf);
+        VgaSetPalette(i, 1, (unsigned char *)buf);
     }
     SETMOUSEHANDLER(sub_8EB93);
     MouseSetPos(0, 0);

@@ -154,7 +154,7 @@ RefPen,C90D6,93G RefPen: penalty / animation number set by SetPA
 RefStep,C90D4,"93G RefStep: SetPA clears it; chkprogress sets it to -1 (93G st RefStep, PC byte RefStep+1)"
 pendelaytab,C9104,per penalty number: delay before stopping play (93G PenaltyList entry byte 0); checkfornewpen shifts it left 5 into Pencntdwn
 penmintab,C9123,"per penalty number: penalty minutes (93G PenaltyList entry byte 1, 0 = no time: called at once); checkfornewpen / chkprogress_go test it"
-priolist,CBC36,"93G priolist: position for the player released from the box, indexed by tmap (+1 when the goalie is pulled); releasepl"
+priolist_m1,CBC36,"priolist-1: the label sat one byte before the table (the FF pad byte); CBC37 holds 0,1,2,4,3,5,6 as 94G priolist"
 recbpr,E039C,"94G recbpr: replay record pointer (80h-byte frames); updatereplay writes through it, ReplayPrevFrame / ReplayStep compare with it"
 replaystart,C9078,pointer to the replay buffer (9600h bytes = 12Ch frames of 80h); 94G replaystart / M68K_RAM role
 replayplay,E03A4,replay play-back frame pointer (94G a4 in ReplayMode); ReplayStep moves it between replaystart and recbpr
@@ -2275,3 +2275,1810 @@ demoteammode,C5886,"RunDemoGame (15DB7): (x+1) mod 3 on every demo game picks ho
 randseed,D41C8,"Watcom rand_/srand_ state (sub_8EB21 returns its address; rand_ is the LCG x*41C64E6Dh+3039h, result (x>>16)&7FFFh; initial value 1); not the game RNG, which is StanleyCupTimer (randomd0)"
 hudhundaccum,D8C78,HUD clock accumulator: RunGameFrames adds 64h on every running frame (11504); GameLoop (11855) and the game_frame loop (69BA6) move the quotient by 18h (24 frames a second) into hudhundstep and keep the remainder
 hudhundstep,DC28C,"hundredths of a second to tick off the HUD clock and the penalty timers this pass: GameLoop sets it from hudhundaccum/18h (or the whole remaining HUD clock at game exit, 118CC); UpdateHudPanel (14D13) copies it to dword_C583C for TickPanelClock / TickPanelPenalties and clears it"
+str_Charging,C1B4A,"""Charging"" string literal"
+str_Slashing,C1B53,"""Slashing"" string literal"
+str_CrossChecking,C1B5C,"""CrossChecking"" string literal"
+str_Hooking,C1B6A,"""Hooking"" string literal"
+str_Tripping,C1B72,"""Tripping"" string literal"
+str_Interference,C1B7B,"""Interference"" string literal"
+str_Holding,C1B88,"""Holding"" string literal"
+str_HighSticking,C1B90,"""HighSticking"" string literal"
+str_Boarding,C1B9D,"""Boarding"" string literal"
+str_Elbowing,C1BA6,"""Elbowing"" string literal"
+str_AbuseOfOfficial,C1BAF,"""Abuse of Official"" string literal"
+str_CheckingFromBehind,C1BC1,"""Checking from Behind"" string literal"
+str_PenaltyShot2,C1BD6,"""Penalty Shot"" string literal"
+str_Roughing,C1BE3,"""roughing"" string literal"
+str_Charging2,C1BEC,"""charging"" string literal"
+str_Slashing2,C1BF5,"""slashing"" string literal"
+str_Xcheck,C1BFE,"""xcheck"" string literal"
+str_Hooking2,C1C05,"""hooking"" string literal"
+str_Tripping2,C1C0D,"""tripping"" string literal"
+str_Interfer,C1C16,"""interfer"" string literal"
+str_Holding2,C1C1F,"""holding"" string literal"
+str_Histick,C1C27,"""histick"" string literal"
+str_Boarding2,C1C2F,"""boarding"" string literal"
+str_Elbowing2,C1C38,"""elbowing"" string literal"
+str_Abuse,C1C41,"""abuse"" string literal"
+str_Checkbnd,C1C47,"""checkbnd"" string literal"
+str_Penshot,C1C50,"""penshot"" string literal"
+str_Gready,C1DDC,"""gready"" string literal"
+str_Gready2,C1DE3,"""gready2"" string literal"
+str_Gglover,C1DEB,"""gglover"" string literal"
+str_Gglovel,C1DF3,"""gglovel"" string literal"
+str_Gglovel2,C1DFB,"""gglovel2"" string literal"
+str_Gstickr,C1E04,"""gstickr"" string literal"
+str_Gstickl,C1E0C,"""gstickl"" string literal"
+str_Gstackr,C1E14,"""gstackr"" string literal"
+str_Gstackl,C1E1C,"""gstackl"" string literal"
+str_Gdive,C1E24,"""gdive"" string literal"
+str_Gswing,C1E2A,"""gswing"" string literal"
+str_Gskate,C1E31,"""gskate"" string literal"
+str_Pflip,C1E38,"""pflip"" string literal"
+str_Glide,C1E3E,"""glide"" string literal"
+str_Skatewp,C1E44,"""skatewp"" string literal"
+str_Skate,C1E4C,"""skate"" string literal"
+str_Turnl,C1E52,"""turnl"" string literal"
+str_Turnr,C1E58,"""turnr"" string literal"
+str_Stop,C1E5E,"""stop"" string literal"
+str_Passf,C1E63,"""passf"" string literal"
+str_Passb,C1E69,"""passb"" string literal"
+str_Shotf,C1E6F,"""shotf"" string literal"
+str_Shotb,C1E75,"""shotb"" string literal"
+str_Glideback,C1E7B,"""glideback"" string literal"
+str_Skateback,C1E85,"""skateback"" string literal"
+str_Sweepchk,C1E8F,"""sweepchk"" string literal"
+str_Shoulderchkl,C1E98,"""shoulderchkl"" string literal"
+str_Shoulderchkr,C1EA5,"""shoulderchkr"" string literal"
+str_Hipchkl,C1EB2,"""hipchkl"" string literal"
+str_Hipchkr,C1EBA,"""hipchkr"" string literal"
+str_Burst,C1EC2,"""burst"" string literal"
+str_Hold,C1EC8,"""hold"" string literal"
+str_Hold2,C1ECD,"""hold2"" string literal"
+str_Flail,C1ED3,"""flail"" string literal"
+str_Fallfwd,C1ED9,"""fallfwd"" string literal"
+str_Fallback,C1EE1,"""fallback"" string literal"
+str_Celebrate,C1EEA,"""celebrate"" string literal"
+str_Pump,C1EF4,"""pump"" string literal"
+str_Wallright,C1EF9,"""wallright"" string literal"
+str_Wallleft,C1F03,"""wallleft"" string literal"
+str_Faceoff,C1F0C,"""faceoff"" string literal"
+str_Faceoffr,C1F14,"""faceoffr"" string literal"
+str_Siren,C1F1D,"""siren"" string literal"
+str_Bglass,C1F23,"""bglass"" string literal"
+str_Stanley2,C1F2A,"""stanley"" string literal"
+str_Catch,C1F32,"""catch"" string literal"
+str_Hook,C1F38,"""hook"" string literal"
+str_Hook2,C1F3D,"""hook2"" string literal"
+str_Stumble,C1F43,"""stumble"" string literal"
+str_Fake,C1F4B,"""fake"" string literal"
+str_Flip,C1F50,"""flip"" string literal"
+str_Injury1,C1F55,"""injury1"" string literal"
+str_Refglide,C1F5D,"""refglide"" string literal"
+str_Refskate,C1F66,"""refskate"" string literal"
+str_Refturnl,C1F6F,"""refturnl"" string literal"
+str_Refturnr,C1F78,"""refturnr"" string literal"
+str_Refstop,C1F81,"""refstop"" string literal"
+str_Reffallback,C1F89,"""reffallback"" string literal"
+str_Armupglide,C1F95,"""armupglide"" string literal"
+str_Armupskate,C1FA0,"""armupskate"" string literal"
+str_Armupturnl,C1FAB,"""armupturnl"" string literal"
+str_Armupturnr,C1FB6,"""armupturnr"" string literal"
+str_Armupstop,C1FC1,"""armupstop"" string literal"
+str_Refpickup,C1FCB,"""refpickup"" string literal"
+str_Refpointgoa,C1FD5,"""refpointgoa"" string literal"
+str_Refdrop,C1FE1,"""refdrop"" string literal"
+str_Reffowait,C1FE9,"""reffowait"" string literal"
+str_Refrough,C1FF3,"""refrough"" string literal"
+str_Refcharge,C1FFC,"""refcharge"" string literal"
+str_Refslash,C2006,"""refslash"" string literal"
+str_Refxcheck,C200F,"""refxcheck"" string literal"
+str_Refhook,C2019,"""refhook"" string literal"
+str_Reftrip,C2021,"""reftrip"" string literal"
+str_Refinterfer,C2029,"""refinterfer"" string literal"
+str_Refhold,C2035,"""refhold"" string literal"
+str_Refabuseoff,C203D,"""refabuseoff"" string literal"
+str_Refbehind,C2049,"""refbehind"" string literal"
+str_Faceoffpoke,C2053,"""faceoffpoke"" string literal"
+str_Gwallright,C205F,"""gwallright"" string literal"
+str_Gwallleft,C206A,"""gwallleft"" string literal"
+str_Anthem1,C2074,"""anthem1"" string literal"
+str_Anthem2,C207C,"""anthem2"" string literal"
+str_Anthem3,C2084,"""anthem3"" string literal"
+str_Anthem4,C208C,"""anthem4"" string literal"
+str_Anthem5,C2094,"""anthem5"" string literal"
+str_Drink,C209C,"""drink"" string literal"
+str_Refanthem1,C20A2,"""refanthem1"" string literal"
+str_Refanthem2,C20AD,"""refanthem2"" string literal"
+str_Onetimef,C20B8,"""onetimef"" string literal"
+str_Onetimeb,C20C1,"""onetimeb"" string literal"
+str_Getcup,C20CA,"""getcup"" string literal"
+str_Brcup,C20D1,"""brcup"" string literal"
+str_Gvcup,C20D7,"""gvcup"" string literal"
+str_Clap,C20DD,"""clap"" string literal"
+str_Stansk,C20E2,"""stansk"" string literal"
+str_Crosscheck,C20E9,"""crosscheck"" string literal"
+str_Boardback,C20F4,"""boardback"" string literal"
+str_Boardfront,C20FE,"""boardfront"" string literal"
+str_Boardright,C2109,"""boardright"" string literal"
+str_Boardleft,C2114,"""boardleft"" string literal"
+str_Benchcheckr,C211E,"""benchcheckr"" string literal"
+str_Benchcheckl,C212A,"""benchcheckl"" string literal"
+str_Refpenshot,C2136,"""refpenshot"" string literal"
+str_Goaliepoke,C2141,"""goaliepoke"" string literal"
+str_Goalieknee,C214C,"""goalieknee"" string literal"
+str_Gokneehold,C2157,"""gokneehold"" string literal"
+str_Gofallback,C2162,"""gofallback"" string literal"
+str_Gofallglove,C216D,"""gofallglove"" string literal"
+str_Gofallstick,C2179,"""gofallstick"" string literal"
+str_Fakeshotf,C2185,"""fakeshotf"" string literal"
+str_Fakeshotb,C218F,"""fakeshotb"" string literal"
+str_Fakeonetimef,C2199,"""fakeonetimef"" string literal"
+str_Fakeonetimeb,C21A6,"""fakeonetimeb"" string literal"
+str_Blockleft,C21B3,"""blockleft"" string literal"
+str_Blockright,C21BD,"""blockright"" string literal"
+str_Blockfront,C21C8,"""blockfront"" string literal"
+str_Blockknee,C21D3,"""blockknee"" string literal"
+str_Refelbow,C21DD,"""refelbow"" string literal"
+str_Refhistick,C21E6,"""refhistick"" string literal"
+str_ERROR,C21F1,"""ERROR"" string literal"
+str_Null,C21F7,"""null"" string literal"
+str_Defo,C21FC,"""defo"" string literal"
+str_Defd,C2201,"""defd"" string literal"
+str_Wingd,C2206,"""wingd"" string literal"
+str_Wingo,C220C,"""wingo"" string literal"
+str_Centd,C2212,"""centd"" string literal"
+str_Cento,C2218,"""cento"" string literal"
+str_Score,C221E,"""score"" string literal"
+str_Stan,C2224,"""stan"" string literal"
+str_Exben,C2229,"""exben"" string literal"
+str_Expen,C222F,"""expen"" string literal"
+str_Bench,C2235,"""bench"" string literal"
+str_Dopen,C223F,"""dopen"" string literal"
+str_Goalie2,C2245,"""goalie"" string literal"
+str_Goalieget,C224C,"""goalieget"" string literal"
+str_Puckc,C2256,"""puckc"" string literal"
+str_Nearest,C225C,"""nearest"" string literal"
+str_Shoot,C2264,"""shoot"" string literal"
+str_Passrec,C226A,"""passrec"" string literal"
+str_3star,C2272,"""3star"" string literal"
+str_R3star,C2278,"""r3star"" string literal"
+str_Fowait,C227F,"""fowait"" string literal"
+str_Pnorm,C2286,"""pnorm"" string literal"
+str_Pshad,C228C,"""pshad"" string literal"
+str_Pnothing,C2292,"""pnothing"" string literal"
+str_Pface,C229B,"""pface"" string literal"
+str_Pface2,C22A1,"""pface2"" string literal"
+str_Gamemiscon,C22A8,"""gamemiscon"" string literal"
+str_Rfaceoff,C22B3,"""rfaceoff"" string literal"
+str_Rnorm,C22BC,"""rnorm"" string literal"
+str_Rcallpen,C22C2,"""rcallpen"" string literal"
+str_Rpickup,C22CB,"""rpickup"" string literal"
+str_Rgotofo,C22D3,"""rgotofo"" string literal"
+str_Rpointgoal,C22DB,"""rpointgoal"" string literal"
+str_Rgetnew,C22E6,"""rgetnew"" string literal"
+str_Anth,C22EE,"""anth"" string literal"
+str_Ranth,C22F3,"""ranth"" string literal"
+str_Agotofo,C22F9,"""agotofo"" string literal"
+str_Benwait,C2301,"""benwait"" string literal"
+str_Initper,C2309,"""initper"" string literal"
+str_Pgivecup,C2311,"""pgivecup"" string literal"
+str_Rpenshot,C231A,"""rpenshot"" string literal"
+str_Apswait,C2323,"""apswait"" string literal"
+str_Abreak,C232B,"""abreak"" string literal"
+str_Error2,C2332,"""error"" string literal"
+str_LD,C233A,"""LD"" string literal"
+str_RD2,C233D,"""RD"" string literal"
+str_LW,C2340,"""LW"" string literal"
+str_RW,C2345,"""RW"" string literal"
+str_XC,C2348,"""XC"" string literal"
+str_Hart,C0243,"""Hart"" string literal"
+str_ArtRoss2,C0248,"""Art Ross"" string literal"
+str_Norris,C0251,"""Norris"" string literal"
+str_Selke,C0258,"""Selke"" string literal"
+str_Vezina,C025E,"""Vezina"" string literal"
+str_Jennings,C0265,"""Jennings"" string literal"
+str_Calder,C026E,"""Calder"" string literal"
+str_Presidents,C0275,"""Presidents"" string literal"
+str_ConnSmythe,C0280,"""Conn Smythe"" string literal"
+str_EASportsCup,C028C,"""EA Sports Cup"" string literal"
+str_MostValuablePlayer,C02A7,"""Most Valuable Player"" string literal"
+str_PointsLeader,C02BC,"""Points Leader"" string literal"
+str_RegularSeason,C02CA,"""Regular Season"" string literal"
+str_BestDefenseman,C02D9,"""Best Defenseman"" string literal"
+str_BestDefensiveForward,C02E9,"""Best Defensive Forward"" string literal"
+str_BestGoalkeeper,C0300,"""Best Goalkeeper"" string literal"
+str_BestGoalsAgainstAverage,C0310,"""Best Goals Against Average"" string literal"
+str_BestRookie,C032B,"""Best Rookie"" string literal"
+str_BestRegularSeasonRecord,C0337,"""Best Regular Season Record"" string literal"
+str_InThePlayoffs,C0352,"""in the Playoffs"" string literal"
+str_Most3StarSelections,C0362,"""Most 3 Star Selections"" string literal"
+str_Season2,C0390,"""Season"" string literal"
+str_Playoff2,C0397,"""Playoff"" string literal"
+str_OT2,C06F3,"""OT  "" string literal"
+str_BOS,C06F8,"""BOS "" string literal"
+str_BUF3,C06FD,"""BUF "" string literal"
+str_CGY,C0702,"""CGY "" string literal"
+str_CHI,C0707,"""CHI "" string literal"
+str_DET,C070C,"""DET "" string literal"
+str_EDM,C0711,"""EDM "" string literal"
+str_HFD,C0716,"""HFD "" string literal"
+str_LA,C071B,"""LA  "" string literal"
+str_DAL,C0720,"""DAL "" string literal"
+str_MTL,C0725,"""MTL "" string literal"
+str_NJ,C072A,"""NJ  "" string literal"
+str_NYI,C072F,"""NYI "" string literal"
+str_NYR,C0734,"""NYR "" string literal"
+str_OTT,C0739,"""OTT "" string literal"
+str_PHI,C073E,"""PHI "" string literal"
+str_PIT,C0743,"""PIT "" string literal"
+str_QUE,C0748,"""QUE "" string literal"
+str_STL,C074D,"""STL "" string literal"
+str_SJ,C0752,"""SJ  "" string literal"
+str_TB,C0757,"""TB  "" string literal"
+str_TOR,C075C,"""TOR "" string literal"
+str_VAN,C0761,"""VAN "" string literal"
+str_WSH,C0766,"""WSH "" string literal"
+str_WPG,C076B,"""WPG "" string literal"
+str_ANA3,C0770,"""ANA "" string literal"
+str_FLA,C0775,"""FLA "" string literal"
+str_ASW,C077A,"""ASW "" string literal"
+str_ASE,C077F,"""ASE "" string literal"
+str_Credit19,C07A6,"""credit19"" string literal"
+str_Credit10,C07AF,"""credit10"" string literal"
+str_Credit09,C07B8,"""credit09"" string literal"
+str_Credit17,C07C1,"""credit17"" string literal"
+str_Credit01,C07CA,"""credit01"" string literal"
+str_Credit15,C07D3,"""credit15"" string literal"
+str_Credit12,C07DC,"""credit12"" string literal"
+str_Credit08,C07E5,"""credit08"" string literal"
+str_Credit02,C07EE,"""credit02"" string literal"
+str_Credit11,C07F7,"""credit11"" string literal"
+str_Credit05,C0800,"""credit05"" string literal"
+str_Credit06,C0809,"""credit06"" string literal"
+str_Credit07,C0812,"""credit07"" string literal"
+str_Credit18,C081B,"""credit18"" string literal"
+str_Credit14,C0824,"""credit14"" string literal"
+str_Credit13,C082D,"""credit13"" string literal"
+str_Credit16,C0836,"""credit16"" string literal"
+str_Credit00,C083F,"""credit00"" string literal"
+str_Credit04,C0848,"""credit04"" string literal"
+str_Credit03,C0851,"""credit03"" string literal"
+str_PacificDivision,C0B68,"""Pacific Division"" string literal"
+str_CentralDivision,C0B79,"""Central Division"" string literal"
+str_NortheastDivision,C0B8A,"""Northeast Division"" string literal"
+str_AtlanticDivision,C0B9D,"""Atlantic Division"" string literal"
+str_Season3,C0BAF,"""Season:"" string literal"
+str_Playoff3,C0BB7,"""Playoff:"" string literal"
+str_RegSeason,C0BC0,"""reg. season"" string literal"
+str_Playoff4,C0BCC,"""playoff    "" string literal"
+str_Actual,C0BD8,"""actual     "" string literal"
+str_Accumulated,C0BE4,"""accumulated"" string literal"
+str_Speed,C0CB0,"""Speed"" string literal"
+str_Agility,C0CB6,"""Agility"" string literal"
+str_Weight,C0CBE,"""Weight"" string literal"
+str_ShotPower,C0CC5,"""Shot Power"" string literal"
+str_Checking2,C0CD0,"""Checking"" string literal"
+str_StickHandling,C0CD9,"""StickHandling"" string literal"
+str_Accuracy,C0CE7,"""Accuracy"" string literal"
+str_Passing2,C0CF0,"""Passing"" string literal"
+str_OffensiveAwareness,C0CF8,"""Offensive Awareness"" string literal"
+str_DefensiveAwareness,C0D0C,"""Defensive Awareness"" string literal"
+str_Aggressiveness,C0D20,"""Aggressiveness"" string literal"
+str_Endurance,C0D2F,"""Endurance"" string literal"
+str_ShootPassBias,C0D39,"""Shoot/Pass Bias"" string literal"
+str_Faceoffs,C0D49,"""Faceoffs"" string literal"
+str_GloveLeft,C0DEC,"""Glove Left"" string literal"
+str_GloveRight,C0DF7,"""Glove Right"" string literal"
+str_StickLeft,C0E03,"""Stick Left"" string literal"
+str_StickRight,C0E0E,"""Stick Right"" string literal"
+str_PuckControl,C0E1A,"""Puck Control"" string literal"
+str_Speed2,C0E27,"""Speed"" string literal"
+str_Agility2,C0E2D,"""Agility"" string literal"
+str_Weight2,C0E35,"""Weight"" string literal"
+str_OffensiveAwareness2,C0E3C,"""Offensive Awareness"" string literal"
+str_DefensiveAwareness2,C0E50,"""Defensive Awareness"" string literal"
+str_WesternConference3,C0EE0,"""Western Conference"" string literal"
+str_EasternConference3,C0EF3,"""Eastern Conference"" string literal"
+str_TeamScoring,C0F06,""" Team Scoring"" string literal"
+str_TeamDefense,C0F14,""" Team Defense"" string literal"
+str_TeamPenaltyKilling,C0F22,""" Team Penalty Killing"" string literal"
+str_TeamPowerPlay,C0F38,""" Team Power Play"" string literal"
+str_TeamPenalties,C0F49,""" Team Penalties"" string literal"
+str_TeamStandings,C0F59,""" Team Standings"" string literal"
+str_GF2,C0F72,""" GF"" string literal"
+str_GA4,C0F76,""" GA"" string literal"
+str_TSH,C0F7A,"""TSH"" string literal"
+str_PPGA,C0F7E,"""PPGA"" string literal"
+str_PCT5,C0F83,"""  PCT"" string literal"
+str_ADV,C0F8A,"""ADV"" string literal"
+str_PPG3,C0F8E,"""PPG"" string literal"
+str_PIM5,C0F92,""" PIM"" string literal"
+str_AVG,C0F97,"""  AVG"" string literal"
+str_PTS,C0F9D,"""PTS"" string literal"
+str_WINS,C0FA1,"""WINS"" string literal"
+str_PointLeaders,C10CC,""" Point Leaders"" string literal"
+str_GoalLeaders,C10DB,""" Goal Leaders"" string literal"
+str_AssistLeaders,C10E9,""" Assist Leaders"" string literal"
+str_PowerPlayGoalLeaders,C10F9,""" Power Play Goal Leaders"" string literal"
+str_ShorthandedGoalLeaders,C1112,""" Shorthanded Goal Leaders"" string literal"
+str_PlusMinusLeaders,C112C,""" Plus/Minus Leaders"" string literal"
+str_PenaltyMinuteLeaders,C1140,""" Penalty Minute Leaders"" string literal"
+str_ShootingPercentageLeaders,C1158,""" Shooting Percentage Leaders"" string literal"
+str_GoalsAgainstAverageLeaders,C1175,""" Goals Against Average Leaders"" string literal"
+str_GoaltenderWinLeaders,C1194,""" Goaltender Win Leaders"" string literal"
+str_SavePercentageLeaders,C11AC,""" Save Percentage Leaders"" string literal"
+str_Pt3,C11CD,""" Pt"" string literal"
+str_PP2,C11D2,"""PP"" string literal"
+str_SHG3,C11D5,"""SHG"" string literal"
+str_PIM6,C11DE,"""PIM"" string literal"
+str_Shots5,C11E2,"""Shots"" string literal"
+str_Pct6,C11E8,"""  Pct"" string literal"
+str_MIN5,C11EE,""" MIN"" string literal"
+str_GA5,C11F3,""" GA"" string literal"
+str_AVG2,C11F7,"""  AVG"" string literal"
+str_SA4,C1206,"""  SA"" string literal"
+str_PCT7,C120B,"""  PCT"" string literal"
+str_LSSCEDDB,C126C,"""LSSCED.DB"" string literal"
+str_SCHEDULEDB3,C1276,"""SCHEDULE.DB"" string literal"
+str_Fanom,C1AE0,"""fanom"" string literal"
+str_Goal,C1AE6,"""goal"" string literal"
+str_Clap2,C1AEB,"""clap"" string literal"
+str_Uflag,C1AF0,"""uflag"" string literal"
+str_Cflag,C1AF6,"""cflag"" string literal"
+str_Siren2,C1AFC,"""siren"" string literal"
+str_Ruff,C1B02,"""ruff"" string literal"
+str_Hook3,C1B07,"""hook"" string literal"
+str_Saved2,C1B0C,"""saved"" string literal"
+str_Cross,C1B12,"""cross"" string literal"
+str_Guilt,C1B18,"""guilt"" string literal"
+str_ANA4,C34D0,"""ANA"" string literal"
+str_BOS2,C34D4,"""BOS"" string literal"
+str_BUF4,C34D8,"""BUF"" string literal"
+str_CGY2,C34DC,"""CGY"" string literal"
+str_CHI2,C34E0,"""CHI"" string literal"
+str_DAL2,C34E4,"""DAL"" string literal"
+str_DET2,C34E8,"""DET"" string literal"
+str_EDM2,C34EC,"""EDM"" string literal"
+str_FLA2,C34F0,"""FLA"" string literal"
+str_HFD2,C34F4,"""HFD"" string literal"
+str_LA2,C34F8,"""LA"" string literal"
+str_MTL2,C34FB,"""MTL"" string literal"
+str_NJ2,C34FF,"""NJ"" string literal"
+str_NYI2,C3502,"""NYI"" string literal"
+str_NYR2,C3506,"""NYR"" string literal"
+str_OTT2,C350A,"""OTT"" string literal"
+str_PHI2,C350E,"""PHI"" string literal"
+str_PIT2,C3512,"""PIT"" string literal"
+str_QUE2,C3516,"""QUE"" string literal"
+str_STL2,C351A,"""STL"" string literal"
+str_SJ2,C351E,"""SJ"" string literal"
+str_TB2,C3521,"""TB"" string literal"
+str_TOR2,C3524,"""TOR"" string literal"
+str_VAN2,C3528,"""VAN"" string literal"
+str_WSH2,C352C,"""WSH"" string literal"
+str_WPG2,C3530,"""WPG"" string literal"
+str_ASW2,C3534,"""ASW"" string literal"
+str_ASE2,C3538,"""ASE"" string literal"
+str_WesternConferenceQuarter,C353C,"""Western Conference Quarter-Finals"" string literal"
+str_EasternConferenceQuarter,C355E,"""Eastern Conference Quarter-Finals"" string literal"
+str_RoughingPen,C36D4,"""roughing.pen"" string literal"
+str_ChargingPen,C36E1,"""charging.pen"" string literal"
+str_SlashingPen,C36EE,"""slashing.pen"" string literal"
+str_XcheckPen,C36FB,"""xcheck.pen"" string literal"
+str_HookingPen,C3706,"""hooking.pen"" string literal"
+str_TrippingPen,C3712,"""tripping.pen"" string literal"
+str_InterferPen,C371F,"""interfer.pen"" string literal"
+str_HoldingPen,C372C,"""holding.pen"" string literal"
+str_AbusePen,C3738,"""abuse.pen"" string literal"
+str_CheckbndPen,C3742,"""checkbnd.pen"" string literal"
+str_BoardingPen,C374F,"""boarding.pen"" string literal"
+str_ElbowingPen,C375C,"""elbowing.pen"" string literal"
+str_HistickPen,C3769,"""histick.pen"" string literal"
+str_SpearingPen,C3775,"""spearing.pen"" string literal"
+str_OfFreeDiskSpace,C56A1,"""of free disk space."" string literal"
+str_OfficiallyLicensed,C588F,"""Officially Licensed"" string literal"
+str_ProductOfThe,C58A3,"""Product of the"" string literal"
+str_NationalHockeyLeague,C58B2,"""National Hockey League."" string literal"
+str_NationalHockeyLeagueNHL,C58CA,"""National Hockey League, NHL and"" string literal"
+str_TheLogoOfThe,C58EA,"""the logo of the NHL are registered"" string literal"
+str_TrademarksOfTheNational,C590D,"""trademarks of the National Hockey"" string literal"
+str_LeagueAndAreUsed,C592F,"""League and are used under license"" string literal"
+str_TrademarkOfTheNational,C59B3,"""Trademark of the National Hockey"" string literal"
+str_LeagueAndIsUsed,C59D4,"""League and is used under licence"" string literal"
+str_ByElectronicArtsInc,C59F5,"""by Electronic Arts Inc."" string literal"
+str_TeamNamesAndLogos,C5A0D,"""Team Names and logos depicted"" string literal"
+str_AreOfficiallyLicensed,C5A2B,"""are Officially Licensed Trademarks"" string literal"
+str_OfTheNationalHockey,C5A4E,"""of the National Hockey League"" string literal"
+str_OfficiallyLicensedProductOf,C5AA5,"""Officially Licensed Product of the"" string literal"
+str_NationalHockeyLeaguePlayers,C5AC8,"""National Hockey League Players'"" string literal"
+str_Association,C5AE8,"""Association."" string literal"
+str_NHLPANationalHockeyLeague,C5AF5,"""NHLPA, National Hockey League"" string literal"
+str_PlayersAssociationAndThe,C5B13,"""Players' Association and the logo"" string literal"
+str_OfTheNHLPAAre,C5B35,"""of the NHLPA are Trademarks of"" string literal"
+str_TheNHLPAAndAre,C5B54,"""the NHLPA and are used, under"" string literal"
+str_LicenseByElectronicArts,C5B72,"""license, by Electronic Arts Inc."" string literal"
+str_EASportsTheEA,C5BC0,"""EA Sports, the EA Sports Logo, and"" string literal"
+str_IfItSIn,C5BE3,"""""If it's in the game, it's in the game"""" string literal"
+str_AreTrademarksOfElectronic,C5C0B,"""are trademarks of Electronic Arts, Inc."" string literal"
+str_ThisHasBeenA,C5C48,"""This has been a presentation by"" string literal"
+str_ThePIONEERPRODUCTIONSGroup,C5C68,"""the PIONEER PRODUCTIONS group of"" string literal"
+str_ElectronicArtsCanada,C5C89,"""Electronic Arts Canada."" string literal"
+str_OriginalGameConcept,C5CB6,"""Original Game Concept:"" string literal"
+str_JimSimmons,C5CCD,"""Jim Simmons"" string literal"
+str_ScottOrr,C5CD9,"""Scott Orr"" string literal"
+str_RichardHilleman,C5CE3,"""Richard Hilleman"" string literal"
+str_OriginalPCVersionGame,C5D11,"""Original PC Version Game Design:"" string literal"
+str_DaveWarfield,C5D32,"""Dave Warfield"" string literal"
+str_RichardHilleman2,C5D40,"""Richard Hilleman"" string literal"
+str_LanceWall,C5D6A,"""Lance Wall"" string literal"
+str_LeadProgrammer,C5D75,"""Lead Programmer"" string literal"
+str_VictoriaWong,C5D9A,"""Victoria Wong"" string literal"
+str_Programmer,C5DA8,"""Programmer"" string literal"
+str_RobertPenner,C5DC8,"""Robert Penner"" string literal"
+str_Programmer2,C5DD6,"""Programmer"" string literal"
+str_KurtKennett,C5DF6,"""Kurt Kennett"" string literal"
+str_Programmer3,C5E03,"""Programmer"" string literal"
+str_GerardDeSouza,C5E23,"""Gerard DeSouza"" string literal"
+str_Artist,C5E32,"""Artist"" string literal"
+str_PhilChow,C5E4E,"""Phil Chow"" string literal"
+str_Artist2,C5E58,"""Artist"" string literal"
+str_KentMaclagan,C5E74,"""Kent Maclagan"" string literal"
+str_Artist3DAnimations,C5E82,"""Artist / 3D Animations"" string literal"
+str_MichaelJSokyrka,C5EAE,"""Michael J. Sokyrka"" string literal"
+str_Composer,C5EC1,"""Composer"" string literal"
+str_AlanStewart,C5EDF,"""Alan Stewart"" string literal"
+str_AudioProgrammer,C5EEC,"""Audio Programmer"" string literal"
+str_IainMacanulty,C5F12,"""Iain Macanulty"" string literal"
+str_AudioProgrammer2,C5F21,"""Audio Programmer"" string literal"
+str_SerenaMcCabe,C5F47,"""Serena McCabe"" string literal"
+str_AdministrativeAssistant,C5F55,"""Administrative Assistant"" string literal"
+str_RodHigo,C5F83,"""Rod Higo"" string literal"
+str_LeadTester,C5F8C,"""Lead Tester"" string literal"
+str_RichardRadarMul,C5FAD,"""Richard (Radar) Mul"" string literal"
+str_AssistantProducer,C5FC1,"""Assistant Producer"" string literal"
+str_FosterHall,C5FE9,"""Foster Hall"" string literal"
+str_DirectorOfDevelopment,C5FF5,"""Director of Development"" string literal"
+str_KenSayler,C6022,"""Ken Sayler"" string literal"
+str_ProducerDesign,C602D,"""Producer & Design"" string literal"
+str_HannoLemke,C6054,"""Hanno Lemke"" string literal"
+str_Producer,C6060,"""Producer"" string literal"
+str_Testers,C607E,"""Testers:"" string literal"
+str_PaulSmith,C6087,"""Paul Smith"" string literal"
+str_JohnBrydon,C6092,"""John Brydon"" string literal"
+str_TonyLam,C609E,"""Tony Lam"" string literal"
+str_DavidLee,C60A7,"""David Lee"" string literal"
+str_QASupport,C60B1,"""QA Support:"" string literal"
+str_JonBruce,C60BD,"""Jon Bruce"" string literal"
+str_JohnSantamaria,C60C7,"""John Santamaria"" string literal"
+str_RosterVerification,C6110,"""Roster Verification:"" string literal"
+str_DaveWarfield2,C6125,"""Dave Warfield"" string literal"
+str_JohnBrydon2,C6133,"""John Brydon"" string literal"
+str_ProductManager,C613F,"""Product Manager:"" string literal"
+str_ChipLange,C6150,"""Chip Lange"" string literal"
+str_RatingsByJohnRosasco,C615B,"""Ratings by John Rosasco"" string literal"
+str_AndNeilSmithOf,C6173,"""and Neil Smith of the"" string literal"
+str_NewYorkRangers,C6189,"""New York Rangers"" string literal"
+str_AudioTechnician,C61CB,"""Audio Technician:"" string literal"
+str_SteveRoyea,C61DD,"""Steve Royea"" string literal"
+str_AudioProgrammers,C61E9,"""Audio Programmers:"" string literal"
+str_PaulChernikhowsky,C61FC,"""Paul Chernikhowsky"" string literal"
+str_JasonLeeSteere,C620F,"""Jason Lee-Steere"" string literal"
+str_AdvancedGravis,C6220,"""(Advanced Gravis)"" string literal"
+str_SportsDeskAnnouncer,C6263,"""SportsDesk Announcer:"" string literal"
+str_MichaelDonovan,C6279,"""Michael Donovan"" string literal"
+str_RinkAnnouncer,C6289,"""Rink Announcer:"" string literal"
+str_BruceJamieson,C6299,"""Bruce Jamieson"" string literal"
+str_PlayerProfilePhotographs,C62A8,"""Player Profile Photographs:"" string literal"
+str_SteveBabineau,C62C4,"""Steve Babineau"" string literal"
+str_VideoProvidedBy,C62FC,"""Video Provided By:"" string literal"
+str_NHLProductions,C630F,"""NHL Productions"" string literal"
+str_SpecialThanks,C631F,"""Special Thanks:"" string literal"
+str_ScottJackson,C632F,"""Scott Jackson"" string literal"
+str_CatherineOBrien,C633D,"""Catherine O'Brien"" string literal"
+str_DougReid,C634F,"""Doug Reid"" string literal"
+str_MottLinn,C6359,"""Mott Linn"" string literal"
+str_TheFileYouSpecified,C6440,"""The file you specified already exists!"" string literal"
+str_DoYouWantTo,C6467,"""Do you want to overwrite the old file?"" string literal"
+str_No3,C6496,"""No"" string literal"
+str_TheStatsWereSuccessfully,C64D1,"""The stats were successfully written"" string literal"
+str_ERROROutputFileWas,C64F9,"""ERROR : Output file was not successfully written"" string literal"
+str_InsufficientDiskSpaceTo,C652E,"""Insufficient disk space to print"" string literal"
+str_TheDisplayedStatisticsTo,C654F,"""the displayed statistics to, you"" string literal"
+str_MayLoseThisGame,C665D,"""may lose this game's data."" string literal"
+str_ConfirmDeletionOfThe,C7088,"""Confirm Deletion of the"" string literal"
+str_Yes,C744C,"""Yes"" string literal"
+str_No4,C7450,"""No"" string literal"
+str_AllTheTeamsAre,C74EF,"""All the teams are already human"" string literal"
+str_ThatNameHasAlready,C7571,"""That name has already been used!"" string literal"
+str_DiskError,C7596,"""Disk Error"" string literal"
+str_AbortRetryOrIgnore,C75A1,"""Abort, Retry or Ignore"" string literal"
+str_ThatFloppyDiskIs,C75C0,"""That floppy disk is not for"" string literal"
+str_InsertDiskFor,C75DC,"""Insert disk for"" string literal"
+str_InAnyDriveAnd,C75EC,"""in any drive and"" string literal"
+str_PressAKey,C75FD,"""press a key"" string literal"
+str_ThatDiskIsFor,C7621,"""That disk is for"" string literal"
+str_AreYouSureYou2,C7644,"""Are you sure you want to overwrite it?"" string literal"
+str_ThereAreNoLeagues,C76BA,"""There are no leagues!"" string literal"
+str_ThereIsAlreadyA,C76D4,"""There is already a league with that name!"" string literal"
+str_DoYouWantTo2,C76FE,"""Do you want to replace it with a new league?"" string literal"
+str_PutDiskWithLeague,C78D8,"""Put disk with league to"" string literal"
+str_ImportInAnyDrive,C78F0,"""import in any drive."" string literal"
+str_ErrorWhileImportingLeague,C790D,"""Error while importing league!"" string literal"
+str_ErrorWhileExportingLeague,C792F,"""Error while exporting league!"" string literal"
+str_IncorrectPassword,C7951,"""Incorrect password!"" string literal"
+str_HasNotBeenImported,C7986,"""has not been imported for"" string literal"
+str_DoYouWantTo3,C79A0,"""Do you want to force an export?"" string literal"
+str_TheLeague2,C7AF4,"""The league"" string literal"
+str_AlreadyExistsFor,C7AFF,"""already exists for"" string literal"
+str_HasNotBeenExported,C7B22,"""has not been exported for the league"" string literal"
+str_IsInASave,C7B53,"""is in a save game in the league"" string literal"
+str_AndCanNotBe,C7B73,"""and can not be imported until"" string literal"
+str_TheGameIsFinished,C7B91,"""the game is finished!"" string literal"
+str_CopyingDatabasesFor,C7BBB,"""Copying databases for"" string literal"
+str_AreYouSureYou3,C7C29,"""Are you sure you want to"" string literal"
+str_UseANewFloppy,C7C42,"""use a new floppy disk?"" string literal"
+str_ImportMasterCopyOf,C7C99,"""Import master copy of league or"" string literal"
+str_ImportForPlayerOn,C7CB9,"""import for player on floppy disk?"" string literal"
+str_Master,C7CDB,"""Master"" string literal"
+str_Player3,C7CE2,"""Player"" string literal"
+str_CanNotImportMaster,C7D29,"""Can not import master league!"" string literal"
+str_TheLeagueAlreadyExists,C7D47,"""The league already exists!"" string literal"
+str_TheLeague3,C7D6A,"""The league"" string literal"
+str_MasterDatabasesFor,C7DA9,"""Master databases for"" string literal"
+str_MustBeMergedFirst,C7DBE,"""must be merged first!"" string literal"
+str_DoYouWantTo4,C7DD4,"""Do you want to merge?"" string literal"
+str_MergingPlayersToMaster,C7F53,"""Merging players to master database."" string literal"
+str_UpdatingSchedule,C7F7B,"""Updating schedule."" string literal"
+str_PleasePutAFloppy,C7F92,"""Please put a floppy disk in any drive."" string literal"
+str_UseFloppyDriveA,C7FBD,"""Use floppy drive A or B?"" string literal"
+str_ThereIsASaved,C805D,"""There is a saved game in the league"" string literal"
+str_WhichMustBePlayed,C8081,"""which must be played first!"" string literal"
+str_KEY2,C80A9,"""KEY"" string literal"
+str_CAREER2,C80AD,"""CAREER"" string literal"
+str_ATT2,C80B4,"""ATT"" string literal"
+str_CARTEAMS,C80B8,"""CARTEAMS"" string literal"
+str_TEAMS3,C80C1,"""TEAMS"" string literal"
+str_SEASON4,C80C7,"""SEASON"" string literal"
+str_SCHEDULE2,C80CE,"""SCHEDULE"" string literal"
+str_January,C833D,"""January"" string literal"
+str_February,C8345,"""February"" string literal"
+str_March,C834E,"""March"" string literal"
+str_April,C8354,"""April"" string literal"
+str_May,C835A,"""May"" string literal"
+str_June,C835E,"""June"" string literal"
+str_July,C8363,"""July"" string literal"
+str_August,C8368,"""August"" string literal"
+str_September,C836F,"""September"" string literal"
+str_October,C8379,"""October"" string literal"
+str_November,C8381,"""November"" string literal"
+str_December,C838A,"""December"" string literal"
+str_Player1Controls,C850A,"""Player 1 Controls ..."" string literal"
+str_Player2Controls,C8520,"""Player 2 Controls ..."" string literal"
+str_ShowLeagueSettings,C8536,"""Show League Settings ..."" string literal"
+str_Play3,C8642,"""Play"" string literal"
+str_Game5,C8647,"""Game"" string literal"
+str_Statistics2,C864C,"""Statistics"" string literal"
+str_ShowLeagueSettings2,C86B7,"""Show League settings"" string literal"
+str_LeagueSettings,C86EC,"""League settings"" string literal"
+str_Done3,C871C,"""Done"" string literal"
+str_Cancel3,C8721,"""Cancel"" string literal"
+str_Select,C8768,"""Select"" string literal"
+str_Settings2,C876F,"""Settings"" string literal"
+str_TheDatabasesCanOnly,C899C,"""The databases can only be merged"" string literal"
+str_OnTheMasterCopy,C89BD,"""on the master copy of the league"" string literal"
+str_TheMasterControllerFor,C89EA,"""The master controller for the league"" string literal"
+str_MustBeImportedFirst,C8A0F,"""must be imported first!"" string literal"
+str_WarningMergeNotCompleted,C8A33,"""Warning! Merge not completed!"" string literal"
+str_LeagueCanNotBe,C8A51,"""League can not be used until"" string literal"
+str_TheMergeIsComplete,C8A6E,"""the merge is complete!"" string literal"
+str_ErrorWhileUpdating,C8A91,"""Error while updating"" string literal"
+str_PlayersDatabases,C8AA6,"""players databases!"" string literal"
+str_ErrorWhileMergingDatabases,C8AC1,"""Error while merging databases!"" string literal"
+str_ImportingMasterDatabases,C8AE4,"""Importing Master Databases."" string literal"
+str_ErrorWhileExportingPlayer,C8B04,"""Error while exporting player!"" string literal"
+str_PlayerNotExported,C8B22,"""Player not exported!"" string literal"
+str_ThereMustBeAn,C8B9C,"""There must be an equal"" string literal"
+str_NumberOfPlayersSelected,C8BB3,"""number of players selected"" string literal"
+str_OnBothTeams,C8BCE,"""on both teams!"" string literal"
+str_TheTradingDeadlineHas,C8BE9,"""The trading deadline has passed!"" string literal"
+str_NoMoreTradingIs,C8C0A,"""No more trading is allowed!"" string literal"
+str_File,CDA50,"""File"" string literal"
+str_Game6,CDA55,"""Game"" string literal"
+str_Statistics3,CDA5A,"""Statistics"" string literal"
+str_Open5,CDA65,"""Open ..."" string literal"
+str_NewExhibitionGame,CDA83,"""New Exhibition Game ..."" string literal"
+str_NewPlayOffSeries,CDA9B,"""New Play-Off Series ..."" string literal"
+str_NextPlayOffGame,CDAB3,"""Next Play-Off Game ..."" string literal"
+str_PlayOffSettings,CDACA,"""Play-Off Settings ..."" string literal"
+str_PlayOffHilights,CDAE0,"""Play-Off Hilights ..."" string literal"
+str_NewLeague,CDAF6,"""New League ..."" string literal"
+str_ImportDatabases,CDB05,"""Import Databases ..."" string literal"
+str_ExportDatabases,CDB1A,"""Export Databases ..."" string literal"
+str_NextLeagueGame,CDB2F,"""Next League Game ..."" string literal"
+str_CentralRegistry,CDB55,"""Central Registry ..."" string literal"
+str_Exit,CDB6A,"""Exit"" string literal"
+str_Player1Controls2,CDB98,"""Player 1 Controls ..."" string literal"
+str_Player2Controls2,CDBAE,"""Player 2 Controls ..."" string literal"
+str_ExhibitionSettings,CDBC4,"""Exhibition Settings ..."" string literal"
+str_PlayOffSettings2,CDBF5,"""Play-Off Settings ..."" string literal"
+str_SoundSettings,CDC0B,"""Sound Settings ..."" string literal"
+str_Action,CDCE9,"""Action"" string literal"
+str_Game7,CDCF0,"""Game"" string literal"
+str_InstantReplay,CDCF5,"""Instant Replay"" string literal"
+str_LineEditor,CDD04,"""Line Editor"" string literal"
+str_Statistics4,CDD10,"""Statistics"" string literal"
+str_GameSummary,CDD1B,"""Game Summary"" string literal"
+str_BackToGame,CDD28,"""Back to Game"" string literal"
+str_SaveGame2,CDD35,"""Save Game ..."" string literal"
+str_SportsDesk,CDD43,"""Sports Desk"" string literal"
+str_Exit2,CDD72,"""Exit"" string literal"
+str_GoToReplay,CDD77,"""Go To Replay ..."" string literal"
+str_HomeTeam2,CDD88,"""Home Team ..."" string literal"
+str_VisitingTeam2,CDD96,"""Visiting Team ..."" string literal"
+str_GameStatistics,CDDA8,"""Game Statistics ..."" string literal"
+str_PenaltySummary,CDDBC,"""Penalty Summary ..."" string literal"
+str_ScoringSummary,CDDD0,"""Scoring Summary ..."" string literal"
+str_TeamScratches,CDDE4,"""Team Scratches ..."" string literal"
+str_MergeLeagueFiles,CDE19,"""Merge League Files ..."" string literal"
+str_RemoveTeamFromLeague,CDE30,"""Remove Team From League ..."" string literal"
+str_AddTeamToLeague,CDE4C,"""Add Team to League ..."" string literal"
+str_TradePlayers,CDE63,"""Trade Players ... "" string literal"
+str_RebuildDataBases,CDE76,"""Rebuild DataBases ..."" string literal"
+str_MergeAndUpdateTeam,CDE8C,"""Merge and Update Team Databases ..."" string literal"
+str_UpdateTeamsDataBases,CDEB0,"""Update Teams DataBases ..."" string literal"
+str_ChangeLeaguePlaySettings,CDECB,"""Change League Play Settings ..."" string literal"
+str_LeagueHilights,CDEEB,"""League Hilights ..."" string literal"
+str_File2,CDEFF,"""File"" string literal"
+str_Settings4,CDF04,"""Settings"" string literal"
+str_Statistics5,CDF0D,"""Statistics"" string literal"
+str_PlayNextGame,CDF18,"""Play Next Game ..."" string literal"
+str_ReturnToSportsCentral2,CDF2B,"""Return To Sports Central"" string literal"
+str_Standings2,CDF56,"""Standings ..."" string literal"
+str_Scoring,CDF9E,"""Scoring ..."" string literal"
+str_Defense4,CDFAA,"""Defense ..."" string literal"
+str_PenaltyKilling2,CDFB6,"""Penalty Killing ..."" string literal"
+str_PowerPlay2,CDFCA,"""Power Play ..."" string literal"
+str_Penalties,CDFD9,"""Penalties ..."" string literal"
+str_Points,CDFE7,"""Points ..."" string literal"
+str_Goals,CDFF2,"""Goals ..."" string literal"
+str_Assists2,CDFFC,"""Assists ..."" string literal"
+str_PowerPlayGoals,CE008,"""Power Play Goals ..."" string literal"
+str_ShorthandedGoals,CE01D,"""Shorthanded Goals ..."" string literal"
+str_PlusMinus4,CE033,"""Plus/Minus ..."" string literal"
+str_PenaltyMinutes,CE042,"""Penalty Minutes ..."" string literal"
+str_ShootingPercentage,CE056,"""Shooting Percentage ..."" string literal"
+str_GoalsAgainstAverage,CE06E,"""Goals Against Average ..."" string literal"
+str_Wins2,CE088,"""Wins ..."" string literal"
+str_SavePercentage,CE091,"""Save Percentage ..."" string literal"
+str_StatisticsType,CE0A5,"""Statistics Type"" string literal"
+str_LineEditor2,CE0B5,"""Line Editor"" string literal"
+str_Roster,CE0C1,"""Roster"" string literal"
+str_PlayerStatistics,CE0C8,"""Player Statistics"" string literal"
+str_SaveTheseLines,CE0DA,"""Save These Lines"" string literal"
+str_UseTheseLines,CE0EB,"""Use These Lines"" string literal"
+str_UseOriginalLines,CE0FB,"""Use Original Lines"" string literal"
+str_UseDefaultLines,CE10E,"""Use Default Lines"" string literal"
+str_SaveAsDefaultLines,CE120,"""Save As Default Lines"" string literal"
+str_DressPlayer,CE136,"""Dress Player"" string literal"
+str_ScratchPlayer,CE143,"""Scratch Player"" string literal"
+str_ShowPlayerStatistics,CE152,"""Show Player Statistics"" string literal"
+str_LineEditor3,CE169,"""Line Editor"" string literal"
+str_PlayerStatistics2,CE175,"""Player Statistics"" string literal"
+str_Cancel4,CE187,"""Cancel"" string literal"
+str_UseTheseLines2,CE18E,"""Use These Lines"" string literal"
+str_UseOriginalLines2,CE19E,"""Use Original Lines"" string literal"
+str_UseDefaultLines2,CE1B1,"""Use Default Lines"" string literal"
+str_SaveAsDefaultLines2,CE1C3,"""Save As Default Lines"" string literal"
+str_LineEditor4,CE1D9,"""Line Editor"" string literal"
+str_StatisticsType2,CE1E5,"""Statistics Type"" string literal"
+str_ReturnTo,CE1F5,"""Return To"" string literal"
+str_SportsDesk2,CE1FF,"""Sports Desk"" string literal"
+str_ReturnTo2,CE263,"""Return To"" string literal"
+str_Roster3,CE26D,"""Roster"" string literal"
+str_StatisticsType3,CE274,"""Statistics Type"" string literal"
+str_TeamRoster,CE284,"""Team Roster"" string literal"
+str_OverallStandings,CE290,"""Overall Standings"" string literal"
+str_ShowTeamRoster,CE2A2,"""Show Team Roster"" string literal"
+str_ReturnTo3,CE2B3,"""Return To"" string literal"
+str_PlayerStatistics3,CE2BD,"""Player Statistics"" string literal"
+str_StatisticsType4,CE2CF,"""Statistics Type"" string literal"
+str_ShowPlayerStatisticsAnd,CE2DF,"""Show Player Statistics And Attributes"" string literal"
+str_ReturnTo4,CE305,"""Return To"" string literal"
+str_StatisticsType5,CE31F,"""Statistics Type"" string literal"
+str_TeamsSortedBy,CE32F,"""Teams Sorted By"" string literal"
+str_StatisticsType6,CE33F,"""Statistics Type"" string literal"
+str_PlayersSortedBy,CE34F,"""Players Sorted By"" string literal"
+str_StatisticsType7,CE361,"""Statistics Type"" string literal"
+str_GoaliesSortedBy,CE371,"""Goalies Sorted By"" string literal"
+str_Print,CE383,"""Print"" string literal"
+str_OutputCurrentData,CE389,"""Output Current Data ..."" string literal"
+str_ThereIsAlreadyA2,CFAD5,"""There is already a database with that name!"" string literal"
+str_DoYouWantTo5,CFB01,"""Do you want to replace it?"" string literal"
+str_InsufficientDiskSpace2,CFB24,"""Insufficient disk space available"" string literal"
+str_ToSaveTheDatabases,CFB46,"""to save the databases, you require"" string literal"
+str_Anaheim,CFB98,"""Anaheim ..."" string literal"
+str_Calgary,CFBA4,"""Calgary ..."" string literal"
+str_Edmonton,CFBB0,"""Edmonton ..."" string literal"
+str_LosAngeles,CFBBD,"""Los Angeles ..."" string literal"
+str_SanJose,CFBCD,"""San Jose ..."" string literal"
+str_Vancouver,CFBDA,"""Vancouver ..."" string literal"
+str_Chicago,CFCA8,"""Chicago ..."" string literal"
+str_Dallas,CFCB4,"""Dallas ..."" string literal"
+str_Detroit,CFCBF,"""Detroit ..."" string literal"
+str_StLouis,CFCCB,"""St. Louis ..."" string literal"
+str_Toronto,CFCD9,"""Toronto ..."" string literal"
+str_Winnipeg,CFCE5,"""Winnipeg ..."" string literal"
+str_Boston,CFDB2,"""Boston ..."" string literal"
+str_Buffalo,CFDBD,"""Buffalo ..."" string literal"
+str_Hartford,CFDC9,"""Hartford ..."" string literal"
+str_Montreal,CFDD6,"""Montreal ..."" string literal"
+str_Ottawa,CFDE3,"""Ottawa ..."" string literal"
+str_Pittsburgh,CFDEE,"""Pittsburgh ..."" string literal"
+str_Quebec,CFDFD,"""Quebec ..."" string literal"
+str_Florida,CFEE8,"""Florida ..."" string literal"
+str_NewJersey,CFEF4,"""New Jersey ..."" string literal"
+str_NYIslanders,CFF03,"""NY Islanders ..."" string literal"
+str_NYRangers,CFF14,"""NY Rangers ..."" string literal"
+str_Philadelphia,CFF23,"""Philadelphia ..."" string literal"
+str_TampaBay,CFF34,"""Tampa Bay ..."" string literal"
+str_Washington,CFF42,"""Washington ..."" string literal"
+str_SaveToGame,D0031,"""Save to Game ..."" string literal"
+str_TemporarySave,D0042,"""Temporary Save ..."" string literal"
+str_LoadDatabase,D0055,"""Load Database ..."" string literal"
+str_Return2,D0067,"""Return"" string literal"
+str_FreeAgents2,D00EE,"""Free Agents ..."" string literal"
+str_FindPlayer,D00FE,"""Find Player ..."" string literal"
+str_ShowPlayerStatistics2,D0598,"""Show Player Statistics"" string literal"
+str_LineEditor5,D05CF,"""Line Editor"" string literal"
+str_Roster4,D05DB,"""Roster"" string literal"
+str_PlayerStatistics4,D05E2,"""Player Statistics"" string literal"
+str_OK,D0B76,"""OK"" string literal"
+str_Cancel5,D0B79,"""Cancel"" string literal"
+str_ConfirmDeletionOfThe2,D1190,"""Confirm deletion of the database:"" string literal"
+str_BOS1,D19F0,"""BOS1"" string literal"
+str_BOS22,D19F5,"""BOS2"" string literal"
+str_BOS3,D19FA,"""BOS3"" string literal"
+str_HART2,D19FF,"""HART2"" string literal"
+str_BUF22,D1A05,"""BUF2"" string literal"
+str_CAL1,D1A0A,"""CAL1"" string literal"
+str_CAL2,D1A0F,"""CAL2"" string literal"
+str_CAL3,D1A14,"""CAL3"" string literal"
+str_CHIC1,D1A19,"""CHIC1"" string literal"
+str_CHIC2,D1A1F,"""CHIC2"" string literal"
+str_CHIC3,D1A25,"""CHIC3"" string literal"
+str_DET1,D1A2B,"""DET1"" string literal"
+str_DET22,D1A30,"""DET2"" string literal"
+str_ED1,D1A35,"""ED1"" string literal"
+str_HART1,D1A39,"""HART1"" string literal"
+str_HART22,D1A3F,"""HART2"" string literal"
+str_HART3,D1A45,"""HART3"" string literal"
+str_LA1,D1A4B,"""LA1"" string literal"
+str_LA4,D1A4F,"""LA4"" string literal"
+str_MON1,D1A53,"""MON1"" string literal"
+str_MON2,D1A58,"""MON2"" string literal"
+str_MON3,D1A5D,"""MON3"" string literal"
+str_HART23,D1A62,"""HART2"" string literal"
+str_NJER2,D1A68,"""NJER2"" string literal"
+str_LI2,D1A6E,"""LI2"" string literal"
+str_LI3,D1A72,"""LI3"" string literal"
+str_NY3,D1A76,"""NY3"" string literal"
+str_PHIL1,D1A7A,"""PHIL1"" string literal"
+str_PHIL2,D1A80,"""PHIL2"" string literal"
+str_CGY22,D1A86,"""CGY2"" string literal"
+str_PITTS1,D1A8B,"""PITTS1"" string literal"
+str_PITTS2,D1A92,"""PITTS2"" string literal"
+str_PITTS3,D1A99,"""PITTS3"" string literal"
+str_PITTS4,D1AA0,"""PITTS4"" string literal"
+str_QU1,D1AA7,"""QU1"" string literal"
+str_SL1,D1AAB,"""SL1"" string literal"
+str_SL2,D1AAF,"""SL2"" string literal"
+str_SL3,D1AB3,"""SL3"" string literal"
+str_SHK1,D1AB7,"""SHK1"" string literal"
+str_SHK2,D1ABC,"""SHK2"" string literal"
+str_MON12,D1AC1,"""MON1"" string literal"
+str_MON32,D1AC6,"""MON3"" string literal"
+str_LA42,D1ACB,"""LA4"" string literal"
+str_SHK7,D1ACF,"""SHK7"" string literal"
+str_SHK8,D1AD4,"""SHK8"" string literal"
+str_BOS23,D1AD9,"""BOS2"" string literal"
+str_TB22,D1ADE,"""TB2"" string literal"
+str_TOR1,D1AE2,"""TOR1"" string literal"
+str_TOR22,D1AE7,"""TOR2"" string literal"
+str_VAN1,D1AEC,"""VAN1"" string literal"
+str_VAN3,D1AF1,"""VAN3"" string literal"
+str_WASH3,D1AF6,"""WASH3"" string literal"
+str_WINN2,D1AFC,"""WINN2"" string literal"
+str_ROCKDITI2,D1B02,"""ROCKDITI"" string literal"
+str_CANADA,D1CD3,"""CANADA"" string literal"
+str_USA,D1CDA,"""USA"" string literal"
+str_InsufficientDiskSpaceTo2,D1EE0,"""Insufficient disk space to"" string literal"
+str_SaveHilights,D1EFB,"""save hilights."" string literal"
+str_CurrentHilightNotSaved,D1F0A,"""Current hilight not saved."" string literal"
+str_ThereAreNoHilights,D1F34,"""There are no hilights!"" string literal"
+str_ThereIsNotEnogh,D1F4F,"""There is not enogh space on"" string literal"
+str_TheFloppyDiskFor,D1F6B,"""the floppy disk for the hilights!"" string literal"
+str_SelectLessHilightsOr,D1F8D,"""Select less hilights or get another disk."" string literal"
+str_ThereIsNotEnogh2,D1FC3,"""There is not enogh space on"" string literal"
+str_TheHardDiskFor,D1FDF,"""the hard disk for the hilights!"" string literal"
+str_TrySelectingLessHilights,D1FFF,"""Try selecting less hilights."" string literal"
+str_TheHilight,D2028,"""The hilight"" string literal"
+str_AlreadyExists,D2034,"""already exists."" string literal"
+str_ExportingHilights,D2050,"""Exporting hilights"" string literal"
+str_CouldNotFindA,D2452,"""Could not find a"" string literal"
+str_CardInThisMachine,D2463,"""card in this machine!"" string literal"
+str_InitializingTheMT32Card,D24A8,"""Initializing the MT32 card."" string literal"
+str_PleaseWait,D24C4,"""Please wait."" string literal"
+str_1ststarCor,D2782,"""1ststar.cor"" string literal"
+str_2ndstarCor,D278E,"""2ndstar.cor"" string literal"
+str_Cor2,D27A2,"""cor"" string literal"
+str_SavingCurrent,D27C4,"""Saving Current"" string literal"
+str_LeagueGame,D27D3,"""League Game."" string literal"
+str_PlayOffGame,D27E0,"""Play-Off Game."" string literal"
+str_InsufficientDiskSpaceTo3,D27FF,"""Insufficient disk space to save"" string literal"
+str_OfFreeDiskSpace2,D2841,"""of free disk space."" string literal"
+str_YourTeamHasBeen,D29FF,"""Your team has been eliminated"" string literal"
+str_FromThePlayOffs,D2A1D,"""from the play-offs. Do you"" string literal"
+str_WishToSeeThe,D2A38,"""wish to see the final results"" string literal"
+str_OfThePlayOffs,D2A56,"""of the play-offs?"" string literal"
+str_GP9,C2974,"""GP"" string literal"
+str_Pt4,C297F,""" Pt"" string literal"
+str_PIM7,C2983,"""PIM"" string literal"
+str_PPG4,C298C,"""PPG"" string literal"
+str_SHG4,C2990,"""SHG"" string literal"
+str_Shots6,C2994,"""Shots"" string literal"
+str_Pct8,C299A,"""  Pct"" string literal"
+str_Shoots3,C29A0,"""Shoots"" string literal"
+str_Speed3,C29A7,"""Speed"" string literal"
+str_Agility3,C29AD,"""Agility"" string literal"
+str_Weight3,C29B5,"""Weight"" string literal"
+str_ShotPower2,C29BC,"""Shot Power"" string literal"
+str_Checking3,C29C7,"""Checking"" string literal"
+str_StickHandling2,C29D0,"""StickHandling"" string literal"
+str_Accuracy2,C29DE,"""Accuracy"" string literal"
+str_Passing3,C29E7,"""Passing"" string literal"
+str_OffensiveAwareness3,C29EF,"""Offensive Awareness"" string literal"
+str_DefensiveAwareness3,C2A03,"""Defensive Awareness"" string literal"
+str_Aggressiveness2,C2A17,"""Aggressiveness"" string literal"
+str_Endurance2,C2A26,"""Endurance"" string literal"
+str_ShootPassBias2,C2A30,"""Shoot/Pass Bias"" string literal"
+str_Faceoffs2,C2A40,"""Faceoffs"" string literal"
+str_Min6,C2A49,""" Min"" string literal"
+str_GA6,C2A4E,"""  GA"" string literal"
+str_GAA5,C2A53,"""  GAA"" string literal"
+str_SO3,C2A62,"""SO"" string literal"
+str_EN3,C2A65,"""EN"" string literal"
+str_SA5,C2A68,"""   SA"" string literal"
+str_GloveHand3,C2A6E,"""Glove Hand"" string literal"
+str_GloveLeft2,C2A79,"""Glove Left"" string literal"
+str_GloveRight2,C2A84,"""Glove Right"" string literal"
+str_StickLeft2,C2A90,"""Stick Left"" string literal"
+str_StickRight2,C2A9B,"""Stick Right"" string literal"
+str_PuckControl2,C2AA7,"""Puck Control"" string literal"
+str_PenaltyKilling3,C2AB4,"""Penalty Killing"" string literal"
+str_PowerPlay3,C2AC4,"""Power Play"" string literal"
+str_Shooting2,C2ACF,"""Shooting"" string literal"
+str_Skating2,C2AD8,"""Skating"" string literal"
+str_Defence2,C2AE0,"""Defence"" string literal"
+str_Goaltending2,C2AE8,"""Goaltending"" string literal"
+str_OverAll2,C2AF4,"""Over all"" string literal"
+str_Cancel6,C2AFD,"""Cancel"" string literal"
+str_Create,C2B04,"""Create"" string literal"
+str_InsufficientDiskSpace3,C5654,"""Insufficient disk space available to"" string literal"
+str_ThereIsOnlyOne,C7513,"""There is only one human"" string literal"
+str_ControlledTeam,C752B,"""controlled team!"" string literal"
+str_CanNotReadDatabases,C7544,"""Can not read databases in the league"" string literal"
+str_WhichScheduleDoYou,C776B,"""  Which schedule do you want to use?  "" string literal"
+str_9394Season2,C7792,"""'93 - '94 Season"" string literal"
+str_Random,C77A3,"""Random"" string literal"
+str_ErrorWhileUpdatingDatabase,C77E6,"""Error while updating database!"" string literal"
+str_ErrorWhileCreatingLeague,C7809,"""Error while creating league!"" string literal"
+str_ErrorWhileTradingPlayers,C782A,"""Error while trading players!"" string literal"
+str_CreatingLeague,C7BD9,"""Creating league."" string literal"
+str_ThatFloppyDiskHas,C7BEE,"""That floppy disk has an"" string literal"
+str_OldCopyOfThe,C7C06,"""old copy of the league"" string literal"
+str_PlayersDatabasesFor,C7DFA,"""Players databases for"" string literal"
+str_MustBeUpdatedFirst,C7E10,"""must be updated first!"" string literal"
+str_DoYouWantTo6,C7E27,"""Do you want to update?"" string literal"
+str_MasterDatabasesFor2,C7E86,"""Master databases for"" string literal"
+str_MustBeCompletelyMerged,C7E9B,"""must be completely merged and"" string literal"
+str_PlayersDatabasesMustBe,C7EB9,"""players databases must be updated first!"" string literal"
+str_DoYouWishTo,C7EE2,"""Do you wish to do merge and update?."" string literal"
+str_Done4,C87F8,"""Done"" string literal"
+str_Cancel7,C87FD,"""Cancel"" string literal"
+str_Trade,C8844,"""Trade"" string literal"
+str_PlayerStatistics5,C884A,"""Player Statistics"" string literal"
+str_Trade2,C88BC,"""Trade"" string literal"
+str_GeneratingRandomSchedule,C8C30,"""Generating random schedule."" string literal"
+str_PleaseWait2,C8C4C,"""Please wait."" string literal"
+str_InsufficientDiskSpaceTo4,C8C68,"""Insufficient disk space to setup"" string literal"
+str_ANewLeagueYou,C8C89,"""a new League, you require "" string literal"
+str_DiskDriveFullCan,C8CD4,"""Disk drive Full. Can not create a new league."" string literal"
+str_MoveToFreeAgent,D02B9,"""Move to Free Agent List"" string literal"
+str_MoveToRoster2,D02D1,"""Move to Roster 2"" string literal"
+str_MoveToRoster1,D02E2,"""Move to Roster 1"" string literal"
+str_CreateFreeAgent,D02F3,"""Create Free Agent ..."" string literal"
+str_EditTeamLines,D0309,"""Edit Team Lines ..."" string literal"
+str_File3,D041D,"""File"" string literal"
+str_Roster12,D0422,"""Roster 1"" string literal"
+str_Roster22,D042B,"""Roster 2"" string literal"
+str_EditRoster1,D0434,"""Edit Roster 1"" string literal"
+str_EditRoster2,D0442,"""Edit Roster 2"" string literal"
+str_Done5,D04F0,"""Done"" string literal"
+str_Cancel8,D04F5,"""Cancel"" string literal"
+str_DressPlayer2,D053C,"""Dress Player"" string literal"
+str_ScratchPlayer2,D0549,"""Scratch Player"" string literal"
+str_RegularSeasonStatistics,D0654,"""Regular Season Statistics ..."" string literal"
+str_PlayOffStatistics,D0672,"""Play-Off Statistics ..."" string literal"
+str_ReturnToLineEditor,D070A,"""Return To Line Editor"" string literal"
+str_PlayerStatistics6,D0740,"""Player Statistics"" string literal"
+str_Display,D0752,"""Display ..."" string literal"
+str_Continue,D0C94,"""Continue"" string literal"
+str_Stop2,D0C9D,"""Stop"" string literal"
+str_Player4,D0ECF,"""Player"" string literal"
+str_Goalie3,D0ED6,"""Goalie"" string literal"
+str_InsufficientDiskSpace4,D1010,"""Insufficient disk space available"" string literal"
+str_ToCreateAFree,D1032,"""to create a free agent, you require"" string literal"
+str_ThereIsAlreadyA3,D2890,"""There is already a Play-Off with that name!"" string literal"
+str_DoYouWantTo7,D28BC,"""Do you want to replace it with a new Play-Off?"" string literal"
+str_AnErrorWasEncountered,D28F3,"""An Error Was Encountered While"" string literal"
+str_SettingUpThePlayoffs,D2912,"""Setting Up The Playoffs."" string literal"
+str_PlayoffSeriesHasNot,D292B,"""Playoff Series Has Not Been"" string literal"
+str_Created,D2947,"""Created."" string literal"
+str_PleaseWait3,D2960,"""Please Wait."" string literal"
+str_SettingUpPlayOffs,D296D,"""Setting Up Play-Offs."" string literal"
+str_InsufficientDiskSpaceTo5,D298B,"""Insufficient disk space to setup"" string literal"
+str_APlayoffSeriesYou,D29AC,"""a Playoff Series, you require "" string literal"
+str_HaveBeenEliminatedFrom,D2A82,"""have been eliminated from"" string literal"
+str_ThePlayOffs,D2A9C,"""the play-offs."" string literal"
+str_WillContinueToThe,D2AC5,"""will continue to the next"" string literal"
+str_Series,D2ADF,"""series."" string literal"
+str_YES2,D2AE7,"""YES"" string literal"
+str_NO5,D2AEB,"""NO"" string literal"
+str_GeneratingTheFinalResults,D2AEE,"""Generating the final results."" string literal"
+str_CmvMemBlock,C09A0,"""cmv mem block"" string literal"
+str_CmvPalette,C09AE,"""cmv palette"" string literal"
+str_CDSTREAM,C09BC,"""CDSTREAM"" string literal"
+str_IllegalSecondaryStreamNumber,C09C5,"""Illegal Secondary Stream Number\n"" string literal"
+str_SECCDSTREAM,C09E6,"""SECCDSTREAM"" string literal"
+str_IllegalChunkSizeD,C09F2,"""Illegal chunk size %d buffersize %d\n"" string literal"
+str_ZMHiddenWindowNoHiddenWindow,C2778,"""ZMHiddenWindow: No hidden window"" string literal"
+str_ZMBackgroundWindowNo,C2799,"""ZMBackgroundWindow: No background window"" string literal"
+str_ZONEMGR,C27C2,"""ZONEMGR"" string literal"
+str_LOWMEM,C3B98,"""LOW MEM"" string literal"
+str_HIGHMEM,C3BA0,"""HIGH MEM"" string literal"
+str_GAP,C3BAC,"""GAP"" string literal"
+str_ReleaseMemoryNotFound,C3BB0,"""Release Memory Not Found\n"" string literal"
+str_ReservememINVALIDSIZE,C3BCC,"""reservemem - INVALID SIZE REQUESTED\nrequested: %ld available: %ld\n"" string literal"
+str_ReservememOUTOFMEMORY,C3C10,"""reservemem - OUT OF MEMORY\nrequested: %ld available: %ld\n"" string literal"
+str_ReservememOUTOFMEMORY2,C3C4C,"""reservemem - OUT OF MEMORY\nrequested: %ld available: %ld\n"" string literal"
+str_ReservememINVALIDTYPEFLAGS,C3C88,"""reservemem - INVALID TYPE FLAGS (%04x)\n"" string literal"
+str_ResizememINVALIDSIZE,C3CB0,"""resizemem - INVALID SIZE REQUESTED\nrequested: %ld available: %ld\n"" string literal"
+str_ResizememblockNOROOMTO,C3CF4,"""resizememblock - NO ROOM TO RESIZE\nrequested: %ld available: %ld\n"" string literal"
+str_FindmemblockBLOCKNOTFOUND,C3D38,"""findmemblock - BLOCK NOT FOUND (%p)\n"" string literal"
+str_GetmemblockNOMEMORYBLOCKS,C3D60,"""getmemblock - NO MEMORY BLOCKS LEFT\n"" string literal"
+str_InitmemmanINSUFFICIENTROW,C3D88,"""initmemman - INSUFFICIENT ROW TABLE SPACE\n"" string literal"
+str_EavesaCom,C3DB4,"""eavesa.com"" string literal"
+str_CUtilEavesaCom,C3DC0,"""c:\util\eavesa.com"" string literal"
+str_InitgraphicsEAVESACOM,C3DD4,"""initgraphics - EAVESA.COM REQUIRED IN PATH.\nPlease copy EAVESA.COM to"" string literal"
+str_CEavesaDat,C3E28,"""c:\eavesa.dat"" string literal"
+str_InitgraphicsNEWVERSIONOF,C3E38,"""initgraphics - NEW VERSION OF EAVESA.COM REQUIRED.\nPlease install EAV"" string literal"
+str_VESA,C3E94,"""VESA"" string literal"
+str_InitgraphicsINITMEMMAN,C3E9C,"""initgraphics - INITMEMMAN REQUIRED BEFORE INITGRAPHICS\n"" string literal"
+str_InitgraphicsINVALIDSCREEN,C3ED4,"""initgraphics - INVALID SCREEN SIZE (%d,%d)\n"" string literal"
+str_VESAVideoBiosDriver,C3F00,"""VESA video bios driver required.\nPlease install a driver for your vid"" string literal"
+str_AddtimerLISTFULL,C3F5C,"""addtimer - LIST FULL\n"" string literal"
+str_SUBWINDOW,C3F74,"""SUBWINDOW"" string literal"
+str_SubwindowdefadrOUTOFROW,C3F80,"""subwindowdefadr - OUT OF ROW SPACE\n"" string literal"
+str_SCN,C3FA4,"""SCN"" string literal"
+str_03sFF03dPAT,C3FA8,"""%0.3sFF%03d.PAT"" string literal"
+str_03sFF03dTIM,C3FB8,"""%0.3sFF%03d.TIM"" string literal"
+str_KMS2,C3FC8,"""KMS"" string literal"
+str_CFG2,C3FCC,"""CFG"" string literal"
+str_VHDR,C3FD0,"""VHDR"" string literal"
+str_SavefileblockaOPENFAILEDFOR,C3FD8,"""savefileblocka - OPEN FAILED FOR FILE <%s>\n"" string literal"
+str_Jan,C4004,"""Jan"" string literal"
+str_Feb2,C4008,"""Feb"" string literal"
+str_Mar,C400C,"""Mar"" string literal"
+str_Apr,C4010,"""Apr"" string literal"
+str_May2,C4014,"""May"" string literal"
+str_Jun,C4018,"""Jun"" string literal"
+str_Jul,C401C,"""Jul"" string literal"
+str_Aug,C4020,"""Aug"" string literal"
+str_Sep,C4024,"""Sep"" string literal"
+str_Oct,C4028,"""Oct"" string literal"
+str_Nov,C402C,"""Nov"" string literal"
+str_Dec,C4030,"""Dec"" string literal"
+str_DBUGTXT,C4034,"""DBUG??.TXT"" string literal"
+str_Wt2,C4040,"""wt"" string literal"
+str_FILES,C4044,"""FILE: %s\n"" string literal"
+str_DATES,C4050,"""DATE: %s\n"" string literal"
+str_TIMES,C405C,"""TIME: %s\n\n"" string literal"
+str_CLOSED,C4068,"""\nCLOSED\n"" string literal"
+str_TIMES2,C4074,"""TIME: %s\n"" string literal"
+str_Fs,C40CC,"""%Fs"" string literal"
+str_Jan2,C40D0,"""Jan"" string literal"
+str_Feb3,C40D4,"""Feb"" string literal"
+str_Mar2,C40D8,"""Mar"" string literal"
+str_Apr2,C40DC,"""Apr"" string literal"
+str_May3,C40E0,"""May"" string literal"
+str_Jun2,C40E4,"""Jun"" string literal"
+str_Jul2,C40E8,"""Jul"" string literal"
+str_Aug2,C40EC,"""Aug"" string literal"
+str_Sep2,C40F0,"""Sep"" string literal"
+str_Oct2,C40F4,"""Oct"" string literal"
+str_Nov2,C40F8,"""Nov"" string literal"
+str_Dec2,C40FC,"""Dec"" string literal"
+str_CS44xDS,C4100,"""CS=%4.4x DS=%4.4x  HW=%6.6x  Pool=%6.6x "" string literal"
+str_CS44xDS2,C412C,"""CS=%4.4x DS=%4.4x  HW=%-7u Pool=%-7u"" string literal"
+str_Used66xFree,C4154,"""Used=%6.6x  Free=%6.6x  Largst=%6.6x "" string literal"
+str_Used7uFree7u,C417C,"""Used=%-7u Free=%-7u Largst=%-7u"" string literal"
+str_NAMESIZEADREND,C419C,"""    NAME      SIZE       ADR      END  "" string literal"
+str_IDXNAMESIZEADR,C41C4,"""IDX     NAME       SIZE    ADR    END  FLAG"" string literal"
+str_SPACE9x8s8s,C420C,"""     SPACE   %9x %8s %8s"" string literal"
+str_SPACE9d8s8s,C4228,"""     SPACE   %9d %8s %8s"" string literal"
+str_SPACE66x6,C4244,"""       SPACE      %6.6x %6.6s %6.6s"" string literal"
+str_SPACE7d66s,C4268,"""       SPACE     %7d %6.6s %6.6s"" string literal"
+str_MEMMANAGER,C430C,"""MEM MANAGER"" string literal"
+str_044X00000000,C431C,"""%04.4X (0000 0000 0000 0000)"" string literal"
+str_SYSTEM,C4340,""" SYSTEM "" string literal"
+str_SPACE3,C434C,""" SPACE "" string literal"
+str_HIGHMemoryBlock,C4354,"""HIGH memory block"" string literal"
+str_LOWMemoryBlock,C4368,"""LOW memory block"" string literal"
+str_ConventionalMemory,C437C,"""Conventional memory"" string literal"
+str_RelocatableBlock,C4390,"""Relocatable block"" string literal"
+str_NonRelocatableBlock,C43A4,"""Non-Relocatable block"" string literal"
+str_ALIGNFlagIsSet,C43BC,"""ALIGN flag is set"" string literal"
+str_PRIORITY1d,C43D0,"""PRIORITY #%1d"" string literal"
+str_SequenceD,C43E0,"""Sequence #%d"" string literal"
+str_BlockIsPURGABLE,C43F0,"""Block is PURGABLE"" string literal"
+str_FILES2,C4424,"""* FILE: %s\n"" string literal"
+str_DATES2,C4430,"""* DATE: %s\n"" string literal"
+str_TIMES3,C443C,"""* TIME: %s\n"" string literal"
+str_FF,C444C,"""FF"" string literal"
+str_HexmemdspOS,C4450,"""hexmemdsp = O%s\n\n"" string literal"
+str_XxMMAPTXT,C4464,"""xxMMAP??.TXT"" string literal"
+str_ErrorDumpingMemoryMap,C4478,"""Error Dumping Memory Map"" string literal"
+str_ShapeFileIsInvalid,C4494,"""Shape file is invalid.  Work with it?"" string literal"
+str_NumDPackedD,C44BC,"""Num = %d, # packed = %d, # not packed = %d, # no shows = %d\n"" string literal"
+str_ThereAreNoShapes,C44FC,"""There are no shapes that can be shown!"" string literal"
+str_44s05x,C4524,"""'%4.4s' %05x: "" string literal"
+str_Bad,C4534,"""Bad.\n"" string literal"
+str_CxCy3d3d,C453C,"""cx/cy = %3d/%3d - "" string literal"
+str_NotDrawn,C4550,"""Not drawn.\n"" string literal"
+str_Bytes3dRows3d,C455C,"""bytes = %3d, rows = %3d, x/y = %3d/%3d, cx/cy = %3d/%3d"" string literal"
+str_Un,C4594,"""un"" string literal"
+str_Spacked,C4598,""" %spacked\n"" string literal"
+str_Packed,C45A4,"""packed  "" string literal"
+str_Unpacked,C45B0,"""unpacked"" string literal"
+str_ShapeIsInvalidDraw,C45D4,"""Shape is invalid.  Draw it anyways?"" string literal"
+str_MEMSHPTXT,C45F8,"""MEMSHP??.TXT"" string literal"
+str_ErrorDumpingShapesList,C4608,"""Error Dumping Shapes List"" string literal"
+str_ShapeFileName0,C4624,"""Shape file name: %0.12s\n"" string literal"
+str_ShapeFileSizeLd,C4640,"""Shape file size: %ld\n"" string literal"
+str_NumberOfShapesD,C4658,"""Number of shapes: %d\n\n"" string literal"
+str_44s66ld,C4670,"""'%-4.4s' @ %6.6ld, "" string literal"
+str_Bytes3dRows3d2,C4684,"""bytes = %3d, rows = %3d, "" string literal"
+str_XY3d3d,C46A0,"""x/y = %3d/%3d, cx/cy = %3d/%3d"" string literal"
+str_033d022X,C46C4,"""%03.3d (%02.2X)"" string literal"
+str_R022d,C46D4,"""R=%02.2d"" string literal"
+str_G022d,C46E0,"""G=%02.2d"" string literal"
+str_B022d,C46EC,"""B=%02.2d"" string literal"
+str_SCREEN2,C4700,"""SCREEN??.*"" string literal"
+str_FrameRate3dFrames,C4730,"""Frame Rate: %3d Frames: %3d Block Size: %3d\n"" string literal"
+str_Width3dHeight3d,C4760,"""Width: %3d      Height: %3d\n"" string literal"
+str_Colours3d1stColour,C4780,"""Colours: %3d    1st Colour: %3d\n"" string literal"
+str_Mvipal,C47A4,"""mvipal"" string literal"
+str_DATABUFFER,C47AC,"""DATABUFFER"" string literal"
+str_Copyright,C47B8,"""Copyright"" string literal"
+str_UnpackINVALIDPACKCODE,C47C4,"""unpack - INVALID PACK CODE (%x)\n"" string literal"
+str_EXITTODOSY,C47E8,"""EXIT TO DOS (Y/N)"" string literal"
+str_PAUSEPRESSANYKEY,C47FC,"""PAUSE - PRESS ANY KEY TO RESUME"" string literal"
+str_RemovewindowROWSPACE,C481C,"""removewindow - ROW SPACE CORRUPTED\n"" string literal"
+str_FshVshQfsQvs,C4840,""".fsh.vsh.qfs.qvs"" string literal"
+str_Vsh,C4854,""".vsh"" string literal"
+str_Qvs,C485C,""".qvs"" string literal"
+str_EACSNDFLIBJul28,C4864,"""EACSNDF.LIB Jul 28 1994 11:01:25"" string literal"
+str_MCGAWINDOW,C4888,"""MCGA WINDOW"" string literal"
+str_WindowdefOUTOFMEMORY,C4894,"""windowdef - OUT OF MEMORY\n"" string literal"
+str_WindowdefBADBLOCK,C48B0,"""windowdef - BAD BLOCK\n"" string literal"
+str_WindowdefadrOUTOFROW,C48C8,"""windowdefadr - OUT OF ROW SPACE\nrequested: %dx%d\n"" string literal"
+str_Unpackf,C48FC,"""unpackf"" string literal"
+str_Unpacking,C4904,"""unpacking...\n"" string literal"
+str_Fsh,C4914,""".fsh"" string literal"
+str_3sh,C491C,""".3sh"" string literal"
+str_SHPI,C4924,"""SHPI"" string literal"
+str_SHPM,C492C,"""SHPM"" string literal"
+str_SHAPE2,C4934,"""SHAPE"" string literal"
+str_Snap,C493C,"""Snap"" string literal"
+str_Pal31,C4944,"""!pal"" string literal"
+str_Snap2,C494C,"""snap"" string literal"
+str_Error0,C4954,"""Error 0"" string literal"
+str_NoSuchFileOr,C495C,"""No such file or directory"" string literal"
+str_ArgumentListTooBig,C4976,"""Argument list too big"" string literal"
+str_ExecFormatError,C498C,"""Exec format error"" string literal"
+str_BadFileNumber,C499E,"""Bad file number"" string literal"
+str_NotEnoughMemory,C49AE,"""Not enough memory"" string literal"
+str_PermissionDenied,C49C0,"""Permission denied"" string literal"
+str_FileExists,C49D2,"""File exists"" string literal"
+str_CrossDeviceLink,C49DE,"""Cross-device link"" string literal"
+str_InvalidArgument,C49F0,"""Invalid argument"" string literal"
+str_FileTableOverflow,C4A01,"""File table overflow"" string literal"
+str_TooManyOpenFiles,C4A15,"""Too many open files"" string literal"
+str_NoSpaceLeftOn,C4A29,"""No space left on device"" string literal"
+str_ArgumentTooLarge,C4A41,"""Argument too large"" string literal"
+str_ResultTooLarge,C4A54,"""Result too large"" string literal"
+str_ResourceDeadlockWouldOccur,C4A65,"""Resource deadlock would occur"" string literal"
+str_UnknownError,C4A83,"""unknown error"" string literal"
+str_BLASTER,C4A94,"""BLASTER"" string literal"
+str_PAT,C4A9C,""".PAT"" string literal"
+str_ULTRADIR,C4AA1,"""ULTRADIR"" string literal"
+str_MIDI,C4AAA,"""\MIDI\"" string literal"
+str_StackOverflow,D2F46,"""Stack Overflow!\r\n"" string literal"
+str_OpenhandleSFILEERROR,D43F4,"""openhandle - %s FILE ERROR\r"" string literal"
+str_SHPI2,D544C,"""SHPI"" string literal"
+str_CULTRASNDMIDI,D53B8,"""C:\ULTRASND\MIDI\"" string literal"
+str_Bat,C4AB7,""".bat"" string literal"
+str_Com,C4ABC,""".com"" string literal"
+str_Exe,C4AC1,""".exe"" string literal"
+str_COMSPEC,C4AC6,"""COMSPEC"" string literal"
+str_CMD,C4ACE,"""CMD"" string literal"
+str_COMMAND,C4AD2,"""COMMAND"" string literal"
+str_FloatingPointSupportNot,C4ADC,"""Floating-point support not loaded\r\n"" string literal"
+str_NotEnoughMemoryTo,C4B00,"""Not enough memory to allocate file structures\r\n"" string literal"
+str_RATIONALDOS4G,C4B30,"""RATIONAL DOS/4G"" string literal"
+str_GF1PATCH110,C4B40,"""GF1PATCH110"" string literal"
+str_ULTRASND,C4B50,"""ULTRASND"" string literal"
+str_Inf,C4B5C,"""inf"" string literal"
+str_Nan,C4B60,"""nan"" string literal"
+asswingo_dedata,CCA18,"94G logic94 asswingo .dedata: x, x random, y, y random per skating zone (words, values retuned on PC); x column"
+asswingo_dedata_xrand,CCA1A,asswingo_dedata+2: the x random column (94G .dedata)
+asswingo_dedata_y,CCA1C,asswingo_dedata+4: the y column (94G .dedata)
+asswingo_dedata_yrand,CCA1E,asswingo_dedata+6: the y random column (94G .dedata)
+asscentero_dedata,CCA38,"94G logic94 asscentero .dedata: x, x random, y, y random per skating zone (words); x column"
+asscentero_dedata_xrand,CCA3A,asscentero_dedata+2: the x random column (94G .dedata)
+asscentero_dedata_y,CCA3C,asscentero_dedata+4: the y column (94G .dedata)
+asscentero_dedata_yrand,CCA3E,asscentero_dedata+6: the y random column (94G .dedata)
+asspuckc_postab2,CCA6E,"94G logic94 asspuckc .postab2: x,y word pairs (FF92,FFEC,6E,FFEC ... on PC; FF9C,FFEC,64,FFEC on 94G); x column"
+asspuckc_postab2_y,CCA70,asspuckc_postab2+2: the y column
+Endfaceoff_ftab_m1,CCA95,"94G logic94 Endfaceoff .ftab-1: dc.b 0,8,10h,0,8,10h (dirtab offsets for the faceoff pull) starts one byte later; the index is 1-based, as -1(a0,d1.w) on 94G"
+hmtmtouch1,DF644,"hmtmstruct+30h = 94G tmtouch1: last touch (pnum), the scorer; StartThreeStars copies it to gwgplayer, StartHL2 clears touch1-3 together"
+hmtmtouch2,DF646,hmtmstruct+32h = 94G tmtouch2: second last touch (first assist); ChkScorerMilestone reads it as an assist pnum
+hmtmtouch3,DF648,hmtmstruct+34h = 94G tmtouch3: third last touch (second assist)
+awtmtouch1,DF744,awtmstruct+30h = 94G tmtouch1 of the visitors
+awtmtouch2,DF746,awtmstruct+32h = 94G tmtouch2 of the visitors
+awtmtouch3,DF748,awtmstruct+34h = 94G tmtouch3 of the visitors
+hmtmnear,DF652,"hmtmstruct+3Eh = 94G tmnear: nearest skater's distance to the puck; updateplayers resets it to FFFFh and keeps the minimum, pucknorm compares both teams' with 14h as 94G compares tmnear of both"
+awtmnear,DF752,awtmstruct+3Eh = 94G tmnear of the visitors
+hmtmnearpl,DF656,"hmtmstruct+42h = 94S tmnearpl: the team's player nearest the puck, stored by updateplayers with tmnear"
+awtmnearpl,DF756,awtmstruct+42h = 94S tmnearpl of the visitors
+hmtmgoaliesc,DF70E,hmtmstruct+FAh: player index of the goalie on the ice (updateplayers stores the loop index when position is 0; -1 none)
+awtmgoaliesc,DF80E,awtmstruct+FAh: player index of the visitors' goalie on the ice
+hmtmextra,DF642,"hmtmstruct+tmextra (2Eh): pnum of the extra attacker, -1 with the goalie in; clearteams stores -1"
+awtmextra,DF742,awtmstruct+tmextra (2Eh)
+hmtmgoalie_b1,DF64D,hmtmgoalie+1: the high byte of tmgoalie; SetTeamGoalie ORs FFh into it to make the word negative (goalie pulled)
+hmtmpdst_gl_m2,DF6C2,"hmtmpdst + 2*19h - 2: -5r short-load base of the goalies' tmpdst words (roster 19h up), LoadTeamRoster indexes it [team*100h + goalie*2]"
+hmtmplattr,DF6F2,"hmtmstruct+DEh: pointer to the home skater attribute records (hmplattr, 14h bytes each); setplayer reads a player's record through it"
+awtmplattr,DF7F2,awtmstruct+DEh: pointer to awplattr
+hmtmglattr,DF6F6,"hmtmstruct+E2h: pointer to the home goalie attribute records (hmglattr, 10h bytes each, indexed pnum*10h-190h)"
+awtmglattr,DF7F6,awtmstruct+E2h: pointer to awglattr
+hmplattr,DACA0,"home skater attribute records, 25 x 14h bytes, filled by LoadTeamRoster; clearteams points hmtmplattr here"
+awplattr,DAE94,visitor skater attribute records (hmplattr + 25*14h)
+hmglattr,DAC40,"home goalie attribute records, 3 x 10h bytes, filled by LoadTeamRoster; clearteams points hmtmglattr here"
+awglattr,DAC70,visitor goalie attribute records (hmglattr+30h)
+hmplattr_b13,DACB3,"hmplattr+13h: byte 13h of a skater attribute record, Endfaceoff indexes it [pnum*14h]"
+awplattr_b13,DAEA7,awplattr+13h
+hmplstats,DB088,"home skater game stats, 25 x 10h bytes (words g, a, pen, +/-, ppg, shg, eng, sht); clearteams points hmtmplstats here"
+hmplstats_m2,DB086,hmplstats-2: -5r short-load base
+awplstats,DB218,visitor skater game stats (hmplstats+190h); clearteams points awtmplstats here
+hmtmcoach_d2,DF6E6,"hmtmstruct+D2h: coach AI byte (default 3, raised to 4 by UpdateCoachModes); meaning not traced"
+hmtmcoach_d3,DF6E7,"hmtmstruct+D3h: coach AI byte (default 2, lowered to 1 by UpdateCoachModes); meaning not traced"
+hmtmcoachflags,DF6E8,"hmtmstruct+D4h: coach AI flags (bit 0 computer line changes in CompLine, bits 6 and 7 line change state)"
+hmtmcoachmode,DF6E9,hmtmstruct+D5h: coach AI mode set by SetCoachMode/UpdateCoachModes; CompLine picks its line order row with it
+hmtmcoachenergy,DF6EA,"hmtmstruct+D6h: line energy limit of the coach mode (CCCh, D9Ah, B33h); CompLine compares getlinee with it"
+awtmcoach_d2,DF7E6,awtmstruct+D2h
+awtmcoach_d3,DF7E7,awtmstruct+D3h
+awtmcoachflags,DF7E8,awtmstruct+D4h
+awtmcoachmode,DF7E9,awtmstruct+D5h
+awtmcoachenergy,DF7EA,awtmstruct+D6h
+coachlinetab,CBD2E,"CompLine: pointer per coach mode (tmcoachmode) to its table of 4-byte rows, the lines to try next for each current line"
+MaxCwdExciteLvl,E9AA4,95G MaxCwdExciteLvl: updatecrowdf keeps the peak CwdExciteLvl here
+NumCwdExciteLvl,E9AA6,95G NumCwdExciteLvl: updatecrowdf counts the samples (inc) for the average
+SumCwdExciteLvl,E009C,95G SumCwdExciteLvl: updatecrowdf adds CwdExciteLvl each sample
+fofdata2_w2,E0392,"fofdata2+2: 95G puckfaceoff2 move.w #$8000,2(a0) and eori.w #$800,2(a0); own label because the C files use it as a variable"
+fofdata2_b3,E0393,"fofdata2+3: high byte of fofdata2_w2, the xor 8 is 95G eori.w #$800,2(a0)"
+fofdata2_w4,E0394,"fofdata2+4: 95G move.w #4,attribute(a0) in puckfaceoff2"
+fofdata2_w6,E0396,"fofdata2+6: 95G move.w #$A800,frame(a0) in puckfaceoff2"
+fofdata2_b7,E0397,"fofdata2+7: high byte of fofdata2_w6, the xor 8 is 95G eori.w #$800,frame(a0)"
+fofdata,E0398,"95G fofdata (fofdata2+8): the referee's faceoff frame, 7 at the set-up (move.w #7,8(a0)), then the drop count from temp1 (updatefaceoff)"
+fofdata_w2,E039A,"fofdata+2: 95G move.w #$8000,VRoffs(a0) in puckfaceoff2"
+fofdata2_m2,E038E,fofdata2-2: -5r short-load base
+puckfaceoff2_ptab,CBE8C,"95G puckfaceoff2 .ptab: faceoff spot x,y word pairs by position, read through apl (0,FF24 ... on PC; 0,FEF9 on 95G); x column"
+puckfaceoff2_ptab_y,CBE8E,puckfaceoff2_ptab+2: the y column
+priolist,CBC37,"94G tables94 priolist: dc.b 0,1,2,4,3,5,6, positions in order of importance (SetPlList)"
+sublist_defl,CCCC8,94G sublist .defl: the first substitute list; the sublist word offsets are relative to it on PC (93G/94G: to sublist)
+sublist_defl_m3,CCCC5,"sublist_defl-3: -5r byte-load base (dword load, sar 18h) in SetPlList"
+sublist_m2,CCCB8,sublist-2: -5r short-load base in SetPlList
+restoreteams_pdsttab,CCCA8,"restoreteams: tmpdst word by roster status byte (-7, -4, -6, then -2 bench)"
+defertab,E9BA4,"deferred call queue, 20h bytes per entry (QueueDeferredCall / RunDeferredCalls): argument 0 (eax)"
+defertab_a1,E9BA8,defertab+4: argument 1 (edx)
+defertab_a2,E9BAC,defertab+8: argument 2 (ebx)
+defertab_a3,E9BB0,defertab+0Ch: argument 3 (ecx)
+defertab_a4,E9BB4,defertab+10h: first stack argument
+defertab_a5,E9BB8,defertab+14h: second stack argument
+defertab_a6,E9BBC,defertab+18h: third stack argument
+defertab_fn,E9BC0,defertab+1Ch: the function to call
+gsumqueue,E9B4C,"queued game summary records, 11 bytes each, at most 8 (PostGoalEvent/PostPenaltyEvent/PostInjuryEvent add, FlushGSumQueue empties)"
+curevent,E9AC8,"the event being posted, 11 bytes: byte 0 type (1 goal, 3 injury, -1 none); BuildEventLines turns it into the five text lines"
+curevent_b1,E9AC9,curevent+1
+curevent_b2,E9ACA,curevent+2
+curevent_b3,E9ACB,curevent+3
+curevent_b4,E9ACC,curevent+4
+curevent_b5,E9ACD,curevent+5
+curevent_b6,E9ACE,curevent+6
+curevent_b7,E9ACF,curevent+7
+curevent_b8,E9AD0,curevent+8
+curevent_b9,E9AD1,curevent+9
+curevent_b10,E9AD2,curevent+0Ah
+goalevent,E9AD3,"PostGoalEvent's copy of the goal event for the announcer: byte 0 is 1 until assrefgoalpa has called the goal (PaGoal), then -1"
+goalevent_b1,E9AD4,"goalevent+1, read by assrefgoalpa for PaGoal"
+goalevent_b2,E9AD5,goalevent+2
+goalevent_b3,E9AD6,goalevent+3
+goalevent_b4,E9AD7,goalevent+4
+rinkobjs,DEE94,"rink-side object slots, 20 x 12 bytes (SetRinkObject sets one, DecayCrowdLevel animates them, DrawRinkObjects draws them)"
+rinkobjs_w2,DEE96,rinkobjs+2
+rinkobjs_b3,DEE97,rinkobjs+3
+rinkobjdefs,CCEF8,"rink object definitions, 3 words per object id (SetRinkObject copies them into the slot at +5, +7, +9)"
+rinkobjdefs_m2,CCEF6,rinkobjdefs-2: -5r short-load base
+rinkobjanim,CCE00,"rink object animation bytes, indexed by a definition's third word (+ step): the frame"
+rinkobjanim_b1,CCE01,rinkobjanim+1
+rinkobjused,E9B2C,"bit set of the rink object ids now in a slot (SetRinkObject sets, DecayCrowdLevel picks a free one)"
+rinkobjused_m2,E9B2A,rinkobjused-2: -5r short-load base
+lastimpact,E9B28,"strength of the last player collision (checkcx stores the impact); checkint, newcheck and setInjuryType compare it"
+penaltysc,C90D8,"sort object number of the player the referee's call is about, -1 none: InProgress sets it from the penalty buffer, QueueGoalieNote and assrefgoalpa read it"
+cupceremony,CCCA0,1 while the cup presentation runs after the final (findpc sets it; SportsDesk and clockcont_0 test it)
+rpl_x,E9F18,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: x per object (17 words); PickNearestPlayer searches it"
+rpl_x_e14,E9F34,rpl_x+2*14: x of object 14
+rpl_x_e15,E9F36,rpl_x+2*15: x of object 15
+rpl_x_e16,E9F38,rpl_x+2*16: x of object 16
+rpl_x_e14_m2,E9F32,rpl_x_e14-2: -5r short-load base
+rpl_y,E9F3A,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: y per object (17 words)"
+rpl_y_e14,E9F56,rpl_y+2*14: y of object 14
+rpl_y_e15,E9F58,rpl_y+2*15: y of object 15
+rpl_y_e16,E9F5A,rpl_y+2*16: y of object 16
+rpl_y_e14_m2,E9F54,rpl_y_e14-2: -5r short-load base
+rpl_frame,E9F5C,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: frame per object (17 words)"
+rpl_frame_e14,E9F78,rpl_frame+2*14: frame of object 14
+rpl_frame_e15,E9F7A,rpl_frame+2*15: frame of object 15
+rpl_frame_e14_m2,E9F76,rpl_frame_e14-2: -5r short-load base
+rpl_flip,E9F7E,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: flip byte per object (17 bytes)"
+rpl_flip_m3,E9F7B,rpl_flip-3: -5r byte-load base
+rpl_jersey,E9F8F,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: jersey byte per player (12 bytes)"
+rpl_jersey_m3,E9F8C,rpl_jersey-3: -5r byte-load base
+rpl_pos,E9F9B,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: position byte per player (12 bytes)"
+rpl_pos_b1,E9F9C,rpl_pos+1
+rpl_pos_m3,E9F98,rpl_pos-3: -5r byte-load base
+rpl_puckz,E9FA7,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: puck height"
+rpl_puckz_m2,E9FA5,rpl_puckz-2: -5r short-load base
+rpl_c1player,E9FAB,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: controlled player of pad 1"
+rpl_c2player,E9FAC,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: controlled player of pad 2"
+rpl_c1player_m3,E9FA8,rpl_c1player-3: -5r byte-load base
+rpl_puckc,E9FAD,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: puck carrier"
+rpl_puckc_m3,E9FAA,rpl_puckc-3: -5r byte-load base
+rpl_pbnum,E9FAE,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: penalty box count, first team"
+rpl_pbnum_b1,E9FAF,"rpl_pbnum+1: penalty box count, second team"
+rpl_camx,E9FB0,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: camera x (ReplayStep stores it with camx)"
+rpl_camy,E9FB2,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: camera y"
+rpl_objframe,E9FB4,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: frame per rink object (18 words)"
+rpl_objstep,E9FDC,"replay frame unpacked by ReplayStep, drawn by DrawRinkSideObjects: animation step per rink object"
+rpl_objstep_b1,E9FDD,rpl_objstep+1
+rpl_objstep_m3,E9FD9,rpl_objstep-3: -5r byte-load base
+offsort_d,E9D50,"BuildDefaultLines: 25 bytes per team, roster players of position D sorted by the first rating table (SortPlayersByPos 'D')"
+offsort_r,E9EAE,"BuildDefaultLines: 25 bytes per team, roster players of position R sorted by the first rating table"
+offsort_l,E9DE6,"BuildDefaultLines: 25 bytes per team, roster players of position L sorted by the first rating table"
+offsort_c,E9CEC,"BuildDefaultLines: 25 bytes per team, roster players of position C sorted by the first rating table"
+defsort_d,E9DB4,"BuildDefaultLines: 25 bytes per team, roster players of position D sorted by the second rating table"
+defsort_r,E9D1E,"BuildDefaultLines: 25 bytes per team, roster players of position R sorted by the second rating table"
+defsort_l,E9E7C,"BuildDefaultLines: 25 bytes per team, roster players of position L sorted by the second rating table"
+defsort_c,E9D82,"BuildDefaultLines: 25 bytes per team, roster players of position C sorted by the second rating table"
+offsort_fwd,E9E4A,"BuildDefaultLines: 25 bytes per team, roster players other than defencemen sorted by the first rating table (SortNonDefPlayers)"
+defsort_fwd,E9EE0,"BuildDefaultLines: 25 bytes per team, roster players other than defencemen sorted by the second rating table (SortNonDefPlayers)"
+dressflags,E9E18,"dressed flag per roster player, 25 per team (BuildDefaultLines sets, NormalizeDressFlags makes them 0/1, CanFillLineSlot tests 2)"
+dressflags_aw,E9E31,dressflags+25: the visitors
+lineslotmark,E9C24,"25 dwords: 1 for each player found in a line slot (BuildDefaultLines, SetupTeamLines, the sorts)"
+pendelaytab_e13,C9111,"pendelaytab+0Dh: entry 13, checkfornewpen uses it for a penalty shot"
+penmintab_m3,C9120,penmintab-3: -5r byte-load base
+pendelay2tab,C9142,"checkfornewpen: second delay per penalty, x 32 frames, the minimum for Pencntdwn2"
+pendelay2tab_e4,C9146,"pendelay2tab+4: entry 4, used for a penalty shot"
+Pencntdwn2,CC0B0,"second penalty-call countdown: checkfornewpen raises it from pendelay2tab, chkprogress counts it down and sets gmode2 bit 2 at the end"
+PenBuf_m2,E9A14,PenBuf-2: -5r short-load base
+PenBuf_pl_m2,E9A15,PenBuf_pl-2: the player byte of the entry before (PostPenaltyEvent)
+pennametab,CD354,"pointer to the name of each penalty (Roughing, Charging, Slashing ...) for the penalty event text"
+penbannertab,CD39C,"AddPenalty2: call banner message per penalty (dword each, -1 none)"
+ovlscripts,CC01D,pointer to the step script of each text overlay sequence (ovlseq)
+ovlsteptime,CC054,frames per step of each overlay sequence (dword per ovlseq; ovlsteptimer is loaded from it)
+ovlmemneed,CD4B0,free memory each overlay sequence needs before LoadTeamPPV loads its art
+ovlartbank,E0244,"the loaded art bank of the running overlay sequence (LoadTeamPPV loads it, Gameloop/PlayGame free it)"
+ovlstepart,DEF8C,"art pointer per overlay step, drawn by DrawTextOverlay"
+ovlstepart_e21,DEFE0,ovlstepart+4*21
+ovlstepart_e30,DF004,ovlstepart+4*30
+goalienotebits,CC0AC,"QueueGoalieNote: one bit per goalie already noted (bit tmgoalie, +3 for the visitors; 3Fh = all done)"
+demoflag,CC0EC,"94S demoflag (nonzero in demo mode): set while the title screen demo game runs (RunDemoGame); the pre-game skate, three stars and opening lineup are skipped"
+injurystop,CBEC6,set by setInjuryType when a player is hurt: the referee stops play and the call countdown is 140h; cleared at the next faceoff
+nethit,CCC2C,"set when a player hits the goal net or post (checkgoalp, checkgoal): wallcoll then skips the hard-hit sound and keeps him outside the net"
+oneminsaid,CCC98,SayOneMinuteLeft: the one minute left clip was queued this period; StartHL2 clears it
+assscore_dancecnt,CCA58,"assscore: count of the scorer celebration, restarted by the scorer"
+lcsel_aw,CBC60,"lcsel+2: the visitors; also lcline-2, the -5r short-load base in lineinput"
+FallDown_pinxr,CCBCC,"FallDown/NetCollide: by facing, x where a player pinned on the right boards is put"
+FallDown_pinxl,CCBDC,"FallDown/NetCollide: by facing, x on the left boards"
+FallDown_pinyt,CCBEC,"FallDown/NetCollide: by facing, y behind the top goal line"
+FallDown_pinyb,CCBFC,"FallDown/NetCollide: by facing, y behind the bottom goal line"
+FallDown_pinxr2,CCC0C,"FallDown/NetCollide: by facing, x on the right boards at the benches (frame 1027h)"
+FallDown_pinxl2,CCC1C,"FallDown/NetCollide: by facing, x on the left boards at the benches (frame 1055h)"
+assonetimer_blade,CCBBA,"assonetimer: stick blade offset by facing, x,y byte pairs; x column"
+assonetimer_blade_y,CCBBB,assonetimer_blade+1: the y column
+HotStickList,CC7A4,"GetHotStick: stick hot spot per stick frame, x,y byte pairs (as HotList for GetHot); x column"
+HotStickList_y,CC7A5,HotStickList+1: the y column
+assstarskate_path,CC9EA,"assstarskate: 4-point skate path, x,y word pairs, one set per side; x column"
+assstarskate_path_y,CC9EC,assstarskate_path+2: the y column
+ShootoutPathData,CCB18,"NextPathPoint: shootout skate path points, 3 dwords each (x, y, end); 94G ShootoutPath1-7 hold x,y words"
+ShootoutPathData_y,CCB1C,ShootoutPathData+4: the y column
+ShootoutPathData_end,CCB20,ShootoutPathData+8: the end column
+puckcross2,DF816,"95G puckcross2 (puckcross+2, top entry frames): pucknorm counts it down, StartHL2 sets it as 95G st (puckcross2).w"
+puckcross6,DF81A,"95G puckcross6 (puckcross+6, bottom entry frames): pucknorm counts it down with puckcross2"
+regd5,E03B8,"Watcom static for the ported 68k d5: checkwallcoll keeps the y limit from wcradiusy in it as 95G d5 (move.w #$138,d5 / sub.w (wcradiusy).w,d5); sits between regd4 and regd0"
+regd5_m2,E03B6,regd5-2: -5r short-load base
+regd3_m2,E03AE,regd3-2: -5r short-load base (also the high word of regd2)
+regd0_m3,E03B9,regd0-3: -5r byte-load base
+regd1_m3,E03BD,"regd1-3: -5r byte-load base; as a byte it is regd0+1, the high byte of the regd0 word (test 8)"
+regd1_b1,E03C1,regd1+1: the high byte of the regd1 word
+refYpos2,E0022,"SortCords entry 16, the referee: Ypos+2, the integer y (absolute field, as puckpflags2 / doortemp1)"
+refXvel,E0028,"SortCords entry 16, the referee: Xvel (absolute field, as puckpflags2 / doortemp1)"
+refYvel,E002A,"SortCords entry 16, the referee: Yvel (absolute field, as puckpflags2 / doortemp1)"
+refframe,E002E,"SortCords entry 16, the referee: frame (absolute field, as puckpflags2 / doortemp1)"
+refposition,E0036,"SortCords entry 16, the referee: position (absolute field, as puckpflags2 / doortemp1)"
+refasslist,E003A,"SortCords entry 16, the referee: asslist, indexed by his assnum (absolute field, as puckpflags2 / doortemp1)"
+reftemp1,E0042,"SortCords entry 16, the referee: temp1 (absolute field, as puckpflags2 / doortemp1)"
+reftemp3,E0046,"SortCords entry 16, the referee: temp3 (absolute field, as puckpflags2 / doortemp1)"
+reftemp4,E0048,"SortCords entry 16, the referee: temp4 (absolute field, as puckpflags2 / doortemp1)"
+reftemp5,E004A,"SortCords entry 16, the referee: temp5 (absolute field, as puckpflags2 / doortemp1)"
+refweight,E0072,"SortCords entry 16, the referee: weight (absolute field, as puckpflags2 / doortemp1)"
+reflegstr,E0073,"SortCords entry 16, the referee: legstr (absolute field, as puckpflags2 / doortemp1)"
+reflegspd,E0074,"SortCords entry 16, the referee: legspd (absolute field, as puckpflags2 / doortemp1)"
+sctemp4,DF848,SortCords+temp4: assintroline walks the 12 players with stride 80h
+sortobj11,DFD9C,"SortCords entry 11 (SortCords+580h), the last player; PreGameIntro walks down from it"
+doorZpos2,DFFA6,sortobj15+Zpos+2: recorded by updatereplay
+hmrosterpos,DB3AE,"hmroster entry (27h bytes) +6: the position letter (D, C, L, R, G), as hmrosterjersey is +5"
+milestonesaid,E024C,ChkScorerMilestone: flag bytes so a milestone is announced once; ResetGameVars clears the four
+milestonesaid_b1,E024D,milestonesaid+1
+milestonesaid_b2,E024E,milestonesaid+2
+milestonesaid_b3,E024F,milestonesaid+3
+blackpal,C4E30,"all-black palette: SetScreenSize sets it around a mode change, RunIntro and ShowCredits fade from it"
+fadepalbuf,D8C88,FadePalette: the scaled palette of each fade step is built here and set
+gsumheader,C5423,"11-byte header of the game summary file (InitGameSummary fills it, WriteGSumHeader writes it)"
+gsumheader_b1,C5424,gsumheader+1
+gsumheader_b2,C5425,gsumheader+2
+gsumheader_b3,C5426,gsumheader+3
+gsumheader_b4,C5427,gsumheader+4
+gsumcount,C5428,gsumheader+5: record count of the game summary file (AppendGSumRecord and WriteGSumHeader add 1)
+gsumtail,C542E,"11-byte block kept at the end of the game summary file (ReadGSumTail, WriteGSumHeader)"
+panelprevmin,C5710,scoreboard panel clock: minutes drawn last frame (DrawPanelClockDigits redraws changed digits only)
+panelprevsec,C5714,scoreboard panel clock: seconds drawn last frame
+panelprevhund,C5718,scoreboard panel clock: hundredths drawn last frame
+hmpanelpen_time,C571E,"home penalty panel list, 8 entries of 4 words (player, time, 2 spare): the time word"
+hmpanelpen_w4,C5720,home penalty panel entry +4
+hmpanelpen_w6,C5722,home penalty panel entry +6
+awpanelpen_time,C575E,visitor penalty panel list: the time word
+awpanelpen_w4,C5760,visitor penalty panel entry +4
+awpanelpen_w6,C5762,visitor penalty panel entry +6
+panelhund,C583C,hundredths elapsed since the last panel update (UpdateHudPanel passes it to TickPanelClock)
+hmlinetimer,C585C,"home line timer of the panel: DrawPanelLine resets it when the line group changes, RequestLineChange and PanelAddPenalty clear it"
+awlinetimer,C5860,visitor line timer of the panel
+nhlintrosaid,C588A,TitleScreen: the NHL intro line was said once with the first movie frame
+creditpages,C6399,ShowCredits: pointers to the 29 credit pages
+embscupbank,C65AC,"loaded EMBSCUP background bank of the playoff screens, freed by FreeDeskBuffers"
+easnfontbuf,C65A8,"loaded EASN.VFN font of the in-game standings screens, freed by FreeDeskBuffers"
+leadercolhdrs,C6C40,"LeadersScreen: column header strings, five per category; first column"
+leadercolhdrs_c1,C6C44,leadercolhdrs+4: second column
+leadercolhdrs_c2,C6C48,leadercolhdrs+8: third column
+leadercolhdrs_c3,C6C4C,leadercolhdrs+0Ch: fourth column
+leadercolhdrs_c4,C6C50,leadercolhdrs+10h: fifth column
+potreeround,C6D24,PlayoffTreeMenu: the round the playoff tree shows; the tree is redrawn when it changes
+potreeseeds,C6DBA,DrawPlayoffTree: seed numbers of the first-round teams
+playoffbuf,C8C61,pointer to the playoff tree buffer (276h bytes) that AdvancePlayoffs and FinishPlayoffs simulate in
+leaguedbsizes,C8D06,CreateNewLeague: sizes of the seven league databases
+ovlartnames,CBED0,LoadTeamPPV: name of the PPV art bank of each overlay sequence
+standingsmenubar,CF54F,menu bar of the standings screens
+rostermenubar,CF6AF,menu bar of the team roster screen reached from the standings (player pick)
+playercardmenubar,CF74F,menu bar of the skater / goalie card screens
+teamstatsmenubar,CF78F,menu bar of the team stats screens
+skaterstatsmenubar,CF80F,menu bar of the skater stats (leaders) screens
+goaliestatsmenubar,CF88F,menu bar of the goalie stats screens
+playoffmenubar,CF90F,menu bar of the playoff mode screen
+editrostersmenubar,D0450,menu bar of the Edit Rosters screen
+newskaterratingnames,D0880,create player: names of the 14 skater ratings (index 1-14)
+newgoalieratingnames,D09DB,create player: names of the 10 goalie ratings (index 1-10)
+skaterratingmin,D0FA8,EditSkaterRating: minimum of each skater rating
+skaterratingmax,D0FBC,EditSkaterRating: maximum of each skater rating
+goalieratingmin,D0FF0,EditGoalieRating: minimum of each goalie rating
+goalieratingmax,D1000,EditGoalieRating: maximum of each goalie rating
+newskaterdefaults,D0F80,CreatePlayerLoop: default ratings copied into a new skater
+newskatershoots,D0F94,"the new skater: shoots L / R byte, right after his ratings"
+newgoaliedefaults,D0FD0,CreatePlayerLoop: default ratings copied into a new goalie
+newgoalieglove,D0FE0,"the new goalie: glove hand L / R byte, right after his ratings"
+rostereditmode,D0B12,roster editor mode (2: CopyRoster1Rec copies the team record into the edit buffer)
+lockerindex,D20E0,LockerRoomScreen: locker index of the home and the visiting team
+lockerteams,D2150,LockerRoomScreen: team of each locker; OK sets HomeTeam / VisTeam from it
+speechchannel,D27B2,"SpeechTimerTick: sound channel of the next speech clip, toggled 0 / 1 per clip"
+poslotx,D2B70,POHiliteSlot: x of each playoff tree slot
+posloty,D2BEC,POHiliteSlot: y of each playoff tree slot
+gfxidlist,D8C4C,graphics id list loaded by LoadGameGfx; DrawSpriteNumber takes the suffix sprite from it
+hmplstats_w2,DB08A,"hmplstats+2: stats word 1 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w4,DB08C,"hmplstats+4: stats word 2 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w6,DB08E,"hmplstats+6: stats word 3 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w8,DB090,"hmplstats+8: stats word 4 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w10,DB092,"hmplstats+10: stats word 5 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w12,DB094,"hmplstats+12: stats word 6 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmplstats_w14,DB096,"hmplstats+14: stats word 7 of a skater record (g, a, pen, +/-, ppg, shg, eng, sht)"
+hmglstats,DC240,"home goalie game stats, 3 x 6 bytes (words min, sht, sav); clearteams points hmtmglstats here"
+hmglstats_w2,DC242,hmglstats+2: shots word
+hmglstats_w4,DC244,hmglstats+4: saves word
+hmglstats_w8,DC248,hmglstats+8
+hmglstats_w14,DC24E,hmglstats+0Eh
+awglstats,DC252,visitor goalie game stats (hmglstats+12h); clearteams points awtmglstats here
+hmteamrec_skaters,DBC7C,"hmteamrec+4Ch: the 25 skater ids of the team record (LoadGameRoster, LoadTeamRoster)"
+hmteamrec_goalies,DBCE0,hmteamrec+0B0h: the 3 goalie ids of the team record
+leaguestatsmode,DC738,set while the stats screens run from the league (calendar) rather than a game: the stats menus then load their own palettes
+str_G5,C2338,string 'G'
+str_C6,C2343,string 'C'
+str_StanleyCup,C029A,string 'Stanley Cup '
+str_StanleyCupChampions,C0379,string 'Stanley Cup  Champions'
+str_3000,C06BC,string '3000'
+str_3001,C06C1,string '3001'
+str_3002,C06C6,string '3002'
+str_3003,C06CB,string '3003'
+str_3004,C06D0,string '3004'
+str_3005,C06D5,string '3005'
+str_3006,C06DA,string '3006'
+str_3007,C06DF,string '3007'
+str_3008,C06E4,string '3008'
+str_3009,C06E9,string '3009'
+str_300,C06EE,string '300 '
+str_spW,C0F69,string ' W'
+str_spG,C11C5,string '  G'
+str_spA,C11C9,string '  A'
+str_spW2,C11FD,string ' W'
+str_A5,C1934,string 'A'
+str_StanleyCupFinals,C3580,string 'Stanley Cup  Finals'
+str_R4,C36AC,string 'r+'
+str_04x,C36C3,string '%04x '
+str_H2,C392C,string 'h2'
+str_H4,C393B,string 'h4'
+str_H1,C396F,string 'h1'
+str_A32,C397B,string 'A3'
+str_SDD3,C39A8,string '%s %d - %d'
+str_S9,C3B67,string '%s '
+str_Dashes,C67A9,string '-------'
+str_Dashes2,CDB84,string '-------------------'
+str_Dashes3,CDC1E,string '---------------------'
+str_sp00XXXXXXXXXXXXXXXXX,CDC47,string '  00 X. XXXXXXXXXXXXXXXX'
+str_sp00XXXXXXXXXXXXXXXXX2,CDC60,string '  00 X. XXXXXXXXXXXXXXXX'
+str_spNONE,CDC79,string '  NONE'
+str_VisitingTeamGoalie,CDC80,string 'Visiting Team Goalie  '
+str_sp00XXXXXXXXXXXXXXXXX3,CDC97,string '  00 X. XXXXXXXXXXXXXXXX'
+str_sp00XXXXXXXXXXXXXXXXX4,CDCB0,string '  00 X. XXXXXXXXXXXXXXXX'
+str_spNONE2,CDCC9,string '  NONE'
+str_StatisticsType8,CDF44,string 'Statistics Type  '
+str_TeamsSortedBy2,CDF64,string 'Teams Sorted By  '
+str_PlayersSortedBy2,CDF76,string 'Players Sorted By  '
+str_GoaliesSortedBy2,CDF8A,string 'Goalies Sorted By  '
+str_Pacific,D010E,string 'Pacific  '
+str_Central,D0118,string 'Central  '
+str_Northeast,D0122,string 'Northeast  '
+str_Atlantic,D012E,string 'Atlantic  '
+str_spG2,C2977,string '  G'
+str_spA2,C297B,string '  A'
+str_spW3,C2A59,string ' W'
+str_X,C2B0B,string 'X'
+str_L9,C2D0E,string 'L'
+str_2d02d02d,C4090,string '%2d:%02d:%02d'
+str_1212s9d8s8s,C42A4,string '%-12.12s %9d %8s %8s'
+str_33d1212s66x66s66s44x,C42BC,string '%3.3d %-12.12s  %6.6x %6.6s %6.6s %4.4x'
+str_04x2,C4404,string '%04x   '
+str_02x,C440C,string '%02x'
+str_2d02d02d2,C471C,string '%2d:%02d:%02d'
+str_110,C4B4C,string '110'
+deskptrx,DC88C,SportsDesk: pointer x passed to the menu action that was clicked
+deskptry,DC888,SportsDesk: pointer y passed to the menu action that was clicked
+awayremap,DC8D8,"256-byte colour remap table of the visiting team (LoadTeamPalette builds it from AWAYPALS.BIN, DrawSprite loads it)"
+homeremap,DC9D8,256-byte colour remap table of the home team (LoadTeamPalette builds it from HOMEPALS.BIN)
+awayremap_e43,DC91B,awayremap+43h: entry 43h of the visitors' remap table
+awayremap_eC0,DC998,awayremap+C0h: entry C0h of the visitors' remap table
+awayremap_eFF,DC9D7,awayremap+FFh: entry FFh of the visitors' remap table
+homeremap_e05,DC9DD,homeremap+5h: entry 5h of the home remap table
+homeremap_e07,DC9DF,homeremap+7h: entry 7h of the home remap table
+homeremap_e10,DC9E8,homeremap+10h: entry 10h of the home remap table
+homeremap_e11,DC9E9,homeremap+11h: entry 11h of the home remap table
+homeremap_e13,DC9EB,homeremap+13h: entry 13h of the home remap table
+homeremap_e14,DC9EC,homeremap+14h: entry 14h of the home remap table
+homeremap_e16,DC9EE,homeremap+16h: entry 16h of the home remap table
+homeremap_e43,DCA1B,homeremap+43h: entry 43h of the home remap table
+homeremap_e49,DCA21,homeremap+49h: entry 49h of the home remap table
+homeremap_e50,DCA28,homeremap+50h: entry 50h of the home remap table
+homeremap_e51,DCA29,homeremap+51h: entry 51h of the home remap table
+homeremap_e60,DCA38,homeremap+60h: entry 60h of the home remap table
+homeremap_eC0,DCA98,homeremap+C0h: entry C0h of the home remap table
+homeremap_eFB,DCAD3,homeremap+FBh: entry FBh of the home remap table
+homeremap_eFC,DCAD4,homeremap+FCh: entry FCh of the home remap table
+homeremap_eFD,DCAD5,homeremap+FDh: entry FDh of the home remap table
+homeremap_eFE,DCAD6,homeremap+FEh: entry FEh of the home remap table
+homeremap_eFF,DCAD7,homeremap+FFh: entry FFh of the home remap table
+calredraw,DDD2C,CalendarScreen: set to redraw the month
+lgschedrec,DDD40,PlayLeagueGame: the schedule record of the league game being played
+lgschedrec_b1,DDD41,lgschedrec+1
+lgschedrec_b2,DDD42,lgschedrec+2
+lgschedrec_b3,DDD43,lgschedrec+3
+lgschedrec_b4,DDD44,lgschedrec+4: a finished game keeps the first score here
+lgschedrec_b5,DDD45,lgschedrec+5: the second score
+tradebitmap,DE264,the 640 x 480 bitmap of the trade screen (TradePlayers makes it)
+falisttop,EBCA4,roster editor: first shown entry of the free-agent list
+hilightslot,ED6D4,"ReplaySaveHilight: the highlight slot row picked, 0-3"
+replayspotx,ED6F0,instant replay: x of the spot the camera follows
+replayspoty,ED6F4,instant replay: y of the spot the camera follows
+replayfollowpl,CD4FC,"instant replay: the player the camera follows, -1 for a free spot"
+replayptrx,ED704,instant replay: rink x under the pointer
+replayptry,ED708,instant replay: rink y under the pointer
+replaybtnarmed,ED6FC,"ReplayControlLoop: a press arms the buttons, a release disarms them"
+replaynosave,ED6F8,"instant replay: the save highlight button is off (exhibition, no human team, or no disk space)"
+replayfrac,ED758,instant replay: fraction of a replay step kept between passes (twentieths)
+portraitoncd,ED909,player cards: 1 when the portrait of the player is read from the CD
+fp_1000,C2CAC,float constant 1000.0 of RandomizeNewRatings
+fp_84,C2CB0,float constant 84.0 of RandomizeNewRatings
+fp_300,C2CB4,float constant 300.0 of RandomizeNewRatings
+fp_390,C2CB8,float constant 390.0 of RandomizeNewRatings
+fp_200,C2CBC,float constant 200.0 of RandomizeNewRatings
+fp_100,C2CC0,float constant 100.0 of RandomizeNewRatings
+fp_m50,C2CC4,float constant -50.0 of RandomizeNewRatings
+fp_500,C2CC8,float constant 500.0 of RandomizeNewRatings
+fp_90,C2CCC,float constant 90.0 of RandomizeNewRatings
+fp_10,C2CD0,float constant 10.0 of RandomizeNewRatings
+fp_70,C2CD4,float constant 70.0 of RandomizeNewRatings
+fp_30,C2CD8,float constant 30.0 of RandomizeNewRatings
+fp_58,C2CDC,float constant 58.0 of RandomizeNewRatings
+fp_347,C2CF0,float constant 347.0 of RandomizeNewRatings
+str_dot2,C311D,string '.'
+str_dot3,C3283,string '.'
+str_dot4,C3470,string '.' (TeamFromHiName separator)
+str_backslash4,C3447,string backslash
+str_space4,C3A66,string ' '
+str_space5,C3AF8,string of two spaces
+str_qmark,C1900,string '?'
+str_ctl07,C03C4,one-byte control string 07h (text colour code) of the award screens
+str_ctl06,C03C6,one-byte control string 06h (text colour code) of the award screens
+str_R5,C2D10,"string 'R', read as a word by AskLeftRight"
+str_SpL4,C0F6C,string ' L'
+str_SpT,C0F6F,string ' T'
+str_SpL5,C1200,string ' L'
+str_SpT2,C1203,string ' T'
+str_SpL6,C2A5C,string ' L'
+str_SpT3,C2A5F,string ' T'
+str_PlusMinus5,C11D9,string ' +/-'
+str_PlusMinus6,C2987,string ' +/-'
+str_PlusMinus7,C3164,string ' +/-' (ShowRosterStats column head)
+str_h3,C392F,string 'h3': MenuSaveGame fatal error tag
+str_h5,C393E,string 'h5': MenuSaveGame fatal error tag
+str_h6,C3941,string 'h6': MenuSaveGame fatal error tag
+str_h7,C3944,string 'h7': MenuSaveGame fatal error tag
+str_ModeR,C3B0C,string 'r': fopen mode InitFileLocations opens NHL.CFG with
+fadestart_m3,C5131,"FadePalette: fadestart-3, the -5r dword load [dir+C5131] whose top byte is fadestart[dir]"
+fadestep_m3,C5133,"FadePalette: fadestep-3 (C5136: +1 fading in, -1 fading out), read by a dword load"
+fadestart_e1,C5135,"FadePalette: fadestart[1], the fade-out start level, set to steps-1"
+fadeendlvl,C5138,"FadePalette: end level by direction (steps+1 fading in, -1 fading out)"
+awardtextcolors,C513C,ShowAwardScreens: text colour of each award (SetTextColors)
+awardartfiles,C5168,ShowAwardScreens: file number (fileoncd index) of each award's art
+awardstatsptrs,C524F,PickAwardWinners: pointer to the stats record of each award's winner
+awardstatsptrs_e01,C5253,awardstatsptrs[1]
+awardstatsptrs_e02,C5257,awardstatsptrs[2]
+awardstatsptrs_e03,C525B,awardstatsptrs[3]
+awardstatsptrs_e04,C525F,awardstatsptrs[4]
+awardstatsptrs_e05,C5263,awardstatsptrs[5]
+awardstatsptrs_e06,C5267,awardstatsptrs[6]
+awardstatsptrs_e08,C526F,awardstatsptrs[8]
+awardstatsptrs_e09,C5273,awardstatsptrs[9]
+awardwinners_e01,D958C,"awardwinners[1] (34h-byte key records), filled by PickAwardWinners"
+awardwinners_e02,D95C0,awardwinners[2]
+awardwinners_e03,D95F4,awardwinners[3]
+awardwinners_e04,D9628,awardwinners[4]
+awardwinners_e05,D965C,awardwinners[5]
+awardwinners_e06,D9690,awardwinners[6]
+awardwinners_e08,D96F8,awardwinners[8]
+awardwinners_e09,D972C,awardwinners[9]
+awardstats0,D9921,season stats record of award 0's winner (awardstatsptrs[0])
+awardstats1,D9894,season stats record of award 1's winner
+awardstats2,D9865,season stats record of award 2's winner
+awardstats3,D98F2,season stats record of award 3's winner
+awardstats4,D9800,goalie season stats record of award 4's winner
+awardstats5,D97CA,goalie season stats record of award 5's winner
+awardstats6,D9950,season stats record of award 6's winner
+awardstats8,D9836,season stats record of award 8's winner
+awardstats9,D98C3,skater season stats record of award 9's winner
+awardstats9g,D9794,goalie season stats record of award 9's winner when a goalie wins it
+awardscopenames,C527B,ShowAwardScreens: 'Season' / 'Playoff' labels
+sndcardmissing,C541B,sound card dialog: a set bit greys out that card (not present)
+poconf2teams,C5619,GetPlayoffSeeds: team numbers of the second conference
+msg_GameDiskSpace,C56B5,CheckGameDiskSpace message lines 'Insufficient disk space' ...
+awlineenergies,C56C4,"UpdateHudPanel: GetLineEnergies(1) results, drawn by awlineind / hudawayline"
+hmlineenergies,C56E4,"UpdateHudPanel: GetLineEnergies(0) results, drawn by hmlineind / hudhomeline"
+hudotname,C57C8,DrawHudPanel: name of the 'OT' shape
+hmpanellines,C5844,"UpdateHudPanel: the home side of the panel shows line bars, not penalties; PanelAddPenalty clears it"
+awpanellines,C5848,"UpdateHudPanel: the away side of the panel shows line bars, not penalties"
+hmpanelpens,C5854,UpdateHudPanel: the home penalty backdrop (hmpanelspr) is drawn
+awpanelpens,C5858,UpdateHudPanel: the away penalty backdrop (awpanelspr) is drawn
+demomatchups,C5862,"RunDemoGame: team byte pairs of the demo games, read by dword loads at team*2"
+demomatchups_m1,C5861,demomatchups-1: load base of the second -5r dword read
+msg_FileExists,C648E,WriteScreenTextFile message 'The file you specified' / 'Do you want to'
+btn_FileExists,C6499,WriteScreenTextFile: the two buttons of msg_FileExists
+msg_StatsWritten,C64F5,WriteScreenTextFile message 'The stats were successfully'
+msg_OutputFileError,C652A,WriteScreenTextFile message 'ERROR: Output file was'
+msg_StatsDiskSpace,C659A,WriteScreenTextFile message 'Insufficient disk space to' / 'the displayed statistics to'
+msg_DeskExit,C66A4,DeskExitGame / DeskReturnConfirm message lines; line 0 is patched
+msg_DeskExit_e02,C66AC,"msg_DeskExit[2], patched with 'Do you wish to exit / return'"
+menutext_statsleague,C6821,stats source menu: text slot of the league item (SetupStatsSourceMenu)
+menuact_statsleague,C6825,stats source menu: action slot of the league item
+menutext_statslgplayoffs,C6841,stats source menu: text slot of the league playoffs item
+menuact_statslgplayoffs,C6845,stats source menu: action slot of the league playoffs item
+menutext_statsplayoff,C6881,stats source menu: text slot of the playoff mode item
+menuact_statsplayoff,C6885,stats source menu: action slot of the playoff mode item
+skatercardattrs_m3,C6A99,SkaterStatsCard: attribute index list -3 (the list is the bytes after the label's dword)
+goaliecardattrs_m3,C6AD1,GoalieStatsCard: attribute index list -3
+newskaterattrs_m3,D08B9,CreateFreeAgent: skater attribute index list -3
+newgoalieattrs_m3,D0A04,CreateFreeAgent: goalie attribute index list -3
+fdlgfilelists,C6F7C,"file dialog: file list of each tab (lgfiles, pofiles, exhfiles), by fdlgtab"
+fdlgfilelists_e01,C6F80,fdlgfilelists[1] (pofiles)
+fdlgfilelists_e02,C6F84,fdlgfilelists[2] (exhfiles)
+msg_NameTaken,C7592,LeagueTeamSelect message 'That name has already'
+msg_DbUpdateError,C7805,PlayLeagueGame message 'Error while updating database'
+msg_WrongPassword,C7965,AskTeamPassword / AskMasterPassword message 'Incorrect password'
+msg_MergeNeeded,C7F07,PlayLeagueGame message 'Master databases for' ... 'must be completely merged'
+msg_MergeNeeded_e01,C7F0B,"msg_MergeNeeded[1], patched with the league name"
+btn_MergeNeeded,C7F1B,PlayLeagueGame: the two buttons of msg_MergeNeeded
+menuwidth_trade1,C87C0,TradePlayers: width slot of the first team's trade menu item
+menutext_trade1,C87C8,TradePlayers: text slot of the first team's trade menu item
+menuwidth_trade2,C87E0,TradePlayers: width slot of the second team's trade menu item
+menutext_trade2,C87E8,TradePlayers: text slot of the second team's trade menu item
+tradestatsmenubar,C88E2,menu bar ('Return To') of TradeShowStats and FixJerseyConflict
+deskmenubar,CEB8F,SportsDesk: 'Action' menu bar outside league mode
+deskmenubar_lg,CEC4F,"SportsDesk: 'Action' menu bar in mode 2 (league), 3 items"
+menutext_deskreturn,CECFF,SetModeMenuLabels: text slot of the desk item that runs DeskReturnConfirm
+menutext_desktodesk,CED3F,SetModeMenuLabels: text slot of the desk item that runs DeskToSportsDesk
+menusub_hmgoalie,CEDE7,SetSideControls: submenu slot of the home goalie item (hmgoaliemenu or 0)
+menusub_awgoalie,CEE07,SetSideControls: submenu slot of the away goalie item (awgoaliemenu or 0)
+hmgoaliemenu,CEE4F,SetupGoalieMenu: the home goalie submenu items
+awgoaliemenu,CEEAF,SetupGoalieMenu: the away goalie submenu items (mi_AwayGoalie1...)
+menuact_gotoreplay,CEF23,SportsDesk: action slot of 'Go To Replay' (0 when the replay is empty)
+menuact_homelines,CEF43,SetSideControls: action slot of the home lines item (DeskHomeLines or 0)
+menuact_visitorlines,CEF63,SetSideControls: action slot of the visitor lines item (DeskVisitorLines or 0)
+pregamelinesmenubar,CF1AF,menu bar of the line editor run from PreGameScreen
+desklinesmenubar,CF2EF,menu bar of the line editor run from the desk (DeskHomeLines / DeskVisitorLines)
+tradelinesmenubar,CF3CF,menu bar of the line editor run after ExecuteTrade
+gameplstatsmenubar,CF48F,menu bar ('Return To') of MenuGameShowPlayerStats
+dblinesmenubar,D05F4,menu bar of the database line editor (EditTeamLines)
+rosterstatsmenubar,D075E,menu bar of ShowRosterStats / MenuShowPlayerStats
+standingsmenubar_srccnt,CF5AB,standingsmenubar+5Ch: item count of its stats source submenu (SetupStatsSourceMenu)
+rostermenubar_srccnt,CF70B,rostermenubar+5Ch: item count of its stats source submenu
+teamstatsmenubar_srccnt,CF7CB,teamstatsmenubar+3Ch: item count of its stats source submenu
+skaterstatsmenubar_srccnt,CF84B,skaterstatsmenubar+3Ch: item count of its stats source submenu
+goaliestatsmenubar_srccnt,CF8CB,goaliestatsmenubar+3Ch: item count of its stats source submenu
+menuact_playnextgame,CF983,playoff mode: action slot of 'Play Next Game' (MenuPlayNextGame or 0)
+teamratingnames,D0AC2,DrawEditRosters: the nine team rating names
+teamratingidx,D0AE6,DrawEditRosters: index of each of the nine ratings in the team record
+btn_EditRosters,D0B80,Edit Rosters screen: its two buttons
+btn_RosterList,D0BB8,DrawRosterList: the two list buttons
+fascrollbar,D0BF0,Edit Rosters: scroll bar of the free agent list
+fascrollbar_len,D0BFC,fascrollbar+0Ch: bar length
+fascrollbar_thumb,D0C04,"fascrollbar+14h: thumb position, (len-4)*top/count"
+fascrollbar_top,D0C10,fascrollbar+20h: list top (falisttop)
+fascrollbar_count,D0C18,fascrollbar+28h: range the thumb position divides by
+btn_DBError,D0CA2,database error screen: its two buttons
+btn_CreateFreeAgent,D0EDD,CreateFreeAgent: the two buttons of its message box
+msg_FreeAgentDiskSpace,D1077,CreateFreeAgent message 'Insufficient disk space' / 'to create a free'
+jerseypalslot0,D1333,"first of four palette slots the jersey shapes use (FBh game lines, 7Bh trade)"
+jerseypalslot1,D1334,second jersey palette slot
+jerseypalslot2,D1335,third jersey palette slot
+jerseypalslot3,D1336,fourth jersey palette slot
+dlggreys,D16A0,four grey RGB triplets the settings dialogs load at colour F7h
+ctlboxrect1,D19CC,ControlsDlgLoop: rectangle of the first highlighted box
+ctlboxrect2,D19DC,ControlsDlgLoop: rectangle of the second highlighted box
+jerseyabbrevs,D21C0,locker room: team abbreviation for the JERSH / JERSV file names
+poroundnames,D2230,locker room: playoff round names ('Western Conference Quarter' ...)
+poroundnameidx,D223C,locker room: index into poroundnames
+lockeracceptx,D22DC,"locker room: Accept button rectangle, x"
+lockeraccepty,D22E0,"locker room: Accept button rectangle, y onward"
+lockercancelx,D22EC,"locker room: Cancel button rectangle, x"
+lockercancely,D22F0,"locker room: Cancel button rectangle, y onward"
+sndselbox1,D2403,sound card dialog: rectangle of the first selection box
+sndselbox2,D2413,sound card dialog: rectangle of the second selection box
+sndtempbuf,D2435,MenuSoundSettings: the 320 KB TEMP buffer
+msg_NoSoundCard,D249C,SetSoundDevice message 'Could not find a'
+podbsizes,D2864,CreatePlayoffs: database sizes passed to GetLeagueDBSizes / DiskSpaceShort
+poseriesfmt,D288C,POAfterGame: pointer to the series score format '%s %d-%d'
+poseriesbuf,ED7BC,POAfterGame: buffer the series score is formatted into
+poseriestext,DDCFB,POAfterGame: copy of poseriesbuf kept for the screen
+titlesample,DC33C,TitleScreen: handle of the sample it loads and plays
+statsscreenpal,DC340,stats screens: 768-byte palette read and faded to
+statsmenuresult,DC6A8,StatsMenu*: the result of the screen just run
+statsfilepos,DC85C,stats cards: file position of the record (game stats)
+lgstatsfilepos,DC860,stats cards: file position of the record when statsfromleague
+deskbankname,DC890,SportsDesk: 'EADESK%1d' bank name buffer
+tmpdbpath,EA968,roster editor: path buffer of the temporary databases
+gamelinespal,ECDF4,game line editor: 768-byte saved palette
+crowdsamples,ED374,PlayCrowdSample: samples of cues 6 to 8
+checkinglist_m2,CCC4E,"checkinglist-2: CCStart's check animation table (95G collide95 checkinglist), read by a -5r dword load >> 16"
+goaliesave_saveanim_m2,CCA5A,"goaliesave .saveanim-2: the ten save SPAs by side and height (94G logic94), read as words at +2"
+refhitcount,CBEC2,checkcheck: checks on the referee (SCnum 10h); the third draws penalty 16h. ResetGameVars clears it
+ovlseqtimed,CC049,UpdateTextOverlay: set for the overlay sequences that get the 258h ovltimer
+ovlartfiles,CC080,"file number (fileoncd index) of each overlay sequence's PPV art, beside ovlartnames"
+teamrocktune,CC9B0,by HomeTeam: the rock tune LoadRockMusic loads and the intro variant PreGameIntro uses
+introstandanims_m2,CC9CE,"assintrostand: five standing animations (SPA in the high word of each dword load), -2"
+starskatermin,CC9E4,PickThreeStars: skater stat minimum by period length (gameopts.pertime)
+stargoaliemin,CC9E7,PickThreeStars: goalie shots minimum by period length
+refsigdir,CCA9C,"assrefsignal: direction the referee turns to for each call (RefPen), -1 for none"
+refsigspa_m2,CCAD8,"assrefsignal: signal SPA of each call (RefPen), read as words at +2"
+cursndbank,CCC94,SndLoadFile: the current sound bank the file is loaded into
+sideobjpos,CD2F8,"DrawRinkObjects: x, y of the rink-side objects (slots 12h, 13h)"
+dressbystatus,CD418,BuildDefaultLines: dressflags value for each roster status byte
+lineslotgroups,CD421,"PickForLineSlot: line slots grouped by position, each group ended by -1"
+lineslotgroupstart,CD473,PickForLineSlot: start index in lineslotgroups of each slot's group
+goaliemenuflags,CD498,ShowGoalieBanner / CPgoalie: per side three pointers to the goalie menu item check marks
+goaliemenuflags_e02,CD4A0,goaliemenuflags[2]: the 'pulled goalie / extra attacker' item
+starthl2pos,CD9A0,"StartHL2: x, y start positions of the players for the highlight"
+plcareergoals,DEB74,"per player (10h each, 25 a team): career goals before this game (LoadTeamRoster); ChkScorerMilestone"
+plcareerpts,DEB78,per player +4: career points before this game
+plseasongoals,DEB7C,per player +8: season goals before this game
+plseasonpts,DEB80,per player +0Ch: season points before this game
+dressedfwds,E9F12,BuildDefaultLines / RemoveFromLines: count of dressed forwards (offsort_fwd)
+dresseddefs,E9F14,BuildDefaultLines / RemoveFromLines: count of dressed defencemen (defsort_d)
+dressedskaters,E9F16,dressedfwds + dresseddefs; CanFillLineSlot stops dressing at 18
+linesortidx,E9C88,SortPlayersByPos / SortNonDefPlayers: the 25 roster indices sorted by lineslotmark
+rpl_ysort,E9FF0,ReplayStep: the 17 replay objects' indices sorted by y
+penevteam,E9AAE,"PostPenaltyEvent: team of the running penalty event, picks the wording; -1 after the faceoff"
+__nullarea,C0000,Watcom _NULL area: the 01h-filled words at the first data address; the port snapshots the data from here
+stackarea,F7B88,the stack area after the game's variables; the port builds the command tail and program name at its start
+_STACKLOW,D4CE8,Watcom: the bound __STK compares the stack pointer with
+_STACKTOP,D4CEC,Watcom cstart: the initial esp
+_curbrk,D4CD8,Watcom: the break address; cstart sets it to esp and the DOS/4GW sbrk glue moves it
+_dynend,D4CD4,"Watcom cstart: end of the dynamic memory, set after the stack is placed"
+_LpCmdLine,D4CDC,Watcom cstart: pointer to the command tail (the port passes its copy)
+_LpPgmName,D4CE0,Watcom cstart: pointer cstart leaves at the program name after the environment strings
+_psp,D4CE4,Watcom cstart: program segment prefix selector
+__no87,D4D04,Watcom cstart: set when the environment has NO87
+_Extender,D4D06,Watcom cstart: DOS extender type (1 = DOS/4G)
+_ExtenderSubtype,D4D07,"Watcom cstart: extender subtype (0 = flat, zero-based data)"
+_Envptr,D4D09,"Watcom cstart: far pointer to the environment, offset part; __setenvp_ reads it"
+_Envptr_w4,D4D0D,_Envptr+4: the selector half of the far pointer
+_osmajor,D4D0F,Watcom cstart: DOS major version
+_osminor,D4D10,Watcom cstart: DOS minor version
+_environ,D5444,Watcom: the environment pointer table __setenvp_ builds
+___env_mask,D5448,"Watcom: one flag byte per environ entry, built by __setenvp_"
+__8087,D4B9C,"Watcom: coprocessor type (3 = 80387), set by the floating point start-up"
+__real87,D51DC,Watcom: a real coprocessor is present
+delaycount,F24CC,"Watcom delay(): loops per millisecond counted by __delay_init_, used by __delay_"
+cpuinfo_d0,D305C,"DetectCPU result, first dword (1 on a 486 in protected mode)"
+cpuinfo_d1,D3060,"DetectCPU result, second dword"
+cpuinfo_b0,D3064,"DetectCPU result, first flag byte"
+cpuinfo_b1,D3068,"DetectCPU result, second flag byte"
+vesainfo,EDBB8,"ProbeVesa: the 256-byte VBE controller information block ('VESA', version, memory)"
+vesamodeinfo,EDAB8,"ProbeVesa: the 256-byte VBE mode information block (window attributes, granularity, segment)"
+vesamodeok,EDCC0,"ProbeVesa: one flag per mode from 100h, 1Bh entries"
+vesapresent,EDCB8,ProbeVesa: set when the VESA tables are filled
+mouseminx,D2FEC,"mouse library: pointer range, left"
+mouseminy,D2FF0,"mouse library: pointer range, top"
+mousemaxx,D2FF4,"mouse library: pointer range, right (exclusive)"
+mousemaxy,D2FF8,"mouse library: pointer range, bottom (exclusive)"
+memblocklist,D2F58,EA memory manager: the block list the port checks a pointer against before FreeMemBlock
+sndhandlecount,D4F64,EA sound library: number of sound handles; the handle calls return -1 for a handle at or above it
+joyedgedir,D41B7,"joystick library table: direction for each edge mask (1 up, 2 down, 4 right, 8 left)"
+markframes_e1,CC0B4,"DrawRinkOverlays: frames of the control marks (stars 185h-187h, then the off-screen arrows); the table starts one word earlier"
+playsuspended,CCC9C,"updateplayers: set while play is paused for a highlight, replay or stoppage; changeplayer then drops both controlled players"
+digidriver,D242B,"SetSoundDevice: id of the second, digital sound driver (3 Sound Blaster, 6 Ultrasound, -1 none)"
+crowddriver,D2439,"SetSoundDevice: the digital driver the crowd noise calls use (Crowd_Noise, CrowdNoiseOff)"

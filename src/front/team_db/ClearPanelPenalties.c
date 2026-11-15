@@ -10,12 +10,12 @@ void ClearPanelPenalties(void)
 
     for (i = 0; i < 8; i++) {
         hudpenhome[i * 4] = hudpenaway[i * 4] = -1;
-        word_C5762[i * 4] = 0;
-        word_C5722[i * 4] = 0;
-        word_C5760[i * 4] = 0;
-        word_C5720[i * 4] = 0;
-        word_C575E[i * 4] = 0;
-        word_C571E[i * 4] = 0;
+        awpanelpen_w6[i * 4] = 0;
+        hmpanelpen_w6[i * 4] = 0;
+        awpanelpen_w4[i * 4] = 0;
+        hmpanelpen_w4[i * 4] = 0;
+        awpanelpen_time[i * 4] = 0;
+        hmpanelpen_time[i * 4] = 0;
     }
     LoadScoreboardGfx();
 }

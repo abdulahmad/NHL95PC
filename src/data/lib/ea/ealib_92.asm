@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_EDAA8 nobits alloc noexec write align=1
-global byte_EDABB, byte_EDCC0, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7, dword_EDAA8, dword_EDAAC
-global dword_EDAB0, dword_EDAB4, dword_EDABA, dword_EDCB8, dword_EDCBC, timercallbacks, unk_EDAB8, unk_EDBB8
+global byte_EDABB, vesamodeok, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7, dword_EDAA8, dword_EDAAC
+global dword_EDAB0, dword_EDAB4, dword_EDABA, vesapresent, dword_EDCBC, timercallbacks, vesamodeinfo, vesainfo
 global word_EDBCA
 dword_EDAA8:
 resb 4
@@ -13,21 +13,21 @@ dword_EDAB0:
 resb 4
 dword_EDAB4:
 resb 4
-unk_EDAB8:
+vesamodeinfo:
 resb 2
 dword_EDABA:
 resb 1
 byte_EDABB:
 resb 253
-unk_EDBB8:
+vesainfo:
 resb 18
 word_EDBCA:
 resb 238
-dword_EDCB8:
+vesapresent:
 resb 4
 dword_EDCBC:
 resb 4
-byte_EDCC0:
+vesamodeok:
 resb 1
 byte_EDCC1:
 resb 2

@@ -94,20 +94,20 @@ int StandingsScreen(Stand *teams, int *order)
     qsort(order, 0x1A, 4, CmpConfStandings);
     sub_B4BA8();
     MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     MakePath(path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar8, 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst27);
-    sub_91370(statspalshape, 0, 0x1C);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pst27);
+    DrawArt(statspalshape, 0, 0x1C);
     FreeMemBlock(statsbgshapes);
     TextGridOpen();
-    sub_8E9E8(state);
-    sub_8EA18(kf);
+    TextSaveState(state);
+    TextSetFont(kf);
     SetTextColors(0x40, 0x43);
     y = 0x31;
     MakeStatsTitle(title, (char *)str_Standings);
@@ -117,7 +117,7 @@ int StandingsScreen(Stand *teams, int *order)
     PrintShadowText(0xA0 - (fputchar((char *)str_Conference) >> 1), y + 0x10, (char *)str_Conference);
     PrintShadowText(0x1E0 - (fputchar((char *)str_Eastern) >> 1), y, (char *)str_Eastern);
     PrintShadowText(0x1E0 - (fputchar((char *)str_Conference) >> 1), y + 0x10, (char *)str_Conference);
-    sub_8EA18(mf);
+    TextSetFont(mf);
     SetTextColors(0x40, 0x43);
     y += 0x57;
     div = -1;
@@ -157,6 +157,6 @@ int StandingsScreen(Stand *teams, int *order)
         y += 0xD;
     }
     TextGridOff();
-    sub_8EA00(state);
+    TextRestoreState(state);
     return 0;
 }

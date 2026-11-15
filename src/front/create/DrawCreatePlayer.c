@@ -17,16 +17,16 @@ void DrawCreatePlayer(unsigned char *pl, int units)
 
     SetDrawBitmap(fullscrbmp);
     MakePath(buf, fileoncd[0x1C3] == 1 ? (char *)cddriveptr : 0, (char *)str_Prez22, 0);
-    bank = sub_8E83C(buf, 0x20);
-    shape = sub_B30B4(bank, (char *)str_Pal2);
+    bank = LoadBank(buf, 0x20);
+    shape = FindShape(bank, (char *)str_Pal2);
     memcpy(savepal, (char *)shape + 0x10, 0x300);
-    sub_913B4(sub_B30B4(bank, (char *)str_ea2));
+    DrawShape(FindShape(bank, (char *)str_ea2));
     FreeMemBlock(bank);
     MakePath(buf, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar, 0);
-    bank = sub_8E83C(buf, 0);
-    sub_913B4(sub_B30B4(bank, (char *)str_Pst2));
+    bank = LoadBank(buf, 0);
+    DrawShape(FindShape(bank, (char *)str_Pst2));
     FreeMemBlock(bank);
-    sub_8EA18(kaufmfont);
+    TextSetFont(kaufmfont);
     SetTextColors(0x40, 0x42);
     *(T11 *)buf = *(T11 *)str_FreeAgent;
     PrintOutlinedText(0x140 - (fputchar(buf) >> 1), 0x52, buf);
@@ -45,7 +45,7 @@ void DrawCreatePlayer(unsigned char *pl, int units)
     strcat(buf, pos);
 shown:
     PrintCenteredText(0xB2, buf);
-    sub_8EA18(mainfont);
+    TextSetFont(mainfont);
     if (pl[2] == 'G')
         DrawGloveField();
     else
@@ -54,5 +54,5 @@ shown:
     PrintCenteredText(0x110, buf);
     DrawButtons((Button *)str_Two, 2);
     sub_B4BA8();
-    sub_9061C(((int *)fullscrbmp)[0x2C / 4]);
+    DrawBitmap(((int *)fullscrbmp)[0x2C / 4]);
 }

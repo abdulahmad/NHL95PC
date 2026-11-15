@@ -198,7 +198,7 @@ int PassLaneChk(Player *p, Player *o)
 /* NetCollide (5601D, PC only; ends in PassLaneChk_ret5): player p near a net (60h, CAh from centre on his side):
    unless he is at least 18h from the net centre nothing happens; else his unit offset (x4) picks the side he
    hits: front or back (facing within the range for that side, dir + 2 / + 1 & 7) or the posts (dir 5+ / 1-3);
-   he is snapped to the net edge for his facing (offset tables word_CCBEC, word_CCBFC, word_CCBCC, word_CCBDC;
+   he is snapped to the net edge for his facing (offset tables FallDown_pinyt, FallDown_pinyb, FallDown_pinxr, FallDown_pinxl;
    mirrored by the x-flip attribute bit 3), stopped, and the bump SPA for that side is returned (F0Fh, F55h,
    F9Bh / FE1h). p: the player; dir: his direction. Result: the new SPA, or his SPA when nothing changes.
    DRAFT (10.0 GA): 22 score differing, same size: only the two ABS temporaries of the side test (ecx / edx
@@ -236,7 +236,7 @@ int NetCollide(Player *p, int dir)
                     HIWORD(p->Ypos) = uy + gy - 8;
                     p->Xvel = 0;
                     p->Yvel = 0;
-                    HIWORD(p->Ypos) += word_CCBEC[p->facedir] - 0x108;
+                    HIWORD(p->Ypos) += FallDown_pinyt[p->facedir] - 0x108;
                     return 0xF0F;
                 }
             } else if ((dir + 1 & 7) < 3) {
@@ -244,7 +244,7 @@ int NetCollide(Player *p, int dir)
                 HIWORD(p->Ypos) = uy + gy;
                 p->Xvel = 0;
                 p->Yvel = 0;
-                HIWORD(p->Ypos) += word_CCBFC[p->facedir] + 0x108;
+                HIWORD(p->Ypos) += FallDown_pinyb[p->facedir] + 0x108;
                 return 0xF55;
             }
         } else {
@@ -255,8 +255,8 @@ int NetCollide(Player *p, int dir)
                 HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
                 p->Xvel = 0;
                 p->Yvel = 0;
-                if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBDC[8 - p->facedir & 7] + 0x9A;
-                else HIWORD(p->Xpos) += word_CCBCC[p->facedir] - 0x9A;
+                if (p->attribute & 8) HIWORD(p->Xpos) -= FallDown_pinxl[8 - p->facedir & 7] + 0x9A;
+                else HIWORD(p->Xpos) += FallDown_pinxr[p->facedir] - 0x9A;
                 if (!(p->attribute & 8)) return 0xF9B;
             } else {
                 if (dir == 0 || dir - 1 >= 3) return p->SPA;
@@ -265,8 +265,8 @@ int NetCollide(Player *p, int dir)
                 HIWORD(p->Ypos) = uy + gy + (gy > 0 ? -10 : 0);
                 p->Xvel = 0;
                 p->Yvel = 0;
-                if (p->attribute & 8) HIWORD(p->Xpos) -= word_CCBCC[8 - p->facedir & 7] - 0x9A;
-                else HIWORD(p->Xpos) += word_CCBDC[p->facedir] + 0x9A;
+                if (p->attribute & 8) HIWORD(p->Xpos) -= FallDown_pinxr[8 - p->facedir & 7] - 0x9A;
+                else HIWORD(p->Xpos) += FallDown_pinxl[p->facedir] + 0x9A;
                 if (p->attribute & 8) return 0xF9B;
             }
             return 0xFE1;

@@ -8,8 +8,8 @@ extern dlgtextfg, dword_C4B69, dword_D42AC, editbuf, editcuron, editcurw, editma
 extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInstall, InputRemove
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
-extern sub_8CCA8, sub_8E9C0, sub_903F0, sub_90A40, sub_90D20, sub_90EC0, sub_91044, sub_91370
-extern sub_91400, sub_92CD0, sub_B2CBE, sub_B2DCA, sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC
+extern AllocMemBlock, TextSetColors, PutBlock, sub_90A40, FillRect, sub_90EC0, sub_91044, DrawArt
+extern GrabBlock, sub_92CD0, KeyDown, MouseRead, sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC
 extern TickDeadlinePassed, unknown_libname_4
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
 global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, TrackButtons_x, DrawButtons
@@ -33,7 +33,7 @@ lea eax, [byte esp+08h]	; 2FDE4
 push eax	; 2FDE8
 lea eax, [byte esp+010h]	; 2FDE9
 push eax	; 2FDED
-call sub_B2DCA	; 2FDEE
+call MouseRead	; 2FDEE
 add esp, byte 0Ch	; 2FDF3
 push byte 0FFFFFFFFh	; 2FDF6
 lea eax, [byte esp+04h]	; 2FDF8
@@ -84,7 +84,7 @@ push ecx	; 2FE6D
 push ebx	; 2FE6E
 push esi	; 2FE6F
 push eax	; 2FE70
-call sub_90D20	; 2FE71
+call FillRect	; 2FE71
 add esp, byte 14h	; 2FE76
 mov ebx, dword [byte esp+018h]	; 2FE79
 push ebx	; 2FE7D
@@ -228,7 +228,7 @@ mov eax, dword [dlgtextbg]	; 2FFFC
 push eax	; 30001
 mov edx, dword [dlgtextfg]	; 30002
 push edx	; 30008
-call sub_8E9C0	; 30009
+call TextSetColors	; 30009
 add esp, byte 8	; 3000E
 mov eax, dword [dword esp+010Ch]	; 30011
 add eax, byte 7	; 30018
@@ -273,16 +273,16 @@ mov eax, dword [dlgtextbg]	; 300A8
 push eax	; 300AD
 mov edx, dword [dlgtextfg]	; 300AE
 push edx	; 300B4
-call sub_8E9C0	; 300B5
+call TextSetColors	; 300B5
 add esp, byte 8	; 300BA
 .5:
 push byte 1	; 300BD
-call sub_B2CBE	; 300BF
+call KeyDown	; 300BF
 add esp, byte 4	; 300C4
 test eax, eax	; 300C7
 jne short TextInputDialog.5	; 300C9
 push byte 1Ch	; 300CB
-call sub_B2CBE	; 300CD
+call KeyDown	; 300CD
 add esp, byte 4	; 300D2
 test eax, eax	; 300D5
 jne short TextInputDialog.5	; 300D7
@@ -365,12 +365,12 @@ test edx, edx	; 301CC
 je short TextInputDialog.11	; 301CE
 .13:
 push byte 1	; 301D0
-call sub_B2CBE	; 301D2
+call KeyDown	; 301D2
 add esp, byte 4	; 301D7
 test eax, eax	; 301DA
 jne short TextInputDialog.13	; 301DC
 push byte 1Ch	; 301DE
-call sub_B2CBE	; 301E0
+call KeyDown	; 301E0
 add esp, byte 4	; 301E5
 test eax, eax	; 301E8
 jne short TextInputDialog.13	; 301EA
@@ -405,7 +405,7 @@ mov eax, dword [dlgtextbg]	; 3022C
 .2:
 push eax	; 30231
 push edx	; 30232
-call sub_8E9C0	; 30233
+call TextSetColors	; 30233
 add esp, byte 8	; 30238
 pop ecx	; 3023B
 pop ebx	; 3023C
@@ -511,7 +511,7 @@ push eax	; 3032D
 push ebp	; 3032E
 push edi	; 3032F
 push esi	; 30330
-call sub_90D20	; 30331
+call FillRect	; 30331
 add esp, byte 14h	; 30336
 mov edx, dword [byte esp+01Ch]	; 30339
 mov eax, dword [byte esp+018h]	; 3033D
@@ -807,7 +807,7 @@ add eax, byte 11h	; 306AF
 push byte 20h	; 306B2
 push eax	; 306B4
 push str_Pointer6	; 306B5
-call sub_8CCA8	; 306BA
+call AllocMemBlock	; 306BA
 mov dword [byte esp+024h], eax	; 306BF
 add esp, byte 0Ch	; 306C3
 mov dword [byte esp+044h], eax	; 306C6
@@ -833,7 +833,7 @@ lea eax, [byte esp+014h]	; 306FC
 push eax	; 30700
 lea eax, [byte esp+01Ch]	; 30701
 push eax	; 30705
-call sub_B2DCA	; 30706
+call MouseRead	; 30706
 add esp, byte 0Ch	; 3070B
 mov eax, dword [byte esp+010h]	; 3070E
 mov dword [byte esp+08h], eax	; 30712
@@ -844,7 +844,7 @@ mov ecx, dword [byte esp+014h]	; 3071F
 push ecx	; 30723
 mov esi, dword [byte esp+020h]	; 30724
 push esi	; 30728
-call sub_91400	; 30729
+call GrabBlock	; 30729
 add esp, byte 0Ch	; 3072E
 mov edi, dword [byte esp+0Ch]	; 30731
 push edi	; 30735
@@ -852,7 +852,7 @@ mov eax, dword [byte esp+014h]	; 30736
 push eax	; 3073A
 mov edx, dword [pointerspr]	; 3073B
 push edx	; 30741
-call sub_91370	; 30742
+call DrawArt	; 30742
 add esp, byte 0Ch	; 30747
 call ClearInputQueue	; 3074A
 xor esi, esi	; 3074F
@@ -889,7 +889,7 @@ mov edi, dword [byte esp+014h]	; 307A3
 push edi	; 307A7
 mov eax, dword [byte esp+04Ch]	; 307A8
 push eax	; 307AC
-call sub_903F0	; 307AD
+call PutBlock	; 307AD
 add esp, byte 0Ch	; 307B2
 mov edx, dword [byte esp+04h]	; 307B5
 push edx	; 307B9
@@ -897,7 +897,7 @@ mov ebx, dword [byte esp+0Ch]	; 307BA
 push ebx	; 307BE
 mov ecx, dword [byte esp+04Ch]	; 307BF
 push ecx	; 307C3
-call sub_91400	; 307C4
+call GrabBlock	; 307C4
 add esp, byte 0Ch	; 307C9
 mov edi, dword [byte esp+04h]	; 307CC
 push edi	; 307D0
@@ -913,7 +913,7 @@ mov ebx, dword [byte esp+014h]	; 307E7
 push ebx	; 307EB
 mov ecx, dword [byte esp+04Ch]	; 307EC
 push ecx	; 307F0
-call sub_903F0	; 307F1
+call PutBlock	; 307F1
 add esp, byte 0Ch	; 307F6
 test byte [byte esp+058h], 2	; 307F9
 je near .23	; 307FE
@@ -1049,7 +1049,7 @@ mov eax, dword [byte esp+0Ch]	; 30971
 push eax	; 30975
 mov edx, dword [byte esp+04Ch]	; 30976
 push edx	; 3097A
-call sub_91400	; 3097B
+call GrabBlock	; 3097B
 add esp, byte 0Ch	; 30980
 mov ebx, dword [byte esp+04h]	; 30983
 push ebx	; 30987
@@ -1058,7 +1058,7 @@ push ecx	; 3098C
 mov edi, dword [pointerspr]	; 3098D
 push edi	; 30993
 .25:
-call sub_91370	; 30994
+call DrawArt	; 30994
 add esp, byte 0Ch	; 30999
 mov eax, dword [byte esp+08h]	; 3099C
 mov dword [byte esp+010h], eax	; 309A0
@@ -1073,7 +1073,7 @@ mov ecx, dword [byte esp+014h]	; 309B9
 push ecx	; 309BD
 mov esi, dword [byte esp+04Ch]	; 309BE
 push esi	; 309C2
-call sub_903F0	; 309C3
+call PutBlock	; 309C3
 add esp, byte 0Ch	; 309C8
 push esi	; 309CB
 call FreeMemBlock	; 309CC
@@ -1560,7 +1560,7 @@ add eax, byte 11h	; 30E8C
 push byte 20h	; 30E8F
 push eax	; 30E91
 push str_DBOX	; 30E92
-call sub_8CCA8	; 30E97
+call AllocMemBlock	; 30E97
 add esp, byte 0Ch	; 30E9C
 mov dword [dlgsavebuf], eax	; 30E9F
 test eax, eax	; 30EA4
@@ -1595,7 +1595,7 @@ mov ebx, dword [dlgsavex]	; 30EF5
 push ebx	; 30EFB
 mov ecx, dword [dlgsavebuf]	; 30EFC
 push ecx	; 30F02
-call sub_91400	; 30F03
+call GrabBlock	; 30F03
 add esp, byte 0Ch	; 30F08
 .x:
 add esp, byte 0Ch	; 30F0B
@@ -1624,7 +1624,7 @@ push ebx	; 30F31
 mov ecx, dword [dlgsavex]	; 30F32
 push ecx	; 30F38
 push edx	; 30F39
-call sub_903F0	; 30F3A
+call PutBlock	; 30F3A
 add esp, byte 0Ch	; 30F3F
 mov edi, dword [dlgsavebuf]	; 30F42
 push edi	; 30F48
@@ -1982,7 +1982,7 @@ add eax, byte 11h	; 3127F
 push byte 20h	; 31282
 push eax	; 31284
 push str_Pointer6	; 31285
-call sub_8CCA8	; 3128A
+call AllocMemBlock	; 3128A
 mov ebp, eax	; 3128F
 add esp, byte 0Ch	; 31291
 mov dword [byte esp+01Ch], eax	; 31294
@@ -2016,22 +2016,22 @@ add esp, byte 8	; 312E2
 push edi	; 312E5
 push esi	; 312E6
 push ebp	; 312E7
-call sub_91400	; 312E8
+call GrabBlock	; 312E8
 add esp, byte 0Ch	; 312ED
 push edi	; 312F0
 push esi	; 312F1
 mov ebx, dword [pointerspr]	; 312F2
 push ebx	; 312F8
-call sub_91370	; 312F9
+call DrawArt	; 312F9
 add esp, byte 0Ch	; 312FE
 .1:
 push byte 1	; 31301
-call sub_B2CBE	; 31303
+call KeyDown	; 31303
 add esp, byte 4	; 31308
 test eax, eax	; 3130B
 jne short RunMessageBox.1	; 3130D
 push byte 1Ch	; 3130F
-call sub_B2CBE	; 31311
+call KeyDown	; 31311
 add esp, byte 4	; 31316
 test eax, eax	; 31319
 jne short RunMessageBox.1	; 3131B
@@ -2051,7 +2051,7 @@ push edi	; 3134E
 push esi	; 3134F
 mov ecx, dword [byte esp+024h]	; 31350
 push ecx	; 31354
-call sub_903F0	; 31355
+call PutBlock	; 31355
 add esp, byte 0Ch	; 3135A
 mov eax, dword [esp]	; 3135D
 test eax, eax	; 31360
@@ -2090,13 +2090,13 @@ push edi	; 313B7
 push esi	; 313B8
 mov eax, dword [byte esp+024h]	; 313B9
 push eax	; 313BD
-call sub_91400	; 313BE
+call GrabBlock	; 313BE
 add esp, byte 0Ch	; 313C3
 push edi	; 313C6
 push esi	; 313C7
 mov edx, dword [pointerspr]	; 313C8
 push edx	; 313CE
-call sub_91370	; 313CF
+call DrawArt	; 313CF
 add esp, byte 0Ch	; 313D4
 .8:
 cmp esi, dword [byte esp+014h]	; 313D7
@@ -2108,14 +2108,14 @@ push edi	; 313E3
 push esi	; 313E4
 mov esi, dword [byte esp+024h]	; 313E5
 push esi	; 313E9
-call sub_903F0	; 313EA
+call PutBlock	; 313EA
 add esp, byte 0Ch	; 313EF
 mov edi, dword [byte esp+010h]	; 313F2
 push edi	; 313F6
 mov eax, dword [byte esp+018h]	; 313F7
 push eax	; 313FB
 push esi	; 313FC
-call sub_91400	; 313FD
+call GrabBlock	; 313FD
 add esp, byte 0Ch	; 31402
 mov ebx, dword [byte esp+010h]	; 31405
 push ebx	; 31409
@@ -2123,7 +2123,7 @@ mov ecx, dword [byte esp+018h]	; 3140A
 push ecx	; 3140E
 mov esi, dword [pointerspr]	; 3140F
 push esi	; 31415
-call sub_91370	; 31416
+call DrawArt	; 31416
 add esp, byte 0Ch	; 3141B
 mov esi, dword [byte esp+014h]	; 3141E
 mov edi, dword [byte esp+010h]	; 31422
@@ -2132,12 +2132,12 @@ test ebp, ebp	; 31426
 je near RunMessageBox.2	; 31428
 .11:
 push byte 1	; 3142E
-call sub_B2CBE	; 31430
+call KeyDown	; 31430
 add esp, byte 4	; 31435
 test eax, eax	; 31438
 jne short RunMessageBox.11	; 3143A
 push byte 1Ch	; 3143C
-call sub_B2CBE	; 3143E
+call KeyDown	; 3143E
 add esp, byte 4	; 31443
 test eax, eax	; 31446
 jne short RunMessageBox.11	; 31448
@@ -2146,7 +2146,7 @@ push edi	; 3144F
 push esi	; 31450
 mov edi, dword [byte esp+024h]	; 31451
 push edi	; 31455
-call sub_903F0	; 31456
+call PutBlock	; 31456
 add esp, byte 0Ch	; 3145B
 call ClearInputQueue	; 3145E
 mov ebp, dword [byte esp+010h]	; 31463

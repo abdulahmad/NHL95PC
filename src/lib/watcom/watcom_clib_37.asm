@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_9D586 progbits alloc exec nowrite align=1
-extern __init_80x87, asc_C4A83, byte_D4B9C, byte_D4B9D, dword_F24CC, loc_9D582, off_D51E4, off_D6600
-extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, word_D4D04, word_D65FC
+extern __init_80x87, str_UnknownError, __8087, byte_D4B9D, delaycount, loc_9D582, off_D51E4, off_D6600
+extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, __no87, word_D65FC
 global __init_8087_, loc_9D5A7, sub_9D5B7, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
 global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, sub_9D66B, sub_9D671, strerror_
 global loc_9D680, loc_9D686
@@ -29,7 +29,7 @@ jne short __init_8087_	; 9D5BE
 ret	; 9D5C0
 __chk8087_:
 push edx	; 9D5C1
-mov ah, byte [byte_D4B9C]	; 9D5C2
+mov ah, byte [__8087]	; 9D5C2
 test ah, ah	; 9D5C8
 jne short loc_9D5FF	; 9D5CA
 mov byte [byte_D4B9D], ah	; 9D5CC
@@ -45,9 +45,9 @@ jne short loc_9D5EA	; 9D5E1
 call __init_8087_	; 9D5E3
 mov dl, al	; 9D5E8
 loc_9D5EA:
-cmp byte [word_D4D04], 0	; 9D5EA
+cmp byte [__no87], 0	; 9D5EA
 jne short loc_9D5FF	; 9D5F1
-mov byte [byte_D4B9C], dl	; 9D5F3
+mov byte [__8087], dl	; 9D5F3
 mov byte [byte_D4B9D], dl	; 9D5F9
 loc_9D5FF:
 pop edx	; 9D5FF
@@ -77,7 +77,7 @@ int 21h	; 9D621
 inc esi	; 9D623
 cmp bl, dh	; 9D624
 je short loc_9D61F	; 9D626
-mov dword [dword_F24CC], esi	; 9D628
+mov dword [delaycount], esi	; 9D628
 pop esi	; 9D62E
 pop edx	; 9D62F
 pop ecx	; 9D630
@@ -90,7 +90,7 @@ push edx	; 9D635
 push esi	; 9D636
 test eax, eax	; 9D637
 je short loc_9D666	; 9D639
-imul eax, dword [dword_F24CC]	; 9D63B
+imul eax, dword [delaycount]	; 9D63B
 mov esi, 3E8h	; 9D642
 add eax, 1F4h	; 9D647
 xor edx, edx	; 9D64C
@@ -126,7 +126,7 @@ jl short loc_9D680	; 9D679
 cmp eax, byte 0Fh	; 9D67B
 jle short loc_9D686	; 9D67E
 loc_9D680:
-mov eax, asc_C4A83	; 9D680
+mov eax, str_UnknownError	; 9D680
 ret	; 9D685
 loc_9D686:
 mov eax, dword [nosplit eax*4+off_D51E4]	; 9D686

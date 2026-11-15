@@ -18,7 +18,7 @@ extern ReadSeasonRec, ReadTeamRec, RestoreDialogBg, savedname, SetDialogColors, 
 extern str_02d3, str_dot, str_extDB, str_extID, str_extxx, str_floppydrv, str_Game2, str_GAME2
 extern str_GAME3, str_GAME4, str_HasNotBeenMerged, str_ID, str_IsAlreadyMerged, str_L1, str_L22, str_PINFO
 extern str_PLAYER, str_SAV2, str_Sav2, str_SAV3, str_SelectATeamTo2, str_SET, str_SET2, str_wildcard
-extern str_Xx, strcmp_, strcpy_, stricmp_, sub_B2DCA, sub_B392C, sub_B3CC8, sub_B4B88
+extern str_Xx, strcmp_, strcpy_, stricmp_, MouseRead, ClearScreen, sub_B3CC8, VgaSetPalette
 extern treeteamnames, unknown_libname_1, updateerrmsg, UpdateSeasonSchedule, updschedmsg, whichdrivemsg, WriteGoalieSeasonRec, WriteLeagueTeamEntry
 extern WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global MergeTeamDbs, MergeTeamDbs_ret, MergeScheduleDb, LocateTeamDbCopy, UpdateTeamDbs, UpdateTeamDbs_ret, MergeLeagueFiles, MergeUpdateDbs
@@ -487,7 +487,7 @@ lea eax, [byte esp+08h]	; 3AFF1
 push eax	; 3AFF5
 lea eax, [byte esp+010h]	; 3AFF6
 push eax	; 3AFFA
-call sub_B2DCA	; 3AFFB
+call MouseRead	; 3AFFB
 add esp, byte 0Ch	; 3B000
 push byte 0FFFFFFFFh	; 3B003
 lea eax, [byte esp+04h]	; 3B005
@@ -570,7 +570,7 @@ lea eax, [byte esp+03Ch]	; 3B0F6
 push eax	; 3B0FA
 lea eax, [byte esp+044h]	; 3B0FB
 push eax	; 3B0FF
-call sub_B2DCA	; 3B100
+call MouseRead	; 3B100
 add esp, byte 0Ch	; 3B105
 push byte 0FFFFFFFFh	; 3B108
 lea eax, [byte esp+038h]	; 3B10A
@@ -631,7 +631,7 @@ lea eax, [byte esp+03Ch]	; 3B1C1
 push eax	; 3B1C5
 lea eax, [byte esp+044h]	; 3B1C6
 push eax	; 3B1CA
-call sub_B2DCA	; 3B1CB
+call MouseRead	; 3B1CB
 add esp, byte 0Ch	; 3B1D0
 push byte 0FFFFFFFFh	; 3B1D3
 lea eax, [byte esp+038h]	; 3B1D5
@@ -654,7 +654,7 @@ lea eax, [byte esp+03Ch]	; 3B200
 push eax	; 3B204
 lea eax, [byte esp+044h]	; 3B205
 push eax	; 3B209
-call sub_B2DCA	; 3B20A
+call MouseRead	; 3B20A
 add esp, byte 0Ch	; 3B20F
 push byte 0FFFFFFFFh	; 3B212
 lea eax, [byte esp+038h]	; 3B214
@@ -756,7 +756,7 @@ lea eax, [byte esp+050h]	; 3B34C
 push eax	; 3B350
 lea eax, [byte esp+058h]	; 3B351
 push eax	; 3B355
-call sub_B2DCA	; 3B356
+call MouseRead	; 3B356
 add esp, byte 0Ch	; 3B35B
 push byte 0FFFFFFFFh	; 3B35E
 lea eax, [byte esp+04Ch]	; 3B360
@@ -783,7 +783,7 @@ lea eax, [byte esp+050h]	; 3B3A0
 push eax	; 3B3A4
 lea eax, [byte esp+058h]	; 3B3A5
 push eax	; 3B3A9
-call sub_B2DCA	; 3B3AA
+call MouseRead	; 3B3AA
 add esp, byte 0Ch	; 3B3AF
 push byte 0FFFFFFFFh	; 3B3B2
 lea eax, [byte esp+04Ch]	; 3B3B4
@@ -806,7 +806,7 @@ lea eax, [byte esp+050h]	; 3B3E6
 push eax	; 3B3EA
 lea eax, [byte esp+058h]	; 3B3EB
 push eax	; 3B3EF
-call sub_B2DCA	; 3B3F0
+call MouseRead	; 3B3F0
 add esp, byte 0Ch	; 3B3F5
 push byte 0FFFFFFFFh	; 3B3F8
 lea eax, [byte esp+04Ch]	; 3B3FA
@@ -1109,7 +1109,7 @@ lea eax, [byte esp+050h]	; 3B7DA
 push eax	; 3B7DE
 lea eax, [byte esp+05Ch]	; 3B7DF
 push eax	; 3B7E3
-call sub_B2DCA	; 3B7E4
+call MouseRead	; 3B7E4
 add esp, byte 0Ch	; 3B7E9
 cmp esi, byte 4	; 3B7EC
 jne short .24	; 3B7EF
@@ -1148,7 +1148,7 @@ lea eax, [byte esp+050h]	; 3B852
 push eax	; 3B856
 lea eax, [byte esp+05Ch]	; 3B857
 push eax	; 3B85B
-call sub_B2DCA	; 3B85C
+call MouseRead	; 3B85C
 add esp, byte 0Ch	; 3B861
 push byte 0FFFFFFFFh	; 3B864
 lea eax, [byte esp+04Ch]	; 3B866
@@ -1204,7 +1204,7 @@ jne near .2	; 3B8FA
 test edx, edx	; 3B900
 je short .1	; 3B902
 push ecx	; 3B904
-call sub_B392C	; 3B905
+call ClearScreen	; 3B905
 add esp, byte 4	; 3B90A
 mov bh, 17h	; 3B90D
 mov byte [esp], bh	; 3B90F
@@ -1214,7 +1214,7 @@ mov eax, esp	; 3B91A
 push eax	; 3B91C
 push byte 1	; 3B91D
 push dword 0F8h	; 3B91F
-call sub_B4B88	; 3B924
+call VgaSetPalette	; 3B924
 add esp, byte 0Ch	; 3B929
 mov al, 2Ah	; 3B92C
 mov byte [esp], al	; 3B92E
@@ -1224,7 +1224,7 @@ mov eax, esp	; 3B939
 push eax	; 3B93B
 push byte 1	; 3B93C
 push dword 0F9h	; 3B93E
-call sub_B4B88	; 3B943
+call VgaSetPalette	; 3B943
 add esp, byte 0Ch	; 3B948
 mov dh, 3Fh	; 3B94B
 mov byte [esp], dh	; 3B94D
@@ -1234,14 +1234,14 @@ mov eax, esp	; 3B958
 push eax	; 3B95A
 push byte 1	; 3B95B
 push dword 0FAh	; 3B95D
-call sub_B4B88	; 3B962
+call VgaSetPalette	; 3B962
 add esp, byte 0Ch	; 3B967
 .1:
 call UpdateTeamDbs	; 3B96A
 test esi, esi	; 3B96F
 je short .2	; 3B971
 push byte 0	; 3B973
-call sub_B392C	; 3B975
+call ClearScreen	; 3B975
 add esp, byte 4	; 3B97A
 xor cl, cl	; 3B97D
 mov byte [esp], cl	; 3B97F
@@ -1251,19 +1251,19 @@ mov eax, esp	; 3B98A
 push eax	; 3B98C
 push byte 1	; 3B98D
 push dword 0F8h	; 3B98F
-call sub_B4B88	; 3B994
+call VgaSetPalette	; 3B994
 add esp, byte 0Ch	; 3B999
 mov eax, esp	; 3B99C
 push eax	; 3B99E
 push byte 1	; 3B99F
 push dword 0F9h	; 3B9A1
-call sub_B4B88	; 3B9A6
+call VgaSetPalette	; 3B9A6
 add esp, byte 0Ch	; 3B9AB
 mov eax, esp	; 3B9AE
 push eax	; 3B9B0
 push byte 1	; 3B9B1
 push dword 0FAh	; 3B9B3
-call sub_B4B88	; 3B9B8
+call VgaSetPalette	; 3B9B8
 add esp, byte 0Ch	; 3B9BD
 .2:
 mov eax, esi	; 3B9C0
@@ -1387,7 +1387,7 @@ lea eax, [byte esp+02Ch]	; 3BB2F
 push eax	; 3BB33
 lea eax, [byte esp+034h]	; 3BB34
 push eax	; 3BB38
-call sub_B2DCA	; 3BB39
+call MouseRead	; 3BB39
 add esp, byte 0Ch	; 3BB3E
 push byte 0FFFFFFFFh	; 3BB41
 lea eax, [byte esp+028h]	; 3BB43
@@ -1521,7 +1521,7 @@ lea eax, [dword esp+0E4h]	; 3BD52
 push eax	; 3BD59
 lea eax, [dword esp+0E0h]	; 3BD5A
 push eax	; 3BD61
-call sub_B2DCA	; 3BD62
+call MouseRead	; 3BD62
 add esp, byte 0Ch	; 3BD67
 push byte 0FFFFFFFFh	; 3BD6A
 lea eax, [dword esp+0E0h]	; 3BD6C
@@ -1563,7 +1563,7 @@ lea eax, [dword esp+0E4h]	; 3BDF8
 push eax	; 3BDFF
 lea eax, [dword esp+0ECh]	; 3BE00
 push eax	; 3BE07
-call sub_B2DCA	; 3BE08
+call MouseRead	; 3BE08
 add esp, byte 0Ch	; 3BE0D
 push byte 0FFFFFFFFh	; 3BE10
 lea eax, [dword esp+0E0h]	; 3BE12
@@ -1837,7 +1837,7 @@ lea eax, [dword esp+0E4h]	; 3C22F
 push eax	; 3C236
 lea eax, [dword esp+0ECh]	; 3C237
 push eax	; 3C23E
-call sub_B2DCA	; 3C23F
+call MouseRead	; 3C23F
 add esp, byte 0Ch	; 3C244
 push byte 0FFFFFFFFh	; 3C247
 lea eax, [dword esp+0E0h]	; 3C249
@@ -1869,7 +1869,7 @@ lea eax, [dword esp+0E4h]	; 3C2B2
 push eax	; 3C2B9
 lea eax, [dword esp+0ECh]	; 3C2BA
 push eax	; 3C2C1
-call sub_B2DCA	; 3C2C2
+call MouseRead	; 3C2C2
 add esp, byte 0Ch	; 3C2C7
 push byte 0FFFFFFFFh	; 3C2CA
 lea eax, [dword esp+0E0h]	; 3C2CC
@@ -2131,7 +2131,7 @@ lea eax, [byte esp+064h]	; 3C5D8
 push eax	; 3C5DC
 lea eax, [byte esp+06Ch]	; 3C5DD
 push eax	; 3C5E1
-call sub_B2DCA	; 3C5E2
+call MouseRead	; 3C5E2
 add esp, byte 0Ch	; 3C5E7
 push byte 0FFFFFFFFh	; 3C5EA
 lea eax, [byte esp+060h]	; 3C5EC
@@ -2158,7 +2158,7 @@ lea eax, [byte esp+064h]	; 3C624
 push eax	; 3C628
 lea eax, [byte esp+06Ch]	; 3C629
 push eax	; 3C62D
-call sub_B2DCA	; 3C62E
+call MouseRead	; 3C62E
 add esp, byte 0Ch	; 3C633
 push byte 0	; 3C636
 mov ecx, 0FAh	; 3C638
@@ -2187,7 +2187,7 @@ lea eax, [byte esp+064h]	; 3C67D
 push eax	; 3C681
 lea eax, [byte esp+06Ch]	; 3C682
 push eax	; 3C686
-call sub_B2DCA	; 3C687
+call MouseRead	; 3C687
 add esp, byte 0Ch	; 3C68C
 push byte 0	; 3C68F
 mov ecx, 0FAh	; 3C691
@@ -2368,7 +2368,7 @@ lea eax, [dword esp+094h]	; 3C901
 push eax	; 3C908
 lea eax, [dword esp+094h]	; 3C909
 push eax	; 3C910
-call sub_B2DCA	; 3C911
+call MouseRead	; 3C911
 add esp, byte 0Ch	; 3C916
 push byte 0FFFFFFFFh	; 3C919
 lea eax, [dword esp+0ACh]	; 3C91B
@@ -2428,7 +2428,7 @@ lea eax, [dword esp+094h]	; 3C9E7
 push eax	; 3C9EE
 lea eax, [dword esp+094h]	; 3C9EF
 push eax	; 3C9F6
-call sub_B2DCA	; 3C9F7
+call MouseRead	; 3C9F7
 add esp, byte 0Ch	; 3C9FC
 test byte [leagueflags], 0Ch	; 3C9FF
 je short .10	; 3CA06
@@ -2520,7 +2520,7 @@ lea eax, [dword esp+094h]	; 3CB47
 push eax	; 3CB4E
 lea eax, [dword esp+094h]	; 3CB4F
 push eax	; 3CB56
-call sub_B2DCA	; 3CB57
+call MouseRead	; 3CB57
 add esp, byte 0Ch	; 3CB5C
 push byte 0FFFFFFFFh	; 3CB5F
 lea eax, [dword esp+0ACh]	; 3CB61
@@ -2555,7 +2555,7 @@ lea eax, [dword esp+094h]	; 3CBCD
 push eax	; 3CBD4
 lea eax, [dword esp+094h]	; 3CBD5
 push eax	; 3CBDC
-call sub_B2DCA	; 3CBDD
+call MouseRead	; 3CBDD
 add esp, byte 0Ch	; 3CBE2
 push byte 0FFFFFFFFh	; 3CBE5
 lea eax, [dword esp+0ACh]	; 3CBE7
@@ -2587,7 +2587,7 @@ lea eax, [dword esp+094h]	; 3CC3D
 push eax	; 3CC44
 lea eax, [dword esp+094h]	; 3CC45
 push eax	; 3CC4C
-call sub_B2DCA	; 3CC4D
+call MouseRead	; 3CC4D
 add esp, byte 0Ch	; 3CC52
 push byte 0FFFFFFFFh	; 3CC55
 lea eax, [dword esp+0ACh]	; 3CC57
@@ -2778,7 +2778,7 @@ lea eax, [dword esp+094h]	; 3CF0A
 push eax	; 3CF11
 lea eax, [dword esp+094h]	; 3CF12
 push eax	; 3CF19
-call sub_B2DCA	; 3CF1A
+call MouseRead	; 3CF1A
 add esp, byte 0Ch	; 3CF1F
 push byte 0FFFFFFFFh	; 3CF22
 lea eax, [dword esp+0ACh]	; 3CF24
@@ -2820,7 +2820,7 @@ lea eax, [byte esp+030h]	; 3CF88
 push eax	; 3CF8C
 lea eax, [byte esp+02Ch]	; 3CF8D
 push eax	; 3CF91
-call sub_B2DCA	; 3CF92
+call MouseRead	; 3CF92
 add esp, byte 0Ch	; 3CF97
 push byte 0FFFFFFFFh	; 3CF9A
 lea eax, [byte esp+024h]	; 3CF9C
@@ -2980,7 +2980,7 @@ lea eax, [byte esp+048h]	; 3D1A7
 push eax	; 3D1AB
 lea eax, [byte esp+044h]	; 3D1AC
 push eax	; 3D1B0
-call sub_B2DCA	; 3D1B1
+call MouseRead	; 3D1B1
 add esp, byte 0Ch	; 3D1B6
 test byte [leagueflags], 0Ch	; 3D1B9
 je short .2	; 3D1C0
@@ -3087,7 +3087,7 @@ lea eax, [byte esp+048h]	; 3D325
 push eax	; 3D329
 lea eax, [byte esp+044h]	; 3D32A
 push eax	; 3D32E
-call sub_B2DCA	; 3D32F
+call MouseRead	; 3D32F
 add esp, byte 0Ch	; 3D334
 push byte 0FFFFFFFFh	; 3D337
 lea eax, [byte esp+038h]	; 3D339
@@ -3277,7 +3277,7 @@ lea eax, [byte esp+050h]	; 3D59F
 push eax	; 3D5A3
 lea eax, [byte esp+058h]	; 3D5A4
 push eax	; 3D5A8
-call sub_B2DCA	; 3D5A9
+call MouseRead	; 3D5A9
 add esp, byte 0Ch	; 3D5AE
 push byte 0FFFFFFFFh	; 3D5B1
 lea eax, [byte esp+04Ch]	; 3D5B3
@@ -3316,7 +3316,7 @@ lea eax, [byte esp+050h]	; 3D62A
 push eax	; 3D62E
 lea eax, [byte esp+058h]	; 3D62F
 push eax	; 3D633
-call sub_B2DCA	; 3D634
+call MouseRead	; 3D634
 add esp, byte 0Ch	; 3D639
 push byte 0FFFFFFFFh	; 3D63C
 lea eax, [byte esp+04Ch]	; 3D63E
@@ -3448,7 +3448,7 @@ lea eax, [dword esp+08Ch]	; 3D7E4
 push eax	; 3D7EB
 lea eax, [dword esp+094h]	; 3D7EC
 push eax	; 3D7F3
-call sub_B2DCA	; 3D7F4
+call MouseRead	; 3D7F4
 add esp, byte 0Ch	; 3D7F9
 push byte 0FFFFFFFFh	; 3D7FC
 lea eax, [dword esp+088h]	; 3D7FE
@@ -3503,7 +3503,7 @@ lea eax, [byte esp+048h]	; 3D87B
 push eax	; 3D87F
 lea eax, [byte esp+050h]	; 3D880
 push eax	; 3D884
-call sub_B2DCA	; 3D885
+call MouseRead	; 3D885
 add esp, byte 0Ch	; 3D88A
 push byte 0FFFFFFFFh	; 3D88D
 lea eax, [byte esp+044h]	; 3D88F
@@ -3592,7 +3592,7 @@ lea eax, [byte esp+034h]	; 3D978
 push eax	; 3D97C
 lea eax, [byte esp+03Ch]	; 3D97D
 push eax	; 3D981
-call sub_B2DCA	; 3D982
+call MouseRead	; 3D982
 add esp, byte 0Ch	; 3D987
 push byte 0FFFFFFFFh	; 3D98A
 lea eax, [byte esp+040h]	; 3D98C

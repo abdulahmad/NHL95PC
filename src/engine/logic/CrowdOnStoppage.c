@@ -38,14 +38,14 @@ int CrowdOnStoppage(void)
         }
     }
     r = randomd0(8);
-    if (dword_CC0EC == 0 && r == 0) {
+    if (demoflag == 0 && r == 0) {
         if (!gameopts.sfx || !(sounddev & 0x2A) || crowdlevel > 700) return 0;
         LoadTeamPPV(0);
         if (ovlseq == -1) return 0;
         CloseTextOverlay();
         return 1;
     }
-    if (dword_CC0EC == 0 && r == 1) {
+    if (demoflag == 0 && r == 1) {
         LoadTeamPPV(2);
         if (ovlseq == -1) return 0;
         PlayCrowdSample(9);

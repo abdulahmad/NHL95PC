@@ -97,40 +97,40 @@ int TeamRosterScreen(int team)
     sub_B4BA8();
     sprintf((char *)printfbuf, (char *)str_fmtEmb, rec);
     MakePath(path, fileoncd[team + 0x70] == 1 ? (char *)cddriveptr : 0, (char *)printfbuf, 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Bkgd2);
-    sub_B4BC4(0, 0x280, 0x13, 0x1E0);
-    sub_913B4(statspalshape);
-    sub_B4BC4(0, 0x280, 0, 0x1E0);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);
+    SetClipWindow(0, 0x280, 0x13, 0x1E0);
+    DrawShape(statspalshape);
+    SetClipWindow(0, 0x280, 0, 0x1E0);
     FreeMemBlock(statsbgshapes);
     MakePath(path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar6, 0);
-    statsbgshapes = sub_8E83C(path, 0);
-    statspalshape = sub_B30B4(statsbgshapes, (char *)str_Pst25);
-    sub_91370(statspalshape, 0, 6);
-    sub_8E9E8(state);
-    sub_8EA18(mf);
+    statsbgshapes = LoadBank(path, 0);
+    statspalshape = FindShape(statsbgshapes, (char *)str_Pst25);
+    DrawArt(statspalshape, 0, 6);
+    TextSaveState(state);
+    TextSetFont(mf);
     TextGridOpen();
     if (dword_DC734) SetTextColors(0xC0, 0xC3);
     else SetTextColors(0x40, 0x43);
-    sub_8EA18(kf);
+    TextSetFont(kf);
     SetTextColors(0x40, 0x43);
     y = 0x1B;
     if (team != 0x18) {
         sprintf((char *)printfbuf, (char *)str_S, rec + 5);
         PrintOutlinedText(0x12C - (fputchar((char *)printfbuf) >> 1), y, (char *)printfbuf);
         if (team == 2 || team == 0x18 || team == 0x19)
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Trad);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Trad);
         else
-            statspalshape = sub_B30B4(statsbgshapes, (char *)str_Regi);
-        sub_91370(statspalshape, (fputchar((char *)printfbuf) >> 1) + 0x12C, y + 6);
+            statspalshape = FindShape(statsbgshapes, (char *)str_Regi);
+        DrawArt(statspalshape, (fputchar((char *)printfbuf) >> 1) + 0x12C, y + 6);
     } else {
         sprintf((char *)printfbuf, (char *)str_MightyDucksOfAnaheim2);
         PrintOutlinedText(0x12C - (fputchar((char *)printfbuf) >> 1), y, (char *)printfbuf);
-        statspalshape = sub_B30B4(statsbgshapes, (char *)str_Trad);
-        sub_91370(statspalshape, 0x12A, y);
+        statspalshape = FindShape(statsbgshapes, (char *)str_Trad);
+        DrawArt(statspalshape, 0x12A, y);
     }
     FreeMemBlock(statsbgshapes);
-    sub_8EA18(mf);
+    TextSetFont(mf);
     SetTextColors(0x40, 0x43);
     y = 0x30;
     PrintShadowText(0x14, y, (char *)str_Pos);
@@ -198,7 +198,7 @@ int TeamRosterScreen(int team)
             PrintFmt2(0x240, y, (char *)str_fmtPct, gs[10] / 1000, gs[10] % 1000);
     }
     TextGridOff();
-    sub_8EA00(state);
+    TextRestoreState(state);
     statsnumskaters = n;
     statsnumgoalies = m;
     return 0;

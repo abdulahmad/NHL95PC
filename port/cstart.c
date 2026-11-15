@@ -4,10 +4,10 @@
 #include "host.h"
 #include "audio.h"
 
-extern uint8_t byte_D4D06, byte_D4D07, byte_D4D0F, byte_D4D10;
-extern uint16_t word_D4CE4, word_D4D04, word_D4D0D, loc_90048;
-extern uint32_t dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0, dword_D4CE8, dword_D4CEC, dword_D4D09;
-extern char unk_F7B88[];
+extern uint8_t _Extender, _ExtenderSubtype, _osmajor, _osminor;
+extern uint16_t _psp, __no87, _Envptr_w4, __saved_DS;
+extern uint32_t _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr;
+extern char stackarea[];
 
 static char envblock[4096];
 
@@ -36,25 +36,25 @@ static void build_environment(const char *program)
 
 void host_cstart(int argc, char **argv)
 {
-    char *dst = (char *)(((uintptr_t)unk_F7B88 + 0xF) & ~0xFu);
+    char *dst = (char *)(((uintptr_t)stackarea + 0xF) & ~0xFu);
     char *e, *cmd;
     int i, no87 = 0;
     uint16_t ds;
     __asm__ volatile("mov %%ds, %0" : "=r"(ds));
 
-    byte_D4D0F = 5;                 /* DOS version 5.0 */
-    byte_D4D10 = 0;
-    byte_D4D06 = 1;                 /* running under DOS/4G */
-    byte_D4D07 = 0;                 /* flat: the data segment starts at linear 0 */
-    loc_90048 = ds;                 /* the code keeps a copy of the data selector for its interrupt handlers */
-    word_D4CE4 = ds;                /* "program segment prefix" selector: the PSP itself is not used */
-    word_D4D0D = ds;                /* environment selector */
+    _osmajor = 5;                 /* DOS version 5.0 */
+    _osminor = 0;
+    _Extender = 1;                 /* running under DOS/4G */
+    _ExtenderSubtype = 0;                 /* flat: the data segment starts at linear 0 */
+    __saved_DS = ds;                 /* the code keeps a copy of the data selector for its interrupt handlers */
+    _psp = ds;                /* "program segment prefix" selector: the PSP itself is not used */
+    _Envptr_w4 = ds;                /* environment selector */
     build_environment("HOCKEY.EXE");
-    dword_D4D09 = (uint32_t)envblock;
-    __asm__ volatile("mov %%esp, %0" : "=r"(dword_D4CEC));
-    dword_D4CEC &= ~3u;
-    dword_D4CD8 = dword_D4CEC;
-    dword_D4CD4 = dword_D4CEC;
+    _Envptr = (uint32_t)envblock;
+    __asm__ volatile("mov %%esp, %0" : "=r"(_STACKTOP));
+    _STACKTOP &= ~3u;
+    _curbrk = _STACKTOP;
+    _dynend = _STACKTOP;
 
     /* command tail, a zero byte pair, then the program name, in the stack area (argv is built from this) */
     cmd = dst;
@@ -71,8 +71,8 @@ void host_cstart(int argc, char **argv)
     e += 1 + 2;                     /* the zero that ends the strings, then the count word */
     strcpy(cmd, e);
     cmd += strlen(e) + 1;
-    word_D4D04 = no87;
-    dword_D4CE8 = (uint32_t)cmd;
-    dword_D4CDC = (uint32_t)dst;
-    dword_D4CE0 = dword_D4D09;
+    __no87 = no87;
+    _STACKLOW = (uint32_t)cmd;
+    _LpCmdLine = (uint32_t)dst;
+    _LpPgmName = _Envptr;
 }

@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_98AC8 progbits alloc exec nowrite align=1
-extern byte_D4D06
+extern _Extender
 global _dos_setvect_, loc_98AE9, _dos_getvect_, loc_98B10, loc_98B1C
 _dos_setvect_:
 push edx	; 98AC8
 mov edx, ebx	; 98AC9
-mov bl, byte [byte_D4D06]	; 98ACB
+mov bl, byte [_Extender]	; 98ACB
 cmp bl, 2	; 98AD1
 jb short loc_98AE9	; 98AD4
 cmp bl, 8	; 98AD6
@@ -33,7 +33,7 @@ _dos_getvect_:
 push ebx	; 98AF3
 push ecx	; 98AF4
 mov ebx, eax	; 98AF5
-mov ah, byte [byte_D4D06]	; 98AF7
+mov ah, byte [_Extender]	; 98AF7
 cmp ah, 2	; 98AFD
 jb short loc_98B10	; 98B00
 cmp ah, 8	; 98B02

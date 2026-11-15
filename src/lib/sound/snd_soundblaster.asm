@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9F226 progbits alloc exec nowrite align=1
-extern __GETDS, asc_C4A94, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
+extern __GETDS, str_BLASTER, dword_D524C, dword_D5250, dword_D525C, dword_F3462, dword_F34DC, getenv_
 extern int386x_, memset_, outp_, sub_8F0D7, sub_A6D24, sub_A6D8D, sub_A6DA0, sub_A6DED
 extern sub_A6E10, sub_A6E7B, sub_A6EA2, sub_A6EC3, sub_A6F3C, sub_A6FA2, sub_A6FE1, sub_A7094
 extern sub_A70BC, sub_A70DD, sub_A905E, sub_A9BA4, sub_AA1D9, unk_D522E, unk_D5254, unk_D5258
@@ -33,7 +33,7 @@ mov dword [byte esp+0Ch], edx	; 9F231
 mov dword [byte esp+08h], edx	; 9F235
 mov dword [byte esp+04h], 0FFFFFFFFh	; 9F239
 mov dword [esp], 9	; 9F241
-mov eax, asc_C4A94	; 9F248
+mov eax, str_BLASTER	; 9F248
 call getenv_	; 9F24D
 mov ecx, eax	; 9F252
 test eax, eax	; 9F254

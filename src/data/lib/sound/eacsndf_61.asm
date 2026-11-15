@@ -8,9 +8,9 @@ extern sub_9DF80, sub_9E676, sub_9F226, sub_9F387, sub_9F418, sub_9F4A0, sub_9F4
 extern sub_9F622, sub_9F642, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, sub_A04B9
 extern sub_A053C, sub_A059B, sub_A05D3, sub_A060B, sub_A0643, sub_A067B, sub_A076E, sub_A0853
 extern sub_A0886, sub_A0D99, sub_A0FEA
-global byte_D4D06, byte_D4D07, byte_D4D08, dword_D4BC8, dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0
-global dword_D4CE8, dword_D4CEC, dword_D4CF0, dword_D4CF4, dword_D4CF8, dword_D4D00, dword_D4D09, off_D4BA0
-global word_D4CE4, word_D4D04, word_D4D0D
+global _Extender, _ExtenderSubtype, byte_D4D08, dword_D4BC8, _dynend, _curbrk, _LpCmdLine, _LpPgmName
+global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, dword_D4CF8, dword_D4D00, _Envptr, off_D4BA0
+global _psp, __no87, _Envptr_w4
 off_D4BA0:
 dd sub_972AB
 dd sub_972AB
@@ -84,19 +84,19 @@ dd sub_A0853
 dd sub_A0FEA
 dd sub_A0886
 db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dword_D4CD4:
+_dynend:
 db 00h,00h,00h,00h
-dword_D4CD8:
+_curbrk:
 db 00h,00h,00h,00h
-dword_D4CDC:
+_LpCmdLine:
 db 00h,00h,00h,00h
-dword_D4CE0:
+_LpPgmName:
 db 00h,00h,00h,00h
-word_D4CE4:
+_psp:
 db 00h,00h,00h,00h
-dword_D4CE8:
+_STACKLOW:
 db 00h,00h,00h,00h
-dword_D4CEC:
+_STACKTOP:
 db 00h,00h,00h,00h
 dword_D4CF0:
 db 00h,00h,00h,00h
@@ -106,15 +106,15 @@ dword_D4CF8:
 db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D4D00:
 db 00h,00h,00h,00h
-word_D4D04:
+__no87:
 db 00h,00h
-byte_D4D06:
+_Extender:
 db 00h
-byte_D4D07:
+_ExtenderSubtype:
 db 00h
 byte_D4D08:
 db 00h
-dword_D4D09:
+_Envptr:
 db 00h,00h,00h,00h
-word_D4D0D:
+_Envptr_w4:
 db 00h,00h

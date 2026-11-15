@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D68E progbits alloc exec nowrite align=1
-extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, dword_D4CE8
+extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD, _STACKLOW
 extern dword_D4F9A, dword_F27F6, sub_8F114, sub_9F685, sub_9F725, sub_9FA5D, sub_9FC24, sub_9FC94
 extern sub_A65E8, sub_A6612, sub_A6635, sub_A6672, sub_A6684, sub_A677B, unk_F21FC, unk_F24D8
 extern unk_F27D8
@@ -19,7 +19,7 @@ global loc_9DDB9, loc_9DDD0, loc_9DDD5, loc_9DDEF, loc_9DE0F, loc_9DE2F, loc_9DE
 global loc_9DE6A, loc_9DE89, loc_9DE8E
 sub_9D68E:
 mov eax, esp	; 9D68E
-sub eax, dword [dword_D4CE8]	; 9D690
+sub eax, dword [_STACKLOW]	; 9D690
 ret	; 9D696
 db 00h
 sub_9D698:

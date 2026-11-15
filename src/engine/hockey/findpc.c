@@ -222,14 +222,14 @@ void Goal(Player *net)
     }
     if (gmode & 0x10) return;
     i = hmscore[0] - awscore;
-    if (i < -3 && byte_DF6E6 > 1 && cont1team != 1 && cont2team != 1 && !(*(unsigned char *)hmtmgoalie & 1))
+    if (i < -3 && hmtmcoach_d2 > 1 && cont1team != 1 && cont2team != 1 && !(*(unsigned char *)hmtmgoalie & 1))
         *(unsigned char *)hmtmgoalie ^= 1;
-    if (i < -1 && byte_DF6E6 > 1) byte_DF6E6--;
-    if (i < 1 && byte_DF6E7 > 1) byte_DF6E7--;
-    if (i > 3 && byte_DF7E6 > 1 && cont1team != 2 && cont2team != 2 && !(*(unsigned char *)&awtmgoalie & 1))
+    if (i < -1 && hmtmcoach_d2 > 1) hmtmcoach_d2--;
+    if (i < 1 && hmtmcoach_d3 > 1) hmtmcoach_d3--;
+    if (i > 3 && awtmcoach_d2 > 1 && cont1team != 2 && cont2team != 2 && !(*(unsigned char *)&awtmgoalie & 1))
         *(unsigned char *)&awtmgoalie ^= 1;
-    if (i > 1 && byte_DF7E6 > 1) byte_DF7E6--;
-    if (i > -1 && byte_DF7E7 > 1) byte_DF7E7--;
+    if (i > 1 && awtmcoach_d2 > 1) awtmcoach_d2--;
+    if (i > -1 && awtmcoach_d3 > 1) awtmcoach_d3--;
     UpdateCoachModes();
 }
 
@@ -304,13 +304,13 @@ void defaultsprites_0(void)
 
 /* SetPlList (5BBFA, 93G SetPlList; ends in findpc_ret6): build PlList, the roster indexes (pnum) of the
    players team t wants on the ice now, -1 for none, with their positions at PlList+6 (byte_E038A). The tmap
-   positions come from priolist, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
+   positions come from priolist_m1, past the goalie when he is pulled (tmgoalie < 0; not while the other team takes
    a penalty shot). Each player comes from the team's line table through the sublist of that position: the
    goalie by tmgoalie, the defence by tmlcnt while the line is below 4, the rest by the line; the extra attacker
    (position 6) is slot 26h. Then, from the last slot down, a listed player in the penalty box or held out
    (tmpdst > 0 or <= -3), or in one of the last two slots one that TryAddPlayerToList refuses (already listed),
    is replaced by the first one TryAddPlayerToList takes from his position's sublist, then from the side's
-   25-byte list for defence or forwards (unk_E9D50 / byte_E9E4A, from line 6 on byte_E9DB4 / unk_E9EE0, always
+   25-byte list for defence or forwards (offsort_d / offsort_fwd, from line 6 on defsort_d / defsort_fwd, always
    the first pair for position 6), then any roster index from 18h down to 1. tmextra gets the pnum listed for
    position 6 (-1 with the goalie in). No result. */
 void SetPlList(Team *t)
@@ -336,34 +336,34 @@ void SetPlList(Team *t)
         t->tmextra = -1;
     i = t->tmap;
     while (--i >= 0) {
-        pos = priolist[i + g + 1];
-        byte_E038A[i] = priolist[i + g + 1];
+        pos = priolist_m1[i + g + 1];
+        byte_E038A[i] = priolist_m1[i + g + 1];
         if (pos == 0)
-            PlList[i] = lines[((signed char *)unk_CCCC8)[sublist[pos] + t->tmgoalie]];
+            PlList[i] = lines[((signed char *)sublist_defl)[sublist[pos] + t->tmgoalie]];
         else if (pos == 6)
             PlList[i] = lines[0x26];
         else if (!(line >= 4 || pos > 2))       /* this form and line + sublist below give the EXE's registers */
-            PlList[i] = lines[((signed char *)unk_CCCC8)[sublist[pos] + t->tmlcnt]];
+            PlList[i] = lines[((signed char *)sublist_defl)[sublist[pos] + t->tmlcnt]];
         else
-            PlList[i] = lines[((signed char *)unk_CCCC8)[line + sublist[pos]]];
+            PlList[i] = lines[((signed char *)sublist_defl)[line + sublist[pos]]];
     }
     for (i = 5; i >= 0; i--) {
         k = PlList[i];
         if (k < 0) continue;
         pos = byte_E038A[i];
         if (t->tmpdst[k] <= -3 || t->tmpdst[k] > 0 || i >= t->tmap - 2 && !TryAddPlayerToList(t, k, i)) {
-            p = (signed char *)unk_CCCC8 + sublist[pos];
+            p = (signed char *)sublist_defl + sublist[pos];
             do {
                 c = *p++;
                 if (c < 0) {                    /* sublist used up: the side's list */
                     side = (t == &awtmstruct);
                     /* an int sum (multiple first) is add reg, offset as in the EXE; list + side * 25 loads the offset */
                     if (pos == 6 || line < 6) {
-                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)unk_E9D50);
-                        else q = (signed char *)(side * 25 + (int)byte_E9E4A);
+                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)offsort_d);
+                        else q = (signed char *)(side * 25 + (int)offsort_fwd);
                     } else {
-                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)byte_E9DB4);
-                        else q = (signed char *)(side * 25 + (int)unk_E9EE0);
+                        if (pos == 1 || pos == 2) q = (signed char *)(side * 25 + (int)defsort_d);
+                        else q = (signed char *)(side * 25 + (int)defsort_fwd);
                     }
                     k = 0;
                     do {
@@ -471,7 +471,7 @@ void StartPer(void)
         else if (cont2team == 1) c2playernum[0] = 2;
         else if (cont2team == 2) c2playernum[0] = 8;
     }
-    byte_E9AD3 = 0xFF;
+    goalevent = 0xFF;
     bannermsg = -1;
     bannertimer = 0;
     ovltimer = -1;
@@ -502,8 +502,8 @@ void StartPer(void)
 }
 
 /* updateplayers (5C40F, 93G updateplayers; ends in findpc_ret6): run every sort object for a frame.
-   PC first: dword_CCC9C = 1 while the clock is stopped for a highlight (gmode bit 7), or with no replay (gmode2
-   bit 0), no penalty countdown or queued penalty, overlay state byte_E003A[...] not 20h / 23h and the overlay idle
+   PC first: playsuspended = 1 while the clock is stopped for a highlight (gmode bit 7), or with no replay (gmode2
+   bit 0), no penalty countdown or queued penalty, overlay state refasslist[...] not 20h / 23h and the overlay idle
    (ovlseq 0 or 2, ovltimer outside 0-FFh); else 0. Then for the 12 players: the puck distance (vecdist, word 4Eh),
    direction (vtoa, byte 52h) and the quarter vector squared (word 50h); per team the goalie's SCnum (word FAh) and
    the nearest available skater (dword 3Eh, word 42h; reset to FFFFh / -1 first). Then for objects 0-10h
@@ -524,16 +524,16 @@ void updateplayers(void)
     short i;
     int a;
 
-    i = byte_E003A[((short *)&word_E0036)[1]];
-    dword_CCC9C = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
+    i = refasslist[((short *)&refposition)[1]];
+    playsuspended = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
         && (ovlseq == 2 || !ovlseq || ovltimer < 0 || ovltimer >= 0x100) != 0);
     p = SortCords;
-    word_DF70E = -1;
-    dword_DF652 = 0xFFFF;
-    word_DF656 = -1;
-    word_DF80E = -1;
-    dword_DF752 = 0xFFFF;
-    word_DF756 = -1;
+    hmtmgoaliesc = -1;
+    hmtmnear = 0xFFFF;
+    hmtmnearpl = -1;
+    awtmgoaliesc = -1;
+    awtmnear = 0xFFFF;
+    awtmnearpl = -1;
     for (i = 0; i < 12; i++, p++) {
         t = p->tmptr;
         dx = *puckx - HIWORD(p->Xpos);
@@ -750,7 +750,7 @@ frame:
    4B0h), gmode bits 0 and 6, excitement +28h, all 12 players off the joysticks, AddPenalty2 type 2; any other tie
    ends the period (type 1). A decided game: both controlled players and the puck carrier cleared, a puck still in
    assignment 18h gets 1Ah, all players off the joysticks, SetBoxDoorObject(away team leads). For the cup:
-   byte_CCCA0 = 1, gmode bit 7, sortobj15 gets assignment 2Bh and the winning team's skater nearest (-91h, 6) is
+   cupceremony = 1, gmode bit 7, sortobj15 gets assignment 2Bh and the winning team's skater nearest (-91h, 6) is
    picked. Then the winning team's six: skaters celebrate (7; the picked one 8 then 2Ah), the goalie stays, an empty
    slot takes the first player of the team's penalty box list (position 5, 3 for the next ones; assignment 7,
    setplayer, the list shifted down). Then the penalty buffer is cleared, the crowd raised (home win: +3E8h to at
@@ -800,7 +800,7 @@ void clockcont_0(void)
     p = &SortCords[regd1.w < 0 ? 6 : 0];
     SetBoxDoorObject(regd1.w < 0);
     if (regd0.w == 8) {
-        byte_CCCA0 = 1;
+        cupceremony = 1;
         gmode |= 0x80;
         assinsert((Player *)sortobj15, 0x2B);
         dmin = 40000;

@@ -10,12 +10,12 @@ void SaveDialogBg(int x, int y, int w, int h)
     int n;
 
     n = (w + 8) * (h + 4) + 0x11;
-    dlgsavebuf = sub_8CCA8((char *)str_DBOX, n, 0x20);
+    dlgsavebuf = AllocMemBlock((char *)str_DBOX, n, 0x20);
     if (!dlgsavebuf) return;
     *(Hdr17 *)dlgsavebuf = *(Hdr17 *)pointerspr;
     ((short *)dlgsavebuf)[2] = w + 7;
     ((short *)dlgsavebuf)[3] = h + 4;
     dlgsavex = x / 4 * 4;
     dlgsavey = y;
-    sub_91400(dlgsavebuf, dlgsavex, dlgsavey);
+    GrabBlock(dlgsavebuf, dlgsavex, dlgsavey);
 }

@@ -90,8 +90,8 @@ void asstakeposition(Player *p)
         regd4.w = (regd4.w + 6) << 3;
         regd4.w = apl[regd4.w + regd1.w];
         regd4.w += regd4.w;
-        regd0.w = word_CBE8C[regd4.w];
-        regd1.w = word_CBE8E[regd4.w];
+        regd0.w = puckfaceoff2_ptab[regd4.w];
+        regd1.w = puckfaceoff2_ptab_y[regd4.w];
         if (!(p->pflags & 0x80)) {
             regd0.w = -regd0.w;
             regd1.w = -regd1.w;

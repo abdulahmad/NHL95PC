@@ -4,11 +4,11 @@ bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, awlinetab, btn_MasterDB, btn_TradeStats, btn_WrongDisk
-extern byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_D42C3, byte_DC8D8
-extern byte_DC9D8, byte_DDD40, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
+extern byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, byte_D42C3, awayremap
+extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
-extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C87C0, dword_C87C8, dword_C87E0
-extern dword_C87E8, dword_DC738, dword_DDD34, dword_DDD3C, dword_DE264, ExportTeamToFloppy, FadePalStep, FileClose
+extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, menuwidth_trade1, menutext_trade1, menuwidth_trade2
+extern menutext_trade2, leaguestatsmode, dword_DDD34, dword_DDD3C, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, GameLineEditor, GetInputEvent, hmlinetab, HomeTeam, humancount, InitMenuRemap, jerseymsg
 extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams
@@ -25,12 +25,12 @@ extern str_FromLeague, str_Gstat2, str_HOMEPALS, str_HOMEPALS2, str_Keys2, str_L
 extern str_Menubuff7, str_Pal21, str_Pal22, str_PINFO, str_PLAYER, str_Pntr2, str_Pointer10, str_Pstat2
 extern str_S12, str_S4, str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_Shrt
 extern str_space, str_star, str_Statistics, str_Temp6, str_TheJerseyNumber2d2, str_Tstat, str_VFN, strcat_
-extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, sub_8CCA8, sub_8E83C, sub_8E8A0
-extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0, sub_903F0, sub_9121C, sub_91370
-extern sub_91400, sub_91FE0, sub_93170, sub_931FC, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
-extern sub_B4BA8, sub_B4DD4, sub_B4F8C, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
+extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0
+extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, sub_9121C, DrawArt
+extern GrabBlock, sub_91FE0, sub_93170, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
+extern sub_B4BA8, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
-extern tradeslot, treeteamnames, unequaltrademsg, unk_C88E2, unk_CF3CF, unk_D12C8, unknown_libname_1, unknown_libname_2
+extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, unknown_libname_1, unknown_libname_2
 extern VisTeam, word_DDD48, word_DDD4A, WriteKeyRec, WriteLeagueTeamEntry, WriteTeamRec
 global BuildTradeRoster, TradeShowStats, FixJerseyConflict, ExecuteTrade, DrawTradeRow, LoadTradeTeamPals, DrawTradeScreen, TradeHitTest
 global TradeHitTest_ret, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop, TradeRosterCmp, TradeScreen, TradePlayers
@@ -225,23 +225,23 @@ call sub_B4BA8	; 3DE23
 push byte 20h	; 3DE28
 push dword 300h	; 3DE2A
 push str_Temp6	; 3DE2F
-call sub_8CCA8	; 3DE34
+call AllocMemBlock	; 3DE34
 mov edi, eax	; 3DE39
 add esp, byte 0Ch	; 3DE3B
 mov esi, eax	; 3DE3E
 push eax	; 3DE40
 push dword 100h	; 3DE41
 push byte 0	; 3DE46
-call sub_8FFB0	; 3DE48
+call SetPalette	; 3DE48
 add esp, byte 0Ch	; 3DE4D
 mov ebx, 10h	; 3DE50
 mov edx, edi	; 3DE55
 mov eax, 1	; 3DE57
 call FadePalStep	; 3DE5C
 push byte 0	; 3DE61
-call sub_B392C	; 3DE63
+call ClearScreen	; 3DE63
 add esp, byte 4	; 3DE68
-mov dword [dword_DC738], 1	; 3DE6B
+mov dword [leaguestatsmode], 1	; 3DE6B
 mov dword [statsredrawcb], TeamRosterScreen	; 3DE75
 xor eax, eax	; 3DE7F
 mov al, byte [byte esp+018h]	; 3DE81
@@ -249,25 +249,25 @@ mov dword [statscategory], eax	; 3DE85
 push byte 20h	; 3DE8A
 push dword 2A4h	; 3DE8C
 push str_Tstat	; 3DE91
-call sub_8CCA8	; 3DE96
+call AllocMemBlock	; 3DE96
 add esp, byte 0Ch	; 3DE9B
 mov dword [statsteambuf], eax	; 3DE9E
 push byte 20h	; 3DEA3
 push dword 5B0h	; 3DEA5
 push str_Keys2	; 3DEAA
-call sub_8CCA8	; 3DEAF
+call AllocMemBlock	; 3DEAF
 add esp, byte 0Ch	; 3DEB4
 mov dword [statsplayerbuf], eax	; 3DEB7
 push byte 20h	; 3DEBC
 push dword 497h	; 3DEBE
 push str_Pstat2	; 3DEC3
-call sub_8CCA8	; 3DEC8
+call AllocMemBlock	; 3DEC8
 add esp, byte 0Ch	; 3DECD
 mov dword [statsskaterbuf], eax	; 3DED0
 push byte 20h	; 3DED5
 push dword 10Eh	; 3DED7
 push str_Gstat2	; 3DEDC
-call sub_8CCA8	; 3DEE1
+call AllocMemBlock	; 3DEE1
 add esp, byte 0Ch	; 3DEE6
 mov dword [statsgoaliebuf], eax	; 3DEE9
 xor ecx, ecx	; 3DEEE
@@ -284,12 +284,12 @@ call MakePath	; 3DF0A
 push byte 0	; 3DF0F
 lea eax, [byte esp+04h]	; 3DF11
 push eax	; 3DF15
-call sub_8E83C	; 3DF16
+call LoadBank	; 3DF16
 mov edi, eax	; 3DF1B
 add esp, byte 8	; 3DF1D
 push str_Pal21	; 3DF20
 push eax	; 3DF25
-call sub_B30B4	; 3DF26
+call FindShape	; 3DF26
 add esp, byte 8	; 3DF2B
 lea edx, [byte eax+010h]	; 3DF2E
 mov ebx, 300h	; 3DF31
@@ -307,7 +307,7 @@ push byte 42h	; 3DF5B
 mov ecx, 41h	; 3DF5D
 mov ebx, 40h	; 3DF62
 mov edx, 2	; 3DF67
-mov eax, unk_C88E2	; 3DF6C
+mov eax, tradestatsmenubar	; 3DF6C
 call DrawMenuBar	; 3DF71
 mov ebx, 10h	; 3DF76
 mov edx, esi	; 3DF7B
@@ -317,10 +317,10 @@ push byte 42h	; 3DF84
 mov ecx, 41h	; 3DF86
 mov ebx, 40h	; 3DF8B
 mov edx, 2	; 3DF90
-mov eax, unk_C88E2	; 3DF95
+mov eax, tradestatsmenubar	; 3DF95
 call RunMenu	; 3DF9A
 xor ecx, ecx	; 3DF9F
-mov dword [dword_DC738], ecx	; 3DFA1
+mov dword [leaguestatsmode], ecx	; 3DFA1
 mov dword [statsredrawcb], ecx	; 3DFA7
 mov eax, dword [statsteambuf]	; 3DFAD
 push eax	; 3DFB2
@@ -349,7 +349,7 @@ mov edx, esi	; 3E00C
 mov eax, 1	; 3E00E
 call FadePalStep	; 3E013
 push edi	; 3E018
-call sub_B392C	; 3E019
+call ClearScreen	; 3E019
 add esp, byte 4	; 3E01E
 push esi	; 3E021
 call FreeMemBlock	; 3E022
@@ -448,13 +448,13 @@ je near .9	; 3E124
 push byte 20h	; 3E12A
 push byte 0Ch	; 3E12C
 push str_Donepal	; 3E12E
-call sub_8CCA8	; 3E133
+call AllocMemBlock	; 3E133
 mov dword [dword esp+0644h], eax	; 3E138
 add esp, byte 0Ch	; 3E13F
 push eax	; 3E142
 push byte 4	; 3E143
 push dword 0FBh	; 3E145
-call sub_8FFB0	; 3E14A
+call SetPalette	; 3E14A
 add esp, byte 0Ch	; 3E14F
 mov byte [dword esp+0644h], 18h	; 3E152
 xor dl, dl	; 3E15A
@@ -464,7 +464,7 @@ lea eax, [dword esp+0644h]	; 3E16A
 push eax	; 3E171
 push byte 1	; 3E172
 push dword 0FBh	; 3E174
-call sub_B4B88	; 3E179
+call VgaSetPalette	; 3E179
 add esp, byte 0Ch	; 3E17E
 mov byte [dword esp+0644h], 2Ah	; 3E181
 xor bh, bh	; 3E189
@@ -474,7 +474,7 @@ lea eax, [dword esp+0644h]	; 3E199
 push eax	; 3E1A0
 push byte 1	; 3E1A1
 push dword 0FCh	; 3E1A3
-call sub_B4B88	; 3E1A8
+call VgaSetPalette	; 3E1A8
 add esp, byte 0Ch	; 3E1AD
 mov byte [dword esp+0644h], 3Bh	; 3E1B0
 mov byte [dword esp+0645h], 12h	; 3E1B8
@@ -484,7 +484,7 @@ lea eax, [dword esp+0644h]	; 3E1C9
 push eax	; 3E1D0
 push byte 1	; 3E1D1
 push dword 0FDh	; 3E1D3
-call sub_B4B88	; 3E1D8
+call VgaSetPalette	; 3E1D8
 add esp, byte 0Ch	; 3E1DD
 mov dl, 3Bh	; 3E1E0
 mov byte [dword esp+0644h], dl	; 3E1E2
@@ -494,7 +494,7 @@ lea eax, [dword esp+0644h]	; 3E1F7
 push eax	; 3E1FE
 push byte 1	; 3E1FF
 push dword 0FEh	; 3E201
-call sub_B4B88	; 3E206
+call VgaSetPalette	; 3E206
 add esp, byte 0Ch	; 3E20B
 mov ebp, edi	; 3E20E
 shl ebp, 2	; 3E210
@@ -534,7 +534,7 @@ lea eax, [dword esp+0634h]	; 3E29B
 push eax	; 3E2A2
 lea eax, [dword esp+063Ch]	; 3E2A3
 push eax	; 3E2AA
-call sub_B2DCA	; 3E2AB
+call MouseRead	; 3E2AB
 add esp, byte 0Ch	; 3E2B0
 push byte 0FFFFFFFFh	; 3E2B3
 lea eax, [dword esp+0630h]	; 3E2B5
@@ -552,7 +552,7 @@ mov ebx, dword [dword esp+0638h]	; 3E2DF
 push ebx	; 3E2E6
 push byte 4	; 3E2E7
 push dword 0FBh	; 3E2E9
-call sub_B4B88	; 3E2EE
+call VgaSetPalette	; 3E2EE
 add esp, byte 0Ch	; 3E2F3
 mov ecx, dword [dword esp+0638h]	; 3E2F6
 push ecx	; 3E2FD
@@ -814,20 +814,20 @@ xor eax, eax	; 3E6E8
 call LoadGameTeams	; 3E6EA
 mov dword [curperiod], 0FFFFFFFEh	; 3E6EF
 mov ecx, 3	; 3E6F9
-mov ebx, unk_CF3CF	; 3E6FE
+mov ebx, tradelinesmenubar	; 3E6FE
 mov edx, hmlinetab	; 3E703
 xor eax, eax	; 3E708
 call GameLineEditor	; 3E70A
 push byte 20h	; 3E70F
 push dword 300h	; 3E711
 push str_Pal22	; 3E716
-call sub_8CCA8	; 3E71B
+call AllocMemBlock	; 3E71B
 mov edi, eax	; 3E720
 add esp, byte 0Ch	; 3E722
 push eax	; 3E725
 push dword 100h	; 3E726
 push esi	; 3E72B
-call sub_8FFB0	; 3E72C
+call SetPalette	; 3E72C
 add esp, byte 0Ch	; 3E731
 mov ebx, 10h	; 3E734
 mov edx, edi	; 3E739
@@ -837,20 +837,20 @@ push edi	; 3E745
 call FreeMemBlock	; 3E746
 add esp, byte 4	; 3E74B
 mov ecx, 3	; 3E74E
-mov ebx, unk_CF3CF	; 3E753
+mov ebx, tradelinesmenubar	; 3E753
 mov edx, awlinetab	; 3E758
 mov eax, 1	; 3E75D
 call GameLineEditor	; 3E762
 push byte 20h	; 3E767
 push dword 300h	; 3E769
 push str_Pal22	; 3E76E
-call sub_8CCA8	; 3E773
+call AllocMemBlock	; 3E773
 mov edi, eax	; 3E778
 add esp, byte 0Ch	; 3E77A
 push eax	; 3E77D
 push dword 100h	; 3E77E
 push esi	; 3E783
-call sub_8FFB0	; 3E784
+call SetPalette	; 3E784
 add esp, byte 0Ch	; 3E789
 mov ebx, 10h	; 3E78C
 mov edx, edi	; 3E791
@@ -968,7 +968,7 @@ xor eax, eax	; 3E8A3
 add edx, 0C0h	; 3E8A5
 .4:
 mov bl, byte [edx+eax]	; 3E8AB
-mov byte [dword eax+byte_DC9D8], bl	; 3E8AE
+mov byte [dword eax+homeremap], bl	; 3E8AE
 inc eax	; 3E8B4
 cmp eax, 100h	; 3E8B5
 jl short LoadTradeTeamPals.4	; 3E8BA
@@ -1009,7 +1009,7 @@ xor eax, eax	; 3E91C
 add edx, 0C0h	; 3E91E
 .8:
 mov bl, byte [edx+eax]	; 3E924
-mov byte [dword eax+byte_DC8D8], bl	; 3E927
+mov byte [dword eax+awayremap], bl	; 3E927
 inc eax	; 3E92D
 cmp eax, 90h	; 3E92E
 jl short LoadTradeTeamPals.8	; 3E933
@@ -1017,7 +1017,7 @@ mov eax, 90h	; 3E935
 .9:
 mov bl, byte [edx+eax]	; 3E93A
 add bl, 40h	; 3E93D
-mov byte [dword eax+byte_DC8D8], bl	; 3E940
+mov byte [dword eax+awayremap], bl	; 3E940
 inc eax	; 3E946
 cmp eax, 100h	; 3E947
 jl short LoadTradeTeamPals.9	; 3E94C
@@ -1036,10 +1036,10 @@ mov byte [dword esi+0179h], 0	; 3E98F
 mov byte [dword esi+017Ah], 3Bh	; 3E996
 mov byte [dword esi+017Bh], 3Bh	; 3E99D
 mov byte [dword esi+017Ch], 3Bh	; 3E9A4
-mov byte [byte_D1333], 7Bh	; 3E9AB
-mov byte [byte_D1334], 7Ch	; 3E9B2
-mov byte [byte_D1335], 7Dh	; 3E9B9
-mov byte [byte_D1336], 7Eh	; 3E9C0
+mov byte [jerseypalslot0], 7Bh	; 3E9AB
+mov byte [jerseypalslot1], 7Ch	; 3E9B2
+mov byte [jerseypalslot2], 7Dh	; 3E9B9
+mov byte [jerseypalslot3], 7Eh	; 3E9C0
 add esp, byte 10h	; 3E9C7
 pop ebp	; 3E9CA
 pop edi	; 3E9CB
@@ -1061,7 +1061,7 @@ sub esp, byte 38h	; 3E9DC
 mov ebp, edx	; 3E9DF
 mov esi, ebx	; 3E9E1
 mov edi, dword [byte esp+050h]	; 3E9E3
-mov edx, dword [dword_DE264]	; 3E9E7
+mov edx, dword [tradebitmap]	; 3E9E7
 push edx	; 3E9ED
 call SetDrawBitmap	; 3E9EE
 add esp, byte 4	; 3E9F3
@@ -1079,17 +1079,17 @@ call MakePath	; 3EA14
 push byte 0	; 3EA19
 lea eax, [byte esp+024h]	; 3EA1B
 push eax	; 3EA1F
-call sub_8E83C	; 3EA20
+call LoadBank	; 3EA20
 mov dword [byte esp+038h], eax	; 3EA25
 add esp, byte 8	; 3EA29
 push byte 0	; 3EA2C
 push byte 0	; 3EA2E
 push str_Bkgd9	; 3EA30
 push eax	; 3EA35
-call sub_B30B4	; 3EA36
+call FindShape	; 3EA36
 add esp, byte 8	; 3EA3B
 push eax	; 3EA3E
-call sub_91370	; 3EA3F
+call DrawArt	; 3EA3F
 add esp, byte 0Ch	; 3EA44
 mov ecx, dword [byte esp+030h]	; 3EA47
 push ecx	; 3EA4B
@@ -1116,7 +1116,7 @@ call DrawDlgFrame	; 3EA93
 push byte 20h	; 3EA98
 push dword 300h	; 3EA9A
 push str_Pal22	; 3EA9F
-call sub_8CCA8	; 3EAA4
+call AllocMemBlock	; 3EAA4
 mov esi, eax	; 3EAA9
 add esp, byte 0Ch	; 3EAAB
 mov dword [byte esp+034h], eax	; 3EAAE
@@ -1128,12 +1128,12 @@ call MakePath	; 3EABD
 push byte 0	; 3EAC2
 lea eax, [byte esp+04h]	; 3EAC4
 push eax	; 3EAC8
-call sub_8E83C	; 3EAC9
+call LoadBank	; 3EAC9
 add esp, byte 8	; 3EACE
 mov dword [statsbgshapes], eax	; 3EAD1
 push str_Pal21	; 3EAD6
 push eax	; 3EADB
-call sub_B30B4	; 3EADC
+call FindShape	; 3EADC
 add esp, byte 8	; 3EAE1
 mov dword [statspalshape], eax	; 3EAE4
 lea edx, [byte eax+010h]	; 3EAE9
@@ -1148,8 +1148,8 @@ mov edx, dword [byte edi+04h]	; 3EB06
 mov eax, dword [edi]	; 3EB09
 mov ebx, esi	; 3EB0B
 call LoadTradeTeamPals	; 3EB0D
-mov dword [traderemap1], byte_DC9D8	; 3EB12
-mov dword [traderemap2], byte_DC8D8	; 3EB1C
+mov dword [traderemap1], homeremap	; 3EB12
+mov dword [traderemap2], awayremap	; 3EB1C
 xor esi, esi	; 3EB26
 .3:
 mov ecx, esi	; 3EB28
@@ -1179,14 +1179,14 @@ and edx, 0FFh	; 3EB7F
 mov eax, jerseyremap	; 3EB85
 call MakeJerseyShape	; 3EB8A
 push jerseyremap	; 3EB8F
-call sub_B4DD4	; 3EB94
+call SetColorRemap	; 3EB94
 add esp, byte 4	; 3EB99
 mov ecx, dword [nosplit esi*8+tradebtny]	; 3EB9C
 push ecx	; 3EBA3
 mov edx, dword [nosplit esi*8+tradebtnx]	; 3EBA4
 push edx	; 3EBAB
 push ebp	; 3EBAC
-call sub_931FC	; 3EBAD
+call DrawArtMasked	; 3EBAD
 add esp, byte 0Ch	; 3EBB2
 inc esi	; 3EBB5
 cmp esi, byte 4	; 3EBB6
@@ -1212,7 +1212,7 @@ jmp short .7	; 3EBF0
 push byte 41h	; 3EBF2
 push byte 40h	; 3EBF4
 .7:
-call sub_8E9C0	; 3EBF6
+call TextSetColors	; 3EBF6
 add esp, byte 8	; 3EBFB
 imul ebx, edi, dword 268h	; 3EBFE
 mov ecx, traderoster	; 3EC04
@@ -1253,7 +1253,7 @@ inc edi	; 3EC68
 cmp edi, byte 2	; 3EC69
 jl near DrawTradeScreen.4	; 3EC6C
 call sub_B4BA8	; 3EC72
-mov eax, dword [dword_DE264]	; 3EC77
+mov eax, dword [tradebitmap]	; 3EC77
 mov ecx, dword [byte eax+02Ch]	; 3EC7C
 push ecx	; 3EC7F
 call sub_9121C	; 3EC80
@@ -1413,13 +1413,13 @@ je near .5	; 3EDFA
 push byte 20h	; 3EE00
 push byte 0Ch	; 3EE02
 push str_Donepal	; 3EE04
-call sub_8CCA8	; 3EE09
+call AllocMemBlock	; 3EE09
 mov esi, eax	; 3EE0E
 add esp, byte 0Ch	; 3EE10
 push eax	; 3EE13
 push byte 4	; 3EE14
 push dword 0FBh	; 3EE16
-call sub_8FFB0	; 3EE1B
+call SetPalette	; 3EE1B
 add esp, byte 0Ch	; 3EE20
 mov byte [byte esp+0Ch], 18h	; 3EE23
 xor ah, ah	; 3EE28
@@ -1429,7 +1429,7 @@ lea eax, [byte esp+0Ch]	; 3EE32
 push eax	; 3EE36
 push byte 1	; 3EE37
 push dword 0FBh	; 3EE39
-call sub_B4B88	; 3EE3E
+call VgaSetPalette	; 3EE3E
 add esp, byte 0Ch	; 3EE43
 mov byte [byte esp+0Ch], 2Ah	; 3EE46
 xor bl, bl	; 3EE4B
@@ -1439,7 +1439,7 @@ lea eax, [byte esp+0Ch]	; 3EE55
 push eax	; 3EE59
 push byte 1	; 3EE5A
 push dword 0FCh	; 3EE5C
-call sub_B4B88	; 3EE61
+call VgaSetPalette	; 3EE61
 add esp, byte 0Ch	; 3EE66
 mov byte [byte esp+0Ch], 3Bh	; 3EE69
 mov byte [byte esp+0Dh], 12h	; 3EE6E
@@ -1449,7 +1449,7 @@ lea eax, [byte esp+0Ch]	; 3EE79
 push eax	; 3EE7D
 push byte 1	; 3EE7E
 push dword 0FDh	; 3EE80
-call sub_B4B88	; 3EE85
+call VgaSetPalette	; 3EE85
 add esp, byte 0Ch	; 3EE8A
 mov ah, 3Bh	; 3EE8D
 mov byte [byte esp+0Ch], ah	; 3EE8F
@@ -1459,7 +1459,7 @@ lea eax, [byte esp+0Ch]	; 3EE9B
 push eax	; 3EE9F
 push byte 1	; 3EEA0
 push dword 0FEh	; 3EEA2
-call sub_B4B88	; 3EEA7
+call VgaSetPalette	; 3EEA7
 add esp, byte 0Ch	; 3EEAC
 mov eax, esp	; 3EEAF
 push eax	; 3EEB1
@@ -1467,7 +1467,7 @@ lea eax, [byte esp+08h]	; 3EEB2
 push eax	; 3EEB6
 lea eax, [byte esp+010h]	; 3EEB7
 push eax	; 3EEBB
-call sub_B2DCA	; 3EEBC
+call MouseRead	; 3EEBC
 add esp, byte 0Ch	; 3EEC1
 push byte 0FFFFFFFFh	; 3EEC4
 lea eax, [byte esp+04h]	; 3EEC6
@@ -1484,7 +1484,7 @@ call MessageBox	; 3EEE5
 push esi	; 3EEEA
 push byte 4	; 3EEEB
 push dword 0FBh	; 3EEED
-call sub_B4B88	; 3EEF2
+call VgaSetPalette	; 3EEF2
 add esp, byte 0Ch	; 3EEF7
 push esi	; 3EEFA
 call FreeMemBlock	; 3EEFB
@@ -1598,7 +1598,7 @@ call DrawTradeScreen	; 3F012
 push str_Pntr2	; 3F017
 mov esi, dword [dword ebp+086h]	; 3F01C
 push esi	; 3F022
-call sub_B30B4	; 3F023
+call FindShape	; 3F023
 mov dword [byte ebp+046h], eax	; 3F028
 add esp, byte 8	; 3F02B
 mov eax, dword [dword ebp+082h]	; 3F02E
@@ -1635,7 +1635,7 @@ add eax, byte 11h	; 3F091
 push byte 20h	; 3F094
 push eax	; 3F096
 push str_Pointer10	; 3F097
-call sub_8CCA8	; 3F09C
+call AllocMemBlock	; 3F09C
 add esp, byte 0Ch	; 3F0A1
 mov dword [byte ebp+05Eh], eax	; 3F0A4
 mov edi, eax	; 3F0A7
@@ -1659,7 +1659,7 @@ lea eax, [byte ebp+03Ah]	; 3F0CD
 push eax	; 3F0D0
 lea eax, [byte ebp+042h]	; 3F0D1
 push eax	; 3F0D4
-call sub_B2DCA	; 3F0D5
+call MouseRead	; 3F0D5
 add esp, byte 0Ch	; 3F0DA
 mov eax, dword [byte ebp+03Ah]	; 3F0DD
 mov dword [byte ebp+032h], eax	; 3F0E0
@@ -1684,7 +1684,7 @@ lea eax, [byte ecx-01Ch]	; 3F102
 push eax	; 3F105
 mov esi, dword [byte ebp+05Eh]	; 3F106
 push esi	; 3F109
-call sub_91400	; 3F10A
+call GrabBlock	; 3F10A
 add esp, byte 0Ch	; 3F10F
 mov edi, dword [byte ebp+036h]	; 3F112
 push edi	; 3F115
@@ -1744,7 +1744,7 @@ lea eax, [byte edi-01Ch]	; 3F195
 push eax	; 3F198
 mov eax, dword [byte ebp+05Eh]	; 3F199
 push eax	; 3F19C
-call sub_903F0	; 3F19D
+call PutBlock	; 3F19D
 add esp, byte 0Ch	; 3F1A2
 mov edx, dword [byte ebp+02Eh]	; 3F1A5
 cmp edx, byte 20h	; 3F1A8
@@ -1766,7 +1766,7 @@ lea eax, [byte ebx-01Ch]	; 3F1C1
 push eax	; 3F1C4
 mov ecx, dword [byte ebp+05Eh]	; 3F1C5
 push ecx	; 3F1C8
-call sub_91400	; 3F1C9
+call GrabBlock	; 3F1C9
 add esp, byte 0Ch	; 3F1CE
 mov eax, dword [byte ebp+02Eh]	; 3F1D1
 mov edx, dword [byte ebp+0Eh]	; 3F1D4
@@ -1831,7 +1831,7 @@ mov dl, byte [dword eax+tradejersey]	; 3F2B9
 mov eax, jerseyremap	; 3F2BF
 call MakeJerseyShape	; 3F2C4
 push jerseyremap	; 3F2C9
-call sub_B4DD4	; 3F2CE
+call SetColorRemap	; 3F2CE
 add esp, byte 4	; 3F2D3
 mov eax, dword [byte ebp+02Eh]	; 3F2D6
 sub eax, byte 20h	; 3F2D9
@@ -1889,7 +1889,7 @@ sub eax, byte 1Ch	; 3F365
 push eax	; 3F368
 mov edx, dword [byte ebp+05Eh]	; 3F369
 push edx	; 3F36C
-call sub_903F0	; 3F36D
+call PutBlock	; 3F36D
 add esp, byte 0Ch	; 3F372
 mov eax, dword [dword ebp+08Eh]	; 3F375
 mov dword [byte ebp+042h], eax	; 3F37B
@@ -1906,7 +1906,7 @@ mov ecx, dword [byte ebp+eax*8-042h]	; 3F393
 push ecx	; 3F397
 mov esi, dword [byte edx+ebp-022h]	; 3F398
 push esi	; 3F39C
-call sub_903F0	; 3F39D
+call PutBlock	; 3F39D
 add esp, byte 0Ch	; 3F3A2
 mov eax, dword [byte ebp+042h]	; 3F3A5
 xor edi, edi	; 3F3A8
@@ -2000,7 +2000,7 @@ lea eax, [byte edi-01Ch]	; 3F49F
 push eax	; 3F4A2
 mov eax, dword [byte ebp+05Eh]	; 3F4A3
 push eax	; 3F4A6
-call sub_903F0	; 3F4A7
+call PutBlock	; 3F4A7
 add esp, byte 0Ch	; 3F4AC
 mov edx, dword [byte ebp+052h]	; 3F4AF
 push edx	; 3F4B2
@@ -2054,7 +2054,7 @@ lea eax, [byte edi-01Ch]	; 3F52E
 push eax	; 3F531
 mov eax, dword [byte ebp+05Eh]	; 3F532
 push eax	; 3F535
-call sub_903F0	; 3F536
+call PutBlock	; 3F536
 add esp, byte 0Ch	; 3F53B
 mov eax, dword [byte ebp+06Eh]	; 3F53E
 cmp eax, dword [byte ebp+02Ah]	; 3F541
@@ -2074,7 +2074,7 @@ push esi	; 3F563
 mov edi, dword [byte ebp+edx*8-042h]	; 3F564
 push edi	; 3F568
 push ecx	; 3F569
-call sub_903F0	; 3F56A
+call PutBlock	; 3F56A
 add esp, byte 0Ch	; 3F56F
 mov eax, dword [byte ebp+042h]	; 3F572
 xor ebx, ebx	; 3F575
@@ -2187,7 +2187,7 @@ imul eax, edx	; 3F6A6
 add eax, byte 11h	; 3F6A9
 push eax	; 3F6AC
 push str_Menubuff7	; 3F6AD
-call sub_8CCA8	; 3F6B2
+call AllocMemBlock	; 3F6B2
 add esp, byte 0Ch	; 3F6B7
 mov edx, dword [byte ebp+066h]	; 3F6BA
 mov dword [byte edx+ebp-022h], eax	; 3F6BD
@@ -2213,7 +2213,7 @@ push edi	; 3F6F3
 mov eax, dword [byte ebp+066h]	; 3F6F4
 mov edx, dword [byte eax+ebp-022h]	; 3F6F7
 push edx	; 3F6FB
-call sub_91400	; 3F6FC
+call GrabBlock	; 3F6FC
 add esp, byte 0Ch	; 3F701
 mov ebx, dword [byte ebp+052h]	; 3F704
 push ebx	; 3F707
@@ -2262,7 +2262,7 @@ lea eax, [byte esi-01Ch]	; 3F773
 push eax	; 3F776
 mov edi, dword [byte ebp+05Eh]	; 3F777
 push edi	; 3F77A
-call sub_903F0	; 3F77B
+call PutBlock	; 3F77B
 add esp, byte 0Ch	; 3F780
 mov eax, dword [byte ebp+052h]	; 3F783
 push eax	; 3F786
@@ -2302,7 +2302,7 @@ lea eax, [byte ecx-01Ch]	; 3F7D7
 push eax	; 3F7DA
 mov esi, dword [byte ebp+05Eh]	; 3F7DB
 push esi	; 3F7DE
-call sub_903F0	; 3F7DF
+call PutBlock	; 3F7DF
 add esp, byte 0Ch	; 3F7E4
 lea eax, [byte ebp+03Eh]	; 3F7E7
 push eax	; 3F7EA
@@ -2327,7 +2327,7 @@ push edi	; 3F824
 mov ebx, dword [byte ebp+ebx*8-042h]	; 3F825
 push ebx	; 3F829
 push esi	; 3F82A
-call sub_903F0	; 3F82B
+call PutBlock	; 3F82B
 add esp, byte 0Ch	; 3F830
 mov eax, dword [byte ebp+042h]	; 3F833
 xor esi, esi	; 3F836
@@ -2388,7 +2388,7 @@ cmp eax, edi	; 3F8EC
 je short .58	; 3F8EE
 push byte 41h	; 3F8F0
 push byte 40h	; 3F8F2
-call sub_8E9C0	; 3F8F4
+call TextSetColors	; 3F8F4
 add esp, byte 8	; 3F8F9
 mov eax, dword [tradeside]	; 3F8FC
 call DrawTradeRow	; 3F901
@@ -2404,7 +2404,7 @@ mov eax, dword [tradeside]	; 3F91F
 mov dword [nosplit eax*4+tradecursor], edx	; 3F924
 push byte 41h	; 3F92B
 push byte 42h	; 3F92D
-call sub_8E9C0	; 3F92F
+call TextSetColors	; 3F92F
 add esp, byte 8	; 3F934
 mov eax, dword [tradeside]	; 3F937
 call DrawTradeRow	; 3F93C
@@ -2575,7 +2575,7 @@ mov byte [dword ebp+eax*2-099h], 0FFh	; 3FB73
 .66:
 push byte 41h	; 3FB7B
 push byte 40h	; 3FB7D
-call sub_8E9C0	; 3FB7F
+call TextSetColors	; 3FB7F
 add esp, byte 8	; 3FB84
 mov eax, dword [tradeside]	; 3FB87
 call DrawTradeRow	; 3FB8C
@@ -2622,7 +2622,7 @@ mov dl, byte [dword ebp+eax*2-099h]	; 3FC1F
 mov eax, jerseyremap	; 3FC26
 call MakeJerseyShape	; 3FC2B
 push jerseyremap	; 3FC30
-call sub_B4DD4	; 3FC35
+call SetColorRemap	; 3FC35
 add esp, byte 4	; 3FC3A
 mov eax, dword [byte ebp+042h]	; 3FC3D
 mov ebx, dword [nosplit eax*8+tradebtny]	; 3FC40
@@ -2630,7 +2630,7 @@ push ebx	; 3FC47
 mov ecx, dword [nosplit eax*8+tradebtnx]	; 3FC48
 push ecx	; 3FC4F
 push esi	; 3FC50
-call sub_931FC	; 3FC51
+call DrawArtMasked	; 3FC51
 add esp, byte 0Ch	; 3FC56
 mov edi, dword [byte ebp+042h]	; 3FC59
 inc edi	; 3FC5C
@@ -2660,7 +2660,7 @@ cmp edx, dword [dword eax+tradeclick]	; 3FCBB
 jne short .70	; 3FCC1
 push byte 41h	; 3FCC3
 push byte 40h	; 3FCC5
-call sub_8E9C0	; 3FCC7
+call TextSetColors	; 3FCC7
 add esp, byte 8	; 3FCCC
 mov eax, dword [tradeside]	; 3FCCF
 call DrawTradeRow	; 3FCD4
@@ -2674,7 +2674,7 @@ cmp edx, byte 0FFFFFFFFh	; 3FCF2
 je short .71	; 3FCF5
 push byte 41h	; 3FCF7
 push byte 40h	; 3FCF9
-call sub_8E9C0	; 3FCFB
+call TextSetColors	; 3FCFB
 add esp, byte 8	; 3FD00
 mov eax, dword [tradeside]	; 3FD03
 call DrawTradeRow	; 3FD08
@@ -2684,7 +2684,7 @@ mov edx, dword [nosplit eax*4+tradeclick]	; 3FD12
 mov dword [nosplit eax*4+tradecursor], edx	; 3FD19
 push byte 41h	; 3FD20
 push byte 42h	; 3FD22
-call sub_8E9C0	; 3FD24
+call TextSetColors	; 3FD24
 add esp, byte 8	; 3FD29
 mov eax, dword [tradeside]	; 3FD2C
 call DrawTradeRow	; 3FD31
@@ -2711,7 +2711,7 @@ lea eax, [byte edi-01Ch]	; 3FD5F
 push eax	; 3FD62
 mov eax, dword [byte ebp+05Eh]	; 3FD63
 push eax	; 3FD66
-call sub_91400	; 3FD67
+call GrabBlock	; 3FD67
 add esp, byte 0Ch	; 3FD6C
 mov eax, dword [byte ebp+02Eh]	; 3FD6F
 mov edx, dword [byte ebp+0Eh]	; 3FD72
@@ -2776,7 +2776,7 @@ mov dl, byte [dword eax+tradejersey]	; 3FE58
 mov eax, jerseyremap	; 3FE5E
 call MakeJerseyShape	; 3FE63
 push jerseyremap	; 3FE68
-call sub_B4DD4	; 3FE6D
+call SetColorRemap	; 3FE6D
 add esp, byte 4	; 3FE72
 mov eax, dword [byte ebp+02Eh]	; 3FE75
 sub eax, byte 20h	; 3FE78
@@ -2892,13 +2892,13 @@ call sub_B4BA8	; 3FF77
 push byte 20h	; 3FF7C
 push dword 300h	; 3FF7E
 push str_Temp6	; 3FF83
-call sub_8CCA8	; 3FF88
+call AllocMemBlock	; 3FF88
 mov edi, eax	; 3FF8D
 add esp, byte 0Ch	; 3FF8F
 push eax	; 3FF92
 push dword 100h	; 3FF93
 push byte 0	; 3FF98
-call sub_8FFB0	; 3FF9A
+call SetPalette	; 3FF9A
 add esp, byte 0Ch	; 3FF9F
 mov ebx, 10h	; 3FFA2
 mov edx, edi	; 3FFA7
@@ -2907,16 +2907,16 @@ call FadePalStep	; 3FFAE
 push edi	; 3FFB3
 call FreeMemBlock	; 3FFB4
 add esp, byte 4	; 3FFB9
-mov edx, dword [dword_DE264]	; 3FFBC
+mov edx, dword [tradebitmap]	; 3FFBC
 push edx	; 3FFC2
 call SetDrawBitmap	; 3FFC3
 add esp, byte 4	; 3FFC8
 push byte 0	; 3FFCB
-call sub_B392C	; 3FFCD
+call ClearScreen	; 3FFCD
 add esp, byte 4	; 3FFD2
 lea eax, [dword esp+05D0h]	; 3FFD5
 push eax	; 3FFDC
-call sub_8E9E8	; 3FFDD
+call TextSaveState	; 3FFDD
 add esp, byte 4	; 3FFE2
 mov ecx, str_VFN	; 3FFE5
 mov ebx, str_S12	; 3FFEA
@@ -2936,7 +2936,7 @@ call sub_8E8A0	; 40018
 add esp, byte 8	; 4001D
 mov dword [dword esp+0630h], eax	; 40020
 push eax	; 40027
-call sub_8EA18	; 40028
+call TextSetFont	; 40028
 add esp, byte 4	; 4002D
 xor ecx, ecx	; 40030
 mov ebx, str_Lineditp	; 40032
@@ -2952,12 +2952,12 @@ call MakePath	; 40051
 push byte 0	; 40056
 lea eax, [dword esp+0614h]	; 40058
 push eax	; 4005F
-call sub_8E83C	; 40060
+call LoadBank	; 40060
 add esp, byte 8	; 40065
 mov dword [dword esp+062Ch], eax	; 40068
 push str_Shrt	; 4006F
 push eax	; 40074
-call sub_B30B4	; 40075
+call FindShape	; 40075
 add esp, byte 8	; 4007A
 mov dword [dword esp+0620h], eax	; 4007D
 mov ebx, 0FFFFFFFFh	; 40084
@@ -3014,7 +3014,7 @@ call FreeMemBlock	; 4014E
 add esp, byte 4	; 40153
 lea eax, [dword esp+05D0h]	; 40156
 push eax	; 4015D
-call sub_8EA00	; 4015E
+call TextRestoreState	; 4015E
 add esp, byte 4	; 40163
 mov edx, dword [dword esp+0630h]	; 40166
 push edx	; 4016D
@@ -3041,9 +3041,9 @@ mov dword [dword esp+0ACh], eax	; 401AB
 push ebp	; 401B2
 push dword 1E0h	; 401B3
 push dword 280h	; 401B8
-call sub_B4F8C	; 401BD
+call CreateBitmap	; 401BD
 add esp, byte 0Ch	; 401C2
-mov dword [dword_DE264], eax	; 401C5
+mov dword [tradebitmap], eax	; 401C5
 mov eax, dword [dlgfillcol]	; 401CA
 mov dword [dword esp+0BCh], eax	; 401CF
 mov eax, dword [dlgedgecol1]	; 401D6
@@ -3093,7 +3093,7 @@ lea eax, [dword esp+0B8h]	; 402A4
 push eax	; 402AB
 lea eax, [dword esp+0B0h]	; 402AC
 push eax	; 402B3
-call sub_B2DCA	; 402B4
+call MouseRead	; 402B4
 add esp, byte 0Ch	; 402B9
 mov edx, curleague	; 402BC
 lea eax, [dword esp+088h]	; 402C1
@@ -3214,7 +3214,7 @@ lea eax, [dword esp+0B8h]	; 40494
 push eax	; 4049B
 lea eax, [dword esp+0B0h]	; 4049C
 push eax	; 404A3
-call sub_B2DCA	; 404A4
+call MouseRead	; 404A4
 add esp, byte 0Ch	; 404A9
 push dword 0F7h	; 404AC
 mov ecx, 0FAh	; 404B1
@@ -3228,7 +3228,7 @@ lea eax, [dword esp+0B8h]	; 404CF
 push eax	; 404D6
 lea eax, [dword esp+0B0h]	; 404D7
 push eax	; 404DE
-call sub_B2DCA	; 404DF
+call MouseRead	; 404DF
 add esp, byte 0Ch	; 404E4
 push byte 0FFFFFFFFh	; 404E7
 lea eax, [dword esp+0B4h]	; 404E9
@@ -3260,7 +3260,7 @@ lea eax, [dword esp+0B8h]	; 4054C
 push eax	; 40553
 lea eax, [dword esp+0B0h]	; 40554
 push eax	; 4055B
-call sub_B2DCA	; 4055C
+call MouseRead	; 4055C
 add esp, byte 0Ch	; 40561
 push byte 0FFFFFFFFh	; 40564
 lea eax, [dword esp+0B4h]	; 40566
@@ -3310,7 +3310,7 @@ mov edx, str_Statistics	; 40614
 mov eax, esp	; 40619
 call strcat_	; 4061B
 mov eax, esp	; 40620
-mov dword [dword_C87C8], eax	; 40622
+mov dword [menutext_trade1], eax	; 40622
 lea edi, [byte esp+034h]	; 40627
 mov esi, str_Show	; 4062B
 movsd	; 40630
@@ -3323,7 +3323,7 @@ mov edx, str_Statistics	; 4064A
 lea eax, [byte esp+034h]	; 4064F
 call strcat_	; 40653
 lea eax, [byte esp+034h]	; 40658
-mov dword [dword_C87E8], eax	; 4065C
+mov dword [menutext_trade2], eax	; 4065C
 mov eax, esp	; 40661
 push eax	; 40663
 call fputchar	; 40664
@@ -3340,8 +3340,8 @@ jge short .15	; 40690
 mov eax, edx	; 40692
 .15:
 add eax, byte 6	; 40694
-mov dword [dword_C87E0], eax	; 40697
-mov dword [dword_C87C0], eax	; 4069C
+mov dword [menuwidth_trade2], eax	; 40697
+mov dword [menuwidth_trade1], eax	; 4069C
 push byte 3	; 406A1
 mov ecx, btn_TradeStats	; 406A3
 lea ebx, [dword esp+0B0h]	; 406A8
@@ -3365,7 +3365,7 @@ lea eax, [dword esp+0B8h]	; 406EA
 push eax	; 406F1
 lea eax, [dword esp+0B0h]	; 406F2
 push eax	; 406F9
-call sub_B2DCA	; 406FA
+call MouseRead	; 406FA
 add esp, byte 0Ch	; 406FF
 push byte 0FFFFFFFFh	; 40702
 lea eax, [dword esp+0B4h]	; 40704
@@ -3393,7 +3393,7 @@ mov eax, dword [dword esp+0C0h]	; 4075E
 mov dword [dlgbevelcol1], eax	; 40765
 mov eax, dword [dword esp+0D0h]	; 4076A
 mov dword [dlgbevelcol2], eax	; 40771
-mov ebx, dword [dword_DE264]	; 40776
+mov ebx, dword [tradebitmap]	; 40776
 push ebx	; 4077C
 call FreeMemBlock	; 4077D
 add esp, byte 4	; 40782
@@ -3453,7 +3453,7 @@ xor eax, eax	; 40805
 add edx, 0C0h	; 40807
 .4:
 mov bl, byte [edx+eax]	; 4080D
-mov byte [dword eax+byte_DC9D8], bl	; 40810
+mov byte [dword eax+homeremap], bl	; 40810
 inc eax	; 40816
 cmp eax, 100h	; 40817
 jl short LoadHomePals.4	; 4081C
@@ -3473,7 +3473,7 @@ xor eax, eax	; 4083F
 add edx, 0C0h	; 40841
 .6:
 mov bl, byte [edx+eax]	; 40847
-mov byte [dword eax+byte_DC8D8], bl	; 4084A
+mov byte [dword eax+awayremap], bl	; 4084A
 inc eax	; 40850
 cmp eax, 90h	; 40851
 jl short LoadHomePals.6	; 40856
@@ -3481,7 +3481,7 @@ mov eax, 90h	; 40858
 .7:
 mov bl, byte [edx+eax]	; 4085D
 add bl, 40h	; 40860
-mov byte [dword eax+byte_DC8D8], bl	; 40863
+mov byte [dword eax+awayremap], bl	; 40863
 inc eax	; 40869
 cmp eax, 100h	; 4086A
 jl short LoadHomePals.7	; 4086F
@@ -3506,7 +3506,7 @@ mov eax, esp	; 408D5
 push eax	; 408D7
 push dword 80h	; 408D8
 push dword 80h	; 408DD
-call sub_B4B88	; 408E2
+call VgaSetPalette	; 408E2
 add esp, byte 0Ch	; 408E7
 add esp, 190h	; 408EA
 pop edi	; 408F0

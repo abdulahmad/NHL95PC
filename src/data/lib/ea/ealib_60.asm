@@ -2,21 +2,21 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, unk_C4004
-extern unk_C4008, unk_C400C, unk_C4010, unk_C4014, unk_C4018, unk_C401C, unk_C4020, unk_C4024
-extern unk_C4028, unk_C402C, unk_C4030
-global asc_D2F46, asc_D43F4, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
-global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, byte_D3064
-global byte_D3068, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7, byte_D41CC
+extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, str_Jan
+extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
+extern str_Oct, str_Nov, str_Dec
+global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
+global byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, joyenablemask, cpuinfo_b0
+global cpuinfo_b1, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir, byte_D41CC
 global byte_D41CD, byte_D4244, byte_D4245, byte_D4246, byte_D4280, byte_D42C0, byte_D42C1, byte_D42C2
 global byte_D42C3, byte_D42C4, byte_D42C5, byte_D42C6, byte_D42E4, byte_D4410, byte_D4544, byte_D4545
-global byte_D4546, byte_D4B9C, byte_D4B9D, dword_D2C84, dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8
-global dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_D2F74
+global byte_D4546, __8087, byte_D4B9D, dword_D2C84, dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8
+global dword_D2D5C, dword_D2D62, dword_D2D68, memblocklist, dword_D2F5C, dword_D2F60, dword_D2F64, dword_D2F74
 global dword_D2F78, dword_D2F7A, dword_D2F7C, dword_D2F80, dword_D2F84, dword_D2F88, dword_D2F8C, dword_D2F90
-global joycalactive, tickcount, slowtickcount, oldint8off, dword_D2FEC, dword_D2FF0, dword_D2FF4, dword_D2FF8
+global joycalactive, tickcount, slowtickcount, oldint8off, mouseminx, mouseminy, mousemaxx, mousemaxy
 global dword_D2FFC, dword_D3000, dword_D301C, dword_D3024, dword_D3028, mousex, mousey, mousebtns
 global dword_D3038, dword_D303C, dword_D3044, dword_D3048, dword_D304C, dword_D3050, dword_D3054, dword_D3058
-global dword_D305C, dword_D3060, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
+global cpuinfo_d0, cpuinfo_d1, dword_D3090, dword_D3096, dword_D30A4, dword_D30A8, cliprect_x0, cliprect_y0
 global cliprect_x1, cliprect_y1, dword_D30BC, dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0
 global dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0, dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0
 global dword_D30F4, dword_D30F8, dword_D3104, dword_D4108, dword_D4158, dword_D415C, dword_D4160, dword_D4164
@@ -120,10 +120,10 @@ db 0FDh,0FEh,0FFh,080h,081h,00h,00h,0C7h,0C8h,0C9h,02Dh,0CBh,0CCh,0CDh,02Bh,0CFh
 db 0D0h,0D1h,0D2h,0D3h,00h,00h,00h,08Dh,08Eh,00h,00h,00h
 saved_ss:
 db 00h,00h
-asc_D2F46:
+str_StackOverflow:
 db 053h,074h,061h,063h,06Bh,020h,04Fh,076h,065h,072h,066h,06Ch,06Fh,077h,021h,0Dh
 db 0Ah,00h
-dword_D2F58:
+memblocklist:
 dd memlist1
 dword_D2F5C:
 db 00h,0Eh,00h,00h
@@ -169,13 +169,13 @@ oldint8off:
 db 00h,00h,00h,00h
 oldint8sel:
 db 00h,00h,00h,00h
-dword_D2FEC:
+mouseminx:
 db 00h,00h,00h,00h
-dword_D2FF0:
+mouseminy:
 db 00h,00h,00h,00h
-dword_D2FF4:
+mousemaxx:
 db 040h,01h,00h,00h
-dword_D2FF8:
+mousemaxy:
 db 0C8h,00h,00h,00h
 dword_D2FFC:
 db 00h,00h,00h,00h
@@ -218,13 +218,13 @@ dword_D3054:
 db 040h,01h,00h,00h
 dword_D3058:
 db 0C8h,00h,00h,00h
-dword_D305C:
+cpuinfo_d0:
 db 00h,00h,00h,00h
-dword_D3060:
+cpuinfo_d1:
 db 00h,00h,00h,00h
-byte_D3064:
+cpuinfo_b0:
 db 00h,00h,00h,00h
-byte_D3068:
+cpuinfo_b1:
 db 00h,00h,00h,00h
 off_D306C:
 dd sub_B300C
@@ -613,7 +613,7 @@ dword_D41AF:
 db 00h,00h,00h,00h
 dword_D41B3:
 db 00h,00h,00h,00h
-byte_D41B7:
+joyedgedir:
 db 00h,01h,05h,00h,03h,02h,04h,03h,07h,08h,06h,07h,00h,01h,05h,00h
 db 00h
 randseed:
@@ -785,7 +785,7 @@ dword_D43EC:
 db 00h,00h,00h,00h
 dword_D43F0:
 db 00h,00h,00h,00h
-asc_D43F4:
+str_OpenhandleSFILEERROR:
 db 06Fh,070h,065h,06Eh,068h,061h,06Eh,064h,06Ch,065h,020h,02Dh,020h,025h,073h,020h
 db 046h,049h,04Ch,045h,020h,045h,052h,052h,04Fh,052h,0Dh,00h
 byte_D4410:
@@ -837,18 +837,18 @@ byte_D4546:
 db 08h,02Fh
 dword_D4548:
 db 00h,00h,00h,00h
-dd unk_C4004
-dd unk_C4008
-dd unk_C400C
-dd unk_C4010
-dd unk_C4014
-dd unk_C4018
-dd unk_C401C
-dd unk_C4020
-dd unk_C4024
-dd unk_C4028
-dd unk_C402C
-dd unk_C4030
+dd str_Jan
+dd str_Feb2
+dd str_Mar
+dd str_Apr
+dd str_May2
+dd str_Jun
+dd str_Jul
+dd str_Aug
+dd str_Sep
+dd str_Oct
+dd str_Nov
+dd str_Dec
 dword_D457C:
 db 00h,00h,00h,00h
 dword_D4580:
@@ -980,7 +980,7 @@ db 0C6h,092h,092h,0C6h,07Ch,00h,00h,00h,02h,04h,048h,050h,020h,00h,00h,00h
 db 020h,060h,0FEh,0FEh,060h,020h,00h,00h,00h,00h,00h,00h,00h,00h,0FFh,080h
 db 0C0h,0E0h,0F0h,0E0h,0C0h,080h,00h,00h,0F0h,088h,084h,084h,084h,07Ch,00h,030h
 db 048h,048h,0FCh,0FCh,0FCh,0FCh,00h,00h
-byte_D4B9C:
+__8087:
 db 00h
 byte_D4B9D:
 db 00h,00h,00h

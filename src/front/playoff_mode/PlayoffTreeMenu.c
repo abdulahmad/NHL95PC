@@ -42,7 +42,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
    human team highlighted (POHiliteSlot, its two tree slots; the final has one). An action runs on the second click
    of the selected item, with the dialog colours FBh-FEh set and the pointer save block freed and made again around
    it; result 1 is returned, 4 returns 0, 2 redraws the screen (the EMBSCUP background loaded if needed, the tree,
-   the menu bar, the BangPal fade-in); the tree is redrawn when the action changed the shown round (word_C6D24) and
+   the menu bar, the BangPal fade-in); the tree is redrawn when the action changed the shown round (potreeround) and
    the highlight put back. bar / n / col1-col3: as RunMenu; series: the highlighted series. Result: 1 or 0. */
 int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int series)
 {
@@ -82,16 +82,16 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     sel[0] = sel[1] = sel[2] = sel[3] = 0;
     pos[0][0] = pos[0][1] = 0;
     size = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
-    ptr = sub_8CCA8((char *)str_Pointer, size, 0x20);
+    ptr = AllocMemBlock((char *)str_Pointer, size, 0x20);
     *(TreeHdr17 *)ptr = *(TreeHdr17 *)pointerspr;
     ((short *)ptr)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
     mx = oldmx = (menus[0]->x1 + menus[0]->x2) / 2;
     my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
     sub_B4BA8();
-    sub_91400(ptr, oldmx, oldmy);
-    sub_91370(pointerspr, oldmx, oldmy);
-    sub_B2E1B(0, 0, 0x280, 0x1E0);
+    GrabBlock(ptr, oldmx, oldmy);
+    DrawArt(pointerspr, oldmx, oldmy);
+    SetViewRect(0, 0, 0x280, 0x1E0);
     MouseSetPos(oldmx, oldmy);
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
@@ -106,28 +106,28 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
         }
         if (!(bits & 2)) {
             if (mx == oldmx && my == oldmy) continue;
-            sub_903F0(ptr, oldmx, oldmy);
-            sub_91400(ptr, mx, my);
-            sub_91370(pointerspr, mx, my);
+            PutBlock(ptr, oldmx, oldmy);
+            GrabBlock(ptr, mx, my);
+            DrawArt(pointerspr, mx, my);
             oldmx = mx;
             oldmy = my;
             continue;
         }
-        sub_903F0(ptr, oldmx, oldmy);
+        PutBlock(ptr, oldmx, oldmy);
         if (MenuHitTest(mx, my, menus, depth, nitems, &pos[0][0], &level, &item)) {
             if (menus[level][item].on1) {
                 if (item == sel[level]) {
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     for (i = 3; i >= 0; i--) {
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                         }
                     }
                     depth = 0;
                     POHiliteSlot(slot, slot2);
-                    tree = word_C6D24;
+                    tree = potreeround;
                     FreeMemBlock(ptr);
                     pal[0] = 0x18;
                     pal[1] = 0;
@@ -141,10 +141,10 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     pal[9] = 0x3B;
                     pal[10] = 0x3B;
                     pal[11] = 0x3B;
-                    sub_B4B88(0xFB, 4, pal);
+                    VgaSetPalette(0xFB, 4, pal);
                     r = ((int (*)(void))menus[level][item].on1)();
                     size = ((((short *)pointerspr)[2] << 2) + 4) * (((short *)pointerspr)[3] + 1) + 0x11;
-                    ptr = sub_8CCA8((char *)str_Pointer, size, 0x20);
+                    ptr = AllocMemBlock((char *)str_Pointer, size, 0x20);
                     *(TreeHdr17 *)ptr = *(TreeHdr17 *)pointerspr;
                     ((short *)ptr)[2]++;
                     ((short *)ptr)[3]++;
@@ -161,13 +161,13 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         return 0;
                     }
                     if (r == 2) {
-                        if (!dword_C65AC) {
+                        if (!embscupbank) {
                             MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
-                            dword_C65AC = sub_8E83C(path, 0x20);
+                            embscupbank = LoadBank(path, 0x20);
                         }
                         MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
-                        bank = sub_8E83C(path, 0);
-                        fade = (unsigned char *)sub_B30B4(bank, (char *)str_BangPal) + 0x10;
+                        bank = LoadBank(path, 0);
+                        fade = (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10;
                         sub_B4BA8();
                         dword_C6D26 = 0;
                         DrawPlayoffTree();
@@ -176,8 +176,8 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         FreeMemBlock(bank);
                     }
                     sub_B4BA8();
-                    if (word_C6D24 != tree) {
-                        word_C6D24 = tree;
+                    if (potreeround != tree) {
+                        potreeround = tree;
                         DrawPlayoffTree();
                     }
                     POHiliteSlot(slot, slot2);
@@ -186,7 +186,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     my = oldmy;
                     ClearInputQueue();
                 } else {
-                    sub_903F0(ptr, oldmx, oldmy);
+                    PutBlock(ptr, oldmx, oldmy);
                     DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                         pos[level][1], col1, col2, col3);
                     sel[level] = item;
@@ -194,12 +194,12 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         pos[level][1], col1, col2, col3);
                 }
             } else if (menus[level][item].on2) {
-                sub_903F0(ptr, oldmx, oldmy);
+                PutBlock(ptr, oldmx, oldmy);
                 if (depth != level) {
                     for (i = depth; i > level; i--) {
                         sel[i] = 0;
                         if (bg[i]) {
-                            sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                            PutBlock(bg[i], pos[i][0], pos[i][1]);
                             pos[i][0] = pos[i][1] = 0;
                             FreeMemBlock(bg[i]);
                             bg[i] = 0;
@@ -220,18 +220,18 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                 pos[depth][1] = (depth != 1 ? menus[level][item].y1 : menus[level][item].y2) + pos[depth - 1][1];
                 w = menus[depth][nitems[depth] - 1].x2 - menus[depth][0].x1 + 1;
                 h = menus[depth][nitems[depth] - 1].y2 - menus[depth][0].y1 + 1;
-                bg[depth] = sub_8CCA8((char *)str_Menubuff2, w * h + 0x11, 0x20);
+                bg[depth] = AllocMemBlock((char *)str_Menubuff2, w * h + 0x11, 0x20);
                 *(TreeHdr17 *)bg[depth] = *(TreeHdr17 *)pointerspr;
                 ((short *)bg[depth])[2] = w;
                 ((short *)bg[depth])[3] = h;
-                sub_91400(bg[depth], pos[depth][0], pos[depth][1]);
+                GrabBlock(bg[depth], pos[depth][0], pos[depth][1]);
                 DrawMenuDropdown(menus[depth], nitems[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
                 sel[depth] = 0;
                 DrawMenuItemNorm(menus[depth], pos[depth][0], pos[depth][1], col1, col2,
                     col3);
             } else {
-                sub_903F0(ptr, oldmx, oldmy);
+                PutBlock(ptr, oldmx, oldmy);
                 DrawMenuItemSel(&menus[level][sel[level]], pos[level][0],
                     pos[level][1], col1, col2, col3);
                 sel[level] = item;
@@ -239,11 +239,11 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                     col1, col2, col3);
             }
         } else {
-            sub_903F0(ptr, oldmx, oldmy);
+            PutBlock(ptr, oldmx, oldmy);
             if (depth) {
                 for (i = depth; i >= 0; i--) {
                     if (bg[i]) {
-                        sub_903F0(bg[i], pos[i][0], pos[i][1]);
+                        PutBlock(bg[i], pos[i][0], pos[i][1]);
                         pos[i][0] = pos[i][1] = 0;
                         FreeMemBlock(bg[i]);
                         bg[i] = 0;
@@ -255,8 +255,8 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
             }
         }
         sub_B4BA8();
-        sub_91400(ptr, mx, my);
-        sub_91370(pointerspr, mx, my);
+        GrabBlock(ptr, mx, my);
+        DrawArt(pointerspr, mx, my);
         oldmx = mx;
         oldmy = my;
     }

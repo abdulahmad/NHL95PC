@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_99A12 progbits alloc exec nowrite align=1
-extern __set_doserrno_, __set_errno_, byte_D4D0F, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, dword_F2440
+extern __set_doserrno_, __set_errno_, _osmajor, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, dword_F2440
 extern dword_F24C0, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, off_D2F68
 extern off_D5668, sub_9D68E, sub_A2ACF, toupper_, ultoa_, unk_D8B14, unk_D8B3E, unk_D8B4A
 global copypart_, loc_99A21, loc_99A41, _splitpath_, loc_99A6C, loc_99A71, loc_99A78, loc_99A7C
@@ -1563,7 +1563,7 @@ mov al, dl	; 9A73D
 call __set_doserrno_	; 9A73F
 cmp edx, 100h	; 9A744
 jae short loc_9A784	; 9A74A
-cmp byte [byte_D4D0F], 3	; 9A74C
+cmp byte [_osmajor], 3	; 9A74C
 jb short loc_9A76E	; 9A753
 cmp dl, 50h	; 9A755
 jne short loc_9A75E	; 9A758

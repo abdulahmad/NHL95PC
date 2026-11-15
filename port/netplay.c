@@ -51,7 +51,7 @@ extern int joyrec;
 #ifndef NHL95_BUILD
 #define NHL95_BUILD "unknown"
 #endif
-#define GAME_ADDR(orig) ((uint8_t *)sub_10000 + ((orig) - 0x10000))
+#define GAME_ADDR(orig) ((uint8_t *)begtext_forever + ((orig) - 0x10000))
 
 /* ---- the game's data and code ---- */
 extern uint32_t joysampling, inputticks, inputframes, joyrawbits, gamemode, gameopts, samesideflag, sounddev;
@@ -63,7 +63,7 @@ extern uint8_t pad1dev, pad2dev, musicon;
 extern uint8_t SortCords[], hmtmstruct[], hmlinetab[], awlinetab[];
 extern uint16_t gameclock, clockticks, gsp, lj1, lj2, crowdlevel;
 extern char SampleInputTick[], joyq_peek[], joyq_pop[], joyq_flush[], RunGameFrames[], PlayGame[], PaSpeechBusy[], SpeechBusy[];
-extern char Crowd_Noise[], IntermissionPC[], ThreeStarsLoop[], ReadJoy1[], ReadJoy2[], ReadControllerPad[], ReadHotKeys[], sub_B3464[];
+extern char Crowd_Noise[], IntermissionPC[], ThreeStarsLoop[], ReadJoy1[], ReadJoy2[], ReadControllerPad[], ReadHotKeys[], ReadJoyRaw[];
 extern char InitGameSummary[];
 
 #define RJ1_SITE 0x48205u           /* PreGameIntro_frameloop: call ReadJoy1 (a button skips the intro / the three stars) */
@@ -191,7 +191,7 @@ static uint16_t read_pad(int p)                 /* p: the seat; its game slot re
     p = port_sides_slot_of_seat(p);
     if (p >= 2) return (uint16_t)(pads4_local_byte(p - 2) ^ 8);   /* pads 3 and 4: a controller of this machine; no hot keys */
     if (p < 0) return 0;
-    if ((p ? pad2dev : pad1dev) & 6) joyrawbits = game_call(sub_B3464, 0, 0);
+    if ((p ? pad2dev : pad1dev) & 6) joyrawbits = game_call(ReadJoyRaw, 0, 0);
     game_call(ReadControllerPad, (uint32_t)p, (uint32_t)(uintptr_t)&pad);
     game_call(ReadHotKeys, (uint32_t)(uintptr_t)&hot, 0);
     if (hot) {
@@ -237,7 +237,7 @@ static void st_regions(void)
     X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_cadence); X(nh_pending); X(nh_local); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
-    st_extra[n].p = sub_10000; st_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
+    st_extra[n].p = begtext_forever; st_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
     st_nextra = n;
 }
 
@@ -282,7 +282,7 @@ static void st_diff_all(void)                   /* which bytes differ now from s
             while (j + 1 < n && j - i < 64 && now[j + 1] != st_copy[at + j + 1]) j++;
             bytes += (uint32_t)(j - i + 1);
             if (runs++ < 120) {
-                uintptr_t a = (uintptr_t)now + i, base = (uintptr_t)sub_10000;
+                uintptr_t a = (uintptr_t)now + i, base = (uintptr_t)begtext_forever;
                 fprintf(stderr, "snaptest: differs region %d (%p, %zu bytes) +%zx %u bytes (game addr %05X): first %02x now %02x\n", r, st_regs[r].p,
                         n, i, (unsigned)(j - i + 1), (unsigned)(a - base + 0x10000), st_copy[at + i], now[i]);
             }
@@ -338,7 +338,7 @@ static void st_parts(uint64_t *o, int show)
         if (!show) continue;
         for (r = 0; r < st_nregs; r++)
             if ((const uint8_t *)t[k].p >= (const uint8_t *)st_regs[r].p && (const uint8_t *)t[k].p < (const uint8_t *)st_regs[r].p + st_regs[r].n) in = r;
-        fprintf(stderr, "snaptest: %s at %p (game addr %05X) is %s%d\n", t[k].name, t[k].p, (unsigned)((const uint8_t *)t[k].p - (const uint8_t *)sub_10000 + 0x10000),
+        fprintf(stderr, "snaptest: %s at %p (game addr %05X) is %s%d\n", t[k].name, t[k].p, (unsigned)((const uint8_t *)t[k].p - (const uint8_t *)begtext_forever + 0x10000),
                 in < 0 ? "in no region" : "in region ", in < 0 ? 0 : in);
     }
 }
@@ -462,7 +462,7 @@ static void rb_regions(void)
     X(nh_ring); X(pads4); X(nh_head); X(nh_tail); X(nh_consumed); X(nh_loop_mark);
     X(nh_rgf_pops0); X(nh_rgf_f0); X(nh_rgf_asked); X(nh_rgf_carry); X(nh_rgf_total); X(nh_finish);
 #undef X
-    rb_extra[n].p = sub_10000; rb_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
+    rb_extra[n].p = begtext_forever; rb_extra[n].n = ST_DATA_LO - 0x10000; n++;        /* the game's code too: it patches itself */
     rb_nextra = n;
 }
 

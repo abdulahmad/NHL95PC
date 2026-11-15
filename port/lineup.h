@@ -26,7 +26,7 @@ void lineup_fit_copy(char *dst, size_t dstn, const char *s);
 /* FitPlayerName with bounded copies. width() is fputchar, or a test stub. */
 void lineup_fit(char *dst, const char *first, const char *last, int maxw, int (*width)(const char *));
 
-/* findmemblock's walk: lists is dword_D2F58. 1 if p is a live user pointer. */
+/* findmemblock's walk: lists is memblocklist. 1 if p is a live user pointer. */
 int lineup_ea_has(const void *p, const void *lists);
 
 int lineup_is_gipk(const char *name);

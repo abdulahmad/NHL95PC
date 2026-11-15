@@ -39,11 +39,11 @@ static void crash_log(const char *head, DWORD headlen, const CONTEXT *c)
     WriteFile(f, line, n, &n, 0);
     WriteFile(f, head, headlen, &n, 0);
     if (IN_GAME_CODE(c->Eip)) {
-        n = wsprintfA(line, "eip is game code G:%05lx\r\n", (unsigned long)(c->Eip - (DWORD)sub_10000 + 0x10000));
+        n = wsprintfA(line, "eip is game code G:%05lx\r\n", (unsigned long)(c->Eip - (DWORD)begtext_forever + 0x10000));
         WriteFile(f, line, n, &n, 0);
     }
     for (i = 0; i < 96 && !IsBadReadPtr(sp + i, 4); i++) {
-        if (IN_GAME_CODE(sp[i])) n = wsprintfA(line, "esp+%03lx %08lx G:%05lx\r\n", i * 4, (unsigned long)sp[i], (unsigned long)(sp[i] - (DWORD)sub_10000 + 0x10000));
+        if (IN_GAME_CODE(sp[i])) n = wsprintfA(line, "esp+%03lx %08lx G:%05lx\r\n", i * 4, (unsigned long)sp[i], (unsigned long)(sp[i] - (DWORD)begtext_forever + 0x10000));
         else n = wsprintfA(line, "esp+%03lx %08lx\r\n", i * 4, (unsigned long)sp[i]);
         WriteFile(f, line, n, &n, 0);
     }

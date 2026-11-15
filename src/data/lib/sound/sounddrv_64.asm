@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_D5224 progbits alloc noexec write align=1
-global asc_D53B8, byte_D5224, byte_D5279, byte_D527A, byte_D5440, dword_D524C, dword_D5250, dword_D525C
+global str_CULTRASNDMIDI, byte_D5224, byte_D5279, byte_D527A, byte_D5440, dword_D524C, dword_D5250, dword_D525C
 global dword_D5260, dword_D5264, dword_D5268, dword_D526C, dword_D5270, dword_D5274, dword_D53A0, dword_D53A4
-global dword_D53A8, dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_D5444, dword_D5448
+global dword_D53A8, dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, _environ, ___env_mask
 global unk_D522E, unk_D5254, unk_D5258, unk_D5382, unk_D5408
 byte_D5224:
 db 010h,00h,00h,00h,07Fh,040h,00h,00h,00h,00h
@@ -68,7 +68,7 @@ dword_D53B0:
 db 00h,00h,00h,00h
 dword_D53B4:
 db 00h,00h,00h,00h
-asc_D53B8:
+str_CULTRASNDMIDI:
 db 043h,03Ah,05Ch,055h,04Ch,054h,052h,041h,053h,04Eh,044h,05Ch,04Dh,049h,044h,049h
 db 05Ch,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -84,7 +84,7 @@ dword_D543C:
 db 0Fh,00h,00h,00h
 byte_D5440:
 db 00h,00h,00h,00h
-dword_D5444:
+_environ:
 db 00h,00h,00h,00h
-dword_D5448:
+___env_mask:
 db 00h,00h,00h,00h

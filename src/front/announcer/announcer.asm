@@ -5,9 +5,9 @@ bits 32
 %include "hockey.inc"
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
-extern addtimer, asc_C36C3, byte_C541B, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, dword_CCC98, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern dword_D2435, dword_D27A2, dword_D27B2, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
+extern addtimer, str_04x, sndcardmissing, crowddriver, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
+extern DrawSelBoxOn, dword_C4CFC, cursndbank, oneminsaid, dword_D2350, dword_D2423, dword_D2427, digidriver
+extern sndtempbuf, str_Cor2, speechchannel, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
 extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
 extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
 extern ptrupdatefn, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RedrawSoundCardOpts, RemoveTimerCallback
@@ -25,10 +25,10 @@ extern str_Rnk, str_SampleMemMan, str_SBDAC, str_SBDAC2, str_Scor1otpBar, str_Sc
 extern str_Scor3otpBar, str_Scor3perBar, str_ScortotpBar, str_SecondsCor, str_Sentence, str_Slapshot, str_SoundBlaster2, str_SpeechBank
 extern str_Speechbuf, str_SS5, str_SSS, str_StanleydBar, str_StanleyuBar, str_TakeynowBar, str_Tea, str_ThegameBar
 extern str_TonightBar, str_ULTRASOUND, str_VIV, str_WestfindBar, str_WestfinuBar, str_WestquadBar, str_WestquauBar, str_WestsemdBar
-extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4
-extern sub_8EB5B, sub_8EB93, sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5
-extern sub_8FC37, sub_8FC8A, sub_8FCAC, sub_8FCDF, sub_903F0, sub_91370, sub_91400, sub_97079
-extern sub_98028, sub_B2DCA, sub_B4BA8, unk_C36AC, unk_D2403, unk_D2413, unk_D249C, WaitDigiSample
+extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, AllocMemBlock, sub_8D2F0, sub_8DBD4
+extern sub_8EB5B, sub_8EB93, sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5
+extern sub_8FC37, SndQuery, sub_8FCAC, sub_8FCDF, PutBlock, DrawArt, GrabBlock, sub_97079
+extern sub_98028, MouseRead, sub_B4BA8, str_R4, sndselbox1, sndselbox2, msg_NoSoundCard, WaitDigiSample
 extern WaitTickDeadline
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
@@ -96,12 +96,12 @@ mov esi, dword [byte eax+0Eh]	; 8334B
 mov ecx, dword [byte eax+016h]	; 8334E
 mov ebx, dword [byte eax+01Eh]	; 83351
 mov dword [byte edx+050h], ebx	; 83354
-mov edx, dword [dword_D27B2]	; 83357
+mov edx, dword [speechchannel]	; 83357
 inc edx	; 8335D
-mov dword [dword_D27B2], edx	; 8335E
+mov dword [speechchannel], edx	; 8335E
 mov ebx, edx	; 83364
 and ebx, byte 1	; 83366
-mov dword [dword_D27B2], ebx	; 83369
+mov dword [speechchannel], ebx	; 83369
 cmp byte [byte eax+0Dh], 47h	; 8336F
 jne short .4	; 83373
 push byte 7Fh	; 83375
@@ -197,7 +197,7 @@ jl short InitSpeechSlots.1	; 8348C
 mov eax, dword [speechbank]	; 8348E
 lea edx, [dword ecx-01388h]	; 83493
 mov dword [dword eax+03B68h], edx	; 83499
-mov edx, dword [dword_CCC94]	; 8349F
+mov edx, dword [cursndbank]	; 8349F
 push edx	; 834A5
 push ecx	; 834A6
 push str_Speechbuf	; 834A7
@@ -274,30 +274,30 @@ jne near .x	; 83595
 mov al, byte [esp]	; 8359B
 mov byte [byte_D27B6], al	; 8359E
 xor edx, edx	; 835A3
-mov dword [dword_D27B2], edx	; 835A5
+mov dword [speechchannel], edx	; 835A5
 mov dword [speechcopybuf], ebx	; 835AB
 mov dword [speechcopylen], ecx	; 835B1
-mov ebx, dword [dword_CCC94]	; 835B7
+mov ebx, dword [cursndbank]	; 835B7
 push ebx	; 835BD
 push byte 64h	; 835BE
 push str_Sentence	; 835C0
-call sub_8CCA8	; 835C5
+call AllocMemBlock	; 835C5
 add esp, byte 0Ch	; 835CA
 mov dword [speechq], eax	; 835CD
 call ResetSpeechQueue	; 835D2
-mov ecx, dword [dword_CCC94]	; 835D7
+mov ecx, dword [cursndbank]	; 835D7
 push ecx	; 835DD
 push dword 110h	; 835DE
 push str_SampleMemMan	; 835E3
-call sub_8CCA8	; 835E8
+call AllocMemBlock	; 835E8
 add esp, byte 0Ch	; 835ED
 mov dword [samplereq], eax	; 835F0
 call ResetSampleReq	; 835F5
-mov edi, dword [dword_CCC94]	; 835FA
+mov edi, dword [cursndbank]	; 835FA
 push edi	; 83600
 push dword 3B93h	; 83601
 push str_SpeechBank	; 83606
-call sub_8CCA8	; 8360B
+call AllocMemBlock	; 8360B
 add esp, byte 0Ch	; 83610
 mov dword [speechbank], eax	; 83613
 mov eax, esi	; 83618
@@ -2900,7 +2900,7 @@ lea eax, [byte esp+02Ch]	; 8525D
 push eax	; 85261
 call sprintf_	; 85262
 add esp, byte 10h	; 85267
-mov edx, dword [nosplit edx*4+dword_D27A2]	; 8526A
+mov edx, dword [nosplit edx*4+str_Cor2]	; 8526A
 mov ebx, 0Dh	; 85271
 mov eax, esp	; 85276
 call strncpy_	; 85278
@@ -3082,7 +3082,7 @@ call EnsureSampleRoom	; 854E1
 mov eax, str_OneleftCor	; 854E6
 call QueueSpeechClip	; 854EB
 mov ebx, 1	; 854F0
-mov dword [dword_CCC98], ebx	; 854F5
+mov dword [oneminsaid], ebx	; 854F5
 mov eax, dword [speechq]	; 854FB
 mov dword [byte eax+060h], ebx	; 85500
 mov eax, ebx	; 85503

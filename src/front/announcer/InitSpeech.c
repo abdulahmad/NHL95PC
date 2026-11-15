@@ -7,14 +7,14 @@ void InitSpeech(unsigned char id, int size, int copybuf, int copylen)
 {
     if (SpeechIsInit()) return;
     byte_D27B6 = id;
-    dword_D27B2 = 0;
+    speechchannel = 0;
     speechcopybuf = copybuf;
     speechcopylen = copylen;
-    speechq = sub_8CCA8((char *)str_Sentence, 100, dword_CCC94);
+    speechq = AllocMemBlock((char *)str_Sentence, 100, cursndbank);
     ResetSpeechQueue();
-    samplereq = (unsigned char *)sub_8CCA8((char *)str_SampleMemMan, 0x110, dword_CCC94);
+    samplereq = (unsigned char *)AllocMemBlock((char *)str_SampleMemMan, 0x110, cursndbank);
     ResetSampleReq();
-    speechbank = (SpeechSlot *)sub_8CCA8((char *)str_SpeechBank, 0x3B93, dword_CCC94);
+    speechbank = (SpeechSlot *)AllocMemBlock((char *)str_SpeechBank, 0x3B93, cursndbank);
     InitSpeechSlots(size);
     addtimer((void (*)(void))SpeechTimerTick);
     speechinit = 1;

@@ -21,7 +21,7 @@ void DrawListItem(char *text, int x, int y, int w, int top, int idx, int sel, un
     if (marks && flags[idx]) c = boxfillcolor;
     else if (sel == idx) c = dlgtextfg;
     else c = dlgtextbg;
-    sub_90D20(x, y, w, byte_D42C3 + 2, c);
+    FillRect(x, y, w, byte_D42C3 + 2, c);
     SetListItemColors(idx, sel);
     switch (align) {
     case 1:

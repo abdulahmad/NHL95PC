@@ -17,7 +17,7 @@ void SetTeamGoalie(short side, short g)
     } else {
         (&hmtmstruct)[side].tmgoalie = g;
         if (!(gmode & 1) && (gmode & 8)) {
-            if (*puckc >= 0 && ((*puckc < 6) ^ side)) byte_DF64D[side << 8] |= 0xFF;
+            if (*puckc >= 0 && ((*puckc < 6) ^ side)) hmtmgoalie_b1[side << 8] |= 0xFF;
         }
     }
     if ((&hmtmstruct)[side].tmgoalie < 0 && old < 0) return;

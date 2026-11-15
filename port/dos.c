@@ -456,7 +456,7 @@ static int int21(ctx_t *c)
     return 0;
 }
 
-extern char sub_10000[];
+extern char begtext_forever[];
 /* Print the words on the stack that point into the game's code: the likely callers of the routine that trapped. */
 static void backtrace_hint(ctx_t *c)
 {
@@ -464,7 +464,7 @@ static void backtrace_hint(ctx_t *c)
     int i, n = 0;
     fprintf(stderr, "stack callers:");
     for (i = 0; i < 64 && n < 10; i++)
-        if (sp[i] >= (uint32_t)sub_10000 && sp[i] < (uint32_t)sub_10000 + 0xB8000) { fprintf(stderr, " %08x", sp[i]); n++; }
+        if (sp[i] >= (uint32_t)begtext_forever && sp[i] < (uint32_t)begtext_forever + 0xB8000) { fprintf(stderr, " %08x", sp[i]); n++; }
     fprintf(stderr, "\n");
 }
 

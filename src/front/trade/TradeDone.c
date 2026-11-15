@@ -19,23 +19,23 @@ void TradeDone(int a, int b, int c, int d, int e, int f, int g, int h, unsigned 
         if ((sel[i] == 0xFF && sel[i + 2] != 0xFF) || (sel[i] != 0xFF && sel[i + 2] == 0xFF)) bad = -1;
     }
     if (bad) {
-        buf = (unsigned char *)sub_8CCA8((char *)str_Donepal, 0xC, 0x20);
-        sub_8FFB0(0xFB, 4, buf);
+        buf = (unsigned char *)AllocMemBlock((char *)str_Donepal, 0xC, 0x20);
+        SetPalette(0xFB, 4, buf);
         rgb[0] = 0x18;
         rgb[2] = rgb[1] = 0;
-        sub_B4B88(0xFB, 1, rgb);
+        VgaSetPalette(0xFB, 1, rgb);
         rgb[0] = 0x2A;
         rgb[2] = rgb[1] = 0;
-        sub_B4B88(0xFC, 1, rgb);
+        VgaSetPalette(0xFC, 1, rgb);
         rgb[0] = 0x3B;
         rgb[1] = 0x12;
         rgb[2] = 0;
-        sub_B4B88(0xFD, 1, rgb);
+        VgaSetPalette(0xFD, 1, rgb);
         rgb[2] = rgb[1] = rgb[0] = 0x3B;
-        sub_B4B88(0xFE, 1, rgb);
-        sub_B2DCA(&i, &mx, &my);
+        VgaSetPalette(0xFE, 1, rgb);
+        MouseRead(&i, &mx, &my);
         MessageBox(-1, -1, (char *)unequaltrademsg, 3, 0, 0, (int)&mx, (int)&my, -1);
-        sub_B4B88(0xFB, 4, buf);
+        VgaSetPalette(0xFB, 4, buf);
         FreeMemBlock((int)buf);
         MouseSetPos(mx, my);
     } else {

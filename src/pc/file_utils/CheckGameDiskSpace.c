@@ -31,6 +31,6 @@ int CheckGameDiskSpace(void)
     if (need <= df.avail) return 0;
     sprintf((char *)msg_NeedKbytes, (char *)str_NeedKbytesFmt, need * csize / 1024);
     MouseSetPos(x, y);
-    MessageBox(-1, -1, (char *)off_C56B5, 3, 0, 0, (int)&x, (int)&y, 0x320);
+    MessageBox(-1, -1, (char *)msg_GameDiskSpace, 3, 0, 0, (int)&x, (int)&y, 0x320);
     return 1;
 }

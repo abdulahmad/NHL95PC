@@ -9,9 +9,9 @@ typedef struct DeferCall {
     void (*fn)(int, int, int, int, int, int, int);
 } DeferCall;
 
-#define Q(i) ((DeferCall *)dword_E9BA4)[i]
+#define Q(i) ((DeferCall *)defertab)[i]
 
-/* RunDeferredCalls: make the defercount queued calls (dword_E9BA4 table: arguments in eax, edx,
+/* RunDeferredCalls: make the defercount queued calls (defertab table: arguments in eax, edx,
  ebx, ecx, then 3 on the stack) in order and empty the queue. */
 void RunDeferredCalls(void)
 {
@@ -26,8 +26,8 @@ void RunDeferredCalls(void)
 /* per player stat rows, 16 bytes, 25 to a team: game goals / assists (shorts at DB088 / DB08A) and the season
    (DEB74 career goals, DEB78 career points, DEB7C season goals, DEB80 season points; ints) */
 #define REC(a, t, p) (((int (*)[25][4])(a))[t][p][0])
-#define GOALS(t, p) (((short (*)[25][8])dword_DB088)[t][p][0])
-#define ASSISTS(t, p) (((short (*)[25][8])word_DB08A)[t][p][0])
+#define GOALS(t, p) (((short (*)[25][8])hmplstats)[t][p][0])
+#define ASSISTS(t, p) (((short (*)[25][8])hmplstats_w2)[t][p][0])
 
 /* DRAFT: same size, all but 8 instructions (two t * 400 / p * 16 address pairs use the other two registers);
    see docs/UNSURE.md. */
@@ -48,9 +48,9 @@ void ChkScorerMilestone(void)
     int pts;
 
     t = (*pucky < 0) ^ ((gmode & gmdir) != 0);
-    if (((unsigned char *)byte_E024C)[t * 2] && byte_E024D[t * 2]) return;
+    if (((unsigned char *)milestonesaid)[t * 2] && milestonesaid_b1[t * 2]) return;
     what = 0;
-    p = (short)(word_DF644[t * 128] & 0xFF);
+    p = (short)(hmtmtouch1[t * 128] & 0xFF);
     if (p < 0x19) {
         g = GOALS(t, p);
         pts = ASSISTS(t, p) + g;
@@ -59,44 +59,44 @@ void ChkScorerMilestone(void)
             pts = g;
         } else if (gamemode) {
             if (gameopts.fullot) {
-                sum = REC(dword_DEB7C, t, p) + REC(dword_DEB74, t, p);
+                sum = REC(plseasongoals, t, p) + REC(plcareergoals, t, p);
                 if (sum + g == 1) {
                     what = 6;
                     pts = sum + g;
-                } else if ((g += REC(dword_DEB7C, t, p)) >= 50 && g % 50 == 0) {
+                } else if ((g += REC(plseasongoals, t, p)) >= 50 && g % 50 == 0) {
                     what = 2;
                     pts = g;
-                } else if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) {
+                } else if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) {
                     what = 4;
-                } else if ((g += REC(dword_DEB74, t, p)) >= 100 && g % 100 == 0) {
+                } else if ((g += REC(plcareergoals, t, p)) >= 100 && g % 100 == 0) {
                     what = 3;
                     pts = g;
-                } else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) {
+                } else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) {
                     what = 5;
                 }
-            } else if ((g += REC(dword_DEB7C, t, p)) >= 10 && g % 10 == 0) {
+            } else if ((g += REC(plseasongoals, t, p)) >= 10 && g % 10 == 0) {
                 what = 7;
                 pts = g;
-            } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+            } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
                 what = 8;
             }
         }
     }
-    if (gamemode && !what && (p = *(short *)((char *)dword_DF646 + (t << 8))) >= 0 && p < 0x19) {
+    if (gamemode && !what && (p = *(short *)((char *)hmtmtouch2 + (t << 8))) >= 0 && p < 0x19) {
         pts = ASSISTS(t, p) + GOALS(t, p);
         if (gameopts.fullot) {
-            if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) what = 4;
-            else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) what = 5;
-        } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+            if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) what = 4;
+            else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) what = 5;
+        } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
             what = 8;
         }
-        if (!what && (p = *(short *)((char *)dword_DF648 + (t << 8))) >= 0 && p < 0x19) {
+        if (!what && (p = *(short *)((char *)hmtmtouch3 + (t << 8))) >= 0 && p < 0x19) {
             g = ASSISTS(t, p);
             pts = GOALS(t, p) + g;
             if (gameopts.fullot) {
-                if ((pts += REC(dword_DEB80, t, p)) >= 100 && pts % 100 == 0) what = 4;
-                else if ((pts += REC(dword_DEB78, t, p)) >= 100 && pts % 100 == 0) what = 5;
-            } else if ((pts += REC(dword_DEB80, t, p)) >= 20 && pts % 20 == 0) {
+                if ((pts += REC(plseasonpts, t, p)) >= 100 && pts % 100 == 0) what = 4;
+                else if ((pts += REC(plcareerpts, t, p)) >= 100 && pts % 100 == 0) what = 5;
+            } else if ((pts += REC(plseasonpts, t, p)) >= 20 && pts % 20 == 0) {
                 what = 8;
             }
         }

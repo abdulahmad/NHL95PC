@@ -47,7 +47,7 @@ int TradeHitTest(int x, int y, int *out, int *slot, int *flag)
 }
 
 /* TradeScreen (3FF52, PC only; ends in TradeHitTest_ret): the trade screen of league dir between teams[0] and
-   teams[1]. Fade to the black "Temp" palette, clear the screen bitmap (dword_DE264), save the text state, load the
+   teams[1]. Fade to the black "Temp" palette, clear the screen bitmap (tradebitmap), save the text state, load the
    S12 font and the lineditp bank ("Shrt" art), reset the cursors and clicks (tradecursor, tradeclick, tradeside -1)
    and build both trade rosters (BuildTradeRoster into traderoster / +268h, the team records into recs); when both
    load, sort them (TradeRosterCmp) and run the screen (TradeScreenLoop). Then free the bank, restore the text
@@ -66,19 +66,19 @@ int TradeScreen(char *dir, int *teams, int b, int c, int d)
     int shape;
 
     sub_B4BA8();
-    r = sub_8CCA8((char *)str_Temp6, 0x300, 0x20);
-    sub_8FFB0(0, 0x100, (unsigned char *)r);
+    r = AllocMemBlock((char *)str_Temp6, 0x300, 0x20);
+    SetPalette(0, 0x100, (unsigned char *)r);
     FadePalStep(1, (unsigned char *)r, 0x10);
     FreeMemBlock(r);
-    SetDrawBitmap(dword_DE264);
-    sub_B392C(0);
-    sub_8E9E8(state);
+    SetDrawBitmap(tradebitmap);
+    ClearScreen(0);
+    TextSaveState(state);
     MakePath(path, fileoncd[0xE7] == 1 ? (char *)cddriveptr : 0, (char *)str_S12, (char *)str_VFN);
     font = sub_8E8A0(path, 0);
-    sub_8EA18(font);
+    TextSetFont(font);
     MakePath(path, fileoncd[0xE8] == 1 ? (char *)cddriveptr : 0, (char *)str_Lineditp, 0);
-    bank = sub_8E83C(path, 0);
-    shape = sub_B30B4(bank, (char *)str_Shrt);
+    bank = LoadBank(path, 0);
+    shape = FindShape(bank, (char *)str_Shrt);
     tradeside = tradeclick[1] = tradeclick[0] = tradecursor[1] = tradecursor[0] = -1;
     r = BuildTradeRoster(dir, teams[0], traderoster, recs);
     if (!r) r = BuildTradeRoster(dir, teams[1], traderoster + 0x268, recs + 0x2E8);
@@ -88,7 +88,7 @@ int TradeScreen(char *dir, int *teams, int b, int c, int d)
         r = ((int (*)(int, unsigned char *, int *, int, int, int, int, int))TradeScreenLoop)(shape, recs, teams, b, c, bank, font, d);
     }
     FreeMemBlock(bank);
-    sub_8EA00(state);
+    TextRestoreState(state);
     FreeMemBlock(font);
     return r;
 }

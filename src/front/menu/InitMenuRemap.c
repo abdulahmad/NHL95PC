@@ -21,5 +21,5 @@ void InitMenuRemap(int mode)
             menuremap2[i] = i;
         }
     }
-    sub_B4DD4(menuremap);
+    SetColorRemap(menuremap);
 }

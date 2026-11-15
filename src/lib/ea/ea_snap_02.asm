@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_9D352 progbits alloc exec nowrite align=1
-extern __hook387, byte_D4B9C, byte_D4D06, byte_D4D08, byte_D51DC, dword_D41F4, dword_D5194, dword_D51D4
+extern __hook387, __8087, _Extender, byte_D4D08, __real87, dword_D41F4, dword_D5194, dword_D51D4
 extern sub_A35EC, sub_A365C, word_D41F8, word_D41FA, word_D51D8, word_D51DA
-global sub_9D352, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, sub_9D41D, sub_9D43A
+global InitFpuFlags, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, sub_9D41D, sub_9D43A
 global loc_9D471, loc_9D486, sub_9D487
-sub_9D352:
-mov byte [byte_D4B9C], 3	; 9D352
-mov byte [byte_D51DC], 1	; 9D359
+InitFpuFlags:
+mov byte [__8087], 3	; 9D352
+mov byte [__real87], 1	; 9D359
 db 066h,0Fh,01h,025h
 dd word_D51DA
 and word [word_D51DA], byte 6	; 9D368
@@ -26,7 +26,7 @@ mov dword [byte es:ebx+04h], ecx	; 9D399
 call sub_9D487	; 9D39D
 jmp short loc_9D41C	; 9D3A2
 loc_9D3A4:
-cmp byte [byte_D4D06], 0	; 9D3A4
+cmp byte [_Extender], 0	; 9D3A4
 jne short loc_9D3C8	; 9D3AB
 mov ax, 2507h	; 9D3AD
 push ds	; 9D3B1
@@ -40,7 +40,7 @@ mov ah, 0F3h	; 9D3C2
 int 21h	; 9D3C4
 jmp short loc_9D41C	; 9D3C6
 loc_9D3C8:
-cmp byte [byte_D4D06], 9	; 9D3C8
+cmp byte [_Extender], 9	; 9D3C8
 jne short loc_9D3F0	; 9D3CF
 call sub_9D41D	; 9D3D1
 mov dword [ebx], edx	; 9D3D6
@@ -51,7 +51,7 @@ mov ecx, dword [dword_D41F4]	; 9D3E5
 call dword [byte ecx+030h]	; 9D3EB
 jmp short loc_9D41C	; 9D3EE
 loc_9D3F0:
-cmp byte [byte_D4D06], 1	; 9D3F0
+cmp byte [_Extender], 1	; 9D3F0
 jne short loc_9D409	; 9D3F7
 mov dx, word [word_D41F8]	; 9D3F9
 sub eax, eax	; 9D400
@@ -82,7 +82,7 @@ mov ax, 2502h	; 9D43C
 int 21h	; 9D440
 mov dword [dword_D51D4], ebx	; 9D442
 o16 mov word [word_D51D8], es	; 9D448
-cmp byte [byte_D4D06], 3	; 9D44F
+cmp byte [_Extender], 3	; 9D44F
 mov cl, 7	; 9D456
 mov ax, 2504h	; 9D458
 push ds	; 9D45C

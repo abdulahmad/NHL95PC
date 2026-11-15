@@ -10,7 +10,7 @@
    counts a check (team word 24h, not for a goalie, nor in a highlight or with the clock stopped), p gets nopuck
    78h, d = the direction from p to h. Hit by an opponent skater: near the nets (|x| >= 60h, |y| >= CAh) NetCollide
    may pick the fall; at the side boards (|x| >= 80h) or behind the goal lines (|y| >= EEh or <= -F2h) a hit toward
-   the boards pins him there (x or y from the word_CCBCC.. tables by facedir, mirrored with attribute bit 3) with a
+   the boards pins him there (x or y from the FallDown_pinxr.. tables by facedir, mirrored with attribute bit 3) with a
    board fall (F0Fh F55h F9Bh FE1h 1027h 1055h); NetCollide again in the corners. Without one: a hit from the front
    falls back (6D9h); a puck hit from the side (directions 3, 7) outside its 450h-467h frames may injure him (injuries
    on, no penalty shot, facedir 0 or 4, not pflags2 bit 4, randomd0(C8h or A0h with pflags bit 3) up to 14h and
@@ -74,10 +74,10 @@ net:
             p->Xvel = 0;
             if (p->attribute & 8) {
                 s = 0xFE1;
-                HIWORD(p->Xpos) = -word_CCBDC[(8 - p->facedir) & 7];
+                HIWORD(p->Xpos) = -FallDown_pinxl[(8 - p->facedir) & 7];
             } else {
                 s = 0xF9B;
-                HIWORD(p->Xpos) = word_CCBCC[p->facedir];
+                HIWORD(p->Xpos) = FallDown_pinxr[p->facedir];
             }
         }
     } else if (HIWORD(p->Xpos) <= -0x80) {
@@ -87,32 +87,32 @@ net:
             if (HIWORD(p->Ypos) >= -0x54 && HIWORD(p->Ypos) < -0xA || HIWORD(p->Ypos) >= 0x27 && HIWORD(p->Ypos) < 0x75) {
                 if (p->attribute & 8) {
                     s = 0x1027;
-                    HIWORD(p->Xpos) = -word_CCC0C[(8 - p->facedir) & 7];
+                    HIWORD(p->Xpos) = -FallDown_pinxr2[(8 - p->facedir) & 7];
                 } else {
                     s = 0x1055;
-                    HIWORD(p->Xpos) = word_CCC1C[p->facedir];
+                    HIWORD(p->Xpos) = FallDown_pinxl2[p->facedir];
                 }
             } else {
                 if (p->attribute & 8) {
                     s = 0xF9B;
-                    HIWORD(p->Xpos) = -word_CCBCC[(8 - p->facedir) & 7];
+                    HIWORD(p->Xpos) = -FallDown_pinxr[(8 - p->facedir) & 7];
                 } else {
                     s = 0xFE1;
-                    HIWORD(p->Xpos) = word_CCBDC[p->facedir];
+                    HIWORD(p->Xpos) = FallDown_pinxl[p->facedir];
                 }
             }
         }
     } else if (HIWORD(p->Ypos) >= 0xEE) {
         if (HIWORD(p->Xpos) > 0x68 || HIWORD(p->Xpos) < -0x68) goto net;
         if (((d + 2) & 7) >= 5) {
-            HIWORD(p->Ypos) = word_CCBEC[p->facedir];
+            HIWORD(p->Ypos) = FallDown_pinyt[p->facedir];
             p->Yvel = 0;
             s = 0xF0F;
         }
     } else if (HIWORD(p->Ypos) <= -0xF2) {
         if (HIWORD(p->Xpos) > 0x68 || HIWORD(p->Xpos) < -0x68) goto net;
         if (((d + 1) & 7) < 3) {
-            HIWORD(p->Ypos) = word_CCBFC[p->facedir];
+            HIWORD(p->Ypos) = FallDown_pinyb[p->facedir];
             p->Yvel = 0;
             s = 0xF55;
         }

@@ -9,11 +9,11 @@ int DeskGoToReplay(void)
 {
     LoadRink(HomeTeam >= 26 ? 12 : HomeTeam);
     LoadPlayerPhotos();
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     SetScreenSize(0x140, 0xC8);
     InstantReplay(0);
-    sub_8EA18(s1font);
+    TextSetFont(s1font);
     dword_C66D0 = dword_C66D4 = 1;
     return 2;
 }
@@ -22,10 +22,10 @@ int DeskGoToReplay(void)
  (hmlinetab), then save and fade again. Returns 2. */
 int DeskHomeLines(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    GameLineEditor(0, hmlinetab, unk_CF2EF, 2);
-    sub_8FFB0(0, 0x100, savepal);
+    GameLineEditor(0, hmlinetab, desklinesmenubar, 2);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     return 2;
 }
@@ -33,10 +33,10 @@ int DeskHomeLines(void)
 /* DeskVisitorLines: as DeskHomeLines for the visitors (awlinetab). Returns 2. */
 int DeskVisitorLines(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    GameLineEditor(1, awlinetab, unk_CF2EF, 2);
-    sub_8FFB0(0, 0x100, savepal);
+    GameLineEditor(1, awlinetab, desklinesmenubar, 2);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     return 2;
 }
@@ -44,7 +44,7 @@ int DeskVisitorLines(void)
 /* DeskGameStats: sports desk game stats: save the palette, fade out, GameStatsScreen. Returns 2. */
 int DeskGameStats(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     GameStatsScreen();
     return 2;
@@ -55,11 +55,11 @@ int DeskGameStats(void)
  screen in mode 2 (penalties) for the current period. Returns 2. */
 int DeskPenaltySummary(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -73,7 +73,7 @@ int DeskPenaltySummary(void)
  DeskItem_ret2) is where the other desk items end. */
 int DeskScoringSummary(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     ShowLoadingScreen();
     GameSummaryScreen(1, 1, curperiod, 0);
@@ -83,7 +83,7 @@ int DeskScoringSummary(void)
 /* DeskTeamScratches: sports desk team scratches: the same with the game summary screen in mode 4. Returns 2. */
 int DeskTeamScratches(void)
 {
-    sub_8FFB0(0, 0x100, savepal);
+    SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     ShowLoadingScreen();
     GameSummaryScreen(4, 0, 0, 0);

@@ -2,18 +2,18 @@
 bits 32
 %include "hockey.inc"
 section s_DB08A nobits alloc noexec write align=1
-global word_DB08A, word_DB08C, word_DB08E, word_DB090, word_DB092, word_DB094, word_DB096
-word_DB08A:
+global hmplstats_w2, hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14
+hmplstats_w2:
 resb 2
-word_DB08C:
+hmplstats_w4:
 resb 2
-word_DB08E:
+hmplstats_w6:
 resb 2
-word_DB090:
+hmplstats_w8:
 resb 2
-word_DB092:
+hmplstats_w10:
 resb 2
-word_DB094:
+hmplstats_w12:
 resb 2
-word_DB096:
+hmplstats_w14:
 resb 386

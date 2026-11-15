@@ -17,124 +17,124 @@ void UpdateCoachModes(void)
     diff = hmscore[0];
     diff -= awscore;
     if (curperiod == 2 && gameclock <= 0x258) {
-        prev = byte_DF6E9;
+        prev = hmtmcoachmode;
         SetCoachMode(0);
-        if (prev != byte_DF6E9)
-            byte_DF6E8 |= 0x40;
-        prev = byte_DF7E9;
+        if (prev != hmtmcoachmode)
+            hmtmcoachflags |= 0x40;
+        prev = awtmcoachmode;
         SetCoachMode(1);
-        if (prev != byte_DF7E9)
-            byte_DF7E8 |= 0x40;
+        if (prev != awtmcoachmode)
+            awtmcoachflags |= 0x40;
         if (gameclock != 0x258)
             return;
         if (diff < -1) {
-            if (byte_DF6E6 < 4)
-                byte_DF6E6++;
-            if (byte_DF6E7 > 1)
-                byte_DF6E7--;
+            if (hmtmcoach_d2 < 4)
+                hmtmcoach_d2++;
+            if (hmtmcoach_d3 > 1)
+                hmtmcoach_d3--;
         }
         if (diff > 1) {
-            if (byte_DF7E6 < 4)
-                byte_DF7E6++;
-            if (byte_DF7E7 > 1)
-                byte_DF7E7--;
+            if (awtmcoach_d2 < 4)
+                awtmcoach_d2++;
+            if (awtmcoach_d3 > 1)
+                awtmcoach_d3--;
         }
         return;
     }
     if (curperiod != 3)
         return;
-    prev = byte_DF6E9;
+    prev = hmtmcoachmode;
     if (gameclock <= 0x3C && diff <= -1) {
-        dword_DF6EA = 0xB33;
-        byte_DF6E8 |= 1;
-        byte_DF6E9 = 6;
-        byte_DF6E6 = 4;
-        byte_DF6E7 = 1;
+        hmtmcoachenergy = 0xB33;
+        hmtmcoachflags |= 1;
+        hmtmcoachmode = 6;
+        hmtmcoach_d2 = 4;
+        hmtmcoach_d3 = 1;
     } else if (gameclock <= 0x78 && diff < -1) {
-        dword_DF6EA = 0xB33;
-        byte_DF6E8 |= 1;
-        byte_DF6E9 = 6;
-        byte_DF6E6 = 4;
-        byte_DF6E7 = 1;
+        hmtmcoachenergy = 0xB33;
+        hmtmcoachflags |= 1;
+        hmtmcoachmode = 6;
+        hmtmcoach_d2 = 4;
+        hmtmcoach_d3 = 1;
     } else if (gameclock <= 0xB4 && diff <= -1) {
-        dword_DF6EA = 0xB33;
-        byte_DF6E8 |= 1;
-        byte_DF6E9 = 7;
-        byte_DF6E6 = 4;
-        byte_DF6E7 = 1;
+        hmtmcoachenergy = 0xB33;
+        hmtmcoachflags |= 1;
+        hmtmcoachmode = 7;
+        hmtmcoach_d2 = 4;
+        hmtmcoach_d3 = 1;
     } else if (gameclock <= 0x12C && diff < -1) {
-        dword_DF6EA = 0xB33;
-        byte_DF6E8 |= 1;
-        byte_DF6E9 = 7;
-        byte_DF6E6 = 4;
-        byte_DF6E7 = 1;
+        hmtmcoachenergy = 0xB33;
+        hmtmcoachflags |= 1;
+        hmtmcoachmode = 7;
+        hmtmcoach_d2 = 4;
+        hmtmcoach_d3 = 1;
     } else if (gameclock <= 0x258) {
         if (diff < -1) {
-            dword_DF6EA = 0xB33;
-            byte_DF6E8 |= 1;
-            byte_DF6E9 = 0x0A;
-            byte_DF6E6 = 4;
-            byte_DF6E7 = 1;
+            hmtmcoachenergy = 0xB33;
+            hmtmcoachflags |= 1;
+            hmtmcoachmode = 0x0A;
+            hmtmcoach_d2 = 4;
+            hmtmcoach_d3 = 1;
         } else {
             if (diff > 2)
-                dword_DF6EA = 0xCCC;
+                hmtmcoachenergy = 0xCCC;
             else
-                dword_DF6EA = 0xD9A;
-            byte_DF6E8 &= 0xFE;
-            byte_DF6E9 = 3;
-            byte_DF6E6 = 3;
-            byte_DF6E7 = 2;
+                hmtmcoachenergy = 0xD9A;
+            hmtmcoachflags &= 0xFE;
+            hmtmcoachmode = 3;
+            hmtmcoach_d2 = 3;
+            hmtmcoach_d3 = 2;
         }
     } else
         SetCoachMode(0);
-    if (prev != byte_DF6E9)
-        byte_DF6E8 |= 0x40;
-    prev = byte_DF7E9;
+    if (prev != hmtmcoachmode)
+        hmtmcoachflags |= 0x40;
+    prev = awtmcoachmode;
     if (gameclock <= 0x3C && diff >= 1) {
-        dword_DF7EA = 0xB33;
-        byte_DF7E8 |= 1;
-        byte_DF7E9 = 6;
-        byte_DF7E6 = 4;
-        byte_DF7E7 = 1;
+        awtmcoachenergy = 0xB33;
+        awtmcoachflags |= 1;
+        awtmcoachmode = 6;
+        awtmcoach_d2 = 4;
+        awtmcoach_d3 = 1;
     } else if (gameclock <= 0x78 && diff > 1) {
-        dword_DF7EA = 0xB33;
-        byte_DF7E8 |= 1;
-        byte_DF7E9 = 6;
-        byte_DF7E6 = 4;
-        byte_DF7E7 = 1;
+        awtmcoachenergy = 0xB33;
+        awtmcoachflags |= 1;
+        awtmcoachmode = 6;
+        awtmcoach_d2 = 4;
+        awtmcoach_d3 = 1;
     } else if (gameclock <= 0xB4 && diff > 1) {
-        dword_DF7EA = 0xB33;
-        byte_DF7E8 |= 1;
-        byte_DF7E9 = 7;
-        byte_DF7E6 = 4;
-        byte_DF7E7 = 1;
+        awtmcoachenergy = 0xB33;
+        awtmcoachflags |= 1;
+        awtmcoachmode = 7;
+        awtmcoach_d2 = 4;
+        awtmcoach_d3 = 1;
     } else if (gameclock <= 0x12C && diff > 1) {
-        dword_DF7EA = 0xB33;
-        byte_DF7E8 |= 1;
-        byte_DF7E9 = 7;
-        byte_DF7E6 = 4;
-        byte_DF7E7 = 1;
+        awtmcoachenergy = 0xB33;
+        awtmcoachflags |= 1;
+        awtmcoachmode = 7;
+        awtmcoach_d2 = 4;
+        awtmcoach_d3 = 1;
     } else if (gameclock <= 0x258) {
         if (diff > 1) {
-            dword_DF7EA = 0xB33;
-            byte_DF7E8 |= 1;
-            byte_DF7E9 = 0x0A;
-            byte_DF7E6 = 4;
-            byte_DF7E7 = 1;
+            awtmcoachenergy = 0xB33;
+            awtmcoachflags |= 1;
+            awtmcoachmode = 0x0A;
+            awtmcoach_d2 = 4;
+            awtmcoach_d3 = 1;
         } else {
             if (diff < -2) {
-                dword_DF7EA = 0xCCC;
-                byte_DF7E9 = 9;
+                awtmcoachenergy = 0xCCC;
+                awtmcoachmode = 9;
             } else {
-                dword_DF7EA = 0xD9A;
-                byte_DF7E9 = 8;
+                awtmcoachenergy = 0xD9A;
+                awtmcoachmode = 8;
             }
-            byte_DF7E8 |= 1;
-            byte_DF7E6 = 3;
-            byte_DF7E7 = 2;
+            awtmcoachflags |= 1;
+            awtmcoach_d2 = 3;
+            awtmcoach_d3 = 2;
         }
     } else
         SetCoachMode(1);
-    if (prev != byte_DF7E9)
-        byte_DF7E8 |= 0x40;
+    if (prev != awtmcoachmode)
+        awtmcoachflags |= 0x40;
 }

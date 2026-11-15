@@ -29,11 +29,11 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
     unsigned char *p;
 
     for (i = 0; i < 25; i++) {
-        if (*(int *)((char *)dword_DBC7C + team * 744 + i * 4) >= 0) {
-            ReadPlayerRecs(f1, f2, f3, f4, *(int *)((char *)dword_DBC7C + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
+        if (*(int *)((char *)hmteamrec_skaters + team * 744 + i * 4) >= 0) {
+            ReadPlayerRecs(f1, f2, f3, f4, *(int *)((char *)hmteamrec_skaters + team * 744 + i * 4), buf + 0x38, buf + 0xC4, 0x14,
                 buf + 0x6C, 0x2F, buf + 0x9C, n4);
             hmrosterjersey[team * 1092 + i * 39] = buf[0x39];
-            byte_DB3AE[team * 1092 + i * 39] = buf[0x3A];
+            hmrosterpos[team * 1092 + i * 39] = buf[0x3A];
             p = hmroster + team * 1092 + i * 39;
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
@@ -53,19 +53,19 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 else
                     hmroster[team * 1092 + i * 39] = byte_C66B4[(-line) * 2];
             }
-            *(struct { unsigned char b[20]; } *)(unk_DACA0 + team * 500 + i * 20) =
+            *(struct { unsigned char b[20]; } *)(hmplattr + team * 500 + i * 20) =
                 *(struct { unsigned char b[20]; } *)(buf + 0xC4);
             if ((mode & 6) == 0) {
                 if (((unsigned char *)&gameopts)[1] & 2) {
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].first = *(unsigned short *)(buf + 0xC0);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = stat + *(unsigned short *)(buf + 0xC2);
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x70);
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].first = *(unsigned short *)(buf + 0xC0);
+                    ((RosterStats *)plcareergoals + team * 25)[i].first_total = stat + *(unsigned short *)(buf + 0xC2);
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].second = *(unsigned short *)(buf + 0x6E);
+                    ((RosterStats *)plcareergoals + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x70);
                 } else {
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first = 0;
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].first_total = 0;
-                    stat = ((RosterStats *)dword_DEB74 + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
-                    ((RosterStats *)dword_DEB74 + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x82);
+                    ((RosterStats *)plcareergoals + team * 25)[i].first = 0;
+                    ((RosterStats *)plcareergoals + team * 25)[i].first_total = 0;
+                    stat = ((RosterStats *)plcareergoals + team * 25)[i].second = *(unsigned short *)(buf + 0x80);
+                    ((RosterStats *)plcareergoals + team * 25)[i].second_total = stat + *(unsigned short *)(buf + 0x82);
                 }
             }
         } else {
@@ -73,11 +73,11 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
         }
     }
     for (i = 0; i < 3; i++) {
-        if (*(int *)((char *)dword_DBCE0 + team * 744 + i * 4) >= 0) {
-            ReadPlayerRecs(f1, f2, f3, 0, *(int *)((char *)dword_DBCE0 + team * 744 + i * 4), buf + 0x38, buf + 0xD8, 0x10,
+        if (*(int *)((char *)hmteamrec_goalies + team * 744 + i * 4) >= 0) {
+            ReadPlayerRecs(f1, f2, f3, 0, *(int *)((char *)hmteamrec_goalies + team * 744 + i * 4), buf + 0x38, buf + 0xD8, 0x10,
                 buf, 0x36, 0, 0);
             hmrosterjersey[team * 1092 + (i + 25) * 39] = buf[0x39];
-            byte_DB3AE[team * 1092 + (i + 25) * 39] = buf[0x3A];
+            hmrosterpos[team * 1092 + (i + 25) * 39] = buf[0x3A];
             p = hmroster + team * 1092 + (i + 25) * 39;
             strcpy((char *)p + 7, (char *)buf + 0x3B);
             strcpy((char *)p + 0x17, (char *)buf + 0x4B);
@@ -91,13 +91,13 @@ void LoadTeamRoster(int mode, int f1, int f2, int f3, int f4, int n4, int team)
                 else
                     hmroster[(i + 25) * 39 + team * 1092] = 3;
             } else {
-                gline = *(short *)((char *)dword_DF6C2 + ((i + 1) * 2 + (team << 8)));
+                gline = *(short *)((char *)hmtmpdst_gl_m2 + ((i + 1) * 2 + (team << 8)));
                 if (gline > 0)
                     hmroster[team * 1092 + (i + 25) * 39] = 5;
                 else
                     hmroster[team * 1092 + (i + 25) * 39] = byte_C66B4[(-gline) * 2];
             }
-            *(struct { unsigned char b[16]; } *)(unk_DAC40 + team * 48 + i * 16) =
+            *(struct { unsigned char b[16]; } *)(hmglattr + team * 48 + i * 16) =
                 *(struct { unsigned char b[16]; } *)(buf + 0xD8);
         } else {
             hmroster[team * 1092 + (i + 25) * 39] = 0;

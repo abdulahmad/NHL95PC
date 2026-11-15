@@ -12,7 +12,7 @@ int GameDressPlayer(unsigned char *nums, int a, unsigned char side, int *sel, in
 
     hmroster[side * 0x444 + gmrosterslot[*sel * 22] * 39] = 3;
     DrawGameLineJerseys(nums, art, side);
-    sub_8E9C0(0xC0, 0xC1);
+    TextSetColors(0xC0, 0xC1);
     sprintf(buf, (char *)str_C2dS3, gmroster[*sel * 22], gmrosterjersey[*sel * 22], gmroster + *sel * 22 + 3);
     PrintLineEdStatus(0x1FA, *sel * 13 + 0x16, buf);
     return 0;

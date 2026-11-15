@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* NextPathPoint: load the next point of the shootout path: the path table
- at dword_CCB18 has 3 dwords per point (x, y, end; dword_CCB1C dword_CCB20 are its y end columns).
+ at ShootoutPathData has 3 dwords per point (x, y, end; ShootoutPathData_y ShootoutPathData_end are its y end columns).
  sopathx = x (negated when pspathside < 0, the other side of the rink), sopathy = y, sopathend = end, then
  sopathpoint goes to the next point. The PC has no end-of-path check here. */
 void NextPathPoint(void)
@@ -11,10 +11,10 @@ void NextPathPoint(void)
     int x;
 
     k = sopathpoint * 3;                        /* 3 dwords per point */
-    x = dword_CCB18[k];
+    x = ShootoutPathData[k];
     if (pspathside < 0) x = -x;                 /* path side */
     sopathx = x;
-    sopathy = dword_CCB1C[k];
-    sopathend = dword_CCB20[k];
+    sopathy = ShootoutPathData_y[k];
+    sopathend = ShootoutPathData_end[k];
     sopathpoint++;
 }

@@ -5,7 +5,7 @@ section s_B5D80 progbits alloc exec nowrite align=1
 extern byte_D42E4, byte_D4F54, byte_D89E4, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30BC
 extern dword_D30C0, dword_D30C4, dword_D30C8, dword_D30CC, dword_D30D0, dword_D3104, dword_D4F4C, dword_D4F50
 extern dword_D86B8, dword_D86BC
-global sub_B5D80, loc_B5DAC, sub_B5DB0, loc_B5DBC, loc_B5DD8, loc_B5DE0, sub_B5E00, sub_B5E04
+global sub_B5D80, loc_B5DAC, PlotPixel, loc_B5DBC, loc_B5DD8, loc_B5DE0, sub_B5E00, sub_B5E04
 global jpt_B5E1F, loc_B5E2B, loc_B5E49, loc_B5E4A, loc_B5E76, sub_B5EA7, sub_B5EB8, sub_B5EC5
 global sub_B5EE8, sub_B5F0F, loc_B5F41, loc_B5F63, loc_B5F67, loc_B5F94, loc_B5FC2, loc_B5FE5
 global loc_B5FEB, loc_B6024, loc_B6037, loc_B603B, loc_B603D, loc_B6055, sub_B6064, sub_B608B
@@ -60,7 +60,7 @@ jl short loc_B5DBC	; B5DAA
 loc_B5DAC:
 ret	; B5DAC
 db 02Eh,0C0h,08Bh
-sub_B5DB0:
+PlotPixel:
 mov eax, dword [byte esp+04h]	; B5DB0
 mov edx, dword [byte esp+08h]	; B5DB4
 mov ebx, dword [byte esp+0Ch]	; B5DB8

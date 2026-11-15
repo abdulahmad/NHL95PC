@@ -8,30 +8,30 @@ void SetSideControls(void)
 {
     if (ctl1side[0] == ctl2side) {
         if (!ctl1side[0]) {
-            off_CEF43 = (int)DeskHomeLines;
-            off_CEF63 = 0;
-            dword_CEDE7 = (int)unk_CEE4F;
-            dword_CEE07 = 0;
+            menuact_homelines = (int)DeskHomeLines;
+            menuact_visitorlines = 0;
+            menusub_hmgoalie = (int)hmgoaliemenu;
+            menusub_awgoalie = 0;
         } else {
-            off_CEF43 = 0;
-            off_CEF63 = (int)DeskVisitorLines;
-            dword_CEDE7 = 0;
-            dword_CEE07 = (int)unk_CEEAF;
+            menuact_homelines = 0;
+            menuact_visitorlines = (int)DeskVisitorLines;
+            menusub_hmgoalie = 0;
+            menusub_awgoalie = (int)awgoaliemenu;
         }
         return;
     }
     if (ctl1team[0] == -1 || ctl2team == -1) {
-        off_CEF43 = 0;
-        dword_CEDE7 = 0;
+        menuact_homelines = 0;
+        menusub_hmgoalie = 0;
     } else {
-        off_CEF43 = (int)DeskHomeLines;
-        dword_CEDE7 = (int)unk_CEE4F;
+        menuact_homelines = (int)DeskHomeLines;
+        menusub_hmgoalie = (int)hmgoaliemenu;
     }
     if (ctl1team[0] == -2 || ctl2team == -2) {
-        off_CEF63 = 0;
-        dword_CEE07 = 0;
+        menuact_visitorlines = 0;
+        menusub_awgoalie = 0;
     } else {
-        off_CEF63 = (int)DeskVisitorLines;
-        dword_CEE07 = (int)unk_CEEAF;
+        menuact_visitorlines = (int)DeskVisitorLines;
+        menusub_awgoalie = (int)awgoaliemenu;
     }
 }

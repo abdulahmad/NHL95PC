@@ -180,15 +180,15 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
             if (!r && f.played[i]) {
                 k = side * 0x190 + i * 16;
                 ss[0]++;
-                ss[1] += *(short *)((char *)dword_DB088 + k);
-                ss[2] += *(short *)((char *)word_DB08A + k);
-                ss[3] += *(short *)((char *)dword_DB088 + k);
-                ss[3] += *(short *)((char *)word_DB08A + k);
-                ss[6] += *(short *)((char *)word_DB08C + k);
-                ss[8] += *(short *)((char *)word_DB08E + k);
-                ss[4] += *(short *)((char *)word_DB090 + k);
-                ss[5] += *(short *)((char *)word_DB092 + k);
-                ss[7] += *(short *)((char *)word_DB096 + k);
+                ss[1] += *(short *)((char *)hmplstats + k);
+                ss[2] += *(short *)((char *)hmplstats_w2 + k);
+                ss[3] += *(short *)((char *)hmplstats + k);
+                ss[3] += *(short *)((char *)hmplstats_w2 + k);
+                ss[6] += *(short *)((char *)hmplstats_w4 + k);
+                ss[8] += *(short *)((char *)hmplstats_w6 + k);
+                ss[4] += *(short *)((char *)hmplstats_w8 + k);
+                ss[5] += *(short *)((char *)hmplstats_w10 + k);
+                ss[7] += *(short *)((char *)hmplstats_w14 + k);
                 r = WriteSeasonRec(f.fseason, f.srec, *(int *)(f.key + 0x2C));
             }
         }
@@ -207,11 +207,11 @@ int PostGameToTeamDb(char *dir, char *ext, int team, int side, int game, char *g
             if (!r) r = ReadGoalieSeasonRec(f.fseason, f.grec, *(int *)(f.key + 0x2C));
             if (!r && f.played[i + 0x19]) {
                 k = side * 18 + i * 6;
-                if (*(short *)((char *)unk_DC240 + k)) {
+                if (*(short *)((char *)hmglstats + k)) {
                     gs[0]++;
-                    gs[6] = gs[6] + *(short *)((char *)unk_DC240 + k) / 0x3C;
-                    gs[9] += *(short *)((char *)word_DC242 + k);
-                    gs[7] += *(short *)((char *)word_DC244 + k);
+                    gs[6] = gs[6] + *(short *)((char *)hmglstats + k) / 0x3C;
+                    gs[9] += *(short *)((char *)hmglstats_w2 + k);
+                    gs[7] += *(short *)((char *)hmglstats_w4 + k);
                     if ((signed char)gk[side] == (unsigned char)(i + 0x19)) {
                         if (hmscore[0] > awscore) {
                             if (!side) gs[1]++;

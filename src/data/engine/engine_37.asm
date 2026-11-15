@@ -4,21 +4,21 @@ bits 32
 section s_CC01D progbits alloc noexec write align=1
 extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, unk_CBF60
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
-global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, byte_CC7A4, byte_CC7A5
-global byte_CC9B0, byte_CC9E4, byte_CC9E7, byte_CCA95, lchoicetab, byte_CCBBA, byte_CCBBB, byte_CCCA0
-global byte_CCE00, byte_CCE01, dword_CC080, dword_CC0AC, dword_CC0B4, lastsfx, photobankf, dword_CC0EC
+global str_ErrLoadGame, str_ErrSaveGame, ovlseqtimed, lldisp, HotList, HotList_y, HotStickList, HotStickList_y
+global teamrocktune, starskatermin, stargoaliemin, Endfaceoff_ftab_m1, lchoicetab, assonetimer_blade, assonetimer_blade_y, cupceremony
+global rinkobjanim, rinkobjanim_b1, ovlartfiles, goalienotebits, markframes_e1, lastsfx, photobankf, demoflag
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
-global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, dword_CC9CE
-global dword_CCA58, dword_CCA5A, dword_CCAD8, dword_CCB18, dword_CCB1C, dword_CCB20, dword_CCC2C, dword_CCC4E
-global digihandle, crowdsmooth, crowdvol8, crowdvol7, dword_CCC94, dword_CCC98, dword_CCC9C, dword_CCC9D
-global dword_CCC9E, dword_CCCB8, sublist, dword_CCCC5, dword_CCD4F, doplayeracc_ftab, MaxSpeed, dword_CCEF6, dword_CD2F8
-global off_CC01D, starordtab, shotsets, unk_CCCC8, word_CC054, word_CC0B0, lldispodd, ltack
-global crowdlevel, word_CC10C, word_CC9CC, word_CC9EA, word_CC9EC, word_CCA18, word_CCA1A, word_CCA1C
-global word_CCA1E, word_CCA38, word_CCA3A, word_CCA3C, word_CCA3E, word_CCA6E, word_CCA70, word_CCA9C
-global linenext, word_CCBCC, word_CCBDC, word_CCBEC, word_CCBFC, word_CCC0C, word_CCC1C, blockspd
-global blockspd_y, shotsetz, word_CCCA8, word_CCEF8, Setplass_alist
-off_CC01D:
+global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, introstandanims_m2
+global assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, nethit, checkinglist_m2
+global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended, dword_CCC9D
+global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
+global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
+global crowdlevel, word_CC10C, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
+global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscentero_dedata_y, asscentero_dedata_yrand, asspuckc_postab2, asspuckc_postab2_y, refsigdir
+global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
+global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
+ovlscripts:
 dd unk_CBF18
 dd unk_CBEFC
 dd unk_CBF04
@@ -30,21 +30,21 @@ dd unk_CBFA9
 dd unk_CBFC3
 dd unk_CBFEB
 dd unk_CBFFA
-byte_CC049:
+ovlseqtimed:
 db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
-word_CC054:
+ovlsteptime:
 db 0Ch,00h,00h,00h,08h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
 db 0Ch,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
 db 08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
-dword_CC080:
+ovlartfiles:
 db 091h,00h,00h,00h,097h,00h,00h,00h,052h,00h,00h,00h,0AEh,01h,00h,00h
 db 047h,00h,00h,00h,0D4h,01h,00h,00h,0D5h,01h,00h,00h,0D6h,01h,00h,00h
 db 0D7h,01h,00h,00h,0D8h,01h,00h,00h,0D9h,01h,00h,00h
-dword_CC0AC:
+goalienotebits:
 db 00h,00h,00h,00h
-word_CC0B0:
+Pencntdwn2:
 db 0FFh,0FFh,085h,01h
-dword_CC0B4:
+markframes_e1:
 db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
 db 081h,01h,080h,01h,082h,01h,083h,01h,084h,01h,063h,01h,062h,01h,063h,01h
 db 084h,01h,083h,01h
@@ -60,7 +60,7 @@ crowdlevel:
 db 00h,00h
 photobankf:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_CC0EC:
+demoflag:
 db 00h,00h,00h,00h
 introskipped:
 db 00h,00h,00h,00h
@@ -213,9 +213,9 @@ db 0FFh,014h,0F2h,0F9h,0F7h,0F9h,0F1h,0E7h,0FEh,0DDh,0FAh,0FCh,03h,0FEh,02h,0F9h
 db 03h,0FFh,03h,09h,00h,06h,04h,0Bh,00h,0Bh,00h,010h,0FDh,00h,0FEh,00h
 db 0FCh,0FFh,0FEh,05h,0FEh,03h,0FDh,01h,0FCh,0FDh,0FCh,0FEh,0FCh,0FEh,0FCh,0FAh
 db 01h,0F8h,03h,0FCh,01h,0FEh,0FEh,0FEh,0FEh,0FEh,0FEh
-byte_CC7A4:
+HotStickList:
 db 01h
-byte_CC7A5:
+HotStickList_y:
 db 05h,011h,011h,0EDh,015h,05h,03h,0Fh,0Bh,0F3h,017h,08h,02h,0F6h,07h,0Ch
 db 01Bh,09h,0FDh,0F0h,09h,0Dh,010h,02h,0FAh,0EDh,010h,0Eh,0Ch,0FBh,0FAh,0F0h
 db 015h,0Ah,01h,0F7h,0FFh,0FFh,014h,0F1h,05h,0F7h,03h,0Eh,019h,0ECh,0Eh,0FEh
@@ -251,21 +251,21 @@ db 0FEh,017h,0F9h,0F9h,0FCh,0F9h,0F7h,0F8h,0FFh,0F3h,0F4h,0F1h,00h,0E3h,03h,0F6h
 db 0FFh,0F5h,0Ah,02h,06h,0FEh,016h,010h
 dword_CC9AD:
 db 0FDh,0Fh,0Dh
-byte_CC9B0:
+teamrocktune:
 db 01h,01h,00h,01h,01h,00h,01h,01h,01h,00h,01h,01h,01h,00h,01h,01h
 db 00h,01h,01h,01h,00h,00h,01h,00h,01h,01h,00h,00h
 word_CC9CC:
 db 0FEh,01h
-dword_CC9CE:
+introstandanims_m2:
 db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
 db 00h,00h,045h,0Dh,00h,00h
-byte_CC9E4:
+starskatermin:
 db 0Ah,0Fh,014h
-byte_CC9E7:
+stargoaliemin:
 db 0Ah,014h,028h
-word_CC9EA:
+assstarskate_path:
 db 089h,0FFh
-word_CC9EC:
+assstarskate_path_y:
 db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
 db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
 starordtab:
@@ -273,52 +273,52 @@ dd str_1st
 dd str_2nd
 dd str_3rd
 db 00h,00h
-word_CCA18:
+asswingo_dedata:
 db 064h,00h
-word_CCA1A:
+asswingo_dedata_xrand:
 db 014h,00h
-word_CCA1C:
+asswingo_dedata_y:
 db 0C0h,0FFh
-word_CCA1E:
+asswingo_dedata_yrand:
 db 0Ah,00h,078h,00h,014h,00h,032h,00h,05h,00h,037h,00h,032h,00h,0BEh,00h
 db 014h,00h,064h,00h,01Eh,00h,0DAh,00h,014h,00h
-word_CCA38:
+asscentero_dedata:
 db 00h,00h
-word_CCA3A:
+asscentero_dedata_xrand:
 db 046h,00h
-word_CCA3C:
+asscentero_dedata_y:
 db 0C0h,0FFh
-word_CCA3E:
+asscentero_dedata_yrand:
 db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
 db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
-dword_CCA58:
+assscore_dancecnt:
 db 00h,00h
-dword_CCA5A:
+goaliesave_saveanim_m2:
 db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
 db 0D5h,011h,09Dh,011h
-word_CCA6E:
+asspuckc_postab2:
 db 092h,0FFh
-word_CCA70:
+asspuckc_postab2_y:
 db 0ECh,0FFh,06Eh,00h,0ECh,0FFh,07Eh,0FFh,024h,00h,01Eh,00h,024h,00h,082h,00h
 db 024h,00h,0E2h,0FFh,024h,00h,0CEh,0FFh,0CCh,00h,00h,00h,0BCh,00h,01Eh,00h
 db 0C6h,00h,028h,00h,0C6h
-byte_CCA95:
+Endfaceoff_ftab_m1:
 db 00h,00h,08h,010h,00h,08h,010h
-word_CCA9C:
+refsigdir:
 db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
 db 0FFh,0FFh,04h,00h,0FFh,0FFh,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
 db 04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
 db 04h,00h,04h,00h,04h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-dword_CCAD8:
+refsigspa_m2:
 db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
 db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
 db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_CCB18:
+ShootoutPathData:
 db 028h,00h,00h,00h
-dword_CCB1C:
+ShootoutPathData_y:
 db 078h,00h,00h,00h
-dword_CCB20:
+ShootoutPathData_end:
 db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
 db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
 db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
@@ -331,24 +331,24 @@ db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
 db 04h,05h,0FFh,0FFh,05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
 db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh
 db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,07h,06h,0FFh,0FFh
-byte_CCBBA:
+assonetimer_blade:
 db 0FAh
-byte_CCBBB:
+assonetimer_blade_y:
 db 0Ch,0Eh,0Ch,013h,0FEh,0Fh,0F9h,06h,0F5h,0F6h,0F4h,0EFh,0F9h,0EEh,04h,00h
 db 00h
-word_CCBCC:
+FallDown_pinxr:
 db 098h,00h,098h,00h,08Dh,00h,08Dh,00h,09Dh,00h,09Dh,00h,096h,00h,099h,00h
-word_CCBDC:
+FallDown_pinxl:
 db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh,070h,0FFh,070h,0FFh
-word_CCBEC:
+FallDown_pinyt:
 db 0FEh,00h,0FEh,00h,03h,01h,03h,01h,06h,01h,01h,01h,01h,01h,01h,01h
-word_CCBFC:
+FallDown_pinyb:
 db 0F6h,0FEh,0F6h,0FEh,0F6h,0FEh,0FDh,0FEh,0FDh,0FEh,0F6h,0FEh,0F6h,0FEh,0F6h,0FEh
-word_CCC0C:
+FallDown_pinxr2:
 db 099h,00h,099h,00h,090h,00h,090h,00h,09Bh,00h,09Bh,00h,09Eh,00h,09Eh,00h
-word_CCC1C:
+FallDown_pinxl2:
 db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh
-dword_CCC2C:
+nethit:
 db 00h,00h,00h,00h
 ; Shot-block slide speeds, eight facings. blockspd is X and blockspd_y is Y, the next short.
 ; The short index is the facing doubled. An axis facing is ±4242 and 0; a diagonal is ±3000 on both.
@@ -357,7 +357,7 @@ db 092h,010h
 blockspd_y:
 db 00h,00h,0B8h,0Bh,048h,0F4h,00h,00h,06Eh,0EFh,048h,0F4h,048h,0F4h,06Eh,0EFh
 db 00h,00h,048h,0F4h,0B8h,0Bh,00h,00h,092h,010h,0B8h,0Bh
-dword_CCC4E:
+checkinglist_m2:
 db 0B8h,0Bh,0C1h,05h,0D9h,05h,09h,06h,09h,06h,09h,06h,0F1h,05h,0F1h,05h
 db 0C1h,05h
 shotsets:
@@ -374,29 +374,29 @@ crowdvol8:
 db 00h,00h,00h,00h
 crowdvol7:
 db 00h,00h,00h,00h
-dword_CCC94:
+cursndbank:
 db 00h,00h,00h,00h
-dword_CCC98:
+oneminsaid:
 db 00h,00h,00h,00h
-dword_CCC9C:
+playsuspended:
 db 00h
 dword_CCC9D:
 db 00h
 dword_CCC9E:
 db 00h,00h
-byte_CCCA0:
+cupceremony:
 db 00h
 Setplass_alist:	; alist: initial assignment by position (0Eh assgoalie, 2 assdefd, 3 asswingd, 5 asscenterd)
 db 0Eh,02h,02h,03h,05h,03h,05h
-word_CCCA8:
+restoreteams_pdsttab:
 db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
-dword_CCCB8:
+sublist_m2:
 db 0FEh,0FFh
-sublist:	; 93G sublist: word offsets into unk_CCCC8 of the substitute list per position 0-6 (SetPlList)
+sublist:	; 93G sublist: word offsets into sublist_defl of the substitute list per position 0-6 (SetPlList)
 db 00h,00h,03h,00h,014h,00h,025h,00h,057h,00h,03Eh
-dword_CCCC5:
+sublist_defl_m3:
 db 00h,070h,00h
-unk_CCCC8:
+sublist_defl:
 db 024h,025h,0FFh,0Ch,0Eh,010h,0Ch,015h,01Ah,01Eh,022h,0Dh,0Fh,011h,0Dh,016h
 db 01Bh,01Fh,023h,0FFh,0Dh,0Fh,011h,0Dh,016h,01Bh,01Fh,023h,0Ch,0Eh,010h,0Ch
 db 015h,01Ah,01Eh,022h,0FFh,00h,03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h
@@ -424,9 +424,9 @@ db 06Dh,065h,0Ah,00h
 str_ErrSaveGame:
 db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
 db 065h,0Ah,00h,00h
-byte_CCE00:
+rinkobjanim:
 db 06h
-byte_CCE01:
+rinkobjanim_b1:
 db 00h,01h,02h,01h,02h,00h,06h,03h,04h,05h,04h,05h,03h,07h,06h,07h
 db 08h,07h,08h,07h,06h,0FEh,09h,0Ah,08h,0Bh,0Ch,0Dh,0Eh,0Ch,0Dh,0Eh
 db 0Bh,06h,0Fh,010h,011h,010h,011h,0Fh,08h,012h,013h,014h,013h,012h,013h,014h
@@ -443,9 +443,9 @@ db 05Eh,05Fh,05Eh,05Fh,05Dh,05Ch,0Ah,046h,047h,048h,049h,04Ah,049h,04Bh,049h,04C
 db 046h,0Ah,061h,061h,062h,062h,061h,061h,062h,062h,063h,063h,06h,063h,063h,063h
 db 063h,063h,063h,06h,067h,067h,067h,067h,068h,068h,03h,065h,065h,065h,03h,066h
 db 066h,066h,04h,067h,067h
-dword_CCEF6:
+rinkobjdefs_m2:
 db 067h,067h
-word_CCEF8:
+rinkobjdefs:
 db 047h,00h,013h,00h,00h,00h,038h,01h,013h,00h,00h,00h,051h,00h,014h,00h
 db 07h,00h,02Eh,01h,014h,00h,07h,00h,0A8h,00h,011h,00h,0Eh,00h,0B6h,00h
 db 010h,00h,016h,00h,0E7h,00h,011h,00h,019h,00h,0F9h,00h,011h,00h,022h,00h
@@ -510,5 +510,5 @@ db 0Ah,00h,01h,01h,0EBh,00h,08h,00h,010h,01h,0EBh,00h,0Bh,00h,019h,01h
 db 0EBh,00h,06h,00h,0CFh,00h,0EFh,00h,09h,00h,0D9h,00h,0EFh,00h,07h,00h
 db 0E8h,00h,0EFh,00h,0Ah,00h,0F1h,00h,0EFh,00h,0Ah,00h,01h,01h,0EFh,00h
 db 08h,00h,010h,01h,0EFh,00h,0Bh,00h,019h,01h,0EFh,00h,04h,00h,02Dh,01h
-dword_CD2F8:
+sideobjpos:
 db 0F3h,00h,0A5h,01h,00h,00h,02Dh,01h,00h,00h,00h,00h

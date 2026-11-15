@@ -35,7 +35,7 @@ int LoadShapeByTag(char *path, char *tag)
     }
     if (s.err == 0) {
         i = s.count << 3;
-        dir = sub_8CCA8((char *)str_sfh, i, 0x20);
+        dir = AllocMemBlock((char *)str_sfh, i, 0x20);
         s.err = FileReadAt(s.handle, (void *)dir, 6, i);
     }
     if (s.err == 0) {
@@ -58,7 +58,7 @@ int LoadShapeByTag(char *path, char *tag)
         p = ((short *)s.hdr)[3];
         p *= base;
         n = p + 0x11;
-        p = sub_8CCA8((char *)str_shape, n, 0x20);
+        p = AllocMemBlock((char *)str_shape, n, 0x20);
         s.shape = p;
         if (FileReadAt(s.handle, (void *)p, pos, n) < 0) {
             FreeMemBlock(p);

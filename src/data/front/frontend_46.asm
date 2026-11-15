@@ -2,51 +2,51 @@
 bits 32
 %include "hockey.inc"
 section s_CFA4B progbits alloc noexec write align=1
-extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, unk_CDF56, unk_CDF64
-extern unk_CDF76, unk_CDF8A, unk_CE96F, unk_CEA2F, unk_CEB2F
-global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, unk_CFAD5, unk_CFB01, unk_CFB24, unk_CFB46
-global unk_CFB98, unk_CFBA4, unk_CFBB0, unk_CFBBD, unk_CFBCD, unk_CFBDA, unk_CFBE8, unk_CFCA8
-global unk_CFCB4, unk_CFCBF, unk_CFCCB, unk_CFCD9, unk_CFCE5, unk_CFCF2, unk_CFDB2, unk_CFDBD
-global unk_CFDC9, unk_CFDD6, unk_CFDE3, unk_CFDEE, unk_CFDFD, unk_CFE08, unk_CFEE8, unk_CFEF4
-global unk_CFF03, unk_CFF14, unk_CFF23, unk_CFF34, unk_CFF42, unk_CFF51, unk_D0031, unk_D0042
-global unk_D0055, unk_D0067, unk_D006E, unk_D00EE, unk_D00FE, unk_D010E, unk_D0118, unk_D0122
-global unk_D012E, unk_D0139
+extern MenuSaveDbs, MenuSaveDbsAs, EditRostersReturn, SelectRosterTeam, MenuOpenDatabase, EasnStandingsMenu, str_Standings2, str_TeamsSortedBy2
+extern str_PlayersSortedBy2, str_GoaliesSortedBy2, unk_CE96F, unk_CEA2F, unk_CEB2F
+global str_XXXKbytesOfFree2, dword_CFA4B, dbexistsmsg, nodiskspacemsg, str_ThereIsAlreadyA2, str_DoYouWantTo5, str_InsufficientDiskSpace2, str_ToSaveTheDatabases
+global str_Anaheim, str_Calgary, str_Edmonton, str_LosAngeles, str_SanJose, str_Vancouver, unk_CFBE8, str_Chicago
+global str_Dallas, str_Detroit, str_StLouis, str_Toronto, str_Winnipeg, unk_CFCF2, str_Boston, str_Buffalo
+global str_Hartford, str_Montreal, str_Ottawa, str_Pittsburgh, str_Quebec, unk_CFE08, str_Florida, str_NewJersey
+global str_NYIslanders, str_NYRangers, str_Philadelphia, str_TampaBay, str_Washington, unk_CFF51, str_SaveToGame, str_TemporarySave
+global str_LoadDatabase, str_Return2, unk_D006E, str_FreeAgents2, str_FindPlayer, str_Pacific, str_Central, str_Northeast
+global str_Atlantic, unk_D0139
 dword_CFA4B:
 db 02h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h,08Ch,00h,00h,00h
 db 023h,00h,00h,00h
-dd unk_CDF56
+dd str_Standings2
 dd EasnStandingsMenu
 db 00h,00h,00h,00h,01h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 08Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CDF64
+dd str_TeamsSortedBy2
 db 00h,00h,00h,00h
 dd unk_CE96F
 db 06h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h,08Ch,00h,00h,00h
 db 047h,00h,00h,00h
-dd unk_CDF76
+dd str_PlayersSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEA2F
 db 08h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h,08Ch,00h,00h,00h
 db 05Ah,00h,00h,00h
-dd unk_CDF8A
+dd str_GoaliesSortedBy2
 db 00h,00h,00h,00h
 dd unk_CEB2F
 db 03h,00h,00h,00h,00h,02Eh,074h,078h,074h,00h
-unk_CFAD5:
+str_ThereIsAlreadyA2:
 db 054h,068h,065h,072h,065h,020h,069h,073h,020h,061h,06Ch,072h,065h,061h,064h,079h
 db 020h,061h,020h,064h,061h,074h,061h,062h,061h,073h,065h,020h,077h,069h,074h,068h
 db 020h,074h,068h,061h,074h,020h,06Eh,061h,06Dh,065h,021h,00h
-unk_CFB01:
+str_DoYouWantTo5:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,072h
 db 065h,070h,06Ch,061h,063h,065h,020h,069h,074h,03Fh,00h
 dbexistsmsg:
-dd unk_CFAD5
-dd unk_CFB01
-unk_CFB24:
+dd str_ThereIsAlreadyA2
+dd str_DoYouWantTo5
+str_InsufficientDiskSpace2:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
 db 06Bh,020h,073h,070h,061h,063h,065h,020h,061h,076h,061h,069h,06Ch,061h,062h,06Ch
 db 065h,00h
-unk_CFB46:
+str_ToSaveTheDatabases:
 db 074h,06Fh,020h,073h,061h,076h,065h,020h,074h,068h,065h,020h,064h,061h,074h,061h
 db 062h,061h,073h,065h,073h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h,069h
 db 072h,065h,00h
@@ -55,211 +55,211 @@ db 058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,07
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,020h,020h
 db 00h
 nodiskspacemsg:
-dd unk_CFB24
-dd unk_CFB46
+dd str_InsufficientDiskSpace2
+dd str_ToSaveTheDatabases
 dd str_XXXKbytesOfFree2
 db 00h,00h
-unk_CFB98:
+str_Anaheim:
 db 041h,06Eh,061h,068h,065h,069h,06Dh,020h,02Eh,02Eh,02Eh,00h
-unk_CFBA4:
+str_Calgary:
 db 043h,061h,06Ch,067h,061h,072h,079h,020h,02Eh,02Eh,02Eh,00h
-unk_CFBB0:
+str_Edmonton:
 db 045h,064h,06Dh,06Fh,06Eh,074h,06Fh,06Eh,020h,02Eh,02Eh,02Eh,00h
-unk_CFBBD:
+str_LosAngeles:
 db 04Ch,06Fh,073h,020h,041h,06Eh,067h,065h,06Ch,065h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_CFBCD:
+str_SanJose:
 db 053h,061h,06Eh,020h,04Ah,06Fh,073h,065h,020h,02Eh,02Eh,02Eh,00h
-unk_CFBDA:
+str_Vancouver:
 db 056h,061h,06Eh,063h,06Fh,075h,076h,065h,072h,020h,02Eh,02Eh,02Eh,00h
 unk_CFBE8:
 db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
-dd unk_CFB98
+dd str_Anaheim
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 066h,00h,00h,00h,023h,00h,00h,00h
-dd unk_CFBA4
+dd str_Calgary
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 066h,00h,00h,00h,035h,00h,00h,00h
-dd unk_CFBB0
+dd str_Edmonton
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 066h,00h,00h,00h,047h,00h,00h,00h
-dd unk_CFBBD
+dd str_LosAngeles
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 066h,00h,00h,00h,059h,00h,00h,00h
-dd unk_CFBCD
+dd str_SanJose
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 066h,00h,00h,00h,06Ch,00h,00h,00h
-dd unk_CFBDA
+dd str_Vancouver
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-unk_CFCA8:
+str_Chicago:
 db 043h,068h,069h,063h,061h,067h,06Fh,020h,02Eh,02Eh,02Eh,00h
-unk_CFCB4:
+str_Dallas:
 db 044h,061h,06Ch,06Ch,061h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_CFCBF:
+str_Detroit:
 db 044h,065h,074h,072h,06Fh,069h,074h,020h,02Eh,02Eh,02Eh,00h
-unk_CFCCB:
+str_StLouis:
 db 053h,074h,02Eh,020h,04Ch,06Fh,075h,069h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_CFCD9:
+str_Toronto:
 db 054h,06Fh,072h,06Fh,06Eh,074h,06Fh,020h,02Eh,02Eh,02Eh,00h
-unk_CFCE5:
+str_Winnipeg:
 db 057h,069h,06Eh,06Eh,069h,070h,065h,067h,020h,02Eh,02Eh,02Eh,00h
 unk_CFCF2:
 db 00h,00h,00h,00h,00h,00h,00h,00h,053h,00h,00h,00h,011h,00h,00h,00h
-dd unk_CFCA8
+dd str_Chicago
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 053h,00h,00h,00h,023h,00h,00h,00h
-dd unk_CFCB4
+dd str_Dallas
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 053h,00h,00h,00h,035h,00h,00h,00h
-dd unk_CFCBF
+dd str_Detroit
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 053h,00h,00h,00h,047h,00h,00h,00h
-dd unk_CFCCB
+dd str_StLouis
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 053h,00h,00h,00h,059h,00h,00h,00h
-dd unk_CFCD9
+dd str_Toronto
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 053h,00h,00h,00h,06Ch,00h,00h,00h
-dd unk_CFCE5
+dd str_Winnipeg
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CFDB2:
+str_Boston:
 db 042h,06Fh,073h,074h,06Fh,06Eh,020h,02Eh,02Eh,02Eh,00h
-unk_CFDBD:
+str_Buffalo:
 db 042h,075h,066h,066h,061h,06Ch,06Fh,020h,02Eh,02Eh,02Eh,00h
-unk_CFDC9:
+str_Hartford:
 db 048h,061h,072h,074h,066h,06Fh,072h,064h,020h,02Eh,02Eh,02Eh,00h
-unk_CFDD6:
+str_Montreal:
 db 04Dh,06Fh,06Eh,074h,072h,065h,061h,06Ch,020h,02Eh,02Eh,02Eh,00h
-unk_CFDE3:
+str_Ottawa:
 db 04Fh,074h,074h,061h,077h,061h,020h,02Eh,02Eh,02Eh,00h
-unk_CFDEE:
+str_Pittsburgh:
 db 050h,069h,074h,074h,073h,062h,075h,072h,067h,068h,020h,02Eh,02Eh,02Eh,00h
-unk_CFDFD:
+str_Quebec:
 db 051h,075h,065h,062h,065h,063h,020h,02Eh,02Eh,02Eh,00h
 unk_CFE08:
 db 00h,00h,00h,00h,00h,00h,00h,00h,05Ch,00h,00h,00h,011h,00h,00h,00h
-dd unk_CFDB2
+dd str_Boston
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 05Ch,00h,00h,00h,023h,00h,00h,00h
-dd unk_CFDBD
+dd str_Buffalo
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 05Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CFDC9
+dd str_Hartford
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 05Ch,00h,00h,00h,047h,00h,00h,00h
-dd unk_CFDD6
+dd str_Montreal
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 05Ch,00h,00h,00h,059h,00h,00h,00h
-dd unk_CFDE3
+dd str_Ottawa
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 05Ch,00h,00h,00h,06Bh,00h,00h,00h
-dd unk_CFDEE
+dd str_Pittsburgh
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
 db 05Ch,00h,00h,00h,07Eh,00h,00h,00h
-dd unk_CFDFD
+dd str_Quebec
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CFEE8:
+str_Florida:
 db 046h,06Ch,06Fh,072h,069h,064h,061h,020h,02Eh,02Eh,02Eh,00h
-unk_CFEF4:
+str_NewJersey:
 db 04Eh,065h,077h,020h,04Ah,065h,072h,073h,065h,079h,020h,02Eh,02Eh,02Eh,00h
-unk_CFF03:
+str_NYIslanders:
 db 04Eh,059h,020h,049h,073h,06Ch,061h,06Eh,064h,065h,072h,073h,020h,02Eh,02Eh,02Eh
 db 00h
-unk_CFF14:
+str_NYRangers:
 db 04Eh,059h,020h,052h,061h,06Eh,067h,065h,072h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_CFF23:
+str_Philadelphia:
 db 050h,068h,069h,06Ch,061h,064h,065h,06Ch,070h,068h,069h,061h,020h,02Eh,02Eh,02Eh
 db 00h
-unk_CFF34:
+str_TampaBay:
 db 054h,061h,06Dh,070h,061h,020h,042h,061h,079h,020h,02Eh,02Eh,02Eh,00h
-unk_CFF42:
+str_Washington:
 db 057h,061h,073h,068h,069h,06Eh,067h,074h,06Fh,06Eh,020h,02Eh,02Eh,02Eh,00h
 unk_CFF51:
 db 00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h,011h,00h,00h,00h
-dd unk_CFEE8
+dd str_Florida
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 06Ch,00h,00h,00h,023h,00h,00h,00h
-dd unk_CFEF4
+dd str_NewJersey
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 06Ch,00h,00h,00h,035h,00h,00h,00h
-dd unk_CFF03
+dd str_NYIslanders
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 06Ch,00h,00h,00h,047h,00h,00h,00h
-dd unk_CFF14
+dd str_NYRangers
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 048h,00h,00h,00h,06Ch,00h,00h,00h,059h,00h,00h,00h
-dd unk_CFF23
+dd str_Philadelphia
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 06Ch,00h,00h,00h,06Bh,00h,00h,00h
-dd unk_CFF34
+dd str_TampaBay
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,06Ch,00h,00h,00h
 db 06Ch,00h,00h,00h,07Eh,00h,00h,00h
-dd unk_CFF42
+dd str_Washington
 dd SelectRosterTeam
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_D0031:
+str_SaveToGame:
 db 053h,061h,076h,065h,020h,074h,06Fh,020h,047h,061h,06Dh,065h,020h,02Eh,02Eh,02Eh
 db 00h
-unk_D0042:
+str_TemporarySave:
 db 054h,065h,06Dh,070h,06Fh,072h,061h,072h,079h,020h,053h,061h,076h,065h,020h,02Eh
 db 02Eh,02Eh,00h
-unk_D0055:
+str_LoadDatabase:
 db 04Ch,06Fh,061h,064h,020h,044h,061h,074h,061h,062h,061h,073h,065h,020h,02Eh,02Eh
 db 02Eh,00h
-unk_D0067:
+str_Return2:
 db 052h,065h,074h,075h,072h,06Eh,00h
 unk_D006E:
 db 00h,00h,00h,00h,00h,00h,00h,00h,080h,00h,00h,00h,011h,00h,00h,00h
-dd unk_D0031
+dd str_SaveToGame
 dd MenuSaveDbs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 080h,00h,00h,00h,023h,00h,00h,00h
-dd unk_D0042
+dd str_TemporarySave
 dd MenuSaveDbsAs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 080h,00h,00h,00h,035h,00h,00h,00h
-dd unk_D0055
+dd str_LoadDatabase
 dd MenuOpenDatabase
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
 db 080h,00h,00h,00h,048h,00h,00h,00h
-dd unk_D0067
+dd str_Return2
 dd EditRostersReturn
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_D00EE:
+str_FreeAgents2:
 db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,073h,020h,02Eh,02Eh,02Eh,00h
-unk_D00FE:
+str_FindPlayer:
 db 046h,069h,06Eh,064h,020h,050h,06Ch,061h,079h,065h,072h,020h,02Eh,02Eh,02Eh,00h
-unk_D010E:
+str_Pacific:
 db 050h,061h,063h,069h,066h,069h,063h,020h,03h,00h
-unk_D0118:
+str_Central:
 db 043h,065h,06Eh,074h,072h,061h,06Ch,020h,03h,00h
-unk_D0122:
+str_Northeast:
 db 04Eh,06Fh,072h,074h,068h,065h,061h,073h,074h,020h,03h,00h
-unk_D012E:
+str_Atlantic:
 db 041h,074h,06Ch,061h,06Eh,074h,069h,063h,020h,03h,00h
 unk_D0139:
 db 00h,00h,00h,00h,00h,00h,00h,00h,066h,00h,00h,00h,011h,00h,00h,00h
-dd unk_D010E
+dd str_Pacific
 db 00h,00h,00h,00h

@@ -10,16 +10,16 @@ global str_ea2, str_Pstatbar, str_Pst2, str_FreeAgent, str_fmtSS, str_fmtD, str_
 global str_LeftWing, str_RightWing, str_Goalie, str_RatingUnitsAvailable3d, str_Temp, str_ErrDiskFree, str_3dKbytesOfFree, str_NotEnoughSpaceTo
 global str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_EnterAPositionFor, str_LCRD, str_EnterAJerseyNumber, str_NotEnoughSpaceFA, str_InTheFreeAgent
 global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies, str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList
-global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, dword_C2CAC, dword_C2CB0, dword_C2CB4
-global dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-global dword_C2CD8, dword_C2CDC, dword_C2CF0, qword_C2CE0, qword_C2CE8, unk_C2974, unk_C2977, unk_C297B
-global unk_C297F, unk_C2983, unk_C2987, unk_C298C, unk_C2990, unk_C2994, unk_C299A, unk_C29A0
-global unk_C29A7, unk_C29AD, unk_C29B5, unk_C29BC, unk_C29C7, unk_C29D0, unk_C29DE, unk_C29E7
-global unk_C29EF, unk_C2A03, unk_C2A17, unk_C2A26, unk_C2A30, unk_C2A40, unk_C2A49, unk_C2A4E
-global unk_C2A53, unk_C2A59, unk_C2A5C, unk_C2A5F, unk_C2A62, unk_C2A65, unk_C2A68, unk_C2A6E
-global unk_C2A79, unk_C2A84, unk_C2A90, unk_C2A9B, unk_C2AA7, unk_C2AB4, unk_C2AC4, unk_C2ACF
-global unk_C2AD8, unk_C2AE0, unk_C2AE8, unk_C2AF4, unk_C2AFD, unk_C2B04, unk_C2B0B, word_C2D0E
-global word_C2D10
+global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, fp_1000, fp_84, fp_300
+global fp_390, fp_200, fp_100, fp_m50, fp_500, fp_90, fp_10, fp_70
+global fp_30, fp_58, fp_347, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
+global str_Pt4, str_PIM7, str_PlusMinus6, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
+global str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3, str_StickHandling2, str_Accuracy2, str_Passing3
+global str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2, str_Faceoffs2, str_Min6, str_GA6
+global str_GAA5, str_spW3, str_SpL6, str_SpT3, str_SO3, str_EN3, str_SA5, str_GloveHand3
+global str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2, str_PenaltyKilling3, str_PowerPlay3, str_Shooting2
+global str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2, str_Cancel6, str_Create, str_X, str_L9
+global str_R5
 str_Prez2:
 db 070h,072h,065h,07Ah,032h,00h
 str_Pal:
@@ -48,107 +48,107 @@ str_AreYouSureYou:
 db 041h,072h,065h,020h,079h,06Fh,075h,020h,073h,075h,072h,065h,020h,079h,06Fh,075h
 db 020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,065h,078h,069h,074h,03Fh,00h,00h
 db 00h
-unk_C2974:
+str_GP9:
 db 047h,050h,00h
-unk_C2977:
+str_spG2:
 db 020h,020h,047h,00h
-unk_C297B:
+str_spA2:
 db 020h,020h,041h,00h
-unk_C297F:
+str_Pt4:
 db 020h,050h,074h,00h
-unk_C2983:
+str_PIM7:
 db 050h,049h,04Dh,00h
-unk_C2987:
+str_PlusMinus6:
 db 020h,02Bh,02Fh,02Dh,00h
-unk_C298C:
+str_PPG4:
 db 050h,050h,047h,00h
-unk_C2990:
+str_SHG4:
 db 053h,048h,047h,00h
-unk_C2994:
+str_Shots6:
 db 053h,068h,06Fh,074h,073h,00h
-unk_C299A:
+str_Pct8:
 db 020h,020h,050h,063h,074h,00h
-unk_C29A0:
+str_Shoots3:
 db 053h,068h,06Fh,06Fh,074h,073h,00h
-unk_C29A7:
+str_Speed3:
 db 053h,070h,065h,065h,064h,00h
-unk_C29AD:
+str_Agility3:
 db 041h,067h,069h,06Ch,069h,074h,079h,00h
-unk_C29B5:
+str_Weight3:
 db 057h,065h,069h,067h,068h,074h,00h
-unk_C29BC:
+str_ShotPower2:
 db 053h,068h,06Fh,074h,020h,050h,06Fh,077h,065h,072h,00h
-unk_C29C7:
+str_Checking3:
 db 043h,068h,065h,063h,06Bh,069h,06Eh,067h,00h
-unk_C29D0:
+str_StickHandling2:
 db 053h,074h,069h,063h,06Bh,048h,061h,06Eh,064h,06Ch,069h,06Eh,067h,00h
-unk_C29DE:
+str_Accuracy2:
 db 041h,063h,063h,075h,072h,061h,063h,079h,00h
-unk_C29E7:
+str_Passing3:
 db 050h,061h,073h,073h,069h,06Eh,067h,00h
-unk_C29EF:
+str_OffensiveAwareness3:
 db 04Fh,066h,066h,065h,06Eh,073h,069h,076h,065h,020h,041h,077h,061h,072h,065h,06Eh
 db 065h,073h,073h,00h
-unk_C2A03:
+str_DefensiveAwareness3:
 db 044h,065h,066h,065h,06Eh,073h,069h,076h,065h,020h,041h,077h,061h,072h,065h,06Eh
 db 065h,073h,073h,00h
-unk_C2A17:
+str_Aggressiveness2:
 db 041h,067h,067h,072h,065h,073h,073h,069h,076h,065h,06Eh,065h,073h,073h,00h
-unk_C2A26:
+str_Endurance2:
 db 045h,06Eh,064h,075h,072h,061h,06Eh,063h,065h,00h
-unk_C2A30:
+str_ShootPassBias2:
 db 053h,068h,06Fh,06Fh,074h,02Fh,050h,061h,073h,073h,020h,042h,069h,061h,073h,00h
-unk_C2A40:
+str_Faceoffs2:
 db 046h,061h,063h,065h,06Fh,066h,066h,073h,00h
-unk_C2A49:
+str_Min6:
 db 020h,04Dh,069h,06Eh,00h
-unk_C2A4E:
+str_GA6:
 db 020h,020h,047h,041h,00h
-unk_C2A53:
+str_GAA5:
 db 020h,020h,047h,041h,041h,00h
-unk_C2A59:
+str_spW3:
 db 020h,057h,00h
-unk_C2A5C:
+str_SpL6:
 db 020h,04Ch,00h
-unk_C2A5F:
+str_SpT3:
 db 020h,054h,00h
-unk_C2A62:
+str_SO3:
 db 053h,04Fh,00h
-unk_C2A65:
+str_EN3:
 db 045h,04Eh,00h
-unk_C2A68:
+str_SA5:
 db 020h,020h,020h,053h,041h,00h
-unk_C2A6E:
+str_GloveHand3:
 db 047h,06Ch,06Fh,076h,065h,020h,048h,061h,06Eh,064h,00h
-unk_C2A79:
+str_GloveLeft2:
 db 047h,06Ch,06Fh,076h,065h,020h,04Ch,065h,066h,074h,00h
-unk_C2A84:
+str_GloveRight2:
 db 047h,06Ch,06Fh,076h,065h,020h,052h,069h,067h,068h,074h,00h
-unk_C2A90:
+str_StickLeft2:
 db 053h,074h,069h,063h,06Bh,020h,04Ch,065h,066h,074h,00h
-unk_C2A9B:
+str_StickRight2:
 db 053h,074h,069h,063h,06Bh,020h,052h,069h,067h,068h,074h,00h
-unk_C2AA7:
+str_PuckControl2:
 db 050h,075h,063h,06Bh,020h,043h,06Fh,06Eh,074h,072h,06Fh,06Ch,00h
-unk_C2AB4:
+str_PenaltyKilling3:
 db 050h,065h,06Eh,061h,06Ch,074h,079h,020h,04Bh,069h,06Ch,06Ch,069h,06Eh,067h,00h
-unk_C2AC4:
+str_PowerPlay3:
 db 050h,06Fh,077h,065h,072h,020h,050h,06Ch,061h,079h,00h
-unk_C2ACF:
+str_Shooting2:
 db 053h,068h,06Fh,06Fh,074h,069h,06Eh,067h,00h
-unk_C2AD8:
+str_Skating2:
 db 053h,06Bh,061h,074h,069h,06Eh,067h,00h
-unk_C2AE0:
+str_Defence2:
 db 044h,065h,066h,065h,06Eh,063h,065h,00h
-unk_C2AE8:
+str_Goaltending2:
 db 047h,06Fh,061h,06Ch,074h,065h,06Eh,064h,069h,06Eh,067h,00h
-unk_C2AF4:
+str_OverAll2:
 db 04Fh,076h,065h,072h,020h,061h,06Ch,06Ch,00h
-unk_C2AFD:
+str_Cancel6:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
-unk_C2B04:
+str_Create:
 db 043h,072h,065h,061h,074h,065h,00h
-unk_C2B0B:
+str_X:
 db 058h,00h,00h,00h,00h
 str_ErrorsFoundInDatabases:
 db 045h,072h,072h,06Fh,072h,073h,020h,066h,06Fh,075h,06Eh,064h,020h,069h,06Eh,020h
@@ -193,37 +193,37 @@ str_NotEnoughDefence:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,064h,065h,066h,065h,06Eh,063h,065h,020h,06Fh,06Eh,020h
 db 00h,00h
-dword_C2CAC:
+fp_1000:
 db 00h,00h,07Ah,044h
-dword_C2CB0:
+fp_84:
 db 00h,00h,0A8h,042h
-dword_C2CB4:
+fp_300:
 db 00h,00h,096h,043h
-dword_C2CB8:
+fp_390:
 db 00h,00h,0C3h,043h
-dword_C2CBC:
+fp_200:
 db 00h,00h,048h,043h
-dword_C2CC0:
+fp_100:
 db 00h,00h,0C8h,042h
-dword_C2CC4:
+fp_m50:
 db 00h,00h,048h,0C2h
-dword_C2CC8:
+fp_500:
 db 00h,00h,0FAh,043h
-dword_C2CCC:
+fp_90:
 db 00h,00h,0B4h,042h
-dword_C2CD0:
+fp_10:
 db 00h,00h,020h,041h
-dword_C2CD4:
+fp_70:
 db 00h,00h,08Ch,042h
-dword_C2CD8:
+fp_30:
 db 00h,00h,0F0h,041h
-dword_C2CDC:
+fp_58:
 db 00h,00h,068h,042h
 qword_C2CE0:
 db 0CDh,0CCh,0CCh,0CCh,0CCh,0CCh,0ECh,03Fh
 qword_C2CE8:
 db 09Ah,099h,099h,099h,099h,099h,0B9h,03Fh
-dword_C2CF0:
+fp_347:
 db 00h,080h,0ADh,043h
 str_Shoots:
 db 053h,068h,06Fh,06Fh,074h,073h,00h
@@ -233,9 +233,9 @@ str_spR:
 db 020h,020h,052h,00h
 str_GloveHand:
 db 047h,06Ch,06Fh,076h,065h,020h,048h,061h,06Eh,064h,00h
-word_C2D0E:
+str_L9:
 db 04Ch,00h
-word_C2D10:
+str_R5:
 db 052h,00h
 str_EnterANewRating:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,072h,061h,074h,069h

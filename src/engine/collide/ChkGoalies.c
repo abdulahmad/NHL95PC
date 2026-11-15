@@ -19,8 +19,8 @@ void ChkGoalies(void)
             if (*puckc >= 0 && !((*puckc < 6) ^ (i == 0))) {
                 if (gmode & 8) {
                     ((unsigned char *)&t->tmgoalie)[1] = 0xFF;
-                    *(unsigned char *)((int (*)[3])off_CD498)[i][(short)(t->tmgoalie & 0xF)] = 2;
-                    *(unsigned char *)((int (*)[3])off_CD4A0)[i][0] = 1;
+                    *(unsigned char *)((int (*)[3])goaliemenuflags)[i][(short)(t->tmgoalie & 0xF)] = 2;
+                    *(unsigned char *)((int (*)[3])goaliemenuflags_e02)[i][0] = 1;
                     setpersonel(t);
                 } else if (cont1team != i + 1 && cont2team != i + 1) {
                     CPgoalie(t, o, *pucky);

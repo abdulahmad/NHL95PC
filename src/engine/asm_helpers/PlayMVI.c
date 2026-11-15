@@ -64,7 +64,7 @@ int __cdecl GetTicks(void);                              /* timer library (stack
    'MVIf' decodes a frame (not the last) and draws it unless it is late, the first one also starting the song
    (when music is on) and the clock, then waits for the frame's time; 'MVIe' counts the end marks (three
    stop); anything else stops. A key or click stops too. Afterwards, with music on, wait on the song's slot
-   (sub_8FC8A; WaitClickTimeout cuts it short) and set the song to 50h. Result: the key that stopped it, -1 at
+   (SndQuery; WaitClickTimeout cuts it short) and set the song to 50h. Result: the key that stopped it, -1 at
    the end of the file, else 0. */
 int PlayMVI(char *path, int x, int y)
 {
@@ -109,7 +109,7 @@ int PlayMVI(char *path, int x, int y)
                 if (n > 1) {
                     due += delay;
                     frame = sub_1B002(dec, chunk);
-                    if (GetTicks() - t0 < due) sub_910E0(frame, x, y);
+                    if (GetTicks() - t0 < due) DrawArtOpaque(frame, x, y);
                     if (!ends && n == nframes) {
                         if (musicon && songdata) sub_8FB8E(songdata, musichandle, 3, 0x7F);
                         t0 = GetTicks();
@@ -120,8 +120,8 @@ int PlayMVI(char *path, int x, int y)
             case 0x4D564968:
                 sub_1AD16(dec, chunk);
                 nframes = n = sub_1B092(dec);
-                sub_90D20(x, y, 0xE4, 0xB0, 0);
-                sub_B4B88(sub_1B0C9(dec), sub_1B0D7(dec), (unsigned char *)sub_1B0E5(dec));
+                FillRect(x, y, 0xE4, 0xB0, 0);
+                VgaSetPalette(sub_1B0C9(dec), sub_1B0D7(dec), (unsigned char *)sub_1B0E5(dec));
                 delay = 100 / sub_1B0BB(dec);
                 break;
             case 0x4D564965:
@@ -145,7 +145,7 @@ int PlayMVI(char *path, int x, int y)
     sub_1ACF1(dec);
     sub_1B18B(stream);
     if (musicon && songdata) {
-        while (!key && !sub_8FC8A(musicslot, 3)) key = WaitClickTimeout(10);
+        while (!key && !SndQuery(musicslot, 3)) key = WaitClickTimeout(10);
         sub_8FCDF(musichandle, 3, 0x50);
     }
     return key;

@@ -3,13 +3,13 @@ bits 32
 %include "hockey.inc"
 section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
-global byte_DC267, byte_DC268, dword_DBC7C, dword_DBCE0, s1font, schedgameidx, pointerspr, dword_DC23E
+global byte_DC267, byte_DC268, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr, dword_DC23E
 global linesprites, hudhundstep, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
-global clockdigits, clockcolon, cupseries, dword_DC33C, statsteamorder, dword_DC6A8, sfpal2, sfpal1
-global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, dword_DC738, statsgoalieplr, statsnumskaters
+global clockdigits, clockcolon, cupseries, titlesample, statsteamorder, statsmenuresult, sfpal2, sfpal1
+global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, leaguestatsmode, statsgoalieplr, statsnumskaters
 global statsskaterplr, playofftree, hmteamrec, unk_DBD1C, awteamrec
-global hmlinetab, unk_DC240, unk_DC252, hmlineind, awlineind, unk_DC340, word_DC242
-global word_DC244, word_DC248, word_DC24E
+global hmlinetab, hmglstats, awglstats, hmlineind, awlineind, statsscreenpal, hmglstats_w2
+global hmglstats_w4, hmglstats_w8, hmglstats_w14
 awroster:
 resb 5
 byte_DB7F1:
@@ -17,9 +17,9 @@ resb 1087
 hmteamrec:
 resb 5
 resb 71
-dword_DBC7C:
+hmteamrec_skaters:
 resb 100
-dword_DBCE0:
+hmteamrec_goalies:
 resb 12
 resb 48
 unk_DBD1C:
@@ -43,17 +43,17 @@ pointerspr:
 resb 6
 dword_DC23E:
 resb 2
-unk_DC240:
+hmglstats:
 resb 2
-word_DC242:
+hmglstats_w2:
 resb 2
-word_DC244:
+hmglstats_w4:
 resb 4
-word_DC248:
+hmglstats_w8:
 resb 6
-word_DC24E:
+hmglstats_w14:
 resb 4
-unk_DC252:
+awglstats:
 resb 18
 byte_DC264:
 resb 1
@@ -91,13 +91,13 @@ clockcolon:
 resb 4
 cupseries:
 resb 4
-dword_DC33C:
+titlesample:
 resb 4
-unk_DC340:
+statsscreenpal:
 resb 768
 statsteamorder:
 resb 104
-dword_DC6A8:
+statsmenuresult:
 resb 4
 sfpal2:
 resb 4
@@ -113,7 +113,7 @@ statsgoalieorder:
 resb 20
 dword_DC734:
 resb 4
-dword_DC738:
+leaguestatsmode:
 resb 4
 statsgoalieplr:
 resb 20

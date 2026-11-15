@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* the joystick library's pad read (hand asm) does not preserve ebx, ecx and edx */
-#pragma aux sub_B3464 modify [ebx ecx edx];
+#pragma aux ReadJoyRaw modify [ebx ecx edx];
 
 /* AnyInputPressed: 1 when a key is pressed, a joystick button (30h on either pad, when pads are available:
  ctlavailmask bits 1 2) or a mouse button (ctlavailmask bit 0); else 0. */
@@ -13,7 +13,7 @@ int AnyInputPressed(void)
 
     r = PollKey();
     if (!r && ((ctlavailmask & 2) || (ctlavailmask & 4))) {
-        k = sub_B3464();
+        k = ReadJoyRaw();
         if ((k & 0x30) || ((k >> 8) & 0x30)) r = 1;
     }
     if (!r && (ctlavailmask & 1)) {

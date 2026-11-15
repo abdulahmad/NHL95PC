@@ -14,7 +14,7 @@ typedef struct { char c[17]; } ArtHdr17;
 int TonightsGameScreen(int home, int away);
 int sub_8F98F(char *path);
 void sub_8FB8E(int song, int handle, int a, int b);
-void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than sub_91370) */
+void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
 
 /* TonightsGameScreen (2ABDF, PC only): tonight's game. Copy the two teams' crests (CTLOGO) into LOGOHOME and
    LOGOAWAY blocks, load the CTBKGD background and palette, the CTTITLE1 gadget art and the INDUS030 font, read
@@ -56,47 +56,47 @@ int TonightsGameScreen(int home, int away)
     ClearInputQueue();
     err = 0;
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     MakePath(path, fileoncd[0x59] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctlogo, 0);
-    logobank = sub_8E83C(path, 0);
-    crest = sub_B30B4(logobank, (char *)crestnames[HomeTeam]);
+    logobank = LoadBank(path, 0);
+    crest = FindShape(logobank, (char *)crestnames[HomeTeam]);
     n = *(short *)(crest + 4) * *(short *)(crest + 6) + 0x11;
-    logos[0] = sub_8CCA8((char *)str_Logohome, n, 0x20);
+    logos[0] = AllocMemBlock((char *)str_Logohome, n, 0x20);
     *(ArtHdr17 *)logos[0] = *(ArtHdr17 *)crest;
-    sub_903F0(crest, 0, 0);
-    sub_91400(logos[0], 0, 0);
-    crest = sub_B30B4(logobank, (char *)crestnames[VisTeam]);
+    PutBlock(crest, 0, 0);
+    GrabBlock(logos[0], 0, 0);
+    crest = FindShape(logobank, (char *)crestnames[VisTeam]);
     n = *(short *)(crest + 4) * *(short *)(crest + 6) + 0x11;
-    logos[1] = sub_8CCA8((char *)str_Logoaway, n, 0x20);
+    logos[1] = AllocMemBlock((char *)str_Logoaway, n, 0x20);
     *(ArtHdr17 *)logos[1] = *(ArtHdr17 *)crest;
-    sub_903F0(crest, 0, 0);
-    sub_91400(logos[1], 0, 0);
+    PutBlock(crest, 0, 0);
+    GrabBlock(logos[1], 0, 0);
     FreeMemBlock(logobank);
     MakePath(path, fileoncd[0x58] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctbkgd, 0);
-    bkbank = sub_8E83C(path, 0);
-    bkgd = sub_B30B4(bkbank, (char *)str_Bkgd4);
-    pal = (unsigned char *)sub_B30B4(bkbank, (char *)str_Pal12) + 0x10;
+    bkbank = LoadBank(path, 0);
+    bkgd = FindShape(bkbank, (char *)str_Bkgd4);
+    pal = (unsigned char *)FindShape(bkbank, (char *)str_Pal12) + 0x10;
     MakePath(path, fileoncd[0x5A] == 1 ? (char *)cddriveptr : 0, (char *)str_Cttitle1, 0);
-    titlebank = sub_8E83C(path, 0);
-    gad[0] = sub_B30B4(titlebank, (char *)str_Def);
-    gad[1] = sub_B30B4(titlebank, (char *)str_Fowa);
-    gad[7] = sub_B30B4(titlebank, (char *)str_Scra);
-    gad[9] = sub_B30B4(titlebank, (char *)str_Tlu);
-    gad[10] = sub_B30B4(titlebank, (char *)str_Top);
-    sub_8E9E8(state);
+    titlebank = LoadBank(path, 0);
+    gad[0] = FindShape(titlebank, (char *)str_Def);
+    gad[1] = FindShape(titlebank, (char *)str_Fowa);
+    gad[7] = FindShape(titlebank, (char *)str_Scra);
+    gad[9] = FindShape(titlebank, (char *)str_Tlu);
+    gad[10] = FindShape(titlebank, (char *)str_Top);
+    TextSaveState(state);
     MakePath(name, fileoncd[0x21A] == 1 ? (char *)cddriveptr : 0, (char *)str_Indus030, (char *)str_VFN);
     font = sub_8E8A0(name, 0x20);
-    sub_8EA18(font);
+    TextSetFont(font);
     SetTextColors(0x40, 0);
     if (!err) {
         MakePath(name, (char *)&curleague, (char *)leaguedbnames[0], (char *)str_extDB);
         err = FileOpenRead(name, &fh);
     }
     if (!err) {
-        gipk = (char *)sub_8CCA8((char *)str_GIPK, 0xB60, 0x20);
+        gipk = (char *)AllocMemBlock((char *)str_GIPK, 0xB60, 0x20);
         for (n = 0; n < 2 && !err; n++) {
             for (i = 0; i < 0x1C && !err; i++) {
-                k = ((int (*)[0xBA])dword_DBC7C)[n][i];
+                k = ((int (*)[0xBA])hmteamrec_skaters)[n][i];
                 if (k != -1) err = ReadKeyRec(fh, gipk + (n * 0x1C + i) * 0x34, k);
             }
         }
@@ -116,20 +116,20 @@ int TonightsGameScreen(int home, int away)
 
         sub_B4BA8();
         if (side) {
-            sub_B4BC4(0x80, 0x280, 0x8C, 0x1E0);
-            sub_9061C(bkgd);
-            sub_B4BC4(0, 0x80, 0, 0x8C);
-            sub_9061C(bkgd);
-            sub_B4BC4(0, 0x80, 0, 0x1E0);
+            SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
+            DrawBitmap(bkgd);
+            SetClipWindow(0, 0x80, 0, 0x8C);
+            DrawBitmap(bkgd);
+            SetClipWindow(0, 0x80, 0, 0x1E0);
         } else {
-            sub_B4BC4(0, 0x280, 0, 0x1E0);
-            sub_9061C(bkgd);
+            SetClipWindow(0, 0x280, 0, 0x1E0);
+            DrawBitmap(bkgd);
         }
         DrawGadgetByType(8, 0, (int)pal, gad, 0, (int)&out);
-        sub_B4BC4(0, 0x280, 0, 0x1E0);
+        SetClipWindow(0, 0x280, 0, 0x1E0);
         sub_913D0(logos[side], 0x3D, 0x50);
         SetTextColors(0x40, 0);
-        sub_B4BC4(0, 0x280, 0, 0x154);
+        SetClipWindow(0, 0x280, 0, 0x154);
         y = byte_D42C3 + 0xA6;
         for (n = 0; n < 4 && !err; n++) {
             for (i = 0; i < 3 && !err; i++) {
@@ -150,12 +150,12 @@ int TonightsGameScreen(int home, int away)
         key = WaitClickTimeout(0x3E8);
         if (key < 2) {
             sub_B4BA8();
-            sub_B4BC4(0x80, 0x280, 0x8C, 0x1E0);
-            sub_9061C(bkgd);
-            sub_B4BC4(0, 0x80, 0x8C, 0x1E0);
+            SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
+            DrawBitmap(bkgd);
+            SetClipWindow(0, 0x80, 0x8C, 0x1E0);
             DrawGadgetByType(0x10, 0, (int)pal, gad, 0, (int)&out);
             sub_913D0(logos[side], 0x3D, 0x50);
-            sub_B4BC4(0, 0x280, 0, 0x1E0);
+            SetClipWindow(0, 0x280, 0, 0x1E0);
             y = byte_D42C3 + 0xA6;
             for (n = 0; n < 3 && !err; n++) {
                 for (i = 0; i < 2 && !err; i++) {
@@ -176,12 +176,12 @@ int TonightsGameScreen(int home, int away)
         }
         if (key < 2) {
             sub_B4BA8();
-            sub_B4BC4(0x80, 0x280, 0x8C, 0x1E0);
-            sub_9061C(bkgd);
-            sub_B4BC4(0, 0x80, 0x8C, 0x1E0);
+            SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
+            DrawBitmap(bkgd);
+            SetClipWindow(0, 0x80, 0x8C, 0x1E0);
             DrawGadgetByType(4, 0, (int)pal, gad, 0, (int)&out);
             sub_913D0(logos[side], 0x3D, 0x50);
-            sub_B4BC4(0, 0x280, 0, 0x1E0);
+            SetClipWindow(0, 0x280, 0, 0x1E0);
             y = byte_D42C3 + 0x7E;
             for (n = 0; n < 8 && !err; n++) {
                 p = linetab[side][n + 0x28];
@@ -206,14 +206,14 @@ int TonightsGameScreen(int home, int away)
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
     sub_B4BA8();
-    sub_B392C(0);
+    ClearScreen(0);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
     if (key < 3) ShowLoadingScreen();
-    sub_8EA00(state);
+    TextRestoreState(state);
     FreeMemBlock(font);
     FreeMemBlock(titlebank);
     FreeMemBlock(bkbank);

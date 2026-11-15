@@ -14,16 +14,16 @@ void InitFileLocations(void)
     int i;
     int r;
 
-    cfg = fopen((char *)str_NhlCfg, (char *)unk_C3B0C);
+    cfg = fopen((char *)str_NhlCfg, (char *)str_ModeR);
     if (!cfg) FatalError((char *)str_CantOpenNhlCfg2);
     fgets(line, 0x10, cfg);
     fgets(line, 0x10, cfg);
     cddrivestr = line[0];
     line[1] = 0;
     strcat(line, (char *)str_ALLFILESTXT);
-    fa = fopen(line, (char *)unk_C3B0C);
+    fa = fopen(line, (char *)str_ModeR);
     if (!fa) {
-        fa = fopen((char *)str_ALLFILESTXT2, (char *)unk_C3B0C);
+        fa = fopen((char *)str_ALLFILESTXT2, (char *)str_ModeR);
         if (!fa) {
             fclose(cfg);
             FatalError((char *)str_CouldNotOpenALLFILES);
@@ -34,14 +34,14 @@ void InitFileLocations(void)
     for (;;) {
         if (i >= 0x225 || r == -1) break;
         fileoncd[i] = 1;
-        r = fscanf(fa, (char *)asc_C3B67, names[i]);
+        r = fscanf(fa, (char *)str_S9, names[i]);
         i++;
     }
     fclose(fa);
     r = 0;
     for (;;) {
         if (r == -1) break;
-        r = fscanf(cfg, (char *)asc_C3B67, line);
+        r = fscanf(cfg, (char *)str_S9, line);
         i = 0;
         for (;;) {
             if (i >= 0x225) break;
