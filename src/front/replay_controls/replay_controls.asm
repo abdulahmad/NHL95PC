@@ -28,8 +28,8 @@ extern sub_1BAB1, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CCA8, sub_8D2
 extern sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE, sub_8FC8A, sub_8FCDF, sub_8FFB0
 extern sub_90D20, sub_91370, sub_913B4, sub_91400, sub_91964, sub_92DE0, sub_93000, sub_96A78
 extern sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B4BA8, sub_B4BC4, sub_B4CD8, sub_B4FAC, sub_B500C
-extern sub_B5DB0, teamabbrevs, teamcitynames, teamrockcuetbl, teamtunefiles, teamtunepathsel, TicksSinceLastCall, unk_C3447
-extern unk_C3470, unknown_libname_1, unknown_libname_2, viewscrollx, viewscrolly, VisTeam, WaitTickDeadline, replayfollowpl
+extern sub_B5DB0, teamabbrevs, teamcitynames, teamrockcuetbl, teamtunefiles, teamtunepathsel, TicksSinceLastCall, str_backslash4
+extern str_dot4, unknown_libname_1, unknown_libname_2, viewscrollx, viewscrolly, VisTeam, WaitTickDeadline, replayfollowpl
 extern rpl_x, rpl_y, replayfrac
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, sub_7E03F, bothneitherstrs, DrawGadgetButton
 global DrawGadgetButton_ret, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight_jt, ReplaySaveHilight, ReplaySaveHilight_n0
@@ -2420,7 +2420,7 @@ jl short SaveHilight.3	; 7FB14
 mov edx, curleague	; 7FB16
 lea eax, [byte esp+02Ch]	; 7FB1B
 call strcpy_	; 7FB1F
-mov edx, unk_C3447	; 7FB24
+mov edx, str_backslash4	; 7FB24
 lea eax, [byte esp+02Ch]	; 7FB29
 call strcat_	; 7FB2D
 mov eax, esi	; 7FB32
@@ -2547,7 +2547,7 @@ push edx	; 7FC68
 push esi	; 7FC69
 mov ecx, eax	; 7FC6A
 mov esi, 0FFFFFFFFh	; 7FC6C
-mov edx, unk_C3470	; 7FC71
+mov edx, str_dot4	; 7FC71
 call strcspn_	; 7FC76
 mov byte [ecx+eax], 0	; 7FC7B
 xor ebx, ebx	; 7FC7F

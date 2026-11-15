@@ -14,7 +14,7 @@ extern str_Pal20, str_PLST, str_Pointer9, str_PTLS, str_TPI, str_Tspal, str_Veri
 extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, sub_8CCA8
 extern sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, sub_B2DCA, sub_B30B4, sub_B392C
-extern sub_B4BA8, sub_B4DD4, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, unk_C1900
+extern sub_B4BA8, sub_B4DD4, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
 extern unk_C7592, unk_C7965, yesnobtns
 global ChooseLeagueController, AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, WriteSeasonRec_common
 global ReadGoalieSeasonRec, ReadGoalieSeasonRec_common, WriteGoalieSeasonRec, WriteSchedGame, WriteSchedGame_common, WriteTeamRec, ReadDbRec4Ch, ReadLeagueTeamEntry
@@ -1874,7 +1874,7 @@ mov edx, str_MightyDucksOfAnaheim3	; 39D72
 .61:
 lea eax, [dword esp+0100h]	; 39D77
 call strcat_	; 39D7E
-mov edx, unk_C1900	; 39D83
+mov edx, str_qmark	; 39D83
 lea eax, [dword esp+0100h]	; 39D88
 call strcat_	; 39D8F
 mov edi, dword [dword esp+02A8h]	; 39D94

@@ -33,10 +33,10 @@ global str_Rnk, str_Awa, str_Hom, str_Bar, str_Gamenum, str_SSS, str_Num, str_DS
 global str_02dS, str_Tea, str_Pen, str_Frm, str_XBRUCE2, str_GsummaryDb4, str_AGameYouRequire, str_DemoNhl
 global str_Gsummary3, str_AGameYouRequire2, str_GameSav5, str_Db4, str_Sav3, str_Pointer22, str_Savegame, str_Prmt
 global str_Dialog, str_Nhl3, str_Err1, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0
-global unk_C311D, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
+global str_dot2, str_S6, str_No2, str_GP8, str_C5, str_W6, str_L8, str_T6
 global str_ErrA1, str_ErrA2, str_ErrA3, str_ErrA4, str_ErrA5, str_ErrA6, str_ErrA7, str_ErrA8
-global unk_C3283, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
-global str_BothTeams, str_NeitherTeams, str_K1, unk_C3447, str_F12, str_F3, str_F4, unk_C3470
+global str_dot3, str_S7, str_ErrB3, str_ErrB4, str_ErrB5, str_ErrB6, str_ErrB7, str_ErrB2
+global str_BothTeams, str_NeitherTeams, str_K1, str_backslash4, str_F12, str_F3, str_F4, str_dot4
 global str_ANA4, str_BOS2, str_BUF4, str_CGY2, str_CHI2, str_DAL2, str_DET2, str_EDM2
 global str_FLA2, str_HFD2, str_LA2, str_MTL2, str_NJ2, str_NYI2, str_NYR2, str_OTT2
 global str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2, str_TB2, str_TOR2, str_VAN2
@@ -126,7 +126,7 @@ str_C2dS2:
 db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
 str_S2dSS:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
-unk_C311D:
+str_dot2:
 db 02Eh,00h
 str_S6:
 db 073h,02Eh,00h
@@ -252,7 +252,7 @@ str_Attackers:
 db 061h,074h,074h,061h,063h,06Bh,065h,072h,073h,00h
 str_S2dSS2:
 db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
-unk_C3283:
+str_dot3:
 db 02Eh,00h
 str_S7:
 db 073h,02Eh,00h
@@ -375,7 +375,7 @@ str_HilightsReel:
 db 048h,069h,06Ch,069h,067h,068h,074h,073h,020h,052h,065h,065h,06Ch,00h
 str_K1:
 db 06Bh,031h,00h
-unk_C3447:
+str_backslash4:
 db 05Ch,00h
 str_HI:
 db 02Eh,048h,049h,00h
@@ -388,7 +388,7 @@ str_F3:
 db 066h,033h,00h
 str_F4:
 db 066h,034h,00h,00h,00h
-unk_C3470:
+str_dot4:
 db 02Eh,00h
 str_HLTL:
 db 048h,04Ch,054h,04Ch,00h

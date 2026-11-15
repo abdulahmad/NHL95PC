@@ -167,9 +167,9 @@ int RunDemoGame(void)
     ReloadGameGfx();
     FadeOutPalCycle();
     one = 1;
-    demogame = one;
+    demoflag = one;
     SetupDemoGame();
-    demogame = 0;
+    demoflag = 0;
     introskipped = 0;
     gameresult = 0;
     SetScreenSize(0x140, 0xC8);
@@ -554,7 +554,7 @@ void RunIntro(void)
     sub_B4BA8();
     sub_B392C(0);
     PaOpenBank();
-    demomode = demogame = 0;
+    demomode = demoflag = 0;
 }
 
 /* DRAFT (ShowCredits): 1320 vs 1320, 4 differing under 10.0 GA (two reordered instructions).

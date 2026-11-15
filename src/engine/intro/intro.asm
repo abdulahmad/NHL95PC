@@ -10,7 +10,7 @@ extern goalevent_b2, goalevent_b3, goalevent_b4, c1playernum, c2playernum, camx,
 extern changeplayer, check4bench, check4check, checkob, checkpuckcoll, chk4lc, chk4pass, chk4shot
 extern ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks, CloseTextOverlay, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame, doorpflags
-extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demogame
+extern doortemp1, doplayeracc, doshot, DrawRinkOverlays, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
 extern dword_CC9AD, dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end
 extern dword_D8C72, dword_D8C7A, hmplstats_m2, hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3
 extern awtmnear, sctemp4, ovlartbank, fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7
@@ -537,7 +537,7 @@ ret	; 4830D
 StartPreGame:
 push dword 4	; 4830E
 call __CHK	; 48313
-cmp dword [demogame], byte 0	; 48318
+cmp dword [demoflag], byte 0	; 48318
 je short .1	; 4831F
 xor eax, eax	; 48321
 ret	; 48323
@@ -1616,7 +1616,7 @@ push ecx	; 48F16
 push edx	; 48F17
 push esi	; 48F18
 push edi	; 48F19
-mov edx, dword [demogame]	; 48F1A
+mov edx, dword [demoflag]	; 48F1A
 test edx, edx	; 48F20
 jne near PreGameIntro_popx	; 48F22
 mov esi, dword [curperiod]	; 48F28

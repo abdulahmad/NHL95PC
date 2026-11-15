@@ -9,7 +9,7 @@ extern byte_DFFE2, curevent, goalevent, goalevent_b1, goalevent_b2, goalevent_b3
 extern c2playernum, camx, camx_m2, camy, changeplayer, check4bench, check4check, checkob
 extern checkpuckcoll, chk4lc, chk4pass, chk4shot, ChkOffsides, ChkPullGoalieLate, ChkScorerMilestone, clockticks
 extern CloseTextOverlay, CrowdFadeOut, crowdlevel, curperiod, deferpending, dirtab, dirtab_y, DoGameFrame
-extern doorpflags, doortemp1, doplayeracc, doshot, hmlinetimer, awlinetimer, dword_CBEBE, demogame
+extern doorpflags, doortemp1, doplayeracc, doshot, hmlinetimer, awlinetimer, dword_CBEBE, demoflag
 extern dword_CC9CE, assscore_dancecnt, dword_CCA5A, dword_CCAD8, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, hmplstats_m2
 extern hmplstats, hmtmextra, hmtmtouch3, hmtmnear, awtmtouch3, awtmnear, sctemp4, ovlartbank
 extern fofdata2_m2, regd3_m2, dword_E9A9E, dword_E9AB6, dword_E9AB7, EndPenaltyShot, energywarn, EvadePC
@@ -6564,7 +6564,7 @@ jmp short CrowdOnStoppage.3	; 4E835
 mov eax, 8	; 4E837
 call randomd0	; 4E83C
 movsx edx, ax	; 4E841
-cmp dword [demogame], byte 0	; 4E844
+cmp dword [demoflag], byte 0	; 4E844
 jne short .8	; 4E84B
 test edx, edx	; 4E84D
 jne short .8	; 4E84F
@@ -6586,7 +6586,7 @@ pop edx	; 4E898
 pop ecx	; 4E899
 ret	; 4E89A
 .8:
-cmp dword [demogame], byte 0	; 4E89B
+cmp dword [demoflag], byte 0	; 4E89B
 jne short .9	; 4E8A2
 cmp edx, byte 1	; 4E8A4
 jne short .9	; 4E8A7

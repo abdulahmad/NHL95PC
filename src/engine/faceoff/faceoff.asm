@@ -7,7 +7,7 @@ extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmfla
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, assonetimer_blade, assonetimer_blade_y, fofdata2_b3
 extern fofdata2_b7, c1playernum, c2playernum, camx, camy, CanBlockShot_ret5, CenterMouse, changeplayer
 extern checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel, donothing
-extern doshot, DrawPanelLine, demogame, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
+extern doshot, DrawPanelLine, demoflag, dword_CC0FA, ovlartbank, dword_E9A9E, Endfaceoff, energywarn
 extern EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1, fodir2, fofdata2, forcepldata
 extern fox, foy, FreeMemBlock, gameclock, gameopts, gmode, gmode2, gsp
 extern hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline, hmtmpdst, hmtmstruct, iflags
@@ -167,7 +167,7 @@ ForceStartLineup:
 push dword 8	; 5125F
 call __CHK	; 51264
 push edx	; 51269
-cmp dword [demogame], byte 0	; 5126A
+cmp dword [demoflag], byte 0	; 5126A
 jne short .x	; 51271
 cmp word [gsp], byte 0	; 51273
 jne short .x	; 5127B
@@ -922,7 +922,7 @@ dec edx	; 51BFB
 mov word [byte esi+temp5], dx	; 51BFC
 test dx, dx	; 51C00
 jle near .2	; 51C03
-cmp dword [demogame], byte 0	; 51C09
+cmp dword [demoflag], byte 0	; 51C09
 jne short .2	; 51C10
 cmp dword [introskipped], byte 0	; 51C12
 jne short .2	; 51C19
@@ -985,7 +985,7 @@ xor cl, cl	; 51D0E
 mov byte [textline1], cl	; 51D10
 xor ch, ch	; 51D16
 mov byte [textline3], ch	; 51D18
-cmp dword [demogame], byte 0	; 51D1E
+cmp dword [demoflag], byte 0	; 51D1E
 jne short .4	; 51D25
 cmp word [gsp], byte 0	; 51D27
 jne short .4	; 51D2F
@@ -1000,7 +1000,7 @@ xor edx, edx	; 51D53
 mov word [fadeinpending], dx	; 51D55
 jmp short .7	; 51D5C
 .4:
-cmp dword [demogame], byte 0	; 51D5E
+cmp dword [demoflag], byte 0	; 51D5E
 jne short .5	; 51D65
 cmp dword [introskipped], byte 0	; 51D67
 jne short .5	; 51D6E

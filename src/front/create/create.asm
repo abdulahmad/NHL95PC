@@ -8,8 +8,8 @@ extern btn_LeagueExists, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRo
 extern byte_D42C3, byte_EAC86, byte_EAF99, byte_EAFB5, careerdb, careerdb_size, CarTeamRecPtr, carteamsdb
 extern carteamsdb_size, cddriveptr, ClearInputQueue, curdbname, dbdirty, dbexistsmsg, DbLineEditor, DeleteDir
 extern divisionteams, dlgtextbg, dlgtextfg, DrawButtons, DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
-extern DrawMenuItemSel, DrawScrollBar, dword_C2CAC, dword_C2CB0, dword_C2CB4, dword_C2CB8, dword_C2CBC, dword_C2CC0
-extern dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4, dword_C2CD8, dword_C2CDC, dword_C2CF0
+extern DrawMenuItemSel, DrawScrollBar, fp_1000, fp_84, fp_300, fp_390, fp_200, fp_100
+extern fp_m50, fp_500, fp_90, fp_10, fp_70, fp_30, fp_58, fp_347
 extern dword_C4B69, rostereditmode, dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_D0CDA
 extern dword_EA2B0, dword_EA994, dword_EAF7C, falisttop, editptrspr, editrosters_exit, facount, FadePalStep
 extern falist, falistsel, FatalError, FileClose, fileoncd, FileOpenWrite, FileWriteAt, FitPlayerName
@@ -43,7 +43,7 @@ extern sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4F8C, sub_B4FAC, sub_B5DB0, teamcit
 extern TeamRecPtr, teamsdb, teamsdb_size, TextInputDialog, TrackButtons, TrackScrollBars, unk13_6BF3D, editrostersmenubar
 extern unk_D05F4, unk_D0B80, unk_D0BB8, unk_D0BF0, unk_D0CA2, unk_D0EDD, newskaterdefaults, skaterratingmin
 extern skaterratingmax, newgoaliedefaults, goalieratingmin, goalieratingmax, unk_EA968, unk_EAC84, unk_EAFB8, unknown_libname_1
-extern VisTeam, str_L9, word_C2D10, WriteLeagueDbsMem
+extern VisTeam, str_L9, str_R5, WriteLeagueDbsMem
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
 global EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, LoadRosterList_faloop, LoadRosterList_team
 global CountSelected, RosterPanelClick, RosterPanelClick_ret, FixJerseyNumber, CopyRoster1Rec, LoadBothRosterLists, LoadRosterList, EditTeamLines
@@ -3811,7 +3811,7 @@ mov eax, 14Dh	; 6F79D
 call randomd0	; 6F7A2
 mov dword [byte esp+04Ch], eax	; 6F7A7
 fild dword [byte esp+04Ch]	; 6F7AB
-fdiv dword [dword_C2CAC]	; 6F7AF
+fdiv dword [fp_1000]	; 6F7AF
 fld1	; 6F7B5
 fsubrp	; 6F7B7
 fstp dword [byte esp+040h]	; 6F7B9
@@ -3827,13 +3827,13 @@ fistp dword [byte esp+04Ch]	; 6F7DF
 mov eax, dword [byte esp+04Ch]	; 6F7E3
 mov word [ebx], ax	; 6F7E7
 fld dword [byte esp+048h]	; 6F7EA
-fdiv dword [dword_C2CB0]	; 6F7EE
+fdiv dword [fp_84]	; 6F7EE
 fstp dword [byte esp+048h]	; 6F7F4
 fld dword [byte esp+034h]	; 6F7F8
 fadd dword [byte esp+028h]	; 6F7FC
 fadd dword [byte esp+044h]	; 6F800
-fdiv dword [dword_C2CB4]	; 6F804
-fmul dword [dword_C2CB8]	; 6F80A
+fdiv dword [fp_300]	; 6F804
+fmul dword [fp_390]	; 6F80A
 fmul dword [byte esp+048h]	; 6F810
 fmul dword [byte esp+040h]	; 6F814
 call __CHP	; 6F818
@@ -3842,9 +3842,9 @@ mov eax, dword [byte esp+04Ch]	; 6F821
 mov word [byte ebx+0Eh], ax	; 6F825
 fld dword [byte esp+034h]	; 6F829
 fadd dword [byte esp+018h]	; 6F82D
-fdiv dword [dword_C2CBC]	; 6F831
-fmul dword [dword_C2CC0]	; 6F837
-fadd dword [dword_C2CC4]	; 6F83D
+fdiv dword [fp_200]	; 6F831
+fmul dword [fp_100]	; 6F837
+fadd dword [fp_m50]	; 6F83D
 fmul dword [byte esp+048h]	; 6F843
 fmul dword [byte esp+040h]	; 6F847
 call __CHP	; 6F84B
@@ -3856,24 +3856,24 @@ fadd dword [byte esp+034h]	; 6F860
 fadd dword [byte esp+024h]	; 6F864
 fadd dword [byte esp+01Ch]	; 6F868
 fadd dword [byte esp+028h]	; 6F86C
-fdiv dword [dword_C2CC8]	; 6F870
+fdiv dword [fp_500]	; 6F870
 fstp dword [byte esp+08h]	; 6F876
 cmp byte [byte esi+02h], 44h	; 6F87A
 je short .1	; 6F87E
 fld dword [byte esp+044h]	; 6F880
-fdiv dword [dword_C2CD4]	; 6F884
+fdiv dword [fp_70]	; 6F884
 fstp dword [byte esp+038h]	; 6F88A
-fld dword [dword_C2CC0]	; 6F88E
+fld dword [fp_100]	; 6F88E
 fsub dword [byte esp+044h]	; 6F894
-fdiv dword [dword_C2CD8]	; 6F898
+fdiv dword [fp_30]	; 6F898
 jmp short .2	; 6F89E
 .1:
 fld dword [byte esp+044h]	; 6F8A0
-fdiv dword [dword_C2CCC]	; 6F8A4
+fdiv dword [fp_90]	; 6F8A4
 fstp dword [byte esp+038h]	; 6F8AA
-fld dword [dword_C2CC0]	; 6F8AE
+fld dword [fp_100]	; 6F8AE
 fsub dword [byte esp+044h]	; 6F8B4
-fdiv dword [dword_C2CD0]	; 6F8B8
+fdiv dword [fp_10]	; 6F8B8
 .2:
 fstp dword [byte esp+030h]	; 6F8BE
 fld1	; 6F8C2
@@ -3882,7 +3882,7 @@ fnstsw ax	; 6F8C8
 sahf	; 6F8CA
 jbe short .3	; 6F8CB
 fld dword [byte esp+038h]	; 6F8CD
-fmul dword [dword_C2CDC]	; 6F8D1
+fmul dword [fp_58]	; 6F8D1
 call __CHP	; 6F8D7
 fistp dword [byte esp+04Ch]	; 6F8DC
 mov eax, dword [byte esp+04Ch]	; 6F8E0
@@ -3898,7 +3898,7 @@ fnstsw ax	; 6F8F6
 sahf	; 6F8F8
 jbe short .5	; 6F8F9
 fld dword [byte esp+030h]	; 6F8FB
-fmul dword [dword_C2CCC]	; 6F8FF
+fmul dword [fp_90]	; 6F8FF
 call __CHP	; 6F905
 fistp dword [byte esp+04Ch]	; 6F90A
 mov eax, dword [byte esp+04Ch]	; 6F90E
@@ -3910,7 +3910,7 @@ mov edx, 5Ah	; 6F919
 .6:
 fld dword [byte esp+014h]	; 6F91E
 fadd dword [byte esp+010h]	; 6F922
-fdiv dword [dword_C2CBC]	; 6F926
+fdiv dword [fp_200]	; 6F926
 xor eax, eax	; 6F92C
 mov ax, cx	; 6F92E
 mov dword [byte esp+04Ch], eax	; 6F931
@@ -3918,7 +3918,7 @@ fild dword [byte esp+04Ch]	; 6F935
 fmulp	; 6F939
 fstp dword [byte esp+04h]	; 6F93B
 fld dword [byte esp+020h]	; 6F93F
-fdiv dword [dword_C2CC0]	; 6F943
+fdiv dword [fp_100]	; 6F943
 xor eax, eax	; 6F949
 mov ax, dx	; 6F94B
 mov dword [byte esp+04Ch], eax	; 6F94E
@@ -3999,8 +3999,8 @@ fmul qword [qword_C2CE8]	; 6FA33
 fstp dword [byte esp+02Ch]	; 6FA39
 fld dword [byte esp+03Ch]	; 6FA3D
 fadd dword [byte esp+02Ch]	; 6FA41
-fdiv dword [dword_C2CC0]	; 6FA45
-fmul dword [dword_C2CF0]	; 6FA4B
+fdiv dword [fp_100]	; 6FA45
+fmul dword [fp_347]	; 6FA4B
 fmul dword [byte esp+048h]	; 6FA51
 fmul dword [byte esp+040h]	; 6FA55
 call __CHP	; 6FA59
@@ -4173,7 +4173,7 @@ je short .1	; 6FBFD
 mov ax, word [str_L9]	; 6FBFF
 jmp short .2	; 6FC05
 .1:
-mov ax, word [word_C2D10]	; 6FC07
+mov ax, word [str_R5]	; 6FC07
 .2:
 mov word [esp], ax	; 6FC0D
 mov dword [msglines], edx	; 6FC11

@@ -10,16 +10,16 @@ global str_ea2, str_Pstatbar, str_Pst2, str_FreeAgent, str_fmtSS, str_fmtD, str_
 global str_LeftWing, str_RightWing, str_Goalie, str_RatingUnitsAvailable3d, str_Temp, str_ErrDiskFree, str_3dKbytesOfFree, str_NotEnoughSpaceTo
 global str_ANewFreeAgent, str_EnterNewPlayerName, str_EnterNewGoalieName, str_EnterAPositionFor, str_LCRD, str_EnterAJerseyNumber, str_NotEnoughSpaceFA, str_InTheFreeAgent
 global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies, str_Players, str_Goalies, str_MustBeTheSame, str_EnterNameOfPlayer, str_FreeAgentList
-global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, dword_C2CAC, dword_C2CB0, dword_C2CB4
-global dword_C2CB8, dword_C2CBC, dword_C2CC0, dword_C2CC4, dword_C2CC8, dword_C2CCC, dword_C2CD0, dword_C2CD4
-global dword_C2CD8, dword_C2CDC, dword_C2CF0, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
+global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, fp_1000, fp_84, fp_300
+global fp_390, fp_200, fp_100, fp_m50, fp_500, fp_90, fp_10, fp_70
+global fp_30, fp_58, fp_347, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
 global str_Pt4, str_PIM7, unk_C2987, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
 global str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3, str_StickHandling2, str_Accuracy2, str_Passing3
 global str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2, str_Faceoffs2, str_Min6, str_GA6
 global str_GAA5, str_spW3, unk_C2A5C, unk_C2A5F, str_SO3, str_EN3, str_SA5, str_GloveHand3
 global str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2, str_PenaltyKilling3, str_PowerPlay3, str_Shooting2
 global str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2, str_Cancel6, str_Create, str_X, str_L9
-global word_C2D10
+global str_R5
 str_Prez2:
 db 070h,072h,065h,07Ah,032h,00h
 str_Pal:
@@ -193,37 +193,37 @@ str_NotEnoughDefence:
 db 054h,068h,065h,072h,065h,020h,061h,072h,065h,020h,06Eh,06Fh,074h,020h,065h,06Eh
 db 06Fh,075h,067h,068h,020h,064h,065h,066h,065h,06Eh,063h,065h,020h,06Fh,06Eh,020h
 db 00h,00h
-dword_C2CAC:
+fp_1000:
 db 00h,00h,07Ah,044h
-dword_C2CB0:
+fp_84:
 db 00h,00h,0A8h,042h
-dword_C2CB4:
+fp_300:
 db 00h,00h,096h,043h
-dword_C2CB8:
+fp_390:
 db 00h,00h,0C3h,043h
-dword_C2CBC:
+fp_200:
 db 00h,00h,048h,043h
-dword_C2CC0:
+fp_100:
 db 00h,00h,0C8h,042h
-dword_C2CC4:
+fp_m50:
 db 00h,00h,048h,0C2h
-dword_C2CC8:
+fp_500:
 db 00h,00h,0FAh,043h
-dword_C2CCC:
+fp_90:
 db 00h,00h,0B4h,042h
-dword_C2CD0:
+fp_10:
 db 00h,00h,020h,041h
-dword_C2CD4:
+fp_70:
 db 00h,00h,08Ch,042h
-dword_C2CD8:
+fp_30:
 db 00h,00h,0F0h,041h
-dword_C2CDC:
+fp_58:
 db 00h,00h,068h,042h
 qword_C2CE0:
 db 0CDh,0CCh,0CCh,0CCh,0CCh,0CCh,0ECh,03Fh
 qword_C2CE8:
 db 09Ah,099h,099h,099h,099h,099h,0B9h,03Fh
-dword_C2CF0:
+fp_347:
 db 00h,080h,0ADh,043h
 str_Shoots:
 db 053h,068h,06Fh,06Fh,074h,073h,00h
@@ -235,7 +235,7 @@ str_GloveHand:
 db 047h,06Ch,06Fh,076h,065h,020h,048h,061h,06Eh,064h,00h
 str_L9:
 db 04Ch,00h
-word_C2D10:
+str_R5:
 db 052h,00h
 str_EnterANewRating:
 db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,072h,061h,074h,069h

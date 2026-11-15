@@ -6,7 +6,7 @@ extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, un
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, byte_CC049, lldisp, HotList, HotList_y, HotStickList, HotStickList_y
 global byte_CC9B0, byte_CC9E4, byte_CC9E7, Endfaceoff_ftab_m1, lchoicetab, assonetimer_blade, assonetimer_blade_y, cupceremony
-global rinkobjanim, rinkobjanim_b1, dword_CC080, goalienotebits, dword_CC0B4, lastsfx, photobankf, demogame
+global rinkobjanim, rinkobjanim_b1, dword_CC080, goalienotebits, dword_CC0B4, lastsfx, photobankf, demoflag
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, dword_CC9CE
@@ -60,7 +60,7 @@ crowdlevel:
 db 00h,00h
 photobankf:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-demogame:
+demoflag:
 db 00h,00h,00h,00h
 introskipped:
 db 00h,00h,00h,00h

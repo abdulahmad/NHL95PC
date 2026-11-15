@@ -70,7 +70,7 @@ global str_D4, str_NHL, str_PO2, str_LP, str_fek1, str_fek2, str_fek3, str_fek4
 global str_fek5, str_fek6, str_fek7, str_fek8, str_feh7, str_feA1, str_fel1, str_feA2
 global str_fel2, str_fec6, str_fed2, str_fed3, str_fed4, str_D6, str_OT, str_S3
 global str_CommaSp, str_RParen2, str_D7, str_Dot, str_Space, str_fee2, str_fee3, str_fee4
-global unk_C17F0, str_D8, str_W5, str_L7, str_T5, unk_C1900, str_wildcard, str_ID
+global unk_C17F0, str_D8, str_W5, str_L7, str_T5, str_qmark, str_wildcard, str_ID
 global str_L1, str_L22, str_A5, unk_C1936, str_R3, str_S12
 str_teams:
 db 074h,065h,061h,06Dh,073h,00h
@@ -1150,7 +1150,7 @@ db 065h,020h,00h
 str_MightyDucksOfAnaheim3:
 db 04Dh,069h,067h,068h,074h,079h,020h,044h,075h,063h,06Bh,073h,020h,06Fh,066h,020h
 db 041h,06Eh,061h,068h,065h,069h,06Dh,00h
-unk_C1900:
+str_qmark:
 db 03Fh,00h,00h,00h
 str_02d2:
 db 02Eh,025h,030h,032h,064h,00h

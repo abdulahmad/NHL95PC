@@ -5,7 +5,7 @@ section s_13867 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, apl, assinsert, awtmap, bannermsg, bannertimer, BuildDefaultLines
 extern milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, cddriveptr, ClearInputQueue, ClearPanelPenalties
 extern cont2team, crowdlevel, CrowdNoiseReset, crowdsmooth, curperiod, CwdExciteLvl, deferpending, DrawAwardsSummary
-extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demogame, gfxidlist, SumCwdExciteLvl, dword_E9A9E
+extern DrawHudPanel, dword_C66D0, dword_C66D4, goalienotebits, demoflag, gfxidlist, SumCwdExciteLvl, dword_E9A9E
 extern dword_E9AB6, energywarn, exitgame, fadeinpending, FadePalette, FadePalStep, FileClose, fileoncd
 extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, gameover
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
@@ -426,7 +426,7 @@ call __CHK	; 13C7E
 push ebx	; 13C83
 push ecx	; 13C84
 push edx	; 13C85
-cmp dword [demogame], byte 0	; 13C86
+cmp dword [demoflag], byte 0	; 13C86
 jne near .x	; 13C8D
 call forceteams	; 13C93
 xor edx, edx	; 13C98
@@ -633,7 +633,7 @@ jne short .5	; 13F7F
 .4:
 call PlacePlayersAtStart	; 13F81
 .5:
-cmp dword [demogame], byte 0	; 13F86
+cmp dword [demoflag], byte 0	; 13F86
 jne short .6	; 13F8D
 cmp dword [introskipped], byte 0	; 13F8F
 jne short .6	; 13F96
@@ -693,7 +693,7 @@ xor edi, edi	; 14026
 mov word [gsp], di	; 14028
 call ResetGameVars	; 1402F
 mov dword [introskipped], edx	; 14034
-cmp dword [demogame], byte 0	; 1403A
+cmp dword [demoflag], byte 0	; 1403A
 jne short .3	; 14041
 test edx, edx	; 14043
 jne short .3	; 14045

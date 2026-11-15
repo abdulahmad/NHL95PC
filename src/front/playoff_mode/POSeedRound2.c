@@ -890,7 +890,7 @@ int PlayoffModeLoop(int *fh)
     pochampion = SeriesWinner(g, *(int *)(f.sched + 0x88));
     if (pochampion == -1) pochampion = 0x1A;
     for (i = 0; i < 0x1A; i++) strcpy((char *)treeteamnames + i * 21, (char *)teamcitynames[i]);
-    strcpy((char *)treeteamnames + 0x222, (char *)unk_C3A66);
+    strcpy((char *)treeteamnames + 0x222, (char *)str_space4);
     if (!embscupbank) {
         MakePath(f.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
         embscupbank = sub_8E83C(f.path, 0x20);
@@ -1183,7 +1183,7 @@ void DrawPlayoffTree(void)
         midl = 1;
         sub_913B4(sub_B30B4(arrows, (char *)str_Midl));
         SetTextColors(0x40, 0x43);
-        *(TreeStr3 *)f.buf = *(TreeStr3 *)unk_C3AF8;
+        *(TreeStr3 *)f.buf = *(TreeStr3 *)str_space5;
         slot = treecolslots[0x18];
         strcat(f.buf, (char *)treeteamnames + playofftree[treecolslots[0x18]] * 21);
         PrintShadowText(0x102, y - 4, f.buf);
@@ -1201,7 +1201,7 @@ void DrawPlayoffTree(void)
         if (!midl) sub_913B4(sub_B30B4(arrows, (char *)str_Midl));
         y += 0x10;
         SetTextColors(0x40, 0x43);
-        *(TreeStr3 *)f.buf = *(TreeStr3 *)unk_C3AF8;
+        *(TreeStr3 *)f.buf = *(TreeStr3 *)str_space5;
         slot = treecolslots[0x28];
         strcat(f.buf, (char *)treeteamnames + playofftree[treecolslots[0x28]] * 21);
         PrintShadowText(0x102, y - 4, f.buf);

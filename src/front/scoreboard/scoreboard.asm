@@ -8,7 +8,7 @@ extern awpanelspr, awscore, awtmline, awtmstruct, awayremap, awayremap_e43, away
 extern homeremap_e43, homeremap_eFF, cddriveptr, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask
 extern cupseries, curleague, demomode, DemoSetupStub, demoteammode, dword_C56C4, dword_C56E4, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
-extern awlinetimer, dword_C5861, dword_C5862, demogame, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
+extern awlinetimer, dword_C5861, dword_C5862, demoflag, dword_DC2B8, energywarn, exhstate, FadeOutPalCycle
 extern FatalError, fileoncd, FreeMemBlock, Gameloop, gamemode, gameopts, gamepal, gameresult
 extern GetPeriodTime, gmode, hmlineind, hmpanelspr, hmscore, hmtmline, hmtmstruct, HomeTeam
 extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhundstep, hudpenaway, hudpenhome

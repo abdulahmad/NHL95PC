@@ -30,7 +30,7 @@ extern str_SA3, str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_W6, s
 extern stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_9121C, sub_913B4
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
-extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, unk_C311D, unk_D075E, unknown_libname_1
+extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, str_dot2, unk_D075E, unknown_libname_1
 extern vgapage, VisTeam
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
@@ -2428,7 +2428,7 @@ mov eax, 12h	; 752C3
 sub eax, ebp	; 752C8
 cmp eax, byte 1	; 752CA
 jne short .5	; 752CD
-mov eax, unk_C311D	; 752CF
+mov eax, str_dot2	; 752CF
 jmp short .6	; 752D4
 .5:
 mov eax, str_S6	; 752D6
@@ -2446,7 +2446,7 @@ jle short .11	; 752F2
 lea eax, [byte ebp-012h]	; 752F4
 cmp eax, byte 1	; 752F7
 jne short .8	; 752FA
-mov eax, unk_C311D	; 752FC
+mov eax, str_dot2	; 752FC
 jmp short .9	; 75301
 .8:
 mov eax, str_S6	; 75303
@@ -2472,7 +2472,7 @@ mov eax, 2	; 7532E
 sub eax, dword [byte esp+07Ch]	; 75333
 cmp eax, byte 1	; 75337
 jne short .12	; 7533A
-mov eax, unk_C311D	; 7533C
+mov eax, str_dot2	; 7533C
 jmp short .13	; 75341
 .12:
 mov eax, str_S6	; 75343
@@ -2490,7 +2490,7 @@ jle short .18	; 75364
 sub eax, byte 2	; 75366
 cmp eax, byte 1	; 75369
 jne short .15	; 7536C
-mov eax, unk_C311D	; 7536E
+mov eax, str_dot2	; 7536E
 jmp short .16	; 75373
 .15:
 mov eax, str_S6	; 75375

@@ -353,7 +353,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                                 *(Str19 *)msg = *(Str19 *)str_WhoWillPlayThe;
                                 strcat(msg, picks[cur] == 0x18 ? (char *)str_MightyDucksOfAnaheim3
                                     : names + picks[cur] * 21);
-                                strcat(msg, (char *)unk_C1900);
+                                strcat(msg, (char *)str_qmark);
                                 do {
                                     r = TextInputDialog(msg, pw1, 10, 0x46, 0, 0, 0, 1, 4);
                                     if (r != 0x1B) {

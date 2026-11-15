@@ -20,8 +20,8 @@ global str_errd3, str_errd4, str_backslash, str_ArtRoss, str_ArtNorr, str_ArtSel
 global str_ArtCald, str_ArtPres, str_ArtConn, str_ArtEasn, str_ArtStan, str_Hart, str_ArtRoss2, str_Norris
 global str_Selke, str_Vezina, str_Jennings, str_Calder, str_Presidents, str_ConnSmythe, str_EASportsCup, str_StanleyCup
 global str_MostValuablePlayer, str_PointsLeader, str_RegularSeason, str_BestDefenseman, str_BestDefensiveForward, str_BestGoalkeeper, str_BestGoalsAgainstAverage, str_BestRookie
-global str_BestRegularSeasonRecord, str_InThePlayoffs, str_Most3StarSelections, str_StanleyCupChampions, str_Season2, str_Playoff2, str_MightyDucks, unk_C03C4
-global unk_C03C6, str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G
+global str_BestRegularSeasonRecord, str_InThePlayoffs, str_Most3StarSelections, str_StanleyCupChampions, str_Season2, str_Playoff2, str_MightyDucks, str_ctl07
+global str_ctl06, str_GP, str_W, str_L, str_T, str_SO, str_EN, str_G
 global str_A, str_Pt, BOS, BUF, CGY, CHI, DET, EDM
 global HFD, LA, DAL, MTL, NJ, NYI, NYR, OTT
 global PHI, PIT, QUE, STL, SJ, TB, TOR, VAN
@@ -191,9 +191,9 @@ str_Cal:
 db 043h,061h,06Ch,00h
 str_Flo:
 db 046h,06Ch,06Fh,00h
-unk_C03C4:
+str_ctl07:
 db 07h,00h
-unk_C03C6:
+str_ctl06:
 db 06h,00h
 str_SS:
 db 025h,073h,020h,025h,073h,00h

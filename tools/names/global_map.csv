@@ -3450,8 +3450,8 @@ awtmtouch2,DF746,awtmstruct+32h = 94G tmtouch2 of the visitors
 awtmtouch3,DF748,awtmstruct+34h = 94G tmtouch3 of the visitors
 hmtmnear,DF652,"hmtmstruct+3Eh = 94G tmnear: nearest skater's distance to the puck; updateplayers resets it to FFFFh and keeps the minimum, pucknorm compares both teams' with 14h as 94G compares tmnear of both"
 awtmnear,DF752,awtmstruct+3Eh = 94G tmnear of the visitors
-hmtmnearsc,DF656,hmtmstruct+42h: player index of the skater whose distance is in hmtmnear (updateplayers stores it with the new minimum; -1 none)
-awtmnearsc,DF756,awtmstruct+42h: player index of the visitors' nearest skater
+hmtmnearpl,DF656,"hmtmstruct+42h = 94S tmnearpl: the team's player nearest the puck, stored by updateplayers with tmnear"
+awtmnearpl,DF756,awtmstruct+42h = 94S tmnearpl of the visitors
 hmtmgoaliesc,DF70E,hmtmstruct+FAh: player index of the goalie on the ice (updateplayers stores the loop index when position is 0; -1 none)
 awtmgoaliesc,DF80E,awtmstruct+FAh: player index of the visitors' goalie on the ice
 hmtmextra,DF642,"hmtmstruct+tmextra (2Eh): pnum of the extra attacker, -1 with the goalie in; clearteams stores -1"
@@ -3603,7 +3603,7 @@ ovlstepart,DEF8C,"art pointer per overlay step, drawn by DrawTextOverlay"
 ovlstepart_e21,DEFE0,ovlstepart+4*21
 ovlstepart_e30,DF004,ovlstepart+4*30
 goalienotebits,CC0AC,"QueueGoalieNote: one bit per goalie already noted (bit tmgoalie, +3 for the visitors; 3Fh = all done)"
-demogame,CC0EC,"set while the title screen demo game runs (RunDemoGame); the pre-game skate, three stars and opening lineup are skipped"
+demoflag,CC0EC,"94S demoflag (nonzero in demo mode): set while the title screen demo game runs (RunDemoGame); the pre-game skate, three stars and opening lineup are skipped"
 injurystop,CBEC6,set by setInjuryType when a player is hurt: the referee stops play and the call countdown is 140h; cleared at the next faceoff
 nethit,CCC2C,"set when a player hits the goal net or post (checkgoalp, checkgoal): wallcoll then skips the hard-hit sound and keeps him outside the net"
 oneminsaid,CCC98,SayOneMinuteLeft: the one minute left clip was queued this period; StartHL2 clears it
@@ -3832,3 +3832,27 @@ replaybtnarmed,ED6FC,"ReplayControlLoop: a press arms the buttons, a release dis
 replaynosave,ED6F8,"instant replay: the save highlight button is off (exhibition, no human team, or no disk space)"
 replayfrac,ED758,instant replay: fraction of a replay step kept between passes (twentieths)
 portraitoncd,ED909,player cards: 1 when the portrait of the player is read from the CD
+fp_1000,C2CAC,float constant 1000.0 of RandomizeNewRatings
+fp_84,C2CB0,float constant 84.0 of RandomizeNewRatings
+fp_300,C2CB4,float constant 300.0 of RandomizeNewRatings
+fp_390,C2CB8,float constant 390.0 of RandomizeNewRatings
+fp_200,C2CBC,float constant 200.0 of RandomizeNewRatings
+fp_100,C2CC0,float constant 100.0 of RandomizeNewRatings
+fp_m50,C2CC4,float constant -50.0 of RandomizeNewRatings
+fp_500,C2CC8,float constant 500.0 of RandomizeNewRatings
+fp_90,C2CCC,float constant 90.0 of RandomizeNewRatings
+fp_10,C2CD0,float constant 10.0 of RandomizeNewRatings
+fp_70,C2CD4,float constant 70.0 of RandomizeNewRatings
+fp_30,C2CD8,float constant 30.0 of RandomizeNewRatings
+fp_58,C2CDC,float constant 58.0 of RandomizeNewRatings
+fp_347,C2CF0,float constant 347.0 of RandomizeNewRatings
+str_dot2,C311D,string '.'
+str_dot3,C3283,string '.'
+str_dot4,C3470,string '.' (TeamFromHiName separator)
+str_backslash4,C3447,string backslash
+str_space4,C3A66,string ' '
+str_space5,C3AF8,string of two spaces
+str_qmark,C1900,string '?'
+str_ctl07,C03C4,one-byte control string 07h (text colour code) of the award screens
+str_ctl06,C03C6,one-byte control string 06h (text colour code) of the award screens
+str_R5,C2D10,"string 'R', read as a word by AskLeftRight"

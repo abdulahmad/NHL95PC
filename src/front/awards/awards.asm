@@ -9,7 +9,7 @@ extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, 
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
 extern demomode, DrawHudPanel, DrawRinkOverlays, dword_C513C, dword_C5168, dword_C66D0, dword_C66D4, dword_CC080
-extern goalienotebits, demogame, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
+extern goalienotebits, demoflag, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
 extern foy, fputchar, frameaccum, FreeMemBlock, gameclock, gamemode, gameopts, gameover
@@ -42,8 +42,8 @@ extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, sub_8CC
 extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F13B, sub_8F1FE
 extern sub_8F633, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C
 extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, teamabbrevs, textline1
-extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, unk_C03C4
-extern unk_C03C6, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690, unk_D96F8
+extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
+extern str_ctl06, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690, unk_D96F8
 extern unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2
 extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
@@ -689,10 +689,10 @@ call strnicmp_	; 12979
 test eax, eax	; 1297E
 jne short .11	; 12980
 .10:
-mov edx, unk_C03C4	; 12982
+mov edx, str_ctl07	; 12982
 jmp short .12	; 12987
 .11:
-mov edx, unk_C03C6	; 12989
+mov edx, str_ctl06	; 12989
 .12:
 mov eax, esp	; 1298E
 call strcat_	; 12990
@@ -766,10 +766,10 @@ je short .15	; 12A52
 cmp bl, 19h	; 12A54
 jne short .16	; 12A57
 .15:
-mov edx, unk_C03C4	; 12A59
+mov edx, str_ctl07	; 12A59
 jmp short .17	; 12A5E
 .16:
-mov edx, unk_C03C6	; 12A60
+mov edx, str_ctl06	; 12A60
 .17:
 mov eax, esp	; 12A65
 call strcat_	; 12A67
@@ -1391,10 +1391,10 @@ call strnicmp_	; 1322F
 test eax, eax	; 13234
 jne short .6	; 13236
 .5:
-mov edx, unk_C03C4	; 13238
+mov edx, str_ctl07	; 13238
 jmp short .7	; 1323D
 .6:
-mov edx, unk_C03C6	; 1323F
+mov edx, str_ctl06	; 1323F
 .7:
 mov eax, esp	; 13244
 call strcat_	; 13246
@@ -1450,10 +1450,10 @@ je short .10	; 132DE
 cmp dh, 19h	; 132E0
 jne short .11	; 132E3
 .10:
-mov edx, unk_C03C4	; 132E5
+mov edx, str_ctl07	; 132E5
 jmp short .12	; 132EA
 .11:
-mov edx, unk_C03C6	; 132EC
+mov edx, str_ctl06	; 132EC
 .12:
 mov eax, esp	; 132F1
 call strcat_	; 132F3

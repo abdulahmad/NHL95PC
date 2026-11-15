@@ -530,10 +530,10 @@ void updateplayers(void)
     p = SortCords;
     hmtmgoaliesc = -1;
     hmtmnear = 0xFFFF;
-    hmtmnearsc = -1;
+    hmtmnearpl = -1;
     awtmgoaliesc = -1;
     awtmnear = 0xFFFF;
-    awtmnearsc = -1;
+    awtmnearpl = -1;
     for (i = 0; i < 12; i++, p++) {
         t = p->tmptr;
         dx = *puckx - HIWORD(p->Xpos);

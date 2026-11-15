@@ -32,7 +32,7 @@ extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCord
 extern SPAtab, sub_93540, sub_B340B, sub_B4BC4, sublist, Sweepcheck, threat, sublist_defl
 extern hmglattr, awglattr, hmplattr, awplattr, awplstats, hmglstats, awglstats, offsort_d
 extern defsort_fwd, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa, word_CBC44, injurystop, Pencntdwn2
-extern restoreteams_pdsttab, hmtmnearsc, hmtmgoaliesc, awtmextra, awtmnearsc, awtmgoaliesc, refposition, word_E03A0
+extern restoreteams_pdsttab, hmtmnearpl, hmtmgoaliesc, awtmextra, awtmnearpl, awtmgoaliesc, refposition, word_E03A0
 extern regd5, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AB0, xc1, yc1, yleader, Ylist
 global SetSPA, SprSort_loop, SprSort_test, changeplayer, changeplayer_ret5, restorepl, AvgCline, CompLine
 global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6, findpc_ret5, GetHot
@@ -3372,10 +3372,10 @@ mov ebx, 0FFFFFFFFh	; 5C4C1
 mov word [hmtmgoaliesc], bx	; 5C4C6
 mov edx, 0FFFFh	; 5C4CD
 mov dword [hmtmnear], edx	; 5C4D2
-mov word [hmtmnearsc], bx	; 5C4D8
+mov word [hmtmnearpl], bx	; 5C4D8
 mov word [awtmgoaliesc], bx	; 5C4DF
 mov dword [awtmnear], edx	; 5C4E6
-mov word [awtmnearsc], bx	; 5C4EC
+mov word [awtmnearpl], bx	; 5C4EC
 xor edx, edx	; 5C4F3
 mov dword [byte esp+08h], edx	; 5C4F5
 jmp near .10	; 5C4F9

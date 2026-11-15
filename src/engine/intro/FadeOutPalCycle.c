@@ -275,12 +275,12 @@ int ThreeStarsLoop(void)
     return 0;
 }
 
-/* StartPreGame (4830E, PC only): start the game's pre-game skate unless demogame is set (then result 0): the
+/* StartPreGame (4830E, PC only): start the game's pre-game skate unless demoflag is set (then result 0): the
    intro set-up (PreGameIntro) unless skip, the crowd noise reset, then the skate itself (ThreeStarsLoop, which it
    falls into). skip: leave the set-up out. Result: ThreeStarsLoop's. */
 int StartPreGame(int skip)
 {
-    if (demogame) return 0;
+    if (demoflag) return 0;
     if (!(short)skip) PreGameIntro();
     CrowdNoiseReset();
     return ThreeStarsLoop();
@@ -357,7 +357,7 @@ void PickThreeStars(void)
 /* Matched under 10.0 GA: the parking loop tests at the bottom once q is set before the for.
    The intro and three-stars routines share the epilogue in ThreeStarsLoop. */
 /* StartThreeStars (48F0B, PC only; ends in PreGameIntro_popx): the three stars ceremony after the game (not in the
-   demo, demogame). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
+   demo, demoflag). Input sampling off, fade the saved palette out (the fade-in pending), pick the stars
    (PickThreeStars). Clear the line change and penalty signals, the banner and the text overlay (freeing its art),
    the text lines, end the period count (curperiod -1) and the game-over flags, stop the clock (gmode bit 0 on, bit 7
    off), run the sequence for 2EE0h ticks, release the controllers and empty the penalty boxes. Park the twelve
@@ -372,7 +372,7 @@ void StartThreeStars(void)
     int per;
     int i;
 
-    if (demogame) return;
+    if (demoflag) return;
     per = curperiod;
     joysampling = 0;
     joyq_flush();

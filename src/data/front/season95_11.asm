@@ -6,8 +6,8 @@ global str_Palette, str_Embscup, str_Bkgd, str_Embpal, str_BangPal, str_PleaseEn
 global str_GameSet, str_4dKbytesOfFree, str_Temp2, str_ScheduleDb, str_E31, str_E32, str_Db, str_Tied
 global str_Schedule, str_GameSav, str_Pointer, str_Menubuff2, str_PlayoffsHaveNotBeen, str_Pstatbar2, str_Rst1, str_Rst2
 global str_Scuparrw, str_WesternConference, str_EasternConference, str_fmtcsp, str_Aup1, str_Aup2, str_Aup3, str_Midl
-global str_Adn3, str_Adn2, str_Adn1, str_E1, str_E2, str_F1, str_F2, unk_C3A66
-global str_D, unk_C3AF8
+global str_Adn3, str_Adn2, str_Adn1, str_E1, str_E2, str_F1, str_F2, str_space4
+global str_D, str_space5
 str_Palette:
 db 070h,061h,06Ch,065h,074h,074h,065h,00h
 str_Embscup:
@@ -54,7 +54,7 @@ str_Schedule:
 db 073h,063h,068h,065h,064h,075h,06Ch,065h,00h
 str_GameSav:
 db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
-unk_C3A66:
+str_space4:
 db 020h,00h
 str_Pointer:
 db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
@@ -90,7 +90,7 @@ str_Aup3:
 db 061h,075h,070h,033h,00h
 str_Midl:
 db 06Dh,069h,064h,06Ch,00h
-unk_C3AF8:
+str_space5:
 db 020h,020h,00h
 str_Adn3:
 db 061h,064h,06Eh,033h,00h

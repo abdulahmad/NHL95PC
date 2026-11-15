@@ -8,7 +8,7 @@ extern byte_D42C3, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
 extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
-extern awlinetimer, dword_C5861, dword_C5862, nhlintrosaid, demogame, dword_CCC94, dword_DC2B8, dword_DC33C
+extern awlinetimer, dword_C5861, dword_C5862, nhlintrosaid, demoflag, dword_CCC94, dword_DC2B8, dword_DC33C
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
@@ -159,10 +159,10 @@ call LoadRockMusic	; 15F37
 call ReloadGameGfx	; 15F3C
 call FadeOutPalCycle	; 15F41
 mov ebp, 1	; 15F46
-mov dword [demogame], ebp	; 15F4B
+mov dword [demoflag], ebp	; 15F4B
 call SetupDemoGame	; 15F51
 xor eax, eax	; 15F56
-mov dword [demogame], eax	; 15F58
+mov dword [demoflag], eax	; 15F58
 mov dword [introskipped], eax	; 15F5D
 mov dword [gameresult], eax	; 15F62
 mov edx, 0C8h	; 15F67
@@ -1362,7 +1362,7 @@ call sub_B392C	; 16F74
 add esp, byte 4	; 16F79
 call PaOpenBank	; 16F7C
 xor ebp, ebp	; 16F81
-mov dword [demogame], ebp	; 16F83
+mov dword [demoflag], ebp	; 16F83
 mov dword [demomode], ebp	; 16F89
 add esp, 64Ch	; 16F8F
 jmp near RunDemoGame_x	; 16F95

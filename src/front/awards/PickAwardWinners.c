@@ -312,9 +312,9 @@ int ShowAwardScreens(void)
                 if (k == 0xA) strcpy(buf, (char *)cupteam + 5);
                 else strcpy(buf, (char *)presidentsteam + 5);
                 if (!strnicmp(buf, (char *)str_Cal, 3) || !strnicmp(buf, (char *)str_Flo, 3))
-                    strcat(buf, (char *)unk_C03C4);
+                    strcat(buf, (char *)str_ctl07);
                 else
-                    strcat(buf, (char *)unk_C03C6);
+                    strcat(buf, (char *)str_ctl06);
                 x = 0x1FE - (fputchar(buf) >> 1);
                 PrintShadowText(x, y, buf);
             }
@@ -327,9 +327,9 @@ int ShowAwardScreens(void)
             if (!strnicmp(buf, (char *)str_ANA, 3)) {
                 *(Str25 *)buf = *(Str25 *)str_MightyDucks;
             } else if (awardwinners[k * 0x34] == 2 || awardwinners[k * 0x34] == 0x18 || awardwinners[k * 0x34] == 0x19) {
-                strcat(buf, (char *)unk_C03C4);
+                strcat(buf, (char *)str_ctl07);
             } else {
-                strcat(buf, (char *)unk_C03C6);
+                strcat(buf, (char *)str_ctl06);
             }
             x = 0x1FE - (fputchar(buf) >> 1);
             y += byte_D42C3;
@@ -444,9 +444,9 @@ void DrawAwardsSummary(void)
             } else {
                 strcpy(s.buf, k == 0xA ? (char *)cupteam + 5 : (char *)presidentsteam + 5);
                 if (!strnicmp(s.buf, (char *)str_Cal, 3) || !strnicmp(s.buf, (char *)str_Flo, 3))
-                    strcat(s.buf, (char *)unk_C03C4);
+                    strcat(s.buf, (char *)str_ctl07);
                 else
-                    strcat(s.buf, (char *)unk_C03C6);
+                    strcat(s.buf, (char *)str_ctl06);
                 PrintShadowText(0x190, y, s.buf);
             }
         } else {
@@ -456,9 +456,9 @@ void DrawAwardsSummary(void)
             if (!strnicmp(s.buf, (char *)str_ANA, 3)) {
                 *(Str25 *)s.buf = *(Str25 *)str_MightyDucks;
             } else if (awardwinners[k * 52] == 2 || awardwinners[k * 52] == 0x18 || awardwinners[k * 52] == 0x19) {
-                strcat(s.buf, (char *)unk_C03C4);
+                strcat(s.buf, (char *)str_ctl07);
             } else {
-                strcat(s.buf, (char *)unk_C03C6);
+                strcat(s.buf, (char *)str_ctl06);
             }
             PrintShadowText(0x190, y, s.buf);
         }

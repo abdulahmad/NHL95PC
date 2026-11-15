@@ -3,7 +3,7 @@
 
 /* SetupDemoGame: set up the attract-mode game: default lines for both teams, no game state (gsp -1), quiet crowd,
  game variables reset, then the pre-game; returns -1 when that fails. Afterwards gsp 0 and a second reset that
- keeps introskipped; fadeinpending only when the intro was skipped or demogame is set. */
+ keeps introskipped; fadeinpending only when the intro was skipped or demoflag is set. */
 int SetupDemoGame(void)
 {
     int s;
@@ -24,6 +24,6 @@ int SetupDemoGame(void)
     gsp = 0;
     ResetGameVars();
     introskipped = s;
-    if (!demogame && !s) fadeinpending = 0;
+    if (!demoflag && !s) fadeinpending = 0;
     return 0;
 }

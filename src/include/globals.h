@@ -67,8 +67,8 @@ extern unsigned char str_ANA[]; /* C039F */
 extern unsigned char str_MightyDucks[]; /* C03A3 */
 extern unsigned char str_Cal[]; /* C03BC */
 extern unsigned char str_Flo[]; /* C03C0 */
-extern unsigned char unk_C03C4[]; /* C03C4 */
-extern unsigned char unk_C03C6[]; /* C03C6 */
+extern unsigned char str_ctl07[]; /* C03C4 */
+extern unsigned char str_ctl06[]; /* C03C6 */
 extern unsigned char str_SS[]; /* C03C8 */
 extern unsigned char str_GP[]; /* C03CE */
 extern unsigned char str_Min[]; /* C03D1 */
@@ -800,7 +800,7 @@ extern unsigned char str_Pal20[]; /* C18C7 */
 extern unsigned char str_Menubuff6[]; /* C18CC */
 extern unsigned char str_WhoWillPlayThe[]; /* C18D5 */
 extern unsigned char str_MightyDucksOfAnaheim3[]; /* C18E8 */
-extern unsigned char unk_C1900[]; /* C1900 */
+extern unsigned char str_qmark[]; /* C1900 */
 extern unsigned char str_02d2[]; /* C1904 */
 extern unsigned char str_SAV2[]; /* C190A */
 extern unsigned char str_GAME2[]; /* C190E */
@@ -1271,28 +1271,28 @@ extern unsigned char str_NotEnoughPlayers[]; /* C2C26 */
 extern unsigned char str_NotEnoughGoalies[]; /* C2C47 */
 extern unsigned char str_NotEnoughForwards[]; /* C2C68 */
 extern unsigned char str_NotEnoughDefence[]; /* C2C8A */
-extern int dword_C2CAC; /* C2CAC */
-extern int dword_C2CB0; /* C2CB0 */
-extern int dword_C2CB4; /* C2CB4 */
-extern int dword_C2CB8; /* C2CB8 */
-extern int dword_C2CBC; /* C2CBC */
-extern int dword_C2CC0; /* C2CC0 */
-extern int dword_C2CC4; /* C2CC4 */
-extern int dword_C2CC8; /* C2CC8 */
-extern int dword_C2CCC; /* C2CCC */
-extern int dword_C2CD0; /* C2CD0 */
-extern int dword_C2CD4; /* C2CD4 */
-extern int dword_C2CD8; /* C2CD8 */
-extern int dword_C2CDC; /* C2CDC */
+extern int fp_1000; /* C2CAC */
+extern int fp_84; /* C2CB0 */
+extern int fp_300; /* C2CB4 */
+extern int fp_390; /* C2CB8 */
+extern int fp_200; /* C2CBC */
+extern int fp_100; /* C2CC0 */
+extern int fp_m50; /* C2CC4 */
+extern int fp_500; /* C2CC8 */
+extern int fp_90; /* C2CCC */
+extern int fp_10; /* C2CD0 */
+extern int fp_70; /* C2CD4 */
+extern int fp_30; /* C2CD8 */
+extern int fp_58; /* C2CDC */
 extern short qword_C2CE0; /* C2CE0 */
 extern short qword_C2CE8; /* C2CE8 */
-extern int dword_C2CF0; /* C2CF0 */
+extern int fp_347; /* C2CF0 */
 extern unsigned char str_Shoots[]; /* C2CF4 */
 extern unsigned char str_spL[]; /* C2CFB */
 extern unsigned char str_spR[]; /* C2CFF */
 extern unsigned char str_GloveHand[]; /* C2D03 */
 extern short str_L9; /* C2D0E */
-extern short word_C2D10; /* C2D10 */
+extern short str_R5; /* C2D10 */
 extern unsigned char str_EnterANewRating[]; /* C2D12 */
 extern unsigned char str_RatingRange[]; /* C2D26 */
 extern unsigned char str_ShootsLeftOrRight[]; /* C2D35 */
@@ -1378,7 +1378,7 @@ extern unsigned char str_Lelogo[]; /* C30F7 */
 extern unsigned char str_Menubuff8[]; /* C30FE */
 extern unsigned char str_C2dS2[]; /* C3107 */
 extern unsigned char str_S2dSS[]; /* C3111 */
-extern unsigned char unk_C311D[]; /* C311D */
+extern unsigned char str_dot2[]; /* C311D */
 extern unsigned char str_S6[]; /* C311F */
 extern unsigned char str_Keys3[]; /* C3122 */
 extern unsigned char str_Pstat3[]; /* C3127 */
@@ -1441,7 +1441,7 @@ extern unsigned char str_Goaltenders[]; /* C325B */
 extern unsigned char str_Extra[]; /* C3267 */
 extern unsigned char str_Attackers[]; /* C326D */
 extern unsigned char str_S2dSS2[]; /* C3277 */
-extern unsigned char unk_C3283[]; /* C3283 */
+extern unsigned char str_dot3[]; /* C3283 */
 extern unsigned char str_S7[]; /* C3285 */
 extern unsigned char str_Teams2[]; /* C3288 */
 extern unsigned char str_ErrB2Perror[]; /* C328E */
@@ -1501,13 +1501,13 @@ extern unsigned char str_Pointer19[]; /* C3426 */
 extern unsigned char str_SaveTo[]; /* C342E */
 extern unsigned char str_HilightsReel[]; /* C3436 */
 extern unsigned char str_K1[]; /* C3444 */
-extern unsigned char unk_C3447[]; /* C3447 */
+extern unsigned char str_backslash4[]; /* C3447 */
 extern unsigned char str_HI[]; /* C3449 */
 extern unsigned char str_F12[]; /* C344D */
 extern unsigned char str_CantOpenFile[]; /* C3450 */
 extern unsigned char str_F3[]; /* C3468 */
 extern unsigned char str_F4[]; /* C346B */
-extern unsigned char unk_C3470[]; /* C3470 */
+extern unsigned char str_dot4[]; /* C3470 */
 extern unsigned char str_HLTL[]; /* C3472 */
 extern unsigned char str_HLT[]; /* C3477 */
 extern unsigned char str_HLTS[]; /* C347B */
@@ -1695,7 +1695,7 @@ extern unsigned char str_Db[]; /* C3A4B */
 extern unsigned char str_Tied[]; /* C3A4F */
 extern unsigned char str_Schedule[]; /* C3A54 */
 extern unsigned char str_GameSav[]; /* C3A5D */
-extern unsigned char unk_C3A66[]; /* C3A66 */
+extern unsigned char str_space4[]; /* C3A66 */
 extern unsigned char str_Pointer[]; /* C3A68 */
 extern unsigned char str_Menubuff2[]; /* C3A70 */
 extern unsigned char str_PlayoffsHaveNotBeen[]; /* C3A79 */
@@ -1711,7 +1711,7 @@ extern unsigned char str_Aup1[]; /* C3AE4 */
 extern unsigned char str_Aup2[]; /* C3AE9 */
 extern unsigned char str_Aup3[]; /* C3AEE */
 extern unsigned char str_Midl[]; /* C3AF3 */
-extern unsigned char unk_C3AF8[]; /* C3AF8 */
+extern unsigned char str_space5[]; /* C3AF8 */
 extern unsigned char str_Adn3[]; /* C3AFB */
 extern unsigned char str_Adn2[]; /* C3B00 */
 extern unsigned char str_Adn1[]; /* C3B05 */
@@ -2814,7 +2814,7 @@ extern short ltack; /* CC0DA */
 extern short lastsfx; /* CC0DC */
 extern short crowdlevel; /* CC0DE */
 extern int photobankf; /* CC0E0 */
-extern int demogame; /* CC0EC */
+extern int demoflag; /* CC0EC */
 extern int introskipped; /* CC0F0 */
 extern int onetimerflag; /* CC0F4 */
 extern int shotongoal; /* CC0F8 */
@@ -4873,7 +4873,7 @@ extern short hmtmap[]; /* DF64A */
 extern short hmtmgoalie[]; /* DF64C */
 extern unsigned char hmtmgoalie_b1[]; /* DF64D */
 extern int hmtmnear; /* DF652 */
-extern short hmtmnearsc; /* DF656 */
+extern short hmtmnearpl; /* DF656 */
 extern unsigned char hmtmflags[]; /* DF658 */
 extern short hmtmpde[]; /* DF65A */
 extern int hmtmpdst_m2[]; /* DF690 */
@@ -4904,7 +4904,7 @@ extern short awtmtouch3; /* DF748 */
 extern short awtmap; /* DF74A */
 extern short awtmgoalie; /* DF74C */
 extern int awtmnear; /* DF752 */
-extern short awtmnearsc; /* DF756 */
+extern short awtmnearpl; /* DF756 */
 extern unsigned char awtmflags; /* DF758 */
 extern short awtmpde[]; /* DF75A */
 extern unsigned char awtmpbox; /* DF7CA */

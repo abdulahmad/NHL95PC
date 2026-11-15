@@ -51,7 +51,7 @@ int SaveHilight(int team)
         hilightrec[0x20 + i] = byte_DB7F1[i * 0x27];
     }
     strcpy(name, (char *)&curleague);
-    strcat(name, (char *)unk_C3447);
+    strcat(name, (char *)str_backslash4);
     strcat(name, (char *)hmteamrec + team * 0x2E8);
     strcat(name, (char *)str_HI);
     if (unknown_libname_1(name, 0, &ft)) {

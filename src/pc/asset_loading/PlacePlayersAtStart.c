@@ -10,7 +10,7 @@
  targetsearch: none. Negating regd1 before regd0 puts regd1 in memory (against the EXE order). */
 #include "nhl95.h"
 
-/* PlacePlayersAtStart: with demogame clear, forceteams and drop the puck and the
+/* PlacePlayersAtStart: with demoflag clear, forceteams and drop the puck and the
  faceoff spot to 0. Each of the 12 players gets temp5 -100 and assignment 16h, or
  17h when position is 4. A negative position is left there. Otherwise the spot
  comes from apl, indexed by the team map plus 6, shifted up 3, plus the position.
@@ -23,7 +23,7 @@ void PlacePlayersAtStart(void)
 {
     Player *p;
 
-    if (demogame) return;
+    if (demoflag) return;
     forceteams();
     fox = foy = 0;
     *puckx = *pucky = 0;

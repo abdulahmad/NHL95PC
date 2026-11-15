@@ -57,24 +57,24 @@ void RandomizeNewRatings(unsigned char *rec, unsigned char *r, unsigned short *o
     s.fd = RatingToFloat(r[0xD]);
     s.fe = RatingToFloat(r[0xE]);
     f13 = RatingToFloat(r[0x13]);
-    s.luck = 1.0 - randomd0(0x14D) / F(dword_C2CAC);
+    s.luck = 1.0 - randomd0(0x14D) / F(fp_1000);
     s.scale = randomd0(0x15) + 0x40;
     out[0] = s.scale;
-    s.scale = s.scale / F(dword_C2CB0);
-    out[7] = (s.fa + s.fd + s.fe) / F(dword_C2CB4) * F(dword_C2CB8) * s.scale * s.luck;
-    out[8] = ((s.fa + s.fb) / F(dword_C2CBC) * F(dword_C2CC0) + F(dword_C2CC4)) * s.scale * s.luck;
-    s.v08 = (s.f2 + s.fa + s.f6 + s.f1 + s.fd) / F(dword_C2CC8);
+    s.scale = s.scale / F(fp_84);
+    out[7] = (s.fa + s.fd + s.fe) / F(fp_300) * F(fp_390) * s.scale * s.luck;
+    out[8] = ((s.fa + s.fb) / F(fp_200) * F(fp_100) + F(fp_m50)) * s.scale * s.luck;
+    s.v08 = (s.f2 + s.fa + s.f6 + s.f1 + s.fd) / F(fp_500);
     if (rec[2] != 'D') {
-        s.v38 = s.fe / F(dword_C2CD4);
-        s.v30 = (F(dword_C2CC0) - s.fe) / F(dword_C2CD8);
+        s.v38 = s.fe / F(fp_70);
+        s.v30 = (F(fp_100) - s.fe) / F(fp_30);
     } else {
-        s.v38 = s.fe / F(dword_C2CCC);
-        s.v30 = (F(dword_C2CC0) - s.fe) / F(dword_C2CD0);
+        s.v38 = s.fe / F(fp_90);
+        s.v30 = (F(fp_100) - s.fe) / F(fp_10);
     }
-    a = s.v38 < 1.0 ? (unsigned short)(s.v38 * F(dword_C2CDC)) : 0x3A;
-    b = s.v30 < 1.0 ? (unsigned short)(s.v30 * F(dword_C2CCC)) : 0x5A;
-    s.v04 = (s.f4 + s.f7) / F(dword_C2CBC) * a;
-    s.v00 = s.f9 / F(dword_C2CC0) * b;
+    a = s.v38 < 1.0 ? (unsigned short)(s.v38 * F(fp_58)) : 0x3A;
+    b = s.v30 < 1.0 ? (unsigned short)(s.v30 * F(fp_90)) : 0x5A;
+    s.v04 = (s.f4 + s.f7) / F(fp_200) * a;
+    s.v00 = s.f9 / F(fp_100) * b;
     a = s.v08 * s.v04 * s.scale * s.luck;
     b = s.v08 * s.v00 * s.scale * s.luck;
     if (a + b > 0x80) {
@@ -88,5 +88,5 @@ void RandomizeNewRatings(unsigned char *rec, unsigned char *r, unsigned short *o
     out[5] = randomd0(out[4]);
     s.fc = s.fc * D(qword_C2CE0);
     s.f5 = s.f5 * D(qword_C2CE8);
-    out[6] = (s.fc + s.f5) / F(dword_C2CC0) * F(dword_C2CF0) * s.scale * s.luck;
+    out[6] = (s.fc + s.f5) / F(fp_100) * F(fp_347) * s.scale * s.luck;
 }

@@ -38,7 +38,7 @@ extern strcmp_, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C
 extern sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20
 extern sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA
 extern sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84
-extern sub_B4DD4, sub_B4FAC, sub_B5DB0, TeamRosterScreen, unk_C311D, unk_C3283, unk_CF48F, unk_D075E
+extern sub_B4DD4, sub_B4FAC, sub_B5DB0, TeamRosterScreen, str_dot2, str_dot3, unk_CF48F, unk_D075E
 extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
 global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
@@ -3345,7 +3345,7 @@ mov eax, 12h	; 78F4F
 sub eax, edx	; 78F54
 cmp eax, byte 1	; 78F56
 jne short .5	; 78F59
-mov eax, unk_C3283	; 78F5B
+mov eax, str_dot3	; 78F5B
 jmp short .6	; 78F60
 .5:
 mov eax, str_S7	; 78F62
@@ -3366,7 +3366,7 @@ jle short .11	; 78F8C
 lea eax, [byte edx-012h]	; 78F8E
 cmp eax, byte 1	; 78F91
 jne short .8	; 78F94
-mov eax, unk_C3283	; 78F96
+mov eax, str_dot3	; 78F96
 jmp short .9	; 78F9B
 .8:
 mov eax, str_S7	; 78F9D
@@ -3396,7 +3396,7 @@ mov eax, 2	; 78FDB
 sub eax, ebp	; 78FE0
 cmp eax, byte 1	; 78FE2
 jne short .12	; 78FE5
-mov eax, unk_C3283	; 78FE7
+mov eax, str_dot3	; 78FE7
 jmp short .13	; 78FEC
 .12:
 mov eax, str_S7	; 78FEE
@@ -3417,7 +3417,7 @@ jle short .18	; 79013
 lea eax, [byte ebp-02h]	; 79015
 cmp eax, byte 1	; 79018
 jne short .15	; 7901B
-mov eax, unk_C3283	; 7901D
+mov eax, str_dot3	; 7901D
 jmp short .16	; 79022
 .15:
 mov eax, str_S7	; 79024

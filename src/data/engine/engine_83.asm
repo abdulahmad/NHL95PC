@@ -7,8 +7,8 @@ global hmtmextra, hmtmtouch2, hmtmtouch3, hmtmnear, hmtmpdst_m2, hmtmpdst_gl_m2,
 global hmtmplattr, hmtmglattr, hmtmplstats, hmtmglstats, hmtmroster, hmtmptrF2, hmtmsort
 global awtmstruct
 global awtmtouch3, awtmnear, hmtmline, hmtmlcnt, hmtmtouch1, hmtmap, hmtmgoalie
-global hmtmnearsc, hmtmpde, hmtmpdst, hmtmgoaliesc, awscore, awtmline, awtmlcnt, awtmextra
-global awtmtouch1, awtmtouch2, awtmap, awtmgoalie, awtmnearsc
+global hmtmnearpl, hmtmpde, hmtmpdst, hmtmgoaliesc, awscore, awtmline, awtmlcnt, awtmextra
+global awtmtouch1, awtmtouch2, awtmap, awtmgoalie, awtmnearpl
 hmtmline:
 resb 2
 hmtmlcnt:
@@ -29,7 +29,7 @@ hmtmgoalie_b1:
 resb 5
 hmtmnear:
 resb 4
-hmtmnearsc:
+hmtmnearpl:
 resb 2
 hmtmflags:
 resb 2
@@ -102,7 +102,7 @@ awtmgoalie:
 resb 6
 awtmnear:
 resb 4
-awtmnearsc:
+awtmnearpl:
 resb 2
 awtmflags:
 resb 2

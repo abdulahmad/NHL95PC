@@ -32,7 +32,7 @@ extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_913
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, teamabbrevs, teamcitynames, teamconf, teamdivflags, teamstatscb, TextGridOff
 extern TextGridOpen, TextInputDialog, treecol_Er1, treecol_Er2, treecol_Wr2, treecolslots, treecolx, treeteamnames
-extern unk_C3A66, unk_C3AF8, unk_CEE4F, unk_CEEAF, playoffmenubar, unk_D2864, unk_DDCFB, unk_ED7BC
+extern str_space4, str_space5, unk_CEE4F, unk_CEEAF, playoffmenubar, unk_D2864, unk_DDCFB, unk_ED7BC
 extern unknown_libname_1, ViewPlayoffHilights, VisTeam, WaitTickDeadline, potreeround, WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
 global POSeriesScore, POSeedRound2, POSeedRound2_x30, POSeedRound2_x, POSeedConfFinals, POSeedConfFinals_pair, POSeedConfFinals_x, POSeedFinal
@@ -4042,7 +4042,7 @@ call strcpy_	; 895F5
 inc esi	; 895FA
 cmp esi, byte 1Ah	; 895FB
 jl short PlayoffModeLoop.15	; 895FE
-mov edx, unk_C3A66	; 89600
+mov edx, str_space4	; 89600
 mov eax, treeteamnames+222h	; 89605
 call strcpy_	; 8960A
 mov ecx, dword [embscupbank]	; 8960F
@@ -5874,7 +5874,7 @@ mov edx, 43h	; 8AFFE
 mov eax, 40h	; 8B003
 call SetTextColors	; 8B008
 lea edi, [dword esp+0B8h]	; 8B00D
-mov esi, unk_C3AF8	; 8B014
+mov esi, str_space5	; 8B014
 movsw	; 8B019
 movsb	; 8B01B
 movzx si, byte [treecolslots+18h]	; 8B01C
@@ -5958,7 +5958,7 @@ mov edx, 43h	; 8B150
 mov eax, 40h	; 8B155
 call SetTextColors	; 8B15A
 lea edi, [dword esp+0B8h]	; 8B15F
-mov esi, unk_C3AF8	; 8B166
+mov esi, str_space5	; 8B166
 movsw	; 8B16B
 movsb	; 8B16D
 movzx si, byte [treecolslots+28h]	; 8B16E

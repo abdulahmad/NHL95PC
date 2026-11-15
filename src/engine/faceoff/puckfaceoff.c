@@ -186,7 +186,7 @@ void puckfaceoff2(Player *p)
     int d;
 
     if (p->pflags & 2) {
-        if (--p->temp5 > 0 && !demogame && !introskipped && !injurystop) {
+        if (--p->temp5 > 0 && !demoflag && !introskipped && !injurystop) {
             if (gsp || clockticks[0] || gameclock != PerTimeTotal) {
                 if (RefStep[0] >= 0) return;
                 if (ovltimer >= 0) return;
@@ -203,8 +203,8 @@ void puckfaceoff2(Player *p)
         ovltimer = ovlseq = ovlstep = bannermsg = -1;
         bannertimer = 0;
         textline3 = textline1 = textline2 = textline4 = textline5 = 0;
-        if (!demogame && !gsp && gameclock == PerTimeTotal && !clockticks[0] && !introskipped) fadeinpending = 0;
-        else if (demogame || introskipped || injurystop) fadeinpending = 1;
+        if (!demoflag && !gsp && gameclock == PerTimeTotal && !clockticks[0] && !introskipped) fadeinpending = 0;
+        else if (demoflag || introskipped || injurystop) fadeinpending = 1;
         else fadeinpending = injurystop;
         RefStep[0] = -1;
         introskipped = 0;
