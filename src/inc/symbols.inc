@@ -490,7 +490,7 @@
 ;  5CAEF  updateanim                               engine/hockey/hockey.asm                     4
 ;  5CE12  DrawRinkOverlays                         engine/hockey/hockey.asm                     4
 ;  5D7F7  setupice                                 engine/hockey/hockey.asm                     1
-;  5D852  clockcont_0                              engine/hockey/hockey.asm                     2
+;  5D852  clockcont                                engine/hockey/hockey.asm                     2
 ;  5DC10  ClockTick                                engine/hockey/hockey.asm                     1
 ;  5DD6B  SprSortVert                              engine/hockey/hockey.asm                     3
 ;  5DD7C  SprSort                                  engine/hockey/hockey.asm                     6

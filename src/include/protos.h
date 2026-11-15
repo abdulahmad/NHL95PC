@@ -589,7 +589,7 @@ void FallDown(Player *p, Player *by);
 void periodicevents(void);  /* 5C302 */
 void PenaltyManager(void);
 void DecayCrowdLevel(void);
-void clockcont_0(void);
+void clockcont(void);
 void UpdatePowerPlayFlags(void);
 void ShotMode(Player *p);  /* 578FA */
 void asscenterd(Player *p);  /* 4A53A */

@@ -19,7 +19,7 @@ extern unsigned short fofdata_w2;
 /* puckfaceoff (516E1, 93G puckfaceoff; ends in TakePlayerFromBox_ret6): asstab 1Bh, the faceoff setup ("this is
    where the action starts"). On a new assignment (pflags bit 1): free the puck (a penalty-shot goalie carrying it
    gets nopuck 78h and the puck stops), then end the game when the clock and ticks are out or gmode bit 6 is set
-   (SetExitGame), play on in overtime when the scores differ (clockcont_0) and stop for a delayed penalty (gmode
+   (SetExitGame), play on in overtime when the scores differ (clockcont) and stop for a delayed penalty (gmode
    bit 3, Stop4Pen). For a penalty shot send both lines (setpersonel, PenShotStart), clear the line-change
    blinks and go to the end. Otherwise, at the start of a penalty shot move each human controller onto a skater
    of its team (restorepl), return pulled goalies, send both lines when line changes are off (gameopts bit 2),
@@ -53,7 +53,7 @@ void puckfaceoff(Player *p)
             return;
         }
         if (gsp == 3 && hmscore[0] != awscore) {
-            clockcont_0();
+            clockcont();
             return;
         }
         if (gmode & 8) {
