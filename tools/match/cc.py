@@ -54,6 +54,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cobj
@@ -327,7 +329,7 @@ def seg_end(stem):
 def block(src, func=None):
     """the marked asm block of function func (default: the file's name): (start, end, [(label, addr)], lines)"""
     stem, func, asm, inc = c_paths(src, func)
-    L = open(asm).read().split('\n')
+    L = asmaddr.legacy_lines(asm)
     i = next((k for k, l in enumerate(L) if l.strip() == '%%include "%s"' % inc), None)
     if i is None: raise SystemExit('%s: no %%include "%s" block (run cc.py mark)' % (os.path.relpath(asm, ROOT), inc))
     assert L[i + 1].strip() == '%else', 'marker: %else must follow the %include line'
@@ -355,7 +357,7 @@ def leading_labels(src, func=None):
     """data labels right before the marked block (Watcom puts a switch's jump table, then padding, in front of the
     function): {label: address}, walking back over db/dd lines from the block start"""
     stem, func, asm, inc = c_paths(src, func)
-    L = open(asm).read().split('\n')
+    L = asmaddr.legacy_lines(asm)
     i = next(k for k, l in enumerate(L) if l.strip() == '%%include "%s"' % inc) - 2
     start = block(src, func)[0]
     out = {}; a = start; k = i - 1
@@ -371,7 +373,7 @@ def asm_range(src, func=None):
     stem, func, asm, inc = c_paths(src, func)
     if any(l.strip() == '%%include "%s"' % inc for l in open(asm)):
         s, e, labs, body = block(src, func); return s, e
-    L = open(asm).read().split('\n'); start = None; k = 0
+    L = asmaddr.legacy_lines(asm); start = None; k = 0
     for k, l in enumerate(L):
         m = LABEL.match(l)
         if start is None:
@@ -527,7 +529,7 @@ def flow_anchor(src, r, start, end):
     return votes.pop() if len(votes) == 1 else None
 
 def label_addr(asm, name):
-    L = open(asm).read().split('\n')
+    L = asmaddr.legacy_lines(asm)
     for k, l in enumerate(L):
         if l.startswith(name + ':'):
             # db / dd lines carry no address comment (MenuSaveDefaultLines starts with a db push): count their bytes
@@ -685,7 +687,7 @@ class TextTargets:
 
 def global_labels(asm):
     """{label: address} of the labels an asm segment exports (its `global` lines)"""
-    L = open(asm).read().split('\n')
+    L = asmaddr.legacy_lines(asm)
     names = set()
     for l in L:
         if l.startswith('global '): names.update(x.strip() for x in l[7:].split(','))
@@ -710,7 +712,7 @@ def symbols():
 
 def mark(src, endlabel=None, func=None):
     stem, func, asm, inc = c_paths(src, func)
-    L = open(asm).read().split('\n')
+    L = asmaddr.legacy_lines(asm); R = open(asm).read().split('\n')  # find on the addressed form, edit the file
     if any(l.strip() == '%%include "%s"' % inc for l in L): raise SystemExit('already marked')
     i = next((k for k, l in enumerate(L) if l.startswith(func + ':')), None)
     if i is None: raise SystemExit('label %s: not in %s' % (func, asm))
@@ -725,8 +727,8 @@ def mark(src, endlabel=None, func=None):
         j += 1
     while j > i + 1 and (not L[j - 1].strip() or L[j - 1].startswith(';')): j -= 1   # the next function's comment block
     rel = os.path.relpath(os.path.abspath(src), ROOT) + ('' if inc.endswith('/%s.inc' % func) else ' (%s)' % func)
-    L[i:j] = ['; C: %s' % rel, '%ifdef CBUILD', '%%include "%s"' % inc, '%else'] + L[i:j] + ['%endif ; C']
-    open(asm, 'w').write('\n'.join(L))
+    R[i:j] = ['; C: %s' % rel, '%ifdef CBUILD', '%%include "%s"' % inc, '%else'] + R[i:j] + ['%endif ; C']
+    open(asm, 'w').write('\n'.join(R))
     print('marked %s lines %d-%d of %s' % (func, i + 1, j, os.path.relpath(asm, ROOT)))
 
 def unmark(src, func=None):

@@ -14,7 +14,7 @@ The segment boundaries come from `segmap95pc.json` (`tools/build/segdef.py`, `EX
 
 ## Sources
 
-- Source of truth: `src/`. There is no listing in the repo. The IDA listing and `FUNCTION_MAPPINGS95.md` are private and stay private. Every instruction line ends with `; <address>`, which is the address in the EXE. Search `src/` for an address to find its line.
+- Source of truth: `src/`. There is no listing in the repo. The IDA listing and `FUNCTION_MAPPINGS95.md` are private and stay private. The source carries no per-line addresses (CONTRIBUTING.md, Source style): `python3 tools/build/asmaddr.py <address>` gives the file and line of an address, `asmaddr.py --show FILE` prints a file with its addresses.
 - Do not disassemble `HOCKEY.EXE`. Do not write a disassembler. Do not run `tools/build/gen_src.py` on `src/`: it regenerates the tree and throws away every name and comment (it refuses without `--force`).
 - Reference EXE: the retail `retail/HOCKEY.EXE` (sha1 `3961e0eba6b0338fad1613bb534efafd9406ed4a`); root `HOCKEY.EXE` is a pointer. `make` checks every build against it.
 - Name evidence:
@@ -44,7 +44,7 @@ Name preference (since 2 Nov 2026): the current 94G name when the body is the sa
 ```
 make            # or ./build.sh; needs nasm, python3 (retail/HOCKEY.EXE is committed; root HOCKEY.EXE is a pointer)
 ```
-`make` assembles every `src/` file, links (`tools/build/link_src.py`) and writes `build/HOCKEY.EXE`. It must end with `MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE`. On a mismatch the link prints the first differing addresses (built byte, retail byte) and any extra or missing fixups, then fails. Find the address in the `; <address>` comments.
+`make` assembles every `src/` file, links (`tools/build/link_src.py`) and writes `build/HOCKEY.EXE`. It must end with `MATCH: build/HOCKEY.EXE is byte-identical to the retail HOCKEY.EXE`. On a mismatch the link prints the first differing addresses (built byte, retail byte) and any extra or missing fixups, then fails. Find the address with `python3 tools/build/asmaddr.py <address>`.
 
 A file that assembles to a different size is a link error (`assembled size ..., segment size ...`). An undefined or duplicate symbol is a link error too. Only a build made this session counts.
 
@@ -118,7 +118,7 @@ After the segment's last change, also run `python3 tools/build/update_symbols.py
 - A `db ...; raw (target X unlabelled)` line is a branch into the middle of something. Keep it as bytes.
 - nasm ignores `nosplit` when the displacement is a symbol plus a constant: `[nosplit esi*2+dirtab+2]` assembles as `[esi+esi*1+...]` and the build fails. Keep a plain label for an indexed table column (`dirtab_y`), not `dirtab+2`.
 - `name equ $+k` defines a label inside an instruction or a pointer. Rename it like any label; keep the `equ $+k`.
-- Keep the `; <address>` comment at the end of every instruction line. It maps the line back to the EXE. Put your comments on their own lines or after it.
+- Do not add `; <address>` comments; `tools/build/asmaddr.py` maps any line back to the EXE. Put a comment after an instruction at column 48, or on its own line, and keep `tools/build/format_asm.py --check` clean.
 - `dd name` in data is a pointer with an LE fixup. A number where the original had a pointer, or a pointer where it had a number, changes the fixup set; the link reports it.
 - Do not change the `section` line, `bits 32`, the `%include` or `src/segments.txt`. Keep the `global`/`extern` lists consistent with the code; `rename_symbol.py` maintains them. A label another file uses must stay `global`, and that file has it in its `extern` list.
 - NASM symbols are case-sensitive, but do not add a name that differs from an existing one only in case.

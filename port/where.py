@@ -2,6 +2,8 @@
 """where.py RUNTIME_EIP -- map a runtime address of build/hockey-linux (or, when that is missing, build/win/hockey-win32.exe, which is
 linked at a fixed address) to the original address and show the asm around it. $NM names the nm program (default nm)."""
 import glob, os, re, subprocess, sys
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'tools', 'build'))
+import asmaddr  # the source no longer carries addresses: read the addressed form
 root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 exe = os.path.join(root, 'build/hockey-linux')
 if not os.path.exists(exe):
@@ -19,13 +21,13 @@ best, best_a = None, -1
 for f in glob.glob(os.path.join(root, 'src', '**', '*.asm'), recursive=True):
     if '/inc/' in f.replace('\\', '/'):
         continue
-    for m in re.finditer(r'; ([0-9A-F]{5})\s*$', open(f, encoding='latin1').read(), re.M):
+    for m in re.finditer(r'; ([0-9A-F]{5})\s*$', asmaddr.legacy_text(f), re.M):
         a = int(m.group(1), 16)
         if a <= orig and a >= best_a:
             best, best_a = f, a
 if best is None:
     raise SystemExit('no asm file contains an address comment at or below %X' % orig)
-L = open(best, encoding='latin1').read().split('\n')
+L = asmaddr.legacy_lines(best)
 print(os.path.basename(best))
 idx = None
 for i, l in enumerate(L):

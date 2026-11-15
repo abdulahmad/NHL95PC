@@ -17,6 +17,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 from link_src import read_layout
@@ -26,7 +28,7 @@ DEF = re.compile(r'^([A-Za-z_?][\w$#@~?.]*)(?::|\s+equ\b)')
 STRUCT_OP = re.compile(r'\[(?:byte|dword) e(?:ax|bx|cx|dx|si|di)\+0[0-9A-F]+h\]')   # not ebp/esp: stack frame
 
 def analyse(sg, segs):
-    t = open(os.path.join(ROOT, 'src', sg['src'])).read()
+    t = asmaddr.legacy_text(os.path.join(ROOT, 'src', sg['src']))
     code = [l.split(';')[0] for l in t.split('\n')]
     defined = [m.group(1) for l in code for m in [DEF.match(l)] if m and AUTO.fullmatch(m.group(1))]
     g, e = decl_lists(t)

@@ -11,13 +11,15 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 import c_progress as cp, cc
 done={r['function'] for r in csv.DictReader(open('tools/match/c_functions.csv'))}
 out=[]
 for f in cc.iter_asm():
     stem=cc.asm_stem(f)
     if cp.is_lib(stem): continue
-    L=open(f).read().split('\n')
+    L=asmaddr.legacy_lines(f)
     labs=[]
     for k,l in enumerate(L):
         m=cc.LABEL.match(l)

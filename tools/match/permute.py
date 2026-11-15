@@ -60,6 +60,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cc, cdiff, scope_decls, cexpr
@@ -880,7 +882,7 @@ def pieces(src, func):
         asm = cc.c_paths(src, func)[2]
         s, e = cc.asm_range(src, func)
         names = []
-        L = open(asm).read().split('\n') + ['', '']
+        L = asmaddr.legacy_lines(asm) + ['', '']
         for j, l in enumerate(L):
             m = cc.LABEL.match(l)
             if not m or not m.group(1).startswith(func + '_'): continue
@@ -891,7 +893,7 @@ def pieces(src, func):
         for m in re.finditer(r'pieces of (\w+):\s*([\w ]+)', open(src).read()):
             for n in m.group(2).split(): claimed[n] = m.group(1)
         names = [n for n in names if claimed.get(n, func) == func] + [n for n, f in claimed.items() if f == func]
-        L = open(asm).read().split('\n')
+        L = asmaddr.legacy_lines(asm)
         def is_code(n):   # the label starts code (not a jump table or other data: GameSummaryScreen_jt)
             k = next((i for i, l in enumerate(L) if l.startswith(n + ':')), None)
             for l in L[k + 1:k + 4] if k is not None else []:

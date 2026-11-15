@@ -19,6 +19,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cc, c_progress
@@ -56,7 +58,7 @@ def labels():
             try: out[int(p[0], 16)] = p[1]
             except ValueError: pass
     for asm in cc.iter_asm():
-        L = open(asm).read().split('\n')
+        L = asmaddr.legacy_lines(asm)
         for k, l in enumerate(L):
             m = cc.LABEL.match(l)
             if not m or m.group(1).startswith('.'): continue

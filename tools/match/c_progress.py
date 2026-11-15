@@ -26,6 +26,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cc
@@ -58,7 +60,7 @@ def is_lib(stem):
 
 def c_functions(asm):
     """{label: address} of the labels in a segment whose first instructions are push N / call __CHK"""
-    out = {}; L = open(asm).read().split('\n')
+    out = {}; L = asmaddr.legacy_lines(asm)
     for k, l in enumerate(L):
         m = cc.LABEL.match(l)
         if m and not m.group(1).startswith('.'):
@@ -70,7 +72,7 @@ def c_functions(asm):
 def asm_pieces(asm, blocks):
     """{label: address} of the global code labels of a segment outside every marked block (data labels, like a
     jump table's F_jt, are left out)"""
-    L = open(asm).read().split('\n'); names = set()
+    L = asmaddr.legacy_lines(asm); names = set()
     for l in L:
         if l.startswith('global '): names.update(x.strip() for x in l[7:].split(','))
     out = {}

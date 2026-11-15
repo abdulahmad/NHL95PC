@@ -33,6 +33,8 @@ while os.path.basename(_td) != 'tools' and _td != os.path.dirname(_td):
 if _td not in sys.path:
     sys.path.insert(0, _td)
 import paths
+sys.path.insert(0, os.path.join(paths.ROOT, 'tools', 'build'))
+import asmaddr  # addresses of source lines (the source no longer carries them)
 ROOT = paths.ROOT
 # sys.path: tools/paths.add_path()
 import cc
@@ -45,7 +47,7 @@ NEVER = re.compile(r'^(pushad?|popad?|pushfd?|popfd?|enter|loopn?[ez]?|jcxz|jecx
 def insns(asm):
     """[(kind, text, addr)] kind: 'label' / 'ins' (comments, directives and data skipped)"""
     out = []
-    for l in open(asm).read().split('\n'):
+    for l in asmaddr.legacy_lines(asm):
         m = cc.LABEL.match(l)
         if m: out.append(('label', m.group(1), None)); continue
         a = cc.ADDR.search(l)
