@@ -4,12 +4,12 @@ bits 32
 %include "hockey.inc"
 section s_10010 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, _dos_getdiskfree_, _dos_getdrive_, _dos_gettime_, addtimer, awardtype, awardwinners
-extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, byte_C5138, byte_D416A, fadepalbuf
+extern bailout_vec, bannertimer, bgscrollx, bgscrolly, BuildDefaultLines, fadeendlvl, byte_D416A, fadepalbuf
 extern byte_D9299, camx, camx_m2, camy, cddriveptr, ClearInputQueue, ClockTick, clockticks
 extern cont1team, cont2team, CritErrHandler, Crowd_Noise, CrowdFadeOut, CrowdNoiseOff, CrowdNoiseReset, ctl1dev
 extern ctl1side, ctl1team, ctl2dev, ctl2side, ctl2team, ctlavailmask, cupteam, curleague
 extern curperiod, deferpending, demomode, DoGameFrame, DrawHudPanel, DrawRinkOverlays, DrawSprite, dword_C4CFC
-extern dword_C5131, dword_C5133, dword_C5135, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
+extern fadestart_m3, fadestep_m3, fadestart_e1, dword_CC080, dword_D30D4, dword_D4158, dword_D415C, dword_D4160
 extern dword_D4164, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, ovlartbank, dword_E9A9E, escrequest
 extern exhstate, exit_, exitgame, fadeinpending, FadeOutPalCycle, FadePalStep, FatalError, FileClose
 extern fileoncd, FileOpenRead, FileReadAt, FlushGSumQueue, frameaccum, gameclock, gamemode, gameopts
@@ -21,8 +21,8 @@ extern joyrec, joysampling, joysampling_save, JoystickCalScreen, kaufmfont, keyd
 extern lcrequest, leaguedbnames, LoadCupFinalSeries, LoadGameGfx, LoadGameState, LoadModeState, LoadNhlCfg, LoadRink
 extern LoadRockMusic, LoadTeamPalette, MainDeskLoop, mainfont, MakeGSummaryPath, MakePath, memlist0, memlist1
 extern mousebtns, mousepollfn, MouseSetPos, mousex, mousey, MusicChanReset, musichandle, musicon
-extern musicslot, NormalizeDressFlags, numshapes, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F
-extern off_C5263, off_C5267, off_C526F, off_C5273, ovlartnames, ovlseq, ovlstep, pad1dev
+extern musicslot, NormalizeDressFlags, numshapes, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04
+extern awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, ovlartnames, ovlseq, ovlstep, pad1dev
 extern pad2dev, palfadedin, PaPreloadClips, penshotlive, PeriodOver, photoptrs, PlayCrowdSample, pntrshapes
 extern pointerspr, PollKey, PostGameDesk, presidentsteam, printf_, ReadGoalieSeasonRec, ReadKeyRec, ReadSeasonRec
 extern ReadTeamNames, ReadTeamRec, recbpr, replaystart, ResetGoalieMenu, rinkendart, rinkhtiles, rinkscrollx
@@ -39,8 +39,8 @@ extern subwindowdefadr, sub_8E83C, sub_8E8A0, sub_8EA18, sub_8F633, sub_8F963, s
 extern sub_8F984, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C, sub_B29F0, sub_B2CBE
 extern sub_B2E1B, sub_B2F22, sub_B3036, sub_B30B4, sub_B30F4, sub_B33DB, sub_B3464, sub_B392C
 extern sub_B3A24, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C33, sub_B4C84, teamabbrevs
-extern TicksSinceLastCall, treeteamnames, blackpal, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
-extern unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly
+extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
+extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
 extern VisTeam, vtoa, WaitTickDeadline, word_CBC44
 global GetMemListHead, GetMemStats, main_, main_x, DiskFreeBytes, SetupControllers, ReadKeyboardPad, ReadJoyPad
 global ReadMousePad, ReadControllerPad, ReadHotKeys, ReadSkipKeys, SampleInputTick, SetScreenSize, IntermissionPC, DrawSpriteNumber
@@ -1978,11 +1978,11 @@ jmp short FadePalette.6	; 1160E
 .8:
 mov al, byte [esp]	; 11610
 dec al	; 11613
-mov byte [dword_C5135], al	; 11615
+mov byte [fadestart_e1], al	; 11615
 mov al, byte [esp]	; 1161A
 inc al	; 1161D
-mov byte [byte_C5138], al	; 1161F
-mov ecx, dword [dword edi+dword_C5131]	; 11624
+mov byte [fadeendlvl], al	; 1161F
+mov ecx, dword [dword edi+fadestart_m3]	; 11624
 sar ecx, 18h	; 1162A
 mov ebp, dword [esp]	; 1162D
 jmp short .11	; 11630
@@ -2000,11 +2000,11 @@ cmp ebx, 300h	; 11649
 jl short FadePalette.10	; 1164F
 mov eax, fadepalbuf	; 11651
 call SetFullPalette	; 11656
-mov eax, dword [dword edi+dword_C5133]	; 1165B
+mov eax, dword [dword edi+fadestep_m3]	; 1165B
 sar eax, 18h	; 11661
 add ecx, eax	; 11664
 .11:
-mov eax, dword [dword edi+byte_C5138-3]	; 11666
+mov eax, dword [dword edi+fadeendlvl-3]	; 11666
 sar eax, 18h	; 1166C
 cmp ecx, eax	; 1166F
 jne short FadePalette.9	; 11671

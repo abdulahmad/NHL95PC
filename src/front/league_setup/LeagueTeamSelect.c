@@ -363,7 +363,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
                                             if (k != picks[cur] && copy[k * 30 + 0x17] == 1
                                                 && stricmp((char *)copy + picks[cur] * 30,
                                                        (char *)copy + k * 30) == 0) {
-                                                MessageBox(-1, -1, (char *)unk_C7592, 1, 0, 0, (int)&mx, (int)&my, -1);
+                                                MessageBox(-1, -1, (char *)msg_NameTaken, 1, 0, 0, (int)&mx, (int)&my, -1);
                                                 r = 1;
                                             }
                                         }

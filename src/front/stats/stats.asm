@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_21CDE progbits alloc exec nowrite align=1
-extern __CHK, portraitoncd, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, dword_DC85C
-extern dword_DC860, eastconfname, eastconfteams, fileoncd, FitPlayerName, fputchar, FreeMemBlock, goalieratingnames
+extern __CHK, portraitoncd, cddriveptr, CmpGAA, CmpPoints, DrawPhotoWithPal, dword_DC734, statsfilepos
+extern lgstatsfilepos, eastconfname, eastconfteams, fileoncd, FitPlayerName, fputchar, FreeMemBlock, goalieratingnames
 extern j___close_, kaufmfont, leadersortfns, leadertitles, lseek_, mainfont, MakePath, MakeStatsTitle
-extern memcpy_, off_C6A99, off_C6AD1, leadercolhdrs, leadercolhdrs_c1, leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4
+extern memcpy_, skatercardattrs_m3, goaliecardattrs_m3, leadercolhdrs, leadercolhdrs_c1, leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4
 extern open_, OpenStatsSchedule, PrintCenteredText, printfbuf, PrintFmt1, PrintFmt2, PrintOutlinedText, PrintShadowText
 extern qsort_, read_, SetTextColors, skaterratingnames, sprintf_, statsbgnames, statsbgshapes, statsfromleague
 extern statsgoaliebuf, statsgoalieorder, statsgoalieplr, statslabels, statsleague, statsnumgoalies, statsnumskaters, statspalshape
@@ -67,10 +67,10 @@ mov ecx, eax	; 21D4E
 xor ebx, ebx	; 21D50
 cmp dword [statsfromleague], byte 0	; 21D52
 jne short .1	; 21D59
-mov edx, dword [dword_DC85C]	; 21D5B
+mov edx, dword [statsfilepos]	; 21D5B
 jmp short .2	; 21D61
 .1:
-mov edx, dword [dword_DC860]	; 21D63
+mov edx, dword [lgstatsfilepos]	; 21D63
 .2:
 mov eax, ecx	; 21D69
 call lseek_	; 21D6B
@@ -609,7 +609,7 @@ add eax, 1Eh	; 22502
 cwde	; 22507
 mov edx, edi	; 22508
 call PrintShadowText	; 2250A
-mov edx, dword [dword ebp+off_C6A99]	; 2250F
+mov edx, dword [dword ebp+skatercardattrs_m3]	; 2250F
 sar edx, 18h	; 22515
 add edx, dword [dword esp+0104h]	; 22518
 xor eax, eax	; 2251F
@@ -677,10 +677,10 @@ mov ecx, eax	; 225E8
 xor ebx, ebx	; 225EA
 cmp dword [statsfromleague], byte 0	; 225EC
 jne short .1	; 225F3
-mov edx, dword [dword_DC85C]	; 225F5
+mov edx, dword [statsfilepos]	; 225F5
 jmp short .2	; 225FB
 .1:
-mov edx, dword [dword_DC860]	; 225FD
+mov edx, dword [lgstatsfilepos]	; 225FD
 .2:
 mov eax, ecx	; 22603
 call lseek_	; 22605
@@ -1200,7 +1200,7 @@ add eax, 14h	; 22D6B
 cwde	; 22D70
 mov edx, esi	; 22D71
 call PrintShadowText	; 22D73
-mov edx, dword [dword ebp+off_C6AD1]	; 22D78
+mov edx, dword [dword ebp+goaliecardattrs_m3]	; 22D78
 sar edx, 18h	; 22D7E
 add edx, dword [dword esp+010Ch]	; 22D81
 xor eax, eax	; 22D88

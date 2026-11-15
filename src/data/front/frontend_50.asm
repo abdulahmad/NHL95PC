@@ -5,8 +5,8 @@ section s_D075E progbits alloc noexec write align=1
 extern unk_D068A, unk_D0720, str_PlayerStatistics6, str_Display
 global str_TMP, rosterteam, rosterisfa, falist, falistsel, facount
 global seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
-global carteamsdb_size, keydb_size, teamsdb_size, attdb_size, unk_D075E, str_C4
-unk_D075E:
+global carteamsdb_size, keydb_size, teamsdb_size, attdb_size, rosterstatsmenubar, str_C4
+rosterstatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
 dd str_PlayerStatistics6
 db 00h,00h,00h,00h

@@ -5,9 +5,9 @@ bits 32
 %include "hockey.inc"
 section s_832BC progbits alloc exec nowrite align=1
 extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _os_handle_3
-extern addtimer, str_04x, byte_C541B, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
+extern addtimer, str_04x, sndcardmissing, byte_D2439, byte_D27B6, cddriveptr, ClearInputQueue, DrawSelBoxOff
 extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, oneminsaid, dword_D2350, dword_D2423, dword_D2427, dword_D242B
-extern dword_D2435, str_Cor2, speechchannel, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
+extern sndtempbuf, str_Cor2, speechchannel, dword_ED7A4, dword_ED7A8, FatalError, fclose_, fileoncd
 extern fopen_, fprintf_, FreeMemBlock, gameopts, GetInputEvent, itoa_, lseek_, MakePath
 extern MessageBox, msg_InitMT32, musichandle, musicon, musicslot, penaltyclips, PlayDigiSample, pointerspr
 extern ptrupdatefn, qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RedrawSoundCardOpts, RemoveTimerCallback
@@ -28,7 +28,7 @@ extern str_TonightBar, str_ULTRASOUND, str_VIV, str_WestfindBar, str_WestfinuBar
 extern str_WestsemuBar, str_XBRUCE2, strcpy_, strncpy_, sub_8CC70, sub_8CCA8, sub_8D2F0, sub_8DBD4
 extern sub_8EB5B, sub_8EB93, sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5
 extern sub_8FC37, sub_8FC8A, sub_8FCAC, sub_8FCDF, sub_903F0, sub_91370, sub_91400, sub_97079
-extern sub_98028, sub_B2DCA, sub_B4BA8, str_R4, unk_D2403, unk_D2413, unk_D249C, WaitDigiSample
+extern sub_98028, sub_B2DCA, sub_B4BA8, str_R4, sndselbox1, sndselbox2, msg_NoSoundCard, WaitDigiSample
 extern WaitTickDeadline
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset

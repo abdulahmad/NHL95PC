@@ -70,7 +70,7 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
     FreeMemBlock(bank);
     sub_8E9E8(f.state);
     sub_8EA18(mainfont);
-    DrawMenuBar(unk_D075E, 2, c0, c1, c2);
+    DrawMenuBar(rosterstatsmenubar, 2, c0, c1, c2);
     SetTextColors(c0, c3);
     sprintf(f.buf, (char *)str_SRoster, rosterteamrec[lineedpanel] + 5);
     PrintCenteredText(0x19, f.buf);
@@ -83,7 +83,7 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
     PrintShadowText(0x186, 0x30, (char *)str_PT2);
     PrintShadowText(0x1AE, 0x30, (char *)str_Shots4);
     PrintShadowText(0x1E8, 0x30, (char *)str_PIM4);
-    PrintShadowText(0x210, 0x30, (char *)asc_C3164);
+    PrintShadowText(0x210, 0x30, (char *)str_PlusMinus7);
     for (i = 0, y = 0x40; i < n; y += 0xD, i++) {
         idx = statsskaterorder[i];
         p = statsplayerbuf + statsskaterplr[idx] * 0x34;

@@ -4,7 +4,7 @@ bits 32
 section s_C772B progbits alloc noexec write align=1
 extern str_Yes, str_No4, str_ThereIsAlreadyA, str_DoYouWantTo2
 global msg_LeagueExists, btn_LeagueExists, str_WhichScheduleDoYou, str_9394Season2, str_Random, msg_WhichSchedule, btn_WhichSchedule, str_ErrorWhileUpdatingDatabase
-global unk_C7805, str_ErrorWhileCreatingLeague, msg_CreateError, str_ErrorWhileTradingPlayers, msg_TradeError, str_DoYouReallyWantToRemove
+global msg_DbUpdateError, str_ErrorWhileCreatingLeague, msg_CreateError, str_ErrorWhileTradingPlayers, msg_TradeError, str_DoYouReallyWantToRemove
 msg_LeagueExists:
 dd str_ThereIsAlreadyA
 dd str_DoYouWantTo2
@@ -36,7 +36,7 @@ dd str_Random
 str_ErrorWhileUpdatingDatabase:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,075h,070h,064h,061h
 db 074h,069h,06Eh,067h,020h,064h,061h,074h,061h,062h,061h,073h,065h,021h,00h
-unk_C7805:
+msg_DbUpdateError:
 dd str_ErrorWhileUpdatingDatabase
 str_ErrorWhileCreatingLeague:
 db 045h,072h,072h,06Fh,072h,020h,077h,068h,069h,06Ch,065h,020h,063h,072h,065h,061h

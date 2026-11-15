@@ -100,7 +100,7 @@ short ExhSetEditLoop(void)
     int oldmusic;
     unsigned char *ev;
 
-    sub_B4B88(0xF7, 4, unk_D16A0);
+    sub_B4B88(0xF7, 4, dlggreys);
     sub_B2DCA(&btn, &ox, &oy);
     x = ox;
     y = oy;

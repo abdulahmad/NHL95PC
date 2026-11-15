@@ -38,8 +38,8 @@ void LoadTradeTeamPals(int t1, int t2, unsigned char *pal)
     pal[0x17A] = 0x3B;
     pal[0x17B] = 0x3B;
     pal[0x17C] = 0x3B;
-    byte_D1333 = 0x7B;
-    byte_D1334 = 0x7C;
-    byte_D1335 = 0x7D;
-    byte_D1336 = 0x7E;
+    jerseypalslot0 = 0x7B;
+    jerseypalslot1 = 0x7C;
+    jerseypalslot2 = 0x7D;
+    jerseypalslot3 = 0x7E;
 }

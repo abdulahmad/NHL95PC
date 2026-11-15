@@ -7,15 +7,15 @@ extern __CHK, __STOSB, _dos_gettime_, _nfree_, _nmalloc_, awscore, awtmline, awt
 extern byte_D42C3, awayremap, awayremap_e43, awayremap_eFF, homeremap, homeremap_e43, homeremap_eFF, cddriveptr
 extern ClearInputQueue, clockcolon, clockdigits, cont2team, crestnames, ctlavailmask, cupseries, demomode
 extern DemoSetupStub, demoteammode, DrawHudPanel, DrawPanelClock, DrawPanelLine_x, DrawPanelScore, dword_C4CFC, panelprevmin
-extern panelprevsec, panelprevhund, panelhund, dword_C5844, dword_C5848, dword_C5854, dword_C5858, hmlinetimer
-extern awlinetimer, dword_C5861, dword_C5862, nhlintrosaid, demoflag, dword_CCC94, dword_DC2B8, dword_DC33C
+extern panelprevsec, panelprevhund, panelhund, hmpanellines, awpanellines, hmpanelpens, awpanelpens, hmlinetimer
+extern awlinetimer, demomatchups_m1, demomatchups, nhlintrosaid, demoflag, dword_CCC94, dword_DC2B8, titlesample
 extern energywarn, exhstate, FadeOutPalCycle, FadePalStep, fileoncd, fontcolor, fputchar, FreeMemBlock
 extern Gameloop, gamemode, gameopts, gamepal, gameresult, GetPeriodTime, GetTicks, hmscore
 extern hmtmline, hmtmstruct, HomeTeam, hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline
 extern InitGameSummary, InitSpeechSlots, InputInstall, InputRemove, introskipped, joyq_flush, kaufmfont, lcblink
 extern lcboxon, lcline, linesprites, LoadModeState, LoadRink, LoadRockMusic, LoadScheduleDB, LoadTeamPalette
 extern mainfont, MakePath, memcpy_, memset_, mousebtns, mousepollfn, musichandle, musicon
-extern musicslot, off_C57C8, creditpages, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
+extern musicslot, hudotname, creditpages, PaGoodnight, PaNhlIntro, PaOpenBank, PaPreloadClips, penaltydigits
 extern perioddigits, PerTimeTab, PlayDigiSample, pointerspr, PollKey, rand_, randomd0, ReloadGameGfx
 extern seed, SelectScreenBM, SeriesLength, SetDrawBitmap, SetScreenSize, SetTickDeadline, SetupControllers, SetupDemoGame
 extern ShowLoadingScreen, songdata, sounddev, speechbank, SpeechStopQueue, sprintf_, srand_, StopDigiSample
@@ -84,10 +84,10 @@ jne short .2	; 15DFD
 mov eax, 11h	; 15DFF
 call randomd0	; 15E04
 movsx edx, ax	; 15E09
-mov eax, dword [nosplit edx*2+dword_C5861]	; 15E0C
+mov eax, dword [nosplit edx*2+demomatchups_m1]	; 15E0C
 sar eax, 18h	; 15E13
 mov dword [exhstate+51h], eax	; 15E16
-mov eax, dword [nosplit edx*2+dword_C5862]	; 15E1B
+mov eax, dword [nosplit edx*2+demomatchups]	; 15E1B
 sar eax, 18h	; 15E22
 mov dword [exhstate+55h], eax	; 15E25
 jmp short .3	; 15E2A
@@ -422,7 +422,7 @@ lea eax, [dword esp+0300h]	; 16267
 call MakePath	; 1626E
 lea eax, [dword esp+0300h]	; 16273
 call sub_8F13B	; 1627A
-mov dword [dword_DC33C], eax	; 1627F
+mov dword [titlesample], eax	; 1627F
 .13:
 mov ecx, str_Cmv	; 16284
 mov ebx, str_Title	; 16289
@@ -487,7 +487,7 @@ jne short .21	; 16360
 call sub_1B2A7	; 16362
 jmp short TitleScreen.19	; 16367
 .20:
-mov eax, dword [dword_DC33C]	; 16369
+mov eax, dword [titlesample]	; 16369
 call PlayDigiSample	; 1636E
 mov ebx, 10h	; 16373
 mov edx, esp	; 16378
@@ -743,7 +743,7 @@ mov dword [songdata], ebp	; 166F6
 jmp short .42	; 166FC
 .41:
 call StopDigiSample	; 166FE
-mov eax, dword [dword_DC33C]	; 16703
+mov eax, dword [titlesample]	; 16703
 call sub_8F1FE	; 16708
 .42:
 mov eax, dword [dword esp+033Ch]	; 1670D

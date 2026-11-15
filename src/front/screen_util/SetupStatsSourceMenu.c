@@ -5,7 +5,7 @@
 
 /* SetupStatsSourceMenu (1D100, PC only): build the stats screen's source menu for src (0 all, 1 exhibition /
  93-94 only, 2 playoffs, 3 league; 0 with a playoff or a league missing picks 2, 3 or 1 from what is loaded,
- postate / lgstate). Points the league / playoff items (off_C6821... the item data and callbacks) at the
+ postate / lgstate). Points the league / playoff items (menutext_statsleague... the item data and callbacks) at the
  sources that exist, and when the checked item (1) is not one of them falls back to the first that is: check it,
  clear the others (2), set statsfromleague / statsplayoffs (a change of playoffs clears statsteamsel) and copy
  that source's name to statsleague. Then lays out the n items (2, 4, 5 or 7; x C5h / title byte 0 for the
@@ -23,10 +23,10 @@ void SetupStatsSourceMenu(int src)
     }
     switch (src) {
     case 3:
-        off_C6825 = (int)StatsSelLeague;
-        off_C6845 = (int)StatsSelLeaguePlayoffs;
-        off_C6821 = (int)&mi_LeagueSeason;
-        off_C6841 = (int)&mi_LeaguePlayoffs;
+        menuact_statsleague = (int)StatsSelLeague;
+        menuact_statslgplayoffs = (int)StatsSelLeaguePlayoffs;
+        menutext_statsleague = (int)&mi_LeagueSeason;
+        menutext_statslgplayoffs = (int)&mi_LeaguePlayoffs;
         if (mi_PlayoffMode == 1 || mi_LeagueSeason == 1) {
             mi_LeagueSeason = 1;
             mi_9394Season = mi_9394Playoffs = mi_LeaguePlayoffs = mi_PlayoffMode = 2;
@@ -44,8 +44,8 @@ void SetupStatsSourceMenu(int src)
         n = 5;
         break;
     case 2:
-        off_C6825 = (int)StatsSelPlayoffMode;
-        off_C6821 = (int)&mi_PlayoffMode;
+        menuact_statsleague = (int)StatsSelPlayoffMode;
+        menutext_statsleague = (int)&mi_PlayoffMode;
         if (mi_LeagueSeason == 1 || mi_LeaguePlayoffs == 1 || mi_PlayoffMode == 1) {
             mi_PlayoffMode = 1;
             mi_9394Season = mi_9394Playoffs = mi_LeagueSeason = mi_LeaguePlayoffs = 2;
@@ -68,12 +68,12 @@ void SetupStatsSourceMenu(int src)
         n = 2;
         break;
     case 0:
-        off_C6825 = (int)StatsSelLeague;
-        off_C6845 = (int)StatsSelLeaguePlayoffs;
-        off_C6885 = (int)StatsSelPlayoffMode;
-        off_C6821 = (int)&mi_LeagueSeason;
-        off_C6841 = (int)&mi_LeaguePlayoffs;
-        off_C6881 = (int)&mi_PlayoffMode;
+        menuact_statsleague = (int)StatsSelLeague;
+        menuact_statslgplayoffs = (int)StatsSelLeaguePlayoffs;
+        menuact_statsplayoff = (int)StatsSelPlayoffMode;
+        menutext_statsleague = (int)&mi_LeagueSeason;
+        menutext_statslgplayoffs = (int)&mi_LeaguePlayoffs;
+        menutext_statsplayoff = (int)&mi_PlayoffMode;
         if (mi_LeagueSeason == 1) {
             mi_9394Season = mi_9394Playoffs = mi_LeaguePlayoffs = mi_PlayoffMode = 2;
             statsfromleague = 1;
@@ -111,11 +111,11 @@ void SetupStatsSourceMenu(int src)
     dword_CE8EB = n;
     dword_CF00B = n;
     dword_CF4CB = n;
-    dword_CF5AB = n;
-    dword_CF70B = n;
-    dword_CF7CB = n;
-    dword_CF84B = n;
-    dword_CF8CB = n;
+    standingsmenubar_srccnt = n;
+    rostermenubar_srccnt = n;
+    teamstatsmenubar_srccnt = n;
+    skaterstatsmenubar_srccnt = n;
+    goaliestatsmenubar_srccnt = n;
     dword_CFA4B = n;
     dword_C891E = n;
 }

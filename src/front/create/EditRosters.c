@@ -104,7 +104,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
         } while (e && !(bits & 2));
         if (dword_D0C20 && (rosterisfa[0] == 1 || rosterisfa[1] == 1) && rostereditmode != 2 && bits) {
             sub_903F0(editptrspr, oldmx, oldmy);
-            k = TrackButtons((int *)unk_D0BB8, 2, mx, my, bits);
+            k = TrackButtons((int *)btn_RosterList, 2, mx, my, bits);
             if (k == 0 && falisttop > 0) {
                 falisttop--;
                 DrawEditRosters();
@@ -112,8 +112,8 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
                 falisttop += k;
                 DrawEditRosters();
             }
-            if (TrackScrollBars(unk_D0BF0, 1, mx, my, bits) >= 0 && falisttop != dword_D0C10) {
-                falisttop = dword_D0C10;
+            if (TrackScrollBars(fascrollbar, 1, mx, my, bits) >= 0 && falisttop != fascrollbar_top) {
+                falisttop = fascrollbar_top;
                 DrawEditRosters();
             }
             sub_91400(editptrspr, mx, my);
@@ -123,7 +123,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
         }
         if (rostereditmode == 2 && bits & 1) {
             sub_903F0(editptrspr, oldmx, oldmy);
-            TrackButtons((int *)unk_D0B80, 2, mx, my, bits);
+            TrackButtons((int *)btn_EditRosters, 2, mx, my, bits);
             sub_91400(editptrspr, mx, my);
             sub_91370(pointerspr, mx, my);
             oldmx = mx;

@@ -5,20 +5,20 @@ section s_C7F07 progbits alloc noexec write align=1
 extern str_Yes, str_No4, str_MasterDatabasesFor2, str_MustBeCompletelyMerged, str_PlayersDatabasesMustBe, str_DoYouWishTo
 global str_PINFO, str_PLAYER, str_LSSCHED, str_GAME4, str_extDB, str_ORG, str_HI2, str_SET2
 global str_PPV, str_KMS, str_CFG, str_VFN, str_extBIN, str_extxx, str_Xx, str_extLP
-global str_extID, str_space, str_dot, str_floppydrv, dword_C7F0B, msg_SavedGame_arg, firstteammsg, pwmismatchmsg
-global leaguedbnames, unk_C7F07
-global unk_C7F1B, str_MergingPlayersToMaster, mergingmsg, str_UpdatingSchedule, updschedmsg, str_PleasePutAFloppy, insertfloppymsg, str_UseFloppyDriveA
+global str_extID, str_space, str_dot, str_floppydrv, msg_MergeNeeded_e01, msg_SavedGame_arg, firstteammsg, pwmismatchmsg
+global leaguedbnames, msg_MergeNeeded
+global btn_MergeNeeded, str_MergingPlayersToMaster, mergingmsg, str_UpdatingSchedule, updschedmsg, str_PleasePutAFloppy, insertfloppymsg, str_UseFloppyDriveA
 global whichdrivemsg, str_FirstTeamSelected, str_PlayMustBeImported, str_PasswordEnteredDifferently, str_SecondTimeTryAgain, str_ThereIsASaved, str_WhichMustBePlayed, msg_SavedGame
 global str_KEY2, str_CAREER2, str_ATT2, str_CARTEAMS, str_TEAMS3, str_SEASON4, str_SCHEDULE2, str_star
 global str_backslash2, str_S4
-unk_C7F07:
+msg_MergeNeeded:
 dd str_MasterDatabasesFor2
-dword_C7F0B:
+msg_MergeNeeded_e01:
 db 00h,00h,00h,00h
 dd str_MustBeCompletelyMerged
 dd str_PlayersDatabasesMustBe
 dd str_DoYouWishTo
-unk_C7F1B:
+btn_MergeNeeded:
 db 010h,00h,00h,00h,06Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd str_Yes

@@ -8,7 +8,7 @@ global str_Org, str_ORIGINAL, str_Dbx, str_Open4, str_Delete2, str_Done2, str_Cu
 global str_Temporary, str_Dbdialog, str_Pdbx, str_Pointer12, str_DBX2, str_Buf2, str_Pal25, str_Lineditp2
 global str_Shrt2, str_Pntr3, str_Pointer13, str_Embpal4, str_Pal26, str_Lelogo, str_Menubuff8, str_C2dS2
 global str_S2dSS, str_Keys3, str_Pstat3, str_Gstat3, str_SRoster, str_Pos2, str_Name2, str_G4
-global str_A4, str_PT2, str_Shots4, str_PIM4, asc_C3164, str_Min4, str_GAA4, str_GA3
+global str_A4, str_PT2, str_Shots4, str_PIM4, str_PlusMinus7, str_Min4, str_GAA4, str_GA3
 global str_SA3, str_PCT2, str_Pal27, str_Lineditp3, str_Shrt3, str_Pntr4, str_Pointer14, str_Embpal5
 global str_Pal28, str_Lelogo2, str_Menubuff9, str_C2dS3, str_Key, str_EmbS, str_HOMEPALS3, str_Bkgd10
 global str_Forward, str_Line1, str_Line2, str_Line3, str_Line4, str_Power, str_Play1, str_Play2
@@ -43,7 +43,7 @@ global str_PHI2, str_PIT2, str_QUE2, str_STL2, str_SJ2, str_TB2, str_TOR2, str_V
 global str_WSH2, str_WPG2, str_ASW2, str_ASE2, str_WesternConferenceQuarter, str_EasternConferenceQuarter, str_StanleyCupFinals, str_Vs
 global str_R4, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen, str_HookingPen, str_TrippingPen, str_InterferPen
 global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, str_H2
-global unk_C392F, str_H4, unk_C393E, unk_C3941, unk_C3944, str_H1, str_A32, str_SDD3
+global str_h3, str_H4, str_h5, str_h6, str_h7, str_H1, str_A32, str_SDD3
 str_DSBOX:
 db 044h,053h,042h,04Fh,058h,00h,00h,00h
 str_DbBut:
@@ -156,7 +156,7 @@ str_Shots4:
 db 053h,068h,06Fh,074h,073h,00h
 str_PIM4:
 db 050h,049h,04Dh,00h
-asc_C3164:
+str_PlusMinus7:
 db 020h,02Bh,02Fh,02Dh,00h
 str_C5:
 db 025h,063h,00h
@@ -689,17 +689,17 @@ str_DemoNhl:
 db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
 str_H2:
 db 068h,032h,00h
-unk_C392F:
+str_h3:
 db 068h,033h,00h
 str_Gsummary3:
 db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
 str_H4:
 db 068h,034h,00h
-unk_C393E:
+str_h5:
 db 068h,035h,00h
-unk_C3941:
+str_h6:
 db 068h,036h,00h
-unk_C3944:
+str_h7:
 db 068h,037h,00h
 str_AGameYouRequire2:
 db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h

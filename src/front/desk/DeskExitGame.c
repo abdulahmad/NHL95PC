@@ -12,10 +12,10 @@ int DeskExitGame(void)
 
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     sub_B2DCA(&x, &y, &r);
-    dword_C66A4 = (int)str_ExitingTheGame;
-    dword_C66AC = (int)str_DoYouWishToExit;
+    msg_DeskExit = (int)str_ExitingTheGame;
+    msg_DeskExit_e02 = (int)str_DoYouWishToExit;
     SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
-    r = MessageBox(-1, -1, (char *)&dword_C66A4, 3, (int)btn_POHumanOut, 2, (int)&x, (int)&y, -1);
+    r = MessageBox(-1, -1, (char *)&msg_DeskExit, 3, (int)btn_POHumanOut, 2, (int)&x, (int)&y, -1);
     if (r > 0) {
         sub_8FFB0(0, 0x100, savepal);
         FadePalStep(1, savepal, 0x10);

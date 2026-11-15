@@ -4,11 +4,11 @@ bits 32
 %include "hockey.inc"
 section s_3DC2C progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, awlinetab, btn_MasterDB, btn_TradeStats, btn_WrongDisk
-extern byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, byte_D42C3, awayremap
+extern byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, byte_D42C3, awayremap
 extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, ClearPlayerFromLines, CopyFile, curleague
 extern curperiod, DeleteFiles, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol
-extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C87C0, dword_C87C8, dword_C87E0
-extern dword_C87E8, leaguestatsmode, dword_DDD34, dword_DDD3C, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
+extern DrawDlgFrame, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, menuwidth_trade1, menutext_trade1, menuwidth_trade2
+extern menutext_trade2, leaguestatsmode, dword_DDD34, dword_DDD3C, tradebitmap, ExportTeamToFloppy, FadePalStep, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, GameLineEditor, GetInputEvent, hmlinetab, HomeTeam, humancount, InitMenuRemap, jerseymsg
 extern jerseyremap, leaguedbfmt, leaguedbfmt2, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams
@@ -30,7 +30,7 @@ extern sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8FFB0, sub_903F0, sub_912
 extern sub_91400, sub_91FE0, sub_93170, sub_931FC, sub_B2DCA, sub_B30B4, sub_B392C, sub_B4B88
 extern sub_B4BA8, sub_B4DD4, sub_B4F8C, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
-extern tradeslot, treeteamnames, unequaltrademsg, unk_C88E2, unk_CF3CF, unk_D12C8, unknown_libname_1, unknown_libname_2
+extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, unknown_libname_1, unknown_libname_2
 extern VisTeam, word_DDD48, word_DDD4A, WriteKeyRec, WriteLeagueTeamEntry, WriteTeamRec
 global BuildTradeRoster, TradeShowStats, FixJerseyConflict, ExecuteTrade, DrawTradeRow, LoadTradeTeamPals, DrawTradeScreen, TradeHitTest
 global TradeHitTest_ret, TradeDone, TradeCancel, FindTradeSlot, TradeScreenLoop, TradeRosterCmp, TradeScreen, TradePlayers
@@ -307,7 +307,7 @@ push byte 42h	; 3DF5B
 mov ecx, 41h	; 3DF5D
 mov ebx, 40h	; 3DF62
 mov edx, 2	; 3DF67
-mov eax, unk_C88E2	; 3DF6C
+mov eax, tradestatsmenubar	; 3DF6C
 call DrawMenuBar	; 3DF71
 mov ebx, 10h	; 3DF76
 mov edx, esi	; 3DF7B
@@ -317,7 +317,7 @@ push byte 42h	; 3DF84
 mov ecx, 41h	; 3DF86
 mov ebx, 40h	; 3DF8B
 mov edx, 2	; 3DF90
-mov eax, unk_C88E2	; 3DF95
+mov eax, tradestatsmenubar	; 3DF95
 call RunMenu	; 3DF9A
 xor ecx, ecx	; 3DF9F
 mov dword [leaguestatsmode], ecx	; 3DFA1
@@ -814,7 +814,7 @@ xor eax, eax	; 3E6E8
 call LoadGameTeams	; 3E6EA
 mov dword [curperiod], 0FFFFFFFEh	; 3E6EF
 mov ecx, 3	; 3E6F9
-mov ebx, unk_CF3CF	; 3E6FE
+mov ebx, tradelinesmenubar	; 3E6FE
 mov edx, hmlinetab	; 3E703
 xor eax, eax	; 3E708
 call GameLineEditor	; 3E70A
@@ -837,7 +837,7 @@ push edi	; 3E745
 call FreeMemBlock	; 3E746
 add esp, byte 4	; 3E74B
 mov ecx, 3	; 3E74E
-mov ebx, unk_CF3CF	; 3E753
+mov ebx, tradelinesmenubar	; 3E753
 mov edx, awlinetab	; 3E758
 mov eax, 1	; 3E75D
 call GameLineEditor	; 3E762
@@ -1036,10 +1036,10 @@ mov byte [dword esi+0179h], 0	; 3E98F
 mov byte [dword esi+017Ah], 3Bh	; 3E996
 mov byte [dword esi+017Bh], 3Bh	; 3E99D
 mov byte [dword esi+017Ch], 3Bh	; 3E9A4
-mov byte [byte_D1333], 7Bh	; 3E9AB
-mov byte [byte_D1334], 7Ch	; 3E9B2
-mov byte [byte_D1335], 7Dh	; 3E9B9
-mov byte [byte_D1336], 7Eh	; 3E9C0
+mov byte [jerseypalslot0], 7Bh	; 3E9AB
+mov byte [jerseypalslot1], 7Ch	; 3E9B2
+mov byte [jerseypalslot2], 7Dh	; 3E9B9
+mov byte [jerseypalslot3], 7Eh	; 3E9C0
 add esp, byte 10h	; 3E9C7
 pop ebp	; 3E9CA
 pop edi	; 3E9CB
@@ -3310,7 +3310,7 @@ mov edx, str_Statistics	; 40614
 mov eax, esp	; 40619
 call strcat_	; 4061B
 mov eax, esp	; 40620
-mov dword [dword_C87C8], eax	; 40622
+mov dword [menutext_trade1], eax	; 40622
 lea edi, [byte esp+034h]	; 40627
 mov esi, str_Show	; 4062B
 movsd	; 40630
@@ -3323,7 +3323,7 @@ mov edx, str_Statistics	; 4064A
 lea eax, [byte esp+034h]	; 4064F
 call strcat_	; 40653
 lea eax, [byte esp+034h]	; 40658
-mov dword [dword_C87E8], eax	; 4065C
+mov dword [menutext_trade2], eax	; 4065C
 mov eax, esp	; 40661
 push eax	; 40663
 call fputchar	; 40664
@@ -3340,8 +3340,8 @@ jge short .15	; 40690
 mov eax, edx	; 40692
 .15:
 add eax, byte 6	; 40694
-mov dword [dword_C87E0], eax	; 40697
-mov dword [dword_C87C0], eax	; 4069C
+mov dword [menuwidth_trade2], eax	; 40697
+mov dword [menuwidth_trade1], eax	; 4069C
 push byte 3	; 406A1
 mov ecx, btn_TradeStats	; 406A3
 lea ebx, [dword esp+0B0h]	; 406A8

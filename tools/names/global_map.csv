@@ -3856,3 +3856,160 @@ str_qmark,C1900,string '?'
 str_ctl07,C03C4,one-byte control string 07h (text colour code) of the award screens
 str_ctl06,C03C6,one-byte control string 06h (text colour code) of the award screens
 str_R5,C2D10,"string 'R', read as a word by AskLeftRight"
+str_SpL4,C0F6C,string ' L'
+str_SpT,C0F6F,string ' T'
+str_SpL5,C1200,string ' L'
+str_SpT2,C1203,string ' T'
+str_SpL6,C2A5C,string ' L'
+str_SpT3,C2A5F,string ' T'
+str_PlusMinus5,C11D9,string ' +/-'
+str_PlusMinus6,C2987,string ' +/-'
+str_PlusMinus7,C3164,string ' +/-' (ShowRosterStats column head)
+str_h3,C392F,string 'h3': MenuSaveGame fatal error tag
+str_h5,C393E,string 'h5': MenuSaveGame fatal error tag
+str_h6,C3941,string 'h6': MenuSaveGame fatal error tag
+str_h7,C3944,string 'h7': MenuSaveGame fatal error tag
+str_ModeR,C3B0C,string 'r': fopen mode InitFileLocations opens NHL.CFG with
+fadestart_m3,C5131,"FadePalette: fadestart-3, the -5r dword load [dir+C5131] whose top byte is fadestart[dir]"
+fadestep_m3,C5133,"FadePalette: fadestep-3 (C5136: +1 fading in, -1 fading out), read by a dword load"
+fadestart_e1,C5135,"FadePalette: fadestart[1], the fade-out start level, set to steps-1"
+fadeendlvl,C5138,"FadePalette: end level by direction (steps+1 fading in, -1 fading out)"
+awardtextcolors,C513C,ShowAwardScreens: text colour of each award (SetTextColors)
+awardartfiles,C5168,ShowAwardScreens: file number (fileoncd index) of each award's art
+awardstatsptrs,C524F,PickAwardWinners: pointer to the stats record of each award's winner
+awardstatsptrs_e01,C5253,awardstatsptrs[1]
+awardstatsptrs_e02,C5257,awardstatsptrs[2]
+awardstatsptrs_e03,C525B,awardstatsptrs[3]
+awardstatsptrs_e04,C525F,awardstatsptrs[4]
+awardstatsptrs_e05,C5263,awardstatsptrs[5]
+awardstatsptrs_e06,C5267,awardstatsptrs[6]
+awardstatsptrs_e08,C526F,awardstatsptrs[8]
+awardstatsptrs_e09,C5273,awardstatsptrs[9]
+awardwinners_e01,D958C,"awardwinners[1] (34h-byte key records), filled by PickAwardWinners"
+awardwinners_e02,D95C0,awardwinners[2]
+awardwinners_e03,D95F4,awardwinners[3]
+awardwinners_e04,D9628,awardwinners[4]
+awardwinners_e05,D965C,awardwinners[5]
+awardwinners_e06,D9690,awardwinners[6]
+awardwinners_e08,D96F8,awardwinners[8]
+awardwinners_e09,D972C,awardwinners[9]
+awardstats0,D9921,season stats record of award 0's winner (awardstatsptrs[0])
+awardstats1,D9894,season stats record of award 1's winner
+awardstats2,D9865,season stats record of award 2's winner
+awardstats3,D98F2,season stats record of award 3's winner
+awardstats4,D9800,goalie season stats record of award 4's winner
+awardstats5,D97CA,goalie season stats record of award 5's winner
+awardstats6,D9950,season stats record of award 6's winner
+awardstats8,D9836,season stats record of award 8's winner
+awardstats9,D98C3,skater season stats record of award 9's winner
+awardstats9g,D9794,goalie season stats record of award 9's winner when a goalie wins it
+awardscopenames,C527B,ShowAwardScreens: 'Season' / 'Playoff' labels
+sndcardmissing,C541B,sound card dialog: a set bit greys out that card (not present)
+poconf2teams,C5619,GetPlayoffSeeds: team numbers of the second conference
+msg_GameDiskSpace,C56B5,CheckGameDiskSpace message lines 'Insufficient disk space' ...
+awlineenergies,C56C4,"UpdateHudPanel: GetLineEnergies(1) results, drawn by awlineind / hudawayline"
+hmlineenergies,C56E4,"UpdateHudPanel: GetLineEnergies(0) results, drawn by hmlineind / hudhomeline"
+hudotname,C57C8,DrawHudPanel: name of the 'OT' shape
+hmpanellines,C5844,"UpdateHudPanel: the home side of the panel shows line bars, not penalties; PanelAddPenalty clears it"
+awpanellines,C5848,"UpdateHudPanel: the away side of the panel shows line bars, not penalties"
+hmpanelpens,C5854,UpdateHudPanel: the home penalty backdrop (hmpanelspr) is drawn
+awpanelpens,C5858,UpdateHudPanel: the away penalty backdrop (awpanelspr) is drawn
+demomatchups,C5862,"RunDemoGame: team byte pairs of the demo games, read by dword loads at team*2"
+demomatchups_m1,C5861,demomatchups-1: load base of the second -5r dword read
+msg_FileExists,C648E,WriteScreenTextFile message 'The file you specified' / 'Do you want to'
+btn_FileExists,C6499,WriteScreenTextFile: the two buttons of msg_FileExists
+msg_StatsWritten,C64F5,WriteScreenTextFile message 'The stats were successfully'
+msg_OutputFileError,C652A,WriteScreenTextFile message 'ERROR: Output file was'
+msg_StatsDiskSpace,C659A,WriteScreenTextFile message 'Insufficient disk space to' / 'the displayed statistics to'
+msg_DeskExit,C66A4,DeskExitGame / DeskReturnConfirm message lines; line 0 is patched
+msg_DeskExit_e02,C66AC,"msg_DeskExit[2], patched with 'Do you wish to exit / return'"
+menutext_statsleague,C6821,stats source menu: text slot of the league item (SetupStatsSourceMenu)
+menuact_statsleague,C6825,stats source menu: action slot of the league item
+menutext_statslgplayoffs,C6841,stats source menu: text slot of the league playoffs item
+menuact_statslgplayoffs,C6845,stats source menu: action slot of the league playoffs item
+menutext_statsplayoff,C6881,stats source menu: text slot of the playoff mode item
+menuact_statsplayoff,C6885,stats source menu: action slot of the playoff mode item
+skatercardattrs_m3,C6A99,SkaterStatsCard: attribute index list -3 (the list is the bytes after the label's dword)
+goaliecardattrs_m3,C6AD1,GoalieStatsCard: attribute index list -3
+newskaterattrs_m3,D08B9,CreateFreeAgent: skater attribute index list -3
+newgoalieattrs_m3,D0A04,CreateFreeAgent: goalie attribute index list -3
+fdlgfilelists,C6F7C,"file dialog: file list of each tab (lgfiles, pofiles, exhfiles), by fdlgtab"
+fdlgfilelists_e01,C6F80,fdlgfilelists[1] (pofiles)
+fdlgfilelists_e02,C6F84,fdlgfilelists[2] (exhfiles)
+msg_NameTaken,C7592,LeagueTeamSelect message 'That name has already'
+msg_DbUpdateError,C7805,PlayLeagueGame message 'Error while updating database'
+msg_WrongPassword,C7965,AskTeamPassword / AskMasterPassword message 'Incorrect password'
+msg_MergeNeeded,C7F07,PlayLeagueGame message 'Master databases for' ... 'must be completely merged'
+msg_MergeNeeded_e01,C7F0B,"msg_MergeNeeded[1], patched with the league name"
+btn_MergeNeeded,C7F1B,PlayLeagueGame: the two buttons of msg_MergeNeeded
+menuwidth_trade1,C87C0,TradePlayers: width slot of the first team's trade menu item
+menutext_trade1,C87C8,TradePlayers: text slot of the first team's trade menu item
+menuwidth_trade2,C87E0,TradePlayers: width slot of the second team's trade menu item
+menutext_trade2,C87E8,TradePlayers: text slot of the second team's trade menu item
+tradestatsmenubar,C88E2,menu bar ('Return To') of TradeShowStats and FixJerseyConflict
+deskmenubar,CEB8F,SportsDesk: 'Action' menu bar outside league mode
+deskmenubar_lg,CEC4F,"SportsDesk: 'Action' menu bar in mode 2 (league), 3 items"
+menutext_deskreturn,CECFF,SetModeMenuLabels: text slot of the desk item that runs DeskReturnConfirm
+menutext_desktodesk,CED3F,SetModeMenuLabels: text slot of the desk item that runs DeskToSportsDesk
+menusub_hmgoalie,CEDE7,SetSideControls: submenu slot of the home goalie item (hmgoaliemenu or 0)
+menusub_awgoalie,CEE07,SetSideControls: submenu slot of the away goalie item (awgoaliemenu or 0)
+hmgoaliemenu,CEE4F,SetupGoalieMenu: the home goalie submenu items
+awgoaliemenu,CEEAF,SetupGoalieMenu: the away goalie submenu items (mi_AwayGoalie1...)
+menuact_gotoreplay,CEF23,SportsDesk: action slot of 'Go To Replay' (0 when the replay is empty)
+menuact_homelines,CEF43,SetSideControls: action slot of the home lines item (DeskHomeLines or 0)
+menuact_visitorlines,CEF63,SetSideControls: action slot of the visitor lines item (DeskVisitorLines or 0)
+pregamelinesmenubar,CF1AF,menu bar of the line editor run from PreGameScreen
+desklinesmenubar,CF2EF,menu bar of the line editor run from the desk (DeskHomeLines / DeskVisitorLines)
+tradelinesmenubar,CF3CF,menu bar of the line editor run after ExecuteTrade
+gameplstatsmenubar,CF48F,menu bar ('Return To') of MenuGameShowPlayerStats
+dblinesmenubar,D05F4,menu bar of the database line editor (EditTeamLines)
+rosterstatsmenubar,D075E,menu bar of ShowRosterStats / MenuShowPlayerStats
+standingsmenubar_srccnt,CF5AB,standingsmenubar+5Ch: item count of its stats source submenu (SetupStatsSourceMenu)
+rostermenubar_srccnt,CF70B,rostermenubar+5Ch: item count of its stats source submenu
+teamstatsmenubar_srccnt,CF7CB,teamstatsmenubar+3Ch: item count of its stats source submenu
+skaterstatsmenubar_srccnt,CF84B,skaterstatsmenubar+3Ch: item count of its stats source submenu
+goaliestatsmenubar_srccnt,CF8CB,goaliestatsmenubar+3Ch: item count of its stats source submenu
+menuact_playnextgame,CF983,playoff mode: action slot of 'Play Next Game' (MenuPlayNextGame or 0)
+teamratingnames,D0AC2,DrawEditRosters: the nine team rating names
+teamratingidx,D0AE6,DrawEditRosters: index of each of the nine ratings in the team record
+btn_EditRosters,D0B80,Edit Rosters screen: its two buttons
+btn_RosterList,D0BB8,DrawRosterList: the two list buttons
+fascrollbar,D0BF0,Edit Rosters: scroll bar of the free agent list
+fascrollbar_len,D0BFC,fascrollbar+0Ch: bar length
+fascrollbar_thumb,D0C04,"fascrollbar+14h: thumb position, (len-4)*top/count"
+fascrollbar_top,D0C10,fascrollbar+20h: list top (falisttop)
+fascrollbar_count,D0C18,fascrollbar+28h: range the thumb position divides by
+btn_DBError,D0CA2,database error screen: its two buttons
+btn_CreateFreeAgent,D0EDD,CreateFreeAgent: the two buttons of its message box
+msg_FreeAgentDiskSpace,D1077,CreateFreeAgent message 'Insufficient disk space' / 'to create a free'
+jerseypalslot0,D1333,"first of four palette slots the jersey shapes use (FBh game lines, 7Bh trade)"
+jerseypalslot1,D1334,second jersey palette slot
+jerseypalslot2,D1335,third jersey palette slot
+jerseypalslot3,D1336,fourth jersey palette slot
+dlggreys,D16A0,four grey RGB triplets the settings dialogs load at colour F7h
+ctlboxrect1,D19CC,ControlsDlgLoop: rectangle of the first highlighted box
+ctlboxrect2,D19DC,ControlsDlgLoop: rectangle of the second highlighted box
+jerseyabbrevs,D21C0,locker room: team abbreviation for the JERSH / JERSV file names
+poroundnames,D2230,locker room: playoff round names ('Western Conference Quarter' ...)
+poroundnameidx,D223C,locker room: index into poroundnames
+lockeracceptx,D22DC,"locker room: Accept button rectangle, x"
+lockeraccepty,D22E0,"locker room: Accept button rectangle, y onward"
+lockercancelx,D22EC,"locker room: Cancel button rectangle, x"
+lockercancely,D22F0,"locker room: Cancel button rectangle, y onward"
+sndselbox1,D2403,sound card dialog: rectangle of the first selection box
+sndselbox2,D2413,sound card dialog: rectangle of the second selection box
+sndtempbuf,D2435,MenuSoundSettings: the 320 KB TEMP buffer
+msg_NoSoundCard,D249C,SetSoundDevice message 'Could not find a'
+podbsizes,D2864,CreatePlayoffs: database sizes passed to GetLeagueDBSizes / DiskSpaceShort
+poseriesfmt,D288C,POAfterGame: pointer to the series score format '%s %d-%d'
+poseriesbuf,ED7BC,POAfterGame: buffer the series score is formatted into
+poseriestext,DDCFB,POAfterGame: copy of poseriesbuf kept for the screen
+titlesample,DC33C,TitleScreen: handle of the sample it loads and plays
+statsscreenpal,DC340,stats screens: 768-byte palette read and faded to
+statsmenuresult,DC6A8,StatsMenu*: the result of the screen just run
+statsfilepos,DC85C,stats cards: file position of the record (game stats)
+lgstatsfilepos,DC860,stats cards: file position of the record when statsfromleague
+deskbankname,DC890,SportsDesk: 'EADESK%1d' bank name buffer
+tmpdbpath,EA968,roster editor: path buffer of the temporary databases
+gamelinespal,ECDF4,game line editor: 768-byte saved palette
+crowdsamples,ED374,PlayCrowdSample: samples of cues 6 to 8

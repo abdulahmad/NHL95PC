@@ -127,10 +127,10 @@ int RunDemoGame(void)
         *(int *)(exhstate + 0x55) = 0x1A;
     } else if (demoteammode == 1) {
         team = randomd0(0x11);
-        one = *(int *)((char *)dword_C5861 + team * 2);
+        one = *(int *)((char *)demomatchups_m1 + team * 2);
         one >>= 24;
         *(int *)(exhstate + 0x51) = one;
-        one = *(int *)((char *)dword_C5862 + team * 2);
+        one = *(int *)((char *)demomatchups + team * 2);
         one >>= 24;
         *(int *)(exhstate + 0x55) = one;
     } else {
@@ -263,7 +263,7 @@ int TitleScreen(void)
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Mttitle, (char *)str_KMS);
         else
             MakePath(path, fileoncd[0x104] == 1 ? (char *)cddriveptr : 0, (char *)str_Adtitle, (char *)str_KMS);
-        dword_DC33C = sub_8F13B(path);
+        titlesample = sub_8F13B(path);
     }
     MakePath(path, fileoncd[0x24] == 1 ? (char *)cddriveptr : 0, (char *)str_Title, (char *)str_Cmv);
     stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
@@ -279,7 +279,7 @@ int TitleScreen(void)
         SetTickDeadline(0x5A);
         while (!TickDeadlinePassed()) sub_1B2A7();
     } else {
-        PlayDigiSample((void *)dword_DC33C);
+        PlayDigiSample((void *)titlesample);
         FadePalStep(0, (unsigned char *)pal, 0x10);
     }
     key = 0;
@@ -360,7 +360,7 @@ int TitleScreen(void)
         songdata = 0;
     } else {
         StopDigiSample();
-        sub_8F1FE(dword_DC33C);
+        sub_8F1FE(titlesample);
     }
     FreeMemBlock((int)mask);
     return key;

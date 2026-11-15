@@ -14,15 +14,15 @@ void StatsSel9394Playoffs(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)exhstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, unk_DC340);
-    FadePalStep(1, unk_DC340, 0x10);
+    sub_8FFB0(0, 0x100, statsscreenpal);
+    FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
-    statspal = (int)unk_DC340;
+    statspal = (int)statsscreenpal;
     dword_DC6B4 = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
-    FadePalStep(0, unk_DC340, 0x10);
+    FadePalStep(0, statsscreenpal, 0x10);
 }
 
 
@@ -39,15 +39,15 @@ void StatsSelLeague(void)
     statsplayoffs = 0;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, unk_DC340);
-    FadePalStep(1, unk_DC340, 0x10);
+    sub_8FFB0(0, 0x100, statsscreenpal);
+    FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
-    statspal = (int)unk_DC340;
+    statspal = (int)statsscreenpal;
     dword_DC6B4 = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
-    FadePalStep(0, unk_DC340, 0x10);
+    FadePalStep(0, statsscreenpal, 0x10);
 }
 
 /* StatsSelLeaguePlayoffs: stats menu: switch the source to the league playoffs (unless already showing
@@ -62,15 +62,15 @@ void StatsSelLeaguePlayoffs(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)lgstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, unk_DC340);
-    FadePalStep(1, unk_DC340, 0x10);
+    sub_8FFB0(0, 0x100, statsscreenpal);
+    FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
-    statspal = (int)unk_DC340;
+    statspal = (int)statsscreenpal;
     dword_DC6B4 = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
-    FadePalStep(0, unk_DC340, 0x10);
+    FadePalStep(0, statsscreenpal, 0x10);
 }
 
 /* StatsSelPlayoffMode: stats menu: switch the source to the playoff mode's playoffs (postate), as
@@ -85,15 +85,15 @@ void StatsSelPlayoffMode(void)
     statsplayoffs = 1;
     strncpy((char *)statsleague, (char *)postate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, unk_DC340);
-    FadePalStep(1, unk_DC340, 0x10);
+    sub_8FFB0(0, 0x100, statsscreenpal);
+    FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
-    statspal = (int)unk_DC340;
+    statspal = (int)statsscreenpal;
     dword_DC6B4 = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
-    FadePalStep(0, unk_DC340, 0x10);
+    FadePalStep(0, statsscreenpal, 0x10);
 }
 
 /* FreeDeskBuffers (18D33, PC only; segment 009, the same source file: it ends in StatsSel_x): free the two stats

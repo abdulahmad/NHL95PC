@@ -15,7 +15,7 @@ extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, str
 extern sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_91370, sub_91400, sub_B2DCA, sub_B30B4, sub_B392C
 extern sub_B4BA8, sub_B4DD4, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
-extern unk_C7592, unk_C7965, yesnobtns
+extern msg_NameTaken, msg_WrongPassword, yesnobtns
 global ChooseLeagueController, AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, WriteSeasonRec_common
 global ReadGoalieSeasonRec, ReadGoalieSeasonRec_common, WriteGoalieSeasonRec, WriteSchedGame, WriteSchedGame_common, WriteTeamRec, ReadDbRec4Ch, ReadLeagueTeamEntry
 global WriteLeagueTeamEntry, ReadDbRec28h, ReadDbRec2Ch, AskTeamPassword, AskTeamPassword_ret, AskMasterPassword, EncryptPassword, MergeTeamRecDelta
@@ -1935,7 +1935,7 @@ push eax	; 39E44
 push byte 0	; 39E45
 push byte 0	; 39E47
 mov ecx, 1	; 39E49
-mov ebx, unk_C7592	; 39E4E
+mov ebx, msg_NameTaken	; 39E4E
 mov edx, 0FFFFFFFFh	; 39E53
 mov eax, edx	; 39E58
 call MessageBox	; 39E5A
@@ -2419,7 +2419,7 @@ push eax	; 3A446
 push byte 0	; 3A447
 push byte 0	; 3A449
 mov ecx, 1	; 3A44B
-mov ebx, unk_C7965	; 3A450
+mov ebx, msg_WrongPassword	; 3A450
 mov edx, 0FFFFFFFFh	; 3A455
 mov eax, edx	; 3A45A
 call MessageBox	; 3A45C
@@ -2519,7 +2519,7 @@ push eax	; 3A54E
 push byte 0	; 3A54F
 push byte 0	; 3A551
 mov ecx, 1	; 3A553
-mov ebx, unk_C7965	; 3A558
+mov ebx, msg_WrongPassword	; 3A558
 mov edx, 0FFFFFFFFh	; 3A55D
 mov eax, edx	; 3A562
 call MessageBox	; 3A564

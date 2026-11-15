@@ -24,7 +24,7 @@ int DeskHomeLines(void)
 {
     sub_8FFB0(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    GameLineEditor(0, hmlinetab, unk_CF2EF, 2);
+    GameLineEditor(0, hmlinetab, desklinesmenubar, 2);
     sub_8FFB0(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     return 2;
@@ -35,7 +35,7 @@ int DeskVisitorLines(void)
 {
     sub_8FFB0(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
-    GameLineEditor(1, awlinetab, unk_CF2EF, 2);
+    GameLineEditor(1, awlinetab, desklinesmenubar, 2);
     sub_8FFB0(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     return 2;

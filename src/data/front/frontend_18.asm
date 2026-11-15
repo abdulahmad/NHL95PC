@@ -20,12 +20,12 @@ extern str_Agility, str_Weight, str_ShotPower, str_Checking2, str_StickHandling,
 extern str_DefensiveAwareness, str_Aggressiveness, str_Endurance, str_ShootPassBias, str_Faceoffs, str_GloveLeft, str_GloveRight, str_StickLeft
 extern str_StickRight, str_PuckControl, str_Speed2, str_Agility2, str_Weight2, str_OffensiveAwareness2, str_DefensiveAwareness2, str_WesternConference3
 extern str_EasternConference3, str_TeamScoring, str_TeamDefense, str_TeamPenaltyKilling, str_TeamPowerPlay, str_TeamPenalties, str_TeamStandings, str_spW
-extern unk_C0F6C, unk_C0F6F, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, unk_C0F89
+extern str_SpL4, str_SpT, str_GF2, str_GA4, str_TSH, str_PPGA, str_PCT5, unk_C0F89
 extern str_ADV, str_PPG3, str_PIM5, str_AVG, str_PTS, str_WINS, str_PointLeaders, str_GoalLeaders
 extern str_AssistLeaders, str_PowerPlayGoalLeaders, str_ShorthandedGoalLeaders, str_PlusMinusLeaders, str_PenaltyMinuteLeaders, str_ShootingPercentageLeaders, str_GoalsAgainstAverageLeaders, str_GoaltenderWinLeaders
-extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3, unk_C11D9
-extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2, unk_C1200
-extern unk_C1203, str_SA4, str_PCT7, str_LSSCEDDB, str_SCHEDULEDB3, str_InsufficientDiskSpace3
+extern str_SavePercentageLeaders, str_spG, str_spA, str_Pt3, unk_C11D1, str_PP2, str_SHG3, str_PlusMinus5
+extern str_PIM6, str_Shots5, str_Pct6, str_MIN5, str_GA5, str_AVG2, str_spW2, str_SpL5
+extern str_SpT2, str_SA4, str_PCT7, str_LSSCEDDB, str_SCHEDULEDB3, str_InsufficientDiskSpace3
 global CreditsList, msg_NeedKbytes, msg_NeedKbytes2, str_ReturningToSportsCentral, str_ReturningOutOfThe, str_ReturningToThePlayoff, str_ExitingTheGame, str_DoYouWishToReturn
 global str_DoYouWishToExit, str_9394Season, str_9394PlayOffs, str_LgSeasonTitle, str_LgPlayoffsTitle, str_POTitle
 global str_SeasonSfx, str_SeasonPlayOffsSfx, str_PlayOffsSfx, str_AttDb, str_fmt2d, str_fmt3d, str_fmt4d
@@ -33,24 +33,24 @@ global str_fmt5d, str_fmtTenths, str_fmtPct, str_fmtPct0, str_fmtMinSec, str_fmt
 global str_ExhibitionGameCalled, str_LeagueCalled, str_PlayOffSeriesCalled, str_NoScoring, str_NoPenalties, rinkarenas, byte_C66B4, mi_9394Season
 global mi_9394Playoffs, mi_LeagueSeason, mi_LeaguePlayoffs, mi_PlayoffMode, str_Dashes, treecolslots, treecol_Wr2, treecol_Wr3, treecol_Er3
 global treecol_Er2, treecol_Er1
-global scoutcatidx, desksongalt, dword_C56C4, dword_C56E4, hudclockmin, hudclocksec, hudclockhund, panelprevmin
-global panelprevsec, panelprevhund, panelhund, deferpending, dword_C5844, dword_C5848, hudhomeline, hudawayline
-global dword_C5854, dword_C5858, hmlinetimer, awlinetimer, dword_C5861, dword_C5862, demoteammode, nhlintrosaid
+global scoutcatidx, desksongalt, awlineenergies, hmlineenergies, hudclockmin, hudclocksec, hudclockhund, panelprevmin
+global panelprevsec, panelprevhund, panelhund, deferpending, hmpanellines, awpanellines, hudhomeline, hudawayline
+global hmpanelpens, awpanelpens, hmlinetimer, awlinetimer, demomatchups_m1, demomatchups, demoteammode, nhlintrosaid
 global textgrid, textgridon, textcolor, textshadow, textoutlinedx, textoutlinedy, easnfontbuf, embscupbank
 global statscategory, statsteamsel, statsredrawcb, deskexit, teamstatscb, skaterstatscb, goaliestatscb, standingscb
-global standingsmenucb, hlplayedmask, dword_C66A4, dword_C66AC, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
+global standingsmenucb, hlplayedmask, msg_DeskExit, msg_DeskExit_e02, dword_C66B0, screenbm, dirtyrectcount, dword_C66D0
 global dword_C66D4, lastsprremap, dword_C679D, dword_C67B9, dword_C67BD, statsplayoffs, statsfromleague, statspalvalid
 global westconfteams, eastconfteams, dword_C6D26, potreeseeds, dword_C6E20, treerowy, divx, divy
 global fdlgshapes, fdlgrects
 global boxfillcolor, boxlitecolor, boxshadecolor, dlgtextfg, dlgtextbg
 global dword_C71E0, dlgsavebuf, listscroll
 global keepdesksong, songdata, rinktilebm
-global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, off_C56B5, perioddigits, off_C57C8
-global crestnames, creditpages, off_C648E, off_C659A, off_C6821, off_C6825, off_C6841, off_C6845
-global off_C6881, off_C6885, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
-global skaterratingnames, off_C6A99, goalieratingnames, off_C6AD1, teamsortfns, westconfname, eastconfname, teamstattitles
+global rinkbm, rinkfileidx, currink, rinkscrollx, rinkscrolly, msg_GameDiskSpace, perioddigits, hudotname
+global crestnames, creditpages, msg_FileExists, msg_StatsDiskSpace, menutext_statsleague, menuact_statsleague, menutext_statslgplayoffs, menuact_statslgplayoffs
+global menutext_statsplayoff, menuact_statsplayoff, divisionnames, statslabels, statsbgnames, statsplayerdbs, statsteamdbs
+global skaterratingnames, skatercardattrs_m3, goalieratingnames, goaliecardattrs_m3, teamsortfns, westconfname, eastconfname, teamstattitles
 global teamcolhdrs, leadersortfns, leadertitles, leadercolhdrs, leadercolhdrs_c1
-global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, off_C6F7C, off_C6F80, off_C6F84
+global leadercolhdrs_c2, leadercolhdrs_c3, leadercolhdrs_c4, off_C6D22, scoutcatnames, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02
 global gamestatlabels, setdiskmsg, dbchoicelines, str_OfFreeDiskSpace, unk_C588E, str_OfficiallyLicensed, str_ProductOfThe, str_NationalHockeyLeague
 global str_NationalHockeyLeagueNHL, str_TheLogoOfThe, str_TrademarksOfTheNational, str_LeagueAndAreUsed, unk_C5969, unk_C5996, str_TrademarkOfTheNational, str_LeagueAndIsUsed
 global str_ByElectronicArtsInc, str_TeamNamesAndLogos, str_AreOfficiallyLicensed, str_OfTheNationalHockey, unk_C5A6C, unk_C5A78, str_OfficiallyLicensedProductOf, str_NationalHockeyLeaguePlayers
@@ -68,8 +68,8 @@ global unk_C60D7, str_RosterVerification, str_DaveWarfield2, str_JohnBrydon2, st
 global str_NewYorkRangers, unk_C619A, str_AudioTechnician, str_SteveRoyea, str_AudioProgrammers, str_PaulChernikhowsky, str_JasonLeeSteere, str_AdvancedGravis
 global unk_C6232, str_SportsDeskAnnouncer, str_MichaelDonovan, str_RinkAnnouncer, str_BruceJamieson, str_PlayerProfilePhotographs, str_SteveBabineau, unk_C62D3
 global str_VideoProvidedBy, str_NHLProductions, str_SpecialThanks, str_ScottJackson, str_CatherineOBrien, str_DougReid, str_MottLinn, unk_C6363
-global unk_C638C, str_TheFileYouSpecified, str_DoYouWantTo, str_No3, unk_C6499, str_TheStatsWereSuccessfully, unk_C64F5, str_ERROROutputFileWas
-global unk_C652A, str_InsufficientDiskSpaceTo, str_TheDisplayedStatisticsTo, statsleague, str_MayLoseThisGame, unk_C678E, unk_C67B1, photoremap
+global unk_C638C, str_TheFileYouSpecified, str_DoYouWantTo, str_No3, btn_FileExists, str_TheStatsWereSuccessfully, msg_StatsWritten, str_ERROROutputFileWas
+global msg_OutputFileError, str_InsufficientDiskSpaceTo, str_TheDisplayedStatisticsTo, statsleague, str_MayLoseThisGame, unk_C678E, unk_C67B1, photoremap
 global str_AwayLines, str_Play, str_Cancel, str_HomeLines, pregamebuttons, str_PenaltyKilling, str_PowerPlay
 global str_Shooting, str_Skating, str_Passing, str_Defense2, str_Checking, str_Goaltending, str_Overall, str_ConfirmDeletionOfThe
 global delmsgbox, str_gsScore, str_gsShots, str_gsPowerPlay, str_gsPenalties, str_gsFaceoffsWon, str_gsBodyChecks, str_gsAttackZone
@@ -84,15 +84,15 @@ db 079h,074h,065h,073h,020h,020h,020h,00h
 str_OfFreeDiskSpace:
 db 06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h
 db 063h,065h,02Eh,00h
-off_C56B5:
+msg_GameDiskSpace:
 dd str_InsufficientDiskSpace3
 dd msg_NeedKbytes
 dd str_OfFreeDiskSpace
 db 00h,00h,00h
-dword_C56C4:
+awlineenergies:
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
-dword_C56E4:
+hmlineenergies:
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 db 0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h,0A0h,0Fh,00h,00h
 hudclockmin:
@@ -141,7 +141,7 @@ dd str_3007
 dd str_3008
 dd str_3009
 dd str_300
-off_C57C8:
+hudotname:
 dd str_OT2
 crestnames:
 dd str_BOS
@@ -176,25 +176,25 @@ panelhund:
 db 00h,00h,00h,00h
 deferpending:
 db 00h,00h,00h,00h
-dword_C5844:
+hmpanellines:
 db 00h,00h,00h,00h
-dword_C5848:
+awpanellines:
 db 00h,00h,00h,00h
 hudhomeline:
 db 00h,00h,00h,00h
 hudawayline:
 db 00h,00h,00h,00h
-dword_C5854:
+hmpanelpens:
 db 00h,00h,00h,00h
-dword_C5858:
+awpanelpens:
 db 00h,00h,00h,00h
 hmlinetimer:
 db 00h,00h,00h,00h
 awlinetimer:
 db 00h
-dword_C5861:
+demomatchups_m1:
 db 00h
-dword_C5862:
+demomatchups:
 db 00h,00h,08h,011h,04h,012h,02h,015h,014h,03h,0Fh,016h,0Ch,015h,0Ch,0Bh
 db 00h,09h,0Ah,01h,08h,015h,014h,012h,0Ch,015h,0Ch,016h,0Ah,00h,0Ch,0Ah
 db 014h,015h,0Ch,015h
@@ -755,12 +755,12 @@ str_DoYouWantTo:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,061h,06Eh,074h,020h,074h,06Fh,020h,06Fh
 db 076h,065h,072h,077h,072h,069h,074h,065h,020h,074h,068h,065h,020h,06Fh,06Ch,064h
 db 020h,066h,069h,06Ch,065h,03Fh,00h
-off_C648E:
+msg_FileExists:
 dd str_TheFileYouSpecified
 dd str_DoYouWantTo
 str_No3:
 db 04Eh,06Fh,00h
-unk_C6499:
+btn_FileExists:
 db 010h,00h,00h,00h,03Ch,00h,00h,00h,028h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd str_No3
@@ -771,14 +771,14 @@ str_TheStatsWereSuccessfully:
 db 054h,068h,065h,020h,073h,074h,061h,074h,073h,020h,077h,065h,072h,065h,020h,073h
 db 075h,063h,063h,065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h
 db 074h,065h,06Eh,00h
-unk_C64F5:
+msg_StatsWritten:
 dd str_TheStatsWereSuccessfully
 str_ERROROutputFileWas:
 db 045h,052h,052h,04Fh,052h,020h,03Ah,020h,04Fh,075h,074h,070h,075h,074h,020h,066h
 db 069h,06Ch,065h,020h,077h,061h,073h,020h,06Eh,06Fh,074h,020h,073h,075h,063h,063h
 db 065h,073h,073h,066h,075h,06Ch,06Ch,079h,020h,077h,072h,069h,074h,074h,065h,06Eh
 db 00h
-unk_C652A:
+msg_OutputFileError:
 dd str_ERROROutputFileWas
 str_InsufficientDiskSpaceTo:
 db 049h,06Eh,073h,075h,066h,066h,069h,063h,069h,065h,06Eh,074h,020h,064h,069h,073h
@@ -792,7 +792,7 @@ msg_NeedKbytes2:
 db 072h,065h,071h,075h,069h,072h,065h,020h,058h,058h,020h,04Bh,062h,079h,074h,065h
 db 073h,020h,06Fh,066h,020h,066h,072h,065h,065h,020h,064h,069h,073h,06Bh,020h,073h
 db 070h,061h,063h,065h,02Eh,020h,020h,020h,020h,00h
-off_C659A:
+msg_StatsDiskSpace:
 dd str_InsufficientDiskSpaceTo
 dd str_TheDisplayedStatisticsTo
 dd msg_NeedKbytes2
@@ -845,10 +845,10 @@ db 065h,074h,075h,072h,06Eh,03Fh,00h
 str_DoYouWishToExit:
 db 044h,06Fh,020h,079h,06Fh,075h,020h,077h,069h,073h,068h,020h,074h,06Fh,020h,065h
 db 078h,069h,074h,03Fh,00h
-dword_C66A4:
+msg_DeskExit:
 db 00h,00h,00h,00h
 dd str_MayLoseThisGame
-dword_C66AC:
+msg_DeskExit_e02:
 db 00h,00h,00h,00h
 dword_C66B0:
 db 0Dh,00h,00h,00h
@@ -931,24 +931,24 @@ db 0F7h,00h,00h,00h,035h,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 036h,00h,00h,00h,0F7h,00h,00h,00h,047h,00h,00h,00h
-off_C6821:
+menutext_statsleague:
 dd mi_LeagueSeason
-off_C6825:
+menuact_statsleague:
 dd StatsSelLeague
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,048h,00h,00h,00h
 db 0F7h,00h,00h,00h,059h,00h,00h,00h
-off_C6841:
+menutext_statslgplayoffs:
 dd mi_LeaguePlayoffs
-off_C6845:
+menuact_statslgplayoffs:
 dd StatsSelLeaguePlayoffs
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,05Ah,00h,00h,00h
 db 0F7h,00h,00h,00h,06Bh,00h,00h,00h
 dd unk_C678E
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 06Ch,00h,00h,00h,0F7h,00h,00h,00h,07Eh,00h,00h,00h
-off_C6881:
+menutext_statsplayoff:
 dd mi_PlayoffMode
-off_C6885:
+menuact_statsplayoff:
 dd StatsSelPlayoffMode
 db 00h,00h,00h,00h,00h,00h,00h,00h
 str_SeasonSfx:
@@ -1041,7 +1041,7 @@ dd str_DefensiveAwareness
 dd str_Aggressiveness
 dd str_Endurance
 dd str_ShootPassBias
-off_C6A99 equ $+1
+skatercardattrs_m3 equ $+1
 dd str_Faceoffs
 db 01h,02h,03h,04h,05h,06h,07h,09h,0Ah,0Bh,0Ch,0Dh,0Eh,013h,00h,00h
 goalieratingnames:
@@ -1054,7 +1054,7 @@ dd str_Speed2
 dd str_Agility2
 dd str_Weight2
 dd str_OffensiveAwareness2
-off_C6AD1 equ $+1
+goaliecardattrs_m3 equ $+1
 dd str_DefensiveAwareness2
 db 01h,02h,03h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h
 teamsortfns:
@@ -1087,12 +1087,12 @@ dd str_TeamPenalties
 dd str_TeamStandings
 teamcolhdrs:
 dd str_spW
-dd unk_C0F6C
-dd unk_C0F6F
+dd str_SpL4
+dd str_SpT
 dd str_GF2
 dd str_spW
-dd unk_C0F6C
-dd unk_C0F6F
+dd str_SpL4
+dd str_SpT
 dd str_GA4
 dd str_TSH
 dd str_PPGA
@@ -1167,7 +1167,7 @@ dd unk_C11D1
 dd str_spG
 dd str_spA
 dd str_Pt3
-dd unk_C11D9
+dd str_PlusMinus5
 dd unk_C11D1
 dd str_spG
 dd str_spA
@@ -1186,8 +1186,8 @@ dd unk_C11D1
 dd unk_C11D1
 dd str_MIN5
 dd str_spW2
-dd unk_C1200
-dd unk_C1203
+dd str_SpL5
+dd str_SpT2
 dd unk_C11D1
 dd str_MIN5
 dd str_GA5
@@ -1302,11 +1302,11 @@ scoutcatidx:
 db 00h,01h,04h,05h,06h,07h,08h,0Ah,0Bh,00h,00h,00h
 fdlgshapes:
 db 00h,00h,00h,00h
-off_C6F7C:
+fdlgfilelists:
 dd lgfiles
-off_C6F80:
+fdlgfilelists_e01:
 dd pofiles
-off_C6F84:
+fdlgfilelists_e02:
 dd exhfiles
 fdlgrects:
 db 0Eh,00h,00h,00h

@@ -5,11 +5,11 @@ section s_C88E2 progbits alloc noexec write align=1
 extern str_A5, unk_C1936, unk_C67B1, unk_C88C2, str_StatisticsType, str_ReturnTo
 global teamstartlag, greyramp, dword_C891E, calcolx, calrowy, calendarshapes
 global gridcellbuf, tradebtnx, tradebtny, masteronlymsg, mergeincompletemsg, updateerrmsg
-global exporterrmsg, unequaltrademsg, unk_C88E2, str_TheDatabasesCanOnly, str_OnTheMasterCopy, str_TheMasterControllerFor, str_MustBeImportedFirst, masterctlmsg
+global exporterrmsg, unequaltrademsg, tradestatsmenubar, str_TheDatabasesCanOnly, str_OnTheMasterCopy, str_TheMasterControllerFor, str_MustBeImportedFirst, masterctlmsg
 global str_WarningMergeNotCompleted, str_LeagueCanNotBe, str_TheMergeIsComplete, str_ErrorWhileUpdating, str_PlayersDatabases, str_ErrorWhileMergingDatabases, mergeerrmsg, str_ImportingMasterDatabases
 global importmastermsg, str_ErrorWhileExportingPlayer, str_PlayerNotExported, drivebtns, str_ThereMustBeAn, str_NumberOfPlayersSelected, str_OnBothTeams, str_TheTradingDeadlineHas
 global str_NoMoreTradingIs
-unk_C88E2:
+tradestatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo
 db 00h,00h,00h,00h

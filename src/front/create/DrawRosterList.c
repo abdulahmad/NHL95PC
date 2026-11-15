@@ -53,11 +53,11 @@ void DrawRosterList(int x, int y, int side)
                 sub_90F38(side ? 0x15E : 0x23, byte_D42C3 * i + 0x35, 0xF0, byte_D42C3, 0x80);
         }
         if (dword_D0C20) {
-            DrawButtons((Button *)unk_D0BB8, 2);
-            dword_D0C10 = falisttop;
-            dword_D0C04 = (unsigned)((dword_D0BFC - 4) * *(volatile int *)&dword_D0C10)
-                / (unsigned)dword_D0C18;
-            DrawScrollBar((int *)unk_D0BF0);
+            DrawButtons((Button *)btn_RosterList, 2);
+            fascrollbar_top = falisttop;
+            fascrollbar_thumb = (unsigned)((fascrollbar_len - 4) * *(volatile int *)&fascrollbar_top)
+                / (unsigned)fascrollbar_count;
+            DrawScrollBar((int *)fascrollbar);
         }
     }
 }

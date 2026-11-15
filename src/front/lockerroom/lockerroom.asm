@@ -2,14 +2,14 @@
 bits 32
 %include "hockey.inc"
 section s_8034B progbits alloc exec nowrite align=1
-extern __CHK, acptspr, byte_C541B, homeremap, homeremap_e05, homeremap_e07, homeremap_e10, homeremap_e11
+extern __CHK, acptspr, sndcardmissing, homeremap, homeremap_e05, homeremap_e07, homeremap_e10, homeremap_e11
 extern homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50, homeremap_e51, homeremap_e60, homeremap_eFB
 extern homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr, chkonspr, ClearInputQueue, cont2team
-extern ctl1side, ctl1team, ctl2side, ctl2team, lockerindex, lockerteams, dword_D223C, dword_D22DC
-extern dword_D22E0, dword_D22EC, dword_D22F0, dword_D2435, FadeOutPalCycle, FadePalStep, fdlg_cancel, fileoncd
+extern ctl1side, ctl1team, ctl2side, ctl2team, lockerindex, lockerteams, poroundnameidx, lockeracceptx
+extern lockeraccepty, lockercancelx, lockercancely, sndtempbuf, FadeOutPalCycle, FadePalStep, fdlg_cancel, fileoncd
 extern fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr, homenamebckspr, HomeTeam
 extern kaufmfont, lockerrects, mainfont, MakePath, modesetlabel, MouseSetPos, musichandle, musicon
-extern musicslot, na01spr, na03spr, na05spr, off_CECFF, off_CED3F, off_D21C0, off_D2230
+extern musicslot, na01spr, na03spr, na05spr, menutext_deskreturn, menutext_desktodesk, jerseyabbrevs, poroundnames
 extern pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr, pointerspr
 extern PrintOutlinedText, PrintShadowText, ptrupdatefn, s1font, setbits, SetTextColors, settingsfile, ShowLoadingScreen
 extern songdata, SoundCardDlgLoop, soundcardrects, sounddev, sprintf_, str_00002, str_Accept, str_Acpt
@@ -265,8 +265,8 @@ mov edx, str_Settings3	; 805F8
 mov eax, modesetlabel+0Ah	; 805FD
 call strcpy_	; 80602
 mov edi, str_SportsCentral2	; 80607
-mov dword [off_CECFF], edi	; 8060C
-mov dword [off_CED3F], edi	; 80612
+mov dword [menutext_deskreturn], edi	; 8060C
+mov dword [menutext_desktodesk], edi	; 80612
 pop edi	; 80618
 pop edx	; 80619
 pop ecx	; 8061A
@@ -279,8 +279,8 @@ mov edx, str_Settings3	; 8062B
 mov eax, modesetlabel+7	; 80630
 call strcpy_	; 80635
 mov ecx, str_PlayoffTree2	; 8063A
-mov dword [off_CECFF], ecx	; 8063F
-mov dword [off_CED3F], ecx	; 80645
+mov dword [menutext_deskreturn], ecx	; 8063F
+mov dword [menutext_desktodesk], ecx	; 80645
 pop edi	; 8064B
 pop edx	; 8064C
 pop ecx	; 8064D
@@ -293,8 +293,8 @@ mov edx, str_Settings3	; 8065E
 mov eax, modesetlabel+0Bh	; 80663
 call strcpy_	; 80668
 mov edx, str_Return	; 8066D
-mov dword [off_CECFF], edx	; 80672
-mov dword [off_CED3F], edx	; 80678
+mov dword [menutext_deskreturn], edx	; 80672
+mov dword [menutext_desktodesk], edx	; 80678
 .x:
 pop edi	; 8067E
 pop edx	; 8067F
@@ -793,7 +793,7 @@ add esp, byte 0Ch	; 80C44
 mov eax, dword [HomeTeam-2]	; 80C47
 sar eax, 10h	; 80C4C
 mov eax, dword [nosplit eax*4+lockerindex]	; 80C4F
-mov edx, dword [nosplit eax*4+off_D21C0]	; 80C56
+mov edx, dword [nosplit eax*4+jerseyabbrevs]	; 80C56
 push edx	; 80C5D
 push str_JERSH	; 80C5E
 lea eax, [dword esp+0348h]	; 80C63
@@ -861,7 +861,7 @@ add esp, byte 4	; 80D40
 mov eax, dword [VisTeam-2]	; 80D43
 sar eax, 10h	; 80D48
 mov eax, dword [nosplit eax*4+lockerindex]	; 80D4B
-mov ebp, dword [nosplit eax*4+off_D21C0]	; 80D52
+mov ebp, dword [nosplit eax*4+jerseyabbrevs]	; 80D52
 push ebp	; 80D59
 push str_JERSV	; 80D5A
 lea eax, [dword esp+0348h]	; 80D5F
@@ -1006,7 +1006,7 @@ idiv ebx	; 80F5C
 mov dword [dword esp+0350h], edx	; 80F5E
 .22:
 mov esi, dword [dword esp+0350h]	; 80F65
-mov esi, dword [nosplit esi*4+off_D21C0]	; 80F6C
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 80F6C
 mov edi, dword [lockerrects+024h]	; 80F73
 add edi, byte 3	; 80F79
 mov ebp, dword [lockerrects+020h]	; 80F7C
@@ -1064,7 +1064,7 @@ idiv ebx	; 81031
 mov dword [dword esp+0350h], edx	; 81033
 .25:
 mov esi, dword [dword esp+0350h]	; 8103A
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81041
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81041
 mov edi, dword [lockerrects+034h]	; 81048
 add edi, byte 3	; 8104E
 mov eax, dword [lockerrects+030h]	; 81051
@@ -1124,7 +1124,7 @@ idiv ebx	; 81113
 mov dword [dword esp+0350h], edx	; 81115
 .28:
 mov esi, dword [dword esp+0350h]	; 8111C
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81123
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81123
 mov edi, dword [lockerrects+044h]	; 8112A
 add edi, byte 3	; 81130
 mov eax, dword [lockerrects+040h]	; 81133
@@ -1184,7 +1184,7 @@ idiv ebx	; 811ED
 mov dword [dword esp+0350h], edx	; 811EF
 .31:
 mov esi, dword [dword esp+0350h]	; 811F6
-mov esi, dword [nosplit esi*4+off_D21C0]	; 811FD
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 811FD
 mov edi, dword [lockerrects+054h]	; 81204
 add edi, byte 3	; 8120A
 mov eax, dword [lockerrects+050h]	; 8120D
@@ -1225,15 +1225,15 @@ mov ebx, dword [nosplit ebx*4+teamcitynames]	; 81298
 mov edx, 2Ch	; 8129F
 mov eax, 154h	; 812A4
 call PrintOutlinedText	; 812A9
-mov edx, dword [dword_D22E0]	; 812AE
+mov edx, dword [lockeraccepty]	; 812AE
 add edx, byte 3	; 812B4
-mov eax, dword [dword_D22DC]	; 812B7
+mov eax, dword [lockeracceptx]	; 812B7
 add eax, byte 12h	; 812BC
 mov ebx, str_Accept	; 812BF
 call PrintShadowText	; 812C4
-mov edx, dword [dword_D22F0]	; 812C9
+mov edx, dword [lockercancely]	; 812C9
 add edx, byte 3	; 812CF
-mov eax, dword [dword_D22EC]	; 812D2
+mov eax, dword [lockercancelx]	; 812D2
 add eax, byte 12h	; 812D7
 mov ebx, str_Cancel2	; 812DA
 call PrintShadowText	; 812DF
@@ -1279,8 +1279,8 @@ mov eax, dword [nosplit eax*4+teamdivflags]	; 8137B
 mov ebp, dword [nosplit edx*4+teamdivflags]	; 81382
 or eax, ebp	; 81389
 mov dword [dword esp+0350h], eax	; 8138B
-mov esi, dword [nosplit eax*4+dword_D223C]	; 81392
-mov esi, dword [nosplit esi*4+off_D2230]	; 81399
+mov esi, dword [nosplit eax*4+poroundnameidx]	; 81392
+mov esi, dword [nosplit esi*4+poroundnames]	; 81399
 push esi	; 813A0
 call fputchar	; 813A1
 add esp, byte 4	; 813A6
@@ -1423,7 +1423,7 @@ mov dword [byte ebp-08h], ebx	; 81587
 mov edi, ecx	; 8158A
 call sub_B4BA8	; 8158C
 mov eax, esi	; 81591
-mov edx, dword [nosplit eax*4+off_D21C0]	; 81593
+mov edx, dword [nosplit eax*4+jerseyabbrevs]	; 81593
 push edx	; 8159A
 cmp dword [dword ebp-0124h], byte 0	; 8159B
 je short .1	; 815A2
@@ -1574,8 +1574,8 @@ push esi	; 8176D
 call sub_8EA18	; 8176E
 add esp, byte 4	; 81773
 mov eax, dword [byte ebp-08h]	; 81776
-mov esi, dword [nosplit eax*4+dword_D223C]	; 81779
-mov esi, dword [nosplit esi*4+off_D2230]	; 81780
+mov esi, dword [nosplit eax*4+poroundnameidx]	; 81779
+mov esi, dword [nosplit esi*4+poroundnames]	; 81780
 push esi	; 81787
 call fputchar	; 81788
 add esp, byte 4	; 8178D
@@ -1636,7 +1636,7 @@ sar edx, 1Fh	; 8182B
 idiv ebx	; 8182E
 mov esi, edx	; 81830
 .17:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81832
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81832
 mov eax, dword [lockerrects+044h]	; 81839
 add eax, byte 3	; 8183E
 mov dword [byte ebp-010h], eax	; 81841
@@ -1671,7 +1671,7 @@ sar edx, 1Fh	; 81891
 idiv ebx	; 81894
 mov esi, edx	; 81896
 .18:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81898
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81898
 mov eax, dword [lockerrects+054h]	; 8189F
 add eax, byte 3	; 818A4
 mov dword [byte ebp-010h], eax	; 818A7
@@ -1712,7 +1712,7 @@ sar edx, 1Fh	; 81919
 idiv ebx	; 8191C
 mov esi, edx	; 8191E
 .19:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81920
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81920
 mov eax, dword [lockerrects+024h]	; 81927
 add eax, byte 3	; 8192C
 mov dword [byte ebp-010h], eax	; 8192F
@@ -1748,7 +1748,7 @@ sar edx, 1Fh	; 81986
 idiv ebx	; 81989
 mov esi, edx	; 8198B
 .20:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 8198D
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 8198D
 mov eax, dword [lockerrects+034h]	; 81994
 add eax, byte 3	; 81999
 mov dword [byte ebp-010h], eax	; 8199C
@@ -1816,7 +1816,7 @@ sar edx, 1Fh	; 81A5C
 idiv ebx	; 81A5F
 mov esi, edx	; 81A61
 .23:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81A63
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81A63
 mov eax, dword [lockerrects+044h]	; 81A6A
 add eax, byte 3	; 81A6F
 mov dword [byte ebp-010h], eax	; 81A72
@@ -1849,7 +1849,7 @@ sar edx, 1Fh	; 81ABD
 idiv ebx	; 81AC0
 mov esi, edx	; 81AC2
 .24:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81AC4
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81AC4
 mov eax, dword [lockerrects+054h]	; 81ACB
 add eax, byte 3	; 81AD0
 mov dword [byte ebp-010h], eax	; 81AD3
@@ -1888,7 +1888,7 @@ sar edx, 1Fh	; 81B40
 idiv ebx	; 81B43
 mov esi, edx	; 81B45
 .25:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81B47
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81B47
 mov eax, dword [lockerrects+024h]	; 81B4E
 add eax, byte 3	; 81B53
 mov dword [byte ebp-010h], eax	; 81B56
@@ -1922,7 +1922,7 @@ sar edx, 1Fh	; 81BA8
 idiv ebx	; 81BAB
 mov esi, edx	; 81BAD
 .26:
-mov esi, dword [nosplit esi*4+off_D21C0]	; 81BAF
+mov esi, dword [nosplit esi*4+jerseyabbrevs]	; 81BAF
 mov eax, dword [lockerrects+034h]	; 81BB6
 add eax, byte 3	; 81BBB
 mov dword [byte ebp-0Ch], eax	; 81BBE
@@ -2348,7 +2348,7 @@ mov ax, word [nosplit eax*4+lockerteams]	; 821A1
 mov word [VisTeam], ax	; 821A9
 cmp dword [gamemode], byte 0	; 821AF
 jne short .4	; 821B6
-mov edx, dword [dword edx+off_D21C0]	; 821B8
+mov edx, dword [dword edx+jerseyabbrevs]	; 821B8
 cmp byte [byte edx+02h], 0	; 821BE
 je short .1	; 821C2
 mov ebx, 3	; 821C4
@@ -2362,7 +2362,7 @@ call strncpy_	; 821DF
 mov byte [str_LAAtMTL+9], 20h	; 821E4
 .2:
 mov edx, dword [dword esp+031Ch]	; 821EB
-mov edx, dword [nosplit edx*4+off_D21C0]	; 821F2
+mov edx, dword [nosplit edx*4+jerseyabbrevs]	; 821F2
 cmp byte [byte edx+02h], 0	; 821F9
 je short .3	; 821FD
 mov ebx, 3	; 821FF

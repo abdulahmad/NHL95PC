@@ -8,7 +8,7 @@ extern rinkfileidx, rinkhtiles, rinkscrollx, rinkscrolly, rinktilebm, rinkwtiles
 extern SetDrawBitmap, str_CRESTS3, str_ErrorLoadingFile, str_extBIN, str_InvalidFileSize, str_Map, str_Pal16, str_Rink2
 extern str_Til, str_TILES, sub_6A033, sub_6A0F6, sub_6A106, sub_6A156, sub_6AD4F, sub_6AF52
 extern sub_6AF97, sub_8CCA8, sub_8DBC0, sub_8E83C, sub_8E8A0, sub_8FFB0, sub_913B4, sub_92DE0
-extern sub_92EE4, sub_B30B4, sub_B4F8C, unk_DC890
+extern sub_92EE4, sub_B30B4, sub_B4F8C, deskbankname
 global LoadRink, BlitTileMap, SetRinkScroll, WaitClickTimeout, LoadCrestsPalette
 ; C: src/front/rink_tiles/LoadRink.c
 %ifdef CBUILD
@@ -709,7 +709,7 @@ push esi	; 33F8D
 call FreeMemBlock	; 33F8E
 add esp, byte 4	; 33F93
 push byte 0	; 33F96
-push unk_DC890	; 33F98
+push deskbankname	; 33F98
 call sub_8E83C	; 33F9D
 add esp, byte 8	; 33FA2
 mov esi, eax	; 33FA5

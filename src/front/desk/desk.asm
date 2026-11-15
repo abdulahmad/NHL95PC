@@ -5,13 +5,13 @@ section s_18D7F progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awlinetab, awscore, awshotcnt, bailout_vec, boxfillcolor, boxlitecolor
 extern boxshadecolor, btn_POHumanOut, cupceremony, cddriveptr, ClearInputQueue, CoachCutScene, cont2team, ctl1team
 extern ctl2team, curperiod, deferpending, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm
-extern DrawMenuItemSel, dword_C66A4, dword_C66AC, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, deskptry
+extern DrawMenuItemSel, msg_DeskExit, msg_DeskExit_e02, dword_C66D0, dword_C66D4, dword_CCC9D, dword_DC868, deskptry
 extern deskptrx, escrequest, exitgame, FadeOutPalCycle, FadePalette, FadePalStep, fileoncd, FlushGSumQueue
 extern FreeBackMoment, FreeMemBlock, FreeNowBack, GameLineEditor, gamemode, gameopts, gameresult, GameStatsScreen
 extern GameSummaryScreen, GetInputEvent, hlplayedmask, hmgoalcnt, hmlinetab, hmscore, hmshotcnt, HomeTeam
 extern InputInstall, InputRemove, InstantReplay, joysampling, LoadPlayerPhotos, LoadRink, MakePath, MenuHitTest
 extern MessageBox, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mousepollfn
-extern MouseSetPos, MusicChanReset, musichandle, musicon, musicslot, off_CEF23, othergames, othergamesb
+extern MouseSetPos, MusicChanReset, musichandle, musicon, musicslot, menuact_gotoreplay, othergames, othergamesb
 extern otherperiod, otherscores, otherscoresb, PaOpenBank, PaPlayoffResult, PickOtherGames, pointerspr, ptrupdatefn
 extern randomd0, ReadGSumHeader, ReadGSumTail, ReplayIsEmpty, s1font, savepal, SayBackMoment, SayNowBack
 extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetScreenSize, SetScreenTitle, SetTeamGoalie
@@ -20,8 +20,8 @@ extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Me
 extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, sub_8CCA8, sub_8D2F0
 extern sub_8E83C, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
 extern sub_8FFB0, sub_903F0, sub_9061C, sub_91370, sub_91400, sub_B2DCA, sub_B2E1B, sub_B30B4
-extern sub_B392C, sub_B4B58, sub_B4BA8, sub_B4FAC, teamconf, TextInputDialog, TicksSinceLastCall, unk_CEB8F
-extern unk_CEC4F, unk_CF2EF, unk_DC890, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
+extern sub_B392C, sub_B4B58, sub_B4BA8, sub_B4FAC, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
+extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
 extern WriteScreenTextFile
 global OutputCurrentData, DrawDeskFrames, MenuCallbackTrue, MenuCallbackTrue2, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk
 global DeskReloadGame, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, DeskExitGame, DeskGoToReplay, DeskHomeLines, DeskLines_common
@@ -509,10 +509,10 @@ call SetScreenTitle	; 1939F
 call ReplayIsEmpty	; 193A4
 test eax, eax	; 193A9
 je short .1	; 193AB
-mov dword [off_CEF23], edx	; 193AD
+mov dword [menuact_gotoreplay], edx	; 193AD
 jmp short .2	; 193B3
 .1:
-mov dword [off_CEF23], DeskGoToReplay	; 193B5
+mov dword [menuact_gotoreplay], DeskGoToReplay	; 193B5
 .2:
 lea eax, [dword esp+03D4h]	; 193BF
 push eax	; 193C6
@@ -544,11 +544,11 @@ call sub_B4BA8	; 19423
 mov ebx, dword [esp]	; 19428
 push ebx	; 1942B
 push str_Eadesk1d	; 1942C
-push unk_DC890	; 19431
+push deskbankname	; 19431
 call sprintf_	; 19436
 add esp, byte 0Ch	; 1943B
 xor ecx, ecx	; 1943E
-mov ebx, unk_DC890	; 19440
+mov ebx, deskbankname	; 19440
 mov eax, dword [esp]	; 19445
 cmp byte [dword eax+fileoncd+064h], 1	; 19448
 jne short .4	; 1944F
@@ -602,11 +602,11 @@ cmp dword [schedgameidx], 444h	; 194E5
 jl short .7	; 194EF
 call PaOpenBank	; 194F1
 .7:
-mov dword [dword esp+03B4h], unk_CEC4F	; 194F6
+mov dword [dword esp+03B4h], deskmenubar_lg	; 194F6
 mov dword [dword esp+03A4h], 3	; 19501
 jmp short .9	; 1950C
 .8:
-mov dword [dword esp+03B4h], unk_CEB8F	; 1950E
+mov dword [dword esp+03B4h], deskmenubar	; 1950E
 mov dword [dword esp+03A4h], 6	; 19519
 .9:
 xor ecx, ecx	; 19524
@@ -1205,7 +1205,7 @@ call FadePalStep	; 19EA5
 mov eax, 0AAE60h	; 19EAA
 call sub_1BAF3	; 19EAF
 xor ecx, ecx	; 19EB4
-mov ebx, unk_DC890	; 19EB6
+mov ebx, deskbankname	; 19EB6
 mov eax, dword [esp]	; 19EBB
 cmp byte [dword eax+fileoncd+064h], 1	; 19EBE
 jne short .49	; 19EC5
@@ -1693,15 +1693,15 @@ jmp short .4	; 1A60B
 .1:
 test eax, eax	; 1A60D
 jne short .4	; 1A60F
-mov dword [dword_C66A4], str_ReturningToSportsCentral	; 1A611
+mov dword [msg_DeskExit], str_ReturningToSportsCentral	; 1A611
 jmp short .4	; 1A61B
 .2:
-mov dword [dword_C66A4], str_ReturningOutOfThe	; 1A61D
+mov dword [msg_DeskExit], str_ReturningOutOfThe	; 1A61D
 jmp short .4	; 1A627
 .3:
-mov dword [dword_C66A4], str_ReturningToThePlayoff	; 1A629
+mov dword [msg_DeskExit], str_ReturningToThePlayoff	; 1A629
 .4:
-mov dword [dword_C66AC], str_DoYouWishToReturn	; 1A633
+mov dword [msg_DeskExit_e02], str_DoYouWishToReturn	; 1A633
 push byte 0	; 1A63D
 mov ecx, 0FAh	; 1A63F
 mov ebx, 0F8h	; 1A644
@@ -1716,7 +1716,7 @@ push eax	; 1A660
 push byte 2	; 1A661
 push btn_POHumanOut	; 1A663
 mov ecx, 3	; 1A668
-mov ebx, dword_C66A4	; 1A66D
+mov ebx, msg_DeskExit	; 1A66D
 mov edx, 0FFFFFFFFh	; 1A672
 mov eax, edx	; 1A677
 call MessageBox	; 1A679
@@ -1768,8 +1768,8 @@ lea eax, [byte esp+010h]	; 1A6E7
 push eax	; 1A6EB
 call sub_B2DCA	; 1A6EC
 add esp, byte 0Ch	; 1A6F1
-mov dword [dword_C66A4], str_ExitingTheGame	; 1A6F4
-mov dword [dword_C66AC], str_DoYouWishToExit	; 1A6FE
+mov dword [msg_DeskExit], str_ExitingTheGame	; 1A6F4
+mov dword [msg_DeskExit_e02], str_DoYouWishToExit	; 1A6FE
 push byte 0	; 1A708
 mov ecx, 0FAh	; 1A70A
 mov ebx, 0F8h	; 1A70F
@@ -1784,7 +1784,7 @@ push eax	; 1A72B
 push byte 2	; 1A72C
 push btn_POHumanOut	; 1A72E
 mov ecx, 3	; 1A733
-mov ebx, dword_C66A4	; 1A738
+mov ebx, msg_DeskExit	; 1A738
 mov edx, 0FFFFFFFFh	; 1A73D
 mov eax, edx	; 1A742
 call MessageBox	; 1A744
@@ -1904,7 +1904,7 @@ mov edx, savepal	; 1A8D0
 mov eax, 1	; 1A8D5
 call FadePalStep	; 1A8DA
 mov ecx, 2	; 1A8DF
-mov ebx, unk_CF2EF	; 1A8E4
+mov ebx, desklinesmenubar	; 1A8E4
 mov edx, hmlinetab	; 1A8E9
 xor eax, eax	; 1A8EE
 DeskLines_common:
@@ -1935,7 +1935,7 @@ mov edx, savepal	; 1A948
 mov eax, 1	; 1A94D
 call FadePalStep	; 1A952
 mov ecx, 2	; 1A957
-mov ebx, unk_CF2EF	; 1A95C
+mov ebx, desklinesmenubar	; 1A95C
 mov edx, awlinetab	; 1A961
 mov eax, 1	; 1A966
 jmp short DeskLines_common	; 1A96B

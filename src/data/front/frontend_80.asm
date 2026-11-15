@@ -8,7 +8,7 @@ global homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE
 global savefname, fdlgmask, leaguedbfmt2, leaguedbfmt, othergames, othergamesb
 global otherscores, otherscoresb, leagueflags, lgteamflags, lgteam_17, lgteam_18, lgteam_19, savedname
 global lgschedrec, lgschedrec_b1, lgschedrec_b2, lgschedrec_b3, lgschedrec_b5, traderoster, tradejersey, tradeslot
-global byte_DE268, loadpals, palcyclephase, palcycledelay, dword_DC85C, dword_DC860, dword_DC868, deskptry
+global byte_DE268, loadpals, palcyclephase, palcycledelay, statsfilepos, lgstatsfilepos, dword_DC868, deskptry
 global deskptrx, dword_DC8A0, dword_DC8C8, dirtyrectptr, statspalshape, statsbgshapes, statsteamrecs, statsteambuf
 global statsskaterbuf, statsgoaliebuf, statssortkeys, statsplayerbuf, statspal, exhfiles
 global exhfilenames, pofiles, pofilenames, lgfiles
@@ -21,7 +21,7 @@ global traderesult, calmonth, criterrflag, leaguemaster, leaguesaved, lgteamver,
 global calredraw, calselmonth, dword_DDD34, lgplayteam, dword_DDD3C, lgschedrec_b4, gridcelly, gridcellx
 global lgplayeridfile, tradeclick, traderemap1, traderemap2, tradecursor, jerseymsg
 global tradeside, tradebitmap, dword_DE265, palcyclelock, dword_DEB74, statsplayer
-global unk_DC890, awayremap_eC0, homeremap_eC0, printfbuf, leagueteams, treeteamnames, unk_DDCFB
+global deskbankname, awayremap_eC0, homeremap_eC0, printfbuf, leagueteams, treeteamnames, poseriestext
 global masterpw, savleague1, savleague2, scrolly, scrollx, bgscrollx, bgscrolly8
 global lgteamver_hi, lggameidx, word_DDD48, word_DDD4A
 statsplayer:
@@ -29,9 +29,9 @@ resb 2
 resb 1
 resb 16
 resb 21
-dword_DC85C:
+statsfilepos:
 resb 4
-dword_DC860:
+lgstatsfilepos:
 resb 8
 dword_DC868:
 resb 32
@@ -39,7 +39,7 @@ deskptry:
 resb 4
 deskptrx:
 resb 4
-unk_DC890:
+deskbankname:
 resb 16
 dword_DC8A0:
 resb 40
@@ -266,7 +266,7 @@ resb 4
 treeteamnames:
 resb 546
 resb 21
-unk_DDCFB:
+poseriestext:
 resb 21
 savedname:
 resb 13

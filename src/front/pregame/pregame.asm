@@ -7,7 +7,7 @@ extern cont2team, crestnames, ctl1team, ctl2team, curleague, DrawBevelBox, DrawB
 extern hmteamrec_skaters, FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, fputchar, FreeMemBlock
 extern GameLineEditor, gameopts, GetInputEvent, hmlinetab, hmroster, HomeTeam, kaufmfont, leaguedbnames
 extern mainfont, MakePath, memcpy_, MouseSetPos, MusicChanReset2, musichandle, musicon, musicslot
-extern off_CEF43, off_CEF63, PaLineups, PaOpenBank, PaPlayoffTonight, PaPreloadClips, PaTonightIntro, pointerspr
+extern menuact_homelines, menuact_visitorlines, PaLineups, PaOpenBank, PaPlayoffTonight, PaPreloadClips, PaTonightIntro, pointerspr
 extern pregamebuttons, PrintOutlinedText, PrintShadowText, ptrupdatefn, ReadKeyRec, ReadTeamRec, schedgameidx, scoutcatidx
 extern scoutcatnames, SetDialogColors, SetTextColors, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, str_Apal
 extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_Def, str_extDB
@@ -17,7 +17,7 @@ extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, sub_8CCA
 extern sub_8E83C, sub_8E8A0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F98F, sub_8FB8E, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_91370, sub_913D0, sub_91400
 extern sub_B2E1B, sub_B30B4, sub_B392C, sub_B4BA8, sub_B4BC4, sub_B4FAC, teamabbrevs, teamconf
-extern TrackButtons, unk_CF1AF, VisTeam, WaitClickTimeout
+extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
 PreGameScreen_jt:
 dd PreGameScreen_awaylines
@@ -420,21 +420,21 @@ mov ebx, dword [dword esp+0648h]	; 2A4BA
 push ebx	; 2A4C1
 call sub_8EA18	; 2A4C2
 add esp, byte 4	; 2A4C7
-cmp dword [off_CEF43], byte 0	; 2A4CA
+cmp dword [menuact_homelines], byte 0	; 2A4CA
 jne short .18	; 2A4D1
-cmp dword [off_CEF63], byte 0	; 2A4D3
+cmp dword [menuact_visitorlines], byte 0	; 2A4D3
 jne short .18	; 2A4DA
 mov dword [dword esp+0650h], 2	; 2A4DC
 .17:
 mov dword [dword esp+0654h], pregamebuttons+1Ch	; 2A4E7
 jmp short .22	; 2A4F2
 .18:
-cmp dword [off_CEF43], byte 0	; 2A4F4
+cmp dword [menuact_homelines], byte 0	; 2A4F4
 jne short .19	; 2A4FB
 mov dword [dword esp+0650h], 3	; 2A4FD
 jmp short .21	; 2A508
 .19:
-cmp dword [off_CEF63], byte 0	; 2A50A
+cmp dword [menuact_visitorlines], byte 0	; 2A50A
 jne short .20	; 2A511
 mov dword [dword esp+0650h], 3	; 2A513
 jmp short PreGameScreen.17	; 2A51E
@@ -669,7 +669,7 @@ call TrackButtons	; 2A88D
 mov edx, eax	; 2A892
 test eax, eax	; 2A894
 jl near PreGameScreen_homelines.4	; 2A896
-cmp dword [off_CEF63], byte 0	; 2A89C
+cmp dword [menuact_visitorlines], byte 0	; 2A89C
 jne short .39	; 2A8A3
 lea edx, [byte eax+01h]	; 2A8A5
 .39:
@@ -705,7 +705,7 @@ push eax	; 2A908
 call sub_91400	; 2A909
 add esp, byte 0Ch	; 2A90E
 mov ecx, 3	; 2A911
-mov ebx, unk_CF1AF	; 2A916
+mov ebx, pregamelinesmenubar	; 2A916
 mov edx, awlinetab	; 2A91B
 mov eax, 1	; 2A920
 jmp near PreGameScreen_homelines.2	; 2A925
@@ -745,7 +745,7 @@ push eax	; 2A9A4
 call sub_91400	; 2A9A5
 add esp, byte 0Ch	; 2A9AA
 mov ecx, 3	; 2A9AD
-mov ebx, unk_CF1AF	; 2A9B2
+mov ebx, pregamelinesmenubar	; 2A9B2
 mov edx, hmlinetab	; 2A9B7
 xor eax, eax	; 2A9BC
 .2:

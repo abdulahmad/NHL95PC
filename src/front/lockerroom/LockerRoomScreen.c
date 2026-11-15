@@ -123,7 +123,7 @@ void DrawLockerRoom(void)
     sub_91400(visbckspr, 0x146, 0x4A);
     sub_91400(homenamebckspr, 0x85, 0x2C);
     sub_91400(visnamebckspr, 0x152, 0x2C);
-    sprintf(name, (char *)str_JERSH, off_D21C0[lockerindex[HomeTeam]]);
+    sprintf(name, (char *)str_JERSH, jerseyabbrevs[lockerindex[HomeTeam]]);
     i = HomeTeam * 2 + 0xA3;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
     bank = sub_8E83C(path, 0);
@@ -134,7 +134,7 @@ void DrawLockerRoom(void)
     }
     sub_912C8(sub_B30B4(bank, (char *)str_00002));
     FreeMemBlock(bank);
-    sprintf(name, (char *)str_JERSV, off_D21C0[lockerindex[VisTeam]]);
+    sprintf(name, (char *)str_JERSV, jerseyabbrevs[lockerindex[VisTeam]]);
     i = VisTeam * 2 + 0xA4;
     MakePath(path, fileoncd[i] == 1 ? (char *)cddriveptr : 0, name, 0);
     bank = sub_8E83C(path, 0);
@@ -156,7 +156,7 @@ void DrawLockerRoom(void)
         i = (lockerindex[HomeTeam] + 0x19) % 0x1A;
         if (i == lockerindex[VisTeam]) i = (i + 0x19) % 0x1A;
     }
-    s = (char *)off_D21C0[i];
+    s = (char *)jerseyabbrevs[i];
     y = LR[2].t + 3;
     x = LR[2].l + LR[2].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
@@ -167,7 +167,7 @@ void DrawLockerRoom(void)
         i = (lockerindex[HomeTeam] + 1) % 0x1A;
         if (i == lockerindex[VisTeam]) i = (HomeTeam + 1) % 0x1A;
     }
-    s = (char *)off_D21C0[i];
+    s = (char *)jerseyabbrevs[i];
     y = LR[3].t + 3;
     x = LR[3].l + LR[3].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
@@ -178,7 +178,7 @@ void DrawLockerRoom(void)
         i = (lockerindex[VisTeam] + 0x19) % 0x1A;
         if (i == lockerindex[HomeTeam]) i = (i + 0x19) % 0x1A;
     }
-    s = (char *)off_D21C0[i];
+    s = (char *)jerseyabbrevs[i];
     y = LR[4].t + 3;
     x = LR[4].l + LR[4].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
@@ -189,7 +189,7 @@ void DrawLockerRoom(void)
         i = (lockerindex[VisTeam] + 1) % 0x1A;
         if (i == lockerindex[HomeTeam]) i = (i + 1) % 0x1A;
     }
-    s = (char *)off_D21C0[i];
+    s = (char *)jerseyabbrevs[i];
     y = LR[5].t + 3;
     x = LR[5].l + LR[5].r >> 1;
     PrintShadowText(x - (fputchar(s) >> 1) + 2, y, s);
@@ -197,8 +197,8 @@ void DrawLockerRoom(void)
     PrintOutlinedText(i, 0x2C, (char *)teamcitynames[HomeTeam]);
     PrintOutlinedText(0x13A, 0x2C, (char *)str_Vs);
     PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[VisTeam]);
-    PrintShadowText(dword_D22DC + 0x12, dword_D22E0 + 3, (char *)str_Accept);
-    PrintShadowText(dword_D22EC + 0x12, dword_D22F0 + 3, (char *)str_Cancel2);
+    PrintShadowText(lockeracceptx + 0x12, lockeraccepty + 3, (char *)str_Accept);
+    PrintShadowText(lockercancelx + 0x12, lockercancely + 3, (char *)str_Cancel2);
     cy = LR[2].b + 5;
     cx = LR[2].l + LR[3].r >> 1;
     PrintShadowText(cx - (fputchar((char *)str_HomeTeam) >> 1) + 2, cy, (char *)str_HomeTeam);
@@ -208,7 +208,7 @@ void DrawLockerRoom(void)
     sub_8EA18(kaufmfont);
     if (gamemode == 1) {
         i = teamdivflags[VisTeam] | teamdivflags[HomeTeam];
-        s = (char *)off_D2230[dword_D223C[i]];
+        s = (char *)poroundnames[poroundnameidx[i]];
         PrintOutlinedText((0x280 - fputchar(s)) / 2, 0x12, s);
     } else {
         PrintOutlinedText((0x280 - fputchar((char *)str_ExhibitionGame)) / 2, 0x12, (char *)str_ExhibitionGame);
@@ -357,14 +357,14 @@ int LockerRoomLoop(void)
                     HomeTeam = lockerteams[hm];
                     VisTeam = lockerteams[vis];
                     if (gamemode == 0) {
-                        p = (char *)off_D21C0[hm];
+                        p = (char *)jerseyabbrevs[hm];
                         if (p[2] != 0) {
                             strncpy((char *)str_LAAtMTL + 7, p, 3);
                         } else {
                             strncpy((char *)str_LAAtMTL + 7, p, 2);
                             str_LAAtMTL[9] = ' ';
                         }
-                        p = (char *)off_D21C0[vis];
+                        p = (char *)jerseyabbrevs[vis];
                         if (p[2] != 0) {
                             strncpy((char *)str_LAAtMTL, p, 3);
                         } else {

@@ -64,7 +64,7 @@ void DrawFileDlgTabs(void)
             sub_91964((char *)str_Playoffs, 0xAB, 0x64);
         if ((fdlgmask[0] & 0x20) == 0)
             sub_92CD0((char *)str_Exhibition, 0xA7, 0x4C);
-        if (*(int *)off_C6F7C[fdlgtab] <= 6)
+        if (*(int *)fdlgfilelists[fdlgtab] <= 6)
             sub_91370(fdlg_noarrow, 0x18, 0x46);
         else
             sub_91370(fdlg_arrow, 0x18, 0x46);
@@ -224,7 +224,7 @@ void DrawFileDlg(void)
     if (fdlgtab < 0) return;
     *(short *)fdlgmask |= 0x20C;
     sub_8E9C0(0xFA, 0xFF);
-    l = (FileList *)off_C6F7C[fdlgtab];
+    l = (FileList *)fdlgfilelists[fdlgtab];
     PrintTextCopy(l->names[l->sel], ((FRect *)fdlgrects)[9].x1 + 0xD, ((FRect *)fdlgrects)[9].y1 + 0x13);
     sub_90D20(((FRect *)fdlgrects)[0xA].x1 + 0xA, ((FRect *)fdlgrects)[0xA].y1 + 0x13,
         ((FRect *)fdlgrects)[0xA].x2 - ((FRect *)fdlgrects)[0xA].x1 + 1,
@@ -330,7 +330,7 @@ int DrawFileDlgList(FileList *l)
         sub_B4FAC(x2, y + 1, x2, y2, 0xF8);
         sub_B4FAC(x + 1, y2, x2, y2, 0xF8);
     }
-    if (*(int *)off_C6F7C[fdlgtab] <= 6)
+    if (*(int *)fdlgfilelists[fdlgtab] <= 6)
         sub_91370(fdlg_noarrow, 0x18, 0x46);
     else
         sub_91370(fdlg_arrow, 0x18, 0x46);
@@ -352,7 +352,7 @@ done:
 typedef struct { char c[17]; } Hdr17;
 
 /* RunFileDlg (2C801, PC only; ends in DrawFileDlg_x): run the saved-games dialog with the mouse pointer (a
-   POINTER block holds the screen under it) on the list of the shown tab (off_C6F7C[fdlgtab]). Button 1 held on the
+   POINTER block holds the screen under it) on the list of the shown tab (fdlgfilelists[fdlgtab]). Button 1 held on the
    scroll bar (box 8, when fdlgmask enables it) drags the shown rows with the pointer (the first event only starts
    the drag); a move too small to scroll a row is kept (from dragy) until it adds up. A click (event bit 2) on an
    enabled box: the arrows scroll one row, the bar brings the clicked position into view, the three tabs switch the
@@ -392,7 +392,7 @@ int RunFileDlg(void)
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
     sub_91400(bm, x - 4, y);
     sub_91370(pointerspr, x - 4, y);
-    l = (FileList *)off_C6F7C[fdlgtab];
+    l = (FileList *)fdlgfilelists[fdlgtab];
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -514,17 +514,17 @@ int RunFileDlg(void)
                         break;
                     case 0x20:
                         fdlgtab = 0;
-                        l = (FileList *)off_C6F7C[0];
+                        l = (FileList *)fdlgfilelists[0];
                         DrawFileDlgList(l);
                         break;
                     case 0x40:
                         fdlgtab = 1;
-                        l = (FileList *)off_C6F7C[1];
+                        l = (FileList *)fdlgfilelists[1];
                         DrawFileDlgList(l);
                         break;
                     case 0x80:
                         fdlgtab = 2;
-                        l = (FileList *)off_C6F7C[2];
+                        l = (FileList *)fdlgfilelists[2];
                         DrawFileDlgList(l);
                         break;
                     case 4:
@@ -533,10 +533,10 @@ int RunFileDlg(void)
                         return SelectSavedFile();
                     case 8:
                         sub_91370(fdlg_del, 0x20, 0xBF);
-                        DeleteSavedGame((FileList *)off_C6F7C[fdlgtab]);
+                        DeleteSavedGame((FileList *)fdlgfilelists[fdlgtab]);
                         MouseSetPos(x, y);
                         if (fdlgtab < 0) l = 0;
-                        else l = (FileList *)off_C6F7C[fdlgtab];
+                        else l = (FileList *)fdlgfilelists[fdlgtab];
                         DrawFileDlgList(l);
                         sub_91370(fdlg_none, 0x20, 0xBF);
                         break;

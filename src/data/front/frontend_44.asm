@@ -12,11 +12,11 @@ extern str_ReturnTo, str_SportsDesk2, str_ReturnTo2, str_Roster3, str_Statistics
 extern str_ReturnTo3, str_PlayerStatistics3, str_StatisticsType4, str_ShowPlayerStatisticsAnd, str_ReturnTo4, str_StatisticsType5, str_TeamsSortedBy, str_StatisticsType6
 extern str_PlayersSortedBy, str_StatisticsType7, str_GoaliesSortedBy, str_Print, str_OutputCurrentData, unk_CE96F, unk_CEA2F, unk_CEB2F
 extern unk_CECAF, unk_CED6F, unk_CEF0F, unk_CEF2F, unk_CEF6F, unk_CEFEF
-global dword_CF00B, dword_CF4CB, dword_CF517, dword_CF5AB, dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637
-global dword_CF657, dword_CF677, dword_CF70B, dword_CF7CB, dword_CF84B, dword_CF8CB, menuact_uselines2, menuact_savedeflines2
+global dword_CF00B, dword_CF4CB, dword_CF517, standingsmenubar_srccnt, dword_CF5D7, dword_CF5F7, dword_CF617, dword_CF637
+global dword_CF657, dword_CF677, rostermenubar_srccnt, teamstatsmenubar_srccnt, skaterstatsmenubar_srccnt, goaliestatsmenubar_srccnt, menuact_uselines2, menuact_savedeflines2
 global menuact_gamedress, menuact_gamescratch, menuact_uselines, menuact_savedeflines, menuact_savelines, off_CF51F, off_CF5DF, off_CF61F
-global off_CF67F, off_CF6A3, unk_CF1AF, unk_CF20F, unk_CF28F, unk_CF2CF, unk_CF2EF, unk_CF32F
-global unk_CF3CF, unk_CF42F, unk_CF48F, unk_CF4CF, unk_CF50F, unk_CF52F, standingsmenubar, unk_CF5CF
+global off_CF67F, off_CF6A3, pregamelinesmenubar, unk_CF20F, unk_CF28F, unk_CF2CF, desklinesmenubar, unk_CF32F
+global tradelinesmenubar, unk_CF42F, gameplstatsmenubar, unk_CF4CF, unk_CF50F, unk_CF52F, standingsmenubar, unk_CF5CF
 global unk_CF5EF, unk_CF62F, unk_CF68F, rostermenubar, unk_CF72F, playercardmenubar, teamstatsmenubar, skaterstatsmenubar
 global goaliestatsmenubar
 dword_CF00B:
@@ -85,7 +85,7 @@ dd str_PlayerStatistics
 db 00h,00h,00h,00h
 dd unk_CF2CF
 db 01h,00h,00h,00h
-unk_CF1AF:
+pregamelinesmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
 dd str_LineEditor2
 db 00h,00h,00h,00h
@@ -136,7 +136,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,09Ch,00h,00h,00h,012h,00h,00h,00h
 dd str_ShowPlayerStatistics
 dd MenuGameShowPlayerStats
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF2EF:
+desklinesmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
 dd str_LineEditor3
 db 00h,00h,00h,00h
@@ -170,7 +170,7 @@ dd str_SaveAsDefaultLines2
 menuact_savedeflines:
 dd MenuSaveDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF3CF:
+tradelinesmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
 dd str_LineEditor2
 db 00h,00h,00h,00h
@@ -200,7 +200,7 @@ db 098h,00h,00h,00h,036h,00h,00h,00h
 dd str_UseDefaultLines
 dd MenuUseDefaultLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CF48F:
+gameplstatsmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,045h,00h,00h,00h,012h,00h,00h,00h
 dd str_ReturnTo
 db 00h,00h,00h,00h
@@ -250,7 +250,7 @@ db 012h,00h,00h,00h
 dd str_StatisticsType3
 db 00h,00h,00h,00h
 dd unk_C67B1
-dword_CF5AB:
+standingsmenubar_srccnt:
 db 04h,00h,00h,00h,0E1h,00h,00h,00h,00h,00h,00h,00h,06h,01h,00h,00h
 db 012h,00h,00h,00h
 dd str_Print
@@ -317,7 +317,7 @@ db 012h,00h,00h,00h
 dd str_StatisticsType4
 db 00h,00h,00h,00h
 dd unk_C67B1
-dword_CF70B:
+rostermenubar_srccnt:
 db 04h,00h,00h,00h,024h,01h,00h,00h,00h,00h,00h,00h,049h,01h,00h,00h
 db 012h,00h,00h,00h
 dd str_Print
@@ -350,7 +350,7 @@ db 012h,00h,00h,00h
 dd str_StatisticsType5
 db 00h,00h,00h,00h
 dd unk_C67B1
-dword_CF7CB:
+teamstatsmenubar_srccnt:
 db 04h,00h,00h,00h,0AEh,00h,00h,00h,00h,00h,00h,00h,021h,01h,00h,00h
 db 012h,00h,00h,00h
 dd str_TeamsSortedBy
@@ -372,7 +372,7 @@ db 012h,00h,00h,00h
 dd str_StatisticsType6
 db 00h,00h,00h,00h
 dd unk_C67B1
-dword_CF84B:
+skaterstatsmenubar_srccnt:
 db 04h,00h,00h,00h,0AEh,00h,00h,00h,00h,00h,00h,00h,02Bh,01h,00h,00h
 db 012h,00h,00h,00h
 dd str_PlayersSortedBy
@@ -394,7 +394,7 @@ db 012h,00h,00h,00h
 dd str_StatisticsType7
 db 00h,00h,00h,00h
 dd unk_C67B1
-dword_CF8CB:
+goaliestatsmenubar_srccnt:
 db 04h,00h,00h,00h,0AEh,00h,00h,00h,00h,00h,00h,00h,02Bh,01h,00h,00h
 db 012h,00h,00h,00h
 dd str_GoaliesSortedBy

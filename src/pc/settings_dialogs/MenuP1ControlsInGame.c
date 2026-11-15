@@ -549,11 +549,11 @@ int ControlsDlgLoop(int side)
                     case 0x20: setbits[0] = setbits[0] & ~0x7C | 0x20; break;
                     case 0x40: setbits[0] = setbits[0] & ~0x7C | 0x40; break;
                     case 0x100:
-                        DrawCtlBoxOn((int *)unk_D19DC);
+                        DrawCtlBoxOn((int *)ctlboxrect2);
                         FreeMemBlock(save);
                         return 0;
                     case 0x80:
-                        DrawCtlBoxOn((int *)unk_D19CC);
+                        DrawCtlBoxOn((int *)ctlboxrect1);
                         ctl1dev[side] = setbits[0] >> 2;
                         if (setbits[0] == 0x41) {
                             ctl1team[side] = -1;

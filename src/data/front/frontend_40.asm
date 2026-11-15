@@ -14,7 +14,7 @@ global str_Return, str_SportsCentral, str_LeagueCalendar, str_PlayoffTree, str_B
 global joycalx, joycaly, inputinstalled, ptrstep, dword_CDA24, inputqcount, inputqtail
 global inputqhead, inputpolldiv, dword_CDA38, joybtnheld, enterheld, lastmousebtns, lastmousex, lastmousey
 global mainmenubar, menuact_export, menuact_nextlg, menusub_lgmgr, menuact_nextpo
-global menuact_posettings, menuact_pohilights, dword_CE8EB, off_CECFF, off_CED3F, str_File, str_Game6, str_Statistics3
+global menuact_posettings, menuact_pohilights, dword_CE8EB, menutext_deskreturn, menutext_desktodesk, str_File, str_Game6, str_Statistics3
 global str_Open5, unk_CDA6E, str_NewExhibitionGame, str_NewPlayOffSeries, str_NextPlayOffGame, str_PlayOffSettings, str_PlayOffHilights, str_NewLeague
 global str_ImportDatabases, str_ExportDatabases, str_NextLeagueGame, unk_CDB44, str_CentralRegistry, str_Exit, unk_CDB6F, str_Dashes2
 global str_Player1Controls2, str_Player2Controls2, str_ExhibitionSettings, str_PlayOffSettings2, str_SoundSettings, str_Dashes3, unk_CDC34, str_sp00XXXXXXXXXXXXXXXXX
@@ -31,7 +31,7 @@ global str_LineEditor3, str_PlayerStatistics2, str_Cancel4, str_UseTheseLines2, 
 global str_StatisticsType2, str_ReturnTo, str_SportsDesk2, str_ReturnTo2, str_Roster3, str_StatisticsType3, str_TeamRoster, str_OverallStandings
 global str_ShowTeamRoster, str_ReturnTo3, str_PlayerStatistics3, str_StatisticsType4, str_ShowPlayerStatisticsAnd, str_ReturnTo4, str_StatisticsType5, str_TeamsSortedBy
 global str_StatisticsType6, str_PlayersSortedBy, str_StatisticsType7, str_GoaliesSortedBy, str_Print, str_OutputCurrentData, filemenu, leaguemgrmenu
-global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, unk_CEB8F, unk_CEC4F, unk_CECAF
+global gamemenu, statsmenu, unk_CE96F, unk_CEA2F, unk_CEB2F, deskmenubar, deskmenubar_lg, unk_CECAF
 global unk_CED2F, unk_CED6F
 joycalx:
 db 01Dh,01h,00h,00h,01Dh,01h,00h,00h,09Dh,01h,00h,00h,09Dh,01h,00h,00h
@@ -691,7 +691,7 @@ db 0ABh,00h,00h,00h,036h,00h,00h,00h
 dd str_SavePercentage
 dd StatsMenuSavePct
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEB8F:
+deskmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
 dd str_Action
 db 00h,00h,00h,00h
@@ -722,7 +722,7 @@ dd str_GameSummary
 db 00h,00h,00h,00h
 dd unk_CEF6F
 db 04h,00h,00h,00h
-unk_CEC4F:
+deskmenubar_lg:
 db 00h,00h,00h,00h,00h,00h,00h,00h,02Eh,00h,00h,00h,012h,00h,00h,00h
 dd str_Action
 db 00h,00h,00h,00h
@@ -748,7 +748,7 @@ dd str_SaveGame2
 dd MenuSaveGame
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,024h,00h,00h,00h
 db 076h,00h,00h,00h,035h,00h,00h,00h
-off_CECFF:
+menutext_deskreturn:
 dd str_SportsDesk
 dd DeskReturnConfirm
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,036h,00h,00h,00h
@@ -758,7 +758,7 @@ dd DeskExitGame
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CED2F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,076h,00h,00h,00h,011h,00h,00h,00h
-off_CED3F:
+menutext_desktodesk:
 dd str_SportsDesk
 dd DeskToSportsDesk
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h

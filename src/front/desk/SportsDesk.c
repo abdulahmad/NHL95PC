@@ -95,8 +95,8 @@ void SportsDesk(int mode)
     timeout = 0x5DC;
     SetModeMenuLabels(gamemode);
     SetScreenTitle(mode + 3);
-    if (ReplayIsEmpty()) off_CEF23 = 0;
-    else off_CEF23 = (int)DeskGoToReplay;
+    if (ReplayIsEmpty()) menuact_gotoreplay = 0;
+    else menuact_gotoreplay = (int)DeskGoToReplay;
     sub_B2DCA(&btn, &savex, &savey);
     escrequest = 0;
     joysampling = 0;
@@ -106,8 +106,8 @@ void SportsDesk(int mode)
         FadePalStep(1, pal, 0x10);
     }
     sub_B4BA8();
-    sprintf((char *)unk_DC890, (char *)str_Eadesk1d, mode);
-    MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
+    sprintf((char *)deskbankname, (char *)str_Eadesk1d, mode);
+    MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)deskbankname, 0);
     bank = sub_8E83C(path, 0);
     sub_9061C(sub_B30B4(bank, (char *)str_Desk));
     src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;
@@ -117,10 +117,10 @@ void SportsDesk(int mode)
     sub_8EA18(s1font);
     if (mode == 2) {
         if (schedgameidx >= 0x444) PaOpenBank();
-        menus[0] = (MenuItem *)unk_CEC4F;
+        menus[0] = (MenuItem *)deskmenubar_lg;
         nitems[0] = 3;
     } else {
-        menus[0] = (MenuItem *)unk_CEB8F;
+        menus[0] = (MenuItem *)deskmenubar;
         nitems[0] = 6;
     }
     menus[1] = menus[2] = menus[3] = 0;
@@ -276,7 +276,7 @@ void SportsDesk(int mode)
                         sub_8FFB0(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);
                         sub_1BAF3(700000);
-                        MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)unk_DC890, 0);
+                        MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)deskbankname, 0);
                         bank = sub_8E83C(path, 0);
                         sub_9061C(sub_B30B4(bank, (char *)str_Desk));
                         src = (unsigned char *)sub_B30B4(bank, (char *)str_Pal5) + 0x10;

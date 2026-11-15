@@ -4,7 +4,7 @@ bits 32
 section s_CEE5F progbits alloc noexec write align=1
 extern DeskGoToReplay, DeskHomeGoalie1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskAwayGoalie1, DeskAwayGoalie2, DeskAwayGoalieNone, str_sp00XXXXXXXXXXXXXXXXX
 extern str_sp00XXXXXXXXXXXXXXXXX2, str_spNONE, str_sp00XXXXXXXXXXXXXXXXX3, str_sp00XXXXXXXXXXXXXXXXX4, str_spNONE2, str_GoToReplay, str_HomeTeam2
-global mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, off_CEF23, unk_CEEAF
+global mi_HomeGoalie1, mi_HomeGoalie2, mi_HomeGoalieNone, mi_AwayGoalie1, mi_AwayGoalie2, mi_AwayGoalieNone, menuact_gotoreplay, awgoaliemenu
 global unk_CEF0F, unk_CEF2F
 mi_HomeGoalie1:
 dd str_sp00XXXXXXXXXXXXXXXXX
@@ -20,7 +20,7 @@ mi_HomeGoalieNone:
 dd str_spNONE
 dd DeskHomeGoalieNone
 db 00h,00h,00h,00h,00h,00h,00h,00h
-unk_CEEAF:
+awgoaliemenu:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,011h,00h,00h,00h
 mi_AwayGoalie1:
 dd str_sp00XXXXXXXXXXXXXXXXX3
@@ -39,7 +39,7 @@ db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEF0F:
 db 00h,00h,00h,00h,00h,00h,00h,00h,06Bh,00h,00h,00h,011h,00h,00h,00h
 dd str_GoToReplay
-off_CEF23:
+menuact_gotoreplay:
 dd DeskGoToReplay
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEF2F:

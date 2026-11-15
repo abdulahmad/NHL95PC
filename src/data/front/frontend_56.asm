@@ -16,7 +16,7 @@ global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBa
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
 global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, jerseyremap
-global byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336, musicslot, musicon, byte_D2439
+global byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, byte_D2439
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
@@ -24,13 +24,13 @@ global dword_D145C, dword_D1468, dword_D146C, jerseydigits, leaguesetrects
 global modesetrects, exhsetrects
 global ctldlgrects
 global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gadgetrect_y0, gadgetrect_x1, gadgetrect_y1
-global settingsfile, lockerindex, lockerteams, dword_D223C, lockerrects
-global dword_D22DC, dword_D22E0
-global dword_D22EC, dword_D22F0, dword_D2350, soundcardrects, dword_D2423
-global dword_D2427, dword_D242B, musichandle, dword_D2435, sounddevids, sndcardname, str_Cor2
+global settingsfile, lockerindex, lockerteams, poroundnameidx, lockerrects
+global lockeracceptx, lockeraccepty
+global lockercancelx, lockercancely, dword_D2350, soundcardrects, dword_D2423
+global dword_D2427, dword_D242B, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
 global speechchannel, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
-global off_D21C0, off_D2230, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
-global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, unk_D16A0, unk_D19CC, unk_D19DC, str_BOS1, str_BOS22
+global jerseyabbrevs, poroundnames, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
+global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, dlggreys, ctlboxrect1, ctlboxrect2, str_BOS1, str_BOS22
 global str_BOS3, str_HART2, str_BUF22, str_CAL1, str_CAL2, str_CAL3, str_CHIC1, str_CHIC2
 global str_CHIC3, str_DET1, str_DET22, str_ED1, str_HART1, str_HART22, str_HART3, str_LA1
 global str_LA4, str_MON1, str_MON2, str_MON3, str_HART23, str_NJER2, str_LI2, str_LI3
@@ -39,8 +39,8 @@ global str_QU1, str_SL1, str_SL2, str_SL3, str_SHK1, str_SHK2, str_MON12, str_MO
 global str_LA42, str_SHK7, str_SHK8, str_BOS23, str_TB22, str_TOR1, str_TOR22, str_VAN1
 global str_VAN3, str_WASH3, str_WINN2, str_ROCKDITI2, str_CANADA, str_USA, str_InsufficientDiskSpaceTo2, str_SaveHilights
 global str_CurrentHilightNotSaved, str_ThereAreNoHilights, msg_NoHilights, str_ThereIsNotEnogh, str_TheFloppyDiskFor, str_SelectLessHilightsOr, str_ThereIsNotEnogh2, str_TheHardDiskFor
-global str_TrySelectingLessHilights, str_TheHilight, str_AlreadyExists, str_ExportingHilights, str_PC, unk_D2403, unk_D2413, str_CouldNotFindA
-global str_CardInThisMachine, unk_D249C, str_InitializingTheMT32Card, str_PleaseWait, str_1ststarCor, str_2ndstarCor, unk_D279A, str_SavingCurrent
+global str_TrySelectingLessHilights, str_TheHilight, str_AlreadyExists, str_ExportingHilights, str_PC, sndselbox1, sndselbox2, str_CouldNotFindA
+global str_CardInThisMachine, msg_NoSoundCard, str_InitializingTheMT32Card, str_PleaseWait, str_1ststarCor, str_2ndstarCor, unk_D279A, str_SavingCurrent
 global str_LeagueGame, str_PlayOffGame, str_InsufficientDiskSpaceTo3, str_OfFreeDiskSpace2
 dbdlgrects:
 db 0Eh,00h,00h,00h
@@ -132,13 +132,13 @@ db 0C6h,0C7h,0C8h,0C9h,0CAh,0CBh,0CCh,0CDh,0CEh,0CFh,0D0h,0D1h,0D2h,0D3h,0D4h,0D
 db 0D6h,0D7h,0D8h,0D9h,0DAh,0DBh,0DCh,0DDh,0DEh,0DFh,0E0h,0E1h,0E2h,0E3h,0E4h,0E5h
 db 0E6h,0E7h,0E8h,0E9h,0EAh,0EBh,0ECh,0EDh,0EEh,0EFh,0F0h,0F1h,0F2h,0F3h,0F4h,0F5h
 db 0F6h,0F7h,0F8h,0F9h,0FAh
-byte_D1333:
+jerseypalslot0:
 db 0FBh
-byte_D1334:
+jerseypalslot1:
 db 0FCh
-byte_D1335:
+jerseypalslot2:
 db 0FDh
-byte_D1336:
+jerseypalslot3:
 db 0FEh,0FFh
 lineslotx:
 db 047h,00h,00h,00h
@@ -218,7 +218,7 @@ db 022h,01h,00h,00h,0C0h,00h,00h,00h,012h,01h,00h,00h,0D1h,00h,00h,00h
 db 022h,01h,00h,00h,035h,00h,00h,00h,035h,01h,00h,00h,066h,00h,00h,00h
 db 045h,01h,00h,00h,07Fh,00h,00h,00h,035h,01h,00h,00h,0B0h,00h,00h,00h
 db 045h,01h,00h,00h
-unk_D16A0:
+dlggreys:
 db 00h,00h,00h,014h,014h,014h,02Eh,02Eh,02Eh,03Fh,03Fh,03Fh
 modesetrects:
 db 018h,00h,00h,00h
@@ -289,9 +289,9 @@ db 08Fh,00h,00h,00h,07Ch,00h,00h,00h,0A0h,00h,00h,00h
 db 01Bh,00h,00h,00h
 db 0A4h,00h,00h,00h,07Ch,00h,00h,00h,0B5h,00h,00h,00h,01Bh,00h,00h,00h
 db 0B9h,00h,00h,00h,07Ch,00h,00h,00h,0CAh,00h,00h,00h
-unk_D19CC:
+ctlboxrect1:
 db 0Eh,00h,00h,00h,0D4h,00h,00h,00h,03Fh,00h,00h,00h,0E4h,00h,00h,00h
-unk_D19DC:
+ctlboxrect2:
 db 058h,00h,00h,00h,0D4h,00h,00h,00h,089h,00h,00h,00h,0E4h,00h,00h,00h
 ctldlgalt:
 db 00h,00h,00h,00h
@@ -612,7 +612,7 @@ db 0Ah,00h,00h,00h,0Bh,00h,00h,00h,0Ch,00h,00h,00h,0Dh,00h,00h,00h
 db 0Eh,00h,00h,00h,0Fh,00h,00h,00h,010h,00h,00h,00h,011h,00h,00h,00h
 db 012h,00h,00h,00h,013h,00h,00h,00h,014h,00h,00h,00h,015h,00h,00h,00h
 db 016h,00h,00h,00h,017h,00h,00h,00h,01Ah,00h,00h,00h,01Bh,00h,00h,00h
-off_D21C0:
+jerseyabbrevs:
 dd str_ANA4
 dd str_BOS2
 dd str_BUF4
@@ -641,11 +641,11 @@ dd str_WSH2
 dd str_WPG2
 dd str_ASW2
 dd str_ASE2
-off_D2230:
+poroundnames:
 dd str_WesternConferenceQuarter
 dd str_EasternConferenceQuarter
 dd str_StanleyCupFinals
-dword_D223C:
+poroundnameidx:
 db 0FFh,0FFh,0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 db 01h,00h,00h,00h,02h,00h,00h,00h,02h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
@@ -670,13 +670,13 @@ db 0C4h,01h,00h,00h
 db 0BDh,01h,00h,00h
 db 0B0h,01h,00h,00h
 db 0ECh,01h,00h,00h,0C4h,01h,00h,00h
-dword_D22DC:
+lockeracceptx:
 db 01Bh,02h,00h,00h
-dword_D22E0:
+lockeraccepty:
 db 0B7h,01h,00h,00h,06Bh,02h,00h,00h,0CBh,01h,00h,00h
-dword_D22EC:
+lockercancelx:
 db 015h,00h,00h,00h
-dword_D22F0:
+lockercancely:
 db 0B7h,01h,00h,00h,065h,00h,00h,00h,0CBh,01h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
@@ -710,9 +710,9 @@ db 059h,00h,00h,00h,0Eh,00h,00h,00h,05Dh,00h,00h,00h,071h,00h,00h,00h
 db 06Eh,00h,00h,00h,0Eh,00h,00h,00h,087h,00h,00h,00h,071h,00h,00h,00h
 db 098h,00h,00h,00h,0Eh,00h,00h,00h,072h,00h,00h,00h,071h,00h,00h,00h
 db 083h,00h,00h,00h
-unk_D2403:
+sndselbox1:
 db 09h,00h,00h,00h,0A4h,00h,00h,00h,03Ah,00h,00h,00h,0B4h,00h,00h,00h
-unk_D2413:
+sndselbox2:
 db 045h,00h,00h,00h,0A4h,00h,00h,00h,076h,00h,00h,00h,0B4h,00h,00h,00h
 dword_D2423:
 db 00h,00h,00h,00h
@@ -727,7 +727,7 @@ musicon:
 db 00h
 musichandle:
 db 00h,00h,00h,00h
-dword_D2435:
+sndtempbuf:
 db 00h,00h,00h,00h
 byte_D2439:
 db 00h
@@ -748,7 +748,7 @@ str_MT323:
 db 04Dh,054h,033h,032h,00h
 str_ULTRASOUND:
 db 055h,04Ch,054h,052h,041h,053h,04Fh,055h,04Eh,044h,00h
-unk_D249C:
+msg_NoSoundCard:
 dd str_CouldNotFindA
 sndcardname:
 db 00h,00h,00h,00h

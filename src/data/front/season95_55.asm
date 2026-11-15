@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D0F80 progbits alloc noexec write align=1
-global str_XXXKbytesOfFree, newskatershoots, newgoalieglove, off_D1077, newskaterdefaults, skaterratingmin, skaterratingmax, newgoaliedefaults
+global str_XXXKbytesOfFree, newskatershoots, newgoalieglove, msg_FreeAgentDiskSpace, newskaterdefaults, skaterratingmin, skaterratingmax, newgoaliedefaults
 global goalieratingmin, goalieratingmax, str_InsufficientDiskSpace4, str_ToCreateAFree
 newskaterdefaults:
 db 01h,07h,07h,09h,07h,07h,07h,07h,07h,07h,07h,07h,07h,05h,07h,00h
@@ -36,7 +36,7 @@ str_XXXKbytesOfFree:
 db 058h,058h,058h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
 db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,020h,020h
 db 00h
-off_D1077:
+msg_FreeAgentDiskSpace:
 dd str_InsufficientDiskSpace4
 dd str_ToCreateAFree
 dd str_XXXKbytesOfFree

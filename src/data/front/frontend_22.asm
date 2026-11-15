@@ -6,7 +6,7 @@ extern str_Yes, str_No4, str_DoYouReallyWantToRemove
 global str_SelectATeamTo, str_SelectATeamTo2, str_WhoWillControlThe, str_MustBeImportedFrom, str_MustBeExportedTo, forceexportmsg
 global notexportedmsg
 global insavegamemsg, importdiskmsg, removeteammsg, removeteambtns, str_PutDiskWithLeague, str_ImportInAnyDrive, str_ErrorWhileImportingLeague
-global importerrmsg, str_ErrorWhileExportingLeague, str_IncorrectPassword, unk_C7965, str_HasNotBeenImported, str_DoYouWantTo3, forceexportbtns, str_DoYouWantToExport
+global importerrmsg, str_ErrorWhileExportingLeague, str_IncorrectPassword, msg_WrongPassword, str_HasNotBeenImported, str_DoYouWantTo3, forceexportbtns, str_DoYouWantToExport
 global str_ToAFloppyDisk, exportmsg, yesnobtns, str_TheLeague, str_BeforeAGameCanBePlayed, leaguediskmsg, str_TheLeague2, str_AlreadyExistsFor
 global lgexistsformsg, str_HasNotBeenExported, str_IsInASave, str_AndCanNotBe, str_TheGameIsFinished, str_CopyingDatabasesFor
 removeteammsg:
@@ -46,7 +46,7 @@ dd str_ErrorWhileExportingLeague
 str_IncorrectPassword:
 db 049h,06Eh,063h,06Fh,072h,072h,065h,063h,074h,020h,070h,061h,073h,073h,077h,06Fh
 db 072h,064h,021h,00h
-unk_C7965:
+msg_WrongPassword:
 dd str_IncorrectPassword
 str_WhoWillControlThe:
 db 057h,068h,06Fh,020h,077h,069h,06Ch,06Ch,020h,063h,06Fh,06Eh,074h,072h,06Fh,06Ch

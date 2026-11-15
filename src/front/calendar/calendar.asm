@@ -8,7 +8,7 @@ extern btn_MasterDB, byte_D42C3, byte_DC267, byte_DC268, lgschedrec, lgschedrec_
 extern lgschedrec_b5, calcolx, calendarshapes, calexit, CalGoalieStatsScreen, calmenubar, calmonth, calnextslot
 extern calprevslot, calrowy, calsel, calselday, calselmonth, CalSkaterStatsScreen, CalStandingsMenu, CalStandingsScreen
 extern CalTeamStatsScreen, cddriveptr, CheckGameDiskSpace, ClearInputQueue, crestnames, curleague, dlgtextbg, dlgtextfg
-extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, dword_C7F0B, hmplstats, dword_DC23E, calredraw
+extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, msg_MergeNeeded_e01, hmplstats, dword_DC23E, calredraw
 extern dword_DDD34, dword_DDD3C, lgschedrec_b4, FadeOutPalCycle, FadePalStep, FileClose, FileExists, fileoncd
 extern FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, FindLeagueFloppy, firstteammsg, FmtFromLeague
 extern fontcolor, fputchar, FreeMemBlock, GameGoalieStatsScreen, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu
@@ -31,7 +31,7 @@ extern strcat_, strcpy_, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9E8, sub_8EA00, 
 extern sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_91370
 extern sub_913D0, sub_91400, sub_91964, sub_92F50, sub_93000, sub_B2DCA, sub_B2E1B, sub_B30B4
 extern sub_B392C, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4DD4, sub_B4FAC, teamstatscb, treeteamnames
-extern unk_C7805, unk_C7F07, unk_C7F1B, hmglstats, UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg
+extern msg_DbUpdateError, msg_MergeNeeded, btn_MergeNeeded, hmglstats, UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg
 extern VisTeam, WaitLeagueFloppy, hmplstats_w2, hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w14
 extern hmglstats_w2, hmglstats_w4, word_DDD48, word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen, CheckLeagueDiskSync
@@ -3003,16 +3003,16 @@ call SetDialogColors	; 36CB2
 test byte [leagueflags], 8	; 36CB7
 je short .4	; 36CBE
 lea eax, [byte esp+020h]	; 36CC0
-mov dword [dword_C7F0B], eax	; 36CC4
+mov dword [msg_MergeNeeded_e01], eax	; 36CC4
 push byte 0FFFFFFFFh	; 36CC9
 lea eax, [byte esp+050h]	; 36CCB
 push eax	; 36CCF
 lea eax, [byte esp+058h]	; 36CD0
 push eax	; 36CD4
 push byte 2	; 36CD5
-push unk_C7F1B	; 36CD7
+push btn_MergeNeeded	; 36CD7
 mov ecx, 5	; 36CDC
-mov ebx, unk_C7F07	; 36CE1
+mov ebx, msg_MergeNeeded	; 36CE1
 jmp short .5	; 36CE6
 .4:
 lea eax, [byte esp+020h]	; 36CE8
@@ -3950,7 +3950,7 @@ push eax	; 37A35
 push byte 0	; 37A36
 push byte 0	; 37A38
 mov ecx, 1	; 37A3A
-mov ebx, unk_C7805	; 37A3F
+mov ebx, msg_DbUpdateError	; 37A3F
 mov edx, 0FFFFFFFFh	; 37A44
 mov eax, edx	; 37A49
 call MessageBox	; 37A4B

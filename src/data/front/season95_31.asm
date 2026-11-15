@@ -3,17 +3,17 @@ bits 32
 %include "hockey.inc"
 section s_C87C0 progbits alloc noexec write align=1
 extern TradeShowStats, TradeDone, TradeCancel, MenuReturnToLineEditor, unk_C17F0, unk_C87B8
-global dword_C87C0, dword_C87C8, dword_C87E0, dword_C87E8, str_Done4, str_Cancel7, unk_C8804, str_Trade
+global menuwidth_trade1, menutext_trade1, menuwidth_trade2, menutext_trade2, str_Done4, str_Cancel7, unk_C8804, str_Trade
 global str_PlayerStatistics5, btn_TradeStats, str_Trade2, unk_C88C2
-dword_C87C0:
+menuwidth_trade1:
 db 0BAh,00h,00h,00h,011h,00h,00h,00h
-dword_C87C8:
+menutext_trade1:
 db 00h,00h,00h,00h
 dd TradeShowStats
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
-dword_C87E0:
+menuwidth_trade2:
 db 0BAh,00h,00h,00h,024h,00h,00h,00h
-dword_C87E8:
+menutext_trade2:
 db 00h,00h,00h,00h
 dd TradeShowStats
 db 00h,00h,00h,00h,00h,00h,00h,00h

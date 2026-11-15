@@ -9,5 +9,5 @@ int ShowDBError(int *sel, int *state, int msg, int arg)
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
     *sel = -1;
     *state = 0;
-    return ErrorScreenWait(msg, arg, (char *)unk_D0CA2, 2);
+    return ErrorScreenWait(msg, arg, (char *)btn_DBError, 2);
 }

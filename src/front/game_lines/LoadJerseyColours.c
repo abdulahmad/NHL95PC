@@ -41,10 +41,10 @@ void LoadJerseyColours(int away, int unused, unsigned char *dst)
         else d = *p + 8;
         jerseyremap[i] = d;
     }
-    byte_D1333 = 0xFB;
-    byte_D1334 = 0xFC;
-    byte_D1335 = 0xFD;
-    byte_D1336 = 0xFE;
+    jerseypalslot0 = 0xFB;
+    jerseypalslot1 = 0xFC;
+    jerseypalslot2 = 0xFD;
+    jerseypalslot3 = 0xFE;
     FreeMemBlock((int)buf);
     sub_B4DD4(jerseyremap);
 }

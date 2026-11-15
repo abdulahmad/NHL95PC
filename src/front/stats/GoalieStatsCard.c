@@ -44,7 +44,7 @@ void GoalieStatsCard(void)
     kaufm = kaufmfont;
     MakePath(s.path, (char *)statsleague, (char *)statsplayerdbs[statsfromleague], 0);
     fh = open(s.path, 0x200);
-    lseek(fh, !statsfromleague ? dword_DC85C : dword_DC860, 0);
+    lseek(fh, !statsfromleague ? statsfilepos : lgstatsfilepos, 0);
     read(fh, s.season, 0x36);
     j___close(fh);
     MakePath(s.path, (char *)statsleague, (char *)str_AttDb, 0);
@@ -161,7 +161,7 @@ void GoalieStatsCard(void)
             y -= (i + 1) * 0xD;
         }
         PrintShadowText((short)(x + 0x14), (short)y, (char *)goalieratingnames[i]);
-        v = (attrp[((signed char *)off_C6AD1)[i + 3]] + 5) * 5;
+        v = (attrp[((signed char *)goaliecardattrs_m3)[i + 3]] + 5) * 5;
         PrintFmt1((short)(x + 0x104), (short)y, (char *)str_fmt3d, (short)v);
         y += 0xD;
     }

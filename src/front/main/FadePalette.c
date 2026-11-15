@@ -15,8 +15,8 @@ void __STOSB(void *p, int v, int n);
 
 /* FadePalette: fade towards palette pal. dir 1 fades in (from black; at most 2 steps when already
  faded in, palfadedin set), dir 0 fades out (palfadedin cleared). Under 2 steps: out sets pal at once,
- in sets a black palette. Else the scale runs from the byte at dword_C5131+dir to the byte at
- byte_C5138+dir-3, stepping by the byte at dword_C5133+dir. dword_C5135 and byte_C5138[0] are
+ in sets a black palette. Else the scale runs from the byte at fadestart_m3+dir to the byte at
+ fadeendlvl+dir-3, stepping by the byte at fadestep_m3+dir. fadestart_e1 and fadeendlvl[0] are
  steps-1 and steps+1. Each step writes pal * scale / steps into fadepalbuf and sets that palette. */
 void FadePalette(int dir, unsigned char *pal, int steps)
 {
@@ -35,9 +35,9 @@ void FadePalette(int dir, unsigned char *pal, int steps)
         }
         return;
     }
-    dword_C5135 = steps - 1;
-    byte_C5138[0] = steps + 1;
-    for (c = SBYTE((unsigned char *)dword_C5131 + 3, dir); c != SBYTE(byte_C5138, dir); c += SBYTE((unsigned char *)dword_C5133 + 3, dir)) {
+    fadestart_e1 = steps - 1;
+    fadeendlvl[0] = steps + 1;
+    for (c = SBYTE((unsigned char *)fadestart_m3 + 3, dir); c != SBYTE(fadeendlvl, dir); c += SBYTE((unsigned char *)fadestep_m3 + 3, dir)) {
         for (i = 0; i < 0x300; i++) fadepalbuf[i] = ((signed char *)pal)[i] * c / steps;
         SetFullPalette(fadepalbuf);
     }

@@ -14,13 +14,13 @@ void StatsSel9394Season(void)
     statsplayoffs = 0;
     strncpy((char *)statsleague, (char *)exhstate + 4, 0x1F);
     if (!leaguestatsmode) return;
-    sub_8FFB0(0, 0x100, unk_DC340);
-    FadePalStep(1, unk_DC340, 0x10);
+    sub_8FFB0(0, 0x100, statsscreenpal);
+    FadePalStep(1, statsscreenpal, 0x10);
     statspalvalid = 1;
-    statspal = (int)unk_DC340;
+    statspal = (int)statsscreenpal;
     dword_DC6B4 = -1;
     ((void (*)(int))statsredrawcb)(statscategory);
     statspalvalid = 0;
     statspal = 0;
-    FadePalStep(0, unk_DC340, 0x10);
+    FadePalStep(0, statsscreenpal, 0x10);
 }

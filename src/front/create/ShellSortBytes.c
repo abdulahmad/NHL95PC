@@ -156,7 +156,7 @@ void LoadRosterList(int side)
         if (facount <= 0x1C) dword_D0C20 = 0;
         else {
             dword_D0C20 = -1;
-            InitScrollBar((int *)unk_D0BF0, 0x1C, facount);
+            InitScrollBar((int *)fascrollbar, 0x1C, facount);
         }
         if (side == 0) menu_r1_tofa = 0;
         else menu_r2_tofa = 0;

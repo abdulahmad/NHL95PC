@@ -4,7 +4,7 @@ bits 32
 section s_41B80 progbits alloc exec nowrite align=1
 extern __CHK, __STOSD, AskDatabaseChoice, AwardsCeremony, btn_LeagueExists, btn_WhichSchedule, lgschedrec, byte_DE268
 extern careerdb, careerdb_size, confteams, CopyFile, CopyHumanTeamDBs, curleague, dbextension, DeleteDir
-extern DiskFreeBytes, DiskSpaceShort, divisionteams, dword_C5619, playoffbuf, leaguedbsizes, dword_C9002, dword_DDD34
+extern DiskFreeBytes, DiskSpaceShort, divisionteams, poconf2teams, playoffbuf, leaguedbsizes, dword_C9002, dword_DDD34
 extern dword_DDD3C, FileClose, FileExists, FileOpenRead, FileOpenRW, FileReadAt, FileWriteAt, FreeMemBlock
 extern gameopts, GetLeagueDBSizes, humancount, keydb, keydb_size, leaguedbnames, leagueflags, leaguemaster
 extern leaguesaved, leagueteams, LeagueTeamSelect, lggameidx, lgplayteam, lgstate, lgteam_17, lgteam_18
@@ -1415,13 +1415,13 @@ xor ecx, ecx	; 42CB4
 .7:
 mov esi, ecx	; 42CB6
 shl esi, 2	; 42CB8
-mov ebx, dword [dword esi+dword_C5619]	; 42CBB
+mov ebx, dword [dword esi+poconf2teams]	; 42CBB
 mov edx, esp	; 42CC1
 mov eax, ebp	; 42CC3
 call ReadTeamRec	; 42CC5
 test eax, eax	; 42CCA
 jne near .x	; 42CCC
-mov edx, dword [dword esi+dword_C5619]	; 42CD2
+mov edx, dword [dword esi+poconf2teams]	; 42CD2
 mov dword [byte edi+esi+038h], edx	; 42CD8
 mov al, byte [byte esp+029h]	; 42CDC
 lea edx, [eax+eax]	; 42CE0

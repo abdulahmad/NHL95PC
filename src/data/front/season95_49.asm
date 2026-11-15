@@ -4,8 +4,8 @@ bits 32
 section s_D05F4 progbits alloc noexec write align=1
 extern MenuRegSeasonStats, MenuPlayoffStats, MenuReturnToLineEditor, unk_D04FC, unk_D0558, unk_D05AF, str_LineEditor5, str_Roster4
 extern str_PlayerStatistics4
-global unk_D05F4, str_RegularSeasonStatistics, str_PlayOffStatistics, unk_D068A, str_ReturnToLineEditor, unk_D0720, str_PlayerStatistics6, str_Display
-unk_D05F4:
+global dblinesmenubar, str_RegularSeasonStatistics, str_PlayOffStatistics, unk_D068A, str_ReturnToLineEditor, unk_D0720, str_PlayerStatistics6, str_Display
+dblinesmenubar:
 db 00h,00h,00h,00h,00h,00h,00h,00h,04Dh,00h,00h,00h,012h,00h,00h,00h
 dd str_LineEditor5
 db 00h,00h,00h,00h

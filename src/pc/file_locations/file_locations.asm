@@ -8,7 +8,7 @@ extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, Play
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
 extern strcat_, stricmp_, sub_8D2F0, sub_8E83C, sub_8F98F, sub_8FC8A, sub_8FFB0, sub_9061C
-extern sub_B30B4, sub_B4BA8, unk_C3B0C, WaitClickTimeout
+extern sub_B30B4, sub_B4BA8, str_ModeR, WaitClickTimeout
 global InitFileLocations, CoachCutScene
 ; C: src/pc/file_locations/InitFileLocations.c
 %ifdef CBUILD
@@ -23,7 +23,7 @@ push edx	; 8BABB
 push esi	; 8BABC
 push edi	; 8BABD
 sub esp, 228Ch	; 8BABE
-mov edx, unk_C3B0C	; 8BAC4
+mov edx, str_ModeR	; 8BAC4
 mov eax, str_NhlCfg	; 8BAC9
 call fopen_	; 8BACE
 mov esi, eax	; 8BAD3
@@ -48,13 +48,13 @@ mov byte [dword esp+02251h], ah	; 8BB1A
 mov edx, str_ALLFILESTXT	; 8BB21
 lea eax, [dword esp+02250h]	; 8BB26
 call strcat_	; 8BB2D
-mov edx, unk_C3B0C	; 8BB32
+mov edx, str_ModeR	; 8BB32
 lea eax, [dword esp+02250h]	; 8BB37
 call fopen_	; 8BB3E
 mov edi, eax	; 8BB43
 test eax, eax	; 8BB45
 jne short .2	; 8BB47
-mov edx, unk_C3B0C	; 8BB49
+mov edx, str_ModeR	; 8BB49
 mov eax, str_ALLFILESTXT2	; 8BB4E
 call fopen_	; 8BB53
 mov edi, eax	; 8BB58

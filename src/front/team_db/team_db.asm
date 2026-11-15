@@ -15,7 +15,7 @@ extern str_fe7, str_fe8, str_fe9, str_feA, str_feB, str_feB1, str_feB5, str_feB8
 extern str_feC, str_feD, str_feE, str_feF, str_feG, str_feH, str_feI, str_feJ
 extern str_feK, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_GoalieItemTmpl
 extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, gsumheader
-extern gsumtail, unk_CEE4F, unk_CEEAF, hmglattr, hmplattr, hmglstats, unknown_libname_1, VisTeam
+extern gsumtail, hmgoaliemenu, awgoaliemenu, hmglattr, hmplattr, hmglstats, unknown_libname_1, VisTeam
 extern gsumcount, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, awpanelpen_time, awpanelpen_w4, awpanelpen_w6, hmplstats_w2
 extern hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14, hmglstats_w2, hmglstats_w4
 global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
@@ -1065,7 +1065,7 @@ push ecx	; 1C85D
 push edx	; 1C85E
 push esi	; 1C85F
 sub esp, byte 20h	; 1C860
-mov esi, unk_CEE4F	; 1C863
+mov esi, hmgoaliemenu	; 1C863
 xor edx, edx	; 1C868
 mov dl, byte [hmgoalieidx]	; 1C86A
 mov ebx, edx	; 1C870
@@ -1197,7 +1197,7 @@ shl eax, 5	; 1C9E3
 mov eax, dword [byte esi+eax+010h]	; 1C9E6
 .8:
 mov byte [eax], 1	; 1C9EA
-mov esi, unk_CEEAF	; 1C9ED
+mov esi, awgoaliemenu	; 1C9ED
 xor edx, edx	; 1C9F2
 mov dl, byte [awgoalieidx]	; 1C9F4
 mov ebx, edx	; 1C9FA

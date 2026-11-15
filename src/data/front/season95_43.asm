@@ -4,13 +4,13 @@ bits 32
 section s_CEF43 progbits alloc noexec write align=1
 extern DeskHomeLines, DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskTeamScratches, unk_C67B1, str_VisitingTeam2
 extern str_GameStatistics, str_PenaltySummary, str_ScoringSummary, str_TeamScratches, str_StatisticsType8
-global off_CEF43, off_CEF63, unk_CEF6F, unk_CEFEF
-off_CEF43:
+global menuact_homelines, menuact_visitorlines, unk_CEF6F, unk_CEFEF
+menuact_homelines:
 dd DeskHomeLines
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,012h,00h,00h,00h
 db 06Eh,00h,00h,00h,024h,00h,00h,00h
 dd str_VisitingTeam2
-off_CEF63:
+menuact_visitorlines:
 dd DeskVisitorLines
 db 00h,00h,00h,00h,00h,00h,00h,00h
 unk_CEF6F:

@@ -8,7 +8,7 @@ extern awardwinners, awtmap, bannermsg, bannertimer, bgscrollx, bgscrolly, Build
 extern byte_D9299, milestonesaid, milestonesaid_b1, milestonesaid_b3, curevent, goalevent, camx, camx_m2
 extern camy, cddriveptr, ClearInputQueue, ClearPanelPenalties, clockticks, cont2team, Crowd_Noise, CrowdFadeOut
 extern crowdlevel, CrowdNoiseReset, crowdsmooth, cupteam, curleague, curperiod, CwdExciteLvl, deferpending
-extern demomode, DrawHudPanel, DrawRinkOverlays, dword_C513C, dword_C5168, dword_C66D0, dword_C66D4, dword_CC080
+extern demomode, DrawHudPanel, DrawRinkOverlays, awardtextcolors, awardartfiles, dword_C66D0, dword_C66D4, dword_CC080
 extern goalienotebits, demoflag, gfxidlist, dword_D8C72, dword_D8C7A, ovlstepart, SumCwdExciteLvl, ovlartbank
 extern dword_E9A9E, dword_E9AB6, energywarn, escrequest, exitgame, fadeinpending, FadeOutPalCycle, FadePalette
 extern FadePalStep, FileClose, fileoncd, FileOpenRead, FitPlayerName, FlushGSumQueue, forceteams, fox
@@ -19,8 +19,8 @@ extern joyq_flush, joysampling, joysampling_save, kaufmfont, lastplayer, lcblink
 extern lcline, lcreqchoice, lcrequest, lcsel, lctimer, leaguedbnames, LoadCupFinalSeries, LoadGameGfx
 extern LoadGameState, LoadRink, LoadRockMusic, LoadTeamPalette, MakeGSummaryPath, MakePath, memcpy_, MouseSetPos
 extern mousex, mousey, MusicChanReset, musichandle, musicon, musicslot, NormalizeDressFlags, nullsub_2
-extern numshapes, numshpbank, off_C524F, off_C5253, off_C5257, off_C525B, off_C525F, off_C5263
-extern off_C5267, off_C526F, off_C5273, off_C527B, ovlartnames, ovlseq, ovlstep, ovltimer
+extern numshapes, numshpbank, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05
+extern awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, ovlartnames, ovlseq, ovlstep, ovltimer
 extern pad1dev, pad2dev, PaPreloadClips, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn
 extern penshotlive, penshotmode, penshotplayer, penshotstart, PeriodOver, photobankf, photobanks, photoptrs
 extern photoptrsf, PlayCrowdSample, PlayDigiSample, PostGameDesk, presidentsteam, PrintFmt1, PrintFmt2, PrintShadowText
@@ -43,8 +43,8 @@ extern sub_8E83C, sub_8E8A0, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8F1
 extern sub_8F633, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90354, sub_9035C
 extern sub_9061C, sub_90B80, sub_B30B4, sub_B30BB, sub_B392C, sub_B4BA8, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
-extern str_ctl06, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C, unk_D9690, unk_D96F8
-extern unk_D972C, unk_D9794, unk_D98C3, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
+extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
+extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
 extern WaitClickTimeout, WaitDigiSample, penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, word_CBEC2
 extern injurystop, Pencntdwn2, rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl
 extern word_E9AAA, word_E9AAE, rinkobjused
@@ -213,7 +213,7 @@ test ebx, ebx	; 122C2
 jne near .30	; 122C4
 cmp word [dword esp+0388h], byte 0	; 122CA
 jbe near .30	; 122D3
-mov edx, dword [off_C524F]	; 122D9
+mov edx, dword [awardstatsptrs]	; 122D9
 cmp byte [dword esp+03D8h], 0	; 122DF
 je short .14	; 122E7
 mov eax, dword [dword esp+038Ah]	; 122E9
@@ -237,7 +237,7 @@ movsw	; 1232A
 movsb	; 1232C
 mov byte [dword esp+03D8h], 0FFh	; 1232D
 .15:
-mov edx, dword [off_C5253]	; 12335
+mov edx, dword [awardstatsptrs_e01]	; 12335
 cmp byte [dword esp+03D9h], 0	; 1233B
 je short .16	; 12343
 mov eax, dword [dword esp+038Eh]	; 12345
@@ -250,7 +250,7 @@ cmp ax, word [edx]	; 1235E
 jae short .17	; 12361
 .16:
 mov ecx, 0Dh	; 12363
-mov edi, unk_D958C	; 12368
+mov edi, awardwinners_e01	; 12368
 lea esi, [dword esp+0354h]	; 1236D
 rep movsd	; 12374
 mov ecx, 0Bh	; 12376
@@ -263,7 +263,7 @@ mov byte [dword esp+03D9h], 0FFh	; 12389
 .17:
 cmp byte [dword esp+0356h], 44h	; 12391
 jne short .19	; 12399
-mov edx, dword [off_C5257]	; 1239B
+mov edx, dword [awardstatsptrs_e02]	; 1239B
 cmp byte [dword esp+03DAh], 0	; 123A1
 je short .18	; 123A9
 mov eax, dword [dword esp+038Eh]	; 123AB
@@ -276,7 +276,7 @@ cmp ax, word [edx]	; 123C4
 jae short .19	; 123C7
 .18:
 mov ecx, 0Dh	; 123C9
-mov edi, unk_D95C0	; 123CE
+mov edi, awardwinners_e02	; 123CE
 lea esi, [dword esp+0354h]	; 123D3
 rep movsd	; 123DA
 mov ecx, 0Bh	; 123DC
@@ -295,7 +295,7 @@ je short .20	; 12404
 cmp al, 43h	; 12406
 jne short .22	; 12408
 .20:
-mov edx, dword [off_C525B]	; 1240A
+mov edx, dword [awardstatsptrs_e03]	; 1240A
 cmp byte [dword esp+03DBh], 0	; 12410
 je short .21	; 12418
 mov eax, dword [dword esp+0398h]	; 1241A
@@ -308,7 +308,7 @@ cmp ax, word [edx]	; 12433
 jae short .22	; 12436
 .21:
 mov ecx, 0Dh	; 12438
-mov edi, unk_D95F4	; 1243D
+mov edi, awardwinners_e03	; 1243D
 lea esi, [dword esp+0354h]	; 12442
 rep movsd	; 12449
 mov ecx, 0Bh	; 1244B
@@ -323,7 +323,7 @@ cmp byte [dword esp+0356h], 47h	; 12466
 je short .24	; 1246E
 cmp byte [dword esp+03B6h], 0	; 12470
 je short .24	; 12478
-mov edx, dword [off_C5267]	; 1247A
+mov edx, dword [awardstatsptrs_e06]	; 1247A
 cmp byte [dword esp+03DEh], 0	; 12480
 je short .23	; 12488
 mov eax, dword [dword esp+038Eh]	; 1248A
@@ -336,7 +336,7 @@ cmp ax, word [edx]	; 124A3
 jae short .24	; 124A6
 .23:
 mov ecx, 0Dh	; 124A8
-mov edi, unk_D9690	; 124AD
+mov edi, awardwinners_e06	; 124AD
 lea esi, [dword esp+0354h]	; 124B2
 rep movsd	; 124B9
 mov ecx, 0Bh	; 124BB
@@ -347,7 +347,7 @@ movsw	; 124CB
 movsb	; 124CD
 mov byte [dword esp+03DEh], 0FFh	; 124CE
 .24:
-mov edx, dword [off_C526F]	; 124D6
+mov edx, dword [awardstatsptrs_e08]	; 124D6
 cmp byte [dword esp+03E0h], 0	; 124DC
 je short .25	; 124E4
 mov eax, dword [dword esp+03A0h]	; 124E6
@@ -360,7 +360,7 @@ cmp ax, word [byte edx+012h]	; 124FF
 jae short .26	; 12503
 .25:
 mov ecx, 0Dh	; 12505
-mov edi, unk_D96F8	; 1250A
+mov edi, awardwinners_e08	; 1250A
 lea esi, [dword esp+0354h]	; 1250F
 rep movsd	; 12516
 mov ecx, 0Bh	; 12518
@@ -373,7 +373,7 @@ mov byte [dword esp+03E0h], 0FFh	; 1252B
 .26:
 cmp byte [awardtype+9], 1	; 12533
 jne short .27	; 1253A
-mov edx, dword [off_C5273]	; 1253C
+mov edx, dword [awardstatsptrs_e09]	; 1253C
 xor esi, esi	; 12542
 mov si, word [byte edx+028h]	; 12544
 xor eax, eax	; 12548
@@ -383,7 +383,7 @@ xor eax, eax	; 12550
 mov ax, word [byte edx+02Ch]	; 12552
 jmp short .28	; 12556
 .27:
-mov edx, dword [off_C5273]	; 12558
+mov edx, dword [awardstatsptrs_e09]	; 12558
 xor esi, esi	; 1255E
 mov si, word [byte edx+030h]	; 12560
 xor eax, eax	; 12564
@@ -411,16 +411,16 @@ cmp cx, word [dword esp+0388h]	; 125A9
 jbe short .30	; 125B1
 .29:
 mov ecx, 0Dh	; 125B3
-mov edi, unk_D972C	; 125B8
+mov edi, awardwinners_e09	; 125B8
 lea esi, [dword esp+0354h]	; 125BD
 rep movsd	; 125C4
 mov ecx, 0Bh	; 125C6
-mov edi, unk_D98C3	; 125CB
+mov edi, awardstats9	; 125CB
 lea esi, [dword esp+0388h]	; 125D0
 rep movsd	; 125D7
 movsw	; 125D9
 movsb	; 125DB
-mov dword [off_C5273], unk_D98C3	; 125DC
+mov dword [awardstatsptrs_e09], awardstats9	; 125DC
 mov byte [awardtype+9], 1	; 125E6
 mov byte [dword esp+03E1h], 0FFh	; 125ED
 .30:
@@ -454,7 +454,7 @@ test ebx, ebx	; 12651
 jne near .42	; 12653
 cmp word [dword esp+02E8h], byte 0	; 12659
 jbe near .42	; 12662
-mov edx, dword [off_C525F]	; 12668
+mov edx, dword [awardstatsptrs_e04]	; 12668
 cmp byte [dword esp+03DCh], 0	; 1266E
 je short .35	; 12676
 mov eax, dword [dword esp+02EAh]	; 12678
@@ -467,7 +467,7 @@ cmp ax, word [byte edx+014h]	; 12691
 jbe short .36	; 12695
 .35:
 mov ecx, 0Dh	; 12697
-mov edi, unk_D9628	; 1269C
+mov edi, awardwinners_e04	; 1269C
 lea esi, [dword esp+0320h]	; 126A1
 rep movsd	; 126A8
 mov ecx, 0Dh	; 126AA
@@ -477,7 +477,7 @@ rep movsd	; 126B8
 movsw	; 126BA
 mov byte [dword esp+03DCh], 0FFh	; 126BC
 .36:
-mov edx, dword [off_C5263]	; 126C4
+mov edx, dword [awardstatsptrs_e05]	; 126C4
 cmp word [dword esp+02E8h], byte 19h	; 126CA
 jb short .38	; 126D3
 cmp byte [dword esp+03DDh], 0	; 126D5
@@ -492,7 +492,7 @@ cmp ax, word [byte edx+0Ch]	; 126F8
 jbe short .38	; 126FC
 .37:
 mov ecx, 0Dh	; 126FE
-mov edi, unk_D965C	; 12703
+mov edi, awardwinners_e05	; 12703
 lea esi, [dword esp+0320h]	; 12708
 rep movsd	; 1270F
 mov ecx, 0Dh	; 12711
@@ -504,7 +504,7 @@ mov byte [dword esp+03DDh], 0FFh	; 12723
 .38:
 cmp byte [awardtype+9], 1	; 1272B
 jne short .39	; 12732
-mov edx, dword [off_C5273]	; 12734
+mov edx, dword [awardstatsptrs_e09]	; 12734
 xor esi, esi	; 1273A
 mov si, word [byte edx+028h]	; 1273C
 xor eax, eax	; 12740
@@ -514,7 +514,7 @@ xor esi, esi	; 12748
 mov si, word [byte edx+02Ch]	; 1274A
 jmp short .40	; 1274E
 .39:
-mov edx, dword [off_C5273]	; 12750
+mov edx, dword [awardstatsptrs_e09]	; 12750
 xor esi, esi	; 12756
 mov si, word [byte edx+030h]	; 12758
 xor eax, eax	; 1275C
@@ -542,15 +542,15 @@ cmp cx, word [dword esp+02E8h]	; 127A1
 jbe short .42	; 127A9
 .41:
 mov ecx, 0Dh	; 127AB
-mov edi, unk_D972C	; 127B0
+mov edi, awardwinners_e09	; 127B0
 lea esi, [dword esp+0354h]	; 127B5
 rep movsd	; 127BC
 mov ecx, 0Dh	; 127BE
-mov edi, unk_D9794	; 127C3
+mov edi, awardstats9g	; 127C3
 lea esi, [dword esp+02E8h]	; 127C8
 rep movsd	; 127CF
 movsw	; 127D1
-mov dword [off_C5273], unk_D9794	; 127D3
+mov dword [awardstatsptrs_e09], awardstats9g	; 127D3
 xor cl, cl	; 127DD
 mov byte [awardtype+9], cl	; 127DF
 mov byte [dword esp+03E1h], 0FFh	; 127E5
@@ -606,13 +606,13 @@ mov dword [byte esp+038h], edi	; 12863
 jmp near .27	; 12867
 .1:
 mov esi, ebx	; 1286C
-mov eax, dword [nosplit ebx*4+dword_C513C]	; 1286E
+mov eax, dword [nosplit ebx*4+awardtextcolors]	; 1286E
 xor edx, edx	; 12875
 call SetTextColors	; 12877
 call GetTicks	; 1287C
 xor ecx, ecx	; 12881
 mov ebx, dword [nosplit esi*4+awardart]	; 12883
-mov eax, dword [nosplit esi*4+dword_C5168]	; 1288A
+mov eax, dword [nosplit esi*4+awardartfiles]	; 1288A
 cmp byte [dword eax+fileoncd], 1	; 12891
 jne short .2	; 12898
 mov edx, dword [cddriveptr]	; 1289A
@@ -873,14 +873,14 @@ lea edx, [eax+ebp]	; 12BAC
 mov ebx, str_Pct	; 12BAF
 mov eax, esi	; 12BB4
 call PrintShadowText	; 12BB6
-mov eax, dword [dword edi+off_C524F]	; 12BBB
+mov eax, dword [dword edi+awardstatsptrs]	; 12BBB
 mov dword [byte esp+034h], eax	; 12BC1
 mov edi, eax	; 12BC5
 xor eax, eax	; 12BC7
 mov dword [byte esp+03Ch], eax	; 12BC9
 .19:
 mov eax, dword [byte esp+03Ch]	; 12BCD
-mov ebx, dword [nosplit eax*4+off_C527B]	; 12BD1
+mov ebx, dword [nosplit eax*4+awardscopenames]	; 12BD1
 xor edx, edx	; 12BD8
 mov dl, byte [byte_D42C3]	; 12BDA
 lea eax, [byte esi+034h]	; 12BE0
@@ -1099,14 +1099,14 @@ lea edx, [eax+ebp]	; 12E8A
 mov ebx, str_Pct	; 12E8D
 mov eax, esi	; 12E92
 call PrintShadowText	; 12E94
-mov eax, dword [dword edi+off_C524F]	; 12E99
+mov eax, dword [dword edi+awardstatsptrs]	; 12E99
 mov dword [byte esp+030h], eax	; 12E9F
 mov edi, eax	; 12EA3
 xor ecx, ecx	; 12EA5
 mov dword [byte esp+03Ch], ecx	; 12EA7
 .22:
 mov eax, dword [byte esp+03Ch]	; 12EAB
-mov ebx, dword [nosplit eax*4+off_C527B]	; 12EAF
+mov ebx, dword [nosplit eax*4+awardscopenames]	; 12EAF
 xor edx, edx	; 12EB6
 mov dl, byte [byte_D42C3]	; 12EB8
 lea eax, [byte esi+034h]	; 12EBE

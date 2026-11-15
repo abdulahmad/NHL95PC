@@ -91,8 +91,8 @@ void RunEditRosters(void)
    RunEditRosters_ret5): redraw the Edit Rosters screen on the full-screen bitmap: the menu bar (editrostersmenubar), the
    prez2 background (palette into savepal, the "ea" art drawn full screen below line 13h), both roster panels
    (DrawRosterPanel) and, in ratings mode (rostereditmode == 2), the ratings box: a dialog frame with bevelled edges,
-   "Ratings " + the first roster team's name centred, the nine rating names (off_D0AC2) with their values from the
-   team record (+2DCh, picked by byte_D0AE6), and the two buttons (unk_D0B80). Then the bitmap is shown
+   "Ratings " + the first roster team's name centred, the nine rating names (teamratingnames) with their values from the
+   team record (+2DCh, picked by teamratingidx), and the two buttons (btn_EditRosters). Then the bitmap is shown
    (sub_9121C). No arguments, no result. */
 void DrawEditRosters(void)
 {
@@ -133,13 +133,13 @@ void DrawEditRosters(void)
         y = 0xB0;
         i = 0;
         do {
-            PrintShadowText(0xD2, y, (char *)off_D0AC2[i]);
-            sprintf(buf, (char *)str_fmt2d, vals[byte_D0AE6[i]]);
+            PrintShadowText(0xD2, y, (char *)teamratingnames[i]);
+            sprintf(buf, (char *)str_fmt2d, vals[teamratingidx[i]]);
             PrintShadowText(0x1A9, y, buf);
             i++;
             y += 0xD;
         } while (i < 9);
-        DrawButtons((Button *)unk_D0B80, 2);
+        DrawButtons((Button *)btn_EditRosters, 2);
     }
     sub_B4BA8();
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
@@ -229,7 +229,7 @@ typedef struct TeamRec2E8 { int d[0xBA]; } TeamRec2E8;  /* a team record (hmteam
 /* EditTeamLines (6DF06, PC only; segment 052, ends in RunEditRosters_ret5): the "Edit Team Lines" item of a
    roster menu (side 0 when *which is 3). The side's game team (HomeTeam / VisTeam) becomes the roster's team and
    its game team record is replaced by the roster's record (rosterteamrec) while the line editor (DbLineEditor, on
-   the record's lines at +0BCh, unk_D05F4, 3) runs; the free-agent lists are freed first (falistsel, falist). Then
+   the record's lines at +0BCh, dblinesmenubar, 3) runs; the free-agent lists are freed first (falistsel, falist). Then
    the screen is cleared, the record copy goes back (into the home record, hmteamrec, for either side), the team
    is restored, a roster that shows the free agents on the other side is reloaded (LoadRosterList), and the editor
    is redrawn (DrawEditRosters) and faded in (savepal). which: the menu callback argument. No result. */
@@ -257,7 +257,7 @@ void EditTeamLines(int *which)
     }
     tmp = ((TeamRec2E8 *)hmteamrec)[side];
     ((TeamRec2E8 *)hmteamrec)[side] = *(TeamRec2E8 *)rosterteamrec[side];
-    DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)unk_D05F4, 3);
+    DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)dblinesmenubar, 3);
     sub_B4BA8();
     sub_B392C(0);
     *(TeamRec2E8 *)hmteamrec = tmp;

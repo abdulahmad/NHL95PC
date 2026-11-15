@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_D0B16 progbits alloc noexec write align=1
 extern str_Yes, str_No4
-global dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2, dword_D0BFC, dword_D0C04
-global dword_D0C10, dword_D0C18, dword_D0C20, str_OK, str_Cancel5, unk_D0B80, unk_D0BB8, unk_D0BF0
+global dlgfillcol, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgbevelcol1, dlgbevelcol2, fascrollbar_len, fascrollbar_thumb
+global fascrollbar_top, fascrollbar_count, dword_D0C20, str_OK, str_Cancel5, btn_EditRosters, btn_RosterList, fascrollbar
 global savedbbtns
 dlgfillcol:
 db 041h,00h,00h,00h
@@ -26,27 +26,27 @@ str_OK:
 db 04Fh,04Bh,00h
 str_Cancel5:
 db 043h,061h,06Eh,063h,065h,06Ch,00h
-unk_D0B80:
+btn_EditRosters:
 db 0D2h,00h,00h,00h,036h,01h,00h,00h,048h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd str_OK
 db 06Bh,01h,00h,00h,036h,01h,00h,00h,048h,00h,00h,00h,014h,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h
 dd str_Cancel5
-unk_D0BB8:
+btn_RosterList:
 db 03Ah,01h,00h,00h,024h,00h,00h,00h,0Ch,00h,00h,00h,0Ah,00h,00h,00h
 db 00h,00h,00h,00h,05h,00h,00h,00h,00h,00h,00h,00h,03Ah,01h,00h,00h
 db 0D2h,01h,00h,00h,0Ch,00h,00h,00h,0Ah,00h,00h,00h,00h,00h,00h,00h
 db 05h,00h,00h,00h,00h,00h,00h,00h
-unk_D0BF0:
+fascrollbar:
 db 03Ah,01h,00h,00h,02Eh,00h,00h,00h,0Ch,00h,00h,00h
-dword_D0BFC:
+fascrollbar_len:
 db 0A4h,01h,00h,00h,00h,00h,00h,00h
-dword_D0C04:
+fascrollbar_thumb:
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-dword_D0C10:
+fascrollbar_top:
 db 00h,00h,00h,00h,00h,00h,00h,00h
-dword_D0C18:
+fascrollbar_count:
 db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D0C20:
 db 00h,00h,00h,00h

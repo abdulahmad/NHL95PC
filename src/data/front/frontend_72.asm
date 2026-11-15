@@ -5,9 +5,9 @@ section s_D8B68 nobits alloc noexec write align=1
 global fadepalbuf, byte_D9299, awardwinners, kaufmfont, pntrshapes, scor2font, mainfont, scor3font
 global joyrawbits, numshapes, spritedrawcount, gfxidlist, rinkendbank, frameaccum, rinkendart, dword_D8C72
 global viewscrolly, hudhundaccum, dword_D8C7A, viewscrollx, numshpbank, curperiod, joyqueue, cupteam
-global presidentsteam, unk_D958C, unk_D95C0, unk_D95F4, unk_D9628, unk_D965C
-global unk_D9690, unk_D96F8, unk_D972C, unk_D9794, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
-global unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
+global presidentsteam, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
+global awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats5, awardstats4, awardstats8, awardstats2
+global awardstats1, awardstats9, awardstats3, awardstats0, awardstats6
 kaufmfont:
 resb 4
 pntrshapes:
@@ -60,39 +60,39 @@ byte_D9299:
 resb 703
 awardwinners:
 resb 52
-unk_D958C:
+awardwinners_e01:
 resb 52
-unk_D95C0:
+awardwinners_e02:
 resb 52
-unk_D95F4:
+awardwinners_e03:
 resb 52
-unk_D9628:
+awardwinners_e04:
 resb 52
-unk_D965C:
+awardwinners_e05:
 resb 52
-unk_D9690:
+awardwinners_e06:
 resb 104
-unk_D96F8:
+awardwinners_e08:
 resb 52
-unk_D972C:
+awardwinners_e09:
 resb 104
-unk_D9794:
+awardstats9g:
 resb 54
-unk_D97CA:
+awardstats5:
 resb 54
-unk_D9800:
+awardstats4:
 resb 54
-unk_D9836:
+awardstats8:
 resb 47
-unk_D9865:
+awardstats2:
 resb 47
-unk_D9894:
+awardstats1:
 resb 47
-unk_D98C3:
+awardstats9:
 resb 47
-unk_D98F2:
+awardstats3:
 resb 47
-unk_D9921:
+awardstats0:
 resb 47
-unk_D9950:
+awardstats6:
 resb 48

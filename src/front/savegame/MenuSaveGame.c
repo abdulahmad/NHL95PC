@@ -63,14 +63,14 @@ int MenuSaveGame(void)
         ((unsigned char *)&gameopts)[1] |= 0x80;
         WriteModeState(exhstate);
         if (FileCreate(s.path, &s.h)) FatalError((char *)str_H2);
-        if (FileWriteAt(s.h, exhstate, -1, 0x75)) FatalError((char *)unk_C392F);
+        if (FileWriteAt(s.h, exhstate, -1, 0x75)) FatalError((char *)str_h3);
         MakePath(s.path, 0, (char *)str_Gsummary3, (char *)str_extDB);
         p = sub_8E8A0(s.path, 0);
         if (FileWriteAt(s.h, (void *)p, -1, sub_92DE0(s.path))) FatalError((char *)str_H4);
         FreeMemBlock(p);
-        if (FileWriteAt(s.h, othergames, -1, 0xC)) FatalError((char *)unk_C393E);
-        if (FileWriteAt(s.h, otherscores, -1, 0xC)) FatalError((char *)unk_C3941);
-        if (FileWriteAt(s.h, otherperiod, -1, 0x18)) FatalError((char *)unk_C3944);
+        if (FileWriteAt(s.h, othergames, -1, 0xC)) FatalError((char *)str_h5);
+        if (FileWriteAt(s.h, otherscores, -1, 0xC)) FatalError((char *)str_h6);
+        if (FileWriteAt(s.h, otherperiod, -1, 0x18)) FatalError((char *)str_h7);
         SaveGameState(s.h);
         FileClose(&s.h);
     } else {

@@ -13,10 +13,10 @@ global str_ForAllSelectedPlayers, str_TheNumberOfSelected, str_PlayersAndGoalies
 global str_ChooseWhichTeamTo, str_IsAlreadyDisplayedOn, str_Roster2, str_Roster1, str_DoesNotExist, fp_1000, fp_84, fp_300
 global fp_390, fp_200, fp_100, fp_m50, fp_500, fp_90, fp_10, fp_70
 global fp_30, fp_58, fp_347, qword_C2CE0, qword_C2CE8, str_GP9, str_spG2, str_spA2
-global str_Pt4, str_PIM7, unk_C2987, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
+global str_Pt4, str_PIM7, str_PlusMinus6, str_PPG4, str_SHG4, str_Shots6, str_Pct8, str_Shoots3
 global str_Speed3, str_Agility3, str_Weight3, str_ShotPower2, str_Checking3, str_StickHandling2, str_Accuracy2, str_Passing3
 global str_OffensiveAwareness3, str_DefensiveAwareness3, str_Aggressiveness2, str_Endurance2, str_ShootPassBias2, str_Faceoffs2, str_Min6, str_GA6
-global str_GAA5, str_spW3, unk_C2A5C, unk_C2A5F, str_SO3, str_EN3, str_SA5, str_GloveHand3
+global str_GAA5, str_spW3, str_SpL6, str_SpT3, str_SO3, str_EN3, str_SA5, str_GloveHand3
 global str_GloveLeft2, str_GloveRight2, str_StickLeft2, str_StickRight2, str_PuckControl2, str_PenaltyKilling3, str_PowerPlay3, str_Shooting2
 global str_Skating2, str_Defence2, str_Goaltending2, str_OverAll2, str_Cancel6, str_Create, str_X, str_L9
 global str_R5
@@ -58,7 +58,7 @@ str_Pt4:
 db 020h,050h,074h,00h
 str_PIM7:
 db 050h,049h,04Dh,00h
-unk_C2987:
+str_PlusMinus6:
 db 020h,02Bh,02Fh,02Dh,00h
 str_PPG4:
 db 050h,050h,047h,00h
@@ -108,9 +108,9 @@ str_GAA5:
 db 020h,020h,047h,041h,041h,00h
 str_spW3:
 db 020h,057h,00h
-unk_C2A5C:
+str_SpL6:
 db 020h,04Ch,00h
-unk_C2A5F:
+str_SpT3:
 db 020h,054h,00h
 str_SO3:
 db 053h,04Fh,00h

@@ -2,17 +2,17 @@
 bits 32
 %include "hockey.inc"
 section s_82579 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, acptspr, str_04x, byte_C541B, byte_D2439, homeremap, homeremap_e05
+extern __CHK, __STOSD, acptspr, str_04x, sndcardmissing, byte_D2439, homeremap, homeremap_e05
 extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50
 extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
-extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, lockerindex, lockerteams, dword_D223C, dword_D22DC, dword_D22E0
-extern dword_D22EC, dword_D22F0, dword_D2350, dword_D2423, dword_D2427, dword_D242B, dword_D2435, speechchannel
+extern DrawSelBoxOn, dword_C4CFC, dword_CCC94, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
+extern lockercancelx, lockercancely, dword_D2350, dword_D2423, dword_D2427, dword_D242B, sndtempbuf, speechchannel
 extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
 extern modesetlabel, MouseSetPos, msg_InitMT32, musichandle, musicon, musicslot, na01spr, na03spr
-extern na05spr, off_CECFF, off_CED3F, off_D21C0, off_D2230, pg01spr, pg03spr, pg05spr
+extern na05spr, menutext_deskreturn, menutext_desktodesk, jerseyabbrevs, poroundnames, pg01spr, pg03spr, pg05spr
 extern pg07spr, pl05spr, pl10spr, pl20spr, PlayDigiSample, pointerspr, PrintOutlinedText, PrintShadowText
 extern ptrupdatefn, RestoreDialogBg, s1font, setbits, SetDialogColors, SetTextColors, SetTickDeadline, settingsfile
 extern ShowLoadingScreen, ShutdownSpeech, ShutdownSpeech_ret5, sndcardname, songdata, soundcardrects, sounddev, sounddevids
@@ -30,8 +30,8 @@ extern sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18, sub_8EB
 extern sub_8ECC0, sub_8F13B, sub_8F1FE, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A
 extern sub_8FCDF, sub_8FFB0, sub_903F0, sub_90D20, sub_910E0, sub_91284, sub_912C8, sub_91370
 extern sub_91400, sub_91964, sub_91FE0, sub_97079, sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8
-extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr, str_R4, unk_D2403
-extern unk_D2413, unk_D249C, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
+extern sub_B4DD4, sub_B4FAC, sub_B5DB0, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
+extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
 global SoundCardDlg_epilogue, SoundCardDlgLoop_x, SetSoundDevice
 ; C: src/pc/sound_config/MenuSoundSettings.c
@@ -56,7 +56,7 @@ push dword 4E200h	; 8259C
 push str_Temp8	; 825A1
 call sub_8CCA8	; 825A6
 add esp, byte 0Ch	; 825AB
-mov dword [dword_D2435], eax	; 825AE
+mov dword [sndtempbuf], eax	; 825AE
 .2:
 push byte 0	; 825B3
 push dword 5F11h	; 825B5
@@ -182,7 +182,7 @@ push dword 0FFh	; 826DC
 push dword 0F8h	; 826E1
 call sub_8E9C0	; 826E6
 add esp, byte 8	; 826EB
-test byte [byte_C541B], 1	; 826EE
+test byte [sndcardmissing], 1	; 826EE
 jne short .4	; 826F5
 mov eax, dword [soundcardrects+4]	; 826F7
 add eax, byte 13h	; 826FC
@@ -195,7 +195,7 @@ call sub_91964	; 8270E
 add esp, byte 0Ch	; 82713
 .4:
 add esi, byte 10h	; 82716
-test byte [byte_C541B], 2	; 82719
+test byte [sndcardmissing], 2	; 82719
 jne short .5	; 82720
 mov eax, dword [byte esi+04h]	; 82722
 add eax, byte 13h	; 82725
@@ -208,7 +208,7 @@ call sub_91964	; 82734
 add esp, byte 0Ch	; 82739
 .5:
 add esi, byte 10h	; 8273C
-test byte [byte_C541B], 4	; 8273F
+test byte [sndcardmissing], 4	; 8273F
 jne short .6	; 82746
 mov eax, dword [byte esi+04h]	; 82748
 add eax, byte 13h	; 8274B
@@ -221,7 +221,7 @@ call sub_91964	; 8275A
 add esp, byte 0Ch	; 8275F
 .6:
 add esi, byte 10h	; 82762
-test byte [byte_C541B], 8	; 82765
+test byte [sndcardmissing], 8	; 82765
 jne short .7	; 8276C
 mov eax, dword [byte esi+04h]	; 8276E
 add eax, byte 13h	; 82771
@@ -234,7 +234,7 @@ call sub_91964	; 82780
 add esp, byte 0Ch	; 82785
 .7:
 add esi, byte 20h	; 82788
-test byte [byte_C541B], 20h	; 8278B
+test byte [sndcardmissing], 20h	; 8278B
 jne short .x	; 82792
 mov eax, dword [byte esi+04h]	; 82794
 add eax, byte 13h	; 82797
@@ -325,7 +325,7 @@ push dword 0FFh	; 82847
 push dword 0F8h	; 8284C
 call sub_8E9C0	; 82851
 add esp, byte 8	; 82856
-test byte [byte_C541B], 1	; 82859
+test byte [sndcardmissing], 1	; 82859
 jne short .4	; 82860
 mov eax, dword [soundcardrects+4]	; 82862
 add eax, byte 13h	; 82867
@@ -338,7 +338,7 @@ call sub_91964	; 82879
 add esp, byte 0Ch	; 8287E
 .4:
 add esi, byte 10h	; 82881
-test byte [byte_C541B], 2	; 82884
+test byte [sndcardmissing], 2	; 82884
 jne short .5	; 8288B
 mov eax, dword [byte esi+04h]	; 8288D
 add eax, byte 13h	; 82890
@@ -351,7 +351,7 @@ call sub_91964	; 8289F
 add esp, byte 0Ch	; 828A4
 .5:
 add esi, byte 10h	; 828A7
-test byte [byte_C541B], 4	; 828AA
+test byte [sndcardmissing], 4	; 828AA
 jne short .6	; 828B1
 mov eax, dword [byte esi+04h]	; 828B3
 add eax, byte 13h	; 828B6
@@ -364,7 +364,7 @@ call sub_91964	; 828C5
 add esp, byte 0Ch	; 828CA
 .6:
 add esi, byte 10h	; 828CD
-test byte [byte_C541B], 8	; 828D0
+test byte [sndcardmissing], 8	; 828D0
 jne short .7	; 828D7
 mov eax, dword [byte esi+04h]	; 828D9
 add eax, byte 13h	; 828DC
@@ -377,7 +377,7 @@ call sub_91964	; 828EB
 add esp, byte 0Ch	; 828F0
 .7:
 add esi, byte 20h	; 828F3
-test byte [byte_C541B], 20h	; 828F6
+test byte [sndcardmissing], 20h	; 828F6
 jne short .x	; 828FD
 mov eax, dword [byte esi+04h]	; 828FF
 add eax, byte 13h	; 82902
@@ -439,14 +439,14 @@ mov edx, dword [pointerspr]	; 82978
 mov dx, word [byte edx+06h]	; 8297E
 inc edx	; 82982
 mov word [byte eax+06h], dx	; 82983
-mov edx, dword [dword_D2435]	; 82987
+mov edx, dword [sndtempbuf]	; 82987
 test edx, edx	; 8298D
 je short .1	; 8298F
 push edx	; 82991
 call FreeMemBlock	; 82992
 add esp, byte 4	; 82997
 xor ecx, ecx	; 8299A
-mov dword [dword_D2435], ecx	; 8299C
+mov dword [sndtempbuf], ecx	; 8299C
 .1:
 lea eax, [byte esp+030h]	; 829A2
 push eax	; 829A6
@@ -561,7 +561,7 @@ shl eax, cl	; 82AF1
 mov dword [byte esp+020h], eax	; 82AF3
 test dword [setbits], eax	; 82AF7
 jne near .20	; 82AFD
-test dword [byte_C541B], eax	; 82B03
+test dword [sndcardmissing], eax	; 82B03
 je near .20	; 82B09
 cmp eax, byte 10h	; 82B0F
 jb short .5	; 82B12
@@ -593,7 +593,7 @@ mov eax, dword [byte esp+020h]	; 82B55
 mov dword [setbits], eax	; 82B59
 jmp near .19	; 82B5E
 .8:
-mov eax, unk_D2403	; 82B63
+mov eax, sndselbox1	; 82B63
 call DrawSelBoxOn	; 82B68
 push dword 0F7h	; 82B6D
 mov ecx, 0FAh	; 82B72
@@ -668,7 +668,7 @@ and byte [gameopts+1], 0FEh	; 82C78
 jmp near SoundCardDlgLoop_next.1	; 82C7F
 .15:
 mov eax, dword [setbits]	; 82C84
-xor dword [byte_C541B], eax	; 82C89
+xor dword [sndcardmissing], eax	; 82C89
 mov eax, dword [sounddev]	; 82C8F
 mov dword [setbits], eax	; 82C94
 cmp byte [musicon], 0	; 82C99
@@ -698,7 +698,7 @@ mov ecx, 4Ch	; 82CEE
 mov ebx, 3	; 82CF3
 call sub_8FB8E	; 82CF8
 .18:
-mov eax, unk_D2403	; 82CFD
+mov eax, sndselbox1	; 82CFD
 call DrawSelBoxOff	; 82D02
 .19:
 call RedrawSoundCardOpts	; 82D07
@@ -720,7 +720,7 @@ mov edx, dword [pointerspr]	; 82D2F
 push edx	; 82D35
 jmp near SoundCardDlgLoop_poll.1	; 82D36
 .21:
-mov eax, unk_D2413	; 82D3B
+mov eax, sndselbox2	; 82D3B
 call DrawSelBoxOn	; 82D40
 SoundCardDlgLoop_next:
 push ebp	; 82D45
@@ -1071,7 +1071,7 @@ push eax	; 831EF
 push byte 0	; 831F0
 push byte 0	; 831F2
 mov ecx, 3	; 831F4
-mov ebx, unk_D249C	; 831F9
+mov ebx, msg_NoSoundCard	; 831F9
 mov edx, 0FFFFFFFFh	; 831FE
 mov eax, edx	; 83203
 call MessageBox	; 83205

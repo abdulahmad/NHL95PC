@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_C3B0C progbits alloc noexec write align=1
 global str_NhlCfg, str_CantOpenNhlCfg2, str_ALLFILESTXT, str_ALLFILESTXT2, str_CouldNotOpenALLFILES, str_S9, str_Coachcut, str_Scrn4
-global str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2, unk_C3B0C
-unk_C3B0C:
+global str_Pal29, str_Iff13, str_Coach, str_Clip04d, str_Cmv2, str_ModeR
+str_ModeR:
 db 072h,00h
 str_NhlCfg:
 db 06Eh,068h,06Ch,02Eh,063h,066h,067h,00h

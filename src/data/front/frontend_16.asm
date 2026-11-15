@@ -13,18 +13,18 @@ extern TB, TOR, VAN, WSH, WPG, ANA, FLA, ASW
 extern ASE, Buffalo, Calgary, Chicago, Detroit, Edmonton, Hartford, LosAngeles
 extern Dallas, Montreal, NewJersey, NYIslanders, NYRangers, Ottawa, Philadelphia, Pittsburgh
 extern Quebec, StLouis, SanJose, TampaBay, Toronto, Vancouver, Washington, Winnipeg
-extern Anaheim, Florida, AllStarsWest, AllStarsEast, unk_D97CA, unk_D9800, unk_D9836, unk_D9865
-extern unk_D9894, unk_D98C3, unk_D98F2, unk_D9921, unk_D9950
-global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, byte_C5138, awardtype, keydirtab
-global byte_C541B, gsumheader_b1
+extern Anaheim, Florida, AllStarsWest, AllStarsEast, awardstats5, awardstats4, awardstats8, awardstats2
+extern awardstats1, awardstats9, awardstats3, awardstats0, awardstats6
+global str_D02d, str_D01d, pad1dev, pad2dev, lasthotkey, fadeendlvl, awardtype, keydirtab
+global sndcardmissing, gsumheader_b1
 global gsumheader_b2, gsumheader_b3, gsumheader_b4, hmgoalcnt, hmshotcnt, awgoalcnt, awshotcnt, joyqtick
 global samesideflag, inputframes, escrequest, joyrec, palfadedin, screenw, screenh, demomode
-global dword_C5131, dword_C5133, dword_C5135, dword_C513C, dword_C5168
+global fadestart_m3, fadestep_m3, fadestart_e1, awardtextcolors, awardartfiles
 global postate
 global lgstate
 global gameresult, gamemode, gameopts, ctl1team, ctl2team, ctl1dev, ctl2dev, ctl1side
-global ctl2side, sounddev, awardart, awardnames, awardtitles, off_C524F, off_C5253, off_C5257
-global off_C525B, off_C525F, off_C5263, off_C5267, off_C526F, off_C5273, off_C527B, teamabbrevs
+global ctl2side, sounddev, awardart, awardnames, awardtitles, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02
+global awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05, awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, teamabbrevs
 global off_C5441, teamcitynames, blackpal, str_fmtpd, exhstate, gsumheader, gsumtail
 global gsumcount
 joyqtick:
@@ -116,19 +116,19 @@ db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 demomode:
 db 00h
-dword_C5131:
+fadestart_m3:
 db 00h,00h
-dword_C5133:
+fadestep_m3:
 db 00h,01h
-dword_C5135:
+fadestart_e1:
 db 0Fh,01h,0FFh
-byte_C5138:
+fadeendlvl:
 db 011h,0FFh,00h,00h
-dword_C513C:
+awardtextcolors:
 db 0E9h,00h,00h,00h,09Dh,00h,00h,00h,01h,00h,00h,00h,0ACh,00h,00h,00h
 db 0C4h,00h,00h,00h,0C2h,00h,00h,00h,0E3h,00h,00h,00h,062h,00h,00h,00h
 db 04h,00h,00h,00h,05Bh,00h,00h,00h,014h,00h,00h,00h
-dword_C5168:
+awardartfiles:
 db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
 db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
 db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
@@ -182,27 +182,27 @@ db 00h,00h,00h,00h
 awardtype:
 db 01h,01h,01h,01h,00h,00h,01h,02h,01h
 db 01h,02h
-off_C524F:
-dd unk_D9921
-off_C5253:
-dd unk_D9894
-off_C5257:
-dd unk_D9865
-off_C525B:
-dd unk_D98F2
-off_C525F:
-dd unk_D9800
-off_C5263:
-dd unk_D97CA
-off_C5267:
-dd unk_D9950
+awardstatsptrs:
+dd awardstats0
+awardstatsptrs_e01:
+dd awardstats1
+awardstatsptrs_e02:
+dd awardstats2
+awardstatsptrs_e03:
+dd awardstats3
+awardstatsptrs_e04:
+dd awardstats4
+awardstatsptrs_e05:
+dd awardstats5
+awardstatsptrs_e06:
+dd awardstats6
 db 00h,00h,00h,00h
-off_C526F:
-dd unk_D9836
-off_C5273:
-dd unk_D98C3
+awardstatsptrs_e08:
+dd awardstats8
+awardstatsptrs_e09:
+dd awardstats9
 db 00h,00h,00h,00h
-off_C527B:
+awardscopenames:
 dd str_Season2
 dd str_Playoff2
 str_fmtpd:
@@ -280,7 +280,7 @@ ctl1side:
 db 00h,00h,00h,00h
 ctl2side:
 db 01h,00h,00h,00h
-byte_C541B:
+sndcardmissing:
 db 0FFh,00h,00h,00h
 sounddev:
 db 010h,00h,00h,00h

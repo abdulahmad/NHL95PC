@@ -3,9 +3,9 @@
 bits 32
 %include "hockey.inc"
 section s_767D0 progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, asc_C3164, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
-extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, byte_D1333, byte_D1334, byte_D1335, byte_D1336
-extern byte_ECDF4, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA, CareerDbPtr, CareerDbPtr2, cddriveptr
+extern __CHK, __STOSB, str_PlusMinus7, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
+extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3
+extern gamelinespal, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA, CareerDbPtr, CareerDbPtr2, cddriveptr
 extern ClearInputQueue, cont2team, crestnames, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2
 extern dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel
 extern dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458, dword_D145C
@@ -38,7 +38,7 @@ extern strcmp_, stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E8A0, sub_8E9C
 extern sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20
 extern sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA
 extern sub_B2E1B, sub_B30B4, sub_B392C, sub_B4B58, sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84
-extern sub_B4DD4, sub_B4FAC, sub_B5DB0, TeamRosterScreen, str_dot2, str_dot3, unk_CF48F, unk_D075E
+extern sub_B4DD4, sub_B4FAC, sub_B5DB0, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
 extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
 global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
@@ -3014,10 +3014,10 @@ mov byte [dword eax+jerseyremap], dl	; 78B9F
 inc eax	; 78BA5
 cmp eax, 0FFh	; 78BA6
 jl short LoadJerseyColours.7	; 78BAB
-mov byte [byte_D1333], 0FBh	; 78BAD
-mov byte [byte_D1334], 0FCh	; 78BB4
-mov byte [byte_D1335], 0FDh	; 78BBB
-mov byte [byte_D1336], 0FEh	; 78BC2
+mov byte [jerseypalslot0], 0FBh	; 78BAD
+mov byte [jerseypalslot1], 0FCh	; 78BB4
+mov byte [jerseypalslot2], 0FDh	; 78BBB
+mov byte [jerseypalslot3], 0FEh	; 78BC2
 push ebp	; 78BC9
 call FreeMemBlock	; 78BCA
 add esp, byte 4	; 78BCF
@@ -4390,14 +4390,14 @@ push str_Gstat4	; 79B6C
 call sub_8CCA8	; 79B71
 add esp, byte 0Ch	; 79B76
 mov dword [statsgoaliebuf], eax	; 79B79
-push byte_ECDF4	; 79B7E
+push gamelinespal	; 79B7E
 push dword 100h	; 79B83
 push byte 0	; 79B88
 call sub_8FFB0	; 79B8A
 add esp, byte 0Ch	; 79B8F
 xor eax, eax	; 79B92
 .3:
-mov dl, byte [dword eax+byte_ECDF4]	; 79B94
+mov dl, byte [dword eax+gamelinespal]	; 79B94
 mov byte [esp+eax], dl	; 79B9A
 inc eax	; 79B9D
 cmp eax, 300h	; 79B9E
@@ -4419,11 +4419,11 @@ push dword 0C2h	; 79BD4
 mov ecx, 0C1h	; 79BD9
 mov ebx, 0C0h	; 79BDE
 mov edx, 2	; 79BE3
-mov eax, unk_CF48F	; 79BE8
+mov eax, gameplstatsmenubar	; 79BE8
 call DrawMenuBar	; 79BED
 xor eax, eax	; 79BF2
 .6:
-mov dl, byte [dword eax+byte_ECDF4]	; 79BF4
+mov dl, byte [dword eax+gamelinespal]	; 79BF4
 mov byte [esp+eax], dl	; 79BFA
 inc eax	; 79BFD
 cmp eax, 300h	; 79BFE
@@ -4436,7 +4436,7 @@ push dword 0C2h	; 79C13
 mov ecx, 0C1h	; 79C18
 mov ebx, 0C0h	; 79C1D
 mov edx, 2	; 79C22
-mov eax, unk_CF48F	; 79C27
+mov eax, gameplstatsmenubar	; 79C27
 call RunMenu	; 79C2C
 mov ebx, 10h	; 79C31
 mov edx, esp	; 79C36
@@ -4444,7 +4444,7 @@ mov eax, 1	; 79C38
 call FadePalStep	; 79C3D
 xor eax, eax	; 79C42
 .7:
-mov dl, byte [dword eax+byte_ECDF4]	; 79C44
+mov dl, byte [dword eax+gamelinespal]	; 79C44
 mov byte [esp+eax], dl	; 79C4A
 inc eax	; 79C4D
 cmp eax, 300h	; 79C4E

@@ -20,8 +20,8 @@ extern str_Pointer17, str_Pointer18, str_Setting3, str_Setting4, str_Setting5, s
 extern str_Sound2, str_Sound3, str_TheKeyboard, str_TheMouse, str_TwoS, sub_8CCA8, sub_8E83C, sub_8E9C0
 extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, sub_903F0
 extern sub_90D20, sub_91284, sub_91370, sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_96440
-extern sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4, sub_B4FAC, teamcitynames, unk_D16A0
-extern unk_D19CC, unk_D19DC, VisTeam, WriteCurModeState, WriteModeState
+extern sub_B2DCA, sub_B30B4, sub_B4B88, sub_B4BA8, sub_B4DD4, sub_B4FAC, teamcitynames, dlggreys
+extern ctlboxrect1, ctlboxrect2, VisTeam, WriteCurModeState, WriteModeState
 global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
 global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
 global LeagueOptsToBits_n1, LeagueOptsToBits_n2, LeagueOptsToBits_n3, LeagueOptsToBits_n4, LeagueOptsToBits_n0, LeagueSetHitTest, DrawLeagueSetChecks, LeagueSetViewLoop
@@ -1051,7 +1051,7 @@ push esi	; 7AC3E
 push edi	; 7AC3F
 push ebp	; 7AC40
 sub esp, byte 14h	; 7AC41
-push unk_D16A0	; 7AC44
+push dlggreys	; 7AC44
 push byte 4	; 7AC49
 push dword 0F7h	; 7AC4B
 call sub_B4B88	; 7AC50
@@ -1202,7 +1202,7 @@ push ebp	; 7ADE2
 sub esp, byte 1Ch	; 7ADE3
 test eax, eax	; 7ADE6
 je short .1	; 7ADE8
-push unk_D16A0	; 7ADEA
+push dlggreys	; 7ADEA
 push byte 4	; 7ADEF
 push dword 0F7h	; 7ADF1
 call sub_B4B88	; 7ADF6
@@ -2106,7 +2106,7 @@ push esi	; 7B853
 push edi	; 7B854
 push ebp	; 7B855
 sub esp, byte 14h	; 7B856
-push unk_D16A0	; 7B859
+push dlggreys	; 7B859
 push byte 4	; 7B85E
 push dword 0F7h	; 7B860
 call sub_B4B88	; 7B865
@@ -2255,7 +2255,7 @@ push esi	; 7B9F5
 push edi	; 7B9F6
 push ebp	; 7B9F7
 sub esp, byte 1Ch	; 7B9F8
-push unk_D16A0	; 7B9FB
+push dlggreys	; 7B9FB
 push byte 4	; 7BA00
 push dword 0F7h	; 7BA02
 call sub_B4B88	; 7BA07
@@ -3061,7 +3061,7 @@ push esi	; 7C324
 push edi	; 7C325
 push ebp	; 7C326
 sub esp, byte 18h	; 7C327
-push unk_D16A0	; 7C32A
+push dlggreys	; 7C32A
 push byte 4	; 7C32F
 push dword 0F7h	; 7C331
 call sub_B4B88	; 7C336
@@ -5026,7 +5026,7 @@ and al, 83h	; 7D922
 or al, 40h	; 7D924
 jmp short ControlsDlgLoop.11	; 7D926
 .18:
-mov eax, unk_D19DC	; 7D928
+mov eax, ctlboxrect2	; 7D928
 call DrawCtlBoxOn	; 7D92D
 .19:
 push ebp	; 7D932
@@ -5036,7 +5036,7 @@ xor eax, eax	; 7D93B
 add esp, byte 1Ch	; 7D93D
 jmp near ControlsDlg_ret	; 7D940
 .20:
-mov eax, unk_D19CC	; 7D945
+mov eax, ctlboxrect1	; 7D945
 call DrawCtlBoxOn	; 7D94A
 mov edx, dword [setbits]	; 7D94F
 sar edx, 2	; 7D955

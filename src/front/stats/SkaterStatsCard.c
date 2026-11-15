@@ -56,7 +56,7 @@ int SkaterStatsCard(void)
     t.kaufm = kaufmfont;
     MakePath(s.path, (char *)statsleague, (char *)statsplayerdbs[statsfromleague], 0);
     fh = open(s.path, 0x200);
-    lseek(fh, !statsfromleague ? dword_DC85C : dword_DC860, 0);
+    lseek(fh, !statsfromleague ? statsfilepos : lgstatsfilepos, 0);
     read(fh, s.season, 0x28);
     j___close(fh);
     MakePath(s.path, (char *)statsleague, (char *)str_AttDb, 0);
@@ -183,7 +183,7 @@ int SkaterStatsCard(void)
             t.y -= 0x68;
         }
         PrintShadowText((short)(t.x + 0x1E), (short)t.y, (char *)skaterratingnames[i]);
-        rating = t.attrp[((signed char *)off_C6A99)[i + 3]];
+        rating = t.attrp[((signed char *)skatercardattrs_m3)[i + 3]];
         v = (rating + 5) * 5;
         PrintFmt1((short)(t.x + 0x10E), (short)t.y, (char *)str_fmt3d, (short)v);
         t.y += 0xD;

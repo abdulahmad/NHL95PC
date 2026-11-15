@@ -65,7 +65,7 @@ typedef struct GSeasonRec {
     unsigned char p16[0x1A];
     unsigned short g30, g32, g34; /* 30 32 34: summed for award 9 */
 } GSeasonRec;                     /* goalie season record, 36h bytes */
-#define AWST(n) (((unsigned char **)off_C524F)[n])   /* stats record of award n's winner */
+#define AWST(n) (((unsigned char **)awardstatsptrs)[n])   /* stats record of award n's winner */
 #define AWKEY(n) (((KeyRec *)awardwinners)[n])       /* key record of award n's winner */
 
 
@@ -77,8 +77,8 @@ typedef struct GSeasonRec {
    word 18h (then the fewest of word 12h), ties to fewer games; per goalie (key indexes at +B0h): award 4 most of
    word 2 (then the most of word 14h), 5 with 19h games the lowest word 10h (then the most of word 0Ch). Award 9
    goes to the best sum of words 28h-2Ch (skaters) or 30h-34h (goalies), fewer games on a tie; it keeps the
-   winner's record in unk_D98C3 / unk_D9794 and awardtype[9] says which (a goalie winner keeps the last skater's
-   key, as in the EXE). Each winner's key record goes to awardwinners[n], the stats to *off_C524F[n]. Returns the
+   winner's record in awardstats9 / awardstats9g and awardtype[9] says which (a goalie winner keeps the last skater's
+   key, as in the EXE). Each winner's key record goes to awardwinners[n], the stats to *awardstatsptrs[n]. Returns the
    first error (0 = ok). */
 int PickAwardWinners(void)
 {
@@ -206,8 +206,8 @@ int PickAwardWinners(void)
             }
             if (!f.found[9] || mine > v || mine == v && g > f.season.gp) {
                 AWKEY(9) = f.key;
-                *(SeasonRec *)unk_D98C3 = f.season;
-                AWST(9) = unk_D98C3;
+                *(SeasonRec *)awardstats9 = f.season;
+                AWST(9) = awardstats9;
                 awardtype[9] = 1;
                 f.found[9] = 0xFF;
             }
@@ -252,8 +252,8 @@ int PickAwardWinners(void)
             }
             if (!f.found[9] || mine > v || mine == v && g > f.gseason.gp) {
                 AWKEY(9) = f.key;
-                *(GSeasonRec *)unk_D9794 = f.gseason;
-                AWST(9) = unk_D9794;
+                *(GSeasonRec *)awardstats9g = f.gseason;
+                AWST(9) = awardstats9g;
                 awardtype[9] = 0;
                 f.found[9] = 0xFF;
             }
@@ -296,9 +296,9 @@ int ShowAwardScreens(void)
     key = 0;
     ClearInputQueue();
     for (k = key; k < 0xB && key != 3; k++) {
-        SetTextColors(dword_C513C[k], 0);
+        SetTextColors(awardtextcolors[k], 0);
         GetTicks();
-        MakePath(buf, fileoncd[dword_C5168[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
+        MakePath(buf, fileoncd[awardartfiles[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
         bank = sub_8E83C(buf, 0);
         sub_9061C(sub_9035C(bank, 1));
         y = 0x76;
@@ -347,10 +347,10 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_EN);
                 PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
-                s = ss = (unsigned short *)off_C524F[k];
+                s = ss = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[6]);
                     PrintFmt2(x, y + byte_D42C3 * 2, (char *)str_D02d, s[8] / 100, s[8] % 100);
@@ -374,10 +374,10 @@ int ShowAwardScreens(void)
                 PrintShadowText(x, y + byte_D42C3 * 7, (char *)str_SHG);
                 PrintShadowText(x, y + byte_D42C3 * 8, (char *)str_Shots);
                 PrintShadowText(x, y + byte_D42C3 * 9, (char *)str_Pct);
-                s = gs = (unsigned short *)off_C524F[k];
+                s = gs = (unsigned short *)awardstatsptrs[k];
                 for (j = 0; j < 2; j++) {
                     x += 0x50;
-                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)off_C527B[j]);
+                    PrintShadowText(x - 0x1C, y - byte_D42C3, (char *)awardscopenames[j]);
                     PrintFmt1(x, y, (char *)str_fmtpd, s[0]);
                     PrintFmt1(x, y + byte_D42C3, (char *)str_fmtpd, s[1]);
                     PrintFmt1(x, y + byte_D42C3 * 2, (char *)str_fmtpd, s[2]);

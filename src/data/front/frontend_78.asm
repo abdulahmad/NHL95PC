@@ -5,10 +5,10 @@ section s_DB7EC nobits alloc noexec write align=1
 global awroster, byte_DB7F1, hmgoalieidx, hmscratch, byte_DC264, byte_DC265, byte_DC266
 global byte_DC267, byte_DC268, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr, dword_DC23E
 global linesprites, hudhundstep, penaltydigits, dword_DC2B8, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
-global clockdigits, clockcolon, cupseries, dword_DC33C, statsteamorder, dword_DC6A8, sfpal2, sfpal1
+global clockdigits, clockcolon, cupseries, titlesample, statsteamorder, statsmenuresult, sfpal2, sfpal1
 global dword_DC6B4, statsnumgoalies, statsskaterorder, statsgoalieorder, dword_DC734, leaguestatsmode, statsgoalieplr, statsnumskaters
 global statsskaterplr, playofftree, hmteamrec, unk_DBD1C, awteamrec
-global hmlinetab, hmglstats, awglstats, hmlineind, awlineind, unk_DC340, hmglstats_w2
+global hmlinetab, hmglstats, awglstats, hmlineind, awlineind, statsscreenpal, hmglstats_w2
 global hmglstats_w4, hmglstats_w8, hmglstats_w14
 awroster:
 resb 5
@@ -91,13 +91,13 @@ clockcolon:
 resb 4
 cupseries:
 resb 4
-dword_DC33C:
+titlesample:
 resb 4
-unk_DC340:
+statsscreenpal:
 resb 768
 statsteamorder:
 resb 104
-dword_DC6A8:
+statsmenuresult:
 resb 4
 sfpal2:
 resb 4

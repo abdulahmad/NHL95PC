@@ -49,7 +49,7 @@ void DrawPanel3D(int x1, int y1, int x2, int y2, int corners)
    fileoncd says so), remap its 192-byte palette (+190h home, +250h visitors; values under 3Bh brightened by 5, the
    rest 3Fh) into the side's 64 palette entries (C0h home, 80h visitors), draw the side's background and name
    plates and the jersey art (P01, 00002). In a league or playoff (gamemode 1) the title for the division flags divs
-   (off_D2230 by dword_D223C) goes on top in the Kaufman font. Then the four neighbour plates (lockerrects 2-5)
+   (poroundnames by poroundnameidx) goes on top in the Kaufman font. Then the four neighbour plates (lockerrects 2-5)
    are cleared and labelled with the teams before and after hm and vis (28 teams in exhibition, where an all-star
    team equal to the other side is skipped; else 26), and the two city names go under the jerseys. No result. */
 void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
@@ -66,7 +66,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
     char *s;
 
     sub_B4BA8();
-    sprintf(name, side ? (char *)str_JERSV : (char *)str_JERSH, off_D21C0[team]);
+    sprintf(name, side ? (char *)str_JERSV : (char *)str_JERSH, jerseyabbrevs[team]);
     team = lockerindex[team];
     f = (side != 0) + 0xA3;
     MakePath(path, fileoncd[team * 2 + f] == 1 ? (char *)cddriveptr : 0, name, 0);
@@ -99,7 +99,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
     if (gamemode == 1) {
         sub_910E0(titlebckspr, 0x2D, 0x11);
         sub_8EA18(kaufmfont);
-        s = (char *)off_D2230[dword_D223C[divs]];
+        s = (char *)poroundnames[poroundnameidx[divs]];
         PrintOutlinedText((0x280 - fputchar(s)) / 2, 0x12, s);
         sub_8EA18(mainfont);
     }
@@ -107,20 +107,20 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
         k = (vis + 0x1B) % 0x1C;
         if (k >= 0x1A && k == hm) k = (hm + 0x1B) % 0x1C;
-        k = off_D21C0[k];
+        k = jerseyabbrevs[k];
         PrintShadowText(((LR[4].l + LR[4].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[4].t + 3, (char *)k);
         k = (vis + 1) % 0x1C;
         if (k >= 0x1A && k == hm) k = (hm + 1) % 0x1C;
-        k = off_D21C0[k];
+        k = jerseyabbrevs[k];
         PrintShadowText(((LR[5].l + LR[5].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[5].t + 3, (char *)k);
         PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[lockerteams[vis]]);
         k2 = (hm + 0x1B) % 0x1C;
         if (k2 >= 0x1A && k2 == vis) k2 = (vis + 0x1B) % 0x1C;
-        k2 = off_D21C0[k2];
+        k2 = jerseyabbrevs[k2];
         PrintShadowText(((LR[2].l + LR[2].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[2].t + 3, (char *)k2);
         k2 = (hm + 1) % 0x1C;
         if (k2 >= 0x1A && k2 == vis) k2 = (vis + 1) % 0x1C;
-        k2 = off_D21C0[k2];
+        k2 = jerseyabbrevs[k2];
         PrintShadowText(((LR[3].l + LR[3].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[3].t + 3, (char *)k2);
         k2 = 0x12D - fputchar((char *)teamcitynames[lockerteams[hm]]);
         PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[lockerteams[hm]]);
@@ -128,20 +128,20 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         for (i = 2; i < 6; i++) sub_90D20(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
         k = (vis + 0x19) % 0x1A;
         if (k == hm) k = (hm + 0x19) % 0x1A;
-        k = off_D21C0[k];
+        k = jerseyabbrevs[k];
         PrintShadowText(((LR[4].l + LR[4].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[4].t + 3, (char *)k);
         k = (vis + 1) % 0x1A;
         if (k == hm) k = (hm + 1) % 0x1A;
-        k = off_D21C0[k];
+        k = jerseyabbrevs[k];
         PrintShadowText(((LR[5].l + LR[5].r) >> 1) - (fputchar((char *)k) >> 1) + 2, LR[5].t + 3, (char *)k);
         PrintOutlinedText(0x154, 0x2C, (char *)teamcitynames[lockerteams[vis]]);
         k2 = (hm + 0x19) % 0x1A;
         if (k2 == vis) k2 = (vis + 0x19) % 0x1A;
-        k2 = off_D21C0[k2];
+        k2 = jerseyabbrevs[k2];
         PrintShadowText(((LR[2].l + LR[2].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[2].t + 3, (char *)k2);
         k2 = (hm + 1) % 0x1A;
         if (k2 == vis) k2 = (vis + 1) % 0x1A;
-        k2 = off_D21C0[k2];
+        k2 = jerseyabbrevs[k2];
         PrintShadowText(((LR[3].l + LR[3].r) >> 1) - (fputchar((char *)k2) >> 1) + 2, LR[3].t + 3, (char *)k2);
         k2 = 0x12D - fputchar((char *)teamcitynames[lockerteams[hm]]);
         PrintOutlinedText(k2, 0x2C, (char *)teamcitynames[lockerteams[hm]]);

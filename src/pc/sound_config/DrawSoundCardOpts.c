@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* DrawSoundCardOpts: start the sound card dialog checks from sounddev, then redraw it (as RedrawSoundCardOpts):
- the eight boxes on or off by setbits, and the names of the cards not present (byte_C541B bits clear) printed
+ the eight boxes on or off by setbits, and the names of the cards not present (sndcardmissing bits clear) printed
  in grey over boxes 0-3 and 5. */
 void DrawSoundCardOpts(void)
 {
@@ -16,13 +16,13 @@ void DrawSoundCardOpts(void)
     }
     r = (Rect4 *)soundcardrects;
     sub_8E9C0(0xF8, 0xFF);
-    if (!(byte_C541B & 1)) sub_91964((char *)str_PCSpeaker, r->l + 0x18, r->t + 0x13);
+    if (!(sndcardmissing & 1)) sub_91964((char *)str_PCSpeaker, r->l + 0x18, r->t + 0x13);
     r++;
-    if (!(byte_C541B & 2)) sub_91964((char *)str_SoundBlaster, r->l + 0x0E, r->t + 0x13);
+    if (!(sndcardmissing & 2)) sub_91964((char *)str_SoundBlaster, r->l + 0x0E, r->t + 0x13);
     r++;
-    if (!(byte_C541B & 4)) sub_91964((char *)str_ADLib, r->l + 0x29, r->t + 0x13);
+    if (!(sndcardmissing & 4)) sub_91964((char *)str_ADLib, r->l + 0x29, r->t + 0x13);
     r++;
-    if (!(byte_C541B & 8)) sub_91964((char *)str_MT32, r->l + 0x28, r->t + 0x13);
+    if (!(sndcardmissing & 8)) sub_91964((char *)str_MT32, r->l + 0x28, r->t + 0x13);
     r += 2;
-    if (!(byte_C541B & 0x20)) sub_91964((char *)str_UltraSound, r->l + 0x18, r->t + 0x13);
+    if (!(sndcardmissing & 0x20)) sub_91964((char *)str_UltraSound, r->l + 0x18, r->t + 0x13);
 }

@@ -11,7 +11,7 @@ void SetupGoalieMenu(void)
     unsigned char *m;
     unsigned char *p;
 
-    m = unk_CEE4F;
+    m = hmgoaliemenu;
     p = hmroster + hmgoalieidx[0] * 39;
     strcpy((char *)buf, (char *)mi_HomeGoalie1);
     if (p[5] < 10)
@@ -48,7 +48,7 @@ void SetupGoalieMenu(void)
     else
         *(unsigned char *)*(int *)(m + 0x10 + (hmtmgoalie[0] << 5)) = 1;
 
-    m = unk_CEEAF;
+    m = awgoaliemenu;
     p = awroster + awgoalieidx[0] * 39;
     strcpy((char *)buf, (char *)mi_AwayGoalie1);
     if (p[5] < 10)

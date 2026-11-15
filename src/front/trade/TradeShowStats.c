@@ -54,9 +54,9 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     FreeMemBlock(bank);
     InitMenuRemap(1);
     TeamRosterScreen(cat);
-    DrawMenuBar(unk_C88E2, 2, 0x40, 0x41, 0x42);
+    DrawMenuBar(tradestatsmenubar, 2, 0x40, 0x41, 0x42);
     FadePalStep(0, (unsigned char *)pal, 0x10);
-    RunMenu(unk_C88E2, 2, 0x40, 0x41, 0x42);
+    RunMenu(tradestatsmenubar, 2, 0x40, 0x41, 0x42);
     c = 0;
     leaguestatsmode = c;
     statsredrawcb = c;

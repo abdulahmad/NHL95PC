@@ -35,9 +35,9 @@ void sub_8F1FE(int sample);                   /* sound library: free a sample */
 typedef struct { char b[0x11]; } SprHdr;
 
 /* SoundCardDlgLoop (8291E, PC only; owner of the SoundCardDlg_epilogue tail SetSoundDevice ends in): run the
-   sound card dialog with the mouse pointer (a POINTER block holds the screen under it; dword_D2435 is freed
+   sound card dialog with the mouse pointer (a POINTER block holds the screen under it; sndtempbuf is freed
    first). A click (event bit 2) on an available device that is not the chosen one (SoundCardHitTest: setbits
-   bit, byte_C541B as a dword of available bits) picks it (bits 1-20h). The OK button (40h) stops the music and
+   bit, sndcardmissing as a dword of available bits) picks it (bits 1-20h). The OK button (40h) stops the music and
    tries SetSoundDevice: on success the device becomes sounddev, the music restarts (MAINDESK.IFF, from the CD
    when it is there) and gameopts bit 8 follows musicon; on failure the device is marked unavailable, the old
    one is chosen again and the music restarts. Cancel (80h) or event bit 4 leaves. Result: 0. */
@@ -60,9 +60,9 @@ int SoundCardDlgLoop(void)
     *(SprHdr *)bg = *(SprHdr *)pointerspr;
     ((short *)bg)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bg)[3] = ((short *)pointerspr)[3] + 1;
-    if (dword_D2435) {
-        FreeMemBlock(dword_D2435);
-        dword_D2435 = 0;
+    if (sndtempbuf) {
+        FreeMemBlock(sndtempbuf);
+        sndtempbuf = 0;
     }
     sub_B2DCA(&s.ev, &s.mx, &s.my);
     s.x = s.mx;
@@ -89,7 +89,7 @@ int SoundCardDlgLoop(void)
             sub_903F0(bg, s.mx - 4, s.my);
             if (SoundCardHitTest(s.x, s.y, &s.hit)) {
                 s.hit = 1 << s.hit;
-                if (!(s.hit & setbits[0]) && (s.hit & *(int *)&byte_C541B)) {
+                if (!(s.hit & setbits[0]) && (s.hit & *(int *)&sndcardmissing)) {
                     switch ((unsigned)s.hit) {
                     case 1:
                     case 2:
@@ -100,7 +100,7 @@ int SoundCardDlgLoop(void)
                         setbits[0] = s.hit;
                         break;
                     case 0x40:
-                        DrawSelBoxOn((Rect4 *)unk_D2403);
+                        DrawSelBoxOn((Rect4 *)sndselbox1);
                         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
                         if (musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x64);
@@ -121,7 +121,7 @@ int SoundCardDlgLoop(void)
                             else gameopts.speech = 0;
                             return 0;
                         }
-                        *(int *)&byte_C541B ^= setbits[0];
+                        *(int *)&sndcardmissing ^= setbits[0];
                         setbits[0] = sounddev;
                         if (musicon && !songdata) {
                             MakePath(s.path, fileoncd[0x1DB] == 1 ? (char *)cddriveptr : 0, (char *)str_Maindesk2, (char *)str_Iff12);
@@ -129,10 +129,10 @@ int SoundCardDlgLoop(void)
                             songdata = t;
                             if (t && gameopts.music) sub_8FB8E(t, musichandle, 3, 0x4C);
                         }
-                        DrawSelBoxOff((Rect4 *)unk_D2403);
+                        DrawSelBoxOff((Rect4 *)sndselbox1);
                         break;
                     case 0x80:
-                        DrawSelBoxOn((Rect4 *)unk_D2413);
+                        DrawSelBoxOn((Rect4 *)sndselbox2);
                         FreeMemBlock(bg);
                         return 0;
                     }
@@ -298,7 +298,7 @@ int SetSoundDevice(int dev)
                 }
                 s.ev = 0;
                 sub_B2DCA(&s.btn, &s.x, &s.y);
-                MessageBox(-1, -1, (char *)unk_D249C, 3, 0, 0, (int)&s.x, (int)&s.y, 0);
+                MessageBox(-1, -1, (char *)msg_NoSoundCard, 3, 0, 0, (int)&s.x, (int)&s.y, 0);
                 do {
                     if ((e = GetInputEvent()) != 0)
                         s.ev = ((int (*)(unsigned char *, int *, int *))ptrupdatefn)(e, &s.x, &s.y);

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_C7569 progbits alloc noexec write align=1
 extern str_Yes, str_No4, str_CanNotReadDatabases
-global str_FromLeague, msg_InsertDisk_arg, msg_WrongDisk_arg, lgreaderrmsg, str_ThatNameHasAlready, unk_C7592
+global str_FromLeague, msg_InsertDisk_arg, msg_WrongDisk_arg, lgreaderrmsg, str_ThatNameHasAlready, msg_NameTaken
 global str_DiskError, str_AbortRetryOrIgnore, str_ThatFloppyDiskIs, str_InsertDiskFor, str_InAnyDriveAnd, str_PressAKey, notforlgmsg, msg_InsertDisk
 global str_ThatDiskIsFor, str_AreYouSureYou2, msg_WrongDisk, btn_WrongDisk, str_ThereAreNoLeagues, str_ThereIsAlreadyA, str_DoYouWantTo2
 lgreaderrmsg:
@@ -13,7 +13,7 @@ str_ThatNameHasAlready:
 db 054h,068h,061h,074h,020h,06Eh,061h,06Dh,065h,020h,068h,061h,073h,020h,061h,06Ch
 db 072h,065h,061h,064h,079h,020h,062h,065h,065h,06Eh,020h,075h,073h,065h,064h,021h
 db 00h
-unk_C7592:
+msg_NameTaken:
 dd str_ThatNameHasAlready
 str_DiskError:
 db 044h,069h,073h,06Bh,020h,045h,072h,072h,06Fh,072h,00h

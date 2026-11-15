@@ -33,12 +33,12 @@ void DrawHudPanel(int home, int away, int period, int reset)
     }
     z = 0;
     panelhund = z;
-    dword_C5848 = z;
-    dword_C5844 = z;
+    awpanellines = z;
+    hmpanellines = z;
     hudhomeline = *(int *)((char *)&hmtmline - 2) >> 16;
     hudawayline = *(int *)((char *)&awtmline - 2) >> 16;
-    dword_C5858 = z;
-    dword_C5854 = z;
+    awpanelpens = z;
+    hmpanelpens = z;
     awlinetimer = z;
     hmlinetimer = z;
     SelectScreenBM();
@@ -50,7 +50,7 @@ void DrawHudPanel(int home, int away, int period, int reset)
     SelectScreenBM();
     DrawPanelClock();
     if (period == 0) {
-        sub_B4CD8(sub_B30B4(bank, (char *)off_C57C8), 0x98, 0x16);
+        sub_B4CD8(sub_B30B4(bank, (char *)hudotname), 0x98, 0x16);
     } else {
         int p;
 

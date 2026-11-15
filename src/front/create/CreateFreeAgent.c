@@ -72,7 +72,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
     for (i = 0; i < 6; i++) n += (s.sizes[i] + csize - 1) / csize;
     if (n > s.df.avail) {
         sprintf((char *)str_XXXKbytesOfFree, (char *)str_3dKbytesOfFree, n * csize / 1024);
-        MessageBox(-1, -1, (char *)off_D1077, 3, 0, 0, mx, my, 0x320);
+        MessageBox(-1, -1, (char *)msg_FreeAgentDiskSpace, 3, 0, 0, mx, my, 0x320);
         return;
     }
     if (facount >= 0x1E) {
@@ -82,7 +82,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
         return;
     }
     msglines[0] = (int)str_CreateAPlayerOr;
-    kind = MessageBox(-1, -1, (char *)msglines, 1, (int)unk_D0EDD, 2, mx, my, -1);
+    kind = MessageBox(-1, -1, (char *)msglines, 1, (int)btn_CreateFreeAgent, 2, mx, my, -1);
     if (kind < 0) return;
     if (kind == 0) msglines[0] = (int)str_EnterNewPlayerName;
     else msglines[0] = (int)str_EnterNewGoalieName;
@@ -130,19 +130,19 @@ void CreateFreeAgent(int a, int *mx, int *my)
         FadePalStep(1, pal, 0x10);
         sub_B392C(0);
         WriteLeagueDbsMem((char *)str_TMP);
-        MakePath((char *)unk_EA968, 0, (char *)leaguedbnames[0], (char *)str_TMP);
-        err = FileOpenWrite((char *)unk_EA968, &s.fhkey);
+        MakePath((char *)tmpdbpath, 0, (char *)leaguedbnames[0], (char *)str_TMP);
+        err = FileOpenWrite((char *)tmpdbpath, &s.fhkey);
         if (!err) {
-            MakePath((char *)unk_EA968, 0, (char *)leaguedbnames[5], (char *)str_TMP);
-            err = FileOpenWrite((char *)unk_EA968, &s.fhsea);
+            MakePath((char *)tmpdbpath, 0, (char *)leaguedbnames[5], (char *)str_TMP);
+            err = FileOpenWrite((char *)tmpdbpath, &s.fhsea);
         }
         if (!err) {
-            MakePath((char *)unk_EA968, 0, (char *)leaguedbnames[1], (char *)str_TMP);
-            err = FileOpenWrite((char *)unk_EA968, &s.fhcar);
+            MakePath((char *)tmpdbpath, 0, (char *)leaguedbnames[1], (char *)str_TMP);
+            err = FileOpenWrite((char *)tmpdbpath, &s.fhcar);
         }
         if (!err) {
-            MakePath((char *)unk_EA968, 0, (char *)leaguedbnames[2], (char *)str_TMP);
-            err = FileOpenWrite((char *)unk_EA968, &s.fhatt);
+            MakePath((char *)tmpdbpath, 0, (char *)leaguedbnames[2], (char *)str_TMP);
+            err = FileOpenWrite((char *)tmpdbpath, &s.fhatt);
         }
         if (!err) {
             if (s.key[2] != 'G') {
@@ -152,7 +152,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 if (!err) {
                     dp = s.satt;
                     sp = &newskatershoots;
-                    for (k = 0; k < 0xF; k++) dp[((signed char *)off_D08B9)[k + 3]] = sp[k];
+                    for (k = 0; k < 0xF; k++) dp[((signed char *)newskaterattrs_m3)[k + 3]] = sp[k];
                     RandomizeNewRatings(s.key, s.satt, s.scareer);
                     err = FileWriteAt(s.fhcar, s.scareer, *(int *)(s.key + 0x28), 0x28);
                 }
@@ -164,7 +164,7 @@ void CreateFreeAgent(int a, int *mx, int *my)
                 if (!err) {
                     sp = s.gatt;
                     gp = &newgoalieglove;
-                    for (k = 0; k < 0xB; k++) sp[((signed char *)off_D0A04)[k + 3]] = gp[k];
+                    for (k = 0; k < 0xB; k++) sp[((signed char *)newgoalieattrs_m3)[k + 3]] = gp[k];
                     err = FileWriteAt(s.fhcar, s.gcareer, *(int *)(s.key + 0x28), 0x2C);
                 }
                 if (!err) err = FileWriteAt(s.fhatt, s.gatt, *(int *)(s.key + 0x24), 0x10);

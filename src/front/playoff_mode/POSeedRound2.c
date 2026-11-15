@@ -180,10 +180,10 @@ int CreatePlayoffs(void)
         }
         if (!r) {
             if ((r = AskDatabaseChoice()) >= 0) {
-                GetLeagueDBSizes(0, (int *)unk_D2864, (char *)dbextension);
+                GetLeagueDBSizes(0, (int *)podbsizes, (char *)dbextension);
                 MakePath(s.path, (char *)&curleague, (char *)str_GameSet, 0);
                 if (FileExists(s.path)) dword_D2884 = 0;
-                if ((r = DiskSpaceShort(0, (int *)unk_D2864)) != 0) {
+                if ((r = DiskSpaceShort(0, (int *)podbsizes)) != 0) {
                     sprintf((char *)msg_PODiskSpace_arg, (char *)str_4dKbytesOfFree, r);
                     MessageBox(-1, -1, (char *)msg_PODiskSpace, 3, 0, 0, (int)&s.x, (int)&s.y, 0x258);
                     r = 1;
@@ -696,7 +696,7 @@ int POAfterGame(unsigned char *p)
             break;
         case 0xE:
             idx = 0xF;
-            off_CF983 = 0;
+            menuact_playnextgame = 0;
             *(int *)(p + 0x40) = 0x69;
             SaveScheduleDB((char *)p);
             break;
@@ -708,12 +708,12 @@ int POAfterGame(unsigned char *p)
         s = p + (++*(int *)(p + 0x40) + 0x444) * 6;
         POSeriesScore(g, &f.hw, &f.aw, &f.home, &f.away);
         if (f.hw == f.aw)
-            sprintf((char *)unk_ED7BC, (char *)dword_D288C, (char *)str_Tied, f.hw, f.aw);
+            sprintf((char *)poseriesbuf, (char *)poseriesfmt, (char *)str_Tied, f.hw, f.aw);
         else if (f.hw > f.aw)
-            sprintf((char *)unk_ED7BC, (char *)dword_D288C, (char *)teamabbrevs[f.home], f.hw, f.aw);
+            sprintf((char *)poseriesbuf, (char *)poseriesfmt, (char *)teamabbrevs[f.home], f.hw, f.aw);
         else
-            sprintf((char *)unk_ED7BC, (char *)dword_D288C, (char *)teamabbrevs[f.away], f.aw, f.hw);
-        strcpy((char *)unk_DDCFB, (char *)unk_ED7BC);
+            sprintf((char *)poseriesbuf, (char *)poseriesfmt, (char *)teamabbrevs[f.away], f.aw, f.hw);
+        strcpy((char *)poseriestext, (char *)poseriesbuf);
     }
     MakePath(f.path, (char *)&curleague, (char *)leaguedbnames[5], (char *)str_extDB);
     sub_932D0(f.path, seasondb, seasondb_size);
@@ -730,7 +730,7 @@ int POAfterGame(unsigned char *p)
             if (n == 1) {
                 if (w != ctl1team[0] && w != ctl2team) {
                     *(int *)(p + 0x40) = 0x69;
-                    off_CF983 = 0;
+                    menuact_playnextgame = 0;
                     SaveScheduleDB((char *)p);
                     return 1;
                 }
@@ -910,8 +910,8 @@ int PlayoffModeLoop(int *fh)
     k = *(int *)(f.sched + 0x40);
     g = (unsigned char *)f.sched + (k + 0x444) * 6;
     seriesgameno = k % 7;
-    if (k / 7 < 0xF) off_CF983 = (int)MenuPlayNextGame;
-    else off_CF983 = 0;
+    if (k / 7 < 0xF) menuact_playnextgame = (int)MenuPlayNextGame;
+    else menuact_playnextgame = 0;
     dword_C6D26 = 0;
     DrawMenuBar(playoffmenubar, 3, 0x40, 0x41, 0x42);
     r = PlayoffTreeMenu(playoffmenubar, 3, 0x40, 0x41, 0x42, *(int *)(f.sched + 0x44));

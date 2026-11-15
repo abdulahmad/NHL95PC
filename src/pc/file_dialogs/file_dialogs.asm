@@ -9,7 +9,7 @@ extern fdlg_up, fdlgmask, fdlgrects, fdlgshapes, fdlgtab, FileClose, FileCreate,
 extern FileOpenRead, FileReadAt, FileWriteAt, FreeMemBlock, gameresult, GetInputEvent, j_unlink_, leaguemgrmenu
 extern lgfilenames, lgfiles, lgstate, LoadModeState, MakePath, menuact_export, menuact_nextlg, menuact_nextpo
 extern menuact_pohilights, menuact_posettings, MenuExportDbs, MenuNewExhibition, MenuNextLeagueGame, menusub_lgmgr, MessageBox, MouseSetPos
-extern musicon, off_C5441, off_C6F7C, off_C6F80, off_C6F84, othergames, otherperiod, otherscores
+extern musicon, off_C5441, fdlgfilelists, fdlgfilelists_e01, fdlgfilelists_e02, othergames, otherperiod, otherscores
 extern PlayoffModeLoop, pofilenames, pofiles, pointerspr, postate, ptrupdatefn, qsort_, savefname
 extern seriesgameno, SetDialogColors, SetupStatsSourceMenu, str_Arro, str_Buf, str_Can, str_Db2, str_Dbox
 extern str_Del, str_Delete, str_Dialogbx, str_Done, str_Down, str_Exhibition, str_ExhibitionGameCalled, str_feA1
@@ -524,7 +524,7 @@ call sub_92CD0	; 2BE59
 add esp, byte 0Ch	; 2BE5E
 .4:
 mov eax, dword [fdlgtab]	; 2BE61
-mov eax, dword [nosplit eax*4+off_C6F7C]	; 2BE66
+mov eax, dword [nosplit eax*4+fdlgfilelists]	; 2BE66
 cmp dword [eax], byte 6	; 2BE6D
 jg short .5	; 2BE70
 push byte 46h	; 2BE72
@@ -882,7 +882,7 @@ push dword 0FAh	; 2C27B
 call sub_8E9C0	; 2C280
 add esp, byte 8	; 2C285
 mov esi, dword [fdlgtab]	; 2C288
-mov esi, dword [nosplit esi*4+off_C6F7C]	; 2C28E
+mov esi, dword [nosplit esi*4+fdlgfilelists]	; 2C28E
 mov ebx, dword [fdlgrects+94h]	; 2C295
 add ebx, byte 13h	; 2C29B
 mov edx, dword [fdlgrects+90h]	; 2C29E
@@ -1317,7 +1317,7 @@ call sub_B4FAC	; 2C76F
 add esp, byte 14h	; 2C774
 .2:
 mov eax, dword [fdlgtab]	; 2C777
-mov eax, dword [nosplit eax*4+off_C6F7C]	; 2C77C
+mov eax, dword [nosplit eax*4+fdlgfilelists]	; 2C77C
 cmp dword [eax], byte 6	; 2C783
 jg short .3	; 2C786
 push byte 46h	; 2C788
@@ -1445,7 +1445,7 @@ push esi	; 2C8C9
 call sub_91370	; 2C8CA
 add esp, byte 0Ch	; 2C8CF
 mov esi, dword [fdlgtab]	; 2C8D2
-mov esi, dword [nosplit esi*4+off_C6F7C]	; 2C8D8
+mov esi, dword [nosplit esi*4+fdlgfilelists]	; 2C8D8
 call ClearInputQueue	; 2C8DF
 .1:
 xor edi, edi	; 2C8E4
@@ -1813,15 +1813,15 @@ mov eax, edx	; 2CD19
 jmp short RunFileDlg.37	; 2CD1B
 .42:
 mov dword [fdlgtab], ebp	; 2CD1D
-mov esi, dword [off_C6F7C]	; 2CD23
+mov esi, dword [fdlgfilelists]	; 2CD23
 jmp short RunFileDlg.38	; 2CD29
 .43:
 mov dword [fdlgtab], 1	; 2CD2B
-mov esi, dword [off_C6F80]	; 2CD35
+mov esi, dword [fdlgfilelists_e01]	; 2CD35
 jmp short RunFileDlg.38	; 2CD3B
 .44:
 mov dword [fdlgtab], 2	; 2CD3D
-mov esi, dword [off_C6F84]	; 2CD47
+mov esi, dword [fdlgfilelists_e02]	; 2CD47
 jmp short RunFileDlg.38	; 2CD4D
 .45:
 push dword 0BFh	; 2CD4F
@@ -1844,7 +1844,7 @@ push eax	; 2CD88
 call sub_91370	; 2CD89
 add esp, byte 0Ch	; 2CD8E
 mov eax, dword [fdlgtab]	; 2CD91
-mov eax, dword [nosplit eax*4+off_C6F7C]	; 2CD96
+mov eax, dword [nosplit eax*4+fdlgfilelists]	; 2CD96
 call DeleteSavedGame	; 2CD9D
 mov edx, dword [byte esp+08h]	; 2CDA2
 push edx	; 2CDA6
@@ -1858,7 +1858,7 @@ jge short .47	; 2CDBC
 xor esi, esi	; 2CDBE
 jmp short .48	; 2CDC0
 .47:
-mov esi, dword [nosplit ecx*4+off_C6F7C]	; 2CDC2
+mov esi, dword [nosplit ecx*4+fdlgfilelists]	; 2CDC2
 .48:
 mov eax, esi	; 2CDC9
 call DrawFileDlgList	; 2CDCB

@@ -22,7 +22,7 @@ void MusicChanReset2(void);
 /* PreGameScreen (29F28, PC only): the scouting report before a game. Read both teams' records from the league
    database, fade out (and stop the music), draw the ARENA rink, both crests (SRLOGO), "<away> at <home>" and the
    nine scouting categories (scoutcatnames) with each team's rating, the higher one highlighted, then the buttons
-   (away lines, play, cancel, home lines; without off_CEF43 / off_CEF63 the line buttons are left out), start the
+   (away lines, play, cancel, home lines; without menuact_homelines / menuact_visitorlines the line buttons are left out), start the
    SCOUTING song and the announcer's introduction (PaTonightIntro, or PaPlayoffTonight with the game, the
    conference pairing and the round in the playoffs) and run the pointer until play or cancel. The line buttons
    open the game line editor for a team a human controls. Then fade out, wait for the announcer and, unless
@@ -142,13 +142,13 @@ int PreGameScreen(unsigned char home, unsigned char away)
     }
     SetTextColors(0xFA, 0xF7);
     sub_8EA18(mf);
-    if (!off_CEF43 && !off_CEF63) {
+    if (!menuact_homelines && !menuact_visitorlines) {
         nb = 2;
         buttons = (Button *)pregamebuttons + 1;
-    } else if (!off_CEF43) {
+    } else if (!menuact_homelines) {
         nb = 3;
         buttons = (Button *)pregamebuttons;
-    } else if (!off_CEF63) {
+    } else if (!menuact_visitorlines) {
         nb = 3;
         buttons = (Button *)pregamebuttons + 1;
     } else {
@@ -210,7 +210,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
             sub_903F0(ptrbg, oldmx, oldmy);
             sel = TrackButtons((int *)buttons, nb, io.mx, io.my, btn);
             if (sel >= 0) {
-                if (!off_CEF63) sel++;
+                if (!menuact_visitorlines) sel++;
                 switch (sel) {
                 case 0:
                     if (VisTeam == ctl1team[0] || VisTeam == ctl2team) {
@@ -219,7 +219,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
                         *(short *)(scr + 4) = 0x280;
                         *(short *)(scr + 6) = 0x1E0;
                         sub_91400(scr, 0, 0);
-                        GameLineEditor(1, awlinetab, unk_CF1AF, 3);
+                        GameLineEditor(1, awlinetab, pregamelinesmenubar, 3);
                         pal = (unsigned char *)sub_8CCA8((char *)str_Pal10, 0x300, 0x20);
                         sub_8FFB0(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);
@@ -244,7 +244,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
                         *(short *)(scr + 4) = 0x280;
                         *(short *)(scr + 6) = 0x1E0;
                         sub_91400(scr, 0, 0);
-                        GameLineEditor(0, hmlinetab, unk_CF1AF, 3);
+                        GameLineEditor(0, hmlinetab, pregamelinesmenubar, 3);
                         pal = (unsigned char *)sub_8CCA8((char *)str_Pal10, 0x300, 0x20);
                         sub_8FFB0(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);

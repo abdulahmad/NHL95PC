@@ -122,15 +122,15 @@ void TradePlayers(void)
                         nm = (char *)teamcitynames[s.sel[0]];
                         strcat(s.msg1, nm);
                         strcat(s.msg1, (char *)str_Statistics);
-                        dword_C87C8 = (int)s.msg1;
+                        menutext_trade1 = (int)s.msg1;
                         *(Str6 *)s.msg2 = *(Str6 *)str_Show;
                         nm = (char *)teamcitynames[s.sel[1]];
                         strcat(s.msg2, nm);
                         strcat(s.msg2, (char *)str_Statistics);
-                        dword_C87E8 = (int)s.msg2;
+                        menutext_trade2 = (int)s.msg2;
                         s.x = fputchar(s.msg1);
                         s.y = fputchar(s.msg2);
-                        dword_C87C0 = dword_C87E0 = (s.y < s.x ? s.x : s.y) + 6;
+                        menuwidth_trade1 = menuwidth_trade2 = (s.y < s.x ? s.x : s.y) + 6;
                         r = TradeScreen((char *)&curleague, s.sel, (int)&s.negone, (int)btn_TradeStats, 3);
                     }
                     if (!r) err = ExecuteTrade((char *)&curleague, s.sel, (unsigned char *)&s.negone);

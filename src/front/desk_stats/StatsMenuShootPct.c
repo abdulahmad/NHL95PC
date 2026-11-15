@@ -14,10 +14,10 @@ int StatsMenuShootPct(void)
         sub_8FFB0(0, 0x100, (unsigned char *)sfpal2);
         FadePalStep(1, (unsigned char *)sfpal1, 0x10);
         FreeMemBlock(sfpal1);
-        dword_DC6A8 = LeadersScreen(7);
+        statsmenuresult = LeadersScreen(7);
         FadePalStep(0, (unsigned char *)sfpal2, 0x10);
         FreeMemBlock(sfpal2);
-        return dword_DC6A8;
+        return statsmenuresult;
     }
     return ((int (*)(int))skaterstatscb)(7);
 }

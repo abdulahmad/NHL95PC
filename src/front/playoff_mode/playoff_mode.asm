@@ -6,8 +6,8 @@ extern __CHK, __STOSD, AskDatabaseChoice, awscore, boxfillcolor, boxlitecolor, b
 extern btn_POHumanOut, BuildSavedGameLabels, careerdb, careerdb_size, cddriveptr, CheckGameDiskSpace, ClearInputQueue, confteams
 extern cont2team, CopyFile, CountSeriesWins, ctl1side, ctl1team, ctl2side, ctl2team, ctlavailmask
 extern curleague, dbextension, DeleteDir, DeskHomeLines, DeskVisitorLines, DiskSpaceShort, dlgtextbg, dlgtextfg
-extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, embscupbank, dword_C6D26, potreeseeds, dword_CEDE7
-extern dword_CEE07, dword_D2884, dword_D288C, poslotx, posloty, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
+extern DrawMenuBar, DrawMenuDropdown, DrawMenuItemNorm, DrawMenuItemSel, embscupbank, dword_C6D26, potreeseeds, menusub_hmgoalie
+extern menusub_awgoalie, dword_D2884, poseriesfmt, poslotx, posloty, EasnGoalieStatsScreen, EasnSkaterStatsScreen, EasnStandingsMenu
 extern EasnStandingsScreen, EasnTeamStatsScreen, EditPlayoffSettings, exhstate, FadePalStep, FatalError, FileClose, FileExists
 extern fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileWriteAt, fputchar, FreeMemBlock, GameGoalieStatsScreen
 extern gamemode, gameopts, gameresult, GameSkaterStatsScreen, GameStandingsMenu, GameStandingsScreen, GameTeamStatsScreen, GetInputEvent
@@ -16,7 +16,7 @@ extern j_unlink_, kaufmfont, keydb, keydb_size, leaguedbfmt, leaguedbfmt2, leagu
 extern LoadModeState, LockerRoomScreen, mainfont, MakePath, menuact_nextpo, menuact_pohilights, menuact_posettings, MenuHitTest
 extern MenuPlayNextGame, MessageBox, mkdir_, mousepollfn, MouseSetPos, msg_PODiskSpace, msg_PODiskSpace_arg, msg_POExists
 extern msg_POGenFinal, msg_POHumanOut, msg_POSettingUp, msg_POSetupError, msg_POTeamOut, msg_POTeamOut_arg, msg_POTeamOut_arg2, musichandle
-extern musicon, musicslot, off_C6D22, off_CEF43, off_CEF63, off_CF983, PlayGame, playofftree
+extern musicon, musicslot, off_C6D22, menuact_homelines, menuact_visitorlines, menuact_playnextgame, PlayGame, playofftree
 extern playofftree_p1, pochampion, pointerspr, postate, PostGameToTeamDb, PreGameScreen, PrintCenteredText, PrintOutlinedText
 extern PrintShadowText, ptrupdatefn, randomd0, RestoreDialogBg, rmdir_, SaveModeState, savenamedefault, schedgameidx
 extern scrpitch, seasondb, seasondb_size, seriesgameno, SetDialogColors, SetScreenTitle, SetTextColors, SetTickDeadline
@@ -32,7 +32,7 @@ extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_910B0, sub_9121C, sub_913
 extern sub_91400, sub_92DE0, sub_92F50, sub_932D0, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B4B88
 extern sub_B4BA8, sub_B4BC4, teamabbrevs, teamcitynames, teamconf, teamdivflags, teamstatscb, TextGridOff
 extern TextGridOpen, TextInputDialog, treecol_Er1, treecol_Er2, treecol_Wr2, treecolslots, treecolx, treeteamnames
-extern str_space4, str_space5, unk_CEE4F, unk_CEEAF, playoffmenubar, unk_D2864, unk_DDCFB, unk_ED7BC
+extern str_space4, str_space5, hmgoaliemenu, awgoaliemenu, playoffmenubar, podbsizes, poseriestext, poseriesbuf
 extern unknown_libname_1, ViewPlayoffHilights, VisTeam, WaitTickDeadline, potreeround, WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
 global POSeriesScore, POSeedRound2, POSeedRound2_x30, POSeedRound2_x, POSeedConfFinals, POSeedConfFinals_pair, POSeedConfFinals_x, POSeedFinal
@@ -343,7 +343,7 @@ mov edi, eax	; 86B25
 test eax, eax	; 86B27
 jl near .18	; 86B29
 mov ebx, dword [dbextension]	; 86B2F
-mov edx, unk_D2864	; 86B35
+mov edx, podbsizes	; 86B35
 xor eax, eax	; 86B3A
 call GetLeagueDBSizes	; 86B3C
 xor ecx, ecx	; 86B41
@@ -358,7 +358,7 @@ je short .17	; 86B61
 xor edx, edx	; 86B63
 mov dword [dword_D2884], edx	; 86B65
 .17:
-mov edx, unk_D2864	; 86B6B
+mov edx, podbsizes	; 86B6B
 xor eax, eax	; 86B70
 call DiskSpaceShort	; 86B72
 mov edi, eax	; 86B77
@@ -3408,7 +3408,7 @@ jmp short .54	; 88D5E
 .53:
 mov dword [byte esp+05Ch], 0Fh	; 88D60
 xor edx, edx	; 88D68
-mov dword [off_CF983], edx	; 88D6A
+mov dword [menuact_playnextgame], edx	; 88D6A
 mov eax, dword [esp]	; 88D70
 mov dword [byte eax+040h], 69h	; 88D73
 call SaveScheduleDB	; 88D7A
@@ -3452,7 +3452,7 @@ push ecx	; 88DED
 mov ebp, dword [byte esp+05Ch]	; 88DEE
 push ebp	; 88DF2
 push str_Tied	; 88DF3
-mov eax, dword [dword_D288C]	; 88DF8
+mov eax, dword [poseriesfmt]	; 88DF8
 push eax	; 88DFD
 jmp short .58	; 88DFE
 .56:
@@ -3462,7 +3462,7 @@ push eax	; 88E03
 mov eax, dword [byte esp+058h]	; 88E04
 mov edx, dword [nosplit eax*4+teamabbrevs]	; 88E08
 push edx	; 88E0F
-mov ebx, dword [dword_D288C]	; 88E10
+mov ebx, dword [poseriesfmt]	; 88E10
 push ebx	; 88E16
 jmp short .58	; 88E17
 .57:
@@ -3471,14 +3471,14 @@ push ecx	; 88E1A
 mov eax, dword [byte esp+054h]	; 88E1B
 mov ebx, dword [nosplit eax*4+teamabbrevs]	; 88E1F
 push ebx	; 88E26
-mov ecx, dword [dword_D288C]	; 88E27
+mov ecx, dword [poseriesfmt]	; 88E27
 push ecx	; 88E2D
 .58:
-push unk_ED7BC	; 88E2E
+push poseriesbuf	; 88E2E
 call sprintf_	; 88E33
 add esp, byte 14h	; 88E38
-mov edx, unk_ED7BC	; 88E3B
-mov eax, unk_DDCFB	; 88E40
+mov edx, poseriesbuf	; 88E3B
+mov eax, poseriestext	; 88E40
 call strcpy_	; 88E45
 .59:
 mov ebx, dword [leaguedbnames+14h]	; 88E4A
@@ -3558,7 +3558,7 @@ je near .70	; 88F4F
 mov eax, dword [esp]	; 88F55
 mov dword [byte eax+040h], 69h	; 88F58
 xor eax, eax	; 88F5F
-mov dword [off_CF983], eax	; 88F61
+mov dword [menuact_playnextgame], eax	; 88F61
 mov eax, dword [esp]	; 88F66
 call SaveScheduleDB	; 88F69
 mov eax, 1	; 88F6E
@@ -4139,11 +4139,11 @@ sar edx, 1Fh	; 8973A
 idiv ecx	; 8973D
 cmp eax, byte 0Fh	; 8973F
 jge short .23	; 89742
-mov dword [off_CF983], MenuPlayNextGame	; 89744
+mov dword [menuact_playnextgame], MenuPlayNextGame	; 89744
 jmp short .24	; 8974E
 .23:
 xor ecx, ecx	; 89750
-mov dword [off_CF983], ecx	; 89752
+mov dword [menuact_playnextgame], ecx	; 89752
 .24:
 xor eax, eax	; 89758
 mov dword [dword_C6D26], eax	; 8975A
@@ -6426,20 +6426,20 @@ jne short .2	; 8B873
 mov eax, dword [ctl1side]	; 8B875
 test eax, eax	; 8B87A
 jne short .1	; 8B87C
-mov dword [off_CEF43], DeskHomeLines	; 8B87E
-mov dword [off_CEF63], eax	; 8B888
-mov dword [dword_CEDE7], unk_CEE4F	; 8B88D
+mov dword [menuact_homelines], DeskHomeLines	; 8B87E
+mov dword [menuact_visitorlines], eax	; 8B888
+mov dword [menusub_hmgoalie], hmgoaliemenu	; 8B88D
 xor edx, edx	; 8B897
-mov dword [dword_CEE07], edx	; 8B899
+mov dword [menusub_awgoalie], edx	; 8B899
 pop ebp	; 8B89F
 pop edi	; 8B8A0
 pop edx	; 8B8A1
 ret	; 8B8A2
 .1:
 xor edx, edx	; 8B8A3
-mov dword [off_CEF43], edx	; 8B8A5
-mov dword [off_CEF63], DeskVisitorLines	; 8B8AB
-mov dword [dword_CEDE7], edx	; 8B8B5
+mov dword [menuact_homelines], edx	; 8B8A5
+mov dword [menuact_visitorlines], DeskVisitorLines	; 8B8AB
+mov dword [menusub_hmgoalie], edx	; 8B8B5
 jmp short .8	; 8B8BB
 .2:
 cmp dword [ctl1team], byte 0FFFFFFFFh	; 8B8BD
@@ -6448,12 +6448,12 @@ cmp dword [ctl2team], byte 0FFFFFFFFh	; 8B8C6
 jne short .4	; 8B8CD
 .3:
 xor ebp, ebp	; 8B8CF
-mov dword [off_CEF43], ebp	; 8B8D1
-mov dword [dword_CEDE7], ebp	; 8B8D7
+mov dword [menuact_homelines], ebp	; 8B8D1
+mov dword [menusub_hmgoalie], ebp	; 8B8D7
 jmp short .5	; 8B8DD
 .4:
-mov dword [off_CEF43], DeskHomeLines	; 8B8DF
-mov dword [dword_CEDE7], unk_CEE4F	; 8B8E9
+mov dword [menuact_homelines], DeskHomeLines	; 8B8DF
+mov dword [menusub_hmgoalie], hmgoaliemenu	; 8B8E9
 .5:
 cmp dword [ctl1team], byte 0FFFFFFFEh	; 8B8F3
 je short .6	; 8B8FA
@@ -6461,16 +6461,16 @@ cmp dword [ctl2team], byte 0FFFFFFFEh	; 8B8FC
 jne short .7	; 8B903
 .6:
 xor edi, edi	; 8B905
-mov dword [off_CEF63], edi	; 8B907
-mov dword [dword_CEE07], edi	; 8B90D
+mov dword [menuact_visitorlines], edi	; 8B907
+mov dword [menusub_awgoalie], edi	; 8B90D
 pop ebp	; 8B913
 pop edi	; 8B914
 pop edx	; 8B915
 ret	; 8B916
 .7:
-mov dword [off_CEF63], DeskVisitorLines	; 8B917
+mov dword [menuact_visitorlines], DeskVisitorLines	; 8B917
 .8:
-mov dword [dword_CEE07], unk_CEEAF	; 8B921
+mov dword [menusub_awgoalie], awgoaliemenu	; 8B921
 pop ebp	; 8B92B
 pop edi	; 8B92C
 pop edx	; 8B92D

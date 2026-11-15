@@ -3,14 +3,14 @@
 bits 32
 %include "hockey.inc"
 section s_17816 progbits alloc exec nowrite align=1
-extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, dword_DC6A8, dword_DC6B4, leaguestatsmode
+extern __CHK, deskexit, DiskSpaceShort, easnfontbuf, embscupbank, statsmenuresult, dword_DC6B4, leaguestatsmode
 extern exhstate, FadePalStep, fclose_, FileExists, fopen_, fputs_, FreeMemBlock, goaliestatscb
 extern LeadersScreen, lgstate, MessageBox, mi_9394Playoffs, mi_9394Season, mi_LeaguePlayoffs, mi_LeagueSeason, mi_PlayoffMode
-extern msg_NeedKbytes2, off_C648E, off_C659A, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
+extern msg_NeedKbytes2, msg_FileExists, msg_StatsDiskSpace, postate, sfpal1, sfpal2, skaterstatscb, sprintf_
 extern statscategory, statsfromleague, statsleague, statspal, statspalvalid, statsplayer, statsplayoffs, statsredrawcb
 extern statsteamsel, str_NeedKbytesFmt2, str_OUT, str_rt, str_SfPal1, str_SfPal2, str_wt, strcat_
 extern strcmp_, strcpy_, strncpy_, sub_8CCA8, sub_8FFB0, teamstatscb, TeamStatsScreen, textgrid
-extern unk_C6499, unk_C64F5, unk_C652A, unk_DC340
+extern btn_FileExists, msg_StatsWritten, msg_OutputFileError, statsscreenpal
 global WriteScreenTextFile, DeskSetExit1, DeskSetExit2, DeskSetExit3, DeskSetExit3_body, DeskSetExit_ret1, StatsSel9394Season, StatsSel9394Playoffs
 global StatsSel_common, StatsSel_x, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode, StatsMenuStandings, StatsMenuTeamScoring, StatsMenuTeamDefense
 global StatsMenuPenaltyKilling, StatsMenuPowerPlay, StatsMenuTeamPenalties, StatsMenuPoints, StatsMenuGoals, StatsMenuAssists, StatsMenuPPGoals, StatsMenuSHGoals
@@ -65,7 +65,7 @@ push eax	; 178A7
 push byte 0	; 178A8
 push byte 0	; 178AA
 mov ecx, 3	; 178AC
-mov ebx, off_C659A	; 178B1
+mov ebx, msg_StatsDiskSpace	; 178B1
 jmp near .7	; 178B6
 .3:
 xor ah, ah	; 178BB
@@ -82,9 +82,9 @@ push eax	; 178E1
 lea eax, [dword esp+090h]	; 178E2
 push eax	; 178E9
 push byte 2	; 178EA
-push unk_C6499	; 178EC
+push btn_FileExists	; 178EC
 mov ecx, 2	; 178F1
-mov ebx, off_C648E	; 178F6
+mov ebx, msg_FileExists	; 178F6
 mov edx, 0FFFFFFFFh	; 178FB
 mov eax, edx	; 17900
 call MessageBox	; 17902
@@ -124,7 +124,7 @@ push eax	; 1796F
 push byte 0	; 17970
 push byte 0	; 17972
 mov ecx, 1	; 17974
-mov ebx, unk_C64F5	; 17979
+mov ebx, msg_StatsWritten	; 17979
 jmp short .7	; 1797E
 .6:
 push byte 0FFFFFFFFh	; 17980
@@ -135,7 +135,7 @@ push eax	; 17991
 push edi	; 17992
 push edi	; 17993
 mov ecx, 1	; 17994
-mov ebx, unk_C652A	; 17999
+mov ebx, msg_OutputFileError	; 17999
 .7:
 mov edx, 0FFFFFFFFh	; 1799E
 mov eax, edx	; 179A3
@@ -222,24 +222,24 @@ mov eax, statsleague	; 17A6E
 call strncpy_	; 17A73
 cmp dword [leaguestatsmode], byte 0	; 17A78
 je short .x	; 17A7F
-push unk_DC340	; 17A81
+push statsscreenpal	; 17A81
 push dword 100h	; 17A86
 push ebp	; 17A8B
 call sub_8FFB0	; 17A8C
 add esp, byte 0Ch	; 17A91
 mov ebx, 10h	; 17A94
-mov edx, unk_DC340	; 17A99
+mov edx, statsscreenpal	; 17A99
 mov eax, 1	; 17A9E
 call FadePalStep	; 17AA3
 mov dword [statspalvalid], 1	; 17AA8
-mov dword [statspal], unk_DC340	; 17AB2
+mov dword [statspal], statsscreenpal	; 17AB2
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17ABC
 mov eax, dword [statscategory]	; 17AC6
 call dword [statsredrawcb]	; 17ACB
 mov dword [statspalvalid], ebp	; 17AD1
 mov dword [statspal], ebp	; 17AD7
 mov ebx, 10h	; 17ADD
-mov edx, unk_DC340	; 17AE2
+mov edx, statsscreenpal	; 17AE2
 xor eax, eax	; 17AE7
 call FadePalStep	; 17AE9
 .x:
@@ -287,17 +287,17 @@ mov eax, statsleague	; 17B65
 call strncpy_	; 17B6A
 cmp dword [leaguestatsmode], byte 0	; 17B6F
 je short StatsSel_x	; 17B76
-push unk_DC340	; 17B78
+push statsscreenpal	; 17B78
 push dword 100h	; 17B7D
 push byte 0	; 17B82
 call sub_8FFB0	; 17B84
 add esp, byte 0Ch	; 17B89
 mov ebx, 10h	; 17B8C
-mov edx, unk_DC340	; 17B91
+mov edx, statsscreenpal	; 17B91
 mov eax, ebp	; 17B96
 call FadePalStep	; 17B98
 mov dword [statspalvalid], ebp	; 17B9D
-mov dword [statspal], unk_DC340	; 17BA3
+mov dword [statspal], statsscreenpal	; 17BA3
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17BAD
 mov eax, dword [statscategory]	; 17BB7
 call dword [statsredrawcb]	; 17BBC
@@ -305,7 +305,7 @@ xor esi, esi	; 17BC2
 mov dword [statspalvalid], esi	; 17BC4
 mov dword [statspal], esi	; 17BCA
 mov ebx, 10h	; 17BD0
-mov edx, unk_DC340	; 17BD5
+mov edx, statsscreenpal	; 17BD5
 xor eax, eax	; 17BDA
 call FadePalStep	; 17BDC
 StatsSel_x:
@@ -353,24 +353,24 @@ mov eax, statsleague	; 17C5A
 call strncpy_	; 17C5F
 cmp dword [leaguestatsmode], byte 0	; 17C64
 je short .x	; 17C6B
-push unk_DC340	; 17C6D
+push statsscreenpal	; 17C6D
 push dword 100h	; 17C72
 push ebp	; 17C77
 call sub_8FFB0	; 17C78
 add esp, byte 0Ch	; 17C7D
 mov ebx, 10h	; 17C80
-mov edx, unk_DC340	; 17C85
+mov edx, statsscreenpal	; 17C85
 mov eax, 1	; 17C8A
 call FadePalStep	; 17C8F
 mov dword [statspalvalid], 1	; 17C94
-mov dword [statspal], unk_DC340	; 17C9E
+mov dword [statspal], statsscreenpal	; 17C9E
 mov dword [dword_DC6B4], 0FFFFFFFFh	; 17CA8
 mov eax, dword [statscategory]	; 17CB2
 call dword [statsredrawcb]	; 17CB7
 mov dword [statspalvalid], ebp	; 17CBD
 mov dword [statspal], ebp	; 17CC3
 mov ebx, 10h	; 17CC9
-mov edx, unk_DC340	; 17CCE
+mov edx, statsscreenpal	; 17CCE
 xor eax, eax	; 17CD3
 call FadePalStep	; 17CD5
 .x:
@@ -510,7 +510,7 @@ call FreeMemBlock	; 17E90
 add esp, byte 4	; 17E95
 mov eax, 5	; 17E98
 call TeamStatsScreen	; 17E9D
-mov dword [dword_DC6A8], eax	; 17EA2
+mov dword [statsmenuresult], eax	; 17EA2
 mov edx, dword [sfpal2]	; 17EA7
 mov ebx, 10h	; 17EAD
 xor eax, eax	; 17EB2
@@ -519,7 +519,7 @@ mov esi, dword [sfpal2]	; 17EB9
 push esi	; 17EBF
 call FreeMemBlock	; 17EC0
 add esp, byte 4	; 17EC5
-mov eax, dword [dword_DC6A8]	; 17EC8
+mov eax, dword [statsmenuresult]	; 17EC8
 pop esi	; 17ECD
 pop edx	; 17ECE
 pop ecx	; 17ECF
@@ -581,7 +581,7 @@ call FreeMemBlock	; 17F70
 add esp, byte 4	; 17F75
 xor eax, eax	; 17F78
 call TeamStatsScreen	; 17F7A
-mov dword [dword_DC6A8], eax	; 17F7F
+mov dword [statsmenuresult], eax	; 17F7F
 mov edx, dword [sfpal2]	; 17F84
 mov ebx, 10h	; 17F8A
 xor eax, eax	; 17F8F
@@ -590,7 +590,7 @@ mov esi, dword [sfpal2]	; 17F96
 push esi	; 17F9C
 call FreeMemBlock	; 17F9D
 add esp, byte 4	; 17FA2
-mov eax, dword [dword_DC6A8]	; 17FA5
+mov eax, dword [statsmenuresult]	; 17FA5
 pop esi	; 17FAA
 pop edx	; 17FAB
 pop ecx	; 17FAC
@@ -652,7 +652,7 @@ call FreeMemBlock	; 18050
 add esp, byte 4	; 18055
 mov eax, 1	; 18058
 call TeamStatsScreen	; 1805D
-mov dword [dword_DC6A8], eax	; 18062
+mov dword [statsmenuresult], eax	; 18062
 mov edx, dword [sfpal2]	; 18067
 mov ebx, 10h	; 1806D
 xor eax, eax	; 18072
@@ -661,7 +661,7 @@ mov esi, dword [sfpal2]	; 18079
 push esi	; 1807F
 call FreeMemBlock	; 18080
 add esp, byte 4	; 18085
-mov eax, dword [dword_DC6A8]	; 18088
+mov eax, dword [statsmenuresult]	; 18088
 pop esi	; 1808D
 pop edx	; 1808E
 pop ecx	; 1808F
@@ -723,7 +723,7 @@ call FreeMemBlock	; 18133
 add esp, byte 4	; 18138
 mov eax, 2	; 1813B
 call TeamStatsScreen	; 18140
-mov dword [dword_DC6A8], eax	; 18145
+mov dword [statsmenuresult], eax	; 18145
 mov edx, dword [sfpal2]	; 1814A
 mov ebx, 10h	; 18150
 xor eax, eax	; 18155
@@ -732,7 +732,7 @@ mov esi, dword [sfpal2]	; 1815C
 push esi	; 18162
 call FreeMemBlock	; 18163
 add esp, byte 4	; 18168
-mov eax, dword [dword_DC6A8]	; 1816B
+mov eax, dword [statsmenuresult]	; 1816B
 pop esi	; 18170
 pop edx	; 18171
 pop ecx	; 18172
@@ -794,7 +794,7 @@ call FreeMemBlock	; 18216
 add esp, byte 4	; 1821B
 mov eax, 3	; 1821E
 call TeamStatsScreen	; 18223
-mov dword [dword_DC6A8], eax	; 18228
+mov dword [statsmenuresult], eax	; 18228
 mov edx, dword [sfpal2]	; 1822D
 mov ebx, 10h	; 18233
 xor eax, eax	; 18238
@@ -803,7 +803,7 @@ mov esi, dword [sfpal2]	; 1823F
 push esi	; 18245
 call FreeMemBlock	; 18246
 add esp, byte 4	; 1824B
-mov eax, dword [dword_DC6A8]	; 1824E
+mov eax, dword [statsmenuresult]	; 1824E
 pop esi	; 18253
 pop edx	; 18254
 pop ecx	; 18255
@@ -865,7 +865,7 @@ call FreeMemBlock	; 182F9
 add esp, byte 4	; 182FE
 mov eax, 4	; 18301
 call TeamStatsScreen	; 18306
-mov dword [dword_DC6A8], eax	; 1830B
+mov dword [statsmenuresult], eax	; 1830B
 mov edx, dword [sfpal2]	; 18310
 mov ebx, 10h	; 18316
 xor eax, eax	; 1831B
@@ -874,7 +874,7 @@ mov esi, dword [sfpal2]	; 18322
 push esi	; 18328
 call FreeMemBlock	; 18329
 add esp, byte 4	; 1832E
-mov eax, dword [dword_DC6A8]	; 18331
+mov eax, dword [statsmenuresult]	; 18331
 pop esi	; 18336
 pop edx	; 18337
 pop ecx	; 18338
@@ -936,7 +936,7 @@ call FreeMemBlock	; 183D9
 add esp, byte 4	; 183DE
 xor eax, eax	; 183E1
 call LeadersScreen	; 183E3
-mov dword [dword_DC6A8], eax	; 183E8
+mov dword [statsmenuresult], eax	; 183E8
 mov edx, dword [sfpal2]	; 183ED
 mov ebx, 10h	; 183F3
 xor eax, eax	; 183F8
@@ -945,7 +945,7 @@ mov esi, dword [sfpal2]	; 183FF
 push esi	; 18405
 call FreeMemBlock	; 18406
 add esp, byte 4	; 1840B
-mov eax, dword [dword_DC6A8]	; 1840E
+mov eax, dword [statsmenuresult]	; 1840E
 pop esi	; 18413
 pop edx	; 18414
 pop ecx	; 18415
@@ -1007,7 +1007,7 @@ call FreeMemBlock	; 184B9
 add esp, byte 4	; 184BE
 mov eax, 1	; 184C1
 call LeadersScreen	; 184C6
-mov dword [dword_DC6A8], eax	; 184CB
+mov dword [statsmenuresult], eax	; 184CB
 mov edx, dword [sfpal2]	; 184D0
 mov ebx, 10h	; 184D6
 xor eax, eax	; 184DB
@@ -1016,7 +1016,7 @@ mov esi, dword [sfpal2]	; 184E2
 push esi	; 184E8
 call FreeMemBlock	; 184E9
 add esp, byte 4	; 184EE
-mov eax, dword [dword_DC6A8]	; 184F1
+mov eax, dword [statsmenuresult]	; 184F1
 pop esi	; 184F6
 pop edx	; 184F7
 pop ecx	; 184F8
@@ -1078,7 +1078,7 @@ call FreeMemBlock	; 1859C
 add esp, byte 4	; 185A1
 mov eax, 2	; 185A4
 call LeadersScreen	; 185A9
-mov dword [dword_DC6A8], eax	; 185AE
+mov dword [statsmenuresult], eax	; 185AE
 mov edx, dword [sfpal2]	; 185B3
 mov ebx, 10h	; 185B9
 xor eax, eax	; 185BE
@@ -1087,7 +1087,7 @@ mov esi, dword [sfpal2]	; 185C5
 push esi	; 185CB
 call FreeMemBlock	; 185CC
 add esp, byte 4	; 185D1
-mov eax, dword [dword_DC6A8]	; 185D4
+mov eax, dword [statsmenuresult]	; 185D4
 pop esi	; 185D9
 pop edx	; 185DA
 pop ecx	; 185DB
@@ -1149,7 +1149,7 @@ call FreeMemBlock	; 1867F
 add esp, byte 4	; 18684
 mov eax, 3	; 18687
 call LeadersScreen	; 1868C
-mov dword [dword_DC6A8], eax	; 18691
+mov dword [statsmenuresult], eax	; 18691
 mov edx, dword [sfpal2]	; 18696
 mov ebx, 10h	; 1869C
 xor eax, eax	; 186A1
@@ -1158,7 +1158,7 @@ mov esi, dword [sfpal2]	; 186A8
 push esi	; 186AE
 call FreeMemBlock	; 186AF
 add esp, byte 4	; 186B4
-mov eax, dword [dword_DC6A8]	; 186B7
+mov eax, dword [statsmenuresult]	; 186B7
 pop esi	; 186BC
 pop edx	; 186BD
 pop ecx	; 186BE
@@ -1220,7 +1220,7 @@ call FreeMemBlock	; 18762
 add esp, byte 4	; 18767
 mov eax, 4	; 1876A
 call LeadersScreen	; 1876F
-mov dword [dword_DC6A8], eax	; 18774
+mov dword [statsmenuresult], eax	; 18774
 mov edx, dword [sfpal2]	; 18779
 mov ebx, 10h	; 1877F
 xor eax, eax	; 18784
@@ -1229,7 +1229,7 @@ mov esi, dword [sfpal2]	; 1878B
 push esi	; 18791
 call FreeMemBlock	; 18792
 add esp, byte 4	; 18797
-mov eax, dword [dword_DC6A8]	; 1879A
+mov eax, dword [statsmenuresult]	; 1879A
 pop esi	; 1879F
 pop edx	; 187A0
 pop ecx	; 187A1
@@ -1291,7 +1291,7 @@ call FreeMemBlock	; 18845
 add esp, byte 4	; 1884A
 mov eax, 5	; 1884D
 call LeadersScreen	; 18852
-mov dword [dword_DC6A8], eax	; 18857
+mov dword [statsmenuresult], eax	; 18857
 mov edx, dword [sfpal2]	; 1885C
 mov ebx, 10h	; 18862
 xor eax, eax	; 18867
@@ -1300,7 +1300,7 @@ mov esi, dword [sfpal2]	; 1886E
 push esi	; 18874
 call FreeMemBlock	; 18875
 add esp, byte 4	; 1887A
-mov eax, dword [dword_DC6A8]	; 1887D
+mov eax, dword [statsmenuresult]	; 1887D
 pop esi	; 18882
 pop edx	; 18883
 pop ecx	; 18884
@@ -1362,7 +1362,7 @@ call FreeMemBlock	; 18928
 add esp, byte 4	; 1892D
 mov eax, 6	; 18930
 call LeadersScreen	; 18935
-mov dword [dword_DC6A8], eax	; 1893A
+mov dword [statsmenuresult], eax	; 1893A
 mov edx, dword [sfpal2]	; 1893F
 mov ebx, 10h	; 18945
 xor eax, eax	; 1894A
@@ -1371,7 +1371,7 @@ mov esi, dword [sfpal2]	; 18951
 push esi	; 18957
 call FreeMemBlock	; 18958
 add esp, byte 4	; 1895D
-mov eax, dword [dword_DC6A8]	; 18960
+mov eax, dword [statsmenuresult]	; 18960
 pop esi	; 18965
 pop edx	; 18966
 pop ecx	; 18967
@@ -1433,7 +1433,7 @@ call FreeMemBlock	; 18A0B
 add esp, byte 4	; 18A10
 mov eax, 7	; 18A13
 call LeadersScreen	; 18A18
-mov dword [dword_DC6A8], eax	; 18A1D
+mov dword [statsmenuresult], eax	; 18A1D
 mov edx, dword [sfpal2]	; 18A22
 mov ebx, 10h	; 18A28
 xor eax, eax	; 18A2D
@@ -1442,7 +1442,7 @@ mov esi, dword [sfpal2]	; 18A34
 push esi	; 18A3A
 call FreeMemBlock	; 18A3B
 add esp, byte 4	; 18A40
-mov eax, dword [dword_DC6A8]	; 18A43
+mov eax, dword [statsmenuresult]	; 18A43
 pop esi	; 18A48
 pop edx	; 18A49
 pop ecx	; 18A4A
@@ -1504,7 +1504,7 @@ call FreeMemBlock	; 18AEE
 add esp, byte 4	; 18AF3
 mov eax, 8	; 18AF6
 call LeadersScreen	; 18AFB
-mov dword [dword_DC6A8], eax	; 18B00
+mov dword [statsmenuresult], eax	; 18B00
 mov edx, dword [sfpal2]	; 18B05
 mov ebx, 10h	; 18B0B
 xor eax, eax	; 18B10
@@ -1513,7 +1513,7 @@ mov esi, dword [sfpal2]	; 18B17
 push esi	; 18B1D
 call FreeMemBlock	; 18B1E
 add esp, byte 4	; 18B23
-mov eax, dword [dword_DC6A8]	; 18B26
+mov eax, dword [statsmenuresult]	; 18B26
 pop esi	; 18B2B
 pop edx	; 18B2C
 pop ecx	; 18B2D
@@ -1575,7 +1575,7 @@ call FreeMemBlock	; 18BD1
 add esp, byte 4	; 18BD6
 mov eax, 9	; 18BD9
 call LeadersScreen	; 18BDE
-mov dword [dword_DC6A8], eax	; 18BE3
+mov dword [statsmenuresult], eax	; 18BE3
 mov edx, dword [sfpal2]	; 18BE8
 mov ebx, 10h	; 18BEE
 xor eax, eax	; 18BF3
@@ -1584,7 +1584,7 @@ mov esi, dword [sfpal2]	; 18BFA
 push esi	; 18C00
 call FreeMemBlock	; 18C01
 add esp, byte 4	; 18C06
-mov eax, dword [dword_DC6A8]	; 18C09
+mov eax, dword [statsmenuresult]	; 18C09
 pop esi	; 18C0E
 pop edx	; 18C0F
 pop ecx	; 18C10
@@ -1646,7 +1646,7 @@ call FreeMemBlock	; 18CB4
 add esp, byte 4	; 18CB9
 mov eax, 0Ah	; 18CBC
 call LeadersScreen	; 18CC1
-mov dword [dword_DC6A8], eax	; 18CC6
+mov dword [statsmenuresult], eax	; 18CC6
 mov edx, dword [sfpal2]	; 18CCB
 mov ebx, 10h	; 18CD1
 xor eax, eax	; 18CD6
@@ -1655,7 +1655,7 @@ mov esi, dword [sfpal2]	; 18CDD
 push esi	; 18CE3
 call FreeMemBlock	; 18CE4
 add esp, byte 4	; 18CE9
-mov eax, dword [dword_DC6A8]	; 18CEC
+mov eax, dword [statsmenuresult]	; 18CEC
 pop esi	; 18CF1
 pop edx	; 18CF2
 pop ecx	; 18CF3

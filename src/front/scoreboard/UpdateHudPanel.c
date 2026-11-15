@@ -24,37 +24,37 @@ void UpdateHudPanel(void)
         TickPanelPenalties((struct PenSlot *)hudpenhome, panelhund);
         TickPanelPenalties((struct PenSlot *)hudpenaway, panelhund);
     }
-    GetLineEnergies(0, dword_C56E4);
-    GetLineEnergies(1, dword_C56C4);
+    GetLineEnergies(0, hmlineenergies);
+    GetLineEnergies(1, awlineenergies);
     DrawPanelClockDigits();
-    DrawEnergyBar(dword_C56E4[hudhomeline] / 500, 0x2B);
-    DrawEnergyBar(dword_C56C4[hudawayline] / 500, 0xFC);
-    if (lcboxon[0] || dword_C5844 || (gmode & 0x10)) {
-        DrawLineGroupBars(&hmlinetimer, (int *)hmlineind, hudhomeline, dword_C56E4, 0x4A);
-        dword_C5854 = 0;
+    DrawEnergyBar(hmlineenergies[hudhomeline] / 500, 0x2B);
+    DrawEnergyBar(awlineenergies[hudawayline] / 500, 0xFC);
+    if (lcboxon[0] || hmpanellines || (gmode & 0x10)) {
+        DrawLineGroupBars(&hmlinetimer, (int *)hmlineind, hudhomeline, hmlineenergies, 0x4A);
+        hmpanelpens = 0;
     } else if (hudpenhome[0] < 0) {
-        dword_C5844 = 1;
-        DrawLineGroupBars(&hmlinetimer, (int *)hmlineind, hudhomeline, dword_C56E4, 0x4A);
-        dword_C5854 = 0;
+        hmpanellines = 1;
+        DrawLineGroupBars(&hmlinetimer, (int *)hmlineind, hudhomeline, hmlineenergies, 0x4A);
+        hmpanelpens = 0;
     } else {
-        if (!dword_C5854) {
+        if (!hmpanelpens) {
             sub_B4CF2(hmpanelspr);
-            dword_C5854 = 1;
+            hmpanelpens = 1;
         }
         DrawPanelPenalties((struct PenSlot *)hudpenhome, 0x48);
         hmlinetimer = 0;
     }
-    if (lcboxon[1] || dword_C5848 || (gmode & 0x10)) {
-        DrawLineGroupBars(&awlinetimer, (int *)awlineind, hudawayline, dword_C56C4, 0xC1);
-        dword_C5858 = 0;
+    if (lcboxon[1] || awpanellines || (gmode & 0x10)) {
+        DrawLineGroupBars(&awlinetimer, (int *)awlineind, hudawayline, awlineenergies, 0xC1);
+        awpanelpens = 0;
     } else if (hudpenaway[0] < 0) {
-        dword_C5848 = 1;
-        DrawLineGroupBars(&awlinetimer, (int *)awlineind, hudawayline, dword_C56C4, 0xC1);
-        dword_C5858 = 0;
+        awpanellines = 1;
+        DrawLineGroupBars(&awlinetimer, (int *)awlineind, hudawayline, awlineenergies, 0xC1);
+        awpanelpens = 0;
     } else {
-        if (!dword_C5858) {
+        if (!awpanelpens) {
             sub_B4CF2(awpanelspr);
-            dword_C5858 = 1;
+            awpanelpens = 1;
         }
         DrawPanelPenalties((struct PenSlot *)hudpenaway, 0xBF);
         awlinetimer = 0;

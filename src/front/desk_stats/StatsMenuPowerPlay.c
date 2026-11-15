@@ -14,10 +14,10 @@ int StatsMenuPowerPlay(void)
         sub_8FFB0(0, 0x100, (unsigned char *)sfpal2);
         FadePalStep(1, (unsigned char *)sfpal1, 0x10);
         FreeMemBlock(sfpal1);
-        dword_DC6A8 = TeamStatsScreen(3);
+        statsmenuresult = TeamStatsScreen(3);
         FadePalStep(0, (unsigned char *)sfpal2, 0x10);
         FreeMemBlock(sfpal2);
-        return dword_DC6A8;
+        return statsmenuresult;
     }
     return ((int (*)(int))teamstatscb)(3);
 }

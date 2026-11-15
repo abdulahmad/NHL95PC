@@ -99,12 +99,12 @@ int ExecuteTrade(char *dir, int *teams, unsigned char *sel)
         strcpy((char *)&leaguedbfmt2, (char *)&leaguedbfmt);
         LoadGameTeams(0);
         curperiod = -2;
-        GameLineEditor(0, hmlinetab, unk_CF3CF, 3);
+        GameLineEditor(0, hmlinetab, tradelinesmenubar, 3);
         pal = sub_8CCA8((char *)str_Pal22, 0x300, 0x20);
         sub_8FFB0(err, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
-        GameLineEditor(1, awlinetab, unk_CF3CF, 3);
+        GameLineEditor(1, awlinetab, tradelinesmenubar, 3);
         pal = sub_8CCA8((char *)str_Pal22, 0x300, 0x20);
         sub_8FFB0(err, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);

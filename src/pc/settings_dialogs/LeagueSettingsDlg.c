@@ -291,7 +291,7 @@ short LeagueSetViewLoop(void)
     int n;
     unsigned char *ev;
 
-    sub_B4B88(0xF7, 4, unk_D16A0);
+    sub_B4B88(0xF7, 4, dlggreys);
     sub_B2DCA(&s.btn, &s.ox, &s.oy);
     s.x = s.ox;
     s.y = s.oy;
@@ -343,7 +343,7 @@ short LeagueSetEditLoop(int mode)
     int n;
     unsigned char *ev;
 
-    if (mode) sub_B4B88(0xF7, 4, unk_D16A0);
+    if (mode) sub_B4B88(0xF7, 4, dlggreys);
     sub_B2DCA(&btn, &ox, &oy);
     x = ox;
     y = oy;

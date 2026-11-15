@@ -5,8 +5,8 @@ bits 32
 section s_408F5 progbits alloc exec nowrite align=1
 extern __CHK, _fstrcspn_, AskMasterPassword, AskTeamPassword, btn_MasterDB, btn_TradeStats, btn_WrongDisk, awayremap
 extern homeremap, lgschedrec, byte_DE268, cddriveptr, ClearInputQueue, CopyFile, curleague, DeleteFiles
-extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, dword_C87C0, dword_C87C8
-extern dword_C87E0, dword_C87E8, dword_DDD34, dword_DDD3C, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
+extern dlgbevelcol1, dlgbevelcol2, dlgedgecol1, dlgedgecol2, dlgedgecol3, dlgfillcol, menuwidth_trade1, menutext_trade1
+extern menuwidth_trade2, menutext_trade2, dword_DDD34, dword_DDD3C, tradebitmap, ExecuteTrade, ExportTeamToFloppy, FileClose
 extern FileCreate, fileoncd, FileOpenRead, FileOpenRW, FileOpenWrite, FileReadAt, FileWriteAt, fputchar
 extern FreeMemBlock, humancount, leaguedbnames, leagueflags, leaguemaster, leaguesaved, leagueteams, LeagueTeamSelect
 extern lggameidx, lgplayteam, MakePath, masterpw, memset_, MergeLeagueFiles, MessageBox, msg_AllHuman

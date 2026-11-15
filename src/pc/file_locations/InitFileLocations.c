@@ -14,16 +14,16 @@ void InitFileLocations(void)
     int i;
     int r;
 
-    cfg = fopen((char *)str_NhlCfg, (char *)unk_C3B0C);
+    cfg = fopen((char *)str_NhlCfg, (char *)str_ModeR);
     if (!cfg) FatalError((char *)str_CantOpenNhlCfg2);
     fgets(line, 0x10, cfg);
     fgets(line, 0x10, cfg);
     cddrivestr = line[0];
     line[1] = 0;
     strcat(line, (char *)str_ALLFILESTXT);
-    fa = fopen(line, (char *)unk_C3B0C);
+    fa = fopen(line, (char *)str_ModeR);
     if (!fa) {
-        fa = fopen((char *)str_ALLFILESTXT2, (char *)unk_C3B0C);
+        fa = fopen((char *)str_ALLFILESTXT2, (char *)str_ModeR);
         if (!fa) {
             fclose(cfg);
             FatalError((char *)str_CouldNotOpenALLFILES);

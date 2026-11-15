@@ -110,8 +110,8 @@ void PlayLeagueGame(int *fh)
                 sub_B2DCA(&s.btn, &s.my, &s.mx);
                 SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0);
                 if (leagueflags & 8) {
-                    dword_C7F0B = (int)s.name;
-                    s.btn = MessageBox(-1, -1, (char *)unk_C7F07, 5, (int)unk_C7F1B, 2, (int)&s.my, (int)&s.mx, -1);
+                    msg_MergeNeeded_e01 = (int)s.name;
+                    s.btn = MessageBox(-1, -1, (char *)msg_MergeNeeded, 5, (int)btn_MergeNeeded, 2, (int)&s.my, (int)&s.mx, -1);
                 } else {
                     ((int *)playerdbsmsg)[1] = (int)s.name;
                     s.btn = MessageBox(-1, -1, (char *)playerdbsmsg, 4, (int)btn_MasterDB, 2, (int)&s.my, (int)&s.mx,
@@ -382,7 +382,7 @@ void PlayLeagueGame(int *fh)
                 }
                 if (err && !s.pwfail && err != 4) {
                     sub_B2DCA(&s.btn, &s.my, &s.mx);
-                    MessageBox(-1, -1, (char *)unk_C7805, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
+                    MessageBox(-1, -1, (char *)msg_DbUpdateError, 1, 0, 0, (int)&s.my, (int)&s.mx, -1);
                 }
                 if (dword_DDD3C) FileClose(&s.fhsched2);
                 FileClose(&s.fhsched1);

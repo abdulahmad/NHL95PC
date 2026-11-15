@@ -7,7 +7,7 @@ extern __CHK, _dos_getdiskfree_, addtimer, attdb, attdb_size, boxfillcolor, boxl
 extern btn_LeagueExists, byte_D416A, byte_D42C3, careerdb, careerdb_size, carteamsdb, carteamsdb_size, CheckDatabases
 extern ctlavailmask, curdbname, dbdirty, dbexistsmsg, DeleteDir, dlgtextbg, dlgtextfg, DrawButtons
 extern DrawEditRosters, DrawScrollBar, dword_C4CFC, dword_C71E0, dword_CCC94, dword_CDA24, dword_CDA38, rostereditmode
-extern dword_D0BFC, dword_D0C04, dword_D0C10, dword_D0C18, dword_D0C20, dword_EA2B0, falisttop, editptrspr
+extern fascrollbar_len, fascrollbar_thumb, fascrollbar_top, fascrollbar_count, dword_D0C20, dword_EA2B0, falisttop, editptrspr
 extern EditRosters, editrosters_exit, enterheld, facount, FadePalStep, falist, falistsel, FatalError
 extern FitPlayerName, fputchar, FreeMemBlock, fullscrbmp, InitSpeechSlots, inputev, inputinstalled, inputpolldiv
 extern inputqcount, inputqhead, inputqtail, inputqueue, inputrepeat, joybtnheld, joycalactive, joycalposthook
@@ -26,7 +26,7 @@ extern sub_8EA00, sub_8EA18, sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_90D20, sub_90F
 extern sub_9121C, sub_91370, sub_913B4, sub_91400, sub_91964, sub_92CD0, sub_92DE0, sub_932D0
 extern sub_B29F0, sub_B2CBE, sub_B2F22, sub_B30B4, sub_B30F4, sub_B340B, sub_B3464, sub_B384E
 extern sub_B387E, sub_B392C, sub_B39D0, sub_B4B88, sub_B4BA8, sub_B4C61, sub_B4F8C, sub_B4FAC
-extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, unk_D0BB8, unk_D0BF0, unk_D45D8
+extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, unk_D45D8
 extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common

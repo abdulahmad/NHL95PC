@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_737AA progbits alloc exec nowrite align=1
-extern __CHK, __STOSB, asc_C3164, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
+extern __CHK, __STOSB, str_PlusMinus7, blitclipbottom, blitclipleft, blitclipright, blitcliptop, boxfillcolor
 extern boxlitecolor, boxshadecolor, byte_D11BC, byte_D12DE, byte_ED0F7, byte_ED0F8, byte_ED0F9, byte_ED0FA
 extern CareerDbPtr, CareerDbPtr2, cddriveptr, ClearInputQueue, curperiod, dlgbevelcol1, dlgbevelcol2, dlgedgecol1
 extern dlgedgecol2, dlgedgecol3, dlgfillcol, dlgtextbg, dlgtextfg, DrawGameLineJerseys, DrawLineEditorScreen, DrawMenuBar
@@ -30,7 +30,7 @@ extern str_SA3, str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_W6, s
 extern stub_8C218, sub_8CCA8, sub_8D2F0, sub_8E83C, sub_8E9C0, sub_8E9E8, sub_8EA00, sub_8EA18
 extern sub_8FC8A, sub_8FCDF, sub_8FFB0, sub_903F0, sub_9061C, sub_90D20, sub_9121C, sub_913B4
 extern sub_91400, sub_91964, sub_91FE0, sub_931FC, sub_B2DCA, sub_B2E1B, sub_B30B4, sub_B392C
-extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, str_dot2, unk_D075E, unknown_libname_1
+extern sub_B4B88, sub_B4BA8, sub_B4BC4, sub_B4C84, sub_B4DD4, str_dot2, rosterstatsmenubar, unknown_libname_1
 extern vgapage, VisTeam
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
@@ -2731,7 +2731,7 @@ push dword 0C2h	; 755EA
 mov ecx, 0C1h	; 755EF
 mov ebx, 0C0h	; 755F4
 mov edx, 2	; 755F9
-mov eax, unk_D075E	; 755FE
+mov eax, rosterstatsmenubar	; 755FE
 call RunMenu	; 75603
 mov edx, dword [rostergstat]	; 75608
 push edx	; 7560E
@@ -3499,7 +3499,7 @@ push edx	; 75E7D
 mov ecx, dword [byte esp+0Ch]	; 75E7E
 mov ebx, dword [byte esp+010h]	; 75E82
 mov edx, 2	; 75E86
-mov eax, unk_D075E	; 75E8B
+mov eax, rosterstatsmenubar	; 75E8B
 call DrawMenuBar	; 75E90
 mov edx, dword [esp]	; 75E95
 mov eax, dword [byte esp+0Ch]	; 75E98
@@ -3553,7 +3553,7 @@ mov ebx, str_PIM4	; 75F73
 mov edx, 30h	; 75F78
 mov eax, 1E8h	; 75F7D
 call PrintShadowText	; 75F82
-mov ebx, asc_C3164	; 75F87
+mov ebx, str_PlusMinus7	; 75F87
 mov edx, 30h	; 75F8C
 mov eax, 210h	; 75F91
 call PrintShadowText	; 75F96

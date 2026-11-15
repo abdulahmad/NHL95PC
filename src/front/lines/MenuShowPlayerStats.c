@@ -32,7 +32,7 @@ int MenuShowPlayerStats(unsigned char *nums, int ignored, unsigned char side, in
     rosterpstat = (unsigned char *)sub_8CCA8((char *)str_Pstat3, 0x497, 0);
     rostergstat = (unsigned char *)sub_8CCA8((char *)str_Gstat3, 0x10E, 0);
     ShowRosterStats(0xC0, 0xC1, 0xC2, 0xC3);
-    RunMenu(unk_D075E, 2, 0xC0, 0xC1, 0xC2);
+    RunMenu(rosterstatsmenubar, 2, 0xC0, 0xC1, 0xC2);
     FreeMemBlock((int)rostergstat);
     FreeMemBlock((int)rosterpstat);
     FreeMemBlock((int)statsplayerbuf);
