@@ -14,7 +14,7 @@ extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTIC
 extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, sub_8D2F0
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, sub_B29F0
-extern KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, sub_B3464, sub_B384E, sub_B387E
+extern KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, ReadJoyRaw, sub_B384E, sub_B387E
 extern ClearScreen, sub_B39D0, VgaSetPalette, sub_B4BA8, sub_B4C61, sub_B4FAC, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, unk_D45D8
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
@@ -45,7 +45,7 @@ push byte 0	; 6B0CC
 push byte 0	; 6B0CE
 call TextSetColors	; 6B0D0
 add esp, byte 8	; 6B0D5
-call sub_B3464	; 6B0D8
+call ReadJoyRaw	; 6B0D8
 mov cl, byte [dword esp+0360h]	; 6B0DD
 sar eax, cl	; 6B0E4
 test al, 30h	; 6B0E6
@@ -147,7 +147,7 @@ not eax	; 6B22F
 and dword [joyenablemask], eax	; 6B231
 jmp near .8	; 6B237
 .6:
-call sub_B3464	; 6B23C
+call ReadJoyRaw	; 6B23C
 mov cl, byte [dword esp+0360h]	; 6B241
 sar eax, cl	; 6B248
 mov dword [dword esp+0348h], eax	; 6B24A
@@ -1188,7 +1188,7 @@ mov esi, eax	; 6BCDF
 cmp byte [byte_D416A], 0	; 6BCE1
 je near .5	; 6BCE8
 call sub_B30F4	; 6BCEE
-call sub_B3464	; 6BCF3
+call ReadJoyRaw	; 6BCF3
 test byte [ctlavailmask], 2	; 6BCF8
 jne short .1	; 6BCFF
 sar eax, 8	; 6BD01

@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_8FFD4 progbits alloc exec nowrite align=1
-extern __CMain, __FiniRtns, __InitRtns, byte_D4D06, byte_D4D07, byte_D4D0F, byte_D4D10, dword_D41F4
-extern dword_D4CD4, dword_D4CD8, dword_D4CDC, dword_D4CE0, dword_D4CE8, dword_D4CEC, dword_D4D09, kaufmfont
-extern unk_10003, unk_F7B88, word_D41F8, word_D4CE4, word_D4D04, word_D4D0D
-global start, loc_90048, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
+extern __CMain, __FiniRtns, __InitRtns, _Extender, _ExtenderSubtype, _osmajor, _osminor, dword_D41F4
+extern _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr, kaufmfont
+extern unk_10003, stackarea, word_D41F8, _psp, __no87, _Envptr_w4
+global start, __saved_DS, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
 global loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B, loc_9014C
 global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, sub_90267
 global loc_9027B, loc_9028A, __GETDS, __STOSB, loc_902B6, loc_902C3, loc_902E0, __STOSD
@@ -61,7 +61,7 @@ db 065h,073h, loc_900A1-($+3)
 jb short loc_900B4	; 9003C
 db 065h,064h,02Eh,08Dh,040h,00h	; 9003E lea eax,[eax]
 dd unk_10003
-loc_90048:
+__saved_DS:
 add byte [eax], al	; 90048
 loc_9004A:
 db 063h,06Fh,06Eh	; 9004A arpl (nasm 3 adds 66h)
@@ -70,19 +70,19 @@ loc_9004E:
 sti	; 9004E
 and esp, byte 0FFFFFFFCh	; 9004F
 mov ebx, esp	; 90052
-mov dword [dword_D4CEC], ebx	; 90054
-mov dword [dword_D4CD8], ebx	; 9005A
+mov dword [_STACKTOP], ebx	; 90054
+mov dword [_curbrk], ebx	; 9005A
 mov ax, 24h	; 90060
 db 066h
 db 0A3h
 loc_90066:
-dd word_D4CE4
+dd _psp
 mov ebx, 50484152h	; 9006A
 sub eax, eax	; 9006F
 mov ah, 30h	; 90071
 int 21h	; 90073
-mov byte [byte_D4D0F], al	; 90075
-mov byte [byte_D4D10], ah	; 9007A
+mov byte [_osmajor], al	; 90075
+mov byte [_osminor], ah	; 9007A
 loc_90080:
 mov ecx, eax	; 90080
 loc_90082:
@@ -96,13 +96,13 @@ sub bl, 30h	; 90092
 mov al, bl	; 90095
 mov ah, 0	; 90097
 push eax	; 90099
-o16 mov es, word [word_D4CE4]	; 9009A
+o16 mov es, word [_psp]	; 9009A
 loc_900A1:
 mov ebx, dword [es:05Ch]	; 900A1
 add ebx, 0FFFh	; 900A8
 and ebx, 0FFFFF000h	; 900AE
 loc_900B4:
-mov dword [dword_D4CD8], ebx	; 900B4
+mov dword [_curbrk], ebx	; 900B4
 shr ebx, 0Ch	; 900BA
 mov ax, ds	; 900BD
 mov es, eax	; 900C0
@@ -123,7 +123,7 @@ sub ebx, edx	; 900E3
 mov ah, 4Ah	; 900E5
 int 21h	; 900E7
 mov bx, ds	; 900E9
-o16 mov word [word_D4CE4], ds	; 900EC
+o16 mov word [_psp], ds	; 900EC
 mov eax, dword [byte esi+010h]	; 900F3
 add edi, eax	; 900F6
 sub esi, esi	; 900F8
@@ -154,7 +154,7 @@ or dx, cx	; 90134
 je short loc_9013B	; 90137
 mov ah, 1	; 90139
 loc_9013B:
-o16 mov word [word_D4CE4], es	; 9013B
+o16 mov word [_psp], es	; 9013B
 db 066h,026h,08Bh,0Dh,02Ch,00h,00h,00h	; 90142 mov cx,[es:2Ch]
 jmp short loc_90163	; 9014A
 loc_9014C:
@@ -167,17 +167,17 @@ mov bx, 17h	; 9015B
 mov al, 0	; 9015F
 mov ah, 0	; 90161
 loc_90163:
-mov byte [byte_D4D06], al	; 90163
-mov byte [byte_D4D07], ah	; 90168
+mov byte [_Extender], al	; 90163
+mov byte [_ExtenderSubtype], ah	; 90168
 mov es, ebx	; 9016E
 db 066h,026h,08Ch,01Dh	; 90170 o16 mov [es:80048h],ds
-dd loc_90048
-mov dword [dword_D4D09], esi	; 90178
-mov word [word_D4D0D], cx	; 9017E
+dd __saved_DS
+mov dword [_Envptr], esi	; 90178
+mov word [_Envptr_w4], cx	; 9017E
 push esi	; 90185
-o16 mov es, word [word_D4CE4]	; 90186
+o16 mov es, word [_psp]	; 90186
 db 03Eh,0BAh	; 9018D mov edx,37B88h
-dd unk_F7B88
+dd stackarea
 add edx, byte 0Fh	; 90193
 and dl, 0F0h	; 90196
 sub ecx, ecx	; 90199
@@ -202,7 +202,7 @@ pop esi	; 901BC
 dec edi	; 901BD
 push edi	; 901BE
 push edx	; 901BF
-o16 mov ds, word [es:word_D4D0D]	; 901C0
+o16 mov ds, word [es:_Envptr_w4]	; 901C0
 sub ebp, ebp	; 901C8
 loc_901CA:
 mov eax, dword [esi]	; 901CA
@@ -228,15 +228,15 @@ jne short loc_901ED	; 901F1
 pop ds	; 901F3
 pop esi	; 901F4
 mov ebx, esp	; 901F5
-mov word [word_D4D04], bp	; 901F7
-mov dword [dword_D4CE8], edi	; 901FE
-mov dword [dword_D4CD4], ebx	; 90204
+mov word [__no87], bp	; 901F7
+mov dword [_STACKLOW], edi	; 901FE
+mov dword [_dynend], ebx	; 90204
 db 03Eh,0B9h	; 9020A mov ecx,37B88h
-dd unk_F7B88
+dd stackarea
 db 03Eh,0BFh	; 90210 mov edi,18B68h
 dd kaufmfont
 sub ecx, edi	; 90216
-cmp byte [byte_D4D06], 1	; 90218
+cmp byte [_Extender], 1	; 90218
 jne short loc_9022E	; 9021F
 cmp ecx, 1000h	; 90221
 jbe short loc_9022E	; 90227
@@ -250,11 +250,11 @@ mov cl, dl	; 90237
 and cl, 3	; 90239
 rep stosb	; 9023C
 db 03Eh,0B8h	; 9023E mov eax,37B88h
-dd unk_F7B88
+dd stackarea
 add eax, byte 0Fh	; 90244
 and al, 0F0h	; 90247
-mov dword [dword_D4CDC], eax	; 90249
-mov dword [dword_D4CE0], esi	; 9024E
+mov dword [_LpCmdLine], eax	; 90249
+mov dword [_LpPgmName], esi	; 9024E
 mov eax, 0FFh	; 90254
 call __InitRtns	; 90259
 sub ebp, ebp	; 9025E
@@ -293,7 +293,7 @@ int 21h	; 9029D
 nop	; 9029F
 __GETDS:
 db 066h,02Eh,08Eh,01Dh	; 902A0 o16 mov ds,[cs:80048h]
-dd loc_90048
+dd __saved_DS
 ret	; 902A8
 db 00h,00h,00h,00h,00h,00h,00h
 __STOSB:

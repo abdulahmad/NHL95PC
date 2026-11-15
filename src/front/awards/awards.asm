@@ -40,7 +40,7 @@ extern str_PPG, str_PPV, str_Pt, str_Scrn, str_SHG, str_Shots, str_SO, str_SS
 extern str_Summ, str_T, str_Titl, str_Trinknd, str_VFN, str_W, strcat_, strcpy_
 extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern sub_8F633, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette, sub_90354, sub_9035C
+extern sub_8F633, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, sub_90354, sub_9035C
 extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
@@ -1517,7 +1517,7 @@ je short .3	; 133A5
 mov eax, dword [musicslot-3]	; 133A7
 sar eax, 18h	; 133AC
 mov edx, 3	; 133AF
-call sub_8FC8A	; 133B4
+call SndQuery	; 133B4
 test eax, eax	; 133B9
 je short AwardsCeremony.2	; 133BB
 mov ecx, dword [songdata]	; 133BD
@@ -1663,7 +1663,7 @@ jne short .16	; 1359E
 mov eax, dword [musicslot-3]	; 135A0
 sar eax, 18h	; 135A5
 mov edx, 3	; 135A8
-call sub_8FC8A	; 135AD
+call SndQuery	; 135AD
 test eax, eax	; 135B2
 jne short .16	; 135B4
 mov eax, 0Ah	; 135B6
@@ -1682,7 +1682,7 @@ call FadePalStep	; 135E2
 mov eax, dword [musicslot-3]	; 135E7
 sar eax, 18h	; 135EC
 mov edx, 3	; 135EF
-call sub_8FC8A	; 135F4
+call SndQuery	; 135F4
 test eax, eax	; 135F9
 je short AwardsCeremony.17	; 135FB
 mov eax, dword [songdata]	; 135FD
@@ -1841,7 +1841,7 @@ call sub_8FCDF	; 13810
 mov eax, dword [musicslot-3]	; 13815
 sar eax, 18h	; 1381A
 mov edx, 3	; 1381D
-call sub_8FC8A	; 13822
+call SndQuery	; 13822
 test eax, eax	; 13827
 je short AwardsCeremony.33	; 13829
 mov ebp, dword [songdata]	; 1382B

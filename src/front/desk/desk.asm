@@ -18,7 +18,7 @@ extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetSc
 extern ShowCredits, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, StartHL2, str_Desk, str_DoYouWishToExit
 extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Menubuff3, str_Pal5, str_Pause, str_PleaseEnterOutputFile
 extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, AllocMemBlock, sub_8D2F0
-extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
 extern SetPalette, PutBlock, DrawBitmap, DrawArt, GrabBlock, MouseRead, SetViewRect, FindShape
 extern ClearScreen, sub_B4B58, sub_B4BA8, sub_B4FAC, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
 extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
@@ -900,7 +900,7 @@ je short .27	; 199A7
 mov eax, dword [musicslot-3]	; 199A9
 sar eax, 18h	; 199AE
 mov edx, 3	; 199B1
-call sub_8FC8A	; 199B6
+call SndQuery	; 199B6
 test eax, eax	; 199BB
 je short SportsDesk.26	; 199BD
 mov edx, dword [songdata]	; 199BF
@@ -1163,7 +1163,7 @@ je short .45	; 19E02
 mov eax, dword [musicslot-3]	; 19E04
 sar eax, 18h	; 19E09
 mov edx, 3	; 19E0C
-call sub_8FC8A	; 19E11
+call SndQuery	; 19E11
 test eax, eax	; 19E16
 je short SportsDesk.44	; 19E18
 mov esi, dword [songdata]	; 19E1A
@@ -1812,7 +1812,7 @@ je short .3	; 1A79B
 mov eax, dword [musicslot-3]	; 1A79D
 sar eax, 18h	; 1A7A2
 mov edx, 3	; 1A7A5
-call sub_8FC8A	; 1A7AA
+call SndQuery	; 1A7AA
 test eax, eax	; 1A7AF
 je short DeskExitGame.2	; 1A7B1
 mov edi, dword [songdata]	; 1A7B3
@@ -1989,7 +1989,7 @@ je short .3	; 1AA18
 mov eax, dword [musicslot-3]	; 1AA1A
 sar eax, 18h	; 1AA1F
 mov edx, 3	; 1AA22
-call sub_8FC8A	; 1AA27
+call SndQuery	; 1AA27
 test eax, eax	; 1AA2C
 je short DeskPenaltySummary.2	; 1AA2E
 mov ecx, dword [songdata]	; 1AA30

@@ -315,7 +315,7 @@ void ClearPanelPenalties(void);  /* 1CBD8 */
 void LoadScoreboardGfx(void);  /* 1CC3D */
 int AnyInputPressed(void);  /* 1600C */
 int PollKey(void);  /* keyboard library */
-int sub_B3464(void);  /* joystick library: read both pads */
+int ReadJoyRaw(void);  /* joystick library: read both pads */
 void CompShoot(Player *p);  /* 55A35 */
 void passmode(Player *p);  /* 5514E */
 void dopass(Player *p);  /* 54DF4 */
@@ -653,7 +653,7 @@ void OpenSpeechBank(char *path, int n);  /* 83897 */
 void QueuePenaltyType(void);
 int DeskExitGame(void);  /* 1A6A7 */
 void sub_8FCDF(int handle, int a, int b);
-int sub_8FC8A(int slot, int a);
+int SndQuery(int slot, int a);
 void __cdecl sub_8D2F0(int p);
 void sub_B4B58(void);
 void ShowCredits(void);

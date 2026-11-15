@@ -43,7 +43,7 @@ void PlayHilight(void)
 
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }

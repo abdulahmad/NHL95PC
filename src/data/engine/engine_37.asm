@@ -6,12 +6,12 @@ extern str_1st, str_2nd, str_3rd, unk_CBEFC, unk_CBF04, unk_CBF18, unk_CBF37, un
 extern unk_CBF85, unk_CBF96, unk_CBFA9, unk_CBFC3, unk_CBFEB, unk_CBFFA
 global str_ErrLoadGame, str_ErrSaveGame, ovlseqtimed, lldisp, HotList, HotList_y, HotStickList, HotStickList_y
 global teamrocktune, starskatermin, stargoaliemin, Endfaceoff_ftab_m1, lchoicetab, assonetimer_blade, assonetimer_blade_y, cupceremony
-global rinkobjanim, rinkobjanim_b1, ovlartfiles, goalienotebits, dword_CC0B4, lastsfx, photobankf, demoflag
+global rinkobjanim, rinkobjanim_b1, ovlartfiles, goalienotebits, markframes_e1, lastsfx, photobankf, demoflag
 global introskipped, onetimerflag, shotongoal, dword_CC0FA, penshotplayer, penshotpnum, penshotteam, penshotctl
 global penshotfox, penshotfoy, penshotmode, penshotstart, penshottimer, shotontarget, penshotlive, psendcount
 global sopathx, sopathy, sopathend, sopathpoint, pspathside, pspathdir, dword_CC9AD, introstandanims_m2
 global assscore_dancecnt, goaliesave_saveanim_m2, refsigspa_m2, ShootoutPathData, ShootoutPathData_y, ShootoutPathData_end, nethit, checkinglist_m2
-global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, dword_CCC9C, dword_CCC9D
+global digihandle, crowdsmooth, crowdvol8, crowdvol7, cursndbank, oneminsaid, playsuspended, dword_CCC9D
 global dword_CCC9E, sublist_m2, sublist, sublist_defl_m3, dword_CCD4F, doplayeracc_ftab, MaxSpeed, rinkobjdefs_m2, sideobjpos
 global ovlscripts, starordtab, shotsets, sublist_defl, ovlsteptime, Pencntdwn2, lldispodd, ltack
 global crowdlevel, word_CC10C, word_CC9CC, assstarskate_path, assstarskate_path_y, asswingo_dedata, asswingo_dedata_xrand, asswingo_dedata_y
@@ -44,7 +44,7 @@ goalienotebits:
 db 00h,00h,00h,00h
 Pencntdwn2:
 db 0FFh,0FFh,085h,01h
-dword_CC0B4:
+markframes_e1:
 db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
 db 081h,01h,080h,01h,082h,01h,083h,01h,084h,01h,063h,01h,062h,01h,063h,01h
 db 084h,01h,083h,01h
@@ -378,7 +378,7 @@ cursndbank:
 db 00h,00h,00h,00h
 oneminsaid:
 db 00h,00h,00h,00h
-dword_CCC9C:
+playsuspended:
 db 00h
 dword_CCC9D:
 db 00h

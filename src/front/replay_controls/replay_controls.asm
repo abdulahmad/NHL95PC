@@ -25,7 +25,7 @@ extern str_Gadget5, str_Gadget6, str_HI, str_HI2, str_HilightDescFmt, str_Hiligh
 extern str_HLTS, str_K1, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SaveTo
 extern str_SBROCKU, str_SelectAHilight, str_SelectATeam, str_star, strcat_, strcpy_, strcspn_, stricmp_
 extern sub_1BAB1, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0, sub_8E8A0
-extern TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample, sub_8FC8A, sub_8FCDF, SetPalette
+extern TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample, SndQuery, sub_8FCDF, SetPalette
 extern FillRect, DrawArt, DrawShape, GrabBlock, PrintString, GetFileSize, sub_93000, sub_96A78
 extern MouseRead, SetViewRect, FindShape, sub_B4BA8, SetClipWindow, sub_B4CD8, sub_B4FAC, sub_B500C
 extern PlotPixel, teamabbrevs, teamcitynames, teamrockcuetbl, teamtunefiles, teamtunepathsel, TicksSinceLastCall, str_backslash4
@@ -3001,7 +3001,7 @@ je short .4	; 8022B
 mov eax, dword [musicslot-3]	; 8022D
 sar eax, 18h	; 80232
 mov edx, 3	; 80235
-call sub_8FC8A	; 8023A
+call SndQuery	; 8023A
 test eax, eax	; 8023F
 je short PlayHilight.3	; 80241
 mov esi, dword [songdata]	; 80243

@@ -12,7 +12,7 @@ extern savedname, SaveGridCellBg, SetDialogColors, SetTextColors, songdata, str_
 extern str_EnterMasterPassword, str_EnterPasswordFor, str_extDB, str_Iff10, str_Leaguetm2, str_Menubuff6, str_MightyDucksOfAnaheim3, str_Pal19
 extern str_Pal20, str_PLST, str_Pointer9, str_PTLS, str_TPI, str_Tspal, str_VerifyMasterControllerPasswo, str_VerifyPasswordFor
 extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, AllocMemBlock
-extern sub_8D2F0, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A
+extern sub_8D2F0, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, DrawArt, GrabBlock, MouseRead, FindShape, ClearScreen
 extern sub_B4BA8, SetColorRemap, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
 extern msg_NameTaken, msg_WrongPassword, yesnobtns
@@ -880,7 +880,7 @@ je short .9	; 38D1E
 mov eax, dword [musicslot-3]	; 38D20
 sar eax, 18h	; 38D25
 mov edx, 3	; 38D28
-call sub_8FC8A	; 38D2D
+call SndQuery	; 38D2D
 test eax, eax	; 38D32
 je short LeagueTeamSelect.8	; 38D34
 mov edi, dword [songdata]	; 38D36

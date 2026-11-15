@@ -174,7 +174,7 @@ int MainDeskLoop(void)
                         sub_B4BA8();
                         if (!keepdesksong && musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x46);
-                            while (sub_8FC8A(musicslot, 3) == 0);
+                            while (SndQuery(musicslot, 3) == 0);
                             sub_8D2F0(songdata);
                             songdata = 0;
                         } else {
@@ -466,7 +466,7 @@ int MenuNewExhibition(int *fh)
             if (musicon && songdata) {
                 do
                     slot = musicslot;
-                while (sub_8FC8A(slot, 3) == 0);
+                while (SndQuery(slot, 3) == 0);
                 sub_8D2F0(songdata);
                 songdata = 0;
             }
@@ -484,7 +484,7 @@ int MenuNewExhibition(int *fh)
     if (musicon && songdata) {
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }

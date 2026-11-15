@@ -175,11 +175,11 @@ short ExhSetEditLoop(void)
                         break;
                     }
                     if (gameopts.music) {
-                        if (musicon && songdata && !oldmusic && sub_8FC8A(musicslot, 3))
+                        if (musicon && songdata && !oldmusic && SndQuery(musicslot, 3))
                             sub_8FB8E(songdata, musichandle, 3, 0x7F);
                         sub_8F979();
                     } else {
-                        if (musicon && songdata && !sub_8FC8A(musicslot, 3))
+                        if (musicon && songdata && !SndQuery(musicslot, 3))
                             sub_8FCDF(musichandle, 3, 0x28);
                         sub_8F984();
                     }

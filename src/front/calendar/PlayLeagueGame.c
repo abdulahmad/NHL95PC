@@ -164,7 +164,7 @@ void PlayLeagueGame(int *fh)
         if (musicon && songdata) {
             do
                 slot = musicslot;
-            while (sub_8FC8A(slot, 3) == 0);
+            while (SndQuery(slot, 3) == 0);
             sub_8D2F0(songdata);
             songdata = 0;
         }
@@ -227,7 +227,7 @@ void PlayLeagueGame(int *fh)
                         sub_8FCDF(musichandle, 3, 0x64);
                         do
                             slot = musicslot;
-                        while (sub_8FC8A(slot, 3) == 0);
+                        while (SndQuery(slot, 3) == 0);
                         sub_8D2F0(songdata);
                         songdata = 0;
                     }
@@ -395,7 +395,7 @@ void PlayLeagueGame(int *fh)
             if (musicon && songdata) {
                 do
                     slot = musicslot;
-                while (sub_8FC8A(slot, 3) == 0);
+                while (SndQuery(slot, 3) == 0);
                 sub_8D2F0(songdata);
                 songdata = 0;
             }

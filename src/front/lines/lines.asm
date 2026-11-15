@@ -28,7 +28,7 @@ extern str_No2, str_Pal25, str_Pal26, str_Pal27, str_Pal28, str_PCT2, str_PIM4, 
 extern str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6
 extern str_SA3, str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_W6, strcmp_
 extern stub_8C218, AllocMemBlock, sub_8D2F0, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
-extern sub_8FC8A, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, sub_9121C, DrawShape
+extern SndQuery, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, sub_9121C, DrawShape
 extern GrabBlock, PrintString, sub_91FE0, DrawArtMasked, MouseRead, SetViewRect, FindShape, ClearScreen
 extern VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C84, SetColorRemap, str_dot2, rosterstatsmenubar, unknown_libname_1
 extern vgapage, VisTeam

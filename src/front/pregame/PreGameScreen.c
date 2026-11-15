@@ -86,7 +86,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FadePalStep(1, pal, 0x10);
     FreeMemBlock((int)pal);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -267,7 +267,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, apal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }

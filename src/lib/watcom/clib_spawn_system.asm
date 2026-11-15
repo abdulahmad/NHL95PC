@@ -4,7 +4,7 @@ bits 32
 section s_A1CA2 progbits alloc exec nowrite align=1
 extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_, __Slash_C_, _makepath_
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
-extern str_COMMAND, byte_D4D0F, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
+extern str_COMMAND, _osmajor, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
 extern sub_9D66B, sub_9D68E, unk_C4AB4, unknown_libname_1
 global sub_A1CA2, sub_A1CC1, sub_A1CF4, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
 global loc_A1D9D, loc_A1DF6, loc_A1DF8, loc_A1E1F, loc_A1E22, loc_A1E42, loc_A1E92, loc_A1EB2
@@ -155,7 +155,7 @@ jmp near loc_A1FC3	; A1E1A
 loc_A1E1F:
 mov dword [byte ebp+072h], eax	; A1E1F
 loc_A1E22:
-cmp byte [byte_D4D0F], 3	; A1E22
+cmp byte [_osmajor], 3	; A1E22
 jb short loc_A1E42	; A1E29
 mov eax, dword [byte ebp+046h]	; A1E2B
 cmp byte [eax], 0	; A1E2E

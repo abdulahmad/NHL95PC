@@ -494,7 +494,7 @@ void AwardsCeremony(void)
     if (musicon && songdata) {
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -526,12 +526,12 @@ void AwardsCeremony(void)
         FreeSample(smp);
     } else if (musicon) {
         done = 0;
-        while (!done && sub_8FC8A(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
+        while (!done && SndQuery(musicslot, 3) == 0) done = WaitClickTimeout(0xA);
         sub_8FCDF(musichandle, 3, 0x32);
         FadePalStep(1, pal, 0x10);
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         if (songdata) sub_8D2F0(songdata);
         songdata = 0;
     } else {
@@ -576,7 +576,7 @@ void AwardsCeremony(void)
         sub_8FCDF(musichandle, 3, 0x78);
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         if (songdata) sub_8D2F0(songdata);
         songdata = 0;
     } else {

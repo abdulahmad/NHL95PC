@@ -355,7 +355,7 @@ int TitleScreen(void)
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     } else {
@@ -509,10 +509,10 @@ void RunIntro(void)
         WaitClickTimeout(0x78);
     }
     if (musicon) {
-        while (!sub_8FC8A(musicslot, 0));
-        while (!sub_8FC8A(musicslot, 1));
-        while (!sub_8FC8A(musicslot, 2));
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 0));
+        while (!SndQuery(musicslot, 1));
+        while (!SndQuery(musicslot, 2));
+        while (!SndQuery(musicslot, 3));
         songdata = 0;
         if (song2) sub_8D2F0(song2);
         if (song3) sub_8D2F0(song3);
@@ -543,7 +543,7 @@ void RunIntro(void)
         SetTickDeadline(0xC8);
         WaitTickDeadline();
         if (musicon && songdata) {
-            while (!sub_8FC8A(musicslot, 3));
+            while (!SndQuery(musicslot, 3));
             sub_8D2F0(songdata);
             songdata = 0;
         }
@@ -660,7 +660,7 @@ void ShowCredits(void)
     SpeechStopQueue();
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     } else {

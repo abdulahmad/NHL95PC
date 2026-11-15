@@ -54,7 +54,7 @@ void RunEditRosters(void)
     TextSetFont(dword_EA2B0);
     TextSaveState(s.state);
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -81,7 +81,7 @@ void RunEditRosters(void)
     dlgtextfg = s.fg;
     dlgtextbg = s.bg;
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }

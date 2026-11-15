@@ -19,7 +19,7 @@ extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standin
 extern str_fee2, str_fee3, str_fee4, str_Game, str_GameSav4, str_GameSet4, str_Iff8, str_LAAtMTL
 extern str_Maindesk, str_Menubuff4, str_Pal15, str_Palette2, str_Pointer7, str_Set, str_Temp4, str_Tonights2
 extern strcat_, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, sub_8F963, sub_8F96E
-extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette, PutBlock
+extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, PutBlock
 extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, sub_B4BA8, SetClipWindow, teamabbrevs
 extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
@@ -440,7 +440,7 @@ call sub_8FCDF	; 3209C
 mov eax, dword [musicslot-3]	; 320A1
 sar eax, 18h	; 320A6
 mov edx, 3	; 320A9
-call sub_8FC8A	; 320AE
+call SndQuery	; 320AE
 test eax, eax	; 320B3
 je short MainDeskLoop.20	; 320B5
 mov ebp, dword [songdata]	; 320B7
@@ -1501,7 +1501,7 @@ je short .5	; 32ECC
 mov eax, dword [musicslot-3]	; 32ECE
 sar eax, 18h	; 32ED3
 mov edx, 3	; 32ED6
-call sub_8FC8A	; 32EDB
+call SndQuery	; 32EDB
 test eax, eax	; 32EE0
 je short MenuNewExhibition.4	; 32EE2
 mov edx, dword [songdata]	; 32EE4
@@ -1553,7 +1553,7 @@ je short .10	; 32F84
 mov eax, dword [musicslot-3]	; 32F86
 sar eax, 18h	; 32F8B
 mov edx, 3	; 32F8E
-call sub_8FC8A	; 32F93
+call SndQuery	; 32F93
 test eax, eax	; 32F98
 je short MenuNewExhibition.9	; 32F9A
 mov edi, dword [songdata]	; 32F9C
@@ -1698,7 +1698,7 @@ je near MenuAddTeam_ret2	; 331F2
 mov eax, dword [musicslot-3]	; 331F8
 sar eax, 18h	; 331FD
 mov edx, 3	; 33200
-call sub_8FC8A	; 33205
+call SndQuery	; 33205
 test eax, eax	; 3320A
 je short MenuNewLeague.13	; 3320C
 mov ecx, dword [songdata]	; 3320E

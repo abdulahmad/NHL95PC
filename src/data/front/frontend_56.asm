@@ -16,7 +16,7 @@ global str_NumberCor, str_NowbackInt, str_BackmomtInt, str_CoachclpInt, str_OfBa
 global str_EasportsBar, str_TonightBar, str_GamebtwnBar, str_GoodniteInt, str_LineupsInt, str_TakeynowBar, str_HighliteBar, str_OvertimeBar
 global str_HavewonBar, str_Scor1perBar, str_Scor2perBar, str_Scor3perBar, str_Scor1otpBar, str_Scor2otpBar, str_Scor3otpBar, str_ScortotpBar
 global str_ThegameBar, str_VIV, str_AGameYouRequire3, byte_D11BC, fadeend, fadeend2, jerseyremap
-global byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, byte_D2439
+global byte_D12DE, jerseypalslot0, jerseypalslot1, jerseypalslot2, jerseypalslot3, musicslot, musicon, crowddriver
 global byte_D27B6, dbdlgrects
 global dword_D1229, dword_D122B, dword_D122F, dword_D1231, lineslotx
 global linesloty, dword_D1398, dword_D139C, dword_D13C8, dword_D13CC, dword_D1418, dword_D141C, dword_D1458
@@ -27,7 +27,7 @@ global ctldlgalt, rockcuepool, teamtunepathsel, rockcuepathsel, gadgetrects, gad
 global settingsfile, lockerindex, lockerteams, poroundnameidx, lockerrects
 global lockeracceptx, lockeraccepty
 global lockercancelx, lockercancely, dword_D2350, soundcardrects, dword_D2423
-global dword_D2427, dword_D242B, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
+global dword_D2427, digidriver, musichandle, sndtempbuf, sounddevids, sndcardname, str_Cor2
 global speechchannel, speechcopylen, speechinit, dbtablists, rockcuefiles, teamrockcuetbl, teamtunefiles, msg_NoHilightSpace
 global jerseyabbrevs, poroundnames, msg_InitMT32, penaltyclips, scorperclips, msg_SavingLeagueGame, msg_SavingPlayoffGame, msg_NoSaveSpace
 global str_ConfirmDeletionOfThe2, deldbmsg, unk_D12C8, dlggreys, ctlboxrect1, ctlboxrect2, str_BOS1, str_BOS22
@@ -718,7 +718,7 @@ dword_D2423:
 db 00h,00h,00h,00h
 dword_D2427:
 db 0FFh,0FFh,0FFh,0FFh
-dword_D242B:
+digidriver:
 db 0FFh
 db 0FFh,0FFh,0FFh
 musicslot:
@@ -729,7 +729,7 @@ musichandle:
 db 00h,00h,00h,00h
 sndtempbuf:
 db 00h,00h,00h,00h
-byte_D2439:
+crowddriver:
 db 00h
 sounddevids:
 db 010h,00h,00h,00h,01h,00h,00h,00h,04h,00h,00h,00h,02h,00h,00h,00h

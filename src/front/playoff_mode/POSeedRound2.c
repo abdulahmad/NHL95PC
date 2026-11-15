@@ -834,7 +834,7 @@ int PlayoffModeLoop(int *fh)
         FadePalStep(1, (unsigned char *)pal, 0x10);
         FreeMemBlock(pal);
         if (musicon && songdata) {
-            while (!sub_8FC8A(musicslot, 3));
+            while (!SndQuery(musicslot, 3));
             sub_8D2F0(songdata);
             songdata = 0;
             f.stopped = 1;
@@ -901,7 +901,7 @@ int PlayoffModeLoop(int *fh)
     FadePalStep(1, (unsigned char *)pal, 0x10);
     FreeMemBlock(pal);
     if (!f.stopped && musicon) {
-        while (!sub_8FC8A(musicslot, 3));
+        while (!SndQuery(musicslot, 3));
         if (songdata) sub_8D2F0(songdata);
         songdata = 0;
     }

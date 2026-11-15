@@ -20,7 +20,7 @@ extern str_PCSpeaker, str_Pg01, str_Pg03, str_Pg05, str_Pg07, str_Pl05, str_Pl10
 extern str_Playoff, str_PlayoffTree2, str_Pointer20, str_Return, str_Room, str_Settings, str_Settings3, str_ShowLeague
 extern str_Sound4, str_SoundBlaster, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound, str_VisBck, str_VisitingTeam
 extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, TextSetColors
-extern TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette
+extern TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
 extern PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, GrabBlock, PrintString, sub_91FE0
 extern MouseRead, FindShape, VgaSetPalette, sub_B4BA8, SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
@@ -519,7 +519,7 @@ je short .3	; 8089F
 mov eax, dword [musicslot-3]	; 808A1
 sar eax, 18h	; 808A6
 mov edx, 3	; 808A9
-call sub_8FC8A	; 808AE
+call SndQuery	; 808AE
 test eax, eax	; 808B3
 je short LockerRoomScreen.2	; 808B5
 mov ecx, dword [songdata]	; 808B7
@@ -2431,7 +2431,7 @@ je short .13	; 822E0
 mov eax, dword [musicslot-3]	; 822E2
 sar eax, 18h	; 822E7
 mov edx, 3	; 822EA
-call sub_8FC8A	; 822EF
+call SndQuery	; 822EF
 test eax, eax	; 822F4
 je short LockerRoomLoop_n6.12	; 822F6
 mov ebx, dword [songdata]	; 822F8
@@ -2477,7 +2477,7 @@ je short .3	; 82385
 mov eax, dword [musicslot-3]	; 82387
 sar eax, 18h	; 8238C
 mov edx, 3	; 8238F
-call sub_8FC8A	; 82394
+call SndQuery	; 82394
 test eax, eax	; 82399
 je short LockerRoomLoop_n7.2	; 8239B
 mov eax, dword [songdata]	; 8239D
@@ -2521,7 +2521,7 @@ je short LockerRoomLoop_n7.3	; 82426
 mov eax, dword [musicslot-3]	; 82428
 sar eax, 18h	; 8242D
 mov edx, 3	; 82430
-call sub_8FC8A	; 82435
+call SndQuery	; 82435
 test eax, eax	; 8243A
 je short LockerRoomLoop_n7.6	; 8243C
 mov edi, dword [songdata]	; 8243E

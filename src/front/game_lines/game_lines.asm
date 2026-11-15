@@ -35,7 +35,7 @@ extern str_Pntr3, str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Power, 
 extern str_PT2, str_RosterIncomplete2, str_S2dSS, str_S2dSS2, str_S6, str_S7, str_SA3, str_Scratch2
 extern str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_Teams2, str_Tstat2, str_W6
 extern strcmp_, stub_8C218, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
-extern TextRestoreState, TextSetFont, sub_8FC8A, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect
+extern TextRestoreState, TextSetFont, SndQuery, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_91FE0, DrawArtMasked, MouseRead
 extern SetViewRect, FindShape, ClearScreen, sub_B4B58, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C84
 extern SetColorRemap, sub_B4FAC, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
@@ -90,7 +90,7 @@ call sub_8FCDF	; 7684F
 mov eax, dword [musicslot-3]	; 76854
 sar eax, 18h	; 76859
 mov edx, 3	; 7685C
-call sub_8FC8A	; 76861
+call SndQuery	; 76861
 test eax, eax	; 76866
 je short GameLineEditor.1	; 76868
 mov ebx, dword [songdata]	; 7686A

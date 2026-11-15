@@ -59,7 +59,7 @@ int DeskPenaltySummary(void)
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }

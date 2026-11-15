@@ -4,7 +4,7 @@
 #ifndef ASMFUNCS_H
 #define ASMFUNCS_H
 
-extern void sub_10000(); /* 10000 */
+extern void ___begtext(); /* 10000 */
 extern void unk_10003(); /* 10003 */
 extern void main_x(); /* 106BF */
 extern void ReadKeyboardPad(); /* 1086A */
@@ -919,7 +919,7 @@ extern void sub_8CC5C(); /* 8CC5C */
 extern void sub_8CC8C(); /* 8CC8C */
 extern void sub_8CCC4(); /* 8CCC4 */
 extern void sub_8CCE0(); /* 8CCE0 */
-extern void sub_8CD04(); /* 8CD04 */
+extern void AllocMemBlockEx(); /* 8CD04 */
 extern void reservemem(); /* 8CD4C */
 extern void loc_8CD90(); /* 8CD90 */
 extern void loc_8CDDC(); /* 8CDDC */
@@ -1074,7 +1074,7 @@ extern void loc_8DF06(); /* 8DF06 */
 extern void sub_8DF28(); /* 8DF28 */
 extern void sub_8DF3C(); /* 8DF3C */
 extern void sub_8DF54(); /* 8DF54 */
-extern void sub_8DF70(); /* 8DF70 */
+extern void ProbeVesa(); /* 8DF70 */
 extern void loc_8DF8B(); /* 8DF8B */
 extern void loc_8DFB0(); /* 8DFB0 */
 extern void loc_8DFEA(); /* 8DFEA */
@@ -1381,7 +1381,7 @@ extern void sub_8FF5E(); /* 8FF5E */
 extern void sub_8FF7C(); /* 8FF7C */
 extern void loc_8FFCB(); /* 8FFCB */
 extern void start(); /* 8FFD4 */
-extern void loc_90048(); /* 90048 */
+extern void __saved_DS(); /* 90048 */
 extern void loc_9004A(); /* 9004A */
 extern void loc_9004E(); /* 9004E */
 extern void loc_90066(); /* 90066 */
@@ -2342,7 +2342,7 @@ extern void sub_971BE(); /* 971BE */
 extern void loc_971D7(); /* 971D7 */
 extern void sub_971DB(); /* 971DB */
 extern void loc_971F4(); /* 971F4 */
-extern void sub_971F8(); /* 971F8 */
+extern void SndDriverCall(); /* 971F8 */
 extern void sub_9720B(); /* 9720B */
 extern void loc_9722C(); /* 9722C */
 extern void sub_9722E(); /* 9722E */
@@ -3305,7 +3305,7 @@ extern void sub_9D2E0(); /* 9D2E0 */
 extern void loc_9D303(); /* 9D303 */
 extern void loc_9D333(); /* 9D333 */
 extern void loc_9D33C(); /* 9D33C */
-extern void sub_9D352(); /* 9D352 */
+extern void InitFpuFlags(); /* 9D352 */
 extern void loc_9D3A4(); /* 9D3A4 */
 extern void loc_9D3C8(); /* 9D3C8 */
 extern void loc_9D3F0(); /* 9D3F0 */
@@ -6226,13 +6226,13 @@ extern void loc_B3DDD(); /* B3DDD */
 extern void loc_B3DF1(); /* B3DF1 */
 extern void sub_B3DFC(); /* B3DFC */
 extern void sub_B3E4A(); /* B3E4A */
-extern void sub_B3E98(); /* B3E98 */
+extern void SaveTextMode(); /* B3E98 */
 extern void loc_B3ED7(); /* B3ED7 */
-extern void sub_B3ED8(); /* B3ED8 */
+extern void RestoreTextMode(); /* B3ED8 */
 extern void loc_B3F23(); /* B3F23 */
 extern void loc_B3F3D(); /* B3F3D */
 extern void loc_B3F4B(); /* B3F4B */
-extern void sub_B3F50(); /* B3F50 */
+extern void DetectCPU(); /* B3F50 */
 extern void loc_B3FAC(); /* B3FAC */
 extern void sub_B3FB0(); /* B3FB0 */
 extern void sub_B3FC2(); /* B3FC2 */

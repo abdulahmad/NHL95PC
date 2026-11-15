@@ -19,7 +19,7 @@ extern msg_GameDiskSpace, hudotname, PaPreloadClips, penaltydigits, perioddigits
 extern randomd0, ReloadGameGfx, rmdir_, scoredigits, seed, SelectRinkBM, SelectScreenBM, SeriesLength
 extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprintf_, str_backslash2, str_Crests4, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
-extern str_star, strcat_, strcpy_, AllocMemBlock, sub_8E8A0, FillRect, FindShape, sub_B3464
+extern str_star, strcat_, strcpy_, AllocMemBlock, sub_8E8A0, FillRect, FindShape, ReadJoyRaw
 extern sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
 extern unknown_libname_2, VisTeam, lcsel_aw
 global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x

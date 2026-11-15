@@ -7,7 +7,7 @@ extern __CHK, a2touchpuck, apl, assexit, assinsert, assreplace, awscore, awtmfla
 extern awtmlcnt, awtmline, awtmstruct, bannermsg, bannertimer, BlockShotDive, burst, assonetimer_blade
 extern assonetimer_blade_y, fofdata2_b3, fofdata2_b7, c1playernum, c2playernum, camx, camy, changeplayer
 extern checkob, checkwindow, clockcont_0, clockticks, CompLine, cont1team, cont2team, crowdlevel
-extern donothing, doplayeracc, doshot, DrawPanelLine, demoflag, dword_CC0FA, dword_CCC9C, ovlartbank
+extern donothing, doplayeracc, doshot, DrawPanelLine, demoflag, dword_CC0FA, playsuspended, ovlartbank
 extern dword_E9A9E, Endfaceoff, energywarn, EvadePC, fadeinpending, Findhittype, FlushGSumQueue, fodir1
 extern fodir2, fofdata2, forcepldata, fox, foy, FreeMemBlock, gameclock, gameopts
 extern gmode, gmode2, gsp, hmroster, hmscore, hmtmflags, hmtmlcnt, hmtmline
@@ -203,7 +203,7 @@ mov word [nosplit edx*2+lcblink], bx	; 4FEC4
 mov bh, byte [byte ecx+pflags]	; 4FECC
 test bh, 8	; 4FECF
 je near CanBlockShot_ret5	; 4FED2
-cmp dword [dword_CCC9C], byte 0	; 4FED8
+cmp dword [playsuspended], byte 0	; 4FED8
 jne near CanBlockShot_ret5	; 4FEDF
 test bh, 20h	; 4FEE5
 jne near CanBlockShot_ret5	; 4FEE8
@@ -905,7 +905,7 @@ mov ecx, dword [puckc]	; 50605
 movsx ax, byte [ecx]	; 5060B
 cmp ax, word [byte ebx+SCnum]	; 5060F
 je near .x	; 50613
-cmp dword [dword_CCC9C], byte 0	; 50619
+cmp dword [playsuspended], byte 0	; 50619
 jne near .x	; 50620
 mov dh, byte [regd1]	; 50626
 test dh, 10h	; 5062C
@@ -1062,7 +1062,7 @@ pop ecx	; 507F4
 pop ebx	; 507F5
 ret	; 507F6
 .notpc:
-cmp dword [dword_CCC9C], byte 0	; 507F7
+cmp dword [playsuspended], byte 0	; 507F7
 jne near .x	; 507FE
 mov al, byte [regd1]	; 50804
 test al, 40h	; 50809
@@ -1094,7 +1094,7 @@ cmp dword [onetimerflag], byte 0	; 50855
 jne near doinput.setpassdir	; 5085C
 test byte [regd1], 10h	; 50862
 jne near doinput.change	; 50869
-cmp dword [dword_CCC9C], byte 0	; 5086F
+cmp dword [playsuspended], byte 0	; 5086F
 jne near .x	; 50876
 jmp near .acc	; 5087C
 .14:
@@ -1130,7 +1130,7 @@ pop ecx	; 508E7
 pop ebx	; 508E8
 ret	; 508E9
 .16:
-cmp dword [dword_CCC9C], byte 0	; 508EA
+cmp dword [playsuspended], byte 0	; 508EA
 jne short .x	; 508F1
 .acc:
 mov edx, dword [regd0-2]	; 508F3

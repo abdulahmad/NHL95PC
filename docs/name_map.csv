@@ -1,4 +1,5 @@
 pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_game_names,confidence,evidence,segment,method
+00010000,sub_10000,___begtext,PC-new,,,,high,Watcom BEGTEXT: the int3 / jmp at the first code address; the port uses it as the base of the game image,watcom_begtext,manual-trace
 00010010,sub_10010,GetMemListHead,PC-new,,,,high,returns memlist1 when eax != 0 else memlist0 [reviewed: body re-read],main_startup,manual-trace
 0001002A,sub_1002A,GetMemStats,PC-new,,,,medium,"walks the memory block list from GetMemListHead(1) (next at +20h) and returns total, free, used and largest block through four pointers; main_ refuses to start ('Insufficient memory available.') when the total is below 1E5D70h",main_startup,manual-trace
 00010094,main_,main_ (role: Begin),93G,hockey93_01.asm,hockey94.asm,94G Begin,high,Watcom main_ entry (called from the C runtime start); front-end entry like 94G Begin,main_startup,role
@@ -1140,6 +1141,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
 0008CCA8,sub_8CCA8,AllocMemBlock,PC-new,,,,medium,"memory manager: allocate a named block (name, size, flags), e.g. the 320 KB 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock",ea_memman_01,manual-trace
+0008CD04,sub_8CD04,AllocMemBlockEx,PC-new,,,,medium,"EA memory manager: the allocator under AllocMemBlock (name, size, flags, one), returns the block descriptor",ea_memman_01,manual-trace
 0008CD4C,sub_8CD4C,reservemem,PC-new,,,,high,"prints its own name: ""reservemem - INVALID SIZE REQUESTED"", ""reservemem - OUT OF MEMORY""",ea_memman_01,manual-trace
 0008D2A0,sub_8D2A0,findmemblock,PC-new,,,,high,EA memory manager name from its own FatalError string asc_C3D38 'findmemblock - BLOCK NOT FOUND (%p)': walks the block list from dword_D2F58 (+20h links) for the descriptor whose address field equals the stack argument and whose flags+19h bit 7 is clear,ea_memman_01,manual-trace
 0008D2D8,jctime,FreeMemBlock,PC-new,watcom_clib,,,high,"was a FLIRT misidentification (Watcom 'jctime', 23-byte collapsed body, name_map_94 method flirt): it is cdecl free(p) of the EA memory manager, findmemblock(p) then sub_8D2F0 (lock, unlink the descriptor unless flags+19h bit 7, return it to the free descriptor list, unlock); every caller passes a buffer it then drops (FreeDeskBuffers, ShutdownSpeech, LoadCrestsPalette); it sits between ea_memman_01 and ea_memman_02",watcom_clib_02,manual-trace
@@ -1154,6 +1156,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DC6E,_dos_getdiskfree_,_dos_getdiskfree_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_03,flirt
 0008DC9C,int386_,int386_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),dos4gw_dpmi_glue_01,flirt
 0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
+0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
 0008E3C0,nullsub_2,nullsub_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_05,flirt
 0008E3C4,_os_handle,_os_handle,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
@@ -1180,6 +1183,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008EB4B,srand_,srand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_06,flirt
 0008F13B,sub_8F13B,LoadSample,PC-new,,,,medium,"sound library: load the sample file at path, returns its handle",ea_sound_hl_01,manual-trace
 0008F1FE,sub_8F1FE,FreeSample,PC-new,,,,medium,sound library: free a sample loaded by LoadSample,ea_sound_hl_01,manual-trace
+0008FC8A,sub_8FC8A,SndQuery,PC-new,,,,medium,"EA sound library: query a sound handle (handle, what); what 3 = has its digital music finished",ea_sound_hl_01,manual-trace
 0008FFB0,sub_8FFB0,SetPalette,PC-new,,,,medium,"graphics library: set palette colours (first, count, rgb)",ea_sound_hl_01,manual-trace
 0008FFD4,start,start,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 725 bytes),watcom_clib_07,flirt
 000902A0,sub_902A0,__GETDS,PC-new,,,,high,"Watcom cstart __GETDS: o16 mov ds,[cs:__saved_DS] (the word at loc_90048 in the cstart code) / ret, right after cstart's int 21h/4Ch exit; called first by interrupt handlers (TimerISR, the GUS, MPU-401 and EACSNDF IRQ handlers, the input_joystick_misc handler at B300C)",watcom_clib_07,manual-trace
@@ -1266,6 +1270,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009621D,perror_,perror_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 74 bytes),watcom_clib_21,flirt
 00096267,write_,write_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 465 bytes),watcom_clib_21,flirt
 00096A58,const ios::failure::cause(void),const ios::failure::cause(void),library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_22,flirt
+000971F8,sub_971F8,SndDriverCall,PC-new,,,,medium,"EACSNDF core entry the handle calls jump to (handle in al, command word in edx)",eacsndf_core,manual-trace
 000972AB,sub_972AB,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972B8,sub_972B8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972C0,sub_972C0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
@@ -1356,6 +1361,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009C58C,j___fprtf_,j___fprtf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_34,flirt
 0009D307,__setEFGfmt_,__setEFGfmt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_35,flirt
 0009D322,__sys_init_387_emulator,__sys_init_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_35,flirt
+0009D352,sub_9D352,InitFpuFlags,PC-new,,,,medium,"start-up routine that sets up the floating point emulator and its two flags (__8087, __real87); replaced in the port",ea_snap_02,manual-trace
 0009D4A7,__sys_fini_387_emulator,__sys_fini_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 122 bytes),watcom_clib_36,flirt
 0009D586,__init_8087_,__init_8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_37,flirt
 0009D5C1,__chk8087_,__chk8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 64 bytes),watcom_clib_37,flirt
@@ -1469,6 +1475,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B2DCA,sub_B2DCA,MouseRead,PC-new,,,,medium,"mouse library: read buttons and position (btn, y, x)",input_mouse,manual-trace
 000B2E1B,sub_B2E1B,SetViewRect,PC-new,,,,medium,"graphics library: set the view rectangle (x, y, w, h)",input_mouse,manual-trace
 000B30B4,sub_B30B4,FindShape,PC-new,,,,medium,"graphics library: find the named art in a bank (bank, name), returns its pointer; 243 calls",input_joystick_misc,manual-trace
+000B3464,sub_B3464,ReadJoyRaw,PC-new,,,,medium,joystick library: read the raw joystick bits (joyrawbits),input_joystick_misc,manual-trace
 000B392C,sub_B392C,ClearScreen,PC-new,,,,medium,graphics library: clear the screen to a colour,input_joystick_misc,manual-trace
 000B395C,sub_B395C,GetTicks,PC-new,,,,high,returns tickcount (the 100 Hz TimerISR count),input_joystick_misc,manual-trace
 000B3962,sub_B3962,TicksSince,PC-new,,,,high,cdecl: returns tickcount minus the stack argument,input_joystick_misc,manual-trace
@@ -1482,6 +1489,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
 000B3B5A,sub_B3B5A,openhandle,PC-new,,,,high,"prints its own name: ""openhandle - %s FILE ERROR""",ea_fileio,manual-trace
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,middle94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B3E98,sub_B3E98,SaveTextMode,PC-new,,,,high,video library: save the text mode and the BIOS data area,video_bios_vga,manual-trace
+000B3ED8,sub_B3ED8,RestoreTextMode,PC-new,,,,high,video library: restore the text mode and the BIOS data area,video_bios_vga,manual-trace
+000B3F50,sub_B3F50,DetectCPU,PC-new,,,,high,"video library start-up: CPU detection by the alignment-check flag (386 or 486, protected mode); replaced in the port",video_bios_vga,manual-trace
 000B4B88,sub_B4B88,VgaSetPalette,PC-new,,,,medium,"video library: set DAC entries (first, count, rgb)",video_bios_vga,manual-trace
 000B4BC4,sub_B4BC4,SetClipWindow,PC-new,,,,medium,"video library: set the clip window (x1, x2, y1, y2)",video_bios_vga,manual-trace
 000B4DD4,sub_B4DD4,SetColorRemap,PC-new,,,,medium,graphics library: set the colour remap table the blitters use,vga_blitters,manual-trace

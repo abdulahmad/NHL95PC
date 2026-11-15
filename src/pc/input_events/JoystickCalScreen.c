@@ -43,7 +43,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     if (side) sub_B387E();
     else sub_B384E();
     TextSetColors(0, 0);
-    buttons = sub_B3464() >> shift;
+    buttons = ReadJoyRaw() >> shift;
     if ((buttons & 0x30) == 0) {
         TextSaveState(state);
         TextSetFont((int)unk_D45D8);
@@ -67,7 +67,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
                 *(int *)&joyenablemask &= ~mask;
                 break;
             }
-            s.cur = sub_B3464() >> shift;
+            s.cur = ReadJoyRaw() >> shift;
             if (s.cur & 0x30) break;
             s.cur = sub_B340B(s.cur);
             if (s.cur == prev) continue;

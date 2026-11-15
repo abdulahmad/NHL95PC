@@ -104,7 +104,7 @@ int SoundCardDlgLoop(void)
                         SetDialogColors(0xF9, 0xFA, 0xF8, 0xFA, 0xF7);
                         if (musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x64);
-                            while (!sub_8FC8A(musicslot, 3));
+                            while (!SndQuery(musicslot, 3));
                             sub_8D2F0(songdata);
                             songdata = 0;
                         }
@@ -160,7 +160,7 @@ int SoundCardDlgLoop(void)
 /* SetSoundDevice (82D7A, PC only): switch the sound to device dev (setbits bits: 1 PC speaker, 2 Sound Blaster,
    4 AdLib, 8 MT-32, 20h Ultrasound, 10h none). Shut the current one down first (speech and its copy buffer for
    2 / 20h, the AdLib sample for 4). Then open dev's music and digital drivers (sub_97079 of dword_D2427 /
-   dword_D242B); on success name them to the sound library, load the AdLib SLAPSHOT sample, play the MT32HOCK
+   digidriver); on success name them to the sound library, load the AdLib SLAPSHOT sample, play the MT32HOCK
    sample once for the MT-32 (with a message), make dev sounddev and setbits, set the slots, write its index in
    sounddevids to NHL.CFG and turn music on for 2 / 20h. When a device fails, say so (its name in sndcardname)
    until a click and fall back to 10h. Then start speech for 2 / 20h. Result: 1. */
@@ -202,49 +202,49 @@ int SetSoundDevice(int dev)
             strcpy(s.drv, (char *)str_PCBEEP);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 1;
-            dword_D242B = -1;
-            byte_D2439 = 0;
+            digidriver = -1;
+            crowddriver = 0;
             break;
         case 2:
             strcpy(s.drv, (char *)str_SBDAC);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 2;
-            dword_D242B = 3;
-            byte_D2439 = musicslot = 1;
+            digidriver = 3;
+            crowddriver = musicslot = 1;
             break;
         case 4:
             strcpy(s.drv, (char *)str_ADLIB);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 2;
-            dword_D242B = -1;
-            byte_D2439 = 0;
+            digidriver = -1;
+            crowddriver = 0;
             break;
         case 8:
             strcpy(s.drv, (char *)str_MT322);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 4;
-            dword_D242B = -1;
-            byte_D2439 = 0;
+            digidriver = -1;
+            crowddriver = 0;
             break;
         case 0x20:
             strcpy(s.drv, (char *)str_SBDAC2);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 5;
-            dword_D242B = 6;
-            byte_D2439 = musicslot = 1;
+            digidriver = 6;
+            crowddriver = musicslot = 1;
             break;
         default:
             strcpy(s.drv, (char *)str_PCBEEP2);
             strcpy(s.port, (char *)str_PC);
             dword_D2427 = 0;
-            dword_D242B = -1;
-            byte_D2439 = 0;
+            digidriver = -1;
+            crowddriver = 0;
             break;
         }
         sub_8EB5B();
         if (dword_D2427 >= 0 && (h1 = sub_97079(dword_D2427)) != -1) {
-            if (dword_D242B < 0) dword_D2423 = -1;
-            else if ((s.h2 = sub_97079(dword_D242B)) != -1) dword_D2423 = -1;
+            if (digidriver < 0) dword_D2423 = -1;
+            else if ((s.h2 = sub_97079(digidriver)) != -1) dword_D2423 = -1;
         }
         if (dword_D2423) {
             sub_8ECC0(s.drv, s.port);
@@ -264,7 +264,7 @@ int SetSoundDevice(int dev)
                 RestoreDialogBg();
             }
             sounddev = dev;
-            byte_D2439 = byte_D2439 ? s.h2 : h1;
+            crowddriver = crowddriver ? s.h2 : h1;
             musicslot = s.h2;
             setbits[0] = sounddev;
             MakePath(s.path, 0, (char *)str_NHL3, (char *)str_CFG);
@@ -276,7 +276,7 @@ int SetSoundDevice(int dev)
             fclose(fp);
             if (sounddev == 2 || sounddev == 0x20) {
                 musicon = 1;
-                musichandle = dword_D242B;
+                musichandle = digidriver;
             } else {
                 musicon = 0;
             }

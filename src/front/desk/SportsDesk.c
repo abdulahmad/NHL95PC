@@ -193,7 +193,7 @@ void SportsDesk(int mode)
                 SetScreenTitle(gamemode);
                 FreeMemBlock(ptr);
                 if (musicon && songdata) {
-                    while (!sub_8FC8A(musicslot, 3));
+                    while (!SndQuery(musicslot, 3));
                     sub_8D2F0(songdata);
                     songdata = 0;
                 }
@@ -261,7 +261,7 @@ void SportsDesk(int mode)
                         SetScreenTitle(gamemode);
                         if (ptr) FreeMemBlock(ptr);
                         if (musicon && songdata) {
-                            while (!sub_8FC8A(musicslot, 3));
+                            while (!SndQuery(musicslot, 3));
                             sub_8D2F0(songdata);
                             songdata = 0;
                         }

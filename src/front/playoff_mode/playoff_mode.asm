@@ -28,7 +28,7 @@ extern str_fmtcsp, str_fmtSlashDb, str_GameSav, str_GameSet, str_Menubuff2, str_
 extern str_PleaseEnterNewPlay, str_PO, str_Pointer, str_POTitle, str_Pstatbar2, str_Rst1, str_Rst2, str_Schedule
 extern str_ScheduleDb, str_Scuparrw, str_Temp2, str_Tied, str_WesternConference, strcat_, strcpy_, AllocMemBlock
 extern sub_8D2F0, LoadBank, sub_8E8A0, sub_8E8B8, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
-extern sub_8FC8A, sub_8FCDF, SetPalette, PutBlock, sub_910B0, sub_9121C, DrawArt, DrawShape
+extern SndQuery, sub_8FCDF, SetPalette, PutBlock, sub_910B0, sub_9121C, DrawArt, DrawShape
 extern GrabBlock, GetFileSize, sub_92F50, WriteFile, MouseRead, SetViewRect, FindShape, VgaSetPalette
 extern sub_B4BA8, SetClipWindow, teamabbrevs, teamcitynames, teamconf, teamdivflags, teamstatscb, TextGridOff
 extern TextGridOpen, TextInputDialog, treecol_Er1, treecol_Er2, treecol_Wr2, treecolslots, treecolx, treeteamnames
@@ -3903,7 +3903,7 @@ je short .4	; 893BC
 mov eax, dword [musicslot-3]	; 893BE
 sar eax, 18h	; 893C3
 mov edx, 3	; 893C6
-call sub_8FC8A	; 893CB
+call SndQuery	; 893CB
 test eax, eax	; 893D0
 je short PlayoffModeLoop.3	; 893D2
 mov esi, dword [songdata]	; 893D4
@@ -4100,7 +4100,7 @@ je short .22	; 896BE
 mov eax, dword [musicslot-3]	; 896C0
 sar eax, 18h	; 896C5
 mov edx, 3	; 896C8
-call sub_8FC8A	; 896CD
+call SndQuery	; 896CD
 test eax, eax	; 896D2
 je short PlayoffModeLoop.20	; 896D4
 mov eax, dword [songdata]	; 896D6

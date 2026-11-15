@@ -22,7 +22,7 @@ extern str_04d, str_Adafan, str_Adawards, str_Awards, str_Awardsi, str_Awasong, 
 extern str_D50_D99, str_D50D99, str_F000149, str_GfxIdList, str_HILIGHT, str_Iff, str_Mtafan, str_Mtawards
 extern str_Numshp, str_Pal3, str_Palmem, str_PPV, str_Scrn, str_Summ, str_Titl, str_Trinknd
 extern str_VFN, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
-extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette
+extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
 extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2

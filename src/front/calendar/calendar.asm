@@ -28,7 +28,7 @@ extern str_Easndesk2, str_extDB, str_extxx, str_floppydrv, str_GAME, str_GSUMMAR
 extern str_L7, str_Menubuff5, str_MustBeExportedTo, str_MustBeImportedFrom, str_Pal17, str_Pal18, str_PINFO, str_Pointer8
 extern str_S4, str_SAV, str_SDD2, str_SelectATeamTo, str_T5, str_Temp5, str_W5, str_Xx
 extern strcat_, strcpy_, AllocMemBlock, sub_8D2F0, LoadBank, TextSaveState, TextRestoreState, TextSetFont
-extern sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, DrawArt
+extern sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, DrawArt
 extern sub_913D0, GrabBlock, PrintString, sub_92F50, sub_93000, MouseRead, SetViewRect, FindShape
 extern ClearScreen, VgaSetPalette, sub_B4BA8, SetClipWindow, SetColorRemap, sub_B4FAC, teamstatscb, treeteamnames
 extern msg_DbUpdateError, msg_MergeNeeded, btn_MergeNeeded, hmglstats, UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg
@@ -766,7 +766,7 @@ je short .3	; 348DC
 mov eax, dword [musicslot-3]	; 348DE
 sar eax, 18h	; 348E3
 mov edx, 3	; 348E6
-call sub_8FC8A	; 348EB
+call SndQuery	; 348EB
 test eax, eax	; 348F0
 je short CalendarScreen.2	; 348F2
 mov ecx, dword [songdata]	; 348F4
@@ -3195,7 +3195,7 @@ je near .22	; 36F8E
 mov eax, dword [musicslot-3]	; 36F94
 sar eax, 18h	; 36F99
 mov edx, 3	; 36F9C
-call sub_8FC8A	; 36FA1
+call SndQuery	; 36FA1
 test eax, eax	; 36FA6
 je short PlayLeagueGame.20	; 36FA8
 mov ebx, dword [songdata]	; 36FAA
@@ -3422,7 +3422,7 @@ call sub_8FCDF	; 372C4
 mov eax, dword [musicslot-3]	; 372C9
 sar eax, 18h	; 372CE
 mov edx, 3	; 372D1
-call sub_8FC8A	; 372D6
+call SndQuery	; 372D6
 test eax, eax	; 372DB
 je short PlayLeagueGame.38	; 372DD
 mov ecx, dword [songdata]	; 372DF
@@ -4000,7 +4000,7 @@ je short .83	; 37AF9
 mov eax, dword [musicslot-3]	; 37AFB
 sar eax, 18h	; 37B00
 mov edx, 3	; 37B03
-call sub_8FC8A	; 37B08
+call SndQuery	; 37B08
 test eax, eax	; 37B0D
 je short PlayLeagueGame.82	; 37B0F
 mov ebx, dword [songdata]	; 37B11

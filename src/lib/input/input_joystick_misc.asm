@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B300C progbits alloc exec nowrite align=1
-extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, byte_D41B7
+extern __GETDS, atexit_, byte_D4168, byte_D416A, byte_D4174, byte_D4175, byte_D4176, joyedgedir
 extern byte_D4244, byte_D4245, byte_D4246, byte_D4280, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1
 extern dword_D2C84, dword_D3090, dword_D3096, dword_D30A4, dword_D4158, dword_D415C, dword_D4160, dword_D4164
 extern dword_D416C, dword_D4170, dword_D4177, dword_D417B, dword_D417F, dword_D4183, dword_D4187, dword_D418B
@@ -19,7 +19,7 @@ global loc_B3156, sub_B3168, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31
 global loc_B3207, loc_B3219, loc_B322F, loc_B3258, loc_B3277, loc_B3285, loc_B32A3, loc_B32BE
 global loc_B32E9, loc_B32FB, loc_B3311, loc_B333A, loc_B3346, loc_B3365, loc_B3373, loc_B3391
 global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, sub_B33DB, sub_B340B, sub_B3421
-global loc_B3430, loc_B3449, sub_B3454, sub_B345D, sub_B3464, loc_B3471, loc_B34B1, loc_B34B5
+global loc_B3430, loc_B3449, sub_B3454, sub_B345D, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
 global loc_B34C7, loc_B34CB, loc_B34CF, loc_B34D3, loc_B34E4, loc_B34F1, loc_B34FE, loc_B3509
 global loc_B3518, loc_B3532, loc_B3548, loc_B3573, loc_B3593, loc_B35A1, loc_B35B5, loc_B35CC
 global loc_B35E6, loc_B35FC, loc_B3627, loc_B3630, loc_B3650, loc_B365E, loc_B3672, loc_B3689
@@ -366,7 +366,7 @@ push ebp	; B340B
 LD mov, ebp, esp	; B340C
 mov ebx, dword [byte ebp+08h]	; B340E
 and ebx, byte 0Fh	; B3411
-mov al, byte [dword ebx+byte_D41B7]	; B3414
+mov al, byte [dword ebx+joyedgedir]	; B3414
 LD xor, ah, ah	; B341A
 movzx eax, ax	; B341C
 leave	; B341F
@@ -395,7 +395,7 @@ jmp near atexit_	; B3458
 sub_B345D:
 LD xor, eax, eax	; B345D
 call exit_	; B345F
-sub_B3464:
+ReadJoyRaw:
 mov bl, byte [joyenablemask]	; B3464
 LD or, bl, bl	; B346A
 jne short loc_B3471	; B346C

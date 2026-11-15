@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2B95 progbits alloc exec nowrite align=1
-extern byte_D4D06, byte_D4D07, dword_D4CD8, dword_D4CEC, sub_9D66B
+extern _Extender, _ExtenderSubtype, _curbrk, _STACKTOP, sub_9D66B
 global sbrk_, loc_A2BAE, loc_A2BBD, loc_A2BF7, loc_A2BF9, loc_A2C08, loc_A2C19, loc_A2C24
 global loc_A2C2B, loc_A2C42, loc_A2C4E, __brk_, loc_A2C7F, loc_A2CA9, loc_A2CAF, loc_A2CBB
 global loc_A2CCD, loc_A2CE2, loc_A2CF8, loc_A2CFE, loc_A2D0C
@@ -13,19 +13,19 @@ push edx	; A2B97
 push esi	; A2B98
 push edi	; A2B99
 mov ecx, eax	; A2B9A
-cmp byte [byte_D4D06], 1	; A2B9C
+cmp byte [_Extender], 1	; A2B9C
 jne short loc_A2BAE	; A2BA3
-cmp byte [byte_D4D07], 0	; A2BA5
+cmp byte [_ExtenderSubtype], 0	; A2BA5
 je short loc_A2BBD	; A2BAC
 loc_A2BAE:
-mov dh, byte [byte_D4D06]	; A2BAE
+mov dh, byte [_Extender]	; A2BAE
 cmp dh, 9	; A2BB4
 jne near loc_A2C2B	; A2BB7
 loc_A2BBD:
 test ecx, ecx	; A2BBD
 jle short loc_A2C19	; A2BBF
 add ecx, 0FFFh	; A2BC1
-mov al, byte [byte_D4D06]	; A2BC7
+mov al, byte [_Extender]	; A2BC7
 and cx, 0F000h	; A2BCC
 cmp al, 1	; A2BD1
 jne short loc_A2BF9	; A2BD3
@@ -73,9 +73,9 @@ xor eax, eax	; A2C35
 mov eax, ds	; A2C37
 lsl eax, eax	; A2C39
 inc eax	; A2C3C
-mov dword [dword_D4CD8], eax	; A2C3D
+mov dword [_curbrk], eax	; A2C3D
 loc_A2C42:
-mov eax, dword [dword_D4CD8]	; A2C42
+mov eax, dword [_curbrk]	; A2C42
 add eax, ecx	; A2C47
 call __brk_	; A2C49
 loc_A2C4E:
@@ -94,9 +94,9 @@ push edi	; A2C58
 push es	; A2C59
 push ebp	; A2C5A
 push eax	; A2C5B
-cmp eax, dword [dword_D4CEC]	; A2C5C
+cmp eax, dword [_STACKTOP]	; A2C5C
 jb short loc_A2CBB	; A2C62
-cmp byte [byte_D4D06], 0	; A2C64
+cmp byte [_Extender], 0	; A2C64
 jne short loc_A2CCD	; A2C6B
 mov ebp, dword [esp]	; A2C6D
 add ebp, byte 0Fh	; A2C70
@@ -147,10 +147,10 @@ test ebx, ebx	; A2CD9
 jne short loc_A2CE2	; A2CDB
 mov ebx, 0FFFFFh	; A2CDD
 loc_A2CE2:
-mov dl, byte [byte_D4D06]	; A2CE2
+mov dl, byte [_Extender]	; A2CE2
 cmp dl, 1	; A2CE8
 jne short loc_A2CF8	; A2CEB
-cmp dl, byte [byte_D4D07]	; A2CED
+cmp dl, byte [_ExtenderSubtype]	; A2CED
 jne short loc_A2CF8	; A2CF3
 shl ebx, 8	; A2CF5
 loc_A2CF8:
@@ -159,8 +159,8 @@ mov es, eax	; A2CFA
 jmp short loc_A2CAF	; A2CFC
 loc_A2CFE:
 mov ebx, dword [esp]	; A2CFE
-mov eax, dword [dword_D4CD8]	; A2D01
-mov dword [dword_D4CD8], ebx	; A2D06
+mov eax, dword [_curbrk]	; A2D01
+mov dword [_curbrk], ebx	; A2D06
 loc_A2D0C:
 add esp, byte 4	; A2D0C
 pop ebp	; A2D0F

@@ -21,7 +21,7 @@ extern str_Per2, str_Per3, str_Period, str_PP, str_PRDS, str_Rd, str_RParen2, st
 extern str_S3, str_Scra2, str_SDD, str_SH, str_ShotsOnGoal, str_SS4, str_St, str_Summ2
 extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, sub_1BAF3, AllocMemBlock
 extern sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF, PutBlock, DrawShape, sub_913D0, FindShape
+extern sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, PutBlock, DrawShape, sub_913D0, FindShape
 extern ClearScreen, VgaSetPalette, sub_B4BA8, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
 extern WaitClickTimeout, WaitTickDeadline
 global GameSummaryScreen_jt, GameSummaryScreen, GameSummaryScreen_p1, GameSummaryScreen_p2, GameSummaryScreen_p3, GameSummaryScreen_ot, GameSummaryScreen_finalot, GameSummaryScreen_final
@@ -64,7 +64,7 @@ call sub_8FCDF	; 2D3CF
 mov eax, dword [musicslot-3]	; 2D3D4
 sar eax, 18h	; 2D3D9
 mov edx, 3	; 2D3DC
-call sub_8FC8A	; 2D3E1
+call SndQuery	; 2D3E1
 test eax, eax	; 2D3E6
 je short GameSummaryScreen.1	; 2D3E8
 mov edi, dword [songdata]	; 2D3EA
@@ -1980,7 +1980,7 @@ je short .84	; 2F176
 mov eax, dword [musicslot-3]	; 2F178
 sar eax, 18h	; 2F17D
 mov edx, 3	; 2F180
-call sub_8FC8A	; 2F185
+call SndQuery	; 2F185
 test eax, eax	; 2F18A
 je short GameSummaryScreen_period.83	; 2F18C
 mov edi, dword [songdata]	; 2F18E
@@ -2965,7 +2965,7 @@ je short .25	; 2FD74
 mov eax, dword [musicslot-3]	; 2FD76
 sar eax, 18h	; 2FD7B
 mov edx, 3	; 2FD7E
-call sub_8FC8A	; 2FD83
+call SndQuery	; 2FD83
 test eax, eax	; 2FD88
 je short GameStatsScreen.23	; 2FD8A
 mov ecx, dword [songdata]	; 2FD8C

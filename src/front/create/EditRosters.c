@@ -93,7 +93,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
     ((void (*)(void))mousepollfn)();
     ClearInputQueue();
     do {
-        if (musicon && songdata && sub_8FC8A(musicslot, 3)) {
+        if (musicon && songdata && SndQuery(musicslot, 3)) {
             sub_8D2F0(songdata);
             songdata = 0;
         }

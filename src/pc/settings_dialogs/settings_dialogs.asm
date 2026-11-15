@@ -18,7 +18,7 @@ extern str_Dbox2, str_Dbox3, str_Dbox4, str_Dbox5, str_DigitizedSpeech, str_Digi
 extern str_JoystickTwo, str_Music, str_Music2, str_Music3, str_OneS, str_PlayerImg, str_Pointer15, str_Pointer16
 extern str_Pointer17, str_Pointer18, str_Setting3, str_Setting4, str_Setting5, str_Setting6, str_Setting7, str_Sound
 extern str_Sound2, str_Sound3, str_TheKeyboard, str_TheMouse, str_TwoS, AllocMemBlock, LoadBank, TextSetColors
-extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, sub_8FC8A, sub_8FCDF, PutBlock
+extern sub_8F963, sub_8F96E, sub_8F979, sub_8F984, sub_8FB8E, SndQuery, sub_8FCDF, PutBlock
 extern FillRect, sub_91284, DrawArt, GrabBlock, PrintString, sub_91FE0, DrawArtMasked, sub_96440
 extern MouseRead, FindShape, VgaSetPalette, sub_B4BA8, SetColorRemap, sub_B4FAC, teamcitynames, dlggreys
 extern ctlboxrect1, ctlboxrect2, VisTeam, WriteCurModeState, WriteModeState
@@ -1538,7 +1538,7 @@ jne short .25	; 7B241
 mov eax, dword [musicslot-3]	; 7B243
 sar eax, 18h	; 7B248
 mov edx, 3	; 7B24B
-call sub_8FC8A	; 7B250
+call SndQuery	; 7B250
 test eax, eax	; 7B255
 je short .25	; 7B257
 mov edx, dword [musichandle]	; 7B259
@@ -1557,7 +1557,7 @@ je short .27	; 7B28A
 mov eax, dword [musicslot-3]	; 7B28C
 sar eax, 18h	; 7B291
 mov edx, 3	; 7B294
-call sub_8FC8A	; 7B299
+call SndQuery	; 7B299
 test eax, eax	; 7B29E
 jne short .27	; 7B2A0
 mov eax, dword [musichandle]	; 7B2A2
@@ -2555,7 +2555,7 @@ jne short .18	; 7BDE1
 mov eax, dword [musicslot-3]	; 7BDE3
 sar eax, 18h	; 7BDE8
 mov edx, 3	; 7BDEB
-call sub_8FC8A	; 7BDF0
+call SndQuery	; 7BDF0
 test eax, eax	; 7BDF5
 je short .18	; 7BDF7
 mov edx, dword [musichandle]	; 7BDF9
@@ -2574,7 +2574,7 @@ je short .20	; 7BE2A
 mov eax, dword [musicslot-3]	; 7BE2C
 sar eax, 18h	; 7BE31
 mov edx, 3	; 7BE34
-call sub_8FC8A	; 7BE39
+call SndQuery	; 7BE39
 test eax, eax	; 7BE3E
 jne short .20	; 7BE40
 mov eax, dword [musichandle]	; 7BE42
@@ -3352,7 +3352,7 @@ jne short .17	; 7C6EF
 mov eax, dword [musicslot-3]	; 7C6F1
 sar eax, 18h	; 7C6F6
 mov edx, 3	; 7C6F9
-call sub_8FC8A	; 7C6FE
+call SndQuery	; 7C6FE
 test eax, eax	; 7C703
 je short .17	; 7C705
 mov edx, dword [musichandle]	; 7C707
@@ -3371,7 +3371,7 @@ je short .19	; 7C738
 mov eax, dword [musicslot-3]	; 7C73A
 sar eax, 18h	; 7C73F
 mov edx, 3	; 7C742
-call sub_8FC8A	; 7C747
+call SndQuery	; 7C747
 test eax, eax	; 7C74C
 jne short .19	; 7C74E
 mov eax, dword [musichandle]	; 7C750

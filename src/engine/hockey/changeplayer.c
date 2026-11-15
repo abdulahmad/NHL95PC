@@ -258,7 +258,7 @@ void DrawRinkOverlays(short vx, short vy)
 
     c1 = c1playernum[0];
     c2 = c2playernum[0];
-    if (dword_CCC9C) c1 = c2 = -1;
+    if (playsuspended) c1 = c2 = -1;
     if (camx > -0x10) {
         if (camy < 0x50 && camy > -0x94) {
             for (i = 0; i < PBnum[0] && i < 3; i++) DrawFrameSprite(0x17E, 0xB3, (i + 3) * -0xB, 0, 0);
@@ -386,7 +386,7 @@ void DrawRinkOverlays(short vx, short vy)
             bannermsg = -1;
         }
     }
-    if ((pad1dev[0] == 1 || pad2dev == 1) && curperiod != -1 && !dword_CCC9C) {
+    if ((pad1dev[0] == 1 || pad2dev == 1) && curperiod != -1 && !playsuspended) {
         i = pad1dev[0] == 1 ? c1 : c2;
         if (i != -1) {
             if ((mousex - 0xA0) * (mousex - 0xA0) + (mousey - 0x64) * (mousey - 0x64) < 0x9C4) {

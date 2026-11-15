@@ -121,7 +121,7 @@ int OppInReach(Player *p)
    highlighted choice (lcsel into regd2, lcfound) and closes the box (lcblink, lcboxon 0); else the choice cycles
    every 60 frames (lctimer; two choices on the special lines above 3, else four; lcline steps through linenext)
    and blinks every 12 (lcblinktime, lcblink). Then a joystick player that is not animation-locked or fighting
-   (and with dword_CCC9C clear) skates (doplayeracc with the direction in regd0). p: the player. No result. */
+   (and with playsuspended clear) skates (doplayeracc with the direction in regd0). p: the player. No result. */
 void lineinput(Player *p)
 {
     Team *t;
@@ -151,7 +151,7 @@ void lineinput(Player *p)
         lcblinktime[side] += 0xC;
         lcblink[side] = lcblink[side] == 0;
     }
-    if (!(p->pflags & pfjoy) || dword_CCC9C || (p->pflags & pfalock) || (p->pflags2 & 1)) return;
+    if (!(p->pflags & pfjoy) || playsuspended || (p->pflags & pfalock) || (p->pflags2 & 1)) return;
     doplayeracc(p, regd0.w);
 }
 

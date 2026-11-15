@@ -4,7 +4,7 @@
 #ifndef GLOBALS_H
 #define GLOBALS_H
 
-extern unsigned char unk_C0000[]; /* C0000 */
+extern unsigned char __nullarea[]; /* C0000 */
 extern unsigned char str_NoDiskSpaceC[]; /* C0004 */
 extern unsigned char str_ErrDiskFree2[]; /* C005B */
 extern unsigned char str_NoDiskSpaceCur[]; /* C007A */
@@ -2807,7 +2807,7 @@ extern short ovlsteptime[]; /* CC054 */
 extern int ovlartfiles[]; /* CC080 */
 extern int goalienotebits; /* CC0AC */
 extern short Pencntdwn2[]; /* CC0B0 */
-extern int dword_CC0B4[]; /* CC0B4 */
+extern int markframes_e1[]; /* CC0B4 */
 extern short lldispodd; /* CC0D8 */
 extern unsigned char lldisp; /* CC0D9 */
 extern short ltack; /* CC0DA */
@@ -2891,7 +2891,7 @@ extern int crowdvol8; /* CCC8C */
 extern int crowdvol7; /* CCC90 */
 extern int cursndbank; /* CCC94 */
 extern int oneminsaid; /* CCC98 */
-extern int dword_CCC9C; /* CCC9C */
+extern int playsuspended; /* CCC9C */
 extern int dword_CCC9D[]; /* CCC9D */
 extern int dword_CCC9E[]; /* CCC9E */
 extern signed char cupceremony; /* CCCA0 */
@@ -3496,12 +3496,12 @@ extern unsigned char sndselbox1[]; /* D2403 */
 extern unsigned char sndselbox2[]; /* D2413 */
 extern int dword_D2423; /* D2423 */
 extern int dword_D2427; /* D2427 */
-extern int dword_D242B; /* D242B */
+extern int digidriver; /* D242B */
 extern signed char musicslot; /* D242F */
 extern unsigned char musicon; /* D2430 */
 extern int musichandle; /* D2431 */
 extern int sndtempbuf; /* D2435 */
-extern unsigned char byte_D2439; /* D2439 */
+extern unsigned char crowddriver; /* D2439 */
 extern int sounddevids[]; /* D243A */
 extern unsigned char str_CouldNotFindA[]; /* D2452 */
 extern unsigned char str_CardInThisMachine[]; /* D2463 */
@@ -3645,7 +3645,7 @@ extern unsigned char byte_D2E8D[]; /* D2E8D */
 extern unsigned char byte_D2EE8[]; /* D2EE8 */
 extern short saved_ss; /* D2F44 */
 extern unsigned char str_StackOverflow[]; /* D2F46 */
-extern int dword_D2F58; /* D2F58 */
+extern int memblocklist; /* D2F58 */
 extern int dword_D2F5C; /* D2F5C */
 extern int dword_D2F60; /* D2F60 */
 extern int dword_D2F64; /* D2F64 */
@@ -3666,10 +3666,10 @@ extern int tickcount; /* D2FDC */
 extern int slowtickcount; /* D2FE0 */
 extern int oldint8off; /* D2FE4 */
 extern short oldint8sel; /* D2FE8 */
-extern int dword_D2FEC; /* D2FEC */
-extern int dword_D2FF0; /* D2FF0 */
-extern int dword_D2FF4; /* D2FF4 */
-extern int dword_D2FF8; /* D2FF8 */
+extern int mouseminx; /* D2FEC */
+extern int mouseminy; /* D2FF0 */
+extern int mousemaxx; /* D2FF4 */
+extern int mousemaxy; /* D2FF8 */
 extern int dword_D2FFC; /* D2FFC */
 extern int dword_D3000; /* D3000 */
 extern short word_D3004; /* D3004 */
@@ -3690,10 +3690,10 @@ extern int dword_D304C; /* D304C */
 extern int dword_D3050; /* D3050 */
 extern int dword_D3054; /* D3054 */
 extern int dword_D3058; /* D3058 */
-extern int dword_D305C; /* D305C */
-extern int dword_D3060; /* D3060 */
-extern unsigned char byte_D3064; /* D3064 */
-extern unsigned char byte_D3068; /* D3068 */
+extern int cpuinfo_d0; /* D305C */
+extern int cpuinfo_d1; /* D3060 */
+extern unsigned char cpuinfo_b0; /* D3064 */
+extern unsigned char cpuinfo_b1; /* D3068 */
 extern int off_D306C; /* D306C */
 extern int off_D3070; /* D3070 */
 extern int off_D3074; /* D3074 */
@@ -3755,7 +3755,7 @@ extern int dword_D41A7; /* D41A7 */
 extern int dword_D41AB; /* D41AB */
 extern int dword_D41AF; /* D41AF */
 extern int dword_D41B3; /* D41B3 */
-extern unsigned char byte_D41B7[]; /* D41B7 */
+extern unsigned char joyedgedir[]; /* D41B7 */
 extern unsigned char randseed[]; /* D41C8 */
 extern unsigned char byte_D41CC; /* D41CC */
 extern unsigned char byte_D41CD; /* D41CD */
@@ -3867,29 +3867,29 @@ extern int joycalposthook; /* D45B8 */
 extern unsigned char unk_D45D8[]; /* D45D8 */
 extern unsigned char unk_D45F8[]; /* D45F8 */
 extern unsigned char unk_D47B4[]; /* D47B4 */
-extern unsigned char byte_D4B9C; /* D4B9C */
+extern unsigned char __8087; /* D4B9C */
 extern unsigned char byte_D4B9D; /* D4B9D */
 extern unsigned char off_D4BA0[]; /* D4BA0 */
 extern int dword_D4BC8[]; /* D4BC8 */
-extern int dword_D4CD4; /* D4CD4 */
-extern int dword_D4CD8; /* D4CD8 */
-extern int dword_D4CDC; /* D4CDC */
-extern int dword_D4CE0; /* D4CE0 */
-extern short word_D4CE4; /* D4CE4 */
-extern int dword_D4CE8; /* D4CE8 */
-extern int dword_D4CEC; /* D4CEC */
+extern int _dynend; /* D4CD4 */
+extern int _curbrk; /* D4CD8 */
+extern int _LpCmdLine; /* D4CDC */
+extern int _LpPgmName; /* D4CE0 */
+extern short _psp; /* D4CE4 */
+extern int _STACKLOW; /* D4CE8 */
+extern int _STACKTOP; /* D4CEC */
 extern int dword_D4CF0; /* D4CF0 */
 extern int dword_D4CF4; /* D4CF4 */
 extern int dword_D4CF8; /* D4CF8 */
 extern int dword_D4D00; /* D4D00 */
-extern unsigned char word_D4D04; /* D4D04 */
-extern unsigned char byte_D4D06; /* D4D06 */
-extern unsigned char byte_D4D07; /* D4D07 */
+extern unsigned char __no87; /* D4D04 */
+extern unsigned char _Extender; /* D4D06 */
+extern unsigned char _ExtenderSubtype; /* D4D07 */
 extern unsigned char byte_D4D08; /* D4D08 */
-extern int dword_D4D09; /* D4D09 */
-extern short word_D4D0D; /* D4D0D */
-extern unsigned char byte_D4D0F; /* D4D0F */
-extern unsigned char byte_D4D10; /* D4D10 */
+extern int _Envptr; /* D4D09 */
+extern short _Envptr_w4; /* D4D0D */
+extern unsigned char _osmajor; /* D4D0F */
+extern unsigned char _osminor; /* D4D10 */
 extern int dword_D4D11; /* D4D11 */
 extern unsigned char unk_D4D18[]; /* D4D18 */
 extern unsigned char unk_D4D32[]; /* D4D32 */
@@ -3915,7 +3915,7 @@ extern int dword_D4F58; /* D4F58 */
 extern unsigned char byte_D4F5C; /* D4F5C */
 extern unsigned char byte_D4F5D; /* D4F5D */
 extern unsigned char byte_D4F5E; /* D4F5E */
-extern int dword_D4F64; /* D4F64 */
+extern int sndhandlecount; /* D4F64 */
 extern short word_D4F68[]; /* D4F68 */
 extern short word_D4F88; /* D4F88 */
 extern int dword_D4F8A; /* D4F8A */
@@ -3946,7 +3946,7 @@ extern int dword_D5194; /* D5194 */
 extern int dword_D51D4; /* D51D4 */
 extern short word_D51D8; /* D51D8 */
 extern short word_D51DA; /* D51DA */
-extern unsigned char byte_D51DC; /* D51DC */
+extern unsigned char __real87; /* D51DC */
 extern int off_D51E4[]; /* D51E4 */
 extern unsigned char byte_D5224; /* D5224 */
 extern unsigned char unk_D522E[]; /* D522E */
@@ -3975,8 +3975,8 @@ extern unsigned char unk_D5408[]; /* D5408 */
 extern int dword_D5424[]; /* D5424 */
 extern int dword_D543C; /* D543C */
 extern unsigned char byte_D5440; /* D5440 */
-extern int dword_D5444; /* D5444 */
-extern int dword_D5448; /* D5448 */
+extern int _environ; /* D5444 */
+extern int ___env_mask; /* D5448 */
 extern unsigned char str_SHPI2[]; /* D544C */
 extern unsigned char byte_D545C[]; /* D545C */
 extern unsigned char byte_D54DC[]; /* D54DC */
@@ -5262,14 +5262,14 @@ extern int dword_EDAA8; /* EDAA8 */
 extern int dword_EDAAC; /* EDAAC */
 extern int dword_EDAB0; /* EDAB0 */
 extern int dword_EDAB4; /* EDAB4 */
-extern unsigned char unk_EDAB8[]; /* EDAB8 */
+extern unsigned char vesamodeinfo[]; /* EDAB8 */
 extern int dword_EDABA; /* EDABA */
 extern unsigned char byte_EDABB; /* EDABB */
-extern unsigned char unk_EDBB8[]; /* EDBB8 */
+extern unsigned char vesainfo[]; /* EDBB8 */
 extern short word_EDBCA; /* EDBCA */
-extern int dword_EDCB8; /* EDCB8 */
+extern int vesapresent; /* EDCB8 */
 extern int dword_EDCBC; /* EDCBC */
-extern unsigned char byte_EDCC0; /* EDCC0 */
+extern unsigned char vesamodeok; /* EDCC0 */
 extern unsigned char byte_EDCC1; /* EDCC1 */
 extern unsigned char byte_EDCC3; /* EDCC3 */
 extern unsigned char byte_EDCC5; /* EDCC5 */
@@ -5351,7 +5351,7 @@ extern int dword_F24C0; /* F24C0 */
 extern unsigned char byte_F24C4; /* F24C4 */
 extern unsigned char byte_F24C5; /* F24C5 */
 extern int dword_F24C8; /* F24C8 */
-extern int dword_F24CC; /* F24CC */
+extern int delaycount; /* F24CC */
 extern unsigned char unk_F24D0[]; /* F24D0 */
 extern unsigned char unk_F24D4[]; /* F24D4 */
 extern unsigned char unk_F24D8[]; /* F24D8 */
@@ -5459,6 +5459,6 @@ extern int dword_F79F8[]; /* F79F8 */
 extern int dword_F79FC[]; /* F79FC */
 extern int dword_F7A00[]; /* F7A00 */
 extern int dword_F7B78; /* F7B78 */
-extern unsigned char unk_F7B88[]; /* F7B88 */
+extern unsigned char stackarea[]; /* F7B88 */
 
 #endif

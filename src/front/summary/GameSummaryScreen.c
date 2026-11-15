@@ -140,7 +140,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     sub_1BAF3(700000);
     if (musicon && songdata) {
         sub_8FCDF(musichandle, 3, 0x4B);
-        while (!sub_8FC8A(musicslot, 3)) ;
+        while (!SndQuery(musicslot, 3)) ;
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -597,7 +597,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
     FadePalStep(1, f.pal, 0x10);
     if (musicon && songdata) {
-        while (!sub_8FC8A(musicslot, 3)) ;
+        while (!SndQuery(musicslot, 3)) ;
         sub_8D2F0(songdata);
         songdata = 0;
     } else {

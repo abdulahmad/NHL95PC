@@ -502,7 +502,7 @@ void StartPer(void)
 }
 
 /* updateplayers (5C40F, 93G updateplayers; ends in findpc_ret6): run every sort object for a frame.
-   PC first: dword_CCC9C = 1 while the clock is stopped for a highlight (gmode bit 7), or with no replay (gmode2
+   PC first: playsuspended = 1 while the clock is stopped for a highlight (gmode bit 7), or with no replay (gmode2
    bit 0), no penalty countdown or queued penalty, overlay state refasslist[...] not 20h / 23h and the overlay idle
    (ovlseq 0 or 2, ovltimer outside 0-FFh); else 0. Then for the 12 players: the puck distance (vecdist, word 4Eh),
    direction (vtoa, byte 52h) and the quarter vector squared (word 50h); per team the goalie's SCnum (word FAh) and
@@ -525,7 +525,7 @@ void updateplayers(void)
     int a;
 
     i = refasslist[((short *)&refposition)[1]];
-    dword_CCC9C = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
+    playsuspended = (gmode & 1) && ((gmode & 0x80) || !(gmode2 & 1) && Pencntdwn < 0 && !PenBuf[0] && i != 0x20 && i != 0x23
         && (ovlseq == 2 || !ovlseq || ovltimer < 0 || ovltimer >= 0x100) != 0);
     p = SortCords;
     hmtmgoaliesc = -1;

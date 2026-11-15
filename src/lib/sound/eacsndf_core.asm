@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_96A60 progbits alloc exec nowrite align=1
-extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, dword_D4F64, dword_D4F96, dword_EDE8C
+extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, sndhandlecount, dword_D4F96, dword_EDE8C
 extern dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0
 extern off_D4BA0, sub_8DBD4, sub_96A10, sub_B3ABC, sub_B3C74, unk_EDE88
 global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
@@ -13,7 +13,7 @@ global loc_96E5B, loc_96E73, sub_96E7C, loc_96EFF, loc_96F3D, loc_96F77, loc_96F
 global loc_9702F, loc_97059, loc_97066, loc_9706F, sub_97079, loc_9708D, loc_97097, loc_9709B
 global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, sub_97166, loc_97175
 global sub_9717F, sub_97194, loc_971A5, sub_971AB, sub_971BE, loc_971D7, sub_971DB, loc_971F4
-global sub_971F8, sub_9720B, loc_9722C, sub_9722E, loc_9724A, loc_9724E, loc_97266, sub_97268
+global SndDriverCall, sub_9720B, loc_9722C, sub_9722E, loc_9724A, loc_9724E, loc_97266, sub_97268
 global loc_972A5, sub_972AB, sub_972B1, sub_972B8, sub_972BE, sub_972C0, sub_972C6, sub_972C8
 global sub_972CE, sub_972D5, sub_972DB, sub_972DD, sub_972E3, sub_972E5, sub_972EB
 sub_96A60:
@@ -637,7 +637,7 @@ cmp ebx, dword [dword edx+dword_EDEB0]	; 9709E
 je near loc_9715C	; 970A4
 inc eax	; 970AA
 loc_970AB:
-mov edx, dword [dword_D4F64]	; 970AB
+mov edx, dword [sndhandlecount]	; 970AB
 cmp eax, edx	; 970B1
 jl short loc_9709B	; 970B3
 test edx, edx	; 970B5
@@ -653,7 +653,7 @@ loc_970CC:
 cmp eax, byte 7	; 970CC
 jb short loc_970C2	; 970CF
 loc_970D1:
-mov eax, dword [dword_D4F64]	; 970D1
+mov eax, dword [sndhandlecount]	; 970D1
 mov dword [esp], eax	; 970D6
 imul esi, ebx, byte 2Ch	; 970D9
 mov dword [dword esi+dword_D4BC8], eax	; 970DC
@@ -682,7 +682,7 @@ mov edx, dword [esp]	; 9712D
 mov byte [dword edx+byte_F243E], al	; 97130
 mov edx, 7	; 97136
 mov eax, ebx	; 9713B
-call sub_971F8	; 9713D
+call SndDriverCall	; 9713D
 test eax, eax	; 97142
 jle short loc_97153	; 97144
 cmp eax, byte 64h	; 97146
@@ -691,7 +691,7 @@ mov eax, dword [esp]	; 9714B
 mov dword [dword_D4F96], eax	; 9714E
 loc_97153:
 mov eax, dword [esp]	; 97153
-inc dword [dword_D4F64]	; 97156
+inc dword [sndhandlecount]	; 97156
 loc_9715C:
 add esp, byte 4	; 9715C
 pop ebp	; 9715F
@@ -702,7 +702,7 @@ pop ecx	; 97163
 pop ebx	; 97164
 ret	; 97165
 sub_97166:
-cmp dword [dword_D4F64], byte 0	; 97166
+cmp dword [sndhandlecount], byte 0	; 97166
 jg short loc_97175	; 9716D
 mov eax, 0FFFFFFFFh	; 9716F
 ret	; 97174
@@ -746,7 +746,7 @@ push ebx	; 971BE
 push ecx	; 971BF
 push edx	; 971C0
 and eax, 0FFh	; 971C1
-cmp eax, dword [dword_D4F64]	; 971C6
+cmp eax, dword [sndhandlecount]	; 971C6
 jge short loc_971D7	; 971CC
 imul eax, byte 2Ch	; 971CE
 call dword [dword eax+dword_EDE94]	; 971D1
@@ -760,7 +760,7 @@ push ebx	; 971DB
 push ecx	; 971DC
 push edx	; 971DD
 and eax, 0FFh	; 971DE
-cmp eax, dword [dword_D4F64]	; 971E3
+cmp eax, dword [sndhandlecount]	; 971E3
 jge short loc_971F4	; 971E9
 imul eax, byte 2Ch	; 971EB
 call dword [dword eax+dword_EDE98]	; 971EE
@@ -769,7 +769,7 @@ pop edx	; 971F4
 pop ecx	; 971F5
 pop ebx	; 971F6
 ret	; 971F7
-sub_971F8:
+SndDriverCall:
 push ebx	; 971F8
 push ecx	; 971F9
 and eax, 0FFh	; 971FA
@@ -780,7 +780,7 @@ jmp short loc_971A5	; 97209
 sub_9720B:
 push ecx	; 9720B
 and eax, 0FFh	; 9720C
-cmp eax, dword [dword_D4F64]	; 97211
+cmp eax, dword [sndhandlecount]	; 97211
 jge short loc_9722C	; 97217
 imul eax, byte 2Ch	; 97219
 push ebx	; 9721C
@@ -796,7 +796,7 @@ sub_9722E:
 push ecx	; 9722E
 xor ecx, ecx	; 9722F
 mov cl, al	; 97231
-cmp ecx, dword [dword_D4F64]	; 97233
+cmp ecx, dword [sndhandlecount]	; 97233
 jge short loc_97266	; 97239
 mov ah, byte [ebx]	; 9723B
 and ah, 0F0h	; 9723D
@@ -823,7 +823,7 @@ push esi	; 97268
 push edi	; 97269
 push ebp	; 9726A
 and eax, 0FFh	; 9726B
-cmp eax, dword [dword_D4F64]	; 97270
+cmp eax, dword [sndhandlecount]	; 97270
 jge short loc_972A5	; 97276
 imul eax, byte 2Ch	; 97278
 mov edi, dword [byte esp+024h]	; 9727B

@@ -7,7 +7,7 @@ extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts,
 extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
-extern strcat_, stricmp_, sub_8D2F0, LoadBank, sub_8F98F, sub_8FC8A, SetPalette, DrawBitmap
+extern strcat_, stricmp_, sub_8D2F0, LoadBank, sub_8F98F, SndQuery, SetPalette, DrawBitmap
 extern FindShape, sub_B4BA8, str_ModeR, WaitClickTimeout
 global InitFileLocations, CoachCutScene
 ; C: src/pc/file_locations/InitFileLocations.c
@@ -295,7 +295,7 @@ je near .16	; 8BE41
 mov eax, dword [musicslot-3]	; 8BE47
 sar eax, 18h	; 8BE4C
 mov edx, 3	; 8BE4F
-call sub_8FC8A	; 8BE54
+call SndQuery	; 8BE54
 test eax, eax	; 8BE59
 je short CoachCutScene.14	; 8BE5B
 mov edx, dword [songdata]	; 8BE5D

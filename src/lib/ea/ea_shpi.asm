@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
 extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC
-extern dword_F6138, strncpy_, strrchr_, sub_8CD04, sub_8D15C, sub_8D728, sub_9762C, unpack
+extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, sub_8D15C, sub_8D728, sub_9762C, unpack
 extern sub_98A40, sub_B0100, sub_B0148, sub_B3ABC, sub_B3B19, sub_B3C60, sub_B3C74, sub_B3CB3
 extern sub_B72D4, sub_B72E9
 global sub_A2000, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
@@ -763,7 +763,7 @@ mov ebx, dword [byte esp+028h]	; A2850
 push ebx	; A2854
 push eax	; A2855
 push esi	; A2856
-call sub_8CD04	; A2857
+call AllocMemBlockEx	; A2857
 mov esi, eax	; A285C
 add esp, byte 10h	; A285E
 test eax, eax	; A2861

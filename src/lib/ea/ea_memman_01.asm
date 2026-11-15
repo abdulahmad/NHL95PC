@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
-extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, dword_D2F58, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
+extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
 extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
 extern getmemblock, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
 global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, AllocMemBlock
-global sub_8CCC4, sub_8CCE0, sub_8CD04, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
+global sub_8CCC4, sub_8CCE0, AllocMemBlockEx, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
 global loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A, loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA
 global loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82, loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4
 global loc_8CFBD, loc_8D022, loc_8D035, loc_8D03D, loc_8D08F, loc_8D097, loc_8D0BF, loc_8D0C1
@@ -285,7 +285,7 @@ mov ebx, dword [byte esp+010h]	; 8CC77
 push ebx	; 8CC7B
 mov ecx, dword [byte esp+010h]	; 8CC7C
 push ecx	; 8CC80
-call sub_8CD04	; 8CC81
+call AllocMemBlockEx	; 8CC81
 add esp, byte 10h	; 8CC86
 ret	; 8CC89
 db 08Bh,0C0h
@@ -297,7 +297,7 @@ mov ebx, dword [byte esp+010h]	; 8CC93
 push ebx	; 8CC97
 mov ecx, dword [byte esp+010h]	; 8CC98
 push ecx	; 8CC9C
-call sub_8CD04	; 8CC9D
+call AllocMemBlockEx	; 8CC9D
 add esp, byte 10h	; 8CCA2
 ret	; 8CCA5
 db 08Bh,0C0h
@@ -309,7 +309,7 @@ mov ebx, dword [byte esp+010h]	; 8CCAF
 push ebx	; 8CCB3
 mov ecx, dword [byte esp+010h]	; 8CCB4
 push ecx	; 8CCB8
-call sub_8CD04	; 8CCB9
+call AllocMemBlockEx	; 8CCB9
 add esp, byte 10h	; 8CCBE
 mov eax, dword [eax]	; 8CCC1
 ret	; 8CCC3
@@ -321,7 +321,7 @@ mov ebx, dword [byte esp+010h]	; 8CCCB
 push ebx	; 8CCCF
 mov ecx, dword [byte esp+010h]	; 8CCD0
 push ecx	; 8CCD4
-call sub_8CD04	; 8CCD5
+call AllocMemBlockEx	; 8CCD5
 add esp, byte 10h	; 8CCDA
 mov eax, dword [eax]	; 8CCDD
 ret	; 8CCDF
@@ -335,13 +335,13 @@ mov ecx, dword [byte esp+014h]	; 8CCEB
 push ecx	; 8CCEF
 mov esi, dword [byte esp+014h]	; 8CCF0
 push esi	; 8CCF4
-call sub_8CD04	; 8CCF5
+call AllocMemBlockEx	; 8CCF5
 add esp, byte 10h	; 8CCFA
 mov eax, dword [eax]	; 8CCFD
 pop esi	; 8CCFF
 ret	; 8CD00
 db 08Dh,040h,00h
-sub_8CD04:
+AllocMemBlockEx:
 push esi	; 8CD04
 push edi	; 8CD05
 push ebp	; 8CD06
@@ -883,7 +883,7 @@ pop esi	; 8D29E
 ret	; 8D29F
 findmemblock:
 mov ebx, dword [byte esp+04h]	; 8D2A0
-mov eax, dword [dword_D2F58]	; 8D2A4
+mov eax, dword [memblocklist]	; 8D2A4
 mov eax, dword [eax]	; 8D2A9
 mov eax, dword [byte eax+020h]	; 8D2AB
 loc_8D2AE:
@@ -894,7 +894,7 @@ jne short loc_8D2B9	; 8D2B6
 ret	; 8D2B8
 loc_8D2B9:
 mov eax, dword [byte eax+020h]	; 8D2B9
-mov edx, dword [dword_D2F58]	; 8D2BC
+mov edx, dword [memblocklist]	; 8D2BC
 cmp eax, dword [byte edx+04h]	; 8D2C2
 jne short loc_8D2AE	; 8D2C5
 push ebx	; 8D2C7

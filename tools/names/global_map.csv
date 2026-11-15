@@ -4042,3 +4042,43 @@ dressedskaters,E9F16,dressedfwds + dresseddefs; CanFillLineSlot stops dressing a
 linesortidx,E9C88,SortPlayersByPos / SortNonDefPlayers: the 25 roster indices sorted by lineslotmark
 rpl_ysort,E9FF0,ReplayStep: the 17 replay objects' indices sorted by y
 penevteam,E9AAE,"PostPenaltyEvent: team of the running penalty event, picks the wording; -1 after the faceoff"
+__nullarea,C0000,Watcom _NULL area: the 01h-filled words at the first data address; the port snapshots the data from here
+stackarea,F7B88,the stack area after the game's variables; the port builds the command tail and program name at its start
+_STACKLOW,D4CE8,Watcom: the bound __STK compares the stack pointer with
+_STACKTOP,D4CEC,Watcom cstart: the initial esp
+_curbrk,D4CD8,Watcom: the break address; cstart sets it to esp and the DOS/4GW sbrk glue moves it
+_dynend,D4CD4,"Watcom cstart: end of the dynamic memory, set after the stack is placed"
+_LpCmdLine,D4CDC,Watcom cstart: pointer to the command tail (the port passes its copy)
+_LpPgmName,D4CE0,Watcom cstart: pointer cstart leaves at the program name after the environment strings
+_psp,D4CE4,Watcom cstart: program segment prefix selector
+__no87,D4D04,Watcom cstart: set when the environment has NO87
+_Extender,D4D06,Watcom cstart: DOS extender type (1 = DOS/4G)
+_ExtenderSubtype,D4D07,"Watcom cstart: extender subtype (0 = flat, zero-based data)"
+_Envptr,D4D09,"Watcom cstart: far pointer to the environment, offset part; __setenvp_ reads it"
+_Envptr_w4,D4D0D,_Envptr+4: the selector half of the far pointer
+_osmajor,D4D0F,Watcom cstart: DOS major version
+_osminor,D4D10,Watcom cstart: DOS minor version
+_environ,D5444,Watcom: the environment pointer table __setenvp_ builds
+___env_mask,D5448,"Watcom: one flag byte per environ entry, built by __setenvp_"
+__8087,D4B9C,"Watcom: coprocessor type (3 = 80387), set by the floating point start-up"
+__real87,D51DC,Watcom: a real coprocessor is present
+delaycount,F24CC,"Watcom delay(): loops per millisecond counted by __delay_init_, used by __delay_"
+cpuinfo_d0,D305C,"DetectCPU result, first dword (1 on a 486 in protected mode)"
+cpuinfo_d1,D3060,"DetectCPU result, second dword"
+cpuinfo_b0,D3064,"DetectCPU result, first flag byte"
+cpuinfo_b1,D3068,"DetectCPU result, second flag byte"
+vesainfo,EDBB8,"ProbeVesa: the 256-byte VBE controller information block ('VESA', version, memory)"
+vesamodeinfo,EDAB8,"ProbeVesa: the 256-byte VBE mode information block (window attributes, granularity, segment)"
+vesamodeok,EDCC0,"ProbeVesa: one flag per mode from 100h, 1Bh entries"
+vesapresent,EDCB8,ProbeVesa: set when the VESA tables are filled
+mouseminx,D2FEC,"mouse library: pointer range, left"
+mouseminy,D2FF0,"mouse library: pointer range, top"
+mousemaxx,D2FF4,"mouse library: pointer range, right (exclusive)"
+mousemaxy,D2FF8,"mouse library: pointer range, bottom (exclusive)"
+memblocklist,D2F58,EA memory manager: the block list the port checks a pointer against before FreeMemBlock
+sndhandlecount,D4F64,EA sound library: number of sound handles; the handle calls return -1 for a handle at or above it
+joyedgedir,D41B7,"joystick library table: direction for each edge mask (1 up, 2 down, 4 right, 8 left)"
+markframes_e1,CC0B4,"DrawRinkOverlays: frames of the control marks (stars 185h-187h, then the off-screen arrows); the table starts one word earlier"
+playsuspended,CCC9C,"updateplayers: set while play is paused for a highlight, replay or stoppage; changeplayer then drops both controlled players"
+digidriver,D242B,"SetSoundDevice: id of the second, digital sound driver (3 Sound Blaster, 6 Ultrasound, -1 none)"
+crowddriver,D2439,"SetSoundDevice: the digital driver the crowd noise calls use (Crowd_Noise, CrowdNoiseOff)"

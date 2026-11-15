@@ -36,7 +36,7 @@ extern str_SavingDatabases, str_Shoots, str_ShootsLeftOrRight, str_space, str_sp
 extern str_TheDatabaseHasNot, str_TheDefenceLinesAre, str_TheExtraAttackerLines, str_TheForwardLinesAre, str_TheGoalieLinesAre, str_TheJerseyNumber2d, str_TheNumberOfSelected, str_ThePenaltyKillingLines
 extern str_ThePowerPlayLines, str_ThereIsNoSpace, str_TheSelectedPlayer, str_TMP, str_ToFreeAgentList, str_Two, str_Uar, str_Uarm
 extern str_XXXKbytesOfFree, str_XXXKbytesOfFree2, strcat_, strcmp_, strcpy_, strlen_, strlwr_, strupr_
-extern AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8FC8A
+extern AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, XorBar, sub_9121C, DrawArt
 extern DrawShape, GrabBlock, PrintString, GetFileSize, WriteFile, KeyDown, SetViewRect, FindShape
 extern ClearScreen, sub_B4BA8, SetClipWindow, CreateBitmap, sub_B4FAC, PlotPixel, teamcitynames, teamdivflags
@@ -131,7 +131,7 @@ je short .3	; 6CD36
 mov eax, dword [musicslot-3]	; 6CD38
 sar eax, 18h	; 6CD3D
 mov edx, 3	; 6CD40
-call sub_8FC8A	; 6CD45
+call SndQuery	; 6CD45
 test eax, eax	; 6CD4A
 je short RunEditRosters.2	; 6CD4C
 mov esi, dword [songdata]	; 6CD4E
@@ -239,7 +239,7 @@ je short .6	; 6CEC2
 mov eax, dword [musicslot-3]	; 6CEC4
 sar eax, 18h	; 6CEC9
 mov edx, 3	; 6CECC
-call sub_8FC8A	; 6CED1
+call SndQuery	; 6CED1
 test eax, eax	; 6CED6
 je short RunEditRosters.5	; 6CED8
 mov esi, dword [songdata]	; 6CEDA
@@ -1879,7 +1879,7 @@ je short .4	; 6E1AE
 mov eax, dword [musicslot-3]	; 6E1B0
 sar eax, 18h	; 6E1B5
 mov edx, 3	; 6E1B8
-call sub_8FC8A	; 6E1BD
+call SndQuery	; 6E1BD
 test eax, eax	; 6E1C2
 je short .4	; 6E1C4
 mov edx, dword [songdata]	; 6E1C6

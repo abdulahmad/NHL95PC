@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A6B87 progbits alloc exec nowrite align=1
-extern dword_D5444, strnicmp_
+extern _environ, strnicmp_
 global getenv_, loc_A6BB3, loc_A6BCF, loc_A6BD2, loc_A6BD8, loc_A6BDA
 getenv_:
 push ebx	; A6B87
@@ -12,7 +12,7 @@ push esi	; A6B8A
 push edi	; A6B8B
 push ebp	; A6B8C
 mov ebp, eax	; A6B8D
-mov esi, dword [dword_D5444]	; A6B8F
+mov esi, dword [_environ]	; A6B8F
 test esi, esi	; A6B95
 je short loc_A6BD8	; A6B97
 test eax, eax	; A6B99

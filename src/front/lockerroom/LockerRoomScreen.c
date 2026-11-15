@@ -36,7 +36,7 @@ int LockerRoomScreen(void)
 
         do
             slot = musicslot;
-        while (sub_8FC8A(slot, 3) == 0);
+        while (SndQuery(slot, 3) == 0);
         sub_8D2F0(songdata);
         songdata = 0;
     }
@@ -386,7 +386,7 @@ int LockerRoomLoop(void)
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
-                        while (!sub_8FC8A(musicslot, 3));
+                        while (!SndQuery(musicslot, 3));
                         sub_8D2F0(songdata);
                         songdata = 0;
                     }
@@ -397,7 +397,7 @@ int LockerRoomLoop(void)
                     FadePalStep(1, buf, 0x10);
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
-                        while (!sub_8FC8A(musicslot, 3));
+                        while (!SndQuery(musicslot, 3));
                         sub_8D2F0(songdata);
                         songdata = 0;
                     }
@@ -414,7 +414,7 @@ int LockerRoomLoop(void)
             FadePalStep(1, buf, 0x10);
             FreeMemBlock(bm);
             if (musicon && songdata) {
-                while (!sub_8FC8A(musicslot, 3));
+                while (!SndQuery(musicslot, 3));
                 sub_8D2F0(songdata);
                 songdata = 0;
             }

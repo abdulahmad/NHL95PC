@@ -36,8 +36,8 @@ extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, sub_6A9CE
 extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0, sub_8DF54, initgraphics
 extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FC8A, sub_8FCDF, SetPalette, sub_90354, sub_9035C, sub_B29F0, KeyDown
-extern SetViewRect, sub_B2F22, sub_B3036, FindShape, sub_B30F4, sub_B33DB, sub_B3464, ClearScreen
+extern sub_8F984, SndQuery, sub_8FCDF, SetPalette, sub_90354, sub_9035C, sub_B29F0, KeyDown
+extern SetViewRect, sub_B2F22, sub_B3036, FindShape, sub_B30F4, sub_B33DB, ReadJoyRaw, ClearScreen
 extern sub_B3A24, sub_B4B58, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C33, sub_B4C84, teamabbrevs
 extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
 extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
@@ -527,7 +527,7 @@ je short .35	; 10676
 mov eax, dword [musicslot-3]	; 10678
 sar eax, 18h	; 1067D
 mov edx, 3	; 10680
-call sub_8FC8A	; 10685
+call SndQuery	; 10685
 test eax, eax	; 1068A
 je short main_.34	; 1068C
 mov edx, dword [songdata]	; 1068E
@@ -1174,7 +1174,7 @@ jne short .4	; 10CF5
 test dl, 4	; 10CF7
 je short .8	; 10CFA
 .4:
-call sub_B3464	; 10CFC
+call ReadJoyRaw	; 10CFC
 test al, 30h	; 10D01
 je short .7	; 10D03
 .5:
@@ -1290,7 +1290,7 @@ jne short .2	; 10E40
 test byte [pad2dev], 6	; 10E42
 je short .3	; 10E49
 .2:
-call sub_B3464	; 10E4B
+call ReadJoyRaw	; 10E4B
 mov dword [joyrawbits], eax	; 10E50
 .3:
 mov eax, esi	; 10E55

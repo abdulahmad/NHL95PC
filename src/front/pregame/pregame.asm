@@ -14,7 +14,7 @@ extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_D
 extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
 extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, sub_8D2F0
-extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, sub_8FC8A
+extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
 extern SetViewRect, FindShape, ClearScreen, sub_B4BA8, SetClipWindow, sub_B4FAC, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
@@ -131,7 +131,7 @@ je short .6	; 2A0AF
 mov eax, dword [musicslot-3]	; 2A0B1
 sar eax, 18h	; 2A0B6
 mov edx, 3	; 2A0B9
-call sub_8FC8A	; 2A0BE
+call SndQuery	; 2A0BE
 test eax, eax	; 2A0C3
 je short PreGameScreen.5	; 2A0C5
 mov esi, dword [songdata]	; 2A0C7
@@ -832,7 +832,7 @@ je short .10	; 2AAF1
 mov eax, dword [musicslot-3]	; 2AAF3
 sar eax, 18h	; 2AAF8
 mov edx, 3	; 2AAFB
-call sub_8FC8A	; 2AB00
+call SndQuery	; 2AB00
 test eax, eax	; 2AB05
 je short PreGameScreen_homelines.9	; 2AB07
 mov ebp, dword [songdata]	; 2AB09
@@ -1687,7 +1687,7 @@ je short .52	; 2B713
 mov eax, dword [musicslot-3]	; 2B715
 sar eax, 18h	; 2B71A
 mov edx, 3	; 2B71D
-call sub_8FC8A	; 2B722
+call SndQuery	; 2B722
 test eax, eax	; 2B727
 je short TonightsGameScreen.51	; 2B729
 mov edx, dword [songdata]	; 2B72B

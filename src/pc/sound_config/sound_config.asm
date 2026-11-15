@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_82579 progbits alloc exec nowrite align=1
-extern __CHK, __STOSD, acptspr, str_04x, sndcardmissing, byte_D2439, homeremap, homeremap_e05
+extern __CHK, __STOSD, acptspr, str_04x, sndcardmissing, crowddriver, homeremap, homeremap_e05
 extern homeremap_e07, homeremap_e10, homeremap_e11, homeremap_e13, homeremap_e14, homeremap_e16, homeremap_e49, homeremap_e50
 extern homeremap_e51, homeremap_e60, homeremap_eFB, homeremap_eFC, homeremap_eFD, homeremap_eFE, cddriveptr, chkoffspr
 extern chkonspr, ClearInputQueue, cont2team, ctl1side, ctl1team, ctl2side, ctl2team, DrawSelBoxOff
 extern DrawSelBoxOn, dword_C4CFC, cursndbank, lockerindex, lockerteams, poroundnameidx, lockeracceptx, lockeraccepty
-extern lockercancelx, lockercancely, dword_D2350, dword_D2423, dword_D2427, dword_D242B, sndtempbuf, speechchannel
+extern lockercancelx, lockercancely, dword_D2350, dword_D2423, dword_D2427, digidriver, sndtempbuf, speechchannel
 extern dword_ED7A4, dword_ED7A8, FadeOutPalCycle, FadePalStep, FatalError, fclose_, fdlg_cancel, fileoncd
 extern fopen_, fprintf_, fputchar, FreeMemBlock, gamemode, gameopts, GetInputEvent, homebckspr
 extern homenamebckspr, HomeTeam, InitSpeech, kaufmfont, lockerrects, mainfont, MakePath, MessageBox
@@ -27,7 +27,7 @@ extern str_Pointer21, str_Return, str_Room, str_SBDAC, str_SBDAC2, str_Settings,
 extern str_Slapshot, str_Sound4, str_SoundBlaster, str_SoundBlaster2, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound
 extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock
 extern sub_8D2F0, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, sub_8EB5B, sub_8EB93
-extern sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, sub_8FC8A
+extern sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
 extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, sub_B4BA8
 extern SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
@@ -613,7 +613,7 @@ call sub_8FCDF	; 82BA9
 mov eax, dword [musicslot-3]	; 82BAE
 sar eax, 18h	; 82BB3
 mov edx, 3	; 82BB6
-call sub_8FC8A	; 82BBB
+call SndQuery	; 82BBB
 test eax, eax	; 82BC0
 je short SoundCardDlgLoop_poll.9	; 82BC2
 mov eax, dword [songdata]	; 82BC4
@@ -821,9 +821,9 @@ mov edx, str_PC	; 82E41
 lea eax, [byte esp+010h]	; 82E46
 call strcpy_	; 82E4A
 mov dword [dword_D2427], 1	; 82E4F
-mov dword [dword_D242B], 0FFFFFFFFh	; 82E59
+mov dword [digidriver], 0FFFFFFFFh	; 82E59
 xor ch, ch	; 82E63
-mov byte [byte_D2439], ch	; 82E65
+mov byte [crowddriver], ch	; 82E65
 jmp near .13	; 82E6B
 .8:
 mov edx, str_SBDAC	; 82E70
@@ -833,10 +833,10 @@ mov edx, str_PC	; 82E7E
 lea eax, [byte esp+010h]	; 82E83
 call strcpy_	; 82E87
 mov dword [dword_D2427], esi	; 82E8C
-mov dword [dword_D242B], 3	; 82E92
+mov dword [digidriver], 3	; 82E92
 mov bh, 1	; 82E9C
 mov byte [musicslot], bh	; 82E9E
-mov byte [byte_D2439], bh	; 82EA4
+mov byte [crowddriver], bh	; 82EA4
 jmp near .13	; 82EAA
 .9:
 mov edx, str_ADLIB	; 82EAF
@@ -846,9 +846,9 @@ mov edx, str_PC	; 82EBD
 lea eax, [byte esp+010h]	; 82EC2
 call strcpy_	; 82EC6
 mov dword [dword_D2427], 2	; 82ECB
-mov dword [dword_D242B], 0FFFFFFFFh	; 82ED5
+mov dword [digidriver], 0FFFFFFFFh	; 82ED5
 xor bl, bl	; 82EDF
-mov byte [byte_D2439], bl	; 82EE1
+mov byte [crowddriver], bl	; 82EE1
 jmp near .13	; 82EE7
 .10:
 mov edx, str_MT322	; 82EEC
@@ -858,9 +858,9 @@ mov edx, str_PC	; 82EFA
 lea eax, [byte esp+010h]	; 82EFF
 call strcpy_	; 82F03
 mov dword [dword_D2427], 4	; 82F08
-mov dword [dword_D242B], 0FFFFFFFFh	; 82F12
+mov dword [digidriver], 0FFFFFFFFh	; 82F12
 xor dh, dh	; 82F1C
-mov byte [byte_D2439], dh	; 82F1E
+mov byte [crowddriver], dh	; 82F1E
 jmp short .13	; 82F24
 .11:
 mov edx, str_SBDAC2	; 82F26
@@ -870,10 +870,10 @@ mov edx, str_PC	; 82F34
 lea eax, [byte esp+010h]	; 82F39
 call strcpy_	; 82F3D
 mov dword [dword_D2427], 5	; 82F42
-mov dword [dword_D242B], 6	; 82F4C
+mov dword [digidriver], 6	; 82F4C
 mov ah, 1	; 82F56
 mov byte [musicslot], ah	; 82F58
-mov byte [byte_D2439], ah	; 82F5E
+mov byte [crowddriver], ah	; 82F5E
 jmp short .13	; 82F64
 .12:
 mov edx, str_PCBEEP2	; 82F66
@@ -884,9 +884,9 @@ lea eax, [byte esp+010h]	; 82F79
 call strcpy_	; 82F7D
 xor eax, eax	; 82F82
 mov dword [dword_D2427], eax	; 82F84
-mov dword [dword_D242B], 0FFFFFFFFh	; 82F89
+mov dword [digidriver], 0FFFFFFFFh	; 82F89
 xor al, al	; 82F93
-mov byte [byte_D2439], al	; 82F95
+mov byte [crowddriver], al	; 82F95
 .13:
 call sub_8EB5B	; 82F9A
 mov ebx, dword [dword_D2427]	; 82F9F
@@ -897,7 +897,7 @@ call sub_97079	; 82FAB
 mov ebp, eax	; 82FB0
 cmp eax, byte 0FFFFFFFFh	; 82FB2
 je short .15	; 82FB5
-mov ecx, dword [dword_D242B]	; 82FB7
+mov ecx, dword [digidriver]	; 82FB7
 test ecx, ecx	; 82FBD
 jl short .14	; 82FBF
 mov eax, ecx	; 82FC1
@@ -970,14 +970,14 @@ call FreeSample	; 830AB
 call RestoreDialogBg	; 830B0
 .21:
 mov dword [sounddev], esi	; 830B5
-cmp byte [byte_D2439], 0	; 830BB
+cmp byte [crowddriver], 0	; 830BB
 je short .22	; 830C2
 mov eax, dword [byte esp+03Ch]	; 830C4
 jmp short .23	; 830C8
 .22:
 mov eax, ebp	; 830CA
 .23:
-mov byte [byte_D2439], al	; 830CC
+mov byte [crowddriver], al	; 830CC
 mov al, byte [byte esp+03Ch]	; 830D1
 mov byte [musicslot], al	; 830D5
 mov eax, dword [sounddev]	; 830DA
@@ -1018,7 +1018,7 @@ cmp ecx, byte 20h	; 83145
 jne short .28	; 83148
 .27:
 mov byte [musicon], 1	; 8314A
-mov eax, dword [dword_D242B]	; 83151
+mov eax, dword [digidriver]	; 83151
 mov dword [musichandle], eax	; 83156
 jmp near .39	; 8315B
 .28:

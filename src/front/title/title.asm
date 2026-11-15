@@ -26,9 +26,9 @@ extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_St
 extern str_Title30, strlen_, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002, sub_1B092, sub_1B09F
 extern sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
 extern sub_1B2A7, sub_1B8AC, sub_1B92E, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState
-extern TextRestoreState, TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FC8A, sub_8FCDF
+extern TextRestoreState, TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
 extern PutBlock, DrawBitmap, sub_9087C, FillRect, sub_9121C, sub_91284, sub_912C8, sub_9132C
-extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, sub_B3464, ClearScreen, sub_B3A88
+extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, sub_B3A88
 extern sub_B3AA1, VgaSetPalette, sub_B4BA8, sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, CreateBitmap
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
 extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
@@ -231,7 +231,7 @@ jne short .1	; 1602E
 test ah, 4	; 16030
 je short .3	; 16033
 .1:
-call sub_B3464	; 16035
+call ReadJoyRaw	; 16035
 test al, 30h	; 1603A
 jne short .2	; 1603C
 sar eax, 8	; 1603E
@@ -731,7 +731,7 @@ je short .41	; 166CD
 mov eax, dword [musicslot-3]	; 166CF
 sar eax, 18h	; 166D4
 mov edx, 3	; 166D7
-call sub_8FC8A	; 166DC
+call SndQuery	; 166DC
 test eax, eax	; 166E1
 je short TitleScreen.40	; 166E3
 mov edi, dword [songdata]	; 166E5
@@ -1189,28 +1189,28 @@ je near .43	; 16D04
 mov eax, dword [musicslot-3]	; 16D0A
 sar eax, 18h	; 16D0F
 xor edx, edx	; 16D12
-call sub_8FC8A	; 16D14
+call SndQuery	; 16D14
 test eax, eax	; 16D19
 je short RunIntro.37	; 16D1B
 .38:
 mov eax, dword [musicslot-3]	; 16D1D
 sar eax, 18h	; 16D22
 mov edx, 1	; 16D25
-call sub_8FC8A	; 16D2A
+call SndQuery	; 16D2A
 test eax, eax	; 16D2F
 je short RunIntro.38	; 16D31
 .39:
 mov eax, dword [musicslot-3]	; 16D33
 sar eax, 18h	; 16D38
 mov edx, 2	; 16D3B
-call sub_8FC8A	; 16D40
+call SndQuery	; 16D40
 test eax, eax	; 16D45
 je short RunIntro.39	; 16D47
 .40:
 mov eax, dword [musicslot-3]	; 16D49
 sar eax, 18h	; 16D4E
 mov edx, 3	; 16D51
-call sub_8FC8A	; 16D56
+call SndQuery	; 16D56
 test eax, eax	; 16D5B
 je short RunIntro.40	; 16D5D
 xor eax, eax	; 16D5F
@@ -1331,7 +1331,7 @@ je short .52	; 16F08
 mov eax, dword [musicslot-3]	; 16F0A
 sar eax, 18h	; 16F0F
 mov edx, 3	; 16F12
-call sub_8FC8A	; 16F17
+call SndQuery	; 16F17
 test eax, eax	; 16F1C
 je short RunIntro.51	; 16F1E
 mov esi, dword [songdata]	; 16F20
@@ -1690,7 +1690,7 @@ je short .26	; 1743B
 mov eax, dword [musicslot-3]	; 1743D
 sar eax, 18h	; 17442
 mov edx, 3	; 17445
-call sub_8FC8A	; 1744A
+call SndQuery	; 1744A
 test eax, eax	; 1744F
 je short ShowCredits.25	; 17451
 mov ebp, dword [songdata]	; 17453

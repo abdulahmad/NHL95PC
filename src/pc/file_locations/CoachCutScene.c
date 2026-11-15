@@ -59,7 +59,7 @@ int CoachCutScene(void)
             while (SpeechBusy());
         }
         if (musicon && songdata) {
-            while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+            while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
             sub_8D2F0(songdata);
             songdata = 0;
         }

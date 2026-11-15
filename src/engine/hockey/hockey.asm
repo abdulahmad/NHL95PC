@@ -12,7 +12,7 @@ extern goalevent, defsort_d, offsort_fwd, c1playernum, c2playernum, camx, camx_m
 extern checkcoll, checkwindow, ChkGoalies, ChkShotStat, ClearPenaltyBuffer, cliprect_y0, cliprect_y1, clockticks
 extern collflag, cont1team, cont2team, crowdlevel, curperiod, CwdExciteLvl, DecayCrowdLevel, doinput
 extern DrawCallBanner, DrawFrameSprite, DrawPanelLine, DrawPanelScore, DrawRinkEndArt, DrawRinkObjects, DrawSpriteNumber, DrawTextOverlay
-extern ds2list, dword_CC0B4, dword_CCC9C, dword_CCC9E, sublist_m2, sublist_defl_m3, dword_CCD4F, dword_D30BC
+extern ds2list, markframes_e1, playsuspended, dword_CCC9E, sublist_m2, sublist_defl_m3, dword_CCD4F, dword_D30BC
 extern dword_D30C0, hmplstats, hmtmextra, hmtmnear, hmtmcoachenergy, hmtmplattr, hmtmglattr, awtmnear
 extern awtmcoachenergy, awtmplattr, awtmglattr, SumCwdExciteLvl, dword_E03A8, regd3_m2, dword_E9A9E, dword_E9AB6
 extern EndPenaltyShot, energywarn, exitgame, fadeinpending, fodir1, fodir2, fox, foy
@@ -3366,7 +3366,7 @@ jmp short .6	; 5C4B3
 .5:
 xor eax, eax	; 5C4B5
 .6:
-mov dword [dword_CCC9C], eax	; 5C4B7
+mov dword [playsuspended], eax	; 5C4B7
 mov esi, SortCords	; 5C4BC
 mov ebx, 0FFFFFFFFh	; 5C4C1
 mov word [hmtmgoaliesc], bx	; 5C4C6
@@ -4092,7 +4092,7 @@ mov ax, word [c1playernum]	; 5CE28
 mov word [byte ebp-014h], ax	; 5CE2E
 mov ax, word [c2playernum]	; 5CE32
 mov word [byte ebp-010h], ax	; 5CE38
-cmp dword [dword_CCC9C], byte 0	; 5CE3C
+cmp dword [playsuspended], byte 0	; 5CE3C
 je short .1	; 5CE43
 mov edx, 0FFFFFFFFh	; 5CE45
 mov word [byte ebp-010h], dx	; 5CE4A
@@ -4242,7 +4242,7 @@ mov ebx, dword [byte esi+eax+04h]	; 5D000
 sar ebx, 10h	; 5D004
 mov edx, dword [esi+eax]	; 5D007
 sar edx, 10h	; 5D00A
-mov eax, dword [dword_CC0B4]	; 5D00D
+mov eax, dword [markframes_e1]	; 5D00D
 sar eax, 10h	; 5D012
 xor ecx, ecx	; 5D015
 jmp near .28	; 5D017
@@ -4380,7 +4380,7 @@ add esp, byte 4	; 5D192
 lea edx, [eax+eax]	; 5D195
 movsx eax, di	; 5D198
 shl eax, 4	; 5D19B
-mov eax, dword [dword edx+eax+dword_CC0B4]	; 5D19E
+mov eax, dword [dword edx+eax+markframes_e1]	; 5D19E
 sar eax, 10h	; 5D1A5
 mov ecx, esi	; 5D1A8
 mov ebx, dword [byte ebp-024h]	; 5D1AA
@@ -4825,7 +4825,7 @@ jne near .77	; 5D6E1
 .70:
 cmp dword [curperiod], byte 0FFFFFFFFh	; 5D6E7
 je near .77	; 5D6EE
-cmp dword [dword_CCC9C], byte 0	; 5D6F4
+cmp dword [playsuspended], byte 0	; 5D6F4
 jne near .77	; 5D6FB
 cmp byte [pad1dev], 1	; 5D701
 jne short .71	; 5D708

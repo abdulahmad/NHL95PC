@@ -114,7 +114,7 @@ int CalendarScreen(char *dir, char *ext, int team)
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
-        while (sub_8FC8A(musicslot, 3) == 0) ;
+        while (SndQuery(musicslot, 3) == 0) ;
         sub_8D2F0(songdata);
         songdata = 0;
     }

@@ -52,24 +52,24 @@ void Crowd_Noise(int n)
     if (step > 0x7F) step = 0x7F;
     if (step < 0x0A) step = 0x0A;
     if (crowdvol8 > 0 && v == 0) {
-        sub_8FDB2(byte_D2439, 8, 0);
-        sub_8FE4F(byte_D2439, 8, 0x24);
+        sub_8FDB2(crowddriver, 8, 0);
+        sub_8FE4F(crowddriver, 8, 0x24);
     } else if (crowdvol8 == 0 && v > 0) {
-        sub_8FD84(byte_D2439, 8, 0x7D);
-        sub_8FE1C(byte_D2439, 8, 0x24);
-        sub_8FDE5(byte_D2439, 8, 0x40);
+        sub_8FD84(crowddriver, 8, 0x7D);
+        sub_8FE1C(crowddriver, 8, 0x24);
+        sub_8FDE5(crowddriver, 8, 0x40);
     }
     if (v > 0) {
-        sub_8FDB2(byte_D2439, 8, v);
+        sub_8FDB2(crowddriver, 8, v);
         if (v >= 0x7F || crowdvol8 >= 0x7F)
-            sub_8FDE5(byte_D2439, 8, 0x40 - (v >= 0x7F ? (short)randomd0(6) : 0));
+            sub_8FDE5(crowddriver, 8, 0x40 - (v >= 0x7F ? (short)randomd0(6) : 0));
     }
     crowdvol8 = v;
     if (crowdvol7 == 0 && step > 0) {
-        sub_8FD84(byte_D2439, 7, 0x7E);
-        sub_8FE1C(byte_D2439, 7, 0x24);
+        sub_8FD84(crowddriver, 7, 0x7E);
+        sub_8FE1C(crowddriver, 7, 0x24);
     }
-    sub_8FDB2(byte_D2439, 7, step);
+    sub_8FDB2(crowddriver, 7, step);
     pan = step / 3 + 0x20;
     if (sounddev & 8)
         lim = 0x32;
@@ -78,6 +78,6 @@ void Crowd_Noise(int n)
     lim += 0x0A;
     if (step == lim)
         pan += (short)randomd0(6);
-    sub_8FDE5(byte_D2439, 7, pan);
+    sub_8FDE5(crowddriver, 7, pan);
     crowdvol7 = step;
 }

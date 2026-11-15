@@ -45,7 +45,7 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     FreeMemBlock((int)pal);
     if (musicon && songdata) {
         sub_8FCDF(musichandle, 3, 0x32);
-        while (!sub_8FC8A(*(int *)((char *)&musicslot - 3) >> 24, 3));
+        while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
         sub_8D2F0(songdata);
         songdata = 0;
     }

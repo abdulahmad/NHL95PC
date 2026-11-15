@@ -3,7 +3,7 @@
 bits 32
 %include "hockey.inc"
 section s_59493 progbits alloc exec nowrite align=1
-extern __CHK, byte_D2439, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
+extern __CHK, crowddriver, crowdlevel, crowdsmooth, crowdvol7, crowdvol8, digihandle, cursndbank
 extern oneminsaid, dword_D2427, crowdsamples, dword_ED7A4, gameopts, gmode, lastsfx, leaguesetimg
 extern MusicChanReset, musicon, OpenAnnouncerBank, PreloadAnnouncerClips, rand_, randomd0, rockteamcues, SayElseNhl
 extern SayGoal, SayGoodnight, SayHighlightIntro, SayLineups, SayNhlIntro, SayOneMinuteLeft, SayPenalty, SayPenaltyShot
@@ -140,12 +140,12 @@ jle short .13	; 595D2
 test ecx, ecx	; 595D4
 jne short .13	; 595D6
 xor eax, eax	; 595D8
-mov al, byte [byte_D2439]	; 595DA
+mov al, byte [crowddriver]	; 595DA
 xor ebx, ebx	; 595DF
 mov edx, 8	; 595E1
 call sub_8FDB2	; 595E6
 xor eax, eax	; 595EB
-mov al, byte [byte_D2439]	; 595ED
+mov al, byte [crowddriver]	; 595ED
 mov ebx, 24h	; 595F2
 mov edx, 8	; 595F7
 call sub_8FE4F	; 595FC
@@ -156,17 +156,17 @@ jne short .14	; 5960A
 test ecx, ecx	; 5960C
 jle short .14	; 5960E
 xor eax, eax	; 59610
-mov al, byte [byte_D2439]	; 59612
+mov al, byte [crowddriver]	; 59612
 mov ebx, 7Dh	; 59617
 mov edx, 8	; 5961C
 call sub_8FD84	; 59621
 xor eax, eax	; 59626
-mov al, byte [byte_D2439]	; 59628
+mov al, byte [crowddriver]	; 59628
 mov ebx, 24h	; 5962D
 mov edx, 8	; 59632
 call sub_8FE1C	; 59637
 xor eax, eax	; 5963C
-mov al, byte [byte_D2439]	; 5963E
+mov al, byte [crowddriver]	; 5963E
 mov ebx, 40h	; 59643
 mov edx, 8	; 59648
 call sub_8FDE5	; 5964D
@@ -174,7 +174,7 @@ call sub_8FDE5	; 5964D
 test ecx, ecx	; 59652
 jle short .18	; 59654
 xor eax, eax	; 59656
-mov al, byte [byte_D2439]	; 59658
+mov al, byte [crowddriver]	; 59658
 mov ebx, ecx	; 5965D
 mov edx, 8	; 5965F
 call sub_8FDB2	; 59664
@@ -195,7 +195,7 @@ xor eax, eax	; 59689
 mov ebx, 40h	; 5968B
 sub ebx, eax	; 59690
 xor eax, eax	; 59692
-mov al, byte [byte_D2439]	; 59694
+mov al, byte [crowddriver]	; 59694
 mov edx, 8	; 59699
 call sub_8FDE5	; 5969E
 .18:
@@ -205,18 +205,18 @@ jne short .19	; 596B0
 test esi, esi	; 596B2
 jle short .19	; 596B4
 xor eax, eax	; 596B6
-mov al, byte [byte_D2439]	; 596B8
+mov al, byte [crowddriver]	; 596B8
 mov ebx, 7Eh	; 596BD
 mov edx, 7	; 596C2
 call sub_8FD84	; 596C7
 xor eax, eax	; 596CC
-mov al, byte [byte_D2439]	; 596CE
+mov al, byte [crowddriver]	; 596CE
 mov ebx, 24h	; 596D3
 mov edx, 7	; 596D8
 call sub_8FE1C	; 596DD
 .19:
 xor eax, eax	; 596E2
-mov al, byte [byte_D2439]	; 596E4
+mov al, byte [crowddriver]	; 596E4
 mov ebx, esi	; 596E9
 mov edx, 7	; 596EB
 call sub_8FDB2	; 596F0
@@ -242,7 +242,7 @@ cwde	; 59729
 add ebx, eax	; 5972A
 .22:
 xor eax, eax	; 5972C
-mov al, byte [byte_D2439]	; 5972E
+mov al, byte [crowddriver]	; 5972E
 mov edx, 7	; 59733
 call sub_8FDE5	; 59738
 mov dword [crowdvol7], esi	; 5973D
@@ -270,12 +270,12 @@ je short .x	; 59769
 cmp dword [crowdvol8], byte 0	; 5976B
 jle short .1	; 59772
 xor eax, eax	; 59774
-mov al, byte [byte_D2439]	; 59776
+mov al, byte [crowddriver]	; 59776
 xor ebx, ebx	; 5977B
 mov edx, 8	; 5977D
 call sub_8FDB2	; 59782
 xor eax, eax	; 59787
-mov al, byte [byte_D2439]	; 59789
+mov al, byte [crowddriver]	; 59789
 mov ebx, 24h	; 5978E
 mov edx, 8	; 59793
 call sub_8FE4F	; 59798
@@ -285,12 +285,12 @@ mov dword [crowdvol8], ebx	; 5979F
 cmp dword [crowdvol7], byte 0	; 597A5
 jle short .x	; 597AC
 xor eax, eax	; 597AE
-mov al, byte [byte_D2439]	; 597B0
+mov al, byte [crowddriver]	; 597B0
 xor ebx, ebx	; 597B5
 mov edx, 7	; 597B7
 call sub_8FDB2	; 597BC
 xor eax, eax	; 597C1
-mov al, byte [byte_D2439]	; 597C3
+mov al, byte [crowddriver]	; 597C3
 mov ebx, 24h	; 597C8
 mov edx, 7	; 597CD
 call sub_8FE4F	; 597D2

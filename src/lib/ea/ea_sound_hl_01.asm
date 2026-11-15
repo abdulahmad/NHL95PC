@@ -5,11 +5,11 @@ section s_8EB5B progbits alloc exec nowrite align=1
 extern __GETDS, _makepath_, _splitpath_, addtimer, str_SCN, str_03sFF03dPAT, str_03sFF03dTIM, str_KMS2
 extern str_CFG2, str_VHDR, byte_D41CC, byte_D41CD, byte_F1A1C, byte_F1A1D, byte_F1D61, byte_F234D
 extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, dword_D41CE, dword_D41EA
-extern dword_D4F64, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
+extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
 extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC
-extern sub_97166, sub_971BE, sub_971F8, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
+extern sub_97166, sub_971BE, SndDriverCall, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
 extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, sub_B3454, sub_B3ABC, sub_B3FB0
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
 global sub_8EB5B, loc_8EB8D, sub_8EB93, loc_8EBAB, loc_8EBB4, loc_8EBBB, sub_8EBE2, loc_8EBEB
@@ -34,7 +34,7 @@ global loc_8F86C, loc_8F870, loc_8F876, loc_8F88D, loc_8F8A5, loc_8F8A9, loc_8F8
 global loc_8F90A, loc_8F929, loc_8F94F, loc_8F950, sub_8F963, sub_8F96E, sub_8F979, sub_8F984
 global sub_8F98F, loc_8F9F6, loc_8FA46, loc_8FA83, loc_8FAD8, loc_8FAE0, loc_8FAE6, loc_8FAEA
 global sub_8FAF2, loc_8FB08, loc_8FB16, loc_8FB18, loc_8FB1C, sub_8FB24, loc_8FB72, loc_8FB87
-global sub_8FB8E, sub_8FBE5, loc_8FC2E, loc_8FC31, sub_8FC37, sub_8FC8A, loc_8FC96, loc_8FC9C
+global sub_8FB8E, sub_8FBE5, loc_8FC2E, loc_8FC31, sub_8FC37, SndQuery, loc_8FC96, loc_8FC9C
 global sub_8FCAC, loc_8FCDC, sub_8FCDF, loc_8FCF8, loc_8FD5F, sub_8FD67, loc_8FD82, sub_8FD84
 global loc_8FDAE, sub_8FDB2, loc_8FDE1, sub_8FDE5, loc_8FE18, sub_8FE1C, loc_8FE4B, sub_8FE4F
 global loc_8FE7F, sub_8FE83, sub_8FE89, loc_8FEAD, loc_8FEBE, loc_8FEC2, sub_8FED2, sub_8FF1E
@@ -66,7 +66,7 @@ push edx	; 8EB95
 push sub_98F11	; 8EB96
 call RemoveTimerCallback	; 8EB9B
 add esp, byte 4	; 8EBA0
-mov edx, dword [dword_D4F64]	; 8EBA3
+mov edx, dword [sndhandlecount]	; 8EBA3
 jmp short loc_8EBB4	; 8EBA9
 loc_8EBAB:
 xor eax, eax	; 8EBAB
@@ -175,7 +175,7 @@ cmp ax, 4	; 8EC9D
 jl short loc_8EC89	; 8ECA1
 xor esi, esi	; 8ECA3
 mov dword [dword_EDE5C], esi	; 8ECA5
-mov dword [dword_D4F64], esi	; 8ECAB
+mov dword [sndhandlecount], esi	; 8ECAB
 mov dword [dword_D4F96], 0FFFFFFFFh	; 8ECB1
 jmp near loc_8F1F8	; 8ECBB
 sub_8ECC0:
@@ -505,7 +505,7 @@ jmp near loc_8F0B5	; 8F016
 loc_8F01B:
 inc eax	; 8F01B
 loc_8F01C:
-cmp eax, dword [dword_D4F64]	; 8F01C
+cmp eax, dword [sndhandlecount]	; 8F01C
 jl short loc_8F008	; 8F022
 jmp near loc_8F0B5	; 8F024
 loc_8F029:
@@ -539,7 +539,7 @@ mov dword [byte ebx+010h], eax	; 8F084
 test eax, eax	; 8F087
 je short loc_8F0AB	; 8F089
 xor eax, eax	; 8F08B
-mov ebp, dword [dword_D4F64]	; 8F08D
+mov ebp, dword [sndhandlecount]	; 8F08D
 jmp short loc_8F0A5	; 8F093
 loc_8F095:
 mov cl, byte [byte ebx+0Fh]	; 8F095
@@ -1258,7 +1258,7 @@ sub_8F80E:
 push ebx	; 8F80E
 push edx	; 8F80F
 mov ebx, eax	; 8F810
-cmp dword [dword_D4F64], byte 0	; 8F812
+cmp dword [sndhandlecount], byte 0	; 8F812
 je short loc_8F83E	; 8F819
 mov eax, byte_F1A1C	; 8F81B
 xor edx, edx	; 8F820
@@ -1287,7 +1287,7 @@ sub_8F846:
 push ebx	; 8F846
 push edx	; 8F847
 mov ebx, eax	; 8F848
-cmp dword [dword_D4F64], byte 0	; 8F84A
+cmp dword [sndhandlecount], byte 0	; 8F84A
 je short loc_8F876	; 8F851
 mov eax, byte_F1A1C	; 8F853
 xor edx, edx	; 8F858
@@ -1746,8 +1746,8 @@ mov ebx, esi	; 8FC7F
 mov edx, edi	; 8FC81
 call sub_97268	; 8FC83
 jmp short loc_8FC31	; 8FC88
-sub_8FC8A:
-cmp eax, dword [dword_D4F64]	; 8FC8A
+SndQuery:
+cmp eax, dword [sndhandlecount]	; 8FC8A
 jge short loc_8FC96	; 8FC90
 test eax, eax	; 8FC92
 jge short loc_8FC9C	; 8FC94
@@ -1758,7 +1758,7 @@ loc_8FC9C:
 shl edx, 10h	; 8FC9C
 add edx, byte 9	; 8FC9F
 and eax, 0FFh	; 8FCA2
-jmp near sub_971F8	; 8FCA7
+jmp near SndDriverCall	; 8FCA7
 sub_8FCAC:
 push ebx	; 8FCAC
 push ecx	; 8FCAD
@@ -1804,7 +1804,7 @@ jl short loc_8FD5F	; 8FD01
 shl edx, 10h	; 8FD03
 add edx, byte 0Ah	; 8FD06
 and eax, 0FFh	; 8FD09
-call sub_971F8	; 8FD0E
+call SndDriverCall	; 8FD0E
 mov ebp, eax	; 8FD13
 shl eax, 18h	; 8FD15
 mov ebx, esi	; 8FD18
@@ -1844,13 +1844,13 @@ shl edx, 10h	; 8FD73
 add edx, byte 33h	; 8FD76
 xor eax, eax	; 8FD79
 mov al, bl	; 8FD7B
-call sub_971F8	; 8FD7D
+call SndDriverCall	; 8FD7D
 loc_8FD82:
 pop ebx	; 8FD82
 ret	; 8FD83
 sub_8FD84:
 sub esp, byte 4	; 8FD84
-cmp eax, dword [dword_D4F64]	; 8FD87
+cmp eax, dword [sndhandlecount]	; 8FD87
 jge short loc_8FDAE	; 8FD8D
 test eax, eax	; 8FD8F
 jl short loc_8FDAE	; 8FD91
@@ -1866,7 +1866,7 @@ add esp, byte 4	; 8FDAE
 ret	; 8FDB1
 sub_8FDB2:
 sub esp, byte 4	; 8FDB2
-cmp eax, dword [dword_D4F64]	; 8FDB5
+cmp eax, dword [sndhandlecount]	; 8FDB5
 jge short loc_8FDE1	; 8FDBB
 test eax, eax	; 8FDBD
 jl short loc_8FDE1	; 8FDBF
@@ -1883,7 +1883,7 @@ add esp, byte 4	; 8FDE1
 ret	; 8FDE4
 sub_8FDE5:
 sub esp, byte 4	; 8FDE5
-cmp eax, dword [dword_D4F64]	; 8FDE8
+cmp eax, dword [sndhandlecount]	; 8FDE8
 jge short loc_8FE18	; 8FDEE
 test eax, eax	; 8FDF0
 jl short loc_8FE18	; 8FDF2
@@ -1902,7 +1902,7 @@ add esp, byte 4	; 8FE18
 ret	; 8FE1B
 sub_8FE1C:
 sub esp, byte 4	; 8FE1C
-cmp eax, dword [dword_D4F64]	; 8FE1F
+cmp eax, dword [sndhandlecount]	; 8FE1F
 jge short loc_8FE4B	; 8FE25
 test eax, eax	; 8FE27
 jl short loc_8FE4B	; 8FE29
@@ -1919,7 +1919,7 @@ add esp, byte 4	; 8FE4B
 ret	; 8FE4E
 sub_8FE4F:
 sub esp, byte 4	; 8FE4F
-cmp eax, dword [dword_D4F64]	; 8FE52
+cmp eax, dword [sndhandlecount]	; 8FE52
 jge short loc_8FE7F	; 8FE58
 test eax, eax	; 8FE5A
 jl short loc_8FE7F	; 8FE5C

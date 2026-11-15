@@ -132,7 +132,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         FadePalStep(1, pal, 0x10);
         FreeMemBlock((int)pal);
         if (musicon && songdata) {
-            while (sub_8FC8A(musicslot, 3) == 0) ;
+            while (SndQuery(musicslot, 3) == 0) ;
             sub_8D2F0(songdata);
             songdata = 0;
         }

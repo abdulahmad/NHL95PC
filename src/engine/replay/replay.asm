@@ -8,7 +8,7 @@ extern regd1_b1, defsort_d, dressflags, dressflags_aw, offsort_fwd, rpl_flip, rp
 extern rpl_pos_b1, rpl_c1player, rpl_c2player, rpl_puckc, rpl_pbnum, rpl_pbnum_b1, rpl_objstep, rpl_objstep_b1
 extern c1playernum, c2playernum, camx, camx_m2, camy, cddriveptr, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, clockticks, cont1team, cont2team, Crowd_Noise, crowdlevel, CrowdNoiseOff
-extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, dword_CC0B4, rinkobjdefs_m2
+extern curperiod, DrawFrameSprite, DrawRinkEndArt, DrawSprite, DrawSpriteNumber, ovlartfiles, markframes_e1, rinkobjdefs_m2
 extern dword_CD41E, ovlmemneed, dword_D30BC, dword_D30C0, ovlstepart, ovlstepart_e21, ovlstepart_e30, dword_E0220
 extern dword_E0230, ovlartbank, regd3_m2, regd0_m3, regd1_m3, dword_E9A9E, lineslotmark, dword_E9C85
 extern linesortidx, dressedskaters, rpl_x_e14_m2, rpl_x_e14, rpl_x_e16, rpl_y_e14_m2, rpl_y_e14, rpl_y_e16
@@ -961,7 +961,7 @@ mov ebx, dword [nosplit eax*2+rpl_x_e16]	; 6815C
 sar ebx, 10h	; 68163
 mov edx, dword [nosplit eax*2+dressedskaters]	; 68166
 sar edx, 10h	; 6816D
-mov eax, dword [dword_CC0B4]	; 68170
+mov eax, dword [markframes_e1]	; 68170
 sar eax, 10h	; 68175
 xor ecx, ecx	; 68178
 jmp near .41	; 6817A
@@ -1093,7 +1093,7 @@ call sub_B340B	; 682FF
 add esp, byte 4	; 68304
 movsx edx, si	; 68307
 shl edx, 4	; 6830A
-mov eax, dword [dword edx+eax*2+dword_CC0B4]	; 6830D
+mov eax, dword [dword edx+eax*2+markframes_e1]	; 6830D
 sar eax, 10h	; 68314
 mov ecx, dword [byte ebp-01Ch]	; 68317
 mov ebx, dword [byte ebp-018h]	; 6831A
