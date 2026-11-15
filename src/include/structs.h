@@ -141,7 +141,7 @@ typedef struct Team {
     short tmpen;                 /* 00Ah penalties: DumpStatsLog 'pen' column */
     short tmpenmin;              /* 00Ch penalty minutes: DumpStatsLog 'penmin' column */
     short tmATOP;                /* 00Eh (attack time of possession stat): chkatop adds 1 once a second for the team with the puck past the blue line */
-    short tmscore;               /* 010h; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont compare hmscore with awscore */
+    short tmscore;               /* 010h; Goal adds 1 (inc word [esi+10h]); PeriodOver/clockcont_0 compare hmscore with awscore */
     short tmfowon;               /* 012h (faceoffs won): puckglue adds 1 when the player takes the puck off a faceoff (sflags3 bit 4) */
     short tmfowonoz;             /* 014h puckglue adds 1 too when that faceoff was in the attacking end (puck y beyond 4Eh toward the team's net side by pflags bit 7) */
     unsigned char pad_16[0x10];

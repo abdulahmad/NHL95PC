@@ -39,7 +39,7 @@ global getlinee_pp, getlinee_sum, TeamLineEnergy, getlinee, findpc, findpc_ret6,
 global GetHotStick, GetHotOrStick, SetCoachMode, InitCoachModes, UpdateCoachModes, PenTeamScored, Goal, GiveControl
 global Setplass, setplayer, reenergizeteam, clearteams, restoreteams, GetPeriodTime, ResetClock, ClearSortCords
 global defaultsprites_0, TryAddPlayerToList, SetPlList, setpersonel, StartPer, DoGameFrame, RestoreBenchEnergy, updatecrowdf
-global periodicevents, updateplayers, updateanim, freezewindow, cleargamevars, DrawRinkOverlays, setupice, clockcont
+global periodicevents, updateplayers, updateanim, freezewindow, cleargamevars, DrawRinkOverlays, setupice, clockcont_0
 global ClockTick, SprSortVert, SprSort, GameOver, SetExitGame, SetupTeamForIntermission, Intermission, PeriodOver_sp
 global PeriodOver, ResetBench, resetplstuff, StartGame, forceteams, forcepldata
 ; C: src/engine/hockey/SetSPA.c
@@ -3228,7 +3228,7 @@ pop edx	; 5C2FF
 pop ecx	; 5C300
 ret	; 5C301
 %endif ; C
-; periodicevents: Clock at 0 -> horn (sfx 90h), freezewindow, clockcont. Once a
+; periodicevents: Clock at 0 -> horn (sfx 90h), freezewindow, clockcont_0. Once a
 ; second (lldisp, 18h frames): updatecrowdf, RestoreBenchEnergy, the stats/energy checks.
 ; C: src/engine/hockey/periodicevents.c
 %ifdef CBUILD
@@ -3250,7 +3250,7 @@ jne short .1	; 5C333
 mov eax, 90h	; 5C335
 call sfx	; 5C33A
 call freezewindow	; 5C33F
-call clockcont	; 5C344
+call clockcont_0	; 5C344
 .1:
 cmp word [word_CBC44], byte 0	; 5C349
 jne near .x	; 5C351
@@ -4937,13 +4937,13 @@ pop edx	; 5D84F
 pop ebx	; 5D850
 ret	; 5D851
 %endif ; C
-; clockcont: (end of period). Puck assinsert 18h; periods 1-2 -> PeriodOver path
+; clockcont_0: (end of period). Puck assinsert 18h; periods 1-2 -> PeriodOver path
 ; later periods compare hmscore/awscore for overtime shootout game over. Also called from puckfaceoff.
-; C: src/engine/hockey/findpc.c (clockcont)
+; C: src/engine/hockey/findpc.c (clockcont_0)
 %ifdef CBUILD
-%include "c/engine/hockey/findpc.clockcont.inc"
+%include "c/engine/hockey/findpc.clockcont_0.inc"
 %else
-clockcont:
+clockcont_0:
 push dword 18h	; 5D852
 call __CHK	; 5D857
 push ebx	; 5D85C
@@ -5007,14 +5007,14 @@ mov word [regd2], si	; 5D94F
 .5:
 mov bx, word [regd2]	; 5D956
 cmp bx, byte 0Ch	; 5D95D
-jl short clockcont.4	; 5D961
+jl short clockcont_0.4	; 5D961
 mov edx, 2	; 5D963
 .6:
 mov eax, ecx	; 5D968
 jmp near .31	; 5D96A
 .7:
 mov edx, 1	; 5D96F
-jmp short clockcont.6	; 5D974
+jmp short clockcont_0.6	; 5D974
 .8:
 mov edx, 0FFFFFFFFh	; 5D976
 mov word [c2playernum], dx	; 5D97B
@@ -5041,7 +5041,7 @@ and byte [dword eax+SortCords+44h], 0F7h	; 5D9C9
 inc word [regd2]	; 5D9D0
 .11:
 cmp word [regd2], byte 0Ch	; 5D9D7
-jl short clockcont.10	; 5D9DF
+jl short clockcont_0.10	; 5D9DF
 cmp word [regd1], byte 0	; 5D9E1
 jge short .12	; 5D9E9
 mov eax, 6	; 5D9EB
@@ -5089,7 +5089,7 @@ inc word [regd2]	; 5DA7D
 add ecx, 80h	; 5DA84
 .16:
 cmp word [regd2], byte 6	; 5DA8A
-jl short clockcont.14	; 5DA92
+jl short clockcont_0.14	; 5DA92
 .17:
 cmp word [regd1], byte 0	; 5DA94
 jge short .18	; 5DA9C
@@ -5123,7 +5123,7 @@ call assinsert	; 5DAF7
 jmp near .27	; 5DAFC
 .22:
 mov edx, 7	; 5DB01
-jmp short clockcont.21	; 5DB06
+jmp short clockcont_0.21	; 5DB06
 .23:
 jge short .27	; 5DB08
 mov esi, dword [byte ecx+06Ch]	; 5DB0A
@@ -5153,13 +5153,13 @@ mov byte [dword esi+eax+0B5h], dl	; 5DB60
 test dl, dl	; 5DB67
 jl short .27	; 5DB69
 inc ebx	; 5DB6B
-jmp short clockcont.26	; 5DB6C
+jmp short clockcont_0.26	; 5DB6C
 .27:
 add ecx, 80h	; 5DB6E
 mov ax, word [regd2]	; 5DB74
 dec ax	; 5DB7A
 mov word [regd2], ax	; 5DB7C
-jne near clockcont.20	; 5DB82
+jne near clockcont_0.20	; 5DB82
 call ClearPenaltyBuffer	; 5DB88
 mov ax, word [hmscore]	; 5DB8D
 cmp ax, word [awscore]	; 5DB93

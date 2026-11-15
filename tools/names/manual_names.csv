@@ -574,7 +574,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0005CD4F,sub_5CD4F,cleargamevars,PC-new,,,,medium,clears per-game globals before StartGame,engine_core,manual-trace
 0005CE12,sub_5CE12,DrawRinkOverlays,PC-new,,,,medium,"draws the rink overlay sprites (penalty box markers per PBnum, period marks) through sub_110E0",engine_core,manual-trace
 0005D7F7,sub_5D7F7,setupice,93G,hockey93_06.asm,,,medium,"93G setupice role: per-period rink setup, gmdir flips pfgoal of the players, defaultsprites2",engine_core,manual-trace
-0005D852,sub_5D852,clockcont,94G,hockey94.asm,,,high,NHL94Genesis hockey94.asm clockcont: monitors the period clock and starts the clock events; the _0 suffix was not needed,engine_core,manual-trace
+0005D852,sub_5D852,clockcont_0,93G,hockey93_01.asm,,,medium,"93G clockcont_0: end of period (puck assinsert 18h, score / overtime checks, shootout); also called from puckfaceoff in the assignment code",engine_core,manual-trace
 0005DC10,sub_5DC10,ClockTick,PC-new,,,,medium,"timer tick of the game clock: gameclock seconds and 18h-tick counter, horn sfx 97h at 60 s, UpdateCoachModes once a second",engine_core,manual-trace
 0005DD6B,sub_5DD6B,SprSortVert,PC-new,,,,medium,clears sfhor and falls into SprSort,engine_core,manual-trace
 0005DD7C,sub_5DD7C,SprSort,93G,hockey93_06.asm,,,high,93G SprSort: insertion sort of OOlist by Ylist,engine_core,manual-trace
