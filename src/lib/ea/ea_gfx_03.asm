@@ -5,52 +5,52 @@ section s_90B50 progbits alloc exec nowrite align=1
 extern FindShape, sub_B30BB
 global sub_90B50, loc_90B64, loc_90B7B, sub_90B80, loc_90B94, loc_90BAB
 sub_90B50:
-push esi	; 90B50
-push edi	; 90B51
-push ebp	; 90B52
-mov ebp, dword [byte esp+010h]	; 90B53
-mov esi, dword [byte esp+014h]	; 90B57
-mov edi, dword [byte esp+018h]	; 90B5B
-cmp byte [esi], 0	; 90B5F
-je short loc_90B7B	; 90B62
+        push esi
+        push edi
+        push ebp
+        mov ebp, dword [byte esp+010h]
+        mov esi, dword [byte esp+014h]
+        mov edi, dword [byte esp+018h]
+        cmp byte [esi], 0
+        je short loc_90B7B
 loc_90B64:
-push esi	; 90B64
-push ebp	; 90B65
-call sub_B30BB	; 90B66
-add esp, byte 8	; 90B6B
-mov dword [edi], eax	; 90B6E
-add edi, byte 4	; 90B70
-add esi, byte 4	; 90B73
-cmp byte [esi], 0	; 90B76
-jne short loc_90B64	; 90B79
+        push esi
+        push ebp
+        call sub_B30BB
+        add esp, byte 8
+        mov dword [edi], eax
+        add edi, byte 4
+        add esi, byte 4
+        cmp byte [esi], 0
+        jne short loc_90B64
 loc_90B7B:
-pop ebp	; 90B7B
-pop edi	; 90B7C
-pop esi	; 90B7D
-ret	; 90B7E
-db 090h
+        pop ebp
+        pop edi
+        pop esi
+        ret
+        db 090h
 sub_90B80:
-push esi	; 90B80
-push edi	; 90B81
-push ebp	; 90B82
-mov ebp, dword [byte esp+010h]	; 90B83
-mov esi, dword [byte esp+014h]	; 90B87
-mov edi, dword [byte esp+018h]	; 90B8B
-cmp byte [esi], 0	; 90B8F
-je short loc_90BAB	; 90B92
+        push esi
+        push edi
+        push ebp
+        mov ebp, dword [byte esp+010h]
+        mov esi, dword [byte esp+014h]
+        mov edi, dword [byte esp+018h]
+        cmp byte [esi], 0
+        je short loc_90BAB
 loc_90B94:
-push esi	; 90B94
-push ebp	; 90B95
-call FindShape	; 90B96
-add esp, byte 8	; 90B9B
-mov dword [edi], eax	; 90B9E
-add edi, byte 4	; 90BA0
-add esi, byte 4	; 90BA3
-cmp byte [esi], 0	; 90BA6
-jne short loc_90B94	; 90BA9
+        push esi
+        push ebp
+        call FindShape
+        add esp, byte 8
+        mov dword [edi], eax
+        add edi, byte 4
+        add esi, byte 4
+        cmp byte [esi], 0
+        jne short loc_90B94
 loc_90BAB:
-pop ebp	; 90BAB
-pop edi	; 90BAC
-pop esi	; 90BAD
-ret	; 90BAE
-db 00h
+        pop ebp
+        pop edi
+        pop esi
+        ret
+        db 00h

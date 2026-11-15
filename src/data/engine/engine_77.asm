@@ -4,10 +4,10 @@ bits 32
 section s_DB218 nobits alloc noexec write align=1
 global hmroster, hmrosterjersey, hmrosterpos, awplstats
 awplstats:
-resb 400
+        resb 400
 hmroster:
-resb 5
+        resb 5
 hmrosterjersey:
-resb 1
+        resb 1
 hmrosterpos:
-resb 1086
+        resb 1086

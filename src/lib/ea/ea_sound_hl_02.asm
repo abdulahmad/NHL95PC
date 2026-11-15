@@ -4,31 +4,31 @@ bits 32
 section s_90354 progbits alloc exec nowrite align=1
 global sub_90354, sub_9035C, loc_90370, sub_90373, loc_9038D
 sub_90354:
-mov ebx, dword [byte esp+04h]	; 90354
-mov eax, dword [byte ebx+08h]	; 90358
-ret	; 9035B
+        mov ebx, dword [byte esp+04h]
+        mov eax, dword [byte ebx+08h]
+        ret
 sub_9035C:
-mov eax, dword [byte esp+04h]	; 9035C
-mov ebx, dword [byte esp+08h]	; 90360
-mov ecx, dword [byte eax+08h]	; 90364
-LD cmp, ebx, ecx	; 90367
-jae short loc_90370	; 90369
-add eax, dword [byte eax+ebx*8+014h]	; 9036B
-ret	; 9036F
+        mov eax, dword [byte esp+04h]
+        mov ebx, dword [byte esp+08h]
+        mov ecx, dword [byte eax+08h]
+        LD cmp, ebx, ecx
+        jae short loc_90370
+        add eax, dword [byte eax+ebx*8+014h]
+        ret
 loc_90370:
-LD xor, eax, eax	; 90370
-ret	; 90372
+        LD xor, eax, eax
+        ret
 sub_90373:
-mov ebx, dword [byte esp+04h]	; 90373
-mov eax, dword [byte esp+08h]	; 90377
-mov edx, dword [byte esp+0Ch]	; 9037B
-mov ecx, dword [byte ebx+08h]	; 9037F
-LD cmp, eax, ecx	; 90382
-jae short loc_9038D	; 90384
-mov eax, dword [byte ebx+eax*8+010h]	; 90386
-mov dword [edx], eax	; 9038A
-ret	; 9038C
+        mov ebx, dword [byte esp+04h]
+        mov eax, dword [byte esp+08h]
+        mov edx, dword [byte esp+0Ch]
+        mov ecx, dword [byte ebx+08h]
+        LD cmp, eax, ecx
+        jae short loc_9038D
+        mov eax, dword [byte ebx+eax*8+010h]
+        mov dword [edx], eax
+        ret
 loc_9038D:
-LD xor, eax, eax	; 9038D
-mov dword [edx], eax	; 9038F
-ret	; 90391
+        LD xor, eax, eax
+        mov dword [edx], eax
+        ret

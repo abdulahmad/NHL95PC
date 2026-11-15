@@ -14,164 +14,164 @@ global word_F3718, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326, w
 global word_F58D2, word_F58D4, word_F58D6, word_F58E2, word_F59FA, word_F6018, word_F6118, word_F611A
 global word_F6128
 unk_F24D8:
-resb 1
+        resb 1
 byte_F24D9:
-resb 767
+        resb 767
 unk_F27D8:
-resb 22
+        resb 22
 byte_F27EE:
-resb 1
+        resb 1
 byte_F27EF:
-resb 7
+        resb 7
 dword_F27F6:
-resb 7
+        resb 7
 byte_F27FD:
-resb 1835
+        resb 1835
 dword_F2F28:
-resb 20
+        resb 20
 word_F2F3C:
-resb 2
+        resb 2
 word_F2F3E:
-resb 2
+        resb 2
 word_F2F40:
-resb 2
+        resb 2
 byte_F2F42:
-resb 1
+        resb 1
 byte_F2F43:
-resb 1
+        resb 1
 word_F2F44:
-resb 452
+        resb 452
 dword_F3108:
-resb 64
+        resb 64
 unk_F3148:
-resb 8
+        resb 8
 word_F3150:
-resb 70
+        resb 70
 byte_F3196:
-resb 1
+        resb 1
 byte_F3197:
-resb 695
+        resb 695
 word_F344E:
-resb 2
+        resb 2
 word_F3450:
-resb 2
+        resb 2
 word_F3452:
-resb 2
+        resb 2
 word_F3454:
-resb 2
+        resb 2
 word_F3456:
-resb 6
+        resb 6
 word_F345C:
-resb 6
+        resb 6
 dword_F3462:
-resb 122
+        resb 122
 dword_F34DC:
-resb 88
+        resb 88
 unk_F3534:
-resb 4
+        resb 4
 word_F3538:
-resb 18
+        resb 18
 word_F354A:
-resb 458
+        resb 458
 word_F3714:
-resb 2
+        resb 2
 word_F3716:
-resb 2
+        resb 2
 word_F3718:
-resb 4
+        resb 4
 word_F371C:
-resb 2
+        resb 2
 dword_F371E:
-resb 7166
+        resb 7166
 word_F531C:
-resb 2
+        resb 2
 word_F531E:
-resb 2
+        resb 2
 byte_F5320:
-resb 1
+        resb 1
 byte_F5321:
-resb 3
+        resb 3
 word_F5324:
-resb 2
+        resb 2
 word_F5326:
-resb 4
+        resb 4
 dword_F532A:
-resb 8
+        resb 8
 dword_F5332:
-resb 122
+        resb 122
 unk_F53AC:
-resb 4
+        resb 4
 word_F53B0:
-resb 18
+        resb 18
 word_F53C2:
-resb 458
+        resb 458
 dword_F558C:
-resb 88
+        resb 88
 dword_F55E4:
-resb 4
+        resb 4
 dword_F55E8:
-resb 4
+        resb 4
 dword_F55EC:
-resb 4
+        resb 4
 dword_F55F0:
-resb 4
+        resb 4
 dword_F55F4:
-resb 4
+        resb 4
 unk_F55F8:
-resb 728
+        resb 728
 dword_F58D0:
-resb 2
+        resb 2
 word_F58D2:
-resb 2
+        resb 2
 word_F58D4:
-resb 2
+        resb 2
 word_F58D6:
-resb 2
+        resb 2
 dword_F58D8:
-resb 4
+        resb 4
 dword_F58DC:
-resb 4
+        resb 4
 dword_F58E0:
-resb 2
+        resb 2
 word_F58E2:
-resb 2
+        resb 2
 unk_F58E4:
-resb 148
+        resb 148
 byte_F5978:
-resb 1
+        resb 1
 byte_F5979:
-resb 1
+        resb 1
 byte_F597A:
-resb 126
+        resb 126
 byte_F59F8:
-resb 1
+        resb 1
 byte_F59F9:
-resb 1
+        resb 1
 word_F59FA:
-resb 2
+        resb 2
 dword_F59FC:
-resb 4
+        resb 4
 byte_F5A00:
-resb 1
+        resb 1
 byte_F5A01:
-resb 3
+        resb 3
 byte_F5A04:
-resb 500
+        resb 500
 unk_F5BF8:
-resb 19
+        resb 19
 byte_F5C0B:
-resb 1035
+        resb 1035
 dword_F6016:
-resb 2
+        resb 2
 word_F6018:
-resb 254
+        resb 254
 dword_F6116:
-resb 2
+        resb 2
 word_F6118:
-resb 2
+        resb 2
 word_F611A:
-resb 14
+        resb 14
 word_F6128:
-resb 4
+        resb 4
 dword_F612C:
-resb 12
+        resb 12

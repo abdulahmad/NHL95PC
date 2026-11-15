@@ -6,21 +6,21 @@ extern PenaltyList, unk_C1B49, str_Charging, str_Slashing, str_CrossChecking, st
 extern str_Holding, str_HighSticking, str_Boarding, str_Elbowing, str_AbuseOfOfficial, str_CheckingFromBehind, str_PenaltyShot2
 global penaltynames
 penaltynames:
-dd PenaltyList
-dd unk_C1B49
-dd str_Charging
-dd str_Slashing
-dd PenaltyList
-dd str_CrossChecking
-dd str_Hooking
-dd str_Tripping
-dd str_Interference
-dd str_Holding
-dd str_HighSticking
-dd str_Boarding
-dd str_Elbowing
-dd str_AbuseOfOfficial
-dd str_CheckingFromBehind
-dd str_Boarding
-dd str_Elbowing
-dd str_PenaltyShot2
+        dd PenaltyList
+        dd unk_C1B49
+        dd str_Charging
+        dd str_Slashing
+        dd PenaltyList
+        dd str_CrossChecking
+        dd str_Hooking
+        dd str_Tripping
+        dd str_Interference
+        dd str_Holding
+        dd str_HighSticking
+        dd str_Boarding
+        dd str_Elbowing
+        dd str_AbuseOfOfficial
+        dd str_CheckingFromBehind
+        dd str_Boarding
+        dd str_Elbowing
+        dd str_PenaltyShot2

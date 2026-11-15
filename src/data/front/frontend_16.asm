@@ -28,340 +28,340 @@ global awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05, awardstatsptr
 global off_C5441, teamcitynames, blackpal, str_fmtpd, exhstate, gsumheader, gsumtail
 global gsumcount
 joyqtick:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 pad1dev:
-db 08h
+        db 08h
 pad2dev:
-db 02h
+        db 02h
 lasthotkey:
-db 00h
+        db 00h
 keydirtab:
-db 08h,00h,04h,08h,02h,01h,03h,02h,06h,07h,05h,06h,08h,00h,04h
-db 08h,00h,0DCh,07Bh,00h,00h,0CFh,0BDh,00h,00h,0F7h,00h,00h,00h,0C0h,08h
-db 00h,00h,062h,04h,00h,00h,00h,00h,00h,00h,0DFh,0FFh,00h,00h,0FFh,0DFh
-db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FEh,0EFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FCh,0FCh,00h,00h,0FFh,0FFh,00h,00h,0FBh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FBh,0FFh,00h,00h,0FFh,0FFh,00h,00h,01Fh,00h,00h,00h,07Ch,0FEh
-db 00h,00h,051h,013h,00h,00h,0DBh,0B6h,00h,00h,0EDh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,00h,00h,00h,00h,080h,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
-db 00h,00h,0FFh,03h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 08h,00h,04h,08h,02h,01h,03h,02h,06h,07h,05h,06h,08h,00h,04h
+        db 08h,00h,0DCh,07Bh,00h,00h,0CFh,0BDh,00h,00h,0F7h,00h,00h,00h,0C0h,08h
+        db 00h,00h,062h,04h,00h,00h,00h,00h,00h,00h,0DFh,0FFh,00h,00h,0FFh,0DFh
+        db 00h,00h,0FFh,0FFh,00h,00h,00h,00h,00h,00h,0FEh,0EFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FCh,0FCh,00h,00h,0FFh,0FFh,00h,00h,0FBh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FBh,0FFh,00h,00h,0FFh,0FFh,00h,00h,01Fh,00h,00h,00h,07Ch,0FEh
+        db 00h,00h,051h,013h,00h,00h,0DBh,0B6h,00h,00h,0EDh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,00h,00h,00h,00h,080h,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh,00h,00h,0FFh,0FFh
+        db 00h,00h,0FFh,03h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 samesideflag:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 inputframes:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 escrequest:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 joyrec:
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 palfadedin:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 screenw:
-db 080h,02h,00h,00h
+        db 080h,02h,00h,00h
 screenh:
-db 0E0h,01h,00h,00h
+        db 0E0h,01h,00h,00h
 blackpal:
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 demomode:
-db 00h
+        db 00h
 fadestart_m3:
-db 00h,00h
+        db 00h,00h
 fadestep_m3:
-db 00h,01h
+        db 00h,01h
 fadestart_e1:
-db 0Fh,01h,0FFh
+        db 0Fh,01h,0FFh
 fadeendlvl:
-db 011h,0FFh,00h,00h
+        db 011h,0FFh,00h,00h
 awardtextcolors:
-db 0E9h,00h,00h,00h,09Dh,00h,00h,00h,01h,00h,00h,00h,0ACh,00h,00h,00h
-db 0C4h,00h,00h,00h,0C2h,00h,00h,00h,0E3h,00h,00h,00h,062h,00h,00h,00h
-db 04h,00h,00h,00h,05Bh,00h,00h,00h,014h,00h,00h,00h
+        db 0E9h,00h,00h,00h,09Dh,00h,00h,00h,01h,00h,00h,00h,0ACh,00h,00h,00h
+        db 0C4h,00h,00h,00h,0C2h,00h,00h,00h,0E3h,00h,00h,00h,062h,00h,00h,00h
+        db 04h,00h,00h,00h,05Bh,00h,00h,00h,014h,00h,00h,00h
 awardartfiles:
-db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
-db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
-db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
+        db 0CEh,01h,00h,00h,0CFh,01h,00h,00h,0CBh,01h,00h,00h,0CCh,01h,00h,00h
+        db 0C9h,01h,00h,00h,0CAh,01h,00h,00h,0D1h,01h,00h,00h,0CDh,01h,00h,00h
+        db 0D2h,01h,00h,00h,0D0h,01h,00h,00h,0D3h,01h,00h,00h
 awardart:
-dd str_ArtHart
-dd str_ArtRoss
-dd str_ArtNorr
-dd str_ArtSelk
-dd str_ArtVezi
-dd str_ArtJenn
-dd str_ArtCald
-dd str_ArtPres
-dd str_ArtConn
-dd str_ArtEasn
-dd str_ArtStan
+        dd str_ArtHart
+        dd str_ArtRoss
+        dd str_ArtNorr
+        dd str_ArtSelk
+        dd str_ArtVezi
+        dd str_ArtJenn
+        dd str_ArtCald
+        dd str_ArtPres
+        dd str_ArtConn
+        dd str_ArtEasn
+        dd str_ArtStan
 awardnames:
-dd str_Hart
-dd str_ArtRoss2
-dd str_Norris
-dd str_Selke
-dd str_Vezina
-dd str_Jennings
-dd str_Calder
-dd str_Presidents
-dd str_ConnSmythe
-dd str_EASportsCup
-dd str_StanleyCup
+        dd str_Hart
+        dd str_ArtRoss2
+        dd str_Norris
+        dd str_Selke
+        dd str_Vezina
+        dd str_Jennings
+        dd str_Calder
+        dd str_Presidents
+        dd str_ConnSmythe
+        dd str_EASportsCup
+        dd str_StanleyCup
 awardtitles:
-dd str_MostValuablePlayer
-db 00h,00h,00h,00h
-dd str_PointsLeader
-dd str_RegularSeason
-dd str_BestDefenseman
-db 00h,00h,00h,00h
-dd str_BestDefensiveForward
-db 00h,00h,00h,00h
-dd str_BestGoalkeeper
-db 00h,00h,00h,00h
-dd str_BestGoalsAgainstAverage
-db 00h,00h,00h,00h
-dd str_BestRookie
-db 00h,00h,00h,00h
-dd str_BestRegularSeasonRecord
-db 00h,00h,00h,00h
-dd str_MostValuablePlayer
-dd str_InThePlayoffs
-dd str_Most3StarSelections
-db 00h,00h,00h,00h
-dd str_StanleyCupChampions
-db 00h,00h,00h,00h
+        dd str_MostValuablePlayer
+        db 00h,00h,00h,00h
+        dd str_PointsLeader
+        dd str_RegularSeason
+        dd str_BestDefenseman
+        db 00h,00h,00h,00h
+        dd str_BestDefensiveForward
+        db 00h,00h,00h,00h
+        dd str_BestGoalkeeper
+        db 00h,00h,00h,00h
+        dd str_BestGoalsAgainstAverage
+        db 00h,00h,00h,00h
+        dd str_BestRookie
+        db 00h,00h,00h,00h
+        dd str_BestRegularSeasonRecord
+        db 00h,00h,00h,00h
+        dd str_MostValuablePlayer
+        dd str_InThePlayoffs
+        dd str_Most3StarSelections
+        db 00h,00h,00h,00h
+        dd str_StanleyCupChampions
+        db 00h,00h,00h,00h
 awardtype:
-db 01h,01h,01h,01h,00h,00h,01h,02h,01h
-db 01h,02h
+        db 01h,01h,01h,01h,00h,00h,01h,02h,01h
+        db 01h,02h
 awardstatsptrs:
-dd awardstats0
+        dd awardstats0
 awardstatsptrs_e01:
-dd awardstats1
+        dd awardstats1
 awardstatsptrs_e02:
-dd awardstats2
+        dd awardstats2
 awardstatsptrs_e03:
-dd awardstats3
+        dd awardstats3
 awardstatsptrs_e04:
-dd awardstats4
+        dd awardstats4
 awardstatsptrs_e05:
-dd awardstats5
+        dd awardstats5
 awardstatsptrs_e06:
-dd awardstats6
-db 00h,00h,00h,00h
+        dd awardstats6
+        db 00h,00h,00h,00h
 awardstatsptrs_e08:
-dd awardstats8
+        dd awardstats8
 awardstatsptrs_e09:
-dd awardstats9
-db 00h,00h,00h,00h
+        dd awardstats9
+        db 00h,00h,00h,00h
 awardscopenames:
-dd str_Season2
-dd str_Playoff2
+        dd str_Season2
+        dd str_Playoff2
 str_fmtpd:
-db 025h,064h,00h
+        db 025h,064h,00h
 str_D02d:
-db 025h,064h,02Eh,025h,030h,032h,064h,00h
+        db 025h,064h,02Eh,025h,030h,032h,064h,00h
 str_D01d:
-db 025h,064h,02Eh,025h,030h,031h,064h,00h,00h,00h
+        db 025h,064h,02Eh,025h,030h,031h,064h,00h,00h,00h
 exhstate:
-db 00h,00h,00h,00h
-db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 0Ch,00h,00h,00h
-db 015h,00h,00h,00h,0FFh
-db 07Bh,00h,00h
-db 0FFh,0FFh,0FFh,0FFh
-db 0FEh,0FFh,0FFh,0FFh
-db 010h,00h,00h,00h
-db 010h,00h,00h,00h
-db 00h,00h,00h,00h
-db 01h,00h,00h,00h
+        db 00h,00h,00h,00h
+        db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 0Ch,00h,00h,00h
+        db 015h,00h,00h,00h,0FFh
+        db 07Bh,00h,00h
+        db 0FFh,0FFh,0FFh,0FFh
+        db 0FEh,0FFh,0FFh,0FFh
+        db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
+        db 00h,00h,00h,00h
+        db 01h,00h,00h,00h
 postate:
-db 01h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 0Ch,00h,00h,00h
-db 015h,00h,00h,00h
-db 0FFh
-db 079h,00h,00h
-db 0FFh,0FFh,0FFh,0FFh
-db 0FEh,0FFh,0FFh,0FFh
-db 010h,00h,00h,00h
-db 010h,00h,00h,00h
-db 00h,00h,00h,00h
-db 01h,00h,00h,00h
+        db 01h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 0Ch,00h,00h,00h
+        db 015h,00h,00h,00h
+        db 0FFh
+        db 079h,00h,00h
+        db 0FFh,0FFh,0FFh,0FFh
+        db 0FEh,0FFh,0FFh,0FFh
+        db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
+        db 00h,00h,00h,00h
+        db 01h,00h,00h,00h
 lgstate:
-db 02h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
-db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 0Ch,00h,00h,00h
-db 015h,00h,00h,00h
-db 0FFh
-db 07Bh,00h,00h
-db 0FFh,0FFh,0FFh,0FFh
-db 0FEh,0FFh,0FFh,0FFh
-db 010h,00h,00h,00h
-db 010h,00h,00h,00h
-db 00h,00h,00h,00h
-db 01h,00h,00h,00h
+        db 02h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,025h,073h,02Eh
+        db 064h,062h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 0Ch,00h,00h,00h
+        db 015h,00h,00h,00h
+        db 0FFh
+        db 07Bh,00h,00h
+        db 0FFh,0FFh,0FFh,0FFh
+        db 0FEh,0FFh,0FFh,0FFh
+        db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
+        db 00h,00h,00h,00h
+        db 01h,00h,00h,00h
 gameresult:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 gamemode:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 gameopts:
-db 0FFh
-db 07Bh,00h,00h
+        db 0FFh
+        db 07Bh,00h,00h
 ctl1team:
-db 0FFh,0FFh,0FFh,0FFh
+        db 0FFh,0FFh,0FFh,0FFh
 ctl2team:
-db 0FEh,0FFh,0FFh,0FFh
+        db 0FEh,0FFh,0FFh,0FFh
 ctl1dev:
-db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
 ctl2dev:
-db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
 ctl1side:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 ctl2side:
-db 01h,00h,00h,00h
+        db 01h,00h,00h,00h
 sndcardmissing:
-db 0FFh,00h,00h,00h
+        db 0FFh,00h,00h,00h
 sounddev:
-db 010h,00h,00h,00h
+        db 010h,00h,00h,00h
 gsumheader:
-db 00h
+        db 00h
 gsumheader_b1:
-db 00h
+        db 00h
 gsumheader_b2:
-db 00h
+        db 00h
 gsumheader_b3:
-db 00h
+        db 00h
 gsumheader_b4:
-db 00h
+        db 00h
 gsumcount:
-db 00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h
 gsumtail:
-db 04h
+        db 04h
 hmgoalcnt:
-db 00h
+        db 00h
 hmshotcnt:
-db 00h
+        db 00h
 awgoalcnt:
-db 00h
+        db 00h
 awshotcnt:
-db 00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h
 teamabbrevs:
-dd BOS
-dd BUF
+        dd BOS
+        dd BUF
 off_C5441:
-dd CGY
-dd CHI
-dd DET
-dd EDM
-dd HFD
-dd LA
-dd DAL
-dd MTL
-dd NJ
-dd NYI
-dd NYR
-dd OTT
-dd PHI
-dd PIT
-dd QUE
-dd STL
-dd SJ
-dd TB
-dd TOR
-dd VAN
-dd WSH
-dd WPG
-dd ANA
-dd FLA
-dd ASW
-dd ASE
+        dd CGY
+        dd CHI
+        dd DET
+        dd EDM
+        dd HFD
+        dd LA
+        dd DAL
+        dd MTL
+        dd NJ
+        dd NYI
+        dd NYR
+        dd OTT
+        dd PHI
+        dd PIT
+        dd QUE
+        dd STL
+        dd SJ
+        dd TB
+        dd TOR
+        dd VAN
+        dd WSH
+        dd WPG
+        dd ANA
+        dd FLA
+        dd ASW
+        dd ASE
 teamcitynames:
-dd TeamList
-dd Buffalo
-dd Calgary
-dd Chicago
-dd Detroit
-dd Edmonton
-dd Hartford
-dd LosAngeles
-dd Dallas
-dd Montreal
-dd NewJersey
-dd NYIslanders
-dd NYRangers
-dd Ottawa
-dd Philadelphia
-dd Pittsburgh
-dd Quebec
-dd StLouis
-dd SanJose
-dd TampaBay
-dd Toronto
-dd Vancouver
-dd Washington
-dd Winnipeg
-dd Anaheim
-dd Florida
-dd AllStarsWest
-dd AllStarsEast
+        dd TeamList
+        dd Buffalo
+        dd Calgary
+        dd Chicago
+        dd Detroit
+        dd Edmonton
+        dd Hartford
+        dd LosAngeles
+        dd Dallas
+        dd Montreal
+        dd NewJersey
+        dd NYIslanders
+        dd NYRangers
+        dd Ottawa
+        dd Philadelphia
+        dd Pittsburgh
+        dd Quebec
+        dd StLouis
+        dd SanJose
+        dd TampaBay
+        dd Toronto
+        dd Vancouver
+        dd Washington
+        dd Winnipeg
+        dd Anaheim
+        dd Florida
+        dd AllStarsWest
+        dd AllStarsEast

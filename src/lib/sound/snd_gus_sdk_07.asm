@@ -5,68 +5,68 @@ section s_B195C progbits alloc exec nowrite align=1
 extern kaufmfont, unk_D8B4A
 global sub_B195C, loc_B196D, loc_B197D, loc_B1986, loc_B199F, loc_B19A4, loc_B19BF, loc_B19C1
 sub_B195C:
-push ebx	; B195C
-push ecx	; B195D
-push edx	; B195E
-push esi	; B195F
-push edi	; B1960
-mov esi, unk_D8B4A	; B1961
-mov edi, kaufmfont	; B1966
-LD mov, ebx, esi	; B196B
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        mov esi, unk_D8B4A
+        mov edi, kaufmfont
+        LD mov, ebx, esi
 loc_B196D:
-LD cmp, ebx, edi	; B196D
-je short loc_B197D	; B196F
-nop	; B1971
-nop	; B1972
-nop	; B1973
-nop	; B1974
-and byte [ebx], 1	; B1975
-add ebx, byte 6	; B1978
-jmp short loc_B196D	; B197B
+        LD cmp, ebx, edi
+        je short loc_B197D
+        nop
+        nop
+        nop
+        nop
+        and byte [ebx], 1
+        add ebx, byte 6
+        jmp short loc_B196D
 loc_B197D:
-mov eax, 100h	; B197D
-LD mov, edx, edi	; B1982
-LD mov, ebx, esi	; B1984
+        mov eax, 100h
+        LD mov, edx, edi
+        LD mov, ebx, esi
 loc_B1986:
-LD cmp, ebx, edi	; B1986
-je short loc_B19A4	; B1988
-nop	; B198A
-nop	; B198B
-nop	; B198C
-nop	; B198D
-test byte [ebx], 2	; B198E
-jne short loc_B199F	; B1991
-movzx ecx, byte [byte ebx+01h]	; B1993
-LD cmp, ecx, eax	; B1997
-jae short loc_B199F	; B1999
-LD mov, eax, ecx	; B199B
-LD mov, edx, ebx	; B199D
+        LD cmp, ebx, edi
+        je short loc_B19A4
+        nop
+        nop
+        nop
+        nop
+        test byte [ebx], 2
+        jne short loc_B199F
+        movzx ecx, byte [byte ebx+01h]
+        LD cmp, ecx, eax
+        jae short loc_B199F
+        LD mov, eax, ecx
+        LD mov, edx, ebx
 loc_B199F:
-add ebx, byte 6	; B199F
-jmp short loc_B1986	; B19A2
+        add ebx, byte 6
+        jmp short loc_B1986
 loc_B19A4:
-LD cmp, edx, edi	; B19A4
-je short loc_B19BF	; B19A6
-nop	; B19A8
-nop	; B19A9
-nop	; B19AA
-nop	; B19AB
-LD mov, ebx, edx	; B19AC
-or byte [ebx], 2	; B19AE
-call dword [byte ebx+02h]	; B19B1
-cmp eax, byte 0	; B19B4
-jne short loc_B19C1	; B19B7
-nop	; B19B9
-nop	; B19BA
-nop	; B19BB
-nop	; B19BC
-jmp short loc_B197D	; B19BD
+        LD cmp, edx, edi
+        je short loc_B19BF
+        nop
+        nop
+        nop
+        nop
+        LD mov, ebx, edx
+        or byte [ebx], 2
+        call dword [byte ebx+02h]
+        cmp eax, byte 0
+        jne short loc_B19C1
+        nop
+        nop
+        nop
+        nop
+        jmp short loc_B197D
 loc_B19BF:
-LD xor, eax, eax	; B19BF
+        LD xor, eax, eax
 loc_B19C1:
-pop edi	; B19C1
-pop esi	; B19C2
-pop edx	; B19C3
-pop ecx	; B19C4
-db 05Bh	; B19C5 pop ebx
-db 0C3h	; B19C6 ret
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        db 05Bh                                 ; insn: pop ebx
+        db 0C3h                                 ; insn: ret

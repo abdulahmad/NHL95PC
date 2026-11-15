@@ -5,27 +5,27 @@ section s_8C94C progbits alloc exec nowrite align=1
 extern __fatal_runtime_error_, str_StackOverflow, _STACKLOW, saved_ss
 global __CHK, __GRO, __STK, loc_8C970, sub_8C97D
 __CHK:
-xchg eax, dword [byte esp+04h]	; 8C94C
-call __STK	; 8C950
-mov eax, dword [byte esp+04h]	; 8C955
-ret 4	; 8C959
+        xchg eax, dword [byte esp+04h]
+        call __STK
+        mov eax, dword [byte esp+04h]
+        ret 4
 __GRO:
-ret 4	; 8C95C
+        ret 4
 __STK:
-cmp eax, esp	; 8C95F
-jae short loc_8C970	; 8C961
-sub eax, esp	; 8C963
-neg eax	; 8C965
-cmp eax, dword [_STACKLOW]	; 8C967
-jbe short loc_8C970	; 8C96D
-ret	; 8C96F
+        cmp eax, esp
+        jae short loc_8C970
+        sub eax, esp
+        neg eax
+        cmp eax, dword [_STACKLOW]
+        jbe short loc_8C970
+        ret
 loc_8C970:
-mov ax, ss	; 8C970
-cmp ax, word [saved_ss]	; 8C973
-je short sub_8C97D	; 8C97A
-ret	; 8C97C
+        mov ax, ss
+        cmp ax, word [saved_ss]
+        je short sub_8C97D
+        ret
 sub_8C97D:
-mov eax, str_StackOverflow	; 8C97D
-mov edx, 1	; 8C982
-call __fatal_runtime_error_	; 8C987
-db 00h,00h,00h,00h
+        mov eax, str_StackOverflow
+        mov edx, 1
+        call __fatal_runtime_error_
+        db 00h,00h,00h,00h

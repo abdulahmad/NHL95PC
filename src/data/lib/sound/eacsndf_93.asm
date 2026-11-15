@@ -8,74 +8,74 @@ global dword_EDE84, dword_EDE8C, dword_EDE90, dword_EDE94, dword_EDE98, dword_ED
 global dword_EDEA8, dword_EDEB0, dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0, dword_EDEF4
 global dword_EDEF8, dword_EDEFC, dword_EDF00, unk_EDE88
 dword_EDCFC:
-resb 4
+        resb 4
 dword_EDD00:
-resb 4
+        resb 4
 dword_EDD04:
-resb 304
+        resb 304
 dword_EDE34:
-resb 40
+        resb 40
 dword_EDE5C:
-resb 4
+        resb 4
 dword_EDE60:
-resb 4
+        resb 4
 dword_EDE64:
-resb 4
+        resb 4
 dword_EDE68:
-resb 4
+        resb 4
 dword_EDE6C:
-resb 4
+        resb 4
 dword_EDE70:
-resb 4
+        resb 4
 dword_EDE74:
-resb 4
+        resb 4
 dword_EDE78:
-resb 4
+        resb 4
 dword_EDE7C:
-resb 1
+        resb 1
 byte_EDE7D:
-resb 3
+        resb 3
 dword_EDE80:
-resb 4
+        resb 4
 dword_EDE84:
-resb 4
+        resb 4
 unk_EDE88:
-resb 4
+        resb 4
 dword_EDE8C:
-resb 4
+        resb 4
 dword_EDE90:
-resb 4
+        resb 4
 dword_EDE94:
-resb 4
+        resb 4
 dword_EDE98:
-resb 4
+        resb 4
 dword_EDE9C:
-resb 4
+        resb 4
 dword_EDEA0:
-resb 4
+        resb 4
 dword_EDEA4:
-resb 4
+        resb 4
 dword_EDEA8:
-resb 4
+        resb 4
 byte_EDEAC:
-resb 4
+        resb 4
 dword_EDEB0:
-resb 48
+        resb 48
 dword_EDEE0:
-resb 4
+        resb 4
 dword_EDEE4:
-resb 4
+        resb 4
 dword_EDEE8:
-resb 4
+        resb 4
 dword_EDEEC:
-resb 4
+        resb 4
 dword_EDEF0:
-resb 4
+        resb 4
 dword_EDEF4:
-resb 4
+        resb 4
 dword_EDEF8:
-resb 4
+        resb 4
 dword_EDEFC:
-resb 4
+        resb 4
 dword_EDF00:
-resb 4
+        resb 4

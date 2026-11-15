@@ -4,4 +4,4 @@ bits 32
 section s_F7B88 nobits alloc noexec write align=1
 global stackarea
 stackarea:
-resb 12296
+        resb 12296

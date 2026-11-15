@@ -7,55 +7,55 @@ global str_TMP, rosterteam, rosterisfa, falist, falistsel, facount
 global seasondb, careerdb, carteamsdb, keydb, teamsdb, attdb, seasondb_size, careerdb_size
 global carteamsdb_size, keydb_size, teamsdb_size, attdb_size, rosterstatsmenubar, str_C4
 rosterstatsmenubar:
-db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
-dd str_PlayerStatistics6
-db 00h,00h,00h,00h
-dd unk_D0720
-db 01h,00h,00h,00h,076h,00h,00h,00h,00h,00h,00h,00h,0BEh,00h,00h,00h
-db 012h,00h,00h,00h
-dd str_Display
-db 00h,00h,00h,00h
-dd unk_D068A
-db 02h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,075h,00h,00h,00h,012h,00h,00h,00h
+        dd str_PlayerStatistics6
+        db 00h,00h,00h,00h
+        dd unk_D0720
+        db 01h,00h,00h,00h,076h,00h,00h,00h,00h,00h,00h,00h,0BEh,00h,00h,00h
+        db 012h,00h,00h,00h
+        dd str_Display
+        db 00h,00h,00h,00h
+        dd unk_D068A
+        db 02h,00h,00h,00h
 rosterteam:
-db 0Ch
-db 015h,07Dh,00h,00h,00h,0B7h,01h,00h,00h
+        db 0Ch
+        db 015h,07Dh,00h,00h,00h,0B7h,01h,00h,00h
 rosterisfa:
-db 00h
-db 00h
+        db 00h
+        db 00h
 falist:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 falistsel:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 facount:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 str_TMP:
-db 02Eh,054h,04Dh,050h,00h
+        db 02Eh,054h,04Dh,050h,00h
 seasondb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 careerdb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 carteamsdb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 keydb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 teamsdb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 attdb:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 seasondb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 careerdb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 carteamsdb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 keydb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 teamsdb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 attdb_size:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 str_C4:
-db 025h,063h,00h,04Eh,061h,06Dh,065h,03Ah,020h,025h,073h,020h,025h,073h,00h,025h
-db 073h,020h,025h,073h,00h,025h,073h,020h,041h,06Ch,06Ch,020h,053h,074h,061h,072h
-db 020h,054h,065h,061h,06Dh,00h,043h,061h,072h,065h,065h,072h,03Ah,00h
+        db 025h,063h,00h,04Eh,061h,06Dh,065h,03Ah,020h,025h,073h,020h,025h,073h,00h,025h
+        db 073h,020h,025h,073h,00h,025h,073h,020h,041h,06Ch,06Ch,020h,053h,074h,061h,072h
+        db 020h,054h,065h,061h,06Dh,00h,043h,061h,072h,065h,065h,072h,03Ah,00h

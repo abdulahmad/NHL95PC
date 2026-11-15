@@ -4,5 +4,5 @@ bits 32
 section s_9AFAD progbits alloc exec nowrite align=1
 global sub_9AFAD
 sub_9AFAD:
-xor eax, eax	; 9AFAD
-ret	; 9AFAF
+        xor eax, eax
+        ret

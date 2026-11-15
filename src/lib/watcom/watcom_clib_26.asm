@@ -6,95 +6,95 @@ extern __flush_, __ioalloc_, __prtf_, dword_D4D11, fputc_, sub_9D66B, sub_9D671
 global file_putc_, __fprtf_, loc_98723, loc_98741, loc_9876B, loc_98776, sub_98785, __set_errno_
 global __set_ERANGE_, __set_EINVAL_, __set_doserrno_, sub_987B9
 file_putc_:
-push ebx	; 986EF
-mov ebx, eax	; 986F0
-mov eax, edx	; 986F2
-mov edx, dword [ebx]	; 986F4
-call fputc_	; 986F6
-inc dword [byte ebx+010h]	; 986FB
-pop ebx	; 986FE
-ret	; 986FF
+        push ebx
+        mov ebx, eax
+        mov eax, edx
+        mov edx, dword [ebx]
+        call fputc_
+        inc dword [byte ebx+010h]
+        pop ebx
+        ret
 __fprtf_:
-push ecx	; 98700
-push esi	; 98701
-push edi	; 98702
-push ebp	; 98703
-mov esi, eax	; 98704
-mov ebp, dword [byte eax+0Ch]	; 98706
-mov ah, byte [byte eax+0Ch]	; 98709
-mov ecx, dword [byte esi+08h]	; 9870C
-and ah, 0CFh	; 9870F
-and ebp, byte 30h	; 98712
-mov byte [byte esi+0Ch], ah	; 98715
-test ecx, ecx	; 98718
-jne short loc_98723	; 9871A
-mov eax, esi	; 9871C
-call __ioalloc_	; 9871E
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov esi, eax
+        mov ebp, dword [byte eax+0Ch]
+        mov ah, byte [byte eax+0Ch]
+        mov ecx, dword [byte esi+08h]
+        and ah, 0CFh
+        and ebp, byte 30h
+        mov byte [byte esi+0Ch], ah
+        test ecx, ecx
+        jne short loc_98723
+        mov eax, esi
+        call __ioalloc_
 loc_98723:
-mov cl, byte [byte esi+0Dh]	; 98723
-xor edi, edi	; 98726
-test cl, 4	; 98728
-je short loc_98741	; 9872B
-mov ch, cl	; 9872D
-and ch, 0FAh	; 9872F
-mov al, ch	; 98732
-mov byte [byte esi+0Dh], ch	; 98734
-or al, 1	; 98737
-mov edi, 1	; 98739
-mov byte [byte esi+0Dh], al	; 9873E
+        mov cl, byte [byte esi+0Dh]
+        xor edi, edi
+        test cl, 4
+        je short loc_98741
+        mov ch, cl
+        and ch, 0FAh
+        mov al, ch
+        mov byte [byte esi+0Dh], ch
+        or al, 1
+        mov edi, 1
+        mov byte [byte esi+0Dh], al
 loc_98741:
-mov ecx, file_putc_	; 98741
-mov eax, esi	; 98746
-call __prtf_	; 98748
-mov edx, eax	; 9874D
-test edi, edi	; 9874F
-je short loc_9876B	; 98751
-mov ah, byte [byte esi+0Dh]	; 98753
-and ah, 0FAh	; 98756
-mov bl, ah	; 98759
-mov byte [byte esi+0Dh], ah	; 9875B
-or bl, 4	; 9875E
-mov eax, esi	; 98761
-mov byte [byte esi+0Dh], bl	; 98763
-call __flush_	; 98766
+        mov ecx, file_putc_
+        mov eax, esi
+        call __prtf_
+        mov edx, eax
+        test edi, edi
+        je short loc_9876B
+        mov ah, byte [byte esi+0Dh]
+        and ah, 0FAh
+        mov bl, ah
+        mov byte [byte esi+0Dh], ah
+        or bl, 4
+        mov eax, esi
+        mov byte [byte esi+0Dh], bl
+        call __flush_
 loc_9876B:
-test byte [byte esi+0Ch], 20h	; 9876B
-je short loc_98776	; 9876F
-mov edx, 0FFFFFFFFh	; 98771
+        test byte [byte esi+0Ch], 20h
+        je short loc_98776
+        mov edx, 0FFFFFFFFh
 loc_98776:
-mov edi, dword [byte esi+0Ch]	; 98776
-or edi, ebp	; 98779
-mov eax, edx	; 9877B
-mov dword [byte esi+0Ch], edi	; 9877D
-pop ebp	; 98780
-pop edi	; 98781
-pop esi	; 98782
-pop ecx	; 98783
-ret	; 98784
+        mov edi, dword [byte esi+0Ch]
+        or edi, ebp
+        mov eax, edx
+        mov dword [byte esi+0Ch], edi
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 sub_98785:
-mov eax, 0Dh	; 98785
+        mov eax, 0Dh
 __set_errno_:
-push edx	; 9878A
-mov edx, eax	; 9878B
-call sub_9D66B	; 9878D
-mov dword [eax], edx	; 98792
-pop edx	; 98794
-ret	; 98795
+        push edx
+        mov edx, eax
+        call sub_9D66B
+        mov dword [eax], edx
+        pop edx
+        ret
 __set_ERANGE_:
-mov eax, 0Eh	; 98796
-jmp short __set_errno_	; 9879B
+        mov eax, 0Eh
+        jmp short __set_errno_
 __set_EINVAL_:
-mov eax, 9	; 9879D
-call __set_errno_	; 987A2
-mov eax, 0FFFFFFFFh	; 987A7
-ret	; 987AC
+        mov eax, 9
+        call __set_errno_
+        mov eax, 0FFFFFFFFh
+        ret
 __set_doserrno_:
-push edx	; 987AD
-mov edx, eax	; 987AE
-call sub_9D671	; 987B0
-mov dword [eax], edx	; 987B5
-pop edx	; 987B7
-ret	; 987B8
+        push edx
+        mov edx, eax
+        call sub_9D671
+        mov dword [eax], edx
+        pop edx
+        ret
 sub_987B9:
-call dword [dword_D4D11]	; 987B9
-ret	; 987BF
+        call dword [dword_D4D11]
+        ret

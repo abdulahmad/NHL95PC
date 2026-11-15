@@ -4,57 +4,57 @@ bits 32
 section s_B2720 progbits alloc exec nowrite align=1
 global sub_B2720, sub_B273C, loc_B278E
 sub_B2720:
-push ebp	; B2720
-mov ebp, esp	; B2721
-push edx	; B2723
-mov edx, eax	; B2724
-and eax, 3FFFFh	; B2726
-and edx, 0FFFC0000h	; B272B
-sar eax, 1	; B2731
-or eax, edx	; B2733
-lea esp, [byte ebp-04h]	; B2735
-pop edx	; B2738
-pop ebp	; B2739
-ret	; B273A
-db 090h
+        push ebp
+        mov ebp, esp
+        push edx
+        mov edx, eax
+        and eax, 3FFFFh
+        and edx, 0FFFC0000h
+        sar eax, 1
+        or eax, edx
+        lea esp, [byte ebp-04h]
+        pop edx
+        pop ebp
+        ret
+        db 090h
 sub_B273C:
-push ebp	; B273C
-mov ebp, esp	; B273D
-push ecx	; B273F
-push esi	; B2740
-mov ecx, eax	; B2741
-xor eax, eax	; B2743
-mov ax, dx	; B2745
-sar eax, 9	; B2748
-and dh, 1	; B274B
-mov esi, eax	; B274E
-xor eax, eax	; B2750
-mov ax, dx	; B2752
-xor edx, edx	; B2755
-mov dx, cx	; B2757
-sar edx, 9	; B275A
-shl eax, 7	; B275D
-and edx, byte 7Fh	; B2760
-or eax, edx	; B2763
-mov ecx, eax	; B2765
-xor eax, eax	; B2767
-mov ax, si	; B2769
-mov edx, eax	; B276C
-xor eax, eax	; B276E
-shl edx, 10h	; B2770
-mov ax, cx	; B2773
-add eax, edx	; B2776
-test bl, 1	; B2778
-je short loc_B278E	; B277B
-mov edx, eax	; B277D
-add eax, eax	; B277F
-and edx, 0C0000h	; B2781
-and eax, 3FFFFh	; B2787
-or eax, edx	; B278C
+        push ebp
+        mov ebp, esp
+        push ecx
+        push esi
+        mov ecx, eax
+        xor eax, eax
+        mov ax, dx
+        sar eax, 9
+        and dh, 1
+        mov esi, eax
+        xor eax, eax
+        mov ax, dx
+        xor edx, edx
+        mov dx, cx
+        sar edx, 9
+        shl eax, 7
+        and edx, byte 7Fh
+        or eax, edx
+        mov ecx, eax
+        xor eax, eax
+        mov ax, si
+        mov edx, eax
+        xor eax, eax
+        shl edx, 10h
+        mov ax, cx
+        add eax, edx
+        test bl, 1
+        je short loc_B278E
+        mov edx, eax
+        add eax, eax
+        and edx, 0C0000h
+        and eax, 3FFFFh
+        or eax, edx
 loc_B278E:
-lea esp, [byte ebp-08h]	; B278E
-pop esi	; B2791
-pop ecx	; B2792
-pop ebp	; B2793
-ret	; B2794
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        lea esp, [byte ebp-08h]
+        pop esi
+        pop ecx
+        pop ebp
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

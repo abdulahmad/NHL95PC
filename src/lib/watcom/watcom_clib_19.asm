@@ -6,91 +6,91 @@ extern __set_errno_dos_, fgetc_, sub_9BA18, ungetc_
 global mkdir_, loc_930C2, cget_file_, loc_930E8, loc_930F2, loc_93103, loc_9310E, uncget_file_
 global vfscanf_, fscanf_
 mkdir_:
-push edx	; 930A7
-mov edx, eax	; 930A8
-mov ah, 39h	; 930AA
-int 21h	; 930AC
-rcl eax, 1	; 930AE
-ror eax, 1	; 930B0
-test eax, eax	; 930B2
-jge short loc_930C2	; 930B4
-and eax, 0FFFFh	; 930B6
-call __set_errno_dos_	; 930BB
-pop edx	; 930C0
-ret	; 930C1
+        push edx
+        mov edx, eax
+        mov ah, 39h
+        int 21h
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jge short loc_930C2
+        and eax, 0FFFFh
+        call __set_errno_dos_
+        pop edx
+        ret
 loc_930C2:
-xor eax, eax	; 930C2
-pop edx	; 930C4
-ret	; 930C5
+        xor eax, eax
+        pop edx
+        ret
 cget_file_:
-push ebx	; 930C6
-push ecx	; 930C7
-push edx	; 930C8
-mov edx, eax	; 930C9
-mov eax, dword [byte eax+08h]	; 930CB
-cmp dword [byte eax+04h], byte 0	; 930CE
-jle short loc_930E8	; 930D2
-test byte [byte eax+0Ch], 4	; 930D4
-jne short loc_930E8	; 930D8
-mov ebx, dword [eax]	; 930DA
-mov cl, byte [ebx]	; 930DC
-cmp cl, 0Dh	; 930DE
-je short loc_930E8	; 930E1
-cmp cl, 1Ah	; 930E3
-jne short loc_930F2	; 930E6
+        push ebx
+        push ecx
+        push edx
+        mov edx, eax
+        mov eax, dword [byte eax+08h]
+        cmp dword [byte eax+04h], byte 0
+        jle short loc_930E8
+        test byte [byte eax+0Ch], 4
+        jne short loc_930E8
+        mov ebx, dword [eax]
+        mov cl, byte [ebx]
+        cmp cl, 0Dh
+        je short loc_930E8
+        cmp cl, 1Ah
+        jne short loc_930F2
 loc_930E8:
-mov eax, dword [byte edx+08h]	; 930E8
-call fgetc_	; 930EB
-jmp short loc_93103	; 930F0
+        mov eax, dword [byte edx+08h]
+        call fgetc_
+        jmp short loc_93103
 loc_930F2:
-dec dword [byte eax+04h]	; 930F2
-mov eax, dword [byte edx+08h]	; 930F5
-mov ebx, dword [eax]	; 930F8
-lea ecx, [byte ebx+01h]	; 930FA
-mov dword [eax], ecx	; 930FD
-xor eax, eax	; 930FF
-mov al, byte [ebx]	; 93101
+        dec dword [byte eax+04h]
+        mov eax, dword [byte edx+08h]
+        mov ebx, dword [eax]
+        lea ecx, [byte ebx+01h]
+        mov dword [eax], ecx
+        xor eax, eax
+        mov al, byte [ebx]
 loc_93103:
-mov ebx, eax	; 93103
-cmp eax, byte 0FFFFFFFFh	; 93105
-jne short loc_9310E	; 93108
-or byte [byte edx+010h], 2	; 9310A
+        mov ebx, eax
+        cmp eax, byte 0FFFFFFFFh
+        jne short loc_9310E
+        or byte [byte edx+010h], 2
 loc_9310E:
-mov eax, ebx	; 9310E
-pop edx	; 93110
-pop ecx	; 93111
-pop ebx	; 93112
-ret	; 93113
+        mov eax, ebx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 uncget_file_:
-mov edx, dword [byte edx+08h]	; 93114
-jmp near ungetc_	; 93117
+        mov edx, dword [byte edx+08h]
+        jmp near ungetc_
 vfscanf_:
-push ecx	; 9311C
-push esi	; 9311D
-sub esp, byte 14h	; 9311E
-mov ecx, cget_file_	; 93121
-mov esi, uncget_file_	; 93126
-mov dword [byte esp+08h], eax	; 9312B
-mov eax, esp	; 9312F
-mov dword [esp], ecx	; 93131
-mov dword [byte esp+04h], esi	; 93134
-call sub_9BA18	; 93138
-add esp, byte 14h	; 9313D
-pop esi	; 93140
-pop ecx	; 93141
-ret	; 93142
+        push ecx
+        push esi
+        sub esp, byte 14h
+        mov ecx, cget_file_
+        mov esi, uncget_file_
+        mov dword [byte esp+08h], eax
+        mov eax, esp
+        mov dword [esp], ecx
+        mov dword [byte esp+04h], esi
+        call sub_9BA18
+        add esp, byte 14h
+        pop esi
+        pop ecx
+        ret
 fscanf_:
-push ebx	; 93143
-push edx	; 93144
-sub esp, byte 4	; 93145
-lea ebx, [byte esp+018h]	; 93148
-mov eax, dword [byte esp+010h]	; 9314C
-mov edx, dword [byte esp+014h]	; 93150
-mov dword [esp], ebx	; 93154
-mov ebx, esp	; 93157
-call vfscanf_	; 93159
-add esp, byte 4	; 9315E
-pop edx	; 93161
-pop ebx	; 93162
-ret	; 93163
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        push ebx
+        push edx
+        sub esp, byte 4
+        lea ebx, [byte esp+018h]
+        mov eax, dword [byte esp+010h]
+        mov edx, dword [byte esp+014h]
+        mov dword [esp], ebx
+        mov ebx, esp
+        call vfscanf_
+        add esp, byte 4
+        pop edx
+        pop ebx
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

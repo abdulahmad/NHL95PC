@@ -5,53 +5,53 @@ section s_98AC8 progbits alloc exec nowrite align=1
 extern _Extender
 global _dos_setvect_, loc_98AE9, _dos_getvect_, loc_98B10, loc_98B1C
 _dos_setvect_:
-push edx	; 98AC8
-mov edx, ebx	; 98AC9
-mov bl, byte [_Extender]	; 98ACB
-cmp bl, 2	; 98AD1
-jb short loc_98AE9	; 98AD4
-cmp bl, 8	; 98AD6
-ja short loc_98AE9	; 98AD9
-push ds	; 98ADB
-mov ds, ecx	; 98ADC
-mov cl, al	; 98ADE
-mov al, 4	; 98AE0
-mov ah, 25h	; 98AE2
-int 21h	; 98AE4
-pop ds	; 98AE6
-pop edx	; 98AE7
-ret	; 98AE8
+        push edx
+        mov edx, ebx
+        mov bl, byte [_Extender]
+        cmp bl, 2
+        jb short loc_98AE9
+        cmp bl, 8
+        ja short loc_98AE9
+        push ds
+        mov ds, ecx
+        mov cl, al
+        mov al, 4
+        mov ah, 25h
+        int 21h
+        pop ds
+        pop edx
+        ret
 loc_98AE9:
-push ds	; 98AE9
-mov ds, ecx	; 98AEA
-mov ah, 25h	; 98AEC
-int 21h	; 98AEE
-pop ds	; 98AF0
-pop edx	; 98AF1
-ret	; 98AF2
+        push ds
+        mov ds, ecx
+        mov ah, 25h
+        int 21h
+        pop ds
+        pop edx
+        ret
 _dos_getvect_:
-push ebx	; 98AF3
-push ecx	; 98AF4
-mov ebx, eax	; 98AF5
-mov ah, byte [_Extender]	; 98AF7
-cmp ah, 2	; 98AFD
-jb short loc_98B10	; 98B00
-cmp ah, 8	; 98B02
-ja short loc_98B10	; 98B05
-mov eax, 2502h	; 98B07
-mov cl, bl	; 98B0C
-jmp short loc_98B1C	; 98B0E
+        push ebx
+        push ecx
+        mov ebx, eax
+        mov ah, byte [_Extender]
+        cmp ah, 2
+        jb short loc_98B10
+        cmp ah, 8
+        ja short loc_98B10
+        mov eax, 2502h
+        mov cl, bl
+        jmp short loc_98B1C
 loc_98B10:
-mov eax, ebx	; 98B10
-and eax, 0FFh	; 98B12
-xor cl, cl	; 98B17
-or ah, 35h	; 98B19
+        mov eax, ebx
+        and eax, 0FFh
+        xor cl, cl
+        or ah, 35h
 loc_98B1C:
-push es	; 98B1C
-int 21h	; 98B1D
-mov edx, es	; 98B1F
-pop es	; 98B21
-mov eax, ebx	; 98B22
-pop ecx	; 98B24
-pop ebx	; 98B25
-ret	; 98B26
+        push es
+        int 21h
+        mov edx, es
+        pop es
+        mov eax, ebx
+        pop ecx
+        pop ebx
+        ret

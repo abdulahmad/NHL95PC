@@ -11,115 +11,115 @@ global statsskaterplr, playofftree, hmteamrec, unk_DBD1C, awteamrec
 global hmlinetab, hmglstats, awglstats, hmlineind, awlineind, statsscreenpal, hmglstats_w2
 global hmglstats_w4, hmglstats_w8, hmglstats_w14
 awroster:
-resb 5
+        resb 5
 byte_DB7F1:
-resb 1087
+        resb 1087
 hmteamrec:
-resb 5
-resb 71
+        resb 5
+        resb 71
 hmteamrec_skaters:
-resb 100
+        resb 100
 hmteamrec_goalies:
-resb 12
-resb 48
+        resb 12
+        resb 48
 unk_DBD1C:
-resb 508
+        resb 508
 awteamrec:
-resb 5
-resb 183
-resb 556
+        resb 5
+        resb 183
+        resb 556
 hmlinetab:
-resb 36
+        resb 36
 hmgoalieidx:
-resb 1
-resb 3
+        resb 1
+        resb 3
 hmscratch:
-resb 8
+        resb 8
 s1font:
-resb 4
+        resb 4
 schedgameidx:
-resb 4
+        resb 4
 pointerspr:
-resb 6
+        resb 6
 dword_DC23E:
-resb 2
+        resb 2
 hmglstats:
-resb 2
+        resb 2
 hmglstats_w2:
-resb 2
+        resb 2
 hmglstats_w4:
-resb 4
+        resb 4
 hmglstats_w8:
-resb 6
+        resb 6
 hmglstats_w14:
-resb 4
+        resb 4
 awglstats:
-resb 18
+        resb 18
 byte_DC264:
-resb 1
+        resb 1
 byte_DC265:
-resb 1
+        resb 1
 byte_DC266:
-resb 1
+        resb 1
 byte_DC267:
-resb 1
+        resb 1
 byte_DC268:
-resb 4
+        resb 4
 linesprites:
-resb 32
+        resb 32
 hudhundstep:
-resb 4
+        resb 4
 penaltydigits:
-resb 40
+        resb 40
 dword_DC2B8:
-resb 4
+        resb 4
 hmpanelspr:
-resb 4
+        resb 4
 awpanelspr:
-resb 4
+        resb 4
 scoredigits:
-resb 44
+        resb 44
 scrbrdshapes:
-resb 4
+        resb 4
 hmlineind:
-resb 12
+        resb 12
 awlineind:
-resb 12
+        resb 12
 clockdigits:
-resb 40
+        resb 40
 clockcolon:
-resb 4
+        resb 4
 cupseries:
-resb 4
+        resb 4
 titlesample:
-resb 4
+        resb 4
 statsscreenpal:
-resb 768
+        resb 768
 statsteamorder:
-resb 104
+        resb 104
 statsmenuresult:
-resb 4
+        resb 4
 sfpal2:
-resb 4
+        resb 4
 sfpal1:
-resb 4
+        resb 4
 dword_DC6B4:
-resb 4
+        resb 4
 statsnumgoalies:
-resb 4
+        resb 4
 statsskaterorder:
-resb 100
+        resb 100
 statsgoalieorder:
-resb 20
+        resb 20
 dword_DC734:
-resb 4
+        resb 4
 leaguestatsmode:
-resb 4
+        resb 4
 statsgoalieplr:
-resb 20
+        resb 20
 statsnumskaters:
-resb 4
+        resb 4
 statsskaterplr:
-resb 100
+        resb 100
 playofftree:
-resb 4
+        resb 4

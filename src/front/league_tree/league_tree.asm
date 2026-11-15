@@ -8,768 +8,802 @@ extern ReadTeamNames, statsfromleague, statsleague, str_extDB, str_LSSCHED, str_
 extern strcmp_, strcpy_, strlen_, sub_8E8A0, FillRect, sub_B4FAC, PlotPixel, teamcitynames
 extern treeteamnames
 global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule, LoadLeagueTree, FitPlayerName, DrawBevelBox
+;-----------------------------------------------------------------------------
+; LoadPlayoffModeTree                          2970A  95 PC, medium confidence
+; Statsfromleague == 0 path of ShowPlayoffTree: reads team names into
+; treeteamnames (ReadTeamNames on leaguedbnames[4]) or LSSCHED.DB, fills
+; playofftree from the playoff games (ReadSchedGame 444h.., final 4A6h ->
+; pochampion), then PlayoffTreeScreen
+;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/LoadPlayoffModeTree.c
 %ifdef CBUILD
 %include "c/front/league_tree/LoadPlayoffModeTree.inc"
 %else
 LoadPlayoffModeTree:
-push dword 0B0h	; 2970A
-call __CHK	; 2970F
-push ebx	; 29714
-push ecx	; 29715
-push esi	; 29716
-push edi	; 29717
-push ebp	; 29718
-mov ebp, esp	; 29719
-sub esp, 98h	; 2971B
-mov dword [byte ebp-030h], eax	; 29721
-mov dword [byte ebp-028h], edx	; 29724
-mov dword [byte ebp-08h], 0FFFFFFFFh	; 29727
-mov ecx, str_extDB	; 2972E
-mov ebx, dword [leaguedbnames+10h]	; 29733
-mov edx, statsleague	; 29739
-lea eax, [byte ebp-058h]	; 2973E
-call MakePath	; 29741
-xor ebx, ebx	; 29746
-mov edx, treeteamnames	; 29748
-lea eax, [byte ebp-058h]	; 2974D
-call ReadTeamNames	; 29750
-mov dword [byte ebp-020h], eax	; 29755
-cmp word [byte ebp-020h], byte 0	; 29758
-jne short .1	; 2975D
-mov ecx, str_extDB	; 2975F
-mov ebx, str_LSSCHED	; 29764
-xor edx, edx	; 29769
-lea eax, [byte ebp-058h]	; 2976B
-call MakePath	; 2976E
-lea edx, [byte ebp-08h]	; 29773
-lea eax, [byte ebp-058h]	; 29776
-call FileOpenRead	; 29779
-mov dword [byte ebp-020h], eax	; 2977E
+        push dword 0B0h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 98h
+        mov dword [byte ebp-030h], eax
+        mov dword [byte ebp-028h], edx
+        mov dword [byte ebp-08h], 0FFFFFFFFh
+        mov ecx, str_extDB
+        mov ebx, dword [leaguedbnames+10h]
+        mov edx, statsleague
+        lea eax, [byte ebp-058h]
+        call MakePath
+        xor ebx, ebx
+        mov edx, treeteamnames
+        lea eax, [byte ebp-058h]
+        call ReadTeamNames
+        mov dword [byte ebp-020h], eax
+        cmp word [byte ebp-020h], byte 0
+        jne short .1
+        mov ecx, str_extDB
+        mov ebx, str_LSSCHED
+        xor edx, edx
+        lea eax, [byte ebp-058h]
+        call MakePath
+        lea edx, [byte ebp-08h]
+        lea eax, [byte ebp-058h]
+        call FileOpenRead
+        mov dword [byte ebp-020h], eax
 .1:
-mov dword [byte ebp-014h], 0	; 29781
-mov dword [byte ebp-010h], 0	; 29788
+        mov dword [byte ebp-014h], 0
+        mov dword [byte ebp-010h], 0
 .2:
-cmp word [byte ebp-010h], byte 69h	; 2978F
-jge short .3	; 29794
-cmp word [byte ebp-020h], byte 0	; 29796
-je short .5	; 2979B
+        cmp word [byte ebp-010h], byte 69h
+        jge short .3
+        cmp word [byte ebp-020h], byte 0
+        je short .5
 .3:
-jmp short .6	; 2979D
+        jmp short .6
 .4:
-add dword [byte ebp-010h], byte 7	; 2979F
-jmp short LoadPlayoffModeTree.2	; 297A3
+        add dword [byte ebp-010h], byte 7
+        jmp short LoadPlayoffModeTree.2
 .5:
-mov ebx, dword [byte ebp-012h]	; 297A5
-sar ebx, 10h	; 297A8
-add ebx, 444h	; 297AB
-lea edx, [byte ebp-038h]	; 297B1
-mov eax, dword [byte ebp-0Ah]	; 297B4
-sar eax, 10h	; 297B7
-call ReadSchedGame	; 297BA
-mov dword [byte ebp-020h], eax	; 297BF
-xor edx, edx	; 297C2
-mov dl, byte [byte ebp-036h]	; 297C4
-mov eax, dword [byte ebp-016h]	; 297C7
-sar eax, 10h	; 297CA
-shl eax, 2	; 297CD
-mov dword [dword eax+playofftree], edx	; 297D0
-inc word [byte ebp-014h]	; 297D6
-xor edx, edx	; 297DA
-mov dl, byte [byte ebp-035h]	; 297DC
-mov eax, dword [byte ebp-016h]	; 297DF
-sar eax, 10h	; 297E2
-shl eax, 2	; 297E5
-mov dword [dword eax+playofftree], edx	; 297E8
-inc word [byte ebp-014h]	; 297EE
-jmp short LoadPlayoffModeTree.4	; 297F2
+        mov ebx, dword [byte ebp-012h]
+        sar ebx, 10h
+        add ebx, 444h
+        lea edx, [byte ebp-038h]
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        call ReadSchedGame
+        mov dword [byte ebp-020h], eax
+        xor edx, edx
+        mov dl, byte [byte ebp-036h]
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        shl eax, 2
+        mov dword [dword eax+playofftree], edx
+        inc word [byte ebp-014h]
+        xor edx, edx
+        mov dl, byte [byte ebp-035h]
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        shl eax, 2
+        mov dword [dword eax+playofftree], edx
+        inc word [byte ebp-014h]
+        jmp short LoadPlayoffModeTree.4
 .6:
-mov dword [byte ebp-018h], 0	; 297F4
-mov dword [byte ebp-0Ch], 0	; 297FB
-mov word [byte ebp-010h], 0	; 29802
+        mov dword [byte ebp-018h], 0
+        mov dword [byte ebp-0Ch], 0
+        mov word [byte ebp-010h], 0
 .7:
-cmp word [byte ebp-010h], byte 7	; 29808
-jge short .8	; 2980D
-cmp word [byte ebp-020h], byte 0	; 2980F
-je short .10	; 29814
+        cmp word [byte ebp-010h], byte 7
+        jge short .8
+        cmp word [byte ebp-020h], byte 0
+        je short .10
 .8:
-jmp near .25	; 29816
+        jmp near .25
 .9:
-inc word [byte ebp-010h]	; 2981B
-jmp short LoadPlayoffModeTree.7	; 2981F
+        inc word [byte ebp-010h]
+        jmp short LoadPlayoffModeTree.7
 .10:
-mov ebx, dword [byte ebp-012h]	; 29821
-sar ebx, 10h	; 29824
-add ebx, 4A6h	; 29827
-lea edx, [byte ebp-038h]	; 2982D
-mov eax, dword [byte ebp-0Ah]	; 29830
-sar eax, 10h	; 29833
-call ReadSchedGame	; 29836
-mov dword [byte ebp-020h], eax	; 2983B
-cmp word [byte ebp-010h], byte 0	; 2983E
-jne short .11	; 29843
-xor eax, eax	; 29845
-mov al, byte [byte ebp-036h]	; 29847
-mov dword [byte ebp-04h], eax	; 2984A
-xor eax, eax	; 2984D
-mov al, byte [byte ebp-035h]	; 2984F
-mov dword [byte ebp-01Ch], eax	; 29852
+        mov ebx, dword [byte ebp-012h]
+        sar ebx, 10h
+        add ebx, 4A6h
+        lea edx, [byte ebp-038h]
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        call ReadSchedGame
+        mov dword [byte ebp-020h], eax
+        cmp word [byte ebp-010h], byte 0
+        jne short .11
+        xor eax, eax
+        mov al, byte [byte ebp-036h]
+        mov dword [byte ebp-04h], eax
+        xor eax, eax
+        mov al, byte [byte ebp-035h]
+        mov dword [byte ebp-01Ch], eax
 .11:
-mov al, byte [byte ebp-034h]	; 29855
-cmp al, byte [byte ebp-033h]	; 29858
-jbe short .12	; 2985B
-xor eax, eax	; 2985D
-mov al, byte [byte ebp-036h]	; 2985F
-cmp ax, word [byte ebp-04h]	; 29862
-je short .14	; 29866
+        mov al, byte [byte ebp-034h]
+        cmp al, byte [byte ebp-033h]
+        jbe short .12
+        xor eax, eax
+        mov al, byte [byte ebp-036h]
+        cmp ax, word [byte ebp-04h]
+        je short .14
 .12:
-mov al, byte [byte ebp-033h]	; 29868
-cmp al, byte [byte ebp-034h]	; 2986B
-jbe short .13	; 2986E
-xor eax, eax	; 29870
-mov al, byte [byte ebp-035h]	; 29872
-cmp ax, word [byte ebp-04h]	; 29875
-je short .14	; 29879
+        mov al, byte [byte ebp-033h]
+        cmp al, byte [byte ebp-034h]
+        jbe short .13
+        xor eax, eax
+        mov al, byte [byte ebp-035h]
+        cmp ax, word [byte ebp-04h]
+        je short .14
 .13:
-jmp short .15	; 2987B
+        jmp short .15
 .14:
-inc dword [byte ebp-018h]	; 2987D
-jmp short .16	; 29880
+        inc dword [byte ebp-018h]
+        jmp short .16
 .15:
-inc dword [byte ebp-0Ch]	; 29882
+        inc dword [byte ebp-0Ch]
 .16:
-cmp word [byte ebp-018h], byte 4	; 29885
-jne short .17	; 2988A
-xor eax, eax	; 2988C
-mov al, byte [byte ebp-036h]	; 2988E
-cmp ax, word [byte ebp-04h]	; 29891
-je short .19	; 29895
+        cmp word [byte ebp-018h], byte 4
+        jne short .17
+        xor eax, eax
+        mov al, byte [byte ebp-036h]
+        cmp ax, word [byte ebp-04h]
+        je short .19
 .17:
-cmp word [byte ebp-0Ch], byte 4	; 29897
-jne short .18	; 2989C
-xor eax, eax	; 2989E
-mov al, byte [byte ebp-036h]	; 298A0
-cmp ax, word [byte ebp-01Ch]	; 298A3
-je short .19	; 298A7
+        cmp word [byte ebp-0Ch], byte 4
+        jne short .18
+        xor eax, eax
+        mov al, byte [byte ebp-036h]
+        cmp ax, word [byte ebp-01Ch]
+        je short .19
 .18:
-jmp short .20	; 298A9
+        jmp short .20
 .19:
-xor eax, eax	; 298AB
-mov al, byte [byte ebp-036h]	; 298AD
-mov dword [pochampion], eax	; 298B0
-mov word [byte ebp-010h], 7	; 298B5
+        xor eax, eax
+        mov al, byte [byte ebp-036h]
+        mov dword [pochampion], eax
+        mov word [byte ebp-010h], 7
 .20:
-cmp word [byte ebp-0Ch], byte 4	; 298BB
-jne short .21	; 298C0
-xor eax, eax	; 298C2
-mov al, byte [byte ebp-035h]	; 298C4
-cmp ax, word [byte ebp-01Ch]	; 298C7
-je short .23	; 298CB
+        cmp word [byte ebp-0Ch], byte 4
+        jne short .21
+        xor eax, eax
+        mov al, byte [byte ebp-035h]
+        cmp ax, word [byte ebp-01Ch]
+        je short .23
 .21:
-cmp word [byte ebp-018h], byte 4	; 298CD
-jne short .22	; 298D2
-xor eax, eax	; 298D4
-mov al, byte [byte ebp-035h]	; 298D6
-cmp ax, word [byte ebp-04h]	; 298D9
-je short .23	; 298DD
+        cmp word [byte ebp-018h], byte 4
+        jne short .22
+        xor eax, eax
+        mov al, byte [byte ebp-035h]
+        cmp ax, word [byte ebp-04h]
+        je short .23
 .22:
-jmp short .24	; 298DF
+        jmp short .24
 .23:
-xor eax, eax	; 298E1
-mov al, byte [byte ebp-035h]	; 298E3
-mov dword [pochampion], eax	; 298E6
-mov word [byte ebp-010h], 7	; 298EB
+        xor eax, eax
+        mov al, byte [byte ebp-035h]
+        mov dword [pochampion], eax
+        mov word [byte ebp-010h], 7
 .24:
-jmp near LoadPlayoffModeTree.9	; 298F1
+        jmp near LoadPlayoffModeTree.9
 .25:
-lea eax, [byte ebp-08h]	; 298F6
-call FileClose	; 298F9
-cmp word [byte ebp-020h], byte 0	; 298FE
-jne short .26	; 29903
-call PlayoffTreeScreen	; 29905
+        lea eax, [byte ebp-08h]
+        call FileClose
+        cmp word [byte ebp-020h], byte 0
+        jne short .26
+        call PlayoffTreeScreen
 .26:
-mov dword [byte ebp-02Ch], 0	; 2990A
-mov eax, dword [byte ebp-02Ch]	; 29911
-mov esp, ebp	; 29914
-pop ebp	; 29916
-pop edi	; 29917
-pop esi	; 29918
-pop ecx	; 29919
-pop ebx	; 2991A
-ret	; 2991B
+        mov dword [byte ebp-02Ch], 0
+        mov eax, dword [byte ebp-02Ch]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TreeSeriesWinner                             2991C  95 PC, medium confidence
+; Same code as SeriesWinner (season_playoffs) with an extra is-series flag:
+; walks 6-byte game entries of a series; returns the team that reached
+; len/2+1 wins, -1 if a game is unplayed
+;-----------------------------------------------------------------------------
 TreeSeriesWinner:
-push dword 38h	; 2991C
-call __CHK	; 29921
-push ecx	; 29926
-push esi	; 29927
-push edi	; 29928
-push ebp	; 29929
-mov ebp, esp	; 2992A
-sub esp, 24h	; 2992C
-mov dword [byte ebp-014h], eax	; 29932
-mov dword [byte ebp-01Ch], edx	; 29935
-mov dword [byte ebp-018h], ebx	; 29938
-xor eax, eax	; 2993B
-mov edx, dword [byte ebp-014h]	; 2993D
-mov al, byte [byte edx+02h]	; 29940
-mov dword [byte ebp-0Ch], eax	; 29943
-xor eax, eax	; 29946
-mov edx, dword [byte ebp-014h]	; 29948
-mov al, byte [byte edx+03h]	; 2994B
-mov dword [byte ebp-010h], eax	; 2994E
-cmp dword [byte ebp-018h], byte 0	; 29951
-je near .12	; 29955
-mov eax, dword [byte ebp-01Ch]	; 2995B
-shr eax, 1	; 2995E
-inc eax	; 29960
-mov dword [byte ebp-01Ch], eax	; 29961
-mov dword [byte ebp-020h], 0	; 29964
-mov eax, dword [byte ebp-020h]	; 2996B
-mov dword [byte ebp-024h], eax	; 2996E
+        push dword 38h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 24h
+        mov dword [byte ebp-014h], eax
+        mov dword [byte ebp-01Ch], edx
+        mov dword [byte ebp-018h], ebx
+        xor eax, eax
+        mov edx, dword [byte ebp-014h]
+        mov al, byte [byte edx+02h]
+        mov dword [byte ebp-0Ch], eax
+        xor eax, eax
+        mov edx, dword [byte ebp-014h]
+        mov al, byte [byte edx+03h]
+        mov dword [byte ebp-010h], eax
+        cmp dword [byte ebp-018h], byte 0
+        je near .12
+        mov eax, dword [byte ebp-01Ch]
+        shr eax, 1
+        inc eax
+        mov dword [byte ebp-01Ch], eax
+        mov dword [byte ebp-020h], 0
+        mov eax, dword [byte ebp-020h]
+        mov dword [byte ebp-024h], eax
 .1:
-mov eax, dword [byte ebp-024h]	; 29971
-cmp eax, dword [byte ebp-01Ch]	; 29974
-jae short .2	; 29977
-mov eax, dword [byte ebp-020h]	; 29979
-cmp eax, dword [byte ebp-01Ch]	; 2997C
-jb short .4	; 2997F
+        mov eax, dword [byte ebp-024h]
+        cmp eax, dword [byte ebp-01Ch]
+        jae short .2
+        mov eax, dword [byte ebp-020h]
+        cmp eax, dword [byte ebp-01Ch]
+        jb short .4
 .2:
-jmp short .11	; 29981
+        jmp short .11
 .3:
-add dword [byte ebp-014h], byte 6	; 29983
-jmp short TreeSeriesWinner.1	; 29987
+        add dword [byte ebp-014h], byte 6
+        jmp short TreeSeriesWinner.1
 .4:
-mov eax, dword [byte ebp-014h]	; 29989
-cmp byte [byte eax+04h], 0FFh	; 2998C
-jne short .5	; 29990
-mov dword [byte ebp-04h], 0FFFFFFFFh	; 29992
-jmp near .26	; 29999
+        mov eax, dword [byte ebp-014h]
+        cmp byte [byte eax+04h], 0FFh
+        jne short .5
+        mov dword [byte ebp-04h], 0FFFFFFFFh
+        jmp near .26
 .5:
-mov eax, dword [byte ebp-014h]	; 2999E
-mov al, byte [byte eax+02h]	; 299A1
-and eax, 0FFh	; 299A4
-cmp eax, dword [byte ebp-0Ch]	; 299A9
-jne short .8	; 299AC
-mov eax, dword [byte ebp-014h]	; 299AE
-mov dl, byte [byte eax+04h]	; 299B1
-mov eax, dword [byte ebp-014h]	; 299B4
-cmp dl, byte [byte eax+05h]	; 299B7
-jbe short .6	; 299BA
-inc dword [byte ebp-024h]	; 299BC
-jmp short .7	; 299BF
+        mov eax, dword [byte ebp-014h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        cmp eax, dword [byte ebp-0Ch]
+        jne short .8
+        mov eax, dword [byte ebp-014h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-014h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .6
+        inc dword [byte ebp-024h]
+        jmp short .7
 .6:
-inc dword [byte ebp-020h]	; 299C1
+        inc dword [byte ebp-020h]
 .7:
-jmp short .10	; 299C4
+        jmp short .10
 .8:
-mov eax, dword [byte ebp-014h]	; 299C6
-mov dl, byte [byte eax+04h]	; 299C9
-mov eax, dword [byte ebp-014h]	; 299CC
-cmp dl, byte [byte eax+05h]	; 299CF
-jbe short .9	; 299D2
-inc dword [byte ebp-020h]	; 299D4
-jmp short .10	; 299D7
+        mov eax, dword [byte ebp-014h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-014h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .9
+        inc dword [byte ebp-020h]
+        jmp short .10
 .9:
-inc dword [byte ebp-024h]	; 299D9
+        inc dword [byte ebp-024h]
 .10:
-jmp short TreeSeriesWinner.3	; 299DC
+        jmp short TreeSeriesWinner.3
 .11:
-jmp near .24	; 299DE
+        jmp near .24
 .12:
-mov eax, dword [byte ebp-014h]	; 299E3
-cmp byte [byte eax+04h], 0FFh	; 299E6
-jne short .13	; 299EA
-mov dword [byte ebp-04h], 0FFFFFFFFh	; 299EC
-jmp near .26	; 299F3
+        mov eax, dword [byte ebp-014h]
+        cmp byte [byte eax+04h], 0FFh
+        jne short .13
+        mov dword [byte ebp-04h], 0FFFFFFFFh
+        jmp near .26
 .13:
-mov dword [byte ebp-08h], 0	; 299F8
-mov dword [byte ebp-020h], 0	; 299FF
-mov eax, dword [byte ebp-020h]	; 29A06
-mov dword [byte ebp-024h], eax	; 29A09
+        mov dword [byte ebp-08h], 0
+        mov dword [byte ebp-020h], 0
+        mov eax, dword [byte ebp-020h]
+        mov dword [byte ebp-024h], eax
 .14:
-mov eax, dword [byte ebp-014h]	; 29A0C
-cmp byte [eax], 0FFh	; 29A0F
-je short .15	; 29A12
-cmp dword [byte ebp-08h], byte 7	; 29A14
-jl short .17	; 29A18
+        mov eax, dword [byte ebp-014h]
+        cmp byte [eax], 0FFh
+        je short .15
+        cmp dword [byte ebp-08h], byte 7
+        jl short .17
 .15:
-jmp short .24	; 29A1A
+        jmp short .24
 .16:
-add dword [byte ebp-014h], byte 6	; 29A1C
-inc dword [byte ebp-08h]	; 29A20
-jmp short TreeSeriesWinner.14	; 29A23
+        add dword [byte ebp-014h], byte 6
+        inc dword [byte ebp-08h]
+        jmp short TreeSeriesWinner.14
 .17:
-mov eax, dword [byte ebp-014h]	; 29A25
-cmp byte [byte eax+04h], 0FFh	; 29A28
-jne short .18	; 29A2C
-mov dword [byte ebp-04h], 0FFFFFFFFh	; 29A2E
-jmp short .26	; 29A35
+        mov eax, dword [byte ebp-014h]
+        cmp byte [byte eax+04h], 0FFh
+        jne short .18
+        mov dword [byte ebp-04h], 0FFFFFFFFh
+        jmp short .26
 .18:
-mov eax, dword [byte ebp-014h]	; 29A37
-mov al, byte [byte eax+02h]	; 29A3A
-and eax, 0FFh	; 29A3D
-cmp eax, dword [byte ebp-0Ch]	; 29A42
-jne short .21	; 29A45
-mov eax, dword [byte ebp-014h]	; 29A47
-mov dl, byte [byte eax+04h]	; 29A4A
-mov eax, dword [byte ebp-014h]	; 29A4D
-cmp dl, byte [byte eax+05h]	; 29A50
-jbe short .19	; 29A53
-inc dword [byte ebp-024h]	; 29A55
-jmp short .20	; 29A58
+        mov eax, dword [byte ebp-014h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        cmp eax, dword [byte ebp-0Ch]
+        jne short .21
+        mov eax, dword [byte ebp-014h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-014h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .19
+        inc dword [byte ebp-024h]
+        jmp short .20
 .19:
-inc dword [byte ebp-020h]	; 29A5A
+        inc dword [byte ebp-020h]
 .20:
-jmp short .23	; 29A5D
+        jmp short .23
 .21:
-mov eax, dword [byte ebp-014h]	; 29A5F
-mov dl, byte [byte eax+04h]	; 29A62
-mov eax, dword [byte ebp-014h]	; 29A65
-cmp dl, byte [byte eax+05h]	; 29A68
-jbe short .22	; 29A6B
-inc dword [byte ebp-020h]	; 29A6D
-jmp short .23	; 29A70
+        mov eax, dword [byte ebp-014h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-014h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .22
+        inc dword [byte ebp-020h]
+        jmp short .23
 .22:
-inc dword [byte ebp-024h]	; 29A72
+        inc dword [byte ebp-024h]
 .23:
-jmp short TreeSeriesWinner.16	; 29A75
+        jmp short TreeSeriesWinner.16
 .24:
-mov eax, dword [byte ebp-024h]	; 29A77
-cmp eax, dword [byte ebp-020h]	; 29A7A
-jle short .25	; 29A7D
-mov eax, dword [byte ebp-0Ch]	; 29A7F
-mov dword [byte ebp-04h], eax	; 29A82
-jmp short .26	; 29A85
+        mov eax, dword [byte ebp-024h]
+        cmp eax, dword [byte ebp-020h]
+        jle short .25
+        mov eax, dword [byte ebp-0Ch]
+        mov dword [byte ebp-04h], eax
+        jmp short .26
 .25:
-mov eax, dword [byte ebp-010h]	; 29A87
-mov dword [byte ebp-04h], eax	; 29A8A
+        mov eax, dword [byte ebp-010h]
+        mov dword [byte ebp-04h], eax
 .26:
-mov eax, dword [byte ebp-04h]	; 29A8D
-mov esp, ebp	; 29A90
-pop ebp	; 29A92
-pop edi	; 29A93
-pop esi	; 29A94
-pop ecx	; 29A95
-ret	; 29A96
+        mov eax, dword [byte ebp-04h]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
+;-----------------------------------------------------------------------------
+; OpenStatsSchedule                            29A97  95 PC, medium confidence
+; Opens the league schedule DB (leaguedbnames[6]) or LSSCHED.DB as a
+; shape-style file (sub_8E8A0) into *out
+;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/OpenStatsSchedule.c
 %ifdef CBUILD
 %include "c/front/league_tree/OpenStatsSchedule.inc"
 %else
 OpenStatsSchedule:
-push dword 48h	; 29A97
-call __CHK	; 29A9C
-push ebx	; 29AA1
-push ecx	; 29AA2
-push edx	; 29AA3
-push esi	; 29AA4
-push edi	; 29AA5
-push ebp	; 29AA6
-mov ebp, esp	; 29AA7
-sub esp, 24h	; 29AA9
-mov dword [byte ebp-04h], eax	; 29AAF
-cmp dword [statsfromleague], byte 0	; 29AB2
-je short .1	; 29AB9
-mov ecx, str_extDB	; 29ABB
-mov ebx, dword [leaguedbnames+18h]	; 29AC0
-mov edx, statsleague	; 29AC6
-lea eax, [byte ebp-024h]	; 29ACB
-call MakePath	; 29ACE
-jmp short .2	; 29AD3
+        push dword 48h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 24h
+        mov dword [byte ebp-04h], eax
+        cmp dword [statsfromleague], byte 0
+        je short .1
+        mov ecx, str_extDB
+        mov ebx, dword [leaguedbnames+18h]
+        mov edx, statsleague
+        lea eax, [byte ebp-024h]
+        call MakePath
+        jmp short .2
 .1:
-mov ecx, str_extDB	; 29AD5
-mov ebx, str_LSSCHED	; 29ADA
-xor edx, edx	; 29ADF
-lea eax, [byte ebp-024h]	; 29AE1
-call MakePath	; 29AE4
+        mov ecx, str_extDB
+        mov ebx, str_LSSCHED
+        xor edx, edx
+        lea eax, [byte ebp-024h]
+        call MakePath
 .2:
-push byte 20h	; 29AE9
-lea eax, [byte ebp-024h]	; 29AEB
-push eax	; 29AEE
-call sub_8E8A0	; 29AEF
-mov edx, eax	; 29AF4
-add esp, byte 8	; 29AF6
-mov eax, dword [byte ebp-04h]	; 29AF9
-mov dword [eax], edx	; 29AFC
-mov esp, ebp	; 29AFE
-pop ebp	; 29B00
-pop edi	; 29B01
-pop esi	; 29B02
-pop edx	; 29B03
-pop ecx	; 29B04
-pop ebx	; 29B05
-ret	; 29B06
+        push byte 20h
+        lea eax, [byte ebp-024h]
+        push eax
+        call sub_8E8A0
+        mov edx, eax
+        add esp, byte 8
+        mov eax, dword [byte ebp-04h]
+        mov dword [eax], edx
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadLeagueTree                               29B07  95 PC, medium confidence
+; Statsfromleague path: copies teamcitynames into treeteamnames, reads the
+; playoff pairs from the schedule into playofftree, resolves winners with
+; SeriesWinner, then PlayoffTreeScreen
+;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/LoadLeagueTree.c
 %ifdef CBUILD
 %include "c/front/league_tree/LoadLeagueTree.inc"
 %else
 LoadLeagueTree:
-push dword 5Ch	; 29B07
-call __CHK	; 29B0C
-push ebx	; 29B11
-push ecx	; 29B12
-push esi	; 29B13
-push edi	; 29B14
-push ebp	; 29B15
-mov ebp, esp	; 29B16
-sub esp, 40h	; 29B18
-mov dword [byte ebp-030h], eax	; 29B1E
-mov dword [byte ebp-028h], edx	; 29B21
-mov edx, lgstate+4	; 29B24
-mov eax, statsleague	; 29B29
-call strcmp_	; 29B2E
-mov dword [byte ebp-018h], eax	; 29B33
-mov dword [byte ebp-04h], 0	; 29B36
+        push dword 5Ch
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 40h
+        mov dword [byte ebp-030h], eax
+        mov dword [byte ebp-028h], edx
+        mov edx, lgstate+4
+        mov eax, statsleague
+        call strcmp_
+        mov dword [byte ebp-018h], eax
+        mov dword [byte ebp-04h], 0
 .1:
-cmp dword [byte ebp-04h], byte 1Ah	; 29B3D
-jl short .3	; 29B41
-jmp short .4	; 29B43
+        cmp dword [byte ebp-04h], byte 1Ah
+        jl short .3
+        jmp short .4
 .2:
-inc dword [byte ebp-04h]	; 29B45
-jmp short LoadLeagueTree.1	; 29B48
+        inc dword [byte ebp-04h]
+        jmp short LoadLeagueTree.1
 .3:
-mov eax, dword [byte ebp-04h]	; 29B4A
-shl eax, 2	; 29B4D
-mov edx, dword [dword eax+teamcitynames]	; 29B50
-imul eax, dword [byte ebp-04h], byte 15h	; 29B56
-mov ebx, treeteamnames	; 29B5A
-add eax, ebx	; 29B5F
-call strcpy_	; 29B61
-jmp short LoadLeagueTree.2	; 29B66
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        mov edx, dword [dword eax+teamcitynames]
+        imul eax, dword [byte ebp-04h], byte 15h
+        mov ebx, treeteamnames
+        add eax, ebx
+        call strcpy_
+        jmp short LoadLeagueTree.2
 .4:
-mov edx, str_Space2	; 29B68
-mov eax, treeteamnames+222h	; 29B6D
-call strcpy_	; 29B72
-lea eax, [byte ebp-01Ch]	; 29B77
-call OpenStatsSchedule	; 29B7A
-add dword [byte ebp-01Ch], byte 2	; 29B7F
-mov eax, dword [byte ebp-01Ch]	; 29B83
-add eax, 1998h	; 29B86
-mov dword [byte ebp-020h], eax	; 29B8B
-mov dword [byte ebp-04h], 0	; 29B8E
+        mov edx, str_Space2
+        mov eax, treeteamnames+222h
+        call strcpy_
+        lea eax, [byte ebp-01Ch]
+        call OpenStatsSchedule
+        add dword [byte ebp-01Ch], byte 2
+        mov eax, dword [byte ebp-01Ch]
+        add eax, 1998h
+        mov dword [byte ebp-020h], eax
+        mov dword [byte ebp-04h], 0
 .5:
-cmp dword [byte ebp-04h], byte 1Eh	; 29B95
-jl short .7	; 29B99
-jmp near .10	; 29B9B
+        cmp dword [byte ebp-04h], byte 1Eh
+        jl short .7
+        jmp near .10
 .6:
-add dword [byte ebp-04h], byte 2	; 29BA0
-add dword [byte ebp-020h], byte 2Ah	; 29BA4
-jmp short LoadLeagueTree.5	; 29BA8
+        add dword [byte ebp-04h], byte 2
+        add dword [byte ebp-020h], byte 2Ah
+        jmp short LoadLeagueTree.5
 .7:
-mov eax, dword [byte ebp-020h]	; 29BAA
-xor edx, edx	; 29BAD
-mov dl, byte [byte eax+02h]	; 29BAF
-mov eax, dword [byte ebp-04h]	; 29BB2
-shl eax, 2	; 29BB5
-mov dword [dword eax+playofftree], edx	; 29BB8
-mov eax, dword [byte ebp-020h]	; 29BBE
-xor edx, edx	; 29BC1
-mov dl, byte [byte eax+03h]	; 29BC3
-mov eax, dword [byte ebp-04h]	; 29BC6
-shl eax, 2	; 29BC9
-mov dword [dword eax+playofftree_p1], edx	; 29BCC
-mov eax, dword [byte ebp-04h]	; 29BD2
-shl eax, 2	; 29BD5
-cmp dword [dword eax+playofftree], 0FFh	; 29BD8
-jne short .8	; 29BE2
-mov eax, dword [byte ebp-04h]	; 29BE4
-shl eax, 2	; 29BE7
-mov dword [dword eax+playofftree], 1Ah	; 29BEA
+        mov eax, dword [byte ebp-020h]
+        xor edx, edx
+        mov dl, byte [byte eax+02h]
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        mov dword [dword eax+playofftree], edx
+        mov eax, dword [byte ebp-020h]
+        xor edx, edx
+        mov dl, byte [byte eax+03h]
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        mov dword [dword eax+playofftree_p1], edx
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], 0FFh
+        jne short .8
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        mov dword [dword eax+playofftree], 1Ah
 .8:
-mov eax, dword [byte ebp-04h]	; 29BF4
-shl eax, 2	; 29BF7
-cmp dword [dword eax+playofftree_p1], 0FFh	; 29BFA
-jne short .9	; 29C04
-mov eax, dword [byte ebp-04h]	; 29C06
-shl eax, 2	; 29C09
-mov dword [dword eax+playofftree_p1], 1Ah	; 29C0C
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree_p1], 0FFh
+        jne short .9
+        mov eax, dword [byte ebp-04h]
+        shl eax, 2
+        mov dword [dword eax+playofftree_p1], 1Ah
 .9:
-jmp short LoadLeagueTree.6	; 29C16
+        jmp short LoadLeagueTree.6
 .10:
-mov eax, dword [byte ebp-01Ch]	; 29C18
-add eax, 1BE4h	; 29C1B
-mov dword [byte ebp-020h], eax	; 29C20
-mov ebx, dword [byte ebp-018h]	; 29C23
-mov eax, dword [byte ebp-01Ch]	; 29C26
-mov edx, dword [dword eax+088h]	; 29C29
-mov eax, dword [byte ebp-020h]	; 29C2F
-call TreeSeriesWinner	; 29C32
-mov dword [pochampion], eax	; 29C37
-cmp dword [pochampion], byte 0FFFFFFFFh	; 29C3C
-jne short .11	; 29C43
-mov dword [pochampion], 1Ah	; 29C45
+        mov eax, dword [byte ebp-01Ch]
+        add eax, 1BE4h
+        mov dword [byte ebp-020h], eax
+        mov ebx, dword [byte ebp-018h]
+        mov eax, dword [byte ebp-01Ch]
+        mov edx, dword [dword eax+088h]
+        mov eax, dword [byte ebp-020h]
+        call TreeSeriesWinner
+        mov dword [pochampion], eax
+        cmp dword [pochampion], byte 0FFFFFFFFh
+        jne short .11
+        mov dword [pochampion], 1Ah
 .11:
-mov eax, dword [byte ebp-01Ch]	; 29C4F
-sub eax, byte 2	; 29C52
-push eax	; 29C55
-call FreeMemBlock	; 29C56
-add esp, byte 4	; 29C5B
-call PlayoffTreeScreen	; 29C5E
-mov dword [byte ebp-02Ch], 0	; 29C63
-mov eax, dword [byte ebp-02Ch]	; 29C6A
-mov esp, ebp	; 29C6D
-pop ebp	; 29C6F
-pop edi	; 29C70
-pop esi	; 29C71
-pop ecx	; 29C72
-pop ebx	; 29C73
-ret	; 29C74
+        mov eax, dword [byte ebp-01Ch]
+        sub eax, byte 2
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        call PlayoffTreeScreen
+        mov dword [byte ebp-02Ch], 0
+        mov eax, dword [byte ebp-02Ch]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; FitPlayerName                                                   29C75  95 PC
+; Dest = "First Last", falls back to "F. Last", then trims chars until the
+; text width fits
+;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/FitPlayerName.c
 %ifdef CBUILD
 %include "c/front/league_tree/FitPlayerName.inc"
 %else
 FitPlayerName:
-push dword 18h	; 29C75
-call __CHK	; 29C7A
-push esi	; 29C7F
-push edi	; 29C80
-push ebp	; 29C81
-sub esp, byte 4	; 29C82
-mov esi, eax	; 29C85
-mov dword [esp], edx	; 29C87
-mov ebp, ebx	; 29C8A
-mov edi, ecx	; 29C8C
-test edx, edx	; 29C8E
-je short .1	; 29C90
-call strcpy_	; 29C92
-mov edx, str_space	; 29C97
-mov eax, esi	; 29C9C
-call strcat_	; 29C9E
-mov edx, ebx	; 29CA3
-mov eax, esi	; 29CA5
-call strcat_	; 29CA7
-push esi	; 29CAC
-call fputchar	; 29CAD
-add esp, byte 4	; 29CB2
-cmp eax, edi	; 29CB5
-jle short .2	; 29CB7
-mov eax, dword [esp]	; 29CB9
-mov al, byte [eax]	; 29CBC
-mov byte [esi], al	; 29CBE
-mov byte [byte esi+01h], 2Eh	; 29CC0
-mov byte [byte esi+02h], 20h	; 29CC4
-mov byte [byte esi+03h], 0	; 29CC8
-mov edx, ebp	; 29CCC
-mov eax, esi	; 29CCE
-call strcat_	; 29CD0
-jmp short .2	; 29CD5
+        push dword 18h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov esi, eax
+        mov dword [esp], edx
+        mov ebp, ebx
+        mov edi, ecx
+        test edx, edx
+        je short .1
+        call strcpy_
+        mov edx, str_space
+        mov eax, esi
+        call strcat_
+        mov edx, ebx
+        mov eax, esi
+        call strcat_
+        push esi
+        call fputchar
+        add esp, byte 4
+        cmp eax, edi
+        jle short .2
+        mov eax, dword [esp]
+        mov al, byte [eax]
+        mov byte [esi], al
+        mov byte [byte esi+01h], 2Eh
+        mov byte [byte esi+02h], 20h
+        mov byte [byte esi+03h], 0
+        mov edx, ebp
+        mov eax, esi
+        call strcat_
+        jmp short .2
 .1:
-mov edx, ebx	; 29CD7
-call strcpy_	; 29CD9
+        mov edx, ebx
+        call strcpy_
 .2:
-push esi	; 29CDE
-call fputchar	; 29CDF
-add esp, byte 4	; 29CE4
-cmp eax, edi	; 29CE7
-jle short .x	; 29CE9
-mov eax, esi	; 29CEB
-call strlen_	; 29CED
-mov byte [byte esi+eax-01h], 0	; 29CF2
-jmp short FitPlayerName.2	; 29CF7
+        push esi
+        call fputchar
+        add esp, byte 4
+        cmp eax, edi
+        jle short .x
+        mov eax, esi
+        call strlen_
+        mov byte [byte esi+eax-01h], 0
+        jmp short FitPlayerName.2
 .x:
-add esp, byte 4	; 29CF9
-pop ebp	; 29CFC
-pop edi	; 29CFD
-pop esi	; 29CFE
-ret	; 29CFF
+        add esp, byte 4
+        pop ebp
+        pop edi
+        pop esi
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawBevelBox                                 29D00  95 PC, medium confidence
+; Fills a rect with boxfillcolor and draws lit / shaded edges (boxlitecolor /
+; boxshadecolor), double edge when the stack flag is set
+;-----------------------------------------------------------------------------
 ; C: src/front/league_tree/FitPlayerName.c (DrawBevelBox)
 %ifdef CBUILD
 %include "c/front/league_tree/FitPlayerName.DrawBevelBox.inc"
 %else
 DrawBevelBox:
-push dword 38h	; 29D00
-call __CHK	; 29D05
-push esi	; 29D0A
-push edi	; 29D0B
-push ebp	; 29D0C
-sub esp, byte 14h	; 29D0D
-mov edi, eax	; 29D10
-mov esi, edx	; 29D12
-mov ebp, ebx	; 29D14
-mov dword [byte esp+010h], ecx	; 29D16
-mov edx, dword [boxfillcolor]	; 29D1A
-push edx	; 29D20
-mov eax, ecx	; 29D21
-sub eax, esi	; 29D23
-inc eax	; 29D25
-push eax	; 29D26
-mov eax, ebx	; 29D27
-sub eax, edi	; 29D29
-inc eax	; 29D2B
-push eax	; 29D2C
-push esi	; 29D2D
-push edi	; 29D2E
-call FillRect	; 29D2F
-add esp, byte 14h	; 29D34
-mov ebx, dword [boxlitecolor]	; 29D37
-push ebx	; 29D3D
-push esi	; 29D3E
-push ebp	; 29D3F
-push esi	; 29D40
-push edi	; 29D41
-call sub_B4FAC	; 29D42
-add esp, byte 14h	; 29D47
-mov ecx, dword [boxlitecolor]	; 29D4A
-push ecx	; 29D50
-mov eax, dword [byte esp+014h]	; 29D51
-push eax	; 29D55
-push edi	; 29D56
-push esi	; 29D57
-push edi	; 29D58
-call sub_B4FAC	; 29D59
-add esp, byte 14h	; 29D5E
-mov edx, dword [boxshadecolor]	; 29D61
-push edx	; 29D67
-mov ebx, dword [byte esp+014h]	; 29D68
-push ebx	; 29D6C
-push ebp	; 29D6D
-push esi	; 29D6E
-push ebp	; 29D6F
-call sub_B4FAC	; 29D70
-add esp, byte 14h	; 29D75
-mov ecx, dword [boxshadecolor]	; 29D78
-push ecx	; 29D7E
-mov eax, dword [byte esp+014h]	; 29D7F
-push eax	; 29D83
-push ebp	; 29D84
-push eax	; 29D85
-push edi	; 29D86
-call sub_B4FAC	; 29D87
-add esp, byte 14h	; 29D8C
-cmp dword [byte esp+024h], byte 0	; 29D8F
-je near .x	; 29D94
-mov ecx, dword [boxlitecolor]	; 29D9A
-push ecx	; 29DA0
-mov eax, esi	; 29DA1
-add eax, byte 2	; 29DA3
-mov dword [byte esp+04h], eax	; 29DA6
-push eax	; 29DAA
-mov eax, edi	; 29DAB
-add eax, byte 2	; 29DAD
-mov dword [byte esp+0Ch], eax	; 29DB0
-push eax	; 29DB4
-call PlotPixel	; 29DB5
-add esp, byte 0Ch	; 29DBA
-mov ebx, dword [boxlitecolor]	; 29DBD
-push ebx	; 29DC3
-add esi, byte 3	; 29DC4
-push esi	; 29DC7
-add edi, byte 3	; 29DC8
-push edi	; 29DCB
-call PlotPixel	; 29DCC
-add esp, byte 0Ch	; 29DD1
-mov ecx, dword [boxshadecolor]	; 29DD4
-push ecx	; 29DDA
-mov eax, dword [byte esp+04h]	; 29DDB
-push eax	; 29DDF
-push edi	; 29DE0
-call PlotPixel	; 29DE1
-add esp, byte 0Ch	; 29DE6
-mov edx, dword [boxshadecolor]	; 29DE9
-push edx	; 29DEF
-push esi	; 29DF0
-mov ebx, dword [byte esp+0Ch]	; 29DF1
-push ebx	; 29DF5
-call PlotPixel	; 29DF6
-add esp, byte 0Ch	; 29DFB
-mov ecx, dword [boxshadecolor]	; 29DFE
-push ecx	; 29E04
-mov eax, dword [byte esp+014h]	; 29E05
-sub eax, byte 2	; 29E09
-mov dword [byte esp+0Ch], eax	; 29E0C
-push eax	; 29E10
-mov edx, dword [byte esp+0Ch]	; 29E11
-push edx	; 29E15
-call PlotPixel	; 29E16
-add esp, byte 0Ch	; 29E1B
-mov ebx, dword [boxshadecolor]	; 29E1E
-push ebx	; 29E24
-mov eax, dword [byte esp+014h]	; 29E25
-sub eax, byte 3	; 29E29
-mov dword [byte esp+010h], eax	; 29E2C
-push eax	; 29E30
-push edi	; 29E31
-call PlotPixel	; 29E32
-add esp, byte 0Ch	; 29E37
-mov eax, dword [boxlitecolor]	; 29E3A
-push eax	; 29E3F
-mov edx, dword [byte esp+0Ch]	; 29E40
-push edx	; 29E44
-push edi	; 29E45
-call PlotPixel	; 29E46
-add esp, byte 0Ch	; 29E4B
-mov ebx, dword [boxlitecolor]	; 29E4E
-push ebx	; 29E54
-mov ecx, dword [byte esp+010h]	; 29E55
-push ecx	; 29E59
-mov edi, dword [byte esp+0Ch]	; 29E5A
-push edi	; 29E5E
-call PlotPixel	; 29E5F
-add esp, byte 0Ch	; 29E64
-mov eax, dword [boxlitecolor]	; 29E67
-push eax	; 29E6C
-mov edx, dword [byte esp+04h]	; 29E6D
-push edx	; 29E71
-lea edi, [byte ebp-03h]	; 29E72
-push edi	; 29E75
-call PlotPixel	; 29E76
-add esp, byte 0Ch	; 29E7B
-mov ebx, dword [boxlitecolor]	; 29E7E
-push ebx	; 29E84
-push esi	; 29E85
-sub ebp, byte 2	; 29E86
-push ebp	; 29E89
-call PlotPixel	; 29E8A
-add esp, byte 0Ch	; 29E8F
-mov ecx, dword [boxshadecolor]	; 29E92
-push ecx	; 29E98
-mov eax, dword [byte esp+04h]	; 29E99
-push eax	; 29E9D
-push ebp	; 29E9E
-call PlotPixel	; 29E9F
-add esp, byte 0Ch	; 29EA4
-mov edx, dword [boxshadecolor]	; 29EA7
-push edx	; 29EAD
-push esi	; 29EAE
-push edi	; 29EAF
-call PlotPixel	; 29EB0
-add esp, byte 0Ch	; 29EB5
-mov ebx, dword [boxshadecolor]	; 29EB8
-push ebx	; 29EBE
-mov ecx, dword [byte esp+0Ch]	; 29EBF
-push ecx	; 29EC3
-push edi	; 29EC4
-call PlotPixel	; 29EC5
-add esp, byte 0Ch	; 29ECA
-mov esi, dword [boxshadecolor]	; 29ECD
-push esi	; 29ED3
-mov eax, dword [byte esp+010h]	; 29ED4
-push eax	; 29ED8
-push ebp	; 29ED9
-call PlotPixel	; 29EDA
-add esp, byte 0Ch	; 29EDF
-mov edx, dword [boxlitecolor]	; 29EE2
-push edx	; 29EE8
-mov ebx, dword [byte esp+0Ch]	; 29EE9
-push ebx	; 29EED
-push ebp	; 29EEE
-call PlotPixel	; 29EEF
-add esp, byte 0Ch	; 29EF4
-mov ecx, dword [boxlitecolor]	; 29EF7
-push ecx	; 29EFD
-mov esi, dword [byte esp+010h]	; 29EFE
-push esi	; 29F02
-push edi	; 29F03
-call PlotPixel	; 29F04
-add esp, byte 0Ch	; 29F09
+        push dword 38h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 14h
+        mov edi, eax
+        mov esi, edx
+        mov ebp, ebx
+        mov dword [byte esp+010h], ecx
+        mov edx, dword [boxfillcolor]
+        push edx
+        mov eax, ecx
+        sub eax, esi
+        inc eax
+        push eax
+        mov eax, ebx
+        sub eax, edi
+        inc eax
+        push eax
+        push esi
+        push edi
+        call FillRect
+        add esp, byte 14h
+        mov ebx, dword [boxlitecolor]
+        push ebx
+        push esi
+        push ebp
+        push esi
+        push edi
+        call sub_B4FAC
+        add esp, byte 14h
+        mov ecx, dword [boxlitecolor]
+        push ecx
+        mov eax, dword [byte esp+014h]
+        push eax
+        push edi
+        push esi
+        push edi
+        call sub_B4FAC
+        add esp, byte 14h
+        mov edx, dword [boxshadecolor]
+        push edx
+        mov ebx, dword [byte esp+014h]
+        push ebx
+        push ebp
+        push esi
+        push ebp
+        call sub_B4FAC
+        add esp, byte 14h
+        mov ecx, dword [boxshadecolor]
+        push ecx
+        mov eax, dword [byte esp+014h]
+        push eax
+        push ebp
+        push eax
+        push edi
+        call sub_B4FAC
+        add esp, byte 14h
+        cmp dword [byte esp+024h], byte 0
+        je near .x
+        mov ecx, dword [boxlitecolor]
+        push ecx
+        mov eax, esi
+        add eax, byte 2
+        mov dword [byte esp+04h], eax
+        push eax
+        mov eax, edi
+        add eax, byte 2
+        mov dword [byte esp+0Ch], eax
+        push eax
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ebx, dword [boxlitecolor]
+        push ebx
+        add esi, byte 3
+        push esi
+        add edi, byte 3
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ecx, dword [boxshadecolor]
+        push ecx
+        mov eax, dword [byte esp+04h]
+        push eax
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov edx, dword [boxshadecolor]
+        push edx
+        push esi
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ecx, dword [boxshadecolor]
+        push ecx
+        mov eax, dword [byte esp+014h]
+        sub eax, byte 2
+        mov dword [byte esp+0Ch], eax
+        push eax
+        mov edx, dword [byte esp+0Ch]
+        push edx
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ebx, dword [boxshadecolor]
+        push ebx
+        mov eax, dword [byte esp+014h]
+        sub eax, byte 3
+        mov dword [byte esp+010h], eax
+        push eax
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov eax, dword [boxlitecolor]
+        push eax
+        mov edx, dword [byte esp+0Ch]
+        push edx
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ebx, dword [boxlitecolor]
+        push ebx
+        mov ecx, dword [byte esp+010h]
+        push ecx
+        mov edi, dword [byte esp+0Ch]
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov eax, dword [boxlitecolor]
+        push eax
+        mov edx, dword [byte esp+04h]
+        push edx
+        lea edi, [byte ebp-03h]
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ebx, dword [boxlitecolor]
+        push ebx
+        push esi
+        sub ebp, byte 2
+        push ebp
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ecx, dword [boxshadecolor]
+        push ecx
+        mov eax, dword [byte esp+04h]
+        push eax
+        push ebp
+        call PlotPixel
+        add esp, byte 0Ch
+        mov edx, dword [boxshadecolor]
+        push edx
+        push esi
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ebx, dword [boxshadecolor]
+        push ebx
+        mov ecx, dword [byte esp+0Ch]
+        push ecx
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
+        mov esi, dword [boxshadecolor]
+        push esi
+        mov eax, dword [byte esp+010h]
+        push eax
+        push ebp
+        call PlotPixel
+        add esp, byte 0Ch
+        mov edx, dword [boxlitecolor]
+        push edx
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        push ebp
+        call PlotPixel
+        add esp, byte 0Ch
+        mov ecx, dword [boxlitecolor]
+        push ecx
+        mov esi, dword [byte esp+010h]
+        push esi
+        push edi
+        call PlotPixel
+        add esp, byte 0Ch
 .x:
-add esp, byte 14h	; 29F0C
-pop ebp	; 29F0F
-pop edi	; 29F10
-pop esi	; 29F11
-ret 4	; 29F12
+        add esp, byte 14h
+        pop ebp
+        pop edi
+        pop esi
+        ret 4
 %endif ; C
-db 08Dh,040h,00h
+        db 08Dh,040h,00h

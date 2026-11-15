@@ -8,202 +8,202 @@ extern sub_8DBD4, SetPalette, sub_91538, sub_932EC, FindShape, sub_B3A88, sub_B3
 global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
 global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
 sub_9D090:
-push esi	; 9D090
-push edi	; 9D091
-push ebp	; 9D092
-sub esp, 0BCh	; 9D093
-mov edi, dword [dword esp+0CCh]	; 9D099
-xor ebp, ebp	; 9D0A0
-cmp dword [dword_D2F84], byte 7	; 9D0A2
-jne short loc_9D0B0	; 9D0A9
-mov ebp, 1	; 9D0AB
+        push esi
+        push edi
+        push ebp
+        sub esp, 0BCh
+        mov edi, dword [dword esp+0CCh]
+        xor ebp, ebp
+        cmp dword [dword_D2F84], byte 7
+        jne short loc_9D0B0
+        mov ebp, 1
 loc_9D0B0:
-mov eax, esp	; 9D0B0
-push eax	; 9D0B2
-call sub_B3A88	; 9D0B3
-add esp, byte 4	; 9D0B8
-call sub_B4BA8	; 9D0BB
-mov eax, dword [dword_D30C4]	; 9D0C0
-imul eax, dword [dword_D30A8]	; 9D0C5
-cmp dword [dword_D2F84], byte 7	; 9D0CC
-jne short loc_9D0D7	; 9D0D3
-add eax, eax	; 9D0D5
+        mov eax, esp
+        push eax
+        call sub_B3A88
+        add esp, byte 4
+        call sub_B4BA8
+        mov eax, dword [dword_D30C4]
+        imul eax, dword [dword_D30A8]
+        cmp dword [dword_D2F84], byte 7
+        jne short loc_9D0D7
+        add eax, eax
 loc_9D0D7:
-add eax, 340h	; 9D0D7
-mov dword [dword esp+0B8h], eax	; 9D0DC
-xor esi, esi	; 9D0E3
-push byte 20h	; 9D0E5
-push eax	; 9D0E7
-push str_SHAPE2	; 9D0E8
-call sub_8CC8C	; 9D0ED
-add esp, byte 0Ch	; 9D0F2
-mov dword [dword esp+0B4h], eax	; 9D0F5
-test eax, eax	; 9D0FC
-je near loc_9D2C8	; 9D0FE
-push eax	; 9D104
-call sub_8DBD4	; 9D105
-mov esi, eax	; 9D10A
-add esp, byte 4	; 9D10C
-mov dword [dword esp+0B0h], eax	; 9D10F
-shl ebp, 2	; 9D116
-mov edx, dword [dword ebp+off_D518C]	; 9D119
-mov ebx, 4	; 9D11F
-call strncpy_	; 9D124
-mov eax, dword [dword esp+0B8h]	; 9D129
-mov dword [byte esi+04h], eax	; 9D130
-mov dword [byte esi+08h], 2	; 9D133
-lea eax, [byte esi+0Ch]	; 9D13A
-mov ebx, 4	; 9D13D
-mov edx, str_Snap	; 9D142
-call strncpy_	; 9D147
-lea eax, [byte esi+010h]	; 9D14C
-mov ebx, 4	; 9D14F
-mov edx, str_Pal31	; 9D154
-call strncpy_	; 9D159
-mov dword [byte esi+014h], 20h	; 9D15E
-lea eax, [byte esi+018h]	; 9D165
-mov ebx, 4	; 9D168
-mov edx, str_Snap2	; 9D16D
-call strncpy_	; 9D172
-mov dword [byte esi+01Ch], 330h	; 9D177
-push str_Pal31	; 9D17E
-push esi	; 9D183
-call FindShape	; 9D184
-add esp, byte 8	; 9D189
-mov dword [eax], 22h	; 9D18C
-mov word [byte eax+04h], 100h	; 9D192
-mov word [byte eax+06h], 3	; 9D198
-mov word [byte eax+08h], 100h	; 9D19E
-mov word [byte eax+0Ah], 0	; 9D1A4
-mov word [byte eax+0Ch], 0	; 9D1AA
-mov word [byte eax+0Eh], 0	; 9D1B0
-add eax, byte 10h	; 9D1B6
-push eax	; 9D1B9
-push dword 100h	; 9D1BA
-push byte 0	; 9D1BF
-call SetPalette	; 9D1C1
-add esp, byte 0Ch	; 9D1C6
-push str_Snap2	; 9D1C9
-push esi	; 9D1CE
-call FindShape	; 9D1CF
-add esp, byte 8	; 9D1D4
-mov edx, dword [dword ebp+dword_D5184]	; 9D1D7
-and edx, 0FFh	; 9D1DD
-mov byte [eax], 0	; 9D1E3
-mov ebx, dword [eax]	; 9D1E6
-or ebx, edx	; 9D1E8
-mov ecx, ebx	; 9D1EA
-and ecx, 0FFh	; 9D1EC
-mov dword [eax], ecx	; 9D1F2
-mov dx, word [dword_D30A4]	; 9D1F4
-mov word [byte eax+04h], dx	; 9D1FB
-mov dx, word [dword_D30A8]	; 9D1FF
-mov word [byte eax+06h], dx	; 9D206
-mov word [byte eax+08h], 0	; 9D20A
-mov word [byte eax+0Ah], 0	; 9D210
-mov word [byte eax+0Ch], 0	; 9D216
-mov word [byte eax+0Eh], 0	; 9D21C
-push eax	; 9D222
-call sub_91538	; 9D223
-add esp, byte 4	; 9D228
-mov esi, edi	; 9D22B
-lea edi, [byte esp+060h]	; 9D22D
-push edi	; 9D231
+        add eax, 340h
+        mov dword [dword esp+0B8h], eax
+        xor esi, esi
+        push byte 20h
+        push eax
+        push str_SHAPE2
+        call sub_8CC8C
+        add esp, byte 0Ch
+        mov dword [dword esp+0B4h], eax
+        test eax, eax
+        je near loc_9D2C8
+        push eax
+        call sub_8DBD4
+        mov esi, eax
+        add esp, byte 4
+        mov dword [dword esp+0B0h], eax
+        shl ebp, 2
+        mov edx, dword [dword ebp+off_D518C]
+        mov ebx, 4
+        call strncpy_
+        mov eax, dword [dword esp+0B8h]
+        mov dword [byte esi+04h], eax
+        mov dword [byte esi+08h], 2
+        lea eax, [byte esi+0Ch]
+        mov ebx, 4
+        mov edx, str_Snap
+        call strncpy_
+        lea eax, [byte esi+010h]
+        mov ebx, 4
+        mov edx, str_Pal31
+        call strncpy_
+        mov dword [byte esi+014h], 20h
+        lea eax, [byte esi+018h]
+        mov ebx, 4
+        mov edx, str_Snap2
+        call strncpy_
+        mov dword [byte esi+01Ch], 330h
+        push str_Pal31
+        push esi
+        call FindShape
+        add esp, byte 8
+        mov dword [eax], 22h
+        mov word [byte eax+04h], 100h
+        mov word [byte eax+06h], 3
+        mov word [byte eax+08h], 100h
+        mov word [byte eax+0Ah], 0
+        mov word [byte eax+0Ch], 0
+        mov word [byte eax+0Eh], 0
+        add eax, byte 10h
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        push str_Snap2
+        push esi
+        call FindShape
+        add esp, byte 8
+        mov edx, dword [dword ebp+dword_D5184]
+        and edx, 0FFh
+        mov byte [eax], 0
+        mov ebx, dword [eax]
+        or ebx, edx
+        mov ecx, ebx
+        and ecx, 0FFh
+        mov dword [eax], ecx
+        mov dx, word [dword_D30A4]
+        mov word [byte eax+04h], dx
+        mov dx, word [dword_D30A8]
+        mov word [byte eax+06h], dx
+        mov word [byte eax+08h], 0
+        mov word [byte eax+0Ah], 0
+        mov word [byte eax+0Ch], 0
+        mov word [byte eax+0Eh], 0
+        push eax
+        call sub_91538
+        add esp, byte 4
+        mov esi, edi
+        lea edi, [byte esp+060h]
+        push edi
 loc_9D232:
-mov al, byte [esi]	; 9D232
-mov byte [edi], al	; 9D234
-cmp al, 0	; 9D236
-je short loc_9D24A	; 9D238
-mov al, byte [byte esi+01h]	; 9D23A
-add esi, byte 2	; 9D23D
-mov byte [byte edi+01h], al	; 9D240
-add edi, byte 2	; 9D243
-cmp al, 0	; 9D246
-jne short loc_9D232	; 9D248
+        mov al, byte [esi]
+        mov byte [edi], al
+        cmp al, 0
+        je short loc_9D24A
+        mov al, byte [byte esi+01h]
+        add esi, byte 2
+        mov byte [byte edi+01h], al
+        add edi, byte 2
+        cmp al, 0
+        jne short loc_9D232
 loc_9D24A:
-pop edi	; 9D24A
-mov dl, 2Eh	; 9D24B
-lea esi, [byte esp+060h]	; 9D24D
+        pop edi
+        mov dl, 2Eh
+        lea esi, [byte esp+060h]
 loc_9D251:
-mov al, byte [esi]	; 9D251
-LD cmp, al, dl	; 9D253
-je short loc_9D269	; 9D255
-cmp al, 0	; 9D257
-je short loc_9D267	; 9D259
-inc esi	; 9D25B
-mov al, byte [esi]	; 9D25C
-LD cmp, al, dl	; 9D25E
-je short loc_9D269	; 9D260
-inc esi	; 9D262
-cmp al, 0	; 9D263
-jne short loc_9D251	; 9D265
+        mov al, byte [esi]
+        LD cmp, al, dl
+        je short loc_9D269
+        cmp al, 0
+        je short loc_9D267
+        inc esi
+        mov al, byte [esi]
+        LD cmp, al, dl
+        je short loc_9D269
+        inc esi
+        cmp al, 0
+        jne short loc_9D251
 loc_9D267:
-LD sub, esi, esi	; 9D267
+        LD sub, esi, esi
 loc_9D269:
-test esi, esi	; 9D269
-jne short loc_9D299	; 9D26B
-mov esi, dword [dword ebp+off_D517C]	; 9D26D
-lea edi, [byte esp+060h]	; 9D273
-push edi	; 9D277
-LD sub, ecx, ecx	; 9D278
-dec ecx	; 9D27A
-mov al, 0	; 9D27B
-repne scasb	; 9D27D
-dec edi	; 9D27F
+        test esi, esi
+        jne short loc_9D299
+        mov esi, dword [dword ebp+off_D517C]
+        lea edi, [byte esp+060h]
+        push edi
+        LD sub, ecx, ecx
+        dec ecx
+        mov al, 0
+        repne scasb
+        dec edi
 loc_9D280:
-mov al, byte [esi]	; 9D280
-mov byte [edi], al	; 9D282
-cmp al, 0	; 9D284
-je short loc_9D298	; 9D286
-mov al, byte [byte esi+01h]	; 9D288
-add esi, byte 2	; 9D28B
-mov byte [byte edi+01h], al	; 9D28E
-add edi, byte 2	; 9D291
-cmp al, 0	; 9D294
-jne short loc_9D280	; 9D296
+        mov al, byte [esi]
+        mov byte [edi], al
+        cmp al, 0
+        je short loc_9D298
+        mov al, byte [byte esi+01h]
+        add esi, byte 2
+        mov byte [byte edi+01h], al
+        add edi, byte 2
+        cmp al, 0
+        jne short loc_9D280
 loc_9D298:
-pop edi	; 9D298
+        pop edi
 loc_9D299:
-mov esi, dword [dword esp+0B8h]	; 9D299
-push esi	; 9D2A0
-mov edi, dword [dword esp+0B4h]	; 9D2A1
-push edi	; 9D2A8
-lea eax, [byte esp+068h]	; 9D2A9
-push eax	; 9D2AD
-call sub_932EC	; 9D2AE
-add esp, byte 0Ch	; 9D2B3
-mov esi, eax	; 9D2B6
-mov ebp, dword [dword esp+0B4h]	; 9D2B8
-push ebp	; 9D2BF
-call sub_8D2F0	; 9D2C0
-add esp, byte 4	; 9D2C5
+        mov esi, dword [dword esp+0B8h]
+        push esi
+        mov edi, dword [dword esp+0B4h]
+        push edi
+        lea eax, [byte esp+068h]
+        push eax
+        call sub_932EC
+        add esp, byte 0Ch
+        mov esi, eax
+        mov ebp, dword [dword esp+0B4h]
+        push ebp
+        call sub_8D2F0
+        add esp, byte 4
 loc_9D2C8:
-mov eax, esp	; 9D2C8
-push eax	; 9D2CA
-call sub_B3AA1	; 9D2CB
-add esp, byte 4	; 9D2D0
-mov eax, esi	; 9D2D3
-add esp, 0BCh	; 9D2D5
-pop ebp	; 9D2DB
-pop edi	; 9D2DC
-pop esi	; 9D2DD
-ret	; 9D2DE
-db 00h
+        mov eax, esp
+        push eax
+        call sub_B3AA1
+        add esp, byte 4
+        mov eax, esi
+        add esp, 0BCh
+        pop ebp
+        pop edi
+        pop esi
+        ret
+        db 00h
 sub_9D2E0:
-push esi	; 9D2E0
-mov esi, dword [byte esp+08h]	; 9D2E1
-mov esi, dword [esi]	; 9D2E5
-test esi, esi	; 9D2E7
-je short loc_9D303	; 9D2E9
-lea eax, [byte esi+030h]	; 9D2EB
-push eax	; 9D2EE
-call _os_handle	; 9D2EF
-add esp, byte 4	; 9D2F4
-mov dword [byte esi+02Ch], eax	; 9D2F7
-push esi	; 9D2FA
-call SetDrawBitmap	; 9D2FB
-add esp, byte 4	; 9D300
+        push esi
+        mov esi, dword [byte esp+08h]
+        mov esi, dword [esi]
+        test esi, esi
+        je short loc_9D303
+        lea eax, [byte esi+030h]
+        push eax
+        call _os_handle
+        add esp, byte 4
+        mov dword [byte esi+02Ch], eax
+        push esi
+        call SetDrawBitmap
+        add esp, byte 4
 loc_9D303:
-mov eax, esi	; 9D303
-pop esi	; 9D305
-ret	; 9D306
+        mov eax, esi
+        pop esi
+        ret

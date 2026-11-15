@@ -4,6 +4,6 @@ bits 32
 section s_96A58 progbits alloc exec nowrite align=1
 global ios__failure__cause
 ios__failure__cause:
-mov eax, dword [byte esp+04h]	; 96A58
-mov eax, dword [byte eax+04h]	; 96A5C
-ret	; 96A5F
+        mov eax, dword [byte esp+04h]
+        mov eax, dword [byte eax+04h]
+        ret

@@ -8,78 +8,78 @@ global dword_EA074, dword_EA078, dword_EA07C, dword_EA080, dword_EA084, dword_EA
 global dword_EA094, dword_EA098, dword_EA09C, dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4
 global dword_EA0B8, dword_EA0BC, dword_EA0C4, dword_EA0C8, dword_EA0CC, dword_EA0D0
 dword_EA034:
-resb 4
+        resb 4
 dword_EA038:
-resb 4
+        resb 4
 dword_EA03C:
-resb 4
+        resb 4
 dword_EA040:
-resb 4
+        resb 4
 dword_EA044:
-resb 4
+        resb 4
 dword_EA048:
-resb 4
+        resb 4
 dword_EA04C:
-resb 4
+        resb 4
 dword_EA050:
-resb 4
+        resb 4
 dword_EA054:
-resb 4
+        resb 4
 byte_EA058:
-resb 4
+        resb 4
 dword_EA05C:
-resb 4
+        resb 4
 dword_EA060:
-resb 4
+        resb 4
 dword_EA064:
-resb 4
+        resb 4
 dword_EA068:
-resb 4
+        resb 4
 dword_EA06C:
-resb 4
+        resb 4
 dword_EA070:
-resb 4
+        resb 4
 dword_EA074:
-resb 4
+        resb 4
 dword_EA078:
-resb 4
+        resb 4
 dword_EA07C:
-resb 4
+        resb 4
 dword_EA080:
-resb 4
+        resb 4
 dword_EA084:
-resb 4
+        resb 4
 dword_EA088:
-resb 4
+        resb 4
 dword_EA08C:
-resb 4
+        resb 4
 dword_EA090:
-resb 4
+        resb 4
 dword_EA094:
-resb 4
+        resb 4
 dword_EA098:
-resb 4
+        resb 4
 dword_EA09C:
-resb 4
+        resb 4
 dword_EA0A0:
-resb 4
+        resb 4
 dword_EA0A4:
-resb 8
+        resb 8
 dword_EA0AC:
-resb 4
+        resb 4
 dword_EA0B0:
-resb 4
+        resb 4
 dword_EA0B4:
-resb 4
+        resb 4
 dword_EA0B8:
-resb 4
+        resb 4
 dword_EA0BC:
-resb 8
+        resb 8
 dword_EA0C4:
-resb 4
+        resb 4
 dword_EA0C8:
-resb 4
+        resb 4
 dword_EA0CC:
-resb 4
+        resb 4
 dword_EA0D0:
-resb 12
+        resb 12

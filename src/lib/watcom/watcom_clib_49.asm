@@ -4,10 +4,10 @@ bits 32
 section s_B128C progbits alloc exec nowrite align=1
 global inp_
 inp_:
-push edx	; B128C
-mov edx, eax	; B128D
-sub eax, eax	; B128F
-in al, dx	; B1291
-pop edx	; B1292
-ret	; B1293
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        push edx
+        mov edx, eax
+        sub eax, eax
+        in al, dx
+        pop edx
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

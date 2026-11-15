@@ -51,6792 +51,7031 @@ global EditRosters, ErrorScreenWait, DrawDBErrorsScreen, ShowDBError, CheckTeamL
 global RatingToFloat, RandomizeNewRatings, CreatePlayerNop, DrawShootsField, DrawShootsField_tail, DrawShootsField_pop, DrawGloveField, AskLeftRight
 global EditSkaterRating, EditSkaterRating_tail, EditGoalieRating, DrawCreatePlayer, CreatePlayerLoop, CreateFreeAgent, MoveToFreeAgents, RemovePlayerFromTeam
 global LoadTempDatabases, DeleteTempDatabases, SwapSelectedPlayers, SelectMatchingPlayers, SetRosterTeamMenus, FindPlayer
+;-----------------------------------------------------------------------------
+; RunEditRosters                                                  6CC20  95 PC
+; Edit Rosters session: dialog colours, music fade, "Current" DBs into memory
+; (LoadLeagueDbsMem), enlarged pointer copy, EditRosters, FreeLeagueDbsMem,
+; restore
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RunEditRosters.c
 %ifdef CBUILD
 %include "c/front/create/RunEditRosters.inc"
 %else
 RunEditRosters:
-push dword 7Ch	; 6CC20
-call __CHK	; 6CC25
-push ebx	; 6CC2A
-push ecx	; 6CC2B
-push edx	; 6CC2C
-push esi	; 6CC2D
-push edi	; 6CC2E
-push ebp	; 6CC2F
-sub esp, byte 54h	; 6CC30
-mov eax, dword [boxlitecolor]	; 6CC33
-mov dword [byte esp+040h], eax	; 6CC38
-mov eax, dword [boxshadecolor]	; 6CC3C
-mov dword [byte esp+04Ch], eax	; 6CC41
-mov eax, dword [boxfillcolor]	; 6CC45
-mov dword [byte esp+050h], eax	; 6CC4A
-mov eax, dword [dlgtextfg]	; 6CC4E
-mov dword [byte esp+048h], eax	; 6CC53
-mov eax, dword [dlgtextbg]	; 6CC57
-mov dword [byte esp+044h], eax	; 6CC5C
-mov dword [boxfillcolor], 41h	; 6CC60
-mov ebx, 40h	; 6CC6A
-mov dword [boxlitecolor], ebx	; 6CC6F
-mov ecx, 42h	; 6CC75
-mov dword [boxshadecolor], ecx	; 6CC7A
-mov dword [dlgtextfg], ebx	; 6CC80
-mov dword [dlgtextbg], ecx	; 6CC86
-xor ebp, ebp	; 6CC8C
-mov dword [editrosters_exit], ebp	; 6CC8E
-mov dword [rostereditmode], ebp	; 6CC94
-push byte 20h	; 6CC9A
-push dword 300h	; 6CC9C
-push str_Temp7	; 6CCA1
-call AllocMemBlock	; 6CCA6
-add esp, byte 0Ch	; 6CCAB
-mov ebp, eax	; 6CCAE
-cmp byte [musicon], 0	; 6CCB0
-je short .1	; 6CCB7
-cmp dword [songdata], byte 0	; 6CCB9
-je short .1	; 6CCC0
-mov eax, dword [musichandle]	; 6CCC2
-mov ebx, 32h	; 6CCC7
-mov edx, 3	; 6CCCC
-call sub_8FCDF	; 6CCD1
+        push dword 7Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 54h
+        mov eax, dword [boxlitecolor]
+        mov dword [byte esp+040h], eax
+        mov eax, dword [boxshadecolor]
+        mov dword [byte esp+04Ch], eax
+        mov eax, dword [boxfillcolor]
+        mov dword [byte esp+050h], eax
+        mov eax, dword [dlgtextfg]
+        mov dword [byte esp+048h], eax
+        mov eax, dword [dlgtextbg]
+        mov dword [byte esp+044h], eax
+        mov dword [boxfillcolor], 41h
+        mov ebx, 40h
+        mov dword [boxlitecolor], ebx
+        mov ecx, 42h
+        mov dword [boxshadecolor], ecx
+        mov dword [dlgtextfg], ebx
+        mov dword [dlgtextbg], ecx
+        xor ebp, ebp
+        mov dword [editrosters_exit], ebp
+        mov dword [rostereditmode], ebp
+        push byte 20h
+        push dword 300h
+        push str_Temp7
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov ebp, eax
+        cmp byte [musicon], 0
+        je short .1
+        cmp dword [songdata], byte 0
+        je short .1
+        mov eax, dword [musichandle]
+        mov ebx, 32h
+        mov edx, 3
+        call sub_8FCDF
 .1:
-push ebp	; 6CCD6
-push dword 100h	; 6CCD7
-push byte 0	; 6CCDC
-call SetPalette	; 6CCDE
-add esp, byte 0Ch	; 6CCE3
-mov ebx, 10h	; 6CCE6
-mov edx, ebp	; 6CCEB
-mov eax, 1	; 6CCED
-call FadePalStep	; 6CCF2
-mov edi, curdbname	; 6CCF7
-mov esi, str_Current3	; 6CCFC
-movsd	; 6CD01
-movsd	; 6CD02
-call sub_B4BA8	; 6CD03
-mov eax, dword [mainfont]	; 6CD08
-mov dword [dword_EA2B0], eax	; 6CD0D
-push eax	; 6CD12
-call TextSetFont	; 6CD13
-add esp, byte 4	; 6CD18
-mov eax, esp	; 6CD1B
-push eax	; 6CD1D
-call TextSaveState	; 6CD1E
-add esp, byte 4	; 6CD23
-cmp byte [musicon], 0	; 6CD26
-je short .3	; 6CD2D
-cmp dword [songdata], byte 0	; 6CD2F
-je short .3	; 6CD36
+        push ebp
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, ebp
+        mov eax, 1
+        call FadePalStep
+        mov edi, curdbname
+        mov esi, str_Current3
+        movsd
+        movsd
+        call sub_B4BA8
+        mov eax, dword [mainfont]
+        mov dword [dword_EA2B0], eax
+        push eax
+        call TextSetFont
+        add esp, byte 4
+        mov eax, esp
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .3
+        cmp dword [songdata], byte 0
+        je short .3
 .2:
-mov eax, dword [musicslot-3]	; 6CD38
-sar eax, 18h	; 6CD3D
-mov edx, 3	; 6CD40
-call SndQuery	; 6CD45
-test eax, eax	; 6CD4A
-je short RunEditRosters.2	; 6CD4C
-mov esi, dword [songdata]	; 6CD4E
-push esi	; 6CD54
-call sub_8D2F0	; 6CD55
-add esp, byte 4	; 6CD5A
-xor edi, edi	; 6CD5D
-mov dword [songdata], edi	; 6CD5F
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short RunEditRosters.2
+        mov esi, dword [songdata]
+        push esi
+        call sub_8D2F0
+        add esp, byte 4
+        xor edi, edi
+        mov dword [songdata], edi
 .3:
-push byte 20h	; 6CD65
-push dword 1E0h	; 6CD67
-push dword 280h	; 6CD6C
-call CreateBitmap	; 6CD71
-add esp, byte 0Ch	; 6CD76
-mov dword [fullscrbmp], eax	; 6CD79
-mov eax, dword [pointerspr]	; 6CD7E
-mov esi, dword [byte eax+02h]	; 6CD83
-sar esi, 10h	; 6CD86
-mov eax, dword [byte eax+04h]	; 6CD89
-sar eax, 10h	; 6CD8C
-lea edx, [byte eax+01h]	; 6CD8F
-lea eax, [byte esi+01h]	; 6CD92
-imul eax, edx	; 6CD95
-add eax, byte 11h	; 6CD98
-push byte 20h	; 6CD9B
-push eax	; 6CD9D
-push str_Pointer11	; 6CD9E
-call AllocMemBlock	; 6CDA3
-add esp, byte 0Ch	; 6CDA8
-mov dword [editptrspr], eax	; 6CDAB
-mov esi, dword [pointerspr]	; 6CDB0
-mov edi, eax	; 6CDB6
-movsd	; 6CDB8
-movsd	; 6CDB9
-movsd	; 6CDBA
-movsd	; 6CDBB
-movsb	; 6CDBC
-mov eax, dword [pointerspr]	; 6CDBD
-mov si, word [byte eax+04h]	; 6CDC2
-inc esi	; 6CDC6
-mov eax, dword [editptrspr]	; 6CDC7
-mov word [byte eax+04h], si	; 6CDCC
-mov eax, dword [pointerspr]	; 6CDD0
-mov si, word [byte eax+06h]	; 6CDD5
-inc esi	; 6CDD9
-mov eax, dword [editptrspr]	; 6CDDA
-mov word [byte eax+06h], si	; 6CDDF
-mov eax, str_extDB	; 6CDE3
-call LoadLeagueDbsMem	; 6CDE8
-push byte 42h	; 6CDED
-mov ecx, 41h	; 6CDEF
-mov ebx, 40h	; 6CDF4
-mov edx, 6	; 6CDF9
-mov eax, editrostersmenubar	; 6CDFE
-call EditRosters	; 6CE03
-call FreeLeagueDbsMem	; 6CE08
-mov eax, dword [editptrspr]	; 6CE0D
-push eax	; 6CE12
-call FreeMemBlock	; 6CE13
-add esp, byte 4	; 6CE18
-cmp byte [musicon], 0	; 6CE1B
-je short .4	; 6CE22
-cmp dword [songdata], byte 0	; 6CE24
-je short .4	; 6CE2B
-mov eax, dword [musichandle]	; 6CE2D
-mov ebx, 32h	; 6CE32
-mov edx, 3	; 6CE37
-call sub_8FCDF	; 6CE3C
+        push byte 20h
+        push dword 1E0h
+        push dword 280h
+        call CreateBitmap
+        add esp, byte 0Ch
+        mov dword [fullscrbmp], eax
+        mov eax, dword [pointerspr]
+        mov esi, dword [byte eax+02h]
+        sar esi, 10h
+        mov eax, dword [byte eax+04h]
+        sar eax, 10h
+        lea edx, [byte eax+01h]
+        lea eax, [byte esi+01h]
+        imul eax, edx
+        add eax, byte 11h
+        push byte 20h
+        push eax
+        push str_Pointer11
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [editptrspr], eax
+        mov esi, dword [pointerspr]
+        mov edi, eax
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov eax, dword [pointerspr]
+        mov si, word [byte eax+04h]
+        inc esi
+        mov eax, dword [editptrspr]
+        mov word [byte eax+04h], si
+        mov eax, dword [pointerspr]
+        mov si, word [byte eax+06h]
+        inc esi
+        mov eax, dword [editptrspr]
+        mov word [byte eax+06h], si
+        mov eax, str_extDB
+        call LoadLeagueDbsMem
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 6
+        mov eax, editrostersmenubar
+        call EditRosters
+        call FreeLeagueDbsMem
+        mov eax, dword [editptrspr]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .4
+        cmp dword [songdata], byte 0
+        je short .4
+        mov eax, dword [musichandle]
+        mov ebx, 32h
+        mov edx, 3
+        call sub_8FCDF
 .4:
-push ebp	; 6CE41
-push dword 100h	; 6CE42
-push byte 0	; 6CE47
-call SetPalette	; 6CE49
-add esp, byte 0Ch	; 6CE4E
-mov ebx, 10h	; 6CE51
-mov edx, ebp	; 6CE56
-mov eax, 1	; 6CE58
-call FadePalStep	; 6CE5D
-push ebp	; 6CE62
-call FreeMemBlock	; 6CE63
-add esp, byte 4	; 6CE68
-mov eax, esp	; 6CE6B
-push eax	; 6CE6D
-call TextRestoreState	; 6CE6E
-add esp, byte 4	; 6CE73
-mov ebx, dword [fullscrbmp]	; 6CE76
-push ebx	; 6CE7C
-call FreeMemBlock	; 6CE7D
-add esp, byte 4	; 6CE82
-mov eax, dword [byte esp+050h]	; 6CE85
-mov dword [boxfillcolor], eax	; 6CE89
-mov eax, dword [byte esp+040h]	; 6CE8E
-mov dword [boxlitecolor], eax	; 6CE92
-mov eax, dword [byte esp+04Ch]	; 6CE97
-mov dword [boxshadecolor], eax	; 6CE9B
-mov eax, dword [byte esp+048h]	; 6CEA0
-mov dword [dlgtextfg], eax	; 6CEA4
-mov eax, dword [byte esp+044h]	; 6CEA9
-mov dword [dlgtextbg], eax	; 6CEAD
-cmp byte [musicon], 0	; 6CEB2
-je short .6	; 6CEB9
-cmp dword [songdata], byte 0	; 6CEBB
-je short .6	; 6CEC2
+        push ebp
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, ebp
+        mov eax, 1
+        call FadePalStep
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, esp
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        mov ebx, dword [fullscrbmp]
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, dword [byte esp+050h]
+        mov dword [boxfillcolor], eax
+        mov eax, dword [byte esp+040h]
+        mov dword [boxlitecolor], eax
+        mov eax, dword [byte esp+04Ch]
+        mov dword [boxshadecolor], eax
+        mov eax, dword [byte esp+048h]
+        mov dword [dlgtextfg], eax
+        mov eax, dword [byte esp+044h]
+        mov dword [dlgtextbg], eax
+        cmp byte [musicon], 0
+        je short .6
+        cmp dword [songdata], byte 0
+        je short .6
 .5:
-mov eax, dword [musicslot-3]	; 6CEC4
-sar eax, 18h	; 6CEC9
-mov edx, 3	; 6CECC
-call SndQuery	; 6CED1
-test eax, eax	; 6CED6
-je short RunEditRosters.5	; 6CED8
-mov esi, dword [songdata]	; 6CEDA
-push esi	; 6CEE0
-call sub_8D2F0	; 6CEE1
-add esp, byte 4	; 6CEE6
-xor edi, edi	; 6CEE9
-mov dword [songdata], edi	; 6CEEB
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short RunEditRosters.5
+        mov esi, dword [songdata]
+        push esi
+        call sub_8D2F0
+        add esp, byte 4
+        xor edi, edi
+        mov dword [songdata], edi
 .6:
-add esp, byte 54h	; 6CEF1
+        add esp, byte 54h
 RunEditRosters_ret6:
-pop ebp	; 6CEF4
+        pop ebp
 RunEditRosters_ret5:
-pop edi	; 6CEF5
-pop esi	; 6CEF6
-pop edx	; 6CEF7
-pop ecx	; 6CEF8
-pop ebx	; 6CEF9
-ret	; 6CEFA
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawRosterTitle                                                 6CEFB  95 PC
+; (x, y, side): team name or "Free Agents", trimmed to 91h pixels
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawRosterTitle.c
 %ifdef CBUILD
 %include "c/front/create/DrawRosterTitle.inc"
 %else
 DrawRosterTitle:
-push dword 70h	; 6CEFB
-call __CHK	; 6CF00
-push ecx	; 6CF05
-push esi	; 6CF06
-push edi	; 6CF07
-sub esp, byte 54h	; 6CF08
-mov edi, eax	; 6CF0B
-mov esi, edx	; 6CF0D
-cmp byte [dword ebx+rosterisfa], 1	; 6CF0F
-je short .3	; 6CF16
-mov eax, dword [nosplit ebx*4+rosterteamptr]	; 6CF18
-add eax, byte 1Ah	; 6CF1F
-push eax	; 6CF22
-push str_S5	; 6CF23
-lea eax, [byte esp+08h]	; 6CF28
-push eax	; 6CF2C
-call sprintf_	; 6CF2D
-add esp, byte 0Ch	; 6CF32
+        push dword 70h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        sub esp, byte 54h
+        mov edi, eax
+        mov esi, edx
+        cmp byte [dword ebx+rosterisfa], 1
+        je short .3
+        mov eax, dword [nosplit ebx*4+rosterteamptr]
+        add eax, byte 1Ah
+        push eax
+        push str_S5
+        lea eax, [byte esp+08h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
 .1:
-mov eax, esp	; 6CF35
-push eax	; 6CF37
-call fputchar	; 6CF38
-add esp, byte 4	; 6CF3D
-cmp eax, 91h	; 6CF40
-jle short .2	; 6CF45
-mov eax, esp	; 6CF47
-call strlen_	; 6CF49
-xor dl, dl	; 6CF4E
-mov byte [byte esp+eax-01h], dl	; 6CF50
-jmp short DrawRosterTitle.1	; 6CF54
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        cmp eax, 91h
+        jle short .2
+        mov eax, esp
+        call strlen_
+        xor dl, dl
+        mov byte [byte esp+eax-01h], dl
+        jmp short DrawRosterTitle.1
 .2:
-mov ebx, esp	; 6CF56
-mov edx, esi	; 6CF58
-jmp short .4	; 6CF5A
+        mov ebx, esp
+        mov edx, esi
+        jmp short .4
 .3:
-mov ebx, str_FreeAgents	; 6CF5C
+        mov ebx, str_FreeAgents
 .4:
-mov eax, edi	; 6CF61
-call PrintShadowText	; 6CF63
-add esp, byte 54h	; 6CF68
-pop edi	; 6CF6B
-pop esi	; 6CF6C
-pop ecx	; 6CF6D
-ret	; 6CF6E
+        mov eax, edi
+        call PrintShadowText
+        add esp, byte 54h
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawRosterList                               6CF6F  95 PC, medium confidence
+; Roster panel rows (position, jersey, FitPlayerName), buttons and scroll bar
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawRosterList.c
 %ifdef CBUILD
 %include "c/front/create/DrawRosterList.inc"
 %else
 DrawRosterList:
-push dword 94h	; 6CF6F
-call __CHK	; 6CF74
-push ecx	; 6CF79
-push esi	; 6CF7A
-push edi	; 6CF7B
-push ebp	; 6CF7C
-mov ebp, esp	; 6CF7D
-sub esp, byte 60h	; 6CF7F
-push eax	; 6CF82
-push edx	; 6CF83
-push ebx	; 6CF84
-cmp byte [dword ebx+rosterisfa], 1	; 6CF85
-je near .6	; 6CF8C
-xor esi, esi	; 6CF92
+        push dword 94h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, byte 60h
+        push eax
+        push edx
+        push ebx
+        cmp byte [dword ebx+rosterisfa], 1
+        je near .6
+        xor esi, esi
 .1:
-mov edi, dword [byte ebp-06Ch]	; 6CF94
-mov eax, edi	; 6CF97
-shl eax, 2	; 6CF99
-sub eax, edi	; 6CF9C
-shl eax, 2	; 6CF9E
-mov edi, eax	; 6CFA1
-shl eax, 6	; 6CFA3
-sub eax, edi	; 6CFA6
-mov dword [byte ebp-08h], eax	; 6CFA8
-mov eax, esi	; 6CFAB
-shl eax, 3	; 6CFAD
-sub eax, esi	; 6CFB0
-shl eax, 2	; 6CFB2
-sub eax, esi	; 6CFB5
-mov dword [byte ebp-04h], eax	; 6CFB7
-mov edi, dword [byte ebp-08h]	; 6CFBA
-add edi, eax	; 6CFBD
-cmp byte [dword edi+rosterlist], 0	; 6CFBF
-je near .4	; 6CFC6
-xor eax, eax	; 6CFCC
-mov al, byte [dword edi+rosterjersey]	; 6CFCE
-push eax	; 6CFD4
-push str_fmt2d	; 6CFD5
-lea eax, [byte ebp-060h]	; 6CFDA
-push eax	; 6CFDD
-call sprintf_	; 6CFDE
-add esp, byte 0Ch	; 6CFE3
-xor eax, eax	; 6CFE6
-mov al, byte [byte_D42C3]	; 6CFE8
-imul eax, esi	; 6CFED
-add eax, dword [byte ebp-068h]	; 6CFF0
-push eax	; 6CFF3
-mov ebx, dword [byte ebp-064h]	; 6CFF4
-push ebx	; 6CFF7
-lea eax, [byte ebp-060h]	; 6CFF8
-push eax	; 6CFFB
-call PrintString	; 6CFFC
-add esp, byte 0Ch	; 6D001
-xor eax, eax	; 6D004
-mov al, byte [dword edi+rosterlist]	; 6D006
-push eax	; 6D00C
-push str_C4	; 6D00D
-lea eax, [byte ebp-060h]	; 6D012
-push eax	; 6D015
-call sprintf_	; 6D016
-add esp, byte 0Ch	; 6D01B
-xor eax, eax	; 6D01E
-mov al, byte [byte_D42C3]	; 6D020
-imul eax, esi	; 6D025
-add eax, dword [byte ebp-068h]	; 6D028
-push eax	; 6D02B
-mov eax, dword [byte ebp-064h]	; 6D02C
-add eax, byte 28h	; 6D02F
-push eax	; 6D032
-lea eax, [byte ebp-060h]	; 6D033
-push eax	; 6D036
-call PrintString	; 6D037
-add esp, byte 0Ch	; 6D03C
-mov ebx, rosterlist	; 6D03F
-add ebx, dword [byte ebp-08h]	; 6D044
-add ebx, dword [byte ebp-04h]	; 6D047
-add ebx, byte 8	; 6D04A
-mov ecx, 91h	; 6D04D
-xor edx, edx	; 6D052
-lea eax, [byte ebp-060h]	; 6D054
-call FitPlayerName	; 6D057
-xor eax, eax	; 6D05C
-mov al, byte [byte_D42C3]	; 6D05E
-imul eax, esi	; 6D063
-add eax, dword [byte ebp-068h]	; 6D066
-push eax	; 6D069
-mov eax, dword [byte ebp-064h]	; 6D06A
-add eax, byte 50h	; 6D06D
-push eax	; 6D070
-lea eax, [byte ebp-060h]	; 6D071
-push eax	; 6D074
-call PrintString	; 6D075
-add esp, byte 0Ch	; 6D07A
-mov edx, dword [byte ebp-06Ch]	; 6D07D
-mov eax, edx	; 6D080
-shl eax, 3	; 6D082
-sub eax, edx	; 6D085
-cmp byte [dword esi+eax*4+rostersel], 0	; 6D087
-je short .5	; 6D08F
-push dword 80h	; 6D091
-xor eax, eax	; 6D096
-mov al, byte [byte_D42C3]	; 6D098
-push eax	; 6D09D
-push dword 0F0h	; 6D09E
-imul eax, esi	; 6D0A3
-add eax, byte 35h	; 6D0A6
-push eax	; 6D0A9
-test edx, edx	; 6D0AA
-je short .2	; 6D0AC
-mov eax, 15Eh	; 6D0AE
-jmp short .3	; 6D0B3
+        mov edi, dword [byte ebp-06Ch]
+        mov eax, edi
+        shl eax, 2
+        sub eax, edi
+        shl eax, 2
+        mov edi, eax
+        shl eax, 6
+        sub eax, edi
+        mov dword [byte ebp-08h], eax
+        mov eax, esi
+        shl eax, 3
+        sub eax, esi
+        shl eax, 2
+        sub eax, esi
+        mov dword [byte ebp-04h], eax
+        mov edi, dword [byte ebp-08h]
+        add edi, eax
+        cmp byte [dword edi+rosterlist], 0
+        je near .4
+        xor eax, eax
+        mov al, byte [dword edi+rosterjersey]
+        push eax
+        push str_fmt2d
+        lea eax, [byte ebp-060h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov ebx, dword [byte ebp-064h]
+        push ebx
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [dword edi+rosterlist]
+        push eax
+        push str_C4
+        lea eax, [byte ebp-060h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov eax, dword [byte ebp-064h]
+        add eax, byte 28h
+        push eax
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        mov ebx, rosterlist
+        add ebx, dword [byte ebp-08h]
+        add ebx, dword [byte ebp-04h]
+        add ebx, byte 8
+        mov ecx, 91h
+        xor edx, edx
+        lea eax, [byte ebp-060h]
+        call FitPlayerName
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov eax, dword [byte ebp-064h]
+        add eax, byte 50h
+        push eax
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        mov edx, dword [byte ebp-06Ch]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        cmp byte [dword esi+eax*4+rostersel], 0
+        je short .5
+        push dword 80h
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        push eax
+        push dword 0F0h
+        imul eax, esi
+        add eax, byte 35h
+        push eax
+        test edx, edx
+        je short .2
+        mov eax, 15Eh
+        jmp short .3
 .2:
-mov eax, 23h	; 6D0B5
+        mov eax, 23h
 .3:
-push eax	; 6D0BA
-call XorBar	; 6D0BB
-add esp, byte 14h	; 6D0C0
-jmp short .5	; 6D0C3
+        push eax
+        call XorBar
+        add esp, byte 14h
+        jmp short .5
 .4:
-mov esi, 1Ch	; 6D0C5
+        mov esi, 1Ch
 .5:
-inc esi	; 6D0CA
-cmp esi, byte 1Ch	; 6D0CB
-jl near DrawRosterList.1	; 6D0CE
-jmp near .x	; 6D0D4
+        inc esi
+        cmp esi, byte 1Ch
+        jl near DrawRosterList.1
+        jmp near .x
 .6:
-mov edi, dword [falisttop]	; 6D0D9
-xor esi, esi	; 6D0DF
-jmp near .11	; 6D0E1
+        mov edi, dword [falisttop]
+        xor esi, esi
+        jmp near .11
 .7:
-mov eax, edi	; 6D0E6
-shl eax, 3	; 6D0E8
-sub eax, edi	; 6D0EB
-shl eax, 2	; 6D0ED
-sub eax, edi	; 6D0F0
-mov dword [byte ebp-0Ch], eax	; 6D0F2
-mov eax, dword [falist]	; 6D0F5
-add eax, dword [byte ebp-0Ch]	; 6D0FA
-mov al, byte [byte eax+01h]	; 6D0FD
-and eax, 0FFh	; 6D100
-push eax	; 6D105
-push str_fmt2d	; 6D106
-lea eax, [byte ebp-060h]	; 6D10B
-push eax	; 6D10E
-call sprintf_	; 6D10F
-add esp, byte 0Ch	; 6D114
-xor eax, eax	; 6D117
-mov al, byte [byte_D42C3]	; 6D119
-imul eax, esi	; 6D11E
-add eax, dword [byte ebp-068h]	; 6D121
-push eax	; 6D124
-mov ecx, dword [byte ebp-064h]	; 6D125
-push ecx	; 6D128
-lea eax, [byte ebp-060h]	; 6D129
-push eax	; 6D12C
-call PrintString	; 6D12D
-add esp, byte 0Ch	; 6D132
-mov eax, dword [falist]	; 6D135
-add eax, dword [byte ebp-0Ch]	; 6D13A
-mov al, byte [eax]	; 6D13D
-and eax, 0FFh	; 6D13F
-push eax	; 6D144
-push str_C4	; 6D145
-lea eax, [byte ebp-060h]	; 6D14A
-push eax	; 6D14D
-call sprintf_	; 6D14E
-add esp, byte 0Ch	; 6D153
-xor eax, eax	; 6D156
-mov al, byte [byte_D42C3]	; 6D158
-imul eax, esi	; 6D15D
-add eax, dword [byte ebp-068h]	; 6D160
-push eax	; 6D163
-mov eax, dword [byte ebp-064h]	; 6D164
-add eax, byte 28h	; 6D167
-push eax	; 6D16A
-lea eax, [byte ebp-060h]	; 6D16B
-push eax	; 6D16E
-call PrintString	; 6D16F
-add esp, byte 0Ch	; 6D174
-mov ebx, dword [falist]	; 6D177
-add ebx, dword [byte ebp-0Ch]	; 6D17D
-add ebx, byte 8	; 6D180
-mov ecx, 91h	; 6D183
-xor edx, edx	; 6D188
-lea eax, [byte ebp-060h]	; 6D18A
-call FitPlayerName	; 6D18D
-xor eax, eax	; 6D192
-mov al, byte [byte_D42C3]	; 6D194
-imul eax, esi	; 6D199
-add eax, dword [byte ebp-068h]	; 6D19C
-push eax	; 6D19F
-mov eax, dword [byte ebp-064h]	; 6D1A0
-add eax, byte 50h	; 6D1A3
-push eax	; 6D1A6
-lea eax, [byte ebp-060h]	; 6D1A7
-push eax	; 6D1AA
-call PrintString	; 6D1AB
-add esp, byte 0Ch	; 6D1B0
-mov eax, dword [falistsel]	; 6D1B3
-cmp byte [edi+eax], 0	; 6D1B8
-je short .10	; 6D1BC
-push dword 80h	; 6D1BE
-xor eax, eax	; 6D1C3
-mov al, byte [byte_D42C3]	; 6D1C5
-push eax	; 6D1CA
-push dword 0F0h	; 6D1CB
-imul eax, esi	; 6D1D0
-add eax, byte 35h	; 6D1D3
-push eax	; 6D1D6
-cmp dword [byte ebp-06Ch], byte 0	; 6D1D7
-je short .8	; 6D1DB
-mov eax, 15Eh	; 6D1DD
-jmp short .9	; 6D1E2
+        mov eax, edi
+        shl eax, 3
+        sub eax, edi
+        shl eax, 2
+        sub eax, edi
+        mov dword [byte ebp-0Ch], eax
+        mov eax, dword [falist]
+        add eax, dword [byte ebp-0Ch]
+        mov al, byte [byte eax+01h]
+        and eax, 0FFh
+        push eax
+        push str_fmt2d
+        lea eax, [byte ebp-060h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov ecx, dword [byte ebp-064h]
+        push ecx
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        mov eax, dword [falist]
+        add eax, dword [byte ebp-0Ch]
+        mov al, byte [eax]
+        and eax, 0FFh
+        push eax
+        push str_C4
+        lea eax, [byte ebp-060h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov eax, dword [byte ebp-064h]
+        add eax, byte 28h
+        push eax
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        mov ebx, dword [falist]
+        add ebx, dword [byte ebp-0Ch]
+        add ebx, byte 8
+        mov ecx, 91h
+        xor edx, edx
+        lea eax, [byte ebp-060h]
+        call FitPlayerName
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        imul eax, esi
+        add eax, dword [byte ebp-068h]
+        push eax
+        mov eax, dword [byte ebp-064h]
+        add eax, byte 50h
+        push eax
+        lea eax, [byte ebp-060h]
+        push eax
+        call PrintString
+        add esp, byte 0Ch
+        mov eax, dword [falistsel]
+        cmp byte [edi+eax], 0
+        je short .10
+        push dword 80h
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        push eax
+        push dword 0F0h
+        imul eax, esi
+        add eax, byte 35h
+        push eax
+        cmp dword [byte ebp-06Ch], byte 0
+        je short .8
+        mov eax, 15Eh
+        jmp short .9
 .8:
-mov eax, 23h	; 6D1E4
+        mov eax, 23h
 .9:
-push eax	; 6D1E9
-call XorBar	; 6D1EA
-add esp, byte 14h	; 6D1EF
+        push eax
+        call XorBar
+        add esp, byte 14h
 .10:
-inc edi	; 6D1F2
-inc esi	; 6D1F3
+        inc edi
+        inc esi
 .11:
-cmp esi, byte 1Ch	; 6D1F4
-jge short .12	; 6D1F7
-cmp edi, dword [facount]	; 6D1F9
-jl near DrawRosterList.7	; 6D1FF
+        cmp esi, byte 1Ch
+        jge short .12
+        cmp edi, dword [facount]
+        jl near DrawRosterList.7
 .12:
-cmp dword [dword_D0C20], byte 0	; 6D205
-je short .x	; 6D20C
-mov edx, 2	; 6D20E
-mov eax, btn_RosterList	; 6D213
-call DrawButtons	; 6D218
-mov eax, dword [falisttop]	; 6D21D
-mov dword [fascrollbar_top], eax	; 6D222
-mov eax, dword [fascrollbar_len]	; 6D227
-sub eax, byte 4	; 6D22C
-imul eax, dword [fascrollbar_top]	; 6D22F
-mov ebx, dword [fascrollbar_count]	; 6D236
-xor edx, edx	; 6D23C
-div ebx	; 6D23E
-mov dword [fascrollbar_thumb], eax	; 6D240
-mov eax, fascrollbar	; 6D245
-call DrawScrollBar	; 6D24A
+        cmp dword [dword_D0C20], byte 0
+        je short .x
+        mov edx, 2
+        mov eax, btn_RosterList
+        call DrawButtons
+        mov eax, dword [falisttop]
+        mov dword [fascrollbar_top], eax
+        mov eax, dword [fascrollbar_len]
+        sub eax, byte 4
+        imul eax, dword [fascrollbar_top]
+        mov ebx, dword [fascrollbar_count]
+        xor edx, edx
+        div ebx
+        mov dword [fascrollbar_thumb], eax
+        mov eax, fascrollbar
+        call DrawScrollBar
 .x:
-mov esp, ebp	; 6D24F
-pop ebp	; 6D251
-pop edi	; 6D252
-pop esi	; 6D253
-pop ecx	; 6D254
-ret	; 6D255
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawDatabaseName                                                6D256  95 PC
+; "DATABASE : " + upper-cased current database name, centred
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawDatabaseName.c
 %ifdef CBUILD
 %include "c/front/create/DrawDatabaseName.inc"
 %else
 DrawDatabaseName:
-push dword 44h	; 6D256
-call __CHK	; 6D25B
-push edx	; 6D260
-push esi	; 6D261
-push edi	; 6D262
-sub esp, byte 34h	; 6D263
-mov edi, esp	; 6D266
-mov esi, str_DATABASE	; 6D268
-movsd	; 6D26D
-movsd	; 6D26E
-movsd	; 6D26F
-mov eax, curdbname	; 6D270
-call strupr_	; 6D275
-mov edx, curdbname	; 6D27A
-mov eax, esp	; 6D27F
-call strcat_	; 6D281
-mov edx, esp	; 6D286
-mov eax, 18h	; 6D288
-call PrintCenteredText	; 6D28D
-add esp, byte 34h	; 6D292
-pop edi	; 6D295
-pop esi	; 6D296
-pop edx	; 6D297
-ret	; 6D298
+        push dword 44h
+        call __CHK
+        push edx
+        push esi
+        push edi
+        sub esp, byte 34h
+        mov edi, esp
+        mov esi, str_DATABASE
+        movsd
+        movsd
+        movsd
+        mov eax, curdbname
+        call strupr_
+        mov edx, curdbname
+        mov eax, esp
+        call strcat_
+        mov edx, esp
+        mov eax, 18h
+        call PrintCenteredText
+        add esp, byte 34h
+        pop edi
+        pop esi
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawRosterPanel                                                 6D299  95 PC
+; (side): DrawRosterTitle, DrawRosterList and DrawDatabaseName for the left
+; or right panel
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawRosterPanel.c
 %ifdef CBUILD
 %include "c/front/create/DrawRosterPanel.inc"
 %else
 DrawRosterPanel:
-push dword 0Ch	; 6D299
-call __CHK	; 6D29E
-push ebx	; 6D2A3
-push edx	; 6D2A4
-test eax, eax	; 6D2A5
-jne short .1	; 6D2A7
-xor ebx, ebx	; 6D2A9
-mov edx, 25h	; 6D2AB
-mov eax, 64h	; 6D2B0
-call DrawRosterTitle	; 6D2B5
-xor ebx, ebx	; 6D2BA
-mov edx, 35h	; 6D2BC
-mov eax, 2Dh	; 6D2C1
-jmp short .2	; 6D2C6
+        push dword 0Ch
+        call __CHK
+        push ebx
+        push edx
+        test eax, eax
+        jne short .1
+        xor ebx, ebx
+        mov edx, 25h
+        mov eax, 64h
+        call DrawRosterTitle
+        xor ebx, ebx
+        mov edx, 35h
+        mov eax, 2Dh
+        jmp short .2
 .1:
-mov ebx, 1	; 6D2C8
-mov edx, 25h	; 6D2CD
-mov eax, 19Eh	; 6D2D2
-call DrawRosterTitle	; 6D2D7
-mov ebx, 1	; 6D2DC
-mov edx, 35h	; 6D2E1
-mov eax, 167h	; 6D2E6
+        mov ebx, 1
+        mov edx, 25h
+        mov eax, 19Eh
+        call DrawRosterTitle
+        mov ebx, 1
+        mov edx, 35h
+        mov eax, 167h
 .2:
-call DrawRosterList	; 6D2EB
-call DrawDatabaseName	; 6D2F0
-pop edx	; 6D2F5
-pop ebx	; 6D2F6
-ret	; 6D2F7
+        call DrawRosterList
+        call DrawDatabaseName
+        pop edx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawEditRosters                              6D2F8  95 PC, medium confidence
+; Redraws the Edit Rosters screen (prez2 background and palette, both roster
+; panels with 'Ratings:' and jersey numbers); called after every roster
+; change and from database_dialogs
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RunEditRosters.c (DrawEditRosters)
 %ifdef CBUILD
 %include "c/front/create/RunEditRosters.DrawEditRosters.inc"
 %else
 DrawEditRosters:
-push dword 80h	; 6D2F8
-call __CHK	; 6D2FD
-push ebx	; 6D302
-push ecx	; 6D303
-push edx	; 6D304
-push esi	; 6D305
-push edi	; 6D306
-sub esp, byte 54h	; 6D307
-mov edx, dword [fullscrbmp]	; 6D30A
-push edx	; 6D310
-call SetDrawBitmap	; 6D311
-add esp, byte 4	; 6D316
-mov edx, 43h	; 6D319
-mov eax, 40h	; 6D31E
-call SetTextColors	; 6D323
-push byte 42h	; 6D328
-mov ecx, 41h	; 6D32A
-mov ebx, 40h	; 6D32F
-mov edx, 5	; 6D334
-mov eax, editrostersmenubar	; 6D339
-call DrawMenuBar	; 6D33E
-xor ecx, ecx	; 6D343
-mov ebx, str_Prez2	; 6D345
-cmp byte [fileoncd+01C3h], 1	; 6D34A
-jne short .1	; 6D351
-mov edx, dword [cddriveptr]	; 6D353
-jmp short .2	; 6D359
+        push dword 80h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, byte 54h
+        mov edx, dword [fullscrbmp]
+        push edx
+        call SetDrawBitmap
+        add esp, byte 4
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 5
+        mov eax, editrostersmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_Prez2
+        cmp byte [fileoncd+01C3h], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 6D35B
+        xor edx, edx
 .2:
-mov eax, esp	; 6D35D
-call MakePath	; 6D35F
-push byte 0	; 6D364
-lea eax, [byte esp+04h]	; 6D366
-push eax	; 6D36A
-call LoadBank	; 6D36B
-mov esi, eax	; 6D370
-add esp, byte 8	; 6D372
-push str_Pal	; 6D375
-push eax	; 6D37A
-call FindShape	; 6D37B
-add esp, byte 8	; 6D380
-lea edx, [byte eax+010h]	; 6D383
-mov ebx, 300h	; 6D386
-mov eax, savepal	; 6D38B
-call memcpy_	; 6D390
-push str_ea	; 6D395
-push esi	; 6D39A
-call FindShape	; 6D39B
-mov edi, eax	; 6D3A0
-add esp, byte 8	; 6D3A2
-push dword 1E0h	; 6D3A5
-push byte 13h	; 6D3AA
-push dword 280h	; 6D3AC
-push byte 0	; 6D3B1
-call SetClipWindow	; 6D3B3
-add esp, byte 10h	; 6D3B8
-push edi	; 6D3BB
-call DrawShape	; 6D3BC
-add esp, byte 4	; 6D3C1
-push dword 1E0h	; 6D3C4
-push byte 0	; 6D3C9
-push dword 280h	; 6D3CB
-push byte 0	; 6D3D0
-call SetClipWindow	; 6D3D2
-add esp, byte 10h	; 6D3D7
-push esi	; 6D3DA
-call FreeMemBlock	; 6D3DB
-add esp, byte 4	; 6D3E0
-xor eax, eax	; 6D3E3
-call DrawRosterPanel	; 6D3E5
-mov eax, 1	; 6D3EA
-call DrawRosterPanel	; 6D3EF
-cmp dword [rostereditmode], byte 2	; 6D3F4
-jne near .4	; 6D3FB
-push byte 1	; 6D401
-mov ecx, 154h	; 6D403
-mov ebx, 1CCh	; 6D408
-mov edx, 8Ch	; 6D40D
-mov eax, 0B4h	; 6D412
-call DrawDlgFrame	; 6D417
-push byte 41h	; 6D41C
-push dword 0C9h	; 6D41E
-push dword 119h	; 6D423
-push dword 8Ch	; 6D428
-push dword 0B4h	; 6D42D
-call FillRect	; 6D432
-add esp, byte 14h	; 6D437
-push byte 40h	; 6D43A
-push dword 8Ch	; 6D43C
-push dword 1CBh	; 6D441
-push dword 8Ch	; 6D446
-push dword 0B4h	; 6D44B
-call sub_B4FAC	; 6D450
-add esp, byte 14h	; 6D455
-push byte 40h	; 6D458
-push dword 153h	; 6D45A
-push dword 0B4h	; 6D45F
-push dword 8Ch	; 6D464
-push dword 0B4h	; 6D469
-call sub_B4FAC	; 6D46E
-add esp, byte 14h	; 6D473
-push byte 42h	; 6D476
-push dword 154h	; 6D478
-push dword 1CCh	; 6D47D
-push dword 8Dh	; 6D482
-push dword 1CCh	; 6D487
-call sub_B4FAC	; 6D48C
-add esp, byte 14h	; 6D491
-push byte 42h	; 6D494
-push dword 154h	; 6D496
-push dword 1CCh	; 6D49B
-push dword 154h	; 6D4A0
-push dword 0B5h	; 6D4A5
-call sub_B4FAC	; 6D4AA
-add esp, byte 14h	; 6D4AF
-push byte 41h	; 6D4B2
-push dword 154h	; 6D4B4
-push dword 0B4h	; 6D4B9
-call PlotPixel	; 6D4BE
-add esp, byte 0Ch	; 6D4C3
-push byte 41h	; 6D4C6
-push dword 8Ch	; 6D4C8
-push dword 1CCh	; 6D4CD
-call PlotPixel	; 6D4D2
-add esp, byte 0Ch	; 6D4D7
-mov edx, str_Ratings	; 6D4DA
-mov eax, esp	; 6D4DF
-call strcpy_	; 6D4E1
-mov edx, str_space	; 6D4E6
-mov eax, esp	; 6D4EB
-call strcat_	; 6D4ED
-mov edx, dword [rosterteamrec]	; 6D4F2
-add edx, byte 1Ah	; 6D4F8
-mov eax, esp	; 6D4FB
-call strcat_	; 6D4FD
-mov eax, esp	; 6D502
-push eax	; 6D504
-call fputchar	; 6D505
-add esp, byte 4	; 6D50A
-mov edx, 118h	; 6D50D
-sub edx, eax	; 6D512
-mov eax, edx	; 6D514
-sar edx, 1Fh	; 6D516
-LD sub, eax, edx	; 6D519
-sar eax, 1	; 6D51B
-add eax, 0B4h	; 6D51D
-mov ebx, esp	; 6D522
-mov edx, 99h	; 6D524
-call PrintShadowText	; 6D529
-mov edi, dword [rosterteamrec]	; 6D52E
-add edi, 2DCh	; 6D534
-mov esi, 0B0h	; 6D53A
-xor ecx, ecx	; 6D53F
+        mov eax, esp
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Pal
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, savepal
+        call memcpy_
+        push str_ea
+        push esi
+        call FindShape
+        mov edi, eax
+        add esp, byte 8
+        push dword 1E0h
+        push byte 13h
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push edi
+        call DrawShape
+        add esp, byte 4
+        push dword 1E0h
+        push byte 0
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        call DrawRosterPanel
+        mov eax, 1
+        call DrawRosterPanel
+        cmp dword [rostereditmode], byte 2
+        jne near .4
+        push byte 1
+        mov ecx, 154h
+        mov ebx, 1CCh
+        mov edx, 8Ch
+        mov eax, 0B4h
+        call DrawDlgFrame
+        push byte 41h
+        push dword 0C9h
+        push dword 119h
+        push dword 8Ch
+        push dword 0B4h
+        call FillRect
+        add esp, byte 14h
+        push byte 40h
+        push dword 8Ch
+        push dword 1CBh
+        push dword 8Ch
+        push dword 0B4h
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 40h
+        push dword 153h
+        push dword 0B4h
+        push dword 8Ch
+        push dword 0B4h
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 42h
+        push dword 154h
+        push dword 1CCh
+        push dword 8Dh
+        push dword 1CCh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 42h
+        push dword 154h
+        push dword 1CCh
+        push dword 154h
+        push dword 0B5h
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 41h
+        push dword 154h
+        push dword 0B4h
+        call PlotPixel
+        add esp, byte 0Ch
+        push byte 41h
+        push dword 8Ch
+        push dword 1CCh
+        call PlotPixel
+        add esp, byte 0Ch
+        mov edx, str_Ratings
+        mov eax, esp
+        call strcpy_
+        mov edx, str_space
+        mov eax, esp
+        call strcat_
+        mov edx, dword [rosterteamrec]
+        add edx, byte 1Ah
+        mov eax, esp
+        call strcat_
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        mov edx, 118h
+        sub edx, eax
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        add eax, 0B4h
+        mov ebx, esp
+        mov edx, 99h
+        call PrintShadowText
+        mov edi, dword [rosterteamrec]
+        add edi, 2DCh
+        mov esi, 0B0h
+        xor ecx, ecx
 .3:
-mov ebx, dword [nosplit ecx*4+teamratingnames]	; 6D541
-mov edx, esi	; 6D548
-mov eax, 0D2h	; 6D54A
-call PrintShadowText	; 6D54F
-xor eax, eax	; 6D554
-mov al, byte [dword ecx+teamratingidx]	; 6D556
-mov al, byte [edi+eax]	; 6D55C
-and eax, 0FFh	; 6D55F
-push eax	; 6D564
-push str_fmt2d	; 6D565
-lea eax, [byte esp+08h]	; 6D56A
-push eax	; 6D56E
-call sprintf_	; 6D56F
-add esp, byte 0Ch	; 6D574
-mov ebx, esp	; 6D577
-mov edx, esi	; 6D579
-mov eax, 1A9h	; 6D57B
-call PrintShadowText	; 6D580
-inc ecx	; 6D585
-add esi, byte 0Dh	; 6D586
-cmp ecx, byte 9	; 6D589
-jl short DrawEditRosters.3	; 6D58C
-mov edx, 2	; 6D58E
-mov eax, btn_EditRosters	; 6D593
-call DrawButtons	; 6D598
+        mov ebx, dword [nosplit ecx*4+teamratingnames]
+        mov edx, esi
+        mov eax, 0D2h
+        call PrintShadowText
+        xor eax, eax
+        mov al, byte [dword ecx+teamratingidx]
+        mov al, byte [edi+eax]
+        and eax, 0FFh
+        push eax
+        push str_fmt2d
+        lea eax, [byte esp+08h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov ebx, esp
+        mov edx, esi
+        mov eax, 1A9h
+        call PrintShadowText
+        inc ecx
+        add esi, byte 0Dh
+        cmp ecx, byte 9
+        jl short DrawEditRosters.3
+        mov edx, 2
+        mov eax, btn_EditRosters
+        call DrawButtons
 .4:
-call sub_B4BA8	; 6D59D
-mov eax, dword [fullscrbmp]	; 6D5A2
-mov ecx, dword [byte eax+02Ch]	; 6D5A7
-push ecx	; 6D5AA
-call sub_9121C	; 6D5AB
-add esp, byte 4	; 6D5B0
-add esp, byte 54h	; 6D5B3
-jmp near RunEditRosters_ret5	; 6D5B6
+        call sub_B4BA8
+        mov eax, dword [fullscrbmp]
+        mov ecx, dword [byte eax+02Ch]
+        push ecx
+        call sub_9121C
+        add esp, byte 4
+        add esp, byte 54h
+        jmp near RunEditRosters_ret5
 %endif ; C
+;-----------------------------------------------------------------------------
+; EditRostersReturn                                               6D5BB  95 PC
+; 'Return' menu item (frontend_46 menu table): sets editrosters_exit to -1
+;-----------------------------------------------------------------------------
 ; C: src/front/create/EditRostersReturn.c
 %ifdef CBUILD
 %include "c/front/create/EditRostersReturn.inc"
 %else
 EditRostersReturn:
-push dword 4	; 6D5BB
-call __CHK	; 6D5C0
-mov dword [editrosters_exit], 0FFFFFFFFh	; 6D5C5
-ret	; 6D5CF
+        push dword 4
+        call __CHK
+        mov dword [editrosters_exit], 0FFFFFFFFh
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SelectRosterTeam                                                6D5D0  95 PC
+; Division-submenu team item: puts the picked team (divisionteams[div][slot])
+; in rosterteam[side], re-enables the previous team's item and 'Free Agents
+; ...', disables the new one, enables 'Edit Team Lines ...', reloads the list
+; (LoadRosterList) and redraws
+;-----------------------------------------------------------------------------
 SelectRosterTeam:
-push dword 20h	; 6D5D0
-call __CHK	; 6D5D5
-push ebx	; 6D5DA
-push ecx	; 6D5DB
-push edx	; 6D5DC
-push esi	; 6D5DD
-push edi	; 6D5DE
-push ebp	; 6D5DF
-sub esp, byte 4	; 6D5E0
-cmp dword [eax], byte 1	; 6D5E3
-setne dl	; 6D5E6
-and edx, 0FFh	; 6D5E9
-mov esi, edx	; 6D5EF
-mov edi, dword [byte eax+04h]	; 6D5F1
-mov ebp, dword [byte eax+08h]	; 6D5F4
-mov al, byte [dword edx+rosterteam]	; 6D5F7
-mov byte [esp], al	; 6D5FD
-mov eax, edi	; 6D600
-shl eax, 3	; 6D602
-sub eax, edi	; 6D605
-mov al, byte [dword eax+ebp+divisionteams]	; 6D607
-mov byte [dword edx+rosterteam], al	; 6D60E
-mov ah, byte [esp]	; 6D614
-cmp ah, 0FFh	; 6D617
-jne short .1	; 6D61A
-mov ecx, ShowFreeAgents	; 6D61C
-mov dword [menu_r1_freeagents], ecx	; 6D621
-mov dword [menu_r2_freeagents], ecx	; 6D627
-jmp short .5	; 6D62D
+        push dword 20h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        cmp dword [eax], byte 1
+        setne dl
+        and edx, 0FFh
+        mov esi, edx
+        mov edi, dword [byte eax+04h]
+        mov ebp, dword [byte eax+08h]
+        mov al, byte [dword edx+rosterteam]
+        mov byte [esp], al
+        mov eax, edi
+        shl eax, 3
+        sub eax, edi
+        mov al, byte [dword eax+ebp+divisionteams]
+        mov byte [dword edx+rosterteam], al
+        mov ah, byte [esp]
+        cmp ah, 0FFh
+        jne short .1
+        mov ecx, ShowFreeAgents
+        mov dword [menu_r1_freeagents], ecx
+        mov dword [menu_r2_freeagents], ecx
+        jmp short .5
 .1:
-xor ecx, ecx	; 6D62F
-mov cl, ah	; 6D631
-mov ecx, dword [nosplit ecx*4+teamdivflags]	; 6D633
-sar ecx, 1	; 6D63A
-cmp ecx, byte 4	; 6D63C
-jne short .2	; 6D63F
-dec ecx	; 6D641
+        xor ecx, ecx
+        mov cl, ah
+        mov ecx, dword [nosplit ecx*4+teamdivflags]
+        sar ecx, 1
+        cmp ecx, byte 4
+        jne short .2
+        dec ecx
 .2:
-xor edx, edx	; 6D642
-mov bl, byte [esp]	; 6D644
+        xor edx, edx
+        mov bl, byte [esp]
 .3:
-mov eax, ecx	; 6D647
-shl eax, 3	; 6D649
-sub eax, ecx	; 6D64C
-cmp bl, byte [dword edx+eax+divisionteams]	; 6D64E
-je short .4	; 6D655
-inc edx	; 6D657
-cmp edx, byte 7	; 6D658
-jl short SelectRosterTeam.3	; 6D65B
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        cmp bl, byte [dword edx+eax+divisionteams]
+        je short .4
+        inc edx
+        cmp edx, byte 7
+        jl short SelectRosterTeam.3
 .4:
-shl ecx, 5	; 6D65D
-shl edx, 5	; 6D660
-mov eax, dword [dword ecx+roster1divmenus]	; 6D663
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 6D669
-mov eax, dword [dword ecx+roster2divmenus]	; 6D671
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 6D677
+        shl ecx, 5
+        shl edx, 5
+        mov eax, dword [dword ecx+roster1divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
+        mov eax, dword [dword ecx+roster2divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
 .5:
-mov eax, edi	; 6D67F
-shl eax, 5	; 6D681
-mov edx, ebp	; 6D684
-shl edx, 5	; 6D686
-mov ebx, dword [dword eax+roster1divmenus]	; 6D689
-mov dword [byte edx+ebx+014h], 0	; 6D68F
-mov eax, dword [dword eax+roster2divmenus]	; 6D697
-mov dword [byte edx+eax+014h], 0	; 6D69D
-test esi, esi	; 6D6A5
-jne short .6	; 6D6A7
-mov dword [menu_r1_editlines], EditTeamLines	; 6D6A9
-jmp short .7	; 6D6B3
+        mov eax, edi
+        shl eax, 5
+        mov edx, ebp
+        shl edx, 5
+        mov ebx, dword [dword eax+roster1divmenus]
+        mov dword [byte edx+ebx+014h], 0
+        mov eax, dword [dword eax+roster2divmenus]
+        mov dword [byte edx+eax+014h], 0
+        test esi, esi
+        jne short .6
+        mov dword [menu_r1_editlines], EditTeamLines
+        jmp short .7
 .6:
-mov dword [menu_r2_editlines], EditTeamLines	; 6D6B5
+        mov dword [menu_r2_editlines], EditTeamLines
 .7:
-xor bh, bh	; 6D6BF
-mov byte [dword esi+rosterisfa], bh	; 6D6C1
-mov eax, esi	; 6D6C7
-call LoadRosterList	; 6D6C9
-call DrawEditRosters	; 6D6CE
-add esp, byte 4	; 6D6D3
-jmp near RunEditRosters_ret6	; 6D6D6
+        xor bh, bh
+        mov byte [dword esi+rosterisfa], bh
+        mov eax, esi
+        call LoadRosterList
+        call DrawEditRosters
+        add esp, byte 4
+        jmp near RunEditRosters_ret6
+;-----------------------------------------------------------------------------
+; ShowFreeAgents                                                  6D6DB  95 PC
+; 'Free Agents ...' menu item: rosterteam[side] = FFh, rosterisfa[side] = 1,
+; disables the item and 'Edit Team Lines ...', LoadRosterList and redraw
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RunEditRosters.c (ShowFreeAgents)
 %ifdef CBUILD
 %include "c/front/create/RunEditRosters.ShowFreeAgents.inc"
 %else
 ShowFreeAgents:
-push dword 18h	; 6D6DB
-call __CHK	; 6D6E0
-push ebx	; 6D6E5
-push ecx	; 6D6E6
-push edx	; 6D6E7
-push esi	; 6D6E8
-push edi	; 6D6E9
-cmp dword [eax], byte 1	; 6D6EA
-setne al	; 6D6ED
-movzx esi, al	; 6D6F0
-mov edi, esi	; 6D6F3
-movzx esi, byte [dword esi+rosterteam]	; 6D6F5
-mov ecx, dword [nosplit esi*4+teamdivflags]	; 6D6FC
-sar ecx, 1	; 6D703
-cmp ecx, byte 4	; 6D705
-jne short .1	; 6D708
-dec ecx	; 6D70A
+        push dword 18h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        cmp dword [eax], byte 1
+        setne al
+        movzx esi, al
+        mov edi, esi
+        movzx esi, byte [dword esi+rosterteam]
+        mov ecx, dword [nosplit esi*4+teamdivflags]
+        sar ecx, 1
+        cmp ecx, byte 4
+        jne short .1
+        dec ecx
 .1:
-xor edx, edx	; 6D70B
+        xor edx, edx
 .2:
-mov eax, ecx	; 6D70D
-shl eax, 3	; 6D70F
-sub eax, ecx	; 6D712
-mov al, byte [dword edx+eax+divisionteams]	; 6D714
-and eax, 0FFh	; 6D71B
-cmp eax, esi	; 6D720
-je short .3	; 6D722
-inc edx	; 6D724
-cmp edx, byte 7	; 6D725
-jl short ShowFreeAgents.2	; 6D728
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        mov al, byte [dword edx+eax+divisionteams]
+        and eax, 0FFh
+        cmp eax, esi
+        je short .3
+        inc edx
+        cmp edx, byte 7
+        jl short ShowFreeAgents.2
 .3:
-shl ecx, 5	; 6D72A
-shl edx, 5	; 6D72D
-mov eax, dword [dword ecx+roster1divmenus]	; 6D730
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 6D736
-mov eax, dword [dword ecx+roster2divmenus]	; 6D73E
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 6D744
-xor ebx, ebx	; 6D74C
-mov dword [menu_r1_freeagents], ebx	; 6D74E
-mov dword [menu_r2_freeagents], ebx	; 6D754
-test edi, edi	; 6D75A
-jne short .4	; 6D75C
-mov dword [menu_r1_editlines], ebx	; 6D75E
-jmp short .5	; 6D764
+        shl ecx, 5
+        shl edx, 5
+        mov eax, dword [dword ecx+roster1divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
+        mov eax, dword [dword ecx+roster2divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
+        xor ebx, ebx
+        mov dword [menu_r1_freeagents], ebx
+        mov dword [menu_r2_freeagents], ebx
+        test edi, edi
+        jne short .4
+        mov dword [menu_r1_editlines], ebx
+        jmp short .5
 .4:
-mov dword [menu_r2_editlines], ebx	; 6D766
+        mov dword [menu_r2_editlines], ebx
 .5:
-mov byte [dword edi+rosterteam], 0FFh	; 6D76C
-mov byte [dword edi+rosterisfa], 1	; 6D773
-mov eax, edi	; 6D77A
-call LoadRosterList	; 6D77C
-call DrawEditRosters	; 6D781
-jmp near RunEditRosters_ret5	; 6D786
+        mov byte [dword edi+rosterteam], 0FFh
+        mov byte [dword edi+rosterisfa], 1
+        mov eax, edi
+        call LoadRosterList
+        call DrawEditRosters
+        jmp near RunEditRosters_ret5
 %endif ; C
+;-----------------------------------------------------------------------------
+; ComparePlayerEntry                           6D78B  95 PC, medium confidence
+; Sort compare for 1Bh-byte list entries: by position byte (L, C, R, D order,
+; empty last), then strcmp of the name at +0Bh
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ComparePlayerEntry.c
 %ifdef CBUILD
 %include "c/front/create/ComparePlayerEntry.inc"
 %else
 ComparePlayerEntry:
-push dword 8	; 6D78B
-call __CHK	; 6D790
-push ebx	; 6D795
-mov bl, byte [eax]	; 6D796
-mov bh, byte [edx]	; 6D798
-cmp bl, bh	; 6D79A
-jne short .2	; 6D79C
-cmp byte [eax], 0	; 6D79E
-jne short .1	; 6D7A1
-xor eax, eax	; 6D7A3
-pop ebx	; 6D7A5
-ret	; 6D7A6
+        push dword 8
+        call __CHK
+        push ebx
+        mov bl, byte [eax]
+        mov bh, byte [edx]
+        cmp bl, bh
+        jne short .2
+        cmp byte [eax], 0
+        jne short .1
+        xor eax, eax
+        pop ebx
+        ret
 .1:
-add edx, byte 0Bh	; 6D7A7
-add eax, byte 0Bh	; 6D7AA
-call strcmp_	; 6D7AD
-pop ebx	; 6D7B2
-ret	; 6D7B3
+        add edx, byte 0Bh
+        add eax, byte 0Bh
+        call strcmp_
+        pop ebx
+        ret
 .2:
-test bl, bl	; 6D7B4
-je short .5	; 6D7B6
-test bh, bh	; 6D7B8
-jne short .4	; 6D7BA
+        test bl, bl
+        je short .5
+        test bh, bh
+        jne short .4
 .3:
-mov eax, 0FFFFFFFFh	; 6D7BC
-pop ebx	; 6D7C1
-ret	; 6D7C2
+        mov eax, 0FFFFFFFFh
+        pop ebx
+        ret
 .4:
-cmp bl, 4Ch	; 6D7C3
-je short ComparePlayerEntry.3	; 6D7C6
-cmp bh, 4Ch	; 6D7C8
-je short .5	; 6D7CB
-cmp bl, 43h	; 6D7CD
-je short ComparePlayerEntry.3	; 6D7D0
-cmp bh, 43h	; 6D7D2
-je short .5	; 6D7D5
-cmp bl, 52h	; 6D7D7
-je short ComparePlayerEntry.3	; 6D7DA
-cmp bh, 52h	; 6D7DC
-je short .5	; 6D7DF
-cmp bl, 44h	; 6D7E1
-je short ComparePlayerEntry.3	; 6D7E4
+        cmp bl, 4Ch
+        je short ComparePlayerEntry.3
+        cmp bh, 4Ch
+        je short .5
+        cmp bl, 43h
+        je short ComparePlayerEntry.3
+        cmp bh, 43h
+        je short .5
+        cmp bl, 52h
+        je short ComparePlayerEntry.3
+        cmp bh, 52h
+        je short .5
+        cmp bl, 44h
+        je short ComparePlayerEntry.3
 .5:
-mov eax, 1	; 6D7E6
-pop ebx	; 6D7EB
-ret	; 6D7EC
+        mov eax, 1
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ShellSortBytes                                                  6D7ED  95 PC
+; Shell sort (base, count, element size, compare fn) swapping elements byte
+; by byte with xor
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ShellSortBytes.c
 %ifdef CBUILD
 %include "c/front/create/ShellSortBytes.inc"
 %else
 ShellSortBytes:
-push dword 28h	; 6D7ED
-call __CHK	; 6D7F2
-push esi	; 6D7F7
-push edi	; 6D7F8
-push ebp	; 6D7F9
-sub esp, byte 14h	; 6D7FA
-push edx	; 6D7FD
-mov ebp, ebx	; 6D7FE
-mov dword [byte esp+08h], ecx	; 6D800
-mov dword [byte esp+0Ch], eax	; 6D804
-mov eax, edx	; 6D808
-sar eax, 1	; 6D80A
-mov dword [byte esp+010h], eax	; 6D80C
-jmp near .9	; 6D810
+        push dword 28h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 14h
+        push edx
+        mov ebp, ebx
+        mov dword [byte esp+08h], ecx
+        mov dword [byte esp+0Ch], eax
+        mov eax, edx
+        sar eax, 1
+        mov dword [byte esp+010h], eax
+        jmp near .9
 .1:
-mov dword [byte esp+04h], edx	; 6D815
-jmp short .8	; 6D819
+        mov dword [byte esp+04h], edx
+        jmp short .8
 .2:
-mov esi, dword [byte esp+010h]	; 6D81B
-sub eax, esi	; 6D81F
-mov dword [byte esp+014h], eax	; 6D821
-jmp short .6	; 6D825
+        mov esi, dword [byte esp+010h]
+        sub eax, esi
+        mov dword [byte esp+014h], eax
+        jmp short .6
 .3:
-imul edi, ebp	; 6D827
-add edi, dword [byte esp+0Ch]	; 6D82A
-mov eax, dword [byte esp+014h]	; 6D82E
-add eax, dword [byte esp+010h]	; 6D832
-imul eax, ebp	; 6D836
-mov esi, dword [byte esp+0Ch]	; 6D839
-add esi, eax	; 6D83D
-mov edx, esi	; 6D83F
-mov eax, edi	; 6D841
-call dword [byte esp+08h]	; 6D843
-test eax, eax	; 6D847
-jl short .7	; 6D849
-xor ebx, ebx	; 6D84B
-jmp short .5	; 6D84D
+        imul edi, ebp
+        add edi, dword [byte esp+0Ch]
+        mov eax, dword [byte esp+014h]
+        add eax, dword [byte esp+010h]
+        imul eax, ebp
+        mov esi, dword [byte esp+0Ch]
+        add esi, eax
+        mov edx, esi
+        mov eax, edi
+        call dword [byte esp+08h]
+        test eax, eax
+        jl short .7
+        xor ebx, ebx
+        jmp short .5
 .4:
-mov cl, byte [esi+ebx]	; 6D84F
-mov ah, byte [edi+ebx]	; 6D852
-xor ah, cl	; 6D855
-mov byte [edi+ebx], ah	; 6D857
-mov dl, byte [esi+ebx]	; 6D85A
-xor dl, ah	; 6D85D
-mov byte [esi+ebx], dl	; 6D85F
-xor byte [edi+ebx], dl	; 6D862
-inc ebx	; 6D865
+        mov cl, byte [esi+ebx]
+        mov ah, byte [edi+ebx]
+        xor ah, cl
+        mov byte [edi+ebx], ah
+        mov dl, byte [esi+ebx]
+        xor dl, ah
+        mov byte [esi+ebx], dl
+        xor byte [edi+ebx], dl
+        inc ebx
 .5:
-cmp ebx, ebp	; 6D866
-jl short ShellSortBytes.4	; 6D868
-mov eax, dword [byte esp+010h]	; 6D86A
-sub dword [byte esp+014h], eax	; 6D86E
+        cmp ebx, ebp
+        jl short ShellSortBytes.4
+        mov eax, dword [byte esp+010h]
+        sub dword [byte esp+014h], eax
 .6:
-mov edi, dword [byte esp+014h]	; 6D872
-test edi, edi	; 6D876
-jge short ShellSortBytes.3	; 6D878
+        mov edi, dword [byte esp+014h]
+        test edi, edi
+        jge short ShellSortBytes.3
 .7:
-inc dword [byte esp+04h]	; 6D87A
+        inc dword [byte esp+04h]
 .8:
-mov eax, dword [byte esp+04h]	; 6D87E
-cmp eax, dword [esp]	; 6D882
-jl short ShellSortBytes.2	; 6D885
-sar dword [byte esp+010h], 1	; 6D887
+        mov eax, dword [byte esp+04h]
+        cmp eax, dword [esp]
+        jl short ShellSortBytes.2
+        sar dword [byte esp+010h], 1
 .9:
-mov edx, dword [byte esp+010h]	; 6D88B
-test edx, edx	; 6D88F
-jg short ShellSortBytes.1	; 6D891
-add esp, byte 18h	; 6D893
-pop ebp	; 6D896
-pop edi	; 6D897
-pop esi	; 6D898
-ret	; 6D899
+        mov edx, dword [byte esp+010h]
+        test edx, edx
+        jg short ShellSortBytes.1
+        add esp, byte 18h
+        pop ebp
+        pop edi
+        pop esi
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadRosterList_fa                                               6D89A  95 PC
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ShellSortBytes.c (LoadRosterList_fa)
 %ifdef CBUILD
 %include "c/front/create/ShellSortBytes.LoadRosterList_fa.inc"
 %else
 LoadRosterList_fa:
-mov edx, eax	; 6D89A
-shl edx, 2	; 6D89C
-sub edx, eax	; 6D89F
-shl edx, 2	; 6D8A1
-add edx, eax	; 6D8A4
-mov ebx, dword [keydb]	; 6D8A6
-cmp byte [ebx+edx*4], 0FFh	; 6D8AC
-jne short .1	; 6D8B0
-inc dword [facount]	; 6D8B2
+        mov edx, eax
+        shl edx, 2
+        sub edx, eax
+        shl edx, 2
+        add edx, eax
+        mov ebx, dword [keydb]
+        cmp byte [ebx+edx*4], 0FFh
+        jne short .1
+        inc dword [facount]
 .1:
-inc eax	; 6D8B8
+        inc eax
 LoadRosterList_faloop:
-cmp eax, ecx	; 6D8B9
-jl short LoadRosterList_fa	; 6D8BB
-push byte 0	; 6D8BD
-mov edx, dword [facount]	; 6D8BF
-mov eax, edx	; 6D8C5
-shl eax, 3	; 6D8C7
-sub eax, edx	; 6D8CA
-shl eax, 2	; 6D8CC
-sub eax, edx	; 6D8CF
-push eax	; 6D8D1
-push str_Uar	; 6D8D2
-call AllocMemBlock	; 6D8D7
-add esp, byte 0Ch	; 6D8DC
-mov dword [falist], eax	; 6D8DF
-push byte 0	; 6D8E4
-mov edx, dword [facount]	; 6D8E6
-push edx	; 6D8EC
-push str_Uarm	; 6D8ED
-call AllocMemBlock	; 6D8F2
-add esp, byte 0Ch	; 6D8F7
-mov dword [falistsel], eax	; 6D8FA
-call BuildFreeAgentList	; 6D8FF
-mov edx, dword [facount]	; 6D904
-mov eax, dword [falist]	; 6D90A
-mov ecx, ComparePlayerEntry	; 6D90F
-mov ebx, 1Bh	; 6D914
-call ShellSortBytes	; 6D919
-xor eax, eax	; 6D91E
-jmp short .4	; 6D920
+        cmp eax, ecx
+        jl short LoadRosterList_fa
+        push byte 0
+        mov edx, dword [facount]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        push eax
+        push str_Uar
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [falist], eax
+        push byte 0
+        mov edx, dword [facount]
+        push edx
+        push str_Uarm
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [falistsel], eax
+        call BuildFreeAgentList
+        mov edx, dword [facount]
+        mov eax, dword [falist]
+        mov ecx, ComparePlayerEntry
+        mov ebx, 1Bh
+        call ShellSortBytes
+        xor eax, eax
+        jmp short .4
 .3:
-mov edx, dword [falistsel]	; 6D922
-mov byte [edx+eax], 0	; 6D928
-inc eax	; 6D92C
+        mov edx, dword [falistsel]
+        mov byte [edx+eax], 0
+        inc eax
 .4:
-mov ecx, dword [facount]	; 6D92D
-cmp eax, ecx	; 6D933
-jl short LoadRosterList_faloop.3	; 6D935
-xor edi, edi	; 6D937
-mov dword [falisttop], edi	; 6D939
-cmp ecx, byte 1Ch	; 6D93F
-jg short .5	; 6D942
-mov dword [dword_D0C20], edi	; 6D944
-jmp short .6	; 6D94A
+        mov ecx, dword [facount]
+        cmp eax, ecx
+        jl short LoadRosterList_faloop.3
+        xor edi, edi
+        mov dword [falisttop], edi
+        cmp ecx, byte 1Ch
+        jg short .5
+        mov dword [dword_D0C20], edi
+        jmp short .6
 .5:
-mov dword [dword_D0C20], 0FFFFFFFFh	; 6D94C
-mov ebx, ecx	; 6D956
-mov edx, 1Ch	; 6D958
-mov eax, fascrollbar	; 6D95D
-call InitScrollBar	; 6D962
+        mov dword [dword_D0C20], 0FFFFFFFFh
+        mov ebx, ecx
+        mov edx, 1Ch
+        mov eax, fascrollbar
+        call InitScrollBar
 .6:
-test esi, esi	; 6D967
-jne short .7	; 6D969
-mov dword [menu_r1_tofa], esi	; 6D96B
-jmp short .8	; 6D971
+        test esi, esi
+        jne short .7
+        mov dword [menu_r1_tofa], esi
+        jmp short .8
 .7:
-xor ebx, ebx	; 6D973
-mov dword [menu_r2_tofa], ebx	; 6D975
+        xor ebx, ebx
+        mov dword [menu_r2_tofa], ebx
 .8:
-xor esi, esi	; 6D97B
-mov dword [menu_r1_toroster2], esi	; 6D97D
-mov dword [menu_r2_toroster1], esi	; 6D983
-jmp near RunEditRosters_ret5	; 6D989
+        xor esi, esi
+        mov dword [menu_r1_toroster2], esi
+        mov dword [menu_r2_toroster1], esi
+        jmp near RunEditRosters_ret5
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadRosterList_team                                             6D98E  95 PC
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ShellSortBytes.c (LoadRosterList_team)
 %ifdef CBUILD
 %include "c/front/create/ShellSortBytes.LoadRosterList_team.inc"
 %else
 LoadRosterList_team:
-xor eax, eax	; 6D98E
-mov al, byte [dword esi+rosterteam]	; 6D990
-call CarTeamRecPtr	; 6D996
-mov edx, eax	; 6D99B
-mov eax, esi	; 6D99D
-shl eax, 2	; 6D99F
-mov dword [dword eax+rosterteamptr], edx	; 6D9A2
-mov ebx, rosterteamrec	; 6D9A8
-add ebx, eax	; 6D9AD
-mov edx, esi	; 6D9AF
-mov eax, edx	; 6D9B1
-shl eax, 2	; 6D9B3
-sub eax, edx	; 6D9B6
-shl eax, 2	; 6D9B8
-mov edx, eax	; 6D9BB
-shl eax, 6	; 6D9BD
-sub eax, edx	; 6D9C0
-mov edi, rosterlist	; 6D9C2
-add edi, eax	; 6D9C7
-xor eax, eax	; 6D9C9
-mov al, byte [dword esi+rosterteam]	; 6D9CB
-mov edx, edi	; 6D9D1
-call BuildTeamRosterList	; 6D9D3
-mov ecx, ComparePlayerEntry	; 6D9D8
-mov ebx, 1Bh	; 6D9DD
-mov edx, 1Ch	; 6D9E2
-mov eax, edi	; 6D9E7
-call ShellSortBytes	; 6D9E9
-xor eax, eax	; 6D9EE
-jmp short .11	; 6D9F0
+        xor eax, eax
+        mov al, byte [dword esi+rosterteam]
+        call CarTeamRecPtr
+        mov edx, eax
+        mov eax, esi
+        shl eax, 2
+        mov dword [dword eax+rosterteamptr], edx
+        mov ebx, rosterteamrec
+        add ebx, eax
+        mov edx, esi
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 2
+        mov edx, eax
+        shl eax, 6
+        sub eax, edx
+        mov edi, rosterlist
+        add edi, eax
+        xor eax, eax
+        mov al, byte [dword esi+rosterteam]
+        mov edx, edi
+        call BuildTeamRosterList
+        mov ecx, ComparePlayerEntry
+        mov ebx, 1Bh
+        mov edx, 1Ch
+        mov eax, edi
+        call ShellSortBytes
+        xor eax, eax
+        jmp short .11
 .10:
-mov edx, esi	; 6D9F2
-shl edx, 3	; 6D9F4
-sub edx, esi	; 6D9F7
-xor bl, bl	; 6D9F9
-mov byte [dword eax+edx*4+rostersel], bl	; 6D9FB
-inc eax	; 6DA02
+        mov edx, esi
+        shl edx, 3
+        sub edx, esi
+        xor bl, bl
+        mov byte [dword eax+edx*4+rostersel], bl
+        inc eax
 .11:
-cmp eax, byte 1Ch	; 6DA03
-jl short LoadRosterList_team.10	; 6DA06
-test esi, esi	; 6DA08
-jne short .14	; 6DA0A
-mov dword [menu_r1_tofa], esi	; 6DA0C
-mov dword [menu_r1_toroster2], esi	; 6DA12
-cmp byte [rosterisfa+1], 1	; 6DA18
-jne short .12	; 6DA1F
-mov eax, dword [falistsel]	; 6DA21
-jmp short .13	; 6DA26
+        cmp eax, byte 1Ch
+        jl short LoadRosterList_team.10
+        test esi, esi
+        jne short .14
+        mov dword [menu_r1_tofa], esi
+        mov dword [menu_r1_toroster2], esi
+        cmp byte [rosterisfa+1], 1
+        jne short .12
+        mov eax, dword [falistsel]
+        jmp short .13
 .12:
-mov eax, rostersel+1Ch	; 6DA28
+        mov eax, rostersel+1Ch
 .13:
-call CountSelected	; 6DA2D
-test eax, eax	; 6DA32
-je near RunEditRosters_ret5	; 6DA34
-mov dword [menu_r2_toroster1], MoveToOtherRoster	; 6DA3A
-jmp near RunEditRosters_ret5	; 6DA44
+        call CountSelected
+        test eax, eax
+        je near RunEditRosters_ret5
+        mov dword [menu_r2_toroster1], MoveToOtherRoster
+        jmp near RunEditRosters_ret5
 .14:
-xor ebx, ebx	; 6DA49
-mov dword [menu_r2_tofa], ebx	; 6DA4B
-mov dword [menu_r2_toroster1], ebx	; 6DA51
-cmp byte [rosterisfa], 1	; 6DA57
-jne short .15	; 6DA5E
-mov eax, dword [falistsel]	; 6DA60
-jmp short .16	; 6DA65
+        xor ebx, ebx
+        mov dword [menu_r2_tofa], ebx
+        mov dword [menu_r2_toroster1], ebx
+        cmp byte [rosterisfa], 1
+        jne short .15
+        mov eax, dword [falistsel]
+        jmp short .16
 .15:
-mov eax, rostersel	; 6DA67
+        mov eax, rostersel
 .16:
-call CountSelected	; 6DA6C
-test eax, eax	; 6DA71
-je near RunEditRosters_ret5	; 6DA73
-mov dword [menu_r1_toroster2], MoveToOtherRoster	; 6DA79
-jmp near RunEditRosters_ret5	; 6DA83
+        call CountSelected
+        test eax, eax
+        je near RunEditRosters_ret5
+        mov dword [menu_r1_toroster2], MoveToOtherRoster
+        jmp near RunEditRosters_ret5
 %endif ; C
+;-----------------------------------------------------------------------------
+; CountSelected                                                   6DA88  95 PC
+; Counts the non-zero selection flags of a panel (falistsel uses facount
+; entries, a roster panel 1Ch)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CountSelected.c
 %ifdef CBUILD
 %include "c/front/create/CountSelected.inc"
 %else
 CountSelected:
-push dword 10h	; 6DA88
-call __CHK	; 6DA8D
-push ebx	; 6DA92
-push ecx	; 6DA93
-push edx	; 6DA94
-xor ecx, ecx	; 6DA95
-mov edx, eax	; 6DA97
-cmp eax, dword [falistsel]	; 6DA99
-jne short .1	; 6DA9F
-mov eax, dword [facount]	; 6DAA1
-jmp short .2	; 6DAA6
+        push dword 10h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        xor ecx, ecx
+        mov edx, eax
+        cmp eax, dword [falistsel]
+        jne short .1
+        mov eax, dword [facount]
+        jmp short .2
 .1:
-mov eax, 1Ch	; 6DAA8
+        mov eax, 1Ch
 .2:
-test eax, eax	; 6DAAD
-jle short .3	; 6DAAF
-mov ebx, edx	; 6DAB1
-dec eax	; 6DAB3
-inc edx	; 6DAB4
-cmp byte [ebx], 0	; 6DAB5
-je short CountSelected.2	; 6DAB8
-inc ecx	; 6DABA
-jmp short CountSelected.2	; 6DABB
+        test eax, eax
+        jle short .3
+        mov ebx, edx
+        dec eax
+        inc edx
+        cmp byte [ebx], 0
+        je short CountSelected.2
+        inc ecx
+        jmp short CountSelected.2
 .3:
-mov eax, ecx	; 6DABD
-pop edx	; 6DABF
-pop ecx	; 6DAC0
-pop ebx	; 6DAC1
-ret	; 6DAC2
+        mov eax, ecx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; RosterPanelClick                             6DAC3  95 PC, medium confidence
+; Mouse click (x, y): picks panel 0 (x 23h-113h) or 1 (x 15Eh-24Eh) and the
+; row (y from 35h), toggles that player's selection, then enables 'Move to
+; Free Agent List' (MoveToFreeAgents) / 'Move to Roster N'
+; (MoveToOtherRoster) by the selection count
+;-----------------------------------------------------------------------------
 RosterPanelClick:
-push dword 30h	; 6DAC3
-call __CHK	; 6DAC8
-push ebx	; 6DACD
-push ecx	; 6DACE
-push esi	; 6DACF
-push edi	; 6DAD0
-push ebp	; 6DAD1
-mov ebp, esp	; 6DAD2
-sub esp, byte 4	; 6DAD4
-mov esi, 0FFFFFFFFh	; 6DAD7
-cmp eax, byte 23h	; 6DADC
-jl short .1	; 6DADF
-cmp eax, 113h	; 6DAE1
-jg short .1	; 6DAE6
-xor esi, esi	; 6DAE8
-jmp short .2	; 6DAEA
+        push dword 30h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, byte 4
+        mov esi, 0FFFFFFFFh
+        cmp eax, byte 23h
+        jl short .1
+        cmp eax, 113h
+        jg short .1
+        xor esi, esi
+        jmp short .2
 .1:
-cmp eax, 15Eh	; 6DAEC
-jl short .2	; 6DAF1
-cmp eax, 24Eh	; 6DAF3
-jg short .2	; 6DAF8
-mov esi, 1	; 6DAFA
+        cmp eax, 15Eh
+        jl short .2
+        cmp eax, 24Eh
+        jg short .2
+        mov esi, 1
 .2:
-test esi, esi	; 6DAFF
-jl near .16	; 6DB01
-cmp edx, byte 35h	; 6DB07
-jl near .8	; 6DB0A
-xor ebx, ebx	; 6DB10
-mov bl, byte [byte_D42C3]	; 6DB12
-mov eax, ebx	; 6DB18
-shl eax, 3	; 6DB1A
-sub eax, ebx	; 6DB1D
-shl eax, 2	; 6DB1F
-add eax, byte 35h	; 6DB22
-cmp edx, eax	; 6DB25
-jge near .8	; 6DB27
-sub edx, byte 35h	; 6DB2D
-mov eax, edx	; 6DB30
-sar edx, 1Fh	; 6DB32
-idiv ebx	; 6DB35
-mov edi, eax	; 6DB37
-mov ecx, eax	; 6DB39
-imul ecx, ebx	; 6DB3B
-add ecx, byte 35h	; 6DB3E
-cmp byte [dword esi+rosterisfa], 1	; 6DB41
-jne short .5	; 6DB48
-mov eax, dword [falisttop]	; 6DB4A
-add eax, edi	; 6DB4F
-cmp eax, dword [facount]	; 6DB51
-jge near .8	; 6DB57
-push dword 80h	; 6DB5D
-push ebx	; 6DB62
-push dword 0F0h	; 6DB63
-push ecx	; 6DB68
-test esi, esi	; 6DB69
-je short .3	; 6DB6B
-mov eax, 15Eh	; 6DB6D
-jmp short .4	; 6DB72
+        test esi, esi
+        jl near .16
+        cmp edx, byte 35h
+        jl near .8
+        xor ebx, ebx
+        mov bl, byte [byte_D42C3]
+        mov eax, ebx
+        shl eax, 3
+        sub eax, ebx
+        shl eax, 2
+        add eax, byte 35h
+        cmp edx, eax
+        jge near .8
+        sub edx, byte 35h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov edi, eax
+        mov ecx, eax
+        imul ecx, ebx
+        add ecx, byte 35h
+        cmp byte [dword esi+rosterisfa], 1
+        jne short .5
+        mov eax, dword [falisttop]
+        add eax, edi
+        cmp eax, dword [facount]
+        jge near .8
+        push dword 80h
+        push ebx
+        push dword 0F0h
+        push ecx
+        test esi, esi
+        je short .3
+        mov eax, 15Eh
+        jmp short .4
 .3:
-mov eax, 23h	; 6DB74
+        mov eax, 23h
 .4:
-push eax	; 6DB79
-call XorBar	; 6DB7A
-add esp, byte 14h	; 6DB7F
-add edi, dword [falisttop]	; 6DB82
-mov eax, dword [falistsel]	; 6DB88
-mov dl, byte [edi+eax]	; 6DB8D
-not dl	; 6DB90
-mov byte [edi+eax], dl	; 6DB92
-jmp short .8	; 6DB95
+        push eax
+        call XorBar
+        add esp, byte 14h
+        add edi, dword [falisttop]
+        mov eax, dword [falistsel]
+        mov dl, byte [edi+eax]
+        not dl
+        mov byte [edi+eax], dl
+        jmp short .8
 .5:
-mov eax, esi	; 6DB97
-shl eax, 2	; 6DB99
-sub eax, esi	; 6DB9C
-shl eax, 2	; 6DB9E
-mov edx, eax	; 6DBA1
-shl eax, 6	; 6DBA3
-sub eax, edx	; 6DBA6
-mov dword [byte ebp-04h], eax	; 6DBA8
-mov edx, edi	; 6DBAB
-mov eax, edx	; 6DBAD
-shl eax, 3	; 6DBAF
-sub eax, edx	; 6DBB2
-shl eax, 2	; 6DBB4
-sub eax, edx	; 6DBB7
-add eax, dword [byte ebp-04h]	; 6DBB9
-cmp byte [dword eax+rosterlist], 0	; 6DBBC
-je short .8	; 6DBC3
-push dword 80h	; 6DBC5
-push ebx	; 6DBCA
-push dword 0F0h	; 6DBCB
-push ecx	; 6DBD0
-test esi, esi	; 6DBD1
-je short .6	; 6DBD3
-mov eax, 15Eh	; 6DBD5
-jmp short .7	; 6DBDA
+        mov eax, esi
+        shl eax, 2
+        sub eax, esi
+        shl eax, 2
+        mov edx, eax
+        shl eax, 6
+        sub eax, edx
+        mov dword [byte ebp-04h], eax
+        mov edx, edi
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        add eax, dword [byte ebp-04h]
+        cmp byte [dword eax+rosterlist], 0
+        je short .8
+        push dword 80h
+        push ebx
+        push dword 0F0h
+        push ecx
+        test esi, esi
+        je short .6
+        mov eax, 15Eh
+        jmp short .7
 .6:
-mov eax, 23h	; 6DBDC
+        mov eax, 23h
 .7:
-push eax	; 6DBE1
-call XorBar	; 6DBE2
-add esp, byte 14h	; 6DBE7
-mov eax, esi	; 6DBEA
-shl eax, 3	; 6DBEC
-sub eax, esi	; 6DBEF
-shl eax, 2	; 6DBF1
-add edi, eax	; 6DBF4
-mov al, byte [dword edi+rostersel]	; 6DBF6
-not al	; 6DBFC
-mov byte [dword edi+rostersel], al	; 6DBFE
+        push eax
+        call XorBar
+        add esp, byte 14h
+        mov eax, esi
+        shl eax, 3
+        sub eax, esi
+        shl eax, 2
+        add edi, eax
+        mov al, byte [dword edi+rostersel]
+        not al
+        mov byte [dword edi+rostersel], al
 .8:
-cmp byte [dword esi+rosterisfa], 1	; 6DC04
-jne short .9	; 6DC0B
-mov eax, dword [falistsel]	; 6DC0D
-jmp short .10	; 6DC12
+        cmp byte [dword esi+rosterisfa], 1
+        jne short .9
+        mov eax, dword [falistsel]
+        jmp short .10
 .9:
-mov eax, esi	; 6DC14
-shl eax, 3	; 6DC16
-sub eax, esi	; 6DC19
-shl eax, 2	; 6DC1B
-add eax, rostersel	; 6DC1E
+        mov eax, esi
+        shl eax, 3
+        sub eax, esi
+        shl eax, 2
+        add eax, rostersel
 .10:
-call CountSelected	; 6DC23
-test eax, eax	; 6DC28
-jle near .14	; 6DC2A
-test esi, esi	; 6DC30
-jne short .12	; 6DC32
-cmp byte [rosterisfa], 1	; 6DC34
-je short .11	; 6DC3B
-cmp dword [facount], byte 1Eh	; 6DC3D
-jge short .11	; 6DC44
-mov dword [menu_r1_tofa], MoveToFreeAgents	; 6DC46
+        call CountSelected
+        test eax, eax
+        jle near .14
+        test esi, esi
+        jne short .12
+        cmp byte [rosterisfa], 1
+        je short .11
+        cmp dword [facount], byte 1Eh
+        jge short .11
+        mov dword [menu_r1_tofa], MoveToFreeAgents
 .11:
-cmp byte [rosterisfa+1], 1	; 6DC50
-je short .16	; 6DC57
-mov dword [menu_r1_toroster2], MoveToOtherRoster	; 6DC59
-jmp short .16	; 6DC63
+        cmp byte [rosterisfa+1], 1
+        je short .16
+        mov dword [menu_r1_toroster2], MoveToOtherRoster
+        jmp short .16
 .12:
-cmp byte [rosterisfa+1], 1	; 6DC65
-je short .13	; 6DC6C
-cmp dword [facount], byte 1Eh	; 6DC6E
-jge short .13	; 6DC75
-mov dword [menu_r2_tofa], MoveToFreeAgents	; 6DC77
+        cmp byte [rosterisfa+1], 1
+        je short .13
+        cmp dword [facount], byte 1Eh
+        jge short .13
+        mov dword [menu_r2_tofa], MoveToFreeAgents
 .13:
-cmp byte [rosterisfa], 1	; 6DC81
-je short .16	; 6DC88
-mov dword [menu_r2_toroster1], MoveToOtherRoster	; 6DC8A
-jmp short .16	; 6DC94
+        cmp byte [rosterisfa], 1
+        je short .16
+        mov dword [menu_r2_toroster1], MoveToOtherRoster
+        jmp short .16
 .14:
-test esi, esi	; 6DC96
-jne short .15	; 6DC98
-mov dword [menu_r1_tofa], esi	; 6DC9A
-mov dword [menu_r1_toroster2], esi	; 6DCA0
-jmp short .16	; 6DCA6
+        test esi, esi
+        jne short .15
+        mov dword [menu_r1_tofa], esi
+        mov dword [menu_r1_toroster2], esi
+        jmp short .16
 .15:
-xor ecx, ecx	; 6DCA8
-mov dword [menu_r2_tofa], ecx	; 6DCAA
-mov dword [menu_r2_toroster1], ecx	; 6DCB0
+        xor ecx, ecx
+        mov dword [menu_r2_tofa], ecx
+        mov dword [menu_r2_toroster1], ecx
 .16:
-mov esp, ebp	; 6DCB6
+        mov esp, ebp
 RosterPanelClick_ret:
-pop ebp	; 6DCB8
-pop edi	; 6DCB9
-pop esi	; 6DCBA
-pop ecx	; 6DCBB
-pop ebx	; 6DCBC
-ret	; 6DCBD
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
+;-----------------------------------------------------------------------------
+; FixJerseyNumber                                                 6DCBE  95 PC
+; 'The jersey number %2d is already used!' / 'Please enter a new jersey
+; number for' input dialog for a player moved onto a team
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RosterPanelClick.c (FixJerseyNumber)
 %ifdef CBUILD
 %include "c/front/create/RosterPanelClick.FixJerseyNumber.inc"
 %else
 FixJerseyNumber:
-push dword 0ACh	; 6DCBE
-call __CHK	; 6DCC3
-push ebx	; 6DCC8
-push ecx	; 6DCC9
-push esi	; 6DCCA
-push edi	; 6DCCB
-push ebp	; 6DCCC
-sub esp, byte 7Ch	; 6DCCD
-push eax	; 6DCD0
-mov ebp, edx	; 6DCD1
-mov edx, eax	; 6DCD3
-shl eax, 2	; 6DCD5
-sub eax, edx	; 6DCD8
-shl eax, 2	; 6DCDA
-mov ebx, eax	; 6DCDD
-shl ebx, 6	; 6DCDF
-sub ebx, eax	; 6DCE2
-mov edx, ebp	; 6DCE4
-mov eax, edx	; 6DCE6
-shl eax, 3	; 6DCE8
-sub eax, edx	; 6DCEB
-shl eax, 2	; 6DCED
-sub eax, edx	; 6DCF0
-xor edx, edx	; 6DCF2
-mov dl, byte [dword ebx+eax+rosterslot]	; 6DCF4
-mov eax, dword [esp]	; 6DCFB
-mov ebx, dword [nosplit eax*4+rosterteamrec]	; 6DCFE
-mov eax, edx	; 6DD05
-mov eax, dword [byte ebx+eax*4+04Ch]	; 6DD07
-call KeyDbPtr	; 6DD0B
-mov dword [byte esp+07Ch], eax	; 6DD10
+        push dword 0ACh
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 7Ch
+        push eax
+        mov ebp, edx
+        mov edx, eax
+        shl eax, 2
+        sub eax, edx
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov edx, ebp
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        xor edx, edx
+        mov dl, byte [dword ebx+eax+rosterslot]
+        mov eax, dword [esp]
+        mov ebx, dword [nosplit eax*4+rosterteamrec]
+        mov eax, edx
+        mov eax, dword [byte ebx+eax*4+04Ch]
+        call KeyDbPtr
+        mov dword [byte esp+07Ch], eax
 .1:
-xor edi, edi	; 6DD14
-xor edx, edx	; 6DD16
-jmp short .4	; 6DD18
+        xor edi, edi
+        xor edx, edx
+        jmp short .4
 .2:
-cmp edx, ebp	; 6DD1A
-je short .3	; 6DD1C
-mov ebx, dword [esp]	; 6DD1E
-mov eax, ebx	; 6DD21
-shl eax, 2	; 6DD23
-sub eax, ebx	; 6DD26
-shl eax, 2	; 6DD28
-mov esi, eax	; 6DD2B
-shl esi, 6	; 6DD2D
-sub esi, eax	; 6DD30
-mov eax, ebp	; 6DD32
-shl eax, 3	; 6DD34
-sub eax, ebp	; 6DD37
-shl eax, 2	; 6DD39
-sub eax, ebp	; 6DD3C
-lea ecx, [esi+eax]	; 6DD3E
-mov eax, edx	; 6DD41
-shl eax, 3	; 6DD43
-sub eax, edx	; 6DD46
-shl eax, 2	; 6DD48
-sub eax, edx	; 6DD4B
-mov bl, byte [dword ecx+rosterjersey]	; 6DD4D
-cmp bl, byte [dword esi+eax+rosterjersey]	; 6DD53
-jne short .3	; 6DD5A
-mov edi, 0FFFFFFFFh	; 6DD5C
+        cmp edx, ebp
+        je short .3
+        mov ebx, dword [esp]
+        mov eax, ebx
+        shl eax, 2
+        sub eax, ebx
+        shl eax, 2
+        mov esi, eax
+        shl esi, 6
+        sub esi, eax
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        shl eax, 2
+        sub eax, ebp
+        lea ecx, [esi+eax]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        mov bl, byte [dword ecx+rosterjersey]
+        cmp bl, byte [dword esi+eax+rosterjersey]
+        jne short .3
+        mov edi, 0FFFFFFFFh
 .3:
-inc edx	; 6DD61
+        inc edx
 .4:
-cmp edx, byte 1Ch	; 6DD62
-jge short .5	; 6DD65
-test edi, edi	; 6DD67
-je short FixJerseyNumber.2	; 6DD69
+        cmp edx, byte 1Ch
+        jge short .5
+        test edi, edi
+        je short FixJerseyNumber.2
 .5:
-test edi, edi	; 6DD6B
-je near .6	; 6DD6D
-mov edx, dword [byte esp+07Ch]	; 6DD73
-add edx, byte 3	; 6DD77
-lea eax, [byte esp+058h]	; 6DD7A
-call strcpy_	; 6DD7E
-mov edx, str_space	; 6DD83
-lea eax, [byte esp+058h]	; 6DD88
-call strcat_	; 6DD8C
-mov edx, dword [byte esp+07Ch]	; 6DD91
-add edx, byte 13h	; 6DD95
-lea eax, [byte esp+058h]	; 6DD98
-call strcat_	; 6DD9C
-xor eax, eax	; 6DDA1
-mov edx, dword [byte esp+07Ch]	; 6DDA3
-mov al, byte [byte edx+01h]	; 6DDA7
-push eax	; 6DDAA
-push str_TheJerseyNumber2d	; 6DDAB
-lea eax, [byte esp+0Ch]	; 6DDB0
-push eax	; 6DDB4
-call sprintf_	; 6DDB5
-add esp, byte 0Ch	; 6DDBA
-lea eax, [byte esp+04h]	; 6DDBD
-mov dword [msglines], eax	; 6DDC1
-mov dword [msglines+4], str_PleaseEnterANew	; 6DDC6
-lea eax, [byte esp+058h]	; 6DDD0
-mov dword [msglines+8], eax	; 6DDD4
-xor ah, ah	; 6DDD9
-mov byte [byte esp+078h], ah	; 6DDDB
-push byte 0FFFFFFFFh	; 6DDDF
-push byte 63h	; 6DDE1
-push byte 0	; 6DDE3
-push byte 0FFFFFFFFh	; 6DDE5
-push byte 16h	; 6DDE7
-mov ecx, 2	; 6DDE9
-lea ebx, [dword esp+08Ch]	; 6DDEE
-mov edx, 3	; 6DDF5
-mov eax, msglines	; 6DDFA
-call InputDialog	; 6DDFF
-mov edx, dword [byte esp+07Ch]	; 6DE04
-mov byte [byte edx+01h], al	; 6DE08
-mov edx, dword [esp]	; 6DE0B
-mov eax, edx	; 6DE0E
-shl eax, 2	; 6DE10
-sub eax, edx	; 6DE13
-shl eax, 2	; 6DE15
-mov ebx, eax	; 6DE18
-shl ebx, 6	; 6DE1A
-sub ebx, eax	; 6DE1D
-mov eax, ebp	; 6DE1F
-shl eax, 3	; 6DE21
-sub eax, ebp	; 6DE24
-shl eax, 2	; 6DE26
-sub eax, ebp	; 6DE29
-mov edx, dword [byte esp+07Ch]	; 6DE2B
-mov dl, byte [byte edx+01h]	; 6DE2F
-mov byte [dword ebx+eax+rosterjersey], dl	; 6DE32
+        test edi, edi
+        je near .6
+        mov edx, dword [byte esp+07Ch]
+        add edx, byte 3
+        lea eax, [byte esp+058h]
+        call strcpy_
+        mov edx, str_space
+        lea eax, [byte esp+058h]
+        call strcat_
+        mov edx, dword [byte esp+07Ch]
+        add edx, byte 13h
+        lea eax, [byte esp+058h]
+        call strcat_
+        xor eax, eax
+        mov edx, dword [byte esp+07Ch]
+        mov al, byte [byte edx+01h]
+        push eax
+        push str_TheJerseyNumber2d
+        lea eax, [byte esp+0Ch]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea eax, [byte esp+04h]
+        mov dword [msglines], eax
+        mov dword [msglines+4], str_PleaseEnterANew
+        lea eax, [byte esp+058h]
+        mov dword [msglines+8], eax
+        xor ah, ah
+        mov byte [byte esp+078h], ah
+        push byte 0FFFFFFFFh
+        push byte 63h
+        push byte 0
+        push byte 0FFFFFFFFh
+        push byte 16h
+        mov ecx, 2
+        lea ebx, [dword esp+08Ch]
+        mov edx, 3
+        mov eax, msglines
+        call InputDialog
+        mov edx, dword [byte esp+07Ch]
+        mov byte [byte edx+01h], al
+        mov edx, dword [esp]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        shl eax, 2
+        sub eax, ebp
+        mov edx, dword [byte esp+07Ch]
+        mov dl, byte [byte edx+01h]
+        mov byte [dword ebx+eax+rosterjersey], dl
 .6:
-test edi, edi	; 6DE39
-jne near FixJerseyNumber.1	; 6DE3B
-add esp, 80h	; 6DE41
-jmp near RosterPanelClick_ret	; 6DE47
+        test edi, edi
+        jne near FixJerseyNumber.1
+        add esp, 80h
+        jmp near RosterPanelClick_ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CopyRoster1Rec                                  6DE4C  95 PC, low confidence
+; Unreferenced: rostereditmode = 2, copies 2E8h bytes from the roster-1 team
+; record to unk_EAFB8 and redraws
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CopyRoster1Rec.c
 %ifdef CBUILD
 %include "c/front/create/CopyRoster1Rec.inc"
 %else
 CopyRoster1Rec:
-push dword 10h	; 6DE4C
-call __CHK	; 6DE51
-push ecx	; 6DE56
-push esi	; 6DE57
-push edi	; 6DE58
-mov dword [rostereditmode], 2	; 6DE59
-mov esi, dword [rosterteamrec]	; 6DE63
-mov ecx, 0BAh	; 6DE69
-mov edi, unk_EAFB8	; 6DE6E
-rep movsd	; 6DE73
-call DrawEditRosters	; 6DE75
-pop edi	; 6DE7A
-pop esi	; 6DE7B
-pop ecx	; 6DE7C
-ret	; 6DE7D
+        push dword 10h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        mov dword [rostereditmode], 2
+        mov esi, dword [rosterteamrec]
+        mov ecx, 0BAh
+        mov edi, unk_EAFB8
+        rep movsd
+        call DrawEditRosters
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadBothRosterLists                                             6DE7E  95 PC
+; LoadRosterList(0) then falls into LoadRosterList(1); database_dialogs 732F4
+; and EditRosters
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ShellSortBytes.c (LoadBothRosterLists)
 %ifdef CBUILD
 %include "c/front/create/ShellSortBytes.LoadBothRosterLists.inc"
 %else
 LoadBothRosterLists:
-push dword 4	; 6DE7E
-call __CHK	; 6DE83
-xor eax, eax	; 6DE88
-call LoadRosterList	; 6DE8A
-mov eax, 1	; 6DE8F
+        push dword 4
+        call __CHK
+        xor eax, eax
+        call LoadRosterList
+        mov eax, 1
+;-----------------------------------------------------------------------------
+; LoadRosterList                                                  6DE94  95 PC
+; (side): free-agent panel frees and rebuilds falist from KEY.DB
+; (keydb_size/34h entries), team panel builds the sorted 1Ch-player list of
+; rosterteam[side]; resets the selections and the move menu items
+;-----------------------------------------------------------------------------
 LoadRosterList:
-push dword 24h	; 6DE94
-call __CHK	; 6DE99
-push ebx	; 6DE9E
-push ecx	; 6DE9F
-push edx	; 6DEA0
-push esi	; 6DEA1
-push edi	; 6DEA2
-mov esi, eax	; 6DEA3
-cmp byte [dword eax+rosterisfa], 1	; 6DEA5
-jne near LoadRosterList_team	; 6DEAC
-mov edx, dword [falistsel]	; 6DEB2
-test edx, edx	; 6DEB8
-je short .1	; 6DEBA
-push edx	; 6DEBC
-call FreeMemBlock	; 6DEBD
-add esp, byte 4	; 6DEC2
-xor ecx, ecx	; 6DEC5
-mov dword [falistsel], ecx	; 6DEC7
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        mov esi, eax
+        cmp byte [dword eax+rosterisfa], 1
+        jne near LoadRosterList_team
+        mov edx, dword [falistsel]
+        test edx, edx
+        je short .1
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ecx, ecx
+        mov dword [falistsel], ecx
 .1:
-mov edi, dword [falist]	; 6DECD
-test edi, edi	; 6DED3
-je short .2	; 6DED5
-push edi	; 6DED7
-call FreeMemBlock	; 6DED8
-add esp, byte 4	; 6DEDD
-xor eax, eax	; 6DEE0
-mov dword [falist], eax	; 6DEE2
+        mov edi, dword [falist]
+        test edi, edi
+        je short .2
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        mov dword [falist], eax
 .2:
-mov ebx, 34h	; 6DEE7
-xor edx, edx	; 6DEEC
-mov eax, dword [keydb_size]	; 6DEEE
-div ebx	; 6DEF3
-mov ecx, eax	; 6DEF5
-xor edx, edx	; 6DEF7
-mov dword [facount], edx	; 6DEF9
-xor eax, eax	; 6DEFF
-jmp near LoadRosterList_faloop	; 6DF01
+        mov ebx, 34h
+        xor edx, edx
+        mov eax, dword [keydb_size]
+        div ebx
+        mov ecx, eax
+        xor edx, edx
+        mov dword [facount], edx
+        xor eax, eax
+        jmp near LoadRosterList_faloop
 %endif ; C
+;-----------------------------------------------------------------------------
+; EditTeamLines                                                   6DF06  95 PC
+; 'Edit Team Lines ...' menu item: sets HomeTeam/VisTeam to the panel's team,
+; copies its team record into the hmteamrec slot and runs the line editor
+; DbLineEditor, then restores and redraws
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RunEditRosters.c (EditTeamLines)
 %ifdef CBUILD
 %include "c/front/create/RunEditRosters.EditTeamLines.inc"
 %else
 EditTeamLines:
-push dword 30Ch	; 6DF06
-call __CHK	; 6DF0B
-push ebx	; 6DF10
-push ecx	; 6DF11
-push edx	; 6DF12
-push esi	; 6DF13
-push edi	; 6DF14
-sub esp, 2F0h	; 6DF15
-cmp dword [eax], byte 3	; 6DF1B
-setne al	; 6DF1E
-and eax, 0FFh	; 6DF21
-mov dword [dword esp+02E8h], eax	; 6DF26
-jne short .1	; 6DF2D
-mov ax, word [HomeTeam]	; 6DF2F
-mov dword [dword esp+02ECh], eax	; 6DF35
-xor eax, eax	; 6DF3C
-mov al, byte [rosterteam]	; 6DF3E
-mov word [HomeTeam], ax	; 6DF43
-jmp short .2	; 6DF49
+        push dword 30Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 2F0h
+        cmp dword [eax], byte 3
+        setne al
+        and eax, 0FFh
+        mov dword [dword esp+02E8h], eax
+        jne short .1
+        mov ax, word [HomeTeam]
+        mov dword [dword esp+02ECh], eax
+        xor eax, eax
+        mov al, byte [rosterteam]
+        mov word [HomeTeam], ax
+        jmp short .2
 .1:
-mov ax, word [VisTeam]	; 6DF4B
-mov dword [dword esp+02ECh], eax	; 6DF51
-xor eax, eax	; 6DF58
-mov al, byte [rosterteam+1]	; 6DF5A
-mov word [VisTeam], ax	; 6DF5F
+        mov ax, word [VisTeam]
+        mov dword [dword esp+02ECh], eax
+        xor eax, eax
+        mov al, byte [rosterteam+1]
+        mov word [VisTeam], ax
 .2:
-mov ebx, dword [falistsel]	; 6DF65
-test ebx, ebx	; 6DF6B
-je short .3	; 6DF6D
-push ebx	; 6DF6F
-call FreeMemBlock	; 6DF70
-add esp, byte 4	; 6DF75
-xor esi, esi	; 6DF78
-mov dword [falistsel], esi	; 6DF7A
+        mov ebx, dword [falistsel]
+        test ebx, ebx
+        je short .3
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
+        xor esi, esi
+        mov dword [falistsel], esi
 .3:
-mov edi, dword [falist]	; 6DF80
-test edi, edi	; 6DF86
-je short .4	; 6DF88
-push edi	; 6DF8A
-call FreeMemBlock	; 6DF8B
-add esp, byte 4	; 6DF90
-xor eax, eax	; 6DF93
-mov dword [falist], eax	; 6DF95
+        mov edi, dword [falist]
+        test edi, edi
+        je short .4
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        mov dword [falist], eax
 .4:
-mov edx, dword [dword esp+02E8h]	; 6DF9A
-mov eax, edx	; 6DFA1
-shl eax, 2	; 6DFA3
-sub eax, edx	; 6DFA6
-shl eax, 3	; 6DFA8
-mov edx, eax	; 6DFAB
-shl eax, 5	; 6DFAD
-sub eax, edx	; 6DFB0
-mov ecx, 0BAh	; 6DFB2
-mov edi, esp	; 6DFB7
-lea esi, [dword eax+hmteamrec]	; 6DFB9
-rep movsd	; 6DFBF
-mov edx, dword [dword esp+02E8h]	; 6DFC1
-mov edx, dword [nosplit edx*4+rosterteamrec]	; 6DFC8
-mov ecx, 0BAh	; 6DFCF
-lea edi, [dword eax+hmteamrec]	; 6DFD4
-mov esi, edx	; 6DFDA
-rep movsd	; 6DFDC
-add edx, 0BCh	; 6DFDE
-xor eax, eax	; 6DFE4
-mov al, byte [dword esp+02E8h]	; 6DFE6
-mov ecx, 3	; 6DFED
-mov ebx, dblinesmenubar	; 6DFF2
-call DbLineEditor	; 6DFF7
-call sub_B4BA8	; 6DFFC
-push byte 0	; 6E001
-call ClearScreen	; 6E003
-add esp, byte 4	; 6E008
-mov ecx, 0BAh	; 6E00B
-mov edi, hmteamrec	; 6E010
-mov esi, esp	; 6E015
-rep movsd	; 6E017
-cmp dword [dword esp+02E8h], byte 0	; 6E019
-jne short .5	; 6E021
-mov eax, dword [dword esp+02ECh]	; 6E023
-mov word [HomeTeam], ax	; 6E02A
-jmp short .6	; 6E030
+        mov edx, dword [dword esp+02E8h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        mov ecx, 0BAh
+        mov edi, esp
+        lea esi, [dword eax+hmteamrec]
+        rep movsd
+        mov edx, dword [dword esp+02E8h]
+        mov edx, dword [nosplit edx*4+rosterteamrec]
+        mov ecx, 0BAh
+        lea edi, [dword eax+hmteamrec]
+        mov esi, edx
+        rep movsd
+        add edx, 0BCh
+        xor eax, eax
+        mov al, byte [dword esp+02E8h]
+        mov ecx, 3
+        mov ebx, dblinesmenubar
+        call DbLineEditor
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        mov ecx, 0BAh
+        mov edi, hmteamrec
+        mov esi, esp
+        rep movsd
+        cmp dword [dword esp+02E8h], byte 0
+        jne short .5
+        mov eax, dword [dword esp+02ECh]
+        mov word [HomeTeam], ax
+        jmp short .6
 .5:
-mov eax, dword [dword esp+02ECh]	; 6E032
-mov word [VisTeam], ax	; 6E039
+        mov eax, dword [dword esp+02ECh]
+        mov word [VisTeam], ax
 .6:
-mov ebx, dword [dword esp+02E8h]	; 6E03F
-test ebx, ebx	; 6E046
-sete al	; 6E048
-and eax, 0FFh	; 6E04B
-cmp byte [dword eax+rosterteam], 0FFh	; 6E050
-jne short .7	; 6E057
-test ebx, ebx	; 6E059
-sete al	; 6E05B
-and eax, 0FFh	; 6E05E
-call LoadRosterList	; 6E063
+        mov ebx, dword [dword esp+02E8h]
+        test ebx, ebx
+        sete al
+        and eax, 0FFh
+        cmp byte [dword eax+rosterteam], 0FFh
+        jne short .7
+        test ebx, ebx
+        sete al
+        and eax, 0FFh
+        call LoadRosterList
 .7:
-call DrawEditRosters	; 6E068
-mov ebx, 10h	; 6E06D
-mov edx, savepal	; 6E072
-xor eax, eax	; 6E077
-call FadePalStep	; 6E079
-add esp, 2F0h	; 6E07E
-jmp near RunEditRosters_ret5	; 6E084
+        call DrawEditRosters
+        mov ebx, 10h
+        mov edx, savepal
+        xor eax, eax
+        call FadePalStep
+        add esp, 2F0h
+        jmp near RunEditRosters_ret5
 %endif ; C
+;-----------------------------------------------------------------------------
+; EditRosters                                  6E089  95 PC, medium confidence
+; Database_save 6CE03: Edit Rosters screen loop (menubuff menus, panel
+; clicks, keys); on exit 'The database has not been saved. Are you sure you
+; want to exit?'
+;-----------------------------------------------------------------------------
 EditRosters:
-push dword 0A0h	; 6E089
-call __CHK	; 6E08E
-push esi	; 6E093
-push edi	; 6E094
-push ebp	; 6E095
-sub esp, byte 7Ch	; 6E096
-mov esi, eax	; 6E099
-mov dword [byte esp+06Ch], ebx	; 6E09B
-mov dword [byte esp+068h], ecx	; 6E09F
-xor ebx, ebx	; 6E0A3
-mov dword [byte esp+074h], ebx	; 6E0A5
-mov dword [dbdirty], ebx	; 6E0A9
-call LoadBothRosterLists	; 6E0AF
-call DrawEditRosters	; 6E0B4
-mov dword [byte esp+018h], esi	; 6E0B9
-mov dword [byte esp+03Ch], edx	; 6E0BD
-xor esi, esi	; 6E0C1
-mov dword [esp], ebx	; 6E0C3
-mov dword [byte esp+04h], ebx	; 6E0C6
+        push dword 0A0h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 7Ch
+        mov esi, eax
+        mov dword [byte esp+06Ch], ebx
+        mov dword [byte esp+068h], ecx
+        xor ebx, ebx
+        mov dword [byte esp+074h], ebx
+        mov dword [dbdirty], ebx
+        call LoadBothRosterLists
+        call DrawEditRosters
+        mov dword [byte esp+018h], esi
+        mov dword [byte esp+03Ch], edx
+        xor esi, esi
+        mov dword [esp], ebx
+        mov dword [byte esp+04h], ebx
 .1:
-mov eax, esi	; 6E0CA
-shl eax, 2	; 6E0CC
-xor ebp, ebp	; 6E0CF
-mov dword [byte esp+eax+024h], ebp	; 6E0D1
-mov dword [byte esp+eax+030h], ebp	; 6E0D5
-test esi, esi	; 6E0D9
-jle short .2	; 6E0DB
-mov dword [byte esp+eax+018h], ebp	; 6E0DD
-mov dword [byte esp+eax+03Ch], ebp	; 6E0E1
+        mov eax, esi
+        shl eax, 2
+        xor ebp, ebp
+        mov dword [byte esp+eax+024h], ebp
+        mov dword [byte esp+eax+030h], ebp
+        test esi, esi
+        jle short .2
+        mov dword [byte esp+eax+018h], ebp
+        mov dword [byte esp+eax+03Ch], ebp
 .2:
-inc esi	; 6E0E5
-cmp esi, byte 3	; 6E0E6
-jl short EditRosters.1	; 6E0E9
-mov edx, dword [byte esp+018h]	; 6E0EB
-mov edx, dword [edx]	; 6E0EF
-mov eax, dword [byte esp+018h]	; 6E0F1
-mov esi, dword [byte eax+08h]	; 6E0F5
-add edx, esi	; 6E0F8
-mov eax, edx	; 6E0FA
-sar edx, 1Fh	; 6E0FC
-LD sub, eax, edx	; 6E0FF
-sar eax, 1	; 6E101
-mov dword [byte esp+064h], eax	; 6E103
-mov dword [byte esp+05Ch], eax	; 6E107
-mov edx, dword [byte esp+018h]	; 6E10B
-mov edx, dword [byte edx+04h]	; 6E10F
-mov eax, dword [byte esp+018h]	; 6E112
-mov edi, dword [byte eax+0Ch]	; 6E116
-add edx, edi	; 6E119
-mov eax, edx	; 6E11B
-sar edx, 1Fh	; 6E11D
-LD sub, eax, edx	; 6E120
-sar eax, 1	; 6E122
-mov dword [byte esp+060h], eax	; 6E124
-mov dword [byte esp+058h], eax	; 6E128
-push eax	; 6E12C
-mov eax, dword [byte esp+068h]	; 6E12D
-push eax	; 6E131
-mov edx, dword [editptrspr]	; 6E132
-push edx	; 6E138
-call GrabBlock	; 6E139
-add esp, byte 0Ch	; 6E13E
-mov ebx, dword [byte esp+060h]	; 6E141
-push ebx	; 6E145
-mov ecx, dword [byte esp+068h]	; 6E146
-push ecx	; 6E14A
-mov esi, dword [pointerspr]	; 6E14B
-push esi	; 6E151
-call DrawArt	; 6E152
-add esp, byte 0Ch	; 6E157
-mov ebx, 10h	; 6E15A
-mov edx, savepal	; 6E15F
-xor eax, eax	; 6E164
-call FadePalStep	; 6E166
-push dword 1E0h	; 6E16B
-push dword 280h	; 6E170
-push byte 0	; 6E175
-push byte 0	; 6E177
-call SetViewRect	; 6E179
-add esp, byte 10h	; 6E17E
-mov edi, dword [byte esp+060h]	; 6E181
-push edi	; 6E185
-mov ebp, dword [byte esp+068h]	; 6E186
-push ebp	; 6E18A
-call MouseSetPos	; 6E18B
-add esp, byte 8	; 6E190
-call dword [mousepollfn]	; 6E193
-call ClearInputQueue	; 6E199
+        inc esi
+        cmp esi, byte 3
+        jl short EditRosters.1
+        mov edx, dword [byte esp+018h]
+        mov edx, dword [edx]
+        mov eax, dword [byte esp+018h]
+        mov esi, dword [byte eax+08h]
+        add edx, esi
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov dword [byte esp+064h], eax
+        mov dword [byte esp+05Ch], eax
+        mov edx, dword [byte esp+018h]
+        mov edx, dword [byte edx+04h]
+        mov eax, dword [byte esp+018h]
+        mov edi, dword [byte eax+0Ch]
+        add edx, edi
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov dword [byte esp+060h], eax
+        mov dword [byte esp+058h], eax
+        push eax
+        mov eax, dword [byte esp+068h]
+        push eax
+        mov edx, dword [editptrspr]
+        push edx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebx, dword [byte esp+060h]
+        push ebx
+        mov ecx, dword [byte esp+068h]
+        push ecx
+        mov esi, dword [pointerspr]
+        push esi
+        call DrawArt
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        xor eax, eax
+        call FadePalStep
+        push dword 1E0h
+        push dword 280h
+        push byte 0
+        push byte 0
+        call SetViewRect
+        add esp, byte 10h
+        mov edi, dword [byte esp+060h]
+        push edi
+        mov ebp, dword [byte esp+068h]
+        push ebp
+        call MouseSetPos
+        add esp, byte 8
+        call dword [mousepollfn]
+        call ClearInputQueue
 .3:
-cmp byte [musicon], 0	; 6E19E
-je short .4	; 6E1A5
-cmp dword [songdata], byte 0	; 6E1A7
-je short .4	; 6E1AE
-mov eax, dword [musicslot-3]	; 6E1B0
-sar eax, 18h	; 6E1B5
-mov edx, 3	; 6E1B8
-call SndQuery	; 6E1BD
-test eax, eax	; 6E1C2
-je short .4	; 6E1C4
-mov edx, dword [songdata]	; 6E1C6
-push edx	; 6E1CC
-call sub_8D2F0	; 6E1CD
-add esp, byte 4	; 6E1D2
-xor ebx, ebx	; 6E1D5
-mov dword [songdata], ebx	; 6E1D7
+        cmp byte [musicon], 0
+        je short .4
+        cmp dword [songdata], byte 0
+        je short .4
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short .4
+        mov edx, dword [songdata]
+        push edx
+        call sub_8D2F0
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [songdata], ebx
 .4:
-xor ecx, ecx	; 6E1DD
-mov dword [byte esp+078h], ecx	; 6E1DF
+        xor ecx, ecx
+        mov dword [byte esp+078h], ecx
 .5:
-call GetInputEvent	; 6E1E3
-mov esi, eax	; 6E1E8
-test eax, eax	; 6E1EA
-je short .6	; 6E1EC
-lea ebx, [byte esp+058h]	; 6E1EE
-lea edx, [byte esp+05Ch]	; 6E1F2
-call dword [ptrupdatefn]	; 6E1F6
-mov dword [byte esp+078h], eax	; 6E1FC
+        call GetInputEvent
+        mov esi, eax
+        test eax, eax
+        je short .6
+        lea ebx, [byte esp+058h]
+        lea edx, [byte esp+05Ch]
+        call dword [ptrupdatefn]
+        mov dword [byte esp+078h], eax
 .6:
-test esi, esi	; 6E200
-je short .7	; 6E202
-test byte [byte esp+078h], 2	; 6E204
-je short EditRosters.5	; 6E209
+        test esi, esi
+        je short .7
+        test byte [byte esp+078h], 2
+        je short EditRosters.5
 .7:
-cmp dword [dword_D0C20], byte 0	; 6E20B
-je near .13	; 6E212
-cmp byte [rosterisfa], 1	; 6E218
-je short .8	; 6E21F
-cmp byte [rosterisfa+1], 1	; 6E221
-jne near .13	; 6E228
+        cmp dword [dword_D0C20], byte 0
+        je near .13
+        cmp byte [rosterisfa], 1
+        je short .8
+        cmp byte [rosterisfa+1], 1
+        jne near .13
 .8:
-cmp dword [rostereditmode], byte 2	; 6E22E
-je near .13	; 6E235
-mov ebp, dword [byte esp+078h]	; 6E23B
-test ebp, ebp	; 6E23F
-je near .13	; 6E241
-mov eax, dword [byte esp+060h]	; 6E247
-push eax	; 6E24B
-mov edx, dword [byte esp+068h]	; 6E24C
-push edx	; 6E250
-mov ebx, dword [editptrspr]	; 6E251
-push ebx	; 6E257
-call PutBlock	; 6E258
-add esp, byte 0Ch	; 6E25D
-push ebp	; 6E260
-mov ecx, dword [byte esp+05Ch]	; 6E261
-mov ebx, dword [byte esp+060h]	; 6E265
-mov edx, 2	; 6E269
-mov eax, btn_RosterList	; 6E26E
-call TrackButtons	; 6E273
-mov edx, eax	; 6E278
-test eax, eax	; 6E27A
-jne short .9	; 6E27C
-mov esi, dword [falisttop]	; 6E27E
-test esi, esi	; 6E284
-jle short .9	; 6E286
-lea eax, [byte esi-01h]	; 6E288
-mov dword [falisttop], eax	; 6E28B
-jmp short .10	; 6E290
+        cmp dword [rostereditmode], byte 2
+        je near .13
+        mov ebp, dword [byte esp+078h]
+        test ebp, ebp
+        je near .13
+        mov eax, dword [byte esp+060h]
+        push eax
+        mov edx, dword [byte esp+068h]
+        push edx
+        mov ebx, dword [editptrspr]
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        push ebp
+        mov ecx, dword [byte esp+05Ch]
+        mov ebx, dword [byte esp+060h]
+        mov edx, 2
+        mov eax, btn_RosterList
+        call TrackButtons
+        mov edx, eax
+        test eax, eax
+        jne short .9
+        mov esi, dword [falisttop]
+        test esi, esi
+        jle short .9
+        lea eax, [byte esi-01h]
+        mov dword [falisttop], eax
+        jmp short .10
 .9:
-cmp edx, byte 1	; 6E292
-jne short .11	; 6E295
-mov eax, dword [facount]	; 6E297
-sub eax, byte 1Ch	; 6E29C
-mov edi, dword [falisttop]	; 6E29F
-cmp eax, edi	; 6E2A5
-jle short .11	; 6E2A7
-lea ebp, [edi+edx]	; 6E2A9
-mov dword [falisttop], ebp	; 6E2AC
+        cmp edx, byte 1
+        jne short .11
+        mov eax, dword [facount]
+        sub eax, byte 1Ch
+        mov edi, dword [falisttop]
+        cmp eax, edi
+        jle short .11
+        lea ebp, [edi+edx]
+        mov dword [falisttop], ebp
 .10:
-call DrawEditRosters	; 6E2B2
+        call DrawEditRosters
 .11:
-mov edx, dword [byte esp+078h]	; 6E2B7
-push edx	; 6E2BB
-mov ecx, dword [byte esp+05Ch]	; 6E2BC
-mov ebx, dword [byte esp+060h]	; 6E2C0
-mov edx, 1	; 6E2C4
-mov eax, fascrollbar	; 6E2C9
-call TrackScrollBars	; 6E2CE
-test eax, eax	; 6E2D3
-jl short .12	; 6E2D5
-mov eax, dword [falisttop]	; 6E2D7
-mov ebx, dword [fascrollbar_top]	; 6E2DC
-cmp eax, ebx	; 6E2E2
-je short .12	; 6E2E4
-mov dword [falisttop], ebx	; 6E2E6
-call DrawEditRosters	; 6E2EC
+        mov edx, dword [byte esp+078h]
+        push edx
+        mov ecx, dword [byte esp+05Ch]
+        mov ebx, dword [byte esp+060h]
+        mov edx, 1
+        mov eax, fascrollbar
+        call TrackScrollBars
+        test eax, eax
+        jl short .12
+        mov eax, dword [falisttop]
+        mov ebx, dword [fascrollbar_top]
+        cmp eax, ebx
+        je short .12
+        mov dword [falisttop], ebx
+        call DrawEditRosters
 .12:
-mov ecx, dword [byte esp+058h]	; 6E2F1
-push ecx	; 6E2F5
-mov esi, dword [byte esp+060h]	; 6E2F6
-push esi	; 6E2FA
-mov edi, dword [editptrspr]	; 6E2FB
-push edi	; 6E301
-call GrabBlock	; 6E302
-add esp, byte 0Ch	; 6E307
-mov ebp, dword [byte esp+058h]	; 6E30A
-push ebp	; 6E30E
-mov eax, dword [byte esp+060h]	; 6E30F
-push eax	; 6E313
-mov edx, dword [pointerspr]	; 6E314
-push edx	; 6E31A
-call DrawArt	; 6E31B
-add esp, byte 0Ch	; 6E320
-mov eax, dword [byte esp+05Ch]	; 6E323
-mov dword [byte esp+064h], eax	; 6E327
-mov eax, dword [byte esp+058h]	; 6E32B
-mov dword [byte esp+060h], eax	; 6E32F
+        mov ecx, dword [byte esp+058h]
+        push ecx
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebp, dword [byte esp+058h]
+        push ebp
+        mov eax, dword [byte esp+060h]
+        push eax
+        mov edx, dword [pointerspr]
+        push edx
+        call DrawArt
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+05Ch]
+        mov dword [byte esp+064h], eax
+        mov eax, dword [byte esp+058h]
+        mov dword [byte esp+060h], eax
 .13:
-cmp dword [rostereditmode], byte 2	; 6E333
-jne short .14	; 6E33A
-test byte [byte esp+078h], 1	; 6E33C
-je short .14	; 6E341
-mov ebp, dword [byte esp+060h]	; 6E343
-push ebp	; 6E347
-mov eax, dword [byte esp+068h]	; 6E348
-push eax	; 6E34C
-mov edx, dword [editptrspr]	; 6E34D
-push edx	; 6E353
-call PutBlock	; 6E354
-add esp, byte 0Ch	; 6E359
-mov ebx, dword [byte esp+078h]	; 6E35C
-push ebx	; 6E360
-mov ecx, dword [byte esp+05Ch]	; 6E361
-mov ebx, dword [byte esp+060h]	; 6E365
-mov edx, 2	; 6E369
-mov eax, btn_EditRosters	; 6E36E
-call TrackButtons	; 6E373
-mov ecx, dword [byte esp+058h]	; 6E378
-push ecx	; 6E37C
-mov esi, dword [byte esp+060h]	; 6E37D
-push esi	; 6E381
-mov edi, dword [editptrspr]	; 6E382
-push edi	; 6E388
-call GrabBlock	; 6E389
-add esp, byte 0Ch	; 6E38E
-mov ebp, dword [byte esp+058h]	; 6E391
-push ebp	; 6E395
-mov eax, dword [byte esp+060h]	; 6E396
-push eax	; 6E39A
-mov edx, dword [pointerspr]	; 6E39B
-push edx	; 6E3A1
-jmp near .47	; 6E3A2
+        cmp dword [rostereditmode], byte 2
+        jne short .14
+        test byte [byte esp+078h], 1
+        je short .14
+        mov ebp, dword [byte esp+060h]
+        push ebp
+        mov eax, dword [byte esp+068h]
+        push eax
+        mov edx, dword [editptrspr]
+        push edx
+        call PutBlock
+        add esp, byte 0Ch
+        mov ebx, dword [byte esp+078h]
+        push ebx
+        mov ecx, dword [byte esp+05Ch]
+        mov ebx, dword [byte esp+060h]
+        mov edx, 2
+        mov eax, btn_EditRosters
+        call TrackButtons
+        mov ecx, dword [byte esp+058h]
+        push ecx
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebp, dword [byte esp+058h]
+        push ebp
+        mov eax, dword [byte esp+060h]
+        push eax
+        mov edx, dword [pointerspr]
+        push edx
+        jmp near .47
 .14:
-test byte [byte esp+078h], 2	; 6E3A7
-jne short .16	; 6E3AC
-mov eax, dword [byte esp+05Ch]	; 6E3AE
-cmp eax, dword [byte esp+064h]	; 6E3B2
-jne short .15	; 6E3B6
-mov eax, dword [byte esp+058h]	; 6E3B8
-cmp eax, dword [byte esp+060h]	; 6E3BC
-je near .48	; 6E3C0
+        test byte [byte esp+078h], 2
+        jne short .16
+        mov eax, dword [byte esp+05Ch]
+        cmp eax, dword [byte esp+064h]
+        jne short .15
+        mov eax, dword [byte esp+058h]
+        cmp eax, dword [byte esp+060h]
+        je near .48
 .15:
-mov esi, dword [byte esp+060h]	; 6E3C6
-push esi	; 6E3CA
-mov edi, dword [byte esp+068h]	; 6E3CB
-push edi	; 6E3CF
-mov ebp, dword [editptrspr]	; 6E3D0
-push ebp	; 6E3D6
-call PutBlock	; 6E3D7
-add esp, byte 0Ch	; 6E3DC
-mov eax, dword [byte esp+058h]	; 6E3DF
-push eax	; 6E3E3
-mov edx, dword [byte esp+060h]	; 6E3E4
-push edx	; 6E3E8
-mov ebx, dword [editptrspr]	; 6E3E9
-push ebx	; 6E3EF
-call GrabBlock	; 6E3F0
-add esp, byte 0Ch	; 6E3F5
-mov ecx, dword [byte esp+058h]	; 6E3F8
-push ecx	; 6E3FC
-mov esi, dword [byte esp+060h]	; 6E3FD
-push esi	; 6E401
-mov edi, dword [pointerspr]	; 6E402
-push edi	; 6E408
-jmp near .47	; 6E409
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        mov ebp, dword [editptrspr]
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+058h]
+        push eax
+        mov edx, dword [byte esp+060h]
+        push edx
+        mov ebx, dword [editptrspr]
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ecx, dword [byte esp+058h]
+        push ecx
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [pointerspr]
+        push edi
+        jmp near .47
 .16:
-cmp dword [rostereditmode], byte 2	; 6E40E
-jne short .18	; 6E415
-mov ecx, dword [byte esp+060h]	; 6E417
-push ecx	; 6E41B
-mov esi, dword [byte esp+068h]	; 6E41C
-push esi	; 6E420
-mov edi, dword [editptrspr]	; 6E421
-push edi	; 6E427
-call PutBlock	; 6E428
-add esp, byte 0Ch	; 6E42D
+        cmp dword [rostereditmode], byte 2
+        jne short .18
+        mov ecx, dword [byte esp+060h]
+        push ecx
+        mov esi, dword [byte esp+068h]
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
 .17:
-mov ebp, dword [byte esp+060h]	; 6E430
-push ebp	; 6E434
-mov eax, dword [byte esp+068h]	; 6E435
-push eax	; 6E439
-mov edx, dword [editptrspr]	; 6E43A
-push edx	; 6E440
-jmp near .46	; 6E441
+        mov ebp, dword [byte esp+060h]
+        push ebp
+        mov eax, dword [byte esp+068h]
+        push eax
+        mov edx, dword [editptrspr]
+        push edx
+        jmp near .46
 .18:
-lea eax, [byte esp+050h]	; 6E446
-push eax	; 6E44A
-lea eax, [byte esp+058h]	; 6E44B
-push eax	; 6E44F
-lea eax, [byte esp+08h]	; 6E450
-push eax	; 6E454
-lea eax, [byte esp+048h]	; 6E455
-push eax	; 6E459
-mov ecx, dword [dword esp+084h]	; 6E45A
-lea ebx, [byte esp+028h]	; 6E461
-mov edx, dword [byte esp+068h]	; 6E465
-mov eax, dword [byte esp+06Ch]	; 6E469
-call MenuHitTest	; 6E46D
-test eax, eax	; 6E472
-je near .40	; 6E474
-mov edx, dword [byte esp+054h]	; 6E47A
-shl edx, 2	; 6E47E
-mov eax, dword [byte esp+050h]	; 6E481
-shl eax, 5	; 6E485
-mov ebx, dword [byte esp+edx+018h]	; 6E488
-add eax, ebx	; 6E48C
-cmp dword [byte eax+014h], byte 0	; 6E48E
-je near .29	; 6E492
-mov eax, dword [byte esp+050h]	; 6E498
-cmp eax, dword [byte esp+edx+030h]	; 6E49C
-jne near .24	; 6E4A0
-mov eax, dword [byte esp+060h]	; 6E4A6
-push eax	; 6E4AA
-mov edx, dword [byte esp+068h]	; 6E4AB
-push edx	; 6E4AF
-mov ebx, dword [editptrspr]	; 6E4B0
-push ebx	; 6E4B6
-call PutBlock	; 6E4B7
-add esp, byte 0Ch	; 6E4BC
-mov esi, 2	; 6E4BF
-jmp short .21	; 6E4C4
+        lea eax, [byte esp+050h]
+        push eax
+        lea eax, [byte esp+058h]
+        push eax
+        lea eax, [byte esp+08h]
+        push eax
+        lea eax, [byte esp+048h]
+        push eax
+        mov ecx, dword [dword esp+084h]
+        lea ebx, [byte esp+028h]
+        mov edx, dword [byte esp+068h]
+        mov eax, dword [byte esp+06Ch]
+        call MenuHitTest
+        test eax, eax
+        je near .40
+        mov edx, dword [byte esp+054h]
+        shl edx, 2
+        mov eax, dword [byte esp+050h]
+        shl eax, 5
+        mov ebx, dword [byte esp+edx+018h]
+        add eax, ebx
+        cmp dword [byte eax+014h], byte 0
+        je near .29
+        mov eax, dword [byte esp+050h]
+        cmp eax, dword [byte esp+edx+030h]
+        jne near .24
+        mov eax, dword [byte esp+060h]
+        push eax
+        mov edx, dword [byte esp+068h]
+        push edx
+        mov ebx, dword [editptrspr]
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        mov esi, 2
+        jmp short .21
 .19:
-mov ebp, esi	; 6E4C6
-shl ebp, 2	; 6E4C8
-mov edi, dword [byte esp+ebp+024h]	; 6E4CB
-test edi, edi	; 6E4CF
-je short .20	; 6E4D1
-mov eax, dword [byte esp+esi*8+04h]	; 6E4D3
-push eax	; 6E4D7
-mov edx, dword [byte esp+esi*8+04h]	; 6E4D8
-push edx	; 6E4DC
-push edi	; 6E4DD
-call PutBlock	; 6E4DE
-add esp, byte 0Ch	; 6E4E3
-xor ecx, ecx	; 6E4E6
-mov dword [byte esp+esi*8+04h], ecx	; 6E4E8
-mov dword [esp+esi*8], ecx	; 6E4EC
-mov edi, dword [byte esp+ebp+024h]	; 6E4EF
-push edi	; 6E4F3
-call FreeMemBlock	; 6E4F4
-add esp, byte 4	; 6E4F9
+        mov ebp, esi
+        shl ebp, 2
+        mov edi, dword [byte esp+ebp+024h]
+        test edi, edi
+        je short .20
+        mov eax, dword [byte esp+esi*8+04h]
+        push eax
+        mov edx, dword [byte esp+esi*8+04h]
+        push edx
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov dword [byte esp+esi*8+04h], ecx
+        mov dword [esp+esi*8], ecx
+        mov edi, dword [byte esp+ebp+024h]
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
 .20:
-dec esi	; 6E4FC
+        dec esi
 .21:
-test esi, esi	; 6E4FD
-jge short EditRosters.19	; 6E4FF
-xor esi, esi	; 6E501
-mov dword [byte esp+074h], esi	; 6E503
-mov eax, dword [byte esp+054h]	; 6E507
-mov edx, dword [byte esp+050h]	; 6E50B
-shl edx, 5	; 6E50F
-mov ecx, dword [byte esp+eax*4+018h]	; 6E512
-add ecx, edx	; 6E516
-lea ebx, [byte esp+060h]	; 6E518
-lea edx, [byte esp+064h]	; 6E51C
-lea eax, [byte esp+030h]	; 6E520
-call dword [byte ecx+014h]	; 6E524
+        test esi, esi
+        jge short EditRosters.19
+        xor esi, esi
+        mov dword [byte esp+074h], esi
+        mov eax, dword [byte esp+054h]
+        mov edx, dword [byte esp+050h]
+        shl edx, 5
+        mov ecx, dword [byte esp+eax*4+018h]
+        add ecx, edx
+        lea ebx, [byte esp+060h]
+        lea edx, [byte esp+064h]
+        lea eax, [byte esp+030h]
+        call dword [byte ecx+014h]
 .22:
-mov eax, esi	; 6E527
-shl eax, 2	; 6E529
-xor ebp, ebp	; 6E52C
-mov dword [byte esp+eax+024h], ebp	; 6E52E
-test esi, esi	; 6E532
-jle short .23	; 6E534
-mov dword [byte esp+eax+018h], ebp	; 6E536
-mov dword [byte esp+eax+030h], ebp	; 6E53A
-mov dword [byte esp+eax+03Ch], ebp	; 6E53E
+        mov eax, esi
+        shl eax, 2
+        xor ebp, ebp
+        mov dword [byte esp+eax+024h], ebp
+        test esi, esi
+        jle short .23
+        mov dword [byte esp+eax+018h], ebp
+        mov dword [byte esp+eax+030h], ebp
+        mov dword [byte esp+eax+03Ch], ebp
 .23:
-inc esi	; 6E542
-cmp esi, byte 3	; 6E543
-jl short EditRosters.22	; 6E546
-mov esi, dword [byte esp+060h]	; 6E548
-push esi	; 6E54C
-mov edi, dword [byte esp+068h]	; 6E54D
-push edi	; 6E551
-call MouseSetPos	; 6E552
-add esp, byte 8	; 6E557
-mov eax, dword [byte esp+064h]	; 6E55A
-mov dword [byte esp+05Ch], eax	; 6E55E
-mov eax, dword [byte esp+060h]	; 6E562
-mov dword [byte esp+058h], eax	; 6E566
-call ClearInputQueue	; 6E56A
-jmp near EditRosters.17	; 6E56F
+        inc esi
+        cmp esi, byte 3
+        jl short EditRosters.22
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        call MouseSetPos
+        add esp, byte 8
+        mov eax, dword [byte esp+064h]
+        mov dword [byte esp+05Ch], eax
+        mov eax, dword [byte esp+060h]
+        mov dword [byte esp+058h], eax
+        call ClearInputQueue
+        jmp near EditRosters.17
 .24:
-mov ecx, dword [byte esp+060h]	; 6E574
-push ecx	; 6E578
-mov esi, dword [byte esp+068h]	; 6E579
-push esi	; 6E57D
-mov edi, dword [editptrspr]	; 6E57E
-push edi	; 6E584
-call PutBlock	; 6E585
-add esp, byte 0Ch	; 6E58A
-mov eax, dword [byte esp+074h]	; 6E58D
-cmp eax, dword [byte esp+054h]	; 6E591
-je short .28	; 6E595
-mov esi, eax	; 6E597
-jmp short .27	; 6E599
+        mov ecx, dword [byte esp+060h]
+        push ecx
+        mov esi, dword [byte esp+068h]
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+074h]
+        cmp eax, dword [byte esp+054h]
+        je short .28
+        mov esi, eax
+        jmp short .27
 .25:
-mov edi, esi	; 6E59B
-shl edi, 2	; 6E59D
-xor ebp, ebp	; 6E5A0
-mov dword [byte esp+edi+030h], ebp	; 6E5A2
-mov eax, dword [byte esp+edi+024h]	; 6E5A6
-test eax, eax	; 6E5AA
-je short .26	; 6E5AC
-mov ebp, esi	; 6E5AE
-mov edx, dword [byte esp+esi*8+04h]	; 6E5B0
-push edx	; 6E5B4
-mov ebx, dword [byte esp+esi*8+04h]	; 6E5B5
-push ebx	; 6E5B9
-push eax	; 6E5BA
-call PutBlock	; 6E5BB
-add esp, byte 0Ch	; 6E5C0
-xor eax, eax	; 6E5C3
-mov dword [byte esp+esi*8+04h], eax	; 6E5C5
-mov dword [esp+esi*8], eax	; 6E5C9
-mov edx, dword [byte esp+edi+024h]	; 6E5CC
-push edx	; 6E5D0
-call FreeMemBlock	; 6E5D1
-add esp, byte 4	; 6E5D6
-xor ebx, ebx	; 6E5D9
-mov dword [byte esp+edi+024h], ebx	; 6E5DB
-mov dword [byte esp+edi+018h], ebx	; 6E5DF
-xor ebp, esi	; 6E5E3
-mov dword [byte esp+edi+03Ch], ebp	; 6E5E5
+        mov edi, esi
+        shl edi, 2
+        xor ebp, ebp
+        mov dword [byte esp+edi+030h], ebp
+        mov eax, dword [byte esp+edi+024h]
+        test eax, eax
+        je short .26
+        mov ebp, esi
+        mov edx, dword [byte esp+esi*8+04h]
+        push edx
+        mov ebx, dword [byte esp+esi*8+04h]
+        push ebx
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        xor eax, eax
+        mov dword [byte esp+esi*8+04h], eax
+        mov dword [esp+esi*8], eax
+        mov edx, dword [byte esp+edi+024h]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [byte esp+edi+024h], ebx
+        mov dword [byte esp+edi+018h], ebx
+        xor ebp, esi
+        mov dword [byte esp+edi+03Ch], ebp
 .26:
-dec esi	; 6E5E9
+        dec esi
 .27:
-mov edi, dword [byte esp+054h]	; 6E5EA
-cmp esi, edi	; 6E5EE
-jg short EditRosters.25	; 6E5F0
-mov dword [byte esp+074h], edi	; 6E5F2
+        mov edi, dword [byte esp+054h]
+        cmp esi, edi
+        jg short EditRosters.25
+        mov dword [byte esp+074h], edi
 .28:
-mov eax, dword [dword esp+08Ch]	; 6E5F6
-push eax	; 6E5FD
-mov edx, dword [byte esp+06Ch]	; 6E5FE
-push edx	; 6E602
-mov eax, dword [byte esp+05Ch]	; 6E603
-mov ebx, dword [byte esp+eax*8+0Ch]	; 6E607
-mov edx, dword [byte esp+eax*8+08h]	; 6E60B
-mov ecx, dword [byte esp+eax*4+038h]	; 6E60F
-shl ecx, 5	; 6E613
-mov eax, dword [byte esp+eax*4+020h]	; 6E616
-add eax, ecx	; 6E61A
-mov ecx, dword [byte esp+074h]	; 6E61C
-call DrawMenuItemSel	; 6E620
-mov edx, dword [byte esp+054h]	; 6E625
-mov eax, dword [byte esp+050h]	; 6E629
-mov dword [byte esp+edx*4+030h], eax	; 6E62D
-mov ebx, dword [dword esp+08Ch]	; 6E631
-push ebx	; 6E638
-mov ecx, dword [byte esp+06Ch]	; 6E639
-push ecx	; 6E63D
-mov ebx, dword [byte esp+edx*8+0Ch]	; 6E63E
-mov eax, dword [byte esp+edx*8+08h]	; 6E642
-mov esi, dword [byte esp+edx*4+038h]	; 6E646
-shl esi, 5	; 6E64A
-mov edx, dword [byte esp+edx*4+020h]	; 6E64D
-add esi, edx	; 6E651
-mov ecx, dword [byte esp+074h]	; 6E653
-mov edx, eax	; 6E657
-mov eax, esi	; 6E659
-jmp near .39	; 6E65B
+        mov eax, dword [dword esp+08Ch]
+        push eax
+        mov edx, dword [byte esp+06Ch]
+        push edx
+        mov eax, dword [byte esp+05Ch]
+        mov ebx, dword [byte esp+eax*8+0Ch]
+        mov edx, dword [byte esp+eax*8+08h]
+        mov ecx, dword [byte esp+eax*4+038h]
+        shl ecx, 5
+        mov eax, dword [byte esp+eax*4+020h]
+        add eax, ecx
+        mov ecx, dword [byte esp+074h]
+        call DrawMenuItemSel
+        mov edx, dword [byte esp+054h]
+        mov eax, dword [byte esp+050h]
+        mov dword [byte esp+edx*4+030h], eax
+        mov ebx, dword [dword esp+08Ch]
+        push ebx
+        mov ecx, dword [byte esp+06Ch]
+        push ecx
+        mov ebx, dword [byte esp+edx*8+0Ch]
+        mov eax, dword [byte esp+edx*8+08h]
+        mov esi, dword [byte esp+edx*4+038h]
+        shl esi, 5
+        mov edx, dword [byte esp+edx*4+020h]
+        add esi, edx
+        mov ecx, dword [byte esp+074h]
+        mov edx, eax
+        mov eax, esi
+        jmp near .39
 .29:
-cmp dword [byte eax+018h], byte 0	; 6E660
-je near .38	; 6E664
-mov esi, dword [byte esp+060h]	; 6E66A
-push esi	; 6E66E
-mov edi, dword [byte esp+068h]	; 6E66F
-push edi	; 6E673
-mov ebp, dword [editptrspr]	; 6E674
-push ebp	; 6E67A
-call PutBlock	; 6E67B
-add esp, byte 0Ch	; 6E680
-mov eax, dword [byte esp+074h]	; 6E683
-cmp eax, dword [byte esp+054h]	; 6E687
-je short .33	; 6E68B
-mov esi, eax	; 6E68D
-jmp short .32	; 6E68F
+        cmp dword [byte eax+018h], byte 0
+        je near .38
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        mov ebp, dword [editptrspr]
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+074h]
+        cmp eax, dword [byte esp+054h]
+        je short .33
+        mov esi, eax
+        jmp short .32
 .30:
-mov edi, esi	; 6E691
-shl edi, 2	; 6E693
-xor edx, edx	; 6E696
-mov dword [byte esp+edi+030h], edx	; 6E698
-mov ebx, dword [byte esp+edi+024h]	; 6E69C
-test ebx, ebx	; 6E6A0
-je short .31	; 6E6A2
-mov ebp, esi	; 6E6A4
-mov ecx, dword [byte esp+esi*8+04h]	; 6E6A6
-push ecx	; 6E6AA
-mov eax, dword [byte esp+esi*8+04h]	; 6E6AB
-push eax	; 6E6AF
-push ebx	; 6E6B0
-call PutBlock	; 6E6B1
-add esp, byte 0Ch	; 6E6B6
-xor ebx, ebx	; 6E6B9
-mov dword [byte esp+esi*8+04h], ebx	; 6E6BB
-mov dword [esp+esi*8], ebx	; 6E6BF
-mov ecx, dword [byte esp+edi+024h]	; 6E6C2
-push ecx	; 6E6C6
-call FreeMemBlock	; 6E6C7
-add esp, byte 4	; 6E6CC
-xor ebp, esi	; 6E6CF
-mov dword [byte esp+edi+024h], ebp	; 6E6D1
-xor eax, eax	; 6E6D5
-mov dword [byte esp+edi+018h], eax	; 6E6D7
-mov dword [byte esp+edi+03Ch], eax	; 6E6DB
+        mov edi, esi
+        shl edi, 2
+        xor edx, edx
+        mov dword [byte esp+edi+030h], edx
+        mov ebx, dword [byte esp+edi+024h]
+        test ebx, ebx
+        je short .31
+        mov ebp, esi
+        mov ecx, dword [byte esp+esi*8+04h]
+        push ecx
+        mov eax, dword [byte esp+esi*8+04h]
+        push eax
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        xor ebx, ebx
+        mov dword [byte esp+esi*8+04h], ebx
+        mov dword [esp+esi*8], ebx
+        mov ecx, dword [byte esp+edi+024h]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebp, esi
+        mov dword [byte esp+edi+024h], ebp
+        xor eax, eax
+        mov dword [byte esp+edi+018h], eax
+        mov dword [byte esp+edi+03Ch], eax
 .31:
-dec esi	; 6E6DF
+        dec esi
 .32:
-mov eax, dword [byte esp+054h]	; 6E6E0
-cmp esi, eax	; 6E6E4
-jg short EditRosters.30	; 6E6E6
-mov dword [byte esp+074h], eax	; 6E6E8
+        mov eax, dword [byte esp+054h]
+        cmp esi, eax
+        jg short EditRosters.30
+        mov dword [byte esp+074h], eax
 .33:
-mov ebx, dword [dword esp+08Ch]	; 6E6EC
-push ebx	; 6E6F3
-mov ecx, dword [byte esp+06Ch]	; 6E6F4
-push ecx	; 6E6F8
-mov esi, dword [byte esp+07Ch]	; 6E6F9
-mov ebx, dword [byte esp+esi*8+0Ch]	; 6E6FD
-mov edx, dword [byte esp+esi*8+08h]	; 6E701
-mov edi, esi	; 6E705
-mov eax, dword [byte esp+esi*4+038h]	; 6E707
-shl eax, 5	; 6E70B
-mov ecx, dword [byte esp+esi*4+020h]	; 6E70E
-add eax, ecx	; 6E712
-mov ecx, dword [byte esp+074h]	; 6E714
-call DrawMenuItemSel	; 6E718
-mov eax, dword [byte esp+050h]	; 6E71D
-mov dword [byte esp+esi*4+030h], eax	; 6E721
-mov ebp, dword [dword esp+08Ch]	; 6E725
-push ebp	; 6E72C
-mov eax, dword [byte esp+06Ch]	; 6E72D
-push eax	; 6E731
-mov ebx, dword [byte esp+esi*8+0Ch]	; 6E732
-mov edx, dword [byte esp+esi*8+08h]	; 6E736
-mov eax, dword [byte esp+058h]	; 6E73A
-shl eax, 5	; 6E73E
-mov ecx, dword [byte esp+esi*4+020h]	; 6E741
-add eax, ecx	; 6E745
-mov ecx, dword [byte esp+074h]	; 6E747
-call DrawMenuItemNorm	; 6E74B
-mov eax, dword [byte esp+054h]	; 6E750
-mov ebx, dword [byte esp+050h]	; 6E754
-shl ebx, 5	; 6E758
-mov esi, dword [byte esp+eax*4+018h]	; 6E75B
-mov edx, edi	; 6E75F
-inc edx	; 6E761
-mov dword [byte esp+074h], edx	; 6E762
-mov ecx, dword [byte esi+ebx+018h]	; 6E766
-mov dword [byte esp+edx*4+018h], ecx	; 6E76A
-mov eax, dword [byte esp+eax*4+018h]	; 6E76E
-add eax, ebx	; 6E772
-mov ebx, dword [byte eax+01Ch]	; 6E774
-mov dword [byte esp+edx*4+03Ch], ebx	; 6E777
-cmp edx, byte 1	; 6E77B
-je short .34	; 6E77E
-mov edx, dword [byte eax+08h]	; 6E780
-jmp short .35	; 6E783
+        mov ebx, dword [dword esp+08Ch]
+        push ebx
+        mov ecx, dword [byte esp+06Ch]
+        push ecx
+        mov esi, dword [byte esp+07Ch]
+        mov ebx, dword [byte esp+esi*8+0Ch]
+        mov edx, dword [byte esp+esi*8+08h]
+        mov edi, esi
+        mov eax, dword [byte esp+esi*4+038h]
+        shl eax, 5
+        mov ecx, dword [byte esp+esi*4+020h]
+        add eax, ecx
+        mov ecx, dword [byte esp+074h]
+        call DrawMenuItemSel
+        mov eax, dword [byte esp+050h]
+        mov dword [byte esp+esi*4+030h], eax
+        mov ebp, dword [dword esp+08Ch]
+        push ebp
+        mov eax, dword [byte esp+06Ch]
+        push eax
+        mov ebx, dword [byte esp+esi*8+0Ch]
+        mov edx, dword [byte esp+esi*8+08h]
+        mov eax, dword [byte esp+058h]
+        shl eax, 5
+        mov ecx, dword [byte esp+esi*4+020h]
+        add eax, ecx
+        mov ecx, dword [byte esp+074h]
+        call DrawMenuItemNorm
+        mov eax, dword [byte esp+054h]
+        mov ebx, dword [byte esp+050h]
+        shl ebx, 5
+        mov esi, dword [byte esp+eax*4+018h]
+        mov edx, edi
+        inc edx
+        mov dword [byte esp+074h], edx
+        mov ecx, dword [byte esi+ebx+018h]
+        mov dword [byte esp+edx*4+018h], ecx
+        mov eax, dword [byte esp+eax*4+018h]
+        add eax, ebx
+        mov ebx, dword [byte eax+01Ch]
+        mov dword [byte esp+edx*4+03Ch], ebx
+        cmp edx, byte 1
+        je short .34
+        mov edx, dword [byte eax+08h]
+        jmp short .35
 .34:
-mov edx, dword [eax]	; 6E785
+        mov edx, dword [eax]
 .35:
-mov eax, dword [byte esp+074h]	; 6E787
-mov ecx, dword [byte esp+eax*8-08h]	; 6E78B
-add edx, ecx	; 6E78F
-mov dword [esp+eax*8], edx	; 6E791
-mov edx, dword [byte esp+050h]	; 6E794
-shl edx, 5	; 6E798
-mov eax, dword [byte esp+054h]	; 6E79B
-shl eax, 2	; 6E79F
-cmp dword [byte esp+074h], byte 1	; 6E7A2
-je short .36	; 6E7A7
-mov eax, dword [byte esp+eax+018h]	; 6E7A9
-mov eax, dword [byte edx+eax+04h]	; 6E7AD
-jmp short .37	; 6E7B1
+        mov eax, dword [byte esp+074h]
+        mov ecx, dword [byte esp+eax*8-08h]
+        add edx, ecx
+        mov dword [esp+eax*8], edx
+        mov edx, dword [byte esp+050h]
+        shl edx, 5
+        mov eax, dword [byte esp+054h]
+        shl eax, 2
+        cmp dword [byte esp+074h], byte 1
+        je short .36
+        mov eax, dword [byte esp+eax+018h]
+        mov eax, dword [byte edx+eax+04h]
+        jmp short .37
 .36:
-mov eax, dword [byte esp+eax+018h]	; 6E7B3
-mov eax, dword [byte edx+eax+0Ch]	; 6E7B7
+        mov eax, dword [byte esp+eax+018h]
+        mov eax, dword [byte edx+eax+0Ch]
 .37:
-mov edx, dword [byte esp+074h]	; 6E7BB
-shl edx, 3	; 6E7BF
-mov dword [byte esp+070h], edx	; 6E7C2
-mov edi, dword [byte esp+edx-04h]	; 6E7C6
-add eax, edi	; 6E7CA
-mov dword [byte esp+edx+04h], eax	; 6E7CC
-mov ebp, dword [byte esp+074h]	; 6E7D0
-mov edx, dword [byte esp+ebp*4+03Ch]	; 6E7D4
-shl edx, 5	; 6E7D8
-mov eax, dword [byte esp+ebp*4+018h]	; 6E7DB
-mov ebx, dword [byte edx+eax-018h]	; 6E7DF
-sub ebx, dword [eax]	; 6E7E3
-inc ebx	; 6E7E5
-mov dword [byte esp+04Ch], ebx	; 6E7E6
-mov edx, dword [byte edx+eax-014h]	; 6E7EA
-sub edx, dword [byte eax+04h]	; 6E7EE
-inc edx	; 6E7F1
-mov dword [byte esp+048h], edx	; 6E7F2
-push byte 0	; 6E7F6
-mov eax, ebx	; 6E7F8
-shl eax, 2	; 6E7FA
-imul eax, edx	; 6E7FD
-add eax, byte 11h	; 6E800
-push eax	; 6E803
-push str_Menubuff	; 6E804
-call AllocMemBlock	; 6E809
-add esp, byte 0Ch	; 6E80E
-mov dword [byte esp+ebp*4+024h], eax	; 6E811
-mov esi, dword [pointerspr]	; 6E815
-mov edi, eax	; 6E81B
-movsd	; 6E81D
-movsd	; 6E81E
-movsd	; 6E81F
-movsd	; 6E820
-movsb	; 6E821
-mov eax, dword [byte esp+ebp*4+024h]	; 6E822
-mov edx, dword [byte esp+04Ch]	; 6E826
-mov word [byte eax+04h], dx	; 6E82A
-mov eax, dword [byte esp+ebp*4+024h]	; 6E82E
-mov edx, dword [byte esp+048h]	; 6E832
-mov word [byte eax+06h], dx	; 6E836
-mov eax, dword [byte esp+070h]	; 6E83A
-mov edx, dword [byte esp+eax+04h]	; 6E83E
-push edx	; 6E842
-mov ebx, dword [byte esp+eax+04h]	; 6E843
-push ebx	; 6E847
-mov ecx, dword [byte esp+ebp*4+02Ch]	; 6E848
-push ecx	; 6E84C
-call GrabBlock	; 6E84D
-add esp, byte 0Ch	; 6E852
-mov esi, dword [dword esp+08Ch]	; 6E855
-push esi	; 6E85C
-mov edi, dword [byte esp+06Ch]	; 6E85D
-push edi	; 6E861
-mov eax, dword [byte esp+074h]	; 6E862
-push eax	; 6E866
-mov ecx, dword [byte esp+07Ch]	; 6E867
-mov ecx, dword [byte esp+ecx+010h]	; 6E86B
-mov ebx, dword [byte esp+07Ch]	; 6E86F
-mov ebx, dword [byte esp+ebx+0Ch]	; 6E873
-mov edx, dword [byte esp+ebp*4+048h]	; 6E877
-mov eax, dword [byte esp+ebp*4+024h]	; 6E87B
-call DrawMenuDropdown	; 6E87F
-xor edx, edx	; 6E884
-mov dword [byte esp+ebp*4+030h], edx	; 6E886
-push esi	; 6E88A
-push edi	; 6E88B
-mov ebx, dword [byte esp+078h]	; 6E88C
-mov ebx, dword [byte esp+ebx+0Ch]	; 6E890
-mov edx, dword [byte esp+078h]	; 6E894
-mov edx, dword [byte esp+edx+08h]	; 6E898
-mov eax, dword [byte esp+ebp*4+020h]	; 6E89C
-mov ecx, dword [byte esp+074h]	; 6E8A0
-jmp short .39	; 6E8A4
+        mov edx, dword [byte esp+074h]
+        shl edx, 3
+        mov dword [byte esp+070h], edx
+        mov edi, dword [byte esp+edx-04h]
+        add eax, edi
+        mov dword [byte esp+edx+04h], eax
+        mov ebp, dword [byte esp+074h]
+        mov edx, dword [byte esp+ebp*4+03Ch]
+        shl edx, 5
+        mov eax, dword [byte esp+ebp*4+018h]
+        mov ebx, dword [byte edx+eax-018h]
+        sub ebx, dword [eax]
+        inc ebx
+        mov dword [byte esp+04Ch], ebx
+        mov edx, dword [byte edx+eax-014h]
+        sub edx, dword [byte eax+04h]
+        inc edx
+        mov dword [byte esp+048h], edx
+        push byte 0
+        mov eax, ebx
+        shl eax, 2
+        imul eax, edx
+        add eax, byte 11h
+        push eax
+        push str_Menubuff
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [byte esp+ebp*4+024h], eax
+        mov esi, dword [pointerspr]
+        mov edi, eax
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov eax, dword [byte esp+ebp*4+024h]
+        mov edx, dword [byte esp+04Ch]
+        mov word [byte eax+04h], dx
+        mov eax, dword [byte esp+ebp*4+024h]
+        mov edx, dword [byte esp+048h]
+        mov word [byte eax+06h], dx
+        mov eax, dword [byte esp+070h]
+        mov edx, dword [byte esp+eax+04h]
+        push edx
+        mov ebx, dword [byte esp+eax+04h]
+        push ebx
+        mov ecx, dword [byte esp+ebp*4+02Ch]
+        push ecx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov esi, dword [dword esp+08Ch]
+        push esi
+        mov edi, dword [byte esp+06Ch]
+        push edi
+        mov eax, dword [byte esp+074h]
+        push eax
+        mov ecx, dword [byte esp+07Ch]
+        mov ecx, dword [byte esp+ecx+010h]
+        mov ebx, dword [byte esp+07Ch]
+        mov ebx, dword [byte esp+ebx+0Ch]
+        mov edx, dword [byte esp+ebp*4+048h]
+        mov eax, dword [byte esp+ebp*4+024h]
+        call DrawMenuDropdown
+        xor edx, edx
+        mov dword [byte esp+ebp*4+030h], edx
+        push esi
+        push edi
+        mov ebx, dword [byte esp+078h]
+        mov ebx, dword [byte esp+ebx+0Ch]
+        mov edx, dword [byte esp+078h]
+        mov edx, dword [byte esp+edx+08h]
+        mov eax, dword [byte esp+ebp*4+020h]
+        mov ecx, dword [byte esp+074h]
+        jmp short .39
 .38:
-mov esi, dword [byte esp+060h]	; 6E8A6
-push esi	; 6E8AA
-mov edi, dword [byte esp+068h]	; 6E8AB
-push edi	; 6E8AF
-mov ebp, dword [editptrspr]	; 6E8B0
-push ebp	; 6E8B6
-call PutBlock	; 6E8B7
-add esp, byte 0Ch	; 6E8BC
-mov eax, dword [dword esp+08Ch]	; 6E8BF
-push eax	; 6E8C6
-mov edx, dword [byte esp+06Ch]	; 6E8C7
-push edx	; 6E8CB
-mov eax, dword [byte esp+05Ch]	; 6E8CC
-mov ebx, dword [byte esp+eax*8+0Ch]	; 6E8D0
-mov edx, dword [byte esp+eax*8+08h]	; 6E8D4
-mov ecx, dword [byte esp+eax*4+038h]	; 6E8D8
-shl ecx, 5	; 6E8DC
-mov eax, dword [byte esp+eax*4+020h]	; 6E8DF
-add eax, ecx	; 6E8E3
-mov ecx, dword [byte esp+074h]	; 6E8E5
-call DrawMenuItemSel	; 6E8E9
-mov edx, dword [byte esp+054h]	; 6E8EE
-mov eax, dword [byte esp+050h]	; 6E8F2
-mov dword [byte esp+edx*4+030h], eax	; 6E8F6
-mov ebx, dword [dword esp+08Ch]	; 6E8FA
-push ebx	; 6E901
-mov ecx, dword [byte esp+06Ch]	; 6E902
-push ecx	; 6E906
-mov ebx, dword [byte esp+edx*8+0Ch]	; 6E907
-mov esi, dword [byte esp+edx*8+08h]	; 6E90B
-shl eax, 5	; 6E90F
-mov edx, dword [byte esp+edx*4+020h]	; 6E912
-add eax, edx	; 6E916
-mov ecx, dword [byte esp+074h]	; 6E918
-mov edx, esi	; 6E91C
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        mov ebp, dword [editptrspr]
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+08Ch]
+        push eax
+        mov edx, dword [byte esp+06Ch]
+        push edx
+        mov eax, dword [byte esp+05Ch]
+        mov ebx, dword [byte esp+eax*8+0Ch]
+        mov edx, dword [byte esp+eax*8+08h]
+        mov ecx, dword [byte esp+eax*4+038h]
+        shl ecx, 5
+        mov eax, dword [byte esp+eax*4+020h]
+        add eax, ecx
+        mov ecx, dword [byte esp+074h]
+        call DrawMenuItemSel
+        mov edx, dword [byte esp+054h]
+        mov eax, dword [byte esp+050h]
+        mov dword [byte esp+edx*4+030h], eax
+        mov ebx, dword [dword esp+08Ch]
+        push ebx
+        mov ecx, dword [byte esp+06Ch]
+        push ecx
+        mov ebx, dword [byte esp+edx*8+0Ch]
+        mov esi, dword [byte esp+edx*8+08h]
+        shl eax, 5
+        mov edx, dword [byte esp+edx*4+020h]
+        add eax, edx
+        mov ecx, dword [byte esp+074h]
+        mov edx, esi
 .39:
-call DrawMenuItemNorm	; 6E91E
-jmp near EditRosters.17	; 6E923
+        call DrawMenuItemNorm
+        jmp near EditRosters.17
 .40:
-mov esi, dword [byte esp+060h]	; 6E928
-push esi	; 6E92C
-mov edi, dword [byte esp+068h]	; 6E92D
-push edi	; 6E931
-mov ebp, dword [editptrspr]	; 6E932
-push ebp	; 6E938
-call PutBlock	; 6E939
-add esp, byte 0Ch	; 6E93E
-mov esi, 2	; 6E941
-jmp short .43	; 6E946
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        mov ebp, dword [editptrspr]
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov esi, 2
+        jmp short .43
 .41:
-mov ebp, esi	; 6E948
-shl ebp, 2	; 6E94A
-mov ecx, dword [byte esp+ebp+024h]	; 6E94D
-test ecx, ecx	; 6E951
-je short .42	; 6E953
-mov eax, dword [byte esp+esi*8+04h]	; 6E955
-push eax	; 6E959
-mov edx, dword [byte esp+esi*8+04h]	; 6E95A
-push edx	; 6E95E
-push ecx	; 6E95F
-call PutBlock	; 6E960
-add esp, byte 0Ch	; 6E965
-xor ecx, ecx	; 6E968
-mov dword [byte esp+esi*8+04h], ecx	; 6E96A
-mov dword [esp+esi*8], ecx	; 6E96E
-mov edi, dword [byte esp+ebp+024h]	; 6E971
-push edi	; 6E975
-call FreeMemBlock	; 6E976
-add esp, byte 4	; 6E97B
+        mov ebp, esi
+        shl ebp, 2
+        mov ecx, dword [byte esp+ebp+024h]
+        test ecx, ecx
+        je short .42
+        mov eax, dword [byte esp+esi*8+04h]
+        push eax
+        mov edx, dword [byte esp+esi*8+04h]
+        push edx
+        push ecx
+        call PutBlock
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov dword [byte esp+esi*8+04h], ecx
+        mov dword [esp+esi*8], ecx
+        mov edi, dword [byte esp+ebp+024h]
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
 .42:
-dec esi	; 6E97E
+        dec esi
 .43:
-test esi, esi	; 6E97F
-jge short EditRosters.41	; 6E981
-xor ebx, ebx	; 6E983
-mov dword [byte esp+074h], ebx	; 6E985
-xor esi, esi	; 6E989
+        test esi, esi
+        jge short EditRosters.41
+        xor ebx, ebx
+        mov dword [byte esp+074h], ebx
+        xor esi, esi
 .44:
-mov eax, esi	; 6E98B
-shl eax, 2	; 6E98D
-xor ebp, ebp	; 6E990
-mov dword [byte esp+eax+024h], ebp	; 6E992
-test esi, esi	; 6E996
-jle short .45	; 6E998
-mov dword [byte esp+eax+018h], ebp	; 6E99A
-mov dword [byte esp+eax+030h], ebp	; 6E99E
-mov dword [byte esp+eax+03Ch], ebp	; 6E9A2
+        mov eax, esi
+        shl eax, 2
+        xor ebp, ebp
+        mov dword [byte esp+eax+024h], ebp
+        test esi, esi
+        jle short .45
+        mov dword [byte esp+eax+018h], ebp
+        mov dword [byte esp+eax+030h], ebp
+        mov dword [byte esp+eax+03Ch], ebp
 .45:
-inc esi	; 6E9A6
-cmp esi, byte 3	; 6E9A7
-jl short EditRosters.44	; 6E9AA
-mov edx, dword [byte esp+058h]	; 6E9AC
-mov eax, dword [byte esp+05Ch]	; 6E9B0
-call RosterPanelClick	; 6E9B4
-mov esi, dword [byte esp+060h]	; 6E9B9
-push esi	; 6E9BD
-mov edi, dword [byte esp+068h]	; 6E9BE
-push edi	; 6E9C2
-mov ebp, dword [editptrspr]	; 6E9C3
-push ebp	; 6E9C9
+        inc esi
+        cmp esi, byte 3
+        jl short EditRosters.44
+        mov edx, dword [byte esp+058h]
+        mov eax, dword [byte esp+05Ch]
+        call RosterPanelClick
+        mov esi, dword [byte esp+060h]
+        push esi
+        mov edi, dword [byte esp+068h]
+        push edi
+        mov ebp, dword [editptrspr]
+        push ebp
 .46:
-call GrabBlock	; 6E9CA
-add esp, byte 0Ch	; 6E9CF
-mov ebx, dword [byte esp+060h]	; 6E9D2
-push ebx	; 6E9D6
-mov ecx, dword [byte esp+068h]	; 6E9D7
-push ecx	; 6E9DB
-mov esi, dword [editptrspr]	; 6E9DC
-push esi	; 6E9E2
-call PutBlock	; 6E9E3
-add esp, byte 0Ch	; 6E9E8
-mov edi, dword [byte esp+058h]	; 6E9EB
-push edi	; 6E9EF
-mov ebp, dword [byte esp+060h]	; 6E9F0
-push ebp	; 6E9F4
-mov eax, dword [editptrspr]	; 6E9F5
-push eax	; 6E9FA
-call GrabBlock	; 6E9FB
-add esp, byte 0Ch	; 6EA00
-mov edx, dword [byte esp+058h]	; 6EA03
-push edx	; 6EA07
-mov ebx, dword [byte esp+060h]	; 6EA08
-push ebx	; 6EA0C
-mov ecx, dword [pointerspr]	; 6EA0D
-push ecx	; 6EA13
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebx, dword [byte esp+060h]
+        push ebx
+        mov ecx, dword [byte esp+068h]
+        push ecx
+        mov esi, dword [editptrspr]
+        push esi
+        call PutBlock
+        add esp, byte 0Ch
+        mov edi, dword [byte esp+058h]
+        push edi
+        mov ebp, dword [byte esp+060h]
+        push ebp
+        mov eax, dword [editptrspr]
+        push eax
+        call GrabBlock
+        add esp, byte 0Ch
+        mov edx, dword [byte esp+058h]
+        push edx
+        mov ebx, dword [byte esp+060h]
+        push ebx
+        mov ecx, dword [pointerspr]
+        push ecx
 .47:
-call DrawArt	; 6EA14
-add esp, byte 0Ch	; 6EA19
-mov eax, dword [byte esp+05Ch]	; 6EA1C
-mov dword [byte esp+064h], eax	; 6EA20
-mov eax, dword [byte esp+058h]	; 6EA24
-mov dword [byte esp+060h], eax	; 6EA28
+        call DrawArt
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+05Ch]
+        mov dword [byte esp+064h], eax
+        mov eax, dword [byte esp+058h]
+        mov dword [byte esp+060h], eax
 .48:
-mov esi, dword [editrosters_exit]	; 6EA2C
-cmp esi, byte 0FFFFFFFFh	; 6EA32
-jne short .49	; 6EA35
-mov edi, dword [byte esp+060h]	; 6EA37
-push edi	; 6EA3B
-mov ebp, dword [byte esp+068h]	; 6EA3C
-push ebp	; 6EA40
-mov eax, dword [editptrspr]	; 6EA41
-push eax	; 6EA46
-call PutBlock	; 6EA47
-add esp, byte 0Ch	; 6EA4C
-cmp dword [dbdirty], byte 0	; 6EA4F
-je short .49	; 6EA56
-mov dword [msglines], str_TheDatabaseHasNot	; 6EA58
-mov dword [msglines+4], str_AreYouSureYou	; 6EA62
-push esi	; 6EA6C
-lea eax, [byte esp+05Ch]	; 6EA6D
-push eax	; 6EA71
-lea eax, [byte esp+064h]	; 6EA72
-push eax	; 6EA76
-push byte 2	; 6EA77
-push btn_LeagueExists	; 6EA79
-mov ecx, 2	; 6EA7E
-mov ebx, msglines	; 6EA83
-mov edx, esi	; 6EA88
-mov eax, esi	; 6EA8A
-call MessageBox	; 6EA8C
-test eax, eax	; 6EA91
-jg short .49	; 6EA93
-xor esi, esi	; 6EA95
-mov dword [editrosters_exit], esi	; 6EA97
+        mov esi, dword [editrosters_exit]
+        cmp esi, byte 0FFFFFFFFh
+        jne short .49
+        mov edi, dword [byte esp+060h]
+        push edi
+        mov ebp, dword [byte esp+068h]
+        push ebp
+        mov eax, dword [editptrspr]
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        cmp dword [dbdirty], byte 0
+        je short .49
+        mov dword [msglines], str_TheDatabaseHasNot
+        mov dword [msglines+4], str_AreYouSureYou
+        push esi
+        lea eax, [byte esp+05Ch]
+        push eax
+        lea eax, [byte esp+064h]
+        push eax
+        push byte 2
+        push btn_LeagueExists
+        mov ecx, 2
+        mov ebx, msglines
+        mov edx, esi
+        mov eax, esi
+        call MessageBox
+        test eax, eax
+        jg short .49
+        xor esi, esi
+        mov dword [editrosters_exit], esi
 .49:
-cmp dword [editrosters_exit], byte 0	; 6EA9D
-je near EditRosters.3	; 6EAA4
-xor eax, eax	; 6EAAA
-add esp, byte 7Ch	; 6EAAC
-pop ebp	; 6EAAF
-pop edi	; 6EAB0
-pop esi	; 6EAB1
-ret 4	; 6EAB2
+        cmp dword [editrosters_exit], byte 0
+        je near EditRosters.3
+        xor eax, eax
+        add esp, byte 7Ch
+        pop ebp
+        pop edi
+        pop esi
+        ret 4
+;-----------------------------------------------------------------------------
+; ErrorScreenWait                                 6EAB5  95 PC, low confidence
+; Mouse/keyboard wait loop used by ShowDBError
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ErrorScreenWait.c
 %ifdef CBUILD
 %include "c/front/create/ErrorScreenWait.inc"
 %else
 ErrorScreenWait:
-push dword 3Ch	; 6EAB5
-call __CHK	; 6EABA
-push esi	; 6EABF
-push edi	; 6EAC0
-push ebp	; 6EAC1
-sub esp, byte 10h	; 6EAC2
-push eax	; 6EAC5
-push edx	; 6EAC6
-push ebx	; 6EAC7
-push ecx	; 6EAC8
-mov dword [byte esp+018h], 0FFFFFFFFh	; 6EAC9
-mov esi, dword [eax]	; 6EAD1
-mov dword [byte esp+014h], esi	; 6EAD3
-mov edi, dword [byte esp+08h]	; 6EAD7
-mov edi, dword [edi]	; 6EADB
-mov dword [byte esp+010h], edi	; 6EADD
-push edi	; 6EAE1
-push esi	; 6EAE2
-call MouseSetPos	; 6EAE3
-add esp, byte 8	; 6EAE8
-push edi	; 6EAEB
-push esi	; 6EAEC
-mov ebx, dword [editptrspr]	; 6EAED
-push ebx	; 6EAF3
-call GrabBlock	; 6EAF4
-add esp, byte 0Ch	; 6EAF9
-push edi	; 6EAFC
-push esi	; 6EAFD
-mov ecx, dword [pointerspr]	; 6EAFE
-push ecx	; 6EB04
-call DrawArt	; 6EB05
-add esp, byte 0Ch	; 6EB0A
+        push dword 3Ch
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 10h
+        push eax
+        push edx
+        push ebx
+        push ecx
+        mov dword [byte esp+018h], 0FFFFFFFFh
+        mov esi, dword [eax]
+        mov dword [byte esp+014h], esi
+        mov edi, dword [byte esp+08h]
+        mov edi, dword [edi]
+        mov dword [byte esp+010h], edi
+        push edi
+        push esi
+        call MouseSetPos
+        add esp, byte 8
+        push edi
+        push esi
+        mov ebx, dword [editptrspr]
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        push edi
+        push esi
+        mov ecx, dword [pointerspr]
+        push ecx
+        call DrawArt
+        add esp, byte 0Ch
 .1:
-push byte 1	; 6EB0D
-call KeyDown	; 6EB0F
-add esp, byte 4	; 6EB14
-test eax, eax	; 6EB17
-jne short ErrorScreenWait.1	; 6EB19
-push byte 1Ch	; 6EB1B
-call KeyDown	; 6EB1D
-add esp, byte 4	; 6EB22
-test eax, eax	; 6EB25
-jne short ErrorScreenWait.1	; 6EB27
-call ClearInputQueue	; 6EB29
-xor ebp, ebp	; 6EB2E
+        push byte 1
+        call KeyDown
+        add esp, byte 4
+        test eax, eax
+        jne short ErrorScreenWait.1
+        push byte 1Ch
+        call KeyDown
+        add esp, byte 4
+        test eax, eax
+        jne short ErrorScreenWait.1
+        call ClearInputQueue
+        xor ebp, ebp
 .2:
-call GetInputEvent	; 6EB30
-test eax, eax	; 6EB35
-je near .9	; 6EB37
-lea ebx, [byte esp+010h]	; 6EB3D
-lea edx, [byte esp+014h]	; 6EB41
-call dword [ptrupdatefn]	; 6EB45
-mov dword [byte esp+01Ch], eax	; 6EB4B
-mov ah, byte [byte esp+01Ch]	; 6EB4F
-test ah, 4	; 6EB53
-je short .3	; 6EB56
-mov edx, 0FFFFFFFFh	; 6EB58
-mov dword [byte esp+018h], edx	; 6EB5D
-mov ebp, edx	; 6EB61
-jmp short .7	; 6EB63
+        call GetInputEvent
+        test eax, eax
+        je near .9
+        lea ebx, [byte esp+010h]
+        lea edx, [byte esp+014h]
+        call dword [ptrupdatefn]
+        mov dword [byte esp+01Ch], eax
+        mov ah, byte [byte esp+01Ch]
+        test ah, 4
+        je short .3
+        mov edx, 0FFFFFFFFh
+        mov dword [byte esp+018h], edx
+        mov ebp, edx
+        jmp short .7
 .3:
-test ah, 3	; 6EB65
-je short .7	; 6EB68
-push edi	; 6EB6A
-push esi	; 6EB6B
-mov eax, dword [editptrspr]	; 6EB6C
-push eax	; 6EB71
-call PutBlock	; 6EB72
-add esp, byte 0Ch	; 6EB77
-mov edx, dword [esp]	; 6EB7A
-test edx, edx	; 6EB7D
-jle short .4	; 6EB7F
-mov ebx, dword [byte esp+01Ch]	; 6EB81
-push ebx	; 6EB85
-mov ecx, dword [byte esp+014h]	; 6EB86
-mov ebx, dword [byte esp+018h]	; 6EB8A
-mov eax, dword [byte esp+08h]	; 6EB8E
-call TrackButtons	; 6EB92
-mov dword [byte esp+018h], eax	; 6EB97
-test eax, eax	; 6EB9B
-jl short .6	; 6EB9D
-jmp short .5	; 6EB9F
+        test ah, 3
+        je short .7
+        push edi
+        push esi
+        mov eax, dword [editptrspr]
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [esp]
+        test edx, edx
+        jle short .4
+        mov ebx, dword [byte esp+01Ch]
+        push ebx
+        mov ecx, dword [byte esp+014h]
+        mov ebx, dword [byte esp+018h]
+        mov eax, dword [byte esp+08h]
+        call TrackButtons
+        mov dword [byte esp+018h], eax
+        test eax, eax
+        jl short .6
+        jmp short .5
 .4:
-test byte [byte esp+01Ch], 2	; 6EBA1
-je short .6	; 6EBA6
+        test byte [byte esp+01Ch], 2
+        je short .6
 .5:
-mov ebp, 0FFFFFFFFh	; 6EBA8
+        mov ebp, 0FFFFFFFFh
 .6:
-push edi	; 6EBAD
-push esi	; 6EBAE
-mov ecx, dword [editptrspr]	; 6EBAF
-push ecx	; 6EBB5
-call GrabBlock	; 6EBB6
-add esp, byte 0Ch	; 6EBBB
-push edi	; 6EBBE
-push esi	; 6EBBF
-mov eax, dword [pointerspr]	; 6EBC0
-push eax	; 6EBC5
-call DrawArt	; 6EBC6
-add esp, byte 0Ch	; 6EBCB
+        push edi
+        push esi
+        mov ecx, dword [editptrspr]
+        push ecx
+        call GrabBlock
+        add esp, byte 0Ch
+        push edi
+        push esi
+        mov eax, dword [pointerspr]
+        push eax
+        call DrawArt
+        add esp, byte 0Ch
 .7:
-cmp esi, dword [byte esp+014h]	; 6EBCE
-jne short .8	; 6EBD2
-cmp edi, dword [byte esp+010h]	; 6EBD4
-je short .9	; 6EBD8
+        cmp esi, dword [byte esp+014h]
+        jne short .8
+        cmp edi, dword [byte esp+010h]
+        je short .9
 .8:
-push edi	; 6EBDA
-push esi	; 6EBDB
-mov esi, dword [editptrspr]	; 6EBDC
-push esi	; 6EBE2
-call PutBlock	; 6EBE3
-add esp, byte 0Ch	; 6EBE8
-mov edi, dword [byte esp+010h]	; 6EBEB
-push edi	; 6EBEF
-mov eax, dword [byte esp+018h]	; 6EBF0
-push eax	; 6EBF4
-mov edx, dword [editptrspr]	; 6EBF5
-push edx	; 6EBFB
-call GrabBlock	; 6EBFC
-add esp, byte 0Ch	; 6EC01
-mov ebx, dword [byte esp+010h]	; 6EC04
-push ebx	; 6EC08
-mov ecx, dword [byte esp+018h]	; 6EC09
-push ecx	; 6EC0D
-mov esi, dword [pointerspr]	; 6EC0E
-push esi	; 6EC14
-call DrawArt	; 6EC15
-add esp, byte 0Ch	; 6EC1A
-mov esi, dword [byte esp+014h]	; 6EC1D
-mov edi, dword [byte esp+010h]	; 6EC21
+        push edi
+        push esi
+        mov esi, dword [editptrspr]
+        push esi
+        call PutBlock
+        add esp, byte 0Ch
+        mov edi, dword [byte esp+010h]
+        push edi
+        mov eax, dword [byte esp+018h]
+        push eax
+        mov edx, dword [editptrspr]
+        push edx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebx, dword [byte esp+010h]
+        push ebx
+        mov ecx, dword [byte esp+018h]
+        push ecx
+        mov esi, dword [pointerspr]
+        push esi
+        call DrawArt
+        add esp, byte 0Ch
+        mov esi, dword [byte esp+014h]
+        mov edi, dword [byte esp+010h]
 .9:
-test ebp, ebp	; 6EC25
-je near ErrorScreenWait.2	; 6EC27
+        test ebp, ebp
+        je near ErrorScreenWait.2
 .10:
-push byte 1	; 6EC2D
-call KeyDown	; 6EC2F
-add esp, byte 4	; 6EC34
-test eax, eax	; 6EC37
-jne short ErrorScreenWait.10	; 6EC39
-push byte 1Ch	; 6EC3B
-call KeyDown	; 6EC3D
-add esp, byte 4	; 6EC42
-test eax, eax	; 6EC45
-jne short ErrorScreenWait.10	; 6EC47
-call ClearInputQueue	; 6EC49
-push edi	; 6EC4E
-push esi	; 6EC4F
-mov edi, dword [editptrspr]	; 6EC50
-push edi	; 6EC56
-call PutBlock	; 6EC57
-add esp, byte 0Ch	; 6EC5C
-call ClearInputQueue	; 6EC5F
-mov ebp, dword [byte esp+010h]	; 6EC64
-push ebp	; 6EC68
-mov eax, dword [byte esp+018h]	; 6EC69
-push eax	; 6EC6D
-call MouseSetPos	; 6EC6E
-add esp, byte 8	; 6EC73
-mov eax, dword [byte esp+014h]	; 6EC76
-mov edx, dword [byte esp+0Ch]	; 6EC7A
-mov dword [edx], eax	; 6EC7E
-mov eax, dword [byte esp+010h]	; 6EC80
-mov edx, dword [byte esp+08h]	; 6EC84
-mov dword [edx], eax	; 6EC88
-mov eax, dword [byte esp+018h]	; 6EC8A
-add esp, byte 20h	; 6EC8E
-pop ebp	; 6EC91
-pop edi	; 6EC92
-pop esi	; 6EC93
-ret	; 6EC94
+        push byte 1
+        call KeyDown
+        add esp, byte 4
+        test eax, eax
+        jne short ErrorScreenWait.10
+        push byte 1Ch
+        call KeyDown
+        add esp, byte 4
+        test eax, eax
+        jne short ErrorScreenWait.10
+        call ClearInputQueue
+        push edi
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
+        call ClearInputQueue
+        mov ebp, dword [byte esp+010h]
+        push ebp
+        mov eax, dword [byte esp+018h]
+        push eax
+        call MouseSetPos
+        add esp, byte 8
+        mov eax, dword [byte esp+014h]
+        mov edx, dword [byte esp+0Ch]
+        mov dword [edx], eax
+        mov eax, dword [byte esp+010h]
+        mov edx, dword [byte esp+08h]
+        mov dword [edx], eax
+        mov eax, dword [byte esp+018h]
+        add esp, byte 20h
+        pop ebp
+        pop edi
+        pop esi
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawDBErrorsScreen                           6EC95  95 PC, medium confidence
+; Draws the 'Errors found in databases!' screen
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawDBErrorsScreen.c
 %ifdef CBUILD
 %include "c/front/create/DrawDBErrorsScreen.inc"
 %else
 DrawDBErrorsScreen:
-push dword 28h	; 6EC95
-call __CHK	; 6EC9A
-push ecx	; 6EC9F
-push esi	; 6ECA0
-push edi	; 6ECA1
-push ebp	; 6ECA2
-mov ebp, eax	; 6ECA3
-mov esi, edx	; 6ECA5
-mov edi, ebx	; 6ECA7
-mov edx, dword [fullscrbmp]	; 6ECA9
-push edx	; 6ECAF
-call SetDrawBitmap	; 6ECB0
-add esp, byte 4	; 6ECB5
-push byte 41h	; 6ECB8
-call ClearScreen	; 6ECBA
-add esp, byte 4	; 6ECBF
-push byte 42h	; 6ECC2
-mov ecx, 41h	; 6ECC4
-mov ebx, 40h	; 6ECC9
-mov edx, 5	; 6ECCE
-mov eax, editrostersmenubar	; 6ECD3
-call DrawMenuBar	; 6ECD8
-push byte 41h	; 6ECDD
-push dword 1CDh	; 6ECDF
-push dword 280h	; 6ECE4
-push byte 13h	; 6ECE9
-push byte 0	; 6ECEB
-call FillRect	; 6ECED
-add esp, byte 14h	; 6ECF2
-mov edx, 2	; 6ECF5
-mov eax, btn_DBError	; 6ECFA
-call DrawButtons	; 6ECFF
-mov dword [byte ebp+00h], 0	; 6ED04
-cmp dword [edi], byte 0	; 6ED0B
-je short .x	; 6ED0E
-mov edx, dword [esi]	; 6ED10
-mov eax, edx	; 6ED12
-shl eax, 2	; 6ED14
-sub eax, edx	; 6ED17
-shl eax, 2	; 6ED19
-add eax, edx	; 6ED1C
-add eax, byte 1Fh	; 6ED1E
-mov edx, str_ErrorsFoundInDatabases	; 6ED21
-call PrintCenteredText	; 6ED26
-add dword [esi], byte 2	; 6ED2B
-mov dword [edi], 0	; 6ED2E
+        push dword 28h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, eax
+        mov esi, edx
+        mov edi, ebx
+        mov edx, dword [fullscrbmp]
+        push edx
+        call SetDrawBitmap
+        add esp, byte 4
+        push byte 41h
+        call ClearScreen
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 5
+        mov eax, editrostersmenubar
+        call DrawMenuBar
+        push byte 41h
+        push dword 1CDh
+        push dword 280h
+        push byte 13h
+        push byte 0
+        call FillRect
+        add esp, byte 14h
+        mov edx, 2
+        mov eax, btn_DBError
+        call DrawButtons
+        mov dword [byte ebp+00h], 0
+        cmp dword [edi], byte 0
+        je short .x
+        mov edx, dword [esi]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 2
+        add eax, edx
+        add eax, byte 1Fh
+        mov edx, str_ErrorsFoundInDatabases
+        call PrintCenteredText
+        add dword [esi], byte 2
+        mov dword [edi], 0
 .x:
-pop ebp	; 6ED34
-pop edi	; 6ED35
-pop esi	; 6ED36
-pop ecx	; 6ED37
-ret	; 6ED38
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ShowDBError                                  6ED39  95 PC, medium confidence
+; Prints one error line on the database-errors screen and waits
+; (ErrorScreenWait)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/ShowDBError.c
 %ifdef CBUILD
 %include "c/front/create/ShowDBError.inc"
 %else
 ShowDBError:
-push dword 18h	; 6ED39
-call __CHK	; 6ED3E
-push esi	; 6ED43
-push edi	; 6ED44
-push ebp	; 6ED45
-sub esp, byte 4	; 6ED46
-mov edi, eax	; 6ED49
-mov esi, edx	; 6ED4B
-mov dword [esp], ebx	; 6ED4D
-mov ebp, ecx	; 6ED50
-call sub_B4BA8	; 6ED52
-mov eax, dword [fullscrbmp]	; 6ED57
-mov edx, dword [byte eax+02Ch]	; 6ED5C
-push edx	; 6ED5F
-call sub_9121C	; 6ED60
-add esp, byte 4	; 6ED65
-mov dword [edi], 0FFFFFFFFh	; 6ED68
-mov dword [esi], 0	; 6ED6E
-mov ecx, 2	; 6ED74
-mov ebx, btn_DBError	; 6ED79
-mov edx, ebp	; 6ED7E
-mov eax, dword [esp]	; 6ED80
-call ErrorScreenWait	; 6ED83
-add esp, byte 4	; 6ED88
-pop ebp	; 6ED8B
-pop edi	; 6ED8C
-pop esi	; 6ED8D
-ret	; 6ED8E
+        push dword 18h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov edi, eax
+        mov esi, edx
+        mov dword [esp], ebx
+        mov ebp, ecx
+        call sub_B4BA8
+        mov eax, dword [fullscrbmp]
+        mov edx, dword [byte eax+02Ch]
+        push edx
+        call sub_9121C
+        add esp, byte 4
+        mov dword [edi], 0FFFFFFFFh
+        mov dword [esi], 0
+        mov ecx, 2
+        mov ebx, btn_DBError
+        mov edx, ebp
+        mov eax, dword [esp]
+        call ErrorScreenWait
+        add esp, byte 4
+        pop ebp
+        pop edi
+        pop esi
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CheckTeamLines                                                  6ED8F  95 PC
+; Checks one team: 'The forward/defence/power play/penalty
+; killing/goalie/extra attacker lines are not complete on', 'There are not
+; enough players/goalies/forwards/defence on' + team name
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CheckTeamLines.c
 %ifdef CBUILD
 %include "c/front/create/CheckTeamLines.inc"
 %else
 CheckTeamLines:
-push dword 78h	; 6ED8F
-call __CHK	; 6ED94
-push esi	; 6ED99
-push edi	; 6ED9A
-push ebp	; 6ED9B
-sub esp, byte 68h	; 6ED9C
-mov ebp, edx	; 6ED9F
-mov dword [byte esp+05Ch], ebx	; 6EDA1
-mov dword [byte esp+054h], ecx	; 6EDA5
-mov dword [byte esp+064h], 0FFFFFFFEh	; 6EDA9
-call TeamRecPtr	; 6EDB1
-mov dword [byte esp+058h], eax	; 6EDB6
-xor ebx, ebx	; 6EDBA
-mov dword [byte esp+060h], ebx	; 6EDBC
-jmp near .20	; 6EDC0
+        push dword 78h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 68h
+        mov ebp, edx
+        mov dword [byte esp+05Ch], ebx
+        mov dword [byte esp+054h], ecx
+        mov dword [byte esp+064h], 0FFFFFFFEh
+        call TeamRecPtr
+        mov dword [byte esp+058h], eax
+        xor ebx, ebx
+        mov dword [byte esp+060h], ebx
+        jmp near .20
 .1:
-mov dword [byte esp+064h], 0FFFFFFFEh	; 6EDC5
-mov eax, dword [byte esp+05Ch]	; 6EDCD
-cmp dword [eax], byte 0	; 6EDD1
-je short .2	; 6EDD4
-mov ebx, dword [byte esp+054h]	; 6EDD6
-mov edx, ebp	; 6EDDA
-call DrawDBErrorsScreen	; 6EDDC
+        mov dword [byte esp+064h], 0FFFFFFFEh
+        mov eax, dword [byte esp+05Ch]
+        cmp dword [eax], byte 0
+        je short .2
+        mov ebx, dword [byte esp+054h]
+        mov edx, ebp
+        call DrawDBErrorsScreen
 .2:
-mov eax, dword [byte esp+060h]	; 6EDE1
-mov ecx, dword [byte esp+078h]	; 6EDE5
-and ecx, dword [nosplit eax*4+dword_D0CDA]	; 6EDE9
-je near .19	; 6EDF0
-cmp ecx, byte 10h	; 6EDF6
-jb short .4	; 6EDF9
-jbe near .11	; 6EDFB
-cmp ecx, 80h	; 6EE01
-jb short .3	; 6EE07
-jbe near .14	; 6EE09
-cmp ecx, 100h	; 6EE0F
-jb near .18	; 6EE15
-jbe near .15	; 6EE1B
-cmp ecx, 200h	; 6EE21
-je near .16	; 6EE27
-jmp near .18	; 6EE2D
+        mov eax, dword [byte esp+060h]
+        mov ecx, dword [byte esp+078h]
+        and ecx, dword [nosplit eax*4+dword_D0CDA]
+        je near .19
+        cmp ecx, byte 10h
+        jb short .4
+        jbe near .11
+        cmp ecx, 80h
+        jb short .3
+        jbe near .14
+        cmp ecx, 100h
+        jb near .18
+        jbe near .15
+        cmp ecx, 200h
+        je near .16
+        jmp near .18
 .3:
-cmp ecx, byte 20h	; 6EE32
-jb near .18	; 6EE35
-jbe near .12	; 6EE3B
-cmp ecx, byte 40h	; 6EE41
-je near .13	; 6EE44
-jmp near .18	; 6EE4A
+        cmp ecx, byte 20h
+        jb near .18
+        jbe near .12
+        cmp ecx, byte 40h
+        je near .13
+        jmp near .18
 .4:
-cmp ecx, byte 2	; 6EE4F
-jb short .5	; 6EE52
-jbe short .7	; 6EE54
-cmp ecx, byte 4	; 6EE56
-jb near .18	; 6EE59
-jbe short .8	; 6EE5F
-cmp ecx, byte 8	; 6EE61
-je short .10	; 6EE64
-jmp near .18	; 6EE66
+        cmp ecx, byte 2
+        jb short .5
+        jbe short .7
+        cmp ecx, byte 4
+        jb near .18
+        jbe short .8
+        cmp ecx, byte 8
+        je short .10
+        jmp near .18
 .5:
-cmp ecx, byte 1	; 6EE6B
-jne near .18	; 6EE6E
-mov ecx, 9	; 6EE74
-mov edi, esp	; 6EE79
-mov esi, str_TheForwardLinesAre	; 6EE7B
+        cmp ecx, byte 1
+        jne near .18
+        mov ecx, 9
+        mov edi, esp
+        mov esi, str_TheForwardLinesAre
 .6:
-rep movsd	; 6EE80
-movsw	; 6EE82
-movsb	; 6EE84
-jmp near .18	; 6EE85
+        rep movsd
+        movsw
+        movsb
+        jmp near .18
 .7:
-mov ecx, 9	; 6EE8A
-mov edi, esp	; 6EE8F
-mov esi, str_TheDefenceLinesAre	; 6EE91
-jmp short CheckTeamLines.6	; 6EE96
+        mov ecx, 9
+        mov edi, esp
+        mov esi, str_TheDefenceLinesAre
+        jmp short CheckTeamLines.6
 .8:
-mov ecx, 0Ah	; 6EE98
-mov edi, esp	; 6EE9D
-mov esi, str_ThePowerPlayLines	; 6EE9F
+        mov ecx, 0Ah
+        mov edi, esp
+        mov esi, str_ThePowerPlayLines
 .9:
-rep movsd	; 6EEA4
-movsw	; 6EEA6
-jmp short .18	; 6EEA8
+        rep movsd
+        movsw
+        jmp short .18
 .10:
-mov ecx, 0Bh	; 6EEAA
-mov edi, esp	; 6EEAF
-mov esi, str_ThePenaltyKillingLines	; 6EEB1
-jmp short CheckTeamLines.6	; 6EEB6
+        mov ecx, 0Bh
+        mov edi, esp
+        mov esi, str_ThePenaltyKillingLines
+        jmp short CheckTeamLines.6
 .11:
-mov ecx, 9	; 6EEB8
-mov edi, esp	; 6EEBD
-mov esi, str_TheGoalieLinesAre	; 6EEBF
-jmp short CheckTeamLines.9	; 6EEC4
+        mov ecx, 9
+        mov edi, esp
+        mov esi, str_TheGoalieLinesAre
+        jmp short CheckTeamLines.9
 .12:
-mov ecx, 0Bh	; 6EEC6
-mov edi, esp	; 6EECB
-mov esi, str_TheExtraAttackerLines	; 6EECD
-jmp short CheckTeamLines.9	; 6EED2
+        mov ecx, 0Bh
+        mov edi, esp
+        mov esi, str_TheExtraAttackerLines
+        jmp short CheckTeamLines.9
 .13:
-mov ecx, 8	; 6EED4
-mov edi, esp	; 6EED9
-mov esi, str_NotEnoughPlayers	; 6EEDB
-jmp short .17	; 6EEE0
+        mov ecx, 8
+        mov edi, esp
+        mov esi, str_NotEnoughPlayers
+        jmp short .17
 .14:
-mov ecx, 8	; 6EEE2
-mov edi, esp	; 6EEE7
-mov esi, str_NotEnoughGoalies	; 6EEE9
-jmp short .17	; 6EEEE
+        mov ecx, 8
+        mov edi, esp
+        mov esi, str_NotEnoughGoalies
+        jmp short .17
 .15:
-mov ecx, 8	; 6EEF0
-mov edi, esp	; 6EEF5
-mov esi, str_NotEnoughForwards	; 6EEF7
-jmp short CheckTeamLines.9	; 6EEFC
+        mov ecx, 8
+        mov edi, esp
+        mov esi, str_NotEnoughForwards
+        jmp short CheckTeamLines.9
 .16:
-mov ecx, 8	; 6EEFE
-mov edi, esp	; 6EF03
-mov esi, str_NotEnoughDefence	; 6EF05
+        mov ecx, 8
+        mov edi, esp
+        mov esi, str_NotEnoughDefence
 .17:
-rep movsd	; 6EF0A
-movsb	; 6EF0C
+        rep movsd
+        movsb
 .18:
-mov edx, dword [byte esp+058h]	; 6EF0D
-add edx, byte 1Ah	; 6EF11
-mov eax, esp	; 6EF14
-call strcat_	; 6EF16
-mov eax, dword [byte ebp+00h]	; 6EF1B
-mov ecx, eax	; 6EF1E
-shl ecx, 2	; 6EF20
-sub ecx, eax	; 6EF23
-shl ecx, 2	; 6EF25
-add ecx, eax	; 6EF28
-lea eax, [byte ecx+01Fh]	; 6EF2A
-mov edx, esp	; 6EF2D
-call PrintCenteredText	; 6EF2F
-mov ecx, dword [byte ebp+00h]	; 6EF34
-inc ecx	; 6EF37
-mov dword [byte ebp+00h], ecx	; 6EF38
-cmp ecx, byte 1Eh	; 6EF3B
-jl short .19	; 6EF3E
-mov ecx, dword [dword esp+080h]	; 6EF40
-mov ebx, dword [byte esp+07Ch]	; 6EF47
-mov edx, ebp	; 6EF4B
-mov eax, dword [byte esp+05Ch]	; 6EF4D
-call ShowDBError	; 6EF51
-mov dword [byte esp+064h], eax	; 6EF56
+        mov edx, dword [byte esp+058h]
+        add edx, byte 1Ah
+        mov eax, esp
+        call strcat_
+        mov eax, dword [byte ebp+00h]
+        mov ecx, eax
+        shl ecx, 2
+        sub ecx, eax
+        shl ecx, 2
+        add ecx, eax
+        lea eax, [byte ecx+01Fh]
+        mov edx, esp
+        call PrintCenteredText
+        mov ecx, dword [byte ebp+00h]
+        inc ecx
+        mov dword [byte ebp+00h], ecx
+        cmp ecx, byte 1Eh
+        jl short .19
+        mov ecx, dword [dword esp+080h]
+        mov ebx, dword [byte esp+07Ch]
+        mov edx, ebp
+        mov eax, dword [byte esp+05Ch]
+        call ShowDBError
+        mov dword [byte esp+064h], eax
 .19:
-inc dword [byte esp+060h]	; 6EF5A
+        inc dword [byte esp+060h]
 .20:
-cmp dword [byte esp+060h], byte 0Ah	; 6EF5E
-jge short .21	; 6EF63
-mov esi, dword [byte esp+064h]	; 6EF65
-cmp esi, byte 1	; 6EF69
-je short .21	; 6EF6C
-cmp esi, byte 0FFFFFFFFh	; 6EF6E
-jne near CheckTeamLines.1	; 6EF71
+        cmp dword [byte esp+060h], byte 0Ah
+        jge short .21
+        mov esi, dword [byte esp+064h]
+        cmp esi, byte 1
+        je short .21
+        cmp esi, byte 0FFFFFFFFh
+        jne near CheckTeamLines.1
 .21:
-mov eax, dword [byte esp+064h]	; 6EF77
-add esp, byte 68h	; 6EF7B
-pop ebp	; 6EF7E
-pop edi	; 6EF7F
-pop esi	; 6EF80
-ret 0Ch	; 6EF81
+        mov eax, dword [byte esp+064h]
+        add esp, byte 68h
+        pop ebp
+        pop edi
+        pop esi
+        ret 0Ch
 %endif ; C
+;-----------------------------------------------------------------------------
+; CheckDatabases                               6EF84  95 PC, medium confidence
+; Database_save 6C353: runs CheckTeamLines over the teams and shows the
+; errors before saving
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CheckDatabases.c
 %ifdef CBUILD
 %include "c/front/create/CheckDatabases.inc"
 %else
 CheckDatabases:
-push dword 48h	; 6EF84
-call __CHK	; 6EF89
-push ebx	; 6EF8E
-push ecx	; 6EF8F
-push esi	; 6EF90
-push edi	; 6EF91
-push ebp	; 6EF92
-sub esp, byte 1Ch	; 6EF93
-push eax	; 6EF96
-push edx	; 6EF97
-xor edx, edx	; 6EF98
-mov dword [byte esp+010h], edx	; 6EF9A
-mov ebx, 0FFFFFFFFh	; 6EF9E
-mov dword [byte esp+014h], ebx	; 6EFA3
-mov dword [byte esp+0Ch], ebx	; 6EFA7
-mov dword [byte esp+08h], ebx	; 6EFAB
-mov dword [byte esp+018h], edx	; 6EFAF
+        push dword 48h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 1Ch
+        push eax
+        push edx
+        xor edx, edx
+        mov dword [byte esp+010h], edx
+        mov ebx, 0FFFFFFFFh
+        mov dword [byte esp+014h], ebx
+        mov dword [byte esp+0Ch], ebx
+        mov dword [byte esp+08h], ebx
+        mov dword [byte esp+018h], edx
 .1:
-xor ebx, ebx	; 6EFB3
-xor ebp, ebp	; 6EFB5
-mov dword [byte esp+020h], ebx	; 6EFB7
-xor edx, edx	; 6EFBB
-mov dword [byte esp+01Ch], ebx	; 6EFBD
-xor edi, edi	; 6EFC1
-mov eax, dword [byte esp+018h]	; 6EFC3
-call TeamRecPtr	; 6EFC7
-mov esi, eax	; 6EFCC
+        xor ebx, ebx
+        xor ebp, ebp
+        mov dword [byte esp+020h], ebx
+        xor edx, edx
+        mov dword [byte esp+01Ch], ebx
+        xor edi, edi
+        mov eax, dword [byte esp+018h]
+        call TeamRecPtr
+        mov esi, eax
 .2:
-mov eax, edx	; 6EFCE
-shl eax, 2	; 6EFD0
-add eax, esi	; 6EFD3
-mov ecx, dword [byte eax+04Ch]	; 6EFD5
-cmp ecx, byte 0FFFFFFFFh	; 6EFD8
-je short .4	; 6EFDB
-inc ebp	; 6EFDD
-mov eax, ecx	; 6EFDE
-call KeyDbPtr	; 6EFE0
-cmp byte [byte eax+02h], 44h	; 6EFE5
-jne short .3	; 6EFE9
-inc edi	; 6EFEB
-jmp short .4	; 6EFEC
+        mov eax, edx
+        shl eax, 2
+        add eax, esi
+        mov ecx, dword [byte eax+04Ch]
+        cmp ecx, byte 0FFFFFFFFh
+        je short .4
+        inc ebp
+        mov eax, ecx
+        call KeyDbPtr
+        cmp byte [byte eax+02h], 44h
+        jne short .3
+        inc edi
+        jmp short .4
 .3:
-inc dword [byte esp+01Ch]	; 6EFEE
+        inc dword [byte esp+01Ch]
 .4:
-inc edx	; 6EFF2
-cmp edx, byte 19h	; 6EFF3
-jl short CheckDatabases.2	; 6EFF6
-xor edx, edx	; 6EFF8
+        inc edx
+        cmp edx, byte 19h
+        jl short CheckDatabases.2
+        xor edx, edx
 .5:
-mov eax, edx	; 6EFFA
-cmp dword [dword esi+eax*4+0B0h], byte 0FFFFFFFFh	; 6EFFC
-je short .6	; 6F004
-inc dword [byte esp+020h]	; 6F006
+        mov eax, edx
+        cmp dword [dword esi+eax*4+0B0h], byte 0FFFFFFFFh
+        je short .6
+        inc dword [byte esp+020h]
 .6:
-inc edx	; 6F00A
-cmp edx, byte 3	; 6F00B
-jl short CheckDatabases.5	; 6F00E
-lea eax, [dword esi+0BCh]	; 6F010
-xor edx, edx	; 6F016
+        inc edx
+        cmp edx, byte 3
+        jl short CheckDatabases.5
+        lea eax, [dword esi+0BCh]
+        xor edx, edx
 .7:
-cmp byte [edx+eax], 64h	; 6F018
-jne short .8	; 6F01C
-or bl, 1	; 6F01E
+        cmp byte [edx+eax], 64h
+        jne short .8
+        or bl, 1
 .8:
-inc edx	; 6F021
-cmp edx, byte 0Ch	; 6F022
-jl short CheckDatabases.7	; 6F025
-lea eax, [dword esi+0C8h]	; 6F027
-xor edx, edx	; 6F02D
+        inc edx
+        cmp edx, byte 0Ch
+        jl short CheckDatabases.7
+        lea eax, [dword esi+0C8h]
+        xor edx, edx
 .9:
-cmp byte [edx+eax], 64h	; 6F02F
-jne short .10	; 6F033
-or bl, 2	; 6F035
+        cmp byte [edx+eax], 64h
+        jne short .10
+        or bl, 2
 .10:
-inc edx	; 6F038
-cmp edx, byte 6	; 6F039
-jl short CheckDatabases.9	; 6F03C
-lea eax, [dword esi+0CEh]	; 6F03E
-xor edx, edx	; 6F044
+        inc edx
+        cmp edx, byte 6
+        jl short CheckDatabases.9
+        lea eax, [dword esi+0CEh]
+        xor edx, edx
 .11:
-cmp byte [edx+eax], 64h	; 6F046
-jne short .12	; 6F04A
-or bl, 4	; 6F04C
+        cmp byte [edx+eax], 64h
+        jne short .12
+        or bl, 4
 .12:
-inc edx	; 6F04F
-cmp edx, byte 0Ah	; 6F050
-jl short CheckDatabases.11	; 6F053
-lea eax, [dword esi+0D8h]	; 6F055
-xor edx, edx	; 6F05B
+        inc edx
+        cmp edx, byte 0Ah
+        jl short CheckDatabases.11
+        lea eax, [dword esi+0D8h]
+        xor edx, edx
 .13:
-cmp byte [edx+eax], 64h	; 6F05D
-jne short .14	; 6F061
-or bl, 8	; 6F063
+        cmp byte [edx+eax], 64h
+        jne short .14
+        or bl, 8
 .14:
-inc edx	; 6F066
-cmp edx, byte 8	; 6F067
-jl short CheckDatabases.13	; 6F06A
-lea eax, [dword esi+0E0h]	; 6F06C
-xor edx, edx	; 6F072
+        inc edx
+        cmp edx, byte 8
+        jl short CheckDatabases.13
+        lea eax, [dword esi+0E0h]
+        xor edx, edx
 .15:
-cmp byte [edx+eax], 64h	; 6F074
-jne short .16	; 6F078
-or bl, 10h	; 6F07A
+        cmp byte [edx+eax], 64h
+        jne short .16
+        or bl, 10h
 .16:
-inc edx	; 6F07D
-cmp edx, byte 2	; 6F07E
-jl short CheckDatabases.15	; 6F081
-lea eax, [dword esi+0E2h]	; 6F083
-xor edx, edx	; 6F089
+        inc edx
+        cmp edx, byte 2
+        jl short CheckDatabases.15
+        lea eax, [dword esi+0E2h]
+        xor edx, edx
 .17:
-cmp byte [edx+eax], 64h	; 6F08B
-jne short .18	; 6F08F
-or bl, 20h	; 6F091
+        cmp byte [edx+eax], 64h
+        jne short .18
+        or bl, 20h
 .18:
-inc edx	; 6F094
-cmp edx, byte 2	; 6F095
-jl short CheckDatabases.17	; 6F098
-cmp ebp, byte 5	; 6F09A
-jge short .19	; 6F09D
-or bl, 40h	; 6F09F
+        inc edx
+        cmp edx, byte 2
+        jl short CheckDatabases.17
+        cmp ebp, byte 5
+        jge short .19
+        or bl, 40h
 .19:
-cmp dword [byte esp+01Ch], byte 3	; 6F0A2
-jge short .20	; 6F0A7
-or bh, 1	; 6F0A9
+        cmp dword [byte esp+01Ch], byte 3
+        jge short .20
+        or bh, 1
 .20:
-cmp edi, byte 2	; 6F0AC
-jge short .21	; 6F0AF
-or bh, 2	; 6F0B1
+        cmp edi, byte 2
+        jge short .21
+        or bh, 2
 .21:
-cmp dword [byte esp+020h], byte 2	; 6F0B4
-jge short .22	; 6F0B9
-or bl, 80h	; 6F0BB
+        cmp dword [byte esp+020h], byte 2
+        jge short .22
+        or bl, 80h
 .22:
-mov eax, 0FFFFFFFEh	; 6F0BE
-test ebx, ebx	; 6F0C3
-je short .23	; 6F0C5
-xor esi, esi	; 6F0C7
-mov dword [byte esp+014h], esi	; 6F0C9
-mov edi, dword [esp]	; 6F0CD
-push edi	; 6F0D0
-mov ebp, dword [byte esp+08h]	; 6F0D1
-push ebp	; 6F0D5
-push ebx	; 6F0D6
-lea ecx, [byte esp+014h]	; 6F0D7
-lea ebx, [byte esp+018h]	; 6F0DB
-lea edx, [byte esp+01Ch]	; 6F0DF
-mov eax, dword [byte esp+024h]	; 6F0E3
-call CheckTeamLines	; 6F0E7
-mov edx, dword [byte esp+010h]	; 6F0EC
-test edx, edx	; 6F0F0
-je short .23	; 6F0F2
-lea ebx, [byte edx+01h]	; 6F0F4
-mov dword [byte esp+010h], ebx	; 6F0F7
+        mov eax, 0FFFFFFFEh
+        test ebx, ebx
+        je short .23
+        xor esi, esi
+        mov dword [byte esp+014h], esi
+        mov edi, dword [esp]
+        push edi
+        mov ebp, dword [byte esp+08h]
+        push ebp
+        push ebx
+        lea ecx, [byte esp+014h]
+        lea ebx, [byte esp+018h]
+        lea edx, [byte esp+01Ch]
+        mov eax, dword [byte esp+024h]
+        call CheckTeamLines
+        mov edx, dword [byte esp+010h]
+        test edx, edx
+        je short .23
+        lea ebx, [byte edx+01h]
+        mov dword [byte esp+010h], ebx
 .23:
-cmp eax, byte 0FFFFFFFEh	; 6F0FB
-jne short .25	; 6F0FE
-mov ecx, dword [byte esp+010h]	; 6F100
-cmp ecx, byte 1Eh	; 6F104
-jge short .24	; 6F107
-test ecx, ecx	; 6F109
-jle short .25	; 6F10B
-cmp dword [byte esp+018h], byte 1Bh	; 6F10D
-jne short .25	; 6F112
+        cmp eax, byte 0FFFFFFFEh
+        jne short .25
+        mov ecx, dword [byte esp+010h]
+        cmp ecx, byte 1Eh
+        jge short .24
+        test ecx, ecx
+        jle short .25
+        cmp dword [byte esp+018h], byte 1Bh
+        jne short .25
 .24:
-mov ecx, dword [esp]	; 6F114
-mov ebx, dword [byte esp+04h]	; 6F117
-lea edx, [byte esp+010h]	; 6F11B
-lea eax, [byte esp+0Ch]	; 6F11F
-call ShowDBError	; 6F123
+        mov ecx, dword [esp]
+        mov ebx, dword [byte esp+04h]
+        lea edx, [byte esp+010h]
+        lea eax, [byte esp+0Ch]
+        call ShowDBError
 .25:
-cmp eax, byte 0FFFFFFFFh	; 6F128
-je short .26	; 6F12B
-cmp eax, byte 1	; 6F12D
-jne short .27	; 6F130
+        cmp eax, byte 0FFFFFFFFh
+        je short .26
+        cmp eax, byte 1
+        jne short .27
 .26:
-mov dword [byte esp+018h], 1Ch	; 6F132
+        mov dword [byte esp+018h], 1Ch
 .27:
-mov eax, dword [byte esp+018h]	; 6F13A
-inc eax	; 6F13E
-mov dword [byte esp+018h], eax	; 6F13F
-cmp eax, byte 1Ch	; 6F143
-jl near CheckDatabases.1	; 6F146
-mov eax, dword [byte esp+014h]	; 6F14C
-add esp, byte 24h	; 6F150
-pop ebp	; 6F153
-pop edi	; 6F154
-pop esi	; 6F155
-pop ecx	; 6F156
-pop ebx	; 6F157
-ret	; 6F158
+        mov eax, dword [byte esp+018h]
+        inc eax
+        mov dword [byte esp+018h], eax
+        cmp eax, byte 1Ch
+        jl near CheckDatabases.1
+        mov eax, dword [byte esp+014h]
+        add esp, byte 24h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SplitPlayerName                                                 6F159  95 PC
+; Splits a full name at the first non-letter run into first name (max 15) and
+; last name using the ctype table (C4B69 bit C0h)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/SplitPlayerName.c
 %ifdef CBUILD
 %include "c/front/create/SplitPlayerName.inc"
 %else
 SplitPlayerName:
-push dword 20h	; 6F159
-call __CHK	; 6F15E
-push ecx	; 6F163
-push esi	; 6F164
-push edi	; 6F165
-push ebp	; 6F166
-sub esp, byte 0Ch	; 6F167
-mov ecx, eax	; 6F16A
-mov dword [byte esp+04h], edx	; 6F16C
-mov dword [byte esp+08h], ebx	; 6F170
-call strlen_	; 6F174
-mov esi, eax	; 6F179
-xor eax, eax	; 6F17B
+        push dword 20h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 0Ch
+        mov ecx, eax
+        mov dword [byte esp+04h], edx
+        mov dword [byte esp+08h], ebx
+        call strlen_
+        mov esi, eax
+        xor eax, eax
 .1:
-mov dl, byte [ecx+eax]	; 6F17D
-inc dl	; 6F180
-and edx, 0FFh	; 6F182
-mov edx, dword [dword edx+byte_C4B6C-3]	; 6F188
-sar edx, 18h	; 6F18E
-test dl, 0C0h	; 6F191
-jne short .2	; 6F194
-cmp eax, esi	; 6F196
-jge short .2	; 6F198
-inc eax	; 6F19A
-jmp short SplitPlayerName.1	; 6F19B
+        mov dl, byte [ecx+eax]
+        inc dl
+        and edx, 0FFh
+        mov edx, dword [dword edx+byte_C4B6C-3]
+        sar edx, 18h
+        test dl, 0C0h
+        jne short .2
+        cmp eax, esi
+        jge short .2
+        inc eax
+        jmp short SplitPlayerName.1
 .2:
-xor edx, edx	; 6F19D
-mov dword [esp], edx	; 6F19F
-jmp short .6	; 6F1A2
+        xor edx, edx
+        mov dword [esp], edx
+        jmp short .6
 .3:
-lea edi, [ecx+eax]	; 6F1A4
-mov bl, byte [edi]	; 6F1A7
-inc bl	; 6F1A9
-and ebx, 0FFh	; 6F1AB
-mov ebx, dword [dword ebx+byte_C4B6C-3]	; 6F1B1
-sar ebx, 18h	; 6F1B7
-test bl, 0C0h	; 6F1BA
-je short .4	; 6F1BD
-mov ebp, dword [byte esp+04h]	; 6F1BF
-mov bl, byte [edi]	; 6F1C3
-mov byte [edx+ebp], bl	; 6F1C5
-inc edx	; 6F1C8
-jmp short .5	; 6F1C9
+        lea edi, [ecx+eax]
+        mov bl, byte [edi]
+        inc bl
+        and ebx, 0FFh
+        mov ebx, dword [dword ebx+byte_C4B6C-3]
+        sar ebx, 18h
+        test bl, 0C0h
+        je short .4
+        mov ebp, dword [byte esp+04h]
+        mov bl, byte [edi]
+        mov byte [edx+ebp], bl
+        inc edx
+        jmp short .5
 .4:
-mov dword [esp], 0FFFFFFFFh	; 6F1CB
+        mov dword [esp], 0FFFFFFFFh
 .5:
-inc eax	; 6F1D2
+        inc eax
 .6:
-cmp eax, esi	; 6F1D3
-jge short .7	; 6F1D5
-cmp edx, byte 0Fh	; 6F1D7
-jge short .7	; 6F1DA
-cmp dword [esp], byte 0	; 6F1DC
-je short SplitPlayerName.3	; 6F1E0
+        cmp eax, esi
+        jge short .7
+        cmp edx, byte 0Fh
+        jge short .7
+        cmp dword [esp], byte 0
+        je short SplitPlayerName.3
 .7:
-mov ebx, dword [byte esp+04h]	; 6F1E2
-mov byte [edx+ebx], 0	; 6F1E6
-cmp edx, byte 0Fh	; 6F1EA
-jne short .9	; 6F1ED
-mov dl, byte [ecx+eax]	; 6F1EF
-inc dl	; 6F1F2
-and edx, 0FFh	; 6F1F4
-mov edx, dword [dword edx+byte_C4B6C-3]	; 6F1FA
-sar edx, 18h	; 6F200
-test dl, 0C0h	; 6F203
-je short .9	; 6F206
+        mov ebx, dword [byte esp+04h]
+        mov byte [edx+ebx], 0
+        cmp edx, byte 0Fh
+        jne short .9
+        mov dl, byte [ecx+eax]
+        inc dl
+        and edx, 0FFh
+        mov edx, dword [dword edx+byte_C4B6C-3]
+        sar edx, 18h
+        test dl, 0C0h
+        je short .9
 .8:
-mov dl, byte [ecx+eax]	; 6F208
-inc dl	; 6F20B
-and edx, 0FFh	; 6F20D
-mov edx, dword [dword edx+byte_C4B6C-3]	; 6F213
-sar edx, 18h	; 6F219
-test dl, 0C0h	; 6F21C
-je short .9	; 6F21F
-cmp eax, esi	; 6F221
-jge short .9	; 6F223
-inc eax	; 6F225
-jmp short SplitPlayerName.8	; 6F226
+        mov dl, byte [ecx+eax]
+        inc dl
+        and edx, 0FFh
+        mov edx, dword [dword edx+byte_C4B6C-3]
+        sar edx, 18h
+        test dl, 0C0h
+        je short .9
+        cmp eax, esi
+        jge short .9
+        inc eax
+        jmp short SplitPlayerName.8
 .9:
-mov dl, byte [ecx+eax]	; 6F228
-inc dl	; 6F22B
-and edx, 0FFh	; 6F22D
-mov edx, dword [dword edx+byte_C4B6C-3]	; 6F233
-sar edx, 18h	; 6F239
-test dl, 0C0h	; 6F23C
-jne short .10	; 6F23F
-cmp eax, esi	; 6F241
-jge short .10	; 6F243
-inc eax	; 6F245
-jmp short SplitPlayerName.9	; 6F246
+        mov dl, byte [ecx+eax]
+        inc dl
+        and edx, 0FFh
+        mov edx, dword [dword edx+byte_C4B6C-3]
+        sar edx, 18h
+        test dl, 0C0h
+        jne short .10
+        cmp eax, esi
+        jge short .10
+        inc eax
+        jmp short SplitPlayerName.9
 .10:
-xor edx, edx	; 6F248
-mov dword [esp], edx	; 6F24A
-jmp short .14	; 6F24D
+        xor edx, edx
+        mov dword [esp], edx
+        jmp short .14
 .11:
-lea edi, [ecx+eax]	; 6F24F
-mov bl, byte [edi]	; 6F252
-inc bl	; 6F254
-and ebx, 0FFh	; 6F256
-mov ebx, dword [dword ebx+byte_C4B6C-3]	; 6F25C
-sar ebx, 18h	; 6F262
-test bl, 0C0h	; 6F265
-je short .12	; 6F268
-mov ebp, dword [byte esp+08h]	; 6F26A
-mov bl, byte [edi]	; 6F26E
-mov byte [edx+ebp], bl	; 6F270
-inc edx	; 6F273
-jmp short .13	; 6F274
+        lea edi, [ecx+eax]
+        mov bl, byte [edi]
+        inc bl
+        and ebx, 0FFh
+        mov ebx, dword [dword ebx+byte_C4B6C-3]
+        sar ebx, 18h
+        test bl, 0C0h
+        je short .12
+        mov ebp, dword [byte esp+08h]
+        mov bl, byte [edi]
+        mov byte [edx+ebp], bl
+        inc edx
+        jmp short .13
 .12:
-mov dword [esp], 0FFFFFFFFh	; 6F276
+        mov dword [esp], 0FFFFFFFFh
 .13:
-inc eax	; 6F27D
+        inc eax
 .14:
-cmp eax, esi	; 6F27E
-jge short .15	; 6F280
-cmp edx, byte 0Fh	; 6F282
-jge short .15	; 6F285
-cmp dword [esp], byte 0	; 6F287
-je short SplitPlayerName.11	; 6F28B
+        cmp eax, esi
+        jge short .15
+        cmp edx, byte 0Fh
+        jge short .15
+        cmp dword [esp], byte 0
+        je short SplitPlayerName.11
 .15:
-add edx, dword [byte esp+08h]	; 6F28D
-mov byte [edx], 0	; 6F291
-add esp, byte 0Ch	; 6F294
-pop ebp	; 6F297
-pop edi	; 6F298
-pop esi	; 6F299
-pop ecx	; 6F29A
-ret	; 6F29B
+        add edx, dword [byte esp+08h]
+        mov byte [edx], 0
+        add esp, byte 0Ch
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MoveToOtherRoster                                               6F29C  95 PC
+; 'Move to Roster N' menu item: moves the selected players to the other
+; panel's team ('There is no space to add the selected player' / 'There is
+; not enough space to add all selected players'), FixJerseyNumber, reloads
+; and redraws
+;-----------------------------------------------------------------------------
 MoveToOtherRoster:
-push dword 4Ch	; 6F29C
-call __CHK	; 6F2A1
-push ecx	; 6F2A6
-push esi	; 6F2A7
-push edi	; 6F2A8
-push ebp	; 6F2A9
-sub esp, byte 1Ch	; 6F2AA
-push edx	; 6F2AD
-push ebx	; 6F2AE
-cmp dword [eax], byte 3	; 6F2AF
-setne al	; 6F2B2
-and eax, 0FFh	; 6F2B5
-mov dword [byte esp+010h], eax	; 6F2BA
-sete al	; 6F2BE
-mov ecx, eax	; 6F2C1
-and ecx, 0FFh	; 6F2C3
-xor ebx, ebx	; 6F2C9
-mov dword [byte esp+0Ch], ebx	; 6F2CB
-mov dword [byte esp+014h], ebx	; 6F2CF
-xor ebp, ebp	; 6F2D3
-mov eax, dword [byte esp+010h]	; 6F2D5
-cmp byte [dword eax+rosterisfa], 0	; 6F2D9
-jne near .14	; 6F2E0
-mov dword [byte esp+01Ch], ebx	; 6F2E6
-jmp near .13	; 6F2EA
+        push dword 4Ch
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 1Ch
+        push edx
+        push ebx
+        cmp dword [eax], byte 3
+        setne al
+        and eax, 0FFh
+        mov dword [byte esp+010h], eax
+        sete al
+        mov ecx, eax
+        and ecx, 0FFh
+        xor ebx, ebx
+        mov dword [byte esp+0Ch], ebx
+        mov dword [byte esp+014h], ebx
+        xor ebp, ebp
+        mov eax, dword [byte esp+010h]
+        cmp byte [dword eax+rosterisfa], 0
+        jne near .14
+        mov dword [byte esp+01Ch], ebx
+        jmp near .13
 .1:
-mov edx, dword [byte esp+010h]	; 6F2EF
-mov eax, edx	; 6F2F3
-shl eax, 3	; 6F2F5
-sub eax, edx	; 6F2F8
-shl eax, 2	; 6F2FA
-add eax, esi	; 6F2FD
-cmp byte [dword eax+rostersel], 0	; 6F2FF
-je near .12	; 6F306
-mov eax, edx	; 6F30C
-shl eax, 2	; 6F30E
-sub eax, edx	; 6F311
-shl eax, 2	; 6F313
-mov ebx, eax	; 6F316
-shl ebx, 6	; 6F318
-sub ebx, eax	; 6F31B
-mov eax, esi	; 6F31D
-shl eax, 3	; 6F31F
-sub eax, esi	; 6F322
-shl eax, 2	; 6F324
-sub eax, esi	; 6F327
-inc dword [byte esp+014h]	; 6F329
-lea edx, [ebx+eax]	; 6F32D
-mov eax, dword [dword edx+dword_EA994]	; 6F330
-mov dword [byte esp+018h], eax	; 6F336
-call KeyDbPtr	; 6F33A
-mov esi, eax	; 6F33F
-mov dword [byte esp+020h], 0FFFFFFFFh	; 6F341
-cmp byte [dword edx+rosterlist], 47h	; 6F349
-jne short .5	; 6F350
-xor ebx, ebx	; 6F352
-jmp short .4	; 6F354
+        mov edx, dword [byte esp+010h]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        add eax, esi
+        cmp byte [dword eax+rostersel], 0
+        je near .12
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov eax, esi
+        shl eax, 3
+        sub eax, esi
+        shl eax, 2
+        sub eax, esi
+        inc dword [byte esp+014h]
+        lea edx, [ebx+eax]
+        mov eax, dword [dword edx+dword_EA994]
+        mov dword [byte esp+018h], eax
+        call KeyDbPtr
+        mov esi, eax
+        mov dword [byte esp+020h], 0FFFFFFFFh
+        cmp byte [dword edx+rosterlist], 47h
+        jne short .5
+        xor ebx, ebx
+        jmp short .4
 .2:
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F356
-mov eax, ebx	; 6F35D
-cmp dword [dword edx+eax*4+0B0h], byte 0FFFFFFFFh	; 6F35F
-jne short .3	; 6F367
-lea eax, [byte ebx+019h]	; 6F369
-mov dword [byte esp+020h], eax	; 6F36C
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, ebx
+        cmp dword [dword edx+eax*4+0B0h], byte 0FFFFFFFFh
+        jne short .3
+        lea eax, [byte ebx+019h]
+        mov dword [byte esp+020h], eax
 .3:
-inc ebx	; 6F370
+        inc ebx
 .4:
-cmp ebx, byte 3	; 6F371
-jge short .9	; 6F374
-cmp dword [byte esp+020h], byte 0	; 6F376
-jl short MoveToOtherRoster.2	; 6F37B
-jmp short .9	; 6F37D
+        cmp ebx, byte 3
+        jge short .9
+        cmp dword [byte esp+020h], byte 0
+        jl short MoveToOtherRoster.2
+        jmp short .9
 .5:
-xor ebx, ebx	; 6F37F
-jmp short .8	; 6F381
+        xor ebx, ebx
+        jmp short .8
 .6:
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F383
-mov eax, ebx	; 6F38A
-cmp dword [byte edx+eax*4+04Ch], byte 0FFFFFFFFh	; 6F38C
-jne short .7	; 6F391
-mov dword [byte esp+020h], ebx	; 6F393
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, ebx
+        cmp dword [byte edx+eax*4+04Ch], byte 0FFFFFFFFh
+        jne short .7
+        mov dword [byte esp+020h], ebx
 .7:
-inc ebx	; 6F397
+        inc ebx
 .8:
-cmp ebx, byte 19h	; 6F398
-jge short .9	; 6F39B
-cmp dword [byte esp+020h], byte 0	; 6F39D
-jl short MoveToOtherRoster.6	; 6F3A2
+        cmp ebx, byte 19h
+        jge short .9
+        cmp dword [byte esp+020h], byte 0
+        jl short MoveToOtherRoster.6
 .9:
-cmp dword [byte esp+020h], byte 0	; 6F3A4
-jl near .12	; 6F3A9
-mov dword [byte esp+0Ch], 0FFFFFFFFh	; 6F3AF
-mov al, byte [dword ecx+rosterteam]	; 6F3B7
-mov byte [esi], al	; 6F3BD
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F3BF
-mov eax, dword [byte esp+020h]	; 6F3C6
-shl eax, 2	; 6F3CA
-inc ebp	; 6F3CD
-add eax, edx	; 6F3CE
-mov edx, dword [byte esp+018h]	; 6F3D0
-mov dword [byte eax+04Ch], edx	; 6F3D4
-mov eax, ecx	; 6F3D7
-shl eax, 2	; 6F3D9
-sub eax, ecx	; 6F3DC
-shl eax, 2	; 6F3DE
-mov ebx, eax	; 6F3E1
-shl ebx, 6	; 6F3E3
-sub ebx, eax	; 6F3E6
-mov edx, dword [byte esp+020h]	; 6F3E8
-mov eax, edx	; 6F3EC
-shl eax, 3	; 6F3EE
-sub eax, edx	; 6F3F1
-shl eax, 2	; 6F3F3
-sub eax, edx	; 6F3F6
-mov byte [dword ebx+eax+rosterstat], 2	; 6F3F8
-xor eax, eax	; 6F400
-mov edx, dword [byte esp+010h]	; 6F402
-mov al, byte [dword edx+rosterteam]	; 6F406
-mov edx, dword [byte esp+018h]	; 6F40C
-call RemovePlayerFromTeam	; 6F410
-xor ebx, ebx	; 6F415
+        cmp dword [byte esp+020h], byte 0
+        jl near .12
+        mov dword [byte esp+0Ch], 0FFFFFFFFh
+        mov al, byte [dword ecx+rosterteam]
+        mov byte [esi], al
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, dword [byte esp+020h]
+        shl eax, 2
+        inc ebp
+        add eax, edx
+        mov edx, dword [byte esp+018h]
+        mov dword [byte eax+04Ch], edx
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov edx, dword [byte esp+020h]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        mov byte [dword ebx+eax+rosterstat], 2
+        xor eax, eax
+        mov edx, dword [byte esp+010h]
+        mov al, byte [dword edx+rosterteam]
+        mov edx, dword [byte esp+018h]
+        call RemovePlayerFromTeam
+        xor ebx, ebx
 .10:
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F417
-mov eax, ebx	; 6F41E
-mov eax, dword [byte edx+eax*4+04Ch]	; 6F420
-call KeyDbPtr	; 6F424
-mov dl, byte [byte esi+01h]	; 6F429
-cmp dl, byte [byte eax+01h]	; 6F42C
-jne short .11	; 6F42F
-mov eax, ecx	; 6F431
-shl eax, 2	; 6F433
-sub eax, ecx	; 6F436
-shl eax, 2	; 6F438
-mov edx, eax	; 6F43B
-shl eax, 6	; 6F43D
-sub eax, edx	; 6F440
-mov dword [byte esp+08h], eax	; 6F442
-mov edi, 1Ch	; 6F446
-sub edi, ebp	; 6F44B
-mov eax, edi	; 6F44D
-shl eax, 3	; 6F44F
-sub eax, edi	; 6F452
-shl eax, 2	; 6F454
-sub eax, edi	; 6F457
-add eax, dword [byte esp+08h]	; 6F459
-mov dl, byte [byte esi+01h]	; 6F45D
-mov byte [dword eax+rosterjersey], dl	; 6F460
-mov dl, byte [byte esp+020h]	; 6F466
-mov byte [dword eax+rosterslot], dl	; 6F46A
-mov edx, edi	; 6F470
-mov eax, ecx	; 6F472
-call FixJerseyNumber	; 6F474
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, ebx
+        mov eax, dword [byte edx+eax*4+04Ch]
+        call KeyDbPtr
+        mov dl, byte [byte esi+01h]
+        cmp dl, byte [byte eax+01h]
+        jne short .11
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 2
+        mov edx, eax
+        shl eax, 6
+        sub eax, edx
+        mov dword [byte esp+08h], eax
+        mov edi, 1Ch
+        sub edi, ebp
+        mov eax, edi
+        shl eax, 3
+        sub eax, edi
+        shl eax, 2
+        sub eax, edi
+        add eax, dword [byte esp+08h]
+        mov dl, byte [byte esi+01h]
+        mov byte [dword eax+rosterjersey], dl
+        mov dl, byte [byte esp+020h]
+        mov byte [dword eax+rosterslot], dl
+        mov edx, edi
+        mov eax, ecx
+        call FixJerseyNumber
 .11:
-inc ebx	; 6F479
-cmp ebx, byte 1Ch	; 6F47A
-jl short MoveToOtherRoster.10	; 6F47D
+        inc ebx
+        cmp ebx, byte 1Ch
+        jl short MoveToOtherRoster.10
 .12:
-inc dword [byte esp+01Ch]	; 6F47F
+        inc dword [byte esp+01Ch]
 .13:
-mov esi, dword [byte esp+01Ch]	; 6F483
-cmp esi, byte 1Ch	; 6F487
-jl near MoveToOtherRoster.1	; 6F48A
-jmp near .28	; 6F490
+        mov esi, dword [byte esp+01Ch]
+        cmp esi, byte 1Ch
+        jl near MoveToOtherRoster.1
+        jmp near .28
 .14:
-mov dword [byte esp+01Ch], ebx	; 6F495
-jmp near .27	; 6F499
+        mov dword [byte esp+01Ch], ebx
+        jmp near .27
 .15:
-mov eax, dword [falistsel]	; 6F49E
-mov ebx, dword [byte esp+01Ch]	; 6F4A3
-add eax, ebx	; 6F4A7
-cmp byte [eax], 0	; 6F4A9
-je near .26	; 6F4AC
-mov edx, ebx	; 6F4B2
-shl edx, 3	; 6F4B4
-sub edx, ebx	; 6F4B7
-shl edx, 2	; 6F4B9
-sub edx, ebx	; 6F4BC
-mov eax, dword [falist]	; 6F4BE
-inc dword [byte esp+014h]	; 6F4C3
-mov eax, dword [byte edx+eax+04h]	; 6F4C7
-mov dword [byte esp+018h], eax	; 6F4CB
-call KeyDbPtr	; 6F4CF
-mov esi, eax	; 6F4D4
-mov dword [byte esp+020h], 0FFFFFFFFh	; 6F4D6
-mov eax, dword [falist]	; 6F4DE
-cmp byte [edx+eax], 47h	; 6F4E3
-jne short .19	; 6F4E7
-xor ebx, ebx	; 6F4E9
-jmp short .18	; 6F4EB
+        mov eax, dword [falistsel]
+        mov ebx, dword [byte esp+01Ch]
+        add eax, ebx
+        cmp byte [eax], 0
+        je near .26
+        mov edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        shl edx, 2
+        sub edx, ebx
+        mov eax, dword [falist]
+        inc dword [byte esp+014h]
+        mov eax, dword [byte edx+eax+04h]
+        mov dword [byte esp+018h], eax
+        call KeyDbPtr
+        mov esi, eax
+        mov dword [byte esp+020h], 0FFFFFFFFh
+        mov eax, dword [falist]
+        cmp byte [edx+eax], 47h
+        jne short .19
+        xor ebx, ebx
+        jmp short .18
 .16:
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F4ED
-mov eax, ebx	; 6F4F4
-cmp dword [dword edx+eax*4+0B0h], byte 0FFFFFFFFh	; 6F4F6
-jne short .17	; 6F4FE
-lea eax, [byte ebx+019h]	; 6F500
-mov dword [byte esp+020h], eax	; 6F503
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, ebx
+        cmp dword [dword edx+eax*4+0B0h], byte 0FFFFFFFFh
+        jne short .17
+        lea eax, [byte ebx+019h]
+        mov dword [byte esp+020h], eax
 .17:
-inc ebx	; 6F507
+        inc ebx
 .18:
-cmp ebx, byte 3	; 6F508
-jge short .23	; 6F50B
-cmp dword [byte esp+020h], byte 0	; 6F50D
-jl short MoveToOtherRoster.16	; 6F512
-jmp short .23	; 6F514
+        cmp ebx, byte 3
+        jge short .23
+        cmp dword [byte esp+020h], byte 0
+        jl short MoveToOtherRoster.16
+        jmp short .23
 .19:
-xor ebx, ebx	; 6F516
-jmp short .22	; 6F518
+        xor ebx, ebx
+        jmp short .22
 .20:
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F51A
-mov eax, ebx	; 6F521
-cmp dword [byte edx+eax*4+04Ch], byte 0FFFFFFFFh	; 6F523
-jne short .21	; 6F528
-mov dword [byte esp+020h], ebx	; 6F52A
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, ebx
+        cmp dword [byte edx+eax*4+04Ch], byte 0FFFFFFFFh
+        jne short .21
+        mov dword [byte esp+020h], ebx
 .21:
-inc ebx	; 6F52E
+        inc ebx
 .22:
-cmp ebx, byte 19h	; 6F52F
-jge short .23	; 6F532
-cmp dword [byte esp+020h], byte 0	; 6F534
-jl short MoveToOtherRoster.20	; 6F539
+        cmp ebx, byte 19h
+        jge short .23
+        cmp dword [byte esp+020h], byte 0
+        jl short MoveToOtherRoster.20
 .23:
-cmp dword [byte esp+020h], byte 0	; 6F53B
-jl near .26	; 6F540
-mov dword [byte esp+0Ch], 0FFFFFFFFh	; 6F546
-mov al, byte [dword ecx+rosterteam]	; 6F54E
-mov byte [esi], al	; 6F554
-mov edx, dword [nosplit ecx*4+rosterteamrec]	; 6F556
-mov eax, dword [byte esp+020h]	; 6F55D
-shl eax, 2	; 6F561
-inc ebp	; 6F564
-add eax, edx	; 6F565
-mov edx, dword [byte esp+018h]	; 6F567
-mov dword [byte eax+04Ch], edx	; 6F56B
-mov eax, ecx	; 6F56E
-shl eax, 2	; 6F570
-sub eax, ecx	; 6F573
-shl eax, 2	; 6F575
-mov ebx, eax	; 6F578
-shl ebx, 6	; 6F57A
-sub ebx, eax	; 6F57D
-mov edx, dword [byte esp+020h]	; 6F57F
-mov eax, edx	; 6F583
-shl eax, 3	; 6F585
-sub eax, edx	; 6F588
-shl eax, 2	; 6F58A
-sub eax, edx	; 6F58D
-mov byte [dword ebx+eax+rosterstat], 2	; 6F58F
-xor ebx, ebx	; 6F597
+        cmp dword [byte esp+020h], byte 0
+        jl near .26
+        mov dword [byte esp+0Ch], 0FFFFFFFFh
+        mov al, byte [dword ecx+rosterteam]
+        mov byte [esi], al
+        mov edx, dword [nosplit ecx*4+rosterteamrec]
+        mov eax, dword [byte esp+020h]
+        shl eax, 2
+        inc ebp
+        add eax, edx
+        mov edx, dword [byte esp+018h]
+        mov dword [byte eax+04Ch], edx
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov edx, dword [byte esp+020h]
+        mov eax, edx
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        sub eax, edx
+        mov byte [dword ebx+eax+rosterstat], 2
+        xor ebx, ebx
 .24:
-mov eax, dword [nosplit ecx*4+rosterteamrec]	; 6F599
-mov edx, ebx	; 6F5A0
-mov eax, dword [byte eax+edx*4+04Ch]	; 6F5A2
-call KeyDbPtr	; 6F5A6
-mov dl, byte [byte esi+01h]	; 6F5AB
-cmp dl, byte [byte eax+01h]	; 6F5AE
-jne short .25	; 6F5B1
-mov eax, ecx	; 6F5B3
-shl eax, 2	; 6F5B5
-sub eax, ecx	; 6F5B8
-shl eax, 2	; 6F5BA
-mov edx, eax	; 6F5BD
-shl eax, 6	; 6F5BF
-sub eax, edx	; 6F5C2
-mov dword [byte esp+08h], eax	; 6F5C4
-mov edi, 1Ch	; 6F5C8
-sub edi, ebp	; 6F5CD
-mov eax, edi	; 6F5CF
-shl eax, 3	; 6F5D1
-sub eax, edi	; 6F5D4
-shl eax, 2	; 6F5D6
-sub eax, edi	; 6F5D9
-add eax, dword [byte esp+08h]	; 6F5DB
-mov dl, byte [byte esi+01h]	; 6F5DF
-mov byte [dword eax+rosterjersey], dl	; 6F5E2
-mov dl, byte [byte esp+020h]	; 6F5E8
-mov byte [dword eax+rosterslot], dl	; 6F5EC
-mov edx, edi	; 6F5F2
-mov eax, ecx	; 6F5F4
-call FixJerseyNumber	; 6F5F6
+        mov eax, dword [nosplit ecx*4+rosterteamrec]
+        mov edx, ebx
+        mov eax, dword [byte eax+edx*4+04Ch]
+        call KeyDbPtr
+        mov dl, byte [byte esi+01h]
+        cmp dl, byte [byte eax+01h]
+        jne short .25
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 2
+        mov edx, eax
+        shl eax, 6
+        sub eax, edx
+        mov dword [byte esp+08h], eax
+        mov edi, 1Ch
+        sub edi, ebp
+        mov eax, edi
+        shl eax, 3
+        sub eax, edi
+        shl eax, 2
+        sub eax, edi
+        add eax, dword [byte esp+08h]
+        mov dl, byte [byte esi+01h]
+        mov byte [dword eax+rosterjersey], dl
+        mov dl, byte [byte esp+020h]
+        mov byte [dword eax+rosterslot], dl
+        mov edx, edi
+        mov eax, ecx
+        call FixJerseyNumber
 .25:
-inc ebx	; 6F5FB
-cmp ebx, byte 1Ch	; 6F5FC
-jl short MoveToOtherRoster.24	; 6F5FF
+        inc ebx
+        cmp ebx, byte 1Ch
+        jl short MoveToOtherRoster.24
 .26:
-inc dword [byte esp+01Ch]	; 6F601
+        inc dword [byte esp+01Ch]
 .27:
-mov eax, dword [byte esp+01Ch]	; 6F605
-cmp eax, dword [facount]	; 6F609
-jl near MoveToOtherRoster.15	; 6F60F
+        mov eax, dword [byte esp+01Ch]
+        cmp eax, dword [facount]
+        jl near MoveToOtherRoster.15
 .28:
-mov ecx, dword [byte esp+014h]	; 6F615
-cmp ebp, ecx	; 6F619
-je short .31	; 6F61B
-cmp ecx, byte 1	; 6F61D
-jne short .29	; 6F620
-mov dword [msglines], str_ThereIsNoSpace	; 6F622
-mov dword [msglines+4], str_TheSelectedPlayer	; 6F62C
-push byte 0FFFFFFFFh	; 6F636
-mov esi, dword [byte esp+04h]	; 6F638
-push esi	; 6F63C
-mov edi, dword [byte esp+0Ch]	; 6F63D
-push edi	; 6F641
-jmp short .30	; 6F642
+        mov ecx, dword [byte esp+014h]
+        cmp ebp, ecx
+        je short .31
+        cmp ecx, byte 1
+        jne short .29
+        mov dword [msglines], str_ThereIsNoSpace
+        mov dword [msglines+4], str_TheSelectedPlayer
+        push byte 0FFFFFFFFh
+        mov esi, dword [byte esp+04h]
+        push esi
+        mov edi, dword [byte esp+0Ch]
+        push edi
+        jmp short .30
 .29:
-mov dword [msglines], str_NotEnoughSpaceTo2	; 6F644
-mov dword [msglines+4], str_AddAllSelectedPlayers	; 6F64E
-push byte 0FFFFFFFFh	; 6F658
-mov eax, dword [byte esp+04h]	; 6F65A
-push eax	; 6F65E
-mov edx, dword [byte esp+0Ch]	; 6F65F
-push edx	; 6F663
+        mov dword [msglines], str_NotEnoughSpaceTo2
+        mov dword [msglines+4], str_AddAllSelectedPlayers
+        push byte 0FFFFFFFFh
+        mov eax, dword [byte esp+04h]
+        push eax
+        mov edx, dword [byte esp+0Ch]
+        push edx
 .30:
-push byte 0	; 6F664
-push byte 0	; 6F666
-mov ecx, 2	; 6F668
-mov ebx, msglines	; 6F66D
-mov edx, 0FFFFFFFFh	; 6F672
-mov eax, edx	; 6F677
-call MessageBox	; 6F679
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
 .31:
-cmp dword [byte esp+0Ch], byte 0	; 6F67E
-je short .x	; 6F683
-mov dword [dbdirty], 1	; 6F685
-xor eax, eax	; 6F68F
-call LoadRosterList	; 6F691
-mov eax, 1	; 6F696
-call LoadRosterList	; 6F69B
-call DrawEditRosters	; 6F6A0
+        cmp dword [byte esp+0Ch], byte 0
+        je short .x
+        mov dword [dbdirty], 1
+        xor eax, eax
+        call LoadRosterList
+        mov eax, 1
+        call LoadRosterList
+        call DrawEditRosters
 .x:
-add esp, byte 24h	; 6F6A5
-pop ebp	; 6F6A8
-pop edi	; 6F6A9
-pop esi	; 6F6AA
-pop ecx	; 6F6AB
-ret	; 6F6AC
+        add esp, byte 24h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
+;-----------------------------------------------------------------------------
+; RatingToFloat                                6F6AD  95 PC, medium confidence
+; Returns (rating + 5) * 5 as a float (fild)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RatingToFloat.c
 %ifdef CBUILD
 %include "c/front/create/RatingToFloat.inc"
 %else
 RatingToFloat:
-push dword 0Ch	; 6F6AD
-call __CHK	; 6F6B2
-push edx	; 6F6B7
-sub esp, byte 4	; 6F6B8
-xor edx, edx	; 6F6BB
-mov dl, al	; 6F6BD
-add edx, byte 5	; 6F6BF
-mov eax, edx	; 6F6C2
-shl eax, 2	; 6F6C4
-add eax, edx	; 6F6C7
-mov dword [esp], eax	; 6F6C9
-fild dword [esp]	; 6F6CC
-add esp, byte 4	; 6F6CF
-pop edx	; 6F6D2
-ret	; 6F6D3
+        push dword 0Ch
+        call __CHK
+        push edx
+        sub esp, byte 4
+        xor edx, edx
+        mov dl, al
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        mov dword [esp], eax
+        fild dword [esp]
+        add esp, byte 4
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; RandomizeNewRatings                          6F6D4  95 PC, medium confidence
+; CreateFreeAgent: builds the new player's ratings from the chosen values
+; with randomd0 and the C2CAC-C2CF0 float tables (RatingToFloat)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RandomizeNewRatings.c
 %ifdef CBUILD
 %include "c/front/create/RandomizeNewRatings.inc"
 %else
 RandomizeNewRatings:
-push dword 64h	; 6F6D4
-call __CHK	; 6F6D9
-push ecx	; 6F6DE
-push esi	; 6F6DF
-push edi	; 6F6E0
-push ebp	; 6F6E1
-sub esp, byte 50h	; 6F6E2
-mov esi, eax	; 6F6E5
-xor eax, eax	; 6F6E7
-mov al, byte [byte edx+01h]	; 6F6E9
-call RatingToFloat	; 6F6EC
-fstp dword [byte esp+01Ch]	; 6F6F1
-xor eax, eax	; 6F6F5
-mov al, byte [byte edx+02h]	; 6F6F7
-call RatingToFloat	; 6F6FA
-fstp dword [byte esp+0Ch]	; 6F6FF
-xor eax, eax	; 6F703
-mov al, byte [byte edx+04h]	; 6F705
-call RatingToFloat	; 6F708
-fstp dword [byte esp+014h]	; 6F70D
-xor eax, eax	; 6F711
-mov al, byte [byte edx+05h]	; 6F713
-call RatingToFloat	; 6F716
-fstp dword [byte esp+02Ch]	; 6F71B
-xor eax, eax	; 6F71F
-mov al, byte [byte edx+06h]	; 6F721
-call RatingToFloat	; 6F724
-fstp dword [byte esp+024h]	; 6F729
-xor eax, eax	; 6F72D
-mov al, byte [byte edx+07h]	; 6F72F
-call RatingToFloat	; 6F732
-fstp dword [byte esp+010h]	; 6F737
-xor eax, eax	; 6F73B
-mov al, byte [byte edx+09h]	; 6F73D
-call RatingToFloat	; 6F740
-fstp dword [byte esp+020h]	; 6F745
-xor eax, eax	; 6F749
-mov al, byte [byte edx+0Ah]	; 6F74B
-call RatingToFloat	; 6F74E
-fstp dword [byte esp+034h]	; 6F753
-xor eax, eax	; 6F757
-mov al, byte [byte edx+0Bh]	; 6F759
-call RatingToFloat	; 6F75C
-fstp dword [byte esp+018h]	; 6F761
-xor eax, eax	; 6F765
-mov al, byte [byte edx+0Ch]	; 6F767
-call RatingToFloat	; 6F76A
-fstp dword [byte esp+03Ch]	; 6F76F
-xor eax, eax	; 6F773
-mov al, byte [byte edx+0Dh]	; 6F775
-call RatingToFloat	; 6F778
-fstp dword [byte esp+028h]	; 6F77D
-xor eax, eax	; 6F781
-mov al, byte [byte edx+0Eh]	; 6F783
-call RatingToFloat	; 6F786
-fstp dword [byte esp+044h]	; 6F78B
-xor eax, eax	; 6F78F
-mov al, byte [byte edx+013h]	; 6F791
-call RatingToFloat	; 6F794
-fstp dword [byte esp+04Ch]	; 6F799
-mov eax, 14Dh	; 6F79D
-call randomd0	; 6F7A2
-mov dword [byte esp+04Ch], eax	; 6F7A7
-fild dword [byte esp+04Ch]	; 6F7AB
-fdiv dword [fp_1000]	; 6F7AF
-fld1	; 6F7B5
-fsubrp	; 6F7B7
-fstp dword [byte esp+040h]	; 6F7B9
-mov eax, 15h	; 6F7BD
-call randomd0	; 6F7C2
-add eax, byte 40h	; 6F7C7
-mov dword [byte esp+04Ch], eax	; 6F7CA
-fild dword [byte esp+04Ch]	; 6F7CE
-fstp dword [byte esp+048h]	; 6F7D2
-fld dword [byte esp+048h]	; 6F7D6
-call __CHP	; 6F7DA
-fistp dword [byte esp+04Ch]	; 6F7DF
-mov eax, dword [byte esp+04Ch]	; 6F7E3
-mov word [ebx], ax	; 6F7E7
-fld dword [byte esp+048h]	; 6F7EA
-fdiv dword [fp_84]	; 6F7EE
-fstp dword [byte esp+048h]	; 6F7F4
-fld dword [byte esp+034h]	; 6F7F8
-fadd dword [byte esp+028h]	; 6F7FC
-fadd dword [byte esp+044h]	; 6F800
-fdiv dword [fp_300]	; 6F804
-fmul dword [fp_390]	; 6F80A
-fmul dword [byte esp+048h]	; 6F810
-fmul dword [byte esp+040h]	; 6F814
-call __CHP	; 6F818
-fistp dword [byte esp+04Ch]	; 6F81D
-mov eax, dword [byte esp+04Ch]	; 6F821
-mov word [byte ebx+0Eh], ax	; 6F825
-fld dword [byte esp+034h]	; 6F829
-fadd dword [byte esp+018h]	; 6F82D
-fdiv dword [fp_200]	; 6F831
-fmul dword [fp_100]	; 6F837
-fadd dword [fp_m50]	; 6F83D
-fmul dword [byte esp+048h]	; 6F843
-fmul dword [byte esp+040h]	; 6F847
-call __CHP	; 6F84B
-fistp dword [byte esp+04Ch]	; 6F850
-mov eax, dword [byte esp+04Ch]	; 6F854
-mov word [byte ebx+010h], ax	; 6F858
-fld dword [byte esp+0Ch]	; 6F85C
-fadd dword [byte esp+034h]	; 6F860
-fadd dword [byte esp+024h]	; 6F864
-fadd dword [byte esp+01Ch]	; 6F868
-fadd dword [byte esp+028h]	; 6F86C
-fdiv dword [fp_500]	; 6F870
-fstp dword [byte esp+08h]	; 6F876
-cmp byte [byte esi+02h], 44h	; 6F87A
-je short .1	; 6F87E
-fld dword [byte esp+044h]	; 6F880
-fdiv dword [fp_70]	; 6F884
-fstp dword [byte esp+038h]	; 6F88A
-fld dword [fp_100]	; 6F88E
-fsub dword [byte esp+044h]	; 6F894
-fdiv dword [fp_30]	; 6F898
-jmp short .2	; 6F89E
+        push dword 64h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 50h
+        mov esi, eax
+        xor eax, eax
+        mov al, byte [byte edx+01h]
+        call RatingToFloat
+        fstp dword [byte esp+01Ch]
+        xor eax, eax
+        mov al, byte [byte edx+02h]
+        call RatingToFloat
+        fstp dword [byte esp+0Ch]
+        xor eax, eax
+        mov al, byte [byte edx+04h]
+        call RatingToFloat
+        fstp dword [byte esp+014h]
+        xor eax, eax
+        mov al, byte [byte edx+05h]
+        call RatingToFloat
+        fstp dword [byte esp+02Ch]
+        xor eax, eax
+        mov al, byte [byte edx+06h]
+        call RatingToFloat
+        fstp dword [byte esp+024h]
+        xor eax, eax
+        mov al, byte [byte edx+07h]
+        call RatingToFloat
+        fstp dword [byte esp+010h]
+        xor eax, eax
+        mov al, byte [byte edx+09h]
+        call RatingToFloat
+        fstp dword [byte esp+020h]
+        xor eax, eax
+        mov al, byte [byte edx+0Ah]
+        call RatingToFloat
+        fstp dword [byte esp+034h]
+        xor eax, eax
+        mov al, byte [byte edx+0Bh]
+        call RatingToFloat
+        fstp dword [byte esp+018h]
+        xor eax, eax
+        mov al, byte [byte edx+0Ch]
+        call RatingToFloat
+        fstp dword [byte esp+03Ch]
+        xor eax, eax
+        mov al, byte [byte edx+0Dh]
+        call RatingToFloat
+        fstp dword [byte esp+028h]
+        xor eax, eax
+        mov al, byte [byte edx+0Eh]
+        call RatingToFloat
+        fstp dword [byte esp+044h]
+        xor eax, eax
+        mov al, byte [byte edx+013h]
+        call RatingToFloat
+        fstp dword [byte esp+04Ch]
+        mov eax, 14Dh
+        call randomd0
+        mov dword [byte esp+04Ch], eax
+        fild dword [byte esp+04Ch]
+        fdiv dword [fp_1000]
+        fld1
+        fsubrp
+        fstp dword [byte esp+040h]
+        mov eax, 15h
+        call randomd0
+        add eax, byte 40h
+        mov dword [byte esp+04Ch], eax
+        fild dword [byte esp+04Ch]
+        fstp dword [byte esp+048h]
+        fld dword [byte esp+048h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov word [ebx], ax
+        fld dword [byte esp+048h]
+        fdiv dword [fp_84]
+        fstp dword [byte esp+048h]
+        fld dword [byte esp+034h]
+        fadd dword [byte esp+028h]
+        fadd dword [byte esp+044h]
+        fdiv dword [fp_300]
+        fmul dword [fp_390]
+        fmul dword [byte esp+048h]
+        fmul dword [byte esp+040h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov word [byte ebx+0Eh], ax
+        fld dword [byte esp+034h]
+        fadd dword [byte esp+018h]
+        fdiv dword [fp_200]
+        fmul dword [fp_100]
+        fadd dword [fp_m50]
+        fmul dword [byte esp+048h]
+        fmul dword [byte esp+040h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov word [byte ebx+010h], ax
+        fld dword [byte esp+0Ch]
+        fadd dword [byte esp+034h]
+        fadd dword [byte esp+024h]
+        fadd dword [byte esp+01Ch]
+        fadd dword [byte esp+028h]
+        fdiv dword [fp_500]
+        fstp dword [byte esp+08h]
+        cmp byte [byte esi+02h], 44h
+        je short .1
+        fld dword [byte esp+044h]
+        fdiv dword [fp_70]
+        fstp dword [byte esp+038h]
+        fld dword [fp_100]
+        fsub dword [byte esp+044h]
+        fdiv dword [fp_30]
+        jmp short .2
 .1:
-fld dword [byte esp+044h]	; 6F8A0
-fdiv dword [fp_90]	; 6F8A4
-fstp dword [byte esp+038h]	; 6F8AA
-fld dword [fp_100]	; 6F8AE
-fsub dword [byte esp+044h]	; 6F8B4
-fdiv dword [fp_10]	; 6F8B8
+        fld dword [byte esp+044h]
+        fdiv dword [fp_90]
+        fstp dword [byte esp+038h]
+        fld dword [fp_100]
+        fsub dword [byte esp+044h]
+        fdiv dword [fp_10]
 .2:
-fstp dword [byte esp+030h]	; 6F8BE
-fld1	; 6F8C2
-fcomp dword [byte esp+038h]	; 6F8C4
-fnstsw ax	; 6F8C8
-sahf	; 6F8CA
-jbe short .3	; 6F8CB
-fld dword [byte esp+038h]	; 6F8CD
-fmul dword [fp_58]	; 6F8D1
-call __CHP	; 6F8D7
-fistp dword [byte esp+04Ch]	; 6F8DC
-mov eax, dword [byte esp+04Ch]	; 6F8E0
-xor ecx, ecx	; 6F8E4
-mov cx, ax	; 6F8E6
-jmp short .4	; 6F8E9
+        fstp dword [byte esp+030h]
+        fld1
+        fcomp dword [byte esp+038h]
+        fnstsw ax
+        sahf
+        jbe short .3
+        fld dword [byte esp+038h]
+        fmul dword [fp_58]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        xor ecx, ecx
+        mov cx, ax
+        jmp short .4
 .3:
-mov ecx, 3Ah	; 6F8EB
+        mov ecx, 3Ah
 .4:
-fld1	; 6F8F0
-fcomp dword [byte esp+030h]	; 6F8F2
-fnstsw ax	; 6F8F6
-sahf	; 6F8F8
-jbe short .5	; 6F8F9
-fld dword [byte esp+030h]	; 6F8FB
-fmul dword [fp_90]	; 6F8FF
-call __CHP	; 6F905
-fistp dword [byte esp+04Ch]	; 6F90A
-mov eax, dword [byte esp+04Ch]	; 6F90E
-xor edx, edx	; 6F912
-mov dx, ax	; 6F914
-jmp short .6	; 6F917
+        fld1
+        fcomp dword [byte esp+030h]
+        fnstsw ax
+        sahf
+        jbe short .5
+        fld dword [byte esp+030h]
+        fmul dword [fp_90]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        xor edx, edx
+        mov dx, ax
+        jmp short .6
 .5:
-mov edx, 5Ah	; 6F919
+        mov edx, 5Ah
 .6:
-fld dword [byte esp+014h]	; 6F91E
-fadd dword [byte esp+010h]	; 6F922
-fdiv dword [fp_200]	; 6F926
-xor eax, eax	; 6F92C
-mov ax, cx	; 6F92E
-mov dword [byte esp+04Ch], eax	; 6F931
-fild dword [byte esp+04Ch]	; 6F935
-fmulp	; 6F939
-fstp dword [byte esp+04h]	; 6F93B
-fld dword [byte esp+020h]	; 6F93F
-fdiv dword [fp_100]	; 6F943
-xor eax, eax	; 6F949
-mov ax, dx	; 6F94B
-mov dword [byte esp+04Ch], eax	; 6F94E
-fild dword [byte esp+04Ch]	; 6F952
-fmulp	; 6F956
-fstp dword [esp]	; 6F958
-fld dword [byte esp+08h]	; 6F95B
-fmul dword [byte esp+04h]	; 6F95F
-fmul dword [byte esp+048h]	; 6F963
-fmul dword [byte esp+040h]	; 6F967
-call __CHP	; 6F96B
-fistp dword [byte esp+04Ch]	; 6F970
-mov eax, dword [byte esp+04Ch]	; 6F974
-mov ecx, eax	; 6F978
-fld dword [byte esp+08h]	; 6F97A
-fmul dword [esp]	; 6F97E
-fmul dword [byte esp+048h]	; 6F981
-fmul dword [byte esp+040h]	; 6F985
-call __CHP	; 6F989
-fistp dword [byte esp+04Ch]	; 6F98E
-mov eax, dword [byte esp+04Ch]	; 6F992
-mov edx, eax	; 6F996
-xor edi, edi	; 6F998
-mov di, cx	; 6F99A
-xor esi, esi	; 6F99D
-mov si, ax	; 6F99F
-lea ebp, [edi+esi]	; 6F9A2
-cmp ebp, 80h	; 6F9A5
-jle short .7	; 6F9AB
-mov eax, ebp	; 6F9AD
-mov edx, ebp	; 6F9AF
-sar edx, 1Fh	; 6F9B1
-shl edx, 7	; 6F9B4
-LD sbb, eax, edx	; 6F9B7
-sar eax, 7	; 6F9B9
-mov ebp, eax	; 6F9BC
-mov eax, edi	; 6F9BE
-mov edx, edi	; 6F9C0
-sar edx, 1Fh	; 6F9C2
-idiv ebp	; 6F9C5
-mov ecx, eax	; 6F9C7
-xor edx, edx	; 6F9C9
-mov dx, ax	; 6F9CB
-add edx, esi	; 6F9CE
-mov eax, edx	; 6F9D0
-sar edx, 1Fh	; 6F9D2
-shl edx, 7	; 6F9D5
-LD sbb, eax, edx	; 6F9D8
-sar eax, 7	; 6F9DA
-mov edi, eax	; 6F9DD
-mov eax, esi	; 6F9DF
-mov edx, esi	; 6F9E1
-sar edx, 1Fh	; 6F9E3
-idiv edi	; 6F9E6
-mov edx, eax	; 6F9E8
+        fld dword [byte esp+014h]
+        fadd dword [byte esp+010h]
+        fdiv dword [fp_200]
+        xor eax, eax
+        mov ax, cx
+        mov dword [byte esp+04Ch], eax
+        fild dword [byte esp+04Ch]
+        fmulp
+        fstp dword [byte esp+04h]
+        fld dword [byte esp+020h]
+        fdiv dword [fp_100]
+        xor eax, eax
+        mov ax, dx
+        mov dword [byte esp+04Ch], eax
+        fild dword [byte esp+04Ch]
+        fmulp
+        fstp dword [esp]
+        fld dword [byte esp+08h]
+        fmul dword [byte esp+04h]
+        fmul dword [byte esp+048h]
+        fmul dword [byte esp+040h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov ecx, eax
+        fld dword [byte esp+08h]
+        fmul dword [esp]
+        fmul dword [byte esp+048h]
+        fmul dword [byte esp+040h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov edx, eax
+        xor edi, edi
+        mov di, cx
+        xor esi, esi
+        mov si, ax
+        lea ebp, [edi+esi]
+        cmp ebp, 80h
+        jle short .7
+        mov eax, ebp
+        mov edx, ebp
+        sar edx, 1Fh
+        shl edx, 7
+        LD sbb, eax, edx
+        sar eax, 7
+        mov ebp, eax
+        mov eax, edi
+        mov edx, edi
+        sar edx, 1Fh
+        idiv ebp
+        mov ecx, eax
+        xor edx, edx
+        mov dx, ax
+        add edx, esi
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 7
+        LD sbb, eax, edx
+        sar eax, 7
+        mov edi, eax
+        mov eax, esi
+        mov edx, esi
+        sar edx, 1Fh
+        idiv edi
+        mov edx, eax
 .7:
-mov word [byte ebx+02h], cx	; 6F9EA
-mov word [byte ebx+04h], dx	; 6F9EE
-mov ax, word [byte ebx+02h]	; 6F9F2
-add eax, edx	; 6F9F6
-mov word [byte ebx+06h], ax	; 6F9F8
-xor edx, edx	; 6F9FC
-mov dx, word [byte ebx+02h]	; 6F9FE
-mov ecx, 0Ah	; 6FA02
-mov eax, edx	; 6FA07
-sar edx, 1Fh	; 6FA09
-idiv ecx	; 6FA0C
-mov word [byte ebx+08h], ax	; 6FA0E
-xor eax, eax	; 6FA12
-mov ax, word [byte ebx+08h]	; 6FA14
-call randomd0	; 6FA18
-mov word [byte ebx+0Ah], ax	; 6FA1D
-fld dword [byte esp+03Ch]	; 6FA21
-fmul qword [qword_C2CE0]	; 6FA25
-fstp dword [byte esp+03Ch]	; 6FA2B
-fld dword [byte esp+02Ch]	; 6FA2F
-fmul qword [qword_C2CE8]	; 6FA33
-fstp dword [byte esp+02Ch]	; 6FA39
-fld dword [byte esp+03Ch]	; 6FA3D
-fadd dword [byte esp+02Ch]	; 6FA41
-fdiv dword [fp_100]	; 6FA45
-fmul dword [fp_347]	; 6FA4B
-fmul dword [byte esp+048h]	; 6FA51
-fmul dword [byte esp+040h]	; 6FA55
-call __CHP	; 6FA59
-fistp dword [byte esp+04Ch]	; 6FA5E
-mov eax, dword [byte esp+04Ch]	; 6FA62
-mov word [byte ebx+0Ch], ax	; 6FA66
-add esp, byte 50h	; 6FA6A
-pop ebp	; 6FA6D
-pop edi	; 6FA6E
-pop esi	; 6FA6F
-pop ecx	; 6FA70
-ret	; 6FA71
+        mov word [byte ebx+02h], cx
+        mov word [byte ebx+04h], dx
+        mov ax, word [byte ebx+02h]
+        add eax, edx
+        mov word [byte ebx+06h], ax
+        xor edx, edx
+        mov dx, word [byte ebx+02h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov word [byte ebx+08h], ax
+        xor eax, eax
+        mov ax, word [byte ebx+08h]
+        call randomd0
+        mov word [byte ebx+0Ah], ax
+        fld dword [byte esp+03Ch]
+        fmul qword [qword_C2CE0]
+        fstp dword [byte esp+03Ch]
+        fld dword [byte esp+02Ch]
+        fmul qword [qword_C2CE8]
+        fstp dword [byte esp+02Ch]
+        fld dword [byte esp+03Ch]
+        fadd dword [byte esp+02Ch]
+        fdiv dword [fp_100]
+        fmul dword [fp_347]
+        fmul dword [byte esp+048h]
+        fmul dword [byte esp+040h]
+        call __CHP
+        fistp dword [byte esp+04Ch]
+        mov eax, dword [byte esp+04Ch]
+        mov word [byte ebx+0Ch], ax
+        add esp, byte 50h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CreatePlayerNop                                                 6FA72  95 PC
+; Empty function (ret only), unreferenced
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CreatePlayerNop.c
 %ifdef CBUILD
 %include "c/front/create/CreatePlayerNop.inc"
 %else
 CreatePlayerNop:
-push dword 4	; 6FA72
-call __CHK	; 6FA77
-ret	; 6FA7C
+        push dword 4
+        call __CHK
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawShootsField                                                 6FA7D  95 PC
+; Draws 'Shoots' and '  L' / '  R' with its value on the create-player screen
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawShootsField.c
 %ifdef CBUILD
 %include "c/front/create/DrawShootsField.inc"
 %else
 DrawShootsField:
-push dword 24h	; 6FA7D
-call __CHK	; 6FA82
-push ebx	; 6FA87
-push ecx	; 6FA88
-push edx	; 6FA89
-push esi	; 6FA8A
-push edi	; 6FA8B
-push ebp	; 6FA8C
-sub esp, byte 8	; 6FA8D
-mov esi, 12Ah	; 6FA90
-mov dword [byte esp+04h], newskatershoots	; 6FA95
-mov ebx, str_Shoots	; 6FA9D
-mov edx, esi	; 6FAA2
-mov eax, 1Eh	; 6FAA4
-call PrintShadowText	; 6FAA9
-cmp byte [newskatershoots], 0	; 6FAAE
-je short .1	; 6FAB5
-mov ebx, str_spL	; 6FAB7
-jmp short .2	; 6FABC
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 8
+        mov esi, 12Ah
+        mov dword [byte esp+04h], newskatershoots
+        mov ebx, str_Shoots
+        mov edx, esi
+        mov eax, 1Eh
+        call PrintShadowText
+        cmp byte [newskatershoots], 0
+        je short .1
+        mov ebx, str_spL
+        jmp short .2
 .1:
-mov ebx, str_spR	; 6FABE
+        mov ebx, str_spR
 .2:
-mov edx, esi	; 6FAC3
-mov eax, 0C8h	; 6FAC5
-call PrintShadowText	; 6FACA
-xor ebp, ebp	; 6FACF
-mov edi, 1	; 6FAD1
-add esi, byte 0Dh	; 6FAD6
+        mov edx, esi
+        mov eax, 0C8h
+        call PrintShadowText
+        xor ebp, ebp
+        mov edi, 1
+        add esi, byte 0Dh
 .3:
-cmp edi, byte 8	; 6FAD9
-jne short .4	; 6FADC
-mov ebp, 136h	; 6FADE
-sub esi, byte 68h	; 6FAE3
+        cmp edi, byte 8
+        jne short .4
+        mov ebp, 136h
+        sub esi, byte 68h
 .4:
-mov ebx, dword [nosplit edi*4+newskaterratingnames]	; 6FAE6
-lea eax, [byte ebp+01Eh]	; 6FAED
-mov edx, esi	; 6FAF0
-call PrintShadowText	; 6FAF2
-mov eax, dword [byte esp+04h]	; 6FAF7
-xor ebx, ebx	; 6FAFB
-mov bl, byte [edi+eax]	; 6FAFD
-add ebx, byte 5	; 6FB00
-mov ecx, ebx	; 6FB03
-shl ecx, 2	; 6FB05
-add ecx, ebx	; 6FB08
-lea ebx, [dword ebp+0C8h]	; 6FB0A
-mov dword [esp], ebx	; 6FB10
-mov ebx, str_fmt3d	; 6FB13
-mov edx, esi	; 6FB18
-mov eax, dword [esp]	; 6FB1A
-call PrintFmt1	; 6FB1D
-add esi, byte 0Dh	; 6FB22
-inc edi	; 6FB25
-cmp edi, byte 0Fh	; 6FB26
-jl short DrawShootsField.3	; 6FB29
+        mov ebx, dword [nosplit edi*4+newskaterratingnames]
+        lea eax, [byte ebp+01Eh]
+        mov edx, esi
+        call PrintShadowText
+        mov eax, dword [byte esp+04h]
+        xor ebx, ebx
+        mov bl, byte [edi+eax]
+        add ebx, byte 5
+        mov ecx, ebx
+        shl ecx, 2
+        add ecx, ebx
+        lea ebx, [dword ebp+0C8h]
+        mov dword [esp], ebx
+        mov ebx, str_fmt3d
+        mov edx, esi
+        mov eax, dword [esp]
+        call PrintFmt1
+        add esi, byte 0Dh
+        inc edi
+        cmp edi, byte 0Fh
+        jl short DrawShootsField.3
 DrawShootsField_tail:
-add esp, byte 8	; 6FB2B
+        add esp, byte 8
 DrawShootsField_pop:
-pop ebp	; 6FB2E
-pop edi	; 6FB2F
-pop esi	; 6FB30
-pop edx	; 6FB31
-pop ecx	; 6FB32
-pop ebx	; 6FB33
-ret	; 6FB34
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawGloveField                                                  6FB35  95 PC
+; Draws 'Glove Hand' and '  L' / '  R' on the create-goalie screen
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawShootsField.c (DrawGloveField)
 %ifdef CBUILD
 %include "c/front/create/DrawShootsField.DrawGloveField.inc"
 %else
 DrawGloveField:
-push dword 24h	; 6FB35
-call __CHK	; 6FB3A
-push ebx	; 6FB3F
-push ecx	; 6FB40
-push edx	; 6FB41
-push esi	; 6FB42
-push edi	; 6FB43
-push ebp	; 6FB44
-sub esp, byte 8	; 6FB45
-mov esi, 12Ah	; 6FB48
-mov dword [byte esp+04h], newgoalieglove	; 6FB4D
-mov ebx, str_GloveHand	; 6FB55
-mov edx, esi	; 6FB5A
-mov eax, 1Eh	; 6FB5C
-call PrintShadowText	; 6FB61
-cmp byte [newgoalieglove], 0	; 6FB66
-je short .1	; 6FB6D
-mov ebx, str_spL	; 6FB6F
-jmp short .2	; 6FB74
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 8
+        mov esi, 12Ah
+        mov dword [byte esp+04h], newgoalieglove
+        mov ebx, str_GloveHand
+        mov edx, esi
+        mov eax, 1Eh
+        call PrintShadowText
+        cmp byte [newgoalieglove], 0
+        je short .1
+        mov ebx, str_spL
+        jmp short .2
 .1:
-mov ebx, str_spR	; 6FB76
+        mov ebx, str_spR
 .2:
-mov edx, esi	; 6FB7B
-mov eax, 0C8h	; 6FB7D
-call PrintShadowText	; 6FB82
-xor ebp, ebp	; 6FB87
-mov edi, 1	; 6FB89
-add esi, byte 0Dh	; 6FB8E
+        mov edx, esi
+        mov eax, 0C8h
+        call PrintShadowText
+        xor ebp, ebp
+        mov edi, 1
+        add esi, byte 0Dh
 .3:
-cmp edi, byte 6	; 6FB91
-jne short .4	; 6FB94
-mov ebp, 136h	; 6FB96
-sub esi, byte 4Eh	; 6FB9B
+        cmp edi, byte 6
+        jne short .4
+        mov ebp, 136h
+        sub esi, byte 4Eh
 .4:
-mov ebx, dword [nosplit edi*4+newgoalieratingnames]	; 6FB9E
-lea eax, [byte ebp+01Eh]	; 6FBA5
-mov edx, esi	; 6FBA8
-call PrintShadowText	; 6FBAA
-mov eax, dword [byte esp+04h]	; 6FBAF
-xor ebx, ebx	; 6FBB3
-mov bl, byte [edi+eax]	; 6FBB5
-add ebx, byte 5	; 6FBB8
-mov ecx, ebx	; 6FBBB
-shl ecx, 2	; 6FBBD
-add ecx, ebx	; 6FBC0
-lea ebx, [dword ebp+0C8h]	; 6FBC2
-mov dword [esp], ebx	; 6FBC8
-mov ebx, str_fmt3d	; 6FBCB
-mov edx, esi	; 6FBD0
-mov eax, dword [esp]	; 6FBD2
-call PrintFmt1	; 6FBD5
-add esi, byte 0Dh	; 6FBDA
-inc edi	; 6FBDD
-cmp edi, byte 0Bh	; 6FBDE
-jl short DrawGloveField.3	; 6FBE1
-jmp near DrawShootsField_tail	; 6FBE3
+        mov ebx, dword [nosplit edi*4+newgoalieratingnames]
+        lea eax, [byte ebp+01Eh]
+        mov edx, esi
+        call PrintShadowText
+        mov eax, dword [byte esp+04h]
+        xor ebx, ebx
+        mov bl, byte [edi+eax]
+        add ebx, byte 5
+        mov ecx, ebx
+        shl ecx, 2
+        add ecx, ebx
+        lea ebx, [dword ebp+0C8h]
+        mov dword [esp], ebx
+        mov ebx, str_fmt3d
+        mov edx, esi
+        mov eax, dword [esp]
+        call PrintFmt1
+        add esi, byte 0Dh
+        inc edi
+        cmp edi, byte 0Bh
+        jl short DrawGloveField.3
+        jmp near DrawShootsField_tail
 %endif ; C
+;-----------------------------------------------------------------------------
+; AskLeftRight                                                    6FBE8  95 PC
+; (&flag, prompt): one-key input dialog, L/l sets 1, R/r sets 0
+;-----------------------------------------------------------------------------
 ; C: src/front/create/AskLeftRight.c
 %ifdef CBUILD
 %include "c/front/create/AskLeftRight.inc"
 %else
 AskLeftRight:
-push dword 28h	; 6FBE8
-call __CHK	; 6FBED
-push ebx	; 6FBF2
-push ecx	; 6FBF3
-push esi	; 6FBF4
-sub esp, byte 4	; 6FBF5
-mov esi, eax	; 6FBF8
-cmp byte [eax], 0	; 6FBFA
-je short .1	; 6FBFD
-mov ax, word [str_L9]	; 6FBFF
-jmp short .2	; 6FC05
+        push dword 28h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        sub esp, byte 4
+        mov esi, eax
+        cmp byte [eax], 0
+        je short .1
+        mov ax, word [str_L9]
+        jmp short .2
 .1:
-mov ax, word [str_R5]	; 6FC07
+        mov ax, word [str_R5]
 .2:
-mov word [esp], ax	; 6FC0D
-mov dword [msglines], edx	; 6FC11
-push byte 0	; 6FC17
-push byte 0	; 6FC19
-push byte 0	; 6FC1B
-push byte 0	; 6FC1D
-push byte 10h	; 6FC1F
-mov ecx, 1	; 6FC21
-lea ebx, [byte esp+014h]	; 6FC26
-mov edx, ecx	; 6FC2A
-mov eax, msglines	; 6FC2C
-call InputDialog	; 6FC31
-cmp al, 0FFh	; 6FC36
-je short .x	; 6FC38
-mov dl, byte [esp]	; 6FC3A
-cmp dl, 4Ch	; 6FC3D
-je short .3	; 6FC40
-cmp dl, 6Ch	; 6FC42
-jne short .4	; 6FC45
+        mov word [esp], ax
+        mov dword [msglines], edx
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 10h
+        mov ecx, 1
+        lea ebx, [byte esp+014h]
+        mov edx, ecx
+        mov eax, msglines
+        call InputDialog
+        cmp al, 0FFh
+        je short .x
+        mov dl, byte [esp]
+        cmp dl, 4Ch
+        je short .3
+        cmp dl, 6Ch
+        jne short .4
 .3:
-mov byte [esi], 1	; 6FC47
-jmp short .x	; 6FC4A
+        mov byte [esi], 1
+        jmp short .x
 .4:
-cmp dl, 52h	; 6FC4C
-je short .5	; 6FC4F
-cmp dl, 72h	; 6FC51
-jne short .x	; 6FC54
+        cmp dl, 52h
+        je short .5
+        cmp dl, 72h
+        jne short .x
 .5:
-mov byte [esi], 0	; 6FC56
+        mov byte [esi], 0
 .x:
-add esp, byte 4	; 6FC59
-pop esi	; 6FC5C
-pop ecx	; 6FC5D
-pop ebx	; 6FC5E
-ret	; 6FC5F
+        add esp, byte 4
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; EditSkaterRating                                                6FC60  95 PC
+; Create-player rating click: 'Enter a new rating:' with '%2d < %s < %2d'
+; limits, 'Shoots Left or Right?' (AskLeftRight), 'Not enough Rating Units'
+;-----------------------------------------------------------------------------
 EditSkaterRating:
-push dword 0D4h	; 6FC60
-call __CHK	; 6FC65
-push ecx	; 6FC6A
-push esi	; 6FC6B
-push edi	; 6FC6C
-push ebp	; 6FC6D
-sub esp, 0A0h	; 6FC6E
-push eax	; 6FC74
-push edx	; 6FC75
-push ebx	; 6FC76
-xor edx, edx	; 6FC77
-mov dword [dword esp+098h], edx	; 6FC79
-mov dword [dword esp+09Ch], edx	; 6FC80
-mov dword [dword esp+0A8h], 12Ah	; 6FC87
-xor ebp, ebp	; 6FC92
-jmp near .8	; 6FC94
+        push dword 0D4h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 0A0h
+        push eax
+        push edx
+        push ebx
+        xor edx, edx
+        mov dword [dword esp+098h], edx
+        mov dword [dword esp+09Ch], edx
+        mov dword [dword esp+0A8h], 12Ah
+        xor ebp, ebp
+        jmp near .8
 .1:
-cmp ebp, byte 8	; 6FC99
-jne short .2	; 6FC9C
-mov dword [dword esp+09Ch], 136h	; 6FC9E
-sub dword [dword esp+0A8h], byte 68h	; 6FCA9
+        cmp ebp, byte 8
+        jne short .2
+        mov dword [dword esp+09Ch], 136h
+        sub dword [dword esp+0A8h], byte 68h
 .2:
-mov eax, dword [dword esp+09Ch]	; 6FCB1
-add eax, 0C8h	; 6FCB8
-mov edx, dword [byte esp+08h]	; 6FCBD
-mov ebx, dword [edx]	; 6FCC1
-cmp eax, ebx	; 6FCC3
-jg near .7	; 6FCC5
-mov eax, dword [dword esp+09Ch]	; 6FCCB
-add eax, 0E4h	; 6FCD2
-cmp eax, ebx	; 6FCD7
-jle near .7	; 6FCD9
-mov eax, dword [byte esp+04h]	; 6FCDF
-mov eax, dword [eax]	; 6FCE3
-mov esi, dword [dword esp+0A8h]	; 6FCE5
-cmp eax, esi	; 6FCEC
-jl near .7	; 6FCEE
-lea eax, [byte esi+0Dh]	; 6FCF4
-mov edx, dword [byte esp+04h]	; 6FCF7
-cmp eax, dword [edx]	; 6FCFB
-jle near .7	; 6FCFD
-mov dword [dword esp+098h], 1	; 6FD03
-mov dword [dword esp+094h], newskatershoots	; 6FD0E
-lea edi, [byte esp+040h]	; 6FD19
-mov esi, str_EnterANewRating	; 6FD1D
-movsd	; 6FD22
-movsd	; 6FD23
-movsd	; 6FD24
-movsd	; 6FD25
-movsd	; 6FD26
-lea eax, [byte esp+040h]	; 6FD27
-mov dword [msglines], eax	; 6FD2B
-mov edi, skaterratingmax	; 6FD30
-add edi, ebp	; 6FD35
-xor eax, eax	; 6FD37
-mov al, byte [edi]	; 6FD39
-add eax, byte 5	; 6FD3B
-mov ebx, eax	; 6FD3E
-shl ebx, 2	; 6FD40
-add ebx, eax	; 6FD43
-push ebx	; 6FD45
-mov ebx, dword [nosplit ebp*4+newskaterratingnames]	; 6FD46
-push ebx	; 6FD4D
-mov eax, skaterratingmin	; 6FD4E
-add eax, ebp	; 6FD53
-mov dword [dword esp+0A8h], eax	; 6FD55
-xor eax, eax	; 6FD5C
-mov edx, dword [dword esp+0A8h]	; 6FD5E
-mov al, byte [edx]	; 6FD65
-add eax, byte 5	; 6FD67
-mov ebx, eax	; 6FD6A
-shl ebx, 2	; 6FD6C
-add ebx, eax	; 6FD6F
-push ebx	; 6FD71
-push str_RatingRange	; 6FD72
-lea eax, [byte esp+01Ch]	; 6FD77
-push eax	; 6FD7B
-call sprintf_	; 6FD7C
-add esp, byte 14h	; 6FD81
-lea eax, [byte esp+0Ch]	; 6FD84
-mov dword [msglines+4], eax	; 6FD88
-mov esi, newskatershoots	; 6FD8D
-add esi, ebp	; 6FD92
-test ebp, ebp	; 6FD94
-jne short .3	; 6FD96
-mov edx, str_ShootsLeftOrRight	; 6FD98
-mov eax, esi	; 6FD9D
-call AskLeftRight	; 6FD9F
-jmp near .7	; 6FDA4
+        mov eax, dword [dword esp+09Ch]
+        add eax, 0C8h
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [edx]
+        cmp eax, ebx
+        jg near .7
+        mov eax, dword [dword esp+09Ch]
+        add eax, 0E4h
+        cmp eax, ebx
+        jle near .7
+        mov eax, dword [byte esp+04h]
+        mov eax, dword [eax]
+        mov esi, dword [dword esp+0A8h]
+        cmp eax, esi
+        jl near .7
+        lea eax, [byte esi+0Dh]
+        mov edx, dword [byte esp+04h]
+        cmp eax, dword [edx]
+        jle near .7
+        mov dword [dword esp+098h], 1
+        mov dword [dword esp+094h], newskatershoots
+        lea edi, [byte esp+040h]
+        mov esi, str_EnterANewRating
+        movsd
+        movsd
+        movsd
+        movsd
+        movsd
+        lea eax, [byte esp+040h]
+        mov dword [msglines], eax
+        mov edi, skaterratingmax
+        add edi, ebp
+        xor eax, eax
+        mov al, byte [edi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        mov ebx, dword [nosplit ebp*4+newskaterratingnames]
+        push ebx
+        mov eax, skaterratingmin
+        add eax, ebp
+        mov dword [dword esp+0A8h], eax
+        xor eax, eax
+        mov edx, dword [dword esp+0A8h]
+        mov al, byte [edx]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push str_RatingRange
+        lea eax, [byte esp+01Ch]
+        push eax
+        call sprintf_
+        add esp, byte 14h
+        lea eax, [byte esp+0Ch]
+        mov dword [msglines+4], eax
+        mov esi, newskatershoots
+        add esi, ebp
+        test ebp, ebp
+        jne short .3
+        mov edx, str_ShootsLeftOrRight
+        mov eax, esi
+        call AskLeftRight
+        jmp near .7
 .3:
-xor eax, eax	; 6FDA9
-mov al, byte [esi]	; 6FDAB
-add eax, byte 5	; 6FDAD
-mov ebx, eax	; 6FDB0
-shl ebx, 2	; 6FDB2
-add ebx, eax	; 6FDB5
-push ebx	; 6FDB7
-push str_fmtpd	; 6FDB8
-lea eax, [byte esp+07Ch]	; 6FDBD
-push eax	; 6FDC1
-call sprintf_	; 6FDC2
-add esp, byte 0Ch	; 6FDC7
-xor edx, edx	; 6FDCA
-mov dl, byte [esi]	; 6FDCC
-add edx, byte 5	; 6FDCE
-mov eax, edx	; 6FDD1
-shl eax, 2	; 6FDD3
-add eax, edx	; 6FDD6
-mov dword [dword esp+0A4h], eax	; 6FDD8
-push byte 0	; 6FDDF
-xor eax, eax	; 6FDE1
-mov al, byte [edi]	; 6FDE3
-add eax, byte 5	; 6FDE5
-mov ebx, eax	; 6FDE8
-shl ebx, 2	; 6FDEA
-add ebx, eax	; 6FDED
-push ebx	; 6FDEF
-xor eax, eax	; 6FDF0
-mov edx, dword [dword esp+0A8h]	; 6FDF2
-mov al, byte [edx]	; 6FDF9
-add eax, byte 5	; 6FDFB
-mov ebx, eax	; 6FDFE
-shl ebx, 2	; 6FE00
-add ebx, eax	; 6FE03
-push ebx	; 6FE05
-push byte 0FFFFFFFFh	; 6FE06
-push byte 1Ch	; 6FE08
-mov ecx, 2	; 6FE0A
-lea ebx, [dword esp+088h]	; 6FE0F
-mov edx, ecx	; 6FE16
-mov eax, msglines	; 6FE18
-call InputDialog	; 6FE1D
-xor ebx, ebx	; 6FE22
-mov bl, al	; 6FE24
-cmp ebx, 0FFh	; 6FE26
-je near .7	; 6FE2C
-xor edx, edx	; 6FE32
-mov eax, dword [dword esp+0A0h]	; 6FE34
-mov dl, byte [eax]	; 6FE3B
-add edx, byte 5	; 6FE3D
-mov eax, edx	; 6FE40
-shl eax, 2	; 6FE42
-add eax, edx	; 6FE45
-cmp ebx, eax	; 6FE47
-jl near .7	; 6FE49
-xor edx, edx	; 6FE4F
-mov dl, byte [edi]	; 6FE51
-add edx, byte 5	; 6FE53
-mov eax, edx	; 6FE56
-shl eax, 2	; 6FE58
-add eax, edx	; 6FE5B
-cmp ebx, eax	; 6FE5D
-jg near .7	; 6FE5F
-mov edi, 5	; 6FE65
-mov eax, ebx	; 6FE6A
-mov edx, ebx	; 6FE6C
-sar edx, 1Fh	; 6FE6E
-idiv edi	; 6FE71
-sub eax, edi	; 6FE73
-mov ecx, dword [dword esp+0A4h]	; 6FE75
-cmp ebx, ecx	; 6FE7C
-jge short .4	; 6FE7E
-mov byte [esi], al	; 6FE80
-test ebp, ebp	; 6FE82
-je near .7	; 6FE84
-cmp ebp, byte 3	; 6FE8A
-je near .7	; 6FE8D
-cmp ebp, byte 0Dh	; 6FE93
-je near .7	; 6FE96
-xor eax, eax	; 6FE9C
-mov al, byte [esi]	; 6FE9E
-add eax, edi	; 6FEA0
-mov ebx, eax	; 6FEA2
-shl ebx, 2	; 6FEA4
-add ebx, eax	; 6FEA7
-mov eax, ecx	; 6FEA9
-sub eax, ebx	; 6FEAB
-mov edx, dword [esp]	; 6FEAD
-add dword [edx], eax	; 6FEB0
-jmp near .7	; 6FEB2
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push str_fmtpd
+        lea eax, [byte esp+07Ch]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor edx, edx
+        mov dl, byte [esi]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        mov dword [dword esp+0A4h], eax
+        push byte 0
+        xor eax, eax
+        mov al, byte [edi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        xor eax, eax
+        mov edx, dword [dword esp+0A8h]
+        mov al, byte [edx]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push byte 0FFFFFFFFh
+        push byte 1Ch
+        mov ecx, 2
+        lea ebx, [dword esp+088h]
+        mov edx, ecx
+        mov eax, msglines
+        call InputDialog
+        xor ebx, ebx
+        mov bl, al
+        cmp ebx, 0FFh
+        je near .7
+        xor edx, edx
+        mov eax, dword [dword esp+0A0h]
+        mov dl, byte [eax]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        cmp ebx, eax
+        jl near .7
+        xor edx, edx
+        mov dl, byte [edi]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        cmp ebx, eax
+        jg near .7
+        mov edi, 5
+        mov eax, ebx
+        mov edx, ebx
+        sar edx, 1Fh
+        idiv edi
+        sub eax, edi
+        mov ecx, dword [dword esp+0A4h]
+        cmp ebx, ecx
+        jge short .4
+        mov byte [esi], al
+        test ebp, ebp
+        je near .7
+        cmp ebp, byte 3
+        je near .7
+        cmp ebp, byte 0Dh
+        je near .7
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, edi
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        mov eax, ecx
+        sub eax, ebx
+        mov edx, dword [esp]
+        add dword [edx], eax
+        jmp near .7
 .4:
-mov edx, ebx	; 6FEB7
-sub edx, ecx	; 6FEB9
-test ebp, ebp	; 6FEBB
-je short .6	; 6FEBD
-cmp ebp, byte 3	; 6FEBF
-je short .6	; 6FEC2
-cmp ebp, byte 0Dh	; 6FEC4
-je short .6	; 6FEC7
-mov ebx, dword [esp]	; 6FEC9
-cmp edx, dword [ebx]	; 6FECC
-jg short .5	; 6FECE
-mov byte [esi], al	; 6FED0
-xor eax, eax	; 6FED2
-mov al, byte [esi]	; 6FED4
-add eax, edi	; 6FED6
-mov ebx, eax	; 6FED8
-shl ebx, 2	; 6FEDA
-add ebx, eax	; 6FEDD
-sub ebx, dword [dword esp+0A4h]	; 6FEDF
-mov eax, dword [esp]	; 6FEE6
-sub dword [eax], ebx	; 6FEE9
-jmp short .7	; 6FEEB
+        mov edx, ebx
+        sub edx, ecx
+        test ebp, ebp
+        je short .6
+        cmp ebp, byte 3
+        je short .6
+        cmp ebp, byte 0Dh
+        je short .6
+        mov ebx, dword [esp]
+        cmp edx, dword [ebx]
+        jg short .5
+        mov byte [esi], al
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, edi
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        sub ebx, dword [dword esp+0A4h]
+        mov eax, dword [esp]
+        sub dword [eax], ebx
+        jmp short .7
 .5:
-mov dword [msglines], str_NotEnoughRatingUnits	; 6FEED
-push byte 0FFFFFFFFh	; 6FEF7
-mov edi, dword [byte esp+08h]	; 6FEF9
-push edi	; 6FEFD
-mov eax, dword [byte esp+010h]	; 6FEFE
-push eax	; 6FF02
-push byte 0	; 6FF03
-push byte 0	; 6FF05
-mov ecx, 1	; 6FF07
-mov ebx, msglines	; 6FF0C
-mov edx, 0FFFFFFFFh	; 6FF11
-mov eax, edx	; 6FF16
-call MessageBox	; 6FF18
-jmp short .7	; 6FF1D
+        mov dword [msglines], str_NotEnoughRatingUnits
+        push byte 0FFFFFFFFh
+        mov edi, dword [byte esp+08h]
+        push edi
+        mov eax, dword [byte esp+010h]
+        push eax
+        push byte 0
+        push byte 0
+        mov ecx, 1
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp short .7
 .6:
-mov esi, 5	; 6FF1F
-mov eax, ebx	; 6FF24
-mov edx, ebx	; 6FF26
-sar edx, 1Fh	; 6FF28
-idiv esi	; 6FF2B
-sub eax, esi	; 6FF2D
-mov dl, al	; 6FF2F
-mov eax, dword [dword esp+094h]	; 6FF31
-mov byte [eax+ebp], dl	; 6FF38
+        mov esi, 5
+        mov eax, ebx
+        mov edx, ebx
+        sar edx, 1Fh
+        idiv esi
+        sub eax, esi
+        mov dl, al
+        mov eax, dword [dword esp+094h]
+        mov byte [eax+ebp], dl
 .7:
-inc ebp	; 6FF3B
-add dword [dword esp+0A8h], byte 0Dh	; 6FF3C
+        inc ebp
+        add dword [dword esp+0A8h], byte 0Dh
 .8:
-cmp ebp, byte 0Fh	; 6FF44
-jge short EditSkaterRating_tail	; 6FF47
-cmp dword [dword esp+098h], byte 0	; 6FF49
-je near EditSkaterRating.1	; 6FF51
+        cmp ebp, byte 0Fh
+        jge short EditSkaterRating_tail
+        cmp dword [dword esp+098h], byte 0
+        je near EditSkaterRating.1
 EditSkaterRating_tail:
-mov eax, dword [dword esp+098h]	; 6FF57
-add esp, 0ACh	; 6FF5E
-pop ebp	; 6FF64
-pop edi	; 6FF65
-pop esi	; 6FF66
-pop ecx	; 6FF67
-ret	; 6FF68
+        mov eax, dword [dword esp+098h]
+        add esp, 0ACh
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
+;-----------------------------------------------------------------------------
+; EditGoalieRating                                                6FF69  95 PC
+; Goalie version of EditSkaterRating ('Glove hand Left or Right?')
+;-----------------------------------------------------------------------------
 EditGoalieRating:
-push dword 0D4h	; 6FF69
-call __CHK	; 6FF6E
-push ecx	; 6FF73
-push esi	; 6FF74
-push edi	; 6FF75
-push ebp	; 6FF76
-sub esp, 0A0h	; 6FF77
-push eax	; 6FF7D
-push edx	; 6FF7E
-push ebx	; 6FF7F
-xor edx, edx	; 6FF80
-mov dword [dword esp+098h], edx	; 6FF82
-mov dword [dword esp+09Ch], edx	; 6FF89
-mov dword [dword esp+0A8h], 12Ah	; 6FF90
-xor ebp, ebp	; 6FF9B
-jmp near .8	; 6FF9D
+        push dword 0D4h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 0A0h
+        push eax
+        push edx
+        push ebx
+        xor edx, edx
+        mov dword [dword esp+098h], edx
+        mov dword [dword esp+09Ch], edx
+        mov dword [dword esp+0A8h], 12Ah
+        xor ebp, ebp
+        jmp near .8
 .1:
-cmp ebp, byte 6	; 6FFA2
-jne short .2	; 6FFA5
-mov dword [dword esp+09Ch], 136h	; 6FFA7
-sub dword [dword esp+0A8h], byte 4Eh	; 6FFB2
+        cmp ebp, byte 6
+        jne short .2
+        mov dword [dword esp+09Ch], 136h
+        sub dword [dword esp+0A8h], byte 4Eh
 .2:
-mov eax, dword [dword esp+09Ch]	; 6FFBA
-add eax, 0C8h	; 6FFC1
-mov edx, dword [byte esp+08h]	; 6FFC6
-mov ebx, dword [edx]	; 6FFCA
-cmp eax, ebx	; 6FFCC
-jg near .7	; 6FFCE
-mov eax, dword [dword esp+09Ch]	; 6FFD4
-add eax, 0E4h	; 6FFDB
-cmp eax, ebx	; 6FFE0
-jle near .7	; 6FFE2
-mov eax, dword [byte esp+04h]	; 6FFE8
-mov eax, dword [eax]	; 6FFEC
-mov esi, dword [dword esp+0A8h]	; 6FFEE
-cmp eax, esi	; 6FFF5
-jl near .7	; 6FFF7
-lea eax, [byte esi+0Dh]	; 6FFFD
-mov edx, dword [byte esp+04h]	; 70000
-cmp eax, dword [edx]	; 70004
-jle near .7	; 70006
-mov dword [dword esp+098h], 1	; 7000C
-mov dword [dword esp+094h], newgoalieglove	; 70017
-lea edi, [byte esp+040h]	; 70022
-mov esi, str_EnterANewRating	; 70026
-movsd	; 7002B
-movsd	; 7002C
-movsd	; 7002D
-movsd	; 7002E
-movsd	; 7002F
-lea eax, [byte esp+040h]	; 70030
-mov dword [msglines], eax	; 70034
-mov edi, goalieratingmax	; 70039
-add edi, ebp	; 7003E
-xor eax, eax	; 70040
-mov al, byte [edi]	; 70042
-add eax, byte 5	; 70044
-mov ebx, eax	; 70047
-shl ebx, 2	; 70049
-add ebx, eax	; 7004C
-push ebx	; 7004E
-mov ebx, dword [nosplit ebp*4+newgoalieratingnames]	; 7004F
-push ebx	; 70056
-mov eax, goalieratingmin	; 70057
-add eax, ebp	; 7005C
-mov dword [dword esp+0A8h], eax	; 7005E
-xor eax, eax	; 70065
-mov edx, dword [dword esp+0A8h]	; 70067
-mov al, byte [edx]	; 7006E
-add eax, byte 5	; 70070
-mov ebx, eax	; 70073
-shl ebx, 2	; 70075
-add ebx, eax	; 70078
-push ebx	; 7007A
-push str_RatingRange	; 7007B
-lea eax, [byte esp+01Ch]	; 70080
-push eax	; 70084
-call sprintf_	; 70085
-add esp, byte 14h	; 7008A
-lea eax, [byte esp+0Ch]	; 7008D
-mov dword [msglines+4], eax	; 70091
-mov esi, newgoalieglove	; 70096
-add esi, ebp	; 7009B
-test ebp, ebp	; 7009D
-jne short .3	; 7009F
-mov edx, str_GloveHandLeftOr	; 700A1
-mov eax, esi	; 700A6
-call AskLeftRight	; 700A8
-jmp near .7	; 700AD
+        mov eax, dword [dword esp+09Ch]
+        add eax, 0C8h
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [edx]
+        cmp eax, ebx
+        jg near .7
+        mov eax, dword [dword esp+09Ch]
+        add eax, 0E4h
+        cmp eax, ebx
+        jle near .7
+        mov eax, dword [byte esp+04h]
+        mov eax, dword [eax]
+        mov esi, dword [dword esp+0A8h]
+        cmp eax, esi
+        jl near .7
+        lea eax, [byte esi+0Dh]
+        mov edx, dword [byte esp+04h]
+        cmp eax, dword [edx]
+        jle near .7
+        mov dword [dword esp+098h], 1
+        mov dword [dword esp+094h], newgoalieglove
+        lea edi, [byte esp+040h]
+        mov esi, str_EnterANewRating
+        movsd
+        movsd
+        movsd
+        movsd
+        movsd
+        lea eax, [byte esp+040h]
+        mov dword [msglines], eax
+        mov edi, goalieratingmax
+        add edi, ebp
+        xor eax, eax
+        mov al, byte [edi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        mov ebx, dword [nosplit ebp*4+newgoalieratingnames]
+        push ebx
+        mov eax, goalieratingmin
+        add eax, ebp
+        mov dword [dword esp+0A8h], eax
+        xor eax, eax
+        mov edx, dword [dword esp+0A8h]
+        mov al, byte [edx]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push str_RatingRange
+        lea eax, [byte esp+01Ch]
+        push eax
+        call sprintf_
+        add esp, byte 14h
+        lea eax, [byte esp+0Ch]
+        mov dword [msglines+4], eax
+        mov esi, newgoalieglove
+        add esi, ebp
+        test ebp, ebp
+        jne short .3
+        mov edx, str_GloveHandLeftOr
+        mov eax, esi
+        call AskLeftRight
+        jmp near .7
 .3:
-xor eax, eax	; 700B2
-mov al, byte [esi]	; 700B4
-add eax, byte 5	; 700B6
-mov ebx, eax	; 700B9
-shl ebx, 2	; 700BB
-add ebx, eax	; 700BE
-push ebx	; 700C0
-push str_fmtpd	; 700C1
-lea eax, [byte esp+07Ch]	; 700C6
-push eax	; 700CA
-call sprintf_	; 700CB
-add esp, byte 0Ch	; 700D0
-xor edx, edx	; 700D3
-mov dl, byte [esi]	; 700D5
-add edx, byte 5	; 700D7
-mov eax, edx	; 700DA
-shl eax, 2	; 700DC
-add eax, edx	; 700DF
-mov dword [dword esp+0A4h], eax	; 700E1
-push byte 0	; 700E8
-xor eax, eax	; 700EA
-mov al, byte [edi]	; 700EC
-add eax, byte 5	; 700EE
-mov ebx, eax	; 700F1
-shl ebx, 2	; 700F3
-add ebx, eax	; 700F6
-push ebx	; 700F8
-xor eax, eax	; 700F9
-mov edx, dword [dword esp+0A8h]	; 700FB
-mov al, byte [edx]	; 70102
-add eax, byte 5	; 70104
-mov ebx, eax	; 70107
-shl ebx, 2	; 70109
-add ebx, eax	; 7010C
-push ebx	; 7010E
-push byte 0FFFFFFFFh	; 7010F
-push byte 1Ch	; 70111
-mov ecx, 2	; 70113
-lea ebx, [dword esp+088h]	; 70118
-mov edx, ecx	; 7011F
-mov eax, msglines	; 70121
-call InputDialog	; 70126
-xor ebx, ebx	; 7012B
-mov bl, al	; 7012D
-cmp ebx, 0FFh	; 7012F
-je near .7	; 70135
-xor edx, edx	; 7013B
-mov eax, dword [dword esp+0A0h]	; 7013D
-mov dl, byte [eax]	; 70144
-add edx, byte 5	; 70146
-mov eax, edx	; 70149
-shl eax, 2	; 7014B
-add eax, edx	; 7014E
-cmp ebx, eax	; 70150
-jl near .7	; 70152
-xor edx, edx	; 70158
-mov dl, byte [edi]	; 7015A
-add edx, byte 5	; 7015C
-mov eax, edx	; 7015F
-shl eax, 2	; 70161
-add eax, edx	; 70164
-cmp ebx, eax	; 70166
-jg near .7	; 70168
-mov edi, 5	; 7016E
-mov eax, ebx	; 70173
-mov edx, ebx	; 70175
-sar edx, 1Fh	; 70177
-idiv edi	; 7017A
-sub eax, edi	; 7017C
-mov ecx, dword [dword esp+0A4h]	; 7017E
-cmp ebx, ecx	; 70185
-jge short .4	; 70187
-mov byte [esi], al	; 70189
-test ebp, ebp	; 7018B
-je near .7	; 7018D
-cmp ebp, byte 8	; 70193
-je near .7	; 70196
-xor eax, eax	; 7019C
-mov al, byte [esi]	; 7019E
-add eax, edi	; 701A0
-mov ebx, eax	; 701A2
-shl ebx, 2	; 701A4
-add ebx, eax	; 701A7
-mov eax, ecx	; 701A9
-sub eax, ebx	; 701AB
-mov edx, dword [esp]	; 701AD
-add dword [edx], eax	; 701B0
-jmp near .7	; 701B2
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push str_fmtpd
+        lea eax, [byte esp+07Ch]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor edx, edx
+        mov dl, byte [esi]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        mov dword [dword esp+0A4h], eax
+        push byte 0
+        xor eax, eax
+        mov al, byte [edi]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        xor eax, eax
+        mov edx, dword [dword esp+0A8h]
+        mov al, byte [edx]
+        add eax, byte 5
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        push ebx
+        push byte 0FFFFFFFFh
+        push byte 1Ch
+        mov ecx, 2
+        lea ebx, [dword esp+088h]
+        mov edx, ecx
+        mov eax, msglines
+        call InputDialog
+        xor ebx, ebx
+        mov bl, al
+        cmp ebx, 0FFh
+        je near .7
+        xor edx, edx
+        mov eax, dword [dword esp+0A0h]
+        mov dl, byte [eax]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        cmp ebx, eax
+        jl near .7
+        xor edx, edx
+        mov dl, byte [edi]
+        add edx, byte 5
+        mov eax, edx
+        shl eax, 2
+        add eax, edx
+        cmp ebx, eax
+        jg near .7
+        mov edi, 5
+        mov eax, ebx
+        mov edx, ebx
+        sar edx, 1Fh
+        idiv edi
+        sub eax, edi
+        mov ecx, dword [dword esp+0A4h]
+        cmp ebx, ecx
+        jge short .4
+        mov byte [esi], al
+        test ebp, ebp
+        je near .7
+        cmp ebp, byte 8
+        je near .7
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, edi
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        mov eax, ecx
+        sub eax, ebx
+        mov edx, dword [esp]
+        add dword [edx], eax
+        jmp near .7
 .4:
-mov edx, ebx	; 701B7
-sub edx, ecx	; 701B9
-test ebp, ebp	; 701BB
-je short .6	; 701BD
-cmp ebp, byte 8	; 701BF
-je short .6	; 701C2
-mov ebx, dword [esp]	; 701C4
-cmp edx, dword [ebx]	; 701C7
-jg short .5	; 701C9
-mov byte [esi], al	; 701CB
-xor eax, eax	; 701CD
-mov al, byte [esi]	; 701CF
-add eax, edi	; 701D1
-mov ebx, eax	; 701D3
-shl ebx, 2	; 701D5
-add ebx, eax	; 701D8
-sub ebx, dword [dword esp+0A4h]	; 701DA
-mov eax, dword [esp]	; 701E1
-sub dword [eax], ebx	; 701E4
-jmp short .7	; 701E6
+        mov edx, ebx
+        sub edx, ecx
+        test ebp, ebp
+        je short .6
+        cmp ebp, byte 8
+        je short .6
+        mov ebx, dword [esp]
+        cmp edx, dword [ebx]
+        jg short .5
+        mov byte [esi], al
+        xor eax, eax
+        mov al, byte [esi]
+        add eax, edi
+        mov ebx, eax
+        shl ebx, 2
+        add ebx, eax
+        sub ebx, dword [dword esp+0A4h]
+        mov eax, dword [esp]
+        sub dword [eax], ebx
+        jmp short .7
 .5:
-mov dword [msglines], str_NotEnoughRatingUnits	; 701E8
-push byte 0FFFFFFFFh	; 701F2
-mov edi, dword [byte esp+08h]	; 701F4
-push edi	; 701F8
-mov eax, dword [byte esp+010h]	; 701F9
-push eax	; 701FD
-push byte 0	; 701FE
-push byte 0	; 70200
-mov ecx, 1	; 70202
-mov ebx, msglines	; 70207
-mov edx, 0FFFFFFFFh	; 7020C
-mov eax, edx	; 70211
-call MessageBox	; 70213
-jmp short .7	; 70218
+        mov dword [msglines], str_NotEnoughRatingUnits
+        push byte 0FFFFFFFFh
+        mov edi, dword [byte esp+08h]
+        push edi
+        mov eax, dword [byte esp+010h]
+        push eax
+        push byte 0
+        push byte 0
+        mov ecx, 1
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp short .7
 .6:
-mov esi, 5	; 7021A
-mov eax, ebx	; 7021F
-mov edx, ebx	; 70221
-sar edx, 1Fh	; 70223
-idiv esi	; 70226
-sub eax, esi	; 70228
-mov dl, al	; 7022A
-mov eax, dword [dword esp+094h]	; 7022C
-mov byte [eax+ebp], dl	; 70233
+        mov esi, 5
+        mov eax, ebx
+        mov edx, ebx
+        sar edx, 1Fh
+        idiv esi
+        sub eax, esi
+        mov dl, al
+        mov eax, dword [dword esp+094h]
+        mov byte [eax+ebp], dl
 .7:
-inc ebp	; 70236
-add dword [dword esp+0A8h], byte 0Dh	; 70237
+        inc ebp
+        add dword [dword esp+0A8h], byte 0Dh
 .8:
-cmp ebp, byte 0Fh	; 7023F
-jge near EditSkaterRating_tail	; 70242
-cmp dword [dword esp+098h], byte 0	; 70248
-je near EditGoalieRating.1	; 70250
-jmp near EditSkaterRating_tail	; 70256
+        cmp ebp, byte 0Fh
+        jge near EditSkaterRating_tail
+        cmp dword [dword esp+098h], byte 0
+        je near EditGoalieRating.1
+        jmp near EditSkaterRating_tail
+;-----------------------------------------------------------------------------
+; DrawCreatePlayer                                                7025B  95 PC
+; Draws the create-player screen (pstatbar, 'Free Agent', name, position
+; Center/Defence/Left Wing/Right Wing/Goalie, ratings, 'Rating Units
+; Available <%3d>')
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawCreatePlayer.c
 %ifdef CBUILD
 %include "c/front/create/DrawCreatePlayer.inc"
 %else
 DrawCreatePlayer:
-push dword 6Ch	; 7025B
-call __CHK	; 70260
-push ebx	; 70265
-push ecx	; 70266
-push esi	; 70267
-push edi	; 70268
-push ebp	; 70269
-sub esp, byte 44h	; 7026A
-mov ebp, eax	; 7026D
-mov dword [byte esp+040h], edx	; 7026F
-mov edx, dword [fullscrbmp]	; 70273
-push edx	; 70279
-call SetDrawBitmap	; 7027A
-add esp, byte 4	; 7027F
-xor ecx, ecx	; 70282
-mov ebx, str_Prez22	; 70284
-cmp byte [fileoncd+01C3h], 1	; 70289
-jne short .1	; 70290
-mov edx, dword [cddriveptr]	; 70292
-jmp short .2	; 70298
+        push dword 6Ch
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 44h
+        mov ebp, eax
+        mov dword [byte esp+040h], edx
+        mov edx, dword [fullscrbmp]
+        push edx
+        call SetDrawBitmap
+        add esp, byte 4
+        xor ecx, ecx
+        mov ebx, str_Prez22
+        cmp byte [fileoncd+01C3h], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 7029A
+        xor edx, edx
 .2:
-mov eax, esp	; 7029C
-call MakePath	; 7029E
-push byte 20h	; 702A3
-lea eax, [byte esp+04h]	; 702A5
-push eax	; 702A9
-call LoadBank	; 702AA
-mov esi, eax	; 702AF
-add esp, byte 8	; 702B1
-push str_Pal2	; 702B4
-push eax	; 702B9
-call FindShape	; 702BA
-add esp, byte 8	; 702BF
-lea edx, [byte eax+010h]	; 702C2
-mov ebx, 300h	; 702C5
-mov eax, savepal	; 702CA
-call memcpy_	; 702CF
-push str_ea2	; 702D4
-push esi	; 702D9
-call FindShape	; 702DA
-add esp, byte 8	; 702DF
-push eax	; 702E2
-call DrawShape	; 702E3
-add esp, byte 4	; 702E8
-push esi	; 702EB
-call FreeMemBlock	; 702EC
-add esp, byte 4	; 702F1
-xor ecx, ecx	; 702F4
-mov ebx, str_Pstatbar	; 702F6
-cmp byte [fileoncd+013Ch], 1	; 702FB
-jne short .3	; 70302
-mov edx, dword [cddriveptr]	; 70304
-jmp short .4	; 7030A
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Pal2
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, savepal
+        call memcpy_
+        push str_ea2
+        push esi
+        call FindShape
+        add esp, byte 8
+        push eax
+        call DrawShape
+        add esp, byte 4
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        xor ecx, ecx
+        mov ebx, str_Pstatbar
+        cmp byte [fileoncd+013Ch], 1
+        jne short .3
+        mov edx, dword [cddriveptr]
+        jmp short .4
 .3:
-xor edx, edx	; 7030C
+        xor edx, edx
 .4:
-mov eax, esp	; 7030E
-call MakePath	; 70310
-push byte 0	; 70315
-lea eax, [byte esp+04h]	; 70317
-push eax	; 7031B
-call LoadBank	; 7031C
-mov esi, eax	; 70321
-add esp, byte 8	; 70323
-push str_Pst2	; 70326
-push eax	; 7032B
-call FindShape	; 7032C
-add esp, byte 8	; 70331
-push eax	; 70334
-call DrawShape	; 70335
-add esp, byte 4	; 7033A
-push esi	; 7033D
-call FreeMemBlock	; 7033E
-add esp, byte 4	; 70343
-mov ebx, dword [kaufmfont]	; 70346
-push ebx	; 7034C
-call TextSetFont	; 7034D
-add esp, byte 4	; 70352
-mov edx, 42h	; 70355
-mov eax, 40h	; 7035A
-call SetTextColors	; 7035F
-mov edi, esp	; 70364
-mov esi, str_FreeAgent	; 70366
-movsd	; 7036B
-movsd	; 7036C
-movsw	; 7036D
-movsb	; 7036F
-mov eax, esp	; 70370
-push eax	; 70372
-call fputchar	; 70373
-add esp, byte 4	; 70378
-sar eax, 1	; 7037B
-mov edx, 140h	; 7037D
-sub edx, eax	; 70382
-mov eax, edx	; 70384
-mov ebx, esp	; 70386
-mov edx, 52h	; 70388
-call PrintOutlinedText	; 7038D
-mov edx, 42h	; 70392
-mov eax, 40h	; 70397
-call SetTextColors	; 7039C
-lea eax, [byte ebp+013h]	; 703A1
-push eax	; 703A4
-lea eax, [byte ebp+03h]	; 703A5
-push eax	; 703A8
-push str_fmtSS	; 703A9
-lea eax, [byte esp+0Ch]	; 703AE
-push eax	; 703B2
-call sprintf_	; 703B3
-add esp, byte 10h	; 703B8
-mov edx, esp	; 703BB
-mov eax, 98h	; 703BD
-call PrintCenteredText	; 703C2
-xor eax, eax	; 703C7
-mov al, byte [byte ebp+01h]	; 703C9
-push eax	; 703CC
-push str_fmtD	; 703CD
-lea eax, [byte esp+08h]	; 703D2
-push eax	; 703D6
-call sprintf_	; 703D7
-add esp, byte 0Ch	; 703DC
-mov al, byte [byte ebp+02h]	; 703DF
-cmp al, 47h	; 703E2
-jb short .5	; 703E4
-jbe short .10	; 703E6
-cmp al, 4Ch	; 703E8
-jb short .12	; 703EA
-jbe short .8	; 703EC
-cmp al, 52h	; 703EE
-je short .9	; 703F0
-jmp short .12	; 703F2
+        mov eax, esp
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Pst2
+        push eax
+        call FindShape
+        add esp, byte 8
+        push eax
+        call DrawShape
+        add esp, byte 4
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebx, dword [kaufmfont]
+        push ebx
+        call TextSetFont
+        add esp, byte 4
+        mov edx, 42h
+        mov eax, 40h
+        call SetTextColors
+        mov edi, esp
+        mov esi, str_FreeAgent
+        movsd
+        movsd
+        movsw
+        movsb
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 140h
+        sub edx, eax
+        mov eax, edx
+        mov ebx, esp
+        mov edx, 52h
+        call PrintOutlinedText
+        mov edx, 42h
+        mov eax, 40h
+        call SetTextColors
+        lea eax, [byte ebp+013h]
+        push eax
+        lea eax, [byte ebp+03h]
+        push eax
+        push str_fmtSS
+        lea eax, [byte esp+0Ch]
+        push eax
+        call sprintf_
+        add esp, byte 10h
+        mov edx, esp
+        mov eax, 98h
+        call PrintCenteredText
+        xor eax, eax
+        mov al, byte [byte ebp+01h]
+        push eax
+        push str_fmtD
+        lea eax, [byte esp+08h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov al, byte [byte ebp+02h]
+        cmp al, 47h
+        jb short .5
+        jbe short .10
+        cmp al, 4Ch
+        jb short .12
+        jbe short .8
+        cmp al, 52h
+        je short .9
+        jmp short .12
 .5:
-cmp al, 43h	; 703F4
-jb short .12	; 703F6
-jbe short .6	; 703F8
-cmp al, 44h	; 703FA
-je short .7	; 703FC
-jmp short .12	; 703FE
+        cmp al, 43h
+        jb short .12
+        jbe short .6
+        cmp al, 44h
+        je short .7
+        jmp short .12
 .6:
-mov edx, str_Center	; 70400
-jmp short .11	; 70405
+        mov edx, str_Center
+        jmp short .11
 .7:
-mov edx, str_Defence	; 70407
-jmp short .11	; 7040C
+        mov edx, str_Defence
+        jmp short .11
 .8:
-mov edx, str_LeftWing	; 7040E
-jmp short .11	; 70413
+        mov edx, str_LeftWing
+        jmp short .11
 .9:
-mov edx, str_RightWing	; 70415
-jmp short .11	; 7041A
+        mov edx, str_RightWing
+        jmp short .11
 .10:
-mov edx, str_Goalie	; 7041C
+        mov edx, str_Goalie
 .11:
-mov eax, esp	; 70421
-call strcat_	; 70423
+        mov eax, esp
+        call strcat_
 .12:
-mov edx, esp	; 70428
-mov eax, 0B2h	; 7042A
-call PrintCenteredText	; 7042F
-mov ecx, dword [mainfont]	; 70434
-push ecx	; 7043A
-call TextSetFont	; 7043B
-add esp, byte 4	; 70440
-cmp byte [byte ebp+02h], 47h	; 70443
-jne short .13	; 70447
-call DrawGloveField	; 70449
-jmp short .14	; 7044E
+        mov edx, esp
+        mov eax, 0B2h
+        call PrintCenteredText
+        mov ecx, dword [mainfont]
+        push ecx
+        call TextSetFont
+        add esp, byte 4
+        cmp byte [byte ebp+02h], 47h
+        jne short .13
+        call DrawGloveField
+        jmp short .14
 .13:
-call DrawShootsField	; 70450
+        call DrawShootsField
 .14:
-mov esi, dword [byte esp+040h]	; 70455
-push esi	; 70459
-push str_RatingUnitsAvailable3d	; 7045A
-lea eax, [byte esp+08h]	; 7045F
-push eax	; 70463
-call sprintf_	; 70464
-add esp, byte 0Ch	; 70469
-mov edx, esp	; 7046C
-mov eax, 110h	; 7046E
-call PrintCenteredText	; 70473
-mov edx, 2	; 70478
-mov eax, str_Two	; 7047D
-call DrawButtons	; 70482
-call sub_B4BA8	; 70487
-mov eax, dword [fullscrbmp]	; 7048C
-mov edi, dword [byte eax+02Ch]	; 70491
-push edi	; 70494
-call DrawBitmap	; 70495
-add esp, byte 4	; 7049A
-add esp, byte 44h	; 7049D
-pop ebp	; 704A0
-pop edi	; 704A1
-pop esi	; 704A2
-pop ecx	; 704A3
-pop ebx	; 704A4
-ret	; 704A5
+        mov esi, dword [byte esp+040h]
+        push esi
+        push str_RatingUnitsAvailable3d
+        lea eax, [byte esp+08h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov edx, esp
+        mov eax, 110h
+        call PrintCenteredText
+        mov edx, 2
+        mov eax, str_Two
+        call DrawButtons
+        call sub_B4BA8
+        mov eax, dword [fullscrbmp]
+        mov edi, dword [byte eax+02Ch]
+        push edi
+        call DrawBitmap
+        add esp, byte 4
+        add esp, byte 44h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CreatePlayerLoop                             704A6  95 PC, medium confidence
+; Create-player screen loop: DrawCreatePlayer, mouse clicks to
+; EditSkaterRating / EditGoalieRating
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DrawShootsField.c (CreatePlayerLoop)
 %ifdef CBUILD
 %include "c/front/create/DrawShootsField.CreatePlayerLoop.inc"
 %else
 CreatePlayerLoop:
-push dword 44h	; 704A6
-call __CHK	; 704AB
-push ebx	; 704B0
-push ecx	; 704B1
-push edx	; 704B2
-push esi	; 704B3
-push edi	; 704B4
-push ebp	; 704B5
-sub esp, byte 1Ch	; 704B6
-mov ebp, eax	; 704B9
-mov dword [byte esp+08h], 118h	; 704BB
-xor ebx, ebx	; 704C3
-mov dword [byte esp+014h], ebx	; 704C5
-push byte 20h	; 704C9
-push dword 300h	; 704CB
-push str_Temp	; 704D0
-call AllocMemBlock	; 704D5
-mov esi, eax	; 704DA
-add esp, byte 0Ch	; 704DC
-mov dword [byte esp+0Ch], eax	; 704DF
-push eax	; 704E3
-push dword 100h	; 704E4
-push byte 0	; 704E9
-call SetPalette	; 704EB
-add esp, byte 0Ch	; 704F0
-mov ebx, 10h	; 704F3
-mov edx, esi	; 704F8
-mov eax, 1	; 704FA
-call FadePalStep	; 704FF
-cmp byte [byte ebp+02h], 47h	; 70504
-jne short .1	; 70508
-mov dword [byte esp+08h], 104h	; 7050A
-mov edi, newgoalieglove	; 70512
-mov esi, newgoaliedefaults	; 70517
-movsd	; 7051C
-movsd	; 7051D
-movsd	; 7051E
-movsd	; 7051F
-jmp short .2	; 70520
+        push dword 44h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 1Ch
+        mov ebp, eax
+        mov dword [byte esp+08h], 118h
+        xor ebx, ebx
+        mov dword [byte esp+014h], ebx
+        push byte 20h
+        push dword 300h
+        push str_Temp
+        call AllocMemBlock
+        mov esi, eax
+        add esp, byte 0Ch
+        mov dword [byte esp+0Ch], eax
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esi
+        mov eax, 1
+        call FadePalStep
+        cmp byte [byte ebp+02h], 47h
+        jne short .1
+        mov dword [byte esp+08h], 104h
+        mov edi, newgoalieglove
+        mov esi, newgoaliedefaults
+        movsd
+        movsd
+        movsd
+        movsd
+        jmp short .2
 .1:
-mov edi, newskatershoots	; 70522
-mov esi, newskaterdefaults	; 70527
-movsd	; 7052C
-movsd	; 7052D
-movsd	; 7052E
-movsd	; 7052F
-movsd	; 70530
+        mov edi, newskatershoots
+        mov esi, newskaterdefaults
+        movsd
+        movsd
+        movsd
+        movsd
+        movsd
 .2:
-mov edx, dword [byte esp+08h]	; 70531
-mov eax, ebp	; 70535
-call DrawCreatePlayer	; 70537
-mov esi, 0F0h	; 7053C
-push esi	; 70541
-mov edi, 140h	; 70542
-push edi	; 70547
-mov eax, dword [editptrspr]	; 70548
-push eax	; 7054D
-call GrabBlock	; 7054E
-add esp, byte 0Ch	; 70553
-push esi	; 70556
-push edi	; 70557
-mov edx, dword [pointerspr]	; 70558
-push edx	; 7055E
-call DrawArt	; 7055F
-add esp, byte 0Ch	; 70564
-mov ebx, 10h	; 70567
-mov edx, dword [byte esp+0Ch]	; 7056C
-xor eax, eax	; 70570
-call FadePalStep	; 70572
-mov ebx, dword [byte esp+0Ch]	; 70577
-push ebx	; 7057B
-call FreeMemBlock	; 7057C
-add esp, byte 4	; 70581
-mov dword [esp], esi	; 70584
-push esi	; 70587
-mov dword [byte esp+08h], edi	; 70588
-push edi	; 7058C
-call MouseSetPos	; 7058D
-add esp, byte 8	; 70592
-call dword [mousepollfn]	; 70595
-call ClearInputQueue	; 7059B
+        mov edx, dword [byte esp+08h]
+        mov eax, ebp
+        call DrawCreatePlayer
+        mov esi, 0F0h
+        push esi
+        mov edi, 140h
+        push edi
+        mov eax, dword [editptrspr]
+        push eax
+        call GrabBlock
+        add esp, byte 0Ch
+        push esi
+        push edi
+        mov edx, dword [pointerspr]
+        push edx
+        call DrawArt
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, dword [byte esp+0Ch]
+        xor eax, eax
+        call FadePalStep
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
+        mov dword [esp], esi
+        push esi
+        mov dword [byte esp+08h], edi
+        push edi
+        call MouseSetPos
+        add esp, byte 8
+        call dword [mousepollfn]
+        call ClearInputQueue
 .3:
-xor edx, edx	; 705A0
-mov dword [byte esp+018h], edx	; 705A2
+        xor edx, edx
+        mov dword [byte esp+018h], edx
 .4:
-call GetInputEvent	; 705A6
-mov ecx, eax	; 705AB
-test eax, eax	; 705AD
-je short .5	; 705AF
-mov ebx, esp	; 705B1
-lea edx, [byte esp+04h]	; 705B3
-call dword [ptrupdatefn]	; 705B7
-mov dword [byte esp+018h], eax	; 705BD
+        call GetInputEvent
+        mov ecx, eax
+        test eax, eax
+        je short .5
+        mov ebx, esp
+        lea edx, [byte esp+04h]
+        call dword [ptrupdatefn]
+        mov dword [byte esp+018h], eax
 .5:
-test ecx, ecx	; 705C1
-je short .6	; 705C3
-test byte [byte esp+018h], 2	; 705C5
-je short CreatePlayerLoop.4	; 705CA
+        test ecx, ecx
+        je short .6
+        test byte [byte esp+018h], 2
+        je short CreatePlayerLoop.4
 .6:
-test byte [byte esp+018h], 2	; 705CC
-jne short .8	; 705D1
-cmp edi, dword [byte esp+04h]	; 705D3
-jne short .7	; 705D7
-cmp esi, dword [esp]	; 705D9
-je near .14	; 705DC
+        test byte [byte esp+018h], 2
+        jne short .8
+        cmp edi, dword [byte esp+04h]
+        jne short .7
+        cmp esi, dword [esp]
+        je near .14
 .7:
-push esi	; 705E2
-push edi	; 705E3
-mov ebx, dword [editptrspr]	; 705E4
-push ebx	; 705EA
-call PutBlock	; 705EB
-add esp, byte 0Ch	; 705F0
-mov ecx, dword [esp]	; 705F3
-push ecx	; 705F6
-mov esi, dword [byte esp+08h]	; 705F7
-push esi	; 705FB
-mov edi, dword [editptrspr]	; 705FC
-push edi	; 70602
-call GrabBlock	; 70603
-add esp, byte 0Ch	; 70608
-mov eax, dword [esp]	; 7060B
-push eax	; 7060E
-mov edx, dword [byte esp+08h]	; 7060F
-push edx	; 70613
-mov ebx, dword [pointerspr]	; 70614
-push ebx	; 7061A
-jmp near .13	; 7061B
+        push esi
+        push edi
+        mov ebx, dword [editptrspr]
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        mov ecx, dword [esp]
+        push ecx
+        mov esi, dword [byte esp+08h]
+        push esi
+        mov edi, dword [editptrspr]
+        push edi
+        call GrabBlock
+        add esp, byte 0Ch
+        mov eax, dword [esp]
+        push eax
+        mov edx, dword [byte esp+08h]
+        push edx
+        mov ebx, dword [pointerspr]
+        push ebx
+        jmp near .13
 .8:
-push esi	; 70620
-push edi	; 70621
-mov ebx, dword [editptrspr]	; 70622
-push ebx	; 70628
-call PutBlock	; 70629
-add esp, byte 0Ch	; 7062E
-cmp byte [byte ebp+02h], 47h	; 70631
-jne short .9	; 70635
-lea ebx, [byte esp+08h]	; 70637
-mov edx, esp	; 7063B
-lea eax, [byte esp+04h]	; 7063D
-call EditGoalieRating	; 70641
-jmp short .10	; 70646
+        push esi
+        push edi
+        mov ebx, dword [editptrspr]
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        cmp byte [byte ebp+02h], 47h
+        jne short .9
+        lea ebx, [byte esp+08h]
+        mov edx, esp
+        lea eax, [byte esp+04h]
+        call EditGoalieRating
+        jmp short .10
 .9:
-lea ebx, [byte esp+08h]	; 70648
-mov edx, esp	; 7064C
-lea eax, [byte esp+04h]	; 7064E
-call EditSkaterRating	; 70652
+        lea ebx, [byte esp+08h]
+        mov edx, esp
+        lea eax, [byte esp+04h]
+        call EditSkaterRating
 .10:
-test eax, eax	; 70657
-je short .11	; 70659
-mov edx, dword [byte esp+08h]	; 7065B
-mov eax, ebp	; 7065F
-call DrawCreatePlayer	; 70661
-jmp short .12	; 70666
+        test eax, eax
+        je short .11
+        mov edx, dword [byte esp+08h]
+        mov eax, ebp
+        call DrawCreatePlayer
+        jmp short .12
 .11:
-mov ecx, dword [byte esp+018h]	; 70668
-push ecx	; 7066C
-mov ecx, dword [byte esp+04h]	; 7066D
-mov ebx, dword [byte esp+08h]	; 70671
-mov edx, 2	; 70675
-mov eax, str_Two	; 7067A
-call TrackButtons	; 7067F
-mov dword [byte esp+010h], eax	; 70684
-test eax, eax	; 70688
-jl short .12	; 7068A
-mov dword [byte esp+014h], 1	; 7068C
+        mov ecx, dword [byte esp+018h]
+        push ecx
+        mov ecx, dword [byte esp+04h]
+        mov ebx, dword [byte esp+08h]
+        mov edx, 2
+        mov eax, str_Two
+        call TrackButtons
+        mov dword [byte esp+010h], eax
+        test eax, eax
+        jl short .12
+        mov dword [byte esp+014h], 1
 .12:
-mov edi, dword [esp]	; 70694
-push edi	; 70697
-mov eax, dword [byte esp+08h]	; 70698
-push eax	; 7069C
-mov edx, dword [editptrspr]	; 7069D
-push edx	; 706A3
-call GrabBlock	; 706A4
-add esp, byte 0Ch	; 706A9
-mov ebx, dword [esp]	; 706AC
-push ebx	; 706AF
-mov ecx, dword [byte esp+08h]	; 706B0
-push ecx	; 706B4
-mov esi, dword [pointerspr]	; 706B5
-push esi	; 706BB
+        mov edi, dword [esp]
+        push edi
+        mov eax, dword [byte esp+08h]
+        push eax
+        mov edx, dword [editptrspr]
+        push edx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebx, dword [esp]
+        push ebx
+        mov ecx, dword [byte esp+08h]
+        push ecx
+        mov esi, dword [pointerspr]
+        push esi
 .13:
-call DrawArt	; 706BC
-add esp, byte 0Ch	; 706C1
-mov edi, dword [byte esp+04h]	; 706C4
-mov esi, dword [esp]	; 706C8
+        call DrawArt
+        add esp, byte 0Ch
+        mov edi, dword [byte esp+04h]
+        mov esi, dword [esp]
 .14:
-cmp dword [byte esp+014h], byte 0	; 706CB
-je near CreatePlayerLoop.3	; 706D0
-mov eax, dword [byte esp+010h]	; 706D6
-add esp, byte 1Ch	; 706DA
-jmp near DrawShootsField_pop	; 706DD
+        cmp dword [byte esp+014h], byte 0
+        je near CreatePlayerLoop.3
+        mov eax, dword [byte esp+010h]
+        add esp, byte 1Ch
+        jmp near DrawShootsField_pop
 %endif ; C
+;-----------------------------------------------------------------------------
+; CreateFreeAgent                                                 706E2  95 PC
+; 'Create Free Agent ...' menu item: disk-space check ('Not enough space to
+; create a new free agent.'), 'Enter the name of the new player/goalie',
+; 'Enter a position for (L,C,R,D)', 'Enter a jersey number for',
+; CreatePlayerLoop, writes the player into .TMP database copies ('Error while
+; making new databases!')
+;-----------------------------------------------------------------------------
 ; C: src/front/create/CreateFreeAgent.c
 %ifdef CBUILD
 %include "c/front/create/CreateFreeAgent.inc"
 %else
 CreateFreeAgent:
-push dword 20Ch	; 706E2
-call __CHK	; 706E7
-push ecx	; 706EC
-push esi	; 706ED
-push edi	; 706EE
-push ebp	; 706EF
-sub esp, 1DCh	; 706F0
-push edx	; 706F6
-push ebx	; 706F7
-mov edx, 0FFFFFFFFh	; 706F8
-mov dword [dword esp+01DCh], edx	; 706FD
-mov dword [dword esp+01D8h], edx	; 70704
-mov dword [dword esp+01D4h], edx	; 7070B
-mov dword [dword esp+01E0h], edx	; 70712
-lea edx, [dword esp+01CCh]	; 70719
-xor eax, eax	; 70720
-call _dos_getdiskfree_	; 70722
-test eax, eax	; 70727
-je short .1	; 70729
-push str_ErrDiskFree	; 7072B
-call FatalError	; 70730
-add esp, byte 4	; 70735
+        push dword 20Ch
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 1DCh
+        push edx
+        push ebx
+        mov edx, 0FFFFFFFFh
+        mov dword [dword esp+01DCh], edx
+        mov dword [dword esp+01D8h], edx
+        mov dword [dword esp+01D4h], edx
+        mov dword [dword esp+01E0h], edx
+        lea edx, [dword esp+01CCh]
+        xor eax, eax
+        call _dos_getdiskfree_
+        test eax, eax
+        je short .1
+        push str_ErrDiskFree
+        call FatalError
+        add esp, byte 4
 .1:
-xor esi, esi	; 70738
-mov si, word [dword esp+01D0h]	; 7073A
-xor eax, eax	; 70742
-mov ax, word [dword esp+01D2h]	; 70744
-imul esi, eax	; 7074C
-mov eax, dword [seasondb_size]	; 7074F
-add eax, byte 36h	; 70754
-mov dword [dword esp+018Ch], eax	; 70757
-mov eax, dword [careerdb_size]	; 7075E
-add eax, byte 2Ch	; 70763
-mov dword [dword esp+0190h], eax	; 70766
-mov eax, dword [attdb_size]	; 7076D
-add eax, byte 14h	; 70772
-mov dword [dword esp+01A0h], eax	; 70775
-mov eax, dword [keydb_size]	; 7077C
-add eax, byte 34h	; 70781
-mov dword [dword esp+0198h], eax	; 70784
-mov eax, dword [carteamsdb_size]	; 7078B
-mov dword [dword esp+0194h], eax	; 70790
-mov eax, dword [teamsdb_size]	; 70797
-mov dword [dword esp+019Ch], eax	; 7079C
-xor edi, edi	; 707A3
-mov dword [dword esp+01A4h], edi	; 707A5
-xor ecx, ecx	; 707AC
-xor ebx, ebx	; 707AE
+        xor esi, esi
+        mov si, word [dword esp+01D0h]
+        xor eax, eax
+        mov ax, word [dword esp+01D2h]
+        imul esi, eax
+        mov eax, dword [seasondb_size]
+        add eax, byte 36h
+        mov dword [dword esp+018Ch], eax
+        mov eax, dword [careerdb_size]
+        add eax, byte 2Ch
+        mov dword [dword esp+0190h], eax
+        mov eax, dword [attdb_size]
+        add eax, byte 14h
+        mov dword [dword esp+01A0h], eax
+        mov eax, dword [keydb_size]
+        add eax, byte 34h
+        mov dword [dword esp+0198h], eax
+        mov eax, dword [carteamsdb_size]
+        mov dword [dword esp+0194h], eax
+        mov eax, dword [teamsdb_size]
+        mov dword [dword esp+019Ch], eax
+        xor edi, edi
+        mov dword [dword esp+01A4h], edi
+        xor ecx, ecx
+        xor ebx, ebx
 .2:
-mov edx, dword [dword esp+ebx*4+018Ch]	; 707B0
-add edx, esi	; 707B7
-dec edx	; 707B9
-mov eax, edx	; 707BA
-sar edx, 1Fh	; 707BC
-idiv esi	; 707BF
-add ecx, eax	; 707C1
-inc ebx	; 707C3
-cmp ebx, byte 6	; 707C4
-jl short CreateFreeAgent.2	; 707C7
-xor eax, eax	; 707C9
-mov ax, word [dword esp+01CEh]	; 707CB
-cmp ecx, eax	; 707D3
-jle short .4	; 707D5
-mov edx, ecx	; 707D7
-imul edx, esi	; 707D9
-mov eax, edx	; 707DC
-sar edx, 1Fh	; 707DE
-shl edx, 0Ah	; 707E1
-LD sbb, eax, edx	; 707E4
-sar eax, 0Ah	; 707E6
-push eax	; 707E9
-push str_3dKbytesOfFree	; 707EA
-push str_XXXKbytesOfFree	; 707EF
-call sprintf_	; 707F4
-add esp, byte 0Ch	; 707F9
-push dword 320h	; 707FC
-mov edi, dword [byte esp+04h]	; 70801
-push edi	; 70805
-mov ebp, dword [byte esp+0Ch]	; 70806
-push ebp	; 7080A
-push byte 0	; 7080B
-push byte 0	; 7080D
-mov ecx, 3	; 7080F
-mov ebx, msg_FreeAgentDiskSpace	; 70814
+        mov edx, dword [dword esp+ebx*4+018Ch]
+        add edx, esi
+        dec edx
+        mov eax, edx
+        sar edx, 1Fh
+        idiv esi
+        add ecx, eax
+        inc ebx
+        cmp ebx, byte 6
+        jl short CreateFreeAgent.2
+        xor eax, eax
+        mov ax, word [dword esp+01CEh]
+        cmp ecx, eax
+        jle short .4
+        mov edx, ecx
+        imul edx, esi
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        push eax
+        push str_3dKbytesOfFree
+        push str_XXXKbytesOfFree
+        call sprintf_
+        add esp, byte 0Ch
+        push dword 320h
+        mov edi, dword [byte esp+04h]
+        push edi
+        mov ebp, dword [byte esp+0Ch]
+        push ebp
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, msg_FreeAgentDiskSpace
 .3:
-mov edx, 0FFFFFFFFh	; 70819
-mov eax, edx	; 7081E
-call MessageBox	; 70820
-jmp near .x	; 70825
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp near .x
 .4:
-cmp dword [facount], byte 1Eh	; 7082A
-jl short .5	; 70831
-mov dword [msglines], str_NotEnoughSpaceTo	; 70833
-mov dword [msglines+4], str_ANewFreeAgent	; 7083D
-push byte 0FFFFFFFFh	; 70847
-mov ecx, dword [byte esp+04h]	; 70849
-push ecx	; 7084D
-mov esi, dword [byte esp+0Ch]	; 7084E
-push esi	; 70852
-push byte 0	; 70853
-push byte 0	; 70855
-mov ecx, 2	; 70857
-mov ebx, msglines	; 7085C
-jmp short CreateFreeAgent.3	; 70861
+        cmp dword [facount], byte 1Eh
+        jl short .5
+        mov dword [msglines], str_NotEnoughSpaceTo
+        mov dword [msglines+4], str_ANewFreeAgent
+        push byte 0FFFFFFFFh
+        mov ecx, dword [byte esp+04h]
+        push ecx
+        mov esi, dword [byte esp+0Ch]
+        push esi
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msglines
+        jmp short CreateFreeAgent.3
 .5:
-mov dword [msglines], str_CreateAPlayerOr	; 70863
-push byte 0FFFFFFFFh	; 7086D
-mov edx, dword [byte esp+04h]	; 7086F
-push edx	; 70873
-mov ebx, dword [byte esp+0Ch]	; 70874
-push ebx	; 70878
-push byte 2	; 70879
-push btn_CreateFreeAgent	; 7087B
-mov ecx, 1	; 70880
-mov ebx, msglines	; 70885
-mov edx, 0FFFFFFFFh	; 7088A
-mov eax, edx	; 7088F
-call MessageBox	; 70891
-mov esi, eax	; 70896
-test eax, eax	; 70898
-jl near .x	; 7089A
-jne short .6	; 708A0
-mov dword [msglines], str_EnterNewPlayerName	; 708A2
-jmp short .7	; 708AC
+        mov dword [msglines], str_CreateAPlayerOr
+        push byte 0FFFFFFFFh
+        mov edx, dword [byte esp+04h]
+        push edx
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        push byte 2
+        push btn_CreateFreeAgent
+        mov ecx, 1
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov esi, eax
+        test eax, eax
+        jl near .x
+        jne short .6
+        mov dword [msglines], str_EnterNewPlayerName
+        jmp short .7
 .6:
-mov dword [msglines], str_EnterNewGoalieName	; 708AE
+        mov dword [msglines], str_EnterNewGoalieName
 .7:
-xor ah, ah	; 708B8
-mov byte [dword esp+014Ch], ah	; 708BA
-push byte 0	; 708C1
-push byte 0	; 708C3
-push byte 0	; 708C5
-push byte 0	; 708C7
-push dword 0BAh	; 708C9
-mov ecx, 1Fh	; 708CE
-lea ebx, [dword esp+0160h]	; 708D3
-mov edx, 1	; 708DA
-mov eax, msglines	; 708DF
-call InputDialog	; 708E4
-cmp eax, byte 0FFFFFFFFh	; 708E9
-je near .x	; 708EC
-lea eax, [dword esp+014Ch]	; 708F2
-call strlen_	; 708F9
-test eax, eax	; 708FE
-je near .x	; 70900
-xor dl, dl	; 70906
-mov byte [dword esp+097h], dl	; 70908
-mov byte [dword esp+0A7h], dl	; 7090F
-lea ebx, [dword esp+0A7h]	; 70916
-lea edx, [dword esp+097h]	; 7091D
-lea eax, [dword esp+014Ch]	; 70924
-call SplitPlayerName	; 7092B
-lea edx, [dword esp+097h]	; 70930
-lea eax, [dword esp+016Ch]	; 70937
-call strcpy_	; 7093E
-mov edx, str_space	; 70943
-lea eax, [dword esp+016Ch]	; 70948
-call strcat_	; 7094F
-lea edx, [dword esp+0A7h]	; 70954
-lea eax, [dword esp+016Ch]	; 7095B
-call strcat_	; 70962
-test esi, esi	; 70967
-jne near .11	; 70969
-mov dword [msglines], str_EnterAPositionFor	; 7096F
-lea eax, [dword esp+016Ch]	; 70979
-mov dword [msglines+4], eax	; 70980
-mov dword [msglines+8], str_LCRD	; 70985
-xor bh, bh	; 7098F
-mov byte [dword esp+014Ch], bh	; 70991
+        xor ah, ah
+        mov byte [dword esp+014Ch], ah
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push dword 0BAh
+        mov ecx, 1Fh
+        lea ebx, [dword esp+0160h]
+        mov edx, 1
+        mov eax, msglines
+        call InputDialog
+        cmp eax, byte 0FFFFFFFFh
+        je near .x
+        lea eax, [dword esp+014Ch]
+        call strlen_
+        test eax, eax
+        je near .x
+        xor dl, dl
+        mov byte [dword esp+097h], dl
+        mov byte [dword esp+0A7h], dl
+        lea ebx, [dword esp+0A7h]
+        lea edx, [dword esp+097h]
+        lea eax, [dword esp+014Ch]
+        call SplitPlayerName
+        lea edx, [dword esp+097h]
+        lea eax, [dword esp+016Ch]
+        call strcpy_
+        mov edx, str_space
+        lea eax, [dword esp+016Ch]
+        call strcat_
+        lea edx, [dword esp+0A7h]
+        lea eax, [dword esp+016Ch]
+        call strcat_
+        test esi, esi
+        jne near .11
+        mov dword [msglines], str_EnterAPositionFor
+        lea eax, [dword esp+016Ch]
+        mov dword [msglines+4], eax
+        mov dword [msglines+8], str_LCRD
+        xor bh, bh
+        mov byte [dword esp+014Ch], bh
 .8:
-push byte 0	; 70998
-push byte 0	; 7099A
-push byte 0	; 7099C
-push byte 0	; 7099E
-push byte 0Eh	; 709A0
-mov ecx, 1	; 709A2
-lea ebx, [dword esp+0160h]	; 709A7
-mov edx, 3	; 709AE
-mov eax, msglines	; 709B3
-call InputDialog	; 709B8
-cmp eax, byte 0FFFFFFFFh	; 709BD
-je near .x	; 709C0
-lea eax, [dword esp+014Ch]	; 709C6
-call strlen_	; 709CD
-test eax, eax	; 709D2
-je near .x	; 709D4
-lea eax, [dword esp+014Ch]	; 709DA
-call strupr_	; 709E1
-mov cl, byte [dword esp+014Ch]	; 709E6
-cmp cl, 43h	; 709ED
-je short .9	; 709F0
-cmp cl, 4Ch	; 709F2
-je short .9	; 709F5
-cmp cl, 52h	; 709F7
-je short .9	; 709FA
-cmp cl, 44h	; 709FC
-je short .9	; 709FF
-mov eax, 1	; 70A01
-jmp short .10	; 70A06
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0Eh
+        mov ecx, 1
+        lea ebx, [dword esp+0160h]
+        mov edx, 3
+        mov eax, msglines
+        call InputDialog
+        cmp eax, byte 0FFFFFFFFh
+        je near .x
+        lea eax, [dword esp+014Ch]
+        call strlen_
+        test eax, eax
+        je near .x
+        lea eax, [dword esp+014Ch]
+        call strupr_
+        mov cl, byte [dword esp+014Ch]
+        cmp cl, 43h
+        je short .9
+        cmp cl, 4Ch
+        je short .9
+        cmp cl, 52h
+        je short .9
+        cmp cl, 44h
+        je short .9
+        mov eax, 1
+        jmp short .10
 .9:
-xor eax, eax	; 70A08
+        xor eax, eax
 .10:
-test eax, eax	; 70A0A
-setne al	; 70A0C
-and eax, 0FFh	; 70A0F
-jne short CreateFreeAgent.8	; 70A14
-mov ebx, 1	; 70A16
-lea edx, [dword esp+014Ch]	; 70A1B
-lea eax, [dword esp+096h]	; 70A22
-call memcpy_	; 70A29
-jmp short .12	; 70A2E
+        test eax, eax
+        setne al
+        and eax, 0FFh
+        jne short CreateFreeAgent.8
+        mov ebx, 1
+        lea edx, [dword esp+014Ch]
+        lea eax, [dword esp+096h]
+        call memcpy_
+        jmp short .12
 .11:
-mov byte [dword esp+096h], 47h	; 70A30
+        mov byte [dword esp+096h], 47h
 .12:
-mov eax, dword [seasondb_size]	; 70A38
-mov dword [dword esp+0C0h], eax	; 70A3D
-mov eax, dword [careerdb_size]	; 70A44
-mov dword [dword esp+0BCh], eax	; 70A49
-mov eax, dword [attdb_size]	; 70A50
-mov dword [dword esp+0B8h], eax	; 70A55
-mov ebx, 4	; 70A5C
-xor edx, edx	; 70A61
-lea eax, [dword esp+0C4h]	; 70A63
-call memset_	; 70A6A
-mov dword [msglines], str_EnterAJerseyNumber	; 70A6F
-lea eax, [dword esp+016Ch]	; 70A79
-mov dword [msglines+4], eax	; 70A80
-xor dl, dl	; 70A85
-mov byte [dword esp+014Ch], dl	; 70A87
-push byte 0	; 70A8E
-push byte 63h	; 70A90
-push byte 0	; 70A92
-push byte 0FFFFFFFFh	; 70A94
-push byte 16h	; 70A96
-mov ecx, 2	; 70A98
-lea ebx, [dword esp+0160h]	; 70A9D
-mov edx, ecx	; 70AA4
-mov eax, msglines	; 70AA6
-call InputDialog	; 70AAB
-test eax, eax	; 70AB0
-jl near .x	; 70AB2
-mov byte [dword esp+095h], al	; 70AB8
-mov byte [dword esp+094h], 0FFh	; 70ABF
-push byte 20h	; 70AC7
-push dword 300h	; 70AC9
-push str_Temp	; 70ACE
-call AllocMemBlock	; 70AD3
-mov esi, eax	; 70AD8
-add esp, byte 0Ch	; 70ADA
-mov edi, eax	; 70ADD
-push eax	; 70ADF
-push dword 100h	; 70AE0
-push byte 0	; 70AE5
-call SetPalette	; 70AE7
-add esp, byte 0Ch	; 70AEC
-lea eax, [dword esp+094h]	; 70AEF
-call CreatePlayerLoop	; 70AF6
-cmp eax, byte 1	; 70AFB
-jl near .26	; 70AFE
-mov ebx, 10h	; 70B04
-mov edx, esi	; 70B09
-mov eax, 1	; 70B0B
-call FadePalStep	; 70B10
-push byte 0	; 70B15
-call ClearScreen	; 70B17
-add esp, byte 4	; 70B1C
-mov eax, str_TMP	; 70B1F
-call WriteLeagueDbsMem	; 70B24
-mov ebx, dword [leaguedbnames]	; 70B29
-mov ecx, str_TMP	; 70B2F
-xor edx, edx	; 70B34
-mov eax, tmpdbpath	; 70B36
-call MakePath	; 70B3B
-lea edx, [dword esp+01DCh]	; 70B40
-mov eax, tmpdbpath	; 70B47
-call FileOpenWrite	; 70B4C
-mov ebx, eax	; 70B51
-test eax, eax	; 70B53
-jne short .13	; 70B55
-mov ebx, dword [leaguedbnames+14h]	; 70B57
-mov ecx, str_TMP	; 70B5D
-xor edx, edx	; 70B62
-mov eax, tmpdbpath	; 70B64
-call MakePath	; 70B69
-lea edx, [dword esp+01D8h]	; 70B6E
-mov eax, tmpdbpath	; 70B75
-call FileOpenWrite	; 70B7A
-mov ebx, eax	; 70B7F
+        mov eax, dword [seasondb_size]
+        mov dword [dword esp+0C0h], eax
+        mov eax, dword [careerdb_size]
+        mov dword [dword esp+0BCh], eax
+        mov eax, dword [attdb_size]
+        mov dword [dword esp+0B8h], eax
+        mov ebx, 4
+        xor edx, edx
+        lea eax, [dword esp+0C4h]
+        call memset_
+        mov dword [msglines], str_EnterAJerseyNumber
+        lea eax, [dword esp+016Ch]
+        mov dword [msglines+4], eax
+        xor dl, dl
+        mov byte [dword esp+014Ch], dl
+        push byte 0
+        push byte 63h
+        push byte 0
+        push byte 0FFFFFFFFh
+        push byte 16h
+        mov ecx, 2
+        lea ebx, [dword esp+0160h]
+        mov edx, ecx
+        mov eax, msglines
+        call InputDialog
+        test eax, eax
+        jl near .x
+        mov byte [dword esp+095h], al
+        mov byte [dword esp+094h], 0FFh
+        push byte 20h
+        push dword 300h
+        push str_Temp
+        call AllocMemBlock
+        mov esi, eax
+        add esp, byte 0Ch
+        mov edi, eax
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        lea eax, [dword esp+094h]
+        call CreatePlayerLoop
+        cmp eax, byte 1
+        jl near .26
+        mov ebx, 10h
+        mov edx, esi
+        mov eax, 1
+        call FadePalStep
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        mov eax, str_TMP
+        call WriteLeagueDbsMem
+        mov ebx, dword [leaguedbnames]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        lea edx, [dword esp+01DCh]
+        mov eax, tmpdbpath
+        call FileOpenWrite
+        mov ebx, eax
+        test eax, eax
+        jne short .13
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        lea edx, [dword esp+01D8h]
+        mov eax, tmpdbpath
+        call FileOpenWrite
+        mov ebx, eax
 .13:
-test ebx, ebx	; 70B81
-jne short .14	; 70B83
-mov ebx, dword [leaguedbnames+4]	; 70B85
-mov ecx, str_TMP	; 70B8B
-xor edx, edx	; 70B90
-mov eax, tmpdbpath	; 70B92
-call MakePath	; 70B97
-lea edx, [dword esp+01D4h]	; 70B9C
-mov eax, tmpdbpath	; 70BA3
-call FileOpenWrite	; 70BA8
-mov ebx, eax	; 70BAD
+        test ebx, ebx
+        jne short .14
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        lea edx, [dword esp+01D4h]
+        mov eax, tmpdbpath
+        call FileOpenWrite
+        mov ebx, eax
 .14:
-test ebx, ebx	; 70BAF
-jne short .15	; 70BB1
-mov ebx, dword [leaguedbnames+8]	; 70BB3
-mov ecx, str_TMP	; 70BB9
-xor edx, edx	; 70BBE
-mov eax, tmpdbpath	; 70BC0
-call MakePath	; 70BC5
-lea edx, [dword esp+01E0h]	; 70BCA
-mov eax, tmpdbpath	; 70BD1
-call FileOpenWrite	; 70BD6
-mov ebx, eax	; 70BDB
+        test ebx, ebx
+        jne short .15
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        lea edx, [dword esp+01E0h]
+        mov eax, tmpdbpath
+        call FileOpenWrite
+        mov ebx, eax
 .15:
-test ebx, ebx	; 70BDD
-jne near .23	; 70BDF
-cmp byte [dword esp+096h], 47h	; 70BE5
-je near .18	; 70BED
-mov ebx, 2Fh	; 70BF3
-xor edx, edx	; 70BF8
-lea eax, [dword esp+0C8h]	; 70BFA
-call memset_	; 70C01
-mov ebx, 28h	; 70C06
-xor edx, edx	; 70C0B
-lea eax, [dword esp+0124h]	; 70C0D
-call memset_	; 70C14
-mov ecx, 2Fh	; 70C19
-mov ebx, dword [dword esp+0C0h]	; 70C1E
-lea edx, [dword esp+0C8h]	; 70C25
-mov eax, dword [dword esp+01D8h]	; 70C2C
-call FileWriteAt	; 70C33
-mov ebx, eax	; 70C38
-test eax, eax	; 70C3A
-jne short .17	; 70C3C
-lea ecx, [dword esp+01A8h]	; 70C3E
-mov esi, newskatershoots	; 70C45
+        test ebx, ebx
+        jne near .23
+        cmp byte [dword esp+096h], 47h
+        je near .18
+        mov ebx, 2Fh
+        xor edx, edx
+        lea eax, [dword esp+0C8h]
+        call memset_
+        mov ebx, 28h
+        xor edx, edx
+        lea eax, [dword esp+0124h]
+        call memset_
+        mov ecx, 2Fh
+        mov ebx, dword [dword esp+0C0h]
+        lea edx, [dword esp+0C8h]
+        mov eax, dword [dword esp+01D8h]
+        call FileWriteAt
+        mov ebx, eax
+        test eax, eax
+        jne short .17
+        lea ecx, [dword esp+01A8h]
+        mov esi, newskatershoots
 .16:
-mov ebx, dword [dword eax+newskaterattrs_m3]	; 70C4A
-sar ebx, 18h	; 70C50
-mov dl, byte [esi+eax]	; 70C53
-mov byte [ecx+ebx], dl	; 70C56
-inc eax	; 70C59
-cmp eax, byte 0Fh	; 70C5A
-jl short CreateFreeAgent.16	; 70C5D
-lea ebx, [dword esp+0124h]	; 70C5F
-lea edx, [dword esp+01A8h]	; 70C66
-lea eax, [dword esp+094h]	; 70C6D
-call RandomizeNewRatings	; 70C74
-mov ecx, 28h	; 70C79
-mov ebx, dword [dword esp+0BCh]	; 70C7E
-lea edx, [dword esp+0124h]	; 70C85
-mov eax, dword [dword esp+01D4h]	; 70C8C
-call FileWriteAt	; 70C93
-mov ebx, eax	; 70C98
+        mov ebx, dword [dword eax+newskaterattrs_m3]
+        sar ebx, 18h
+        mov dl, byte [esi+eax]
+        mov byte [ecx+ebx], dl
+        inc eax
+        cmp eax, byte 0Fh
+        jl short CreateFreeAgent.16
+        lea ebx, [dword esp+0124h]
+        lea edx, [dword esp+01A8h]
+        lea eax, [dword esp+094h]
+        call RandomizeNewRatings
+        mov ecx, 28h
+        mov ebx, dword [dword esp+0BCh]
+        lea edx, [dword esp+0124h]
+        mov eax, dword [dword esp+01D4h]
+        call FileWriteAt
+        mov ebx, eax
 .17:
-test ebx, ebx	; 70C9A
-jne near .22	; 70C9C
-mov ecx, 14h	; 70CA2
-mov ebx, dword [dword esp+0B8h]	; 70CA7
-lea edx, [dword esp+01A8h]	; 70CAE
-jmp near .21	; 70CB5
+        test ebx, ebx
+        jne near .22
+        mov ecx, 14h
+        mov ebx, dword [dword esp+0B8h]
+        lea edx, [dword esp+01A8h]
+        jmp near .21
 .18:
-mov ebx, 36h	; 70CBA
-xor edx, edx	; 70CBF
-lea eax, [byte esp+05Ch]	; 70CC1
-call memset_	; 70CC5
-mov ebx, 2Ch	; 70CCA
-xor edx, edx	; 70CCF
-lea eax, [dword esp+0F8h]	; 70CD1
-call memset_	; 70CD8
-mov ecx, 36h	; 70CDD
-mov ebx, dword [dword esp+0C0h]	; 70CE2
-lea edx, [byte esp+05Ch]	; 70CE9
-mov eax, dword [dword esp+01D8h]	; 70CED
-call FileWriteAt	; 70CF4
-mov ebx, eax	; 70CF9
-test eax, eax	; 70CFB
-jne short .20	; 70CFD
-lea esi, [dword esp+01BCh]	; 70CFF
-mov ecx, newgoalieglove	; 70D06
+        mov ebx, 36h
+        xor edx, edx
+        lea eax, [byte esp+05Ch]
+        call memset_
+        mov ebx, 2Ch
+        xor edx, edx
+        lea eax, [dword esp+0F8h]
+        call memset_
+        mov ecx, 36h
+        mov ebx, dword [dword esp+0C0h]
+        lea edx, [byte esp+05Ch]
+        mov eax, dword [dword esp+01D8h]
+        call FileWriteAt
+        mov ebx, eax
+        test eax, eax
+        jne short .20
+        lea esi, [dword esp+01BCh]
+        mov ecx, newgoalieglove
 .19:
-mov edx, dword [dword eax+newgoalieattrs_m3]	; 70D0B
-sar edx, 18h	; 70D11
-mov bl, byte [ecx+eax]	; 70D14
-mov byte [edx+esi], bl	; 70D17
-inc eax	; 70D1A
-cmp eax, byte 0Bh	; 70D1B
-jl short CreateFreeAgent.19	; 70D1E
-mov ecx, 2Ch	; 70D20
-mov ebx, dword [dword esp+0BCh]	; 70D25
-lea edx, [dword esp+0F8h]	; 70D2C
-mov eax, dword [dword esp+01D4h]	; 70D33
-call FileWriteAt	; 70D3A
-mov ebx, eax	; 70D3F
+        mov edx, dword [dword eax+newgoalieattrs_m3]
+        sar edx, 18h
+        mov bl, byte [ecx+eax]
+        mov byte [edx+esi], bl
+        inc eax
+        cmp eax, byte 0Bh
+        jl short CreateFreeAgent.19
+        mov ecx, 2Ch
+        mov ebx, dword [dword esp+0BCh]
+        lea edx, [dword esp+0F8h]
+        mov eax, dword [dword esp+01D4h]
+        call FileWriteAt
+        mov ebx, eax
 .20:
-test ebx, ebx	; 70D41
-jne short .22	; 70D43
-mov ecx, 10h	; 70D45
-mov ebx, dword [dword esp+0B8h]	; 70D4A
-lea edx, [dword esp+01BCh]	; 70D51
+        test ebx, ebx
+        jne short .22
+        mov ecx, 10h
+        mov ebx, dword [dword esp+0B8h]
+        lea edx, [dword esp+01BCh]
 .21:
-mov eax, dword [dword esp+01E0h]	; 70D58
-call FileWriteAt	; 70D5F
-mov ebx, eax	; 70D64
+        mov eax, dword [dword esp+01E0h]
+        call FileWriteAt
+        mov ebx, eax
 .22:
-test ebx, ebx	; 70D66
-jne short .23	; 70D68
-mov ebx, dword [keydb_size]	; 70D6A
-mov ecx, 34h	; 70D70
-lea edx, [dword esp+094h]	; 70D75
-mov eax, dword [dword esp+01DCh]	; 70D7C
-call FileWriteAt	; 70D83
-mov ebx, eax	; 70D88
+        test ebx, ebx
+        jne short .23
+        mov ebx, dword [keydb_size]
+        mov ecx, 34h
+        lea edx, [dword esp+094h]
+        mov eax, dword [dword esp+01DCh]
+        call FileWriteAt
+        mov ebx, eax
 .23:
-lea eax, [dword esp+01E0h]	; 70D8A
-call FileClose	; 70D91
-lea eax, [dword esp+01D4h]	; 70D96
-call FileClose	; 70D9D
-lea eax, [dword esp+01D8h]	; 70DA2
-call FileClose	; 70DA9
-lea eax, [dword esp+01DCh]	; 70DAE
-call FileClose	; 70DB5
-test ebx, ebx	; 70DBA
-jne short .24	; 70DBC
-call LoadTempDatabases	; 70DBE
-xor eax, eax	; 70DC3
-call LoadRosterList	; 70DC5
-mov eax, 1	; 70DCA
-call LoadRosterList	; 70DCF
+        lea eax, [dword esp+01E0h]
+        call FileClose
+        lea eax, [dword esp+01D4h]
+        call FileClose
+        lea eax, [dword esp+01D8h]
+        call FileClose
+        lea eax, [dword esp+01DCh]
+        call FileClose
+        test ebx, ebx
+        jne short .24
+        call LoadTempDatabases
+        xor eax, eax
+        call LoadRosterList
+        mov eax, 1
+        call LoadRosterList
 .24:
-call DeleteTempDatabases	; 70DD4
-test ebx, ebx	; 70DD9
-je short .25	; 70DDB
-mov dword [msglines], str_ErrorWhileMakingNew	; 70DDD
-mov edx, str_NewPlayer	; 70DE7
-lea eax, [byte esp+08h]	; 70DEC
-call strcpy_	; 70DF0
-mov edx, str_NotAddedToDatabases	; 70DF5
-lea eax, [byte esp+08h]	; 70DFA
-call strcat_	; 70DFE
-mov ebx, 10h	; 70E03
-mov edx, edi	; 70E08
-xor eax, eax	; 70E0A
-call FadePalStep	; 70E0C
-lea eax, [byte esp+08h]	; 70E11
-mov dword [msglines+4], eax	; 70E15
-push byte 0FFFFFFFFh	; 70E1A
-mov ecx, dword [byte esp+04h]	; 70E1C
-push ecx	; 70E20
-mov esi, dword [byte esp+0Ch]	; 70E21
-push esi	; 70E25
-push byte 0	; 70E26
-push byte 0	; 70E28
-mov ecx, 2	; 70E2A
-mov ebx, msglines	; 70E2F
-mov edx, 0FFFFFFFFh	; 70E34
-mov eax, edx	; 70E39
-call MessageBox	; 70E3B
-mov ebx, 10h	; 70E40
-mov edx, edi	; 70E45
-jmp short .27	; 70E47
+        call DeleteTempDatabases
+        test ebx, ebx
+        je short .25
+        mov dword [msglines], str_ErrorWhileMakingNew
+        mov edx, str_NewPlayer
+        lea eax, [byte esp+08h]
+        call strcpy_
+        mov edx, str_NotAddedToDatabases
+        lea eax, [byte esp+08h]
+        call strcat_
+        mov ebx, 10h
+        mov edx, edi
+        xor eax, eax
+        call FadePalStep
+        lea eax, [byte esp+08h]
+        mov dword [msglines+4], eax
+        push byte 0FFFFFFFFh
+        mov ecx, dword [byte esp+04h]
+        push ecx
+        mov esi, dword [byte esp+0Ch]
+        push esi
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov ebx, 10h
+        mov edx, edi
+        jmp short .27
 .25:
-mov dword [dbdirty], 1	; 70E49
-jmp short .28	; 70E53
+        mov dword [dbdirty], 1
+        jmp short .28
 .26:
-mov ebx, 10h	; 70E55
-mov edx, esi	; 70E5A
+        mov ebx, 10h
+        mov edx, esi
 .27:
-mov eax, 1	; 70E5C
-call FadePalStep	; 70E61
+        mov eax, 1
+        call FadePalStep
 .28:
-call DrawEditRosters	; 70E66
-mov ebx, 10h	; 70E6B
-mov edx, edi	; 70E70
-xor eax, eax	; 70E72
-call FadePalStep	; 70E74
-push edi	; 70E79
-call FreeMemBlock	; 70E7A
-add esp, byte 4	; 70E7F
+        call DrawEditRosters
+        mov ebx, 10h
+        mov edx, edi
+        xor eax, eax
+        call FadePalStep
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
 .x:
-add esp, 1E4h	; 70E82
-pop ebp	; 70E88
-pop edi	; 70E89
-pop esi	; 70E8A
-pop ecx	; 70E8B
-ret	; 70E8C
+        add esp, 1E4h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MoveToFreeAgents                                                70E8D  95 PC
+; 'Move to Free Agent List' menu item: 'Move <name> to free agent list?',
+; 'There is not enough space in the free agent list for all selected
+; players', RemovePlayerFromTeam, reload and redraw
+;-----------------------------------------------------------------------------
 ; C: src/front/create/MoveToFreeAgents.c
 %ifdef CBUILD
 %include "c/front/create/MoveToFreeAgents.inc"
 %else
 MoveToFreeAgents:
-push dword 64h	; 70E8D
-call __CHK	; 70E92
-push ecx	; 70E97
-push esi	; 70E98
-push edi	; 70E99
-push ebp	; 70E9A
-sub esp, byte 34h	; 70E9B
-push edx	; 70E9E
-push ebx	; 70E9F
-xor edx, edx	; 70EA0
-mov dword [byte esp+030h], edx	; 70EA2
-mov dword [byte esp+028h], edx	; 70EA6
-mov dword [byte esp+034h], edx	; 70EAA
-cmp dword [eax], byte 3	; 70EAE
-setne al	; 70EB1
-and eax, 0FFh	; 70EB4
-mov esi, eax	; 70EB9
-sete al	; 70EBB
-and eax, 0FFh	; 70EBE
-mov dword [byte esp+02Ch], eax	; 70EC3
-xor ebp, ebp	; 70EC7
+        push dword 64h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 34h
+        push edx
+        push ebx
+        xor edx, edx
+        mov dword [byte esp+030h], edx
+        mov dword [byte esp+028h], edx
+        mov dword [byte esp+034h], edx
+        cmp dword [eax], byte 3
+        setne al
+        and eax, 0FFh
+        mov esi, eax
+        sete al
+        and eax, 0FFh
+        mov dword [byte esp+02Ch], eax
+        xor ebp, ebp
 .1:
-mov eax, esi	; 70EC9
-shl eax, 3	; 70ECB
-sub eax, esi	; 70ECE
-cmp byte [dword ebp+eax*4+rostersel], 0	; 70ED0
-je near .2	; 70ED8
-inc dword [byte esp+028h]	; 70EDE
-cmp dword [facount], byte 1Eh	; 70EE2
-jge near .2	; 70EE9
-mov eax, esi	; 70EEF
-shl eax, 2	; 70EF1
-sub eax, esi	; 70EF4
-shl eax, 2	; 70EF6
-mov edx, eax	; 70EF9
-shl edx, 6	; 70EFB
-sub edx, eax	; 70EFE
-mov eax, ebp	; 70F00
-shl eax, 3	; 70F02
-sub eax, ebp	; 70F05
-shl eax, 2	; 70F07
-sub eax, ebp	; 70F0A
-inc dword [byte esp+034h]	; 70F0C
-mov eax, dword [dword edx+eax+dword_EA994]	; 70F10
-mov dword [byte esp+038h], eax	; 70F17
-call KeyDbPtr	; 70F1B
-mov edi, eax	; 70F20
-mov dword [msglines], str_Move	; 70F22
-lea edx, [byte eax+03h]	; 70F2C
-lea eax, [byte esp+08h]	; 70F2F
-call strcpy_	; 70F33
-mov edx, str_space	; 70F38
-lea eax, [byte esp+08h]	; 70F3D
-call strcat_	; 70F41
-lea edx, [byte edi+013h]	; 70F46
-lea eax, [byte esp+08h]	; 70F49
-call strcat_	; 70F4D
-lea eax, [byte esp+08h]	; 70F52
-mov dword [msglines+4], eax	; 70F56
-mov dword [msglines+8], str_ToFreeAgentList	; 70F5B
-push byte 0FFFFFFFFh	; 70F65
-mov edx, dword [byte esp+04h]	; 70F67
-push edx	; 70F6B
-mov ebx, dword [byte esp+0Ch]	; 70F6C
-push ebx	; 70F70
-push byte 2	; 70F71
-push btn_LeagueExists	; 70F73
-mov ecx, 3	; 70F78
-mov ebx, msglines	; 70F7D
-mov edx, 0FFFFFFFFh	; 70F82
-mov eax, edx	; 70F87
-call MessageBox	; 70F89
-cmp eax, byte 1	; 70F8E
-jne short .2	; 70F91
-mov dword [byte esp+030h], eax	; 70F93
-cmp byte [dword esi+rosterteam], 1Ah	; 70F97
-jae short .2	; 70F9E
-mov byte [edi], 0FFh	; 70FA0
-xor eax, eax	; 70FA3
-mov al, byte [dword esi+rosterteam]	; 70FA5
-mov edx, dword [byte esp+038h]	; 70FAB
-call RemovePlayerFromTeam	; 70FAF
+        mov eax, esi
+        shl eax, 3
+        sub eax, esi
+        cmp byte [dword ebp+eax*4+rostersel], 0
+        je near .2
+        inc dword [byte esp+028h]
+        cmp dword [facount], byte 1Eh
+        jge near .2
+        mov eax, esi
+        shl eax, 2
+        sub eax, esi
+        shl eax, 2
+        mov edx, eax
+        shl edx, 6
+        sub edx, eax
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        shl eax, 2
+        sub eax, ebp
+        inc dword [byte esp+034h]
+        mov eax, dword [dword edx+eax+dword_EA994]
+        mov dword [byte esp+038h], eax
+        call KeyDbPtr
+        mov edi, eax
+        mov dword [msglines], str_Move
+        lea edx, [byte eax+03h]
+        lea eax, [byte esp+08h]
+        call strcpy_
+        mov edx, str_space
+        lea eax, [byte esp+08h]
+        call strcat_
+        lea edx, [byte edi+013h]
+        lea eax, [byte esp+08h]
+        call strcat_
+        lea eax, [byte esp+08h]
+        mov dword [msglines+4], eax
+        mov dword [msglines+8], str_ToFreeAgentList
+        push byte 0FFFFFFFFh
+        mov edx, dword [byte esp+04h]
+        push edx
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        push byte 2
+        push btn_LeagueExists
+        mov ecx, 3
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        cmp eax, byte 1
+        jne short .2
+        mov dword [byte esp+030h], eax
+        cmp byte [dword esi+rosterteam], 1Ah
+        jae short .2
+        mov byte [edi], 0FFh
+        xor eax, eax
+        mov al, byte [dword esi+rosterteam]
+        mov edx, dword [byte esp+038h]
+        call RemovePlayerFromTeam
 .2:
-inc ebp	; 70FB4
-cmp ebp, byte 1Ch	; 70FB5
-jl near MoveToFreeAgents.1	; 70FB8
-mov eax, dword [byte esp+028h]	; 70FBE
-cmp eax, dword [byte esp+034h]	; 70FC2
-je short .3	; 70FC6
-mov dword [msglines], str_NotEnoughSpaceFA	; 70FC8
-mov dword [msglines+4], str_InTheFreeAgent	; 70FD2
-mov dword [msglines+8], str_ForAllSelectedPlayers	; 70FDC
-push byte 0FFFFFFFFh	; 70FE6
-mov ebx, dword [byte esp+04h]	; 70FE8
-push ebx	; 70FEC
-mov ecx, dword [byte esp+0Ch]	; 70FED
-push ecx	; 70FF1
-push byte 0	; 70FF2
-push byte 0	; 70FF4
-mov ecx, 3	; 70FF6
-mov ebx, msglines	; 70FFB
-mov edx, 0FFFFFFFFh	; 71000
-mov eax, edx	; 71005
-call MessageBox	; 71007
+        inc ebp
+        cmp ebp, byte 1Ch
+        jl near MoveToFreeAgents.1
+        mov eax, dword [byte esp+028h]
+        cmp eax, dword [byte esp+034h]
+        je short .3
+        mov dword [msglines], str_NotEnoughSpaceFA
+        mov dword [msglines+4], str_InTheFreeAgent
+        mov dword [msglines+8], str_ForAllSelectedPlayers
+        push byte 0FFFFFFFFh
+        mov ebx, dword [byte esp+04h]
+        push ebx
+        mov ecx, dword [byte esp+0Ch]
+        push ecx
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
 .3:
-cmp dword [byte esp+030h], byte 0	; 7100C
-je short .x	; 71011
-mov dword [dbdirty], 1	; 71013
-mov eax, esi	; 7101D
-call LoadRosterList	; 7101F
-mov eax, dword [byte esp+02Ch]	; 71024
-cmp byte [dword eax+rosterisfa], 1	; 71028
-jne short .4	; 7102F
-call LoadRosterList	; 71031
+        cmp dword [byte esp+030h], byte 0
+        je short .x
+        mov dword [dbdirty], 1
+        mov eax, esi
+        call LoadRosterList
+        mov eax, dword [byte esp+02Ch]
+        cmp byte [dword eax+rosterisfa], 1
+        jne short .4
+        call LoadRosterList
 .4:
-call DrawEditRosters	; 71036
+        call DrawEditRosters
 .x:
-add esp, byte 3Ch	; 7103B
-pop ebp	; 7103E
-pop edi	; 7103F
-pop esi	; 71040
-pop ecx	; 71041
-ret	; 71042
+        add esp, byte 3Ch
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; RemovePlayerFromTeam                         71043  95 PC, medium confidence
+; Finds the player (name keys +24h/+28h/+2Ch) in the team's 1Ch roster slots
+; (+4Ch), clears it (-1), facount++, and replaces it in the line table
+; (+0BCh, 30h bytes) with 64h
+;-----------------------------------------------------------------------------
 ; C: src/front/create/RemovePlayerFromTeam.c
 %ifdef CBUILD
 %include "c/front/create/RemovePlayerFromTeam.inc"
 %else
 RemovePlayerFromTeam:
-push dword 14h	; 71043
-call __CHK	; 71048
-push ebx	; 7104D
-push ecx	; 7104E
-push esi	; 7104F
-push edi	; 71050
-and eax, 0FFh	; 71051
-call TeamRecPtr	; 71056
-mov edi, eax	; 7105B
-mov eax, edx	; 7105D
-call KeyDbPtr	; 7105F
-mov ebx, eax	; 71064
-mov dh, 0FFh	; 71066
-xor dl, dl	; 71068
-jmp short .3	; 7106A
+        push dword 14h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        and eax, 0FFh
+        call TeamRecPtr
+        mov edi, eax
+        mov eax, edx
+        call KeyDbPtr
+        mov ebx, eax
+        mov dh, 0FFh
+        xor dl, dl
+        jmp short .3
 .1:
-xor ecx, ecx	; 7106C
-mov cl, dl	; 7106E
-shl ecx, 2	; 71070
-add ecx, edi	; 71073
-mov eax, dword [byte ecx+04Ch]	; 71075
-call KeyDbPtr	; 71078
-mov esi, dword [byte ebx+024h]	; 7107D
-cmp esi, dword [byte eax+024h]	; 71080
-jne short .2	; 71083
-mov esi, dword [byte ebx+028h]	; 71085
-cmp esi, dword [byte eax+028h]	; 71088
-jne short .2	; 7108B
-mov esi, dword [byte ebx+02Ch]	; 7108D
-cmp esi, dword [byte eax+02Ch]	; 71090
-jne short .2	; 71093
-inc dword [facount]	; 71095
-mov dword [byte ecx+04Ch], 0FFFFFFFFh	; 7109B
-mov dh, dl	; 710A2
+        xor ecx, ecx
+        mov cl, dl
+        shl ecx, 2
+        add ecx, edi
+        mov eax, dword [byte ecx+04Ch]
+        call KeyDbPtr
+        mov esi, dword [byte ebx+024h]
+        cmp esi, dword [byte eax+024h]
+        jne short .2
+        mov esi, dword [byte ebx+028h]
+        cmp esi, dword [byte eax+028h]
+        jne short .2
+        mov esi, dword [byte ebx+02Ch]
+        cmp esi, dword [byte eax+02Ch]
+        jne short .2
+        inc dword [facount]
+        mov dword [byte ecx+04Ch], 0FFFFFFFFh
+        mov dh, dl
 .2:
-inc dl	; 710A4
+        inc dl
 .3:
-cmp dl, 1Ch	; 710A6
-jae short .4	; 710A9
-cmp dh, 0FFh	; 710AB
-je short RemovePlayerFromTeam.1	; 710AE
+        cmp dl, 1Ch
+        jae short .4
+        cmp dh, 0FFh
+        je short RemovePlayerFromTeam.1
 .4:
-cmp dh, 0FFh	; 710B0
-je short .x	; 710B3
-lea esi, [dword edi+0BCh]	; 710B5
-xor dl, dl	; 710BB
-jmp short .7	; 710BD
+        cmp dh, 0FFh
+        je short .x
+        lea esi, [dword edi+0BCh]
+        xor dl, dl
+        jmp short .7
 .5:
-xor eax, eax	; 710BF
-mov al, dl	; 710C1
-add eax, esi	; 710C3
-cmp dh, byte [eax]	; 710C5
-jne short .6	; 710C7
-mov byte [eax], 64h	; 710C9
+        xor eax, eax
+        mov al, dl
+        add eax, esi
+        cmp dh, byte [eax]
+        jne short .6
+        mov byte [eax], 64h
 .6:
-inc dl	; 710CC
+        inc dl
 .7:
-cmp dl, 30h	; 710CE
-jb short RemovePlayerFromTeam.5	; 710D1
+        cmp dl, 30h
+        jb short RemovePlayerFromTeam.5
 .x:
-pop edi	; 710D3
-pop esi	; 710D4
-pop ecx	; 710D5
-pop ebx	; 710D6
-ret	; 710D7
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadTempDatabases                            710D8  95 PC, medium confidence
+; Loads the league databases' .TMP copies into buffers
+; (carteamsdb/D07CB/D07CF with sizes D07DB/D07E3/D07E7)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/LoadTempDatabases.c
 %ifdef CBUILD
 %include "c/front/create/LoadTempDatabases.inc"
 %else
 LoadTempDatabases:
-push dword 18h	; 710D8
-call __CHK	; 710DD
-push ebx	; 710E2
-push ecx	; 710E3
-push edx	; 710E4
-call FreeLeagueDbsMem	; 710E5
-mov ebx, dword [leaguedbnames+14h]	; 710EA
-mov ecx, str_TMP	; 710F0
-xor edx, edx	; 710F5
-mov eax, tmpdbpath	; 710F7
-call MakePath	; 710FC
-push byte 20h	; 71101
-push tmpdbpath	; 71103
-call sub_8E8A0	; 71108
-add esp, byte 8	; 7110D
-mov dword [seasondb], eax	; 71110
-push tmpdbpath	; 71115
-call GetFileSize	; 7111A
-add esp, byte 4	; 7111F
-mov dword [seasondb_size], eax	; 71122
-mov ebx, dword [leaguedbnames+4]	; 71127
-mov ecx, str_TMP	; 7112D
-xor edx, edx	; 71132
-mov eax, tmpdbpath	; 71134
-call MakePath	; 71139
-push byte 20h	; 7113E
-push tmpdbpath	; 71140
-call sub_8E8A0	; 71145
-add esp, byte 8	; 7114A
-mov dword [careerdb], eax	; 7114D
-push tmpdbpath	; 71152
-call GetFileSize	; 71157
-add esp, byte 4	; 7115C
-mov dword [careerdb_size], eax	; 7115F
-mov ebx, dword [leaguedbnames+0Ch]	; 71164
-mov ecx, str_TMP	; 7116A
-xor edx, edx	; 7116F
-mov eax, tmpdbpath	; 71171
-call MakePath	; 71176
-push byte 20h	; 7117B
-push tmpdbpath	; 7117D
-call sub_8E8A0	; 71182
-add esp, byte 8	; 71187
-mov dword [carteamsdb], eax	; 7118A
-push tmpdbpath	; 7118F
-call GetFileSize	; 71194
-add esp, byte 4	; 71199
-mov dword [carteamsdb_size], eax	; 7119C
-mov ebx, dword [leaguedbnames]	; 711A1
-mov ecx, str_TMP	; 711A7
-xor edx, edx	; 711AC
-mov eax, tmpdbpath	; 711AE
-call MakePath	; 711B3
-push byte 20h	; 711B8
-push tmpdbpath	; 711BA
-call sub_8E8A0	; 711BF
-add esp, byte 8	; 711C4
-mov dword [keydb], eax	; 711C7
-push tmpdbpath	; 711CC
-call GetFileSize	; 711D1
-add esp, byte 4	; 711D6
-mov dword [keydb_size], eax	; 711D9
-mov ebx, dword [leaguedbnames+10h]	; 711DE
-mov ecx, str_TMP	; 711E4
-xor edx, edx	; 711E9
-mov eax, tmpdbpath	; 711EB
-call MakePath	; 711F0
-push byte 20h	; 711F5
-push tmpdbpath	; 711F7
-call sub_8E8A0	; 711FC
-add esp, byte 8	; 71201
-mov dword [teamsdb], eax	; 71204
-push tmpdbpath	; 71209
-call GetFileSize	; 7120E
-add esp, byte 4	; 71213
-mov dword [teamsdb_size], eax	; 71216
-mov ebx, dword [leaguedbnames+8]	; 7121B
-mov ecx, str_TMP	; 71221
-xor edx, edx	; 71226
-mov eax, tmpdbpath	; 71228
-call MakePath	; 7122D
-push byte 20h	; 71232
-push tmpdbpath	; 71234
-call sub_8E8A0	; 71239
-add esp, byte 8	; 7123E
-mov dword [attdb], eax	; 71241
-push tmpdbpath	; 71246
-call GetFileSize	; 7124B
-add esp, byte 4	; 71250
-mov dword [attdb_size], eax	; 71253
-pop edx	; 71258
-pop ecx	; 71259
-pop ebx	; 7125A
-ret	; 7125B
+        push dword 18h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        call FreeLeagueDbsMem
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [seasondb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [seasondb_size], eax
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [careerdb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [careerdb_size], eax
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [carteamsdb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [carteamsdb_size], eax
+        mov ebx, dword [leaguedbnames]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [keydb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [keydb_size], eax
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [teamsdb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [teamsdb_size], eax
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        push byte 20h
+        push tmpdbpath
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [attdb], eax
+        push tmpdbpath
+        call GetFileSize
+        add esp, byte 4
+        mov dword [attdb_size], eax
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeleteTempDatabases                                             7125C  95 PC
+; Unlinks the .TMP copies of the league databases
+;-----------------------------------------------------------------------------
 ; C: src/front/create/DeleteTempDatabases.c
 %ifdef CBUILD
 %include "c/front/create/DeleteTempDatabases.inc"
 %else
 DeleteTempDatabases:
-push dword 10h	; 7125C
-call __CHK	; 71261
-push ebx	; 71266
-push ecx	; 71267
-push edx	; 71268
-mov ebx, dword [leaguedbnames+14h]	; 71269
-mov ecx, str_TMP	; 7126F
-xor edx, edx	; 71274
-mov eax, tmpdbpath	; 71276
-call MakePath	; 7127B
-mov eax, tmpdbpath	; 71280
-call j_unlink_	; 71285
-mov ebx, dword [leaguedbnames+4]	; 7128A
-mov ecx, str_TMP	; 71290
-xor edx, edx	; 71295
-mov eax, tmpdbpath	; 71297
-call MakePath	; 7129C
-mov eax, tmpdbpath	; 712A1
-call j_unlink_	; 712A6
-mov ebx, dword [leaguedbnames+0Ch]	; 712AB
-mov ecx, str_TMP	; 712B1
-xor edx, edx	; 712B6
-mov eax, tmpdbpath	; 712B8
-call MakePath	; 712BD
-mov eax, tmpdbpath	; 712C2
-call j_unlink_	; 712C7
-mov ebx, dword [leaguedbnames]	; 712CC
-mov ecx, str_TMP	; 712D2
-xor edx, edx	; 712D7
-mov eax, tmpdbpath	; 712D9
-call MakePath	; 712DE
-mov eax, tmpdbpath	; 712E3
-call j_unlink_	; 712E8
-mov ebx, dword [leaguedbnames+10h]	; 712ED
-mov ecx, str_TMP	; 712F3
-xor edx, edx	; 712F8
-mov eax, tmpdbpath	; 712FA
-call MakePath	; 712FF
-mov eax, tmpdbpath	; 71304
-call j_unlink_	; 71309
-mov ebx, dword [leaguedbnames+8]	; 7130E
-mov ecx, str_TMP	; 71314
-xor edx, edx	; 71319
-mov eax, tmpdbpath	; 7131B
-call MakePath	; 71320
-mov eax, tmpdbpath	; 71325
-call j_unlink_	; 7132A
-pop edx	; 7132F
-pop ecx	; 71330
-pop ebx	; 71331
-ret	; 71332
+        push dword 10h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        mov ebx, dword [leaguedbnames]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, str_TMP
+        xor edx, edx
+        mov eax, tmpdbpath
+        call MakePath
+        mov eax, tmpdbpath
+        call j_unlink_
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SwapSelectedPlayers                             71333  95 PC, low confidence
+; Unreferenced: checks 'The number of selected players and goalies must be
+; the same on both teams!' and exchanges the selected players between the two
+; panels
+;-----------------------------------------------------------------------------
 SwapSelectedPlayers:
-push dword 114h	; 71333
-call __CHK	; 71338
-push ecx	; 7133D
-push esi	; 7133E
-push edi	; 7133F
-push ebp	; 71340
-sub esp, 0E4h	; 71341
-push edx	; 71347
-push ebx	; 71348
-xor edx, edx	; 71349
-mov dword [dword esp+0E8h], edx	; 7134B
-xor ebp, ebp	; 71352
-xor eax, eax	; 71354
-xor ebx, ebx	; 71356
+        push dword 114h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 0E4h
+        push edx
+        push ebx
+        xor edx, edx
+        mov dword [dword esp+0E8h], edx
+        xor ebp, ebp
+        xor eax, eax
+        xor ebx, ebx
 .1:
-cmp byte [dword ebx+rostersel], 0	; 71358
-je short .2	; 7135F
-inc dword [dword esp+0E8h]	; 71361
+        cmp byte [dword ebx+rostersel], 0
+        je short .2
+        inc dword [dword esp+0E8h]
 .2:
-cmp byte [dword ebx+rostersel+1Ch], 0	; 71368
-je short .3	; 7136F
-inc edx	; 71371
+        cmp byte [dword ebx+rostersel+1Ch], 0
+        je short .3
+        inc edx
 .3:
-inc ebx	; 71372
-cmp ebx, byte 19h	; 71373
-jl short SwapSelectedPlayers.1	; 71376
-xor ebx, ebx	; 71378
+        inc ebx
+        cmp ebx, byte 19h
+        jl short SwapSelectedPlayers.1
+        xor ebx, ebx
 .4:
-cmp byte [dword ebx+byte_EAF99], 0	; 7137A
-je short .5	; 71381
-inc ebp	; 71383
+        cmp byte [dword ebx+byte_EAF99], 0
+        je short .5
+        inc ebp
 .5:
-cmp byte [dword ebx+byte_EAFB5], 0	; 71384
-je short .6	; 7138B
-inc eax	; 7138D
+        cmp byte [dword ebx+byte_EAFB5], 0
+        je short .6
+        inc eax
 .6:
-inc ebx	; 7138E
-cmp ebx, byte 3	; 7138F
-jl short SwapSelectedPlayers.4	; 71392
-cmp edx, dword [dword esp+0E8h]	; 71394
-jne short .7	; 7139B
-cmp ebp, eax	; 7139D
-je near .12	; 7139F
+        inc ebx
+        cmp ebx, byte 3
+        jl short SwapSelectedPlayers.4
+        cmp edx, dword [dword esp+0E8h]
+        jne short .7
+        cmp ebp, eax
+        je near .12
 .7:
-mov ecx, 6	; 713A5
-lea edi, [byte esp+08h]	; 713AA
-mov esi, str_TheNumberOfSelected	; 713AE
-rep movsd	; 713B3
-cmp edx, dword [dword esp+0E8h]	; 713B5
-je short .8	; 713BC
-cmp ebp, eax	; 713BE
-je short .8	; 713C0
-mov edx, str_PlayersAndGoalies	; 713C2
-jmp short .10	; 713C7
+        mov ecx, 6
+        lea edi, [byte esp+08h]
+        mov esi, str_TheNumberOfSelected
+        rep movsd
+        cmp edx, dword [dword esp+0E8h]
+        je short .8
+        cmp ebp, eax
+        je short .8
+        mov edx, str_PlayersAndGoalies
+        jmp short .10
 .8:
-cmp edx, dword [dword esp+0E8h]	; 713C9
-je short .9	; 713D0
-mov edx, str_Players	; 713D2
-jmp short .10	; 713D7
+        cmp edx, dword [dword esp+0E8h]
+        je short .9
+        mov edx, str_Players
+        jmp short .10
 .9:
-cmp ebp, eax	; 713D9
-je short .11	; 713DB
-mov edx, str_Goalies	; 713DD
+        cmp ebp, eax
+        je short .11
+        mov edx, str_Goalies
 .10:
-lea eax, [byte esp+08h]	; 713E2
-call strcat_	; 713E6
+        lea eax, [byte esp+08h]
+        call strcat_
 .11:
-lea eax, [byte esp+08h]	; 713EB
-mov dword [msglines], eax	; 713EF
-mov dword [msglines+4], str_MustBeTheSame	; 713F4
-push byte 0FFFFFFFFh	; 713FE
-mov esi, dword [byte esp+04h]	; 71400
-push esi	; 71404
-mov edi, dword [byte esp+0Ch]	; 71405
-push edi	; 71409
-push byte 0	; 7140A
-push byte 0	; 7140C
-mov ecx, 2	; 7140E
-mov ebx, msglines	; 71413
-mov edx, 0FFFFFFFFh	; 71418
-mov eax, edx	; 7141D
-call MessageBox	; 7141F
-jmp near .x	; 71424
+        lea eax, [byte esp+08h]
+        mov dword [msglines], eax
+        mov dword [msglines+4], str_MustBeTheSame
+        push byte 0FFFFFFFFh
+        mov esi, dword [byte esp+04h]
+        push esi
+        mov edi, dword [byte esp+0Ch]
+        push edi
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp near .x
 .12:
-xor eax, eax	; 71429
-xor ecx, ecx	; 7142B
-xor ebx, ebx	; 7142D
+        xor eax, eax
+        xor ecx, ecx
+        xor ebx, ebx
 .13:
-cmp byte [dword ebx+rostersel], 0	; 7142F
-je short .14	; 71436
-mov edx, ebx	; 71438
-shl edx, 3	; 7143A
-sub edx, ebx	; 7143D
-shl edx, 2	; 7143F
-sub edx, ebx	; 71442
-mov dl, byte [dword edx+rosterslot]	; 71444
-mov byte [dword esp+eax+0B0h], dl	; 7144A
-mov byte [byte esp+eax+078h], bl	; 71451
-inc eax	; 71455
+        cmp byte [dword ebx+rostersel], 0
+        je short .14
+        mov edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        shl edx, 2
+        sub edx, ebx
+        mov dl, byte [dword edx+rosterslot]
+        mov byte [dword esp+eax+0B0h], dl
+        mov byte [byte esp+eax+078h], bl
+        inc eax
 .14:
-cmp byte [dword ebx+rostersel+1Ch], 0	; 71456
-je short .15	; 7145D
-mov edx, ebx	; 7145F
-shl edx, 3	; 71461
-sub edx, ebx	; 71464
-shl edx, 2	; 71466
-sub edx, ebx	; 71469
-mov dl, byte [dword edx+byte_EAC86]	; 7146B
-mov byte [dword esp+ecx+0CCh], dl	; 71471
-mov byte [dword esp+ecx+094h], bl	; 71478
-inc ecx	; 7147F
+        cmp byte [dword ebx+rostersel+1Ch], 0
+        je short .15
+        mov edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        shl edx, 2
+        sub edx, ebx
+        mov dl, byte [dword edx+byte_EAC86]
+        mov byte [dword esp+ecx+0CCh], dl
+        mov byte [dword esp+ecx+094h], bl
+        inc ecx
 .15:
-inc ebx	; 71480
-cmp ebx, byte 1Ch	; 71481
-jl short SwapSelectedPlayers.13	; 71484
-add dword [dword esp+0E8h], ebp	; 71486
-xor ebx, ebx	; 7148D
-jmp near .21	; 7148F
+        inc ebx
+        cmp ebx, byte 1Ch
+        jl short SwapSelectedPlayers.13
+        add dword [dword esp+0E8h], ebp
+        xor ebx, ebx
+        jmp near .21
 .16:
-xor eax, eax	; 71494
-mov al, byte [dword esp+ebx+0B0h]	; 71496
-mov edx, dword [rosterteamrec]	; 7149D
-mov eax, dword [byte edx+eax*4+04Ch]	; 714A3
-call KeyDbPtr	; 714A7
-mov edx, eax	; 714AC
-xor eax, eax	; 714AE
-mov al, byte [dword esp+ebx+0CCh]	; 714B0
-mov ecx, eax	; 714B7
-shl ecx, 2	; 714B9
-mov eax, dword [dword_EAF7C]	; 714BC
-mov eax, dword [byte ecx+eax+04Ch]	; 714C1
-call KeyDbPtr	; 714C5
-mov cl, byte [eax]	; 714CA
-mov ch, byte [edx]	; 714CC
-xor ch, cl	; 714CE
-mov byte [edx], ch	; 714D0
-mov cl, ch	; 714D2
-mov ch, byte [eax]	; 714D4
-xor ch, cl	; 714D6
-mov byte [eax], ch	; 714D8
-xor byte [edx], ch	; 714DA
-xor eax, eax	; 714DC
-mov al, byte [dword esp+ebx+0B0h]	; 714DE
-mov edx, eax	; 714E5
-shl edx, 2	; 714E7
-mov eax, dword [rosterteamrec]	; 714EA
-add eax, edx	; 714EF
-xor edx, edx	; 714F1
-mov dl, byte [dword esp+ebx+0CCh]	; 714F3
-mov ecx, edx	; 714FA
-shl ecx, 2	; 714FC
-mov edx, dword [dword_EAF7C]	; 714FF
-mov edx, dword [byte ecx+edx+04Ch]	; 71505
-xor dword [byte eax+04Ch], edx	; 71509
-xor edx, edx	; 7150C
-mov dl, byte [dword esp+ebx+0CCh]	; 7150E
-shl edx, 2	; 71515
-mov eax, dword [dword_EAF7C]	; 71518
-add eax, edx	; 7151D
-xor edx, edx	; 7151F
-mov dl, byte [dword esp+ebx+0B0h]	; 71521
-mov ecx, dword [rosterteamrec]	; 71528
-mov edx, dword [byte ecx+edx*4+04Ch]	; 7152E
-xor dword [byte eax+04Ch], edx	; 71532
-xor edx, edx	; 71535
-mov dl, byte [dword esp+ebx+0B0h]	; 71537
-shl edx, 2	; 7153E
-mov eax, dword [rosterteamrec]	; 71541
-add eax, edx	; 71546
-xor edx, edx	; 71548
-mov dl, byte [dword esp+ebx+0CCh]	; 7154A
-mov ecx, edx	; 71551
-shl ecx, 2	; 71553
-mov edx, dword [dword_EAF7C]	; 71556
-mov edx, dword [byte ecx+edx+04Ch]	; 7155C
-xor dword [byte eax+04Ch], edx	; 71560
-movzx ebp, byte [byte esp+ebx+078h]	; 71563
-mov eax, ebp	; 71568
-shl eax, 3	; 7156A
-sub eax, ebp	; 7156D
-shl eax, 2	; 7156F
-sub eax, ebp	; 71572
-xor ecx, ecx	; 71574
-mov cl, byte [dword esp+ebx+094h]	; 71576
-mov edx, ecx	; 7157D
-shl edx, 3	; 7157F
-sub edx, ecx	; 71582
-shl edx, 2	; 71584
-sub edx, ecx	; 71587
-mov cl, byte [dword edx+byte_EAC86]	; 71589
-mov ch, byte [dword eax+rosterslot]	; 7158F
-xor ch, cl	; 71595
-mov byte [dword eax+rosterslot], ch	; 71597
-mov cl, ch	; 7159D
-mov ch, byte [dword edx+byte_EAC86]	; 7159F
-xor ch, cl	; 715A5
-mov byte [dword edx+byte_EAC86], ch	; 715A7
-mov cl, ch	; 715AD
-xor byte [dword eax+rosterslot], cl	; 715AF
-mov ecx, 6	; 715B5
-lea edi, [byte esp+05Ch]	; 715BA
-lea esi, [dword eax+rosterlist]	; 715BE
-rep movsd	; 715C4
-movsw	; 715C6
-movsb	; 715C8
-mov ecx, 6	; 715C9
-lea edi, [dword eax+rosterlist]	; 715CE
-lea esi, [dword edx+unk_EAC84]	; 715D4
-rep movsd	; 715DA
-movsw	; 715DC
-movsb	; 715DE
-mov ecx, 6	; 715DF
-lea edi, [dword edx+unk_EAC84]	; 715E4
-lea esi, [byte esp+05Ch]	; 715EA
-rep movsd	; 715EE
-movsw	; 715F0
-movsb	; 715F2
-mov edx, ebp	; 715F3
-xor eax, eax	; 715F5
-call FixJerseyNumber	; 715F7
-xor edx, edx	; 715FC
-mov dl, byte [dword esp+ebx+094h]	; 715FE
-mov eax, 1	; 71605
-call FixJerseyNumber	; 7160A
-mov esi, dword [rosterteamrec]	; 7160F
-add esi, 0BCh	; 71615
-xor eax, eax	; 7161B
+        xor eax, eax
+        mov al, byte [dword esp+ebx+0B0h]
+        mov edx, dword [rosterteamrec]
+        mov eax, dword [byte edx+eax*4+04Ch]
+        call KeyDbPtr
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword esp+ebx+0CCh]
+        mov ecx, eax
+        shl ecx, 2
+        mov eax, dword [dword_EAF7C]
+        mov eax, dword [byte ecx+eax+04Ch]
+        call KeyDbPtr
+        mov cl, byte [eax]
+        mov ch, byte [edx]
+        xor ch, cl
+        mov byte [edx], ch
+        mov cl, ch
+        mov ch, byte [eax]
+        xor ch, cl
+        mov byte [eax], ch
+        xor byte [edx], ch
+        xor eax, eax
+        mov al, byte [dword esp+ebx+0B0h]
+        mov edx, eax
+        shl edx, 2
+        mov eax, dword [rosterteamrec]
+        add eax, edx
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+0CCh]
+        mov ecx, edx
+        shl ecx, 2
+        mov edx, dword [dword_EAF7C]
+        mov edx, dword [byte ecx+edx+04Ch]
+        xor dword [byte eax+04Ch], edx
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+0CCh]
+        shl edx, 2
+        mov eax, dword [dword_EAF7C]
+        add eax, edx
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+0B0h]
+        mov ecx, dword [rosterteamrec]
+        mov edx, dword [byte ecx+edx*4+04Ch]
+        xor dword [byte eax+04Ch], edx
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+0B0h]
+        shl edx, 2
+        mov eax, dword [rosterteamrec]
+        add eax, edx
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+0CCh]
+        mov ecx, edx
+        shl ecx, 2
+        mov edx, dword [dword_EAF7C]
+        mov edx, dword [byte ecx+edx+04Ch]
+        xor dword [byte eax+04Ch], edx
+        movzx ebp, byte [byte esp+ebx+078h]
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        shl eax, 2
+        sub eax, ebp
+        xor ecx, ecx
+        mov cl, byte [dword esp+ebx+094h]
+        mov edx, ecx
+        shl edx, 3
+        sub edx, ecx
+        shl edx, 2
+        sub edx, ecx
+        mov cl, byte [dword edx+byte_EAC86]
+        mov ch, byte [dword eax+rosterslot]
+        xor ch, cl
+        mov byte [dword eax+rosterslot], ch
+        mov cl, ch
+        mov ch, byte [dword edx+byte_EAC86]
+        xor ch, cl
+        mov byte [dword edx+byte_EAC86], ch
+        mov cl, ch
+        xor byte [dword eax+rosterslot], cl
+        mov ecx, 6
+        lea edi, [byte esp+05Ch]
+        lea esi, [dword eax+rosterlist]
+        rep movsd
+        movsw
+        movsb
+        mov ecx, 6
+        lea edi, [dword eax+rosterlist]
+        lea esi, [dword edx+unk_EAC84]
+        rep movsd
+        movsw
+        movsb
+        mov ecx, 6
+        lea edi, [dword edx+unk_EAC84]
+        lea esi, [byte esp+05Ch]
+        rep movsd
+        movsw
+        movsb
+        mov edx, ebp
+        xor eax, eax
+        call FixJerseyNumber
+        xor edx, edx
+        mov dl, byte [dword esp+ebx+094h]
+        mov eax, 1
+        call FixJerseyNumber
+        mov esi, dword [rosterteamrec]
+        add esi, 0BCh
+        xor eax, eax
 .17:
-lea edx, [esi+eax]	; 7161D
-mov cl, byte [edx]	; 71620
-cmp cl, byte [dword esp+ebx+0B0h]	; 71622
-jne short .18	; 71629
-mov byte [edx], 64h	; 7162B
+        lea edx, [esi+eax]
+        mov cl, byte [edx]
+        cmp cl, byte [dword esp+ebx+0B0h]
+        jne short .18
+        mov byte [edx], 64h
 .18:
-inc eax	; 7162E
-cmp eax, byte 30h	; 7162F
-jl short SwapSelectedPlayers.17	; 71632
-mov esi, dword [dword_EAF7C]	; 71634
-add esi, 0BCh	; 7163A
-xor eax, eax	; 71640
+        inc eax
+        cmp eax, byte 30h
+        jl short SwapSelectedPlayers.17
+        mov esi, dword [dword_EAF7C]
+        add esi, 0BCh
+        xor eax, eax
 .19:
-lea edx, [esi+eax]	; 71642
-mov cl, byte [edx]	; 71645
-cmp cl, byte [dword esp+ebx+0CCh]	; 71647
-jne short .20	; 7164E
-mov byte [edx], 64h	; 71650
+        lea edx, [esi+eax]
+        mov cl, byte [edx]
+        cmp cl, byte [dword esp+ebx+0CCh]
+        jne short .20
+        mov byte [edx], 64h
 .20:
-inc eax	; 71653
-cmp eax, byte 30h	; 71654
-jl short SwapSelectedPlayers.19	; 71657
-inc ebx	; 71659
+        inc eax
+        cmp eax, byte 30h
+        jl short SwapSelectedPlayers.19
+        inc ebx
 .21:
-cmp ebx, dword [dword esp+0E8h]	; 7165A
-jl near SwapSelectedPlayers.16	; 71661
-mov ebx, 1	; 71667
-mov dword [dbdirty], ebx	; 7166C
-xor eax, eax	; 71672
-call LoadRosterList	; 71674
-mov eax, ebx	; 71679
-call LoadRosterList	; 7167B
-call DrawEditRosters	; 71680
+        cmp ebx, dword [dword esp+0E8h]
+        jl near SwapSelectedPlayers.16
+        mov ebx, 1
+        mov dword [dbdirty], ebx
+        xor eax, eax
+        call LoadRosterList
+        mov eax, ebx
+        call LoadRosterList
+        call DrawEditRosters
 .x:
-add esp, 0ECh	; 71685
-pop ebp	; 7168B
-pop edi	; 7168C
-pop esi	; 7168D
-pop ecx	; 7168E
-ret	; 7168F
+        add esp, 0ECh
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
+;-----------------------------------------------------------------------------
+; SelectMatchingPlayers                                           71690  95 PC
+; (first, last, side): selects the panel's players whose lower-cased
+; first/last name match (last only when first is empty)
+;-----------------------------------------------------------------------------
 ; C: src/front/create/SelectMatchingPlayers.c
 %ifdef CBUILD
 %include "c/front/create/SelectMatchingPlayers.inc"
 %else
 SelectMatchingPlayers:
-push dword 34h	; 71690
-call __CHK	; 71695
-push ecx	; 7169A
-push esi	; 7169B
-push edi	; 7169C
-push ebp	; 7169D
-sub esp, byte 20h	; 7169E
-mov esi, eax	; 716A1
-mov edi, edx	; 716A3
-mov ebp, ebx	; 716A5
-cmp byte [dword ebx+rosterisfa], 1	; 716A7
-je near .6	; 716AE
-xor ecx, ecx	; 716B4
+        push dword 34h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 20h
+        mov esi, eax
+        mov edi, edx
+        mov ebp, ebx
+        cmp byte [dword ebx+rosterisfa], 1
+        je near .6
+        xor ecx, ecx
 .1:
-mov eax, ebp	; 716B6
-shl eax, 3	; 716B8
-sub eax, ebp	; 716BB
-xor dh, dh	; 716BD
-mov byte [dword ecx+eax*4+rostersel], dh	; 716BF
-inc ecx	; 716C6
-cmp ecx, byte 1Ch	; 716C7
-jl short SelectMatchingPlayers.1	; 716CA
-xor ecx, ecx	; 716CC
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        xor dh, dh
+        mov byte [dword ecx+eax*4+rostersel], dh
+        inc ecx
+        cmp ecx, byte 1Ch
+        jl short SelectMatchingPlayers.1
+        xor ecx, ecx
 .2:
-mov eax, ebp	; 716CE
-shl eax, 2	; 716D0
-sub eax, ebp	; 716D3
-shl eax, 2	; 716D5
-mov ebx, eax	; 716D8
-shl ebx, 6	; 716DA
-sub ebx, eax	; 716DD
-mov eax, ecx	; 716DF
-shl eax, 3	; 716E1
-sub eax, ecx	; 716E4
-shl eax, 2	; 716E6
-sub eax, ecx	; 716E9
-mov eax, dword [dword ebx+eax+dword_EA994]	; 716EB
-call KeyDbPtr	; 716F2
-mov ebx, eax	; 716F7
-lea edx, [byte eax+03h]	; 716F9
-lea eax, [byte esp+010h]	; 716FC
-call strcpy_	; 71700
-lea edx, [byte ebx+013h]	; 71705
-mov eax, esp	; 71708
-call strcpy_	; 7170A
-lea eax, [byte esp+010h]	; 7170F
-call strlwr_	; 71713
-mov eax, esp	; 71718
-call strlwr_	; 7171A
-lea edx, [byte esp+010h]	; 7171F
-mov eax, esi	; 71723
-call strcmp_	; 71725
-test eax, eax	; 7172A
-jne short .3	; 7172C
-mov edx, esp	; 7172E
-mov eax, edi	; 71730
-call strcmp_	; 71732
-test eax, eax	; 71737
-je short .4	; 71739
+        mov eax, ebp
+        shl eax, 2
+        sub eax, ebp
+        shl eax, 2
+        mov ebx, eax
+        shl ebx, 6
+        sub ebx, eax
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        mov eax, dword [dword ebx+eax+dword_EA994]
+        call KeyDbPtr
+        mov ebx, eax
+        lea edx, [byte eax+03h]
+        lea eax, [byte esp+010h]
+        call strcpy_
+        lea edx, [byte ebx+013h]
+        mov eax, esp
+        call strcpy_
+        lea eax, [byte esp+010h]
+        call strlwr_
+        mov eax, esp
+        call strlwr_
+        lea edx, [byte esp+010h]
+        mov eax, esi
+        call strcmp_
+        test eax, eax
+        jne short .3
+        mov edx, esp
+        mov eax, edi
+        call strcmp_
+        test eax, eax
+        je short .4
 .3:
-cmp byte [edi], 0	; 7173B
-jne short .5	; 7173E
-mov edx, esp	; 71740
-mov eax, esi	; 71742
-call strcmp_	; 71744
-test eax, eax	; 71749
-jne short .5	; 7174B
+        cmp byte [edi], 0
+        jne short .5
+        mov edx, esp
+        mov eax, esi
+        call strcmp_
+        test eax, eax
+        jne short .5
 .4:
-mov eax, ebp	; 7174D
-shl eax, 3	; 7174F
-sub eax, ebp	; 71752
-mov dl, byte [dword ecx+eax*4+rostersel]	; 71754
-not dl	; 7175B
-mov byte [dword ecx+eax*4+rostersel], dl	; 7175D
+        mov eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        mov dl, byte [dword ecx+eax*4+rostersel]
+        not dl
+        mov byte [dword ecx+eax*4+rostersel], dl
 .5:
-inc ecx	; 71764
-cmp ecx, byte 1Ch	; 71765
-jl near SelectMatchingPlayers.2	; 71768
-jmp near .x	; 7176E
+        inc ecx
+        cmp ecx, byte 1Ch
+        jl near SelectMatchingPlayers.2
+        jmp near .x
 .6:
-xor ecx, ecx	; 71773
-jmp short .8	; 71775
+        xor ecx, ecx
+        jmp short .8
 .7:
-mov eax, dword [falistsel]	; 71777
-mov byte [ecx+eax], 0	; 7177C
-inc ecx	; 71780
+        mov eax, dword [falistsel]
+        mov byte [ecx+eax], 0
+        inc ecx
 .8:
-cmp ecx, dword [facount]	; 71781
-jl short SelectMatchingPlayers.7	; 71787
-cmp dword [dword_D0C20], byte 0	; 71789
-je short .9	; 71790
-mov dword [falisttop], 0FFFFFFFFh	; 71792
+        cmp ecx, dword [facount]
+        jl short SelectMatchingPlayers.7
+        cmp dword [dword_D0C20], byte 0
+        je short .9
+        mov dword [falisttop], 0FFFFFFFFh
 .9:
-xor ecx, ecx	; 7179C
-jmp near .14	; 7179E
+        xor ecx, ecx
+        jmp near .14
 .10:
-mov eax, ecx	; 717A3
-shl eax, 3	; 717A5
-sub eax, ecx	; 717A8
-shl eax, 2	; 717AA
-sub eax, ecx	; 717AD
-mov edx, dword [falist]	; 717AF
-add eax, edx	; 717B5
-add eax, byte 8	; 717B7
-mov ebx, esp	; 717BA
-lea edx, [byte esp+010h]	; 717BC
-call SplitPlayerName	; 717C0
-lea eax, [byte esp+010h]	; 717C5
-call strlwr_	; 717C9
-mov eax, esp	; 717CE
-call strlwr_	; 717D0
-lea edx, [byte esp+010h]	; 717D5
-mov eax, esi	; 717D9
-call strcmp_	; 717DB
-test eax, eax	; 717E0
-jne short .11	; 717E2
-mov edx, esp	; 717E4
-mov eax, edi	; 717E6
-call strcmp_	; 717E8
-test eax, eax	; 717ED
-je short .12	; 717EF
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        mov edx, dword [falist]
+        add eax, edx
+        add eax, byte 8
+        mov ebx, esp
+        lea edx, [byte esp+010h]
+        call SplitPlayerName
+        lea eax, [byte esp+010h]
+        call strlwr_
+        mov eax, esp
+        call strlwr_
+        lea edx, [byte esp+010h]
+        mov eax, esi
+        call strcmp_
+        test eax, eax
+        jne short .11
+        mov edx, esp
+        mov eax, edi
+        call strcmp_
+        test eax, eax
+        je short .12
 .11:
-cmp byte [edi], 0	; 717F1
-jne short .13	; 717F4
-mov edx, esp	; 717F6
-mov eax, esi	; 717F8
-call strcmp_	; 717FA
-test eax, eax	; 717FF
-jne short .13	; 71801
+        cmp byte [edi], 0
+        jne short .13
+        mov edx, esp
+        mov eax, esi
+        call strcmp_
+        test eax, eax
+        jne short .13
 .12:
-mov eax, dword [falistsel]	; 71803
-mov dl, byte [ecx+eax]	; 71808
-not dl	; 7180B
-mov byte [ecx+eax], dl	; 7180D
-cmp dword [dword_D0C20], byte 0	; 71810
-je short .13	; 71817
-cmp dword [falisttop], byte 0FFFFFFFFh	; 71819
-jne short .13	; 71820
-mov dword [falisttop], ecx	; 71822
+        mov eax, dword [falistsel]
+        mov dl, byte [ecx+eax]
+        not dl
+        mov byte [ecx+eax], dl
+        cmp dword [dword_D0C20], byte 0
+        je short .13
+        cmp dword [falisttop], byte 0FFFFFFFFh
+        jne short .13
+        mov dword [falisttop], ecx
 .13:
-inc ecx	; 71828
+        inc ecx
 .14:
-cmp ecx, dword [facount]	; 71829
-jl near SelectMatchingPlayers.10	; 7182F
+        cmp ecx, dword [facount]
+        jl near SelectMatchingPlayers.10
 .x:
-add esp, byte 20h	; 71835
-pop ebp	; 71838
-pop edi	; 71839
-pop esi	; 7183A
-pop ecx	; 7183B
-ret	; 7183C
+        add esp, byte 20h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SetRosterTeamMenus                                              7183D  95 PC
+; (side, team): re-enables the old team's division item (or 'Free Agents
+; ...'), disables the new one and sets 'Edit Team Lines ...'
+;-----------------------------------------------------------------------------
 SetRosterTeamMenus:
-push dword 14h	; 7183D
-call __CHK	; 71842
-push ecx	; 71847
-push esi	; 71848
-push edi	; 71849
-push ebp	; 7184A
-mov ebp, eax	; 7184B
-mov esi, edx	; 7184D
-movzx edi, byte [dword eax+rosterteam]	; 7184F
-cmp edi, 0FFh	; 71856
-jne short .1	; 7185C
-mov edx, ShowFreeAgents	; 7185E
-mov dword [menu_r1_freeagents], edx	; 71863
-mov dword [menu_r2_freeagents], edx	; 71869
-jmp short .5	; 7186F
+        push dword 14h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, eax
+        mov esi, edx
+        movzx edi, byte [dword eax+rosterteam]
+        cmp edi, 0FFh
+        jne short .1
+        mov edx, ShowFreeAgents
+        mov dword [menu_r1_freeagents], edx
+        mov dword [menu_r2_freeagents], edx
+        jmp short .5
 .1:
-mov ecx, dword [nosplit edi*4+teamdivflags]	; 71871
-sar ecx, 1	; 71878
-cmp ecx, byte 4	; 7187A
-jne short .2	; 7187D
-dec ecx	; 7187F
+        mov ecx, dword [nosplit edi*4+teamdivflags]
+        sar ecx, 1
+        cmp ecx, byte 4
+        jne short .2
+        dec ecx
 .2:
-xor edx, edx	; 71880
+        xor edx, edx
 .3:
-mov eax, ecx	; 71882
-shl eax, 3	; 71884
-sub eax, ecx	; 71887
-mov al, byte [dword edx+eax+divisionteams]	; 71889
-and eax, 0FFh	; 71890
-cmp eax, edi	; 71895
-je short .4	; 71897
-inc edx	; 71899
-cmp edx, byte 7	; 7189A
-jl short SetRosterTeamMenus.3	; 7189D
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        mov al, byte [dword edx+eax+divisionteams]
+        and eax, 0FFh
+        cmp eax, edi
+        je short .4
+        inc edx
+        cmp edx, byte 7
+        jl short SetRosterTeamMenus.3
 .4:
-shl ecx, 5	; 7189F
-shl edx, 5	; 718A2
-mov eax, dword [dword ecx+roster1divmenus]	; 718A5
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 718AB
-mov eax, dword [dword ecx+roster2divmenus]	; 718B3
-mov dword [byte edx+eax+014h], SelectRosterTeam	; 718B9
+        shl ecx, 5
+        shl edx, 5
+        mov eax, dword [dword ecx+roster1divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
+        mov eax, dword [dword ecx+roster2divmenus]
+        mov dword [byte edx+eax+014h], SelectRosterTeam
 .5:
-cmp esi, byte 64h	; 718C1
-jne short .8	; 718C4
-test ebp, ebp	; 718C6
-jne short .6	; 718C8
-mov dword [menu_r1_editlines], ebp	; 718CA
-jmp short .7	; 718D0
+        cmp esi, byte 64h
+        jne short .8
+        test ebp, ebp
+        jne short .6
+        mov dword [menu_r1_editlines], ebp
+        jmp short .7
 .6:
-xor ecx, ecx	; 718D2
-mov dword [menu_r2_editlines], ecx	; 718D4
+        xor ecx, ecx
+        mov dword [menu_r2_editlines], ecx
 .7:
-xor edi, edi	; 718DA
-mov dword [menu_r1_freeagents], edi	; 718DC
-mov dword [menu_r2_freeagents], edi	; 718E2
-pop ebp	; 718E8
-pop edi	; 718E9
-pop esi	; 718EA
-pop ecx	; 718EB
-ret	; 718EC
+        xor edi, edi
+        mov dword [menu_r1_freeagents], edi
+        mov dword [menu_r2_freeagents], edi
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 .8:
-mov ecx, dword [nosplit esi*4+teamdivflags]	; 718ED
-sar ecx, 1	; 718F4
-cmp ecx, byte 4	; 718F6
-jne short .9	; 718F9
-dec ecx	; 718FB
+        mov ecx, dword [nosplit esi*4+teamdivflags]
+        sar ecx, 1
+        cmp ecx, byte 4
+        jne short .9
+        dec ecx
 .9:
-xor edx, edx	; 718FC
+        xor edx, edx
 .10:
-mov eax, ecx	; 718FE
-shl eax, 3	; 71900
-sub eax, ecx	; 71903
-mov al, byte [dword edx+eax+divisionteams]	; 71905
-and eax, 0FFh	; 7190C
-cmp eax, esi	; 71911
-je short .11	; 71913
-inc edx	; 71915
-cmp edx, byte 7	; 71916
-jl short SetRosterTeamMenus.10	; 71919
+        mov eax, ecx
+        shl eax, 3
+        sub eax, ecx
+        mov al, byte [dword edx+eax+divisionteams]
+        and eax, 0FFh
+        cmp eax, esi
+        je short .11
+        inc edx
+        cmp edx, byte 7
+        jl short SetRosterTeamMenus.10
 .11:
-shl ecx, 5	; 7191B
-mov eax, edx	; 7191E
-shl eax, 5	; 71920
-mov edx, dword [dword ecx+roster1divmenus]	; 71923
-mov dword [byte edx+eax+014h], 0	; 71929
-mov edx, dword [dword ecx+roster2divmenus]	; 71931
-mov dword [byte edx+eax+014h], 0	; 71937
-test ebp, ebp	; 7193F
-jne short .12	; 71941
-mov dword [menu_r1_editlines], EditTeamLines	; 71943
-pop ebp	; 7194D
-pop edi	; 7194E
-pop esi	; 7194F
-pop ecx	; 71950
-ret	; 71951
+        shl ecx, 5
+        mov eax, edx
+        shl eax, 5
+        mov edx, dword [dword ecx+roster1divmenus]
+        mov dword [byte edx+eax+014h], 0
+        mov edx, dword [dword ecx+roster2divmenus]
+        mov dword [byte edx+eax+014h], 0
+        test ebp, ebp
+        jne short .12
+        mov dword [menu_r1_editlines], EditTeamLines
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 .12:
-mov dword [menu_r2_editlines], EditTeamLines	; 71952
-pop ebp	; 7195C
-pop edi	; 7195D
-pop esi	; 7195E
-pop ecx	; 7195F
-ret	; 71960
+        mov dword [menu_r2_editlines], EditTeamLines
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
+;-----------------------------------------------------------------------------
+; FindPlayer                                                      71961  95 PC
+; 'Find Player ...' menu item: 'Enter name of player to find:', searches the
+; free-agent list and the teams, 'Choose which team to display' / 'is already
+; displayed on Roster N' / 'does not exist!', then SetRosterTeamMenus,
+; LoadRosterList and SelectMatchingPlayers
+;-----------------------------------------------------------------------------
 ; C: src/front/create/FindPlayer.c
 %ifdef CBUILD
 %include "c/front/create/FindPlayer.inc"
 %else
 FindPlayer:
-push dword 1E8h	; 71961
-call __CHK	; 71966
-push ecx	; 7196B
-push esi	; 7196C
-push edi	; 7196D
-push ebp	; 7196E
-sub esp, 1B8h	; 7196F
-push edx	; 71975
-push ebx	; 71976
-cmp dword [eax], byte 1	; 71977
-setne al	; 7197A
-and eax, 0FFh	; 7197D
-mov dword [dword esp+01BCh], eax	; 71982
-sete al	; 71989
-and eax, 0FFh	; 7198C
-mov dword [dword esp+01B4h], eax	; 71991
-xor ah, ah	; 71998
-mov byte [dword esp+0154h], ah	; 7199A
-mov dword [msglines], str_EnterNameOfPlayer	; 719A1
-push byte 0	; 719AB
-push byte 0	; 719AD
-push byte 0	; 719AF
-push byte 0	; 719B1
-push dword 0BAh	; 719B3
-mov ecx, 1Fh	; 719B8
-lea ebx, [dword esp+0168h]	; 719BD
-mov edx, 1	; 719C4
-mov eax, msglines	; 719C9
-call InputDialog	; 719CE
-lea eax, [dword esp+0154h]	; 719D3
-call strlwr_	; 719DA
-lea ebx, [dword esp+0174h]	; 719DF
-lea edx, [dword esp+01A4h]	; 719E6
-lea eax, [dword esp+0154h]	; 719ED
-call SplitPlayerName	; 719F4
-cmp byte [dword esp+0174h], 0	; 719F9
-jne short .1	; 71A01
-cmp byte [dword esp+01A4h], 0	; 71A03
-je near .x	; 71A0B
+        push dword 1E8h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 1B8h
+        push edx
+        push ebx
+        cmp dword [eax], byte 1
+        setne al
+        and eax, 0FFh
+        mov dword [dword esp+01BCh], eax
+        sete al
+        and eax, 0FFh
+        mov dword [dword esp+01B4h], eax
+        xor ah, ah
+        mov byte [dword esp+0154h], ah
+        mov dword [msglines], str_EnterNameOfPlayer
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push dword 0BAh
+        mov ecx, 1Fh
+        lea ebx, [dword esp+0168h]
+        mov edx, 1
+        mov eax, msglines
+        call InputDialog
+        lea eax, [dword esp+0154h]
+        call strlwr_
+        lea ebx, [dword esp+0174h]
+        lea edx, [dword esp+01A4h]
+        lea eax, [dword esp+0154h]
+        call SplitPlayerName
+        cmp byte [dword esp+0174h], 0
+        jne short .1
+        cmp byte [dword esp+01A4h], 0
+        je near .x
 .1:
-xor esi, esi	; 71A11
-xor edi, edi	; 71A13
+        xor esi, esi
+        xor edi, edi
 .2:
-mov eax, edi	; 71A15
-call TeamRecPtr	; 71A17
-mov ebp, eax	; 71A1C
-mov dword [dword esp+esi*4+0E8h], 0FFFFFFFFh	; 71A1E
-xor ebx, ebx	; 71A29
-jmp near .7	; 71A2B
+        mov eax, edi
+        call TeamRecPtr
+        mov ebp, eax
+        mov dword [dword esp+esi*4+0E8h], 0FFFFFFFFh
+        xor ebx, ebx
+        jmp near .7
 .3:
-mov eax, ebx	; 71A30
-mov eax, dword [byte ebp+eax*4+04Ch]	; 71A32
-call KeyDbPtr	; 71A36
-mov ecx, eax	; 71A3B
-lea edx, [byte eax+03h]	; 71A3D
-lea eax, [dword esp+0184h]	; 71A40
-call strcpy_	; 71A47
-lea edx, [byte ecx+013h]	; 71A4C
-lea eax, [dword esp+0194h]	; 71A4F
-call strcpy_	; 71A56
-lea eax, [dword esp+0184h]	; 71A5B
-call strlwr_	; 71A62
-lea eax, [dword esp+0194h]	; 71A67
-call strlwr_	; 71A6E
-lea edx, [dword esp+0184h]	; 71A73
-lea eax, [dword esp+01A4h]	; 71A7A
-call strcmp_	; 71A81
-test eax, eax	; 71A86
-jne short .4	; 71A88
-lea edx, [dword esp+0194h]	; 71A8A
-lea eax, [dword esp+0174h]	; 71A91
-call strcmp_	; 71A98
-test eax, eax	; 71A9D
-je short .5	; 71A9F
+        mov eax, ebx
+        mov eax, dword [byte ebp+eax*4+04Ch]
+        call KeyDbPtr
+        mov ecx, eax
+        lea edx, [byte eax+03h]
+        lea eax, [dword esp+0184h]
+        call strcpy_
+        lea edx, [byte ecx+013h]
+        lea eax, [dword esp+0194h]
+        call strcpy_
+        lea eax, [dword esp+0184h]
+        call strlwr_
+        lea eax, [dword esp+0194h]
+        call strlwr_
+        lea edx, [dword esp+0184h]
+        lea eax, [dword esp+01A4h]
+        call strcmp_
+        test eax, eax
+        jne short .4
+        lea edx, [dword esp+0194h]
+        lea eax, [dword esp+0174h]
+        call strcmp_
+        test eax, eax
+        je short .5
 .4:
-cmp byte [dword esp+0174h], 0	; 71AA1
-jne short .6	; 71AA9
-lea edx, [dword esp+0194h]	; 71AAB
-lea eax, [dword esp+01A4h]	; 71AB2
-call strcmp_	; 71AB9
-test eax, eax	; 71ABE
-jne short .6	; 71AC0
+        cmp byte [dword esp+0174h], 0
+        jne short .6
+        lea edx, [dword esp+0194h]
+        lea eax, [dword esp+01A4h]
+        call strcmp_
+        test eax, eax
+        jne short .6
 .5:
-mov dword [dword esp+esi*4+0E8h], edi	; 71AC2
-inc esi	; 71AC9
+        mov dword [dword esp+esi*4+0E8h], edi
+        inc esi
 .6:
-inc ebx	; 71ACA
+        inc ebx
 .7:
-cmp ebx, byte 1Ch	; 71ACB
-jge short .8	; 71ACE
-cmp dword [dword esp+esi*4+0E8h], byte 0	; 71AD0
-jl near FindPlayer.3	; 71AD8
+        cmp ebx, byte 1Ch
+        jge short .8
+        cmp dword [dword esp+esi*4+0E8h], byte 0
+        jl near FindPlayer.3
 .8:
-inc edi	; 71ADE
-cmp edi, byte 1Ah	; 71ADF
-jl near FindPlayer.2	; 71AE2
-mov ebx, 34h	; 71AE8
-xor edx, edx	; 71AED
-mov eax, dword [keydb_size]	; 71AEF
-div ebx	; 71AF4
-mov edi, eax	; 71AF6
-mov dword [dword esp+esi*4+0E8h], 0FFFFFFFFh	; 71AF8
-xor ecx, ecx	; 71B03
-jmp near .13	; 71B05
+        inc edi
+        cmp edi, byte 1Ah
+        jl near FindPlayer.2
+        mov ebx, 34h
+        xor edx, edx
+        mov eax, dword [keydb_size]
+        div ebx
+        mov edi, eax
+        mov dword [dword esp+esi*4+0E8h], 0FFFFFFFFh
+        xor ecx, ecx
+        jmp near .13
 .9:
-mov eax, ecx	; 71B0A
-shl eax, 2	; 71B0C
-sub eax, ecx	; 71B0F
-shl eax, 2	; 71B11
-add eax, ecx	; 71B14
-shl eax, 2	; 71B16
-mov ebx, dword [keydb]	; 71B19
-add ebx, eax	; 71B1F
-cmp byte [ebx], 0FFh	; 71B21
-jne near .12	; 71B24
-lea edx, [byte ebx+03h]	; 71B2A
-lea eax, [dword esp+0184h]	; 71B2D
-call strcpy_	; 71B34
-lea edx, [byte ebx+013h]	; 71B39
-lea eax, [dword esp+0194h]	; 71B3C
-call strcpy_	; 71B43
-lea eax, [dword esp+0184h]	; 71B48
-call strlwr_	; 71B4F
-lea eax, [dword esp+0194h]	; 71B54
-call strlwr_	; 71B5B
-lea edx, [dword esp+0184h]	; 71B60
-lea eax, [dword esp+01A4h]	; 71B67
-call strcmp_	; 71B6E
-test eax, eax	; 71B73
-jne short .10	; 71B75
-lea edx, [dword esp+0194h]	; 71B77
-lea eax, [dword esp+0174h]	; 71B7E
-call strcmp_	; 71B85
-test eax, eax	; 71B8A
-je short .11	; 71B8C
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 2
+        add eax, ecx
+        shl eax, 2
+        mov ebx, dword [keydb]
+        add ebx, eax
+        cmp byte [ebx], 0FFh
+        jne near .12
+        lea edx, [byte ebx+03h]
+        lea eax, [dword esp+0184h]
+        call strcpy_
+        lea edx, [byte ebx+013h]
+        lea eax, [dword esp+0194h]
+        call strcpy_
+        lea eax, [dword esp+0184h]
+        call strlwr_
+        lea eax, [dword esp+0194h]
+        call strlwr_
+        lea edx, [dword esp+0184h]
+        lea eax, [dword esp+01A4h]
+        call strcmp_
+        test eax, eax
+        jne short .10
+        lea edx, [dword esp+0194h]
+        lea eax, [dword esp+0174h]
+        call strcmp_
+        test eax, eax
+        je short .11
 .10:
-cmp byte [dword esp+0174h], 0	; 71B8E
-jne short .12	; 71B96
-lea edx, [dword esp+0194h]	; 71B98
-lea eax, [dword esp+01A4h]	; 71B9F
-call strcmp_	; 71BA6
-test eax, eax	; 71BAB
-jne short .12	; 71BAD
+        cmp byte [dword esp+0174h], 0
+        jne short .12
+        lea edx, [dword esp+0194h]
+        lea eax, [dword esp+01A4h]
+        call strcmp_
+        test eax, eax
+        jne short .12
 .11:
-mov dword [dword esp+esi*4+0E8h], 64h	; 71BAF
-inc esi	; 71BBA
+        mov dword [dword esp+esi*4+0E8h], 64h
+        inc esi
 .12:
-inc ecx	; 71BBB
+        inc ecx
 .13:
-cmp ecx, edi	; 71BBC
-jge short .14	; 71BBE
-cmp dword [dword esp+esi*4+0E8h], byte 0	; 71BC0
-jl near FindPlayer.9	; 71BC8
+        cmp ecx, edi
+        jge short .14
+        cmp dword [dword esp+esi*4+0E8h], byte 0
+        jl near FindPlayer.9
 .14:
-test esi, esi	; 71BCE
-jle near .36	; 71BD0
-cmp esi, byte 1	; 71BD6
-jle short .19	; 71BD9
-xor ebx, ebx	; 71BDB
-xor edi, edi	; 71BDD
-jmp short .18	; 71BDF
+        test esi, esi
+        jle near .36
+        cmp esi, byte 1
+        jle short .19
+        xor ebx, ebx
+        xor edi, edi
+        jmp short .18
 .15:
-mov eax, edi	; 71BE1
-shl eax, 2	; 71BE3
-mov edx, ebx	; 71BE6
-shl edx, 2	; 71BE8
-mov ecx, dword [dword esp+eax+0E8h]	; 71BEB
-cmp ecx, byte 64h	; 71BF2
-jne short .16	; 71BF5
-mov dword [byte esp+edx+08h], str_FreeAgentList	; 71BF7
-jmp short .17	; 71BFF
+        mov eax, edi
+        shl eax, 2
+        mov edx, ebx
+        shl edx, 2
+        mov ecx, dword [dword esp+eax+0E8h]
+        cmp ecx, byte 64h
+        jne short .16
+        mov dword [byte esp+edx+08h], str_FreeAgentList
+        jmp short .17
 .16:
-cmp ecx, byte 1Ah	; 71C01
-jge short .17	; 71C04
-mov eax, dword [nosplit ecx*4+teamcitynames]	; 71C06
-mov dword [byte esp+edx+08h], eax	; 71C0D
+        cmp ecx, byte 1Ah
+        jge short .17
+        mov eax, dword [nosplit ecx*4+teamcitynames]
+        mov dword [byte esp+edx+08h], eax
 .17:
-inc ebx	; 71C11
-inc edi	; 71C12
+        inc ebx
+        inc edi
 .18:
-cmp edi, esi	; 71C13
-jl short FindPlayer.15	; 71C15
-lea eax, [byte esp+078h]	; 71C17
-push eax	; 71C1B
-push byte 0	; 71C1C
-xor ecx, ecx	; 71C1E
-mov ebx, str_ChooseWhichTeamTo	; 71C20
-mov edx, esi	; 71C25
-lea eax, [byte esp+010h]	; 71C27
-call ListDialog	; 71C2B
-mov eax, dword [dword esp+eax*4+0E8h]	; 71C30
-jmp short .20	; 71C37
+        cmp edi, esi
+        jl short FindPlayer.15
+        lea eax, [byte esp+078h]
+        push eax
+        push byte 0
+        xor ecx, ecx
+        mov ebx, str_ChooseWhichTeamTo
+        mov edx, esi
+        lea eax, [byte esp+010h]
+        call ListDialog
+        mov eax, dword [dword esp+eax*4+0E8h]
+        jmp short .20
 .19:
-mov eax, dword [dword esp+0E8h]	; 71C39
+        mov eax, dword [dword esp+0E8h]
 .20:
-mov dword [dword esp+01B8h], eax	; 71C40
-cmp dword [dword esp+01B8h], byte 64h	; 71C47
-jne near .24	; 71C4F
-mov eax, dword [dword esp+01B4h]	; 71C55
-cmp byte [dword eax+rosterisfa], 1	; 71C5C
-jne short .23	; 71C63
-lea eax, [dword esp+0154h]	; 71C65
-mov dword [msglines], eax	; 71C6C
-mov dword [msglines+4], str_IsAlreadyDisplayedOn	; 71C71
-cmp dword [dword esp+01BCh], byte 0	; 71C7B
-jne short .21	; 71C83
-mov eax, str_Roster2	; 71C85
-jmp short .22	; 71C8A
+        mov dword [dword esp+01B8h], eax
+        cmp dword [dword esp+01B8h], byte 64h
+        jne near .24
+        mov eax, dword [dword esp+01B4h]
+        cmp byte [dword eax+rosterisfa], 1
+        jne short .23
+        lea eax, [dword esp+0154h]
+        mov dword [msglines], eax
+        mov dword [msglines+4], str_IsAlreadyDisplayedOn
+        cmp dword [dword esp+01BCh], byte 0
+        jne short .21
+        mov eax, str_Roster2
+        jmp short .22
 .21:
-mov eax, str_Roster1	; 71C8C
+        mov eax, str_Roster1
 .22:
-mov dword [msglines+8], eax	; 71C91
-push byte 0FFFFFFFFh	; 71C96
-mov ecx, dword [byte esp+04h]	; 71C98
-push ecx	; 71C9C
-mov esi, dword [byte esp+0Ch]	; 71C9D
-push esi	; 71CA1
-push byte 0	; 71CA2
-push byte 0	; 71CA4
-mov ecx, 3	; 71CA6
-mov ebx, msglines	; 71CAB
-mov edx, 0FFFFFFFFh	; 71CB0
-mov eax, edx	; 71CB5
-call MessageBox	; 71CB7
-jmp near .28	; 71CBC
+        mov dword [msglines+8], eax
+        push byte 0FFFFFFFFh
+        mov ecx, dword [byte esp+04h]
+        push ecx
+        mov esi, dword [byte esp+0Ch]
+        push esi
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp near .28
 .23:
-mov eax, dword [dword esp+01BCh]	; 71CC1
-cmp byte [dword eax+rosterisfa], 1	; 71CC8
-je near .28	; 71CCF
-mov edx, dword [dword esp+01B8h]	; 71CD5
-call SetRosterTeamMenus	; 71CDC
-mov eax, dword [dword esp+01BCh]	; 71CE1
-mov byte [dword eax+rosterisfa], 1	; 71CE8
-call LoadRosterList	; 71CEF
-mov eax, dword [dword esp+01BCh]	; 71CF4
-mov byte [dword eax+rosterteam], 0FFh	; 71CFB
-jmp near .28	; 71D02
+        mov eax, dword [dword esp+01BCh]
+        cmp byte [dword eax+rosterisfa], 1
+        je near .28
+        mov edx, dword [dword esp+01B8h]
+        call SetRosterTeamMenus
+        mov eax, dword [dword esp+01BCh]
+        mov byte [dword eax+rosterisfa], 1
+        call LoadRosterList
+        mov eax, dword [dword esp+01BCh]
+        mov byte [dword eax+rosterteam], 0FFh
+        jmp near .28
 .24:
-xor eax, eax	; 71D07
-mov edx, dword [dword esp+01B4h]	; 71D09
-mov al, byte [dword edx+rosterteam]	; 71D10
-mov ebx, dword [dword esp+01B8h]	; 71D16
-cmp eax, ebx	; 71D1D
-jne short .27	; 71D1F
-lea eax, [dword esp+0154h]	; 71D21
-mov dword [msglines], eax	; 71D28
-mov dword [msglines+4], str_IsAlreadyDisplayedOn	; 71D2D
-cmp dword [dword esp+01BCh], byte 0	; 71D37
-jne short .25	; 71D3F
-mov eax, str_Roster2	; 71D41
-jmp short .26	; 71D46
+        xor eax, eax
+        mov edx, dword [dword esp+01B4h]
+        mov al, byte [dword edx+rosterteam]
+        mov ebx, dword [dword esp+01B8h]
+        cmp eax, ebx
+        jne short .27
+        lea eax, [dword esp+0154h]
+        mov dword [msglines], eax
+        mov dword [msglines+4], str_IsAlreadyDisplayedOn
+        cmp dword [dword esp+01BCh], byte 0
+        jne short .25
+        mov eax, str_Roster2
+        jmp short .26
 .25:
-mov eax, str_Roster1	; 71D48
+        mov eax, str_Roster1
 .26:
-mov dword [msglines+8], eax	; 71D4D
-push byte 0FFFFFFFFh	; 71D52
-mov ebp, dword [byte esp+04h]	; 71D54
-push ebp	; 71D58
-mov eax, dword [byte esp+0Ch]	; 71D59
-push eax	; 71D5D
-push byte 0	; 71D5E
-push byte 0	; 71D60
-mov ecx, 3	; 71D62
-mov ebx, msglines	; 71D67
-mov edx, 0FFFFFFFFh	; 71D6C
-mov eax, edx	; 71D71
-call MessageBox	; 71D73
-mov eax, dword [dword esp+01B4h]	; 71D78
-mov dword [dword esp+01BCh], eax	; 71D7F
-jmp short .28	; 71D86
+        mov dword [msglines+8], eax
+        push byte 0FFFFFFFFh
+        mov ebp, dword [byte esp+04h]
+        push ebp
+        mov eax, dword [byte esp+0Ch]
+        push eax
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov eax, dword [dword esp+01B4h]
+        mov dword [dword esp+01BCh], eax
+        jmp short .28
 .27:
-xor eax, eax	; 71D88
-mov edx, dword [dword esp+01BCh]	; 71D8A
-mov al, byte [dword edx+rosterteam]	; 71D91
-cmp eax, ebx	; 71D97
-je short .28	; 71D99
-mov edx, ebx	; 71D9B
-mov eax, dword [dword esp+01BCh]	; 71D9D
-call SetRosterTeamMenus	; 71DA4
-mov eax, dword [dword esp+01BCh]	; 71DA9
-xor dl, dl	; 71DB0
-mov byte [dword eax+rosterisfa], dl	; 71DB2
-mov al, byte [dword esp+01B8h]	; 71DB8
-mov edx, dword [dword esp+01BCh]	; 71DBF
-mov byte [dword edx+rosterteam], al	; 71DC6
-mov eax, edx	; 71DCC
-call LoadRosterList	; 71DCE
+        xor eax, eax
+        mov edx, dword [dword esp+01BCh]
+        mov al, byte [dword edx+rosterteam]
+        cmp eax, ebx
+        je short .28
+        mov edx, ebx
+        mov eax, dword [dword esp+01BCh]
+        call SetRosterTeamMenus
+        mov eax, dword [dword esp+01BCh]
+        xor dl, dl
+        mov byte [dword eax+rosterisfa], dl
+        mov al, byte [dword esp+01B8h]
+        mov edx, dword [dword esp+01BCh]
+        mov byte [dword edx+rosterteam], al
+        mov eax, edx
+        call LoadRosterList
 .28:
-mov ebx, dword [dword esp+01BCh]	; 71DD3
-lea edx, [dword esp+0174h]	; 71DDA
-lea eax, [dword esp+01A4h]	; 71DE1
-call SelectMatchingPlayers	; 71DE8
-call DrawEditRosters	; 71DED
-mov eax, dword [dword esp+01BCh]	; 71DF2
-cmp byte [dword eax+rosterisfa], 1	; 71DF9
-jne short .29	; 71E00
-mov eax, dword [falistsel]	; 71E02
-jmp short .30	; 71E07
+        mov ebx, dword [dword esp+01BCh]
+        lea edx, [dword esp+0174h]
+        lea eax, [dword esp+01A4h]
+        call SelectMatchingPlayers
+        call DrawEditRosters
+        mov eax, dword [dword esp+01BCh]
+        cmp byte [dword eax+rosterisfa], 1
+        jne short .29
+        mov eax, dword [falistsel]
+        jmp short .30
 .29:
-mov edx, eax	; 71E09
-shl eax, 3	; 71E0B
-sub eax, edx	; 71E0E
-shl eax, 2	; 71E10
-add eax, rostersel	; 71E13
+        mov edx, eax
+        shl eax, 3
+        sub eax, edx
+        shl eax, 2
+        add eax, rostersel
 .30:
-call CountSelected	; 71E18
-test eax, eax	; 71E1D
-jle near .34	; 71E1F
-cmp dword [dword esp+01BCh], byte 0	; 71E25
-jne short .32	; 71E2D
-cmp byte [rosterisfa], 1	; 71E2F
-je short .31	; 71E36
-cmp dword [facount], byte 1Eh	; 71E38
-jge short .31	; 71E3F
-mov dword [menu_r1_tofa], MoveToFreeAgents	; 71E41
+        call CountSelected
+        test eax, eax
+        jle near .34
+        cmp dword [dword esp+01BCh], byte 0
+        jne short .32
+        cmp byte [rosterisfa], 1
+        je short .31
+        cmp dword [facount], byte 1Eh
+        jge short .31
+        mov dword [menu_r1_tofa], MoveToFreeAgents
 .31:
-cmp byte [rosterisfa+1], 1	; 71E4B
-je near .x	; 71E52
-mov dword [menu_r1_toroster2], MoveToOtherRoster	; 71E58
-jmp near .x	; 71E62
+        cmp byte [rosterisfa+1], 1
+        je near .x
+        mov dword [menu_r1_toroster2], MoveToOtherRoster
+        jmp near .x
 .32:
-cmp byte [rosterisfa+1], 1	; 71E67
-je short .33	; 71E6E
-cmp dword [facount], byte 1Eh	; 71E70
-jge short .33	; 71E77
-mov dword [menu_r2_tofa], MoveToFreeAgents	; 71E79
+        cmp byte [rosterisfa+1], 1
+        je short .33
+        cmp dword [facount], byte 1Eh
+        jge short .33
+        mov dword [menu_r2_tofa], MoveToFreeAgents
 .33:
-cmp byte [rosterisfa], 1	; 71E83
-je near .x	; 71E8A
-mov dword [menu_r2_toroster1], MoveToOtherRoster	; 71E90
-jmp short .x	; 71E9A
+        cmp byte [rosterisfa], 1
+        je near .x
+        mov dword [menu_r2_toroster1], MoveToOtherRoster
+        jmp short .x
 .34:
-mov edi, dword [dword esp+01BCh]	; 71E9C
-test edi, edi	; 71EA3
-jne short .35	; 71EA5
-mov dword [menu_r1_tofa], edi	; 71EA7
-mov dword [menu_r1_toroster2], edi	; 71EAD
-jmp short .x	; 71EB3
+        mov edi, dword [dword esp+01BCh]
+        test edi, edi
+        jne short .35
+        mov dword [menu_r1_tofa], edi
+        mov dword [menu_r1_toroster2], edi
+        jmp short .x
 .35:
-xor ebp, ebp	; 71EB5
-mov dword [menu_r2_tofa], ebp	; 71EB7
-mov dword [menu_r2_toroster1], ebp	; 71EBD
-jmp short .x	; 71EC3
+        xor ebp, ebp
+        mov dword [menu_r2_tofa], ebp
+        mov dword [menu_r2_toroster1], ebp
+        jmp short .x
 .36:
-lea eax, [dword esp+0154h]	; 71EC5
-mov dword [msglines], eax	; 71ECC
-mov dword [msglines+4], str_DoesNotExist	; 71ED1
-push byte 0FFFFFFFFh	; 71EDB
-mov edx, dword [byte esp+04h]	; 71EDD
-push edx	; 71EE1
-mov ebx, dword [byte esp+0Ch]	; 71EE2
-push ebx	; 71EE6
-push byte 0	; 71EE7
-push byte 0	; 71EE9
-mov ecx, 2	; 71EEB
-mov ebx, msglines	; 71EF0
-mov edx, 0FFFFFFFFh	; 71EF5
-mov eax, edx	; 71EFA
-call MessageBox	; 71EFC
+        lea eax, [dword esp+0154h]
+        mov dword [msglines], eax
+        mov dword [msglines+4], str_DoesNotExist
+        push byte 0FFFFFFFFh
+        mov edx, dword [byte esp+04h]
+        push edx
+        mov ebx, dword [byte esp+0Ch]
+        push ebx
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
 .x:
-add esp, 1C0h	; 71F01
-pop ebp	; 71F07
-pop edi	; 71F08
-pop esi	; 71F09
-pop ecx	; 71F0A
-ret	; 71F0B
+        add esp, 1C0h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C

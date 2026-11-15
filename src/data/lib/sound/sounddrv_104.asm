@@ -6,48 +6,48 @@ global byte_F79A4, byte_F79A5, byte_F79A6, byte_F79A7, byte_F79A8, byte_F79C8, b
 global dword_F79BC, dword_F79C0, dword_F79C4, dword_F79F8, dword_F79FC, dword_F7A00, dword_F7B78, unk_F7978
 global word_F799C, word_F799E, word_F79A0, word_F79A2, word_F79B8, word_F79BA, word_F79C9
 unk_F7978:
-resb 36
+        resb 36
 word_F799C:
-resb 2
+        resb 2
 word_F799E:
-resb 2
+        resb 2
 word_F79A0:
-resb 2
+        resb 2
 word_F79A2:
-resb 2
+        resb 2
 byte_F79A4:
-resb 1
+        resb 1
 byte_F79A5:
-resb 1
+        resb 1
 byte_F79A6:
-resb 1
+        resb 1
 byte_F79A7:
-resb 1
+        resb 1
 byte_F79A8:
-resb 16
+        resb 16
 word_F79B8:
-resb 2
+        resb 2
 word_F79BA:
-resb 2
+        resb 2
 dword_F79BC:
-resb 4
+        resb 4
 dword_F79C0:
-resb 4
+        resb 4
 dword_F79C4:
-resb 4
+        resb 4
 byte_F79C8:
-resb 1
+        resb 1
 word_F79C9:
-resb 15
+        resb 15
 byte_F79D8:
-resb 16
+        resb 16
 byte_F79E8:
-resb 16
+        resb 16
 dword_F79F8:
-resb 4
+        resb 4
 dword_F79FC:
-resb 4
+        resb 4
 dword_F7A00:
-resb 376
+        resb 376
 dword_F7B78:
-resb 16
+        resb 16

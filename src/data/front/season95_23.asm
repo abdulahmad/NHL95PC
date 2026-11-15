@@ -5,17 +5,17 @@ section s_C7BD1 progbits alloc noexec write align=1
 extern str_CopyingDatabasesFor
 global msg_Copying_arg, msg_Copying, str_CreatingLeague, msg_CreatingLeague, str_ThatFloppyDiskHas, str_OldCopyOfThe
 msg_Copying:
-dd str_CopyingDatabasesFor
+        dd str_CopyingDatabasesFor
 msg_Copying_arg:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 str_CreatingLeague:
-db 043h,072h,065h,061h,074h,069h,06Eh,067h,020h,06Ch,065h,061h,067h,075h,065h,02Eh
-db 00h
+        db 043h,072h,065h,061h,074h,069h,06Eh,067h,020h,06Ch,065h,061h,067h,075h,065h,02Eh
+        db 00h
 msg_CreatingLeague:
-dd str_CreatingLeague
+        dd str_CreatingLeague
 str_ThatFloppyDiskHas:
-db 054h,068h,061h,074h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,069h,073h,06Bh
-db 020h,068h,061h,073h,020h,061h,06Eh,00h
+        db 054h,068h,061h,074h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,069h,073h,06Bh
+        db 020h,068h,061h,073h,020h,061h,06Eh,00h
 str_OldCopyOfThe:
-db 06Fh,06Ch,064h,020h,063h,06Fh,070h,079h,020h,06Fh,066h,020h,074h,068h,065h,020h
-db 06Ch,065h,061h,067h,075h,065h,00h
+        db 06Fh,06Ch,064h,020h,063h,06Fh,070h,079h,020h,06Fh,066h,020h,074h,068h,065h,020h
+        db 06Ch,065h,061h,067h,075h,065h,00h

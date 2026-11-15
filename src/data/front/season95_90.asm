@@ -6,37 +6,37 @@ global byte_EAC86, rostersel, byte_EAF99, byte_EAFB5, dword_EA994, rosterteamrec
 global dbdirty, rostergstat, rosterpstat, msglines, falisttop, editptrspr
 global editrosters_exit, unk_EAC84, unk_EAFB8
 dword_EA994:
-resb 752
+        resb 752
 unk_EAC84:
-resb 2
+        resb 2
 byte_EAC86:
-resb 754
+        resb 754
 rosterteamrec:
-resb 4
+        resb 4
 dword_EAF7C:
-resb 4
+        resb 4
 rostersel:
-resb 25
+        resb 25
 byte_EAF99:
-resb 3
-resb 25
+        resb 3
+        resb 25
 byte_EAFB5:
-resb 3
+        resb 3
 unk_EAFB8:
-resb 3248
+        resb 3248
 dbdirty:
-resb 4
+        resb 4
 rostergstat:
-resb 4
+        resb 4
 rosterpstat:
-resb 4
+        resb 4
 msglines:
-resb 4
-resb 4
-resb 40
+        resb 4
+        resb 4
+        resb 40
 falisttop:
-resb 504
+        resb 504
 editptrspr:
-resb 4
+        resb 4
 editrosters_exit:
-resb 2072
+        resb 2072

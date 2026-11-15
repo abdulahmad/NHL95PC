@@ -5,61 +5,61 @@ section s_8EAEC progbits alloc exec nowrite align=1
 extern randseed
 global _dos_getdate_, _dos_gettime_, sub_8EB21, rand_, loc_8EB49, srand_, loc_8EB59
 _dos_getdate_:
-push edx	; 8EAEC
-push ecx	; 8EAED
-push ebx	; 8EAEE
-mov ebx, eax	; 8EAEF
-mov ah, 2Ah	; 8EAF1
-int 21h	; 8EAF3
-mov word [byte ebx+02h], cx	; 8EAF5
-mov byte [byte ebx+01h], dh	; 8EAF9
-mov byte [ebx], dl	; 8EAFC
-mov byte [byte ebx+04h], al	; 8EAFE
-sub eax, eax	; 8EB01
-pop ebx	; 8EB03
-pop ecx	; 8EB04
-pop edx	; 8EB05
-ret	; 8EB06
+        push edx
+        push ecx
+        push ebx
+        mov ebx, eax
+        mov ah, 2Ah
+        int 21h
+        mov word [byte ebx+02h], cx
+        mov byte [byte ebx+01h], dh
+        mov byte [ebx], dl
+        mov byte [byte ebx+04h], al
+        sub eax, eax
+        pop ebx
+        pop ecx
+        pop edx
+        ret
 _dos_gettime_:
-push edx	; 8EB07
-push ecx	; 8EB08
-push ebx	; 8EB09
-mov ebx, eax	; 8EB0A
-mov ah, 2Ch	; 8EB0C
-int 21h	; 8EB0E
-mov byte [ebx], ch	; 8EB10
-mov byte [byte ebx+01h], cl	; 8EB12
-mov byte [byte ebx+02h], dh	; 8EB15
-mov byte [byte ebx+03h], dl	; 8EB18
-sub eax, eax	; 8EB1B
-pop ebx	; 8EB1D
-pop ecx	; 8EB1E
-pop edx	; 8EB1F
-ret	; 8EB20
+        push edx
+        push ecx
+        push ebx
+        mov ebx, eax
+        mov ah, 2Ch
+        int 21h
+        mov byte [ebx], ch
+        mov byte [byte ebx+01h], cl
+        mov byte [byte ebx+02h], dh
+        mov byte [byte ebx+03h], dl
+        sub eax, eax
+        pop ebx
+        pop ecx
+        pop edx
+        ret
 sub_8EB21:
-mov eax, randseed	; 8EB21
-ret	; 8EB26
+        mov eax, randseed
+        ret
 rand_:
-push edx	; 8EB27
-call sub_8EB21	; 8EB28
-test eax, eax	; 8EB2D
-je short loc_8EB49	; 8EB2F
-imul edx, dword [eax], dword 41C64E6Dh	; 8EB31
-add edx, 3039h	; 8EB37
-mov dword [eax], edx	; 8EB3D
-mov eax, edx	; 8EB3F
-shr eax, 10h	; 8EB41
-and eax, 7FFFh	; 8EB44
+        push edx
+        call sub_8EB21
+        test eax, eax
+        je short loc_8EB49
+        imul edx, dword [eax], dword 41C64E6Dh
+        add edx, 3039h
+        mov dword [eax], edx
+        mov eax, edx
+        shr eax, 10h
+        and eax, 7FFFh
 loc_8EB49:
-pop edx	; 8EB49
-ret	; 8EB4A
+        pop edx
+        ret
 srand_:
-push edx	; 8EB4B
-mov edx, eax	; 8EB4C
-call sub_8EB21	; 8EB4E
-test eax, eax	; 8EB53
-je short loc_8EB59	; 8EB55
-mov dword [eax], edx	; 8EB57
+        push edx
+        mov edx, eax
+        call sub_8EB21
+        test eax, eax
+        je short loc_8EB59
+        mov dword [eax], edx
 loc_8EB59:
-pop edx	; 8EB59
-ret	; 8EB5A
+        pop edx
+        ret

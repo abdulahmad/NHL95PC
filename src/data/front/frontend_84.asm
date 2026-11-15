@@ -4,4 +4,4 @@ bits 32
 section s_DF75A nobits alloc noexec write align=1
 global awtmpde
 awtmpde:
-resb 112
+        resb 112

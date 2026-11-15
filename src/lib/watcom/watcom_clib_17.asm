@@ -6,99 +6,99 @@ extern __set_errno_dos_, byte_C4B6C
 global stricmp_, loc_92D22, loc_92D33, loc_92D40, loc_92D4C, unlink_, loc_92D75, unknown_libname_4
 global loc_92D7F, loc_92D95, loc_92DA1, loc_92DA2, loc_92DA4, loc_92DC6, loc_92DCD
 stricmp_:
-push ebx	; 92D21
+        push ebx
 loc_92D22:
-mov bl, byte [eax]	; 92D22
-mov bh, byte [edx]	; 92D24
-cmp bl, 41h	; 92D26
-jb short loc_92D33	; 92D29
-cmp bl, 5Ah	; 92D2B
-ja short loc_92D33	; 92D2E
-add bl, 20h	; 92D30
+        mov bl, byte [eax]
+        mov bh, byte [edx]
+        cmp bl, 41h
+        jb short loc_92D33
+        cmp bl, 5Ah
+        ja short loc_92D33
+        add bl, 20h
 loc_92D33:
-cmp bh, 41h	; 92D33
-jb short loc_92D40	; 92D36
-cmp bh, 5Ah	; 92D38
-ja short loc_92D40	; 92D3B
-add bh, 20h	; 92D3D
+        cmp bh, 41h
+        jb short loc_92D40
+        cmp bh, 5Ah
+        ja short loc_92D40
+        add bh, 20h
 loc_92D40:
-cmp bl, bh	; 92D40
-jne short loc_92D4C	; 92D42
-test bh, bh	; 92D44
-je short loc_92D4C	; 92D46
-inc eax	; 92D48
-inc edx	; 92D49
-jmp short loc_92D22	; 92D4A
+        cmp bl, bh
+        jne short loc_92D4C
+        test bh, bh
+        je short loc_92D4C
+        inc eax
+        inc edx
+        jmp short loc_92D22
 loc_92D4C:
-xor edx, edx	; 92D4C
-xor eax, eax	; 92D4E
-mov dl, bl	; 92D50
-mov al, bh	; 92D52
-sub edx, eax	; 92D54
-mov eax, edx	; 92D56
-pop ebx	; 92D58
-ret	; 92D59
+        xor edx, edx
+        xor eax, eax
+        mov dl, bl
+        mov al, bh
+        sub edx, eax
+        mov eax, edx
+        pop ebx
+        ret
 unlink_:
-push edx	; 92D5A
-mov edx, eax	; 92D5B
-mov ah, 41h	; 92D5D
-int 21h	; 92D5F
-rcl eax, 1	; 92D61
-ror eax, 1	; 92D63
-test eax, eax	; 92D65
-jge short loc_92D75	; 92D67
-and eax, 0FFFFh	; 92D69
-call __set_errno_dos_	; 92D6E
-pop edx	; 92D73
-ret	; 92D74
+        push edx
+        mov edx, eax
+        mov ah, 41h
+        int 21h
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jge short loc_92D75
+        and eax, 0FFFFh
+        call __set_errno_dos_
+        pop edx
+        ret
 loc_92D75:
-xor eax, eax	; 92D75
-pop edx	; 92D77
-ret	; 92D78
-db 00h,00h,00h
+        xor eax, eax
+        pop edx
+        ret
+        db 00h,00h,00h
 unknown_libname_4:
-push ebx	; 92D7C
-push ecx	; 92D7D
-push edx	; 92D7E
+        push ebx
+        push ecx
+        push edx
 loc_92D7F:
-mov dl, byte [eax]	; 92D7F
-inc dl	; 92D81
-and edx, 0FFh	; 92D83
-test byte [dword edx+byte_C4B6C], 2	; 92D89
-je short loc_92D95	; 92D90
-inc eax	; 92D92
-jmp short loc_92D7F	; 92D93
+        mov dl, byte [eax]
+        inc dl
+        and edx, 0FFh
+        test byte [dword edx+byte_C4B6C], 2
+        je short loc_92D95
+        inc eax
+        jmp short loc_92D7F
 loc_92D95:
-mov cl, byte [eax]	; 92D95
-cmp cl, 2Bh	; 92D97
-je short loc_92DA1	; 92D9A
-cmp cl, 2Dh	; 92D9C
-jne short loc_92DA2	; 92D9F
+        mov cl, byte [eax]
+        cmp cl, 2Bh
+        je short loc_92DA1
+        cmp cl, 2Dh
+        jne short loc_92DA2
 loc_92DA1:
-inc eax	; 92DA1
+        inc eax
 loc_92DA2:
-xor ebx, ebx	; 92DA2
+        xor ebx, ebx
 loc_92DA4:
-mov dl, byte [eax]	; 92DA4
-inc dl	; 92DA6
-and edx, 0FFh	; 92DA8
-test byte [dword edx+byte_C4B6C], 20h	; 92DAE
-je short loc_92DC6	; 92DB5
-imul ebx, byte 0Ah	; 92DB7
-xor edx, edx	; 92DBA
-mov dl, byte [eax]	; 92DBC
-add ebx, edx	; 92DBE
-inc eax	; 92DC0
-sub ebx, byte 30h	; 92DC1
-jmp short loc_92DA4	; 92DC4
+        mov dl, byte [eax]
+        inc dl
+        and edx, 0FFh
+        test byte [dword edx+byte_C4B6C], 20h
+        je short loc_92DC6
+        imul ebx, byte 0Ah
+        xor edx, edx
+        mov dl, byte [eax]
+        add ebx, edx
+        inc eax
+        sub ebx, byte 30h
+        jmp short loc_92DA4
 loc_92DC6:
-cmp cl, 2Dh	; 92DC6
-jne short loc_92DCD	; 92DC9
-neg ebx	; 92DCB
+        cmp cl, 2Dh
+        jne short loc_92DCD
+        neg ebx
 loc_92DCD:
-mov eax, ebx	; 92DCD
-pop edx	; 92DCF
-pop ecx	; 92DD0
-pop ebx	; 92DD1
-ret	; 92DD2
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        mov eax, ebx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

@@ -5,12 +5,12 @@ section s_8D2D8 progbits alloc exec nowrite align=1
 extern findmemblock, sub_8D2F0
 global FreeMemBlock
 FreeMemBlock:
-mov edx, dword [byte esp+04h]	; 8D2D8
-push edx	; 8D2DC
-call findmemblock	; 8D2DD
-add esp, byte 4	; 8D2E2
-push eax	; 8D2E5
-call sub_8D2F0	; 8D2E6
-add esp, byte 4	; 8D2EB
-ret	; 8D2EE
-db 090h
+        mov edx, dword [byte esp+04h]
+        push edx
+        call findmemblock
+        add esp, byte 4
+        push eax
+        call sub_8D2F0
+        add esp, byte 4
+        ret
+        db 090h

@@ -5,16 +5,16 @@ section s_A18D6 progbits alloc exec nowrite align=1
 extern unk_A197C
 global sub_A18D6
 sub_A18D6:
-lea esi, [esi+esi*2]	; A18D6
-lea eax, [dword cs:esi+unk_A197C]	; A18D9
-push eax	; A18E0
-mov es, word [ebx]	; A18E1
-mov bp, word [byte ebx+06h]	; A18E3
-mov eax, dword [edi]	; A18E7
-mov ebx, dword [byte edi+04h]	; A18E9
-mov ecx, dword [byte edi+08h]	; A18EC
-mov edx, dword [byte edi+0Ch]	; A18EF
-mov esi, dword [byte edi+010h]	; A18F2
-mov edi, dword [byte edi+014h]	; A18F5
-mov ds, ebp	; A18F8
-ret	; A18FA
+        lea esi, [esi+esi*2]
+        lea eax, [dword cs:esi+unk_A197C]
+        push eax
+        mov es, word [ebx]
+        mov bp, word [byte ebx+06h]
+        mov eax, dword [edi]
+        mov ebx, dword [byte edi+04h]
+        mov ecx, dword [byte edi+08h]
+        mov edx, dword [byte edi+0Ch]
+        mov esi, dword [byte edi+010h]
+        mov edi, dword [byte edi+014h]
+        mov ds, ebp
+        ret

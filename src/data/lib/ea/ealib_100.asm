@@ -4,6 +4,6 @@ bits 32
 section s_F234D nobits alloc noexec write align=1
 global byte_F234D, byte_F234E
 byte_F234D:
-resb 1
+        resb 1
 byte_F234E:
-resb 110
+        resb 110

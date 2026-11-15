@@ -4,51 +4,51 @@ bits 32
 section s_909E0 progbits alloc exec nowrite align=1
 global strnicmp_, loc_909E4, loc_909E8, loc_909EF, loc_90A03, loc_90A16, loc_90A2E
 strnicmp_:
-push ecx	; 909E0
-sub esp, byte 4	; 909E1
+        push ecx
+        sub esp, byte 4
 loc_909E4:
-test ebx, ebx	; 909E4
-jne short loc_909EF	; 909E6
+        test ebx, ebx
+        jne short loc_909EF
 loc_909E8:
-xor eax, eax	; 909E8
-add esp, byte 4	; 909EA
-pop ecx	; 909ED
-ret	; 909EE
+        xor eax, eax
+        add esp, byte 4
+        pop ecx
+        ret
 loc_909EF:
-mov ch, byte [edx]	; 909EF
-mov cl, byte [eax]	; 909F1
-mov byte [esp], ch	; 909F3
-cmp cl, 41h	; 909F6
-jb short loc_90A03	; 909F9
-cmp cl, 5Ah	; 909FB
-ja short loc_90A03	; 909FE
-add cl, 20h	; 90A00
+        mov ch, byte [edx]
+        mov cl, byte [eax]
+        mov byte [esp], ch
+        cmp cl, 41h
+        jb short loc_90A03
+        cmp cl, 5Ah
+        ja short loc_90A03
+        add cl, 20h
 loc_90A03:
-mov ch, byte [esp]	; 90A03
-cmp ch, 41h	; 90A06
-jb short loc_90A16	; 90A09
-cmp ch, 5Ah	; 90A0B
-ja short loc_90A16	; 90A0E
-add ch, 20h	; 90A10
-mov byte [esp], ch	; 90A13
+        mov ch, byte [esp]
+        cmp ch, 41h
+        jb short loc_90A16
+        cmp ch, 5Ah
+        ja short loc_90A16
+        add ch, 20h
+        mov byte [esp], ch
 loc_90A16:
-mov ch, byte [esp]	; 90A16
-cmp cl, ch	; 90A19
-je short loc_90A2E	; 90A1B
-xor edx, edx	; 90A1D
-xor eax, eax	; 90A1F
-mov dl, cl	; 90A21
-mov al, ch	; 90A23
-sub edx, eax	; 90A25
-mov eax, edx	; 90A27
-add esp, byte 4	; 90A29
-pop ecx	; 90A2C
-ret	; 90A2D
+        mov ch, byte [esp]
+        cmp cl, ch
+        je short loc_90A2E
+        xor edx, edx
+        xor eax, eax
+        mov dl, cl
+        mov al, ch
+        sub edx, eax
+        mov eax, edx
+        add esp, byte 4
+        pop ecx
+        ret
 loc_90A2E:
-test ch, ch	; 90A2E
-je short loc_909E8	; 90A30
-inc eax	; 90A32
-inc edx	; 90A33
-dec ebx	; 90A34
-jmp short loc_909E4	; 90A35
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h
+        test ch, ch
+        je short loc_909E8
+        inc eax
+        inc edx
+        dec ebx
+        jmp short loc_909E4
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h

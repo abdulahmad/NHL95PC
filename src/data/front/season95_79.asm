@@ -4,6 +4,6 @@ bits 32
 section s_DC7BC nobits alloc noexec write align=1
 global playofftree_p1, pochampion
 playofftree_p1:
-resb 116
+        resb 116
 pochampion:
-resb 4
+        resb 4

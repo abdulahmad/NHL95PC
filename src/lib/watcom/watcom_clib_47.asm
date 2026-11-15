@@ -4,22 +4,22 @@ bits 32
 section s_B00E4 progbits alloc exec nowrite align=1
 global strrchr_, loc_B00EA, loc_B00F0
 strrchr_:
-push ebx	; B00E4
-push ecx	; B00E5
-mov cl, dl	; B00E6
-xor ebx, ebx	; B00E8
+        push ebx
+        push ecx
+        mov cl, dl
+        xor ebx, ebx
 loc_B00EA:
-cmp cl, byte [eax]	; B00EA
-jne short loc_B00F0	; B00EC
-mov ebx, eax	; B00EE
+        cmp cl, byte [eax]
+        jne short loc_B00F0
+        mov ebx, eax
 loc_B00F0:
-mov edx, eax	; B00F0
-mov ch, byte [edx]	; B00F2
-inc eax	; B00F4
-test ch, ch	; B00F5
-jne short loc_B00EA	; B00F7
-mov eax, ebx	; B00F9
-pop ecx	; B00FB
-pop ebx	; B00FC
-ret	; B00FD
-db 00h,00h
+        mov edx, eax
+        mov ch, byte [edx]
+        inc eax
+        test ch, ch
+        jne short loc_B00EA
+        mov eax, ebx
+        pop ecx
+        pop ebx
+        ret
+        db 00h,00h

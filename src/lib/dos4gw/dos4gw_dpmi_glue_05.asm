@@ -5,23 +5,23 @@ section s_A1877 progbits alloc exec nowrite align=1
 extern byte_D5440
 global __EnterWVIDEO_, loc_A1891, loc_A189A
 __EnterWVIDEO_:
-cmp byte [byte_D5440], 0	; A1877
-je short loc_A189A	; A187E
-and edx, 0FFFFh	; A1880
-push edx	; A1886
-push eax	; A1887
-int3	; A1888
-jmp short loc_A1891	; A1889
-push edi	; A188B
-push esi	; A188C
-dec ecx	; A188D
-inc esp	; A188E
-inc ebp	; A188F
-dec edi	; A1890
+        cmp byte [byte_D5440], 0
+        je short loc_A189A
+        and edx, 0FFFFh
+        push edx
+        push eax
+        int3
+        jmp short loc_A1891
+        push edi
+        push esi
+        dec ecx
+        inc esp
+        inc ebp
+        dec edi
 loc_A1891:
-mov eax, 1	; A1891
-add esp, byte 8	; A1896
-ret	; A1899
+        mov eax, 1
+        add esp, byte 8
+        ret
 loc_A189A:
-xor eax, eax	; A189A
-ret	; A189C
+        xor eax, eax
+        ret

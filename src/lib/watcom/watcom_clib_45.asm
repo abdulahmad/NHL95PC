@@ -4,4 +4,4 @@ bits 32
 section s_ADEE8 progbits alloc exec nowrite align=1
 global nullsub_4
 nullsub_4:
-ret	; ADEE8
+        ret

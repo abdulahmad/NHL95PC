@@ -4,4 +4,4 @@ bits 32
 section s_F6138 nobits alloc noexec write align=1
 global dword_F6138
 dword_F6138:
-resb 6208
+        resb 6208

@@ -36,2062 +36,2152 @@ extern lcsel_aw
 global RunDemoGame, RunDemoGame_x, AnyInputPressed, ReadBE32, TitleScreen, RunIntro, ShowCredits, SetTextColors
 global RenderTextLine, PrintCenteredText, PrintShadowText, PrintOutlinedText, PrintFmt1, PrintFmt2, TextGridOpen, TextGridFree
 global TextGridOff, TextGridPut
+;-----------------------------------------------------------------------------
+; RunDemoGame                                                     15D6B  95 PC
+; Attract-mode demo from the title screens: picks random teams / options,
+; sets demomode, loads the exhibition mode state, ReloadGameGfx,
+; SetupGameQuick, DrawHudPanel, GameLoop, then restores the screen size and
+; mode state and clears demomode
+;-----------------------------------------------------------------------------
 ; C: src/front/title/RunDemoGame.c
 %ifdef CBUILD
 %include "c/front/title/RunDemoGame.inc"
 %else
 RunDemoGame:
-push dword 94h	; 15D6B
-call __CHK	; 15D70
-push ebx	; 15D75
-push ecx	; 15D76
-push edx	; 15D77
-push esi	; 15D78
-push edi	; 15D79
-push ebp	; 15D7A
-sub esp, byte 78h	; 15D7B
-call ShowLoadingScreen	; 15D7E
-call InputRemove	; 15D83
-mov word [PerTimeTab], 3Ch	; 15D88
-call DemoSetupStub	; 15D91
-mov dword [demomode], 1	; 15D96
-call rand_	; 15DA0
-mov edx, eax	; 15DA5
-shl edx, 10h	; 15DA7
-call rand_	; 15DAA
-add edx, eax	; 15DAF
-mov dword [seed], edx	; 15DB1
-mov edx, dword [demoteammode]	; 15DB7
-inc edx	; 15DBD
-mov ebx, 3	; 15DBE
-mov eax, edx	; 15DC3
-sar edx, 1Fh	; 15DC5
-idiv ebx	; 15DC8
-mov dword [demoteammode], edx	; 15DCA
-mov ecx, 1Dh	; 15DD0
-mov edi, esp	; 15DD5
-mov esi, exhstate	; 15DD7
-rep movsd	; 15DDC
-movsb	; 15DDE
-cmp edx, byte 2	; 15DDF
-jne short .1	; 15DE2
-mov dword [exhstate+51h], 1Bh	; 15DE4
-mov dword [exhstate+55h], 1Ah	; 15DEE
-jmp short .3	; 15DF8
+        push dword 94h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 78h
+        call ShowLoadingScreen
+        call InputRemove
+        mov word [PerTimeTab], 3Ch
+        call DemoSetupStub
+        mov dword [demomode], 1
+        call rand_
+        mov edx, eax
+        shl edx, 10h
+        call rand_
+        add edx, eax
+        mov dword [seed], edx
+        mov edx, dword [demoteammode]
+        inc edx
+        mov ebx, 3
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov dword [demoteammode], edx
+        mov ecx, 1Dh
+        mov edi, esp
+        mov esi, exhstate
+        rep movsd
+        movsb
+        cmp edx, byte 2
+        jne short .1
+        mov dword [exhstate+51h], 1Bh
+        mov dword [exhstate+55h], 1Ah
+        jmp short .3
 .1:
-cmp edx, byte 1	; 15DFA
-jne short .2	; 15DFD
-mov eax, 11h	; 15DFF
-call randomd0	; 15E04
-movsx edx, ax	; 15E09
-mov eax, dword [nosplit edx*2+demomatchups_m1]	; 15E0C
-sar eax, 18h	; 15E13
-mov dword [exhstate+51h], eax	; 15E16
-mov eax, dword [nosplit edx*2+demomatchups]	; 15E1B
-sar eax, 18h	; 15E22
-mov dword [exhstate+55h], eax	; 15E25
-jmp short .3	; 15E2A
+        cmp edx, byte 1
+        jne short .2
+        mov eax, 11h
+        call randomd0
+        movsx edx, ax
+        mov eax, dword [nosplit edx*2+demomatchups_m1]
+        sar eax, 18h
+        mov dword [exhstate+51h], eax
+        mov eax, dword [nosplit edx*2+demomatchups]
+        sar eax, 18h
+        mov dword [exhstate+55h], eax
+        jmp short .3
 .2:
-call rand_	; 15E2C
-mov edx, eax	; 15E31
-mov ebx, 1Ah	; 15E33
-sar edx, 1Fh	; 15E38
-idiv ebx	; 15E3B
-mov dword [exhstate+51h], edx	; 15E3D
-inc edx	; 15E43
-mov eax, 19h	; 15E44
-call randomd0	; 15E49
-cwde	; 15E4E
-add edx, eax	; 15E4F
-mov eax, edx	; 15E51
-sar edx, 1Fh	; 15E53
-idiv ebx	; 15E56
-mov dword [exhstate+55h], edx	; 15E58
+        call rand_
+        mov edx, eax
+        mov ebx, 1Ah
+        sar edx, 1Fh
+        idiv ebx
+        mov dword [exhstate+51h], edx
+        inc edx
+        mov eax, 19h
+        call randomd0
+        cwde
+        add edx, eax
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov dword [exhstate+55h], edx
 .3:
-mov ebp, 10h	; 15E5E
-mov dword [exhstate+65h], ebp	; 15E63
-xor eax, eax	; 15E69
-mov dword [gamemode], eax	; 15E6B
-mov dword [exhstate+69h], ebp	; 15E70
-mov dword [exhstate+6Dh], eax	; 15E76
-mov dword [exhstate+71h], 1	; 15E7B
-mov eax, dword [exhstate+51h]	; 15E85
-mov dword [exhstate+5Dh], eax	; 15E8A
-mov dword [exhstate+5Dh], 0FFFFFFFFh	; 15E8F
-mov dword [exhstate+61h], 0FFFFFFFEh	; 15E99
-mov eax, exhstate	; 15EA3
-call LoadModeState	; 15EA8
-or byte [gameopts], 0FFh	; 15EAD
-cmp byte [musicon], 0	; 15EB4
-je short .4	; 15EBB
-or byte [gameopts+1], 1	; 15EBD
-jmp short .5	; 15EC4
+        mov ebp, 10h
+        mov dword [exhstate+65h], ebp
+        xor eax, eax
+        mov dword [gamemode], eax
+        mov dword [exhstate+69h], ebp
+        mov dword [exhstate+6Dh], eax
+        mov dword [exhstate+71h], 1
+        mov eax, dword [exhstate+51h]
+        mov dword [exhstate+5Dh], eax
+        mov dword [exhstate+5Dh], 0FFFFFFFFh
+        mov dword [exhstate+61h], 0FFFFFFFEh
+        mov eax, exhstate
+        call LoadModeState
+        or byte [gameopts], 0FFh
+        cmp byte [musicon], 0
+        je short .4
+        or byte [gameopts+1], 1
+        jmp short .5
 .4:
-and byte [gameopts+1], 0FEh	; 15EC6
+        and byte [gameopts+1], 0FEh
 .5:
-mov bh, byte [gameopts+1]	; 15ECD
-or bh, 2	; 15ED3
-mov byte [gameopts+1], bh	; 15ED6
-mov cl, bh	; 15EDC
-and cl, 3	; 15EDE
-mov byte [gameopts+1], cl	; 15EE1
-mov edx, dword [VisTeam-2]	; 15EE7
-sar edx, 10h	; 15EED
-mov edx, dword [nosplit edx*4+teamabbrevs]	; 15EF0
-mov eax, dword [HomeTeam-2]	; 15EF7
-sar eax, 10h	; 15EFC
-mov eax, dword [nosplit eax*4+teamabbrevs]	; 15EFF
-call PaPreloadClips	; 15F06
-call SetupControllers	; 15F0B
-xor edx, edx	; 15F10
-xor eax, eax	; 15F12
-call InitGameSummary	; 15F14
-cmp word [HomeTeam], byte 1Ah	; 15F19
-jl short .6	; 15F21
-mov eax, 0Ch	; 15F23
-jmp short .7	; 15F28
+        mov bh, byte [gameopts+1]
+        or bh, 2
+        mov byte [gameopts+1], bh
+        mov cl, bh
+        and cl, 3
+        mov byte [gameopts+1], cl
+        mov edx, dword [VisTeam-2]
+        sar edx, 10h
+        mov edx, dword [nosplit edx*4+teamabbrevs]
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
+        mov eax, dword [nosplit eax*4+teamabbrevs]
+        call PaPreloadClips
+        call SetupControllers
+        xor edx, edx
+        xor eax, eax
+        call InitGameSummary
+        cmp word [HomeTeam], byte 1Ah
+        jl short .6
+        mov eax, 0Ch
+        jmp short .7
 .6:
-mov eax, dword [HomeTeam-2]	; 15F2A
-sar eax, 10h	; 15F2F
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
 .7:
-call LoadRink	; 15F32
-call LoadRockMusic	; 15F37
-call ReloadGameGfx	; 15F3C
-call FadeOutPalCycle	; 15F41
-mov ebp, 1	; 15F46
-mov dword [demoflag], ebp	; 15F4B
-call SetupDemoGame	; 15F51
-xor eax, eax	; 15F56
-mov dword [demoflag], eax	; 15F58
-mov dword [introskipped], eax	; 15F5D
-mov dword [gameresult], eax	; 15F62
-mov edx, 0C8h	; 15F67
-mov eax, 140h	; 15F6C
-call SetScreenSize	; 15F71
-mov edx, dword [VisTeam-2]	; 15F76
-sar edx, 10h	; 15F7C
-mov eax, dword [HomeTeam-2]	; 15F7F
-sar eax, 10h	; 15F84
-mov ebx, gamepal	; 15F87
-call LoadTeamPalette	; 15F8C
-mov edx, dword [VisTeam-2]	; 15F91
-sar edx, 10h	; 15F97
-mov eax, dword [HomeTeam-2]	; 15F9A
-sar eax, 10h	; 15F9F
-mov ecx, ebp	; 15FA2
-mov ebx, ebp	; 15FA4
-call DrawHudPanel	; 15FA6
-call joyq_flush	; 15FAB
-call Gameloop	; 15FB0
-mov edx, 1E0h	; 15FB5
-mov eax, 280h	; 15FBA
-call SetScreenSize	; 15FBF
-mov word [PerTimeTab], 12Ch	; 15FC4
-xor ecx, ecx	; 15FCD
-mov dword [demomode], ecx	; 15FCF
-mov ecx, 1Dh	; 15FD5
-mov edi, exhstate	; 15FDA
-mov esi, esp	; 15FDF
-rep movsd	; 15FE1
-movsb	; 15FE3
-mov eax, exhstate	; 15FE4
-call LoadModeState	; 15FE9
-call InputInstall	; 15FEE
-cmp dword [gameresult], byte 2	; 15FF3
-sete al	; 15FFA
-and eax, 0FFh	; 15FFD
-add esp, byte 78h	; 16002
+        call LoadRink
+        call LoadRockMusic
+        call ReloadGameGfx
+        call FadeOutPalCycle
+        mov ebp, 1
+        mov dword [demoflag], ebp
+        call SetupDemoGame
+        xor eax, eax
+        mov dword [demoflag], eax
+        mov dword [introskipped], eax
+        mov dword [gameresult], eax
+        mov edx, 0C8h
+        mov eax, 140h
+        call SetScreenSize
+        mov edx, dword [VisTeam-2]
+        sar edx, 10h
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
+        mov ebx, gamepal
+        call LoadTeamPalette
+        mov edx, dword [VisTeam-2]
+        sar edx, 10h
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
+        mov ecx, ebp
+        mov ebx, ebp
+        call DrawHudPanel
+        call joyq_flush
+        call Gameloop
+        mov edx, 1E0h
+        mov eax, 280h
+        call SetScreenSize
+        mov word [PerTimeTab], 12Ch
+        xor ecx, ecx
+        mov dword [demomode], ecx
+        mov ecx, 1Dh
+        mov edi, exhstate
+        mov esi, esp
+        rep movsd
+        movsb
+        mov eax, exhstate
+        call LoadModeState
+        call InputInstall
+        cmp dword [gameresult], byte 2
+        sete al
+        and eax, 0FFh
+        add esp, byte 78h
 RunDemoGame_x:
-pop ebp	; 16005
-pop edi	; 16006
-pop esi	; 16007
-pop edx	; 16008
-pop ecx	; 16009
-pop ebx	; 1600A
-ret	; 1600B
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; AnyInputPressed                              1600C  95 PC, medium confidence
+; Returns 1 for a key (PollKey), a joystick button (bits 30h of ReadJoyRaw
+; for each present stick) or a mouse button; used to break the demo and the
+; MVI movies
+;-----------------------------------------------------------------------------
 ; C: src/front/title/AnyInputPressed.c
 %ifdef CBUILD
 %include "c/front/title/AnyInputPressed.inc"
 %else
 AnyInputPressed:
-push dword 14h	; 1600C
-call __CHK	; 16011
-push ebx	; 16016
-push ecx	; 16017
-push edx	; 16018
-push esi	; 16019
-call PollKey	; 1601A
-mov esi, eax	; 1601F
-test eax, eax	; 16021
-jne short .3	; 16023
-mov ah, byte [ctlavailmask]	; 16025
-test ah, 2	; 1602B
-jne short .1	; 1602E
-test ah, 4	; 16030
-je short .3	; 16033
+        push dword 14h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        call PollKey
+        mov esi, eax
+        test eax, eax
+        jne short .3
+        mov ah, byte [ctlavailmask]
+        test ah, 2
+        jne short .1
+        test ah, 4
+        je short .3
 .1:
-call ReadJoyRaw	; 16035
-test al, 30h	; 1603A
-jne short .2	; 1603C
-sar eax, 8	; 1603E
-test al, 30h	; 16041
-je short .3	; 16043
+        call ReadJoyRaw
+        test al, 30h
+        jne short .2
+        sar eax, 8
+        test al, 30h
+        je short .3
 .2:
-mov esi, 1	; 16045
+        mov esi, 1
 .3:
-test esi, esi	; 1604A
-jne short .4	; 1604C
-test byte [ctlavailmask], 1	; 1604E
-je short .4	; 16055
-call dword [mousepollfn]	; 16057
-test byte [mousebtns], 3	; 1605D
-je short .4	; 16064
-mov esi, 1	; 16066
+        test esi, esi
+        jne short .4
+        test byte [ctlavailmask], 1
+        je short .4
+        call dword [mousepollfn]
+        test byte [mousebtns], 3
+        je short .4
+        mov esi, 1
 .4:
-mov eax, esi	; 1606B
-pop esi	; 1606D
-pop edx	; 1606E
-pop ecx	; 1606F
-pop ebx	; 16070
-ret	; 16071
+        mov eax, esi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ReadBE32                                                        16072  95 PC
+; Returns the big-endian 32-bit value at the pointer (MVI / title_intro chunk
+; headers)
+;-----------------------------------------------------------------------------
 ; C: src/front/title/ReadBE32.c
 %ifdef CBUILD
 %include "c/front/title/ReadBE32.inc"
 %else
 ReadBE32:
-push dword 0Ch	; 16072
-call __CHK	; 16077
-push ebx	; 1607C
-push edx	; 1607D
-movsx edx, byte [eax]	; 1607E
-inc eax	; 16081
-movsx ebx, byte [eax]	; 16082
-shl edx, 8	; 16085
-inc eax	; 16088
-add edx, ebx	; 16089
-movsx ebx, byte [eax]	; 1608B
-shl edx, 8	; 1608E
-inc eax	; 16091
-add edx, ebx	; 16092
-movsx eax, byte [eax]	; 16094
-shl edx, 8	; 16097
-add eax, edx	; 1609A
-pop edx	; 1609C
-pop ebx	; 1609D
-ret	; 1609E
+        push dword 0Ch
+        call __CHK
+        push ebx
+        push edx
+        movsx edx, byte [eax]
+        inc eax
+        movsx ebx, byte [eax]
+        shl edx, 8
+        inc eax
+        add edx, ebx
+        movsx ebx, byte [eax]
+        shl edx, 8
+        inc eax
+        add edx, ebx
+        movsx eax, byte [eax]
+        shl edx, 8
+        add eax, edx
+        pop edx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TitleScreen                                  1609F  95 PC, medium confidence
+; The EA screen ("eascrn" scrn / msk1 / MASK) and the title ("title30", title
+; music "mttitle" / "adtitle" by sound card, the "title.cmv" movie checked
+; for the 'MVIf' tag, ended early by AnyInputPressed); returns nonzero when
+; the player pressed something, 0 when it timed out; called from RunIntro
+;-----------------------------------------------------------------------------
 TitleScreen:
-push dword 378h	; 1609F
-call __CHK	; 160A4
-push ebx	; 160A9
-push ecx	; 160AA
-push edx	; 160AB
-push esi	; 160AC
-push edi	; 160AD
-push ebp	; 160AE
-sub esp, 350h	; 160AF
-xor edx, edx	; 160B5
-mov dword [dword esp+032Ch], edx	; 160B7
-call ClearInputQueue	; 160BE
-call sub_B4BA8	; 160C3
-push byte 0	; 160C8
-call ClearScreen	; 160CA
-add esp, byte 4	; 160CF
-xor ecx, ecx	; 160D2
-mov ebx, str_Eascrn	; 160D4
-cmp byte [fileoncd+068h], 1	; 160D9
-jne short .1	; 160E0
-mov edx, dword [cddriveptr]	; 160E2
-jmp short .2	; 160E8
+        push dword 378h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 350h
+        xor edx, edx
+        mov dword [dword esp+032Ch], edx
+        call ClearInputQueue
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        xor ecx, ecx
+        mov ebx, str_Eascrn
+        cmp byte [fileoncd+068h], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 160EA
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 160EC
-call MakePath	; 160F3
-push byte 0	; 160F8
-lea eax, [dword esp+0304h]	; 160FA
-push eax	; 16101
-call LoadBank	; 16102
-add esp, byte 8	; 16107
-mov dword [dword esp+0320h], eax	; 1610A
-push str_Pal4	; 16111
-push eax	; 16116
-call FindShape	; 16117
-add esp, byte 8	; 1611C
-lea edx, [byte eax+010h]	; 1611F
-mov ebx, 300h	; 16122
-mov eax, esp	; 16127
-call memcpy_	; 16129
-xor eax, eax	; 1612E
-mov dh, 3Fh	; 16130
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [dword esp+0320h], eax
+        push str_Pal4
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        xor eax, eax
+        mov dh, 3Fh
 .3:
-mov dl, byte [esp+eax]	; 16132
-cmp dl, 3Bh	; 16135
-jge short .4	; 16138
-mov bl, dl	; 1613A
-add bl, 5	; 1613C
-mov byte [esp+eax], bl	; 1613F
-jmp short .5	; 16142
+        mov dl, byte [esp+eax]
+        cmp dl, 3Bh
+        jge short .4
+        mov bl, dl
+        add bl, 5
+        mov byte [esp+eax], bl
+        jmp short .5
 .4:
-mov byte [esp+eax], dh	; 16144
+        mov byte [esp+eax], dh
 .5:
-inc eax	; 16147
-cmp eax, 300h	; 16148
-jl short TitleScreen.3	; 1614D
-push str_Scrn2	; 1614F
-mov ebx, dword [dword esp+0324h]	; 16154
-push ebx	; 1615B
-call FindShape	; 1615C
-add esp, byte 8	; 16161
-push eax	; 16164
-call sub_9121C	; 16165
-add esp, byte 4	; 1616A
-push str_Msk1	; 1616D
-mov ecx, dword [dword esp+0324h]	; 16172
-push ecx	; 16179
-call FindShape	; 1617A
-mov ebp, eax	; 1617F
-add esp, byte 8	; 16181
-push byte 20h	; 16184
-push dword 9C51h	; 16186
-push str_MASK	; 1618B
-call AllocMemBlock	; 16190
-add esp, byte 0Ch	; 16195
-mov dword [dword esp+033Ch], eax	; 16198
-mov edi, eax	; 1619F
-mov esi, ebp	; 161A1
-movsd	; 161A3
-movsd	; 161A4
-movsd	; 161A5
-movsd	; 161A6
-movsb	; 161A7
-mov word [byte eax+04h], 0C8h	; 161A8
-mov word [byte eax+06h], 0C8h	; 161AE
-lea edx, [byte ebp+010h]	; 161B4
-add eax, byte 10h	; 161B7
-mov ebx, 9C40h	; 161BA
-call memcpy_	; 161BF
-mov esi, dword [dword esp+0320h]	; 161C4
-push esi	; 161CB
-call FreeMemBlock	; 161CC
-add esp, byte 4	; 161D1
-cmp byte [musicon], 0	; 161D4
-je short .8	; 161DB
-cmp dword [songdata], byte 0	; 161DD
-jne short .8	; 161E4
-mov ecx, str_Iff2	; 161E6
-mov ebx, str_Title30	; 161EB
-cmp byte [fileoncd+01DAh], 1	; 161F0
-jne short .6	; 161F7
-mov edx, dword [cddriveptr]	; 161F9
-jmp short .7	; 161FF
+        inc eax
+        cmp eax, 300h
+        jl short TitleScreen.3
+        push str_Scrn2
+        mov ebx, dword [dword esp+0324h]
+        push ebx
+        call FindShape
+        add esp, byte 8
+        push eax
+        call sub_9121C
+        add esp, byte 4
+        push str_Msk1
+        mov ecx, dword [dword esp+0324h]
+        push ecx
+        call FindShape
+        mov ebp, eax
+        add esp, byte 8
+        push byte 20h
+        push dword 9C51h
+        push str_MASK
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [dword esp+033Ch], eax
+        mov edi, eax
+        mov esi, ebp
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov word [byte eax+04h], 0C8h
+        mov word [byte eax+06h], 0C8h
+        lea edx, [byte ebp+010h]
+        add eax, byte 10h
+        mov ebx, 9C40h
+        call memcpy_
+        mov esi, dword [dword esp+0320h]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .8
+        cmp dword [songdata], byte 0
+        jne short .8
+        mov ecx, str_Iff2
+        mov ebx, str_Title30
+        cmp byte [fileoncd+01DAh], 1
+        jne short .6
+        mov edx, dword [cddriveptr]
+        jmp short .7
 .6:
-xor edx, edx	; 16201
+        xor edx, edx
 .7:
-lea eax, [dword esp+0300h]	; 16203
-call MakePath	; 1620A
-lea eax, [dword esp+0300h]	; 1620F
-call sub_8F98F	; 16216
-mov dword [songdata], eax	; 1621B
-jmp short .13	; 16220
+        lea eax, [dword esp+0300h]
+        call MakePath
+        lea eax, [dword esp+0300h]
+        call sub_8F98F
+        mov dword [songdata], eax
+        jmp short .13
 .8:
-cmp dword [sounddev], byte 8	; 16222
-jne short .10	; 16229
-mov ecx, str_KMS	; 1622B
-mov ebx, str_Mttitle	; 16230
-cmp byte [fileoncd+0104h], 1	; 16235
-jne short .9	; 1623C
-mov edx, dword [cddriveptr]	; 1623E
-jmp short .12	; 16244
+        cmp dword [sounddev], byte 8
+        jne short .10
+        mov ecx, str_KMS
+        mov ebx, str_Mttitle
+        cmp byte [fileoncd+0104h], 1
+        jne short .9
+        mov edx, dword [cddriveptr]
+        jmp short .12
 .9:
-xor edx, edx	; 16246
-jmp short .12	; 16248
+        xor edx, edx
+        jmp short .12
 .10:
-mov ecx, str_KMS	; 1624A
-mov ebx, str_Adtitle	; 1624F
-cmp byte [fileoncd+0104h], 1	; 16254
-jne short .11	; 1625B
-mov edx, dword [cddriveptr]	; 1625D
-jmp short .12	; 16263
+        mov ecx, str_KMS
+        mov ebx, str_Adtitle
+        cmp byte [fileoncd+0104h], 1
+        jne short .11
+        mov edx, dword [cddriveptr]
+        jmp short .12
 .11:
-xor edx, edx	; 16265
+        xor edx, edx
 .12:
-lea eax, [dword esp+0300h]	; 16267
-call MakePath	; 1626E
-lea eax, [dword esp+0300h]	; 16273
-call LoadSample	; 1627A
-mov dword [titlesample], eax	; 1627F
+        lea eax, [dword esp+0300h]
+        call MakePath
+        lea eax, [dword esp+0300h]
+        call LoadSample
+        mov dword [titlesample], eax
 .13:
-mov ecx, str_Cmv	; 16284
-mov ebx, str_Title	; 16289
-cmp byte [fileoncd+024h], 1	; 1628E
-jne short .14	; 16295
-mov edx, dword [cddriveptr]	; 16297
-jmp short .15	; 1629D
+        mov ecx, str_Cmv
+        mov ebx, str_Title
+        cmp byte [fileoncd+024h], 1
+        jne short .14
+        mov edx, dword [cddriveptr]
+        jmp short .15
 .14:
-xor edx, edx	; 1629F
+        xor edx, edx
 .15:
-lea eax, [dword esp+0300h]	; 162A1
-call MakePath	; 162A8
-push byte 20h	; 162AD
-push dword 2000h	; 162AF
-push dword 493E0h	; 162B4
-call sub_1B0F3	; 162B9
-add esp, byte 0Ch	; 162BE
-mov dword [dword esp+0340h], eax	; 162C1
-lea edx, [dword esp+0300h]	; 162C8
-push edx	; 162CF
-push eax	; 162D0
-call sub_1B1C2	; 162D1
-add esp, byte 8	; 162D6
-call sub_1AC25	; 162D9
-mov edi, eax	; 162DE
-push dword 96h	; 162E0
-call SetTickDeadline	; 162E5
-add esp, byte 4	; 162EA
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 20h
+        push dword 2000h
+        push dword 493E0h
+        call sub_1B0F3
+        add esp, byte 0Ch
+        mov dword [dword esp+0340h], eax
+        lea edx, [dword esp+0300h]
+        push edx
+        push eax
+        call sub_1B1C2
+        add esp, byte 8
+        call sub_1AC25
+        mov edi, eax
+        push dword 96h
+        call SetTickDeadline
+        add esp, byte 4
 .16:
-call TickDeadlinePassed	; 162ED
-test eax, eax	; 162F2
-jne short .17	; 162F4
-call sub_1B2A7	; 162F6
-jmp short TitleScreen.16	; 162FB
+        call TickDeadlinePassed
+        test eax, eax
+        jne short .17
+        call sub_1B2A7
+        jmp short TitleScreen.16
 .17:
-mov dword [dword esp+0334h], 0Ah	; 162FD
-xor bl, bl	; 16308
-mov byte [esp], bl	; 1630A
-mov byte [byte esp+01h], bl	; 1630D
-mov byte [byte esp+02h], bl	; 16311
-cmp byte [musicon], 0	; 16315
-je short .20	; 1631C
-cmp dword [songdata], byte 0	; 1631E
-je short .18	; 16325
-mov edx, dword [musichandle]	; 16327
-mov eax, dword [songdata]	; 1632D
-mov ecx, 4Ch	; 16332
-mov ebx, 3	; 16337
-call sub_8FB8E	; 1633C
+        mov dword [dword esp+0334h], 0Ah
+        xor bl, bl
+        mov byte [esp], bl
+        mov byte [byte esp+01h], bl
+        mov byte [byte esp+02h], bl
+        cmp byte [musicon], 0
+        je short .20
+        cmp dword [songdata], byte 0
+        je short .18
+        mov edx, dword [musichandle]
+        mov eax, dword [songdata]
+        mov ecx, 4Ch
+        mov ebx, 3
+        call sub_8FB8E
 .18:
-mov ebx, 10h	; 16341
-mov edx, esp	; 16346
-xor eax, eax	; 16348
-call FadePalStep	; 1634A
-push byte 5Ah	; 1634F
-call SetTickDeadline	; 16351
-add esp, byte 4	; 16356
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        push byte 5Ah
+        call SetTickDeadline
+        add esp, byte 4
 .19:
-call TickDeadlinePassed	; 16359
-test eax, eax	; 1635E
-jne short .21	; 16360
-call sub_1B2A7	; 16362
-jmp short TitleScreen.19	; 16367
+        call TickDeadlinePassed
+        test eax, eax
+        jne short .21
+        call sub_1B2A7
+        jmp short TitleScreen.19
 .20:
-mov eax, dword [titlesample]	; 16369
-call PlayDigiSample	; 1636E
-mov ebx, 10h	; 16373
-mov edx, esp	; 16378
-xor eax, eax	; 1637A
-call FadePalStep	; 1637C
+        mov eax, dword [titlesample]
+        call PlayDigiSample
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
 .21:
-xor esi, esi	; 16381
-call GetTicks	; 16383
-mov dword [dword esp+0344h], eax	; 16388
-mov dword [dword esp+034Ch], esi	; 1638F
-mov dword [dword esp+0338h], 1	; 16396
-xor ebp, ebp	; 163A1
-call TicksSinceLastCall	; 163A3
-mov dword [dword esp+0348h], esi	; 163A8
+        xor esi, esi
+        call GetTicks
+        mov dword [dword esp+0344h], eax
+        mov dword [dword esp+034Ch], esi
+        mov dword [dword esp+0338h], 1
+        xor ebp, ebp
+        call TicksSinceLastCall
+        mov dword [dword esp+0348h], esi
 .22:
-mov edx, dword [dword esp+0340h]	; 163AF
-push edx	; 163B6
-call sub_1B8AC	; 163B7
-mov edx, eax	; 163BC
-add esp, byte 4	; 163BE
-mov dword [dword esp+0324h], eax	; 163C1
-cmp eax, byte 0FFFFFFFFh	; 163C8
-jne short .23	; 163CB
-mov esi, eax	; 163CD
-jmp near .35	; 163CF
+        mov edx, dword [dword esp+0340h]
+        push edx
+        call sub_1B8AC
+        mov edx, eax
+        add esp, byte 4
+        mov dword [dword esp+0324h], eax
+        cmp eax, byte 0FFFFFFFFh
+        jne short .23
+        mov esi, eax
+        jmp near .35
 .23:
-test eax, eax	; 163D4
-je near .34	; 163D6
-call ReadBE32	; 163DC
-mov dword [dword esp+0330h], eax	; 163E1
-cmp eax, 4D564966h	; 163E8
-jb short .24	; 163ED
-jbe short .25	; 163EF
-cmp eax, 4D564968h	; 163F1
-je near .28	; 163F6
-jmp near .31	; 163FC
+        test eax, eax
+        je near .34
+        call ReadBE32
+        mov dword [dword esp+0330h], eax
+        cmp eax, 4D564966h
+        jb short .24
+        jbe short .25
+        cmp eax, 4D564968h
+        je near .28
+        jmp near .31
 .24:
-cmp eax, 4D564965h	; 16401
-je near .30	; 16406
-jmp near .31	; 1640C
+        cmp eax, 4D564965h
+        je near .30
+        jmp near .31
 .25:
-mov eax, dword [dword esp+0334h]	; 16411
-add dword [dword esp+034Ch], eax	; 16418
-inc ebp	; 1641F
-mov eax, edi	; 16420
-call sub_1B002	; 16422
-mov dword [dword esp+0328h], eax	; 16427
-call GetTicks	; 1642E
-sub eax, dword [dword esp+0344h]	; 16433
-cmp eax, dword [dword esp+034Ch]	; 1643A
-jge short .26	; 16441
-mov ecx, dword [dword esp+032Ch]	; 16443
-push ecx	; 1644A
-call SetDrawBitmap	; 1644B
-add esp, byte 4	; 16450
-mov eax, dword [dword esp+033Ch]	; 16453
-push eax	; 1645A
-call sub_9121C	; 1645B
-add esp, byte 4	; 16460
-push byte 0	; 16463
-push byte 0	; 16465
-mov edx, dword [dword esp+0330h]	; 16467
-push edx	; 1646E
-call sub_9087C	; 1646F
-add esp, byte 0Ch	; 16474
-call sub_B4BA8	; 16477
-push byte 56h	; 1647C
-push byte 21h	; 1647E
-mov eax, dword [dword esp+0334h]	; 16480
-mov ebx, dword [byte eax+02Ch]	; 16487
-push ebx	; 1648A
-call sub_91284	; 1648B
-add esp, byte 0Ch	; 16490
+        mov eax, dword [dword esp+0334h]
+        add dword [dword esp+034Ch], eax
+        inc ebp
+        mov eax, edi
+        call sub_1B002
+        mov dword [dword esp+0328h], eax
+        call GetTicks
+        sub eax, dword [dword esp+0344h]
+        cmp eax, dword [dword esp+034Ch]
+        jge short .26
+        mov ecx, dword [dword esp+032Ch]
+        push ecx
+        call SetDrawBitmap
+        add esp, byte 4
+        mov eax, dword [dword esp+033Ch]
+        push eax
+        call sub_9121C
+        add esp, byte 4
+        push byte 0
+        push byte 0
+        mov edx, dword [dword esp+0330h]
+        push edx
+        call sub_9087C
+        add esp, byte 0Ch
+        call sub_B4BA8
+        push byte 56h
+        push byte 21h
+        mov eax, dword [dword esp+0334h]
+        mov ebx, dword [byte eax+02Ch]
+        push ebx
+        call sub_91284
+        add esp, byte 0Ch
 .26:
-cmp dword [dword esp+0338h], byte 1	; 16493
-jne near .32	; 1649B
-cmp dword [dword esp+0348h], byte 0	; 164A1
-jne near .32	; 164A9
-cmp byte [musicon], 0	; 164AF
-je short .27	; 164B6
-cmp dword [nhlintrosaid], byte 0	; 164B8
-je short .27	; 164BF
-xor ebx, ebx	; 164C1
-mov dword [nhlintrosaid], ebx	; 164C3
-call PaNhlIntro	; 164C9
+        cmp dword [dword esp+0338h], byte 1
+        jne near .32
+        cmp dword [dword esp+0348h], byte 0
+        jne near .32
+        cmp byte [musicon], 0
+        je short .27
+        cmp dword [nhlintrosaid], byte 0
+        je short .27
+        xor ebx, ebx
+        mov dword [nhlintrosaid], ebx
+        call PaNhlIntro
 .27:
-xor ecx, ecx	; 164CE
-mov dword [dword esp+0338h], ecx	; 164D0
-call GetTicks	; 164D7
-mov dword [dword esp+0344h], eax	; 164DC
-jmp near .32	; 164E3
+        xor ecx, ecx
+        mov dword [dword esp+0338h], ecx
+        call GetTicks
+        mov dword [dword esp+0344h], eax
+        jmp near .32
 .28:
-mov eax, edi	; 164E8
-call sub_1AD16	; 164EA
-mov eax, edi	; 164EF
-call sub_1B092	; 164F1
-mov ebx, dword [dword esp+032Ch]	; 164F6
-test ebx, ebx	; 164FD
-jne short .29	; 164FF
-push ebx	; 16501
-mov eax, edi	; 16502
-call sub_1B0AD	; 16504
-push eax	; 16509
-mov eax, edi	; 1650A
-call sub_1B09F	; 1650C
-push eax	; 16511
-call CreateBitmap	; 16512
-add esp, byte 0Ch	; 16517
-mov dword [dword esp+032Ch], eax	; 1651A
+        mov eax, edi
+        call sub_1AD16
+        mov eax, edi
+        call sub_1B092
+        mov ebx, dword [dword esp+032Ch]
+        test ebx, ebx
+        jne short .29
+        push ebx
+        mov eax, edi
+        call sub_1B0AD
+        push eax
+        mov eax, edi
+        call sub_1B09F
+        push eax
+        call CreateBitmap
+        add esp, byte 0Ch
+        mov dword [dword esp+032Ch], eax
 .29:
-mov ecx, dword [dword esp+032Ch]	; 16521
-push ecx	; 16528
-call SetDrawBitmap	; 16529
-add esp, byte 4	; 1652E
-mov eax, dword [dword esp+033Ch]	; 16531
-push eax	; 16538
-call sub_9121C	; 16539
-add esp, byte 4	; 1653E
-call sub_B4BA8	; 16541
-push byte 56h	; 16546
-push byte 21h	; 16548
-mov eax, dword [dword esp+0334h]	; 1654A
-mov edx, dword [byte eax+02Ch]	; 16551
-push edx	; 16554
-call sub_91284	; 16555
-add esp, byte 0Ch	; 1655A
-mov eax, edi	; 1655D
-call sub_1B0D7	; 1655F
-mov ecx, eax	; 16564
-shl ecx, 2	; 16566
-sub ecx, eax	; 16569
-mov eax, edi	; 1656B
-call sub_1B0E5	; 1656D
-mov edx, eax	; 16572
-mov eax, edi	; 16574
-call sub_1B0C9	; 16576
-mov ebx, eax	; 1657B
-shl eax, 2	; 1657D
-sub eax, ebx	; 16580
-mov ebx, esp	; 16582
-add eax, ebx	; 16584
-mov ebx, ecx	; 16586
-call memcpy_	; 16588
-mov eax, esp	; 1658D
-push eax	; 1658F
-push dword 100h	; 16590
-push byte 0	; 16595
-call VgaSetPalette	; 16597
-add esp, byte 0Ch	; 1659C
-mov eax, edi	; 1659F
-call sub_1B0BB	; 165A1
-mov ebx, eax	; 165A6
-mov eax, 64h	; 165A8
-mov edx, eax	; 165AD
-sar edx, 1Fh	; 165AF
-idiv ebx	; 165B2
-mov dword [dword esp+0334h], eax	; 165B4
-jmp short .32	; 165BB
+        mov ecx, dword [dword esp+032Ch]
+        push ecx
+        call SetDrawBitmap
+        add esp, byte 4
+        mov eax, dword [dword esp+033Ch]
+        push eax
+        call sub_9121C
+        add esp, byte 4
+        call sub_B4BA8
+        push byte 56h
+        push byte 21h
+        mov eax, dword [dword esp+0334h]
+        mov edx, dword [byte eax+02Ch]
+        push edx
+        call sub_91284
+        add esp, byte 0Ch
+        mov eax, edi
+        call sub_1B0D7
+        mov ecx, eax
+        shl ecx, 2
+        sub ecx, eax
+        mov eax, edi
+        call sub_1B0E5
+        mov edx, eax
+        mov eax, edi
+        call sub_1B0C9
+        mov ebx, eax
+        shl eax, 2
+        sub eax, ebx
+        mov ebx, esp
+        add eax, ebx
+        mov ebx, ecx
+        call memcpy_
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        mov eax, edi
+        call sub_1B0BB
+        mov ebx, eax
+        mov eax, 64h
+        mov edx, eax
+        sar edx, 1Fh
+        idiv ebx
+        mov dword [dword esp+0334h], eax
+        jmp short .32
 .30:
-inc dword [dword esp+0348h]	; 165BD
-jmp short .32	; 165C4
+        inc dword [dword esp+0348h]
+        jmp short .32
 .31:
-mov esi, 0FFFFFFFFh	; 165C6
+        mov esi, 0FFFFFFFFh
 .32:
-mov edx, dword [dword esp+0324h]	; 165CB
-push edx	; 165D2
-mov ebx, dword [dword esp+0344h]	; 165D3
-push ebx	; 165DA
-call sub_1B92E	; 165DB
-add esp, byte 8	; 165E0
-call sub_1B2A7	; 165E3
-cmp dword [dword esp+0330h], 4D564966h	; 165E8
-jne short .35	; 165F3
-call GetTicks	; 165F5
-sub eax, dword [dword esp+0344h]	; 165FA
-mov ebx, dword [dword esp+034Ch]	; 16601
-cmp eax, ebx	; 16608
-jge short .35	; 1660A
-mov edx, ebx	; 1660C
-sub edx, eax	; 1660E
-push edx	; 16610
-call SetTickDeadline	; 16611
-add esp, byte 4	; 16616
+        mov edx, dword [dword esp+0324h]
+        push edx
+        mov ebx, dword [dword esp+0344h]
+        push ebx
+        call sub_1B92E
+        add esp, byte 8
+        call sub_1B2A7
+        cmp dword [dword esp+0330h], 4D564966h
+        jne short .35
+        call GetTicks
+        sub eax, dword [dword esp+0344h]
+        mov ebx, dword [dword esp+034Ch]
+        cmp eax, ebx
+        jge short .35
+        mov edx, ebx
+        sub edx, eax
+        push edx
+        call SetTickDeadline
+        add esp, byte 4
 .33:
-call TickDeadlinePassed	; 16619
-test eax, eax	; 1661E
-jne short .35	; 16620
-test esi, esi	; 16622
-jne short .35	; 16624
-cmp ebp, byte 23h	; 16626
-jle short TitleScreen.33	; 16629
-call AnyInputPressed	; 1662B
-mov esi, eax	; 16630
-jmp short TitleScreen.33	; 16632
+        call TickDeadlinePassed
+        test eax, eax
+        jne short .35
+        test esi, esi
+        jne short .35
+        cmp ebp, byte 23h
+        jle short TitleScreen.33
+        call AnyInputPressed
+        mov esi, eax
+        jmp short TitleScreen.33
 .34:
-call sub_1B2A7	; 16634
+        call sub_1B2A7
 .35:
-test esi, esi	; 16639
-jne short .36	; 1663B
-cmp ebp, byte 23h	; 1663D
-jle short .36	; 16640
-call AnyInputPressed	; 16642
-mov esi, eax	; 16647
+        test esi, esi
+        jne short .36
+        cmp ebp, byte 23h
+        jle short .36
+        call AnyInputPressed
+        mov esi, eax
 .36:
-test esi, esi	; 16649
-jne short .37	; 1664B
-cmp dword [dword esp+0348h], byte 2	; 1664D
-jl near TitleScreen.22	; 16655
+        test esi, esi
+        jne short .37
+        cmp dword [dword esp+0348h], byte 2
+        jl near TitleScreen.22
 .37:
-mov ebp, dword [dword esp+032Ch]	; 1665B
-test ebp, ebp	; 16662
-je short .38	; 16664
-push ebp	; 16666
-call sub_9132C	; 16667
-add esp, byte 4	; 1666C
+        mov ebp, dword [dword esp+032Ch]
+        test ebp, ebp
+        je short .38
+        push ebp
+        call sub_9132C
+        add esp, byte 4
 .38:
-mov eax, edi	; 1666F
-call sub_1ACF1	; 16671
-mov edx, dword [dword esp+0340h]	; 16676
-push edx	; 1667D
-call sub_1B18B	; 1667E
-add esp, byte 4	; 16683
-cmp byte [musicon], 0	; 16686
-je short .39	; 1668D
-cmp dword [songdata], byte 0	; 1668F
-je short .39	; 16696
-mov eax, dword [musichandle]	; 16698
-mov ebx, 64h	; 1669D
-mov edx, 3	; 166A2
-call sub_8FCDF	; 166A7
+        mov eax, edi
+        call sub_1ACF1
+        mov edx, dword [dword esp+0340h]
+        push edx
+        call sub_1B18B
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .39
+        cmp dword [songdata], byte 0
+        je short .39
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .39:
-mov ebx, 10h	; 166AC
-mov edx, esp	; 166B1
-mov eax, 1	; 166B3
-call FadePalStep	; 166B8
-cmp byte [musicon], 0	; 166BD
-je short .41	; 166C4
-cmp dword [songdata], byte 0	; 166C6
-je short .41	; 166CD
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        cmp byte [musicon], 0
+        je short .41
+        cmp dword [songdata], byte 0
+        je short .41
 .40:
-mov eax, dword [musicslot-3]	; 166CF
-sar eax, 18h	; 166D4
-mov edx, 3	; 166D7
-call SndQuery	; 166DC
-test eax, eax	; 166E1
-je short TitleScreen.40	; 166E3
-mov edi, dword [songdata]	; 166E5
-push edi	; 166EB
-call sub_8D2F0	; 166EC
-add esp, byte 4	; 166F1
-xor ebp, ebp	; 166F4
-mov dword [songdata], ebp	; 166F6
-jmp short .42	; 166FC
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short TitleScreen.40
+        mov edi, dword [songdata]
+        push edi
+        call sub_8D2F0
+        add esp, byte 4
+        xor ebp, ebp
+        mov dword [songdata], ebp
+        jmp short .42
 .41:
-call StopDigiSample	; 166FE
-mov eax, dword [titlesample]	; 16703
-call FreeSample	; 16708
+        call StopDigiSample
+        mov eax, dword [titlesample]
+        call FreeSample
 .42:
-mov eax, dword [dword esp+033Ch]	; 1670D
-push eax	; 16714
-call FreeMemBlock	; 16715
-add esp, byte 4	; 1671A
-mov eax, esi	; 1671D
-add esp, 350h	; 1671F
-jmp near RunDemoGame_x	; 16725
+        mov eax, dword [dword esp+033Ch]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, esi
+        add esp, 350h
+        jmp near RunDemoGame_x
+;-----------------------------------------------------------------------------
+; RunIntro                                     1672A  95 PC, medium confidence
+; Start-up sequence called once from main: the Pioneer logo screens
+; ("pioneer1".."pioneer4", "bkgd", "fla%d" flashes, "pion"), the EA SPORTS
+; opening ("eaopen", "easports"), then TitleScreen / RunDemoGame in turn
+; until the player presses something; clears demomode on the way out
+;-----------------------------------------------------------------------------
 ; C: src/front/title/RunDemoGame.c (RunIntro)
 %ifdef CBUILD
 %include "c/front/title/RunDemoGame.RunIntro.inc"
 %else
 RunIntro:
-push dword 674h	; 1672A
-call __CHK	; 1672F
-push ebx	; 16734
-push ecx	; 16735
-push edx	; 16736
-push esi	; 16737
-push edi	; 16738
-push ebp	; 16739
-sub esp, 64Ch	; 1673A
-xor edx, edx	; 16740
-mov dword [dword esp+0638h], edx	; 16742
-cmp byte [musicon], 0	; 16749
-je short .1	; 16750
-mov eax, dword [speechbank]	; 16752
-mov ebx, dword [dword eax+03B60h]	; 16757
-push ebx	; 1675D
-call sub_8D2F0	; 1675E
-add esp, byte 4	; 16763
+        push dword 674h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 64Ch
+        xor edx, edx
+        mov dword [dword esp+0638h], edx
+        cmp byte [musicon], 0
+        je short .1
+        mov eax, dword [speechbank]
+        mov ebx, dword [dword eax+03B60h]
+        push ebx
+        call sub_8D2F0
+        add esp, byte 4
 .1:
-call ClearInputQueue	; 16766
-call sub_B4BA8	; 1676B
-push byte 0	; 16770
-call ClearScreen	; 16772
-add esp, byte 4	; 16777
-mov ecx, 300h	; 1677A
-xor edx, edx	; 1677F
-mov eax, blackpal	; 16781
-call __STOSB	; 16786
-push blackpal	; 1678B
-push dword 100h	; 16790
-push byte 0	; 16795
-call VgaSetPalette	; 16797
-add esp, byte 0Ch	; 1679C
-xor ecx, ecx	; 1679F
-mov ebx, str_Pioneer1	; 167A1
-cmp byte [fileoncd+0127h], 1	; 167A6
-jne short .2	; 167AD
-mov edx, dword [cddriveptr]	; 167AF
-jmp short .3	; 167B5
+        call ClearInputQueue
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        mov ecx, 300h
+        xor edx, edx
+        mov eax, blackpal
+        call __STOSB
+        push blackpal
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov ebx, str_Pioneer1
+        cmp byte [fileoncd+0127h], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .3
 .2:
-xor edx, edx	; 167B7
+        xor edx, edx
 .3:
-lea eax, [dword esp+0600h]	; 167B9
-call MakePath	; 167C0
-push byte 0	; 167C5
-lea eax, [dword esp+0604h]	; 167C7
-push eax	; 167CE
-call LoadBank	; 167CF
-mov esi, eax	; 167D4
-add esp, byte 8	; 167D6
-push str_Pl2	; 167D9
-push eax	; 167DE
-call FindShape	; 167DF
-add esp, byte 8	; 167E4
-lea edx, [byte eax+010h]	; 167E7
-mov ebx, 300h	; 167EA
-lea eax, [dword esp+0300h]	; 167EF
-call memcpy_	; 167F6
-push str_Pl1	; 167FB
-push esi	; 16800
-call FindShape	; 16801
-add esp, byte 8	; 16806
-lea edx, [byte eax+010h]	; 16809
-mov ebx, 300h	; 1680C
-mov eax, esp	; 16811
-call memcpy_	; 16813
-push str_Bkgd3	; 16818
-push esi	; 1681D
-call FindShape	; 1681E
-add esp, byte 8	; 16823
-push eax	; 16826
-call sub_9121C	; 16827
-add esp, byte 4	; 1682C
-push esi	; 1682F
-call FreeMemBlock	; 16830
-add esp, byte 4	; 16835
-xor ecx, ecx	; 16838
-mov ebx, str_Pioneer2	; 1683A
-cmp byte [fileoncd+0128h], 1	; 1683F
-jne short .4	; 16846
-mov edx, dword [cddriveptr]	; 16848
-jmp short .5	; 1684E
+        lea eax, [dword esp+0600h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0604h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Pl2
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        lea eax, [dword esp+0300h]
+        call memcpy_
+        push str_Pl1
+        push esi
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        push str_Bkgd3
+        push esi
+        call FindShape
+        add esp, byte 8
+        push eax
+        call sub_9121C
+        add esp, byte 4
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        xor ecx, ecx
+        mov ebx, str_Pioneer2
+        cmp byte [fileoncd+0128h], 1
+        jne short .4
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .4:
-xor edx, edx	; 16850
+        xor edx, edx
 .5:
-lea eax, [dword esp+0600h]	; 16852
-call MakePath	; 16859
-push byte 0	; 1685E
-lea eax, [dword esp+0604h]	; 16860
-push eax	; 16867
-call LoadBank	; 16868
-add esp, byte 8	; 1686D
-mov ebp, eax	; 16870
-cmp byte [musicon], 0	; 16872
-je near .13	; 16879
-cmp dword [songdata], byte 0	; 1687F
-jne near .13	; 16886
-mov ecx, str_Iff2	; 1688C
-mov ebx, str_Pioneer4	; 16891
-cmp byte [fileoncd+012Ch], 1	; 16896
-jne short .6	; 1689D
-mov edx, dword [cddriveptr]	; 1689F
-jmp short .7	; 168A5
+        lea eax, [dword esp+0600h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0604h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov ebp, eax
+        cmp byte [musicon], 0
+        je near .13
+        cmp dword [songdata], byte 0
+        jne near .13
+        mov ecx, str_Iff2
+        mov ebx, str_Pioneer4
+        cmp byte [fileoncd+012Ch], 1
+        jne short .6
+        mov edx, dword [cddriveptr]
+        jmp short .7
 .6:
-xor edx, edx	; 168A7
+        xor edx, edx
 .7:
-lea eax, [dword esp+0600h]	; 168A9
-call MakePath	; 168B0
-lea eax, [dword esp+0600h]	; 168B5
-call sub_8F98F	; 168BC
-mov dword [dword esp+0644h], eax	; 168C1
-mov ecx, str_Iff2	; 168C8
-mov ebx, str_Pioneer3	; 168CD
-cmp byte [fileoncd+012Bh], 1	; 168D2
-jne short .8	; 168D9
-mov edx, dword [cddriveptr]	; 168DB
-jmp short .9	; 168E1
+        lea eax, [dword esp+0600h]
+        call MakePath
+        lea eax, [dword esp+0600h]
+        call sub_8F98F
+        mov dword [dword esp+0644h], eax
+        mov ecx, str_Iff2
+        mov ebx, str_Pioneer3
+        cmp byte [fileoncd+012Bh], 1
+        jne short .8
+        mov edx, dword [cddriveptr]
+        jmp short .9
 .8:
-xor edx, edx	; 168E3
+        xor edx, edx
 .9:
-lea eax, [dword esp+0600h]	; 168E5
-call MakePath	; 168EC
-lea eax, [dword esp+0600h]	; 168F1
-call sub_8F98F	; 168F8
-mov dword [dword esp+0648h], eax	; 168FD
-mov ecx, str_Iff2	; 16904
-mov ebx, str_Pioneer2	; 16909
-cmp byte [fileoncd+012Ah], 1	; 1690E
-jne short .10	; 16915
-mov edx, dword [cddriveptr]	; 16917
-jmp short .11	; 1691D
+        lea eax, [dword esp+0600h]
+        call MakePath
+        lea eax, [dword esp+0600h]
+        call sub_8F98F
+        mov dword [dword esp+0648h], eax
+        mov ecx, str_Iff2
+        mov ebx, str_Pioneer2
+        cmp byte [fileoncd+012Ah], 1
+        jne short .10
+        mov edx, dword [cddriveptr]
+        jmp short .11
 .10:
-xor edx, edx	; 1691F
+        xor edx, edx
 .11:
-lea eax, [dword esp+0600h]	; 16921
-call MakePath	; 16928
-lea eax, [dword esp+0600h]	; 1692D
-call sub_8F98F	; 16934
-mov dword [dword esp+0640h], eax	; 16939
-mov dword [songdata], eax	; 16940
-test eax, eax	; 16945
-je short .12	; 16947
-mov edx, dword [musichandle]	; 16949
-mov ecx, 7Fh	; 1694F
-mov ebx, 1	; 16954
-call sub_8FB8E	; 16959
+        lea eax, [dword esp+0600h]
+        call MakePath
+        lea eax, [dword esp+0600h]
+        call sub_8F98F
+        mov dword [dword esp+0640h], eax
+        mov dword [songdata], eax
+        test eax, eax
+        je short .12
+        mov edx, dword [musichandle]
+        mov ecx, 7Fh
+        mov ebx, 1
+        call sub_8FB8E
 .12:
-push dword 104h	; 1695E
-call SetTickDeadline	; 16963
-add esp, byte 4	; 16968
-call WaitTickDeadline	; 1696B
-mov dword [dword esp+063Ch], 50h	; 16970
-jmp short .14	; 1697B
+        push dword 104h
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        mov dword [dword esp+063Ch], 50h
+        jmp short .14
 .13:
-mov dword [dword esp+063Ch], 0C8h	; 1697D
+        mov dword [dword esp+063Ch], 0C8h
 .14:
-cmp byte [musicon], 0	; 16988
-je short .15	; 1698F
-mov eax, dword [songdata]	; 16991
-test eax, eax	; 16996
-je short .15	; 16998
-mov edx, dword [musichandle]	; 1699A
-mov ecx, 64h	; 169A0
-xor ebx, ebx	; 169A5
-call sub_8FB8E	; 169A7
+        cmp byte [musicon], 0
+        je short .15
+        mov eax, dword [songdata]
+        test eax, eax
+        je short .15
+        mov edx, dword [musichandle]
+        mov ecx, 64h
+        xor ebx, ebx
+        call sub_8FB8E
 .15:
-mov ebx, 5Ah	; 169AC
-mov edx, esp	; 169B1
-xor eax, eax	; 169B3
-call FadePalStep	; 169B5
-mov edi, 1	; 169BA
+        mov ebx, 5Ah
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        mov edi, 1
 .16:
-test edi, edi	; 169BF
-je short .20	; 169C1
-xor edi, edi	; 169C3
-xor esi, esi	; 169C5
+        test edi, edi
+        je short .20
+        xor edi, edi
+        xor esi, esi
 .17:
-mov al, byte [esp+esi]	; 169C7
-mov bl, byte [dword esp+esi+0300h]	; 169CA
-cmp al, bl	; 169D1
-jge short .18	; 169D3
-mov edi, 1	; 169D5
-mov ch, al	; 169DA
-inc ch	; 169DC
-mov byte [esp+esi], ch	; 169DE
-jmp short .19	; 169E1
+        mov al, byte [esp+esi]
+        mov bl, byte [dword esp+esi+0300h]
+        cmp al, bl
+        jge short .18
+        mov edi, 1
+        mov ch, al
+        inc ch
+        mov byte [esp+esi], ch
+        jmp short .19
 .18:
-jle short .19	; 169E3
-mov edi, 1	; 169E5
-mov cl, al	; 169EA
-dec cl	; 169EC
-mov byte [esp+esi], cl	; 169EE
+        jle short .19
+        mov edi, 1
+        mov cl, al
+        dec cl
+        mov byte [esp+esi], cl
 .19:
-inc esi	; 169F1
-cmp esi, 300h	; 169F2
-jl short RunIntro.17	; 169F8
-push byte 2	; 169FA
-call SetTickDeadline	; 169FC
-add esp, byte 4	; 16A01
-call WaitTickDeadline	; 16A04
-test edi, edi	; 16A09
-je short RunIntro.16	; 16A0B
-mov eax, esp	; 16A0D
-push eax	; 16A0F
-push dword 100h	; 16A10
-push byte 0	; 16A15
-call VgaSetPalette	; 16A17
-add esp, byte 0Ch	; 16A1C
-jmp short RunIntro.16	; 16A1F
+        inc esi
+        cmp esi, 300h
+        jl short RunIntro.17
+        push byte 2
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        test edi, edi
+        je short RunIntro.16
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        jmp short RunIntro.16
 .20:
-mov edx, dword [dword esp+063Ch]	; 16A21
-push edx	; 16A28
-call SetTickDeadline	; 16A29
-add esp, byte 4	; 16A2E
-call WaitTickDeadline	; 16A31
-mov esi, 1	; 16A36
+        mov edx, dword [dword esp+063Ch]
+        push edx
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        mov esi, 1
 .21:
-push esi	; 16A3B
-push str_FlaD	; 16A3C
-lea eax, [dword esp+0608h]	; 16A41
-push eax	; 16A48
-call sprintf_	; 16A49
-add esp, byte 0Ch	; 16A4E
-lea eax, [dword esp+0600h]	; 16A51
-push eax	; 16A58
-push ebp	; 16A59
-call FindShape	; 16A5A
-add esp, byte 8	; 16A5F
-mov dword [dword esp+esi*4+0620h], eax	; 16A62
-inc esi	; 16A69
-cmp esi, byte 5	; 16A6A
-jl short RunIntro.21	; 16A6D
-push str_Pion	; 16A6F
-push ebp	; 16A74
-call FindShape	; 16A75
-add esp, byte 8	; 16A7A
-mov dword [dword esp+0620h], eax	; 16A7D
-mov edi, 1	; 16A84
+        push esi
+        push str_FlaD
+        lea eax, [dword esp+0608h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea eax, [dword esp+0600h]
+        push eax
+        push ebp
+        call FindShape
+        add esp, byte 8
+        mov dword [dword esp+esi*4+0620h], eax
+        inc esi
+        cmp esi, byte 5
+        jl short RunIntro.21
+        push str_Pion
+        push ebp
+        call FindShape
+        add esp, byte 8
+        mov dword [dword esp+0620h], eax
+        mov edi, 1
 .22:
-test edi, edi	; 16A89
-je short .25	; 16A8B
-xor edi, edi	; 16A8D
-xor esi, esi	; 16A8F
+        test edi, edi
+        je short .25
+        xor edi, edi
+        xor esi, esi
 .23:
-mov al, byte [esp+esi]	; 16A91
-cmp al, byte [dword esp+esi+0300h]	; 16A94
-jge short .24	; 16A9B
-mov edi, 1	; 16A9D
-mov dl, al	; 16AA2
-inc dl	; 16AA4
-mov byte [esp+esi], dl	; 16AA6
+        mov al, byte [esp+esi]
+        cmp al, byte [dword esp+esi+0300h]
+        jge short .24
+        mov edi, 1
+        mov dl, al
+        inc dl
+        mov byte [esp+esi], dl
 .24:
-inc esi	; 16AA9
-cmp esi, 270h	; 16AAA
-jl short RunIntro.23	; 16AB0
-push byte 5	; 16AB2
-call SetTickDeadline	; 16AB4
-add esp, byte 4	; 16AB9
-call WaitTickDeadline	; 16ABC
-test edi, edi	; 16AC1
-je short RunIntro.22	; 16AC3
-mov eax, esp	; 16AC5
-push eax	; 16AC7
-push dword 100h	; 16AC8
-push byte 0	; 16ACD
-call VgaSetPalette	; 16ACF
-add esp, byte 0Ch	; 16AD4
-jmp short RunIntro.22	; 16AD7
+        inc esi
+        cmp esi, 270h
+        jl short RunIntro.23
+        push byte 5
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        test edi, edi
+        je short RunIntro.22
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        jmp short RunIntro.22
 .25:
-mov ebx, 300h	; 16AD9
-mov edx, 3Fh	; 16ADE
-mov eax, esp	; 16AE3
-call memset_	; 16AE5
-push str_Pio	; 16AEA
-push ebp	; 16AEF
-call FindShape	; 16AF0
-add esp, byte 8	; 16AF5
-lea edx, [byte eax+010h]	; 16AF8
-mov ebx, 300h	; 16AFB
-lea eax, [dword esp+0300h]	; 16B00
-call memcpy_	; 16B07
-push byte 50h	; 16B0C
-call SetTickDeadline	; 16B0E
-add esp, byte 4	; 16B13
-call WaitTickDeadline	; 16B16
-cmp byte [musicon], 0	; 16B1B
-je short .26	; 16B22
-cmp dword [dword esp+0648h], byte 0	; 16B24
-je short .26	; 16B2C
-mov edx, dword [musichandle]	; 16B2E
-mov ecx, 7Fh	; 16B34
-mov ebx, 2	; 16B39
-mov eax, dword [dword esp+0648h]	; 16B3E
-call sub_8FB8E	; 16B45
+        mov ebx, 300h
+        mov edx, 3Fh
+        mov eax, esp
+        call memset_
+        push str_Pio
+        push ebp
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        lea eax, [dword esp+0300h]
+        call memcpy_
+        push byte 50h
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        cmp byte [musicon], 0
+        je short .26
+        cmp dword [dword esp+0648h], byte 0
+        je short .26
+        mov edx, dword [musichandle]
+        mov ecx, 7Fh
+        mov ebx, 2
+        mov eax, dword [dword esp+0648h]
+        call sub_8FB8E
 .26:
-mov esi, 1	; 16B4A
+        mov esi, 1
 .27:
-mov ecx, dword [dword esp+esi*4+0620h]	; 16B4F
-push ecx	; 16B56
-call DrawShape	; 16B57
-add esp, byte 4	; 16B5C
-inc esi	; 16B5F
-cmp esi, byte 5	; 16B60
-jl short RunIntro.27	; 16B63
-mov eax, esp	; 16B65
-push eax	; 16B67
-push dword 100h	; 16B68
-push byte 0	; 16B6D
-call VgaSetPalette	; 16B6F
-add esp, byte 0Ch	; 16B74
-mov esi, dword [dword esp+0620h]	; 16B77
-push esi	; 16B7E
-call sub_9121C	; 16B7F
-add esp, byte 4	; 16B84
-push ebp	; 16B87
-call FreeMemBlock	; 16B88
-add esp, byte 4	; 16B8D
-mov edi, 1	; 16B90
+        mov ecx, dword [dword esp+esi*4+0620h]
+        push ecx
+        call DrawShape
+        add esp, byte 4
+        inc esi
+        cmp esi, byte 5
+        jl short RunIntro.27
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        mov esi, dword [dword esp+0620h]
+        push esi
+        call sub_9121C
+        add esp, byte 4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov edi, 1
 .28:
-test edi, edi	; 16B95
-je short .31	; 16B97
-xor edi, edi	; 16B99
-xor esi, esi	; 16B9B
+        test edi, edi
+        je short .31
+        xor edi, edi
+        xor esi, esi
 .29:
-mov al, byte [esp+esi]	; 16B9D
-cmp al, byte [dword esp+esi+0300h]	; 16BA0
-jle short .30	; 16BA7
-mov edi, 1	; 16BA9
-dec al	; 16BAE
-mov byte [esp+esi], al	; 16BB0
+        mov al, byte [esp+esi]
+        cmp al, byte [dword esp+esi+0300h]
+        jle short .30
+        mov edi, 1
+        dec al
+        mov byte [esp+esi], al
 .30:
-inc esi	; 16BB3
-cmp esi, 300h	; 16BB4
-jl short RunIntro.29	; 16BBA
-push byte 5	; 16BBC
-call SetTickDeadline	; 16BBE
-add esp, byte 4	; 16BC3
-call WaitTickDeadline	; 16BC6
-test edi, edi	; 16BCB
-je short RunIntro.28	; 16BCD
-mov eax, esp	; 16BCF
-push eax	; 16BD1
-push dword 100h	; 16BD2
-push byte 0	; 16BD7
-call VgaSetPalette	; 16BD9
-add esp, byte 0Ch	; 16BDE
-jmp short RunIntro.28	; 16BE1
+        inc esi
+        cmp esi, 300h
+        jl short RunIntro.29
+        push byte 5
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        test edi, edi
+        je short RunIntro.28
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        jmp short RunIntro.28
 .31:
-push byte 28h	; 16BE3
-call SetTickDeadline	; 16BE5
-add esp, byte 4	; 16BEA
-call WaitTickDeadline	; 16BED
-cmp byte [musicon], 0	; 16BF2
-je short .32	; 16BF9
-mov edi, dword [dword esp+0644h]	; 16BFB
-test edi, edi	; 16C02
-je short .32	; 16C04
-mov edx, dword [musichandle]	; 16C06
-mov ecx, 7Fh	; 16C0C
-mov ebx, 3	; 16C11
-mov eax, edi	; 16C16
-call sub_8FB8E	; 16C18
+        push byte 28h
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        cmp byte [musicon], 0
+        je short .32
+        mov edi, dword [dword esp+0644h]
+        test edi, edi
+        je short .32
+        mov edx, dword [musichandle]
+        mov ecx, 7Fh
+        mov ebx, 3
+        mov eax, edi
+        call sub_8FB8E
 .32:
-mov esi, 0E0h	; 16C1D
+        mov esi, 0E0h
 .33:
-cmp esi, 0E0h	; 16C22
-jle short .34	; 16C28
-lea edx, [byte esi-01h]	; 16C2A
-mov eax, edx	; 16C2D
-shl eax, 2	; 16C2F
-sub eax, edx	; 16C32
-xor bl, bl	; 16C34
-mov byte [esp+eax], bl	; 16C36
-mov byte [byte esp+eax+01h], bl	; 16C39
-mov byte [byte esp+eax+02h], bl	; 16C3D
+        cmp esi, 0E0h
+        jle short .34
+        lea edx, [byte esi-01h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        xor bl, bl
+        mov byte [esp+eax], bl
+        mov byte [byte esp+eax+01h], bl
+        mov byte [byte esp+eax+02h], bl
 .34:
-mov eax, esi	; 16C41
-shl eax, 2	; 16C43
-sub eax, esi	; 16C46
-mov ch, 3Fh	; 16C48
-mov byte [esp+eax], ch	; 16C4A
-mov byte [byte esp+eax+01h], ch	; 16C4D
-mov byte [byte esp+eax+02h], ch	; 16C51
-push byte 2	; 16C55
-call SetTickDeadline	; 16C57
-add esp, byte 4	; 16C5C
-call WaitTickDeadline	; 16C5F
-mov eax, esp	; 16C64
-push eax	; 16C66
-push dword 100h	; 16C67
-push byte 0	; 16C6C
-call VgaSetPalette	; 16C6E
-add esp, byte 0Ch	; 16C73
-inc esi	; 16C76
-cmp esi, 0F0h	; 16C77
-jl short RunIntro.33	; 16C7D
-push dword 0C8h	; 16C7F
-call SetTickDeadline	; 16C84
-add esp, byte 4	; 16C89
-call WaitTickDeadline	; 16C8C
-cmp byte [musicon], 0	; 16C91
-je short .35	; 16C98
-mov eax, dword [musichandle]	; 16C9A
-mov ebx, 64h	; 16C9F
-xor edx, edx	; 16CA4
-call sub_8FCDF	; 16CA6
-mov eax, dword [musichandle]	; 16CAB
-mov ebx, 64h	; 16CB0
-mov edx, 1	; 16CB5
-call sub_8FCDF	; 16CBA
-mov eax, dword [musichandle]	; 16CBF
-mov ebx, 64h	; 16CC4
-mov edx, 2	; 16CC9
-call sub_8FCDF	; 16CCE
-mov eax, dword [musichandle]	; 16CD3
-mov ebx, 64h	; 16CD8
-mov edx, 3	; 16CDD
-call sub_8FCDF	; 16CE2
-jmp short .36	; 16CE7
+        mov eax, esi
+        shl eax, 2
+        sub eax, esi
+        mov ch, 3Fh
+        mov byte [esp+eax], ch
+        mov byte [byte esp+eax+01h], ch
+        mov byte [byte esp+eax+02h], ch
+        push byte 2
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        inc esi
+        cmp esi, 0F0h
+        jl short RunIntro.33
+        push dword 0C8h
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        cmp byte [musicon], 0
+        je short .35
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        xor edx, edx
+        call sub_8FCDF
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 1
+        call sub_8FCDF
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 2
+        call sub_8FCDF
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
+        jmp short .36
 .35:
-cmp dword [dword esp+0638h], byte 0	; 16CE9
-jne short .36	; 16CF1
-mov eax, 78h	; 16CF3
-call WaitClickTimeout	; 16CF8
+        cmp dword [dword esp+0638h], byte 0
+        jne short .36
+        mov eax, 78h
+        call WaitClickTimeout
 .36:
-cmp byte [musicon], 0	; 16CFD
-je near .43	; 16D04
+        cmp byte [musicon], 0
+        je near .43
 .37:
-mov eax, dword [musicslot-3]	; 16D0A
-sar eax, 18h	; 16D0F
-xor edx, edx	; 16D12
-call SndQuery	; 16D14
-test eax, eax	; 16D19
-je short RunIntro.37	; 16D1B
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        xor edx, edx
+        call SndQuery
+        test eax, eax
+        je short RunIntro.37
 .38:
-mov eax, dword [musicslot-3]	; 16D1D
-sar eax, 18h	; 16D22
-mov edx, 1	; 16D25
-call SndQuery	; 16D2A
-test eax, eax	; 16D2F
-je short RunIntro.38	; 16D31
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 1
+        call SndQuery
+        test eax, eax
+        je short RunIntro.38
 .39:
-mov eax, dword [musicslot-3]	; 16D33
-sar eax, 18h	; 16D38
-mov edx, 2	; 16D3B
-call SndQuery	; 16D40
-test eax, eax	; 16D45
-je short RunIntro.39	; 16D47
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 2
+        call SndQuery
+        test eax, eax
+        je short RunIntro.39
 .40:
-mov eax, dword [musicslot-3]	; 16D49
-sar eax, 18h	; 16D4E
-mov edx, 3	; 16D51
-call SndQuery	; 16D56
-test eax, eax	; 16D5B
-je short RunIntro.40	; 16D5D
-xor eax, eax	; 16D5F
-mov dword [songdata], eax	; 16D61
-mov edx, dword [dword esp+0640h]	; 16D66
-test edx, edx	; 16D6D
-je short .41	; 16D6F
-push edx	; 16D71
-call sub_8D2F0	; 16D72
-add esp, byte 4	; 16D77
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short RunIntro.40
+        xor eax, eax
+        mov dword [songdata], eax
+        mov edx, dword [dword esp+0640h]
+        test edx, edx
+        je short .41
+        push edx
+        call sub_8D2F0
+        add esp, byte 4
 .41:
-mov ecx, dword [dword esp+0648h]	; 16D7A
-test ecx, ecx	; 16D81
-je short .42	; 16D83
-push ecx	; 16D85
-call sub_8D2F0	; 16D86
-add esp, byte 4	; 16D8B
+        mov ecx, dword [dword esp+0648h]
+        test ecx, ecx
+        je short .42
+        push ecx
+        call sub_8D2F0
+        add esp, byte 4
 .42:
-mov edi, dword [dword esp+0644h]	; 16D8E
-test edi, edi	; 16D95
-je short .43	; 16D97
-push edi	; 16D99
-call sub_8D2F0	; 16D9A
-add esp, byte 4	; 16D9F
+        mov edi, dword [dword esp+0644h]
+        test edi, edi
+        je short .43
+        push edi
+        call sub_8D2F0
+        add esp, byte 4
 .43:
-cmp byte [musicon], 0	; 16DA2
-je short .44	; 16DA9
-mov dword [cursndbank], 20h	; 16DAB
-mov eax, dword [dword_C4CFC]	; 16DB5
-call InitSpeechSlots	; 16DBA
-xor edx, edx	; 16DBF
-mov dword [cursndbank], edx	; 16DC1
+        cmp byte [musicon], 0
+        je short .44
+        mov dword [cursndbank], 20h
+        mov eax, dword [dword_C4CFC]
+        call InitSpeechSlots
+        xor edx, edx
+        mov dword [cursndbank], edx
 .44:
-call PaOpenBank	; 16DC7
-mov ebx, 10h	; 16DCC
-lea edx, [dword esp+0300h]	; 16DD1
-mov eax, 1	; 16DD8
-call FadePalStep	; 16DDD
-lea eax, [dword esp+0634h]	; 16DE2
-call _dos_gettime_	; 16DE9
-xor eax, eax	; 16DEE
-mov al, byte [dword esp+0637h]	; 16DF0
-call srand_	; 16DF7
+        call PaOpenBank
+        mov ebx, 10h
+        lea edx, [dword esp+0300h]
+        mov eax, 1
+        call FadePalStep
+        lea eax, [dword esp+0634h]
+        call _dos_gettime_
+        xor eax, eax
+        mov al, byte [dword esp+0637h]
+        call srand_
 .45:
-xor ecx, ecx	; 16DFC
-mov ebx, str_Eaopen	; 16DFE
-cmp byte [fileoncd+067h], 1	; 16E03
-jne short .46	; 16E0A
-mov edx, dword [cddriveptr]	; 16E0C
-jmp short .47	; 16E12
+        xor ecx, ecx
+        mov ebx, str_Eaopen
+        cmp byte [fileoncd+067h], 1
+        jne short .46
+        mov edx, dword [cddriveptr]
+        jmp short .47
 .46:
-xor edx, edx	; 16E14
+        xor edx, edx
 .47:
-lea eax, [dword esp+0600h]	; 16E16
-call MakePath	; 16E1D
-push byte 0	; 16E22
-lea eax, [dword esp+0604h]	; 16E24
-push eax	; 16E2B
-call LoadBank	; 16E2C
-mov esi, eax	; 16E31
-add esp, byte 8	; 16E33
-push str_Pal4	; 16E36
-push eax	; 16E3B
-call FindShape	; 16E3C
-add esp, byte 8	; 16E41
-lea edx, [byte eax+010h]	; 16E44
-mov ebx, 300h	; 16E47
-mov eax, esp	; 16E4C
-call memcpy_	; 16E4E
-push str_Scrn2	; 16E53
-push esi	; 16E58
-call FindShape	; 16E59
-add esp, byte 8	; 16E5E
-push eax	; 16E61
-call sub_912C8	; 16E62
-add esp, byte 4	; 16E67
-push esi	; 16E6A
-call FreeMemBlock	; 16E6B
-add esp, byte 4	; 16E70
-cmp byte [musicon], 0	; 16E73
-je short .50	; 16E7A
-cmp dword [songdata], byte 0	; 16E7C
-jne short .50	; 16E83
-mov ecx, str_Iff2	; 16E85
-mov ebx, str_Easports	; 16E8A
-cmp byte [fileoncd+01DCh], 1	; 16E8F
-jne short .48	; 16E96
-mov edx, dword [cddriveptr]	; 16E98
-jmp short .49	; 16E9E
+        lea eax, [dword esp+0600h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0604h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Pal4
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        push str_Scrn2
+        push esi
+        call FindShape
+        add esp, byte 8
+        push eax
+        call sub_912C8
+        add esp, byte 4
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .50
+        cmp dword [songdata], byte 0
+        jne short .50
+        mov ecx, str_Iff2
+        mov ebx, str_Easports
+        cmp byte [fileoncd+01DCh], 1
+        jne short .48
+        mov edx, dword [cddriveptr]
+        jmp short .49
 .48:
-xor edx, edx	; 16EA0
+        xor edx, edx
 .49:
-lea eax, [dword esp+0600h]	; 16EA2
-call MakePath	; 16EA9
-lea eax, [dword esp+0600h]	; 16EAE
-call sub_8F98F	; 16EB5
-mov dword [songdata], eax	; 16EBA
-test eax, eax	; 16EBF
-je short .50	; 16EC1
-mov edx, dword [musichandle]	; 16EC3
-mov ecx, 4Ch	; 16EC9
-mov ebx, 3	; 16ECE
-call sub_8FB8E	; 16ED3
+        lea eax, [dword esp+0600h]
+        call MakePath
+        lea eax, [dword esp+0600h]
+        call sub_8F98F
+        mov dword [songdata], eax
+        test eax, eax
+        je short .50
+        mov edx, dword [musichandle]
+        mov ecx, 4Ch
+        mov ebx, 3
+        call sub_8FB8E
 .50:
-mov ebx, 10h	; 16ED8
-mov edx, esp	; 16EDD
-xor eax, eax	; 16EDF
-call FadePalStep	; 16EE1
-push dword 0C8h	; 16EE6
-call SetTickDeadline	; 16EEB
-add esp, byte 4	; 16EF0
-call WaitTickDeadline	; 16EF3
-cmp byte [musicon], 0	; 16EF8
-je short .52	; 16EFF
-cmp dword [songdata], byte 0	; 16F01
-je short .52	; 16F08
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        push dword 0C8h
+        call SetTickDeadline
+        add esp, byte 4
+        call WaitTickDeadline
+        cmp byte [musicon], 0
+        je short .52
+        cmp dword [songdata], byte 0
+        je short .52
 .51:
-mov eax, dword [musicslot-3]	; 16F0A
-sar eax, 18h	; 16F0F
-mov edx, 3	; 16F12
-call SndQuery	; 16F17
-test eax, eax	; 16F1C
-je short RunIntro.51	; 16F1E
-mov esi, dword [songdata]	; 16F20
-push esi	; 16F26
-call sub_8D2F0	; 16F27
-add esp, byte 4	; 16F2C
-xor edi, edi	; 16F2F
-mov dword [songdata], edi	; 16F31
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short RunIntro.51
+        mov esi, dword [songdata]
+        push esi
+        call sub_8D2F0
+        add esp, byte 4
+        xor edi, edi
+        mov dword [songdata], edi
 .52:
-mov ebx, 10h	; 16F37
-mov edx, esp	; 16F3C
-mov eax, 1	; 16F3E
-call FadePalStep	; 16F43
-call sub_B4BA8	; 16F48
-push byte 0	; 16F4D
-call ClearScreen	; 16F4F
-add esp, byte 4	; 16F54
-call TitleScreen	; 16F57
-test eax, eax	; 16F5C
-jne short .53	; 16F5E
-call RunDemoGame	; 16F60
-test eax, eax	; 16F65
-je near RunIntro.45	; 16F67
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        call TitleScreen
+        test eax, eax
+        jne short .53
+        call RunDemoGame
+        test eax, eax
+        je near RunIntro.45
 .53:
-call sub_B4BA8	; 16F6D
-push byte 0	; 16F72
-call ClearScreen	; 16F74
-add esp, byte 4	; 16F79
-call PaOpenBank	; 16F7C
-xor ebp, ebp	; 16F81
-mov dword [demoflag], ebp	; 16F83
-mov dword [demomode], ebp	; 16F89
-add esp, 64Ch	; 16F8F
-jmp near RunDemoGame_x	; 16F95
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        call PaOpenBank
+        xor ebp, ebp
+        mov dword [demoflag], ebp
+        mov dword [demomode], ebp
+        add esp, 64Ch
+        jmp near RunDemoGame_x
 %endif ; C
+;-----------------------------------------------------------------------------
+; ShowCredits                                  16F9A  95 PC, medium confidence
+; Credits screen ("backwin", "credits" art, "rockditi" song, scrolling text
+; lines drawn by RenderTextLine); called from main at exit and from
+; frontend_desk
+;-----------------------------------------------------------------------------
 ShowCredits:
-push dword 394h	; 16F9A
-call __CHK	; 16F9F
-push ebx	; 16FA4
-push ecx	; 16FA5
-push edx	; 16FA6
-push esi	; 16FA7
-push edi	; 16FA8
-push ebp	; 16FA9
-sub esp, 36Ch	; 16FAA
-call TextGridFree	; 16FB0
-call PaOpenBank	; 16FB5
-lea eax, [dword esp+0300h]	; 16FBA
-push eax	; 16FC1
-call TextSaveState	; 16FC2
-add esp, byte 4	; 16FC7
-mov edx, dword [mainfont]	; 16FCA
-push edx	; 16FD0
-call TextSetFont	; 16FD1
-add esp, byte 4	; 16FD6
-xor edx, edx	; 16FD9
-mov eax, 7Fh	; 16FDB
-call SetTextColors	; 16FE0
-push byte 0	; 16FE5
-push dword 19337h	; 16FE7
-push str_Backwin	; 16FEC
-call AllocMemBlock	; 16FF1
-add esp, byte 0Ch	; 16FF6
-mov dword [dword esp+0360h], eax	; 16FF9
-xor ecx, ecx	; 17000
-mov ebx, str_Credits	; 17002
-cmp byte [fileoncd+021Dh], 1	; 17007
-jne short .1	; 1700E
-mov edx, dword [cddriveptr]	; 17010
-jmp short .2	; 17016
+        push dword 394h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 36Ch
+        call TextGridFree
+        call PaOpenBank
+        lea eax, [dword esp+0300h]
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        mov edx, dword [mainfont]
+        push edx
+        call TextSetFont
+        add esp, byte 4
+        xor edx, edx
+        mov eax, 7Fh
+        call SetTextColors
+        push byte 0
+        push dword 19337h
+        push str_Backwin
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [dword esp+0360h], eax
+        xor ecx, ecx
+        mov ebx, str_Credits
+        cmp byte [fileoncd+021Dh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 17018
+        xor edx, edx
 .2:
-lea eax, [dword esp+0340h]	; 1701A
-call MakePath	; 17021
-push byte 0	; 17026
-lea eax, [dword esp+0344h]	; 17028
-push eax	; 1702F
-call LoadBank	; 17030
-mov ebp, eax	; 17035
-add esp, byte 8	; 17037
-push str_Pal4	; 1703A
-push eax	; 1703F
-call FindShape	; 17040
-add esp, byte 8	; 17045
-lea ecx, [byte eax+010h]	; 17048
-mov ebx, 300h	; 1704B
-mov edx, ecx	; 17050
-mov eax, esp	; 17052
-call memcpy_	; 17054
-mov ebx, 300h	; 17059
-mov edx, ecx	; 1705E
-mov eax, blackpal	; 17060
-call memcpy_	; 17065
-push str_Bkgd3	; 1706A
-push ebp	; 1706F
-call FindShape	; 17070
-mov edx, eax	; 17075
-add esp, byte 8	; 17077
-mov esi, dword [pointerspr]	; 1707A
-mov edi, dword [dword esp+0360h]	; 17080
-movsd	; 17087
-movsd	; 17088
-movsd	; 17089
-movsd	; 1708A
-movsb	; 1708B
-mov eax, dword [dword esp+0360h]	; 1708C
-mov word [byte eax+04h], 135h	; 17093
-mov word [byte eax+06h], 14Eh	; 17099
-call FadeOutPalCycle	; 1709F
-push edx	; 170A4
-call DrawBitmap	; 170A5
-add esp, byte 4	; 170AA
-push ebp	; 170AD
-call FreeMemBlock	; 170AE
-add esp, byte 4	; 170B3
-push byte 3Fh	; 170B6
-push dword 14Ah	; 170B8
-mov ebx, dword [dword esp+0368h]	; 170BD
-push ebx	; 170C4
-call GrabBlock	; 170C5
-add esp, byte 0Ch	; 170CA
-cmp byte [musicon], 0	; 170CD
-je short .5	; 170D4
-cmp dword [songdata], byte 0	; 170D6
-jne short .5	; 170DD
-mov ecx, str_Iff2	; 170DF
-mov ebx, str_Credits	; 170E4
-cmp byte [fileoncd+01E1h], 1	; 170E9
-jne short .3	; 170F0
-mov edx, dword [cddriveptr]	; 170F2
-jmp short .4	; 170F8
+        lea eax, [dword esp+0340h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0344h]
+        push eax
+        call LoadBank
+        mov ebp, eax
+        add esp, byte 8
+        push str_Pal4
+        push eax
+        call FindShape
+        add esp, byte 8
+        lea ecx, [byte eax+010h]
+        mov ebx, 300h
+        mov edx, ecx
+        mov eax, esp
+        call memcpy_
+        mov ebx, 300h
+        mov edx, ecx
+        mov eax, blackpal
+        call memcpy_
+        push str_Bkgd3
+        push ebp
+        call FindShape
+        mov edx, eax
+        add esp, byte 8
+        mov esi, dword [pointerspr]
+        mov edi, dword [dword esp+0360h]
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov eax, dword [dword esp+0360h]
+        mov word [byte eax+04h], 135h
+        mov word [byte eax+06h], 14Eh
+        call FadeOutPalCycle
+        push edx
+        call DrawBitmap
+        add esp, byte 4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 3Fh
+        push dword 14Ah
+        mov ebx, dword [dword esp+0368h]
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .5
+        cmp dword [songdata], byte 0
+        jne short .5
+        mov ecx, str_Iff2
+        mov ebx, str_Credits
+        cmp byte [fileoncd+01E1h], 1
+        jne short .3
+        mov edx, dword [cddriveptr]
+        jmp short .4
 .3:
-xor edx, edx	; 170FA
+        xor edx, edx
 .4:
-lea eax, [dword esp+0340h]	; 170FC
-call MakePath	; 17103
-lea eax, [dword esp+0340h]	; 17108
-call sub_8F98F	; 1710F
-mov dword [songdata], eax	; 17114
-test eax, eax	; 17119
-je near .12	; 1711B
-mov edx, dword [musichandle]	; 17121
-mov ecx, 4Ch	; 17127
-mov ebx, 3	; 1712C
-call sub_8FB8E	; 17131
-jmp near .12	; 17136
+        lea eax, [dword esp+0340h]
+        call MakePath
+        lea eax, [dword esp+0340h]
+        call sub_8F98F
+        mov dword [songdata], eax
+        test eax, eax
+        je near .12
+        mov edx, dword [musichandle]
+        mov ecx, 4Ch
+        mov ebx, 3
+        call sub_8FB8E
+        jmp near .12
 .5:
-cmp dword [sounddev], byte 8	; 1713B
-jne short .7	; 17142
-mov ecx, str_KMS	; 17144
-mov ebx, str_Adtitle	; 17149
-cmp byte [fileoncd+0104h], 1	; 1714E
-jne short .6	; 17155
-mov edx, dword [cddriveptr]	; 17157
-jmp short .9	; 1715D
+        cmp dword [sounddev], byte 8
+        jne short .7
+        mov ecx, str_KMS
+        mov ebx, str_Adtitle
+        cmp byte [fileoncd+0104h], 1
+        jne short .6
+        mov edx, dword [cddriveptr]
+        jmp short .9
 .6:
-xor edx, edx	; 1715F
-jmp short .9	; 17161
+        xor edx, edx
+        jmp short .9
 .7:
-mov ecx, str_KMS	; 17163
-mov ebx, str_Adtitle	; 17168
-cmp byte [fileoncd+0104h], 1	; 1716D
-jne short .8	; 17174
-mov edx, dword [cddriveptr]	; 17176
-jmp short .9	; 1717C
+        mov ecx, str_KMS
+        mov ebx, str_Adtitle
+        cmp byte [fileoncd+0104h], 1
+        jne short .8
+        mov edx, dword [cddriveptr]
+        jmp short .9
 .8:
-xor edx, edx	; 1717E
+        xor edx, edx
 .9:
-lea eax, [dword esp+0340h]	; 17180
-call MakePath	; 17187
-lea eax, [dword esp+0340h]	; 1718C
-call LoadSample	; 17193
-mov dword [dword esp+0354h], eax	; 17198
-mov ecx, str_KMS	; 1719F
-mov ebx, str_Rockditi	; 171A4
-cmp byte [fileoncd+0161h], 1	; 171A9
-jne short .10	; 171B0
-mov edx, dword [cddriveptr]	; 171B2
-jmp short .11	; 171B8
+        lea eax, [dword esp+0340h]
+        call MakePath
+        lea eax, [dword esp+0340h]
+        call LoadSample
+        mov dword [dword esp+0354h], eax
+        mov ecx, str_KMS
+        mov ebx, str_Rockditi
+        cmp byte [fileoncd+0161h], 1
+        jne short .10
+        mov edx, dword [cddriveptr]
+        jmp short .11
 .10:
-xor edx, edx	; 171BA
+        xor edx, edx
 .11:
-lea eax, [dword esp+0340h]	; 171BC
-call MakePath	; 171C3
-lea eax, [dword esp+0340h]	; 171C8
-call LoadSample	; 171CF
-mov dword [dword esp+0350h], eax	; 171D4
-mov eax, dword [dword esp+0354h]	; 171DB
-call PlayDigiSample	; 171E2
+        lea eax, [dword esp+0340h]
+        call MakePath
+        lea eax, [dword esp+0340h]
+        call LoadSample
+        mov dword [dword esp+0350h], eax
+        mov eax, dword [dword esp+0354h]
+        call PlayDigiSample
 .12:
-mov ebx, 10h	; 171E7
-mov edx, esp	; 171EC
-xor eax, eax	; 171EE
-call FadePalStep	; 171F0
-call PaGoodnight	; 171F5
-xor edi, edi	; 171FA
-mov dword [dword esp+035Ch], edi	; 171FC
-mov dword [dword esp+0364h], edi	; 17203
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        call PaGoodnight
+        xor edi, edi
+        mov dword [dword esp+035Ch], edi
+        mov dword [dword esp+0364h], edi
 .13:
-cmp dword [dword esp+0364h], byte 7	; 1720A
-jne short .14	; 17212
-mov edx, dword [kaufmfont]	; 17214
-push edx	; 1721A
-call TextSetFont	; 1721B
-add esp, byte 4	; 17220
+        cmp dword [dword esp+0364h], byte 7
+        jne short .14
+        mov edx, dword [kaufmfont]
+        push edx
+        call TextSetFont
+        add esp, byte 4
 .14:
-mov eax, dword [dword esp+0364h]	; 17223
-mov eax, dword [nosplit eax*4+creditpages]	; 1722A
-mov dword [dword esp+0368h], eax	; 17231
-call ClearInputQueue	; 17238
-cmp dword [dword esp+0364h], byte 0	; 1723D
-je short .15	; 17245
-mov eax, 62h	; 17247
-call WaitClickTimeout	; 1724C
-mov dword [dword esp+035Ch], eax	; 17251
+        mov eax, dword [dword esp+0364h]
+        mov eax, dword [nosplit eax*4+creditpages]
+        mov dword [dword esp+0368h], eax
+        call ClearInputQueue
+        cmp dword [dword esp+0364h], byte 0
+        je short .15
+        mov eax, 62h
+        call WaitClickTimeout
+        mov dword [dword esp+035Ch], eax
 .15:
-mov ecx, dword [dword esp+035Ch]	; 17258
-test ecx, ecx	; 1725F
-jne near .23	; 17261
-mov esi, dword [dword esp+0368h]	; 17267
-cmp esi, unk_C638C	; 1726E
-je near .22	; 17274
-mov eax, dword [byte esi+05h]	; 1727A
-cmp byte [eax], 0	; 1727D
-je near .18	; 17280
-cmp byte [fileoncd+021Eh], 1	; 17286
-jne short .16	; 1728D
-mov edx, dword [cddriveptr]	; 1728F
-jmp short .17	; 17295
+        mov ecx, dword [dword esp+035Ch]
+        test ecx, ecx
+        jne near .23
+        mov esi, dword [dword esp+0368h]
+        cmp esi, unk_C638C
+        je near .22
+        mov eax, dword [byte esi+05h]
+        cmp byte [eax], 0
+        je near .18
+        cmp byte [fileoncd+021Eh], 1
+        jne short .16
+        mov edx, dword [cddriveptr]
+        jmp short .17
 .16:
-xor edx, edx	; 17297
+        xor edx, edx
 .17:
-mov ebx, eax	; 17299
-lea eax, [dword esp+0340h]	; 1729B
-call MakePath	; 172A2
-push byte 0	; 172A7
-lea eax, [dword esp+0344h]	; 172A9
-push eax	; 172B0
-call LoadBank	; 172B1
-mov esi, eax	; 172B6
-add esp, byte 8	; 172B8
-push str_Shp0	; 172BB
-push eax	; 172C0
-call FindShape	; 172C1
-mov edi, eax	; 172C6
-add esp, byte 8	; 172C8
-push byte 3Fh	; 172CB
-push dword 14Ah	; 172CD
-mov ebp, dword [dword esp+0368h]	; 172D2
-push ebp	; 172D9
-call PutBlock	; 172DA
-add esp, byte 0Ch	; 172DF
-call rand_	; 172E2
-mov edx, eax	; 172E7
-sar edx, 1Fh	; 172E9
-mov ecx, 8	; 172EC
-idiv ecx	; 172F1
-add edx, byte 6Ah	; 172F3
-push edx	; 172F6
-call rand_	; 172F7
-mov edx, eax	; 172FC
-sar edx, 1Fh	; 172FE
-idiv ecx	; 17301
-add edx, 85h	; 17303
-push edx	; 17309
-push edi	; 1730A
-call DrawArt	; 1730B
-add esp, byte 0Ch	; 17310
-push esi	; 17313
-call FreeMemBlock	; 17314
-add esp, byte 4	; 17319
-jmp short .19	; 1731C
+        mov ebx, eax
+        lea eax, [dword esp+0340h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0344h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        push str_Shp0
+        push eax
+        call FindShape
+        mov edi, eax
+        add esp, byte 8
+        push byte 3Fh
+        push dword 14Ah
+        mov ebp, dword [dword esp+0368h]
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        call rand_
+        mov edx, eax
+        sar edx, 1Fh
+        mov ecx, 8
+        idiv ecx
+        add edx, byte 6Ah
+        push edx
+        call rand_
+        mov edx, eax
+        sar edx, 1Fh
+        idiv ecx
+        add edx, 85h
+        push edx
+        push edi
+        call DrawArt
+        add esp, byte 0Ch
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        jmp short .19
 .18:
-push byte 3Fh	; 1731E
-push dword 14Ah	; 17320
-mov edi, dword [dword esp+0368h]	; 17325
-push edi	; 1732C
-call PutBlock	; 1732D
-add esp, byte 0Ch	; 17332
+        push byte 3Fh
+        push dword 14Ah
+        mov edi, dword [dword esp+0368h]
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
 .19:
-mov eax, dword [dword esp+0368h]	; 17335
-mov eax, dword [byte eax+01h]	; 1733C
-mov dword [dword esp+0358h], eax	; 1733F
-xor eax, eax	; 17346
-mov al, byte [byte_D42C3]	; 17348
-mov edx, dword [dword esp+0368h]	; 1734D
-movsx edx, byte [edx]	; 17354
-imul eax, edx	; 17357
-sar eax, 1	; 1735A
-mov edi, 0DAh	; 1735C
-sub edi, eax	; 17361
-xor esi, esi	; 17363
-jmp short .21	; 17365
+        mov eax, dword [dword esp+0368h]
+        mov eax, dword [byte eax+01h]
+        mov dword [dword esp+0358h], eax
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        mov edx, dword [dword esp+0368h]
+        movsx edx, byte [edx]
+        imul eax, edx
+        sar eax, 1
+        mov edi, 0DAh
+        sub edi, eax
+        xor esi, esi
+        jmp short .21
 .20:
-mov ebp, esi	; 17367
-shl ebp, 2	; 17369
-add ebp, dword [dword esp+0368h]	; 1736C
-mov ebp, dword [byte ebp+09h]	; 17373
-push ebp	; 17376
-call fputchar	; 17377
-add esp, byte 4	; 1737C
-sar eax, 1	; 1737F
-mov edx, 1EAh	; 17381
-sub edx, eax	; 17386
-mov eax, edx	; 17388
-mov ebx, ebp	; 1738A
-mov edx, edi	; 1738C
-call RenderTextLine	; 1738E
-xor eax, eax	; 17393
-mov al, byte [byte_D42C3]	; 17395
-add edi, eax	; 1739A
-inc esi	; 1739C
+        mov ebp, esi
+        shl ebp, 2
+        add ebp, dword [dword esp+0368h]
+        mov ebp, dword [byte ebp+09h]
+        push ebp
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 1EAh
+        sub edx, eax
+        mov eax, edx
+        mov ebx, ebp
+        mov edx, edi
+        call RenderTextLine
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        add edi, eax
+        inc esi
 .21:
-mov eax, dword [dword esp+0368h]	; 1739D
-movsx eax, byte [eax]	; 173A4
-cmp esi, eax	; 173A7
-jl short ShowCredits.20	; 173A9
-call ClearInputQueue	; 173AB
-mov eax, dword [dword esp+0358h]	; 173B0
-call WaitClickTimeout	; 173B7
-test eax, eax	; 173BC
-jne short .23	; 173BE
+        mov eax, dword [dword esp+0368h]
+        movsx eax, byte [eax]
+        cmp esi, eax
+        jl short ShowCredits.20
+        call ClearInputQueue
+        mov eax, dword [dword esp+0358h]
+        call WaitClickTimeout
+        test eax, eax
+        jne short .23
 .22:
-mov edx, dword [dword esp+0364h]	; 173C0
-inc edx	; 173C7
-mov dword [dword esp+0364h], edx	; 173C8
-cmp edx, byte 1Dh	; 173CF
-jl near ShowCredits.13	; 173D2
+        mov edx, dword [dword esp+0364h]
+        inc edx
+        mov dword [dword esp+0364h], edx
+        cmp edx, byte 1Dh
+        jl near ShowCredits.13
 .23:
-push byte 3Fh	; 173D8
-push dword 14Ah	; 173DA
-mov ecx, dword [dword esp+0368h]	; 173DF
-push ecx	; 173E6
-call PutBlock	; 173E7
-add esp, byte 0Ch	; 173EC
-cmp byte [musicon], 0	; 173EF
-je short .24	; 173F6
-cmp dword [songdata], byte 0	; 173F8
-je short .24	; 173FF
-mov eax, dword [musichandle]	; 17401
-mov ebx, 64h	; 17406
-mov edx, 3	; 1740B
-call sub_8FCDF	; 17410
+        push byte 3Fh
+        push dword 14Ah
+        mov ecx, dword [dword esp+0368h]
+        push ecx
+        call PutBlock
+        add esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .24
+        cmp dword [songdata], byte 0
+        je short .24
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .24:
-call SpeechStopQueue	; 17415
-mov ebx, 10h	; 1741A
-mov edx, esp	; 1741F
-mov eax, 1	; 17421
-call FadePalStep	; 17426
-cmp byte [musicon], 0	; 1742B
-je short .26	; 17432
-cmp dword [songdata], byte 0	; 17434
-je short .26	; 1743B
+        call SpeechStopQueue
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        cmp byte [musicon], 0
+        je short .26
+        cmp dword [songdata], byte 0
+        je short .26
 .25:
-mov eax, dword [musicslot-3]	; 1743D
-sar eax, 18h	; 17442
-mov edx, 3	; 17445
-call SndQuery	; 1744A
-test eax, eax	; 1744F
-je short ShowCredits.25	; 17451
-mov ebp, dword [songdata]	; 17453
-push ebp	; 17459
-call sub_8D2F0	; 1745A
-add esp, byte 4	; 1745F
-xor eax, eax	; 17462
-mov dword [songdata], eax	; 17464
-jmp short .27	; 17469
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short ShowCredits.25
+        mov ebp, dword [songdata]
+        push ebp
+        call sub_8D2F0
+        add esp, byte 4
+        xor eax, eax
+        mov dword [songdata], eax
+        jmp short .27
 .26:
-call StopDigiSample	; 1746B
-mov eax, dword [dword esp+0354h]	; 17470
-call FreeSample	; 17477
-mov eax, dword [dword esp+0350h]	; 1747C
-call FreeSample	; 17483
+        call StopDigiSample
+        mov eax, dword [dword esp+0354h]
+        call FreeSample
+        mov eax, dword [dword esp+0350h]
+        call FreeSample
 .27:
-lea eax, [dword esp+0300h]	; 17488
-push eax	; 1748F
-call TextRestoreState	; 17490
-add esp, byte 4	; 17495
-mov edx, dword [dword esp+0360h]	; 17498
-push edx	; 1749F
-call FreeMemBlock	; 174A0
-add esp, byte 4	; 174A5
-call sub_B4BA8	; 174A8
-push byte 0	; 174AD
-call ClearScreen	; 174AF
-add esp, byte 4	; 174B4
-add esp, 36Ch	; 174B7
-jmp near RunDemoGame_x	; 174BD
+        lea eax, [dword esp+0300h]
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        mov edx, dword [dword esp+0360h]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        add esp, 36Ch
+        jmp near RunDemoGame_x
+;-----------------------------------------------------------------------------
+; SetTextColors                                                   174C2  95 PC
+; (colour, shadow colour): sets textcolor / textshadow used by the Print*
+; text routines
+;-----------------------------------------------------------------------------
 ; C: src/front/title/SetTextColors.c
 %ifdef CBUILD
 %include "c/front/title/SetTextColors.inc"
 %else
 SetTextColors:
-push dword 4	; 174C2
-call __CHK	; 174C7
-mov dword [textcolor], eax	; 174CC
-mov dword [textshadow], edx	; 174D1
-ret	; 174D7
+        push dword 4
+        call __CHK
+        mov dword [textcolor], eax
+        mov dword [textshadow], edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; RenderTextLine                               174D8  95 PC, medium confidence
+; (?, y, text): draws the text (PrintShadowText) into a temporary bitmap
+; sized to its width (rounded up to 40h) and the font height, blits it with
+; DrawArt and frees it; ShowCredits
+;-----------------------------------------------------------------------------
 ; C: src/front/title/RenderTextLine.c
 %ifdef CBUILD
 %include "c/front/title/RenderTextLine.inc"
 %else
 RenderTextLine:
-push dword 84h	; 174D8
-call __CHK	; 174DD
-push ecx	; 174E2
-push esi	; 174E3
-push edi	; 174E4
-push ebp	; 174E5
-sub esp, byte 60h	; 174E6
-push eax	; 174E9
-mov ebp, edx	; 174EA
-mov edi, ebx	; 174EC
-push ebx	; 174EE
-call fputchar	; 174EF
-add esp, byte 4	; 174F4
-and eax, 0FFC0h	; 174F7
-lea esi, [byte eax+040h]	; 174FC
-xor eax, eax	; 174FF
-mov al, byte [byte_D42C3]	; 17501
-inc eax	; 17506
-push byte 0	; 17507
-push eax	; 17509
-push esi	; 1750A
-call CreateBitmap	; 1750B
-mov esi, eax	; 17510
-add esp, byte 0Ch	; 17512
-lea eax, [byte esp+04h]	; 17515
-push eax	; 17519
-call sub_B3A88	; 1751A
-add esp, byte 4	; 1751F
-push esi	; 17522
-call SetDrawBitmap	; 17523
-add esp, byte 4	; 17528
-push dword 0FFh	; 1752B
-call ClearScreen	; 17530
-add esp, byte 4	; 17535
-mov ebx, edi	; 17538
-xor edx, edx	; 1753A
-xor eax, eax	; 1753C
-call PrintShadowText	; 1753E
-lea eax, [byte esp+04h]	; 17543
-push eax	; 17547
-call sub_B3AA1	; 17548
-add esp, byte 4	; 1754D
-push ebp	; 17550
-mov edx, dword [byte esp+04h]	; 17551
-push edx	; 17555
-mov ebx, dword [byte esi+02Ch]	; 17556
-push ebx	; 17559
-call DrawArt	; 1755A
-add esp, byte 0Ch	; 1755F
-push esi	; 17562
-call sub_9132C	; 17563
-add esp, byte 4	; 17568
-add esp, byte 64h	; 1756B
-pop ebp	; 1756E
-pop edi	; 1756F
-pop esi	; 17570
-pop ecx	; 17571
-ret	; 17572
+        push dword 84h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 60h
+        push eax
+        mov ebp, edx
+        mov edi, ebx
+        push ebx
+        call fputchar
+        add esp, byte 4
+        and eax, 0FFC0h
+        lea esi, [byte eax+040h]
+        xor eax, eax
+        mov al, byte [byte_D42C3]
+        inc eax
+        push byte 0
+        push eax
+        push esi
+        call CreateBitmap
+        mov esi, eax
+        add esp, byte 0Ch
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_B3A88
+        add esp, byte 4
+        push esi
+        call SetDrawBitmap
+        add esp, byte 4
+        push dword 0FFh
+        call ClearScreen
+        add esp, byte 4
+        mov ebx, edi
+        xor edx, edx
+        xor eax, eax
+        call PrintShadowText
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_B3AA1
+        add esp, byte 4
+        push ebp
+        mov edx, dword [byte esp+04h]
+        push edx
+        mov ebx, dword [byte esi+02Ch]
+        push ebx
+        call DrawArt
+        add esp, byte 0Ch
+        push esi
+        call sub_9132C
+        add esp, byte 4
+        add esp, byte 64h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PrintCenteredText                                               17573  95 PC
+; (y, text): PrintShadowText centred on the 640-pixel screen (fputchar is the
+; text width), also logged with TextGridPut
+;-----------------------------------------------------------------------------
 ; C: src/front/title/PrintCenteredText.c
 %ifdef CBUILD
 %include "c/front/title/PrintCenteredText.inc"
 %else
 PrintCenteredText:
-push dword 24h	; 17573
-call __CHK	; 17578
-push ebx	; 1757D
-push ecx	; 1757E
-push esi	; 1757F
-push edi	; 17580
-push ebp	; 17581
-mov ebp, eax	; 17582
-mov esi, edx	; 17584
-push edx	; 17586
-call fputchar	; 17587
-add esp, byte 4	; 1758C
-mov edx, 280h	; 1758F
-sub edx, eax	; 17594
-mov eax, edx	; 17596
-sar edx, 1Fh	; 17598
-LD sub, eax, edx	; 1759B
-sar eax, 1	; 1759D
-mov edi, eax	; 1759F
-mov eax, dword [textshadow]	; 175A1
-mov dword [fontcolor], eax	; 175A6
-lea eax, [byte ebp+01h]	; 175AB
-push eax	; 175AE
-lea eax, [byte edi+01h]	; 175AF
-push eax	; 175B2
-push esi	; 175B3
-call PrintString	; 175B4
-add esp, byte 0Ch	; 175B9
-mov eax, dword [textcolor]	; 175BC
-mov dword [fontcolor], eax	; 175C1
-push ebp	; 175C6
-push edi	; 175C7
-push esi	; 175C8
-call PrintString	; 175C9
-add esp, byte 0Ch	; 175CE
-mov ebx, esi	; 175D1
-mov edx, ebp	; 175D3
-mov eax, edi	; 175D5
-call TextGridPut	; 175D7
-pop ebp	; 175DC
-pop edi	; 175DD
-pop esi	; 175DE
-pop ecx	; 175DF
-pop ebx	; 175E0
-ret	; 175E1
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, eax
+        mov esi, edx
+        push edx
+        call fputchar
+        add esp, byte 4
+        mov edx, 280h
+        sub edx, eax
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, eax
+        mov eax, dword [textshadow]
+        mov dword [fontcolor], eax
+        lea eax, [byte ebp+01h]
+        push eax
+        lea eax, [byte edi+01h]
+        push eax
+        push esi
+        call PrintString
+        add esp, byte 0Ch
+        mov eax, dword [textcolor]
+        mov dword [fontcolor], eax
+        push ebp
+        push edi
+        push esi
+        call PrintString
+        add esp, byte 0Ch
+        mov ebx, esi
+        mov edx, ebp
+        mov eax, edi
+        call TextGridPut
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PrintShadowText                                                 175E2  95 PC
+; (x, y, text): draws the text at +1,+1 in textshadow, then at x,y in
+; textcolor (PrintString), and logs it with TextGridPut
+;-----------------------------------------------------------------------------
 ; C: src/front/title/PrintShadowText.c
 %ifdef CBUILD
 %include "c/front/title/PrintShadowText.inc"
 %else
 PrintShadowText:
-push dword 20h	; 175E2
-call __CHK	; 175E7
-push ecx	; 175EC
-push esi	; 175ED
-push edi	; 175EE
-push ebp	; 175EF
-mov edi, eax	; 175F0
-mov ebp, edx	; 175F2
-mov esi, ebx	; 175F4
-mov eax, dword [textshadow]	; 175F6
-mov dword [fontcolor], eax	; 175FB
-lea eax, [byte edx+01h]	; 17600
-push eax	; 17603
-lea eax, [byte edi+01h]	; 17604
-push eax	; 17607
-push ebx	; 17608
-call PrintString	; 17609
-add esp, byte 0Ch	; 1760E
-mov eax, dword [textcolor]	; 17611
-mov dword [fontcolor], eax	; 17616
-push ebp	; 1761B
-push edi	; 1761C
-push esi	; 1761D
-call PrintString	; 1761E
-add esp, byte 0Ch	; 17623
-mov ebx, esi	; 17626
-mov edx, ebp	; 17628
-mov eax, edi	; 1762A
-call TextGridPut	; 1762C
-pop ebp	; 17631
-pop edi	; 17632
-pop esi	; 17633
-pop ecx	; 17634
-ret	; 17635
+        push dword 20h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov edi, eax
+        mov ebp, edx
+        mov esi, ebx
+        mov eax, dword [textshadow]
+        mov dword [fontcolor], eax
+        lea eax, [byte edx+01h]
+        push eax
+        lea eax, [byte edi+01h]
+        push eax
+        push ebx
+        call PrintString
+        add esp, byte 0Ch
+        mov eax, dword [textcolor]
+        mov dword [fontcolor], eax
+        push ebp
+        push edi
+        push esi
+        call PrintString
+        add esp, byte 0Ch
+        mov ebx, esi
+        mov edx, ebp
+        mov eax, edi
+        call TextGridPut
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PrintOutlinedText                                               17636  95 PC
+; (x, y, text): draws the text 4 times in textshadow at the outline offsets
+; (textoutlinedx / textoutlinedy), then in textcolor; TextGridPut
+;-----------------------------------------------------------------------------
 ; C: src/front/title/PrintOutlinedText.c
 %ifdef CBUILD
 %include "c/front/title/PrintOutlinedText.inc"
 %else
 PrintOutlinedText:
-push dword 24h	; 17636
-call __CHK	; 1763B
-push ecx	; 17640
-push esi	; 17641
-push edi	; 17642
-push ebp	; 17643
-sub esp, byte 4	; 17644
-mov edi, eax	; 17647
-mov ebp, edx	; 17649
-mov dword [esp], ebx	; 1764B
-mov eax, dword [textshadow]	; 1764E
-mov dword [fontcolor], eax	; 17653
-xor esi, esi	; 17658
+        push dword 24h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov edi, eax
+        mov ebp, edx
+        mov dword [esp], ebx
+        mov eax, dword [textshadow]
+        mov dword [fontcolor], eax
+        xor esi, esi
 .1:
-mov edx, dword [nosplit esi*4+textoutlinedy]	; 1765A
-add edx, ebp	; 17661
-push edx	; 17663
-mov eax, dword [nosplit esi*4+textoutlinedx]	; 17664
-add eax, edi	; 1766B
-push eax	; 1766D
-mov edx, dword [byte esp+08h]	; 1766E
-push edx	; 17672
-call PrintString	; 17673
-add esp, byte 0Ch	; 17678
-inc esi	; 1767B
-cmp esi, byte 4	; 1767C
-jl short PrintOutlinedText.1	; 1767F
-mov eax, dword [textcolor]	; 17681
-mov dword [fontcolor], eax	; 17686
-push ebp	; 1768B
-push edi	; 1768C
-mov ebx, dword [byte esp+08h]	; 1768D
-push ebx	; 17691
-call PrintString	; 17692
-add esp, byte 0Ch	; 17697
-mov ebx, dword [esp]	; 1769A
-mov edx, ebp	; 1769D
-mov eax, edi	; 1769F
-call TextGridPut	; 176A1
-add esp, byte 4	; 176A6
-pop ebp	; 176A9
-pop edi	; 176AA
-pop esi	; 176AB
-pop ecx	; 176AC
-ret	; 176AD
+        mov edx, dword [nosplit esi*4+textoutlinedy]
+        add edx, ebp
+        push edx
+        mov eax, dword [nosplit esi*4+textoutlinedx]
+        add eax, edi
+        push eax
+        mov edx, dword [byte esp+08h]
+        push edx
+        call PrintString
+        add esp, byte 0Ch
+        inc esi
+        cmp esi, byte 4
+        jl short PrintOutlinedText.1
+        mov eax, dword [textcolor]
+        mov dword [fontcolor], eax
+        push ebp
+        push edi
+        mov ebx, dword [byte esp+08h]
+        push ebx
+        call PrintString
+        add esp, byte 0Ch
+        mov ebx, dword [esp]
+        mov edx, ebp
+        mov eax, edi
+        call TextGridPut
+        add esp, byte 4
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PrintFmt1                                                       176AE  95 PC
+; (x, y, fmt, a): sprintf then PrintShadowText
+;-----------------------------------------------------------------------------
 ; C: src/front/title/PrintFmt1.c
 %ifdef CBUILD
 %include "c/front/title/PrintFmt1.inc"
 %else
 PrintFmt1:
-push dword 68h	; 176AE
-call __CHK	; 176B3
-push esi	; 176B8
-sub esp, byte 54h	; 176B9
-mov esi, eax	; 176BC
-push ecx	; 176BE
-push ebx	; 176BF
-lea ebx, [byte esp+08h]	; 176C0
-push ebx	; 176C4
-call sprintf_	; 176C5
-add esp, byte 0Ch	; 176CA
-mov ebx, esp	; 176CD
-mov eax, esi	; 176CF
-call PrintShadowText	; 176D1
-add esp, byte 54h	; 176D6
-pop esi	; 176D9
-ret	; 176DA
+        push dword 68h
+        call __CHK
+        push esi
+        sub esp, byte 54h
+        mov esi, eax
+        push ecx
+        push ebx
+        lea ebx, [byte esp+08h]
+        push ebx
+        call sprintf_
+        add esp, byte 0Ch
+        mov ebx, esp
+        mov eax, esi
+        call PrintShadowText
+        add esp, byte 54h
+        pop esi
+        ret
+;-----------------------------------------------------------------------------
+; PrintFmt2                                                       176DB  95 PC
+; (x, y, fmt, a, b): sprintf then PrintShadowText
+;-----------------------------------------------------------------------------
 PrintFmt2:
-push dword 70h	; 176DB
-call __CHK	; 176E0
-push esi	; 176E5
-push edi	; 176E6
-sub esp, byte 54h	; 176E7
-mov esi, eax	; 176EA
-mov edi, dword [byte esp+060h]	; 176EC
-push edi	; 176F0
-push ecx	; 176F1
-push ebx	; 176F2
-lea ebx, [byte esp+0Ch]	; 176F3
-push ebx	; 176F7
-call sprintf_	; 176F8
-add esp, byte 10h	; 176FD
-mov ebx, esp	; 17700
-mov eax, esi	; 17702
-call PrintShadowText	; 17704
-add esp, byte 54h	; 17709
-pop edi	; 1770C
-pop esi	; 1770D
-ret 4	; 1770E
+        push dword 70h
+        call __CHK
+        push esi
+        push edi
+        sub esp, byte 54h
+        mov esi, eax
+        mov edi, dword [byte esp+060h]
+        push edi
+        push ecx
+        push ebx
+        lea ebx, [byte esp+0Ch]
+        push ebx
+        call sprintf_
+        add esp, byte 10h
+        mov ebx, esp
+        mov eax, esi
+        call PrintShadowText
+        add esp, byte 54h
+        pop edi
+        pop esi
+        ret 4
 %endif ; C
+;-----------------------------------------------------------------------------
+; TextGridOpen                                 17711  95 PC, medium confidence
+; Allocates (once) and clears to spaces the 100 x 36 character copy of the
+; screen text (textgrid) and enables logging (textgridon)
+;-----------------------------------------------------------------------------
 ; C: src/front/title/TextGridOpen.c
 %ifdef CBUILD
 %include "c/front/title/TextGridOpen.inc"
 %else
 TextGridOpen:
-push dword 0Ch	; 17711
-call __CHK	; 17716
-push ebx	; 1771B
-push edx	; 1771C
-cmp dword [textgrid], byte 0	; 1771D
-jne short .1	; 17724
-mov eax, 0E74h	; 17726
-call _nmalloc_	; 1772B
-mov dword [textgrid], eax	; 17730
+        push dword 0Ch
+        call __CHK
+        push ebx
+        push edx
+        cmp dword [textgrid], byte 0
+        jne short .1
+        mov eax, 0E74h
+        call _nmalloc_
+        mov dword [textgrid], eax
 .1:
-mov dword [textgridon], 1	; 17735
-mov eax, dword [textgrid]	; 1773F
-mov ebx, 0E10h	; 17744
-mov edx, 20h	; 17749
-call memset_	; 1774E
-pop edx	; 17753
-pop ebx	; 17754
-ret	; 17755
+        mov dword [textgridon], 1
+        mov eax, dword [textgrid]
+        mov ebx, 0E10h
+        mov edx, 20h
+        call memset_
+        pop edx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TextGridFree                                 17756  95 PC, medium confidence
+; Frees textgrid
+;-----------------------------------------------------------------------------
 ; C: src/front/title/TextGridFree.c
 %ifdef CBUILD
 %include "c/front/title/TextGridFree.inc"
 %else
 TextGridFree:
-push dword 0Ch	; 17756
-call __CHK	; 1775B
-push ebx	; 17760
-push edx	; 17761
-mov edx, dword [textgrid]	; 17762
-test edx, edx	; 17768
-je short .1	; 1776A
-mov eax, edx	; 1776C
-call _nfree_	; 1776E
+        push dword 0Ch
+        call __CHK
+        push ebx
+        push edx
+        mov edx, dword [textgrid]
+        test edx, edx
+        je short .1
+        mov eax, edx
+        call _nfree_
 .1:
-xor ebx, ebx	; 17773
-mov dword [textgrid], ebx	; 17775
-pop edx	; 1777B
-pop ebx	; 1777C
-ret	; 1777D
+        xor ebx, ebx
+        mov dword [textgrid], ebx
+        pop edx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TextGridOff                                  1777E  95 PC, medium confidence
+; Textgridon = 0
+;-----------------------------------------------------------------------------
 ; C: src/front/title/TextGridOff.c
 %ifdef CBUILD
 %include "c/front/title/TextGridOff.inc"
 %else
 TextGridOff:
-push dword 8	; 1777E
-call __CHK	; 17783
-push edx	; 17788
-xor edx, edx	; 17789
-mov dword [textgridon], edx	; 1778B
-pop edx	; 17791
-ret	; 17792
+        push dword 8
+        call __CHK
+        push edx
+        xor edx, edx
+        mov dword [textgridon], edx
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TextGridPut                                  17793  95 PC, medium confidence
+; (x, y, text): when textgridon, copies the text into textgrid at column
+; x*100/640, row y*36/480
+;-----------------------------------------------------------------------------
 ; C: src/front/title/TextGridPut.c
 %ifdef CBUILD
 %include "c/front/title/TextGridPut.inc"
 %else
 TextGridPut:
-push dword 0Ch	; 17793
-call __CHK	; 17798
-push ecx	; 1779D
-push esi	; 1779E
-mov esi, edx	; 1779F
-mov ecx, ebx	; 177A1
-cmp dword [textgrid], byte 0	; 177A3
-je short .x	; 177AA
-cmp dword [textgridon], byte 1	; 177AC
-jne short .x	; 177B3
-mov edx, eax	; 177B5
-shl eax, 2	; 177B7
-sub eax, edx	; 177BA
-shl eax, 3	; 177BC
-add edx, eax	; 177BF
-shl edx, 2	; 177C1
-mov ebx, 280h	; 177C4
-mov eax, edx	; 177C9
-sar edx, 1Fh	; 177CB
-idiv ebx	; 177CE
-mov ebx, eax	; 177D0
-mov edx, esi	; 177D2
-shl edx, 3	; 177D4
-add edx, esi	; 177D7
-shl edx, 2	; 177D9
-mov esi, 1E0h	; 177DC
-mov eax, edx	; 177E1
-sar edx, 1Fh	; 177E3
-idiv esi	; 177E6
-mov esi, dword [textgrid]	; 177E8
-mov edx, eax	; 177EE
-shl eax, 2	; 177F0
-sub eax, edx	; 177F3
-shl eax, 3	; 177F5
-add eax, edx	; 177F8
-shl eax, 2	; 177FA
-add ebx, eax	; 177FD
-add esi, ebx	; 177FF
-mov eax, ecx	; 17801
-call strlen_	; 17803
-mov ebx, eax	; 17808
-mov edx, ecx	; 1780A
-mov eax, esi	; 1780C
-call memcpy_	; 1780E
+        push dword 0Ch
+        call __CHK
+        push ecx
+        push esi
+        mov esi, edx
+        mov ecx, ebx
+        cmp dword [textgrid], byte 0
+        je short .x
+        cmp dword [textgridon], byte 1
+        jne short .x
+        mov edx, eax
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        add edx, eax
+        shl edx, 2
+        mov ebx, 280h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov ebx, eax
+        mov edx, esi
+        shl edx, 3
+        add edx, esi
+        shl edx, 2
+        mov esi, 1E0h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv esi
+        mov esi, dword [textgrid]
+        mov edx, eax
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        add eax, edx
+        shl eax, 2
+        add ebx, eax
+        add esi, ebx
+        mov eax, ecx
+        call strlen_
+        mov ebx, eax
+        mov edx, ecx
+        mov eax, esi
+        call memcpy_
 .x:
-pop esi	; 17813
-pop ecx	; 17814
-ret	; 17815
+        pop esi
+        pop ecx
+        ret
 %endif ; C

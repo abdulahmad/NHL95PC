@@ -6,77 +6,77 @@ extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLO
 extern sub_B3FC2
 global sub_9A7A0, loc_9A7DB, loc_9A7EF, loc_9A868
 sub_9A7A0:
-push esi	; 9A7A0
-push edi	; 9A7A1
-push ebp	; 9A7A2
-sub esp, byte 4	; 9A7A3
-mov eax, dword [byte esp+014h]	; 9A7A6
-mov dword [esp], eax	; 9A7AA
-imul eax, dword [byte esp+018h]	; 9A7AD
-add eax, byte 40h	; 9A7B2
-mov ebx, dword [byte esp+01Ch]	; 9A7B5
-push ebx	; 9A7B9
-push eax	; 9A7BA
-push str_MCGAWINDOW	; 9A7BB
-call sub_8CC70	; 9A7C0
-add esp, byte 0Ch	; 9A7C5
-mov ebp, eax	; 9A7C8
-test eax, eax	; 9A7CA
-jne short loc_9A7DB	; 9A7CC
-push str_WindowdefOUTOFMEMORY	; 9A7CE
-call FatalError	; 9A7D3
-add esp, byte 4	; 9A7D8
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov eax, dword [byte esp+014h]
+        mov dword [esp], eax
+        imul eax, dword [byte esp+018h]
+        add eax, byte 40h
+        mov ebx, dword [byte esp+01Ch]
+        push ebx
+        push eax
+        push str_MCGAWINDOW
+        call sub_8CC70
+        add esp, byte 0Ch
+        mov ebp, eax
+        test eax, eax
+        jne short loc_9A7DB
+        push str_WindowdefOUTOFMEMORY
+        call FatalError
+        add esp, byte 4
 loc_9A7DB:
-mov esi, dword [byte ebp+00h]	; 9A7DB
-test esi, esi	; 9A7DE
-jne short loc_9A7EF	; 9A7E0
-push str_WindowdefBADBLOCK	; 9A7E2
-call FatalError	; 9A7E7
-add esp, byte 4	; 9A7EC
+        mov esi, dword [byte ebp+00h]
+        test esi, esi
+        jne short loc_9A7EF
+        push str_WindowdefBADBLOCK
+        call FatalError
+        add esp, byte 4
 loc_9A7EF:
-lea eax, [byte esi+030h]	; 9A7EF
-push eax	; 9A7F2
-call _os_handle	; 9A7F3
-mov edi, eax	; 9A7F8
-add esp, byte 4	; 9A7FA
-push byte 40h	; 9A7FD
-push esi	; 9A7FF
-call sub_B3FC2	; 9A800
-add esp, byte 8	; 9A805
-mov eax, dword [esp]	; 9A808
-mov word [byte edi+04h], ax	; 9A80B
-mov eax, dword [byte esp+018h]	; 9A80F
-mov word [byte edi+06h], ax	; 9A813
-mov dword [edi], 0	; 9A817
-or byte [edi], 1	; 9A81D
-mov eax, dword [esp]	; 9A820
-mov dword [esi], eax	; 9A823
-mov dword [byte esi+020h], eax	; 9A825
-mov dword [byte esi+010h], eax	; 9A828
-mov dword [byte esi+01Ch], eax	; 9A82B
-mov eax, dword [byte esp+018h]	; 9A82E
-mov dword [byte esi+04h], eax	; 9A832
-mov dword [byte esi+014h], eax	; 9A835
-mov dword [byte esi+02Ch], edi	; 9A838
-mov ebx, eax	; 9A83B
-mov edx, dword [esp]	; 9A83D
-mov eax, 10h	; 9A840
-call sub_98D20	; 9A845
-mov dword [byte esi+028h], eax	; 9A84A
-test eax, eax	; 9A84D
-jne short loc_9A868	; 9A84F
-mov esi, dword [byte esp+018h]	; 9A851
-push esi	; 9A855
-mov edi, dword [byte esp+018h]	; 9A856
-push edi	; 9A85A
-push str_WindowdefadrOUTOFROW	; 9A85B
-call FatalError	; 9A860
-add esp, byte 0Ch	; 9A865
+        lea eax, [byte esi+030h]
+        push eax
+        call _os_handle
+        mov edi, eax
+        add esp, byte 4
+        push byte 40h
+        push esi
+        call sub_B3FC2
+        add esp, byte 8
+        mov eax, dword [esp]
+        mov word [byte edi+04h], ax
+        mov eax, dword [byte esp+018h]
+        mov word [byte edi+06h], ax
+        mov dword [edi], 0
+        or byte [edi], 1
+        mov eax, dword [esp]
+        mov dword [esi], eax
+        mov dword [byte esi+020h], eax
+        mov dword [byte esi+010h], eax
+        mov dword [byte esi+01Ch], eax
+        mov eax, dword [byte esp+018h]
+        mov dword [byte esi+04h], eax
+        mov dword [byte esi+014h], eax
+        mov dword [byte esi+02Ch], edi
+        mov ebx, eax
+        mov edx, dword [esp]
+        mov eax, 10h
+        call sub_98D20
+        mov dword [byte esi+028h], eax
+        test eax, eax
+        jne short loc_9A868
+        mov esi, dword [byte esp+018h]
+        push esi
+        mov edi, dword [byte esp+018h]
+        push edi
+        push str_WindowdefadrOUTOFROW
+        call FatalError
+        add esp, byte 0Ch
 loc_9A868:
-mov eax, ebp	; 9A868
-add esp, byte 4	; 9A86A
-pop ebp	; 9A86D
-pop edi	; 9A86E
-pop esi	; 9A86F
-ret	; 9A870
-db 00h,00h,00h
+        mov eax, ebp
+        add esp, byte 4
+        pop ebp
+        pop edi
+        pop esi
+        ret
+        db 00h,00h,00h

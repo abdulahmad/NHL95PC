@@ -45,686 +45,686 @@ global str_R4, str_RoughingPen, str_ChargingPen, str_SlashingPen, str_XcheckPen,
 global str_HoldingPen, str_AbusePen, str_CheckbndPen, str_BoardingPen, str_ElbowingPen, str_HistickPen, str_SpearingPen, str_H2
 global str_h3, str_H4, str_h5, str_h6, str_h7, str_H1, str_A32, str_SDD3
 str_DSBOX:
-db 044h,053h,042h,04Fh,058h,00h,00h,00h
+        db 044h,053h,042h,04Fh,058h,00h,00h,00h
 str_DbBut:
-db 064h,062h,05Fh,062h,075h,074h,00h
+        db 064h,062h,05Fh,062h,075h,074h,00h
 str_None2:
-db 06Eh,06Fh,06Eh,065h,00h
+        db 06Eh,06Fh,06Eh,065h,00h
 str_Del2:
-db 064h,065h,06Ch,020h,00h
+        db 064h,065h,06Ch,020h,00h
 str_Open3:
-db 06Fh,070h,065h,06Eh,00h
+        db 06Fh,070h,065h,06Eh,00h
 str_Can2:
-db 063h,061h,06Eh,020h,00h
+        db 063h,061h,06Eh,020h,00h
 str_Noar2:
-db 06Eh,06Fh,061h,072h,00h
+        db 06Eh,06Fh,061h,072h,00h
 str_Up2:
-db 075h,070h,020h,020h,00h
+        db 075h,070h,020h,020h,00h
 str_Down2:
-db 064h,06Fh,077h,06Eh,00h
+        db 064h,06Fh,077h,06Eh,00h
 str_Arro2:
-db 061h,072h,072h,06Fh,00h
+        db 061h,072h,072h,06Fh,00h
 str_Dbno:
-db 064h,062h,06Eh,06Fh,00h
+        db 064h,062h,06Eh,06Fh,00h
 str_Dbcu:
-db 064h,062h,063h,075h,00h
+        db 064h,062h,063h,075h,00h
 str_Dbtm:
-db 064h,062h,074h,06Dh,00h
+        db 064h,062h,074h,06Dh,00h
 str_Dbor:
-db 064h,062h,06Fh,072h,00h
+        db 064h,062h,06Fh,072h,00h
 str_Db3:
-db 02Ah,02Eh,064h,062h,00h
+        db 02Ah,02Eh,064h,062h,00h
 str_CURRENT:
-db 043h,055h,052h,052h,045h,04Eh,054h,00h
+        db 043h,055h,052h,052h,045h,04Eh,054h,00h
 str_Org:
-db 02Ah,02Eh,06Fh,072h,067h,00h
+        db 02Ah,02Eh,06Fh,072h,067h,00h
 str_ORIGINAL:
-db 04Fh,052h,049h,047h,049h,04Eh,041h,04Ch,00h
+        db 04Fh,052h,049h,047h,049h,04Eh,041h,04Ch,00h
 str_Dbx:
-db 02Ah,02Eh,064h,062h,078h,00h
+        db 02Ah,02Eh,064h,062h,078h,00h
 str_Open4:
-db 04Fh,070h,065h,06Eh,00h
+        db 04Fh,070h,065h,06Eh,00h
 str_Delete2:
-db 044h,065h,06Ch,065h,074h,065h,00h
+        db 044h,065h,06Ch,065h,074h,065h,00h
 str_Done2:
-db 044h,06Fh,06Eh,065h,00h
+        db 044h,06Fh,06Eh,065h,00h
 str_Current4:
-db 043h,075h,072h,072h,065h,06Eh,074h,00h
+        db 043h,075h,072h,072h,065h,06Eh,074h,00h
 str_Original2:
-db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,00h
+        db 04Fh,072h,069h,067h,069h,06Eh,061h,06Ch,00h
 str_Temporary:
-db 054h,065h,06Dh,070h,06Fh,072h,061h,072h,079h,00h
+        db 054h,065h,06Dh,070h,06Fh,072h,061h,072h,079h,00h
 str_Dbdialog:
-db 064h,062h,064h,069h,061h,06Ch,06Fh,067h,00h
+        db 064h,062h,064h,069h,061h,06Ch,06Fh,067h,00h
 str_Pdbx:
-db 070h,064h,062h,078h,00h
+        db 070h,064h,062h,078h,00h
 str_Pointer12:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_DBX2:
-db 02Eh,044h,042h,058h,00h
+        db 02Eh,044h,042h,058h,00h
 str_Buf2:
-db 062h,075h,066h,00h
+        db 062h,075h,066h,00h
 str_Pal25:
-db 050h,061h,06Ch,00h
+        db 050h,061h,06Ch,00h
 str_Lineditp2:
-db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
+        db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
 str_Shrt2:
-db 073h,068h,072h,074h,00h
+        db 073h,068h,072h,074h,00h
 str_Pntr3:
-db 070h,06Eh,074h,072h,00h
+        db 070h,06Eh,074h,072h,00h
 str_Pointer13:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_Embpal4:
-db 065h,06Dh,062h,070h,061h,06Ch,00h
+        db 065h,06Dh,062h,070h,061h,06Ch,00h
 str_Pal26:
-db 021h,070h,061h,06Ch,00h
+        db 021h,070h,061h,06Ch,00h
 str_Lelogo:
-db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
+        db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
 str_Menubuff8:
-db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
+        db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
 str_C2dS2:
-db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
+        db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
 str_S2dSS:
-db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
+        db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
 str_dot2:
-db 02Eh,00h
+        db 02Eh,00h
 str_S6:
-db 073h,02Eh,00h
+        db 073h,02Eh,00h
 str_Keys3:
-db 06Bh,065h,079h,073h,00h
+        db 06Bh,065h,079h,073h,00h
 str_Pstat3:
-db 070h,073h,074h,061h,074h,00h
+        db 070h,073h,074h,061h,074h,00h
 str_Gstat3:
-db 067h,073h,074h,061h,074h,00h,00h
+        db 067h,073h,074h,061h,074h,00h,00h
 str_SRoster:
-db 025h,073h,020h,052h,06Fh,073h,074h,065h,072h,03Ah,00h
+        db 025h,073h,020h,052h,06Fh,073h,074h,065h,072h,03Ah,00h
 str_Pos2:
-db 050h,06Fh,073h,00h
+        db 050h,06Fh,073h,00h
 str_No2:
-db 04Eh,06Fh,00h
+        db 04Eh,06Fh,00h
 str_Name2:
-db 04Eh,061h,06Dh,065h,00h
+        db 04Eh,061h,06Dh,065h,00h
 str_GP8:
-db 047h,050h,00h
+        db 047h,050h,00h
 str_G4:
-db 020h,020h,047h,00h
+        db 020h,020h,047h,00h
 str_A4:
-db 020h,020h,041h,00h
+        db 020h,020h,041h,00h
 str_PT2:
-db 020h,050h,054h,00h
+        db 020h,050h,054h,00h
 str_Shots4:
-db 053h,068h,06Fh,074h,073h,00h
+        db 053h,068h,06Fh,074h,073h,00h
 str_PIM4:
-db 050h,049h,04Dh,00h
+        db 050h,049h,04Dh,00h
 str_PlusMinus7:
-db 020h,02Bh,02Fh,02Dh,00h
+        db 020h,02Bh,02Fh,02Dh,00h
 str_C5:
-db 025h,063h,00h
+        db 025h,063h,00h
 str_Min4:
-db 020h,04Dh,069h,06Eh,00h
+        db 020h,04Dh,069h,06Eh,00h
 str_GAA4:
-db 020h,020h,047h,041h,041h,00h
+        db 020h,020h,047h,041h,041h,00h
 str_W6:
-db 020h,057h,00h
+        db 020h,057h,00h
 str_L8:
-db 020h,04Ch,00h
+        db 020h,04Ch,00h
 str_T6:
-db 020h,054h,00h
+        db 020h,054h,00h
 str_GA3:
-db 020h,047h,041h,00h
+        db 020h,047h,041h,00h
 str_SA3:
-db 020h,020h,053h,041h,00h
+        db 020h,020h,053h,041h,00h
 str_PCT2:
-db 020h,020h,050h,043h,054h,00h,00h
+        db 020h,020h,050h,043h,054h,00h,00h
 str_Pal27:
-db 050h,061h,06Ch,00h
+        db 050h,061h,06Ch,00h
 str_Lineditp3:
-db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
+        db 06Ch,069h,06Eh,065h,064h,069h,074h,070h,00h
 str_Shrt3:
-db 073h,068h,072h,074h,00h
+        db 073h,068h,072h,074h,00h
 str_Pntr4:
-db 070h,06Eh,074h,072h,00h
+        db 070h,06Eh,074h,072h,00h
 str_Pointer14:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_Embpal5:
-db 065h,06Dh,062h,070h,061h,06Ch,00h
+        db 065h,06Dh,062h,070h,061h,06Ch,00h
 str_Pal28:
-db 021h,070h,061h,06Ch,00h
+        db 021h,070h,061h,06Ch,00h
 str_Lelogo2:
-db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
+        db 06Ch,065h,06Ch,06Fh,067h,06Fh,00h
 str_Menubuff9:
-db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
+        db 06Dh,065h,06Eh,075h,062h,075h,066h,066h,00h
 str_C2dS3:
-db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
+        db 025h,063h,020h,025h,032h,064h,020h,025h,073h,00h
 str_Key:
-db 06Bh,065h,079h,00h
+        db 06Bh,065h,079h,00h
 str_ErrA1:
-db 041h,031h,00h
+        db 041h,031h,00h
 str_ErrA2:
-db 041h,032h,00h
+        db 041h,032h,00h
 str_ErrA3:
-db 041h,033h,00h
+        db 041h,033h,00h
 str_ErrA4:
-db 041h,034h,00h
+        db 041h,034h,00h
 str_ErrA5:
-db 041h,035h,00h
+        db 041h,035h,00h
 str_ErrA6:
-db 041h,036h,00h
+        db 041h,036h,00h
 str_ErrA7:
-db 041h,037h,00h
+        db 041h,037h,00h
 str_ErrA8:
-db 041h,038h,00h
+        db 041h,038h,00h
 str_EmbS:
-db 065h,06Dh,062h,025h,073h,00h
+        db 065h,06Dh,062h,025h,073h,00h
 str_HOMEPALS3:
-db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h
+        db 048h,04Fh,04Dh,045h,050h,041h,04Ch,053h,00h
 str_Bkgd10:
-db 062h,06Bh,067h,064h,00h
+        db 062h,06Bh,067h,064h,00h
 str_Forward:
-db 066h,06Fh,072h,077h,061h,072h,064h,00h
+        db 066h,06Fh,072h,077h,061h,072h,064h,00h
 str_Line1:
-db 06Ch,069h,06Eh,065h,020h,031h,00h
+        db 06Ch,069h,06Eh,065h,020h,031h,00h
 str_Line2:
-db 06Ch,069h,06Eh,065h,020h,032h,00h
+        db 06Ch,069h,06Eh,065h,020h,032h,00h
 str_Line3:
-db 06Ch,069h,06Eh,065h,020h,033h,00h
+        db 06Ch,069h,06Eh,065h,020h,033h,00h
 str_Line4:
-db 06Ch,069h,06Eh,065h,020h,034h,00h
+        db 06Ch,069h,06Eh,065h,020h,034h,00h
 str_Power:
-db 070h,06Fh,077h,065h,072h,00h
+        db 070h,06Fh,077h,065h,072h,00h
 str_Play1:
-db 070h,06Ch,061h,079h,020h,031h,00h
+        db 070h,06Ch,061h,079h,020h,031h,00h
 str_Play2:
-db 070h,06Ch,061h,079h,020h,032h,00h
+        db 070h,06Ch,061h,079h,020h,032h,00h
 str_Penalty:
-db 070h,065h,06Eh,061h,06Ch,074h,079h,00h
+        db 070h,065h,06Eh,061h,06Ch,074h,079h,00h
 str_Kill1:
-db 06Bh,069h,06Ch,06Ch,020h,031h,00h
+        db 06Bh,069h,06Ch,06Ch,020h,031h,00h
 str_Kill2:
-db 06Bh,069h,06Ch,06Ch,020h,032h,00h
+        db 06Bh,069h,06Ch,06Ch,020h,032h,00h
 str_Defense3:
-db 064h,065h,066h,065h,06Eh,073h,065h,00h
+        db 064h,065h,066h,065h,06Eh,073h,065h,00h
 str_Goaltenders:
-db 067h,06Fh,061h,06Ch,074h,065h,06Eh,064h,065h,072h,073h,00h
+        db 067h,06Fh,061h,06Ch,074h,065h,06Eh,064h,065h,072h,073h,00h
 str_Extra:
-db 065h,078h,074h,072h,061h,00h
+        db 065h,078h,074h,072h,061h,00h
 str_Attackers:
-db 061h,074h,074h,061h,063h,06Bh,065h,072h,073h,00h
+        db 061h,074h,074h,061h,063h,06Bh,065h,072h,073h,00h
 str_S2dSS2:
-db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
+        db 025h,073h,020h,025h,032h,064h,020h,025h,073h,025h,073h,00h
 str_dot3:
-db 02Eh,00h
+        db 02Eh,00h
 str_S7:
-db 073h,02Eh,00h
+        db 073h,02Eh,00h
 str_Teams2:
-db 074h,065h,061h,06Dh,073h,00h
+        db 074h,065h,061h,06Dh,073h,00h
 str_ErrB2Perror:
-db 062h,032h,03Ah,00h
+        db 062h,032h,03Ah,00h
 str_ErrB3:
-db 042h,033h,00h
+        db 042h,033h,00h
 str_ErrB4:
-db 042h,034h,00h
+        db 042h,034h,00h
 str_ErrB5:
-db 042h,035h,00h
+        db 042h,035h,00h
 str_ErrB6:
-db 042h,036h,00h
+        db 042h,036h,00h
 str_ErrB7:
-db 042h,037h,00h
+        db 042h,037h,00h
 str_ErrB2:
-db 042h,032h,00h
+        db 042h,032h,00h
 str_Tstat2:
-db 074h,073h,074h,061h,074h,00h
+        db 074h,073h,074h,061h,074h,00h
 str_Keys4:
-db 06Bh,065h,079h,073h,00h
+        db 06Bh,065h,079h,073h,00h
 str_Pstat4:
-db 070h,073h,074h,061h,074h,00h
+        db 070h,073h,074h,061h,074h,00h
 str_Gstat4:
-db 067h,073h,074h,061h,074h,00h,00h
+        db 067h,073h,074h,061h,074h,00h,00h
 str_BKGD:
-db 042h,04Bh,047h,044h,00h
+        db 042h,04Bh,047h,044h,00h
 str_Setting5:
-db 073h,065h,074h,074h,069h,06Eh,067h,035h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,035h,00h
 str_Dbox2:
-db 064h,062h,06Fh,078h,00h
+        db 064h,062h,06Fh,078h,00h
 str_Music:
-db 04Dh,075h,073h,069h,063h,00h
+        db 04Dh,075h,073h,069h,063h,00h
 str_Sound:
-db 053h,06Fh,075h,06Eh,064h,00h
+        db 053h,06Fh,075h,06Eh,064h,00h
 str_DigitizedSpeech:
-db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
-db 00h
+        db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
+        db 00h
 str_Setting3:
-db 073h,065h,074h,074h,069h,06Eh,067h,033h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,033h,00h
 str_Pointer15:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
 str_BKGD2:
-db 042h,04Bh,047h,044h,00h
+        db 042h,04Bh,047h,044h,00h
 str_Setting7:
-db 073h,065h,074h,074h,069h,06Eh,067h,037h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,037h,00h
 str_Setting4:
-db 073h,065h,074h,074h,069h,06Eh,067h,034h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,034h,00h
 str_Dbox3:
-db 064h,062h,06Fh,078h,00h
+        db 064h,062h,06Fh,078h,00h
 str_Music2:
-db 04Dh,075h,073h,069h,063h,00h
+        db 04Dh,075h,073h,069h,063h,00h
 str_Sound2:
-db 053h,06Fh,075h,06Eh,064h,00h
+        db 053h,06Fh,075h,06Eh,064h,00h
 str_DigitizedSpeech2:
-db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
-db 00h
+        db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
+        db 00h
 str_Pointer16:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h,00h
 str_BKGD3:
-db 042h,04Bh,047h,044h,00h
+        db 042h,04Bh,047h,044h,00h
 str_DigitizedSpeech3:
-db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
-db 00h
+        db 044h,069h,067h,069h,074h,069h,07Ah,065h,064h,020h,053h,070h,065h,065h,063h,068h
+        db 00h
 str_Music3:
-db 04Dh,075h,073h,069h,063h,00h
+        db 04Dh,075h,073h,069h,063h,00h
 str_Sound3:
-db 053h,06Fh,075h,06Eh,064h,00h
+        db 053h,06Fh,075h,06Eh,064h,00h
 str_Setting6:
-db 073h,065h,074h,074h,069h,06Eh,067h,036h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,036h,00h
 str_Dbox4:
-db 064h,062h,06Fh,078h,00h
+        db 064h,062h,06Fh,078h,00h
 str_Pointer17:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_BKGD4:
-db 042h,04Bh,047h,044h,00h
+        db 042h,04Bh,047h,044h,00h
 str_PlayerImg:
-db 070h,06Ch,061h,079h,065h,072h,00h
+        db 070h,06Ch,061h,079h,065h,072h,00h
 str_Dbox5:
-db 064h,062h,06Fh,078h,00h
+        db 064h,062h,06Fh,078h,00h
 str_OneS:
-db 04Fh,06Eh,065h,027h,073h,00h
+        db 04Fh,06Eh,065h,027h,073h,00h
 str_TwoS:
-db 054h,077h,06Fh,027h,073h,00h
+        db 054h,077h,06Fh,027h,073h,00h
 str_TheMouse:
-db 054h,068h,065h,020h,04Dh,06Fh,075h,073h,065h,00h
+        db 054h,068h,065h,020h,04Dh,06Fh,075h,073h,065h,00h
 str_JoystickOne:
-db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,04Fh,06Eh,065h,00h
+        db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,04Fh,06Eh,065h,00h
 str_JoystickTwo:
-db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,054h,077h,06Fh,00h
+        db 04Ah,06Fh,079h,073h,074h,069h,063h,06Bh,020h,054h,077h,06Fh,00h
 str_TheKeyboard:
-db 054h,068h,065h,020h,04Bh,065h,079h,062h,06Fh,061h,072h,064h,00h
+        db 054h,068h,065h,020h,04Bh,065h,079h,062h,06Fh,061h,072h,064h,00h
 str_Pointer18:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
 str_MTROCKU:
-db 04Dh,054h,052h,04Fh,043h,04Bh,055h,00h
+        db 04Dh,054h,052h,04Fh,043h,04Bh,055h,00h
 str_SBROCKU:
-db 053h,042h,052h,04Fh,043h,04Bh,055h,00h
+        db 053h,042h,052h,04Fh,043h,04Bh,055h,00h
 str_ADROCKU:
-db 041h,044h,052h,04Fh,043h,04Bh,055h,00h
+        db 041h,044h,052h,04Fh,043h,04Bh,055h,00h
 str_ROCKDITI:
-db 052h,04Fh,043h,04Bh,044h,049h,054h,049h,00h,00h,00h,00h
+        db 052h,04Fh,043h,04Bh,044h,049h,054h,049h,00h,00h,00h,00h
 str_BothTeams:
-db 042h,06Fh,074h,068h,020h,054h,065h,061h,06Dh,073h,00h
+        db 042h,06Fh,074h,068h,020h,054h,065h,061h,06Dh,073h,00h
 str_NeitherTeams:
-db 04Eh,065h,069h,074h,068h,065h,072h,020h,054h,065h,061h,06Dh,073h,00h
+        db 04Eh,065h,069h,074h,068h,065h,072h,020h,054h,065h,061h,06Dh,073h,00h
 str_Gadget6:
-db 067h,061h,064h,067h,065h,074h,036h,00h
+        db 067h,061h,064h,067h,065h,074h,036h,00h
 str_Gadget5:
-db 067h,061h,064h,067h,065h,074h,035h,00h
+        db 067h,061h,064h,067h,065h,074h,035h,00h
 str_Gad1:
-db 067h,061h,064h,031h,00h
+        db 067h,061h,064h,031h,00h
 str_Pointer19:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_SaveTo:
-db 053h,061h,076h,065h,020h,054h,06Fh,00h
+        db 053h,061h,076h,065h,020h,054h,06Fh,00h
 str_HilightsReel:
-db 048h,069h,06Ch,069h,067h,068h,074h,073h,020h,052h,065h,065h,06Ch,00h
+        db 048h,069h,06Ch,069h,067h,068h,074h,073h,020h,052h,065h,065h,06Ch,00h
 str_K1:
-db 06Bh,031h,00h
+        db 06Bh,031h,00h
 str_backslash4:
-db 05Ch,00h
+        db 05Ch,00h
 str_HI:
-db 02Eh,048h,049h,00h
+        db 02Eh,048h,049h,00h
 str_F12:
-db 066h,031h,00h
+        db 066h,031h,00h
 str_CantOpenFile:
-db 043h,061h,06Eh,020h,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,060h,025h,073h
-db 027h,020h,066h,069h,06Ch,065h,0Ah,00h
+        db 043h,061h,06Eh,020h,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,060h,025h,073h
+        db 027h,020h,066h,069h,06Ch,065h,0Ah,00h
 str_F3:
-db 066h,033h,00h
+        db 066h,033h,00h
 str_F4:
-db 066h,034h,00h,00h,00h
+        db 066h,034h,00h,00h,00h
 str_dot4:
-db 02Eh,00h
+        db 02Eh,00h
 str_HLTL:
-db 048h,04Ch,054h,04Ch,00h
+        db 048h,04Ch,054h,04Ch,00h
 str_HLT:
-db 048h,04Ch,054h,00h
+        db 048h,04Ch,054h,00h
 str_HLTS:
-db 048h,04Ch,054h,053h,00h
+        db 048h,04Ch,054h,053h,00h
 str_Settings:
-db 073h,065h,074h,074h,069h,06Eh,067h,073h,00h
+        db 073h,065h,074h,074h,069h,06Eh,067h,073h,00h
 str_On:
-db 04Fh,06Eh,020h,020h,00h
+        db 04Fh,06Eh,020h,020h,00h
 str_Off:
-db 04Fh,066h,066h,020h,00h
+        db 04Fh,066h,066h,020h,00h
 str_Acpt:
-db 061h,063h,070h,074h,00h
+        db 061h,063h,070h,074h,00h
 str_Canc:
-db 063h,061h,06Eh,063h,00h
+        db 063h,061h,06Eh,063h,00h
 str_Na01:
-db 06Eh,061h,030h,031h,00h
+        db 06Eh,061h,030h,031h,00h
 str_Na03:
-db 06Eh,061h,030h,033h,00h
+        db 06Eh,061h,030h,033h,00h
 str_Na05:
-db 06Eh,061h,030h,035h,00h
+        db 06Eh,061h,030h,035h,00h
 str_Pg01:
-db 070h,067h,030h,031h,00h
+        db 070h,067h,030h,031h,00h
 str_Pg03:
-db 070h,067h,030h,033h,00h
+        db 070h,067h,030h,033h,00h
 str_Pg05:
-db 070h,067h,030h,035h,00h
+        db 070h,067h,030h,035h,00h
 str_Pg07:
-db 070h,067h,030h,037h,00h
+        db 070h,067h,030h,037h,00h
 str_Pl05:
-db 070h,06Ch,030h,035h,00h
+        db 070h,06Ch,030h,035h,00h
 str_Pl10:
-db 070h,06Ch,031h,030h,00h
+        db 070h,06Ch,031h,030h,00h
 str_Pl20:
-db 070h,06Ch,032h,030h,00h,00h
+        db 070h,06Ch,032h,030h,00h,00h
 str_ANA4:
-db 041h,04Eh,041h,00h
+        db 041h,04Eh,041h,00h
 str_BOS2:
-db 042h,04Fh,053h,00h
+        db 042h,04Fh,053h,00h
 str_BUF4:
-db 042h,055h,046h,00h
+        db 042h,055h,046h,00h
 str_CGY2:
-db 043h,047h,059h,00h
+        db 043h,047h,059h,00h
 str_CHI2:
-db 043h,048h,049h,00h
+        db 043h,048h,049h,00h
 str_DAL2:
-db 044h,041h,04Ch,00h
+        db 044h,041h,04Ch,00h
 str_DET2:
-db 044h,045h,054h,00h
+        db 044h,045h,054h,00h
 str_EDM2:
-db 045h,044h,04Dh,00h
+        db 045h,044h,04Dh,00h
 str_FLA2:
-db 046h,04Ch,041h,00h
+        db 046h,04Ch,041h,00h
 str_HFD2:
-db 048h,046h,044h,00h
+        db 048h,046h,044h,00h
 str_LA2:
-db 04Ch,041h,00h
+        db 04Ch,041h,00h
 str_MTL2:
-db 04Dh,054h,04Ch,00h
+        db 04Dh,054h,04Ch,00h
 str_NJ2:
-db 04Eh,04Ah,00h
+        db 04Eh,04Ah,00h
 str_NYI2:
-db 04Eh,059h,049h,00h
+        db 04Eh,059h,049h,00h
 str_NYR2:
-db 04Eh,059h,052h,00h
+        db 04Eh,059h,052h,00h
 str_OTT2:
-db 04Fh,054h,054h,00h
+        db 04Fh,054h,054h,00h
 str_PHI2:
-db 050h,048h,049h,00h
+        db 050h,048h,049h,00h
 str_PIT2:
-db 050h,049h,054h,00h
+        db 050h,049h,054h,00h
 str_QUE2:
-db 051h,055h,045h,00h
+        db 051h,055h,045h,00h
 str_STL2:
-db 053h,054h,04Ch,00h
+        db 053h,054h,04Ch,00h
 str_SJ2:
-db 053h,04Ah,00h
+        db 053h,04Ah,00h
 str_TB2:
-db 054h,042h,00h
+        db 054h,042h,00h
 str_TOR2:
-db 054h,04Fh,052h,00h
+        db 054h,04Fh,052h,00h
 str_VAN2:
-db 056h,041h,04Eh,00h
+        db 056h,041h,04Eh,00h
 str_WSH2:
-db 057h,053h,048h,00h
+        db 057h,053h,048h,00h
 str_WPG2:
-db 057h,050h,047h,00h
+        db 057h,050h,047h,00h
 str_ASW2:
-db 041h,053h,057h,00h
+        db 041h,053h,057h,00h
 str_ASE2:
-db 041h,053h,045h,00h
+        db 041h,053h,045h,00h
 str_WesternConferenceQuarter:
-db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
-db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
-db 073h,00h
+        db 057h,065h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
+        db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
+        db 073h,00h
 str_EasternConferenceQuarter:
-db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
-db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
-db 073h,00h
+        db 045h,061h,073h,074h,065h,072h,06Eh,020h,043h,06Fh,06Eh,066h,065h,072h,065h,06Eh
+        db 063h,065h,020h,051h,075h,061h,072h,074h,065h,072h,02Dh,046h,069h,06Eh,061h,06Ch
+        db 073h,00h
 str_StanleyCupFinals:
-db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,046h,069h,06Eh
-db 061h,06Ch,073h,00h
+        db 053h,074h,061h,06Eh,06Ch,065h,079h,020h,043h,075h,070h,06h,020h,046h,069h,06Eh
+        db 061h,06Ch,073h,00h
 str_HomeBck:
-db 048h,06Fh,06Dh,065h,042h,063h,06Bh,00h
+        db 048h,06Fh,06Dh,065h,042h,063h,06Bh,00h
 str_VisBck:
-db 056h,069h,073h,042h,063h,06Bh,00h
+        db 056h,069h,073h,042h,063h,06Bh,00h
 str_HomeNameBck:
-db 048h,06Fh,06Dh,065h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
+        db 048h,06Fh,06Dh,065h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
 str_VisNameBck:
-db 056h,069h,073h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
+        db 056h,069h,073h,04Eh,061h,06Dh,065h,042h,063h,06Bh,00h
 str_TitleBck:
-db 054h,069h,074h,06Ch,065h,042h,063h,06Bh,00h
+        db 054h,069h,074h,06Ch,065h,042h,063h,06Bh,00h
 str_Lockroom:
-db 06Ch,06Fh,063h,06Bh,072h,06Fh,06Fh,06Dh,00h
+        db 06Ch,06Fh,063h,06Bh,072h,06Fh,06Fh,06Dh,00h
 str_P01:
-db 021h,070h,030h,031h,00h
+        db 021h,070h,030h,031h,00h
 str_Room:
-db 072h,06Fh,06Fh,06Dh,00h
+        db 072h,06Fh,06Fh,06Dh,00h
 str_JERSH:
-db 04Ah,045h,052h,025h,073h,048h,00h
+        db 04Ah,045h,052h,025h,073h,048h,00h
 str_00002:
-db 030h,030h,030h,030h,00h
+        db 030h,030h,030h,030h,00h
 str_JERSV:
-db 04Ah,045h,052h,025h,073h,056h,00h
+        db 04Ah,045h,052h,025h,073h,056h,00h
 str_Vs:
-db 076h,073h,00h
+        db 076h,073h,00h
 str_Accept:
-db 041h,063h,063h,065h,070h,074h,00h
+        db 041h,063h,063h,065h,070h,074h,00h
 str_Cancel2:
-db 043h,061h,06Eh,063h,065h,06Ch,00h
+        db 043h,061h,06Eh,063h,065h,06Ch,00h
 str_HomeTeam:
-db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,00h
+        db 048h,06Fh,06Dh,065h,020h,054h,065h,061h,06Dh,00h
 str_VisitingTeam:
-db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,00h
+        db 056h,069h,073h,069h,074h,069h,06Eh,067h,020h,054h,065h,061h,06Dh,00h
 str_ExhibitionGame:
-db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,00h
+        db 045h,078h,068h,069h,062h,069h,074h,069h,06Fh,06Eh,020h,047h,061h,06Dh,065h,00h
 str_Iff11:
-db 02Eh,069h,066h,066h,00h
+        db 02Eh,069h,066h,066h,00h
 str_Jersey:
-db 06Ah,065h,072h,073h,065h,079h,00h
+        db 06Ah,065h,072h,073h,065h,079h,00h
 str_Pointer20:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h,00h,00h
 str_Temp8:
-db 074h,065h,06Dh,070h,00h
+        db 074h,065h,06Dh,070h,00h
 str_Buffer:
-db 062h,075h,066h,066h,065h,072h,00h
+        db 062h,075h,066h,066h,065h,072h,00h
 str_Sound4:
-db 073h,06Fh,075h,06Eh,064h,00h
+        db 073h,06Fh,075h,06Eh,064h,00h
 str_Dbx2:
-db 064h,062h,078h,032h,00h
+        db 064h,062h,078h,032h,00h
 str_PCSpeaker:
-db 050h,043h,020h,053h,070h,065h,061h,06Bh,065h,072h,00h
+        db 050h,043h,020h,053h,070h,065h,061h,06Bh,065h,072h,00h
 str_SoundBlaster:
-db 053h,06Fh,075h,06Eh,064h,020h,042h,06Ch,061h,073h,074h,065h,072h,00h
+        db 053h,06Fh,075h,06Eh,064h,020h,042h,06Ch,061h,073h,074h,065h,072h,00h
 str_ADLib:
-db 041h,044h,020h,04Ch,069h,062h,00h
+        db 041h,044h,020h,04Ch,069h,062h,00h
 str_MT32:
-db 04Dh,054h,02Dh,033h,032h,00h
+        db 04Dh,054h,02Dh,033h,032h,00h
 str_UltraSound:
-db 055h,06Ch,074h,072h,061h,053h,06Fh,075h,06Eh,064h,00h
+        db 055h,06Ch,074h,072h,061h,053h,06Fh,075h,06Eh,064h,00h
 str_Pointer21:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_Iff12:
-db 02Eh,069h,066h,066h,00h
+        db 02Eh,069h,066h,066h,00h
 str_Maindesk2:
-db 06Dh,061h,069h,06Eh,064h,065h,073h,06Bh,00h
+        db 06Dh,061h,069h,06Eh,064h,065h,073h,06Bh,00h
 str_Slapshot:
-db 073h,06Ch,061h,070h,073h,068h,06Fh,074h,00h
+        db 073h,06Ch,061h,070h,073h,068h,06Fh,074h,00h
 str_MT32HOCK:
-db 04Dh,054h,033h,032h,048h,04Fh,043h,04Bh,00h
+        db 04Dh,054h,033h,032h,048h,04Fh,043h,04Bh,00h
 str_NHL3:
-db 04Eh,048h,04Ch,00h
+        db 04Eh,048h,04Ch,00h
 str_R4:
-db 072h,02Bh,00h
+        db 072h,02Bh,00h
 str_CantOpenNhlCfg:
-db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
-db 063h,066h,067h,00h
+        db 063h,061h,06Eh,06Eh,06Fh,074h,020h,06Fh,070h,065h,06Eh,020h,06Eh,068h,06Ch,02Eh
+        db 063h,066h,067h,00h
 str_04x:
-db 025h,030h,034h,078h,0Ah,00h
+        db 025h,030h,034h,078h,0Ah,00h
 str_Emmcopybuf:
-db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
+        db 065h,06Dh,06Dh,063h,06Fh,070h,079h,062h,075h,066h,00h
 str_RoughingPen:
-db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 072h,06Fh,075h,067h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_ChargingPen:
-db 063h,068h,061h,072h,067h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 063h,068h,061h,072h,067h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_SlashingPen:
-db 073h,06Ch,061h,073h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 073h,06Ch,061h,073h,068h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_XcheckPen:
-db 078h,063h,068h,065h,063h,06Bh,02Eh,070h,065h,06Eh,00h
+        db 078h,063h,068h,065h,063h,06Bh,02Eh,070h,065h,06Eh,00h
 str_HookingPen:
-db 068h,06Fh,06Fh,06Bh,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 068h,06Fh,06Fh,06Bh,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_TrippingPen:
-db 074h,072h,069h,070h,070h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 074h,072h,069h,070h,070h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_InterferPen:
-db 069h,06Eh,074h,065h,072h,066h,065h,072h,02Eh,070h,065h,06Eh,00h
+        db 069h,06Eh,074h,065h,072h,066h,065h,072h,02Eh,070h,065h,06Eh,00h
 str_HoldingPen:
-db 068h,06Fh,06Ch,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 068h,06Fh,06Ch,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_AbusePen:
-db 061h,062h,075h,073h,065h,02Eh,070h,065h,06Eh,00h
+        db 061h,062h,075h,073h,065h,02Eh,070h,065h,06Eh,00h
 str_CheckbndPen:
-db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,02Eh,070h,065h,06Eh,00h
+        db 063h,068h,065h,063h,06Bh,062h,06Eh,064h,02Eh,070h,065h,06Eh,00h
 str_BoardingPen:
-db 062h,06Fh,061h,072h,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 062h,06Fh,061h,072h,064h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_ElbowingPen:
-db 065h,06Ch,062h,06Fh,077h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 065h,06Ch,062h,06Fh,077h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_HistickPen:
-db 068h,069h,073h,074h,069h,063h,06Bh,02Eh,070h,065h,06Eh,00h
+        db 068h,069h,073h,074h,069h,063h,06Bh,02Eh,070h,065h,06Eh,00h
 str_SpearingPen:
-db 073h,070h,065h,061h,072h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
+        db 073h,070h,065h,061h,072h,069h,06Eh,067h,02Eh,070h,065h,06Eh,00h
 str_Speechbuf:
-db 073h,070h,065h,065h,063h,068h,062h,075h,066h,00h
+        db 073h,070h,065h,065h,063h,068h,062h,075h,066h,00h
 str_Sentence:
-db 073h,065h,06Eh,074h,065h,06Eh,063h,065h,00h
+        db 073h,065h,06Eh,074h,065h,06Eh,063h,065h,00h
 str_SampleMemMan:
-db 073h,061h,06Dh,070h,06Ch,065h,020h,06Dh,065h,06Dh,020h,06Dh,061h,06Eh,00h
+        db 073h,061h,06Dh,070h,06Ch,065h,020h,06Dh,065h,06Dh,020h,06Dh,061h,06Eh,00h
 str_SpeechBank:
-db 073h,070h,065h,065h,063h,068h,020h,062h,061h,06Eh,06Bh,00h
+        db 073h,070h,065h,065h,063h,068h,020h,062h,061h,06Eh,06Bh,00h
 qword_C37B0:
-db 00h,00h,00h,00h,00h,00h,059h,040h
+        db 00h,00h,00h,00h,00h,00h,059h,040h
 qword_C37B8:
-db 00h,00h,00h,00h,00h,088h,0B5h,040h
+        db 00h,00h,00h,00h,00h,088h,0B5h,040h
 qword_C37C0:
-db 00h,00h,00h,00h,080h,088h,0C5h,040h
+        db 00h,00h,00h,00h,080h,088h,0C5h,040h
 qword_C37C8:
-db 00h,00h,00h,00h,00h,00h,059h,040h
+        db 00h,00h,00h,00h,00h,00h,059h,040h
 qword_C37D0:
-db 00h,00h,00h,00h,080h,088h,0C5h,040h
+        db 00h,00h,00h,00h,080h,088h,0C5h,040h
 str_Cor:
-db 063h,06Fh,072h,00h
+        db 063h,06Fh,072h,00h
 str_GamemiscS:
-db 067h,061h,06Dh,065h,06Dh,069h,073h,063h,02Eh,025h,073h,00h
+        db 067h,061h,06Dh,065h,06Dh,069h,073h,063h,02Eh,025h,073h,00h
 str_EastquadBar:
-db 065h,061h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
 str_EastsemdBar:
-db 065h,061h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
 str_EastfindBar:
-db 065h,061h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
 str_WestquadBar:
-db 077h,065h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,071h,075h,061h,064h,02Eh,062h,061h,072h,00h
 str_WestsemdBar:
-db 077h,065h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,073h,065h,06Dh,064h,02Eh,062h,061h,072h,00h
 str_WestfindBar:
-db 077h,065h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,066h,069h,06Eh,064h,02Eh,062h,061h,072h,00h
 str_StanleydBar:
-db 073h,074h,061h,06Eh,06Ch,065h,079h,064h,02Eh,062h,061h,072h,00h
+        db 073h,074h,061h,06Eh,06Ch,065h,079h,064h,02Eh,062h,061h,072h,00h
 str_EastquauBar:
-db 065h,061h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
 str_EastsemuBar:
-db 065h,061h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
 str_EastfinuBar:
-db 065h,061h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
+        db 065h,061h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
 str_WestquauBar:
-db 077h,065h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,071h,075h,061h,075h,02Eh,062h,061h,072h,00h
 str_WestsemuBar:
-db 077h,065h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,073h,065h,06Dh,075h,02Eh,062h,061h,072h,00h
 str_WestfinuBar:
-db 077h,065h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
+        db 077h,065h,073h,074h,066h,069h,06Eh,075h,02Eh,062h,061h,072h,00h
 str_StanleyuBar:
-db 073h,074h,061h,06Eh,06Ch,065h,079h,075h,02Eh,062h,061h,072h,00h
+        db 073h,074h,061h,06Eh,06Ch,065h,079h,075h,02Eh,062h,061h,072h,00h
 str_NhlInt:
-db 06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
+        db 06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
 str_ElsenhlInt:
-db 065h,06Ch,073h,065h,06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
+        db 065h,06Ch,073h,065h,06Eh,068h,06Ch,02Eh,069h,06Eh,074h,00h
 str_Rnk:
-db 072h,06Eh,06Bh,00h
+        db 072h,06Eh,06Bh,00h
 str_Awa:
-db 061h,077h,061h,00h
+        db 061h,077h,061h,00h
 str_Hom:
-db 068h,06Fh,06Dh,00h
+        db 068h,06Fh,06Dh,00h
 str_Bar:
-db 062h,061h,072h,00h
+        db 062h,061h,072h,00h
 str_Gamenum:
-db 067h,061h,06Dh,065h,06Eh,075h,06Dh,00h
+        db 067h,061h,06Dh,065h,06Eh,075h,06Dh,00h
 str_SSS:
-db 025h,073h,025h,073h,02Eh,025h,073h,00h
+        db 025h,073h,025h,073h,02Eh,025h,073h,00h
 str_Num:
-db 06Eh,075h,06Dh,00h
+        db 06Eh,075h,06Dh,00h
 str_DS:
-db 025h,064h,02Eh,025h,073h,00h
+        db 025h,064h,02Eh,025h,073h,00h
 str_02dS:
-db 025h,030h,032h,064h,02Eh,025h,073h,00h
+        db 025h,030h,032h,064h,02Eh,025h,073h,00h
 str_Tea:
-db 074h,065h,061h,00h
+        db 074h,065h,061h,00h
 str_Pen:
-db 070h,065h,06Eh,00h
+        db 070h,065h,06Eh,00h
 str_Frm:
-db 066h,072h,06Dh,00h
+        db 066h,072h,06Dh,00h
 str_XBRUCE2:
-db 058h,042h,052h,055h,043h,045h,032h,00h
+        db 058h,042h,052h,055h,043h,045h,032h,00h
 str_GsummaryDb4:
-db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h
+        db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,02Eh,064h,062h,00h
 str_AGameYouRequire:
-db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
-db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
+        db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
+        db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_DemoNhl:
-db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
+        db 064h,065h,06Dh,06Fh,02Eh,06Eh,068h,06Ch,00h
 str_H2:
-db 068h,032h,00h
+        db 068h,032h,00h
 str_h3:
-db 068h,033h,00h
+        db 068h,033h,00h
 str_Gsummary3:
-db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
+        db 067h,073h,075h,06Dh,06Dh,061h,072h,079h,00h
 str_H4:
-db 068h,034h,00h
+        db 068h,034h,00h
 str_h5:
-db 068h,035h,00h
+        db 068h,035h,00h
 str_h6:
-db 068h,036h,00h
+        db 068h,036h,00h
 str_h7:
-db 068h,037h,00h
+        db 068h,037h,00h
 str_AGameYouRequire2:
-db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
-db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
+        db 061h,020h,067h,061h,06Dh,065h,02Ch,020h,079h,06Fh,075h,020h,072h,065h,071h,075h
+        db 069h,072h,065h,020h,025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,00h
 str_GameSav5:
-db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
+        db 067h,061h,06Dh,065h,02Eh,073h,061h,076h,00h
 str_H1:
-db 068h,031h,00h
+        db 068h,031h,00h
 str_Db4:
-db 02Eh,064h,062h,00h
+        db 02Eh,064h,062h,00h
 str_Sav3:
-db 02Eh,073h,061h,076h,00h
+        db 02Eh,073h,061h,076h,00h
 str_A32:
-db 041h,033h,00h
+        db 041h,033h,00h
 str_Pointer22:
-db 070h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 070h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_Savegame:
-db 073h,061h,076h,065h,067h,061h,06Dh,065h,00h
+        db 073h,061h,076h,065h,067h,061h,06Dh,065h,00h
 str_Prmt:
-db 070h,072h,06Dh,074h,00h
+        db 070h,072h,06Dh,074h,00h
 str_Dialog:
-db 064h,069h,061h,06Ch,06Fh,067h,00h
+        db 064h,069h,061h,06Ch,06Fh,067h,00h
 str_Nhl3:
-db 02Eh,06Eh,068h,06Ch,00h
+        db 02Eh,06Eh,068h,06Ch,00h
 str_Err1:
-db 065h,072h,072h,031h,00h,00h,00h,00h
+        db 065h,072h,072h,031h,00h,00h,00h,00h
 str_SDD3:
-db 025h,073h,020h,025h,064h,020h,02Dh,020h,025h,064h,00h
+        db 025h,073h,020h,025h,064h,020h,02Dh,020h,025h,064h,00h

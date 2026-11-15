@@ -7,58 +7,58 @@ global tag_t, tag_at, tag_pk, tag_ps, tag_gk, tag_gs, str_Fanom, str_Goal
 global str_Clap2, str_Uflag, str_Cflag, str_Siren2, str_Ruff, str_Hook3, str_Saved2, str_Cross
 global str_Guilt, str_1st, str_2nd, str_3rd
 tag_t:
-db 074h,00h
+        db 074h,00h
 tag_at:
-db 061h,074h,00h
+        db 061h,074h,00h
 tag_pk:
-db 070h,06Bh,00h
+        db 070h,06Bh,00h
 tag_ps:
-db 070h,073h,00h
+        db 070h,073h,00h
 tag_pset:
-db 070h,073h,065h,074h,00h
+        db 070h,073h,065h,074h,00h
 tag_aps:
-db 061h,070h,073h,00h
+        db 061h,070h,073h,00h
 tag_apset:
-db 061h,070h,073h,065h,074h,00h
+        db 061h,070h,073h,065h,074h,00h
 tag_gk:
-db 067h,06Bh,00h
+        db 067h,06Bh,00h
 tag_gs:
-db 067h,073h,00h
+        db 067h,073h,00h
 tag_gset:
-db 067h,073h,065h,074h,00h
+        db 067h,073h,065h,074h,00h
 tag_ags:
-db 061h,067h,073h,00h
+        db 061h,067h,073h,00h
 tag_agset:
-db 061h,067h,073h,065h,074h,00h,00h
+        db 061h,067h,073h,065h,074h,00h,00h
 str_LoadPic:
-db 06Ch,06Fh,061h,064h,00h
+        db 06Ch,06Fh,061h,064h,00h
 str_Pal23:
-db 021h,070h,061h,06Ch,00h,00h,00h
+        db 021h,070h,061h,06Ch,00h,00h,00h
 str_Fanom:
-db 066h,061h,06Eh,06Fh,06Dh,00h
+        db 066h,061h,06Eh,06Fh,06Dh,00h
 str_Goal:
-db 067h,06Fh,061h,06Ch,00h
+        db 067h,06Fh,061h,06Ch,00h
 str_Clap2:
-db 063h,06Ch,061h,070h,00h
+        db 063h,06Ch,061h,070h,00h
 str_Uflag:
-db 075h,066h,06Ch,061h,067h,00h
+        db 075h,066h,06Ch,061h,067h,00h
 str_Cflag:
-db 063h,066h,06Ch,061h,067h,00h
+        db 063h,066h,06Ch,061h,067h,00h
 str_Siren2:
-db 073h,069h,072h,065h,06Eh,00h
+        db 073h,069h,072h,065h,06Eh,00h
 str_Ruff:
-db 072h,075h,066h,066h,00h
+        db 072h,075h,066h,066h,00h
 str_Hook3:
-db 068h,06Fh,06Fh,06Bh,00h
+        db 068h,06Fh,06Fh,06Bh,00h
 str_Saved2:
-db 073h,061h,076h,065h,064h,00h
+        db 073h,061h,076h,065h,064h,00h
 str_Cross:
-db 063h,072h,06Fh,073h,073h,00h
+        db 063h,072h,06Fh,073h,073h,00h
 str_Guilt:
-db 067h,075h,069h,06Ch,074h,00h,00h,00h
+        db 067h,075h,069h,06Ch,074h,00h,00h,00h
 str_1st:
-db 031h,073h,074h,00h
+        db 031h,073h,074h,00h
 str_2nd:
-db 032h,06Eh,064h,00h
+        db 032h,06Eh,064h,00h
 str_3rd:
-db 033h,072h,064h,00h
+        db 033h,072h,064h,00h

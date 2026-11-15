@@ -7,124 +7,124 @@ global rmdir_, loc_90C4D, _dos_close_, _dos_commit_, _dos_open_, loc_90C7A, _dos
 global sub_90C94, loc_90CA1, lseek_, loc_90CE0, loc_90CE3, _dos_read_, loc_90CEF, loc_90D08
 global _dos_write_
 rmdir_:
-push edx	; 90C32
-mov edx, eax	; 90C33
-mov ah, 3Ah	; 90C35
-int 21h	; 90C37
-rcl eax, 1	; 90C39
-ror eax, 1	; 90C3B
-test eax, eax	; 90C3D
-jge short loc_90C4D	; 90C3F
-and eax, 0FFFFh	; 90C41
-call __set_errno_dos_	; 90C46
-pop edx	; 90C4B
-ret	; 90C4C
+        push edx
+        mov edx, eax
+        mov ah, 3Ah
+        int 21h
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jge short loc_90C4D
+        and eax, 0FFFFh
+        call __set_errno_dos_
+        pop edx
+        ret
 loc_90C4D:
-xor eax, eax	; 90C4D
-pop edx	; 90C4F
-ret	; 90C50
-db 00h
+        xor eax, eax
+        pop edx
+        ret
+        db 00h
 _dos_close_:
-push ebx	; 90C52
-mov bx, ax	; 90C53
-mov ah, 3Eh	; 90C56
-int 21h	; 90C58
-call __doserror_	; 90C5A
-pop ebx	; 90C5F
-ret	; 90C60
+        push ebx
+        mov bx, ax
+        mov ah, 3Eh
+        int 21h
+        call __doserror_
+        pop ebx
+        ret
 _dos_commit_:
-push ebx	; 90C61
-mov bx, ax	; 90C62
-mov ah, 68h	; 90C65
-clc	; 90C67
-int 21h	; 90C68
-call __doserror_	; 90C6A
-pop ebx	; 90C6F
-ret	; 90C70
+        push ebx
+        mov bx, ax
+        mov ah, 68h
+        clc
+        int 21h
+        call __doserror_
+        pop ebx
+        ret
 _dos_open_:
-xchg edx, eax	; 90C71
-mov ah, 3Dh	; 90C72
-int 21h	; 90C74
-jb short loc_90C7A	; 90C76
-mov dword [ebx], eax	; 90C78
+        xchg edx, eax
+        mov ah, 3Dh
+        int 21h
+        jb short loc_90C7A
+        mov dword [ebx], eax
 loc_90C7A:
-call __doserror_	; 90C7A
-ret	; 90C7F
+        call __doserror_
+        ret
 _dos_creat_:
-push ecx	; 90C80
-mov ecx, edx	; 90C81
-mov edx, eax	; 90C83
-mov ah, 3Ch	; 90C85
-int 21h	; 90C87
-jb short loc_90C8D	; 90C89
-mov dword [ebx], eax	; 90C8B
+        push ecx
+        mov ecx, edx
+        mov edx, eax
+        mov ah, 3Ch
+        int 21h
+        jb short loc_90C8D
+        mov dword [ebx], eax
 loc_90C8D:
-call __doserror_	; 90C8D
-pop ecx	; 90C92
-ret	; 90C93
+        call __doserror_
+        pop ecx
+        ret
 sub_90C94:
-push ecx	; 90C94
-mov ecx, edx	; 90C95
-mov edx, eax	; 90C97
-mov ah, 5Bh	; 90C99
-int 21h	; 90C9B
-jb short loc_90CA1	; 90C9D
-mov dword [ebx], eax	; 90C9F
+        push ecx
+        mov ecx, edx
+        mov edx, eax
+        mov ah, 5Bh
+        int 21h
+        jb short loc_90CA1
+        mov dword [ebx], eax
 loc_90CA1:
-call __doserror_	; 90CA1
-pop ecx	; 90CA6
-ret	; 90CA7
+        call __doserror_
+        pop ecx
+        ret
 lseek_:
-push ecx	; 90CA8
-push edi	; 90CA9
-sub esp, byte 4	; 90CAA
-mov ecx, eax	; 90CAD
-mov eax, ebx	; 90CAF
-mov edi, esp	; 90CB1
-mov ebx, ecx	; 90CB3
-mov ah, 42h	; 90CB5
-mov ecx, edx	; 90CB7
-shr ecx, 10h	; 90CB9
-int 21h	; 90CBC
-db 066h,036h,089h,07h	; 90CBE mov [ss:edi],ax
-db 066h,036h,089h,057h,02h	; 90CC2 mov [ss:edi+2],dx
-rcl eax, 1	; 90CC7
-ror eax, 1	; 90CC9
-test eax, eax	; 90CCB
-jge short loc_90CE0	; 90CCD
-and eax, 0FFFFh	; 90CCF
-call __set_errno_dos_	; 90CD4
-mov eax, 0FFFFFFFFh	; 90CD9
-jmp short loc_90CE3	; 90CDE
+        push ecx
+        push edi
+        sub esp, byte 4
+        mov ecx, eax
+        mov eax, ebx
+        mov edi, esp
+        mov ebx, ecx
+        mov ah, 42h
+        mov ecx, edx
+        shr ecx, 10h
+        int 21h
+        db 066h,036h,089h,07h                   ; insn: mov [ss:edi],ax
+        db 066h,036h,089h,057h,02h              ; insn: mov [ss:edi+2],dx
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jge short loc_90CE0
+        and eax, 0FFFFh
+        call __set_errno_dos_
+        mov eax, 0FFFFFFFFh
+        jmp short loc_90CE3
 loc_90CE0:
-mov eax, dword [esp]	; 90CE0
+        mov eax, dword [esp]
 loc_90CE3:
-add esp, byte 4	; 90CE3
-pop edi	; 90CE6
-pop ecx	; 90CE7
-ret	; 90CE8
-db 00h
+        add esp, byte 4
+        pop edi
+        pop ecx
+        ret
+        db 00h
 _dos_read_:
-push dword 3F00h	; 90CEA
+        push dword 3F00h
 loc_90CEF:
-push ds	; 90CEF
-mov ds, ecx	; 90CF0
-mov ecx, edx	; 90CF2
-mov edx, ebx	; 90CF4
-mov ebx, eax	; 90CF6
-mov eax, dword [byte esp+04h]	; 90CF8
-int 21h	; 90CFC
-pop ds	; 90CFE
-push ds	; 90CFF
-jb short loc_90D08	; 90D00
-mov ebx, dword [byte esp+0Ch]	; 90D02
-mov dword [ebx], eax	; 90D06
+        push ds
+        mov ds, ecx
+        mov ecx, edx
+        mov edx, ebx
+        mov ebx, eax
+        mov eax, dword [byte esp+04h]
+        int 21h
+        pop ds
+        push ds
+        jb short loc_90D08
+        mov ebx, dword [byte esp+0Ch]
+        mov dword [ebx], eax
 loc_90D08:
-call __doserror_	; 90D08
-pop ds	; 90D0D
-add esp, byte 4	; 90D0E
-ret 4	; 90D11
+        call __doserror_
+        pop ds
+        add esp, byte 4
+        ret 4
 _dos_write_:
-push dword 4000h	; 90D14
-jmp short loc_90CEF	; 90D19
-db 00h,00h,00h,00h,00h
+        push dword 4000h
+        jmp short loc_90CEF
+        db 00h,00h,00h,00h,00h

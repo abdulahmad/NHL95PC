@@ -6,38 +6,38 @@ global byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, b
 global dword_F23EA, dword_F23EE, dword_F2416, dword_F243C, dword_F2440, dword_F24C0, dword_F24C8, delaycount
 global unk_F24D0, unk_F24D4
 byte_F23BC:
-resb 16
+        resb 16
 byte_F23CC:
-resb 1
+        resb 1
 byte_F23CD:
-resb 2
+        resb 2
 byte_F23CF:
-resb 17
+        resb 17
 byte_F23E0:
-resb 10
+        resb 10
 dword_F23EA:
-resb 4
+        resb 4
 dword_F23EE:
-resb 40
+        resb 40
 dword_F2416:
-resb 38
+        resb 38
 dword_F243C:
-resb 2
+        resb 2
 byte_F243E:
-resb 2
+        resb 2
 dword_F2440:
-resb 128
+        resb 128
 dword_F24C0:
-resb 4
+        resb 4
 byte_F24C4:
-resb 1
+        resb 1
 byte_F24C5:
-resb 3
+        resb 3
 dword_F24C8:
-resb 4
+        resb 4
 delaycount:
-resb 4
+        resb 4
 unk_F24D0:
-resb 4
+        resb 4
 unk_F24D4:
-resb 4
+        resb 4

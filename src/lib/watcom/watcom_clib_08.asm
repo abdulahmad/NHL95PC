@@ -5,57 +5,57 @@ section s_90392 progbits alloc exec nowrite align=1
 extern unlink_
 global strcpy_, loc_90394, loc_903AE, strcat_, loc_903C4, loc_903E0, j_unlink_
 strcpy_:
-push ecx	; 90392
-push eax	; 90393
+        push ecx
+        push eax
 loc_90394:
-mov cl, byte [edx]	; 90394
-mov byte [eax], cl	; 90396
-cmp cl, 0	; 90398
-je short loc_903AE	; 9039B
-mov cl, byte [byte edx+01h]	; 9039D
-add edx, byte 2	; 903A0
-mov byte [byte eax+01h], cl	; 903A3
-add eax, byte 2	; 903A6
-cmp cl, 0	; 903A9
-jne short loc_90394	; 903AC
+        mov cl, byte [edx]
+        mov byte [eax], cl
+        cmp cl, 0
+        je short loc_903AE
+        mov cl, byte [byte edx+01h]
+        add edx, byte 2
+        mov byte [byte eax+01h], cl
+        add eax, byte 2
+        cmp cl, 0
+        jne short loc_90394
 loc_903AE:
-pop eax	; 903AE
-pop ecx	; 903AF
-ret	; 903B0
+        pop eax
+        pop ecx
+        ret
 strcat_:
-push ecx	; 903B1
-push esi	; 903B2
-push edi	; 903B3
-mov edi, eax	; 903B4
-mov esi, edx	; 903B6
-push es	; 903B8
-push ds	; 903B9
-pop es	; 903BA
-push edi	; 903BB
-LD sub, ecx, ecx	; 903BC
-dec ecx	; 903BE
-mov al, 0	; 903BF
-repne scasb	; 903C1
-dec edi	; 903C3
+        push ecx
+        push esi
+        push edi
+        mov edi, eax
+        mov esi, edx
+        push es
+        push ds
+        pop es
+        push edi
+        LD sub, ecx, ecx
+        dec ecx
+        mov al, 0
+        repne scasb
+        dec edi
 loc_903C4:
-mov al, byte [esi]	; 903C4
-mov byte [edi], al	; 903C6
-cmp al, 0	; 903C8
-je near loc_903E0	; 903CA
-mov al, byte [byte esi+01h]	; 903D0
-add esi, byte 2	; 903D3
-mov byte [byte edi+01h], al	; 903D6
-add edi, byte 2	; 903D9
-cmp al, 0	; 903DC
-jne short loc_903C4	; 903DE
+        mov al, byte [esi]
+        mov byte [edi], al
+        cmp al, 0
+        je near loc_903E0
+        mov al, byte [byte esi+01h]
+        add esi, byte 2
+        mov byte [byte edi+01h], al
+        add edi, byte 2
+        cmp al, 0
+        jne short loc_903C4
 loc_903E0:
-pop edi	; 903E0
-pop es	; 903E1
-mov eax, edi	; 903E2
-pop edi	; 903E4
-pop esi	; 903E5
-pop ecx	; 903E6
-ret	; 903E7
+        pop edi
+        pop es
+        mov eax, edi
+        pop edi
+        pop esi
+        pop ecx
+        ret
 j_unlink_:
-jmp near unlink_	; 903E8
-db 00h,00h,00h
+        jmp near unlink_
+        db 00h,00h,00h

@@ -20,1377 +20,1434 @@ extern gsumcount, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, awpanelpen_time
 extern hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14, hmglstats_w2, hmglstats_w4
 global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
 global ResetGoalieMenu, ClearPanelPenalties
+;-----------------------------------------------------------------------------
+; LoadGameTeams                                1BBCC  95 PC, medium confidence
+; (mode): reads the Home and Visitor TEAMS.DB records (leaguedbfmt /
+; leaguedbfmt2 paths) into hmteamrec / awteamrec, opens each side's KEY / ATT
+; / SEASON / CAREER files (OpenPlayerDBs) and loads both rosters
+; (LoadTeamRoster); in modes 0 / 2 copies the saved lines into hmlinetab /
+; awlinetab; marks the scratched players (hmscratch / awscratch) in the
+; rosters; FatalError codes "1".."8"
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/LoadGameTeams.c
 %ifdef CBUILD
 %include "c/front/team_db/LoadGameTeams.inc"
 %else
 LoadGameTeams:
-push dword 88h	; 1BBCC
-call __CHK	; 1BBD1
-push ebx	; 1BBD6
-push ecx	; 1BBD7
-push edx	; 1BBD8
-push esi	; 1BBD9
-push edi	; 1BBDA
-sub esp, byte 60h	; 1BBDB
-push eax	; 1BBDE
-push str_teams	; 1BBDF
-push leaguedbfmt	; 1BBE4
-lea eax, [byte esp+038h]	; 1BBE9
-push eax	; 1BBED
-call sprintf_	; 1BBEE
-add esp, byte 0Ch	; 1BBF3
-lea ebx, [byte esp+04h]	; 1BBF6
-xor edx, edx	; 1BBFA
-lea eax, [byte esp+030h]	; 1BBFC
-call unknown_libname_1	; 1BC00
-test eax, eax	; 1BC05
-je short .1	; 1BC07
-push str_fe1	; 1BC09
-call FatalError	; 1BC0E
-add esp, byte 4	; 1BC13
+        push dword 88h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, byte 60h
+        push eax
+        push str_teams
+        push leaguedbfmt
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .1
+        push str_fe1
+        call FatalError
+        add esp, byte 4
 .1:
-lea edx, [byte esp+060h]	; 1BC16
-lea eax, [byte esp+030h]	; 1BC1A
-call FileOpenRead	; 1BC1E
-test eax, eax	; 1BC23
-je short .2	; 1BC25
-push str_fe2	; 1BC27
-call FatalError	; 1BC2C
-add esp, byte 4	; 1BC31
+        lea edx, [byte esp+060h]
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .2
+        push str_fe2
+        call FatalError
+        add esp, byte 4
 .2:
-xor ebx, ebx	; 1BC34
-xor edx, edx	; 1BC36
-mov eax, dword [byte esp+060h]	; 1BC38
-call lseek_	; 1BC3C
-test eax, eax	; 1BC41
-je short .3	; 1BC43
-push str_fe3	; 1BC45
-call FatalError	; 1BC4A
-add esp, byte 4	; 1BC4F
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, dword [byte esp+060h]
+        call lseek_
+        test eax, eax
+        je short .3
+        push str_fe3
+        call FatalError
+        add esp, byte 4
 .3:
-mov edx, dword [HomeTeam-2]	; 1BC52
-sar edx, 10h	; 1BC58
-mov eax, edx	; 1BC5B
-shl eax, 2	; 1BC5D
-sub eax, edx	; 1BC60
-shl eax, 3	; 1BC62
-mov edx, eax	; 1BC65
-shl eax, 5	; 1BC67
-sub eax, edx	; 1BC6A
-xor ebx, ebx	; 1BC6C
-mov edx, eax	; 1BC6E
-mov eax, dword [byte esp+060h]	; 1BC70
-call lseek_	; 1BC74
-test eax, eax	; 1BC79
-jge short .4	; 1BC7B
-push str_fe4	; 1BC7D
-call FatalError	; 1BC82
-add esp, byte 4	; 1BC87
+        mov edx, dword [HomeTeam-2]
+        sar edx, 10h
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        xor ebx, ebx
+        mov edx, eax
+        mov eax, dword [byte esp+060h]
+        call lseek_
+        test eax, eax
+        jge short .4
+        push str_fe4
+        call FatalError
+        add esp, byte 4
 .4:
-mov ecx, 2E8h	; 1BC8A
-mov ebx, 0FFFFFFFFh	; 1BC8F
-mov edx, hmteamrec	; 1BC94
-mov eax, dword [byte esp+060h]	; 1BC99
-call FileReadAt	; 1BC9D
-test eax, eax	; 1BCA2
-je short .5	; 1BCA4
-push str_fe5	; 1BCA6
-call FatalError	; 1BCAB
-add esp, byte 4	; 1BCB0
+        mov ecx, 2E8h
+        mov ebx, 0FFFFFFFFh
+        mov edx, hmteamrec
+        mov eax, dword [byte esp+060h]
+        call FileReadAt
+        test eax, eax
+        je short .5
+        push str_fe5
+        call FatalError
+        add esp, byte 4
 .5:
-lea eax, [byte esp+060h]	; 1BCB3
-call FileClose	; 1BCB7
-push str_teams	; 1BCBC
-push leaguedbfmt2	; 1BCC1
-lea eax, [byte esp+038h]	; 1BCC6
-push eax	; 1BCCA
-call sprintf_	; 1BCCB
-add esp, byte 0Ch	; 1BCD0
-lea ebx, [byte esp+04h]	; 1BCD3
-xor edx, edx	; 1BCD7
-lea eax, [byte esp+030h]	; 1BCD9
-call unknown_libname_1	; 1BCDD
-test eax, eax	; 1BCE2
-je short .6	; 1BCE4
-push str_fe1	; 1BCE6
-call FatalError	; 1BCEB
-add esp, byte 4	; 1BCF0
+        lea eax, [byte esp+060h]
+        call FileClose
+        push str_teams
+        push leaguedbfmt2
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .6
+        push str_fe1
+        call FatalError
+        add esp, byte 4
 .6:
-lea edx, [byte esp+060h]	; 1BCF3
-lea eax, [byte esp+030h]	; 1BCF7
-call FileOpenRead	; 1BCFB
-test eax, eax	; 1BD00
-je short .7	; 1BD02
-push str_fe2	; 1BD04
-call FatalError	; 1BD09
-add esp, byte 4	; 1BD0E
+        lea edx, [byte esp+060h]
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .7
+        push str_fe2
+        call FatalError
+        add esp, byte 4
 .7:
-xor ebx, ebx	; 1BD11
-xor edx, edx	; 1BD13
-mov eax, dword [byte esp+060h]	; 1BD15
-call lseek_	; 1BD19
-test eax, eax	; 1BD1E
-je short .8	; 1BD20
-push str_fe3	; 1BD22
-call FatalError	; 1BD27
-add esp, byte 4	; 1BD2C
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, dword [byte esp+060h]
+        call lseek_
+        test eax, eax
+        je short .8
+        push str_fe3
+        call FatalError
+        add esp, byte 4
 .8:
-mov edx, dword [VisTeam-2]	; 1BD2F
-sar edx, 10h	; 1BD35
-mov eax, edx	; 1BD38
-shl eax, 2	; 1BD3A
-sub eax, edx	; 1BD3D
-shl eax, 3	; 1BD3F
-mov edx, eax	; 1BD42
-shl eax, 5	; 1BD44
-sub eax, edx	; 1BD47
-xor ebx, ebx	; 1BD49
-mov edx, eax	; 1BD4B
-mov eax, dword [byte esp+060h]	; 1BD4D
-call lseek_	; 1BD51
-test eax, eax	; 1BD56
-jge short .9	; 1BD58
-push str_fe7	; 1BD5A
-call FatalError	; 1BD5F
-add esp, byte 4	; 1BD64
+        mov edx, dword [VisTeam-2]
+        sar edx, 10h
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        xor ebx, ebx
+        mov edx, eax
+        mov eax, dword [byte esp+060h]
+        call lseek_
+        test eax, eax
+        jge short .9
+        push str_fe7
+        call FatalError
+        add esp, byte 4
 .9:
-mov ecx, 2E8h	; 1BD67
-mov ebx, 0FFFFFFFFh	; 1BD6C
-mov edx, awteamrec	; 1BD71
-mov eax, dword [byte esp+060h]	; 1BD76
-call FileReadAt	; 1BD7A
-test eax, eax	; 1BD7F
-je short .10	; 1BD81
-push str_fe8	; 1BD83
-call FatalError	; 1BD88
-add esp, byte 4	; 1BD8D
+        mov ecx, 2E8h
+        mov ebx, 0FFFFFFFFh
+        mov edx, awteamrec
+        mov eax, dword [byte esp+060h]
+        call FileReadAt
+        test eax, eax
+        je short .10
+        push str_fe8
+        call FatalError
+        add esp, byte 4
 .10:
-lea eax, [byte esp+060h]	; 1BD90
-call FileClose	; 1BD94
-lea eax, [byte esp+050h]	; 1BD99
-push eax	; 1BD9D
-push leaguedbfmt	; 1BD9E
-lea eax, [byte esp+05Ch]	; 1BDA3
-push eax	; 1BDA7
-lea ecx, [byte esp+064h]	; 1BDA8
-lea ebx, [byte esp+068h]	; 1BDAC
-lea edx, [byte esp+06Ch]	; 1BDB0
-mov eax, dword [byte esp+0Ch]	; 1BDB4
-call OpenPlayerDBs	; 1BDB8
-push byte 0	; 1BDBD
-mov edx, dword [byte esp+054h]	; 1BDBF
-push edx	; 1BDC3
-mov ebx, dword [byte esp+05Ch]	; 1BDC4
-push ebx	; 1BDC8
-mov ecx, dword [byte esp+064h]	; 1BDC9
-mov ebx, dword [byte esp+068h]	; 1BDCD
-mov edx, dword [byte esp+06Ch]	; 1BDD1
-mov eax, dword [byte esp+0Ch]	; 1BDD5
-call LoadTeamRoster	; 1BDD9
-lea eax, [byte esp+060h]	; 1BDDE
-call FileClose	; 1BDE2
-lea eax, [byte esp+05Ch]	; 1BDE7
-call FileClose	; 1BDEB
-lea eax, [byte esp+058h]	; 1BDF0
-call FileClose	; 1BDF4
-test byte [esp], 6	; 1BDF9
-jne short .11	; 1BDFD
-lea eax, [byte esp+054h]	; 1BDFF
-call FileClose	; 1BE03
+        lea eax, [byte esp+060h]
+        call FileClose
+        lea eax, [byte esp+050h]
+        push eax
+        push leaguedbfmt
+        lea eax, [byte esp+05Ch]
+        push eax
+        lea ecx, [byte esp+064h]
+        lea ebx, [byte esp+068h]
+        lea edx, [byte esp+06Ch]
+        mov eax, dword [byte esp+0Ch]
+        call OpenPlayerDBs
+        push byte 0
+        mov edx, dword [byte esp+054h]
+        push edx
+        mov ebx, dword [byte esp+05Ch]
+        push ebx
+        mov ecx, dword [byte esp+064h]
+        mov ebx, dword [byte esp+068h]
+        mov edx, dword [byte esp+06Ch]
+        mov eax, dword [byte esp+0Ch]
+        call LoadTeamRoster
+        lea eax, [byte esp+060h]
+        call FileClose
+        lea eax, [byte esp+05Ch]
+        call FileClose
+        lea eax, [byte esp+058h]
+        call FileClose
+        test byte [esp], 6
+        jne short .11
+        lea eax, [byte esp+054h]
+        call FileClose
 .11:
-lea eax, [byte esp+050h]	; 1BE08
-push eax	; 1BE0C
-push leaguedbfmt2	; 1BE0D
-lea eax, [byte esp+05Ch]	; 1BE12
-push eax	; 1BE16
-lea ecx, [byte esp+064h]	; 1BE17
-lea ebx, [byte esp+068h]	; 1BE1B
-lea edx, [byte esp+06Ch]	; 1BE1F
-mov eax, dword [byte esp+0Ch]	; 1BE23
-call OpenPlayerDBs	; 1BE27
-push byte 1	; 1BE2C
-mov ecx, dword [byte esp+054h]	; 1BE2E
-push ecx	; 1BE32
-mov esi, dword [byte esp+05Ch]	; 1BE33
-push esi	; 1BE37
-mov ecx, dword [byte esp+064h]	; 1BE38
-mov ebx, dword [byte esp+068h]	; 1BE3C
-mov edx, dword [byte esp+06Ch]	; 1BE40
-mov eax, dword [byte esp+0Ch]	; 1BE44
-call LoadTeamRoster	; 1BE48
-lea eax, [byte esp+060h]	; 1BE4D
-call FileClose	; 1BE51
-lea eax, [byte esp+05Ch]	; 1BE56
-call FileClose	; 1BE5A
-lea eax, [byte esp+058h]	; 1BE5F
-call FileClose	; 1BE63
-test byte [esp], 6	; 1BE68
-jne short .12	; 1BE6C
-lea eax, [byte esp+054h]	; 1BE6E
-call FileClose	; 1BE72
+        lea eax, [byte esp+050h]
+        push eax
+        push leaguedbfmt2
+        lea eax, [byte esp+05Ch]
+        push eax
+        lea ecx, [byte esp+064h]
+        lea ebx, [byte esp+068h]
+        lea edx, [byte esp+06Ch]
+        mov eax, dword [byte esp+0Ch]
+        call OpenPlayerDBs
+        push byte 1
+        mov ecx, dword [byte esp+054h]
+        push ecx
+        mov esi, dword [byte esp+05Ch]
+        push esi
+        mov ecx, dword [byte esp+064h]
+        mov ebx, dword [byte esp+068h]
+        mov edx, dword [byte esp+06Ch]
+        mov eax, dword [byte esp+0Ch]
+        call LoadTeamRoster
+        lea eax, [byte esp+060h]
+        call FileClose
+        lea eax, [byte esp+05Ch]
+        call FileClose
+        lea eax, [byte esp+058h]
+        call FileClose
+        test byte [esp], 6
+        jne short .12
+        lea eax, [byte esp+054h]
+        call FileClose
 .12:
-mov edi, dword [esp]	; 1BE77
-test edi, edi	; 1BE7A
-je short .13	; 1BE7C
-cmp edi, byte 2	; 1BE7E
-jne short .14	; 1BE81
+        mov edi, dword [esp]
+        test edi, edi
+        je short .13
+        cmp edi, byte 2
+        jne short .14
 .13:
-mov ecx, 0Ch	; 1BE83
-mov edi, hmlinetab	; 1BE88
-mov esi, hmteamrec+0BCh	; 1BE8D
-rep movsd	; 1BE92
-mov ecx, 0Ch	; 1BE94
-mov edi, awlinetab	; 1BE99
-mov esi, awteamrec+0BCh	; 1BE9E
-rep movsd	; 1BEA3
+        mov ecx, 0Ch
+        mov edi, hmlinetab
+        mov esi, hmteamrec+0BCh
+        rep movsd
+        mov ecx, 0Ch
+        mov edi, awlinetab
+        mov esi, awteamrec+0BCh
+        rep movsd
 .14:
-xor eax, eax	; 1BEA5
-mov cl, 2	; 1BEA7
+        xor eax, eax
+        mov cl, 2
 .15:
-mov dh, byte [dword eax+hmscratch]	; 1BEA9
-cmp dh, 64h	; 1BEAF
-je short .16	; 1BEB2
-xor ebx, ebx	; 1BEB4
-mov bl, dh	; 1BEB6
-mov edx, ebx	; 1BEB8
-shl edx, 2	; 1BEBA
-add edx, ebx	; 1BEBD
-shl edx, 3	; 1BEBF
-sub edx, ebx	; 1BEC2
-mov byte [dword edx+hmroster], 2	; 1BEC4
+        mov dh, byte [dword eax+hmscratch]
+        cmp dh, 64h
+        je short .16
+        xor ebx, ebx
+        mov bl, dh
+        mov edx, ebx
+        shl edx, 2
+        add edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        mov byte [dword edx+hmroster], 2
 .16:
-cmp byte [dword eax+awscratch], 64h	; 1BECB
-je short .17	; 1BED2
-xor ebx, ebx	; 1BED4
-mov bl, byte [dword eax+awscratch]	; 1BED6
-mov edx, ebx	; 1BEDC
-shl edx, 2	; 1BEDE
-add edx, ebx	; 1BEE1
-shl edx, 3	; 1BEE3
-sub edx, ebx	; 1BEE6
-mov byte [dword edx+awroster], cl	; 1BEE8
+        cmp byte [dword eax+awscratch], 64h
+        je short .17
+        xor ebx, ebx
+        mov bl, byte [dword eax+awscratch]
+        mov edx, ebx
+        shl edx, 2
+        add edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        mov byte [dword edx+awroster], cl
 .17:
-inc eax	; 1BEEE
-cmp eax, byte 8	; 1BEEF
-jl short LoadGameTeams.15	; 1BEF2
-add esp, byte 64h	; 1BEF4
-pop edi	; 1BEF7
-pop esi	; 1BEF8
-pop edx	; 1BEF9
-pop ecx	; 1BEFA
-pop ebx	; 1BEFB
-ret	; 1BEFC
+        inc eax
+        cmp eax, byte 8
+        jl short LoadGameTeams.15
+        add esp, byte 64h
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; InitGameSummary                              1BEFD  95 PC, medium confidence
+; (a, b): new game: fills the 0Bh-byte game header at C5423 (a, b, Home,
+; Visitor, 1), clears the goal / shot counters, LoadCupFinalSeries unless
+; gameopts+1 bit 1, creates <league>\gsummary.db (MakeGSummaryPath) with two
+; 0Bh headers, LoadGameTeams(0), clears the per-player (2 x 25 x 10h at
+; hmplstats) and goalie (2 x 3 x 6 at hmglstats) game stats; called from
+; temp_files, import_export, RunDemoGame and season_playoffs
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/InitGameSummary.c
 %ifdef CBUILD
 %include "c/front/team_db/InitGameSummary.inc"
 %else
 InitGameSummary:
-push dword 1Ch	; 1BEFD
-call __CHK	; 1BF02
-push ebx	; 1BF07
-push ecx	; 1BF08
-push esi	; 1BF09
-push edi	; 1BF0A
-sub esp, byte 4	; 1BF0B
-mov byte [byte_DC268], al	; 1BF0E
-mov byte [byte_DC267], dl	; 1BF13
-mov dword [curperiod], 0FFFFFFFFh	; 1BF19
-mov byte [gsumheader_b1], al	; 1BF23
-mov byte [gsumheader_b2], dl	; 1BF28
-mov al, byte [HomeTeam]	; 1BF2E
-mov byte [gsumheader_b3], al	; 1BF33
-mov al, byte [VisTeam]	; 1BF38
-mov byte [gsumheader_b4], al	; 1BF3D
-mov word [gsumcount], 1	; 1BF42
-xor ah, ah	; 1BF4B
-mov byte [hmgoalcnt], ah	; 1BF4D
-mov byte [hmshotcnt], ah	; 1BF53
-mov byte [awgoalcnt], ah	; 1BF59
-mov byte [awshotcnt], ah	; 1BF5F
-test byte [gameopts+1], 2	; 1BF65
-jne short .1	; 1BF6C
-call LoadCupFinalSeries	; 1BF6E
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        sub esp, byte 4
+        mov byte [byte_DC268], al
+        mov byte [byte_DC267], dl
+        mov dword [curperiod], 0FFFFFFFFh
+        mov byte [gsumheader_b1], al
+        mov byte [gsumheader_b2], dl
+        mov al, byte [HomeTeam]
+        mov byte [gsumheader_b3], al
+        mov al, byte [VisTeam]
+        mov byte [gsumheader_b4], al
+        mov word [gsumcount], 1
+        xor ah, ah
+        mov byte [hmgoalcnt], ah
+        mov byte [hmshotcnt], ah
+        mov byte [awgoalcnt], ah
+        mov byte [awshotcnt], ah
+        test byte [gameopts+1], 2
+        jne short .1
+        call LoadCupFinalSeries
 .1:
-call MakeGSummaryPath	; 1BF73
-mov edx, esp	; 1BF78
-mov eax, gsummarypath	; 1BF7A
-call FileCreate	; 1BF7F
-test eax, eax	; 1BF84
-je short .2	; 1BF86
-push str_feB1	; 1BF88
-call FatalError	; 1BF8D
-add esp, byte 4	; 1BF92
+        call MakeGSummaryPath
+        mov edx, esp
+        mov eax, gsummarypath
+        call FileCreate
+        test eax, eax
+        je short .2
+        push str_feB1
+        call FatalError
+        add esp, byte 4
 .2:
-mov ecx, 0Bh	; 1BF95
-mov ebx, 0FFFFFFFFh	; 1BF9A
-mov edx, gsumheader	; 1BF9F
-mov eax, dword [esp]	; 1BFA4
-call FileWriteAt	; 1BFA7
-test eax, eax	; 1BFAC
-je short .3	; 1BFAE
-push str_feB5	; 1BFB0
-call FatalError	; 1BFB5
-add esp, byte 4	; 1BFBA
+        mov ecx, 0Bh
+        mov ebx, 0FFFFFFFFh
+        mov edx, gsumheader
+        mov eax, dword [esp]
+        call FileWriteAt
+        test eax, eax
+        je short .3
+        push str_feB5
+        call FatalError
+        add esp, byte 4
 .3:
-mov ecx, 0Bh	; 1BFBD
-mov ebx, 0FFFFFFFFh	; 1BFC2
-mov edx, gsumtail	; 1BFC7
-mov eax, dword [esp]	; 1BFCC
-call FileWriteAt	; 1BFCF
-test eax, eax	; 1BFD4
-je short .4	; 1BFD6
-push str_feB8	; 1BFD8
-call FatalError	; 1BFDD
-add esp, byte 4	; 1BFE2
+        mov ecx, 0Bh
+        mov ebx, 0FFFFFFFFh
+        mov edx, gsumtail
+        mov eax, dword [esp]
+        call FileWriteAt
+        test eax, eax
+        je short .4
+        push str_feB8
+        call FatalError
+        add esp, byte 4
 .4:
-mov eax, esp	; 1BFE5
-call FileClose	; 1BFE7
-xor eax, eax	; 1BFEC
-call LoadGameTeams	; 1BFEE
-xor ebx, ebx	; 1BFF3
-mov word [hmplstats_w14], bx	; 1BFF5
-mov word [hmplstats_w12], bx	; 1BFFC
-mov word [hmplstats_w10], bx	; 1C003
-mov word [hmplstats_w8], bx	; 1C00A
-mov word [hmplstats_w6], bx	; 1C011
-mov word [hmplstats_w4], bx	; 1C018
-mov word [hmplstats_w2], bx	; 1C01F
-mov word [hmplstats], bx	; 1C026
-xor ecx, ecx	; 1C02D
+        mov eax, esp
+        call FileClose
+        xor eax, eax
+        call LoadGameTeams
+        xor ebx, ebx
+        mov word [hmplstats_w14], bx
+        mov word [hmplstats_w12], bx
+        mov word [hmplstats_w10], bx
+        mov word [hmplstats_w8], bx
+        mov word [hmplstats_w6], bx
+        mov word [hmplstats_w4], bx
+        mov word [hmplstats_w2], bx
+        mov word [hmplstats], bx
+        xor ecx, ecx
 .5:
-xor edx, edx	; 1C02F
+        xor edx, edx
 .6:
-mov eax, ecx	; 1C031
-shl eax, 2	; 1C033
-sub eax, ecx	; 1C036
-shl eax, 3	; 1C038
-add eax, ecx	; 1C03B
-shl eax, 4	; 1C03D
-mov esi, edx	; 1C040
-shl esi, 4	; 1C042
-lea edi, [dword esi+eax+hmplstats]	; 1C045
-mov esi, hmplstats	; 1C04C
-movsd	; 1C051
-movsd	; 1C052
-movsd	; 1C053
-movsd	; 1C054
-inc edx	; 1C055
-cmp edx, byte 19h	; 1C056
-jl short InitGameSummary.6	; 1C059
-inc ecx	; 1C05B
-cmp ecx, byte 2	; 1C05C
-jl short InitGameSummary.5	; 1C05F
-xor esi, esi	; 1C061
-mov word [hmglstats_w4], si	; 1C063
-mov word [hmglstats_w2], si	; 1C06A
-mov word [hmglstats], si	; 1C071
-xor ecx, ecx	; 1C078
+        mov eax, ecx
+        shl eax, 2
+        sub eax, ecx
+        shl eax, 3
+        add eax, ecx
+        shl eax, 4
+        mov esi, edx
+        shl esi, 4
+        lea edi, [dword esi+eax+hmplstats]
+        mov esi, hmplstats
+        movsd
+        movsd
+        movsd
+        movsd
+        inc edx
+        cmp edx, byte 19h
+        jl short InitGameSummary.6
+        inc ecx
+        cmp ecx, byte 2
+        jl short InitGameSummary.5
+        xor esi, esi
+        mov word [hmglstats_w4], si
+        mov word [hmglstats_w2], si
+        mov word [hmglstats], si
+        xor ecx, ecx
 .7:
-xor edx, edx	; 1C07A
+        xor edx, edx
 .8:
-mov esi, ecx	; 1C07C
-shl esi, 3	; 1C07E
-add esi, ecx	; 1C081
-add esi, esi	; 1C083
-mov eax, edx	; 1C085
-shl eax, 2	; 1C087
-sub eax, edx	; 1C08A
-lea edi, [dword esi+eax*2+hmglstats]	; 1C08C
-mov esi, hmglstats	; 1C093
-movsd	; 1C098
-movsw	; 1C099
-inc edx	; 1C09B
-cmp edx, byte 3	; 1C09C
-jl short InitGameSummary.8	; 1C09F
-inc ecx	; 1C0A1
-cmp ecx, byte 2	; 1C0A2
-jl short InitGameSummary.7	; 1C0A5
-add esp, byte 4	; 1C0A7
-pop edi	; 1C0AA
-pop esi	; 1C0AB
-pop ecx	; 1C0AC
-pop ebx	; 1C0AD
-ret	; 1C0AE
+        mov esi, ecx
+        shl esi, 3
+        add esi, ecx
+        add esi, esi
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        lea edi, [dword esi+eax*2+hmglstats]
+        mov esi, hmglstats
+        movsd
+        movsw
+        inc edx
+        cmp edx, byte 3
+        jl short InitGameSummary.8
+        inc ecx
+        cmp ecx, byte 2
+        jl short InitGameSummary.7
+        add esp, byte 4
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ReadPlayerRecs                               1C0AF  95 PC, medium confidence
+; Reads one player's KEY (34h), ATT, SEASON and CAREER records with lseek /
+; FileReadAt (FatalError codes "D".."Q"); ret 20h
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/ReadPlayerRecs.c
 %ifdef CBUILD
 %include "c/front/team_db/ReadPlayerRecs.inc"
 %else
 ReadPlayerRecs:
-push dword 1Ch	; 1C0AF
-call __CHK	; 1C0B4
-push esi	; 1C0B9
-push edi	; 1C0BA
-push ebp	; 1C0BB
-sub esp, byte 8	; 1C0BC
-mov edi, eax	; 1C0BF
-mov ebp, edx	; 1C0C1
-mov dword [byte esp+04h], ebx	; 1C0C3
-mov esi, ecx	; 1C0C7
-xor ebx, ebx	; 1C0C9
-xor edx, edx	; 1C0CB
-call lseek_	; 1C0CD
-test eax, eax	; 1C0D2
-je short .1	; 1C0D4
-push str_feD	; 1C0D6
-call FatalError	; 1C0DB
-add esp, byte 4	; 1C0E0
+        push dword 1Ch
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 8
+        mov edi, eax
+        mov ebp, edx
+        mov dword [byte esp+04h], ebx
+        mov esi, ecx
+        xor ebx, ebx
+        xor edx, edx
+        call lseek_
+        test eax, eax
+        je short .1
+        push str_feD
+        call FatalError
+        add esp, byte 4
 .1:
-xor ebx, ebx	; 1C0E3
-mov edx, dword [byte esp+018h]	; 1C0E5
-mov eax, edi	; 1C0E9
-call lseek_	; 1C0EB
-test eax, eax	; 1C0F0
-jge short .2	; 1C0F2
-push str_feE	; 1C0F4
-call FatalError	; 1C0F9
-add esp, byte 4	; 1C0FE
+        xor ebx, ebx
+        mov edx, dword [byte esp+018h]
+        mov eax, edi
+        call lseek_
+        test eax, eax
+        jge short .2
+        push str_feE
+        call FatalError
+        add esp, byte 4
 .2:
-mov ecx, 34h	; 1C101
-mov ebx, 0FFFFFFFFh	; 1C106
-mov edx, dword [byte esp+01Ch]	; 1C10B
-mov eax, edi	; 1C10F
-call FileReadAt	; 1C111
-test eax, eax	; 1C116
-je short .3	; 1C118
-push str_feF	; 1C11A
-call FatalError	; 1C11F
-add esp, byte 4	; 1C124
+        mov ecx, 34h
+        mov ebx, 0FFFFFFFFh
+        mov edx, dword [byte esp+01Ch]
+        mov eax, edi
+        call FileReadAt
+        test eax, eax
+        je short .3
+        push str_feF
+        call FatalError
+        add esp, byte 4
 .3:
-xor ebx, ebx	; 1C127
-xor edx, edx	; 1C129
-mov eax, ebp	; 1C12B
-call lseek_	; 1C12D
-test eax, eax	; 1C132
-je short .4	; 1C134
-push str_feG	; 1C136
-call FatalError	; 1C13B
-add esp, byte 4	; 1C140
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, ebp
+        call lseek_
+        test eax, eax
+        je short .4
+        push str_feG
+        call FatalError
+        add esp, byte 4
 .4:
-mov edx, dword [byte esp+01Ch]	; 1C143
-mov edx, dword [byte edx+024h]	; 1C147
-xor ebx, ebx	; 1C14A
-mov eax, ebp	; 1C14C
-call lseek_	; 1C14E
-test eax, eax	; 1C153
-jge short .5	; 1C155
-push str_feH	; 1C157
-call FatalError	; 1C15C
-add esp, byte 4	; 1C161
+        mov edx, dword [byte esp+01Ch]
+        mov edx, dword [byte edx+024h]
+        xor ebx, ebx
+        mov eax, ebp
+        call lseek_
+        test eax, eax
+        jge short .5
+        push str_feH
+        call FatalError
+        add esp, byte 4
 .5:
-mov ecx, dword [byte esp+024h]	; 1C164
-mov ebx, 0FFFFFFFFh	; 1C168
-mov edx, dword [byte esp+020h]	; 1C16D
-mov eax, ebp	; 1C171
-call FileReadAt	; 1C173
-test eax, eax	; 1C178
-je short .6	; 1C17A
-push str_feI	; 1C17C
-call FatalError	; 1C181
-add esp, byte 4	; 1C186
+        mov ecx, dword [byte esp+024h]
+        mov ebx, 0FFFFFFFFh
+        mov edx, dword [byte esp+020h]
+        mov eax, ebp
+        call FileReadAt
+        test eax, eax
+        je short .6
+        push str_feI
+        call FatalError
+        add esp, byte 4
 .6:
-xor ebx, ebx	; 1C189
-xor edx, edx	; 1C18B
-mov eax, dword [byte esp+04h]	; 1C18D
-call lseek_	; 1C191
-test eax, eax	; 1C196
-je short .7	; 1C198
-push str_feL	; 1C19A
-call FatalError	; 1C19F
-add esp, byte 4	; 1C1A4
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, dword [byte esp+04h]
+        call lseek_
+        test eax, eax
+        je short .7
+        push str_feL
+        call FatalError
+        add esp, byte 4
 .7:
-mov edx, dword [byte esp+01Ch]	; 1C1A7
-mov edx, dword [byte edx+02Ch]	; 1C1AB
-xor ebx, ebx	; 1C1AE
-mov eax, dword [byte esp+04h]	; 1C1B0
-call lseek_	; 1C1B4
-test eax, eax	; 1C1B9
-jge short .8	; 1C1BB
-push str_feM	; 1C1BD
-call FatalError	; 1C1C2
-add esp, byte 4	; 1C1C7
+        mov edx, dword [byte esp+01Ch]
+        mov edx, dword [byte edx+02Ch]
+        xor ebx, ebx
+        mov eax, dword [byte esp+04h]
+        call lseek_
+        test eax, eax
+        jge short .8
+        push str_feM
+        call FatalError
+        add esp, byte 4
 .8:
-mov ecx, dword [byte esp+02Ch]	; 1C1CA
-mov ebx, 0FFFFFFFFh	; 1C1CE
-mov edx, dword [byte esp+028h]	; 1C1D3
-mov eax, dword [byte esp+04h]	; 1C1D7
-call FileReadAt	; 1C1DB
-test eax, eax	; 1C1E0
-je short .9	; 1C1E2
-push str_feN	; 1C1E4
-call FatalError	; 1C1E9
-add esp, byte 4	; 1C1EE
+        mov ecx, dword [byte esp+02Ch]
+        mov ebx, 0FFFFFFFFh
+        mov edx, dword [byte esp+028h]
+        mov eax, dword [byte esp+04h]
+        call FileReadAt
+        test eax, eax
+        je short .9
+        push str_feN
+        call FatalError
+        add esp, byte 4
 .9:
-mov edx, dword [byte esp+034h]	; 1C1F1
-test edx, edx	; 1C1F5
-jne short .10	; 1C1F7
-mov dword [esp], edx	; 1C1F9
-jmp short .13	; 1C1FC
+        mov edx, dword [byte esp+034h]
+        test edx, edx
+        jne short .10
+        mov dword [esp], edx
+        jmp short .13
 .10:
-xor ebx, ebx	; 1C1FE
-xor edx, edx	; 1C200
-mov eax, esi	; 1C202
-call lseek_	; 1C204
-test eax, eax	; 1C209
-je short .11	; 1C20B
-push str_feO	; 1C20D
-call FatalError	; 1C212
-add esp, byte 4	; 1C217
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, esi
+        call lseek_
+        test eax, eax
+        je short .11
+        push str_feO
+        call FatalError
+        add esp, byte 4
 .11:
-mov edx, dword [byte esp+01Ch]	; 1C21A
-mov edx, dword [byte edx+028h]	; 1C21E
-xor ebx, ebx	; 1C221
-mov eax, esi	; 1C223
-call lseek_	; 1C225
-test eax, eax	; 1C22A
-jge short .12	; 1C22C
-push str_feP	; 1C22E
-call FatalError	; 1C233
-add esp, byte 4	; 1C238
+        mov edx, dword [byte esp+01Ch]
+        mov edx, dword [byte edx+028h]
+        xor ebx, ebx
+        mov eax, esi
+        call lseek_
+        test eax, eax
+        jge short .12
+        push str_feP
+        call FatalError
+        add esp, byte 4
 .12:
-mov ecx, dword [byte esp+034h]	; 1C23B
-mov ebx, 0FFFFFFFFh	; 1C23F
-mov edx, dword [byte esp+030h]	; 1C244
-mov eax, esi	; 1C248
-call FileReadAt	; 1C24A
-test eax, eax	; 1C24F
-je short .13	; 1C251
-push str_feQ	; 1C253
-call FatalError	; 1C258
-add esp, byte 4	; 1C25D
+        mov ecx, dword [byte esp+034h]
+        mov ebx, 0FFFFFFFFh
+        mov edx, dword [byte esp+030h]
+        mov eax, esi
+        call FileReadAt
+        test eax, eax
+        je short .13
+        push str_feQ
+        call FatalError
+        add esp, byte 4
 .13:
-mov eax, dword [esp]	; 1C260
-add esp, byte 8	; 1C263
-pop ebp	; 1C266
-pop edi	; 1C267
-pop esi	; 1C268
-ret 20h	; 1C269
+        mov eax, dword [esp]
+        add esp, byte 8
+        pop ebp
+        pop edi
+        pop esi
+        ret 20h
 %endif ; C
+;-----------------------------------------------------------------------------
+; OpenPlayerDBs                                1C26C  95 PC, medium confidence
+; (path fmt, &key, &att, &season, &career): FileOpenRead of "key", "att",
+; "season" and (unless mode bits 6) "career" .DB for one side (FatalError
+; "9".."K")
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/OpenPlayerDBs.c
 %ifdef CBUILD
 %include "c/front/team_db/OpenPlayerDBs.inc"
 %else
 OpenPlayerDBs:
-push dword 6Ch	; 1C26C
-call __CHK	; 1C271
-push esi	; 1C276
-push edi	; 1C277
-push ebp	; 1C278
-sub esp, byte 4Ch	; 1C279
-push eax	; 1C27C
-mov edi, edx	; 1C27D
-mov ebp, ebx	; 1C27F
-mov esi, ecx	; 1C281
-push str_key	; 1C283
-mov edx, dword [byte esp+068h]	; 1C288
-push edx	; 1C28C
-lea eax, [byte esp+038h]	; 1C28D
-push eax	; 1C291
-call sprintf_	; 1C292
-add esp, byte 0Ch	; 1C297
-lea ebx, [byte esp+04h]	; 1C29A
-xor edx, edx	; 1C29E
-lea eax, [byte esp+030h]	; 1C2A0
-call unknown_libname_1	; 1C2A4
-test eax, eax	; 1C2A9
-je short .1	; 1C2AB
-push str_fe9	; 1C2AD
-call FatalError	; 1C2B2
-add esp, byte 4	; 1C2B7
+        push dword 6Ch
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4Ch
+        push eax
+        mov edi, edx
+        mov ebp, ebx
+        mov esi, ecx
+        push str_key
+        mov edx, dword [byte esp+068h]
+        push edx
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .1
+        push str_fe9
+        call FatalError
+        add esp, byte 4
 .1:
-mov edx, edi	; 1C2BA
-lea eax, [byte esp+030h]	; 1C2BC
-call FileOpenRead	; 1C2C0
-test eax, eax	; 1C2C5
-je short .2	; 1C2C7
-push str_feA	; 1C2C9
-call FatalError	; 1C2CE
-add esp, byte 4	; 1C2D3
+        mov edx, edi
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .2
+        push str_feA
+        call FatalError
+        add esp, byte 4
 .2:
-push str_att	; 1C2D6
-mov ebx, dword [byte esp+068h]	; 1C2DB
-push ebx	; 1C2DF
-lea eax, [byte esp+038h]	; 1C2E0
-push eax	; 1C2E4
-call sprintf_	; 1C2E5
-add esp, byte 0Ch	; 1C2EA
-lea ebx, [byte esp+04h]	; 1C2ED
-xor edx, edx	; 1C2F1
-lea eax, [byte esp+030h]	; 1C2F3
-call unknown_libname_1	; 1C2F7
-test eax, eax	; 1C2FC
-je short .3	; 1C2FE
-push str_feB	; 1C300
-call FatalError	; 1C305
-add esp, byte 4	; 1C30A
+        push str_att
+        mov ebx, dword [byte esp+068h]
+        push ebx
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .3
+        push str_feB
+        call FatalError
+        add esp, byte 4
 .3:
-mov edx, ebp	; 1C30D
-lea eax, [byte esp+030h]	; 1C30F
-call FileOpenRead	; 1C313
-test eax, eax	; 1C318
-je short .4	; 1C31A
-push str_feC	; 1C31C
-call FatalError	; 1C321
-add esp, byte 4	; 1C326
+        mov edx, ebp
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .4
+        push str_feC
+        call FatalError
+        add esp, byte 4
 .4:
-push str_season	; 1C329
-mov ecx, dword [byte esp+068h]	; 1C32E
-push ecx	; 1C332
-lea eax, [byte esp+038h]	; 1C333
-push eax	; 1C337
-call sprintf_	; 1C338
-add esp, byte 0Ch	; 1C33D
-lea ebx, [byte esp+04h]	; 1C340
-xor edx, edx	; 1C344
-lea eax, [byte esp+030h]	; 1C346
-call unknown_libname_1	; 1C34A
-test eax, eax	; 1C34F
-je short .5	; 1C351
-push str_feJ	; 1C353
-call FatalError	; 1C358
-add esp, byte 4	; 1C35D
+        push str_season
+        mov ecx, dword [byte esp+068h]
+        push ecx
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .5
+        push str_feJ
+        call FatalError
+        add esp, byte 4
 .5:
-mov edx, esi	; 1C360
-lea eax, [byte esp+030h]	; 1C362
-call FileOpenRead	; 1C366
-test eax, eax	; 1C36B
-je short .6	; 1C36D
-push str_feK	; 1C36F
-call FatalError	; 1C374
-add esp, byte 4	; 1C379
+        mov edx, esi
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .6
+        push str_feK
+        call FatalError
+        add esp, byte 4
 .6:
-test byte [esp], 6	; 1C37C
-je short .7	; 1C380
-mov eax, dword [byte esp+068h]	; 1C382
-mov dword [eax], 0	; 1C386
-jmp short .10	; 1C38C
+        test byte [esp], 6
+        je short .7
+        mov eax, dword [byte esp+068h]
+        mov dword [eax], 0
+        jmp short .10
 .7:
-push str_career	; 1C38E
-mov esi, dword [byte esp+068h]	; 1C393
-push esi	; 1C397
-lea eax, [byte esp+038h]	; 1C398
-push eax	; 1C39C
-call sprintf_	; 1C39D
-add esp, byte 0Ch	; 1C3A2
-lea ebx, [byte esp+04h]	; 1C3A5
-xor edx, edx	; 1C3A9
-lea eax, [byte esp+030h]	; 1C3AB
-call unknown_libname_1	; 1C3AF
-test eax, eax	; 1C3B4
-je short .8	; 1C3B6
-push str_feL	; 1C3B8
-call FatalError	; 1C3BD
-add esp, byte 4	; 1C3C2
+        push str_career
+        mov esi, dword [byte esp+068h]
+        push esi
+        lea eax, [byte esp+038h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [byte esp+04h]
+        xor edx, edx
+        lea eax, [byte esp+030h]
+        call unknown_libname_1
+        test eax, eax
+        je short .8
+        push str_feL
+        call FatalError
+        add esp, byte 4
 .8:
-mov edx, dword [byte esp+060h]	; 1C3C5
-lea eax, [byte esp+030h]	; 1C3C9
-call FileOpenRead	; 1C3CD
-test eax, eax	; 1C3D2
-je short .9	; 1C3D4
-push str_feM	; 1C3D6
-call FatalError	; 1C3DB
-add esp, byte 4	; 1C3E0
+        mov edx, dword [byte esp+060h]
+        lea eax, [byte esp+030h]
+        call FileOpenRead
+        test eax, eax
+        je short .9
+        push str_feM
+        call FatalError
+        add esp, byte 4
 .9:
-mov eax, dword [byte esp+068h]	; 1C3E3
-mov dword [eax], 28h	; 1C3E7
+        mov eax, dword [byte esp+068h]
+        mov dword [eax], 28h
 .10:
-add esp, byte 50h	; 1C3ED
+        add esp, byte 50h
 OpenPlayerDBs_x:
-pop ebp	; 1C3F0
-pop edi	; 1C3F1
-pop esi	; 1C3F2
-ret 0Ch	; 1C3F3
+        pop ebp
+        pop edi
+        pop esi
+        ret 0Ch
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadTeamRoster                               1C3F6  95 PC, medium confidence
+; (side, file handles...): for each roster slot of the team record reads the
+; player records (ReadPlayerRecs at hmteamrec_skaters offsets) into hmroster
+; / awroster entries (names, attributes, status bytes 1 / 3 / 5)
+;-----------------------------------------------------------------------------
 LoadTeamRoster:
-push dword 130h	; 1C3F6
-call __CHK	; 1C3FB
-push esi	; 1C400
-push edi	; 1C401
-push ebp	; 1C402
-sub esp, 0F0h	; 1C403
-push eax	; 1C409
-push edx	; 1C40A
-push ebx	; 1C40B
-push ecx	; 1C40C
-xor ebp, ebp	; 1C40D
+        push dword 130h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, 0F0h
+        push eax
+        push edx
+        push ebx
+        push ecx
+        xor ebp, ebp
 .1:
-mov edx, dword [dword esp+0118h]	; 1C40F
-mov eax, edx	; 1C416
-shl eax, 2	; 1C418
-sub eax, edx	; 1C41B
-shl eax, 3	; 1C41D
-mov edx, eax	; 1C420
-shl eax, 5	; 1C422
-sub eax, edx	; 1C425
-mov edx, ebp	; 1C427
-shl edx, 2	; 1C429
-add edx, eax	; 1C42C
-mov eax, ebp	; 1C42E
-shl eax, 2	; 1C430
-add eax, ebp	; 1C433
-shl eax, 3	; 1C435
-sub eax, ebp	; 1C438
-mov dword [dword esp+0FCh], eax	; 1C43A
-mov esi, dword [dword esp+0118h]	; 1C441
-mov edi, esi	; 1C448
-shl edi, 4	; 1C44A
-add edi, esi	; 1C44D
-shl edi, 4	; 1C44F
-add edi, esi	; 1C452
-shl edi, 2	; 1C454
-lea esi, [eax+edi]	; 1C457
-mov ebx, dword [dword edx+hmteamrec_skaters]	; 1C45A
-test ebx, ebx	; 1C460
-jl near .12	; 1C462
-mov ecx, dword [dword esp+0114h]	; 1C468
-push ecx	; 1C46F
-lea eax, [dword esp+0B0h]	; 1C470
-push eax	; 1C477
-push byte 2Fh	; 1C478
-lea eax, [dword esp+088h]	; 1C47A
-push eax	; 1C481
-push byte 14h	; 1C482
-lea eax, [dword esp+0E8h]	; 1C484
-push eax	; 1C48B
-lea eax, [byte esp+060h]	; 1C48C
-push eax	; 1C490
-push ebx	; 1C491
-mov ecx, dword [dword esp+0130h]	; 1C492
-mov ebx, dword [byte esp+020h]	; 1C499
-mov edx, dword [byte esp+024h]	; 1C49D
-mov eax, dword [byte esp+028h]	; 1C4A1
-call ReadPlayerRecs	; 1C4A5
-mov al, byte [byte esp+049h]	; 1C4AA
-mov byte [dword esi+hmrosterjersey], al	; 1C4AE
-mov al, byte [byte esp+04Ah]	; 1C4B4
-mov byte [dword esi+hmrosterpos], al	; 1C4B8
-mov ebx, hmroster	; 1C4BE
-add ebx, edi	; 1C4C3
-add ebx, dword [dword esp+0FCh]	; 1C4C5
-lea eax, [byte ebx+07h]	; 1C4CC
-lea edx, [byte esp+04Bh]	; 1C4CF
-call strcpy_	; 1C4D3
-lea eax, [byte ebx+017h]	; 1C4D8
-lea edx, [byte esp+05Bh]	; 1C4DB
-call strcpy_	; 1C4DF
-mov ebx, dword [byte esp+0Ch]	; 1C4E4
-test ebx, ebx	; 1C4E8
-je short .2	; 1C4EA
-cmp ebx, byte 2	; 1C4EC
-jne short .7	; 1C4EF
+        mov edx, dword [dword esp+0118h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        mov edx, ebp
+        shl edx, 2
+        add edx, eax
+        mov eax, ebp
+        shl eax, 2
+        add eax, ebp
+        shl eax, 3
+        sub eax, ebp
+        mov dword [dword esp+0FCh], eax
+        mov esi, dword [dword esp+0118h]
+        mov edi, esi
+        shl edi, 4
+        add edi, esi
+        shl edi, 4
+        add edi, esi
+        shl edi, 2
+        lea esi, [eax+edi]
+        mov ebx, dword [dword edx+hmteamrec_skaters]
+        test ebx, ebx
+        jl near .12
+        mov ecx, dword [dword esp+0114h]
+        push ecx
+        lea eax, [dword esp+0B0h]
+        push eax
+        push byte 2Fh
+        lea eax, [dword esp+088h]
+        push eax
+        push byte 14h
+        lea eax, [dword esp+0E8h]
+        push eax
+        lea eax, [byte esp+060h]
+        push eax
+        push ebx
+        mov ecx, dword [dword esp+0130h]
+        mov ebx, dword [byte esp+020h]
+        mov edx, dword [byte esp+024h]
+        mov eax, dword [byte esp+028h]
+        call ReadPlayerRecs
+        mov al, byte [byte esp+049h]
+        mov byte [dword esi+hmrosterjersey], al
+        mov al, byte [byte esp+04Ah]
+        mov byte [dword esi+hmrosterpos], al
+        mov ebx, hmroster
+        add ebx, edi
+        add ebx, dword [dword esp+0FCh]
+        lea eax, [byte ebx+07h]
+        lea edx, [byte esp+04Bh]
+        call strcpy_
+        lea eax, [byte ebx+017h]
+        lea edx, [byte esp+05Bh]
+        call strcpy_
+        mov ebx, dword [byte esp+0Ch]
+        test ebx, ebx
+        je short .2
+        cmp ebx, byte 2
+        jne short .7
 .2:
-mov esi, ebp	; 1C4F1
-shl esi, 2	; 1C4F3
-add esi, ebp	; 1C4F6
-shl esi, 3	; 1C4F8
-sub esi, ebp	; 1C4FB
-mov edx, dword [dword esp+0118h]	; 1C4FD
-mov eax, edx	; 1C504
-shl eax, 4	; 1C506
-add eax, edx	; 1C509
-shl eax, 4	; 1C50B
-add eax, edx	; 1C50E
-shl eax, 2	; 1C510
-add esi, eax	; 1C513
-mov al, byte [byte_DC268]	; 1C515
-mov dh, byte [dword esp+0A2h]	; 1C51A
-cmp al, dh	; 1C521
-jae short .4	; 1C523
+        mov esi, ebp
+        shl esi, 2
+        add esi, ebp
+        shl esi, 3
+        sub esi, ebp
+        mov edx, dword [dword esp+0118h]
+        mov eax, edx
+        shl eax, 4
+        add eax, edx
+        shl eax, 4
+        add eax, edx
+        shl eax, 2
+        add esi, eax
+        mov al, byte [byte_DC268]
+        mov dh, byte [dword esp+0A2h]
+        cmp al, dh
+        jae short .4
 .3:
-mov byte [dword esi+hmroster], 1	; 1C525
-jmp short .9	; 1C52C
+        mov byte [dword esi+hmroster], 1
+        jmp short .9
 .4:
-jbe short .6	; 1C52E
+        jbe short .6
 .5:
-mov byte [dword esi+hmroster], 3	; 1C530
-jmp short .9	; 1C537
+        mov byte [dword esi+hmroster], 3
+        jmp short .9
 .6:
-mov al, byte [byte_DC267]	; 1C539
-cmp al, byte [dword esp+0A3h]	; 1C53E
-jb short LoadTeamRoster.3	; 1C545
-jmp short LoadTeamRoster.5	; 1C547
+        mov al, byte [byte_DC267]
+        cmp al, byte [dword esp+0A3h]
+        jb short LoadTeamRoster.3
+        jmp short LoadTeamRoster.5
 .7:
-mov edx, dword [dword esp+0118h]	; 1C549
-shl edx, 8	; 1C550
-mov eax, ebp	; 1C553
-mov eax, dword [dword edx+eax*2+hmtmpdst_m2]	; 1C555
-sar eax, 10h	; 1C55C
-test eax, eax	; 1C55F
-jle short .8	; 1C561
-mov byte [dword esi+hmroster], 5	; 1C563
-jmp short .9	; 1C56A
+        mov edx, dword [dword esp+0118h]
+        shl edx, 8
+        mov eax, ebp
+        mov eax, dword [dword edx+eax*2+hmtmpdst_m2]
+        sar eax, 10h
+        test eax, eax
+        jle short .8
+        mov byte [dword esi+hmroster], 5
+        jmp short .9
 .8:
-neg eax	; 1C56C
-mov al, byte [nosplit eax*2+byte_C66B4]	; 1C56E
-mov byte [dword esi+hmroster], al	; 1C575
+        neg eax
+        mov al, byte [nosplit eax*2+byte_C66B4]
+        mov byte [dword esi+hmroster], al
 .9:
-mov edx, dword [dword esp+0118h]	; 1C57B
-mov esi, edx	; 1C582
-shl esi, 5	; 1C584
-sub esi, edx	; 1C587
-shl esi, 2	; 1C589
-add esi, edx	; 1C58C
-shl esi, 2	; 1C58E
-mov eax, ebp	; 1C591
-shl eax, 2	; 1C593
-add eax, ebp	; 1C596
-lea edi, [dword esi+eax*4+hmplattr]	; 1C598
-lea esi, [dword esp+0D4h]	; 1C59F
-movsd	; 1C5A6
-movsd	; 1C5A7
-movsd	; 1C5A8
-movsd	; 1C5A9
-movsd	; 1C5AA
-test byte [byte esp+0Ch], 6	; 1C5AB
-jne near .13	; 1C5B0
-mov edx, dword [dword esp+0118h]	; 1C5B6
-mov eax, edx	; 1C5BD
-shl eax, 2	; 1C5BF
-sub eax, edx	; 1C5C2
-shl eax, 3	; 1C5C4
-add eax, edx	; 1C5C7
-shl eax, 4	; 1C5C9
-mov edx, ebp	; 1C5CC
-shl edx, 4	; 1C5CE
-add eax, edx	; 1C5D1
-test byte [gameopts+1], 2	; 1C5D3
-je short .11	; 1C5DA
-xor edx, edx	; 1C5DC
-mov dx, word [dword esp+0D0h]	; 1C5DE
-mov dword [dword eax+plcareergoals], edx	; 1C5E6
-mov ebx, edx	; 1C5EC
-xor edx, edx	; 1C5EE
-mov dx, word [dword esp+0D2h]	; 1C5F0
-add edx, ebx	; 1C5F8
-mov dword [dword eax+plcareerpts], edx	; 1C5FA
-xor edx, edx	; 1C600
-mov dx, word [byte esp+07Eh]	; 1C602
-mov dword [dword eax+plseasongoals], edx	; 1C607
-mov ebx, edx	; 1C60D
-xor edx, edx	; 1C60F
-mov dx, word [dword esp+080h]	; 1C611
+        mov edx, dword [dword esp+0118h]
+        mov esi, edx
+        shl esi, 5
+        sub esi, edx
+        shl esi, 2
+        add esi, edx
+        shl esi, 2
+        mov eax, ebp
+        shl eax, 2
+        add eax, ebp
+        lea edi, [dword esi+eax*4+hmplattr]
+        lea esi, [dword esp+0D4h]
+        movsd
+        movsd
+        movsd
+        movsd
+        movsd
+        test byte [byte esp+0Ch], 6
+        jne near .13
+        mov edx, dword [dword esp+0118h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        add eax, edx
+        shl eax, 4
+        mov edx, ebp
+        shl edx, 4
+        add eax, edx
+        test byte [gameopts+1], 2
+        je short .11
+        xor edx, edx
+        mov dx, word [dword esp+0D0h]
+        mov dword [dword eax+plcareergoals], edx
+        mov ebx, edx
+        xor edx, edx
+        mov dx, word [dword esp+0D2h]
+        add edx, ebx
+        mov dword [dword eax+plcareerpts], edx
+        xor edx, edx
+        mov dx, word [byte esp+07Eh]
+        mov dword [dword eax+plseasongoals], edx
+        mov ebx, edx
+        xor edx, edx
+        mov dx, word [dword esp+080h]
 .10:
-add edx, ebx	; 1C619
-mov dword [dword eax+plseasonpts], edx	; 1C61B
-jmp short .13	; 1C621
+        add edx, ebx
+        mov dword [dword eax+plseasonpts], edx
+        jmp short .13
 .11:
-xor esi, esi	; 1C623
-mov dword [dword eax+plcareergoals], esi	; 1C625
-mov edx, esi	; 1C62B
-mov dword [dword eax+plcareerpts], esi	; 1C62D
-mov dx, word [dword esp+090h]	; 1C633
-mov dword [dword eax+plseasongoals], edx	; 1C63B
-mov ebx, edx	; 1C641
-xor edx, edx	; 1C643
-mov dx, word [dword esp+092h]	; 1C645
-jmp short LoadTeamRoster.10	; 1C64D
+        xor esi, esi
+        mov dword [dword eax+plcareergoals], esi
+        mov edx, esi
+        mov dword [dword eax+plcareerpts], esi
+        mov dx, word [dword esp+090h]
+        mov dword [dword eax+plseasongoals], edx
+        mov ebx, edx
+        xor edx, edx
+        mov dx, word [dword esp+092h]
+        jmp short LoadTeamRoster.10
 .12:
-xor ah, ah	; 1C64F
-mov byte [dword esi+hmroster], ah	; 1C651
+        xor ah, ah
+        mov byte [dword esi+hmroster], ah
 .13:
-inc ebp	; 1C657
-cmp ebp, byte 19h	; 1C658
-jl near LoadTeamRoster.1	; 1C65B
-xor ebp, ebp	; 1C661
+        inc ebp
+        cmp ebp, byte 19h
+        jl near LoadTeamRoster.1
+        xor ebp, ebp
 .14:
-mov edx, dword [dword esp+0118h]	; 1C663
-mov eax, edx	; 1C66A
-shl eax, 2	; 1C66C
-sub eax, edx	; 1C66F
-shl eax, 3	; 1C671
-mov edx, eax	; 1C674
-shl eax, 5	; 1C676
-sub eax, edx	; 1C679
-mov edx, ebp	; 1C67B
-shl edx, 2	; 1C67D
-add edx, eax	; 1C680
-lea ebx, [byte ebp+019h]	; 1C682
-mov esi, dword [dword esp+0118h]	; 1C685
-mov eax, esi	; 1C68C
-shl eax, 4	; 1C68E
-add eax, esi	; 1C691
-shl eax, 4	; 1C693
-add eax, esi	; 1C696
-shl eax, 2	; 1C698
-mov dword [dword esp+0F8h], eax	; 1C69B
-mov edi, ebx	; 1C6A2
-shl edi, 2	; 1C6A4
-add edi, ebx	; 1C6A7
-shl edi, 3	; 1C6A9
-sub edi, ebx	; 1C6AC
-lea esi, [eax+edi]	; 1C6AE
-cmp dword [dword edx+hmteamrec_goalies], byte 0	; 1C6B1
-jl near .23	; 1C6B8
-push byte 0	; 1C6BE
-push byte 0	; 1C6C0
-push byte 36h	; 1C6C2
-lea eax, [byte esp+01Ch]	; 1C6C4
-push eax	; 1C6C8
-push byte 10h	; 1C6C9
-lea eax, [dword esp+0FCh]	; 1C6CB
-push eax	; 1C6D2
-lea eax, [byte esp+060h]	; 1C6D3
-push eax	; 1C6D7
-mov ebx, dword [dword edx+hmteamrec_goalies]	; 1C6D8
-push ebx	; 1C6DE
-xor ecx, ecx	; 1C6DF
-mov ebx, dword [byte esp+020h]	; 1C6E1
-mov edx, dword [byte esp+024h]	; 1C6E5
-mov eax, dword [byte esp+028h]	; 1C6E9
-call ReadPlayerRecs	; 1C6ED
-mov al, byte [byte esp+049h]	; 1C6F2
-mov byte [dword esi+hmrosterjersey], al	; 1C6F6
-mov al, byte [byte esp+04Ah]	; 1C6FC
-mov byte [dword esi+hmrosterpos], al	; 1C700
-mov ebx, hmroster	; 1C706
-add ebx, dword [dword esp+0F8h]	; 1C70B
-add ebx, edi	; 1C712
-lea eax, [byte ebx+07h]	; 1C714
-lea edx, [byte esp+04Bh]	; 1C717
-call strcpy_	; 1C71B
-lea eax, [byte ebx+017h]	; 1C720
-lea edx, [byte esp+05Bh]	; 1C723
-call strcpy_	; 1C727
-mov edi, dword [byte esp+0Ch]	; 1C72C
-test edi, edi	; 1C730
-je short .15	; 1C732
-cmp edi, byte 2	; 1C734
-jne short .20	; 1C737
+        mov edx, dword [dword esp+0118h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        mov edx, ebp
+        shl edx, 2
+        add edx, eax
+        lea ebx, [byte ebp+019h]
+        mov esi, dword [dword esp+0118h]
+        mov eax, esi
+        shl eax, 4
+        add eax, esi
+        shl eax, 4
+        add eax, esi
+        shl eax, 2
+        mov dword [dword esp+0F8h], eax
+        mov edi, ebx
+        shl edi, 2
+        add edi, ebx
+        shl edi, 3
+        sub edi, ebx
+        lea esi, [eax+edi]
+        cmp dword [dword edx+hmteamrec_goalies], byte 0
+        jl near .23
+        push byte 0
+        push byte 0
+        push byte 36h
+        lea eax, [byte esp+01Ch]
+        push eax
+        push byte 10h
+        lea eax, [dword esp+0FCh]
+        push eax
+        lea eax, [byte esp+060h]
+        push eax
+        mov ebx, dword [dword edx+hmteamrec_goalies]
+        push ebx
+        xor ecx, ecx
+        mov ebx, dword [byte esp+020h]
+        mov edx, dword [byte esp+024h]
+        mov eax, dword [byte esp+028h]
+        call ReadPlayerRecs
+        mov al, byte [byte esp+049h]
+        mov byte [dword esi+hmrosterjersey], al
+        mov al, byte [byte esp+04Ah]
+        mov byte [dword esi+hmrosterpos], al
+        mov ebx, hmroster
+        add ebx, dword [dword esp+0F8h]
+        add ebx, edi
+        lea eax, [byte ebx+07h]
+        lea edx, [byte esp+04Bh]
+        call strcpy_
+        lea eax, [byte ebx+017h]
+        lea edx, [byte esp+05Bh]
+        call strcpy_
+        mov edi, dword [byte esp+0Ch]
+        test edi, edi
+        je short .15
+        cmp edi, byte 2
+        jne short .20
 .15:
-lea ebx, [byte ebp+019h]	; 1C739
-mov edx, dword [dword esp+0118h]	; 1C73C
-mov esi, edx	; 1C743
-shl esi, 4	; 1C745
-add esi, edx	; 1C748
-shl esi, 4	; 1C74A
-add esi, edx	; 1C74D
-shl esi, 2	; 1C74F
-mov eax, ebx	; 1C752
-shl eax, 2	; 1C754
-add eax, ebx	; 1C757
-shl eax, 3	; 1C759
-sub eax, ebx	; 1C75C
-add esi, eax	; 1C75E
-mov al, byte [byte_DC268]	; 1C760
-mov cl, byte [byte esp+03Eh]	; 1C765
-cmp al, cl	; 1C769
-jae short .17	; 1C76B
+        lea ebx, [byte ebp+019h]
+        mov edx, dword [dword esp+0118h]
+        mov esi, edx
+        shl esi, 4
+        add esi, edx
+        shl esi, 4
+        add esi, edx
+        shl esi, 2
+        mov eax, ebx
+        shl eax, 2
+        add eax, ebx
+        shl eax, 3
+        sub eax, ebx
+        add esi, eax
+        mov al, byte [byte_DC268]
+        mov cl, byte [byte esp+03Eh]
+        cmp al, cl
+        jae short .17
 .16:
-mov byte [dword esi+hmroster], 1	; 1C76D
-jmp short .22	; 1C774
+        mov byte [dword esi+hmroster], 1
+        jmp short .22
 .17:
-jbe short .19	; 1C776
+        jbe short .19
 .18:
-mov byte [dword esi+hmroster], 3	; 1C778
-jmp short .22	; 1C77F
+        mov byte [dword esi+hmroster], 3
+        jmp short .22
 .19:
-mov al, byte [byte_DC267]	; 1C781
-cmp al, byte [byte esp+03Fh]	; 1C786
-jb short LoadTeamRoster.16	; 1C78A
-jmp short LoadTeamRoster.18	; 1C78C
+        mov al, byte [byte_DC267]
+        cmp al, byte [byte esp+03Fh]
+        jb short LoadTeamRoster.16
+        jmp short LoadTeamRoster.18
 .20:
-mov eax, dword [dword esp+0118h]	; 1C78E
-shl eax, 8	; 1C795
-mov edx, ebp	; 1C798
-mov eax, dword [dword eax+edx*2+hmtmpdst_gl_m2]	; 1C79A
-sar eax, 10h	; 1C7A1
-test eax, eax	; 1C7A4
-jle short .21	; 1C7A6
-mov byte [dword esi+hmroster], 5	; 1C7A8
-jmp short .22	; 1C7AF
+        mov eax, dword [dword esp+0118h]
+        shl eax, 8
+        mov edx, ebp
+        mov eax, dword [dword eax+edx*2+hmtmpdst_gl_m2]
+        sar eax, 10h
+        test eax, eax
+        jle short .21
+        mov byte [dword esi+hmroster], 5
+        jmp short .22
 .21:
-neg eax	; 1C7B1
-mov al, byte [nosplit eax*2+byte_C66B4]	; 1C7B3
-mov byte [dword esi+hmroster], al	; 1C7BA
+        neg eax
+        mov al, byte [nosplit eax*2+byte_C66B4]
+        mov byte [dword esi+hmroster], al
 .22:
-mov edx, dword [dword esp+0118h]	; 1C7C0
-mov eax, edx	; 1C7C7
-shl eax, 2	; 1C7C9
-sub eax, edx	; 1C7CC
-shl eax, 4	; 1C7CE
-mov esi, ebp	; 1C7D1
-shl esi, 4	; 1C7D3
-lea edi, [dword esi+eax+hmglattr]	; 1C7D6
-lea esi, [dword esp+0E8h]	; 1C7DD
-movsd	; 1C7E4
-movsd	; 1C7E5
-movsd	; 1C7E6
-movsd	; 1C7E7
-jmp short .24	; 1C7E8
+        mov edx, dword [dword esp+0118h]
+        mov eax, edx
+        shl eax, 2
+        sub eax, edx
+        shl eax, 4
+        mov esi, ebp
+        shl esi, 4
+        lea edi, [dword esi+eax+hmglattr]
+        lea esi, [dword esp+0E8h]
+        movsd
+        movsd
+        movsd
+        movsd
+        jmp short .24
 .23:
-xor bl, bl	; 1C7EA
-mov byte [dword esi+hmroster], bl	; 1C7EC
+        xor bl, bl
+        mov byte [dword esi+hmroster], bl
 .24:
-inc ebp	; 1C7F2
-cmp ebp, byte 3	; 1C7F3
-jl near LoadTeamRoster.14	; 1C7F6
-add esp, 100h	; 1C7FC
-jmp near OpenPlayerDBs_x	; 1C802
+        inc ebp
+        cmp ebp, byte 3
+        jl near LoadTeamRoster.14
+        add esp, 100h
+        jmp near OpenPlayerDBs_x
+;-----------------------------------------------------------------------------
+; MakeGSummaryPath                                                1C807  95 PC
+; Gsummarypath = "<curleague>\gsummary.db" (just "gsummary.db" without a
+; league)
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/MakeGSummaryPath.c
 %ifdef CBUILD
 %include "c/front/team_db/MakeGSummaryPath.inc"
 %else
 MakeGSummaryPath:
-push dword 8	; 1C807
-call __CHK	; 1C80C
-push edx	; 1C811
-xor ah, ah	; 1C812
-mov byte [gsummarypath], ah	; 1C814
-cmp byte [curleague], 0	; 1C81A
-je short .1	; 1C821
-mov edx, curleague	; 1C823
-mov eax, gsummarypath	; 1C828
-call strcpy_	; 1C82D
-mov edx, str_backslash3	; 1C832
-mov eax, gsummarypath	; 1C837
-call strcat_	; 1C83C
+        push dword 8
+        call __CHK
+        push edx
+        xor ah, ah
+        mov byte [gsummarypath], ah
+        cmp byte [curleague], 0
+        je short .1
+        mov edx, curleague
+        mov eax, gsummarypath
+        call strcpy_
+        mov edx, str_backslash3
+        mov eax, gsummarypath
+        call strcat_
 .1:
-mov edx, str_GsummaryDb2	; 1C841
-mov eax, gsummarypath	; 1C846
-call strcat_	; 1C84B
-pop edx	; 1C850
-ret	; 1C851
+        mov edx, str_GsummaryDb2
+        mov eax, gsummarypath
+        call strcat_
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SetupGoalieMenu                              1C852  95 PC, medium confidence
+; Fills the goalie menu items (mi_HomeGoalie1/2, mi_AwayGoalie1/2) with "nn
+; X. Name" for each side's two goalies (hmgoalieidx / awgoalieidx in hmroster
+; / awroster), sizes the menu columns and marks the goalie in net
+; (hmtmgoalie, NONE when pulled); called from PlayGame
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/SetupGoalieMenu.c
 %ifdef CBUILD
 %include "c/front/team_db/SetupGoalieMenu.inc"
 %else
 SetupGoalieMenu:
-push dword 38h	; 1C852
-call __CHK	; 1C857
-push ebx	; 1C85C
-push ecx	; 1C85D
-push edx	; 1C85E
-push esi	; 1C85F
-sub esp, byte 20h	; 1C860
-mov esi, hmgoaliemenu	; 1C863
-xor edx, edx	; 1C868
-mov dl, byte [hmgoalieidx]	; 1C86A
-mov ebx, edx	; 1C870
-shl ebx, 2	; 1C872
-add ebx, edx	; 1C875
-shl ebx, 3	; 1C877
-sub ebx, edx	; 1C87A
-add ebx, hmroster	; 1C87C
-mov edx, dword [mi_HomeGoalie1]	; 1C882
-mov eax, esp	; 1C888
-call strcpy_	; 1C88A
-mov ah, byte [byte ebx+05h]	; 1C88F
-cmp ah, 0Ah	; 1C892
-jae short .1	; 1C895
-mov al, byte [byte esp+01h]	; 1C897
-mov byte [byte esp+02h], al	; 1C89B
-jmp short .2	; 1C89F
+        push dword 38h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        sub esp, byte 20h
+        mov esi, hmgoaliemenu
+        xor edx, edx
+        mov dl, byte [hmgoalieidx]
+        mov ebx, edx
+        shl ebx, 2
+        add ebx, edx
+        shl ebx, 3
+        sub ebx, edx
+        add ebx, hmroster
+        mov edx, dword [mi_HomeGoalie1]
+        mov eax, esp
+        call strcpy_
+        mov ah, byte [byte ebx+05h]
+        cmp ah, 0Ah
+        jae short .1
+        mov al, byte [byte esp+01h]
+        mov byte [byte esp+02h], al
+        jmp short .2
 .1:
-xor edx, edx	; 1C8A1
-mov dl, ah	; 1C8A3
-mov ecx, 0Ah	; 1C8A5
-mov eax, edx	; 1C8AA
-sar edx, 1Fh	; 1C8AC
-idiv ecx	; 1C8AF
-mov edx, dword [byte esp-01h]	; 1C8B1
-sar edx, 18h	; 1C8B5
-add edx, eax	; 1C8B8
-mov byte [byte esp+02h], dl	; 1C8BA
+        xor edx, edx
+        mov dl, ah
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov edx, dword [byte esp-01h]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+02h], dl
 .2:
-xor edx, edx	; 1C8BE
-mov dl, byte [byte ebx+05h]	; 1C8C0
-mov ecx, 0Ah	; 1C8C3
-mov eax, edx	; 1C8C8
-sar edx, 1Fh	; 1C8CA
-idiv ecx	; 1C8CD
-mov eax, edx	; 1C8CF
-mov edx, dword [esp]	; 1C8D1
-sar edx, 18h	; 1C8D4
-add edx, eax	; 1C8D7
-mov byte [byte esp+03h], dl	; 1C8D9
-mov al, byte [byte ebx+07h]	; 1C8DD
-mov byte [byte esp+05h], al	; 1C8E0
-lea edx, [byte ebx+017h]	; 1C8E4
-mov ebx, 10h	; 1C8E7
-lea eax, [byte esp+08h]	; 1C8EC
-call strncpy_	; 1C8F0
-mov eax, esp	; 1C8F5
-push eax	; 1C8F7
-call fputchar	; 1C8F8
-add esp, byte 4	; 1C8FD
-add eax, byte 5	; 1C900
-mov dword [byte esi+08h], eax	; 1C903
-mov eax, dword [byte esi+010h]	; 1C906
-mov edx, esp	; 1C909
-call strcpy_	; 1C90B
-xor edx, edx	; 1C910
-mov dl, byte [hmgoalieidx+1]	; 1C912
-mov ebx, edx	; 1C918
-shl ebx, 2	; 1C91A
-add ebx, edx	; 1C91D
-shl ebx, 3	; 1C91F
-sub ebx, edx	; 1C922
-add ebx, hmroster	; 1C924
-mov edx, dword [byte esi+030h]	; 1C92A
-mov eax, esp	; 1C92D
-call strcpy_	; 1C92F
-cmp byte [byte ebx+05h], 0Ah	; 1C934
-jae short .3	; 1C938
-mov al, byte [byte esp+01h]	; 1C93A
-mov byte [byte esp+02h], al	; 1C93E
-jmp short .4	; 1C942
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov eax, edx
+        mov edx, dword [esp]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+03h], dl
+        mov al, byte [byte ebx+07h]
+        mov byte [byte esp+05h], al
+        lea edx, [byte ebx+017h]
+        mov ebx, 10h
+        lea eax, [byte esp+08h]
+        call strncpy_
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        add eax, byte 5
+        mov dword [byte esi+08h], eax
+        mov eax, dword [byte esi+010h]
+        mov edx, esp
+        call strcpy_
+        xor edx, edx
+        mov dl, byte [hmgoalieidx+1]
+        mov ebx, edx
+        shl ebx, 2
+        add ebx, edx
+        shl ebx, 3
+        sub ebx, edx
+        add ebx, hmroster
+        mov edx, dword [byte esi+030h]
+        mov eax, esp
+        call strcpy_
+        cmp byte [byte ebx+05h], 0Ah
+        jae short .3
+        mov al, byte [byte esp+01h]
+        mov byte [byte esp+02h], al
+        jmp short .4
 .3:
-xor edx, edx	; 1C944
-mov dl, byte [byte ebx+05h]	; 1C946
-mov ecx, 0Ah	; 1C949
-mov eax, edx	; 1C94E
-sar edx, 1Fh	; 1C950
-idiv ecx	; 1C953
-mov edx, dword [byte esp-01h]	; 1C955
-sar edx, 18h	; 1C959
-add edx, eax	; 1C95C
-mov byte [byte esp+02h], dl	; 1C95E
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov edx, dword [byte esp-01h]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+02h], dl
 .4:
-xor edx, edx	; 1C962
-mov dl, byte [byte ebx+05h]	; 1C964
-mov ecx, 0Ah	; 1C967
-mov eax, edx	; 1C96C
-sar edx, 1Fh	; 1C96E
-idiv ecx	; 1C971
-mov eax, edx	; 1C973
-mov edx, dword [esp]	; 1C975
-sar edx, 18h	; 1C978
-add edx, eax	; 1C97B
-mov byte [byte esp+03h], dl	; 1C97D
-mov al, byte [byte ebx+07h]	; 1C981
-mov byte [byte esp+05h], al	; 1C984
-lea edx, [byte ebx+017h]	; 1C988
-mov ebx, 10h	; 1C98B
-lea eax, [byte esp+08h]	; 1C990
-call strncpy_	; 1C994
-mov eax, esp	; 1C999
-push eax	; 1C99B
-call fputchar	; 1C99C
-add esp, byte 4	; 1C9A1
-add eax, byte 5	; 1C9A4
-mov dword [byte esi+028h], eax	; 1C9A7
-mov eax, dword [byte esi+030h]	; 1C9AA
-mov edx, esp	; 1C9AD
-call strcpy_	; 1C9AF
-mov eax, dword [byte esi+08h]	; 1C9B4
-mov edx, dword [byte esi+028h]	; 1C9B7
-cmp eax, edx	; 1C9BA
-jle short .5	; 1C9BC
-mov dword [byte esi+048h], eax	; 1C9BE
-mov dword [byte esi+028h], eax	; 1C9C1
-jmp short .6	; 1C9C4
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov eax, edx
+        mov edx, dword [esp]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+03h], dl
+        mov al, byte [byte ebx+07h]
+        mov byte [byte esp+05h], al
+        lea edx, [byte ebx+017h]
+        mov ebx, 10h
+        lea eax, [byte esp+08h]
+        call strncpy_
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        add eax, byte 5
+        mov dword [byte esi+028h], eax
+        mov eax, dword [byte esi+030h]
+        mov edx, esp
+        call strcpy_
+        mov eax, dword [byte esi+08h]
+        mov edx, dword [byte esi+028h]
+        cmp eax, edx
+        jle short .5
+        mov dword [byte esi+048h], eax
+        mov dword [byte esi+028h], eax
+        jmp short .6
 .5:
-mov dword [byte esi+048h], edx	; 1C9C6
-mov dword [byte esi+08h], edx	; 1C9C9
+        mov dword [byte esi+048h], edx
+        mov dword [byte esi+08h], edx
 .6:
-cmp word [hmtmgoalie], byte 0	; 1C9CC
-jge short .7	; 1C9D4
-mov eax, dword [byte esi+050h]	; 1C9D6
-jmp short .8	; 1C9D9
+        cmp word [hmtmgoalie], byte 0
+        jge short .7
+        mov eax, dword [byte esi+050h]
+        jmp short .8
 .7:
-mov eax, dword [hmtmgoalie-2]	; 1C9DB
-sar eax, 10h	; 1C9E0
-shl eax, 5	; 1C9E3
-mov eax, dword [byte esi+eax+010h]	; 1C9E6
+        mov eax, dword [hmtmgoalie-2]
+        sar eax, 10h
+        shl eax, 5
+        mov eax, dword [byte esi+eax+010h]
 .8:
-mov byte [eax], 1	; 1C9EA
-mov esi, awgoaliemenu	; 1C9ED
-xor edx, edx	; 1C9F2
-mov dl, byte [awgoalieidx]	; 1C9F4
-mov ebx, edx	; 1C9FA
-shl ebx, 2	; 1C9FC
-add ebx, edx	; 1C9FF
-shl ebx, 3	; 1CA01
-sub ebx, edx	; 1CA04
-add ebx, awroster	; 1CA06
-mov edx, dword [mi_AwayGoalie1]	; 1CA0C
-mov eax, esp	; 1CA12
-call strcpy_	; 1CA14
-cmp byte [byte ebx+05h], 0Ah	; 1CA19
-jae short .9	; 1CA1D
-mov al, byte [byte esp+01h]	; 1CA1F
-mov byte [byte esp+02h], al	; 1CA23
-jmp short .10	; 1CA27
+        mov byte [eax], 1
+        mov esi, awgoaliemenu
+        xor edx, edx
+        mov dl, byte [awgoalieidx]
+        mov ebx, edx
+        shl ebx, 2
+        add ebx, edx
+        shl ebx, 3
+        sub ebx, edx
+        add ebx, awroster
+        mov edx, dword [mi_AwayGoalie1]
+        mov eax, esp
+        call strcpy_
+        cmp byte [byte ebx+05h], 0Ah
+        jae short .9
+        mov al, byte [byte esp+01h]
+        mov byte [byte esp+02h], al
+        jmp short .10
 .9:
-xor edx, edx	; 1CA29
-mov dl, byte [byte ebx+05h]	; 1CA2B
-mov ecx, 0Ah	; 1CA2E
-mov eax, edx	; 1CA33
-sar edx, 1Fh	; 1CA35
-idiv ecx	; 1CA38
-mov edx, dword [byte esp-01h]	; 1CA3A
-sar edx, 18h	; 1CA3E
-add edx, eax	; 1CA41
-mov byte [byte esp+02h], dl	; 1CA43
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov edx, dword [byte esp-01h]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+02h], dl
 .10:
-xor edx, edx	; 1CA47
-mov dl, byte [byte ebx+05h]	; 1CA49
-mov ecx, 0Ah	; 1CA4C
-mov eax, edx	; 1CA51
-sar edx, 1Fh	; 1CA53
-idiv ecx	; 1CA56
-mov eax, edx	; 1CA58
-mov edx, dword [esp]	; 1CA5A
-sar edx, 18h	; 1CA5D
-add edx, eax	; 1CA60
-mov byte [byte esp+03h], dl	; 1CA62
-mov al, byte [byte ebx+07h]	; 1CA66
-mov byte [byte esp+05h], al	; 1CA69
-lea edx, [byte ebx+017h]	; 1CA6D
-mov ebx, 10h	; 1CA70
-lea eax, [byte esp+08h]	; 1CA75
-call strncpy_	; 1CA79
-mov eax, esp	; 1CA7E
-push eax	; 1CA80
-call fputchar	; 1CA81
-add esp, byte 4	; 1CA86
-add eax, byte 5	; 1CA89
-mov dword [byte esi+08h], eax	; 1CA8C
-mov eax, dword [byte esi+010h]	; 1CA8F
-mov edx, esp	; 1CA92
-call strcpy_	; 1CA94
-xor edx, edx	; 1CA99
-mov dl, byte [awgoalieidx+1]	; 1CA9B
-mov ebx, edx	; 1CAA1
-shl ebx, 2	; 1CAA3
-add ebx, edx	; 1CAA6
-shl ebx, 3	; 1CAA8
-sub ebx, edx	; 1CAAB
-add ebx, awroster	; 1CAAD
-mov edx, dword [byte esi+030h]	; 1CAB3
-mov eax, esp	; 1CAB6
-call strcpy_	; 1CAB8
-mov cl, byte [byte ebx+05h]	; 1CABD
-cmp cl, 0Ah	; 1CAC0
-jae short .11	; 1CAC3
-mov al, byte [byte esp+01h]	; 1CAC5
-mov byte [byte esp+02h], al	; 1CAC9
-jmp short .12	; 1CACD
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov eax, edx
+        mov edx, dword [esp]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+03h], dl
+        mov al, byte [byte ebx+07h]
+        mov byte [byte esp+05h], al
+        lea edx, [byte ebx+017h]
+        mov ebx, 10h
+        lea eax, [byte esp+08h]
+        call strncpy_
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        add eax, byte 5
+        mov dword [byte esi+08h], eax
+        mov eax, dword [byte esi+010h]
+        mov edx, esp
+        call strcpy_
+        xor edx, edx
+        mov dl, byte [awgoalieidx+1]
+        mov ebx, edx
+        shl ebx, 2
+        add ebx, edx
+        shl ebx, 3
+        sub ebx, edx
+        add ebx, awroster
+        mov edx, dword [byte esi+030h]
+        mov eax, esp
+        call strcpy_
+        mov cl, byte [byte ebx+05h]
+        cmp cl, 0Ah
+        jae short .11
+        mov al, byte [byte esp+01h]
+        mov byte [byte esp+02h], al
+        jmp short .12
 .11:
-xor edx, edx	; 1CACF
-mov dl, cl	; 1CAD1
-mov ecx, 0Ah	; 1CAD3
-mov eax, edx	; 1CAD8
-sar edx, 1Fh	; 1CADA
-idiv ecx	; 1CADD
-mov edx, dword [byte esp-01h]	; 1CADF
-sar edx, 18h	; 1CAE3
-add edx, eax	; 1CAE6
-mov byte [byte esp+02h], dl	; 1CAE8
+        xor edx, edx
+        mov dl, cl
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov edx, dword [byte esp-01h]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+02h], dl
 .12:
-xor edx, edx	; 1CAEC
-mov dl, byte [byte ebx+05h]	; 1CAEE
-mov ecx, 0Ah	; 1CAF1
-mov eax, edx	; 1CAF6
-sar edx, 1Fh	; 1CAF8
-idiv ecx	; 1CAFB
-mov eax, edx	; 1CAFD
-mov edx, dword [esp]	; 1CAFF
-sar edx, 18h	; 1CB02
-add edx, eax	; 1CB05
-mov byte [byte esp+03h], dl	; 1CB07
-mov al, byte [byte ebx+07h]	; 1CB0B
-mov byte [byte esp+05h], al	; 1CB0E
-lea edx, [byte ebx+017h]	; 1CB12
-mov ebx, 10h	; 1CB15
-lea eax, [byte esp+08h]	; 1CB1A
-call strncpy_	; 1CB1E
-mov eax, esp	; 1CB23
-push eax	; 1CB25
-call fputchar	; 1CB26
-add esp, byte 4	; 1CB2B
-add eax, byte 5	; 1CB2E
-mov dword [byte esi+028h], eax	; 1CB31
-mov eax, dword [byte esi+030h]	; 1CB34
-mov edx, esp	; 1CB37
-call strcpy_	; 1CB39
-mov eax, dword [byte esi+08h]	; 1CB3E
-mov ebx, dword [byte esi+028h]	; 1CB41
-cmp eax, ebx	; 1CB44
-jle short .13	; 1CB46
-mov dword [byte esi+048h], eax	; 1CB48
-mov dword [byte esi+028h], eax	; 1CB4B
-jmp short .14	; 1CB4E
+        xor edx, edx
+        mov dl, byte [byte ebx+05h]
+        mov ecx, 0Ah
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ecx
+        mov eax, edx
+        mov edx, dword [esp]
+        sar edx, 18h
+        add edx, eax
+        mov byte [byte esp+03h], dl
+        mov al, byte [byte ebx+07h]
+        mov byte [byte esp+05h], al
+        lea edx, [byte ebx+017h]
+        mov ebx, 10h
+        lea eax, [byte esp+08h]
+        call strncpy_
+        mov eax, esp
+        push eax
+        call fputchar
+        add esp, byte 4
+        add eax, byte 5
+        mov dword [byte esi+028h], eax
+        mov eax, dword [byte esi+030h]
+        mov edx, esp
+        call strcpy_
+        mov eax, dword [byte esi+08h]
+        mov ebx, dword [byte esi+028h]
+        cmp eax, ebx
+        jle short .13
+        mov dword [byte esi+048h], eax
+        mov dword [byte esi+028h], eax
+        jmp short .14
 .13:
-mov dword [byte esi+048h], ebx	; 1CB50
-mov dword [byte esi+08h], ebx	; 1CB53
+        mov dword [byte esi+048h], ebx
+        mov dword [byte esi+08h], ebx
 .14:
-cmp word [awtmgoalie], byte 0	; 1CB56
-jge short .15	; 1CB5E
-mov eax, dword [byte esi+050h]	; 1CB60
-jmp short .16	; 1CB63
+        cmp word [awtmgoalie], byte 0
+        jge short .15
+        mov eax, dword [byte esi+050h]
+        jmp short .16
 .15:
-mov eax, dword [awtmgoalie-2]	; 1CB65
-sar eax, 10h	; 1CB6A
-shl eax, 5	; 1CB6D
-mov eax, dword [byte esi+eax+010h]	; 1CB70
+        mov eax, dword [awtmgoalie-2]
+        sar eax, 10h
+        shl eax, 5
+        mov eax, dword [byte esi+eax+010h]
 .16:
-mov byte [eax], 1	; 1CB74
-add esp, byte 20h	; 1CB77
-pop esi	; 1CB7A
-pop edx	; 1CB7B
-pop ecx	; 1CB7C
-pop ebx	; 1CB7D
-ret	; 1CB7E
+        mov byte [eax], 1
+        add esp, byte 20h
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ResetGoalieMenu                                                 1CB7F  95 PC
+; Copies the "00 X. XXXXXXXXXXXXXXXX" template back into the four goalie
+; items and unmarks the NONE items; called at the end of PlayGame
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/ResetGoalieMenu.c
 %ifdef CBUILD
 %include "c/front/team_db/ResetGoalieMenu.inc"
 %else
 ResetGoalieMenu:
-push dword 8	; 1CB7F
-call __CHK	; 1CB84
-push edx	; 1CB89
-mov eax, dword [mi_HomeGoalie1]	; 1CB8A
-mov edx, str_GoalieItemTmpl	; 1CB8F
-call strcpy_	; 1CB94
-mov eax, dword [mi_HomeGoalie2]	; 1CB99
-mov edx, str_GoalieItemTmpl	; 1CB9E
-call strcpy_	; 1CBA3
-mov eax, dword [mi_HomeGoalieNone]	; 1CBA8
-mov byte [eax], 2	; 1CBAD
-mov eax, dword [mi_AwayGoalie1]	; 1CBB0
-mov edx, str_GoalieItemTmpl	; 1CBB5
-call strcpy_	; 1CBBA
-mov eax, dword [mi_AwayGoalie2]	; 1CBBF
-mov edx, str_GoalieItemTmpl	; 1CBC4
-call strcpy_	; 1CBC9
-mov eax, dword [mi_AwayGoalieNone]	; 1CBCE
-mov byte [eax], 2	; 1CBD3
-pop edx	; 1CBD6
-ret	; 1CBD7
+        push dword 8
+        call __CHK
+        push edx
+        mov eax, dword [mi_HomeGoalie1]
+        mov edx, str_GoalieItemTmpl
+        call strcpy_
+        mov eax, dword [mi_HomeGoalie2]
+        mov edx, str_GoalieItemTmpl
+        call strcpy_
+        mov eax, dword [mi_HomeGoalieNone]
+        mov byte [eax], 2
+        mov eax, dword [mi_AwayGoalie1]
+        mov edx, str_GoalieItemTmpl
+        call strcpy_
+        mov eax, dword [mi_AwayGoalie2]
+        mov edx, str_GoalieItemTmpl
+        call strcpy_
+        mov eax, dword [mi_AwayGoalieNone]
+        mov byte [eax], 2
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ClearPanelPenalties                          1CBD8  95 PC, medium confidence
+; Empties the 8-entry hudpenhome / hudpenaway lists (-1, times 0), then
+; LoadScoreboardGfx; LoadGameGfx_common
+;-----------------------------------------------------------------------------
 ; C: src/front/team_db/ClearPanelPenalties.c
 %ifdef CBUILD
 %include "c/front/team_db/ClearPanelPenalties.inc"
 %else
 ClearPanelPenalties:
-push dword 10h	; 1CBD8
-call __CHK	; 1CBDD
-push ebx	; 1CBE2
-push ecx	; 1CBE3
-push edx	; 1CBE4
-xor edx, edx	; 1CBE5
-mov ebx, 0FFFFFFFFh	; 1CBE7
+        push dword 10h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        xor edx, edx
+        mov ebx, 0FFFFFFFFh
 .1:
-mov word [nosplit edx*8+hudpenaway], bx	; 1CBEC
-mov word [nosplit edx*8+hudpenhome], bx	; 1CBF4
-xor ecx, ecx	; 1CBFC
-mov word [nosplit edx*8+awpanelpen_w6], cx	; 1CBFE
-mov word [nosplit edx*8+hmpanelpen_w6], cx	; 1CC06
-mov word [nosplit edx*8+awpanelpen_w4], cx	; 1CC0E
-mov word [nosplit edx*8+hmpanelpen_w4], cx	; 1CC16
-mov word [nosplit edx*8+awpanelpen_time], cx	; 1CC1E
-mov word [nosplit edx*8+hmpanelpen_time], cx	; 1CC26
-inc edx	; 1CC2E
-cmp edx, byte 8	; 1CC2F
-jl short ClearPanelPenalties.1	; 1CC32
-call LoadScoreboardGfx	; 1CC34
-pop edx	; 1CC39
-pop ecx	; 1CC3A
-pop ebx	; 1CC3B
-ret	; 1CC3C
+        mov word [nosplit edx*8+hudpenaway], bx
+        mov word [nosplit edx*8+hudpenhome], bx
+        xor ecx, ecx
+        mov word [nosplit edx*8+awpanelpen_w6], cx
+        mov word [nosplit edx*8+hmpanelpen_w6], cx
+        mov word [nosplit edx*8+awpanelpen_w4], cx
+        mov word [nosplit edx*8+hmpanelpen_w4], cx
+        mov word [nosplit edx*8+awpanelpen_time], cx
+        mov word [nosplit edx*8+hmpanelpen_time], cx
+        inc edx
+        cmp edx, byte 8
+        jl short ClearPanelPenalties.1
+        call LoadScoreboardGfx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C

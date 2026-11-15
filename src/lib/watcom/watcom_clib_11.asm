@@ -5,54 +5,54 @@ section s_90BB0 progbits alloc exec nowrite align=1
 extern __doserror_, _Extender, sub_90C0F
 global unknown_libname_1, unknown_libname_2, sub_90BE9, sub_90BEC, loc_90C0E
 unknown_libname_1:
-push ecx	; 90BB0
-push eax	; 90BB1
-push edx	; 90BB2
-mov edx, ebx	; 90BB3
-mov ah, 1Ah	; 90BB5
-int 21h	; 90BB7
-pop ecx	; 90BB9
-pop edx	; 90BBA
-mov ah, 4Eh	; 90BBB
-int 21h	; 90BBD
-call __doserror_	; 90BBF
-mov edx, ebx	; 90BC4
-call sub_90BEC	; 90BC6
-pop ecx	; 90BCB
-ret	; 90BCC
+        push ecx
+        push eax
+        push edx
+        mov edx, ebx
+        mov ah, 1Ah
+        int 21h
+        pop ecx
+        pop edx
+        mov ah, 4Eh
+        int 21h
+        call __doserror_
+        mov edx, ebx
+        call sub_90BEC
+        pop ecx
+        ret
 unknown_libname_2:
-push edx	; 90BCD
-mov edx, eax	; 90BCE
-mov ah, 1Ah	; 90BD0
-int 21h	; 90BD2
-call sub_90C0F	; 90BD4
-mov ah, 4Fh	; 90BD9
-int 21h	; 90BDB
-call __doserror_	; 90BDD
-call sub_90BEC	; 90BE2
-pop edx	; 90BE7
-ret	; 90BE8
+        push edx
+        mov edx, eax
+        mov ah, 1Ah
+        int 21h
+        call sub_90C0F
+        mov ah, 4Fh
+        int 21h
+        call __doserror_
+        call sub_90BEC
+        pop edx
+        ret
 sub_90BE9:
-xor eax, eax	; 90BE9
-ret	; 90BEB
+        xor eax, eax
+        ret
 sub_90BEC:
-cmp byte [_Extender], 9	; 90BEC
-jne short loc_90C0E	; 90BF3
-push eax	; 90BF5
-push ebx	; 90BF6
-push ecx	; 90BF7
-push esi	; 90BF8
-push edi	; 90BF9
-mov ah, 2Fh	; 90BFA
-int 21h	; 90BFC
-mov esi, ebx	; 90BFE
-mov edi, edx	; 90C00
-mov ecx, 2Bh	; 90C02
-rep movsb	; 90C07
-pop edi	; 90C09
-pop esi	; 90C0A
-pop ecx	; 90C0B
-pop ebx	; 90C0C
-pop eax	; 90C0D
+        cmp byte [_Extender], 9
+        jne short loc_90C0E
+        push eax
+        push ebx
+        push ecx
+        push esi
+        push edi
+        mov ah, 2Fh
+        int 21h
+        mov esi, ebx
+        mov edi, edx
+        mov ecx, 2Bh
+        rep movsb
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        pop eax
 loc_90C0E:
-ret	; 90C0E
+        ret

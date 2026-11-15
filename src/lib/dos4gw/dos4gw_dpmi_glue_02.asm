@@ -5,34 +5,34 @@ section s_987C0 progbits alloc exec nowrite align=1
 extern __int386x_
 global segread_, int386x_
 segread_:
-push edx	; 987C0
-mov edx, eax	; 987C1
-mov eax, cs	; 987C3
-mov word [byte edx+02h], ax	; 987C5
-mov eax, ds	; 987C9
-mov word [byte edx+06h], ax	; 987CB
-mov eax, es	; 987CF
-mov word [edx], ax	; 987D1
-mov eax, ss	; 987D4
-mov word [byte edx+04h], ax	; 987D6
-mov eax, fs	; 987DA
-mov word [byte edx+08h], ax	; 987DC
-mov eax, gs	; 987E0
-mov word [byte edx+0Ah], ax	; 987E2
-pop edx	; 987E6
-ret	; 987E7
+        push edx
+        mov edx, eax
+        mov eax, cs
+        mov word [byte edx+02h], ax
+        mov eax, ds
+        mov word [byte edx+06h], ax
+        mov eax, es
+        mov word [edx], ax
+        mov eax, ss
+        mov word [byte edx+04h], ax
+        mov eax, fs
+        mov word [byte edx+08h], ax
+        mov eax, gs
+        mov word [byte edx+0Ah], ax
+        pop edx
+        ret
 int386x_:
-push esi	; 987E8
-push edi	; 987E9
-push ebp	; 987EA
-mov ebp, ebx	; 987EB
-mov ebx, ecx	; 987ED
-mov esi, eax	; 987EF
-mov edi, edx	; 987F1
-mov edx, ebp	; 987F3
-call __int386x_	; 987F5
-mov eax, dword [byte ebp+00h]	; 987FA
-pop ebp	; 987FD
-pop edi	; 987FE
-pop esi	; 987FF
-ret	; 98800
+        push esi
+        push edi
+        push ebp
+        mov ebp, ebx
+        mov ebx, ecx
+        mov esi, eax
+        mov edi, edx
+        mov edx, ebp
+        call __int386x_
+        mov eax, dword [byte ebp+00h]
+        pop ebp
+        pop edi
+        pop esi
+        ret

@@ -5,94 +5,94 @@ section s_93170 progbits alloc exec nowrite align=1
 extern byte_D42E4, dword_D30C8, dword_D43E4, DrawArtOpaque, sub_92CD0, sub_B3ABC, sub_B6D47, vsprintf_
 global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
 sub_93170:
-sub esp, 104h	; 93170
-lea eax, [dword esp+0114h]	; 93176
-mov dword [dword esp+0100h], eax	; 9317D
-lea ebx, [dword esp+0100h]	; 93184
-mov edx, dword [dword esp+0110h]	; 9318B
-mov eax, esp	; 93192
-call vsprintf_	; 93194
-mov edx, dword [dword esp+010Ch]	; 93199
-push edx	; 931A0
-mov ebx, dword [dword esp+010Ch]	; 931A1
-push ebx	; 931A8
-lea eax, [byte esp+08h]	; 931A9
-push eax	; 931AD
-call sub_92CD0	; 931AE
-add esp, byte 0Ch	; 931B3
-xor ecx, ecx	; 931B6
-mov dword [dword esp+0100h], ecx	; 931B8
-add esp, 104h	; 931BF
-ret	; 931C5
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        sub esp, 104h
+        lea eax, [dword esp+0114h]
+        mov dword [dword esp+0100h], eax
+        lea ebx, [dword esp+0100h]
+        mov edx, dword [dword esp+0110h]
+        mov eax, esp
+        call vsprintf_
+        mov edx, dword [dword esp+010Ch]
+        push edx
+        mov ebx, dword [dword esp+010Ch]
+        push ebx
+        lea eax, [byte esp+08h]
+        push eax
+        call sub_92CD0
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov dword [dword esp+0100h], ecx
+        add esp, 104h
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 sub_931D0:
-mov ebx, dword [byte esp+08h]	; 931D0
-mov ecx, dword [byte esp+0Ch]	; 931D4
-mov edx, dword [byte esp+04h]	; 931D8
-mov eax, ebx	; 931DC
-test ecx, ecx	; 931DE
-je short loc_931FB	; 931E0
-add ecx, ebx	; 931E2
+        mov ebx, dword [byte esp+08h]
+        mov ecx, dword [byte esp+0Ch]
+        mov edx, dword [byte esp+04h]
+        mov eax, ebx
+        test ecx, ecx
+        je short loc_931FB
+        add ecx, ebx
 loc_931E4:
-xor ebx, ebx	; 931E4
-mov bl, byte [edx]	; 931E6
-mov bl, byte [dword ebx+byte_D42E4]	; 931E8
-inc edx	; 931EE
-cmp bl, 0FFh	; 931EF
-je short loc_931F6	; 931F2
-mov byte [eax], bl	; 931F4
+        xor ebx, ebx
+        mov bl, byte [edx]
+        mov bl, byte [dword ebx+byte_D42E4]
+        inc edx
+        cmp bl, 0FFh
+        je short loc_931F6
+        mov byte [eax], bl
 loc_931F6:
-inc eax	; 931F6
-cmp eax, ecx	; 931F7
-jb short loc_931E4	; 931F9
+        inc eax
+        cmp eax, ecx
+        jb short loc_931E4
 loc_931FB:
-ret	; 931FB
+        ret
 DrawArtMasked:
-mov edx, dword [byte esp+04h]	; 931FC
-mov ebx, dword [byte esp+08h]	; 93200
-mov eax, dword [byte esp+0Ch]	; 93204
-cmp dword [dword_D30C8], byte 0	; 93208
-jne short loc_9321D	; 9320F
-push eax	; 93211
-push ebx	; 93212
-push edx	; 93213
-call sub_B6D47	; 93214
-add esp, byte 0Ch	; 93219
-ret	; 9321C
+        mov edx, dword [byte esp+04h]
+        mov ebx, dword [byte esp+08h]
+        mov eax, dword [byte esp+0Ch]
+        cmp dword [dword_D30C8], byte 0
+        jne short loc_9321D
+        push eax
+        push ebx
+        push edx
+        call sub_B6D47
+        add esp, byte 0Ch
+        ret
 loc_9321D:
-mov dword [dword_D43E4], sub_931D0	; 9321D
-push eax	; 93227
-push ebx	; 93228
-push edx	; 93229
-call DrawArtOpaque	; 9322A
-add esp, byte 0Ch	; 9322F
-mov dword [dword_D43E4], sub_B3ABC	; 93232
-ret	; 9323C
-db 08Dh,040h,00h
+        mov dword [dword_D43E4], sub_931D0
+        push eax
+        push ebx
+        push edx
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        mov dword [dword_D43E4], sub_B3ABC
+        ret
+        db 08Dh,040h,00h
 sub_93240:
-mov edx, dword [byte esp+04h]	; 93240
-mov eax, dword [byte edx+0Ch]	; 93244
-sar eax, 10h	; 93247
-push eax	; 9324A
-mov eax, dword [byte edx+0Ah]	; 9324B
-sar eax, 10h	; 9324E
-push eax	; 93251
-push edx	; 93252
-call DrawArtMasked	; 93253
-add esp, byte 0Ch	; 93258
-ret	; 9325B
-mov edx, dword [byte esp+04h]	; 9325C
-mov eax, dword [byte edx+08h]	; 93260
-sar eax, 10h	; 93263
-mov ebx, dword [byte esp+0Ch]	; 93266
-sub ebx, eax	; 9326A
-push ebx	; 9326C
-mov eax, dword [byte edx+06h]	; 9326D
-sar eax, 10h	; 93270
-mov ebx, dword [byte esp+0Ch]	; 93273
-sub ebx, eax	; 93277
-push ebx	; 93279
-push edx	; 9327A
-call DrawArtMasked	; 9327B
-add esp, byte 0Ch	; 93280
-ret	; 93283
+        mov edx, dword [byte esp+04h]
+        mov eax, dword [byte edx+0Ch]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte edx+0Ah]
+        sar eax, 10h
+        push eax
+        push edx
+        call DrawArtMasked
+        add esp, byte 0Ch
+        ret
+        mov edx, dword [byte esp+04h]
+        mov eax, dword [byte edx+08h]
+        sar eax, 10h
+        mov ebx, dword [byte esp+0Ch]
+        sub ebx, eax
+        push ebx
+        mov eax, dword [byte edx+06h]
+        sar eax, 10h
+        mov ebx, dword [byte esp+0Ch]
+        sub ebx, eax
+        push ebx
+        push edx
+        call DrawArtMasked
+        add esp, byte 0Ch
+        ret

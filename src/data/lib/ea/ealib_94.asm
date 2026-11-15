@@ -4,4 +4,4 @@ bits 32
 section s_EDF04 nobits alloc noexec write align=1
 global unk_EDF04
 unk_EDF04:
-resb 8444
+        resb 8444

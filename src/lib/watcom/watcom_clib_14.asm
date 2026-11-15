@@ -14,396 +14,396 @@ global loc_91BF3, loc_91BFE, loc_91C01, loc_91C06, loc_91C26, loc_91C4E, _fsopen
 global fopen_, close_file_, loc_91C89, loc_91CA6, loc_91CAC, loc_91CB0, loc_91CB5, loc_91CD3
 global loc_91CD7
 _nmalloc_:
-push ebx	; 91984
-push ecx	; 91985
-push edx	; 91986
-push esi	; 91987
-push edi	; 91988
-push es	; 91989
-push fs	; 9198A
-push gs	; 9198C
-push ebp	; 9198E
-sub esp, byte 4	; 9198F
-mov esi, eax	; 91992
-test eax, eax	; 91994
-je short loc_9199D	; 91996
-cmp eax, byte 0FFFFFFD4h	; 91998
-jbe short loc_919A4	; 9199B
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push es
+        push fs
+        push gs
+        push ebp
+        sub esp, byte 4
+        mov esi, eax
+        test eax, eax
+        je short loc_9199D
+        cmp eax, byte 0FFFFFFD4h
+        jbe short loc_919A4
 loc_9199D:
-xor eax, eax	; 9199D
-jmp near loc_91A58	; 9199F
+        xor eax, eax
+        jmp near loc_91A58
 loc_919A4:
-mov ebp, dword_D43E8	; 919A4
-lea edi, [byte esi+03h]	; 919A9
-xor ah, ah	; 919AC
-xor ebx, ebx	; 919AE
-mov byte [esp], ah	; 919B0
-and di, byte 0FFFCh	; 919B3
+        mov ebp, dword_D43E8
+        lea edi, [byte esi+03h]
+        xor ah, ah
+        xor ebx, ebx
+        mov byte [esp], ah
+        and di, byte 0FFFCh
 loc_919B7:
-mov eax, edi	; 919B7
-cmp edi, byte 0Ch	; 919B9
-jae short loc_919C3	; 919BC
-mov eax, 0Ch	; 919BE
+        mov eax, edi
+        cmp edi, byte 0Ch
+        jae short loc_919C3
+        mov eax, 0Ch
 loc_919C3:
-cmp eax, dword [dword_D43F0]	; 919C3
-jbe short loc_919E3	; 919C9
-mov ecx, dword [dword_D43EC]	; 919CB
-test ecx, ecx	; 919D1
-jne short loc_91A1B	; 919D3
+        cmp eax, dword [dword_D43F0]
+        jbe short loc_919E3
+        mov ecx, dword [dword_D43EC]
+        test ecx, ecx
+        jne short loc_91A1B
 loc_919D5:
-mov dword [dword_D43F0], ecx	; 919D5
-mov ecx, dword [dword_D43E8]	; 919DB
-jmp short loc_91A1B	; 919E1
+        mov dword [dword_D43F0], ecx
+        mov ecx, dword [dword_D43E8]
+        jmp short loc_91A1B
 loc_919E3:
-xor ecx, ecx	; 919E3
-jmp short loc_919D5	; 919E5
+        xor ecx, ecx
+        jmp short loc_919D5
 loc_919E7:
-mov edx, ds	; 919E7
-mov eax, ebp	; 919E9
-mov dword [dword_D43EC], ecx	; 919EB
-and edx, 0FFFFh	; 919F1
-mov eax, esi	; 919F7
-mov ebx, ecx	; 919F9
-call __MemAllocator	; 919FB
-mov ebx, eax	; 91A00
-test eax, eax	; 91A02
-jne short loc_91A4E	; 91A04
-mov eax, dword [dword_D43F0]	; 91A06
-mov edx, dword [byte ecx+014h]	; 91A0B
-cmp edx, eax	; 91A0E
-jbe short loc_91A18	; 91A10
-mov dword [dword_D43F0], edx	; 91A12
+        mov edx, ds
+        mov eax, ebp
+        mov dword [dword_D43EC], ecx
+        and edx, 0FFFFh
+        mov eax, esi
+        mov ebx, ecx
+        call __MemAllocator
+        mov ebx, eax
+        test eax, eax
+        jne short loc_91A4E
+        mov eax, dword [dword_D43F0]
+        mov edx, dword [byte ecx+014h]
+        cmp edx, eax
+        jbe short loc_91A18
+        mov dword [dword_D43F0], edx
 loc_91A18:
-mov ecx, dword [byte ecx+08h]	; 91A18
+        mov ecx, dword [byte ecx+08h]
 loc_91A1B:
-test ecx, ecx	; 91A1B
-jne short loc_919E7	; 91A1D
-cmp byte [esp], 0	; 91A1F
-jne short loc_91A30	; 91A23
-mov eax, esi	; 91A25
-call __ExpandDGROUP_	; 91A27
-test eax, eax	; 91A2C
-jne short loc_91A45	; 91A2E
+        test ecx, ecx
+        jne short loc_919E7
+        cmp byte [esp], 0
+        jne short loc_91A30
+        mov eax, esi
+        call __ExpandDGROUP_
+        test eax, eax
+        jne short loc_91A45
 loc_91A30:
-mov eax, esi	; 91A30
-call sub_9AFAD	; 91A32
-test eax, eax	; 91A37
-je short loc_91A4E	; 91A39
-xor cl, cl	; 91A3B
-mov byte [esp], cl	; 91A3D
-jmp near loc_919B7	; 91A40
+        mov eax, esi
+        call sub_9AFAD
+        test eax, eax
+        je short loc_91A4E
+        xor cl, cl
+        mov byte [esp], cl
+        jmp near loc_919B7
 loc_91A45:
-mov byte [esp], 1	; 91A45
-jmp near loc_919B7	; 91A49
+        mov byte [esp], 1
+        jmp near loc_919B7
 loc_91A4E:
-xor ch, ch	; 91A4E
-mov eax, ebx	; 91A50
-mov byte [byte_F24C5], ch	; 91A52
+        xor ch, ch
+        mov eax, ebx
+        mov byte [byte_F24C5], ch
 loc_91A58:
-add esp, byte 4	; 91A58
-pop ebp	; 91A5B
-pop gs	; 91A5C
-pop fs	; 91A5E
-pop es	; 91A60
-pop edi	; 91A61
-pop esi	; 91A62
-pop edx	; 91A63
-pop ecx	; 91A64
-pop ebx	; 91A65
-ret	; 91A66
+        add esp, byte 4
+        pop ebp
+        pop gs
+        pop fs
+        pop es
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 _nfree_:
-push ebx	; 91A67
-push ecx	; 91A68
-push edx	; 91A69
-push ebp	; 91A6A
-mov ebx, eax	; 91A6B
-mov ecx, dword [dword_D43E8]	; 91A6D
-jmp short loc_91A80	; 91A73
+        push ebx
+        push ecx
+        push edx
+        push ebp
+        mov ebx, eax
+        mov ecx, dword [dword_D43E8]
+        jmp short loc_91A80
 loc_91A75:
-cmp ecx, ebx	; 91A75
-ja short loc_91A7D	; 91A77
-cmp ebx, edx	; 91A79
-jb short loc_91A87	; 91A7B
+        cmp ecx, ebx
+        ja short loc_91A7D
+        cmp ebx, edx
+        jb short loc_91A87
 loc_91A7D:
-mov ecx, dword [byte ecx+08h]	; 91A7D
+        mov ecx, dword [byte ecx+08h]
 loc_91A80:
-mov edx, dword [byte ecx+08h]	; 91A80
-test edx, edx	; 91A83
-jne short loc_91A75	; 91A85
+        mov edx, dword [byte ecx+08h]
+        test edx, edx
+        jne short loc_91A75
 loc_91A87:
-mov eax, dword_D43E8	; 91A87
-mov edx, ds	; 91A8C
-and edx, 0FFFFh	; 91A8E
-mov eax, ebx	; 91A94
-mov ebx, ecx	; 91A96
-call __MemFree	; 91A98
-cmp ecx, dword [dword_D43EC]	; 91A9D
-je short loc_91AB8	; 91AA3
-mov ebp, dword [dword_D43F0]	; 91AA5
-mov edx, dword [byte ecx+014h]	; 91AAB
-cmp edx, ebp	; 91AAE
-jbe short loc_91AB8	; 91AB0
-mov dword [dword_D43F0], edx	; 91AB2
+        mov eax, dword_D43E8
+        mov edx, ds
+        and edx, 0FFFFh
+        mov eax, ebx
+        mov ebx, ecx
+        call __MemFree
+        cmp ecx, dword [dword_D43EC]
+        je short loc_91AB8
+        mov ebp, dword [dword_D43F0]
+        mov edx, dword [byte ecx+014h]
+        cmp edx, ebp
+        jbe short loc_91AB8
+        mov dword [dword_D43F0], edx
 loc_91AB8:
-xor ah, ah	; 91AB8
-mov byte [byte_F24C5], ah	; 91ABA
-pop ebp	; 91AC0
-pop edx	; 91AC1
-pop ecx	; 91AC2
-pop ebx	; 91AC3
-ret	; 91AC4
+        xor ah, ah
+        mov byte [byte_F24C5], ah
+        pop ebp
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 strlen_:
-push ecx	; 91AC5
-push edi	; 91AC6
-mov edi, eax	; 91AC7
-push es	; 91AC9
-mov eax, ds	; 91ACA
-mov es, eax	; 91ACC
-sub ecx, ecx	; 91ACE
-dec ecx	; 91AD0
-xor eax, eax	; 91AD1
-repne scasb	; 91AD3
-not ecx	; 91AD5
-dec ecx	; 91AD7
-pop es	; 91AD8
-mov eax, ecx	; 91AD9
-pop edi	; 91ADB
-pop ecx	; 91ADC
-ret	; 91ADD
+        push ecx
+        push edi
+        mov edi, eax
+        push es
+        mov eax, ds
+        mov es, eax
+        sub ecx, ecx
+        dec ecx
+        xor eax, eax
+        repne scasb
+        not ecx
+        dec ecx
+        pop es
+        mov eax, ecx
+        pop edi
+        pop ecx
+        ret
 __open_flags_:
-push ebx	; 91ADE
-push ecx	; 91ADF
-push edx	; 91AE0
-sub esp, byte 4	; 91AE1
-mov edx, eax	; 91AE4
-xor eax, eax	; 91AE6
-mov al, byte [edx]	; 91AE8
-xor ebx, ebx	; 91AEA
-call tolower_	; 91AEC
-mov byte [esp], al	; 91AF1
-cmp al, 72h	; 91AF4
-je short loc_91B11	; 91AF6
-cmp al, 77h	; 91AF8
-je short loc_91B11	; 91AFA
-cmp al, 61h	; 91AFC
-je short loc_91B11	; 91AFE
-mov eax, 9	; 91B00
-call __set_errno_	; 91B05
-xor eax, eax	; 91B0A
-jmp near loc_91B8B	; 91B0C
+        push ebx
+        push ecx
+        push edx
+        sub esp, byte 4
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [edx]
+        xor ebx, ebx
+        call tolower_
+        mov byte [esp], al
+        cmp al, 72h
+        je short loc_91B11
+        cmp al, 77h
+        je short loc_91B11
+        cmp al, 61h
+        je short loc_91B11
+        mov eax, 9
+        call __set_errno_
+        xor eax, eax
+        jmp near loc_91B8B
 loc_91B11:
-mov eax, ebx	; 91B11
-mov cl, byte [byte edx+01h]	; 91B13
-or al, 3	; 91B16
-cmp cl, 2Bh	; 91B18
-jne short loc_91B3E	; 91B1B
-mov ebx, eax	; 91B1D
-mov cl, byte [byte edx+02h]	; 91B1F
-or al, 40h	; 91B22
-cmp cl, 62h	; 91B24
-je short loc_91B3A	; 91B27
-cmp cl, 74h	; 91B29
-je short loc_91B71	; 91B2C
-cmp dword [dword_D4F21], 200h	; 91B2E
+        mov eax, ebx
+        mov cl, byte [byte edx+01h]
+        or al, 3
+        cmp cl, 2Bh
+        jne short loc_91B3E
+        mov ebx, eax
+        mov cl, byte [byte edx+02h]
+        or al, 40h
+        cmp cl, 62h
+        je short loc_91B3A
+        cmp cl, 74h
+        je short loc_91B71
+        cmp dword [dword_D4F21], 200h
 loc_91B38:
-jne short loc_91B71	; 91B38
+        jne short loc_91B71
 loc_91B3A:
-mov ebx, eax	; 91B3A
-jmp short loc_91B71	; 91B3C
+        mov ebx, eax
+        jmp short loc_91B71
 loc_91B3E:
-mov ecx, ebx	; 91B3E
-or cl, 40h	; 91B40
-cmp byte [byte edx+01h], 62h	; 91B43
-jne short loc_91B57	; 91B47
-mov al, byte [byte edx+02h]	; 91B49
-mov ebx, ecx	; 91B4C
-cmp al, 2Bh	; 91B4E
-jne short loc_91B71	; 91B50
-or cl, 3	; 91B52
-jmp short loc_91B6F	; 91B55
+        mov ecx, ebx
+        or cl, 40h
+        cmp byte [byte edx+01h], 62h
+        jne short loc_91B57
+        mov al, byte [byte edx+02h]
+        mov ebx, ecx
+        cmp al, 2Bh
+        jne short loc_91B71
+        or cl, 3
+        jmp short loc_91B6F
 loc_91B57:
-cmp byte [byte edx+01h], 74h	; 91B57
-jne short loc_91B63	; 91B5B
-cmp byte [byte edx+02h], 2Bh	; 91B5D
-jmp short loc_91B38	; 91B61
+        cmp byte [byte edx+01h], 74h
+        jne short loc_91B63
+        cmp byte [byte edx+02h], 2Bh
+        jmp short loc_91B38
 loc_91B63:
-cmp dword [dword_D4F21], 200h	; 91B63
-jne short loc_91B71	; 91B6D
+        cmp dword [dword_D4F21], 200h
+        jne short loc_91B71
 loc_91B6F:
-mov ebx, ecx	; 91B6F
+        mov ebx, ecx
 loc_91B71:
-mov al, byte [esp]	; 91B71
-cmp al, 77h	; 91B74
-jne short loc_91B7D	; 91B76
-or bl, 2	; 91B78
-jmp short loc_91B89	; 91B7B
+        mov al, byte [esp]
+        cmp al, 77h
+        jne short loc_91B7D
+        or bl, 2
+        jmp short loc_91B89
 loc_91B7D:
-cmp al, 61h	; 91B7D
-jne short loc_91B86	; 91B7F
-or bl, 82h	; 91B81
-jmp short loc_91B89	; 91B84
+        cmp al, 61h
+        jne short loc_91B86
+        or bl, 82h
+        jmp short loc_91B89
 loc_91B86:
-or bl, 1	; 91B86
+        or bl, 1
 loc_91B89:
-mov eax, ebx	; 91B89
+        mov eax, ebx
 loc_91B8B:
-add esp, byte 4	; 91B8B
-pop edx	; 91B8E
-pop ecx	; 91B8F
-pop ebx	; 91B90
-ret	; 91B91
+        add esp, byte 4
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 __doopen_:
-push esi	; 91B92
-push edi	; 91B93
-mov esi, eax	; 91B94
-and byte [byte ecx+0Ch], 0FCh	; 91B96
-mov eax, edx	; 91B9A
-call __open_flags_	; 91B9C
-mov edi, dword [byte ecx+0Ch]	; 91BA1
-or edi, eax	; 91BA4
-xor eax, eax	; 91BA6
-mov dword [byte ecx+0Ch], edi	; 91BA8
-mov al, byte [edx]	; 91BAB
-call tolower_	; 91BAD
-mov dl, al	; 91BB2
-cmp al, 72h	; 91BB4
-jne short loc_91BD9	; 91BB6
-mov dh, byte [byte ecx+0Ch]	; 91BB8
-xor eax, eax	; 91BBB
-test dh, 2	; 91BBD
-je short loc_91BC7	; 91BC0
-mov eax, 2	; 91BC2
+        push esi
+        push edi
+        mov esi, eax
+        and byte [byte ecx+0Ch], 0FCh
+        mov eax, edx
+        call __open_flags_
+        mov edi, dword [byte ecx+0Ch]
+        or edi, eax
+        xor eax, eax
+        mov dword [byte ecx+0Ch], edi
+        mov al, byte [edx]
+        call tolower_
+        mov dl, al
+        cmp al, 72h
+        jne short loc_91BD9
+        mov dh, byte [byte ecx+0Ch]
+        xor eax, eax
+        test dh, 2
+        je short loc_91BC7
+        mov eax, 2
 loc_91BC7:
-test byte [byte ecx+0Ch], 40h	; 91BC7
-je short loc_91BD2	; 91BCB
-or ah, 2	; 91BCD
-jmp short loc_91BD5	; 91BD0
+        test byte [byte ecx+0Ch], 40h
+        je short loc_91BD2
+        or ah, 2
+        jmp short loc_91BD5
 loc_91BD2:
-or ah, 1	; 91BD2
+        or ah, 1
 loc_91BD5:
-push byte 0	; 91BD5
-jmp short loc_91C06	; 91BD7
+        push byte 0
+        jmp short loc_91C06
 loc_91BD9:
-test byte [byte ecx+0Ch], 1	; 91BD9
-setne al	; 91BDD
-and eax, 0FFh	; 91BE0
-add eax, byte 21h	; 91BE5
-cmp dl, 61h	; 91BE8
-jne short loc_91BF1	; 91BEB
-or al, 10h	; 91BED
-jmp short loc_91BF3	; 91BEF
+        test byte [byte ecx+0Ch], 1
+        setne al
+        and eax, 0FFh
+        add eax, byte 21h
+        cmp dl, 61h
+        jne short loc_91BF1
+        or al, 10h
+        jmp short loc_91BF3
 loc_91BF1:
-or al, 40h	; 91BF1
+        or al, 40h
 loc_91BF3:
-test byte [byte ecx+0Ch], 40h	; 91BF3
-je short loc_91BFE	; 91BF7
-or ah, 2	; 91BF9
-jmp short loc_91C01	; 91BFC
+        test byte [byte ecx+0Ch], 40h
+        je short loc_91BFE
+        or ah, 2
+        jmp short loc_91C01
 loc_91BFE:
-or ah, 1	; 91BFE
+        or ah, 1
 loc_91C01:
-push dword 180h	; 91C01
+        push dword 180h
 loc_91C06:
-push ebx	; 91C06
-push eax	; 91C07
-push esi	; 91C08
-call sopen_	; 91C09
-add esp, byte 10h	; 91C0E
-mov dword [byte ecx+010h], eax	; 91C11
-cmp dword [byte ecx+010h], byte 0FFFFFFFFh	; 91C14
-jne short loc_91C26	; 91C18
-mov eax, ecx	; 91C1A
-call __freefp_	; 91C1C
-xor eax, eax	; 91C21
-pop edi	; 91C23
-pop esi	; 91C24
-ret	; 91C25
+        push ebx
+        push eax
+        push esi
+        call sopen_
+        add esp, byte 10h
+        mov dword [byte ecx+010h], eax
+        cmp dword [byte ecx+010h], byte 0FFFFFFFFh
+        jne short loc_91C26
+        mov eax, ecx
+        call __freefp_
+        xor eax, eax
+        pop edi
+        pop esi
+        ret
 loc_91C26:
-mov dword [byte ecx+04h], 0	; 91C26
-mov dword [byte ecx+08h], 0	; 91C2D
-mov dword [byte ecx+014h], 0	; 91C34
-cmp dl, 61h	; 91C3B
-jne short loc_91C4E	; 91C3E
-mov ebx, 2	; 91C40
-mov eax, ecx	; 91C45
-xor edx, edx	; 91C47
-call fseek_	; 91C49
+        mov dword [byte ecx+04h], 0
+        mov dword [byte ecx+08h], 0
+        mov dword [byte ecx+014h], 0
+        cmp dl, 61h
+        jne short loc_91C4E
+        mov ebx, 2
+        mov eax, ecx
+        xor edx, edx
+        call fseek_
 loc_91C4E:
-mov eax, ecx	; 91C4E
-call __chktty_	; 91C50
-mov eax, ecx	; 91C55
-pop edi	; 91C57
-pop esi	; 91C58
-ret	; 91C59
+        mov eax, ecx
+        call __chktty_
+        mov eax, ecx
+        pop edi
+        pop esi
+        ret
 _fsopen_:
-push ecx	; 91C5A
-push esi	; 91C5B
-mov esi, eax	; 91C5C
-xor eax, eax	; 91C5E
-call __allocfp_	; 91C60
-mov ecx, eax	; 91C65
-test eax, eax	; 91C67
-je short loc_91C72	; 91C69
-mov eax, esi	; 91C6B
-call __doopen_	; 91C6D
+        push ecx
+        push esi
+        mov esi, eax
+        xor eax, eax
+        call __allocfp_
+        mov ecx, eax
+        test eax, eax
+        je short loc_91C72
+        mov eax, esi
+        call __doopen_
 loc_91C72:
-pop esi	; 91C72
-pop ecx	; 91C73
-ret	; 91C74
+        pop esi
+        pop ecx
+        ret
 fopen_:
-push ebx	; 91C75
-xor ebx, ebx	; 91C76
-call _fsopen_	; 91C78
-pop ebx	; 91C7D
-ret	; 91C7E
+        push ebx
+        xor ebx, ebx
+        call _fsopen_
+        pop ebx
+        ret
 close_file_:
-push ebx	; 91C7F
-push ecx	; 91C80
-push edx	; 91C81
-mov ebx, eax	; 91C82
-mov eax, dword [dword_F24C8]	; 91C84
+        push ebx
+        push ecx
+        push edx
+        mov ebx, eax
+        mov eax, dword [dword_F24C8]
 loc_91C89:
-test eax, eax	; 91C89
-je short loc_91CB0	; 91C8B
-mov edx, dword [byte eax+04h]	; 91C8D
-cmp ebx, edx	; 91C90
-jne short loc_91CAC	; 91C92
-test byte [byte edx+0Ch], 3	; 91C94
-je short loc_91CA6	; 91C98
-mov eax, edx	; 91C9A
-mov edx, 1	; 91C9C
-call __doclose_	; 91CA1
+        test eax, eax
+        je short loc_91CB0
+        mov edx, dword [byte eax+04h]
+        cmp ebx, edx
+        jne short loc_91CAC
+        test byte [byte edx+0Ch], 3
+        je short loc_91CA6
+        mov eax, edx
+        mov edx, 1
+        call __doclose_
 loc_91CA6:
-mov eax, ebx	; 91CA6
-pop edx	; 91CA8
-pop ecx	; 91CA9
-pop ebx	; 91CAA
-ret	; 91CAB
+        mov eax, ebx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 loc_91CAC:
-mov eax, dword [eax]	; 91CAC
-jmp short loc_91C89	; 91CAE
+        mov eax, dword [eax]
+        jmp short loc_91C89
 loc_91CB0:
-mov edx, dword_EDF00	; 91CB0
+        mov edx, dword_EDF00
 loc_91CB5:
-mov eax, dword [edx]	; 91CB5
-test eax, eax	; 91CB7
-je short loc_91CD7	; 91CB9
-cmp ebx, dword [byte eax+04h]	; 91CBB
-jne short loc_91CD3	; 91CBE
-mov ecx, dword [eax]	; 91CC0
-mov dword [edx], ecx	; 91CC2
-mov edx, dword [dword_F24C8]	; 91CC4
-mov dword [dword_F24C8], eax	; 91CCA
-mov dword [eax], edx	; 91CCF
-jmp short loc_91CA6	; 91CD1
+        mov eax, dword [edx]
+        test eax, eax
+        je short loc_91CD7
+        cmp ebx, dword [byte eax+04h]
+        jne short loc_91CD3
+        mov ecx, dword [eax]
+        mov dword [edx], ecx
+        mov edx, dword [dword_F24C8]
+        mov dword [dword_F24C8], eax
+        mov dword [eax], edx
+        jmp short loc_91CA6
 loc_91CD3:
-mov edx, eax	; 91CD3
-jmp short loc_91CB5	; 91CD5
+        mov edx, eax
+        jmp short loc_91CB5
 loc_91CD7:
-mov eax, 4	; 91CD7
-call __set_errno_	; 91CDC
-xor eax, eax	; 91CE1
-pop edx	; 91CE3
-pop ecx	; 91CE4
-pop ebx	; 91CE5
-ret	; 91CE6
+        mov eax, 4
+        call __set_errno_
+        xor eax, eax
+        pop edx
+        pop ecx
+        pop ebx
+        ret

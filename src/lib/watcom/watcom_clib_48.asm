@@ -16,645 +16,645 @@ global loc_B06B9, loc_B06D1, loc_B06D3, loc_B06D6, loc_B06F5, loc_B06FB, loc_B07
 global loc_B070D, loc_B0710, loc_B0721, loc_B0730, loc_B073F, loc_B076F, loc_B0781, loc_B0798
 global loc_B07AD, loc_B07B6, loc_B07C4
 DoEFormat_:
-push esi	; B028E
-push edi	; B028F
-push ebp	; B0290
-sub esp, byte 4	; B0291
-mov edi, eax	; B0294
-mov esi, edx	; B0296
-mov eax, ebx	; B0298
-test edx, edx	; B029A
-jge short loc_B02A7	; B029C
-mov dh, 2Dh	; B029E
-neg esi	; B02A0
-mov byte [esp], dh	; B02A2
-jmp short loc_B02AB	; B02A5
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov edi, eax
+        mov esi, edx
+        mov eax, ebx
+        test edx, edx
+        jge short loc_B02A7
+        mov dh, 2Dh
+        neg esi
+        mov byte [esp], dh
+        jmp short loc_B02AB
 loc_B02A7:
-mov byte [esp], 2Bh	; B02A7
+        mov byte [esp], 2Bh
 loc_B02AB:
-mov ebx, 64h	; B02AB
-mov edx, 3	; B02B0
-cmp esi, ebx	; B02B5
-jge short loc_B02CE	; B02B7
-mov ebx, 0Ah	; B02B9
-mov edx, 2	; B02BE
-cmp esi, ebx	; B02C3
-jge short loc_B02CE	; B02C5
-mov edx, 1	; B02C7
-mov ebx, edx	; B02CC
+        mov ebx, 64h
+        mov edx, 3
+        cmp esi, ebx
+        jge short loc_B02CE
+        mov ebx, 0Ah
+        mov edx, 2
+        cmp esi, ebx
+        jge short loc_B02CE
+        mov edx, 1
+        mov ebx, edx
 loc_B02CE:
-test eax, eax	; B02CE
-jne short loc_B02DE	; B02D0
-mov eax, 2	; B02D2
-cmp edx, byte 3	; B02D7
-jne short loc_B02DE	; B02DA
-mov eax, edx	; B02DC
+        test eax, eax
+        jne short loc_B02DE
+        mov eax, 2
+        cmp edx, byte 3
+        jne short loc_B02DE
+        mov eax, edx
 loc_B02DE:
-lea ebp, [byte eax+01h]	; B02DE
-cmp ebp, ecx	; B02E1
-jg short loc_B032C	; B02E3
-cmp edx, eax	; B02E5
-jg short loc_B0329	; B02E7
-mov cl, byte [esp]	; B02E9
-mov byte [edi], cl	; B02EC
+        lea ebp, [byte eax+01h]
+        cmp ebp, ecx
+        jg short loc_B032C
+        cmp edx, eax
+        jg short loc_B0329
+        mov cl, byte [esp]
+        mov byte [edi], cl
 loc_B02EE:
-inc edi	; B02EE
-cmp eax, edx	; B02EF
-jle short loc_B02F9	; B02F1
-dec eax	; B02F3
-mov byte [edi], 30h	; B02F4
-jmp short loc_B02EE	; B02F7
+        inc edi
+        cmp eax, edx
+        jle short loc_B02F9
+        dec eax
+        mov byte [edi], 30h
+        jmp short loc_B02EE
 loc_B02F9:
-mov edx, esi	; B02F9
-mov eax, esi	; B02FB
-sar edx, 1Fh	; B02FD
-idiv ebx	; B0300
-mov edx, esi	; B0302
-add eax, byte 30h	; B0304
-sar edx, 1Fh	; B0307
-mov byte [edi], al	; B030A
-mov eax, esi	; B030C
-idiv ebx	; B030E
-mov esi, edx	; B0310
-mov eax, ebx	; B0312
-mov edx, ebx	; B0314
-mov ebx, 0Ah	; B0316
-sar edx, 1Fh	; B031B
-idiv ebx	; B031E
-inc edi	; B0320
-mov ebx, eax	; B0321
-test eax, eax	; B0323
-jne short loc_B02F9	; B0325
-jmp short loc_B032C	; B0327
+        mov edx, esi
+        mov eax, esi
+        sar edx, 1Fh
+        idiv ebx
+        mov edx, esi
+        add eax, byte 30h
+        sar edx, 1Fh
+        mov byte [edi], al
+        mov eax, esi
+        idiv ebx
+        mov esi, edx
+        mov eax, ebx
+        mov edx, ebx
+        mov ebx, 0Ah
+        sar edx, 1Fh
+        idiv ebx
+        inc edi
+        mov ebx, eax
+        test eax, eax
+        jne short loc_B02F9
+        jmp short loc_B032C
 loc_B0329:
-lea ebp, [byte edx+01h]	; B0329
+        lea ebp, [byte edx+01h]
 loc_B032C:
-mov eax, ebp	; B032C
-add esp, byte 4	; B032E
-pop ebp	; B0331
-pop edi	; B0332
+        mov eax, ebp
+        add esp, byte 4
+        pop ebp
+        pop edi
 loc_B0333:
-pop esi	; B0333
-ret	; B0334
+        pop esi
+        ret
 DoFFormat_:
-push esi	; B0335
-mov esi, ebx	; B0336
-test ecx, ecx	; B0338
-jne short loc_B034A	; B033A
-test ebx, ebx	; B033C
-jg short loc_B034A	; B033E
-mov byte [eax], 30h	; B0340
-inc eax	; B0343
-mov byte [eax], 2Eh	; B0344
-inc eax	; B0347
-pop esi	; B0348
-ret	; B0349
+        push esi
+        mov esi, ebx
+        test ecx, ecx
+        jne short loc_B034A
+        test ebx, ebx
+        jg short loc_B034A
+        mov byte [eax], 30h
+        inc eax
+        mov byte [eax], 2Eh
+        inc eax
+        pop esi
+        ret
 loc_B034A:
-test esi, esi	; B034A
-jle short loc_B035B	; B034C
-mov bl, byte [edx]	; B034E
-test bl, bl	; B0350
-je short loc_B035B	; B0352
-inc edx	; B0354
-dec esi	; B0355
-mov byte [eax], bl	; B0356
-inc eax	; B0358
-jmp short loc_B034A	; B0359
+        test esi, esi
+        jle short loc_B035B
+        mov bl, byte [edx]
+        test bl, bl
+        je short loc_B035B
+        inc edx
+        dec esi
+        mov byte [eax], bl
+        inc eax
+        jmp short loc_B034A
 loc_B035B:
-test esi, esi	; B035B
-jle short loc_B0368	; B035D
+        test esi, esi
+        jle short loc_B0368
 loc_B035F:
-dec esi	; B035F
-mov byte [eax], 30h	; B0360
-inc eax	; B0363
-test esi, esi	; B0364
-jg short loc_B035F	; B0366
+        dec esi
+        mov byte [eax], 30h
+        inc eax
+        test esi, esi
+        jg short loc_B035F
 loc_B0368:
-mov byte [eax], 2Eh	; B0368
-inc eax	; B036B
-test ecx, ecx	; B036C
-jle short loc_B037C	; B036E
+        mov byte [eax], 2Eh
+        inc eax
+        test ecx, ecx
+        jle short loc_B037C
 loc_B0370:
-test esi, esi	; B0370
-je short loc_B037C	; B0372
-inc esi	; B0374
-mov byte [eax], 30h	; B0375
-inc eax	; B0378
-dec ecx	; B0379
-jne short loc_B0370	; B037A
+        test esi, esi
+        je short loc_B037C
+        inc esi
+        mov byte [eax], 30h
+        inc eax
+        dec ecx
+        jne short loc_B0370
 loc_B037C:
-test ecx, ecx	; B037C
-jle short loc_B0333	; B037E
+        test ecx, ecx
+        jle short loc_B0333
 loc_B0380:
-mov bh, byte [edx]	; B0380
-test bh, bh	; B0382
-je short loc_B038D	; B0384
-inc edx	; B0386
-mov byte [eax], bh	; B0387
-inc eax	; B0389
-dec ecx	; B038A
-jne short loc_B0380	; B038B
+        mov bh, byte [edx]
+        test bh, bh
+        je short loc_B038D
+        inc edx
+        mov byte [eax], bh
+        inc eax
+        dec ecx
+        jne short loc_B0380
 loc_B038D:
-test ecx, ecx	; B038D
-je short loc_B0333	; B038F
-dec ecx	; B0391
-mov byte [eax], 30h	; B0392
-inc eax	; B0395
-jmp short loc_B038D	; B0396
+        test ecx, ecx
+        je short loc_B0333
+        dec ecx
+        mov byte [eax], 30h
+        inc eax
+        jmp short loc_B038D
 AdjField_:
-push ebp	; B0398
-mov ebp, esp	; B0399
-push ecx	; B039B
-push esi	; B039C
-push edi	; B039D
-sub esp, byte 8	; B039E
-mov edi, eax	; B03A1
-mov esi, edx	; B03A3
-cmp edx, ebx	; B03A5
-je short loc_B03FB	; B03A7
-mov dword [byte ebp-014h], edi	; B03A9
-mov al, byte [byte eax+01h]	; B03AC
-lea edx, [ebx+edi]	; B03AF
-mov byte [byte ebp-010h], al	; B03B2
-lea eax, [esi+edi]	; B03B5
+        push ebp
+        mov ebp, esp
+        push ecx
+        push esi
+        push edi
+        sub esp, byte 8
+        mov edi, eax
+        mov esi, edx
+        cmp edx, ebx
+        je short loc_B03FB
+        mov dword [byte ebp-014h], edi
+        mov al, byte [byte eax+01h]
+        lea edx, [ebx+edi]
+        mov byte [byte ebp-010h], al
+        lea eax, [esi+edi]
 loc_B03B8:
-dec eax	; B03B8
-dec edx	; B03B9
-mov cl, byte [eax]	; B03BA
-dec esi	; B03BC
-mov byte [edx], cl	; B03BD
-mov ecx, dword [byte ebp-014h]	; B03BF
-dec ebx	; B03C2
-cmp eax, ecx	; B03C3
-jne short loc_B03B8	; B03C5
-mov ah, byte [edi]	; B03C7
-cmp ah, 2Eh	; B03C9
-jne short loc_B03D5	; B03CC
-dec ebx	; B03CE
-mov byte [edi+ebx], 30h	; B03CF
-jmp short loc_B03EF	; B03D3
+        dec eax
+        dec edx
+        mov cl, byte [eax]
+        dec esi
+        mov byte [edx], cl
+        mov ecx, dword [byte ebp-014h]
+        dec ebx
+        cmp eax, ecx
+        jne short loc_B03B8
+        mov ah, byte [edi]
+        cmp ah, 2Eh
+        jne short loc_B03D5
+        dec ebx
+        mov byte [edi+ebx], 30h
+        jmp short loc_B03EF
 loc_B03D5:
-cmp ah, 2Bh	; B03D5
-je short loc_B03DF	; B03D8
-cmp ah, 2Dh	; B03DA
-jne short loc_B03EF	; B03DD
+        cmp ah, 2Bh
+        je short loc_B03DF
+        cmp ah, 2Dh
+        jne short loc_B03EF
 loc_B03DF:
-cmp byte [byte ebp-010h], 2Eh	; B03DF
-jne short loc_B03EF	; B03E3
-mov byte [edi+ebx], 30h	; B03E5
-dec ebx	; B03E9
-mov dl, byte [edi]	; B03EA
-mov byte [edi+ebx], dl	; B03EC
+        cmp byte [byte ebp-010h], 2Eh
+        jne short loc_B03EF
+        mov byte [edi+ebx], 30h
+        dec ebx
+        mov dl, byte [edi]
+        mov byte [edi+ebx], dl
 loc_B03EF:
-mov edx, 20h	; B03EF
-mov eax, edi	; B03F4
-call memset_	; B03F6
+        mov edx, 20h
+        mov eax, edi
+        call memset_
 loc_B03FB:
-lea esp, [byte ebp-0Ch]	; B03FB
-pop edi	; B03FE
-pop esi	; B03FF
-pop ecx	; B0400
-pop ebp	; B0401
-ret	; B0402
+        lea esp, [byte ebp-0Ch]
+        pop edi
+        pop esi
+        pop ecx
+        pop ebp
+        ret
 _FtoS_:
-push ebp	; B0403
-mov ebp, esp	; B0404
-push esi	; B0406
-push edi	; B0407
-sub esp, byte 3Ch	; B0408
-mov edi, dword [byte ebp+08h]	; B040B
-mov dword [byte ebp-014h], eax	; B040E
-mov byte [byte ebp-010h], cl	; B0411
-lea eax, [byte ebp-044h]	; B0414
-push eax	; B0417
-mov ecx, dword [byte edx+04h]	; B0418
-push ecx	; B041B
-mov esi, dword [edx]	; B041C
-push esi	; B041E
-call __Nan_Inf_	; B041F
-test eax, eax	; B0424
-je short loc_B0444	; B0426
-mov eax, dword [byte ebp-014h]	; B0428
-xor esi, esi	; B042B
-jmp short loc_B0437	; B042D
+        push ebp
+        mov ebp, esp
+        push esi
+        push edi
+        sub esp, byte 3Ch
+        mov edi, dword [byte ebp+08h]
+        mov dword [byte ebp-014h], eax
+        mov byte [byte ebp-010h], cl
+        lea eax, [byte ebp-044h]
+        push eax
+        mov ecx, dword [byte edx+04h]
+        push ecx
+        mov esi, dword [edx]
+        push esi
+        call __Nan_Inf_
+        test eax, eax
+        je short loc_B0444
+        mov eax, dword [byte ebp-014h]
+        xor esi, esi
+        jmp short loc_B0437
 loc_B042F:
-cmp esi, edi	; B042F
-jge short loc_B0435	; B0431
-mov byte [eax], ch	; B0433
+        cmp esi, edi
+        jge short loc_B0435
+        mov byte [eax], ch
 loc_B0435:
-inc eax	; B0435
-inc esi	; B0436
+        inc eax
+        inc esi
 loc_B0437:
-mov ch, byte [byte esi+ebp-044h]	; B0437
-test ch, ch	; B043B
-jne short loc_B042F	; B043D
-jmp near loc_B060A	; B043F
+        mov ch, byte [byte esi+ebp-044h]
+        test ch, ch
+        jne short loc_B042F
+        jmp near loc_B060A
 loc_B0444:
-mov al, byte [byte ebp+018h]	; B0444
-mov byte [byte ebp-0Ch], al	; B0447
-cmp al, 47h	; B044A
-jne near loc_B04C8	; B044C
-fld qword [edx]	; B0452
-fabs	; B0454
-fstp qword [byte ebp-030h]	; B0456
-mov eax, dword [byte ebp-02Ch]	; B0459
-mov ecx, dword [byte ebp-030h]	; B045C
-test eax, 7FFFFFFFh	; B045F
-jne short loc_B046A	; B0464
-test ecx, ecx	; B0466
-je short loc_B04BE	; B0468
+        mov al, byte [byte ebp+018h]
+        mov byte [byte ebp-0Ch], al
+        cmp al, 47h
+        jne near loc_B04C8
+        fld qword [edx]
+        fabs
+        fstp qword [byte ebp-030h]
+        mov eax, dword [byte ebp-02Ch]
+        mov ecx, dword [byte ebp-030h]
+        test eax, 7FFFFFFFh
+        jne short loc_B046A
+        test ecx, ecx
+        je short loc_B04BE
 loc_B046A:
-fld qword [byte ebp-030h]	; B046A
-fldlg2	; B046D
-fxch	; B046F
-fyl2x	; B0471
-fstp qword [byte ebp-030h]	; B0473
-mov eax, dword [byte ebp-02Ch]	; B0476
-push eax	; B0479
-mov ecx, dword [byte ebp-030h]	; B047A
-push ecx	; B047D
-call floor_	; B047E
-call __CHP	; B0483
-fistp dword [byte ebp-018h]	; B0488
-mov esi, dword [byte ebp-018h]	; B048B
-cmp esi, byte 0FFFFFFFCh	; B048E
-jl short loc_B0497	; B0491
-cmp ebx, esi	; B0493
-jg short loc_B049D	; B0495
+        fld qword [byte ebp-030h]
+        fldlg2
+        fxch
+        fyl2x
+        fstp qword [byte ebp-030h]
+        mov eax, dword [byte ebp-02Ch]
+        push eax
+        mov ecx, dword [byte ebp-030h]
+        push ecx
+        call floor_
+        call __CHP
+        fistp dword [byte ebp-018h]
+        mov esi, dword [byte ebp-018h]
+        cmp esi, byte 0FFFFFFFCh
+        jl short loc_B0497
+        cmp ebx, esi
+        jg short loc_B049D
 loc_B0497:
-mov byte [byte ebp-0Ch], 45h	; B0497
-jmp short loc_B04C8	; B049B
+        mov byte [byte ebp-0Ch], 45h
+        jmp short loc_B04C8
 loc_B049D:
-fldz	; B049D
-fcomp qword [byte ebp-030h]	; B049F
-fnstsw ax	; B04A2
-sahf	; B04A4
-ja short loc_B04AD	; B04A5
-lea ecx, [byte esi+01h]	; B04A7
-mov dword [byte ebp-018h], ecx	; B04AA
+        fldz
+        fcomp qword [byte ebp-030h]
+        fnstsw ax
+        sahf
+        ja short loc_B04AD
+        lea ecx, [byte esi+01h]
+        mov dword [byte ebp-018h], ecx
 loc_B04AD:
-mov esi, dword [byte ebp-018h]	; B04AD
-xor eax, eax	; B04B0
-mov ch, 46h	; B04B2
-mov dword [byte ebp+0Ch], eax	; B04B4
-mov byte [byte ebp-0Ch], ch	; B04B7
-sub ebx, esi	; B04BA
-jmp short loc_B04C8	; B04BC
+        mov esi, dword [byte ebp-018h]
+        xor eax, eax
+        mov ch, 46h
+        mov dword [byte ebp+0Ch], eax
+        mov byte [byte ebp-0Ch], ch
+        sub ebx, esi
+        jmp short loc_B04C8
 loc_B04BE:
-xor esi, esi	; B04BE
-mov cl, 46h	; B04C0
-mov dword [byte ebp+0Ch], esi	; B04C2
-mov byte [byte ebp-0Ch], cl	; B04C5
+        xor esi, esi
+        mov cl, 46h
+        mov dword [byte ebp+0Ch], esi
+        mov byte [byte ebp-0Ch], cl
 loc_B04C8:
-cmp byte [byte ebp-0Ch], 45h	; B04C8
-jne short loc_B04F4	; B04CC
-mov eax, ebx	; B04CE
-mov ecx, dword [byte ebp+0Ch]	; B04D0
-neg eax	; B04D3
-cmp eax, ecx	; B04D5
-jge short loc_B04E0	; B04D7
-lea eax, [byte ebx+02h]	; B04D9
-cmp eax, ecx	; B04DC
-jg short loc_B04F4	; B04DE
+        cmp byte [byte ebp-0Ch], 45h
+        jne short loc_B04F4
+        mov eax, ebx
+        mov ecx, dword [byte ebp+0Ch]
+        neg eax
+        cmp eax, ecx
+        jge short loc_B04E0
+        lea eax, [byte ebx+02h]
+        cmp eax, ecx
+        jg short loc_B04F4
 loc_B04E0:
-mov eax, dword [byte ebp-014h]	; B04E0
-mov edx, 2Ah	; B04E3
-mov ebx, edi	; B04E8
-call memset_	; B04EA
-jmp near loc_B061E	; B04EF
+        mov eax, dword [byte ebp-014h]
+        mov edx, 2Ah
+        mov ebx, edi
+        call memset_
+        jmp near loc_B061E
 loc_B04F4:
-mov al, byte [byte ebp+018h]	; B04F4
-mov ecx, ebx	; B04F7
-cmp al, 45h	; B04F9
-jne short loc_B050E	; B04FB
-mov eax, dword [byte ebp+0Ch]	; B04FD
-test eax, eax	; B0500
-jle short loc_B0509	; B0502
-lea ecx, [byte ebx+01h]	; B0504
-jmp short loc_B050E	; B0507
+        mov al, byte [byte ebp+018h]
+        mov ecx, ebx
+        cmp al, 45h
+        jne short loc_B050E
+        mov eax, dword [byte ebp+0Ch]
+        test eax, eax
+        jle short loc_B0509
+        lea ecx, [byte ebx+01h]
+        jmp short loc_B050E
 loc_B0509:
-jge short loc_B050E	; B0509
-lea ecx, [eax+ebx]	; B050B
+        jge short loc_B050E
+        lea ecx, [eax+ebx]
 loc_B050E:
-mov eax, dword [edx]	; B050E
-mov dword [byte ebp-028h], eax	; B0510
-mov eax, dword [byte edx+04h]	; B0513
-mov edx, dword [byte ebp-028h]	; B0516
-mov dword [byte ebp-024h], eax	; B0519
-test eax, 7FFFFFFFh	; B051C
-jne short loc_B0527	; B0521
-test edx, edx	; B0523
-je short loc_B0545	; B0525
+        mov eax, dword [edx]
+        mov dword [byte ebp-028h], eax
+        mov eax, dword [byte edx+04h]
+        mov edx, dword [byte ebp-028h]
+        mov dword [byte ebp-024h], eax
+        test eax, 7FFFFFFFh
+        jne short loc_B0527
+        test edx, edx
+        je short loc_B0545
 loc_B0527:
-cmp byte [byte ebp-0Ch], 45h	; B0527
-je short loc_B0545	; B052B
-mov ebx, dword [byte ebp+0Ch]	; B052D
-test ebx, ebx	; B0530
-je short loc_B0545	; B0532
-push ebx	; B0534
-mov eax, dword [byte ebp-024h]	; B0535
-push eax	; B0538
-mov edx, dword [byte ebp-028h]	; B0539
-push edx	; B053C
-call _Scale10V_	; B053D
-fstp qword [byte ebp-028h]	; B0542
+        cmp byte [byte ebp-0Ch], 45h
+        je short loc_B0545
+        mov ebx, dword [byte ebp+0Ch]
+        test ebx, ebx
+        je short loc_B0545
+        push ebx
+        mov eax, dword [byte ebp-024h]
+        push eax
+        mov edx, dword [byte ebp-028h]
+        push edx
+        call _Scale10V_
+        fstp qword [byte ebp-028h]
 loc_B0545:
-lea eax, [byte ebp-044h]	; B0545
-push eax	; B0548
-xor eax, eax	; B0549
-mov al, byte [byte ebp-0Ch]	; B054B
-push eax	; B054E
-lea eax, [byte ebp-020h]	; B054F
-push eax	; B0552
-lea eax, [byte ebp-01Ch]	; B0553
-push eax	; B0556
-push ecx	; B0557
-mov ebx, dword [byte ebp-024h]	; B0558
-push ebx	; B055B
-mov esi, dword [byte ebp-028h]	; B055C
-push esi	; B055F
-mov edx, dword [byte ebp-014h]	; B0560
-call __cvt_	; B0563
-mov ebx, dword [byte ebp-020h]	; B0568
-lea eax, [byte edx+01h]	; B056B
-test ebx, ebx	; B056E
-je short loc_B0577	; B0570
-mov byte [edx], 2Dh	; B0572
-jmp short loc_B0580	; B0575
+        lea eax, [byte ebp-044h]
+        push eax
+        xor eax, eax
+        mov al, byte [byte ebp-0Ch]
+        push eax
+        lea eax, [byte ebp-020h]
+        push eax
+        lea eax, [byte ebp-01Ch]
+        push eax
+        push ecx
+        mov ebx, dword [byte ebp-024h]
+        push ebx
+        mov esi, dword [byte ebp-028h]
+        push esi
+        mov edx, dword [byte ebp-014h]
+        call __cvt_
+        mov ebx, dword [byte ebp-020h]
+        lea eax, [byte edx+01h]
+        test ebx, ebx
+        je short loc_B0577
+        mov byte [edx], 2Dh
+        jmp short loc_B0580
 loc_B0577:
-cmp byte [byte ebp-010h], 0	; B0577
-je short loc_B0582	; B057B
-mov byte [edx], 2Bh	; B057D
+        cmp byte [byte ebp-010h], 0
+        je short loc_B0582
+        mov byte [edx], 2Bh
 loc_B0580:
-mov edx, eax	; B0580
+        mov edx, eax
 loc_B0582:
-cmp byte [byte ebp-0Ch], 45h	; B0582
-jne short loc_B05DF	; B0586
-mov ebx, dword [byte ebp+0Ch]	; B0588
-mov eax, edx	; B058B
-lea edx, [byte ebp-044h]	; B058D
-sub ecx, ebx	; B0590
-call DoFFormat_	; B0592
-mov ecx, dword [byte ebp-014h]	; B0597
-mov esi, eax	; B059A
-mov ebx, eax	; B059C
-sub esi, ecx	; B059E
-mov cl, byte [byte ebp+014h]	; B05A0
-mov edx, eax	; B05A3
-test cl, cl	; B05A5
-je short loc_B05B3	; B05A7
-cmp esi, edi	; B05A9
-jge short loc_B05B3	; B05AB
-lea edx, [byte eax+01h]	; B05AD
-inc esi	; B05B0
-mov byte [eax], cl	; B05B1
+        cmp byte [byte ebp-0Ch], 45h
+        jne short loc_B05DF
+        mov ebx, dword [byte ebp+0Ch]
+        mov eax, edx
+        lea edx, [byte ebp-044h]
+        sub ecx, ebx
+        call DoFFormat_
+        mov ecx, dword [byte ebp-014h]
+        mov esi, eax
+        mov ebx, eax
+        sub esi, ecx
+        mov cl, byte [byte ebp+014h]
+        mov edx, eax
+        test cl, cl
+        je short loc_B05B3
+        cmp esi, edi
+        jge short loc_B05B3
+        lea edx, [byte eax+01h]
+        inc esi
+        mov byte [eax], cl
 loc_B05B3:
-mov eax, dword [byte ebp-024h]	; B05B3
-mov ebx, dword [byte ebp-028h]	; B05B6
-test eax, 7FFFFFFFh	; B05B9
-jne short loc_B05C4	; B05BE
-test ebx, ebx	; B05C0
-je short loc_B05CA	; B05C2
+        mov eax, dword [byte ebp-024h]
+        mov ebx, dword [byte ebp-028h]
+        test eax, 7FFFFFFFh
+        jne short loc_B05C4
+        test ebx, ebx
+        je short loc_B05CA
 loc_B05C4:
-mov eax, dword [byte ebp+0Ch]	; B05C4
-sub dword [byte ebp-01Ch], eax	; B05C7
+        mov eax, dword [byte ebp+0Ch]
+        sub dword [byte ebp-01Ch], eax
 loc_B05CA:
-mov ebx, dword [byte ebp+010h]	; B05CA
-mov ecx, edi	; B05CD
-mov eax, edx	; B05CF
-mov edx, dword [byte ebp-01Ch]	; B05D1
-sub ecx, esi	; B05D4
-call DoEFormat_	; B05D6
-add esi, eax	; B05DB
-jmp short loc_B060A	; B05DD
+        mov ebx, dword [byte ebp+010h]
+        mov ecx, edi
+        mov eax, edx
+        mov edx, dword [byte ebp-01Ch]
+        sub ecx, esi
+        call DoEFormat_
+        add esi, eax
+        jmp short loc_B060A
 loc_B05DF:
-mov esi, dword [byte ebp-014h]	; B05DF
-mov eax, dword [byte ebp-01Ch]	; B05E2
-mov ebx, edx	; B05E5
-inc eax	; B05E7
-sub ebx, esi	; B05E8
-add eax, ecx	; B05EA
-add eax, ebx	; B05EC
-cmp edi, eax	; B05EE
-jge short loc_B05F7	; B05F0
-lea esi, [byte edi+01h]	; B05F2
-jmp short loc_B060A	; B05F5
+        mov esi, dword [byte ebp-014h]
+        mov eax, dword [byte ebp-01Ch]
+        mov ebx, edx
+        inc eax
+        sub ebx, esi
+        add eax, ecx
+        add eax, ebx
+        cmp edi, eax
+        jge short loc_B05F7
+        lea esi, [byte edi+01h]
+        jmp short loc_B060A
 loc_B05F7:
-mov ebx, dword [byte ebp-01Ch]	; B05F7
-mov eax, edx	; B05FA
-lea edx, [byte ebp-044h]	; B05FC
-call DoFFormat_	; B05FF
-mov edx, esi	; B0604
-mov esi, eax	; B0606
-sub esi, edx	; B0608
+        mov ebx, dword [byte ebp-01Ch]
+        mov eax, edx
+        lea edx, [byte ebp-044h]
+        call DoFFormat_
+        mov edx, esi
+        mov esi, eax
+        sub esi, edx
 loc_B060A:
-cmp esi, edi	; B060A
-jg near loc_B04E0	; B060C
-mov eax, dword [byte ebp-014h]	; B0612
-mov edx, esi	; B0615
-mov ebx, edi	; B0617
-call AdjField_	; B0619
+        cmp esi, edi
+        jg near loc_B04E0
+        mov eax, dword [byte ebp-014h]
+        mov edx, esi
+        mov ebx, edi
+        call AdjField_
 loc_B061E:
-lea esp, [byte ebp-08h]	; B061E
-pop edi	; B0621
-pop esi	; B0622
-pop ebp	; B0623
-ret 14h	; B0624
+        lea esp, [byte ebp-08h]
+        pop edi
+        pop esi
+        pop ebp
+        ret 14h
 strtod_:
-push ebp	; B0627
-mov ebp, esp	; B0628
-push ebx	; B062A
-push ecx	; B062B
-push esi	; B062C
-push edi	; B062D
-sub esp, byte 24h	; B062E
-push edx	; B0631
-mov dword [byte ebp-014h], eax	; B0632
+        push ebp
+        mov ebp, esp
+        push ebx
+        push ecx
+        push esi
+        push edi
+        sub esp, byte 24h
+        push edx
+        mov dword [byte ebp-014h], eax
 loc_B0635:
-mov dl, byte [eax]	; B0635
-cmp dl, 20h	; B0637
-je short loc_B0646	; B063A
-cmp dl, 9	; B063C
-jb short loc_B0649	; B063F
-cmp dl, 0Dh	; B0641
-ja short loc_B0649	; B0644
+        mov dl, byte [eax]
+        cmp dl, 20h
+        je short loc_B0646
+        cmp dl, 9
+        jb short loc_B0649
+        cmp dl, 0Dh
+        ja short loc_B0649
 loc_B0646:
-inc eax	; B0646
-jmp short loc_B0635	; B0647
+        inc eax
+        jmp short loc_B0635
 loc_B0649:
-lea ebx, [byte eax+01h]	; B0649
-xor cl, cl	; B064C
-cmp dl, 2Bh	; B064E
-je short loc_B065A	; B0651
-cmp dl, 2Dh	; B0653
-jne short loc_B065C	; B0656
-mov cl, 1	; B0658
+        lea ebx, [byte eax+01h]
+        xor cl, cl
+        cmp dl, 2Bh
+        je short loc_B065A
+        cmp dl, 2Dh
+        jne short loc_B065C
+        mov cl, 1
 loc_B065A:
-mov eax, ebx	; B065A
+        mov eax, ebx
 loc_B065C:
-mov bl, 30h	; B065C
-xor edx, edx	; B065E
-xor esi, esi	; B0660
+        mov bl, 30h
+        xor edx, edx
+        xor esi, esi
 loc_B0662:
-mov ch, byte [eax]	; B0662
-inc eax	; B0664
-cmp ch, 2Eh	; B0665
-jne short loc_B0674	; B0668
-test cl, 8	; B066A
-jne short loc_B069A	; B066D
-or cl, 8	; B066F
-jmp short loc_B0662	; B0672
+        mov ch, byte [eax]
+        inc eax
+        cmp ch, 2Eh
+        jne short loc_B0674
+        test cl, 8
+        jne short loc_B069A
+        or cl, 8
+        jmp short loc_B0662
 loc_B0674:
-cmp ch, 30h	; B0674
-jb short loc_B069A	; B0677
-cmp ch, 39h	; B0679
-ja short loc_B069A	; B067C
-test cl, 8	; B067E
-je short loc_B0684	; B0681
-inc esi	; B0683
+        cmp ch, 30h
+        jb short loc_B069A
+        cmp ch, 39h
+        ja short loc_B069A
+        test cl, 8
+        je short loc_B0684
+        inc esi
 loc_B0684:
-or bl, ch	; B0684
-cmp bl, 30h	; B0686
-je short loc_B0695	; B0689
-cmp edx, byte 11h	; B068B
-jge short loc_B0694	; B068E
-mov byte [byte edx+ebp-034h], ch	; B0690
+        or bl, ch
+        cmp bl, 30h
+        je short loc_B0695
+        cmp edx, byte 11h
+        jge short loc_B0694
+        mov byte [byte edx+ebp-034h], ch
 loc_B0694:
-inc edx	; B0694
+        inc edx
 loc_B0695:
-or cl, 4	; B0695
-jmp short loc_B0662	; B0698
+        or cl, 4
+        jmp short loc_B0662
 loc_B069A:
-xor ebx, ebx	; B069A
-test cl, 4	; B069C
-je near loc_B0710	; B069F
-cmp ch, 65h	; B06A5
-je short loc_B06B9	; B06A8
-cmp ch, 45h	; B06AA
-je short loc_B06B9	; B06AD
-cmp ch, 64h	; B06AF
-je short loc_B06B9	; B06B2
-cmp ch, 44h	; B06B4
-jne short loc_B070C	; B06B7
+        xor ebx, ebx
+        test cl, 4
+        je near loc_B0710
+        cmp ch, 65h
+        je short loc_B06B9
+        cmp ch, 45h
+        je short loc_B06B9
+        cmp ch, 64h
+        je short loc_B06B9
+        cmp ch, 44h
+        jne short loc_B070C
 loc_B06B9:
-lea edi, [byte eax-01h]	; B06B9
-mov dword [byte ebp-018h], edi	; B06BC
-lea edi, [byte eax+01h]	; B06BF
-mov ch, byte [eax]	; B06C2
-cmp ch, 2Bh	; B06C4
-je short loc_B06D1	; B06C7
-cmp ch, 2Dh	; B06C9
-jne short loc_B06D3	; B06CC
-or cl, 2	; B06CE
+        lea edi, [byte eax-01h]
+        mov dword [byte ebp-018h], edi
+        lea edi, [byte eax+01h]
+        mov ch, byte [eax]
+        cmp ch, 2Bh
+        je short loc_B06D1
+        cmp ch, 2Dh
+        jne short loc_B06D3
+        or cl, 2
 loc_B06D1:
-mov eax, edi	; B06D1
+        mov eax, edi
 loc_B06D3:
-and cl, 0FBh	; B06D3
+        and cl, 0FBh
 loc_B06D6:
-mov ch, byte [eax]	; B06D6
-cmp ch, 30h	; B06D8
-jb short loc_B06FB	; B06DB
-cmp ch, 39h	; B06DD
-ja short loc_B06FB	; B06E0
-cmp ebx, 3E8h	; B06E2
-jge short loc_B06F5	; B06E8
-imul ebx, byte 0Ah	; B06EA
-movzx edi, ch	; B06ED
-add ebx, edi	; B06F0
-sub ebx, byte 30h	; B06F2
+        mov ch, byte [eax]
+        cmp ch, 30h
+        jb short loc_B06FB
+        cmp ch, 39h
+        ja short loc_B06FB
+        cmp ebx, 3E8h
+        jge short loc_B06F5
+        imul ebx, byte 0Ah
+        movzx edi, ch
+        add ebx, edi
+        sub ebx, byte 30h
 loc_B06F5:
-or cl, 4	; B06F5
-inc eax	; B06F8
-jmp short loc_B06D6	; B06F9
+        or cl, 4
+        inc eax
+        jmp short loc_B06D6
 loc_B06FB:
-test cl, 2	; B06FB
-je short loc_B0702	; B06FE
-neg ebx	; B0700
+        test cl, 2
+        je short loc_B0702
+        neg ebx
 loc_B0702:
-test cl, 4	; B0702
-jne short loc_B070D	; B0705
-mov eax, dword [byte ebp-018h]	; B0707
-jmp short loc_B070D	; B070A
+        test cl, 4
+        jne short loc_B070D
+        mov eax, dword [byte ebp-018h]
+        jmp short loc_B070D
 loc_B070C:
-dec eax	; B070C
+        dec eax
 loc_B070D:
-mov dword [byte ebp-014h], eax	; B070D
+        mov dword [byte ebp-014h], eax
 loc_B0710:
-sub ebx, esi	; B0710
-cmp edx, byte 11h	; B0712
-jle short loc_B0721	; B0715
-sub edx, byte 11h	; B0717
-add ebx, edx	; B071A
-mov edx, 11h	; B071C
+        sub ebx, esi
+        cmp edx, byte 11h
+        jle short loc_B0721
+        sub edx, byte 11h
+        add ebx, edx
+        mov edx, 11h
 loc_B0721:
-test edx, edx	; B0721
-jle short loc_B0730	; B0723
-cmp byte [byte edx+ebp-035h], 30h	; B0725
-jne short loc_B0730	; B072A
-inc ebx	; B072C
-dec edx	; B072D
-jmp short loc_B0721	; B072E
+        test edx, edx
+        jle short loc_B0730
+        cmp byte [byte edx+ebp-035h], 30h
+        jne short loc_B0730
+        inc ebx
+        dec edx
+        jmp short loc_B0721
 loc_B0730:
-test edx, edx	; B0730
-jne short loc_B073F	; B0732
-mov dword [byte ebp-020h], edx	; B0734
-mov dword [byte ebp-01Ch], edx	; B0737
-jmp near loc_B07B6	; B073A
+        test edx, edx
+        jne short loc_B073F
+        mov dword [byte ebp-020h], edx
+        mov dword [byte ebp-01Ch], edx
+        jmp near loc_B07B6
 loc_B073F:
-xor ah, ah	; B073F
-mov byte [byte edx+ebp-034h], ah	; B0741
-lea eax, [byte ebp-034h]	; B0745
-lea edx, [byte ebp-020h]	; B0748
-call unknown_libname_6	; B074B
-cmp ebx, 134h	; B0750
-jle short loc_B0781	; B0756
-call __set_ERANGE_	; B0758
-test cl, 1	; B075D
-je short loc_B076F	; B0760
-fld qword [dword_C4CA0]	; B0762
-fchs	; B0768
-fstp qword [byte ebp-020h]	; B076A
-jmp short loc_B07B6	; B076D
+        xor ah, ah
+        mov byte [byte edx+ebp-034h], ah
+        lea eax, [byte ebp-034h]
+        lea edx, [byte ebp-020h]
+        call unknown_libname_6
+        cmp ebx, 134h
+        jle short loc_B0781
+        call __set_ERANGE_
+        test cl, 1
+        je short loc_B076F
+        fld qword [dword_C4CA0]
+        fchs
+        fstp qword [byte ebp-020h]
+        jmp short loc_B07B6
 loc_B076F:
-mov eax, dword [dword_C4CA0]	; B076F
-mov dword [byte ebp-020h], eax	; B0774
-mov eax, dword [dword_C4CA4]	; B0777
-mov dword [byte ebp-01Ch], eax	; B077C
-jmp short loc_B07B6	; B077F
+        mov eax, dword [dword_C4CA0]
+        mov dword [byte ebp-020h], eax
+        mov eax, dword [dword_C4CA4]
+        mov dword [byte ebp-01Ch], eax
+        jmp short loc_B07B6
 loc_B0781:
-cmp ebx, 0FFFFFEBBh	; B0781
-jge short loc_B0798	; B0787
-xor ebx, ebx	; B0789
-call __set_ERANGE_	; B078B
-mov dword [byte ebp-020h], ebx	; B0790
-mov dword [byte ebp-01Ch], ebx	; B0793
-jmp short loc_B07B6	; B0796
+        cmp ebx, 0FFFFFEBBh
+        jge short loc_B0798
+        xor ebx, ebx
+        call __set_ERANGE_
+        mov dword [byte ebp-020h], ebx
+        mov dword [byte ebp-01Ch], ebx
+        jmp short loc_B07B6
 loc_B0798:
-test ebx, ebx	; B0798
-je short loc_B07AD	; B079A
-push ebx	; B079C
-mov eax, dword [byte ebp-01Ch]	; B079D
-push eax	; B07A0
-mov edx, dword [byte ebp-020h]	; B07A1
-push edx	; B07A4
-call _Scale10V_	; B07A5
-fstp qword [byte ebp-020h]	; B07AA
+        test ebx, ebx
+        je short loc_B07AD
+        push ebx
+        mov eax, dword [byte ebp-01Ch]
+        push eax
+        mov edx, dword [byte ebp-020h]
+        push edx
+        call _Scale10V_
+        fstp qword [byte ebp-020h]
 loc_B07AD:
-test cl, 1	; B07AD
-je short loc_B07B6	; B07B0
-xor byte [byte ebp-019h], 80h	; B07B2
+        test cl, 1
+        je short loc_B07B6
+        xor byte [byte ebp-019h], 80h
 loc_B07B6:
-cmp dword [byte ebp-038h], byte 0	; B07B6
-je short loc_B07C4	; B07BA
-mov edx, dword [byte ebp-038h]	; B07BC
-mov eax, dword [byte ebp-014h]	; B07BF
-mov dword [edx], eax	; B07C2
+        cmp dword [byte ebp-038h], byte 0
+        je short loc_B07C4
+        mov edx, dword [byte ebp-038h]
+        mov eax, dword [byte ebp-014h]
+        mov dword [edx], eax
 loc_B07C4:
-fld qword [byte ebp-020h]	; B07C4
-lea esp, [byte ebp-010h]	; B07C7
-pop edi	; B07CA
-pop esi	; B07CB
-pop ecx	; B07CC
-pop ebx	; B07CD
-pop ebp	; B07CE
-ret	; B07CF
+        fld qword [byte ebp-020h]
+        lea esp, [byte ebp-010h]
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        pop ebp
+        ret

@@ -4,13 +4,13 @@ bits 32
 section s_D9A38 nobits alloc noexec write align=1
 global awgoalieidx, awscratch, gsummarypath, photoptrs, awlinetab
 photoptrs:
-resb 4536
+        resb 4536
 awlinetab:
-resb 36
+        resb 36
 awgoalieidx:
-resb 1
-resb 3
+        resb 1
+        resb 3
 awscratch:
-resb 8
+        resb 8
 gsummarypath:
-resb 32
+        resb 32

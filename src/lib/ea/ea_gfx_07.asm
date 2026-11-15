@@ -5,19 +5,19 @@ section s_91CE7 progbits alloc exec nowrite align=1
 extern __doopen_, close_file_
 global sub_91CE7, loc_91D08
 sub_91CE7:
-push ecx	; 91CE7
-push esi	; 91CE8
-mov esi, eax	; 91CE9
-mov eax, ebx	; 91CEB
-call close_file_	; 91CED
-mov ecx, eax	; 91CF2
-test eax, eax	; 91CF4
-je short loc_91D08	; 91CF6
-and dword [byte eax+0Ch], 4000h	; 91CF8
-mov eax, esi	; 91CFF
-xor ebx, ebx	; 91D01
-call __doopen_	; 91D03
+        push ecx
+        push esi
+        mov esi, eax
+        mov eax, ebx
+        call close_file_
+        mov ecx, eax
+        test eax, eax
+        je short loc_91D08
+        and dword [byte eax+0Ch], 4000h
+        mov eax, esi
+        xor ebx, ebx
+        call __doopen_
 loc_91D08:
-pop esi	; 91D08
-pop ecx	; 91D09
-ret	; 91D0A
+        pop esi
+        pop ecx
+        ret

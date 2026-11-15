@@ -7,162 +7,162 @@ global sbrk_, loc_A2BAE, loc_A2BBD, loc_A2BF7, loc_A2BF9, loc_A2C08, loc_A2C19, 
 global loc_A2C2B, loc_A2C42, loc_A2C4E, __brk_, loc_A2C7F, loc_A2CA9, loc_A2CAF, loc_A2CBB
 global loc_A2CCD, loc_A2CE2, loc_A2CF8, loc_A2CFE, loc_A2D0C
 sbrk_:
-push ebx	; A2B95
-push ecx	; A2B96
-push edx	; A2B97
-push esi	; A2B98
-push edi	; A2B99
-mov ecx, eax	; A2B9A
-cmp byte [_Extender], 1	; A2B9C
-jne short loc_A2BAE	; A2BA3
-cmp byte [_ExtenderSubtype], 0	; A2BA5
-je short loc_A2BBD	; A2BAC
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        mov ecx, eax
+        cmp byte [_Extender], 1
+        jne short loc_A2BAE
+        cmp byte [_ExtenderSubtype], 0
+        je short loc_A2BBD
 loc_A2BAE:
-mov dh, byte [_Extender]	; A2BAE
-cmp dh, 9	; A2BB4
-jne near loc_A2C2B	; A2BB7
+        mov dh, byte [_Extender]
+        cmp dh, 9
+        jne near loc_A2C2B
 loc_A2BBD:
-test ecx, ecx	; A2BBD
-jle short loc_A2C19	; A2BBF
-add ecx, 0FFFh	; A2BC1
-mov al, byte [_Extender]	; A2BC7
-and cx, 0F000h	; A2BCC
-cmp al, 1	; A2BD1
-jne short loc_A2BF9	; A2BD3
-mov eax, ecx	; A2BD5
-sar eax, 10h	; A2BD7
-mov ebx, eax	; A2BDA
-mov ah, 5	; A2BDC
-mov al, 1	; A2BDE
-int 31h	; A2BE0
-sbb eax, eax	; A2BE2
-inc eax	; A2BE4
-je short loc_A2BF7	; A2BE5
-mov ax, bx	; A2BE7
-shl eax, 10h	; A2BEA
-mov ax, cx	; A2BED
-mov word [eax], di	; A2BF0
-mov word [byte eax+02h], si	; A2BF3
+        test ecx, ecx
+        jle short loc_A2C19
+        add ecx, 0FFFh
+        mov al, byte [_Extender]
+        and cx, 0F000h
+        cmp al, 1
+        jne short loc_A2BF9
+        mov eax, ecx
+        sar eax, 10h
+        mov ebx, eax
+        mov ah, 5
+        mov al, 1
+        int 31h
+        sbb eax, eax
+        inc eax
+        je short loc_A2BF7
+        mov ax, bx
+        shl eax, 10h
+        mov ax, cx
+        mov word [eax], di
+        mov word [byte eax+02h], si
 loc_A2BF7:
-jmp short loc_A2C08	; A2BF7
+        jmp short loc_A2C08
 loc_A2BF9:
-mov ebx, ecx	; A2BF9
-mov eax, 80004800h	; A2BFB
-int 21h	; A2C00
-sbb ebx, ebx	; A2C02
-not ebx	; A2C04
-and eax, ebx	; A2C06
+        mov ebx, ecx
+        mov eax, 80004800h
+        int 21h
+        sbb ebx, ebx
+        not ebx
+        and eax, ebx
 loc_A2C08:
-test eax, eax	; A2C08
-jne short loc_A2C4E	; A2C0A
-call sub_9D66B	; A2C0C
-mov dword [eax], 5	; A2C11
-jmp short loc_A2C24	; A2C17
+        test eax, eax
+        jne short loc_A2C4E
+        call sub_9D66B
+        mov dword [eax], 5
+        jmp short loc_A2C24
 loc_A2C19:
-call sub_9D66B	; A2C19
-mov dword [eax], 9	; A2C1E
+        call sub_9D66B
+        mov dword [eax], 9
 loc_A2C24:
-mov eax, 0FFFFFFFFh	; A2C24
-jmp short loc_A2C4E	; A2C29
+        mov eax, 0FFFFFFFFh
+        jmp short loc_A2C4E
 loc_A2C2B:
-cmp dh, 2	; A2C2B
-jb short loc_A2C42	; A2C2E
-cmp dh, 8	; A2C30
-ja short loc_A2C42	; A2C33
-xor eax, eax	; A2C35
-mov eax, ds	; A2C37
-lsl eax, eax	; A2C39
-inc eax	; A2C3C
-mov dword [_curbrk], eax	; A2C3D
+        cmp dh, 2
+        jb short loc_A2C42
+        cmp dh, 8
+        ja short loc_A2C42
+        xor eax, eax
+        mov eax, ds
+        lsl eax, eax
+        inc eax
+        mov dword [_curbrk], eax
 loc_A2C42:
-mov eax, dword [_curbrk]	; A2C42
-add eax, ecx	; A2C47
-call __brk_	; A2C49
+        mov eax, dword [_curbrk]
+        add eax, ecx
+        call __brk_
 loc_A2C4E:
-pop edi	; A2C4E
-pop esi	; A2C4F
-pop edx	; A2C50
-pop ecx	; A2C51
-pop ebx	; A2C52
-ret	; A2C53
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 __brk_:
-push ebx	; A2C54
-push ecx	; A2C55
-push edx	; A2C56
-push esi	; A2C57
-push edi	; A2C58
-push es	; A2C59
-push ebp	; A2C5A
-push eax	; A2C5B
-cmp eax, dword [_STACKTOP]	; A2C5C
-jb short loc_A2CBB	; A2C62
-cmp byte [_Extender], 0	; A2C64
-jne short loc_A2CCD	; A2C6B
-mov ebp, dword [esp]	; A2C6D
-add ebp, byte 0Fh	; A2C70
-shr ebp, 4	; A2C73
-test ebp, ebp	; A2C76
-jne short loc_A2C7F	; A2C78
-mov ebp, 0FFFFFFFh	; A2C7A
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push es
+        push ebp
+        push eax
+        cmp eax, dword [_STACKTOP]
+        jb short loc_A2CBB
+        cmp byte [_Extender], 0
+        jne short loc_A2CCD
+        mov ebp, dword [esp]
+        add ebp, byte 0Fh
+        shr ebp, 4
+        test ebp, ebp
+        jne short loc_A2C7F
+        mov ebp, 0FFFFFFFh
 loc_A2C7F:
-xor ebx, ebx	; A2C7F
-mov eax, ds	; A2C81
-mov bx, ax	; A2C83
-mov ah, 0EDh	; A2C86
-int 21h	; A2C88
-shl eax, 1Fh	; A2C8A
-and edi, 0FFFFh	; A2C8D
-or edi, eax	; A2C93
-test edi, edi	; A2C95
-jge short loc_A2CA9	; A2C97
-mov es, edi	; A2C99
-mov ebx, ebp	; A2C9B
-mov ah, 4Ah	; A2C9D
-int 21h	; A2C9F
-rcl eax, 1	; A2CA1
-ror eax, 1	; A2CA3
-test eax, eax	; A2CA5
-jl short loc_A2CBB	; A2CA7
+        xor ebx, ebx
+        mov eax, ds
+        mov bx, ax
+        mov ah, 0EDh
+        int 21h
+        shl eax, 1Fh
+        and edi, 0FFFFh
+        or edi, eax
+        test edi, edi
+        jge short loc_A2CA9
+        mov es, edi
+        mov ebx, ebp
+        mov ah, 4Ah
+        int 21h
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jl short loc_A2CBB
 loc_A2CA9:
-mov eax, ds	; A2CA9
-mov es, eax	; A2CAB
-mov ebx, ebp	; A2CAD
+        mov eax, ds
+        mov es, eax
+        mov ebx, ebp
 loc_A2CAF:
-mov ah, 4Ah	; A2CAF
-int 21h	; A2CB1
-rcl eax, 1	; A2CB3
-ror eax, 1	; A2CB5
-test eax, eax	; A2CB7
-jge short loc_A2CFE	; A2CB9
+        mov ah, 4Ah
+        int 21h
+        rcl eax, 1
+        ror eax, 1
+        test eax, eax
+        jge short loc_A2CFE
 loc_A2CBB:
-call sub_9D66B	; A2CBB
-mov dword [eax], 5	; A2CC0
-mov eax, 0FFFFFFFFh	; A2CC6
-jmp short loc_A2D0C	; A2CCB
+        call sub_9D66B
+        mov dword [eax], 5
+        mov eax, 0FFFFFFFFh
+        jmp short loc_A2D0C
 loc_A2CCD:
-mov ebx, dword [esp]	; A2CCD
-add ebx, 0FFFh	; A2CD0
-shr ebx, 0Ch	; A2CD6
-test ebx, ebx	; A2CD9
-jne short loc_A2CE2	; A2CDB
-mov ebx, 0FFFFFh	; A2CDD
+        mov ebx, dword [esp]
+        add ebx, 0FFFh
+        shr ebx, 0Ch
+        test ebx, ebx
+        jne short loc_A2CE2
+        mov ebx, 0FFFFFh
 loc_A2CE2:
-mov dl, byte [_Extender]	; A2CE2
-cmp dl, 1	; A2CE8
-jne short loc_A2CF8	; A2CEB
-cmp dl, byte [_ExtenderSubtype]	; A2CED
-jne short loc_A2CF8	; A2CF3
-shl ebx, 8	; A2CF5
+        mov dl, byte [_Extender]
+        cmp dl, 1
+        jne short loc_A2CF8
+        cmp dl, byte [_ExtenderSubtype]
+        jne short loc_A2CF8
+        shl ebx, 8
 loc_A2CF8:
-mov eax, ds	; A2CF8
-mov es, eax	; A2CFA
-jmp short loc_A2CAF	; A2CFC
+        mov eax, ds
+        mov es, eax
+        jmp short loc_A2CAF
 loc_A2CFE:
-mov ebx, dword [esp]	; A2CFE
-mov eax, dword [_curbrk]	; A2D01
-mov dword [_curbrk], ebx	; A2D06
+        mov ebx, dword [esp]
+        mov eax, dword [_curbrk]
+        mov dword [_curbrk], ebx
 loc_A2D0C:
-add esp, byte 4	; A2D0C
-pop ebp	; A2D0F
-pop es	; A2D10
-jmp near loc_A2C4E	; A2D11
+        add esp, byte 4
+        pop ebp
+        pop es
+        jmp near loc_A2C4E

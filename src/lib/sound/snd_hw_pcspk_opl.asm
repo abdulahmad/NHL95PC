@@ -17,599 +17,599 @@ global loc_A69B0, loc_A69C0, loc_A69D5, sub_A69E8, sub_A69FB, sub_A6A01, sub_A6A
 global sub_A6A42, loc_A6A89, loc_A6A92, loc_A6ABB, sub_A6AC2, loc_A6AEC, loc_A6B14, loc_A6B29
 global sub_A6B32, sub_A6B5D, sub_A6B73
 sub_A65E8:
-mov al, 0B6h	; A65E8
-out 43h, al	; A65EA
-call sub_A6618	; A65EC
-mov al, 7Fh	; A65F1
-mov byte [byte_D6785], al	; A65F3
-mov byte [byte_D6786], al	; A65F8
-mov byte [byte_D6787], al	; A65FD
-mov byte [byte_D6788], al	; A6602
-mov byte [byte_D6789], al	; A6607
-mov eax, 5	; A660C
-ret	; A6611
+        mov al, 0B6h
+        out 43h, al
+        call sub_A6618
+        mov al, 7Fh
+        mov byte [byte_D6785], al
+        mov byte [byte_D6786], al
+        mov byte [byte_D6787], al
+        mov byte [byte_D6788], al
+        mov byte [byte_D6789], al
+        mov eax, 5
+        ret
 sub_A6612:
-call sub_A6618	; A6612
-ret	; A6617
+        call sub_A6618
+        ret
 sub_A6618:
-in al, 61h	; A6618
-and al, 0FCh	; A661A
-out 61h, al	; A661C
-LD xor, al, al	; A661E
-mov byte [byte_D6775], al	; A6620
-mov byte [byte_D6776], al	; A6625
-mov byte [byte_D6777], al	; A662A
-mov byte [byte_D6778], al	; A662F
-ret	; A6634
+        in al, 61h
+        and al, 0FCh
+        out 61h, al
+        LD xor, al, al
+        mov byte [byte_D6775], al
+        mov byte [byte_D6776], al
+        mov byte [byte_D6777], al
+        mov byte [byte_D6778], al
+        ret
 sub_A6635:
-push ebp	; A6635
-LD mov, ebp, esp	; A6636
-cmp dword [byte ebp+08h], byte 0	; A6638
-je short loc_A6670	; A663C
-push esi	; A663E
-LD xor, eax, eax	; A663F
-mov al, byte [byte ebp+010h]	; A6641
-mov ebx, dword [byte ebp+0Ch]	; A6644
-mov byte [byte ebx+03h], al	; A6647
-cmp al, 0FFh	; A664A
-je short loc_A6664	; A664C
-shl eax, 1	; A664E
-LD mov, esi, eax	; A6650
-mov ax, word [dword esi+word_D6608]	; A6652
-mov ebx, dword [byte ebp+0Ch]	; A6659
-mov word [byte ebx+04h], ax	; A665C
-mov word [byte ebx+06h], ax	; A6660
+        push ebp
+        LD mov, ebp, esp
+        cmp dword [byte ebp+08h], byte 0
+        je short loc_A6670
+        push esi
+        LD xor, eax, eax
+        mov al, byte [byte ebp+010h]
+        mov ebx, dword [byte ebp+0Ch]
+        mov byte [byte ebx+03h], al
+        cmp al, 0FFh
+        je short loc_A6664
+        shl eax, 1
+        LD mov, esi, eax
+        mov ax, word [dword esi+word_D6608]
+        mov ebx, dword [byte ebp+0Ch]
+        mov word [byte ebx+04h], ax
+        mov word [byte ebx+06h], ax
 loc_A6664:
-mov esi, dword [byte ebp+08h]	; A6664
-mov al, 0FFh	; A6667
-mov byte [dword esi+byte_D6774], al	; A6669
-pop esi	; A666F
+        mov esi, dword [byte ebp+08h]
+        mov al, 0FFh
+        mov byte [dword esi+byte_D6774], al
+        pop esi
 loc_A6670:
-leave	; A6670
-ret	; A6671
+        leave
+        ret
 sub_A6672:
-db 055h	; A6672 push ebp
-LD mov, ebp, esp	; A6673
-push esi	; A6675
-mov esi, dword [byte ebp+08h]	; A6676
-LD xor, al, al	; A6679
-mov byte [dword esi+byte_D6774], al	; A667B
-pop esi	; A6681
-leave	; A6682
-ret	; A6683
+        db 055h                                 ; insn: push ebp
+        LD mov, ebp, esp
+        push esi
+        mov esi, dword [byte ebp+08h]
+        LD xor, al, al
+        mov byte [dword esi+byte_D6774], al
+        pop esi
+        leave
+        ret
 sub_A6684:
-push ebp	; A6684
-LD mov, ebp, esp	; A6685
-mov ebx, dword [byte ebp+0Ch]	; A6687
-cmp byte [byte ebx+01h], 0	; A668A
-jne short loc_A6692	; A668E
-leave	; A6690
-ret	; A6691
+        push ebp
+        LD mov, ebp, esp
+        mov ebx, dword [byte ebp+0Ch]
+        cmp byte [byte ebx+01h], 0
+        jne short loc_A6692
+        leave
+        ret
 loc_A6692:
-push esi	; A6692
-push ecx	; A6693
-mov ebx, dword [byte ebp+014h]	; A6694
-cmp byte [byte ebx+035h], 1	; A6697
-jne short loc_A66BA	; A669B
-mov ebx, dword [byte ebp+0Ch]	; A669D
-LD xor, eax, eax	; A66A0
-mov al, byte [byte ebx+022h]	; A66A2
-add al, byte [byte ebx+03h]	; A66A5
-mov byte [byte_D6770], al	; A66A8
-shl eax, 1	; A66AD
-LD mov, esi, eax	; A66AF
-movzx ecx, word [dword esi+word_D6608]	; A66B1
-jmp short loc_A66C9	; A66B8
+        push esi
+        push ecx
+        mov ebx, dword [byte ebp+014h]
+        cmp byte [byte ebx+035h], 1
+        jne short loc_A66BA
+        mov ebx, dword [byte ebp+0Ch]
+        LD xor, eax, eax
+        mov al, byte [byte ebx+022h]
+        add al, byte [byte ebx+03h]
+        mov byte [byte_D6770], al
+        shl eax, 1
+        LD mov, esi, eax
+        movzx ecx, word [dword esi+word_D6608]
+        jmp short loc_A66C9
 loc_A66BA:
-mov ebx, dword [byte ebp+0Ch]	; A66BA
-movzx ecx, word [byte ebx+04h]	; A66BD
-mov al, byte [byte ebx+03h]	; A66C1
-mov byte [byte_D6770], al	; A66C4
+        mov ebx, dword [byte ebp+0Ch]
+        movzx ecx, word [byte ebx+04h]
+        mov al, byte [byte ebx+03h]
+        mov byte [byte_D6770], al
 loc_A66C9:
-mov ebx, dword [byte ebp+014h]	; A66C9
-movsx eax, byte [byte ebx+011h]	; A66CC
-neg eax	; A66D0
-LD add, ecx, eax	; A66D2
-mov ebx, dword [byte ebp+010h]	; A66D4
-cmp word [byte ebx+026h], byte 0	; A66D7
-jne short loc_A66E0	; A66DC
-jmp short loc_A6745	; A66DE
+        mov ebx, dword [byte ebp+014h]
+        movsx eax, byte [byte ebx+011h]
+        neg eax
+        LD add, ecx, eax
+        mov ebx, dword [byte ebp+010h]
+        cmp word [byte ebx+026h], byte 0
+        jne short loc_A66E0
+        jmp short loc_A6745
 loc_A66E0:
-jl short loc_A6715	; A66E0
-LD xor, eax, eax	; A66E2
-mov al, byte [byte_D6770]	; A66E4
-mov ebx, dword [byte ebp+014h]	; A66E9
-add al, byte [byte ebx+012h]	; A66EC
-shl eax, 1	; A66EF
-LD mov, esi, eax	; A66F1
-movzx eax, word [nosplit esi*1+word_D6608]	; A66F3
-neg eax	; A66FB
-LD add, eax, ecx	; A66FD
-mov ebx, dword [byte ebp+010h]	; A66FF
-movzx edx, word [byte ebx+026h]	; A6702
-mul edx	; A6706
-push ebx	; A6708
-mov ebx, 1F80h	; A6709
-div ebx	; A670E
-pop ebx	; A6710
-LD sub, ecx, eax	; A6711
-jmp short loc_A6745	; A6713
+        jl short loc_A6715
+        LD xor, eax, eax
+        mov al, byte [byte_D6770]
+        mov ebx, dword [byte ebp+014h]
+        add al, byte [byte ebx+012h]
+        shl eax, 1
+        LD mov, esi, eax
+        movzx eax, word [nosplit esi*1+word_D6608]
+        neg eax
+        LD add, eax, ecx
+        mov ebx, dword [byte ebp+010h]
+        movzx edx, word [byte ebx+026h]
+        mul edx
+        push ebx
+        mov ebx, 1F80h
+        div ebx
+        pop ebx
+        LD sub, ecx, eax
+        jmp short loc_A6745
 loc_A6715:
-LD xor, eax, eax	; A6715
-mov al, byte [byte_D6770]	; A6717
-mov ebx, dword [byte ebp+014h]	; A671C
-sub al, byte [byte ebx+012h]	; A671F
-shl eax, 1	; A6722
-LD mov, esi, eax	; A6724
-movzx eax, word [dword esi+word_D6608]	; A6726
-LD sub, eax, ecx	; A672D
-mov ebx, dword [byte ebp+010h]	; A672F
-movzx edx, word [byte ebx+026h]	; A6732
-neg edx	; A6736
-mul edx	; A6738
-push ebx	; A673A
-mov ebx, 1F80h	; A673B
-div ebx	; A6740
-pop ebx	; A6742
-LD add, ecx, eax	; A6743
+        LD xor, eax, eax
+        mov al, byte [byte_D6770]
+        mov ebx, dword [byte ebp+014h]
+        sub al, byte [byte ebx+012h]
+        shl eax, 1
+        LD mov, esi, eax
+        movzx eax, word [dword esi+word_D6608]
+        LD sub, eax, ecx
+        mov ebx, dword [byte ebp+010h]
+        movzx edx, word [byte ebx+026h]
+        neg edx
+        mul edx
+        push ebx
+        mov ebx, 1F80h
+        div ebx
+        pop ebx
+        LD add, ecx, eax
 loc_A6745:
-mov ebx, dword [byte ebp+014h]	; A6745
-cmp byte [byte ebx+028h], 2	; A6748
-jne short loc_A6754	; A674C
-mov ebx, dword [byte ebp+0Ch]	; A674E
-add ecx, dword [byte ebx+01Ch]	; A6751
+        mov ebx, dword [byte ebp+014h]
+        cmp byte [byte ebx+028h], 2
+        jne short loc_A6754
+        mov ebx, dword [byte ebp+0Ch]
+        add ecx, dword [byte ebx+01Ch]
 loc_A6754:
-mov ebx, dword [byte ebp+014h]	; A6754
-cmp byte [byte ebx+019h], 2	; A6757
-jne short loc_A6763	; A675B
-mov ebx, dword [byte ebp+0Ch]	; A675D
-add ecx, dword [byte ebx+014h]	; A6760
+        mov ebx, dword [byte ebp+014h]
+        cmp byte [byte ebx+019h], 2
+        jne short loc_A6763
+        mov ebx, dword [byte ebp+0Ch]
+        add ecx, dword [byte ebx+014h]
 loc_A6763:
-mov eax, dword [byte ebp+08h]	; A6763
-shl eax, 1	; A6766
-LD mov, esi, eax	; A6768
-mov word [dword esi+word_D677B], cx	; A676A
-mov ebx, dword [byte ebp+0Ch]	; A6771
-mov dword [byte ebx+06h], ecx	; A6774
-pop ecx	; A6777
-pop esi	; A6778
-leave	; A6779
-ret	; A677A
+        mov eax, dword [byte ebp+08h]
+        shl eax, 1
+        LD mov, esi, eax
+        mov word [dword esi+word_D677B], cx
+        mov ebx, dword [byte ebp+0Ch]
+        mov dword [byte ebx+06h], ecx
+        pop ecx
+        pop esi
+        leave
+        ret
 sub_A677B:
-mov al, byte [byte_D6774]	; A677B
-mov byte [byte_D678C], al	; A6780
-push esi	; A6785
-mov ecx, 4	; A6786
-LD mov, esi, ecx	; A678B
+        mov al, byte [byte_D6774]
+        mov byte [byte_D678C], al
+        push esi
+        mov ecx, 4
+        LD mov, esi, ecx
 loc_A678D:
-cmp byte [dword esi+byte_D6785], 0	; A678D
-je short loc_A67A6	; A6794
-mov al, byte [nosplit esi*1+byte_D6774]	; A6796
-mov byte [nosplit esi*1+byte_D678C], al	; A679D
-jmp short loc_A67AF	; A67A4
+        cmp byte [dword esi+byte_D6785], 0
+        je short loc_A67A6
+        mov al, byte [nosplit esi*1+byte_D6774]
+        mov byte [nosplit esi*1+byte_D678C], al
+        jmp short loc_A67AF
 loc_A67A6:
-LD xor, al, al	; A67A6
-mov byte [nosplit esi*1+byte_D678C], al	; A67A8
+        LD xor, al, al
+        mov byte [nosplit esi*1+byte_D678C], al
 loc_A67AF:
-dec esi	; A67AF
-loop loc_A678D	; A67B0
-pop esi	; A67B2
-mov al, byte [byte_D678C]	; A67B3
-cmp al, 0	; A67B8
-jne near loc_A684A	; A67BA
-mov bl, byte [byte_D678F]	; A67C0
-mov cl, byte [byte_D6790]	; A67C6
-LD xor, al, al	; A67CC
-LD or, al, bl	; A67CE
-LD or, al, cl	; A67D0
-je short loc_A6812	; A67D2
-mov al, byte [byte_D679A]	; A67D4
-and al, 2	; A67D9
-je short loc_A67FD	; A67DB
-mov bl, byte [byte_D678D]	; A67DD
-mov cl, byte [byte_D678E]	; A67E3
-LD xor, al, al	; A67E9
-LD or, al, bl	; A67EB
-LD or, al, cl	; A67ED
-jne short loc_A6812	; A67EF
-mov bl, byte [byte_D678F]	; A67F1
-mov cl, byte [byte_D6790]	; A67F7
+        dec esi
+        loop loc_A678D
+        pop esi
+        mov al, byte [byte_D678C]
+        cmp al, 0
+        jne near loc_A684A
+        mov bl, byte [byte_D678F]
+        mov cl, byte [byte_D6790]
+        LD xor, al, al
+        LD or, al, bl
+        LD or, al, cl
+        je short loc_A6812
+        mov al, byte [byte_D679A]
+        and al, 2
+        je short loc_A67FD
+        mov bl, byte [byte_D678D]
+        mov cl, byte [byte_D678E]
+        LD xor, al, al
+        LD or, al, bl
+        LD or, al, cl
+        jne short loc_A6812
+        mov bl, byte [byte_D678F]
+        mov cl, byte [byte_D6790]
 loc_A67FD:
-cmp bl, 0	; A67FD
-je short loc_A680A	; A6800
-mov ax, word [word_D6781]	; A6802
-jmp short loc_A6836	; A6808
+        cmp bl, 0
+        je short loc_A680A
+        mov ax, word [word_D6781]
+        jmp short loc_A6836
 loc_A680A:
-mov ax, word [word_D6783]	; A680A
-jmp short loc_A6836	; A6810
+        mov ax, word [word_D6783]
+        jmp short loc_A6836
 loc_A6812:
-mov bl, byte [byte_D678D]	; A6812
-cmp bl, 0	; A6818
-jne short loc_A6830	; A681B
-mov cl, byte [byte_D678E]	; A681D
-cmp cl, 0	; A6823
-je short loc_A6844	; A6826
-mov ax, word [word_D677F]	; A6828
-jmp short loc_A6836	; A682E
+        mov bl, byte [byte_D678D]
+        cmp bl, 0
+        jne short loc_A6830
+        mov cl, byte [byte_D678E]
+        cmp cl, 0
+        je short loc_A6844
+        mov ax, word [word_D677F]
+        jmp short loc_A6836
 loc_A6830:
-mov ax, word [word_D677D]	; A6830
+        mov ax, word [word_D677D]
 loc_A6836:
-out 42h, al	; A6836
-LD mov, al, ah	; A6838
-out 42h, al	; A683A
-in al, 61h	; A683C
-or al, 3	; A683E
-out 61h, al	; A6840
-jmp short loc_A684A	; A6842
+        out 42h, al
+        LD mov, al, ah
+        out 42h, al
+        in al, 61h
+        or al, 3
+        out 61h, al
+        jmp short loc_A684A
 loc_A6844:
-in al, 61h	; A6844
-and al, 0FEh	; A6846
-out 61h, al	; A6848
+        in al, 61h
+        and al, 0FEh
+        out 61h, al
 loc_A684A:
-mov al, byte [byte_D679A]	; A684A
-inc al	; A684F
-mov byte [byte_D679A], al	; A6851
-ret	; A6856
-db 00h
+        mov al, byte [byte_D679A]
+        inc al
+        mov byte [byte_D679A], al
+        ret
+        db 00h
 sub_A6858:
-out dx, al	; A6858
-push eax	; A6859
-push ecx	; A685A
-mov ecx, dword [dword_D67A0]	; A685B
+        out dx, al
+        push eax
+        push ecx
+        mov ecx, dword [dword_D67A0]
 loc_A6861:
-in al, dx	; A6861
-loop loc_A6861	; A6862
-pop ecx	; A6864
-pop eax	; A6865
-inc dx	; A6866
-db 086h,0C4h	; A6868 xchg al,ah
-out dx, al	; A686A
-db 086h,0C4h	; A686B xchg al,ah
-dec dx	; A686D
-push eax	; A686F
-push ecx	; A6870
-mov ecx, dword [dword_D67A4]	; A6871
+        in al, dx
+        loop loc_A6861
+        pop ecx
+        pop eax
+        inc dx
+        db 086h,0C4h                            ; insn: xchg al,ah
+        out dx, al
+        db 086h,0C4h                            ; insn: xchg al,ah
+        dec dx
+        push eax
+        push ecx
+        mov ecx, dword [dword_D67A4]
 loc_A6877:
-in al, dx	; A6877
-loop loc_A6877	; A6878
-pop ecx	; A687A
-pop eax	; A687B
-ret	; A687C
+        in al, dx
+        loop loc_A6877
+        pop ecx
+        pop eax
+        ret
 sub_A687D:
-LD xor, eax, eax	; A687D
-mov al, 1	; A687F
-mov dx, word [word_D679C]	; A6881
+        LD xor, eax, eax
+        mov al, 1
+        mov dx, word [word_D679C]
 loc_A6888:
-call sub_A6858	; A6888
-inc al	; A688D
-cmp al, 0F6h	; A688F
-jne short loc_A6888	; A6891
-mov al, 1	; A6893
-mov ah, 20h	; A6895
-call sub_A6858	; A6897
-push esi	; A689C
-LD xor, eax, eax	; A689D
-mov ebx, unk_D68FC	; A689F
-mov esi, unk_D69FF	; A68A4
+        call sub_A6858
+        inc al
+        cmp al, 0F6h
+        jne short loc_A6888
+        mov al, 1
+        mov ah, 20h
+        call sub_A6858
+        push esi
+        LD xor, eax, eax
+        mov ebx, unk_D68FC
+        mov esi, unk_D69FF
 loc_A68A9:
-mov byte [ebx], ah	; A68A9
-mov byte [esi], ah	; A68AB
-inc ebx	; A68AD
-inc esi	; A68AE
-inc al	; A68AF
-jne short loc_A68A9	; A68B1
-pop esi	; A68B3
-mov al, 80h	; A68B4
-mov ah, 0Eh	; A68B6
+        mov byte [ebx], ah
+        mov byte [esi], ah
+        inc ebx
+        inc esi
+        inc al
+        jne short loc_A68A9
+        pop esi
+        mov al, 80h
+        mov ah, 0Eh
 loc_A68B8:
-call sub_A6957	; A68B8
-inc al	; A68BD
-cmp al, 95h	; A68BF
-jle short loc_A68B8	; A68C1
-call sub_A68C9	; A68C3
-ret	; A68C8
+        call sub_A6957
+        inc al
+        cmp al, 95h
+        jle short loc_A68B8
+        call sub_A68C9
+        ret
 sub_A68C9:
-mov dx, word [word_D679C]	; A68C9
-push esi	; A68D0
-mov al, 20h	; A68D1
-mov ebx, unk_D691C	; A68D3
-mov esi, unk_D6A1F	; A68D8
+        mov dx, word [word_D679C]
+        push esi
+        mov al, 20h
+        mov ebx, unk_D691C
+        mov esi, unk_D6A1F
 loc_A68DD:
-mov ah, byte [ebx]	; A68DD
-mov cl, byte [esi]	; A68DF
-LD cmp, ah, cl	; A68E1
-je short loc_A68EA	; A68E3
-call sub_A6858	; A68E5
+        mov ah, byte [ebx]
+        mov cl, byte [esi]
+        LD cmp, ah, cl
+        je short loc_A68EA
+        call sub_A6858
 loc_A68EA:
-mov byte [esi], ah	; A68EA
-inc ebx	; A68EC
-inc esi	; A68ED
-inc al	; A68EE
-cmp al, 96h	; A68F0
-jne short loc_A68DD	; A68F2
-mov al, 0BDh	; A68F4
-mov ebx, unk_D69B9	; A68F6
-mov esi, unk_D6ABC	; A68FB
+        mov byte [esi], ah
+        inc ebx
+        inc esi
+        inc al
+        cmp al, 96h
+        jne short loc_A68DD
+        mov al, 0BDh
+        mov ebx, unk_D69B9
+        mov esi, unk_D6ABC
 loc_A6900:
-mov ah, byte [ebx]	; A6900
-mov cl, byte [esi]	; A6902
-LD cmp, ah, cl	; A6904
-je short loc_A690D	; A6906
-call sub_A6858	; A6908
+        mov ah, byte [ebx]
+        mov cl, byte [esi]
+        LD cmp, ah, cl
+        je short loc_A690D
+        call sub_A6858
 loc_A690D:
-mov byte [esi], ah	; A690D
-inc ebx	; A690F
-inc esi	; A6910
-inc al	; A6911
-cmp al, 0F6h	; A6913
-jne short loc_A6900	; A6915
-mov al, 0A0h	; A6917
-mov ebx, unk_D699C	; A6919
-mov esi, unk_D6A9F	; A691E
+        mov byte [esi], ah
+        inc ebx
+        inc esi
+        inc al
+        cmp al, 0F6h
+        jne short loc_A6900
+        mov al, 0A0h
+        mov ebx, unk_D699C
+        mov esi, unk_D6A9F
 loc_A6923:
-mov ah, byte [ebx]	; A6923
-mov cl, byte [esi]	; A6925
-LD cmp, ah, cl	; A6927
-jne short loc_A6935	; A6929
-mov ah, byte [byte ebx+010h]	; A692B
-mov cl, byte [byte esi+010h]	; A692E
-LD cmp, ah, cl	; A6931
-je short loc_A694D	; A6933
+        mov ah, byte [ebx]
+        mov cl, byte [esi]
+        LD cmp, ah, cl
+        jne short loc_A6935
+        mov ah, byte [byte ebx+010h]
+        mov cl, byte [byte esi+010h]
+        LD cmp, ah, cl
+        je short loc_A694D
 loc_A6935:
-add al, 10h	; A6935
-mov ah, byte [byte ebx+010h]	; A6937
-call sub_A6858	; A693A
-mov byte [byte esi+010h], ah	; A693F
-sub al, 10h	; A6942
-mov ah, byte [ebx]	; A6944
-call sub_A6858	; A6946
-mov byte [esi], ah	; A694B
+        add al, 10h
+        mov ah, byte [byte ebx+010h]
+        call sub_A6858
+        mov byte [byte esi+010h], ah
+        sub al, 10h
+        mov ah, byte [ebx]
+        call sub_A6858
+        mov byte [esi], ah
 loc_A694D:
-inc ebx	; A694D
-inc esi	; A694E
-inc al	; A694F
-cmp al, 0A9h	; A6951
-jne short loc_A6923	; A6953
-pop esi	; A6955
-ret	; A6956
+        inc ebx
+        inc esi
+        inc al
+        cmp al, 0A9h
+        jne short loc_A6923
+        pop esi
+        ret
 sub_A6957:
-mov dx, word [word_D679C]	; A6957
-cmp al, 20h	; A695E
-jb short loc_A697D	; A6960
-cmp al, 0F5h	; A6962
-ja short loc_A697D	; A6964
-push eax	; A6966
-push ebx	; A6967
-push ecx	; A6968
-LD mov, ecx, eax	; A6969
-LD xor, eax, eax	; A696B
-LD mov, al, cl	; A696D
-mov ebx, unk_D68FC	; A696F
-LD add, ebx, eax	; A6974
-mov byte [ebx], ch	; A6976
-pop ecx	; A6978
-pop ebx	; A6979
-pop eax	; A697A
-jmp short loc_A6982	; A697B
+        mov dx, word [word_D679C]
+        cmp al, 20h
+        jb short loc_A697D
+        cmp al, 0F5h
+        ja short loc_A697D
+        push eax
+        push ebx
+        push ecx
+        LD mov, ecx, eax
+        LD xor, eax, eax
+        LD mov, al, cl
+        mov ebx, unk_D68FC
+        LD add, ebx, eax
+        mov byte [ebx], ch
+        pop ecx
+        pop ebx
+        pop eax
+        jmp short loc_A6982
 loc_A697D:
-call sub_A6858	; A697D
+        call sub_A6858
 loc_A6982:
-ret	; A6982
+        ret
 sub_A6983:
-push ecx	; A6983
-cmp al, 20h	; A6984
-jb short loc_A699B	; A6986
-cmp al, 0F5h	; A6988
-ja short loc_A699B	; A698A
-LD mov, ecx, eax	; A698C
-LD xor, eax, eax	; A698E
-LD mov, al, cl	; A6990
-mov ebx, unk_D68FC	; A6992
-LD add, ebx, eax	; A6997
-mov al, byte [ebx]	; A6999
+        push ecx
+        cmp al, 20h
+        jb short loc_A699B
+        cmp al, 0F5h
+        ja short loc_A699B
+        LD mov, ecx, eax
+        LD xor, eax, eax
+        LD mov, al, cl
+        mov ebx, unk_D68FC
+        LD add, ebx, eax
+        mov al, byte [ebx]
 loc_A699B:
-pop ecx	; A699B
-ret	; A699C
+        pop ecx
+        ret
 sub_A699D:
-push ebp	; A699D
-LD mov, ebp, esp	; A699E
-push si	; A69A0
-cld	; A69A2
-movzx ebx, word [byte ebp+08h]	; A69A3
-cmp ebx, byte 9	; A69A7
-jl short loc_A69B0	; A69AA
-pop si	; A69AC
-leave	; A69AE
-ret	; A69AF
+        push ebp
+        LD mov, ebp, esp
+        push si
+        cld
+        movzx ebx, word [byte ebp+08h]
+        cmp ebx, byte 9
+        jl short loc_A69B0
+        pop si
+        leave
+        ret
 loc_A69B0:
-mov cl, byte [dword ebx+byte_D67A8]	; A69B0
-mov esi, unk_D67B4	; A69B6
-mov ebx, dword [byte ebp+0Ch]	; A69BB
-mov ch, 0Ah	; A69BE
+        mov cl, byte [dword ebx+byte_D67A8]
+        mov esi, unk_D67B4
+        mov ebx, dword [byte ebp+0Ch]
+        mov ch, 0Ah
 loc_A69C0:
-mov ah, byte [ebx]	; A69C0
-inc ebx	; A69C2
-lodsb	; A69C3
-LD add, al, cl	; A69C4
-call sub_A6957	; A69C6
-dec ch	; A69CB
-jne short loc_A69C0	; A69CD
-movzx ecx, word [byte ebp+08h]	; A69CF
-mov ch, 3	; A69D3
+        mov ah, byte [ebx]
+        inc ebx
+        lodsb
+        LD add, al, cl
+        call sub_A6957
+        dec ch
+        jne short loc_A69C0
+        movzx ecx, word [byte ebp+08h]
+        mov ch, 3
 loc_A69D5:
-mov ah, byte [ebx]	; A69D5
-inc ebx	; A69D7
-lodsb	; A69D8
-LD add, al, cl	; A69D9
-call sub_A6957	; A69DB
-dec ch	; A69E0
-jne short loc_A69D5	; A69E2
-pop si	; A69E4
-leave	; A69E6
-ret	; A69E7
+        mov ah, byte [ebx]
+        inc ebx
+        lodsb
+        LD add, al, cl
+        call sub_A6957
+        dec ch
+        jne short loc_A69D5
+        pop si
+        leave
+        ret
 sub_A69E8:
-push ebp	; A69E8
-LD mov, ebp, esp	; A69E9
-mov eax, dword [byte ebp+08h]	; A69EB
-mov word [word_D679C], ax	; A69EE
-call sub_A687D	; A69F4
-leave	; A69F9
-ret	; A69FA
+        push ebp
+        LD mov, ebp, esp
+        mov eax, dword [byte ebp+08h]
+        mov word [word_D679C], ax
+        call sub_A687D
+        leave
+        ret
 sub_A69FB:
-call sub_A687D	; A69FB
-ret	; A6A00
+        call sub_A687D
+        ret
 sub_A6A01:
-mov eax, 388h	; A6A01
-LD xor, edx, edx	; A6A06
-ret	; A6A08
+        mov eax, 388h
+        LD xor, edx, edx
+        ret
 sub_A6A09:
-push ebp	; A6A09
-LD mov, ebp, esp	; A6A0A
-mov eax, dword [byte ebp+08h]	; A6A0C
-mov word [word_D679C], ax	; A6A0F
-mov eax, 20h	; A6A15
-mov dword [dword_D67A0], eax	; A6A1A
-mov eax, 8Ch	; A6A1F
-mov dword [dword_D67A4], eax	; A6A24
-call sub_A6A42	; A6A29
-mov eax, 0	; A6A2E
-jb short loc_A6A40	; A6A33
-call sub_A6AC2	; A6A35
-mov eax, 1	; A6A3A
-clc	; A6A3F
+        push ebp
+        LD mov, ebp, esp
+        mov eax, dword [byte ebp+08h]
+        mov word [word_D679C], ax
+        mov eax, 20h
+        mov dword [dword_D67A0], eax
+        mov eax, 8Ch
+        mov dword [dword_D67A4], eax
+        call sub_A6A42
+        mov eax, 0
+        jb short loc_A6A40
+        call sub_A6AC2
+        mov eax, 1
+        clc
 loc_A6A40:
-leave	; A6A40
-ret	; A6A41
+        leave
+        ret
 sub_A6A42:
-push ax	; A6A42
-push cx	; A6A44
-push dx	; A6A46
-mov dx, word [word_D679C]	; A6A48
-mov eax, 1	; A6A4F
-call sub_A6858	; A6A54
-mov eax, 6004h	; A6A59
-call sub_A6858	; A6A5E
-mov eax, 8004h	; A6A63
-call sub_A6858	; A6A68
-in al, dx	; A6A6D
-LD mov, ebx, eax	; A6A6E
-mov eax, 0FF02h	; A6A70
-call sub_A6858	; A6A75
-mov eax, 2104h	; A6A7A
-call sub_A6858	; A6A7F
-mov ecx, 0C350h	; A6A84
+        push ax
+        push cx
+        push dx
+        mov dx, word [word_D679C]
+        mov eax, 1
+        call sub_A6858
+        mov eax, 6004h
+        call sub_A6858
+        mov eax, 8004h
+        call sub_A6858
+        in al, dx
+        LD mov, ebx, eax
+        mov eax, 0FF02h
+        call sub_A6858
+        mov eax, 2104h
+        call sub_A6858
+        mov ecx, 0C350h
 loc_A6A89:
-in al, dx	; A6A89
-and al, 0E0h	; A6A8A
-cmp al, 0C0h	; A6A8C
-je short loc_A6A92	; A6A8E
-loop loc_A6A89	; A6A90
+        in al, dx
+        and al, 0E0h
+        cmp al, 0C0h
+        je short loc_A6A92
+        loop loc_A6A89
 loc_A6A92:
-LD mov, ecx, eax	; A6A92
-mov eax, 6004h	; A6A94
-call sub_A6858	; A6A99
-mov eax, 8004h	; A6A9E
-call sub_A6858	; A6AA3
-and bl, 0E0h	; A6AA8
-cmp bl, 0	; A6AAB
-stc	; A6AAE
-jne short loc_A6ABB	; A6AAF
-and cl, 0E0h	; A6AB1
-cmp cl, 0C0h	; A6AB4
-stc	; A6AB7
-jne short loc_A6ABB	; A6AB8
-clc	; A6ABA
+        LD mov, ecx, eax
+        mov eax, 6004h
+        call sub_A6858
+        mov eax, 8004h
+        call sub_A6858
+        and bl, 0E0h
+        cmp bl, 0
+        stc
+        jne short loc_A6ABB
+        and cl, 0E0h
+        cmp cl, 0C0h
+        stc
+        jne short loc_A6ABB
+        clc
 loc_A6ABB:
-pop dx	; A6ABB
-pop cx	; A6ABD
-pop ax	; A6ABF
-ret	; A6AC1
+        pop dx
+        pop cx
+        pop ax
+        ret
 sub_A6AC2:
-push ax	; A6AC2
-push cx	; A6AC4
-push dx	; A6AC6
-in al, 61h	; A6AC8
-and al, 0FEh	; A6ACA
-out 61h, al	; A6ACC
-mov al, 0B0h	; A6ACE
-out 43h, al	; A6AD0
-LD xor, al, al	; A6AD2
-out 42h, al	; A6AD4
-out 42h, al	; A6AD6
-in al, 61h	; A6AD8
-or al, 1	; A6ADA
-out 61h, al	; A6ADC
-mov ecx, 3E8h	; A6ADE
-mov dx, word [word_D679C]	; A6AE3
-LD xor, eax, eax	; A6AEA
+        push ax
+        push cx
+        push dx
+        in al, 61h
+        and al, 0FEh
+        out 61h, al
+        mov al, 0B0h
+        out 43h, al
+        LD xor, al, al
+        out 42h, al
+        out 42h, al
+        in al, 61h
+        or al, 1
+        out 61h, al
+        mov ecx, 3E8h
+        mov dx, word [word_D679C]
+        LD xor, eax, eax
 loc_A6AEC:
-in al, dx	; A6AEC
-loop loc_A6AEC	; A6AED
-in al, 61h	; A6AEF
-and al, 0FEh	; A6AF1
-out 61h, al	; A6AF3
-in al, 42h	; A6AF5
-db 086h,0C4h	; A6AF7 xchg al,ah
-in al, 42h	; A6AF9
-db 086h,0C4h	; A6AFB xchg al,ah
-neg eax	; A6AFD
-LD mov, ecx, eax	; A6AFF
-LD xor, edx, edx	; A6B01
-mov eax, 0EA60h	; A6B03
-div ecx	; A6B08
-cmp eax, byte 0	; A6B0A
-jne short loc_A6B14	; A6B0D
-mov eax, 1	; A6B0F
+        in al, dx
+        loop loc_A6AEC
+        in al, 61h
+        and al, 0FEh
+        out 61h, al
+        in al, 42h
+        db 086h,0C4h                            ; insn: xchg al,ah
+        in al, 42h
+        db 086h,0C4h                            ; insn: xchg al,ah
+        neg eax
+        LD mov, ecx, eax
+        LD xor, edx, edx
+        mov eax, 0EA60h
+        div ecx
+        cmp eax, byte 0
+        jne short loc_A6B14
+        mov eax, 1
 loc_A6B14:
-shl eax, 1	; A6B14
-LD xor, edx, edx	; A6B16
-mov eax, 7530h	; A6B18
-div ecx	; A6B1D
-cmp eax, byte 0	; A6B1F
-jne short loc_A6B29	; A6B22
-mov eax, 1	; A6B24
+        shl eax, 1
+        LD xor, edx, edx
+        mov eax, 7530h
+        div ecx
+        cmp eax, byte 0
+        jne short loc_A6B29
+        mov eax, 1
 loc_A6B29:
-shl eax, 1	; A6B29
-pop dx	; A6B2B
-pop cx	; A6B2D
-pop ax	; A6B2F
-ret	; A6B31
+        shl eax, 1
+        pop dx
+        pop cx
+        pop ax
+        ret
 sub_A6B32:
-push ebp	; A6B32
-LD mov, ebp, esp	; A6B33
-LD xor, eax, eax	; A6B35
-LD xor, edx, edx	; A6B37
-mov al, byte [byte ebp+08h]	; A6B39
-mov dh, byte [byte ebp+0Ch]	; A6B3C
-mov cl, 0Ch	; A6B3F
-div cl	; A6B41
-LD mov, dl, al	; A6B43
-LD mov, al, ah	; A6B45
-LD add, al, dh	; A6B47
-cbw	; A6B49
-cwde	; A6B4B
-movzx eax, word [nosplit eax*2+word_D67F4]	; A6B4C
-LD xor, dh, dh	; A6B54
-shl edx, 0Ah	; A6B56
-LD or, eax, edx	; A6B59
-leave	; A6B5B
-ret	; A6B5C
+        push ebp
+        LD mov, ebp, esp
+        LD xor, eax, eax
+        LD xor, edx, edx
+        mov al, byte [byte ebp+08h]
+        mov dh, byte [byte ebp+0Ch]
+        mov cl, 0Ch
+        div cl
+        LD mov, dl, al
+        LD mov, al, ah
+        LD add, al, dh
+        cbw
+        cwde
+        movzx eax, word [nosplit eax*2+word_D67F4]
+        LD xor, dh, dh
+        shl edx, 0Ah
+        LD or, eax, edx
+        leave
+        ret
 sub_A6B5D:
-push ebp	; A6B5D
-LD mov, ebp, esp	; A6B5E
-LD xor, ebx, ebx	; A6B60
-mov bl, byte [byte ebp+08h]	; A6B62
-and ebx, byte 7Ch	; A6B65
-shr ebx, 1	; A6B68
-movzx eax, word [dword ebx+word_D683C]	; A6B6A
-leave	; A6B71
-ret	; A6B72
+        push ebp
+        LD mov, ebp, esp
+        LD xor, ebx, ebx
+        mov bl, byte [byte ebp+08h]
+        and ebx, byte 7Ch
+        shr ebx, 1
+        movzx eax, word [dword ebx+word_D683C]
+        leave
+        ret
 sub_A6B73:
-push ebp	; A6B73
-LD mov, ebp, esp	; A6B74
-LD xor, ebx, ebx	; A6B76
-mov bl, byte [byte ebp+08h]	; A6B78
-and ebx, byte 7Eh	; A6B7B
-movzx eax, word [dword ebx+word_D687C]	; A6B7E
-leave	; A6B85
-ret	; A6B86
+        push ebp
+        LD mov, ebp, esp
+        LD xor, ebx, ebx
+        mov bl, byte [byte ebp+08h]
+        and ebx, byte 7Eh
+        movzx eax, word [dword ebx+word_D687C]
+        leave
+        ret

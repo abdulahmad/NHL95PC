@@ -4,4 +4,4 @@ bits 32
 section s_F21FC nobits alloc noexec write align=1
 global unk_F21FC
 unk_F21FC:
-resb 256
+        resb 256

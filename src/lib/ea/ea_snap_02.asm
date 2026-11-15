@@ -7,110 +7,110 @@ extern sub_A35EC, sub_A365C, word_D41F8, word_D41FA, word_D51D8, word_D51DA
 global InitFpuFlags, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, sub_9D41D, sub_9D43A
 global loc_9D471, loc_9D486, sub_9D487
 InitFpuFlags:
-mov byte [__8087], 3	; 9D352
-mov byte [__real87], 1	; 9D359
-db 066h,0Fh,01h,025h
-dd word_D51DA
-and word [word_D51DA], byte 6	; 9D368
-sub esp, byte 8	; 9D370
-sidt [esp]	; 9D373
-mov ebx, dword [byte esp+02h]	; 9D377
-add ebx, byte 38h	; 9D37B
-add esp, byte 8	; 9D37E
-cmp byte [byte_D4D08], 0	; 9D381
-je short loc_9D3A4	; 9D388
-call sub_9D41D	; 9D38A
-o16 mov es, word [word_D41FA]	; 9D38F
-mov dword [es:ebx], edx	; 9D396
-mov dword [byte es:ebx+04h], ecx	; 9D399
-call sub_9D487	; 9D39D
-jmp short loc_9D41C	; 9D3A2
+        mov byte [__8087], 3
+        mov byte [__real87], 1
+        db 066h,0Fh,01h,025h
+        dd word_D51DA
+        and word [word_D51DA], byte 6
+        sub esp, byte 8
+        sidt [esp]
+        mov ebx, dword [byte esp+02h]
+        add ebx, byte 38h
+        add esp, byte 8
+        cmp byte [byte_D4D08], 0
+        je short loc_9D3A4
+        call sub_9D41D
+        o16 mov es, word [word_D41FA]
+        mov dword [es:ebx], edx
+        mov dword [byte es:ebx+04h], ecx
+        call sub_9D487
+        jmp short loc_9D41C
 loc_9D3A4:
-cmp byte [_Extender], 0	; 9D3A4
-jne short loc_9D3C8	; 9D3AB
-mov ax, 2507h	; 9D3AD
-push ds	; 9D3B1
-mov cx, cs	; 9D3B2
-mov ds, ecx	; 9D3B5
-lea edx, [sub_A365C]	; 9D3B7
-int 21h	; 9D3BD
-pop ds	; 9D3BF
-mov al, 4	; 9D3C0
-mov ah, 0F3h	; 9D3C2
-int 21h	; 9D3C4
-jmp short loc_9D41C	; 9D3C6
+        cmp byte [_Extender], 0
+        jne short loc_9D3C8
+        mov ax, 2507h
+        push ds
+        mov cx, cs
+        mov ds, ecx
+        lea edx, [sub_A365C]
+        int 21h
+        pop ds
+        mov al, 4
+        mov ah, 0F3h
+        int 21h
+        jmp short loc_9D41C
 loc_9D3C8:
-cmp byte [_Extender], 9	; 9D3C8
-jne short loc_9D3F0	; 9D3CF
-call sub_9D41D	; 9D3D1
-mov dword [ebx], edx	; 9D3D6
-mov dword [byte ebx+04h], ecx	; 9D3D8
-mov eax, 0E02h	; 9D3DB
-mov ebx, 4	; 9D3E0
-mov ecx, dword [dword_D41F4]	; 9D3E5
-call dword [byte ecx+030h]	; 9D3EB
-jmp short loc_9D41C	; 9D3EE
+        cmp byte [_Extender], 9
+        jne short loc_9D3F0
+        call sub_9D41D
+        mov dword [ebx], edx
+        mov dword [byte ebx+04h], ecx
+        mov eax, 0E02h
+        mov ebx, 4
+        mov ecx, dword [dword_D41F4]
+        call dword [byte ecx+030h]
+        jmp short loc_9D41C
 loc_9D3F0:
-cmp byte [_Extender], 1	; 9D3F0
-jne short loc_9D409	; 9D3F7
-mov dx, word [word_D41F8]	; 9D3F9
-sub eax, eax	; 9D400
-call __hook387	; 9D402
-jmp short loc_9D41C	; 9D407
+        cmp byte [_Extender], 1
+        jne short loc_9D409
+        mov dx, word [word_D41F8]
+        sub eax, eax
+        call __hook387
+        jmp short loc_9D41C
 loc_9D409:
-sub dx, dx	; 9D409
-sub eax, eax	; 9D40C
-call __hook387	; 9D40E
-cmp al, 1	; 9D413
-je short loc_9D41C	; 9D415
-call sub_9D43A	; 9D417
+        sub dx, dx
+        sub eax, eax
+        call __hook387
+        cmp al, 1
+        je short loc_9D41C
+        call sub_9D43A
 loc_9D41C:
-ret	; 9D41C
+        ret
 sub_9D41D:
-lea ecx, [sub_A365C]	; 9D41D
-mov dx, cs	; 9D423
-shl edx, 10h	; 9D426
-mov dx, cx	; 9D429
-mov cx, cs	; 9D42C
-and cl, 3	; 9D42F
-shl cx, 0Dh	; 9D432
-or ch, 8Eh	; 9D436
-ret	; 9D439
+        lea ecx, [sub_A365C]
+        mov dx, cs
+        shl edx, 10h
+        mov dx, cx
+        mov cx, cs
+        and cl, 3
+        shl cx, 0Dh
+        or ch, 8Eh
+        ret
 sub_9D43A:
-mov cl, 7	; 9D43A
-mov ax, 2502h	; 9D43C
-int 21h	; 9D440
-mov dword [dword_D51D4], ebx	; 9D442
-o16 mov word [word_D51D8], es	; 9D448
-cmp byte [_Extender], 3	; 9D44F
-mov cl, 7	; 9D456
-mov ax, 2504h	; 9D458
-push ds	; 9D45C
-push cs	; 9D45D
-pop ds	; 9D45E
-jl short loc_9D471	; 9D45F
-lea edx, [sub_A35EC]	; 9D461
-int 21h	; 9D467
-pop ds	; 9D469
-call sub_9D487	; 9D46A
-jmp short loc_9D486	; 9D46F
+        mov cl, 7
+        mov ax, 2502h
+        int 21h
+        mov dword [dword_D51D4], ebx
+        o16 mov word [word_D51D8], es
+        cmp byte [_Extender], 3
+        mov cl, 7
+        mov ax, 2504h
+        push ds
+        push cs
+        pop ds
+        jl short loc_9D471
+        lea edx, [sub_A35EC]
+        int 21h
+        pop ds
+        call sub_9D487
+        jmp short loc_9D486
 loc_9D471:
-lea edx, [sub_A365C]	; 9D471
-int 21h	; 9D477
-pop ds	; 9D479
-mov ecx, cr0	; 9D47A
-or ecx, byte 4	; 9D47D
-and ecx, byte 0FFFFFFFDh	; 9D480
-mov cr0, ecx	; 9D483
+        lea edx, [sub_A365C]
+        int 21h
+        pop ds
+        mov ecx, cr0
+        or ecx, byte 4
+        and ecx, byte 0FFFFFFFDh
+        mov cr0, ecx
 loc_9D486:
-ret	; 9D486
+        ret
 sub_9D487:
-xor ebx, ebx	; 9D487
-lea edx, [dword_D5194]	; 9D489
-mov ax, 2535h	; 9D48F
-int 21h	; 9D493
-or dword [dword_D5194], byte 4	; 9D495
-and dword [dword_D5194], byte 0FFFFFFFDh	; 9D49C
-inc ebx	; 9D4A3
-int 21h	; 9D4A4
-ret	; 9D4A6
+        xor ebx, ebx
+        lea edx, [dword_D5194]
+        mov ax, 2535h
+        int 21h
+        or dword [dword_D5194], byte 4
+        and dword [dword_D5194], byte 0FFFFFFFDh
+        inc ebx
+        int 21h
+        ret

@@ -5,32 +5,32 @@ section s_98683 progbits alloc exec nowrite align=1
 extern __EnterWVIDEO_, dword_EDEFC, sub_90267
 global __fatal_runtime_error_, loc_9869D, nullsub_7, sub_986B0, unknown_libname_22
 __fatal_runtime_error_:
-push ebx	; 98683
-push ecx	; 98684
-mov ebx, eax	; 98685
-mov ecx, edx	; 98687
-mov edx, ds	; 98689
-call __EnterWVIDEO_	; 9868B
-test eax, eax	; 98690
-jne short loc_9869D	; 98692
-mov eax, ebx	; 98694
-mov edx, ecx	; 98696
-call sub_90267	; 98698
+        push ebx
+        push ecx
+        mov ebx, eax
+        mov ecx, edx
+        mov edx, ds
+        call __EnterWVIDEO_
+        test eax, eax
+        jne short loc_9869D
+        mov eax, ebx
+        mov edx, ecx
+        call sub_90267
 loc_9869D:
-pop ecx	; 9869D
-pop ebx	; 9869E
-ret	; 9869F
+        pop ecx
+        pop ebx
+        ret
 nullsub_7:
-ret	; 986A0
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 sub_986B0:
-xor edx, edx	; 986B0
-mov dword [dword_EDEFC], edx	; 986B2
-mov eax, dword_EDEFC	; 986B8
-ret	; 986BD
-db 08Bh,0C0h
+        xor edx, edx
+        mov dword [dword_EDEFC], edx
+        mov eax, dword_EDEFC
+        ret
+        db 08Bh,0C0h
 unknown_libname_22:
-mov eax, dword [byte esp+04h]	; 986C0
-mov dword [eax], 1	; 986C4
-ret	; 986CA
-db 090h
+        mov eax, dword [byte esp+04h]
+        mov dword [eax], 1
+        ret
+        db 090h

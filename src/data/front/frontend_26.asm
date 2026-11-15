@@ -12,137 +12,137 @@ global whichdrivemsg, str_FirstTeamSelected, str_PlayMustBeImported, str_Passwor
 global str_KEY2, str_CAREER2, str_ATT2, str_CARTEAMS, str_TEAMS3, str_SEASON4, str_SCHEDULE2, str_star
 global str_backslash2, str_S4
 msg_MergeNeeded:
-dd str_MasterDatabasesFor2
+        dd str_MasterDatabasesFor2
 msg_MergeNeeded_e01:
-db 00h,00h,00h,00h
-dd str_MustBeCompletelyMerged
-dd str_PlayersDatabasesMustBe
-dd str_DoYouWishTo
+        db 00h,00h,00h,00h
+        dd str_MustBeCompletelyMerged
+        dd str_PlayersDatabasesMustBe
+        dd str_DoYouWishTo
 btn_MergeNeeded:
-db 010h,00h,00h,00h,06Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
-db 00h,00h,00h,00h,05h,00h,00h,00h
-dd str_Yes
-db 0F0h,0FFh,0FFh,0FFh,06Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
-db 00h,00h,00h,00h,06h,00h,00h,00h
-dd str_No4
+        db 010h,00h,00h,00h,06Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
+        db 00h,00h,00h,00h,05h,00h,00h,00h
+        dd str_Yes
+        db 0F0h,0FFh,0FFh,0FFh,06Ch,00h,00h,00h,050h,00h,00h,00h,014h,00h,00h,00h
+        db 00h,00h,00h,00h,06h,00h,00h,00h
+        dd str_No4
 str_MergingPlayersToMaster:
-db 04Dh,065h,072h,067h,069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,073h,020h
-db 074h,06Fh,020h,06Dh,061h,073h,074h,065h,072h,020h,064h,061h,074h,061h,062h,061h
-db 073h,065h,02Eh,00h
+        db 04Dh,065h,072h,067h,069h,06Eh,067h,020h,070h,06Ch,061h,079h,065h,072h,073h,020h
+        db 074h,06Fh,020h,06Dh,061h,073h,074h,065h,072h,020h,064h,061h,074h,061h,062h,061h
+        db 073h,065h,02Eh,00h
 mergingmsg:
-dd str_MergingPlayersToMaster
+        dd str_MergingPlayersToMaster
 str_UpdatingSchedule:
-db 055h,070h,064h,061h,074h,069h,06Eh,067h,020h,073h,063h,068h,065h,064h,075h,06Ch
-db 065h,02Eh,00h
+        db 055h,070h,064h,061h,074h,069h,06Eh,067h,020h,073h,063h,068h,065h,064h,075h,06Ch
+        db 065h,02Eh,00h
 updschedmsg:
-dd str_UpdatingSchedule
+        dd str_UpdatingSchedule
 str_PleasePutAFloppy:
-db 050h,06Ch,065h,061h,073h,065h,020h,070h,075h,074h,020h,061h,020h,066h,06Ch,06Fh
-db 070h,070h,079h,020h,064h,069h,073h,06Bh,020h,069h,06Eh,020h,061h,06Eh,079h,020h
-db 064h,072h,069h,076h,065h,02Eh,00h
+        db 050h,06Ch,065h,061h,073h,065h,020h,070h,075h,074h,020h,061h,020h,066h,06Ch,06Fh
+        db 070h,070h,079h,020h,064h,069h,073h,06Bh,020h,069h,06Eh,020h,061h,06Eh,079h,020h
+        db 064h,072h,069h,076h,065h,02Eh,00h
 insertfloppymsg:
-dd str_PleasePutAFloppy
+        dd str_PleasePutAFloppy
 str_UseFloppyDriveA:
-db 055h,073h,065h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,072h,069h,076h,065h
-db 020h,041h,020h,06Fh,072h,020h,042h,03Fh,00h
+        db 055h,073h,065h,020h,066h,06Ch,06Fh,070h,070h,079h,020h,064h,072h,069h,076h,065h
+        db 020h,041h,020h,06Fh,072h,020h,042h,03Fh,00h
 whichdrivemsg:
-dd str_UseFloppyDriveA
+        dd str_UseFloppyDriveA
 str_FirstTeamSelected:
-db 054h,068h,065h,020h,066h,069h,072h,073h,074h,020h,074h,065h,061h,06Dh,020h,073h
-db 065h,06Ch,065h,063h,074h,065h,064h,020h,074h,06Fh,00h
+        db 054h,068h,065h,020h,066h,069h,072h,073h,074h,020h,074h,065h,061h,06Dh,020h,073h
+        db 065h,06Ch,065h,063h,074h,065h,064h,020h,074h,06Fh,00h
 str_PlayMustBeImported:
-db 070h,06Ch,061h,079h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,069h,06Dh,070h
-db 06Fh,072h,074h,065h,064h,021h,00h
+        db 070h,06Ch,061h,079h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,069h,06Dh,070h
+        db 06Fh,072h,074h,065h,064h,021h,00h
 firstteammsg:
-dd str_FirstTeamSelected
-dd str_PlayMustBeImported
+        dd str_FirstTeamSelected
+        dd str_PlayMustBeImported
 str_PasswordEnteredDifferently:
-db 054h,068h,065h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h,020h,077h,061h,073h
-db 020h,065h,06Eh,074h,065h,072h,065h,064h,020h,064h,069h,066h,066h,065h,072h,065h
-db 06Eh,074h,06Ch,079h,00h
+        db 054h,068h,065h,020h,070h,061h,073h,073h,077h,06Fh,072h,064h,020h,077h,061h,073h
+        db 020h,065h,06Eh,074h,065h,072h,065h,064h,020h,064h,069h,066h,066h,065h,072h,065h
+        db 06Eh,074h,06Ch,079h,00h
 str_SecondTimeTryAgain:
-db 074h,068h,065h,020h,073h,065h,063h,06Fh,06Eh,064h,020h,074h,069h,06Dh,065h,021h
-db 020h,054h,072h,079h,020h,061h,067h,061h,069h,06Eh,02Eh,00h
+        db 074h,068h,065h,020h,073h,065h,063h,06Fh,06Eh,064h,020h,074h,069h,06Dh,065h,021h
+        db 020h,054h,072h,079h,020h,061h,067h,061h,069h,06Eh,02Eh,00h
 pwmismatchmsg:
-dd str_PasswordEnteredDifferently
-dd str_SecondTimeTryAgain
+        dd str_PasswordEnteredDifferently
+        dd str_SecondTimeTryAgain
 str_ThereIsASaved:
-db 054h,068h,065h,072h,065h,020h,069h,073h,020h,061h,020h,073h,061h,076h,065h,064h
-db 020h,067h,061h,06Dh,065h,020h,069h,06Eh,020h,074h,068h,065h,020h,06Ch,065h,061h
-db 067h,075h,065h,00h
+        db 054h,068h,065h,072h,065h,020h,069h,073h,020h,061h,020h,073h,061h,076h,065h,064h
+        db 020h,067h,061h,06Dh,065h,020h,069h,06Eh,020h,074h,068h,065h,020h,06Ch,065h,061h
+        db 067h,075h,065h,00h
 str_WhichMustBePlayed:
-db 077h,068h,069h,063h,068h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,070h,06Ch
-db 061h,079h,065h,064h,020h,066h,069h,072h,073h,074h,021h,00h
+        db 077h,068h,069h,063h,068h,020h,06Dh,075h,073h,074h,020h,062h,065h,020h,070h,06Ch
+        db 061h,079h,065h,064h,020h,066h,069h,072h,073h,074h,021h,00h
 msg_SavedGame:
-dd str_ThereIsASaved
+        dd str_ThereIsASaved
 msg_SavedGame_arg:
-db 00h,00h,00h,00h
-dd str_WhichMustBePlayed
+        db 00h,00h,00h,00h
+        dd str_WhichMustBePlayed
 str_KEY2:
-db 04Bh,045h,059h,00h
+        db 04Bh,045h,059h,00h
 str_CAREER2:
-db 043h,041h,052h,045h,045h,052h,00h
+        db 043h,041h,052h,045h,045h,052h,00h
 str_ATT2:
-db 041h,054h,054h,00h
+        db 041h,054h,054h,00h
 str_CARTEAMS:
-db 043h,041h,052h,054h,045h,041h,04Dh,053h,00h
+        db 043h,041h,052h,054h,045h,041h,04Dh,053h,00h
 str_TEAMS3:
-db 054h,045h,041h,04Dh,053h,00h
+        db 054h,045h,041h,04Dh,053h,00h
 str_SEASON4:
-db 053h,045h,041h,053h,04Fh,04Eh,00h
+        db 053h,045h,041h,053h,04Fh,04Eh,00h
 str_SCHEDULE2:
-db 053h,043h,048h,045h,044h,055h,04Ch,045h,00h
+        db 053h,043h,048h,045h,044h,055h,04Ch,045h,00h
 leaguedbnames:
-dd str_KEY2
-dd str_CAREER2
-dd str_ATT2
-dd str_CARTEAMS
-dd str_TEAMS3
-dd str_SEASON4
-dd str_SCHEDULE2
+        dd str_KEY2
+        dd str_CAREER2
+        dd str_ATT2
+        dd str_CARTEAMS
+        dd str_TEAMS3
+        dd str_SEASON4
+        dd str_SCHEDULE2
 str_PINFO:
-db 050h,049h,04Eh,046h,04Fh,00h
+        db 050h,049h,04Eh,046h,04Fh,00h
 str_PLAYER:
-db 050h,04Ch,041h,059h,045h,052h,00h
+        db 050h,04Ch,041h,059h,045h,052h,00h
 str_LSSCHED:
-db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
+        db 04Ch,053h,053h,043h,048h,045h,044h,00h,050h,047h,053h,00h
 str_GAME4:
-db 047h,041h,04Dh,045h,00h
+        db 047h,041h,04Dh,045h,00h
 str_space:
-db 020h,00h
+        db 020h,00h
 str_star:
-db 02Ah,00h
+        db 02Ah,00h
 str_backslash2:
-db 05Ch,00h
+        db 05Ch,00h
 str_S4:
-db 025h,073h,00h
+        db 025h,073h,00h
 str_extDB:
-db 02Eh,044h,042h,00h
+        db 02Eh,044h,042h,00h
 str_ORG:
-db 02Eh,04Fh,052h,047h,00h,02Eh,04Eh,053h,048h,00h,02Eh,04Dh,056h,049h,00h
+        db 02Eh,04Fh,052h,047h,00h,02Eh,04Eh,053h,048h,00h,02Eh,04Dh,056h,049h,00h
 str_HI2:
-db 02Eh,048h,049h,00h
+        db 02Eh,048h,049h,00h
 str_SET2:
-db 02Eh,053h,045h,054h,00h
+        db 02Eh,053h,045h,054h,00h
 str_PPV:
-db 02Eh,050h,050h,056h,00h,02Eh,056h,053h,048h,00h
+        db 02Eh,050h,050h,056h,00h,02Eh,056h,053h,048h,00h
 str_KMS:
-db 02Eh,04Bh,04Dh,053h,00h
+        db 02Eh,04Bh,04Dh,053h,00h
 str_CFG:
-db 02Eh,043h,046h,047h,00h
+        db 02Eh,043h,046h,047h,00h
 str_VFN:
-db 02Eh,056h,046h,04Eh,00h
+        db 02Eh,056h,046h,04Eh,00h
 str_extBIN:
-db 02Eh,042h,049h,04Eh,00h
+        db 02Eh,042h,049h,04Eh,00h
 str_extxx:
-db 02Eh,078h,078h,00h
+        db 02Eh,078h,078h,00h
 str_Xx:
-db 02Eh,078h,078h,00h
+        db 02Eh,078h,078h,00h
 str_extLP:
-db 02Eh,04Ch,050h,00h,02Eh,053h,050h,00h
+        db 02Eh,04Ch,050h,00h,02Eh,053h,050h,00h
 str_dot:
-db 02Eh,00h
+        db 02Eh,00h
 str_extID:
-db 02Eh,049h,044h,00h
+        db 02Eh,049h,044h,00h
 str_floppydrv:
-db 03Fh,03Ah,00h
+        db 03Fh,03Ah,00h

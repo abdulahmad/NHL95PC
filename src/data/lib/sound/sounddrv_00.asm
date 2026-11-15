@@ -4,4 +4,4 @@ bits 32
 section s_C0000 progbits alloc noexec write align=1
 global __nullarea
 __nullarea:
-db 01h,01h,01h,00h
+        db 01h,01h,01h,00h

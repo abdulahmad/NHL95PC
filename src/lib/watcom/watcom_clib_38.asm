@@ -4,4 +4,4 @@ bits 32
 section s_A189D progbits alloc exec nowrite align=1
 global loc_A189D
 loc_A189D:
-db 00h
+        db 00h

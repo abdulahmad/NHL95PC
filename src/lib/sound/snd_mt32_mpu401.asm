@@ -10,248 +10,248 @@ global loc_9FF17, loc_9FF1D, loc_9FF23, loc_9FF27, loc_9FF2B, loc_9FF31, loc_9FF
 global loc_9FF3F, loc_9FF4B, loc_9FF51, sub_9FF55, loc_9FF60, loc_9FF6E, loc_9FF77, sub_9FF78
 global loc_9FF86, loc_9FF94, loc_9FF9E, sub_9FFA0, sub_9FFA6, loc_9FFB2, loc_9FFC1
 sub_9FD94:
-mov eax, 70330h	; 9FD94
-ret	; 9FD99
+        mov eax, 70330h
+        ret
 sub_9FD9A:
-push ebp	; 9FD9A
-LD mov, ebp, esp	; 9FD9B
-movzx eax, word [byte ebp+08h]	; 9FD9D
-mov dword [dword_D5260], eax	; 9FDA1
-inc eax	; 9FDA6
-mov dword [dword_D5264], eax	; 9FDA7
-movzx eax, word [byte ebp+0Ah]	; 9FDAC
-mov byte [byte_D5279], al	; 9FDB0
-LD mov, cl, al	; 9FDB5
-mov al, 1	; 9FDB7
-shl al, cl	; 9FDB9
-mov byte [byte_D527A], al	; 9FDBB
-push dword 0FFh	; 9FDC0
-call sub_9FEB0	; 9FDC5
-push byte 24h	; 9FDCA
-call sub_9FF04	; 9FDCC
-add esp, byte 8	; 9FDD1
-call sub_9FF55	; 9FDD4
-mov eax, 3Fh	; 9FDD9
-push eax	; 9FDDE
-call sub_9FEB0	; 9FDDF
-add esp, byte 4	; 9FDE4
-inc eax	; 9FDE7
-leave	; 9FDE8
-ret	; 9FDE9
+        push ebp
+        LD mov, ebp, esp
+        movzx eax, word [byte ebp+08h]
+        mov dword [dword_D5260], eax
+        inc eax
+        mov dword [dword_D5264], eax
+        movzx eax, word [byte ebp+0Ah]
+        mov byte [byte_D5279], al
+        LD mov, cl, al
+        mov al, 1
+        shl al, cl
+        mov byte [byte_D527A], al
+        push dword 0FFh
+        call sub_9FEB0
+        push byte 24h
+        call sub_9FF04
+        add esp, byte 8
+        call sub_9FF55
+        mov eax, 3Fh
+        push eax
+        call sub_9FEB0
+        add esp, byte 4
+        inc eax
+        leave
+        ret
 sub_9FDEA:
-push ebp	; 9FDEA
-LD mov, ebp, esp	; 9FDEB
-movzx eax, word [byte ebp+08h]	; 9FDED
-mov dword [dword_D5260], eax	; 9FDF1
-inc eax	; 9FDF6
-mov dword [dword_D5264], eax	; 9FDF7
-movzx eax, word [byte ebp+0Ah]	; 9FDFC
-mov byte [byte_D5279], al	; 9FE00
-LD mov, cl, al	; 9FE05
-mov al, 1	; 9FE07
-shl al, cl	; 9FE09
-mov byte [byte_D527A], al	; 9FE0B
-pushfw	; 9FE10
-cli	; 9FE12
-mov eax, 0	; 9FE13
-mov dword [dword_D5268], eax	; 9FE18
-mov eax, 0FFh	; 9FE1D
-mov dword [dword_D526C], eax	; 9FE22
-mov eax, dword [dword_D5270]	; 9FE27
-or eax, dword [dword_D5274]	; 9FE2C
-call sub_9FE94	; 9FE32
-popfw	; 9FE37
-leave	; 9FE39
-ret	; 9FE3A
+        push ebp
+        LD mov, ebp, esp
+        movzx eax, word [byte ebp+08h]
+        mov dword [dword_D5260], eax
+        inc eax
+        mov dword [dword_D5264], eax
+        movzx eax, word [byte ebp+0Ah]
+        mov byte [byte_D5279], al
+        LD mov, cl, al
+        mov al, 1
+        shl al, cl
+        mov byte [byte_D527A], al
+        pushfw
+        cli
+        mov eax, 0
+        mov dword [dword_D5268], eax
+        mov eax, 0FFh
+        mov dword [dword_D526C], eax
+        mov eax, dword [dword_D5270]
+        or eax, dword [dword_D5274]
+        call sub_9FE94
+        popfw
+        leave
+        ret
 sub_9FE3B:
-pusha	; 9FE3B
-mov ebx, 0B0h	; 9FE3C
-mov ecx, 10h	; 9FE41
+        pusha
+        mov ebx, 0B0h
+        mov ecx, 10h
 loc_9FE46:
-db 051h	; 9FE46 push ecx
-db 053h	; 9FE47 push ebx
-call sub_9FF78	; 9FE48
-push byte 7Bh	; 9FE4D
-call sub_9FF78	; 9FE4F
-push byte 0	; 9FE54
-call sub_9FF78	; 9FE56
-add esp, byte 0Ch	; 9FE5B
-pop ecx	; 9FE5E
-inc ebx	; 9FE5F
-loop loc_9FE46	; 9FE60
-push dword 0FFh	; 9FE62
-call sub_9FEB0	; 9FE67
-push byte 9	; 9FE6C
-call sub_9FF04	; 9FE6E
-push dword 0FFh	; 9FE73
-call sub_9FEB0	; 9FE78
-push byte 9	; 9FE7D
-call sub_9FF04	; 9FE7F
-add esp, byte 10h	; 9FE84
-mov eax, dword [dword_D5270]	; 9FE87
-or eax, dword [dword_D5274]	; 9FE8C
-popa	; 9FE92
-ret	; 9FE93
+        db 051h                                 ; insn: push ecx
+        db 053h                                 ; insn: push ebx
+        call sub_9FF78
+        push byte 7Bh
+        call sub_9FF78
+        push byte 0
+        call sub_9FF78
+        add esp, byte 0Ch
+        pop ecx
+        inc ebx
+        loop loc_9FE46
+        push dword 0FFh
+        call sub_9FEB0
+        push byte 9
+        call sub_9FF04
+        push dword 0FFh
+        call sub_9FEB0
+        push byte 9
+        call sub_9FF04
+        add esp, byte 10h
+        mov eax, dword [dword_D5270]
+        or eax, dword [dword_D5274]
+        popa
+        ret
 sub_9FE94:
-push dword 0FFh	; 9FE94
-call sub_9FEB0	; 9FE99
-push byte 9	; 9FE9E
-call sub_9FF04	; 9FEA0
-push byte 3Fh	; 9FEA5
-call sub_9FEB0	; 9FEA7
-add esp, byte 0Ch	; 9FEAC
-ret	; 9FEAF
+        push dword 0FFh
+        call sub_9FEB0
+        push byte 9
+        call sub_9FF04
+        push byte 3Fh
+        call sub_9FEB0
+        add esp, byte 0Ch
+        ret
 sub_9FEB0:
-push ebp	; 9FEB0
-LD mov, ebp, esp	; 9FEB1
-mov edx, dword [dword_D5264]	; 9FEB3
-mov ecx, 0FFh	; 9FEB9
+        push ebp
+        LD mov, ebp, esp
+        mov edx, dword [dword_D5264]
+        mov ecx, 0FFh
 loc_9FEBE:
-in al, dx	; 9FEBE
-test al, 40h	; 9FEBF
-je short loc_9FECC	; 9FEC1
-loop loc_9FEBE	; 9FEC3
-mov eax, 0FFFFFFFFh	; 9FEC5
-jmp short loc_9FF02	; 9FECA
+        in al, dx
+        test al, 40h
+        je short loc_9FECC
+        loop loc_9FEBE
+        mov eax, 0FFFFFFFFh
+        jmp short loc_9FF02
 loc_9FECC:
-pushfw	; 9FECC
-cli	; 9FECE
-mov eax, dword [byte ebp+08h]	; 9FECF
-out dx, al	; 9FED2
+        pushfw
+        cli
+        mov eax, dword [byte ebp+08h]
+        out dx, al
 loc_9FED3:
-mov edx, dword [dword_D5264]	; 9FED3
-mov ecx, 0FFh	; 9FED9
+        mov edx, dword [dword_D5264]
+        mov ecx, 0FFh
 loc_9FEDE:
-in al, dx	; 9FEDE
-LD or, al, al	; 9FEDF
-jge short loc_9FEEC	; 9FEE1
-loop loc_9FEDE	; 9FEE3
-mov eax, 0FFFFFFFFh	; 9FEE5
-jmp short loc_9FF00	; 9FEEA
+        in al, dx
+        LD or, al, al
+        jge short loc_9FEEC
+        loop loc_9FEDE
+        mov eax, 0FFFFFFFFh
+        jmp short loc_9FF00
 loc_9FEEC:
-mov edx, dword [dword_D5260]	; 9FEEC
-in al, dx	; 9FEF2
-cmp al, 0FEh	; 9FEF3
-mov eax, 0	; 9FEF5
-je short loc_9FF00	; 9FEFA
-int 0Ah	; 9FEFC
-jmp short loc_9FED3	; 9FEFE
+        mov edx, dword [dword_D5260]
+        in al, dx
+        cmp al, 0FEh
+        mov eax, 0
+        je short loc_9FF00
+        int 0Ah
+        jmp short loc_9FED3
 loc_9FF00:
-popfw	; 9FF00
+        popfw
 loc_9FF02:
-leave	; 9FF02
-ret	; 9FF03
+        leave
+        ret
 sub_9FF04:
-push ebp	; 9FF04
-LD mov, ebp, esp	; 9FF05
-mov ecx, dword [byte ebp+08h]	; 9FF07
-pushfw	; 9FF0A
-cli	; 9FF0C
-in al, 61h	; 9FF0D
-jmp short loc_9FF11	; 9FF0F
+        push ebp
+        LD mov, ebp, esp
+        mov ecx, dword [byte ebp+08h]
+        pushfw
+        cli
+        in al, 61h
+        jmp short loc_9FF11
 loc_9FF11:
-and al, 0FEh	; 9FF11
-out 61h, al	; 9FF13
-jmp short loc_9FF17	; 9FF15
+        and al, 0FEh
+        out 61h, al
+        jmp short loc_9FF17
 loc_9FF17:
-mov al, 0B6h	; 9FF17
-out 43h, al	; 9FF19
-jmp short loc_9FF1D	; 9FF1B
+        mov al, 0B6h
+        out 43h, al
+        jmp short loc_9FF1D
 loc_9FF1D:
-LD xor, al, al	; 9FF1D
-out 42h, al	; 9FF1F
-jmp short loc_9FF23	; 9FF21
+        LD xor, al, al
+        out 42h, al
+        jmp short loc_9FF23
 loc_9FF23:
-out 42h, al	; 9FF23
-jmp short loc_9FF27	; 9FF25
+        out 42h, al
+        jmp short loc_9FF27
 loc_9FF27:
-in al, 61h	; 9FF27
-jmp short loc_9FF2B	; 9FF29
+        in al, 61h
+        jmp short loc_9FF2B
 loc_9FF2B:
-or al, 1	; 9FF2B
-out 61h, al	; 9FF2D
-jmp short loc_9FF31	; 9FF2F
+        or al, 1
+        out 61h, al
+        jmp short loc_9FF31
 loc_9FF31:
-in al, 42h	; 9FF31
-jmp short loc_9FF35	; 9FF33
+        in al, 42h
+        jmp short loc_9FF35
 loc_9FF35:
-in al, 42h	; 9FF35
-LD or, al, al	; 9FF37
-js short loc_9FF31	; 9FF39
+        in al, 42h
+        LD or, al, al
+        js short loc_9FF31
 loc_9FF3B:
-in al, 42h	; 9FF3B
-jmp short loc_9FF3F	; 9FF3D
+        in al, 42h
+        jmp short loc_9FF3F
 loc_9FF3F:
-in al, 42h	; 9FF3F
-LD or, al, al	; 9FF41
-jns short loc_9FF3B	; 9FF43
-loop loc_9FF31	; 9FF45
-in al, 61h	; 9FF47
-jmp short loc_9FF4B	; 9FF49
+        in al, 42h
+        LD or, al, al
+        jns short loc_9FF3B
+        loop loc_9FF31
+        in al, 61h
+        jmp short loc_9FF4B
 loc_9FF4B:
-and al, 0FEh	; 9FF4B
-out 61h, al	; 9FF4D
-jmp short loc_9FF51	; 9FF4F
+        and al, 0FEh
+        out 61h, al
+        jmp short loc_9FF51
 loc_9FF51:
-popfw	; 9FF51
-leave	; 9FF53
-ret	; 9FF54
+        popfw
+        leave
+        ret
 sub_9FF55:
-mov edx, dword [dword_D5264]	; 9FF55
-mov ecx, 0FFh	; 9FF5B
+        mov edx, dword [dword_D5264]
+        mov ecx, 0FFh
 loc_9FF60:
-in al, dx	; 9FF60
-LD or, al, al	; 9FF61
-jge short loc_9FF6E	; 9FF63
-loop loc_9FF60	; 9FF65
-mov eax, 0FFFFFFFFh	; 9FF67
-jmp short loc_9FF77	; 9FF6C
+        in al, dx
+        LD or, al, al
+        jge short loc_9FF6E
+        loop loc_9FF60
+        mov eax, 0FFFFFFFFh
+        jmp short loc_9FF77
 loc_9FF6E:
-mov edx, dword [dword_D5260]	; 9FF6E
-LD xor, eax, eax	; 9FF74
-in al, dx	; 9FF76
+        mov edx, dword [dword_D5260]
+        LD xor, eax, eax
+        in al, dx
 loc_9FF77:
-ret	; 9FF77
+        ret
 sub_9FF78:
-push ebp	; 9FF78
-LD mov, ebp, esp	; 9FF79
-mov edx, dword [dword_D5264]	; 9FF7B
-mov ecx, 0FFh	; 9FF81
+        push ebp
+        LD mov, ebp, esp
+        mov edx, dword [dword_D5264]
+        mov ecx, 0FFh
 loc_9FF86:
-in al, dx	; 9FF86
-test al, 40h	; 9FF87
-je short loc_9FF94	; 9FF89
-loop loc_9FF86	; 9FF8B
-mov eax, 0FFFFFFFFh	; 9FF8D
-jmp short loc_9FF9E	; 9FF92
+        in al, dx
+        test al, 40h
+        je short loc_9FF94
+        loop loc_9FF86
+        mov eax, 0FFFFFFFFh
+        jmp short loc_9FF9E
 loc_9FF94:
-mov edx, dword [dword_D5260]	; 9FF94
-mov eax, dword [byte ebp+08h]	; 9FF9A
-out dx, al	; 9FF9D
+        mov edx, dword [dword_D5260]
+        mov eax, dword [byte ebp+08h]
+        out dx, al
 loc_9FF9E:
-leave	; 9FF9E
-ret	; 9FF9F
+        leave
+        ret
 sub_9FFA0:
-push ds	; 9FFA0
-call __GETDS	; 9FFA1
+        push ds
+        call __GETDS
 sub_9FFA6:
-push esi	; 9FFA6
-push edi	; 9FFA7
-mov edi, dword [byte esp+010h]	; 9FFA8
-mov esi, dword [byte esp+014h]	; 9FFAC
-jmp short loc_9FFC1	; 9FFB0
+        push esi
+        push edi
+        mov edi, dword [byte esp+010h]
+        mov esi, dword [byte esp+014h]
+        jmp short loc_9FFC1
 loc_9FFB2:
-xor eax, eax	; 9FFB2
-mov al, byte [esi]	; 9FFB4
-push eax	; 9FFB6
-call sub_9FF78	; 9FFB7
-add esp, byte 4	; 9FFBC
-dec edi	; 9FFBF
-inc esi	; 9FFC0
+        xor eax, eax
+        mov al, byte [esi]
+        push eax
+        call sub_9FF78
+        add esp, byte 4
+        dec edi
+        inc esi
 loc_9FFC1:
-test di, di	; 9FFC1
-ja short loc_9FFB2	; 9FFC4
-pop edi	; 9FFC6
-pop esi	; 9FFC7
-pop ds	; 9FFC8
-ret	; 9FFC9
+        test di, di
+        ja short loc_9FFB2
+        pop edi
+        pop esi
+        pop ds
+        ret

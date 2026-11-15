@@ -5,51 +5,51 @@ section s_91FE0 progbits alloc exec nowrite align=1
 extern dword_D30C8, dword_D43E4, PutBlock, sub_931D0, sub_B3ABC, sub_B6BE5
 global sub_91FE0, loc_92001, sub_92024
 sub_91FE0:
-mov edx, dword [byte esp+04h]	; 91FE0
-mov ebx, dword [byte esp+08h]	; 91FE4
-mov eax, dword [byte esp+0Ch]	; 91FE8
-cmp dword [dword_D30C8], byte 0	; 91FEC
-jne short loc_92001	; 91FF3
-push eax	; 91FF5
-push ebx	; 91FF6
-push edx	; 91FF7
-call sub_B6BE5	; 91FF8
-add esp, byte 0Ch	; 91FFD
-ret	; 92000
+        mov edx, dword [byte esp+04h]
+        mov ebx, dword [byte esp+08h]
+        mov eax, dword [byte esp+0Ch]
+        cmp dword [dword_D30C8], byte 0
+        jne short loc_92001
+        push eax
+        push ebx
+        push edx
+        call sub_B6BE5
+        add esp, byte 0Ch
+        ret
 loc_92001:
-mov dword [dword_D43E4], sub_931D0	; 92001
-push eax	; 9200B
-push ebx	; 9200C
-push edx	; 9200D
-call PutBlock	; 9200E
-add esp, byte 0Ch	; 92013
-mov dword [dword_D43E4], sub_B3ABC	; 92016
-ret	; 92020
-db 08Dh,040h,00h
+        mov dword [dword_D43E4], sub_931D0
+        push eax
+        push ebx
+        push edx
+        call PutBlock
+        add esp, byte 0Ch
+        mov dword [dword_D43E4], sub_B3ABC
+        ret
+        db 08Dh,040h,00h
 sub_92024:
-mov edx, dword [byte esp+04h]	; 92024
-mov eax, dword [byte edx+0Ch]	; 92028
-sar eax, 10h	; 9202B
-push eax	; 9202E
-mov eax, dword [byte edx+0Ah]	; 9202F
-sar eax, 10h	; 92032
-push eax	; 92035
-push edx	; 92036
-call sub_91FE0	; 92037
-add esp, byte 0Ch	; 9203C
-ret	; 9203F
-mov edx, dword [byte esp+04h]	; 92040
-mov eax, dword [byte edx+08h]	; 92044
-sar eax, 10h	; 92047
-mov ebx, dword [byte esp+0Ch]	; 9204A
-sub ebx, eax	; 9204E
-push ebx	; 92050
-mov eax, dword [byte edx+06h]	; 92051
-sar eax, 10h	; 92054
-mov ebx, dword [byte esp+0Ch]	; 92057
-sub ebx, eax	; 9205B
-push ebx	; 9205D
-push edx	; 9205E
-call sub_91FE0	; 9205F
-add esp, byte 0Ch	; 92064
-ret	; 92067
+        mov edx, dword [byte esp+04h]
+        mov eax, dword [byte edx+0Ch]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte edx+0Ah]
+        sar eax, 10h
+        push eax
+        push edx
+        call sub_91FE0
+        add esp, byte 0Ch
+        ret
+        mov edx, dword [byte esp+04h]
+        mov eax, dword [byte edx+08h]
+        sar eax, 10h
+        mov ebx, dword [byte esp+0Ch]
+        sub ebx, eax
+        push ebx
+        mov eax, dword [byte edx+06h]
+        sar eax, 10h
+        mov ebx, dword [byte esp+0Ch]
+        sub ebx, eax
+        push ebx
+        push edx
+        call sub_91FE0
+        add esp, byte 0Ch
+        ret

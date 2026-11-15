@@ -19,496 +19,496 @@ global asswingo_dedata_yrand, asscentero_dedata, asscentero_dedata_xrand, asscen
 global linenext, FallDown_pinxr, FallDown_pinxl, FallDown_pinyt, FallDown_pinyb, FallDown_pinxr2, FallDown_pinxl2, blockspd
 global blockspd_y, shotsetz, restoreteams_pdsttab, rinkobjdefs, Setplass_alist
 ovlscripts:
-dd unk_CBF18
-dd unk_CBEFC
-dd unk_CBF04
-dd unk_CBF37
-dd unk_CBF60
-dd unk_CBF85
-dd unk_CBF96
-dd unk_CBFA9
-dd unk_CBFC3
-dd unk_CBFEB
-dd unk_CBFFA
+        dd unk_CBF18
+        dd unk_CBEFC
+        dd unk_CBF04
+        dd unk_CBF37
+        dd unk_CBF60
+        dd unk_CBF85
+        dd unk_CBF96
+        dd unk_CBFA9
+        dd unk_CBFC3
+        dd unk_CBFEB
+        dd unk_CBFFA
 ovlseqtimed:
-db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
+        db 01h,00h,01h,01h,01h,00h,00h,00h,01h,00h,00h
 ovlsteptime:
-db 0Ch,00h,00h,00h,08h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
-db 0Ch,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
-db 08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
+        db 0Ch,00h,00h,00h,08h,00h,00h,00h,0Ch,00h,00h,00h,0Ch,00h,00h,00h
+        db 0Ch,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
+        db 08h,00h,00h,00h,08h,00h,00h,00h,08h,00h,00h,00h
 ovlartfiles:
-db 091h,00h,00h,00h,097h,00h,00h,00h,052h,00h,00h,00h,0AEh,01h,00h,00h
-db 047h,00h,00h,00h,0D4h,01h,00h,00h,0D5h,01h,00h,00h,0D6h,01h,00h,00h
-db 0D7h,01h,00h,00h,0D8h,01h,00h,00h,0D9h,01h,00h,00h
+        db 091h,00h,00h,00h,097h,00h,00h,00h,052h,00h,00h,00h,0AEh,01h,00h,00h
+        db 047h,00h,00h,00h,0D4h,01h,00h,00h,0D5h,01h,00h,00h,0D6h,01h,00h,00h
+        db 0D7h,01h,00h,00h,0D8h,01h,00h,00h,0D9h,01h,00h,00h
 goalienotebits:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 Pencntdwn2:
-db 0FFh,0FFh,085h,01h
+        db 0FFh,0FFh,085h,01h
 markframes_e1:
-db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
-db 081h,01h,080h,01h,082h,01h,083h,01h,084h,01h,063h,01h,062h,01h,063h,01h
-db 084h,01h,083h,01h
+        db 086h,01h,087h,01h,07Fh,01h,080h,01h,081h,01h,061h,01h,060h,01h,061h,01h
+        db 081h,01h,080h,01h,082h,01h,083h,01h,084h,01h,063h,01h,062h,01h,063h,01h
+        db 084h,01h,083h,01h
 lldispodd:
-db 00h
+        db 00h
 lldisp:
-db 00h
+        db 00h
 ltack:
-db 00h,00h
+        db 00h,00h
 lastsfx:
-db 0FFh,0FFh
+        db 0FFh,0FFh
 crowdlevel:
-db 00h,00h
+        db 00h,00h
 photobankf:
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
 demoflag:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 introskipped:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 onetimerflag:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 shotongoal:
-db 00h,00h
+        db 00h,00h
 dword_CC0FA:
-db 00h,00h
+        db 00h,00h
 penshotplayer:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotpnum:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotteam:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotctl:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 word_CC10C:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotfox:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotfoy:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotmode:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotstart:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshottimer:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 shotontarget:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 penshotlive:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 psendcount:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 sopathx:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 sopathy:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 sopathend:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 sopathpoint:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 pspathside:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 pspathdir:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 HotList:
-db 0FCh
+        db 0FCh
 HotList_y:
-db 014h,0FFh,018h,0FEh,01Ch,0FFh,019h,01h,019h,010h,08h,017h,0Ah,013h,08h,015h
-db 0Bh,0Eh,04h,011h,0FDh,015h,0FDh,015h,0FEh,015h,0FDh,012h,0FDh,0Eh,0FAh,011h
-db 0F2h,011h,0F6h,013h,0F5h,011h,0F6h,02h,0F0h,01h,0ECh,04h,0F1h,04h,0ECh,00h
-db 0ECh,0F8h,0FAh,0F3h,0F5h,0F2h,0F4h,0EFh,0F2h,0F1h,0F4h,0F3h,0FDh,0ECh,0FFh,0F2h
-db 0FDh,0F1h,0FEh,0F3h,0FDh,0F2h,08h,0F1h,07h,0F2h,07h,0F1h,08h,0F3h,09h,01h
-db 0Dh,01h,0Bh,01h,0Ch,00h,0Ch,01h,0Dh,0Bh,06h,0Ch,07h,0Ch,06h,0Ah
-db 06h,0Ah,07h,011h,00h,016h,0FEh,016h,0FFh,014h,0FFh,012h,0FFh,0Bh,0F4h,0Dh
-db 0F2h,0Ch,0F5h,0Ah,0F4h,0Bh,0F5h,00h,0F3h,01h,0F1h,01h,0F4h,00h,0F2h,02h
-db 0F4h,0F7h,0F5h,0F7h,0F6h,0F6h,0F7h,0F3h,0F6h,0F5h,0F6h,0F0h,00h,0EFh,01h,0EFh
-db 00h,0F0h,0FEh,0F2h,0FEh,0F7h,0Ah,0F4h,08h,0F6h,06h,0F7h,05h,0F6h,06h,0FAh
-db 05h,0Eh,05h,014h,00h,012h,0FAh,09h,0FAh,0F0h,0F5h,0E8h,04h,0EAh,07h,01h
-db 07h,0Fh,09h,016h,0FDh,0Eh,0FBh,0FEh,0F9h,0EAh,0FAh,0EAh,06h,0F2h,0Eh,0FAh
-db 0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0Eh,0Ch,0Eh,0Ch,0Eh
-db 0Ch,0Eh,0Ch,0Eh,0Ch,0Eh,0Ch,013h,0FEh,013h,0FEh,013h,0FEh,013h,0FEh,013h
-db 0FEh,013h,0FEh,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,08h
-db 0F2h,08h,0F2h,08h,0F2h,06h,0F5h,08h,0F2h,08h,0F2h,0F6h,0F4h,0F6h,0F4h,0F6h
-db 0F4h,0F6h,0F4h,0F6h,0F4h,0F6h,0F4h,0F0h,0F9h,0EFh,0F9h,0EFh,0F9h,0EFh,0F9h,0EFh
-db 0F9h,0EFh,0F9h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0FFh
-db 013h,0FFh,013h,010h,07h,010h,07h,011h,01h,011h,01h,0Bh,0F8h,0Bh,0F8h,0FAh
-db 0F8h,0FAh,0F8h,0F1h,0F9h,0F1h,0F9h,0F4h,05h,0F4h,05h,0F5h,09h,0F5h,09h,0FEh
-db 013h,0F6h,010h,0FDh,010h,011h,012h,0Eh,0Bh,06h,0Ah,018h,0FFh,018h,04h,012h
-db 03h,0Bh,0F8h,0Fh,0FDh,0Eh,0FCh,0FCh,0F7h,02h,0F7h,08h,0F8h,0EEh,0FCh,0F2h
-db 0FAh,0F8h,0FAh,0E7h,02h,0EEh,0FFh,0F1h,01h,0EBh,0Dh,0F1h,09h,0F2h,02h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0Ch
-db 0Ah,02h,0Dh,013h,03h,010h,06h,012h,0F8h,012h,0F9h,09h,0F6h,0Ah,0F4h,0F2h
-db 0F7h,0F8h,0F5h,0EEh,0FFh,0F1h,0FCh,0F3h,03h,0EEh,02h,0F8h,07h,0F7h,09h,0FEh
-db 05h,06h,05h,07h,02h,04h,0F9h,0FFh,0F7h,0F7h,0FDh,0F4h,0FFh,0F6h,05h,0EFh
-db 01h,0F6h,05h,019h,0FEh,014h,0FAh,09h,0F3h,0F8h,0F4h,0E9h,0FCh,0F0h,0F9h,0EFh
-db 04h,0F7h,08h,01Bh,05h,01Dh,0FEh,0Eh,0F2h,02h,0F0h,0EAh,0FBh,0E9h,0FCh,0F1h
-db 0Ah,013h,0Ah,01Eh,08h,01Dh,0F8h,08h,0F5h,0E4h,0F9h,0E3h,0FEh,0E8h,08h,0EBh
-db 00h,0F1h,01h,0Fh,08h,0Ch,02h,011h,00h,02h,0F8h,0F4h,0F9h,0F2h,0FBh,0F8h
-db 018h,0F6h,01Ch,013h,07h,017h,0Dh,01Ah,0FAh,021h,0FAh,014h,0F3h,020h,0F3h,09h
-db 0F0h,07h,0E6h,0EFh,0F7h,0E6h,0EFh,0E2h,0FCh,0DCh,0FFh,0E9h,08h,0E8h,0Bh,00h
-db 00h,0Ch,0F9h,02h,0E1h,0Fh,0Dh,00h,00h,05h,0FDh,0ECh,0E6h,0Ch,0FEh,0Ch
-db 0FCh,02h,0FDh,0E0h,05h,06h,0F8h,0FDh,0FCh,0F9h,0FBh,0E6h,013h,0FFh,0F8h,00h
-db 00h,00h,00h,01h,019h,0F2h,0FBh,0F1h,03h,0FEh,0FBh,012h,018h,0F0h,07h,0EEh
-db 02h,0FBh,0FDh,01Fh,01h,03h,04h,0F7h,08h,03h,0FDh,01Ch,0ECh,02h,07h,02h
-db 014h,0F6h,015h,0F5h,018h,0F8h,012h,0Ch,0Bh,011h,016h,012h,01Fh,012h,0Fh,019h
-db 0FCh,022h,0FEh,029h,07h,01Dh,03h,011h,0F8h,01Bh,0EFh,01Fh,0F0h,013h,0EEh,0FDh
-db 0F2h,0FEh,0DFh,04h,0DCh,02h,0E1h,0E7h,0F6h,0E5h,0EBh,0E4h,0EBh,0EBh,0EBh,0E0h
-db 0FEh,0D9h,0FCh,0D7h,0FBh,0E5h,0FAh,0F1h,04h,0E4h,0Ch,0E4h,0Fh,0ECh,010h,0Ch
-db 04h,010h,01h,0Dh,0F9h,08h,0F9h,0F2h,0FCh,0ECh,00h,0EFh,01h,0F9h,0Bh,0Dh
-db 07h,013h,01h,019h,0FBh,0Dh,0F5h,0F9h,0F5h,0ECh,0F9h,0EDh,00h,0F1h,06h,00h
-db 00h,06h,02h,07h,00h,07h,00h,07h,00h,07h,00h,07h,01h,07h,01h,07h
-db 01h,07h,01h,07h,01h,07h,01h,07h,01h,07h,01h,07h,01h,0F7h,02h,0EAh
-db 01h,0E0h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0ECh
-db 0FAh,0FDh,02h,0FFh,00h,0E3h,0FEh,02h,0FBh,02h,0FEh,0FDh,0FEh,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,05h,0Ah,0FFh,0F3h
-db 05h,05h,03h,09h,0FBh,0F7h,09h,08h,02h,0FCh,0F9h,08h,011h,09h,0FDh,0F7h
-db 0FBh,09h,0FEh,02h,0FAh,0F5h,00h,09h,0FFh,0FBh,0F9h,0F5h,09h,06h,0F5h,0F7h
-db 0FFh,0FAh,09h,0F8h,0F7h,0F7h,03h,09h,08h,0F2h,0FCh,0FEh,06h,08h,0Dh,0Bh
-db 08h,017h,04h,013h,0FFh,013h,0F9h,0Eh,0FDh,0FFh,0F5h,03h,0F5h,0EFh,0F8h,0F0h
-db 0F6h,0EBh,0FBh,0EDh,0FFh,0E1h,03h,0F5h,05h,0F1h,011h,0Bh,01h,012h,03h,08h
-db 0FFh,0Eh,0FCh,0F8h,0FDh,0FAh,0F6h,0F9h,0FDh,0F1h,0FEh,0F3h,00h,0F3h,07h,0F9h
-db 00h,0Eh,0Fh,0FFh,00h,0EDh,06h,0FEh,01h,0F8h,0Ah,07h,00h,012h,0Ch,09h
-db 00h,016h,0FFh,05h,0F7h,09h,0F5h,0F8h,0FDh,0ECh,0FBh,0Dh,08h,0F7h,0FBh,011h
-db 00h,0F5h,04h,0Dh,0F9h,0F7h,0Ch,0FEh,0F6h,0Ah,02h,0F6h,0FFh,0Ch,00h,0F0h
-db 00h,0Ch,0FEh,0F6h,04h,05h,0F8h,04h,0Dh,0F9h,0FAh,0FEh,08h,01h,07h,07h
-db 03h,01h,00h,013h,01h,0Eh,00h,013h,04h,010h,01h,011h,0FDh,0Dh,0FCh,011h
-db 0FCh,010h,0FEh,01h,0F7h,03h,0F7h,06h,0F7h,07h,0F6h,0F6h,0F3h,0F7h,0F3h,0F7h
-db 0F6h,0F5h,0F3h,0ECh,0F6h,0EEh,0F6h,0E8h,0F7h,0EAh,0F7h,0E9h,0FDh,0E8h,0FDh,0E8h
-db 0FEh,0EAh,02h,0F0h,06h,0F1h,07h,0F1h,05h,0F3h,05h,0F5h,09h,0FDh,018h,08h
-db 0Fh,0Bh,014h,0Fh,01h,017h,05h,09h,0FEh,012h,0F6h,00h,0F8h,02h,0EDh,0F4h
-db 0F8h,0EEh,0F4h,0F2h,0FFh,0E3h,04h,0FBh,0Ah,0F2h,011h,0F8h,00h,0F2h,0FFh,07h
-db 0FEh,0Bh,0FEh,0FFh,09h,0FFh,08h,011h,02h,011h,03h,0Ch,00h,0Dh,01h,0Eh
-db 0FCh,08h,0FCh,03h,0FBh,03h,0F9h,0EDh,0F7h,0F1h,0F6h,0EFh,0FEh,0EFh,0FFh,0F5h
-db 04h,0F5h,04h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0F9h
-db 05h,06h,03h,0FFh,03h,07h,00h,05h,03h,05h,0FEh,06h,02h,0FDh,0FEh,07h
-db 0FFh,0FCh,00h,01h,0FCh,0FAh,02h,0F9h,0FFh,0FBh,02h,0F9h,01h,0FCh,05h,00h
-db 023h,04h,01Ah,0Fh,06h,08h,0Bh,0Fh,01h,011h,09h,0Fh,0FCh,010h,05h,0FFh
-db 0F8h,05h,0FDh,0F3h,0FBh,0EFh,0FFh,0EDh,0FFh,0EBh,0Ah,0EEh,0Ch,0F4h,011h,00h
-db 0Ah,00h,09h,00h,0Bh,08h,09h,08h,09h,08h,08h,0Ch,02h,0Dh,03h,0Dh
-db 03h,0Ah,0FAh,0Ah,0FAh,0Ah,0FBh,00h,0F5h,01h,0F6h,01h,0F6h,0F5h,0FAh,0F5h
-db 0FAh,0F5h,0FAh,0F4h,01h,0F4h,01h,0ECh,01h,0F4h,08h,0F2h,07h,0F3h,08h,03h
-db 02h,03h,02h,03h,02h,06h,02h,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,02h
-db 0FDh,02h,0FDh,02h,0FDh,02h,0FDh,02h,0FEh,01h,0FEh,0E6h,0F2h,0E6h,0F2h,0E6h
-db 0F2h,0E6h,0F2h,0E6h,0F2h,0E6h,0F2h,0F1h,01h,0EFh,04h,0Ch,0FFh,0FCh,00h,04h
-db 0FFh,010h,0FFh,011h,02h,017h,01h,012h,00h,011h,0FEh,012h,0FDh,05h,0FDh,0FAh
-db 0FFh,0F1h,0FFh,0EDh,00h,0EBh,01h,026h,07h,00h,00h,018h,0FFh,020h,0FEh,0FEh
-db 09h,0FFh,0Bh,0Dh,05h,017h,01h,016h,0FEh,017h,0FDh,06h,0FBh,013h,0FCh,02h
-db 0FBh,04h,0F4h,0EEh,0FDh,0E3h,0FAh,0E9h,0FDh,0E6h,0FDh,0F4h,0FFh,0E5h,00h,0F4h
-db 03h,0F4h,04h,00h,06h,07h,00h,011h,00h,0Bh,02h,0Fh,0FDh,011h,02h,015h
-db 0FCh,0Ch,0FEh,06h,0F5h,01h,0FCh,0F2h,0FCh,0F3h,0FBh,0ECh,0FEh,0EBh,00h,0DFh
-db 01h,0F3h,01h,0F3h,01h,0F0h,02h,02h,0FDh,02h,0FCh,0FFh,0FEh,0FBh,0FEh,0F0h
-db 0FDh,0F1h,0FCh,0F5h,01h,0Eh,0FEh,011h,0FFh,0F5h,05h,0F8h,04h,01h,0FCh,00h
-db 0FFh,0FDh,0FEh,0F5h,01h,0F2h,0FCh,0F1h,0FCh,0FBh,01h,0F5h,01h,0EEh,03h,0Bh
-db 0FEh,0FCh,01h,0F5h,01h,08h,0FBh,0Ch,0FDh,0Eh,0FEh,08h,0FCh,0Ch,07h,09h
-db 02h,03h,00h,0Ah,00h,012h,06h,0Eh,0FEh,019h,03h,025h,04h,05h,01h,04h
-db 01h,05h,0FFh,0Eh,03h,014h,02h,01Dh,0F8h,010h,0FDh,0Eh,0FCh,0FFh,0F5h,06h
-db 0FBh,0F2h,0FDh,0DCh,0FEh,0F4h,0FFh,0E7h,02h,0DCh,05h,0F7h,0FEh,0EEh,04h,0E4h
-db 05h,0F3h,00h,0F0h,0Bh,0EDh,05h,00h,0FEh,05h,0FFh,020h,01h,023h,02h,021h
-db 0FEh,02Bh,0FBh,05h,0F9h,05h,0ECh,0DCh,0FCh,0E5h,0F2h,0E4h,01h,0E6h,02h,0D8h
-db 013h,0DEh,010h,0F7h,04h,0E7h,011h,018h,06h,0Eh,0Ch,0E6h,01h,0DEh,00h,0F0h
-db 02h,0F0h,0Ch,09h,09h,01Ch,013h,01Fh,0Fh,022h,010h,014h,02h,013h,04h,01Bh
-db 0FFh,014h,0F2h,0F9h,0F7h,0F9h,0F1h,0E7h,0FEh,0DDh,0FAh,0FCh,03h,0FEh,02h,0F9h
-db 03h,0FFh,03h,09h,00h,06h,04h,0Bh,00h,0Bh,00h,010h,0FDh,00h,0FEh,00h
-db 0FCh,0FFh,0FEh,05h,0FEh,03h,0FDh,01h,0FCh,0FDh,0FCh,0FEh,0FCh,0FEh,0FCh,0FAh
-db 01h,0F8h,03h,0FCh,01h,0FEh,0FEh,0FEh,0FEh,0FEh,0FEh
+        db 014h,0FFh,018h,0FEh,01Ch,0FFh,019h,01h,019h,010h,08h,017h,0Ah,013h,08h,015h
+        db 0Bh,0Eh,04h,011h,0FDh,015h,0FDh,015h,0FEh,015h,0FDh,012h,0FDh,0Eh,0FAh,011h
+        db 0F2h,011h,0F6h,013h,0F5h,011h,0F6h,02h,0F0h,01h,0ECh,04h,0F1h,04h,0ECh,00h
+        db 0ECh,0F8h,0FAh,0F3h,0F5h,0F2h,0F4h,0EFh,0F2h,0F1h,0F4h,0F3h,0FDh,0ECh,0FFh,0F2h
+        db 0FDh,0F1h,0FEh,0F3h,0FDh,0F2h,08h,0F1h,07h,0F2h,07h,0F1h,08h,0F3h,09h,01h
+        db 0Dh,01h,0Bh,01h,0Ch,00h,0Ch,01h,0Dh,0Bh,06h,0Ch,07h,0Ch,06h,0Ah
+        db 06h,0Ah,07h,011h,00h,016h,0FEh,016h,0FFh,014h,0FFh,012h,0FFh,0Bh,0F4h,0Dh
+        db 0F2h,0Ch,0F5h,0Ah,0F4h,0Bh,0F5h,00h,0F3h,01h,0F1h,01h,0F4h,00h,0F2h,02h
+        db 0F4h,0F7h,0F5h,0F7h,0F6h,0F6h,0F7h,0F3h,0F6h,0F5h,0F6h,0F0h,00h,0EFh,01h,0EFh
+        db 00h,0F0h,0FEh,0F2h,0FEh,0F7h,0Ah,0F4h,08h,0F6h,06h,0F7h,05h,0F6h,06h,0FAh
+        db 05h,0Eh,05h,014h,00h,012h,0FAh,09h,0FAh,0F0h,0F5h,0E8h,04h,0EAh,07h,01h
+        db 07h,0Fh,09h,016h,0FDh,0Eh,0FBh,0FEh,0F9h,0EAh,0FAh,0EAh,06h,0F2h,0Eh,0FAh
+        db 0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0FAh,0Ch,0Eh,0Ch,0Eh,0Ch,0Eh
+        db 0Ch,0Eh,0Ch,0Eh,0Ch,0Eh,0Ch,013h,0FEh,013h,0FEh,013h,0FEh,013h,0FEh,013h
+        db 0FEh,013h,0FEh,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,0Fh,0F9h,08h
+        db 0F2h,08h,0F2h,08h,0F2h,06h,0F5h,08h,0F2h,08h,0F2h,0F6h,0F4h,0F6h,0F4h,0F6h
+        db 0F4h,0F6h,0F4h,0F6h,0F4h,0F6h,0F4h,0F0h,0F9h,0EFh,0F9h,0EFh,0F9h,0EFh,0F9h,0EFh
+        db 0F9h,0EFh,0F9h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0EEh,04h,0FFh
+        db 013h,0FFh,013h,010h,07h,010h,07h,011h,01h,011h,01h,0Bh,0F8h,0Bh,0F8h,0FAh
+        db 0F8h,0FAh,0F8h,0F1h,0F9h,0F1h,0F9h,0F4h,05h,0F4h,05h,0F5h,09h,0F5h,09h,0FEh
+        db 013h,0F6h,010h,0FDh,010h,011h,012h,0Eh,0Bh,06h,0Ah,018h,0FFh,018h,04h,012h
+        db 03h,0Bh,0F8h,0Fh,0FDh,0Eh,0FCh,0FCh,0F7h,02h,0F7h,08h,0F8h,0EEh,0FCh,0F2h
+        db 0FAh,0F8h,0FAh,0E7h,02h,0EEh,0FFh,0F1h,01h,0EBh,0Dh,0F1h,09h,0F2h,02h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0Ch
+        db 0Ah,02h,0Dh,013h,03h,010h,06h,012h,0F8h,012h,0F9h,09h,0F6h,0Ah,0F4h,0F2h
+        db 0F7h,0F8h,0F5h,0EEh,0FFh,0F1h,0FCh,0F3h,03h,0EEh,02h,0F8h,07h,0F7h,09h,0FEh
+        db 05h,06h,05h,07h,02h,04h,0F9h,0FFh,0F7h,0F7h,0FDh,0F4h,0FFh,0F6h,05h,0EFh
+        db 01h,0F6h,05h,019h,0FEh,014h,0FAh,09h,0F3h,0F8h,0F4h,0E9h,0FCh,0F0h,0F9h,0EFh
+        db 04h,0F7h,08h,01Bh,05h,01Dh,0FEh,0Eh,0F2h,02h,0F0h,0EAh,0FBh,0E9h,0FCh,0F1h
+        db 0Ah,013h,0Ah,01Eh,08h,01Dh,0F8h,08h,0F5h,0E4h,0F9h,0E3h,0FEh,0E8h,08h,0EBh
+        db 00h,0F1h,01h,0Fh,08h,0Ch,02h,011h,00h,02h,0F8h,0F4h,0F9h,0F2h,0FBh,0F8h
+        db 018h,0F6h,01Ch,013h,07h,017h,0Dh,01Ah,0FAh,021h,0FAh,014h,0F3h,020h,0F3h,09h
+        db 0F0h,07h,0E6h,0EFh,0F7h,0E6h,0EFh,0E2h,0FCh,0DCh,0FFh,0E9h,08h,0E8h,0Bh,00h
+        db 00h,0Ch,0F9h,02h,0E1h,0Fh,0Dh,00h,00h,05h,0FDh,0ECh,0E6h,0Ch,0FEh,0Ch
+        db 0FCh,02h,0FDh,0E0h,05h,06h,0F8h,0FDh,0FCh,0F9h,0FBh,0E6h,013h,0FFh,0F8h,00h
+        db 00h,00h,00h,01h,019h,0F2h,0FBh,0F1h,03h,0FEh,0FBh,012h,018h,0F0h,07h,0EEh
+        db 02h,0FBh,0FDh,01Fh,01h,03h,04h,0F7h,08h,03h,0FDh,01Ch,0ECh,02h,07h,02h
+        db 014h,0F6h,015h,0F5h,018h,0F8h,012h,0Ch,0Bh,011h,016h,012h,01Fh,012h,0Fh,019h
+        db 0FCh,022h,0FEh,029h,07h,01Dh,03h,011h,0F8h,01Bh,0EFh,01Fh,0F0h,013h,0EEh,0FDh
+        db 0F2h,0FEh,0DFh,04h,0DCh,02h,0E1h,0E7h,0F6h,0E5h,0EBh,0E4h,0EBh,0EBh,0EBh,0E0h
+        db 0FEh,0D9h,0FCh,0D7h,0FBh,0E5h,0FAh,0F1h,04h,0E4h,0Ch,0E4h,0Fh,0ECh,010h,0Ch
+        db 04h,010h,01h,0Dh,0F9h,08h,0F9h,0F2h,0FCh,0ECh,00h,0EFh,01h,0F9h,0Bh,0Dh
+        db 07h,013h,01h,019h,0FBh,0Dh,0F5h,0F9h,0F5h,0ECh,0F9h,0EDh,00h,0F1h,06h,00h
+        db 00h,06h,02h,07h,00h,07h,00h,07h,00h,07h,00h,07h,01h,07h,01h,07h
+        db 01h,07h,01h,07h,01h,07h,01h,07h,01h,07h,01h,07h,01h,0F7h,02h,0EAh
+        db 01h,0E0h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0E8h,04h,0ECh
+        db 0FAh,0FDh,02h,0FFh,00h,0E3h,0FEh,02h,0FBh,02h,0FEh,0FDh,0FEh,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,05h,0Ah,0FFh,0F3h
+        db 05h,05h,03h,09h,0FBh,0F7h,09h,08h,02h,0FCh,0F9h,08h,011h,09h,0FDh,0F7h
+        db 0FBh,09h,0FEh,02h,0FAh,0F5h,00h,09h,0FFh,0FBh,0F9h,0F5h,09h,06h,0F5h,0F7h
+        db 0FFh,0FAh,09h,0F8h,0F7h,0F7h,03h,09h,08h,0F2h,0FCh,0FEh,06h,08h,0Dh,0Bh
+        db 08h,017h,04h,013h,0FFh,013h,0F9h,0Eh,0FDh,0FFh,0F5h,03h,0F5h,0EFh,0F8h,0F0h
+        db 0F6h,0EBh,0FBh,0EDh,0FFh,0E1h,03h,0F5h,05h,0F1h,011h,0Bh,01h,012h,03h,08h
+        db 0FFh,0Eh,0FCh,0F8h,0FDh,0FAh,0F6h,0F9h,0FDh,0F1h,0FEh,0F3h,00h,0F3h,07h,0F9h
+        db 00h,0Eh,0Fh,0FFh,00h,0EDh,06h,0FEh,01h,0F8h,0Ah,07h,00h,012h,0Ch,09h
+        db 00h,016h,0FFh,05h,0F7h,09h,0F5h,0F8h,0FDh,0ECh,0FBh,0Dh,08h,0F7h,0FBh,011h
+        db 00h,0F5h,04h,0Dh,0F9h,0F7h,0Ch,0FEh,0F6h,0Ah,02h,0F6h,0FFh,0Ch,00h,0F0h
+        db 00h,0Ch,0FEh,0F6h,04h,05h,0F8h,04h,0Dh,0F9h,0FAh,0FEh,08h,01h,07h,07h
+        db 03h,01h,00h,013h,01h,0Eh,00h,013h,04h,010h,01h,011h,0FDh,0Dh,0FCh,011h
+        db 0FCh,010h,0FEh,01h,0F7h,03h,0F7h,06h,0F7h,07h,0F6h,0F6h,0F3h,0F7h,0F3h,0F7h
+        db 0F6h,0F5h,0F3h,0ECh,0F6h,0EEh,0F6h,0E8h,0F7h,0EAh,0F7h,0E9h,0FDh,0E8h,0FDh,0E8h
+        db 0FEh,0EAh,02h,0F0h,06h,0F1h,07h,0F1h,05h,0F3h,05h,0F5h,09h,0FDh,018h,08h
+        db 0Fh,0Bh,014h,0Fh,01h,017h,05h,09h,0FEh,012h,0F6h,00h,0F8h,02h,0EDh,0F4h
+        db 0F8h,0EEh,0F4h,0F2h,0FFh,0E3h,04h,0FBh,0Ah,0F2h,011h,0F8h,00h,0F2h,0FFh,07h
+        db 0FEh,0Bh,0FEh,0FFh,09h,0FFh,08h,011h,02h,011h,03h,0Ch,00h,0Dh,01h,0Eh
+        db 0FCh,08h,0FCh,03h,0FBh,03h,0F9h,0EDh,0F7h,0F1h,0F6h,0EFh,0FEh,0EFh,0FFh,0F5h
+        db 04h,0F5h,04h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,0F9h
+        db 05h,06h,03h,0FFh,03h,07h,00h,05h,03h,05h,0FEh,06h,02h,0FDh,0FEh,07h
+        db 0FFh,0FCh,00h,01h,0FCh,0FAh,02h,0F9h,0FFh,0FBh,02h,0F9h,01h,0FCh,05h,00h
+        db 023h,04h,01Ah,0Fh,06h,08h,0Bh,0Fh,01h,011h,09h,0Fh,0FCh,010h,05h,0FFh
+        db 0F8h,05h,0FDh,0F3h,0FBh,0EFh,0FFh,0EDh,0FFh,0EBh,0Ah,0EEh,0Ch,0F4h,011h,00h
+        db 0Ah,00h,09h,00h,0Bh,08h,09h,08h,09h,08h,08h,0Ch,02h,0Dh,03h,0Dh
+        db 03h,0Ah,0FAh,0Ah,0FAh,0Ah,0FBh,00h,0F5h,01h,0F6h,01h,0F6h,0F5h,0FAh,0F5h
+        db 0FAh,0F5h,0FAh,0F4h,01h,0F4h,01h,0ECh,01h,0F4h,08h,0F2h,07h,0F3h,08h,03h
+        db 02h,03h,02h,03h,02h,06h,02h,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,0FDh,02h
+        db 0FDh,02h,0FDh,02h,0FDh,02h,0FDh,02h,0FEh,01h,0FEh,0E6h,0F2h,0E6h,0F2h,0E6h
+        db 0F2h,0E6h,0F2h,0E6h,0F2h,0E6h,0F2h,0F1h,01h,0EFh,04h,0Ch,0FFh,0FCh,00h,04h
+        db 0FFh,010h,0FFh,011h,02h,017h,01h,012h,00h,011h,0FEh,012h,0FDh,05h,0FDh,0FAh
+        db 0FFh,0F1h,0FFh,0EDh,00h,0EBh,01h,026h,07h,00h,00h,018h,0FFh,020h,0FEh,0FEh
+        db 09h,0FFh,0Bh,0Dh,05h,017h,01h,016h,0FEh,017h,0FDh,06h,0FBh,013h,0FCh,02h
+        db 0FBh,04h,0F4h,0EEh,0FDh,0E3h,0FAh,0E9h,0FDh,0E6h,0FDh,0F4h,0FFh,0E5h,00h,0F4h
+        db 03h,0F4h,04h,00h,06h,07h,00h,011h,00h,0Bh,02h,0Fh,0FDh,011h,02h,015h
+        db 0FCh,0Ch,0FEh,06h,0F5h,01h,0FCh,0F2h,0FCh,0F3h,0FBh,0ECh,0FEh,0EBh,00h,0DFh
+        db 01h,0F3h,01h,0F3h,01h,0F0h,02h,02h,0FDh,02h,0FCh,0FFh,0FEh,0FBh,0FEh,0F0h
+        db 0FDh,0F1h,0FCh,0F5h,01h,0Eh,0FEh,011h,0FFh,0F5h,05h,0F8h,04h,01h,0FCh,00h
+        db 0FFh,0FDh,0FEh,0F5h,01h,0F2h,0FCh,0F1h,0FCh,0FBh,01h,0F5h,01h,0EEh,03h,0Bh
+        db 0FEh,0FCh,01h,0F5h,01h,08h,0FBh,0Ch,0FDh,0Eh,0FEh,08h,0FCh,0Ch,07h,09h
+        db 02h,03h,00h,0Ah,00h,012h,06h,0Eh,0FEh,019h,03h,025h,04h,05h,01h,04h
+        db 01h,05h,0FFh,0Eh,03h,014h,02h,01Dh,0F8h,010h,0FDh,0Eh,0FCh,0FFh,0F5h,06h
+        db 0FBh,0F2h,0FDh,0DCh,0FEh,0F4h,0FFh,0E7h,02h,0DCh,05h,0F7h,0FEh,0EEh,04h,0E4h
+        db 05h,0F3h,00h,0F0h,0Bh,0EDh,05h,00h,0FEh,05h,0FFh,020h,01h,023h,02h,021h
+        db 0FEh,02Bh,0FBh,05h,0F9h,05h,0ECh,0DCh,0FCh,0E5h,0F2h,0E4h,01h,0E6h,02h,0D8h
+        db 013h,0DEh,010h,0F7h,04h,0E7h,011h,018h,06h,0Eh,0Ch,0E6h,01h,0DEh,00h,0F0h
+        db 02h,0F0h,0Ch,09h,09h,01Ch,013h,01Fh,0Fh,022h,010h,014h,02h,013h,04h,01Bh
+        db 0FFh,014h,0F2h,0F9h,0F7h,0F9h,0F1h,0E7h,0FEh,0DDh,0FAh,0FCh,03h,0FEh,02h,0F9h
+        db 03h,0FFh,03h,09h,00h,06h,04h,0Bh,00h,0Bh,00h,010h,0FDh,00h,0FEh,00h
+        db 0FCh,0FFh,0FEh,05h,0FEh,03h,0FDh,01h,0FCh,0FDh,0FCh,0FEh,0FCh,0FEh,0FCh,0FAh
+        db 01h,0F8h,03h,0FCh,01h,0FEh,0FEh,0FEh,0FEh,0FEh,0FEh
 HotStickList:
-db 01h
+        db 01h
 HotStickList_y:
-db 05h,011h,011h,0EDh,015h,05h,03h,0Fh,0Bh,0F3h,017h,08h,02h,0F6h,07h,0Ch
-db 01Bh,09h,0FDh,0F0h,09h,0Dh,010h,02h,0FAh,0EDh,010h,0Eh,0Ch,0FBh,0FAh,0F0h
-db 015h,0Ah,01h,0F7h,0FFh,0FFh,014h,0F1h,05h,0F7h,03h,0Eh,019h,0ECh,0Eh,0FEh
-db 06h,08h,0Dh,0Bh,08h,017h,04h,013h,0FFh,013h,0F9h,0Eh,0FDh,0FFh,0F4h,03h
-db 0F5h,0EFh,0F8h,0F0h,0F6h,0EBh,0FBh,0EDh,0FFh,0E1h,03h,0F5h,05h,0F1h,011h,0Fh
-db 0Fh,018h,08h,0Dh,09h,016h,0FDh,0F3h,0FFh,03h,0F7h,0F4h,06h,0E9h,0FFh,0F0h
-db 0Ah,0ECh,09h,0F6h,0Fh,016h,012h,0FAh,04h,0E5h,0Bh,0FBh,04h,0F1h,0Dh,0Bh
-db 02h,01Ah,010h,0Bh,06h,01Eh,01h,07h,0F9h,012h,0F8h,0F4h,00h,0E2h,0FDh,012h
-db 0Eh,0F0h,02h,017h,06h,0F0h,0Bh,013h,0FFh,0F2h,011h,03h,0F9h,010h,07h,0EEh
-db 04h,011h,05h,0E8h,06h,011h,02h,0F1h,08h,00h,0F9h,0FEh,011h,0F3h,0FCh,0FEh
-db 08h,01h,07h,07h,03h,01h,00h,013h,01h,0Eh,00h,013h,04h,010h,01h,011h
-db 0FDh,0Dh,0FCh,011h,0FCh,010h,0FEh,01h,0F8h,03h,0F7h,06h,0F7h,07h,0F6h,0F6h
-db 0F3h,0F7h,0F3h,0F7h,0F6h,0F5h,0F3h,0ECh,0F6h,0EEh,0F6h,0E8h,0F7h,0EAh,0F7h,0E9h
-db 0FDh,0E8h,0FDh,0E8h,0FEh,0EAh,02h,0F0h,06h,0F0h,07h,0F1h,05h,0F3h,05h,0F3h
-db 010h,08h,015h,0Eh,017h,013h,016h,016h,0Fh,021h,07h,013h,0Eh,01Ah,0FAh,0Bh
-db 0F5h,09h,0E8h,0EBh,08h,0F6h,0F4h,0EDh,0Bh,0ECh,05h,02h,013h,0FAh,016h,0F3h
-db 010h,0E8h,0Ch,011h,010h,01Ah,012h,029h,0Fh,01h,0Fh,01Ch,0Fh,027h,03h,00h
-db 0Bh,01h,0Ch,0Fh,07h,019h,07h,01Ah,02h,01Dh,02h,0Ch,0FFh,019h,0FFh,07h
-db 0FDh,08h,0F8h,0F0h,0FFh,0E9h,0FCh,0ECh,01h,0E8h,0FFh,0F6h,04h,0E9h,04h,0F1h
-db 0Dh,0F1h,010h,00h,06h,0Dh,0Dh,016h,09h,0Ch,03h,012h,03h,011h,03h,01Bh
-db 04h,0Ch,0FFh,0Ch,0FCh,01h,0FCh,0EDh,02h,0F3h,0FBh,0E9h,05h,0EBh,00h,0D9h
-db 07h,0F3h,01h,0F1h,09h,0EFh,08h,08h,08h,07h,01h,04h,0Fh,03h,07h,0E9h
-db 05h,0ECh,02h,0F3h,09h,011h,07h,015h,07h,0F8h,012h,0FCh,0Eh,07h,04h,00h
-db 00h,0FAh,04h,0EDh,011h,0EBh,06h,0ECh,01h,0F8h,015h,0EFh,015h,0E9h,0Bh,011h
-db 011h,0F8h,016h,0F0h,07h,0Eh,011h,011h,0Bh,012h,03h,0Eh,08h,013h,0Fh,0Dh
-db 05h,07h,0Ch,012h,0Dh,019h,0Dh,016h,0Ah,020h,0Ch,02Bh,0Ah,0FCh,0Dh,0F9h
-db 0Eh,0FEh,01h,010h,0Ah,017h,011h,022h,00h,012h,07h,012h,04h,04h,0FAh,0Ah
-db 05h,0EFh,04h,0D5h,05h,0EFh,0Ah,0E1h,0Eh,0D6h,0Ch,0F2h,0Bh,0ECh,0Fh,0E2h
-db 09h,0F0h,09h,0EBh,015h,0E7h,0Ch,00h,011h,06h,07h,0F8h,0FFh,0EAh,0FEh,0F0h
-db 0FFh,0F3h,0Eh,05h,08h,03h,016h,0Bh,00h,0Dh,08h,010h,02h,01Eh,04h,09h
-db 0FEh,0Eh,0F6h,08h,0FDh,09h,0F8h,0F0h,0FDh,0E9h,0FAh,0Bh,0FFh,018h,0FDh,011h
-db 0FEh,017h,0F9h,0F9h,0FCh,0F9h,0F7h,0F8h,0FFh,0F3h,0F4h,0F1h,00h,0E3h,03h,0F6h
-db 0FFh,0F5h,0Ah,02h,06h,0FEh,016h,010h
+        db 05h,011h,011h,0EDh,015h,05h,03h,0Fh,0Bh,0F3h,017h,08h,02h,0F6h,07h,0Ch
+        db 01Bh,09h,0FDh,0F0h,09h,0Dh,010h,02h,0FAh,0EDh,010h,0Eh,0Ch,0FBh,0FAh,0F0h
+        db 015h,0Ah,01h,0F7h,0FFh,0FFh,014h,0F1h,05h,0F7h,03h,0Eh,019h,0ECh,0Eh,0FEh
+        db 06h,08h,0Dh,0Bh,08h,017h,04h,013h,0FFh,013h,0F9h,0Eh,0FDh,0FFh,0F4h,03h
+        db 0F5h,0EFh,0F8h,0F0h,0F6h,0EBh,0FBh,0EDh,0FFh,0E1h,03h,0F5h,05h,0F1h,011h,0Fh
+        db 0Fh,018h,08h,0Dh,09h,016h,0FDh,0F3h,0FFh,03h,0F7h,0F4h,06h,0E9h,0FFh,0F0h
+        db 0Ah,0ECh,09h,0F6h,0Fh,016h,012h,0FAh,04h,0E5h,0Bh,0FBh,04h,0F1h,0Dh,0Bh
+        db 02h,01Ah,010h,0Bh,06h,01Eh,01h,07h,0F9h,012h,0F8h,0F4h,00h,0E2h,0FDh,012h
+        db 0Eh,0F0h,02h,017h,06h,0F0h,0Bh,013h,0FFh,0F2h,011h,03h,0F9h,010h,07h,0EEh
+        db 04h,011h,05h,0E8h,06h,011h,02h,0F1h,08h,00h,0F9h,0FEh,011h,0F3h,0FCh,0FEh
+        db 08h,01h,07h,07h,03h,01h,00h,013h,01h,0Eh,00h,013h,04h,010h,01h,011h
+        db 0FDh,0Dh,0FCh,011h,0FCh,010h,0FEh,01h,0F8h,03h,0F7h,06h,0F7h,07h,0F6h,0F6h
+        db 0F3h,0F7h,0F3h,0F7h,0F6h,0F5h,0F3h,0ECh,0F6h,0EEh,0F6h,0E8h,0F7h,0EAh,0F7h,0E9h
+        db 0FDh,0E8h,0FDh,0E8h,0FEh,0EAh,02h,0F0h,06h,0F0h,07h,0F1h,05h,0F3h,05h,0F3h
+        db 010h,08h,015h,0Eh,017h,013h,016h,016h,0Fh,021h,07h,013h,0Eh,01Ah,0FAh,0Bh
+        db 0F5h,09h,0E8h,0EBh,08h,0F6h,0F4h,0EDh,0Bh,0ECh,05h,02h,013h,0FAh,016h,0F3h
+        db 010h,0E8h,0Ch,011h,010h,01Ah,012h,029h,0Fh,01h,0Fh,01Ch,0Fh,027h,03h,00h
+        db 0Bh,01h,0Ch,0Fh,07h,019h,07h,01Ah,02h,01Dh,02h,0Ch,0FFh,019h,0FFh,07h
+        db 0FDh,08h,0F8h,0F0h,0FFh,0E9h,0FCh,0ECh,01h,0E8h,0FFh,0F6h,04h,0E9h,04h,0F1h
+        db 0Dh,0F1h,010h,00h,06h,0Dh,0Dh,016h,09h,0Ch,03h,012h,03h,011h,03h,01Bh
+        db 04h,0Ch,0FFh,0Ch,0FCh,01h,0FCh,0EDh,02h,0F3h,0FBh,0E9h,05h,0EBh,00h,0D9h
+        db 07h,0F3h,01h,0F1h,09h,0EFh,08h,08h,08h,07h,01h,04h,0Fh,03h,07h,0E9h
+        db 05h,0ECh,02h,0F3h,09h,011h,07h,015h,07h,0F8h,012h,0FCh,0Eh,07h,04h,00h
+        db 00h,0FAh,04h,0EDh,011h,0EBh,06h,0ECh,01h,0F8h,015h,0EFh,015h,0E9h,0Bh,011h
+        db 011h,0F8h,016h,0F0h,07h,0Eh,011h,011h,0Bh,012h,03h,0Eh,08h,013h,0Fh,0Dh
+        db 05h,07h,0Ch,012h,0Dh,019h,0Dh,016h,0Ah,020h,0Ch,02Bh,0Ah,0FCh,0Dh,0F9h
+        db 0Eh,0FEh,01h,010h,0Ah,017h,011h,022h,00h,012h,07h,012h,04h,04h,0FAh,0Ah
+        db 05h,0EFh,04h,0D5h,05h,0EFh,0Ah,0E1h,0Eh,0D6h,0Ch,0F2h,0Bh,0ECh,0Fh,0E2h
+        db 09h,0F0h,09h,0EBh,015h,0E7h,0Ch,00h,011h,06h,07h,0F8h,0FFh,0EAh,0FEh,0F0h
+        db 0FFh,0F3h,0Eh,05h,08h,03h,016h,0Bh,00h,0Dh,08h,010h,02h,01Eh,04h,09h
+        db 0FEh,0Eh,0F6h,08h,0FDh,09h,0F8h,0F0h,0FDh,0E9h,0FAh,0Bh,0FFh,018h,0FDh,011h
+        db 0FEh,017h,0F9h,0F9h,0FCh,0F9h,0F7h,0F8h,0FFh,0F3h,0F4h,0F1h,00h,0E3h,03h,0F6h
+        db 0FFh,0F5h,0Ah,02h,06h,0FEh,016h,010h
 dword_CC9AD:
-db 0FDh,0Fh,0Dh
+        db 0FDh,0Fh,0Dh
 teamrocktune:
-db 01h,01h,00h,01h,01h,00h,01h,01h,01h,00h,01h,01h,01h,00h,01h,01h
-db 00h,01h,01h,01h,00h,00h,01h,00h,01h,01h,00h,00h
+        db 01h,01h,00h,01h,01h,00h,01h,01h,01h,00h,01h,01h,01h,00h,01h,01h
+        db 00h,01h,01h,01h,00h,00h,01h,00h,01h,01h,00h,00h
 word_CC9CC:
-db 0FEh,01h
+        db 0FEh,01h
 introstandanims_m2:
-db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
-db 00h,00h,045h,0Dh,00h,00h
+        db 03Ah,02h,067h,0Dh,00h,00h,07Bh,0Dh,00h,00h,057h,0Dh,00h,00h,089h,0Dh
+        db 00h,00h,045h,0Dh,00h,00h
 starskatermin:
-db 0Ah,0Fh,014h
+        db 0Ah,0Fh,014h
 stargoaliemin:
-db 0Ah,014h,028h
+        db 0Ah,014h,028h
 assstarskate_path:
-db 089h,0FFh
+        db 089h,0FFh
 assstarskate_path_y:
-db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
-db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
+        db 0C9h,0FFh,0CAh,0FFh,0D3h,0FFh,0C5h,0FFh,0Fh,00h,084h,0FFh,0Ah,00h,0A2h,0FFh
+        db 014h,00h,0D4h,0FFh,05h,00h,0C0h,0FFh,0CEh,0FFh,08Eh,0FFh,0ECh,0FFh
 starordtab:
-dd str_1st
-dd str_2nd
-dd str_3rd
-db 00h,00h
+        dd str_1st
+        dd str_2nd
+        dd str_3rd
+        db 00h,00h
 asswingo_dedata:
-db 064h,00h
+        db 064h,00h
 asswingo_dedata_xrand:
-db 014h,00h
+        db 014h,00h
 asswingo_dedata_y:
-db 0C0h,0FFh
+        db 0C0h,0FFh
 asswingo_dedata_yrand:
-db 0Ah,00h,078h,00h,014h,00h,032h,00h,05h,00h,037h,00h,032h,00h,0BEh,00h
-db 014h,00h,064h,00h,01Eh,00h,0DAh,00h,014h,00h
+        db 0Ah,00h,078h,00h,014h,00h,032h,00h,05h,00h,037h,00h,032h,00h,0BEh,00h
+        db 014h,00h,064h,00h,01Eh,00h,0DAh,00h,014h,00h
 asscentero_dedata:
-db 00h,00h
+        db 00h,00h
 asscentero_dedata_xrand:
-db 046h,00h
+        db 046h,00h
 asscentero_dedata_y:
-db 0C0h,0FFh
+        db 0C0h,0FFh
 asscentero_dedata_yrand:
-db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
-db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
+        db 0Ah,00h,00h,00h,046h,00h,034h,00h,0Ah,00h,00h,00h,03Ch,00h,0A0h,00h
+        db 01Eh,00h,00h,00h,064h,00h,09Bh,00h,014h,00h
 assscore_dancecnt:
-db 00h,00h
+        db 00h,00h
 goaliesave_saveanim_m2:
-db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
-db 0D5h,011h,09Dh,011h
+        db 00h,00h,0B1h,00h,0C9h,00h,031h,01h,059h,01h,01h,01h,019h,01h,01Dh,012h
+        db 0D5h,011h,09Dh,011h
 asspuckc_postab2:
-db 092h,0FFh
+        db 092h,0FFh
 asspuckc_postab2_y:
-db 0ECh,0FFh,06Eh,00h,0ECh,0FFh,07Eh,0FFh,024h,00h,01Eh,00h,024h,00h,082h,00h
-db 024h,00h,0E2h,0FFh,024h,00h,0CEh,0FFh,0CCh,00h,00h,00h,0BCh,00h,01Eh,00h
-db 0C6h,00h,028h,00h,0C6h
+        db 0ECh,0FFh,06Eh,00h,0ECh,0FFh,07Eh,0FFh,024h,00h,01Eh,00h,024h,00h,082h,00h
+        db 024h,00h,0E2h,0FFh,024h,00h,0CEh,0FFh,0CCh,00h,00h,00h,0BCh,00h,01Eh,00h
+        db 0C6h,00h,028h,00h,0C6h
 Endfaceoff_ftab_m1:
-db 00h,00h,08h,010h,00h,08h,010h
+        db 00h,00h,08h,010h,00h,08h,010h
 refsigdir:
-db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
-db 0FFh,0FFh,04h,00h,0FFh,0FFh,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
-db 04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
-db 04h,00h,04h,00h,04h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
+        db 0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
+        db 0FFh,0FFh,04h,00h,0FFh,0FFh,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
+        db 04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h,04h,00h
+        db 04h,00h,04h,00h,04h,00h,0FFh,0FFh,0FFh,0FFh,0FFh,0FFh
 refsigspa_m2:
-db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
-db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
-db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 0FFh,0FFh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,063h,0Ch,00h,00h,073h,0Ch,08Bh,0Ch,063h,0Ch,09Bh,0Ch
+        db 0ABh,0Ch,0BBh,0Ch,0CBh,0Ch,0D9h,0Ch,0F9h,014h,0F5h,0Ch,0E5h,014h,0E7h,0Ch
+        db 0F5h,0Ch,0F5h,0Ch,0E5h,014h,083h,010h,00h,00h,00h,00h,00h,00h,00h,00h
 ShootoutPathData:
-db 028h,00h,00h,00h
+        db 028h,00h,00h,00h
 ShootoutPathData_y:
-db 078h,00h,00h,00h
+        db 078h,00h,00h,00h
 ShootoutPathData_end:
-db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
-db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
-db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
+        db 03Eh,00h,00h,00h,0EAh,0FFh,0FFh,0FFh,097h,00h,00h,00h,066h,00h,00h,00h
+        db 0EAh,0FFh,0FFh,0FFh,0C0h,00h,00h,00h,091h,00h,00h,00h,02Ch,00h,00h,00h
+        db 0C3h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh,00h,00h
 linenext:
-db 01h,00h,02h,00h,03h,00h,00h,00h,05h,00h,04h,00h,07h,00h,06h,00h
+        db 01h,00h,02h,00h,03h,00h,00h,00h,05h,00h,04h,00h,07h,00h,06h,00h
 lchoicetab:
-db 00h,01h,02h,03h,01h,02h,03h,00h,02h,03h,00h,01h,03h,00h,01h,02h
-db 00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h
-db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
-db 04h,05h,0FFh,0FFh,05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
-db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh
-db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,07h,06h,0FFh,0FFh
+        db 00h,01h,02h,03h,01h,02h,03h,00h,02h,03h,00h,01h,03h,00h,01h,02h
+        db 00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h,00h,01h,02h,03h
+        db 04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
+        db 04h,05h,0FFh,0FFh,05h,04h,0FFh,0FFh,04h,05h,0FFh,0FFh,04h,05h,0FFh,0FFh
+        db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh
+        db 06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,06h,07h,0FFh,0FFh,07h,06h,0FFh,0FFh
 assonetimer_blade:
-db 0FAh
+        db 0FAh
 assonetimer_blade_y:
-db 0Ch,0Eh,0Ch,013h,0FEh,0Fh,0F9h,06h,0F5h,0F6h,0F4h,0EFh,0F9h,0EEh,04h,00h
-db 00h
+        db 0Ch,0Eh,0Ch,013h,0FEh,0Fh,0F9h,06h,0F5h,0F6h,0F4h,0EFh,0F9h,0EEh,04h,00h
+        db 00h
 FallDown_pinxr:
-db 098h,00h,098h,00h,08Dh,00h,08Dh,00h,09Dh,00h,09Dh,00h,096h,00h,099h,00h
+        db 098h,00h,098h,00h,08Dh,00h,08Dh,00h,09Dh,00h,09Dh,00h,096h,00h,099h,00h
 FallDown_pinxl:
-db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh,070h,0FFh,070h,0FFh
+        db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh,070h,0FFh,070h,0FFh
 FallDown_pinyt:
-db 0FEh,00h,0FEh,00h,03h,01h,03h,01h,06h,01h,01h,01h,01h,01h,01h,01h
+        db 0FEh,00h,0FEh,00h,03h,01h,03h,01h,06h,01h,01h,01h,01h,01h,01h,01h
 FallDown_pinyb:
-db 0F6h,0FEh,0F6h,0FEh,0F6h,0FEh,0FDh,0FEh,0FDh,0FEh,0F6h,0FEh,0F6h,0FEh,0F6h,0FEh
+        db 0F6h,0FEh,0F6h,0FEh,0F6h,0FEh,0FDh,0FEh,0FDh,0FEh,0F6h,0FEh,0F6h,0FEh,0F6h,0FEh
 FallDown_pinxr2:
-db 099h,00h,099h,00h,090h,00h,090h,00h,09Bh,00h,09Bh,00h,09Eh,00h,09Eh,00h
+        db 099h,00h,099h,00h,090h,00h,090h,00h,09Bh,00h,09Bh,00h,09Eh,00h,09Eh,00h
 FallDown_pinxl2:
-db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh
+        db 066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,066h,0FFh,068h,0FFh,068h,0FFh
 nethit:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 ; Shot-block slide speeds, eight facings. blockspd is X and blockspd_y is Y, the next short.
 ; The short index is the facing doubled. An axis facing is ±4242 and 0; a diagonal is ±3000 on both.
 blockspd:
-db 092h,010h
+        db 092h,010h
 blockspd_y:
-db 00h,00h,0B8h,0Bh,048h,0F4h,00h,00h,06Eh,0EFh,048h,0F4h,048h,0F4h,06Eh,0EFh
-db 00h,00h,048h,0F4h,0B8h,0Bh,00h,00h,092h,010h,0B8h,0Bh
+        db 00h,00h,0B8h,0Bh,048h,0F4h,00h,00h,06Eh,0EFh,048h,0F4h,048h,0F4h,06Eh,0EFh
+        db 00h,00h,048h,0F4h,0B8h,0Bh,00h,00h,092h,010h,0B8h,0Bh
 checkinglist_m2:
-db 0B8h,0Bh,0C1h,05h,0D9h,05h,09h,06h,09h,06h,09h,06h,0F1h,05h,0F1h,05h
-db 0C1h,05h
+        db 0B8h,0Bh,0C1h,05h,0D9h,05h,09h,06h,09h,06h,09h,06h,0F1h,05h,0F1h,05h
+        db 0C1h,05h
 shotsets:
-db 00h,00h
+        db 00h,00h
 shotsetz:
-db 0Ch,00h,010h,00h,0Ch,00h,010h,00h,06h,00h,010h,00h,00h,00h,00h,00h
-db 00h,00h,0F0h,0FFh,00h,00h,0F0h,0FFh,06h,00h,0F0h,0FFh,0Ch,00h,00h,00h
-db 06h,00h
+        db 0Ch,00h,010h,00h,0Ch,00h,010h,00h,06h,00h,010h,00h,00h,00h,00h,00h
+        db 00h,00h,0F0h,0FFh,00h,00h,0F0h,0FFh,06h,00h,0F0h,0FFh,0Ch,00h,00h,00h
+        db 06h,00h
 digihandle:
-db 0FFh,0FFh,0FFh,0FFh
+        db 0FFh,0FFh,0FFh,0FFh
 crowdsmooth:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 crowdvol8:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 crowdvol7:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 cursndbank:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 oneminsaid:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 playsuspended:
-db 00h
+        db 00h
 dword_CCC9D:
-db 00h
+        db 00h
 dword_CCC9E:
-db 00h,00h
+        db 00h,00h
 cupceremony:
-db 00h
+        db 00h
 Setplass_alist:	; alist: initial assignment by position (0Eh assgoalie, 2 assdefd, 3 asswingd, 5 asscenterd)
-db 0Eh,02h,02h,03h,05h,03h,05h
+        db 0Eh,02h,02h,03h,05h,03h,05h
 restoreteams_pdsttab:
-db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
+        db 0F9h,0FFh,0FCh,0FFh,0FAh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh,0FEh,0FFh
 sublist_m2:
-db 0FEh,0FFh
+        db 0FEh,0FFh
 sublist:	; 93G sublist: word offsets into sublist_defl of the substitute list per position 0-6 (SetPlList)
-db 00h,00h,03h,00h,014h,00h,025h,00h,057h,00h,03Eh
+        db 00h,00h,03h,00h,014h,00h,025h,00h,057h,00h,03Eh
 sublist_defl_m3:
-db 00h,070h,00h
+        db 00h,070h,00h
 sublist_defl:
-db 024h,025h,0FFh,0Ch,0Eh,010h,0Ch,015h,01Ah,01Eh,022h,0Dh,0Fh,011h,0Dh,016h
-db 01Bh,01Fh,023h,0FFh,0Dh,0Fh,011h,0Dh,016h,01Bh,01Fh,023h,0Ch,0Eh,010h,0Ch
-db 015h,01Ah,01Eh,022h,0FFh,00h,03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h
-db 0Bh,014h,019h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,026h,027h,0FFh,02h,05h
-db 08h,0Bh,014h,019h,026h,027h,00h,03h,06h,09h,012h,017h,01Ch,020h,01h,04h
-db 07h,0Ah,013h,018h,01Dh,021h,0FFh,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h
-db 03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h,0Bh,014h,019h,026h,027h,0FFh
-db 026h,027h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h,03h,06h,09h,012h,017h
-db 01Ch,020h,02h,05h,08h,0Bh,014h
+        db 024h,025h,0FFh,0Ch,0Eh,010h,0Ch,015h,01Ah,01Eh,022h,0Dh,0Fh,011h,0Dh,016h
+        db 01Bh,01Fh,023h,0FFh,0Dh,0Fh,011h,0Dh,016h,01Bh,01Fh,023h,0Ch,0Eh,010h,0Ch
+        db 015h,01Ah,01Eh,022h,0FFh,00h,03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h
+        db 0Bh,014h,019h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,026h,027h,0FFh,02h,05h
+        db 08h,0Bh,014h,019h,026h,027h,00h,03h,06h,09h,012h,017h,01Ch,020h,01h,04h
+        db 07h,0Ah,013h,018h,01Dh,021h,0FFh,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h
+        db 03h,06h,09h,012h,017h,01Ch,020h,02h,05h,08h,0Bh,014h,019h,026h,027h,0FFh
+        db 026h,027h,01h,04h,07h,0Ah,013h,018h,01Dh,021h,00h,03h,06h,09h,012h,017h
+        db 01Ch,020h,02h,05h,08h,0Bh,014h
 dword_CCD4F:
-db 019h,0FFh,0C4h,02h,00h,00h,0C5h,02h,00h,00h,0C6h,02h,00h,00h,0C9h,02h
-db 00h,00h,0CAh,02h,00h,00h,0C9h,02h,00h,00h,0C6h,02h,00h,00h,0C5h,02h
-db 00h,00h,064h,01h,00h,00h,00h,00h,00h
+        db 019h,0FFh,0C4h,02h,00h,00h,0C5h,02h,00h,00h,0C6h,02h,00h,00h,0C9h,02h
+        db 00h,00h,0CAh,02h,00h,00h,0C9h,02h,00h,00h,0C6h,02h,00h,00h,0C5h,02h
+        db 00h,00h,064h,01h,00h,00h,00h,00h,00h
 doplayeracc_ftab:
-db 00h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
-db 00h,00h,00h,00h,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh
+        db 00h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h,010h,00h,00h,00h
+        db 00h,00h,00h,00h,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh,0F0h,0FFh,0FFh,0FFh
 MaxSpeed:
-db 040h,0F2h,0BCh,01h,010h,050h,0E3h,01h,010h,08Dh,0Ah,02h,040h,094h,032h,02h
-db 00h,051h,05Bh,02h,010h,0AFh,084h,02h,090h,09Ah,0AEh,02h,00h,00h,0D9h,02h
-db 040h,0CCh,03h,03h,090h,0ECh,02Eh,03h,090h,04Eh,05Ah,03h,040h,0E0h,085h,03h
-db 00h,090h,0B1h,03h,090h,04Ch,0DDh,03h,010h,05h,09h,04h,00h,0A9h,034h,04h
+        db 040h,0F2h,0BCh,01h,010h,050h,0E3h,01h,010h,08Dh,0Ah,02h,040h,094h,032h,02h
+        db 00h,051h,05Bh,02h,010h,0AFh,084h,02h,090h,09Ah,0AEh,02h,00h,00h,0D9h,02h
+        db 040h,0CCh,03h,03h,090h,0ECh,02Eh,03h,090h,04Eh,05Ah,03h,040h,0E0h,085h,03h
+        db 00h,090h,0B1h,03h,090h,04Ch,0DDh,03h,010h,05h,09h,04h,00h,0A9h,034h,04h
 str_ErrLoadGame:
-db 045h,072h,072h,06Fh,072h,020h,04Ch,06Fh,061h,064h,069h,06Eh,067h,020h,047h,061h
-db 06Dh,065h,0Ah,00h
+        db 045h,072h,072h,06Fh,072h,020h,04Ch,06Fh,061h,064h,069h,06Eh,067h,020h,047h,061h
+        db 06Dh,065h,0Ah,00h
 str_ErrSaveGame:
-db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
-db 065h,0Ah,00h,00h
+        db 045h,072h,072h,06Fh,072h,020h,053h,061h,076h,069h,06Eh,067h,020h,047h,061h,06Dh
+        db 065h,0Ah,00h,00h
 rinkobjanim:
-db 06h
+        db 06h
 rinkobjanim_b1:
-db 00h,01h,02h,01h,02h,00h,06h,03h,04h,05h,04h,05h,03h,07h,06h,07h
-db 08h,07h,08h,07h,06h,0FEh,09h,0Ah,08h,0Bh,0Ch,0Dh,0Eh,0Ch,0Dh,0Eh
-db 0Bh,06h,0Fh,010h,011h,010h,011h,0Fh,08h,012h,013h,014h,013h,012h,013h,014h
-db 012h,08h,015h,016h,017h,018h,016h,017h,018h,015h,07h,019h,01Ah,01Bh,01Ah,01Bh
-db 01Ah,01Bh,07h,01Ch,01Dh,01Eh,01Dh,01Eh,01Dh,01Eh,07h,01Fh,020h,021h,020h,021h
-db 020h,01Fh,05h,022h,023h,024h,023h,024h,06h,025h,026h,027h,026h,027h,026h,06h
-db 028h,029h,02Ah,029h,02Ah,028h,06h,02Bh,02Ch,02Dh,02Dh,02Dh,02Ch,05h,02Eh,02Fh
-db 030h,02Fh,030h,07h,031h,032h,033h,032h,033h,032h,031h,09h,036h,037h,038h,036h
-db 037h,038h,036h,037h,038h,06h,039h,03Ah,039h,03Ah,039h,03Ah,0FEh,03Bh,03Ch,01h
-db 040h,01h,041h,01h,042h,01h,043h,01h,044h,01h,045h,01h,05Bh,01h,034h,01h
-db 035h,04h,03Dh,03Eh,03Fh,03Eh,05h,04Dh,04Eh,04Fh,04Eh,04Fh,07h,050h,051h,052h
-db 053h,051h,052h,053h,0FEh,054h,055h,0FEh,056h,057h,02h,059h,05Ah,08h,05Ch,05Dh
-db 05Eh,05Fh,05Eh,05Fh,05Dh,05Ch,0Ah,046h,047h,048h,049h,04Ah,049h,04Bh,049h,04Ch
-db 046h,0Ah,061h,061h,062h,062h,061h,061h,062h,062h,063h,063h,06h,063h,063h,063h
-db 063h,063h,063h,06h,067h,067h,067h,067h,068h,068h,03h,065h,065h,065h,03h,066h
-db 066h,066h,04h,067h,067h
+        db 00h,01h,02h,01h,02h,00h,06h,03h,04h,05h,04h,05h,03h,07h,06h,07h
+        db 08h,07h,08h,07h,06h,0FEh,09h,0Ah,08h,0Bh,0Ch,0Dh,0Eh,0Ch,0Dh,0Eh
+        db 0Bh,06h,0Fh,010h,011h,010h,011h,0Fh,08h,012h,013h,014h,013h,012h,013h,014h
+        db 012h,08h,015h,016h,017h,018h,016h,017h,018h,015h,07h,019h,01Ah,01Bh,01Ah,01Bh
+        db 01Ah,01Bh,07h,01Ch,01Dh,01Eh,01Dh,01Eh,01Dh,01Eh,07h,01Fh,020h,021h,020h,021h
+        db 020h,01Fh,05h,022h,023h,024h,023h,024h,06h,025h,026h,027h,026h,027h,026h,06h
+        db 028h,029h,02Ah,029h,02Ah,028h,06h,02Bh,02Ch,02Dh,02Dh,02Dh,02Ch,05h,02Eh,02Fh
+        db 030h,02Fh,030h,07h,031h,032h,033h,032h,033h,032h,031h,09h,036h,037h,038h,036h
+        db 037h,038h,036h,037h,038h,06h,039h,03Ah,039h,03Ah,039h,03Ah,0FEh,03Bh,03Ch,01h
+        db 040h,01h,041h,01h,042h,01h,043h,01h,044h,01h,045h,01h,05Bh,01h,034h,01h
+        db 035h,04h,03Dh,03Eh,03Fh,03Eh,05h,04Dh,04Eh,04Fh,04Eh,04Fh,07h,050h,051h,052h
+        db 053h,051h,052h,053h,0FEh,054h,055h,0FEh,056h,057h,02h,059h,05Ah,08h,05Ch,05Dh
+        db 05Eh,05Fh,05Eh,05Fh,05Dh,05Ch,0Ah,046h,047h,048h,049h,04Ah,049h,04Bh,049h,04Ch
+        db 046h,0Ah,061h,061h,062h,062h,061h,061h,062h,062h,063h,063h,06h,063h,063h,063h
+        db 063h,063h,063h,06h,067h,067h,067h,067h,068h,068h,03h,065h,065h,065h,03h,066h
+        db 066h,066h,04h,067h,067h
 rinkobjdefs_m2:
-db 067h,067h
+        db 067h,067h
 rinkobjdefs:
-db 047h,00h,013h,00h,00h,00h,038h,01h,013h,00h,00h,00h,051h,00h,014h,00h
-db 07h,00h,02Eh,01h,014h,00h,07h,00h,0A8h,00h,011h,00h,0Eh,00h,0B6h,00h
-db 010h,00h,016h,00h,0E7h,00h,011h,00h,019h,00h,0F9h,00h,011h,00h,022h,00h
-db 011h,01h,011h,00h,022h,00h,086h,00h,011h,00h,022h,00h,06Eh,00h,011h,00h
-db 022h,00h,0DAh,00h,011h,00h,029h,00h,0A1h,00h,01Ch,00h,032h,00h,061h,00h
-db 01Ch,00h,032h,00h,01Eh,01h,01Ch,00h,032h,00h,01Ah,01h,02Dh,00h,03Bh,00h
-db 065h,00h,02Dh,00h,03Bh,00h,0BFh,00h,02Dh,00h,043h,00h,0A6h,00h,02Dh,00h
-db 04Bh,00h,066h,00h,02Dh,00h,04Bh,00h,019h,01h,02Dh,00h,04Bh,00h,022h,00h
-db 015h,00h,053h,00h,05Fh,01h,015h,00h,053h,00h,028h,00h,01Fh,00h,059h,00h
-db 056h,01h,01Fh,00h,059h,00h,01Fh,00h,033h,00h,060h,00h,060h,01h,033h,00h
-db 060h,00h,01Bh,00h,038h,00h,067h,00h,064h,01h,038h,00h,067h,00h,0Eh,00h
-db 045h,00h,06Eh,00h,071h,01h,045h,00h,06Eh,00h,0Ah,00h,04Dh,00h,074h,00h
-db 075h,01h,04Dh,00h,074h,00h,02h,00h,046h,00h,07Ch,00h,07Dh,01h,046h,00h
-db 07Ch,00h,08h,00h,038h,00h,086h,00h,077h,01h,038h,00h,086h,00h,0Bh,00h
-db 019h,00h,08Dh,00h,074h,01h,019h,00h,08Dh,00h,00h,00h,048h,02h,090h,00h
-db 07Fh,01h,048h,02h,090h,00h,030h,00h,048h,02h,092h,00h,04Fh,01h,048h,02h
-db 092h,00h,03Ah,00h,04Ch,02h,094h,00h,044h,01h,04Ch,02h,094h,00h,0F8h,0FFh
-db 037h,02h,096h,00h,087h,01h,037h,02h,096h,00h,062h,00h,04Eh,02h,098h,00h
-db 01Dh,01h,04Eh,02h,098h,00h,078h,00h,04Fh,02h,09Ah,00h,013h,01h,04Fh,02h
-db 09Ah,00h,089h,00h,04Fh,02h,09Ch,00h,03h,01h,04Fh,02h,09Ch,00h,014h,00h
-db 036h,02h,09Eh,00h,04h,00h,037h,02h,09Eh,00h,07Bh,01h,037h,02h,09Eh,00h
-db 06Bh,01h,036h,02h,09Eh,00h,0Bh,00h,05Ah,00h,0A0h,00h,0Bh,00h,092h,00h
-db 0A0h,00h,0Bh,00h,0C2h,01h,0A0h,00h,0Bh,00h,0FAh,01h,0A0h,00h,08h,00h
-db 079h,00h,0A0h,00h,08h,00h,0B2h,00h,0A0h,00h,08h,00h,0E1h,01h,0A0h,00h
-db 08h,00h,01Ah,02h,0A0h,00h,074h,01h,05Ah,00h,0A0h,00h,074h,01h,092h,00h
-db 0A0h,00h,074h,01h,0CAh,00h,0A0h,00h,074h,01h,0C2h,01h,0A0h,00h,074h,01h
-db 0FAh,01h,0A0h,00h,077h,01h,079h,00h,0A0h,00h,077h,01h,0B1h,00h,0A0h,00h
-db 077h,01h,0A9h,01h,0A0h,00h,077h,01h,0E1h,01h,0A0h,00h,077h,01h,019h,02h
-db 0A0h,00h,09h,00h,062h,00h,0A2h,00h,09h,00h,09Ah,00h,0A2h,00h,09h,00h
-db 0CAh,01h,0A2h,00h,09h,00h,02h,02h,0A2h,00h,076h,01h,062h,00h,0A2h,00h
-db 076h,01h,09Ah,00h,0A2h,00h,076h,01h,0D2h,00h,0A2h,00h,076h,01h,0CAh,01h
-db 0A2h,00h,076h,01h,02h,02h,0A2h,00h,05h,00h,082h,00h,0A7h,00h,05h,00h
-db 0BAh,00h,0A7h,00h,05h,00h,0EAh,01h,0A7h,00h,05h,00h,022h,02h,0A7h,00h
-db 07Ah,01h,082h,00h,0A7h,00h,07Ah,01h,0BAh,00h,0A7h,00h,07Ah,01h,0B2h,01h
-db 0A7h,00h,07Ah,01h,0EAh,01h,0A7h,00h,07Ah,01h,022h,02h,0A7h,00h,0FFh,0FFh
-db 05Dh,00h,0ADh,00h,0FFh,0FFh,095h,00h,0ADh,00h,0FFh,0FFh,0C5h,01h,0ADh,00h
-db 0FFh,0FFh,0FDh,01h,0ADh,00h,080h,01h,05Dh,00h,0ADh,00h,080h,01h,095h,00h
-db 0ADh,00h,080h,01h,0CDh,00h,0ADh,00h,080h,01h,0C5h,01h,0ADh,00h,080h,01h
-db 0FDh,01h,0ADh,00h,07h,00h,075h,00h,0B5h,00h,07h,00h,0ADh,00h,0B5h,00h
-db 07h,00h,0DDh,01h,0B5h,00h,07h,00h,015h,02h,0B5h,00h,078h,01h,075h,00h
-db 0B5h,00h,078h,01h,0ADh,00h,0B5h,00h,078h,01h,0E5h,00h,0B5h,00h,097h,01h
-db 03Fh,01h,0B5h,00h,078h,01h,0A5h,01h,0B5h,00h,078h,01h,0DDh,01h,0B5h,00h
-db 078h,01h,015h,02h,0B5h,00h,06h,00h,06Fh,00h,0B8h,00h,06h,00h,0A7h,00h
-db 0B8h,00h,06h,00h,0D7h,01h,0B8h,00h,06h,00h,0Fh,02h,0B8h,00h,079h,01h
-db 06Fh,00h,0B8h,00h,079h,01h,0A7h,00h,0B8h,00h,079h,01h,0DFh,00h,0B8h,00h
-db 079h,01h,09Fh,01h,0B8h,00h,079h,01h,0D7h,01h,0B8h,00h,079h,01h,0Fh,02h
-db 0B8h,00h,03h,00h,068h,00h,0BBh,00h,03h,00h,0A0h,00h,0BBh,00h,03h,00h
-db 0D0h,01h,0BBh,00h,03h,00h,08h,02h,0BBh,00h,07Ch,01h,068h,00h,0BBh,00h
-db 07Ch,01h,0A0h,00h,0BBh,00h,07Ch,01h,0D8h,00h,0BBh,00h,07Ch,01h,098h,01h
-db 0BBh,00h,07Ch,01h,0D0h,01h,0BBh,00h,07Ch,01h,08h,02h,0BBh,00h,083h,00h
-db 012h,00h,0BEh,00h,0Ch,00h,01Eh,00h,0C7h,00h,04h,00h,0A5h,01h,0D2h,00h
-db 04h,00h,02Dh,01h,0D2h,00h,04h,00h,0A5h,01h,0DDh,00h,04h,00h,0A5h,01h
-db 0E4h,00h,06h,00h,047h,01h,0EBh,00h,09h,00h,051h,01h,0EBh,00h,07h,00h
-db 060h,01h,0EBh,00h,0Ah,00h,069h,01h,0EBh,00h,0Ah,00h,079h,01h,0EBh,00h
-db 08h,00h,088h,01h,0EBh,00h,0Bh,00h,091h,01h,0EBh,00h,06h,00h,047h,01h
-db 0EFh,00h,09h,00h,051h,01h,0EFh,00h,07h,00h,060h,01h,0EFh,00h,0Ah,00h
-db 069h,01h,0EFh,00h,0Ah,00h,079h,01h,0EFh,00h,08h,00h,088h,01h,0EFh,00h
-db 0Bh,00h,091h,01h,0EFh,00h,04h,00h,0A5h,01h,0F3h,00h,04h,00h,02Dh,01h
-db 0DDh,00h,04h,00h,02Dh,01h,0E4h,00h,06h,00h,0CFh,00h,0EBh,00h,09h,00h
-db 0D9h,00h,0EBh,00h,07h,00h,0E8h,00h,0EBh,00h,0Ah,00h,0F1h,00h,0EBh,00h
-db 0Ah,00h,01h,01h,0EBh,00h,08h,00h,010h,01h,0EBh,00h,0Bh,00h,019h,01h
-db 0EBh,00h,06h,00h,0CFh,00h,0EFh,00h,09h,00h,0D9h,00h,0EFh,00h,07h,00h
-db 0E8h,00h,0EFh,00h,0Ah,00h,0F1h,00h,0EFh,00h,0Ah,00h,01h,01h,0EFh,00h
-db 08h,00h,010h,01h,0EFh,00h,0Bh,00h,019h,01h,0EFh,00h,04h,00h,02Dh,01h
+        db 047h,00h,013h,00h,00h,00h,038h,01h,013h,00h,00h,00h,051h,00h,014h,00h
+        db 07h,00h,02Eh,01h,014h,00h,07h,00h,0A8h,00h,011h,00h,0Eh,00h,0B6h,00h
+        db 010h,00h,016h,00h,0E7h,00h,011h,00h,019h,00h,0F9h,00h,011h,00h,022h,00h
+        db 011h,01h,011h,00h,022h,00h,086h,00h,011h,00h,022h,00h,06Eh,00h,011h,00h
+        db 022h,00h,0DAh,00h,011h,00h,029h,00h,0A1h,00h,01Ch,00h,032h,00h,061h,00h
+        db 01Ch,00h,032h,00h,01Eh,01h,01Ch,00h,032h,00h,01Ah,01h,02Dh,00h,03Bh,00h
+        db 065h,00h,02Dh,00h,03Bh,00h,0BFh,00h,02Dh,00h,043h,00h,0A6h,00h,02Dh,00h
+        db 04Bh,00h,066h,00h,02Dh,00h,04Bh,00h,019h,01h,02Dh,00h,04Bh,00h,022h,00h
+        db 015h,00h,053h,00h,05Fh,01h,015h,00h,053h,00h,028h,00h,01Fh,00h,059h,00h
+        db 056h,01h,01Fh,00h,059h,00h,01Fh,00h,033h,00h,060h,00h,060h,01h,033h,00h
+        db 060h,00h,01Bh,00h,038h,00h,067h,00h,064h,01h,038h,00h,067h,00h,0Eh,00h
+        db 045h,00h,06Eh,00h,071h,01h,045h,00h,06Eh,00h,0Ah,00h,04Dh,00h,074h,00h
+        db 075h,01h,04Dh,00h,074h,00h,02h,00h,046h,00h,07Ch,00h,07Dh,01h,046h,00h
+        db 07Ch,00h,08h,00h,038h,00h,086h,00h,077h,01h,038h,00h,086h,00h,0Bh,00h
+        db 019h,00h,08Dh,00h,074h,01h,019h,00h,08Dh,00h,00h,00h,048h,02h,090h,00h
+        db 07Fh,01h,048h,02h,090h,00h,030h,00h,048h,02h,092h,00h,04Fh,01h,048h,02h
+        db 092h,00h,03Ah,00h,04Ch,02h,094h,00h,044h,01h,04Ch,02h,094h,00h,0F8h,0FFh
+        db 037h,02h,096h,00h,087h,01h,037h,02h,096h,00h,062h,00h,04Eh,02h,098h,00h
+        db 01Dh,01h,04Eh,02h,098h,00h,078h,00h,04Fh,02h,09Ah,00h,013h,01h,04Fh,02h
+        db 09Ah,00h,089h,00h,04Fh,02h,09Ch,00h,03h,01h,04Fh,02h,09Ch,00h,014h,00h
+        db 036h,02h,09Eh,00h,04h,00h,037h,02h,09Eh,00h,07Bh,01h,037h,02h,09Eh,00h
+        db 06Bh,01h,036h,02h,09Eh,00h,0Bh,00h,05Ah,00h,0A0h,00h,0Bh,00h,092h,00h
+        db 0A0h,00h,0Bh,00h,0C2h,01h,0A0h,00h,0Bh,00h,0FAh,01h,0A0h,00h,08h,00h
+        db 079h,00h,0A0h,00h,08h,00h,0B2h,00h,0A0h,00h,08h,00h,0E1h,01h,0A0h,00h
+        db 08h,00h,01Ah,02h,0A0h,00h,074h,01h,05Ah,00h,0A0h,00h,074h,01h,092h,00h
+        db 0A0h,00h,074h,01h,0CAh,00h,0A0h,00h,074h,01h,0C2h,01h,0A0h,00h,074h,01h
+        db 0FAh,01h,0A0h,00h,077h,01h,079h,00h,0A0h,00h,077h,01h,0B1h,00h,0A0h,00h
+        db 077h,01h,0A9h,01h,0A0h,00h,077h,01h,0E1h,01h,0A0h,00h,077h,01h,019h,02h
+        db 0A0h,00h,09h,00h,062h,00h,0A2h,00h,09h,00h,09Ah,00h,0A2h,00h,09h,00h
+        db 0CAh,01h,0A2h,00h,09h,00h,02h,02h,0A2h,00h,076h,01h,062h,00h,0A2h,00h
+        db 076h,01h,09Ah,00h,0A2h,00h,076h,01h,0D2h,00h,0A2h,00h,076h,01h,0CAh,01h
+        db 0A2h,00h,076h,01h,02h,02h,0A2h,00h,05h,00h,082h,00h,0A7h,00h,05h,00h
+        db 0BAh,00h,0A7h,00h,05h,00h,0EAh,01h,0A7h,00h,05h,00h,022h,02h,0A7h,00h
+        db 07Ah,01h,082h,00h,0A7h,00h,07Ah,01h,0BAh,00h,0A7h,00h,07Ah,01h,0B2h,01h
+        db 0A7h,00h,07Ah,01h,0EAh,01h,0A7h,00h,07Ah,01h,022h,02h,0A7h,00h,0FFh,0FFh
+        db 05Dh,00h,0ADh,00h,0FFh,0FFh,095h,00h,0ADh,00h,0FFh,0FFh,0C5h,01h,0ADh,00h
+        db 0FFh,0FFh,0FDh,01h,0ADh,00h,080h,01h,05Dh,00h,0ADh,00h,080h,01h,095h,00h
+        db 0ADh,00h,080h,01h,0CDh,00h,0ADh,00h,080h,01h,0C5h,01h,0ADh,00h,080h,01h
+        db 0FDh,01h,0ADh,00h,07h,00h,075h,00h,0B5h,00h,07h,00h,0ADh,00h,0B5h,00h
+        db 07h,00h,0DDh,01h,0B5h,00h,07h,00h,015h,02h,0B5h,00h,078h,01h,075h,00h
+        db 0B5h,00h,078h,01h,0ADh,00h,0B5h,00h,078h,01h,0E5h,00h,0B5h,00h,097h,01h
+        db 03Fh,01h,0B5h,00h,078h,01h,0A5h,01h,0B5h,00h,078h,01h,0DDh,01h,0B5h,00h
+        db 078h,01h,015h,02h,0B5h,00h,06h,00h,06Fh,00h,0B8h,00h,06h,00h,0A7h,00h
+        db 0B8h,00h,06h,00h,0D7h,01h,0B8h,00h,06h,00h,0Fh,02h,0B8h,00h,079h,01h
+        db 06Fh,00h,0B8h,00h,079h,01h,0A7h,00h,0B8h,00h,079h,01h,0DFh,00h,0B8h,00h
+        db 079h,01h,09Fh,01h,0B8h,00h,079h,01h,0D7h,01h,0B8h,00h,079h,01h,0Fh,02h
+        db 0B8h,00h,03h,00h,068h,00h,0BBh,00h,03h,00h,0A0h,00h,0BBh,00h,03h,00h
+        db 0D0h,01h,0BBh,00h,03h,00h,08h,02h,0BBh,00h,07Ch,01h,068h,00h,0BBh,00h
+        db 07Ch,01h,0A0h,00h,0BBh,00h,07Ch,01h,0D8h,00h,0BBh,00h,07Ch,01h,098h,01h
+        db 0BBh,00h,07Ch,01h,0D0h,01h,0BBh,00h,07Ch,01h,08h,02h,0BBh,00h,083h,00h
+        db 012h,00h,0BEh,00h,0Ch,00h,01Eh,00h,0C7h,00h,04h,00h,0A5h,01h,0D2h,00h
+        db 04h,00h,02Dh,01h,0D2h,00h,04h,00h,0A5h,01h,0DDh,00h,04h,00h,0A5h,01h
+        db 0E4h,00h,06h,00h,047h,01h,0EBh,00h,09h,00h,051h,01h,0EBh,00h,07h,00h
+        db 060h,01h,0EBh,00h,0Ah,00h,069h,01h,0EBh,00h,0Ah,00h,079h,01h,0EBh,00h
+        db 08h,00h,088h,01h,0EBh,00h,0Bh,00h,091h,01h,0EBh,00h,06h,00h,047h,01h
+        db 0EFh,00h,09h,00h,051h,01h,0EFh,00h,07h,00h,060h,01h,0EFh,00h,0Ah,00h
+        db 069h,01h,0EFh,00h,0Ah,00h,079h,01h,0EFh,00h,08h,00h,088h,01h,0EFh,00h
+        db 0Bh,00h,091h,01h,0EFh,00h,04h,00h,0A5h,01h,0F3h,00h,04h,00h,02Dh,01h
+        db 0DDh,00h,04h,00h,02Dh,01h,0E4h,00h,06h,00h,0CFh,00h,0EBh,00h,09h,00h
+        db 0D9h,00h,0EBh,00h,07h,00h,0E8h,00h,0EBh,00h,0Ah,00h,0F1h,00h,0EBh,00h
+        db 0Ah,00h,01h,01h,0EBh,00h,08h,00h,010h,01h,0EBh,00h,0Bh,00h,019h,01h
+        db 0EBh,00h,06h,00h,0CFh,00h,0EFh,00h,09h,00h,0D9h,00h,0EFh,00h,07h,00h
+        db 0E8h,00h,0EFh,00h,0Ah,00h,0F1h,00h,0EFh,00h,0Ah,00h,01h,01h,0EFh,00h
+        db 08h,00h,010h,01h,0EFh,00h,0Bh,00h,019h,01h,0EFh,00h,04h,00h,02Dh,01h
 sideobjpos:
-db 0F3h,00h,0A5h,01h,00h,00h,02Dh,01h,00h,00h,00h,00h
+        db 0F3h,00h,0A5h,01h,00h,00h,02Dh,01h,00h,00h,00h,00h

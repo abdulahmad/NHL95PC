@@ -25,725 +25,725 @@ global loc_AA120, loc_AA122, loc_AA124, loc_AA141, loc_AA148, sub_AA14D, loc_AA1
 global loc_AA172, loc_AA174, loc_AA1A8, loc_AA1B0, sub_AA1B2, loc_AA1C1, loc_AA1C3, loc_AA1C8
 global loc_AA1CA, sub_AA1D9, loc_AA1EB, loc_AA1ED, loc_AA1F9, loc_AA1FC, loc_AA1FE
 sub_A9C9C:
-pushf	; A9C9C
-cli	; A9C9D
-push es	; A9C9E
-mov byte [unk_A9C91], al	; A9C9F
-add al, 8	; A9CA4
-cmp al, 0Fh	; A9CA6
-jbe short loc_A9CAC	; A9CA8
-add al, 60h	; A9CAA
+        pushf
+        cli
+        push es
+        mov byte [unk_A9C91], al
+        add al, 8
+        cmp al, 0Fh
+        jbe short loc_A9CAC
+        add al, 60h
 loc_A9CAC:
-mov ah, 35h	; A9CAC
-int 21h	; A9CAE
-o16 mov word [unk_A9C96], es	; A9CB0
-mov dword [unk_A9C92], ebx	; A9CB7
-pop es	; A9CBD
-push ds	; A9CBE
-mov ax, cs	; A9CBF
-mov ds, ax	; A9CC2
-mov al, byte [unk_A9C91]	; A9CC5
-add al, 8	; A9CCA
-cmp al, 0Fh	; A9CCC
-jbe short loc_A9CD2	; A9CCE
-add al, 60h	; A9CD0
+        mov ah, 35h
+        int 21h
+        o16 mov word [unk_A9C96], es
+        mov dword [unk_A9C92], ebx
+        pop es
+        push ds
+        mov ax, cs
+        mov ds, ax
+        mov al, byte [unk_A9C91]
+        add al, 8
+        cmp al, 0Fh
+        jbe short loc_A9CD2
+        add al, 60h
 loc_A9CD2:
-mov ah, 25h	; A9CD2
-int 21h	; A9CD4
-pop ds	; A9CD6
-mov al, 20h	; A9CD7
-out 20h, al	; A9CD9
-jmp short loc_A9CDD	; A9CDB
+        mov ah, 25h
+        int 21h
+        pop ds
+        mov al, 20h
+        out 20h, al
+        jmp short loc_A9CDD
 loc_A9CDD:
-jmp short loc_A9CDF	; A9CDD
+        jmp short loc_A9CDF
 loc_A9CDF:
-out 0A0h, al	; A9CDF
-jmp short loc_A9CE3	; A9CE1
+        out 0A0h, al
+        jmp short loc_A9CE3
 loc_A9CE3:
-jmp short loc_A9CE5	; A9CE3
+        jmp short loc_A9CE5
 loc_A9CE5:
-mov cl, byte [unk_A9C91]	; A9CE5
-mov ah, 1	; A9CEB
-cmp cl, 8	; A9CED
-jb short loc_A9D09	; A9CF0
-sub cl, 8	; A9CF2
-shl ah, cl	; A9CF5
-not ah	; A9CF7
-in al, 21h	; A9CF9
-jmp short loc_A9CFD	; A9CFB
+        mov cl, byte [unk_A9C91]
+        mov ah, 1
+        cmp cl, 8
+        jb short loc_A9D09
+        sub cl, 8
+        shl ah, cl
+        not ah
+        in al, 21h
+        jmp short loc_A9CFD
 loc_A9CFD:
-jmp short loc_A9CFF	; A9CFD
+        jmp short loc_A9CFF
 loc_A9CFF:
-LD and, al, ah	; A9CFF
-out 21h, al	; A9D01
-jmp short loc_A9D05	; A9D03
+        LD and, al, ah
+        out 21h, al
+        jmp short loc_A9D05
 loc_A9D05:
-jmp short loc_A9D07	; A9D05
+        jmp short loc_A9D07
 loc_A9D07:
-popf	; A9D07
-ret	; A9D08
+        popf
+        ret
 loc_A9D09:
-shl ah, cl	; A9D09
-not ah	; A9D0B
-in al, 21h	; A9D0D
-jmp short loc_A9D11	; A9D0F
+        shl ah, cl
+        not ah
+        in al, 21h
+        jmp short loc_A9D11
 loc_A9D11:
-jmp short loc_A9D13	; A9D11
+        jmp short loc_A9D13
 loc_A9D13:
-LD and, al, ah	; A9D13
-out 21h, al	; A9D15
-jmp short loc_A9D19	; A9D17
+        LD and, al, ah
+        out 21h, al
+        jmp short loc_A9D19
 loc_A9D19:
-jmp short loc_A9D1B	; A9D19
+        jmp short loc_A9D1B
 loc_A9D1B:
-popf	; A9D1B
-ret	; A9D1C
+        popf
+        ret
 sub_A9D1D:
-mov al, byte [unk_A9C91]	; A9D1D
-LD or, al, al	; A9D22
-je short loc_A9D4B	; A9D24
-pushf	; A9D26
-cli	; A9D27
-add al, 8	; A9D28
-cmp al, 0Fh	; A9D2A
-jbe short loc_A9D30	; A9D2C
-add al, 60h	; A9D2E
+        mov al, byte [unk_A9C91]
+        LD or, al, al
+        je short loc_A9D4B
+        pushf
+        cli
+        add al, 8
+        cmp al, 0Fh
+        jbe short loc_A9D30
+        add al, 60h
 loc_A9D30:
-push ds	; A9D30
-mov edx, dword [unk_A9C92]	; A9D31
-o16 mov ds, word [unk_A9C96]	; A9D37
-mov ah, 25h	; A9D3E
-int 21h	; A9D40
-pop ds	; A9D42
-LD xor, al, al	; A9D43
-mov byte [unk_A9C91], al	; A9D45
-popf	; A9D4A
+        push ds
+        mov edx, dword [unk_A9C92]
+        o16 mov ds, word [unk_A9C96]
+        mov ah, 25h
+        int 21h
+        pop ds
+        LD xor, al, al
+        mov byte [unk_A9C91], al
+        popf
 loc_A9D4B:
-ret	; A9D4B
+        ret
 sub_A9D4C:
-pushf	; A9D4C
-pusha	; A9D4D
-push ds	; A9D4E
-call __GETDS	; A9D4F
+        pushf
+        pusha
+        push ds
+        call __GETDS
 sub_A9D54:
-movzx edx, word [unk_A9C86]	; A9D54
-add edx, byte 0Eh	; A9D5B
-in al, dx	; A9D5E
-jmp short loc_A9D61	; A9D5F
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Eh
+        in al, dx
+        jmp short loc_A9D61
 loc_A9D61:
-jmp short loc_A9D63	; A9D61
+        jmp short loc_A9D63
 loc_A9D63:
-cmp byte [unk_A9C8E], 1	; A9D63
-je short loc_A9DD9	; A9D6A
-mov ah, 14h	; A9D6C
-movzx edx, word [unk_A9C86]	; A9D6E
-add edx, byte 0Ch	; A9D75
-mov ecx, 3E8h	; A9D78
+        cmp byte [unk_A9C8E], 1
+        je short loc_A9DD9
+        mov ah, 14h
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Ch
+        mov ecx, 3E8h
 loc_A9D7D:
-in al, dx	; A9D7D
-jmp short loc_A9D80	; A9D7E
+        in al, dx
+        jmp short loc_A9D80
 loc_A9D80:
-jmp short loc_A9D82	; A9D80
+        jmp short loc_A9D82
 loc_A9D82:
-and al, 80h	; A9D82
-loopne loc_A9D7D	; A9D84
-stc	; A9D86
-jne short loc_A9D91	; A9D87
-LD mov, al, ah	; A9D89
-out dx, al	; A9D8B
-jmp short loc_A9D8E	; A9D8C
+        and al, 80h
+        loopne loc_A9D7D
+        stc
+        jne short loc_A9D91
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_A9D8E
 loc_A9D8E:
-jmp short loc_A9D90	; A9D8E
+        jmp short loc_A9D90
 loc_A9D90:
-clc	; A9D90
+        clc
 loc_A9D91:
-mov ah, 0FFh	; A9D91
-movzx edx, word [unk_A9C86]	; A9D93
-add edx, byte 0Ch	; A9D9A
-mov ecx, 3E8h	; A9D9D
+        mov ah, 0FFh
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Ch
+        mov ecx, 3E8h
 loc_A9DA2:
-in al, dx	; A9DA2
-jmp short loc_A9DA5	; A9DA3
+        in al, dx
+        jmp short loc_A9DA5
 loc_A9DA5:
-jmp short loc_A9DA7	; A9DA5
+        jmp short loc_A9DA7
 loc_A9DA7:
-and al, 80h	; A9DA7
-loopne loc_A9DA2	; A9DA9
-stc	; A9DAB
-jne short loc_A9DB6	; A9DAC
-LD mov, al, ah	; A9DAE
-out dx, al	; A9DB0
-jmp short loc_A9DB3	; A9DB1
+        and al, 80h
+        loopne loc_A9DA2
+        stc
+        jne short loc_A9DB6
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_A9DB3
 loc_A9DB3:
-jmp short loc_A9DB5	; A9DB3
+        jmp short loc_A9DB5
 loc_A9DB5:
-clc	; A9DB5
+        clc
 loc_A9DB6:
-movzx edx, word [unk_A9C86]	; A9DB6
-add edx, byte 0Ch	; A9DBD
-mov ecx, 3E8h	; A9DC0
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Ch
+        mov ecx, 3E8h
 loc_A9DC5:
-in al, dx	; A9DC5
-jmp short loc_A9DC8	; A9DC6
+        in al, dx
+        jmp short loc_A9DC8
 loc_A9DC8:
-jmp short loc_A9DCA	; A9DC8
+        jmp short loc_A9DCA
 loc_A9DCA:
-and al, 80h	; A9DCA
-loopne loc_A9DC5	; A9DCC
-stc	; A9DCE
-jne short loc_A9DD9	; A9DCF
-LD mov, al, ah	; A9DD1
-out dx, al	; A9DD3
-jmp short loc_A9DD6	; A9DD4
+        and al, 80h
+        loopne loc_A9DC5
+        stc
+        jne short loc_A9DD9
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_A9DD6
 loc_A9DD6:
-jmp short loc_A9DD8	; A9DD6
+        jmp short loc_A9DD8
 loc_A9DD8:
-clc	; A9DD8
+        clc
 loc_A9DD9:
-mov al, 20h	; A9DD9
-out 0A0h, al	; A9DDB
-jmp short loc_A9DDF	; A9DDD
+        mov al, 20h
+        out 0A0h, al
+        jmp short loc_A9DDF
 loc_A9DDF:
-jmp short loc_A9DE1	; A9DDF
+        jmp short loc_A9DE1
 loc_A9DE1:
-out 20h, al	; A9DE1
-jmp short loc_A9DE5	; A9DE3
+        out 20h, al
+        jmp short loc_A9DE5
 loc_A9DE5:
-jmp short loc_A9DE7	; A9DE5
+        jmp short loc_A9DE7
 loc_A9DE7:
-pop ds	; A9DE7
-popa	; A9DE8
-popf	; A9DE9
-iret	; A9DEA
+        pop ds
+        popa
+        popf
+        iret
 sub_A9DEB:
-movzx edx, word [unk_A9C86]	; A9DEB
-add edx, byte 0Ch	; A9DF2
-mov ecx, 3E8h	; A9DF5
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Ch
+        mov ecx, 3E8h
 loc_A9DFA:
-in al, dx	; A9DFA
-jmp short loc_A9DFD	; A9DFB
+        in al, dx
+        jmp short loc_A9DFD
 loc_A9DFD:
-jmp short loc_A9DFF	; A9DFD
+        jmp short loc_A9DFF
 loc_A9DFF:
-and al, 80h	; A9DFF
-loopne loc_A9DFA	; A9E01
-stc	; A9E03
-jne short loc_A9E0E	; A9E04
-LD mov, al, ah	; A9E06
-out dx, al	; A9E08
-jmp short loc_A9E0B	; A9E09
+        and al, 80h
+        loopne loc_A9DFA
+        stc
+        jne short loc_A9E0E
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_A9E0B
 loc_A9E0B:
-jmp short loc_A9E0D	; A9E0B
+        jmp short loc_A9E0D
 loc_A9E0D:
-clc	; A9E0D
+        clc
 loc_A9E0E:
-ret	; A9E0E
+        ret
 sub_A9E0F:
-movzx edx, word [unk_A9C86]	; A9E0F
-add edx, byte 0Eh	; A9E16
-mov ecx, 3E8h	; A9E19
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Eh
+        mov ecx, 3E8h
 loc_A9E1E:
-in al, dx	; A9E1E
-jmp short loc_A9E21	; A9E1F
+        in al, dx
+        jmp short loc_A9E21
 loc_A9E21:
-jmp short loc_A9E23	; A9E21
+        jmp short loc_A9E23
 loc_A9E23:
-and al, 80h	; A9E23
-loope loc_A9E1E	; A9E25
-stc	; A9E27
-je short loc_A9E33	; A9E28
-sub edx, byte 4	; A9E2A
-in al, dx	; A9E2D
-jmp short loc_A9E30	; A9E2E
+        and al, 80h
+        loope loc_A9E1E
+        stc
+        je short loc_A9E33
+        sub edx, byte 4
+        in al, dx
+        jmp short loc_A9E30
 loc_A9E30:
-jmp short loc_A9E32	; A9E30
+        jmp short loc_A9E32
 loc_A9E32:
-clc	; A9E32
+        clc
 loc_A9E33:
-ret	; A9E33
+        ret
 sub_A9E34:
-call sub_AA14D	; A9E34
-mov al, byte [unk_A9C8F]	; A9E39
-out 21h, al	; A9E3E
-jmp short loc_A9E42	; A9E40
+        call sub_AA14D
+        mov al, byte [unk_A9C8F]
+        out 21h, al
+        jmp short loc_A9E42
 loc_A9E42:
-jmp short loc_A9E44	; A9E42
+        jmp short loc_A9E44
 loc_A9E44:
-mov al, byte [unk_A9C90]	; A9E44
-out 0A1h, al	; A9E49
-jmp short loc_A9E4D	; A9E4B
+        mov al, byte [unk_A9C90]
+        out 0A1h, al
+        jmp short loc_A9E4D
 loc_A9E4D:
-jmp short loc_A9E4F	; A9E4D
+        jmp short loc_A9E4F
 loc_A9E4F:
-call sub_A9E55	; A9E4F
-ret	; A9E54
+        call sub_A9E55
+        ret
 sub_A9E55:
-movzx edx, word [unk_A9C86]	; A9E55
-add edx, byte 0Eh	; A9E5C
-in al, dx	; A9E5F
-jmp short loc_A9E62	; A9E60
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Eh
+        in al, dx
+        jmp short loc_A9E62
 loc_A9E62:
-jmp short loc_A9E64	; A9E62
+        jmp short loc_A9E64
 loc_A9E64:
-movzx edx, word [unk_A9C86]	; A9E64
-add edx, byte 6	; A9E6B
-mov al, 1	; A9E6E
-out dx, al	; A9E70
-jmp short loc_A9E73	; A9E71
+        movzx edx, word [unk_A9C86]
+        add edx, byte 6
+        mov al, 1
+        out dx, al
+        jmp short loc_A9E73
 loc_A9E73:
-jmp short loc_A9E75	; A9E73
+        jmp short loc_A9E75
 loc_A9E75:
-pushf	; A9E75
-push ecx	; A9E76
-mov ecx, 14h	; A9E77
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9E7C:
-jmp short loc_A9E7E	; A9E7C
+        jmp short loc_A9E7E
 loc_A9E7E:
-jmp short loc_A9E80	; A9E7E
+        jmp short loc_A9E80
 loc_A9E80:
-push eax	; A9E80
-pop eax	; A9E81
-loop loc_A9E7C	; A9E82
-pop ecx	; A9E84
-popf	; A9E85
-pushf	; A9E86
-push ecx	; A9E87
-mov ecx, 14h	; A9E88
+        push eax
+        pop eax
+        loop loc_A9E7C
+        pop ecx
+        popf
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9E8D:
-jmp short loc_A9E8F	; A9E8D
+        jmp short loc_A9E8F
 loc_A9E8F:
-jmp short loc_A9E91	; A9E8F
+        jmp short loc_A9E91
 loc_A9E91:
-push eax	; A9E91
-pop eax	; A9E92
-loop loc_A9E8D	; A9E93
-pop ecx	; A9E95
-popf	; A9E96
-pushf	; A9E97
-push ecx	; A9E98
-mov ecx, 14h	; A9E99
+        push eax
+        pop eax
+        loop loc_A9E8D
+        pop ecx
+        popf
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9E9E:
-jmp short loc_A9EA0	; A9E9E
+        jmp short loc_A9EA0
 loc_A9EA0:
-jmp short loc_A9EA2	; A9EA0
+        jmp short loc_A9EA2
 loc_A9EA2:
-push eax	; A9EA2
-pop eax	; A9EA3
-loop loc_A9E9E	; A9EA4
-pop ecx	; A9EA6
-popf	; A9EA7
-dec al	; A9EA8
-out dx, al	; A9EAA
-jmp short loc_A9EAD	; A9EAB
+        push eax
+        pop eax
+        loop loc_A9E9E
+        pop ecx
+        popf
+        dec al
+        out dx, al
+        jmp short loc_A9EAD
 loc_A9EAD:
-jmp short loc_A9EAF	; A9EAD
+        jmp short loc_A9EAF
 loc_A9EAF:
-pushf	; A9EAF
-push ecx	; A9EB0
-mov ecx, 14h	; A9EB1
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9EB6:
-jmp short loc_A9EB8	; A9EB6
+        jmp short loc_A9EB8
 loc_A9EB8:
-jmp short loc_A9EBA	; A9EB8
+        jmp short loc_A9EBA
 loc_A9EBA:
-push eax	; A9EBA
-pop eax	; A9EBB
-loop loc_A9EB6	; A9EBC
-pop ecx	; A9EBE
-popf	; A9EBF
-pushf	; A9EC0
-push ecx	; A9EC1
-mov ecx, 14h	; A9EC2
+        push eax
+        pop eax
+        loop loc_A9EB6
+        pop ecx
+        popf
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9EC7:
-jmp short loc_A9EC9	; A9EC7
+        jmp short loc_A9EC9
 loc_A9EC9:
-jmp short loc_A9ECB	; A9EC9
+        jmp short loc_A9ECB
 loc_A9ECB:
-push eax	; A9ECB
-pop eax	; A9ECC
-loop loc_A9EC7	; A9ECD
-pop ecx	; A9ECF
-popf	; A9ED0
-pushf	; A9ED1
-push ecx	; A9ED2
-mov ecx, 14h	; A9ED3
+        push eax
+        pop eax
+        loop loc_A9EC7
+        pop ecx
+        popf
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9ED8:
-jmp short loc_A9EDA	; A9ED8
+        jmp short loc_A9EDA
 loc_A9EDA:
-jmp short loc_A9EDC	; A9EDA
+        jmp short loc_A9EDC
 loc_A9EDC:
-push eax	; A9EDC
-pop eax	; A9EDD
-loop loc_A9ED8	; A9EDE
-pop ecx	; A9EE0
-popf	; A9EE1
-mov ecx, 3E8h	; A9EE2
+        push eax
+        pop eax
+        loop loc_A9ED8
+        pop ecx
+        popf
+        mov ecx, 3E8h
 loc_A9EE7:
-push ecx	; A9EE7
-movzx edx, word [unk_A9C86]	; A9EE8
-add edx, byte 0Eh	; A9EEF
-mov ecx, 3E8h	; A9EF2
+        push ecx
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Eh
+        mov ecx, 3E8h
 loc_A9EF7:
-in al, dx	; A9EF7
-jmp short loc_A9EFA	; A9EF8
+        in al, dx
+        jmp short loc_A9EFA
 loc_A9EFA:
-jmp short loc_A9EFC	; A9EFA
+        jmp short loc_A9EFC
 loc_A9EFC:
-and al, 80h	; A9EFC
-loope loc_A9EF7	; A9EFE
-stc	; A9F00
-je short loc_A9F0C	; A9F01
-sub edx, byte 4	; A9F03
-in al, dx	; A9F06
-jmp short loc_A9F09	; A9F07
+        and al, 80h
+        loope loc_A9EF7
+        stc
+        je short loc_A9F0C
+        sub edx, byte 4
+        in al, dx
+        jmp short loc_A9F09
 loc_A9F09:
-jmp short loc_A9F0B	; A9F09
+        jmp short loc_A9F0B
 loc_A9F0B:
-clc	; A9F0B
+        clc
 loc_A9F0C:
-pop ecx	; A9F0C
-cmp al, 0AAh	; A9F0D
-loopne loc_A9EE7	; A9F0F
-stc	; A9F11
-jne short loc_A9F15	; A9F12
-clc	; A9F14
+        pop ecx
+        cmp al, 0AAh
+        loopne loc_A9EE7
+        stc
+        jne short loc_A9F15
+        clc
 loc_A9F15:
-LD sbb, eax, eax	; A9F15
-rol eax, 1	; A9F17
-ret	; A9F19
+        LD sbb, eax, eax
+        rol eax, 1
+        ret
 sub_A9F1A:
-push eax	; A9F1A
-push ebx	; A9F1B
-mov ah, 0E1h	; A9F1C
-call sub_A9DEB	; A9F1E
-mov ecx, 4E20h	; A9F23
+        push eax
+        push ebx
+        mov ah, 0E1h
+        call sub_A9DEB
+        mov ecx, 4E20h
 loc_A9F28:
-pushf	; A9F28
-push ecx	; A9F29
-mov ecx, 14h	; A9F2A
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_A9F2F:
-jmp short loc_A9F31	; A9F2F
+        jmp short loc_A9F31
 loc_A9F31:
-jmp short loc_A9F33	; A9F31
+        jmp short loc_A9F33
 loc_A9F33:
-push eax	; A9F33
-pop eax	; A9F34
-loop loc_A9F2F	; A9F35
-pop ecx	; A9F37
-popf	; A9F38
-loop loc_A9F28	; A9F39
-LD xor, eax, eax	; A9F3B
-call sub_A9E0F	; A9F3D
-LD mov, ah, al	; A9F42
-call sub_A9E0F	; A9F44
-LD mov, ebx, eax	; A9F49
-cmp eax, 201h	; A9F4B
-jb short loc_A9F7F	; A9F50
-cmp eax, 400h	; A9F52
-jb short loc_A9F6C	; A9F57
-mov eax, 5622h	; A9F59
-mov dword [unk_A9C8A], eax	; A9F5E
-mov byte [unk_A9C8E], 0	; A9F63
-jmp short loc_A9F90	; A9F6A
+        push eax
+        pop eax
+        loop loc_A9F2F
+        pop ecx
+        popf
+        loop loc_A9F28
+        LD xor, eax, eax
+        call sub_A9E0F
+        LD mov, ah, al
+        call sub_A9E0F
+        LD mov, ebx, eax
+        cmp eax, 201h
+        jb short loc_A9F7F
+        cmp eax, 400h
+        jb short loc_A9F6C
+        mov eax, 5622h
+        mov dword [unk_A9C8A], eax
+        mov byte [unk_A9C8E], 0
+        jmp short loc_A9F90
 loc_A9F6C:
-mov eax, 5622h	; A9F6C
-mov dword [unk_A9C8A], eax	; A9F71
-mov byte [unk_A9C8E], 1	; A9F76
-jmp short loc_A9F90	; A9F7D
+        mov eax, 5622h
+        mov dword [unk_A9C8A], eax
+        mov byte [unk_A9C8E], 1
+        jmp short loc_A9F90
 loc_A9F7F:
-mov eax, 2B11h	; A9F7F
-mov dword [unk_A9C8A], eax	; A9F84
-mov byte [unk_A9C8E], 0	; A9F89
+        mov eax, 2B11h
+        mov dword [unk_A9C8A], eax
+        mov byte [unk_A9C8E], 0
 loc_A9F90:
-pop ebx	; A9F90
-pop eax	; A9F91
-ret	; A9F92
+        pop ebx
+        pop eax
+        ret
 sub_A9F93:
-push ebp	; A9F93
-LD mov, ebp, esp	; A9F94
-in al, 21h	; A9F96
-mov byte [unk_A9C8F], al	; A9F98
-in al, 0A1h	; A9F9D
-mov byte [unk_A9C90], al	; A9F9F
-LD xor, al, al	; A9FA4
-mov byte [unk_A9C91], al	; A9FA6
-mov eax, dword [byte ebp+08h]	; A9FAB
-mov word [unk_A9C86], ax	; A9FAE
-mov eax, dword [byte ebp+0Ch]	; A9FB4
-mov byte [unk_A9C88], al	; A9FB7
-mov eax, dword [byte ebp+010h]	; A9FBC
-mov byte [unk_A9C89], al	; A9FBF
-call sub_A9E55	; A9FC4
-jae short loc_A9FCD	; A9FC9
-leave	; A9FCB
-ret	; A9FCC
+        push ebp
+        LD mov, ebp, esp
+        in al, 21h
+        mov byte [unk_A9C8F], al
+        in al, 0A1h
+        mov byte [unk_A9C90], al
+        LD xor, al, al
+        mov byte [unk_A9C91], al
+        mov eax, dword [byte ebp+08h]
+        mov word [unk_A9C86], ax
+        mov eax, dword [byte ebp+0Ch]
+        mov byte [unk_A9C88], al
+        mov eax, dword [byte ebp+010h]
+        mov byte [unk_A9C89], al
+        call sub_A9E55
+        jae short loc_A9FCD
+        leave
+        ret
 loc_A9FCD:
-call sub_A9F1A	; A9FCD
-mov ebx, dword [unk_A9C8A]	; A9FD2
-LD or, ebx, ebx	; A9FD8
-je short loc_A9FF9	; A9FDA
-LD xor, edx, edx	; A9FDC
-mov eax, 0F424000h	; A9FDE
-div ebx	; A9FE3
-neg eax	; A9FE5
-LD mov, ebx, eax	; A9FE7
-mov ah, 40h	; A9FE9
-call sub_A9DEB	; A9FEB
-jb short loc_A9FF9	; A9FF0
-LD mov, ah, bh	; A9FF2
-call sub_A9DEB	; A9FF4
+        call sub_A9F1A
+        mov ebx, dword [unk_A9C8A]
+        LD or, ebx, ebx
+        je short loc_A9FF9
+        LD xor, edx, edx
+        mov eax, 0F424000h
+        div ebx
+        neg eax
+        LD mov, ebx, eax
+        mov ah, 40h
+        call sub_A9DEB
+        jb short loc_A9FF9
+        LD mov, ah, bh
+        call sub_A9DEB
 loc_A9FF9:
-LD sbb, eax, eax	; A9FF9
-rol eax, 1	; A9FFB
-jae short loc_AA001	; A9FFD
-leave	; A9FFF
-ret	; AA000
+        LD sbb, eax, eax
+        rol eax, 1
+        jae short loc_AA001
+        leave
+        ret
 loc_AA001:
-mov ah, 0D1h	; AA001
-call sub_A9DEB	; AA003
-LD sbb, eax, eax	; AA008
-rol eax, 1	; AA00A
-jae short loc_AA010	; AA00C
-leave	; AA00E
-ret	; AA00F
+        mov ah, 0D1h
+        call sub_A9DEB
+        LD sbb, eax, eax
+        rol eax, 1
+        jae short loc_AA010
+        leave
+        ret
 loc_AA010:
-mov eax, dword [byte ebp+018h]	; AA010
-mov word [unk_A9C83], ax	; AA013
-mov eax, dword [byte ebp+014h]	; AA019
-mov word [unk_A9C81], ax	; AA01C
-shr eax, 10h	; AA022
-mov byte [unk_A9C80], al	; AA025
-mov al, byte [unk_A9C85]	; AA02A
-LD or, al, al	; AA02F
-jne near loc_AA148	; AA031
-mov al, 1	; AA037
-mov byte [unk_A9C85], al	; AA039
-mov al, byte [unk_A9C88]	; AA03E
-mov edx, sub_A9D4C	; AA043
-call sub_A9C9C	; AA048
-cli	; AA04D
-LD xor, edx, edx	; AA04E
-mov al, byte [unk_A9C89]	; AA050
-or al, 4	; AA055
-out 0Ah, al	; AA057
-jmp short loc_AA05B	; AA059
+        mov eax, dword [byte ebp+018h]
+        mov word [unk_A9C83], ax
+        mov eax, dword [byte ebp+014h]
+        mov word [unk_A9C81], ax
+        shr eax, 10h
+        mov byte [unk_A9C80], al
+        mov al, byte [unk_A9C85]
+        LD or, al, al
+        jne near loc_AA148
+        mov al, 1
+        mov byte [unk_A9C85], al
+        mov al, byte [unk_A9C88]
+        mov edx, sub_A9D4C
+        call sub_A9C9C
+        cli
+        LD xor, edx, edx
+        mov al, byte [unk_A9C89]
+        or al, 4
+        out 0Ah, al
+        jmp short loc_AA05B
 loc_AA05B:
-jmp short loc_AA05D	; AA05B
+        jmp short loc_AA05D
 loc_AA05D:
-mov al, byte [unk_A9C89]	; AA05D
-or al, 58h	; AA062
-out 0Bh, al	; AA064
-jmp short loc_AA068	; AA066
+        mov al, byte [unk_A9C89]
+        or al, 58h
+        out 0Bh, al
+        jmp short loc_AA068
 loc_AA068:
-jmp short loc_AA06A	; AA068
+        jmp short loc_AA06A
 loc_AA06A:
-out 0Ch, al	; AA06A
-jmp short loc_AA06E	; AA06C
+        out 0Ch, al
+        jmp short loc_AA06E
 loc_AA06E:
-jmp short loc_AA070	; AA06E
+        jmp short loc_AA070
 loc_AA070:
-mov dl, byte [unk_A9C89]	; AA070
-shl dl, 1	; AA076
-mov ax, word [unk_A9C81]	; AA078
-out dx, al	; AA07E
-jmp short loc_AA081	; AA07F
+        mov dl, byte [unk_A9C89]
+        shl dl, 1
+        mov ax, word [unk_A9C81]
+        out dx, al
+        jmp short loc_AA081
 loc_AA081:
-jmp short loc_AA083	; AA081
+        jmp short loc_AA083
 loc_AA083:
-LD mov, al, ah	; AA083
-out dx, al	; AA085
-jmp short loc_AA088	; AA086
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_AA088
 loc_AA088:
-jmp short loc_AA08A	; AA088
+        jmp short loc_AA08A
 loc_AA08A:
-LD xor, ebx, ebx	; AA08A
-mov bl, byte [unk_A9C89]	; AA08C
-mov dl, byte [dword ebx+unk_A9C98]	; AA092
-mov al, byte [unk_A9C80]	; AA098
-out dx, al	; AA09D
-jmp short loc_AA0A0	; AA09E
+        LD xor, ebx, ebx
+        mov bl, byte [unk_A9C89]
+        mov dl, byte [dword ebx+unk_A9C98]
+        mov al, byte [unk_A9C80]
+        out dx, al
+        jmp short loc_AA0A0
 loc_AA0A0:
-jmp short loc_AA0A2	; AA0A0
+        jmp short loc_AA0A2
 loc_AA0A2:
-mov dl, byte [unk_A9C89]	; AA0A2
-shl dl, 1	; AA0A8
-inc dl	; AA0AA
-mov ax, word [unk_A9C83]	; AA0AC
-dec ax	; AA0B2
-out 0Ch, al	; AA0B4
-jmp short loc_AA0B8	; AA0B6
+        mov dl, byte [unk_A9C89]
+        shl dl, 1
+        inc dl
+        mov ax, word [unk_A9C83]
+        dec ax
+        out 0Ch, al
+        jmp short loc_AA0B8
 loc_AA0B8:
-jmp short loc_AA0BA	; AA0B8
+        jmp short loc_AA0BA
 loc_AA0BA:
-out dx, al	; AA0BA
-jmp short loc_AA0BD	; AA0BB
+        out dx, al
+        jmp short loc_AA0BD
 loc_AA0BD:
-jmp short loc_AA0BF	; AA0BD
+        jmp short loc_AA0BF
 loc_AA0BF:
-LD mov, al, ah	; AA0BF
-out dx, al	; AA0C1
-jmp short loc_AA0C4	; AA0C2
+        LD mov, al, ah
+        out dx, al
+        jmp short loc_AA0C4
 loc_AA0C4:
-jmp short loc_AA0C6	; AA0C4
+        jmp short loc_AA0C6
 loc_AA0C6:
-mov al, byte [unk_A9C89]	; AA0C6
-out 0Ah, al	; AA0CB
-jmp short loc_AA0CF	; AA0CD
+        mov al, byte [unk_A9C89]
+        out 0Ah, al
+        jmp short loc_AA0CF
 loc_AA0CF:
-jmp short loc_AA0D1	; AA0CF
+        jmp short loc_AA0D1
 loc_AA0D1:
-cmp byte [unk_A9C8E], 1	; AA0D1
-je short loc_AA10B	; AA0D8
-mov ah, 14h	; AA0DA
-call sub_A9DEB	; AA0DC
-jb short loc_AA141	; AA0E1
-mov ecx, 4E20h	; AA0E3
+        cmp byte [unk_A9C8E], 1
+        je short loc_AA10B
+        mov ah, 14h
+        call sub_A9DEB
+        jb short loc_AA141
+        mov ecx, 4E20h
 loc_AA0E8:
-pushf	; AA0E8
-push ecx	; AA0E9
-mov ecx, 14h	; AA0EA
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_AA0EF:
-jmp short loc_AA0F1	; AA0EF
+        jmp short loc_AA0F1
 loc_AA0F1:
-jmp short loc_AA0F3	; AA0F1
+        jmp short loc_AA0F3
 loc_AA0F3:
-push eax	; AA0F3
-pop eax	; AA0F4
-loop loc_AA0EF	; AA0F5
-pop ecx	; AA0F7
-popf	; AA0F8
-loop loc_AA0E8	; AA0F9
-mov ah, 0FFh	; AA0FB
-call sub_A9DEB	; AA0FD
-jb short loc_AA141	; AA102
-call sub_A9DEB	; AA104
-jmp short loc_AA141	; AA109
+        push eax
+        pop eax
+        loop loc_AA0EF
+        pop ecx
+        popf
+        loop loc_AA0E8
+        mov ah, 0FFh
+        call sub_A9DEB
+        jb short loc_AA141
+        call sub_A9DEB
+        jmp short loc_AA141
 loc_AA10B:
-mov ah, 48h	; AA10B
-call sub_A9DEB	; AA10D
-jb short loc_AA141	; AA112
-mov ecx, 4E20h	; AA114
+        mov ah, 48h
+        call sub_A9DEB
+        jb short loc_AA141
+        mov ecx, 4E20h
 loc_AA119:
-pushf	; AA119
-push ecx	; AA11A
-mov ecx, 14h	; AA11B
+        pushf
+        push ecx
+        mov ecx, 14h
 loc_AA120:
-jmp short loc_AA122	; AA120
+        jmp short loc_AA122
 loc_AA122:
-jmp short loc_AA124	; AA122
+        jmp short loc_AA124
 loc_AA124:
-push eax	; AA124
-pop eax	; AA125
-loop loc_AA120	; AA126
-pop ecx	; AA128
-popf	; AA129
-loop loc_AA119	; AA12A
-mov ah, 0FFh	; AA12C
-call sub_A9DEB	; AA12E
-jb short loc_AA141	; AA133
-call sub_A9DEB	; AA135
-mov ah, 90h	; AA13A
-call sub_A9DEB	; AA13C
+        push eax
+        pop eax
+        loop loc_AA120
+        pop ecx
+        popf
+        loop loc_AA119
+        mov ah, 0FFh
+        call sub_A9DEB
+        jb short loc_AA141
+        call sub_A9DEB
+        mov ah, 90h
+        call sub_A9DEB
 loc_AA141:
-LD sbb, eax, eax	; AA141
-rol eax, 1	; AA143
-sti	; AA145
-leave	; AA146
-ret	; AA147
+        LD sbb, eax, eax
+        rol eax, 1
+        sti
+        leave
+        ret
 loc_AA148:
-LD xor, eax, eax	; AA148
-clc	; AA14A
-leave	; AA14B
-ret	; AA14C
+        LD xor, eax, eax
+        clc
+        leave
+        ret
 sub_AA14D:
-cmp byte [unk_A9C85], 0	; AA14D
-clc	; AA154
-je short loc_AA1B0	; AA155
-cli	; AA157
-mov al, byte [unk_A9C89]	; AA158
-or al, 4	; AA15D
-out 0Ah, al	; AA15F
-jmp short loc_AA163	; AA161
+        cmp byte [unk_A9C85], 0
+        clc
+        je short loc_AA1B0
+        cli
+        mov al, byte [unk_A9C89]
+        or al, 4
+        out 0Ah, al
+        jmp short loc_AA163
 loc_AA163:
-jmp short loc_AA165	; AA163
+        jmp short loc_AA165
 loc_AA165:
-movzx edx, word [unk_A9C86]	; AA165
-add edx, byte 0Eh	; AA16C
-in al, dx	; AA16F
-jmp short loc_AA172	; AA170
+        movzx edx, word [unk_A9C86]
+        add edx, byte 0Eh
+        in al, dx
+        jmp short loc_AA172
 loc_AA172:
-jmp short loc_AA174	; AA172
+        jmp short loc_AA174
 loc_AA174:
-LD xor, al, al	; AA174
-mov byte [unk_A9C85], al	; AA176
-mov al, byte [unk_A9C91]	; AA17B
-LD or, al, al	; AA180
-je short loc_AA1B0	; AA182
-call sub_A9D1D	; AA184
-mov cl, byte [unk_A9C88]	; AA189
-cmp cl, 0FFh	; AA18F
-je short loc_AA1B0	; AA192
-mov ah, 1	; AA194
-cmp cl, 8	; AA196
-jb short loc_AA1A8	; AA199
-sub cl, 8	; AA19B
-shl ah, cl	; AA19E
-in al, 0A1h	; AA1A0
-LD or, al, ah	; AA1A2
-out 0A1h, al	; AA1A4
-jmp short loc_AA1B0	; AA1A6
+        LD xor, al, al
+        mov byte [unk_A9C85], al
+        mov al, byte [unk_A9C91]
+        LD or, al, al
+        je short loc_AA1B0
+        call sub_A9D1D
+        mov cl, byte [unk_A9C88]
+        cmp cl, 0FFh
+        je short loc_AA1B0
+        mov ah, 1
+        cmp cl, 8
+        jb short loc_AA1A8
+        sub cl, 8
+        shl ah, cl
+        in al, 0A1h
+        LD or, al, ah
+        out 0A1h, al
+        jmp short loc_AA1B0
 loc_AA1A8:
-shl ah, cl	; AA1A8
-in al, 21h	; AA1AA
-LD or, al, ah	; AA1AC
-out 21h, al	; AA1AE
+        shl ah, cl
+        in al, 21h
+        LD or, al, ah
+        out 21h, al
 loc_AA1B0:
-sti	; AA1B0
-ret	; AA1B1
+        sti
+        ret
 sub_AA1B2:
-LD xor, eax, eax	; AA1B2
-movzx edx, byte [unk_A9C89]	; AA1B4
-shl edx, 1	; AA1BB
-inc edx	; AA1BD
-in al, dx	; AA1BE
-jmp short loc_AA1C1	; AA1BF
+        LD xor, eax, eax
+        movzx edx, byte [unk_A9C89]
+        shl edx, 1
+        inc edx
+        in al, dx
+        jmp short loc_AA1C1
 loc_AA1C1:
-jmp short loc_AA1C3	; AA1C1
+        jmp short loc_AA1C3
 loc_AA1C3:
-LD mov, ah, al	; AA1C3
-in al, dx	; AA1C5
-jmp short loc_AA1C8	; AA1C6
+        LD mov, ah, al
+        in al, dx
+        jmp short loc_AA1C8
 loc_AA1C8:
-jmp short loc_AA1CA	; AA1C8
+        jmp short loc_AA1CA
 loc_AA1CA:
-db 086h,0C4h	; AA1CA xchg al,ah
-LD mov, ebx, eax	; AA1CC
-movzx eax, word [unk_A9C83]	; AA1CE
-dec eax	; AA1D5
-LD sub, eax, ebx	; AA1D6
-ret	; AA1D8
+        db 086h,0C4h                            ; insn: xchg al,ah
+        LD mov, ebx, eax
+        movzx eax, word [unk_A9C83]
+        dec eax
+        LD sub, eax, ebx
+        ret
 sub_AA1D9:
-push ebp	; AA1D9
-LD mov, ebp, esp	; AA1DA
-movzx edx, word [unk_A9C86]	; AA1DC
-add edx, byte 4	; AA1E3
-mov al, 0Eh	; AA1E6
-out dx, al	; AA1E8
-jmp short loc_AA1EB	; AA1E9
+        push ebp
+        LD mov, ebp, esp
+        movzx edx, word [unk_A9C86]
+        add edx, byte 4
+        mov al, 0Eh
+        out dx, al
+        jmp short loc_AA1EB
 loc_AA1EB:
-jmp short loc_AA1ED	; AA1EB
+        jmp short loc_AA1ED
 loc_AA1ED:
-inc edx	; AA1ED
-LD xor, eax, eax	; AA1EE
-mov ebx, dword [byte ebp+08h]	; AA1F0
-LD or, ebx, ebx	; AA1F3
-jne short loc_AA1F9	; AA1F5
-mov al, 20h	; AA1F7
+        inc edx
+        LD xor, eax, eax
+        mov ebx, dword [byte ebp+08h]
+        LD or, ebx, ebx
+        jne short loc_AA1F9
+        mov al, 20h
 loc_AA1F9:
-out dx, al	; AA1F9
-jmp short loc_AA1FC	; AA1FA
+        out dx, al
+        jmp short loc_AA1FC
 loc_AA1FC:
-jmp short loc_AA1FE	; AA1FC
+        jmp short loc_AA1FE
 loc_AA1FE:
-leave	; AA1FE
-ret	; AA1FF
+        leave
+        ret

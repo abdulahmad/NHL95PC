@@ -4,7 +4,7 @@ bits 32
 section s_10000 progbits alloc exec nowrite align=1
 global begtext_forever, ___begtext
 begtext_forever:
-int3	; 10000
-jmp short begtext_forever	; 10001
+        int3
+        jmp short begtext_forever
 ___begtext:
-db 090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h
+        db 090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h,090h

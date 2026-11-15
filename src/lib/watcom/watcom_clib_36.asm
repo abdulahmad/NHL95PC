@@ -6,49 +6,49 @@ extern __unhook387, _Extender, byte_D4D08, __real87, dword_D41F4, sub_9D521, sub
 extern word_D51DA
 global __sys_fini_387_emulator, loc_9D4B1, loc_9D4C9, loc_9D4E2, loc_9D4F2, loc_9D506, loc_9D516
 __sys_fini_387_emulator:
-cmp byte [__real87], 1	; 9D4A7
-je short loc_9D4B1	; 9D4AE
-ret	; 9D4B0
+        cmp byte [__real87], 1
+        je short loc_9D4B1
+        ret
 loc_9D4B1:
-push ecx	; 9D4B1
-push ebx	; 9D4B2
-push edx	; 9D4B3
-mov al, byte [_Extender]	; 9D4B4
-cmp byte [byte_D4D08], 0	; 9D4B9
-je short loc_9D4C9	; 9D4C0
-call sub_9D55C	; 9D4C2
-jmp short loc_9D516	; 9D4C7
+        push ecx
+        push ebx
+        push edx
+        mov al, byte [_Extender]
+        cmp byte [byte_D4D08], 0
+        je short loc_9D4C9
+        call sub_9D55C
+        jmp short loc_9D516
 loc_9D4C9:
-cmp al, 9	; 9D4C9
-jne short loc_9D4E2	; 9D4CB
-mov eax, 0E02h	; 9D4CD
-mov ebx, 0	; 9D4D2
-mov ecx, dword [dword_D41F4]	; 9D4D7
-call dword [byte ecx+030h]	; 9D4DD
-jmp short loc_9D516	; 9D4E0
+        cmp al, 9
+        jne short loc_9D4E2
+        mov eax, 0E02h
+        mov ebx, 0
+        mov ecx, dword [dword_D41F4]
+        call dword [byte ecx+030h]
+        jmp short loc_9D516
 loc_9D4E2:
-cmp al, 0	; 9D4E2
-jne short loc_9D4F2	; 9D4E4
-mov ax, word [word_D51DA]	; 9D4E6
-mov ah, 0F3h	; 9D4EC
-int 21h	; 9D4EE
-jmp short loc_9D516	; 9D4F0
+        cmp al, 0
+        jne short loc_9D4F2
+        mov ax, word [word_D51DA]
+        mov ah, 0F3h
+        int 21h
+        jmp short loc_9D516
 loc_9D4F2:
-cmp al, 1	; 9D4F2
-jne short loc_9D506	; 9D4F4
-mov dx, word [word_D41F8]	; 9D4F6
-sub eax, eax	; 9D4FD
-call __unhook387	; 9D4FF
-jmp short loc_9D516	; 9D504
+        cmp al, 1
+        jne short loc_9D506
+        mov dx, word [word_D41F8]
+        sub eax, eax
+        call __unhook387
+        jmp short loc_9D516
 loc_9D506:
-sub edx, edx	; 9D506
-call __unhook387	; 9D508
-cmp al, 1	; 9D50D
-je short loc_9D516	; 9D50F
-call sub_9D521	; 9D511
+        sub edx, edx
+        call __unhook387
+        cmp al, 1
+        je short loc_9D516
+        call sub_9D521
 loc_9D516:
-mov byte [__real87], 0	; 9D516
-pop edx	; 9D51D
-pop ebx	; 9D51E
-pop ecx	; 9D51F
-ret	; 9D520
+        mov byte [__real87], 0
+        pop edx
+        pop ebx
+        pop ecx
+        ret

@@ -6,51 +6,51 @@ global str_Joycal, str_Scrn3, str_Rite, str_Left, str_Pal24, str_Puck, str_PuckB
 global str_RIGHTJOYSTICK, str_SaveAsGameDatabases, str_Current2, str_EnterANewDatabase, str_DBX, str_ErrorGettingDiskSpace, str_3dKbytesOfFree2, str_Temp7
 global str_Current3, str_Pointer11, str_FreeAgents, str_DATABASE, unk_C27F5, str_S5
 str_Joycal:
-db 06Ah,06Fh,079h,063h,061h,06Ch,00h
+        db 06Ah,06Fh,079h,063h,061h,06Ch,00h
 str_Scrn3:
-db 073h,063h,072h,06Eh,00h
+        db 073h,063h,072h,06Eh,00h
 str_Rite:
-db 072h,069h,074h,065h,00h
+        db 072h,069h,074h,065h,00h
 str_Left:
-db 06Ch,065h,066h,074h,00h
+        db 06Ch,065h,066h,074h,00h
 str_Pal24:
-db 021h,070h,061h,06Ch,00h
+        db 021h,070h,061h,06Ch,00h
 str_Puck:
-db 070h,075h,063h,06Bh,00h
+        db 070h,075h,063h,06Bh,00h
 str_PuckBack:
-db 050h,075h,063h,06Bh,042h,061h,063h,06Bh,00h
+        db 050h,075h,063h,06Bh,042h,061h,063h,06Bh,00h
 unk_C27F5:
-db 020h,00h
+        db 020h,00h
 str_LEFTJOYSTICK:
-db 04Ch,045h,046h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
+        db 04Ch,045h,046h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
 str_RIGHTJOYSTICK:
-db 052h,049h,047h,048h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
+        db 052h,049h,047h,048h,054h,020h,04Ah,04Fh,059h,053h,054h,049h,043h,04Bh,00h
 str_SaveAsGameDatabases:
-db 053h,061h,076h,065h,020h,061h,073h,020h,067h,061h,06Dh,065h,020h,064h,061h,074h
-db 061h,062h,061h,073h,065h,073h,03Fh,00h
+        db 053h,061h,076h,065h,020h,061h,073h,020h,067h,061h,06Dh,065h,020h,064h,061h,074h
+        db 061h,062h,061h,073h,065h,073h,03Fh,00h
 str_Current2:
-db 043h,075h,072h,072h,065h,06Eh,074h,00h
+        db 043h,075h,072h,072h,065h,06Eh,074h,00h
 str_EnterANewDatabase:
-db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,064h,061h,074h,061h
-db 062h,061h,073h,065h,020h,06Eh,061h,06Dh,065h,03Ah,00h
+        db 045h,06Eh,074h,065h,072h,020h,061h,020h,06Eh,065h,077h,020h,064h,061h,074h,061h
+        db 062h,061h,073h,065h,020h,06Eh,061h,06Dh,065h,03Ah,00h
 str_DBX:
-db 02Eh,044h,042h,058h,00h
+        db 02Eh,044h,042h,058h,00h
 str_ErrorGettingDiskSpace:
-db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
-db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h
+        db 065h,072h,072h,06Fh,072h,020h,067h,065h,074h,074h,069h,06Eh,067h,020h,064h,069h
+        db 073h,06Bh,020h,073h,070h,061h,063h,065h,020h,066h,072h,065h,065h,0Ah,00h
 str_3dKbytesOfFree2:
-db 025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
-db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h,00h
-db 00h
+        db 025h,033h,064h,020h,04Bh,062h,079h,074h,065h,073h,020h,06Fh,066h,020h,066h,072h
+        db 065h,065h,020h,064h,069h,073h,06Bh,020h,073h,070h,061h,063h,065h,02Eh,00h,00h
+        db 00h
 str_Temp7:
-db 074h,065h,06Dh,070h,00h
+        db 074h,065h,06Dh,070h,00h
 str_Current3:
-db 043h,075h,072h,072h,065h,06Eh,074h,00h
+        db 043h,075h,072h,072h,065h,06Eh,074h,00h
 str_Pointer11:
-db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
+        db 050h,06Fh,069h,06Eh,074h,065h,072h,00h
 str_S5:
-db 025h,073h,00h
+        db 025h,073h,00h
 str_FreeAgents:
-db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,073h,00h
+        db 046h,072h,065h,065h,020h,041h,067h,065h,06Eh,074h,073h,00h
 str_DATABASE:
-db 044h,041h,054h,041h,042h,041h,053h,045h,020h,03Ah,020h,00h
+        db 044h,041h,054h,041h,042h,041h,053h,045h,020h,03Ah,020h,00h

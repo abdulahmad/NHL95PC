@@ -17,2988 +17,3024 @@ extern TextSaveState, TextRestoreState, TextSetFont, sub_91044, DrawArt, DrawSha
 extern sub_B4BA8, SetClipWindow, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
 extern treecol_Wr2, treecol_Wr3, treecolslots, treecolx, treerowy, treeteamnames
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
+;-----------------------------------------------------------------------------
+; StandingsScreen                                                 27080  95 PC
+; " Standings" screen: Western / Eastern Conference by division
+; (divisionnames, divx / divy), qsort CmpConfStandings, Team GP W L T GF GA P
+; Pct; called by the *StandingsScreen callbacks
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/StandingsScreen.c
 %ifdef CBUILD
 %include "c/front/playoff/StandingsScreen.inc"
 %else
 StandingsScreen:
-push dword 468h	; 27080
-call __CHK	; 27085
-push ebx	; 2708A
-push ecx	; 2708B
-push esi	; 2708C
-push edi	; 2708D
-push ebp	; 2708E
-mov ebp, esp	; 2708F
-sub esp, 440h	; 27091
-mov dword [byte ebp-034h], eax	; 27097
-mov dword [byte ebp-03Ch], edx	; 2709A
-lea edi, [byte ebp-054h]	; 2709D
-mov esi, stand_tmpl1	; 270A0
-movsd	; 270A5
-movsd	; 270A6
-movsw	; 270A7
-lea edi, [byte ebp-048h]	; 270A9
-mov esi, stand_tmpl2	; 270AC
-movsd	; 270B1
-movsd	; 270B2
-movsw	; 270B3
-mov dword [off_CF6A3], DeskSetExit3b	; 270B5
-mov eax, dword [mainfont]	; 270BF
-mov dword [byte ebp-08h], eax	; 270C4
-mov eax, dword [kaufmfont]	; 270C7
-mov dword [byte ebp-0Ch], eax	; 270CC
-xor ecx, ecx	; 270CF
-mov eax, dword [statsfromleague]	; 270D1
-shl eax, 2	; 270D6
-mov ebx, dword [dword eax+statsteamdbs]	; 270D9
-mov edx, statsleague	; 270DF
-lea eax, [byte ebp-074h]	; 270E4
-call MakePath	; 270E7
-push dword 200h	; 270EC
-lea eax, [byte ebp-074h]	; 270F1
-push eax	; 270F4
-call open_	; 270F5
-add esp, byte 8	; 270FA
-mov dword [byte ebp-010h], eax	; 270FD
-cmp dword [statsfromleague], byte 0	; 27100
-jne short .1	; 27107
-mov dword [dword ebp-0428h], 4Ch	; 27109
-jmp short .2	; 27113
+        push dword 468h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 440h
+        mov dword [byte ebp-034h], eax
+        mov dword [byte ebp-03Ch], edx
+        lea edi, [byte ebp-054h]
+        mov esi, stand_tmpl1
+        movsd
+        movsd
+        movsw
+        lea edi, [byte ebp-048h]
+        mov esi, stand_tmpl2
+        movsd
+        movsd
+        movsw
+        mov dword [off_CF6A3], DeskSetExit3b
+        mov eax, dword [mainfont]
+        mov dword [byte ebp-08h], eax
+        mov eax, dword [kaufmfont]
+        mov dword [byte ebp-0Ch], eax
+        xor ecx, ecx
+        mov eax, dword [statsfromleague]
+        shl eax, 2
+        mov ebx, dword [dword eax+statsteamdbs]
+        mov edx, statsleague
+        lea eax, [byte ebp-074h]
+        call MakePath
+        push dword 200h
+        lea eax, [byte ebp-074h]
+        push eax
+        call open_
+        add esp, byte 8
+        mov dword [byte ebp-010h], eax
+        cmp dword [statsfromleague], byte 0
+        jne short .1
+        mov dword [dword ebp-0428h], 4Ch
+        jmp short .2
 .1:
-mov dword [dword ebp-0428h], 2E8h	; 27115
+        mov dword [dword ebp-0428h], 2E8h
 .2:
-mov eax, dword [dword ebp-0428h]	; 2711F
-mov dword [byte ebp-030h], eax	; 27125
-lea eax, [dword ebp-08Eh]	; 27128
-mov dword [byte ebp-02Ch], eax	; 2712E
-mov dword [byte ebp-018h], 0	; 27131
+        mov eax, dword [dword ebp-0428h]
+        mov dword [byte ebp-030h], eax
+        lea eax, [dword ebp-08Eh]
+        mov dword [byte ebp-02Ch], eax
+        mov dword [byte ebp-018h], 0
 .3:
-cmp dword [byte ebp-018h], byte 1Ah	; 27138
-jl short .5	; 2713C
-jmp near .8	; 2713E
+        cmp dword [byte ebp-018h], byte 1Ah
+        jl short .5
+        jmp near .8
 .4:
-inc dword [byte ebp-018h]	; 27143
-jmp short StandingsScreen.3	; 27146
+        inc dword [byte ebp-018h]
+        jmp short StandingsScreen.3
 .5:
-xor ebx, ebx	; 27148
-mov edx, dword [byte ebp-030h]	; 2714A
-imul edx, dword [byte ebp-018h]	; 2714D
-mov eax, dword [byte ebp-010h]	; 27151
-call lseek_	; 27154
-mov ebx, 34h	; 27159
-lea edx, [dword ebp-0A8h]	; 2715E
-mov eax, dword [byte ebp-010h]	; 27164
-call read_	; 27167
-mov eax, dword [byte ebp-02Ch]	; 2716C
-mov al, byte [byte eax+0Fh]	; 2716F
-xor ah, ah	; 27172
-add eax, eax	; 27174
-mov ebx, eax	; 27176
-mov eax, dword [byte ebp-02Ch]	; 27178
-xor dh, dh	; 2717B
-mov dl, byte [byte eax+011h]	; 2717D
-mov eax, dword [byte ebp-02Ch]	; 27180
-add ebx, edx	; 27183
-mov word [byte eax+016h], bx	; 27185
-mov eax, dword [byte ebp-02Ch]	; 27189
-cmp byte [byte eax+0Eh], 0	; 2718C
-je short .6	; 27190
-mov edx, dword [byte ebp-02Ch]	; 27192
-xor eax, eax	; 27195
-mov ax, word [byte edx+016h]	; 27197
-imul eax, dword 3E8h	; 2719B
-mov edx, dword [byte ebp-02Ch]	; 271A1
-mov dl, byte [byte edx+0Eh]	; 271A4
-and edx, 0FFh	; 271A7
-add edx, eax	; 271AD
-mov eax, dword [byte ebp-02Ch]	; 271AF
-mov al, byte [byte eax+0Eh]	; 271B2
-and eax, 0FFh	; 271B5
-add eax, eax	; 271BA
-mov ebx, eax	; 271BC
-mov eax, edx	; 271BE
-sar edx, 1Fh	; 271C0
-idiv ebx	; 271C3
-mov edx, dword [byte ebp-02Ch]	; 271C5
-mov word [byte edx+018h], ax	; 271C8
-jmp short .7	; 271CC
+        xor ebx, ebx
+        mov edx, dword [byte ebp-030h]
+        imul edx, dword [byte ebp-018h]
+        mov eax, dword [byte ebp-010h]
+        call lseek_
+        mov ebx, 34h
+        lea edx, [dword ebp-0A8h]
+        mov eax, dword [byte ebp-010h]
+        call read_
+        mov eax, dword [byte ebp-02Ch]
+        mov al, byte [byte eax+0Fh]
+        xor ah, ah
+        add eax, eax
+        mov ebx, eax
+        mov eax, dword [byte ebp-02Ch]
+        xor dh, dh
+        mov dl, byte [byte eax+011h]
+        mov eax, dword [byte ebp-02Ch]
+        add ebx, edx
+        mov word [byte eax+016h], bx
+        mov eax, dword [byte ebp-02Ch]
+        cmp byte [byte eax+0Eh], 0
+        je short .6
+        mov edx, dword [byte ebp-02Ch]
+        xor eax, eax
+        mov ax, word [byte edx+016h]
+        imul eax, dword 3E8h
+        mov edx, dword [byte ebp-02Ch]
+        mov dl, byte [byte edx+0Eh]
+        and edx, 0FFh
+        add edx, eax
+        mov eax, dword [byte ebp-02Ch]
+        mov al, byte [byte eax+0Eh]
+        and eax, 0FFh
+        add eax, eax
+        mov ebx, eax
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov edx, dword [byte ebp-02Ch]
+        mov word [byte edx+018h], ax
+        jmp short .7
 .6:
-mov eax, dword [byte ebp-02Ch]	; 271CE
-mov word [byte eax+018h], 0	; 271D1
+        mov eax, dword [byte ebp-02Ch]
+        mov word [byte eax+018h], 0
 .7:
-imul eax, dword [byte ebp-018h], byte 1Ah	; 271D7
-mov edx, dword [byte ebp-034h]	; 271DB
-add edx, eax	; 271DE
-mov dword [byte ebp-01Ch], edx	; 271E0
-mov ecx, 6	; 271E3
-mov edi, dword [byte ebp-01Ch]	; 271E8
-mov esi, dword [byte ebp-02Ch]	; 271EB
-rep movsd	; 271EE
-movsw	; 271F0
-mov edx, dword [byte ebp-018h]	; 271F2
-shl edx, 2	; 271F5
-add edx, dword [byte ebp-03Ch]	; 271F8
-mov eax, dword [byte ebp-018h]	; 271FB
-mov dword [edx], eax	; 271FE
-jmp near StandingsScreen.4	; 27200
+        imul eax, dword [byte ebp-018h], byte 1Ah
+        mov edx, dword [byte ebp-034h]
+        add edx, eax
+        mov dword [byte ebp-01Ch], edx
+        mov ecx, 6
+        mov edi, dword [byte ebp-01Ch]
+        mov esi, dword [byte ebp-02Ch]
+        rep movsd
+        movsw
+        mov edx, dword [byte ebp-018h]
+        shl edx, 2
+        add edx, dword [byte ebp-03Ch]
+        mov eax, dword [byte ebp-018h]
+        mov dword [edx], eax
+        jmp near StandingsScreen.4
 .8:
-mov eax, dword [byte ebp-010h]	; 27205
-call j___close_	; 27208
-mov ecx, CmpConfStandings	; 2720D
-mov ebx, 4	; 27212
-mov edx, 1Ah	; 27217
-mov eax, dword [byte ebp-03Ch]	; 2721C
-call qsort_	; 2721F
-call sub_B4BA8	; 27224
-mov dword [dword ebp-042Ch], 0	; 27229
-mov eax, dword [statsplayoffs]	; 27233
-shl eax, 2	; 27238
-mov eax, dword [dword eax+statsbgnames]	; 2723B
-mov dword [dword ebp-0430h], eax	; 27241
-cmp byte [fileoncd+08Ch], 1	; 27247
-jne short .9	; 2724E
-mov eax, dword [cddriveptr]	; 27250
-mov dword [dword ebp-0434h], eax	; 27255
-jmp short .10	; 2725B
+        mov eax, dword [byte ebp-010h]
+        call j___close_
+        mov ecx, CmpConfStandings
+        mov ebx, 4
+        mov edx, 1Ah
+        mov eax, dword [byte ebp-03Ch]
+        call qsort_
+        call sub_B4BA8
+        mov dword [dword ebp-042Ch], 0
+        mov eax, dword [statsplayoffs]
+        shl eax, 2
+        mov eax, dword [dword eax+statsbgnames]
+        mov dword [dword ebp-0430h], eax
+        cmp byte [fileoncd+08Ch], 1
+        jne short .9
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-0434h], eax
+        jmp short .10
 .9:
-mov dword [dword ebp-0434h], 0	; 2725D
+        mov dword [dword ebp-0434h], 0
 .10:
-mov edx, dword [dword ebp-0434h]	; 27267
-lea eax, [byte ebp-074h]	; 2726D
-mov ecx, dword [dword ebp-042Ch]	; 27270
-mov ebx, dword [dword ebp-0430h]	; 27276
-call MakePath	; 2727C
-push byte 0	; 27281
-lea eax, [byte ebp-074h]	; 27283
-push eax	; 27286
-call LoadBank	; 27287
-add esp, byte 8	; 2728C
-mov dword [statsbgshapes], eax	; 2728F
-mov eax, str_Bkgd2	; 27294
-push eax	; 27299
-push dword [statsbgshapes]	; 2729A
-call FindShape	; 272A0
-add esp, byte 8	; 272A5
-mov dword [statspalshape], eax	; 272A8
-push dword 1E0h	; 272AD
-push byte 13h	; 272B2
-push dword 280h	; 272B4
-push byte 0	; 272B9
-call SetClipWindow	; 272BB
-add esp, byte 10h	; 272C0
-push dword [statspalshape]	; 272C3
-call DrawShape	; 272C9
-add esp, byte 4	; 272CE
-push dword 1E0h	; 272D1
-push byte 0	; 272D6
-push dword 280h	; 272D8
-push byte 0	; 272DD
-call SetClipWindow	; 272DF
-add esp, byte 10h	; 272E4
-push dword [statsbgshapes]	; 272E7
-call FreeMemBlock	; 272ED
-add esp, byte 4	; 272F2
-mov dword [dword ebp-0438h], 0	; 272F5
-mov eax, str_Pstatbar8	; 272FF
-mov dword [dword ebp-043Ch], eax	; 27304
-cmp byte [fileoncd+013Ch], 1	; 2730A
-jne short .11	; 27311
-mov eax, dword [cddriveptr]	; 27313
-mov dword [dword ebp-0440h], eax	; 27318
-jmp short .12	; 2731E
+        mov edx, dword [dword ebp-0434h]
+        lea eax, [byte ebp-074h]
+        mov ecx, dword [dword ebp-042Ch]
+        mov ebx, dword [dword ebp-0430h]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-074h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        mov eax, str_Bkgd2
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword 1E0h
+        push byte 13h
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        push dword 1E0h
+        push byte 0
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        mov dword [dword ebp-0438h], 0
+        mov eax, str_Pstatbar8
+        mov dword [dword ebp-043Ch], eax
+        cmp byte [fileoncd+013Ch], 1
+        jne short .11
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-0440h], eax
+        jmp short .12
 .11:
-mov dword [dword ebp-0440h], 0	; 27320
+        mov dword [dword ebp-0440h], 0
 .12:
-mov edx, dword [dword ebp-0440h]	; 2732A
-lea eax, [byte ebp-074h]	; 27330
-mov ecx, dword [dword ebp-0438h]	; 27333
-mov ebx, dword [dword ebp-043Ch]	; 27339
-call MakePath	; 2733F
-push byte 0	; 27344
-lea eax, [byte ebp-074h]	; 27346
-push eax	; 27349
-call LoadBank	; 2734A
-add esp, byte 8	; 2734F
-mov dword [statsbgshapes], eax	; 27352
-mov eax, str_Pst27	; 27357
-push eax	; 2735C
-push dword [statsbgshapes]	; 2735D
-call FindShape	; 27363
-add esp, byte 8	; 27368
-mov dword [statspalshape], eax	; 2736B
-push byte 1Ch	; 27370
-push byte 0	; 27372
-push dword [statspalshape]	; 27374
-call DrawArt	; 2737A
-add esp, byte 0Ch	; 2737F
-push dword [statsbgshapes]	; 27382
-call FreeMemBlock	; 27388
-add esp, byte 4	; 2738D
-call TextGridOpen	; 27390
-lea eax, [dword ebp-0E8h]	; 27395
-push eax	; 2739B
-call TextSaveState	; 2739C
-add esp, byte 4	; 273A1
-push dword [byte ebp-0Ch]	; 273A4
-call TextSetFont	; 273A7
-add esp, byte 4	; 273AC
-mov edx, 43h	; 273AF
-mov eax, 40h	; 273B4
-call SetTextColors	; 273B9
-mov dword [byte ebp-024h], 31h	; 273BE
-mov edx, str_Standings	; 273C5
-lea eax, [dword ebp-013Ch]	; 273CA
-call MakeStatsTitle	; 273D0
-lea esi, [dword ebp-013Ch]	; 273D5
-mov edi, dword [byte ebp-024h]	; 273DB
-lea eax, [dword ebp-013Ch]	; 273DE
-push eax	; 273E4
-call fputchar	; 273E5
-add esp, byte 4	; 273EA
-sar eax, 1	; 273ED
-mov edx, 12Ch	; 273EF
-sub edx, eax	; 273F4
-mov eax, edx	; 273F6
-mov ebx, esi	; 273F8
-mov edx, edi	; 273FA
-call PrintOutlinedText	; 273FC
-mov dword [byte ebp-024h], 50h	; 27401
-mov esi, str_Western	; 27408
-mov edi, dword [byte ebp-026h]	; 2740D
-sar edi, 10h	; 27410
-mov eax, str_Western	; 27413
-push eax	; 27418
-call fputchar	; 27419
-add esp, byte 4	; 2741E
-sar eax, 1	; 27421
-mov edx, 0A0h	; 27423
-sub edx, eax	; 27428
-mov eax, edx	; 2742A
-cwde	; 2742C
-mov ebx, esi	; 2742D
-mov edx, edi	; 2742F
-call PrintShadowText	; 27431
-mov esi, str_Conference	; 27436
-mov eax, dword [byte ebp-024h]	; 2743B
-add eax, 10h	; 2743E
-movsx edi, ax	; 27443
-mov eax, str_Conference	; 27446
-push eax	; 2744B
-call fputchar	; 2744C
-add esp, byte 4	; 27451
-sar eax, 1	; 27454
-mov edx, 0A0h	; 27456
-sub edx, eax	; 2745B
-mov eax, edx	; 2745D
-cwde	; 2745F
-mov ebx, esi	; 27460
-mov edx, edi	; 27462
-call PrintShadowText	; 27464
-mov esi, str_Eastern	; 27469
-mov edi, dword [byte ebp-026h]	; 2746E
-sar edi, 10h	; 27471
-mov eax, str_Eastern	; 27474
-push eax	; 27479
-call fputchar	; 2747A
-add esp, byte 4	; 2747F
-sar eax, 1	; 27482
-mov edx, 1E0h	; 27484
-sub edx, eax	; 27489
-mov eax, edx	; 2748B
-cwde	; 2748D
-mov ebx, esi	; 2748E
-mov edx, edi	; 27490
-call PrintShadowText	; 27492
-mov esi, str_Conference	; 27497
-mov eax, dword [byte ebp-024h]	; 2749C
-add eax, 10h	; 2749F
-movsx edi, ax	; 274A4
-mov eax, str_Conference	; 274A7
-push eax	; 274AC
-call fputchar	; 274AD
-add esp, byte 4	; 274B2
-sar eax, 1	; 274B5
-mov edx, 1E0h	; 274B7
-sub edx, eax	; 274BC
-mov eax, edx	; 274BE
-cwde	; 274C0
-mov ebx, esi	; 274C1
-mov edx, edi	; 274C3
-call PrintShadowText	; 274C5
-push dword [byte ebp-08h]	; 274CA
-call TextSetFont	; 274CD
-add esp, byte 4	; 274D2
-mov edx, 43h	; 274D5
-mov eax, 40h	; 274DA
-call SetTextColors	; 274DF
-add dword [byte ebp-024h], byte 57h	; 274E4
-mov dword [byte ebp-028h], 0FFFFFFFFh	; 274E8
-mov dword [byte ebp-018h], 0	; 274EF
+        mov edx, dword [dword ebp-0440h]
+        lea eax, [byte ebp-074h]
+        mov ecx, dword [dword ebp-0438h]
+        mov ebx, dword [dword ebp-043Ch]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-074h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        mov eax, str_Pst27
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push byte 1Ch
+        push byte 0
+        push dword [statspalshape]
+        call DrawArt
+        add esp, byte 0Ch
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        call TextGridOpen
+        lea eax, [dword ebp-0E8h]
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        push dword [byte ebp-0Ch]
+        call TextSetFont
+        add esp, byte 4
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov dword [byte ebp-024h], 31h
+        mov edx, str_Standings
+        lea eax, [dword ebp-013Ch]
+        call MakeStatsTitle
+        lea esi, [dword ebp-013Ch]
+        mov edi, dword [byte ebp-024h]
+        lea eax, [dword ebp-013Ch]
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 12Ch
+        sub edx, eax
+        mov eax, edx
+        mov ebx, esi
+        mov edx, edi
+        call PrintOutlinedText
+        mov dword [byte ebp-024h], 50h
+        mov esi, str_Western
+        mov edi, dword [byte ebp-026h]
+        sar edi, 10h
+        mov eax, str_Western
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 0A0h
+        sub edx, eax
+        mov eax, edx
+        cwde
+        mov ebx, esi
+        mov edx, edi
+        call PrintShadowText
+        mov esi, str_Conference
+        mov eax, dword [byte ebp-024h]
+        add eax, 10h
+        movsx edi, ax
+        mov eax, str_Conference
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 0A0h
+        sub edx, eax
+        mov eax, edx
+        cwde
+        mov ebx, esi
+        mov edx, edi
+        call PrintShadowText
+        mov esi, str_Eastern
+        mov edi, dword [byte ebp-026h]
+        sar edi, 10h
+        mov eax, str_Eastern
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 1E0h
+        sub edx, eax
+        mov eax, edx
+        cwde
+        mov ebx, esi
+        mov edx, edi
+        call PrintShadowText
+        mov esi, str_Conference
+        mov eax, dword [byte ebp-024h]
+        add eax, 10h
+        movsx edi, ax
+        mov eax, str_Conference
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 1E0h
+        sub edx, eax
+        mov eax, edx
+        cwde
+        mov ebx, esi
+        mov edx, edi
+        call PrintShadowText
+        push dword [byte ebp-08h]
+        call TextSetFont
+        add esp, byte 4
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        add dword [byte ebp-024h], byte 57h
+        mov dword [byte ebp-028h], 0FFFFFFFFh
+        mov dword [byte ebp-018h], 0
 .13:
-cmp dword [byte ebp-018h], byte 1Ah	; 274F6
-jl short .15	; 274FA
-jmp near .22	; 274FC
+        cmp dword [byte ebp-018h], byte 1Ah
+        jl short .15
+        jmp near .22
 .14:
-inc dword [byte ebp-018h]	; 27501
-jmp short StandingsScreen.13	; 27504
+        inc dword [byte ebp-018h]
+        jmp short StandingsScreen.13
 .15:
-mov eax, dword [byte ebp-018h]	; 27506
-shl eax, 2	; 27509
-add eax, dword [byte ebp-03Ch]	; 2750C
-imul eax, dword [eax], byte 1Ah	; 2750F
-mov edx, dword [byte ebp-034h]	; 27512
-add edx, eax	; 27515
-mov dword [byte ebp-01Ch], edx	; 27517
-mov eax, dword [byte ebp-01Ch]	; 2751A
-mov al, byte [byte eax+0Dh]	; 2751D
-and eax, 0FFh	; 27520
-cmp eax, dword [byte ebp-028h]	; 27525
-je near .16	; 27528
-mov edx, dword [byte ebp-01Ch]	; 2752E
-mov dl, byte [byte edx+0Dh]	; 27531
-and edx, 0FFh	; 27534
-mov ebx, 4	; 2753A
-mov eax, edx	; 2753F
-sar edx, 1Fh	; 27541
-idiv ebx	; 27544
-mov dword [byte ebp-028h], edx	; 27546
-mov eax, dword [byte ebp-028h]	; 27549
-shl eax, 2	; 2754C
-mov eax, dword [dword eax+divx]	; 2754F
-mov dword [byte ebp-020h], eax	; 27555
-mov eax, dword [byte ebp-028h]	; 27558
-shl eax, 2	; 2755B
-mov eax, dword [dword eax+divy]	; 2755E
-mov dword [byte ebp-024h], eax	; 27564
-mov eax, dword [byte ebp-028h]	; 27567
-shl eax, 2	; 2756A
-mov ebx, dword [dword eax+divisionnames]	; 2756D
-mov edx, dword [byte ebp-026h]	; 27573
-sar edx, 10h	; 27576
-mov eax, dword [byte ebp-022h]	; 27579
-sar eax, 10h	; 2757C
-call PrintShadowText	; 2757F
-add dword [byte ebp-024h], byte 12h	; 27584
-mov ebx, str_Team	; 27588
-mov edx, dword [byte ebp-026h]	; 2758D
-sar edx, 10h	; 27590
-mov eax, dword [byte ebp-022h]	; 27593
-sar eax, 10h	; 27596
-call PrintShadowText	; 27599
-mov ebx, str_GP7	; 2759E
-mov edx, dword [byte ebp-026h]	; 275A3
-sar edx, 10h	; 275A6
-mov eax, dword [byte ebp-020h]	; 275A9
-add eax, 64h	; 275AC
-cwde	; 275B1
-call PrintShadowText	; 275B2
-mov ebx, str_W4	; 275B7
-mov edx, dword [byte ebp-026h]	; 275BC
-sar edx, 10h	; 275BF
-mov eax, dword [byte ebp-020h]	; 275C2
-add eax, 78h	; 275C5
-cwde	; 275CA
-call PrintShadowText	; 275CB
-mov ebx, str_L6	; 275D0
-mov edx, dword [byte ebp-026h]	; 275D5
-sar edx, 10h	; 275D8
-mov eax, dword [byte ebp-020h]	; 275DB
-add eax, 8Ch	; 275DE
-cwde	; 275E3
-call PrintShadowText	; 275E4
-mov ebx, str_T4	; 275E9
-mov edx, dword [byte ebp-026h]	; 275EE
-sar edx, 10h	; 275F1
-mov eax, dword [byte ebp-020h]	; 275F4
-add eax, 0A0h	; 275F7
-cwde	; 275FC
-call PrintShadowText	; 275FD
-mov ebx, str_GF	; 27602
-mov edx, dword [byte ebp-026h]	; 27607
-sar edx, 10h	; 2760A
-mov eax, dword [byte ebp-020h]	; 2760D
-add eax, 0B4h	; 27610
-cwde	; 27615
-call PrintShadowText	; 27616
-mov ebx, str_GA2	; 2761B
-mov edx, dword [byte ebp-026h]	; 27620
-sar edx, 10h	; 27623
-mov eax, dword [byte ebp-020h]	; 27626
-add eax, 0D2h	; 27629
-cwde	; 2762E
-call PrintShadowText	; 2762F
-mov ebx, str_P	; 27634
-mov edx, dword [byte ebp-026h]	; 27639
-sar edx, 10h	; 2763C
-mov eax, dword [byte ebp-020h]	; 2763F
-add eax, 0F0h	; 27642
-cwde	; 27647
-call PrintShadowText	; 27648
-mov ebx, str_Pct4	; 2764D
-mov edx, dword [byte ebp-026h]	; 27652
-sar edx, 10h	; 27655
-mov eax, dword [byte ebp-020h]	; 27658
-add eax, 10Eh	; 2765B
-cwde	; 27660
-call PrintShadowText	; 27661
-add dword [byte ebp-024h], byte 13h	; 27666
+        mov eax, dword [byte ebp-018h]
+        shl eax, 2
+        add eax, dword [byte ebp-03Ch]
+        imul eax, dword [eax], byte 1Ah
+        mov edx, dword [byte ebp-034h]
+        add edx, eax
+        mov dword [byte ebp-01Ch], edx
+        mov eax, dword [byte ebp-01Ch]
+        mov al, byte [byte eax+0Dh]
+        and eax, 0FFh
+        cmp eax, dword [byte ebp-028h]
+        je near .16
+        mov edx, dword [byte ebp-01Ch]
+        mov dl, byte [byte edx+0Dh]
+        and edx, 0FFh
+        mov ebx, 4
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        mov dword [byte ebp-028h], edx
+        mov eax, dword [byte ebp-028h]
+        shl eax, 2
+        mov eax, dword [dword eax+divx]
+        mov dword [byte ebp-020h], eax
+        mov eax, dword [byte ebp-028h]
+        shl eax, 2
+        mov eax, dword [dword eax+divy]
+        mov dword [byte ebp-024h], eax
+        mov eax, dword [byte ebp-028h]
+        shl eax, 2
+        mov ebx, dword [dword eax+divisionnames]
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-022h]
+        sar eax, 10h
+        call PrintShadowText
+        add dword [byte ebp-024h], byte 12h
+        mov ebx, str_Team
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-022h]
+        sar eax, 10h
+        call PrintShadowText
+        mov ebx, str_GP7
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 64h
+        cwde
+        call PrintShadowText
+        mov ebx, str_W4
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 78h
+        cwde
+        call PrintShadowText
+        mov ebx, str_L6
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 8Ch
+        cwde
+        call PrintShadowText
+        mov ebx, str_T4
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0A0h
+        cwde
+        call PrintShadowText
+        mov ebx, str_GF
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0B4h
+        cwde
+        call PrintShadowText
+        mov ebx, str_GA2
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0D2h
+        cwde
+        call PrintShadowText
+        mov ebx, str_P
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0F0h
+        cwde
+        call PrintShadowText
+        mov ebx, str_Pct4
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 10Eh
+        cwde
+        call PrintShadowText
+        add dword [byte ebp-024h], byte 13h
 .16:
-cmp dword [statsfromleague], byte 0	; 2766A
-jne short .17	; 27671
-mov eax, dword [byte ebp-01Ch]	; 27673
-cmp byte [byte eax+0Eh], 0	; 27676
-je short .18	; 2767A
+        cmp dword [statsfromleague], byte 0
+        jne short .17
+        mov eax, dword [byte ebp-01Ch]
+        cmp byte [byte eax+0Eh], 0
+        je short .18
 .17:
-jmp short .19	; 2767C
+        jmp short .19
 .18:
-jmp near StandingsScreen.14	; 2767E
+        jmp near StandingsScreen.14
 .19:
-mov ecx, 6	; 27683
-mov edi, dword [byte ebp-02Ch]	; 27688
-mov esi, dword [byte ebp-01Ch]	; 2768B
-rep movsd	; 2768E
-movsw	; 27690
-mov ebx, dword [byte ebp-02Ch]	; 27692
-mov edx, dword [byte ebp-026h]	; 27695
-sar edx, 10h	; 27698
-mov eax, dword [byte ebp-022h]	; 2769B
-sar eax, 10h	; 2769E
-call PrintShadowText	; 276A1
-mov eax, dword [byte ebp-02Ch]	; 276A6
-mov al, byte [byte eax+0Eh]	; 276A9
-xor ah, ah	; 276AC
-movsx ecx, ax	; 276AE
-mov ebx, str_fmt2d	; 276B1
-mov edx, dword [byte ebp-026h]	; 276B6
-sar edx, 10h	; 276B9
-mov eax, dword [byte ebp-020h]	; 276BC
-add eax, 64h	; 276BF
-cwde	; 276C4
-call PrintFmt1	; 276C5
-mov eax, dword [byte ebp-02Ch]	; 276CA
-mov al, byte [byte eax+0Fh]	; 276CD
-xor ah, ah	; 276D0
-movsx ecx, ax	; 276D2
-mov ebx, str_fmt2d	; 276D5
-mov edx, dword [byte ebp-026h]	; 276DA
-sar edx, 10h	; 276DD
-mov eax, dword [byte ebp-020h]	; 276E0
-add eax, 78h	; 276E3
-cwde	; 276E8
-call PrintFmt1	; 276E9
-mov edx, dword [byte ebp-02Ch]	; 276EE
-xor eax, eax	; 276F1
-mov al, byte [byte edx+010h]	; 276F3
-movsx ecx, ax	; 276F6
-mov ebx, str_fmt2d	; 276F9
-mov edx, dword [byte ebp-026h]	; 276FE
-sar edx, 10h	; 27701
-mov eax, dword [byte ebp-020h]	; 27704
-add eax, 8Ch	; 27707
-cwde	; 2770C
-call PrintFmt1	; 2770D
-mov edx, dword [byte ebp-02Ch]	; 27712
-xor eax, eax	; 27715
-mov al, byte [byte edx+011h]	; 27717
-movsx ecx, ax	; 2771A
-mov ebx, str_fmt2d	; 2771D
-mov edx, dword [byte ebp-026h]	; 27722
-sar edx, 10h	; 27725
-mov eax, dword [byte ebp-020h]	; 27728
-add eax, 0A0h	; 2772B
-cwde	; 27730
-call PrintFmt1	; 27731
-mov ecx, dword [byte ebp-02Ch]	; 27736
-mov ecx, dword [byte ecx+010h]	; 27739
-sar ecx, 10h	; 2773C
-mov ebx, str_fmt3d	; 2773F
-mov edx, dword [byte ebp-026h]	; 27744
-sar edx, 10h	; 27747
-mov eax, dword [byte ebp-020h]	; 2774A
-add eax, 0B4h	; 2774D
-cwde	; 27752
-call PrintFmt1	; 27753
-mov ecx, dword [byte ebp-02Ch]	; 27758
-mov ecx, dword [byte ecx+012h]	; 2775B
-sar ecx, 10h	; 2775E
-mov ebx, str_fmt3d	; 27761
-mov edx, dword [byte ebp-026h]	; 27766
-sar edx, 10h	; 27769
-mov eax, dword [byte ebp-020h]	; 2776C
-add eax, 0D2h	; 2776F
-cwde	; 27774
-call PrintFmt1	; 27775
-mov eax, dword [byte ebp-02Ch]	; 2777A
-mov ecx, dword [byte eax+014h]	; 2777D
-sar ecx, 10h	; 27780
-mov ebx, str_fmt3d	; 27783
-mov edx, dword [byte ebp-026h]	; 27788
-sar edx, 10h	; 2778B
-mov eax, dword [byte ebp-020h]	; 2778E
-add eax, 0F0h	; 27791
-cwde	; 27796
-call PrintFmt1	; 27797
-mov eax, dword [byte ebp-02Ch]	; 2779C
-cmp word [byte eax+018h], 3E8h	; 2779F
-jae short .20	; 277A5
-mov edx, dword [byte ebp-02Ch]	; 277A7
-mov dx, word [byte edx+018h]	; 277AA
-and edx, 0FFFFh	; 277AE
-mov ebx, 3E8h	; 277B4
-mov eax, edx	; 277B9
-sar edx, 1Fh	; 277BB
-idiv ebx	; 277BE
-movsx ecx, dx	; 277C0
-mov ebx, str_fmtPct0	; 277C3
-mov edx, dword [byte ebp-026h]	; 277C8
-sar edx, 10h	; 277CB
-mov eax, dword [byte ebp-020h]	; 277CE
-add eax, 10Eh	; 277D1
-cwde	; 277D6
-call PrintFmt1	; 277D7
-jmp short .21	; 277DC
+        mov ecx, 6
+        mov edi, dword [byte ebp-02Ch]
+        mov esi, dword [byte ebp-01Ch]
+        rep movsd
+        movsw
+        mov ebx, dword [byte ebp-02Ch]
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-022h]
+        sar eax, 10h
+        call PrintShadowText
+        mov eax, dword [byte ebp-02Ch]
+        mov al, byte [byte eax+0Eh]
+        xor ah, ah
+        movsx ecx, ax
+        mov ebx, str_fmt2d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 64h
+        cwde
+        call PrintFmt1
+        mov eax, dword [byte ebp-02Ch]
+        mov al, byte [byte eax+0Fh]
+        xor ah, ah
+        movsx ecx, ax
+        mov ebx, str_fmt2d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 78h
+        cwde
+        call PrintFmt1
+        mov edx, dword [byte ebp-02Ch]
+        xor eax, eax
+        mov al, byte [byte edx+010h]
+        movsx ecx, ax
+        mov ebx, str_fmt2d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 8Ch
+        cwde
+        call PrintFmt1
+        mov edx, dword [byte ebp-02Ch]
+        xor eax, eax
+        mov al, byte [byte edx+011h]
+        movsx ecx, ax
+        mov ebx, str_fmt2d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0A0h
+        cwde
+        call PrintFmt1
+        mov ecx, dword [byte ebp-02Ch]
+        mov ecx, dword [byte ecx+010h]
+        sar ecx, 10h
+        mov ebx, str_fmt3d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0B4h
+        cwde
+        call PrintFmt1
+        mov ecx, dword [byte ebp-02Ch]
+        mov ecx, dword [byte ecx+012h]
+        sar ecx, 10h
+        mov ebx, str_fmt3d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0D2h
+        cwde
+        call PrintFmt1
+        mov eax, dword [byte ebp-02Ch]
+        mov ecx, dword [byte eax+014h]
+        sar ecx, 10h
+        mov ebx, str_fmt3d
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 0F0h
+        cwde
+        call PrintFmt1
+        mov eax, dword [byte ebp-02Ch]
+        cmp word [byte eax+018h], 3E8h
+        jae short .20
+        mov edx, dword [byte ebp-02Ch]
+        mov dx, word [byte edx+018h]
+        and edx, 0FFFFh
+        mov ebx, 3E8h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        movsx ecx, dx
+        mov ebx, str_fmtPct0
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 10Eh
+        cwde
+        call PrintFmt1
+        jmp short .21
 .20:
-mov edx, dword [byte ebp-02Ch]	; 277DE
-mov dx, word [byte edx+018h]	; 277E1
-and edx, 0FFFFh	; 277E5
-mov ebx, 3E8h	; 277EB
-mov eax, edx	; 277F0
-sar edx, 1Fh	; 277F2
-idiv ebx	; 277F5
-movsx eax, dx	; 277F7
-push eax	; 277FA
-mov edx, dword [byte ebp-02Ch]	; 277FB
-mov dx, word [byte edx+018h]	; 277FE
-and edx, 0FFFFh	; 27802
-mov ebx, 3E8h	; 27808
-mov eax, edx	; 2780D
-sar edx, 1Fh	; 2780F
-idiv ebx	; 27812
-movsx ecx, ax	; 27814
-mov ebx, str_fmtPct	; 27817
-mov edx, dword [byte ebp-026h]	; 2781C
-sar edx, 10h	; 2781F
-mov eax, dword [byte ebp-020h]	; 27822
-add eax, 10Eh	; 27825
-cwde	; 2782A
-call PrintFmt2	; 2782B
+        mov edx, dword [byte ebp-02Ch]
+        mov dx, word [byte edx+018h]
+        and edx, 0FFFFh
+        mov ebx, 3E8h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        movsx eax, dx
+        push eax
+        mov edx, dword [byte ebp-02Ch]
+        mov dx, word [byte edx+018h]
+        and edx, 0FFFFh
+        mov ebx, 3E8h
+        mov eax, edx
+        sar edx, 1Fh
+        idiv ebx
+        movsx ecx, ax
+        mov ebx, str_fmtPct
+        mov edx, dword [byte ebp-026h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-020h]
+        add eax, 10Eh
+        cwde
+        call PrintFmt2
 .21:
-add dword [byte ebp-024h], byte 0Dh	; 27830
-jmp near StandingsScreen.14	; 27834
+        add dword [byte ebp-024h], byte 0Dh
+        jmp near StandingsScreen.14
 .22:
-call TextGridOff	; 27839
-lea eax, [dword ebp-0E8h]	; 2783E
-push eax	; 27844
-call TextRestoreState	; 27845
-add esp, byte 4	; 2784A
-mov dword [byte ebp-038h], 0	; 2784D
-mov eax, dword [byte ebp-038h]	; 27854
-mov esp, ebp	; 27857
-pop ebp	; 27859
-pop edi	; 2785A
-pop esi	; 2785B
-pop ecx	; 2785C
-pop ebx	; 2785D
-ret	; 2785E
+        call TextGridOff
+        lea eax, [dword ebp-0E8h]
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        mov dword [byte ebp-038h], 0
+        mov eax, dword [byte ebp-038h]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; HighlightTreeSlot                            2785F  95 PC, medium confidence
+; Finds the team's slot in treecolslots and draws the 80h highlight box
+; (sub_91044) at treecolx / treerowy
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/HighlightTreeSlot.c
 %ifdef CBUILD
 %include "c/front/playoff/HighlightTreeSlot.inc"
 %else
 HighlightTreeSlot:
-push dword 4Ch	; 2785F
-call __CHK	; 27864
-push ebx	; 27869
-push ecx	; 2786A
-push edx	; 2786B
-push esi	; 2786C
-push edi	; 2786D
-push ebp	; 2786E
-mov ebp, esp	; 2786F
-sub esp, 1Ch	; 27871
-mov dword [byte ebp-01Ch], eax	; 27877
-mov dword [byte ebp-08h], 0	; 2787A
+        push dword 4Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 1Ch
+        mov dword [byte ebp-01Ch], eax
+        mov dword [byte ebp-08h], 0
 .1:
-cmp word [byte ebp-08h], byte 8	; 27881
-jl short .3	; 27886
-jmp near .10	; 27888
+        cmp word [byte ebp-08h], byte 8
+        jl short .3
+        jmp near .10
 .2:
-inc dword [byte ebp-08h]	; 2788D
-jmp short HighlightTreeSlot.1	; 27890
+        inc dword [byte ebp-08h]
+        jmp short HighlightTreeSlot.1
 .3:
-mov eax, dword [byte ebp-0Ah]	; 27892
-sar eax, 10h	; 27895
-xor edx, edx	; 27898
-mov dl, byte [dword eax+treecolslots]	; 2789A
-mov eax, dword [byte ebp-01Ch]	; 278A0
-cmp edx, dword [eax]	; 278A3
-jne short .6	; 278A5
-mov eax, dword [byte ebp-0Ah]	; 278A7
-sar eax, 10h	; 278AA
-sar eax, 1	; 278AD
-shl eax, 2	; 278AF
-mov ax, word [dword eax+treecolx]	; 278B2
-dec eax	; 278B9
-mov dword [byte ebp-0Ch], eax	; 278BA
-test byte [byte ebp-08h], 1	; 278BD
-jne short .4	; 278C1
-mov dword [byte ebp-010h], 4Ah	; 278C3
-jmp short .5	; 278CA
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecolslots]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .6
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        sar eax, 1
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        dec eax
+        mov dword [byte ebp-0Ch], eax
+        test byte [byte ebp-08h], 1
+        jne short .4
+        mov dword [byte ebp-010h], 4Ah
+        jmp short .5
 .4:
-mov dword [byte ebp-010h], 5Ah	; 278CC
+        mov dword [byte ebp-010h], 5Ah
 .5:
-mov word [byte ebp-014h], 64h	; 278D3
-mov word [byte ebp-018h], 0Dh	; 278D9
-push dword 80h	; 278DF
-mov eax, dword [byte ebp-01Ah]	; 278E4
-sar eax, 10h	; 278E7
-push eax	; 278EA
-mov eax, dword [byte ebp-016h]	; 278EB
-sar eax, 10h	; 278EE
-push eax	; 278F1
-mov eax, dword [byte ebp-012h]	; 278F2
-sar eax, 10h	; 278F5
-push eax	; 278F8
-mov eax, dword [byte ebp-0Eh]	; 278F9
-sar eax, 10h	; 278FC
-push eax	; 278FF
-call sub_91044	; 27900
-add esp, byte 14h	; 27905
-jmp near .x	; 27908
+        mov word [byte ebp-014h], 64h
+        mov word [byte ebp-018h], 0Dh
+        push dword 80h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-0Eh]
+        sar eax, 10h
+        push eax
+        call sub_91044
+        add esp, byte 14h
+        jmp near .x
 .6:
-mov eax, dword [byte ebp-0Ah]	; 2790D
-sar eax, 10h	; 27910
-xor edx, edx	; 27913
-mov dl, byte [dword eax+treecol_Er1]	; 27915
-mov eax, dword [byte ebp-01Ch]	; 2791B
-cmp edx, dword [eax]	; 2791E
-jne short .9	; 27920
-mov eax, dword [byte ebp-0Ah]	; 27922
-sar eax, 10h	; 27925
-sar eax, 1	; 27928
-shl eax, 2	; 2792A
-mov ax, word [dword eax+treecolx]	; 2792D
-dec eax	; 27934
-mov word [byte ebp-0Ch], ax	; 27935
-test byte [byte ebp-08h], 1	; 27939
-jne short .7	; 2793D
-mov word [byte ebp-010h], 180h	; 2793F
-jmp short .8	; 27945
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecol_Er1]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .9
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        sar eax, 1
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        dec eax
+        mov word [byte ebp-0Ch], ax
+        test byte [byte ebp-08h], 1
+        jne short .7
+        mov word [byte ebp-010h], 180h
+        jmp short .8
 .7:
-mov word [byte ebp-010h], 190h	; 27947
+        mov word [byte ebp-010h], 190h
 .8:
-mov word [byte ebp-014h], 64h	; 2794D
-mov word [byte ebp-018h], 0Dh	; 27953
-push dword 80h	; 27959
-mov eax, dword [byte ebp-01Ah]	; 2795E
-sar eax, 10h	; 27961
-push eax	; 27964
-mov eax, dword [byte ebp-016h]	; 27965
-sar eax, 10h	; 27968
-push eax	; 2796B
-mov eax, dword [byte ebp-012h]	; 2796C
-sar eax, 10h	; 2796F
-push eax	; 27972
-mov eax, dword [byte ebp-0Eh]	; 27973
-sar eax, 10h	; 27976
-push eax	; 27979
-call sub_91044	; 2797A
-add esp, byte 14h	; 2797F
-jmp near .x	; 27982
+        mov word [byte ebp-014h], 64h
+        mov word [byte ebp-018h], 0Dh
+        push dword 80h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-0Eh]
+        sar eax, 10h
+        push eax
+        call sub_91044
+        add esp, byte 14h
+        jmp near .x
 .9:
-jmp near HighlightTreeSlot.2	; 27987
+        jmp near HighlightTreeSlot.2
 .10:
-mov word [byte ebp-08h], 0	; 2798C
+        mov word [byte ebp-08h], 0
 .11:
-cmp word [byte ebp-08h], byte 4	; 27992
-jl short .13	; 27997
-jmp near .20	; 27999
+        cmp word [byte ebp-08h], byte 4
+        jl short .13
+        jmp near .20
 .12:
-inc word [byte ebp-08h]	; 2799E
-jmp short HighlightTreeSlot.11	; 279A2
+        inc word [byte ebp-08h]
+        jmp short HighlightTreeSlot.11
 .13:
-mov eax, dword [byte ebp-0Ah]	; 279A4
-sar eax, 10h	; 279A7
-xor edx, edx	; 279AA
-mov dl, byte [dword eax+treecol_Wr2]	; 279AC
-mov eax, dword [byte ebp-01Ch]	; 279B2
-cmp edx, dword [eax]	; 279B5
-jne short .16	; 279B7
-mov eax, dword [byte ebp-0Ah]	; 279B9
-sar eax, 10h	; 279BC
-sar eax, 1	; 279BF
-shl eax, 2	; 279C1
-mov ax, word [dword eax+treerowy]	; 279C4
-dec eax	; 279CB
-mov word [byte ebp-0Ch], ax	; 279CC
-test byte [byte ebp-08h], 1	; 279D0
-jne short .14	; 279D4
-mov word [byte ebp-010h], 99h	; 279D6
-jmp short .15	; 279DC
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecol_Wr2]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .16
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        sar eax, 1
+        shl eax, 2
+        mov ax, word [dword eax+treerowy]
+        dec eax
+        mov word [byte ebp-0Ch], ax
+        test byte [byte ebp-08h], 1
+        jne short .14
+        mov word [byte ebp-010h], 99h
+        jmp short .15
 .14:
-mov word [byte ebp-010h], 0A9h	; 279DE
+        mov word [byte ebp-010h], 0A9h
 .15:
-mov word [byte ebp-014h], 64h	; 279E4
-mov word [byte ebp-018h], 0Dh	; 279EA
-push dword 80h	; 279F0
-mov eax, dword [byte ebp-01Ah]	; 279F5
-sar eax, 10h	; 279F8
-push eax	; 279FB
-mov eax, dword [byte ebp-016h]	; 279FC
-sar eax, 10h	; 279FF
-push eax	; 27A02
-mov eax, dword [byte ebp-012h]	; 27A03
-sar eax, 10h	; 27A06
-push eax	; 27A09
-mov eax, dword [byte ebp-0Eh]	; 27A0A
-sar eax, 10h	; 27A0D
-push eax	; 27A10
-call sub_91044	; 27A11
-add esp, byte 14h	; 27A16
-jmp near .x	; 27A19
+        mov word [byte ebp-014h], 64h
+        mov word [byte ebp-018h], 0Dh
+        push dword 80h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-0Eh]
+        sar eax, 10h
+        push eax
+        call sub_91044
+        add esp, byte 14h
+        jmp near .x
 .16:
-mov eax, dword [byte ebp-0Ah]	; 27A1E
-sar eax, 10h	; 27A21
-xor edx, edx	; 27A24
-mov dl, byte [dword eax+treecol_Er2]	; 27A26
-mov eax, dword [byte ebp-01Ch]	; 27A2C
-cmp edx, dword [eax]	; 27A2F
-jne near .19	; 27A31
-mov eax, dword [byte ebp-0Ah]	; 27A37
-sar eax, 10h	; 27A3A
-sar eax, 1	; 27A3D
-mov edx, 1	; 27A3F
-sub edx, eax	; 27A44
-mov eax, edx	; 27A46
-shl eax, 2	; 27A48
-mov ax, word [dword eax+treerowy]	; 27A4B
-add eax, 64h	; 27A52
-mov edx, 27Fh	; 27A57
-sub edx, eax	; 27A5C
-mov word [byte ebp-0Ch], dx	; 27A5E
-test byte [byte ebp-08h], 1	; 27A62
-jne short .17	; 27A66
-mov word [byte ebp-010h], 133h	; 27A68
-jmp short .18	; 27A6E
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecol_Er2]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne near .19
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        sar eax, 1
+        mov edx, 1
+        sub edx, eax
+        mov eax, edx
+        shl eax, 2
+        mov ax, word [dword eax+treerowy]
+        add eax, 64h
+        mov edx, 27Fh
+        sub edx, eax
+        mov word [byte ebp-0Ch], dx
+        test byte [byte ebp-08h], 1
+        jne short .17
+        mov word [byte ebp-010h], 133h
+        jmp short .18
 .17:
-mov word [byte ebp-010h], 143h	; 27A70
+        mov word [byte ebp-010h], 143h
 .18:
-mov word [byte ebp-014h], 64h	; 27A76
-mov word [byte ebp-018h], 0Dh	; 27A7C
-push dword 80h	; 27A82
-mov eax, dword [byte ebp-01Ah]	; 27A87
-sar eax, 10h	; 27A8A
-push eax	; 27A8D
-mov eax, dword [byte ebp-016h]	; 27A8E
-sar eax, 10h	; 27A91
-push eax	; 27A94
-mov eax, dword [byte ebp-012h]	; 27A95
-sar eax, 10h	; 27A98
-push eax	; 27A9B
-mov eax, dword [byte ebp-0Eh]	; 27A9C
-sar eax, 10h	; 27A9F
-push eax	; 27AA2
-call sub_91044	; 27AA3
-add esp, byte 14h	; 27AA8
-jmp near .x	; 27AAB
+        mov word [byte ebp-014h], 64h
+        mov word [byte ebp-018h], 0Dh
+        push dword 80h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-016h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte ebp-0Eh]
+        sar eax, 10h
+        push eax
+        call sub_91044
+        add esp, byte 14h
+        jmp near .x
 .19:
-jmp near HighlightTreeSlot.12	; 27AB0
+        jmp near HighlightTreeSlot.12
 .20:
-mov word [byte ebp-08h], 0	; 27AB5
+        mov word [byte ebp-08h], 0
 .21:
-cmp word [byte ebp-08h], byte 2	; 27ABB
-jl short .23	; 27AC0
-jmp near .30	; 27AC2
+        cmp word [byte ebp-08h], byte 2
+        jl short .23
+        jmp near .30
 .22:
-inc word [byte ebp-08h]	; 27AC7
-jmp short HighlightTreeSlot.21	; 27ACB
+        inc word [byte ebp-08h]
+        jmp short HighlightTreeSlot.21
 .23:
-mov eax, dword [byte ebp-0Ah]	; 27ACD
-sar eax, 10h	; 27AD0
-xor edx, edx	; 27AD3
-mov dl, byte [dword eax+treecolslots+10h]	; 27AD5
-mov eax, dword [byte ebp-01Ch]	; 27ADB
-cmp edx, dword [eax]	; 27ADE
-jne short .26	; 27AE0
-cmp word [byte ebp-08h], byte 0	; 27AE2
-jne short .24	; 27AE7
-mov word [byte ebp-010h], 0E6h	; 27AE9
-jmp short .25	; 27AEF
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecolslots+10h]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .26
+        cmp word [byte ebp-08h], byte 0
+        jne short .24
+        mov word [byte ebp-010h], 0E6h
+        jmp short .25
 .24:
-mov word [byte ebp-010h], 0F6h	; 27AF1
+        mov word [byte ebp-010h], 0F6h
 .25:
-push dword 80h	; 27AF7
-push byte 0Dh	; 27AFC
-push byte 64h	; 27AFE
-mov eax, dword [byte ebp-012h]	; 27B00
-sar eax, 10h	; 27B03
-push eax	; 27B06
-push byte 47h	; 27B07
-call sub_91044	; 27B09
-add esp, byte 14h	; 27B0E
-jmp near .x	; 27B11
+        push dword 80h
+        push byte 0Dh
+        push byte 64h
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        push byte 47h
+        call sub_91044
+        add esp, byte 14h
+        jmp near .x
 .26:
-mov eax, dword [byte ebp-0Ah]	; 27B16
-sar eax, 10h	; 27B19
-xor edx, edx	; 27B1C
-mov dl, byte [dword eax+treecolslots+30h]	; 27B1E
-mov eax, dword [byte ebp-01Ch]	; 27B24
-cmp edx, dword [eax]	; 27B27
-jne short .29	; 27B29
-cmp word [byte ebp-08h], byte 0	; 27B2B
-jne short .27	; 27B30
-mov word [byte ebp-010h], 0E6h	; 27B32
-jmp short .28	; 27B38
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        xor edx, edx
+        mov dl, byte [dword eax+treecolslots+30h]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .29
+        cmp word [byte ebp-08h], byte 0
+        jne short .27
+        mov word [byte ebp-010h], 0E6h
+        jmp short .28
 .27:
-mov word [byte ebp-010h], 0F6h	; 27B3A
+        mov word [byte ebp-010h], 0F6h
 .28:
-push dword 80h	; 27B40
-push byte 0Dh	; 27B45
-push byte 64h	; 27B47
-mov eax, dword [byte ebp-012h]	; 27B49
-sar eax, 10h	; 27B4C
-push eax	; 27B4F
-push dword 1C5h	; 27B50
-call sub_91044	; 27B55
-add esp, byte 14h	; 27B5A
-jmp short .x	; 27B5D
+        push dword 80h
+        push byte 0Dh
+        push byte 64h
+        mov eax, dword [byte ebp-012h]
+        sar eax, 10h
+        push eax
+        push dword 1C5h
+        call sub_91044
+        add esp, byte 14h
+        jmp short .x
 .29:
-jmp near HighlightTreeSlot.22	; 27B5F
+        jmp near HighlightTreeSlot.22
 .30:
-xor edx, edx	; 27B64
-mov dl, byte [treecolslots+18h]	; 27B66
-mov eax, dword [byte ebp-01Ch]	; 27B6C
-cmp edx, dword [eax]	; 27B6F
-jne short .31	; 27B71
-push dword 80h	; 27B73
-push byte 0Dh	; 27B78
-push byte 5Ch	; 27B7A
-push dword 0E2h	; 27B7C
-push dword 10Ah	; 27B81
-call sub_91044	; 27B86
-add esp, byte 14h	; 27B8B
-jmp short .x	; 27B8E
+        xor edx, edx
+        mov dl, byte [treecolslots+18h]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .31
+        push dword 80h
+        push byte 0Dh
+        push byte 5Ch
+        push dword 0E2h
+        push dword 10Ah
+        call sub_91044
+        add esp, byte 14h
+        jmp short .x
 .31:
-xor edx, edx	; 27B90
-mov dl, byte [treecolslots+28h]	; 27B92
-mov eax, dword [byte ebp-01Ch]	; 27B98
-cmp edx, dword [eax]	; 27B9B
-jne short .x	; 27B9D
-push dword 80h	; 27B9F
-push byte 0Dh	; 27BA4
-push byte 5Ch	; 27BA6
-push dword 0F2h	; 27BA8
-push dword 10Ah	; 27BAD
-call sub_91044	; 27BB2
-add esp, byte 14h	; 27BB7
+        xor edx, edx
+        mov dl, byte [treecolslots+28h]
+        mov eax, dword [byte ebp-01Ch]
+        cmp edx, dword [eax]
+        jne short .x
+        push dword 80h
+        push byte 0Dh
+        push byte 5Ch
+        push dword 0F2h
+        push dword 10Ah
+        call sub_91044
+        add esp, byte 14h
 .x:
-mov esp, ebp	; 27BBA
-pop ebp	; 27BBC
-pop edi	; 27BBD
-pop esi	; 27BBE
-pop edx	; 27BBF
-pop ecx	; 27BC0
-pop ebx	; 27BC1
-ret	; 27BC2
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MoveTreeHighlight                            27BC3  95 PC, medium confidence
+; (old*, new*): unhighlight old, highlight new, *old = new; skips slots >=
+; 1Ah; called by RunTeamPickMenu in playoff mode
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/MoveTreeHighlight.c
 %ifdef CBUILD
 %include "c/front/playoff/MoveTreeHighlight.inc"
 %else
 MoveTreeHighlight:
-push dword 20h	; 27BC3
-call __CHK	; 27BC8
-push ebx	; 27BCD
-push ecx	; 27BCE
-push esi	; 27BCF
-push edi	; 27BD0
-push ebp	; 27BD1
-mov ebp, esp	; 27BD2
-sub esp, 8	; 27BD4
-mov dword [byte ebp-08h], eax	; 27BDA
-mov dword [byte ebp-04h], edx	; 27BDD
-cmp dword [byte ebp-08h], byte 0	; 27BE0
-je short .1	; 27BE4
-mov eax, dword [byte ebp-08h]	; 27BE6
-mov eax, dword [eax]	; 27BE9
-shl eax, 2	; 27BEB
-cmp dword [dword eax+playofftree], byte 1Ah	; 27BEE
-jl short .2	; 27BF5
+        push dword 20h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 8
+        mov dword [byte ebp-08h], eax
+        mov dword [byte ebp-04h], edx
+        cmp dword [byte ebp-08h], byte 0
+        je short .1
+        mov eax, dword [byte ebp-08h]
+        mov eax, dword [eax]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .2
 .1:
-jmp short .x	; 27BF7
+        jmp short .x
 .2:
-mov eax, dword [byte ebp-08h]	; 27BF9
-call HighlightTreeSlot	; 27BFC
-cmp dword [byte ebp-04h], byte 0	; 27C01
-je short .3	; 27C05
-mov eax, dword [byte ebp-04h]	; 27C07
-mov eax, dword [eax]	; 27C0A
-shl eax, 2	; 27C0C
-cmp dword [dword eax+playofftree], byte 1Ah	; 27C0F
-jl short .4	; 27C16
+        mov eax, dword [byte ebp-08h]
+        call HighlightTreeSlot
+        cmp dword [byte ebp-04h], byte 0
+        je short .3
+        mov eax, dword [byte ebp-04h]
+        mov eax, dword [eax]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .4
 .3:
-jmp short .x	; 27C18
+        jmp short .x
 .4:
-mov eax, dword [byte ebp-04h]	; 27C1A
-call HighlightTreeSlot	; 27C1D
-mov eax, dword [byte ebp-04h]	; 27C22
-mov edx, dword [eax]	; 27C25
-mov eax, dword [byte ebp-08h]	; 27C27
-mov dword [eax], edx	; 27C2A
+        mov eax, dword [byte ebp-04h]
+        call HighlightTreeSlot
+        mov eax, dword [byte ebp-04h]
+        mov edx, dword [eax]
+        mov eax, dword [byte ebp-08h]
+        mov dword [eax], edx
 .x:
-mov esp, ebp	; 27C2C
-pop ebp	; 27C2E
-pop edi	; 27C2F
-pop esi	; 27C30
-pop ecx	; 27C31
-pop ebx	; 27C32
-ret	; 27C33
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CountSeriesWins                              27C34  95 PC, medium confidence
+; Loads the schedule (LoadScheduleDB or OpenStatsSchedule), counts wins per
+; team over the 38h playoff games (6-byte entries, score +4/+5), writes wins
+; for the 16 tree teams
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/CountSeriesWins.c
 %ifdef CBUILD
 %include "c/front/playoff/CountSeriesWins.inc"
 %else
 CountSeriesWins:
-push dword 54h	; 27C34
-call __CHK	; 27C39
-push ecx	; 27C3E
-push esi	; 27C3F
-push edi	; 27C40
-push ebp	; 27C41
-mov ebp, esp	; 27C42
-sub esp, 3Ch	; 27C44
-mov dword [byte ebp-014h], eax	; 27C4A
-mov dword [byte ebp-01Ch], edx	; 27C4D
-mov dword [byte ebp-018h], ebx	; 27C50
-cmp dword [byte ebp-018h], byte 0	; 27C53
-je short .1	; 27C57
-lea eax, [byte ebp-08h]	; 27C59
-call LoadScheduleDB	; 27C5C
-jmp short .2	; 27C61
+        push dword 54h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 3Ch
+        mov dword [byte ebp-014h], eax
+        mov dword [byte ebp-01Ch], edx
+        mov dword [byte ebp-018h], ebx
+        cmp dword [byte ebp-018h], byte 0
+        je short .1
+        lea eax, [byte ebp-08h]
+        call LoadScheduleDB
+        jmp short .2
 .1:
-lea eax, [byte ebp-08h]	; 27C63
-call OpenStatsSchedule	; 27C66
+        lea eax, [byte ebp-08h]
+        call OpenStatsSchedule
 .2:
-add dword [byte ebp-08h], byte 2	; 27C6B
-mov eax, dword [byte ebp-08h]	; 27C6F
-add eax, 1998h	; 27C72
-mov dword [byte ebp-04h], eax	; 27C77
-mov dword [byte ebp-010h], 0	; 27C7A
+        add dword [byte ebp-08h], byte 2
+        mov eax, dword [byte ebp-08h]
+        add eax, 1998h
+        mov dword [byte ebp-04h], eax
+        mov dword [byte ebp-010h], 0
 .3:
-cmp dword [byte ebp-010h], byte 1Ch	; 27C81
-jl short .5	; 27C85
-jmp short .6	; 27C87
+        cmp dword [byte ebp-010h], byte 1Ch
+        jl short .5
+        jmp short .6
 .4:
-inc dword [byte ebp-010h]	; 27C89
-jmp short CountSeriesWins.3	; 27C8C
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.3
 .5:
-mov eax, dword [byte ebp-010h]	; 27C8E
-mov byte [byte eax+ebp-03Ch], 0	; 27C91
-jmp short CountSeriesWins.4	; 27C96
+        mov eax, dword [byte ebp-010h]
+        mov byte [byte eax+ebp-03Ch], 0
+        jmp short CountSeriesWins.4
 .6:
-mov dword [byte ebp-010h], 0	; 27C98
+        mov dword [byte ebp-010h], 0
 .7:
-cmp dword [byte ebp-010h], byte 38h	; 27C9F
-jl short .9	; 27CA3
-jmp near .16	; 27CA5
+        cmp dword [byte ebp-010h], byte 38h
+        jl short .9
+        jmp near .16
 .8:
-inc dword [byte ebp-010h]	; 27CAA
-add dword [byte ebp-04h], byte 6	; 27CAD
-jmp short CountSeriesWins.7	; 27CB1
+        inc dword [byte ebp-010h]
+        add dword [byte ebp-04h], byte 6
+        jmp short CountSeriesWins.7
 .9:
-mov eax, dword [byte ebp-04h]	; 27CB3
-cmp byte [byte eax+02h], 0FFh	; 27CB6
-je short .10	; 27CBA
-mov eax, dword [byte ebp-04h]	; 27CBC
-cmp byte [byte eax+03h], 0FFh	; 27CBF
-jne short .11	; 27CC3
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+02h], 0FFh
+        je short .10
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+03h], 0FFh
+        jne short .11
 .10:
-jmp short .15	; 27CC5
+        jmp short .15
 .11:
-mov eax, dword [byte ebp-04h]	; 27CC7
-cmp byte [byte eax+04h], 0FFh	; 27CCA
-je short .12	; 27CCE
-mov eax, dword [byte ebp-04h]	; 27CD0
-cmp byte [byte eax+05h], 0FFh	; 27CD3
-jne short .13	; 27CD7
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+04h], 0FFh
+        je short .12
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+05h], 0FFh
+        jne short .13
 .12:
-jmp short .15	; 27CD9
+        jmp short .15
 .13:
-mov eax, dword [byte ebp-04h]	; 27CDB
-mov dl, byte [byte eax+04h]	; 27CDE
-mov eax, dword [byte ebp-04h]	; 27CE1
-cmp dl, byte [byte eax+05h]	; 27CE4
-jbe short .14	; 27CE7
-mov eax, dword [byte ebp-04h]	; 27CE9
-mov al, byte [byte eax+02h]	; 27CEC
-and eax, 0FFh	; 27CEF
-inc byte [byte eax+ebp-03Ch]	; 27CF4
-jmp short .15	; 27CF8
+        mov eax, dword [byte ebp-04h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-04h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .14
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
+        jmp short .15
 .14:
-mov eax, dword [byte ebp-04h]	; 27CFA
-mov al, byte [byte eax+03h]	; 27CFD
-and eax, 0FFh	; 27D00
-inc byte [byte eax+ebp-03Ch]	; 27D05
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+03h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
 .15:
-jmp short CountSeriesWins.8	; 27D09
+        jmp short CountSeriesWins.8
 .16:
-mov dword [byte ebp-010h], 0	; 27D0B
+        mov dword [byte ebp-010h], 0
 .17:
-cmp dword [byte ebp-010h], byte 10h	; 27D12
-jl short .19	; 27D16
-jmp short .20	; 27D18
+        cmp dword [byte ebp-010h], byte 10h
+        jl short .19
+        jmp short .20
 .18:
-inc dword [byte ebp-010h]	; 27D1A
-jmp short CountSeriesWins.17	; 27D1D
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.17
 .19:
-mov eax, dword [byte ebp-010h]	; 27D1F
-shl eax, 2	; 27D22
-add eax, dword [byte ebp-014h]	; 27D25
-mov eax, dword [eax]	; 27D28
-xor edx, edx	; 27D2A
-mov dl, byte [byte eax+ebp-03Ch]	; 27D2C
-mov eax, dword [byte ebp-010h]	; 27D30
-shl eax, 2	; 27D33
-add eax, dword [byte ebp-01Ch]	; 27D36
-mov dword [eax], edx	; 27D39
-jmp short CountSeriesWins.18	; 27D3B
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-014h]
+        mov eax, dword [eax]
+        xor edx, edx
+        mov dl, byte [byte eax+ebp-03Ch]
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-01Ch]
+        mov dword [eax], edx
+        jmp short CountSeriesWins.18
 .20:
-mov dword [byte ebp-010h], 0	; 27D3D
+        mov dword [byte ebp-010h], 0
 .21:
-cmp dword [byte ebp-010h], byte 1Ah	; 27D44
-jl short .23	; 27D48
-jmp short .24	; 27D4A
+        cmp dword [byte ebp-010h], byte 1Ah
+        jl short .23
+        jmp short .24
 .22:
-inc dword [byte ebp-010h]	; 27D4C
-jmp short CountSeriesWins.21	; 27D4F
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.21
 .23:
-mov eax, dword [byte ebp-010h]	; 27D51
-mov byte [byte eax+ebp-03Ch], 0	; 27D54
-jmp short CountSeriesWins.22	; 27D59
+        mov eax, dword [byte ebp-010h]
+        mov byte [byte eax+ebp-03Ch], 0
+        jmp short CountSeriesWins.22
 .24:
-mov dword [byte ebp-010h], 0	; 27D5B
+        mov dword [byte ebp-010h], 0
 .25:
-cmp dword [byte ebp-010h], byte 1Ch	; 27D62
-jl short .27	; 27D66
-jmp near .34	; 27D68
+        cmp dword [byte ebp-010h], byte 1Ch
+        jl short .27
+        jmp near .34
 .26:
-inc dword [byte ebp-010h]	; 27D6D
-add dword [byte ebp-04h], byte 6	; 27D70
-jmp short CountSeriesWins.25	; 27D74
+        inc dword [byte ebp-010h]
+        add dword [byte ebp-04h], byte 6
+        jmp short CountSeriesWins.25
 .27:
-mov eax, dword [byte ebp-04h]	; 27D76
-cmp byte [byte eax+02h], 0FFh	; 27D79
-je short .28	; 27D7D
-mov eax, dword [byte ebp-04h]	; 27D7F
-cmp byte [byte eax+03h], 0FFh	; 27D82
-jne short .29	; 27D86
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+02h], 0FFh
+        je short .28
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+03h], 0FFh
+        jne short .29
 .28:
-jmp short .33	; 27D88
+        jmp short .33
 .29:
-mov eax, dword [byte ebp-04h]	; 27D8A
-cmp byte [byte eax+04h], 0FFh	; 27D8D
-je short .30	; 27D91
-mov eax, dword [byte ebp-04h]	; 27D93
-cmp byte [byte eax+05h], 0FFh	; 27D96
-jne short .31	; 27D9A
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+04h], 0FFh
+        je short .30
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+05h], 0FFh
+        jne short .31
 .30:
-jmp short .33	; 27D9C
+        jmp short .33
 .31:
-mov eax, dword [byte ebp-04h]	; 27D9E
-mov dl, byte [byte eax+04h]	; 27DA1
-mov eax, dword [byte ebp-04h]	; 27DA4
-cmp dl, byte [byte eax+05h]	; 27DA7
-jbe short .32	; 27DAA
-mov eax, dword [byte ebp-04h]	; 27DAC
-mov al, byte [byte eax+02h]	; 27DAF
-and eax, 0FFh	; 27DB2
-inc byte [byte eax+ebp-03Ch]	; 27DB7
-jmp short .33	; 27DBB
+        mov eax, dword [byte ebp-04h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-04h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .32
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
+        jmp short .33
 .32:
-mov eax, dword [byte ebp-04h]	; 27DBD
-mov al, byte [byte eax+03h]	; 27DC0
-and eax, 0FFh	; 27DC3
-inc byte [byte eax+ebp-03Ch]	; 27DC8
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+03h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
 .33:
-jmp short CountSeriesWins.26	; 27DCC
+        jmp short CountSeriesWins.26
 .34:
-mov dword [byte ebp-010h], 10h	; 27DCE
+        mov dword [byte ebp-010h], 10h
 .35:
-cmp dword [byte ebp-010h], byte 18h	; 27DD5
-jl short .37	; 27DD9
-jmp short .38	; 27DDB
+        cmp dword [byte ebp-010h], byte 18h
+        jl short .37
+        jmp short .38
 .36:
-inc dword [byte ebp-010h]	; 27DDD
-jmp short CountSeriesWins.35	; 27DE0
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.35
 .37:
-mov eax, dword [byte ebp-010h]	; 27DE2
-shl eax, 2	; 27DE5
-add eax, dword [byte ebp-014h]	; 27DE8
-mov eax, dword [eax]	; 27DEB
-xor edx, edx	; 27DED
-mov dl, byte [byte eax+ebp-03Ch]	; 27DEF
-mov eax, dword [byte ebp-010h]	; 27DF3
-shl eax, 2	; 27DF6
-add eax, dword [byte ebp-01Ch]	; 27DF9
-mov dword [eax], edx	; 27DFC
-jmp short CountSeriesWins.36	; 27DFE
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-014h]
+        mov eax, dword [eax]
+        xor edx, edx
+        mov dl, byte [byte eax+ebp-03Ch]
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-01Ch]
+        mov dword [eax], edx
+        jmp short CountSeriesWins.36
 .38:
-mov dword [byte ebp-010h], 0	; 27E00
+        mov dword [byte ebp-010h], 0
 .39:
-cmp dword [byte ebp-010h], byte 1Ah	; 27E07
-jl short .41	; 27E0B
-jmp short .42	; 27E0D
+        cmp dword [byte ebp-010h], byte 1Ah
+        jl short .41
+        jmp short .42
 .40:
-inc dword [byte ebp-010h]	; 27E0F
-jmp short CountSeriesWins.39	; 27E12
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.39
 .41:
-mov eax, dword [byte ebp-010h]	; 27E14
-mov byte [byte eax+ebp-03Ch], 0	; 27E17
-jmp short CountSeriesWins.40	; 27E1C
+        mov eax, dword [byte ebp-010h]
+        mov byte [byte eax+ebp-03Ch], 0
+        jmp short CountSeriesWins.40
 .42:
-mov dword [byte ebp-010h], 0	; 27E1E
+        mov dword [byte ebp-010h], 0
 .43:
-cmp dword [byte ebp-010h], byte 0Eh	; 27E25
-jl short .45	; 27E29
-jmp near .52	; 27E2B
+        cmp dword [byte ebp-010h], byte 0Eh
+        jl short .45
+        jmp near .52
 .44:
-inc dword [byte ebp-010h]	; 27E30
-add dword [byte ebp-04h], byte 6	; 27E33
-jmp short CountSeriesWins.43	; 27E37
+        inc dword [byte ebp-010h]
+        add dword [byte ebp-04h], byte 6
+        jmp short CountSeriesWins.43
 .45:
-mov eax, dword [byte ebp-04h]	; 27E39
-cmp byte [byte eax+02h], 0FFh	; 27E3C
-je short .46	; 27E40
-mov eax, dword [byte ebp-04h]	; 27E42
-cmp byte [byte eax+03h], 0FFh	; 27E45
-jne short .47	; 27E49
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+02h], 0FFh
+        je short .46
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+03h], 0FFh
+        jne short .47
 .46:
-jmp short .51	; 27E4B
+        jmp short .51
 .47:
-mov eax, dword [byte ebp-04h]	; 27E4D
-cmp byte [byte eax+04h], 0FFh	; 27E50
-je short .48	; 27E54
-mov eax, dword [byte ebp-04h]	; 27E56
-cmp byte [byte eax+05h], 0FFh	; 27E59
-jne short .49	; 27E5D
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+04h], 0FFh
+        je short .48
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+05h], 0FFh
+        jne short .49
 .48:
-jmp short .51	; 27E5F
+        jmp short .51
 .49:
-mov eax, dword [byte ebp-04h]	; 27E61
-mov dl, byte [byte eax+04h]	; 27E64
-mov eax, dword [byte ebp-04h]	; 27E67
-cmp dl, byte [byte eax+05h]	; 27E6A
-jbe short .50	; 27E6D
-mov eax, dword [byte ebp-04h]	; 27E6F
-mov al, byte [byte eax+02h]	; 27E72
-and eax, 0FFh	; 27E75
-inc byte [byte eax+ebp-03Ch]	; 27E7A
-jmp short .51	; 27E7E
+        mov eax, dword [byte ebp-04h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-04h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .50
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
+        jmp short .51
 .50:
-mov eax, dword [byte ebp-04h]	; 27E80
-mov al, byte [byte eax+03h]	; 27E83
-and eax, 0FFh	; 27E86
-inc byte [byte eax+ebp-03Ch]	; 27E8B
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+03h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
 .51:
-jmp short CountSeriesWins.44	; 27E8F
+        jmp short CountSeriesWins.44
 .52:
-mov dword [byte ebp-010h], 18h	; 27E91
+        mov dword [byte ebp-010h], 18h
 .53:
-cmp dword [byte ebp-010h], byte 1Ch	; 27E98
-jl short .55	; 27E9C
-jmp short .56	; 27E9E
+        cmp dword [byte ebp-010h], byte 1Ch
+        jl short .55
+        jmp short .56
 .54:
-inc dword [byte ebp-010h]	; 27EA0
-jmp short CountSeriesWins.53	; 27EA3
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.53
 .55:
-mov eax, dword [byte ebp-010h]	; 27EA5
-shl eax, 2	; 27EA8
-add eax, dword [byte ebp-014h]	; 27EAB
-mov eax, dword [eax]	; 27EAE
-xor edx, edx	; 27EB0
-mov dl, byte [byte eax+ebp-03Ch]	; 27EB2
-mov eax, dword [byte ebp-010h]	; 27EB6
-shl eax, 2	; 27EB9
-add eax, dword [byte ebp-01Ch]	; 27EBC
-mov dword [eax], edx	; 27EBF
-jmp short CountSeriesWins.54	; 27EC1
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-014h]
+        mov eax, dword [eax]
+        xor edx, edx
+        mov dl, byte [byte eax+ebp-03Ch]
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-01Ch]
+        mov dword [eax], edx
+        jmp short CountSeriesWins.54
 .56:
-mov dword [byte ebp-010h], 0	; 27EC3
+        mov dword [byte ebp-010h], 0
 .57:
-cmp dword [byte ebp-010h], byte 1Ah	; 27ECA
-jl short .59	; 27ECE
-jmp short .60	; 27ED0
+        cmp dword [byte ebp-010h], byte 1Ah
+        jl short .59
+        jmp short .60
 .58:
-inc dword [byte ebp-010h]	; 27ED2
-jmp short CountSeriesWins.57	; 27ED5
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.57
 .59:
-mov eax, dword [byte ebp-010h]	; 27ED7
-mov byte [byte eax+ebp-03Ch], 0	; 27EDA
-jmp short CountSeriesWins.58	; 27EDF
+        mov eax, dword [byte ebp-010h]
+        mov byte [byte eax+ebp-03Ch], 0
+        jmp short CountSeriesWins.58
 .60:
-mov dword [byte ebp-010h], 0	; 27EE1
+        mov dword [byte ebp-010h], 0
 .61:
-cmp dword [byte ebp-010h], byte 7	; 27EE8
-jl short .63	; 27EEC
-jmp near .70	; 27EEE
+        cmp dword [byte ebp-010h], byte 7
+        jl short .63
+        jmp near .70
 .62:
-inc dword [byte ebp-010h]	; 27EF3
-add dword [byte ebp-04h], byte 6	; 27EF6
-jmp short CountSeriesWins.61	; 27EFA
+        inc dword [byte ebp-010h]
+        add dword [byte ebp-04h], byte 6
+        jmp short CountSeriesWins.61
 .63:
-mov eax, dword [byte ebp-04h]	; 27EFC
-cmp byte [byte eax+02h], 0FFh	; 27EFF
-je short .64	; 27F03
-mov eax, dword [byte ebp-04h]	; 27F05
-cmp byte [byte eax+03h], 0FFh	; 27F08
-jne short .65	; 27F0C
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+02h], 0FFh
+        je short .64
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+03h], 0FFh
+        jne short .65
 .64:
-jmp short .69	; 27F0E
+        jmp short .69
 .65:
-mov eax, dword [byte ebp-04h]	; 27F10
-cmp byte [byte eax+04h], 0FFh	; 27F13
-je short .66	; 27F17
-mov eax, dword [byte ebp-04h]	; 27F19
-cmp byte [byte eax+05h], 0FFh	; 27F1C
-jne short .67	; 27F20
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+04h], 0FFh
+        je short .66
+        mov eax, dword [byte ebp-04h]
+        cmp byte [byte eax+05h], 0FFh
+        jne short .67
 .66:
-jmp short .69	; 27F22
+        jmp short .69
 .67:
-mov eax, dword [byte ebp-04h]	; 27F24
-mov dl, byte [byte eax+04h]	; 27F27
-mov eax, dword [byte ebp-04h]	; 27F2A
-cmp dl, byte [byte eax+05h]	; 27F2D
-jbe short .68	; 27F30
-mov eax, dword [byte ebp-04h]	; 27F32
-mov al, byte [byte eax+02h]	; 27F35
-and eax, 0FFh	; 27F38
-inc byte [byte eax+ebp-03Ch]	; 27F3D
-jmp short .69	; 27F41
+        mov eax, dword [byte ebp-04h]
+        mov dl, byte [byte eax+04h]
+        mov eax, dword [byte ebp-04h]
+        cmp dl, byte [byte eax+05h]
+        jbe short .68
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+02h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
+        jmp short .69
 .68:
-mov eax, dword [byte ebp-04h]	; 27F43
-mov al, byte [byte eax+03h]	; 27F46
-and eax, 0FFh	; 27F49
-inc byte [byte eax+ebp-03Ch]	; 27F4E
+        mov eax, dword [byte ebp-04h]
+        mov al, byte [byte eax+03h]
+        and eax, 0FFh
+        inc byte [byte eax+ebp-03Ch]
 .69:
-jmp short CountSeriesWins.62	; 27F52
+        jmp short CountSeriesWins.62
 .70:
-mov dword [byte ebp-010h], 1Ch	; 27F54
+        mov dword [byte ebp-010h], 1Ch
 .71:
-cmp dword [byte ebp-010h], byte 1Eh	; 27F5B
-jl short .73	; 27F5F
-jmp short .74	; 27F61
+        cmp dword [byte ebp-010h], byte 1Eh
+        jl short .73
+        jmp short .74
 .72:
-inc dword [byte ebp-010h]	; 27F63
-jmp short CountSeriesWins.71	; 27F66
+        inc dword [byte ebp-010h]
+        jmp short CountSeriesWins.71
 .73:
-mov eax, dword [byte ebp-010h]	; 27F68
-shl eax, 2	; 27F6B
-add eax, dword [byte ebp-014h]	; 27F6E
-mov eax, dword [eax]	; 27F71
-xor edx, edx	; 27F73
-mov dl, byte [byte eax+ebp-03Ch]	; 27F75
-mov eax, dword [byte ebp-010h]	; 27F79
-shl eax, 2	; 27F7C
-add eax, dword [byte ebp-01Ch]	; 27F7F
-mov dword [eax], edx	; 27F82
-jmp short CountSeriesWins.72	; 27F84
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-014h]
+        mov eax, dword [eax]
+        xor edx, edx
+        mov dl, byte [byte eax+ebp-03Ch]
+        mov eax, dword [byte ebp-010h]
+        shl eax, 2
+        add eax, dword [byte ebp-01Ch]
+        mov dword [eax], edx
+        jmp short CountSeriesWins.72
 .74:
-mov eax, dword [byte ebp-08h]	; 27F86
-sub eax, byte 2	; 27F89
-push eax	; 27F8C
-call FreeMemBlock	; 27F8D
-add esp, byte 4	; 27F92
-mov esp, ebp	; 27F95
-pop ebp	; 27F97
-pop edi	; 27F98
-pop esi	; 27F99
-pop ecx	; 27F9A
-ret	; 27F9B
+        mov eax, dword [byte ebp-08h]
+        sub eax, byte 2
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PlayoffTreeScreen                                               27F9C  95 PC
+; Playoff tree: "Playoffs have not been seeded yet", rst1 / rst2, scuparrw,
+; Western / Eastern Conference, aup / midl / adn arrows
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/PlayoffTreeScreen.c
 %ifdef CBUILD
 %include "c/front/playoff/PlayoffTreeScreen.inc"
 %else
 PlayoffTreeScreen:
-push dword 224h	; 27F9C
-call __CHK	; 27FA1
-push ebx	; 27FA6
-push ecx	; 27FA7
-push edx	; 27FA8
-push esi	; 27FA9
-push edi	; 27FAA
-push ebp	; 27FAB
-mov ebp, esp	; 27FAC
-sub esp, 1F8h	; 27FAE
-mov dword [byte ebp-038h], 0	; 27FB4
-mov eax, dword [mainfont]	; 27FBB
-mov dword [byte ebp-02Ch], eax	; 27FC0
-mov eax, dword [kaufmfont]	; 27FC3
-mov dword [byte ebp-03Ch], eax	; 27FC8
-cmp dword [playofftree], byte 1Ah	; 27FCB
-jne short .1	; 27FD2
-mov dword [off_CF6A3], 0	; 27FD4
-jmp short .2	; 27FDE
+        push dword 224h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 1F8h
+        mov dword [byte ebp-038h], 0
+        mov eax, dword [mainfont]
+        mov dword [byte ebp-02Ch], eax
+        mov eax, dword [kaufmfont]
+        mov dword [byte ebp-03Ch], eax
+        cmp dword [playofftree], byte 1Ah
+        jne short .1
+        mov dword [off_CF6A3], 0
+        jmp short .2
 .1:
-mov dword [off_CF6A3], DeskSetExit3b	; 27FE0
+        mov dword [off_CF6A3], DeskSetExit3b
 .2:
-call sub_B4BA8	; 27FEA
-cmp dword [embscupbank], byte 0	; 27FEF
-jne near .5	; 27FF6
-mov dword [dword ebp-01CCh], 0	; 27FFC
-mov eax, dword [statsplayoffs]	; 28006
-shl eax, 2	; 2800B
-mov eax, dword [dword eax+statsbgnames]	; 2800E
-mov dword [dword ebp-01D0h], eax	; 28014
-cmp byte [fileoncd+08Dh], 1	; 2801A
-jne short .3	; 28021
-mov eax, dword [cddriveptr]	; 28023
-mov dword [dword ebp-01D4h], eax	; 28028
-jmp short .4	; 2802E
+        call sub_B4BA8
+        cmp dword [embscupbank], byte 0
+        jne near .5
+        mov dword [dword ebp-01CCh], 0
+        mov eax, dword [statsplayoffs]
+        shl eax, 2
+        mov eax, dword [dword eax+statsbgnames]
+        mov dword [dword ebp-01D0h], eax
+        cmp byte [fileoncd+08Dh], 1
+        jne short .3
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-01D4h], eax
+        jmp short .4
 .3:
-mov dword [dword ebp-01D4h], 0	; 28030
+        mov dword [dword ebp-01D4h], 0
 .4:
-mov edx, dword [dword ebp-01D4h]	; 2803A
-lea eax, [byte ebp-05Ch]	; 28040
-mov ecx, dword [dword ebp-01CCh]	; 28043
-mov ebx, dword [dword ebp-01D0h]	; 28049
-call MakePath	; 2804F
-push byte 0	; 28054
-lea eax, [byte ebp-05Ch]	; 28056
-push eax	; 28059
-call LoadBank	; 2805A
-add esp, byte 8	; 2805F
-mov dword [statsbgshapes], eax	; 28062
-mov eax, str_Bkgd2	; 28067
-push eax	; 2806C
-push dword [statsbgshapes]	; 2806D
-call FindShape	; 28073
-add esp, byte 8	; 28078
-mov dword [statspalshape], eax	; 2807B
-push dword 1E0h	; 28080
-push byte 13h	; 28085
-push dword 280h	; 28087
-push byte 0	; 2808C
-call SetClipWindow	; 2808E
-add esp, byte 10h	; 28093
-push dword [statspalshape]	; 28096
-call DrawShape	; 2809C
-add esp, byte 4	; 280A1
-push dword 1E0h	; 280A4
-push byte 0	; 280A9
-push dword 280h	; 280AB
-push byte 0	; 280B0
-call SetClipWindow	; 280B2
-add esp, byte 10h	; 280B7
-push dword [statsbgshapes]	; 280BA
-call FreeMemBlock	; 280C0
-add esp, byte 4	; 280C5
-jmp short .6	; 280C8
+        mov edx, dword [dword ebp-01D4h]
+        lea eax, [byte ebp-05Ch]
+        mov ecx, dword [dword ebp-01CCh]
+        mov ebx, dword [dword ebp-01D0h]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-05Ch]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        mov eax, str_Bkgd2
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword 1E0h
+        push byte 13h
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        push dword 1E0h
+        push byte 0
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        jmp short .6
 .5:
-mov eax, str_Bkgd2	; 280CA
-push eax	; 280CF
-push dword [embscupbank]	; 280D0
-call FindShape	; 280D6
-add esp, byte 8	; 280DB
-mov dword [statspalshape], eax	; 280DE
-push dword 1E0h	; 280E3
-push byte 13h	; 280E8
-push dword 280h	; 280EA
-push byte 0	; 280EF
-call SetClipWindow	; 280F1
-add esp, byte 10h	; 280F6
-push dword [statspalshape]	; 280F9
-call DrawShape	; 280FF
-add esp, byte 4	; 28104
-push dword 1E0h	; 28107
-push byte 0	; 2810C
-push dword 280h	; 2810E
-push byte 0	; 28113
-call SetClipWindow	; 28115
-add esp, byte 10h	; 2811A
+        mov eax, str_Bkgd2
+        push eax
+        push dword [embscupbank]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword 1E0h
+        push byte 13h
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        push dword 1E0h
+        push byte 0
+        push dword 280h
+        push byte 0
+        call SetClipWindow
+        add esp, byte 10h
 .6:
-cmp dword [dword_C6D26], byte 1	; 2811D
-jne near .11	; 28124
-mov dword [dword ebp-01D8h], 0	; 2812A
-mov eax, str_Embpal2	; 28134
-mov dword [dword ebp-01DCh], eax	; 28139
-cmp byte [fileoncd+08Eh], 1	; 2813F
-jne short .7	; 28146
-mov eax, dword [cddriveptr]	; 28148
-mov dword [dword ebp-01E0h], eax	; 2814D
-jmp short .8	; 28153
+        cmp dword [dword_C6D26], byte 1
+        jne near .11
+        mov dword [dword ebp-01D8h], 0
+        mov eax, str_Embpal2
+        mov dword [dword ebp-01DCh], eax
+        cmp byte [fileoncd+08Eh], 1
+        jne short .7
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-01E0h], eax
+        jmp short .8
 .7:
-mov dword [dword ebp-01E0h], 0	; 28155
+        mov dword [dword ebp-01E0h], 0
 .8:
-mov edx, dword [dword ebp-01E0h]	; 2815F
-lea eax, [byte ebp-05Ch]	; 28165
-mov ecx, dword [dword ebp-01D8h]	; 28168
-mov ebx, dword [dword ebp-01DCh]	; 2816E
-call MakePath	; 28174
-push byte 0	; 28179
-lea eax, [byte ebp-05Ch]	; 2817B
-push eax	; 2817E
-call LoadBank	; 2817F
-add esp, byte 8	; 28184
-mov dword [statsbgshapes], eax	; 28187
-mov eax, str_Pal9	; 2818C
-push eax	; 28191
-push dword [statsbgshapes]	; 28192
-call FindShape	; 28198
-add esp, byte 8	; 2819D
-mov dword [statspalshape], eax	; 281A0
-cmp dword [statspalvalid], byte 1	; 281A5
-jne short .9	; 281AC
-mov ebx, 300h	; 281AE
-mov edx, dword [statspalshape]	; 281B3
-add edx, byte 10h	; 281B9
-mov eax, dword [statspal]	; 281BC
-call memcpy_	; 281C1
-jmp short .10	; 281C6
+        mov edx, dword [dword ebp-01E0h]
+        lea eax, [byte ebp-05Ch]
+        mov ecx, dword [dword ebp-01D8h]
+        mov ebx, dword [dword ebp-01DCh]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-05Ch]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        mov eax, str_Pal9
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        cmp dword [statspalvalid], byte 1
+        jne short .9
+        mov ebx, 300h
+        mov edx, dword [statspalshape]
+        add edx, byte 10h
+        mov eax, dword [statspal]
+        call memcpy_
+        jmp short .10
 .9:
-mov eax, dword [statspalshape]	; 281C8
-add eax, byte 10h	; 281CD
-push eax	; 281D0
-push dword 100h	; 281D1
-push byte 0	; 281D6
-call VgaSetPalette	; 281D8
-add esp, byte 0Ch	; 281DD
+        mov eax, dword [statspalshape]
+        add eax, byte 10h
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
 .10:
-push dword [statsbgshapes]	; 281E0
-call FreeMemBlock	; 281E6
-add esp, byte 4	; 281EB
-mov dword [dword_C6D26], 0	; 281EE
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        mov dword [dword_C6D26], 0
 .11:
-xor ebx, ebx	; 281F8
-lea edx, [dword ebp-01C8h]	; 281FA
-mov eax, playofftree	; 28200
-call CountSeriesWins	; 28205
-mov edx, 43h	; 2820A
-mov eax, 40h	; 2820F
-call SetTextColors	; 28214
-xor eax, eax	; 28219
-mov al, byte [treecolslots]	; 2821B
-shl eax, 2	; 28220
-cmp dword [dword eax+playofftree], byte 19h	; 28223
-jle short .12	; 2822A
-push dword [byte ebp-03Ch]	; 2822C
-call TextSetFont	; 2822F
-add esp, byte 4	; 28234
-mov ecx, 8	; 28237
-lea edi, [dword ebp-0F0h]	; 2823C
-mov esi, str_PlayoffsHaveNotBeen2	; 28242
-rep movsd	; 28247
-movsw	; 28249
-lea esi, [dword ebp-0F0h]	; 2824B
-mov edi, 0F0h	; 28251
-lea eax, [dword ebp-0F0h]	; 28256
-push eax	; 2825C
-call fputchar	; 2825D
-add esp, byte 4	; 28262
-sar eax, 1	; 28265
-mov edx, 140h	; 28267
-sub edx, eax	; 2826C
-mov eax, edx	; 2826E
-mov ebx, esi	; 28270
-mov edx, edi	; 28272
-call PrintOutlinedText	; 28274
-push dword [byte ebp-02Ch]	; 28279
-call TextSetFont	; 2827C
-add esp, byte 4	; 28281
-jmp near .x	; 28284
+        xor ebx, ebx
+        lea edx, [dword ebp-01C8h]
+        mov eax, playofftree
+        call CountSeriesWins
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        xor eax, eax
+        mov al, byte [treecolslots]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 19h
+        jle short .12
+        push dword [byte ebp-03Ch]
+        call TextSetFont
+        add esp, byte 4
+        mov ecx, 8
+        lea edi, [dword ebp-0F0h]
+        mov esi, str_PlayoffsHaveNotBeen2
+        rep movsd
+        movsw
+        lea esi, [dword ebp-0F0h]
+        mov edi, 0F0h
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 140h
+        sub edx, eax
+        mov eax, edx
+        mov ebx, esi
+        mov edx, edi
+        call PrintOutlinedText
+        push dword [byte ebp-02Ch]
+        call TextSetFont
+        add esp, byte 4
+        jmp near .x
 .12:
-mov dword [dword ebp-01E4h], 0	; 28289
-mov eax, str_Pstatbar8	; 28293
-mov dword [dword ebp-01E8h], eax	; 28298
-cmp byte [fileoncd+013Ch], 1	; 2829E
-jne short .13	; 282A5
-mov eax, dword [cddriveptr]	; 282A7
-mov dword [dword ebp-01ECh], eax	; 282AC
-jmp short .14	; 282B2
+        mov dword [dword ebp-01E4h], 0
+        mov eax, str_Pstatbar8
+        mov dword [dword ebp-01E8h], eax
+        cmp byte [fileoncd+013Ch], 1
+        jne short .13
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-01ECh], eax
+        jmp short .14
 .13:
-mov dword [dword ebp-01ECh], 0	; 282B4
+        mov dword [dword ebp-01ECh], 0
 .14:
-mov edx, dword [dword ebp-01ECh]	; 282BE
-lea eax, [byte ebp-05Ch]	; 282C4
-mov ecx, dword [dword ebp-01E4h]	; 282C7
-mov ebx, dword [dword ebp-01E8h]	; 282CD
-call MakePath	; 282D3
-push byte 0	; 282D8
-lea eax, [byte ebp-05Ch]	; 282DA
-push eax	; 282DD
-call LoadBank	; 282DE
-add esp, byte 8	; 282E3
-mov dword [statsbgshapes], eax	; 282E6
-mov eax, str_Rst12	; 282EB
-push eax	; 282F0
-push dword [statsbgshapes]	; 282F1
-call FindShape	; 282F7
-add esp, byte 8	; 282FC
-mov dword [statspalshape], eax	; 282FF
-push byte 1Ah	; 28304
-push byte 0	; 28306
-push dword [statspalshape]	; 28308
-call DrawArt	; 2830E
-add esp, byte 0Ch	; 28313
-mov eax, str_Rst22	; 28316
-push eax	; 2831B
-push dword [statsbgshapes]	; 2831C
-call FindShape	; 28322
-add esp, byte 8	; 28327
-mov dword [statspalshape], eax	; 2832A
-push dword 192h	; 2832F
-push byte 0Fh	; 28334
-push dword [statspalshape]	; 28336
-call DrawArt	; 2833C
-add esp, byte 0Ch	; 28341
-push dword [statsbgshapes]	; 28344
-call FreeMemBlock	; 2834A
-add esp, byte 4	; 2834F
-mov dword [dword ebp-01F0h], 0	; 28352
-mov eax, str_Scuparrw2	; 2835C
-mov dword [dword ebp-01F4h], eax	; 28361
-cmp byte [fileoncd+016Eh], 1	; 28367
-jne short .15	; 2836E
-mov eax, dword [cddriveptr]	; 28370
-mov dword [dword ebp-01F8h], eax	; 28375
-jmp short .16	; 2837B
+        mov edx, dword [dword ebp-01ECh]
+        lea eax, [byte ebp-05Ch]
+        mov ecx, dword [dword ebp-01E4h]
+        mov ebx, dword [dword ebp-01E8h]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-05Ch]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        mov eax, str_Rst12
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push byte 1Ah
+        push byte 0
+        push dword [statspalshape]
+        call DrawArt
+        add esp, byte 0Ch
+        mov eax, str_Rst22
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword 192h
+        push byte 0Fh
+        push dword [statspalshape]
+        call DrawArt
+        add esp, byte 0Ch
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        mov dword [dword ebp-01F0h], 0
+        mov eax, str_Scuparrw2
+        mov dword [dword ebp-01F4h], eax
+        cmp byte [fileoncd+016Eh], 1
+        jne short .15
+        mov eax, dword [cddriveptr]
+        mov dword [dword ebp-01F8h], eax
+        jmp short .16
 .15:
-mov dword [dword ebp-01F8h], 0	; 2837D
+        mov dword [dword ebp-01F8h], 0
 .16:
-mov edx, dword [dword ebp-01F8h]	; 28387
-lea eax, [byte ebp-05Ch]	; 2838D
-mov ecx, dword [dword ebp-01F0h]	; 28390
-mov ebx, dword [dword ebp-01F4h]	; 28396
-call MakePath	; 2839C
-push byte 0	; 283A1
-lea eax, [byte ebp-05Ch]	; 283A3
-push eax	; 283A6
-call LoadBank	; 283A7
-add esp, byte 8	; 283AC
-mov dword [statsbgshapes], eax	; 283AF
-call TextGridOpen	; 283B4
-lea eax, [dword ebp-09Ch]	; 283B9
-push eax	; 283BF
-call TextSaveState	; 283C0
-add esp, byte 4	; 283C5
-push dword [byte ebp-02Ch]	; 283C8
-call TextSetFont	; 283CB
-add esp, byte 4	; 283D0
-mov edx, str_Standings	; 283D3
-lea eax, [dword ebp-0F0h]	; 283D8
-call MakeStatsTitle	; 283DE
-lea edx, [dword ebp-0F0h]	; 283E3
-mov eax, 16h	; 283E9
-call PrintCenteredText	; 283EE
-push dword [byte ebp-03Ch]	; 283F3
-call TextSetFont	; 283F6
-add esp, byte 4	; 283FB
-lea edi, [dword ebp-0F0h]	; 283FE
-mov esi, str_WesternConference2	; 28404
-movsd	; 28409
-movsd	; 2840A
-movsd	; 2840B
-movsd	; 2840C
-movsw	; 2840D
-movsb	; 2840F
-lea esi, [dword ebp-0F0h]	; 28410
-mov edi, 2Fh	; 28416
-lea eax, [dword ebp-0F0h]	; 2841B
-push eax	; 28421
-call fputchar	; 28422
-add esp, byte 4	; 28427
-sar eax, 1	; 2842A
-mov edx, 140h	; 2842C
-sub edx, eax	; 28431
-mov eax, edx	; 28433
-mov ebx, esi	; 28435
-mov edx, edi	; 28437
-call PrintOutlinedText	; 28439
-lea edi, [dword ebp-0F0h]	; 2843E
-mov esi, str_EasternConference2	; 28444
-movsd	; 28449
-movsd	; 2844A
-movsd	; 2844B
-movsd	; 2844C
-movsw	; 2844D
-movsb	; 2844F
-lea esi, [dword ebp-0F0h]	; 28450
-mov edi, 1A7h	; 28456
-lea eax, [dword ebp-0F0h]	; 2845B
-push eax	; 28461
-call fputchar	; 28462
-add esp, byte 4	; 28467
-sar eax, 1	; 2846A
-mov edx, 140h	; 2846C
-sub edx, eax	; 28471
-mov eax, edx	; 28473
-mov ebx, esi	; 28475
-mov edx, edi	; 28477
-call PrintOutlinedText	; 28479
-push dword [byte ebp-02Ch]	; 2847E
-call TextSetFont	; 28481
-add esp, byte 4	; 28486
-mov dword [byte ebp-014h], 0	; 28489
+        mov edx, dword [dword ebp-01F8h]
+        lea eax, [byte ebp-05Ch]
+        mov ecx, dword [dword ebp-01F0h]
+        mov ebx, dword [dword ebp-01F4h]
+        call MakePath
+        push byte 0
+        lea eax, [byte ebp-05Ch]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        call TextGridOpen
+        lea eax, [dword ebp-09Ch]
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        push dword [byte ebp-02Ch]
+        call TextSetFont
+        add esp, byte 4
+        mov edx, str_Standings
+        lea eax, [dword ebp-0F0h]
+        call MakeStatsTitle
+        lea edx, [dword ebp-0F0h]
+        mov eax, 16h
+        call PrintCenteredText
+        push dword [byte ebp-03Ch]
+        call TextSetFont
+        add esp, byte 4
+        lea edi, [dword ebp-0F0h]
+        mov esi, str_WesternConference2
+        movsd
+        movsd
+        movsd
+        movsd
+        movsw
+        movsb
+        lea esi, [dword ebp-0F0h]
+        mov edi, 2Fh
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 140h
+        sub edx, eax
+        mov eax, edx
+        mov ebx, esi
+        mov edx, edi
+        call PrintOutlinedText
+        lea edi, [dword ebp-0F0h]
+        mov esi, str_EasternConference2
+        movsd
+        movsd
+        movsd
+        movsd
+        movsw
+        movsb
+        lea esi, [dword ebp-0F0h]
+        mov edi, 1A7h
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call fputchar
+        add esp, byte 4
+        sar eax, 1
+        mov edx, 140h
+        sub edx, eax
+        mov eax, edx
+        mov ebx, esi
+        mov edx, edi
+        call PrintOutlinedText
+        push dword [byte ebp-02Ch]
+        call TextSetFont
+        add esp, byte 4
+        mov dword [byte ebp-014h], 0
 .17:
-cmp word [byte ebp-014h], byte 8	; 28490
-jl short .19	; 28495
-jmp near .24	; 28497
+        cmp word [byte ebp-014h], byte 8
+        jl short .19
+        jmp near .24
 .18:
-inc dword [byte ebp-014h]	; 2849C
-jmp short PlayoffTreeScreen.17	; 2849F
+        inc dword [byte ebp-014h]
+        jmp short PlayoffTreeScreen.17
 .19:
-cmp word [byte ebp-014h], byte 4	; 284A1
-jge short .20	; 284A6
-mov eax, dword [byte ebp-014h]	; 284A8
-mov dword [byte ebp-018h], eax	; 284AB
-mov edx, dword [byte ebp-016h]	; 284AE
-sar edx, 10h	; 284B1
-add edx, edx	; 284B4
-xor eax, eax	; 284B6
-mov al, byte [dword edx+treecolslots]	; 284B8
-mov dword [byte ebp-08h], eax	; 284BE
-jmp short .21	; 284C1
+        cmp word [byte ebp-014h], byte 4
+        jge short .20
+        mov eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecolslots]
+        mov dword [byte ebp-08h], eax
+        jmp short .21
 .20:
-mov eax, 7	; 284C3
-sub eax, dword [byte ebp-014h]	; 284C8
-mov dword [byte ebp-018h], eax	; 284CB
-mov edx, dword [byte ebp-016h]	; 284CE
-sar edx, 10h	; 284D1
-add edx, edx	; 284D4
-sub edx, byte 8	; 284D6
-mov eax, 7	; 284D9
-sub eax, edx	; 284DE
-mov edx, eax	; 284E0
-xor eax, eax	; 284E2
-mov al, byte [dword edx+treecolslots]	; 284E4
-mov dword [byte ebp-08h], eax	; 284EA
+        mov eax, 7
+        sub eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 8
+        mov eax, 7
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecolslots]
+        mov dword [byte ebp-08h], eax
 .21:
-mov edx, dword [byte ebp-016h]	; 284ED
-sar edx, 10h	; 284F0
-mov eax, dword [byte ebp-0Ah]	; 284F3
-sar eax, 10h	; 284F6
-shl eax, 2	; 284F9
-mov eax, dword [dword eax+playofftree]	; 284FC
-shl eax, 2	; 28502
-mov dword [dword eax+potreeseeds], edx	; 28505
-cmp word [byte ebp-014h], byte 4	; 2850B
-jge short .22	; 28510
-mov eax, dword [byte ebp-014h]	; 28512
-mov dword [byte ebp-018h], eax	; 28515
-mov edx, dword [byte ebp-016h]	; 28518
-sar edx, 10h	; 2851B
-add edx, edx	; 2851E
-xor eax, eax	; 28520
-mov al, byte [dword edx+treecol_Er1]	; 28522
-mov word [byte ebp-08h], ax	; 28528
-jmp short .23	; 2852C
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov dword [dword eax+potreeseeds], edx
+        cmp word [byte ebp-014h], byte 4
+        jge short .22
+        mov eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er1]
+        mov word [byte ebp-08h], ax
+        jmp short .23
 .22:
-mov eax, 7	; 2852E
-sub eax, dword [byte ebp-014h]	; 28533
-mov dword [byte ebp-018h], eax	; 28536
-mov edx, dword [byte ebp-016h]	; 28539
-sar edx, 10h	; 2853C
-add edx, edx	; 2853F
-sub edx, byte 8	; 28541
-mov eax, 7	; 28544
-sub eax, edx	; 28549
-mov edx, eax	; 2854B
-xor eax, eax	; 2854D
-mov al, byte [dword edx+treecol_Er1]	; 2854F
-mov word [byte ebp-08h], ax	; 28555
+        mov eax, 7
+        sub eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 8
+        mov eax, 7
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er1]
+        mov word [byte ebp-08h], ax
 .23:
-mov edx, dword [byte ebp-016h]	; 28559
-sar edx, 10h	; 2855C
-mov eax, dword [byte ebp-0Ah]	; 2855F
-sar eax, 10h	; 28562
-shl eax, 2	; 28565
-mov eax, dword [dword eax+playofftree]	; 28568
-shl eax, 2	; 2856E
-mov dword [dword eax+potreeseeds], edx	; 28571
-jmp near PlayoffTreeScreen.18	; 28577
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov dword [dword eax+potreeseeds], edx
+        jmp near PlayoffTreeScreen.18
 .24:
-mov dword [byte ebp-034h], 48h	; 2857C
-mov word [byte ebp-014h], 0	; 28583
+        mov dword [byte ebp-034h], 48h
+        mov word [byte ebp-014h], 0
 .25:
-cmp word [byte ebp-014h], byte 8	; 28589
-jl short .27	; 2858E
-jmp near .38	; 28590
+        cmp word [byte ebp-014h], byte 8
+        jl short .27
+        jmp near .38
 .26:
-inc word [byte ebp-014h]	; 28595
-jmp short PlayoffTreeScreen.25	; 28599
+        inc word [byte ebp-014h]
+        jmp short PlayoffTreeScreen.25
 .27:
-cmp word [byte ebp-014h], byte 4	; 2859B
-jge short .28	; 285A0
-mov eax, dword [byte ebp-014h]	; 285A2
-mov dword [byte ebp-018h], eax	; 285A5
-mov edx, dword [byte ebp-016h]	; 285A8
-sar edx, 10h	; 285AB
-add edx, edx	; 285AE
-xor eax, eax	; 285B0
-mov al, byte [dword edx+treecolslots]	; 285B2
-mov word [byte ebp-08h], ax	; 285B8
-jmp short .29	; 285BC
+        cmp word [byte ebp-014h], byte 4
+        jge short .28
+        mov eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecolslots]
+        mov word [byte ebp-08h], ax
+        jmp short .29
 .28:
-mov eax, 7	; 285BE
-sub eax, dword [byte ebp-014h]	; 285C3
-mov dword [byte ebp-018h], eax	; 285C6
-mov edx, dword [byte ebp-016h]	; 285C9
-sar edx, 10h	; 285CC
-add edx, edx	; 285CF
-sub edx, byte 8	; 285D1
-mov eax, 7	; 285D4
-sub eax, edx	; 285D9
-mov edx, eax	; 285DB
-xor eax, eax	; 285DD
-mov al, byte [dword edx+treecolslots]	; 285DF
-mov word [byte ebp-08h], ax	; 285E5
+        mov eax, 7
+        sub eax, dword [byte ebp-014h]
+        mov dword [byte ebp-018h], eax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 8
+        mov eax, 7
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecolslots]
+        mov word [byte ebp-08h], ax
 .29:
-mov edx, 43h	; 285E9
-mov eax, 40h	; 285EE
-call SetTextColors	; 285F3
-mov eax, dword [byte ebp-0Ah]	; 285F8
-sar eax, 10h	; 285FB
-shl eax, 2	; 285FE
-mov eax, dword [dword eax+playofftree]	; 28601
-shl eax, 2	; 28607
-mov eax, dword [dword eax+potreeseeds]	; 2860A
-add eax, 91h	; 28610
-push eax	; 28615
-mov eax, str_C3	; 28616
-push eax	; 2861B
-lea eax, [dword ebp-0F0h]	; 2861C
-push eax	; 28622
-call sprintf_	; 28623
-add esp, byte 0Ch	; 28628
-mov eax, dword [byte ebp-0Ah]	; 2862B
-sar eax, 10h	; 2862E
-shl eax, 2	; 28631
-imul edx, dword [dword eax+playofftree], byte 15h	; 28634
-mov eax, treeteamnames	; 2863B
-add edx, eax	; 28640
-lea eax, [dword ebp-0F0h]	; 28642
-call strcat_	; 28648
-lea ebx, [dword ebp-0F0h]	; 2864D
-mov edx, dword [byte ebp-036h]	; 28653
-sar edx, 10h	; 28656
-mov eax, dword [byte ebp-01Ah]	; 28659
-sar eax, 10h	; 2865C
-shl eax, 2	; 2865F
-mov eax, dword [dword eax+treecolx-2]	; 28662
-sar eax, 10h	; 28668
-call PrintShadowText	; 2866B
-mov eax, dword [byte ebp-01Ah]	; 28670
-sar eax, 10h	; 28673
-shl eax, 2	; 28676
-mov ax, word [dword eax+treecolx]	; 28679
-add eax, 6Ah	; 28680
-mov dword [byte ebp-024h], eax	; 28685
-xor edx, edx	; 28688
-mov dl, byte [treecol_Wr2]	; 2868A
-shl edx, 2	; 28690
-mov eax, dword [byte ebp-0Ah]	; 28693
-sar eax, 10h	; 28696
-shl eax, 2	; 28699
-mov edx, dword [dword edx+playofftree]	; 2869C
-cmp edx, dword [dword eax+playofftree]	; 286A2
-je short .30	; 286A8
-xor eax, eax	; 286AA
-mov al, byte [treecol_Wr2+1]	; 286AC
-shl eax, 2	; 286B1
-mov edx, dword [byte ebp-0Ah]	; 286B4
-sar edx, 10h	; 286B7
-shl edx, 2	; 286BA
-mov eax, dword [dword eax+playofftree]	; 286BD
-cmp eax, dword [dword edx+playofftree]	; 286C3
-jne short .31	; 286C9
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul edx, dword [dword eax+playofftree], byte 15h
+        mov eax, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+treecolx-2]
+        sar eax, 10h
+        call PrintShadowText
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        add eax, 6Ah
+        mov dword [byte ebp-024h], eax
+        xor edx, edx
+        mov dl, byte [treecol_Wr2]
+        shl edx, 2
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov edx, dword [dword edx+playofftree]
+        cmp edx, dword [dword eax+playofftree]
+        je short .30
+        xor eax, eax
+        mov al, byte [treecol_Wr2+1]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .31
 .30:
-jmp short .32	; 286CB
+        jmp short .32
 .31:
-xor eax, eax	; 286CD
-mov al, byte [treecol_Wr2+2]	; 286CF
-shl eax, 2	; 286D4
-mov edx, dword [byte ebp-0Ah]	; 286D7
-sar edx, 10h	; 286DA
-shl edx, 2	; 286DD
-mov eax, dword [dword eax+playofftree]	; 286E0
-cmp eax, dword [dword edx+playofftree]	; 286E6
-jne short .33	; 286EC
+        xor eax, eax
+        mov al, byte [treecol_Wr2+2]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .33
 .32:
-jmp short .34	; 286EE
+        jmp short .34
 .33:
-xor eax, eax	; 286F0
-mov al, byte [treecol_Wr2+3]	; 286F2
-shl eax, 2	; 286F7
-mov edx, dword [byte ebp-0Ah]	; 286FA
-sar edx, 10h	; 286FD
-shl edx, 2	; 28700
-mov eax, dword [dword eax+playofftree]	; 28703
-cmp eax, dword [dword edx+playofftree]	; 28709
-jne short .35	; 2870F
+        xor eax, eax
+        mov al, byte [treecol_Wr2+3]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .35
 .34:
-mov edx, 43h	; 28711
-mov eax, 44h	; 28716
-call SetTextColors	; 2871B
-jmp short .36	; 28720
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .36
 .35:
-mov edx, 43h	; 28722
-mov eax, 40h	; 28727
-call SetTextColors	; 2872C
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .36:
-mov eax, dword [byte ebp-0Ah]	; 28731
-sar eax, 10h	; 28734
-shl eax, 2	; 28737
-push dword [dword eax+ebp-01C8h]	; 2873A
-mov eax, str_D3	; 28741
-push eax	; 28746
-lea eax, [dword ebp-0F0h]	; 28747
-push eax	; 2874D
-call sprintf_	; 2874E
-add esp, byte 0Ch	; 28753
-lea ebx, [dword ebp-0F0h]	; 28756
-mov edx, dword [byte ebp-036h]	; 2875C
-sar edx, 10h	; 2875F
-mov eax, dword [byte ebp-026h]	; 28762
-sar eax, 10h	; 28765
-call PrintShadowText	; 28768
-cmp word [byte ebp-014h], byte 3	; 2876D
-jne short .37	; 28772
-add dword [byte ebp-034h], byte 10h	; 28774
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-026h]
+        sar eax, 10h
+        call PrintShadowText
+        cmp word [byte ebp-014h], byte 3
+        jne short .37
+        add dword [byte ebp-034h], byte 10h
 .37:
-jmp near PlayoffTreeScreen.26	; 28778
+        jmp near PlayoffTreeScreen.26
 .38:
-add dword [byte ebp-034h], byte 3Fh	; 2877D
-xor eax, eax	; 28781
-mov al, byte [treecol_Wr2]	; 28783
-shl eax, 2	; 28788
-cmp dword [dword eax+playofftree], byte 1Ah	; 2878B
-jge short .39	; 28792
-xor eax, eax	; 28794
-mov al, byte [treecol_Wr2+1]	; 28796
-shl eax, 2	; 2879B
-cmp dword [dword eax+playofftree], byte 1Ah	; 2879E
-jl short .40	; 287A5
+        add dword [byte ebp-034h], byte 3Fh
+        xor eax, eax
+        mov al, byte [treecol_Wr2]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge short .39
+        xor eax, eax
+        mov al, byte [treecol_Wr2+1]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .40
 .39:
-jmp short .41	; 287A7
+        jmp short .41
 .40:
-xor eax, eax	; 287A9
-mov al, byte [treecol_Wr2+2]	; 287AB
-shl eax, 2	; 287B0
-cmp dword [dword eax+playofftree], byte 1Ah	; 287B3
-jl short .42	; 287BA
+        xor eax, eax
+        mov al, byte [treecol_Wr2+2]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .42
 .41:
-jmp short .43	; 287BC
+        jmp short .43
 .42:
-xor eax, eax	; 287BE
-mov al, byte [treecol_Wr2+3]	; 287C0
-shl eax, 2	; 287C5
-cmp dword [dword eax+playofftree], byte 1Ah	; 287C8
-jl short .44	; 287CF
+        xor eax, eax
+        mov al, byte [treecol_Wr2+3]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .44
 .43:
-jmp near .64	; 287D1
+        jmp near .64
 .44:
-mov eax, str_Aup12	; 287D6
-push eax	; 287DB
-push dword [statsbgshapes]	; 287DC
-call FindShape	; 287E2
-add esp, byte 8	; 287E7
-mov dword [statspalshape], eax	; 287EA
-push dword [statspalshape]	; 287EF
-call DrawShape	; 287F5
-add esp, byte 4	; 287FA
-mov word [byte ebp-014h], 0	; 287FD
+        mov eax, str_Aup12
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        mov word [byte ebp-014h], 0
 .45:
-cmp word [byte ebp-014h], byte 4	; 28803
-jl short .47	; 28808
-jmp near .54	; 2880A
+        cmp word [byte ebp-014h], byte 4
+        jl short .47
+        jmp near .54
 .46:
-inc word [byte ebp-014h]	; 2880F
-jmp short PlayoffTreeScreen.45	; 28813
+        inc word [byte ebp-014h]
+        jmp short PlayoffTreeScreen.45
 .47:
-cmp word [byte ebp-014h], byte 2	; 28815
-jge short .48	; 2881A
-mov eax, dword [byte ebp-014h]	; 2881C
-add eax, 4	; 2881F
-mov word [byte ebp-018h], ax	; 28824
-mov edx, dword [byte ebp-016h]	; 28828
-sar edx, 10h	; 2882B
-add edx, edx	; 2882E
-xor eax, eax	; 28830
-mov al, byte [dword edx+treecol_Wr2]	; 28832
-mov word [byte ebp-08h], ax	; 28838
-jmp short .49	; 2883C
+        cmp word [byte ebp-014h], byte 2
+        jge short .48
+        mov eax, dword [byte ebp-014h]
+        add eax, 4
+        mov word [byte ebp-018h], ax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Wr2]
+        mov word [byte ebp-08h], ax
+        jmp short .49
 .48:
-mov eax, 7	; 2883E
-sub eax, dword [byte ebp-014h]	; 28843
-mov word [byte ebp-018h], ax	; 28846
-mov edx, dword [byte ebp-016h]	; 2884A
-sar edx, 10h	; 2884D
-add edx, edx	; 28850
-sub edx, byte 4	; 28852
-mov eax, 3	; 28855
-sub eax, edx	; 2885A
-mov edx, eax	; 2885C
-xor eax, eax	; 2885E
-mov al, byte [dword edx+treecol_Wr2]	; 28860
-mov word [byte ebp-08h], ax	; 28866
+        mov eax, 7
+        sub eax, dword [byte ebp-014h]
+        mov word [byte ebp-018h], ax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 4
+        mov eax, 3
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Wr2]
+        mov word [byte ebp-08h], ax
 .49:
-mov edx, 43h	; 2886A
-mov eax, 40h	; 2886F
-call SetTextColors	; 28874
-mov eax, dword [byte ebp-0Ah]	; 28879
-sar eax, 10h	; 2887C
-shl eax, 2	; 2887F
-mov eax, dword [dword eax+playofftree]	; 28882
-shl eax, 2	; 28888
-mov eax, dword [dword eax+potreeseeds]	; 2888B
-add eax, 91h	; 28891
-push eax	; 28896
-mov eax, str_C3	; 28897
-push eax	; 2889C
-lea eax, [dword ebp-0F0h]	; 2889D
-push eax	; 288A3
-call sprintf_	; 288A4
-add esp, byte 0Ch	; 288A9
-mov eax, dword [byte ebp-0Ah]	; 288AC
-sar eax, 10h	; 288AF
-shl eax, 2	; 288B2
-imul edx, dword [dword eax+playofftree], byte 15h	; 288B5
-mov eax, treeteamnames	; 288BC
-add edx, eax	; 288C1
-lea eax, [dword ebp-0F0h]	; 288C3
-call strcat_	; 288C9
-lea ebx, [dword ebp-0F0h]	; 288CE
-mov edx, dword [byte ebp-036h]	; 288D4
-sar edx, 10h	; 288D7
-mov eax, dword [byte ebp-01Ah]	; 288DA
-sar eax, 10h	; 288DD
-shl eax, 2	; 288E0
-mov eax, dword [dword eax+treecolx-2]	; 288E3
-sar eax, 10h	; 288E9
-call PrintShadowText	; 288EC
-mov eax, dword [byte ebp-01Ah]	; 288F1
-sar eax, 10h	; 288F4
-shl eax, 2	; 288F7
-mov ax, word [dword eax+treecolx]	; 288FA
-add eax, 6Ah	; 28901
-mov word [byte ebp-024h], ax	; 28906
-xor edx, edx	; 2890A
-mov dl, byte [treecolslots+10h]	; 2890C
-shl edx, 2	; 28912
-mov eax, dword [byte ebp-0Ah]	; 28915
-sar eax, 10h	; 28918
-shl eax, 2	; 2891B
-mov edx, dword [dword edx+playofftree]	; 2891E
-cmp edx, dword [dword eax+playofftree]	; 28924
-je short .50	; 2892A
-xor eax, eax	; 2892C
-mov al, byte [treecolslots+11h]	; 2892E
-shl eax, 2	; 28933
-mov edx, dword [byte ebp-0Ah]	; 28936
-sar edx, 10h	; 28939
-shl edx, 2	; 2893C
-mov eax, dword [dword eax+playofftree]	; 2893F
-cmp eax, dword [dword edx+playofftree]	; 28945
-jne short .51	; 2894B
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul edx, dword [dword eax+playofftree], byte 15h
+        mov eax, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+treecolx-2]
+        sar eax, 10h
+        call PrintShadowText
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        add eax, 6Ah
+        mov word [byte ebp-024h], ax
+        xor edx, edx
+        mov dl, byte [treecolslots+10h]
+        shl edx, 2
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov edx, dword [dword edx+playofftree]
+        cmp edx, dword [dword eax+playofftree]
+        je short .50
+        xor eax, eax
+        mov al, byte [treecolslots+11h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .51
 .50:
-mov edx, 43h	; 2894D
-mov eax, 44h	; 28952
-call SetTextColors	; 28957
-jmp short .52	; 2895C
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .52
 .51:
-mov edx, 43h	; 2895E
-mov eax, 40h	; 28963
-call SetTextColors	; 28968
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .52:
-mov eax, dword [byte ebp-0Ah]	; 2896D
-sar eax, 10h	; 28970
-shl eax, 2	; 28973
-push dword [dword eax+ebp-01C8h]	; 28976
-mov eax, str_D3	; 2897D
-push eax	; 28982
-lea eax, [dword ebp-0F0h]	; 28983
-push eax	; 28989
-call sprintf_	; 2898A
-add esp, byte 0Ch	; 2898F
-lea ebx, [dword ebp-0F0h]	; 28992
-mov edx, dword [byte ebp-036h]	; 28998
-sar edx, 10h	; 2899B
-mov eax, dword [byte ebp-026h]	; 2899E
-sar eax, 10h	; 289A1
-call PrintShadowText	; 289A4
-cmp word [byte ebp-014h], byte 1	; 289A9
-jne short .53	; 289AE
-add dword [byte ebp-034h], byte 10h	; 289B0
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-026h]
+        sar eax, 10h
+        call PrintShadowText
+        cmp word [byte ebp-014h], byte 1
+        jne short .53
+        add dword [byte ebp-034h], byte 10h
 .53:
-jmp near PlayoffTreeScreen.46	; 289B4
+        jmp near PlayoffTreeScreen.46
 .54:
-add dword [byte ebp-034h], byte 3Dh	; 289B9
-xor eax, eax	; 289BD
-mov al, byte [treecolslots+10h]	; 289BF
-shl eax, 2	; 289C4
-cmp dword [dword eax+playofftree], byte 1Ah	; 289C7
-jge short .55	; 289CE
-xor eax, eax	; 289D0
-mov al, byte [treecolslots+11h]	; 289D2
-shl eax, 2	; 289D7
-cmp dword [dword eax+playofftree], byte 1Ah	; 289DA
-jl short .56	; 289E1
+        add dword [byte ebp-034h], byte 3Dh
+        xor eax, eax
+        mov al, byte [treecolslots+10h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge short .55
+        xor eax, eax
+        mov al, byte [treecolslots+11h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .56
 .55:
-jmp near .63	; 289E3
+        jmp near .63
 .56:
-mov eax, str_Aup22	; 289E8
-push eax	; 289ED
-push dword [statsbgshapes]	; 289EE
-call FindShape	; 289F4
-add esp, byte 8	; 289F9
-mov dword [statspalshape], eax	; 289FC
-push dword [statspalshape]	; 28A01
-call DrawShape	; 28A07
-add esp, byte 4	; 28A0C
-xor eax, eax	; 28A0F
-mov al, byte [treecolslots+10h]	; 28A11
-mov word [byte ebp-08h], ax	; 28A16
-mov edx, 43h	; 28A1A
-mov eax, 40h	; 28A1F
-call SetTextColors	; 28A24
-mov eax, dword [byte ebp-0Ah]	; 28A29
-sar eax, 10h	; 28A2C
-shl eax, 2	; 28A2F
-mov eax, dword [dword eax+playofftree]	; 28A32
-shl eax, 2	; 28A38
-mov eax, dword [dword eax+potreeseeds]	; 28A3B
-add eax, 91h	; 28A41
-push eax	; 28A46
-mov eax, str_C3	; 28A47
-push eax	; 28A4C
-lea eax, [dword ebp-0F0h]	; 28A4D
-push eax	; 28A53
-call sprintf_	; 28A54
-add esp, byte 0Ch	; 28A59
-mov eax, dword [byte ebp-0Ah]	; 28A5C
-sar eax, 10h	; 28A5F
-shl eax, 2	; 28A62
-imul eax, dword [dword eax+playofftree], byte 15h	; 28A65
-mov edx, treeteamnames	; 28A6C
-add edx, eax	; 28A71
-lea eax, [dword ebp-0F0h]	; 28A73
-call strcat_	; 28A79
-lea ebx, [dword ebp-0F0h]	; 28A7E
-mov eax, dword [byte ebp-034h]	; 28A84
-dec eax	; 28A87
-movsx edx, ax	; 28A88
-mov eax, 48h	; 28A8B
-call PrintShadowText	; 28A90
-xor eax, eax	; 28A95
-mov al, byte [treecolslots+18h]	; 28A97
-shl eax, 2	; 28A9C
-mov edx, dword [byte ebp-0Ah]	; 28A9F
-sar edx, 10h	; 28AA2
-shl edx, 2	; 28AA5
-mov eax, dword [dword eax+playofftree]	; 28AA8
-cmp eax, dword [dword edx+playofftree]	; 28AAE
-je short .57	; 28AB4
-xor eax, eax	; 28AB6
-mov al, byte [treecolslots+28h]	; 28AB8
-shl eax, 2	; 28ABD
-mov edx, dword [byte ebp-0Ah]	; 28AC0
-sar edx, 10h	; 28AC3
-shl edx, 2	; 28AC6
-mov eax, dword [dword eax+playofftree]	; 28AC9
-cmp eax, dword [dword edx+playofftree]	; 28ACF
-jne short .58	; 28AD5
+        mov eax, str_Aup22
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        xor eax, eax
+        mov al, byte [treecolslots+10h]
+        mov word [byte ebp-08h], ax
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul eax, dword [dword eax+playofftree], byte 15h
+        mov edx, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 48h
+        call PrintShadowText
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        je short .57
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .58
 .57:
-mov edx, 43h	; 28AD7
-mov eax, 44h	; 28ADC
-call SetTextColors	; 28AE1
-jmp short .59	; 28AE6
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .59
 .58:
-mov edx, 43h	; 28AE8
-mov eax, 40h	; 28AED
-call SetTextColors	; 28AF2
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .59:
-mov eax, dword [byte ebp-0Ah]	; 28AF7
-sar eax, 10h	; 28AFA
-shl eax, 2	; 28AFD
-push dword [dword eax+ebp-01C8h]	; 28B00
-mov eax, str_D3	; 28B07
-push eax	; 28B0C
-lea eax, [dword ebp-0F0h]	; 28B0D
-push eax	; 28B13
-call sprintf_	; 28B14
-add esp, byte 0Ch	; 28B19
-lea ebx, [dword ebp-0F0h]	; 28B1C
-mov eax, dword [byte ebp-034h]	; 28B22
-dec eax	; 28B25
-movsx edx, ax	; 28B26
-mov eax, 0B2h	; 28B29
-call PrintShadowText	; 28B2E
-add dword [byte ebp-034h], byte 10h	; 28B33
-xor eax, eax	; 28B37
-mov al, byte [treecolslots+11h]	; 28B39
-mov word [byte ebp-08h], ax	; 28B3E
-mov edx, 43h	; 28B42
-mov eax, 40h	; 28B47
-call SetTextColors	; 28B4C
-mov eax, dword [byte ebp-0Ah]	; 28B51
-sar eax, 10h	; 28B54
-shl eax, 2	; 28B57
-mov eax, dword [dword eax+playofftree]	; 28B5A
-shl eax, 2	; 28B60
-mov eax, dword [dword eax+potreeseeds]	; 28B63
-add eax, 91h	; 28B69
-push eax	; 28B6E
-mov eax, str_C3	; 28B6F
-push eax	; 28B74
-lea eax, [dword ebp-0F0h]	; 28B75
-push eax	; 28B7B
-call sprintf_	; 28B7C
-add esp, byte 0Ch	; 28B81
-mov eax, dword [byte ebp-0Ah]	; 28B84
-sar eax, 10h	; 28B87
-shl eax, 2	; 28B8A
-imul eax, dword [dword eax+playofftree], byte 15h	; 28B8D
-mov edx, treeteamnames	; 28B94
-add edx, eax	; 28B99
-lea eax, [dword ebp-0F0h]	; 28B9B
-call strcat_	; 28BA1
-lea ebx, [dword ebp-0F0h]	; 28BA6
-mov eax, dword [byte ebp-034h]	; 28BAC
-dec eax	; 28BAF
-movsx edx, ax	; 28BB0
-mov eax, 48h	; 28BB3
-call PrintShadowText	; 28BB8
-xor eax, eax	; 28BBD
-mov al, byte [treecolslots+18h]	; 28BBF
-shl eax, 2	; 28BC4
-mov edx, dword [byte ebp-0Ah]	; 28BC7
-sar edx, 10h	; 28BCA
-shl edx, 2	; 28BCD
-mov eax, dword [dword eax+playofftree]	; 28BD0
-cmp eax, dword [dword edx+playofftree]	; 28BD6
-je short .60	; 28BDC
-xor eax, eax	; 28BDE
-mov al, byte [treecolslots+28h]	; 28BE0
-shl eax, 2	; 28BE5
-mov edx, dword [byte ebp-0Ah]	; 28BE8
-sar edx, 10h	; 28BEB
-shl edx, 2	; 28BEE
-mov eax, dword [dword eax+playofftree]	; 28BF1
-cmp eax, dword [dword edx+playofftree]	; 28BF7
-jne short .61	; 28BFD
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 0B2h
+        call PrintShadowText
+        add dword [byte ebp-034h], byte 10h
+        xor eax, eax
+        mov al, byte [treecolslots+11h]
+        mov word [byte ebp-08h], ax
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul eax, dword [dword eax+playofftree], byte 15h
+        mov edx, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 48h
+        call PrintShadowText
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        je short .60
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .61
 .60:
-mov edx, 43h	; 28BFF
-mov eax, 44h	; 28C04
-call SetTextColors	; 28C09
-jmp short .62	; 28C0E
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .62
 .61:
-mov edx, 43h	; 28C10
-mov eax, 40h	; 28C15
-call SetTextColors	; 28C1A
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .62:
-mov eax, dword [byte ebp-0Ah]	; 28C1F
-sar eax, 10h	; 28C22
-shl eax, 2	; 28C25
-push dword [dword eax+ebp-01C8h]	; 28C28
-mov eax, str_D3	; 28C2F
-push eax	; 28C34
-lea eax, [dword ebp-0F0h]	; 28C35
-push eax	; 28C3B
-call sprintf_	; 28C3C
-add esp, byte 0Ch	; 28C41
-lea ebx, [dword ebp-0F0h]	; 28C44
-mov eax, dword [byte ebp-034h]	; 28C4A
-dec eax	; 28C4D
-movsx edx, ax	; 28C4E
-mov eax, 0B2h	; 28C51
-call PrintShadowText	; 28C56
-sub dword [byte ebp-034h], byte 10h	; 28C5B
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 0B2h
+        call PrintShadowText
+        sub dword [byte ebp-034h], byte 10h
 .63:
-jmp short .65	; 28C5F
+        jmp short .65
 .64:
-add dword [byte ebp-034h], byte 4Dh	; 28C61
+        add dword [byte ebp-034h], byte 4Dh
 .65:
-xor eax, eax	; 28C65
-mov al, byte [treecolslots+18h]	; 28C67
-shl eax, 2	; 28C6C
-cmp dword [dword eax+playofftree], byte 1Ah	; 28C6F
-jge near .70	; 28C76
-mov eax, str_Aup32	; 28C7C
-push eax	; 28C81
-push dword [statsbgshapes]	; 28C82
-call FindShape	; 28C88
-add esp, byte 8	; 28C8D
-mov dword [statspalshape], eax	; 28C90
-push dword [statspalshape]	; 28C95
-call DrawShape	; 28C9B
-add esp, byte 4	; 28CA0
-mov dword [byte ebp-038h], 1	; 28CA3
-mov eax, str_Midl2	; 28CAA
-push eax	; 28CAF
-push dword [statsbgshapes]	; 28CB0
-call FindShape	; 28CB6
-add esp, byte 8	; 28CBB
-mov dword [statspalshape], eax	; 28CBE
-push dword [statspalshape]	; 28CC3
-call DrawShape	; 28CC9
-add esp, byte 4	; 28CCE
-mov edx, 43h	; 28CD1
-mov eax, 40h	; 28CD6
-call SetTextColors	; 28CDB
-lea edi, [dword ebp-0F0h]	; 28CE0
-mov esi, str_TwoSpaces	; 28CE6
-movsw	; 28CEB
-movsb	; 28CED
-xor eax, eax	; 28CEE
-mov al, byte [treecolslots+18h]	; 28CF0
-mov word [byte ebp-08h], ax	; 28CF5
-mov eax, dword [byte ebp-0Ah]	; 28CF9
-sar eax, 10h	; 28CFC
-shl eax, 2	; 28CFF
-imul edx, dword [dword eax+playofftree], byte 15h	; 28D02
-mov eax, treeteamnames	; 28D09
-add edx, eax	; 28D0E
-lea eax, [dword ebp-0F0h]	; 28D10
-call strcat_	; 28D16
-lea ebx, [dword ebp-0F0h]	; 28D1B
-mov eax, dword [byte ebp-034h]	; 28D21
-sub eax, byte 4	; 28D24
-movsx edx, ax	; 28D27
-mov eax, 102h	; 28D2A
-call PrintShadowText	; 28D2F
-mov eax, dword [byte ebp-0Ah]	; 28D34
-sar eax, 10h	; 28D37
-shl eax, 2	; 28D3A
-push dword [dword eax+ebp-01C8h]	; 28D3D
-mov eax, str_D3	; 28D44
-push eax	; 28D49
-lea eax, [dword ebp-0F0h]	; 28D4A
-push eax	; 28D50
-call sprintf_	; 28D51
-add esp, byte 0Ch	; 28D56
-xor eax, eax	; 28D59
-mov al, byte [treecolslots+20h]	; 28D5B
-shl eax, 2	; 28D60
-mov edx, dword [byte ebp-0Ah]	; 28D63
-sar edx, 10h	; 28D66
-shl edx, 2	; 28D69
-mov eax, dword [dword eax+playofftree]	; 28D6C
-cmp eax, dword [dword edx+playofftree]	; 28D72
-jne short .68	; 28D78
-mov eax, dword [byte ebp-0Ah]	; 28D7A
-sar eax, 10h	; 28D7D
-shl eax, 2	; 28D80
-cmp dword [dword eax+teamconf], byte 3	; 28D83
-jne short .66	; 28D8A
-mov edx, 43h	; 28D8C
-mov eax, 44h	; 28D91
-call SetTextColors	; 28D96
-jmp short .67	; 28D9B
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge near .70
+        mov eax, str_Aup32
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        mov dword [byte ebp-038h], 1
+        mov eax, str_Midl2
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        lea edi, [dword ebp-0F0h]
+        mov esi, str_TwoSpaces
+        movsw
+        movsb
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        mov word [byte ebp-08h], ax
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul edx, dword [dword eax+playofftree], byte 15h
+        mov eax, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        sub eax, byte 4
+        movsx edx, ax
+        mov eax, 102h
+        call PrintShadowText
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [treecolslots+20h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .68
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        cmp dword [dword eax+teamconf], byte 3
+        jne short .66
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .67
 .66:
-mov edx, 43h	; 28D9D
-mov eax, 0C4h	; 28DA2
-call SetTextColors	; 28DA7
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
 .67:
-jmp short .69	; 28DAC
+        jmp short .69
 .68:
-mov edx, 43h	; 28DAE
-mov eax, 40h	; 28DB3
-call SetTextColors	; 28DB8
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .69:
-lea ebx, [dword ebp-0F0h]	; 28DBD
-mov eax, dword [byte ebp-034h]	; 28DC3
-sub eax, byte 4	; 28DC6
-movsx edx, ax	; 28DC9
-mov eax, 16Ch	; 28DCC
-call PrintShadowText	; 28DD1
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        sub eax, byte 4
+        movsx edx, ax
+        mov eax, 16Ch
+        call PrintShadowText
 .70:
-xor eax, eax	; 28DD6
-mov al, byte [treecolslots+28h]	; 28DD8
-shl eax, 2	; 28DDD
-cmp dword [dword eax+playofftree], byte 1Ah	; 28DE0
-jge near .76	; 28DE7
-mov eax, str_Adn32	; 28DED
-push eax	; 28DF2
-push dword [statsbgshapes]	; 28DF3
-call FindShape	; 28DF9
-add esp, byte 8	; 28DFE
-mov dword [statspalshape], eax	; 28E01
-push dword [statspalshape]	; 28E06
-call DrawShape	; 28E0C
-add esp, byte 4	; 28E11
-cmp dword [byte ebp-038h], byte 0	; 28E14
-jne short .71	; 28E18
-mov eax, str_Midl2	; 28E1A
-push eax	; 28E1F
-push dword [statsbgshapes]	; 28E20
-call FindShape	; 28E26
-add esp, byte 8	; 28E2B
-mov dword [statspalshape], eax	; 28E2E
-push dword [statspalshape]	; 28E33
-call DrawShape	; 28E39
-add esp, byte 4	; 28E3E
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge near .76
+        mov eax, str_Adn32
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        cmp dword [byte ebp-038h], byte 0
+        jne short .71
+        mov eax, str_Midl2
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
 .71:
-add dword [byte ebp-034h], byte 10h	; 28E41
-mov edx, 43h	; 28E45
-mov eax, 40h	; 28E4A
-call SetTextColors	; 28E4F
-lea edi, [dword ebp-0F0h]	; 28E54
-mov esi, str_TwoSpaces	; 28E5A
-movsw	; 28E5F
-movsb	; 28E61
-xor eax, eax	; 28E62
-mov al, byte [treecolslots+28h]	; 28E64
-mov word [byte ebp-08h], ax	; 28E69
-mov eax, dword [byte ebp-0Ah]	; 28E6D
-sar eax, 10h	; 28E70
-shl eax, 2	; 28E73
-imul eax, dword [dword eax+playofftree], byte 15h	; 28E76
-mov edx, treeteamnames	; 28E7D
-add edx, eax	; 28E82
-lea eax, [dword ebp-0F0h]	; 28E84
-call strcat_	; 28E8A
-lea ebx, [dword ebp-0F0h]	; 28E8F
-mov eax, dword [byte ebp-034h]	; 28E95
-sub eax, byte 4	; 28E98
-movsx edx, ax	; 28E9B
-mov eax, 102h	; 28E9E
-call PrintShadowText	; 28EA3
-mov eax, dword [byte ebp-0Ah]	; 28EA8
-sar eax, 10h	; 28EAB
-shl eax, 2	; 28EAE
-push dword [dword eax+ebp-01C8h]	; 28EB1
-mov eax, str_D3	; 28EB8
-push eax	; 28EBD
-lea eax, [dword ebp-0F0h]	; 28EBE
-push eax	; 28EC4
-call sprintf_	; 28EC5
-add esp, byte 0Ch	; 28ECA
-xor eax, eax	; 28ECD
-mov al, byte [treecolslots+20h]	; 28ECF
-shl eax, 2	; 28ED4
-mov edx, dword [byte ebp-0Ah]	; 28ED7
-sar edx, 10h	; 28EDA
-shl edx, 2	; 28EDD
-mov eax, dword [dword eax+playofftree]	; 28EE0
-cmp eax, dword [dword edx+playofftree]	; 28EE6
-jne short .74	; 28EEC
-mov eax, dword [byte ebp-0Ah]	; 28EEE
-sar eax, 10h	; 28EF1
-shl eax, 2	; 28EF4
-cmp dword [dword eax+teamconf], byte 3	; 28EF7
-jne short .72	; 28EFE
-mov edx, 43h	; 28F00
-mov eax, 44h	; 28F05
-call SetTextColors	; 28F0A
-jmp short .73	; 28F0F
+        add dword [byte ebp-034h], byte 10h
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        lea edi, [dword ebp-0F0h]
+        mov esi, str_TwoSpaces
+        movsw
+        movsb
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        mov word [byte ebp-08h], ax
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul eax, dword [dword eax+playofftree], byte 15h
+        mov edx, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        sub eax, byte 4
+        movsx edx, ax
+        mov eax, 102h
+        call PrintShadowText
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        xor eax, eax
+        mov al, byte [treecolslots+20h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .74
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        cmp dword [dword eax+teamconf], byte 3
+        jne short .72
+        mov edx, 43h
+        mov eax, 44h
+        call SetTextColors
+        jmp short .73
 .72:
-mov edx, 43h	; 28F11
-mov eax, 0C4h	; 28F16
-call SetTextColors	; 28F1B
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
 .73:
-jmp short .75	; 28F20
+        jmp short .75
 .74:
-mov edx, 43h	; 28F22
-mov eax, 40h	; 28F27
-call SetTextColors	; 28F2C
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .75:
-lea ebx, [dword ebp-0F0h]	; 28F31
-mov eax, dword [byte ebp-034h]	; 28F37
-sub eax, byte 4	; 28F3A
-movsx edx, ax	; 28F3D
-mov eax, 16Ch	; 28F40
-call PrintShadowText	; 28F45
-sub dword [byte ebp-034h], byte 10h	; 28F4A
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        sub eax, byte 4
+        movsx edx, ax
+        mov eax, 16Ch
+        call PrintShadowText
+        sub dword [byte ebp-034h], byte 10h
 .76:
-xor eax, eax	; 28F4E
-mov al, byte [treecolslots+30h]	; 28F50
-shl eax, 2	; 28F55
-cmp dword [dword eax+playofftree], byte 1Ah	; 28F58
-jge short .77	; 28F5F
-xor eax, eax	; 28F61
-mov al, byte [treecolslots+31h]	; 28F63
-shl eax, 2	; 28F68
-cmp dword [dword eax+playofftree], byte 1Ah	; 28F6B
-jl short .78	; 28F72
+        xor eax, eax
+        mov al, byte [treecolslots+30h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge short .77
+        xor eax, eax
+        mov al, byte [treecolslots+31h]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .78
 .77:
-jmp near .85	; 28F74
+        jmp near .85
 .78:
-xor eax, eax	; 28F79
-mov al, byte [treecolslots+30h]	; 28F7B
-mov word [byte ebp-08h], ax	; 28F80
-mov edx, 43h	; 28F84
-mov eax, 40h	; 28F89
-call SetTextColors	; 28F8E
-mov eax, dword [byte ebp-0Ah]	; 28F93
-sar eax, 10h	; 28F96
-shl eax, 2	; 28F99
-mov eax, dword [dword eax+playofftree]	; 28F9C
-shl eax, 2	; 28FA2
-mov eax, dword [dword eax+potreeseeds]	; 28FA5
-add eax, 91h	; 28FAB
-push eax	; 28FB0
-mov eax, str_C3	; 28FB1
-push eax	; 28FB6
-lea eax, [dword ebp-0F0h]	; 28FB7
-push eax	; 28FBD
-call sprintf_	; 28FBE
-add esp, byte 0Ch	; 28FC3
-mov eax, dword [byte ebp-0Ah]	; 28FC6
-sar eax, 10h	; 28FC9
-shl eax, 2	; 28FCC
-imul edx, dword [dword eax+playofftree], byte 15h	; 28FCF
-mov eax, treeteamnames	; 28FD6
-add edx, eax	; 28FDB
-lea eax, [dword ebp-0F0h]	; 28FDD
-call strcat_	; 28FE3
-lea ebx, [dword ebp-0F0h]	; 28FE8
-mov eax, dword [byte ebp-034h]	; 28FEE
-dec eax	; 28FF1
-movsx edx, ax	; 28FF2
-mov eax, 1C6h	; 28FF5
-call PrintShadowText	; 28FFA
-xor eax, eax	; 28FFF
-mov al, byte [treecolslots+18h]	; 29001
-shl eax, 2	; 29006
-mov edx, dword [byte ebp-0Ah]	; 29009
-sar edx, 10h	; 2900C
-shl edx, 2	; 2900F
-mov eax, dword [dword eax+playofftree]	; 29012
-cmp eax, dword [dword edx+playofftree]	; 29018
-je short .79	; 2901E
-xor eax, eax	; 29020
-mov al, byte [treecolslots+28h]	; 29022
-shl eax, 2	; 29027
-mov edx, dword [byte ebp-0Ah]	; 2902A
-sar edx, 10h	; 2902D
-shl edx, 2	; 29030
-mov eax, dword [dword eax+playofftree]	; 29033
-cmp eax, dword [dword edx+playofftree]	; 29039
-jne short .80	; 2903F
+        xor eax, eax
+        mov al, byte [treecolslots+30h]
+        mov word [byte ebp-08h], ax
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul edx, dword [dword eax+playofftree], byte 15h
+        mov eax, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 1C6h
+        call PrintShadowText
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        je short .79
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .80
 .79:
-mov edx, 43h	; 29041
-mov eax, 0C4h	; 29046
-call SetTextColors	; 2904B
-jmp short .81	; 29050
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
+        jmp short .81
 .80:
-mov edx, 43h	; 29052
-mov eax, 40h	; 29057
-call SetTextColors	; 2905C
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .81:
-mov eax, dword [byte ebp-0Ah]	; 29061
-sar eax, 10h	; 29064
-shl eax, 2	; 29067
-push dword [dword eax+ebp-01C8h]	; 2906A
-mov eax, str_D3	; 29071
-push eax	; 29076
-lea eax, [dword ebp-0F0h]	; 29077
-push eax	; 2907D
-call sprintf_	; 2907E
-add esp, byte 0Ch	; 29083
-lea ebx, [dword ebp-0F0h]	; 29086
-mov eax, dword [byte ebp-034h]	; 2908C
-dec eax	; 2908F
-movsx edx, ax	; 29090
-mov eax, 230h	; 29093
-call PrintShadowText	; 29098
-add dword [byte ebp-034h], byte 10h	; 2909D
-xor eax, eax	; 290A1
-mov al, byte [treecolslots+31h]	; 290A3
-mov word [byte ebp-08h], ax	; 290A8
-mov edx, 43h	; 290AC
-mov eax, 40h	; 290B1
-call SetTextColors	; 290B6
-mov eax, dword [byte ebp-0Ah]	; 290BB
-sar eax, 10h	; 290BE
-shl eax, 2	; 290C1
-mov eax, dword [dword eax+playofftree]	; 290C4
-shl eax, 2	; 290CA
-mov eax, dword [dword eax+potreeseeds]	; 290CD
-add eax, 91h	; 290D3
-push eax	; 290D8
-mov eax, str_C3	; 290D9
-push eax	; 290DE
-lea eax, [dword ebp-0F0h]	; 290DF
-push eax	; 290E5
-call sprintf_	; 290E6
-add esp, byte 0Ch	; 290EB
-mov eax, dword [byte ebp-0Ah]	; 290EE
-sar eax, 10h	; 290F1
-shl eax, 2	; 290F4
-imul eax, dword [dword eax+playofftree], byte 15h	; 290F7
-mov edx, treeteamnames	; 290FE
-add edx, eax	; 29103
-lea eax, [dword ebp-0F0h]	; 29105
-call strcat_	; 2910B
-lea ebx, [dword ebp-0F0h]	; 29110
-mov eax, dword [byte ebp-034h]	; 29116
-dec eax	; 29119
-movsx edx, ax	; 2911A
-mov eax, 1C6h	; 2911D
-call PrintShadowText	; 29122
-xor eax, eax	; 29127
-mov al, byte [treecolslots+18h]	; 29129
-shl eax, 2	; 2912E
-mov edx, dword [byte ebp-0Ah]	; 29131
-sar edx, 10h	; 29134
-shl edx, 2	; 29137
-mov eax, dword [dword eax+playofftree]	; 2913A
-cmp eax, dword [dword edx+playofftree]	; 29140
-je short .82	; 29146
-xor eax, eax	; 29148
-mov al, byte [treecolslots+28h]	; 2914A
-shl eax, 2	; 2914F
-mov edx, dword [byte ebp-0Ah]	; 29152
-sar edx, 10h	; 29155
-shl edx, 2	; 29158
-mov eax, dword [dword eax+playofftree]	; 2915B
-cmp eax, dword [dword edx+playofftree]	; 29161
-jne short .83	; 29167
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 230h
+        call PrintShadowText
+        add dword [byte ebp-034h], byte 10h
+        xor eax, eax
+        mov al, byte [treecolslots+31h]
+        mov word [byte ebp-08h], ax
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul eax, dword [dword eax+playofftree], byte 15h
+        mov edx, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 1C6h
+        call PrintShadowText
+        xor eax, eax
+        mov al, byte [treecolslots+18h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        je short .82
+        xor eax, eax
+        mov al, byte [treecolslots+28h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .83
 .82:
-mov edx, 43h	; 29169
-mov eax, 0C4h	; 2916E
-call SetTextColors	; 29173
-jmp short .84	; 29178
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
+        jmp short .84
 .83:
-mov edx, 43h	; 2917A
-mov eax, 40h	; 2917F
-call SetTextColors	; 29184
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .84:
-mov eax, dword [byte ebp-0Ah]	; 29189
-sar eax, 10h	; 2918C
-shl eax, 2	; 2918F
-push dword [dword eax+ebp-01C8h]	; 29192
-mov eax, str_D3	; 29199
-push eax	; 2919E
-lea eax, [dword ebp-0F0h]	; 2919F
-push eax	; 291A5
-call sprintf_	; 291A6
-add esp, byte 0Ch	; 291AB
-lea ebx, [dword ebp-0F0h]	; 291AE
-mov eax, dword [byte ebp-034h]	; 291B4
-dec eax	; 291B7
-movsx edx, ax	; 291B8
-mov eax, 230h	; 291BB
-call PrintShadowText	; 291C0
-add dword [byte ebp-034h], byte 3Dh	; 291C5
-mov eax, str_Adn22	; 291C9
-push eax	; 291CE
-push dword [statsbgshapes]	; 291CF
-call FindShape	; 291D5
-add esp, byte 8	; 291DA
-mov dword [statspalshape], eax	; 291DD
-push dword [statspalshape]	; 291E2
-call DrawShape	; 291E8
-add esp, byte 4	; 291ED
-jmp short .86	; 291F0
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov eax, dword [byte ebp-034h]
+        dec eax
+        movsx edx, ax
+        mov eax, 230h
+        call PrintShadowText
+        add dword [byte ebp-034h], byte 3Dh
+        mov eax, str_Adn22
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        jmp short .86
 .85:
-add dword [byte ebp-034h], byte 4Dh	; 291F2
+        add dword [byte ebp-034h], byte 4Dh
 .86:
-xor eax, eax	; 291F6
-mov al, byte [treecol_Er2]	; 291F8
-shl eax, 2	; 291FD
-cmp dword [dword eax+playofftree], byte 1Ah	; 29200
-jge short .87	; 29207
-xor eax, eax	; 29209
-mov al, byte [treecol_Er2+1]	; 2920B
-shl eax, 2	; 29210
-cmp dword [dword eax+playofftree], byte 1Ah	; 29213
-jl short .88	; 2921A
+        xor eax, eax
+        mov al, byte [treecol_Er2]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jge short .87
+        xor eax, eax
+        mov al, byte [treecol_Er2+1]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .88
 .87:
-jmp short .89	; 2921C
+        jmp short .89
 .88:
-xor eax, eax	; 2921E
-mov al, byte [treecol_Er2+2]	; 29220
-shl eax, 2	; 29225
-cmp dword [dword eax+playofftree], byte 1Ah	; 29228
-jl short .90	; 2922F
+        xor eax, eax
+        mov al, byte [treecol_Er2+2]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .90
 .89:
-jmp short .91	; 29231
+        jmp short .91
 .90:
-xor eax, eax	; 29233
-mov al, byte [treecol_Er2+3]	; 29235
-shl eax, 2	; 2923A
-cmp dword [dword eax+playofftree], byte 1Ah	; 2923D
-jl short .92	; 29244
+        xor eax, eax
+        mov al, byte [treecol_Er2+3]
+        shl eax, 2
+        cmp dword [dword eax+playofftree], byte 1Ah
+        jl short .92
 .91:
-jmp near .105	; 29246
+        jmp near .105
 .92:
-mov word [byte ebp-014h], 0	; 2924B
+        mov word [byte ebp-014h], 0
 .93:
-cmp word [byte ebp-014h], byte 4	; 29251
-jl short .95	; 29256
-jmp near .104	; 29258
+        cmp word [byte ebp-014h], byte 4
+        jl short .95
+        jmp near .104
 .94:
-inc word [byte ebp-014h]	; 2925D
-jmp short PlayoffTreeScreen.93	; 29261
+        inc word [byte ebp-014h]
+        jmp short PlayoffTreeScreen.93
 .95:
-cmp word [byte ebp-014h], byte 2	; 29263
-jge short .96	; 29268
-mov eax, dword [byte ebp-014h]	; 2926A
-mov word [byte ebp-018h], ax	; 2926D
-jmp short .97	; 29271
+        cmp word [byte ebp-014h], byte 2
+        jge short .96
+        mov eax, dword [byte ebp-014h]
+        mov word [byte ebp-018h], ax
+        jmp short .97
 .96:
-mov eax, 3	; 29273
-sub eax, dword [byte ebp-014h]	; 29278
-mov word [byte ebp-018h], ax	; 2927B
+        mov eax, 3
+        sub eax, dword [byte ebp-014h]
+        mov word [byte ebp-018h], ax
 .97:
-cmp word [byte ebp-014h], byte 2	; 2927F
-jge short .98	; 29284
-mov edx, dword [byte ebp-016h]	; 29286
-sar edx, 10h	; 29289
-add edx, edx	; 2928C
-xor eax, eax	; 2928E
-mov al, byte [dword edx+treecol_Er2]	; 29290
-mov word [byte ebp-08h], ax	; 29296
-jmp short .99	; 2929A
+        cmp word [byte ebp-014h], byte 2
+        jge short .98
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er2]
+        mov word [byte ebp-08h], ax
+        jmp short .99
 .98:
-mov edx, dword [byte ebp-016h]	; 2929C
-sar edx, 10h	; 2929F
-add edx, edx	; 292A2
-sub edx, byte 4	; 292A4
-mov eax, 3	; 292A7
-sub eax, edx	; 292AC
-mov edx, eax	; 292AE
-xor eax, eax	; 292B0
-mov al, byte [dword edx+treecol_Er2]	; 292B2
-mov word [byte ebp-08h], ax	; 292B8
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 4
+        mov eax, 3
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er2]
+        mov word [byte ebp-08h], ax
 .99:
-mov edx, 43h	; 292BC
-mov eax, 40h	; 292C1
-call SetTextColors	; 292C6
-mov eax, dword [byte ebp-0Ah]	; 292CB
-sar eax, 10h	; 292CE
-shl eax, 2	; 292D1
-mov eax, dword [dword eax+playofftree]	; 292D4
-shl eax, 2	; 292DA
-mov eax, dword [dword eax+potreeseeds]	; 292DD
-add eax, 91h	; 292E3
-push eax	; 292E8
-mov eax, str_C3	; 292E9
-push eax	; 292EE
-lea eax, [dword ebp-0F0h]	; 292EF
-push eax	; 292F5
-call sprintf_	; 292F6
-add esp, byte 0Ch	; 292FB
-mov eax, dword [byte ebp-0Ah]	; 292FE
-sar eax, 10h	; 29301
-shl eax, 2	; 29304
-imul eax, dword [dword eax+playofftree], byte 15h	; 29307
-mov edx, treeteamnames	; 2930E
-add edx, eax	; 29313
-lea eax, [dword ebp-0F0h]	; 29315
-call strcat_	; 2931B
-lea ebx, [dword ebp-0F0h]	; 29320
-mov edx, dword [byte ebp-036h]	; 29326
-sar edx, 10h	; 29329
-mov eax, dword [byte ebp-01Ah]	; 2932C
-sar eax, 10h	; 2932F
-mov ecx, 5	; 29332
-sub ecx, eax	; 29337
-mov eax, ecx	; 29339
-shl eax, 2	; 2933B
-mov ax, word [dword eax+treecolx]	; 2933E
-add eax, 64h	; 29345
-mov ecx, 280h	; 2934A
-sub ecx, eax	; 2934F
-mov eax, ecx	; 29351
-cwde	; 29353
-call PrintShadowText	; 29354
-mov eax, dword [byte ebp-01Ah]	; 29359
-sar eax, 10h	; 2935C
-mov edx, 5	; 2935F
-sub edx, eax	; 29364
-shl edx, 2	; 29366
-mov eax, 286h	; 29369
-sub ax, word [dword edx+treecolx]	; 2936E
-mov word [byte ebp-024h], ax	; 29375
-xor edx, edx	; 29379
-mov dl, byte [treecolslots+30h]	; 2937B
-shl edx, 2	; 29381
-mov eax, dword [byte ebp-0Ah]	; 29384
-sar eax, 10h	; 29387
-shl eax, 2	; 2938A
-mov edx, dword [dword edx+playofftree]	; 2938D
-cmp edx, dword [dword eax+playofftree]	; 29393
-je short .100	; 29399
-xor eax, eax	; 2939B
-mov al, byte [treecolslots+31h]	; 2939D
-shl eax, 2	; 293A2
-mov edx, dword [byte ebp-0Ah]	; 293A5
-sar edx, 10h	; 293A8
-shl edx, 2	; 293AB
-mov eax, dword [dword eax+playofftree]	; 293AE
-cmp eax, dword [dword edx+playofftree]	; 293B4
-jne short .101	; 293BA
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul eax, dword [dword eax+playofftree], byte 15h
+        mov edx, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        mov ecx, 5
+        sub ecx, eax
+        mov eax, ecx
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        add eax, 64h
+        mov ecx, 280h
+        sub ecx, eax
+        mov eax, ecx
+        cwde
+        call PrintShadowText
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        mov edx, 5
+        sub edx, eax
+        shl edx, 2
+        mov eax, 286h
+        sub ax, word [dword edx+treecolx]
+        mov word [byte ebp-024h], ax
+        xor edx, edx
+        mov dl, byte [treecolslots+30h]
+        shl edx, 2
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov edx, dword [dword edx+playofftree]
+        cmp edx, dword [dword eax+playofftree]
+        je short .100
+        xor eax, eax
+        mov al, byte [treecolslots+31h]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .101
 .100:
-mov edx, 43h	; 293BC
-mov eax, 0C4h	; 293C1
-call SetTextColors	; 293C6
-jmp short .102	; 293CB
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
+        jmp short .102
 .101:
-mov edx, 43h	; 293CD
-mov eax, 40h	; 293D2
-call SetTextColors	; 293D7
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .102:
-mov eax, dword [byte ebp-0Ah]	; 293DC
-sar eax, 10h	; 293DF
-shl eax, 2	; 293E2
-push dword [dword eax+ebp-01C8h]	; 293E5
-mov eax, str_D3	; 293EC
-push eax	; 293F1
-lea eax, [dword ebp-0F0h]	; 293F2
-push eax	; 293F8
-call sprintf_	; 293F9
-add esp, byte 0Ch	; 293FE
-lea ebx, [dword ebp-0F0h]	; 29401
-mov edx, dword [byte ebp-036h]	; 29407
-sar edx, 10h	; 2940A
-mov eax, dword [byte ebp-026h]	; 2940D
-sar eax, 10h	; 29410
-call PrintShadowText	; 29413
-cmp word [byte ebp-014h], byte 1	; 29418
-jne short .103	; 2941D
-add dword [byte ebp-034h], byte 10h	; 2941F
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-026h]
+        sar eax, 10h
+        call PrintShadowText
+        cmp word [byte ebp-014h], byte 1
+        jne short .103
+        add dword [byte ebp-034h], byte 10h
 .103:
-jmp near PlayoffTreeScreen.94	; 29423
+        jmp near PlayoffTreeScreen.94
 .104:
-add dword [byte ebp-034h], byte 3Dh	; 29428
-mov eax, str_Adn12	; 2942C
-push eax	; 29431
-push dword [statsbgshapes]	; 29432
-call FindShape	; 29438
-add esp, byte 8	; 2943D
-mov dword [statspalshape], eax	; 29440
-push dword [statspalshape]	; 29445
-call DrawShape	; 2944B
-add esp, byte 4	; 29450
-jmp short .106	; 29453
+        add dword [byte ebp-034h], byte 3Dh
+        mov eax, str_Adn12
+        push eax
+        push dword [statsbgshapes]
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        push dword [statspalshape]
+        call DrawShape
+        add esp, byte 4
+        jmp short .106
 .105:
-add dword [byte ebp-034h], byte 4Dh	; 29455
+        add dword [byte ebp-034h], byte 4Dh
 .106:
-mov word [byte ebp-014h], 0	; 29459
+        mov word [byte ebp-014h], 0
 .107:
-cmp word [byte ebp-014h], byte 8	; 2945F
-jl short .109	; 29464
-jmp near .120	; 29466
+        cmp word [byte ebp-014h], byte 8
+        jl short .109
+        jmp near .120
 .108:
-inc word [byte ebp-014h]	; 2946B
-jmp short PlayoffTreeScreen.107	; 2946F
+        inc word [byte ebp-014h]
+        jmp short PlayoffTreeScreen.107
 .109:
-cmp word [byte ebp-014h], byte 4	; 29471
-jge short .110	; 29476
-mov eax, dword [byte ebp-014h]	; 29478
-mov word [byte ebp-018h], ax	; 2947B
-mov edx, dword [byte ebp-016h]	; 2947F
-sar edx, 10h	; 29482
-add edx, edx	; 29485
-xor eax, eax	; 29487
-mov al, byte [dword edx+treecol_Er1]	; 29489
-mov word [byte ebp-08h], ax	; 2948F
-jmp short .111	; 29493
+        cmp word [byte ebp-014h], byte 4
+        jge short .110
+        mov eax, dword [byte ebp-014h]
+        mov word [byte ebp-018h], ax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er1]
+        mov word [byte ebp-08h], ax
+        jmp short .111
 .110:
-mov eax, 7	; 29495
-sub eax, dword [byte ebp-014h]	; 2949A
-mov word [byte ebp-018h], ax	; 2949D
-mov edx, dword [byte ebp-016h]	; 294A1
-sar edx, 10h	; 294A4
-add edx, edx	; 294A7
-sub edx, byte 8	; 294A9
-mov eax, 7	; 294AC
-sub eax, edx	; 294B1
-mov edx, eax	; 294B3
-xor eax, eax	; 294B5
-mov al, byte [dword edx+treecol_Er1]	; 294B7
-mov word [byte ebp-08h], ax	; 294BD
+        mov eax, 7
+        sub eax, dword [byte ebp-014h]
+        mov word [byte ebp-018h], ax
+        mov edx, dword [byte ebp-016h]
+        sar edx, 10h
+        add edx, edx
+        sub edx, byte 8
+        mov eax, 7
+        sub eax, edx
+        mov edx, eax
+        xor eax, eax
+        mov al, byte [dword edx+treecol_Er1]
+        mov word [byte ebp-08h], ax
 .111:
-mov edx, 43h	; 294C1
-mov eax, 40h	; 294C6
-call SetTextColors	; 294CB
-mov eax, dword [byte ebp-0Ah]	; 294D0
-sar eax, 10h	; 294D3
-shl eax, 2	; 294D6
-mov eax, dword [dword eax+playofftree]	; 294D9
-shl eax, 2	; 294DF
-mov eax, dword [dword eax+potreeseeds]	; 294E2
-add eax, 91h	; 294E8
-push eax	; 294ED
-mov eax, str_C3	; 294EE
-push eax	; 294F3
-lea eax, [dword ebp-0F0h]	; 294F4
-push eax	; 294FA
-call sprintf_	; 294FB
-add esp, byte 0Ch	; 29500
-mov eax, dword [byte ebp-0Ah]	; 29503
-sar eax, 10h	; 29506
-shl eax, 2	; 29509
-imul edx, dword [dword eax+playofftree], byte 15h	; 2950C
-mov eax, treeteamnames	; 29513
-add edx, eax	; 29518
-lea eax, [dword ebp-0F0h]	; 2951A
-call strcat_	; 29520
-lea ebx, [dword ebp-0F0h]	; 29525
-mov edx, dword [byte ebp-036h]	; 2952B
-sar edx, 10h	; 2952E
-mov eax, dword [byte ebp-01Ah]	; 29531
-sar eax, 10h	; 29534
-shl eax, 2	; 29537
-mov eax, dword [dword eax+treecolx-2]	; 2953A
-sar eax, 10h	; 29540
-call PrintShadowText	; 29543
-mov eax, dword [byte ebp-01Ah]	; 29548
-sar eax, 10h	; 2954B
-shl eax, 2	; 2954E
-mov ax, word [dword eax+treecolx]	; 29551
-add eax, 6Ah	; 29558
-mov word [byte ebp-024h], ax	; 2955D
-xor edx, edx	; 29561
-mov dl, byte [treecol_Er2]	; 29563
-shl edx, 2	; 29569
-mov eax, dword [byte ebp-0Ah]	; 2956C
-sar eax, 10h	; 2956F
-shl eax, 2	; 29572
-mov edx, dword [dword edx+playofftree]	; 29575
-cmp edx, dword [dword eax+playofftree]	; 2957B
-je short .112	; 29581
-xor eax, eax	; 29583
-mov al, byte [treecol_Er2+1]	; 29585
-shl eax, 2	; 2958A
-mov edx, dword [byte ebp-0Ah]	; 2958D
-sar edx, 10h	; 29590
-shl edx, 2	; 29593
-mov eax, dword [dword eax+playofftree]	; 29596
-cmp eax, dword [dword edx+playofftree]	; 2959C
-jne short .113	; 295A2
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+playofftree]
+        shl eax, 2
+        mov eax, dword [dword eax+potreeseeds]
+        add eax, 91h
+        push eax
+        mov eax, str_C3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        imul edx, dword [dword eax+playofftree], byte 15h
+        mov eax, treeteamnames
+        add edx, eax
+        lea eax, [dword ebp-0F0h]
+        call strcat_
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov eax, dword [dword eax+treecolx-2]
+        sar eax, 10h
+        call PrintShadowText
+        mov eax, dword [byte ebp-01Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov ax, word [dword eax+treecolx]
+        add eax, 6Ah
+        mov word [byte ebp-024h], ax
+        xor edx, edx
+        mov dl, byte [treecol_Er2]
+        shl edx, 2
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        mov edx, dword [dword edx+playofftree]
+        cmp edx, dword [dword eax+playofftree]
+        je short .112
+        xor eax, eax
+        mov al, byte [treecol_Er2+1]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .113
 .112:
-jmp short .114	; 295A4
+        jmp short .114
 .113:
-xor eax, eax	; 295A6
-mov al, byte [treecol_Er2+2]	; 295A8
-shl eax, 2	; 295AD
-mov edx, dword [byte ebp-0Ah]	; 295B0
-sar edx, 10h	; 295B3
-shl edx, 2	; 295B6
-mov eax, dword [dword eax+playofftree]	; 295B9
-cmp eax, dword [dword edx+playofftree]	; 295BF
-jne short .115	; 295C5
+        xor eax, eax
+        mov al, byte [treecol_Er2+2]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .115
 .114:
-jmp short .116	; 295C7
+        jmp short .116
 .115:
-xor eax, eax	; 295C9
-mov al, byte [treecol_Er2+3]	; 295CB
-shl eax, 2	; 295D0
-mov edx, dword [byte ebp-0Ah]	; 295D3
-sar edx, 10h	; 295D6
-shl edx, 2	; 295D9
-mov eax, dword [dword eax+playofftree]	; 295DC
-cmp eax, dword [dword edx+playofftree]	; 295E2
-jne short .117	; 295E8
+        xor eax, eax
+        mov al, byte [treecol_Er2+3]
+        shl eax, 2
+        mov edx, dword [byte ebp-0Ah]
+        sar edx, 10h
+        shl edx, 2
+        mov eax, dword [dword eax+playofftree]
+        cmp eax, dword [dword edx+playofftree]
+        jne short .117
 .116:
-mov edx, 43h	; 295EA
-mov eax, 0C4h	; 295EF
-call SetTextColors	; 295F4
-jmp short .118	; 295F9
+        mov edx, 43h
+        mov eax, 0C4h
+        call SetTextColors
+        jmp short .118
 .117:
-mov edx, 43h	; 295FB
-mov eax, 40h	; 29600
-call SetTextColors	; 29605
+        mov edx, 43h
+        mov eax, 40h
+        call SetTextColors
 .118:
-mov eax, dword [byte ebp-0Ah]	; 2960A
-sar eax, 10h	; 2960D
-shl eax, 2	; 29610
-push dword [dword eax+ebp-01C8h]	; 29613
-mov eax, str_D3	; 2961A
-push eax	; 2961F
-lea eax, [dword ebp-0F0h]	; 29620
-push eax	; 29626
-call sprintf_	; 29627
-add esp, byte 0Ch	; 2962C
-lea ebx, [dword ebp-0F0h]	; 2962F
-mov edx, dword [byte ebp-036h]	; 29635
-sar edx, 10h	; 29638
-mov eax, dword [byte ebp-026h]	; 2963B
-sar eax, 10h	; 2963E
-call PrintShadowText	; 29641
-cmp word [byte ebp-014h], byte 3	; 29646
-jne short .119	; 2964B
-add dword [byte ebp-034h], byte 10h	; 2964D
+        mov eax, dword [byte ebp-0Ah]
+        sar eax, 10h
+        shl eax, 2
+        push dword [dword eax+ebp-01C8h]
+        mov eax, str_D3
+        push eax
+        lea eax, [dword ebp-0F0h]
+        push eax
+        call sprintf_
+        add esp, byte 0Ch
+        lea ebx, [dword ebp-0F0h]
+        mov edx, dword [byte ebp-036h]
+        sar edx, 10h
+        mov eax, dword [byte ebp-026h]
+        sar eax, 10h
+        call PrintShadowText
+        cmp word [byte ebp-014h], byte 3
+        jne short .119
+        add dword [byte ebp-034h], byte 10h
 .119:
-jmp near PlayoffTreeScreen.108	; 29651
+        jmp near PlayoffTreeScreen.108
 .120:
-call TextGridOff	; 29656
-push dword [statsbgshapes]	; 2965B
-call FreeMemBlock	; 29661
-add esp, byte 4	; 29666
-lea eax, [dword ebp-09Ch]	; 29669
-push eax	; 2966F
-call TextRestoreState	; 29670
-add esp, byte 4	; 29675
+        call TextGridOff
+        push dword [statsbgshapes]
+        call FreeMemBlock
+        add esp, byte 4
+        lea eax, [dword ebp-09Ch]
+        push eax
+        call TextRestoreState
+        add esp, byte 4
 .x:
-mov esp, ebp	; 29678
-pop ebp	; 2967A
-pop edi	; 2967B
-pop esi	; 2967C
-pop edx	; 2967D
-pop ecx	; 2967E
-pop ebx	; 2967F
-ret	; 29680
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PlayoffTreeHitTest                                              29681  95 PC
+; Stub, always returns 0 (ret 4); called by RunTeamPickMenu
+;-----------------------------------------------------------------------------
 ; C: src/front/playoff/PlayoffTreeHitTest.c
 %ifdef CBUILD
 %include "c/front/playoff/PlayoffTreeHitTest.inc"
 %else
 PlayoffTreeHitTest:
-push dword 28h	; 29681
-call __CHK	; 29686
-push esi	; 2968B
-push edi	; 2968C
-push ebp	; 2968D
-mov ebp, esp	; 2968E
-sub esp, 18h	; 29690
-mov dword [byte ebp-018h], eax	; 29696
-mov dword [byte ebp-014h], edx	; 29699
-mov dword [byte ebp-010h], ebx	; 2969C
-mov dword [byte ebp-0Ch], ecx	; 2969F
-mov dword [byte ebp-04h], 0	; 296A2
-mov eax, dword [byte ebp-04h]	; 296A9
-mov dword [byte ebp-08h], eax	; 296AC
-mov eax, dword [byte ebp-08h]	; 296AF
-mov esp, ebp	; 296B2
-pop ebp	; 296B4
-pop edi	; 296B5
-pop esi	; 296B6
-ret 4	; 296B7
+        push dword 28h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 18h
+        mov dword [byte ebp-018h], eax
+        mov dword [byte ebp-014h], edx
+        mov dword [byte ebp-010h], ebx
+        mov dword [byte ebp-0Ch], ecx
+        mov dword [byte ebp-04h], 0
+        mov eax, dword [byte ebp-04h]
+        mov dword [byte ebp-08h], eax
+        mov eax, dword [byte ebp-08h]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        ret 4
+;-----------------------------------------------------------------------------
+; ShowPlayoffTree                              296BA  95 PC, medium confidence
+; Statsfromleague ? LoadLeagueTree : LoadPlayoffModeTree (both end in
+; PlayoffTreeScreen); called by the *StandingsScreen callbacks
+;-----------------------------------------------------------------------------
 ShowPlayoffTree:
-push dword 24h	; 296BA
-call __CHK	; 296BF
-push ebx	; 296C4
-push ecx	; 296C5
-push esi	; 296C6
-push edi	; 296C7
-push ebp	; 296C8
-mov ebp, esp	; 296C9
-sub esp, 0Ch	; 296CB
-mov dword [byte ebp-0Ch], eax	; 296D1
-mov dword [byte ebp-08h], edx	; 296D4
-cmp dword [statsfromleague], byte 0	; 296D7
-jne short .1	; 296DE
-mov edx, dword [byte ebp-08h]	; 296E0
-mov eax, dword [byte ebp-0Ch]	; 296E3
-call LoadPlayoffModeTree	; 296E6
-jmp short .2	; 296EB
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov ebp, esp
+        sub esp, 0Ch
+        mov dword [byte ebp-0Ch], eax
+        mov dword [byte ebp-08h], edx
+        cmp dword [statsfromleague], byte 0
+        jne short .1
+        mov edx, dword [byte ebp-08h]
+        mov eax, dword [byte ebp-0Ch]
+        call LoadPlayoffModeTree
+        jmp short .2
 .1:
-mov edx, dword [byte ebp-08h]	; 296ED
-mov eax, dword [byte ebp-0Ch]	; 296F0
-call LoadLeagueTree	; 296F3
+        mov edx, dword [byte ebp-08h]
+        mov eax, dword [byte ebp-0Ch]
+        call LoadLeagueTree
 .2:
-mov dword [byte ebp-04h], 0	; 296F8
-mov eax, dword [byte ebp-04h]	; 296FF
-mov esp, ebp	; 29702
-pop ebp	; 29704
-pop edi	; 29705
-pop esi	; 29706
-pop ecx	; 29707
-pop ebx	; 29708
-ret	; 29709
+        mov dword [byte ebp-04h], 0
+        mov eax, dword [byte ebp-04h]
+        mov esp, ebp
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C

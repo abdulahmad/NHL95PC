@@ -5,31 +5,31 @@ section s_A189E progbits alloc exec nowrite align=1
 extern sub_A18D6
 global __int386x_
 __int386x_:
-push ebp	; A189E
-push es	; A189F
-push ebx	; A18A0
-push ds	; A18A1
-push edx	; A18A2
-call sub_A18D6	; A18A3
-push ds	; A18A8
-push edi	; A18A9
-mov ebp, esp	; A18AA
-mov edi, dword [byte ebp+08h]	; A18AC
-mov ds, word [byte ebp+0Ch]	; A18AF
-mov dword [edi], eax	; A18B2
-mov dword [byte edi+04h], ebx	; A18B4
-mov dword [byte edi+08h], ecx	; A18B7
-mov dword [byte edi+0Ch], edx	; A18BA
-mov dword [byte edi+010h], esi	; A18BD
-pop dword [byte edi+014h]	; A18C0
-sbb eax, eax	; A18C3
-mov dword [byte edi+018h], eax	; A18C5
-pop eax	; A18C8
-pop ebx	; A18C9
-pop ebx	; A18CA
-pop ebx	; A18CB
-mov word [byte ebx+06h], ax	; A18CC
-o16 mov word [ebx], es	; A18D0
-pop es	; A18D3
-pop ebp	; A18D4
-ret	; A18D5
+        push ebp
+        push es
+        push ebx
+        push ds
+        push edx
+        call sub_A18D6
+        push ds
+        push edi
+        mov ebp, esp
+        mov edi, dword [byte ebp+08h]
+        mov ds, word [byte ebp+0Ch]
+        mov dword [edi], eax
+        mov dword [byte edi+04h], ebx
+        mov dword [byte edi+08h], ecx
+        mov dword [byte edi+0Ch], edx
+        mov dword [byte edi+010h], esi
+        pop dword [byte edi+014h]
+        sbb eax, eax
+        mov dword [byte edi+018h], eax
+        pop eax
+        pop ebx
+        pop ebx
+        pop ebx
+        mov word [byte ebx+06h], ax
+        o16 mov word [ebx], es
+        pop es
+        pop ebp
+        ret

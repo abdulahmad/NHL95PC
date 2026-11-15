@@ -6,36 +6,36 @@ global byte_EDABB, vesamodeok, byte_EDCC1, byte_EDCC3, byte_EDCC5, byte_EDCC7, d
 global dword_EDAB0, dword_EDAB4, dword_EDABA, vesapresent, dword_EDCBC, timercallbacks, vesamodeinfo, vesainfo
 global word_EDBCA
 dword_EDAA8:
-resb 4
+        resb 4
 dword_EDAAC:
-resb 4
+        resb 4
 dword_EDAB0:
-resb 4
+        resb 4
 dword_EDAB4:
-resb 4
+        resb 4
 vesamodeinfo:
-resb 2
+        resb 2
 dword_EDABA:
-resb 1
+        resb 1
 byte_EDABB:
-resb 253
+        resb 253
 vesainfo:
-resb 18
+        resb 18
 word_EDBCA:
-resb 238
+        resb 238
 vesapresent:
-resb 4
+        resb 4
 dword_EDCBC:
-resb 4
+        resb 4
 vesamodeok:
-resb 1
+        resb 1
 byte_EDCC1:
-resb 2
+        resb 2
 byte_EDCC3:
-resb 2
+        resb 2
 byte_EDCC5:
-resb 2
+        resb 2
 byte_EDCC7:
-resb 21
+        resb 21
 timercallbacks:
-resb 32
+        resb 32

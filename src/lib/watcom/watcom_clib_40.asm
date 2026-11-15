@@ -6,89 +6,89 @@ extern __fatal_runtime_error_, str_FloatingPointSupportNot, dword_D5670, dword_D
 global abs_, loc_A2ACE, sub_A2ACF, sub_A2ADC, unk_A2AEE, ultoa_, loc_A2B28, loc_A2B48
 global ltoa_, loc_A2B6E, toupper_, loc_A2B84, sub_A2B85
 abs_:
-test eax, eax	; A2AC8
-jge short loc_A2ACE	; A2ACA
-neg eax	; A2ACC
+        test eax, eax
+        jge short loc_A2ACE
+        neg eax
 loc_A2ACE:
-ret	; A2ACE
+        ret
 sub_A2ACF:
-mov dword [dword_D5674], 8000h	; A2ACF
-ret	; A2AD9
-db 00h,00h
+        mov dword [dword_D5674], 8000h
+        ret
+        db 00h,00h
 sub_A2ADC:
-push edx	; A2ADC
-mov eax, str_FloatingPointSupportNot	; A2ADD
-mov edx, 1	; A2AE2
-call __fatal_runtime_error_	; A2AE7
-pop edx	; A2AEC
-ret	; A2AED
+        push edx
+        mov eax, str_FloatingPointSupportNot
+        mov edx, 1
+        call __fatal_runtime_error_
+        pop edx
+        ret
 unk_A2AEE:
-db 030h,031h,032h,033h,034h,035h,036h,037h,038h,039h,061h,062h,063h,064h,065h,066h
-db 067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h
-db 077h,078h,079h,07Ah,00h
+        db 030h,031h,032h,033h,034h,035h,036h,037h,038h,039h,061h,062h,063h,064h,065h,066h
+        db 067h,068h,069h,06Ah,06Bh,06Ch,06Dh,06Eh,06Fh,070h,071h,072h,073h,074h,075h,076h
+        db 077h,078h,079h,07Ah,00h
 ultoa_:
-push ecx	; A2B13
-push esi	; A2B14
-push ebp	; A2B15
-sub esp, byte 28h	; A2B16
-push edx	; A2B19
-mov ebp, ebx	; A2B1A
-mov esi, edx	; A2B1C
-xor dl, dl	; A2B1E
-lea ecx, [byte esp+05h]	; A2B20
-mov byte [byte esp+04h], dl	; A2B24
+        push ecx
+        push esi
+        push ebp
+        sub esp, byte 28h
+        push edx
+        mov ebp, ebx
+        mov esi, edx
+        xor dl, dl
+        lea ecx, [byte esp+05h]
+        mov byte [byte esp+04h], dl
 loc_A2B28:
-lea ebx, [byte esp+028h]	; A2B28
-mov dword [byte esp+028h], ebp	; A2B2C
-xor edx, edx	; A2B30
-div dword [ebx]	; A2B32
-mov dword [ebx], edx	; A2B34
-mov edx, dword [byte esp+028h]	; A2B36
-mov dl, byte [dword cs:edx+unk_A2AEE]	; A2B3A
-mov byte [ecx], dl	; A2B41
-inc ecx	; A2B43
-test eax, eax	; A2B44
-jne short loc_A2B28	; A2B46
+        lea ebx, [byte esp+028h]
+        mov dword [byte esp+028h], ebp
+        xor edx, edx
+        div dword [ebx]
+        mov dword [ebx], edx
+        mov edx, dword [byte esp+028h]
+        mov dl, byte [dword cs:edx+unk_A2AEE]
+        mov byte [ecx], dl
+        inc ecx
+        test eax, eax
+        jne short loc_A2B28
 loc_A2B48:
-dec ecx	; A2B48
-mov al, byte [ecx]	; A2B49
-mov byte [esi], al	; A2B4B
-inc esi	; A2B4D
-test al, al	; A2B4E
-jne short loc_A2B48	; A2B50
-mov eax, dword [esp]	; A2B52
-add esp, byte 2Ch	; A2B55
-pop ebp	; A2B58
-pop esi	; A2B59
-pop ecx	; A2B5A
-ret	; A2B5B
+        dec ecx
+        mov al, byte [ecx]
+        mov byte [esi], al
+        inc esi
+        test al, al
+        jne short loc_A2B48
+        mov eax, dword [esp]
+        add esp, byte 2Ch
+        pop ebp
+        pop esi
+        pop ecx
+        ret
 ltoa_:
-push ecx	; A2B5C
-mov ecx, edx	; A2B5D
-cmp ebx, byte 0Ah	; A2B5F
-jne short loc_A2B6E	; A2B62
-test eax, eax	; A2B64
-jge short loc_A2B6E	; A2B66
-neg eax	; A2B68
-mov byte [edx], 2Dh	; A2B6A
-inc edx	; A2B6D
+        push ecx
+        mov ecx, edx
+        cmp ebx, byte 0Ah
+        jne short loc_A2B6E
+        test eax, eax
+        jge short loc_A2B6E
+        neg eax
+        mov byte [edx], 2Dh
+        inc edx
 loc_A2B6E:
-call ultoa_	; A2B6E
-mov eax, ecx	; A2B73
-pop ecx	; A2B75
-ret	; A2B76
+        call ultoa_
+        mov eax, ecx
+        pop ecx
+        ret
 toupper_:
-cmp eax, byte 61h	; A2B77
-jl short loc_A2B84	; A2B7A
-cmp eax, byte 7Ah	; A2B7C
-jg short loc_A2B84	; A2B7F
-sub eax, byte 20h	; A2B81
+        cmp eax, byte 61h
+        jl short loc_A2B84
+        cmp eax, byte 7Ah
+        jg short loc_A2B84
+        sub eax, byte 20h
 loc_A2B84:
-ret	; A2B84
+        ret
 sub_A2B85:
-push edx	; A2B85
-mov edx, eax	; A2B86
-mov eax, dword [dword_D5670]	; A2B88
-mov dword [dword_D5670], edx	; A2B8D
-pop edx	; A2B93
-ret	; A2B94
+        push edx
+        mov edx, eax
+        mov eax, dword [dword_D5670]
+        mov dword [dword_D5670], edx
+        pop edx
+        ret

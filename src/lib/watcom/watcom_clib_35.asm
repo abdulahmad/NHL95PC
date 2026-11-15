@@ -5,41 +5,41 @@ section s_9D307 progbits alloc exec nowrite align=1
 extern __cnvs2d_, loc_A313F, off_D5668, off_D566C, InitFpuFlags, word_D65FC
 global __setEFGfmt_, __sys_init_387_emulator, loc_9D333, loc_9D33C
 __setEFGfmt_:
-push ebx	; 9D307
-push edx	; 9D308
-mov edx, loc_A313F	; 9D309
-mov ebx, __cnvs2d_	; 9D30E
-mov dword [off_D5668], edx	; 9D313
-mov dword [off_D566C], ebx	; 9D319
-pop edx	; 9D31F
-pop ebx	; 9D320
-ret	; 9D321
+        push ebx
+        push edx
+        mov edx, loc_A313F
+        mov ebx, __cnvs2d_
+        mov dword [off_D5668], edx
+        mov dword [off_D566C], ebx
+        pop edx
+        pop ebx
+        ret
 __sys_init_387_emulator:
-push es	; 9D322
-push ecx	; 9D323
-push ebx	; 9D324
-push edx	; 9D325
-fninit	; 9D326
-push eax	; 9D328
-fnstcw word [esp]	; 9D329
-pop eax	; 9D32C
-cmp ah, 3	; 9D32D
-je short loc_9D333	; 9D330
-inc ebp	; 9D332
+        push es
+        push ecx
+        push ebx
+        push edx
+        fninit
+        push eax
+        fnstcw word [esp]
+        pop eax
+        cmp ah, 3
+        je short loc_9D333
+        inc ebp
 loc_9D333:
-or ebp, ebp	; 9D333
-je short loc_9D33C	; 9D335
-call InitFpuFlags	; 9D337
+        or ebp, ebp
+        je short loc_9D33C
+        call InitFpuFlags
 loc_9D33C:
-wait	; 9D33C
-fninit	; 9D33D
-fldcw word [word_D65FC]	; 9D33F
-fldz	; 9D345
-fldz	; 9D347
-fldz	; 9D349
-fldz	; 9D34B
-pop edx	; 9D34D
-pop ebx	; 9D34E
-pop ecx	; 9D34F
-pop es	; 9D350
-ret	; 9D351
+        wait
+        fninit
+        fldcw word [word_D65FC]
+        fldz
+        fldz
+        fldz
+        fldz
+        pop edx
+        pop ebx
+        pop ecx
+        pop es
+        ret

@@ -8,232 +8,232 @@ global loc_988C0, loc_988C3, loc_988CA, loc_988D7, loc_988E6, loc_9891A, loc_989
 global loc_98967, loc_9899C, loc_989A4, loc_989A7, loc_989AE, loc_989BD, loc_989BF, loc_989C8
 global loc_989DF, loc_989E8, loc_989EC, loc_989F1, loc_98A21, loc_98A23, _nmsize_
 _nexpand_:
-push ebx	; 98801
-push ecx	; 98802
-push esi	; 98803
-push edi	; 98804
-sub esp, byte 8	; 98805
-mov esi, eax	; 98808
-mov edi, edx	; 9880A
-and byte [byte esp+04h], 0FEh	; 9880C
+        push ebx
+        push ecx
+        push esi
+        push edi
+        sub esp, byte 8
+        mov esi, eax
+        mov edi, edx
+        and byte [byte esp+04h], 0FEh
 loc_98811:
-mov eax, dword_D43E8	; 98811
-mov edx, ds	; 98816
-mov ecx, esp	; 98818
-xor eax, eax	; 9881A
-mov ebx, edi	; 9881C
-mov ax, dx	; 9881E
-mov edx, esi	; 98821
-call __HeapManager_expand_	; 98823
-mov edx, eax	; 98828
-test eax, eax	; 9882A
-jne near loc_989C8	; 9882C
-mov eax, esi	; 98832
-jmp near loc_98A23	; 98834
+        mov eax, dword_D43E8
+        mov edx, ds
+        mov ecx, esp
+        xor eax, eax
+        mov ebx, edi
+        mov ax, dx
+        mov edx, esi
+        call __HeapManager_expand_
+        mov edx, eax
+        test eax, eax
+        jne near loc_989C8
+        mov eax, esi
+        jmp near loc_98A23
 __HeapManager_expand_:
-push esi	; 98839
-push edi	; 9883A
-push ebp	; 9883B
-sub esp, byte 0Ch	; 9883C
-push eax	; 9883F
-mov edi, edx	; 98840
-lea eax, [byte ebx+07h]	; 98842
-and al, 0FCh	; 98845
-cmp eax, ebx	; 98847
-jae short loc_98850	; 98849
-mov eax, 0FFFFFFFFh	; 9884B
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 0Ch
+        push eax
+        mov edi, edx
+        lea eax, [byte ebx+07h]
+        and al, 0FCh
+        cmp eax, ebx
+        jae short loc_98850
+        mov eax, 0FFFFFFFFh
 loc_98850:
-cmp eax, byte 0Ch	; 98850
-jae short loc_9885A	; 98853
-mov eax, 0Ch	; 98855
+        cmp eax, byte 0Ch
+        jae short loc_9885A
+        mov eax, 0Ch
 loc_9885A:
-lea edx, [byte edi-04h]	; 9885A
-mov dword [byte esp+04h], edx	; 9885D
-mov edx, dword [edx]	; 98861
-and dl, 0FEh	; 98863
-cmp eax, edx	; 98866
-jbe near loc_98967	; 98868
-mov ebx, dword [byte esp+04h]	; 9886E
-sub eax, edx	; 98872
-add ebx, edx	; 98874
+        lea edx, [byte edi-04h]
+        mov dword [byte esp+04h], edx
+        mov edx, dword [edx]
+        and dl, 0FEh
+        cmp eax, edx
+        jbe near loc_98967
+        mov ebx, dword [byte esp+04h]
+        sub eax, edx
+        add ebx, edx
 loc_98876:
-mov dword [ecx], eax	; 98876
-mov ebp, dword [ebx]	; 98878
-cmp ebp, byte 0FFFFFFFFh	; 9887A
-jne short loc_98889	; 9887D
-mov ebp, 2	; 9887F
-jmp near loc_989BF	; 98884
+        mov dword [ecx], eax
+        mov ebp, dword [ebx]
+        cmp ebp, byte 0FFFFFFFFh
+        jne short loc_98889
+        mov ebp, 2
+        jmp near loc_989BF
 loc_98889:
-test ebp, 1	; 98889
-jne near loc_98960	; 9888F
-mov eax, dword [byte ebx+08h]	; 98895
-mov dword [byte esp+08h], eax	; 98898
-mov eax, dword [byte ebx+04h]	; 9889C
-mov edx, ds	; 9889F
-mov dword [byte esp+0Ch], eax	; 988A1
-mov eax, dword_D43E8	; 988A5
-cmp dx, word [esp]	; 988AA
-jne short loc_988CA	; 988AE
-mov esi, dword [dword_D43E8]	; 988B0
-jmp short loc_988C3	; 988B6
+        test ebp, 1
+        jne near loc_98960
+        mov eax, dword [byte ebx+08h]
+        mov dword [byte esp+08h], eax
+        mov eax, dword [byte ebx+04h]
+        mov edx, ds
+        mov dword [byte esp+0Ch], eax
+        mov eax, dword_D43E8
+        cmp dx, word [esp]
+        jne short loc_988CA
+        mov esi, dword [dword_D43E8]
+        jmp short loc_988C3
 loc_988B8:
-cmp esi, edi	; 988B8
-ja short loc_988C0	; 988BA
-cmp edi, edx	; 988BC
-jb short loc_988CA	; 988BE
+        cmp esi, edi
+        ja short loc_988C0
+        cmp edi, edx
+        jb short loc_988CA
 loc_988C0:
-mov esi, dword [byte esi+08h]	; 988C0
+        mov esi, dword [byte esi+08h]
 loc_988C3:
-mov edx, dword [byte esi+08h]	; 988C3
-test edx, edx	; 988C6
-jne short loc_988B8	; 988C8
+        mov edx, dword [byte esi+08h]
+        test edx, edx
+        jne short loc_988B8
 loc_988CA:
-mov edx, dword [byte esi+0Ch]	; 988CA
-cmp ebx, edx	; 988CD
-jne short loc_988D7	; 988CF
-mov eax, dword [byte edx+04h]	; 988D1
-mov dword [byte esi+0Ch], eax	; 988D4
+        mov edx, dword [byte esi+0Ch]
+        cmp ebx, edx
+        jne short loc_988D7
+        mov eax, dword [byte edx+04h]
+        mov dword [byte esi+0Ch], eax
 loc_988D7:
-cmp ebp, dword [ecx]	; 988D7
-jb short loc_988E6	; 988D9
-mov eax, ebp	; 988DB
-mov edx, dword [ecx]	; 988DD
-sub eax, edx	; 988DF
-cmp eax, byte 0Ch	; 988E1
-jae short loc_9891A	; 988E4
+        cmp ebp, dword [ecx]
+        jb short loc_988E6
+        mov eax, ebp
+        mov edx, dword [ecx]
+        sub eax, edx
+        cmp eax, byte 0Ch
+        jae short loc_9891A
 loc_988E6:
-mov eax, dword [byte esp+0Ch]	; 988E6
-mov edx, dword [byte esp+08h]	; 988EA
-mov dword [byte eax+08h], edx	; 988EE
-mov eax, edx	; 988F1
-mov edx, dword [byte esp+0Ch]	; 988F3
-mov dword [byte eax+04h], edx	; 988F7
-mov eax, dword [byte esp+04h]	; 988FA
-add dword [eax], ebp	; 988FE
-mov eax, dword [byte esi+01Ch]	; 98900
-dec eax	; 98903
-xor dl, dl	; 98904
-mov dword [byte esi+01Ch], eax	; 98906
-mov byte [byte_F24C4], dl	; 98909
-mov edx, dword [ecx]	; 9890F
-cmp ebp, edx	; 98911
-jb short loc_98955	; 98913
-jmp near loc_989BD	; 98915
+        mov eax, dword [byte esp+0Ch]
+        mov edx, dword [byte esp+08h]
+        mov dword [byte eax+08h], edx
+        mov eax, edx
+        mov edx, dword [byte esp+0Ch]
+        mov dword [byte eax+04h], edx
+        mov eax, dword [byte esp+04h]
+        add dword [eax], ebp
+        mov eax, dword [byte esi+01Ch]
+        dec eax
+        xor dl, dl
+        mov dword [byte esi+01Ch], eax
+        mov byte [byte_F24C4], dl
+        mov edx, dword [ecx]
+        cmp ebp, edx
+        jb short loc_98955
+        jmp near loc_989BD
 loc_9891A:
-add ebx, edx	; 9891A
-mov dword [ebx], eax	; 9891C
-mov eax, dword [byte esp+0Ch]	; 9891E
-mov dword [byte ebx+04h], eax	; 98922
-mov eax, dword [byte esp+08h]	; 98925
-mov dword [byte ebx+08h], eax	; 98929
-mov eax, dword [byte esp+0Ch]	; 9892C
-mov dword [byte eax+08h], ebx	; 98930
-mov eax, dword [byte esp+08h]	; 98933
-mov dword [byte eax+04h], ebx	; 98937
-mov edx, dword [byte esp+04h]	; 9893A
-mov eax, dword [ecx]	; 9893E
-mov edi, dword [edx]	; 98940
-xor ebp, ebp	; 98942
-add edi, eax	; 98944
-xor ah, ah	; 98946
-mov dword [edx], edi	; 98948
-mov byte [byte_F24C4], ah	; 9894A
-jmp near loc_989BF	; 98950
+        add ebx, edx
+        mov dword [ebx], eax
+        mov eax, dword [byte esp+0Ch]
+        mov dword [byte ebx+04h], eax
+        mov eax, dword [byte esp+08h]
+        mov dword [byte ebx+08h], eax
+        mov eax, dword [byte esp+0Ch]
+        mov dword [byte eax+08h], ebx
+        mov eax, dword [byte esp+08h]
+        mov dword [byte eax+04h], ebx
+        mov edx, dword [byte esp+04h]
+        mov eax, dword [ecx]
+        mov edi, dword [edx]
+        xor ebp, ebp
+        add edi, eax
+        xor ah, ah
+        mov dword [edx], edi
+        mov byte [byte_F24C4], ah
+        jmp near loc_989BF
 loc_98955:
-mov eax, edx	; 98955
-sub eax, ebp	; 98957
-add ebx, ebp	; 98959
-jmp near loc_98876	; 9895B
+        mov eax, edx
+        sub eax, ebp
+        add ebx, ebp
+        jmp near loc_98876
 loc_98960:
-mov ebp, 1	; 98960
-jmp short loc_989BF	; 98965
+        mov ebp, 1
+        jmp short loc_989BF
 loc_98967:
-sub edx, eax	; 98967
-cmp edx, byte 0Ch	; 98969
-jb short loc_989BD	; 9896C
-mov ebx, eax	; 9896E
-mov ecx, dword [byte esp+04h]	; 98970
-or bl, 1	; 98974
-or dl, 1	; 98977
-mov dword [ecx], ebx	; 9897A
-lea ebx, [ecx+eax]	; 9897C
-mov eax, dword_D43E8	; 9897F
-mov dword [byte esp+04h], ebx	; 98984
-mov dword [ebx], edx	; 98988
-mov edx, ds	; 9898A
-mov ebx, dword [esp]	; 9898C
-cmp dx, bx	; 9898F
-jne short loc_989AE	; 98992
-mov esi, dword [dword_D43E8]	; 98994
-jmp short loc_989A7	; 9899A
+        sub edx, eax
+        cmp edx, byte 0Ch
+        jb short loc_989BD
+        mov ebx, eax
+        mov ecx, dword [byte esp+04h]
+        or bl, 1
+        or dl, 1
+        mov dword [ecx], ebx
+        lea ebx, [ecx+eax]
+        mov eax, dword_D43E8
+        mov dword [byte esp+04h], ebx
+        mov dword [ebx], edx
+        mov edx, ds
+        mov ebx, dword [esp]
+        cmp dx, bx
+        jne short loc_989AE
+        mov esi, dword [dword_D43E8]
+        jmp short loc_989A7
 loc_9899C:
-cmp esi, edi	; 9899C
-ja short loc_989A4	; 9899E
-cmp edi, ecx	; 989A0
-jb short loc_989AE	; 989A2
+        cmp esi, edi
+        ja short loc_989A4
+        cmp edi, ecx
+        jb short loc_989AE
 loc_989A4:
-mov esi, dword [byte esi+08h]	; 989A4
+        mov esi, dword [byte esi+08h]
 loc_989A7:
-mov ecx, dword [byte esi+08h]	; 989A7
-test ecx, ecx	; 989AA
-jne short loc_9899C	; 989AC
+        mov ecx, dword [byte esi+08h]
+        test ecx, ecx
+        jne short loc_9899C
 loc_989AE:
-inc dword [byte esi+018h]	; 989AE
-mov eax, dword [byte esp+04h]	; 989B1
-add eax, byte 4	; 989B5
-call _nfree_	; 989B8
+        inc dword [byte esi+018h]
+        mov eax, dword [byte esp+04h]
+        add eax, byte 4
+        call _nfree_
 loc_989BD:
-xor ebp, ebp	; 989BD
+        xor ebp, ebp
 loc_989BF:
-mov eax, ebp	; 989BF
-add esp, byte 10h	; 989C1
-pop ebp	; 989C4
-pop edi	; 989C5
-pop esi	; 989C6
-ret	; 989C7
+        mov eax, ebp
+        add esp, byte 10h
+        pop ebp
+        pop edi
+        pop esi
+        ret
 loc_989C8:
-cmp eax, byte 1	; 989C8
-je short loc_98A21	; 989CB
-cmp byte [_Extender], 1	; 989CD
-jne short loc_989DF	; 989D4
-cmp byte [_ExtenderSubtype], 0	; 989D6
-je short loc_989E8	; 989DD
+        cmp eax, byte 1
+        je short loc_98A21
+        cmp byte [_Extender], 1
+        jne short loc_989DF
+        cmp byte [_ExtenderSubtype], 0
+        je short loc_989E8
 loc_989DF:
-cmp byte [_Extender], 9	; 989DF
-jne short loc_989EC	; 989E6
+        cmp byte [_Extender], 9
+        jne short loc_989EC
 loc_989E8:
-xor edx, edx	; 989E8
-jmp short loc_989F1	; 989EA
+        xor edx, edx
+        jmp short loc_989F1
 loc_989EC:
-mov edx, 1	; 989EC
+        mov edx, 1
 loc_989F1:
-test edx, edx	; 989F1
-je short loc_98A21	; 989F3
-cmp eax, byte 2	; 989F5
-jne near loc_98811	; 989F8
-mov bh, byte [byte esp+04h]	; 989FE
-test bh, 1	; 98A02
-jne short loc_98A21	; 98A05
-mov eax, dword [esp]	; 98A07
-call __ExpandDGROUP_	; 98A0A
-test eax, eax	; 98A0F
-je short loc_98A21	; 98A11
-mov cl, bh	; 98A13
-or cl, 1	; 98A15
-mov byte [byte esp+04h], cl	; 98A18
-jmp near loc_98811	; 98A1C
+        test edx, edx
+        je short loc_98A21
+        cmp eax, byte 2
+        jne near loc_98811
+        mov bh, byte [byte esp+04h]
+        test bh, 1
+        jne short loc_98A21
+        mov eax, dword [esp]
+        call __ExpandDGROUP_
+        test eax, eax
+        je short loc_98A21
+        mov cl, bh
+        or cl, 1
+        mov byte [byte esp+04h], cl
+        jmp near loc_98811
 loc_98A21:
-xor eax, eax	; 98A21
+        xor eax, eax
 loc_98A23:
-add esp, byte 8	; 98A23
-pop edi	; 98A26
-pop esi	; 98A27
-pop ecx	; 98A28
-pop ebx	; 98A29
-ret	; 98A2A
+        add esp, byte 8
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 _nmsize_:
-mov eax, dword [byte eax-04h]	; 98A2B
-and al, 0FEh	; 98A2E
-sub eax, byte 4	; 98A30
-ret	; 98A33
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        mov eax, dword [byte eax-04h]
+        and al, 0FEh
+        sub eax, byte 4
+        ret
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h

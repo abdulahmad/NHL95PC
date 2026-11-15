@@ -31,1182 +31,1263 @@ extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common
 global SeasonDbPtr2, CareerDbPtr, CareerDbPtr_common, CareerDbPtr2, AttDbPtr
+;-----------------------------------------------------------------------------
+; MenuCentralRegistry                          6BE95  95 PC, medium confidence
+; "Central Registry ..." menu action: music cue, restores pitch, frees the
+; free-agent lists (falist / falistsel), returns 2
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/MenuCentralRegistry.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuCentralRegistry.inc"
 %else
 MenuCentralRegistry:
-push dword 1Ch	; 6BE95
-call __CHK	; 6BE9A
-push ebx	; 6BE9F
-push ecx	; 6BEA0
-push edx	; 6BEA1
-push esi	; 6BEA2
-push ebp	; 6BEA3
-cmp byte [musicon], 0	; 6BEA4
-je short .1	; 6BEAB
-mov eax, dword [speechbank]	; 6BEAD
-mov edx, dword [dword eax+03B60h]	; 6BEB2
-push edx	; 6BEB8
-call sub_8D2F0	; 6BEB9
-add esp, byte 4	; 6BEBE
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push ebp
+        cmp byte [musicon], 0
+        je short .1
+        mov eax, dword [speechbank]
+        mov edx, dword [dword eax+03B60h]
+        push edx
+        call sub_8D2F0
+        add esp, byte 4
 .1:
-mov dword [scrpitch], 0A0h	; 6BEC1
-xor ecx, ecx	; 6BECB
-mov dword [dword_C71E0], ecx	; 6BECD
-call RunEditRosters	; 6BED3
-mov esi, dword [falistsel]	; 6BED8
-test esi, esi	; 6BEDE
-je short .2	; 6BEE0
-push esi	; 6BEE2
-call FreeMemBlock	; 6BEE3
-add esp, byte 4	; 6BEE8
-xor ebp, ebp	; 6BEEB
-mov dword [falistsel], ebp	; 6BEED
+        mov dword [scrpitch], 0A0h
+        xor ecx, ecx
+        mov dword [dword_C71E0], ecx
+        call RunEditRosters
+        mov esi, dword [falistsel]
+        test esi, esi
+        je short .2
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebp, ebp
+        mov dword [falistsel], ebp
 .2:
-mov eax, dword [falist]	; 6BEF3
-test eax, eax	; 6BEF8
-je short .3	; 6BEFA
-push eax	; 6BEFC
-call FreeMemBlock	; 6BEFD
-add esp, byte 4	; 6BF02
-xor ebx, ebx	; 6BF05
-mov dword [falist], ebx	; 6BF07
+        mov eax, dword [falist]
+        test eax, eax
+        je short .3
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [falist], ebx
 .3:
-cmp byte [musicon], 0	; 6BF0D
-je short .4	; 6BF14
-mov dword [cursndbank], 20h	; 6BF16
-mov eax, dword [dword_C4CFC]	; 6BF20
-call InitSpeechSlots	; 6BF25
-xor esi, esi	; 6BF2A
-mov dword [cursndbank], esi	; 6BF2C
+        cmp byte [musicon], 0
+        je short .4
+        mov dword [cursndbank], 20h
+        mov eax, dword [dword_C4CFC]
+        call InitSpeechSlots
+        xor esi, esi
+        mov dword [cursndbank], esi
 .4:
-mov eax, 2	; 6BF32
-pop ebp	; 6BF37
-pop esi	; 6BF38
-pop edx	; 6BF39
-pop ecx	; 6BF3A
-pop ebx	; 6BF3B
-ret	; 6BF3C
+        mov eax, 2
+        pop ebp
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
 unk13_6BF3D:
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+;-----------------------------------------------------------------------------
+; BuildFreeAgentList                                              6BF4A  95 PC
+; Falist entries (1Bh bytes: position, jersey, index, "F. Lastname") for KEY
+; records with team 0FFh, up to facount
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/BuildFreeAgentList.c
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.inc"
 %else
 BuildFreeAgentList:
-push dword 20h	; 6BF4A
-call __CHK	; 6BF4F
-push ebx	; 6BF54
-push ecx	; 6BF55
-push edx	; 6BF56
-push esi	; 6BF57
-push edi	; 6BF58
-push ebp	; 6BF59
-sub esp, byte 4	; 6BF5A
-mov ebx, 34h	; 6BF5D
-xor edx, edx	; 6BF62
-mov eax, dword [keydb_size]	; 6BF64
-div ebx	; 6BF69
-mov dword [esp], eax	; 6BF6B
-xor ebx, ebx	; 6BF6E
-xor esi, esi	; 6BF70
-jmp near .3	; 6BF72
+        push dword 20h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 4
+        mov ebx, 34h
+        xor edx, edx
+        mov eax, dword [keydb_size]
+        div ebx
+        mov dword [esp], eax
+        xor ebx, ebx
+        xor esi, esi
+        jmp near .3
 .1:
-mov edi, esi	; 6BF77
-shl edi, 2	; 6BF79
-sub edi, esi	; 6BF7C
-shl edi, 2	; 6BF7E
-add edi, esi	; 6BF81
-shl edi, 2	; 6BF83
-mov edx, dword [keydb]	; 6BF86
-add edx, edi	; 6BF8C
-cmp byte [edx], 0FFh	; 6BF8E
-jne near .2	; 6BF91
-mov eax, ebx	; 6BF97
-shl eax, 3	; 6BF99
-sub eax, ebx	; 6BF9C
-shl eax, 2	; 6BF9E
-sub eax, ebx	; 6BFA1
-mov ecx, dword [falist]	; 6BFA3
-mov byte [byte ecx+eax+02h], bl	; 6BFA9
-mov ebp, dword [falist]	; 6BFAD
-mov cl, byte [byte edx+02h]	; 6BFB3
-mov byte [eax+ebp], cl	; 6BFB6
-mov ebp, dword [falist]	; 6BFB9
-mov cl, byte [byte edx+01h]	; 6BFBF
-mov byte [byte eax+ebp+01h], cl	; 6BFC2
-mov ecx, dword [falist]	; 6BFC6
-mov byte [byte ecx+eax+03h], 3	; 6BFCC
-mov ecx, dword [falist]	; 6BFD1
-mov dword [byte ecx+eax+04h], edi	; 6BFD7
-mov edi, dword [falist]	; 6BFDB
-mov cl, byte [byte edx+03h]	; 6BFE1
-mov byte [byte edi+eax+08h], cl	; 6BFE4
-mov edi, dword [falist]	; 6BFE8
-mov cl, byte [str_dot]	; 6BFEE
-mov byte [byte edi+eax+09h], cl	; 6BFF4
-mov edi, dword [falist]	; 6BFF8
-mov cl, byte [str_space]	; 6BFFE
-mov byte [byte edi+eax+0Ah], cl	; 6C004
-mov ecx, dword [falist]	; 6C008
-mov byte [byte ecx+eax+0Bh], 0	; 6C00E
-add edx, byte 13h	; 6C013
-mov ecx, dword [falist]	; 6C016
-add eax, ecx	; 6C01C
-add eax, byte 8	; 6C01E
-call strcat_	; 6C021
-inc ebx	; 6C026
+        mov edi, esi
+        shl edi, 2
+        sub edi, esi
+        shl edi, 2
+        add edi, esi
+        shl edi, 2
+        mov edx, dword [keydb]
+        add edx, edi
+        cmp byte [edx], 0FFh
+        jne near .2
+        mov eax, ebx
+        shl eax, 3
+        sub eax, ebx
+        shl eax, 2
+        sub eax, ebx
+        mov ecx, dword [falist]
+        mov byte [byte ecx+eax+02h], bl
+        mov ebp, dword [falist]
+        mov cl, byte [byte edx+02h]
+        mov byte [eax+ebp], cl
+        mov ebp, dword [falist]
+        mov cl, byte [byte edx+01h]
+        mov byte [byte eax+ebp+01h], cl
+        mov ecx, dword [falist]
+        mov byte [byte ecx+eax+03h], 3
+        mov ecx, dword [falist]
+        mov dword [byte ecx+eax+04h], edi
+        mov edi, dword [falist]
+        mov cl, byte [byte edx+03h]
+        mov byte [byte edi+eax+08h], cl
+        mov edi, dword [falist]
+        mov cl, byte [str_dot]
+        mov byte [byte edi+eax+09h], cl
+        mov edi, dword [falist]
+        mov cl, byte [str_space]
+        mov byte [byte edi+eax+0Ah], cl
+        mov ecx, dword [falist]
+        mov byte [byte ecx+eax+0Bh], 0
+        add edx, byte 13h
+        mov ecx, dword [falist]
+        add eax, ecx
+        add eax, byte 8
+        call strcat_
+        inc ebx
 .2:
-inc esi	; 6C027
+        inc esi
 .3:
-cmp esi, dword [esp]	; 6C028
-jge short .4	; 6C02B
-cmp ebx, dword [facount]	; 6C02D
-jl near BuildFreeAgentList.1	; 6C033
+        cmp esi, dword [esp]
+        jge short .4
+        cmp ebx, dword [facount]
+        jl near BuildFreeAgentList.1
 .4:
-add esp, byte 4	; 6C039
+        add esp, byte 4
 BuildFreeAgentList_ret:
-pop ebp	; 6C03C
-pop edi	; 6C03D
-pop esi	; 6C03E
-pop edx	; 6C03F
-pop ecx	; 6C040
-pop ebx	; 6C041
-ret	; 6C042
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; BuildTeamRosterList                                             6C043  95 PC
+; (team, entries, teamrec*): 28 roster entries from the in-memory TEAMS / KEY
+; DBs, entries in teamrec+0E4h flagged 2
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/BuildTeamRosterList.c
 %ifdef CBUILD
 %include "c/pc/league_db/BuildTeamRosterList.inc"
 %else
 BuildTeamRosterList:
-push dword 14h	; 6C043
-call __CHK	; 6C048
-push ecx	; 6C04D
-push esi	; 6C04E
-push edi	; 6C04F
-push ebp	; 6C050
-mov esi, eax	; 6C051
-mov ebp, edx	; 6C053
-mov edi, ebx	; 6C055
-xor ebx, ebx	; 6C057
+        push dword 14h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        mov esi, eax
+        mov ebp, edx
+        mov edi, ebx
+        xor ebx, ebx
 .1:
-mov edx, ebx	; 6C059
-shl edx, 3	; 6C05B
-sub edx, ebx	; 6C05E
-shl edx, 2	; 6C060
-sub edx, ebx	; 6C063
-mov byte [byte edx+ebp+02h], bl	; 6C065
-inc ebx	; 6C069
-cmp ebx, byte 1Ch	; 6C06A
-jl short BuildTeamRosterList.1	; 6C06D
-mov eax, esi	; 6C06F
-call TeamRecPtr	; 6C071
-mov dword [edi], eax	; 6C076
-xor ebx, ebx	; 6C078
+        mov edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        shl edx, 2
+        sub edx, ebx
+        mov byte [byte edx+ebp+02h], bl
+        inc ebx
+        cmp ebx, byte 1Ch
+        jl short BuildTeamRosterList.1
+        mov eax, esi
+        call TeamRecPtr
+        mov dword [edi], eax
+        xor ebx, ebx
 .2:
-mov eax, dword [edi]	; 6C07A
-mov ecx, ebx	; 6C07C
-mov ecx, dword [byte eax+ecx*4+04Ch]	; 6C07E
-mov edx, ebx	; 6C082
-shl edx, 3	; 6C084
-sub edx, ebx	; 6C087
-shl edx, 2	; 6C089
-sub edx, ebx	; 6C08C
-add edx, ebp	; 6C08E
-cmp ecx, byte 0FFFFFFFFh	; 6C090
-jne short .3	; 6C093
-mov byte [edx], 0	; 6C095
-mov byte [byte edx+01h], 64h	; 6C098
-mov byte [byte edx+02h], 0	; 6C09C
-mov byte [byte edx+03h], 0	; 6C0A0
-jmp short .4	; 6C0A4
+        mov eax, dword [edi]
+        mov ecx, ebx
+        mov ecx, dword [byte eax+ecx*4+04Ch]
+        mov edx, ebx
+        shl edx, 3
+        sub edx, ebx
+        shl edx, 2
+        sub edx, ebx
+        add edx, ebp
+        cmp ecx, byte 0FFFFFFFFh
+        jne short .3
+        mov byte [edx], 0
+        mov byte [byte edx+01h], 64h
+        mov byte [byte edx+02h], 0
+        mov byte [byte edx+03h], 0
+        jmp short .4
 .3:
-mov eax, ecx	; 6C0A6
-call KeyDbPtr	; 6C0A8
-mov esi, eax	; 6C0AD
-mov al, byte [byte eax+02h]	; 6C0AF
-mov byte [edx], al	; 6C0B2
-mov al, byte [byte esi+01h]	; 6C0B4
-mov byte [byte edx+01h], al	; 6C0B7
-mov byte [byte edx+03h], 3	; 6C0BA
-mov dword [byte edx+04h], ecx	; 6C0BE
-mov al, byte [byte esi+03h]	; 6C0C1
-mov byte [byte edx+08h], al	; 6C0C4
-mov al, byte [str_dot]	; 6C0C7
-mov byte [byte edx+09h], al	; 6C0CC
-mov al, byte [str_space]	; 6C0CF
-mov byte [byte edx+0Ah], al	; 6C0D4
-mov byte [byte edx+0Bh], 0	; 6C0D7
-add esi, byte 13h	; 6C0DB
-lea eax, [byte edx+08h]	; 6C0DE
-mov edx, esi	; 6C0E1
-call strcat_	; 6C0E3
+        mov eax, ecx
+        call KeyDbPtr
+        mov esi, eax
+        mov al, byte [byte eax+02h]
+        mov byte [edx], al
+        mov al, byte [byte esi+01h]
+        mov byte [byte edx+01h], al
+        mov byte [byte edx+03h], 3
+        mov dword [byte edx+04h], ecx
+        mov al, byte [byte esi+03h]
+        mov byte [byte edx+08h], al
+        mov al, byte [str_dot]
+        mov byte [byte edx+09h], al
+        mov al, byte [str_space]
+        mov byte [byte edx+0Ah], al
+        mov byte [byte edx+0Bh], 0
+        add esi, byte 13h
+        lea eax, [byte edx+08h]
+        mov edx, esi
+        call strcat_
 .4:
-inc ebx	; 6C0E8
-cmp ebx, byte 19h	; 6C0E9
-jl short BuildTeamRosterList.2	; 6C0EC
-xor ebx, ebx	; 6C0EE
+        inc ebx
+        cmp ebx, byte 19h
+        jl short BuildTeamRosterList.2
+        xor ebx, ebx
 .5:
-mov ecx, dword [edi]	; 6C0F0
-mov eax, ebx	; 6C0F2
-mov ecx, dword [dword ecx+eax*4+0B0h]	; 6C0F4
-lea esi, [byte ebx+019h]	; 6C0FB
-mov edx, esi	; 6C0FE
-shl edx, 3	; 6C100
-sub edx, esi	; 6C103
-shl edx, 2	; 6C105
-sub edx, esi	; 6C108
-add edx, ebp	; 6C10A
-cmp ecx, byte 0FFFFFFFFh	; 6C10C
-jne short .6	; 6C10F
-mov byte [edx], 0	; 6C111
-mov byte [byte edx+01h], 64h	; 6C114
-mov byte [byte edx+02h], 0	; 6C118
-mov byte [byte edx+03h], 0	; 6C11C
-jmp short .7	; 6C120
+        mov ecx, dword [edi]
+        mov eax, ebx
+        mov ecx, dword [dword ecx+eax*4+0B0h]
+        lea esi, [byte ebx+019h]
+        mov edx, esi
+        shl edx, 3
+        sub edx, esi
+        shl edx, 2
+        sub edx, esi
+        add edx, ebp
+        cmp ecx, byte 0FFFFFFFFh
+        jne short .6
+        mov byte [edx], 0
+        mov byte [byte edx+01h], 64h
+        mov byte [byte edx+02h], 0
+        mov byte [byte edx+03h], 0
+        jmp short .7
 .6:
-mov eax, ecx	; 6C122
-call KeyDbPtr	; 6C124
-mov esi, eax	; 6C129
-mov al, byte [byte eax+02h]	; 6C12B
-mov byte [edx], al	; 6C12E
-mov al, byte [byte esi+01h]	; 6C130
-mov byte [byte edx+01h], al	; 6C133
-mov byte [byte edx+03h], 3	; 6C136
-mov dword [byte edx+04h], ecx	; 6C13A
-mov al, byte [byte esi+03h]	; 6C13D
-mov byte [byte edx+08h], al	; 6C140
-mov al, byte [str_dot]	; 6C143
-mov byte [byte edx+09h], al	; 6C148
-mov al, byte [str_space]	; 6C14B
-mov byte [byte edx+0Ah], al	; 6C150
-mov byte [byte edx+0Bh], 0	; 6C153
-add esi, byte 13h	; 6C157
-lea eax, [byte edx+08h]	; 6C15A
-mov edx, esi	; 6C15D
-call strcat_	; 6C15F
+        mov eax, ecx
+        call KeyDbPtr
+        mov esi, eax
+        mov al, byte [byte eax+02h]
+        mov byte [edx], al
+        mov al, byte [byte esi+01h]
+        mov byte [byte edx+01h], al
+        mov byte [byte edx+03h], 3
+        mov dword [byte edx+04h], ecx
+        mov al, byte [byte esi+03h]
+        mov byte [byte edx+08h], al
+        mov al, byte [str_dot]
+        mov byte [byte edx+09h], al
+        mov al, byte [str_space]
+        mov byte [byte edx+0Ah], al
+        mov byte [byte edx+0Bh], 0
+        add esi, byte 13h
+        lea eax, [byte edx+08h]
+        mov edx, esi
+        call strcat_
 .7:
-inc ebx	; 6C164
-cmp ebx, byte 3	; 6C165
-jl short BuildTeamRosterList.5	; 6C168
-xor ebx, ebx	; 6C16A
+        inc ebx
+        cmp ebx, byte 3
+        jl short BuildTeamRosterList.5
+        xor ebx, ebx
 .8:
-mov edx, dword [edi]	; 6C16C
-add edx, ebx	; 6C16E
-mov ah, byte [dword edx+0E4h]	; 6C170
-cmp ah, 64h	; 6C176
-je short .9	; 6C179
-xor ecx, ecx	; 6C17B
-mov cl, ah	; 6C17D
-mov edx, ecx	; 6C17F
-shl edx, 3	; 6C181
-sub edx, ecx	; 6C184
-shl edx, 2	; 6C186
-sub edx, ecx	; 6C189
-mov byte [byte edx+ebp+03h], 2	; 6C18B
+        mov edx, dword [edi]
+        add edx, ebx
+        mov ah, byte [dword edx+0E4h]
+        cmp ah, 64h
+        je short .9
+        xor ecx, ecx
+        mov cl, ah
+        mov edx, ecx
+        shl edx, 3
+        sub edx, ecx
+        shl edx, 2
+        sub edx, ecx
+        mov byte [byte edx+ebp+03h], 2
 .9:
-inc ebx	; 6C190
-cmp ebx, byte 8	; 6C191
-jl short BuildTeamRosterList.8	; 6C194
-pop ebp	; 6C196
-pop edi	; 6C197
-pop esi	; 6C198
-pop ecx	; 6C199
-ret	; 6C19A
+        inc ebx
+        cmp ebx, byte 8
+        jl short BuildTeamRosterList.8
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadLeagueDbsMem                                                6C19B  95 PC
+; (dir): loads SEASON, CAREER, CARTEAMS, KEY, TEAMS and ATT .DB files into
+; memory (seasondb, careerdb, ...) with sizes
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/LoadLeagueDbsMem.c
 %ifdef CBUILD
 %include "c/pc/league_db/LoadLeagueDbsMem.inc"
 %else
 LoadLeagueDbsMem:
-push dword 3Ch	; 6C19B
-call __CHK	; 6C1A0
-push ebx	; 6C1A5
-push ecx	; 6C1A6
-push edx	; 6C1A7
-push esi	; 6C1A8
-sub esp, byte 20h	; 6C1A9
-mov esi, eax	; 6C1AC
-call FreeLeagueDbsMem	; 6C1AE
-mov ebx, dword [leaguedbnames+14h]	; 6C1B3
-mov ecx, esi	; 6C1B9
-xor edx, edx	; 6C1BB
-mov eax, esp	; 6C1BD
-call MakePath	; 6C1BF
-push byte 20h	; 6C1C4
-lea eax, [byte esp+04h]	; 6C1C6
-push eax	; 6C1CA
-call sub_8E8A0	; 6C1CB
-add esp, byte 8	; 6C1D0
-mov dword [seasondb], eax	; 6C1D3
-mov eax, esp	; 6C1D8
-push eax	; 6C1DA
-call GetFileSize	; 6C1DB
-add esp, byte 4	; 6C1E0
-mov dword [seasondb_size], eax	; 6C1E3
-mov ebx, dword [leaguedbnames+4]	; 6C1E8
-mov ecx, esi	; 6C1EE
-xor edx, edx	; 6C1F0
-mov eax, esp	; 6C1F2
-call MakePath	; 6C1F4
-push byte 20h	; 6C1F9
-lea eax, [byte esp+04h]	; 6C1FB
-push eax	; 6C1FF
-call sub_8E8A0	; 6C200
-add esp, byte 8	; 6C205
-mov dword [careerdb], eax	; 6C208
-mov eax, esp	; 6C20D
-push eax	; 6C20F
-call GetFileSize	; 6C210
-add esp, byte 4	; 6C215
-mov dword [careerdb_size], eax	; 6C218
-mov ebx, dword [leaguedbnames+0Ch]	; 6C21D
-mov ecx, esi	; 6C223
-xor edx, edx	; 6C225
-mov eax, esp	; 6C227
-call MakePath	; 6C229
-push byte 20h	; 6C22E
-lea eax, [byte esp+04h]	; 6C230
-push eax	; 6C234
-call sub_8E8A0	; 6C235
-add esp, byte 8	; 6C23A
-mov dword [carteamsdb], eax	; 6C23D
-mov eax, esp	; 6C242
-push eax	; 6C244
-call GetFileSize	; 6C245
-add esp, byte 4	; 6C24A
-mov dword [carteamsdb_size], eax	; 6C24D
-mov ebx, dword [leaguedbnames]	; 6C252
-mov ecx, esi	; 6C258
-xor edx, edx	; 6C25A
-mov eax, esp	; 6C25C
-call MakePath	; 6C25E
-push byte 20h	; 6C263
-lea eax, [byte esp+04h]	; 6C265
-push eax	; 6C269
-call sub_8E8A0	; 6C26A
-add esp, byte 8	; 6C26F
-mov dword [keydb], eax	; 6C272
-mov eax, esp	; 6C277
-push eax	; 6C279
-call GetFileSize	; 6C27A
-add esp, byte 4	; 6C27F
-mov dword [keydb_size], eax	; 6C282
-mov ebx, dword [leaguedbnames+10h]	; 6C287
-mov ecx, esi	; 6C28D
-xor edx, edx	; 6C28F
-mov eax, esp	; 6C291
-call MakePath	; 6C293
-push byte 20h	; 6C298
-lea eax, [byte esp+04h]	; 6C29A
-push eax	; 6C29E
-call sub_8E8A0	; 6C29F
-add esp, byte 8	; 6C2A4
-mov dword [teamsdb], eax	; 6C2A7
-mov eax, esp	; 6C2AC
-push eax	; 6C2AE
-call GetFileSize	; 6C2AF
-add esp, byte 4	; 6C2B4
-mov dword [teamsdb_size], eax	; 6C2B7
-mov ebx, dword [leaguedbnames+8]	; 6C2BC
-mov ecx, esi	; 6C2C2
-xor edx, edx	; 6C2C4
-mov eax, esp	; 6C2C6
-call MakePath	; 6C2C8
-push byte 20h	; 6C2CD
-lea eax, [byte esp+04h]	; 6C2CF
-push eax	; 6C2D3
-call sub_8E8A0	; 6C2D4
-add esp, byte 8	; 6C2D9
-mov dword [attdb], eax	; 6C2DC
-mov eax, esp	; 6C2E1
-push eax	; 6C2E3
-call GetFileSize	; 6C2E4
-add esp, byte 4	; 6C2E9
-mov dword [attdb_size], eax	; 6C2EC
-add esp, byte 20h	; 6C2F1
-pop esi	; 6C2F4
-pop edx	; 6C2F5
-pop ecx	; 6C2F6
-pop ebx	; 6C2F7
-ret	; 6C2F8
+        push dword 3Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        sub esp, byte 20h
+        mov esi, eax
+        call FreeLeagueDbsMem
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [seasondb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [seasondb_size], eax
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [careerdb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [careerdb_size], eax
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [carteamsdb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [carteamsdb_size], eax
+        mov ebx, dword [leaguedbnames]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [keydb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [keydb_size], eax
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [teamsdb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [teamsdb_size], eax
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [attdb], eax
+        mov eax, esp
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov dword [attdb_size], eax
+        add esp, byte 20h
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MenuSaveDbs                                                     6C2F9  95 PC
+; Edit Rosters menu "Save": "Save as game databases?", CheckDatabases,
+; "Saving databases." into "Current" (SaveDbsToDir)
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/MenuSaveDbs.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuSaveDbs.inc"
 %else
 MenuSaveDbs:
-push dword 3Ch	; 6C2F9
-call __CHK	; 6C2FE
-push ecx	; 6C303
-push esi	; 6C304
-push edi	; 6C305
-push ebp	; 6C306
-sub esp, byte 10h	; 6C307
-push edx	; 6C30A
-mov ebp, ebx	; 6C30B
-lea edi, [byte esp+04h]	; 6C30D
-mov esi, unk13_6BF3D	; 6C311
-movsd	; 6C316
-movsd	; 6C317
-movsd	; 6C318
-movsb	; 6C319
-mov dword [msglines], str_SaveAsGameDatabases	; 6C31A
-push byte 0FFFFFFFFh	; 6C324
-push ebx	; 6C326
-mov ebx, dword [byte esp+08h]	; 6C327
-push ebx	; 6C32B
-push byte 2	; 6C32C
-push savedbbtns	; 6C32E
-mov ecx, 1	; 6C333
-mov ebx, msglines	; 6C338
-mov edx, 0FFFFFFFFh	; 6C33D
-mov eax, edx	; 6C342
-call MessageBox	; 6C344
-cmp eax, byte 1	; 6C349
-jne short .x	; 6C34C
-mov edx, ebp	; 6C34E
-mov eax, dword [esp]	; 6C350
-call CheckDatabases	; 6C353
-mov edx, eax	; 6C358
-call DrawEditRosters	; 6C35A
-test edx, edx	; 6C35F
-je short .x	; 6C361
-mov edi, curdbname	; 6C363
-mov esi, str_Current2	; 6C368
-movsd	; 6C36D
-movsd	; 6C36E
-mov dword [msglines], str_SavingDatabases	; 6C36F
-push byte 0	; 6C379
-push ebp	; 6C37B
-mov esi, dword [byte esp+08h]	; 6C37C
-push esi	; 6C380
-push byte 0	; 6C381
-push byte 0	; 6C383
-mov ecx, 1	; 6C385
-mov ebx, msglines	; 6C38A
-mov edx, 0FFFFFFFFh	; 6C38F
-mov eax, edx	; 6C394
-call MessageBox	; 6C396
-mov edx, str_extDB	; 6C39B
-lea eax, [byte esp+04h]	; 6C3A0
-call SaveDbsToDir	; 6C3A4
-call RestoreDialogBg	; 6C3A9
-call DrawEditRosters	; 6C3AE
+        push dword 3Ch
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 10h
+        push edx
+        mov ebp, ebx
+        lea edi, [byte esp+04h]
+        mov esi, unk13_6BF3D
+        movsd
+        movsd
+        movsd
+        movsb
+        mov dword [msglines], str_SaveAsGameDatabases
+        push byte 0FFFFFFFFh
+        push ebx
+        mov ebx, dword [byte esp+08h]
+        push ebx
+        push byte 2
+        push savedbbtns
+        mov ecx, 1
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        cmp eax, byte 1
+        jne short .x
+        mov edx, ebp
+        mov eax, dword [esp]
+        call CheckDatabases
+        mov edx, eax
+        call DrawEditRosters
+        test edx, edx
+        je short .x
+        mov edi, curdbname
+        mov esi, str_Current2
+        movsd
+        movsd
+        mov dword [msglines], str_SavingDatabases
+        push byte 0
+        push ebp
+        mov esi, dword [byte esp+08h]
+        push esi
+        push byte 0
+        push byte 0
+        mov ecx, 1
+        mov ebx, msglines
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov edx, str_extDB
+        lea eax, [byte esp+04h]
+        call SaveDbsToDir
+        call RestoreDialogBg
+        call DrawEditRosters
 .x:
-add esp, byte 14h	; 6C3B3
-pop ebp	; 6C3B6
-pop edi	; 6C3B7
-pop esi	; 6C3B8
-pop ecx	; 6C3B9
-ret	; 6C3BA
+        add esp, byte 14h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MenuSaveDbsAs                                                   6C3BB  95 PC
+; Edit Rosters menu "Save As": "Enter a new database name:" (.DBX dir),
+; "There is already a database with that name! Do you want to replace it?",
+; mkdir, SaveDbsToDir
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/MenuSaveDbsAs.c
 %ifdef CBUILD
 %include "c/pc/league_db/MenuSaveDbsAs.inc"
 %else
 MenuSaveDbsAs:
-push dword 78h	; 6C3BB
-call __CHK	; 6C3C0
-push ecx	; 6C3C5
-push esi	; 6C3C6
-push edi	; 6C3C7
-push ebp	; 6C3C8
-sub esp, byte 50h	; 6C3C9
-mov edi, edx	; 6C3CC
-mov ebp, ebx	; 6C3CE
-xor esi, esi	; 6C3D0
-mov dword [byte esp+04Ch], esi	; 6C3D2
-push byte 5	; 6C3D6
-push esi	; 6C3D8
-push esi	; 6C3D9
-push esi	; 6C3DA
-push esi	; 6C3DB
-mov ecx, 30h	; 6C3DC
-mov ebx, 8	; 6C3E1
-lea edx, [byte esp+050h]	; 6C3E6
-mov eax, str_EnterANewDatabase	; 6C3EA
-call TextInputDialog	; 6C3EF
-cmp byte [byte esp+03Ch], 0	; 6C3F4
-je near .x	; 6C3F9
-cmp eax, byte 1Bh	; 6C3FF
-je near .x	; 6C402
-lea edx, [byte esp+03Ch]	; 6C408
-lea eax, [byte esp+02Ch]	; 6C40C
-call strcpy_	; 6C410
-mov edx, str_DBX	; 6C415
-lea eax, [byte esp+03Ch]	; 6C41A
-call strcat_	; 6C41E
-mov ebx, esp	; 6C423
-mov edx, 10h	; 6C425
-lea eax, [byte esp+03Ch]	; 6C42A
-call unknown_libname_1	; 6C42E
-test eax, eax	; 6C433
-sete al	; 6C435
-and eax, 0FFh	; 6C438
-je short .2	; 6C43D
-push byte 0FFFFFFFFh	; 6C43F
-push ebp	; 6C441
-push edi	; 6C442
-push byte 2	; 6C443
-push btn_LeagueExists	; 6C445
-mov ecx, 2	; 6C44A
-mov ebx, dbexistsmsg	; 6C44F
-mov edx, 0FFFFFFFFh	; 6C454
-mov eax, edx	; 6C459
-call MessageBox	; 6C45B
-cmp eax, byte 1	; 6C460
-jne short .1	; 6C463
-lea eax, [byte esp+03Ch]	; 6C465
-call DeleteDir	; 6C469
-jmp short .2	; 6C46E
+        push dword 78h
+        call __CHK
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 50h
+        mov edi, edx
+        mov ebp, ebx
+        xor esi, esi
+        mov dword [byte esp+04Ch], esi
+        push byte 5
+        push esi
+        push esi
+        push esi
+        push esi
+        mov ecx, 30h
+        mov ebx, 8
+        lea edx, [byte esp+050h]
+        mov eax, str_EnterANewDatabase
+        call TextInputDialog
+        cmp byte [byte esp+03Ch], 0
+        je near .x
+        cmp eax, byte 1Bh
+        je near .x
+        lea edx, [byte esp+03Ch]
+        lea eax, [byte esp+02Ch]
+        call strcpy_
+        mov edx, str_DBX
+        lea eax, [byte esp+03Ch]
+        call strcat_
+        mov ebx, esp
+        mov edx, 10h
+        lea eax, [byte esp+03Ch]
+        call unknown_libname_1
+        test eax, eax
+        sete al
+        and eax, 0FFh
+        je short .2
+        push byte 0FFFFFFFFh
+        push ebp
+        push edi
+        push byte 2
+        push btn_LeagueExists
+        mov ecx, 2
+        mov ebx, dbexistsmsg
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        cmp eax, byte 1
+        jne short .1
+        lea eax, [byte esp+03Ch]
+        call DeleteDir
+        jmp short .2
 .1:
-mov esi, 1	; 6C470
+        mov esi, 1
 .2:
-test esi, esi	; 6C475
-jne short .3	; 6C477
-lea eax, [byte esp+03Ch]	; 6C479
-call mkdir_	; 6C47D
-mov dword [byte esp+04Ch], eax	; 6C482
+        test esi, esi
+        jne short .3
+        lea eax, [byte esp+03Ch]
+        call mkdir_
+        mov dword [byte esp+04Ch], eax
 .3:
-test esi, esi	; 6C486
-jne short .x	; 6C488
-cmp dword [byte esp+04Ch], byte 0	; 6C48A
-jne short .x	; 6C48F
-lea edx, [byte esp+02Ch]	; 6C491
-mov eax, curdbname	; 6C495
-call strcpy_	; 6C49A
-mov edx, str_extDB	; 6C49F
-lea eax, [byte esp+03Ch]	; 6C4A4
-call SaveDbsToDir	; 6C4A8
-call DrawEditRosters	; 6C4AD
+        test esi, esi
+        jne short .x
+        cmp dword [byte esp+04Ch], byte 0
+        jne short .x
+        lea edx, [byte esp+02Ch]
+        mov eax, curdbname
+        call strcpy_
+        mov edx, str_extDB
+        lea eax, [byte esp+03Ch]
+        call SaveDbsToDir
+        call DrawEditRosters
 .x:
-add esp, byte 50h	; 6C4B2
-pop ebp	; 6C4B5
-pop edi	; 6C4B6
-pop esi	; 6C4B7
-pop ecx	; 6C4B8
-ret	; 6C4B9
+        add esp, byte 50h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SaveDbsToDir                                 6C4BA  95 PC, medium confidence
+; (dir, ext): sums the old file sizes (KB) against the in-memory DB sizes and
+; the free disk space ("Insufficient disk space available ... XXX Kbytes"),
+; then writes the DBs (WriteLeagueDbsMem); rmdir on failure
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/SaveDbsToDir.c
 %ifdef CBUILD
 %include "c/pc/league_db/SaveDbsToDir.inc"
 %else
 SaveDbsToDir:
-push dword 0CCh	; 6C4BA
-call __CHK	; 6C4BF
-push ebx	; 6C4C4
-push ecx	; 6C4C5
-push esi	; 6C4C6
-push edi	; 6C4C7
-push ebp	; 6C4C8
-sub esp, 0A0h	; 6C4C9
-mov ebp, eax	; 6C4CF
-mov dword [dword esp+09Ch], edx	; 6C4D1
-lea edx, [dword esp+08Ch]	; 6C4D8
-xor eax, eax	; 6C4DF
-call _dos_getdiskfree_	; 6C4E1
-test eax, eax	; 6C4E6
-je short .1	; 6C4E8
-push str_ErrorGettingDiskSpace	; 6C4EA
-call FatalError	; 6C4EF
-add esp, byte 4	; 6C4F4
+        push dword 0CCh
+        call __CHK
+        push ebx
+        push ecx
+        push esi
+        push edi
+        push ebp
+        sub esp, 0A0h
+        mov ebp, eax
+        mov dword [dword esp+09Ch], edx
+        lea edx, [dword esp+08Ch]
+        xor eax, eax
+        call _dos_getdiskfree_
+        test eax, eax
+        je short .1
+        push str_ErrorGettingDiskSpace
+        call FatalError
+        add esp, byte 4
 .1:
-xor esi, esi	; 6C4F7
-mov si, word [dword esp+090h]	; 6C4F9
-xor eax, eax	; 6C501
-mov ax, word [dword esp+092h]	; 6C503
-imul esi, eax	; 6C50B
-mov ebx, dword [leaguedbnames+14h]	; 6C50E
-mov ecx, dword [dword esp+09Ch]	; 6C514
-mov edx, ebp	; 6C51B
-lea eax, [byte esp+02Ch]	; 6C51D
-call MakePath	; 6C521
-mov ebx, esp	; 6C526
-xor edx, edx	; 6C528
-lea eax, [byte esp+02Ch]	; 6C52A
-call unknown_libname_1	; 6C52E
-test eax, eax	; 6C533
-je short .2	; 6C535
-xor edx, edx	; 6C537
-mov dword [byte esp+04Ch], edx	; 6C539
-jmp short .3	; 6C53D
+        xor esi, esi
+        mov si, word [dword esp+090h]
+        xor eax, eax
+        mov ax, word [dword esp+092h]
+        imul esi, eax
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .2
+        xor edx, edx
+        mov dword [byte esp+04Ch], edx
+        jmp short .3
 .2:
-mov eax, dword [byte esp+01Ah]	; 6C53F
-add eax, 3FFh	; 6C543
-shr eax, 0Ah	; 6C548
-mov dword [byte esp+04Ch], eax	; 6C54B
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
+        mov dword [byte esp+04Ch], eax
 .3:
-mov ebx, dword [leaguedbnames+4]	; 6C54F
-mov ecx, dword [dword esp+09Ch]	; 6C555
-mov edx, ebp	; 6C55C
-lea eax, [byte esp+02Ch]	; 6C55E
-call MakePath	; 6C562
-mov ebx, esp	; 6C567
-xor edx, edx	; 6C569
-lea eax, [byte esp+02Ch]	; 6C56B
-call unknown_libname_1	; 6C56F
-test eax, eax	; 6C574
-je short .4	; 6C576
-xor ebx, ebx	; 6C578
-mov dword [byte esp+050h], ebx	; 6C57A
-jmp short .5	; 6C57E
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .4
+        xor ebx, ebx
+        mov dword [byte esp+050h], ebx
+        jmp short .5
 .4:
-mov eax, dword [byte esp+01Ah]	; 6C580
-add eax, 3FFh	; 6C584
-shr eax, 0Ah	; 6C589
-mov dword [byte esp+050h], eax	; 6C58C
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
+        mov dword [byte esp+050h], eax
 .5:
-mov ebx, dword [leaguedbnames+0Ch]	; 6C590
-mov ecx, dword [dword esp+09Ch]	; 6C596
-mov edx, ebp	; 6C59D
-lea eax, [byte esp+02Ch]	; 6C59F
-call MakePath	; 6C5A3
-mov ebx, esp	; 6C5A8
-xor edx, edx	; 6C5AA
-lea eax, [byte esp+02Ch]	; 6C5AC
-call unknown_libname_1	; 6C5B0
-test eax, eax	; 6C5B5
-je short .6	; 6C5B7
-xor ecx, ecx	; 6C5B9
-mov dword [byte esp+054h], ecx	; 6C5BB
-jmp short .7	; 6C5BF
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .6
+        xor ecx, ecx
+        mov dword [byte esp+054h], ecx
+        jmp short .7
 .6:
-mov eax, dword [byte esp+01Ah]	; 6C5C1
-add eax, 3FFh	; 6C5C5
-shr eax, 0Ah	; 6C5CA
-mov dword [byte esp+054h], eax	; 6C5CD
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
+        mov dword [byte esp+054h], eax
 .7:
-mov ebx, dword [leaguedbnames]	; 6C5D1
-mov ecx, dword [dword esp+09Ch]	; 6C5D7
-mov edx, ebp	; 6C5DE
-lea eax, [byte esp+02Ch]	; 6C5E0
-call MakePath	; 6C5E4
-mov ebx, esp	; 6C5E9
-xor edx, edx	; 6C5EB
-lea eax, [byte esp+02Ch]	; 6C5ED
-call unknown_libname_1	; 6C5F1
-test eax, eax	; 6C5F6
-je short .8	; 6C5F8
-xor edi, edi	; 6C5FA
-mov dword [byte esp+058h], edi	; 6C5FC
-jmp short .9	; 6C600
+        mov ebx, dword [leaguedbnames]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .8
+        xor edi, edi
+        mov dword [byte esp+058h], edi
+        jmp short .9
 .8:
-mov eax, dword [byte esp+01Ah]	; 6C602
-add eax, 3FFh	; 6C606
-shr eax, 0Ah	; 6C60B
-mov dword [byte esp+058h], eax	; 6C60E
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
+        mov dword [byte esp+058h], eax
 .9:
-mov ebx, dword [leaguedbnames+10h]	; 6C612
-mov ecx, dword [dword esp+09Ch]	; 6C618
-mov edx, ebp	; 6C61F
-lea eax, [byte esp+02Ch]	; 6C621
-call MakePath	; 6C625
-mov ebx, esp	; 6C62A
-xor edx, edx	; 6C62C
-lea eax, [byte esp+02Ch]	; 6C62E
-call unknown_libname_1	; 6C632
-test eax, eax	; 6C637
-je short .10	; 6C639
-xor eax, eax	; 6C63B
-jmp short .11	; 6C63D
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .10
+        xor eax, eax
+        jmp short .11
 .10:
-mov eax, dword [byte esp+01Ah]	; 6C63F
-add eax, 3FFh	; 6C643
-shr eax, 0Ah	; 6C648
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
 .11:
-mov dword [byte esp+05Ch], eax	; 6C64B
-mov ebx, dword [leaguedbnames+8]	; 6C64F
-mov ecx, dword [dword esp+09Ch]	; 6C655
-mov edx, ebp	; 6C65C
-lea eax, [byte esp+02Ch]	; 6C65E
-call MakePath	; 6C662
-mov ebx, esp	; 6C667
-xor edx, edx	; 6C669
-lea eax, [byte esp+02Ch]	; 6C66B
-call unknown_libname_1	; 6C66F
-test eax, eax	; 6C674
-je short .12	; 6C676
-xor edx, edx	; 6C678
-mov dword [byte esp+060h], edx	; 6C67A
-jmp short .13	; 6C67E
+        mov dword [byte esp+05Ch], eax
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ebx, esp
+        xor edx, edx
+        lea eax, [byte esp+02Ch]
+        call unknown_libname_1
+        test eax, eax
+        je short .12
+        xor edx, edx
+        mov dword [byte esp+060h], edx
+        jmp short .13
 .12:
-mov eax, dword [byte esp+01Ah]	; 6C680
-add eax, 3FFh	; 6C684
-shr eax, 0Ah	; 6C689
-mov dword [byte esp+060h], eax	; 6C68C
+        mov eax, dword [byte esp+01Ah]
+        add eax, 3FFh
+        shr eax, 0Ah
+        mov dword [byte esp+060h], eax
 .13:
-mov edx, dword [seasondb_size]	; 6C690
-add edx, 3FFh	; 6C696
-mov eax, edx	; 6C69C
-sar edx, 1Fh	; 6C69E
-shl edx, 0Ah	; 6C6A1
-LD sbb, eax, edx	; 6C6A4
-sar eax, 0Ah	; 6C6A6
-mov dword [byte esp+06Ch], eax	; 6C6A9
-mov edx, dword [careerdb_size]	; 6C6AD
-add edx, 3FFh	; 6C6B3
-mov eax, edx	; 6C6B9
-sar edx, 1Fh	; 6C6BB
-shl edx, 0Ah	; 6C6BE
-LD sbb, eax, edx	; 6C6C1
-sar eax, 0Ah	; 6C6C3
-mov dword [byte esp+070h], eax	; 6C6C6
-mov edx, dword [carteamsdb_size]	; 6C6CA
-add edx, 3FFh	; 6C6D0
-mov eax, edx	; 6C6D6
-sar edx, 1Fh	; 6C6D8
-shl edx, 0Ah	; 6C6DB
-LD sbb, eax, edx	; 6C6DE
-sar eax, 0Ah	; 6C6E0
-mov dword [byte esp+074h], eax	; 6C6E3
-mov edx, dword [keydb_size]	; 6C6E7
-add edx, 3FFh	; 6C6ED
-mov eax, edx	; 6C6F3
-sar edx, 1Fh	; 6C6F5
-shl edx, 0Ah	; 6C6F8
-LD sbb, eax, edx	; 6C6FB
-sar eax, 0Ah	; 6C6FD
-mov dword [byte esp+078h], eax	; 6C700
-mov edx, dword [teamsdb_size]	; 6C704
-add edx, 3FFh	; 6C70A
-mov eax, edx	; 6C710
-sar edx, 1Fh	; 6C712
-shl edx, 0Ah	; 6C715
-LD sbb, eax, edx	; 6C718
-sar eax, 0Ah	; 6C71A
-mov dword [byte esp+07Ch], eax	; 6C71D
-mov edx, dword [attdb_size]	; 6C721
-add edx, 3FFh	; 6C727
-mov eax, edx	; 6C72D
-sar edx, 1Fh	; 6C72F
-shl edx, 0Ah	; 6C732
-LD sbb, eax, edx	; 6C735
-sar eax, 0Ah	; 6C737
-mov dword [dword esp+080h], eax	; 6C73A
-xor ebx, ebx	; 6C741
-mov dword [dword esp+084h], ebx	; 6C743
-xor edi, edi	; 6C74A
+        mov edx, dword [seasondb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [byte esp+06Ch], eax
+        mov edx, dword [careerdb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [byte esp+070h], eax
+        mov edx, dword [carteamsdb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [byte esp+074h], eax
+        mov edx, dword [keydb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [byte esp+078h], eax
+        mov edx, dword [teamsdb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [byte esp+07Ch], eax
+        mov edx, dword [attdb_size]
+        add edx, 3FFh
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [dword esp+080h], eax
+        xor ebx, ebx
+        mov dword [dword esp+084h], ebx
+        xor edi, edi
 .14:
-mov edx, dword [byte esp+ebx*4+06Ch]	; 6C74C
-add edx, esi	; 6C750
-dec edx	; 6C752
-mov eax, edx	; 6C753
-sar edx, 1Fh	; 6C755
-idiv esi	; 6C758
-add edi, eax	; 6C75A
-mov edx, dword [byte esp+ebx*4+04Ch]	; 6C75C
-add edx, esi	; 6C760
-dec edx	; 6C762
-mov eax, edx	; 6C763
-sar edx, 1Fh	; 6C765
-idiv esi	; 6C768
-sub edi, eax	; 6C76A
-inc ebx	; 6C76C
-cmp ebx, byte 6	; 6C76D
-jl short SaveDbsToDir.14	; 6C770
-xor eax, eax	; 6C772
-mov ax, word [dword esp+08Eh]	; 6C774
-cmp edi, eax	; 6C77C
-jle near .16	; 6C77E
-mov eax, 140h	; 6C784
-mov dword [dword esp+098h], eax	; 6C789
-mov edx, 0F0h	; 6C790
-mov dword [dword esp+094h], edx	; 6C795
-push edx	; 6C79C
-push eax	; 6C79D
-call MouseSetPos	; 6C79E
-add esp, byte 8	; 6C7A3
-xor ebx, ebx	; 6C7A6
+        mov edx, dword [byte esp+ebx*4+06Ch]
+        add edx, esi
+        dec edx
+        mov eax, edx
+        sar edx, 1Fh
+        idiv esi
+        add edi, eax
+        mov edx, dword [byte esp+ebx*4+04Ch]
+        add edx, esi
+        dec edx
+        mov eax, edx
+        sar edx, 1Fh
+        idiv esi
+        sub edi, eax
+        inc ebx
+        cmp ebx, byte 6
+        jl short SaveDbsToDir.14
+        xor eax, eax
+        mov ax, word [dword esp+08Eh]
+        cmp edi, eax
+        jle near .16
+        mov eax, 140h
+        mov dword [dword esp+098h], eax
+        mov edx, 0F0h
+        mov dword [dword esp+094h], edx
+        push edx
+        push eax
+        call MouseSetPos
+        add esp, byte 8
+        xor ebx, ebx
 .15:
-mov edx, dword [byte esp+ebx*4+06Ch]	; 6C7A8
-add edx, esi	; 6C7AC
-dec edx	; 6C7AE
-mov eax, edx	; 6C7AF
-sar edx, 1Fh	; 6C7B1
-idiv esi	; 6C7B4
-add edi, eax	; 6C7B6
-inc ebx	; 6C7B8
-cmp ebx, byte 6	; 6C7B9
-jl short SaveDbsToDir.15	; 6C7BC
-mov edx, edi	; 6C7BE
-imul edx, esi	; 6C7C0
-mov eax, edx	; 6C7C3
-sar edx, 1Fh	; 6C7C5
-shl edx, 0Ah	; 6C7C8
-LD sbb, eax, edx	; 6C7CB
-sar eax, 0Ah	; 6C7CD
-push eax	; 6C7D0
-push str_3dKbytesOfFree2	; 6C7D1
-push str_XXXKbytesOfFree2	; 6C7D6
-call sprintf_	; 6C7DB
-add esp, byte 0Ch	; 6C7E0
-push dword 320h	; 6C7E3
-lea eax, [dword esp+098h]	; 6C7E8
-push eax	; 6C7EF
-lea eax, [dword esp+0A0h]	; 6C7F0
-push eax	; 6C7F7
-push byte 0	; 6C7F8
-push byte 0	; 6C7FA
-mov ecx, 3	; 6C7FC
-mov ebx, nodiskspacemsg	; 6C801
-mov edx, 0FFFFFFFFh	; 6C806
-mov eax, edx	; 6C80B
-call MessageBox	; 6C80D
-cmp byte [byte ebp+00h], 0	; 6C812
-je near .x	; 6C816
-mov eax, ebp	; 6C81C
-call rmdir_	; 6C81E
-jmp near .x	; 6C823
+        mov edx, dword [byte esp+ebx*4+06Ch]
+        add edx, esi
+        dec edx
+        mov eax, edx
+        sar edx, 1Fh
+        idiv esi
+        add edi, eax
+        inc ebx
+        cmp ebx, byte 6
+        jl short SaveDbsToDir.15
+        mov edx, edi
+        imul edx, esi
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        push eax
+        push str_3dKbytesOfFree2
+        push str_XXXKbytesOfFree2
+        call sprintf_
+        add esp, byte 0Ch
+        push dword 320h
+        lea eax, [dword esp+098h]
+        push eax
+        lea eax, [dword esp+0A0h]
+        push eax
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, nodiskspacemsg
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        cmp byte [byte ebp+00h], 0
+        je near .x
+        mov eax, ebp
+        call rmdir_
+        jmp near .x
 .16:
-mov ebx, dword [leaguedbnames+14h]	; 6C828
-mov ecx, dword [dword esp+09Ch]	; 6C82E
-mov edx, ebp	; 6C835
-lea eax, [byte esp+02Ch]	; 6C837
-call MakePath	; 6C83B
-mov ecx, dword [seasondb_size]	; 6C840
-push ecx	; 6C846
-mov esi, dword [seasondb]	; 6C847
-push esi	; 6C84D
-lea eax, [byte esp+034h]	; 6C84E
-push eax	; 6C852
-call WriteFile	; 6C853
-add esp, byte 0Ch	; 6C858
-mov ebx, dword [leaguedbnames+4]	; 6C85B
-mov ecx, dword [dword esp+09Ch]	; 6C861
-mov edx, ebp	; 6C868
-lea eax, [byte esp+02Ch]	; 6C86A
-call MakePath	; 6C86E
-mov edi, dword [careerdb_size]	; 6C873
-push edi	; 6C879
-mov eax, dword [careerdb]	; 6C87A
-push eax	; 6C87F
-lea eax, [byte esp+034h]	; 6C880
-push eax	; 6C884
-call WriteFile	; 6C885
-add esp, byte 0Ch	; 6C88A
-mov ebx, dword [leaguedbnames+0Ch]	; 6C88D
-mov ecx, dword [dword esp+09Ch]	; 6C893
-mov edx, ebp	; 6C89A
-lea eax, [byte esp+02Ch]	; 6C89C
-call MakePath	; 6C8A0
-mov edx, dword [carteamsdb_size]	; 6C8A5
-push edx	; 6C8AB
-mov ebx, dword [carteamsdb]	; 6C8AC
-push ebx	; 6C8B2
-lea eax, [byte esp+034h]	; 6C8B3
-push eax	; 6C8B7
-call WriteFile	; 6C8B8
-add esp, byte 0Ch	; 6C8BD
-mov ebx, dword [leaguedbnames]	; 6C8C0
-mov ecx, dword [dword esp+09Ch]	; 6C8C6
-mov edx, ebp	; 6C8CD
-lea eax, [byte esp+02Ch]	; 6C8CF
-call MakePath	; 6C8D3
-mov ecx, dword [keydb_size]	; 6C8D8
-push ecx	; 6C8DE
-mov esi, dword [keydb]	; 6C8DF
-push esi	; 6C8E5
-lea eax, [byte esp+034h]	; 6C8E6
-push eax	; 6C8EA
-call WriteFile	; 6C8EB
-add esp, byte 0Ch	; 6C8F0
-mov ebx, dword [leaguedbnames+10h]	; 6C8F3
-mov ecx, dword [dword esp+09Ch]	; 6C8F9
-mov edx, ebp	; 6C900
-lea eax, [byte esp+02Ch]	; 6C902
-call MakePath	; 6C906
-mov edi, dword [teamsdb_size]	; 6C90B
-push edi	; 6C911
-mov eax, dword [teamsdb]	; 6C912
-push eax	; 6C917
-lea eax, [byte esp+034h]	; 6C918
-push eax	; 6C91C
-call WriteFile	; 6C91D
-add esp, byte 0Ch	; 6C922
-mov ebx, dword [leaguedbnames+8]	; 6C925
-mov ecx, dword [dword esp+09Ch]	; 6C92B
-mov edx, ebp	; 6C932
-lea eax, [byte esp+02Ch]	; 6C934
-call MakePath	; 6C938
-mov edx, dword [attdb_size]	; 6C93D
-push edx	; 6C943
-mov ebx, dword [attdb]	; 6C944
-push ebx	; 6C94A
-lea eax, [byte esp+034h]	; 6C94B
-push eax	; 6C94F
-call WriteFile	; 6C950
-add esp, byte 0Ch	; 6C955
-xor ecx, ecx	; 6C958
-mov dword [dbdirty], ecx	; 6C95A
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ecx, dword [seasondb_size]
+        push ecx
+        mov esi, dword [seasondb]
+        push esi
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov edi, dword [careerdb_size]
+        push edi
+        mov eax, dword [careerdb]
+        push eax
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov edx, dword [carteamsdb_size]
+        push edx
+        mov ebx, dword [carteamsdb]
+        push ebx
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov ecx, dword [keydb_size]
+        push ecx
+        mov esi, dword [keydb]
+        push esi
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov edi, dword [teamsdb_size]
+        push edi
+        mov eax, dword [teamsdb]
+        push eax
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, dword [dword esp+09Ch]
+        mov edx, ebp
+        lea eax, [byte esp+02Ch]
+        call MakePath
+        mov edx, dword [attdb_size]
+        push edx
+        mov ebx, dword [attdb]
+        push ebx
+        lea eax, [byte esp+034h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov dword [dbdirty], ecx
 .x:
-add esp, 0A0h	; 6C960
-pop ebp	; 6C966
-pop edi	; 6C967
-pop esi	; 6C968
-pop ecx	; 6C969
-pop ebx	; 6C96A
-ret	; 6C96B
+        add esp, 0A0h
+        pop ebp
+        pop edi
+        pop esi
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; WriteLeagueDbsMem                                               6C96C  95 PC
+; (dir): writes SEASON, CAREER, CARTEAMS, KEY, TEAMS and ATT from memory
+; (pair of LoadLeagueDbsMem)
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/BuildFreeAgentList.c (WriteLeagueDbsMem)
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.WriteLeagueDbsMem.inc"
 %else
 WriteLeagueDbsMem:
-push dword 48h	; 6C96C
-call __CHK	; 6C971
-push ebx	; 6C976
-push ecx	; 6C977
-push edx	; 6C978
-push esi	; 6C979
-push edi	; 6C97A
-push ebp	; 6C97B
-sub esp, byte 20h	; 6C97C
-mov esi, eax	; 6C97F
-mov ebx, dword [leaguedbnames+14h]	; 6C981
-mov ecx, eax	; 6C987
-xor edx, edx	; 6C989
-mov eax, esp	; 6C98B
-call MakePath	; 6C98D
-mov edx, dword [seasondb_size]	; 6C992
-push edx	; 6C998
-mov ebx, dword [seasondb]	; 6C999
-push ebx	; 6C99F
-lea eax, [byte esp+08h]	; 6C9A0
-push eax	; 6C9A4
-call WriteFile	; 6C9A5
-add esp, byte 0Ch	; 6C9AA
-mov ebx, dword [leaguedbnames+4]	; 6C9AD
-mov ecx, esi	; 6C9B3
-xor edx, edx	; 6C9B5
-mov eax, esp	; 6C9B7
-call MakePath	; 6C9B9
-mov ecx, dword [careerdb_size]	; 6C9BE
-push ecx	; 6C9C4
-mov edi, dword [careerdb]	; 6C9C5
-push edi	; 6C9CB
-lea eax, [byte esp+08h]	; 6C9CC
-push eax	; 6C9D0
-call WriteFile	; 6C9D1
-add esp, byte 0Ch	; 6C9D6
-mov ebx, dword [leaguedbnames+0Ch]	; 6C9D9
-mov ecx, esi	; 6C9DF
-xor edx, edx	; 6C9E1
-mov eax, esp	; 6C9E3
-call MakePath	; 6C9E5
-mov ebp, dword [carteamsdb_size]	; 6C9EA
-push ebp	; 6C9F0
-mov eax, dword [carteamsdb]	; 6C9F1
-push eax	; 6C9F6
-lea eax, [byte esp+08h]	; 6C9F7
-push eax	; 6C9FB
-call WriteFile	; 6C9FC
-add esp, byte 0Ch	; 6CA01
-mov ebx, dword [leaguedbnames]	; 6CA04
-mov ecx, esi	; 6CA0A
-xor edx, edx	; 6CA0C
-mov eax, esp	; 6CA0E
-call MakePath	; 6CA10
-mov edx, dword [keydb_size]	; 6CA15
-push edx	; 6CA1B
-mov ebx, dword [keydb]	; 6CA1C
-push ebx	; 6CA22
-lea eax, [byte esp+08h]	; 6CA23
-push eax	; 6CA27
-call WriteFile	; 6CA28
-add esp, byte 0Ch	; 6CA2D
-mov ebx, dword [leaguedbnames+10h]	; 6CA30
-mov ecx, esi	; 6CA36
-xor edx, edx	; 6CA38
-mov eax, esp	; 6CA3A
-call MakePath	; 6CA3C
-mov ecx, dword [teamsdb_size]	; 6CA41
-push ecx	; 6CA47
-mov edi, dword [teamsdb]	; 6CA48
-push edi	; 6CA4E
-lea eax, [byte esp+08h]	; 6CA4F
-push eax	; 6CA53
-call WriteFile	; 6CA54
-add esp, byte 0Ch	; 6CA59
-mov ebx, dword [leaguedbnames+8]	; 6CA5C
-mov ecx, esi	; 6CA62
-xor edx, edx	; 6CA64
-mov eax, esp	; 6CA66
-call MakePath	; 6CA68
-mov ebp, dword [attdb_size]	; 6CA6D
-push ebp	; 6CA73
-mov eax, dword [attdb]	; 6CA74
-push eax	; 6CA79
-lea eax, [byte esp+08h]	; 6CA7A
-push eax	; 6CA7E
-call WriteFile	; 6CA7F
-add esp, byte 0Ch	; 6CA84
-add esp, byte 20h	; 6CA87
-jmp near BuildFreeAgentList_ret	; 6CA8A
+        push dword 48h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 20h
+        mov esi, eax
+        mov ebx, dword [leaguedbnames+14h]
+        mov ecx, eax
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov edx, dword [seasondb_size]
+        push edx
+        mov ebx, dword [seasondb]
+        push ebx
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+4]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov ecx, dword [careerdb_size]
+        push ecx
+        mov edi, dword [careerdb]
+        push edi
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+0Ch]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov ebp, dword [carteamsdb_size]
+        push ebp
+        mov eax, dword [carteamsdb]
+        push eax
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov edx, dword [keydb_size]
+        push edx
+        mov ebx, dword [keydb]
+        push ebx
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+10h]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov ecx, dword [teamsdb_size]
+        push ecx
+        mov edi, dword [teamsdb]
+        push edi
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        mov ebx, dword [leaguedbnames+8]
+        mov ecx, esi
+        xor edx, edx
+        mov eax, esp
+        call MakePath
+        mov ebp, dword [attdb_size]
+        push ebp
+        mov eax, dword [attdb]
+        push eax
+        lea eax, [byte esp+08h]
+        push eax
+        call WriteFile
+        add esp, byte 0Ch
+        add esp, byte 20h
+        jmp near BuildFreeAgentList_ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; FreeLeagueDbsMem                                                6CA8F  95 PC
+; Frees the six in-memory DBs
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/BuildFreeAgentList.c (FreeLeagueDbsMem)
 %ifdef CBUILD
 %include "c/pc/league_db/BuildFreeAgentList.FreeLeagueDbsMem.inc"
 %else
 FreeLeagueDbsMem:
-push dword 20h	; 6CA8F
-call __CHK	; 6CA94
-push ebx	; 6CA99
-push ecx	; 6CA9A
-push edx	; 6CA9B
-push esi	; 6CA9C
-push edi	; 6CA9D
-push ebp	; 6CA9E
-mov edx, dword [attdb]	; 6CA9F
-test edx, edx	; 6CAA5
-je short .1	; 6CAA7
-push edx	; 6CAA9
-call FreeMemBlock	; 6CAAA
-add esp, byte 4	; 6CAAF
-xor ecx, ecx	; 6CAB2
-mov dword [attdb], ecx	; 6CAB4
-mov dword [attdb_size], ecx	; 6CABA
+        push dword 20h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        mov edx, dword [attdb]
+        test edx, edx
+        je short .1
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ecx, ecx
+        mov dword [attdb], ecx
+        mov dword [attdb_size], ecx
 .1:
-mov edi, dword [teamsdb]	; 6CAC0
-test edi, edi	; 6CAC6
-je short .2	; 6CAC8
-push edi	; 6CACA
-call FreeMemBlock	; 6CACB
-add esp, byte 4	; 6CAD0
-xor eax, eax	; 6CAD3
-mov dword [teamsdb], eax	; 6CAD5
-mov dword [teamsdb_size], eax	; 6CADA
+        mov edi, dword [teamsdb]
+        test edi, edi
+        je short .2
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        mov dword [teamsdb], eax
+        mov dword [teamsdb_size], eax
 .2:
-mov ebx, dword [keydb]	; 6CADF
-test ebx, ebx	; 6CAE5
-je short .3	; 6CAE7
-push ebx	; 6CAE9
-call FreeMemBlock	; 6CAEA
-add esp, byte 4	; 6CAEF
-xor esi, esi	; 6CAF2
-mov dword [keydb], esi	; 6CAF4
-mov dword [keydb_size], esi	; 6CAFA
+        mov ebx, dword [keydb]
+        test ebx, ebx
+        je short .3
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
+        xor esi, esi
+        mov dword [keydb], esi
+        mov dword [keydb_size], esi
 .3:
-mov ebp, dword [carteamsdb]	; 6CB00
-test ebp, ebp	; 6CB06
-je short .4	; 6CB08
-push ebp	; 6CB0A
-call FreeMemBlock	; 6CB0B
-add esp, byte 4	; 6CB10
-xor edx, edx	; 6CB13
-mov dword [carteamsdb], edx	; 6CB15
-mov dword [carteamsdb_size], edx	; 6CB1B
+        mov ebp, dword [carteamsdb]
+        test ebp, ebp
+        je short .4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        xor edx, edx
+        mov dword [carteamsdb], edx
+        mov dword [carteamsdb_size], edx
 .4:
-mov ecx, dword [careerdb]	; 6CB21
-test ecx, ecx	; 6CB27
-je short .5	; 6CB29
-push ecx	; 6CB2B
-call FreeMemBlock	; 6CB2C
-add esp, byte 4	; 6CB31
-xor edi, edi	; 6CB34
-mov dword [careerdb], edi	; 6CB36
-mov dword [careerdb_size], edi	; 6CB3C
+        mov ecx, dword [careerdb]
+        test ecx, ecx
+        je short .5
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        xor edi, edi
+        mov dword [careerdb], edi
+        mov dword [careerdb_size], edi
 .5:
-mov eax, dword [seasondb]	; 6CB42
-test eax, eax	; 6CB47
-je near BuildFreeAgentList_ret	; 6CB49
-push eax	; 6CB4F
-call FreeMemBlock	; 6CB50
-add esp, byte 4	; 6CB55
-xor ebx, ebx	; 6CB58
-mov dword [seasondb], ebx	; 6CB5A
-mov dword [seasondb_size], ebx	; 6CB60
-jmp near BuildFreeAgentList_ret	; 6CB66
+        mov eax, dword [seasondb]
+        test eax, eax
+        je near BuildFreeAgentList_ret
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [seasondb], ebx
+        mov dword [seasondb_size], ebx
+        jmp near BuildFreeAgentList_ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CarTeamRecPtr                                                   6CB6B  95 PC
+; Returns carteamsdb + team * 4Ch
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/CarTeamRecPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/CarTeamRecPtr.inc"
 %else
 CarTeamRecPtr:
-push dword 8	; 6CB6B
-call __CHK	; 6CB70
-push edx	; 6CB75
-mov edx, eax	; 6CB76
-shl eax, 2	; 6CB78
-add eax, edx	; 6CB7B
-shl eax, 2	; 6CB7D
-sub eax, edx	; 6CB80
-mov edx, eax	; 6CB82
-shl edx, 2	; 6CB84
-mov eax, dword [carteamsdb]	; 6CB87
-add eax, edx	; 6CB8C
-pop edx	; 6CB8E
-ret	; 6CB8F
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, eax
+        shl eax, 2
+        add eax, edx
+        shl eax, 2
+        sub eax, edx
+        mov edx, eax
+        shl edx, 2
+        mov eax, dword [carteamsdb]
+        add eax, edx
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; TeamRecPtr                                                      6CB90  95 PC
+; Returns teamsdb + team * 2E8h
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/TeamRecPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/TeamRecPtr.inc"
 %else
 TeamRecPtr:
-push dword 8	; 6CB90
-call __CHK	; 6CB95
-push edx	; 6CB9A
-mov edx, eax	; 6CB9B
-shl eax, 2	; 6CB9D
-sub eax, edx	; 6CBA0
-shl eax, 3	; 6CBA2
-mov edx, eax	; 6CBA5
-shl eax, 5	; 6CBA7
-sub eax, edx	; 6CBAA
-mov edx, eax	; 6CBAC
-mov eax, dword [teamsdb]	; 6CBAE
-add eax, edx	; 6CBB3
-pop edx	; 6CBB5
-ret	; 6CBB6
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, eax
+        shl eax, 2
+        sub eax, edx
+        shl eax, 3
+        mov edx, eax
+        shl eax, 5
+        sub eax, edx
+        mov edx, eax
+        mov eax, dword [teamsdb]
+        add eax, edx
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; KeyDbPtr                                                        6CBB7  95 PC
+; Returns keydb + offset (player entry pointer into KEY.DB)
+;-----------------------------------------------------------------------------
 ; C: src/pc/league_db/KeyDbPtr.c
 %ifdef CBUILD
 %include "c/pc/league_db/KeyDbPtr.inc"
 %else
 KeyDbPtr:
-push dword 8	; 6CBB7
-call __CHK	; 6CBBC
-push edx	; 6CBC1
-mov edx, dword [keydb]	; 6CBC2
-add eax, edx	; 6CBC8
-pop edx	; 6CBCA
-ret	; 6CBCB
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, dword [keydb]
+        add eax, edx
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; SeasonDbPtr                                  6CBCC  95 PC, medium confidence
+; Seasondb + offset
+;-----------------------------------------------------------------------------
 SeasonDbPtr:
-push dword 8	; 6CBCC
+        push dword 8
 SeasonDbPtr_common:
-call __CHK	; 6CBD1
-push edx	; 6CBD6
-mov edx, dword [seasondb]	; 6CBD7
-add eax, edx	; 6CBDD
-pop edx	; 6CBDF
-ret	; 6CBE0
+        call __CHK
+        push edx
+        mov edx, dword [seasondb]
+        add eax, edx
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; SeasonDbPtr2                                 6CBE1  95 PC, medium confidence
+; Second entry with the same body (SimulateGame goalie path)
+;-----------------------------------------------------------------------------
 SeasonDbPtr2:
-push dword 8	; 6CBE1
-jmp short SeasonDbPtr_common	; 6CBE6
+        push dword 8
+        jmp short SeasonDbPtr_common
+;-----------------------------------------------------------------------------
+; CareerDbPtr                                  6CBE8  95 PC, medium confidence
+; Careerdb + offset
+;-----------------------------------------------------------------------------
 CareerDbPtr:
-push dword 8	; 6CBE8
+        push dword 8
 CareerDbPtr_common:
-call __CHK	; 6CBED
-push edx	; 6CBF2
-mov edx, dword [careerdb]	; 6CBF3
-add eax, edx	; 6CBF9
-pop edx	; 6CBFB
-ret	; 6CBFC
+        call __CHK
+        push edx
+        mov edx, dword [careerdb]
+        add eax, edx
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; CareerDbPtr2                                 6CBFD  95 PC, medium confidence
+; Second entry with the same body
+;-----------------------------------------------------------------------------
 CareerDbPtr2:
-push dword 8	; 6CBFD
-jmp short CareerDbPtr_common	; 6CC02
+        push dword 8
+        jmp short CareerDbPtr_common
+;-----------------------------------------------------------------------------
+; AttDbPtr                                     6CC04  95 PC, medium confidence
+; Attdb + offset (no direct refs; an unlabelled twin follows)
+;-----------------------------------------------------------------------------
 AttDbPtr:
-push dword 8	; 6CC04
+        push dword 8
 .1:
-call __CHK	; 6CC09
-push edx	; 6CC0E
-mov edx, dword [attdb]	; 6CC0F
-add eax, edx	; 6CC15
-pop edx	; 6CC17
-ret	; 6CC18
+        call __CHK
+        push edx
+        mov edx, dword [attdb]
+        add eax, edx
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; AttDbPtr2                                                       6CC19  95 PC
+;-----------------------------------------------------------------------------
 AttDbPtr2:
-push dword 8	; 6CC19
-jmp short AttDbPtr.1	; 6CC1E
+        push dword 8
+        jmp short AttDbPtr.1
 %endif ; C

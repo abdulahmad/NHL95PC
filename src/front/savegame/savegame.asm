@@ -14,1057 +14,1085 @@ extern TextRestoreState, TextSetFont, PutBlock, DrawArtOpaque, sub_91284, DrawAr
 extern GetFileSize, MouseRead, FindShape, sub_B4BA8, str_H2, str_h3, str_H4, str_h5
 extern str_h6, str_h7, str_H1, str_A32, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
 global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
+;-----------------------------------------------------------------------------
+; MenuSaveGame                                 85924  95 PC, medium confidence
+; Menu action "Save Game ...": disk-space check (msg_NoSaveSpace),
+; SaveGameNameDlg, writes .nhl game file, game.sav / gsummary.db copies,
+; league / playoff 'Saving Current ...' messages
+;-----------------------------------------------------------------------------
 ; C: src/front/savegame/MenuSaveGame.c
 %ifdef CBUILD
 %include "c/front/savegame/MenuSaveGame.inc"
 %else
 MenuSaveGame:
-push dword 0CCh	; 85924
-call __CHK	; 85929
-push ebx	; 8592E
-push ecx	; 8592F
-push edx	; 85930
-push esi	; 85931
-push edi	; 85932
-push ebp	; 85933
-sub esp, 9Ch	; 85934
-mov eax, esp	; 8593A
-push eax	; 8593C
-call TextSaveState	; 8593D
-add esp, byte 4	; 85942
-mov edx, dword [mainfont]	; 85945
-push edx	; 8594B
-call TextSetFont	; 8594C
-add esp, byte 4	; 85951
-xor ecx, ecx	; 85954
-mov ebx, str_GsummaryDb4	; 85956
-mov edx, curleague	; 8595B
-lea eax, [byte esp+06Ch]	; 85960
-call MakePath	; 85964
-lea ebx, [byte esp+040h]	; 85969
-xor edx, edx	; 8596D
-lea eax, [byte esp+06Ch]	; 8596F
-call unknown_libname_1	; 85973
-mov eax, dword [byte esp+05Ah]	; 85978
-mov dword [dword esp+08Ch], eax	; 8597C
-xor ebx, ebx	; 85983
-mov dword [dword esp+094h], ebx	; 85985
-cmp dword [gamemode], byte 0	; 8598C
-jne near .11	; 85993
-lea edx, [dword eax+01328h]	; 85999
-mov eax, edx	; 8599F
-sar edx, 1Fh	; 859A1
-shl edx, 0Ah	; 859A4
-LD sbb, eax, edx	; 859A7
-sar eax, 0Ah	; 859A9
-mov dword [dword esp+08Ch], eax	; 859AC
-xor eax, eax	; 859B3
-mov dword [dword esp+090h], ebx	; 859B5
-lea edx, [dword esp+08Ch]	; 859BC
-call DiskSpaceShort	; 859C3
-mov esi, eax	; 859C8
-test eax, eax	; 859CA
-je short .2	; 859CC
-db 053h	; 859CE push ebx
-db 0B9h,0FAh,00h,00h,00h	; 859CF mov ecx,0FAh
-mov ebx, 0F8h	; 859D4
-mov edx, ecx	; 859D9
-mov eax, 0F9h	; 859DB
-call SetDialogColors	; 859E0
-push esi	; 859E5
-push str_AGameYouRequire	; 859E6
+        push dword 0CCh
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 9Ch
+        mov eax, esp
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        mov edx, dword [mainfont]
+        push edx
+        call TextSetFont
+        add esp, byte 4
+        xor ecx, ecx
+        mov ebx, str_GsummaryDb4
+        mov edx, curleague
+        lea eax, [byte esp+06Ch]
+        call MakePath
+        lea ebx, [byte esp+040h]
+        xor edx, edx
+        lea eax, [byte esp+06Ch]
+        call unknown_libname_1
+        mov eax, dword [byte esp+05Ah]
+        mov dword [dword esp+08Ch], eax
+        xor ebx, ebx
+        mov dword [dword esp+094h], ebx
+        cmp dword [gamemode], byte 0
+        jne near .11
+        lea edx, [dword eax+01328h]
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [dword esp+08Ch], eax
+        xor eax, eax
+        mov dword [dword esp+090h], ebx
+        lea edx, [dword esp+08Ch]
+        call DiskSpaceShort
+        mov esi, eax
+        test eax, eax
+        je short .2
+        db 053h                                 ; insn: push ebx
+        db 0B9h,0FAh,00h,00h,00h                ; insn: mov ecx,0FAh
+        mov ebx, 0F8h
+        mov edx, ecx
+        mov eax, 0F9h
+        call SetDialogColors
+        push esi
+        push str_AGameYouRequire
 .1:
-push str_AGameYouRequire3	; 859EB
-call sprintf_	; 859F0
-add esp, byte 0Ch	; 859F5
-push dword 320h	; 859F8
-push deskptry	; 859FD
-push deskptrx	; 85A02
-push byte 0	; 85A07
-push byte 0	; 85A09
-mov ecx, 3	; 85A0B
-mov ebx, msg_NoSaveSpace	; 85A10
-mov edx, 0FFFFFFFFh	; 85A15
-mov eax, edx	; 85A1A
-call MessageBox	; 85A1C
-jmp near .17	; 85A21
+        push str_AGameYouRequire3
+        call sprintf_
+        add esp, byte 0Ch
+        push dword 320h
+        push deskptry
+        push deskptrx
+        push byte 0
+        push byte 0
+        mov ecx, 3
+        mov ebx, msg_NoSaveSpace
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        jmp near .17
 .2:
-cmp dword [demomode], byte 0	; 85A26
-je short .3	; 85A2D
-lea edi, [byte esp+06Ch]	; 85A2F
-mov esi, str_DemoNhl	; 85A33
-movsd	; 85A38
-movsd	; 85A39
-movsb	; 85A3A
-jmp short .4	; 85A3B
+        cmp dword [demomode], byte 0
+        je short .3
+        lea edi, [byte esp+06Ch]
+        mov esi, str_DemoNhl
+        movsd
+        movsd
+        movsb
+        jmp short .4
 .3:
-lea eax, [byte esp+06Ch]	; 85A3D
-call SaveGameNameDlg	; 85A41
-test eax, eax	; 85A46
-je short .4	; 85A48
-mov eax, esp	; 85A4A
-push eax	; 85A4C
-call TextRestoreState	; 85A4D
-add esp, byte 4	; 85A52
-xor ebp, ebp	; 85A55
-jmp near .18	; 85A57
+        lea eax, [byte esp+06Ch]
+        call SaveGameNameDlg
+        test eax, eax
+        je short .4
+        mov eax, esp
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        xor ebp, ebp
+        jmp near .18
 .4:
-or byte [exhstate+5Ah], 80h	; 85A5C
-or byte [gameopts+1], 80h	; 85A63
-mov eax, exhstate	; 85A6A
-call WriteModeState	; 85A6F
-lea edx, [dword esp+098h]	; 85A74
-lea eax, [byte esp+06Ch]	; 85A7B
-call FileCreate	; 85A7F
-test eax, eax	; 85A84
-je short .5	; 85A86
-push str_H2	; 85A88
-call FatalError	; 85A8D
-add esp, byte 4	; 85A92
+        or byte [exhstate+5Ah], 80h
+        or byte [gameopts+1], 80h
+        mov eax, exhstate
+        call WriteModeState
+        lea edx, [dword esp+098h]
+        lea eax, [byte esp+06Ch]
+        call FileCreate
+        test eax, eax
+        je short .5
+        push str_H2
+        call FatalError
+        add esp, byte 4
 .5:
-mov ecx, 75h	; 85A95
-mov ebx, 0FFFFFFFFh	; 85A9A
-mov edx, exhstate	; 85A9F
-mov eax, dword [dword esp+098h]	; 85AA4
-call FileWriteAt	; 85AAB
-test eax, eax	; 85AB0
-je short .6	; 85AB2
-push str_h3	; 85AB4
-call FatalError	; 85AB9
-add esp, byte 4	; 85ABE
+        mov ecx, 75h
+        mov ebx, 0FFFFFFFFh
+        mov edx, exhstate
+        mov eax, dword [dword esp+098h]
+        call FileWriteAt
+        test eax, eax
+        je short .6
+        push str_h3
+        call FatalError
+        add esp, byte 4
 .6:
-mov ecx, str_extDB	; 85AC1
-mov ebx, str_Gsummary3	; 85AC6
-xor edx, edx	; 85ACB
-lea eax, [byte esp+06Ch]	; 85ACD
-call MakePath	; 85AD1
-push byte 0	; 85AD6
-lea eax, [byte esp+070h]	; 85AD8
-push eax	; 85ADC
-call sub_8E8A0	; 85ADD
-mov esi, eax	; 85AE2
-add esp, byte 8	; 85AE4
-mov edi, eax	; 85AE7
-lea eax, [byte esp+06Ch]	; 85AE9
-push eax	; 85AED
-call GetFileSize	; 85AEE
-add esp, byte 4	; 85AF3
-mov ecx, eax	; 85AF6
-mov ebx, 0FFFFFFFFh	; 85AF8
-mov edx, esi	; 85AFD
-mov eax, dword [dword esp+098h]	; 85AFF
-call FileWriteAt	; 85B06
-test eax, eax	; 85B0B
-je short .7	; 85B0D
-push str_H4	; 85B0F
-call FatalError	; 85B14
-add esp, byte 4	; 85B19
+        mov ecx, str_extDB
+        mov ebx, str_Gsummary3
+        xor edx, edx
+        lea eax, [byte esp+06Ch]
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+070h]
+        push eax
+        call sub_8E8A0
+        mov esi, eax
+        add esp, byte 8
+        mov edi, eax
+        lea eax, [byte esp+06Ch]
+        push eax
+        call GetFileSize
+        add esp, byte 4
+        mov ecx, eax
+        mov ebx, 0FFFFFFFFh
+        mov edx, esi
+        mov eax, dword [dword esp+098h]
+        call FileWriteAt
+        test eax, eax
+        je short .7
+        push str_H4
+        call FatalError
+        add esp, byte 4
 .7:
-push edi	; 85B1C
-call FreeMemBlock	; 85B1D
-add esp, byte 4	; 85B22
-mov ecx, 0Ch	; 85B25
-mov ebx, 0FFFFFFFFh	; 85B2A
-mov edx, othergames	; 85B2F
-mov eax, dword [dword esp+098h]	; 85B34
-call FileWriteAt	; 85B3B
-test eax, eax	; 85B40
-je short .8	; 85B42
-push str_h5	; 85B44
-call FatalError	; 85B49
-add esp, byte 4	; 85B4E
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ecx, 0Ch
+        mov ebx, 0FFFFFFFFh
+        mov edx, othergames
+        mov eax, dword [dword esp+098h]
+        call FileWriteAt
+        test eax, eax
+        je short .8
+        push str_h5
+        call FatalError
+        add esp, byte 4
 .8:
-mov ecx, 0Ch	; 85B51
-mov ebx, 0FFFFFFFFh	; 85B56
-mov edx, otherscores	; 85B5B
-mov eax, dword [dword esp+098h]	; 85B60
-call FileWriteAt	; 85B67
-test eax, eax	; 85B6C
-je short .9	; 85B6E
-push str_h6	; 85B70
-call FatalError	; 85B75
-add esp, byte 4	; 85B7A
+        mov ecx, 0Ch
+        mov ebx, 0FFFFFFFFh
+        mov edx, otherscores
+        mov eax, dword [dword esp+098h]
+        call FileWriteAt
+        test eax, eax
+        je short .9
+        push str_h6
+        call FatalError
+        add esp, byte 4
 .9:
-mov ecx, 18h	; 85B7D
-mov ebx, 0FFFFFFFFh	; 85B82
-mov edx, otherperiod	; 85B87
-mov eax, dword [dword esp+098h]	; 85B8C
-call FileWriteAt	; 85B93
-test eax, eax	; 85B98
-je short .10	; 85B9A
-push str_h7	; 85B9C
-call FatalError	; 85BA1
-add esp, byte 4	; 85BA6
+        mov ecx, 18h
+        mov ebx, 0FFFFFFFFh
+        mov edx, otherperiod
+        mov eax, dword [dword esp+098h]
+        call FileWriteAt
+        test eax, eax
+        je short .10
+        push str_h7
+        call FatalError
+        add esp, byte 4
 .10:
-mov eax, dword [dword esp+098h]	; 85BA9
-call SaveGameState	; 85BB0
-lea eax, [dword esp+098h]	; 85BB5
-call FileClose	; 85BBC
-jmp near .17	; 85BC1
+        mov eax, dword [dword esp+098h]
+        call SaveGameState
+        lea eax, [dword esp+098h]
+        call FileClose
+        jmp near .17
 .11:
-lea edx, [dword eax+03FFh]	; 85BC6
-mov eax, edx	; 85BCC
-sar edx, 1Fh	; 85BCE
-shl edx, 0Ah	; 85BD1
-LD sbb, eax, edx	; 85BD4
-sar eax, 0Ah	; 85BD6
-mov dword [dword esp+08Ch], eax	; 85BD9
-mov dword [dword esp+090h], 4	; 85BE0
-lea edx, [dword esp+08Ch]	; 85BEB
-xor eax, eax	; 85BF2
-call DiskSpaceShort	; 85BF4
-mov esi, eax	; 85BF9
-test eax, eax	; 85BFB
-je short .12	; 85BFD
-push ebx	; 85BFF
-mov ecx, 0FAh	; 85C00
-mov ebx, 0F8h	; 85C05
-mov edx, ecx	; 85C0A
-mov eax, 0F9h	; 85C0C
-call SetDialogColors	; 85C11
-push esi	; 85C16
-push str_AGameYouRequire2	; 85C17
-jmp near MenuSaveGame.1	; 85C1C
+        lea edx, [dword eax+03FFh]
+        mov eax, edx
+        sar edx, 1Fh
+        shl edx, 0Ah
+        LD sbb, eax, edx
+        sar eax, 0Ah
+        mov dword [dword esp+08Ch], eax
+        mov dword [dword esp+090h], 4
+        lea edx, [dword esp+08Ch]
+        xor eax, eax
+        call DiskSpaceShort
+        mov esi, eax
+        test eax, eax
+        je short .12
+        push ebx
+        mov ecx, 0FAh
+        mov ebx, 0F8h
+        mov edx, ecx
+        mov eax, 0F9h
+        call SetDialogColors
+        push esi
+        push str_AGameYouRequire2
+        jmp near MenuSaveGame.1
 .12:
-push dword 0C8h	; 85C21
-call SetTickDeadline	; 85C26
-add esp, byte 4	; 85C2B
-push esi	; 85C2E
-mov ecx, 0FAh	; 85C2F
-mov ebx, 0F8h	; 85C34
-mov edx, ecx	; 85C39
-mov eax, 0F9h	; 85C3B
-call SetDialogColors	; 85C40
-xor ecx, ecx	; 85C45
-mov ebx, str_GameSav5	; 85C47
-mov edx, curleague	; 85C4C
-lea eax, [byte esp+06Ch]	; 85C51
-call MakePath	; 85C55
-lea edx, [dword esp+098h]	; 85C5A
-lea eax, [byte esp+06Ch]	; 85C61
-call FileCreate	; 85C65
-test eax, eax	; 85C6A
-je short .13	; 85C6C
-push str_H1	; 85C6E
-call FatalError	; 85C73
-add esp, byte 4	; 85C78
+        push dword 0C8h
+        call SetTickDeadline
+        add esp, byte 4
+        push esi
+        mov ecx, 0FAh
+        mov ebx, 0F8h
+        mov edx, ecx
+        mov eax, 0F9h
+        call SetDialogColors
+        xor ecx, ecx
+        mov ebx, str_GameSav5
+        mov edx, curleague
+        lea eax, [byte esp+06Ch]
+        call MakePath
+        lea edx, [dword esp+098h]
+        lea eax, [byte esp+06Ch]
+        call FileCreate
+        test eax, eax
+        je short .13
+        push str_H1
+        call FatalError
+        add esp, byte 4
 .13:
-mov edi, dword [gamemode]	; 85C7B
-cmp edi, byte 2	; 85C81
-jne short .14	; 85C84
-push byte 0	; 85C86
-push byte 0	; 85C88
-push byte 0	; 85C8A
-push byte 0	; 85C8C
-push byte 0	; 85C8E
-mov ecx, edi	; 85C90
-mov ebx, msg_SavingLeagueGame	; 85C92
-mov edx, 0FFFFFFFFh	; 85C97
-mov eax, edx	; 85C9C
-call MessageBox	; 85C9E
-or byte [lgstate+5Ah], 80h	; 85CA3
-or byte [gameopts+1], 80h	; 85CAA
-mov eax, lgstate	; 85CB1
-call WriteModeState	; 85CB6
-mov eax, dword [dword esp+098h]	; 85CBB
-call SaveLeagueGameRef	; 85CC2
-jmp short .15	; 85CC7
+        mov edi, dword [gamemode]
+        cmp edi, byte 2
+        jne short .14
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        mov ecx, edi
+        mov ebx, msg_SavingLeagueGame
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        or byte [lgstate+5Ah], 80h
+        or byte [gameopts+1], 80h
+        mov eax, lgstate
+        call WriteModeState
+        mov eax, dword [dword esp+098h]
+        call SaveLeagueGameRef
+        jmp short .15
 .14:
-push byte 0	; 85CC9
-push byte 0	; 85CCB
-push byte 0	; 85CCD
-push byte 0	; 85CCF
-push byte 0	; 85CD1
-mov ecx, 2	; 85CD3
-mov ebx, msg_SavingPlayoffGame	; 85CD8
-mov edx, 0FFFFFFFFh	; 85CDD
-mov eax, edx	; 85CE2
-call MessageBox	; 85CE4
-or byte [postate+5Ah], 80h	; 85CE9
-or byte [gameopts+1], 80h	; 85CF0
-mov eax, postate	; 85CF7
-call WriteModeState	; 85CFC
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        push byte 0
+        mov ecx, 2
+        mov ebx, msg_SavingPlayoffGame
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        or byte [postate+5Ah], 80h
+        or byte [gameopts+1], 80h
+        mov eax, postate
+        call WriteModeState
 .15:
-mov eax, dword [dword esp+098h]	; 85D01
-call SaveGameState	; 85D08
-lea eax, [dword esp+098h]	; 85D0D
-call FileClose	; 85D14
-push curleague	; 85D19
-mov ecx, curleague	; 85D1E
-mov ebx, str_Sav3	; 85D23
-mov edx, str_Db4	; 85D28
-mov eax, str_Gsummary3	; 85D2D
-call CopyFile	; 85D32
-test eax, eax	; 85D37
-je short .16	; 85D39
-push str_A32	; 85D3B
-call FatalError	; 85D40
-add esp, byte 4	; 85D45
+        mov eax, dword [dword esp+098h]
+        call SaveGameState
+        lea eax, [dword esp+098h]
+        call FileClose
+        push curleague
+        mov ecx, curleague
+        mov ebx, str_Sav3
+        mov edx, str_Db4
+        mov eax, str_Gsummary3
+        call CopyFile
+        test eax, eax
+        je short .16
+        push str_A32
+        call FatalError
+        add esp, byte 4
 .16:
-call WaitTickDeadline	; 85D48
-call RestoreDialogBg	; 85D4D
+        call WaitTickDeadline
+        call RestoreDialogBg
 .17:
-mov eax, esp	; 85D52
-push eax	; 85D54
-call TextRestoreState	; 85D55
-add esp, byte 4	; 85D5A
+        mov eax, esp
+        push eax
+        call TextRestoreState
+        add esp, byte 4
 .18:
-mov eax, ebp	; 85D5D
-add esp, 9Ch	; 85D5F
+        mov eax, ebp
+        add esp, 9Ch
+;-----------------------------------------------------------------------------
+; SaveGameStub                                                    85D65  95 PC
+; Lone ret
+;-----------------------------------------------------------------------------
 SaveGameStub:
-pop ebp	; 85D65
-pop edi	; 85D66
-pop esi	; 85D67
-pop edx	; 85D68
-pop ecx	; 85D69
-pop ebx	; 85D6A
-ret	; 85D6B
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SaveGameNameDlg                              85D6C  95 PC, medium confidence
+; 'savegame' dialog with prmt field (EditTextField), appends .nhl, 'err1' on
+; bad name
+;-----------------------------------------------------------------------------
 ; C: src/front/savegame/MenuSaveGame.c (SaveGameNameDlg)
 %ifdef CBUILD
 %include "c/front/savegame/MenuSaveGame.SaveGameNameDlg.inc"
 %else
 SaveGameNameDlg:
-push dword 0C0h	; 85D6C
-call __CHK	; 85D71
-push ebx	; 85D76
-push ecx	; 85D77
-push edx	; 85D78
-push esi	; 85D79
-push edi	; 85D7A
-push ebp	; 85D7B
-sub esp, 90h	; 85D7C
-push eax	; 85D82
-mov eax, dword [pointerspr]	; 85D83
-mov edx, dword [byte eax+02h]	; 85D88
-sar edx, 10h	; 85D8B
-mov eax, dword [byte eax+04h]	; 85D8E
-sar eax, 10h	; 85D91
-add edx, byte 8	; 85D94
-imul eax, edx	; 85D97
-add eax, byte 11h	; 85D9A
-mov dword [byte esp+07Ch], eax	; 85D9D
-push byte 20h	; 85DA1
-push eax	; 85DA3
-push str_Pointer22	; 85DA4
-call AllocMemBlock	; 85DA9
-add esp, byte 0Ch	; 85DAE
-mov ebp, eax	; 85DB1
-mov esi, dword [pointerspr]	; 85DB3
-mov edi, eax	; 85DB9
-movsd	; 85DBB
-movsd	; 85DBC
-movsd	; 85DBD
-movsd	; 85DBE
-movsb	; 85DBF
-call sub_B4BA8	; 85DC0
-lea eax, [byte esp+074h]	; 85DC5
-push eax	; 85DC9
-lea eax, [byte esp+07Ch]	; 85DCA
-push eax	; 85DCE
-lea eax, [dword esp+084h]	; 85DCF
-push eax	; 85DD6
-call MouseRead	; 85DD7
-add esp, byte 0Ch	; 85DDC
-mov eax, dword [byte esp+078h]	; 85DDF
-mov dword [byte esp+070h], eax	; 85DE3
-mov eax, dword [byte esp+074h]	; 85DE7
-mov dword [dword esp+080h], eax	; 85DEB
-push eax	; 85DF2
-mov ecx, dword [byte esp+07Ch]	; 85DF3
-push ecx	; 85DF7
-mov esi, ebp	; 85DF8
-push esi	; 85DFA
-call GrabBlock	; 85DFB
-add esp, byte 0Ch	; 85E00
-mov edi, dword [byte esp+074h]	; 85E03
-push edi	; 85E07
-mov eax, dword [byte esp+07Ch]	; 85E08
-push eax	; 85E0C
-mov edx, dword [pointerspr]	; 85E0D
-push edx	; 85E13
-call sub_91284	; 85E14
-add esp, byte 0Ch	; 85E19
-xor ecx, ecx	; 85E1C
-mov ebx, str_Savegame	; 85E1E
-cmp byte [fileoncd+0163h], 1	; 85E23
-jne short .1	; 85E2A
-mov edx, dword [cddriveptr]	; 85E2C
-jmp short .2	; 85E32
+        push dword 0C0h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 90h
+        push eax
+        mov eax, dword [pointerspr]
+        mov edx, dword [byte eax+02h]
+        sar edx, 10h
+        mov eax, dword [byte eax+04h]
+        sar eax, 10h
+        add edx, byte 8
+        imul eax, edx
+        add eax, byte 11h
+        mov dword [byte esp+07Ch], eax
+        push byte 20h
+        push eax
+        push str_Pointer22
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov ebp, eax
+        mov esi, dword [pointerspr]
+        mov edi, eax
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        call sub_B4BA8
+        lea eax, [byte esp+074h]
+        push eax
+        lea eax, [byte esp+07Ch]
+        push eax
+        lea eax, [dword esp+084h]
+        push eax
+        call MouseRead
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+078h]
+        mov dword [byte esp+070h], eax
+        mov eax, dword [byte esp+074h]
+        mov dword [dword esp+080h], eax
+        push eax
+        mov ecx, dword [byte esp+07Ch]
+        push ecx
+        mov esi, ebp
+        push esi
+        call GrabBlock
+        add esp, byte 0Ch
+        mov edi, dword [byte esp+074h]
+        push edi
+        mov eax, dword [byte esp+07Ch]
+        push eax
+        mov edx, dword [pointerspr]
+        push edx
+        call sub_91284
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov ebx, str_Savegame
+        cmp byte [fileoncd+0163h], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 85E34
+        xor edx, edx
 .2:
-lea eax, [byte esp+04h]	; 85E36
-call MakePath	; 85E3A
-push byte 0	; 85E3F
-lea eax, [byte esp+08h]	; 85E41
-push eax	; 85E45
-call LoadBank	; 85E46
-add esp, byte 8	; 85E4B
-mov dword [dword esp+088h], eax	; 85E4E
-push str_Prmt	; 85E55
-push eax	; 85E5A
-call FindShape	; 85E5B
-mov dword [dword esp+08Ch], eax	; 85E60
-add esp, byte 8	; 85E67
-mov dword [dword esp+090h], eax	; 85E6A
-mov eax, dword [byte eax+02h]	; 85E71
-sar eax, 10h	; 85E74
-mov edx, dword [dword esp+084h]	; 85E77
-mov edx, dword [byte edx+04h]	; 85E7E
-sar edx, 10h	; 85E81
-add eax, byte 8	; 85E84
-imul eax, edx	; 85E87
-add eax, byte 11h	; 85E8A
-mov dword [byte esp+07Ch], eax	; 85E8D
-push byte 20h	; 85E91
-push eax	; 85E93
-push str_Dialog	; 85E94
-call AllocMemBlock	; 85E99
-mov ebx, eax	; 85E9E
-add esp, byte 0Ch	; 85EA0
-mov dword [dword esp+08Ch], eax	; 85EA3
-mov edi, eax	; 85EAA
-mov esi, dword [dword esp+084h]	; 85EAC
-movsd	; 85EB3
-movsd	; 85EB4
-movsd	; 85EB5
-movsd	; 85EB6
-movsb	; 85EB7
-mov edx, dword [dword esp+084h]	; 85EB8
-mov edx, dword [byte edx+02h]	; 85EBF
-sar edx, 10h	; 85EC2
-mov eax, edx	; 85EC5
-sar edx, 1Fh	; 85EC7
-LD sub, eax, edx	; 85ECA
-sar eax, 1	; 85ECC
-mov esi, 140h	; 85ECE
-sub esi, eax	; 85ED3
-mov edx, dword [dword esp+084h]	; 85ED5
-mov edx, dword [byte edx+04h]	; 85EDC
-sar edx, 10h	; 85EDF
-mov eax, edx	; 85EE2
-sar edx, 1Fh	; 85EE4
-LD sub, eax, edx	; 85EE7
-sar eax, 1	; 85EE9
-mov edi, 0F0h	; 85EEB
-sub edi, eax	; 85EF0
-push edi	; 85EF2
-push esi	; 85EF3
-push ebx	; 85EF4
-call GrabBlock	; 85EF5
-add esp, byte 0Ch	; 85EFA
-push edi	; 85EFD
-push esi	; 85EFE
-mov ecx, dword [dword esp+08Ch]	; 85EFF
-push ecx	; 85F06
-call DrawArtOpaque	; 85F07
-add esp, byte 0Ch	; 85F0C
-push dword 0F8h	; 85F0F
-push dword 0FAh	; 85F14
-call TextSetColors	; 85F19
-add esp, byte 8	; 85F1E
-mov eax, dword [dword esp+084h]	; 85F21
-mov eax, dword [byte eax+06h]	; 85F28
-sar eax, 10h	; 85F2B
-add esi, eax	; 85F2E
-mov eax, dword [dword esp+084h]	; 85F30
-mov eax, dword [byte eax+08h]	; 85F37
-sar eax, 10h	; 85F3A
-add edi, eax	; 85F3D
-mov eax, dword [esp]	; 85F3F
-mov byte [eax], 0	; 85F42
-push byte 1	; 85F45
-push byte 0	; 85F47
-push byte 0	; 85F49
-push edi	; 85F4B
-mov ecx, esi	; 85F4C
-mov ebx, 64h	; 85F4E
-mov edx, 8	; 85F53
-call EditTextField	; 85F58
-mov edx, str_Nhl3	; 85F5D
-mov eax, dword [esp]	; 85F62
-call strcat_	; 85F65
-mov eax, dword [byte esp+074h]	; 85F6A
-push eax	; 85F6E
-mov edx, dword [byte esp+07Ch]	; 85F6F
-push edx	; 85F73
-push ebp	; 85F74
-call DrawArtOpaque	; 85F75
-add esp, byte 0Ch	; 85F7A
+        lea eax, [byte esp+04h]
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+08h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [dword esp+088h], eax
+        push str_Prmt
+        push eax
+        call FindShape
+        mov dword [dword esp+08Ch], eax
+        add esp, byte 8
+        mov dword [dword esp+090h], eax
+        mov eax, dword [byte eax+02h]
+        sar eax, 10h
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        add eax, byte 8
+        imul eax, edx
+        add eax, byte 11h
+        mov dword [byte esp+07Ch], eax
+        push byte 20h
+        push eax
+        push str_Dialog
+        call AllocMemBlock
+        mov ebx, eax
+        add esp, byte 0Ch
+        mov dword [dword esp+08Ch], eax
+        mov edi, eax
+        mov esi, dword [dword esp+084h]
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        push edi
+        push esi
+        mov ecx, dword [dword esp+08Ch]
+        push ecx
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        push dword 0F8h
+        push dword 0FAh
+        call TextSetColors
+        add esp, byte 8
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+06h]
+        sar eax, 10h
+        add esi, eax
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+08h]
+        sar eax, 10h
+        add edi, eax
+        mov eax, dword [esp]
+        mov byte [eax], 0
+        push byte 1
+        push byte 0
+        push byte 0
+        push edi
+        mov ecx, esi
+        mov ebx, 64h
+        mov edx, 8
+        call EditTextField
+        mov edx, str_Nhl3
+        mov eax, dword [esp]
+        call strcat_
+        mov eax, dword [byte esp+074h]
+        push eax
+        mov edx, dword [byte esp+07Ch]
+        push edx
+        push ebp
+        call DrawArtOpaque
+        add esp, byte 0Ch
 .3:
-mov eax, dword [esp]	; 85F7D
-cmp byte [eax], 2Eh	; 85F80
-je short .4	; 85F83
-lea ebx, [byte esp+044h]	; 85F85
-xor edx, edx	; 85F89
-call unknown_libname_1	; 85F8B
-test eax, eax	; 85F90
-jne near .21	; 85F92
+        mov eax, dword [esp]
+        cmp byte [eax], 2Eh
+        je short .4
+        lea ebx, [byte esp+044h]
+        xor edx, edx
+        call unknown_libname_1
+        test eax, eax
+        jne near .21
 .4:
-mov eax, dword [esp]	; 85F98
-cmp byte [eax], 2Eh	; 85F9B
-je near .17	; 85F9E
-mov edx, dword [dword esp+090h]	; 85FA4
-mov edx, dword [byte edx+02h]	; 85FAB
-sar edx, 10h	; 85FAE
-mov eax, edx	; 85FB1
-sar edx, 1Fh	; 85FB3
-LD sub, eax, edx	; 85FB6
-sar eax, 1	; 85FB8
-mov esi, 140h	; 85FBA
-sub esi, eax	; 85FBF
-mov edx, dword [dword esp+090h]	; 85FC1
-mov edx, dword [byte edx+04h]	; 85FC8
-sar edx, 10h	; 85FCB
-mov eax, edx	; 85FCE
-sar edx, 1Fh	; 85FD0
-LD sub, eax, edx	; 85FD3
-sar eax, 1	; 85FD5
-mov edi, 0F0h	; 85FD7
-sub edi, eax	; 85FDC
-push edi	; 85FDE
-push esi	; 85FDF
-mov eax, dword [dword esp+094h]	; 85FE0
-push eax	; 85FE7
-call DrawArtOpaque	; 85FE8
-add esp, byte 0Ch	; 85FED
-mov edx, dword [dword esp+08Ch]	; 85FF0
-push edx	; 85FF7
-call FreeMemBlock	; 85FF8
-add esp, byte 4	; 85FFD
-push str_Err1	; 86000
-mov ebx, dword [dword esp+08Ch]	; 86005
-push ebx	; 8600C
-call FindShape	; 8600D
-mov dword [dword esp+08Ch], eax	; 86012
-add esp, byte 8	; 86019
-mov dword [dword esp+090h], eax	; 8601C
-mov eax, dword [byte eax+02h]	; 86023
-sar eax, 10h	; 86026
-mov edx, dword [dword esp+084h]	; 86029
-mov edx, dword [byte edx+04h]	; 86030
-sar edx, 10h	; 86033
-add eax, byte 8	; 86036
-imul eax, edx	; 86039
-add eax, byte 11h	; 8603C
-mov dword [byte esp+07Ch], eax	; 8603F
-push byte 20h	; 86043
-push eax	; 86045
-push str_Dialog	; 86046
-call AllocMemBlock	; 8604B
-mov ebx, eax	; 86050
-add esp, byte 0Ch	; 86052
-mov dword [dword esp+08Ch], eax	; 86055
-mov edi, eax	; 8605C
-mov esi, dword [dword esp+084h]	; 8605E
-movsd	; 86065
-movsd	; 86066
-movsd	; 86067
-movsd	; 86068
-movsb	; 86069
-mov edx, dword [dword esp+084h]	; 8606A
-mov edx, dword [byte edx+02h]	; 86071
-sar edx, 10h	; 86074
-mov eax, edx	; 86077
-sar edx, 1Fh	; 86079
-LD sub, eax, edx	; 8607C
-sar eax, 1	; 8607E
-mov esi, 140h	; 86080
-sub esi, eax	; 86085
-mov edx, dword [dword esp+084h]	; 86087
-mov edx, dword [byte edx+04h]	; 8608E
-sar edx, 10h	; 86091
-mov eax, edx	; 86094
-sar edx, 1Fh	; 86096
-LD sub, eax, edx	; 86099
-sar eax, 1	; 8609B
-mov edi, 0F0h	; 8609D
-sub edi, eax	; 860A2
-push edi	; 860A4
-push esi	; 860A5
-push ebx	; 860A6
-call GrabBlock	; 860A7
-add esp, byte 0Ch	; 860AC
-push edi	; 860AF
-push esi	; 860B0
-mov eax, dword [dword esp+08Ch]	; 860B1
-push eax	; 860B8
-call sub_91284	; 860B9
-add esp, byte 0Ch	; 860BE
-mov eax, dword [dword esp+084h]	; 860C1
-mov eax, dword [byte eax+06h]	; 860C8
-sar eax, 10h	; 860CB
-add esi, eax	; 860CE
-mov eax, dword [dword esp+084h]	; 860D0
-mov eax, dword [byte eax+08h]	; 860D7
-sar eax, 10h	; 860DA
-add edi, eax	; 860DD
-xor eax, eax	; 860DF
-jmp short .6	; 860E1
+        mov eax, dword [esp]
+        cmp byte [eax], 2Eh
+        je near .17
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        mov eax, dword [dword esp+094h]
+        push eax
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+08Ch]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        push str_Err1
+        mov ebx, dword [dword esp+08Ch]
+        push ebx
+        call FindShape
+        mov dword [dword esp+08Ch], eax
+        add esp, byte 8
+        mov dword [dword esp+090h], eax
+        mov eax, dword [byte eax+02h]
+        sar eax, 10h
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        add eax, byte 8
+        imul eax, edx
+        add eax, byte 11h
+        mov dword [byte esp+07Ch], eax
+        push byte 20h
+        push eax
+        push str_Dialog
+        call AllocMemBlock
+        mov ebx, eax
+        add esp, byte 0Ch
+        mov dword [dword esp+08Ch], eax
+        mov edi, eax
+        mov esi, dword [dword esp+084h]
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        push edi
+        push esi
+        mov eax, dword [dword esp+08Ch]
+        push eax
+        call sub_91284
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+06h]
+        sar eax, 10h
+        add esi, eax
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+08h]
+        sar eax, 10h
+        add edi, eax
+        xor eax, eax
+        jmp short .6
 .5:
-inc eax	; 860E3
+        inc eax
 .6:
-mov edx, dword [esp]	; 860E4
-add edx, eax	; 860E7
-cmp byte [edx], 2Eh	; 860E9
-jne short SaveGameNameDlg.5	; 860EC
-mov byte [edx], 0	; 860EE
-push dword 0F9h	; 860F1
-push dword 0FAh	; 860F6
-call TextSetColors	; 860FB
-add esp, byte 8	; 86100
-push edi	; 86103
-push esi	; 86104
-mov edx, dword [byte esp+08h]	; 86105
-push edx	; 86109
-call sub_92CD0	; 8610A
-add esp, byte 0Ch	; 8610F
-call ClearInputQueue	; 86112
-push dword 0FEh	; 86117
-push dword 181h	; 8611C
-call MouseSetPos	; 86121
-add esp, byte 8	; 86126
-push dword 0FEh	; 86129
-push dword 181h	; 8612E
-push ebp	; 86133
-call GrabBlock	; 86134
-add esp, byte 0Ch	; 86139
-push dword 0FEh	; 8613C
-push dword 181h	; 86141
-mov ebx, dword [pointerspr]	; 86146
-push ebx	; 8614C
-call sub_91284	; 8614D
-add esp, byte 0Ch	; 86152
-mov ecx, 181h	; 86155
-mov dword [byte esp+070h], ecx	; 8615A
-mov dword [byte esp+078h], ecx	; 8615E
-mov edi, 0FEh	; 86162
-mov dword [dword esp+080h], edi	; 86167
-mov dword [byte esp+074h], edi	; 8616E
-call ClearInputQueue	; 86172
+        mov edx, dword [esp]
+        add edx, eax
+        cmp byte [edx], 2Eh
+        jne short SaveGameNameDlg.5
+        mov byte [edx], 0
+        push dword 0F9h
+        push dword 0FAh
+        call TextSetColors
+        add esp, byte 8
+        push edi
+        push esi
+        mov edx, dword [byte esp+08h]
+        push edx
+        call sub_92CD0
+        add esp, byte 0Ch
+        call ClearInputQueue
+        push dword 0FEh
+        push dword 181h
+        call MouseSetPos
+        add esp, byte 8
+        push dword 0FEh
+        push dword 181h
+        push ebp
+        call GrabBlock
+        add esp, byte 0Ch
+        push dword 0FEh
+        push dword 181h
+        mov ebx, dword [pointerspr]
+        push ebx
+        call sub_91284
+        add esp, byte 0Ch
+        mov ecx, 181h
+        mov dword [byte esp+070h], ecx
+        mov dword [byte esp+078h], ecx
+        mov edi, 0FEh
+        mov dword [dword esp+080h], edi
+        mov dword [byte esp+074h], edi
+        call ClearInputQueue
 .7:
-xor ecx, ecx	; 86177
+        xor ecx, ecx
 .8:
-call GetInputEvent	; 86179
-test eax, eax	; 8617E
-je short .9	; 86180
-lea ebx, [dword esp+080h]	; 86182
-lea edx, [byte esp+070h]	; 86189
-call dword [ptrupdatefn]	; 8618D
-mov ecx, eax	; 86193
-test al, 2	; 86195
-je short SaveGameNameDlg.8	; 86197
+        call GetInputEvent
+        test eax, eax
+        je short .9
+        lea ebx, [dword esp+080h]
+        lea edx, [byte esp+070h]
+        call dword [ptrupdatefn]
+        mov ecx, eax
+        test al, 2
+        je short SaveGameNameDlg.8
 .9:
-test cl, 2	; 86199
-jne short .12	; 8619C
-mov eax, dword [byte esp+070h]	; 8619E
-cmp eax, dword [byte esp+078h]	; 861A2
-jne short .10	; 861A6
-mov eax, dword [dword esp+080h]	; 861A8
-cmp eax, dword [byte esp+074h]	; 861AF
-je short SaveGameNameDlg.7	; 861B3
+        test cl, 2
+        jne short .12
+        mov eax, dword [byte esp+070h]
+        cmp eax, dword [byte esp+078h]
+        jne short .10
+        mov eax, dword [dword esp+080h]
+        cmp eax, dword [byte esp+074h]
+        je short SaveGameNameDlg.7
 .10:
-mov ecx, dword [byte esp+074h]	; 861B5
-push ecx	; 861B9
-mov esi, dword [byte esp+07Ch]	; 861BA
-push esi	; 861BE
-push ebp	; 861BF
-call PutBlock	; 861C0
-add esp, byte 0Ch	; 861C5
-mov edi, dword [dword esp+080h]	; 861C8
-push edi	; 861CF
-mov eax, dword [byte esp+074h]	; 861D0
-push eax	; 861D4
-push ebp	; 861D5
-call GrabBlock	; 861D6
-add esp, byte 0Ch	; 861DB
-mov edx, dword [dword esp+080h]	; 861DE
-push edx	; 861E5
-mov ebx, dword [byte esp+074h]	; 861E6
-push ebx	; 861EA
-mov ecx, dword [pointerspr]	; 861EB
-push ecx	; 861F1
+        mov ecx, dword [byte esp+074h]
+        push ecx
+        mov esi, dword [byte esp+07Ch]
+        push esi
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov edi, dword [dword esp+080h]
+        push edi
+        mov eax, dword [byte esp+074h]
+        push eax
+        push ebp
+        call GrabBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+080h]
+        push edx
+        mov ebx, dword [byte esp+074h]
+        push ebx
+        mov ecx, dword [pointerspr]
+        push ecx
 .11:
-call DrawArt	; 861F2
-add esp, byte 0Ch	; 861F7
-mov eax, dword [byte esp+070h]	; 861FA
-mov dword [byte esp+078h], eax	; 861FE
-mov eax, dword [dword esp+080h]	; 86202
-mov dword [byte esp+074h], eax	; 86209
-jmp near SaveGameNameDlg.7	; 8620D
+        call DrawArt
+        add esp, byte 0Ch
+        mov eax, dword [byte esp+070h]
+        mov dword [byte esp+078h], eax
+        mov eax, dword [dword esp+080h]
+        mov dword [byte esp+074h], eax
+        jmp near SaveGameNameDlg.7
 .12:
-mov edx, dword [dword esp+080h]	; 86212
-cmp edx, 109h	; 86219
-jge short SaveGameNameDlg.10	; 8621F
-cmp edx, 0F8h	; 86221
-jl short SaveGameNameDlg.10	; 86227
-mov esi, dword [byte esp+070h]	; 86229
-cmp esi, 0DAh	; 8622D
-jle near .13	; 86233
-cmp esi, 107h	; 86239
-jge near .13	; 8623F
-mov ebx, dword [byte esp+074h]	; 86245
-push ebx	; 86249
-mov ecx, dword [byte esp+07Ch]	; 8624A
-push ecx	; 8624E
-push ebp	; 8624F
-call PutBlock	; 86250
-add esp, byte 0Ch	; 86255
-mov edx, dword [dword esp+090h]	; 86258
-mov edx, dword [byte edx+02h]	; 8625F
-sar edx, 10h	; 86262
-mov eax, edx	; 86265
-sar edx, 1Fh	; 86267
-LD sub, eax, edx	; 8626A
-sar eax, 1	; 8626C
-mov esi, 140h	; 8626E
-sub esi, eax	; 86273
-mov edx, dword [dword esp+090h]	; 86275
-mov edx, dword [byte edx+04h]	; 8627C
-sar edx, 10h	; 8627F
-mov eax, edx	; 86282
-sar edx, 1Fh	; 86284
-LD sub, eax, edx	; 86287
-sar eax, 1	; 86289
-mov edi, 0F0h	; 8628B
-sub edi, eax	; 86290
-push edi	; 86292
-push esi	; 86293
-mov esi, dword [dword esp+094h]	; 86294
-push esi	; 8629B
-call DrawArtOpaque	; 8629C
-add esp, byte 0Ch	; 862A1
-push esi	; 862A4
-call FreeMemBlock	; 862A5
-add esp, byte 4	; 862AA
-push ebp	; 862AD
-call FreeMemBlock	; 862AE
-add esp, byte 4	; 862B3
-mov ebp, dword [dword esp+088h]	; 862B6
-push ebp	; 862BD
-call FreeMemBlock	; 862BE
-add esp, byte 4	; 862C3
-mov edx, str_Nhl3	; 862C6
-mov eax, dword [esp]	; 862CB
-call strcat_	; 862CE
-jmp near .22	; 862D3
+        mov edx, dword [dword esp+080h]
+        cmp edx, 109h
+        jge short SaveGameNameDlg.10
+        cmp edx, 0F8h
+        jl short SaveGameNameDlg.10
+        mov esi, dword [byte esp+070h]
+        cmp esi, 0DAh
+        jle near .13
+        cmp esi, 107h
+        jge near .13
+        mov ebx, dword [byte esp+074h]
+        push ebx
+        mov ecx, dword [byte esp+07Ch]
+        push ecx
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        mov esi, dword [dword esp+094h]
+        push esi
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebp, dword [dword esp+088h]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov edx, str_Nhl3
+        mov eax, dword [esp]
+        call strcat_
+        jmp near .22
 .13:
-mov eax, dword [byte esp+070h]	; 862D8
-cmp eax, 114h	; 862DC
-jle near .14	; 862E1
-cmp eax, 148h	; 862E7
-jge near .14	; 862EC
-mov ecx, dword [byte esp+074h]	; 862F2
-push ecx	; 862F6
-mov esi, dword [byte esp+07Ch]	; 862F7
-push esi	; 862FB
-push ebp	; 862FC
-call PutBlock	; 862FD
-add esp, byte 0Ch	; 86302
-mov edx, dword [dword esp+090h]	; 86305
-mov edx, dword [byte edx+02h]	; 8630C
-sar edx, 10h	; 8630F
-mov eax, edx	; 86312
-sar edx, 1Fh	; 86314
-LD sub, eax, edx	; 86317
-sar eax, 1	; 86319
-mov esi, 140h	; 8631B
-sub esi, eax	; 86320
-mov edx, dword [dword esp+090h]	; 86322
-mov edx, dword [byte edx+04h]	; 86329
-sar edx, 10h	; 8632C
-mov eax, edx	; 8632F
-sar edx, 1Fh	; 86331
-LD sub, eax, edx	; 86334
-sar eax, 1	; 86336
-mov edi, 0F0h	; 86338
-sub edi, eax	; 8633D
-push edi	; 8633F
-push esi	; 86340
-mov edi, dword [dword esp+094h]	; 86341
-push edi	; 86348
-call DrawArtOpaque	; 86349
-add esp, byte 0Ch	; 8634E
-push edi	; 86351
-call FreeMemBlock	; 86352
-add esp, byte 4	; 86357
-push ebp	; 8635A
-call FreeMemBlock	; 8635B
-add esp, byte 4	; 86360
-mov edx, dword [dword esp+088h]	; 86363
-push edx	; 8636A
-call FreeMemBlock	; 8636B
-add esp, byte 4	; 86370
-mov eax, 1	; 86373
-jmp near .23	; 86378
+        mov eax, dword [byte esp+070h]
+        cmp eax, 114h
+        jle near .14
+        cmp eax, 148h
+        jge near .14
+        mov ecx, dword [byte esp+074h]
+        push ecx
+        mov esi, dword [byte esp+07Ch]
+        push esi
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        mov edi, dword [dword esp+094h]
+        push edi
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov edx, dword [dword esp+088h]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, 1
+        jmp near .23
 .14:
-mov ebx, dword [byte esp+070h]	; 8637D
-cmp ebx, 15Dh	; 86381
-jle short .15	; 86387
-cmp ebx, 1A2h	; 86389
-jl short .16	; 8638F
+        mov ebx, dword [byte esp+070h]
+        cmp ebx, 15Dh
+        jle short .15
+        cmp ebx, 1A2h
+        jl short .16
 .15:
-mov esi, dword [byte esp+074h]	; 86391
-push esi	; 86395
-mov edi, dword [byte esp+07Ch]	; 86396
-push edi	; 8639A
-push ebp	; 8639B
-call PutBlock	; 8639C
-add esp, byte 0Ch	; 863A1
-mov eax, dword [dword esp+080h]	; 863A4
-push eax	; 863AB
-mov edx, dword [byte esp+074h]	; 863AC
-push edx	; 863B0
-push ebp	; 863B1
-call GrabBlock	; 863B2
-add esp, byte 0Ch	; 863B7
-mov ebx, dword [dword esp+080h]	; 863BA
-push ebx	; 863C1
-mov ecx, dword [byte esp+074h]	; 863C2
-push ecx	; 863C6
-mov esi, dword [pointerspr]	; 863C7
-push esi	; 863CD
-jmp near SaveGameNameDlg.11	; 863CE
+        mov esi, dword [byte esp+074h]
+        push esi
+        mov edi, dword [byte esp+07Ch]
+        push edi
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+080h]
+        push eax
+        mov edx, dword [byte esp+074h]
+        push edx
+        push ebp
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebx, dword [dword esp+080h]
+        push ebx
+        mov ecx, dword [byte esp+074h]
+        push ecx
+        mov esi, dword [pointerspr]
+        push esi
+        jmp near SaveGameNameDlg.11
 .16:
-mov edi, dword [byte esp+074h]	; 863D3
-push edi	; 863D7
-mov eax, dword [byte esp+07Ch]	; 863D8
-push eax	; 863DC
-push ebp	; 863DD
-call PutBlock	; 863DE
-add esp, byte 0Ch	; 863E3
-mov edx, dword [dword esp+090h]	; 863E6
-mov edx, dword [byte edx+02h]	; 863ED
-sar edx, 10h	; 863F0
-mov eax, edx	; 863F3
-sar edx, 1Fh	; 863F5
-LD sub, eax, edx	; 863F8
-sar eax, 1	; 863FA
-mov esi, 140h	; 863FC
-sub esi, eax	; 86401
-mov edx, dword [dword esp+090h]	; 86403
-mov edx, dword [byte edx+04h]	; 8640A
-sar edx, 10h	; 8640D
-mov eax, edx	; 86410
-sar edx, 1Fh	; 86412
-LD sub, eax, edx	; 86415
-sar eax, 1	; 86417
-mov edi, 0F0h	; 86419
-sub edi, eax	; 8641E
-push edi	; 86420
-push esi	; 86421
-mov edx, dword [dword esp+094h]	; 86422
-push edx	; 86429
-call DrawArtOpaque	; 8642A
-add esp, byte 0Ch	; 8642F
-mov ebx, dword [dword esp+08Ch]	; 86432
-push ebx	; 86439
-call FreeMemBlock	; 8643A
-add esp, byte 4	; 8643F
-push str_Prmt	; 86442
-mov ecx, dword [dword esp+08Ch]	; 86447
-push ecx	; 8644E
-call FindShape	; 8644F
-mov dword [dword esp+08Ch], eax	; 86454
-add esp, byte 8	; 8645B
-mov dword [dword esp+090h], eax	; 8645E
-mov edx, dword [byte eax+02h]	; 86465
-sar edx, 10h	; 86468
-mov eax, dword [byte eax+04h]	; 8646B
-sar eax, 10h	; 8646E
-add edx, byte 8	; 86471
-imul eax, edx	; 86474
-add eax, byte 11h	; 86477
-mov dword [byte esp+07Ch], eax	; 8647A
-push byte 20h	; 8647E
-push eax	; 86480
-push str_Dialog	; 86481
-call AllocMemBlock	; 86486
-mov ebx, eax	; 8648B
-add esp, byte 0Ch	; 8648D
-mov dword [dword esp+08Ch], eax	; 86490
-mov edi, eax	; 86497
-mov esi, dword [dword esp+084h]	; 86499
-movsd	; 864A0
-movsd	; 864A1
-movsd	; 864A2
-movsd	; 864A3
-movsb	; 864A4
-mov edx, dword [dword esp+084h]	; 864A5
-mov edx, dword [byte edx+02h]	; 864AC
-sar edx, 10h	; 864AF
-mov eax, edx	; 864B2
-sar edx, 1Fh	; 864B4
-LD sub, eax, edx	; 864B7
-sar eax, 1	; 864B9
-mov esi, 140h	; 864BB
-sub esi, eax	; 864C0
-mov edx, dword [dword esp+084h]	; 864C2
-mov edx, dword [byte edx+04h]	; 864C9
-sar edx, 10h	; 864CC
-mov eax, edx	; 864CF
-sar edx, 1Fh	; 864D1
-LD sub, eax, edx	; 864D4
-sar eax, 1	; 864D6
-mov edi, 0F0h	; 864D8
-sub edi, eax	; 864DD
-push edi	; 864DF
-push esi	; 864E0
-push ebx	; 864E1
-call GrabBlock	; 864E2
-add esp, byte 0Ch	; 864E7
-push edi	; 864EA
-push esi	; 864EB
-mov eax, dword [dword esp+08Ch]	; 864EC
-push eax	; 864F3
-call DrawArtOpaque	; 864F4
-add esp, byte 0Ch	; 864F9
-mov eax, dword [dword esp+084h]	; 864FC
-mov eax, dword [byte eax+06h]	; 86503
-sar eax, 10h	; 86506
-add esi, eax	; 86509
-mov eax, dword [dword esp+084h]	; 8650B
-mov eax, dword [byte eax+08h]	; 86512
-sar eax, 10h	; 86515
-add edi, eax	; 86518
-mov edx, dword [byte esp+074h]	; 8651A
-push edx	; 8651E
-mov ebx, dword [byte esp+07Ch]	; 8651F
-push ebx	; 86523
-push ebp	; 86524
-call GrabBlock	; 86525
-add esp, byte 0Ch	; 8652A
+        mov edi, dword [byte esp+074h]
+        push edi
+        mov eax, dword [byte esp+07Ch]
+        push eax
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        mov edx, dword [dword esp+094h]
+        push edx
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        mov ebx, dword [dword esp+08Ch]
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
+        push str_Prmt
+        mov ecx, dword [dword esp+08Ch]
+        push ecx
+        call FindShape
+        mov dword [dword esp+08Ch], eax
+        add esp, byte 8
+        mov dword [dword esp+090h], eax
+        mov edx, dword [byte eax+02h]
+        sar edx, 10h
+        mov eax, dword [byte eax+04h]
+        sar eax, 10h
+        add edx, byte 8
+        imul eax, edx
+        add eax, byte 11h
+        mov dword [byte esp+07Ch], eax
+        push byte 20h
+        push eax
+        push str_Dialog
+        call AllocMemBlock
+        mov ebx, eax
+        add esp, byte 0Ch
+        mov dword [dword esp+08Ch], eax
+        mov edi, eax
+        mov esi, dword [dword esp+084h]
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+084h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        push ebx
+        call GrabBlock
+        add esp, byte 0Ch
+        push edi
+        push esi
+        mov eax, dword [dword esp+08Ch]
+        push eax
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+06h]
+        sar eax, 10h
+        add esi, eax
+        mov eax, dword [dword esp+084h]
+        mov eax, dword [byte eax+08h]
+        sar eax, 10h
+        add edi, eax
+        mov edx, dword [byte esp+074h]
+        push edx
+        mov ebx, dword [byte esp+07Ch]
+        push ebx
+        push ebp
+        call GrabBlock
+        add esp, byte 0Ch
 .17:
-xor eax, eax	; 8652D
-jmp short .19	; 8652F
+        xor eax, eax
+        jmp short .19
 .18:
-inc eax	; 86531
+        inc eax
 .19:
-mov edx, dword [esp]	; 86532
-add edx, eax	; 86535
-mov bh, byte [edx]	; 86537
-cmp bh, 2Eh	; 86539
-je short .20	; 8653C
-test bh, bh	; 8653E
-jne short SaveGameNameDlg.18	; 86540
+        mov edx, dword [esp]
+        add edx, eax
+        mov bh, byte [edx]
+        cmp bh, 2Eh
+        je short .20
+        test bh, bh
+        jne short SaveGameNameDlg.18
 .20:
-add eax, dword [esp]	; 86542
-mov byte [eax], 0	; 86545
-push dword 0F8h	; 86548
-push dword 0FAh	; 8654D
-call TextSetColors	; 86552
-add esp, byte 8	; 86557
-push byte 1	; 8655A
-push byte 0	; 8655C
-push byte 0	; 8655E
-push edi	; 86560
-mov ecx, esi	; 86561
-mov ebx, 64h	; 86563
-mov edx, 8	; 86568
-mov eax, dword [byte esp+010h]	; 8656D
-call EditTextField	; 86571
-mov edx, str_Nhl3	; 86576
-mov eax, dword [esp]	; 8657B
-call strcat_	; 8657E
-jmp near SaveGameNameDlg.3	; 86583
+        add eax, dword [esp]
+        mov byte [eax], 0
+        push dword 0F8h
+        push dword 0FAh
+        call TextSetColors
+        add esp, byte 8
+        push byte 1
+        push byte 0
+        push byte 0
+        push edi
+        mov ecx, esi
+        mov ebx, 64h
+        mov edx, 8
+        mov eax, dword [byte esp+010h]
+        call EditTextField
+        mov edx, str_Nhl3
+        mov eax, dword [esp]
+        call strcat_
+        jmp near SaveGameNameDlg.3
 .21:
-mov ebx, dword [byte esp+074h]	; 86588
-push ebx	; 8658C
-mov ecx, dword [byte esp+07Ch]	; 8658D
-push ecx	; 86591
-push ebp	; 86592
-call PutBlock	; 86593
-add esp, byte 0Ch	; 86598
-mov edx, dword [dword esp+090h]	; 8659B
-mov edx, dword [byte edx+02h]	; 865A2
-sar edx, 10h	; 865A5
-mov eax, edx	; 865A8
-sar edx, 1Fh	; 865AA
-LD sub, eax, edx	; 865AD
-sar eax, 1	; 865AF
-mov esi, 140h	; 865B1
-sub esi, eax	; 865B6
-mov edx, dword [dword esp+090h]	; 865B8
-mov edx, dword [byte edx+04h]	; 865BF
-sar edx, 10h	; 865C2
-mov eax, edx	; 865C5
-sar edx, 1Fh	; 865C7
-LD sub, eax, edx	; 865CA
-sar eax, 1	; 865CC
-mov edi, 0F0h	; 865CE
-sub edi, eax	; 865D3
-push edi	; 865D5
-push esi	; 865D6
-mov esi, dword [dword esp+094h]	; 865D7
-push esi	; 865DE
-call DrawArtOpaque	; 865DF
-add esp, byte 0Ch	; 865E4
-push esi	; 865E7
-call FreeMemBlock	; 865E8
-add esp, byte 4	; 865ED
-push ebp	; 865F0
-call FreeMemBlock	; 865F1
-add esp, byte 4	; 865F6
-mov ebp, dword [dword esp+088h]	; 865F9
-push ebp	; 86600
-call FreeMemBlock	; 86601
-add esp, byte 4	; 86606
+        mov ebx, dword [byte esp+074h]
+        push ebx
+        mov ecx, dword [byte esp+07Ch]
+        push ecx
+        push ebp
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+02h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov esi, 140h
+        sub esi, eax
+        mov edx, dword [dword esp+090h]
+        mov edx, dword [byte edx+04h]
+        sar edx, 10h
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov edi, 0F0h
+        sub edi, eax
+        push edi
+        push esi
+        mov esi, dword [dword esp+094h]
+        push esi
+        call DrawArtOpaque
+        add esp, byte 0Ch
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebp, dword [dword esp+088h]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
 .22:
-xor eax, eax	; 86609
+        xor eax, eax
 .23:
-add esp, 94h	; 8660B
-jmp near SaveGameStub	; 86611
+        add esp, 94h
+        jmp near SaveGameStub
 %endif ; C
 savenamedefault:
-db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-db 00h
+        db 02Eh,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h
+;-----------------------------------------------------------------------------
+; MenuPlayNextGame                             86627  95 PC, medium confidence
+; Menu action "Play Next Game ...": returns 4
+;-----------------------------------------------------------------------------
 ; C: src/front/savegame/MenuPlayNextGame.c
 %ifdef CBUILD
 %include "c/front/savegame/MenuPlayNextGame.inc"
 %else
 MenuPlayNextGame:
-push dword 4	; 86627
-call __CHK	; 8662C
-mov eax, 4	; 86631
-ret	; 86636
+        push dword 4
+        call __CHK
+        mov eax, 4
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MenuReturnToSportsCentral                    86637  95 PC, medium confidence
+; Menu action "Return To Sports Central": returns 1
+;-----------------------------------------------------------------------------
 ; C: src/front/savegame/MenuReturnToSportsCentral.c
 %ifdef CBUILD
 %include "c/front/savegame/MenuReturnToSportsCentral.inc"
 %else
 MenuReturnToSportsCentral:
-push dword 4	; 86637
-call __CHK	; 8663C
-mov eax, 1	; 86641
-ret	; 86646
+        push dword 4
+        call __CHK
+        mov eax, 1
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; ViewPlayoffHilights                          86647  95 PC, medium confidence
+; Loads postate, gamemode 0, ViewHilights, restores exhstate; from
+; SelectSavedFile / CreatePlayoffs
+;-----------------------------------------------------------------------------
 ; C: src/front/savegame/ViewPlayoffHilights.c
 %ifdef CBUILD
 %include "c/front/savegame/ViewPlayoffHilights.inc"
 %else
 ViewPlayoffHilights:
-push dword 8	; 86647
-call __CHK	; 8664C
-push edx	; 86651
-mov eax, exhstate	; 86652
-call SaveModeState	; 86657
-mov eax, postate	; 8665C
-call LoadModeState	; 86661
-xor edx, edx	; 86666
-mov dword [gamemode], edx	; 86668
-call ViewHilights	; 8666E
-test eax, eax	; 86673
-jne short .1	; 86675
-mov eax, exhstate	; 86677
-call LoadModeState	; 8667C
-mov eax, 2	; 86681
-pop edx	; 86686
-ret	; 86687
+        push dword 8
+        call __CHK
+        push edx
+        mov eax, exhstate
+        call SaveModeState
+        mov eax, postate
+        call LoadModeState
+        xor edx, edx
+        mov dword [gamemode], edx
+        call ViewHilights
+        test eax, eax
+        jne short .1
+        mov eax, exhstate
+        call LoadModeState
+        mov eax, 2
+        pop edx
+        ret
 .1:
-mov eax, exhstate	; 86688
-call LoadModeState	; 8668D
-xor eax, eax	; 86692
-pop edx	; 86694
-ret	; 86695
+        mov eax, exhstate
+        call LoadModeState
+        xor eax, eax
+        pop edx
+        ret
 %endif ; C

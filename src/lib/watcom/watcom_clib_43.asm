@@ -5,56 +5,56 @@ section s_A6B87 progbits alloc exec nowrite align=1
 extern _environ, strnicmp_
 global getenv_, loc_A6BB3, loc_A6BCF, loc_A6BD2, loc_A6BD8, loc_A6BDA
 getenv_:
-push ebx	; A6B87
-push ecx	; A6B88
-push edx	; A6B89
-push esi	; A6B8A
-push edi	; A6B8B
-push ebp	; A6B8C
-mov ebp, eax	; A6B8D
-mov esi, dword [_environ]	; A6B8F
-test esi, esi	; A6B95
-je short loc_A6BD8	; A6B97
-test eax, eax	; A6B99
-je short loc_A6BD8	; A6B9B
-mov edi, eax	; A6B9D
-push es	; A6B9F
-mov eax, ds	; A6BA0
-mov es, eax	; A6BA2
-sub ecx, ecx	; A6BA4
-dec ecx	; A6BA6
-xor eax, eax	; A6BA7
-repne scasb	; A6BA9
-not ecx	; A6BAB
-dec ecx	; A6BAD
-pop es	; A6BAE
-mov edi, ecx	; A6BAF
-jmp short loc_A6BD2	; A6BB1
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        mov ebp, eax
+        mov esi, dword [_environ]
+        test esi, esi
+        je short loc_A6BD8
+        test eax, eax
+        je short loc_A6BD8
+        mov edi, eax
+        push es
+        mov eax, ds
+        mov es, eax
+        sub ecx, ecx
+        dec ecx
+        xor eax, eax
+        repne scasb
+        not ecx
+        dec ecx
+        pop es
+        mov edi, ecx
+        jmp short loc_A6BD2
 loc_A6BB3:
-mov eax, ecx	; A6BB3
-mov edx, ebp	; A6BB5
-mov ebx, edi	; A6BB7
-call strnicmp_	; A6BB9
-test eax, eax	; A6BBE
-jne short loc_A6BCF	; A6BC0
-cmp byte [ecx+edi], 3Dh	; A6BC2
-jne short loc_A6BCF	; A6BC6
-lea eax, [byte edi+01h]	; A6BC8
-add eax, ecx	; A6BCB
-jmp short loc_A6BDA	; A6BCD
+        mov eax, ecx
+        mov edx, ebp
+        mov ebx, edi
+        call strnicmp_
+        test eax, eax
+        jne short loc_A6BCF
+        cmp byte [ecx+edi], 3Dh
+        jne short loc_A6BCF
+        lea eax, [byte edi+01h]
+        add eax, ecx
+        jmp short loc_A6BDA
 loc_A6BCF:
-add esi, byte 4	; A6BCF
+        add esi, byte 4
 loc_A6BD2:
-mov ecx, dword [esi]	; A6BD2
-test ecx, ecx	; A6BD4
-jne short loc_A6BB3	; A6BD6
+        mov ecx, dword [esi]
+        test ecx, ecx
+        jne short loc_A6BB3
 loc_A6BD8:
-xor eax, eax	; A6BD8
+        xor eax, eax
 loc_A6BDA:
-pop ebp	; A6BDA
-pop edi	; A6BDB
-pop esi	; A6BDC
-pop edx	; A6BDD
-pop ecx	; A6BDE
-pop ebx	; A6BDF
-ret	; A6BE0
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret

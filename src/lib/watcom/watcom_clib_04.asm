@@ -4,4 +4,4 @@ bits 32
 section s_8DCB7 progbits alloc exec nowrite align=1
 global loc_8DCB7
 loc_8DCB7:
-db 00h,00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h,00h

@@ -5,55 +5,55 @@ section s_A321C progbits alloc exec nowrite align=1
 extern strtod_
 global forcedecpt_, loc_A3226, loc_A3239, loc_A3249, loc_A3251, loc_A3257, loc_A3261, __cnvs2d_
 forcedecpt_:
-push ebx	; A321C
-push ecx	; A321D
-mov ebx, edx	; A321E
-test byte [byte edx+014h], 1	; A3220
-jne short loc_A3261	; A3224
+        push ebx
+        push ecx
+        mov ebx, edx
+        test byte [byte edx+014h], 1
+        jne short loc_A3261
 loc_A3226:
-mov dh, byte [eax]	; A3226
-test dh, dh	; A3228
-je short loc_A3239	; A322A
-cmp dh, 65h	; A322C
-je short loc_A3239	; A322F
-cmp dh, 45h	; A3231
-je short loc_A3239	; A3234
-inc eax	; A3236
-jmp short loc_A3226	; A3237
+        mov dh, byte [eax]
+        test dh, dh
+        je short loc_A3239
+        cmp dh, 65h
+        je short loc_A3239
+        cmp dh, 45h
+        je short loc_A3239
+        inc eax
+        jmp short loc_A3226
 loc_A3239:
-mov edx, eax	; A3239
-mov cl, byte [byte ebx+015h]	; A323B
-dec eax	; A323E
-cmp cl, 47h	; A323F
-je short loc_A3249	; A3242
-cmp cl, 67h	; A3244
-jne short loc_A3251	; A3247
+        mov edx, eax
+        mov cl, byte [byte ebx+015h]
+        dec eax
+        cmp cl, 47h
+        je short loc_A3249
+        cmp cl, 67h
+        jne short loc_A3251
 loc_A3249:
-cmp byte [eax], 30h	; A3249
-jne short loc_A3251	; A324C
-dec eax	; A324E
-jmp short loc_A3249	; A324F
+        cmp byte [eax], 30h
+        jne short loc_A3251
+        dec eax
+        jmp short loc_A3249
 loc_A3251:
-cmp byte [eax], 2Eh	; A3251
-je short loc_A3257	; A3254
-inc eax	; A3256
+        cmp byte [eax], 2Eh
+        je short loc_A3257
+        inc eax
 loc_A3257:
-mov bl, byte [edx]	; A3257
-inc edx	; A3259
-mov byte [eax], bl	; A325A
-inc eax	; A325C
-test bl, bl	; A325D
-jne short loc_A3257	; A325F
+        mov bl, byte [edx]
+        inc edx
+        mov byte [eax], bl
+        inc eax
+        test bl, bl
+        jne short loc_A3257
 loc_A3261:
-pop ecx	; A3261
-pop ebx	; A3262
-ret	; A3263
+        pop ecx
+        pop ebx
+        ret
 __cnvs2d_:
-push ebx	; A3264
-mov ebx, edx	; A3265
-xor edx, edx	; A3267
-call strtod_	; A3269
-fstp qword [ebx]	; A326E
-pop ebx	; A3270
-ret	; A3271
-db 00h,00h
+        push ebx
+        mov ebx, edx
+        xor edx, edx
+        call strtod_
+        fstp qword [ebx]
+        pop ebx
+        ret
+        db 00h,00h

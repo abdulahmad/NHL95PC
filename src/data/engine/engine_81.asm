@@ -5,24 +5,24 @@ section s_DEB78 nobits alloc noexec write align=1
 global rinkobjs_b3, plcareerpts, plseasongoals, plseasonpts, ovlstepart, ovlstepart_e21, ovlstepart_e30, rinkobjs
 global rinkobjs_w2, word_DEF84, word_DEF88
 plcareerpts:
-resb 4
+        resb 4
 plseasongoals:
-resb 4
+        resb 4
 plseasonpts:
-resb 788
+        resb 788
 rinkobjs:
-resb 2
+        resb 2
 rinkobjs_w2:
-resb 1
+        resb 1
 rinkobjs_b3:
-resb 237
+        resb 237
 word_DEF84:
-resb 4
+        resb 4
 word_DEF88:
-resb 4
+        resb 4
 ovlstepart:
-resb 84
+        resb 84
 ovlstepart_e21:
-resb 36
+        resb 36
 ovlstepart_e30:
-resb 8
+        resb 8

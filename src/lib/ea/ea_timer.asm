@@ -11,388 +11,388 @@ global loc_8E4CB, loc_8E4D6, loc_8E4E9, sub_8E4F3, RemoveTimerCallback, loc_8E50
 global CountTimerCallbacks, loc_8E52C, loc_8E536, MaskTimerKbdIrq, RestoreTimer, loc_8E56A, loc_8E5A5, loc_8E5A8
 global InstallTimer, UnmaskTimerKbdIrq, sub_8E624, sub_8E6A8, sub_8E6CC, sub_8E714, sub_8E738, sub_8E780
 sub_8E3DC:
-mov eax, dword [byte esp+04h]	; 8E3DC
-ret	; 8E3E0
-db 08Dh,040h,00h
+        mov eax, dword [byte esp+04h]
+        ret
+        db 08Dh,040h,00h
 sub_8E3E4:
-mov eax, dword [byte esp+04h]	; 8E3E4
-mov edx, dword [byte esp+08h]	; 8E3E8
-mov ebx, dword [byte esp+0Ch]	; 8E3EC
-jmp near strncpy_	; 8E3F0
-db 08Dh,040h,00h
+        mov eax, dword [byte esp+04h]
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [byte esp+0Ch]
+        jmp near strncpy_
+        db 08Dh,040h,00h
 sub_8E3F8:
-mov eax, dword [byte esp+04h]	; 8E3F8
-mov edx, dword [byte esp+08h]	; 8E3FC
-mov ebx, dword [byte esp+0Ch]	; 8E400
-jmp near strncmp_	; 8E404
-db 08Dh,040h,00h
+        mov eax, dword [byte esp+04h]
+        mov edx, dword [byte esp+08h]
+        mov ebx, dword [byte esp+0Ch]
+        jmp near strncmp_
+        db 08Dh,040h,00h
 sub_8E40C:
-mov edx, dword [byte esp+0Ch]	; 8E40C
-push edx	; 8E410
-mov ebx, dword [byte esp+08h]	; 8E411
-push ebx	; 8E415
-mov ecx, dword [byte esp+010h]	; 8E416
-push ecx	; 8E41A
-call sub_B3ABC	; 8E41B
-add esp, byte 0Ch	; 8E420
-ret	; 8E423
+        mov edx, dword [byte esp+0Ch]
+        push edx
+        mov ebx, dword [byte esp+08h]
+        push ebx
+        mov ecx, dword [byte esp+010h]
+        push ecx
+        call sub_B3ABC
+        add esp, byte 0Ch
+        ret
 sub_8E424:
-mov eax, dword [byte esp+04h]	; 8E424
-mov edx, eax	; 8E428
-cmp byte [eax], 0	; 8E42A
-je short loc_8E449	; 8E42D
+        mov eax, dword [byte esp+04h]
+        mov edx, eax
+        cmp byte [eax], 0
+        je short loc_8E449
 loc_8E42F:
-mov cl, byte [eax]	; 8E42F
-cmp cl, 5Ch	; 8E431
-je short loc_8E440	; 8E434
-cmp cl, 3Ah	; 8E436
-je short loc_8E440	; 8E439
-cmp cl, 2Fh	; 8E43B
-jne short loc_8E443	; 8E43E
+        mov cl, byte [eax]
+        cmp cl, 5Ch
+        je short loc_8E440
+        cmp cl, 3Ah
+        je short loc_8E440
+        cmp cl, 2Fh
+        jne short loc_8E443
 loc_8E440:
-lea edx, [byte eax+01h]	; 8E440
+        lea edx, [byte eax+01h]
 loc_8E443:
-inc eax	; 8E443
-cmp byte [eax], 0	; 8E444
-jne short loc_8E42F	; 8E447
+        inc eax
+        cmp byte [eax], 0
+        jne short loc_8E42F
 loc_8E449:
-mov eax, edx	; 8E449
-ret	; 8E44B
+        mov eax, edx
+        ret
 sub_8E44C:
-mov edx, dword [byte esp+04h]	; 8E44C
-push edx	; 8E450
-call sub_8E424	; 8E451
-add esp, byte 4	; 8E456
-ret	; 8E459
-db 08Bh,0C0h
+        mov edx, dword [byte esp+04h]
+        push edx
+        call sub_8E424
+        add esp, byte 4
+        ret
+        db 08Bh,0C0h
 TimerISR:
-pusha	; 8E45C
-push ds	; 8E45D
-push es	; 8E45E
-push fs	; 8E45F
-push gs	; 8E461
-mov ebp, esp	; 8E463
-cld	; 8E465
-call __GETDS	; 8E466
-inc dword [tickcount]	; 8E46B
-xor edx, edx	; 8E471
+        pusha
+        push ds
+        push es
+        push fs
+        push gs
+        mov ebp, esp
+        cld
+        call __GETDS
+        inc dword [tickcount]
+        xor edx, edx
 loc_8E473:
-cmp dword [dword edx+timercallbacks], byte 0	; 8E473
-je short loc_8E484	; 8E47A
-mov eax, edx	; 8E47C
-call dword [dword eax+timercallbacks]	; 8E47E
+        cmp dword [dword edx+timercallbacks], byte 0
+        je short loc_8E484
+        mov eax, edx
+        call dword [dword eax+timercallbacks]
 loc_8E484:
-add edx, byte 4	; 8E484
-cmp edx, byte 20h	; 8E487
-jne short loc_8E473	; 8E48A
-mov ebx, 5	; 8E48C
-mov eax, dword [tickcount]	; 8E491
-mov edx, eax	; 8E496
-sar edx, 1Fh	; 8E498
-idiv ebx	; 8E49B
-test edx, edx	; 8E49D
-jne short loc_8E4B0	; 8E49F
-inc dword [slowtickcount]	; 8E4A1
-pushf	; 8E4A7
-call far [oldint8off]	; 8E4A8
-jmp short loc_8E4B8	; 8E4AE
+        add edx, byte 4
+        cmp edx, byte 20h
+        jne short loc_8E473
+        mov ebx, 5
+        mov eax, dword [tickcount]
+        mov edx, eax
+        sar edx, 1Fh
+        idiv ebx
+        test edx, edx
+        jne short loc_8E4B0
+        inc dword [slowtickcount]
+        pushf
+        call far [oldint8off]
+        jmp short loc_8E4B8
 loc_8E4B0:
-mov al, 20h	; 8E4B0
-mov edx, 20h	; 8E4B2
-out dx, al	; 8E4B7
+        mov al, 20h
+        mov edx, 20h
+        out dx, al
 loc_8E4B8:
-pop gs	; 8E4B8
-pop fs	; 8E4BA
-pop es	; 8E4BC
-pop ds	; 8E4BD
-popa	; 8E4BE
-iret	; 8E4BF
+        pop gs
+        pop fs
+        pop es
+        pop ds
+        popa
+        iret
 addtimer:
-xor eax, eax	; 8E4C0
-cmp dword [timercallbacks], byte 0	; 8E4C2
-jne short loc_8E4D6	; 8E4C9
+        xor eax, eax
+        cmp dword [timercallbacks], byte 0
+        jne short loc_8E4D6
 loc_8E4CB:
-mov edx, dword [byte esp+04h]	; 8E4CB
-mov dword [dword eax+timercallbacks], edx	; 8E4CF
-ret	; 8E4D5
+        mov edx, dword [byte esp+04h]
+        mov dword [dword eax+timercallbacks], edx
+        ret
 loc_8E4D6:
-add eax, byte 4	; 8E4D6
-cmp eax, byte 20h	; 8E4D9
-jge short loc_8E4E9	; 8E4DC
-cmp dword [dword eax+timercallbacks], byte 0	; 8E4DE
-je short loc_8E4CB	; 8E4E5
-jmp short loc_8E4D6	; 8E4E7
+        add eax, byte 4
+        cmp eax, byte 20h
+        jge short loc_8E4E9
+        cmp dword [dword eax+timercallbacks], byte 0
+        je short loc_8E4CB
+        jmp short loc_8E4D6
 loc_8E4E9:
-push str_AddtimerLISTFULL	; 8E4E9
-call FatalError	; 8E4EE
+        push str_AddtimerLISTFULL
+        call FatalError
 sub_8E4F3:
-add esp, byte 4	; 8E4F3
-ret	; 8E4F6
-db 090h
+        add esp, byte 4
+        ret
+        db 090h
 RemoveTimerCallback:
-push esi	; 8E4F8
-mov edx, dword [byte esp+08h]	; 8E4F9
-xor eax, eax	; 8E4FD
-cmp edx, dword [timercallbacks]	; 8E4FF
-jne short loc_8E511	; 8E505
+        push esi
+        mov edx, dword [byte esp+08h]
+        xor eax, eax
+        cmp edx, dword [timercallbacks]
+        jne short loc_8E511
 loc_8E507:
-xor esi, esi	; 8E507
-mov dword [dword eax+timercallbacks], esi	; 8E509
-pop esi	; 8E50F
-ret	; 8E510
+        xor esi, esi
+        mov dword [dword eax+timercallbacks], esi
+        pop esi
+        ret
 loc_8E511:
-add eax, byte 4	; 8E511
-cmp eax, byte 20h	; 8E514
-jge short loc_8E523	; 8E517
-cmp edx, dword [dword eax+timercallbacks]	; 8E519
-je short loc_8E507	; 8E51F
-jmp short loc_8E511	; 8E521
+        add eax, byte 4
+        cmp eax, byte 20h
+        jge short loc_8E523
+        cmp edx, dword [dword eax+timercallbacks]
+        je short loc_8E507
+        jmp short loc_8E511
 loc_8E523:
-pop esi	; 8E523
-ret	; 8E524
-db 08Dh,040h,00h
+        pop esi
+        ret
+        db 08Dh,040h,00h
 CountTimerCallbacks:
-xor edx, edx	; 8E528
-xor eax, eax	; 8E52A
+        xor edx, edx
+        xor eax, eax
 loc_8E52C:
-cmp dword [dword eax+timercallbacks], byte 0	; 8E52C
-je short loc_8E536	; 8E533
-inc edx	; 8E535
+        cmp dword [dword eax+timercallbacks], byte 0
+        je short loc_8E536
+        inc edx
 loc_8E536:
-add eax, byte 4	; 8E536
-cmp eax, byte 20h	; 8E539
-jne short loc_8E52C	; 8E53C
-mov eax, edx	; 8E53E
-ret	; 8E540
-db 08Dh,040h,00h
+        add eax, byte 4
+        cmp eax, byte 20h
+        jne short loc_8E52C
+        mov eax, edx
+        ret
+        db 08Dh,040h,00h
 MaskTimerKbdIrq:
-push edx	; 8E544
-mov edx, 21h	; 8E545
-sub eax, eax	; 8E54A
-in al, dx	; 8E54C
-or al, 3	; 8E54D
-out dx, al	; 8E54F
-pop edx	; 8E550
-ret	; 8E551
-db 08Bh,0C0h
+        push edx
+        mov edx, 21h
+        sub eax, eax
+        in al, dx
+        or al, 3
+        out dx, al
+        pop edx
+        ret
+        db 08Bh,0C0h
 RestoreTimer:
-push ebx	; 8E554
-push ecx	; 8E555
-push edx	; 8E556
-cmp dword [oldint8off], byte 0	; 8E557
-jne short loc_8E56A	; 8E55E
-cmp word [oldint8sel], byte 0	; 8E560
-je short loc_8E5A5	; 8E568
+        push ebx
+        push ecx
+        push edx
+        cmp dword [oldint8off], byte 0
+        jne short loc_8E56A
+        cmp word [oldint8sel], byte 0
+        je short loc_8E5A5
 loc_8E56A:
-call MaskTimerKbdIrq	; 8E56A
-mov cx, word [oldint8sel]	; 8E56F
-mov ebx, dword [oldint8off]	; 8E576
-mov eax, 8	; 8E57C
-call _dos_setvect_	; 8E581
-xor al, al	; 8E586
-mov edx, 40h	; 8E588
-out dx, al	; 8E58D
-out dx, al	; 8E58E
-xor ebx, ebx	; 8E58F
-mov word [oldint8sel], bx	; 8E591
-xor ebx, ebx	; 8E598
-mov dword [oldint8off], ebx	; 8E59A
-call UnmaskTimerKbdIrq	; 8E5A0
+        call MaskTimerKbdIrq
+        mov cx, word [oldint8sel]
+        mov ebx, dword [oldint8off]
+        mov eax, 8
+        call _dos_setvect_
+        xor al, al
+        mov edx, 40h
+        out dx, al
+        out dx, al
+        xor ebx, ebx
+        mov word [oldint8sel], bx
+        xor ebx, ebx
+        mov dword [oldint8off], ebx
+        call UnmaskTimerKbdIrq
 loc_8E5A5:
-pop edx	; 8E5A5
-pop ecx	; 8E5A6
-pop ebx	; 8E5A7
+        pop edx
+        pop ecx
+        pop ebx
 loc_8E5A8:
-ret	; 8E5A8
-db 08Dh,040h,00h
+        ret
+        db 08Dh,040h,00h
 InstallTimer:
-mov ecx, 8	; 8E5AC
-xor edx, edx	; 8E5B1
-mov eax, timercallbacks	; 8E5B3
-call __STOSD	; 8E5B8
-cmp dword [oldint8off], byte 0	; 8E5BD
-jne short loc_8E5A8	; 8E5C4
-cmp word [oldint8sel], byte 0	; 8E5C6
-jne short loc_8E5A8	; 8E5CE
-call MaskTimerKbdIrq	; 8E5D0
-mov eax, 8	; 8E5D5
-call _dos_getvect_	; 8E5DA
-mov word [oldint8sel], dx	; 8E5DF
-mov dword [oldint8off], eax	; 8E5E6
-mov al, 9Ch	; 8E5EB
-mov edx, 40h	; 8E5ED
-out dx, al	; 8E5F2
-mov al, 2Eh	; 8E5F3
-out dx, al	; 8E5F5
-mov ecx, cs	; 8E5F6
-mov ebx, TimerISR	; 8E5F8
-mov eax, 8	; 8E5FD
-call _dos_setvect_	; 8E602
-push RestoreTimer	; 8E607
-call sub_B3454	; 8E60C
-add esp, byte 4	; 8E611
+        mov ecx, 8
+        xor edx, edx
+        mov eax, timercallbacks
+        call __STOSD
+        cmp dword [oldint8off], byte 0
+        jne short loc_8E5A8
+        cmp word [oldint8sel], byte 0
+        jne short loc_8E5A8
+        call MaskTimerKbdIrq
+        mov eax, 8
+        call _dos_getvect_
+        mov word [oldint8sel], dx
+        mov dword [oldint8off], eax
+        mov al, 9Ch
+        mov edx, 40h
+        out dx, al
+        mov al, 2Eh
+        out dx, al
+        mov ecx, cs
+        mov ebx, TimerISR
+        mov eax, 8
+        call _dos_setvect_
+        push RestoreTimer
+        call sub_B3454
+        add esp, byte 4
 UnmaskTimerKbdIrq:
-push edx	; 8E614
-mov edx, 21h	; 8E615
-sub eax, eax	; 8E61A
-in al, dx	; 8E61C
-and al, 0FCh	; 8E61D
-out dx, al	; 8E61F
-pop edx	; 8E620
-ret	; 8E621
-db 08Bh,0C0h
+        push edx
+        mov edx, 21h
+        sub eax, eax
+        in al, dx
+        and al, 0FCh
+        out dx, al
+        pop edx
+        ret
+        db 08Bh,0C0h
 sub_8E624:
-push esi	; 8E624
-push edi	; 8E625
-push ebp	; 8E626
-sub esp, byte 20h	; 8E627
-mov ebp, dword [byte esp+034h]	; 8E62A
-mov edi, dword [byte esp+038h]	; 8E62E
-mov eax, dword [byte ebp+02h]	; 8E632
-sar eax, 10h	; 8E635
-push eax	; 8E638
-mov edx, dword [byte esp+034h]	; 8E639
-push edx	; 8E63D
-call sub_91FA4	; 8E63E
-mov esi, eax	; 8E643
-add esp, byte 8	; 8E645
-mov eax, dword [byte ebp+04h]	; 8E648
-sar eax, 10h	; 8E64B
-push eax	; 8E64E
-mov ebx, dword [byte esp+034h]	; 8E64F
-push ebx	; 8E653
-call sub_91FA4	; 8E654
-mov edx, eax	; 8E659
-add esp, byte 8	; 8E65B
-mov dword [esp], edi	; 8E65E
-mov eax, dword [byte esp+03Ch]	; 8E661
-mov dword [byte esp+04h], eax	; 8E665
-lea eax, [edi+esi]	; 8E669
-mov dword [byte esp+08h], eax	; 8E66C
-mov eax, dword [byte esp+03Ch]	; 8E670
-mov dword [byte esp+0Ch], eax	; 8E674
-mov eax, dword [byte esp+08h]	; 8E678
-mov dword [byte esp+010h], eax	; 8E67C
-mov eax, dword [byte esp+03Ch]	; 8E680
-add eax, edx	; 8E684
-mov dword [byte esp+014h], eax	; 8E686
-mov dword [byte esp+018h], edi	; 8E68A
-mov dword [byte esp+01Ch], eax	; 8E68E
-mov eax, esp	; 8E692
-push eax	; 8E694
-push ebp	; 8E695
-call sub_98B30	; 8E696
-add esp, byte 8	; 8E69B
-add esp, byte 20h	; 8E69E
-pop ebp	; 8E6A1
-pop edi	; 8E6A2
-pop esi	; 8E6A3
-ret	; 8E6A4
-db 08Dh,040h,00h
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 20h
+        mov ebp, dword [byte esp+034h]
+        mov edi, dword [byte esp+038h]
+        mov eax, dword [byte ebp+02h]
+        sar eax, 10h
+        push eax
+        mov edx, dword [byte esp+034h]
+        push edx
+        call sub_91FA4
+        mov esi, eax
+        add esp, byte 8
+        mov eax, dword [byte ebp+04h]
+        sar eax, 10h
+        push eax
+        mov ebx, dword [byte esp+034h]
+        push ebx
+        call sub_91FA4
+        mov edx, eax
+        add esp, byte 8
+        mov dword [esp], edi
+        mov eax, dword [byte esp+03Ch]
+        mov dword [byte esp+04h], eax
+        lea eax, [edi+esi]
+        mov dword [byte esp+08h], eax
+        mov eax, dword [byte esp+03Ch]
+        mov dword [byte esp+0Ch], eax
+        mov eax, dword [byte esp+08h]
+        mov dword [byte esp+010h], eax
+        mov eax, dword [byte esp+03Ch]
+        add eax, edx
+        mov dword [byte esp+014h], eax
+        mov dword [byte esp+018h], edi
+        mov dword [byte esp+01Ch], eax
+        mov eax, esp
+        push eax
+        push ebp
+        call sub_98B30
+        add esp, byte 8
+        add esp, byte 20h
+        pop ebp
+        pop edi
+        pop esi
+        ret
+        db 08Dh,040h,00h
 sub_8E6A8:
-mov edx, dword [byte esp+08h]	; 8E6A8
-mov eax, dword [byte edx+0Ch]	; 8E6AC
-sar eax, 10h	; 8E6AF
-push eax	; 8E6B2
-mov eax, dword [byte edx+0Ah]	; 8E6B3
-sar eax, 10h	; 8E6B6
-push eax	; 8E6B9
-push edx	; 8E6BA
-mov edx, dword [byte esp+010h]	; 8E6BB
-push edx	; 8E6BF
-call sub_8E624	; 8E6C0
-add esp, byte 10h	; 8E6C5
-ret	; 8E6C8
-db 08Dh,040h,00h
+        mov edx, dword [byte esp+08h]
+        mov eax, dword [byte edx+0Ch]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte edx+0Ah]
+        sar eax, 10h
+        push eax
+        push edx
+        mov edx, dword [byte esp+010h]
+        push edx
+        call sub_8E624
+        add esp, byte 10h
+        ret
+        db 08Dh,040h,00h
 sub_8E6CC:
-push esi	; 8E6CC
-push edi	; 8E6CD
-mov edi, dword [byte esp+0Ch]	; 8E6CE
-mov esi, dword [byte esp+010h]	; 8E6D2
-mov eax, dword [byte esi+06h]	; 8E6D6
-sar eax, 10h	; 8E6D9
-push eax	; 8E6DC
-push edi	; 8E6DD
-call sub_91FA4	; 8E6DE
-add esp, byte 8	; 8E6E3
-mov edx, dword [byte esp+018h]	; 8E6E6
-sub edx, eax	; 8E6EA
-push edx	; 8E6EC
-mov eax, dword [byte esi+06h]	; 8E6ED
-sar eax, 10h	; 8E6F0
-push eax	; 8E6F3
-push edi	; 8E6F4
-call sub_91FA4	; 8E6F5
-add esp, byte 8	; 8E6FA
-mov edx, dword [byte esp+018h]	; 8E6FD
-sub edx, eax	; 8E701
-push edx	; 8E703
-push esi	; 8E704
-push edi	; 8E705
-call sub_8E624	; 8E706
-add esp, byte 10h	; 8E70B
-pop edi	; 8E70E
-pop esi	; 8E70F
-ret	; 8E710
-db 08Dh,040h,00h
+        push esi
+        push edi
+        mov edi, dword [byte esp+0Ch]
+        mov esi, dword [byte esp+010h]
+        mov eax, dword [byte esi+06h]
+        sar eax, 10h
+        push eax
+        push edi
+        call sub_91FA4
+        add esp, byte 8
+        mov edx, dword [byte esp+018h]
+        sub edx, eax
+        push edx
+        mov eax, dword [byte esi+06h]
+        sar eax, 10h
+        push eax
+        push edi
+        call sub_91FA4
+        add esp, byte 8
+        mov edx, dword [byte esp+018h]
+        sub edx, eax
+        push edx
+        push esi
+        push edi
+        call sub_8E624
+        add esp, byte 10h
+        pop edi
+        pop esi
+        ret
+        db 08Dh,040h,00h
 sub_8E714:
-mov edx, dword [byte esp+08h]	; 8E714
-mov eax, dword [byte edx+0Ch]	; 8E718
-sar eax, 10h	; 8E71B
-push eax	; 8E71E
-mov eax, dword [byte edx+0Ah]	; 8E71F
-sar eax, 10h	; 8E722
-push eax	; 8E725
-push edx	; 8E726
-mov edx, dword [byte esp+010h]	; 8E727
-push edx	; 8E72B
-call sub_8E624	; 8E72C
-add esp, byte 10h	; 8E731
-ret	; 8E734
-db 08Dh,040h,00h
+        mov edx, dword [byte esp+08h]
+        mov eax, dword [byte edx+0Ch]
+        sar eax, 10h
+        push eax
+        mov eax, dword [byte edx+0Ah]
+        sar eax, 10h
+        push eax
+        push edx
+        mov edx, dword [byte esp+010h]
+        push edx
+        call sub_8E624
+        add esp, byte 10h
+        ret
+        db 08Dh,040h,00h
 sub_8E738:
-push esi	; 8E738
-push edi	; 8E739
-mov edi, dword [byte esp+0Ch]	; 8E73A
-mov esi, dword [byte esp+010h]	; 8E73E
-mov eax, dword [byte esi+06h]	; 8E742
-sar eax, 10h	; 8E745
-push eax	; 8E748
-push edi	; 8E749
-call sub_91FA4	; 8E74A
-add esp, byte 8	; 8E74F
-mov edx, dword [byte esp+018h]	; 8E752
-sub edx, eax	; 8E756
-push edx	; 8E758
-mov eax, dword [byte esi+06h]	; 8E759
-sar eax, 10h	; 8E75C
-push eax	; 8E75F
-push edi	; 8E760
-call sub_91FA4	; 8E761
-add esp, byte 8	; 8E766
-mov edx, dword [byte esp+018h]	; 8E769
-sub edx, eax	; 8E76D
-push edx	; 8E76F
-push esi	; 8E770
-push edi	; 8E771
-call sub_8E624	; 8E772
-add esp, byte 10h	; 8E777
-pop edi	; 8E77A
-pop esi	; 8E77B
-ret	; 8E77C
-db 08Dh,040h,00h
+        push esi
+        push edi
+        mov edi, dword [byte esp+0Ch]
+        mov esi, dword [byte esp+010h]
+        mov eax, dword [byte esi+06h]
+        sar eax, 10h
+        push eax
+        push edi
+        call sub_91FA4
+        add esp, byte 8
+        mov edx, dword [byte esp+018h]
+        sub edx, eax
+        push edx
+        mov eax, dword [byte esi+06h]
+        sar eax, 10h
+        push eax
+        push edi
+        call sub_91FA4
+        add esp, byte 8
+        mov edx, dword [byte esp+018h]
+        sub edx, eax
+        push edx
+        push esi
+        push edi
+        call sub_8E624
+        add esp, byte 10h
+        pop edi
+        pop esi
+        ret
+        db 08Dh,040h,00h
 sub_8E780:
-push esi	; 8E780
-mov edx, dword [byte esp+014h]	; 8E781
-push edx	; 8E785
-mov ebx, dword [byte esp+014h]	; 8E786
-push ebx	; 8E78A
-mov ecx, dword [byte esp+014h]	; 8E78B
-push ecx	; 8E78F
-mov esi, dword [byte esp+014h]	; 8E790
-push esi	; 8E794
-call sub_8E624	; 8E795
-add esp, byte 10h	; 8E79A
-pop esi	; 8E79D
-ret	; 8E79E
-db 00h
+        push esi
+        mov edx, dword [byte esp+014h]
+        push edx
+        mov ebx, dword [byte esp+014h]
+        push ebx
+        mov ecx, dword [byte esp+014h]
+        push ecx
+        mov esi, dword [byte esp+014h]
+        push esi
+        call sub_8E624
+        add esp, byte 10h
+        pop esi
+        ret
+        db 00h

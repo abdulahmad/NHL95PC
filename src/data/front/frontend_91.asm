@@ -16,271 +16,271 @@ global na03spr, pg03spr, chkoffspr, pg05spr, chkonspr, na01spr, titlebckspr, hom
 global homenamebckspr, visbckspr, visnamebckspr, dword_ED7A4, dword_ED7A8, speechq, speechbank, samplereq
 global speechcopybuf, vgapage, memlist1, memlist0, curdbname, poseriesbuf, replayfrac
 dblistcur:
-resb 4
-resb 4
-resb 4
-resb 4
-resb 72
+        resb 4
+        resb 4
+        resb 4
+        resb 4
+        resb 72
 dblisttemp:
-resb 4
-resb 4
-resb 4
-resb 4
+        resb 4
+        resb 4
+        resb 4
+        resb 4
 dblisttempnames:
-resb 72
+        resb 72
 dblistorig:
-resb 4
-resb 4
-resb 4
-resb 4
-resb 72
+        resb 4
+        resb 4
+        resb 4
+        resb 4
+        resb 72
 curdbname:
-resb 32
+        resb 32
 lineedpanel:
-resb 4
+        resb 4
 fadepal:
-resb 768
+        resb 768
 fadepal2:
-resb 768
+        resb 768
 blitclipright:
-resb 4
+        resb 4
 blitclipbottom:
-resb 4
+        resb 4
 blitcliptop:
-resb 4
+        resb 4
 blitclipleft:
-resb 4
+        resb 4
 gamelinespal:
-resb 768
+        resb 768
 gmroster:
-resb 1
+        resb 1
 gmrosterjersey:
-resb 1
+        resb 1
 gmrosterslot:
-resb 1
+        resb 1
 byte_ED0F7:
-resb 1
+        resb 1
 byte_ED0F8:
-resb 1
+        resb 1
 byte_ED0F9:
-resb 1
+        resb 1
 byte_ED0FA:
-resb 610
+        resb 610
 leaguesetimg:
-resb 4
+        resb 4
 setbits:
-resb 1
-resb 3
+        resb 1
+        resb 3
 dword_ED364:
-resb 4
+        resb 4
 rockteamcues:
-resb 12
+        resb 12
 crowdsamples:
-resb 12
+        resb 12
 rocktunes:
-resb 4
-resb 4
-resb 4
+        resb 4
+        resb 4
+        resb 4
 rockrandcues:
-resb 836
+        resb 836
 dword_ED6D0:
-resb 4
+        resb 4
 hilightslot:
-resb 4
+        resb 4
 gadgetfile:
-resb 4
+        resb 4
 gadgetptry:
-resb 4
+        resb 4
 gadgetptrx:
-resb 4
+        resb 4
 gadgetshape:
-resb 4
+        resb 4
 dword_ED6E8:
-resb 4
+        resb 4
 dword_ED6EC:
-resb 4
+        resb 4
 replayspotx:
-resb 4
+        resb 4
 replayspoty:
-resb 4
+        resb 4
 replaynosave:
-resb 4
+        resb 4
 replaybtnarmed:
-resb 4
+        resb 4
 hilightfont:
-resb 4
+        resb 4
 replayptrx:
-resb 4
+        resb 4
 replayptry:
-resb 4
+        resb 4
 dword_ED70C:
-resb 64
+        resb 64
 dword_ED74C:
-resb 4
+        resb 4
 dword_ED750:
-resb 4
+        resb 4
 dword_ED754:
-resb 2
+        resb 2
 dword_ED756:
-resb 2
+        resb 2
 replayfrac:
-resb 4
+        resb 4
 pl20spr:
-resb 4
+        resb 4
 pl05spr:
-resb 4
+        resb 4
 pl10spr:
-resb 4
+        resb 4
 pg07spr:
-resb 4
+        resb 4
 na05spr:
-resb 4
+        resb 4
 pg01spr:
-resb 4
+        resb 4
 acptspr:
-resb 4
+        resb 4
 na03spr:
-resb 4
+        resb 4
 pg03spr:
-resb 4
+        resb 4
 chkoffspr:
-resb 4
+        resb 4
 pg05spr:
-resb 4
+        resb 4
 chkonspr:
-resb 4
+        resb 4
 na01spr:
-resb 4
+        resb 4
 titlebckspr:
-resb 4
+        resb 4
 homebckspr:
-resb 4
+        resb 4
 homenamebckspr:
-resb 4
+        resb 4
 visbckspr:
-resb 4
+        resb 4
 visnamebckspr:
-resb 4
+        resb 4
 dword_ED7A4:
-resb 4
+        resb 4
 dword_ED7A8:
-resb 4
+        resb 4
 speechq:
-resb 4
+        resb 4
 speechbank:
-resb 4
+        resb 4
 samplereq:
-resb 4
+        resb 4
 speechcopybuf:
-resb 4
+        resb 4
 poseriesbuf:
-resb 16
+        resb 16
 fileoncd:
-resb 1
-resb 23
-resb 2
-resb 5
-resb 2
-resb 3
-resb 3
-resb 4
-resb 42
-resb 2
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 7
-resb 1
-resb 3
-resb 1
-resb 2
-resb 6
-resb 28
-resb 1
-resb 1
-resb 2
-resb 6
-resb 10
-resb 1
-resb 70
-resb 1
-resb 1
-resb 14
-resb 3
-resb 2
-resb 4
-resb 2
-resb 2
-resb 7
-resb 28
-resb 1
-resb 2
-resb 1
-resb 1
-resb 12
-resb 2
-resb 2
-resb 1
+        resb 1
+        resb 23
+        resb 2
+        resb 5
+        resb 2
+        resb 3
+        resb 3
+        resb 4
+        resb 42
+        resb 2
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 7
+        resb 1
+        resb 3
+        resb 1
+        resb 2
+        resb 6
+        resb 28
+        resb 1
+        resb 1
+        resb 2
+        resb 6
+        resb 10
+        resb 1
+        resb 70
+        resb 1
+        resb 1
+        resb 14
+        resb 3
+        resb 2
+        resb 4
+        resb 2
+        resb 2
+        resb 7
+        resb 28
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 12
+        resb 2
+        resb 2
+        resb 1
 portraitoncd:
-resb 30
-resb 4
-resb 2
-resb 1
-resb 1
-resb 3
-resb 3
-resb 1
-resb 2
-resb 1
-resb 1
-resb 5
-resb 1
-resb 1
-resb 1
-resb 1
-resb 24
-resb 2
-resb 25
-resb 3
-resb 19
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 18
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 2
-resb 1
-resb 50
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 1
-resb 2
-resb 1
-resb 1
-resb 20
+        resb 30
+        resb 4
+        resb 2
+        resb 1
+        resb 1
+        resb 3
+        resb 3
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 5
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 24
+        resb 2
+        resb 25
+        resb 3
+        resb 19
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 18
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 2
+        resb 1
+        resb 50
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 1
+        resb 2
+        resb 1
+        resb 1
+        resb 20
 vgapage:
-resb 4
+        resb 4
 memlist1:
-resb 4
+        resb 4
 memlist0:
-resb 156
+        resb 156

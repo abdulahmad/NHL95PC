@@ -28,2122 +28,2248 @@ global DeskReloadGame, DeskBackToGame, DeskToSportsDesk, DeskReturnConfirm, Desk
 global DeskVisitorLines, DeskGameStats, DeskPenaltySummary, DeskScoringSummary, DeskSummary_common, DeskItem_ret2, DeskTeamScratches, DeskHomeGoalie1
 global DeskGoalie_x1, DeskHomeGoalie2, DeskHomeGoalieNone, DeskGoalie_x2, DeskAwayGoalie1, DeskGoalie_x3, DeskGoalie_x4, DeskAwayGoalie2
 global DeskAwayGoalieNone
+;-----------------------------------------------------------------------------
+; OutputCurrentData                                               18D7F  95 PC
+; "Output Current Data ..." sports desk item: prompts "Please enter output
+; file name" (TextInputDialog text entry with temporary boxfillcolor..C71DC
+; colours) and, unless Esc or empty, WriteScreenTextFile
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/OutputCurrentData.c
 %ifdef CBUILD
 %include "c/front/desk/OutputCurrentData.inc"
 %else
 OutputCurrentData:
-push dword 44h	; 18D7F
-call __CHK	; 18D84
-push ebx	; 18D89
-push ecx	; 18D8A
-push edx	; 18D8B
-push esi	; 18D8C
-push edi	; 18D8D
-push ebp	; 18D8E
-sub esp, byte 14h	; 18D8F
-mov eax, dword [boxfillcolor]	; 18D92
-mov dword [byte esp+010h], eax	; 18D97
-mov eax, dword [boxlitecolor]	; 18D9B
-mov dword [byte esp+0Ch], eax	; 18DA0
-mov ebp, dword [boxshadecolor]	; 18DA4
-mov edi, dword [dlgtextfg]	; 18DAA
-mov esi, dword [dlgtextbg]	; 18DB0
-mov dword [boxfillcolor], 41h	; 18DB6
-mov ebx, 40h	; 18DC0
-mov dword [boxlitecolor], ebx	; 18DC5
-mov dword [boxshadecolor], 42h	; 18DCB
-mov dword [dlgtextfg], ebx	; 18DD5
-xor edx, edx	; 18DDB
-mov dword [dlgtextbg], edx	; 18DDD
-push byte 5	; 18DE3
-push edx	; 18DE5
-push edx	; 18DE6
-push edx	; 18DE7
-push edx	; 18DE8
-mov ecx, 22h	; 18DE9
-mov ebx, 8	; 18DEE
-lea edx, [byte esp+014h]	; 18DF3
-mov eax, str_PleaseEnterOutputFile	; 18DF7
-call TextInputDialog	; 18DFC
-cmp eax, byte 1Bh	; 18E01
-je short .1	; 18E04
-cmp byte [esp], 0	; 18E06
-je short .1	; 18E0A
-mov eax, esp	; 18E0C
-call WriteScreenTextFile	; 18E0E
+        push dword 44h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 14h
+        mov eax, dword [boxfillcolor]
+        mov dword [byte esp+010h], eax
+        mov eax, dword [boxlitecolor]
+        mov dword [byte esp+0Ch], eax
+        mov ebp, dword [boxshadecolor]
+        mov edi, dword [dlgtextfg]
+        mov esi, dword [dlgtextbg]
+        mov dword [boxfillcolor], 41h
+        mov ebx, 40h
+        mov dword [boxlitecolor], ebx
+        mov dword [boxshadecolor], 42h
+        mov dword [dlgtextfg], ebx
+        xor edx, edx
+        mov dword [dlgtextbg], edx
+        push byte 5
+        push edx
+        push edx
+        push edx
+        push edx
+        mov ecx, 22h
+        mov ebx, 8
+        lea edx, [byte esp+014h]
+        mov eax, str_PleaseEnterOutputFile
+        call TextInputDialog
+        cmp eax, byte 1Bh
+        je short .1
+        cmp byte [esp], 0
+        je short .1
+        mov eax, esp
+        call WriteScreenTextFile
 .1:
-mov eax, dword [byte esp+010h]	; 18E13
-mov dword [boxfillcolor], eax	; 18E17
-mov eax, dword [byte esp+0Ch]	; 18E1C
-mov dword [boxlitecolor], eax	; 18E20
-mov dword [boxshadecolor], ebp	; 18E25
-mov dword [dlgtextfg], edi	; 18E2B
-mov dword [dlgtextbg], esi	; 18E31
-xor eax, eax	; 18E37
-add esp, byte 14h	; 18E39
-pop ebp	; 18E3C
-pop edi	; 18E3D
-pop esi	; 18E3E
-pop edx	; 18E3F
-pop ecx	; 18E40
-pop ebx	; 18E41
-ret	; 18E42
+        mov eax, dword [byte esp+010h]
+        mov dword [boxfillcolor], eax
+        mov eax, dword [byte esp+0Ch]
+        mov dword [boxlitecolor], eax
+        mov dword [boxshadecolor], ebp
+        mov dword [dlgtextfg], edi
+        mov dword [dlgtextbg], esi
+        xor eax, eax
+        add esp, byte 14h
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawDeskFrames                               18E43  95 PC, medium confidence
+; Draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h)
+; around 0Eh,21h - 0AFh,86h
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DrawDeskFrames.c
 %ifdef CBUILD
 %include "c/front/desk/DrawDeskFrames.inc"
 %else
 DrawDeskFrames:
-push dword 24h	; 18E43
-call __CHK	; 18E48
-push ebx	; 18E4D
-push ecx	; 18E4E
-push edx	; 18E4F
-push byte 22h	; 18E50
-push byte 21h	; 18E52
-push dword 0AFh	; 18E54
-push byte 21h	; 18E59
-push byte 0Eh	; 18E5B
-call sub_B4FAC	; 18E5D
-add esp, byte 14h	; 18E62
-push byte 22h	; 18E65
-push dword 86h	; 18E67
-push dword 0AFh	; 18E6C
-push byte 21h	; 18E71
-push dword 0AFh	; 18E73
-call sub_B4FAC	; 18E78
-add esp, byte 14h	; 18E7D
-push byte 22h	; 18E80
-push dword 86h	; 18E82
-push dword 0AFh	; 18E87
-push dword 86h	; 18E8C
-push byte 0Eh	; 18E91
-call sub_B4FAC	; 18E93
-add esp, byte 14h	; 18E98
-push byte 22h	; 18E9B
-push byte 21h	; 18E9D
-push byte 0Eh	; 18E9F
-push dword 86h	; 18EA1
-push byte 0Eh	; 18EA6
-call sub_B4FAC	; 18EA8
-add esp, byte 14h	; 18EAD
-push byte 21h	; 18EB0
-push byte 20h	; 18EB2
-push dword 0B0h	; 18EB4
-push byte 20h	; 18EB9
-push byte 0Dh	; 18EBB
-call sub_B4FAC	; 18EBD
-add esp, byte 14h	; 18EC2
-push byte 21h	; 18EC5
-push dword 87h	; 18EC7
-push dword 0B0h	; 18ECC
-push byte 20h	; 18ED1
-push dword 0B0h	; 18ED3
-call sub_B4FAC	; 18ED8
-add esp, byte 14h	; 18EDD
-push byte 21h	; 18EE0
-push dword 87h	; 18EE2
-push dword 0B0h	; 18EE7
-push dword 87h	; 18EEC
-push byte 0Dh	; 18EF1
-call sub_B4FAC	; 18EF3
-add esp, byte 14h	; 18EF8
-push byte 21h	; 18EFB
-push byte 20h	; 18EFD
-push byte 0Dh	; 18EFF
-push dword 87h	; 18F01
-push byte 0Dh	; 18F06
-call sub_B4FAC	; 18F08
-add esp, byte 14h	; 18F0D
-push byte 20h	; 18F10
-push byte 1Fh	; 18F12
-push dword 0B1h	; 18F14
-push byte 1Fh	; 18F19
-push byte 0Ch	; 18F1B
-call sub_B4FAC	; 18F1D
-add esp, byte 14h	; 18F22
-push byte 20h	; 18F25
-push dword 88h	; 18F27
-push dword 0B1h	; 18F2C
-push byte 1Fh	; 18F31
-push dword 0B1h	; 18F33
-call sub_B4FAC	; 18F38
-add esp, byte 14h	; 18F3D
-push byte 20h	; 18F40
-push dword 88h	; 18F42
-push dword 0B1h	; 18F47
-push dword 88h	; 18F4C
-push byte 0Ch	; 18F51
-call sub_B4FAC	; 18F53
-add esp, byte 14h	; 18F58
-push byte 20h	; 18F5B
-push byte 1Fh	; 18F5D
-push byte 0Ch	; 18F5F
-push dword 88h	; 18F61
-push byte 0Ch	; 18F66
-call sub_B4FAC	; 18F68
-add esp, byte 14h	; 18F6D
-pop edx	; 18F70
-pop ecx	; 18F71
-pop ebx	; 18F72
-ret	; 18F73
+        push dword 24h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push byte 22h
+        push byte 21h
+        push dword 0AFh
+        push byte 21h
+        push byte 0Eh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 22h
+        push dword 86h
+        push dword 0AFh
+        push byte 21h
+        push dword 0AFh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 22h
+        push dword 86h
+        push dword 0AFh
+        push dword 86h
+        push byte 0Eh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 22h
+        push byte 21h
+        push byte 0Eh
+        push dword 86h
+        push byte 0Eh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 21h
+        push byte 20h
+        push dword 0B0h
+        push byte 20h
+        push byte 0Dh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 21h
+        push dword 87h
+        push dword 0B0h
+        push byte 20h
+        push dword 0B0h
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 21h
+        push dword 87h
+        push dword 0B0h
+        push dword 87h
+        push byte 0Dh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 21h
+        push byte 20h
+        push byte 0Dh
+        push dword 87h
+        push byte 0Dh
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 20h
+        push byte 1Fh
+        push dword 0B1h
+        push byte 1Fh
+        push byte 0Ch
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 20h
+        push dword 88h
+        push dword 0B1h
+        push byte 1Fh
+        push dword 0B1h
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 20h
+        push dword 88h
+        push dword 0B1h
+        push dword 88h
+        push byte 0Ch
+        call sub_B4FAC
+        add esp, byte 14h
+        push byte 20h
+        push byte 1Fh
+        push byte 0Ch
+        push dword 88h
+        push byte 0Ch
+        call sub_B4FAC
+        add esp, byte 14h
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; MenuCallbackTrue                                                18F74  95 PC
+; Callback that returns 1 (ret 0Ch; second entry MenuCallbackTrue2); its
+; address is passed by the penalty text code (62CB9)
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/MenuCallbackTrue.c
 %ifdef CBUILD
 %include "c/front/desk/MenuCallbackTrue.inc"
 %else
 MenuCallbackTrue:
-push dword 4	; 18F74
+        push dword 4
 .1:
-call __CHK	; 18F79
-mov eax, 1	; 18F7E
-ret 0Ch	; 18F83
+        call __CHK
+        mov eax, 1
+        ret 0Ch
+;-----------------------------------------------------------------------------
+; MenuCallbackTrue2                                               18F86  95 PC
+;-----------------------------------------------------------------------------
 MenuCallbackTrue2:
-push dword 4	; 18F86
-jmp short MenuCallbackTrue.1	; 18F8B
+        push dword 4
+        jmp short MenuCallbackTrue.1
 %endif ; C
+;-----------------------------------------------------------------------------
+; PlayRandomHighlight                          18F8D  95 PC, medium confidence
+; Marks the highlights already shown (otherperiod state >= 5 and unchanged)
+; in hlplayedmask, picks a random unplayed one of the 6 and plays it with
+; StartHL2; returns -1 / its result
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/PlayRandomHighlight.c
 %ifdef CBUILD
 %include "c/front/desk/PlayRandomHighlight.inc"
 %else
 PlayRandomHighlight:
-push dword 2Ch	; 18F8D
-call __CHK	; 18F92
-push ebx	; 18F97
-push ecx	; 18F98
-push edx	; 18F99
-push esi	; 18F9A
-push edi	; 18F9B
-push ebp	; 18F9C
-sub esp, byte 0Ch	; 18F9D
-xor eax, eax	; 18FA0
+        push dword 2Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, byte 0Ch
+        xor eax, eax
 .1:
-mov edx, eax	; 18FA2
-shl edx, 2	; 18FA4
-mov ebx, dword [dword edx+otherperiod]	; 18FA7
-cmp ebx, byte 5	; 18FAD
-jl short .2	; 18FB0
-cmp ebx, dword [dword edx+dword_DC868]	; 18FB2
-je short .2	; 18FB8
-mov cl, al	; 18FBA
-mov edx, 1	; 18FBC
-shl edx, cl	; 18FC1
-or dword [hlplayedmask], edx	; 18FC3
+        mov edx, eax
+        shl edx, 2
+        mov ebx, dword [dword edx+otherperiod]
+        cmp ebx, byte 5
+        jl short .2
+        cmp ebx, dword [dword edx+dword_DC868]
+        je short .2
+        mov cl, al
+        mov edx, 1
+        shl edx, cl
+        or dword [hlplayedmask], edx
 .2:
-inc eax	; 18FC9
-cmp eax, byte 6	; 18FCA
-jl short PlayRandomHighlight.1	; 18FCD
-cmp dword [hlplayedmask], byte 3Fh	; 18FCF
-jne short .3	; 18FD6
-xor eax, eax	; 18FD8
-jmp near .x	; 18FDA
+        inc eax
+        cmp eax, byte 6
+        jl short PlayRandomHighlight.1
+        cmp dword [hlplayedmask], byte 3Fh
+        jne short .3
+        xor eax, eax
+        jmp near .x
 .3:
-mov eax, 6	; 18FDF
-call randomd0	; 18FE4
-cwde	; 18FE9
-mov dword [byte esp+08h], eax	; 18FEA
-mov cl, byte [byte esp+08h]	; 18FEE
-mov eax, 1	; 18FF2
-shl eax, cl	; 18FF7
-mov ebp, dword [hlplayedmask]	; 18FF9
-test eax, ebp	; 18FFF
-jne short PlayRandomHighlight.3	; 19001
-mov edx, ebp	; 19003
-or edx, eax	; 19005
-mov dword [hlplayedmask], edx	; 19007
-mov edx, dword [byte esp+08h]	; 1900D
-xor eax, eax	; 19011
-mov al, byte [nosplit edx*2+otherscores]	; 19013
-mov dword [esp], eax	; 1901A
-xor eax, eax	; 1901D
-mov al, byte [nosplit edx*2+otherscoresb]	; 1901F
-mov dword [byte esp+04h], eax	; 19026
-mov ecx, dword [nosplit edx*4+otherperiod]	; 1902A
-cmp ecx, byte 5	; 19031
-jl short .4	; 19034
-mov ecx, 3	; 19036
-dec dword [esp]	; 1903B
-lea esi, [byte eax-01h]	; 1903E
-mov dword [byte esp+04h], esi	; 19041
+        mov eax, 6
+        call randomd0
+        cwde
+        mov dword [byte esp+08h], eax
+        mov cl, byte [byte esp+08h]
+        mov eax, 1
+        shl eax, cl
+        mov ebp, dword [hlplayedmask]
+        test eax, ebp
+        jne short PlayRandomHighlight.3
+        mov edx, ebp
+        or edx, eax
+        mov dword [hlplayedmask], edx
+        mov edx, dword [byte esp+08h]
+        xor eax, eax
+        mov al, byte [nosplit edx*2+otherscores]
+        mov dword [esp], eax
+        xor eax, eax
+        mov al, byte [nosplit edx*2+otherscoresb]
+        mov dword [byte esp+04h], eax
+        mov ecx, dword [nosplit edx*4+otherperiod]
+        cmp ecx, byte 5
+        jl short .4
+        mov ecx, 3
+        dec dword [esp]
+        lea esi, [byte eax-01h]
+        mov dword [byte esp+04h], esi
 .4:
-push ecx	; 19045
-mov esi, dword [byte esp+0Ch]	; 19046
-add esi, esi	; 1904A
-xor edx, edx	; 1904C
-mov dl, byte [dword esi+othergamesb]	; 1904E
-xor eax, eax	; 19054
-mov al, byte [dword esi+othergames]	; 19056
-lea ecx, [byte esp+08h]	; 1905C
-lea ebx, [byte esp+04h]	; 19060
-call StartHL2	; 19064
-mov ecx, eax	; 19069
-mov edx, dword [byte esp+08h]	; 1906B
-shl edx, 2	; 1906F
-mov edi, dword [dword edx+otherperiod]	; 19072
-cmp edi, byte 4	; 19078
-jg short .5	; 1907B
-mov al, byte [esp]	; 1907D
-mov byte [dword esi+otherscores], al	; 19080
-mov al, byte [byte esp+04h]	; 19086
-mov byte [dword esi+otherscoresb], al	; 1908A
-jne short .5	; 19090
-mov dword [dword edx+otherperiod], 5	; 19092
+        push ecx
+        mov esi, dword [byte esp+0Ch]
+        add esi, esi
+        xor edx, edx
+        mov dl, byte [dword esi+othergamesb]
+        xor eax, eax
+        mov al, byte [dword esi+othergames]
+        lea ecx, [byte esp+08h]
+        lea ebx, [byte esp+04h]
+        call StartHL2
+        mov ecx, eax
+        mov edx, dword [byte esp+08h]
+        shl edx, 2
+        mov edi, dword [dword edx+otherperiod]
+        cmp edi, byte 4
+        jg short .5
+        mov al, byte [esp]
+        mov byte [dword esi+otherscores], al
+        mov al, byte [byte esp+04h]
+        mov byte [dword esi+otherscoresb], al
+        jne short .5
+        mov dword [dword edx+otherperiod], 5
 .5:
-xor eax, eax	; 1909C
+        xor eax, eax
 .6:
-mov ebx, dword [nosplit eax*4+otherperiod]	; 1909E
-mov dword [nosplit eax*4+dword_DC868], ebx	; 190A5
-inc eax	; 190AC
-cmp eax, byte 6	; 190AD
-jl short PlayRandomHighlight.6	; 190B0
-mov eax, ecx	; 190B2
+        mov ebx, dword [nosplit eax*4+otherperiod]
+        mov dword [nosplit eax*4+dword_DC868], ebx
+        inc eax
+        cmp eax, byte 6
+        jl short PlayRandomHighlight.6
+        mov eax, ecx
 .x:
-add esp, byte 0Ch	; 190B4
-pop ebp	; 190B7
-pop edi	; 190B8
-pop esi	; 190B9
-pop edx	; 190BA
-pop ecx	; 190BB
-pop ebx	; 190BC
-ret	; 190BD
+        add esp, byte 0Ch
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; IntermissionDesk                             190BE  95 PC, medium confidence
+; Between periods (called from IntermissionPC): in an exhibition between real
+; teams plays the period highlights (UpdateOtherScores, PlayRandomHighlight),
+; then the sports desk in intermission mode (SportsDesk 1), clears the goal /
+; shot counters and restores 320x200
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/IntermissionDesk.c
 %ifdef CBUILD
 %include "c/front/desk/IntermissionDesk.inc"
 %else
 IntermissionDesk:
-push dword 14h	; 190BE
-call __CHK	; 190C3
-push ebx	; 190C8
-push ecx	; 190C9
-push edx	; 190CA
-push esi	; 190CB
-mov eax, dword [exitgame-2]	; 190CC
-sar eax, 10h	; 190D1
-cmp eax, byte 0FFFFFFFFh	; 190D4
-je near .3	; 190D7
-call ShowLoadingScreen	; 190DD
-call FlushGSumQueue	; 190E2
-call ReadGSumTail	; 190E7
-call InputInstall	; 190EC
-mov edx, dword [curperiod]	; 190F1
-xor ecx, ecx	; 190F7
-mov ebx, edx	; 190F9
-mov eax, 1	; 190FB
-call GameSummaryScreen	; 19100
-mov ecx, eax	; 19105
-call InputRemove	; 19107
-cmp dword [gamemode], byte 0	; 1910C
-jne near .4	; 19113
-mov dx, word [HomeTeam]	; 19119
-cmp dx, byte 1Ah	; 19120
-je near .4	; 19124
-cmp dx, byte 1Bh	; 1912A
-je near .4	; 1912E
-mov si, word [VisTeam]	; 19134
-cmp si, byte 1Ah	; 1913B
-je near .4	; 1913F
-cmp si, byte 1Bh	; 19145
-je near .4	; 19149
-cmp dword [curperiod], byte 1	; 1914F
-jne short .2	; 19156
-xor esi, esi	; 19158
-mov dword [hlplayedmask], esi	; 1915A
-mov edx, dword [VisTeam-2]	; 19160
-sar edx, 10h	; 19166
-mov eax, dword [HomeTeam-2]	; 19169
-sar eax, 10h	; 1916E
-call PickOtherGames	; 19171
-xor edx, edx	; 19176
+        push dword 14h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        mov eax, dword [exitgame-2]
+        sar eax, 10h
+        cmp eax, byte 0FFFFFFFFh
+        je near .3
+        call ShowLoadingScreen
+        call FlushGSumQueue
+        call ReadGSumTail
+        call InputInstall
+        mov edx, dword [curperiod]
+        xor ecx, ecx
+        mov ebx, edx
+        mov eax, 1
+        call GameSummaryScreen
+        mov ecx, eax
+        call InputRemove
+        cmp dword [gamemode], byte 0
+        jne near .4
+        mov dx, word [HomeTeam]
+        cmp dx, byte 1Ah
+        je near .4
+        cmp dx, byte 1Bh
+        je near .4
+        mov si, word [VisTeam]
+        cmp si, byte 1Ah
+        je near .4
+        cmp si, byte 1Bh
+        je near .4
+        cmp dword [curperiod], byte 1
+        jne short .2
+        xor esi, esi
+        mov dword [hlplayedmask], esi
+        mov edx, dword [VisTeam-2]
+        sar edx, 10h
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
+        call PickOtherGames
+        xor edx, edx
 .1:
-mov ebx, dword [nosplit edx*4+otherperiod]	; 19178
-mov dword [nosplit edx*4+dword_DC868], ebx	; 1917F
-inc edx	; 19186
-cmp edx, byte 6	; 19187
-jl short IntermissionDesk.1	; 1918A
+        mov ebx, dword [nosplit edx*4+otherperiod]
+        mov dword [nosplit edx*4+dword_DC868], ebx
+        inc edx
+        cmp edx, byte 6
+        jl short IntermissionDesk.1
 .2:
-test cl, 4	; 1918C
-jne short .4	; 1918F
-mov eax, dword [curperiod]	; 19191
-call UpdateOtherScores	; 19196
-call PlayRandomHighlight	; 1919B
-test eax, eax	; 191A0
-jl short .4	; 191A2
-call InputInstall	; 191A4
-mov edx, dword [curperiod]	; 191A9
-xor ecx, ecx	; 191AF
-xor ebx, ebx	; 191B1
-mov eax, 20h	; 191B3
-call GameSummaryScreen	; 191B8
-call InputRemove	; 191BD
-jmp short .4	; 191C2
+        test cl, 4
+        jne short .4
+        mov eax, dword [curperiod]
+        call UpdateOtherScores
+        call PlayRandomHighlight
+        test eax, eax
+        jl short .4
+        call InputInstall
+        mov edx, dword [curperiod]
+        xor ecx, ecx
+        xor ebx, ebx
+        mov eax, 20h
+        call GameSummaryScreen
+        call InputRemove
+        jmp short .4
 .3:
-call FadeOutPalCycle	; 191C4
+        call FadeOutPalCycle
 .4:
-mov word [exitgame], 0FFFFh	; 191C9
-mov eax, 1	; 191D2
-call SportsDesk	; 191D7
-xor ah, ah	; 191DC
-mov byte [hmgoalcnt], ah	; 191DE
-mov byte [hmshotcnt], ah	; 191E4
-mov byte [awgoalcnt], ah	; 191EA
-mov byte [awshotcnt], ah	; 191F0
-call WriteGSumHeader	; 191F6
-mov edx, 0C8h	; 191FB
-mov eax, 140h	; 19200
-call SetScreenSize	; 19205
-pop esi	; 1920A
-pop edx	; 1920B
-pop ecx	; 1920C
-pop ebx	; 1920D
-ret	; 1920E
+        mov word [exitgame], 0FFFFh
+        mov eax, 1
+        call SportsDesk
+        xor ah, ah
+        mov byte [hmgoalcnt], ah
+        mov byte [hmshotcnt], ah
+        mov byte [awgoalcnt], ah
+        mov byte [awshotcnt], ah
+        call WriteGSumHeader
+        mov edx, 0C8h
+        mov eax, 140h
+        call SetScreenSize
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; PostGameDesk                                 1920F  95 PC, medium confidence
+; End of game (from PlayGame): fade, 640x480, game summary
+; (GameSummaryScreen), in an exhibition between real teams the highlights
+; (PlayRandomHighlight), then SportsDesk 2 and gameresult = 1
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/PostGameDesk.c
 %ifdef CBUILD
 %include "c/front/desk/PostGameDesk.inc"
 %else
 PostGameDesk:
-push dword 1Ch	; 1920F
-call __CHK	; 19214
-push ebx	; 19219
-push ecx	; 1921A
-push edx	; 1921B
-push savepal	; 1921C
-push dword 100h	; 19221
-push byte 0	; 19226
-call SetPalette	; 19228
-add esp, byte 0Ch	; 1922D
-mov ebx, 10h	; 19230
-mov edx, savepal	; 19235
-mov eax, 1	; 1923A
-call FadePalStep	; 1923F
-mov edx, 1E0h	; 19244
-mov eax, 280h	; 19249
-call SetScreenSize	; 1924E
-mov eax, 222E0h	; 19253
-call sub_1BAF3	; 19258
-call ShowLoadingScreen	; 1925D
-call FlushGSumQueue	; 19262
-call ReadGSumTail	; 19267
-call ReadGSumHeader	; 1926C
-call InputInstall	; 19271
-mov ebx, dword [curperiod]	; 19276
-xor ecx, ecx	; 1927C
-mov edx, 1	; 1927E
-mov eax, edx	; 19283
-call GameSummaryScreen	; 19285
-mov edx, eax	; 1928A
-call InputRemove	; 1928C
-cmp dword [gamemode], byte 0	; 19291
-jne near .2	; 19298
-test dl, 4	; 1929E
-jne near .2	; 192A1
-mov dx, word [HomeTeam]	; 192A7
-cmp dx, byte 1Ah	; 192AE
-je near .2	; 192B2
-cmp dx, byte 1Bh	; 192B8
-je near .2	; 192BC
-mov cx, word [VisTeam]	; 192C2
-cmp cx, byte 1Ah	; 192C9
-je short .2	; 192CD
-cmp cx, byte 1Bh	; 192CF
-je short .2	; 192D3
-mov eax, dword [curperiod]	; 192D5
-call UpdateOtherScores	; 192DA
-call PlayRandomHighlight	; 192DF
-mov edx, 1E0h	; 192E4
-mov eax, 280h	; 192E9
-call SetScreenSize	; 192EE
-call sub_1B982	; 192F3
-call CoachCutScene	; 192F8
-mov edx, eax	; 192FD
-test eax, eax	; 192FF
-je short .1	; 19301
-mov eax, 0Ah	; 19303
-call WaitClickTimeout	; 19308
-mov edx, eax	; 1930D
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        mov edx, 1E0h
+        mov eax, 280h
+        call SetScreenSize
+        mov eax, 222E0h
+        call sub_1BAF3
+        call ShowLoadingScreen
+        call FlushGSumQueue
+        call ReadGSumTail
+        call ReadGSumHeader
+        call InputInstall
+        mov ebx, dword [curperiod]
+        xor ecx, ecx
+        mov edx, 1
+        mov eax, edx
+        call GameSummaryScreen
+        mov edx, eax
+        call InputRemove
+        cmp dword [gamemode], byte 0
+        jne near .2
+        test dl, 4
+        jne near .2
+        mov dx, word [HomeTeam]
+        cmp dx, byte 1Ah
+        je near .2
+        cmp dx, byte 1Bh
+        je near .2
+        mov cx, word [VisTeam]
+        cmp cx, byte 1Ah
+        je short .2
+        cmp cx, byte 1Bh
+        je short .2
+        mov eax, dword [curperiod]
+        call UpdateOtherScores
+        call PlayRandomHighlight
+        mov edx, 1E0h
+        mov eax, 280h
+        call SetScreenSize
+        call sub_1B982
+        call CoachCutScene
+        mov edx, eax
+        test eax, eax
+        je short .1
+        mov eax, 0Ah
+        call WaitClickTimeout
+        mov edx, eax
 .1:
-test edx, edx	; 1930F
-jne short .2	; 19311
-call ShowLoadingScreen	; 19313
-call InputInstall	; 19318
-mov edx, dword [curperiod]	; 1931D
-xor ecx, ecx	; 19323
-xor ebx, ebx	; 19325
-mov eax, 20h	; 19327
-call GameSummaryScreen	; 1932C
-call InputRemove	; 19331
+        test edx, edx
+        jne short .2
+        call ShowLoadingScreen
+        call InputInstall
+        mov edx, dword [curperiod]
+        xor ecx, ecx
+        xor ebx, ebx
+        mov eax, 20h
+        call GameSummaryScreen
+        call InputRemove
 .2:
-mov eax, 2	; 19336
-call SportsDesk	; 1933B
-mov dword [gameresult], 1	; 19340
-mov edx, 0C8h	; 1934A
-mov eax, 140h	; 1934F
-call SetScreenSize	; 19354
-pop edx	; 19359
-pop ecx	; 1935A
-pop ebx	; 1935B
-ret	; 1935C
+        mov eax, 2
+        call SportsDesk
+        mov dword [gameresult], 1
+        mov edx, 0C8h
+        mov eax, 140h
+        call SetScreenSize
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; SportsDesk                                   1935D  95 PC, medium confidence
+; (mode): the PC "EA Sports desk" menu screen ("eadesk%1d" art by mode,
+; "desk" / "!pal", "Pointer" cursor, "pause" and "menubuff" buffers); mode 0
+; is the pause menu from GameLoop (Esc), 1 the intermission, 2 after the
+; game; runs the desk menus until an item returns to the game
+;-----------------------------------------------------------------------------
 SportsDesk:
-push dword 434h	; 1935D
-call __CHK	; 19362
-push ebx	; 19367
-push ecx	; 19368
-push edx	; 19369
-push esi	; 1936A
-push edi	; 1936B
-push ebp	; 1936C
-sub esp, 404h	; 1936D
-push eax	; 19373
-xor edx, edx	; 19374
-mov dword [dword esp+0404h], edx	; 19376
-mov dword [dword esp+03F4h], edx	; 1937D
-mov dword [dword esp+03F0h], 5DCh	; 19384
-mov eax, dword [gamemode]	; 1938F
-call SetModeMenuLabels	; 19394
-mov eax, dword [esp]	; 19399
-add eax, byte 3	; 1939C
-call SetScreenTitle	; 1939F
-call ReplayIsEmpty	; 193A4
-test eax, eax	; 193A9
-je short .1	; 193AB
-mov dword [menuact_gotoreplay], edx	; 193AD
-jmp short .2	; 193B3
+        push dword 434h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 404h
+        push eax
+        xor edx, edx
+        mov dword [dword esp+0404h], edx
+        mov dword [dword esp+03F4h], edx
+        mov dword [dword esp+03F0h], 5DCh
+        mov eax, dword [gamemode]
+        call SetModeMenuLabels
+        mov eax, dword [esp]
+        add eax, byte 3
+        call SetScreenTitle
+        call ReplayIsEmpty
+        test eax, eax
+        je short .1
+        mov dword [menuact_gotoreplay], edx
+        jmp short .2
 .1:
-mov dword [menuact_gotoreplay], DeskGoToReplay	; 193B5
+        mov dword [menuact_gotoreplay], DeskGoToReplay
 .2:
-lea eax, [dword esp+03D4h]	; 193BF
-push eax	; 193C6
-lea eax, [dword esp+03DCh]	; 193C7
-push eax	; 193CE
-lea eax, [dword esp+03E4h]	; 193CF
-push eax	; 193D6
-call MouseRead	; 193D7
-add esp, byte 0Ch	; 193DC
-xor ebp, ebp	; 193DF
-mov dword [escrequest], ebp	; 193E1
-mov dword [joysampling], ebp	; 193E7
-cmp dword [esp], byte 0	; 193ED
-jne short .3	; 193F1
-mov eax, 0AAE60h	; 193F3
-call sub_1BAF3	; 193F8
-lea eax, [byte esp+04h]	; 193FD
-push eax	; 19401
-push dword 100h	; 19402
-push ebp	; 19407
-call SetPalette	; 19408
-add esp, byte 0Ch	; 1940D
-mov ebx, 10h	; 19410
-lea edx, [byte esp+04h]	; 19415
-mov eax, 1	; 19419
-call FadePalStep	; 1941E
+        lea eax, [dword esp+03D4h]
+        push eax
+        lea eax, [dword esp+03DCh]
+        push eax
+        lea eax, [dword esp+03E4h]
+        push eax
+        call MouseRead
+        add esp, byte 0Ch
+        xor ebp, ebp
+        mov dword [escrequest], ebp
+        mov dword [joysampling], ebp
+        cmp dword [esp], byte 0
+        jne short .3
+        mov eax, 0AAE60h
+        call sub_1BAF3
+        lea eax, [byte esp+04h]
+        push eax
+        push dword 100h
+        push ebp
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        lea edx, [byte esp+04h]
+        mov eax, 1
+        call FadePalStep
 .3:
-call sub_B4BA8	; 19423
-mov ebx, dword [esp]	; 19428
-push ebx	; 1942B
-push str_Eadesk1d	; 1942C
-push deskbankname	; 19431
-call sprintf_	; 19436
-add esp, byte 0Ch	; 1943B
-xor ecx, ecx	; 1943E
-mov ebx, deskbankname	; 19440
-mov eax, dword [esp]	; 19445
-cmp byte [dword eax+fileoncd+064h], 1	; 19448
-jne short .4	; 1944F
-mov edx, dword [cddriveptr]	; 19451
-jmp short .5	; 19457
+        call sub_B4BA8
+        mov ebx, dword [esp]
+        push ebx
+        push str_Eadesk1d
+        push deskbankname
+        call sprintf_
+        add esp, byte 0Ch
+        xor ecx, ecx
+        mov ebx, deskbankname
+        mov eax, dword [esp]
+        cmp byte [dword eax+fileoncd+064h], 1
+        jne short .4
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .4:
-xor edx, edx	; 19459
+        xor edx, edx
 .5:
-lea eax, [dword esp+0344h]	; 1945B
-call MakePath	; 19462
-push byte 0	; 19467
-lea eax, [dword esp+0348h]	; 19469
-push eax	; 19470
-call LoadBank	; 19471
-mov esi, eax	; 19476
-add esp, byte 8	; 19478
-mov edi, eax	; 1947B
-push str_Desk	; 1947D
-push eax	; 19482
-call FindShape	; 19483
-add esp, byte 8	; 19488
-push eax	; 1948B
-call DrawBitmap	; 1948C
-add esp, byte 4	; 19491
-push str_Pal5	; 19494
-push esi	; 19499
-call FindShape	; 1949A
-add esp, byte 8	; 1949F
-lea edx, [byte eax+010h]	; 194A2
-xor esi, esi	; 194A5
+        lea eax, [dword esp+0344h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0348h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        mov edi, eax
+        push str_Desk
+        push eax
+        call FindShape
+        add esp, byte 8
+        push eax
+        call DrawBitmap
+        add esp, byte 4
+        push str_Pal5
+        push esi
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        xor esi, esi
 .6:
-mov al, byte [edx+esi]	; 194A7
-mov byte [byte esp+esi+04h], al	; 194AA
-inc esi	; 194AE
-cmp esi, 300h	; 194AF
-jl short SportsDesk.6	; 194B5
-push edi	; 194B7
-call FreeMemBlock	; 194B8
-add esp, byte 4	; 194BD
-lea eax, [dword esp+0304h]	; 194C0
-push eax	; 194C7
-call TextSaveState	; 194C8
-add esp, byte 4	; 194CD
-mov ecx, dword [s1font]	; 194D0
-push ecx	; 194D6
-call TextSetFont	; 194D7
-add esp, byte 4	; 194DC
-cmp dword [esp], byte 2	; 194DF
-jne short .8	; 194E3
-cmp dword [schedgameidx], 444h	; 194E5
-jl short .7	; 194EF
-call PaOpenBank	; 194F1
+        mov al, byte [edx+esi]
+        mov byte [byte esp+esi+04h], al
+        inc esi
+        cmp esi, 300h
+        jl short SportsDesk.6
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        lea eax, [dword esp+0304h]
+        push eax
+        call TextSaveState
+        add esp, byte 4
+        mov ecx, dword [s1font]
+        push ecx
+        call TextSetFont
+        add esp, byte 4
+        cmp dword [esp], byte 2
+        jne short .8
+        cmp dword [schedgameidx], 444h
+        jl short .7
+        call PaOpenBank
 .7:
-mov dword [dword esp+03B4h], deskmenubar_lg	; 194F6
-mov dword [dword esp+03A4h], 3	; 19501
-jmp short .9	; 1950C
+        mov dword [dword esp+03B4h], deskmenubar_lg
+        mov dword [dword esp+03A4h], 3
+        jmp short .9
 .8:
-mov dword [dword esp+03B4h], deskmenubar	; 1950E
-mov dword [dword esp+03A4h], 6	; 19519
+        mov dword [dword esp+03B4h], deskmenubar
+        mov dword [dword esp+03A4h], 6
 .9:
-xor ecx, ecx	; 19524
-mov dword [dword esp+03C0h], ecx	; 19526
-mov dword [dword esp+03BCh], ecx	; 1952D
-mov dword [dword esp+03B8h], ecx	; 19534
-mov dword [dword esp+0390h], ecx	; 1953B
-mov dword [dword esp+038Ch], ecx	; 19542
-mov dword [dword esp+0388h], ecx	; 19549
-mov dword [dword esp+0384h], ecx	; 19550
-mov dword [dword esp+03A0h], ecx	; 19557
-mov dword [dword esp+039Ch], ecx	; 1955E
-mov dword [dword esp+0398h], ecx	; 19565
-mov dword [dword esp+0394h], ecx	; 1956C
-mov dword [dword esp+0368h], ecx	; 19573
-mov dword [dword esp+0364h], ecx	; 1957A
-mov eax, dword [pointerspr]	; 19581
-mov edx, dword [byte eax+02h]	; 19586
-sar edx, 10h	; 19589
-mov eax, dword [byte eax+04h]	; 1958C
-sar eax, 10h	; 1958F
-lea ebx, [byte eax+01h]	; 19592
-lea eax, [byte edx+01h]	; 19595
-imul eax, ebx	; 19598
-add eax, byte 11h	; 1959B
-push byte 20h	; 1959E
-push eax	; 195A0
-push str_Pointer2	; 195A1
-call AllocMemBlock	; 195A6
-mov ebp, eax	; 195AB
-add esp, byte 0Ch	; 195AD
-mov dword [dword esp+03F8h], eax	; 195B0
-mov esi, dword [pointerspr]	; 195B7
-mov edi, eax	; 195BD
-movsd	; 195BF
-movsd	; 195C0
-movsd	; 195C1
-movsd	; 195C2
-movsb	; 195C3
-mov eax, dword [pointerspr]	; 195C4
-mov ax, word [byte eax+04h]	; 195C9
-inc eax	; 195CD
-mov word [byte ebp+04h], ax	; 195CE
-mov eax, dword [pointerspr]	; 195D2
-mov ax, word [byte eax+06h]	; 195D7
-inc eax	; 195DB
-mov word [byte ebp+06h], ax	; 195DC
-push dword 0F8h	; 195E0
-mov ecx, 0F9h	; 195E5
-mov ebx, 0FAh	; 195EA
-mov edx, dword [dword esp+03A8h]	; 195EF
-mov eax, dword [dword esp+03B8h]	; 195F6
-call DrawMenuBar	; 195FD
-call InputInstall	; 19602
-mov edx, dword [dword esp+03B4h]	; 19607
-mov edx, dword [edx]	; 1960E
-mov eax, dword [dword esp+03B4h]	; 19610
-mov ebx, dword [byte eax+08h]	; 19617
-add edx, ebx	; 1961A
-mov eax, edx	; 1961C
-sar edx, 1Fh	; 1961E
-LD sub, eax, edx	; 19621
-sar eax, 1	; 19623
-mov dword [dword esp+0400h], eax	; 19625
-mov dword [dword esp+03E4h], eax	; 1962C
-mov edx, dword [dword esp+03B4h]	; 19633
-mov edx, dword [byte edx+04h]	; 1963A
-mov eax, dword [dword esp+03B4h]	; 1963D
-mov ecx, dword [byte eax+0Ch]	; 19644
-add edx, ecx	; 19647
-mov eax, edx	; 19649
-sar edx, 1Fh	; 1964B
-LD sub, eax, edx	; 1964E
-sar eax, 1	; 19650
-mov dword [dword esp+03ECh], eax	; 19652
-mov dword [dword esp+03E0h], eax	; 19659
-mov esi, eax	; 19660
-push eax	; 19662
-mov edi, dword [dword esp+0404h]	; 19663
-push edi	; 1966A
-push ebp	; 1966B
-call GrabBlock	; 1966C
-add esp, byte 0Ch	; 19671
-mov ebp, esi	; 19674
-push ebp	; 19676
-push edi	; 19677
-mov edx, dword [pointerspr]	; 19678
-push edx	; 1967E
-call DrawArt	; 1967F
-add esp, byte 0Ch	; 19684
-cmp byte [musicon], 0	; 19687
-je short .12	; 1968E
-cmp dword [songdata], byte 0	; 19690
-jne short .12	; 19697
-mov ecx, str_Iff3	; 19699
-mov ebx, str_Pause	; 1969E
-cmp byte [fileoncd+021Ch], 1	; 196A3
-jne short .10	; 196AA
-mov edx, dword [cddriveptr]	; 196AC
-jmp short .11	; 196B2
+        xor ecx, ecx
+        mov dword [dword esp+03C0h], ecx
+        mov dword [dword esp+03BCh], ecx
+        mov dword [dword esp+03B8h], ecx
+        mov dword [dword esp+0390h], ecx
+        mov dword [dword esp+038Ch], ecx
+        mov dword [dword esp+0388h], ecx
+        mov dword [dword esp+0384h], ecx
+        mov dword [dword esp+03A0h], ecx
+        mov dword [dword esp+039Ch], ecx
+        mov dword [dword esp+0398h], ecx
+        mov dword [dword esp+0394h], ecx
+        mov dword [dword esp+0368h], ecx
+        mov dword [dword esp+0364h], ecx
+        mov eax, dword [pointerspr]
+        mov edx, dword [byte eax+02h]
+        sar edx, 10h
+        mov eax, dword [byte eax+04h]
+        sar eax, 10h
+        lea ebx, [byte eax+01h]
+        lea eax, [byte edx+01h]
+        imul eax, ebx
+        add eax, byte 11h
+        push byte 20h
+        push eax
+        push str_Pointer2
+        call AllocMemBlock
+        mov ebp, eax
+        add esp, byte 0Ch
+        mov dword [dword esp+03F8h], eax
+        mov esi, dword [pointerspr]
+        mov edi, eax
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov eax, dword [pointerspr]
+        mov ax, word [byte eax+04h]
+        inc eax
+        mov word [byte ebp+04h], ax
+        mov eax, dword [pointerspr]
+        mov ax, word [byte eax+06h]
+        inc eax
+        mov word [byte ebp+06h], ax
+        push dword 0F8h
+        mov ecx, 0F9h
+        mov ebx, 0FAh
+        mov edx, dword [dword esp+03A8h]
+        mov eax, dword [dword esp+03B8h]
+        call DrawMenuBar
+        call InputInstall
+        mov edx, dword [dword esp+03B4h]
+        mov edx, dword [edx]
+        mov eax, dword [dword esp+03B4h]
+        mov ebx, dword [byte eax+08h]
+        add edx, ebx
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov dword [dword esp+0400h], eax
+        mov dword [dword esp+03E4h], eax
+        mov edx, dword [dword esp+03B4h]
+        mov edx, dword [byte edx+04h]
+        mov eax, dword [dword esp+03B4h]
+        mov ecx, dword [byte eax+0Ch]
+        add edx, ecx
+        mov eax, edx
+        sar edx, 1Fh
+        LD sub, eax, edx
+        sar eax, 1
+        mov dword [dword esp+03ECh], eax
+        mov dword [dword esp+03E0h], eax
+        mov esi, eax
+        push eax
+        mov edi, dword [dword esp+0404h]
+        push edi
+        push ebp
+        call GrabBlock
+        add esp, byte 0Ch
+        mov ebp, esi
+        push ebp
+        push edi
+        mov edx, dword [pointerspr]
+        push edx
+        call DrawArt
+        add esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .12
+        cmp dword [songdata], byte 0
+        jne short .12
+        mov ecx, str_Iff3
+        mov ebx, str_Pause
+        cmp byte [fileoncd+021Ch], 1
+        jne short .10
+        mov edx, dword [cddriveptr]
+        jmp short .11
 .10:
-xor edx, edx	; 196B4
+        xor edx, edx
 .11:
-lea eax, [dword esp+0344h]	; 196B6
-call MakePath	; 196BD
-lea eax, [dword esp+0344h]	; 196C2
-call sub_8F98F	; 196C9
-mov dword [songdata], eax	; 196CE
-test eax, eax	; 196D3
-je short .12	; 196D5
-test byte [gameopts], 40h	; 196D7
-je short .12	; 196DE
-mov edx, dword [musichandle]	; 196E0
-mov ecx, 4Ch	; 196E6
-mov ebx, 3	; 196EB
-call sub_8FB8E	; 196F0
+        lea eax, [dword esp+0344h]
+        call MakePath
+        lea eax, [dword esp+0344h]
+        call sub_8F98F
+        mov dword [songdata], eax
+        test eax, eax
+        je short .12
+        test byte [gameopts], 40h
+        je short .12
+        mov edx, dword [musichandle]
+        mov ecx, 4Ch
+        mov ebx, 3
+        call sub_8FB8E
 .12:
-mov ebx, 10h	; 196F5
-lea edx, [byte esp+04h]	; 196FA
-xor eax, eax	; 196FE
-call FadePalStep	; 19700
-push dword 1E0h	; 19705
-push dword 280h	; 1970A
-push byte 0	; 1970F
-push byte 0	; 19711
-call SetViewRect	; 19713
-add esp, byte 10h	; 19718
-mov ecx, dword [dword esp+03ECh]	; 1971B
-push ecx	; 19722
-mov esi, dword [dword esp+0404h]	; 19723
-push esi	; 1972A
-call MouseSetPos	; 1972B
-add esp, byte 8	; 19730
-call dword [mousepollfn]	; 19733
-call ClearInputQueue	; 19739
-mov edi, dword [esp]	; 1973E
-cmp edi, byte 1	; 19741
-jne short .13	; 19744
-cmp dword [ctl1team], byte 0	; 19746
-jge short .13	; 1974D
-cmp dword [ctl2team], byte 0	; 1974F
-jge short .13	; 19756
-mov dword [dword esp+03F4h], edi	; 19758
+        mov ebx, 10h
+        lea edx, [byte esp+04h]
+        xor eax, eax
+        call FadePalStep
+        push dword 1E0h
+        push dword 280h
+        push byte 0
+        push byte 0
+        call SetViewRect
+        add esp, byte 10h
+        mov ecx, dword [dword esp+03ECh]
+        push ecx
+        mov esi, dword [dword esp+0404h]
+        push esi
+        call MouseSetPos
+        add esp, byte 8
+        call dword [mousepollfn]
+        call ClearInputQueue
+        mov edi, dword [esp]
+        cmp edi, byte 1
+        jne short .13
+        cmp dword [ctl1team], byte 0
+        jge short .13
+        cmp dword [ctl2team], byte 0
+        jge short .13
+        mov dword [dword esp+03F4h], edi
 .13:
-call TicksSinceLastCall	; 1975F
-cmp dword [esp], byte 2	; 19764
-jne near .21	; 19768
-cmp dword [schedgameidx], 444h	; 1976E
-jl near .21	; 19778
-mov ax, word [hmscore]	; 1977E
-cmp ax, word [awscore]	; 19784
-jle short .14	; 1978B
-mov esi, dword [cont2team]	; 1978D
-jmp short .15	; 19793
+        call TicksSinceLastCall
+        cmp dword [esp], byte 2
+        jne near .21
+        cmp dword [schedgameidx], 444h
+        jl near .21
+        mov ax, word [hmscore]
+        cmp ax, word [awscore]
+        jle short .14
+        mov esi, dword [cont2team]
+        jmp short .15
 .14:
-mov esi, dword [HomeTeam]	; 19795
+        mov esi, dword [HomeTeam]
 .15:
-sar esi, 10h	; 1979B
-xor edi, edi	; 1979E
-cmp dword [curperiod], byte 3	; 197A0
-jle short .16	; 197A7
-mov edi, 0FFFFFFFFh	; 197A9
+        sar esi, 10h
+        xor edi, edi
+        cmp dword [curperiod], byte 3
+        jle short .16
+        mov edi, 0FFFFFFFFh
 .16:
-mov edx, dword [HomeTeam-2]	; 197AE
-sar edx, 10h	; 197B4
-mov eax, dword [VisTeam-2]	; 197B7
-sar eax, 10h	; 197BC
-shl eax, 2	; 197BF
-mov edx, dword [nosplit edx*4+teamconf]	; 197C2
-mov ebx, dword [dword eax+teamconf]	; 197C9
-cmp edx, ebx	; 197CF
-je short .17	; 197D1
-mov ebx, 3	; 197D3
-jmp short .18	; 197D8
+        mov edx, dword [HomeTeam-2]
+        sar edx, 10h
+        mov eax, dword [VisTeam-2]
+        sar eax, 10h
+        shl eax, 2
+        mov edx, dword [nosplit edx*4+teamconf]
+        mov ebx, dword [dword eax+teamconf]
+        cmp edx, ebx
+        je short .17
+        mov ebx, 3
+        jmp short .18
 .17:
-or edx, ebx	; 197DA
-mov eax, edx	; 197DC
-sar edx, 1Fh	; 197DE
-mov ebx, 2	; 197E1
-idiv ebx	; 197E6
-lea ebx, [byte edx+01h]	; 197E8
+        or edx, ebx
+        mov eax, edx
+        sar edx, 1Fh
+        mov ebx, 2
+        idiv ebx
+        lea ebx, [byte edx+01h]
 .18:
-mov ecx, 1	; 197EB
-cmp dword [schedgameidx], 47Ch	; 197F0
-jl short .19	; 197FA
-mov ecx, 2	; 197FC
+        mov ecx, 1
+        cmp dword [schedgameidx], 47Ch
+        jl short .19
+        mov ecx, 2
 .19:
-cmp dword [schedgameidx], 498h	; 19801
-jl short .20	; 1980B
-mov ecx, 3	; 1980D
+        cmp dword [schedgameidx], 498h
+        jl short .20
+        mov ecx, 3
 .20:
-mov eax, dword [cupceremony-3]	; 19812
-sar eax, 18h	; 19817
-push eax	; 1981A
-push edi	; 1981B
-mov edx, dword [schedgameidx]	; 1981C
-sub edx, 444h	; 19822
-mov eax, edx	; 19828
-sar edx, 1Fh	; 1982A
-mov edi, 7	; 1982D
-idiv edi	; 19832
-inc edx	; 19834
-mov eax, esi	; 19835
-call PaPlayoffResult	; 19837
-xor dh, dh	; 1983C
-mov byte [cupceremony], dh	; 1983E
+        mov eax, dword [cupceremony-3]
+        sar eax, 18h
+        push eax
+        push edi
+        mov edx, dword [schedgameidx]
+        sub edx, 444h
+        mov eax, edx
+        sar edx, 1Fh
+        mov edi, 7
+        idiv edi
+        inc edx
+        mov eax, esi
+        call PaPlayoffResult
+        xor dh, dh
+        mov byte [cupceremony], dh
 .21:
-mov dword [dword esp+03E8h], 0B4h	; 19844
-jmp near .34	; 1984F
+        mov dword [dword esp+03E8h], 0B4h
+        jmp near .34
 .22:
-test ebx, ebx	; 19854
-jle short .23	; 19856
-xor esi, esi	; 19858
-mov dword [dword esp+03E8h], esi	; 1985A
+        test ebx, ebx
+        jle short .23
+        xor esi, esi
+        mov dword [dword esp+03E8h], esi
 .23:
-cmp dword [dword esp+03E8h], byte 0	; 19861
-jne short .24	; 19869
-cmp dword [esp], byte 0	; 1986B
-jne short .24	; 1986F
-cmp dword [gameresult], byte 0	; 19871
-jne short .24	; 19878
-test byte [gameopts+1], 1	; 1987A
-je short .24	; 19881
-mov dword [dword esp+03E8h], 0FFFFFFFFh	; 19883
-call MusicChanReset	; 1988E
-call SayBackMoment	; 19893
+        cmp dword [dword esp+03E8h], byte 0
+        jne short .24
+        cmp dword [esp], byte 0
+        jne short .24
+        cmp dword [gameresult], byte 0
+        jne short .24
+        test byte [gameopts+1], 1
+        je short .24
+        mov dword [dword esp+03E8h], 0FFFFFFFFh
+        call MusicChanReset
+        call SayBackMoment
 .24:
-cmp dword [dword esp+03F4h], byte 0	; 19898
-je near .29	; 198A0
-call TicksSinceLastCall	; 198A6
-mov esi, dword [dword esp+03F0h]	; 198AB
-sub esi, eax	; 198B2
-mov dword [dword esp+03F0h], esi	; 198B4
-test esi, esi	; 198BB
-jge near .29	; 198BD
-cmp byte [musicon], 0	; 198C3
-je short .25	; 198CA
-cmp dword [songdata], byte 0	; 198CC
-je short .25	; 198D3
-mov eax, dword [musichandle]	; 198D5
-mov ebx, 64h	; 198DA
-mov edx, 3	; 198DF
-call sub_8FCDF	; 198E4
+        cmp dword [dword esp+03F4h], byte 0
+        je near .29
+        call TicksSinceLastCall
+        mov esi, dword [dword esp+03F0h]
+        sub esi, eax
+        mov dword [dword esp+03F0h], esi
+        test esi, esi
+        jge near .29
+        cmp byte [musicon], 0
+        je short .25
+        cmp dword [songdata], byte 0
+        je short .25
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .25:
-mov edx, 1	; 198E9
-mov dword [dword_C66D4], edx	; 198EE
-mov dword [dword_C66D0], edx	; 198F4
-call ClearInputQueue	; 198FA
-call InputRemove	; 198FF
-lea eax, [dword esp+0304h]	; 19904
-push eax	; 1990B
-call TextRestoreState	; 1990C
-add esp, byte 4	; 19911
-push dword 1E0h	; 19914
-push dword 280h	; 19919
-push byte 0	; 1991E
-push byte 0	; 19920
-call SetViewRect	; 19922
-add esp, byte 10h	; 19927
-mov word [scrolly], ax	; 1992A
-mov word [scrollx], ax	; 19930
-xor ecx, ecx	; 19936
-mov dword [deferpending], ecx	; 19938
-mov esi, dword [dword esp+03D4h]	; 1993E
-push esi	; 19945
-mov edi, dword [dword esp+03DCh]	; 19946
-push edi	; 1994D
-call MouseSetPos	; 1994E
-add esp, byte 8	; 19953
-lea eax, [byte esp+04h]	; 19956
-push eax	; 1995A
-push dword 100h	; 1995B
-push byte 0	; 19960
-call SetPalette	; 19962
-add esp, byte 0Ch	; 19967
-mov ebx, 10h	; 1996A
-lea edx, [byte esp+04h]	; 1996F
-mov eax, 1	; 19973
-call FadePalStep	; 19978
-mov eax, dword [gamemode]	; 1997D
-call SetScreenTitle	; 19982
-mov ebp, dword [dword esp+03F8h]	; 19987
-push ebp	; 1998E
-call FreeMemBlock	; 1998F
-add esp, byte 4	; 19994
-cmp byte [musicon], 0	; 19997
-je short .27	; 1999E
-cmp dword [songdata], byte 0	; 199A0
-je short .27	; 199A7
+        mov edx, 1
+        mov dword [dword_C66D4], edx
+        mov dword [dword_C66D0], edx
+        call ClearInputQueue
+        call InputRemove
+        lea eax, [dword esp+0304h]
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        push dword 1E0h
+        push dword 280h
+        push byte 0
+        push byte 0
+        call SetViewRect
+        add esp, byte 10h
+        mov word [scrolly], ax
+        mov word [scrollx], ax
+        xor ecx, ecx
+        mov dword [deferpending], ecx
+        mov esi, dword [dword esp+03D4h]
+        push esi
+        mov edi, dword [dword esp+03DCh]
+        push edi
+        call MouseSetPos
+        add esp, byte 8
+        lea eax, [byte esp+04h]
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        lea edx, [byte esp+04h]
+        mov eax, 1
+        call FadePalStep
+        mov eax, dword [gamemode]
+        call SetScreenTitle
+        mov ebp, dword [dword esp+03F8h]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .27
+        cmp dword [songdata], byte 0
+        je short .27
 .26:
-mov eax, dword [musicslot-3]	; 199A9
-sar eax, 18h	; 199AE
-mov edx, 3	; 199B1
-call SndQuery	; 199B6
-test eax, eax	; 199BB
-je short SportsDesk.26	; 199BD
-mov edx, dword [songdata]	; 199BF
-push edx	; 199C5
-call sub_8D2F0	; 199C6
-add esp, byte 4	; 199CB
-xor ebx, ebx	; 199CE
-mov dword [songdata], ebx	; 199D0
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short SportsDesk.26
+        mov edx, dword [songdata]
+        push edx
+        call sub_8D2F0
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [songdata], ebx
 .27:
-call DeskReloadGame	; 199D6
-cmp byte [musicon], 0	; 199DB
-je short .28	; 199E2
-cmp dword [gameresult], byte 0	; 199E4
-jne short .28	; 199EB
-test byte [gameopts+1], 1	; 199ED
-je short .28	; 199F4
-call MusicChanReset	; 199F6
-call FreeBackMoment	; 199FB
+        call DeskReloadGame
+        cmp byte [musicon], 0
+        je short .28
+        cmp dword [gameresult], byte 0
+        jne short .28
+        test byte [gameopts+1], 1
+        je short .28
+        call MusicChanReset
+        call FreeBackMoment
 .28:
-xor eax, eax	; 19A00
-add esp, 408h	; 19A02
-pop ebp	; 19A08
-pop edi	; 19A09
-pop esi	; 19A0A
-pop edx	; 19A0B
-pop ecx	; 19A0C
-pop ebx	; 19A0D
-ret	; 19A0E
+        xor eax, eax
+        add esp, 408h
+        pop ebp
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 .29:
-xor ebp, ebp	; 19A0F
-mov dword [dword esp+03DCh], ebp	; 19A11
+        xor ebp, ebp
+        mov dword [dword esp+03DCh], ebp
 .30:
-call GetInputEvent	; 19A18
-test eax, eax	; 19A1D
-je short .31	; 19A1F
-lea ebx, [dword esp+03E0h]	; 19A21
-lea edx, [dword esp+03E4h]	; 19A28
-call dword [ptrupdatefn]	; 19A2F
-mov dword [dword esp+03DCh], eax	; 19A35
-test al, 2	; 19A3C
-je short SportsDesk.30	; 19A3E
+        call GetInputEvent
+        test eax, eax
+        je short .31
+        lea ebx, [dword esp+03E0h]
+        lea edx, [dword esp+03E4h]
+        call dword [ptrupdatefn]
+        mov dword [dword esp+03DCh], eax
+        test al, 2
+        je short SportsDesk.30
 .31:
-test byte [dword esp+03DCh], 2	; 19A40
-jne near .35	; 19A48
-mov eax, dword [dword esp+03E4h]	; 19A4E
-cmp eax, dword [dword esp+0400h]	; 19A55
-jne short .32	; 19A5C
-mov eax, dword [dword esp+03E0h]	; 19A5E
-cmp eax, dword [dword esp+03ECh]	; 19A65
-je near .34	; 19A6C
+        test byte [dword esp+03DCh], 2
+        jne near .35
+        mov eax, dword [dword esp+03E4h]
+        cmp eax, dword [dword esp+0400h]
+        jne short .32
+        mov eax, dword [dword esp+03E0h]
+        cmp eax, dword [dword esp+03ECh]
+        je near .34
 .32:
-xor esi, esi	; 19A72
-mov dword [dword esp+03F4h], esi	; 19A74
-mov edi, dword [dword esp+03ECh]	; 19A7B
-push edi	; 19A82
-mov ebp, dword [dword esp+0404h]	; 19A83
-push ebp	; 19A8A
-mov eax, dword [dword esp+0400h]	; 19A8B
-push eax	; 19A92
-call PutBlock	; 19A93
-add esp, byte 0Ch	; 19A98
-mov edx, dword [dword esp+03E0h]	; 19A9B
-push edx	; 19AA2
-mov ebx, dword [dword esp+03E8h]	; 19AA3
-push ebx	; 19AAA
-mov ecx, dword [dword esp+0400h]	; 19AAB
-push ecx	; 19AB2
-call GrabBlock	; 19AB3
-add esp, byte 0Ch	; 19AB8
-mov esi, dword [dword esp+03E0h]	; 19ABB
-push esi	; 19AC2
-mov edi, dword [dword esp+03E8h]	; 19AC3
-push edi	; 19ACA
-mov ebp, dword [pointerspr]	; 19ACB
-push ebp	; 19AD1
+        xor esi, esi
+        mov dword [dword esp+03F4h], esi
+        mov edi, dword [dword esp+03ECh]
+        push edi
+        mov ebp, dword [dword esp+0404h]
+        push ebp
+        mov eax, dword [dword esp+0400h]
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+03E0h]
+        push edx
+        mov ebx, dword [dword esp+03E8h]
+        push ebx
+        mov ecx, dword [dword esp+0400h]
+        push ecx
+        call GrabBlock
+        add esp, byte 0Ch
+        mov esi, dword [dword esp+03E0h]
+        push esi
+        mov edi, dword [dword esp+03E8h]
+        push edi
+        mov ebp, dword [pointerspr]
+        push ebp
 .33:
-call DrawArt	; 19AD2
-add esp, byte 0Ch	; 19AD7
-mov eax, dword [dword esp+03E4h]	; 19ADA
-mov dword [dword esp+0400h], eax	; 19AE1
-mov eax, dword [dword esp+03E0h]	; 19AE8
-mov dword [dword esp+03ECh], eax	; 19AEF
+        call DrawArt
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+03E4h]
+        mov dword [dword esp+0400h], eax
+        mov eax, dword [dword esp+03E0h]
+        mov dword [dword esp+03ECh], eax
 .34:
-cmp byte [musicon], 0	; 19AF6
-je near SportsDesk.24	; 19AFD
-mov ebx, dword [dword esp+03E8h]	; 19B03
-cmp ebx, TicksSinceLastCall	; 19B0A
-jbe near SportsDesk.22	; 19B10
-call TicksSinceLastCall	; 19B16
-sub dword [dword esp+03E8h], eax	; 19B1B
-jmp near SportsDesk.23	; 19B22
+        cmp byte [musicon], 0
+        je near SportsDesk.24
+        mov ebx, dword [dword esp+03E8h]
+        cmp ebx, TicksSinceLastCall
+        jbe near SportsDesk.22
+        call TicksSinceLastCall
+        sub dword [dword esp+03E8h], eax
+        jmp near SportsDesk.23
 .35:
-xor edx, edx	; 19B27
-mov dword [dword esp+03F4h], edx	; 19B29
-lea eax, [dword esp+03CCh]	; 19B30
-push eax	; 19B37
-lea eax, [dword esp+03D4h]	; 19B38
-push eax	; 19B3F
-lea eax, [dword esp+036Ch]	; 19B40
-push eax	; 19B47
-lea eax, [dword esp+03B0h]	; 19B48
-push eax	; 19B4F
-mov ecx, dword [dword esp+0414h]	; 19B50
-lea ebx, [dword esp+03C4h]	; 19B57
-mov edx, dword [dword esp+03F0h]	; 19B5E
-mov eax, dword [dword esp+03F4h]	; 19B65
-call MenuHitTest	; 19B6C
-test eax, eax	; 19B71
-je near .69	; 19B73
-mov esi, dword [dword esp+03D0h]	; 19B79
-shl esi, 2	; 19B80
-mov eax, dword [dword esp+03CCh]	; 19B83
-shl eax, 5	; 19B8A
-mov edx, dword [dword esp+esi+03B4h]	; 19B8D
-add eax, edx	; 19B94
-cmp dword [byte eax+014h], byte 0	; 19B96
-je near .59	; 19B9A
-mov eax, dword [dword esp+03CCh]	; 19BA0
-cmp eax, dword [dword esp+esi+0394h]	; 19BA7
-jne near .53	; 19BAE
-mov ebp, dword [dword esp+03ECh]	; 19BB4
-push ebp	; 19BBB
-mov eax, dword [dword esp+0404h]	; 19BBC
-push eax	; 19BC3
-mov edx, dword [dword esp+0400h]	; 19BC4
-push edx	; 19BCB
-call PutBlock	; 19BCC
-add esp, byte 0Ch	; 19BD1
-mov esi, dword [dword esp+0404h]	; 19BD4
-jmp short .38	; 19BDB
+        xor edx, edx
+        mov dword [dword esp+03F4h], edx
+        lea eax, [dword esp+03CCh]
+        push eax
+        lea eax, [dword esp+03D4h]
+        push eax
+        lea eax, [dword esp+036Ch]
+        push eax
+        lea eax, [dword esp+03B0h]
+        push eax
+        mov ecx, dword [dword esp+0414h]
+        lea ebx, [dword esp+03C4h]
+        mov edx, dword [dword esp+03F0h]
+        mov eax, dword [dword esp+03F4h]
+        call MenuHitTest
+        test eax, eax
+        je near .69
+        mov esi, dword [dword esp+03D0h]
+        shl esi, 2
+        mov eax, dword [dword esp+03CCh]
+        shl eax, 5
+        mov edx, dword [dword esp+esi+03B4h]
+        add eax, edx
+        cmp dword [byte eax+014h], byte 0
+        je near .59
+        mov eax, dword [dword esp+03CCh]
+        cmp eax, dword [dword esp+esi+0394h]
+        jne near .53
+        mov ebp, dword [dword esp+03ECh]
+        push ebp
+        mov eax, dword [dword esp+0404h]
+        push eax
+        mov edx, dword [dword esp+0400h]
+        push edx
+        call PutBlock
+        add esp, byte 0Ch
+        mov esi, dword [dword esp+0404h]
+        jmp short .38
 .36:
-mov ebp, esi	; 19BDD
-shl ebp, 2	; 19BDF
-xor eax, eax	; 19BE2
-mov dword [dword esp+ebp+0394h], eax	; 19BE4
-mov edx, dword [dword esp+ebp+0384h]	; 19BEB
-test edx, edx	; 19BF2
-je short .37	; 19BF4
-mov ebx, dword [dword esp+esi*8+0368h]	; 19BF6
-push ebx	; 19BFD
-mov ecx, dword [dword esp+esi*8+0368h]	; 19BFE
-push ecx	; 19C05
-push edx	; 19C06
-call PutBlock	; 19C07
-add esp, byte 0Ch	; 19C0C
-xor edx, edx	; 19C0F
-mov dword [dword esp+esi*8+0368h], edx	; 19C11
-mov dword [dword esp+esi*8+0364h], edx	; 19C18
-mov ebx, dword [dword esp+ebp+0384h]	; 19C1F
-push ebx	; 19C26
-call FreeMemBlock	; 19C27
-add esp, byte 4	; 19C2C
+        mov ebp, esi
+        shl ebp, 2
+        xor eax, eax
+        mov dword [dword esp+ebp+0394h], eax
+        mov edx, dword [dword esp+ebp+0384h]
+        test edx, edx
+        je short .37
+        mov ebx, dword [dword esp+esi*8+0368h]
+        push ebx
+        mov ecx, dword [dword esp+esi*8+0368h]
+        push ecx
+        push edx
+        call PutBlock
+        add esp, byte 0Ch
+        xor edx, edx
+        mov dword [dword esp+esi*8+0368h], edx
+        mov dword [dword esp+esi*8+0364h], edx
+        mov ebx, dword [dword esp+ebp+0384h]
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
 .37:
-dec esi	; 19C2F
+        dec esi
 .38:
-test esi, esi	; 19C30
-jg short SportsDesk.36	; 19C32
-xor eax, eax	; 19C34
-mov dword [dword esp+0404h], eax	; 19C36
-mov eax, dword [dword esp+03E4h]	; 19C3D
-mov dword [deskptrx], eax	; 19C44
-mov eax, dword [dword esp+03E0h]	; 19C49
-mov dword [deskptry], eax	; 19C50
-mov eax, dword [dword esp+03D0h]	; 19C55
-mov edx, dword [dword esp+03CCh]	; 19C5C
-shl edx, 5	; 19C63
-mov eax, dword [dword esp+eax*4+03B4h]	; 19C66
-call dword [byte edx+eax+014h]	; 19C6D
-mov edx, eax	; 19C71
-mov dword [dword esp+03DCh], eax	; 19C73
-mov eax, dword [deskptrx]	; 19C7A
-mov dword [dword esp+03E4h], eax	; 19C7F
-mov eax, dword [deskptry]	; 19C86
-mov dword [dword esp+03E0h], eax	; 19C8B
-xor ebx, ebx	; 19C92
-mov dword [dword esp+03C0h], ebx	; 19C94
-mov dword [dword esp+03BCh], ebx	; 19C9B
-mov dword [dword esp+03B8h], ebx	; 19CA2
-mov dword [dword esp+0390h], ebx	; 19CA9
-mov dword [dword esp+038Ch], ebx	; 19CB0
-mov dword [dword esp+0388h], ebx	; 19CB7
-mov dword [dword esp+0384h], ebx	; 19CBE
-mov dword [dword esp+03A0h], ebx	; 19CC5
-mov dword [dword esp+039Ch], ebx	; 19CCC
-mov dword [dword esp+0398h], ebx	; 19CD3
-mov dword [dword esp+03B0h], ebx	; 19CDA
-mov dword [dword esp+03ACh], ebx	; 19CE1
-mov dword [dword esp+03A8h], ebx	; 19CE8
-cmp edx, byte 1	; 19CEF
-je short .39	; 19CF2
-cmp edx, byte 5	; 19CF4
-jne near .48	; 19CF7
+        test esi, esi
+        jg short SportsDesk.36
+        xor eax, eax
+        mov dword [dword esp+0404h], eax
+        mov eax, dword [dword esp+03E4h]
+        mov dword [deskptrx], eax
+        mov eax, dword [dword esp+03E0h]
+        mov dword [deskptry], eax
+        mov eax, dword [dword esp+03D0h]
+        mov edx, dword [dword esp+03CCh]
+        shl edx, 5
+        mov eax, dword [dword esp+eax*4+03B4h]
+        call dword [byte edx+eax+014h]
+        mov edx, eax
+        mov dword [dword esp+03DCh], eax
+        mov eax, dword [deskptrx]
+        mov dword [dword esp+03E4h], eax
+        mov eax, dword [deskptry]
+        mov dword [dword esp+03E0h], eax
+        xor ebx, ebx
+        mov dword [dword esp+03C0h], ebx
+        mov dword [dword esp+03BCh], ebx
+        mov dword [dword esp+03B8h], ebx
+        mov dword [dword esp+0390h], ebx
+        mov dword [dword esp+038Ch], ebx
+        mov dword [dword esp+0388h], ebx
+        mov dword [dword esp+0384h], ebx
+        mov dword [dword esp+03A0h], ebx
+        mov dword [dword esp+039Ch], ebx
+        mov dword [dword esp+0398h], ebx
+        mov dword [dword esp+03B0h], ebx
+        mov dword [dword esp+03ACh], ebx
+        mov dword [dword esp+03A8h], ebx
+        cmp edx, byte 1
+        je short .39
+        cmp edx, byte 5
+        jne near .48
 .39:
-call ClearInputQueue	; 19CFD
-call InputRemove	; 19D02
-lea eax, [dword esp+0304h]	; 19D07
-push eax	; 19D0E
-call TextRestoreState	; 19D0F
-add esp, byte 4	; 19D14
-push dword 1E0h	; 19D17
-push dword 280h	; 19D1C
-push byte 0	; 19D21
-push byte 0	; 19D23
-call SetViewRect	; 19D25
-add esp, byte 10h	; 19D2A
-xor ecx, ecx	; 19D2D
-mov dword [deferpending], ecx	; 19D2F
-mov esi, dword [dword esp+03D4h]	; 19D35
-push esi	; 19D3C
-mov edi, dword [dword esp+03DCh]	; 19D3D
-push edi	; 19D44
-call MouseSetPos	; 19D45
-add esp, byte 8	; 19D4A
-lea eax, [byte esp+04h]	; 19D4D
-push eax	; 19D51
-push dword 100h	; 19D52
-push byte 0	; 19D57
-call SetPalette	; 19D59
-add esp, byte 0Ch	; 19D5E
-cmp byte [musicon], 0	; 19D61
-je short .40	; 19D68
-cmp dword [songdata], byte 0	; 19D6A
-je short .40	; 19D71
-mov eax, dword [musichandle]	; 19D73
-mov ebx, 64h	; 19D78
-mov edx, 3	; 19D7D
-call sub_8FCDF	; 19D82
+        call ClearInputQueue
+        call InputRemove
+        lea eax, [dword esp+0304h]
+        push eax
+        call TextRestoreState
+        add esp, byte 4
+        push dword 1E0h
+        push dword 280h
+        push byte 0
+        push byte 0
+        call SetViewRect
+        add esp, byte 10h
+        xor ecx, ecx
+        mov dword [deferpending], ecx
+        mov esi, dword [dword esp+03D4h]
+        push esi
+        mov edi, dword [dword esp+03DCh]
+        push edi
+        call MouseSetPos
+        add esp, byte 8
+        lea eax, [byte esp+04h]
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .40
+        cmp dword [songdata], byte 0
+        je short .40
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .40:
-cmp dword [dword esp+03DCh], byte 1	; 19D87
-jne short .41	; 19D8F
-cmp byte [musicon], 0	; 19D91
-je short .41	; 19D98
-test byte [gameopts+1], 1	; 19D9A
-je short .41	; 19DA1
-call MusicChanReset	; 19DA3
-call SayNowBack	; 19DA8
+        cmp dword [dword esp+03DCh], byte 1
+        jne short .41
+        cmp byte [musicon], 0
+        je short .41
+        test byte [gameopts+1], 1
+        je short .41
+        call MusicChanReset
+        call SayNowBack
 .41:
-mov ebx, 14h	; 19DAD
-lea edx, [byte esp+04h]	; 19DB2
-mov eax, 1	; 19DB6
-call FadePalStep	; 19DBB
-cmp dword [dword esp+03DCh], byte 1	; 19DC0
-je short .42	; 19DC8
-mov dword [gameresult], 2	; 19DCA
+        mov ebx, 14h
+        lea edx, [byte esp+04h]
+        mov eax, 1
+        call FadePalStep
+        cmp dword [dword esp+03DCh], byte 1
+        je short .42
+        mov dword [gameresult], 2
 .42:
-mov eax, dword [gamemode]	; 19DD4
-call SetScreenTitle	; 19DD9
-mov ecx, dword [dword esp+03F8h]	; 19DDE
-test ecx, ecx	; 19DE5
-je short .43	; 19DE7
-push ecx	; 19DE9
-call FreeMemBlock	; 19DEA
-add esp, byte 4	; 19DEF
+        mov eax, dword [gamemode]
+        call SetScreenTitle
+        mov ecx, dword [dword esp+03F8h]
+        test ecx, ecx
+        je short .43
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
 .43:
-cmp byte [musicon], 0	; 19DF2
-je short .45	; 19DF9
-cmp dword [songdata], byte 0	; 19DFB
-je short .45	; 19E02
+        cmp byte [musicon], 0
+        je short .45
+        cmp dword [songdata], byte 0
+        je short .45
 .44:
-mov eax, dword [musicslot-3]	; 19E04
-sar eax, 18h	; 19E09
-mov edx, 3	; 19E0C
-call SndQuery	; 19E11
-test eax, eax	; 19E16
-je short SportsDesk.44	; 19E18
-mov esi, dword [songdata]	; 19E1A
-push esi	; 19E20
-call sub_8D2F0	; 19E21
-add esp, byte 4	; 19E26
-xor edi, edi	; 19E29
-mov dword [songdata], edi	; 19E2B
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short SportsDesk.44
+        mov esi, dword [songdata]
+        push esi
+        call sub_8D2F0
+        add esp, byte 4
+        xor edi, edi
+        mov dword [songdata], edi
 .45:
-cmp dword [dword esp+03DCh], byte 1	; 19E31
-jne short .46	; 19E39
-call DeskReloadGame	; 19E3B
+        cmp dword [dword esp+03DCh], byte 1
+        jne short .46
+        call DeskReloadGame
 .46:
-cmp dword [dword esp+03DCh], byte 1	; 19E40
-jne near SportsDesk.28	; 19E48
-cmp byte [musicon], 0	; 19E4E
-je near SportsDesk.28	; 19E55
-test byte [gameopts+1], 1	; 19E5B
-je near SportsDesk.28	; 19E62
+        cmp dword [dword esp+03DCh], byte 1
+        jne near SportsDesk.28
+        cmp byte [musicon], 0
+        je near SportsDesk.28
+        test byte [gameopts+1], 1
+        je near SportsDesk.28
 .47:
-call SpeechBusy	; 19E68
-test eax, eax	; 19E6D
-jne short SportsDesk.47	; 19E6F
-call FreeNowBack	; 19E71
-jmp near SportsDesk.28	; 19E76
+        call SpeechBusy
+        test eax, eax
+        jne short SportsDesk.47
+        call FreeNowBack
+        jmp near SportsDesk.28
 .48:
-cmp edx, byte 2	; 19E7B
-jne near .52	; 19E7E
-lea eax, [byte esp+04h]	; 19E84
-push eax	; 19E88
-push dword 100h	; 19E89
-push ebx	; 19E8E
-call SetPalette	; 19E8F
-add esp, byte 0Ch	; 19E94
-mov ebx, 10h	; 19E97
-lea edx, [byte esp+04h]	; 19E9C
-mov eax, 1	; 19EA0
-call FadePalStep	; 19EA5
-mov eax, 0AAE60h	; 19EAA
-call sub_1BAF3	; 19EAF
-xor ecx, ecx	; 19EB4
-mov ebx, deskbankname	; 19EB6
-mov eax, dword [esp]	; 19EBB
-cmp byte [dword eax+fileoncd+064h], 1	; 19EBE
-jne short .49	; 19EC5
-mov edx, dword [cddriveptr]	; 19EC7
-jmp short .50	; 19ECD
+        cmp edx, byte 2
+        jne near .52
+        lea eax, [byte esp+04h]
+        push eax
+        push dword 100h
+        push ebx
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        lea edx, [byte esp+04h]
+        mov eax, 1
+        call FadePalStep
+        mov eax, 0AAE60h
+        call sub_1BAF3
+        xor ecx, ecx
+        mov ebx, deskbankname
+        mov eax, dword [esp]
+        cmp byte [dword eax+fileoncd+064h], 1
+        jne short .49
+        mov edx, dword [cddriveptr]
+        jmp short .50
 .49:
-xor edx, edx	; 19ECF
+        xor edx, edx
 .50:
-lea eax, [dword esp+0344h]	; 19ED1
-call MakePath	; 19ED8
-push byte 0	; 19EDD
-lea eax, [dword esp+0348h]	; 19EDF
-push eax	; 19EE6
-call LoadBank	; 19EE7
-mov esi, eax	; 19EEC
-add esp, byte 8	; 19EEE
-mov edi, eax	; 19EF1
-push str_Desk	; 19EF3
-push eax	; 19EF8
-call FindShape	; 19EF9
-add esp, byte 8	; 19EFE
-push eax	; 19F01
-call DrawBitmap	; 19F02
-add esp, byte 4	; 19F07
-push str_Pal5	; 19F0A
-push esi	; 19F0F
-call FindShape	; 19F10
-add esp, byte 8	; 19F15
-lea edx, [byte eax+010h]	; 19F18
-xor esi, esi	; 19F1B
+        lea eax, [dword esp+0344h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0348h]
+        push eax
+        call LoadBank
+        mov esi, eax
+        add esp, byte 8
+        mov edi, eax
+        push str_Desk
+        push eax
+        call FindShape
+        add esp, byte 8
+        push eax
+        call DrawBitmap
+        add esp, byte 4
+        push str_Pal5
+        push esi
+        call FindShape
+        add esp, byte 8
+        lea edx, [byte eax+010h]
+        xor esi, esi
 .51:
-mov al, byte [edx+esi]	; 19F1D
-mov byte [byte esp+esi+04h], al	; 19F20
-inc esi	; 19F24
-cmp esi, 300h	; 19F25
-jl short SportsDesk.51	; 19F2B
-push edi	; 19F2D
-call FreeMemBlock	; 19F2E
-add esp, byte 4	; 19F33
-push dword 0F8h	; 19F36
-mov ecx, 0F9h	; 19F3B
-mov ebx, 0FAh	; 19F40
-mov edx, dword [dword esp+03A8h]	; 19F45
-mov eax, dword [dword esp+03B8h]	; 19F4C
-call DrawMenuBar	; 19F53
-mov ebx, 10h	; 19F58
-lea edx, [byte esp+04h]	; 19F5D
-xor eax, eax	; 19F61
-call FadePalStep	; 19F63
+        mov al, byte [edx+esi]
+        mov byte [byte esp+esi+04h], al
+        inc esi
+        cmp esi, 300h
+        jl short SportsDesk.51
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        push dword 0F8h
+        mov ecx, 0F9h
+        mov ebx, 0FAh
+        mov edx, dword [dword esp+03A8h]
+        mov eax, dword [dword esp+03B8h]
+        call DrawMenuBar
+        mov ebx, 10h
+        lea edx, [byte esp+04h]
+        xor eax, eax
+        call FadePalStep
 .52:
-mov ecx, dword [dword esp+03ECh]	; 19F68
-push ecx	; 19F6F
-mov esi, dword [dword esp+0404h]	; 19F70
-push esi	; 19F77
-call MouseSetPos	; 19F78
-add esp, byte 8	; 19F7D
-call ClearInputQueue	; 19F80
-jmp near .73	; 19F85
+        mov ecx, dword [dword esp+03ECh]
+        push ecx
+        mov esi, dword [dword esp+0404h]
+        push esi
+        call MouseSetPos
+        add esp, byte 8
+        call ClearInputQueue
+        jmp near .73
 .53:
-mov ebx, dword [dword esp+03ECh]	; 19F8A
-push ebx	; 19F91
-mov ecx, dword [dword esp+0404h]	; 19F92
-push ecx	; 19F99
-mov esi, dword [dword esp+0400h]	; 19F9A
-push esi	; 19FA1
-call PutBlock	; 19FA2
-add esp, byte 0Ch	; 19FA7
-mov eax, dword [dword esp+0404h]	; 19FAA
-cmp eax, dword [dword esp+03D0h]	; 19FB1
-je near .57	; 19FB8
-mov esi, eax	; 19FBE
-jmp short .56	; 19FC0
+        mov ebx, dword [dword esp+03ECh]
+        push ebx
+        mov ecx, dword [dword esp+0404h]
+        push ecx
+        mov esi, dword [dword esp+0400h]
+        push esi
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+0404h]
+        cmp eax, dword [dword esp+03D0h]
+        je near .57
+        mov esi, eax
+        jmp short .56
 .54:
-mov edi, esi	; 19FC2
-shl edi, 2	; 19FC4
-xor ebp, ebp	; 19FC7
-mov dword [dword esp+edi+0394h], ebp	; 19FC9
-mov eax, dword [dword esp+edi+0384h]	; 19FD0
-test eax, eax	; 19FD7
-je short .55	; 19FD9
-mov ebp, esi	; 19FDB
-mov edx, dword [dword esp+esi*8+0368h]	; 19FDD
-push edx	; 19FE4
-mov ebx, dword [dword esp+esi*8+0368h]	; 19FE5
-push ebx	; 19FEC
-push eax	; 19FED
-call PutBlock	; 19FEE
-add esp, byte 0Ch	; 19FF3
-xor eax, eax	; 19FF6
-mov dword [dword esp+esi*8+0368h], eax	; 19FF8
-mov dword [dword esp+esi*8+0364h], eax	; 19FFF
-mov edx, dword [dword esp+edi+0384h]	; 1A006
-push edx	; 1A00D
-call FreeMemBlock	; 1A00E
-add esp, byte 4	; 1A013
-xor ebx, ebx	; 1A016
-mov dword [dword esp+edi+0384h], ebx	; 1A018
-mov dword [dword esp+edi+03B4h], ebx	; 1A01F
-xor ebp, esi	; 1A026
-mov dword [dword esp+edi+03A4h], ebp	; 1A028
+        mov edi, esi
+        shl edi, 2
+        xor ebp, ebp
+        mov dword [dword esp+edi+0394h], ebp
+        mov eax, dword [dword esp+edi+0384h]
+        test eax, eax
+        je short .55
+        mov ebp, esi
+        mov edx, dword [dword esp+esi*8+0368h]
+        push edx
+        mov ebx, dword [dword esp+esi*8+0368h]
+        push ebx
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        xor eax, eax
+        mov dword [dword esp+esi*8+0368h], eax
+        mov dword [dword esp+esi*8+0364h], eax
+        mov edx, dword [dword esp+edi+0384h]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [dword esp+edi+0384h], ebx
+        mov dword [dword esp+edi+03B4h], ebx
+        xor ebp, esi
+        mov dword [dword esp+edi+03A4h], ebp
 .55:
-dec esi	; 1A02F
+        dec esi
 .56:
-mov edi, dword [dword esp+03D0h]	; 1A030
-cmp esi, edi	; 1A037
-jg short SportsDesk.54	; 1A039
-mov dword [dword esp+0404h], edi	; 1A03B
+        mov edi, dword [dword esp+03D0h]
+        cmp esi, edi
+        jg short SportsDesk.54
+        mov dword [dword esp+0404h], edi
 .57:
-push dword 0F8h	; 1A042
-push dword 0F9h	; 1A047
-mov eax, dword [dword esp+03D8h]	; 1A04C
-mov ebx, dword [dword esp+eax*8+0370h]	; 1A053
-mov edx, dword [dword esp+eax*8+036Ch]	; 1A05A
-mov ecx, dword [dword esp+eax*4+039Ch]	; 1A061
-shl ecx, 5	; 1A068
-mov eax, dword [dword esp+eax*4+03BCh]	; 1A06B
-add eax, ecx	; 1A072
-mov ecx, 0FAh	; 1A074
-call DrawMenuItemSel	; 1A079
-mov edx, dword [dword esp+03D0h]	; 1A07E
-mov eax, dword [dword esp+03CCh]	; 1A085
-mov dword [dword esp+edx*4+0394h], eax	; 1A08C
-push dword 0F8h	; 1A093
-push dword 0F9h	; 1A098
-mov ebx, dword [dword esp+edx*8+0370h]	; 1A09D
-mov eax, dword [dword esp+edx*8+036Ch]	; 1A0A4
-mov ecx, dword [dword esp+edx*4+039Ch]	; 1A0AB
-shl ecx, 5	; 1A0B2
-mov esi, dword [dword esp+edx*4+03BCh]	; 1A0B5
-add esi, ecx	; 1A0BC
-mov ecx, 0FAh	; 1A0BE
-mov edx, eax	; 1A0C3
-mov eax, esi	; 1A0C5
+        push dword 0F8h
+        push dword 0F9h
+        mov eax, dword [dword esp+03D8h]
+        mov ebx, dword [dword esp+eax*8+0370h]
+        mov edx, dword [dword esp+eax*8+036Ch]
+        mov ecx, dword [dword esp+eax*4+039Ch]
+        shl ecx, 5
+        mov eax, dword [dword esp+eax*4+03BCh]
+        add eax, ecx
+        mov ecx, 0FAh
+        call DrawMenuItemSel
+        mov edx, dword [dword esp+03D0h]
+        mov eax, dword [dword esp+03CCh]
+        mov dword [dword esp+edx*4+0394h], eax
+        push dword 0F8h
+        push dword 0F9h
+        mov ebx, dword [dword esp+edx*8+0370h]
+        mov eax, dword [dword esp+edx*8+036Ch]
+        mov ecx, dword [dword esp+edx*4+039Ch]
+        shl ecx, 5
+        mov esi, dword [dword esp+edx*4+03BCh]
+        add esi, ecx
+        mov ecx, 0FAh
+        mov edx, eax
+        mov eax, esi
 .58:
-call DrawMenuItemNorm	; 1A0C7
-jmp near .73	; 1A0CC
+        call DrawMenuItemNorm
+        jmp near .73
 .59:
-cmp dword [byte eax+018h], byte 0	; 1A0D1
-je near .68	; 1A0D5
-mov ecx, dword [dword esp+03ECh]	; 1A0DB
-push ecx	; 1A0E2
-mov esi, dword [dword esp+0404h]	; 1A0E3
-push esi	; 1A0EA
-mov edi, dword [dword esp+0400h]	; 1A0EB
-push edi	; 1A0F2
-call PutBlock	; 1A0F3
-add esp, byte 0Ch	; 1A0F8
-mov eax, dword [dword esp+0404h]	; 1A0FB
-cmp eax, dword [dword esp+03D0h]	; 1A102
-je near .63	; 1A109
-mov esi, eax	; 1A10F
-jmp short .62	; 1A111
+        cmp dword [byte eax+018h], byte 0
+        je near .68
+        mov ecx, dword [dword esp+03ECh]
+        push ecx
+        mov esi, dword [dword esp+0404h]
+        push esi
+        mov edi, dword [dword esp+0400h]
+        push edi
+        call PutBlock
+        add esp, byte 0Ch
+        mov eax, dword [dword esp+0404h]
+        cmp eax, dword [dword esp+03D0h]
+        je near .63
+        mov esi, eax
+        jmp short .62
 .60:
-mov edi, esi	; 1A113
-shl edi, 2	; 1A115
-xor ebp, ebp	; 1A118
-mov dword [dword esp+edi+0394h], ebp	; 1A11A
-mov eax, dword [dword esp+edi+0384h]	; 1A121
-test eax, eax	; 1A128
-je short .61	; 1A12A
-mov ebp, esi	; 1A12C
-mov edx, dword [dword esp+esi*8+0368h]	; 1A12E
-push edx	; 1A135
-mov ebx, dword [dword esp+esi*8+0368h]	; 1A136
-push ebx	; 1A13D
-push eax	; 1A13E
-call PutBlock	; 1A13F
-add esp, byte 0Ch	; 1A144
-xor eax, eax	; 1A147
-mov dword [dword esp+esi*8+0368h], eax	; 1A149
-mov dword [dword esp+esi*8+0364h], eax	; 1A150
-mov edx, dword [dword esp+edi+0384h]	; 1A157
-push edx	; 1A15E
-call FreeMemBlock	; 1A15F
-add esp, byte 4	; 1A164
-xor ebx, ebx	; 1A167
-mov dword [dword esp+edi+0384h], ebx	; 1A169
-mov dword [dword esp+edi+03B4h], ebx	; 1A170
-xor ebp, esi	; 1A177
-mov dword [dword esp+edi+03A4h], ebp	; 1A179
+        mov edi, esi
+        shl edi, 2
+        xor ebp, ebp
+        mov dword [dword esp+edi+0394h], ebp
+        mov eax, dword [dword esp+edi+0384h]
+        test eax, eax
+        je short .61
+        mov ebp, esi
+        mov edx, dword [dword esp+esi*8+0368h]
+        push edx
+        mov ebx, dword [dword esp+esi*8+0368h]
+        push ebx
+        push eax
+        call PutBlock
+        add esp, byte 0Ch
+        xor eax, eax
+        mov dword [dword esp+esi*8+0368h], eax
+        mov dword [dword esp+esi*8+0364h], eax
+        mov edx, dword [dword esp+edi+0384h]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        xor ebx, ebx
+        mov dword [dword esp+edi+0384h], ebx
+        mov dword [dword esp+edi+03B4h], ebx
+        xor ebp, esi
+        mov dword [dword esp+edi+03A4h], ebp
 .61:
-dec esi	; 1A180
+        dec esi
 .62:
-mov ecx, dword [dword esp+03D0h]	; 1A181
-cmp esi, ecx	; 1A188
-jg short SportsDesk.60	; 1A18A
-mov dword [dword esp+0404h], ecx	; 1A18C
+        mov ecx, dword [dword esp+03D0h]
+        cmp esi, ecx
+        jg short SportsDesk.60
+        mov dword [dword esp+0404h], ecx
 .63:
-push dword 0F8h	; 1A193
-push dword 0F9h	; 1A198
-mov edi, dword [dword esp+040Ch]	; 1A19D
-mov ebx, dword [dword esp+edi*8+0370h]	; 1A1A4
-mov edx, dword [dword esp+edi*8+036Ch]	; 1A1AB
-mov eax, dword [dword esp+edi*4+039Ch]	; 1A1B2
-shl eax, 5	; 1A1B9
-mov ecx, dword [dword esp+edi*4+03BCh]	; 1A1BC
-add eax, ecx	; 1A1C3
-mov ecx, 0FAh	; 1A1C5
-call DrawMenuItemSel	; 1A1CA
-mov eax, dword [dword esp+03CCh]	; 1A1CF
-mov dword [dword esp+edi*4+0394h], eax	; 1A1D6
-push dword 0F8h	; 1A1DD
-push dword 0F9h	; 1A1E2
-mov ebx, dword [dword esp+edi*8+0370h]	; 1A1E7
-mov edx, dword [dword esp+edi*8+036Ch]	; 1A1EE
-shl eax, 5	; 1A1F5
-mov ecx, dword [dword esp+edi*4+03BCh]	; 1A1F8
-add eax, ecx	; 1A1FF
-mov ecx, 0FAh	; 1A201
-call DrawMenuItemNorm	; 1A206
-mov eax, dword [dword esp+03D0h]	; 1A20B
-mov ecx, dword [dword esp+03CCh]	; 1A212
-shl ecx, 5	; 1A219
-mov ebx, dword [dword esp+eax*4+03B4h]	; 1A21C
-lea edx, [byte edi+01h]	; 1A223
-mov dword [dword esp+0404h], edx	; 1A226
-mov ebx, dword [byte ecx+ebx+018h]	; 1A22D
-mov dword [dword esp+edx*4+03B4h], ebx	; 1A231
-mov eax, dword [dword esp+eax*4+03B4h]	; 1A238
-add eax, ecx	; 1A23F
-mov ebx, dword [byte eax+01Ch]	; 1A241
-mov dword [dword esp+edx*4+03A4h], ebx	; 1A244
-cmp edx, byte 1	; 1A24B
-je short .64	; 1A24E
-mov edx, dword [byte eax+08h]	; 1A250
-jmp short .65	; 1A253
+        push dword 0F8h
+        push dword 0F9h
+        mov edi, dword [dword esp+040Ch]
+        mov ebx, dword [dword esp+edi*8+0370h]
+        mov edx, dword [dword esp+edi*8+036Ch]
+        mov eax, dword [dword esp+edi*4+039Ch]
+        shl eax, 5
+        mov ecx, dword [dword esp+edi*4+03BCh]
+        add eax, ecx
+        mov ecx, 0FAh
+        call DrawMenuItemSel
+        mov eax, dword [dword esp+03CCh]
+        mov dword [dword esp+edi*4+0394h], eax
+        push dword 0F8h
+        push dword 0F9h
+        mov ebx, dword [dword esp+edi*8+0370h]
+        mov edx, dword [dword esp+edi*8+036Ch]
+        shl eax, 5
+        mov ecx, dword [dword esp+edi*4+03BCh]
+        add eax, ecx
+        mov ecx, 0FAh
+        call DrawMenuItemNorm
+        mov eax, dword [dword esp+03D0h]
+        mov ecx, dword [dword esp+03CCh]
+        shl ecx, 5
+        mov ebx, dword [dword esp+eax*4+03B4h]
+        lea edx, [byte edi+01h]
+        mov dword [dword esp+0404h], edx
+        mov ebx, dword [byte ecx+ebx+018h]
+        mov dword [dword esp+edx*4+03B4h], ebx
+        mov eax, dword [dword esp+eax*4+03B4h]
+        add eax, ecx
+        mov ebx, dword [byte eax+01Ch]
+        mov dword [dword esp+edx*4+03A4h], ebx
+        cmp edx, byte 1
+        je short .64
+        mov edx, dword [byte eax+08h]
+        jmp short .65
 .64:
-mov edx, dword [eax]	; 1A255
+        mov edx, dword [eax]
 .65:
-mov eax, dword [dword esp+0404h]	; 1A257
-mov ecx, dword [dword esp+eax*8+035Ch]	; 1A25E
-add edx, ecx	; 1A265
-mov dword [dword esp+eax*8+0364h], edx	; 1A267
-mov edx, dword [dword esp+03CCh]	; 1A26E
-shl edx, 5	; 1A275
-mov eax, dword [dword esp+03D0h]	; 1A278
-shl eax, 2	; 1A27F
-cmp dword [dword esp+0404h], byte 1	; 1A282
-je short .66	; 1A28A
-mov eax, dword [dword esp+eax+03B4h]	; 1A28C
-mov eax, dword [byte edx+eax+04h]	; 1A293
-jmp short .67	; 1A297
+        mov eax, dword [dword esp+0404h]
+        mov ecx, dword [dword esp+eax*8+035Ch]
+        add edx, ecx
+        mov dword [dword esp+eax*8+0364h], edx
+        mov edx, dword [dword esp+03CCh]
+        shl edx, 5
+        mov eax, dword [dword esp+03D0h]
+        shl eax, 2
+        cmp dword [dword esp+0404h], byte 1
+        je short .66
+        mov eax, dword [dword esp+eax+03B4h]
+        mov eax, dword [byte edx+eax+04h]
+        jmp short .67
 .66:
-mov eax, dword [dword esp+eax+03B4h]	; 1A299
-mov eax, dword [byte edx+eax+0Ch]	; 1A2A0
+        mov eax, dword [dword esp+eax+03B4h]
+        mov eax, dword [byte edx+eax+0Ch]
 .67:
-mov edx, dword [dword esp+0404h]	; 1A2A4
-shl edx, 3	; 1A2AB
-mov dword [dword esp+03FCh], edx	; 1A2AE
-mov edi, dword [dword esp+edx+0360h]	; 1A2B5
-add eax, edi	; 1A2BC
-mov dword [dword esp+edx+0368h], eax	; 1A2BE
-mov ebp, dword [dword esp+0404h]	; 1A2C5
-mov edx, dword [dword esp+ebp*4+03A4h]	; 1A2CC
-shl edx, 5	; 1A2D3
-mov eax, dword [dword esp+ebp*4+03B4h]	; 1A2D6
-mov ebx, dword [byte edx+eax-018h]	; 1A2DD
-sub ebx, dword [eax]	; 1A2E1
-inc ebx	; 1A2E3
-mov dword [dword esp+03C4h], ebx	; 1A2E4
-mov edx, dword [byte edx+eax-014h]	; 1A2EB
-sub edx, dword [byte eax+04h]	; 1A2EF
-inc edx	; 1A2F2
-mov dword [dword esp+03C8h], edx	; 1A2F3
-push byte 20h	; 1A2FA
-mov eax, ebx	; 1A2FC
-imul eax, edx	; 1A2FE
-add eax, byte 11h	; 1A301
-push eax	; 1A304
-push str_Menubuff3	; 1A305
-call AllocMemBlock	; 1A30A
-add esp, byte 0Ch	; 1A30F
-mov dword [dword esp+ebp*4+0384h], eax	; 1A312
-mov esi, dword [pointerspr]	; 1A319
-mov edi, eax	; 1A31F
-movsd	; 1A321
-movsd	; 1A322
-movsd	; 1A323
-movsd	; 1A324
-movsb	; 1A325
-mov eax, dword [dword esp+ebp*4+0384h]	; 1A326
-mov edx, dword [dword esp+03C4h]	; 1A32D
-mov word [byte eax+04h], dx	; 1A334
-mov eax, dword [dword esp+ebp*4+0384h]	; 1A338
-mov edx, dword [dword esp+03C8h]	; 1A33F
-mov word [byte eax+06h], dx	; 1A346
-mov eax, dword [dword esp+03FCh]	; 1A34A
-mov edx, dword [dword esp+eax+0368h]	; 1A351
-push edx	; 1A358
-mov ebx, dword [dword esp+eax+0368h]	; 1A359
-push ebx	; 1A360
-mov ecx, dword [dword esp+ebp*4+038Ch]	; 1A361
-push ecx	; 1A368
-call GrabBlock	; 1A369
-add esp, byte 0Ch	; 1A36E
-push dword 0F8h	; 1A371
-push dword 0F9h	; 1A376
-push dword 0FAh	; 1A37B
-mov ecx, dword [dword esp+0408h]	; 1A380
-mov ecx, dword [dword esp+ecx+0374h]	; 1A387
-mov ebx, dword [dword esp+0408h]	; 1A38E
-mov ebx, dword [dword esp+ebx+0370h]	; 1A395
-mov edx, dword [dword esp+ebp*4+03B0h]	; 1A39C
-mov eax, dword [dword esp+ebp*4+03C0h]	; 1A3A3
-call DrawMenuDropdown	; 1A3AA
-xor esi, esi	; 1A3AF
-mov dword [dword esp+ebp*4+0394h], esi	; 1A3B1
-push dword 0F8h	; 1A3B8
-push dword 0F9h	; 1A3BD
-mov ebx, dword [dword esp+0404h]	; 1A3C2
-mov ebx, dword [dword esp+ebx+0370h]	; 1A3C9
-mov edx, dword [dword esp+0404h]	; 1A3D0
-mov edx, dword [dword esp+edx+036Ch]	; 1A3D7
-mov eax, dword [dword esp+ebp*4+03BCh]	; 1A3DE
-mov ecx, 0FAh	; 1A3E5
-jmp near SportsDesk.58	; 1A3EA
+        mov edx, dword [dword esp+0404h]
+        shl edx, 3
+        mov dword [dword esp+03FCh], edx
+        mov edi, dword [dword esp+edx+0360h]
+        add eax, edi
+        mov dword [dword esp+edx+0368h], eax
+        mov ebp, dword [dword esp+0404h]
+        mov edx, dword [dword esp+ebp*4+03A4h]
+        shl edx, 5
+        mov eax, dword [dword esp+ebp*4+03B4h]
+        mov ebx, dword [byte edx+eax-018h]
+        sub ebx, dword [eax]
+        inc ebx
+        mov dword [dword esp+03C4h], ebx
+        mov edx, dword [byte edx+eax-014h]
+        sub edx, dword [byte eax+04h]
+        inc edx
+        mov dword [dword esp+03C8h], edx
+        push byte 20h
+        mov eax, ebx
+        imul eax, edx
+        add eax, byte 11h
+        push eax
+        push str_Menubuff3
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [dword esp+ebp*4+0384h], eax
+        mov esi, dword [pointerspr]
+        mov edi, eax
+        movsd
+        movsd
+        movsd
+        movsd
+        movsb
+        mov eax, dword [dword esp+ebp*4+0384h]
+        mov edx, dword [dword esp+03C4h]
+        mov word [byte eax+04h], dx
+        mov eax, dword [dword esp+ebp*4+0384h]
+        mov edx, dword [dword esp+03C8h]
+        mov word [byte eax+06h], dx
+        mov eax, dword [dword esp+03FCh]
+        mov edx, dword [dword esp+eax+0368h]
+        push edx
+        mov ebx, dword [dword esp+eax+0368h]
+        push ebx
+        mov ecx, dword [dword esp+ebp*4+038Ch]
+        push ecx
+        call GrabBlock
+        add esp, byte 0Ch
+        push dword 0F8h
+        push dword 0F9h
+        push dword 0FAh
+        mov ecx, dword [dword esp+0408h]
+        mov ecx, dword [dword esp+ecx+0374h]
+        mov ebx, dword [dword esp+0408h]
+        mov ebx, dword [dword esp+ebx+0370h]
+        mov edx, dword [dword esp+ebp*4+03B0h]
+        mov eax, dword [dword esp+ebp*4+03C0h]
+        call DrawMenuDropdown
+        xor esi, esi
+        mov dword [dword esp+ebp*4+0394h], esi
+        push dword 0F8h
+        push dword 0F9h
+        mov ebx, dword [dword esp+0404h]
+        mov ebx, dword [dword esp+ebx+0370h]
+        mov edx, dword [dword esp+0404h]
+        mov edx, dword [dword esp+edx+036Ch]
+        mov eax, dword [dword esp+ebp*4+03BCh]
+        mov ecx, 0FAh
+        jmp near SportsDesk.58
 .68:
-mov eax, dword [dword esp+03ECh]	; 1A3EF
-push eax	; 1A3F6
-mov edx, dword [dword esp+0404h]	; 1A3F7
-push edx	; 1A3FE
-mov ebx, dword [dword esp+0400h]	; 1A3FF
-push ebx	; 1A406
-call PutBlock	; 1A407
-add esp, byte 0Ch	; 1A40C
-jmp near .73	; 1A40F
+        mov eax, dword [dword esp+03ECh]
+        push eax
+        mov edx, dword [dword esp+0404h]
+        push edx
+        mov ebx, dword [dword esp+0400h]
+        push ebx
+        call PutBlock
+        add esp, byte 0Ch
+        jmp near .73
 .69:
-mov ebx, dword [dword esp+03ECh]	; 1A414
-push ebx	; 1A41B
-mov ecx, dword [dword esp+0404h]	; 1A41C
-push ecx	; 1A423
-mov esi, dword [dword esp+0400h]	; 1A424
-push esi	; 1A42B
-call PutBlock	; 1A42C
-add esp, byte 0Ch	; 1A431
-mov esi, dword [dword esp+0404h]	; 1A434
-jmp short .72	; 1A43B
+        mov ebx, dword [dword esp+03ECh]
+        push ebx
+        mov ecx, dword [dword esp+0404h]
+        push ecx
+        mov esi, dword [dword esp+0400h]
+        push esi
+        call PutBlock
+        add esp, byte 0Ch
+        mov esi, dword [dword esp+0404h]
+        jmp short .72
 .70:
-mov ebp, esi	; 1A43D
-shl ebp, 2	; 1A43F
-xor eax, eax	; 1A442
-mov dword [dword esp+ebp+0394h], eax	; 1A444
-mov edx, dword [dword esp+ebp+0384h]	; 1A44B
-test edx, edx	; 1A452
-je short .71	; 1A454
-mov ebx, dword [dword esp+esi*8+0368h]	; 1A456
-push ebx	; 1A45D
-mov ecx, dword [dword esp+esi*8+0368h]	; 1A45E
-push ecx	; 1A465
-push edx	; 1A466
-call PutBlock	; 1A467
-add esp, byte 0Ch	; 1A46C
-xor edx, edx	; 1A46F
-mov dword [dword esp+esi*8+0368h], edx	; 1A471
-mov dword [dword esp+esi*8+0364h], edx	; 1A478
-mov ebx, dword [dword esp+ebp+0384h]	; 1A47F
-push ebx	; 1A486
-call FreeMemBlock	; 1A487
-add esp, byte 4	; 1A48C
+        mov ebp, esi
+        shl ebp, 2
+        xor eax, eax
+        mov dword [dword esp+ebp+0394h], eax
+        mov edx, dword [dword esp+ebp+0384h]
+        test edx, edx
+        je short .71
+        mov ebx, dword [dword esp+esi*8+0368h]
+        push ebx
+        mov ecx, dword [dword esp+esi*8+0368h]
+        push ecx
+        push edx
+        call PutBlock
+        add esp, byte 0Ch
+        xor edx, edx
+        mov dword [dword esp+esi*8+0368h], edx
+        mov dword [dword esp+esi*8+0364h], edx
+        mov ebx, dword [dword esp+ebp+0384h]
+        push ebx
+        call FreeMemBlock
+        add esp, byte 4
 .71:
-dec esi	; 1A48F
+        dec esi
 .72:
-test esi, esi	; 1A490
-jg short SportsDesk.70	; 1A492
-xor eax, eax	; 1A494
-mov dword [dword esp+0404h], eax	; 1A496
-mov dword [dword esp+03C0h], eax	; 1A49D
-mov dword [dword esp+03BCh], eax	; 1A4A4
-mov dword [dword esp+03B8h], eax	; 1A4AB
-mov dword [dword esp+0390h], eax	; 1A4B2
-mov dword [dword esp+038Ch], eax	; 1A4B9
-mov dword [dword esp+0388h], eax	; 1A4C0
-mov dword [dword esp+0384h], eax	; 1A4C7
-mov dword [dword esp+03A0h], eax	; 1A4CE
-mov dword [dword esp+039Ch], eax	; 1A4D5
-mov dword [dword esp+0398h], eax	; 1A4DC
-mov dword [dword esp+03B0h], eax	; 1A4E3
-mov dword [dword esp+03ACh], eax	; 1A4EA
-mov dword [dword esp+03A8h], eax	; 1A4F1
+        test esi, esi
+        jg short SportsDesk.70
+        xor eax, eax
+        mov dword [dword esp+0404h], eax
+        mov dword [dword esp+03C0h], eax
+        mov dword [dword esp+03BCh], eax
+        mov dword [dword esp+03B8h], eax
+        mov dword [dword esp+0390h], eax
+        mov dword [dword esp+038Ch], eax
+        mov dword [dword esp+0388h], eax
+        mov dword [dword esp+0384h], eax
+        mov dword [dword esp+03A0h], eax
+        mov dword [dword esp+039Ch], eax
+        mov dword [dword esp+0398h], eax
+        mov dword [dword esp+03B0h], eax
+        mov dword [dword esp+03ACh], eax
+        mov dword [dword esp+03A8h], eax
 .73:
-mov edi, dword [dword esp+03E0h]	; 1A4F8
-push edi	; 1A4FF
-mov ebp, dword [dword esp+03E8h]	; 1A500
-push ebp	; 1A507
-mov eax, dword [dword esp+0400h]	; 1A508
-push eax	; 1A50F
-call GrabBlock	; 1A510
-add esp, byte 0Ch	; 1A515
-mov edx, dword [dword esp+03E0h]	; 1A518
-push edx	; 1A51F
-mov ebx, dword [dword esp+03E8h]	; 1A520
-push ebx	; 1A527
-mov ecx, dword [pointerspr]	; 1A528
-push ecx	; 1A52E
-jmp near SportsDesk.33	; 1A52F
+        mov edi, dword [dword esp+03E0h]
+        push edi
+        mov ebp, dword [dword esp+03E8h]
+        push ebp
+        mov eax, dword [dword esp+0400h]
+        push eax
+        call GrabBlock
+        add esp, byte 0Ch
+        mov edx, dword [dword esp+03E0h]
+        push edx
+        mov ebx, dword [dword esp+03E8h]
+        push ebx
+        mov ecx, dword [pointerspr]
+        push ecx
+        jmp near SportsDesk.33
+;-----------------------------------------------------------------------------
+; DeskReloadGame                                  1A534  95 PC, low confidence
+; Reloads the home team art (LoadRink, team 0Ch for the all-star teams) and
+; LoadPlayerPhotos, fades in and flags a desk redraw (dword_C66D4 /
+; dword_C66D0); SportsDesk
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskReloadGame.c
 %ifdef CBUILD
 %include "c/front/desk/DeskReloadGame.inc"
 %else
 DeskReloadGame:
-push dword 1Ch	; 1A534
-call __CHK	; 1A539
-push ebx	; 1A53E
-push ecx	; 1A53F
-push edx	; 1A540
-cmp word [HomeTeam], byte 1Ah	; 1A541
-jl short .1	; 1A549
-mov eax, 0Ch	; 1A54B
-jmp short .2	; 1A550
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        cmp word [HomeTeam], byte 1Ah
+        jl short .1
+        mov eax, 0Ch
+        jmp short .2
 .1:
-mov eax, dword [HomeTeam-2]	; 1A552
-sar eax, 10h	; 1A557
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
 .2:
-call LoadRink	; 1A55A
-call LoadPlayerPhotos	; 1A55F
-push savepal	; 1A564
-push dword 100h	; 1A569
-push byte 0	; 1A56E
-call SetPalette	; 1A570
-add esp, byte 0Ch	; 1A575
-mov ebx, 10h	; 1A578
-mov edx, savepal	; 1A57D
-mov eax, 1	; 1A582
-call FadePalStep	; 1A587
-mov edx, 1	; 1A58C
-mov dword [dword_C66D4], edx	; 1A591
-mov dword [dword_C66D0], edx	; 1A597
-pop edx	; 1A59D
-pop ecx	; 1A59E
-pop ebx	; 1A59F
-ret	; 1A5A0
+        call LoadRink
+        call LoadPlayerPhotos
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        mov edx, 1
+        mov dword [dword_C66D4], edx
+        mov dword [dword_C66D0], edx
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeskBackToGame                                                  1A5A1  95 PC
+; "Back to Game" item: returns 1
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskBackToGame.c
 %ifdef CBUILD
 %include "c/front/desk/DeskBackToGame.inc"
 %else
 DeskBackToGame:
-push dword 4	; 1A5A1
-call __CHK	; 1A5A6
-mov eax, 1	; 1A5AB
-ret	; 1A5B0
+        push dword 4
+        call __CHK
+        mov eax, 1
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeskToSportsDesk                             1A5B1  95 PC, medium confidence
+; "Sports Desk" item (no confirmation): flags a redraw, returns 5
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskToSportsDesk.c
 %ifdef CBUILD
 %include "c/front/desk/DeskToSportsDesk.inc"
 %else
 DeskToSportsDesk:
-push dword 8	; 1A5B1
-call __CHK	; 1A5B6
-push edx	; 1A5BB
-mov edx, 1	; 1A5BC
-mov dword [dword_C66D4], edx	; 1A5C1
-mov dword [dword_C66D0], edx	; 1A5C7
-mov eax, 5	; 1A5CD
-pop edx	; 1A5D2
-ret	; 1A5D3
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, 1
+        mov dword [dword_C66D4], edx
+        mov dword [dword_C66D0], edx
+        mov eax, 5
+        pop edx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeskReturnConfirm                                               1A5D4  95 PC
+; "Sports Desk" item in a game: MessageBox "Returning to sports central" /
+; "Returning out of the game" / "Returning to the playoff tree" (by gamemode)
+; "Do you wish to return?"; yes returns 5, else 0
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskReturnConfirm.c
 %ifdef CBUILD
 %include "c/front/desk/DeskReturnConfirm.inc"
 %else
 DeskReturnConfirm:
-push dword 34h	; 1A5D4
-call __CHK	; 1A5D9
-push ebx	; 1A5DE
-push ecx	; 1A5DF
-push edx	; 1A5E0
-push edi	; 1A5E1
-sub esp, byte 0Ch	; 1A5E2
-mov eax, esp	; 1A5E5
-push eax	; 1A5E7
-lea eax, [byte esp+08h]	; 1A5E8
-push eax	; 1A5EC
-lea eax, [byte esp+010h]	; 1A5ED
-push eax	; 1A5F1
-call MouseRead	; 1A5F2
-add esp, byte 0Ch	; 1A5F7
-mov eax, dword [gamemode]	; 1A5FA
-cmp eax, byte 1	; 1A5FF
-jb short .1	; 1A602
-jbe short .3	; 1A604
-cmp eax, byte 2	; 1A606
-je short .2	; 1A609
-jmp short .4	; 1A60B
+        push dword 34h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push edi
+        sub esp, byte 0Ch
+        mov eax, esp
+        push eax
+        lea eax, [byte esp+08h]
+        push eax
+        lea eax, [byte esp+010h]
+        push eax
+        call MouseRead
+        add esp, byte 0Ch
+        mov eax, dword [gamemode]
+        cmp eax, byte 1
+        jb short .1
+        jbe short .3
+        cmp eax, byte 2
+        je short .2
+        jmp short .4
 .1:
-test eax, eax	; 1A60D
-jne short .4	; 1A60F
-mov dword [msg_DeskExit], str_ReturningToSportsCentral	; 1A611
-jmp short .4	; 1A61B
+        test eax, eax
+        jne short .4
+        mov dword [msg_DeskExit], str_ReturningToSportsCentral
+        jmp short .4
 .2:
-mov dword [msg_DeskExit], str_ReturningOutOfThe	; 1A61D
-jmp short .4	; 1A627
+        mov dword [msg_DeskExit], str_ReturningOutOfThe
+        jmp short .4
 .3:
-mov dword [msg_DeskExit], str_ReturningToThePlayoff	; 1A629
+        mov dword [msg_DeskExit], str_ReturningToThePlayoff
 .4:
-mov dword [msg_DeskExit_e02], str_DoYouWishToReturn	; 1A633
-push byte 0	; 1A63D
-mov ecx, 0FAh	; 1A63F
-mov ebx, 0F8h	; 1A644
-mov edx, ecx	; 1A649
-mov eax, 0F9h	; 1A64B
-call SetDialogColors	; 1A650
-push byte 0FFFFFFFFh	; 1A655
-lea eax, [byte esp+08h]	; 1A657
-push eax	; 1A65B
-lea eax, [byte esp+010h]	; 1A65C
-push eax	; 1A660
-push byte 2	; 1A661
-push btn_POHumanOut	; 1A663
-mov ecx, 3	; 1A668
-mov ebx, msg_DeskExit	; 1A66D
-mov edx, 0FFFFFFFFh	; 1A672
-mov eax, edx	; 1A677
-call MessageBox	; 1A679
-mov dword [esp], eax	; 1A67E
-test eax, eax	; 1A681
-jg short .5	; 1A683
-xor eax, eax	; 1A685
-jmp short .x	; 1A687
+        mov dword [msg_DeskExit_e02], str_DoYouWishToReturn
+        push byte 0
+        mov ecx, 0FAh
+        mov ebx, 0F8h
+        mov edx, ecx
+        mov eax, 0F9h
+        call SetDialogColors
+        push byte 0FFFFFFFFh
+        lea eax, [byte esp+08h]
+        push eax
+        lea eax, [byte esp+010h]
+        push eax
+        push byte 2
+        push btn_POHumanOut
+        mov ecx, 3
+        mov ebx, msg_DeskExit
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov dword [esp], eax
+        test eax, eax
+        jg short .5
+        xor eax, eax
+        jmp short .x
 .5:
-mov edi, 1	; 1A689
-mov dword [dword_C66D4], edi	; 1A68E
-mov dword [dword_C66D0], edi	; 1A694
-mov eax, 5	; 1A69A
+        mov edi, 1
+        mov dword [dword_C66D4], edi
+        mov dword [dword_C66D0], edi
+        mov eax, 5
 .x:
-add esp, byte 0Ch	; 1A69F
-pop edi	; 1A6A2
-pop edx	; 1A6A3
-pop ecx	; 1A6A4
-pop ebx	; 1A6A5
-ret	; 1A6A6
+        add esp, byte 0Ch
+        pop edi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeskExitGame                                                    1A6A7  95 PC
+; "Exit" item: MessageBox "Exiting the game" / "Do you wish to exit?"; on yes
+; stops the music, ShowCredits and leaves through bailout_vec
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskExitGame.c
 %ifdef CBUILD
 %include "c/front/desk/DeskExitGame.inc"
 %else
 DeskExitGame:
-push dword 38h	; 1A6A7
-call __CHK	; 1A6AC
-push ebx	; 1A6B1
-push ecx	; 1A6B2
-push edx	; 1A6B3
-push edi	; 1A6B4
-push ebp	; 1A6B5
-sub esp, byte 0Ch	; 1A6B6
-cmp byte [musicon], 0	; 1A6B9
-je short .1	; 1A6C0
-cmp dword [songdata], byte 0	; 1A6C2
-je short .1	; 1A6C9
-mov eax, dword [musichandle]	; 1A6CB
-mov ebx, 64h	; 1A6D0
-mov edx, 3	; 1A6D5
-call sub_8FCDF	; 1A6DA
+        push dword 38h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push edi
+        push ebp
+        sub esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .1
+        cmp dword [songdata], byte 0
+        je short .1
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .1:
-mov eax, esp	; 1A6DF
-push eax	; 1A6E1
-lea eax, [byte esp+08h]	; 1A6E2
-push eax	; 1A6E6
-lea eax, [byte esp+010h]	; 1A6E7
-push eax	; 1A6EB
-call MouseRead	; 1A6EC
-add esp, byte 0Ch	; 1A6F1
-mov dword [msg_DeskExit], str_ExitingTheGame	; 1A6F4
-mov dword [msg_DeskExit_e02], str_DoYouWishToExit	; 1A6FE
-push byte 0	; 1A708
-mov ecx, 0FAh	; 1A70A
-mov ebx, 0F8h	; 1A70F
-mov edx, ecx	; 1A714
-mov eax, 0F9h	; 1A716
-call SetDialogColors	; 1A71B
-push byte 0FFFFFFFFh	; 1A720
-lea eax, [byte esp+08h]	; 1A722
-push eax	; 1A726
-lea eax, [byte esp+010h]	; 1A727
-push eax	; 1A72B
-push byte 2	; 1A72C
-push btn_POHumanOut	; 1A72E
-mov ecx, 3	; 1A733
-mov ebx, msg_DeskExit	; 1A738
-mov edx, 0FFFFFFFFh	; 1A73D
-mov eax, edx	; 1A742
-call MessageBox	; 1A744
-mov dword [esp], eax	; 1A749
-test eax, eax	; 1A74C
-jle near .4	; 1A74E
-push savepal	; 1A754
-push dword 100h	; 1A759
-push byte 0	; 1A75E
-call SetPalette	; 1A760
-add esp, byte 0Ch	; 1A765
-mov ebx, 10h	; 1A768
-mov edx, savepal	; 1A76D
-mov eax, 1	; 1A772
-call FadePalStep	; 1A777
-call sub_B4BA8	; 1A77C
-push byte 0	; 1A781
-call ClearScreen	; 1A783
-add esp, byte 4	; 1A788
-cmp byte [musicon], 0	; 1A78B
-je short .3	; 1A792
-cmp dword [songdata], byte 0	; 1A794
-je short .3	; 1A79B
+        mov eax, esp
+        push eax
+        lea eax, [byte esp+08h]
+        push eax
+        lea eax, [byte esp+010h]
+        push eax
+        call MouseRead
+        add esp, byte 0Ch
+        mov dword [msg_DeskExit], str_ExitingTheGame
+        mov dword [msg_DeskExit_e02], str_DoYouWishToExit
+        push byte 0
+        mov ecx, 0FAh
+        mov ebx, 0F8h
+        mov edx, ecx
+        mov eax, 0F9h
+        call SetDialogColors
+        push byte 0FFFFFFFFh
+        lea eax, [byte esp+08h]
+        push eax
+        lea eax, [byte esp+010h]
+        push eax
+        push byte 2
+        push btn_POHumanOut
+        mov ecx, 3
+        mov ebx, msg_DeskExit
+        mov edx, 0FFFFFFFFh
+        mov eax, edx
+        call MessageBox
+        mov dword [esp], eax
+        test eax, eax
+        jle near .4
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        cmp byte [musicon], 0
+        je short .3
+        cmp dword [songdata], byte 0
+        je short .3
 .2:
-mov eax, dword [musicslot-3]	; 1A79D
-sar eax, 18h	; 1A7A2
-mov edx, 3	; 1A7A5
-call SndQuery	; 1A7AA
-test eax, eax	; 1A7AF
-je short DeskExitGame.2	; 1A7B1
-mov edi, dword [songdata]	; 1A7B3
-push edi	; 1A7B9
-call sub_8D2F0	; 1A7BA
-add esp, byte 4	; 1A7BF
-xor ebp, ebp	; 1A7C2
-mov dword [songdata], ebp	; 1A7C4
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short DeskExitGame.2
+        mov edi, dword [songdata]
+        push edi
+        call sub_8D2F0
+        add esp, byte 4
+        xor ebp, ebp
+        mov dword [songdata], ebp
 .3:
-call ShowLoadingScreen	; 1A7CA
-call sub_1B982	; 1A7CF
-call ShowCredits	; 1A7D4
-push savepal	; 1A7D9
-push dword 100h	; 1A7DE
-push byte 0	; 1A7E3
-call SetPalette	; 1A7E5
-add esp, byte 0Ch	; 1A7EA
-mov ebx, 10h	; 1A7ED
-mov edx, savepal	; 1A7F2
-mov eax, 1	; 1A7F7
-call FadePalStep	; 1A7FC
-call sub_B4B58	; 1A801
-call dword [bailout_vec]	; 1A806
+        call ShowLoadingScreen
+        call sub_1B982
+        call ShowCredits
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        call sub_B4B58
+        call dword [bailout_vec]
 .4:
-xor eax, eax	; 1A80C
-add esp, byte 0Ch	; 1A80E
-pop ebp	; 1A811
-pop edi	; 1A812
-pop edx	; 1A813
-pop ecx	; 1A814
-pop ebx	; 1A815
-ret	; 1A816
+        xor eax, eax
+        add esp, byte 0Ch
+        pop ebp
+        pop edi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; DeskGoToReplay                               1A817  95 PC, medium confidence
+; "Go To Replay ..." item: reloads the home team art and photos, fades,
+; 320x200, InstantReplay (replay), flags a redraw
+;-----------------------------------------------------------------------------
 ; C: src/front/desk/DeskGoToReplay.c
 %ifdef CBUILD
 %include "c/front/desk/DeskGoToReplay.inc"
 %else
 DeskGoToReplay:
-push dword 1Ch	; 1A817
-call __CHK	; 1A81C
-push ebx	; 1A821
-push ecx	; 1A822
-push edx	; 1A823
-cmp word [HomeTeam], byte 1Ah	; 1A824
-jl short .1	; 1A82C
-mov eax, 0Ch	; 1A82E
-jmp short .2	; 1A833
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        cmp word [HomeTeam], byte 1Ah
+        jl short .1
+        mov eax, 0Ch
+        jmp short .2
 .1:
-mov eax, dword [HomeTeam-2]	; 1A835
-sar eax, 10h	; 1A83A
+        mov eax, dword [HomeTeam-2]
+        sar eax, 10h
 .2:
-call LoadRink	; 1A83D
-call LoadPlayerPhotos	; 1A842
-push savepal	; 1A847
-push dword 100h	; 1A84C
-push byte 0	; 1A851
-call SetPalette	; 1A853
-add esp, byte 0Ch	; 1A858
-mov ebx, 10h	; 1A85B
-mov edx, savepal	; 1A860
-mov eax, 1	; 1A865
-call FadePalette	; 1A86A
-mov edx, 0C8h	; 1A86F
-mov eax, 140h	; 1A874
-call SetScreenSize	; 1A879
-xor eax, eax	; 1A87E
-call InstantReplay	; 1A880
-mov edx, dword [s1font]	; 1A885
-push edx	; 1A88B
-call TextSetFont	; 1A88C
-add esp, byte 4	; 1A891
-mov ebx, 1	; 1A894
-mov dword [dword_C66D4], ebx	; 1A899
-mov dword [dword_C66D0], ebx	; 1A89F
-jmp near DeskItem_ret2	; 1A8A5
+        call LoadRink
+        call LoadPlayerPhotos
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalette
+        mov edx, 0C8h
+        mov eax, 140h
+        call SetScreenSize
+        xor eax, eax
+        call InstantReplay
+        mov edx, dword [s1font]
+        push edx
+        call TextSetFont
+        add esp, byte 4
+        mov ebx, 1
+        mov dword [dword_C66D4], ebx
+        mov dword [dword_C66D0], ebx
+        jmp near DeskItem_ret2
+;-----------------------------------------------------------------------------
+; DeskHomeLines                                1A8AA  95 PC, medium confidence
+; "Home Team ..." item: fade, line editor for hmlinetab (GameLineEditor team
+; 0)
+;-----------------------------------------------------------------------------
 DeskHomeLines:
-push dword 1Ch	; 1A8AA
-call __CHK	; 1A8AF
-push ebx	; 1A8B4
-push ecx	; 1A8B5
-push edx	; 1A8B6
-push savepal	; 1A8B7
-push dword 100h	; 1A8BC
-push byte 0	; 1A8C1
-call SetPalette	; 1A8C3
-add esp, byte 0Ch	; 1A8C8
-mov ebx, 10h	; 1A8CB
-mov edx, savepal	; 1A8D0
-mov eax, 1	; 1A8D5
-call FadePalStep	; 1A8DA
-mov ecx, 2	; 1A8DF
-mov ebx, desklinesmenubar	; 1A8E4
-mov edx, hmlinetab	; 1A8E9
-xor eax, eax	; 1A8EE
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        mov ecx, 2
+        mov ebx, desklinesmenubar
+        mov edx, hmlinetab
+        xor eax, eax
 DeskLines_common:
-call GameLineEditor	; 1A8F0
-push savepal	; 1A8F5
-push dword 100h	; 1A8FA
-push byte 0	; 1A8FF
-call SetPalette	; 1A901
-add esp, byte 0Ch	; 1A906
-mov ebx, 10h	; 1A909
-mov edx, savepal	; 1A90E
-mov eax, 1	; 1A913
-call FadePalStep	; 1A918
-jmp near DeskItem_ret2	; 1A91D
+        call GameLineEditor
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        jmp near DeskItem_ret2
+;-----------------------------------------------------------------------------
+; DeskVisitorLines                             1A922  95 PC, medium confidence
+; "Visiting Team ..." item: fade, line editor for awlinetab (GameLineEditor
+; team 1)
+;-----------------------------------------------------------------------------
 DeskVisitorLines:
-push dword 1Ch	; 1A922
-call __CHK	; 1A927
-push ebx	; 1A92C
-push ecx	; 1A92D
-push edx	; 1A92E
-push savepal	; 1A92F
-push dword 100h	; 1A934
-push byte 0	; 1A939
-call SetPalette	; 1A93B
-add esp, byte 0Ch	; 1A940
-mov ebx, 10h	; 1A943
-mov edx, savepal	; 1A948
-mov eax, 1	; 1A94D
-call FadePalStep	; 1A952
-mov ecx, 2	; 1A957
-mov ebx, desklinesmenubar	; 1A95C
-mov edx, awlinetab	; 1A961
-mov eax, 1	; 1A966
-jmp short DeskLines_common	; 1A96B
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        mov ecx, 2
+        mov ebx, desklinesmenubar
+        mov edx, awlinetab
+        mov eax, 1
+        jmp short DeskLines_common
+;-----------------------------------------------------------------------------
+; DeskGameStats                                1A96D  95 PC, medium confidence
+; "Game Statistics ..." item: fade, GameStatsScreen
+;-----------------------------------------------------------------------------
 DeskGameStats:
-push dword 1Ch	; 1A96D
-call __CHK	; 1A972
-push ebx	; 1A977
-push ecx	; 1A978
-push edx	; 1A979
-push savepal	; 1A97A
-push dword 100h	; 1A97F
-push byte 0	; 1A984
-call SetPalette	; 1A986
-add esp, byte 0Ch	; 1A98B
-mov ebx, 10h	; 1A98E
-mov edx, savepal	; 1A993
-mov eax, 1	; 1A998
-call FadePalStep	; 1A99D
-call GameStatsScreen	; 1A9A2
-jmp near DeskItem_ret2	; 1A9A7
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        call GameStatsScreen
+        jmp near DeskItem_ret2
+;-----------------------------------------------------------------------------
+; DeskPenaltySummary                           1A9AC  95 PC, medium confidence
+; "Penalty Summary ..." item: fades the music, GameSummaryScreen summary page
+;-----------------------------------------------------------------------------
 DeskPenaltySummary:
-push dword 20h	; 1A9AC
-call __CHK	; 1A9B1
-push ebx	; 1A9B6
-push ecx	; 1A9B7
-push edx	; 1A9B8
-push esi	; 1A9B9
-push savepal	; 1A9BA
-push dword 100h	; 1A9BF
-push byte 0	; 1A9C4
-call SetPalette	; 1A9C6
-add esp, byte 0Ch	; 1A9CB
-cmp byte [musicon], 0	; 1A9CE
-je short .1	; 1A9D5
-cmp dword [songdata], byte 0	; 1A9D7
-je short .1	; 1A9DE
-mov eax, dword [musichandle]	; 1A9E0
-mov ebx, 64h	; 1A9E5
-mov edx, 3	; 1A9EA
-call sub_8FCDF	; 1A9EF
+        push dword 20h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        cmp byte [musicon], 0
+        je short .1
+        cmp dword [songdata], byte 0
+        je short .1
+        mov eax, dword [musichandle]
+        mov ebx, 64h
+        mov edx, 3
+        call sub_8FCDF
 .1:
-mov ebx, 10h	; 1A9F4
-mov edx, savepal	; 1A9F9
-mov eax, 1	; 1A9FE
-call FadePalStep	; 1AA03
-cmp byte [musicon], 0	; 1AA08
-je short .3	; 1AA0F
-cmp dword [songdata], byte 0	; 1AA11
-je short .3	; 1AA18
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        cmp byte [musicon], 0
+        je short .3
+        cmp dword [songdata], byte 0
+        je short .3
 .2:
-mov eax, dword [musicslot-3]	; 1AA1A
-sar eax, 18h	; 1AA1F
-mov edx, 3	; 1AA22
-call SndQuery	; 1AA27
-test eax, eax	; 1AA2C
-je short DeskPenaltySummary.2	; 1AA2E
-mov ecx, dword [songdata]	; 1AA30
-push ecx	; 1AA36
-call sub_8D2F0	; 1AA37
-add esp, byte 4	; 1AA3C
-xor esi, esi	; 1AA3F
-mov dword [songdata], esi	; 1AA41
+        mov eax, dword [musicslot-3]
+        sar eax, 18h
+        mov edx, 3
+        call SndQuery
+        test eax, eax
+        je short DeskPenaltySummary.2
+        mov ecx, dword [songdata]
+        push ecx
+        call sub_8D2F0
+        add esp, byte 4
+        xor esi, esi
+        mov dword [songdata], esi
 .3:
-call ShowLoadingScreen	; 1AA47
-mov ebx, dword [curperiod]	; 1AA4C
-xor ecx, ecx	; 1AA52
-mov edx, 1	; 1AA54
-mov eax, 2	; 1AA59
-call GameSummaryScreen	; 1AA5E
-mov eax, 2	; 1AA63
-pop esi	; 1AA68
-pop edx	; 1AA69
-pop ecx	; 1AA6A
-pop ebx	; 1AA6B
-ret	; 1AA6C
+        call ShowLoadingScreen
+        mov ebx, dword [curperiod]
+        xor ecx, ecx
+        mov edx, 1
+        mov eax, 2
+        call GameSummaryScreen
+        mov eax, 2
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
+;-----------------------------------------------------------------------------
+; DeskScoringSummary                           1AA6D  95 PC, medium confidence
+; "Scoring Summary ..." item: fade, GameSummaryScreen(1)
+;-----------------------------------------------------------------------------
 DeskScoringSummary:
-push dword 1Ch	; 1AA6D
-call __CHK	; 1AA72
-push ebx	; 1AA77
-push ecx	; 1AA78
-push edx	; 1AA79
-push savepal	; 1AA7A
-push dword 100h	; 1AA7F
-push byte 0	; 1AA84
-call SetPalette	; 1AA86
-add esp, byte 0Ch	; 1AA8B
-mov ebx, 10h	; 1AA8E
-mov edx, savepal	; 1AA93
-mov eax, 1	; 1AA98
-call FadePalStep	; 1AA9D
-call ShowLoadingScreen	; 1AAA2
-mov ebx, dword [curperiod]	; 1AAA7
-xor ecx, ecx	; 1AAAD
-mov edx, 1	; 1AAAF
-mov eax, edx	; 1AAB4
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        call ShowLoadingScreen
+        mov ebx, dword [curperiod]
+        xor ecx, ecx
+        mov edx, 1
+        mov eax, edx
 DeskSummary_common:
-call GameSummaryScreen	; 1AAB6
+        call GameSummaryScreen
 DeskItem_ret2:
-mov eax, 2	; 1AABB
-pop edx	; 1AAC0
-pop ecx	; 1AAC1
-pop ebx	; 1AAC2
-ret	; 1AAC3
+        mov eax, 2
+        pop edx
+        pop ecx
+        pop ebx
+        ret
+;-----------------------------------------------------------------------------
+; DeskTeamScratches                            1AAC4  95 PC, medium confidence
+; "Team Scratches ..." item: fade, GameSummaryScreen(4)
+;-----------------------------------------------------------------------------
 DeskTeamScratches:
-push dword 1Ch	; 1AAC4
-call __CHK	; 1AAC9
-push ebx	; 1AACE
-push ecx	; 1AACF
-push edx	; 1AAD0
-push savepal	; 1AAD1
-push dword 100h	; 1AAD6
-push byte 0	; 1AADB
-call SetPalette	; 1AADD
-add esp, byte 0Ch	; 1AAE2
-mov ebx, 10h	; 1AAE5
-mov edx, savepal	; 1AAEA
-mov eax, 1	; 1AAEF
-call FadePalStep	; 1AAF4
-call ShowLoadingScreen	; 1AAF9
-xor ecx, ecx	; 1AAFE
-xor ebx, ebx	; 1AB00
-xor edx, edx	; 1AB02
-mov eax, 4	; 1AB04
-jmp short DeskSummary_common	; 1AB09
+        push dword 1Ch
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push savepal
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, savepal
+        mov eax, 1
+        call FadePalStep
+        call ShowLoadingScreen
+        xor ecx, ecx
+        xor ebx, ebx
+        xor edx, edx
+        mov eax, 4
+        jmp short DeskSummary_common
+;-----------------------------------------------------------------------------
+; DeskHomeGoalie1                              1AB0B  95 PC, medium confidence
+; "Home Team Goalie" menu, first goalie: SetTeamGoalie(0, 0) and marks the
+; item
+;-----------------------------------------------------------------------------
 DeskHomeGoalie1:
-push dword 8	; 1AB0B
-call __CHK	; 1AB10
-push edx	; 1AB15
-xor edx, edx	; 1AB16
-xor eax, eax	; 1AB18
-call SetTeamGoalie	; 1AB1A
-mov eax, dword [mi_HomeGoalie1]	; 1AB1F
-mov byte [eax], 1	; 1AB24
-mov eax, dword [mi_HomeGoalie2]	; 1AB27
-mov byte [eax], 2	; 1AB2C
+        push dword 8
+        call __CHK
+        push edx
+        xor edx, edx
+        xor eax, eax
+        call SetTeamGoalie
+        mov eax, dword [mi_HomeGoalie1]
+        mov byte [eax], 1
+        mov eax, dword [mi_HomeGoalie2]
+        mov byte [eax], 2
 DeskGoalie_x1:
-mov eax, dword [mi_HomeGoalieNone]	; 1AB2F
-jmp near DeskGoalie_x4	; 1AB34
+        mov eax, dword [mi_HomeGoalieNone]
+        jmp near DeskGoalie_x4
+;-----------------------------------------------------------------------------
+; DeskHomeGoalie2                              1AB39  95 PC, medium confidence
+; Home second goalie: SetTeamGoalie(0, 1)
+;-----------------------------------------------------------------------------
 DeskHomeGoalie2:
-push dword 8	; 1AB39
-call __CHK	; 1AB3E
-push edx	; 1AB43
-mov edx, 1	; 1AB44
-xor eax, eax	; 1AB49
-call SetTeamGoalie	; 1AB4B
-mov eax, dword [mi_HomeGoalie1]	; 1AB50
-mov byte [eax], 2	; 1AB55
-mov eax, dword [mi_HomeGoalie2]	; 1AB58
-mov byte [eax], 1	; 1AB5D
-jmp short DeskGoalie_x1	; 1AB60
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, 1
+        xor eax, eax
+        call SetTeamGoalie
+        mov eax, dword [mi_HomeGoalie1]
+        mov byte [eax], 2
+        mov eax, dword [mi_HomeGoalie2]
+        mov byte [eax], 1
+        jmp short DeskGoalie_x1
+;-----------------------------------------------------------------------------
+; DeskHomeGoalieNone                           1AB62  95 PC, medium confidence
+; Home goalie "NONE" (empty net): SetTeamGoalie(0, -1)
+;-----------------------------------------------------------------------------
 DeskHomeGoalieNone:
-push dword 8	; 1AB62
-call __CHK	; 1AB67
-push edx	; 1AB6C
-mov edx, 0FFFFFFFFh	; 1AB6D
-xor eax, eax	; 1AB72
-call SetTeamGoalie	; 1AB74
-mov eax, dword [mi_HomeGoalie1]	; 1AB79
-mov byte [eax], 2	; 1AB7E
-mov eax, dword [mi_HomeGoalie2]	; 1AB81
-mov byte [eax], 2	; 1AB86
-mov eax, dword [mi_HomeGoalieNone]	; 1AB89
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, 0FFFFFFFFh
+        xor eax, eax
+        call SetTeamGoalie
+        mov eax, dword [mi_HomeGoalie1]
+        mov byte [eax], 2
+        mov eax, dword [mi_HomeGoalie2]
+        mov byte [eax], 2
+        mov eax, dword [mi_HomeGoalieNone]
 DeskGoalie_x2:
-mov byte [eax], 1	; 1AB8E
-xor eax, eax	; 1AB91
-pop edx	; 1AB93
-ret	; 1AB94
+        mov byte [eax], 1
+        xor eax, eax
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; DeskAwayGoalie1                              1AB95  95 PC, medium confidence
+; Visiting first goalie: SetTeamGoalie(1, 0)
+;-----------------------------------------------------------------------------
 DeskAwayGoalie1:
-push dword 8	; 1AB95
-call __CHK	; 1AB9A
-push edx	; 1AB9F
-xor edx, edx	; 1ABA0
-mov eax, 1	; 1ABA2
-call SetTeamGoalie	; 1ABA7
-mov eax, dword [mi_AwayGoalie1]	; 1ABAC
-mov byte [eax], 1	; 1ABB1
-mov eax, dword [mi_AwayGoalie2]	; 1ABB4
-mov byte [eax], 2	; 1ABB9
+        push dword 8
+        call __CHK
+        push edx
+        xor edx, edx
+        mov eax, 1
+        call SetTeamGoalie
+        mov eax, dword [mi_AwayGoalie1]
+        mov byte [eax], 1
+        mov eax, dword [mi_AwayGoalie2]
+        mov byte [eax], 2
 DeskGoalie_x3:
-mov eax, dword [mi_AwayGoalieNone]	; 1ABBC
+        mov eax, dword [mi_AwayGoalieNone]
 DeskGoalie_x4:
-mov byte [eax], 2	; 1ABC1
-xor eax, eax	; 1ABC4
-pop edx	; 1ABC6
-ret	; 1ABC7
+        mov byte [eax], 2
+        xor eax, eax
+        pop edx
+        ret
+;-----------------------------------------------------------------------------
+; DeskAwayGoalie2                              1ABC8  95 PC, medium confidence
+; Visiting second goalie: SetTeamGoalie(1, 1)
+;-----------------------------------------------------------------------------
 DeskAwayGoalie2:
-push dword 8	; 1ABC8
-call __CHK	; 1ABCD
-push edx	; 1ABD2
-mov edx, 1	; 1ABD3
-mov eax, edx	; 1ABD8
-call SetTeamGoalie	; 1ABDA
-mov eax, dword [mi_AwayGoalie1]	; 1ABDF
-mov byte [eax], 2	; 1ABE4
-mov eax, dword [mi_AwayGoalie2]	; 1ABE7
-mov byte [eax], 1	; 1ABEC
-jmp short DeskGoalie_x3	; 1ABEF
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, 1
+        mov eax, edx
+        call SetTeamGoalie
+        mov eax, dword [mi_AwayGoalie1]
+        mov byte [eax], 2
+        mov eax, dword [mi_AwayGoalie2]
+        mov byte [eax], 1
+        jmp short DeskGoalie_x3
+;-----------------------------------------------------------------------------
+; DeskAwayGoalieNone                           1ABF1  95 PC, medium confidence
+; Visiting goalie "NONE": SetTeamGoalie(1, -1)
+;-----------------------------------------------------------------------------
 DeskAwayGoalieNone:
-push dword 8	; 1ABF1
-call __CHK	; 1ABF6
-push edx	; 1ABFB
-mov edx, 0FFFFFFFFh	; 1ABFC
-mov eax, 1	; 1AC01
-call SetTeamGoalie	; 1AC06
-mov eax, dword [mi_AwayGoalie1]	; 1AC0B
-mov byte [eax], 2	; 1AC10
-mov eax, dword [mi_AwayGoalie2]	; 1AC13
-mov byte [eax], 2	; 1AC18
-mov eax, dword [mi_AwayGoalieNone]	; 1AC1B
-jmp near DeskGoalie_x2	; 1AC20
+        push dword 8
+        call __CHK
+        push edx
+        mov edx, 0FFFFFFFFh
+        mov eax, 1
+        call SetTeamGoalie
+        mov eax, dword [mi_AwayGoalie1]
+        mov byte [eax], 2
+        mov eax, dword [mi_AwayGoalie2]
+        mov byte [eax], 2
+        mov eax, dword [mi_AwayGoalieNone]
+        jmp near DeskGoalie_x2
 %endif ; C

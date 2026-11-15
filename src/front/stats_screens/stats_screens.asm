@@ -19,2050 +19,2135 @@ global EasnSkaterStatsScreen_m, EasnGoalieStatsScreen, EasnGoalieStatsScreen_m, 
 global EasnStandingsMenu_standings, EasnStandingsMenu_roster, EasnStandingsMenu_player, EasnStandingsMenu_player2, FreeCalendarIfLowMem, LoadCalendarShapes, CalTeamStatsScreen, CalTeamStatsScreen_common
 global CalTeamStatsScreen_x, CalSkaterStatsScreen, CalGoalieStatsScreen, CalStandingsScreen, CalStandingsMenu_jt, CalStandingsMenu, CalStandingsMenu_standings, CalStandingsMenu_roster
 global CalStandingsMenu_player, CalStandingsMenu_player2, DrawPhotoWithPal
+;-----------------------------------------------------------------------------
+; GameTeamStatsScreen                          20016  95 PC, medium confidence
+; Teamstatscb set around PlayGame: team stats screen (TeamStatsScreen) with
+; embpal / !pal palette fade and RunMenu on the 4-item menu
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameTeamStatsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/GameTeamStatsScreen.inc"
 %else
 GameTeamStatsScreen:
-push dword 330h	; 20016
-call __CHK	; 2001B
-push ebx	; 20020
-push ecx	; 20021
-push edx	; 20022
-push esi	; 20023
-sub esp, 310h	; 20024
-mov esi, eax	; 2002A
-mov dword [leaguestatsmode], 1	; 2002C
-mov dword [statscategory], eax	; 20036
-mov dword [statsredrawcb], TeamStatsScreen	; 2003B
-mov eax, esp	; 20045
-push eax	; 20047
-push dword 100h	; 20048
-push byte 0	; 2004D
-call SetPalette	; 2004F
-add esp, byte 0Ch	; 20054
-mov ebx, 10h	; 20057
-mov edx, esp	; 2005C
-mov eax, 1	; 2005E
-call FadePalStep	; 20063
-call sub_B4BA8	; 20068
-mov eax, 1	; 2006D
-call InitMenuRemap	; 20072
-mov eax, esi	; 20077
-call TeamStatsScreen	; 20079
-push byte 42h	; 2007E
-mov ecx, 41h	; 20080
-mov ebx, 40h	; 20085
-mov edx, 4	; 2008A
-mov eax, teamstatsmenubar	; 2008F
-call DrawMenuBar	; 20094
-xor ecx, ecx	; 20099
-mov ebx, str_embpal	; 2009B
-cmp byte [fileoncd+08Eh], 1	; 200A0
-jne short .1	; 200A7
-mov edx, dword [cddriveptr]	; 200A9
-jmp short .2	; 200AF
+        push dword 330h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        sub esp, 310h
+        mov esi, eax
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], eax
+        mov dword [statsredrawcb], TeamStatsScreen
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov eax, esi
+        call TeamStatsScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 200B1
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 200B3
-call MakePath	; 200BA
-push byte 0	; 200BF
-lea eax, [dword esp+0304h]	; 200C1
-push eax	; 200C8
-call LoadBank	; 200C9
-add esp, byte 8	; 200CE
-mov dword [statsbgshapes], eax	; 200D1
-push str_Pal6	; 200D6
-push eax	; 200DB
-call FindShape	; 200DC
-add esp, byte 8	; 200E1
-mov dword [statspalshape], eax	; 200E4
-lea edx, [byte eax+010h]	; 200E9
-mov ebx, 300h	; 200EC
-mov eax, esp	; 200F1
-call memcpy_	; 200F3
-mov ecx, dword [statsbgshapes]	; 200F8
-push ecx	; 200FE
-call FreeMemBlock	; 200FF
-add esp, byte 4	; 20104
-mov ebx, 10h	; 20107
-mov edx, esp	; 2010C
-xor eax, eax	; 2010E
-call FadePalStep	; 20110
-push byte 42h	; 20115
-mov ecx, 41h	; 20117
-mov ebx, 40h	; 2011C
-mov edx, 4	; 20121
-mov eax, teamstatsmenubar	; 20126
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal6
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        mov ecx, dword [statsbgshapes]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
 GameTeamStatsScreen_common:
-call RunMenu	; 2012B
-mov eax, esp	; 20130
-push eax	; 20132
-push dword 100h	; 20133
-push byte 0	; 20138
-call SetPalette	; 2013A
-add esp, byte 0Ch	; 2013F
-mov ebx, 10h	; 20142
-mov edx, esp	; 20147
-mov eax, 1	; 20149
-call FadePalStep	; 2014E
-xor esi, esi	; 20153
-mov dword [leaguestatsmode], esi	; 20155
-mov dword [statsredrawcb], esi	; 2015B
-mov eax, 2	; 20161
-add esp, 310h	; 20166
-pop esi	; 2016C
-pop edx	; 2016D
-pop ecx	; 2016E
-pop ebx	; 2016F
-ret	; 20170
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        xor esi, esi
+        mov dword [leaguestatsmode], esi
+        mov dword [statsredrawcb], esi
+        mov eax, 2
+        add esp, 310h
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; GameSkaterStatsScreen                        20171  95 PC, medium confidence
+; Skaterstatscb in game: skater stats (LeadersScreen) + RunMenu
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameSkaterStatsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/GameSkaterStatsScreen.inc"
 %else
 GameSkaterStatsScreen:
-push dword 334h	; 20171
-call __CHK	; 20176
-push ebx	; 2017B
-push ecx	; 2017C
-push edx	; 2017D
-push esi	; 2017E
-push edi	; 2017F
-sub esp, 310h	; 20180
-mov esi, eax	; 20186
-mov edx, 1	; 20188
-mov dword [leaguestatsmode], edx	; 2018D
-mov dword [statscategory], eax	; 20193
-mov dword [statsredrawcb], LeadersScreen	; 20198
-mov dword [statspalvalid], edx	; 201A2
-mov eax, esp	; 201A8
-mov dword [statspal], eax	; 201AA
-push eax	; 201AF
-push dword 100h	; 201B0
-push byte 0	; 201B5
-call SetPalette	; 201B7
-add esp, byte 0Ch	; 201BC
-mov ebx, 10h	; 201BF
-mov edx, esp	; 201C4
-mov eax, 1	; 201C6
-call FadePalStep	; 201CB
-call sub_B4BA8	; 201D0
-mov eax, 1	; 201D5
-call InitMenuRemap	; 201DA
-mov eax, esi	; 201DF
-call LeadersScreen	; 201E1
-push byte 42h	; 201E6
-mov ecx, 41h	; 201E8
-mov ebx, 40h	; 201ED
-mov edx, 4	; 201F2
-mov eax, skaterstatsmenubar	; 201F7
-call DrawMenuBar	; 201FC
-xor ecx, ecx	; 20201
-mov ebx, str_embpal	; 20203
-cmp byte [fileoncd+08Eh], 1	; 20208
-jne short .1	; 2020F
-mov edx, dword [cddriveptr]	; 20211
-jmp short .2	; 20217
+        push dword 334h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 310h
+        mov esi, eax
+        mov edx, 1
+        mov dword [leaguestatsmode], edx
+        mov dword [statscategory], eax
+        mov dword [statsredrawcb], LeadersScreen
+        mov dword [statspalvalid], edx
+        mov eax, esp
+        mov dword [statspal], eax
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 20219
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 2021B
-call MakePath	; 20222
-push byte 0	; 20227
-lea eax, [dword esp+0304h]	; 20229
-push eax	; 20230
-call LoadBank	; 20231
-add esp, byte 8	; 20236
-mov dword [statsbgshapes], eax	; 20239
-push str_Pal6	; 2023E
-push eax	; 20243
-call FindShape	; 20244
-add esp, byte 8	; 20249
-mov dword [statspalshape], eax	; 2024C
-lea edx, [byte eax+010h]	; 20251
-mov ebx, 300h	; 20254
-mov eax, esp	; 20259
-call memcpy_	; 2025B
-mov esi, dword [statsbgshapes]	; 20260
-push esi	; 20266
-call FreeMemBlock	; 20267
-add esp, byte 4	; 2026C
-mov ebx, 10h	; 2026F
-mov edx, esp	; 20274
-xor eax, eax	; 20276
-call FadePalStep	; 20278
-xor edi, edi	; 2027D
-mov dword [statspalvalid], edi	; 2027F
-mov dword [statspal], edi	; 20285
-push byte 42h	; 2028B
-mov ecx, 41h	; 2028D
-mov ebx, 40h	; 20292
-mov edx, 4	; 20297
-mov eax, skaterstatsmenubar	; 2029C
-call RunMenu	; 202A1
-mov eax, esp	; 202A6
-push eax	; 202A8
-push dword 100h	; 202A9
-push edi	; 202AE
-call SetPalette	; 202AF
-add esp, byte 0Ch	; 202B4
-mov ebx, 10h	; 202B7
-mov edx, esp	; 202BC
-mov eax, 1	; 202BE
-call FadePalStep	; 202C3
-mov dword [leaguestatsmode], edi	; 202C8
-mov dword [statsredrawcb], edi	; 202CE
-mov eax, 2	; 202D4
-add esp, 310h	; 202D9
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal6
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        mov esi, dword [statsbgshapes]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        xor edi, edi
+        mov dword [statspalvalid], edi
+        mov dword [statspal], edi
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push edi
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov dword [leaguestatsmode], edi
+        mov dword [statsredrawcb], edi
+        mov eax, 2
+        add esp, 310h
 GameSkaterStatsScreen_x:
-pop edi	; 202DF
-pop esi	; 202E0
-pop edx	; 202E1
-pop ecx	; 202E2
-pop ebx	; 202E3
-ret	; 202E4
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; GameGoalieStatsScreen                        202E5  95 PC, medium confidence
+; Goaliestatscb in game: goalie stats (LeadersScreen) + menu
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameTeamStatsScreen.c (GameGoalieStatsScreen)
 %ifdef CBUILD
 %include "c/front/stats_screens/GameTeamStatsScreen.GameGoalieStatsScreen.inc"
 %else
 GameGoalieStatsScreen:
-push dword 330h	; 202E5
-call __CHK	; 202EA
-push ebx	; 202EF
-push ecx	; 202F0
-push edx	; 202F1
-push esi	; 202F2
-sub esp, 310h	; 202F3
-mov esi, eax	; 202F9
-mov dword [leaguestatsmode], 1	; 202FB
-mov dword [statscategory], eax	; 20305
-mov dword [statsredrawcb], LeadersScreen	; 2030A
-mov eax, esp	; 20314
-push eax	; 20316
-push dword 100h	; 20317
-push byte 0	; 2031C
-call SetPalette	; 2031E
-add esp, byte 0Ch	; 20323
-mov ebx, 10h	; 20326
-mov edx, esp	; 2032B
-mov eax, 1	; 2032D
-call FadePalStep	; 20332
-mov eax, 1	; 20337
-call InitMenuRemap	; 2033C
-mov eax, esi	; 20341
-call LeadersScreen	; 20343
-push byte 42h	; 20348
-mov ecx, 41h	; 2034A
-mov ebx, 40h	; 2034F
-mov edx, 4	; 20354
-mov eax, goaliestatsmenubar	; 20359
-call DrawMenuBar	; 2035E
-xor ecx, ecx	; 20363
-mov ebx, str_embpal	; 20365
-cmp byte [fileoncd+08Eh], 1	; 2036A
-jne short .1	; 20371
-mov edx, dword [cddriveptr]	; 20373
-jmp short .2	; 20379
+        push dword 330h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        sub esp, 310h
+        mov esi, eax
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], eax
+        mov dword [statsredrawcb], LeadersScreen
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov eax, 1
+        call InitMenuRemap
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 2037B
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 2037D
-call MakePath	; 20384
-push byte 0	; 20389
-lea eax, [dword esp+0304h]	; 2038B
-push eax	; 20392
-call LoadBank	; 20393
-add esp, byte 8	; 20398
-mov dword [statsbgshapes], eax	; 2039B
-push str_Pal6	; 203A0
-push eax	; 203A5
-call FindShape	; 203A6
-add esp, byte 8	; 203AB
-mov dword [statspalshape], eax	; 203AE
-lea edx, [byte eax+010h]	; 203B3
-mov ebx, 300h	; 203B6
-mov eax, esp	; 203BB
-call memcpy_	; 203BD
-mov ecx, dword [statsbgshapes]	; 203C2
-push ecx	; 203C8
-call FreeMemBlock	; 203C9
-add esp, byte 4	; 203CE
-mov ebx, 10h	; 203D1
-mov edx, esp	; 203D6
-xor eax, eax	; 203D8
-call FadePalStep	; 203DA
-push byte 42h	; 203DF
-mov ecx, 41h	; 203E1
-mov ebx, 40h	; 203E6
-mov edx, 4	; 203EB
-mov eax, goaliestatsmenubar	; 203F0
-jmp near GameTeamStatsScreen_common	; 203F5
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal6
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        mov ecx, dword [statsbgshapes]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebx, 10h
+        mov edx, esp
+        xor eax, eax
+        call FadePalStep
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        jmp near GameTeamStatsScreen_common
 %endif ; C
+;-----------------------------------------------------------------------------
+; GameStandingsScreen                          203FA  95 PC, medium confidence
+; Standingscb in game: loads EASN.vfn, draws standings via StandingsScreen
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameStandingsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/GameStandingsScreen.inc"
 %else
 GameStandingsScreen:
-push dword 28h	; 203FA
-call __CHK	; 203FF
-push ebx	; 20404
-push ecx	; 20405
-push edx	; 20406
-sub esp, byte 10h	; 20407
-cmp dword [statsplayoffs], byte 0	; 2040A
-je near .7	; 20411
-mov ebx, dword [easnfontbuf]	; 20417
-test ebx, ebx	; 2041D
-jne short .1	; 2041F
-push ebx	; 20421
-push str_EASNvfn	; 20422
-call sub_8E8A0	; 20427
-add esp, byte 8	; 2042C
-mov dword [easnfontbuf], eax	; 2042F
+        push dword 28h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        sub esp, byte 10h
+        cmp dword [statsplayoffs], byte 0
+        je near .7
+        mov ebx, dword [easnfontbuf]
+        test ebx, ebx
+        jne short .1
+        push ebx
+        push str_EASNvfn
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [easnfontbuf], eax
 .1:
-mov ecx, dword [embscupbank]	; 20434
-test ecx, ecx	; 2043A
-jne short .6	; 2043C
-mov eax, dword [statsplayoffs]	; 2043E
-shl eax, 2	; 20443
-cmp dword [statsplayoffs], byte 0	; 20446
-jne short .3	; 2044D
-mov ebx, dword [dword eax+statsbgnames]	; 2044F
-cmp byte [fileoncd+08Ch], 1	; 20455
-jne short .2	; 2045C
-mov edx, dword [cddriveptr]	; 2045E
-jmp short .5	; 20464
+        mov ecx, dword [embscupbank]
+        test ecx, ecx
+        jne short .6
+        mov eax, dword [statsplayoffs]
+        shl eax, 2
+        cmp dword [statsplayoffs], byte 0
+        jne short .3
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Ch], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .2:
-xor edx, edx	; 20466
-jmp short .5	; 20468
+        xor edx, edx
+        jmp short .5
 .3:
-mov ebx, dword [dword eax+statsbgnames]	; 2046A
-cmp byte [fileoncd+08Dh], 1	; 20470
-jne short .4	; 20477
-mov edx, dword [cddriveptr]	; 20479
-jmp short .5	; 2047F
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Dh], 1
+        jne short .4
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .4:
-xor edx, edx	; 20481
+        xor edx, edx
 .5:
-mov eax, esp	; 20483
-call MakePath	; 20485
-push byte 0	; 2048A
-lea eax, [byte esp+04h]	; 2048C
-push eax	; 20490
-call LoadBank	; 20491
-add esp, byte 8	; 20496
-mov dword [embscupbank], eax	; 20499
+        mov eax, esp
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [embscupbank], eax
 .6:
-mov eax, dword [statsteambuf]	; 2049E
-mov edx, statsteamorder	; 204A3
-call ShowPlayoffTree	; 204A8
-push byte 42h	; 204AD
-mov ecx, 41h	; 204AF
-mov ebx, 40h	; 204B4
-mov edx, 4	; 204B9
-mov eax, standingsmenubar	; 204BE
-call DrawMenuBar	; 204C3
-jmp short .8	; 204C8
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call ShowPlayoffTree
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        jmp short .8
 .7:
-call FreeDeskBuffers	; 204CA
-call sub_B4BA8	; 204CF
-push byte 42h	; 204D4
-mov ecx, 41h	; 204D6
-mov ebx, 40h	; 204DB
-mov edx, 4	; 204E0
-mov eax, standingsmenubar	; 204E5
-call DrawMenuBar	; 204EA
-mov eax, dword [statsteambuf]	; 204EF
-mov edx, statsteamorder	; 204F4
-call StandingsScreen	; 204F9
+        call FreeDeskBuffers
+        call sub_B4BA8
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call StandingsScreen
 .8:
-xor eax, eax	; 204FE
-add esp, byte 10h	; 20500
-pop edx	; 20503
-pop ecx	; 20504
-pop ebx	; 20505
-ret	; 20506
+        xor eax, eax
+        add esp, byte 10h
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
-db 08Dh,040h,00h
+        db 08Dh,040h,00h
 GameStandingsMenu_jt:
-dd GameStandingsMenu_standings
-dd GameStandingsMenu_roster
-dd GameStandingsMenu_player
-dd GameStandingsMenu_player2
+        dd GameStandingsMenu_standings
+        dd GameStandingsMenu_roster
+        dd GameStandingsMenu_player
+        dd GameStandingsMenu_player2
+;-----------------------------------------------------------------------------
+; GameStandingsMenu                            2051A  95 PC, medium confidence
+; Standingsmenucb in game: allocs tstat / keys / pstat / gstat, Overall
+; Standings + team picker, Team Roster player picker, player screens; loops
+; on deskexit
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/GameSkaterStatsScreen.c (GameStandingsMenu)
 %ifdef CBUILD
 %include "c/front/stats_screens/GameSkaterStatsScreen.GameStandingsMenu.inc"
 %else
 GameStandingsMenu:
-push dword 338h	; 2051A
-call __CHK	; 2051F
-push ebx	; 20524
-push ecx	; 20525
-push edx	; 20526
-push esi	; 20527
-push edi	; 20528
-push ebp	; 20529
-sub esp, 310h	; 2052A
-mov dword [leaguestatsmode], 1	; 20530
-mov eax, dword [standingscb]	; 2053A
-mov dword [statsredrawcb], eax	; 2053F
-xor ebx, ebx	; 20544
-mov dword [statsteamsel], ebx	; 20546
-mov dword [statscategory], ebx	; 2054C
-xor ah, ah	; 20552
-mov byte [statsplayer+2], ah	; 20554
-mov eax, esp	; 2055A
-push eax	; 2055C
-push dword 100h	; 2055D
-push ebx	; 20562
-call SetPalette	; 20563
-add esp, byte 0Ch	; 20568
-mov ebx, 10h	; 2056B
-mov edx, esp	; 20570
-mov eax, 1	; 20572
-call FadePalStep	; 20577
-call sub_B4BA8	; 2057C
-push byte 0	; 20581
-call ClearScreen	; 20583
-add esp, byte 4	; 20588
-xor esi, esi	; 2058B
-mov dword [dword_C6D26], esi	; 2058D
-mov eax, 1	; 20593
-call InitMenuRemap	; 20598
-push byte 20h	; 2059D
-push dword 2A4h	; 2059F
-push str_tstat	; 205A4
-call AllocMemBlock	; 205A9
-add esp, byte 0Ch	; 205AE
-mov dword [statsteambuf], eax	; 205B1
-push byte 20h	; 205B6
-push dword 5B0h	; 205B8
-push str_keys	; 205BD
-call AllocMemBlock	; 205C2
-add esp, byte 0Ch	; 205C7
-mov dword [statsplayerbuf], eax	; 205CA
-push byte 20h	; 205CF
-push dword 497h	; 205D1
-push str_pstat	; 205D6
-call AllocMemBlock	; 205DB
-add esp, byte 0Ch	; 205E0
-mov dword [statsskaterbuf], eax	; 205E3
-push byte 20h	; 205E8
-push dword 10Eh	; 205EA
-push str_gstat	; 205EF
-call AllocMemBlock	; 205F4
-add esp, byte 0Ch	; 205F9
-mov dword [statsgoaliebuf], eax	; 205FC
-xor eax, eax	; 20601
-call dword [standingscb]	; 20603
-push byte 42h	; 20609
-mov ecx, 41h	; 2060B
-mov ebx, 40h	; 20610
-mov edx, 4	; 20615
-mov eax, standingsmenubar	; 2061A
-call DrawMenuBar	; 2061F
-mov dword [statscategory], esi	; 20624
-mov dword [statsteamsel], esi	; 2062A
-xor ecx, ecx	; 20630
-mov ebx, str_embpal	; 20632
-cmp byte [fileoncd+08Eh], 1	; 20637
-jne short .1	; 2063E
-mov edx, dword [cddriveptr]	; 20640
-jmp short .2	; 20646
+        push dword 338h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 310h
+        mov dword [leaguestatsmode], 1
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor ebx, ebx
+        mov dword [statsteamsel], ebx
+        mov dword [statscategory], ebx
+        xor ah, ah
+        mov byte [statsplayer+2], ah
+        mov eax, esp
+        push eax
+        push dword 100h
+        push ebx
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call sub_B4BA8
+        push byte 0
+        call ClearScreen
+        add esp, byte 4
+        xor esi, esi
+        mov dword [dword_C6D26], esi
+        mov eax, 1
+        call InitMenuRemap
+        push byte 20h
+        push dword 2A4h
+        push str_tstat
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsteambuf], eax
+        push byte 20h
+        push dword 5B0h
+        push str_keys
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsplayerbuf], eax
+        push byte 20h
+        push dword 497h
+        push str_pstat
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsskaterbuf], eax
+        push byte 20h
+        push dword 10Eh
+        push str_gstat
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsgoaliebuf], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        mov dword [statscategory], esi
+        mov dword [statsteamsel], esi
+        xor ecx, ecx
+        mov ebx, str_embpal
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 20648
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 2064A
-call MakePath	; 20651
-push byte 0	; 20656
-lea eax, [dword esp+0304h]	; 20658
-push eax	; 2065F
-call LoadBank	; 20660
-add esp, byte 8	; 20665
-mov dword [statsbgshapes], eax	; 20668
-push str_Pal6	; 2066D
-push eax	; 20672
-call FindShape	; 20673
-add esp, byte 8	; 20678
-mov dword [statspalshape], eax	; 2067B
-add eax, byte 10h	; 20680
-push eax	; 20683
-push dword 100h	; 20684
-push byte 0	; 20689
-call VgaSetPalette	; 2068B
-add esp, byte 0Ch	; 20690
-mov eax, dword [statsbgshapes]	; 20693
-push eax	; 20698
-call FreeMemBlock	; 20699
-add esp, byte 4	; 2069E
-push byte 42h	; 206A1
-mov ecx, 41h	; 206A3
-mov ebx, 40h	; 206A8
-mov edx, 4	; 206AD
-mov eax, standingsmenubar	; 206B2
-call RunTeamPickMenu	; 206B7
-call FreeDeskBuffers	; 206BC
-mov edi, GoalieStatsCard	; 206C1
-mov esi, 1	; 206C6
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal6
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        add eax, byte 10h
+        push eax
+        push dword 100h
+        push byte 0
+        call VgaSetPalette
+        add esp, byte 0Ch
+        mov eax, dword [statsbgshapes]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        call FreeDeskBuffers
+        mov edi, GoalieStatsCard
+        mov esi, 1
 .3:
-mov edx, dword [deskexit]	; 206CB
-cmp edx, byte 1	; 206D1
-je near GameStandingsMenu_player2.1	; 206D4
-lea eax, [byte edx-02h]	; 206DA
-cmp eax, byte 3	; 206DD
-ja short GameStandingsMenu.3	; 206E0
-jmp dword [nosplit cs:eax*4+GameStandingsMenu_jt]	; 206E2
+        mov edx, dword [deskexit]
+        cmp edx, byte 1
+        je near GameStandingsMenu_player2.1
+        lea eax, [byte edx-02h]
+        cmp eax, byte 3
+        ja short GameStandingsMenu.3
+        jmp dword [nosplit cs:eax*4+GameStandingsMenu_jt]
 GameStandingsMenu_standings:
-mov eax, dword [standingscb]	; 206EA
-mov dword [statsredrawcb], eax	; 206EF
-xor eax, eax	; 206F4
-call dword [standingscb]	; 206F6
-push byte 42h	; 206FC
-mov ecx, 41h	; 206FE
-mov ebx, 40h	; 20703
-mov edx, 4	; 20708
-mov eax, standingsmenubar	; 2070D
-call DrawMenuBar	; 20712
-push byte 42h	; 20717
-mov ecx, 41h	; 20719
-mov ebx, 40h	; 2071E
-mov edx, 4	; 20723
-mov eax, standingsmenubar	; 20728
-call RunTeamPickMenu	; 2072D
-cmp dword [statsplayoffs], byte 0	; 20732
-je short .1	; 20739
-call FreeDeskBuffers	; 2073B
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        cmp dword [statsplayoffs], byte 0
+        je short .1
+        call FreeDeskBuffers
 .1:
-xor ecx, ecx	; 20740
-mov dword [dword_C6D26], ecx	; 20742
-jmp short GameStandingsMenu.3	; 20748
+        xor ecx, ecx
+        mov dword [dword_C6D26], ecx
+        jmp short GameStandingsMenu.3
 GameStandingsMenu_roster:
-xor eax, eax	; 2074A
-mov dword [dword_DC734], eax	; 2074C
-mov dword [statsredrawcb], TeamRosterScreen	; 20751
-mov eax, dword [statscategory]	; 2075B
-call TeamRosterScreen	; 20760
-push byte 42h	; 20765
-mov ecx, 41h	; 20767
-mov ebx, 40h	; 2076C
-mov edx, 4	; 20771
-mov eax, rostermenubar	; 20776
-call DrawMenuBar	; 2077B
-push byte 42h	; 20780
-mov ecx, 41h	; 20782
-mov ebx, 40h	; 20787
-mov edx, 4	; 2078C
-mov eax, rostermenubar	; 20791
-call RunPlayerPickMenu	; 20796
-jmp near GameStandingsMenu.3	; 2079B
+        xor eax, eax
+        mov dword [dword_DC734], eax
+        mov dword [statsredrawcb], TeamRosterScreen
+        mov eax, dword [statscategory]
+        call TeamRosterScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call RunPlayerPickMenu
+        jmp near GameStandingsMenu.3
 GameStandingsMenu_player:
-mov dword [statsredrawcb], edi	; 207A0
-xor ebp, ebp	; 207A6
-mov dword [dword_DC6B4], ebp	; 207A8
-mov eax, statsplayer	; 207AE
-call GoalieStatsCard	; 207B3
-push byte 42h	; 207B8
-mov ecx, 41h	; 207BA
-mov ebx, 40h	; 207BF
-mov edx, 2	; 207C4
-mov eax, playercardmenubar	; 207C9
-call DrawMenuBar	; 207CE
-push byte 42h	; 207D3
-mov ecx, 41h	; 207D5
-mov ebx, 40h	; 207DA
-mov edx, 2	; 207DF
-mov eax, playercardmenubar	; 207E4
-call RunMenu	; 207E9
-jmp near GameStandingsMenu.3	; 207EE
+        mov dword [statsredrawcb], edi
+        xor ebp, ebp
+        mov dword [dword_DC6B4], ebp
+        mov eax, statsplayer
+        call GoalieStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        jmp near GameStandingsMenu.3
 GameStandingsMenu_player2:
-mov dword [statsredrawcb], SkaterStatsCard	; 207F3
-xor ecx, ecx	; 207FD
-mov dword [dword_DC6B4], ecx	; 207FF
-mov eax, statsplayer	; 20805
-call SkaterStatsCard	; 2080A
-push byte 42h	; 2080F
-mov ecx, 41h	; 20811
-mov ebx, 40h	; 20816
-mov edx, 2	; 2081B
-mov eax, playercardmenubar	; 20820
-call DrawMenuBar	; 20825
-push byte 42h	; 2082A
-mov ecx, 41h	; 2082C
-mov ebx, 40h	; 20831
-mov edx, 2	; 20836
-mov eax, playercardmenubar	; 2083B
-call RunMenu	; 20840
-mov dword [dword_C6D26], esi	; 20845
-jmp near GameStandingsMenu.3	; 2084B
+        mov dword [statsredrawcb], SkaterStatsCard
+        xor ecx, ecx
+        mov dword [dword_DC6B4], ecx
+        mov eax, statsplayer
+        call SkaterStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        mov dword [dword_C6D26], esi
+        jmp near GameStandingsMenu.3
 .1:
-xor esi, esi	; 20850
-mov dword [dword_C6D26], esi	; 20852
-mov eax, esp	; 20858
-push eax	; 2085A
-push dword 100h	; 2085B
-push esi	; 20860
-call SetPalette	; 20861
-add esp, byte 0Ch	; 20866
-mov ebx, 10h	; 20869
-mov edx, esp	; 2086E
-mov eax, 1	; 20870
-call FadePalStep	; 20875
-call FreeDeskBuffers	; 2087A
-mov edi, dword [statsteambuf]	; 2087F
-push edi	; 20885
-call FreeMemBlock	; 20886
-add esp, byte 4	; 2088B
-mov ebp, dword [statsgoaliebuf]	; 2088E
-push ebp	; 20894
-call FreeMemBlock	; 20895
-add esp, byte 4	; 2089A
-mov eax, dword [statsskaterbuf]	; 2089D
-push eax	; 208A2
-call FreeMemBlock	; 208A3
-add esp, byte 4	; 208A8
-mov edx, dword [statsplayerbuf]	; 208AB
-push edx	; 208B1
-call FreeMemBlock	; 208B2
-add esp, byte 4	; 208B7
-mov dword [statsplayerbuf], esi	; 208BA
-mov dword [statsteambuf], esi	; 208C0
-mov dword [statsgoaliebuf], esi	; 208C6
-mov dword [statsskaterbuf], esi	; 208CC
-mov dword [leaguestatsmode], esi	; 208D2
-mov dword [statsredrawcb], esi	; 208D8
-mov eax, 2	; 208DE
-add esp, 310h	; 208E3
-pop ebp	; 208E9
-jmp near GameSkaterStatsScreen_x	; 208EA
+        xor esi, esi
+        mov dword [dword_C6D26], esi
+        mov eax, esp
+        push eax
+        push dword 100h
+        push esi
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call FreeDeskBuffers
+        mov edi, dword [statsteambuf]
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebp, dword [statsgoaliebuf]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, dword [statsskaterbuf]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        mov edx, dword [statsplayerbuf]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        mov dword [statsplayerbuf], esi
+        mov dword [statsteambuf], esi
+        mov dword [statsgoaliebuf], esi
+        mov dword [statsskaterbuf], esi
+        mov dword [leaguestatsmode], esi
+        mov dword [statsredrawcb], esi
+        mov eax, 2
+        add esp, 310h
+        pop ebp
+        jmp near GameSkaterStatsScreen_x
 %endif ; C
+;-----------------------------------------------------------------------------
+; EasnTeamStatsScreen                                             208EF  95 PC
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/EasnTeamStatsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/EasnTeamStatsScreen.inc"
 %else
 EasnTeamStatsScreen:
-push dword 334h	; 208EF
+        push dword 334h
 EasnTeamStatsScreen_m:
-call __CHK	; 208F4
-push ebx	; 208F9
-push ecx	; 208FA
-push edx	; 208FB
-push esi	; 208FC
-push edi	; 208FD
-sub esp, 310h	; 208FE
-mov esi, eax	; 20904
-mov eax, esp	; 20906
-push eax	; 20908
-push dword 100h	; 20909
-push byte 0	; 2090E
-call SetPalette	; 20910
-add esp, byte 0Ch	; 20915
-mov edx, 1	; 20918
-mov dword [keepdesksong], edx	; 2091D
-mov dword [leaguestatsmode], edx	; 20923
-mov dword [statscategory], esi	; 20929
-mov dword [statsredrawcb], TeamStatsScreen	; 2092F
-call sub_B4BA8	; 20939
-mov eax, 1	; 2093E
-call InitMenuRemap	; 20943
-mov ebx, 10h	; 20948
-mov edx, esp	; 2094D
-mov eax, 1	; 2094F
-call FadePalStep	; 20954
-mov eax, esi	; 20959
-call TeamStatsScreen	; 2095B
-push byte 42h	; 20960
-mov ecx, 41h	; 20962
-mov ebx, 40h	; 20967
-mov edx, 4	; 2096C
-mov eax, teamstatsmenubar	; 20971
-call DrawMenuBar	; 20976
-xor ecx, ecx	; 2097B
-mov ebx, str_embpal2	; 2097D
-cmp byte [fileoncd+08Eh], 1	; 20982
-jne short .1	; 20989
-mov edx, dword [cddriveptr]	; 2098B
-jmp short .2	; 20991
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 310h
+        mov esi, eax
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov edx, 1
+        mov dword [keepdesksong], edx
+        mov dword [leaguestatsmode], edx
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], TeamStatsScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov eax, esi
+        call TeamStatsScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 20993
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 20995
-call MakePath	; 2099C
-push byte 0	; 209A1
-lea eax, [dword esp+0304h]	; 209A3
-push eax	; 209AA
-call LoadBank	; 209AB
-add esp, byte 8	; 209B0
-mov dword [statsbgshapes], eax	; 209B3
-push str_Pal7	; 209B8
-push eax	; 209BD
-call FindShape	; 209BE
-add esp, byte 8	; 209C3
-mov dword [statspalshape], eax	; 209C6
-lea edx, [byte eax+010h]	; 209CB
-mov ebx, 10h	; 209CE
-xor eax, eax	; 209D3
-call FadePalStep	; 209D5
-mov esi, dword [statsbgshapes]	; 209DA
-push esi	; 209E0
-call FreeMemBlock	; 209E1
-add esp, byte 4	; 209E6
-push byte 42h	; 209E9
-mov ecx, 41h	; 209EB
-mov ebx, 40h	; 209F0
-mov edx, 4	; 209F5
-mov eax, teamstatsmenubar	; 209FA
-call RunMenu	; 209FF
-mov eax, esp	; 20A04
-push eax	; 20A06
-push dword 100h	; 20A07
-push byte 0	; 20A0C
-call SetPalette	; 20A0E
-add esp, byte 0Ch	; 20A13
-mov ebx, 10h	; 20A16
-mov edx, esp	; 20A1B
-mov eax, 1	; 20A1D
-call FadePalStep	; 20A22
-xor edi, edi	; 20A27
-mov dword [leaguestatsmode], edi	; 20A29
-mov dword [statsredrawcb], edi	; 20A2F
-mov eax, 2	; 20A35
-add esp, 310h	; 20A3A
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal7
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov esi, dword [statsbgshapes]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        xor edi, edi
+        mov dword [leaguestatsmode], edi
+        mov dword [statsredrawcb], edi
+        mov eax, 2
+        add esp, 310h
 EasnTeamStatsScreen_x:
-pop edi	; 20A40
-pop esi	; 20A41
-pop edx	; 20A42
-pop ecx	; 20A43
-pop ebx	; 20A44
-ret	; 20A45
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
 EasnSkaterStatsScreen:
-db 068h,034h,03h,00h,00h,0E8h
+        db 068h,034h,03h,00h,00h,0E8h
+;-----------------------------------------------------------------------------
+; EasnSkaterStatsScreen_m                                         20A4C  95 PC
+;-----------------------------------------------------------------------------
 EasnSkaterStatsScreen_m:
-cld	; 20A4C
-mov esi, 51530006h	; 20A4D
-push edx	; 20A52
-push esi	; 20A53
-push ebp	; 20A54
-sub esp, 310h	; 20A55
-mov esi, eax	; 20A5B
-mov dword [keepdesksong], 1	; 20A5D
-mov eax, esp	; 20A67
-push eax	; 20A69
-push dword 100h	; 20A6A
-push byte 0	; 20A6F
-call SetPalette	; 20A71
-add esp, byte 0Ch	; 20A76
-mov dword [leaguestatsmode], 1	; 20A79
-mov dword [statscategory], esi	; 20A83
-mov dword [statsredrawcb], LeadersScreen	; 20A89
-call sub_B4BA8	; 20A93
-mov eax, 1	; 20A98
-call InitMenuRemap	; 20A9D
-mov ebx, 10h	; 20AA2
-mov edx, esp	; 20AA7
-mov eax, 1	; 20AA9
-call FadePalStep	; 20AAE
-mov eax, esi	; 20AB3
-call LeadersScreen	; 20AB5
-push byte 42h	; 20ABA
-mov ecx, 41h	; 20ABC
-mov ebx, 40h	; 20AC1
-mov edx, 4	; 20AC6
-mov eax, skaterstatsmenubar	; 20ACB
-call DrawMenuBar	; 20AD0
-xor ecx, ecx	; 20AD5
-mov ebx, str_embpal2	; 20AD7
-cmp byte [fileoncd+08Eh], 1	; 20ADC
-jne short .1	; 20AE3
-mov edx, dword [cddriveptr]	; 20AE5
-jmp short .2	; 20AEB
+        cld
+        mov esi, 51530006h
+        push edx
+        push esi
+        push ebp
+        sub esp, 310h
+        mov esi, eax
+        mov dword [keepdesksong], 1
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], LeadersScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 20AED
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 20AEF
-call MakePath	; 20AF6
-push byte 0	; 20AFB
-lea eax, [dword esp+0304h]	; 20AFD
-push eax	; 20B04
-call LoadBank	; 20B05
-add esp, byte 8	; 20B0A
-mov dword [statsbgshapes], eax	; 20B0D
-push str_Pal7	; 20B12
-push eax	; 20B17
-call FindShape	; 20B18
-add esp, byte 8	; 20B1D
-mov dword [statspalshape], eax	; 20B20
-lea edx, [byte eax+010h]	; 20B25
-mov ebx, 10h	; 20B28
-xor eax, eax	; 20B2D
-call FadePalStep	; 20B2F
-mov esi, dword [statsbgshapes]	; 20B34
-push esi	; 20B3A
-call FreeMemBlock	; 20B3B
-add esp, byte 4	; 20B40
-push byte 42h	; 20B43
-mov ecx, 41h	; 20B45
-mov ebx, 40h	; 20B4A
-mov edx, 4	; 20B4F
-mov eax, skaterstatsmenubar	; 20B54
-call RunMenu	; 20B59
-mov eax, esp	; 20B5E
-push eax	; 20B60
-push dword 100h	; 20B61
-push byte 0	; 20B66
-call SetPalette	; 20B68
-add esp, byte 0Ch	; 20B6D
-cmp dword [gamemode], byte 1	; 20B70
-je short .4	; 20B77
-xor ecx, ecx	; 20B79
-mov ebx, str_easndesk2	; 20B7B
-cmp byte [fileoncd+06Ah], 1	; 20B80
-jne short .3	; 20B87
-mov edx, dword [cddriveptr]	; 20B89
-jmp near EasnGoalieStatsScreen_common	; 20B8F
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal7
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov esi, dword [statsbgshapes]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        cmp dword [gamemode], byte 1
+        je short .4
+        xor ecx, ecx
+        mov ebx, str_easndesk2
+        cmp byte [fileoncd+06Ah], 1
+        jne short .3
+        mov edx, dword [cddriveptr]
+        jmp near EasnGoalieStatsScreen_common
 .3:
-xor edx, edx	; 20B94
-jmp near EasnGoalieStatsScreen_common	; 20B96
+        xor edx, edx
+        jmp near EasnGoalieStatsScreen_common
 .4:
-xor ecx, ecx	; 20B9B
-mov ebx, str_embpal2	; 20B9D
-cmp byte [fileoncd+08Eh], 1	; 20BA2
-jne short .5	; 20BA9
-mov edx, dword [cddriveptr]	; 20BAB
-jmp near EasnGoalieStatsScreen_common	; 20BB1
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jne short .5
+        mov edx, dword [cddriveptr]
+        jmp near EasnGoalieStatsScreen_common
 .5:
-xor edx, edx	; 20BB6
-jmp near EasnGoalieStatsScreen_common	; 20BB8
+        xor edx, edx
+        jmp near EasnGoalieStatsScreen_common
+;-----------------------------------------------------------------------------
+; EasnGoalieStatsScreen                                           20BBD  95 PC
+;-----------------------------------------------------------------------------
 EasnGoalieStatsScreen:
-push dword 334h	; 20BBD
+        push dword 334h
 EasnGoalieStatsScreen_m:
-call __CHK	; 20BC2
-push ebx	; 20BC7
-push ecx	; 20BC8
-push edx	; 20BC9
-push esi	; 20BCA
-push ebp	; 20BCB
-sub esp, 310h	; 20BCC
-mov esi, eax	; 20BD2
-mov dword [keepdesksong], 1	; 20BD4
-mov eax, esp	; 20BDE
-push eax	; 20BE0
-push dword 100h	; 20BE1
-push byte 0	; 20BE6
-call SetPalette	; 20BE8
-add esp, byte 0Ch	; 20BED
-mov dword [leaguestatsmode], 1	; 20BF0
-mov dword [statscategory], esi	; 20BFA
-mov dword [statsredrawcb], LeadersScreen	; 20C00
-call sub_B4BA8	; 20C0A
-mov eax, 1	; 20C0F
-call InitMenuRemap	; 20C14
-mov ebx, 10h	; 20C19
-mov edx, esp	; 20C1E
-mov eax, 1	; 20C20
-call FadePalStep	; 20C25
-mov eax, esi	; 20C2A
-call LeadersScreen	; 20C2C
-push byte 42h	; 20C31
-mov ecx, 41h	; 20C33
-mov ebx, 40h	; 20C38
-mov edx, 4	; 20C3D
-mov eax, goaliestatsmenubar	; 20C42
-call DrawMenuBar	; 20C47
-xor ecx, ecx	; 20C4C
-mov ebx, str_embpal2	; 20C4E
-cmp byte [fileoncd+08Eh], 1	; 20C53
-jne short .1	; 20C5A
-mov edx, dword [cddriveptr]	; 20C5C
-jmp short .2	; 20C62
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push ebp
+        sub esp, 310h
+        mov esi, eax
+        mov dword [keepdesksong], 1
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], LeadersScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 20C64
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 20C66
-call MakePath	; 20C6D
-push byte 0	; 20C72
-lea eax, [dword esp+0304h]	; 20C74
-push eax	; 20C7B
-call LoadBank	; 20C7C
-add esp, byte 8	; 20C81
-mov dword [statsbgshapes], eax	; 20C84
-push str_Pal7	; 20C89
-push eax	; 20C8E
-call FindShape	; 20C8F
-add esp, byte 8	; 20C94
-mov dword [statspalshape], eax	; 20C97
-lea edx, [byte eax+010h]	; 20C9C
-mov ebx, 10h	; 20C9F
-xor eax, eax	; 20CA4
-call FadePalStep	; 20CA6
-mov esi, dword [statsbgshapes]	; 20CAB
-push esi	; 20CB1
-call FreeMemBlock	; 20CB2
-add esp, byte 4	; 20CB7
-push byte 42h	; 20CBA
-mov ecx, 41h	; 20CBC
-mov ebx, 40h	; 20CC1
-mov edx, 4	; 20CC6
-mov eax, goaliestatsmenubar	; 20CCB
-call RunMenu	; 20CD0
-mov eax, esp	; 20CD5
-push eax	; 20CD7
-push dword 100h	; 20CD8
-push byte 0	; 20CDD
-call SetPalette	; 20CDF
-add esp, byte 0Ch	; 20CE4
-cmp dword [gamemode], byte 1	; 20CE7
-je near EasnGoalieStatsScreen_common.2	; 20CEE
-xor ecx, ecx	; 20CF4
-mov ebx, str_easndesk2	; 20CF6
-cmp byte [fileoncd+06Ah], 1	; 20CFB
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal7
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov esi, dword [statsbgshapes]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        cmp dword [gamemode], byte 1
+        je near EasnGoalieStatsScreen_common.2
+        xor ecx, ecx
+        mov ebx, str_easndesk2
+        cmp byte [fileoncd+06Ah], 1
 .3:
-jne short EasnGoalieStatsScreen_common.1	; 20D02
-mov edx, dword [cddriveptr]	; 20D04
+        jne short EasnGoalieStatsScreen_common.1
+        mov edx, dword [cddriveptr]
 EasnGoalieStatsScreen_common:
-lea eax, [dword esp+0300h]	; 20D0A
-call MakePath	; 20D11
-push byte 0	; 20D16
-lea eax, [dword esp+0304h]	; 20D18
-push eax	; 20D1F
-call LoadBank	; 20D20
-add esp, byte 8	; 20D25
-mov dword [statsbgshapes], eax	; 20D28
-push str_Pal7	; 20D2D
-push eax	; 20D32
-call FindShape	; 20D33
-add esp, byte 8	; 20D38
-add eax, byte 10h	; 20D3B
-mov dword [statspalshape], eax	; 20D3E
-mov ebx, 10h	; 20D43
-mov edx, esp	; 20D48
-mov eax, 1	; 20D4A
-call FadePalStep	; 20D4F
-mov ebp, dword [statsbgshapes]	; 20D54
-push ebp	; 20D5A
-call FreeMemBlock	; 20D5B
-add esp, byte 4	; 20D60
-xor eax, eax	; 20D63
-mov dword [leaguestatsmode], eax	; 20D65
-mov dword [statsredrawcb], eax	; 20D6A
-mov eax, 2	; 20D6F
-add esp, 310h	; 20D74
-pop ebp	; 20D7A
-pop esi	; 20D7B
-pop edx	; 20D7C
-pop ecx	; 20D7D
-pop ebx	; 20D7E
-ret	; 20D7F
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal7
+        push eax
+        call FindShape
+        add esp, byte 8
+        add eax, byte 10h
+        mov dword [statspalshape], eax
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov ebp, dword [statsbgshapes]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        mov dword [leaguestatsmode], eax
+        mov dword [statsredrawcb], eax
+        mov eax, 2
+        add esp, 310h
+        pop ebp
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 .1:
-xor edx, edx	; 20D80
-jmp short EasnGoalieStatsScreen_common	; 20D82
+        xor edx, edx
+        jmp short EasnGoalieStatsScreen_common
 .2:
-xor ecx, ecx	; 20D84
-mov ebx, str_embpal2	; 20D86
-cmp byte [fileoncd+08Eh], 1	; 20D8B
-jmp near EasnGoalieStatsScreen_m.3	; 20D92
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jmp near EasnGoalieStatsScreen_m.3
+;-----------------------------------------------------------------------------
+; EasnStandingsScreen                          20D97  95 PC, medium confidence
+; Standingscb front-end variant (EASN.vfn, StandingsScreen)
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/EasnStandingsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/EasnStandingsScreen.inc"
 %else
 EasnStandingsScreen:
-push dword 28h	; 20D97
-call __CHK	; 20D9C
-push ebx	; 20DA1
-push ecx	; 20DA2
-push edx	; 20DA3
-sub esp, byte 10h	; 20DA4
-cmp dword [statsplayoffs], byte 0	; 20DA7
-je near .7	; 20DAE
-mov ebx, dword [easnfontbuf]	; 20DB4
-test ebx, ebx	; 20DBA
-jne short .1	; 20DBC
-push ebx	; 20DBE
-push str_EASNvfn	; 20DBF
-call sub_8E8A0	; 20DC4
-add esp, byte 8	; 20DC9
-mov dword [easnfontbuf], eax	; 20DCC
+        push dword 28h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        sub esp, byte 10h
+        cmp dword [statsplayoffs], byte 0
+        je near .7
+        mov ebx, dword [easnfontbuf]
+        test ebx, ebx
+        jne short .1
+        push ebx
+        push str_EASNvfn
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [easnfontbuf], eax
 .1:
-mov ecx, dword [embscupbank]	; 20DD1
-test ecx, ecx	; 20DD7
-jne short .6	; 20DD9
-mov eax, dword [statsplayoffs]	; 20DDB
-shl eax, 2	; 20DE0
-cmp dword [statsplayoffs], byte 0	; 20DE3
-jne short .3	; 20DEA
-mov ebx, dword [dword eax+statsbgnames]	; 20DEC
-cmp byte [fileoncd+08Ch], 1	; 20DF2
-jne short .2	; 20DF9
-mov edx, dword [cddriveptr]	; 20DFB
-jmp short .5	; 20E01
+        mov ecx, dword [embscupbank]
+        test ecx, ecx
+        jne short .6
+        mov eax, dword [statsplayoffs]
+        shl eax, 2
+        cmp dword [statsplayoffs], byte 0
+        jne short .3
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Ch], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .2:
-xor edx, edx	; 20E03
-jmp short .5	; 20E05
+        xor edx, edx
+        jmp short .5
 .3:
-mov ebx, dword [dword eax+statsbgnames]	; 20E07
-cmp byte [fileoncd+08Dh], 1	; 20E0D
-jne short .4	; 20E14
-mov edx, dword [cddriveptr]	; 20E16
-jmp short .5	; 20E1C
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Dh], 1
+        jne short .4
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .4:
-xor edx, edx	; 20E1E
+        xor edx, edx
 .5:
-mov eax, esp	; 20E20
-call MakePath	; 20E22
-push byte 0	; 20E27
-lea eax, [byte esp+04h]	; 20E29
-push eax	; 20E2D
-call LoadBank	; 20E2E
-add esp, byte 8	; 20E33
-mov dword [embscupbank], eax	; 20E36
+        mov eax, esp
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [embscupbank], eax
 .6:
-mov eax, dword [statsteambuf]	; 20E3B
-mov edx, statsteamorder	; 20E40
-call ShowPlayoffTree	; 20E45
-push byte 42h	; 20E4A
-mov ecx, 41h	; 20E4C
-mov ebx, 40h	; 20E51
-mov edx, 4	; 20E56
-mov eax, standingsmenubar	; 20E5B
-call DrawMenuBar	; 20E60
-jmp short .8	; 20E65
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call ShowPlayoffTree
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        jmp short .8
 .7:
-call FreeDeskBuffers	; 20E67
-call sub_B4BA8	; 20E6C
-push byte 42h	; 20E71
-mov ecx, 41h	; 20E73
-mov ebx, 40h	; 20E78
-mov edx, 4	; 20E7D
-mov eax, standingsmenubar	; 20E82
-call DrawMenuBar	; 20E87
-mov eax, dword [statsteambuf]	; 20E8C
-mov edx, statsteamorder	; 20E91
-call StandingsScreen	; 20E96
+        call FreeDeskBuffers
+        call sub_B4BA8
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call StandingsScreen
 .8:
-xor eax, eax	; 20E9B
-add esp, byte 10h	; 20E9D
-pop edx	; 20EA0
-pop ecx	; 20EA1
-pop ebx	; 20EA2
-ret	; 20EA3
+        xor eax, eax
+        add esp, byte 10h
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
-db 08Dh,040h,00h
+        db 08Dh,040h,00h
 EasnStandingsMenu_jt:
-dd EasnStandingsMenu_standings
-dd EasnStandingsMenu_roster
-dd EasnStandingsMenu_player
-dd EasnStandingsMenu_player2
+        dd EasnStandingsMenu_standings
+        dd EasnStandingsMenu_roster
+        dd EasnStandingsMenu_player
+        dd EasnStandingsMenu_player2
 EasnStandingsMenu:
-db 068h,0B4h,03h,00h,00h
+        db 068h,0B4h,03h,00h,00h
+;-----------------------------------------------------------------------------
+; EasnStandingsMenu_m                                             20EBC  95 PC
+;-----------------------------------------------------------------------------
 EasnStandingsMenu_m:
-call __CHK	; 20EBC
-push ebx	; 20EC1
-push ecx	; 20EC2
-push edx	; 20EC3
-push esi	; 20EC4
-push edi	; 20EC5
-push ebp	; 20EC6
-sub esp, 38Ch	; 20EC7
-xor eax, eax	; 20ECD
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 38Ch
+        xor eax, eax
 .1:
-mov ebx, dword [nosplit eax*4+playofftree]	; 20ECF
-mov dword [dword esp+eax*4+0300h], ebx	; 20ED6
-inc eax	; 20EDD
-cmp eax, byte 1Fh	; 20EDE
-jl short EasnStandingsMenu_m.1	; 20EE1
-mov edx, 1	; 20EE3
-mov dword [leaguestatsmode], edx	; 20EE8
-mov eax, dword [standingscb]	; 20EEE
-mov dword [statsredrawcb], eax	; 20EF3
-xor ebx, ebx	; 20EF8
-mov dword [statsteamsel], ebx	; 20EFA
-mov dword [statscategory], ebx	; 20F00
-mov dword [dword_C6D26], ebx	; 20F06
-mov edi, edx	; 20F0C
-mov dword [keepdesksong], edx	; 20F0E
-xor ah, ah	; 20F14
-mov byte [statsplayer+2], ah	; 20F16
-mov eax, esp	; 20F1C
-push eax	; 20F1E
-push dword 100h	; 20F1F
-push ebx	; 20F24
-call SetPalette	; 20F25
-add esp, byte 0Ch	; 20F2A
-mov ebx, 10h	; 20F2D
-mov edx, esp	; 20F32
-mov eax, edi	; 20F34
-call FadePalStep	; 20F36
-mov eax, edi	; 20F3B
-call InitMenuRemap	; 20F3D
-push byte 20h	; 20F42
-push dword 2A4h	; 20F44
-push str_tstat2	; 20F49
-call AllocMemBlock	; 20F4E
-add esp, byte 0Ch	; 20F53
-mov dword [statsteambuf], eax	; 20F56
-push byte 20h	; 20F5B
-push dword 5B0h	; 20F5D
-push str_keys2	; 20F62
-call AllocMemBlock	; 20F67
-add esp, byte 0Ch	; 20F6C
-mov dword [statsplayerbuf], eax	; 20F6F
-push byte 20h	; 20F74
-push dword 497h	; 20F76
-push str_pstat2	; 20F7B
-call AllocMemBlock	; 20F80
-add esp, byte 0Ch	; 20F85
-mov dword [statsskaterbuf], eax	; 20F88
-push byte 20h	; 20F8D
-push dword 10Eh	; 20F8F
-push str_gstat2	; 20F94
-call AllocMemBlock	; 20F99
-add esp, byte 0Ch	; 20F9E
-mov dword [statsgoaliebuf], eax	; 20FA1
-xor eax, eax	; 20FA6
-call dword [standingscb]	; 20FA8
-push byte 42h	; 20FAE
-mov ecx, 41h	; 20FB0
-mov ebx, 40h	; 20FB5
-mov edx, 4	; 20FBA
-mov eax, standingsmenubar	; 20FBF
-call DrawMenuBar	; 20FC4
-xor ebp, ebp	; 20FC9
-mov dword [statscategory], ebp	; 20FCB
-mov dword [statsteamsel], ebp	; 20FD1
-xor ecx, ecx	; 20FD7
-mov ebx, str_embpal2	; 20FD9
-cmp byte [fileoncd+08Eh], 1	; 20FDE
-jne short .2	; 20FE5
-mov edx, dword [cddriveptr]	; 20FE7
-jmp short .3	; 20FED
+        mov ebx, dword [nosplit eax*4+playofftree]
+        mov dword [dword esp+eax*4+0300h], ebx
+        inc eax
+        cmp eax, byte 1Fh
+        jl short EasnStandingsMenu_m.1
+        mov edx, 1
+        mov dword [leaguestatsmode], edx
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor ebx, ebx
+        mov dword [statsteamsel], ebx
+        mov dword [statscategory], ebx
+        mov dword [dword_C6D26], ebx
+        mov edi, edx
+        mov dword [keepdesksong], edx
+        xor ah, ah
+        mov byte [statsplayer+2], ah
+        mov eax, esp
+        push eax
+        push dword 100h
+        push ebx
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, edi
+        call FadePalStep
+        mov eax, edi
+        call InitMenuRemap
+        push byte 20h
+        push dword 2A4h
+        push str_tstat2
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsteambuf], eax
+        push byte 20h
+        push dword 5B0h
+        push str_keys2
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsplayerbuf], eax
+        push byte 20h
+        push dword 497h
+        push str_pstat2
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsskaterbuf], eax
+        push byte 20h
+        push dword 10Eh
+        push str_gstat2
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsgoaliebuf], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        xor ebp, ebp
+        mov dword [statscategory], ebp
+        mov dword [statsteamsel], ebp
+        xor ecx, ecx
+        mov ebx, str_embpal2
+        cmp byte [fileoncd+08Eh], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .3
 .2:
-xor edx, edx	; 20FEF
+        xor edx, edx
 .3:
-lea eax, [dword esp+037Ch]	; 20FF1
-call MakePath	; 20FF8
-push byte 0	; 20FFD
-lea eax, [dword esp+0380h]	; 20FFF
-push eax	; 21006
-call LoadBank	; 21007
-add esp, byte 8	; 2100C
-mov dword [statsbgshapes], eax	; 2100F
-push str_Pal7	; 21014
-push eax	; 21019
-call FindShape	; 2101A
-add esp, byte 8	; 2101F
-mov dword [statspalshape], eax	; 21022
-lea edx, [byte eax+010h]	; 21027
-mov ebx, 10h	; 2102A
-xor eax, eax	; 2102F
-call FadePalStep	; 21031
-mov edx, dword [statsbgshapes]	; 21036
-push edx	; 2103C
-call FreeMemBlock	; 2103D
-add esp, byte 4	; 21042
-push byte 42h	; 21045
-mov ecx, 41h	; 21047
-mov ebx, 40h	; 2104C
-mov edx, 4	; 21051
-mov eax, standingsmenubar	; 21056
-call RunTeamPickMenu	; 2105B
-call FreeDeskBuffers	; 21060
-call sub_B4BA8	; 21065
-mov edi, GoalieStatsCard	; 2106A
-mov esi, 1	; 2106F
+        lea eax, [dword esp+037Ch]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0380h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal7
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov edx, dword [statsbgshapes]
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        call FreeDeskBuffers
+        call sub_B4BA8
+        mov edi, GoalieStatsCard
+        mov esi, 1
 .4:
-mov ebx, dword [deskexit]	; 21074
-cmp ebx, byte 1	; 2107A
-je near EasnStandingsMenu_player2.1	; 2107D
-lea eax, [byte ebx-02h]	; 21083
-cmp eax, byte 3	; 21086
-ja short EasnStandingsMenu_m.4	; 21089
-jmp dword [nosplit cs:eax*4+EasnStandingsMenu_jt]	; 2108B
+        mov ebx, dword [deskexit]
+        cmp ebx, byte 1
+        je near EasnStandingsMenu_player2.1
+        lea eax, [byte ebx-02h]
+        cmp eax, byte 3
+        ja short EasnStandingsMenu_m.4
+        jmp dword [nosplit cs:eax*4+EasnStandingsMenu_jt]
+;-----------------------------------------------------------------------------
+; EasnStandingsMenu_standings                                     21093  95 PC
+;-----------------------------------------------------------------------------
 EasnStandingsMenu_standings:
-mov eax, dword [standingscb]	; 21093
-mov dword [statsredrawcb], eax	; 21098
-xor eax, eax	; 2109D
-call dword [standingscb]	; 2109F
-push byte 42h	; 210A5
-mov ecx, 41h	; 210A7
-mov ebx, 40h	; 210AC
-mov edx, 4	; 210B1
-mov eax, standingsmenubar	; 210B6
-call DrawMenuBar	; 210BB
-push byte 42h	; 210C0
-mov ecx, 41h	; 210C2
-mov ebx, 40h	; 210C7
-mov edx, 4	; 210CC
-mov eax, standingsmenubar	; 210D1
-call RunTeamPickMenu	; 210D6
-cmp dword [statsplayoffs], byte 0	; 210DB
-je short .1	; 210E2
-call FreeDeskBuffers	; 210E4
-call sub_B4BA8	; 210E9
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        cmp dword [statsplayoffs], byte 0
+        je short .1
+        call FreeDeskBuffers
+        call sub_B4BA8
 .1:
-xor ecx, ecx	; 210EE
-mov dword [dword_C6D26], ecx	; 210F0
-jmp near EasnStandingsMenu_m.4	; 210F6
+        xor ecx, ecx
+        mov dword [dword_C6D26], ecx
+        jmp near EasnStandingsMenu_m.4
+;-----------------------------------------------------------------------------
+; EasnStandingsMenu_roster                                        210FB  95 PC
+;-----------------------------------------------------------------------------
 EasnStandingsMenu_roster:
-xor eax, eax	; 210FB
-mov dword [dword_DC734], eax	; 210FD
-mov dword [statsredrawcb], TeamRosterScreen	; 21102
-mov eax, dword [statscategory]	; 2110C
-call TeamRosterScreen	; 21111
-push byte 42h	; 21116
-mov ecx, 41h	; 21118
-mov ebx, 40h	; 2111D
-mov edx, 4	; 21122
-mov eax, rostermenubar	; 21127
-call DrawMenuBar	; 2112C
-push byte 42h	; 21131
-mov ecx, 41h	; 21133
-mov ebx, 40h	; 21138
-mov edx, 4	; 2113D
-mov eax, rostermenubar	; 21142
-call RunPlayerPickMenu	; 21147
-jmp near EasnStandingsMenu_m.4	; 2114C
+        xor eax, eax
+        mov dword [dword_DC734], eax
+        mov dword [statsredrawcb], TeamRosterScreen
+        mov eax, dword [statscategory]
+        call TeamRosterScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call RunPlayerPickMenu
+        jmp near EasnStandingsMenu_m.4
+;-----------------------------------------------------------------------------
+; EasnStandingsMenu_player                                        21151  95 PC
+;-----------------------------------------------------------------------------
 EasnStandingsMenu_player:
-mov dword [statsredrawcb], edi	; 21151
-xor ebp, ebp	; 21157
-mov dword [dword_DC6B4], ebp	; 21159
-mov eax, statsplayer	; 2115F
-call GoalieStatsCard	; 21164
-push byte 42h	; 21169
-mov ecx, 41h	; 2116B
-mov ebx, 40h	; 21170
-mov edx, 2	; 21175
-mov eax, playercardmenubar	; 2117A
-call DrawMenuBar	; 2117F
-push byte 42h	; 21184
-mov ecx, 41h	; 21186
-mov ebx, 40h	; 2118B
-mov edx, 2	; 21190
-mov eax, playercardmenubar	; 21195
-call RunMenu	; 2119A
-jmp near EasnStandingsMenu_m.4	; 2119F
+        mov dword [statsredrawcb], edi
+        xor ebp, ebp
+        mov dword [dword_DC6B4], ebp
+        mov eax, statsplayer
+        call GoalieStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        jmp near EasnStandingsMenu_m.4
+;-----------------------------------------------------------------------------
+; EasnStandingsMenu_player2                                       211A4  95 PC
+;-----------------------------------------------------------------------------
 EasnStandingsMenu_player2:
-mov dword [statsredrawcb], SkaterStatsCard	; 211A4
-xor edx, edx	; 211AE
-mov dword [dword_DC6B4], edx	; 211B0
-mov dword [statspalvalid], edx	; 211B6
-mov dword [statspal], edx	; 211BC
-mov eax, statsplayer	; 211C2
-call SkaterStatsCard	; 211C7
-push byte 42h	; 211CC
-mov ecx, 41h	; 211CE
-mov ebx, 40h	; 211D3
-mov edx, 2	; 211D8
-mov eax, playercardmenubar	; 211DD
-call DrawMenuBar	; 211E2
-push byte 42h	; 211E7
-mov ecx, 41h	; 211E9
-mov ebx, 40h	; 211EE
-mov edx, 2	; 211F3
-mov eax, playercardmenubar	; 211F8
-call RunMenu	; 211FD
-mov dword [dword_C6D26], esi	; 21202
-jmp near EasnStandingsMenu_m.4	; 21208
+        mov dword [statsredrawcb], SkaterStatsCard
+        xor edx, edx
+        mov dword [dword_DC6B4], edx
+        mov dword [statspalvalid], edx
+        mov dword [statspal], edx
+        mov eax, statsplayer
+        call SkaterStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        mov dword [dword_C6D26], esi
+        jmp near EasnStandingsMenu_m.4
 .1:
-xor ecx, ecx	; 2120D
-mov dword [dword_C6D26], ecx	; 2120F
-call FreeDeskBuffers	; 21215
-mov esi, dword [statsteambuf]	; 2121A
-push esi	; 21220
-call FreeMemBlock	; 21221
-add esp, byte 4	; 21226
-mov edi, dword [statsgoaliebuf]	; 21229
-push edi	; 2122F
-call FreeMemBlock	; 21230
-add esp, byte 4	; 21235
-mov ebp, dword [statsskaterbuf]	; 21238
-push ebp	; 2123E
-call FreeMemBlock	; 2123F
-add esp, byte 4	; 21244
-mov eax, dword [statsplayerbuf]	; 21247
-push eax	; 2124C
-call FreeMemBlock	; 2124D
-add esp, byte 4	; 21252
-xor edx, edx	; 21255
-mov dword [statsplayerbuf], edx	; 21257
-mov dword [statsteambuf], edx	; 2125D
-mov dword [statsgoaliebuf], edx	; 21263
-mov dword [statsskaterbuf], edx	; 21269
-mov eax, esp	; 2126F
-push eax	; 21271
-push dword 100h	; 21272
-push edx	; 21277
-call SetPalette	; 21278
-add esp, byte 0Ch	; 2127D
-mov ebx, 10h	; 21280
-mov edx, esp	; 21285
-mov eax, 1	; 21287
-call FadePalStep	; 2128C
-xor edi, edi	; 21291
-mov dword [leaguestatsmode], edi	; 21293
-mov dword [statsredrawcb], edi	; 21299
-xor eax, eax	; 2129F
+        xor ecx, ecx
+        mov dword [dword_C6D26], ecx
+        call FreeDeskBuffers
+        mov esi, dword [statsteambuf]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        mov edi, dword [statsgoaliebuf]
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebp, dword [statsskaterbuf]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        mov eax, dword [statsplayerbuf]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        xor edx, edx
+        mov dword [statsplayerbuf], edx
+        mov dword [statsteambuf], edx
+        mov dword [statsgoaliebuf], edx
+        mov dword [statsskaterbuf], edx
+        mov eax, esp
+        push eax
+        push dword 100h
+        push edx
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        xor edi, edi
+        mov dword [leaguestatsmode], edi
+        mov dword [statsredrawcb], edi
+        xor eax, eax
 .2:
-mov ebx, dword [dword esp+eax*4+0300h]	; 212A1
-mov dword [nosplit eax*4+playofftree], ebx	; 212A8
-inc eax	; 212AF
-cmp eax, byte 1Fh	; 212B0
-jl short EasnStandingsMenu_player2.2	; 212B3
-mov eax, 2	; 212B5
-add esp, 38Ch	; 212BA
-pop ebp	; 212C0
-jmp near EasnTeamStatsScreen_x	; 212C1
+        mov ebx, dword [dword esp+eax*4+0300h]
+        mov dword [nosplit eax*4+playofftree], ebx
+        inc eax
+        cmp eax, byte 1Fh
+        jl short EasnStandingsMenu_player2.2
+        mov eax, 2
+        add esp, 38Ch
+        pop ebp
+        jmp near EasnTeamStatsScreen_x
+;-----------------------------------------------------------------------------
+; FreeCalendarIfLowMem                         212C6  95 PC, medium confidence
+; Frees calendarshapes when free memory <= 4B708h
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/FreeCalendarIfLowMem.c
 %ifdef CBUILD
 %include "c/front/stats_screens/FreeCalendarIfLowMem.inc"
 %else
 FreeCalendarIfLowMem:
-push dword 14h	; 212C6
-call __CHK	; 212CB
-push ebx	; 212D0
-push ecx	; 212D1
-push edx	; 212D2
-call sub_8DAB8	; 212D3
-cmp eax, 4B708h	; 212D8
-jg short .x	; 212DD
-mov edx, dword [calendarshapes]	; 212DF
-test edx, edx	; 212E5
-je short .1	; 212E7
-push edx	; 212E9
-call FreeMemBlock	; 212EA
-add esp, byte 4	; 212EF
+        push dword 14h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        call sub_8DAB8
+        cmp eax, 4B708h
+        jg short .x
+        mov edx, dword [calendarshapes]
+        test edx, edx
+        je short .1
+        push edx
+        call FreeMemBlock
+        add esp, byte 4
 .1:
-xor ecx, ecx	; 212F2
-mov dword [calendarshapes], ecx	; 212F4
+        xor ecx, ecx
+        mov dword [calendarshapes], ecx
 .x:
-pop edx	; 212FA
-pop ecx	; 212FB
-pop ebx	; 212FC
-ret	; 212FD
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; LoadCalendarShapes                                              212FE  95 PC
+; Loads "calendar" shape file into calendarshapes if not loaded
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/LoadCalendarShapes.c
 %ifdef CBUILD
 %include "c/front/stats_screens/LoadCalendarShapes.inc"
 %else
 LoadCalendarShapes:
-push dword 38h	; 212FE
-call __CHK	; 21303
-push ebx	; 21308
-push ecx	; 21309
-push edx	; 2130A
-sub esp, byte 20h	; 2130B
-mov edx, dword [calendarshapes]	; 2130E
-test edx, edx	; 21314
-jne short .x	; 21316
-xor ecx, ecx	; 21318
-mov ebx, str_calendar	; 2131A
-cmp byte [fileoncd+01C1h], 1	; 2131F
-jne short .1	; 21326
-mov edx, dword [cddriveptr]	; 21328
+        push dword 38h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        sub esp, byte 20h
+        mov edx, dword [calendarshapes]
+        test edx, edx
+        jne short .x
+        xor ecx, ecx
+        mov ebx, str_calendar
+        cmp byte [fileoncd+01C1h], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
 .1:
-mov eax, esp	; 2132E
-call MakePath	; 21330
-push byte 20h	; 21335
-lea eax, [byte esp+04h]	; 21337
-push eax	; 2133B
-call LoadBank	; 2133C
-add esp, byte 8	; 21341
-mov dword [calendarshapes], eax	; 21344
+        mov eax, esp
+        call MakePath
+        push byte 20h
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [calendarshapes], eax
 .x:
-add esp, byte 20h	; 21349
-pop edx	; 2134C
-pop ecx	; 2134D
-pop ebx	; 2134E
-ret	; 2134F
+        add esp, byte 20h
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CalTeamStatsScreen                           21350  95 PC, medium confidence
+; Teamstatscb set by calendar (sub_34821): frees calendar, team stats screen,
+; reloads calendar
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalTeamStatsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/CalTeamStatsScreen.inc"
 %else
 CalTeamStatsScreen:
-push dword 334h	; 21350
-call __CHK	; 21355
-push ebx	; 2135A
-push ecx	; 2135B
-push edx	; 2135C
-push esi	; 2135D
-push edi	; 2135E
-sub esp, 310h	; 2135F
-mov esi, eax	; 21365
-mov eax, esp	; 21367
-push eax	; 21369
-push dword 100h	; 2136A
-push byte 0	; 2136F
-call SetPalette	; 21371
-add esp, byte 0Ch	; 21376
-mov dword [leaguestatsmode], 1	; 21379
-mov dword [statscategory], esi	; 21383
-mov dword [statsredrawcb], TeamStatsScreen	; 21389
-call sub_B4BA8	; 21393
-mov eax, 1	; 21398
-call InitMenuRemap	; 2139D
-mov ebx, 10h	; 213A2
-mov edx, esp	; 213A7
-mov eax, 1	; 213A9
-call FadePalStep	; 213AE
-call FreeCalendarIfLowMem	; 213B3
-mov eax, esi	; 213B8
-call TeamStatsScreen	; 213BA
-push byte 42h	; 213BF
-mov ecx, 41h	; 213C1
-mov ebx, 40h	; 213C6
-mov edx, 4	; 213CB
-mov eax, teamstatsmenubar	; 213D0
-call DrawMenuBar	; 213D5
-xor ecx, ecx	; 213DA
-mov ebx, str_embpal3	; 213DC
-cmp byte [fileoncd+08Eh], 1	; 213E1
-jne short .1	; 213E8
-mov edx, dword [cddriveptr]	; 213EA
-jmp short .2	; 213F0
+        push dword 334h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 310h
+        mov esi, eax
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], TeamStatsScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call FreeCalendarIfLowMem
+        mov eax, esi
+        call TeamStatsScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal3
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 213F2
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 213F4
-call MakePath	; 213FB
-push byte 0	; 21400
-lea eax, [dword esp+0304h]	; 21402
-push eax	; 21409
-call LoadBank	; 2140A
-add esp, byte 8	; 2140F
-mov dword [statsbgshapes], eax	; 21412
-push str_Pal8	; 21417
-push eax	; 2141C
-call FindShape	; 2141D
-add esp, byte 8	; 21422
-mov dword [statspalshape], eax	; 21425
-lea edx, [byte eax+010h]	; 2142A
-mov ebx, 10h	; 2142D
-xor eax, eax	; 21432
-call FadePalStep	; 21434
-mov ecx, dword [statsbgshapes]	; 21439
-push ecx	; 2143F
-call FreeMemBlock	; 21440
-add esp, byte 4	; 21445
-push byte 42h	; 21448
-mov ecx, 41h	; 2144A
-mov ebx, 40h	; 2144F
-mov edx, 4	; 21454
-mov eax, teamstatsmenubar	; 21459
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal8
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov ecx, dword [statsbgshapes]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, teamstatsmenubar
 CalTeamStatsScreen_common:
-call RunMenu	; 2145E
-mov eax, esp	; 21463
-push eax	; 21465
-push dword 100h	; 21466
-push byte 0	; 2146B
-call SetPalette	; 2146D
-add esp, byte 0Ch	; 21472
-mov ebx, 10h	; 21475
-mov edx, esp	; 2147A
-mov eax, 1	; 2147C
-call FadePalStep	; 21481
-mov dword [calredraw], 0FFFFFFFFh	; 21486
-call LoadCalendarShapes	; 21490
-xor edi, edi	; 21495
-mov dword [leaguestatsmode], edi	; 21497
-mov dword [statsredrawcb], edi	; 2149D
-xor eax, eax	; 214A3
-add esp, 310h	; 214A5
+        call RunMenu
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov dword [calredraw], 0FFFFFFFFh
+        call LoadCalendarShapes
+        xor edi, edi
+        mov dword [leaguestatsmode], edi
+        mov dword [statsredrawcb], edi
+        xor eax, eax
+        add esp, 310h
 CalTeamStatsScreen_x:
-pop edi	; 214AB
-pop esi	; 214AC
-pop edx	; 214AD
-pop ecx	; 214AE
-pop ebx	; 214AF
-ret	; 214B0
+        pop edi
+        pop esi
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
+;-----------------------------------------------------------------------------
+; CalSkaterStatsScreen                         214B1  95 PC, medium confidence
+; Calendar skater stats
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalTeamStatsScreen.c (CalSkaterStatsScreen)
 %ifdef CBUILD
 %include "c/front/stats_screens/CalTeamStatsScreen.CalSkaterStatsScreen.inc"
 %else
 CalSkaterStatsScreen:
-push dword 334h	; 214B1
-call __CHK	; 214B6
-push ebx	; 214BB
-push ecx	; 214BC
-push edx	; 214BD
-push esi	; 214BE
-push edi	; 214BF
-sub esp, 310h	; 214C0
-mov esi, eax	; 214C6
-mov eax, esp	; 214C8
-push eax	; 214CA
-push dword 100h	; 214CB
-push byte 0	; 214D0
-call SetPalette	; 214D2
-add esp, byte 0Ch	; 214D7
-mov dword [leaguestatsmode], 1	; 214DA
-mov dword [statscategory], esi	; 214E4
-mov dword [statsredrawcb], LeadersScreen	; 214EA
-call sub_B4BA8	; 214F4
-mov eax, 1	; 214F9
-call InitMenuRemap	; 214FE
-mov ebx, 10h	; 21503
-mov edx, esp	; 21508
-mov eax, 1	; 2150A
-call FadePalStep	; 2150F
-call FreeCalendarIfLowMem	; 21514
-mov eax, esi	; 21519
-call LeadersScreen	; 2151B
-push byte 42h	; 21520
-mov ecx, 41h	; 21522
-mov ebx, 40h	; 21527
-mov edx, 4	; 2152C
-mov eax, skaterstatsmenubar	; 21531
-call DrawMenuBar	; 21536
-xor ecx, ecx	; 2153B
-mov ebx, str_embpal3	; 2153D
-cmp byte [fileoncd+08Eh], 1	; 21542
-jne short .1	; 21549
-mov edx, dword [cddriveptr]	; 2154B
-jmp short .2	; 21551
+        push dword 334h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 310h
+        mov esi, eax
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], LeadersScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call FreeCalendarIfLowMem
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal3
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 21553
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 21555
-call MakePath	; 2155C
-push byte 0	; 21561
-lea eax, [dword esp+0304h]	; 21563
-push eax	; 2156A
-call LoadBank	; 2156B
-add esp, byte 8	; 21570
-mov dword [statsbgshapes], eax	; 21573
-push str_Pal8	; 21578
-push eax	; 2157D
-call FindShape	; 2157E
-add esp, byte 8	; 21583
-mov dword [statspalshape], eax	; 21586
-lea edx, [byte eax+010h]	; 2158B
-mov ebx, 10h	; 2158E
-xor eax, eax	; 21593
-call FadePalStep	; 21595
-mov ecx, dword [statsbgshapes]	; 2159A
-push ecx	; 215A0
-call FreeMemBlock	; 215A1
-add esp, byte 4	; 215A6
-push byte 42h	; 215A9
-mov ecx, 41h	; 215AB
-mov ebx, 40h	; 215B0
-mov edx, 4	; 215B5
-mov eax, skaterstatsmenubar	; 215BA
-jmp near CalTeamStatsScreen_common	; 215BF
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal8
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov ecx, dword [statsbgshapes]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, skaterstatsmenubar
+        jmp near CalTeamStatsScreen_common
 %endif ; C
+;-----------------------------------------------------------------------------
+; CalGoalieStatsScreen                         215C4  95 PC, medium confidence
+; Calendar goalie stats
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalTeamStatsScreen.c (CalGoalieStatsScreen)
 %ifdef CBUILD
 %include "c/front/stats_screens/CalTeamStatsScreen.CalGoalieStatsScreen.inc"
 %else
 CalGoalieStatsScreen:
-push dword 334h	; 215C4
-call __CHK	; 215C9
-push ebx	; 215CE
-push ecx	; 215CF
-push edx	; 215D0
-push esi	; 215D1
-push edi	; 215D2
-sub esp, 310h	; 215D3
-mov esi, eax	; 215D9
-mov eax, esp	; 215DB
-push eax	; 215DD
-push dword 100h	; 215DE
-push byte 0	; 215E3
-call SetPalette	; 215E5
-add esp, byte 0Ch	; 215EA
-mov dword [leaguestatsmode], 1	; 215ED
-mov dword [statscategory], esi	; 215F7
-mov dword [statsredrawcb], LeadersScreen	; 215FD
-call sub_B4BA8	; 21607
-mov eax, 1	; 2160C
-call InitMenuRemap	; 21611
-mov ebx, 10h	; 21616
-mov edx, esp	; 2161B
-mov eax, 1	; 2161D
-call FadePalStep	; 21622
-call FreeCalendarIfLowMem	; 21627
-mov eax, esi	; 2162C
-call LeadersScreen	; 2162E
-push byte 42h	; 21633
-mov ecx, 41h	; 21635
-mov ebx, 40h	; 2163A
-mov edx, 4	; 2163F
-mov eax, goaliestatsmenubar	; 21644
-call DrawMenuBar	; 21649
-xor ecx, ecx	; 2164E
-mov ebx, str_embpal3	; 21650
-cmp byte [fileoncd+08Eh], 1	; 21655
-jne short .1	; 2165C
-mov edx, dword [cddriveptr]	; 2165E
-jmp short .2	; 21664
+        push dword 334h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        sub esp, 310h
+        mov esi, eax
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov dword [leaguestatsmode], 1
+        mov dword [statscategory], esi
+        mov dword [statsredrawcb], LeadersScreen
+        call sub_B4BA8
+        mov eax, 1
+        call InitMenuRemap
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call FreeCalendarIfLowMem
+        mov eax, esi
+        call LeadersScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        call DrawMenuBar
+        xor ecx, ecx
+        mov ebx, str_embpal3
+        cmp byte [fileoncd+08Eh], 1
+        jne short .1
+        mov edx, dword [cddriveptr]
+        jmp short .2
 .1:
-xor edx, edx	; 21666
+        xor edx, edx
 .2:
-lea eax, [dword esp+0300h]	; 21668
-call MakePath	; 2166F
-push byte 0	; 21674
-lea eax, [dword esp+0304h]	; 21676
-push eax	; 2167D
-call LoadBank	; 2167E
-add esp, byte 8	; 21683
-mov dword [statsbgshapes], eax	; 21686
-push str_Pal8	; 2168B
-push eax	; 21690
-call FindShape	; 21691
-add esp, byte 8	; 21696
-mov dword [statspalshape], eax	; 21699
-lea edx, [byte eax+010h]	; 2169E
-mov ebx, 10h	; 216A1
-xor eax, eax	; 216A6
-call FadePalStep	; 216A8
-mov ecx, dword [statsbgshapes]	; 216AD
-push ecx	; 216B3
-call FreeMemBlock	; 216B4
-add esp, byte 4	; 216B9
-push byte 42h	; 216BC
-mov ecx, 41h	; 216BE
-mov ebx, 40h	; 216C3
-mov edx, 4	; 216C8
-mov eax, goaliestatsmenubar	; 216CD
-jmp near CalTeamStatsScreen_common	; 216D2
+        lea eax, [dword esp+0300h]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0304h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal8
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov ecx, dword [statsbgshapes]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, goaliestatsmenubar
+        jmp near CalTeamStatsScreen_common
 %endif ; C
+;-----------------------------------------------------------------------------
+; CalStandingsScreen                           216D7  95 PC, medium confidence
+; Calendar standings
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalStandingsScreen.c
 %ifdef CBUILD
 %include "c/front/stats_screens/CalStandingsScreen.inc"
 %else
 CalStandingsScreen:
-push dword 28h	; 216D7
-call __CHK	; 216DC
-push ebx	; 216E1
-push ecx	; 216E2
-push edx	; 216E3
-sub esp, byte 10h	; 216E4
-call FreeCalendarIfLowMem	; 216E7
-cmp dword [statsplayoffs], byte 0	; 216EC
-je near .7	; 216F3
-mov ebx, dword [easnfontbuf]	; 216F9
-test ebx, ebx	; 216FF
-jne short .1	; 21701
-push ebx	; 21703
-push str_EASNvfn	; 21704
-call sub_8E8A0	; 21709
-add esp, byte 8	; 2170E
-mov dword [easnfontbuf], eax	; 21711
+        push dword 28h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        sub esp, byte 10h
+        call FreeCalendarIfLowMem
+        cmp dword [statsplayoffs], byte 0
+        je near .7
+        mov ebx, dword [easnfontbuf]
+        test ebx, ebx
+        jne short .1
+        push ebx
+        push str_EASNvfn
+        call sub_8E8A0
+        add esp, byte 8
+        mov dword [easnfontbuf], eax
 .1:
-mov ecx, dword [embscupbank]	; 21716
-test ecx, ecx	; 2171C
-jne short .6	; 2171E
-mov eax, dword [statsplayoffs]	; 21720
-shl eax, 2	; 21725
-cmp dword [statsplayoffs], byte 0	; 21728
-jne short .3	; 2172F
-mov ebx, dword [dword eax+statsbgnames]	; 21731
-cmp byte [fileoncd+08Ch], 1	; 21737
-jne short .2	; 2173E
-mov edx, dword [cddriveptr]	; 21740
-jmp short .5	; 21746
+        mov ecx, dword [embscupbank]
+        test ecx, ecx
+        jne short .6
+        mov eax, dword [statsplayoffs]
+        shl eax, 2
+        cmp dword [statsplayoffs], byte 0
+        jne short .3
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Ch], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .2:
-xor edx, edx	; 21748
-jmp short .5	; 2174A
+        xor edx, edx
+        jmp short .5
 .3:
-mov ebx, dword [dword eax+statsbgnames]	; 2174C
-cmp byte [fileoncd+08Dh], 1	; 21752
-jne short .4	; 21759
-mov edx, dword [cddriveptr]	; 2175B
-jmp short .5	; 21761
+        mov ebx, dword [dword eax+statsbgnames]
+        cmp byte [fileoncd+08Dh], 1
+        jne short .4
+        mov edx, dword [cddriveptr]
+        jmp short .5
 .4:
-xor edx, edx	; 21763
+        xor edx, edx
 .5:
-mov eax, esp	; 21765
-call MakePath	; 21767
-push byte 0	; 2176C
-lea eax, [byte esp+04h]	; 2176E
-push eax	; 21772
-call LoadBank	; 21773
-add esp, byte 8	; 21778
-mov dword [embscupbank], eax	; 2177B
+        mov eax, esp
+        call MakePath
+        push byte 0
+        lea eax, [byte esp+04h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [embscupbank], eax
 .6:
-mov eax, dword [statsteambuf]	; 21780
-mov edx, statsteamorder	; 21785
-call ShowPlayoffTree	; 2178A
-push byte 42h	; 2178F
-mov ecx, 41h	; 21791
-mov ebx, 40h	; 21796
-mov edx, 4	; 2179B
-mov eax, standingsmenubar	; 217A0
-call DrawMenuBar	; 217A5
-jmp short .8	; 217AA
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call ShowPlayoffTree
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        jmp short .8
 .7:
-call FreeDeskBuffers	; 217AC
-call sub_B4BA8	; 217B1
-push byte 42h	; 217B6
-mov ecx, 41h	; 217B8
-mov ebx, 40h	; 217BD
-mov edx, 4	; 217C2
-mov eax, standingsmenubar	; 217C7
-call DrawMenuBar	; 217CC
-mov eax, dword [statsteambuf]	; 217D1
-mov edx, statsteamorder	; 217D6
-call StandingsScreen	; 217DB
+        call FreeDeskBuffers
+        call sub_B4BA8
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        mov eax, dword [statsteambuf]
+        mov edx, statsteamorder
+        call StandingsScreen
 .8:
-call LoadCalendarShapes	; 217E0
-xor eax, eax	; 217E5
-add esp, byte 10h	; 217E7
-pop edx	; 217EA
-pop ecx	; 217EB
-pop ebx	; 217EC
-ret	; 217ED
+        call LoadCalendarShapes
+        xor eax, eax
+        add esp, byte 10h
+        pop edx
+        pop ecx
+        pop ebx
+        ret
 %endif ; C
 CalStandingsMenu_jt:
-dd CalStandingsMenu_standings
-dd CalStandingsMenu_roster
-dd CalStandingsMenu_player
-dd CalStandingsMenu_player2
+        dd CalStandingsMenu_standings
+        dd CalStandingsMenu_roster
+        dd CalStandingsMenu_player
+        dd CalStandingsMenu_player2
+;-----------------------------------------------------------------------------
+; CalStandingsMenu                             217FE  95 PC, medium confidence
+; Standingsmenucb set by calendar; also in a menu table
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/CalTeamStatsScreen.c (CalStandingsMenu)
 %ifdef CBUILD
 %include "c/front/stats_screens/CalTeamStatsScreen.CalStandingsMenu.inc"
 %else
 CalStandingsMenu:
-push dword 3B4h	; 217FE
-call __CHK	; 21803
-push ebx	; 21808
-push ecx	; 21809
-push edx	; 2180A
-push esi	; 2180B
-push edi	; 2180C
-push ebp	; 2180D
-sub esp, 38Ch	; 2180E
-xor eax, eax	; 21814
+        push dword 3B4h
+        call __CHK
+        push ebx
+        push ecx
+        push edx
+        push esi
+        push edi
+        push ebp
+        sub esp, 38Ch
+        xor eax, eax
 .1:
-mov ebx, dword [nosplit eax*4+playofftree]	; 21816
-mov dword [dword esp+eax*4+0300h], ebx	; 2181D
-inc eax	; 21824
-cmp eax, byte 1Fh	; 21825
-jl short CalStandingsMenu.1	; 21828
-mov dword [leaguestatsmode], 1	; 2182A
-mov eax, dword [standingscb]	; 21834
-mov dword [statsredrawcb], eax	; 21839
-xor ebx, ebx	; 2183E
-mov dword [statsteamsel], ebx	; 21840
-mov dword [statscategory], ebx	; 21846
-xor ah, ah	; 2184C
-mov byte [statsplayer+2], ah	; 2184E
-mov eax, esp	; 21854
-push eax	; 21856
-push dword 100h	; 21857
-push ebx	; 2185C
-call SetPalette	; 2185D
-add esp, byte 0Ch	; 21862
-mov ebx, 10h	; 21865
-mov edx, esp	; 2186A
-mov eax, 1	; 2186C
-call FadePalStep	; 21871
-call FreeCalendarIfLowMem	; 21876
-xor esi, esi	; 2187B
-mov dword [dword_C6D26], esi	; 2187D
-mov eax, 1	; 21883
-call InitMenuRemap	; 21888
-push byte 20h	; 2188D
-push dword 2A4h	; 2188F
-push str_tstat3	; 21894
-call AllocMemBlock	; 21899
-add esp, byte 0Ch	; 2189E
-mov dword [statsteambuf], eax	; 218A1
-push byte 20h	; 218A6
-push dword 5B0h	; 218A8
-push str_keys3	; 218AD
-call AllocMemBlock	; 218B2
-add esp, byte 0Ch	; 218B7
-mov dword [statsplayerbuf], eax	; 218BA
-push byte 20h	; 218BF
-push dword 497h	; 218C1
-push str_pstat3	; 218C6
-call AllocMemBlock	; 218CB
-add esp, byte 0Ch	; 218D0
-mov dword [statsskaterbuf], eax	; 218D3
-push byte 20h	; 218D8
-push dword 10Eh	; 218DA
-push str_gstat3	; 218DF
-call AllocMemBlock	; 218E4
-add esp, byte 0Ch	; 218E9
-mov dword [statsgoaliebuf], eax	; 218EC
-xor eax, eax	; 218F1
-call dword [standingscb]	; 218F3
-push byte 42h	; 218F9
-mov ecx, 41h	; 218FB
-mov ebx, 40h	; 21900
-mov edx, 4	; 21905
-mov eax, standingsmenubar	; 2190A
-call DrawMenuBar	; 2190F
-mov dword [statscategory], esi	; 21914
-mov dword [statsteamsel], esi	; 2191A
-xor ecx, ecx	; 21920
-mov ebx, str_embpal3	; 21922
-cmp byte [fileoncd+08Eh], 1	; 21927
-jne short .2	; 2192E
-mov edx, dword [cddriveptr]	; 21930
-jmp short .3	; 21936
+        mov ebx, dword [nosplit eax*4+playofftree]
+        mov dword [dword esp+eax*4+0300h], ebx
+        inc eax
+        cmp eax, byte 1Fh
+        jl short CalStandingsMenu.1
+        mov dword [leaguestatsmode], 1
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor ebx, ebx
+        mov dword [statsteamsel], ebx
+        mov dword [statscategory], ebx
+        xor ah, ah
+        mov byte [statsplayer+2], ah
+        mov eax, esp
+        push eax
+        push dword 100h
+        push ebx
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        call FreeCalendarIfLowMem
+        xor esi, esi
+        mov dword [dword_C6D26], esi
+        mov eax, 1
+        call InitMenuRemap
+        push byte 20h
+        push dword 2A4h
+        push str_tstat3
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsteambuf], eax
+        push byte 20h
+        push dword 5B0h
+        push str_keys3
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsplayerbuf], eax
+        push byte 20h
+        push dword 497h
+        push str_pstat3
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsskaterbuf], eax
+        push byte 20h
+        push dword 10Eh
+        push str_gstat3
+        call AllocMemBlock
+        add esp, byte 0Ch
+        mov dword [statsgoaliebuf], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        mov dword [statscategory], esi
+        mov dword [statsteamsel], esi
+        xor ecx, ecx
+        mov ebx, str_embpal3
+        cmp byte [fileoncd+08Eh], 1
+        jne short .2
+        mov edx, dword [cddriveptr]
+        jmp short .3
 .2:
-xor edx, edx	; 21938
+        xor edx, edx
 .3:
-lea eax, [dword esp+037Ch]	; 2193A
-call MakePath	; 21941
-push byte 0	; 21946
-lea eax, [dword esp+0380h]	; 21948
-push eax	; 2194F
-call LoadBank	; 21950
-add esp, byte 8	; 21955
-mov dword [statsbgshapes], eax	; 21958
-push str_Pal8	; 2195D
-push eax	; 21962
-call FindShape	; 21963
-add esp, byte 8	; 21968
-mov dword [statspalshape], eax	; 2196B
-lea edx, [byte eax+010h]	; 21970
-mov ebx, 10h	; 21973
-xor eax, eax	; 21978
-call FadePalStep	; 2197A
-mov eax, dword [statsbgshapes]	; 2197F
-push eax	; 21984
-call FreeMemBlock	; 21985
-add esp, byte 4	; 2198A
-push byte 42h	; 2198D
-mov ecx, 41h	; 2198F
-mov ebx, 40h	; 21994
-mov edx, 4	; 21999
-mov eax, standingsmenubar	; 2199E
-call RunTeamPickMenu	; 219A3
-call FreeDeskBuffers	; 219A8
-call sub_B4BA8	; 219AD
-mov edi, TeamRosterScreen	; 219B2
+        lea eax, [dword esp+037Ch]
+        call MakePath
+        push byte 0
+        lea eax, [dword esp+0380h]
+        push eax
+        call LoadBank
+        add esp, byte 8
+        mov dword [statsbgshapes], eax
+        push str_Pal8
+        push eax
+        call FindShape
+        add esp, byte 8
+        mov dword [statspalshape], eax
+        lea edx, [byte eax+010h]
+        mov ebx, 10h
+        xor eax, eax
+        call FadePalStep
+        mov eax, dword [statsbgshapes]
+        push eax
+        call FreeMemBlock
+        add esp, byte 4
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        call FreeDeskBuffers
+        call sub_B4BA8
+        mov edi, TeamRosterScreen
 .4:
-mov edx, dword [deskexit]	; 219B7
-cmp edx, byte 1	; 219BD
-je near CalStandingsMenu_player2.1	; 219C0
-lea eax, [byte edx-02h]	; 219C6
-cmp eax, byte 3	; 219C9
-ja short CalStandingsMenu.4	; 219CC
-jmp dword [nosplit cs:eax*4+CalStandingsMenu_jt]	; 219CE
+        mov edx, dword [deskexit]
+        cmp edx, byte 1
+        je near CalStandingsMenu_player2.1
+        lea eax, [byte edx-02h]
+        cmp eax, byte 3
+        ja short CalStandingsMenu.4
+        jmp dword [nosplit cs:eax*4+CalStandingsMenu_jt]
 CalStandingsMenu_standings:
-mov eax, dword [standingscb]	; 219D6
-mov dword [statsredrawcb], eax	; 219DB
-xor eax, eax	; 219E0
-call dword [standingscb]	; 219E2
-push byte 42h	; 219E8
-mov ecx, 41h	; 219EA
-mov ebx, 40h	; 219EF
-mov edx, 4	; 219F4
-mov eax, standingsmenubar	; 219F9
-call DrawMenuBar	; 219FE
-push byte 42h	; 21A03
-mov ecx, 41h	; 21A05
-mov ebx, 40h	; 21A0A
-mov edx, 4	; 21A0F
-mov eax, standingsmenubar	; 21A14
-call RunTeamPickMenu	; 21A19
-cmp dword [statsplayoffs], byte 0	; 21A1E
-je short .1	; 21A25
-call FreeDeskBuffers	; 21A27
-call sub_B4BA8	; 21A2C
+        mov eax, dword [standingscb]
+        mov dword [statsredrawcb], eax
+        xor eax, eax
+        call dword [standingscb]
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, standingsmenubar
+        call RunTeamPickMenu
+        cmp dword [statsplayoffs], byte 0
+        je short .1
+        call FreeDeskBuffers
+        call sub_B4BA8
 .1:
-xor eax, eax	; 21A31
-mov dword [dword_C6D26], eax	; 21A33
-jmp near CalStandingsMenu.4	; 21A38
+        xor eax, eax
+        mov dword [dword_C6D26], eax
+        jmp near CalStandingsMenu.4
 CalStandingsMenu_roster:
-xor esi, esi	; 21A3D
-mov dword [dword_DC734], esi	; 21A3F
-mov dword [statsredrawcb], edi	; 21A45
-mov eax, dword [statscategory]	; 21A4B
-call TeamRosterScreen	; 21A50
-push byte 42h	; 21A55
-mov ecx, 41h	; 21A57
-mov ebx, 40h	; 21A5C
-mov edx, 4	; 21A61
-mov eax, rostermenubar	; 21A66
-call DrawMenuBar	; 21A6B
-push byte 42h	; 21A70
-mov ecx, 41h	; 21A72
-mov ebx, 40h	; 21A77
-mov edx, 4	; 21A7C
-mov eax, rostermenubar	; 21A81
-call RunPlayerPickMenu	; 21A86
-jmp near CalStandingsMenu.4	; 21A8B
+        xor esi, esi
+        mov dword [dword_DC734], esi
+        mov dword [statsredrawcb], edi
+        mov eax, dword [statscategory]
+        call TeamRosterScreen
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 4
+        mov eax, rostermenubar
+        call RunPlayerPickMenu
+        jmp near CalStandingsMenu.4
 CalStandingsMenu_player:
-mov dword [statsredrawcb], GoalieStatsCard	; 21A90
-xor ecx, ecx	; 21A9A
-mov dword [dword_DC6B4], ecx	; 21A9C
-mov eax, statsplayer	; 21AA2
-call GoalieStatsCard	; 21AA7
-push byte 42h	; 21AAC
-mov ecx, 41h	; 21AAE
-mov ebx, 40h	; 21AB3
-mov edx, 2	; 21AB8
-mov eax, playercardmenubar	; 21ABD
-call DrawMenuBar	; 21AC2
-push byte 42h	; 21AC7
-mov ecx, 41h	; 21AC9
-mov ebx, 40h	; 21ACE
-mov edx, 2	; 21AD3
-mov eax, playercardmenubar	; 21AD8
-call RunMenu	; 21ADD
-jmp near CalStandingsMenu.4	; 21AE2
+        mov dword [statsredrawcb], GoalieStatsCard
+        xor ecx, ecx
+        mov dword [dword_DC6B4], ecx
+        mov eax, statsplayer
+        call GoalieStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        jmp near CalStandingsMenu.4
 CalStandingsMenu_player2:
-mov dword [statsredrawcb], SkaterStatsCard	; 21AE7
-xor eax, eax	; 21AF1
-mov dword [dword_DC6B4], eax	; 21AF3
-mov eax, statsplayer	; 21AF8
-call SkaterStatsCard	; 21AFD
-push byte 42h	; 21B02
-mov ecx, 41h	; 21B04
-mov ebx, 40h	; 21B09
-mov edx, 2	; 21B0E
-mov eax, playercardmenubar	; 21B13
-call DrawMenuBar	; 21B18
-push byte 42h	; 21B1D
-mov ecx, 41h	; 21B1F
-mov ebx, 40h	; 21B24
-mov edx, 2	; 21B29
-mov eax, playercardmenubar	; 21B2E
-call RunMenu	; 21B33
-mov dword [dword_C6D26], 1	; 21B38
-jmp near CalStandingsMenu.4	; 21B42
+        mov dword [statsredrawcb], SkaterStatsCard
+        xor eax, eax
+        mov dword [dword_DC6B4], eax
+        mov eax, statsplayer
+        call SkaterStatsCard
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call DrawMenuBar
+        push byte 42h
+        mov ecx, 41h
+        mov ebx, 40h
+        mov edx, 2
+        mov eax, playercardmenubar
+        call RunMenu
+        mov dword [dword_C6D26], 1
+        jmp near CalStandingsMenu.4
 .1:
-xor ebx, ebx	; 21B47
-mov dword [dword_C6D26], ebx	; 21B49
-call FreeDeskBuffers	; 21B4F
-mov ecx, dword [statsteambuf]	; 21B54
-push ecx	; 21B5A
-call FreeMemBlock	; 21B5B
-add esp, byte 4	; 21B60
-mov esi, dword [statsgoaliebuf]	; 21B63
-push esi	; 21B69
-call FreeMemBlock	; 21B6A
-add esp, byte 4	; 21B6F
-mov edi, dword [statsskaterbuf]	; 21B72
-push edi	; 21B78
-call FreeMemBlock	; 21B79
-add esp, byte 4	; 21B7E
-mov ebp, dword [statsplayerbuf]	; 21B81
-push ebp	; 21B87
-call FreeMemBlock	; 21B88
-add esp, byte 4	; 21B8D
-xor eax, eax	; 21B90
-mov dword [statsplayerbuf], eax	; 21B92
-mov dword [statsteambuf], eax	; 21B97
-mov dword [statsgoaliebuf], eax	; 21B9C
-mov dword [statsskaterbuf], eax	; 21BA1
-mov dword [leaguestatsmode], eax	; 21BA6
-mov dword [statsredrawcb], eax	; 21BAB
+        xor ebx, ebx
+        mov dword [dword_C6D26], ebx
+        call FreeDeskBuffers
+        mov ecx, dword [statsteambuf]
+        push ecx
+        call FreeMemBlock
+        add esp, byte 4
+        mov esi, dword [statsgoaliebuf]
+        push esi
+        call FreeMemBlock
+        add esp, byte 4
+        mov edi, dword [statsskaterbuf]
+        push edi
+        call FreeMemBlock
+        add esp, byte 4
+        mov ebp, dword [statsplayerbuf]
+        push ebp
+        call FreeMemBlock
+        add esp, byte 4
+        xor eax, eax
+        mov dword [statsplayerbuf], eax
+        mov dword [statsteambuf], eax
+        mov dword [statsgoaliebuf], eax
+        mov dword [statsskaterbuf], eax
+        mov dword [leaguestatsmode], eax
+        mov dword [statsredrawcb], eax
 .2:
-mov ebx, dword [dword esp+eax*4+0300h]	; 21BB0
-mov dword [nosplit eax*4+playofftree], ebx	; 21BB7
-inc eax	; 21BBE
-cmp eax, byte 1Fh	; 21BBF
-jl short CalStandingsMenu_player2.2	; 21BC2
-mov eax, esp	; 21BC4
-push eax	; 21BC6
-push dword 100h	; 21BC7
-push byte 0	; 21BCC
-call SetPalette	; 21BCE
-add esp, byte 0Ch	; 21BD3
-mov ebx, 10h	; 21BD6
-mov edx, esp	; 21BDB
-mov eax, 1	; 21BDD
-call FadePalStep	; 21BE2
-mov dword [calredraw], 0FFFFFFFFh	; 21BE7
-call LoadCalendarShapes	; 21BF1
-xor eax, eax	; 21BF6
-add esp, 38Ch	; 21BF8
-pop ebp	; 21BFE
-jmp near CalTeamStatsScreen_x	; 21BFF
+        mov ebx, dword [dword esp+eax*4+0300h]
+        mov dword [nosplit eax*4+playofftree], ebx
+        inc eax
+        cmp eax, byte 1Fh
+        jl short CalStandingsMenu_player2.2
+        mov eax, esp
+        push eax
+        push dword 100h
+        push byte 0
+        call SetPalette
+        add esp, byte 0Ch
+        mov ebx, 10h
+        mov edx, esp
+        mov eax, 1
+        call FadePalStep
+        mov dword [calredraw], 0FFFFFFFFh
+        call LoadCalendarShapes
+        xor eax, eax
+        add esp, 38Ch
+        pop ebp
+        jmp near CalTeamStatsScreen_x
 %endif ; C
+;-----------------------------------------------------------------------------
+; DrawPhotoWithPal                             21C04  95 PC, medium confidence
+; Copies 0B4h + 0A5h palette bytes into the stats palette, installs
+; photoremap, draws photo shape (player photo by tag at 21FC7 / 22860)
+;-----------------------------------------------------------------------------
 ; C: src/front/stats_screens/DrawPhotoWithPal.c
 %ifdef CBUILD
 %include "c/front/stats_screens/DrawPhotoWithPal.inc"
 %else
 DrawPhotoWithPal:
-push dword 320h	; 21C04
-call __CHK	; 21C09
-push esi	; 21C0E
-push edi	; 21C0F
-push ebp	; 21C10
-sub esp, 304h	; 21C11
-mov esi, eax	; 21C17
-mov dword [dword esp+0300h], edx	; 21C19
-mov edi, ebx	; 21C20
-mov ebp, ecx	; 21C22
-mov edx, dword [statspalvalid]	; 21C24
-test edx, edx	; 21C2A
-je short .1	; 21C2C
-mov edx, dword [statspal]	; 21C2E
-mov ebx, 300h	; 21C34
-mov eax, esp	; 21C39
-call memcpy_	; 21C3B
-jmp short .2	; 21C40
+        push dword 320h
+        call __CHK
+        push esi
+        push edi
+        push ebp
+        sub esp, 304h
+        mov esi, eax
+        mov dword [dword esp+0300h], edx
+        mov edi, ebx
+        mov ebp, ecx
+        mov edx, dword [statspalvalid]
+        test edx, edx
+        je short .1
+        mov edx, dword [statspal]
+        mov ebx, 300h
+        mov eax, esp
+        call memcpy_
+        jmp short .2
 .1:
-mov eax, esp	; 21C42
-push eax	; 21C44
-push dword 100h	; 21C45
-push edx	; 21C4A
-call SetPalette	; 21C4B
-add esp, byte 0Ch	; 21C50
+        mov eax, esp
+        push eax
+        push dword 100h
+        push edx
+        call SetPalette
+        add esp, byte 0Ch
 .2:
-lea eax, [dword esp+0CCh]	; 21C53
-xor edx, edx	; 21C5A
-jmp short .4	; 21C5C
+        lea eax, [dword esp+0CCh]
+        xor edx, edx
+        jmp short .4
 .3:
-mov bl, byte [esi]	; 21C5E
-mov byte [eax], bl	; 21C60
-inc edx	; 21C62
-inc esi	; 21C63
-inc eax	; 21C64
+        mov bl, byte [esi]
+        mov byte [eax], bl
+        inc edx
+        inc esi
+        inc eax
 .4:
-cmp edx, 0B4h	; 21C65
-jl short DrawPhotoWithPal.3	; 21C6B
-lea eax, [dword esp+024Ch]	; 21C6D
-xor edx, edx	; 21C74
-jmp short .6	; 21C76
+        cmp edx, 0B4h
+        jl short DrawPhotoWithPal.3
+        lea eax, [dword esp+024Ch]
+        xor edx, edx
+        jmp short .6
 .5:
-mov bl, byte [esi]	; 21C78
-mov byte [eax], bl	; 21C7A
-inc edx	; 21C7C
-inc esi	; 21C7D
-inc eax	; 21C7E
+        mov bl, byte [esi]
+        mov byte [eax], bl
+        inc edx
+        inc esi
+        inc eax
 .6:
-cmp edx, 0A5h	; 21C7F
-jl short DrawPhotoWithPal.5	; 21C85
-push photoremap	; 21C87
-call SetColorRemap	; 21C8C
-add esp, byte 4	; 21C91
-mov ebx, dword [statspalvalid]	; 21C94
-test ebx, ebx	; 21C9A
-je short .7	; 21C9C
-mov eax, dword [statspal]	; 21C9E
-mov ebx, 300h	; 21CA3
-mov edx, esp	; 21CA8
-call memcpy_	; 21CAA
-jmp short .8	; 21CAF
+        cmp edx, 0A5h
+        jl short DrawPhotoWithPal.5
+        push photoremap
+        call SetColorRemap
+        add esp, byte 4
+        mov ebx, dword [statspalvalid]
+        test ebx, ebx
+        je short .7
+        mov eax, dword [statspal]
+        mov ebx, 300h
+        mov edx, esp
+        call memcpy_
+        jmp short .8
 .7:
-mov eax, esp	; 21CB1
-push eax	; 21CB3
-push dword 100h	; 21CB4
-push ebx	; 21CB9
-call VgaSetPalette	; 21CBA
-add esp, byte 0Ch	; 21CBF
+        mov eax, esp
+        push eax
+        push dword 100h
+        push ebx
+        call VgaSetPalette
+        add esp, byte 0Ch
 .8:
-push ebp	; 21CC2
-push edi	; 21CC3
-mov ecx, dword [dword esp+0308h]	; 21CC4
-push ecx	; 21CCB
-call sub_91FE0	; 21CCC
-add esp, byte 0Ch	; 21CD1
-add esp, 304h	; 21CD4
-pop ebp	; 21CDA
-pop edi	; 21CDB
-pop esi	; 21CDC
-ret	; 21CDD
+        push ebp
+        push edi
+        mov ecx, dword [dword esp+0308h]
+        push ecx
+        call sub_91FE0
+        add esp, byte 0Ch
+        add esp, 304h
+        pop ebp
+        pop edi
+        pop esi
+        ret
 %endif ; C

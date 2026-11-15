@@ -12,109 +12,109 @@ global _Extender, _ExtenderSubtype, byte_D4D08, dword_D4BC8, _dynend, _curbrk, _
 global _STACKLOW, _STACKTOP, dword_D4CF0, dword_D4CF4, dword_D4CF8, dword_D4D00, _Envptr, off_D4BA0
 global _psp, __no87, _Envptr_w4
 off_D4BA0:
-dd sub_972AB
-dd sub_972AB
-dd sub_972B8
-dd sub_972C0
-dd sub_972C0
-dd sub_972C8
-dd sub_972D5
-dd sub_972DD
-dd sub_972E5
-db 00h,00h,00h,00h
+        dd sub_972AB
+        dd sub_972AB
+        dd sub_972B8
+        dd sub_972C0
+        dd sub_972C0
+        dd sub_972C8
+        dd sub_972D5
+        dd sub_972DD
+        dd sub_972E5
+        db 00h,00h,00h,00h
 dword_D4BC8:
-db 0FFh,0FFh,0FFh,0FFh
-dd sub_972AB
-dd sub_972AB
-dd sub_9D698
-dd sub_9D6E6
-dd sub_9D6F3
-dd sub_972C8
-dd sub_972D5
-dd sub_9DAAC
-dd sub_972E5
-db 05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dd sub_9DE9C
-dd sub_9DEA9
-dd sub_9DEBE
-dd sub_9DF73
-dd sub_9DF80
-dd sub_972C8
-dd sub_972D5
-dd sub_9E676
-dd sub_972E5
-db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dd sub_9F226
-dd sub_9F387
-dd sub_9F418
-dd sub_9F4A0
-dd sub_9F4C8
-dd sub_9F577
-dd sub_9F622
-dd sub_9DC9F
-dd sub_9F642
-db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dd sub_9FD94
-dd sub_9FD9A
-dd sub_9FDEA
-dd sub_9FE3B
-dd sub_972C0
-dd sub_972C8
-dd sub_972D5
-dd sub_9FFA0
-dd sub_972E5
-db 03h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dd sub_A053C
-dd sub_A04B9
-dd sub_A05D3
-dd sub_A0643
-dd sub_972C0
-dd sub_972C8
-dd sub_972D5
-dd sub_A0D99
-dd sub_972E5
-db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-dd sub_A053C
-dd sub_A04B9
-dd sub_A059B
-dd sub_A060B
-dd sub_A067B
-dd sub_A076E
-dd sub_A0853
-dd sub_A0FEA
-dd sub_A0886
-db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        db 0FFh,0FFh,0FFh,0FFh
+        dd sub_972AB
+        dd sub_972AB
+        dd sub_9D698
+        dd sub_9D6E6
+        dd sub_9D6F3
+        dd sub_972C8
+        dd sub_972D5
+        dd sub_9DAAC
+        dd sub_972E5
+        db 05h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        dd sub_9DE9C
+        dd sub_9DEA9
+        dd sub_9DEBE
+        dd sub_9DF73
+        dd sub_9DF80
+        dd sub_972C8
+        dd sub_972D5
+        dd sub_9E676
+        dd sub_972E5
+        db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        dd sub_9F226
+        dd sub_9F387
+        dd sub_9F418
+        dd sub_9F4A0
+        dd sub_9F4C8
+        dd sub_9F577
+        dd sub_9F622
+        dd sub_9DC9F
+        dd sub_9F642
+        db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        dd sub_9FD94
+        dd sub_9FD9A
+        dd sub_9FDEA
+        dd sub_9FE3B
+        dd sub_972C0
+        dd sub_972C8
+        dd sub_972D5
+        dd sub_9FFA0
+        dd sub_972E5
+        db 03h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        dd sub_A053C
+        dd sub_A04B9
+        dd sub_A05D3
+        dd sub_A0643
+        dd sub_972C0
+        dd sub_972C8
+        dd sub_972D5
+        dd sub_A0D99
+        dd sub_972E5
+        db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
+        dd sub_A053C
+        dd sub_A04B9
+        dd sub_A059B
+        dd sub_A060B
+        dd sub_A067B
+        dd sub_A076E
+        dd sub_A0853
+        dd sub_A0FEA
+        dd sub_A0886
+        db 04h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
 _dynend:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _curbrk:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _LpCmdLine:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _LpPgmName:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _psp:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _STACKLOW:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _STACKTOP:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 dword_D4CF0:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 dword_D4CF4:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 dword_D4CF8:
-db 00h,00h,00h,00h,00h,00h,00h,00h
+        db 00h,00h,00h,00h,00h,00h,00h,00h
 dword_D4D00:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 __no87:
-db 00h,00h
+        db 00h,00h
 _Extender:
-db 00h
+        db 00h
 _ExtenderSubtype:
-db 00h
+        db 00h
 byte_D4D08:
-db 00h
+        db 00h
 _Envptr:
-db 00h,00h,00h,00h
+        db 00h,00h,00h,00h
 _Envptr_w4:
-db 00h,00h
+        db 00h,00h
