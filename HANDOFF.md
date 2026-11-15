@@ -2,6 +2,7 @@
 
 ## Now
 
+- Source cleanup 2026-11-15 (plan https://claude.ai/artifact/B5uLXNRSGD6gVVAiAXL5dJ), on `main`: no per-line addresses (`tools/build/asmaddr.py` prints any address; tools read `asmaddr.legacy_lines`), code indented, a header with name, address, name source and description on every game routine (`tools/build/format_asm.py`), the 18 largest files split by subject (`tools/build/split_modules.py docs/cleanup/split_95pc.map`), the numbered data files named after their users (`docs/cleanup/data_renames_95pc.txt`), no unnamed game routine left. Open: struct field names for raw offsets (plan phase 3), line comments and word labels (phase 5). Style: CONTRIBUTING.md.
 - Stage / unit: leftover NR **paused** 2026-11-07 at **82 PASS / 0 FAIL / 27 NR**. StarCompare / assonetimer **PASS 3000**. H6 stays closed. Native F4 waits. Do not resume leftover NR unless asked.
 - Branch: `main` (leftover stack H2–keep merged, #322–#345). sdl2 twin on `sdl2-port` (#324–#346).
 - Last check: 2026-11-06 `check.py --selftest` ALL PASS; G17 SeriesLength PASS 450, NetCollide PASS 6750; planted SeriesLength FAIL case 4 (`ret eax` 1 vs 2). Leftover 82/27.
