@@ -25,11 +25,11 @@ extern str_Pio, str_Pion, str_Pioneer1, str_Pioneer2, str_Pioneer3, str_Pioneer4
 extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_Stanley, str_Title
 extern str_Title30, strlen_, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002, sub_1B092, sub_1B09F
 extern sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState
+extern sub_1B2A7, sub_1B8AC, sub_1B92E, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState
 extern TextRestoreState, TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
-extern PutBlock, DrawBitmap, sub_9087C, FillRect, sub_9121C, sub_91284, sub_912C8, sub_9132C
-extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, sub_B3A88
-extern sub_B3AA1, VgaSetPalette, sub_B4BA8, sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, CreateBitmap
+extern PutBlock, DrawBitmap, sub_9087C, FillRect, sub_9121C, sub_91284, sub_912C8, FreeBitmap
+extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, SaveDrawState
+extern RestoreDrawState, VgaSetPalette, SetScreenTarget, sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, CreateBitmap
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
 extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
 extern lcsel_aw
@@ -320,7 +320,7 @@ TitleScreen:
         xor edx, edx
         mov dword [dword esp+032Ch], edx
         call ClearInputQueue
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -578,7 +578,7 @@ TitleScreen:
         push edx
         call sub_9087C
         add esp, byte 0Ch
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 56h
         push byte 21h
         mov eax, dword [dword esp+0334h]
@@ -631,7 +631,7 @@ TitleScreen:
         push eax
         call sub_9121C
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 56h
         push byte 21h
         mov eax, dword [dword esp+0334h]
@@ -726,7 +726,7 @@ TitleScreen:
         test ebp, ebp
         je short .38
         push ebp
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
 .38:
         mov eax, edi
@@ -761,7 +761,7 @@ TitleScreen:
         je short TitleScreen.40
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -806,11 +806,11 @@ RunIntro:
         mov eax, dword [speechbank]
         mov ebx, dword [dword eax+03B60h]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .1:
         call ClearInputQueue
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1251,21 +1251,21 @@ RunIntro:
         test edx, edx
         je short .41
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .41:
         mov ecx, dword [dword esp+0648h]
         test ecx, ecx
         je short .42
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .42:
         mov edi, dword [dword esp+0644h]
         test edi, edi
         je short .43
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .43:
         cmp byte [musicon], 0
@@ -1368,7 +1368,7 @@ RunIntro:
         je short RunIntro.51
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -1377,7 +1377,7 @@ RunIntro:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1388,7 +1388,7 @@ RunIntro:
         test eax, eax
         je near RunIntro.45
 .53:
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1733,7 +1733,7 @@ ShowCredits:
         je short ShowCredits.25
         mov ebp, dword [songdata]
         push ebp
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor eax, eax
         mov dword [songdata], eax
@@ -1753,7 +1753,7 @@ ShowCredits:
         push edx
         call FreeMemBlock
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1812,7 +1812,7 @@ RenderTextLine:
         add esp, byte 0Ch
         lea eax, [byte esp+04h]
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
         push esi
         call SetDrawBitmap
@@ -1826,7 +1826,7 @@ RenderTextLine:
         call PrintShadowText
         lea eax, [byte esp+04h]
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         push ebp
         mov edx, dword [byte esp+04h]
@@ -1836,7 +1836,7 @@ RenderTextLine:
         call DrawArt
         add esp, byte 0Ch
         push esi
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         add esp, byte 64h
         pop ebp

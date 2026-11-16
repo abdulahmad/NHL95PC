@@ -46,7 +46,7 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     if (musicon && songdata) {
         sub_8FCDF(musichandle, 3, 0x32);
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     if (musicon && (((unsigned char *)&gameopts)[1] & 1)) {
@@ -79,7 +79,7 @@ void GameLineEditor(int team, unsigned char *lines, unsigned char *names, int mo
     boxshadecolor = c1;
     dlgtextfg = c0;
     dlgtextbg = c1;
-    sub_B4BA8();
+    SetScreenTarget();
     SetClipWindow(0, 0x280, 0, 0x1E0);
     MouseSetPos(0x140, 0xC8);
     MakePath(s.path, fileoncd[0xE8] == 1 ? (char *)cddriveptr : 0, (char *)str_Lineditp3, 0);

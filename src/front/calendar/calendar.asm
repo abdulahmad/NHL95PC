@@ -15,7 +15,7 @@ extern ptrupdatefn, PutBlock, ReadSchedGame, savepal, SetClipWindow, SetColorRem
 extern SetPalette, ShowLoadingScreen, skaterstatscb, SndQuery, songdata, sprintf_, standingscb, standingsmenucb
 extern str_02d9D, str_Away, str_Bkgd7, str_Boxb, str_Boxr, str_Calendar, str_Callogo, str_D8
 extern str_Home, str_Iff9, str_L7, str_Menubuff5, str_Pal17, str_Pointer8, str_SDD2, str_T5
-extern str_W5, sub_8D2F0, sub_8F98F, sub_8FB8E, sub_8FCDF, sub_913D0, sub_B4BA8, sub_B4FAC
+extern str_W5, PushMemDescriptorLocked, sub_8F98F, sub_8FB8E, sub_8FCDF, sub_913D0, SetScreenTarget, FillRectColor
 extern teamstatscb, TextRestoreState, TextSaveState, TextSetFont
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen
 ;-----------------------------------------------------------------------------
@@ -476,7 +476,7 @@ DrawCalendarDay:
         lea eax, [byte esi-01h]
         mov dword [dword esp+090h], eax
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         push edi
@@ -486,7 +486,7 @@ DrawCalendarDay:
         push eax
         push edi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         push ebp
@@ -495,7 +495,7 @@ DrawCalendarDay:
         mov ebx, dword [dword esp+088h]
         push ebx
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         lea eax, [byte ebp-01h]
@@ -504,7 +504,7 @@ DrawCalendarDay:
         push esi
         push edi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         push ebp
@@ -513,7 +513,7 @@ DrawCalendarDay:
         mov ebx, dword [dword esp+088h]
         push ebx
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         mov eax, dword [dword esp+090h]
@@ -522,7 +522,7 @@ DrawCalendarDay:
         push edx
         push edi
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         push ebp
@@ -531,7 +531,7 @@ DrawCalendarDay:
         push ebp
         mov edi, dword [dword esp+090h]
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0BBh
         mov ebp, dword [dword esp+090h]
@@ -540,7 +540,7 @@ DrawCalendarDay:
         push eax
         push ebp
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
 .19:
         lea eax, [byte esp+0Ch]
@@ -751,7 +751,7 @@ CalendarScreen:
         mov dword [dword esp+079Ch], 0C0h
         mov dword [dword esp+07A4h], 0Ch
         mov dword [dword esp+07A0h], 67h
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -786,7 +786,7 @@ CalendarScreen:
         je short CalendarScreen.2
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi
@@ -1069,7 +1069,7 @@ CalendarScreen:
 .28:
         mov ax, word [calmonth]
         mov word [dword esp+07D0h], ax
-        call sub_B4BA8
+        call SetScreenTarget
         mov esi, calmenubar
         mov dword [dword esp+0730h], esi
         mov edi, 3
@@ -1083,7 +1083,7 @@ CalendarScreen:
         mov dword [dword esp+0718h], eax
         mov dword [dword esp+071Ch], eax
         call FadeOutPalCycle
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [dword esp+07A0h]
         push edx
         mov ecx, dword [dword esp+07A8h]
@@ -1358,7 +1358,7 @@ CalendarScreen:
         sar eax, 10h
         cmp eax, dword [calmonth]
         je short .43
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebx, dword [dword esp+07A0h]
         push ebx
         mov ecx, dword [dword esp+07A8h]
@@ -1382,7 +1382,7 @@ CalendarScreen:
 .43:
         cmp dword [calredraw], byte 0
         je short .44
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword esp+07A0h]
         push eax
         mov ecx, dword [dword esp+07A8h]
@@ -1939,7 +1939,7 @@ CalendarScreen:
         mov eax, ebp
         call SetGameSides
 .74:
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebx, dword [dword esp+07A0h]
         push ebx
         mov ecx, dword [dword esp+07A8h]

@@ -26,11 +26,11 @@ extern str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20, str_Playoff, str_Playof
 extern str_Pointer21, str_Return, str_Room, str_SBDAC, str_SBDAC2, str_Settings, str_Settings3, str_ShowLeague
 extern str_Slapshot, str_Sound4, str_SoundBlaster, str_SoundBlaster2, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound
 extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock
-extern sub_8D2F0, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, sub_8EB5B, sub_8EB93
+extern PushMemDescriptorLocked, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, sub_8EB5B, sub_8EB93
 extern sub_8ECC0, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, sub_8FBE5, sub_8FC37, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
-extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, sub_B4BA8
-extern SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
+extern GrabBlock, PrintString, sub_91FE0, sub_97079, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
+extern SetColorRemap, FillRectColor, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
 extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
 global SoundCardDlg_epilogue, SoundCardDlgLoop_x, SetSoundDevice
@@ -117,7 +117,7 @@ DrawSoundCardDlg:
         push edx
         push esi
         sub esp, byte 20h
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Sound4
         cmp byte [fileoncd+0191h], 1
@@ -486,7 +486,7 @@ SoundCardDlgLoop:
         mov dword [byte esp+02Ch], eax
         mov eax, dword [byte esp+030h]
         mov dword [byte esp+028h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov esi, dword [byte esp+028h]
         push esi
         mov eax, dword [byte esp+030h]
@@ -644,7 +644,7 @@ SoundCardDlgLoop_poll:
         je short SoundCardDlgLoop_poll.9
         mov eax, dword [songdata]
         push eax
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edx, edx
         mov dword [songdata], edx

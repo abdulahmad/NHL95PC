@@ -4,9 +4,9 @@ bits 32
 section s_96440 progbits alloc exec nowrite align=1
 extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1stColour, str_Mvipal, str_DATABUFFER, cliprect_x0, cliprect_x1
 extern cliprect_y0, cliprect_y1, DebugPrintf, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104, FreeMemBlock
-extern sub_8CC70, AllocMemBlock, sub_8CCC4, sub_8D2F0, sub_8DBD4, sub_8E8F0, sub_9132C, sub_B3A88
-extern sub_B3AA1, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3, sub_B4BA8, SetClipWindow
-extern CreateBitmap, sub_B5E00, sub_B6DF7
+extern sub_8CC70, AllocMemBlock, sub_8CCC4, PushMemDescriptorLocked, sub_8DBD4, sub_8E8F0, FreeBitmap, SaveDrawState
+extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
+extern CreateBitmap, sub_B5E00, BlitShapeClipped
 global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
 global loc_965A4, loc_965CB, loc_965D4, sub_965DC, sub_96690, sub_966E4, loc_967AE, loc_967C3
 global sub_96844, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
@@ -24,7 +24,7 @@ sub_96440:
         push eax
         push edi
         push edx
-        call sub_B6DF7
+        call BlitShapeClipped
         add esp, byte 0Ch
         jmp near loc_965D4
 loc_9646B:
@@ -102,7 +102,7 @@ loc_96526:
         push ebp
         push esi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         add esi, ebp
         mov ebp, dword [byte esp+014h]
@@ -117,7 +117,7 @@ loc_96526:
         push esi
         mov eax, dword [byte esp+010h]
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov edi, ebp
         add esi, ebp
@@ -127,7 +127,7 @@ loc_9658D:
         push edx
         push esi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov edi, dword [byte esp+014h]
         add esi, dword [byte esp+010h]
@@ -188,10 +188,10 @@ sub_965DC:
         mov edi, dword [byte esp+074h]
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
         mov esi, dword [dword_D30D0]
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword esp+084h]
         add eax, edi
         push eax
@@ -215,7 +215,7 @@ sub_965DC:
         add esp, byte 0Ch
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         add esp, byte 60h
         pop ebp
@@ -483,7 +483,7 @@ loc_96915:
         lea eax, [byte esp+04h]
         push eax
         push ecx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         mov edx, esp
         mov eax, esi
@@ -504,7 +504,7 @@ loc_96915:
         jne short loc_96988
         mov ebp, dword [dword esp+0318h]
         push ebp
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         push esi
         call FreeMemBlock
@@ -520,7 +520,7 @@ loc_96988:
         push ecx
         mov edi, dword [dword esp+031Ch]
         push edi
-        call sub_B3CB3
+        call DosSeekFile
         add esp, byte 8
         mov eax, esi
 loc_9699E:
@@ -539,27 +539,27 @@ loc_9699E:
         test edx, edx
         je short loc_969C4
         push edx
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
 loc_969C4:
         mov ecx, dword [byte esi+030h]
         test ecx, ecx
         je short loc_969D4
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 loc_969D4:
         mov ebp, dword [byte esi+034h]
         push ebp
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         mov eax, dword [byte esi+038h]
         push eax
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         mov edx, dword [byte esi+03Ch]
         push edx
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         mov ebx, dword [byte esi+01Ch]
         push ebx
@@ -585,7 +585,7 @@ loc_96A29:
         mov ebx, dword [byte eax+028h]
         push ebx
         push edx
-        call sub_B3CB3
+        call DosSeekFile
         add esp, byte 8
         ret
         db 090h

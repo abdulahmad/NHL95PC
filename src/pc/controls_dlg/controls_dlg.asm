@@ -11,7 +11,7 @@ extern lcblink, lcboxon, LoadBank, MakePath, MouseRead, pad1dev, pointerspr, Pri
 extern ptrupdatefn, puckasslist, puckc, puckstruct, pucktemp1, puckvx, puckvy, puckx
 extern pucky, PutBlock, restorepl, samesideflag, scpflags2, setbits, SetColorRemap, setpersonel
 extern SetSideControls, SortCords, str_BKGD4, str_Dbox5, str_JoystickOne, str_JoystickTwo, str_OneS, str_PlayerImg
-extern str_Pointer18, str_TheKeyboard, str_TheMouse, str_TwoS, sub_B4BA8, sub_B4FAC, teamcitynames, TextSetColors
+extern str_Pointer18, str_TheKeyboard, str_TheMouse, str_TwoS, SetScreenTarget, FillRectColor, teamcitynames, TextSetColors
 extern VisTeam, WriteCurModeState
 global DrawCtlBoxOn, DrawCtlBox_common, DrawCtlBoxOff, MenuP1ControlsExh, MenuP2ControlsExh, ControlsDlgExh, ControlsDlg_done, MenuP1ControlsLeague
 global MenuP2ControlsLeague, ControlsDlgLeague, MenuP1ControlsInGame, ControlsDlgInGame, MenuP2ControlsInGame, CtlSwapScoreFix, CtlSwapTeamFlag, ReassignCtlPlayer
@@ -55,7 +55,7 @@ DrawCtlBoxOn:
         add edx, byte 12h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push ebp
         mov ebp, dword [byte esi+04h]
@@ -68,7 +68,7 @@ DrawCtlBoxOn:
         mov eax, dword [esi]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push edi
         mov eax, dword [byte esi+0Ch]
@@ -81,7 +81,7 @@ DrawCtlBoxOn:
         add eax, byte 14h
         push eax
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push edi
 DrawCtlBox_common:
@@ -95,7 +95,7 @@ DrawCtlBox_common:
         mov eax, dword [byte esi+08h]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         jmp near ControlsDlg_ret
 %endif ; C
@@ -137,7 +137,7 @@ DrawCtlBoxOff:
         add edx, byte 12h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push edi
         mov edi, dword [byte esi+04h]
@@ -150,7 +150,7 @@ DrawCtlBoxOff:
         mov eax, dword [esi]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push ebp
         mov eax, dword [byte esi+0Ch]
@@ -163,7 +163,7 @@ DrawCtlBoxOff:
         add eax, byte 14h
         push eax
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push ebp
         jmp near DrawCtlBox_common
@@ -1063,7 +1063,7 @@ DrawControlsDlg:
         push edi
         sub esp, 120h
         mov esi, eax
-        call sub_B4BA8
+        call SetScreenTarget
         xor eax, eax
 .1:
         mov byte [esp+eax], al

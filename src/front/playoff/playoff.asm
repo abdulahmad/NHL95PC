@@ -14,7 +14,7 @@ extern str_fmtPct0, str_GA2, str_GF, str_GP7, str_L6, str_Midl2, str_P, str_Pal9
 extern str_Pct4, str_PlayoffsHaveNotBeen2, str_Pst27, str_Pstatbar8, str_Rst12, str_Rst22, str_Scuparrw2, str_Standings
 extern str_T4, str_Team, str_TwoSpaces, str_W4, str_Western, str_WesternConference2, strcat_, LoadBank
 extern TextSaveState, TextRestoreState, TextSetFont, sub_91044, DrawArt, DrawShape, FindShape, VgaSetPalette
-extern sub_B4BA8, SetClipWindow, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
+extern SetScreenTarget, SetClipWindow, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
 extern treecol_Wr2, treecol_Wr3, treecolslots, treecolx, treerowy, treeteamnames
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
 ;-----------------------------------------------------------------------------
@@ -156,7 +156,7 @@ StandingsScreen:
         mov edx, 1Ah
         mov eax, dword [byte ebp-03Ch]
         call qsort_
-        call sub_B4BA8
+        call SetScreenTarget
         mov dword [dword ebp-042Ch], 0
         mov eax, dword [statsplayoffs]
         shl eax, 2
@@ -1370,7 +1370,7 @@ PlayoffTreeScreen:
 .1:
         mov dword [off_CF6A3], DeskSetExit3b
 .2:
-        call sub_B4BA8
+        call SetScreenTarget
         cmp dword [embscupbank], byte 0
         jne near .5
         mov dword [dword ebp-01CCh], 0

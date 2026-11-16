@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_8DCF8 progbits alloc exec nowrite align=1
 extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, dword_EDAB0
-extern dword_EDAB4, FatalError, int386_, sub_8C990, sub_8CAF4, sub_8DAB8, sub_8DB4C, sub_8DCC0
-extern sub_986B0, sub_986E4, DetectCPU, unk_EDF04, unknown_libname_22
+extern dword_EDAB4, FatalError, int386_, sub_8C990, sub_8CAF4, sub_8DAB8, sub_8DB4C, GrabLargestBlock
+extern sub_986B0, MemUnlock, DetectCPU, unk_EDF04, unknown_libname_22
 global initmemman, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
 global sub_8DF28, sub_8DF3C, sub_8DF54
 initmemman:
@@ -20,7 +20,7 @@ initmemman:
         call unknown_libname_22
         add esp, byte 4
         call DetectCPU
-        call sub_8DCC0
+        call GrabLargestBlock
         mov edx, eax
         test esi, esi
         jle short loc_8DD2F
@@ -129,7 +129,7 @@ loc_8DDF4:
         mov ax, word [byte esp+0Ch]
         mov dword [byte esp+038h], eax
 loc_8DEAD:
-        call sub_8DCC0
+        call GrabLargestBlock
         mov edx, eax
         cmp eax, 2710h
         jl short loc_8DED0
@@ -162,7 +162,7 @@ loc_8DED0:
 loc_8DF06:
         mov esi, dword [dword_EDAB0]
         push esi
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         call sub_8DAB8
         mov dword [dword_EDAB4], eax

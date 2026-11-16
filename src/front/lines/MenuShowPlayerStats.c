@@ -44,7 +44,7 @@ int MenuShowPlayerStats(unsigned char *nums, int ignored, unsigned char side, in
     ClearScreen(z);
     DrawLineEditorScreen(side, art, zero, buttons, extra);
     DrawLineJerseys(nums, art, side);
-    sub_B4BA8();
+    SetScreenTarget();
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
     if (*(volatile int *)sel >= 0) {
         if (rosterstat[side * 0x2F4 + *sel * 27] == 2)

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_B0100 progbits alloc exec nowrite align=1
-extern byte_D89E4, dword_D30C8, dword_D43E4, dword_D86C0, DrawArtOpaque, sub_B3ABC, sub_B77F4
+extern byte_D89E4, dword_D30C8, dword_D43E4, dword_D86C0, DrawArtOpaque, bcopy, BlitBlockRemapKeyed
 global sub_B0100, loc_B010E, loc_B0123, sub_B0128, loc_B0132, loc_B0144, sub_B0148, loc_B015B
 global loc_B016A, sub_B0170, loc_B018F, loc_B01A3, sub_B01B0, loc_B01BD, loc_B01CE, loc_B01DC
 global loc_B01E1, sub_B01E4, loc_B0205, sub_B0228, sub_B026C, loc_B027D, loc_B0285, sub_B0288
@@ -129,7 +129,7 @@ sub_B01E4:
         push eax
         push ebx
         push edx
-        call sub_B77F4
+        call BlitBlockRemapKeyed
         add esp, byte 0Ch
         ret
 loc_B0205:
@@ -139,7 +139,7 @@ loc_B0205:
         push edx
         call DrawArtOpaque
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_B0228:

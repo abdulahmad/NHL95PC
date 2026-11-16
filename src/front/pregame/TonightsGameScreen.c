@@ -55,7 +55,7 @@ int TonightsGameScreen(int home, int away)
     fh = -1;
     ClearInputQueue();
     err = 0;
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     MakePath(path, fileoncd[0x59] == 1 ? (char *)cddriveptr : 0, (char *)str_Ctlogo, 0);
     logobank = LoadBank(path, 0);
@@ -114,7 +114,7 @@ int TonightsGameScreen(int home, int away)
     for (side = 0; side < 2 && key < 2 && !err; side++) {
         short out;
 
-        sub_B4BA8();
+        SetScreenTarget();
         if (side) {
             SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
             DrawBitmap(bkgd);
@@ -149,7 +149,7 @@ int TonightsGameScreen(int home, int away)
         }
         key = WaitClickTimeout(0x3E8);
         if (key < 2) {
-            sub_B4BA8();
+            SetScreenTarget();
             SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
             DrawBitmap(bkgd);
             SetClipWindow(0, 0x80, 0x8C, 0x1E0);
@@ -175,7 +175,7 @@ int TonightsGameScreen(int home, int away)
             key = WaitClickTimeout(0x3E8);
         }
         if (key < 2) {
-            sub_B4BA8();
+            SetScreenTarget();
             SetClipWindow(0x80, 0x280, 0x8C, 0x1E0);
             DrawBitmap(bkgd);
             SetClipWindow(0, 0x80, 0x8C, 0x1E0);
@@ -205,11 +205,11 @@ int TonightsGameScreen(int home, int away)
     FreeMemBlock((int)gipk);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, pal, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     if (key < 3) ShowLoadingScreen();

@@ -12,7 +12,7 @@ extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d, str_fmtEmb, str_fmtMinSec, st
 extern str_G3, str_GA, str_GAA3, str_GP5, str_KeyDb, str_L5, str_MightyDucksOfAnaheim2, str_Min3
 extern str_Name, str_No, str_PCT, str_PIM3, str_PlusMinus3, str_Pos, str_Pst25, str_Pstatbar6
 extern str_PT, str_Regi, str_S, str_SA2, str_Shots3, str_T3, str_Trad, str_W3
-extern sub_B4BA8, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont
+extern SetScreenTarget, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont
 global PlayerFromMouseY, TeamRosterScreen
 ;-----------------------------------------------------------------------------
 ; PlayerFromMouseY                                                24453  95 PC
@@ -298,7 +298,7 @@ TeamRosterScreen:
         mov edx, dword [dword esp+0408h]
         mov eax, statsgoalieorder
         call qsort_
-        call sub_B4BA8
+        call SetScreenTarget
         lea eax, [byte esp+04h]
         push eax
         push str_fmtEmb

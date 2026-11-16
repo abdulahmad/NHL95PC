@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_91D0B progbits alloc exec nowrite align=1
 extern __close_, __flush_, __freefp_, __ioalloc_, _nfree_, dword_F24C8, fputc_, ftell_
-extern j_unlink_, lseek_, sub_9B22C
+extern j_unlink_, lseek_, GetPsp
 global fclose_, loc_91D14, loc_91D20, loc_91D2B, __shutdown_stream_, __hex_, loc_91D5A, __MkTmpFile_
 global loc_91D76, __doclose_, loc_91DDC, loc_91DEF, loc_91E07, loc_91E15, loc_91E2A, loc_91E43
 global strncpy_, loc_91E53, loc_91E5E, loc_91E62, loc_91E6D, fputs_, loc_91E88, loc_91EA7
@@ -58,7 +58,7 @@ __MkTmpFile_:
         push edi
         mov ecx, eax
         mov edi, edx
-        call sub_9B22C
+        call GetPsp
         mov edx, 4
         mov ebx, eax
         mov esi, ecx

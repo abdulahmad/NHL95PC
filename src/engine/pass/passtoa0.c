@@ -2,11 +2,11 @@
 /* DRAFT (10.0 GA): 48 score differing, 692 vs 708 bytes. The explicit word frame, doubled dot
    product and ternary root calculation give the EXE's frame size and player register.
    The ay / speed registers, velocity sign extensions and some arithmetic temporaries remain. */
-#define sub_93470 sub_93470_decl
+#define IntSqrt sub_93470_decl
 #include "nhl95.h"
-#undef sub_93470
+#undef IntSqrt
 
-int __cdecl sub_93470(int v);  /* sroot: integer square root */
+int __cdecl IntSqrt(int v);  /* sroot: integer square root */
 
 /* passtoa0 (551CF, 94G passtoa0): pass the puck to p. Count the pass for p's team (not in highlight mode),
    make p the pass target (passplayer) and give p the pass receive assignment (13h). From p's hot spot (GetHot)
@@ -46,7 +46,7 @@ void passtoa0(Player *p)
     sp = passspeed >> 2;
     s.k = s.vx * s.vx + s.vy * s.vy - sp * sp;
     r = s.j * s.j - (s.k * (ay * ay + ax * ax) << 2);
-    r = r > 0 ? sub_93470(r) : r ^ r;
+    r = r > 0 ? IntSqrt(r) : r ^ r;
     s.k = s.k >> 2;
     if (!s.k) s.k = 1;
     for (n = 0; n < 2; n++) {

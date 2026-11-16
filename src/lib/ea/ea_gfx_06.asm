@@ -5,10 +5,10 @@ section s_91370 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, dword_D30A4
 extern dword_D30A8, dword_D30C8, dword_D30D0, dword_D3104, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
 extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, dword_D43E4, fontcolor
-extern loc_91260, off_D42A4, sub_8E9D4, PutBlock, sub_B3ABC, SetClipWindow, sub_B5D80, sub_B5E00
-extern sub_B69E4, sub_B6B3F
+extern loc_91260, off_D42A4, sub_8E9D4, PutBlock, bcopy, SetClipWindow, sub_B5D80, sub_B5E00
+extern sub_B69E4, BlitShapeFast
 global DrawArt, loc_91391, DrawShape, sub_913D0, GrabBlock, loc_9142B, loc_9148A, loc_914E6
-global loc_914FD, loc_91520, loc_91531, sub_91538, sub_91554, sub_91580, loc_915E7, loc_91616
+global loc_914FD, loc_91520, loc_91531, DrawShapeAtOwnPos, sub_91554, sub_91580, loc_915E7, loc_91616
 global loc_9161C, loc_91637, loc_9163D, loc_91655, loc_91660, loc_91679, loc_9167B, loc_9169F
 global loc_916A1, loc_91722, loc_9174E, loc_91765, loc_91787, loc_91790, loc_917A4, loc_917B8
 global loc_917CD, loc_917E2, loc_917F7, loc_9180C, loc_91821, loc_91836, loc_9184B, loc_91860
@@ -34,7 +34,7 @@ loc_91391:
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 DrawShape:
@@ -79,7 +79,7 @@ GrabBlock:
         push esi
         push edx
         push eax
-        call sub_B6B3F
+        call BlitShapeFast
         add esp, byte 0Ch
         jmp near loc_91531
 loc_9142B:
@@ -122,7 +122,7 @@ loc_9148A:
         push ebp
         push edi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         add edi, ebp
         mov ebp, dword [byte esp+010h]
@@ -137,7 +137,7 @@ loc_9148A:
         push edi
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov esi, ebp
         add edi, ebp
@@ -147,7 +147,7 @@ loc_914E6:
         push ecx
         push edi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov esi, dword [byte esp+010h]
         add edi, dword [byte esp+0Ch]
@@ -174,7 +174,7 @@ loc_91531:
         pop edi
         pop esi
         ret
-sub_91538:
+DrawShapeAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h

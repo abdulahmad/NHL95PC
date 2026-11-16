@@ -10,7 +10,7 @@ extern na05spr, pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr
 extern pointerspr, postate, PrintString, ptrupdatefn, PutBlock, SaveModeState, seriesgameno, setbits
 extern SetColorRemap, settingsfile, SndQuery, songdata, sounddev, str_BKGD, str_Dbox2, str_DigitizedSpeech
 extern str_Music, str_Pointer15, str_Setting3, str_Setting5, str_Sound, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_91FE0, sub_96440, sub_B4BA8, TextSetColors
+extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_91FE0, sub_96440, SetScreenTarget, TextSetColors
 extern VgaSetPalette, WriteCurModeState, WriteModeState
 global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
 global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
@@ -39,7 +39,7 @@ LeagueSettingsDlg:
         xor edx, edx
         mov dword [seriesgameno], edx
         call LoadSettingsShapes
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 1436Bh
         push str_BKGD
@@ -113,7 +113,7 @@ MenuPlayoffSettings:
         push edi
         push ebp
         call LoadSettingsShapes
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 1436Bh
         push str_BKGD
@@ -181,7 +181,7 @@ EditPlayoffSettings:
         push edi
         push ebp
         call LoadSettingsShapes
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 1436Bh
         push str_BKGD
@@ -234,7 +234,7 @@ MenuLeagueSettingsEdit:
         push esi
         push edi
         push ebp
-        call sub_B4BA8
+        call SetScreenTarget
         call LoadSettingsShapes
         push byte 20h
         push dword 1436Bh
@@ -323,7 +323,7 @@ MenuShowLeagueSettings2:
         push ebp
         sub esp, byte 28h
         call LoadSettingsShapes
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Setting5
         cmp byte [fileoncd+0175h], 1
@@ -450,7 +450,7 @@ DrawLeagueSetDlgSel:
         push ebp
         mov ebp, esp
         sub esp, byte 20h
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [leaguesetimg]
         test edx, edx
         je short .2
@@ -527,7 +527,7 @@ DrawLeagueSetDlgSel:
         mov edx, 13h
         mov eax, 0Ah
         call DrawSettingsHeading
-        call sub_B4BA8
+        call SetScreenTarget
         xor eax, eax
         mov esp, ebp
         pop ebp
@@ -569,7 +569,7 @@ DrawLeagueSetDlg:
         push edi
         sub esp, 120h
         mov esi, eax
-        call sub_B4BA8
+        call SetScreenTarget
         xor eax, eax
 .1:
         mov byte [esp+eax], al
@@ -1111,7 +1111,7 @@ LeagueSetViewLoop:
         mov dword [byte esp+08h], eax
         mov eax, dword [byte esp+0Ch]
         mov dword [byte esp+04h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -1271,7 +1271,7 @@ LeagueSetEditLoop:
         shl eax, 19h
         shr eax, 1Fh
         mov dword [byte esp+018h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h

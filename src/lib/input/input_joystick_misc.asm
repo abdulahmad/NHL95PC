@@ -11,15 +11,15 @@ extern dword_D41AF, dword_D41B3, dword_D41FC, dword_D4200, dword_D4204, dword_D4
 extern dword_D4214, dword_D4218, dword_D421C, dword_D4220, dword_D4224, dword_D4228, dword_D422C, dword_D4230
 extern dword_D4234, dword_D4238, dword_D423C, dword_D4240, dword_D4248, dword_D424C, dword_D4250, dword_D4254
 extern dword_D4258, dword_D425C, dword_D4260, dword_D4264, dword_D4268, dword_D426C, dword_D4270, dword_D4274
-extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, off_D42A0, FillRect, sub_9864C
-extern sub_98664, tickcount, tickdeadline, ticklast, unk_8E870, word_D3094, word_D309A
-global sub_B300C, sub_B3010, sub_B3036, loc_B3089, sub_B308B, loc_B30B0, FindShape, sub_B30BB
+extern dword_D4278, dword_D427C, exit_, FatalError, joyenablemask, off_D42A0, FillRect, DosGetVector
+extern DosSetVector, tickcount, tickdeadline, ticklast, unk_8E870, word_D3094, word_D309A
+global sub_B300C, sub_B3010, sub_B3036, loc_B3089, sub_B308B, loc_B30B0, FindShape, FindShapeQuiet
 global loc_B30BD, loc_B30D1, loc_B30E3, loc_B30F1, sub_B30F4, loc_B3115, loc_B3129, loc_B3132
-global loc_B3156, sub_B3168, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31D0, loc_B31DB
+global loc_B3156, ReadJoystickPorts, loc_B31A5, loc_B31A9, loc_B31BB, loc_B31BF, loc_B31D0, loc_B31DB
 global loc_B3207, loc_B3219, loc_B322F, loc_B3258, loc_B3277, loc_B3285, loc_B32A3, loc_B32BE
 global loc_B32E9, loc_B32FB, loc_B3311, loc_B333A, loc_B3346, loc_B3365, loc_B3373, loc_B3391
-global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, sub_B33DB, sub_B340B, sub_B3421
-global loc_B3430, loc_B3449, sub_B3454, sub_B345D, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
+global loc_B33A8, loc_B33BA, loc_B33C1, loc_B33C7, loc_B33D2, JoyResetCentres, JoyButtonMap, sub_B3421
+global loc_B3430, loc_B3449, AddExitHandler, sub_B345D, ReadJoyRaw, loc_B3471, loc_B34B1, loc_B34B5
 global loc_B34C7, loc_B34CB, loc_B34CF, loc_B34D3, loc_B34E4, loc_B34F1, loc_B34FE, loc_B3509
 global loc_B3518, loc_B3532, loc_B3548, loc_B3573, loc_B3593, loc_B35A1, loc_B35B5, loc_B35CC
 global loc_B35E6, loc_B35FC, loc_B3627, loc_B3630, loc_B3650, loc_B365E, loc_B3672, loc_B3689
@@ -27,9 +27,9 @@ global loc_B369C, loc_B36A5, loc_B36B3, loc_B36CD, loc_B36E3, loc_B370E, loc_B37
 global loc_B3750, loc_B3767, loc_B3781, loc_B3797, loc_B37C2, loc_B37CB, loc_B37EB, loc_B37F9
 global loc_B380D, loc_B3824, loc_B3838, loc_B3845, sub_B384E, sub_B387E, sub_B38AE, loc_B38BD
 global loc_B38DC, loc_B38FB, loc_B391A, ClearScreen, GetTicks, TicksSince, TicksSinceLastCall, ResetTicks
-global SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks, loc_B39C3, sub_B39D0, loc_B39DE, loc_B39EC
-global PollKey, sub_B39F3, loc_B3A01, loc_B3A07, WaitKey, sub_B3A24, sub_B3A2F, loc_B3A47
-global loc_B3A59, loc_B3A70, sub_B3A88, sub_B3AA1, sub_B3ABC, loc_B3ADF
+global SetTickDeadline, WaitTickDeadline, TickDeadlinePassed, WaitTicks, loc_B39C3, KbdGetKey, loc_B39DE, loc_B39EC
+global PollKey, sub_B39F3, loc_B3A01, loc_B3A07, WaitKey, KbdFlush, sub_B3A2F, loc_B3A47
+global loc_B3A59, loc_B3A70, SaveDrawState, RestoreDrawState, bcopy, loc_B3ADF
 sub_B300C:
         LD xor, eax, eax
         ret
@@ -70,15 +70,15 @@ sub_B3036:
         jne short loc_B3089
         db 0BBh,024h,00h,00h,00h                ; insn: mov ebx,24h
         db 0E8h                                 ; insn: call 0009864Ch
-        dd sub_9864C-$-4
+        dd DosGetVector-$-4
         mov dword [dword_D3090], eax
         mov word [word_D3094], dx
         mov ebx, 24h
         mov dx, cs
         mov eax, sub_B3010
-        call sub_98664
+        call DosSetVector
         push sub_B308B
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 4
 loc_B3089:
         leave
@@ -90,7 +90,7 @@ sub_B308B:
         mov eax, dword [dword_D3090]
         LD or, dx, dx
         je short loc_B30B0
-        call sub_98664
+        call DosSetVector
         mov word [word_D3094], 0
 loc_B30B0:
         popa
@@ -99,7 +99,7 @@ loc_B30B0:
 FindShape:
         mov ebx, unk_8E870
         jmp short loc_B30BD
-sub_B30BB:
+FindShapeQuiet:
         LD xor, ebx, ebx
 loc_B30BD:
         mov edx, dword [byte esp+04h]
@@ -174,7 +174,7 @@ loc_B3156:
         mov byte [byte_D416A], ah
         jmp short loc_B3132
         db 00h,00h,00h
-sub_B3168:
+ReadJoystickPorts:
         mov byte [byte_D4176], 0
         test byte [joyenablemask], 1
         je near loc_B33C7
@@ -354,14 +354,14 @@ loc_B33C7:
 loc_B33D2:
         or byte [byte_D4176], 1
         jmp short loc_B33A8
-sub_B33DB:
+JoyResetCentres:
         mov byte [joyenablemask], 1
         mov dword [dword_D4177], 50h
         mov dword [dword_D417F], 0
         mov dword [dword_D4193], 50h
         mov dword [dword_D419B], 0
         ret
-sub_B340B:
+JoyButtonMap:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+08h]
@@ -389,7 +389,7 @@ loc_B3449:
         sub eax, byte 1Fh
         ret
         db 00h
-sub_B3454:
+AddExitHandler:
         mov eax, dword [byte esp+04h]
         jmp near atexit_
 sub_B345D:
@@ -817,7 +817,7 @@ loc_B39C3:
         js short loc_B39C3
         ret
         db 00h,00h
-sub_B39D0:
+KbdGetKey:
         mov ah, 1
         call dword [dword_D2C84]
         jne short loc_B39DE
@@ -855,10 +855,10 @@ WaitKey:
         LD or, ax, ax
         je short WaitKey
         ret
-sub_B3A24:
-        call sub_B39D0
+KbdFlush:
+        call KbdGetKey
         LD or, ax, ax
-        jne short sub_B3A24
+        jne short KbdFlush
         ret
 sub_B3A2F:
         call dword [off_D42A0]
@@ -908,7 +908,7 @@ loc_B3A70:
         pop ebx
         ret
         db 00h
-sub_B3A88:
+SaveDrawState:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -922,7 +922,7 @@ sub_B3A88:
         pop esi
         leave
         ret
-sub_B3AA1:
+RestoreDrawState:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -937,7 +937,7 @@ sub_B3AA1:
         leave
         ret
         db 00h,00h
-sub_B3ABC:
+bcopy:
         push ebp
         LD mov, ebp, esp
         push esi

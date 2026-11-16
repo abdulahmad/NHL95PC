@@ -18,10 +18,10 @@ void DrawPanel3D(int x1, int y1, int x2, int y2, int corners)
     int xc;
 
     FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, 0x70);
-    sub_B4FAC(x1, y1, x2, y1, 0x77);
-    sub_B4FAC(x1, y1, x1, y2, 0x77);
-    sub_B4FAC(x2, y1, x2, y2, 0x62);
-    sub_B4FAC(x1, y2, x2, y2, 0x62);
+    FillRectColor(x1, y1, x2, y1, 0x77);
+    FillRectColor(x1, y1, x1, y2, 0x77);
+    FillRectColor(x2, y1, x2, y2, 0x62);
+    FillRectColor(x1, y2, x2, y2, 0x62);
     if (corners) {
         PlotPixel(xa = x1 + 2, ya = y1 + 2, 0x77);
         PlotPixel(x1 += 3, y1 += 3, 0x77);
@@ -65,7 +65,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
     int k2;
     char *s;
 
-    sub_B4BA8();
+    SetScreenTarget();
     sprintf(name, side ? (char *)str_JERSV : (char *)str_JERSH, jerseyabbrevs[team]);
     team = lockerindex[team];
     f = (side != 0) + 0xA3;

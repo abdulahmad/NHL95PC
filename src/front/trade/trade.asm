@@ -28,7 +28,7 @@ extern str_space, str_star, str_Statistics, str_Temp6, str_TheJerseyNumber2d2, s
 extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0
 extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, sub_9121C, DrawArt
 extern GrabBlock, sub_91FE0, sub_93170, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
-extern sub_B4BA8, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
+extern SetScreenTarget, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
 extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, unknown_libname_1, unknown_libname_2
 extern VisTeam, word_DDD48, word_DDD4A, WriteKeyRec, WriteLeagueTeamEntry, WriteTeamRec
@@ -238,7 +238,7 @@ TradeShowStats:
         mov byte [byte esp+018h], dl
         mov dword [byte esp+010h], ebx
         mov dword [byte esp+014h], ecx
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 300h
         push str_Temp6
@@ -360,7 +360,7 @@ TradeShowStats:
         mov dword [statsteambuf], edi
         mov dword [statsgoaliebuf], edi
         mov dword [statsskaterbuf], edi
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebx, 10h
         mov edx, esi
         mov eax, 1
@@ -1300,7 +1300,7 @@ DrawTradeScreen:
         inc edi
         cmp edi, byte 2
         jl near DrawTradeScreen.4
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [tradebitmap]
         mov ecx, dword [byte eax+02Ch]
         push ecx
@@ -2989,7 +2989,7 @@ TradeScreen:
         mov esi, edx
         mov dword [dword esp+0624h], ebx
         mov dword [dword esp+0628h], ecx
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 300h
         push str_Temp6

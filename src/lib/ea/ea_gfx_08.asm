@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_91FE0 progbits alloc exec nowrite align=1
-extern dword_D30C8, dword_D43E4, PutBlock, sub_931D0, sub_B3ABC, sub_B6BE5
+extern dword_D30C8, dword_D43E4, PutBlock, sub_931D0, bcopy, sub_B6BE5
 global sub_91FE0, loc_92001, sub_92024
 sub_91FE0:
         mov edx, dword [byte esp+04h]
@@ -23,7 +23,7 @@ loc_92001:
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_92024:

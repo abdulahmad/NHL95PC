@@ -8,11 +8,11 @@ void SetScreenSize(int w, int h)
 {
     if (w == screenw && h == screenh) return;
     VgaSetPalette(0, 0x100, blackpal);
-    sub_B4BA8();
+    SetScreenTarget();
     SetClipWindow(0, screenw, 0, screenh);
     ClearScreen(0);
     SetTickDeadline(0x28);
-    sub_B4C33();
+    WaitRetrace();
     initgraphics(w, h);
     VgaSetPalette(0, 0x100, blackpal);
     SetClipWindow(0, w, 0, h);

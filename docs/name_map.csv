@@ -785,6 +785,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000688A4,sub_688A4,DebugMonitor,PC-new,,,,medium,"Unreferenced PC debug monitor: when debugstep is set prints a state line per frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[], puckc/gmclock) and one line per SortCords object (17 entries, skipping 0Ch/0Dh/0Fh); flags 'debError' on a bad SPA/SCnum; then reads a key: '0' bail, 'm' sub_93E38, 'd' DumpStatsLog(""stats.log""), '\' toggles debugstep",debug_dump,manual-trace
 00068E7B,sub_68E7B,DumpStatsLog,PC-new,,,,high,"fopen(name,""a+t"") ('error dump stats' on failure), then fprintf of pool/gm header, both team structs (E8h bytes), SortCords (11h x 48h bytes and a field line), team stat lines (shts score ppg pp pen penmin atop pass passcomp), skater and goalie stat tables; called by DebugMonitor with ""stats.log""",debug_dump,manual-trace
 00069336,sub_69336,StartHL2,93G,penalty93_2.asm,penalty94.asm,92G StartHL2,medium,"caller propagation weight 2.17 via matched callees ResetBench, forcepldata, reenergizeteam, resetplstuff; cosine: 0.11; fieldseq: 0.41; shared: g:823483 i:3C c:randomd0 i:78 fv:Xpos f:Xpos i:18 f:Yvel; calls: 1 known Genesis callees present, 0 missing, 1 extra; size: ninsn PC 762 / G 192",game_frame,callers(it0)
+0006A068,sub_6A068,InputRecordAvail,PC-new,,,,medium,same routine as the matched 97 PC routine (exact 1.0),zonemgr,match97
+0006A9CE,sub_6A9CE,InitZoneManager,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.911),zonemgr,match96
 0006B093,sub_6B093,JoystickCalScreen,PC-new,,,,high,"(stick, shift, mask, title): ""joycal"" screen with the left / right stick picture; moves the puck to the position of the stick direction (joycalx / joycaly) until a button; Esc / failure clears the stick from joyenablemask",joystick_calibration,manual-trace
 0006B35C,sub_6B35C,CalLeftJoystick,PC-new,,,,high,"JoystickCalScreen(1, 0, 0, ""LEFT JOYSTICK"") (no refs; startup calls JoystickCalScreen directly)",joystick_calibration,manual-trace
 0006B37A,sub_6B37A,CalRightJoystick,PC-new,,,,high,"JoystickCalScreen(2, 8, 1, ""RIGHT JOYSTICK"") (no refs)",joystick_calibration,manual-trace
@@ -1145,9 +1147,17 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008CCA8,sub_8CCA8,AllocMemBlock,PC-new,,,,medium,"memory manager: allocate a named block (name, size, flags), e.g. the 320 KB 'TEMP' buffer of MenuSoundSettings; freed with FreeMemBlock",ea_memman_01,manual-trace
 0008CD04,sub_8CD04,AllocMemBlockEx,PC-new,,,,medium,"EA memory manager: the allocator under AllocMemBlock (name, size, flags, one), returns the block descriptor",ea_memman_01,manual-trace
 0008CD4C,sub_8CD4C,reservemem,PC-new,,,,high,"prints its own name: ""reservemem - INVALID SIZE REQUESTED"", ""reservemem - OUT OF MEMORY""",ea_memman_01,manual-trace
+0008D15C,sub_8D15C,ResizeMemBlock,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.91),ea_memman_01,match96
 0008D2A0,sub_8D2A0,findmemblock,PC-new,,,,high,EA memory manager name from its own FatalError string asc_C3D38 'findmemblock - BLOCK NOT FOUND (%p)': walks the block list from dword_D2F58 (+20h links) for the descriptor whose address field equals the stack argument and whose flags+19h bit 7 is clear,ea_memman_01,manual-trace
 0008D2D8,jctime,FreeMemBlock,PC-new,watcom_clib,,,high,"was a FLIRT misidentification (Watcom 'jctime', 23-byte collapsed body, name_map_94 method flirt): it is cdecl free(p) of the EA memory manager, findmemblock(p) then sub_8D2F0 (lock, unlink the descriptor unless flags+19h bit 7, return it to the free descriptor list, unlock); every caller passes a buffer it then drops (FreeDeskBuffers, ShutdownSpeech, LoadCrestsPalette); it sits between ea_memman_01 and ea_memman_02",watcom_clib_02,manual-trace
+0008D2F0,sub_8D2F0,PushMemDescriptorLocked,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_memman_02,match96
+0008D3D4,sub_8D3D4,MergeFreeSpace,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.703),ea_memman_02,match96
+0008D604,sub_8D604,FindFreeSpace,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.894),ea_memman_02,match96+97
+0008D714,sub_8D714,FindCachedFileData,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_memman_02,match96+97
+0008D728,sub_8D728,FindCachedFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_memman_02,match96+97
 0008DB8C,sub_8DB8C,getmemblock,PC-new,,,,high,"prints its own name: ""getmemblock - NO MEMORY BLOCKS LEFT""",ea_memman_02,manual-trace
+0008DBC0,sub_8DBC0,MemPtrSize,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_memman_02,match96
+0008DBDC,sub_8DBDC,MemDescSize,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_memman_02,match96+97
 0008DBE4,const type_info::raw_name(void),const type_info::raw_name(void),library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_03,flirt
 0008DBF4,_dos_getdrive_,_dos_getdrive_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 20 bytes),watcom_clib_03,flirt
 0008DC08,_dos_setdrive_,_dos_setdrive_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 20 bytes),watcom_clib_03,flirt
@@ -1157,6 +1167,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DC57,_exit_,_exit_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 22 bytes),watcom_clib_03,flirt
 0008DC6E,_dos_getdiskfree_,_dos_getdiskfree_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_03,flirt
 0008DC9C,int386_,int386_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),dos4gw_dpmi_glue_01,flirt
+0008DCC0,sub_8DCC0,GrabLargestBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.945),ea_memman_03,match96+97
 0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
 0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
@@ -1174,13 +1185,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008E614,sub_8E614,UnmaskTimerKbdIrq,PC-new,,,,high,"in al,21h / and al,0FCh / out 21h: unmasks IRQ0 and IRQ1; tail of InstallTimer, called by RestoreTimer",ea_timer,manual-trace
 0008E7A0,sub_8E7A0,subwindowdefadr,PC-new,,,,high,"prints its own name: ""subwindowdefadr - OUT OF ROW SPACE""",ea_window,manual-trace
 0008E83C,sub_8E83C,LoadBank,PC-new,,,,medium,"graphics library: load an art bank file (path, flags), returns the bank",ea_window,manual-trace
+0008E920,sub_8E920,LoadDataFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.969),ea_window,match96
 0008E9C0,sub_8E9C0,TextSetColors,PC-new,,,,medium,text library: set the foreground and background text colours,ea_window,manual-trace
 0008E9E8,sub_8E9E8,TextSaveState,PC-new,,,,medium,text library: save the text state (40h bytes),ea_window,manual-trace
 0008EA00,sub_8EA00,TextRestoreState,PC-new,,,,medium,text library: restore the text state,ea_window,manual-trace
 0008EA18,sub_8EA18,TextSetFont,PC-new,,,,medium,text library: set the current font,ea_window,manual-trace
 0008EAEC,_dos_getdate_,_dos_getdate_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_06,flirt
 0008EB07,_dos_gettime_,_dos_gettime_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 26 bytes),watcom_clib_06,flirt
-0008EB21,sub_8EB21,sub_8EB21,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 6 bytes),watcom_clib_06,flirt
+0008EB21,sub_8EB21,GetRandState,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_06,match96+97
 0008EB27,rand_,rand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 36 bytes),watcom_clib_06,flirt
 0008EB4B,srand_,srand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_06,flirt
 0008F13B,sub_8F13B,LoadSample,PC-new,,,,medium,"sound library: load the sample file at path, returns its handle",ea_sound_hl_01,manual-trace
@@ -1188,22 +1200,29 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008FC8A,sub_8FC8A,SndQuery,PC-new,,,,medium,"EA sound library: query a sound handle (handle, what); what 3 = has its digital music finished",ea_sound_hl_01,manual-trace
 0008FFB0,sub_8FFB0,SetPalette,PC-new,,,,medium,"graphics library: set palette colours (first, count, rgb)",ea_sound_hl_01,manual-trace
 0008FFD4,start,start,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 725 bytes),watcom_clib_07,flirt
+00090267,sub_90267,WriteConsoleMessage,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.962),watcom_clib_07,match96+97
 000902A0,sub_902A0,__GETDS,PC-new,,,,high,"Watcom cstart __GETDS: o16 mov ds,[cs:__saved_DS] (the word at loc_90048 in the cstart code) / ret, right after cstart's int 21h/4Ch exit; called first by interrupt handlers (TimerISR, the GUS, MPU-401 and EACSNDF IRQ handlers, the input_joystick_misc handler at B300C)",watcom_clib_07,manual-trace
 000902B0,__STOSB,__STOSB,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_07,flirt
 000902E7,__STOSD,__STOSD,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 108 bytes),watcom_clib_07,flirt
+00090354,sub_90354,ShapeBankCount,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_sound_hl_02,match96
+0009035C,sub_9035C,ShapeBankEntry,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_sound_hl_02,match96
 00090392,strcpy_,strcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_08,flirt
 000903B1,strcat_,strcat_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 55 bytes),watcom_clib_08,flirt
 000903E8,j_unlink_,j_unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_08,flirt
 000903F0,sub_903F0,PutBlock,PC-new,,,,medium,"graphics library: put a saved screen block back (buf, x, y)",ea_gfx_01,manual-trace
 0009061C,sub_9061C,DrawBitmap,PC-new,,,,medium,graphics library: draw a bitmap,ea_gfx_01,manual-trace
+00090720,sub_90720,DrawArtAnd,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_gfx_01,match96
 000909E0,strnicmp_,strnicmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_09,flirt
+00090A40,sub_90A40,TextWidthN,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.83),ea_gfx_02,match96
 00090AC4,fputchar,fputchar,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_10,flirt
 00090AD7,mem_putc_,mem_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_10,flirt
 00090AEA,sprintf_,sprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_10,flirt
 00090B20,memcpy_,memcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 37 bytes),watcom_clib_10,flirt
+00090B80,sub_90B80,ProjectPointList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.837),ea_gfx_03,match96
 00090BB0,unknown_libname_1,unknown_libname_1,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_11,flirt
 00090BCD,unknown_libname_2,unknown_libname_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 28 bytes),watcom_clib_11,flirt
-00090BEC,sub_90BEC,sub_90BEC,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 35 bytes),watcom_clib_11,flirt
+00090BEC,sub_90BEC,CopyDtaOut,PC-new,watcom_clib,,,medium,same routine as the matched 96 PC routine (exact 1.0),watcom_clib_11,match96
+00090C0F,sub_90C0F,CopyDtaIn,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_04,match96
 00090C32,rmdir_,rmdir_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_12,flirt
 00090C52,_dos_close_,_dos_close_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 15 bytes),watcom_clib_12,flirt
 00090C61,_dos_commit_,_dos_commit_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_12,flirt
@@ -1214,11 +1233,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090D14,_dos_write_,_dos_write_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 7 bytes),watcom_clib_12,flirt
 00090D20,sub_90D20,FillRect,PC-new,,,,medium,"graphics library: fill a rectangle (x, y, w, h, colour)",ea_gfx_05,manual-trace
 00090F38,sub_90F38,XorBar,PC-new,,,,medium,graphics library: xor a bar on the screen (selection highlight of the stats and standings grids),ea_gfx_05,manual-trace
+000910B0,sub_910B0,ClearScreenColour,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_05,match96
 000910E0,sub_910E0,DrawArtOpaque,PC-new,,,,medium,"graphics library: draw art at x, y without transparency",ea_gfx_05,manual-trace
+0009132C,sub_9132C,FreeBitmap,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_gfx_05,match96
 00091350,memset_,memset_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 24 bytes),watcom_clib_13,flirt
 00091370,sub_91370,DrawArt,PC-new,,,,medium,"graphics library: draw art at x, y",ea_gfx_06,manual-trace
 000913B4,sub_913B4,DrawShape,PC-new,,,,medium,graphics library: draw a shape at its own position,ea_gfx_06,manual-trace
 00091400,sub_91400,GrabBlock,PC-new,,,,medium,"graphics library: grab a screen rectangle into a block (buf, x, y)",ea_gfx_06,manual-trace
+00091538,sub_91538,DrawShapeAtOwnPos,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.889),ea_gfx_06,match96+97
 00091964,sub_91964,PrintString,PC-new,,,,medium,"graphics library: print a string at x, y in the current font and colours",ea_gfx_06,manual-trace
 00091984,_nmalloc_,_nmalloc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 227 bytes),watcom_clib_14,flirt
 00091A67,_nfree_,_nfree_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 94 bytes),watcom_clib_14,flirt
@@ -1249,6 +1271,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00092D5A,unlink_,unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_17,flirt
 00092D7C,unknown_libname_4,unknown_libname_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_17,flirt
 00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
+00092E40,sub_92E40,ReadFileCachedInto,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.881),ea_gfx_10,match96+97
 00092EF9,_fstrcspn_,_fstrcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 73 bytes),watcom_clib_18,flirt
 000930A7,mkdir_,mkdir_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_19,flirt
 000930C6,cget_file_,cget_file_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 78 bytes),watcom_clib_19,flirt
@@ -1258,10 +1281,42 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000931FC,sub_931FC,DrawArtMasked,PC-new,,,,medium,"graphics library: draw art at x, y masked (line editor slots)",ea_gfx_12,manual-trace
 00093284,strcspn_,strcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_20,flirt
 000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
+00093308,sub_93308,SaveDataFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.75),ea_fileblock,match96+97
 0009336C,sub_9336C,savefileblocka,PC-new,,,,high,"prints its own name: ""savefileblocka - OPEN FAILED FOR FILE <%s>""",ea_fileblock,manual-trace
 000933F0,sub_933F0,imul32,PC-new,,,,medium,EA math helper (cdecl): returns [esp+4]*[esp+8] signed (imul edx); skatetopuck squares x and y with it,ea_fileblock,manual-trace
+00093470,sub_93470,IntSqrt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.954),ea_fileblock,match96
 00093540,sub_93540,SortIndices,PC-new,,,,medium,"sort library: sort n indices by their keys (n, keys, idx)",ea_fileblock,manual-trace
 000935E0,sub_935E0,DebugPrintf,PC-new,,,,high,vsprintf into a 100h stack buffer and pass it to sub_936C0 only when dword_D4534 >= 2 (debug level); DebugMonitor/DumpStatsLog use it for their debug text,ea_fileblock,manual-trace
+0009362C,sub_9362C,DebugSetLine,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.941),ea_fileblock,match96+97
+00093844,sub_93844,DebugScrollUp,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.854),ea_fileblock,match96
+000938C8,sub_938C8,DebugClearScreen,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
+000938F4,sub_938F4,DebugSetRow,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
+00093908,sub_93908,DebugSetAttr,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.948),ea_fileblock,match96
+00093AA4,sub_93AA4,DebugLog,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.921),ea_debug,match96
+00093B34,sub_93B34,FindWildcardDigits,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.859),ea_debug,match96
+00093BD4,sub_93BD4,FormatDateStamp,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.799),ea_debug,match96
+00093CA0,sub_93CA0,DebugGetKey,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.528),ea_debug,match96
+00093E4C,sub_93E4C,MemViewerListHead,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.945),ea_debug,match96
+00094114,sub_94114,MemViewerSelectRow,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.951),ea_debug,match96
+00094188,sub_94188,MemViewerDrawList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.908),ea_debug,match96
+0009477C,sub_9477C,MemPoolTotals,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.929),ea_debug,match96
+000947D8,sub_947D8,MemViewerDrawTitle,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
+000948D4,sub_948D4,DebugSprintf,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_debug,match96
+000948E4,sub_948E4,MemViewerBlockInfo,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.924),ea_debug,match96
+00094B6C,sub_94B6C,MemViewerHexDump,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.942),ea_debug,match96
+00094E34,sub_94E34,HexDumpRow,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.863),ea_debug,match96
+00094FBC,sub_94FBC,WriteMemMap,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
+000950AC,sub_950AC,DumpMemoryMap,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.86),ea_debug,match96
+00095158,sub_95158,ShapeViewer,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.894),ea_debug,match96
+000954C8,sub_954C8,ReadShapeFileHeader,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.922),ea_debug,match96
+00095548,sub_95548,ShapeInfo,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.901),ea_debug,match96
+000956C0,sub_956C0,DumpShapesList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.903),ea_debug,match96
+0009596C,sub_9596C,PaletteViewer,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.896),ea_debug,match96
+00095ECC,sub_95ECC,PaletteViewerLabel,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.878),ea_debug,match96
+00095F30,sub_95F30,SaveScreenshot,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.512),ea_debug,match96
+00095F84,sub_95F84,MemViewerShowArt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.912),ea_debug,match96
+00096030,sub_96030,FormatDateTime,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.915),ea_debug,match96
+000960AC,sub_960AC,NextFreeFileName,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
 00096185,fprintf_,fprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 33 bytes),watcom_clib_21,flirt
 000961B0,strupr_,strupr_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_21,flirt
 000961D0,__CHP,__CHP,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_21,flirt
@@ -1281,14 +1336,25 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000972DD,sub_972DD,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972E5,sub_972E5,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),eacsndf_core,unmatched
 000972F0,_os_handle_3,_os_handle_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_23,flirt
+00097300,sub_97300,SkipCopyrightHeader,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.964),ea_unpack,match96
+00097350,sub_97350,PackedTypeOf,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.954),ea_unpack,match96
+000979F8,sub_979F8,ExpandBytePair,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.93),ea_unpack,match96+97
+00097A38,sub_97A38,UnpackBytePair,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.521),ea_unpack,match96+97
+00097BB8,sub_97BB8,UnpackDelta,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_unpack,match96
 00097EB8,sub_97EB8,unpack,PC-new,,,,high,"prints its own name: ""unpack - INVALID PACK CODE (%x)""",ea_unpack,manual-trace
+00098028,sub_98028,UnpackTo,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_unpack,match96
 0009805E,_fmemmove_,_fmemmove_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 98 bytes),watcom_clib_24,flirt
 000980E5,utoa_,utoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 74 bytes),watcom_clib_24,flirt
 0009812F,itoa_,itoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_24,flirt
 0009814A,fgets_,fgets_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 99 bytes),watcom_clib_24,flirt
+000981F8,sub_981F8,ShowPromptBox,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.879),ea_kbd_exit_01,match96
+000984D0,sub_984D0,ShowMessageBox,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.654),ea_kbd_exit_01,match96
+0009864C,sub_9864C,DosGetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_kbd_exit_01,match96+97
+00098664,sub_98664,DosSetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.952),ea_kbd_exit_01,match96+97
 00098683,__fatal_runtime_error_,__fatal_runtime_error_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_25,flirt
 000986A0,nullsub_7,nullsub_7,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_25,flirt
 000986C0,unknown_libname_22,unknown_libname_22,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 11 bytes),watcom_clib_25,flirt
+000986E4,sub_986E4,MemUnlock,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_kbd_exit_02,match96
 000986EF,file_putc_,file_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 17 bytes),watcom_clib_26,flirt
 00098700,__fprtf_,__fprtf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 133 bytes),watcom_clib_26,flirt
 0009878A,__set_errno_,__set_errno_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 12 bytes),watcom_clib_26,flirt
@@ -1300,11 +1366,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00098801,_nexpand_,_nexpand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 56 bytes),watcom_clib_27,flirt
 00098839,__HeapManager_expand_,__HeapManager_expand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 399 bytes),watcom_clib_27,flirt
 00098A2B,_nmsize_,_nmsize_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 9 bytes),watcom_clib_27,flirt
+00098A40,sub_98A40,DosFileInfo,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_kbd_exit_03,match96+97
 00098A81,spawnl_,spawnl_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 30 bytes),watcom_clib_28,flirt
 00098A9F,strncmp_,strncmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 41 bytes),watcom_clib_28,flirt
 00098AC8,_dos_setvect_,_dos_setvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 43 bytes),dos4gw_dpmi_glue_03,flirt
 00098AF3,_dos_getvect_,_dos_getvect_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 52 bytes),dos4gw_dpmi_glue_03,flirt
+00098D20,sub_98D20,FillRowTable,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.893),ea_shapes,match96+97
 00098DD8,sub_98DD8,removewindow,PC-new,,,,high,"prints its own name: ""removewindow - ROW SPACE CORRUPTED""",ea_shapes,manual-trace
+00098E50,sub_98E50,LoadFileCached,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.873),ea_shapes,match96
 00099A12,copypart_,copypart_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 51 bytes),watcom_clib_30,flirt
 00099A45,_splitpath_,_splitpath_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 157 bytes),watcom_clib_30,flirt
 00099AE2,pickup_,pickup_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 18 bytes),watcom_clib_30,flirt
@@ -1338,17 +1407,20 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009AD43,__CreateNewNHeap_,__CreateNewNHeap_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 175 bytes),dos4gw_dpmi_glue_04,flirt
 0009ADF2,__ExpandDGROUP_,__ExpandDGROUP_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 324 bytes),dos4gw_dpmi_glue_04,flirt
 0009AF36,__AdjustAmount_,__AdjustAmount_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 119 bytes),dos4gw_dpmi_glue_04,flirt
+0009AFAD,sub_9AFAD,McgaNoWindow,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_mcga_window_02,match96+97
 0009AFB0,tolower_,tolower_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_32,flirt
 0009AFBE,__allocfp_,__allocfp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 168 bytes),watcom_clib_32,flirt
 0009B066,__freefp_,__freefp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 57 bytes),watcom_clib_32,flirt
 0009B0BD,__update_buffer_,__update_buffer_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 66 bytes),watcom_clib_32,flirt
 0009B0FF,fseek_,fseek_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 252 bytes),watcom_clib_32,flirt
 0009B1FB,__chktty_,__chktty_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_32,flirt
+0009B22C,sub_9B22C,GetPsp,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_32,match96+97
 0009B232,__flush_,__flush_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 191 bytes),watcom_clib_32,flirt
 0009B2F1,ftell_,ftell_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_32,flirt
 0009B321,__close_,__close_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 50 bytes),watcom_clib_32,flirt
 0009B353,__ioalloc_,__ioalloc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 119 bytes),watcom_clib_32,flirt
 0009B3CA,fputc_,fputc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 164 bytes),watcom_clib_32,flirt
+0009B498,sub_9B498,FillRectSpans,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.908),ea_misc_01,match96+97
 0009B710,isatty_,isatty_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 30 bytes),watcom_clib_33,flirt
 0009B72E,__IOMode_,__IOMode_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 85 bytes),watcom_clib_33,flirt
 0009B783,__SetIOMode_,__SetIOMode_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 21 bytes),watcom_clib_33,flirt
@@ -1358,18 +1430,42 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009B8BC,__filbuf_,__filbuf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 47 bytes),watcom_clib_33,flirt
 0009B8EB,__fill_buffer_,__fill_buffer_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 171 bytes),watcom_clib_33,flirt
 0009B996,ungetc_,ungetc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 130 bytes),watcom_clib_33,flirt
+0009BA18,sub_9BA18,ScanFormat,PC-new,,,,medium,same routine as the matched 97 PC routine (callsite 0.9),ea_misc_02,match97
+0009BC3A,sub_9BC3A,ScanParseSpec,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.927),ea_misc_02,match97
+0009BD13,sub_9BD13,ScanSkipSpace,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.863),ea_misc_02,match97
+0009BD48,sub_9BD48,ScanStoreCount,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.953),ea_misc_02,match97
+0009BDCE,sub_9BDCE,ScanChars,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.899),ea_misc_02,match97
+0009BEBC,sub_9BEBC,ScanStoreInt,PC-new,,,,medium,same routine as the matched 97 PC routine (exact 1.0),ea_misc_02,match97
+0009BF1A,sub_9BF1A,ScanBuildCharSet,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 1.0),ea_misc_02,match97
+0009BF5D,sub_9BF5D,ScanCharSet,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.91),ea_misc_02,match97
+0009C043,sub_9C043,ScanFloatField,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.906),ea_misc_02,match97
+0009C321,sub_9C321,ScanIntegerField,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.924),ea_misc_02,match97
+0009C519,sub_9C519,HexDigitValue,PC-new,,,,medium,same routine as the matched 97 PC routine (exact 1.0),ea_misc_02,match97
+0009C540,sub_9C540,ScanGetCharWidth,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 1.0),ea_misc_02,match97
 0009C563,mem_putc__0,mem_putc__0,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_34,flirt
 0009C576,vsprintf_,vsprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 21 bytes),watcom_clib_34,flirt
 0009C58C,j___fprtf_,j___fprtf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_34,flirt
+0009C5A8,sub_9C5A8,ReturnFalse,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.827),ea_unpackf_blit,match96
+0009C8E8,sub_9C8E8,DrawArtAnyFormat,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.722),ea_unpackf_blit,match96
+0009CA6C,sub_9CA6C,DrawArtAnyFormatAt,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.909),ea_unpackf_blit,match96
+0009CA90,sub_9CA90,DrawArtAnyFormatOwnPos,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.877),ea_unpackf_blit,match96
 0009D307,__setEFGfmt_,__setEFGfmt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_35,flirt
 0009D322,__sys_init_387_emulator,__sys_init_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_35,flirt
 0009D352,sub_9D352,InitFpuFlags,PC-new,,,,medium,"start-up routine that sets up the floating point emulator and its two flags (__8087, __real87); replaced in the port",ea_snap_02,manual-trace
+0009D41D,sub_9D41D,MakeFpuGate,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_02,match96+97
+0009D43A,sub_9D43A,HookCoprocessorVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_02,match96+97
+0009D487,sub_9D487,SetSystemFpuFlag,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_02,match96+97
 0009D4A7,__sys_fini_387_emulator,__sys_fini_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 122 bytes),watcom_clib_36,flirt
+0009D521,sub_9D521,EmuRestoreFpuVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_03,match96+97
+0009D55C,sub_9D55C,EmuRestoreRealVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_snap_03,match96+97
 0009D586,__init_8087_,__init_8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 49 bytes),watcom_clib_37,flirt
 0009D5C1,__chk8087_,__chk8087_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 64 bytes),watcom_clib_37,flirt
 0009D601,__delay_init_,__delay_init_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 50 bytes),watcom_clib_37,flirt
 0009D633,__delay_,__delay_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 56 bytes),watcom_clib_37,flirt
+0009D66B,sub_9D66B,ErrnoPtr,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_37,match96+97
+0009D671,sub_9D671,__get_doserrno_ptr_,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_37,match96+97
 0009D677,strerror_,strerror_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 23 bytes),watcom_clib_37,flirt
+0009D68E,sub_9D68E,CMainHook,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_pcspeaker,match96+97
 0009D698,sub_9D698,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
 0009D6E6,sub_9D6E6,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
 0009D6F3,sub_9D6F3,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_pcspeaker,unmatched
@@ -1381,7 +1477,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009DF73,sub_9DF73,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
 0009DF80,sub_9DF80,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
 0009E676,sub_9E676,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_adlib,unmatched
-0009F226,sub_9F226,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
+0009F226,sub_9F226,ParseBlasterEnv,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
+0009F34C,sub_9F34C,ParseHexValue,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_soundblaster,match96+97
 0009F387,sub_9F387,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
 0009F418,sub_9F418,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
 0009F4A0,sub_9F4A0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
@@ -1389,11 +1486,13 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009F577,sub_9F577,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
 0009F622,sub_9F622,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
 0009F642,sub_9F642,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_soundblaster,unmatched
+0009FD3D,sub_9FD3D,__rterrmsg_,PC-new,,,,medium,same routine as the matched 97 PC routine (similar 0.877),snd_soundblaster,match97
 0009FD94,sub_9FD94,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
 0009FD9A,sub_9FD9A,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
 0009FDEA,sub_9FDEA,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
 0009FE3B,sub_9FE3B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
 0009FFA0,sub_9FFA0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_mt32_mpu401,unmatched
+000A044D,sub_A044D,GusDriverClose,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 0.838),snd_gus,match97
 000A04B9,sub_A04B9,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus,unmatched
 000A053C,sub_A053C,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus,unmatched
 000A059B,sub_A059B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus,unmatched
@@ -1408,10 +1507,16 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A0FEA,sub_A0FEA,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus,unmatched
 000A1877,__EnterWVIDEO_,__EnterWVIDEO_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 38 bytes),dos4gw_dpmi_glue_05,flirt
 000A189E,__int386x_,__int386x_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 56 bytes),dos4gw_dpmi_glue_06,flirt
-000A18D6,sub_A18D6,sub_A18D6,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 37 bytes),watcom_clib_39,flirt
+000A18D6,sub_A18D6,IntrLoadSegRegs,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_clib_39,match96+97
 000A18FB,_DoINTR_,_DoINTR_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 77 bytes),dos4gw_dpmi_glue_07,flirt
 000A1C7C,__Slash_C_,__Slash_C_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 38 bytes),dos4gw_intr,flirt
+000A2610,sub_A2610,SplitFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_shpi,match96
+000A26B0,sub_A26B0,ReadFileRange,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_shpi,match96+97
+000A27C4,sub_A27C4,LoadPackedCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.882),ea_shpi,match96
+000A28F0,sub_A28F0,ConvertShapeBank,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),ea_shpi,match96
+000A2AB8,sub_A2AB8,ConvertShapeBankInPlace,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_shpi,match96
 000A2AC8,abs_,abs_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 7 bytes),watcom_clib_40,flirt
+000A2ACF,sub_A2ACF,__CommonInit_,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),watcom_clib_40,match96
 000A2ADC,sub_A2ADC,sub_A2ADC,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 18 bytes),watcom_clib_40,flirt
 000A2B13,ultoa_,ultoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 73 bytes),watcom_clib_40,flirt
 000A2B5C,ltoa_,ltoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_40,flirt
@@ -1427,17 +1532,69 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2EB4,getche_,getche_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_41,flirt
 000A2ED1,__qread_,__qread_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_41,flirt
 000A2EF0,__FDFS,__FDFS,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 76 bytes),watcom_clib_41,flirt
+000A30D0,sub_A30D0,_EFG_Format_,PC-new,,,,medium,same routine as the matched 97 PC routine (sem 1.0),ea_unpack_helpers,match97
 000A321C,forcedecpt_,forcedecpt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 72 bytes),watcom_clib_42,flirt
 000A3264,__cnvs2d_,__cnvs2d_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_42,flirt
+000A3680,sub_A3680,EmuTrapExit,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.811),watcom_emu387,match96+97
+000A4D96,sub_A4D96,EmuSub,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A4DA4,sub_A4DA4,EmuAdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),watcom_emu387,match96+97
+000A4DCE,sub_A4DCE,AddExtRaw,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A4DFE,sub_A4DFE,AddMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A4F6A,sub_A4F6A,EmuCompare,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5003,sub_A5003,EmuDiv,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A502D,sub_A502D,DivideMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A51D8,sub_A51D8,EmuMul,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A5202,sub_A5202,MultiplyMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A5353,sub_A5353,StoreM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5358,sub_A5358,Emu387LdToInt,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A53C2,sub_A53C2,LoadM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A53D3,sub_A53D3,Emu387IntToLd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5408,sub_A5408,LoadM64Real,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5488,sub_A5488,StoreM32Real,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5507,sub_A5507,StoreM64Real,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5693,sub_A5693,ExtToInt,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.857),watcom_emu387,match96+97
+000A5820,sub_A5820,EmuRemainder,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A58D6,sub_A58D6,RemainderStep,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5A39,sub_A5A39,EmuRoundInt,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5A9F,sub_A5A9F,RoundMantissa,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5C08,sub_A5C08,AddOne,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5C21,sub_A5C21,EmuLog2,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A5C64,sub_A5C64,Log2Core,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A5EFC,sub_A5EFC,SinCosCore,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A60F3,sub_A60F3,EmuSin,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A60FD,sub_A60FD,EmuCos,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A6140,sub_A6140,EmuAtan,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A6314,sub_A6314,EmuExp2,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A6400,sub_A6400,PolyEval,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A6452,sub_A6452,PolyEvalOdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A649A,__hook387,__hook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 202 bytes),watcom_emu387,flirt
 000A6564,__unhook387,__unhook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 89 bytes),watcom_emu387,flirt
 000A65BD,nullsub_3,nullsub_3,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_emu387,flirt
 000A65BE,__init_80x87,__init_80x87,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 39 bytes),watcom_emu387,flirt
 000A6B87,getenv_,getenv_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 90 bytes),watcom_clib_43,flirt
+000A6BE1,sub_A6BE1,StrToLong,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
+000A6D24,sub_A6D24,strtoul_,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_hw_sb,match96+97
+000A6D2C,sub_A6D2C,DigitValue,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),snd_hw_sb,match96
 000AA200,outp_,outp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_44,flirt
+000AA7E0,sub_AA7E0,GusStopDmaAndTimers,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.983),snd_gus_sdk_01,match96+97
+000AA8C0,sub_AA8C0,GusUnhookIrqs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_01,match96+97
+000AA8E0,sub_AA8E0,GusHookIrqs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_01,match96+97
+000AA910,sub_AA910,GusOpenCard,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.983),snd_gus_sdk_01,match96+97
+000AA9C0,sub_AA9C0,GusStopAllVoices,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.991),snd_gus_sdk_01,match96+97
+000AAB5C,sub_AAB5C,GusOpen,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.989),snd_gus_sdk_01,match96+97
+000AAC48,sub_AAC48,GusClose,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.969),snd_gus_sdk_01,match96+97
+000AACAC,sub_AACAC,GusSetIrqDmaLatches,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.991),snd_gus_sdk_01,match96+97
+000AAE40,sub_AAE40,GusResetVoices,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.993),snd_gus_sdk_01,match96+97
 000AB180,sub_AB180,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_01,unmatched
-000AD434,sub_AD434,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_01,unmatched
+000AD3C0,sub_AD3C0,GusPokeBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.967),snd_gus_sdk_01,match96+97
+000AD3FC,sub_AD3FC,GusPeekBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.963),snd_gus_sdk_01,match96+97
+000AD434,sub_AD434,GusSizeDram,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.982),snd_gus_sdk_01,match96+97
 000ADEE8,nullsub_4,nullsub_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_45,flirt
+000AE9EB,sub_AE9EB,GusServiceStream,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_02,match96+97
+000AEA23,sub_AEA23,GusStartStream,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.47),snd_gus_sdk_02,match96+97
+000AF198,sub_AF198,GusStreamBusy,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_02,match96+97
+000AF1D0,sub_AF1D0,GusGetEnvConfig,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.95),snd_gus_sdk_02,match96+97
+000AF2E0,sub_AF2E0,GusProbePort,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_02,match96+97
 000AF6D3,__setenvp_,__setenvp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 212 bytes),watcom_clib_46,flirt
 000AF7A7,stpcpy_,stpcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 15 bytes),watcom_clib_46,flirt
 000AF7B6,__cenvarg_,__cenvarg_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 312 bytes),watcom_clib_46,flirt
@@ -1451,12 +1608,40 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B0398,AdjField_,AdjField_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 107 bytes),watcom_clib_48,flirt
 000B0403,_FtoS_,_FtoS_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 548 bytes),watcom_clib_48,flirt
 000B0627,strtod_,strtod_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 425 bytes),watcom_clib_48,flirt
-000B0C5C,sub_B0C5C,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_05,unmatched
+000B07D0,sub_B07D0,GusSetupDmaChannel,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
+000B085C,sub_B085C,GusProgramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B0AA4,sub_B0AA4,GusSetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
+000B0AB0,sub_B0AB0,GusGetVect,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_05,match96+97
+000B0ABC,sub_B0ABC,GusHookIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.981),snd_gus_sdk_05,match96+97
+000B0B5C,sub_B0B5C,GusUnhookIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.977),snd_gus_sdk_05,match96+97
+000B0BE4,sub_B0BE4,GusSendEoi,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B0C10,sub_B0C10,GusInitPlayDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
+000B0C34,sub_B0C34,GusInitRecordDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_05,match96+97
+000B0C5C,sub_B0C5C,GusInitDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B0CB8,sub_B0CB8,GusStartDramDma,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.981),snd_gus_sdk_05,match96+97
+000B0D6C,sub_B0D6C,GusDownload,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.989),snd_gus_sdk_05,match96+97
+000B0FA8,sub_B0FA8,GusDramDmaDone,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.656),snd_gus_sdk_05,match96+97
+000B121C,sub_B121C,GusClearIrqState,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B122F,sub_B122F,GusEnterCritical,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
+000B1256,sub_B1256,GusLeaveCritical,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_05,match96+97
 000B128C,inp_,inp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_49,flirt
+000B13A1,sub_B13A1,GusDelay,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_06,match96+97
+000B13B5,sub_B13B5,GusSetBasePort,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.946),snd_gus_sdk_06,match96+97
+000B1400,sub_B1400,GusClearCallbacks,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_06,match96+97
+000B145C,sub_B145C,GusClaimCallback,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
+000B1484,sub_B1484,GusClaimVoiceCallback,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.95),snd_gus_sdk_06,match96+97
+000B14AC,sub_B14AC,GusSetDmaCallbacks,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
+000B1554,sub_B1554,GusSetVoiceCallbacks,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.473),snd_gus_sdk_06,match96+97
+000B15F8,sub_B15F8,GusMidiIrqService,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),snd_gus_sdk_06,match96+97
+000B1680,sub_B1680,GusReadIrqSource,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_06,match96+97
+000B16BC,sub_B16BC,GusServiceIrq,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_06,match96+97
 000B1951,inpw_,inpw_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 9 bytes),watcom_clib_50,flirt
+000B195C,sub_B195C,GusRunInitTable,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_07,match96+97
 000B19C7,outpw_,outpw_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 11 bytes),watcom_clib_51,flirt
 000B19E0,sub_B19E0,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_08,unmatched
 000B1C70,sub_B1C70,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),snd_gus_sdk_08,unmatched
+000B1F9C,sub_B1F9C,GusPokeFill,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),snd_gus_sdk_08,match96+97
+000B2074,sub_B2074,GusTestDramBank,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.994),snd_gus_sdk_08,match96+97
 000B2220,__Nan_Inf_,__Nan_Inf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 132 bytes),watcom_clib_52,flirt
 000B22A4,floor_,floor_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 60 bytes),watcom_clib_52,flirt
 000B22E0,_Scale_,_Scale_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 65 bytes),watcom_clib_52,flirt
@@ -1464,19 +1649,31 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B2408,__cvt_,__cvt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 486 bytes),watcom_clib_52,flirt
 000B25EE,unknown_libname_5,unknown_libname_5,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 144 bytes),watcom_clib_52,flirt
 000B267E,unknown_libname_6,unknown_libname_6,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 75 bytes),watcom_clib_52,flirt
-000B26C9,sub_B26C9,sub_B26C9,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 81 bytes),watcom_clib_52,flirt
+000B26C9,sub_B26C9,NormalizeDouble,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_52,match96+97
+000B2720,sub_B2720,GusConvertAddr16,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.926),snd_gus_sdk_09,match96+97
 000B27A0,modf_,modf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 25 bytes),watcom_clib_53,flirt
 000B27BA,__CmpBigInt,__CmpBigInt,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 58 bytes),watcom_clib_53,flirt
 000B27F4,__Rnd2Int,__Rnd2Int,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 107 bytes),watcom_clib_53,flirt
 000B285F,__Bin2String,__Bin2String,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 106 bytes),watcom_clib_53,flirt
 000B297E,sub_B297E,sub_B297E,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 2 bytes),watcom_clib_54,flirt
 000B2980,frexp_,frexp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 111 bytes),watcom_clib_54,flirt
+000B29F0,sub_B29F0,RemoveKeyboardHandler,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.597),input_keyboard_02,match96
+000B2C4A,sub_B2C4A,Int16Service,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_keyboard_02,match96+97
 000B2CBE,sub_B2CBE,KeyDown,PC-new,,,,medium,keyboard library: is this key down,input_keyboard_02,manual-trace
 000B2CD8,sub_B2CD8,FatalError,PC-new,,,,medium,"fatal-error exit, never returns: drops its return address, optionally shows a message (sub_93170 + WaitKey), shuts down and jumps through bailout_vec; callers push short code strings like 'e1' [reviewed: body re-read]",input_keyboard_02,manual-trace
+000B2D38,sub_B2D38,MouseReadButtons,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_mouse,match96+97
+000B2D74,sub_B2D74,MouseSetSensitivity,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_mouse,match96+97
 000B2DB4,sub_B2DB4,MouseSetPos,PC-new,,,,medium,"input_mouse lib: stores the two stack args as the mouse x/y (D302C/D3030), read back by sub_B2DCA",input_mouse,manual-trace
 000B2DCA,sub_B2DCA,MouseRead,PC-new,,,,medium,"mouse library: read buttons and position (btn, y, x)",input_mouse,manual-trace
 000B2E1B,sub_B2E1B,SetViewRect,PC-new,,,,medium,"graphics library: set the view rectangle (x, y, w, h)",input_mouse,manual-trace
+000B2E43,sub_B2E43,MouseReadMotion,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.86),input_mouse,match96+97
+000B2F22,sub_B2F22,InitMouse,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),input_mouse,match96+97
 000B30B4,sub_B30B4,FindShape,PC-new,,,,medium,"graphics library: find the named art in a bank (bank, name), returns its pointer; 243 calls",input_joystick_misc,manual-trace
+000B30BB,sub_B30BB,FindShapeQuiet,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_joystick_misc,match96+97
+000B3168,sub_B3168,ReadJoystickPorts,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.927),input_joystick_misc,match96+97
+000B33DB,sub_B33DB,JoyResetCentres,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),input_joystick_misc,match96
+000B340B,sub_B340B,JoyButtonMap,PC-new,,,,medium,same routine as the matched 96 PC routine (loose 1.0),input_joystick_misc,match96
+000B3454,sub_B3454,AddExitHandler,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),input_joystick_misc,match96+97
 000B3464,sub_B3464,ReadJoyRaw,PC-new,,,,medium,joystick library: read the raw joystick bits (joyrawbits),input_joystick_misc,manual-trace
 000B392C,sub_B392C,ClearScreen,PC-new,,,,medium,graphics library: clear the screen to a colour,input_joystick_misc,manual-trace
 000B395C,sub_B395C,GetTicks,PC-new,,,,high,returns tickcount (the 100 Hz TimerISR count),input_joystick_misc,manual-trace
@@ -1487,18 +1684,40 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B3999,sub_B3999,WaitTickDeadline,PC-new,,,,high,busy-waits while tickcount - tickdeadline is negative,input_joystick_misc,manual-trace
 000B39A7,sub_B39A7,TickDeadlinePassed,PC-new,,,,high,"returns 1 when tickcount >= tickdeadline (unsigned sub / sbb / inc), else 0",input_joystick_misc,manual-trace
 000B39B7,sub_B39B7,WaitTicks,PC-new,,,,high,cdecl: busy-waits until tickcount reaches tickcount-at-entry + the stack argument; no caller in the EXE,input_joystick_misc,manual-trace
+000B39D0,sub_B39D0,KbdGetKey,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),input_joystick_misc,match96+97
 000B39ED,sub_B39ED,PollKey,PC-new,,,,medium,jmp through the keyboard read vector off_D42A0 (returns 0 when no key); DebugMonitor's non-stepping key read,input_joystick_misc,manual-trace
 000B3A18,sub_B3A18,WaitKey,PC-new,,,,medium,loops calling the keyboard read vector off_D42A0 until it returns non-zero; DebugMonitor uses it in single-step mode,input_joystick_misc,manual-trace
+000B3A24,sub_B3A24,KbdFlush,PC-new,,,,medium,same routine as the matched 97 PC routine (loose 1.0),input_joystick_misc,match97
+000B3A88,sub_B3A88,SaveDrawState,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),input_joystick_misc,match96
+000B3AA1,sub_B3AA1,RestoreDrawState,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),input_joystick_misc,match96
+000B3ABC,sub_B3ABC,bcopy,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.867),input_joystick_misc,match96
+000B3B00,sub_B3B00,DosCallSplitDx,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_fileio,match96+97
+000B3B19,sub_B3B19,DosOpenFile,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_fileio,match96
+000B3B2E,sub_B3B2E,DosOpenReadOnly,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_fileio,match96+97
+000B3B44,sub_B3B44,CreateHandle,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_fileio,match96
 000B3B5A,sub_B3B5A,openhandle,PC-new,,,,high,"prints its own name: ""openhandle - %s FILE ERROR""",ea_fileio,manual-trace
+000B3C60,sub_B3C60,DosCloseFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_fileio,match96+97
+000B3C74,sub_B3C74,DosReadFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
+000B3CB3,sub_B3CB3,DosSeekFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_fileio,match96+97
+000B3CC8,sub_B3CC8,FindFirstFile,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.885),ea_fileio,match96
 000B3D94,sub_B3D94,vecdist,PC-new,middle93_1.asm,middle94.asm,92G sroot; 95G sroot,medium,"EA math helper (cdecl dx,dy): angle of (dx,dy) via sub_B49C0, then |dx|/cos or |dy|/sin (16.16) = the vector length; skatetopuck compares the player-puck distance with 18h. Plays the role of 93G sroot (sqrt of dx^2+dy^2)",ea_fileio,manual-trace
+000B3E4A,sub_B3E4A,PrintfSaveRegs,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),video_bios_vga,match96+97
 000B3E98,sub_B3E98,SaveTextMode,PC-new,,,,high,video library: save the text mode and the BIOS data area,video_bios_vga,manual-trace
 000B3ED8,sub_B3ED8,RestoreTextMode,PC-new,,,,high,video library: restore the text mode and the BIOS data area,video_bios_vga,manual-trace
 000B3F50,sub_B3F50,DetectCPU,PC-new,,,,high,"video library start-up: CPU detection by the alignment-check flag (386 or 486, protected mode); replaced in the port",video_bios_vga,manual-trace
+000B3FB0,sub_B3FB0,FillMem,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),video_bios_vga,match96
+000B3FC2,sub_B3FC2,ZeroMem,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.641),video_bios_vga,match96
+000B40E2,sub_B40E2,SetupRectFill,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.988),video_bios_vga,match96+97
+000B49C0,sub_B49C0,AngleFromDelta,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.962),video_bios_vga,match96+97
+000B4B58,sub_B4B58,SetTextMode,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),video_bios_vga,match96
 000B4B88,sub_B4B88,VgaSetPalette,PC-new,,,,medium,"video library: set DAC entries (first, count, rgb)",video_bios_vga,manual-trace
+000B4BA8,sub_B4BA8,SetScreenTarget,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),video_bios_vga,match96
 000B4BC4,sub_B4BC4,SetClipWindow,PC-new,,,,medium,"video library: set the clip window (x1, x2, y1, y2)",video_bios_vga,manual-trace
+000B4C33,sub_B4C33,WaitRetrace,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.812),video_bios_vga,match96
 000B4DD4,sub_B4DD4,SetColorRemap,PC-new,,,,medium,graphics library: set the colour remap table the blitters use,vga_blitters,manual-trace
 000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace
 000B4F8C,sub_B4F8C,CreateBitmap,PC-new,,,,medium,"graphics library: create a bitmap (w, h, flags)",vga_blitters,manual-trace
+000B4FAC,sub_B4FAC,FillRectColor,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),vga_blitters,match96+97
 000B52B4,sub_B52B4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B5584,sub_B5584,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
 000B56B8,sub_B56B8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vga_blitters,unmatched
@@ -1507,34 +1726,34 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B5D80,sub_B5D80,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B5DB0,sub_B5DB0,PlotPixel,PC-new,,,,medium,"graphics library: plot a pixel (x, y, colour)",vesa_banked_blit,manual-trace
 000B5E00,sub_B5E00,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B5E04,sub_B5E04,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B5EA7,sub_B5EA7,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B5EB8,sub_B5EB8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B5F0F,sub_B5F0F,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B5E04,sub_B5E04,VesaSetBank,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.763),vesa_banked_blit,match96
+000B5EA7,sub_B5EA7,VesaSetMode,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),vesa_banked_blit,match96
+000B5EB8,sub_B5EB8,VgaSetModeTwice,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),vesa_banked_blit,match96+97
+000B5F0F,sub_B5F0F,BlitBlock,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.994),vesa_banked_blit,match96
 000B608B,sub_B608B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B6217,sub_B6217,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B63AC,sub_B63AC,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B63AC,sub_B63AC,AndPixel,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.947),vesa_banked_blit,match96
 000B6423,sub_B6423,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B65B8,sub_B65B8,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B6665,sub_B6665,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B65B8,sub_B65B8,OrPixel,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.965),vesa_banked_blit,match96
+000B6665,sub_B6665,FillRectCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.878),vesa_banked_blit,match96
 000B677D,sub_B677D,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B6887,sub_B6887,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B6887,sub_B6887,BlitArtOpaque,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.878),vesa_banked_blit,match96
 000B693C,sub_B693C,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B69E4,sub_B69E4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B6B3F,sub_B6B3F,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B6B3F,sub_B6B3F,BlitShapeFast,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.838),vesa_banked_blit,match96
 000B6BE5,sub_B6BE5,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B6D47,sub_B6D47,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B6DF7,sub_B6DF7,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B6DF7,sub_B6DF7,BlitShapeClipped,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.997),vesa_banked_blit,match96
 000B6F84,sub_B6F84,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B6FFC,sub_B6FFC,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B7005,sub_B7005,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B704C,sub_B704C,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B7218,sub_B7218,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B72D4,sub_B72D4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B704C,sub_B704C,FillRectSpansCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.928),vesa_banked_blit,match96
+000B7218,sub_B7218,UnpackArtRle,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.882),vesa_banked_blit,match96
+000B72D4,sub_B72D4,SetBlitSource,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),vesa_banked_blit,match96
 000B72E9,sub_B72E9,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B7420,sub_B7420,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
 000B763B,sub_B763B,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
-000B77F4,sub_B77F4,,library,,,,none,no Genesis counterpart established (front end/menus/PC libs are PC-original),vesa_banked_blit,unmatched
+000B77F4,sub_B77F4,BlitBlockRemapKeyed,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.862),vesa_banked_blit,match96
 000C020C,unk_C020C,str_ArtHart..str_ArtStan,PC-new,,,,medium,award art tags (hart ross norr selk vezi jenn cald pres conn easn stan) listed by the awardart pointer table; full award names follow them. 95G reference dropped (95G disassembly not used for naming),dseg02,data
 000C053C,,TeamList city names,94G,teamdata94.asm,teamdata94.asm,,medium,team city string table incl. ANAHEIM/FLORIDA (26-team 94G list; 93G TeamList has 24),dseg02,data
 000C1B40,,PenaltyList,93G,hockey93_11.asm,setup94.asm,,medium,penalty name strings in Genesis order (+ .pen file table D273E),dseg02,data

@@ -5,13 +5,13 @@ section s_B29F0 progbits alloc exec nowrite align=1
 extern __GETDS, bailout_vec, byte_D2C5C, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12
 extern byte_D2D14, byte_D2D2F, byte_D2D7C, byte_D2DD7, byte_D2E32, byte_D2E8D, byte_D2EE8, dword_D2C84
 extern dword_D2C8C, dword_D2CCC, dword_D2CD0, dword_D2CD8, dword_D2D5C, dword_D2D62, dword_D2D68, dword_D2F74
-extern dword_D3024, sub_93170, sub_9864C, sub_98664, sub_B3454, sub_B3E4A, RestoreTextMode, sub_B4BA8
+extern dword_D3024, sub_93170, DosGetVector, DosSetVector, AddExitHandler, PrintfSaveRegs, RestoreTextMode, SetScreenTarget
 extern WaitKey, word_D2D60, word_D2D66, word_D2D6C, word_D2D6E
-global sub_B29F0, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
+global RemoveKeyboardHandler, loc_B2A9A, sub_B2A9B, loc_B2B09, sub_B2B0A, loc_B2B3A, loc_B2B81, loc_B2B85
 global loc_B2BA5, loc_B2BA9, loc_B2BC0, loc_B2BCE, loc_B2BD6, loc_B2BDC, loc_B2BDE, loc_B2BE5
-global loc_B2BED, unk_B2C00, sub_B2C01, loc_B2C3B, sub_B2C4A, loc_B2C68, loc_B2C6D, loc_B2C85
+global loc_B2BED, unk_B2C00, sub_B2C01, loc_B2C3B, Int16Service, loc_B2C68, loc_B2C6D, loc_B2C85
 global loc_B2CAC, KeyDown, sub_B2CCD, FatalError, loc_B2D01, loc_B2D11, sub_B2D27
-sub_B29F0:
+RemoveKeyboardHandler:
         cmp word [word_D2D6E], byte 0
         jne near loc_B2A9A
         o16 mov word [word_D2D6E], ds
@@ -20,34 +20,34 @@ sub_B29F0:
         or al, 3
         out 21h, al
         mov ebx, 9
-        call sub_9864C
+        call DosGetVector
         mov dword [dword_D2D5C], eax
         mov word [word_D2D60], dx
         mov ebx, 16h
-        call sub_9864C
+        call DosGetVector
         mov dword [dword_D2D62], eax
         mov word [word_D2D66], dx
         mov ebx, 23h
-        call sub_9864C
+        call DosGetVector
         mov dword [dword_D2D68], eax
         mov word [word_D2D6C], dx
         mov dx, cs
         mov ebx, 9
         mov eax, sub_B2B0A
-        call sub_98664
+        call DosSetVector
         mov dx, cs
         mov ebx, 16h
         mov eax, sub_B2C01
         mov dx, cs
         mov ebx, 23h
         mov eax, unk_B2C00
-        call sub_98664
+        call DosSetVector
         pop eax
         out 21h, al
-        mov ebx, sub_B2C4A
+        mov ebx, Int16Service
         mov dword [dword_D2C84], ebx
         push sub_B2A9B
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 4
 loc_B2A9A:
         ret
@@ -63,14 +63,14 @@ sub_B2A9B:
         mov ebx, 9
         mov eax, dword [dword_D2D5C]
         mov dx, word [word_D2D60]
-        call sub_98664
+        call DosSetVector
         mov ebx, 16h
         mov eax, dword [dword_D2D62]
         mov dx, word [word_D2D66]
         mov ebx, 23h
         mov eax, dword [dword_D2D68]
         mov dx, word [word_D2D6C]
-        call sub_98664
+        call DosSetVector
         and byte [0417h], 0F0h
         pop eax
         out 21h, al
@@ -187,7 +187,7 @@ sub_B2C01:
         cld
         call __GETDS
         sti
-        call sub_B2C4A
+        call Int16Service
         pushf
         pop ebx
         and ebx, 4000h
@@ -218,7 +218,7 @@ loc_B2C3B:
         pop ecx
         pop ebx
         iret
-sub_B2C4A:
+Int16Service:
         cmp ah, 0
         je short loc_B2C85
         cmp ah, 10h
@@ -278,7 +278,7 @@ FatalError:
         jne short loc_B2D11
         cmp dword [dword_D3024], byte 0
         je short loc_B2D01
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         push byte 0
         call sub_93170
@@ -286,12 +286,12 @@ FatalError:
         call WaitKey
 loc_B2D01:
         call RestoreTextMode
-        call sub_B3E4A
+        call PrintfSaveRegs
         call dword [bailout_vec]
 loc_B2D11:
         push dword [dword_D2F74]
         call RestoreTextMode
-        call sub_B3E4A
+        call PrintfSaveRegs
         call dword [bailout_vec]
 sub_B2D27:
         ret

@@ -147,7 +147,7 @@ int MenuSaveDefaultLines(unsigned char *nums, unsigned char *dst, unsigned char 
     else sprintf(path, (char *)&leaguedbfmt, str_Teams2);
     fh = open(path, 0x202);
     if (fh < 0) {
-        sub_B4B58();
+        SetTextMode();
         perror((char *)str_ErrB2Perror);
         WaitKey();
         exit(1);

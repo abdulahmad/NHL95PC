@@ -12,9 +12,9 @@ extern savedname, SaveGridCellBg, SetDialogColors, SetTextColors, songdata, str_
 extern str_EnterMasterPassword, str_EnterPasswordFor, str_extDB, str_Iff10, str_Leaguetm2, str_Menubuff6, str_MightyDucksOfAnaheim3, str_Pal19
 extern str_Pal20, str_PLST, str_Pointer9, str_PTLS, str_TPI, str_Tspal, str_VerifyMasterControllerPasswo, str_VerifyPasswordFor
 extern str_WhoWillControlThe, str_WhoWillPlayThe, strcat_, strcmp_, strcpy_, stricmp_, strlen_, AllocMemBlock
-extern sub_8D2F0, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
+extern PushMemDescriptorLocked, LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, DrawArt, GrabBlock, MouseRead, FindShape, ClearScreen
-extern sub_B4BA8, SetColorRemap, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
+extern SetScreenTarget, SetColorRemap, TeamGridHitTest, teamselmenubar, teamselresult, teamselsetslot, TextInputDialog, str_qmark
 extern msg_NameTaken, msg_WrongPassword, yesnobtns
 global ChooseLeagueController, AskExportToFloppy, BuildStandingsGrid, TeamSelDone, TeamSelCancel, LeagueTeamSelect, WriteSeasonRec, WriteSeasonRec_common
 global ReadGoalieSeasonRec, ReadGoalieSeasonRec_common, WriteGoalieSeasonRec, WriteSchedGame, WriteSchedGame_common, WriteTeamRec, ReadDbRec4Ch, ReadLeagueTeamEntry
@@ -819,7 +819,7 @@ LeagueTeamSelect:
         push ebp
         call TextSetFont
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         mov dword [dword esp+028Ch], edi
 .1:
         mov eax, dword [dword esp+028Ch]
@@ -917,7 +917,7 @@ LeagueTeamSelect:
         je short LeagueTeamSelect.8
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -954,7 +954,7 @@ LeagueTeamSelect:
         mov esi, eax
         add esp, byte 8
         mov dword [dword esp+025Ch], eax
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4

@@ -3,7 +3,7 @@
 
 /* ReadGameSettings: read the 75h-byte game settings into set from GAMESET in directory dir, or
  from file dir itself when direct (errors "fe d2" "fe dd2", "fe d3" read, "fe d4" close). Without direct, the
- result needs GAMESAV in dir too (sub_B3CC8). With sound off the music option (byte 5Ah bit 0) is cleared.
+ result needs GAMESAV in dir too (FindFirstFile). With sound off the music option (byte 5Ah bit 0) is cleared.
  Returns 1, or 0 when the GAMESAV check fails. */
 int ReadGameSettings(unsigned char *set, char *dir, int direct)
 {
@@ -20,7 +20,7 @@ int ReadGameSettings(unsigned char *set, char *dir, int direct)
     if (FileClose(&fh) != 0) FatalError((char *)str_fed4);
     if (direct == 0) {
         MakePath(path, dir, (char *)str_GameSav3, 0);
-        dir = (char *)sub_B3CC8(path);
+        dir = (char *)FindFirstFile(path);
     }
     if (dir != 0) {
         if (!musicon) set[0x5A] &= 0xFE;

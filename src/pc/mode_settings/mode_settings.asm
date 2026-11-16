@@ -9,7 +9,7 @@ extern lcblink, lcboxon, LoadBank, LoadSettingsShapes, MakePath, modesetrects, M
 extern musicon, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpflags2, setbits
 extern settingsfile, SndQuery, songdata, sounddev, str_BKGD2, str_Dbox3, str_DigitizedSpeech2, str_Music2
 extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, sub_8F963, sub_8F96E, sub_8F979, sub_8F984
-extern sub_8FB8E, sub_8FCDF, sub_91284, sub_B4BA8, TextSetColors, VgaSetPalette, WriteCurModeState
+extern sub_8FB8E, sub_8FCDF, sub_91284, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
 global SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks, ModeSetViewLoop
 global ModeSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -43,7 +43,7 @@ MenuModeSettings:
         push esi
         push edi
         push ebp
-        call sub_B4BA8
+        call SetScreenTarget
         call LoadSettingsShapes
         push byte 20h
         push dword 0E935h
@@ -229,7 +229,7 @@ DrawModeSetDlg:
         call PrintString
         add esp, byte 0Ch
 .6:
-        call sub_B4BA8
+        call SetScreenTarget
         push dword 0FAh
         mov ecx, dword [gamemode]
         mov ebx, 4
@@ -344,7 +344,7 @@ ModeOptsToBits:
         call PrintString
         add esp, byte 0Ch
 .8:
-        call sub_B4BA8
+        call SetScreenTarget
         pop edx
         pop ecx
         pop ebx
@@ -518,7 +518,7 @@ ModeSetViewLoop:
         mov dword [byte esp+08h], eax
         mov eax, dword [byte esp+0Ch]
         mov dword [byte esp+04h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -671,7 +671,7 @@ ModeSetEditLoop:
         mov dword [byte esp+0Ch], eax
         mov eax, dword [byte esp+010h]
         mov dword [byte esp+08h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [gameopts]
         shl eax, 19h
         shr eax, 1Fh

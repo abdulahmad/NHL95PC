@@ -3,12 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_903F0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
-extern dword_D4108, dword_D43E4, sub_B3ABC, sub_B5E00, sub_B5F0F, sub_B608B, sub_B6217, sub_B63AC
-extern sub_B6423, sub_B65B8
+extern dword_D4108, dword_D43E4, bcopy, sub_B5E00, BlitBlock, sub_B608B, sub_B6217, AndPixel
+extern sub_B6423, OrPixel
 global PutBlock, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
 global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, DrawBitmap
 global sub_90638, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, sub_90698, loc_906B9
-global sub_906DC, sub_90720, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
+global sub_906DC, DrawArtAnd, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
 global loc_90808, loc_90825, sub_9082F, sub_90838, sub_9087C, loc_908A9, loc_908EA, loc_90906
 global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, sub_9099C
 PutBlock:
@@ -24,7 +24,7 @@ PutBlock:
         push ebx
         push esi
         push eax
-        call sub_B5F0F
+        call BlitBlock
         add esp, byte 0Ch
         jmp near loc_90614
 loc_9041B:
@@ -277,7 +277,7 @@ loc_906B9:
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_906DC:
@@ -307,7 +307,7 @@ sub_906DC:
         call sub_90698
         add esp, byte 0Ch
         ret
-sub_90720:
+DrawArtAnd:
         push esi
         push edi
         push ebp
@@ -402,7 +402,7 @@ loc_90808:
         push ebp
         inc esi
         inc ebp
-        call sub_B63AC
+        call AndPixel
         add esp, byte 0Ch
         jmp short loc_90808
 loc_90825:
@@ -425,7 +425,7 @@ sub_90838:
         sar eax, 10h
         push eax
         push edx
-        call sub_90720
+        call DrawArtAnd
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -440,7 +440,7 @@ sub_90838:
         sub ebx, eax
         push ebx
         push edx
-        call sub_90720
+        call DrawArtAnd
         add esp, byte 0Ch
         ret
 sub_9087C:
@@ -542,7 +542,7 @@ loc_90972:
         push ebp
         inc esi
         inc ebp
-        call sub_B65B8
+        call OrPixel
         add esp, byte 0Ch
         jmp short loc_90972
 loc_9098F:

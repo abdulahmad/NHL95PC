@@ -7,16 +7,16 @@ extern cliprect_x0, cliprect_x1, dword_D30A4, dword_D30A8, dword_D4F9A, dword_D5
 extern dword_D53AC, dword_D53B0, dword_D53B4, dword_D5424, dword_D543C, dword_F371E, dword_F532A, dword_F5332
 extern dword_F558C, dword_F55E4, dword_F55E8, dword_F55EC, dword_F55F0, dword_F55F4, dword_F58D0, fputchar
 extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, sub_8F0D7, PrintString
-extern sub_AA210, sub_AA300, sub_AAB5C, sub_AAC48, sub_AB79C, sub_AC0CC, sub_AC6E8, sub_AD298
-extern sub_AD4DC, sub_AD6F4, sub_AE9EB, sub_AEA23, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33
-extern sub_AEFA2, sub_AEFC9, sub_AEFEA, sub_AF076, sub_AF0D5, sub_AF112, sub_AF198, sub_AF1A4
-extern sub_AF1D0, sub_AF2E0, sub_AF340, sub_AF428, SetClipWindow, sub_B6F84, unk_D5382, unk_D5408
+extern sub_AA210, sub_AA300, GusOpen, GusClose, sub_AB79C, sub_AC0CC, sub_AC6E8, sub_AD298
+extern sub_AD4DC, sub_AD6F4, GusServiceStream, GusStartStream, sub_AEDBC, sub_AEE54, sub_AEF0E, sub_AEF33
+extern sub_AEFA2, sub_AEFC9, sub_AEFEA, sub_AF076, sub_AF0D5, sub_AF112, GusStreamBusy, sub_AF1A4
+extern GusGetEnvConfig, GusProbePort, sub_AF340, sub_AF428, SetClipWindow, sub_B6F84, unk_D5382, unk_D5408
 extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
 global sub_9FFCA, loc_A004D, sub_A0064, sub_A00C1, loc_A00F7, loc_A0102, loc_A0107, loc_A0124
 global loc_A013D, loc_A014B, loc_A0200, loc_A020C, loc_A0215, loc_A021C, loc_A027D, loc_A027F
 global sub_A0288, loc_A0301, loc_A0308, loc_A0340, loc_A0358, loc_A0396, loc_A03D6, loc_A03DE
-global loc_A03E3, loc_A0416, loc_A041D, loc_A0425, loc_A042A, loc_A0444, sub_A044D, loc_A0477
+global loc_A03E3, loc_A0416, loc_A041D, loc_A0425, loc_A042A, loc_A0444, GusDriverClose, loc_A0477
 global loc_A0479, loc_A0482, loc_A0484, loc_A048D, loc_A048F, loc_A04B2, sub_A04B9, loc_A04FD
 global loc_A0507, loc_A0521, loc_A052B, loc_A0532, sub_A053C, sub_A054C, loc_A056E, loc_A0591
 global sub_A059B, sub_A05AB, loc_A05CE, sub_A05D3, sub_A05E3, loc_A0606, sub_A060B, sub_A061B
@@ -295,7 +295,7 @@ loc_A0301:
         mov byte [byte_F5320], 5
 loc_A0308:
         mov eax, word_F531C
-        call sub_AAB5C
+        call GusOpen
         test eax, eax
         jne near loc_A0444
         mov eax, 7Fh
@@ -330,7 +330,7 @@ loc_A0396:
         push dword 800h
         push dword [dword_F55E8]
         push dword [dword_F55F4]
-        call sub_AEA23
+        call GusStartStream
         add esp, byte 0Ch
         mov word [word_F58D4], 0Fh
         mov word [word_F58D6], 0
@@ -381,7 +381,7 @@ loc_A0444:
         pop ecx
         pop ebx
         ret
-sub_A044D:
+GusDriverClose:
         push dword 1Ch
         call __CHK
         push ebx
@@ -409,7 +409,7 @@ loc_A0484:
 loc_A048D:
         jmp short loc_A04B2
 loc_A048F:
-        call sub_AAC48
+        call GusClose
         call sub_A0064
         mov dword [dword_D53A4], 0
         mov dword [dword_D53A8], 0
@@ -437,7 +437,7 @@ sub_A04B9:
         cmp dword [dword_D53A0], byte 0
         jne short loc_A0507
         mov eax, word_F531C
-        call sub_AF1D0
+        call GusGetEnvConfig
         test eax, eax
         jne short loc_A04FD
         mov dword [byte ebp-04h], 0
@@ -447,7 +447,7 @@ loc_A04FD:
 loc_A0507:
         xor eax, eax
         mov ax, word [word_F531E]
-        call sub_AF2E0
+        call GusProbePort
         test eax, eax
         jne short loc_A0521
         mov dword [byte ebp-04h], 0
@@ -476,7 +476,7 @@ sub_A054C:
         mov ebp, esp
         sub esp, 4
         mov eax, word_F531C
-        call sub_AF1D0
+        call GusGetEnvConfig
         test eax, eax
         jne short loc_A056E
         mov dword [byte ebp-04h], 0
@@ -555,7 +555,7 @@ sub_A061B:
         cmp dword [dword_D53B4], byte 0
         je short loc_A063E
         mov dword [dword_D53B4], 0
-        call sub_A044D
+        call GusDriverClose
 loc_A063E:
         pop ebp
         pop edi
@@ -576,7 +576,7 @@ sub_A0653:
         cmp dword [dword_D53B0], byte 0
         je short loc_A0676
         mov dword [dword_D53B0], 0
-        call sub_A044D
+        call GusDriverClose
 loc_A0676:
         pop ebp
         pop edi
@@ -670,7 +670,7 @@ loc_A071D:
 loc_A0760:
         jmp short loc_A0718
 loc_A0762:
-        call sub_AE9EB
+        call GusServiceStream
         mov esp, ebp
         pop ebp
         pop edi
@@ -714,7 +714,7 @@ loc_A07D4:
         mov dword [byte ebp-04h], 56h
         jmp short loc_A083A
 loc_A07DD:
-        call sub_AF198
+        call GusStreamBusy
         mov dword [byte ebp-04h], eax
         jmp short loc_A083A
 loc_A07E7:

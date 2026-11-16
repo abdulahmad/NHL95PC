@@ -9,7 +9,7 @@ extern hmtmap, hmtmstruct, lastplayer, lasttouch, onetimerflag, OOlist, OOlistpo
 extern passdir, passplayer, passspeed, penshotlive, penshotstart, puckbody, puckc, puckcross
 extern puckcross_m2, puckgoalie, pucknopuck, puckstick, puckvx, puckvy, puckvz, puckx
 extern pucky, puckz, randomd0, regd0, regd1, regd2, regd3, regd4
-extern restorepl, setpersonel, SetSPA, sflags, sfx, ShotLaneOpen, SortCords, sub_93470
+extern restorepl, setpersonel, SetSPA, sflags, sfx, ShotLaneOpen, SortCords, IntSqrt
 extern threat, ToFixed, vtoa, Ylist, Ylist_m2
 global checkob, checkob_ret5a, checkob_ret5, SkillForAnim, ChkDelayedOffside, checkpuckcoll_ccx, checkpuckcoll, CheckBump
 global GetLowestPen, chk4lc, chk4lc_shoot, PassLaneChk, PassLaneChk_ret5a, PassLaneChk_ret5, ScatterPass, dopass
@@ -1733,7 +1733,7 @@ passtoa0:
         test eax, eax
         jle short .2
         push eax
-        call sub_93470
+        call IntSqrt
         add esp, byte 4
         mov ecx, eax
         jmp short .3

@@ -1,9 +1,9 @@
 /* Main startup: keyboard wait. */
 #include "nhl95.h"
 
-/* WaitKeyRelease: wait until key is released (polling the keyboard), then flush (sub_B3A24). */
+/* WaitKeyRelease: wait until key is released (polling the keyboard), then flush (KbdFlush). */
 void WaitKeyRelease(int key)
 {
     while (KeyDown(key)) PollKey();
-    sub_B3A24();
+    KbdFlush();
 }

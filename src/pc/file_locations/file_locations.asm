@@ -7,8 +7,8 @@ extern fgets_, fileoncd, fopen_, FreeCoachClip, FreeMemBlock, fscanf_, gameopts,
 extern InputRemove, MakePath, memcpy_, MusicChanReset2, musicon, musicslot, PlayMVI, rand_
 extern SayCoachClip, songdata, SpeechBusy, sprintf_, str_ALLFILESTXT, str_ALLFILESTXT2, str_CantOpenNhlCfg2, str_Clip04d
 extern str_Cmv2, str_Coach, str_Coachcut, str_CouldNotOpenALLFILES, str_Iff13, str_NhlCfg, str_Pal29, str_Scrn4
-extern strcat_, stricmp_, sub_8D2F0, LoadBank, sub_8F98F, SndQuery, SetPalette, DrawBitmap
-extern FindShape, sub_B4BA8, str_ModeR, WaitClickTimeout
+extern strcat_, stricmp_, PushMemDescriptorLocked, LoadBank, sub_8F98F, SndQuery, SetPalette, DrawBitmap
+extern FindShape, SetScreenTarget, str_ModeR, WaitClickTimeout
 global InitFileLocations, CoachCutScene
 ;-----------------------------------------------------------------------------
 ; InitFileLocations                            8BAAF  95 PC, medium confidence
@@ -184,7 +184,7 @@ CoachCutScene:
         mov edx, esp
         mov eax, 1
         call FadePalette
-        call sub_B4BA8
+        call SetScreenTarget
         push str_Scrn4
         push esi
         call FindShape
@@ -311,7 +311,7 @@ CoachCutScene:
         je short CoachCutScene.14
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx
@@ -333,7 +333,7 @@ CoachCutScene:
         test ebx, ebx
         je short .16
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp

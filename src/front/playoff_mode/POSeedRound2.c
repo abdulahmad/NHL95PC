@@ -15,7 +15,7 @@
 #define POHandleElimination POHandleElimination_decl
 #define PlayoffTreeMenu PlayoffTreeMenu_decl
 #define PreGameScreen PreGameScreen_decl
-#define sub_910B0 sub_910B0_decl
+#define ClearScreenColour sub_910B0_decl
 #define DrawPlayoffTree DrawPlayoffTree_decl
 #define CountSeriesWins CountSeriesWins_decl
 #include "nhl95.h"
@@ -33,7 +33,7 @@
 #undef POHandleElimination
 #undef PlayoffTreeMenu
 #undef PreGameScreen
-#undef sub_910B0
+#undef ClearScreenColour
 #undef DrawPlayoffTree
 #undef CountSeriesWins
 
@@ -53,7 +53,7 @@ void POSeedFinal(unsigned char *p);
 void POHandleElimination(int mode, unsigned char *po);
 int PlayoffTreeMenu(void *bar, int n, int col1, int col2, int col3, int sel);
 int PreGameScreen(int home, int vis);
-void __cdecl sub_910B0(int a);  /* graphics library */
+void __cdecl ClearScreenColour(int a);  /* graphics library */
 void DrawPlayoffTree(void);
 void CountSeriesWins(int *tree, int *wins, int mode);  /* 27C34 */
 extern PlayoffName savenamedefault;  /* 86616: "." and zeros, the default name */
@@ -113,7 +113,7 @@ int CreatePlayoffs(void)
     pal = p = AllocMemBlock((char *)str_Palette, 0x300, 0x20);
     SetPalette(0, 0x100, (unsigned char *)p);
     FadePalStep(1, (unsigned char *)p, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     if (!embscupbank) {
         MakePath(s.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
         p = LoadBank(s.path, 0);
@@ -835,7 +835,7 @@ int PlayoffModeLoop(int *fh)
         FreeMemBlock(pal);
         if (musicon && songdata) {
             while (!SndQuery(musicslot, 3));
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
             f.stopped = 1;
         }
@@ -902,7 +902,7 @@ int PlayoffModeLoop(int *fh)
     FreeMemBlock(pal);
     if (!f.stopped && musicon) {
         while (!SndQuery(musicslot, 3));
-        if (songdata) sub_8D2F0(songdata);
+        if (songdata) PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     POHandleElimination(f.r, (unsigned char *)f.sched);
@@ -924,7 +924,7 @@ int PlayoffModeLoop(int *fh)
         SetPalette(0, 0x100, (unsigned char *)pal);
         FadePalStep(1, (unsigned char *)pal, 0x10);
         SetDialogColors(0x41, 0x40, 0x42, 0x40, 0x43);
-        sub_910B0(0);
+        ClearScreenColour(0);
         VgaSetPalette(0, 0x100, (unsigned char *)pal);
         if (!CheckGameDiskSpace()) {
             FadePalStep(1, (unsigned char *)pal, 1);

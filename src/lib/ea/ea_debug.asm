@@ -17,54 +17,54 @@ extern dword_D3044, dword_D3048, dword_D4534, dword_D4548, dword_D457C, dword_D4
 extern dword_D458C, dword_D4590, dword_D4594, dword_D4598, dword_D459C, dword_D45A0, dword_D45A4, dword_D45B0
 extern dword_EDAB4, dword_EDE60, dword_EDE64, dword_EDE68, dword_EDE6C, dword_EDE70, dword_EDE74, dword_EDE78
 extern dword_EDE7C, dword_EDE80, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
-extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, sub_8D2F0, sub_8D484, TextSetColors
-extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, sub_90354, sub_9035C, sub_90373, PutBlock
-extern DrawBitmap, FillRect, sub_92CD0, sub_92F50, sub_93000, sub_93170, sub_9362C, sub_936C0
-extern sub_938C8, sub_938F4, sub_93908, sub_984D0, sub_9C594, sub_9C5A8, sub_9C5B0, sub_9C890
-extern sub_9CA6C, sub_9CA90, sub_9D090, sub_9D2E0, FindShape, ClearScreen, sub_B39D0, sub_B3A24
-extern sub_B3A88, sub_B3AA1, sub_B3CC8, sub_B40BF, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4FAC
+extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, sub_8D484, TextSetColors
+extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, sub_90373, PutBlock
+extern DrawBitmap, FillRect, sub_92CD0, sub_92F50, sub_93000, sub_93170, DebugSetLine, sub_936C0
+extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, sub_9C594, ReturnFalse, sub_9C5B0, sub_9C890
+extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindShape, ClearScreen, KbdGetKey, KbdFlush
+extern SaveDrawState, RestoreDrawState, FindFirstFile, sub_B40BF, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
 extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
 extern unk_C41FC, unk_C4318, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, unk_C4474
 extern str_Un, unk_C46C0, unk_D45D8, vsprintf_, WaitTickDeadline
 global sub_93938, loc_93955, loc_9396D, loc_9399A, loc_939AA, loc_939C2, loc_93A2E, loc_93A33
-global sub_93A40, loc_93A9B, sub_93AA4, loc_93AD3, sub_93AD8, loc_93B26, loc_93B2D, sub_93B34
+global sub_93A40, loc_93A9B, DebugLog, loc_93AD3, sub_93AD8, loc_93B26, loc_93B2D, FindWildcardDigits
 global loc_93B49, loc_93B55, loc_93B66, loc_93B6A, loc_93B6C, loc_93BA5, loc_93BC5, loc_93BCA
-global sub_93BD4, unk_93C50, unk_93C54, sub_93C88, sub_93CA0, sub_93CB8, sub_93CC0, loc_93D22
-global loc_93DA5, loc_93DE2, loc_93E09, loc_93E26, loc_93E28, sub_93E38, sub_93E4C, loc_93E70
+global FormatDateStamp, unk_93C50, unk_93C54, sub_93C88, DebugGetKey, sub_93CB8, sub_93CC0, loc_93D22
+global loc_93DA5, loc_93DE2, loc_93E09, loc_93E26, loc_93E28, sub_93E38, MemViewerListHead, loc_93E70
 global sub_93E79, loc_93E88, loc_93E9A, loc_93EB1, loc_93EBF, loc_93EC1, loc_93EDC, loc_93EE1
 global loc_93EF1, loc_93F0D, loc_93F21, loc_93F2E, loc_93F3A, loc_93F56, loc_93F60, loc_93F6A
 global loc_93F6F, loc_93F8E, loc_93FB0, loc_93FBA, loc_93FCB, loc_93FE1, loc_93FEE, loc_93FFB
 global loc_9401B, loc_9405B, loc_9406D, loc_94075, loc_94082, loc_940BA, sub_940F4, loc_94105
-global loc_9410D, sub_94114, loc_94124, loc_9412C, loc_9416D, loc_94181, sub_94188, loc_941DF
+global loc_9410D, MemViewerSelectRow, loc_94124, loc_9412C, loc_9416D, loc_94181, MemViewerDrawList, loc_941DF
 global loc_941E4, loc_9420D, loc_94212, loc_94316, loc_9439B, loc_943EE, loc_943FC, loc_94488
 global loc_9448D, loc_944D4, loc_944ED, loc_944F2, loc_94534, loc_94551, loc_94552, loc_94594
 global loc_945D3, loc_945D8, loc_94624, loc_94649, loc_9464E, loc_946A0, loc_946C0, loc_946CB
-global loc_946FB, loc_94710, loc_94729, loc_94753, loc_9476E, sub_9477C, loc_947A7, loc_947B9
-global loc_947C1, loc_947CA, sub_947D8, loc_9485F, loc_948B7, loc_948B9, loc_948C7, sub_948D4
-global sub_948E4, loc_94987, loc_949A4, loc_949BF, loc_94A1D, loc_94A54, loc_94A5E, loc_94A86
-global loc_94A8D, loc_94AC6, loc_94ACD, loc_94AFA, loc_94B20, loc_94B57, loc_94B62, sub_94B6C
+global loc_946FB, loc_94710, loc_94729, loc_94753, loc_9476E, MemPoolTotals, loc_947A7, loc_947B9
+global loc_947C1, loc_947CA, MemViewerDrawTitle, loc_9485F, loc_948B7, loc_948B9, loc_948C7, DebugSprintf
+global MemViewerBlockInfo, loc_94987, loc_949A4, loc_949BF, loc_94A1D, loc_94A54, loc_94A5E, loc_94A86
+global loc_94A8D, loc_94AC6, loc_94ACD, loc_94AFA, loc_94B20, loc_94B57, loc_94B62, MemViewerHexDump
 global loc_94B85, loc_94B9A, loc_94BBC, loc_94BD3, loc_94BDE, loc_94C1A, loc_94C49, loc_94C51
 global loc_94C61, loc_94C6F, loc_94C71, loc_94C89, loc_94C95, loc_94CA5, loc_94CA7, loc_94CB1
 global loc_94CC1, loc_94CC9, loc_94CCF, loc_94CE3, loc_94CF3, loc_94D00, loc_94D1F, loc_94D2C
 global loc_94D44, loc_94D5C, loc_94D91, loc_94DA8, loc_94DC1, loc_94DD6, loc_94DE5, loc_94DEC
-global loc_94DFC, loc_94E06, loc_94E18, loc_94E1E, loc_94E29, sub_94E34, loc_94E68, loc_94E7C
+global loc_94DFC, loc_94E06, loc_94E18, loc_94E1E, loc_94E29, HexDumpRow, loc_94E68, loc_94E7C
 global loc_94E91, loc_94ECB, loc_94EDF, loc_94EF9, loc_94F16, loc_94F31, loc_94F40, loc_94F91
-global loc_94F98, loc_94FB0, sub_94FBC, loc_9506F, loc_95074, loc_950A3, sub_950AC, loc_950ED
-global loc_9511A, loc_95122, loc_9513E, sub_95148, sub_95158, loc_951B1, loc_951FD, loc_95210
+global loc_94F98, loc_94FB0, WriteMemMap, loc_9506F, loc_95074, loc_950A3, DumpMemoryMap, loc_950ED
+global loc_9511A, loc_95122, loc_9513E, sub_95148, ShapeViewer, loc_951B1, loc_951FD, loc_95210
 global loc_95228, loc_95245, loc_95249, loc_95250, loc_9528A, loc_95297, loc_9529E, loc_952A5
 global loc_952B4, loc_95384, loc_95391, loc_953A0, loc_953A6, loc_953A9, loc_953B3, loc_953CC
 global loc_95401, loc_9540C, loc_9541E, loc_95427, loc_95436, loc_9544E, loc_9545B, loc_95464
-global loc_95476, loc_9547F, loc_95493, loc_9549D, loc_954AB, loc_954B5, loc_954C0, sub_954C8
-global sub_95548, loc_9559A, loc_9559F, loc_955C0, loc_955C5, loc_95665, loc_956AC, loc_956B3
-global loc_956B8, sub_956C0, loc_9576B, loc_9585D, loc_9590C, loc_95911, loc_95937, loc_95955
-global loc_9595F, sub_9596C, loc_959D4, loc_959E7, loc_95A92, loc_95AD4, loc_95AE3, loc_95B03
+global loc_95476, loc_9547F, loc_95493, loc_9549D, loc_954AB, loc_954B5, loc_954C0, ReadShapeFileHeader
+global ShapeInfo, loc_9559A, loc_9559F, loc_955C0, loc_955C5, loc_95665, loc_956AC, loc_956B3
+global loc_956B8, DumpShapesList, loc_9576B, loc_9585D, loc_9590C, loc_95911, loc_95937, loc_95955
+global loc_9595F, PaletteViewer, loc_959D4, loc_959E7, loc_95A92, loc_95AD4, loc_95AE3, loc_95B03
 global loc_95B05, loc_95B17, loc_95B35, loc_95B47, loc_95B67, loc_95B69, loc_95B7B, loc_95B97
 global loc_95B99, loc_95BAB, loc_95BC7, loc_95BC9, loc_95BDB, loc_95BF5, loc_95C07, loc_95C11
 global loc_95C16, loc_95C26, loc_95C28, loc_95C3C, loc_95C3E, loc_95C51, loc_95C62, loc_95C75
-global loc_95C86, loc_95C91, loc_95C98, loc_95CA3, loc_95CAA, loc_95CF0, loc_95D5D, sub_95ECC
-global loc_95EF1, sub_95F30, sub_95F84, loc_95FE7, loc_95FF4, loc_96000, loc_96006, loc_96009
-global loc_96010, loc_96026, loc_9602A, sub_96030, sub_960AC, loc_960BF, loc_960C6, loc_960CA
+global loc_95C86, loc_95C91, loc_95C98, loc_95CA3, loc_95CAA, loc_95CF0, loc_95D5D, PaletteViewerLabel
+global loc_95EF1, SaveScreenshot, MemViewerShowArt, loc_95FE7, loc_95FF4, loc_96000, loc_96006, loc_96009
+global loc_96010, loc_96026, loc_9602A, FormatDateTime, NextFreeFileName, loc_960BF, loc_960C6, loc_960CA
 global loc_9610C, loc_9611D, sub_9612C, sub_96144, sub_96164, sub_96170, loc_96178
 sub_93938:
         push ebx
@@ -132,7 +132,7 @@ loc_939AA:
 loc_939C2:
         pop edi
         mov eax, esp
-        call sub_93B34
+        call FindWildcardDigits
         mov edx, str_Wt2
         mov eax, esp
         call fopen_
@@ -141,21 +141,21 @@ loc_939C2:
         je short loc_93A2E
         lea edx, [dword esp+09Ch]
         lea eax, [dword esp+088h]
-        call sub_93BD4
+        call FormatDateStamp
         mov eax, esp
         push eax
         push str_FILES
-        call sub_93AA4
+        call DebugLog
         add esp, byte 8
         lea eax, [dword esp+088h]
         push eax
         push str_DATES
-        call sub_93AA4
+        call DebugLog
         add esp, byte 8
         lea eax, [dword esp+09Ch]
         push eax
         push str_TIMES
-        call sub_93AA4
+        call DebugLog
         add esp, byte 8
         jmp short loc_93A33
 loc_93A2E:
@@ -178,19 +178,19 @@ sub_93A40:
         je short loc_93A9B
         mov edx, esp
         lea eax, [byte esp+014h]
-        call sub_93BD4
+        call FormatDateStamp
         push str_CLOSED
-        call sub_93AA4
+        call DebugLog
         add esp, byte 4
         lea eax, [byte esp+014h]
         push eax
         push str_DATES
-        call sub_93AA4
+        call DebugLog
         add esp, byte 8
         mov eax, esp
         push eax
         push str_TIMES2
-        call sub_93AA4
+        call DebugLog
         add esp, byte 8
         mov eax, dword [dword_D4548]
         call fclose_
@@ -203,7 +203,7 @@ loc_93A9B:
         pop ebx
         ret
         db 08Bh,0C0h
-sub_93AA4:
+DebugLog:
         sub esp, byte 4
         cmp dword [dword_D4534], byte 2
         jl short loc_93AD3
@@ -246,7 +246,7 @@ loc_93B26:
 loc_93B2D:
         add esp, 104h
         ret
-sub_93B34:
+FindWildcardDigits:
         push ebx
         push ecx
         push edx
@@ -294,7 +294,7 @@ loc_93B6C:
         mov byte [byte ebp+01h], dl
         mov edx, dword [esp]
         push edx
-        call sub_B3CC8
+        call FindFirstFile
         add esp, byte 4
         test eax, eax
         je short loc_93BA5
@@ -328,7 +328,7 @@ loc_93BCA:
         pop ecx
         pop ebx
         ret
-sub_93BD4:
+FormatDateStamp:
         push ebx
         push ecx
         push esi
@@ -405,14 +405,14 @@ sub_93C88:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_93CA0:
+DebugGetKey:
         push ebx
         push ecx
         push edx
         push eax
         call ClearScreen
         add esp, byte 4
-        call sub_9C5A8
+        call ReturnFalse
         pop edx
         pop ecx
         pop ebx
@@ -432,7 +432,7 @@ sub_93CC0:
         mov dword [dword esp+0B8h], eax
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
         lea eax, [byte esp+060h]
         push eax
@@ -444,7 +444,7 @@ sub_93CC0:
         mov al, byte [byte_D4544]
         mov byte [dword esp+0C0h], al
         push byte 0
-        call sub_938F4
+        call DebugSetRow
         add esp, byte 4
         cmp dword [dword_D3024], byte 0
         jne short loc_93D22
@@ -498,7 +498,7 @@ loc_93DE2:
         mov ebx, eax
         mov edx, ebp
         mov eax, edi
-        call sub_94188
+        call MemViewerDrawList
         mov dword [dword esp+0B4h], eax
         lea edx, [byte ebp+014h]
         cmp edx, eax
@@ -531,7 +531,7 @@ sub_93E38:
         mov eax, edx
         jmp near sub_93CC0
         db 08Bh,0C0h
-sub_93E4C:
+MemViewerListHead:
         push ebx
         push edx
         mov ebx, eax
@@ -604,13 +604,13 @@ loc_93EF1:
         mov edx, dword [dword_EDE84]
         mov eax, dword [dword_EDE68]
         mov ebx, dword [dword esp+0B8h]
-        call sub_94B6C
+        call MemViewerHexDump
 loc_93F0D:
         cmp esi, byte 43h
         jne short loc_93F21
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
 loc_93F21:
         cmp esi, byte 46h
         jne short loc_93F2E
@@ -626,18 +626,18 @@ loc_93F3A:
         mov edx, dword [dword_EDE78]
         mov eax, dword [dword_EDE7C]
         mov ebx, dword [dword esp+0B8h]
-        call sub_948E4
+        call MemViewerBlockInfo
 loc_93F56:
         cmp esi, byte 4Dh
         jne short loc_93F60
-        call sub_938C8
+        call DebugClearScreen
 loc_93F60:
         cmp esi, byte 50h
         je short loc_93F6A
         cmp esi, byte 20h
         jne short loc_93F6F
 loc_93F6A:
-        call sub_950AC
+        call DumpMemoryMap
 loc_93F6F:
         cmp esi, byte 53h
         je short loc_93F8E
@@ -656,22 +656,22 @@ loc_93F8E:
         mov eax, dword [dword_EDE68]
         mov ecx, esi
         mov ebx, dword [dword esp+0B8h]
-        call sub_95158
+        call ShapeViewer
 loc_93FB0:
         cmp esi, byte 56h
         jne short loc_93FBA
-        call sub_95F30
+        call SaveScreenshot
 loc_93FBA:
         cmp esi, byte 54h
         jne short loc_93FCB
         mov eax, dword [dword esp+0B8h]
-        call sub_9596C
+        call PaletteViewer
 loc_93FCB:
         cmp esi, byte 57h
         jne short loc_93FE1
         mov eax, dword [dword_EDE68]
         mov edx, dword [dword esp+0B8h]
-        call sub_95F84
+        call MemViewerShowArt
 loc_93FE1:
         cmp esi, byte 41h
         jne short loc_93FEE
@@ -687,7 +687,7 @@ loc_93FFB:
         jne short loc_9401B
         mov ebx, dword [dword_EDE80]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 loc_9401B:
         cmp esi, 5200h
@@ -729,14 +729,14 @@ loc_94082:
         call sub_96164
         cmp dword [dword esp+0B0h], byte 0
         je short loc_940BA
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
 loc_940BA:
         xor eax, eax
         mov al, byte [dword esp+0C0h]
         push eax
-        call sub_938F4
+        call DebugSetRow
         add esp, byte 4
         lea eax, [byte esp+060h]
         push eax
@@ -744,7 +744,7 @@ loc_940BA:
         add esp, byte 4
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         add esp, 0C4h
         pop ebp
@@ -759,7 +759,7 @@ sub_940F4:
         push edx
         xor edx, edx
         mov eax, 1
-        call sub_93E4C
+        call MemViewerListHead
         test eax, eax
         je short loc_9410D
 loc_94105:
@@ -772,7 +772,7 @@ loc_9410D:
         pop edx
         ret
         db 08Bh,0C0h
-sub_94114:
+MemViewerSelectRow:
         cmp edx, byte 2
         je short loc_94181
         cmp eax, ebx
@@ -807,7 +807,7 @@ loc_94181:
         xor eax, eax
         ret 10h
         db 08Bh,0C0h
-sub_94188:
+MemViewerDrawList:
         push esi
         push edi
         push ebp
@@ -822,7 +822,7 @@ sub_94188:
         lea ebx, [byte ebp+062h]
         lea edx, [byte ebp+066h]
         lea eax, [byte ebp+05Eh]
-        call sub_9477C
+        call MemPoolTotals
         mov edx, dword [byte ebp+05Eh]
         push edx
         mov ebx, dword [dword_EDAB4]
@@ -867,7 +867,7 @@ loc_94212:
         lea edi, [dword ebp-0D6h]
         mov esi, str_NAMESIZEADREND
         rep movsd
-        call sub_B4BA8
+        call SetScreenTarget
         mov esi, dword [dword_D457C]
         push esi
         mov edi, dword [dword_D4584]
@@ -889,7 +889,7 @@ loc_94212:
         push eax
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov ebx, dword [dword_D457C]
         push ebx
         push byte 1
@@ -905,7 +905,7 @@ loc_94212:
         push eax
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov esi, dword [dword_D457C]
         push esi
         push byte 1
@@ -921,7 +921,7 @@ loc_94212:
         push eax
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov eax, dword [dword_D457C]
         push eax
         push byte 2
@@ -931,7 +931,7 @@ loc_94212:
         push byte 0
         call FillRect
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         jmp near loc_943EE
 loc_94316:
         mov ecx, 0Bh
@@ -950,27 +950,27 @@ loc_94316:
         push asc_C41F4
         push byte 0
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         lea eax, [dword ebp-082h]
         push eax
         push asc_C41F4
         push edi
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         lea eax, [dword ebp-0D6h]
         push eax
         push asc_C41F4
         push byte 2
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         push unk_C41FC
         push asc_C41F4
         push byte 3
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         jmp short loc_943EE
 loc_9439B:
@@ -1015,7 +1015,7 @@ loc_943FC:
         lea ebx, [byte ebp+03Eh]
         lea edx, [byte ebp+052h]
         mov eax, edi
-        call sub_947D8
+        call MemViewerDrawTitle
         mov eax, dword [byte ebp+03Eh]
         mov ecx, dword [byte ebp+056h]
         cmp eax, ecx
@@ -1029,15 +1029,15 @@ loc_943FC:
         mov ebx, dword [byte ebp+07Ah]
         mov edx, dword [byte ebp+07Eh]
         mov eax, esi
-        call sub_94114
+        call MemViewerSelectRow
         test eax, eax
         jne near loc_94551
         lea edx, [byte ebp+032h]
         mov eax, dword [byte ebp+056h]
-        call sub_948D4
+        call DebugSprintf
         lea edx, [byte ebp+026h]
         mov eax, dword [byte ebp+03Eh]
-        call sub_948D4
+        call DebugSprintf
         mov eax, dword [byte ebp+03Eh]
         sub eax, dword [byte ebp+056h]
         cmp dword [byte ebp+07Eh], byte 0
@@ -1075,7 +1075,7 @@ loc_9448D:
         push eax
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         jmp near loc_94551
 loc_944D4:
         lea edx, [byte ebp+026h]
@@ -1100,7 +1100,7 @@ loc_944F2:
         jne short loc_94534
         mov ebx, dword [dword_EDE60]
         push ebx
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         lea eax, [byte ebp-02Eh]
         push eax
@@ -1110,7 +1110,7 @@ loc_944F2:
         add eax, byte 4
         push eax
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         jmp short loc_94551
 loc_94534:
@@ -1138,7 +1138,7 @@ loc_94552:
         mov ebx, dword [byte ebp+07Ah]
         mov edx, dword [byte ebp+07Eh]
         mov eax, esi
-        call sub_94114
+        call MemViewerSelectRow
         test eax, eax
         jne near loc_946C0
         cmp esi, dword [byte ebp+076h]
@@ -1151,11 +1151,11 @@ loc_94552:
 loc_94594:
         lea edx, [byte ebp+032h]
         mov eax, dword [byte ebp+03Eh]
-        call sub_948D4
+        call DebugSprintf
         mov eax, dword [byte ebp+03Eh]
         add eax, dword [byte ebp+04Eh]
         lea edx, [byte ebp+026h]
-        call sub_948D4
+        call DebugSprintf
         cmp dword [byte ebp+07Eh], byte 0
         jne short loc_94624
         lea eax, [byte ebp+026h]
@@ -1194,7 +1194,7 @@ loc_945D8:
         push eax
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         jmp near loc_946C0
 loc_94624:
         mov ecx, dword [byte ebp+046h]
@@ -1225,7 +1225,7 @@ loc_9464E:
         jne short loc_946A0
         mov ebx, dword [dword_EDE60]
         push ebx
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         lea eax, [dword ebp-082h]
         push eax
@@ -1235,10 +1235,10 @@ loc_9464E:
         add eax, byte 4
         push eax
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         push byte 7
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         jmp short loc_946C0
 loc_946A0:
@@ -1287,14 +1287,14 @@ loc_94710:
         call SetClipWindow
         add esp, byte 10h
         mov eax, dword [dword_D457C]
-        call sub_93CA0
-        call sub_B4BA8
+        call DebugGetKey
+        call SetScreenTarget
         jmp short loc_9476E
 loc_94729:
         cmp edi, byte 1
         jne short loc_9476E
         push byte 7
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         lea eax, [byte esi+04h]
         mov edx, dword [byte ebp+07Ah]
@@ -1312,7 +1312,7 @@ loc_94753:
         push asc_C41F4
         push edi
         push byte 0
-        call sub_9362C
+        call DebugSetLine
         add esp, byte 10h
         inc edi
         cmp edi, dword [byte ebp+072h]
@@ -1325,7 +1325,7 @@ loc_9476E:
         pop esi
         ret
         db 090h
-sub_9477C:
+MemPoolTotals:
         push esi
         push edi
         push ebp
@@ -1333,7 +1333,7 @@ sub_9477C:
         mov edi, edx
         mov esi, ebx
         mov eax, 1
-        call sub_93E4C
+        call MemViewerListHead
         mov ebx, eax
         mov eax, dword [byte eax+020h]
         mov dword [ecx], 0
@@ -1371,7 +1371,7 @@ loc_947CA:
         pop esi
         ret
         db 090h
-sub_947D8:
+MemViewerDrawTitle:
         push esi
         push edi
         push ebp
@@ -1456,14 +1456,14 @@ loc_948C7:
         pop esi
         ret 10h
         db 08Bh,0C0h
-sub_948D4:
+DebugSprintf:
         push eax
         push unk_C4318
         push edx
         call sprintf_
         add esp, byte 0Ch
         ret
-sub_948E4:
+MemViewerBlockInfo:
         push ecx
         push esi
         push edi
@@ -1472,7 +1472,7 @@ sub_948E4:
         mov dword [byte esp+08h], eax
         mov dword [byte esp+04h], edx
         mov dword [esp], ebx
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [dword_D4580]
         push edx
         push dword 0A4h
@@ -1510,7 +1510,7 @@ sub_948E4:
         push byte 38h
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         mov edi, 0F8h
         xor esi, esi
 loc_94987:
@@ -1521,7 +1521,7 @@ loc_94987:
         push unk_C433C
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
 loc_949A4:
         sar ebp, 1
         mov eax, esi
@@ -1553,14 +1553,14 @@ loc_949BF:
         push dword 8Fh
         push byte 4Ch
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push esi
         push edi
         push str_SYSTEM
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov esi, 55h
 loc_94A1D:
         test byte [byte esp+09h], 20h
@@ -1573,14 +1573,14 @@ loc_94A1D:
         push ebp
         push edx
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push esi
         push edi
         push str_SPACE3
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         add esi, byte 8
 loc_94A54:
         test byte [byte esp+09h], 0A0h
@@ -1607,14 +1607,14 @@ loc_94A86:
 loc_94A8D:
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov esi, ebp
         push esi
         push edi
         push str_ConventionalMemory
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         lea ebp, [byte esi+014h]
         add esi, byte 0Ah
         test byte [byte esp+08h], 10h
@@ -1630,7 +1630,7 @@ loc_94AC6:
 loc_94ACD:
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         mov esi, ebp
         test byte [byte esp+08h], 40h
         je short loc_94AFA
@@ -1639,7 +1639,7 @@ loc_94ACD:
         push str_ALIGNFlagIsSet
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
         add esi, byte 0Ah
 loc_94AFA:
         test byte [byte esp+08h], 0Fh
@@ -1652,7 +1652,7 @@ loc_94AFA:
         push edi
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         add esi, byte 0Ah
 loc_94B20:
         mov edx, dword [byte esp+04h]
@@ -1662,7 +1662,7 @@ loc_94B20:
         push edi
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         add esi, byte 0Ah
         test byte [byte esp+08h], 8
         je short loc_94B57
@@ -1671,7 +1671,7 @@ loc_94B20:
         push str_BlockIsPURGABLE
         call sub_92CD0
         add esp, byte 0Ch
-        call sub_9C5A8
+        call ReturnFalse
 loc_94B57:
         cmp dword [esp], byte 0
         jne short loc_94B62
@@ -1684,7 +1684,7 @@ loc_94B62:
         pop ecx
         ret
         db 08Bh,0C0h
-sub_94B6C:
+MemViewerHexDump:
         push ecx
         push esi
         push edi
@@ -1693,7 +1693,7 @@ sub_94B6C:
         mov dword [byte esp+08h], eax
         test edx, edx
         jne short loc_94B85
-        call sub_938C8
+        call DebugClearScreen
         jmp near loc_94E29
 loc_94B85:
         mov eax, edx
@@ -1741,13 +1741,13 @@ loc_94BDE:
         mov ebx, eax
         mov edx, esi
         mov eax, dword [byte esp+034h]
-        call sub_94E34
+        call HexDumpRow
         mov dword [byte esp+014h], ebp
         mov dword [byte esp+010h], edi
         mov dword [byte esp+0Ch], esi
-        call sub_9C5A8
+        call ReturnFalse
 loc_94C1A:
-        call sub_B39D0
+        call KbdGetKey
         mov dword [byte esp+030h], eax
         push eax
         call sub_9C594
@@ -1962,7 +1962,7 @@ loc_94E29:
         pop ecx
         ret
         db 08Dh,040h,00h
-sub_94E34:
+HexDumpRow:
         push esi
         push edi
         push ebp
@@ -1993,7 +1993,7 @@ loc_94E7C:
         cmp ebp, dword [byte esp+020h]
         jne short loc_94E91
         push byte 70h
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
 loc_94E91:
         xor eax, eax
@@ -2012,11 +2012,11 @@ loc_94E91:
         call DebugPrintf
         add esp, byte 4
         push byte 7
-        call sub_93908
+        call DebugSetAttr
         jmp short loc_94EDF
 loc_94ECB:
         push byte 7
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         push unk_C4418
         call DebugPrintf
@@ -2054,7 +2054,7 @@ loc_94F31:
 loc_94F40:
         mov ecx, dword [dword_EDE60]
         push ecx
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         xor eax, eax
         mov al, byte [byte esp+0Ch]
@@ -2067,7 +2067,7 @@ loc_94F40:
         cmp edi, byte 10h
         jl short loc_94F16
         push byte 7
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         push asc_C441C
         call DebugPrintf
@@ -2095,7 +2095,7 @@ loc_94FB0:
         pop esi
         ret 8
         db 08Dh,040h,00h
-sub_94FBC:
+WriteMemMap:
         push esi
         push edi
         push ebp
@@ -2107,7 +2107,7 @@ sub_94FBC:
         mov dword [dword_EDE74], edx
         mov edx, esp
         lea eax, [byte esp+014h]
-        call sub_96030
+        call FormatDateTime
         mov edx, dword [unk_93C50]
         push edx
         push asc_C4200
@@ -2161,7 +2161,7 @@ loc_95074:
         mov ebx, eax
         xor edx, edx
         xor eax, eax
-        call sub_94188
+        call MemViewerDrawList
         mov eax, 1
 loc_950A3:
         add esp, byte 28h
@@ -2170,7 +2170,7 @@ loc_950A3:
         pop esi
         ret
         db 08Bh,0C0h
-sub_950AC:
+DumpMemoryMap:
         push ebx
         push ecx
         push edx
@@ -2186,14 +2186,14 @@ sub_950AC:
         mov byte [esp], 4Dh
         mov byte [byte esp+01h], 45h
         mov eax, esp
-        call sub_960AC
+        call NextFreeFileName
         mov esi, dword [dword_EDAB4]
         cmp dword [dword_D3024], byte 0
         je short loc_950ED
         push byte 14h
         lea eax, [byte esp+04h]
         push eax
-        call sub_984D0
+        call ShowMessageBox
         add esp, byte 8
 loc_950ED:
         mov edx, unk_C4474
@@ -2206,7 +2206,7 @@ loc_950ED:
         je short loc_9511A
         push byte 14h
         push str_ErrorDumpingMemoryMap
-        call sub_984D0
+        call ShowMessageBox
         add esp, byte 8
 loc_9511A:
         mov dword [dword_EDAB4], esi
@@ -2216,7 +2216,7 @@ loc_95122:
         mov esi, esp
         push esi
         push eax
-        call sub_94FBC
+        call WriteMemMap
         add esp, byte 8
         mov eax, dword [dword_EDE74]
         call fclose_
@@ -2240,7 +2240,7 @@ sub_95148:
         pop ebx
         ret
         db 090h
-sub_95158:
+ShapeViewer:
         push esi
         push edi
         push ebp
@@ -2257,10 +2257,10 @@ sub_95158:
         lea ebx, [byte esp+02Ch]
         lea edx, [byte esp+030h]
         mov eax, dword [byte esp+040h]
-        call sub_954C8
+        call ReadShapeFileHeader
         mov edx, dword [byte esp+024h]
         push edx
-        call sub_90354
+        call ShapeBankCount
         add esp, byte 4
         mov dword [byte esp+030h], eax
         xor ah, ah
@@ -2272,21 +2272,21 @@ sub_95158:
         cmp dword [eax], byte 0
         jge short loc_951FD
 loc_951B1:
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
         mov esi, dword [dword_D457C]
         push esi
         mov edi, dword [dword_D4584]
         push edi
         call TextSetColors
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         push byte 60h
         push str_ShapeFileIsInvalid
         call sub_9C890
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         call sub_96144
         cmp eax, byte 59h
         jne near loc_954C0
@@ -2326,7 +2326,7 @@ loc_95249:
         cmp esi, dword [byte esp+030h]
         jl short loc_95210
 loc_95250:
-        call sub_938C8
+        call DebugClearScreen
         push edi
         mov ecx, dword [byte esp+030h]
         push ecx
@@ -2372,7 +2372,7 @@ loc_952B4:
         push edi
         mov esi, dword [byte esp+028h]
         push esi
-        call sub_9035C
+        call ShapeBankEntry
         mov esi, eax
         add esp, byte 8
         push eax
@@ -2403,11 +2403,11 @@ loc_952B4:
         push byte 0
         call sub_93170
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         cmp byte [esp], 21h
         je near loc_953CC
         mov eax, esi
-        call sub_95548
+        call ShapeInfo
         mov dword [byte esp+03Ch], eax
         test eax, eax
         je short loc_953B3
@@ -2416,7 +2416,7 @@ loc_952B4:
         sar eax, 18h
         and eax, 80h
         mov dword [byte esp+038h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         cmp dword [byte esp+03Ch], byte 2
         jne short loc_95391
         mov ebx, dword [byte esp+038h]
@@ -2425,7 +2425,7 @@ loc_952B4:
         push byte 0
         push byte 0
         push esi
-        call sub_9CA6C
+        call DrawArtAnyFormatAt
         add esp, byte 0Ch
         jmp short loc_953A9
 loc_95384:
@@ -2439,7 +2439,7 @@ loc_95391:
         cmp dword [byte esp+038h], byte 0
         je short loc_953A0
         push esi
-        call sub_9CA90
+        call DrawArtAnyFormatOwnPos
         jmp short loc_953A6
 loc_953A0:
         push esi
@@ -2447,14 +2447,14 @@ loc_953A0:
 loc_953A6:
         add esp, byte 4
 loc_953A9:
-        call sub_9C5A8
+        call ReturnFalse
         jmp near loc_95427
 loc_953B3:
         push str_Bad
         call DebugPrintf
         add esp, byte 4
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
         jmp short loc_95427
 loc_953CC:
         mov eax, dword [byte esi+08h]
@@ -2494,7 +2494,7 @@ loc_9541E:
 loc_95427:
         cmp byte [esp], 21h
         je near loc_952B4
-        call sub_9C5A8
+        call ReturnFalse
 loc_95436:
         call sub_93C88
         mov ebp, eax
@@ -2528,22 +2528,22 @@ loc_95476:
 loc_9547F:
         cmp ebp, byte 43h
         jne short loc_95493
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
 loc_95493:
         cmp ebp, byte 4Dh
         jne short loc_9549D
-        call sub_938C8
+        call DebugClearScreen
 loc_9549D:
         cmp ebp, byte 50h
         jne short loc_954AB
         mov eax, dword [byte esp+034h]
-        call sub_956C0
+        call DumpShapesList
 loc_954AB:
         cmp ebp, byte 56h
         jne short loc_954B5
-        call sub_95F30
+        call SaveScreenshot
 loc_954B5:
         cmp dword [byte esp+028h], byte 0
         je near loc_952B4
@@ -2554,7 +2554,7 @@ loc_954C0:
         pop esi
         ret
         db 090h
-sub_954C8:
+ReadShapeFileHeader:
         push esi
         push edi
         push ebp
@@ -2606,7 +2606,7 @@ sub_954C8:
         pop esi
         ret 0Ch
         db 08Bh,0C0h
-sub_95548:
+ShapeInfo:
         push ebx
         push ecx
         push edx
@@ -2677,7 +2677,7 @@ loc_955C5:
         push byte 70h
         call sub_93170
         add esp, byte 20h
-        call sub_9C5A8
+        call ReturnFalse
         cmp word [byte esi+04h], byte 0
         jl near loc_95665
         mov edx, dword [byte esi+02h]
@@ -2710,9 +2710,9 @@ loc_955C5:
         cmp eax, ebp
         jle short loc_956B3
 loc_95665:
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
         mov esi, dword [dword_D457C]
         push esi
         mov edi, dword [dword_D4580]
@@ -2723,7 +2723,7 @@ loc_95665:
         push str_ShapeIsInvalidDraw
         call sub_9C890
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         call sub_96144
         cmp eax, byte 59h
         je short loc_956AC
@@ -2743,7 +2743,7 @@ loc_956B8:
         pop ebx
         ret
         db 090h
-sub_956C0:
+DumpShapesList:
         push ebx
         push ecx
         push edx
@@ -2760,7 +2760,7 @@ sub_956C0:
         lea ecx, [dword esp+088h]
         lea ebx, [dword esp+08Ch]
         lea edx, [dword esp+090h]
-        call sub_954C8
+        call ReadShapeFileHeader
         mov eax, dword [byte esp+07Ch]
         mov eax, dword [eax]
         mov dword [dword esp+088h], eax
@@ -2773,14 +2773,14 @@ sub_956C0:
         movsd
         movsb
         mov eax, esp
-        call sub_960AC
+        call NextFreeFileName
         mov esi, dword [dword_EDAB4]
         push byte 14h
         lea eax, [byte esp+04h]
         push eax
-        call sub_984D0
+        call ShowMessageBox
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         mov edx, unk_C4474
         mov eax, esp
         call fopen_
@@ -2789,16 +2789,16 @@ sub_956C0:
         jne short loc_9576B
         push byte 14h
         push str_ErrorDumpingShapesList
-        call sub_984D0
+        call ShowMessageBox
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         mov dword [dword_EDAB4], esi
         jmp near loc_9595F
 loc_9576B:
         mov dword [dword_EDAB4], esi
         lea edx, [byte esp+040h]
         lea eax, [byte esp+054h]
-        call sub_96030
+        call FormatDateTime
         mov edx, dword [unk_93C50]
         push edx
         push asc_C4200
@@ -2873,7 +2873,7 @@ loc_9585D:
         push esi
         mov eax, dword [dword esp+088h]
         push eax
-        call sub_9035C
+        call ShapeBankEntry
         mov edx, eax
         add esp, byte 8
         push ebp
@@ -2952,7 +2952,7 @@ loc_9595F:
         pop ecx
         pop ebx
         ret
-sub_9596C:
+PaletteViewer:
         push ebx
         push ecx
         push edx
@@ -2966,11 +2966,11 @@ sub_9596C:
         push byte 0
         call SetPalette
         add esp, byte 0Ch
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
         xor eax, eax
-        call sub_95ECC
+        call PaletteViewerLabel
         push dword 0FFh
         push dword 0A3h
         push dword 120h
@@ -2978,7 +2978,7 @@ sub_9596C:
         push byte 18h
         call FillRect
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         mov dword [dword esp+0308h], 19h
         xor ebx, ebx
         mov dword [dword esp+0310h], ebx
@@ -3004,7 +3004,7 @@ loc_959E7:
         mov dword [dword esp+0310h], edi
         cmp edi, 100h
         jne short loc_959D4
-        call sub_9C5A8
+        call ReturnFalse
         xor esi, esi
         xor edi, edi
         mov dword [dword esp+031Ch], esi
@@ -3020,7 +3020,7 @@ loc_959E7:
         push edx
         call sub_92F50
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         mov dword [dword esp+0318h], esi
         xor eax, eax
         mov al, byte [esp]
@@ -3041,17 +3041,17 @@ loc_95A92:
         mov dword [dword esp+0304h], eax
         xor eax, eax
         mov dword [dword esp+0320h], eax
-        call sub_B39D0
+        call KbdGetKey
         mov ebp, eax
         cmp eax, byte 30h
         jne short loc_95AD4
         xor eax, eax
-        call sub_95ECC
+        call PaletteViewerLabel
 loc_95AD4:
         cmp ebp, byte 31h
         jne short loc_95AE3
         mov eax, 1
-        call sub_95ECC
+        call PaletteViewerLabel
 loc_95AE3:
         cmp ebp, byte 52h
         jne short loc_95B17
@@ -3142,7 +3142,7 @@ loc_95C07:
         cmp ebp, byte 76h
         jne short loc_95C16
 loc_95C11:
-        call sub_95F30
+        call SaveScreenshot
 loc_95C16:
         cmp ebp, 4700h
         jne short loc_95C28
@@ -3272,7 +3272,7 @@ loc_95D5D:
         push eax
         call sub_92F50
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         mov eax, edi
         shl eax, 4
         add eax, esi
@@ -3301,7 +3301,7 @@ loc_95D5D:
         push byte 44h
         call sub_93170
         add esp, byte 14h
-        call sub_9C5A8
+        call ReturnFalse
         mov edx, dword [dword_D457C]
         push edx
         push byte 4
@@ -3314,7 +3314,7 @@ loc_95D5D:
         push dword 8Ch
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         mov ecx, dword [dword_D457C]
         push ecx
         push byte 2
@@ -3327,7 +3327,7 @@ loc_95D5D:
         push dword 0B4h
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         mov edx, dword [dword_D457C]
         push edx
         push byte 1
@@ -3340,7 +3340,7 @@ loc_95D5D:
         push dword 0DCh
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         call WaitTickDeadline
         cmp ebp, byte 1Bh
         jne near loc_95A92
@@ -3353,7 +3353,7 @@ loc_95D5D:
         pop ebx
         ret
         db 090h
-sub_95ECC:
+PaletteViewerLabel:
         push ebx
         push ecx
         push edx
@@ -3382,7 +3382,7 @@ loc_95EF1:
         push byte 7
         call sub_93170
         add esp, byte 10h
-        call sub_9C5A8
+        call ReturnFalse
         add ebp, byte 0Ah
         add esi, byte 12h
         inc edi
@@ -3396,7 +3396,7 @@ loc_95EF1:
         pop ebx
         ret
         db 08Bh,0C0h
-sub_95F30:
+SaveScreenshot:
         push esi
         push edi
         push ebp
@@ -3409,15 +3409,15 @@ sub_95F30:
         movsw
         movsb
         mov eax, esp
-        call sub_960AC
+        call NextFreeFileName
         xor ah, ah
         mov byte [byte esp+08h], ah
         push byte 14h
         lea eax, [byte esp+04h]
         push eax
-        call sub_984D0
+        call ShowMessageBox
         add esp, byte 8
-        call sub_9C5A8
+        call ReturnFalse
         mov eax, esp
         push eax
         call sub_9D090
@@ -3429,22 +3429,22 @@ sub_95F30:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_95F84:
+MemViewerShowArt:
         push ebx
         push ecx
         push esi
-        call sub_938C8
-        call sub_B4BA8
+        call DebugClearScreen
+        call SetScreenTarget
         mov eax, dword [dword_D457C]
-        call sub_93CA0
+        call DebugGetKey
         mov edx, dword [dword_EDE80]
         push edx
         call sub_9D2E0
         add esp, byte 4
         mov esi, dword [byte eax+02Ch]
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, esi
-        call sub_95548
+        call ShapeInfo
         test eax, eax
         je near loc_9602A
         mov edx, dword [esi]
@@ -3458,7 +3458,7 @@ sub_95F84:
         push byte 0
         push byte 0
         push esi
-        call sub_9CA6C
+        call DrawArtAnyFormatAt
         add esp, byte 0Ch
         jmp short loc_96009
 loc_95FE7:
@@ -3472,7 +3472,7 @@ loc_95FF4:
         test edx, edx
         je short loc_96000
         push esi
-        call sub_9CA90
+        call DrawArtAnyFormatOwnPos
         jmp short loc_96006
 loc_96000:
         push esi
@@ -3480,14 +3480,14 @@ loc_96000:
 loc_96006:
         add esp, byte 4
 loc_96009:
-        call sub_9C5A8
+        call ReturnFalse
         xor esi, esi
 loc_96010:
         call sub_96144
         mov edx, 1
         cmp eax, byte 56h
         jne short loc_96026
-        call sub_95F30
+        call SaveScreenshot
         mov edx, esi
 loc_96026:
         test edx, edx
@@ -3498,7 +3498,7 @@ loc_9602A:
         pop ebx
         ret
         db 08Bh,0C0h
-sub_96030:
+FormatDateTime:
         push ebx
         push ecx
         push esi
@@ -3546,7 +3546,7 @@ sub_96030:
         pop ebx
         ret
         db 090h
-sub_960AC:
+NextFreeFileName:
         push ebx
         push ecx
         push edx
@@ -3585,7 +3585,7 @@ loc_960CA:
         mov byte [byte ebp+01h], al
         mov edx, dword [esp]
         push edx
-        call sub_B3CC8
+        call FindFirstFile
         add esp, byte 4
         test eax, eax
         je short loc_9610C
@@ -3613,7 +3613,7 @@ sub_9612C:
         push ebx
         push ecx
         push edx
-        call sub_9C5A8
+        call ReturnFalse
         call sub_93C88
         mov dword [dword_D45B0], eax
         pop edx
@@ -3625,7 +3625,7 @@ sub_96144:
         push ebx
         push ecx
         push edx
-        call sub_9C5A8
+        call ReturnFalse
         call sub_96164
         call sub_96170
         push eax
@@ -3640,7 +3640,7 @@ sub_96164:
         push ebx
         push ecx
         push edx
-        call sub_B3A24
+        call KbdFlush
         pop edx
         pop ecx
         pop ebx
@@ -3649,7 +3649,7 @@ sub_96170:
         push ebx
         push ecx
         push edx
-        call sub_B3A24
+        call KbdFlush
 loc_96178:
         call sub_9612C
         test eax, eax

@@ -69,10 +69,10 @@ void DrawCtlBoxOn(int *r)
         lite = 0xFA;
         shade = 0xF8;
     }
-    sub_B4FAC(r[0] + 0xA, r[3] + 0x12, r[0] + 0xA, r[1] + 0x13, shade);
-    sub_B4FAC(r[0] + 0xA, r[1] + 0x13, r[2] + 9, r[1] + 0x13, shade);
-    sub_B4FAC(r[2] + 0xA, r[1] + 0x14, r[2] + 0xA, r[3] + 0x13, lite);
-    sub_B4FAC(r[2] + 0xA, r[3] + 0x13, r[0] + 0xB, r[3] + 0x13, lite);
+    FillRectColor(r[0] + 0xA, r[3] + 0x12, r[0] + 0xA, r[1] + 0x13, shade);
+    FillRectColor(r[0] + 0xA, r[1] + 0x13, r[2] + 9, r[1] + 0x13, shade);
+    FillRectColor(r[2] + 0xA, r[1] + 0x14, r[2] + 0xA, r[3] + 0x13, lite);
+    FillRectColor(r[2] + 0xA, r[3] + 0x13, r[0] + 0xB, r[3] + 0x13, lite);
 }
 
 /* DrawCtlBoxOff (7C901, PC only): DrawCtlBoxOn's bevel the other way round (raised: light left and top, shade
@@ -89,10 +89,10 @@ void DrawCtlBoxOff(int *r)
         lite = 0xFA;
         shade = 0xF8;
     }
-    sub_B4FAC(r[0] + 0xA, r[3] + 0x12, r[0] + 0xA, r[1] + 0x13, lite);
-    sub_B4FAC(r[0] + 0xA, r[1] + 0x13, r[2] + 9, r[1] + 0x13, lite);
-    sub_B4FAC(r[2] + 0xA, r[1] + 0x14, r[2] + 0xA, r[3] + 0x13, shade);
-    sub_B4FAC(r[2] + 0xA, r[3] + 0x13, r[0] + 0xB, r[3] + 0x13, shade);
+    FillRectColor(r[0] + 0xA, r[3] + 0x12, r[0] + 0xA, r[1] + 0x13, lite);
+    FillRectColor(r[0] + 0xA, r[1] + 0x13, r[2] + 9, r[1] + 0x13, lite);
+    FillRectColor(r[2] + 0xA, r[1] + 0x14, r[2] + 0xA, r[3] + 0x13, shade);
+    FillRectColor(r[2] + 0xA, r[3] + 0x13, r[0] + 0xB, r[3] + 0x13, shade);
 }
 
 /* MenuP1ControlsExh (7C993, PC only): the exhibition controls dialog for controller 1. Result 0. */
@@ -417,7 +417,7 @@ void DrawControlsDlg(int alt)
     int w;
     int h;
 
-    sub_B4BA8();
+    SetScreenTarget();
     for (i = 0; i < 0x100; i++) remap[i] = i;
     ctldlgalt = alt;
     if (alt) {

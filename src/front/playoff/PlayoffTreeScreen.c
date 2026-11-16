@@ -49,7 +49,7 @@ void PlayoffTreeScreen(void)
     kf = kaufmfont;
     if (playofftree[0] == 0x1A) off_CF6A3 = 0;
     else off_CF6A3 = (int)DeskSetExit3b;
-    sub_B4BA8();
+    SetScreenTarget();
     if (embscupbank == 0) {
         MakePath(path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
         statsbgshapes = LoadBank(path, 0);

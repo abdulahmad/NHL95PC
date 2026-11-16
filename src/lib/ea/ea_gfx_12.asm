@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
-extern byte_D42E4, dword_D30C8, dword_D43E4, DrawArtOpaque, sub_92CD0, sub_B3ABC, sub_B6D47, vsprintf_
+extern byte_D42E4, dword_D30C8, dword_D43E4, DrawArtOpaque, sub_92CD0, bcopy, sub_B6D47, vsprintf_
 global sub_93170, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
 sub_93170:
         sub esp, 104h
@@ -66,7 +66,7 @@ loc_9321D:
         push edx
         call DrawArtOpaque
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_93240:

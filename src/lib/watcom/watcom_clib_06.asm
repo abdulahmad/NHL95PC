@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8EAEC progbits alloc exec nowrite align=1
 extern randseed
-global _dos_getdate_, _dos_gettime_, sub_8EB21, rand_, loc_8EB49, srand_, loc_8EB59
+global _dos_getdate_, _dos_gettime_, GetRandState, rand_, loc_8EB49, srand_, loc_8EB59
 _dos_getdate_:
         push edx
         push ecx
@@ -36,12 +36,12 @@ _dos_gettime_:
         pop ecx
         pop edx
         ret
-sub_8EB21:
+GetRandState:
         mov eax, randseed
         ret
 rand_:
         push edx
-        call sub_8EB21
+        call GetRandState
         test eax, eax
         je short loc_8EB49
         imul edx, dword [eax], dword 41C64E6Dh
@@ -56,7 +56,7 @@ loc_8EB49:
 srand_:
         push edx
         mov edx, eax
-        call sub_8EB21
+        call GetRandState
         test eax, eax
         je short loc_8EB59
         mov dword [eax], edx

@@ -17,10 +17,10 @@ extern randomd0, ReadGSumHeader, ReadGSumTail, ReplayIsEmpty, s1font, savepal, S
 extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetScreenSize, SetScreenTitle, SetTeamGoalie
 extern ShowCredits, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, StartHL2, str_Desk, str_DoYouWishToExit
 extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Menubuff3, str_Pal5, str_Pause, str_PleaseEnterOutputFile
-extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, AllocMemBlock, sub_8D2F0
+extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF
 extern SetPalette, PutBlock, DrawBitmap, DrawArt, GrabBlock, MouseRead, SetViewRect, FindShape
-extern ClearScreen, sub_B4B58, sub_B4BA8, sub_B4FAC, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
+extern ClearScreen, SetTextMode, SetScreenTarget, FillRectColor, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
 extern deskmenubar_lg, desklinesmenubar, deskbankname, UpdateOtherScores, VisTeam, WaitClickTimeout, word_CBC44, WriteGSumHeader
 extern WriteScreenTextFile
 global OutputCurrentData, DrawDeskFrames, MenuCallbackTrue, MenuCallbackTrue2, PlayRandomHighlight, IntermissionDesk, PostGameDesk, SportsDesk
@@ -98,7 +98,7 @@ OutputCurrentData:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; DrawDeskFrames                               18E43  95 PC, medium confidence
-; Draws three nested rectangles (sub_B4FAC lines, colours 22h / 21h / 20h)
+; Draws three nested rectangles (FillRectColor lines, colours 22h / 21h / 20h)
 ; around 0Eh,21h - 0AFh,86h
 ;-----------------------------------------------------------------------------
 ; C: src/front/desk/DrawDeskFrames.c
@@ -116,84 +116,84 @@ DrawDeskFrames:
         push dword 0AFh
         push byte 21h
         push byte 0Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 22h
         push dword 86h
         push dword 0AFh
         push byte 21h
         push dword 0AFh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 22h
         push dword 86h
         push dword 0AFh
         push dword 86h
         push byte 0Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 22h
         push byte 21h
         push byte 0Eh
         push dword 86h
         push byte 0Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 21h
         push byte 20h
         push dword 0B0h
         push byte 20h
         push byte 0Dh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 21h
         push dword 87h
         push dword 0B0h
         push byte 20h
         push dword 0B0h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 21h
         push dword 87h
         push dword 0B0h
         push dword 87h
         push byte 0Dh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 21h
         push byte 20h
         push byte 0Dh
         push dword 87h
         push byte 0Dh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 20h
         push byte 1Fh
         push dword 0B1h
         push byte 1Fh
         push byte 0Ch
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 20h
         push dword 88h
         push dword 0B1h
         push byte 1Fh
         push dword 0B1h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 20h
         push dword 88h
         push dword 0B1h
         push dword 88h
         push byte 0Ch
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 20h
         push byte 1Fh
         push byte 0Ch
         push dword 88h
         push byte 0Ch
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         pop edx
         pop ecx
@@ -587,7 +587,7 @@ SportsDesk:
         mov eax, 1
         call FadePalStep
 .3:
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebx, dword [esp]
         push ebx
         push str_Eadesk1d
@@ -952,7 +952,7 @@ SportsDesk:
         je short SportsDesk.26
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx
@@ -1215,7 +1215,7 @@ SportsDesk:
         je short SportsDesk.44
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -1872,7 +1872,7 @@ DeskExitGame:
         mov edx, savepal
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1889,7 +1889,7 @@ DeskExitGame:
         je short DeskExitGame.2
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -1906,7 +1906,7 @@ DeskExitGame:
         mov edx, savepal
         mov eax, 1
         call FadePalStep
-        call sub_B4B58
+        call SetTextMode
         call dword [bailout_vec]
 .4:
         xor eax, eax
@@ -2089,7 +2089,7 @@ DeskPenaltySummary:
         je short DeskPenaltySummary.2
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi

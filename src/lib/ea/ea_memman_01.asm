@@ -4,15 +4,15 @@ bits 32
 section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
 extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, dword_D2F64, dword_EDAB0
-extern FatalError, memlist1, sub_8D604, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
-extern getmemblock, sub_8E3E4, sub_8E424, sub_986E4, unknown_libname_22
+extern FatalError, memlist1, FindFreeSpace, sub_8D844, sub_8D990, sub_8DA98, sub_8DAB8, sub_8DB78
+extern getmemblock, sub_8E3E4, sub_8E424, MemUnlock, unknown_libname_22
 global sub_8C990, sub_8CA6C, loc_8CAC8, loc_8CAE8, sub_8CAF4, sub_8CBA4, loc_8CBD2, loc_8CBE3
 global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, sub_8CC5C, sub_8CC70, sub_8CC8C, AllocMemBlock
 global sub_8CCC4, sub_8CCE0, AllocMemBlockEx, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
 global loc_8CE32, loc_8CE3D, loc_8CE43, loc_8CE5A, loc_8CE68, loc_8CEC9, loc_8CEE4, loc_8CEFA
 global loc_8CF54, loc_8CF66, loc_8CF7D, loc_8CF82, loc_8CF84, loc_8CF9B, loc_8CFA5, loc_8CFB4
 global loc_8CFBD, loc_8D022, loc_8D035, loc_8D03D, loc_8D08F, loc_8D097, loc_8D0BF, loc_8D0C1
-global sub_8D0C8, sub_8D0EC, sub_8D10C, sub_8D12C, sub_8D144, sub_8D15C, loc_8D1CB, loc_8D202
+global sub_8D0C8, sub_8D0EC, sub_8D10C, sub_8D12C, sub_8D144, ResizeMemBlock, loc_8D1CB, loc_8D202
 global loc_8D227, loc_8D241, loc_8D257, loc_8D271, loc_8D29A, findmemblock, loc_8D2AE, loc_8D2B9
 global sub_8D2D2
 sub_8C990:
@@ -362,7 +362,7 @@ AllocMemBlockEx:
         add esp, byte 10h
         mov ebp, dword [dword_EDAB0]
         push ebp
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         mov eax, esi
         pop ebp
@@ -381,7 +381,7 @@ reservemem:
         je near loc_8D0BF
         mov edi, dword [dword_EDAB0]
         push edi
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         call sub_8DAB8
         push eax
@@ -529,7 +529,7 @@ loc_8CEE4:
 loc_8CEFA:
         mov ebx, dword [byte esp+01Ch]
         push ebx
-        call sub_8D604
+        call FindFreeSpace
         add esp, byte 4
         test eax, eax
         jne near loc_8CE17
@@ -545,7 +545,7 @@ loc_8CEFA:
         je near loc_8D097
         mov eax, dword [dword_EDAB0]
         push eax
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         call sub_8DAB8
         push eax
@@ -654,7 +654,7 @@ loc_8D035:
 loc_8D03D:
         mov ecx, dword [byte esp+01Ch]
         push ecx
-        call sub_8D604
+        call FindFreeSpace
         add esp, byte 4
         test eax, eax
         jne near loc_8CF66
@@ -670,7 +670,7 @@ loc_8D03D:
         je short loc_8D097
         mov edx, dword [dword_EDAB0]
         push edx
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         call sub_8DAB8
         push eax
@@ -685,7 +685,7 @@ loc_8D097:
         je short loc_8D0BF
         mov esi, dword [dword_EDAB0]
         push esi
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         mov edi, dword [byte esp+01Ch]
         push edi
@@ -710,7 +710,7 @@ sub_8D0C8:
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
@@ -723,7 +723,7 @@ sub_8D0EC:
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
@@ -736,7 +736,7 @@ sub_8D10C:
         call findmemblock
         add esp, byte 4
         push eax
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
@@ -746,7 +746,7 @@ sub_8D12C:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
@@ -756,11 +756,11 @@ sub_8D144:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8D15C:
+ResizeMemBlock:
         push esi
         push edi
         push ebp
@@ -790,7 +790,7 @@ sub_8D15C:
         jge short loc_8D202
         mov ebx, dword [dword_EDAB0]
         push ebx
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         cmp dword [byte esp+014h], byte 0FFFFFFFFh
         jne short loc_8D1CB
@@ -804,7 +804,7 @@ loc_8D1CB:
         je near loc_8D29A
         mov edi, dword [dword_EDAB0]
         push edi
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         call sub_8DAB8
         push eax
@@ -822,7 +822,7 @@ loc_8D202:
         mov dword [byte esi+010h], eax
         mov edx, dword [dword_EDAB0]
         push edx
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         mov eax, dword [byte esp+014h]
         pop ebp
@@ -865,7 +865,7 @@ loc_8D257:
 loc_8D271:
         mov ebx, dword [dword_EDAB0]
         push ebx
-        call sub_986E4
+        call MemUnlock
         add esp, byte 4
         cmp dword [byte esp+018h], byte 0
         je short loc_8D29A

@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_90D20 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30A4, dword_D30C8, dword_D30D0, dword_D3104
-extern dword_D4108, dword_D43E4, FreeMemBlock, sub_8D2F0, removewindow, ClearScreen, sub_B3A88, sub_B3AA1
-extern sub_B3ABC, sub_B3FB0, sub_B4BA8, sub_B5E00, sub_B6665, sub_B677D, sub_B6887, sub_B693C
+extern dword_D4108, dword_D43E4, FreeMemBlock, PushMemDescriptorLocked, removewindow, ClearScreen, SaveDrawState, RestoreDrawState
+extern bcopy, FillMem, SetScreenTarget, sub_B5E00, FillRectCore, sub_B677D, BlitArtOpaque, sub_B693C
 global FillRect, loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71
 global loc_90E82, loc_90EA5, loc_90EAD, loc_90EB8, sub_90EC0, loc_90EE1, loc_90EF0, loc_90F00
 global loc_90F0F, loc_90F28, loc_90F29, sub_90F2C, XorBar, loc_90F7D, loc_90FC1, loc_91004
 global loc_91015, loc_91030, loc_9103D, sub_91044, loc_91065, loc_91074, loc_91084, loc_91093
-global loc_910AC, sub_910B0, DrawArtOpaque, loc_9110B, loc_91165, loc_911CE, loc_911E6, loc_91209
+global loc_910AC, ClearScreenColour, DrawArtOpaque, loc_9110B, loc_91165, loc_911CE, loc_911E6, loc_91209
 global loc_91212, sub_9121C, sub_91238, loc_91260, loc_91274, loc_9127E, loc_91283, sub_91284
-global loc_912A5, sub_912C8, sub_912E4, sub_91310, sub_9132C
+global loc_912A5, sub_912C8, sub_912E4, sub_91310, FreeBitmap
 FillRect:
         push esi
         push edi
@@ -33,7 +33,7 @@ FillRect:
         mov edi, dword [byte esp+034h]
         push edi
         push esi
-        call sub_B6665
+        call FillRectCore
         add esp, byte 14h
         jmp near loc_90EB8
 loc_90D65:
@@ -78,7 +78,7 @@ loc_90DD9:
         mov eax, dword [byte esp+018h]
         add eax, esi
         push eax
-        call sub_B3FB0
+        call FillMem
         add esp, byte 0Ch
         add esi, dword [byte esp+0Ch]
         dec edi
@@ -107,7 +107,7 @@ loc_90E20:
         push ebp
         push edx
         push eax
-        call sub_B3FB0
+        call FillMem
         add esp, byte 0Ch
         mov esi, edi
         and esi, 0FFFFh
@@ -121,7 +121,7 @@ loc_90E20:
         push esi
         mov eax, dword [byte esp+018h]
         push eax
-        call sub_B3FB0
+        call FillMem
         add esp, byte 0Ch
         jmp short loc_90E82
 loc_90E71:
@@ -129,7 +129,7 @@ loc_90E71:
         mov ebx, dword [byte esp+030h]
         push ebx
         push eax
-        call sub_B3FB0
+        call FillMem
         add esp, byte 0Ch
         mov esi, edi
 loc_90E82:
@@ -353,20 +353,20 @@ loc_910AC:
         pop esi
         ret
         db 08Bh,0C0h
-sub_910B0:
+ClearScreenColour:
         sub esp, byte 60h
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [byte esp+064h]
         push edx
         call ClearScreen
         add esp, byte 4
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         add esp, byte 60h
         ret
@@ -384,7 +384,7 @@ DrawArtOpaque:
         push esi
         push edx
         push eax
-        call sub_B6887
+        call BlitArtOpaque
         add esp, byte 0Ch
         jmp near loc_91212
 loc_9110B:
@@ -544,7 +544,7 @@ loc_912A5:
         push edx
         call DrawArtOpaque
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_912C8:
@@ -583,11 +583,11 @@ sub_91310:
         sub eax, byte 8
         call removewindow
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         ret
         db 090h
-sub_9132C:
+FreeBitmap:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+028h]
         sub eax, byte 8

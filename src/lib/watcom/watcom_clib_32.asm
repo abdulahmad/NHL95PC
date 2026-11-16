@@ -9,7 +9,7 @@ global tolower_, loc_9AFBD, __allocfp_, loc_9AFE6, loc_9AFED, loc_9B00A, loc_9B0
 global loc_9B054, loc_9B060, __freefp_, loc_9B070, loc_9B081, loc_9B09B, loc_9B09F, loc_9B0A0
 global loc_9B0BB, __update_buffer_, loc_9B0E9, fseek_, loc_9B125, loc_9B12F, loc_9B138, loc_9B140
 global loc_9B14C, loc_9B167, loc_9B175, loc_9B17B, loc_9B1A0, loc_9B1D1, loc_9B1F5, loc_9B1F7
-global __chktty_, loc_9B228, sub_9B22C, __flush_, loc_9B280, loc_9B29F, loc_9B2CE, loc_9B2DE
+global __chktty_, loc_9B228, GetPsp, __flush_, loc_9B280, loc_9B29F, loc_9B2CE, loc_9B2DE
 global ftell_, loc_9B319, loc_9B31D, __close_, loc_9B341, __ioalloc_, loc_9B373, loc_9B381
 global loc_9B388, loc_9B3B7, loc_9B3BB, fputc_, loc_9B3E5, loc_9B3EF, loc_9B3FC, loc_9B439
 global loc_9B459, loc_9B464, loc_9B468, unk_9B470
@@ -301,7 +301,7 @@ loc_9B228:
         pop ecx
         pop ebx
         ret
-sub_9B22C:
+GetPsp:
         mov eax, dword [_psp]
         ret
 __flush_:

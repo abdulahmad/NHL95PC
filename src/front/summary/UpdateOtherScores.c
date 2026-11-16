@@ -89,7 +89,7 @@ void GameStatsScreen(void)
     s.teams[0] = HomeTeam;
     s.teams[1] = VisTeam;
     ClearInputQueue();
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     s.buf[2] = s.buf[1] = s.buf[0] = 0;
     for (i = 0; i < 0x100; i++) VgaSetPalette(i, 1, s.buf);
@@ -161,7 +161,7 @@ void GameStatsScreen(void)
             sub_8FCDF(musichandle, 3, 0x28);
             SetTickDeadline(0x28);
             WaitTickDeadline();
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
         MusicChanCmd3();
@@ -187,7 +187,7 @@ void GameStatsScreen(void)
             do
                 slot = musicslot;
             while (SndQuery(slot, 3) == 0);
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
     } else {

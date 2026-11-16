@@ -20,7 +20,7 @@ extern songdata, sprintf_, standingscb, standingsmenucb, str_Adn1, str_Adn2, str
 extern str_Aup2, str_Aup3, str_BangPal, str_Bkgd2, str_D, str_EasternConference, str_Embpal, str_Embscup
 extern str_fmtcsp, str_GameSav, str_Menubuff2, str_Midl, str_Palette, str_PlayoffsHaveNotBeen, str_Pointer, str_POTitle
 extern str_Pstatbar2, str_Rst1, str_Rst2, str_Scuparrw, str_space4, str_space5, str_WesternConference, strcat_
-extern strcpy_, sub_8D2F0, sub_8FCDF, sub_910B0, sub_92F50, sub_B4BA8, teamcitynames, teamconf
+extern strcpy_, PushMemDescriptorLocked, sub_8FCDF, ClearScreenColour, sub_92F50, SetScreenTarget, teamcitynames, teamconf
 extern teamstatscb, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont, treecol_Er1, treecol_Er2
 extern treecol_Wr2, treecolslots, treecolx, treeteamnames, VgaSetPalette, VisTeam, WriteModeState
 global PlayoffModeLoop, POReturnZero, POHiliteSlot, PlayoffTreeMenu, DrawPlayoffTree, SetSideControls, WriteCurModeState, ClearPlayerFromLines
@@ -138,7 +138,7 @@ PlayoffModeLoop:
         je short PlayoffModeLoop.3
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -337,7 +337,7 @@ PlayoffModeLoop:
         test eax, eax
         je short .21
         push eax
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .21:
         xor ebx, ebx
@@ -426,7 +426,7 @@ PlayoffModeLoop:
         mov eax, 41h
         call SetDialogColors
         push byte 0
-        call sub_910B0
+        call ClearScreenColour
         add esp, byte 4
         push esi
         push dword 100h
@@ -804,7 +804,7 @@ PlayoffTreeMenu:
         sar eax, 1
         mov dword [dword esp+0D0h], eax
         mov dword [dword esp+0A4h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov esi, dword [dword esp+0D0h]
         push esi
         mov edi, dword [dword esp+0B8h]
@@ -1100,7 +1100,7 @@ PlayoffTreeMenu:
         call FindShape
         add esp, byte 8
         lea edi, [byte eax+010h]
-        call sub_B4BA8
+        call SetScreenTarget
         xor ebp, ebp
         mov dword [dword_C6D26], ebp
         call DrawPlayoffTree
@@ -1119,7 +1119,7 @@ PlayoffTreeMenu:
         call FreeMemBlock
         add esp, byte 4
 .18:
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [potreeround-2]
         sar eax, 10h
         cmp eax, dword [dword esp+0CCh]
@@ -1451,7 +1451,7 @@ PlayoffTreeMenu:
         xor edi, edi
         mov dword [dword esp+0B8h], edi
 .37:
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebp, dword [dword esp+0A4h]
         push ebp
         mov eax, dword [dword esp+0ACh]

@@ -1,7 +1,7 @@
 /* Misc dialogs: text edit cursor. */
 #include "nhl95.h"
 
-#define TEXTWIDTHN ((int (__cdecl *)(char *s, int n))sub_90A40)
+#define TEXTWIDTHN ((int (__cdecl *)(char *s, int n))TextWidthN)
 #define FILLRECT ((void (__cdecl *)(int x, int y, int w, int h, int col))sub_91044)
 
 /* DrawEditCursor: draw the cursor of the text edit field (when editcuron): clamp editpos to the text, then a

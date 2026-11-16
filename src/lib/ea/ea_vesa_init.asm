@@ -8,8 +8,8 @@ extern dword_D2F80, dword_D2F88, dword_D2F8C, dword_D2F90, dword_D3024, dword_D3
 extern dword_D3050, dword_D3054, dword_D3058, dword_D30A4, dword_D30D4, dword_D30D8, dword_D30DC, dword_D30E0
 extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, dword_D3104, dword_D4108
 extern dword_D4F4C, dword_D4F50, dword_EDABA, vesapresent, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
-extern strncmp_, sub_8DBC0, sub_8E8A0, sub_98A40, sub_B3ABC, SaveTextMode, sub_B3FC2, sub_B4BA8
-extern sub_B5E00, sub_B5EA7, sub_B5EB8, vesamodeinfo, vesainfo, unlink_, word_EDBCA
+extern strncmp_, MemPtrSize, sub_8E8A0, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
+extern sub_B5E00, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
 global ProbeVesa, loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, initgraphics, loc_8E0A0
 global loc_8E0AE, loc_8E0C6, loc_8E0D5, loc_8E0DE, loc_8E0FA, loc_8E113, loc_8E12F, loc_8E148
 global loc_8E161, loc_8E17A, loc_8E18E, loc_8E1A1, loc_8E1BF, loc_8E1D4, loc_8E1E3, loc_8E1FD
@@ -22,7 +22,7 @@ ProbeVesa:
         push esi
         mov esi, str_EavesaCom
         push esi
-        call sub_98A40
+        call DosFileInfo
         add esp, byte 4
         test eax, eax
         jne short loc_8DF8B
@@ -50,7 +50,7 @@ loc_8DFB0:
         mov eax, str_CEavesaDat
         call unlink_
         push edx
-        call sub_8DBC0
+        call MemPtrSize
         add esp, byte 4
         cmp eax, 41Ch
         je short loc_8DFEA
@@ -71,25 +71,25 @@ loc_8E011:
         push dword 100h
         push vesainfo
         push esi
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         push dword 100h
         push vesamodeinfo
         lea eax, [dword esi+0100h]
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         push byte 1Bh
         push vesamodeok
         lea eax, [dword esi+0400h]
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         cmp word [word_EDBCA], byte 4
         jg short loc_8E06C
         push byte 1Ah
         push byte_EDCC1
-        call sub_B3FC2
+        call ZeroMem
         add esp, byte 8
 loc_8E06C:
         push esi
@@ -243,7 +243,7 @@ loc_8E24F:
         or ah, 1
 loc_8E254:
         push eax
-        call sub_B5EA7
+        call VesaSetMode
         mov edi, eax
         add esp, byte 4
 loc_8E25F:
@@ -291,7 +291,7 @@ loc_8E2A9:
 loc_8E2BC:
         mov esi, 13h
         push esi
-        call sub_B5EB8
+        call VgaSetModeTwice
         add esp, byte 4
         mov ecx, 140h
         mov eax, 0C8h
@@ -350,7 +350,7 @@ loc_8E38C:
         add esi, 10000h
         cmp ebx, byte 50h
         jne short loc_8E38C
-        call sub_B4BA8
+        call SetScreenTarget
         mov dword [dword_EDCBC], dword_D30A4
         add esp, byte 8
         pop ebp

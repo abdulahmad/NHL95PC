@@ -1,7 +1,7 @@
 /* Config: NHL.CFG. */
 #include "nhl95.h"
 
-#define SETMOUSEHANDLER ((void (__cdecl *)(void *fn))sub_B3454)
+#define SETMOUSEHANDLER ((void (__cdecl *)(void *fn))AddExitHandler)
 
 /* LoadNhlCfg: read the sound card setting from NHL.CFG (a hex index into sounddevids; device 10h when it
  doesn't parse; fatal error when the file can't be opened); set palette entries 0-3 to the grey ramp, the mouse

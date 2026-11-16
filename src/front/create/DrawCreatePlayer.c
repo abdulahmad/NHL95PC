@@ -53,6 +53,6 @@ shown:
     sprintf(buf, (char *)str_RatingUnitsAvailable3d, units);
     PrintCenteredText(0x110, buf);
     DrawButtons((Button *)str_Two, 2);
-    sub_B4BA8();
+    SetScreenTarget();
     DrawBitmap(((int *)fullscrbmp)[0x2C / 4]);
 }

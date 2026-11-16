@@ -187,7 +187,7 @@ static int emulate_flagop(ctx_t *c, uint8_t *ip)
 
 /* ---- the first 64 KB ----
  * Under DOS/4GW the flat address space starts with the real-mode interrupt table and the BIOS data area, and reading there was
- * harmless; the game does it (for example sub_8D728 reads [eax+18h] when eax is 0). A host process cannot map that page, so an
+ * harmless; the game does it (for example FindCachedFile reads [eax+18h] when eax is 0). A host process cannot map that page, so an
  * access below 0x10000 is redone on lowmem[]: the instruction is copied into a trampoline with its memory operand turned into an
  * absolute address inside lowmem[], followed by a jump back. Flags and every operation then work as on the CPU. */
 static uint8_t lowmem[0x10000 + 16];

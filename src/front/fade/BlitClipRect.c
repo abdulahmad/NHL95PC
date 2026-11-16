@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* BlitClipRect: clip x, y, w, h to the blit clip box. When the rectangle misses the box, return.
- Otherwise set the draw target (sub_B4BA8) and copy the clipped rectangle between VGA pages.
+ Otherwise set the draw target (SetScreenTarget) and copy the clipped rectangle between VGA pages.
  Under 10.0 GA the plain sums `x2 = x + w` stay in the incoming registers (eax, edx) with x saved in edi and
  y in esi, as in the EXE. */
 void BlitClipRect(int x, int y, int w, int h)
@@ -22,6 +22,6 @@ void BlitClipRect(int x, int y, int w, int h)
     if (y2 > blitclipbottom) y2 = blitclipbottom;
     w = x2 - x;
     h = y2 - y;
-    sub_B4BA8();
+    SetScreenTarget();
     stub_8C218(vgapage == 0, x, y, w, h, 0);
 }

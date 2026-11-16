@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_90BB0 progbits alloc exec nowrite align=1
-extern __doserror_, _Extender, sub_90C0F
-global unknown_libname_1, unknown_libname_2, sub_90BE9, sub_90BEC, loc_90C0E
+extern __doserror_, _Extender, CopyDtaIn
+global unknown_libname_1, unknown_libname_2, sub_90BE9, CopyDtaOut, loc_90C0E
 unknown_libname_1:
         push ecx
         push eax
@@ -17,7 +17,7 @@ unknown_libname_1:
         int 21h
         call __doserror_
         mov edx, ebx
-        call sub_90BEC
+        call CopyDtaOut
         pop ecx
         ret
 unknown_libname_2:
@@ -25,17 +25,17 @@ unknown_libname_2:
         mov edx, eax
         mov ah, 1Ah
         int 21h
-        call sub_90C0F
+        call CopyDtaIn
         mov ah, 4Fh
         int 21h
         call __doserror_
-        call sub_90BEC
+        call CopyDtaOut
         pop edx
         ret
 sub_90BE9:
         xor eax, eax
         ret
-sub_90BEC:
+CopyDtaOut:
         cmp byte [_Extender], 9
         jne short loc_90C0E
         push eax

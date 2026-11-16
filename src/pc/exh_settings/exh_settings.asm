@@ -8,7 +8,7 @@ extern gameopts, GetInputEvent, GrabBlock, LoadBank, LoadSettingsShapes, MakePat
 extern musicon, musicslot, pl05spr, pl10spr, pl20spr, pointerspr, PrintString, ptrupdatefn
 extern PutBlock, setbits, settingsfile, SndQuery, songdata, sounddev, str_BKGD3, str_Dbox4
 extern str_DigitizedSpeech3, str_Music3, str_Pointer17, str_Setting6, str_Sound3, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_96440, sub_B4BA8, TextSetColors, VgaSetPalette
+extern sub_8F984, sub_8FB8E, sub_8FCDF, sub_91284, sub_96440, SetScreenTarget, TextSetColors, VgaSetPalette
 extern WriteCurModeState
 global MenuExhibitionSettings, ExhSettings_ret, ExhOptsToBits, DrawExhSetChecks, DrawExhSetDlg, ExhSetHitTest, ExhSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -49,7 +49,7 @@ MenuExhibitionSettings:
         push eax
         call GrabBlock
         add esp, byte 0Ch
-        call sub_B4BA8
+        call SetScreenTarget
         call DrawExhSetDlg
         call ExhOptsToBits
         call ExhSetEditLoop
@@ -332,7 +332,7 @@ DrawExhSetDlg:
         push edx
         push esi
         sub esp, byte 20h
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Setting6
         cmp byte [fileoncd+0176h], 1
@@ -496,7 +496,7 @@ ExhSetEditLoop:
         mov dword [byte esp+0Ch], eax
         mov eax, dword [byte esp+010h]
         mov dword [byte esp+08h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h

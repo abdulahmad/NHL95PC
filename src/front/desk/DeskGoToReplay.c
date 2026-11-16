@@ -60,7 +60,7 @@ int DeskPenaltySummary(void)
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     ShowLoadingScreen();

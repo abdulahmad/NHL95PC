@@ -97,10 +97,10 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
 void DrawDlgFrame(int x1, int y1, int x2, int y2, int bevel)
 {
     FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, dlgfillcol);
-    sub_B4FAC(x1, y1, x2 - 1, y1, dlgedgecol1);
-    sub_B4FAC(x1, y1, x1, y2 - 1, dlgedgecol1);
-    sub_B4FAC(x2, y1 + 1, x2, y2, dlgedgecol2);
-    sub_B4FAC(x1 + 1, y2, x2, y2, dlgedgecol2);
+    FillRectColor(x1, y1, x2 - 1, y1, dlgedgecol1);
+    FillRectColor(x1, y1, x1, y2 - 1, dlgedgecol1);
+    FillRectColor(x2, y1 + 1, x2, y2, dlgedgecol2);
+    FillRectColor(x1 + 1, y2, x2, y2, dlgedgecol2);
     PlotPixel(x1, y2, dlgedgecol3);
     PlotPixel(x2, y1, dlgedgecol3);
     if (bevel) {

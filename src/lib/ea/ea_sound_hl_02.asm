@@ -2,12 +2,12 @@
 bits 32
 %include "hockey.inc"
 section s_90354 progbits alloc exec nowrite align=1
-global sub_90354, sub_9035C, loc_90370, sub_90373, loc_9038D
-sub_90354:
+global ShapeBankCount, ShapeBankEntry, loc_90370, sub_90373, loc_9038D
+ShapeBankCount:
         mov ebx, dword [byte esp+04h]
         mov eax, dword [byte ebx+08h]
         ret
-sub_9035C:
+ShapeBankEntry:
         mov eax, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov ecx, dword [byte eax+08h]

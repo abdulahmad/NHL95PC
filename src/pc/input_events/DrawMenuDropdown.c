@@ -46,8 +46,8 @@ void DrawMenuDropdown(MenuItem *m, int n, int x, int y, int col1, int col2, int 
 void DrawMenuBox(int x1, int y1, int x2, int y2, int col1, int col2, int col3)
 {
     FillRect(x1, y1, x2 - x1 + 1, y2 - y1 + 1, col2);
-    sub_B4FAC(x1, y1, x2 - 1, y1, col1);
-    sub_B4FAC(x1, y1, x1, y2 - 1, col1);
-    sub_B4FAC(x2, y1 + 1, x2, y2, col3);
-    sub_B4FAC(x1 + 1, y2, x2, y2, col3);
+    FillRectColor(x1, y1, x2 - 1, y1, col1);
+    FillRectColor(x1, y1, x1, y2 - 1, col1);
+    FillRectColor(x2, y1 + 1, x2, y2, col3);
+    FillRectColor(x1 + 1, y2, x2, y2, col3);
 }

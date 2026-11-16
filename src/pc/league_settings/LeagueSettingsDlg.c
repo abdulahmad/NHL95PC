@@ -30,7 +30,7 @@ int LeagueSettingsDlg(void)
     sg = seriesgameno;
     seriesgameno = 0;
     LoadSettingsShapes();
-    sub_B4BA8();
+    SetScreenTarget();
     bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
@@ -54,7 +54,7 @@ int MenuPlayoffSettings(void)
     int bm;
 
     LoadSettingsShapes();
-    sub_B4BA8();
+    SetScreenTarget();
     bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
@@ -78,7 +78,7 @@ int EditPlayoffSettings(void)
     int bm;
 
     LoadSettingsShapes();
-    sub_B4BA8();
+    SetScreenTarget();
     bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
     ((short *)bm)[2] = 0xE6;
@@ -104,7 +104,7 @@ int MenuLeagueSettingsEdit(void)
 {
     int bm;
 
-    sub_B4BA8();
+    SetScreenTarget();
     LoadSettingsShapes();
     bm = AllocMemBlock((char *)str_BKGD, 0x1436B, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -158,7 +158,7 @@ int MenuShowLeagueSettings2(void)
     int sz;
 
     LoadSettingsShapes();
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0x175] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting5, 0);
     bank = LoadBank(path, 0);
     box = FindShape(bank, (char *)str_Dbox2);
@@ -198,7 +198,7 @@ void DrawLeagueSetDlg(int playoffs)
     int i;
     int bank;
 
-    sub_B4BA8();
+    SetScreenTarget();
     for (i = 0; i < 0x100; i++) remap[i] = i;
     if (playoffs) {
         remap[0xFA] = 0x40;
@@ -295,7 +295,7 @@ short LeagueSetViewLoop(void)
     MouseRead(&s.btn, &s.ox, &s.oy);
     s.x = s.ox;
     s.y = s.oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer15, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -348,7 +348,7 @@ short LeagueSetEditLoop(int mode)
     x = ox;
     y = oy;
     oldmusic = gameopts.music;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer15, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;

@@ -94,7 +94,7 @@ int TeamRosterScreen(int team)
     j___close(pfh);
     qsort(statsskaterorder, n, 4, (int (*)(const void *, const void *))CmpPoints);
     qsort(statsgoalieorder, m, 4, (int (*)(const void *, const void *))CmpGAA);
-    sub_B4BA8();
+    SetScreenTarget();
     sprintf((char *)printfbuf, (char *)str_fmtEmb, rec);
     MakePath(path, fileoncd[team + 0x70] == 1 ? (char *)cddriveptr : 0, (char *)printfbuf, 0);
     statsbgshapes = LoadBank(path, 0);

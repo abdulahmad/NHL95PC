@@ -20,9 +20,9 @@ extern str_NoPenalties, str_NoScoring, str_OT, str_Ots, str_OtShape, str_Pal13, 
 extern str_Per2, str_Per3, str_Period, str_PP, str_PRDS, str_Rd, str_RParen2, str_S2
 extern str_S3, str_Scra2, str_SDD, str_SH, str_ShotsOnGoal, str_SS4, str_St, str_Summ2
 extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, sub_1BAF3, AllocMemBlock
-extern sub_8D2F0, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
+extern PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
 extern sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, PutBlock, DrawShape, sub_913D0, FindShape
-extern ClearScreen, VgaSetPalette, sub_B4BA8, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
+extern ClearScreen, VgaSetPalette, SetScreenTarget, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
 extern WaitClickTimeout, WaitTickDeadline
 global GameSummaryScreen_jt, GameSummaryScreen, GameSummaryScreen_p1, GameSummaryScreen_p2, GameSummaryScreen_p3, GameSummaryScreen_ot, GameSummaryScreen_finalot, GameSummaryScreen_final
 global GameSummaryScreen_period, PickOtherGames, UpdateOtherScores, UpdateOtherScores_x, PrintClampedText, GameStatsScreen
@@ -76,7 +76,7 @@ GameSummaryScreen:
         je short GameSummaryScreen.1
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -131,7 +131,7 @@ GameSummaryScreen:
         mov dword [dword esp+0778h], eax
         cmp eax, byte 2
         jl short GameSummaryScreen.5
-        call sub_B4BA8
+        call SetScreenTarget
         lea eax, [dword esp+0628h]
         push eax
         call TextSaveState
@@ -241,7 +241,7 @@ GameSummaryScreen:
         mov eax, dword [byte eax+02Ch]
         mov dx, word [byte esi+0Ah]
         mov word [byte eax+0Ah], dx
-        call sub_B4BA8
+        call SetScreenTarget
         push edi
         call FreeMemBlock
         add esp, byte 4
@@ -1992,7 +1992,7 @@ GameSummaryScreen_period:
         je short GameSummaryScreen_period.83
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -2000,7 +2000,7 @@ GameSummaryScreen_period:
 .84:
         call StopDigiSample
 .85:
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -2413,7 +2413,7 @@ GameStatsScreen:
         sar eax, 10h
         mov dword [byte ebp-01Ch], eax
         call ClearInputQueue
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -2907,7 +2907,7 @@ GameStatsScreen:
         call WaitTickDeadline
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor eax, eax
         mov dword [songdata], eax
@@ -3000,7 +3000,7 @@ GameStatsScreen:
         je short GameStatsScreen.23
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi

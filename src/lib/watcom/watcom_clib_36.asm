@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9D4A7 progbits alloc exec nowrite align=1
-extern __unhook387, _Extender, byte_D4D08, __real87, dword_D41F4, sub_9D521, sub_9D55C, word_D41F8
+extern __unhook387, _Extender, byte_D4D08, __real87, dword_D41F4, EmuRestoreFpuVector, EmuRestoreRealVector, word_D41F8
 extern word_D51DA
 global __sys_fini_387_emulator, loc_9D4B1, loc_9D4C9, loc_9D4E2, loc_9D4F2, loc_9D506, loc_9D516
 __sys_fini_387_emulator:
@@ -16,7 +16,7 @@ loc_9D4B1:
         mov al, byte [_Extender]
         cmp byte [byte_D4D08], 0
         je short loc_9D4C9
-        call sub_9D55C
+        call EmuRestoreRealVector
         jmp short loc_9D516
 loc_9D4C9:
         cmp al, 9
@@ -45,7 +45,7 @@ loc_9D506:
         call __unhook387
         cmp al, 1
         je short loc_9D516
-        call sub_9D521
+        call EmuRestoreFpuVector
 loc_9D516:
         mov byte [__real87], 0
         pop edx

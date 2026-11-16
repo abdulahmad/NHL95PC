@@ -4,15 +4,15 @@ bits 32
 section s_B12A0 progbits alloc exec nowrite align=1
 extern __GETDS, byte_F79A7, byte_F79A8, byte_F79D8, dword_D87A0, dword_D87A8, dword_D87AC, dword_D87B0
 extern dword_D87B4, dword_D87B8, dword_D87BC, dword_D87C0, dword_D87C4, dword_D87C8, dword_D87CC, dword_D87D0
-extern dword_D87D4, inp_, outp_, sub_B0BE4, word_D8760, word_D8762, word_D876C, word_D876E
+extern dword_D87D4, inp_, outp_, GusSendEoi, word_D8760, word_D8762, word_D876C, word_D876E
 extern word_D8772, word_D8776, word_D8778, word_F799E, word_F79A2
 global sub_B12A0, loc_B12DD, loc_B12EC, loc_B1311, sub_B131C, loc_B1358, loc_B1365, loc_B1392
-global sub_B13A1, loc_B13AF, sub_B13B5, loc_B13E7, loc_B13EF, loc_B13F6, loc_B13FB, sub_B1400
-global sub_B145C, loc_B146B, loc_B1476, loc_B147B, sub_B1484, loc_B1493, loc_B149E, loc_B14A3
-global sub_B14AC, loc_B14DA, loc_B14DC, sub_B14E4, loc_B1512, loc_B1514, sub_B151C, loc_B154A
-global loc_B154C, sub_B1554, loc_B1573, loc_B158F, loc_B1594, sub_B1598, loc_B15B1, sub_B15B8
-global loc_B15D1, sub_B15D8, loc_B15F1, sub_B15F8, loc_B1646, loc_B166D, sub_B1680, loc_B16A9
-global loc_B16B3, sub_B16BC, loc_B16D8, loc_B16F3, loc_B1706, loc_B1735, loc_B1772, loc_B17B9
+global GusDelay, loc_B13AF, GusSetBasePort, loc_B13E7, loc_B13EF, loc_B13F6, loc_B13FB, GusClearCallbacks
+global GusClaimCallback, loc_B146B, loc_B1476, loc_B147B, GusClaimVoiceCallback, loc_B1493, loc_B149E, loc_B14A3
+global GusSetDmaCallbacks, loc_B14DA, loc_B14DC, sub_B14E4, loc_B1512, loc_B1514, sub_B151C, loc_B154A
+global loc_B154C, GusSetVoiceCallbacks, loc_B1573, loc_B158F, loc_B1594, sub_B1598, loc_B15B1, sub_B15B8
+global loc_B15D1, sub_B15D8, loc_B15F1, GusMidiIrqService, loc_B1646, loc_B166D, GusReadIrqSource, loc_B16A9
+global loc_B16B3, GusServiceIrq, loc_B16D8, loc_B16F3, loc_B1706, loc_B1735, loc_B1772, loc_B17B9
 global loc_B1813, loc_B186E, loc_B1877, loc_B18C7, loc_B18DC, loc_B18F1, loc_B18F3, loc_B1902
 global loc_B1917, loc_B192C, loc_B192E, loc_B1938
 sub_B12A0:
@@ -27,7 +27,7 @@ sub_B12A0:
         xor ah, ah
         mov al, byte [byte_F79A8]
         and eax, 0FFFFh
-        call sub_B0BE4
+        call GusSendEoi
         cmp word [word_F79A2], byte 0
         je short loc_B12DD
         mov bx, word [word_F799E]
@@ -41,7 +41,7 @@ loc_B12DD:
         pop es
 loc_B12EC:
         and word [word_F799E], byte 0FFFDh
-        call sub_B16BC
+        call GusServiceIrq
         test word [word_F799E], 2
         jne short loc_B12EC
         mov ax, word [word_F79A2]
@@ -66,7 +66,7 @@ sub_B131C:
         xor ah, ah
         mov al, byte [byte_F79A7]
         and eax, 0FFFFh
-        call sub_B0BE4
+        call GusSendEoi
         cmp dword [dword_D87A0], byte 0
         je short loc_B1358
         mov dx, word [word_F799E]
@@ -82,7 +82,7 @@ loc_B1365:
         mov bx, word [word_F799E]
         and bl, 0F7h
         mov word [word_F799E], bx
-        call sub_B15F8
+        call GusMidiIrqService
         mov cx, word [word_F799E]
         test cl, 8
         jne short loc_B1365
@@ -96,7 +96,7 @@ loc_B1392:
         popa
         iret
         db 00h,00h,00h,00h,00h,00h,00h
-sub_B13A1:
+GusDelay:
         push ecx
         push edx
         mov ecx, 0Ah
@@ -107,7 +107,7 @@ loc_B13AF:
         pop edx
         pop ecx
         ret
-sub_B13B5:
+GusSetBasePort:
         push ebx
         push ecx
         push esi
@@ -148,7 +148,7 @@ loc_B13FB:
         pop ebx
         ret
         db 00h
-sub_B1400:
+GusClearCallbacks:
         push ebp
         mov ebp, esp
         push edx
@@ -171,7 +171,7 @@ sub_B1400:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B145C:
+GusClaimCallback:
         push ebp
         mov ebp, esp
         push ebx
@@ -195,7 +195,7 @@ loc_B147B:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B1484:
+GusClaimVoiceCallback:
         push ebp
         mov ebp, esp
         push ebx
@@ -219,7 +219,7 @@ loc_B14A3:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B14AC:
+GusSetDmaCallbacks:
         push ebp
         mov ebp, esp
         push ebx
@@ -227,12 +227,12 @@ sub_B14AC:
         mov ebx, eax
         mov eax, dword_D87B0
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B14DA
         mov eax, dword_D87B4
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B14DA
         mov eax, 8
@@ -254,12 +254,12 @@ sub_B14E4:
         mov ebx, eax
         mov eax, dword_D87B8
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B1512
         mov eax, dword_D87BC
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B1512
         mov eax, 8
@@ -281,12 +281,12 @@ sub_B151C:
         mov ebx, eax
         mov eax, dword_D87C0
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B154A
         mov eax, dword_D87C4
         mov edx, ebx
-        call sub_B145C
+        call GusClaimCallback
         test eax, eax
         je short loc_B154A
         mov eax, 8
@@ -300,13 +300,13 @@ loc_B154C:
         pop ebp
         ret
         db 090h
-sub_B1554:
+GusSetVoiceCallbacks:
         push ebp
         mov ebp, esp
         cmp eax, byte 1
         jne short loc_B1573
         mov eax, dword_D87C8
-        call sub_B1484
+        call GusClaimVoiceCallback
         test eax, eax
         je short loc_B1594
         mov eax, 8
@@ -317,7 +317,7 @@ loc_B1573:
         cmp eax, byte 2
         jne short loc_B158F
         mov eax, dword_D87CC
-        call sub_B1484
+        call GusClaimVoiceCallback
         test eax, eax
         je short loc_B1594
         mov eax, 8
@@ -336,7 +336,7 @@ sub_B1598:
         push edx
         mov edx, eax
         mov eax, dword_D87D4
-        call sub_B1484
+        call GusClaimVoiceCallback
         test eax, eax
         je short loc_B15B1
         mov eax, 8
@@ -352,7 +352,7 @@ sub_B15B8:
         push edx
         mov edx, eax
         mov eax, dword_D87D0
-        call sub_B1484
+        call GusClaimVoiceCallback
         test eax, eax
         je short loc_B15D1
         mov eax, 8
@@ -368,7 +368,7 @@ sub_B15D8:
         push edx
         mov edx, eax
         mov eax, dword_D87AC
-        call sub_B1484
+        call GusClaimVoiceCallback
         test eax, eax
         je short loc_B15F1
         mov eax, 8
@@ -378,7 +378,7 @@ loc_B15F1:
         pop ebp
         ret
         db 090h
-sub_B15F8:
+GusMidiIrqService:
         push ebp
         mov ebp, esp
         push ebx
@@ -429,7 +429,7 @@ loc_B166D:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B1680:
+GusReadIrqSource:
         push ebp
         mov ebp, esp
         push ebx
@@ -448,7 +448,7 @@ sub_B1680:
 loc_B16A9:
         test dl, 3
         je short loc_B16B3
-        call sub_B15F8
+        call GusMidiIrqService
 loc_B16B3:
         mov eax, edx
         lea esp, [byte ebp-08h]
@@ -456,7 +456,7 @@ loc_B16B3:
         pop ebx
         pop ebp
         ret
-sub_B16BC:
+GusServiceIrq:
         push ebp
         mov ebp, esp
         push ebx
@@ -471,7 +471,7 @@ sub_B16BC:
         xor edi, edi
         xor esi, esi
 loc_B16D8:
-        call sub_B1680
+        call GusReadIrqSource
         mov ebx, eax
         test eax, eax
         jne short loc_B16F3
@@ -649,7 +649,7 @@ loc_B1917:
 loc_B192C:
         or esi, ebx
 loc_B192E:
-        call sub_B1680
+        call GusReadIrqSource
         jmp near loc_B1877
 loc_B1938:
         mov ax, word [word_F79A2]

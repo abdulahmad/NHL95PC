@@ -9,7 +9,7 @@
    `add esi, edx`). See docs/UNSURE.md. */
 #define PickAwardWinners PickAwardWinners_decl
 #define ShowAwardScreens ShowAwardScreens_decl
-#define sub_9035C sub_9035C_decl
+#define ShapeBankEntry sub_9035C_decl
 #define FreeSample sub_8F1FE_decl
 #define LoadSample sub_8F13B_decl
 #define sub_8F98F sub_8F98F_decl
@@ -22,7 +22,7 @@
 #undef sub_8FB8E
 #undef PickAwardWinners
 #undef ShowAwardScreens
-#undef sub_9035C
+#undef ShapeBankEntry
 #undef GetTicks
 void FreeSample(void *smp);
 void *LoadSample(char *path);
@@ -31,7 +31,7 @@ void sub_8FB8E(int song, int handle, int a, int b);
 
 int PickAwardWinners(void);
 int ShowAwardScreens(void);
-int __cdecl sub_9035C(int bank, int n);  /* graphics library: frame n of a bank */
+int __cdecl ShapeBankEntry(int bank, int n);  /* graphics library: frame n of a bank */
 int __cdecl GetTicks(void);  /* timer library, cdecl in this module (as in WaitClickTimeout.c) */
 int strnicmp(const char *a, const char *b, unsigned n);  /* Watcom CRT strnicmp_ */
 void __STOSB(void *p, int v, int n);  /* Watcom memset helper: the EXE clears the award flags with it */
@@ -300,7 +300,7 @@ int ShowAwardScreens(void)
         GetTicks();
         MakePath(buf, fileoncd[awardartfiles[k]] == 1 ? (char *)cddriveptr : 0, (char *)awardart[k], 0);
         bank = LoadBank(buf, 0);
-        DrawBitmap(sub_9035C(bank, 1));
+        DrawBitmap(ShapeBankEntry(bank, 1));
         y = 0x76;
         if (awardtype[k] == 2) {
             if (k == 0xA) strcpy(buf, (char *)cupteam);
@@ -495,7 +495,7 @@ void AwardsCeremony(void)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     TextSaveState(s.text);
@@ -532,7 +532,7 @@ void AwardsCeremony(void)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        if (songdata) sub_8D2F0(songdata);
+        if (songdata) PushMemDescriptorLocked(songdata);
         songdata = 0;
     } else {
         WaitClickTimeout(0x140);
@@ -557,19 +557,19 @@ void AwardsCeremony(void)
             MakePath(s.path, fileoncd[0x1DE] == 1 ? (char *)cddriveptr : 0, (char *)str_Awardsi, 0);
             bank2 = LoadBank(s.path, 0);
             ClearInputQueue();
-            sub_B4BA8();
+            SetScreenTarget();
             SetTextColors(1, 0);
             DrawBitmap(FindShape(bank2, (char *)str_Scrn));
             DrawBitmap(FindShape(bank2, (char *)str_Summ));
             DrawAwardsSummary();
-            sub_B4BA8();
+            SetScreenTarget();
             pal2 = (unsigned char *)FindShape(bank2, (char *)str_Pal3) + 0x10;
             FadePalStep(0, pal2, 0x10);
             WaitClickTimeout(0x2328);
             FadePalStep(1, pal2, 0x10);
             FreeMemBlock(bank2);
         }
-        sub_B4BA8();
+        SetScreenTarget();
         ClearScreen(0);
     }
     if (musicon) {
@@ -577,7 +577,7 @@ void AwardsCeremony(void)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        if (songdata) sub_8D2F0(songdata);
+        if (songdata) PushMemDescriptorLocked(songdata);
         songdata = 0;
     } else {
         StopDigiSample();

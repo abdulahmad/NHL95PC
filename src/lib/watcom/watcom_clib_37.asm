@@ -5,7 +5,7 @@ section s_9D586 progbits alloc exec nowrite align=1
 extern __init_80x87, str_UnknownError, __8087, byte_D4B9D, delaycount, loc_9D582, off_D51E4, off_D6600
 extern off_D6604, sub_9D57D, unk_F24D0, unk_F24D4, __no87, word_D65FC
 global __init_8087_, loc_9D5A7, sub_9D5B7, __chk8087_, loc_9D5EA, loc_9D5FF, __delay_init_, loc_9D60F
-global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, sub_9D66B, sub_9D671, strerror_
+global loc_9D61F, __delay_, loc_9D659, loc_9D65D, loc_9D666, ErrnoPtr, __get_doserrno_ptr_, strerror_
 global loc_9D680, loc_9D686
 __init_8087_:
         push ebx
@@ -114,10 +114,10 @@ loc_9D666:
         pop ecx
         pop ebx
         ret
-sub_9D66B:
+ErrnoPtr:
         mov eax, unk_F24D4
         ret
-sub_9D671:
+__get_doserrno_ptr_:
         mov eax, unk_F24D0
         ret
 strerror_:

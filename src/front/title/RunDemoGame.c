@@ -238,7 +238,7 @@ int TitleScreen(void)
 
     bmp = 0;
     ClearInputQueue();
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     MakePath(path, fileoncd[0x68] == 1 ? (char *)cddriveptr : 0, (char *)str_Eascrn, 0);
     bank = LoadBank(path, 0);
@@ -304,7 +304,7 @@ int TitleScreen(void)
                     SetDrawBitmap(bmp);
                     sub_9121C((int)mask);
                     sub_9087C(frame, 0, 0);
-                    sub_B4BA8();
+                    SetScreenTarget();
                     sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 }
                 if (first == 1 && ends == 0) {
@@ -322,7 +322,7 @@ int TitleScreen(void)
                 if (!bmp) bmp = CreateBitmap(sub_1B09F(dec), sub_1B0AD(dec), 0);
                 SetDrawBitmap(bmp);
                 sub_9121C((int)mask);
-                sub_B4BA8();
+                SetScreenTarget();
                 sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 memcpy(pal + sub_1B0C9(dec) * 3, (void *)sub_1B0E5(dec), sub_1B0D7(dec) * 3);
                 VgaSetPalette(0, 0x100, (unsigned char *)pal);
@@ -349,14 +349,14 @@ int TitleScreen(void)
         }
         if (!key && n > 0x23) key = AnyInputPressed();
     } while (!key && ends < 2);
-    if (bmp) sub_9132C(bmp);
+    if (bmp) FreeBitmap(bmp);
     sub_1ACF1(dec);
     sub_1B18B(stream);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     } else {
         StopDigiSample();
@@ -395,9 +395,9 @@ void RunIntro(void)
     int bank2;
 
     skip = 0;
-    if (musicon) sub_8D2F0(*(int *)((char *)speechbank + 0x3B60));
+    if (musicon) PushMemDescriptorLocked(*(int *)((char *)speechbank + 0x3B60));
     ClearInputQueue();
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     __STOSB(blackpal, 0, 0x300);
     VgaSetPalette(0, 0x100, blackpal);
@@ -514,9 +514,9 @@ void RunIntro(void)
         while (!SndQuery(musicslot, 2));
         while (!SndQuery(musicslot, 3));
         songdata = 0;
-        if (song2) sub_8D2F0(song2);
-        if (song3) sub_8D2F0(song3);
-        if (song4) sub_8D2F0(song4);
+        if (song2) PushMemDescriptorLocked(song2);
+        if (song3) PushMemDescriptorLocked(song3);
+        if (song4) PushMemDescriptorLocked(song4);
     }
     if (musicon) {
         cursndbank = 0x20;
@@ -544,14 +544,14 @@ void RunIntro(void)
         WaitTickDeadline();
         if (musicon && songdata) {
             while (!SndQuery(musicslot, 3));
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
         FadePalStep(1, (unsigned char *)pal, 0x10);
-        sub_B4BA8();
+        SetScreenTarget();
         ClearScreen(0);
     } while (!TitleScreen() && !RunDemoGame());
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     PaOpenBank();
     demomode = demoflag = 0;
@@ -661,7 +661,7 @@ void ShowCredits(void)
     FadePalStep(1, pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     } else {
         StopDigiSample();
@@ -670,6 +670,6 @@ void ShowCredits(void)
     }
     TextRestoreState(st);
     FreeMemBlock(bg);
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
 }

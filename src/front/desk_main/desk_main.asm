@@ -18,9 +18,9 @@ extern schedgameidx, scrpitch, setdiskmsg, SetLeagueSetImage, SetScreenTitle, Se
 extern SetupStatsSourceMenu, ShowLoadingScreen, skaterstatscb, songdata, standingscb, standingsmenucb, str_Desk2, str_Easndesk
 extern str_fee2, str_fee3, str_fee4, str_Game, str_GameSav4, str_GameSet4, str_Iff8, str_LAAtMTL
 extern str_Maindesk, str_Menubuff4, str_Pal15, str_Palette2, str_Pointer7, str_Set, str_Temp4, str_Tonights2
-extern strcat_, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, sub_8F963, sub_8F96E
+extern strcat_, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8F963, sub_8F96E
 extern sub_8F979, sub_8F984, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, PutBlock
-extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, sub_B4BA8, SetClipWindow, teamabbrevs
+extern DrawBitmap, DrawArt, GrabBlock, SetViewRect, FindShape, SetScreenTarget, SetClipWindow, teamabbrevs
 extern teamstatscb, TradePlayers, UpdateTeamDbs, ViewHilights, VisTeam
 global MainDeskLoop, MainDeskLoop_x, MainDeskLoop_x2, MenuExit, SaveModeState, LoadModeState, WriteModeState, CopyGameSettings
 global MenuNewExhibition, MenuNewLeague, MenuAddTeam, MenuAddTeam_common, MenuAddTeam_ret2, MenuRemoveTeam, MenuLeagueSettings, MenuRebuildDbs
@@ -194,7 +194,7 @@ MainDeskLoop:
         add esp, byte 8
         mov ebp, eax
         call FadeOutPalCycle
-        call sub_B4BA8
+        call SetScreenTarget
         push str_Desk2
         push esi
         call FindShape
@@ -271,7 +271,7 @@ MainDeskLoop:
         cmp eax, dword [dword esp+098h]
         je short MainDeskLoop.11
 .14:
-        call sub_B4BA8
+        call SetScreenTarget
         mov esi, dword [dword esp+098h]
         push esi
         mov edi, dword [dword esp+098h]
@@ -431,7 +431,7 @@ MainDeskLoop:
         je near .54
         cmp ebp, byte 2
         jne near .32
-        call sub_B4BA8
+        call SetScreenTarget
         cmp dword [keepdesksong], byte 0
         jne short .21
         cmp byte [musicon], 0
@@ -451,7 +451,7 @@ MainDeskLoop:
         je short MainDeskLoop.20
         mov ebp, dword [songdata]
         push ebp
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor eax, eax
         mov dword [songdata], eax
@@ -1543,7 +1543,7 @@ MenuNewExhibition:
         je short MenuNewExhibition.4
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx
@@ -1595,7 +1595,7 @@ MenuNewExhibition:
         je short MenuNewExhibition.9
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -1745,7 +1745,7 @@ MenuNewLeague:
         je short MenuNewLeague.13
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi

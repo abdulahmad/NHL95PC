@@ -19,11 +19,11 @@ int DeskExitGame(void)
     if (r > 0) {
         SetPalette(0, 0x100, savepal);
         FadePalStep(1, savepal, 0x10);
-        sub_B4BA8();
+        SetScreenTarget();
         ClearScreen(0);
         if (musicon && songdata) {
             while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
         ShowLoadingScreen();
@@ -31,7 +31,7 @@ int DeskExitGame(void)
         ShowCredits();
         SetPalette(0, 0x100, savepal);
         FadePalStep(1, savepal, 0x10);
-        sub_B4B58();
+        SetTextMode();
         ((void (*)(void))bailout_vec)();
     }
     return 0;

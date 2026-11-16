@@ -84,7 +84,7 @@ int PlayMVI(char *path, int x, int y)
     int el;
 
     ClearInputQueue();
-    sub_B4BA8();
+    SetScreenTarget();
     stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
     sub_1B1C2(stream, path);
     dec = sub_1AC25();

@@ -20,7 +20,7 @@ int MenuModeSettings(void)
     int bm;
     short i;
 
-    sub_B4BA8();
+    SetScreenTarget();
     LoadSettingsShapes();
     bm = AllocMemBlock((char *)str_BKGD2, 0xE935, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -73,7 +73,7 @@ short ModeSetViewLoop(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer16, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -128,7 +128,7 @@ short ModeSetEditLoop(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     oldmusic = gameopts.music;
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer16, n, 0x20);

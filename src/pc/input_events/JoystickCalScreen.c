@@ -1,14 +1,14 @@
 /* Joystick calibration: the calibration screen. */
 #define JoystickCalScreen JoystickCalScreen_decl
-#define sub_B340B sub_B340B_decl
-#define sub_B39D0 sub_B39D0_decl
+#define JoyButtonMap sub_B340B_decl
+#define KbdGetKey sub_B39D0_decl
 #include "nhl95.h"
 #undef JoystickCalScreen
-#undef sub_B340B
-#undef sub_B39D0
+#undef JoyButtonMap
+#undef KbdGetKey
 
-int __cdecl sub_B340B(int buttons);
-int sub_B39D0(void);
+int __cdecl JoyButtonMap(int buttons);
+int KbdGetKey(void);
 
 typedef struct { char b[17]; } Hdr17;                  /* the shape header the puck background copies */
 
@@ -47,7 +47,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
     if ((buttons & 0x30) == 0) {
         TextSaveState(state);
         TextSetFont((int)unk_D45D8);
-        sub_B4BA8();
+        SetScreenTarget();
         ClearScreen(0);
         memset(pal, 0, 0x300);
         VgaSetPalette(0, 0x100, pal);
@@ -63,13 +63,13 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
         FadePalStep(0, pal, 0x10);
         prev = -1;
         for (;;) {
-            if (sub_B39D0()) {
+            if (KbdGetKey()) {
                 *(int *)&joyenablemask &= ~mask;
                 break;
             }
             s.cur = ReadJoyRaw() >> shift;
             if (s.cur & 0x30) break;
-            s.cur = sub_B340B(s.cur);
+            s.cur = JoyButtonMap(s.cur);
             if (s.cur == prev) continue;
             sub_B4C61();
             if (prev != -1) DrawArtOpaque((int)back, joycalx[prev], joycaly[prev]);

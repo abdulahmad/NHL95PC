@@ -21,9 +21,9 @@ extern songdata, SortCords, sounddev, sprintf_, StartGame, StartPreGame, StopDig
 extern str_04d, str_Adafan, str_Adawards, str_Awards, str_Awardsi, str_Awasong, str_D00_D49, str_D00D49
 extern str_D50_D99, str_D50D99, str_F000149, str_GfxIdList, str_HILIGHT, str_Iff, str_Mtafan, str_Mtawards
 extern str_Numshp, str_Pal3, str_Palmem, str_PPV, str_Scrn, str_Summ, str_Titl, str_Trinknd
-extern str_VFN, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
+extern str_VFN, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState
 extern TextSetFont, LoadSample, FreeSample, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
-extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, textline1, textline2
+extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, textline1, textline2
 extern textline3, textline4, textline5, threat, VisTeam, vtoa, WaitClickTimeout, WaitDigiSample
 extern penaltysc, word_CBC44, lcsel_aw, puckfaceoff2_ptab, puckfaceoff2_ptab_y, refhitcount, injurystop, Pencntdwn2
 extern rinkobjs, milestonesaid_b2, word_E9A9C, word_E9AA2, MaxCwdExciteLvl, NumCwdExciteLvl, word_E9AAA, penevteam
@@ -68,7 +68,7 @@ IndexPhotoBank:
         push eax
         mov edx, dword [nosplit ebp*4+photobanks]
         push edx
-        call sub_B30BB
+        call FindShapeQuiet
         add esp, byte 8
         mov dword [nosplit esi*4+photoptrs], eax
         inc esi
@@ -285,7 +285,7 @@ LoadTransparentRinkEndOverlay:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; LoadGameGfx                                  13A91  95 PC, medium confidence
-; In-game graphics: sub_B4BA8, scrpitch 52h, HILIGHT.VFN (hilightfont),
+; In-game graphics: SetScreenTarget, scrpitch 52h, HILIGHT.VFN (hilightfont),
 ; numshp.PPV with its 10 number shapes (numshapes), then LoadGameGfx_common;
 ; called from PlayGame and the highlights / game-setup code
 ;-----------------------------------------------------------------------------
@@ -301,7 +301,7 @@ LoadGameGfx:
         push edx
         push esi
         sub esp, byte 1Ch
-        call sub_B4BA8
+        call SetScreenTarget
         mov word [scrpitch], 52h
         mov ecx, str_VFN
         mov ebx, str_HILIGHT
@@ -360,7 +360,7 @@ LoadGameGfx_common:
         push str_GfxIdList
         mov ebx, dword [numshpbank]
         push ebx
-        call sub_90B80
+        call ProjectPointList
         add esp, byte 0Ch
         call ClearPanelPenalties
         call LoadTransparentRinkEndOverlay
@@ -383,7 +383,7 @@ LoadGameGfx_common:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; ReloadGameGfx                                13BB4  95 PC, medium confidence
-; LoadGameGfx without the sub_B4BA8 call (same HILIGHT / numshp loads, then
+; LoadGameGfx without the SetScreenTarget call (same HILIGHT / numshp loads, then
 ; LoadGameGfx_common); called from the scoreboard segment before
 ; SetupGameQuick
 ;-----------------------------------------------------------------------------

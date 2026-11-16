@@ -99,7 +99,7 @@ void DrawDbDialog(void)
     int y;
     int ybar;
 
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0x1C8] == 1 ? (char *)cddriveptr : 0, (char *)str_Dbdialog, 0);
     bank = LoadBank(path, 0);
     sub_91284(FindShape(bank, (char *)str_Pdbx), 10, 0x13);
@@ -134,10 +134,10 @@ void DrawDbDialog(void)
         xright = DBRECT[8].x2 + 0xA;
         bank = 0x354 / list[0];                 /* the thumb height (bank reused) */
         ybar = DBRECT[8].y1 + 0x12 + bank;
-        sub_B4FAC(x, y, DBRECT[8].x2 + 9, y, 0x7D);
-        sub_B4FAC(x, y, x, ybar - 1, 0x7D);
-        sub_B4FAC(xright, y - 1, xright, ybar, 0x7B);
-        sub_B4FAC(x - 1, ybar, xright, ybar, 0x7B);
+        FillRectColor(x, y, DBRECT[8].x2 + 9, y, 0x7D);
+        FillRectColor(x, y, x, ybar - 1, 0x7D);
+        FillRectColor(xright, y - 1, xright, ybar, 0x7B);
+        FillRectColor(x - 1, ybar, xright, ybar, 0x7B);
         return;
     }
     switch (list[0]) {
@@ -204,10 +204,10 @@ int DrawDbList(int *list)
         i = DBRECT[8].y1 + 0x13 + list[2] * 0x8E / list[0];
         xright = DBRECT[8].x2 + 0xA;
         y2 = DBRECT[8].y1 + 0x13 + (list[3] + 1) * 0x8E / list[0];
-        sub_B4FAC(x, i, DBRECT[8].x2 + 9, i, 0x7D);
-        sub_B4FAC(x, i, x, y2 - 1, 0x7D);
-        sub_B4FAC(xright, i + 1, xright, y2, 0x7B);
-        sub_B4FAC(x + 1, y2, xright, y2, 0x7B);
+        FillRectColor(x, i, DBRECT[8].x2 + 9, i, 0x7D);
+        FillRectColor(x, i, x, y2 - 1, 0x7D);
+        FillRectColor(xright, i + 1, xright, y2, 0x7B);
+        FillRectColor(x + 1, y2, xright, y2, 0x7B);
     }
     switch ((unsigned)fdlgtab) {
     case 0:
@@ -252,7 +252,7 @@ int DbDialogLoop(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer12, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -272,7 +272,7 @@ int DbDialogLoop(void)
         }
         if (btn == 0) {
             if (x != ox || y != oy) {
-                sub_B4BA8();
+                SetScreenTarget();
                 PutBlock(bm, ox - 4, oy);
                 GrabBlock(bm, x - 4, y);
                 DrawArt(pointerspr, x - 4, y);

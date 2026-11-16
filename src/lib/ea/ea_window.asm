@@ -5,10 +5,10 @@ section s_8E7A0 progbits alloc exec nowrite align=1
 extern str_SUBWINDOW, str_SubwindowdefadrOUTOFROW, byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, byte_D42C5
 extern byte_D42C6, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42B8, dword_D42BC, dword_D42C8, dword_D42CC
 extern dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, FatalError, fontcolor, off_D42A4
-extern AllocMemBlock, AllocMemBlockEx, sub_8D728, sub_98D20, sub_98E50, sub_B3B19, sub_B3C60, sub_B3C74
-extern sub_B3FC2
+extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCached, DosOpenFile, DosCloseFile, DosReadFile
+extern ZeroMem
 global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, LoadBank, loc_8E853, loc_8E868, sub_8E86A
-global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, sub_8E920
+global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, LoadDataFileExt
 global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, sub_8E9D4, TextSaveState, TextRestoreState, TextSetFont
 global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
 subwindowdefadr:
@@ -25,7 +25,7 @@ subwindowdefadr:
         mov edi, eax
         push byte 30h
         push eax
-        call sub_B3FC2
+        call ZeroMem
         add esp, byte 8
         mov eax, dword [byte esp+01Ch]
         mov dword [byte esi+020h], eax
@@ -44,7 +44,7 @@ subwindowdefadr:
         add eax, dword [byte esp+014h]
         mov edx, dword [esi]
         mov ebx, dword [byte esp+020h]
-        call sub_98D20
+        call FillRowTable
         mov dword [byte esi+028h], eax
         test eax, eax
         jne short loc_8E816
@@ -70,7 +70,7 @@ loc_8E82B:
         push dword [byte ebp+0Ch]
         db 0FFh,075h,08h                        ; insn: push dword [ebp+8]
         db 0E8h                                 ; insn: call 00098E50h
-        dd sub_98E50-$-4
+        dd LoadFileCached-$-4
         add esp, byte 0Ch
         leave
         ret
@@ -90,7 +90,7 @@ loc_8E853:
         push eax
         push dword [byte ebp+0Ch]
         push dword [byte ebp+08h]
-        call sub_98E50
+        call LoadFileCached
         add esp, byte 0Ch
         LD or, eax, eax
         je short loc_8E868
@@ -99,7 +99,7 @@ loc_8E868:
         leave
         ret
 sub_8E86A:
-        jmp near sub_98E50
+        jmp near LoadFileCached
         db 00h
 unk_8E870:
         db 06Ch,06Fh,063h,061h,074h,065h,073h,068h,061h,070h,065h,020h,02Dh,020h,027h,025h
@@ -132,7 +132,7 @@ sub_8E8D0:
         push ebx
         mov ecx, dword [byte esp+0Ch]
         push ecx
-        call sub_8E920
+        call LoadDataFileExt
         add esp, byte 0Ch
         test eax, eax
         je short loc_8E8ED
@@ -146,7 +146,7 @@ sub_8E8F0:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E920
+        call LoadDataFileExt
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
@@ -156,17 +156,17 @@ sub_8E908:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E920
+        call LoadDataFileExt
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8E920:
+LoadDataFileExt:
         push esi
         push edi
         sub esp, byte 0Ch
         mov esi, dword [byte esp+018h]
         push esi
-        call sub_8D728
+        call FindCachedFile
         add esp, byte 4
         test eax, eax
         jne near loc_8E9B4
@@ -179,7 +179,7 @@ sub_8E920:
         lea eax, [byte esp+0Ch]
         push eax
         push esi
-        call sub_B3B19
+        call DosOpenFile
         add esp, byte 14h
         mov ebx, dword [byte esp+08h]
         test ebx, ebx
@@ -200,7 +200,7 @@ loc_8E963:
         jne short loc_8E991
         mov esi, dword [esp]
         push esi
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         xor eax, eax
         add esp, byte 0Ch
@@ -214,11 +214,11 @@ loc_8E991:
         push edx
         mov ebx, dword [byte esp+08h]
         push ebx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         mov ecx, dword [esp]
         push ecx
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         mov eax, esi
 loc_8E9B4:

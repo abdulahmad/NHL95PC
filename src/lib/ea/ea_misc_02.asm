@@ -3,26 +3,26 @@ bits 32
 %include "hockey.inc"
 section s_9BA18 progbits alloc exec nowrite align=1
 extern __FDFS, byte_C4B6C, byte_C4C78, memset_, off_D566C, tolower_
-global sub_9BA18, loc_9BA37, loc_9BA6E, loc_9BA7B, loc_9BA8F, loc_9BA95, loc_9BAB1, loc_9BAE3
+global ScanFormat, loc_9BA37, loc_9BA6E, loc_9BA7B, loc_9BA8F, loc_9BA95, loc_9BAB1, loc_9BAE3
 global loc_9BAF1, loc_9BB01, loc_9BB0B, loc_9BB23, loc_9BB31, loc_9BB42, loc_9BB50, loc_9BB55
 global loc_9BB5E, loc_9BB65, loc_9BB72, loc_9BB79, loc_9BB86, loc_9BB8D, loc_9BB98, loc_9BBA3
 global loc_9BBB0, loc_9BBB9, loc_9BBCD, loc_9BBDA, loc_9BBE6, loc_9BC1A, loc_9BC2E, loc_9BC32
-global sub_9BC3A, loc_9BC69, loc_9BC86, loc_9BCAC, loc_9BCBC, loc_9BCC5, loc_9BCC7, loc_9BCE1
-global loc_9BCE8, loc_9BCF5, loc_9BD01, loc_9BD0C, sub_9BD13, loc_9BD1B, loc_9BD34, loc_9BD41
-global sub_9BD48, loc_9BD69, loc_9BD7E, loc_9BD8C, loc_9BD9B, loc_9BDC0, loc_9BDC6, loc_9BDC8
-global sub_9BDCE, loc_9BDE4, loc_9BDEC, loc_9BE03, loc_9BE17, loc_9BE25, loc_9BE27, loc_9BE3E
+global ScanParseSpec, loc_9BC69, loc_9BC86, loc_9BCAC, loc_9BCBC, loc_9BCC5, loc_9BCC7, loc_9BCE1
+global loc_9BCE8, loc_9BCF5, loc_9BD01, loc_9BD0C, ScanSkipSpace, loc_9BD1B, loc_9BD34, loc_9BD41
+global ScanStoreCount, loc_9BD69, loc_9BD7E, loc_9BD8C, loc_9BD9B, loc_9BDC0, loc_9BDC6, loc_9BDC8
+global ScanChars, loc_9BDE4, loc_9BDEC, loc_9BE03, loc_9BE17, loc_9BE25, loc_9BE27, loc_9BE3E
 global loc_9BE48, loc_9BE55, loc_9BE68, loc_9BE6C, loc_9BE73, loc_9BE8F, loc_9BE96, loc_9BEAC
-global loc_9BEB2, sub_9BEBC, loc_9BED9, loc_9BEEE, loc_9BEFE, loc_9BF0F, loc_9BF15, sub_9BF1A
-global loc_9BF38, loc_9BF57, sub_9BF5D, loc_9BF80, loc_9BFA4, loc_9BFB9, loc_9BFC7, loc_9BFD4
-global loc_9C012, loc_9C025, loc_9C036, sub_9C043, loc_9C05A, loc_9C078, loc_9C09D, loc_9C0BB
+global loc_9BEB2, ScanStoreInt, loc_9BED9, loc_9BEEE, loc_9BEFE, loc_9BF0F, loc_9BF15, ScanBuildCharSet
+global loc_9BF38, loc_9BF57, ScanCharSet, loc_9BF80, loc_9BFA4, loc_9BFB9, loc_9BFC7, loc_9BFD4
+global loc_9C012, loc_9C025, loc_9C036, ScanFloatField, loc_9C05A, loc_9C078, loc_9C09D, loc_9C0BB
 global loc_9C0D6, loc_9C0FA, loc_9C113, loc_9C136, loc_9C171, loc_9C172, loc_9C196, loc_9C1A4
 global loc_9C1CA, loc_9C1D3, loc_9C1DC, loc_9C1F4, loc_9C212, loc_9C224, loc_9C23A, loc_9C25C
 global loc_9C263, loc_9C28E, loc_9C29A, loc_9C2B2, loc_9C2CB, loc_9C2DD, loc_9C2EB, loc_9C2F5
-global loc_9C306, loc_9C313, loc_9C316, sub_9C321, loc_9C33E, loc_9C357, loc_9C38C, loc_9C3A2
+global loc_9C306, loc_9C313, loc_9C316, ScanIntegerField, loc_9C33E, loc_9C357, loc_9C38C, loc_9C3A2
 global loc_9C3CE, loc_9C3EC, loc_9C3F3, loc_9C3FA, loc_9C427, loc_9C433, loc_9C43A, loc_9C45C
 global loc_9C467, loc_9C490, loc_9C497, loc_9C4A1, loc_9C4C8, loc_9C4E1, loc_9C4F3, loc_9C505
-global loc_9C50F, sub_9C519, loc_9C527, loc_9C53A, sub_9C540, loc_9C55B, loc_9C560
-sub_9BA18:
+global loc_9C50F, HexDigitValue, loc_9C527, loc_9C53A, ScanGetCharWidth, loc_9C55B, loc_9C560
+ScanFormat:
         push ecx
         push esi
         push edi
@@ -50,7 +50,7 @@ loc_9BA37:
         test byte [dword eax+byte_C4B6C], 2
         je short loc_9BA6E
         mov eax, esi
-        call sub_9BD13
+        call ScanSkipSpace
         add ebp, eax
         jmp near loc_9BBE6
 loc_9BA6E:
@@ -72,7 +72,7 @@ loc_9BA8F:
 loc_9BA95:
         mov eax, ecx
         mov edx, esi
-        call sub_9BC3A
+        call ScanParseSpec
         xor ebx, ebx
         mov dword [esp], eax
         mov bl, byte [eax]
@@ -138,7 +138,7 @@ loc_9BB55:
         mov eax, esi
         mov edx, edi
 loc_9BB5E:
-        call sub_9C321
+        call ScanIntegerField
         jmp short loc_9BBB9
 loc_9BB65:
         mov ecx, 1
@@ -161,23 +161,23 @@ loc_9BB86:
 loc_9BB8D:
         mov eax, esi
         mov edx, edi
-        call sub_9C043
+        call ScanFloatField
         jmp short loc_9BBB9
 loc_9BB98:
         mov eax, esi
         mov edx, edi
-        call sub_9BDCE
+        call ScanChars
         jmp short loc_9BBB9
 loc_9BBA3:
         mov ebx, esp
         mov eax, esi
         mov edx, edi
-        call sub_9BF5D
+        call ScanCharSet
         jmp short loc_9BBB9
 loc_9BBB0:
         mov eax, esi
         mov edx, edi
-        call sub_9BD48
+        call ScanStoreCount
 loc_9BBB9:
         test eax, eax
         jle short loc_9BC1A
@@ -191,7 +191,7 @@ loc_9BBCD:
         mov eax, esi
         mov edx, edi
         mov ebx, ebp
-        call sub_9BEBC
+        call ScanStoreInt
         jmp short loc_9BBE6
 loc_9BBDA:
         mov eax, esi
@@ -208,14 +208,14 @@ loc_9BBE6:
         mov dword [esp], edx
         mov eax, edx
         mov edx, esi
-        call sub_9BC3A
+        call ScanParseSpec
         mov dword [esp], eax
         cmp byte [eax], 6Eh
         jne short loc_9BC1A
         mov eax, esi
         mov edx, edi
         mov ebx, ebp
-        call sub_9BEBC
+        call ScanStoreInt
 loc_9BC1A:
         cmp dword [byte esp+04h], byte 0
         jne short loc_9BC2E
@@ -232,7 +232,7 @@ loc_9BC32:
         pop esi
         pop ecx
         ret
-sub_9BC3A:
+ScanParseSpec:
         push ebx
         push ecx
         push esi
@@ -327,7 +327,7 @@ loc_9BD0C:
         pop ecx
         pop ebx
         ret
-sub_9BD13:
+ScanSkipSpace:
         push ebx
         push ecx
         push edx
@@ -357,7 +357,7 @@ loc_9BD41:
         pop ecx
         pop ebx
         ret
-sub_9BD48:
+ScanStoreCount:
         push ebx
         push ecx
         push esi
@@ -426,7 +426,7 @@ loc_9BDC8:
         pop ecx
         pop ebx
         ret
-sub_9BDCE:
+ScanChars:
         push ebx
         push ecx
         push esi
@@ -509,7 +509,7 @@ loc_9BE6C:
         add ecx, edx
 loc_9BE73:
         mov eax, ebx
-        call sub_9C540
+        call ScanGetCharWidth
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
         je short loc_9BE96
@@ -536,7 +536,7 @@ loc_9BEB2:
         mov eax, esi
         add esp, byte 4
         jmp near loc_9BDC8
-sub_9BEBC:
+ScanStoreInt:
         push ecx
         push esi
         push edi
@@ -588,7 +588,7 @@ loc_9BF15:
         pop esi
         pop ecx
         ret
-sub_9BF1A:
+ScanBuildCharSet:
         push ebx
         push ecx
         push esi
@@ -622,7 +622,7 @@ loc_9BF57:
         pop ecx
         pop ebx
         ret
-sub_9BF5D:
+ScanCharSet:
         push ecx
         push esi
         push edi
@@ -642,7 +642,7 @@ sub_9BF5D:
 loc_9BF80:
         mov edx, esp
         mov eax, dword [ebx]
-        call sub_9BF1A
+        call ScanBuildCharSet
         mov dword [ebx], eax
         mov bl, byte [byte ecx+010h]
         test bl, 1
@@ -722,7 +722,7 @@ loc_9C036:
         pop esi
         pop ecx
         ret
-sub_9C043:
+ScanFloatField:
         push ebx
         push ecx
         push esi
@@ -762,7 +762,7 @@ loc_9C09D:
         mov ebp, dword [byte esp+06Ch]
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         inc ebp
         mov ebx, eax
@@ -800,7 +800,7 @@ loc_9C0FA:
 loc_9C113:
         mov eax, ecx
         inc edi
-        call sub_9C540
+        call ScanGetCharWidth
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
         je near loc_9C263
@@ -813,7 +813,7 @@ loc_9C136:
         jne near loc_9C1DC
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -836,7 +836,7 @@ loc_9C172:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -877,7 +877,7 @@ loc_9C1F4:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         mov ebp, eax
         mov ebx, eax
@@ -891,7 +891,7 @@ loc_9C212:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -908,7 +908,7 @@ loc_9C23A:
         inc edi
         mov eax, ecx
         mov byte [esi], bl
-        call sub_9C540
+        call ScanGetCharWidth
         inc esi
         mov ebx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -995,7 +995,7 @@ loc_9C316:
         add esp, byte 70h
         pop ebp
         jmp near loc_9BDC8
-sub_9C321:
+ScanIntegerField:
         push esi
         push edi
         push es
@@ -1040,7 +1040,7 @@ loc_9C38C:
         mov dword [esp], edx
         mov eax, esi
         inc ebp
-        call sub_9C540
+        call ScanGetCharWidth
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
         je near loc_9C497
@@ -1051,7 +1051,7 @@ loc_9C3A2:
         jne short loc_9C3F3
         mov eax, esi
         mov ebx, 1
-        call sub_9C540
+        call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -1063,7 +1063,7 @@ loc_9C3A2:
 loc_9C3CE:
         mov eax, esi
         add ebp, byte 2
-        call sub_9C540
+        call ScanGetCharWidth
         xor ebx, ebx
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -1083,7 +1083,7 @@ loc_9C3FA:
         jne short loc_9C43A
         mov eax, esi
         mov ebx, 1
-        call sub_9C540
+        call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
@@ -1095,7 +1095,7 @@ loc_9C3FA:
 loc_9C427:
         mov eax, esi
         add ebp, byte 2
-        call sub_9C540
+        call ScanGetCharWidth
         xor ebx, ebx
 loc_9C433:
         mov edx, eax
@@ -1103,7 +1103,7 @@ loc_9C433:
         je short loc_9C497
 loc_9C43A:
         mov eax, edx
-        call sub_9C519
+        call HexDigitValue
         cmp eax, edi
         jge short loc_9C45C
         mov edx, dword [byte esp+08h]
@@ -1112,7 +1112,7 @@ loc_9C43A:
         add edx, eax
         mov eax, esi
         mov dword [byte esp+08h], edx
-        call sub_9C540
+        call ScanGetCharWidth
         jmp short loc_9C433
 loc_9C45C:
         cmp edx, byte 3Ah
@@ -1122,12 +1122,12 @@ loc_9C45C:
 loc_9C467:
         mov eax, esi
         inc ebx
-        call sub_9C540
+        call ScanGetCharWidth
         mov ecx, eax
         mov edx, eax
         cmp eax, byte 0FFFFFFFFh
         je short loc_9C497
-        call sub_9C519
+        call HexDigitValue
         cmp eax, edi
         jge short loc_9C490
         mov edx, dword [byte esp+08h]
@@ -1196,7 +1196,7 @@ loc_9C50F:
         pop edi
         pop esi
         ret
-sub_9C519:
+HexDigitValue:
         cmp eax, byte 30h
         jl short loc_9C527
         cmp eax, byte 39h
@@ -1214,7 +1214,7 @@ loc_9C527:
 loc_9C53A:
         mov eax, 10h
         ret
-sub_9C540:
+ScanGetCharWidth:
         push ebx
         push edx
         mov edx, eax

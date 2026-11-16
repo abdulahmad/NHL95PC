@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 /* IndexPhotoBank: look up the 50 photos of photo bank b (entries named "%04d", numbered from
- b * 50) in the bank (sub_B30BB) and store their pointers in photoptrs, up to the 1134 photos. */
+ b * 50) in the bank (FindShapeQuiet) and store their pointers in photoptrs, up to the 1134 photos. */
 void IndexPhotoBank(int b)
 {
     char name[12];
@@ -12,7 +12,7 @@ void IndexPhotoBank(int b)
     n = b * 50;
     for (i = 0; i < 50; i++) {
         sprintf(name, (char *)str_04d, n);
-        photoptrs[n] = sub_B30BB(photobanks[b], name);
+        photoptrs[n] = FindShapeQuiet(photobanks[b], name);
         if (++n >= 1134) break;
     }
 }

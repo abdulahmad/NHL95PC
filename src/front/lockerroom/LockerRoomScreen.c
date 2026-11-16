@@ -37,7 +37,7 @@ int LockerRoomScreen(void)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     ShowLoadingScreen();
@@ -101,7 +101,7 @@ void DrawLockerRoom(void)
     int cx;
     int cy;
 
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0xE9] == 1 ? (char *)cddriveptr : 0, (char *)str_Lockroom, 0);
     bank = LoadBank(path, 0);
     src = (signed char *)FindShape(bank, (char *)str_P01) + 0x10;
@@ -274,7 +274,7 @@ int LockerRoomLoop(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer20, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -387,7 +387,7 @@ int LockerRoomLoop(void)
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
                         while (!SndQuery(musicslot, 3));
-                        sub_8D2F0(songdata);
+                        PushMemDescriptorLocked(songdata);
                         songdata = 0;
                     }
                     return 0;
@@ -398,7 +398,7 @@ int LockerRoomLoop(void)
                     FreeMemBlock(bm);
                     if (musicon && songdata) {
                         while (!SndQuery(musicslot, 3));
-                        sub_8D2F0(songdata);
+                        PushMemDescriptorLocked(songdata);
                         songdata = 0;
                     }
                     return 3;
@@ -415,7 +415,7 @@ int LockerRoomLoop(void)
             FreeMemBlock(bm);
             if (musicon && songdata) {
                 while (!SndQuery(musicslot, 3));
-                sub_8D2F0(songdata);
+                PushMemDescriptorLocked(songdata);
                 songdata = 0;
             }
             return 3;

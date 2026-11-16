@@ -22,7 +22,7 @@ extern refasslist, reflegspd, reflegstr, refposition, RefStep, refweight, regd0,
 extern regd2, regd3, regd4, regd5, ReplayRecordReset, replaystart, restoreteams, rinkscrollx
 extern rinkscrolly, SetBoxDoorObject, SetClipWindow, SetPenaltyStrength, Setplass, setplayer, SetSPA, sflags
 extern sflags3, sfx, shotongoal, shotontarget, shotplayer, shownumbers, SortCords, SortIndices
-extern sortobj15, SPAtab, SprSort_loop, SprSort_test, sub_B340B, sublist, sublist_defl, sublist_defl_m3
+extern sortobj15, SPAtab, SprSort_loop, SprSort_test, JoyButtonMap, sublist, sublist_defl, sublist_defl_m3
 extern sublist_m2, SumCwdExciteLvl, threat, UpdateCoachModes, UpdatePowerPlayFlags, updatereplay, vecdist, vtoa
 extern word_CBC44, word_E03A0, xc1, yc1, yleader, Ylist
 global GetPeriodTime, ResetClock, ClearSortCords, defaultsprites_0, TryAddPlayerToList, SetPlList, setpersonel, StartPer
@@ -2066,7 +2066,7 @@ DrawRinkOverlays:
         mov dword [byte ebp-020h], eax
         movsx eax, bx
         push eax
-        call sub_B340B
+        call JoyButtonMap
         add esp, byte 4
         lea edx, [eax+eax]
         movsx eax, di

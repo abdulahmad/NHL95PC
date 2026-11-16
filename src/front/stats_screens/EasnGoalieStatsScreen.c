@@ -32,7 +32,7 @@ int EasnGoalieStatsScreen(int cat)
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     FadePalStep(1, buf, 0x10);
     LeadersScreen(cat);

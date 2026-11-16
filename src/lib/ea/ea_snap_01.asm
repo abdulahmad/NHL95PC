@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, dword_D30A4, dword_D30A8
-extern dword_D30C4, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, sub_8CC8C, sub_8D2F0
-extern sub_8DBD4, SetPalette, sub_91538, sub_932EC, FindShape, sub_B3A88, sub_B3AA1, sub_B4BA8
+extern dword_D30C4, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, sub_8CC8C, PushMemDescriptorLocked
+extern sub_8DBD4, SetPalette, DrawShapeAtOwnPos, sub_932EC, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
 global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
 global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
 sub_9D090:
@@ -20,9 +20,9 @@ sub_9D090:
 loc_9D0B0:
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [dword_D30C4]
         imul eax, dword [dword_D30A8]
         cmp dword [dword_D2F84], byte 7
@@ -104,7 +104,7 @@ loc_9D0D7:
         mov word [byte eax+0Ch], 0
         mov word [byte eax+0Eh], 0
         push eax
-        call sub_91538
+        call DrawShapeAtOwnPos
         add esp, byte 4
         mov esi, edi
         lea edi, [byte esp+060h]
@@ -175,12 +175,12 @@ loc_9D299:
         mov esi, eax
         mov ebp, dword [dword esp+0B4h]
         push ebp
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 loc_9D2C8:
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         mov eax, esi
         add esp, 0BCh

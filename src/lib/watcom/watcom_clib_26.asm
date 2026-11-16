@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_986EF progbits alloc exec nowrite align=1
-extern __flush_, __ioalloc_, __prtf_, dword_D4D11, fputc_, sub_9D66B, sub_9D671
+extern __flush_, __ioalloc_, __prtf_, dword_D4D11, fputc_, ErrnoPtr, __get_doserrno_ptr_
 global file_putc_, __fprtf_, loc_98723, loc_98741, loc_9876B, loc_98776, sub_98785, __set_errno_
 global __set_ERANGE_, __set_EINVAL_, __set_doserrno_, sub_987B9
 file_putc_:
@@ -76,7 +76,7 @@ sub_98785:
 __set_errno_:
         push edx
         mov edx, eax
-        call sub_9D66B
+        call ErrnoPtr
         mov dword [eax], edx
         pop edx
         ret
@@ -91,7 +91,7 @@ __set_EINVAL_:
 __set_doserrno_:
         push edx
         mov edx, eax
-        call sub_9D671
+        call __get_doserrno_ptr_
         mov dword [eax], edx
         pop edx
         ret

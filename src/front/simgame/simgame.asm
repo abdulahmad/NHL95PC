@@ -6,7 +6,7 @@ extern __CHK, addtimer, CareerDbPtr, CareerDbPtr2, cddriveptr, FadePalStep, file
 extern gameopts, KeyDbPtr, loadpals, loadscreenon, MakePath, memcpy_, memset_, palcycledelay
 extern palcyclelock, palcyclephase, rand_, ReadDbRec4Ch, ReadTeamRec, seasondb, SeasonDbPtr, SeasonDbPtr2
 extern SetTickDeadline, simdorder, simfwdorder, str_LoadPic, str_Pal23, AllocMemBlock, sub_8DAB8, LoadBank
-extern SetPalette, DrawArtOpaque, FindShape, ClearScreen, VgaSetPalette, sub_B4BA8, sub_B4C61, tag_ags
+extern SetPalette, DrawArtOpaque, FindShape, ClearScreen, VgaSetPalette, SetScreenTarget, sub_B4C61, tag_ags
 extern tag_agset, tag_aps, tag_apset, tag_at, tag_gk, tag_gs, tag_gset, tag_pk
 extern tag_ps, tag_pset, tag_t, WaitTickDeadline, WriteTeamRec
 global RandMod, SimAddPair, SimulateGame, LoadScreenPalTick, ShowLoadingScreen
@@ -2746,7 +2746,7 @@ ShowLoadingScreen:
         mov edx, loadpals
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4

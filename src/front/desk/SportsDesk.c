@@ -105,7 +105,7 @@ void SportsDesk(int mode)
         SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
     }
-    sub_B4BA8();
+    SetScreenTarget();
     sprintf((char *)deskbankname, (char *)str_Eadesk1d, mode);
     MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)deskbankname, 0);
     bank = LoadBank(path, 0);
@@ -194,7 +194,7 @@ void SportsDesk(int mode)
                 FreeMemBlock(ptr);
                 if (musicon && songdata) {
                     while (!SndQuery(musicslot, 3));
-                    sub_8D2F0(songdata);
+                    PushMemDescriptorLocked(songdata);
                     songdata = 0;
                 }
                 DeskReloadGame();
@@ -262,7 +262,7 @@ void SportsDesk(int mode)
                         if (ptr) FreeMemBlock(ptr);
                         if (musicon && songdata) {
                             while (!SndQuery(musicslot, 3));
-                            sub_8D2F0(songdata);
+                            PushMemDescriptorLocked(songdata);
                             songdata = 0;
                         }
                         if (r == 1) DeskReloadGame();

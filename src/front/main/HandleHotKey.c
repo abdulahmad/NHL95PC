@@ -1,12 +1,12 @@
 /* Main startup: in-game hot keys. */
-#define sub_90354 sub_90354_decl
-#define sub_9035C sub_9035C_decl
+#define ShapeBankCount sub_90354_decl
+#define ShapeBankEntry sub_9035C_decl
 #include "nhl95.h"
-#undef sub_90354
-#undef sub_9035C
+#undef ShapeBankCount
+#undef ShapeBankEntry
 
-int __cdecl sub_90354(int bank);  /* graphics library: frames in a bank */
-int __cdecl sub_9035C(int bank, int n);  /* graphics library: frame n of a bank */
+int __cdecl ShapeBankCount(int bank);  /* graphics library: frames in a bank */
+int __cdecl ShapeBankEntry(int bank, int n);  /* graphics library: frame n of a bank */
 
 /* HandleHotKey (1118F, PC only; owner of HandleHotKey_ret): act on a hot key from the input queue (bit 7 set, the
    scan code in bits 0-6). F1-F4 / F5-F8 (3Bh-3Eh / 3Fh-42h) request a line change for the home / away team
@@ -145,7 +145,7 @@ void PlayGame(int *fh)
         if (SetupGame() < 0) {
             gameresult = 2;
             sub_1B982();
-            sub_B4BA8();
+            SetScreenTarget();
             goto desk;
         }
         SetupGoalieMenu();
@@ -181,7 +181,7 @@ void PlayGame(int *fh)
             MakePath(path, fileoncd[ovlartfiles[ovlseq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[ovlseq],
                 (char *)str_PPV);
             ovlartbank = sub_8E8A0(path, 0x20);
-            for (i = 0; i < sub_90354(ovlartbank); i++) ovlstepart[i] = sub_9035C(ovlartbank, i);
+            for (i = 0; i < ShapeBankCount(ovlartbank); i++) ovlstepart[i] = ShapeBankEntry(ovlartbank, i);
         }
         PaPreloadClips(teamabbrevs[HomeTeam], teamabbrevs[VisTeam]);
     }

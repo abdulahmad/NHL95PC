@@ -165,7 +165,7 @@ void PlayLeagueGame(int *fh)
             do
                 slot = musicslot;
             while (SndQuery(slot, 3) == 0);
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
     } else {
@@ -228,7 +228,7 @@ void PlayLeagueGame(int *fh)
                         do
                             slot = musicslot;
                         while (SndQuery(slot, 3) == 0);
-                        sub_8D2F0(songdata);
+                        PushMemDescriptorLocked(songdata);
                         songdata = 0;
                     }
                     if (*fh >= 0) ShowLoadingScreen();
@@ -396,7 +396,7 @@ void PlayLeagueGame(int *fh)
                 do
                     slot = musicslot;
                 while (SndQuery(slot, 3) == 0);
-                sub_8D2F0(songdata);
+                PushMemDescriptorLocked(songdata);
                 songdata = 0;
             }
             InputInstall();

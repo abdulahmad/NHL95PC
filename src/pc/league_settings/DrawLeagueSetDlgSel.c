@@ -15,7 +15,7 @@ int DrawLeagueSetDlgSel(void)
     char *dir;
     char *ext;
 
-    sub_B4BA8();
+    SetScreenTarget();
     if (leaguesetimg[0]) {
         ext = 0;
         name = (char *)str_Setting5;
@@ -39,6 +39,6 @@ int DrawLeagueSetDlgSel(void)
     }
     if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     DrawSettingsHeading(0x0A, 0x13, leaguesetimg[0] ? 5 : 3, gamemode, 0xFA);
-    sub_B4BA8();
+    SetScreenTarget();
     return 0;
 }

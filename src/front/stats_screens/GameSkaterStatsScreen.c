@@ -30,7 +30,7 @@ int GameSkaterStatsScreen(int cat)
     statspal = (int)buf;
     SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     LeadersScreen(cat);
     DrawMenuBar(skaterstatsmenubar, 4, 0x40, 0x41, 0x42);
@@ -76,7 +76,7 @@ int GameStandingsMenu(void)
     statsplayer[2] = 0;
     SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     dword_C6D26 = 0;
     InitMenuRemap(1);

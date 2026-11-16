@@ -17,7 +17,7 @@ extern rockteamcues, rocktunes, rpl_x, rpl_x_e16, rpl_y, SaveHilight, savepal, s
 extern scrolly, SelectRinkBM, SelectScreenBM, SetClipWindow, SetDialogColors, SetPalette, SetRinkScroll, SetScreenSize
 extern SetTickDeadline, SetViewRect, sounddev, spritedrawcount, str_ADROCKU, str_BothTeams, str_Gad1, str_Gadget5
 extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, sub_6ADA7
-extern sub_6AF52, sub_6AF97, sub_6B008, sub_8E8A0, sub_96A78, sub_B4BA8, sub_B4CD8, sub_B4FAC
+extern sub_6AF52, sub_6AF97, sub_6B008, sub_8E8A0, sub_96A78, SetScreenTarget, sub_B4CD8, FillRectColor
 extern sub_B500C, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
@@ -467,7 +467,7 @@ DrawGadgetButton:
         push edi
         mov edx, dword [byte esp+010h]
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 10h
         push ebp
@@ -475,14 +475,14 @@ DrawGadgetButton:
         push ebx
         push edi
         push ebx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 15h
         push ebp
         push esi
         push edi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 15h
         push ebp
@@ -490,7 +490,7 @@ DrawGadgetButton:
         push ebp
         mov esi, dword [byte esp+010h]
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         add esp, byte 4
 DrawGadgetButton_ret:
@@ -999,7 +999,7 @@ InstantReplay:
         push ebx
         call FreeMemBlock
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         cmp dword [esp], byte 0
         jne short .30
         mov edx, 1E0h
@@ -1639,7 +1639,7 @@ ReplaySaveHilight:
         sub esp, byte 64h
         push edx
         push ebx
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [ctl1team]
         test edx, edx
         jl short .1
@@ -1758,7 +1758,7 @@ ReplaySaveHilight:
         add esp, byte 0Ch
         mov eax, 7
         call DrawGadgetButton
-        call sub_B4BA8
+        call SetScreenTarget
         push dword 0C8h
         push byte 0
         push dword 140h
@@ -1923,7 +1923,7 @@ ReplaySaveHilight:
         add eax, byte 50h
         push eax
         push byte 4Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 10h
         mov edx, dword [hilightslot]
@@ -1935,7 +1935,7 @@ ReplaySaveHilight:
         push dword 0D8h
         push eax
         push byte 4Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 59h
         mov edx, dword [hilightslot]
@@ -1947,7 +1947,7 @@ ReplaySaveHilight:
         push dword 0D8h
         push eax
         push byte 4Fh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 59h
         mov edx, dword [hilightslot]
@@ -1960,7 +1960,7 @@ ReplaySaveHilight:
         add eax, byte 51h
         push eax
         push dword 0D8h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 13h
         mov edx, dword [hilightslot]
@@ -2087,7 +2087,7 @@ ReplaySaveHilight_n3:
         mov edx, ecx
         mov eax, 14h
         call SetDialogColors
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         push byte 0
         push byte 0

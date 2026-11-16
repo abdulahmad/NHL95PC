@@ -6,12 +6,12 @@ extern abs_, str_RemovewindowROWSPACE, str_FshVshQfsQvs, str_Vsh, str_Qvs, byte_
 extern byte_F1704, byte_F1705, byte_F1784, byte_F188C, byte_F188D, byte_F188E, byte_F1A1C, byte_F234D
 extern byte_F234E, dword_D2F60, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F92, dword_D4F96, dword_D4F9A
 extern dword_EDAA8, dword_F1888, dword_F1890, dword_F189C, dword_F22FC, FatalError, stricmp_, AllocMemBlockEx
-extern sub_8D2F0, sub_8D728, sub_8F0D7, sub_8FCAC, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
-extern sub_A2610, sub_A27C4, sub_A28F0, sub_A2AB8, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
+extern PushMemDescriptorLocked, FindCachedFile, sub_8F0D7, sub_8FCAC, sub_971DB, SndDriverCall, sub_9722E, sub_A2000
+extern SplitFileExt, LoadPackedCore, ConvertShapeBank, ConvertShapeBankInPlace, sub_B6FFC, sub_B7005, unk_F1884, unk_F21FC
 extern word_D4F88
-global sub_98B30, sub_98BEC, sub_98D20, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
+global sub_98B30, sub_98BEC, FillRowTable, loc_98D43, loc_98D67, loc_98D6D, loc_98D7D, loc_98D8E
 global loc_98DA1, loc_98DB7, loc_98DC3, loc_98DCD, loc_98DCF, removewindow, loc_98DF6, loc_98E06
-global loc_98E17, loc_98E36, loc_98E47, sub_98E50, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
+global loc_98E17, loc_98E36, loc_98E47, LoadFileCached, loc_98EAA, loc_98EFB, loc_98F0A, sub_98F11
 global loc_98F44, sub_98F46, loc_98F54, loc_98FA5, loc_98FA7, loc_98FD7, loc_98FDB, loc_98FEC
 global loc_98FED, loc_9900E, loc_99064, loc_9906B, loc_9907B, loc_99091, loc_9909A, loc_990C4
 global sub_990CB, loc_99116, loc_9912B, loc_9912F, loc_99165, loc_99185, loc_991C1, loc_991C7
@@ -182,7 +182,7 @@ sub_98BEC:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_98D20:
+FillRowTable:
         push ecx
         push esi
         push edi
@@ -329,7 +329,7 @@ loc_98E47:
         pop ebx
         ret
         db 00h,00h,00h
-sub_98E50:
+LoadFileCached:
         push esi
         push edi
         push ebp
@@ -341,12 +341,12 @@ sub_98E50:
         push eax
         mov edx, dword [byte esp+07Ch]
         push edx
-        call sub_A2610
+        call SplitFileExt
         mov esi, eax
         add esp, byte 0Ch
         mov eax, esp
         push eax
-        call sub_8D728
+        call FindCachedFile
         add esp, byte 4
         test eax, eax
         jne near loc_98F0A
@@ -367,14 +367,14 @@ loc_98EAA:
         push eax
         lea eax, [byte esp+08h]
         push eax
-        call sub_A27C4
+        call LoadPackedCore
         mov esi, eax
         add esp, byte 0Ch
         test eax, eax
         je short loc_98F0A
         mov ebx, dword [eax]
         push ebx
-        call sub_A2AB8
+        call ConvertShapeBankInPlace
         add esp, byte 4
         push edi
         push ebp
@@ -388,10 +388,10 @@ loc_98EAA:
         push ecx
         mov ebp, dword [esi]
         push ebp
-        call sub_A28F0
+        call ConvertShapeBank
         add esp, byte 8
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         mov eax, edi
         jmp short loc_98F0A
@@ -400,7 +400,7 @@ loc_98EFB:
         push ebp
         lea eax, [byte esp+08h]
         push eax
-        call sub_A27C4
+        call LoadPackedCore
         add esp, byte 0Ch
 loc_98F0A:
         add esp, byte 64h

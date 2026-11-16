@@ -94,7 +94,7 @@ int EditRosters(MenuItem *bar, int n, int col1, int col2, int col3)
     ClearInputQueue();
     do {
         if (musicon && songdata && SndQuery(musicslot, 3)) {
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
         bits = 0;

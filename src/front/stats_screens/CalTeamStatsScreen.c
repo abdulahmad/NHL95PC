@@ -30,7 +30,7 @@ int CalTeamStatsScreen(int cat)
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)TeamStatsScreen;
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     FadePalStep(1, buf, 0x10);
     FreeCalendarIfLowMem();
@@ -71,7 +71,7 @@ int CalSkaterStatsScreen(int cat)
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     FadePalStep(1, buf, 0x10);
     FreeCalendarIfLowMem();
@@ -111,7 +111,7 @@ int CalGoalieStatsScreen(int cat)
     leaguestatsmode = 1;
     statscategory = cat;
     statsredrawcb = (int)LeadersScreen;
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     FadePalStep(1, buf, 0x10);
     FreeCalendarIfLowMem();
@@ -181,7 +181,7 @@ int CalStandingsMenu(void)
     FreeMemBlock(statsbgshapes);
     ((void (*)(void *, int, int, int, int))RunTeamPickMenu)(standingsmenubar, 4, 0x40, 0x41, 0x42);
     FreeDeskBuffers();
-    sub_B4BA8();
+    SetScreenTarget();
     while (deskexit != 1) {
         switch (deskexit) {
         case 2:
@@ -191,7 +191,7 @@ int CalStandingsMenu(void)
             ((void (*)(void *, int, int, int, int))RunTeamPickMenu)(standingsmenubar, 4, 0x40, 0x41, 0x42);
             if (statsplayoffs) {
                 FreeDeskBuffers();
-                sub_B4BA8();
+                SetScreenTarget();
             }
             dword_C6D26 = 0;
             break;

@@ -65,7 +65,7 @@ int TradeScreen(char *dir, int *teams, int b, int c, int d)
     int font;
     int shape;
 
-    sub_B4BA8();
+    SetScreenTarget();
     r = AllocMemBlock((char *)str_Temp6, 0x300, 0x20);
     SetPalette(0, 0x100, (unsigned char *)r);
     FadePalStep(1, (unsigned char *)r, 0x10);

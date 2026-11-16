@@ -44,10 +44,10 @@ extern word_D73D8, word_D73DA, word_D73DC, word_D73DE, word_D73E0, word_D73E2, w
 extern word_D73E8, word_D73EA, word_D73EC, word_D73EE, word_D73F0, word_D73F2, word_D73F4, word_D73F6
 extern word_D73F8, word_D73FA, word_D73FC, word_D73FE, word_D7400, word_D7402, word_D7404, word_D7406
 extern word_D7408, word_D740A, word_D740C, word_D740E, word_D7410, word_D7412, word_D7414
-global sub_A6BE1, loc_A6BF7, loc_A6BF9, loc_A6C0E, loc_A6C1C, loc_A6C1D, loc_A6C31, loc_A6C38
+global StrToLong, loc_A6BF7, loc_A6BF9, loc_A6C0E, loc_A6C1C, loc_A6C1D, loc_A6C31, loc_A6C38
 global loc_A6C44, loc_A6C49, loc_A6C53, loc_A6C64, loc_A6C7B, loc_A6C7E, loc_A6C89, loc_A6CA6
 global loc_A6CA9, loc_A6CB0, loc_A6CB6, loc_A6CCE, loc_A6CD3, loc_A6CF3, loc_A6D01, loc_A6D08
-global loc_A6D11, loc_A6D13, sub_A6D1A, loc_A6D1D, sub_A6D24, sub_A6D2C, loc_A6D40, loc_A6D5D
+global loc_A6D11, loc_A6D13, sub_A6D1A, loc_A6D1D, strtoul_, DigitValue, loc_A6D40, loc_A6D5D
 global loc_A6D67, loc_A6D70, loc_A6D7A, sub_A6D84, loc_A6D8B, sub_A6D8D, sub_A6DA0, loc_A6DB2
 global loc_A6DE5, sub_A6DED, sub_A6DF8, loc_A6E02, sub_A6E10, loc_A6E54, loc_A6E66, loc_A6E78
 global sub_A6E7B, loc_A6E9F, sub_A6EA2, loc_A6EC0, sub_A6EC3, loc_A6F08, loc_A6F17, sub_A6F1B
@@ -67,7 +67,7 @@ global loc_A9B7C, loc_A9B88, loc_A9B8F, sub_A9BA4, loc_A9BB5, loc_A9BBA, loc_A9B
 global loc_A9C08, sub_A9C1B, loc_A9C33, sub_A9C37, sub_A9C4A, loc_A9C60, unk_A9C80, unk_A9C81
 global unk_A9C83, unk_A9C85, unk_A9C86, unk_A9C88, unk_A9C89, unk_A9C8A, unk_A9C8E, unk_A9C8F
 global unk_A9C90, unk_A9C91, unk_A9C92, unk_A9C96, unk_A9C98
-sub_A6BE1:
+StrToLong:
         push esi
         push edi
         push ebp
@@ -148,7 +148,7 @@ loc_A6C7E:
 loc_A6C89:
         xor eax, eax
         mov al, byte [edx]
-        call sub_A6D2C
+        call DigitValue
         cmp eax, esi
         jge short loc_A6CA9
         mov ecx, ebx
@@ -212,14 +212,14 @@ sub_A6D1A:
         push ecx
         xor ecx, ecx
 loc_A6D1D:
-        call sub_A6BE1
+        call StrToLong
         pop ecx
         ret
-sub_A6D24:
+strtoul_:
         push ecx
         mov ecx, 1
         jmp short loc_A6D1D
-sub_A6D2C:
+DigitValue:
         push edx
         mov dl, al
         cmp al, 30h

@@ -17,7 +17,7 @@ int ReadLeagueInfo(char *dir, void *teams, char *pw, short *b, void *a, void *d,
 
     fh = -1;
     MakePath(path, dir, (char *)str_PINFO, (char *)str_extDB);
-    if (sub_B3CC8(path) == 0) {
+    if (FindFirstFile(path) == 0) {
         err = 1;
         strcpy(lg, (char *)&curleague);
         lg[_fstrcspn(lg, (char *)&str_dot)] = 0;

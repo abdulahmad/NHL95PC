@@ -9,7 +9,7 @@ void DrawExhSetDlg(void)
     char path[32];
     int bank;
 
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0x176] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting6, 0);
     bank = LoadBank(path, 0);
     sub_91284(FindShape(bank, (char *)str_Dbox4), 0xA, 0x13);

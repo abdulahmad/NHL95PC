@@ -51,7 +51,7 @@ int ListDialog(char **items, int n, char *title, unsigned align, int marks, char
 
     s.title = title;
     s.align = align;
-    sub_B4BA8();
+    SetScreenTarget();
     s.top = s.scroll = 0;
     cur = 0;
     if (marks) cur = -1;

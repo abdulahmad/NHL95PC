@@ -2,10 +2,10 @@
 bits 32
 %include "hockey.inc"
 section s_A2F40 progbits alloc exec nowrite align=1
-extern _FtoS_, byte_D42E4, dword_D30C8, dword_D43E4, forcedecpt_, sub_90354, sub_9035C, sub_90373
-extern PutBlock, sub_B01B0, sub_B026C, sub_B3ABC, sub_B763B
+extern _FtoS_, byte_D42E4, dword_D30C8, dword_D43E4, forcedecpt_, ShapeBankCount, ShapeBankEntry, sub_90373
+extern PutBlock, sub_B01B0, sub_B026C, bcopy, sub_B763B
 global sub_A2F40, loc_A2F61, sub_A2F84, sub_A2FD0, loc_A3006, loc_A3015, loc_A3024, loc_A302C
-global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, sub_A30D0, sub_A30F8, loc_A3105
+global sub_A3050, loc_A308C, loc_A3092, loc_A30A1, loc_A30AA, _EFG_Format_, sub_A30F8, loc_A3105
 global loc_A312B, loc_A312C, loc_A313F, loc_A3172, loc_A317C, loc_A3189, loc_A3196, loc_A3199
 global loc_A319E, loc_A31BF, loc_A31EE, loc_A31F2, loc_A31FA, loc_A3210
 sub_A2F40:
@@ -27,7 +27,7 @@ loc_A2F61:
         push edx
         call PutBlock
         add esp, byte 0Ch
-        mov dword [dword_D43E4], sub_B3ABC
+        mov dword [dword_D43E4], bcopy
         ret
         db 08Dh,040h,00h
 sub_A2F84:
@@ -167,7 +167,7 @@ loc_A30AA:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_A30D0:
+_EFG_Format_:
         mov ebx, dword [byte esp+04h]
         mov edx, dword [byte ebx+02h]
         sar edx, 10h
@@ -200,16 +200,16 @@ loc_A3105:
         je short loc_A312B
         push esi
         push edi
-        call sub_9035C
+        call ShapeBankEntry
         add esp, byte 8
         push eax
-        call sub_A30D0
+        call _EFG_Format_
         add esp, byte 4
 loc_A312B:
         inc esi
 loc_A312C:
         push edi
-        call sub_90354
+        call ShapeBankCount
         add esp, byte 4
         cmp esi, eax
         jl short loc_A3105

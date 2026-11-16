@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_9AFAD progbits alloc exec nowrite align=1
-global sub_9AFAD
-sub_9AFAD:
+global McgaNoWindow
+McgaNoWindow:
         xor eax, eax
         ret

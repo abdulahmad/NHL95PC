@@ -8,9 +8,9 @@ extern byte_F23BC, byte_F23CC, byte_F23CD, byte_F23CF, byte_F23E0, byte_F243E, d
 extern sndhandlecount, dword_D4F8A, dword_D4F8E, dword_D4F92, dword_D4F96, dword_D4F9A, dword_EDCFC, dword_EDD00
 extern dword_EDD04, dword_EDE34, dword_EDE5C, dword_F189C, dword_F18A4, dword_F1A1E, dword_F22FC, dword_F2300
 extern dword_F2304, dword_F2308, dword_F230C, dword_F23EA, dword_F23EE, dword_F2416, FreeMemBlock, RemoveTimerCallback
-extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, sub_8D2F0, sub_8DBD4, sub_8DBDC
+extern SndLoadFile, SndLoadFile2, sprintf_, strlen_, sub_8D144, PushMemDescriptorLocked, sub_8DBD4, MemDescSize
 extern sub_97166, sub_971BE, SndDriverCall, sub_9720B, sub_97268, sub_98F11, sub_98F46, sub_99522
-extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, sub_B3454, sub_B3ABC, sub_B3FB0
+extern sub_99620, sub_996B0, sub_99700, sub_997B7, sub_998A0, AddExitHandler, bcopy, FillMem
 extern unk_C3FD5, unk_D41D2, unk_F21FC, word_D4F68, word_D4F88
 global sub_8EB5B, loc_8EB8D, sub_8EB93, loc_8EBAB, loc_8EBB4, loc_8EBBB, sub_8EBE2, loc_8EBEB
 global loc_8EC08, loc_8EC12, loc_8EC26, loc_8EC30, loc_8EC3D, loc_8EC47, loc_8EC53, loc_8EC5D
@@ -50,7 +50,7 @@ sub_8EB5B:
         cmp byte [byte_D41CC], 0
         jne short loc_8EB8D
         push sub_8EB93
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 4
         mov byte [byte_D41CC], 1
 loc_8EB8D:
@@ -205,7 +205,7 @@ loc_8ECDE:
         jmp near loc_8EDCB
 loc_8ED0A:
         push eax
-        call sub_8DBDC
+        call MemDescSize
         add esp, byte 4
         push eax
         push byte_F23CC
@@ -214,7 +214,7 @@ loc_8ED0A:
         call sub_8DBD4
         add esp, byte 4
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         lea eax, [byte esp+010h]
         call sub_8FF3E
@@ -785,7 +785,7 @@ loc_8F2F8:
         push byte 0
         push byte 54h
         push esi
-        call sub_B3FB0
+        call FillMem
         add esp, byte 0Ch
         mov al, byte [byte esp+01Ch]
         mov byte [esi], al
@@ -1468,7 +1468,7 @@ loc_8F9F6:
         lea edx, [byte esp+030h]
         push edx
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         add esi, byte 24h
         xor eax, eax
@@ -1494,7 +1494,7 @@ loc_8FA46:
         lea edx, [byte esp+04h]
         push edx
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov esi, 2Ch
         mov eax, dword [byte esp+018h]
@@ -1508,7 +1508,7 @@ loc_8FA46:
 loc_8FA83:
         mov ecx, dword [byte esp+054h]
         push ecx
-        call sub_8DBDC
+        call MemDescSize
         add esp, byte 4
         sub eax, esi
         push eax
@@ -1516,11 +1516,11 @@ loc_8FA83:
         push ebp
         lea eax, [edi+esi]
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [byte esp+054h]
         push eax
-        call sub_8DBDC
+        call MemDescSize
         add esp, byte 4
         sub eax, esi
         add eax, byte 10h
@@ -2026,7 +2026,7 @@ sub_8FF3E:
         test edx, edx
         je short loc_8FF59
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         mov dword [esi], 0
 loc_8FF59:

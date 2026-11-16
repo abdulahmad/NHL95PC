@@ -65,14 +65,14 @@ void SpeechTimerTick(void)
 
 /* ShutdownSpeech: when the speech system is up, remove the SpeechTimerTick timer handler,
  close the open bank file (flag +3B78h, handle +3B7Ch of speechbank), free the speech queue, the sample memory
- (+3B60h, sub_8D2F0), the bank and the request block, and clear speechinit. */
+ (+3B60h, PushMemDescriptorLocked), the bank and the request block, and clear speechinit. */
 void ShutdownSpeech(void)
 {
     if (speechinit != 0) {
         RemoveTimerCallback(SpeechTimerTick);
         if (BANKD(0x3B78) != 0) _dos_close(BANKD(0x3B7C));
         FreeMemBlock(speechq);
-        sub_8D2F0(BANKD(0x3B60));
+        PushMemDescriptorLocked(BANKD(0x3B60));
         FreeMemBlock((int)speechbank);
         FreeMemBlock((int)samplereq);
         speechinit = 0;

@@ -69,7 +69,7 @@ int SkaterStatsCard(void)
     lseek(fh, pl[0] * 0x4C, 0);
     read(fh, s.abbr, 5);
     j___close(fh);
-    sub_B4BA8();
+    SetScreenTarget();
     sprintf((char *)printfbuf, (char *)str_fmtEmb, s.abbr);
     MakePath(s.path, fileoncd[pl[0] + 0x70] == 1 ? (char *)cddriveptr : 0, (char *)printfbuf, 0);
     statsbgshapes = LoadBank(s.path, 0);
@@ -89,10 +89,10 @@ int SkaterStatsCard(void)
         bank = LoadBank(s.path, 0);
         memcpy(s.name, pl + 0x30, 4);
         s.name[4] = 0;
-        art = sub_B30BB(bank, s.name);
+        art = FindShapeQuiet(bank, s.name);
         if (art) {
             s.name[0] = 0x21;
-            DrawPhotoWithPal((unsigned char *)sub_B30BB(bank, s.name) + 0x10, art, 0x21, 0x26);
+            DrawPhotoWithPal((unsigned char *)FindShapeQuiet(bank, s.name) + 0x10, art, 0x21, 0x26);
             FreeMemBlock(bank);
             MakePath(s.path, fileoncd[0x13C] == 1 ? (char *)cddriveptr : 0, (char *)str_Pstatbar3, 0);
             statsbgshapes = LoadBank(s.path, 0);

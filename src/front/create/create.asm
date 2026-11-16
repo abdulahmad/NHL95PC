@@ -21,7 +21,7 @@ extern str_fmtD, str_fmtpd, str_fmtSS, str_FreeAgent, str_GloveHand, str_GloveHa
 extern str_LCRD, str_LeftWing, str_NewPlayer, str_NotAddedToDatabases, str_NotEnoughRatingUnits, str_NotEnoughSpaceTo, str_NotEnoughSpaceTo2, str_Pal2
 extern str_Prez22, str_Pst2, str_Pstatbar, str_R5, str_RatingRange, str_RatingUnitsAvailable3d, str_RightWing, str_Shoots
 extern str_ShootsLeftOrRight, str_space, str_spL, str_spR, str_Temp, str_ThereIsNoSpace, str_TheSelectedPlayer, str_TMP
-extern str_Two, str_XXXKbytesOfFree, strcat_, strcpy_, strlen_, strupr_, sub_B4BA8, teamsdb_size
+extern str_Two, str_XXXKbytesOfFree, strcat_, strcpy_, strlen_, strupr_, SetScreenTarget, teamsdb_size
 extern TextSetFont, tmpdbpath, TrackButtons, WriteLeagueDbsMem
 global SplitPlayerName, MoveToOtherRoster, RatingToFloat, RandomizeNewRatings, CreatePlayerNop, DrawShootsField, DrawShootsField_tail, DrawShootsField_pop
 global DrawGloveField, AskLeftRight, EditSkaterRating, EditSkaterRating_tail, EditGoalieRating, DrawCreatePlayer, CreatePlayerLoop, CreateFreeAgent
@@ -1706,7 +1706,7 @@ DrawCreatePlayer:
         mov edx, 2
         mov eax, str_Two
         call DrawButtons
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [fullscrbmp]
         mov edi, dword [byte eax+02Ch]
         push edi

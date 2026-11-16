@@ -23,7 +23,7 @@ int GameStandingsScreen(void)
         DrawMenuBar(standingsmenubar, 4, 0x40, 0x41, 0x42);
     } else {
         FreeDeskBuffers();
-        sub_B4BA8();
+        SetScreenTarget();
         DrawMenuBar(standingsmenubar, 4, 0x40, 0x41, 0x42);
         StandingsScreen(statsteambuf, (int)statsteamorder);
     }

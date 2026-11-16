@@ -11,7 +11,7 @@ extern statsleague, statspalshape, statsplayerbuf, statsplayerdbs, statsplayoffs
 extern statsteamdbs, str_Addsort2, str_Bkgd2, str_C2, str_fmt2d, str_fmt3d, str_fmt4d, str_fmt5d
 extern str_fmtMinSec, str_fmtPct, str_fmtPct0, str_fmtTenths, str_GP6, str_Gstat, str_KeyDb2, str_Keys
 extern str_NO, str_PLAYER2, str_POS, str_Pst26, str_Pstat, str_Pstatbar7, str_StatsUnavailable2, str_TEAM
-extern sub_B4BA8, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont, treecol_Er1, treecol_Er2
+extern SetScreenTarget, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState, TextSetFont, treecol_Er1, treecol_Er2
 extern treecol_Wr2, treecolslots, treecolx, treerowy
 global CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct, CmpGoalieWins
 global CmpSavePct, LeadersScreen_coljt, LeadersScreen, LeadersScreen_colPPG, LeadersScreen_colSHG, LeadersScreen_colPIM, LeadersScreen_colPlusMinus, LeadersScreen_colShootPct
@@ -1627,7 +1627,7 @@ LeadersScreen:
         call j___close_
         mov edi, dword [mainfont]
         mov esi, dword [kaufmfont]
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, dword [statsplayoffs]
         mov ebx, dword [nosplit ebx*4+statsbgnames]

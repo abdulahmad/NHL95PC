@@ -33,12 +33,12 @@ extern ShowGoalieBanner, ShowLoadingScreen, shownumbers, songdata, SpeechStopQue
 extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_CheckRefCard2, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_errd3
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
-extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, sub_6A9CE
-extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0, sub_8DF54, initgraphics
+extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, InitZoneManager
+extern sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
 extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, sub_8F633, sub_8F963, sub_8F96E, sub_8F979
-extern sub_8F984, SndQuery, sub_8FCDF, SetPalette, sub_90354, sub_9035C, sub_B29F0, KeyDown
-extern SetViewRect, sub_B2F22, sub_B3036, FindShape, sub_B30F4, sub_B33DB, ReadJoyRaw, ClearScreen
-extern sub_B3A24, sub_B4B58, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C33, sub_B4C84, teamabbrevs
+extern sub_8F984, SndQuery, sub_8FCDF, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
+extern SetViewRect, InitMouse, sub_B3036, FindShape, sub_B30F4, JoyResetCentres, ReadJoyRaw, ClearScreen
+extern KbdFlush, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetrace, sub_B4C84, teamabbrevs
 extern TicksSinceLastCall, treeteamnames, blackpal, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05
 extern awardwinners_e06, awardwinners_e08, awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly
 extern VisTeam, vtoa, WaitTickDeadline, word_CBC44
@@ -267,7 +267,7 @@ main_:
         call addtimer
         add esp, byte 4
         or byte [ctlavailmask], 8
-        call sub_B2F22
+        call InitMouse
         test eax, eax
         je short .8
         or byte [ctlavailmask], 1
@@ -293,7 +293,7 @@ main_:
         mov eax, 280h
         call SetScreenSize
         mov eax, 64h
-        call sub_6A9CE
+        call InitZoneManager
         xor ecx, ecx
         mov ebx, str_Pointer3
         cmp byte [fileoncd+013Ah], 1
@@ -402,7 +402,7 @@ main_:
         and eax, 0FFh
         inc eax
         push eax
-        call sub_B33DB
+        call JoyResetCentres
         add esp, byte 4
         test byte [byte_D416A], 3
         je short .20
@@ -548,7 +548,7 @@ main_:
         je short main_.34
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx
@@ -556,7 +556,7 @@ main_:
         call ShowLoadingScreen
         call InputInstall
         call ShowCredits
-        call sub_B4B58
+        call SetTextMode
         call dword [bailout_vec]
 main_x:
         add esp, byte 70h
@@ -723,12 +723,12 @@ SetupControllers:
         xor cl, cl
         mov byte [pad2dev], cl
 .20:
-        call sub_B2F22
+        call InitMouse
         push byte 64h
         push dword 0A0h
         call MouseSetPos
         add esp, byte 8
-        call sub_B29F0
+        call RemoveKeyboardHandler
         xor ebp, ebp
         mov dword [joysampling], ebp
         pop ebp
@@ -1424,7 +1424,7 @@ SetScreenSize:
         push byte 0
         call VgaSetPalette
         add esp, byte 0Ch
-        call sub_B4BA8
+        call SetScreenTarget
         mov ecx, dword [screenh]
         push ecx
         push byte 0
@@ -1439,7 +1439,7 @@ SetScreenSize:
         push byte 28h
         call SetTickDeadline
         add esp, byte 4
-        call sub_B4C33
+        call WaitRetrace
         push edi
         push esi
         call initgraphics
@@ -1687,7 +1687,7 @@ DrawRinkEndArt:
 ;-----------------------------------------------------------------------------
 ; WaitKeyRelease                                                  11161  95 PC
 ; Waits (PollKey) until scan code eax is no longer down, then flushes the key
-; buffer (sub_B3A24)
+; buffer (KbdFlush)
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/WaitKeyRelease.c
 %ifdef CBUILD
@@ -1710,7 +1710,7 @@ WaitKeyRelease:
         call PollKey
         jmp short WaitKeyRelease.1
 .2:
-        call sub_B3A24
+        call KbdFlush
         pop esi
         pop edx
         pop ecx
@@ -2480,14 +2480,14 @@ Gameloop:
         push esi
         mov ebp, dword [ovlartbank]
         push ebp
-        call sub_9035C
+        call ShapeBankEntry
         add esp, byte 8
         mov dword [nosplit esi*4+ovlstepart], eax
         inc esi
 .21:
         mov edi, dword [ovlartbank]
         push edi
-        call sub_90354
+        call ShapeBankCount
         add esp, byte 4
         cmp esi, eax
         jl short Gameloop.20
@@ -2635,7 +2635,7 @@ PlayGame:
         jge short .3
         mov dword [gameresult], 2
         call sub_1B982
-        call sub_B4BA8
+        call SetScreenTarget
         jmp near .15
 .3:
         call SetupGoalieMenu
@@ -2734,14 +2734,14 @@ PlayGame:
         push esi
         mov edx, dword [ovlartbank]
         push edx
-        call sub_9035C
+        call ShapeBankEntry
         add esp, byte 8
         mov dword [nosplit esi*4+ovlstepart], eax
         inc esi
 .12:
         mov eax, dword [ovlartbank]
         push eax
-        call sub_90354
+        call ShapeBankCount
         add esp, byte 4
         cmp esi, eax
         jl short PlayGame.11

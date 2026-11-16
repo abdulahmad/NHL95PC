@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_AFAE0 progbits alloc exec nowrite align=1
-extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC, dword_F6138, sub_B72D4, sub_B7420
+extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC, dword_F6138, SetBlitSource, sub_B7420
 global sub_AFAE0, loc_AFB37, loc_AFB4E, loc_AFB5C, loc_AFBD3, loc_AFBD9, loc_AFCB1, loc_AFCBD
 global loc_AFCEB, loc_AFD87, loc_AFDBC, loc_AFDC5, loc_AFE18, loc_AFE38, loc_AFE5C, loc_AFE86
 global loc_AFEA4, loc_AFEA6, loc_AFEE4, loc_AFF0C, loc_AFF7C, loc_B001F, loc_B002A, loc_B005E
@@ -19,7 +19,7 @@ sub_AFAE0:
         push dword_F6138
         add eax, byte 10h
         push eax
-        call sub_B72D4
+        call SetBlitSource
         add esp, byte 8
         xor esi, esi
         xor edi, edi

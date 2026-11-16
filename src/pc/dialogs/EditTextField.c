@@ -39,7 +39,7 @@ int EditTextField(char *buf, int maxlen, int w, int x, int y, void (*idle)(void)
     int c;
     int ins;
 
-    sub_B4BA8();
+    SetScreenTarget();
     editx = x;
     edity = y;
     editbuf = buf;

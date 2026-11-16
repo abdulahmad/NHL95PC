@@ -38,10 +38,10 @@ extern str_GameSav2, str_GfxIdList, str_GP, str_HILIGHT, str_Iff, str_L, str_Mig
 extern str_Mtafan, str_Mtawards, str_Numshp, str_Pal3, str_Palmem, str_Pct, str_PIM, str_PlusMinus
 extern str_PPG, str_PPV, str_Pt, str_Scrn, str_SHG, str_Shots, str_SO, str_SS
 extern str_Summ, str_T, str_Titl, str_Trinknd, str_VFN, str_W, strcat_, strcpy_
-extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, sub_8D2F0
+extern strnicmp_, sub_1B982, sub_6ADA7, sub_6AF52, sub_6AF97, sub_6B008, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern sub_8F633, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, sub_90354, sub_9035C
-extern DrawBitmap, sub_90B80, FindShape, sub_B30BB, ClearScreen, sub_B4BA8, teamabbrevs, textline1
+extern sub_8F633, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette, ShapeBankCount, ShapeBankEntry
+extern DrawBitmap, ProjectPointList, FindShape, FindShapeQuiet, ClearScreen, SetScreenTarget, teamabbrevs, textline1
 extern textline2, textline3, textline4, textline5, threat, TicksSinceLastCall, treeteamnames, str_ctl07
 extern str_ctl06, awardwinners_e01, awardwinners_e02, awardwinners_e03, awardwinners_e04, awardwinners_e05, awardwinners_e06, awardwinners_e08
 extern awardwinners_e09, awardstats9g, awardstats9, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa
@@ -648,7 +648,7 @@ ShowAwardScreens:
         mov dword [byte esp+02Ch], eax
         push byte 1
         push eax
-        call sub_9035C
+        call ShapeBankEntry
         add esp, byte 8
         push eax
         call DrawBitmap
@@ -1554,7 +1554,7 @@ AwardsCeremony:
         je short AwardsCeremony.2
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -1721,7 +1721,7 @@ AwardsCeremony:
         test eax, eax
         je short .18
         push eax
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .18:
         xor ebx, ebx
@@ -1819,7 +1819,7 @@ AwardsCeremony:
         mov esi, eax
         add esp, byte 8
         call ClearInputQueue
-        call sub_B4BA8
+        call SetScreenTarget
         xor edx, edx
         mov eax, 1
         call SetTextColors
@@ -1838,7 +1838,7 @@ AwardsCeremony:
         call DrawBitmap
         add esp, byte 4
         call DrawAwardsSummary
-        call sub_B4BA8
+        call SetScreenTarget
         push str_Pal3
         push esi
         call FindShape
@@ -1858,7 +1858,7 @@ AwardsCeremony:
         call FreeMemBlock
         add esp, byte 4
 .31:
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1880,7 +1880,7 @@ AwardsCeremony:
         test ebp, ebp
         je short .34
         push ebp
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .34:
         xor edx, edx

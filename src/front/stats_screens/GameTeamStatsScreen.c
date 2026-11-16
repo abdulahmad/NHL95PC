@@ -25,7 +25,7 @@ int GameTeamStatsScreen(int cat)
     statsredrawcb = (int)TeamStatsScreen;
     SetPalette(0, 0x100, buf);
     FadePalStep(1, buf, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     InitMenuRemap(1);
     TeamStatsScreen(cat);
     DrawMenuBar(teamstatsmenubar, 4, 0x40, 0x41, 0x42);
@@ -48,7 +48,7 @@ int GameTeamStatsScreen(int cat)
 }
 
 /* GameGoalieStatsScreen: the goalie-stats page. Same fade and embpal load as the team page, but no
- sub_B4BA8 after the fade-out, LeadersScreen instead of TeamStatsScreen, and menu bar goaliestatsmenubar.
+ SetScreenTarget after the fade-out, LeadersScreen instead of TeamStatsScreen, and menu bar goaliestatsmenubar.
  The menu run and the fade-back are GameTeamStatsScreen_common. Returns 2. */
 int GameGoalieStatsScreen(int cat)
 {

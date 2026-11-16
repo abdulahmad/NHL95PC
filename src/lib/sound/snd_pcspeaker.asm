@@ -6,7 +6,7 @@ extern __GETDS, abs_, byte_D5224, byte_F24D9, byte_F27EE, byte_F27EF, byte_F27FD
 extern dword_D4F9A, dword_F27F6, sub_8F114, sub_9F685, sub_9F725, sub_9FA5D, sub_9FC24, sub_9FC94
 extern sub_A65E8, sub_A6612, sub_A6635, sub_A6672, sub_A6684, sub_A677B, unk_F21FC, unk_F24D8
 extern unk_F27D8
-global sub_9D68E, sub_9D698, sub_9D69E, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, sub_9D6E6
+global CMainHook, sub_9D698, sub_9D69E, loc_9D6A2, loc_9D6B8, loc_9D6C4, loc_9D6D9, sub_9D6E6
 global sub_9D6EC, sub_9D6F3, sub_9D6F9, sub_9D700, loc_9D723, loc_9D73E, loc_9D802, sub_9D805
 global loc_9D81C, loc_9D82B, loc_9D82C, loc_9D832, loc_9D852, loc_9D856, sub_9D858, sub_9D880
 global loc_9D897, loc_9D8D4, loc_9D8D8, loc_9D8FE, loc_9D90F, loc_9D951, loc_9D970, loc_9D98A
@@ -17,7 +17,7 @@ global loc_9DC1B, loc_9DC40, loc_9DC42, loc_9DC44, loc_9DC5F, loc_9DC8C, loc_9DC
 global sub_9DCA5, loc_9DCE6, loc_9DCF2, loc_9DCFA, loc_9DD32, loc_9DD39, loc_9DD51, loc_9DDB4
 global loc_9DDB9, loc_9DDD0, loc_9DDD5, loc_9DDEF, loc_9DE0F, loc_9DE2F, loc_9DE31, loc_9DE53
 global loc_9DE6A, loc_9DE89, loc_9DE8E
-sub_9D68E:
+CMainHook:
         mov eax, esp
         sub eax, dword [_STACKLOW]
         ret

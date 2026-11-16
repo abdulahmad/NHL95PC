@@ -19,8 +19,8 @@ extern rosterteamrec, savepal, SetClipWindow, SetDrawBitmap, SetPalette, SetText
 extern songdata, sprintf_, str_AreYouSureYou, str_C4, str_Current3, str_DATABASE, str_ea, str_extDB
 extern str_fmt2d, str_FreeAgents, str_Menubuff, str_Pal, str_PleaseEnterANew, str_Pointer11, str_Prez2, str_Ratings
 extern str_S5, str_space, str_Temp7, str_TheDatabaseHasNot, str_TheJerseyNumber2d, str_Uar, str_Uarm, strcat_
-extern strcmp_, strcpy_, strlen_, strupr_, sub_8D2F0, sub_8FCDF, sub_9121C, sub_B4BA8
-extern sub_B4FAC, teamdivflags, teamratingidx, teamratingnames, TextRestoreState, TextSaveState, TextSetFont, TrackButtons
+extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, sub_8FCDF, sub_9121C, SetScreenTarget
+extern FillRectColor, teamdivflags, teamratingidx, teamratingnames, TextRestoreState, TextSaveState, TextSetFont, TrackButtons
 extern TrackScrollBars, unk_EAFB8, VisTeam, XorBar
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
 global EditRostersReturn, SelectRosterTeam, ShowFreeAgents, ComparePlayerEntry, ShellSortBytes, LoadRosterList_fa, LoadRosterList_faloop, LoadRosterList_team
@@ -94,7 +94,7 @@ RunEditRosters:
         mov esi, str_Current3
         movsd
         movsd
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [mainfont]
         mov dword [dword_EA2B0], eax
         push eax
@@ -117,7 +117,7 @@ RunEditRosters:
         je short RunEditRosters.2
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -225,7 +225,7 @@ RunEditRosters:
         je short RunEditRosters.5
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -733,28 +733,28 @@ DrawEditRosters:
         push dword 1CBh
         push dword 8Ch
         push dword 0B4h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 40h
         push dword 153h
         push dword 0B4h
         push dword 8Ch
         push dword 0B4h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 42h
         push dword 154h
         push dword 1CCh
         push dword 8Dh
         push dword 1CCh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 42h
         push dword 154h
         push dword 1CCh
         push dword 154h
         push dword 0B5h
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 41h
         push dword 154h
@@ -821,7 +821,7 @@ DrawEditRosters:
         mov eax, btn_EditRosters
         call DrawButtons
 .4:
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [fullscrbmp]
         mov ecx, dword [byte eax+02Ch]
         push ecx
@@ -1823,7 +1823,7 @@ EditTeamLines:
         mov ecx, 3
         mov ebx, dblinesmenubar
         call DbLineEditor
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1967,7 +1967,7 @@ EditRosters:
         je short .4
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx

@@ -67,7 +67,7 @@ int SoundCardDlgLoop(void)
     MouseRead(&s.ev, &s.mx, &s.my);
     s.x = s.mx;
     s.y = s.my;
-    sub_B4BA8();
+    SetScreenTarget();
     GrabBlock(bg, s.x - 4, s.y);
     DrawArt(pointerspr, s.x - 4, s.y);
     ClearInputQueue();
@@ -105,7 +105,7 @@ int SoundCardDlgLoop(void)
                         if (musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x64);
                             while (!SndQuery(musicslot, 3));
-                            sub_8D2F0(songdata);
+                            PushMemDescriptorLocked(songdata);
                             songdata = 0;
                         }
                         if (SetSoundDevice(setbits[0])) {

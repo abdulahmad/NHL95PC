@@ -143,7 +143,7 @@ int SaveGameNameDlg(char *path)
     n = ((short *)pointerspr)[3] * (((short *)pointerspr)[2] + 8) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer22, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
-    sub_B4BA8();
+    SetScreenTarget();
     MouseRead(&n, &ox, &oy);
     x = ox;
     y = oy;

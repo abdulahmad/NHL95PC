@@ -13,10 +13,10 @@ extern scoutcatnames, SetDialogColors, SetTextColors, ShowLoadingScreen, songdat
 extern str_Arena, str_Bkgd4, str_Ctbkgd, str_Ctlogo, str_Cttitle1, str_D4, str_Def, str_extDB
 extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Logoaway, str_Logohome
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
-extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, sub_8D2F0
+extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery
 extern sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
-extern SetViewRect, FindShape, ClearScreen, sub_B4BA8, SetClipWindow, sub_B4FAC, teamabbrevs, teamconf
+extern SetViewRect, FindShape, ClearScreen, SetScreenTarget, SetClipWindow, FillRectColor, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
 PreGameScreen_jt:
@@ -103,7 +103,7 @@ PreGameScreen:
 .3:
         lea eax, [dword esp+0638h]
         call FileClose
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 20h
         push dword 300h
         push str_Pal10
@@ -144,7 +144,7 @@ PreGameScreen:
         je short PreGameScreen.5
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi
@@ -285,7 +285,7 @@ PreGameScreen:
         push dword 21Ch
         push dword 0CFh
         push byte 6Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov edi, dword [boxshadecolor]
         push edi
@@ -293,7 +293,7 @@ PreGameScreen:
         push dword 21Ch
         push dword 0D3h
         push byte 6Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         xor esi, esi
 .11:
@@ -321,7 +321,7 @@ PreGameScreen:
         mov dword [dword esp+0648h], eax
         push ebp
         push byte 6Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov edx, dword [boxshadecolor]
         push edx
@@ -331,7 +331,7 @@ PreGameScreen:
         add edi, byte 0Eh
         push ebx
         push byte 6Eh
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
 .12:
         mov ebp, dword [nosplit esi*4+scoutcatnames]
@@ -792,7 +792,7 @@ PreGameScreen_homelines:
         mov eax, 0FAh
         call SetTextColors
 .3:
-        call sub_B4BA8
+        call SetScreenTarget
 .4:
         mov esi, dword [dword esp+0634h]
         push esi
@@ -845,7 +845,7 @@ PreGameScreen_homelines:
         je short PreGameScreen_homelines.9
         mov ebp, dword [songdata]
         push ebp
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor eax, eax
         mov dword [songdata], eax
@@ -923,7 +923,7 @@ TonightsGameScreen:
         mov dword [dword esp+0E8h], 0FFFFFFFFh
         call ClearInputQueue
         xor ebp, ebp
-        call sub_B4BA8
+        call SetScreenTarget
         push ebp
         call ClearScreen
         add esp, byte 4
@@ -1238,7 +1238,7 @@ TonightsGameScreen:
         mov dword [dword esp+0114h], edx
         jmp near .48
 .20:
-        call sub_B4BA8
+        call SetScreenTarget
         cmp dword [dword esp+0114h], byte 0
         je short .21
         push dword 1E0h
@@ -1410,7 +1410,7 @@ TonightsGameScreen:
         mov esi, eax
         cmp eax, byte 2
         jge near .40
-        call sub_B4BA8
+        call SetScreenTarget
         push dword 1E0h
         push dword 8Ch
         push dword 280h
@@ -1540,7 +1540,7 @@ TonightsGameScreen:
 .40:
         cmp esi, byte 2
         jge near .47
-        call sub_B4BA8
+        call SetScreenTarget
         push dword 1E0h
         push dword 8Ch
         push dword 280h
@@ -1689,7 +1689,7 @@ TonightsGameScreen:
         mov edx, dword [dword esp+0108h]
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -1706,7 +1706,7 @@ TonightsGameScreen:
         je short TonightsGameScreen.51
         mov edx, dword [songdata]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebx, ebx
         mov dword [songdata], ebx

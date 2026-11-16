@@ -88,7 +88,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
     ((short *)ptr)[3] = ((short *)pointerspr)[3] + 1;
     mx = oldmx = (menus[0]->x1 + menus[0]->x2) / 2;
     my = oldmy = (menus[0]->y1 + menus[0]->y2) / 2;
-    sub_B4BA8();
+    SetScreenTarget();
     GrabBlock(ptr, oldmx, oldmy);
     DrawArt(pointerspr, oldmx, oldmy);
     SetViewRect(0, 0, 0x280, 0x1E0);
@@ -168,14 +168,14 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                         MakePath(path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
                         bank = LoadBank(path, 0);
                         fade = (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10;
-                        sub_B4BA8();
+                        SetScreenTarget();
                         dword_C6D26 = 0;
                         DrawPlayoffTree();
                         DrawMenuBar(bar, n, col1, col2, col3);
                         FadePalStep(0, fade, 0x10);
                         FreeMemBlock(bank);
                     }
-                    sub_B4BA8();
+                    SetScreenTarget();
                     if (potreeround != tree) {
                         potreeround = tree;
                         DrawPlayoffTree();
@@ -254,7 +254,7 @@ int PlayoffTreeMenu(MenuItem *bar, int n, int col1, int col2, int col3, int seri
                 depth = 0;
             }
         }
-        sub_B4BA8();
+        SetScreenTarget();
         GrabBlock(ptr, mx, my);
         DrawArt(pointerspr, mx, my);
         oldmx = mx;

@@ -2,10 +2,10 @@
  changeplayer, setplayer (5B2C5, jumps to changeplayer_ret5 at 5B821) and DrawRinkOverlays
  (5CE12, jumps at 5D7F2). Unmarked functions here are drafts; see tools/c_functions.csv. */
 #define setplayer setplayer_decl
-#define sub_B340B sub_B340B_decl
+#define JoyButtonMap sub_B340B_decl
 #include "nhl95.h"
 #undef setplayer
-#undef sub_B340B
+#undef JoyButtonMap
 
 void setplayer(Player *p, short n);
 /* the team block fields setplayer reads: the skater ratings (20 bytes per skater), the goalie ratings (16 bytes per
@@ -224,7 +224,7 @@ void setplayer(Player *p, short n)
 #define MARKFRAME(j) (((short *)((char *)Pencntdwn2 + 2))[j])
 #define ARROWFRAME(j, d) (*(short *)((char *)Pencntdwn2 + 6 + (d) * 2 + ((j) << 4)))
 #define OOBYTE(i) (*(int *)(OOlist + (i) - 3) >> 24)
-int __cdecl sub_B340B(int fl);
+int __cdecl JoyButtonMap(int fl);
 
 /* DRAFT (10.0 GA, 73 differing, same size): the second penalty box clamp as an if / else gives the EXE's slots
    (c1 -14h, c2 -10h, k -0Ch, the clip temporary -8) but not its clamp code (the EXE's ternary result in eax);
@@ -232,7 +232,7 @@ int __cdecl sub_B340B(int fl);
 /* DrawRinkOverlays (5CE12, PC only; ends in changeplayer_ret5): draw the rink layer above the objects for the
    view at vx, vy (viewscrollx / viewscrolly). With the penalty boxes in view, a marker per player in each box
    (up to three a side); then DrawRinkObjects. The markers of the two controlled players and the puck carrier,
-   in y order (SortIndices): a player off the screen gets an edge arrow (sub_B340B picks it from the edge bits 1 / 2
+   in y order (SortIndices): a player off the screen gets an edge arrow (JoyButtonMap picks it from the edge bits 1 / 2
    bottom / top, 4 / 8 right / left). The penalty box door (sortobj15) and the puck, then the 17 objects in
    OOlist order with their jersey numbers (always for the controlled players and the carrier, else when
    shownumbers is set) and the puck again where it passes in front of the goal; the end boards art (clipped to
@@ -322,7 +322,7 @@ void DrawRinkOverlays(short vx, short vy)
                 fl = 8;
             }
         }
-        if (fl) DrawFrameSprite(ARROWFRAME(i, sub_B340B(fl)), x, y, fl & 8, 0);
+        if (fl) DrawFrameSprite(ARROWFRAME(i, JoyButtonMap(fl)), x, y, fl & 8, 0);
         else DrawFrameSprite(MARKFRAME(i), x, y, 0, 0);
     }
     q = (Player *)sortobj15;

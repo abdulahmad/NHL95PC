@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A189E progbits alloc exec nowrite align=1
-extern sub_A18D6
+extern IntrLoadSegRegs
 global __int386x_
 __int386x_:
         push ebp
@@ -10,7 +10,7 @@ __int386x_:
         push ebx
         push ds
         push edx
-        call sub_A18D6
+        call IntrLoadSegRegs
         push ds
         push edi
         mov ebp, esp

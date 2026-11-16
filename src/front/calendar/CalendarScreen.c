@@ -108,14 +108,14 @@ int CalendarScreen(char *dir, char *ext, int team)
     c1 = 0xC0;
     c2 = 0x0C;
     c3 = 0x67;
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 100);
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     if (musicon && songdata) {
         while (SndQuery(musicslot, 3) == 0) ;
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     ShowLoadingScreen();
@@ -185,13 +185,13 @@ int CalendarScreen(char *dir, char *ext, int team)
         if (calmonth == 9) calprevslot = 0;
         else calprevslot = (int)CalPrevMonth;
         shown = calmonth;
-        sub_B4BA8();
+        SetScreenTarget();
         menus[0] = (MenuItem *)calmenubar;
         nitems[0] = 3;
         menus[1] = 0;
         pos[0][1] = pos[0][0] = sel[1] = sel[0] = bg[1] = bg[0] = 0;
         FadeOutPalCycle();
-        sub_B4BA8();
+        SetScreenTarget();
         DrawMenuBar((MenuItem *)calmenubar, 3, c1, c2, c3);
         DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
         if (musicon && !songdata) {
@@ -253,12 +253,12 @@ int CalendarScreen(char *dir, char *ext, int team)
                         my = oldmy;
                         ClearInputQueue();
                         if (shown != calmonth) {
-                            sub_B4BA8();
+                            SetScreenTarget();
                             DrawMenuBar(calmenubar, 3, c1, c2, c3);
                             DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
                         }
                         if (calredraw) {
-                            sub_B4BA8();
+                            SetScreenTarget();
                             DrawMenuBar(calmenubar, 3, c1, c2, c3);
                             DrawCalendarDay(calmonth, crests, unused, games[0], ngames, team, font, calendarshapes);
                             ApplyShapePalette(calendarshapes);
@@ -381,7 +381,7 @@ int CalendarScreen(char *dir, char *ext, int team)
                                 calselmonth = games[selgame][0];
                                 calselday = games[selgame][1];
                                 if (calexit == 0) SetGameSides(team, games[0], selgame);
-                                sub_B4BA8();
+                                SetScreenTarget();
                                 DrawMenuBar(calmenubar, 3, c1, c2, c3);
                                 if (oldm == calselmonth && oldd != calselday) {
                                     k = monthfirstday_m1[calselmonth];

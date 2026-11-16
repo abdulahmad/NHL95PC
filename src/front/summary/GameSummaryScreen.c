@@ -141,7 +141,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     if (musicon && songdata) {
         sub_8FCDF(musichandle, 3, 0x4B);
         while (!SndQuery(musicslot, 3)) ;
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     ClearInputQueue();
@@ -168,7 +168,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         f.score[n] = 0;
         f.i = n + 1;
     } while (f.i < 2);
-    sub_B4BA8();
+    SetScreenTarget();
     TextSaveState(f.state);
     MakePath(f.name, fileoncd[0x21A] == 1 ? (char *)cddriveptr : 0, (char *)str_Indus0302, (char *)str_VFN);
     f.font = sub_8E8A0(f.name, 0x20);
@@ -189,7 +189,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     PutBlock(crest, 0, 0);
     *(short *)(*(int *)(vscrestbmp + 0x2C) + 8) = *(short *)(crest + 8);
     *(short *)(*(int *)(vscrestbmp + 0x2C) + 0xA) = *(short *)(crest + 0xA);
-    sub_B4BA8();
+    SetScreenTarget();
     FreeMemBlock(bank);
 
     /* The background, its palette and the title art of the mode. */
@@ -598,12 +598,12 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     FadePalStep(1, f.pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3)) ;
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     } else {
         StopDigiSample();
     }
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     if (f.prds) FreeMemBlock((int)f.prds);
     if (f.evbuf) FreeMemBlock((int)f.evbuf);

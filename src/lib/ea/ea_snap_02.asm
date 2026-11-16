@@ -4,8 +4,8 @@ bits 32
 section s_9D352 progbits alloc exec nowrite align=1
 extern __hook387, __8087, _Extender, byte_D4D08, __real87, dword_D41F4, dword_D5194, dword_D51D4
 extern sub_A35EC, sub_A365C, word_D41F8, word_D41FA, word_D51D8, word_D51DA
-global InitFpuFlags, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, sub_9D41D, sub_9D43A
-global loc_9D471, loc_9D486, sub_9D487
+global InitFpuFlags, loc_9D3A4, loc_9D3C8, loc_9D3F0, loc_9D409, loc_9D41C, MakeFpuGate, HookCoprocessorVector
+global loc_9D471, loc_9D486, SetSystemFpuFlag
 InitFpuFlags:
         mov byte [__8087], 3
         mov byte [__real87], 1
@@ -19,11 +19,11 @@ InitFpuFlags:
         add esp, byte 8
         cmp byte [byte_D4D08], 0
         je short loc_9D3A4
-        call sub_9D41D
+        call MakeFpuGate
         o16 mov es, word [word_D41FA]
         mov dword [es:ebx], edx
         mov dword [byte es:ebx+04h], ecx
-        call sub_9D487
+        call SetSystemFpuFlag
         jmp short loc_9D41C
 loc_9D3A4:
         cmp byte [_Extender], 0
@@ -42,7 +42,7 @@ loc_9D3A4:
 loc_9D3C8:
         cmp byte [_Extender], 9
         jne short loc_9D3F0
-        call sub_9D41D
+        call MakeFpuGate
         mov dword [ebx], edx
         mov dword [byte ebx+04h], ecx
         mov eax, 0E02h
@@ -63,10 +63,10 @@ loc_9D409:
         call __hook387
         cmp al, 1
         je short loc_9D41C
-        call sub_9D43A
+        call HookCoprocessorVector
 loc_9D41C:
         ret
-sub_9D41D:
+MakeFpuGate:
         lea ecx, [sub_A365C]
         mov dx, cs
         shl edx, 10h
@@ -76,7 +76,7 @@ sub_9D41D:
         shl cx, 0Dh
         or ch, 8Eh
         ret
-sub_9D43A:
+HookCoprocessorVector:
         mov cl, 7
         mov ax, 2502h
         int 21h
@@ -92,7 +92,7 @@ sub_9D43A:
         lea edx, [sub_A35EC]
         int 21h
         pop ds
-        call sub_9D487
+        call SetSystemFpuFlag
         jmp short loc_9D486
 loc_9D471:
         lea edx, [sub_A365C]
@@ -104,7 +104,7 @@ loc_9D471:
         mov cr0, ecx
 loc_9D486:
         ret
-sub_9D487:
+SetSystemFpuFlag:
         xor ebx, ebx
         lea edx, [dword_D5194]
         mov ax, 2535h

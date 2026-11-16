@@ -7,12 +7,12 @@ extern byte_D6074, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30
 extern dword_D30A4, dword_D30A8, dword_D30BC, dword_D30C0, dword_D30D4, dword_D429C, dword_D4F2C, dword_D4F30
 extern dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, dword_D4FA0, dword_D4FA4, dword_D4FEB, dword_D5562
 extern dword_D5566, dword_D5678, dword_D5D78, dword_D6178, dword_D6578, dword_D7178, GetTicks, loc_B4D0C
-extern mousepollfn, off_D567C, printf_, sub_910B0, sub_B3168, sub_B3454, sub_B39D0, TicksSince
+extern mousepollfn, off_D567C, printf_, ClearScreenColour, ReadJoystickPorts, AddExitHandler, KbdGetKey, TicksSince
 extern word_D4F46, word_D4FE4, word_D4FE6, word_D4FE9
-global sub_B3E4A, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
-global loc_B3FAC, sub_B3FB0, sub_B3FC2, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
+global PrintfSaveRegs, SaveTextMode, loc_B3ED7, RestoreTextMode, loc_B3F23, loc_B3F3D, loc_B3F4B, DetectCPU
+global loc_B3FAC, FillMem, ZeroMem, loc_B3FC8, sub_B3FE0, sub_B3FEC, loc_B401F, loc_B402B
 global loc_B4030, loc_B403F, loc_B4049, loc_B4057, loc_B405B, loc_B407E, loc_B409F, loc_B40B0
-global sub_B40BF, loc_B40D1, sub_B40D4, sub_B40E2, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
+global sub_B40BF, loc_B40D1, sub_B40D4, SetupRectFill, loc_B40EE, loc_B4129, loc_B4135, loc_B413C
 global loc_B415E, loc_B4165, loc_B4173, loc_B417A, loc_B4190, loc_B4197, loc_B41A1, loc_B41A8
 global loc_B41B3, loc_B41C3, loc_B41C8, loc_B41DC, loc_B41E8, loc_B41EA, loc_B4204, loc_B4211
 global loc_B421C, loc_B4222, loc_B4228, loc_B4238, loc_B423E, loc_B4242, loc_B4246, jpt_B4253
@@ -26,15 +26,15 @@ global loc_B4740, loc_B4780, loc_B47B3, loc_B47C1, loc_B47D1, loc_B47E7, loc_B47
 global loc_B480B, loc_B481A, loc_B4828, loc_B482D, loc_B4839, loc_B4847, loc_B485F, loc_B4870
 global loc_B487B, loc_B488F, loc_B48AD, loc_B48C3, loc_B48D4, loc_B48E7, loc_B48EC, loc_B4908
 global loc_B4911, loc_B4929, loc_B4935, loc_B4945, loc_B4948, loc_B494D, loc_B497F, loc_B499A
-global loc_B49A7, loc_B49B7, loc_B49BA, sub_B49C0, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
+global loc_B49A7, loc_B49B7, loc_B49BA, AngleFromDelta, loc_B49D4, loc_B49DD, loc_B49E8, loc_B4A00
 global unk_B4A0C, loc_B4A2C, loc_B4A33, loc_B4A35, loc_B4A3E, loc_B4A45, loc_B4A49, loc_B4A50
 global loc_B4A57, sub_B4A60, sub_B4A66, loc_B4A6C, loc_B4A7E, loc_B4A8C, loc_B4A96, sub_B4AA4
 global loc_B4AC2, loc_B4ADA, loc_B4AEA, loc_B4AF2, sub_B4AFD, loc_B4B0D, loc_B4B1E, loc_B4B20
-global loc_B4B27, loc_B4B39, loc_B4B3B, sub_B4B58, VgaSetPalette, loc_B4BA0, sub_B4BA8, SetClipWindow
-global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, sub_B4C33, loc_B4C48, loc_B4C4F
+global loc_B4B27, loc_B4B39, loc_B4B3B, SetTextMode, VgaSetPalette, loc_B4BA0, SetScreenTarget, SetClipWindow
+global loc_B4BDE, loc_B4BE8, loc_B4BF6, loc_B4C04, sub_B4C28, WaitRetrace, loc_B4C48, loc_B4C4F
 global loc_B4C56, sub_B4C61, loc_B4C6B, loc_B4C72, sub_B4C84, loc_B4C8E, loc_B4C95, sub_B4CA7
 global sub_B4CB4
-sub_B3E4A:
+PrintfSaveRegs:
         mov dword [dword_D4F2C], ebx
         mov dword [dword_D4F30], ecx
         mov dword [dword_D4F34], edx
@@ -62,7 +62,7 @@ SaveTextMode:
         mov al, byte [0484h]
         mov byte [byte_D4F48], al
         push RestoreTextMode
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 4
 loc_B3ED7:
         ret
@@ -93,7 +93,7 @@ loc_B3F23:
         cmp al, 30h
         jne short loc_B3F3D
         push byte 0
-        call sub_910B0
+        call ClearScreenColour
         add esp, byte 4
 loc_B3F3D:
         mov ah, 0Bh
@@ -139,7 +139,7 @@ loc_B3FAC:
         popfw
         ret
         db 00h
-sub_B3FB0:
+FillMem:
         push ebp
         LD mov, ebp, esp
         push edi
@@ -148,7 +148,7 @@ sub_B3FB0:
         shrd eax, edx, 10h
         LD mov, ax, dx
         jmp short loc_B3FC8
-sub_B3FC2:
+ZeroMem:
         push ebp
         LD mov, ebp, esp
         push edi
@@ -171,18 +171,18 @@ sub_B3FE0:
         ret
         db 00h
 sub_B3FEC:
-        call sub_B39D0
+        call KbdGetKey
         LD or, ax, ax
         je short loc_B402B
         ret
-        call sub_B39D0
+        call KbdGetKey
         LD or, ax, ax
         je short loc_B402B
         push eax
         call sub_B4AA4
         add esp, byte 4
         ret
-        call sub_B39D0
+        call KbdGetKey
         LD or, ax, ax
         je short loc_B401F
         push eax
@@ -194,7 +194,7 @@ loc_B401F:
         shl ax, 4
         jne short loc_B4030
 loc_B402B:
-        call sub_B3168
+        call ReadJoystickPorts
 loc_B4030:
         LD mov, bx, ax
         test ax, 30h
@@ -239,7 +239,7 @@ loc_B40B0:
         mov word [word_D4FE6], ax
         jmp short loc_B4057
 sub_B40BF:
-        call sub_B39D0
+        call KbdGetKey
         LD or, eax, eax
         je short loc_B40D1
         push eax
@@ -256,7 +256,7 @@ sub_B40D4:
         push edi
         mov byte [byte ebp-05h], 1
         jmp short loc_B40EE
-sub_B40E2:
+SetupRectFill:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
@@ -1095,7 +1095,7 @@ loc_B49BA:
         sub dword [byte esi+010h], edx
         jmp short loc_B494D
         db 00h
-sub_B49C0:
+AngleFromDelta:
         push ebp
         LD mov, ebp, esp
         LD xor, ebx, ebx
@@ -1274,9 +1274,9 @@ loc_B4B3B:
         LD xor, eax, eax
         jmp short loc_B4B27
         db 00h,00h,00h
-sub_B4B58:
+SetTextMode:
         push byte 0
-        call sub_910B0
+        call ClearScreenColour
         add esp, byte 4
         and byte [0410h], 0CFh
         or byte [0410h], 10h
@@ -1307,7 +1307,7 @@ loc_B4BA0:
         leave
         ret
         db 00h
-sub_B4BA8:
+SetScreenTarget:
         LD mov, edx, edi
         LD mov, eax, esi
         mov esi, dword_D30D4
@@ -1350,7 +1350,7 @@ loc_B4C04:
 sub_B4C28:
         mov dword [dword_D429C], 2710h
         ret
-sub_B4C33:
+WaitRetrace:
         mov dx, 3DAh
         mov ecx, dword [dword_D429C]
         cmp dword [dword_D4FA0], byte 1

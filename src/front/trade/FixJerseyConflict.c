@@ -34,7 +34,7 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     int c;
     int z;
 
-    sub_B4BA8();
+    SetScreenTarget();
     pal = AllocMemBlock((char *)str_Temp6, 0x300, 0x20);
     SetPalette(0, 0x100, (unsigned char *)pal);
     FadePalStep(1, (unsigned char *)pal, 0x10);
@@ -74,7 +74,7 @@ void TradeShowStats(int list, unsigned char cat, int b2, int b3,
     statsteambuf = z;
     statsgoaliebuf = (unsigned char *)z;
     statsskaterbuf = (unsigned char *)z;
-    sub_B4BA8();
+    SetScreenTarget();
     FadePalStep(1, (unsigned char *)pal, 0x10);
     ClearScreen(z);
     FreeMemBlock(pal);

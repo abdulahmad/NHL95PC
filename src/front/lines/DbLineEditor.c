@@ -33,7 +33,7 @@ void DbLineEditor(unsigned char team, int lines, int buttons, int n)
     shape = FindShape(bank, (char *)str_Shrt2);
     DrawLineEditorScreen(team, shape, 0, buttons, n);
     FadeOutPalCycle();
-    sub_B4BA8();
+    SetScreenTarget();
     DrawBitmap(((int *)fullscrbmp)[0x2C / 4]);
     DbLineEditorLoop(lines, shape, team, 0, buttons, n, bank);
     FreeMemBlock(bank);

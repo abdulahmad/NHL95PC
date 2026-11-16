@@ -8,8 +8,8 @@ extern dword_EA060, dword_EA064, dword_EA068, dword_EA06C, dword_EA070, dword_EA
 extern dword_EA080, dword_EA084, dword_EA088, dword_EA08C, dword_EA090, dword_EA094, dword_EA098, dword_EA09C
 extern dword_EA0A0, dword_EA0A4, dword_EA0AC, dword_EA0B0, dword_EA0B4, dword_EA0B8, dword_EA0BC, dword_EA0C4
 extern dword_EA0C8, dword_EA0CC, dword_EA0D0, FatalError, fputchar, FreeMemBlock, memset_, SetDrawBitmap
-extern AllocMemBlock, PutBlock, sub_B4BA8, SetClipWindow, sub_B4FAC
-global sub_6A033, sub_6A044, sub_6A057, sub_6A068, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4
+extern AllocMemBlock, PutBlock, SetScreenTarget, SetClipWindow, FillRectColor
+global sub_6A033, sub_6A044, sub_6A057, InputRecordAvail, sub_6A078, sub_6A092, sub_6A0AA, sub_6A0C4
 global sub_6A0DE, sub_6A0F6, sub_6A106, loc_6A12A, loc_6A13E, loc_6A149, sub_6A156, sub_6A166
 global loc_6A18A, sub_6A1A0, sub_6A1D6, sub_6A234, sub_6A27A, sub_6A2BC, sub_6A2C7, sub_6A335
 global sub_6A373, loc_6A3B9, loc_6A3BA, sub_6A3C0, loc_6A3FA, loc_6A41D, sub_6A439, loc_6A479
@@ -22,7 +22,7 @@ global loc_6A755, loc_6A771, sub_6A791, loc_6A7E1, loc_6A7E8, loc_6A7FF, loc_6A8
 global loc_6A82B, loc_6A840, loc_6A842, loc_6A853, loc_6A855, loc_6A86C, loc_6A86E, loc_6A88B
 global loc_6A8A9, sub_6A8B1, loc_6A8E2, loc_6A909, loc_6A916, loc_6A91C, loc_6A941, loc_6A94A
 global loc_6A954, loc_6A95A, loc_6A97C, loc_6A989, loc_6A98E, sub_6A990, loc_6A9AB, loc_6A9B9
-global sub_6A9CE, loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, sub_6AAD5, sub_6AAF5
+global InitZoneManager, loc_6A9EA, loc_6AA6E, loc_6AA8A, loc_6AAA4, loc_6AAB0, sub_6AAD5, sub_6AAF5
 global loc_6AB54, loc_6AB5C, loc_6AB64, loc_6AB70, loc_6AB78, sub_6AB7C, loc_6ABD2, loc_6ABD8
 global loc_6ABE0, loc_6ABE8, loc_6ABF4, sub_6ABF9, sub_6AC31, loc_6AC63, loc_6AC73, loc_6AC7A
 global loc_6AC85, loc_6AC8E, loc_6AC9A, sub_6ACA2, loc_6ACC5, loc_6ACE3, sub_6ACE9, sub_6AD22
@@ -47,7 +47,7 @@ sub_6A057:
         call __CHK
         xor dword [byte_EA058], eax
         ret
-sub_6A068:
+InputRecordAvail:
         push dword 4
         call __CHK
         mov eax, dword [byte_EA058]
@@ -291,7 +291,7 @@ sub_6A2C7:
         push eax
         push edi
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [byte esp+014h]
         push ecx
@@ -300,7 +300,7 @@ sub_6A2C7:
         push ebp
         push eax
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ebx, dword [byte esp+014h]
         push ebx
@@ -309,7 +309,7 @@ sub_6A2C7:
         mov ecx, dword [byte esp+0Ch]
         push ecx
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov eax, dword [byte esp+014h]
         push eax
@@ -317,7 +317,7 @@ sub_6A2C7:
         push esi
         push edi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         add esp, byte 4
         pop ebp
@@ -990,7 +990,7 @@ loc_6A9B9:
         pop esi
         pop ecx
         ret
-sub_6A9CE:
+InitZoneManager:
         push dword 20h
         call __CHK
         push ebx
@@ -1388,7 +1388,7 @@ sub_6ADA7:
         push ebx
         push ecx
         push edx
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [dword_EA09C]
         mov eax, dword [dword_EA074]
         call sub_6A2BC

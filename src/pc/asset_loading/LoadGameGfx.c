@@ -3,7 +3,7 @@
 
 /* LoadGameGfx: load the in-game graphics: screen pitch 52h; the HILIGHT.VFN font (hilightfont) and the
  NUMSHP.PPV number shapes (numshpbank; both from the CD when fileoncd says so), the ten digit shapes "0000".."0009"
- (numshapes), the graphics id list (sub_90B80 into gfxidlist), clear the panel penalties, load the transparent
+ (numshapes), the graphics id list (ProjectPointList into gfxidlist), clear the panel penalties, load the transparent
  rink end overlay, colour 4 on FFh, the player photos; then a fade-in is pending (fadeinpending,
  dword_C66D4 dword_C66D0 = 1). */
 void LoadGameGfx(void)
@@ -12,7 +12,7 @@ void LoadGameGfx(void)
     char name[12];
     int i;
 
-    sub_B4BA8();
+    SetScreenTarget();
     scrpitch = 0x52;
     MakePath(path, fileoncd[0xA0] == 1 ? (char *)cddriveptr : 0, (char *)str_HILIGHT, (char *)str_VFN);
     hilightfont = sub_8E8A0(path, 0x20);
@@ -22,7 +22,7 @@ void LoadGameGfx(void)
         sprintf(name, (char *)str_04d, i);
         numshapes[i] = FindShape(numshpbank, name);
     }
-    sub_90B80(numshpbank, (char *)str_GfxIdList, gfxidlist);
+    ProjectPointList(numshpbank, (char *)str_GfxIdList, gfxidlist);
     ClearPanelPenalties();
     LoadTransparentRinkEndOverlay();
     TextSetColors(4, 0xFF);
@@ -32,7 +32,7 @@ void LoadGameGfx(void)
     dword_C66D0 = dword_C66D4 = 1;
 }
 
-/* ReloadGameGfx: LoadGameGfx without the sub_B4BA8 call first (reload after the graphics were freed). */
+/* ReloadGameGfx: LoadGameGfx without the SetScreenTarget call first (reload after the graphics were freed). */
 void ReloadGameGfx(void)
 {
     char path[16];
@@ -48,7 +48,7 @@ void ReloadGameGfx(void)
         sprintf(name, (char *)str_04d, i);
         numshapes[i] = FindShape(numshpbank, name);
     }
-    sub_90B80(numshpbank, (char *)str_GfxIdList, gfxidlist);
+    ProjectPointList(numshpbank, (char *)str_GfxIdList, gfxidlist);
     ClearPanelPenalties();
     LoadTransparentRinkEndOverlay();
     TextSetColors(4, 0xFF);

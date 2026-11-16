@@ -19,10 +19,10 @@ extern str_Lockroom, str_MT32, str_Na01, str_Na03, str_Na05, str_Off, str_On, st
 extern str_PCSpeaker, str_Pg01, str_Pg03, str_Pg05, str_Pg07, str_Pl05, str_Pl10, str_Pl20
 extern str_Playoff, str_PlayoffTree2, str_Pointer20, str_Return, str_Room, str_Settings, str_Settings3, str_ShowLeague
 extern str_Sound4, str_SoundBlaster, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound, str_VisBck, str_VisitingTeam
-extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, sub_8D2F0, LoadBank, TextSetColors
+extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, sub_8F98F, sub_8FB8E, SndQuery, sub_8FCDF, SetPalette
 extern PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, GrabBlock, PrintString, sub_91FE0
-extern MouseRead, FindShape, VgaSetPalette, sub_B4BA8, SetColorRemap, sub_B4FAC, PlotPixel, teamcitynames
+extern MouseRead, FindShape, VgaSetPalette, SetScreenTarget, SetColorRemap, FillRectColor, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
 global LoadSettingsShapes, DrawSettingsHeading_jt, DrawSettingsHeading, DrawSettingsHeading_n0, DrawSettingsHeading_n1, SetModeMenuLabels, DrawPanel3D, DrawPanel3D_ret
 global LockerRoomScreen, LockerStub, DrawLockerRoom, LockerHitTest, DrawLockerJersey, LockerRoomLoop_jt, LockerRoomLoop, LockerRoomLoop_n2
@@ -353,7 +353,7 @@ DrawPanel3D:
         push ebp
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 77h
         mov edx, dword [byte esp+014h]
@@ -361,7 +361,7 @@ DrawPanel3D:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 62h
         mov ebx, dword [byte esp+014h]
@@ -369,7 +369,7 @@ DrawPanel3D:
         push ebp
         push esi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 62h
         mov ecx, dword [byte esp+014h]
@@ -377,7 +377,7 @@ DrawPanel3D:
         push ebp
         push ecx
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         cmp dword [byte esp+024h], byte 0
         je near .1
@@ -548,7 +548,7 @@ LockerRoomScreen:
         je short LockerRoomScreen.2
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi
@@ -709,7 +709,7 @@ DrawLockerRoom:
         push edi
         push ebp
         sub esp, 354h
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Lockroom
         cmp byte [fileoncd+0E9h], 1
@@ -1461,7 +1461,7 @@ DrawLockerJersey:
         mov esi, edx
         mov dword [byte ebp-08h], ebx
         mov edi, ecx
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, esi
         mov edx, dword [nosplit eax*4+jerseyabbrevs]
         push edx
@@ -2042,7 +2042,7 @@ LockerRoomLoop:
         mov dword [dword esp+030Ch], eax
         mov eax, dword [dword esp+0310h]
         mov dword [dword esp+0308h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -2480,7 +2480,7 @@ LockerRoomLoop_n6:
         je short LockerRoomLoop_n6.12
         mov ebx, dword [songdata]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ecx, ecx
         mov dword [songdata], ecx
@@ -2526,7 +2526,7 @@ LockerRoomLoop_n7:
         je short LockerRoomLoop_n7.2
         mov eax, dword [songdata]
         push eax
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edx, edx
         mov dword [songdata], edx
@@ -2570,7 +2570,7 @@ LockerRoomLoop_n7:
         je short LockerRoomLoop_n7.6
         mov edi, dword [songdata]
         push edi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ebp, ebp
         mov dword [songdata], ebp
@@ -2603,7 +2603,7 @@ DrawSelBoxOn:
         add edx, byte 12h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         mov eax, dword [byte esi+04h]
@@ -2616,7 +2616,7 @@ DrawSelBoxOn:
         mov eax, dword [esi]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0FAh
         mov eax, dword [byte esi+0Ch]
@@ -2629,7 +2629,7 @@ DrawSelBoxOn:
         add edx, byte 14h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0FAh
 DrawSelBox_common:
@@ -2643,7 +2643,7 @@ DrawSelBox_common:
         mov eax, dword [byte esi+08h]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         pop esi
         pop edx
@@ -2678,7 +2678,7 @@ DrawSelBoxOff:
         add edx, byte 12h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0FAh
         mov eax, dword [byte esi+04h]
@@ -2691,7 +2691,7 @@ DrawSelBoxOff:
         mov eax, dword [esi]
         add eax, byte 0Ah
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         mov eax, dword [byte esi+0Ch]
@@ -2704,7 +2704,7 @@ DrawSelBoxOff:
         add edx, byte 14h
         push edx
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         jmp near DrawSelBox_common

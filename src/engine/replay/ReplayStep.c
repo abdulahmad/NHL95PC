@@ -2,16 +2,16 @@
 #define ReplayStep ReplayStep_decl
 #define replayplay replayplay_decl
 #define Crowd_Noise CrowdNoiseUpdate_decl
-#define sub_B340B sub_B340B_decl
+#define JoyButtonMap sub_B340B_decl
 #include "nhl95.h"
-#undef sub_B340B
+#undef JoyButtonMap
 #undef ReplayStep
 #undef replayplay
 #undef Crowd_Noise
 
 extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
 void Crowd_Noise(short step);
-int __cdecl sub_B340B(int fl);  /* the edge arrow for the side bits */
+int __cdecl JoyButtonMap(int fl);  /* the edge arrow for the side bits */
 
 #define RB(r) (*(unsigned char *)&(r))
 #define RSB(r) (*(signed char *)&(r))
@@ -254,7 +254,7 @@ void DrawRinkSideObjects(short vx, short vy)
                 f = 4;
             }
         }
-        if (f) DrawFrameSprite(ARROWFRAME(i, sub_B340B(f)), x, y, f & 8, 0);
+        if (f) DrawFrameSprite(ARROWFRAME(i, JoyButtonMap(f)), x, y, f & 8, 0);
         else DrawFrameSprite(MARKFRAME(i), x, y, 0, 0);
     }
     i = 0xF;

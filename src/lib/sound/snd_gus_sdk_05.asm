@@ -4,22 +4,22 @@ bits 32
 section s_B07D0 progbits alloc exec nowrite align=1
 extern _dos_close_, _dos_getvect_, _dos_open_, _dos_read_, _dos_setvect_, byte_D86C8, byte_D877A, byte_D8AE4
 extern byte_F79A4, byte_F79A6, byte_F79C8, dword_D86DC, dword_D8784, dword_F79BC, dword_F79C0, dword_F79C4
-extern inp_, lseek_, outp_, outpw_, sub_B13A1, sub_B14AC, sub_B16BC, sub_B1F9C
-extern sub_B2720, unk_F7978, word_D86DA, word_D86E0, word_D8762, word_D8772, word_D8774, word_D8776
+extern inp_, lseek_, outp_, outpw_, GusDelay, GusSetDmaCallbacks, GusServiceIrq, GusPokeFill
+extern GusConvertAddr16, unk_F7978, word_D86DA, word_D86E0, word_D8762, word_D8772, word_D8774, word_D8776
 extern word_D8788, word_D8ACC, word_F799C, word_F799E, word_F79A0, word_F79A2, word_F79B8, word_F79BA
 extern word_F79C9
-global sub_B07D0, loc_B0815, loc_B083B, sub_B085C, loc_B08B5, loc_B08D7, sub_B097C, sub_B09A4
+global GusSetupDmaChannel, loc_B0815, loc_B083B, GusProgramDma, loc_B08B5, loc_B08D7, sub_B097C, sub_B09A4
 global loc_B0A09, sub_B0A14, sub_B0A40, loc_B0A58, sub_B0A5C, loc_B0A71, sub_B0A78, loc_B0A9A
-global loc_B0A9D, sub_B0AA4, sub_B0AB0, sub_B0ABC, loc_B0B2F, loc_B0B4B, sub_B0B5C, loc_B0B98
-global loc_B0BB4, loc_B0BB9, sub_B0BE4, loc_B0BFD, sub_B0C10, loc_B0C23, loc_B0C2C, sub_B0C34
-global loc_B0C47, loc_B0C53, sub_B0C5C, loc_B0C7F, loc_B0C98, loc_B0CAF, sub_B0CB8, loc_B0D14
-global loc_B0D3D, loc_B0D4F, sub_B0D6C, loc_B0DA1, loc_B0DDA, loc_B0DEF, loc_B0E02, loc_B0E22
+global loc_B0A9D, GusSetVect, GusGetVect, GusHookIrq, loc_B0B2F, loc_B0B4B, GusUnhookIrq, loc_B0B98
+global loc_B0BB4, loc_B0BB9, GusSendEoi, loc_B0BFD, GusInitPlayDma, loc_B0C23, loc_B0C2C, GusInitRecordDma
+global loc_B0C47, loc_B0C53, GusInitDma, loc_B0C7F, loc_B0C98, loc_B0CAF, GusStartDramDma, loc_B0D14
+global loc_B0D3D, loc_B0D4F, GusDownload, loc_B0DA1, loc_B0DDA, loc_B0DEF, loc_B0E02, loc_B0E22
 global loc_B0E4B, loc_B0E50, loc_B0E69, loc_B0E72, sub_B0E7C, loc_B0E95, loc_B0EBB, loc_B0EDB
-global loc_B0F0B, loc_B0F10, loc_B0F2B, loc_B0F59, loc_B0F9F, sub_B0FA8, loc_B0FB6, loc_B0FE0
+global loc_B0F0B, loc_B0F10, loc_B0F2B, loc_B0F59, loc_B0F9F, GusDramDmaDone, loc_B0FB6, loc_B0FE0
 global loc_B0FE6, loc_B0FFC, loc_B1003, loc_B1019, loc_B101B, sub_B1024, sub_B103C, loc_B10BB
 global sub_B10D0, loc_B10F6, loc_B10F8, loc_B1129, loc_B112B, loc_B116E, loc_B11BA, loc_B11C0
-global sub_B121C, sub_B122F, sub_B1237, loc_B1250, loc_B1252, sub_B1256, loc_B126E, loc_B1289
-sub_B07D0:
+global GusClearIrqState, GusEnterCritical, sub_B1237, loc_B1250, loc_B1252, GusLeaveCritical, loc_B126E, loc_B1289
+GusSetupDmaChannel:
         push ebp
         mov ebp, esp
         push ebx
@@ -68,7 +68,7 @@ loc_B083B:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B085C:
+GusProgramDma:
         push ebp
         mov ebp, esp
         push esi
@@ -307,21 +307,21 @@ loc_B0A9D:
         pop ebx
         pop ebp
         ret
-sub_B0AA4:
+GusSetVect:
         push ebp
         mov ebp, esp
         call _dos_setvect_
         mov esp, ebp
         pop ebp
         ret
-sub_B0AB0:
+GusGetVect:
         push ebp
         mov ebp, esp
         call _dos_getvect_
         mov esp, ebp
         pop ebp
         ret
-sub_B0ABC:
+GusHookIrq:
         push ebp
         mov ebp, esp
         push edx
@@ -337,13 +337,13 @@ sub_B0ABC:
         cli
         mov bx, word [nosplit ecx*8+word_D86DA]
         mov eax, ebx
-        call sub_B0AB0
+        call GusGetVect
         mov word [nosplit ecx*8+word_D86E0], dx
         mov dword [nosplit ecx*8+dword_D86DC], eax
         mov eax, ebx
         mov ecx, edi
         mov ebx, esi
-        call sub_B0AA4
+        call GusSetVect
         mov cl, byte [byte ebp-010h]
         mov dl, 1
         and cl, 7
@@ -376,7 +376,7 @@ loc_B0B4B:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B0B5C:
+GusUnhookIrq:
         push ebp
         mov ebp, esp
         push ebx
@@ -414,7 +414,7 @@ loc_B0BB9:
         mov cx, word [nosplit ebx*8+word_D86E0]
         mov ax, word [nosplit ebx*8+word_D86DA]
         mov ebx, dword [nosplit ebx*8+dword_D86DC]
-        call sub_B0AA4
+        call GusSetVect
         popfw
         lea esp, [byte ebp-0Ch]
         pop edx
@@ -423,7 +423,7 @@ loc_B0BB9:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B0BE4:
+GusSendEoi:
         push ebp
         mov ebp, esp
         push edx
@@ -441,7 +441,7 @@ loc_B0BFD:
         pop ebp
         ret
         db 00h
-sub_B0C10:
+GusInitPlayDma:
         push ebp
         mov ebp, esp
         push edx
@@ -452,7 +452,7 @@ sub_B0C10:
         jmp short loc_B0C2C
 loc_B0C23:
         xor eax, eax
-        call sub_B07D0
+        call GusSetupDmaChannel
         xor al, al
 loc_B0C2C:
         lea esp, [byte ebp-04h]
@@ -460,7 +460,7 @@ loc_B0C2C:
         pop ebp
         ret
         db 08Bh,0C0h
-sub_B0C34:
+GusInitRecordDma:
         push ebp
         mov ebp, esp
         push edx
@@ -471,7 +471,7 @@ sub_B0C34:
         jmp short loc_B0C53
 loc_B0C47:
         mov eax, 1
-        call sub_B07D0
+        call GusSetupDmaChannel
         xor al, al
 loc_B0C53:
         lea esp, [byte ebp-04h]
@@ -479,13 +479,13 @@ loc_B0C53:
         pop ebp
         ret
         db 08Dh,040h,00h
-sub_B0C5C:
+GusInitDma:
         push ebp
         mov ebp, esp
         mov byte [byte_D8AE4], 1
         xor eax, eax
         mov al, byte [byte_F79A4]
-        call sub_B0C10
+        call GusInitPlayDma
         test al, al
         je short loc_B0C7F
         and eax, 0FFh
@@ -495,7 +495,7 @@ sub_B0C5C:
 loc_B0C7F:
         xor eax, eax
         mov al, byte [byte_F79A6]
-        call sub_B0C34
+        call GusInitRecordDma
         test al, al
         je short loc_B0C98
         and eax, 0FFh
@@ -504,7 +504,7 @@ loc_B0C7F:
         ret
 loc_B0C98:
         mov eax, sub_B0E7C
-        call sub_B14AC
+        call GusSetDmaCallbacks
         test eax, eax
         je short loc_B0CAF
         mov eax, 8
@@ -516,7 +516,7 @@ loc_B0CAF:
         mov esp, ebp
         pop ebp
         ret
-sub_B0CB8:
+GusStartDramDma:
         push ebp
         mov ebp, esp
         push esi
@@ -541,7 +541,7 @@ sub_B0CB8:
         cmp byte [byte_F79A4], 4
         jb short loc_B0D14
         mov eax, ebx
-        call sub_B2720
+        call GusConvertAddr16
         mov cl, dl
         mov ebx, eax
 loc_B0D14:
@@ -560,7 +560,7 @@ loc_B0D3D:
         cmp byte [byte_F79A6], 4
         jb short loc_B0D4F
         mov eax, ebx
-        call sub_B2720
+        call GusConvertAddr16
         mov cl, dl
 loc_B0D4F:
         or cl, 21h
@@ -573,7 +573,7 @@ loc_B0D4F:
         pop ebp
         ret 4
         db 090h
-sub_B0D6C:
+GusDownload:
         push ebp
         mov ebp, esp
         push esi
@@ -585,10 +585,10 @@ sub_B0D6C:
         mov byte [byte ebp-0Ch], cl
         pushfw
         cli
-        call sub_B122F
+        call GusEnterCritical
         cmp dword [dword_D8784], byte 0
         je short loc_B0DA1
-        call sub_B1256
+        call GusLeaveCritical
         popfw
         mov eax, 7
         jmp near loc_B0E72
@@ -616,7 +616,7 @@ loc_B0DDA:
         xor ecx, ecx
         mov ebx, esi
         mov cl, byte [byte ebp-0Ch]
-        call sub_B1F9C
+        call GusPokeFill
 loc_B0DEF:
         mov dx, word [word_F799E]
         or dl, 4
@@ -644,7 +644,7 @@ loc_B0E22:
         mov edx, dword [byte ebp-010h]
         mov ebx, dword [byte ebp-018h]
         mov eax, edi
-        call sub_B1F9C
+        call GusPokeFill
         mov ecx, dword [byte ebp-018h]
         mov edx, dword [byte ebp-014h]
         sub esi, ecx
@@ -663,9 +663,9 @@ loc_B0E50:
         push eax
         mov cl, byte [byte ebp-0Ch]
         mov eax, dword [byte ebp-014h]
-        call sub_B0CB8
+        call GusStartDramDma
 loc_B0E69:
-        call sub_B1256
+        call GusLeaveCritical
         popfw
         xor eax, eax
 loc_B0E72:
@@ -733,7 +733,7 @@ loc_B0F10:
         mov bx, ax
         mov edx, dword [dword_F79C0]
         xor eax, eax
-        call sub_B085C
+        call GusProgramDma
         xor eax, eax
         mov edx, 41h
         jmp short loc_B0F59
@@ -746,7 +746,7 @@ loc_B0F2B:
         mov edx, dword [dword_F79C0]
         mov eax, 1
         mov ebx, 44h
-        call sub_B085C
+        call GusProgramDma
         xor eax, eax
         mov edx, 49h
 loc_B0F59:
@@ -757,7 +757,7 @@ loc_B0F59:
         xor eax, eax
         mov ax, word [word_D8776]
         call outp_
-        call sub_B13A1
+        call GusDelay
         popfw
         sub dword [dword_F79BC], esi
         add word [word_F79B8], si
@@ -772,7 +772,7 @@ loc_B0F9F:
         pop ebx
         pop ebp
         ret
-sub_B0FA8:
+GusDramDmaDone:
         push ebp
         mov ebp, esp
         push ebx
@@ -796,7 +796,7 @@ loc_B0FB6:
         test bl, 4
         je short loc_B0FE6
 loc_B0FE0:
-        call sub_B16BC
+        call GusServiceIrq
         cli
 loc_B0FE6:
         mov cx, word [word_F799E]
@@ -805,7 +805,7 @@ loc_B0FE6:
         and word [word_F799E], byte 0FFFDh
         jmp short loc_B0FE0
 loc_B0FFC:
-        call sub_B13A1
+        call GusDelay
         jmp short loc_B0FB6
 loc_B1003:
         popfw
@@ -886,13 +886,13 @@ sub_B10D0:
         mov ebx, eax
         pushfw
         cli
-        call sub_B122F
+        call GusEnterCritical
         mov ah, byte [byte ebx+048h]
         mov ecx, dword [byte ebx+014h]
         test ah, 1
         je short loc_B10F6
         mov eax, ecx
-        call sub_B2720
+        call GusConvertAddr16
         mov edx, eax
         jmp short loc_B10F8
 loc_B10F6:
@@ -912,7 +912,7 @@ loc_B10F8:
         test dl, 1
         je short loc_B1129
         mov eax, ecx
-        call sub_B2720
+        call GusConvertAddr16
         mov edx, eax
         jmp short loc_B112B
 loc_B1129:
@@ -939,7 +939,7 @@ loc_B112B:
         add eax, ecx
         test dh, 1
         je short loc_B116E
-        call sub_B2720
+        call GusConvertAddr16
 loc_B116E:
         mov edx, eax
         mov eax, edx
@@ -965,7 +965,7 @@ loc_B116E:
         mov edx, dword [byte ebx+030h]
         sub edx, byte 2
         add eax, edx
-        call sub_B2720
+        call GusConvertAddr16
         mov edx, eax
         jmp short loc_B11C0
 loc_B11BA:
@@ -994,7 +994,7 @@ loc_B11C0:
         xor edx, edx
         div ecx
         mov word [byte ebx+02Eh], ax
-        call sub_B1256
+        call GusLeaveCritical
         popfw
         xor eax, eax
         lea esp, [byte ebp-0Ch]
@@ -1004,11 +1004,11 @@ loc_B11C0:
         pop ebp
         ret
         db 00h
-sub_B121C:
+GusClearIrqState:
         mov word [word_D8788], 0
         mov word [word_F79A2], 0
         ret
-sub_B122F:
+GusEnterCritical:
         inc word [word_F79A2]
         ret
 sub_B1237:
@@ -1016,7 +1016,7 @@ sub_B1237:
         cli
         cmp word [word_F79A2], byte 0
         jne short loc_B1250
-        call sub_B122F
+        call GusEnterCritical
         mov eax, 1
         jmp short loc_B1252
 loc_B1250:
@@ -1025,7 +1025,7 @@ loc_B1252:
         popfw
         ret
         ret
-sub_B1256:
+GusLeaveCritical:
         pushfw
         cli
         dec word [word_F79A2]
@@ -1043,7 +1043,7 @@ loc_B126E:
         nop
         nop
         and byte [word_F799E], 0FDh
-        call sub_B16BC
+        call GusServiceIrq
         jmp short loc_B126E
 loc_B1289:
         popfw

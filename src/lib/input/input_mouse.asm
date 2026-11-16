@@ -4,11 +4,11 @@ bits 32
 section s_B2D38 progbits alloc exec nowrite align=1
 extern mouseminx, mouseminy, mousemaxx, mousemaxy, dword_D2FFC, dword_D3000, dword_D301C, dword_D3028
 extern dword_D3038, dword_D303C, dword_D3044, dword_D3048, mousebtns, mousepollfn, mousex, mousey
-extern off_D306C, off_D3070, off_D3074, sub_B3454, word_D3004, word_D3006, word_D3008
-global sub_B2D38, loc_B2D57, loc_B2D5E, sub_B2D74, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
-global MouseRead, sub_B2DEF, SetViewRect, sub_B2E43, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
-global loc_B2EEA, sub_B2EF6, sub_B2EFD, sub_B2F04, sub_B2F22, loc_B2F7C, loc_B3006
-sub_B2D38:
+extern off_D306C, off_D3070, off_D3074, AddExitHandler, word_D3004, word_D3006, word_D3008
+global MouseReadButtons, loc_B2D57, loc_B2D5E, MouseSetSensitivity, loc_B2D92, sub_B2D94, loc_B2DB2, MouseSetPos
+global MouseRead, sub_B2DEF, SetViewRect, MouseReadMotion, loc_B2E94, loc_B2EA5, loc_B2EB3, loc_B2EC2
+global loc_B2EEA, sub_B2EF6, sub_B2EFD, sub_B2F04, InitMouse, loc_B2F7C, loc_B3006
+MouseReadButtons:
         LD xor, eax, eax
         dec dword [dword_D3000]
         jne short loc_B2D57
@@ -29,7 +29,7 @@ loc_B2D5E:
         LD or, eax, ebx
         inc dword [dword_D3000]
         ret
-sub_B2D74:
+MouseSetSensitivity:
         push ebp
         LD mov, ebp, esp
         cmp dword [dword_D3028], byte 0
@@ -67,7 +67,7 @@ MouseSetPos:
 MouseRead:
         push ebp
         LD mov, ebp, esp
-        call sub_B2E43
+        call MouseReadMotion
         db 08Bh,05Dh,08h                        ; insn: mov ebx,[ebp+8]
         db 089h,03h                             ; insn: mov [ebx],eax
         mov ecx, dword [mousex]
@@ -108,7 +108,7 @@ SetViewRect:
         mov dword [mousemaxy], ecx
         leave
         ret
-sub_B2E43:
+MouseReadMotion:
         dec dword [dword_D3000]
         jne near loc_B2EEA
         mov eax, dword [dword_D3028]
@@ -150,7 +150,7 @@ loc_B2EC2:
         mov dword [mousex], ecx
         mov dword [mousey], edx
         inc dword [dword_D3000]
-        call sub_B2D38
+        call MouseReadButtons
         dec dword [dword_D3000]
         mov dword [mousebtns], eax
 loc_B2EEA:
@@ -172,7 +172,7 @@ sub_B2F04:
         int 33h
         popa
         ret
-sub_B2F22:
+InitMouse:
         mov dword [dword_D3028], 0
         mov dword [dword_D3038], 0
         mov dword [dword_D303C], 0
@@ -209,13 +209,13 @@ loc_B2F7C:
         push byte 40h
         push byte 20h
         push byte 20h
-        call sub_B2D74
+        call MouseSetSensitivity
         mov dword [off_D306C], sub_B2EFD
         mov dword [off_D3070], sub_B2EFD
         mov dword [off_D3074], sub_B2EF6
-        mov dword [mousepollfn], sub_B2E43
+        mov dword [mousepollfn], MouseReadMotion
         push sub_B2F04
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 20h
 loc_B3006:
         mov eax, dword [dword_D3028]

@@ -3,22 +3,22 @@
 #define InstallTimer InstallTimer_decl
 #define sub_B3036 sub_B3036_decl
 #define subwindowdefadr sub_8E7A0_decl
-#define sub_6A9CE sub_6A9CE_decl
+#define InitZoneManager sub_6A9CE_decl
 #define LoadNhlCfg LoadNhlCfg_decl
 #define RunIntro RunIntro_decl
 #define sub_B30F4 sub_B30F4_decl
-#define sub_B33DB sub_B33DB_decl
+#define JoyResetCentres sub_B33DB_decl
 #define MainDeskLoop MainDeskLoop_decl
 #include "nhl95.h"
 #undef sub_8DF54
 #undef InstallTimer
 #undef sub_B3036
 #undef subwindowdefadr
-#undef sub_6A9CE
+#undef InitZoneManager
 #undef LoadNhlCfg
 #undef RunIntro
 #undef sub_B30F4
-#undef sub_B33DB
+#undef JoyResetCentres
 #undef MainDeskLoop
 
 typedef struct {
@@ -39,11 +39,11 @@ void __cdecl sub_8DF54(int a, int b);          /* memory library: set up */
 void InstallTimer(void);
 void __cdecl sub_B3036(int (*fn)(void));       /* DOS critical error handler */
 int __cdecl subwindowdefadr(void *buf, int a, int w, int h, int flags);
-void sub_6A9CE(int n);
+void InitZoneManager(int n);
 void LoadNhlCfg(void);
 void RunIntro(void);
 int sub_B30F4(void);
-void __cdecl sub_B33DB(int n);
+void __cdecl JoyResetCentres(int n);
 void MainDeskLoop(void);
 
 typedef struct {
@@ -120,7 +120,7 @@ void main_(void)
     joysampling = 0;
     addtimer(SampleInputTick);
     ctlavailmask |= 8;
-    if (sub_B2F22()) ctlavailmask |= 1;
+    if (InitMouse()) ctlavailmask |= 1;
     InputInstall();
     ((void (*)(void))mousepollfn)();
     sub_B3036(CritErrHandler);
@@ -128,7 +128,7 @@ void main_(void)
     SetScreenSize(0x140, 0xC8);
     screenbm = subwindowdefadr(&dword_D30D4, 0, 0xA8, 0x140, 0x20);
     SetScreenSize(0x280, 0x1E0);
-    sub_6A9CE(0x64);
+    InitZoneManager(0x64);
     MakePath(s.path, fileoncd[0x13A] == 1 ? (char *)cddriveptr : 0, (char *)str_Pointer3, 0);
     pntrshapes = LoadBank(s.path, 0);
     pointerspr = FindShape(pntrshapes, (char *)str_Pntr);
@@ -145,7 +145,7 @@ void main_(void)
     LoadNhlCfg();
     RunIntro();
     s.drive = sub_B30F4();
-    sub_B33DB(((byte_D416A & 0xF) == 0xF) + 1);
+    JoyResetCentres(((byte_D416A & 0xF) == 0xF) + 1);
     if ((byte_D416A & 3) && (dword_D4158 || dword_D415C)) {
         JoystickCalScreen(1, 0, 0, (char *)str_ConfigureLeftJoystick);
         if (joyenablemask & 1) {
@@ -187,12 +187,12 @@ void main_(void)
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     ShowLoadingScreen();
     InputInstall();
     ShowCredits();
-    sub_B4B58();
+    SetTextMode();
     ((void (*)(void))bailout_vec)();
 }

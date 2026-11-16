@@ -3,8 +3,8 @@ bits 32
 %include "hockey.inc"
 section s_8DCC0 progbits alloc exec nowrite align=1
 extern _nexpand_, _nfree_, _nmalloc_, _nmsize_
-global sub_8DCC0, loc_8DCC5, loc_8DCD6, loc_8DCD9
-sub_8DCC0:
+global GrabLargestBlock, loc_8DCC5, loc_8DCD6, loc_8DCD9
+GrabLargestBlock:
         mov edx, 4000000h
 loc_8DCC5:
         mov eax, edx

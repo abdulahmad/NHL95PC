@@ -16,7 +16,7 @@ extern str_DBX2, str_Del2, str_Delete2, str_Done2, str_Down2, str_DSBOX, str_ext
 extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Original2, str_Pdbx
 extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMemBlock, LoadBank
 extern sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt, GrabBlock
-extern PrintString, sub_92CD0, GetFileSize, KeyDown, MouseRead, FindShape, sub_B4BA8, sub_B4FAC
+extern PrintString, sub_92CD0, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
 extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
 global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
@@ -788,7 +788,7 @@ DrawDbDialog:
         push edi
         push ebp
         sub esp, byte 24h
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Dbdialog
         cmp byte [fileoncd+01C8h], 1
@@ -920,7 +920,7 @@ DrawDbDialog:
         push eax
         push edi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Dh
         lea eax, [byte esi-01h]
@@ -928,7 +928,7 @@ DrawDbDialog:
         push ebp
         push edi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Bh
         push esi
@@ -938,7 +938,7 @@ DrawDbDialog:
         push edi
         mov edi, ecx
         push ecx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Bh
         push esi
@@ -947,7 +947,7 @@ DrawDbDialog:
         push esi
         dec ebp
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         jmp short DrawDbDialog_n1.1
 .8:
@@ -1248,7 +1248,7 @@ DrawDbList_n1:
         push eax
         push esi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Dh
         lea eax, [byte edi-01h]
@@ -1256,7 +1256,7 @@ DrawDbList_n1:
         push ebp
         push esi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Bh
         push edi
@@ -1265,7 +1265,7 @@ DrawDbList_n1:
         inc esi
         push esi
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 7Bh
         push edi
@@ -1274,7 +1274,7 @@ DrawDbList_n1:
         push edi
         inc ebp
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
 .2:
         mov eax, dword [fdlgtab]
@@ -1345,7 +1345,7 @@ DbDialogLoop:
         mov dword [byte esp+0Ch], eax
         mov eax, dword [byte esp+010h]
         mov dword [byte esp+08h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -1419,7 +1419,7 @@ DbDialogLoop:
         cmp eax, dword [byte esp+010h]
         je short DbDialogLoop.1
 .4:
-        call sub_B4BA8
+        call SetScreenTarget
         mov ecx, dword [byte esp+010h]
         push ecx
         mov eax, dword [byte esp+018h]

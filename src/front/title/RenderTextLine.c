@@ -13,11 +13,11 @@ void RenderTextLine(int x, int y, char *s)
     w = (fputchar(s) & 0xFFC0) + 0x40;
     h = byte_D42C3 + 1;
     bmp = CreateBitmap(w, h, 0);
-    sub_B3A88(save);
+    SaveDrawState(save);
     SetDrawBitmap(bmp);
     ClearScreen(0xFF);
     PrintShadowText(0, 0, s);
-    sub_B3AA1(save);
+    RestoreDrawState(save);
     DrawArt(((int *)bmp)[0x2C / 4], x, y);
-    sub_9132C(bmp);
+    FreeBitmap(bmp);
 }

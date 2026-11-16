@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_9A7A0 progbits alloc exec nowrite align=1
-extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, sub_8CC70, sub_98D20
-extern sub_B3FC2
+extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, sub_8CC70, FillRowTable
+extern ZeroMem
 global sub_9A7A0, loc_9A7DB, loc_9A7EF, loc_9A868
 sub_9A7A0:
         push esi
@@ -41,7 +41,7 @@ loc_9A7EF:
         add esp, byte 4
         push byte 40h
         push esi
-        call sub_B3FC2
+        call ZeroMem
         add esp, byte 8
         mov eax, dword [esp]
         mov word [byte edi+04h], ax
@@ -61,7 +61,7 @@ loc_9A7EF:
         mov ebx, eax
         mov edx, dword [esp]
         mov eax, 10h
-        call sub_98D20
+        call FillRowTable
         mov dword [byte esi+028h], eax
         test eax, eax
         jne short loc_9A868

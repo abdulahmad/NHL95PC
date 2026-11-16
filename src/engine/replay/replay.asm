@@ -21,8 +21,8 @@ extern photoptrsf, puckc, puckstruct, puckz, recbpr, RefStep, regd0, regd1
 extern regd2, regd3, replayplay, replaysfx, replaystart, replaytick, scor2font, scor3font
 extern scrollx, scrolly, setpersonel, sflags, sfx, shownumbers, SortCords, sprintf_
 extern spritedrawcount, str_04d2, str_AWAYPALS, str_extBIN, str_HOMEPALS4, str_Pal30, str_PPV, str_Rinkpal
-extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, sub_90354, FillRect
-extern sub_90EC0, PrintString, SortIndices, FindShape, sub_B340B, SetClipWindow, sub_B500C, sub_B5D80
+extern sub_6AB7C, sub_8DAB8, LoadBank, sub_8E8A0, TextSetColors, TextSetFont, ShapeBankCount, FillRect
+extern sub_90EC0, PrintString, SortIndices, FindShape, JoyButtonMap, SetClipWindow, sub_B500C, sub_B5D80
 extern textline1, textline2, textline3, textline4, textline5, hmplattr, offsort_c, defsort_r
 extern offsort_d, defsort_c, offsort_l, defsort_l, offsort_r, defsort_fwd, ovlsteptime, Pencntdwn2
 extern rinkobjdefs, replayfollowpl, rinkobjs, refYpos2, reftemp3, dressedfwds, dresseddefs, rpl_x
@@ -1126,7 +1126,7 @@ DrawRinkSideObjects:
         mov eax, dword [byte ebp-0Ah]
         sar eax, 10h
         push eax
-        call sub_B340B
+        call JoyButtonMap
         add esp, byte 4
         movsx edx, si
         shl edx, 4

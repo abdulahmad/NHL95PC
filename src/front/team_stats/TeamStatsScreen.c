@@ -158,7 +158,7 @@ int TeamStatsScreen(int page)
     j___close(fh);
     mf = mainfont;
     kf = kaufmfont;
-    sub_B4BA8();
+    SetScreenTarget();
     if (!statsplayoffs)
         MakePath(f.path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
     else

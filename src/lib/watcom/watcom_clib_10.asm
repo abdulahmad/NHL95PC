@@ -2,13 +2,13 @@
 bits 32
 %include "hockey.inc"
 section s_90AC4 progbits alloc exec nowrite align=1
-extern __prtf_, sub_90A40
+extern __prtf_, TextWidthN
 global fputchar, mem_putc_, sprintf_, memcpy_
 fputchar:
         push dword 200h
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_90A40
+        call TextWidthN
         add esp, byte 8
         ret
 mem_putc_:

@@ -32,7 +32,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     int n;
     int w;
 
-    sub_B4BA8();
+    SetScreenTarget();
     if (ctl1team[0] < 0 || ctl2team < 0 || ctl1team[0] == ctl2team) {
         SetTickDeadline(0x64);
         if (ctl1team[0] >= 0) r = SaveHilight(HomeTeam == ctl1team[0] ? HomeTeam ^ ctl1team[0] : 1);
@@ -59,7 +59,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     SetClipWindow(0xC2, 0xF0, 0, 0x20);
     sub_B500C(gadgetshape, 0, 0);
     DrawGadgetButton(7);
-    sub_B4BA8();
+    SetScreenTarget();
     SetClipWindow(0, 0x140, 0, 0xC8);
     w = ((short *)pointerspr)[2];
     w *= ((short *)pointerspr)[3];
@@ -100,10 +100,10 @@ void ReplaySaveHilight(int unused, int x, int y)
     }
     SetTickDeadline(0x64);
     SetClipWindow(0, 0x140, 0, 0xC8);
-    sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0x4E, hilightslot * 0x11 + 0x5E, 0x10);
-    sub_B4FAC(0x4E, hilightslot * 0x11 + 0x50, 0xD8, hilightslot * 0x11 + 0x50, 0x10);
-    sub_B4FAC(0x4F, hilightslot * 0x11 + 0x5E, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
-    sub_B4FAC(0xD8, hilightslot * 0x11 + 0x51, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
+    FillRectColor(0x4E, hilightslot * 0x11 + 0x50, 0x4E, hilightslot * 0x11 + 0x5E, 0x10);
+    FillRectColor(0x4E, hilightslot * 0x11 + 0x50, 0xD8, hilightslot * 0x11 + 0x50, 0x10);
+    FillRectColor(0x4F, hilightslot * 0x11 + 0x5E, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
+    FillRectColor(0xD8, hilightslot * 0x11 + 0x51, 0xD8, hilightslot * 0x11 + 0x5E, 0x59);
     PlotPixel(0xD8, hilightslot * 0x11 + 0x50, 0x13);
     PlotPixel(0x4E, hilightslot * 0x11 + 0x5E, 0x13);
     DrawArt(pointerspr, gadgetptrx, gadgetptry);
@@ -141,7 +141,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     if (r) {
         SetTickDeadline(0x1F4);
         SetDialogColors(0x14, 0x59, 0x11, 0x59, 0);
-        sub_B4BA8();
+        SetScreenTarget();
         MessageBox(-1, -1, (char *)msg_NoHilightSpace, 3, 0, 0, 0, 0, 0);
         WaitTickDeadline();
         RestoreDialogBg();

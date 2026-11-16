@@ -113,7 +113,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
     depth = 0;
     TextSaveState(textstate);
     TextSetFont(mainfont);
-    sub_B4BA8();
+    SetScreenTarget();
     for (i = 0; i < 0x100; i++) remap[i] = i;
     SetColorRemap(remap);
     SetDialogColors(0x41, 0x40, 0x42, 0x40, 0);
@@ -133,7 +133,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         FreeMemBlock((int)pal);
         if (musicon && songdata) {
             while (SndQuery(musicslot, 3) == 0) ;
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
         copy = (unsigned char *)AllocMemBlock((char *)str_TPI, 0x30C, 0x20);
@@ -141,7 +141,7 @@ void LeagueTeamSelect(char *dir, int *humans, char *names, unsigned char *teams,
         MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)str_Embnhl, 0);
         bank = LoadBank(path, 0);
         art = FindShape(bank, (char *)str_Bkgd8);
-        sub_B4BA8();
+        SetScreenTarget();
         ClearScreen(0);
         SetTextColors(0x40, 0x43);
         DrawArt(art, 0, 0);

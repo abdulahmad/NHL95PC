@@ -5,7 +5,7 @@ section s_2970A progbits alloc exec nowrite align=1
 extern __CHK, boxfillcolor, boxlitecolor, boxshadecolor, FileClose, FileOpenRead, fputchar, FreeMemBlock
 extern leaguedbnames, lgstate, MakePath, playofftree, playofftree_p1, PlayoffTreeScreen, pochampion, ReadSchedGame
 extern ReadTeamNames, statsfromleague, statsleague, str_extDB, str_LSSCHED, str_space, str_Space2, strcat_
-extern strcmp_, strcpy_, strlen_, sub_8E8A0, FillRect, sub_B4FAC, PlotPixel, teamcitynames
+extern strcmp_, strcpy_, strlen_, sub_8E8A0, FillRect, FillRectColor, PlotPixel, teamcitynames
 extern treeteamnames
 global LoadPlayoffModeTree, TreeSeriesWinner, OpenStatsSchedule, LoadLeagueTree, FitPlayerName, DrawBevelBox
 ;-----------------------------------------------------------------------------
@@ -644,7 +644,7 @@ DrawBevelBox:
         push ebp
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [boxlitecolor]
         push ecx
@@ -653,7 +653,7 @@ DrawBevelBox:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov edx, dword [boxshadecolor]
         push edx
@@ -662,7 +662,7 @@ DrawBevelBox:
         push ebp
         push esi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [boxshadecolor]
         push ecx
@@ -671,7 +671,7 @@ DrawBevelBox:
         push ebp
         push eax
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         cmp dword [byte esp+024h], byte 0
         je near .x

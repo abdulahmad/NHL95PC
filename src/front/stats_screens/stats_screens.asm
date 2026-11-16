@@ -11,7 +11,7 @@ extern statsplayerbuf, statsplayoffs, statsredrawcb, statsskaterbuf, statsteambu
 extern str_easndesk2, str_EASNvfn, str_embpal, str_embpal2, str_embpal3, str_gstat, str_gstat2, str_gstat3
 extern str_keys, str_keys2, str_keys3, str_Pal6, str_Pal7, str_Pal8, str_pstat, str_pstat2
 extern str_pstat3, str_tstat, str_tstat2, str_tstat3, AllocMemBlock, sub_8DAB8, LoadBank, sub_8E8A0
-extern SetPalette, sub_91FE0, FindShape, ClearScreen, VgaSetPalette, sub_B4BA8, SetColorRemap, TeamRosterScreen
+extern SetPalette, sub_91FE0, FindShape, ClearScreen, VgaSetPalette, SetScreenTarget, SetColorRemap, TeamRosterScreen
 extern TeamStatsScreen, standingsmenubar, rostermenubar, playercardmenubar, teamstatsmenubar, skaterstatsmenubar, goaliestatsmenubar
 global GameTeamStatsScreen, GameTeamStatsScreen_common, GameSkaterStatsScreen, GameSkaterStatsScreen_x, GameGoalieStatsScreen, GameStandingsScreen, GameStandingsMenu_jt, GameStandingsMenu
 global GameStandingsMenu_standings, GameStandingsMenu_roster, GameStandingsMenu_player, GameStandingsMenu_player2, EasnTeamStatsScreen, EasnTeamStatsScreen_m, EasnTeamStatsScreen_x, EasnSkaterStatsScreen
@@ -50,7 +50,7 @@ GameTeamStatsScreen:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov eax, esi
@@ -157,7 +157,7 @@ GameSkaterStatsScreen:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov eax, esi
@@ -385,7 +385,7 @@ GameStandingsScreen:
         jmp short .8
 .7:
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 42h
         mov ecx, 41h
         mov ebx, 40h
@@ -447,7 +447,7 @@ GameStandingsMenu:
         mov edx, esp
         mov eax, 1
         call FadePalStep
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -694,7 +694,7 @@ EasnTeamStatsScreen_m:
         mov dword [leaguestatsmode], edx
         mov dword [statscategory], esi
         mov dword [statsredrawcb], TeamStatsScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -793,7 +793,7 @@ EasnSkaterStatsScreen_m:
         mov dword [leaguestatsmode], 1
         mov dword [statscategory], esi
         mov dword [statsredrawcb], LeadersScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -896,7 +896,7 @@ EasnGoalieStatsScreen_m:
         mov dword [leaguestatsmode], 1
         mov dword [statscategory], esi
         mov dword [statsredrawcb], LeadersScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -1074,7 +1074,7 @@ EasnStandingsScreen:
         jmp short .8
 .7:
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 42h
         mov ecx, 41h
         mov ebx, 40h
@@ -1217,7 +1217,7 @@ EasnStandingsMenu_m:
         mov eax, standingsmenubar
         call RunTeamPickMenu
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
         mov edi, GoalieStatsCard
         mov esi, 1
 .4:
@@ -1252,7 +1252,7 @@ EasnStandingsMenu_standings:
         cmp dword [statsplayoffs], byte 0
         je short .1
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
 .1:
         xor ecx, ecx
         mov dword [dword_C6D26], ecx
@@ -1478,7 +1478,7 @@ CalTeamStatsScreen:
         mov dword [leaguestatsmode], 1
         mov dword [statscategory], esi
         mov dword [statsredrawcb], TeamStatsScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -1583,7 +1583,7 @@ CalSkaterStatsScreen:
         mov dword [leaguestatsmode], 1
         mov dword [statscategory], esi
         mov dword [statsredrawcb], LeadersScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -1663,7 +1663,7 @@ CalGoalieStatsScreen:
         mov dword [leaguestatsmode], 1
         mov dword [statscategory], esi
         mov dword [statsredrawcb], LeadersScreen
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, 1
         call InitMenuRemap
         mov ebx, 10h
@@ -1788,7 +1788,7 @@ CalStandingsScreen:
         jmp short .8
 .7:
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 42h
         mov ecx, 41h
         mov ebx, 40h
@@ -1931,7 +1931,7 @@ CalStandingsMenu:
         mov eax, standingsmenubar
         call RunTeamPickMenu
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
         mov edi, TeamRosterScreen
 .4:
         mov edx, dword [deskexit]
@@ -1961,7 +1961,7 @@ CalStandingsMenu_standings:
         cmp dword [statsplayoffs], byte 0
         je short .1
         call FreeDeskBuffers
-        call sub_B4BA8
+        call SetScreenTarget
 .1:
         xor eax, eax
         mov dword [dword_C6D26], eax

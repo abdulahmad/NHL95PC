@@ -24,7 +24,7 @@ int MenuExhibitionSettings(void)
     ((short *)bm)[2] = 0xD6;
     ((short *)bm)[3] = 0x129;
     GrabBlock(bm, 0xA, 0x13);
-    sub_B4BA8();
+    SetScreenTarget();
     DrawExhSetDlg();
     ExhOptsToBits();
     ExhSetEditLoop();
@@ -104,7 +104,7 @@ short ExhSetEditLoop(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer17, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;

@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_98A40 progbits alloc exec nowrite align=1
-extern sub_B3B2E, sub_B3C60
-global sub_98A40, loc_98A79
-sub_98A40:
+extern DosOpenReadOnly, DosCloseFile
+global DosFileInfo, loc_98A79
+DosFileInfo:
         sub esp, byte 0Ch
         mov eax, esp
         push eax
@@ -14,11 +14,11 @@ sub_98A40:
         push eax
         mov edx, dword [byte esp+01Ch]
         push edx
-        call sub_B3B2E
+        call DosOpenReadOnly
         add esp, byte 10h
         mov ebx, dword [byte esp+08h]
         push ebx
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         cmp dword [byte esp+08h], byte 0
         je short loc_98A79

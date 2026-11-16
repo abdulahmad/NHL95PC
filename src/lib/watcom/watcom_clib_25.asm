@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98683 progbits alloc exec nowrite align=1
-extern __EnterWVIDEO_, dword_EDEFC, sub_90267
+extern __EnterWVIDEO_, dword_EDEFC, WriteConsoleMessage
 global __fatal_runtime_error_, loc_9869D, nullsub_7, sub_986B0, unknown_libname_22
 __fatal_runtime_error_:
         push ebx
@@ -15,7 +15,7 @@ __fatal_runtime_error_:
         jne short loc_9869D
         mov eax, ebx
         mov edx, ecx
-        call sub_90267
+        call WriteConsoleMessage
 loc_9869D:
         pop ecx
         pop ebx

@@ -283,7 +283,7 @@ int MenuNewLeague(void)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     return 2;

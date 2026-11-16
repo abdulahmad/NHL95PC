@@ -21,7 +21,7 @@ void ShowLoadingScreen(void)
     if (loadscreenon) return;
     SetPalette(0, 0x100, loadpals);
     FadePalStep(1, loadpals, 8);
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     if (sub_8DAB8() <= 0x222E0) return;
     memset(loadpals, 0, 0x900);

@@ -2,7 +2,7 @@
 #define LoadTeamPPV LoadTeamPPV_decl
 #define UpdateTextOverlay UpdateTextOverlay_decl
 #define DrawCallBanner DrawCallBanner_decl
-#define sub_90354 sub_90354_decl
+#define ShapeBankCount sub_90354_decl
 #define sub_90EC0 sub_90EC0_decl
 #define sub_B500C sub_B500C_decl
 #define sub_6AB7C sub_6AB7C_decl
@@ -10,12 +10,12 @@
 #undef LoadTeamPPV
 #undef UpdateTextOverlay
 #undef DrawCallBanner
-#undef sub_90354
+#undef ShapeBankCount
 #undef sub_90EC0
 #undef sub_B500C
 #undef sub_6AB7C
 
-int __cdecl sub_90354(int bank);
+int __cdecl ShapeBankCount(int bank);
 void __cdecl sub_90EC0(int x, int y, int w, int h, int c);  /* graphics library: save a rectangle */
 void __cdecl sub_B500C(int art, int x, int y);              /* graphics library: draw art */
 void sub_6AB7C(int n, int x0, int y0, int x1, int y1);      /* mark a dirty rectangle */
@@ -177,7 +177,7 @@ void LoadTeamPPV(short seq)
     joysampling = 0;
     MakePath(name, fileoncd[ovlartfiles[seq]] == 1 ? (char *)cddriveptr : 0, (char *)ovlartnames[seq], (char *)str_PPV);
     ovlartbank = sub_8E8A0(name, 0x20);
-    for (i = 0; i < sub_90354(ovlartbank); i++) {
+    for (i = 0; i < ShapeBankCount(ovlartbank); i++) {
         sprintf(name, (char *)str_04d2, i);
         ovlstepart[i] = FindShape(ovlartbank, name);
     }

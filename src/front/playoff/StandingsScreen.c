@@ -92,7 +92,7 @@ int StandingsScreen(Stand *teams, int *order)
     }
     j___close(fh);
     qsort(order, 0x1A, 4, CmpConfStandings);
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0x8C] == 1 ? (char *)cddriveptr : 0, (char *)statsbgnames[statsplayoffs], 0);
     statsbgshapes = LoadBank(path, 0);
     statspalshape = FindShape(statsbgshapes, (char *)str_Bkgd2);

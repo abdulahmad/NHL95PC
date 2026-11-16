@@ -20,7 +20,7 @@ extern savleague2, schedgameidx, SetDialogColors, SetPalette, SetupControllers, 
 extern SndQuery, songdata, sprintf_, standingscb, standingsmenucb, starpl, startm, str_02d
 extern str_backslash2, str_dot, str_Easndesk2, str_extDB, str_extxx, str_floppydrv, str_GAME, str_GSUMMARY
 extern str_MustBeExportedTo, str_MustBeImportedFrom, str_Pal17, str_Pal18, str_PINFO, str_S4, str_SAV, str_SelectATeamTo
-extern str_Temp5, str_Xx, strcat_, strcpy_, sub_8D2F0, sub_8FCDF, teamstatscb, treeteamnames
+extern str_Temp5, str_Xx, strcat_, strcpy_, PushMemDescriptorLocked, sub_8FCDF, teamstatscb, treeteamnames
 extern UpdatePlayoffSeries, UpdateSeasonSchedule, UpdateTeamDbs, updschedmsg, VgaSetPalette, VisTeam, WaitLeagueFloppy, word_DDD48
 extern word_DDD4A, WriteGoalieSeasonRec, WriteSchedGame, WriteSeasonRec, WriteTeamRec
 global CheckLeagueDiskSync, MakeTeamDbFmt, PostGameToTeamDb, PlayLeagueGame
@@ -1126,7 +1126,7 @@ PlayLeagueGame:
         je short PlayLeagueGame.20
         mov ebx, dword [songdata]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ecx, ecx
         mov dword [songdata], ecx
@@ -1353,7 +1353,7 @@ PlayLeagueGame:
         je short PlayLeagueGame.38
         mov ecx, dword [songdata]
         push ecx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor esi, esi
         mov dword [songdata], esi
@@ -1931,7 +1931,7 @@ PlayLeagueGame:
         je short PlayLeagueGame.82
         mov ebx, dword [songdata]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ecx, ecx
         mov dword [songdata], ecx

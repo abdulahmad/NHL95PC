@@ -93,7 +93,7 @@ void OpenSpeechBank(char *path, int n)
 }
 
 /* ReadSpeechSample: read sample n of the open bank (file offset +12h, packed length +1Ah) to
- the end of its room at addr (addr + size - length + 1388h), unpack it to addr (sub_98028), then undo the delta
+ the end of its room at addr (addr + size - length + 1388h), unpack it to addr (UnpackTo), then undo the delta
  coding: each byte is the running sum of the bytes 5 further on (a 5-byte header is dropped). Returns the
  unpacked size less 5. */
 int ReadSpeechSample(int n, int addr)
@@ -117,7 +117,7 @@ int ReadSpeechSample(int n, int addr)
     src = &dst[size - len + 5000];
     lseek(fh, pos, 0);
     _dos_read(fh, src, len, &got);
-    cnt = sub_98028(src, dst, len);
+    cnt = UnpackTo(src, dst, len);
     acc = 0;
     for (i = 0; i < cnt - 5; i++) {
         dst[i] = dst[i + 5] + acc;

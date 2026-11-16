@@ -21,7 +21,7 @@ extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_
 extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
 extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
 extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt
-extern GrabBlock, PrintString, sub_92CD0, MouseRead, FindShape, sub_B3CC8, sub_B4BA8, sub_B4FAC
+extern GrabBlock, PrintString, sub_92CD0, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
 extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
 global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
@@ -861,7 +861,7 @@ DrawFileDlg:
         push edi
         push ebp
         sub esp, byte 24h
-        call sub_B4BA8
+        call SetScreenTarget
         xor ecx, ecx
         mov ebx, str_Dialogbx
         cmp byte [fileoncd+063h], 1
@@ -985,7 +985,7 @@ DrawFileDlg:
         push eax
         push edi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0FAh
         lea eax, [byte esi-01h]
@@ -993,7 +993,7 @@ DrawFileDlg:
         push ebp
         push edi
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         push esi
@@ -1003,7 +1003,7 @@ DrawFileDlg:
         push edi
         mov edi, ecx
         push ecx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         push esi
@@ -1012,7 +1012,7 @@ DrawFileDlg:
         push esi
         dec ebp
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         jmp short DrawFileDlg_x
 .8:
@@ -1329,7 +1329,7 @@ DrawFileDlgList_n1:
         push eax
         push ebp
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0FAh
         lea eax, [byte edi-01h]
@@ -1337,7 +1337,7 @@ DrawFileDlgList_n1:
         push esi
         push ebp
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         push edi
@@ -1347,7 +1347,7 @@ DrawFileDlgList_n1:
         push ebp
         mov ebp, ecx
         push ecx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push dword 0F8h
         push edi
@@ -1356,7 +1356,7 @@ DrawFileDlgList_n1:
         push edi
         inc esi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
 .2:
         mov eax, dword [fdlgtab]
@@ -1444,7 +1444,7 @@ RunFileDlg:
         mov dword [byte esp+0Ch], eax
         mov eax, dword [byte esp+010h]
         mov dword [byte esp+08h], eax
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [pointerspr]
         mov edx, dword [byte eax+02h]
         sar edx, 10h
@@ -1518,7 +1518,7 @@ RunFileDlg:
         cmp eax, dword [byte esp+010h]
         je short RunFileDlg.1
 .4:
-        call sub_B4BA8
+        call SetScreenTarget
         mov ebx, dword [byte esp+010h]
         push ebx
         mov eax, dword [byte esp+018h]
@@ -2261,7 +2261,7 @@ SelectSavedFile:
 ;-----------------------------------------------------------------------------
 ; ReadGameSettings                             2D260  95 PC, medium confidence
 ; Reads 75h bytes of game.set (default or from the save dir), FatalError d2 /
-; dd2 / d3 / d4; returns whether game.sav exists (sub_B3CC8)
+; dd2 / d3 / d4; returns whether game.sav exists (FindFirstFile)
 ;-----------------------------------------------------------------------------
 ; C: src/pc/file_dialogs/ReadGameSettings.c
 %ifdef CBUILD
@@ -2330,7 +2330,7 @@ ReadGameSettings:
         call MakePath
         mov eax, esp
         push eax
-        call sub_B3CC8
+        call FindFirstFile
         add esp, byte 4
         mov esi, eax
 .6:

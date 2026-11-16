@@ -13,8 +13,8 @@ extern recbpr, replaynosave, replaystart, rinkendbank, rinkscrollx, rinkscrolly,
 extern SetDialogColors, SetPalette, SetScreenSize, sflags, ShowLoadingScreen, SndQuery, songdata, sprintf_
 extern str_backslash4, str_CantOpenFile, str_dot4, str_F12, str_F3, str_F4, str_HI, str_HI2
 extern str_HilightDescFmt, str_HilightsReel, str_HLT, str_HLTL, str_HLTS, str_K1, str_SaveTo, str_SelectAHilight
-extern str_SelectATeam, str_star, strcat_, strcpy_, strcspn_, stricmp_, sub_1BAB1, sub_8D2F0
-extern sub_8FCDF, sub_93000, sub_B4FAC, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, unknown_libname_1
+extern str_SelectATeam, str_star, strcat_, strcpy_, strcspn_, stricmp_, sub_1BAB1, PushMemDescriptorLocked
+extern sub_8FCDF, sub_93000, FillRectColor, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, unknown_libname_1
 extern unknown_libname_2, VisTeam
 global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
 global PlayHilight
@@ -82,7 +82,7 @@ HilightSaveToDlg:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 59h
         push esi
@@ -91,7 +91,7 @@ HilightSaveToDlg:
         push eax
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 10h
         push ebp
@@ -100,7 +100,7 @@ HilightSaveToDlg:
         push ebp
         lea eax, [byte edi+01h]
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 10h
         push ebp
@@ -109,7 +109,7 @@ HilightSaveToDlg:
         lea eax, [byte esi+01h]
         push eax
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         push byte 13h
         push esi
@@ -981,7 +981,7 @@ PlayHilight:
         je short PlayHilight.3
         mov esi, dword [songdata]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor edi, edi
         mov dword [songdata], edi

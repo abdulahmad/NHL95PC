@@ -5,8 +5,8 @@
    exits come out as `jne` over a `jmp` where the EXE has one `je` to the exit (a goto shape would give that).
    Left: the register cycle one step behind the EXE from frameaccum on (edi / ebp, ...), the Esc demomode test
    (the EXE loads it into edx and stores that known zero as joysampling = 0). See docs/UNSURE.md. */
-#define sub_90354 sub_90354_decl
-#define sub_9035C sub_9035C_decl
+#define ShapeBankCount sub_90354_decl
+#define ShapeBankEntry sub_9035C_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
 #define sub_6AF97 sub_6AF97_decl
 #define sub_6B008 sub_6B008_decl
@@ -18,8 +18,8 @@
 #define StartThreeStars StartThreeStars_decl
 #define Gameloop GameLoop_decl
 #include "nhl95.h"
-#undef sub_90354
-#undef sub_9035C
+#undef ShapeBankCount
+#undef ShapeBankEntry
 #undef TicksSinceLastCall
 #undef sub_6AF97
 #undef sub_6B008
@@ -31,8 +31,8 @@
 #undef StartThreeStars
 #undef Gameloop
 
-int __cdecl sub_90354(int bank);
-int __cdecl sub_9035C(int bank, int n);
+int __cdecl ShapeBankCount(int bank);
+int __cdecl ShapeBankEntry(int bank, int n);
 void TicksSinceLastCall(void);
 void sub_6AF97(int x, int y);
 void sub_6B008(void);
@@ -148,7 +148,7 @@ void Gameloop(void)
                     MakePath(path, fileoncd[ovlartfiles[ovlseq]] == 1 ? (char *)cddriveptr : 0,
                         (char *)ovlartnames[ovlseq], (char *)str_PPV);
                     ovlartbank = sub_8E8A0(path, 0x20);
-                    for (i = 0; i < sub_90354(ovlartbank); i++) ovlstepart[i] = sub_9035C(ovlartbank, i);
+                    for (i = 0; i < ShapeBankCount(ovlartbank); i++) ovlstepart[i] = ShapeBankEntry(ovlartbank, i);
                 }
                 joysampling = joysampling_save;
                 joyq_flush();

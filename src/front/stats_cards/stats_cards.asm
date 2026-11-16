@@ -14,7 +14,7 @@ extern str_L3, str_L4, str_LeftWing2, str_Min2, str_Pct2, str_Pct3, str_PIM2, st
 extern str_PlayerStats2, str_PlusMinus2, str_PORTR, str_PORTR2, str_PPG2, str_Pst1, str_Pst12, str_Pst22
 extern str_Pst23, str_Pstatbar3, str_Pstatbar4, str_Pt2, str_R, str_R2, str_Ratings2, str_Ratings3
 extern str_RightWing2, str_SA, str_SHG2, str_Shoots2, str_Shots2, str_SO2, str_SS2, str_SS3
-extern str_T2, str_W2, strcat_, sub_B30BB, sub_B4BA8, TextGridOff, TextGridOpen, TextRestoreState
+extern str_T2, str_W2, strcat_, FindShapeQuiet, SetScreenTarget, TextGridOff, TextGridOpen, TextRestoreState
 extern TextSaveState, TextSetFont
 global SkaterStatsCard, GoalieStatsCard
 ;-----------------------------------------------------------------------------
@@ -117,7 +117,7 @@ SkaterStatsCard:
         call read_
         mov eax, ecx
         call j___close_
-        call sub_B4BA8
+        call SetScreenTarget
         lea eax, [dword esp+0ECh]
         push eax
         push str_fmtEmb
@@ -216,7 +216,7 @@ SkaterStatsCard:
         mov eax, esp
         push eax
         push esi
-        call sub_B30BB
+        call FindShapeQuiet
         mov edi, eax
         add esp, byte 8
         test eax, eax
@@ -225,7 +225,7 @@ SkaterStatsCard:
         mov eax, esp
         push eax
         push esi
-        call sub_B30BB
+        call FindShapeQuiet
         add esp, byte 8
         add eax, byte 10h
         mov ecx, 26h
@@ -732,7 +732,7 @@ GoalieStatsCard:
         call read_
         mov eax, ecx
         call j___close_
-        call sub_B4BA8
+        call SetScreenTarget
         lea eax, [dword esp+0F8h]
         push eax
         push str_fmtEmb
@@ -830,7 +830,7 @@ GoalieStatsCard:
         mov eax, esp
         push eax
         push esi
-        call sub_B30BB
+        call FindShapeQuiet
         mov edi, eax
         add esp, byte 8
         test eax, eax
@@ -839,7 +839,7 @@ GoalieStatsCard:
         mov eax, esp
         push eax
         push esi
-        call sub_B30BB
+        call FindShapeQuiet
         add esp, byte 8
         add eax, byte 10h
         mov ecx, 26h

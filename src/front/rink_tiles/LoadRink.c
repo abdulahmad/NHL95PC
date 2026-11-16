@@ -1,5 +1,5 @@
 /* Rink tiles: loading the rink. */
-#define sub_8DBC0 sub_8DBC0_decl
+#define MemPtrSize sub_8DBC0_decl
 #define sub_92EE4 sub_92EE4_decl
 #define sub_6A0F6 sub_6A0F6_decl
 #define sub_6A156 sub_6A156_decl
@@ -8,7 +8,7 @@
 #define sub_6AF52 sub_6AF52_decl
 #define sub_6AF97 sub_6AF97_decl
 #include "nhl95.h"
-#undef sub_8DBC0
+#undef MemPtrSize
 #undef sub_92EE4
 #undef sub_6A0F6
 #undef sub_6A156
@@ -17,7 +17,7 @@
 #undef sub_6AF52
 #undef sub_6AF97
 
-int __cdecl sub_8DBC0(int blk);              /* memory library: block size */
+int __cdecl MemPtrSize(int blk);              /* memory library: block size */
 int __cdecl sub_92EE4(char *path, int buf);  /* file library: load a file into buf */
 void sub_6A0F6(int bm);
 void sub_6A156(int bm);
@@ -56,11 +56,11 @@ void LoadRink(int rink)
     short n;
     int tiles;
 
-    if (rinkbm && sub_8DBC0(rinkbm) != 0x37840) {
+    if (rinkbm && MemPtrSize(rinkbm) != 0x37840) {
         FreeMemBlock(rinkbm);
         rinkbm = 0;
     }
-    if (rinktilebm && sub_8DBC0(rinktilebm) != 0x37840) {
+    if (rinktilebm && MemPtrSize(rinktilebm) != 0x37840) {
         FreeMemBlock(rinktilebm);
         rinktilebm = 0;
     }

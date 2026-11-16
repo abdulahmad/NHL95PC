@@ -4,7 +4,7 @@ bits 32
 section s_99A12 progbits alloc exec nowrite align=1
 extern __set_doserrno_, __set_errno_, _osmajor, dword_D4CF0, dword_D4CF4, dword_D4FF1, dword_F243C, dword_F2440
 extern dword_F24C0, dword_F58D8, dword_F58DC, exit_, itoa_, ltoa_, main_, off_D2F68
-extern off_D5668, sub_9D68E, sub_A2ACF, toupper_, ultoa_, unk_D8B14, unk_D8B3E, unk_D8B4A
+extern off_D5668, CMainHook, __CommonInit_, toupper_, ultoa_, unk_D8B14, unk_D8B3E, unk_D8B4A
 global copypart_, loc_99A21, loc_99A41, _splitpath_, loc_99A6C, loc_99A71, loc_99A78, loc_99A7C
 global loc_99A7E, loc_99A8D, loc_99A96, loc_99A9A, loc_99AB2, pickup_, loc_99AEA, loc_99AF1
 global loc_99AF3, _makepath_, loc_99B15, loc_99B21, loc_99B40, loc_99B4B, loc_99B4D, loc_99B57
@@ -312,7 +312,7 @@ __CMain:
         mov edx, dword [dword_D4CF0]
         add edx, byte 3
         and dl, 0FCh
-        call sub_9D68E
+        call CMainHook
         cmp edx, eax
         jae short loc_99C53
         mov eax, edx
@@ -325,7 +325,7 @@ loc_99C55:
         mov edx, dword [dword_D4CF0]
         add eax, edx
         mov dword [dword_D4CF4], eax
-        call sub_A2ACF
+        call __CommonInit_
         mov edx, dword [dword_F58DC]
         mov eax, dword [dword_F58D8]
         call main_

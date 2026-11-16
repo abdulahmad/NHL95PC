@@ -4,7 +4,7 @@ bits 32
 section s_D4BA0 progbits alloc noexec write align=1
 extern sub_972AB, sub_972B8, sub_972C0, sub_972C8, sub_972D5, sub_972DD, sub_972E5, sub_9D698
 extern sub_9D6E6, sub_9D6F3, sub_9DAAC, sub_9DC9F, sub_9DE9C, sub_9DEA9, sub_9DEBE, sub_9DF73
-extern sub_9DF80, sub_9E676, sub_9F226, sub_9F387, sub_9F418, sub_9F4A0, sub_9F4C8, sub_9F577
+extern sub_9DF80, sub_9E676, ParseBlasterEnv, sub_9F387, sub_9F418, sub_9F4A0, sub_9F4C8, sub_9F577
 extern sub_9F622, sub_9F642, sub_9FD94, sub_9FD9A, sub_9FDEA, sub_9FE3B, sub_9FFA0, sub_A04B9
 extern sub_A053C, sub_A059B, sub_A05D3, sub_A060B, sub_A0643, sub_A067B, sub_A076E, sub_A0853
 extern sub_A0886, sub_A0D99, sub_A0FEA
@@ -44,7 +44,7 @@ dword_D4BC8:
         dd sub_9E676
         dd sub_972E5
         db 01h,00h,00h,00h,0FFh,0FFh,0FFh,0FFh
-        dd sub_9F226
+        dd ParseBlasterEnv
         dd sub_9F387
         dd sub_9F418
         dd sub_9F4A0

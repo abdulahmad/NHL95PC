@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A2B95 progbits alloc exec nowrite align=1
-extern _Extender, _ExtenderSubtype, _curbrk, _STACKTOP, sub_9D66B
+extern _Extender, _ExtenderSubtype, _curbrk, _STACKTOP, ErrnoPtr
 global sbrk_, loc_A2BAE, loc_A2BBD, loc_A2BF7, loc_A2BF9, loc_A2C08, loc_A2C19, loc_A2C24
 global loc_A2C2B, loc_A2C42, loc_A2C4E, __brk_, loc_A2C7F, loc_A2CA9, loc_A2CAF, loc_A2CBB
 global loc_A2CCD, loc_A2CE2, loc_A2CF8, loc_A2CFE, loc_A2D0C
@@ -55,11 +55,11 @@ loc_A2BF9:
 loc_A2C08:
         test eax, eax
         jne short loc_A2C4E
-        call sub_9D66B
+        call ErrnoPtr
         mov dword [eax], 5
         jmp short loc_A2C24
 loc_A2C19:
-        call sub_9D66B
+        call ErrnoPtr
         mov dword [eax], 9
 loc_A2C24:
         mov eax, 0FFFFFFFFh
@@ -135,7 +135,7 @@ loc_A2CAF:
         test eax, eax
         jge short loc_A2CFE
 loc_A2CBB:
-        call sub_9D66B
+        call ErrnoPtr
         mov dword [eax], 5
         mov eax, 0FFFFFFFFh
         jmp short loc_A2D0C

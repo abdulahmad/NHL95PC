@@ -8,7 +8,7 @@ extern MakePath, MakeStatsTitle, open_, OpenStatsSchedule, PrintCenteredText, Pr
 extern PrintShadowText, qsort_, read_, SetClipWindow, SetTextColors, statsbgnames, statsbgshapes, statsfromleague
 extern statsleague, statspalshape, statsplayoffs, statssortkeys, statsteamdbs, statsteamrecs, str_Addsort, str_ANA2
 extern str_Bkgd2, str_Dashes36, str_Dashes39, str_fmt2d, str_fmt3d, str_fmt4d, str_fmtTenths, str_GP4
-extern str_MightyDucksOfAnaheim, str_Pst24, str_Pstatbar5, str_StatsUnavailable, str_Teams, strnicmp_, sub_B4BA8, teamcolhdrs
+extern str_MightyDucksOfAnaheim, str_Pst24, str_Pstatbar5, str_StatsUnavailable, str_Teams, strnicmp_, SetScreenTarget, teamcolhdrs
 extern teamconf, teamdivflags, teamsortfns, teamstattitles, TextGridOff, TextGridOpen, TextRestoreState, TextSaveState
 extern TextSetFont, westconfname, westconfteams
 global CmpTeamStandings, CmpTeamScoring, CmpTeamScoring_sub, CmpTeamScoring_ret8, CmpTeamScoring_common, CmpTeamDefense, CmpTeamPP, CmpTeamPP_tie
@@ -1228,7 +1228,7 @@ TeamStatsScreen_keyPen:
         call j___close_
         mov esi, dword [mainfont]
         mov edi, dword [kaufmfont]
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [statsplayoffs]
         shl eax, 2
         cmp dword [statsplayoffs], byte 0

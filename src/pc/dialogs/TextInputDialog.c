@@ -48,7 +48,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
     int ok;
 
     InputRemove();
-    sub_B4BA8();
+    SetScreenTarget();
     for (i = 0; i < maxlen; i++) probe[i] = 'M';
     probe[maxlen] = 0;
     w = fputchar(probe);
@@ -114,7 +114,7 @@ int MessageBox(int x, int y, char **lines, int n, DlgBtn *b, int nb, int *mx, in
     int i;
     int d;
 
-    sub_B4BA8();
+    SetScreenTarget();
     RestoreDialogBg();
     h = w = 0;
     lineh = byte_D42C3 + 2;

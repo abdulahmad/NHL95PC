@@ -34,11 +34,11 @@ extern str_Pal27, str_Pal28, str_PCT2, str_Penalty, str_PIM4, str_Play1, str_Pla
 extern str_Pntr3, str_Pntr4, str_Pointer13, str_Pointer14, str_Pos2, str_Power, str_Pstat3, str_Pstat4
 extern str_PT2, str_RosterIncomplete2, str_S2dSS, str_S2dSS2, str_S6, str_S7, str_SA3, str_Scratch2
 extern str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_Teams2, str_Tstat2, str_W6
-extern strcmp_, stub_8C218, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern strcmp_, stub_8C218, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, sub_8FCDF, SetPalette, PutBlock, DrawBitmap, FillRect
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_91FE0, DrawArtMasked, MouseRead
-extern SetViewRect, FindShape, ClearScreen, sub_B4B58, VgaSetPalette, sub_B4BA8, SetClipWindow, sub_B4C84
-extern SetColorRemap, sub_B4FAC, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
+extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, sub_B4C84
+extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
 extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
 global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
@@ -101,7 +101,7 @@ GameLineEditor:
         je short GameLineEditor.1
         mov ebx, dword [songdata]
         push ebx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         xor ecx, ecx
         mov dword [songdata], ecx
@@ -153,7 +153,7 @@ GameLineEditor:
         mov dword [boxshadecolor], edi
         mov dword [dlgtextfg], ebp
         mov dword [dlgtextbg], edi
-        call sub_B4BA8
+        call SetScreenTarget
         push dword 1E0h
         push byte 0
         push dword 280h
@@ -3117,7 +3117,7 @@ DrawDlgFrame:
         push eax
         push edi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [dlgedgecol1]
         push ecx
@@ -3127,7 +3127,7 @@ DrawDlgFrame:
         push esi
         push edi
         push esi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov eax, dword [dlgedgecol2]
         push eax
@@ -3137,7 +3137,7 @@ DrawDlgFrame:
         lea eax, [byte edi+01h]
         push eax
         push ebp
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ebx, dword [dlgedgecol2]
         push ebx
@@ -3147,7 +3147,7 @@ DrawDlgFrame:
         push ecx
         lea eax, [byte esi+01h]
         push eax
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov edx, dword [dlgedgecol3]
         push edx
@@ -3972,7 +3972,7 @@ MenuSaveDefaultLines:
         mov ebp, eax
         test eax, eax
         jge short .3
-        call sub_B4B58
+        call SetTextMode
         mov eax, str_ErrB2Perror
         call perror_
         call WaitKey

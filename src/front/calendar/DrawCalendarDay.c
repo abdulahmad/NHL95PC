@@ -147,14 +147,14 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
         y = calrowy[y];
         x2 = x + 0x4C;
         y2 = y + 0x3E;
-        sub_B4FAC(x - 1, y - 1, x2, y - 1, 0xBB);
-        sub_B4FAC(x, y, x2 - 1, y, 0xBB);
-        sub_B4FAC(x - 1, y - 1, x - 1, y2, 0xBB);
-        sub_B4FAC(x, y, x, y2 - 1, 0xBB);
-        sub_B4FAC(x2, y - 1, x2, y2, 0xBB);
-        sub_B4FAC(x2 - 1, y, x2 - 1, y2 - 1, 0xBB);
-        sub_B4FAC(x - 1, y2, x2, y2, 0xBB);
-        sub_B4FAC(x, y2 - 1, x2 - 1, y2 - 1, 0xBB);
+        FillRectColor(x - 1, y - 1, x2, y - 1, 0xBB);
+        FillRectColor(x, y, x2 - 1, y, 0xBB);
+        FillRectColor(x - 1, y - 1, x - 1, y2, 0xBB);
+        FillRectColor(x, y, x, y2 - 1, 0xBB);
+        FillRectColor(x2, y - 1, x2, y2, 0xBB);
+        FillRectColor(x2 - 1, y, x2 - 1, y2 - 1, 0xBB);
+        FillRectColor(x - 1, y2, x2, y2, 0xBB);
+        FillRectColor(x, y2 - 1, x2 - 1, y2 - 1, 0xBB);
     }
     TextRestoreState(state);
 }

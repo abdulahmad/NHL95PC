@@ -130,7 +130,7 @@ typedef struct nh_settings {
 #define NH_MAGIC 0x4F353948u            /* "H95O" */
 #define NH_VERSION 2                    /* 2: the Game page's options */
 
-static uint32_t *randseed_ptr(void)       /* sub_8EB21: mov eax, randseed (the C library's rand state) */
+static uint32_t *randseed_ptr(void)       /* GetRandState: mov eax, randseed (the C library's rand state) */
 {
     const uint8_t *p = GAME_ADDR(0x8EB21u);
     uint32_t a;

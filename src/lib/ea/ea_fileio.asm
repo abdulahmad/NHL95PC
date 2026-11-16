@@ -4,13 +4,13 @@ bits 32
 section s_B3B00 progbits alloc exec nowrite align=1
 extern str_OpenhandleSFILEERROR, byte_D4410, dword_D4438, dword_D443C, dword_D4440, dword_D4444, dword_D44AC, dword_D4530
 extern dword_D4F2C, dword_D4F30, dword_D4F34, dword_D4F38, dword_D4F3C, dword_D4F40, FatalError, slowtickcount
-extern sprintf_, sub_B49C0, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
-global sub_B3B00, sub_B3B19, sub_B3B2E, sub_B3B44, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
-global loc_B3C2B, loc_B3C53, sub_B3C60, loc_B3C6E, sub_B3C70, sub_B3C74, loc_B3C76, loc_B3C85
-global loc_B3C9C, loc_B3CAF, loc_B3CB1, sub_B3CB3, sub_B3CC8, loc_B3CF4, loc_B3D02, loc_B3D08
+extern sprintf_, AngleFromDelta, sub_B4A60, sub_B4A66, unk_D4448, unk_D44B0, unk_D44CE
+global DosCallSplitDx, DosOpenFile, DosOpenReadOnly, CreateHandle, openhandle, loc_B3B6E, loc_B3BB9, loc_B3BEE
+global loc_B3C2B, loc_B3C53, DosCloseFile, loc_B3C6E, sub_B3C70, DosReadFile, loc_B3C76, loc_B3C85
+global loc_B3C9C, loc_B3CAF, loc_B3CB1, DosSeekFile, FindFirstFile, loc_B3CF4, loc_B3D02, loc_B3D08
 global loc_B3D0A, loc_B3D22, loc_B3D26, sub_B3D2A, sub_B3D46, sub_B3D56, sub_B3D64, sub_B3D74
 global loc_B3D85, vecdist, loc_B3DAB, loc_B3DB9, loc_B3DD4, loc_B3DDD, loc_B3DF1, sub_B3DFC
-sub_B3B00:
+DosCallSplitDx:
         push ecx
         push edx
         LD mov, ecx, edx
@@ -25,7 +25,7 @@ sub_B3B00:
         pop edx
         pop ecx
         ret
-sub_B3B19:
+DosOpenFile:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
@@ -33,14 +33,14 @@ sub_B3B19:
         mov dword [byte ebp-04h], eax
         mov dword [byte ebp-08h], 3D00h
         jmp short loc_B3B6E
-sub_B3B2E:
+DosOpenReadOnly:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
         mov dword [byte ebp-04h], 0
         mov dword [byte ebp-08h], 3D00h
         jmp short loc_B3B6E
-sub_B3B44:
+CreateHandle:
         push ebp
         LD mov, ebp, esp
         add esp, byte 0FFFFFFF8h
@@ -66,7 +66,7 @@ loc_B3B6E:
         LD mov, ebx, eax
         db 0B8h,02h,042h,00h,00h                ; insn: mov eax,4202h
         LD xor, edx, edx
-        call sub_B3B00
+        call DosCallSplitDx
         jb short loc_B3BB9
         db 08Bh,05Dh,014h                       ; insn: mov ebx,[ebp+14h]
         db 089h,03h                             ; insn: mov [ebx],eax
@@ -74,7 +74,7 @@ loc_B3B6E:
         mov ebx, dword [ebx]
         mov eax, 4200h
         LD xor, edx, edx
-        call sub_B3B00
+        call DosCallSplitDx
         jb short loc_B3BB9
         mov ebx, dword [byte ebp+010h]
         LD xor, eax, eax
@@ -116,7 +116,7 @@ loc_B3BEE:
         mov eax, 4200h
         mov ebx, dword [byte ebp+0Ch]
         mov ebx, dword [ebx]
-        call sub_B3B00
+        call DosCallSplitDx
         jb short loc_B3C2B
         leave
         ret
@@ -125,7 +125,7 @@ loc_B3C2B:
         mov eax, dword [ebx]
         mov dword [ebx], 0
         push eax
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         cmp dword [byte ebp-04h], byte 0
         jne short loc_B3C53
@@ -140,7 +140,7 @@ loc_B3C53:
         push dword [byte ebp+08h]
         push str_OpenhandleSFILEERROR
         call FatalError
-sub_B3C60:
+DosCloseFile:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+08h]
@@ -154,7 +154,7 @@ loc_B3C6E:
 sub_B3C70:
         mov ah, 40h
         jmp short loc_B3C76
-sub_B3C74:
+DosReadFile:
         mov ah, 3Fh
 loc_B3C76:
         push ebp
@@ -183,16 +183,16 @@ loc_B3CAF:
 loc_B3CB1:
         leave
         ret
-sub_B3CB3:
+DosSeekFile:
         push ebp
         LD mov, ebp, esp
         mov ebx, dword [byte ebp+08h]
         mov eax, 4200h
         mov edx, dword [byte ebp+0Ch]
-        call sub_B3B00
+        call DosCallSplitDx
         leave
         ret
-sub_B3CC8:
+FindFirstFile:
         push ebp
         LD mov, ebp, esp
         push esi
@@ -286,7 +286,7 @@ vecdist:
         LD mov, ebp, esp
         push dword [byte ebp+08h]
         push dword [byte ebp+0Ch]
-        call sub_B49C0
+        call AngleFromDelta
         add esp, byte 8
         LD or, eax, eax
         jge short loc_B3DAB

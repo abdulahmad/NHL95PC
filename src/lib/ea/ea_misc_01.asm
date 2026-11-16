@@ -2,11 +2,11 @@
 bits 32
 %include "hockey.inc"
 section s_9B498 progbits alloc exec nowrite align=1
-extern dword_D30C8, FillRect, PlotPixel, sub_B704C, unk_9B470
-global sub_9B498, loc_9B4B9, loc_9B544, loc_9B565, loc_9B589, loc_9B58C, loc_9B5A9, loc_9B5AC
+extern dword_D30C8, FillRect, PlotPixel, FillRectSpansCore, unk_9B470
+global FillRectSpans, loc_9B4B9, loc_9B544, loc_9B565, loc_9B589, loc_9B58C, loc_9B5A9, loc_9B5AC
 global loc_9B5C9, loc_9B5E1, loc_9B61A, loc_9B632, loc_9B66B, loc_9B67E, loc_9B6B3, loc_9B6C6
 global loc_9B6F7, loc_9B706
-sub_9B498:
+FillRectSpans:
         push esi
         push edi
         push ebp
@@ -15,7 +15,7 @@ sub_9B498:
         cmp dword [dword_D30C8], byte 0
         jne short loc_9B4B9
         push eax
-        call sub_B704C
+        call FillRectSpansCore
         add esp, byte 4
         jmp near loc_9B706
 loc_9B4B9:

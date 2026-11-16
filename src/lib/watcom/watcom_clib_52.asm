@@ -10,7 +10,7 @@ global loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, __cvt_,
 global loc_B246E, loc_B2487, loc_B249F, loc_B24BF, loc_B24CB, loc_B24DD, loc_B2507, loc_B2531
 global loc_B2533, loc_B253F, loc_B2549, loc_B2567, loc_B259B, loc_B25A7, loc_B25B1, loc_B25C3
 global loc_B25DF, loc_B25E2, unknown_libname_5, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672
-global unknown_libname_6, loc_B268C, loc_B26B0, sub_B26C9, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
+global unknown_libname_6, loc_B268C, loc_B26B0, NormalizeDouble, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
 global loc_B2719
 __Nan_Inf_:
         push ebx
@@ -478,7 +478,7 @@ loc_B264E:
         mov ebp, esi
         and edx, dword [byte ebp+04h]
         and eax, dword [byte ebp+00h]
-        call sub_B26C9
+        call NormalizeDouble
         pop esi
         or edx, edx
         je short loc_B2672
@@ -526,7 +526,7 @@ loc_B268C:
 loc_B26B0:
         mov eax, ecx
         mov edi, 43300000h
-        call sub_B26C9
+        call NormalizeDouble
         pop ebp
         mov dword [byte ebp+04h], edx
         mov dword [byte ebp+00h], eax
@@ -536,7 +536,7 @@ loc_B26B0:
         pop esi
         pop ebp
         ret
-sub_B26C9:
+NormalizeDouble:
         sub esi, esi
         or esi, eax
         or esi, edx

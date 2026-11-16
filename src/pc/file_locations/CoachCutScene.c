@@ -30,7 +30,7 @@ int CoachCutScene(void)
     bank = LoadBank(s.path, 0);
     SetPalette(0, 0x100, s.pal);
     FadePalette(1, s.pal, 0x10);
-    sub_B4BA8();
+    SetScreenTarget();
     DrawBitmap(FindShape(bank, (char *)str_Scrn4));
     memcpy(s.pal, (unsigned char *)FindShape(bank, (char *)str_Pal29) + 0x10, 0x300);
     FreeMemBlock(bank);
@@ -60,14 +60,14 @@ int CoachCutScene(void)
         }
         if (musicon && songdata) {
             while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
     } else {
         SetPalette(0, 0x100, s.pal);
         FadePalette(1, s.pal, 0x10);
         if (musicon && songdata) {
-            sub_8D2F0(songdata);
+            PushMemDescriptorLocked(songdata);
             songdata = 0;
         }
     }

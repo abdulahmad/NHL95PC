@@ -49,13 +49,13 @@ void RunEditRosters(void)
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
-    sub_B4BA8();
+    SetScreenTarget();
     dword_EA2B0 = mainfont;
     TextSetFont(dword_EA2B0);
     TextSaveState(s.state);
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     fullscrbmp = CreateBitmap(0x280, 0x1E0, 0x20);
@@ -82,7 +82,7 @@ void RunEditRosters(void)
     dlgtextbg = s.bg;
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
 }

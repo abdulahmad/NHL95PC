@@ -23,6 +23,6 @@ void DrawModeSetDlg(void)
         PrintString((char *)str_Sound2, 0x60, 0xC0);
     }
     if (!musicon) PrintString((char *)str_DigitizedSpeech2, 0x60, 0xD6);
-    sub_B4BA8();
+    SetScreenTarget();
     DrawSettingsHeading(0xA, 0x13, 4, gamemode, 0xFA);
 }

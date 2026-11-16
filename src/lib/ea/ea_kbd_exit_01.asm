@@ -4,11 +4,11 @@ bits 32
 section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, dword_D30D4, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
-extern sub_90267, FillRect, DrawArtOpaque, sub_9132C, GrabBlock, sub_93000, sub_9C5A8, sub_9C5B0
-extern sub_A1800, sub_A1840, sub_B39D0, sub_B3A88, sub_B3AA1, sub_B3D74, sub_B4BA8, CreateBitmap
+extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, sub_9C5B0
+extern sub_A1800, sub_A1840, KbdGetKey, SaveDrawState, RestoreDrawState, sub_B3D74, SetScreenTarget, CreateBitmap
 extern sub_B6F84, unk_D45D8
-global sub_981AD, sub_981B0, sub_981D4, sub_981F8, loc_983B1, loc_983BB, loc_983DB, loc_983F1
-global sub_984A8, loc_984CF, sub_984D0, sub_9862C, sub_9864C, sub_98664, sub_9867E
+global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
+global sub_984A8, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
 sub_981AD:
         sti
         ret
@@ -21,7 +21,7 @@ sub_981B0:
         mov esi, eax
         mov edi, edx
         mov ebp, ebx
-        call sub_B4BA8
+        call SetScreenTarget
         push ebp
         push edi
         mov edx, dword [byte esi+02Ch]
@@ -42,7 +42,7 @@ sub_981D4:
         mov esi, eax
         mov edi, edx
         mov ebp, ebx
-        call sub_B4BA8
+        call SetScreenTarget
         push ebp
         push edi
         mov edx, dword [byte esi+02Ch]
@@ -55,7 +55,7 @@ sub_981D4:
         pop ecx
         ret
         db 08Bh,0C0h
-sub_981F8:
+ShowPromptBox:
         push esi
         push edi
         push ebp
@@ -68,11 +68,11 @@ sub_981F8:
         mov dword [joycalactive], 1
         call dword [joycalprehook]
         push byte 0FFFFFFFFh
-        call sub_9C5A8
+        call ReturnFalse
         add esp, byte 4
         mov dword [dword esp+0A8h], eax
         push byte 0
-        call sub_9C5A8
+        call ReturnFalse
         add esp, byte 4
         push byte 0
         mov ebx, dword [dword esp+0D4h]
@@ -85,7 +85,7 @@ sub_981F8:
         mov dword [dword esp+0ACh], eax
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
         lea eax, [byte esp+060h]
         push eax
@@ -117,7 +117,7 @@ sub_981F8:
         mov edx, dword [dword esp+0B4h]
         mov eax, esi
         call sub_981B0
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call sub_9C5B0
         add esp, byte 4
@@ -171,7 +171,7 @@ loc_983B1:
         test eax, ebp
         jne short loc_983B1
 loc_983BB:
-        call sub_B39D0
+        call KbdGetKey
         mov esi, eax
         mov dword [dword esp+0BCh], eax
         call dword [mousepollfn]
@@ -214,15 +214,15 @@ loc_983F1:
         add esp, byte 4
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         mov ecx, dword [dword esp+0ACh]
         push ecx
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         mov esi, dword [dword esp+0A8h]
         push esi
-        call sub_9C5A8
+        call ReturnFalse
         add esp, byte 4
         call dword [joycalposthook]
         xor ebp, ebp
@@ -241,23 +241,23 @@ sub_984A8:
         mov ebx, 58h
         mov edx, 50h
         mov eax, str_EXITTODOSY
-        call sub_981F8
+        call ShowPromptBox
         test eax, eax
         je short loc_984CF
         call dword [bailout_vec]
 loc_984CF:
         ret
-sub_984D0:
+ShowMessageBox:
         push esi
         push edi
         sub esp, 0A0h
         mov dword [joycalactive], 1
         push byte 0FFFFFFFFh
-        call sub_9C5A8
+        call ReturnFalse
         mov edi, eax
         add esp, byte 4
         push byte 0
-        call sub_9C5A8
+        call ReturnFalse
         add esp, byte 4
         push byte 0
         push byte 0Ah
@@ -267,7 +267,7 @@ sub_984D0:
         add esp, byte 0Ch
         mov eax, esp
         push eax
-        call sub_B3A88
+        call SaveDrawState
         add esp, byte 4
         lea eax, [byte esp+060h]
         push eax
@@ -291,7 +291,7 @@ sub_984D0:
         xor edx, edx
         mov eax, esi
         call sub_981B0
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call sub_9C5B0
         add esp, byte 4
@@ -331,13 +331,13 @@ sub_984D0:
         add esp, byte 4
         mov eax, esp
         push eax
-        call sub_B3AA1
+        call RestoreDrawState
         add esp, byte 4
         push esi
-        call sub_9132C
+        call FreeBitmap
         add esp, byte 4
         push edi
-        call sub_9C5A8
+        call ReturnFalse
         add esp, byte 4
         xor esi, esi
         mov dword [joycalactive], esi
@@ -353,10 +353,10 @@ sub_9862C:
         mov ebx, 58h
         mov edx, 10h
         mov eax, str_PAUSEPRESSANYKEY
-        call sub_981F8
+        call ShowPromptBox
         ret
         db 00h,00h
-sub_9864C:
+DosGetVector:
         push ebx
         push es
         push ds
@@ -375,7 +375,7 @@ sub_9864C:
         pop es
         pop ebx
         ret
-sub_98664:
+DosSetVector:
         push es
         push ds
         push esi
@@ -397,4 +397,4 @@ sub_98664:
         pop es
         ret
 sub_9867E:
-        jmp near sub_90267
+        jmp near WriteConsoleMessage

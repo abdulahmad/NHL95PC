@@ -110,7 +110,7 @@ int MainDeskLoop(void)
     MakePath(path, fileoncd[0x6A] == 1 ? (char *)cddriveptr : 0, (char *)str_Easndesk, 0);
     bank = LoadBank(path, 0);
     FadeOutPalCycle();
-    sub_B4BA8();
+    SetScreenTarget();
     DrawBitmap(FindShape(bank, (char *)str_Desk2));
     DrawMenuBar(menus[0], nitems[0], 0xFA, 0xF9, 0xF8);
     GrabBlock(ptr, oldmx, oldmy);
@@ -128,7 +128,7 @@ int MainDeskLoop(void)
         }
         if (!(bits & 2)) {
             if (mx == oldmx && my == oldmy) continue;
-            sub_B4BA8();
+            SetScreenTarget();
             PutBlock(ptr, oldmx, oldmy);
             GrabBlock(ptr, mx, my);
             DrawArt(pointerspr, mx, my);
@@ -171,11 +171,11 @@ int MainDeskLoop(void)
                         return 0;
                     }
                     if (r == 2) {
-                        sub_B4BA8();
+                        SetScreenTarget();
                         if (!keepdesksong && musicon && songdata) {
                             sub_8FCDF(musichandle, 3, 0x46);
                             while (SndQuery(musicslot, 3) == 0);
-                            sub_8D2F0(songdata);
+                            PushMemDescriptorLocked(songdata);
                             songdata = 0;
                         } else {
                             keepdesksong = 0;
@@ -467,7 +467,7 @@ int MenuNewExhibition(int *fh)
                 do
                     slot = musicslot;
                 while (SndQuery(slot, 3) == 0);
-                sub_8D2F0(songdata);
+                PushMemDescriptorLocked(songdata);
                 songdata = 0;
             }
             ShowLoadingScreen();
@@ -485,7 +485,7 @@ int MenuNewExhibition(int *fh)
         do
             slot = musicslot;
         while (SndQuery(slot, 3) == 0);
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     InputInstall();

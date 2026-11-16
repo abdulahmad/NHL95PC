@@ -6,8 +6,8 @@ extern __CHK, __CHP, __STOSD, _dos_close_, _dos_open_, _dos_read_, _fmemmove_, _
 extern addtimer, AllocMemBlock, byte_D27B6, cursndbank, FreeClip_ret, FreeMemBlock, lseek_, musichandle
 extern qword_C37B0, qword_C37B8, qword_C37C0, qword_C37C8, qword_C37D0, RemoveTimerCallback, samplereq, SayNhlIntro
 extern speechbank, speechchannel, speechcopybuf, speechcopylen, speechinit, speechq, str_SampleMemMan, str_Sentence
-extern str_SpeechBank, str_Speechbuf, strncpy_, sub_8CC70, sub_8D2F0, sub_8DBD4, sub_8FBE5, sub_8FC37
-extern sub_8FCAC, sub_98028
+extern str_SpeechBank, str_Speechbuf, strncpy_, sub_8CC70, PushMemDescriptorLocked, sub_8DBD4, sub_8FBE5, sub_8FC37
+extern sub_8FCAC, UnpackTo
 global SpeechTimerTick, ClearSpeechSlot, ResetSpeechQueue, InitSpeechSlots, ResetSampleReq, InitSpeech, ShutdownSpeech, ShutdownSpeech_ret6
 global ShutdownSpeech_ret5, SpeechIsInit, SpeechBusy, SpeechIdle, MusicChanReset2, SpeechStopQueue, MusicChanCmd3, MusicChanReset
 global Swap16, ReadBE24, ReadBE24_ret, ReadCString, OpenSpeechBank, OpenSpeechBank_ret, SpeechSlotSize, ReadSpeechSample
@@ -348,7 +348,7 @@ ShutdownSpeech:
         mov eax, dword [speechbank]
         mov esi, dword [dword eax+03B60h]
         push esi
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
         mov edi, dword [speechbank]
         push edi
@@ -941,7 +941,7 @@ ReadSpeechSample:
         push ebp
         mov edx, dword [byte esp+018h]
         push edx
-        call sub_98028
+        call UnpackTo
         add esp, byte 0Ch
         mov ecx, eax
         xor bl, bl

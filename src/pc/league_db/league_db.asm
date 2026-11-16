@@ -21,11 +21,11 @@ extern speechbank, sprintf_, str_3dKbytesOfFree2, str_C4, str_Current2, str_Curr
 extern str_dot, str_EnterANewDatabase, str_ErrorGettingDiskSpace, str_extDB, str_fmt2d, str_FreeAgents, str_Joycal, str_Left
 extern str_LEFTJOYSTICK, str_Pal24, str_Pointer11, str_Puck, str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_S5
 extern str_SaveAsGameDatabases, str_SavingDatabases, str_Scrn3, str_space, str_Temp7, str_XXXKbytesOfFree2, strcat_, strcpy_
-extern strlen_, strupr_, AllocMemBlock, sub_8D2F0, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
+extern strlen_, strupr_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, sub_8FCDF, SetPalette, FillRect, XorBar, DrawArtOpaque
 extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, WriteFile
-extern sub_B29F0, KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, ReadJoyRaw, sub_B384E
-extern sub_B387E, ClearScreen, sub_B39D0, VgaSetPalette, sub_B4BA8, sub_B4C61, CreateBitmap, sub_B4FAC
+extern RemoveKeyboardHandler, KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E
+extern sub_B387E, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, CreateBitmap, FillRectColor
 extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, unk_D45D8
 extern unknown_libname_1
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
@@ -53,7 +53,7 @@ MenuCentralRegistry:
         mov eax, dword [speechbank]
         mov edx, dword [dword eax+03B60h]
         push edx
-        call sub_8D2F0
+        call PushMemDescriptorLocked
         add esp, byte 4
 .1:
         mov dword [scrpitch], 0A0h

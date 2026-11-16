@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_D2C84 progbits alloc noexec write align=1
-extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, sub_B3ABC, sub_B40BF, str_Jan
+extern __null_int23_exit_, memlist1, sub_B2CCD, sub_B300C, sub_B345D, bcopy, sub_B40BF, str_Jan
 extern str_Feb2, str_Mar, str_Apr, str_May2, str_Jun, str_Jul, str_Aug, str_Sep
 extern str_Oct, str_Nov, str_Dec
 global str_StackOverflow, str_OpenhandleSFILEERROR, byte_D2CD4, byte_D2CDC, byte_D2CF9, byte_D2D06, byte_D2D12, byte_D2D14
@@ -778,7 +778,7 @@ byte_D42E4:
         db 0E0h,0E1h,0E2h,0E3h,0E4h,0E5h,0E6h,0E7h,0E8h,0E9h,0EAh,0EBh,0ECh,0EDh,0EEh,0EFh
         db 0F0h,0F1h,0F2h,0F3h,0F4h,0F5h,0F6h,0F7h,0F8h,0F9h,0FAh,0FBh,0FCh,0FDh,0FEh,0FFh
 dword_D43E4:
-        dd sub_B3ABC
+        dd bcopy
 dword_D43E8:
         db 00h,00h,00h,00h
 dword_D43EC:

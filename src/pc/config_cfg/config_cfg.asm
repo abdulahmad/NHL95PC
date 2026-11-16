@@ -4,7 +4,7 @@ bits 32
 section s_3DB41 progbits alloc exec nowrite align=1
 extern __CHK, FatalError, fclose_, fopen_, fscanf_, greyramp, MakePath, MouseSetPos
 extern SetDialogColors, SetSoundDevice, sounddevids, str_CannotOpenNhlCfg, str_CFG, str_fmt4x, str_NHL2, str_R3
-extern sub_8EB93, sub_8FE83, sub_B3454, VgaSetPalette
+extern sub_8EB93, sub_8FE83, AddExitHandler, VgaSetPalette
 global LoadNhlCfg, negone_3DC28
 ;-----------------------------------------------------------------------------
 ; LoadNhlCfg                                                      3DB41  95 PC
@@ -73,7 +73,7 @@ LoadNhlCfg:
         cmp esi, byte 4
         jl short LoadNhlCfg.4
         push sub_8EB93
-        call sub_B3454
+        call AddExitHandler
         add esp, byte 4
         push byte 0
         push byte 0

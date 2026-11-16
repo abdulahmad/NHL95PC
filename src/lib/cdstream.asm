@@ -6,7 +6,7 @@ extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECC
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
-extern sub_8DAB8, TextSetFont, sub_91FA4, sub_B3ABC, openhandle, sub_B3C60, sub_B3C74, sub_B3CB3
+extern sub_8DAB8, TextSetFont, sub_91FA4, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
 global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
 global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
 global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
@@ -74,7 +74,7 @@ sub_1B18B:
         test edx, edx
         je short loc_1B1B7
         push edx
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
 loc_1B1B7:
         push esi
@@ -176,7 +176,7 @@ loc_1B2E0:
         test esi, esi
         je short loc_1B2F0
         push esi
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
 loc_1B2F0:
         mov eax, dword [dword_DC8A0]
@@ -219,7 +219,7 @@ loc_1B334:
         push esi
         mov edi, dword [byte eax+018h]
         push edi
-        call sub_B3CB3
+        call DosSeekFile
         add esp, byte 8
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+030h], 0
@@ -251,7 +251,7 @@ loc_1B3AE:
         push ebp
         mov edx, dword [byte eax+018h]
         push edx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+04Ch], esi
@@ -360,7 +360,7 @@ loc_1B534:
         push ebx
         mov ecx, dword [byte eax+0Ch]
         push ecx
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
         mov edx, dword [dword_DC8A0]
@@ -382,7 +382,7 @@ loc_1B588:
         push ebp
         mov edx, dword [byte eax+0Ch]
         push edx
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
         mov edx, dword [dword_DC8A0]
@@ -402,7 +402,7 @@ loc_1B588:
         mov eax, dword [byte eax+02Ch]
         add eax, edi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+02Ch]
@@ -434,7 +434,7 @@ loc_1B5EB:
         push esi
         mov edi, dword [byte eax+0Ch]
         push edi
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
         mov eax, dword [byte eax+0Ch]
@@ -467,7 +467,7 @@ loc_1B681:
         push ebp
         mov edx, dword [byte eax+018h]
         push edx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         mov eax, dword [dword_DC8A0]
         mov dword [byte eax+04Ch], esi
@@ -516,7 +516,7 @@ loc_1B721:
         mov eax, dword [dword_DC8C8]
         mov ecx, dword [byte eax+0Ch]
         push ecx
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov eax, dword [dword_DC8C8]
         mov edx, dword [byte eax+0Ch]

@@ -20,7 +20,7 @@ extern str_GAA4, str_GP8, str_Gstat3, str_Keys3, str_L8, str_Lelogo, str_Linedit
 extern str_Min4, str_Name2, str_No2, str_Pal25, str_Pal26, str_PCT2, str_PIM4, str_PlusMinus7
 extern str_Pntr3, str_Pointer13, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6, str_SA3
 extern str_Shots4, str_Shrt2, str_SRoster, str_T6, str_W6, sub_8FCDF, sub_9121C, sub_91FE0
-extern sub_B4BA8, TextRestoreState, TextSaveState, TextSetColors, TextSetFont
+extern SetScreenTarget, TextRestoreState, TextSaveState, TextSetColors, TextSetFont
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
 global CmpRosterSkaters, CmpRosterGoalies, MenuRegSeasonStats, MenuRegSeasonStats_common, MenuPlayoffStats, ShowRosterStats
@@ -138,7 +138,7 @@ DbLineEditor:
         mov eax, ebp
         call DrawLineEditorScreen
         call FadeOutPalCycle
-        call sub_B4BA8
+        call SetScreenTarget
         mov edx, dword [fullscrbmp]
         mov ecx, dword [byte edx+02Ch]
         push ecx
@@ -2791,7 +2791,7 @@ MenuShowPlayerStats:
         mov edx, dword [byte esp+034h]
         mov eax, ebp
         call DrawLineJerseys
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [fullscrbmp]
         mov ebp, dword [byte eax+02Ch]
         push ebp
@@ -3920,7 +3920,7 @@ ShowRosterStats:
 .20:
         cmp ebp, dword [dword esp+0A4h]
         jl near ShowRosterStats.15
-        call sub_B4BA8
+        call SetScreenTarget
         mov eax, dword [fullscrbmp]
         mov esi, dword [byte eax+02Ch]
         push esi

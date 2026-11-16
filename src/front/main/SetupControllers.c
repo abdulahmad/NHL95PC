@@ -34,8 +34,8 @@ void SetupControllers(void)
     case 8: pad2dev = 8; break;
     case 0x10: pad2dev = 0; break;
     }
-    sub_B2F22();
+    InitMouse();
     MouseSetPos(0xA0, 0x64);
-    sub_B29F0();
+    RemoveKeyboardHandler();
     joysampling = 0;
 }

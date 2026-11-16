@@ -202,7 +202,7 @@ void DrawFileDlg(void)
     int x2;
     int y2;
 
-    sub_B4BA8();
+    SetScreenTarget();
     MakePath(path, fileoncd[0x63] == 1 ? (char *)cddriveptr : 0, (char *)str_Dialogbx, 0);
     bank = LoadBank(path, 0);
     sub_91284(FindShape(bank, (char *)str_Dbox), 0xA, 0x13);
@@ -238,10 +238,10 @@ void DrawFileDlg(void)
         x2 = ((FRect *)fdlgrects)[8].x2 + 0xA;
         i = 0x1E0 / l->count;
         y2 = ((FRect *)fdlgrects)[8].y1 + 0x11 + i;
-        sub_B4FAC(x, y, ((FRect *)fdlgrects)[8].x2 + 9, y, 0xFA);
-        sub_B4FAC(x, y, x, y2 - 1, 0xFA);
-        sub_B4FAC(x2, y - 1, x2, y2, 0xF8);
-        sub_B4FAC(x - 1, y2, x2, y2, 0xF8);
+        FillRectColor(x, y, ((FRect *)fdlgrects)[8].x2 + 9, y, 0xFA);
+        FillRectColor(x, y, x, y2 - 1, 0xFA);
+        FillRectColor(x2, y - 1, x2, y2, 0xF8);
+        FillRectColor(x - 1, y2, x2, y2, 0xF8);
         return;
     }
     switch (l->count) {
@@ -325,10 +325,10 @@ int DrawFileDlgList(FileList *l)
         y = ((FRect *)fdlgrects)[8].y1 + 0x13 + l->top * 0x50 / l->count;
         x2 = ((FRect *)fdlgrects)[8].x2 + 0xA;
         y2 = ((FRect *)fdlgrects)[8].y1 + 0x12 + (l->bottom + 1) * 0x50 / l->count;
-        sub_B4FAC(x, y, ((FRect *)fdlgrects)[8].x2 + 9, y, 0xFA);
-        sub_B4FAC(x, y, x, y2 - 1, 0xFA);
-        sub_B4FAC(x2, y + 1, x2, y2, 0xF8);
-        sub_B4FAC(x + 1, y2, x2, y2, 0xF8);
+        FillRectColor(x, y, ((FRect *)fdlgrects)[8].x2 + 9, y, 0xFA);
+        FillRectColor(x, y, x, y2 - 1, 0xFA);
+        FillRectColor(x2, y + 1, x2, y2, 0xF8);
+        FillRectColor(x + 1, y2, x2, y2, 0xF8);
     }
     if (*(int *)fdlgfilelists[fdlgtab] <= 6)
         DrawArt(fdlg_noarrow, 0x18, 0x46);
@@ -384,7 +384,7 @@ int RunFileDlg(void)
     MouseRead(&btn, &ox, &oy);
     x = ox;
     y = oy;
-    sub_B4BA8();
+    SetScreenTarget();
     n = (((short *)pointerspr)[2] + 1) * (((short *)pointerspr)[3] + 1) + 0x11;
     bm = AllocMemBlock((char *)str_Pointer5, n, 0x20);
     *(Hdr17 *)bm = *(Hdr17 *)pointerspr;
@@ -404,7 +404,7 @@ int RunFileDlg(void)
         }
         if (btn == 0) {
             if (x != ox || y != oy) {
-                sub_B4BA8();
+                SetScreenTarget();
                 PutBlock(bm, ox - 4, oy);
                 GrabBlock(bm, x - 4, y);
                 DrawArt(pointerspr, x - 4, y);

@@ -49,13 +49,13 @@ void RunEditRosters(void)
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     *(Hdr8 *)curdbname = *(Hdr8 *)str_Current3;
-    sub_B4BA8();
+    SetScreenTarget();
     dword_EA2B0 = mainfont;
     TextSetFont(dword_EA2B0);
     TextSaveState(s.state);
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     fullscrbmp = CreateBitmap(0x280, 0x1E0, 0x20);
@@ -82,7 +82,7 @@ void RunEditRosters(void)
     dlgtextbg = s.bg;
     if (musicon && songdata) {
         while (!SndQuery(*(int *)((char *)&musicslot - 3) >> 24, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
 }
@@ -119,10 +119,10 @@ void DrawEditRosters(void)
     if (rostereditmode == 2) {
         DrawDlgFrame(0xB4, 0x8C, 0x1CC, 0x154, 1);
         FillRect(0xB4, 0x8C, 0x119, 0xC9, 0x41);
-        sub_B4FAC(0xB4, 0x8C, 0x1CB, 0x8C, 0x40);
-        sub_B4FAC(0xB4, 0x8C, 0xB4, 0x153, 0x40);
-        sub_B4FAC(0x1CC, 0x8D, 0x1CC, 0x154, 0x42);
-        sub_B4FAC(0xB5, 0x154, 0x1CC, 0x154, 0x42);
+        FillRectColor(0xB4, 0x8C, 0x1CB, 0x8C, 0x40);
+        FillRectColor(0xB4, 0x8C, 0xB4, 0x153, 0x40);
+        FillRectColor(0x1CC, 0x8D, 0x1CC, 0x154, 0x42);
+        FillRectColor(0xB5, 0x154, 0x1CC, 0x154, 0x42);
         PlotPixel(0xB4, 0x154, 0x41);
         PlotPixel(0x1CC, 0x8C, 0x41);
         strcpy(buf, (char *)str_Ratings);
@@ -141,7 +141,7 @@ void DrawEditRosters(void)
         } while (i < 9);
         DrawButtons((Button *)btn_EditRosters, 2);
     }
-    sub_B4BA8();
+    SetScreenTarget();
     sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
 }
 
@@ -258,7 +258,7 @@ void EditTeamLines(int *which)
     tmp = ((TeamRec2E8 *)hmteamrec)[side];
     ((TeamRec2E8 *)hmteamrec)[side] = *(TeamRec2E8 *)rosterteamrec[side];
     DbLineEditor(side, rosterteamrec[side] + 0xBC, (int)dblinesmenubar, 3);
-    sub_B4BA8();
+    SetScreenTarget();
     ClearScreen(0);
     *(TeamRec2E8 *)hmteamrec = tmp;
     if (!side) HomeTeam = old;

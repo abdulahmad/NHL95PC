@@ -4,7 +4,7 @@ bits 32
 section s_91984 progbits alloc exec nowrite align=1
 extern __allocfp_, __chktty_, __doclose_, __ExpandDGROUP_, __freefp_, __MemAllocator, __MemFree, __set_errno_
 extern byte_F24C5, dword_D43E8, dword_D43EC, dword_D43F0, dword_D4F21, dword_EDF00, dword_F24C8, fseek_
-extern sopen_, sub_9AFAD, tolower_
+extern sopen_, McgaNoWindow, tolower_
 global _nmalloc_, loc_9199D, loc_919A4, loc_919B7, loc_919C3, loc_919D5, loc_919E3, loc_919E7
 global loc_91A18, loc_91A1B, loc_91A30, loc_91A45, loc_91A4E, loc_91A58, _nfree_, loc_91A75
 global loc_91A7D, loc_91A80, loc_91A87, loc_91AB8, strlen_, __open_flags_, loc_91B11, loc_91B38
@@ -86,7 +86,7 @@ loc_91A1B:
         jne short loc_91A45
 loc_91A30:
         mov eax, esi
-        call sub_9AFAD
+        call McgaNoWindow
         test eax, eax
         je short loc_91A4E
         xor cl, cl

@@ -45,10 +45,10 @@ void DrawGadgetButton(int n)
     y0 = gadgetrect_y0[n] - 0xA8;
     x1 = gadgetrect_x1[n];
     y1 = gadgetrect_y1[n] - 0xA8;
-    sub_B4FAC(x0, y0, x1, y0, 0x10);
-    sub_B4FAC(x0, y0, x0, y1, 0x10);
-    sub_B4FAC(x1, y0, x1, y1, 0x15);
-    sub_B4FAC(x0, y1, x1, y1, 0x15);
+    FillRectColor(x0, y0, x1, y0, 0x10);
+    FillRectColor(x0, y0, x0, y1, 0x10);
+    FillRectColor(x1, y0, x1, y1, 0x15);
+    FillRectColor(x0, y1, x1, y1, 0x15);
 }
 
 short ReplayStep(short n, short sound);
@@ -215,7 +215,7 @@ void InstantReplay(int mode)
     SetPalette(0, 0x100, savepal);
     FadePalette(1, savepal, 0x10);
     FreeMemBlock(gadgetfile);
-    sub_B4BA8();
+    SetScreenTarget();
     if (!mode) SetScreenSize(0x280, 0x1E0);
 }
 
@@ -445,10 +445,10 @@ void HilightSaveToDlg(void)
     x = 0x4E;
     y = 0x50;
     for (count.i = 0; count.i < 4; count.i++, y += 0x11) {
-        sub_B4FAC(x, y, x, y2 = y + 0xE, 0x59);
-        sub_B4FAC(x, y, x2 = x + 0x8A, y, 0x59);
-        sub_B4FAC(x + 1, y2, x2, y2, 0x10);
-        sub_B4FAC(x2, y + 1, x2, y2, 0x10);
+        FillRectColor(x, y, x, y2 = y + 0xE, 0x59);
+        FillRectColor(x, y, x2 = x + 0x8A, y, 0x59);
+        FillRectColor(x + 1, y2, x2, y2, 0x10);
+        FillRectColor(x2, y + 1, x2, y2, 0x10);
         PlotPixel(x2, y, 0x13);
         PlotPixel(x, y2, 0x13);
     }

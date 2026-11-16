@@ -11,11 +11,11 @@ extern KeyDbPtr, lastinputdir, lastmousebtns, lastmousex, lastmousey, leaguedbna
 extern memset_, mousebtns, mousepollfn, MouseSetPos, mousex, mousey, musicon, PollKey
 extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRosters, scrpitch, seasondb, seasondb_size
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
-extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, sub_8D2F0
+extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
-extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, sub_B29F0
-extern KeyDown, sub_B2F22, FindShape, sub_B30F4, sub_B340B, ReadJoyRaw, sub_B384E, sub_B387E
-extern ClearScreen, sub_B39D0, VgaSetPalette, sub_B4BA8, sub_B4C61, sub_B4FAC, TeamRecPtr, teamsdb
+extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_92CD0, GetFileSize, RemoveKeyboardHandler
+extern KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E, sub_B387E
+extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, FillRectColor, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, unk_D45D8
 global JoystickCalScreen, CalLeftJoystick, CalLeftJoystick_common, CalRightJoystick, GetInputEvent, ClearInputQueue, InputInstall, InputRemove
 global EventToPointer, DrawMenuBar, DrawMenuDropdown, DrawMenuDropdown_ret, DrawMenuBox, PrintMenuText, PrintMenuTextGrey, PrintMenuTextGrey_common
@@ -63,7 +63,7 @@ JoystickCalScreen:
         push unk_D45D8
         call TextSetFont
         add esp, byte 4
-        call sub_B4BA8
+        call SetScreenTarget
         push byte 0
         call ClearScreen
         add esp, byte 4
@@ -145,7 +145,7 @@ JoystickCalScreen:
         call FadePalStep
         mov esi, 0FFFFFFFFh
 .5:
-        call sub_B39D0
+        call KbdGetKey
         test eax, eax
         je short .6
         mov eax, dword [dword esp+035Ch]
@@ -161,7 +161,7 @@ JoystickCalScreen:
         jne near .8
         mov ebx, dword [dword esp+0348h]
         push ebx
-        call sub_B340B
+        call JoyButtonMap
         add esp, byte 4
         mov dword [dword esp+0348h], eax
         cmp eax, esi
@@ -340,7 +340,7 @@ InputInstall:
         push ebx
         push ecx
         push edx
-        call sub_B2F22
+        call InitMouse
         test eax, eax
         je short .1
         or byte [ctlavailmask], 1
@@ -350,7 +350,7 @@ InputInstall:
 .2:
         cmp dword [inputinstalled], byte 0
         jne short .x
-        call sub_B29F0
+        call RemoveKeyboardHandler
         xor ebx, ebx
         mov dword [dword_CDA24], ebx
         mov dword [ptrstep], ebx
@@ -761,7 +761,7 @@ DrawMenuBox:
         push eax
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [byte esp+014h]
         push ecx
@@ -770,7 +770,7 @@ DrawMenuBox:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov eax, dword [byte esp+01Ch]
         push eax
@@ -780,7 +780,7 @@ DrawMenuBox:
         inc esi
         push esi
         push edx
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [byte esp+01Ch]
         push ecx
@@ -790,7 +790,7 @@ DrawMenuBox:
         push ebp
         inc edi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         add esp, byte 4
         jmp near DrawMenuDropdown_ret

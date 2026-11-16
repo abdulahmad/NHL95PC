@@ -8,8 +8,8 @@ extern dlgtextfg, dword_C4B69, dword_D42AC, editbuf, editcuron, editcurw, editma
 extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInstall, InputRemove
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
-extern AllocMemBlock, TextSetColors, PutBlock, sub_90A40, FillRect, sub_90EC0, sub_91044, DrawArt
-extern GrabBlock, sub_92CD0, KeyDown, MouseRead, sub_B3D46, sub_B3D64, sub_B4BA8, sub_B4FAC
+extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, sub_90EC0, sub_91044, DrawArt
+extern GrabBlock, sub_92CD0, KeyDown, MouseRead, sub_B3D46, sub_B3D64, SetScreenTarget, FillRectColor
 extern TickDeadlinePassed, unknown_libname_4
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
 global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, TrackButtons_x, DrawButtons
@@ -102,7 +102,7 @@ DrawBevelRect:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [byte esp+018h]
         push ecx
@@ -111,7 +111,7 @@ DrawBevelRect:
         push eax
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov edx, dword [byte esp+01Ch]
         push edx
@@ -120,7 +120,7 @@ DrawBevelRect:
         push ebx
         push ebp
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         mov ecx, dword [byte esp+01Ch]
         push ecx
@@ -129,7 +129,7 @@ DrawBevelRect:
         push edi
         push esi
         push edi
-        call sub_B4FAC
+        call FillRectColor
         add esp, byte 14h
         add esp, byte 4
         pop ebp
@@ -172,7 +172,7 @@ TextInputDialog:
         mov edi, ebx
         mov ebp, ecx
         call InputRemove
-        call sub_B4BA8
+        call SetScreenTarget
         xor edx, edx
         mov bl, 4Dh
         jmp short .2
@@ -653,7 +653,7 @@ ListDialog:
         mov esi, edx
         mov dword [byte esp+01Ch], ebx
         mov dword [byte esp+038h], ecx
-        call sub_B4BA8
+        call SetScreenTarget
         xor edx, edx
         mov dword [byte esp+034h], edx
         mov dword [byte esp+054h], edx
@@ -1860,7 +1860,7 @@ MessageBox:
         mov ebp, edx
         mov dword [byte esp+010h], ebx
         mov dword [byte esp+0Ch], ecx
-        call sub_B4BA8
+        call SetScreenTarget
         call RestoreDialogBg
         xor edx, edx
         mov dword [byte esp+04h], edx
@@ -2339,7 +2339,7 @@ DrawEditCursor:
 .2:
         push byte 1
         push eax
-        call sub_90A40
+        call TextWidthN
         add esp, byte 8
         jmp short .4
 .3:
@@ -2359,7 +2359,7 @@ DrawEditCursor:
         push edi
         mov ebp, dword [editbuf]
         push ebp
-        call sub_90A40
+        call TextWidthN
         add esp, byte 8
 .7:
         add eax, dword [editx]
@@ -2529,7 +2529,7 @@ EditTextField:
         mov edi, edx
         mov dword [esp], ebx
         mov ebp, ecx
-        call sub_B4BA8
+        call SetScreenTarget
         mov dword [editx], ebp
         mov eax, dword [byte esp+018h]
         mov dword [edity], eax

@@ -3,15 +3,15 @@ bits 32
 %include "hockey.inc"
 section s_93308 progbits alloc exec nowrite align=1
 extern str_SavefileblockaOPENFAILEDFOR, byte_D4544, byte_D4545, byte_D4546, dword_D4534, dword_D453C, dword_D4540, FatalError
-extern sub_8DBD4, sub_8DBDC, sub_B3ABC, sub_B3B44, sub_B3C60, sub_B3C70, sub_B3FC2, vsprintf_
-global sub_93308, sub_9333C, sub_93354, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
-global sub_933FB, sub_93470, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
+extern sub_8DBD4, MemDescSize, bcopy, CreateHandle, DosCloseFile, sub_B3C70, ZeroMem, vsprintf_
+global SaveDataFile, sub_9333C, sub_93354, savefileblocka, loc_933C7, loc_933CB, loc_933E8, imul32
+global sub_933FB, IntSqrt, loc_9348D, loc_934A9, loc_934C0, loc_934C1, loc_934DC, loc_934F2
 global SortIndices, loc_93558, loc_93565, loc_93570, loc_935B4, loc_935C1, loc_935CF, DebugPrintf
-global loc_93622, sub_9362C, loc_93671, loc_936A4, unk_936AC, sub_936C0, loc_936E8, loc_93705
+global loc_93622, DebugSetLine, loc_93671, loc_936A4, unk_936AC, sub_936C0, loc_936E8, loc_93705
 global loc_9374E, loc_9377C, loc_937A8, loc_937E5, loc_9380C, loc_93818, loc_9382A, loc_9382F
-global loc_93839, sub_93844, loc_938C1, sub_938C8, loc_938D9, loc_938EA, sub_938F4, loc_93906
-global sub_93908, sub_93914, loc_93922, sub_93924
-sub_93308:
+global loc_93839, DebugScrollUp, loc_938C1, DebugClearScreen, loc_938D9, loc_938EA, DebugSetRow, loc_93906
+global DebugSetAttr, sub_93914, loc_93922, sub_93924
+SaveDataFile:
         sub esp, byte 28h
         mov eax, dword [byte esp+030h]
         mov dword [esp], eax
@@ -57,7 +57,7 @@ savefileblocka:
         sub esp, byte 0Ch
         mov esi, dword [byte esp+020h]
         push esi
-        call sub_8DBDC
+        call MemDescSize
         mov edi, eax
         add esp, byte 4
         push esi
@@ -72,7 +72,7 @@ savefileblocka:
         push eax
         mov edx, dword [byte esp+028h]
         push edx
-        call sub_B3B44
+        call CreateHandle
         add esp, byte 10h
         mov ebx, dword [byte esp+08h]
         test ebx, ebx
@@ -95,7 +95,7 @@ loc_933CB:
         add esp, byte 0Ch
         mov esi, dword [byte esp+08h]
         push esi
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         mov eax, 1
 loc_933E8:
@@ -154,7 +154,7 @@ sub_933FB:
         idiv ebx
         ret
         db 00h,00h
-sub_93470:
+IntSqrt:
         mov eax, dword [byte esp+04h]
         cmp eax, 10000h
         jae short loc_934F2
@@ -328,7 +328,7 @@ loc_93622:
         add esp, 104h
         ret
         db 08Dh,040h,00h
-sub_9362C:
+DebugSetLine:
         push esi
         sub esp, 104h
         mov ebx, dword [dword esp+010Ch]
@@ -398,7 +398,7 @@ loc_936E8:
         xor eax, eax
         mov al, byte [esi]
         push eax
-        call sub_93908
+        call DebugSetAttr
         add esp, byte 4
         xor bh, bh
         mov byte [esp], bh
@@ -408,7 +408,7 @@ loc_93705:
         mov byte [esp], al
         cmp al, 20h
         jb short loc_9374E
-        call sub_93844
+        call DebugScrollUp
         xor dh, dh
         mov dl, byte [byte_D4545]
         shl edx, 8
@@ -488,7 +488,7 @@ loc_937E5:
         mov dword [dword_D4540], eax
         imul eax, ecx
         mov dword [dword_D4540], eax
-        call sub_93844
+        call DebugScrollUp
         inc esi
         inc edi
         cmp edi, ebp
@@ -507,7 +507,7 @@ loc_9380C:
         imul eax, ecx
         jmp short loc_9382A
 loc_93818:
-        call sub_938C8
+        call DebugClearScreen
         xor eax, eax
         mov al, byte [byte_D4544]
         imul eax, dword 0A0h
@@ -528,7 +528,7 @@ loc_93839:
         pop ebx
         ret
         db 090h
-sub_93844:
+DebugScrollUp:
         push ebx
         push ecx
         push edx
@@ -555,13 +555,13 @@ sub_93844:
         shl eax, 5
         add eax, ebx
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         push dword 0A0h
         mov eax, dword [dword_D453C]
         add eax, 0F00h
         push eax
-        call sub_B3FC2
+        call ZeroMem
         add esp, byte 8
         mov dword [dword_D4540], 0F00h
 loc_938C1:
@@ -570,7 +570,7 @@ loc_938C1:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_938C8:
+DebugClearScreen:
         mov ebx, dword [dword_D453C]
         cmp dword [dword_D4534], byte 2
         jl short loc_938EA
@@ -584,7 +584,7 @@ loc_938EA:
         mov dword [dword_D453C], ebx
         ret
         db 08Dh,040h,00h
-sub_938F4:
+DebugSetRow:
         mov eax, dword [byte esp+04h]
         test eax, eax
         jl short loc_93906
@@ -594,7 +594,7 @@ sub_938F4:
 loc_93906:
         ret
         db 090h
-sub_93908:
+DebugSetAttr:
         mov al, byte [byte esp+04h]
         mov byte [byte_D4545], al
         ret

@@ -13,8 +13,8 @@ extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8
 extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
 extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
 extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
-extern nullsub_4, off_D846C, outp_, sub_A6D24, sub_AB658, sub_AB6D0, sub_AB80C, sub_ACC3C
-extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, sub_B0D6C, sub_B14E4, sub_B1CBC, sub_B1F1C
+extern nullsub_4, off_D846C, outp_, strtoul_, sub_AB658, sub_AB6D0, sub_AB80C, sub_ACC3C
+extern sub_AD2A8, sub_AD344, sub_AD7CC, sub_ADC96, GusDownload, sub_B14E4, sub_B1CBC, sub_B1F1C
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, word_D8770, word_D8772, word_D8774, word_D8776, word_D8778
 global sub_ADEE9, loc_ADF15, loc_ADF2A, loc_ADF49, loc_ADF5E, loc_ADFE7, loc_ADFFB, loc_AE002
@@ -26,13 +26,13 @@ global loc_AE4BF, loc_AE4F1, loc_AE526, loc_AE535, loc_AE551, loc_AE566, loc_AE5
 global loc_AE5DC, loc_AE5F2, loc_AE631, loc_AE63D, loc_AE647, loc_AE6BF, loc_AE6D3, loc_AE6DA
 global loc_AE707, loc_AE739, loc_AE76E, loc_AE77D, loc_AE799, loc_AE7AE, loc_AE7BA, loc_AE7F5
 global loc_AE824, loc_AE83A, loc_AE879, loc_AE885, loc_AE88F, loc_AE8DD, loc_AE8E3, loc_AE8FE
-global sub_AE903, loc_AE96B, loc_AE9E2, loc_AE9E8, sub_AE9EB, loc_AEA05, loc_AEA22, sub_AEA23
+global sub_AE903, loc_AE96B, loc_AE9E2, loc_AE9E8, GusServiceStream, loc_AEA05, loc_AEA22, GusStartStream
 global loc_AEA32, loc_AEA68, loc_AEB45, sub_AEDBC, loc_AEE52, sub_AEE54, loc_AEE86, loc_AEEDD
 global loc_AEEF5, loc_AEF08, sub_AEF0E, loc_AEF26, loc_AEF2E, sub_AEF33, loc_AEF77, loc_AEF89
 global loc_AEF9F, sub_AEFA2, loc_AEFC6, sub_AEFC9, loc_AEFE7, sub_AEFEA, loc_AF039, loc_AF054
 global sub_AF058, loc_AF073, sub_AF076, loc_AF0C8, loc_AF0CF, loc_AF0D2, sub_AF0D5, loc_AF10F
-global sub_AF112, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, sub_AF198, sub_AF1A4, loc_AF1BE
-global sub_AF1D0, loc_AF214, loc_AF23B, loc_AF262, loc_AF289, loc_AF2C8, loc_AF2CA, sub_AF2E0
+global sub_AF112, loc_AF16A, loc_AF178, loc_AF186, loc_AF194, GusStreamBusy, sub_AF1A4, loc_AF1BE
+global GusGetEnvConfig, loc_AF214, loc_AF23B, loc_AF262, loc_AF289, loc_AF2C8, loc_AF2CA, GusProbePort
 global loc_AF335, loc_AF337, sub_AF340, loc_AF37E, loc_AF412, loc_AF417, sub_AF428, loc_AF47E
 global loc_AF48C, loc_AF4A8, loc_AF4B9, loc_AF4E0, loc_AF4F1, loc_AF509, loc_AF523, loc_AF549
 global loc_AF558, loc_AF583, loc_AF5AB, loc_AF5D3, loc_AF601, loc_AF610, loc_AF63E, loc_AF657
@@ -719,7 +719,7 @@ loc_AE8E3:
         mov eax, dword_D84A8
         mov edx, dword [dword_D8480]
         mov ecx, 41h
-        call sub_B0D6C
+        call GusDownload
 loc_AE8FE:
         pop ebx
         pop edi
@@ -805,7 +805,7 @@ loc_AE9E2:
 loc_AE9E8:
         LD xor, eax, eax
         ret
-sub_AE9EB:
+GusServiceStream:
         cmp dword [dword_D7AFC], byte 0
         je short loc_AEA05
         LD xor, eax, eax
@@ -819,7 +819,7 @@ loc_AEA05:
         mov dword [dword_D7B08], 0
 loc_AEA22:
         ret
-sub_AEA23:
+GusStartStream:
         push ebp
         LD mov, ebp, esp
         push ebx
@@ -1487,7 +1487,7 @@ loc_AF194:
         pop esi
         leave
         ret
-sub_AF198:
+GusStreamBusy:
         mov eax, dword [dword_D7AFC]
         or eax, dword [dword_D7B08]
         ret
@@ -1509,7 +1509,7 @@ loc_AF1BE:
         leave
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_AF1D0:
+GusGetEnvConfig:
         push ebp
         mov ebp, esp
         push ebx
@@ -1524,7 +1524,7 @@ sub_AF1D0:
         je near loc_AF2CA
         mov edx, dword_F612C
         mov ebx, 10h
-        call sub_A6D24
+        call strtoul_
         mov word [byte ecx+02h], ax
         mov eax, dword [dword_F612C]
         cmp byte [eax], 2Ch
@@ -1535,7 +1535,7 @@ loc_AF214:
         mov edx, dword_F612C
         mov ebx, 0Ah
         mov eax, dword [dword_F612C]
-        call sub_A6D24
+        call strtoul_
         mov byte [byte ecx+07h], al
         mov eax, dword [dword_F612C]
         cmp byte [eax], 2Ch
@@ -1546,7 +1546,7 @@ loc_AF23B:
         mov edx, dword_F612C
         mov ebx, 0Ah
         mov eax, dword [dword_F612C]
-        call sub_A6D24
+        call strtoul_
         mov byte [byte ecx+06h], al
         mov eax, dword [dword_F612C]
         cmp byte [eax], 2Ch
@@ -1557,7 +1557,7 @@ loc_AF262:
         mov edx, dword_F612C
         mov ebx, 0Ah
         mov eax, dword [dword_F612C]
-        call sub_A6D24
+        call strtoul_
         mov byte [byte ecx+04h], al
         mov eax, dword [dword_F612C]
         cmp byte [eax], 2Ch
@@ -1568,7 +1568,7 @@ loc_AF289:
         mov edx, dword_F612C
         mov ebx, 0Ah
         mov eax, dword [dword_F612C]
-        call sub_A6D24
+        call strtoul_
         mov dx, word [byte ecx+02h]
         mov byte [byte ecx+05h], al
         test dx, dx
@@ -1593,7 +1593,7 @@ loc_AF2CA:
         pop ebp
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_AF2E0:
+GusProbePort:
         push ebp
         mov ebp, esp
         push ebx

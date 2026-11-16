@@ -79,7 +79,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     err = FileOpenRead(path, &io.fh);
     for (i = 0; i < 2 && !err; i++) err = ReadTeamRec(io.fh, recs[i], tm[i]);
     FileClose(&io.fh);
-    sub_B4BA8();
+    SetScreenTarget();
     pal = (unsigned char *)AllocMemBlock((char *)str_Pal10, 0x300, 0x20);
     if (musicon && songdata) sub_8FCDF(musichandle, 3, 0x64);
     SetPalette(0, 0x100, pal);
@@ -87,7 +87,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FreeMemBlock((int)pal);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     kf = kaufmfont;
@@ -112,15 +112,15 @@ int PreGameScreen(unsigned char home, unsigned char away)
     sprintf(path, (char *)str_SAtS, recs[1] + 0x1A, recs[0] + 0x1A);
     PrintOutlinedText((0x280 - fputchar(path)) / 2, 0x93, path);
     FillRect(0x6E, 0xCF, 0x1AE, 5, boxfillcolor);
-    sub_B4FAC(0x6E, 0xCF, 0x21C, 0xCF, boxlitecolor);
-    sub_B4FAC(0x6E, 0xD3, 0x21C, 0xD3, boxshadecolor);
+    FillRectColor(0x6E, 0xCF, 0x21C, 0xCF, boxlitecolor);
+    FillRectColor(0x6E, 0xD3, 0x21C, 0xD3, boxshadecolor);
     for (k = 0; k < 9; k++) {
         y = (byte_D42C3 + 3) * k + 0xDA;
         if (k == 8) {
             FillRect(0x6E, y + 5, 0x1AE, 5, boxfillcolor);
             y += 0xE;
-            sub_B4FAC(0x6E, y - 9, 0x21C, y - 9, boxlitecolor);
-            sub_B4FAC(0x6E, y - 5, 0x21C, y - 5, boxshadecolor);
+            FillRectColor(0x6E, y - 9, 0x21C, y - 9, boxlitecolor);
+            FillRectColor(0x6E, y - 5, 0x21C, y - 5, boxshadecolor);
         }
         PrintOutlinedText((0x280 - fputchar((char *)scoutcatnames[k])) / 2, y, (char *)scoutcatnames[k]);
     }
@@ -256,7 +256,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
                     }
                     break;
                 }
-                sub_B4BA8();
+                SetScreenTarget();
             }
             GrabBlock(ptrbg, io.mx, io.my);
             if (!done) DrawArt(pointerspr, io.mx, io.my);
@@ -268,7 +268,7 @@ int PreGameScreen(unsigned char home, unsigned char away)
     FadePalStep(1, apal, 0x10);
     if (musicon && songdata) {
         while (!SndQuery(musicslot, 3));
-        sub_8D2F0(songdata);
+        PushMemDescriptorLocked(songdata);
         songdata = 0;
     }
     if (musicon && gameopts.speech) {

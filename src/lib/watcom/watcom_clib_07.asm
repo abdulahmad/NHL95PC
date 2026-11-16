@@ -7,7 +7,7 @@ extern _dynend, _curbrk, _LpCmdLine, _LpPgmName, _STACKLOW, _STACKTOP, _Envptr, 
 extern ___begtext, stackarea, word_D41F8, _psp, __no87, _Envptr_w4
 global start, __saved_DS, loc_9004A, loc_9004E, loc_90066, loc_90080, loc_90082, loc_90090
 global loc_900A1, loc_900B4, loc_900D0, loc_90108, loc_9010A, loc_90127, loc_9013B, loc_9014C
-global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, sub_90267
+global loc_90163, loc_901B8, loc_901CA, loc_901DF, loc_901ED, loc_9022E, loc_90265, WriteConsoleMessage
 global loc_9027B, loc_9028A, __GETDS, __STOSB, loc_902B6, loc_902C3, loc_902E0, __STOSD
 global loc_902EB, loc_902F7, loc_90300, loc_90326, loc_90329, loc_90337, loc_90352
 start:
@@ -261,7 +261,7 @@ loc_9022E:
         call __CMain
 loc_90265:
         jmp short loc_9028A
-sub_90267:
+WriteConsoleMessage:
         push edx
         push eax
         db 0BAh                                 ; insn: mov edx,8004Ah

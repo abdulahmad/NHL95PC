@@ -4,7 +4,7 @@ bits 32
 section s_96A60 progbits alloc exec nowrite align=1
 extern __GETDS, _os_handle_3, byte_EDEAC, byte_F243E, dword_D4BC8, sndhandlecount, dword_D4F96, dword_EDE8C
 extern dword_EDE90, dword_EDE94, dword_EDE98, dword_EDE9C, dword_EDEA0, dword_EDEA4, dword_EDEA8, dword_EDEB0
-extern off_D4BA0, sub_8DBD4, sub_96A10, sub_B3ABC, sub_B3C74, unk_EDE88
+extern off_D4BA0, sub_8DBD4, sub_96A10, bcopy, DosReadFile, unk_EDE88
 global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
 global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
 global sub_96C4C, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
@@ -485,7 +485,7 @@ loc_96EFF:
         push eax
         mov ebx, dword [byte ebp+024h]
         push ebx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
 loc_96F3D:
         cmp byte [esi], 0
@@ -505,7 +505,7 @@ loc_96F3D:
         add eax, byte 10h
         push eax
         push ecx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         jmp near loc_97066
 loc_96F77:
@@ -515,7 +515,7 @@ loc_96F77:
         add eax, byte 10h
         push eax
         push esi
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         jmp near loc_97066
 loc_96F90:
@@ -545,7 +545,7 @@ loc_96FC7:
         lea eax, [byte esp+04h]
         push eax
         push ecx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         xor eax, eax
         mov al, byte [byte esp+01h]
@@ -573,7 +573,7 @@ loc_96FC7:
         push eax
         mov ebx, dword [byte edi+024h]
         push ebx
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         mov eax, esi
         mov ecx, dword [byte esp+0Ch]

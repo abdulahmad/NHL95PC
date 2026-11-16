@@ -3,17 +3,17 @@ bits 32
 %include "hockey.inc"
 section s_A2000 progbits alloc exec nowrite align=1
 extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, dword_D30CC
-extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, sub_8D15C, sub_8D728, sub_9762C, unpack
-extern sub_98A40, sub_B0100, sub_B0148, sub_B3ABC, sub_B3B19, sub_B3C60, sub_B3C74, sub_B3CB3
-extern sub_B72D4, sub_B72E9
+extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, sub_9762C, unpack
+extern DosFileInfo, sub_B0100, sub_B0148, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
+extern SetBlitSource, sub_B72E9
 global sub_A2000, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
 global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
 global loc_A23C4, loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E
-global loc_A2598, loc_A259A, loc_A25D8, loc_A25FB, sub_A2610, loc_A261E, loc_A2636, loc_A2666
-global loc_A2679, loc_A2682, loc_A26A5, loc_A26A8, loc_A26AA, sub_A26B0, loc_A26E9, loc_A26FF
+global loc_A2598, loc_A259A, loc_A25D8, loc_A25FB, SplitFileExt, loc_A261E, loc_A2636, loc_A2666
+global loc_A2679, loc_A2682, loc_A26A5, loc_A26A8, loc_A26AA, ReadFileRange, loc_A26E9, loc_A26FF
 global loc_A2704, loc_A2727, sub_A2744, sub_A275C, sub_A2774, loc_A2791, sub_A2794, sub_A27AC
-global sub_A27C4, loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, sub_A28F0, loc_A29C6
-global loc_A2AAA, sub_A2AB8
+global LoadPackedCore, loc_A280B, loc_A283C, loc_A2846, loc_A287A, loc_A28DF, ConvertShapeBank, loc_A29C6
+global loc_A2AAA, ConvertShapeBankInPlace
 sub_A2000:
         push esi
         push edi
@@ -26,7 +26,7 @@ sub_A2000:
         push dword_F6138
         add eax, byte 10h
         push eax
-        call sub_B72D4
+        call SetBlitSource
         add esp, byte 8
         xor esi, esi
         xor edi, edi
@@ -518,7 +518,7 @@ loc_A25FB:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_A2610:
+SplitFileExt:
         push esi
         push edi
         push ebp
@@ -574,7 +574,7 @@ loc_A2682:
         mov eax, edi
         call strncpy_
         push ebp
-        call sub_98A40
+        call DosFileInfo
         add esp, byte 4
         test eax, eax
         jne short loc_A26A8
@@ -591,7 +591,7 @@ loc_A26AA:
         pop esi
         ret
         db 00h,00h
-sub_A26B0:
+ReadFileRange:
         push esi
         push edi
         push ebp
@@ -602,7 +602,7 @@ sub_A26B0:
         mov edx, dword [dword esp+0114h]
         push edx
         push edi
-        call sub_B3CB3
+        call DosSeekFile
         add esp, byte 8
         lea eax, [byte ebp-08h]
         cmp eax, 100h
@@ -623,7 +623,7 @@ loc_A2704:
         lea eax, [byte esp+04h]
         push eax
         push edi
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         test eax, eax
         je short loc_A2727
@@ -637,7 +637,7 @@ loc_A2727:
         mov ebx, dword [dword esp+0114h]
         push ebx
         push edi
-        call sub_B3CB3
+        call DosSeekFile
         add esp, byte 8
         mov eax, esi
         add esp, 100h
@@ -672,7 +672,7 @@ sub_A2774:
         push ebx
         mov ecx, dword [byte esp+0Ch]
         push ecx
-        call sub_A27C4
+        call LoadPackedCore
         add esp, byte 0Ch
         test eax, eax
         je short loc_A2791
@@ -686,7 +686,7 @@ sub_A2794:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_A27C4
+        call LoadPackedCore
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
@@ -696,11 +696,11 @@ sub_A27AC:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_A27C4
+        call LoadPackedCore
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_A27C4:
+LoadPackedCore:
         push esi
         push edi
         push ebp
@@ -708,7 +708,7 @@ sub_A27C4:
         mov esi, dword [byte esp+020h]
         mov edi, dword [byte esp+028h]
         push esi
-        call sub_8D728
+        call FindCachedFile
         add esp, byte 4
         test eax, eax
         jne near loc_A28DF
@@ -720,7 +720,7 @@ sub_A27C4:
         lea eax, [byte esp+0Ch]
         push eax
         push esi
-        call sub_B3B19
+        call DosOpenFile
         add esp, byte 14h
         mov edx, dword [byte esp+08h]
         test edx, edx
@@ -734,14 +734,14 @@ loc_A280B:
         push ecx
         mov ebp, dword [byte esp+0Ch]
         push ebp
-        call sub_A26B0
+        call ReadFileRange
         add esp, byte 10h
         mov dword [byte esp+0Ch], eax
         test eax, eax
         jne short loc_A283C
         mov eax, dword [esp]
         push eax
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         xor eax, eax
         add esp, byte 10h
@@ -770,7 +770,7 @@ loc_A2846:
         jne short loc_A287A
         mov ebp, dword [esp]
         push ebp
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         xor eax, eax
         add esp, byte 10h
@@ -797,7 +797,7 @@ loc_A287A:
         push ebp
         mov eax, dword [byte esp+08h]
         push eax
-        call sub_B3C74
+        call DosReadFile
         add esp, byte 0Ch
         push edi
         mov edx, dword [byte esp+0Ch]
@@ -811,11 +811,11 @@ loc_A287A:
         mov ecx, dword [byte esp+010h]
         push ecx
         push esi
-        call sub_8D15C
+        call ResizeMemBlock
         add esp, byte 0Ch
         mov edi, dword [esp]
         push edi
-        call sub_B3C60
+        call DosCloseFile
         add esp, byte 4
         mov eax, esi
 loc_A28DF:
@@ -825,7 +825,7 @@ loc_A28DF:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_A28F0:
+ConvertShapeBank:
         push esi
         push edi
         push ebp
@@ -853,7 +853,7 @@ sub_A28F0:
         push byte 10h
         push ebx
         push str_SHPI2
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         push byte 4
         mov edi, dword [byte esp+028h]
@@ -883,7 +883,7 @@ sub_A28F0:
         mov dword [byte esp+030h], eax
         add eax, edi
         push eax
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         xor eax, eax
         mov dword [byte esp+01Ch], eax
@@ -926,7 +926,7 @@ loc_A29C6:
         lea eax, [byte esp+04h]
         push eax
         push esi
-        call sub_B3ABC
+        call bcopy
         add esp, byte 0Ch
         mov al, byte [byte esp+0Ch]
         mov byte [esi], al
@@ -977,10 +977,10 @@ loc_A2AAA:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_A2AB8:
+ConvertShapeBankInPlace:
         push byte 0
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_A28F0
+        call ConvertShapeBank
         add esp, byte 8
         ret
