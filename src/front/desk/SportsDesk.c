@@ -101,7 +101,7 @@ void SportsDesk(int mode)
     escrequest = 0;
     joysampling = 0;
     if (mode == 0) {
-        sub_1BAF3(700000);
+        EnsureFreeMemory(700000);
         SetPalette(0, 0x100, pal);
         FadePalStep(1, pal, 0x10);
     }
@@ -275,7 +275,7 @@ void SportsDesk(int mode)
                     if (r == 2) {
                         SetPalette(0, 0x100, pal);
                         FadePalStep(1, pal, 0x10);
-                        sub_1BAF3(700000);
+                        EnsureFreeMemory(700000);
                         MakePath(path, fileoncd[0x64 + mode] == 1 ? (char *)cddriveptr : 0, (char *)deskbankname, 0);
                         bank = LoadBank(path, 0);
                         DrawBitmap(FindShape(bank, (char *)str_Desk));

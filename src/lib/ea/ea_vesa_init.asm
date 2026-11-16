@@ -9,7 +9,7 @@ extern dword_D3050, dword_D3054, dword_D3058, ScreenWidth, BackBufferWidth, dwor
 extern dword_D30E4, dword_D30E8, dword_D30EC, dword_D30F0, dword_D30F4, dword_D30F8, ScreenRowTable, dword_D4108
 extern dword_D4F4C, dword_D4F50, dword_EDABA, vesapresent, dword_EDCBC, FatalError, FreeMemBlock, spawnl_
 extern strncmp_, MemPtrSize, sub_8E8A0, DosFileInfo, bcopy, SaveTextMode, ZeroMem, SetScreenTarget
-extern sub_B5E00, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
+extern VesaSetBankArg, VesaSetMode, VgaSetModeTwice, vesamodeinfo, vesainfo, unlink_, word_EDBCA
 global ProbeVesa, loc_8DF8B, loc_8DFB0, loc_8DFEA, loc_8E011, loc_8E06C, initgraphics, loc_8E0A0
 global loc_8E0AE, loc_8E0C6, loc_8E0D5, loc_8E0DE, loc_8E0FA, loc_8E113, loc_8E12F, loc_8E148
 global loc_8E161, loc_8E17A, loc_8E18E, loc_8E1A1, loc_8E1BF, loc_8E1D4, loc_8E1E3, loc_8E1FD
@@ -286,7 +286,7 @@ loc_8E2A9:
         cmp dword [GraphicsReady], byte 8
         jne short loc_8E2BC
         push byte 0
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_8E2BC:
         mov esi, 13h

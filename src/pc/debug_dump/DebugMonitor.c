@@ -2,19 +2,19 @@
    jumps into, so both are one file. */
 #define DebugPrintf DebugPrintf_decl
 #define WaitKey WaitKey_decl
-#define sub_93E38 sub_93E38_decl
+#define MemViewerStart sub_93E38_decl
 #define DumpStatsLog DumpStatsLog_decl
 #define DebugMonitor DebugMonitor_decl
 #include "nhl95.h"
 #undef DebugPrintf
 #undef WaitKey
-#undef sub_93E38
+#undef MemViewerStart
 #undef DumpStatsLog
 #undef DebugMonitor
 
 void __cdecl DebugPrintf(char *fmt, ...);
 int WaitKey(void);
-void sub_93E38(void);
+void MemViewerStart(void);
 void DumpStatsLog(char *name);
 int fprintf(void *fp, const char *fmt, ...);
 
@@ -23,7 +23,7 @@ int fprintf(void *fp, const char *fmt, ...);
    clock, referee, penalty buffer, goalies, game over / exit flags, controllers, puck carrier) and one line per
    object 0-10h except 0Ch, 0Dh and 0Fh (index, jersey, numbers, box time, position name, position and
    velocity, the puck height for 0Eh, assignment name, flags, SPA name), stopping on a bad frame number. Then
-   read a key (WaitKey in step mode, else PollKey): 0 bails out, m calls sub_93E38, d dumps the stats log and
+   read a key (WaitKey in step mode, else PollKey): 0 bails out, m calls MemViewerStart, d dumps the stats log and
    a backslash toggles step mode. No arguments, no result. The last sprintf of an object line builds its
    destination in n itself (n is dead after it: add esi, eax / push esi in the EXE). */
 void DebugMonitor(void)
@@ -93,7 +93,7 @@ void DebugMonitor(void)
         DebugPrintf((char *)str_dbgBail);
         ((void (*)(void))bailout_vec)();
     } else if (k == 'm') {
-        sub_93E38();
+        MemViewerStart();
     } else if (k == 'd') {
         DumpStatsLog((char *)str_statslog);
     } else if (k == 0x5C) {

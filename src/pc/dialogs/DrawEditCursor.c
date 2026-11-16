@@ -2,7 +2,7 @@
 #include "nhl95.h"
 
 #define TEXTWIDTHN ((int (__cdecl *)(char *s, int n))TextWidthN)
-#define FILLRECT ((void (__cdecl *)(int x, int y, int w, int h, int col))sub_91044)
+#define FILLRECT ((void (__cdecl *)(int x, int y, int w, int h, int col))XorRectClipped)
 
 /* DrawEditCursor: draw the cursor of the text edit field (when editcuron): clamp editpos to the text, then a
  bar the width of the character under it (a space at the end; the width of "." in fixed-pitch mode, mode bit 2)
@@ -29,12 +29,12 @@ void DrawEditCursor(int mode)
     FILLRECT(x, y, w, editcurw, fontcolor);
 }
 
-#define CLEARRECT ((void (__cdecl *)(int x, int y, int w, int h, int col))sub_90EC0)
+#define CLEARRECT ((void (__cdecl *)(int x, int y, int w, int h, int col))FillRectClipped)
 
 /* DrawEditText (31599, PC only; ends in DrawEditCursor's exits): draw the text of the edit field. With a field
    width (editmaxw), first cut editbuf from the end until it fits (in fixed-pitch mode, mode bit 2, by the width of
    "." per character, else by fputchar); clamp editpos to the text; print it at editx, edity (fixed-pitch: a "."
-   per character); then clear the rest of the field (sub_90EC0, byte_D42C5 - 2 high, colour dword_D42AC).
+   per character); then clear the rest of the field (FillRectClipped, byte_D42C5 - 2 high, colour dword_D42AC).
    mode: the edit mode bits. No result.
    The fixed-pitch width test keeps its product in len, and the clamp goes through w, as the EXE's registers
    show. */

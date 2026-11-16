@@ -2,18 +2,18 @@
    and LockerRoomLoop ends there too. */
 #define LockerRoomScreen LockerRoomScreen_decl
 #define LockerRoomLoop LockerRoomLoop_decl
-#define sub_912C8 sub_912C8_decl
+#define DrawArtKeyFFAtOwnPos sub_912C8_decl
 #define LoadDigiFile sub_8F98F_decl
 #include "nhl95.h"
 #undef LockerRoomScreen
 #undef LockerRoomLoop
-#undef sub_912C8
+#undef DrawArtKeyFFAtOwnPos
 #undef LoadDigiFile
 
 typedef struct { char c[17]; } Hdr17;
 
 int LockerRoomLoop(void);
-void __cdecl sub_912C8(int art);  /* graphics library: set the palette from an art block */
+void __cdecl DrawArtKeyFFAtOwnPos(int art);  /* graphics library: set the palette from an art block */
 int LoadDigiFile(char *path);  /* sound library: load a song */
 
 #define LR ((Rect4 *)lockerrects)
@@ -114,7 +114,7 @@ void DrawLockerRoom(void)
         }
     }
     FadeOutPalCycle();
-    sub_912C8(FindShape(bank, (char *)str_Room));
+    DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_Room));
     FreeMemBlock(bank);
     DrawPanel3D(0, 0x1A7, 0x27F, 0x1E0, 1);
     for (i = 2; i < 8; i++) DrawPanel3D(LR[i].l, LR[i].t, LR[i].r, LR[i].b, 0);
@@ -132,7 +132,7 @@ void DrawLockerRoom(void)
         if (src[i] < 0x3B) pal[i] = src[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_912C8(FindShape(bank, (char *)str_00002));
+    DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
     sprintf(name, (char *)str_JERSV, jerseyabbrevs[lockerindex[VisTeam]]);
     i = VisTeam * 2 + 0xA4;
@@ -143,7 +143,7 @@ void DrawLockerRoom(void)
         if (src[i] < 0x3B) pal[i] = src[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_912C8(FindShape(bank, (char *)str_00002));
+    DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
     SetTextColors(0x77, 0x62);
     for (i = 2; i < 6; i++) FillRect(LR[i].l + 1, LR[i].t + 1, LR[i].r - LR[i].l - 1, LR[i].b - LR[i].t - 1, 0x70);
@@ -240,7 +240,7 @@ void DrawLockerRoom(void)
 }
 
 /* LockerRoomLoop (81C4E, PC only; ends in LockerStub): the locker room. Start from the home and visiting teams'
-   locker indexes (lockerindex), draw the mouse pointer (sub_91FE0) over a saved POINTER block and follow it.
+   locker indexes (lockerindex), draw the mouse pointer (DrawArtKeyColour) over a saved POINTER block and follow it.
    A click (event bit 2) on a box (LockerHitTest): 0 / 3 and 2 step the home team forward and back, 1 / 5 and 4
    the visitors (28 teams in exhibition mode, where the two extra teams may not meet themselves, else 26 and the
    teams must differ); each step redraws that side's jersey (DrawLockerJersey with both teams' division flags)
@@ -281,7 +281,7 @@ int LockerRoomLoop(void)
     ((short *)bm)[2] = ((short *)pointerspr)[2] + 1;
     ((short *)bm)[3] = ((short *)pointerspr)[3] + 1;
     GrabBlock(bm, x - 4, y);
-    sub_91FE0(pointerspr, x - 4, y);
+    DrawArtKeyColour(pointerspr, x - 4, y);
     ClearInputQueue();
     for (;;) {
         btn = 0;
@@ -295,7 +295,7 @@ int LockerRoomLoop(void)
             if (x != ox || y != oy) {
                 PutBlock(bm, ox - 4, oy);
                 GrabBlock(bm, x - 4, y);
-                sub_91FE0(pointerspr, x - 4, y);
+                DrawArtKeyColour(pointerspr, x - 4, y);
                 ox = x;
                 oy = y;
             }
@@ -405,7 +405,7 @@ int LockerRoomLoop(void)
                 }
             }
             GrabBlock(bm, x - 4, y);
-            sub_91FE0(pointerspr, x - 4, y);
+            DrawArtKeyColour(pointerspr, x - 4, y);
             ox = x;
             oy = y;
         } else {

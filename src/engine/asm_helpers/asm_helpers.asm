@@ -5,9 +5,9 @@ bits 32
 section s_8BEDB progbits alloc exec nowrite align=1
 extern __CHK, AnyInputPressed, bgscrollx, bgscrolly8, ClearInputQueue, GetTicks, musichandle, musicon
 extern musicslot, ReadBE32, rinkbm, saved_ss, screenbm, scrollx, scrolly, scrpitch
-extern seed, SetDrawBitmap, SetTickDeadline, songdata, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002
-extern sub_1B092, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, FillRect, DrawArtOpaque
+extern seed, SetDrawBitmap, SetTickDeadline, songdata, CmvCreate, CmvDestroy, CmvReadHeader, CmvDecodeFrame
+extern CmvFrameCount, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette, CdStreamCreate, CdStreamClose, CdStreamOpen
+extern CdStreamService, CdStreamNextChunk, CdStreamReleaseChunk, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, FillRect, DrawArtOpaque
 extern VgaSetPalette, SetScreenTarget, TickDeadlinePassed, vgapage, vtoa_dt, WaitClickTimeout
 global PlayMVI, stub_8C1B7, SelectScreenBM, SelectScreenBM_set, SelectRinkBM, stub_8C1F7, stub_8C202, stub_8C20D
 global stub_8C218, stub_8C223, randomd0, vgacopy_bg, vtoa, SaveSS
@@ -40,14 +40,14 @@ PlayMVI:
         push byte 20h
         push dword 2000h
         push dword 493E0h
-        call sub_1B0F3
+        call CdStreamCreate
         add esp, byte 0Ch
         mov dword [byte esp+020h], eax
         push esi
         push eax
-        call sub_1B1C2
+        call CdStreamOpen
         add esp, byte 8
-        call sub_1AC25
+        call CmvCreate
         mov edi, eax
         push dword 96h
         call SetTickDeadline
@@ -56,7 +56,7 @@ PlayMVI:
         call TickDeadlinePassed
         test eax, eax
         jne short .1
-        call sub_1B2A7
+        call CdStreamService
         jmp short PlayMVI.prime
 .1:
         mov dword [byte esp+0Ch], 0Ah
@@ -69,11 +69,11 @@ PlayMVI:
         call GetTicks
         mov dword [byte esp+024h], eax
         mov dword [byte esp+028h], ebp
-        call sub_1B2A7
+        call CdStreamService
 .chunk:
         mov ebx, dword [byte esp+020h]
         push ebx
-        call sub_1B8AC
+        call CdStreamNextChunk
         mov edx, eax
         add esp, byte 4
         mov dword [byte esp+04h], eax
@@ -102,7 +102,7 @@ PlayMVI:
         mov eax, dword [byte esp+0Ch]
         add dword [byte esp+02Ch], eax
         mov eax, edi
-        call sub_1B002
+        call CmvDecodeFrame
         mov dword [esp], eax
         call GetTicks
         sub eax, dword [byte esp+024h]
@@ -139,9 +139,9 @@ PlayMVI:
         jmp near .next
 .header:
         mov eax, edi
-        call sub_1AD16
+        call CmvReadHeader
         mov eax, edi
-        call sub_1B092
+        call CmvFrameCount
         mov ebp, eax
         mov dword [byte esp+010h], eax
         push byte 0
@@ -154,18 +154,18 @@ PlayMVI:
         call FillRect
         add esp, byte 14h
         mov eax, edi
-        call sub_1B0E5
+        call CmvPalette
         push eax
         mov eax, edi
-        call sub_1B0D7
+        call CmvPaletteCount
         push eax
         mov eax, edi
-        call sub_1B0C9
+        call CmvPaletteFirst
         push eax
         call VgaSetPalette
         add esp, byte 0Ch
         mov eax, edi
-        call sub_1B0BB
+        call CmvFrameRate
         mov ebx, eax
         mov eax, 64h
         mov edx, eax
@@ -183,9 +183,9 @@ PlayMVI:
         push ebx
         mov ecx, dword [byte esp+024h]
         push ecx
-        call sub_1B92E
+        call CdStreamReleaseChunk
         add esp, byte 8
-        call sub_1B2A7
+        call CdStreamService
         cmp dword [byte esp+08h], 4D564966h
         jne short .8
         call GetTicks
@@ -208,7 +208,7 @@ PlayMVI:
         mov esi, eax
         jmp short PlayMVI.wait
 .7:
-        call sub_1B2A7
+        call CdStreamService
 .8:
         test esi, esi
         jne short .9
@@ -223,10 +223,10 @@ PlayMVI:
         jne near PlayMVI.chunk
 .done:
         mov eax, edi
-        call sub_1ACF1
+        call CmvDestroy
         mov edx, dword [byte esp+020h]
         push edx
-        call sub_1B18B
+        call CdStreamClose
         add esp, byte 4
         cmp byte [musicon], 0
         je short .x

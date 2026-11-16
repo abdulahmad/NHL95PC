@@ -36,7 +36,7 @@ extern str_PT2, str_RosterIncomplete2, str_S2dSS, str_S2dSS2, str_S6, str_S7, st
 extern str_Shots4, str_Shrt2, str_Shrt3, str_SRoster, str_T6, str_Teams2, str_Tstat2, str_W6
 extern strcmp_, stub_8C218, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect
-extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, sub_91FE0, DrawArtMasked, MouseRead
+extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, DrawArtKeyColour, DrawArtMasked, MouseRead
 extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, sub_B4C84
 extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
 extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
@@ -625,7 +625,7 @@ GameLineEditorLoop:
         push eax
         mov eax, dword [pointerspr]
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         push dword 1E0h
         push dword 280h
@@ -751,7 +751,7 @@ GameLineEditorLoop:
         push eax
         mov eax, dword [dword ebp-0AAh]
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .29:
         mov edx, dword [byte ebp+02Eh]
@@ -762,7 +762,7 @@ GameLineEditorLoop:
         mov ebx, dword [pointerspr]
         push ebx
 .30:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov esi, dword [byte ebp+032h]
         mov edi, dword [byte ebp+02Eh]
@@ -2052,7 +2052,7 @@ GameLineEditorLoop:
         push eax
         mov ebx, dword [dword ebp-0AAh]
         push ebx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .110:
         mov ecx, dword [byte ebp+02Eh]
@@ -2688,7 +2688,7 @@ DrawLineEditorScreen:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         push esi
         call FreeMemBlock

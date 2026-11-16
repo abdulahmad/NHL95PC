@@ -26,8 +26,8 @@ extern str_Menubuff7, str_Pal21, str_Pal22, str_PINFO, str_PLAYER, str_Pntr2, st
 extern str_S12, str_S4, str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_Shrt
 extern str_space, str_star, str_Statistics, str_Temp6, str_TheJerseyNumber2d2, str_Tstat, str_VFN, strcat_
 extern strcmp_, strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, sub_8E8A0
-extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, sub_9121C, DrawArt
-extern GrabBlock, sub_91FE0, PrintBoxedText, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
+extern TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SetPalette, PutBlock, DrawArtOpaqueAtOwnPos, DrawArt
+extern GrabBlock, DrawArtKeyColour, PrintBoxedText, DrawArtMasked, MouseRead, FindShape, ClearScreen, VgaSetPalette
 extern SetScreenTarget, SetColorRemap, CreateBitmap, teamcitynames, TeamRosterScreen, TextInputDialog, tradebtnx, tradebtny
 extern tradeclick, tradecursor, tradejersey, traderemap1, traderemap2, traderesult, traderoster, tradeside
 extern tradeslot, treeteamnames, unequaltrademsg, tradestatsmenubar, tradelinesmenubar, unk_D12C8, unknown_libname_1, unknown_libname_2
@@ -1304,7 +1304,7 @@ DrawTradeScreen:
         mov eax, dword [tradebitmap]
         mov ecx, dword [byte eax+02Ch]
         push ecx
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         mov ebx, 10h
         mov edx, dword [byte esp+034h]
@@ -1773,7 +1773,7 @@ TradeScreenLoop:
         push eax
         mov eax, dword [pointerspr]
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         call ClearInputQueue
         xor edx, edx
@@ -1921,7 +1921,7 @@ TradeScreenLoop:
         push eax
         mov edi, dword [dword ebp-09Eh]
         push edi
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         jmp near .78
 .20:
@@ -2866,7 +2866,7 @@ TradeScreenLoop:
         push eax
         mov edi, dword [dword ebp-09Eh]
         push edi
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .78:
         mov eax, dword [byte ebp+02Eh]
@@ -2876,7 +2876,7 @@ TradeScreenLoop:
         push eax
         mov edx, dword [pointerspr]
         push edx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov eax, dword [byte ebp+032h]
         mov dword [byte ebp+03Ah], eax

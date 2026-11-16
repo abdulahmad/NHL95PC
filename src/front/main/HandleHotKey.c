@@ -144,7 +144,7 @@ void PlayGame(int *fh)
         rinkscrollx = rinkscrolly = 0;
         if (SetupGame() < 0) {
             gameresult = 2;
-            sub_1B982();
+            FreeGameMemory();
             SetScreenTarget();
             goto desk;
         }
@@ -167,7 +167,7 @@ void PlayGame(int *fh)
         gameresult = 0;
         SportsDesk(0);
         if (gameresult == 2) {
-            sub_1B982();
+            FreeGameMemory();
             return;
         }
         SetScreenSize(0x140, 0xC8);

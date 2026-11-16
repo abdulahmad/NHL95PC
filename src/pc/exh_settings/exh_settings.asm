@@ -8,7 +8,7 @@ extern gameopts, GetInputEvent, GrabBlock, LoadBank, LoadSettingsShapes, MakePat
 extern musicon, musicslot, pl05spr, pl10spr, pl20spr, pointerspr, PrintString, ptrupdatefn
 extern PutBlock, setbits, settingsfile, SndQuery, songdata, sounddev, str_BKGD3, str_Dbox4
 extern str_DigitizedSpeech3, str_Music3, str_Pointer17, str_Setting6, str_Sound3, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
-extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, sub_96440, SetScreenTarget, TextSetColors, VgaSetPalette
+extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, DrawShapeClippedKeyed, SetScreenTarget, TextSetColors, VgaSetPalette
 extern WriteCurModeState
 global MenuExhibitionSettings, ExhSettings_ret, ExhOptsToBits, DrawExhSetChecks, DrawExhSetDlg, ExhSetHitTest, ExhSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -357,7 +357,7 @@ DrawExhSetDlg:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         push esi
         call FreeMemBlock
@@ -842,7 +842,7 @@ ExhSetEditLoop:
         sub eax, byte 4
         push eax
         push ebp
-        call sub_96440
+        call DrawShapeClippedKeyed
         add esp, byte 0Ch
         mov edx, dword [byte esp+08h]
         push edx

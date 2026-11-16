@@ -19,7 +19,7 @@ extern randomd0, ReadJoy1, ReadJoy2, reenergizeteam, RefPen, refsignal, RefStep,
 extern ResetBench, ResetInputSampling, resetplstuff, restoreteams, rinkhtiles, rinkscrollx, rinkscrolly, rinkwtiles
 extern RunGameFrames, savepal, scrollx, scrolly, setpersonel, SetRinkScroll, SetScreenSize, setupice
 extern sflags, sflags3, ShowLoadingScreen, SortCords, SpeechBusy, spritedrawcount, SprSort, SprSortVert
-extern StopDigiSample, sub_1BAF3, FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, ReleaseAllVoices, SetPalette
+extern StopDigiSample, EnsureFreeMemory, FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, ReleaseAllVoices, SetPalette
 extern TicksSinceLastCall, UpdateHudPanel, viewscrollx, viewscrolly, VisTeam, vtoa, penaltysc, SortPending
 extern injurystop, hmtmtouch1, awtmtouch1, awtmtouch2, puckcross2, puckcross6, refYpos2, refXvel
 extern refYvel, xc1, yc1, yleader
@@ -684,7 +684,7 @@ StartHL2:
         cmp dword [escrequest], byte 0
         jne short .31
         mov eax, 222E0h
-        call sub_1BAF3
+        call EnsureFreeMemory
         call ShowLoadingScreen
 .31:
         mov eax, dword [dword esp+0F8h]

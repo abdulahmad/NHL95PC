@@ -5,8 +5,8 @@ section s_C5679 progbits alloc noexec write align=1
 extern exhfiles, pofiles, lgfiles, StatsSel9394Season, StatsSel9394Playoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMode
 extern NullBlit, CmpPoints, CmpGAA, CmpTeamStandings, CmpTeamScoring, CmpTeamDefense, CmpTeamPP, CmpTeamPK
 extern CmpTeamPenalties, CmpGoals, CmpAssists, CmpPPGoals, CmpSHGoals, CmpPlusMinus, CmpPIM, CmpShootPct
-extern CmpGoalieWins, CmpSavePct, sub_B4CD8, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
-extern sub_B5974, sub_B5AC8, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005
+extern CmpGoalieWins, CmpSavePct, VgaBlitKeyedHot, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
+extern VgaBlitRemapFlipH, VgaBlitRemapFlipHV, str_3000, str_3001, str_3002, str_3003, str_3004, str_3005
 extern str_3006, str_3007, str_3008, str_3009, str_300, str_OT2, str_BOS, str_BUF3
 extern str_CGY, str_CHI, str_DET, str_EDM, str_HFD, str_LA, str_DAL, str_MTL
 extern str_NJ, str_NYI, str_NYR, str_OTT, str_PHI, str_PIT, str_QUE, str_STL
@@ -870,14 +870,14 @@ dword_C66D4:
         dd NullBlit
         dd NullBlit
         dd NullBlit
-        dd sub_B4CD8
-        dd sub_B500C
-        dd sub_B4E50
-        dd sub_B52B4
-        dd sub_B5584
-        dd sub_B56B8
-        dd sub_B5974
-        dd sub_B5AC8
+        dd VgaBlitKeyedHot
+        dd VgaBlitKeyedFlipV
+        dd VgaBlitRemap
+        dd VgaBlitRemapFlipV
+        dd VgaBlitKeyedFlipH
+        dd VgaBlitKeyedFlipHV
+        dd VgaBlitRemapFlipH
+        dd VgaBlitRemapFlipHV
 lastsprremap:
         db 0FFh,0FFh,0FFh,0FFh
 mi_9394Season:

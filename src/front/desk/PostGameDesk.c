@@ -12,7 +12,7 @@ void PostGameDesk(void)
     SetPalette(0, 0x100, savepal);
     FadePalStep(1, savepal, 0x10);
     SetScreenSize(0x280, 0x1E0);
-    sub_1BAF3(0x222E0);
+    EnsureFreeMemory(0x222E0);
     ShowLoadingScreen();
     FlushGSumQueue();
     ReadGSumTail();
@@ -24,7 +24,7 @@ void PostGameDesk(void)
         UpdateOtherScores(curperiod);
         PlayRandomHighlight();
         SetScreenSize(0x280, 0x1E0);
-        sub_1B982();
+        FreeGameMemory();
         r = CoachCutScene();
         if (r) r = WaitClickTimeout(10);
         if (!r) {

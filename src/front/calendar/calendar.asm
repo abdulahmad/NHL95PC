@@ -15,7 +15,7 @@ extern ptrupdatefn, PutBlock, ReadSchedGame, savepal, SetClipWindow, SetColorRem
 extern SetPalette, ShowLoadingScreen, skaterstatscb, SndQuery, songdata, sprintf_, standingscb, standingsmenucb
 extern str_02d9D, str_Away, str_Bkgd7, str_Boxb, str_Boxr, str_Calendar, str_Callogo, str_D8
 extern str_Home, str_Iff9, str_L7, str_Menubuff5, str_Pal17, str_Pointer8, str_SDD2, str_T5
-extern str_W5, PushMemDescriptorLocked, LoadDigiFile, PlayDigiBlockLoop, SetDigiChannelVolume, sub_913D0, SetScreenTarget, FillRectColor
+extern str_W5, PushMemDescriptorLocked, LoadDigiFile, PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtHotspot, SetScreenTarget, FillRectColor
 extern teamstatscb, TextRestoreState, TextSaveState, TextSetFont
 global DrawCalendarDay, CalNextMonth, CalPrevMonth, CalReturn, ApplyShapePalette, SetGameSides, CalendarScreen
 ;-----------------------------------------------------------------------------
@@ -87,7 +87,7 @@ DrawCalendarDay:
         add ecx, dword [byte esp+0Ch]
         mov esi, dword [ecx]
         push esi
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         lea eax, [byte esp+0Ch]
         push eax

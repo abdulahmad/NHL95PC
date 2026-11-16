@@ -6,7 +6,7 @@ extern __CHK, btn_DBError, ClearInputQueue, ClearScreen, DrawArt, DrawButtons, D
 extern editptrspr, editrostersmenubar, FillRect, fullscrbmp, GetInputEvent, GrabBlock, KeyDbPtr, KeyDown
 extern MouseSetPos, pointerspr, PrintCenteredText, ptrupdatefn, PutBlock, SetDrawBitmap, str_ErrorsFoundInDatabases, str_NotEnoughDefence
 extern str_NotEnoughForwards, str_NotEnoughGoalies, str_NotEnoughPlayers, str_TheDefenceLinesAre, str_TheExtraAttackerLines, str_TheForwardLinesAre, str_TheGoalieLinesAre, str_ThePenaltyKillingLines
-extern str_ThePowerPlayLines, strcat_, sub_9121C, SetScreenTarget, TeamRecPtr, TrackButtons
+extern str_ThePowerPlayLines, strcat_, DrawArtOpaqueAtOwnPos, SetScreenTarget, TeamRecPtr, TrackButtons
 global ErrorScreenWait, DrawDBErrorsScreen, ShowDBError, CheckTeamLines, CheckDatabases
 ;-----------------------------------------------------------------------------
 ; ErrorScreenWait                                 6EAB5  95 PC, low confidence
@@ -274,7 +274,7 @@ ShowDBError:
         mov eax, dword [fullscrbmp]
         mov edx, dword [byte eax+02Ch]
         push edx
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         mov dword [edi], 0FFFFFFFFh
         mov dword [esi], 0

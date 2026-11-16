@@ -10,7 +10,7 @@ extern getenv_, int386x_, memcpy_, memset_, strcat_, strcpy_, GetPatchEntry, Pri
 extern GusReadPatchHeader, GusLoadPatch, GusOpen, GusClose, GusSetMasterVolume, GusMidiNoteOn, GusMidiNoteOff, GusSetChannelPatch
 extern GusDramAlloc, GusDramFreeTotal, GusServiceStream, GusStartStream, GusStopStream, GusStreamStart, GusStreamIdle, GusStreamPlayNote
 extern GusStreamRelease, GusStreamStop, GusStreamSetVolume, GusStreamSetRate, GusStreamSetSample, GusStreamApplyBend, GusStreamBusy, GusStreamGetVolume
-extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, sub_B6F84, unk_D5382, unk_D5408
+extern GusGetEnvConfig, GusProbePort, GusMidiPitchBend, GusMidiController, SetClipWindow, SetBitmapClip, unk_D5382, unk_D5408
 extern unk_F21FC, unk_F53AC, unk_F55F8, word_F371C, word_F531C, word_F531E, word_F5324, word_F5326
 extern word_F53B0, word_F53C2, word_F58D2, word_F58D4, word_F58D6
 global GusAllocDosBuffer, loc_A004D, GusFreeDosBuffer, GusLoadMidiPatch, loc_A00F7, loc_A0102, loc_A0107, loc_A0124
@@ -2210,7 +2210,7 @@ ResetClipRect:
         push ebx
         push byte 0
         push eax
-        call sub_B6F84
+        call SetBitmapClip
         add esp, byte 14h
         ret
         db 08Dh,040h,00h

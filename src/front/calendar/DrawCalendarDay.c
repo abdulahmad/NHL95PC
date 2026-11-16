@@ -5,12 +5,12 @@
    tools/wccre/declsearch.py --conflicts. Left: the day numbers' divisor 7 in ecx (EXE esi, then ecx), game-day
    index, selection sum and temporary stack slots in the selection frame. See docs/UNSURE.md. */
 #define DrawCalendarDay DrawCalendarDay_decl
-#define sub_913D0 sub_913D0_decl
+#define DrawArtHotspot sub_913D0_decl
 #include "nhl95.h"
 #undef DrawCalendarDay
-#undef sub_913D0
+#undef DrawArtHotspot
 
-void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
+void __cdecl DrawArtHotspot(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
 
 /* DrawCalendarDay (33FFD, PC only): draw a month of the calendar screen for team. Draws the bkgd art and the
    month art "<mm>9<y>" (93 for October to December, 94 after) from bank, team's crest at 26h, 3Fh, and the Home /
@@ -54,7 +54,7 @@ void DrawCalendarDay(int month, int *crests, int unused, unsigned char *games, i
     name[1] = cn[0];
     name[2] = cn[1];
     name[3] = cn[2];
-    sub_913D0(crests[team], 0x26, 0x3F);
+    DrawArtHotspot(crests[team], 0x26, 0x3F);
     TextSaveState(state);
     TextSetFont(font);
     fontcolor = 0xC0;

@@ -61,7 +61,7 @@ void PlayHilight(void)
     SetPalette(0, 0x100, pal);
     FadePalStep(1, pal, 0x10);
     TextSetFont(s1font);
-    sub_1BAB1();
+    FreePhotoBanks();
     FreeMemBlock(rinkendbank);
     FreeMemBlock(scrbrdshapes);
     FreeMemBlock(numshpbank);

@@ -8,7 +8,7 @@ extern dlgtextfg, dword_C4B69, dword_D42AC, editbuf, editcuron, editcurw, editma
 extern editx, edity, fontcolor, fputchar, FreeMemBlock, GetInputEvent, InputInstall, InputRemove
 extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowText, ptrupdatefn, SetTextColors
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
-extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, sub_90EC0, sub_91044, DrawArt
+extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, FillRectClipped, XorRectClipped, DrawArt
 extern GrabBlock, TextPrintAt, KeyDown, MouseRead, sub_B3D46, sub_B3D64, SetScreenTarget, FillRectColor
 extern TickDeadlinePassed, unknown_libname_4
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
@@ -2374,7 +2374,7 @@ DrawEditCursor:
         push esi
         push edi
         push eax
-        call sub_91044
+        call XorRectClipped
 DrawEditCursor_x:
         add esp, byte 14h
 DrawEditCursor_ret:
@@ -2509,7 +2509,7 @@ DrawEditText:
         push ebp
         add edi, dword [editx]
         push edi
-        call sub_90EC0
+        call FillRectClipped
         jmp near DrawEditCursor_x
 %endif ; C
 ;-----------------------------------------------------------------------------

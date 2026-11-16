@@ -28,8 +28,8 @@ extern str_Slapshot, str_Sound4, str_SoundBlaster, str_SoundBlaster2, str_Sports
 extern str_ULTRASOUND, str_VisBck, str_VisitingTeam, str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock
 extern PushMemDescriptorLocked, LoadBank, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, SndInit, SndShutdown
 extern LoadMusicBank, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, PlayDigiPtr, PlayDigiPtrLoop, SndQuery
-extern SetDigiChannelVolume, SetPalette, PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, DrawArt
-extern GrabBlock, PrintString, sub_91FE0, SndOpenDriver, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
+extern SetDigiChannelVolume, SetPalette, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, DrawArt
+extern GrabBlock, PrintString, DrawArtKeyColour, SndOpenDriver, MouseRead, FindShape, VgaSetPalette, SetScreenTarget
 extern SetColorRemap, FillRectColor, PlotPixel, teamcitynames, teamdivflags, titlebckspr, str_R4, sndselbox1
 extern sndselbox2, msg_NoSoundCard, visbckspr, visnamebckspr, VisTeam, WaitDigiSample, WaitTickDeadline, WriteCurModeState
 global MenuSoundSettings, DrawSoundCardDlg, DrawSoundCardOpts, SoundCardHitTest, RedrawSoundCardOpts, SoundCardDlgLoop, SoundCardDlgLoop_poll, SoundCardDlgLoop_next
@@ -142,7 +142,7 @@ DrawSoundCardDlg:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         push esi
         call FreeMemBlock

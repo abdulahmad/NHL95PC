@@ -21,7 +21,7 @@ extern str_Playoff, str_PlayoffTree2, str_Pointer20, str_Return, str_Room, str_S
 extern str_Sound4, str_SoundBlaster, str_SportsCentral2, str_Temp8, str_TitleBck, str_UltraSound, str_VisBck, str_VisitingTeam
 extern str_VisNameBck, str_Vs, strcpy_, strncpy_, AllocMemBlock, PushMemDescriptorLocked, LoadBank, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, SetPalette
-extern PutBlock, FillRect, DrawArtOpaque, sub_91284, sub_912C8, GrabBlock, PrintString, sub_91FE0
+extern PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, GrabBlock, PrintString, DrawArtKeyColour
 extern MouseRead, FindShape, VgaSetPalette, SetScreenTarget, SetColorRemap, FillRectColor, PlotPixel, teamcitynames
 extern teamdivflags, titlebckspr, visbckspr, visnamebckspr, VisTeam, WriteCurModeState
 global LoadSettingsShapes, DrawSettingsHeading_jt, DrawSettingsHeading, DrawSettingsHeading_n0, DrawSettingsHeading_n1, SetModeMenuLabels, DrawPanel3D, DrawPanel3D_ret
@@ -766,7 +766,7 @@ DrawLockerRoom:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_912C8
+        call DrawArtKeyFFAtOwnPos
         add esp, byte 4
         push esi
         call FreeMemBlock
@@ -885,7 +885,7 @@ DrawLockerRoom:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_912C8
+        call DrawArtKeyFFAtOwnPos
         add esp, byte 4
         push esi
         call FreeMemBlock
@@ -953,7 +953,7 @@ DrawLockerRoom:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_912C8
+        call DrawArtKeyFFAtOwnPos
         add esp, byte 4
         push esi
         call FreeMemBlock
@@ -1588,7 +1588,7 @@ DrawLockerJersey:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_912C8
+        call DrawArtKeyFFAtOwnPos
         add esp, byte 4
         mov edx, dword [byte ebp-04h]
         push edx
@@ -2088,7 +2088,7 @@ LockerRoomLoop:
         push eax
         mov ecx, dword [pointerspr]
         push ecx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         call ClearInputQueue
 .1:
@@ -2143,7 +2143,7 @@ LockerRoomLoop:
         mov esi, dword [pointerspr]
         push esi
 .5:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov eax, dword [dword esp+030Ch]
         mov dword [dword esp+0314h], eax

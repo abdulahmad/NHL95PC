@@ -1,6 +1,6 @@
 /* Game save / IO: the in-game main loop. */
 /* DRAFT (10.0 GA): 61 differing, 1685 vs 1678 bytes (own epilogue; the EXE jumps to HandleHotKey_ret, so a
-   match belongs in HandleHotKey.c); no goto. Each exit is `sub_1B982(); return;` (Watcom merges the calls into
+   match belongs in HandleHotKey.c); no goto. Each exit is `FreeGameMemory(); return;` (Watcom merges the calls into
    one, and the period-end demo exit keeps its own `gameresult = 1` as in the EXE). The two `gameresult == 2`
    exits come out as `jne` over a `jmp` where the EXE has one `je` to the exit (a goto shape would give that).
    Left: the register cycle one step behind the EXE from frameaccum on (edi / ebp, ...), the Esc demomode test
@@ -52,7 +52,7 @@ void StartThreeStars(void);
    calls run between frames. At the period end (exitgame): in demo mode fade and end with result 1, else
    PeriodOver (result 2 ends) and, if the game goes on, redraw the HUD for the next period, centre the mouse
    and reset the period state. When the game is over: the three stars, the post-game desk and result 1. Then
-   sub_1B982. No arguments, no result. */
+   FreeGameMemory. No arguments, no result. */
 void Gameloop(void)
 {
     char path[0x20];
@@ -112,7 +112,7 @@ void Gameloop(void)
                 if (demomode) {
                     FadePalette(1, gamepal, 0x10);
                     gameresult = 2;
-                    sub_1B982();
+                    FreeGameMemory();
                     return;
                 }
                 joysampling_save = joysampling;
@@ -133,7 +133,7 @@ void Gameloop(void)
                 SetScreenSize(0x280, 0x1E0);
                 SportsDesk(0);
                 if (gameresult == 2) {
-                    sub_1B982();
+                    FreeGameMemory();
                     return;
                 }
                 SetScreenSize(0x140, 0xC8);
@@ -166,12 +166,12 @@ void Gameloop(void)
         if (demomode) {
             FadePalette(1, gamepal, 0x10);
             gameresult = 1;
-            sub_1B982();
+            FreeGameMemory();
             return;
         }
         PeriodOver();
         if (gameresult == 2) {
-                    sub_1B982();
+                    FreeGameMemory();
                     return;
                 }
         if (!gameover) {
@@ -195,5 +195,5 @@ void Gameloop(void)
     StartThreeStars();
     PostGameDesk();
     gameresult = 1;
-    sub_1B982();
+    FreeGameMemory();
 }

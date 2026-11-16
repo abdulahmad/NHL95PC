@@ -13,7 +13,7 @@ extern str_Conference, str_D3, str_Eastern, str_EasternConference2, str_Embpal2,
 extern str_fmtPct0, str_GA2, str_GF, str_GP7, str_L6, str_Midl2, str_P, str_Pal9
 extern str_Pct4, str_PlayoffsHaveNotBeen2, str_Pst27, str_Pstatbar8, str_Rst12, str_Rst22, str_Scuparrw2, str_Standings
 extern str_T4, str_Team, str_TwoSpaces, str_W4, str_Western, str_WesternConference2, strcat_, LoadBank
-extern TextSaveState, TextRestoreState, TextSetFont, sub_91044, DrawArt, DrawShape, FindShape, VgaSetPalette
+extern TextSaveState, TextRestoreState, TextSetFont, XorRectClipped, DrawArt, DrawShape, FindShape, VgaSetPalette
 extern SetScreenTarget, SetClipWindow, teamconf, TextGridOff, TextGridOpen, treecol_Er1, treecol_Er2, treecol_Er3
 extern treecol_Wr2, treecol_Wr3, treecolslots, treecolx, treerowy, treeteamnames
 global StandingsScreen, HighlightTreeSlot, MoveTreeHighlight, CountSeriesWins, PlayoffTreeScreen, PlayoffTreeHitTest, ShowPlayoffTree
@@ -611,7 +611,7 @@ StandingsScreen:
 ;-----------------------------------------------------------------------------
 ; HighlightTreeSlot                            2785F  95 PC, medium confidence
 ; Finds the team's slot in treecolslots and draws the 80h highlight box
-; (sub_91044) at treecolx / treerowy
+; (XorRectClipped) at treecolx / treerowy
 ;-----------------------------------------------------------------------------
 ; C: src/front/playoff/HighlightTreeSlot.c
 %ifdef CBUILD
@@ -674,7 +674,7 @@ HighlightTreeSlot:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         push eax
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp near .x
 .6:
@@ -714,7 +714,7 @@ HighlightTreeSlot:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         push eax
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp near .x
 .9:
@@ -765,7 +765,7 @@ HighlightTreeSlot:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         push eax
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp near .x
 .16:
@@ -810,7 +810,7 @@ HighlightTreeSlot:
         mov eax, dword [byte ebp-0Eh]
         sar eax, 10h
         push eax
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp near .x
 .19:
@@ -846,7 +846,7 @@ HighlightTreeSlot:
         sar eax, 10h
         push eax
         push byte 47h
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp near .x
 .26:
@@ -871,7 +871,7 @@ HighlightTreeSlot:
         sar eax, 10h
         push eax
         push dword 1C5h
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp short .x
 .29:
@@ -887,7 +887,7 @@ HighlightTreeSlot:
         push byte 5Ch
         push dword 0E2h
         push dword 10Ah
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         jmp short .x
 .31:
@@ -901,7 +901,7 @@ HighlightTreeSlot:
         push byte 5Ch
         push dword 0F2h
         push dword 10Ah
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
 .x:
         mov esp, ebp

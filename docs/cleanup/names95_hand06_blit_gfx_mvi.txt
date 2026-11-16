@@ -1,0 +1,156 @@
+sub_B5D80 PutPixel {source_game=PC-new,confidence=low} plots a pixel when it is inside the clip window
+sub_B5E00 VesaSetBankArg {source_game=PC-new,confidence=medium} stack-argument entry of VesaSetBank
+sub_B5EC5 VesaSetDisplayStart {source_game=PC-new,confidence=medium} sets the VESA display start (function 4F07h); the code after it sets the bank (4F05h)
+sub_B5EE8 BlitBlockHot {source_game=PC-new,confidence=low} BlitBlock at a position less the shape's hotspot
+sub_B6064 BlitBlockXorHot {source_game=PC-new,confidence=low} BlitBlockXor at a position less the shape's hotspot
+sub_B608B BlitBlockXor {source_game=PC-new,confidence=medium} XORs a block onto the screen at a position
+sub_B61F0 BlitBlockAndHot {source_game=PC-new,confidence=low} BlitBlockAnd at a position less the shape's hotspot
+sub_B6217 BlitBlockAnd {source_game=PC-new,confidence=medium} ANDs a block onto the screen at a position
+sub_B637C AndPixelClipped {source_game=PC-new,confidence=low} ANDs a pixel when it is inside the clip window
+sub_B63FC BlitBlockOrHot {source_game=PC-new,confidence=low} BlitBlockOr at a position less the shape's hotspot
+sub_B6423 BlitBlockOr {source_game=PC-new,confidence=medium} ORs a block onto the screen at a position
+sub_B6588 OrPixelClipped {source_game=PC-new,confidence=low} ORs a pixel when it is inside the clip window
+sub_B6608 FillRectClippedCore {source_game=PC-new,confidence=low} clips a rectangle to the clip window and fills it
+sub_B6720 XorRectClippedCore {source_game=PC-new,confidence=low} clips a rectangle to the clip window and XORs it
+sub_B677D XorRectCore {source_game=PC-new,confidence=medium} XORs a rectangle with a colour
+sub_B6860 BlitArtOpaqueHot {source_game=PC-new,confidence=low} BlitArtOpaque at a position less the shape's hotspot
+sub_B6918 BlitArtKeyFFHot {source_game=PC-new,confidence=low} BlitArtKeyFF at a position less the shape's hotspot
+sub_B693C BlitArtKeyFF {source_game=PC-new,confidence=low} draws art skipping colour FFh
+sub_B69C0 BlitArtHot {source_game=PC-new,confidence=low} BlitArt at a position less the shape's hotspot
+sub_B69E4 BlitArt {source_game=PC-new,confidence=low} draws art at a position
+sub_B6B18 BlitShapeFastHot {source_game=PC-new,confidence=low} BlitShapeFast at a position less the shape's hotspot
+sub_B6BC0 BlitArtKeyColourHot {source_game=PC-new,confidence=low} BlitArtKeyColour at a position less the shape's hotspot
+sub_B6BE5 BlitArtKeyColour {source_game=PC-new,confidence=low} draws art skipping a given colour
+sub_B6D24 BlitArtMaskedHot {source_game=PC-new,confidence=low} BlitArtMasked at a position less the shape's hotspot
+sub_B6D47 BlitArtMasked {source_game=PC-new,confidence=low} draws masked art at a position
+sub_B6DD0 BlitShapeClippedHot {source_game=PC-new,confidence=low} BlitShapeClipped at a position less the shape's hotspot
+sub_B6F84 SetBitmapClip {source_game=PC-new,confidence=low} sets a bitmap's clip window and makes it the drawing target
+sub_B700E ShapeDataSize {source_game=PC-new,confidence=low} returns the data size of a shape
+sub_B72E9 CopyRowKeyFF {source_game=PC-new,confidence=low} copies a row of the blit source to the screen, skipping colour FFh
+sub_B731E CopyRowRemapKeyed {source_game=PC-new,confidence=low} copies a row of the blit source through the remap table, skipping colours FEh and FFh
+sub_B7420 CopyRowFast {source_game=PC-new,confidence=low} copies a row of the blit source to the screen
+sub_B7614 BlitBlockShadowHot {source_game=PC-new,confidence=low} BlitBlockShadow at a position less the shape's hotspot
+sub_B763B BlitBlockShadow {source_game=PC-new,confidence=medium} draws a block as a shadow through the shade table
+sub_B7778 SetRemapTable {source_game=PC-new,confidence=medium} copies a 256-byte remap table
+sub_B77D0 BlitBlockRemapKeyedHot {source_game=PC-new,confidence=low} BlitBlockRemapKeyed at a position less the shape's hotspot
+sub_90638 PutBlockHotspot {source_game=PC-new,confidence=medium} PutBlock at a position less the shape's hotspot
+sub_90698 DrawArtXor {source_game=PC-new,confidence=low} XORs art onto the screen (keyed when KeyedDraw is set)
+sub_906DC DrawArtXorAtOwnPos {source_game=PC-new,confidence=low} DrawArtXor at the shape's own position
+sub_90838 DrawArtAndAtOwnPos {source_game=PC-new,confidence=low} DrawArtAnd at the shape's own position
+sub_9087C DrawArtOr {source_game=PC-new,confidence=medium} ORs art onto the screen
+sub_9099C DrawArtOrAtOwnPos {source_game=PC-new,confidence=low} DrawArtOr at the shape's own position
+sub_90EC0 FillRectClipped {source_game=PC-new,confidence=medium} fills a rectangle clipped to the clip window
+sub_90F2C XorRowBytes {source_game=PC-new,confidence=low} XORs a run of bytes with a colour
+sub_91044 XorRectClipped {source_game=PC-new,confidence=medium} XORs a rectangle clipped to the clip window
+sub_9121C DrawArtOpaqueAtOwnPos {source_game=PC-new,confidence=medium} DrawArtOpaque at the shape's own position
+sub_91238 DrawArtOpaqueHotspot {source_game=PC-new,confidence=medium} DrawArtOpaque at a position less the shape's hotspot
+sub_91284 DrawArtKeyFF {source_game=PC-new,confidence=low} draws art skipping colour FFh
+sub_912C8 DrawArtKeyFFAtOwnPos {source_game=PC-new,confidence=low} DrawArtKeyFF at the shape's own position
+sub_912E4 DrawArtKeyFFHotspot {source_game=PC-new,confidence=low} DrawArtKeyFF at a position less the shape's hotspot
+sub_91310 FreeWindowBitmap {source_game=PC-new,confidence=low} removes a bitmap's window and frees its block
+sub_913D0 DrawArtHotspot {source_game=PC-new,confidence=medium} DrawArt at a position less the shape's hotspot
+sub_91554 GrabBlockHotspot {source_game=PC-new,confidence=low} GrabBlock at a position less the shape's hotspot
+sub_91580 PrintStringAtCursor {source_game=PC-new,confidence=low} prints a string at the text cursor
+sub_91FE0 DrawArtKeyColour {source_game=PC-new,confidence=low} draws art skipping a given colour
+sub_92024 DrawArtKeyColourAtOwnPos {source_game=PC-new,confidence=low} DrawArtKeyColour at the shape's own position
+sub_92890 TextPrint {source_game=PC-new,confidence=medium} prints a string at the text cursor with the current font
+sub_92CF0 TextPutCharAt {source_game=PC-new,confidence=low} prints one character at a position
+sub_931D0 RemapRowKeyed {source_game=PC-new,confidence=low} copies bytes through the text remap table, skipping colour FFh
+sub_93240 DrawArtMaskedAtOwnPos {source_game=PC-new,confidence=low} DrawArtMasked at the shape's own position
+sub_8E9D4 TextSetCursor {source_game=PC-new,confidence=medium} sets the text cursor position
+sub_9082F DrawArtAnd+010Fh {no_record}
+sub_9A7A0 CreateMcgaWindow {source_game=PC-new,confidence=medium} allocates and sets up an MCGA window bitmap of a given size
+sub_B4FA6 CreateBitmapJump {source_game=PC-new,confidence=low} jumps to CreateMcgaWindow
+sub_B4CD8 VgaBlitKeyedHot {source_game=PC-new,confidence=low} VgaBlitKeyed at a position less the shape's hotspot (sprite mode 0)
+sub_B4CF2 VgaBlitKeyed {source_game=PC-new,confidence=low} draws a shape skipping colour FFh
+sub_B4DEC GetColorRemap {source_game=PC-new,confidence=medium} copies the 256-byte colour remap table out
+sub_B4E50 VgaBlitRemap {source_game=PC-new,confidence=low} draws a shape through the colour remap table (sprite mode 2)
+sub_B4FE8 VgaBlitKeyedFlipVHot {source_game=PC-new,confidence=low} VgaBlitKeyedFlipV at a position less the shape's hotspot
+sub_B500C VgaBlitKeyedFlipV {source_game=PC-new,confidence=low} draws a shape upside down, skipping colour FFh (sprite mode 1)
+sub_B5290 VgaBlitRemapFlipVHot {source_game=PC-new,confidence=low} VgaBlitRemapFlipV at a position less the shape's hotspot
+sub_B52B4 VgaBlitRemapFlipV {source_game=PC-new,confidence=low} draws a shape upside down through the colour remap table (sprite mode 3)
+sub_B555C VgaBlitKeyedFlipHHot {source_game=PC-new,confidence=low} VgaBlitKeyedFlipH at a position less the shape's hotspot
+sub_B5584 VgaBlitKeyedFlipH {source_game=PC-new,confidence=low} draws a shape mirrored, skipping colour FFh (sprite mode 4)
+sub_B5690 VgaBlitKeyedFlipHVHot {source_game=PC-new,confidence=low} VgaBlitKeyedFlipHV at a position less the shape's hotspot
+sub_B56B8 VgaBlitKeyedFlipHV {source_game=PC-new,confidence=low} draws a shape mirrored and upside down, skipping colour FFh (sprite mode 5)
+sub_B594C VgaBlitRemapFlipHHot {source_game=PC-new,confidence=low} VgaBlitRemapFlipH at a position less the shape's hotspot
+sub_B5974 VgaBlitRemapFlipH {source_game=PC-new,confidence=low} draws a shape mirrored through the colour remap table (sprite mode 6)
+sub_B5AA0 VgaBlitRemapFlipHVHot {source_game=PC-new,confidence=low} VgaBlitRemapFlipHV at a position less the shape's hotspot
+sub_B5AC8 VgaBlitRemapFlipHV {source_game=PC-new,confidence=low} draws a shape mirrored and upside down through the colour remap table (sprite mode 7)
+sub_91FA4 FixedMulRound {source_game=PC-new,confidence=medium} multiplies two 16.16 fixed-point numbers with rounding
+sub_8E3DC ReturnPointerArg {source_game=PC-new,confidence=low} returns its argument (unused)
+sub_8E3E4 StrCopyN {source_game=PC-new,confidence=medium} strncpy wrapper with stack arguments
+sub_8E3F8 StrCompareN {source_game=PC-new,confidence=medium} strncmp wrapper with stack arguments
+sub_8E40C MemCopyArgs {source_game=PC-new,confidence=low} copies memory (bcopy with destination first, stack arguments)
+sub_8E424 FileNamePart {source_game=PC-new,confidence=medium} returns the part of a path after its last backslash, colon or slash
+sub_8E44C FileNameOnly {source_game=PC-new,confidence=medium} stack-argument wrapper of FileNamePart
+sub_8E624 DrawShapeScaled {source_game=PC-new,confidence=low} draws a shape scaled by 16.16 factors at a position
+sub_8E6A8 DrawShapeScaledAtOwnPos {source_game=PC-new,confidence=low} DrawShapeScaled at the shape's own position (unused)
+sub_8E6CC DrawShapeScaledHotspot {source_game=PC-new,confidence=low} DrawShapeScaled with the scaled hotspot taken off the position (unused)
+sub_8E714 DrawShapeZoomedAtOwnPos {source_game=PC-new,confidence=low} second copy of DrawShapeScaledAtOwnPos (unused)
+sub_8E738 DrawShapeZoomedHotspot {source_game=PC-new,confidence=low} second copy of DrawShapeScaledHotspot (unused)
+sub_8E780 DrawShapeZoomed {source_game=PC-new,confidence=low} passes its arguments on to DrawShapeScaled (unused)
+sub_93938 DebugLogOpen {source_game=PC-new,confidence=low} opens the debug log file unless it is already open
+sub_93A40 DebugLogClose {source_game=PC-new,confidence=medium} writes the closing date and time to the debug log and closes it
+sub_93AD8 DebugLogPrintf {source_game=PC-new,confidence=medium} formats a line with vsprintf and writes it to the debug log
+sub_93C88 DebugWaitKey {source_game=PC-new,confidence=low} waits for a key in the debug viewers and returns it in upper case
+sub_93CB8 MemViewerGetMode {source_game=PC-new,confidence=low} returns the memory viewer mode
+sub_93CC0 MemViewer {source_game=PC-new,confidence=low} memory viewer screen: block list, totals, hex dump and art view
+sub_93E38 MemViewerStart {source_game=PC-new,confidence=low} opens the memory viewer in mode 1
+sub_93E79 MemViewerDrawRows {source_game=PC-new,confidence=low} draws the rows of the memory viewer block list
+sub_940F4 MemViewerCountBlocks {source_game=PC-new,confidence=low} counts the blocks the memory viewer will list
+sub_95148 ShapeViewerFindShape {source_game=PC-new,confidence=low} looks up the shape under the cursor in the shape viewer
+sub_9612C DebugGetKeyUpper {source_game=PC-new,confidence=low} waits for a key and returns it in upper case
+sub_96144 DebugPressAnyKey {source_game=PC-new,confidence=low} flushes the keyboard, waits for a key and returns it in upper case
+sub_96164 DebugKbdFlush {source_game=PC-new,confidence=low} flushes the keyboard buffer
+sub_96170 DebugFlushAndWait {source_game=PC-new,confidence=low} flushes the keyboard and waits for a key
+sub_1B0F3 CdStreamCreate {source_game=PC-new,confidence=medium} creates a CD stream reader with its buffer and hooks its timer
+sub_1B18B CdStreamClose {source_game=PC-new,confidence=medium} unhooks a CD stream's timer and closes its file
+sub_1B1C2 CdStreamOpen {source_game=PC-new,confidence=medium} starts a CD stream reading a file
+sub_1B1DF CdStreamSeek {source_game=PC-new,confidence=low} moves a CD stream to an offset in its file
+sub_1B201 CdStreamCreateSecondary {source_game=PC-new,confidence=medium} creates secondary CD stream 0-9 with its own buffer
+sub_1B2A7 CdStreamService {source_game=PC-new,confidence=medium} reads more of the file into a CD stream's buffer
+sub_1B818 CdStreamTimer {source_game=PC-new,confidence=low} timer callback that counts down a CD stream's wait
+sub_1B82B CdStreamSkipReleased {source_game=PC-new,confidence=low} moves a CD stream's read pointer past released chunks
+sub_1B871 CdStreamSpace {source_game=PC-new,confidence=low} returns the free space in a CD stream's buffer
+sub_1B88A CdStreamFilled {source_game=PC-new,confidence=low} returns the bytes waiting in a CD stream's buffer
+sub_1B8AC CdStreamNextChunk {source_game=PC-new,confidence=medium} returns the next chunk of a CD stream, 0 when none is ready, -1 at the end
+sub_1B92E CdStreamReleaseChunk {source_game=PC-new,confidence=medium} marks a chunk of a CD stream as used
+sub_1B982 FreeGameMemory {source_game=PC-new,confidence=low} frees the game's overlay art, photos, rink, score board and fonts after a game
+sub_1BA85 FreePhotoBankF {source_game=PC-new,confidence=low} frees the photo bank in photobankf
+sub_1BAB1 FreePhotoBanks {source_game=PC-new,confidence=low} frees every player photo bank
+sub_1BAF3 EnsureFreeMemory {source_game=PC-new,confidence=medium} frees cached graphics until a block of a given size fits
+sub_1AC25 CmvCreate {source_game=PC-new,confidence=medium} allocates a CMV movie decoder
+sub_1AC9A CmvFreeBuffers {source_game=PC-new,confidence=medium} frees a CMV decoder's frame buffers
+sub_1ACF1 CmvDestroy {source_game=PC-new,confidence=medium} frees a CMV decoder
+sub_1AD16 CmvReadHeader {source_game=PC-new,confidence=medium} reads a movie header chunk: frame count, size, rate and palette
+sub_1AE6B CmvDecodeBlocks {source_game=PC-new,confidence=low} decodes the blocks of one CMV frame
+sub_1B002 CmvDecodeFrame {source_game=PC-new,confidence=medium} decodes a frame chunk and returns its picture
+sub_1B092 CmvFrameCount {source_game=PC-new,confidence=medium} returns the movie's frame count
+sub_1B09F CmvWidth {source_game=PC-new,confidence=medium} returns the movie's width
+sub_1B0AD CmvHeight {source_game=PC-new,confidence=medium} returns the movie's height
+sub_1B0BB CmvFrameRate {source_game=PC-new,confidence=medium} returns the movie's frame rate
+sub_1B0C9 CmvPaletteFirst {source_game=PC-new,confidence=medium} returns the first palette entry the movie sets
+sub_1B0D7 CmvPaletteCount {source_game=PC-new,confidence=medium} returns the number of palette entries the movie sets
+sub_1B0E5 CmvPalette {source_game=PC-new,confidence=medium} returns the movie's palette
+sub_96440 DrawShapeClippedKeyed {source_game=PC-new,confidence=low} draws a shape clipped to the clip window (keyed when KeyedDraw is set)
+sub_965DC DrawShapeClippedKeyedAtOwnPos {source_game=PC-new,confidence=low} DrawShapeClippedKeyed at the shape's own position; the code after it draws at a hotspot and into a screen window
+sub_96690 MviPrintInfo {source_game=PC-new,confidence=medium} prints a movie's frame rate, frame count, size and colours to the debug screen
+sub_966E4 MviLoadPalette {source_game=PC-new,confidence=medium} reads a movie's palette into a new block
+sub_96844 MviOpen {source_game=PC-new,confidence=low} opens an MVI movie file: header, palette, frame buffers and data buffer
+sub_96A10 MviRewind {source_game=PC-new,confidence=low} goes back to a movie's first frame
+sub_96A38 MviGetPalette {source_game=PC-new,confidence=low} returns a movie's palette pointer, first colour and colour count
+sub_96A60 MviGetWidth {source_game=PC-new,confidence=low} returns a movie's width; the code after it returns the height and the frame count
+sub_96A78 MviGetFrame {source_game=PC-new,confidence=low} returns a movie's current picture
+sub_96A80 MviAtEnd {source_game=PC-new,confidence=medium} returns 1 when a movie is past its last frame
+sub_96A94 MviSeekFrame {source_game=PC-new,confidence=low} moves a movie to a frame, rewinding when it has to
+sub_96AC4 MviDecodeKeyFrame {source_game=PC-new,confidence=low} decodes a movie key frame
+sub_96C4C MviDecodeDeltaFrame {source_game=PC-new,confidence=low} decodes a movie delta frame
+sub_96E7C MviNextFrame {source_game=PC-new,confidence=low} reads and decodes a movie's next frame
+sub_972B1 NullDriverOpen+06h {no_record}
+sub_972BE NullDriverInit+06h {no_record}
+sub_972C6 NullDriverReturn+06h {no_record}
+sub_972CE NullDriverQuery+06h {no_record}
+sub_972DB NullDriverSetTrack+06h {no_record}
+sub_972E3 NullDriverMidi+06h {no_record}
+sub_972EB NullDriverPlayDigi+06h {no_record}

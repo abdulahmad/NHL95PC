@@ -205,7 +205,7 @@ void DrawFileDlg(void)
     SetScreenTarget();
     MakePath(path, fileoncd[0x63] == 1 ? (char *)cddriveptr : 0, (char *)str_Dialogbx, 0);
     bank = LoadBank(path, 0);
-    sub_91284(FindShape(bank, (char *)str_Dbox), 0xA, 0x13);
+    DrawArtKeyFF(FindShape(bank, (char *)str_Dbox), 0xA, 0x13);
     FreeMemBlock(bank);
     *(int *)fdlgmask = 0x10;
     fdlgtab = -1;

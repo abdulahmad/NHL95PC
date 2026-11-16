@@ -267,7 +267,7 @@ int StartHL2(int home, int vis, int *hsc, int *asc, int period)
     exitgame = -1;
     SetScreenSize(0x280, 0x1E0);
     if (!escrequest) {
-        sub_1BAF3(0x222E0);
+        EnsureFreeMemory(0x222E0);
         ShowLoadingScreen();
     }
     gameover = sgameover;

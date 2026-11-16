@@ -147,6 +147,35 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0001AB95,sub_1AB95,DeskAwayGoalie1,PC-new,,,,medium,"visiting first goalie: sub_672F9(1, 0)",frontend_desk,manual-trace
 0001ABC8,sub_1ABC8,DeskAwayGoalie2,PC-new,,,,medium,"visiting second goalie: sub_672F9(1, 1)",frontend_desk,manual-trace
 0001ABF1,sub_1ABF1,DeskAwayGoalieNone,PC-new,,,,medium,"visiting goalie ""NONE"": sub_672F9(1, -1)",frontend_desk,manual-trace
+0001AC25,sub_1AC25,CmvCreate,PC-new,,,,medium,allocates a CMV movie decoder,cmv_player,manual-trace
+0001AC9A,sub_1AC9A,CmvFreeBuffers,PC-new,,,,medium,frees a CMV decoder's frame buffers,cmv_player,manual-trace
+0001ACF1,sub_1ACF1,CmvDestroy,PC-new,,,,medium,frees a CMV decoder,cmv_player,manual-trace
+0001AD16,sub_1AD16,CmvReadHeader,PC-new,,,,medium,"reads a movie header chunk: frame count, size, rate and palette",cmv_player,manual-trace
+0001AE6B,sub_1AE6B,CmvDecodeBlocks,PC-new,,,,low,decodes the blocks of one CMV frame,cmv_player,manual-trace
+0001B002,sub_1B002,CmvDecodeFrame,PC-new,,,,medium,decodes a frame chunk and returns its picture,cmv_player,manual-trace
+0001B092,sub_1B092,CmvFrameCount,PC-new,,,,medium,returns the movie's frame count,cmv_player,manual-trace
+0001B09F,sub_1B09F,CmvWidth,PC-new,,,,medium,returns the movie's width,cmv_player,manual-trace
+0001B0AD,sub_1B0AD,CmvHeight,PC-new,,,,medium,returns the movie's height,cmv_player,manual-trace
+0001B0BB,sub_1B0BB,CmvFrameRate,PC-new,,,,medium,returns the movie's frame rate,cmv_player,manual-trace
+0001B0C9,sub_1B0C9,CmvPaletteFirst,PC-new,,,,medium,returns the first palette entry the movie sets,cmv_player,manual-trace
+0001B0D7,sub_1B0D7,CmvPaletteCount,PC-new,,,,medium,returns the number of palette entries the movie sets,cmv_player,manual-trace
+0001B0E5,sub_1B0E5,CmvPalette,PC-new,,,,medium,returns the movie's palette,cmv_player,manual-trace
+0001B0F3,sub_1B0F3,CdStreamCreate,PC-new,,,,medium,creates a CD stream reader with its buffer and hooks its timer,cdstream,manual-trace
+0001B18B,sub_1B18B,CdStreamClose,PC-new,,,,medium,unhooks a CD stream's timer and closes its file,cdstream,manual-trace
+0001B1C2,sub_1B1C2,CdStreamOpen,PC-new,,,,medium,starts a CD stream reading a file,cdstream,manual-trace
+0001B1DF,sub_1B1DF,CdStreamSeek,PC-new,,,,low,moves a CD stream to an offset in its file,cdstream,manual-trace
+0001B201,sub_1B201,CdStreamCreateSecondary,PC-new,,,,medium,creates secondary CD stream 0-9 with its own buffer,cdstream,manual-trace
+0001B2A7,sub_1B2A7,CdStreamService,PC-new,,,,medium,reads more of the file into a CD stream's buffer,cdstream,manual-trace
+0001B818,sub_1B818,CdStreamTimer,PC-new,,,,low,timer callback that counts down a CD stream's wait,cdstream,manual-trace
+0001B82B,sub_1B82B,CdStreamSkipReleased,PC-new,,,,low,moves a CD stream's read pointer past released chunks,cdstream,manual-trace
+0001B871,sub_1B871,CdStreamSpace,PC-new,,,,low,returns the free space in a CD stream's buffer,cdstream,manual-trace
+0001B88A,sub_1B88A,CdStreamFilled,PC-new,,,,low,returns the bytes waiting in a CD stream's buffer,cdstream,manual-trace
+0001B8AC,sub_1B8AC,CdStreamNextChunk,PC-new,,,,medium,"returns the next chunk of a CD stream, 0 when none is ready, -1 at the end",cdstream,manual-trace
+0001B92E,sub_1B92E,CdStreamReleaseChunk,PC-new,,,,medium,marks a chunk of a CD stream as used,cdstream,manual-trace
+0001B982,sub_1B982,FreeGameMemory,PC-new,,,,low,"frees the game's overlay art, photos, rink, score board and fonts after a game",cdstream,manual-trace
+0001BA85,sub_1BA85,FreePhotoBankF,PC-new,,,,low,frees the photo bank in photobankf,cdstream,manual-trace
+0001BAB1,sub_1BAB1,FreePhotoBanks,PC-new,,,,low,frees every player photo bank,cdstream,manual-trace
+0001BAF3,sub_1BAF3,EnsureFreeMemory,PC-new,,,,medium,frees cached graphics until a block of a given size fits,cdstream,manual-trace
 0001BBCC,sub_1BBCC,LoadGameTeams,PC-new,,,,medium,"(mode): reads the Home and Visitor TEAMS.DB records (leaguedbfmt / leaguedbfmt2 paths) into hmteamrec / awteamrec, opens each side's KEY / ATT / SEASON / CAREER files (OpenPlayerDBs) and loads both rosters (LoadTeamRoster); in modes 0 / 2 copies the saved lines into hmlinetab / awlinetab; marks the scratched players (hmscratch / awscratch) in the rosters; FatalError codes ""1""..""8""",key_team_db,manual-trace
 0001BEFD,sub_1BEFD,InitGameSummary,PC-new,,,,medium,"(a, b): new game: fills the 0Bh-byte game header at C5423 (a, b, Home, Visitor, 1), clears the goal / shot counters, LoadCupFinalSeries unless gameopts+1 bit 1, creates <league>\gsummary.db (MakeGSummaryPath) with two 0Bh headers, LoadGameTeams(0), clears the per-player (2 x 25 x 10h at dword_DB088) and goalie (2 x 3 x 6 at unk_DC240) game stats; called from temp_files, import_export, RunDemoGame and season_playoffs",key_team_db,manual-trace
 0001C0AF,sub_1C0AF,ReadPlayerRecs,PC-new,,,,medium,"reads one player's KEY (34h), ATT, SEASON and CAREER records with lseek / FileReadAt (FatalError codes ""D""..""Q""); ret 20h",key_team_db,manual-trace
@@ -1129,6 +1158,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
 0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
+0008E3DC,sub_8E3DC,ReturnPointerArg,PC-new,,,,low,returns its argument (unused),ea_timer,manual-trace
+0008E3E4,sub_8E3E4,StrCopyN,PC-new,,,,medium,strncpy wrapper with stack arguments,ea_timer,manual-trace
+0008E3F8,sub_8E3F8,StrCompareN,PC-new,,,,medium,strncmp wrapper with stack arguments,ea_timer,manual-trace
+0008E40C,sub_8E40C,MemCopyArgs,PC-new,,,,low,"copies memory (bcopy with destination first, stack arguments)",ea_timer,manual-trace
+0008E424,sub_8E424,FileNamePart,PC-new,,,,medium,"returns the part of a path after its last backslash, colon or slash",ea_timer,manual-trace
+0008E44C,sub_8E44C,FileNameOnly,PC-new,,,,medium,stack-argument wrapper of FileNamePart,ea_timer,manual-trace
 0008E45C,sub_8E45C,TimerISR,PC-new,,,,high,"int 08h handler installed by InstallTimer (8E5F8 _dos_setvect_(8)): pusha + segment regs, __GETDS, inc tickcount, calls every non-null timercallbacks slot (8 dwords), then on every 5th tick incs slowtickcount and far-calls the saved vector (oldint8off/oldint8sel), else EOI (out 20h,20h); iret",ea_timer,manual-trace
 0008E4C0,sub_8E4C0,addtimer,PC-new,,,,high,"EA timer library name from its own FatalError string asc_C3F5C 'addtimer - LIST FULL': stores the stack argument (a callback) in the first free timercallbacks slot of 8; callers register SampleInputTick, SpeechTimerTick and the other tick handlers",ea_timer,manual-trace
 0008E4F8,sub_8E4F8,RemoveTimerCallback,PC-new,,,,high,"clears the timercallbacks slot equal to the stack argument (8 slots); the counterpart of addtimer (InputRemove, ShutdownSpeech, FadeOutPalCycle, cdstream)",ea_timer,manual-trace
@@ -1137,10 +1172,17 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008E554,sub_8E554,RestoreTimer,PC-new,,,,high,"when a vector is saved: masks IRQ0/1, _dos_setvect_(8) back to oldint8off/oldint8sel, PIT channel 0 divisor 0 (18.2 Hz), clears the saved vector, unmasks; the atexit handler InstallTimer registers",ea_timer,manual-trace
 0008E5AC,sub_8E5AC,InstallTimer,PC-new,,,,high,"clears timercallbacks (__STOSD 8 dwords); unless a vector is already saved: masks IRQ0/1, saves _dos_getvect_(8) in oldint8off/oldint8sel, programs PIT channel 0 divisor 2E9Ch (out 40h 9Ch,2Eh = 100 Hz), sets TimerISR, registers RestoreTimer with atexit (sub_B3454), then falls into UnmaskTimerKbdIrq; called once from main_ (10248)",ea_timer,manual-trace
 0008E614,sub_8E614,UnmaskTimerKbdIrq,PC-new,,,,high,"in al,21h / and al,0FCh / out 21h: unmasks IRQ0 and IRQ1; tail of InstallTimer, called by RestoreTimer",ea_timer,manual-trace
+0008E624,sub_8E624,DrawShapeScaled,PC-new,,,,low,draws a shape scaled by 16.16 factors at a position,ea_timer,manual-trace
+0008E6A8,sub_8E6A8,DrawShapeScaledAtOwnPos,PC-new,,,,low,DrawShapeScaled at the shape's own position (unused),ea_timer,manual-trace
+0008E6CC,sub_8E6CC,DrawShapeScaledHotspot,PC-new,,,,low,DrawShapeScaled with the scaled hotspot taken off the position (unused),ea_timer,manual-trace
+0008E714,sub_8E714,DrawShapeZoomedAtOwnPos,PC-new,,,,low,second copy of DrawShapeScaledAtOwnPos (unused),ea_timer,manual-trace
+0008E738,sub_8E738,DrawShapeZoomedHotspot,PC-new,,,,low,second copy of DrawShapeScaledHotspot (unused),ea_timer,manual-trace
+0008E780,sub_8E780,DrawShapeZoomed,PC-new,,,,low,passes its arguments on to DrawShapeScaled (unused),ea_timer,manual-trace
 0008E7A0,sub_8E7A0,subwindowdefadr,PC-new,,,,high,"prints its own name: ""subwindowdefadr - OUT OF ROW SPACE""",ea_window,manual-trace
 0008E83C,sub_8E83C,LoadBank,PC-new,,,,medium,"graphics library: load an art bank file (path, flags), returns the bank",ea_window,manual-trace
 0008E920,sub_8E920,LoadDataFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.969),ea_window,match96
 0008E9C0,sub_8E9C0,TextSetColors,PC-new,,,,medium,text library: set the foreground and background text colours,ea_window,manual-trace
+0008E9D4,sub_8E9D4,TextSetCursor,PC-new,,,,medium,sets the text cursor position,ea_window,manual-trace
 0008E9E8,sub_8E9E8,TextSaveState,PC-new,,,,medium,text library: save the text state (40h bytes),ea_window,manual-trace
 0008EA00,sub_8EA00,TextRestoreState,PC-new,,,,medium,text library: restore the text state,ea_window,manual-trace
 0008EA18,sub_8EA18,TextSetFont,PC-new,,,,medium,text library: set the current font,ea_window,manual-trace
@@ -1209,30 +1251,55 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090373,sub_90373,ShapeBankEntryId,PC-new,,,,medium,"same library routine as the 96 PC ShapeBankEntryId (similarity 0.96, dp)",ea_sound_hl_02,match96
 000903F0,sub_903F0,PutBlock,PC-new,,,,medium,"graphics library: put a saved screen block back (buf, x, y)",ea_gfx_01,manual-trace
 0009061C,sub_9061C,DrawBitmap,PC-new,,,,medium,graphics library: draw a bitmap,ea_gfx_01,manual-trace
+00090638,sub_90638,PutBlockHotspot,PC-new,,,,medium,PutBlock at a position less the shape's hotspot,ea_gfx_01,manual-trace
+00090698,sub_90698,DrawArtXor,PC-new,,,,low,XORs art onto the screen (keyed when KeyedDraw is set),ea_gfx_01,manual-trace
+000906DC,sub_906DC,DrawArtXorAtOwnPos,PC-new,,,,low,DrawArtXor at the shape's own position,ea_gfx_01,manual-trace
 00090720,sub_90720,DrawArtAnd,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_gfx_01,match96
+00090838,sub_90838,DrawArtAndAtOwnPos,PC-new,,,,low,DrawArtAnd at the shape's own position,ea_gfx_01,manual-trace
+0009087C,sub_9087C,DrawArtOr,PC-new,,,,medium,ORs art onto the screen,ea_gfx_01,manual-trace
+0009099C,sub_9099C,DrawArtOrAtOwnPos,PC-new,,,,low,DrawArtOr at the shape's own position,ea_gfx_01,manual-trace
 00090A40,sub_90A40,TextWidthN,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.83),ea_gfx_02,match96
 00090B80,sub_90B80,ProjectPointList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.837),ea_gfx_03,match96
 00090BEC,sub_90BEC,CopyDtaOut,PC-new,watcom_clib,,,medium,same routine as the matched 96 PC routine (exact 1.0),watcom_clib_11,match96
 00090C0F,sub_90C0F,CopyDtaIn,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_04,match96
 00090D20,sub_90D20,FillRect,PC-new,,,,medium,"graphics library: fill a rectangle (x, y, w, h, colour)",ea_gfx_05,manual-trace
+00090EC0,sub_90EC0,FillRectClipped,PC-new,,,,medium,fills a rectangle clipped to the clip window,ea_gfx_05,manual-trace
+00090F2C,sub_90F2C,XorRowBytes,PC-new,,,,low,XORs a run of bytes with a colour,ea_gfx_05,manual-trace
 00090F38,sub_90F38,XorBar,PC-new,,,,medium,graphics library: xor a bar on the screen (selection highlight of the stats and standings grids),ea_gfx_05,manual-trace
+00091044,sub_91044,XorRectClipped,PC-new,,,,medium,XORs a rectangle clipped to the clip window,ea_gfx_05,manual-trace
 000910B0,sub_910B0,ClearScreenColour,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_05,match96
 000910E0,sub_910E0,DrawArtOpaque,PC-new,,,,medium,"graphics library: draw art at x, y without transparency",ea_gfx_05,manual-trace
+0009121C,sub_9121C,DrawArtOpaqueAtOwnPos,PC-new,,,,medium,DrawArtOpaque at the shape's own position,ea_gfx_05,manual-trace
+00091238,sub_91238,DrawArtOpaqueHotspot,PC-new,,,,medium,DrawArtOpaque at a position less the shape's hotspot,ea_gfx_05,manual-trace
+00091284,sub_91284,DrawArtKeyFF,PC-new,,,,low,draws art skipping colour FFh,ea_gfx_05,manual-trace
+000912C8,sub_912C8,DrawArtKeyFFAtOwnPos,PC-new,,,,low,DrawArtKeyFF at the shape's own position,ea_gfx_05,manual-trace
+000912E4,sub_912E4,DrawArtKeyFFHotspot,PC-new,,,,low,DrawArtKeyFF at a position less the shape's hotspot,ea_gfx_05,manual-trace
+00091310,sub_91310,FreeWindowBitmap,PC-new,,,,low,removes a bitmap's window and frees its block,ea_gfx_05,manual-trace
 0009132C,sub_9132C,FreeBitmap,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_gfx_05,match96
 00091370,sub_91370,DrawArt,PC-new,,,,medium,"graphics library: draw art at x, y",ea_gfx_06,manual-trace
 000913B4,sub_913B4,DrawShape,PC-new,,,,medium,graphics library: draw a shape at its own position,ea_gfx_06,manual-trace
+000913D0,sub_913D0,DrawArtHotspot,PC-new,,,,medium,DrawArt at a position less the shape's hotspot,ea_gfx_06,manual-trace
 00091400,sub_91400,GrabBlock,PC-new,,,,medium,"graphics library: grab a screen rectangle into a block (buf, x, y)",ea_gfx_06,manual-trace
 00091538,sub_91538,DrawShapeAtOwnPos,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.889),ea_gfx_06,match96+97
+00091554,sub_91554,GrabBlockHotspot,PC-new,,,,low,GrabBlock at a position less the shape's hotspot,ea_gfx_06,manual-trace
+00091580,sub_91580,PrintStringAtCursor,PC-new,,,,low,prints a string at the text cursor,ea_gfx_06,manual-trace
 00091964,sub_91964,PrintString,PC-new,,,,medium,"graphics library: print a string at x, y in the current font and colours",ea_gfx_06,manual-trace
 00091CE7,sub_91CE7,freopen_,PC-new,,,,high,"same library routine as the 96 PC freopen_ (similarity 1.0, dp)",ea_gfx_07,match96
+00091FA4,sub_91FA4,FixedMulRound,PC-new,,,,medium,multiplies two 16.16 fixed-point numbers with rounding,watcom_clib_15,manual-trace
+00091FE0,sub_91FE0,DrawArtKeyColour,PC-new,,,,low,draws art skipping a given colour,ea_gfx_08,manual-trace
+00092024,sub_92024,DrawArtKeyColourAtOwnPos,PC-new,,,,low,DrawArtKeyColour at the shape's own position,ea_gfx_08,manual-trace
+00092890,sub_92890,TextPrint,PC-new,,,,medium,prints a string at the text cursor with the current font,ea_gfx_09,manual-trace
 00092CD0,sub_92CD0,TextPrintAt,PC-new,,,,medium,"same library routine as the 96 PC TextPrintAt (similarity 0.957, dp)",ea_gfx_09,match96
+00092CF0,sub_92CF0,TextPutCharAt,PC-new,,,,low,prints one character at a position,ea_gfx_09,manual-trace
 00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
 00092E40,sub_92E40,ReadFileCachedInto,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.881),ea_gfx_10,match96+97
 00092ECC,sub_92ECC,LoadFileInto,PC-new,,,,high,"same library routine as the 96 PC LoadFileInto (similarity 1.0, dp)",ea_gfx_10,match96
 00092EE4,sub_92EE4,LoadFileToBlockShared,PC-new,,,,medium,"same library routine as the 96 PC LoadFileToBlockShared (similarity 0.941, dp)",ea_gfx_10,match96
 00092F50,sub_92F50,XorRectOutline,PC-new,,,,medium,"same library routine as the 96 PC XorRectOutline (similarity 0.915, dp)",ea_gfx_11,match96
 00093170,sub_93170,PrintBoxedText,PC-new,,,,medium,"same library routine as the 96 PC PrintBoxedText (similarity 0.923, dp)",ea_gfx_12,match96
+000931D0,sub_931D0,RemapRowKeyed,PC-new,,,,low,"copies bytes through the text remap table, skipping colour FFh",ea_gfx_12,manual-trace
 000931FC,sub_931FC,DrawArtMasked,PC-new,,,,medium,"graphics library: draw art at x, y masked (line editor slots)",ea_gfx_12,manual-trace
+00093240,sub_93240,DrawArtMaskedAtOwnPos,PC-new,,,,low,DrawArtMasked at the shape's own position,ea_gfx_12,manual-trace
 000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
 00093308,sub_93308,SaveDataFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.75),ea_fileblock,match96+97
 0009336C,sub_9336C,savefileblocka,PC-new,,,,high,"prints its own name: ""savefileblocka - OPEN FAILED FOR FILE <%s>""",ea_fileblock,manual-trace
@@ -1245,11 +1312,20 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000938C8,sub_938C8,DebugClearScreen,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
 000938F4,sub_938F4,DebugSetRow,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_fileblock,match96
 00093908,sub_93908,DebugSetAttr,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.948),ea_fileblock,match96
+00093938,sub_93938,DebugLogOpen,PC-new,,,,low,opens the debug log file unless it is already open,ea_debug,manual-trace
+00093A40,sub_93A40,DebugLogClose,PC-new,,,,medium,writes the closing date and time to the debug log and closes it,ea_debug,manual-trace
 00093AA4,sub_93AA4,DebugLog,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.921),ea_debug,match96
+00093AD8,sub_93AD8,DebugLogPrintf,PC-new,,,,medium,formats a line with vsprintf and writes it to the debug log,ea_debug,manual-trace
 00093B34,sub_93B34,FindWildcardDigits,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.859),ea_debug,match96
 00093BD4,sub_93BD4,FormatDateStamp,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.799),ea_debug,match96
+00093C88,sub_93C88,DebugWaitKey,PC-new,,,,low,waits for a key in the debug viewers and returns it in upper case,ea_debug,manual-trace
 00093CA0,sub_93CA0,DebugGetKey,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.528),ea_debug,match96
+00093CB8,sub_93CB8,MemViewerGetMode,PC-new,,,,low,returns the memory viewer mode,ea_debug,manual-trace
+00093CC0,sub_93CC0,MemViewer,PC-new,,,,low,"memory viewer screen: block list, totals, hex dump and art view",ea_debug,manual-trace
+00093E38,sub_93E38,MemViewerStart,PC-new,,,,low,opens the memory viewer in mode 1,ea_debug,manual-trace
 00093E4C,sub_93E4C,MemViewerListHead,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.945),ea_debug,match96
+00093E79,sub_93E79,MemViewerDrawRows,PC-new,,,,low,draws the rows of the memory viewer block list,ea_debug,manual-trace
+000940F4,sub_940F4,MemViewerCountBlocks,PC-new,,,,low,counts the blocks the memory viewer will list,ea_debug,manual-trace
 00094114,sub_94114,MemViewerSelectRow,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.951),ea_debug,match96
 00094188,sub_94188,MemViewerDrawList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.908),ea_debug,match96
 0009477C,sub_9477C,MemPoolTotals,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.929),ea_debug,match96
@@ -1260,6 +1336,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00094E34,sub_94E34,HexDumpRow,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.863),ea_debug,match96
 00094FBC,sub_94FBC,WriteMemMap,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
 000950AC,sub_950AC,DumpMemoryMap,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.86),ea_debug,match96
+00095148,sub_95148,ShapeViewerFindShape,PC-new,,,,low,looks up the shape under the cursor in the shape viewer,ea_debug,manual-trace
 00095158,sub_95158,ShapeViewer,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.894),ea_debug,match96
 000954C8,sub_954C8,ReadShapeFileHeader,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.922),ea_debug,match96
 00095548,sub_95548,ShapeInfo,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.901),ea_debug,match96
@@ -1270,6 +1347,24 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00095F84,sub_95F84,MemViewerShowArt,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.912),ea_debug,match96
 00096030,sub_96030,FormatDateTime,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.915),ea_debug,match96
 000960AC,sub_960AC,NextFreeFileName,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_debug,match96
+0009612C,sub_9612C,DebugGetKeyUpper,PC-new,,,,low,waits for a key and returns it in upper case,ea_debug,manual-trace
+00096144,sub_96144,DebugPressAnyKey,PC-new,,,,low,"flushes the keyboard, waits for a key and returns it in upper case",ea_debug,manual-trace
+00096164,sub_96164,DebugKbdFlush,PC-new,,,,low,flushes the keyboard buffer,ea_debug,manual-trace
+00096170,sub_96170,DebugFlushAndWait,PC-new,,,,low,flushes the keyboard and waits for a key,ea_debug,manual-trace
+00096440,sub_96440,DrawShapeClippedKeyed,PC-new,,,,low,draws a shape clipped to the clip window (keyed when KeyedDraw is set),ea_mvi,manual-trace
+000965DC,sub_965DC,DrawShapeClippedKeyedAtOwnPos,PC-new,,,,low,DrawShapeClippedKeyed at the shape's own position; the code after it draws at a hotspot and into a screen window,ea_mvi,manual-trace
+00096690,sub_96690,MviPrintInfo,PC-new,,,,medium,"prints a movie's frame rate, frame count, size and colours to the debug screen",ea_mvi,manual-trace
+000966E4,sub_966E4,MviLoadPalette,PC-new,,,,medium,reads a movie's palette into a new block,ea_mvi,manual-trace
+00096844,sub_96844,MviOpen,PC-new,,,,low,"opens an MVI movie file: header, palette, frame buffers and data buffer",ea_mvi,manual-trace
+00096A10,sub_96A10,MviRewind,PC-new,,,,low,goes back to a movie's first frame,ea_mvi,manual-trace
+00096A38,sub_96A38,MviGetPalette,PC-new,,,,low,"returns a movie's palette pointer, first colour and colour count",ea_mvi,manual-trace
+00096A60,sub_96A60,MviGetWidth,PC-new,,,,low,returns a movie's width; the code after it returns the height and the frame count,eacsndf_core,manual-trace
+00096A78,sub_96A78,MviGetFrame,PC-new,,,,low,returns a movie's current picture,eacsndf_core,manual-trace
+00096A80,sub_96A80,MviAtEnd,PC-new,,,,medium,returns 1 when a movie is past its last frame,eacsndf_core,manual-trace
+00096A94,sub_96A94,MviSeekFrame,PC-new,,,,low,"moves a movie to a frame, rewinding when it has to",eacsndf_core,manual-trace
+00096AC4,sub_96AC4,MviDecodeKeyFrame,PC-new,,,,low,decodes a movie key frame,eacsndf_core,manual-trace
+00096C4C,sub_96C4C,MviDecodeDeltaFrame,PC-new,,,,low,decodes a movie delta frame,eacsndf_core,manual-trace
+00096E7C,sub_96E7C,MviNextFrame,PC-new,,,,low,reads and decodes a movie's next frame,eacsndf_core,manual-trace
 00097079,sub_97079,SndOpenDriver,PC-new,,,,medium,"opens sound driver 0-6 (detect, open, init) and returns its handle, or the handle it already has",eacsndf_core,manual-trace
 00097166,sub_97166,SndDriverHandle,PC-new,,,,medium,"returns the open handle of a sound driver, or -1",eacsndf_core,manual-trace
 0009717F,sub_9717F,SndHandleDetect,PC-new,,,,medium,calls the detect entry of an open driver handle,eacsndf_core,manual-trace
@@ -1322,6 +1417,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00099925,sub_99925,SeqReadEvent,PC-new,,,,low,"reads one event of a track: variable-length delta time, status and EA meta events",ea_shapes,manual-trace
 00099A0B,sub_99A0B,PeekDword,PC-new,,,,medium,returns the dword at an address,ea_shapes,manual-trace
 00099A0E,sub_99A0E,PeekWord,PC-new,,,,medium,returns the word at an address,ea_shapes,manual-trace
+0009A7A0,sub_9A7A0,CreateMcgaWindow,PC-new,,,,medium,allocates and sets up an MCGA window bitmap of a given size,ea_mcga_window_01,manual-trace
 0009AFAD,sub_9AFAD,McgaNoWindow,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_mcga_window_02,match96+97
 0009B22C,sub_9B22C,GetPsp,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_32,match96+97
 0009B498,sub_9B498,FillRectSpans,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.908),ea_misc_01,match96+97
@@ -1855,24 +1951,76 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B4BA8,sub_B4BA8,SetScreenTarget,PC-new,,,,medium,same routine as the matched 96 PC routine (callsite 0.9),video_bios_vga,match96
 000B4BC4,sub_B4BC4,SetClipWindow,PC-new,,,,medium,"video library: set the clip window (x1, x2, y1, y2)",video_bios_vga,manual-trace
 000B4C33,sub_B4C33,WaitRetrace,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.812),video_bios_vga,match96
+000B4CD8,sub_B4CD8,VgaBlitKeyedHot,PC-new,,,,low,VgaBlitKeyed at a position less the shape's hotspot (sprite mode 0),vga_blitters,manual-trace
+000B4CF2,sub_B4CF2,VgaBlitKeyed,PC-new,,,,low,draws a shape skipping colour FFh,vga_blitters,manual-trace
 000B4DD4,sub_B4DD4,SetColorRemap,PC-new,,,,medium,graphics library: set the colour remap table the blitters use,vga_blitters,manual-trace
+000B4DEC,sub_B4DEC,GetColorRemap,PC-new,,,,medium,copies the 256-byte colour remap table out,vga_blitters,manual-trace
+000B4E50,sub_B4E50,VgaBlitRemap,PC-new,,,,low,draws a shape through the colour remap table (sprite mode 2),vga_blitters,manual-trace
 000B4F70,sub_B4F70,SetDrawBitmap,PC-new,,,,medium,vga_blitters: copies the 48-byte bitmap descriptor at [esp+4] into the current one at D30A4 (640x480 default),vga_blitters,manual-trace
 000B4F8C,sub_B4F8C,CreateBitmap,PC-new,,,,medium,"graphics library: create a bitmap (w, h, flags)",vga_blitters,manual-trace
+000B4FA6,sub_B4FA6,CreateBitmapJump,PC-new,,,,low,jumps to CreateMcgaWindow,vga_blitters,manual-trace
 000B4FAC,sub_B4FAC,FillRectColor,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),vga_blitters,match96+97
+000B4FE8,sub_B4FE8,VgaBlitKeyedFlipVHot,PC-new,,,,low,VgaBlitKeyedFlipV at a position less the shape's hotspot,vga_blitters,manual-trace
+000B500C,sub_B500C,VgaBlitKeyedFlipV,PC-new,,,,low,"draws a shape upside down, skipping colour FFh (sprite mode 1)",vga_blitters,manual-trace
+000B5290,sub_B5290,VgaBlitRemapFlipVHot,PC-new,,,,low,VgaBlitRemapFlipV at a position less the shape's hotspot,vga_blitters,manual-trace
+000B52B4,sub_B52B4,VgaBlitRemapFlipV,PC-new,,,,low,draws a shape upside down through the colour remap table (sprite mode 3),vga_blitters,manual-trace
+000B555C,sub_B555C,VgaBlitKeyedFlipHHot,PC-new,,,,low,VgaBlitKeyedFlipH at a position less the shape's hotspot,vga_blitters,manual-trace
+000B5584,sub_B5584,VgaBlitKeyedFlipH,PC-new,,,,low,"draws a shape mirrored, skipping colour FFh (sprite mode 4)",vga_blitters,manual-trace
+000B5690,sub_B5690,VgaBlitKeyedFlipHVHot,PC-new,,,,low,VgaBlitKeyedFlipHV at a position less the shape's hotspot,vga_blitters,manual-trace
+000B56B8,sub_B56B8,VgaBlitKeyedFlipHV,PC-new,,,,low,"draws a shape mirrored and upside down, skipping colour FFh (sprite mode 5)",vga_blitters,manual-trace
+000B594C,sub_B594C,VgaBlitRemapFlipHHot,PC-new,,,,low,VgaBlitRemapFlipH at a position less the shape's hotspot,vga_blitters,manual-trace
+000B5974,sub_B5974,VgaBlitRemapFlipH,PC-new,,,,low,draws a shape mirrored through the colour remap table (sprite mode 6),vga_blitters,manual-trace
+000B5AA0,sub_B5AA0,VgaBlitRemapFlipHVHot,PC-new,,,,low,VgaBlitRemapFlipHV at a position less the shape's hotspot,vga_blitters,manual-trace
+000B5AC8,sub_B5AC8,VgaBlitRemapFlipHV,PC-new,,,,low,draws a shape mirrored and upside down through the colour remap table (sprite mode 7),vga_blitters,manual-trace
+000B5D80,sub_B5D80,PutPixel,PC-new,,,,low,plots a pixel when it is inside the clip window,vesa_banked_blit,manual-trace
 000B5DB0,sub_B5DB0,PlotPixel,PC-new,,,,medium,"graphics library: plot a pixel (x, y, colour)",vesa_banked_blit,manual-trace
+000B5E00,sub_B5E00,VesaSetBankArg,PC-new,,,,medium,stack-argument entry of VesaSetBank,vesa_banked_blit,manual-trace
 000B5E04,sub_B5E04,VesaSetBank,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.763),vesa_banked_blit,match96
 000B5EA7,sub_B5EA7,VesaSetMode,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),vesa_banked_blit,match96
 000B5EB8,sub_B5EB8,VgaSetModeTwice,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),vesa_banked_blit,match96+97
+000B5EC5,sub_B5EC5,VesaSetDisplayStart,PC-new,,,,medium,sets the VESA display start (function 4F07h); the code after it sets the bank (4F05h),vesa_banked_blit,manual-trace
+000B5EE8,sub_B5EE8,BlitBlockHot,PC-new,,,,low,BlitBlock at a position less the shape's hotspot,vesa_banked_blit,manual-trace
 000B5F0F,sub_B5F0F,BlitBlock,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.994),vesa_banked_blit,match96
+000B6064,sub_B6064,BlitBlockXorHot,PC-new,,,,low,BlitBlockXor at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B608B,sub_B608B,BlitBlockXor,PC-new,,,,medium,XORs a block onto the screen at a position,vesa_banked_blit,manual-trace
+000B61F0,sub_B61F0,BlitBlockAndHot,PC-new,,,,low,BlitBlockAnd at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B6217,sub_B6217,BlitBlockAnd,PC-new,,,,medium,ANDs a block onto the screen at a position,vesa_banked_blit,manual-trace
+000B637C,sub_B637C,AndPixelClipped,PC-new,,,,low,ANDs a pixel when it is inside the clip window,vesa_banked_blit,manual-trace
 000B63AC,sub_B63AC,AndPixel,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.947),vesa_banked_blit,match96
+000B63FC,sub_B63FC,BlitBlockOrHot,PC-new,,,,low,BlitBlockOr at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B6423,sub_B6423,BlitBlockOr,PC-new,,,,medium,ORs a block onto the screen at a position,vesa_banked_blit,manual-trace
+000B6588,sub_B6588,OrPixelClipped,PC-new,,,,low,ORs a pixel when it is inside the clip window,vesa_banked_blit,manual-trace
 000B65B8,sub_B65B8,OrPixel,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.965),vesa_banked_blit,match96
+000B6608,sub_B6608,FillRectClippedCore,PC-new,,,,low,clips a rectangle to the clip window and fills it,vesa_banked_blit,manual-trace
 000B6665,sub_B6665,FillRectCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.878),vesa_banked_blit,match96
+000B6720,sub_B6720,XorRectClippedCore,PC-new,,,,low,clips a rectangle to the clip window and XORs it,vesa_banked_blit,manual-trace
+000B677D,sub_B677D,XorRectCore,PC-new,,,,medium,XORs a rectangle with a colour,vesa_banked_blit,manual-trace
+000B6860,sub_B6860,BlitArtOpaqueHot,PC-new,,,,low,BlitArtOpaque at a position less the shape's hotspot,vesa_banked_blit,manual-trace
 000B6887,sub_B6887,BlitArtOpaque,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.878),vesa_banked_blit,match96
+000B6918,sub_B6918,BlitArtKeyFFHot,PC-new,,,,low,BlitArtKeyFF at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B693C,sub_B693C,BlitArtKeyFF,PC-new,,,,low,draws art skipping colour FFh,vesa_banked_blit,manual-trace
+000B69C0,sub_B69C0,BlitArtHot,PC-new,,,,low,BlitArt at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B69E4,sub_B69E4,BlitArt,PC-new,,,,low,draws art at a position,vesa_banked_blit,manual-trace
+000B6B18,sub_B6B18,BlitShapeFastHot,PC-new,,,,low,BlitShapeFast at a position less the shape's hotspot,vesa_banked_blit,manual-trace
 000B6B3F,sub_B6B3F,BlitShapeFast,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.838),vesa_banked_blit,match96
+000B6BC0,sub_B6BC0,BlitArtKeyColourHot,PC-new,,,,low,BlitArtKeyColour at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B6BE5,sub_B6BE5,BlitArtKeyColour,PC-new,,,,low,draws art skipping a given colour,vesa_banked_blit,manual-trace
+000B6D24,sub_B6D24,BlitArtMaskedHot,PC-new,,,,low,BlitArtMasked at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B6D47,sub_B6D47,BlitArtMasked,PC-new,,,,low,draws masked art at a position,vesa_banked_blit,manual-trace
+000B6DD0,sub_B6DD0,BlitShapeClippedHot,PC-new,,,,low,BlitShapeClipped at a position less the shape's hotspot,vesa_banked_blit,manual-trace
 000B6DF7,sub_B6DF7,BlitShapeClipped,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.997),vesa_banked_blit,match96
+000B6F84,sub_B6F84,SetBitmapClip,PC-new,,,,low,sets a bitmap's clip window and makes it the drawing target,vesa_banked_blit,manual-trace
 000B6FFC,sub_B6FFC,ShapeWidth,PC-new,,,,medium,returns a shape's width,vesa_banked_blit,manual-trace
 000B7005,sub_B7005,ShapeHeight,PC-new,,,,medium,returns a shape's height,vesa_banked_blit,manual-trace
+000B700E,sub_B700E,ShapeDataSize,PC-new,,,,low,returns the data size of a shape,vesa_banked_blit,manual-trace
 000B704C,sub_B704C,FillRectSpansCore,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.928),vesa_banked_blit,match96
 000B7218,sub_B7218,UnpackArtRle,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.882),vesa_banked_blit,match96
 000B72D4,sub_B72D4,SetBlitSource,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),vesa_banked_blit,match96
+000B72E9,sub_B72E9,CopyRowKeyFF,PC-new,,,,low,"copies a row of the blit source to the screen, skipping colour FFh",vesa_banked_blit,manual-trace
+000B731E,sub_B731E,CopyRowRemapKeyed,PC-new,,,,low,"copies a row of the blit source through the remap table, skipping colours FEh and FFh",vesa_banked_blit,manual-trace
+000B7420,sub_B7420,CopyRowFast,PC-new,,,,low,copies a row of the blit source to the screen,vesa_banked_blit,manual-trace
+000B7614,sub_B7614,BlitBlockShadowHot,PC-new,,,,low,BlitBlockShadow at a position less the shape's hotspot,vesa_banked_blit,manual-trace
+000B763B,sub_B763B,BlitBlockShadow,PC-new,,,,medium,draws a block as a shadow through the shade table,vesa_banked_blit,manual-trace
+000B7778,sub_B7778,SetRemapTable,PC-new,,,,medium,copies a 256-byte remap table,vesa_banked_blit,manual-trace
+000B77D0,sub_B77D0,BlitBlockRemapKeyedHot,PC-new,,,,low,BlitBlockRemapKeyed at a position less the shape's hotspot,vesa_banked_blit,manual-trace
 000B77F4,sub_B77F4,BlitBlockRemapKeyed,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.862),vesa_banked_blit,match96

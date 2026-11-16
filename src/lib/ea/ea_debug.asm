@@ -27,15 +27,15 @@ extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_M
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
 extern MemViewStrings, str_X_DebugSprintf, unk_C433C, unk_C4414, unk_C4418, unk_C4448, str_FF, str_W_DumpMemoryMap
 extern str_Un, unk_C46C0, DefaultFont, vsprintf_, WaitTickDeadline
-global sub_93938, loc_93955, loc_9396D, loc_9399A, loc_939AA, loc_939C2, loc_93A2E, loc_93A33
-global sub_93A40, loc_93A9B, DebugLog, loc_93AD3, sub_93AD8, loc_93B26, loc_93B2D, FindWildcardDigits
+global DebugLogOpen, loc_93955, loc_9396D, loc_9399A, loc_939AA, loc_939C2, loc_93A2E, loc_93A33
+global DebugLogClose, loc_93A9B, DebugLog, loc_93AD3, DebugLogPrintf, loc_93B26, loc_93B2D, FindWildcardDigits
 global loc_93B49, loc_93B55, loc_93B66, loc_93B6A, loc_93B6C, loc_93BA5, loc_93BC5, loc_93BCA
-global FormatDateStamp, unk_93C50, unk_93C54, sub_93C88, DebugGetKey, sub_93CB8, sub_93CC0, loc_93D22
-global loc_93DA5, loc_93DE2, loc_93E09, loc_93E26, loc_93E28, sub_93E38, MemViewerListHead, loc_93E70
-global sub_93E79, loc_93E88, loc_93E9A, loc_93EB1, loc_93EBF, loc_93EC1, loc_93EDC, loc_93EE1
+global FormatDateStamp, unk_93C50, unk_93C54, DebugWaitKey, DebugGetKey, MemViewerGetMode, MemViewer, loc_93D22
+global loc_93DA5, loc_93DE2, loc_93E09, loc_93E26, loc_93E28, MemViewerStart, MemViewerListHead, loc_93E70
+global MemViewerDrawRows, loc_93E88, loc_93E9A, loc_93EB1, loc_93EBF, loc_93EC1, loc_93EDC, loc_93EE1
 global loc_93EF1, loc_93F0D, loc_93F21, loc_93F2E, loc_93F3A, loc_93F56, loc_93F60, loc_93F6A
 global loc_93F6F, loc_93F8E, loc_93FB0, loc_93FBA, loc_93FCB, loc_93FE1, loc_93FEE, loc_93FFB
-global loc_9401B, loc_9405B, loc_9406D, loc_94075, loc_94082, loc_940BA, sub_940F4, loc_94105
+global loc_9401B, loc_9405B, loc_9406D, loc_94075, loc_94082, loc_940BA, MemViewerCountBlocks, loc_94105
 global loc_9410D, MemViewerSelectRow, loc_94124, loc_9412C, loc_9416D, loc_94181, MemViewerDrawList, loc_941DF
 global loc_941E4, loc_9420D, loc_94212, loc_94316, loc_9439B, loc_943EE, loc_943FC, loc_94488
 global loc_9448D, loc_944D4, loc_944ED, loc_944F2, loc_94534, loc_94551, loc_94552, loc_94594
@@ -51,7 +51,7 @@ global loc_94D44, loc_94D5C, loc_94D91, loc_94DA8, loc_94DC1, loc_94DD6, loc_94D
 global loc_94DFC, loc_94E06, loc_94E18, loc_94E1E, loc_94E29, HexDumpRow, loc_94E68, loc_94E7C
 global loc_94E91, loc_94ECB, loc_94EDF, loc_94EF9, loc_94F16, loc_94F31, loc_94F40, loc_94F91
 global loc_94F98, loc_94FB0, WriteMemMap, loc_9506F, loc_95074, loc_950A3, DumpMemoryMap, loc_950ED
-global loc_9511A, loc_95122, loc_9513E, sub_95148, ShapeViewer, loc_951B1, loc_951FD, loc_95210
+global loc_9511A, loc_95122, loc_9513E, ShapeViewerFindShape, ShapeViewer, loc_951B1, loc_951FD, loc_95210
 global loc_95228, loc_95245, loc_95249, loc_95250, loc_9528A, loc_95297, loc_9529E, loc_952A5
 global loc_952B4, loc_95384, loc_95391, loc_953A0, loc_953A6, loc_953A9, loc_953B3, loc_953CC
 global loc_95401, loc_9540C, loc_9541E, loc_95427, loc_95436, loc_9544E, loc_9545B, loc_95464
@@ -65,8 +65,8 @@ global loc_95C16, loc_95C26, loc_95C28, loc_95C3C, loc_95C3E, loc_95C51, loc_95C
 global loc_95C86, loc_95C91, loc_95C98, loc_95CA3, loc_95CAA, loc_95CF0, loc_95D5D, PaletteViewerLabel
 global loc_95EF1, SaveScreenshot, MemViewerShowArt, loc_95FE7, loc_95FF4, loc_96000, loc_96006, loc_96009
 global loc_96010, loc_96026, loc_9602A, FormatDateTime, NextFreeFileName, loc_960BF, loc_960C6, loc_960CA
-global loc_9610C, loc_9611D, sub_9612C, sub_96144, sub_96164, sub_96170, loc_96178
-sub_93938:
+global loc_9610C, loc_9611D, DebugGetKeyUpper, DebugPressAnyKey, DebugKbdFlush, DebugFlushAndWait, loc_96178
+DebugLogOpen:
         push ebx
         push ecx
         push edx
@@ -169,7 +169,7 @@ loc_93A33:
         pop ebx
         ret
         db 090h
-sub_93A40:
+DebugLogClose:
         push ebx
         push ecx
         push edx
@@ -222,7 +222,7 @@ loc_93AD3:
         add esp, byte 4
         ret
         db 090h
-sub_93AD8:
+DebugLogPrintf:
         sub esp, 104h
         cmp dword [DebugMode], byte 2
         jl short loc_93B2D
@@ -392,7 +392,7 @@ unk_93C54:
         dd str_Oct2
         dd str_Nov2
         dd str_Dec2
-sub_93C88:
+DebugWaitKey:
         push ebx
         push ecx
         push edx
@@ -418,10 +418,10 @@ DebugGetKey:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_93CB8:
+MemViewerGetMode:
         mov eax, dword [dword_D4594]
         lea eax, [byte eax+00h]
-sub_93CC0:
+MemViewer:
         push ebx
         push ecx
         push edx
@@ -493,7 +493,7 @@ loc_93DA5:
         and eax, 0FFh
         mov dword [dword esp+0B0h], eax
 loc_93DE2:
-        call sub_940F4
+        call MemViewerCountBlocks
         mov ecx, dword [dword esp+0B8h]
         mov ebx, eax
         mov edx, ebp
@@ -505,7 +505,7 @@ loc_93DE2:
         jle short loc_93E09
         mov edx, eax
 loc_93E09:
-        call sub_93C88
+        call DebugWaitKey
         mov esi, eax
         test eax, eax
         je short loc_93E09
@@ -522,14 +522,14 @@ loc_93E28:
         cmp esi, 5100h
         jne short loc_93E88
         cmp edi, edx
-        je short sub_93E79
+        je short MemViewerDrawRows
         mov edi, edx
         jmp short loc_93E88
-sub_93E38:
+MemViewerStart:
         mov edx, 1
         mov dword [dword_D4594], edx
         mov eax, edx
-        jmp near sub_93CC0
+        jmp near MemViewer
         db 08Bh,0C0h
 MemViewerListHead:
         push ebx
@@ -550,7 +550,7 @@ loc_93E70:
         pop edx
         pop ebx
         ret
-sub_93E79:
+MemViewerDrawRows:
         cmp edx, dword [dword esp+0B4h]
         jge short loc_93E88
         add ebp, byte 15h
@@ -726,7 +726,7 @@ loc_94082:
         je near loc_93DA5
         mov dword [dword_D459C], ebp
         mov dword [dword_D45A0], edi
-        call sub_96164
+        call DebugKbdFlush
         cmp dword [dword esp+0B0h], byte 0
         je short loc_940BA
         call SetScreenTarget
@@ -755,7 +755,7 @@ loc_940BA:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_940F4:
+MemViewerCountBlocks:
         push edx
         xor edx, edx
         mov eax, 1
@@ -1675,7 +1675,7 @@ loc_94B20:
 loc_94B57:
         cmp dword [esp], byte 0
         jne short loc_94B62
-        call sub_96144
+        call DebugPressAnyKey
 loc_94B62:
         add esp, byte 0Ch
         pop ebp
@@ -2156,7 +2156,7 @@ loc_95074:
         push ecx
         call fprintf_
         add esp, byte 0Ch
-        call sub_940F4
+        call MemViewerCountBlocks
         mov ecx, 2
         mov ebx, eax
         xor edx, edx
@@ -2229,7 +2229,7 @@ loc_9513E:
         pop ebx
         ret
         db 090h
-sub_95148:
+ShapeViewerFindShape:
         push ebx
         push ecx
         push edx
@@ -2287,7 +2287,7 @@ loc_951B1:
         call TextPrintCentered
         add esp, byte 8
         call ReturnFalse
-        call sub_96144
+        call DebugPressAnyKey
         cmp eax, byte 59h
         jne near loc_954C0
 loc_951FD:
@@ -2311,7 +2311,7 @@ loc_95210:
 loc_95228:
         mov edx, esp
         mov eax, dword [byte esp+024h]
-        call sub_95148
+        call ShapeViewerFindShape
         mov eax, dword [eax]
         shl eax, 18h
         sar eax, 18h
@@ -2496,7 +2496,7 @@ loc_95427:
         je near loc_952B4
         call ReturnFalse
 loc_95436:
-        call sub_93C88
+        call DebugWaitKey
         mov ebp, eax
         test eax, eax
         je short loc_95436
@@ -2724,7 +2724,7 @@ loc_95665:
         call TextPrintCentered
         add esp, byte 8
         call ReturnFalse
-        call sub_96144
+        call DebugPressAnyKey
         cmp eax, byte 59h
         je short loc_956AC
         xor eax, eax
@@ -3483,7 +3483,7 @@ loc_96009:
         call ReturnFalse
         xor esi, esi
 loc_96010:
-        call sub_96144
+        call DebugPressAnyKey
         mov edx, 1
         cmp eax, byte 56h
         jne short loc_96026
@@ -3609,25 +3609,25 @@ loc_9611D:
         pop ecx
         pop ebx
         ret
-sub_9612C:
+DebugGetKeyUpper:
         push ebx
         push ecx
         push edx
         call ReturnFalse
-        call sub_93C88
+        call DebugWaitKey
         mov dword [dword_D45B0], eax
         pop edx
         pop ecx
         pop ebx
         ret
         db 08Bh,0C0h
-sub_96144:
+DebugPressAnyKey:
         push ebx
         push ecx
         push edx
         call ReturnFalse
-        call sub_96164
-        call sub_96170
+        call DebugKbdFlush
+        call DebugFlushAndWait
         push eax
         call ToUpperChar
         add esp, byte 4
@@ -3636,7 +3636,7 @@ sub_96144:
         pop ebx
         ret
         db 090h
-sub_96164:
+DebugKbdFlush:
         push ebx
         push ecx
         push edx
@@ -3645,13 +3645,13 @@ sub_96164:
         pop ecx
         pop ebx
         ret
-sub_96170:
+DebugFlushAndWait:
         push ebx
         push ecx
         push edx
         call KbdFlush
 loc_96178:
-        call sub_9612C
+        call DebugGetKeyUpper
         test eax, eax
         je short loc_96178
         pop edx

@@ -15,7 +15,7 @@ extern str_Fowa, str_GIPK, str_Iff4, str_Iff5, str_Indus030, str_Injured, str_Lo
 extern str_Pal10, str_Pal11, str_Pal12, str_Pointer4, str_Rink, str_SAtS, str_Scouting, str_Scra
 extern str_Screen, str_Srlogo, str_Tlu, str_Tonights, str_Top, str_VFN, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery
-extern SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, sub_913D0, GrabBlock
+extern SetDigiChannelVolume, SetPalette, PutBlock, DrawBitmap, FillRect, DrawArt, DrawArtHotspot, GrabBlock
 extern SetViewRect, FindShape, ClearScreen, SetScreenTarget, SetClipWindow, FillRectColor, teamabbrevs, teamconf
 extern TrackButtons, pregamelinesmenubar, VisTeam, WaitClickTimeout
 global PreGameScreen_jt, PreGameScreen, PreGameScreen_awaylines, PreGameScreen_play, PreGameScreen_cancel, PreGameScreen_homelines, TonightsGameScreen
@@ -1299,7 +1299,7 @@ TonightsGameScreen:
         mov eax, dword [dword esp+011Ch]
         mov esi, dword [dword esp+eax*4+0E8h]
         push esi
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         xor edx, edx
         mov eax, 40h
@@ -1440,7 +1440,7 @@ TonightsGameScreen:
         mov eax, dword [dword esp+011Ch]
         mov ebx, dword [dword esp+eax*4+0E8h]
         push ebx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         push dword 1E0h
         push byte 0
@@ -1570,7 +1570,7 @@ TonightsGameScreen:
         mov eax, dword [dword esp+011Ch]
         mov edi, dword [dword esp+eax*4+0E8h]
         push edi
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         push dword 1E0h
         push byte 0

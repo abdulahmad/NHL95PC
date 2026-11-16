@@ -102,7 +102,7 @@ void DrawDbDialog(void)
     SetScreenTarget();
     MakePath(path, fileoncd[0x1C8] == 1 ? (char *)cddriveptr : 0, (char *)str_Dbdialog, 0);
     bank = LoadBank(path, 0);
-    sub_91284(FindShape(bank, (char *)str_Pdbx), 10, 0x13);
+    DrawArtKeyFF(FindShape(bank, (char *)str_Pdbx), 10, 0x13);
     FreeMemBlock(bank);
     FDLGMASKD = 0x10;
     fdlgtab = -1;

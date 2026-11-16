@@ -18,7 +18,7 @@ extern seriesgameno, SetClipWindow, SetDialogColors, SetPalette, SetTickDeadline
 extern str_4dKbytesOfFree, str_BangPal, str_Bkgd, str_Db, str_dot, str_E1, str_E2, str_E31
 extern str_E32, str_Embpal, str_Embscup, str_extDB, str_F1, str_F2, str_fmtSlashDb, str_GameSet
 extern str_Palette, str_PleaseEnterNewPlay, str_PO, str_Schedule, str_ScheduleDb, str_Temp2, str_Tied, strcat_
-extern strcpy_, sub_8E8A0, sub_8E8B8, sub_9121C, SetScreenTarget, teamabbrevs, teamconf, teamdivflags
+extern strcpy_, sub_8E8A0, sub_8E8B8, DrawArtOpaqueAtOwnPos, SetScreenTarget, teamabbrevs, teamconf, teamdivflags
 extern TextInputDialog, TextSetColors, unknown_libname_1, VgaSetPalette, ViewPlayoffHilights, VisTeam, WaitTickDeadline, WriteFile
 extern WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
@@ -132,7 +132,7 @@ CreatePlayoffs:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
 .4:
         add esp, byte 4
         xor ecx, ecx
@@ -418,7 +418,7 @@ CreatePlayoffs:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         mov edx, dword [dword esp+0A8h]
         push edx
@@ -430,7 +430,7 @@ CreatePlayoffs:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
 .22:
         add esp, byte 4
         push str_BangPal

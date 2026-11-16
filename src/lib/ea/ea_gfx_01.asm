@@ -3,14 +3,14 @@ bits 32
 %include "hockey.inc"
 section s_903F0 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
-extern dword_D4108, RowCopyFunc, bcopy, sub_B5E00, BlitBlock, sub_B608B, sub_B6217, AndPixel
-extern sub_B6423, OrPixel
+extern dword_D4108, RowCopyFunc, bcopy, VesaSetBankArg, BlitBlock, BlitBlockXor, BlitBlockAnd, AndPixel
+extern BlitBlockOr, OrPixel
 global PutBlock, loc_9041B, loc_9045A, loc_9046C, loc_90483, loc_9049B, loc_904F1, loc_90512
 global loc_9051E, loc_9053F, loc_90566, loc_905C8, loc_905E0, loc_90607, loc_90614, DrawBitmap
-global sub_90638, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, sub_90698, loc_906B9
-global sub_906DC, DrawArtAnd, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
-global loc_90808, loc_90825, sub_9082F, sub_90838, sub_9087C, loc_908A9, loc_908EA, loc_90906
-global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, sub_9099C
+global PutBlockHotspot, loc_9065F, loc_90660, loc_9066F, loc_90681, loc_90688, DrawArtXor, loc_906B9
+global DrawArtXorAtOwnPos, DrawArtAnd, loc_9074B, loc_9078C, loc_907A8, loc_907C6, loc_907E5, loc_907F3
+global loc_90808, loc_90825, DrawArtAndAtOwnPos, DrawArtOr, loc_908A9, loc_908EA, loc_90906
+global loc_90924, loc_90943, loc_90959, loc_90972, loc_9098F, DrawArtOrAtOwnPos
 PutBlock:
         push esi
         push edi
@@ -83,7 +83,7 @@ loc_9049B:
         shr eax, 10h
         mov dword [byte esp+010h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and esi, 0FFFFh
         mov dword [byte esp+0Ch], ebp
@@ -134,7 +134,7 @@ loc_9053F:
         inc eax
         mov dword [byte esp+010h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_90566:
         mov eax, dword [byte esp+020h]
@@ -159,7 +159,7 @@ loc_90566:
         inc esi
         mov dword [byte esp+010h], esi
         push esi
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         push ebp
         mov edx, dword [byte esp+020h]
@@ -189,7 +189,7 @@ loc_905E0:
         inc ebp
         mov dword [byte esp+010h], ebp
         push ebp
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_90607:
         dec dword [byte esp+0Ch]
@@ -214,7 +214,7 @@ DrawBitmap:
         call PutBlock
         add esp, byte 0Ch
         ret
-sub_90638:
+PutBlockHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
         sar eax, 10h
@@ -258,7 +258,7 @@ loc_90688:
         inc edx
         jmp short loc_90688
         db 08Bh,0C0h
-sub_90698:
+DrawArtXor:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
@@ -267,7 +267,7 @@ sub_90698:
         push eax
         push ebx
         push edx
-        call sub_B608B
+        call BlitBlockXor
         add esp, byte 0Ch
         ret
 loc_906B9:
@@ -280,7 +280,7 @@ loc_906B9:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_906DC:
+DrawArtXorAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -289,7 +289,7 @@ sub_906DC:
         sar eax, 10h
         push eax
         push edx
-        call sub_90698
+        call DrawArtXor
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -304,7 +304,7 @@ sub_906DC:
         sub ebx, eax
         push ebx
         push edx
-        call sub_90698
+        call DrawArtXor
         add esp, byte 0Ch
         ret
 DrawArtAnd:
@@ -320,9 +320,9 @@ DrawArtAnd:
         push esi
         push edi
         push eax
-        call sub_B6217
+        call BlitBlockAnd
         add esp, byte 0Ch
-        jmp near sub_9082F
+        jmp near DrawArtAnd+010Fh
 loc_9074B:
         lea esi, [byte eax+010h]
         mov ebp, dword [byte eax+02h]
@@ -379,15 +379,15 @@ loc_907C6:
         mov dword [byte esp+08h], edx
 loc_907E5:
         cmp dword [byte esp+08h], byte 0
-        jle short sub_9082F
+        jle short DrawArtAnd+010Fh
         cmp dword [byte esp+0Ch], byte 0
-        jle short sub_9082F
+        jle short DrawArtAnd+010Fh
 loc_907F3:
         mov edi, dword [byte esp+0Ch]
         dec edi
         mov dword [byte esp+0Ch], edi
         cmp edi, byte 0FFFFFFFFh
-        je short sub_9082F
+        je short DrawArtAnd+010Fh
         mov ebp, dword [esp]
         mov edi, dword [byte esp+08h]
 loc_90808:
@@ -409,14 +409,13 @@ loc_90825:
         inc dword [byte esp+028h]
         add esi, dword [byte esp+04h]
         jmp short loc_907F3
-sub_9082F:
         add esp, byte 10h
         pop ebp
         pop edi
         pop esi
         ret
         db 08Bh,0C0h
-sub_90838:
+DrawArtAndAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -443,7 +442,7 @@ sub_90838:
         call DrawArtAnd
         add esp, byte 0Ch
         ret
-sub_9087C:
+DrawArtOr:
         push esi
         push edi
         push ebp
@@ -456,7 +455,7 @@ sub_9087C:
         push esi
         push edi
         push eax
-        call sub_B6423
+        call BlitBlockOr
         add esp, byte 0Ch
         add esp, byte 10h
         pop ebp
@@ -519,15 +518,15 @@ loc_90924:
         mov dword [byte esp+08h], edx
 loc_90943:
         cmp dword [byte esp+08h], byte 0
-        jle near sub_9082F
+        jle near DrawArtAnd+010Fh
         cmp dword [byte esp+0Ch], byte 0
-        jle near sub_9082F
+        jle near DrawArtAnd+010Fh
 loc_90959:
         mov edi, dword [byte esp+0Ch]
         dec edi
         mov dword [byte esp+0Ch], edi
         cmp edi, byte 0FFFFFFFFh
-        je near sub_9082F
+        je near DrawArtAnd+010Fh
         mov ebp, dword [esp]
         mov edi, dword [byte esp+08h]
 loc_90972:
@@ -550,7 +549,7 @@ loc_9098F:
         add esi, dword [byte esp+04h]
         jmp short loc_90959
         db 08Dh,040h,00h
-sub_9099C:
+DrawArtOrAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -559,7 +558,7 @@ sub_9099C:
         sar eax, 10h
         push eax
         push edx
-        call sub_9087C
+        call DrawArtOr
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -574,6 +573,6 @@ sub_9099C:
         sub ebx, eax
         push ebx
         push edx
-        call sub_9087C
+        call DrawArtOr
         add esp, byte 0Ch
         ret

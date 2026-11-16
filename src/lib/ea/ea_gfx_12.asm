@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_93170 progbits alloc exec nowrite align=1
-extern byte_D42E4, KeyedDraw, RowCopyFunc, DrawArtOpaque, TextPrintAt, bcopy, sub_B6D47, vsprintf_
-global PrintBoxedText, sub_931D0, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, sub_93240
+extern byte_D42E4, KeyedDraw, RowCopyFunc, DrawArtOpaque, TextPrintAt, bcopy, BlitArtMasked, vsprintf_
+global PrintBoxedText, RemapRowKeyed, loc_931E4, loc_931F6, loc_931FB, DrawArtMasked, loc_9321D, DrawArtMaskedAtOwnPos
 PrintBoxedText:
         sub esp, 104h
         lea eax, [dword esp+0114h]
@@ -25,7 +25,7 @@ PrintBoxedText:
         add esp, 104h
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_931D0:
+RemapRowKeyed:
         mov ebx, dword [byte esp+08h]
         mov ecx, dword [byte esp+0Ch]
         mov edx, dword [byte esp+04h]
@@ -56,11 +56,11 @@ DrawArtMasked:
         push eax
         push ebx
         push edx
-        call sub_B6D47
+        call BlitArtMasked
         add esp, byte 0Ch
         ret
 loc_9321D:
-        mov dword [RowCopyFunc], sub_931D0
+        mov dword [RowCopyFunc], RemapRowKeyed
         push eax
         push ebx
         push edx
@@ -69,7 +69,7 @@ loc_9321D:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_93240:
+DrawArtMaskedAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h

@@ -5,7 +5,7 @@ section s_8C990 progbits alloc exec nowrite align=1
 extern str_LOWMEM, str_HIGHMEM, str_GAP, str_ReleaseMemoryNotFound, str_ReservememINVALIDSIZE, str_ReservememOUTOFMEMORY, str_ReservememOUTOFMEMORY2, str_ReservememINVALIDTYPEFLAGS
 extern str_ResizememINVALIDSIZE, str_ResizememblockNOROOMTO, str_FindmemblockBLOCKNOTFOUND, memblocklist, dword_D2F5C, dword_D2F60, FreeSpaceList, MemLockHandle
 extern FatalError, memlist1, FindFreeSpace, CompactMemListDown, CompactMemListUp, MemTrackLargestFree, MemLargestFree, PushMemDescriptor
-extern getmemblock, sub_8E3E4, sub_8E424, MemUnlock, MemLock
+extern getmemblock, StrCopyN, FileNamePart, MemUnlock, MemLock
 global InitMemList, AddMemListRegion, loc_8CAC8, loc_8CAE8, AddHighMemList, FindMemListBlock, loc_8CBD2, loc_8CBE3
 global loc_8CBF5, loc_8CC1D, loc_8CC37, loc_8CC53, SetMemErrorHooks, AllocMemHandleLocked, AllocMemHandle, AllocMemBlock
 global AllocMemBlockUnlocked, AllocMemBlockFlags, AllocMemBlockEx, reservemem, loc_8CD90, loc_8CDDC, loc_8CDEE, loc_8CE17
@@ -45,7 +45,7 @@ InitMemList:
         push str_LOWMEM
         add eax, byte 4
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov dword [edi], ebp
         mov dword [byte edi+014h], 0
@@ -61,7 +61,7 @@ InitMemList:
         push str_HIGHMEM
         add eax, byte 4
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov eax, dword [byte esp+018h]
         mov dword [edi], eax
@@ -164,7 +164,7 @@ AddHighMemList:
         push str_HIGHMEM
         add eax, byte 4
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov eax, dword [byte esp+018h]
         mov dword [esi], eax
@@ -179,7 +179,7 @@ AddHighMemList:
         mov eax, dword [byte edi+04h]
         add eax, byte 4
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov eax, dword [byte edi+04h]
         mov dword [byte eax+020h], esi
@@ -401,7 +401,7 @@ loc_8CD90:
         add esi, eax
         mov ebx, dword [byte esp+014h]
         push ebx
-        call sub_8E424
+        call FileNamePart
         add esp, byte 4
         mov dword [byte esp+014h], eax
         test byte [byte esp+01Ch], 40h
@@ -493,7 +493,7 @@ loc_8CE68:
         mov dword [FreeSpaceList], eax
         lea eax, [byte esi+04h]
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov dword [esi], ebp
         mov eax, dword [byte edi+024h]
@@ -621,7 +621,7 @@ loc_8CFBD:
         mov dword [FreeSpaceList], eax
         lea eax, [byte esi+04h]
         push eax
-        call sub_8E3E4
+        call StrCopyN
         add esp, byte 0Ch
         mov eax, dword [esp]
         sub ebp, eax

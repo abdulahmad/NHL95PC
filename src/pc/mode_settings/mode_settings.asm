@@ -9,7 +9,7 @@ extern lcblink, lcboxon, LoadBank, LoadSettingsShapes, MakePath, modesetrects, M
 extern musicon, musicslot, pointerspr, PrintString, ptrupdatefn, PutBlock, scpflags2, setbits
 extern settingsfile, SndQuery, songdata, sounddev, str_BKGD2, str_Dbox3, str_DigitizedSpeech2, str_Music2
 extern str_Pointer16, str_Setting4, str_Setting7, str_Sound2, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic, DisableMidiMusic
-extern PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
+extern PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, SetScreenTarget, TextSetColors, VgaSetPalette, WriteCurModeState
 global SettingsStub, MenuModeSettings, ModeSettings_epilogue, DrawModeSetDlg, ModeOptsToBits, ModeSetHitTest, DrawModeSetChecks, ModeSetViewLoop
 global ModeSetEditLoop
 ;-----------------------------------------------------------------------------
@@ -199,7 +199,7 @@ DrawModeSetDlg:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         push esi
         call FreeMemBlock

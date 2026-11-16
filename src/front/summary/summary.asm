@@ -19,9 +19,9 @@ extern str_Iff6, str_Iff7, str_Indus0302, str_Injured2, str_Leaguetm, str_Mtsum,
 extern str_NoPenalties, str_NoScoring, str_OT, str_Ots, str_OtShape, str_Pal13, str_Pal14, str_Per1
 extern str_Per2, str_Per3, str_Period, str_PP, str_PRDS, str_Rd, str_RParen2, str_S2
 extern str_S3, str_Scra2, str_SDD, str_SH, str_ShotsOnGoal, str_SS4, str_St, str_Summ2
-extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, sub_1BAF3, AllocMemBlock
+extern str_Th, str_Tlu2, str_Top2, str_VFN, strcat_, strcpy_, EnsureFreeMemory, AllocMemBlock
 extern PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState, TextRestoreState, TextSetFont, LoadSample, FreeSample
-extern LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, PutBlock, DrawShape, sub_913D0, FindShape
+extern LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume, PutBlock, DrawShape, DrawArtHotspot, FindShape
 extern ClearScreen, VgaSetPalette, SetScreenTarget, SetClipWindow, CreateBitmap, teamstartlag, VisTeam, vscrestbmp
 extern WaitClickTimeout, WaitTickDeadline
 global GameSummaryScreen_jt, GameSummaryScreen, GameSummaryScreen_p1, GameSummaryScreen_p2, GameSummaryScreen_p3, GameSummaryScreen_ot, GameSummaryScreen_finalot, GameSummaryScreen_final
@@ -58,7 +58,7 @@ GameSummaryScreen:
         movsd
         mov dword [dword esp+0760h], edx
         mov eax, 0AAE60h
-        call sub_1BAF3
+        call EnsureFreeMemory
         cmp byte [musicon], 0
         je short .2
         cmp dword [songdata], byte 0
@@ -602,14 +602,14 @@ GameSummaryScreen:
         mov eax, dword [hmcrestbmp]
         mov edx, dword [byte eax+02Ch]
         push edx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         push byte 50h
         push dword 221h
         mov eax, dword [vscrestbmp]
         mov ebx, dword [byte eax+02Ch]
         push ebx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         jmp near GameSummaryScreen_period.15
 .38:
@@ -847,7 +847,7 @@ GameSummaryScreen_period:
         mov eax, dword [nosplit esi*4+hmcrestbmp]
         mov ebp, dword [byte eax+02Ch]
         push ebp
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         movzx edi, byte [byte_D42C3]
         add edi, byte 78h
@@ -1096,14 +1096,14 @@ GameSummaryScreen_period:
         mov eax, dword [hmcrestbmp]
         mov ebp, dword [byte eax+02Ch]
         push ebp
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         push byte 50h
         push dword 221h
         mov eax, dword [vscrestbmp]
         mov edx, dword [byte eax+02Ch]
         push edx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         jmp short .28
 .27:
@@ -1871,14 +1871,14 @@ GameSummaryScreen_period:
         mov eax, dword [hmcrestbmp]
         mov ecx, dword [byte eax+02Ch]
         push ecx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         push byte 50h
         push dword 221h
         mov eax, dword [vscrestbmp]
         mov esi, dword [byte eax+02Ch]
         push esi
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         jmp short .76
 .75:
@@ -2569,7 +2569,7 @@ GameStatsScreen:
 .11:
         push eax
         push edx
-        call sub_913D0
+        call DrawArtHotspot
         add esp, byte 0Ch
         mov eax, edi
         shl eax, 3

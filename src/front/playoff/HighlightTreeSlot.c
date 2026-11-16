@@ -1,14 +1,14 @@
 /* cflags: -od */
 /* Standings playoffs: highlighting a playoff tree slot. */
-#define sub_91044 sub_91044_decl
+#define XorRectClipped sub_91044_decl
 #include "nhl95.h"
-#undef sub_91044
+#undef XorRectClipped
 
 typedef struct { short a; short b; } Pair;
 
-void __cdecl sub_91044(int x, int y, int w, int h, int c);
+void __cdecl XorRectClipped(int x, int y, int w, int h, int c);
 
-/* HighlightTreeSlot (2785F, PC only): toggle (sub_91044, colour 80h) the highlight bar of playoff tree slot *slot.
+/* HighlightTreeSlot (2785F, PC only): toggle (XorRectClipped, colour 80h) the highlight bar of playoff tree slot *slot.
    The slot is found in the tree's columns: the eight first-round slots of either side (treecolslots /
    treecol_Er1, bars 64h x 0Dh at the column's x from treecolx), the four second-round slots (treecol_Wr2 /
    treecol_Er2, from treerowy, the east side mirrored from 27Fh), the two conference finals (treecol_Wr3 /
@@ -30,7 +30,7 @@ void HighlightTreeSlot(int *slot)
             else y = 0x5A;
             w = 0x64;
             h = 0xD;
-            sub_91044(x, y, w, h, 0x80);
+            XorRectClipped(x, y, w, h, 0x80);
             return;
         } else if (treecol_Er1[i] == *slot) {
             x = ((Pair *)treecolx)[i >> 1].a - 1;
@@ -38,7 +38,7 @@ void HighlightTreeSlot(int *slot)
             else y = 0x190;
             w = 0x64;
             h = 0xD;
-            sub_91044(x, y, w, h, 0x80);
+            XorRectClipped(x, y, w, h, 0x80);
             return;
         }
     }
@@ -49,7 +49,7 @@ void HighlightTreeSlot(int *slot)
             else y = 0xA9;
             w = 0x64;
             h = 0xD;
-            sub_91044(x, y, w, h, 0x80);
+            XorRectClipped(x, y, w, h, 0x80);
             return;
         } else if (treecol_Er2[i] == *slot) {
             x = 0x27F - (treerowy[1 - (i >> 1)] + 0x64);
@@ -57,7 +57,7 @@ void HighlightTreeSlot(int *slot)
             else y = 0x143;
             w = 0x64;
             h = 0xD;
-            sub_91044(x, y, w, h, 0x80);
+            XorRectClipped(x, y, w, h, 0x80);
             return;
         }
     }
@@ -65,15 +65,15 @@ void HighlightTreeSlot(int *slot)
         if (treecol_Wr3[i] == *slot) {
             if (i == 0) y = 0xE6;
             else y = 0xF6;
-            sub_91044(0x47, y, 0x64, 0xD, 0x80);
+            XorRectClipped(0x47, y, 0x64, 0xD, 0x80);
             return;
         } else if (treecol_Er3[i] == *slot) {
             if (i == 0) y = 0xE6;
             else y = 0xF6;
-            sub_91044(0x1C5, y, 0x64, 0xD, 0x80);
+            XorRectClipped(0x1C5, y, 0x64, 0xD, 0x80);
             return;
         }
     }
-    if (treecolslots[0x18] == *slot) sub_91044(0x10A, 0xE2, 0x5C, 0xD, 0x80);
-    else if (treecolslots[0x28] == *slot) sub_91044(0x10A, 0xF2, 0x5C, 0xD, 0x80);
+    if (treecolslots[0x18] == *slot) XorRectClipped(0x10A, 0xE2, 0x5C, 0xD, 0x80);
+    else if (treecolslots[0x28] == *slot) XorRectClipped(0x10A, 0xF2, 0x5C, 0xD, 0x80);
 }

@@ -1,10 +1,10 @@
 /* Settings locker room: a filled panel with a light and dark edge, and DrawLockerJersey (8156F), which ends in
  DrawPanel3D's exit (DrawPanel3D_ret). */
-#define sub_912C8 sub_912C8_decl
+#define DrawArtKeyFFAtOwnPos sub_912C8_decl
 #include "nhl95.h"
-#undef sub_912C8
+#undef DrawArtKeyFFAtOwnPos
 
-void __cdecl sub_912C8(int art);  /* graphics library: set the palette from an art block */
+void __cdecl DrawArtKeyFFAtOwnPos(int art);  /* graphics library: set the palette from an art block */
 
 /* DrawPanel3D: fill x1,y1..x2,y2 in colour 70h. The top and left edges are 77h and the right and
  bottom edges are 62h. When corners is set, the four corners also get a pair of pixels two and three
@@ -92,7 +92,7 @@ void DrawLockerJersey(int side, int team, int divs, int hm, int vis)
         DrawArtOpaque(homenamebckspr, 0x85, 0x2C);
         VgaSetPalette(0xC0, 0x40, pal);
     }
-    sub_912C8(FindShape(bank, (char *)str_00002));
+    DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_00002));
     FreeMemBlock(bank);
     TextSetColors(0x77, 0xFF);
     SetTextColors(0x77, 0x62);

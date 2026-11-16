@@ -5,25 +5,25 @@
    Left: mode/clip/remap register choices and the first flip test's cached value. */
 #define DrawSprite DrawSprite_decl
 #define MarkZoneRect sub_6AB7C_decl
-#define sub_B4CD8 sub_B4CD8_decl
-#define sub_B500C sub_B500C_decl
-#define sub_B4E50 sub_B4E50_decl
-#define sub_B52B4 sub_B52B4_decl
-#define sub_B5584 sub_B5584_decl
-#define sub_B56B8 sub_B56B8_decl
-#define sub_B5974 sub_B5974_decl
-#define sub_B5AC8 sub_B5AC8_decl
+#define VgaBlitKeyedHot sub_B4CD8_decl
+#define VgaBlitKeyedFlipV sub_B500C_decl
+#define VgaBlitRemap sub_B4E50_decl
+#define VgaBlitRemapFlipV sub_B52B4_decl
+#define VgaBlitKeyedFlipH sub_B5584_decl
+#define VgaBlitKeyedFlipHV sub_B56B8_decl
+#define VgaBlitRemapFlipH sub_B5974_decl
+#define VgaBlitRemapFlipHV sub_B5AC8_decl
 #include "nhl95.h"
 #undef DrawSprite
 #undef MarkZoneRect
-#undef sub_B4CD8
-#undef sub_B500C
-#undef sub_B4E50
-#undef sub_B52B4
-#undef sub_B5584
-#undef sub_B56B8
-#undef sub_B5974
-#undef sub_B5AC8
+#undef VgaBlitKeyedHot
+#undef VgaBlitKeyedFlipV
+#undef VgaBlitRemap
+#undef VgaBlitRemapFlipV
+#undef VgaBlitKeyedFlipH
+#undef VgaBlitKeyedFlipHV
+#undef VgaBlitRemapFlipH
+#undef VgaBlitRemapFlipHV
 
 typedef struct {
     int flags : 8;
@@ -35,14 +35,14 @@ typedef struct {
 } SprHdr;
 
 void MarkZoneRect(int n, int x0, int y0, int x1, int y1);
-void __cdecl sub_B4CD8(SprHdr *s, int x, int y);
-void __cdecl sub_B500C(SprHdr *s, int x, int y);
-void __cdecl sub_B4E50(SprHdr *s, int x, int y);
-void __cdecl sub_B52B4(SprHdr *s, int x, int y);
-void __cdecl sub_B5584(SprHdr *s, int x, int y);
-void __cdecl sub_B56B8(SprHdr *s, int x, int y);
-void __cdecl sub_B5974(SprHdr *s, int x, int y);
-void __cdecl sub_B5AC8(SprHdr *s, int x, int y);
+void __cdecl VgaBlitKeyedHot(SprHdr *s, int x, int y);
+void __cdecl VgaBlitKeyedFlipV(SprHdr *s, int x, int y);
+void __cdecl VgaBlitRemap(SprHdr *s, int x, int y);
+void __cdecl VgaBlitRemapFlipV(SprHdr *s, int x, int y);
+void __cdecl VgaBlitKeyedFlipH(SprHdr *s, int x, int y);
+void __cdecl VgaBlitKeyedFlipHV(SprHdr *s, int x, int y);
+void __cdecl VgaBlitRemapFlipH(SprHdr *s, int x, int y);
+void __cdecl VgaBlitRemapFlipHV(SprHdr *s, int x, int y);
 
 /* DrawSprite (1CD73, PC only): draw sprite spr with its hot spot (+8h / +0Ah) at x, y, mirrored when flip. Nothing
    is drawn when it lies wholly outside cliprect; it is clipped when it crosses it. With pal not negative the
@@ -122,13 +122,13 @@ void DrawSprite(SprHdr *spr, int x, int y, int flip, short pal, int unused)
     if (spr->flags) s.mode += 8;
     MarkZoneRect(spritedrawcount++, s.sx, s.sy, s.sx + spr->w, s.sy + spr->h);
     switch ((unsigned short)s.mode) {
-    case 8: sub_B4CD8(spr, s.sx, s.sy); break;
-    case 9: sub_B500C(spr, s.sx, s.sy); break;
-    case 10: sub_B4E50(spr, s.sx, s.sy); break;
-    case 11: sub_B52B4(spr, s.sx, s.sy); break;
-    case 12: sub_B5584(spr, s.sx, s.sy); break;
-    case 13: sub_B56B8(spr, s.sx, s.sy); break;
-    case 14: sub_B5974(spr, s.sx, s.sy); break;
-    case 15: sub_B5AC8(spr, s.sx, s.sy); break;
+    case 8: VgaBlitKeyedHot(spr, s.sx, s.sy); break;
+    case 9: VgaBlitKeyedFlipV(spr, s.sx, s.sy); break;
+    case 10: VgaBlitRemap(spr, s.sx, s.sy); break;
+    case 11: VgaBlitRemapFlipV(spr, s.sx, s.sy); break;
+    case 12: VgaBlitKeyedFlipH(spr, s.sx, s.sy); break;
+    case 13: VgaBlitKeyedFlipHV(spr, s.sx, s.sy); break;
+    case 14: VgaBlitRemapFlipH(spr, s.sx, s.sy); break;
+    case 15: VgaBlitRemapFlipHV(spr, s.sx, s.sy); break;
     }
 }

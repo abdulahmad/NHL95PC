@@ -6,18 +6,18 @@ extern __CHK, addtimer, str_CDSTREAM, str_IllegalSecondaryStreamNumber, str_SECC
 extern cupseries, dword_C66B0, dword_DC8A0, dword_DC8C8, ovlartbank, FatalError, FreeMemBlock, FreeRinkGfx
 extern FreeRockMusic, GameOver, hilightfont, joyq_flush, joysampling, numshpbank, ovlseq, photobankf
 extern photobanks, RemoveTimerCallback, rinkbm, rinkendbank, s1font, scrbrdshapes, scrpitch, AllocMemBlock
-extern MemLargestFree, TextSetFont, sub_91FA4, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
-global sub_1B0F3, sub_1B18B, loc_1B1B7, sub_1B1C2, sub_1B1DF, sub_1B201, loc_1B218, loc_1B225
-global jpt_1B283, sub_1B2A7, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
+extern MemLargestFree, TextSetFont, FixedMulRound, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile
+global CdStreamCreate, CdStreamClose, loc_1B1B7, CdStreamOpen, CdStreamSeek, CdStreamCreateSecondary, loc_1B218, loc_1B225
+global jpt_1B283, CdStreamService, loc_1B2B4, loc_1B2D5, loc_1B2DC, loc_1B2E0, loc_1B2F0, loc_1B334
 global loc_1B3AE, loc_1B42A, loc_1B468, loc_1B46D, loc_1B485, loc_1B49D, loc_1B4BC, loc_1B534
-global loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799, loc_1B80C, sub_1B818
-global sub_1B82B, loc_1B84F, loc_1B856, loc_1B859, loc_1B868, loc_1B86A, sub_1B871, sub_1B88A
-global loc_1B8A7, sub_1B8AC, loc_1B8D0, loc_1B8E9, loc_1B8F9, loc_1B904, loc_1B908, loc_1B920
-global loc_1B926, loc_1B92B, loc_1B92C, sub_1B92E, loc_1B94C, loc_1B963, loc_1B972, loc_1B977
-global sub_1B982, loc_1B9C4, loc_1B9E4, loc_1B9FE, loc_1BA19, loc_1BA34, loc_1BA54, loc_1BA7E
-global loc_1BA7F, sub_1BA85, loc_1BAA5, sub_1BAB1, loc_1BACC, loc_1BAEC, loc_1BAED, sub_1BAF3
+global loc_1B588, loc_1B5EB, loc_1B681, loc_1B721, loc_1B789, loc_1B799, loc_1B80C, CdStreamTimer
+global CdStreamSkipReleased, loc_1B84F, loc_1B856, loc_1B859, loc_1B868, loc_1B86A, CdStreamSpace, CdStreamFilled
+global loc_1B8A7, CdStreamNextChunk, loc_1B8D0, loc_1B8E9, loc_1B8F9, loc_1B904, loc_1B908, loc_1B920
+global loc_1B926, loc_1B92B, loc_1B92C, CdStreamReleaseChunk, loc_1B94C, loc_1B963, loc_1B972, loc_1B977
+global FreeGameMemory, loc_1B9C4, loc_1B9E4, loc_1B9FE, loc_1BA19, loc_1BA34, loc_1BA54, loc_1BA7E
+global loc_1BA7F, FreePhotoBankF, loc_1BAA5, FreePhotoBanks, loc_1BACC, loc_1BAEC, loc_1BAED, EnsureFreeMemory
 global loc_1BB0E, loc_1BB18, loc_1BB33, loc_1BB71, loc_1BB86, loc_1BBB3, loc_1BBB4
-sub_1B0F3:
+CdStreamCreate:
         push dword 14h
         call __CHK
         push esi
@@ -52,22 +52,22 @@ sub_1B0F3:
         mov ebx, dword [dword_C66B0]
         push ebx
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov dword [byte esi+050h], eax
         mov dword [byte esi+04Ch], 0
-        push sub_1B818
+        push CdStreamTimer
         call addtimer
         add esp, byte 4
         mov eax, esi
         pop esi
         ret
-sub_1B18B:
+CdStreamClose:
         push dword 0Ch
         call __CHK
         push esi
         mov esi, dword [byte esp+08h]
-        push sub_1B818
+        push CdStreamTimer
         call RemoveTimerCallback
         add esp, byte 4
         mov edx, dword [byte esi+018h]
@@ -82,7 +82,7 @@ loc_1B1B7:
         add esp, byte 4
         pop esi
         ret
-sub_1B1C2:
+CdStreamOpen:
         push dword 4
         call __CHK
         mov eax, dword [byte esp+04h]
@@ -90,7 +90,7 @@ sub_1B1C2:
         mov dword [byte eax+048h], edx
         mov dword [byte eax+01Ch], 1
         ret
-sub_1B1DF:
+CdStreamSeek:
         push dword 4
         call __CHK
         mov edx, dword [byte esp+04h]
@@ -100,7 +100,7 @@ sub_1B1DF:
         mov dword [byte edx+044h], eax
         mov dword [byte edx+01Ch], 2
         ret
-sub_1B201:
+CdStreamCreateSecondary:
         push dword 10h
         call __CHK
         mov edx, dword [byte esp+04h]
@@ -149,7 +149,7 @@ jpt_1B283:
         dd loc_1B2D5
         dd loc_1B2B4
         dd loc_1B799
-sub_1B2A7:
+CdStreamService:
         push dword 20h
         call __CHK
         push esi
@@ -203,7 +203,7 @@ loc_1B2F0:
 loc_1B334:
         mov edx, dword [dword_DC8A0]
         mov eax, edx
-        call sub_1B82B
+        call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl short loc_1B2DC
         mov eax, dword [dword_DC8A0]
@@ -228,7 +228,7 @@ loc_1B334:
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+024h]
         push edx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [dword_DC8A0]
         mov dword [byte edx+04Ch], eax
@@ -240,7 +240,7 @@ loc_1B3AE:
         cmp dword [byte edx+030h], byte 8
         jae short loc_1B42A
         mov eax, edx
-        call sub_1B82B
+        call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl near loc_1B2DC
         mov eax, dword [dword_DC8A0]
@@ -260,7 +260,7 @@ loc_1B3AE:
         mov eax, dword [dword_DC8A0]
         mov ecx, dword [byte eax+024h]
         push ecx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [dword_DC8A0]
         mov dword [byte edx+04Ch], eax
@@ -329,14 +329,14 @@ loc_1B4BC:
         mov edx, dword [byte eax+024h]
         add edx, byte 8
         mov eax, dword [dword_DC8C8]
-        call sub_1B82B
+        call CdStreamSkipReleased
         cmp eax, edx
         jb near loc_1B2DC
         mov eax, dword [dword_DC8A0]
         mov edx, dword [byte eax+02Ch]
         add edx, dword [byte eax+024h]
         mov eax, dword [dword_DC8C8]
-        call sub_1B871
+        call CdStreamSpace
         add edx, byte 8
         cmp eax, edx
         jae short loc_1B534
@@ -415,7 +415,7 @@ loc_1B5EB:
         mov ebp, dword [byte eax+024h]
         lea edx, [edi+ebp]
         mov eax, dword [dword_DC8C8]
-        call sub_1B871
+        call CdStreamSpace
         add edx, byte 8
         cmp eax, edx
         jae short loc_1B681
@@ -423,7 +423,7 @@ loc_1B5EB:
         mov dword [byte eax+01Ch], 5
         mov edx, dword [dword_DC8A0]
         mov eax, dword [dword_DC8C8]
-        call sub_1B88A
+        call CdStreamFilled
         cmp eax, dword [byte edx+030h]
         jl near loc_1B2DC
         mov eax, dword [dword_DC8A0]
@@ -455,7 +455,7 @@ loc_1B681:
         cmp dword [byte edx+028h], byte 0
         jle near loc_1B721
         mov eax, dword [dword_DC8C8]
-        call sub_1B82B
+        call CdStreamSkipReleased
         cmp eax, dword [byte edx+024h]
         jl near loc_1B2DC
         mov eax, dword [dword_DC8A0]
@@ -476,7 +476,7 @@ loc_1B681:
         push ebx
         mov ecx, dword [byte esi+024h]
         push ecx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         add dword [byte esi+04Ch], eax
         mov eax, dword [dword_DC8A0]
@@ -542,7 +542,7 @@ loc_1B799:
         mov dword [byte edx+01Ch], 9
         mov edx, dword [dword_DC8A0]
         mov eax, edx
-        call sub_1B82B
+        call CdStreamSkipReleased
         add eax, dword [byte edx+030h]
         cmp eax, byte 8
         jb near loc_1B2DC
@@ -563,13 +563,13 @@ loc_1B799:
 loc_1B80C:
         mov dword [byte edx+01Ch], 3
         jmp near loc_1B2B4
-sub_1B818:
+CdStreamTimer:
         push dword 4
         call __CHK
         mov eax, dword [dword_DC8A0]
         dec dword [byte eax+04Ch]
         ret
-sub_1B82B:
+CdStreamSkipReleased:
         push dword 14h
         call __CHK
         push ebx
@@ -607,7 +607,7 @@ loc_1B86A:
         pop ecx
         pop ebx
         ret
-sub_1B871:
+CdStreamSpace:
         push dword 0Ch
         call __CHK
         push ebx
@@ -619,7 +619,7 @@ sub_1B871:
         pop edx
         pop ebx
         ret
-sub_1B88A:
+CdStreamFilled:
         push dword 0Ch
         call __CHK
         push ecx
@@ -638,13 +638,13 @@ loc_1B8A7:
         pop edx
         pop ecx
         ret
-sub_1B8AC:
+CdStreamNextChunk:
         push dword 0Ch
         call __CHK
         push esi
         push edi
         mov esi, dword [byte esp+0Ch]
-        call sub_1B2A7
+        call CdStreamService
         mov eax, dword [byte esi+0Ch]
         mov edx, dword [byte esi+010h]
         cmp eax, edx
@@ -703,7 +703,7 @@ loc_1B92B:
 loc_1B92C:
         pop esi
         ret
-sub_1B92E:
+CdStreamReleaseChunk:
         push dword 8
         call __CHK
         push esi
@@ -737,7 +737,7 @@ loc_1B977:
         je short loc_1B92C
         mov edx, dword [byte eax+014h]
         jmp short loc_1B94C
-sub_1B982:
+FreeGameMemory:
         push dword 20h
         call __CHK
         push ebx
@@ -761,7 +761,7 @@ sub_1B982:
         xor ecx, ecx
         mov dword [ovlartbank], ecx
 loc_1B9C4:
-        call sub_1BAB1
+        call FreePhotoBanks
         mov esi, dword [rinkendbank]
         test esi, esi
         je short loc_1B9E4
@@ -826,7 +826,7 @@ loc_1BA7F:
         pop ecx
         pop ebx
         ret
-sub_1BA85:
+FreePhotoBankF:
         push dword 14h
         call __CHK
         push ebx
@@ -845,7 +845,7 @@ loc_1BAA5:
         pop ecx
         pop ebx
         ret
-sub_1BAB1:
+FreePhotoBanks:
         push dword 1Ch
         call __CHK
         push ebx
@@ -853,7 +853,7 @@ sub_1BAB1:
         push edx
         push esi
         push edi
-        call sub_1BA85
+        call FreePhotoBankF
         mov edi, 16h
         jmp short loc_1BAED
 loc_1BACC:
@@ -873,7 +873,7 @@ loc_1BAED:
         test edi, edi
         jge short loc_1BACC
         jmp short loc_1BA7F
-sub_1BAF3:
+EnsureFreeMemory:
         push dword 20h
         call __CHK
         push ebx
@@ -922,7 +922,7 @@ loc_1BB71:
         call MemLargestFree
         cmp eax, ebp
         jge short loc_1BB0E
-        call sub_1BA85
+        call FreePhotoBankF
         mov edi, 16h
         jmp short loc_1BBB4
 loc_1BB86:

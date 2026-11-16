@@ -1,17 +1,17 @@
 /* Game setup: other-game simulation and the end-of-game team stats screen. */
-#define sub_913D0 sub_913D0_decl
+#define DrawArtHotspot sub_913D0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
 #define LoadDigiFile sub_8F98F_decl
 #define PlayDigiBlockLoop sub_8FB8E_decl
 #include "nhl95.h"
-#undef sub_913D0
+#undef DrawArtHotspot
 #undef LoadSample
 #undef FreeSample
 #undef LoadDigiFile
 #undef PlayDigiBlockLoop
 
-void __cdecl sub_913D0(int shape, int x, int y);
+void __cdecl DrawArtHotspot(int shape, int x, int y);
 void *LoadSample(char *path);
 void FreeSample(void *smp);
 int LoadDigiFile(char *path);
@@ -116,7 +116,7 @@ void GameStatsScreen(void)
     }
     for (i = 0; i < 2; i++) {
         shape = FindShape(logos, (char *)crestnames[s.teams[i]]);
-        sub_913D0(shape, i ? 0x212 : 0x40, 0x4E);
+        DrawArtHotspot(shape, i ? 0x212 : 0x40, 0x4E);
         col = i * 455;
         name = (char *)hmteamrec + i * 0x2E8 + 0x1A;
         width = fputchar(name) >> 1;

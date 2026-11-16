@@ -10,10 +10,10 @@
 #define FlushZones sub_6ADA7_decl
 #define DrawRinkSideObjects DrawRinkSideObjects_decl
 #define ReplayControlLoop ReplayControlLoop_decl
-#define sub_B4CD8 sub_B4CD8_decl
+#define VgaBlitKeyedHot sub_B4CD8_decl
 #define replayplay replayplay_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
-#define sub_B500C sub_B500C_decl
+#define VgaBlitKeyedFlipV sub_B500C_decl
 #include "nhl95.h"
 #undef ReplayStep
 #undef SetZoneOrigin
@@ -22,10 +22,10 @@
 #undef FlushZones
 #undef DrawRinkSideObjects
 #undef ReplayControlLoop
-#undef sub_B4CD8
+#undef VgaBlitKeyedHot
 #undef replayplay
 #undef TicksSinceLastCall
-#undef sub_B500C
+#undef VgaBlitKeyedFlipV
 #undef bothneitherstrs
 #undef HilightSaveToDlg
 
@@ -58,7 +58,7 @@ void SetZoneScreen(int x0, int y0, int x1, int y1);
 void FlushZones(void);
 void DrawRinkSideObjects(short vx, short vy);
 int ReplayControlLoop(int *step);
-void __cdecl sub_B4CD8(int art, int x, int y);  /* graphics library: draw art (opaque) */
+void __cdecl VgaBlitKeyedHot(int art, int x, int y);  /* graphics library: draw art (opaque) */
 extern unsigned char *replayplay;  /* E03A4: the replay frame being played */
 int __cdecl TicksSinceLastCall(void);
 
@@ -103,7 +103,7 @@ void InstantReplay(int mode)
         MakePath(path, fileoncd[0x96] == 1 ? (char *)cddriveptr : 0, (char *)str_Gadget5, (char *)str_PPV);
     gadgetfile = sub_8E8A0(path, 0);
     gadgetshape = FindShape(gadgetfile, (char *)str_Gad1);
-    sub_B4CD8(gadgetshape, 0, 0);
+    VgaBlitKeyedHot(gadgetshape, 0, 0);
     DrawGadgetButton(6);
     DrawGadgetButton(2);
     DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
@@ -219,7 +219,7 @@ void InstantReplay(int mode)
     if (!mode) SetScreenSize(0x280, 0x1E0);
 }
 
-void __cdecl sub_B500C(int art, int x, int y);  /* graphics library: draw art */
+void __cdecl VgaBlitKeyedFlipV(int art, int x, int y);  /* graphics library: draw art */
 void ReplaySaveHilight(int unused, int x, int y);
 
 /* ReplayControlLoop (7E9AC, PC only; ends in DrawGadgetButton_ret): one pass of the replay controls. Read the
@@ -395,7 +395,7 @@ int ReplayControlLoop(int *step)
             else if (y1 > 0x20) y1 = 0x20;
             SetClipWindow(oldx, x1, oldy, y1);
         }
-        sub_B500C(gadgetshape, 0, 0);
+        VgaBlitKeyedFlipV(gadgetshape, 0, 0);
         if (oldbits == dword_ED754) SetClipWindow(0, 0x140, 0, 0x20);
         for (hit = 0; hit < 9; hit++) {
             if (dword_ED754 & 1 << hit) DrawGadgetButton(hit);
@@ -409,7 +409,7 @@ int ReplayControlLoop(int *step)
         dword_ED754 = 4;
         SelectScreenBM();
         SetClipWindow(0, 0x140, 0, 0x20);
-        sub_B4CD8(gadgetshape, 0, 0);
+        VgaBlitKeyedHot(gadgetshape, 0, 0);
         DrawGadgetButton(2);
         DrawArt(pointerspr, gadgetptrx, gadgetptry - 0xA8);
     }

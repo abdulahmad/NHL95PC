@@ -72,7 +72,7 @@ void DrawTradeScreen(int unused, int art, void *menu, int unused2, int count,
         }
     }
     SetScreenTarget();
-    sub_9121C(*(int *)(tradebitmap + 0x2C));
+    DrawArtOpaqueAtOwnPos(*(int *)(tradebitmap + 0x2C));
     FadePalStep(0, spal, 0x10);
     FreeMemBlock((int)spal);
 }

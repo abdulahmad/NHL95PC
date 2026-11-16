@@ -15,7 +15,7 @@ void DrawModeSetDlg(void)
     else
         MakePath(path, fileoncd[0x174] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting4, 0);
     bank = LoadBank(path, 0);
-    sub_91284(FindShape(bank, (char *)str_Dbox3), 0xA, 0x13);
+    DrawArtKeyFF(FindShape(bank, (char *)str_Dbox3), 0xA, 0x13);
     FreeMemBlock(bank);
     TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {

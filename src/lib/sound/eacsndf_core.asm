@@ -3,19 +3,19 @@ bits 32
 %include "hockey.inc"
 section s_96A60 progbits alloc exec nowrite align=1
 extern __GETDS, _os_handle_3, SndHandleType, sndhandlecount, SndTimerHandle
-extern SndDriverTable, MemDescPtr, sub_96A10, bcopy, DosReadFile, SndHandleTable
-global sub_96A60, sub_96A78, sub_96A80, sub_96A94, loc_96AA4, loc_96AB2, loc_96AC0, sub_96AC4
+extern SndDriverTable, MemDescPtr, MviRewind, bcopy, DosReadFile, SndHandleTable
+global MviGetWidth, MviGetFrame, MviAtEnd, MviSeekFrame, loc_96AA4, loc_96AB2, loc_96AC0, MviDecodeKeyFrame
 global loc_96B15, loc_96B38, loc_96B73, loc_96BA1, loc_96BC5, loc_96C15, loc_96C2B, loc_96C43
-global sub_96C4C, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
+global MviDecodeDeltaFrame, loc_96CA2, loc_96CBD, loc_96CF3, loc_96D01, loc_96D0E, loc_96D27, loc_96D5E
 global loc_96D8B, loc_96DA9, loc_96DC4, loc_96DF4, loc_96E09, loc_96E2D, loc_96E34, loc_96E47
-global loc_96E5B, loc_96E73, sub_96E7C, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90, loc_96FC7
+global loc_96E5B, loc_96E73, MviNextFrame, loc_96EFF, loc_96F3D, loc_96F77, loc_96F90, loc_96FC7
 global loc_9702F, loc_97059, loc_97066, loc_9706F, SndOpenDriver, loc_9708D, loc_97097, loc_9709B
 global loc_970AB, loc_970C2, loc_970CC, loc_970D1, loc_97153, loc_9715C, SndDriverHandle, loc_97175
 global SndHandleDetect, SndHandleOpen, loc_971A5, SndHandleInit, SndHandleClose, loc_971D7, SndHandleService, loc_971F4
 global SndDriverCall, SndHandleSetTrack, loc_9722C, SndHandleMidi, loc_9724A, loc_9724E, loc_97266, SndHandlePlayDigi
-global loc_972A5, NullDriverOpen, sub_972B1, NullDriverInit, sub_972BE, NullDriverReturn, sub_972C6, NullDriverQuery
-global sub_972CE, NullDriverSetTrack, sub_972DB, NullDriverMidi, sub_972E3, NullDriverPlayDigi, sub_972EB
-sub_96A60:
+global loc_972A5, NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery
+global NullDriverSetTrack, NullDriverMidi, NullDriverPlayDigi
+MviGetWidth:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+0Ch]
         ret
@@ -26,11 +26,11 @@ sub_96A60:
         mov eax, dword [eax]
         ret
         db 090h
-sub_96A78:
+MviGetFrame:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+08h]
         ret
-sub_96A80:
+MviAtEnd:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+04h]
         cmp eax, dword [edx]
@@ -38,7 +38,7 @@ sub_96A80:
         and eax, 0FFh
         ret
         db 08Bh,0C0h
-sub_96A94:
+MviSeekFrame:
         push esi
         push edi
         mov edi, dword [byte esp+010h]
@@ -48,13 +48,13 @@ sub_96A94:
         xor edi, edi
 loc_96AA4:
         push esi
-        call sub_96A10
+        call MviRewind
         add esp, byte 4
         cmp edi, dword [byte esi+04h]
         jle short loc_96AC0
 loc_96AB2:
         push esi
-        call sub_96E7C
+        call MviNextFrame
         add esp, byte 4
         cmp edi, dword [byte esi+04h]
         jg short loc_96AB2
@@ -63,7 +63,7 @@ loc_96AC0:
         pop esi
         ret
         db 090h
-sub_96AC4:
+MviDecodeKeyFrame:
         push ecx
         push esi
         push edi
@@ -210,7 +210,7 @@ loc_96C43:
         pop ecx
         ret
         db 090h
-sub_96C4C:
+MviDecodeDeltaFrame:
         push ecx
         push esi
         push edi
@@ -415,7 +415,7 @@ loc_96E73:
         pop ecx
         ret
         db 090h
-sub_96E7C:
+MviNextFrame:
         push esi
         push edi
         push ebp
@@ -457,7 +457,7 @@ sub_96E7C:
         add edx, eax
         mov dword [byte esp+014h], edx
         push ebp
-        call sub_96A80
+        call MviAtEnd
         add esp, byte 4
         test eax, eax
         je short loc_96EFF
@@ -585,7 +585,7 @@ loc_9702F:
         mov ebx, dword [byte esp+014h]
         mov edx, esi
         mov eax, edi
-        call sub_96AC4
+        call MviDecodeKeyFrame
         inc dword [byte edi+04h]
         add dword [byte edi+02Ch], ebp
         mov eax, dword [byte edi+034h]
@@ -599,7 +599,7 @@ loc_97059:
         mov ebx, dword [byte esp+014h]
         mov edx, esi
         mov eax, edi
-        call sub_96C4C
+        call MviDecodeDeltaFrame
 loc_97066:
         inc dword [byte edi+04h]
         add dword [byte edi+02Ch], ebp
@@ -850,45 +850,38 @@ loc_972A5:
 NullDriverOpen:
         push ds
         call __GETDS
-sub_972B1:
         mov eax, 1
         pop ds
         ret
 NullDriverInit:
         push ds
         call __GETDS
-sub_972BE:
         pop ds
         ret
 NullDriverReturn:
         push ds
         call __GETDS
-sub_972C6:
         pop ds
         ret
 NullDriverQuery:
         push ds
         call __GETDS
-sub_972CE:
         mov eax, 0FFFFFFFFh
         pop ds
         ret
 NullDriverSetTrack:
         push ds
         call __GETDS
-sub_972DB:
         pop ds
         ret
 NullDriverMidi:
         push ds
         call __GETDS
-sub_972E3:
         pop ds
         ret
 NullDriverPlayDigi:
         push ds
         call __GETDS
-sub_972EB:
         pop ds
         ret
         db 00h,00h,00h

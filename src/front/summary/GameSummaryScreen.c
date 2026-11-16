@@ -6,7 +6,7 @@
    temporaries, and event/page register choices. */
 #define GameSummaryScreen GameSummaryScreen_decl
 #define ReadGSummaryRec ReadGSummaryRec_decl
-#define sub_913D0 sub_913D0_decl
+#define DrawArtHotspot sub_913D0_decl
 #define LoadSample sub_8F13B_decl
 #define FreeSample sub_8F1FE_decl
 #define LoadDigiFile sub_8F98F_decl
@@ -18,7 +18,7 @@ extern int gsuminitff[2];
 struct SummaryHandles { int first, second; };
 #undef GameSummaryScreen
 #undef ReadGSummaryRec
-#undef sub_913D0
+#undef DrawArtHotspot
 #undef LoadSample
 #undef FreeSample
 #undef LoadDigiFile
@@ -26,7 +26,7 @@ struct SummaryHandles { int first, second; };
 
 int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unused);
 int ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */
-void __cdecl sub_913D0(int shape, int x, int y);
+void __cdecl DrawArtHotspot(int shape, int x, int y);
 void *LoadSample(char *path);
 void FreeSample(void *smp);
 int LoadDigiFile(char *path);
@@ -137,7 +137,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
     f.dbfh = -1;
     *(struct SummaryHandles *)f.seasonfh = *(struct SummaryHandles *)gsuminitff;
     f.gsumfh = -1;
-    sub_1BAF3(700000);
+    EnsureFreeMemory(700000);
     if (musicon && songdata) {
         SetDigiChannelVolume(musichandle, 3, 0x4B);
         while (!SndQuery(musicslot, 3)) ;
@@ -279,8 +279,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         DrawShape(f.bkgd);
         if (mode & 3) {
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
-            sub_913D0(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
-            sub_913D0(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
+            DrawArtHotspot(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
+            DrawArtHotspot(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
         } else {
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
         }
@@ -341,7 +341,7 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
             ClearScreen(0);
             DrawShape(f.bkgd);
             DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, 0, (int)f.goals);
-            sub_913D0(*(int *)(hmcrestbmp[side] + 0x2C), 0x3D, 0x50);
+            DrawArtHotspot(*(int *)(hmcrestbmp[side] + 0x2C), 0x3D, 0x50);
             y = byte_D42C3 + 0x78;
             for (f.i = 0; f.i < 8 && !f.err; f.i++) {
                 f.k = f.linetab[side][f.i + 0x28];
@@ -396,8 +396,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
         if (!(mode & 0x24)) {
             if (mode & 3) {
                 DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, f.nperiods, (int)f.goals);
-                sub_913D0(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
-                sub_913D0(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
+                DrawArtHotspot(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
+                DrawArtHotspot(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
             } else {
                 DrawGadgetByType(mode, f.first, (int)f.pal, f.gad, f.nperiods, (int)f.goals);
             }
@@ -575,8 +575,8 @@ int GameSummaryScreen(int mode, unsigned char first, unsigned char last, int unu
                     DrawShape(f.bkgd);
                     if (mode & 3) {
                         DrawGadgetByType(mode, f.period, (int)f.pal, f.gad, f.nperiods, (int)f.goals);
-                        sub_913D0(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
-                        sub_913D0(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
+                        DrawArtHotspot(*(int *)(hmcrestbmp[0] + 0x2C), 0x3D, 0x50);
+                        DrawArtHotspot(*(int *)(vscrestbmp + 0x2C), 0x221, 0x50);
                     } else {
                         DrawGadgetByType(mode, f.period, (int)f.pal, f.gad, f.nperiods, (int)f.goals);
                     }

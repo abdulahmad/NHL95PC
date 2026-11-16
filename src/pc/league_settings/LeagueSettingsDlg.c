@@ -4,18 +4,18 @@
 #define MenuShowLeagueSettings2 MenuShowLeagueSettings2_decl
 #define LeagueSetViewLoop LeagueSetViewLoop_decl
 #define LeagueSetEditLoop LeagueSetEditLoop_decl
-#define sub_96440 sub_96440_decl
+#define DrawShapeClippedKeyed sub_96440_decl
 #include "nhl95.h"
 #undef LeagueSetViewLoop
 #undef LeagueSetEditLoop
-#undef sub_96440
+#undef DrawShapeClippedKeyed
 #undef MenuShowLeagueSettings2
 
 typedef struct Hdr17 { char c[17]; } Hdr17;
 
 void DrawLeagueSetDlg(int playoffs);  /* 7A6BD */
 short LeagueSetEditLoop(int mode);  /* 7ADD3 */
-void __cdecl sub_96440(int buf, int x, int y);  /* graphics library: save a screen block, clipped */
+void __cdecl DrawShapeClippedKeyed(int buf, int x, int y);  /* graphics library: save a screen block, clipped */
 short LeagueSetViewLoop(void);  /* 7AC31 */
 
 /* LeagueSettingsDlg (7A13A, PC only; owner of LeagueSettingsDlg_ret4 / _ret / _ret0): the league settings dialog: with the series game number cleared (restored after),
@@ -219,9 +219,9 @@ void DrawLeagueSetDlg(int playoffs)
     }
     if (!musicon) PrintString((char *)str_DigitizedSpeech, 0x68, 0xD6);
     if (gamemode == 1) {
-        if (seriesgameno >= 5) sub_91FE0(na05spr, 0x85, 0x125);
-        else if (seriesgameno >= 3) sub_91FE0(na03spr, 0x85, 0x125);
-        else if (seriesgameno >= 1) sub_91FE0(na01spr, 0x85, 0x125);
+        if (seriesgameno >= 5) DrawArtKeyColour(na05spr, 0x85, 0x125);
+        else if (seriesgameno >= 3) DrawArtKeyColour(na03spr, 0x85, 0x125);
+        else if (seriesgameno >= 1) DrawArtKeyColour(na01spr, 0x85, 0x125);
     }
     if (playoffs) DrawSettingsHeading(0xA, 0x13, 3, gamemode, 0x40);
     else DrawSettingsHeading(0xA, 0x13, 3, gamemode, 0xFA);
@@ -243,33 +243,33 @@ void DrawLeagueSetChecks(void)
             i++;
             r += 2;
         }
-        if (setbits[0] & (1 << i)) sub_91FE0(chkonspr, r->l + 10, r->t + 0x13);
-        else sub_91FE0(chkoffspr, r->l + 10, r->t + 0x13);
+        if (setbits[0] & (1 << i)) DrawArtKeyColour(chkonspr, r->l + 10, r->t + 0x13);
+        else DrawArtKeyColour(chkoffspr, r->l + 10, r->t + 0x13);
     }
     switch (setbits[0] & 0xE00) {
     case 0x200:
-        sub_91FE0(pl20spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pl20spr, r->l + 10, r->t + 0x13);
         break;
     case 0x400:
-        sub_91FE0(pl10spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pl10spr, r->l + 10, r->t + 0x13);
         break;
     case 0x800:
-        sub_91FE0(pl05spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pl05spr, r->l + 10, r->t + 0x13);
         break;
     }
     r += 3;
     switch (setbits[0] & 0xF000) {
     case 0x1000:
-        sub_91FE0(pg01spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pg01spr, r->l + 10, r->t + 0x13);
         break;
     case 0x2000:
-        sub_91FE0(pg03spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pg03spr, r->l + 10, r->t + 0x13);
         break;
     case 0x4000:
-        sub_91FE0(pg05spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pg05spr, r->l + 10, r->t + 0x13);
         break;
     case 0x8000:
-        sub_91FE0(pg07spr, r->l + 10, r->t + 0x13);
+        DrawArtKeyColour(pg07spr, r->l + 10, r->t + 0x13);
         break;
     }
 }
@@ -328,8 +328,8 @@ short LeagueSetViewLoop(void)
 /* LeagueSetEditLoop (7ADD3, PC only; ends in LeagueSettingsDlg_ret): the league settings dialog, as
    ModeSetEditLoop (mode nonzero: set the dialog colours first) with two option groups: boxes 18-20 pick one of
    setbits bits 9-11 (pertime 2, 1, 0) and boxes 21-24 one of bits 12-15 (optbits12 1, 3, 5, 7); OK is box 25 and
-   Cancel box 26 (their buttons drawn with sub_91FE0). Speech follows its box with a 22h sound device and there is
-   no crowd noise. After a click the screen under the pointer is saved clipped (sub_96440). Result: 0, a short. */
+   Cancel box 26 (their buttons drawn with DrawArtKeyColour). Speech follows its box with a 22h sound device and there is
+   no crowd noise. After a click the screen under the pointer is saved clipped (DrawShapeClippedKeyed). Result: 0, a short. */
 short LeagueSetEditLoop(int mode)
 {
     int oldmusic;
@@ -395,7 +395,7 @@ short LeagueSetEditLoop(int mode)
                     hit -= 9;
                     setbits[0] = (setbits[0] & 0xFFF) | 1 << hit;
                 } else if (hit == 0x19) {
-                    sub_91FE0(acptspr, 0x3F, 0x148);
+                    DrawArtKeyColour(acptspr, 0x3F, 0x148);
                     gameopts.optbit0 = (setbits[0] & 1) != 0;
                     gameopts.offsides = (setbits[0] & 2) != 0;
                     gameopts.linechanges = (setbits[0] & 4) != 0;
@@ -447,13 +447,13 @@ short LeagueSetEditLoop(int mode)
                     FreeMemBlock(bm);
                     return 0;
                 } else {
-                    sub_91FE0(fdlg_cancel, 0x89, 0x148);
+                    DrawArtKeyColour(fdlg_cancel, 0x89, 0x148);
                     FreeMemBlock(bm);
                     return 0;
                 }
                 DrawLeagueSetChecks();
             }
-            sub_96440(bm, x - 4, y);
+            DrawShapeClippedKeyed(bm, x - 4, y);
             DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;

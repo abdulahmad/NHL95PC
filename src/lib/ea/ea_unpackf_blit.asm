@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9C594 progbits alloc exec nowrite align=1
 extern str_Unpackf, str_Unpacking, byte_D506C, cliprect_x0, cliprect_x1, DebugPrintf, dword_D5064, dword_D5068
-extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, sub_91FA4, TextPrintAt, sub_A2FD0
+extern fputchar, FreeMemBlock, off_D516C, AllocMemBlock, SetPalette, FixedMulRound, TextPrintAt, sub_A2FD0
 extern sub_A3050, _EFG_Format_, bcopy, UnpackArtRle
 global ToUpperChar, loc_9C5A4, ReturnFalse, FindNearestColor, loc_9C611, loc_9C62B, loc_9C689, loc_9C6BE
 global loc_9C70C, loc_9C71B, loc_9C72B, loc_9C748, loc_9C7AD, loc_9C7AF, loc_9C86F, loc_9C873
@@ -338,7 +338,7 @@ loc_9C991:
         push eax
         mov ecx, dword [byte esp+028h]
         push ecx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         sub dword [byte esp+08h], eax
         mov eax, dword [byte esi+08h]
@@ -346,7 +346,7 @@ loc_9C991:
         push eax
         mov eax, dword [byte esp+02Ch]
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         sub ebp, eax
         jmp short loc_9C9D3
@@ -368,7 +368,7 @@ loc_9C9D3:
         sar eax, 10h
         push eax
         push ebx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         sub dword [byte esp+08h], eax
         push esi
@@ -385,7 +385,7 @@ loc_9CA00:
         sar eax, 10h
         push eax
         push edx
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         sub ebp, eax
         push esi

@@ -40,7 +40,7 @@ void DrawLineEditorScreen(int team, int shape, int zero, int buttons, int n)
     for (i = 0x80; i < 0x100; i++) s.remap[i] = src[i];
     FreeMemBlock(pals);
     SetColorRemap(s.remap);
-    sub_91FE0(FindShape(bank, (char *)str_Bkgd10), -0x4C, 0);
+    DrawArtKeyColour(FindShape(bank, (char *)str_Bkgd10), -0x4C, 0);
     FreeMemBlock(bank);
     DrawMenuBar((void *)buttons, n, s.col1, s.col2, s.col3);
     TextSetColors(0xC0, 0xC1);

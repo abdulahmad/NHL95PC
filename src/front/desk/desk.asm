@@ -17,7 +17,7 @@ extern randomd0, ReadGSumHeader, ReadGSumTail, ReplayIsEmpty, s1font, savepal, S
 extern schedgameidx, scrollx, scrolly, SetDialogColors, SetModeMenuLabels, SetScreenSize, SetScreenTitle, SetTeamGoalie
 extern ShowCredits, ShowLoadingScreen, songdata, SpeechBusy, sprintf_, StartHL2, str_Desk, str_DoYouWishToExit
 extern str_DoYouWishToReturn, str_Eadesk1d, str_ExitingTheGame, str_Iff3, str_Menubuff3, str_Pal5, str_Pause, str_PleaseEnterOutputFile
-extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, sub_1B982, sub_1BAF3, AllocMemBlock, PushMemDescriptorLocked
+extern str_Pointer2, str_ReturningOutOfThe, str_ReturningToSportsCentral, str_ReturningToThePlayoff, FreeGameMemory, EnsureFreeMemory, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, TextSaveState, TextRestoreState, TextSetFont, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume
 extern SetPalette, PutBlock, DrawBitmap, DrawArt, GrabBlock, MouseRead, SetViewRect, FindShape
 extern ClearScreen, SetTextMode, SetScreenTarget, FillRectColor, teamconf, TextInputDialog, TicksSinceLastCall, deskmenubar
@@ -462,7 +462,7 @@ PostGameDesk:
         mov eax, 280h
         call SetScreenSize
         mov eax, 222E0h
-        call sub_1BAF3
+        call EnsureFreeMemory
         call ShowLoadingScreen
         call FlushGSumQueue
         call ReadGSumTail
@@ -495,7 +495,7 @@ PostGameDesk:
         mov edx, 1E0h
         mov eax, 280h
         call SetScreenSize
-        call sub_1B982
+        call FreeGameMemory
         call CoachCutScene
         mov edx, eax
         test eax, eax
@@ -575,7 +575,7 @@ SportsDesk:
         cmp dword [esp], byte 0
         jne short .3
         mov eax, 0AAE60h
-        call sub_1BAF3
+        call EnsureFreeMemory
         lea eax, [byte esp+04h]
         push eax
         push dword 100h
@@ -1250,7 +1250,7 @@ SportsDesk:
         mov eax, 1
         call FadePalStep
         mov eax, 0AAE60h
-        call sub_1BAF3
+        call EnsureFreeMemory
         xor ecx, ecx
         mov ebx, deskbankname
         mov eax, dword [esp]
@@ -1895,7 +1895,7 @@ DeskExitGame:
         mov dword [songdata], ebp
 .3:
         call ShowLoadingScreen
-        call sub_1B982
+        call FreeGameMemory
         call ShowCredits
         push savepal
         push dword 100h

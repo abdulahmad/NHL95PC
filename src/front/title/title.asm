@@ -23,13 +23,13 @@ extern str_Adtitle, str_Backwin, str_Bkgd3, str_Cmv, str_Credits, str_Crests4, s
 extern str_Easports, str_FlaD, str_Iff2, str_KMS, str_MASK, str_Msk1, str_Mttitle, str_Pal4
 extern str_Pio, str_Pion, str_Pioneer1, str_Pioneer2, str_Pioneer3, str_Pioneer4, str_Pl1, str_Pl2
 extern str_PPV, str_Rockditi, str_Scrbrd2, str_Scrn2, str_Shp0, str_Srb3, str_Stanley, str_Title
-extern str_Title30, strlen_, sub_1AC25, sub_1ACF1, sub_1AD16, sub_1B002, sub_1B092, sub_1B09F
-extern sub_1B0AD, sub_1B0BB, sub_1B0C9, sub_1B0D7, sub_1B0E5, sub_1B0F3, sub_1B18B, sub_1B1C2
-extern sub_1B2A7, sub_1B8AC, sub_1B92E, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState
+extern str_Title30, strlen_, CmvCreate, CmvDestroy, CmvReadHeader, CmvDecodeFrame, CmvFrameCount, CmvWidth
+extern CmvHeight, CmvFrameRate, CmvPaletteFirst, CmvPaletteCount, CmvPalette, CdStreamCreate, CdStreamClose, CdStreamOpen
+extern CdStreamService, CdStreamNextChunk, CdStreamReleaseChunk, AllocMemBlock, PushMemDescriptorLocked, LoadBank, sub_8E8A0, TextSaveState
 extern TextRestoreState, TextSetFont, LoadSample, FreeSample, LoadDigiFile, PlayDigiBlockLoop, SndQuery, SetDigiChannelVolume
-extern PutBlock, DrawBitmap, sub_9087C, FillRect, sub_9121C, sub_91284, sub_912C8, FreeBitmap
+extern PutBlock, DrawBitmap, DrawArtOr, FillRect, DrawArtOpaqueAtOwnPos, DrawArtKeyFF, DrawArtKeyFFAtOwnPos, FreeBitmap
 extern DrawArt, DrawShape, GrabBlock, PrintString, FindShape, ReadJoyRaw, ClearScreen, SaveDrawState
-extern RestoreDrawState, VgaSetPalette, SetScreenTarget, sub_B4CD8, sub_B4CF2, SetColorRemap, sub_B4E50, CreateBitmap
+extern RestoreDrawState, VgaSetPalette, SetScreenTarget, VgaBlitKeyedHot, VgaBlitKeyed, SetColorRemap, VgaBlitRemap, CreateBitmap
 extern teamabbrevs, teamdivflags, textcolor, textgrid, textgridon, textoutlinedx, textoutlinedy, textshadow
 extern TickDeadlinePassed, TicksSinceLastCall, blackpal, unk_C638C, UpdateHudPanel_x, VisTeam, WaitClickTimeout, WaitTickDeadline
 extern lcsel_aw
@@ -371,7 +371,7 @@ TitleScreen:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         push str_Msk1
         mov ecx, dword [dword esp+0324h]
@@ -463,15 +463,15 @@ TitleScreen:
         push byte 20h
         push dword 2000h
         push dword 493E0h
-        call sub_1B0F3
+        call CdStreamCreate
         add esp, byte 0Ch
         mov dword [dword esp+0340h], eax
         lea edx, [dword esp+0300h]
         push edx
         push eax
-        call sub_1B1C2
+        call CdStreamOpen
         add esp, byte 8
-        call sub_1AC25
+        call CmvCreate
         mov edi, eax
         push dword 96h
         call SetTickDeadline
@@ -480,7 +480,7 @@ TitleScreen:
         call TickDeadlinePassed
         test eax, eax
         jne short .17
-        call sub_1B2A7
+        call CdStreamService
         jmp short TitleScreen.16
 .17:
         mov dword [dword esp+0334h], 0Ah
@@ -509,7 +509,7 @@ TitleScreen:
         call TickDeadlinePassed
         test eax, eax
         jne short .21
-        call sub_1B2A7
+        call CdStreamService
         jmp short TitleScreen.19
 .20:
         mov eax, dword [titlesample]
@@ -530,7 +530,7 @@ TitleScreen:
 .22:
         mov edx, dword [dword esp+0340h]
         push edx
-        call sub_1B8AC
+        call CdStreamNextChunk
         mov edx, eax
         add esp, byte 4
         mov dword [dword esp+0324h], eax
@@ -558,7 +558,7 @@ TitleScreen:
         add dword [dword esp+034Ch], eax
         inc ebp
         mov eax, edi
-        call sub_1B002
+        call CmvDecodeFrame
         mov dword [dword esp+0328h], eax
         call GetTicks
         sub eax, dword [dword esp+0344h]
@@ -570,13 +570,13 @@ TitleScreen:
         add esp, byte 4
         mov eax, dword [dword esp+033Ch]
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         push byte 0
         push byte 0
         mov edx, dword [dword esp+0330h]
         push edx
-        call sub_9087C
+        call DrawArtOr
         add esp, byte 0Ch
         call SetScreenTarget
         push byte 56h
@@ -584,7 +584,7 @@ TitleScreen:
         mov eax, dword [dword esp+0334h]
         mov ebx, dword [byte eax+02Ch]
         push ebx
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
 .26:
         cmp dword [dword esp+0338h], byte 1
@@ -606,18 +606,18 @@ TitleScreen:
         jmp near .32
 .28:
         mov eax, edi
-        call sub_1AD16
+        call CmvReadHeader
         mov eax, edi
-        call sub_1B092
+        call CmvFrameCount
         mov ebx, dword [dword esp+032Ch]
         test ebx, ebx
         jne short .29
         push ebx
         mov eax, edi
-        call sub_1B0AD
+        call CmvHeight
         push eax
         mov eax, edi
-        call sub_1B09F
+        call CmvWidth
         push eax
         call CreateBitmap
         add esp, byte 0Ch
@@ -629,7 +629,7 @@ TitleScreen:
         add esp, byte 4
         mov eax, dword [dword esp+033Ch]
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         call SetScreenTarget
         push byte 56h
@@ -637,18 +637,18 @@ TitleScreen:
         mov eax, dword [dword esp+0334h]
         mov edx, dword [byte eax+02Ch]
         push edx
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         mov eax, edi
-        call sub_1B0D7
+        call CmvPaletteCount
         mov ecx, eax
         shl ecx, 2
         sub ecx, eax
         mov eax, edi
-        call sub_1B0E5
+        call CmvPalette
         mov edx, eax
         mov eax, edi
-        call sub_1B0C9
+        call CmvPaletteFirst
         mov ebx, eax
         shl eax, 2
         sub eax, ebx
@@ -663,7 +663,7 @@ TitleScreen:
         call VgaSetPalette
         add esp, byte 0Ch
         mov eax, edi
-        call sub_1B0BB
+        call CmvFrameRate
         mov ebx, eax
         mov eax, 64h
         mov edx, eax
@@ -681,9 +681,9 @@ TitleScreen:
         push edx
         mov ebx, dword [dword esp+0344h]
         push ebx
-        call sub_1B92E
+        call CdStreamReleaseChunk
         add esp, byte 8
-        call sub_1B2A7
+        call CdStreamService
         cmp dword [dword esp+0330h], 4D564966h
         jne short .35
         call GetTicks
@@ -708,7 +708,7 @@ TitleScreen:
         mov esi, eax
         jmp short TitleScreen.33
 .34:
-        call sub_1B2A7
+        call CdStreamService
 .35:
         test esi, esi
         jne short .36
@@ -730,10 +730,10 @@ TitleScreen:
         add esp, byte 4
 .38:
         mov eax, edi
-        call sub_1ACF1
+        call CmvDestroy
         mov edx, dword [dword esp+0340h]
         push edx
-        call sub_1B18B
+        call CdStreamClose
         add esp, byte 4
         cmp byte [musicon], 0
         je short .39
@@ -861,7 +861,7 @@ RunIntro:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         push esi
         call FreeMemBlock
@@ -1102,7 +1102,7 @@ RunIntro:
         add esp, byte 0Ch
         mov esi, dword [dword esp+0620h]
         push esi
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         push ebp
         call FreeMemBlock
@@ -1317,7 +1317,7 @@ RunIntro:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_912C8
+        call DrawArtKeyFFAtOwnPos
         add esp, byte 4
         push esi
         call FreeMemBlock

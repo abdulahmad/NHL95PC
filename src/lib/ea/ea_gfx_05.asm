@@ -4,14 +4,14 @@ bits 32
 section s_90D20 progbits alloc exec nowrite align=1
 extern cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable
 extern dword_D4108, RowCopyFunc, FreeMemBlock, PushMemDescriptorLocked, removewindow, ClearScreen, SaveDrawState, RestoreDrawState
-extern bcopy, FillMem, SetScreenTarget, sub_B5E00, FillRectCore, sub_B677D, BlitArtOpaque, sub_B693C
+extern bcopy, FillMem, SetScreenTarget, VesaSetBankArg, FillRectCore, XorRectCore, BlitArtOpaque, BlitArtKeyFF
 global FillRect, loc_90D65, loc_90DB4, loc_90DCD, loc_90DD9, loc_90DF5, loc_90E20, loc_90E71
-global loc_90E82, loc_90EA5, loc_90EAD, loc_90EB8, sub_90EC0, loc_90EE1, loc_90EF0, loc_90F00
-global loc_90F0F, loc_90F28, loc_90F29, sub_90F2C, XorBar, loc_90F7D, loc_90FC1, loc_91004
-global loc_91015, loc_91030, loc_9103D, sub_91044, loc_91065, loc_91074, loc_91084, loc_91093
+global loc_90E82, loc_90EA5, loc_90EAD, loc_90EB8, FillRectClipped, loc_90EE1, loc_90EF0, loc_90F00
+global loc_90F0F, loc_90F28, loc_90F29, XorRowBytes, XorBar, loc_90F7D, loc_90FC1, loc_91004
+global loc_91015, loc_91030, loc_9103D, XorRectClipped, loc_91065, loc_91074, loc_91084, loc_91093
 global loc_910AC, ClearScreenColour, DrawArtOpaque, loc_9110B, loc_91165, loc_911CE, loc_911E6, loc_91209
-global loc_91212, sub_9121C, sub_91238, loc_91260, loc_91274, loc_9127E, loc_91283, sub_91284
-global loc_912A5, sub_912C8, sub_912E4, sub_91310, FreeBitmap
+global loc_91212, DrawArtOpaqueAtOwnPos, DrawArtOpaqueHotspot, loc_91260, loc_91274, loc_9127E, loc_91283, DrawArtKeyFF
+global loc_912A5, DrawArtKeyFFAtOwnPos, DrawArtKeyFFHotspot, FreeWindowBitmap, FreeBitmap
 FillRect:
         push esi
         push edi
@@ -48,7 +48,7 @@ loc_90D65:
         shr eax, 10h
         mov dword [byte esp+08h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and esi, 0FFFFh
         mov dword [byte esp+04h], edi
@@ -93,7 +93,7 @@ loc_90DF5:
         inc eax
         mov dword [byte esp+08h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_90E20:
         mov edi, dword [byte esp+02Ch]
@@ -115,7 +115,7 @@ loc_90E20:
         inc ecx
         mov dword [byte esp+08h], ecx
         push ecx
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         push ebp
         push esi
@@ -141,7 +141,7 @@ loc_90E82:
         inc ebx
         mov dword [byte esp+08h], ebx
         push ebx
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_90EA5:
         dec dword [byte esp+04h]
@@ -156,7 +156,7 @@ loc_90EB8:
         pop esi
         ret
         db 090h
-sub_90EC0:
+FillRectClipped:
         push esi
         mov esi, dword [byte esp+08h]
         mov ecx, dword [byte esp+0Ch]
@@ -205,13 +205,13 @@ loc_90F28:
 loc_90F29:
         ret
         db 08Bh,0C0h
-sub_90F2C:
+XorRowBytes:
         dec edx
         cmp edx, byte 0FFFFFFFFh
         je short loc_90F29
         xor byte [eax], bl
         inc eax
-        jmp short sub_90F2C
+        jmp short XorRowBytes
         db 090h
 XorBar:
         push esi
@@ -234,7 +234,7 @@ XorBar:
         push edx
         push edi
         push eax
-        call sub_B677D
+        call XorRectCore
         add esp, byte 14h
         jmp near loc_9103D
 loc_90F7D:
@@ -249,7 +249,7 @@ loc_90F7D:
         mov edi, esi
         shr edi, 10h
         push edi
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and esi, 0FFFFh
         mov dword [byte esp+08h], ebp
@@ -266,23 +266,23 @@ loc_90FC1:
         mov edx, 10000h
         sub edx, esi
         mov ebx, ebp
-        call sub_90F2C
+        call XorRowBytes
         mov esi, ecx
         and esi, 0FFFFh
         inc edi
         push edi
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         mov ebx, ebp
         mov edx, esi
         mov eax, dword [byte esp+04h]
-        call sub_90F2C
+        call XorRowBytes
         jmp short loc_91015
 loc_91004:
         xor ebx, ebx
         mov bl, byte [byte esp+02Ch]
         mov edx, dword [byte esp+024h]
-        call sub_90F2C
+        call XorRowBytes
         mov esi, ecx
 loc_91015:
         add esi, dword [esp]
@@ -291,7 +291,7 @@ loc_91015:
         and esi, 0FFFFh
         inc edi
         push edi
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_91030:
         mov eax, dword [byte esp+08h]
@@ -305,7 +305,7 @@ loc_9103D:
         pop edi
         pop esi
         ret
-sub_91044:
+XorRectClipped:
         push esi
         mov esi, dword [byte esp+08h]
         mov ecx, dword [byte esp+0Ch]
@@ -406,7 +406,7 @@ loc_9110B:
         shr eax, 10h
         mov dword [byte esp+014h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and esi, 0FFFFh
         mov dword [byte esp+08h], ebp
@@ -436,7 +436,7 @@ loc_91165:
         inc eax
         mov dword [byte esp+014h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         push ebp
         mov ebx, dword [byte esp+08h]
@@ -465,7 +465,7 @@ loc_911E6:
         inc ebp
         mov dword [byte esp+014h], ebp
         push ebp
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_91209:
         dec dword [byte esp+08h]
@@ -477,7 +477,7 @@ loc_91212:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_9121C:
+DrawArtOpaqueAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -489,7 +489,7 @@ sub_9121C:
         call DrawArtOpaque
         add esp, byte 0Ch
         ret
-sub_91238:
+DrawArtOpaqueHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
         sar eax, 10h
@@ -525,7 +525,7 @@ loc_9127E:
         jb short loc_91274
 loc_91283:
         ret
-sub_91284:
+DrawArtKeyFF:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
@@ -534,7 +534,7 @@ sub_91284:
         push eax
         push ebx
         push edx
-        call sub_B693C
+        call BlitArtKeyFF
         add esp, byte 0Ch
         ret
 loc_912A5:
@@ -547,7 +547,7 @@ loc_912A5:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_912C8:
+DrawArtKeyFFAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -556,10 +556,10 @@ sub_912C8:
         sar eax, 10h
         push eax
         push edx
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         ret
-sub_912E4:
+DrawArtKeyFFHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
         sar eax, 10h
@@ -572,11 +572,11 @@ sub_912E4:
         sub ebx, eax
         push ebx
         push edx
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h
-sub_91310:
+FreeWindowBitmap:
         mov edx, dword [byte esp+04h]
         mov eax, dword [edx]
         mov eax, dword [byte eax+028h]

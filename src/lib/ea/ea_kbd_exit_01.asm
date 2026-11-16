@@ -6,7 +6,7 @@ extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joyca
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
 extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, FindNearestColor
 extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
-extern sub_B6F84, DefaultFont
+extern SetBitmapClip, DefaultFont
 global sub_981AD, sub_981B0, sub_981D4, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
 global AskExitToDos, loc_984CF, ShowMessageBox, sub_9862C, DosGetVector, DosSetVector, sub_9867E
 sub_981AD:
@@ -107,7 +107,7 @@ ShowPromptBox:
         mov eax, dword [dword esp+0C0h]
         push eax
         push BackBufferWidth
-        call sub_B6F84
+        call SetBitmapClip
         add esp, byte 14h
         call dword [off_D3070]
         push esi
@@ -200,7 +200,7 @@ loc_983F1:
         mov ebx, dword [dword esp+0C0h]
         push ebx
         push BackBufferWidth
-        call sub_B6F84
+        call SetBitmapClip
         add esp, byte 14h
         call dword [off_D306C]
         mov ebx, dword [dword esp+0B8h]
@@ -284,7 +284,7 @@ ShowMessageBox:
         push dword 140h
         push byte 0
         push BackBufferWidth
-        call sub_B6F84
+        call SetBitmapClip
         add esp, byte 14h
         call dword [off_D3070]
         mov ebx, 0BEh

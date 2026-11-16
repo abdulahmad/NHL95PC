@@ -17,8 +17,8 @@ extern rockteamcues, rocktunes, rpl_x, rpl_x_e16, rpl_y, SaveHilight, savepal, s
 extern scrolly, SelectRinkBM, SelectScreenBM, SetClipWindow, SetDialogColors, SetPalette, SetRinkScroll, SetScreenSize
 extern SetTickDeadline, SetViewRect, sounddev, spritedrawcount, str_ADROCKU, str_BothTeams, str_Gad1, str_Gadget5
 extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, FlushZones
-extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, sub_8E8A0, sub_96A78, SetScreenTarget, sub_B4CD8, FillRectColor
-extern sub_B500C, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
+extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, sub_8E8A0, MviGetFrame, SetScreenTarget, VgaBlitKeyedHot, FillRectColor
+extern VgaBlitKeyedFlipV, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
 global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
 global DrawGadgetButton_ret, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight_jt, ReplaySaveHilight, ReplaySaveHilight_n0
@@ -408,7 +408,7 @@ GadgetStub0:
 %endif ; C
 ;-----------------------------------------------------------------------------
 ; GadgetSoundStub                                7E03F  95 PC, low confidence
-; sub_96A78(dword_ED6D0) (EA sound library, one stack argument).
+; MviGetFrame(dword_ED6D0) (EA sound library, one stack argument).
 ;-----------------------------------------------------------------------------
 ; C: src/front/replay_controls/GadgetSoundStub.c
 %ifdef CBUILD
@@ -422,7 +422,7 @@ GadgetSoundStub:
         push edx
         mov edx, dword [dword_ED6D0]
         push edx
-        call sub_96A78
+        call MviGetFrame
         add esp, byte 4
         pop edx
         pop ecx
@@ -591,7 +591,7 @@ InstantReplay:
         push byte 0
         push byte 0
         push eax
-        call sub_B4CD8
+        call VgaBlitKeyedHot
         add esp, byte 0Ch
         mov eax, 6
         call DrawGadgetButton
@@ -1537,7 +1537,7 @@ ReplayControlLoop:
         push byte 0
         mov ebp, dword [gadgetshape]
         push ebp
-        call sub_B500C
+        call VgaBlitKeyedFlipV
         add esp, byte 0Ch
         mov eax, dword [byte esp+04h]
         cmp eax, dword [dword_ED754]
@@ -1598,7 +1598,7 @@ ReplayControlLoop:
         push ebp
         mov edx, dword [gadgetshape]
         push edx
-        call sub_B4CD8
+        call VgaBlitKeyedHot
         add esp, byte 0Ch
         mov eax, 2
         call DrawGadgetButton
@@ -1754,7 +1754,7 @@ ReplaySaveHilight:
         push byte 0
         mov esi, dword [gadgetshape]
         push esi
-        call sub_B500C
+        call VgaBlitKeyedFlipV
         add esp, byte 0Ch
         mov eax, 7
         call DrawGadgetButton

@@ -30,7 +30,7 @@ int DrawLeagueSetDlgSel(void)
         MakePath(path, dir, name, ext);
     }
     img = LoadBank(path, 0);
-    sub_91284(FindShape(img, (char *)str_Dbox2), 0x0A, 0x13);
+    DrawArtKeyFF(FindShape(img, (char *)str_Dbox2), 0x0A, 0x13);
     FreeMemBlock(img);
     TextSetColors(0xF8, 0xFF);
     if (sounddev == 0x10) {

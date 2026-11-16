@@ -19,7 +19,7 @@ extern str_fmt2d, str_fmt3d, str_fmt4d, str_fmtEmb, str_fmtMinSec, str_fmtTenths
 extern str_GAA4, str_GP8, str_Gstat3, str_Keys3, str_L8, str_Lelogo, str_Lineditp2, str_Menubuff8
 extern str_Min4, str_Name2, str_No2, str_Pal25, str_Pal26, str_PCT2, str_PIM4, str_PlusMinus7
 extern str_Pntr3, str_Pointer13, str_Pos2, str_Pstat3, str_PT2, str_S2dSS, str_S6, str_SA3
-extern str_Shots4, str_Shrt2, str_SRoster, str_T6, str_W6, SetDigiChannelVolume, sub_9121C, sub_91FE0
+extern str_Shots4, str_Shrt2, str_SRoster, str_T6, str_W6, SetDigiChannelVolume, DrawArtOpaqueAtOwnPos, DrawArtKeyColour
 extern SetScreenTarget, TextRestoreState, TextSaveState, TextSetColors, TextSetFont
 global str_RosterIncomplete, str_Scratch, str_Dress, str_Player, str_GoalieW, DbLineEditor, FindRosterSlot, DbLineEditorLoop
 global DrawLineJerseys, CheckRosterComplete, LineEdDone, MenuShowPlayerStats, MenuShowPlayerStats_status, MenuShowPlayerStats_ret, ScratchPlayer, DressPlayer
@@ -542,7 +542,7 @@ DbLineEditorLoop:
         push eax
         mov ebx, dword [pointerspr]
         push ebx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         push dword 1E0h
         push dword 280h
@@ -663,7 +663,7 @@ DbLineEditorLoop:
         push eax
         mov eax, dword [dword ebp-0B6h]
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .26:
         mov edx, dword [byte ebp+03Ah]
@@ -674,7 +674,7 @@ DbLineEditorLoop:
         mov ebx, dword [pointerspr]
         push ebx
 .27:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov esi, dword [byte ebp+03Eh]
         mov edi, dword [byte ebp+03Ah]
@@ -2157,7 +2157,7 @@ DbLineEditorLoop:
         push eax
         mov ebx, dword [dword ebp-0B6h]
         push ebx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .129:
         mov ecx, dword [byte ebp+03Ah]
@@ -2795,7 +2795,7 @@ MenuShowPlayerStats:
         mov eax, dword [fullscrbmp]
         mov ebp, dword [byte eax+02Ch]
         push ebp
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         cmp dword [esi], byte 0
         jl near MenuShowPlayerStats_status.1
@@ -3924,7 +3924,7 @@ ShowRosterStats:
         mov eax, dword [fullscrbmp]
         mov esi, dword [byte eax+02Ch]
         push esi
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         lea eax, [byte esp+010h]
         push eax

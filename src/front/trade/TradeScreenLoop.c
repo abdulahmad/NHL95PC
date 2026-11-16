@@ -40,7 +40,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
         c2 = byte_D12DE;                                                                                          \
         MakeJerseyShape(jerseyremap, tradejersey[tradeside * 0x268 + tradecursor[tradeside] * 0x16], c1, c2);     \
         SetColorRemap(jerseyremap);                                                                                   \
-        sub_91FE0(art, mx - 0x1C, my - 0x20);                                                                     \
+        DrawArtKeyColour(art, mx - 0x1C, my - 0x20);                                                                     \
     }
 
 /* DRAFT (first pass from Ghidra): same size (3,943 bytes), 51 differing under 10.0 GA, every stack slot the EXE's
@@ -129,7 +129,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
     mx = oldmx;
     my = oldmy;
     GrabBlock(ptr, PTRX(oldmx), PTRY(oldmy));
-    sub_91FE0(pointerspr, oldmx - 3, oldmy);
+    DrawArtKeyColour(pointerspr, oldmx - 3, oldmy);
     ClearInputQueue();
     traderesult = 0;
     do {
@@ -143,7 +143,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
                 PutBlock(ptr, PTRX(oldmx), PTRY(oldmy));
                 GrabBlock(ptr, PTRX(mx), PTRY(my));
                 DRAGJERSEY();
-                sub_91FE0(pointerspr, mx - 3, my);
+                DrawArtKeyColour(pointerspr, mx - 3, my);
                 oldmx = mx;
                 oldmy = my;
             }
@@ -333,7 +333,7 @@ int TradeScreenLoop(int art, unsigned char *recs, int *teams, unsigned char *slo
             if (!traderesult) {
                 GrabBlock(ptr, PTRX(mx), PTRY(my));
                 DRAGJERSEY();
-                sub_91FE0(pointerspr, mx - 3, my);
+                DrawArtKeyColour(pointerspr, mx - 3, my);
                 oldmx = mx;
                 oldmy = my;
             }

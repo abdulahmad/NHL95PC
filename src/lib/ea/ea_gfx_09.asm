@@ -4,15 +4,15 @@ bits 32
 section s_92890 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
 extern dword_D30A8, dword_D42AC, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8, dword_D42CC, dword_D42D0
-extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, sub_8E9D4, PutBlock
-extern sub_90EC0, SetClipWindow, sub_B5D80
-global sub_92890, loc_92901, loc_92930, loc_92936, loc_92951, loc_92957, loc_9296F, loc_9297A
+extern dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, fontcolor, off_D42A4, TextSetCursor, PutBlock
+extern FillRectClipped, SetClipWindow, PutPixel
+global TextPrint, loc_92901, loc_92930, loc_92936, loc_92951, loc_92957, loc_9296F, loc_9297A
 global loc_92993, loc_92995, loc_929B9, loc_929BB, loc_92A3D, loc_92A6A, loc_92A9A, loc_92ABC
 global loc_92AC5, loc_92AD9, loc_92AED, loc_92B02, loc_92B17, loc_92B2C, loc_92B41, loc_92B56
 global loc_92B6B, loc_92B80, loc_92B95, loc_92B9B, loc_92BBF, loc_92BE1, loc_92BE7, loc_92BF7
 global loc_92C0D, loc_92C29, loc_92C3A, loc_92C3D, loc_92C56, loc_92C74, loc_92C7A, loc_92C86
-global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, TextPrintAt, sub_92CF0
-sub_92890:
+global loc_92CA5, loc_92CAC, loc_92CAF, loc_92CB9, loc_92CC6, TextPrintAt, TextPutCharAt
+TextPrint:
         push esi
         push edi
         push ebp
@@ -168,7 +168,7 @@ loc_92A6A:
         push ebp
         mov ecx, dword [byte esp+02Ch]
         push ecx
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         mov eax, dword [byte esp+038h]
         add eax, byte 7
@@ -200,7 +200,7 @@ loc_92AD9:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92AED:
         inc esi
@@ -210,7 +210,7 @@ loc_92AED:
         push edx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B02:
         inc esi
@@ -220,7 +220,7 @@ loc_92B02:
         push ebx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B17:
         inc esi
@@ -230,7 +230,7 @@ loc_92B17:
         push ecx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B2C:
         inc esi
@@ -240,7 +240,7 @@ loc_92B2C:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B41:
         inc esi
@@ -250,7 +250,7 @@ loc_92B41:
         push edx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B56:
         inc esi
@@ -260,7 +260,7 @@ loc_92B56:
         push ebx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B6B:
         inc esi
@@ -270,7 +270,7 @@ loc_92B6B:
         push ecx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92B80:
         inc esi
@@ -292,7 +292,7 @@ loc_92B9B:
         push ebp
         mov ecx, dword [byte esp+02Ch]
         push ecx
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         mov eax, dword [byte esp+038h]
         inc eax
@@ -326,7 +326,7 @@ loc_92BF7:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92C0D:
         inc esi
@@ -339,7 +339,7 @@ loc_92C0D:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92C29:
         inc esi
@@ -361,7 +361,7 @@ loc_92C3D:
         push ebp
         mov eax, dword [byte esp+02Ch]
         push eax
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
 loc_92C56:
         mov eax, dword [byte esp+020h]
@@ -393,7 +393,7 @@ loc_92C86:
         push ebp
         mov eax, dword [byte esp+030h]
         push eax
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_92CA5:
         inc dword [byte esp+028h]
@@ -421,20 +421,20 @@ TextPrintAt:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E9D4
+        call TextSetCursor
         add esp, byte 8
         mov ecx, dword [byte esp+04h]
         push ecx
-        call sub_92890
+        call TextPrint
         add esp, byte 4
         ret
-sub_92CF0:
+TextPutCharAt:
         sub esp, byte 4
         mov edx, dword [byte esp+010h]
         push edx
         mov ebx, dword [byte esp+010h]
         push ebx
-        call sub_8E9D4
+        call TextSetCursor
         add esp, byte 8
         mov al, byte [byte esp+08h]
         mov byte [esp], al
@@ -442,7 +442,7 @@ sub_92CF0:
         mov byte [byte esp+01h], ah
         mov eax, esp
         push eax
-        call sub_92890
+        call TextPrint
         add esp, byte 4
         add esp, byte 4
         ret

@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9DE9C progbits alloc exec nowrite align=1
 extern __GETDS, byte_F2F42, byte_F2F43, byte_F3196, byte_F3197, dword_D4F9A, dword_F2F28, dword_F3108
-extern memcpy_, GetPatchEntry, sub_91FA4, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
+extern memcpy_, GetPatchEntry, FixedMulRound, OplFlush, OplLoadVoice, OplHwInit, OplHwClose, OplDetect
 extern OplOpen, OplNoteFNum, OplVolumeLevel, OplVelocityLevel, sub_B4A60, unk_F21FC, unk_F3148, word_F2F3C
 extern word_F2F3E, word_F2F40, word_F2F44, word_F3150, word_F344E, word_F3450, word_F3452
 global AdlibDetect, AdlibOpen, AdlibInit, loc_9DEE3, loc_9DF3A
@@ -750,7 +750,7 @@ loc_9E601:
         movsx eax, word [byte esi+08h]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov word [byte esi+02h], ax
 loc_9E641:
@@ -1030,7 +1030,7 @@ loc_9E921:
         movsx eax, word [byte eax+02h]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1042,7 +1042,7 @@ loc_9E94E:
         push eax
         movsx eax, word [byte ebp-0Ch]
         push eax
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-018h]
@@ -1058,7 +1058,7 @@ loc_9E97A:
         push eax
         movsx eax, word [byte ebp-0Ch]
         push eax
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-014h]
@@ -1068,7 +1068,7 @@ loc_9E9A2:
         push byte 3Fh
         movsx eax, word [byte ebp-0Ch]
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov ah, 3Fh
         sub ah, al
@@ -1110,7 +1110,7 @@ loc_9EA0F:
         movsx eax, word [byte ebp-0Ch]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1148,7 +1148,7 @@ loc_9EA7A:
         movsx eax, word [byte ebp-0Ch]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov eax, dword [byte ebp-010h]
@@ -1293,7 +1293,7 @@ AdlibWriteVoice:
         movsx eax, word [byte eax+012h]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov ah, 3Fh
         sub ah, al
@@ -1318,7 +1318,7 @@ loc_9EC4D:
         movsx eax, word [byte eax+012h]
         shl eax, 2
         push eax
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov ah, 3Fh
         sub ah, al

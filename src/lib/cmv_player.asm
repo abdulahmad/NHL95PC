@@ -4,12 +4,12 @@ bits 32
 section s_1AC25 progbits alloc exec nowrite align=1
 extern __CHK, str_CmvMemBlock, str_CmvPalette, FreeMemBlock, AllocMemBlock, AllocMemBlockUnlocked, FreeBitmap, bcopy
 extern CreateBitmap
-global sub_1AC25, loc_1AC96, sub_1AC9A, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, sub_1ACF1
-global loc_1AD12, sub_1AD16, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, sub_1AE6B, loc_1AEE2
-global loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB, loc_1AFEF, sub_1B002, loc_1B029
-global loc_1B05A, loc_1B087, loc_1B08A, sub_1B092, sub_1B09F, sub_1B0AD, sub_1B0BB, sub_1B0C9
-global sub_1B0D7, sub_1B0E5
-sub_1AC25:
+global CmvCreate, loc_1AC96, CmvFreeBuffers, loc_1ACBB, loc_1ACCB, loc_1ACDB, loc_1ACEB, CmvDestroy
+global loc_1AD12, CmvReadHeader, loc_1ADE0, loc_1ADF0, loc_1AE3B, loc_1AE65, CmvDecodeBlocks, loc_1AEE2
+global loc_1AEEF, loc_1AF62, loc_1AFB8, loc_1AFD3, loc_1AFDB, loc_1AFEF, CmvDecodeFrame, loc_1B029
+global loc_1B05A, loc_1B087, loc_1B08A, CmvFrameCount, CmvWidth, CmvHeight, CmvFrameRate, CmvPaletteFirst
+global CmvPaletteCount, CmvPalette
+CmvCreate:
         push dword 1Ch
         call __CHK
         push ebx
@@ -38,7 +38,7 @@ loc_1AC96:
         pop ecx
         pop ebx
         ret
-sub_1AC9A:
+CmvFreeBuffers:
         push dword 1Ch
         call __CHK
         push ebx
@@ -81,7 +81,7 @@ loc_1ACEB:
         pop ecx
         pop ebx
         ret
-sub_1ACF1:
+CmvDestroy:
         push dword 14h
         call __CHK
         push ebx
@@ -90,7 +90,7 @@ sub_1ACF1:
         mov edx, eax
         test eax, eax
         je short loc_1AD12
-        call sub_1AC9A
+        call CmvFreeBuffers
         push edx
         call FreeMemBlock
         add esp, byte 4
@@ -99,7 +99,7 @@ loc_1AD12:
         pop ecx
         pop ebx
         ret
-sub_1AD16:
+CmvReadHeader:
         push dword 28h
         call __CHK
         push ebx
@@ -111,7 +111,7 @@ sub_1AD16:
         mov edi, eax
         mov ebp, eax
         lea esi, [byte edx+0Ah]
-        call sub_1AC9A
+        call CmvFreeBuffers
         xor eax, eax
         mov al, byte [esi]
         mov dword [edi], eax
@@ -251,7 +251,7 @@ loc_1AE65:
         pop ecx
         pop ebx
         ret
-sub_1AE6B:
+CmvDecodeBlocks:
         push dword 4Ch
         call __CHK
         push ecx
@@ -394,7 +394,7 @@ loc_1AFEF:
         pop esi
         pop ecx
         ret
-sub_1B002:
+CmvDecodeFrame:
         push dword 24h
         call __CHK
         push ebx
@@ -448,43 +448,43 @@ loc_1B05A:
         lea ebx, [esi+eax]
         mov edx, esi
         mov eax, ecx
-        call sub_1AE6B
+        call CmvDecodeBlocks
 loc_1B087:
         mov eax, dword [byte edi+020h]
 loc_1B08A:
         mov eax, dword [byte eax+02Ch]
         jmp near loc_1AE65
-sub_1B092:
+CmvFrameCount:
         push dword 4
         call __CHK
         mov eax, dword [eax]
         ret
-sub_1B09F:
+CmvWidth:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+04h]
         ret
-sub_1B0AD:
+CmvHeight:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+08h]
         ret
-sub_1B0BB:
+CmvFrameRate:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+0Ch]
         ret
-sub_1B0C9:
+CmvPaletteFirst:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+014h]
         ret
-sub_1B0D7:
+CmvPaletteCount:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+018h]
         ret
-sub_1B0E5:
+CmvPalette:
         push dword 4
         call __CHK
         mov eax, dword [byte eax+01Ch]

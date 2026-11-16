@@ -52,7 +52,7 @@ int __cdecl JoystickCalScreen(int mask, int shift, int side, char *title)
         memset(pal, 0, 0x300);
         VgaSetPalette(0, 0x100, pal);
         s.bank = LoadBank((char *)str_Joycal, 0);
-        sub_9121C(FindShape(s.bank, (char *)str_Scrn3));
+        DrawArtOpaqueAtOwnPos(FindShape(s.bank, (char *)str_Scrn3));
         if (side) s.shape = FindShape(s.bank, (char *)str_Rite);
         else s.shape = FindShape(s.bank, (char *)str_Left);
         DrawShape(s.shape);

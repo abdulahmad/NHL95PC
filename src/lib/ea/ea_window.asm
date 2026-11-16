@@ -9,7 +9,7 @@ extern AllocMemBlock, AllocMemBlockEx, FindCachedFile, FillRowTable, LoadFileCac
 extern ZeroMem
 global subwindowdefadr, loc_8E816, sub_8E81C, loc_8E82B, LoadBank, loc_8E853, loc_8E868, sub_8E86A
 global unk_8E870, sub_8E8A0, sub_8E8B8, sub_8E8D0, loc_8E8ED, sub_8E8F0, sub_8E908, LoadDataFileExt
-global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, sub_8E9D4, TextSaveState, TextRestoreState, TextSetFont
+global loc_8E963, loc_8E991, loc_8E9B4, TextSetColors, TextSetCursor, TextSaveState, TextRestoreState, TextSetFont
 global loc_8EA81, loc_8EA83, loc_8EA98, loc_8EAAA, loc_8EABF, loc_8EAD1
 subwindowdefadr:
         push esi
@@ -234,7 +234,7 @@ TextSetColors:
         mov dword [dword_D42AC], eax
         ret
         db 090h
-sub_8E9D4:
+TextSetCursor:
         mov eax, dword [byte esp+04h]
         mov dword [dword_D42B0], eax
         mov eax, dword [byte esp+08h]

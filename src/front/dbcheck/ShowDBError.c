@@ -6,7 +6,7 @@
 int ShowDBError(int *sel, int *state, int msg, int arg)
 {
     SetScreenTarget();
-    sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
+    DrawArtOpaqueAtOwnPos(((int *)fullscrbmp)[0x2C / 4]);
     *sel = -1;
     *state = 0;
     return ErrorScreenWait(msg, arg, (char *)btn_DBError, 2);

@@ -9,26 +9,26 @@
 #define RunIntro RunIntro_decl
 #define TickDeadlinePassed TickDeadlinePassed_decl
 #define TicksSinceLastCall TicksSinceLastCall_decl
-#define sub_9087C sub_9087C_decl
+#define DrawArtOr sub_9087C_decl
 #define FreeSample sub_8F1FE_decl
-#define sub_912C8 sub_912C8_decl
-#define sub_1B0F3 sub_1B0F3_decl
-#define sub_1B1C2 sub_1B1C2_decl
-#define sub_1AC25 sub_1AC25_decl
-#define sub_1B2A7 sub_1B2A7_decl
-#define sub_1B8AC sub_1B8AC_decl
-#define sub_1B002 sub_1B002_decl
-#define sub_1AD16 sub_1AD16_decl
-#define sub_1B092 sub_1B092_decl
-#define sub_1B09F sub_1B09F_decl
-#define sub_1B0AD sub_1B0AD_decl
-#define sub_1B0E5 sub_1B0E5_decl
-#define sub_1B0D7 sub_1B0D7_decl
-#define sub_1B0C9 sub_1B0C9_decl
-#define sub_1B0BB sub_1B0BB_decl
-#define sub_1B92E sub_1B92E_decl
-#define sub_1ACF1 sub_1ACF1_decl
-#define sub_1B18B sub_1B18B_decl
+#define DrawArtKeyFFAtOwnPos sub_912C8_decl
+#define CdStreamCreate sub_1B0F3_decl
+#define CdStreamOpen sub_1B1C2_decl
+#define CmvCreate sub_1AC25_decl
+#define CdStreamService sub_1B2A7_decl
+#define CdStreamNextChunk sub_1B8AC_decl
+#define CmvDecodeFrame sub_1B002_decl
+#define CmvReadHeader sub_1AD16_decl
+#define CmvFrameCount sub_1B092_decl
+#define CmvWidth sub_1B09F_decl
+#define CmvHeight sub_1B0AD_decl
+#define CmvPalette sub_1B0E5_decl
+#define CmvPaletteCount sub_1B0D7_decl
+#define CmvPaletteFirst sub_1B0C9_decl
+#define CmvFrameRate sub_1B0BB_decl
+#define CdStreamReleaseChunk sub_1B92E_decl
+#define CmvDestroy sub_1ACF1_decl
+#define CdStreamClose sub_1B18B_decl
 #include "nhl95.h"
 #undef RunDemoGame
 #undef LoadRockMusic
@@ -40,51 +40,51 @@
 #undef RunIntro
 #undef TickDeadlinePassed
 #undef TicksSinceLastCall
-#undef sub_9087C
+#undef DrawArtOr
 #undef FreeSample
-#undef sub_912C8
-#undef sub_1B0F3
-#undef sub_1B1C2
-#undef sub_1AC25
-#undef sub_1B2A7
-#undef sub_1B8AC
-#undef sub_1B002
-#undef sub_1AD16
-#undef sub_1B092
-#undef sub_1B09F
-#undef sub_1B0AD
-#undef sub_1B0E5
-#undef sub_1B0D7
-#undef sub_1B0C9
-#undef sub_1B0BB
-#undef sub_1B92E
-#undef sub_1ACF1
-#undef sub_1B18B
+#undef DrawArtKeyFFAtOwnPos
+#undef CdStreamCreate
+#undef CdStreamOpen
+#undef CmvCreate
+#undef CdStreamService
+#undef CdStreamNextChunk
+#undef CmvDecodeFrame
+#undef CmvReadHeader
+#undef CmvFrameCount
+#undef CmvWidth
+#undef CmvHeight
+#undef CmvPalette
+#undef CmvPaletteCount
+#undef CmvPaletteFirst
+#undef CmvFrameRate
+#undef CdStreamReleaseChunk
+#undef CmvDestroy
+#undef CdStreamClose
 
 int TitleScreen(void);
 void RunIntro(void);
 int TickDeadlinePassed(void);
 int TicksSinceLastCall(void);
-void __cdecl sub_9087C(int frame, int x, int y);       /* graphics library: draw a frame */
+void __cdecl DrawArtOr(int frame, int x, int y);       /* graphics library: draw a frame */
 void FreeSample(int sample);                            /* sound library: free a sample */
-void __cdecl sub_912C8(int art);                       /* graphics library: set the palette from an art block */
-int __cdecl sub_1B0F3(int size, int chunk, int flags);  /* cdstream: create a reader */
-void __cdecl sub_1B1C2(int stream, char *path);         /* cdstream: open a file */
-int sub_1AC25(void);                                    /* cmv_player: create a decoder */
-void sub_1B2A7(void);                                   /* cdstream: service the reader */
-int __cdecl sub_1B8AC(int stream);                      /* cdstream: next chunk, 0 none yet, -1 at the end */
-int sub_1B002(int dec);                                 /* cmv_player: decode a frame */
-void sub_1AD16(int dec);
-int sub_1B092(int dec);
-int sub_1B09F(int dec);
-int sub_1B0AD(int dec);
-int sub_1B0E5(int dec);
-int sub_1B0D7(int dec);
-int sub_1B0C9(int dec);
-int sub_1B0BB(int dec);
-void __cdecl sub_1B92E(int stream, int chunk);          /* cdstream: release a chunk */
-void sub_1ACF1(int dec);
-void __cdecl sub_1B18B(int stream);
+void __cdecl DrawArtKeyFFAtOwnPos(int art);                       /* graphics library: set the palette from an art block */
+int __cdecl CdStreamCreate(int size, int chunk, int flags);  /* cdstream: create a reader */
+void __cdecl CdStreamOpen(int stream, char *path);         /* cdstream: open a file */
+int CmvCreate(void);                                    /* cmv_player: create a decoder */
+void CdStreamService(void);                                   /* cdstream: service the reader */
+int __cdecl CdStreamNextChunk(int stream);                      /* cdstream: next chunk, 0 none yet, -1 at the end */
+int CmvDecodeFrame(int dec);                                 /* cmv_player: decode a frame */
+void CmvReadHeader(int dec);
+int CmvFrameCount(int dec);
+int CmvWidth(int dec);
+int CmvHeight(int dec);
+int CmvPalette(int dec);
+int CmvPaletteCount(int dec);
+int CmvPaletteFirst(int dec);
+int CmvFrameRate(int dec);
+void __cdecl CdStreamReleaseChunk(int stream, int chunk);          /* cdstream: release a chunk */
+void CmvDestroy(int dec);
+void __cdecl CdStreamClose(int stream);
 void __STOSB(void *p, int v, int n);
 #pragma aux __STOSB "__STOSB" parm [eax] [edx] [ecx];
 
@@ -200,9 +200,9 @@ typedef struct CreditPage { signed char n; int time; char *bank; char *lines[1];
    (the EXE's 3Fh in dh and the sum in bl; a char copy c adds in place and stores 3Fh as an immediate), which
    also gives the EXE's frame size. The remaining wait goes through a local (left) and ends is declared first:
    with that temporary in the list GA's stack-slot sort gives frame and bmp the EXE's slots. Left: the EXE's
-   `mov edx, eax` right after sub_1B8AC (as PlayMVI). It is the chunk argument: sub_1B002 and sub_1AD16 take the
+   `mov edx, eax` right after CdStreamNextChunk (as PlayMVI). It is the chunk argument: CmvDecodeFrame and CmvReadHeader take the
    chunk as a second parameter in edx (`mov esi, edx` / `lea esi, [edx+0Ah]` at their entries; edx survives
-   ReadBE32). `sub_1B002(dec, chunk)` / `sub_1AD16(dec, chunk)` reproduce the move exactly, but then frame and bmp
+   ReadBE32). `CmvDecodeFrame(dec, chunk)` / `CmvReadHeader(dec, chunk)` reproduce the move exactly, but then frame and bmp
    swap slots again (10 differing) and left no longer helps: that version still needs its slot fix. */
 /* TitleScreen (1609F, PC only; ends in RunDemoGame_x): the title screen. Load EASCRN (from the CD when listed):
    its palette brightened (+5, at most 3Fh), the SCRN2 screen and the MSK1 mask (copied into a MASK block of 200 x
@@ -247,7 +247,7 @@ int TitleScreen(void)
         if (pal[i] < 0x3B) pal[i] = pal[i] + 5;
         else pal[i] = 0x3F;
     }
-    sub_9121C(FindShape(bank, (char *)str_Scrn2));
+    DrawArtOpaqueAtOwnPos(FindShape(bank, (char *)str_Scrn2));
     m = (unsigned char *)FindShape(bank, (char *)str_Msk1);
     mask = (unsigned char *)AllocMemBlock((char *)str_MASK, 0x9C51, 0x20);
     *(struct { unsigned char b[17]; } *)mask = *(struct { unsigned char b[17]; } *)m;
@@ -266,18 +266,18 @@ int TitleScreen(void)
         titlesample = LoadSample(path);
     }
     MakePath(path, fileoncd[0x24] == 1 ? (char *)cddriveptr : 0, (char *)str_Title, (char *)str_Cmv);
-    stream = sub_1B0F3(0x493E0, 0x2000, 0x20);
-    sub_1B1C2(stream, path);
-    dec = sub_1AC25();
+    stream = CdStreamCreate(0x493E0, 0x2000, 0x20);
+    CdStreamOpen(stream, path);
+    dec = CmvCreate();
     SetTickDeadline(0x96);
-    while (!TickDeadlinePassed()) sub_1B2A7();
+    while (!TickDeadlinePassed()) CdStreamService();
     delay = 10;
     pal[2] = pal[1] = pal[0] = 0;
     if (musicon) {
         if (songdata) PlayDigiBlockLoop(songdata, musichandle, 3, 0x4C);
         FadePalStep(0, (unsigned char *)pal, 0x10);
         SetTickDeadline(0x5A);
-        while (!TickDeadlinePassed()) sub_1B2A7();
+        while (!TickDeadlinePassed()) CdStreamService();
     } else {
         PlayDigiSample((void *)titlesample);
         FadePalStep(0, (unsigned char *)pal, 0x10);
@@ -291,7 +291,7 @@ int TitleScreen(void)
     TicksSinceLastCall();
     ends = key;
     do {
-        chunk = sub_1B8AC(stream);
+        chunk = CdStreamNextChunk(stream);
         if (chunk == -1) {
             key = chunk;
         } else if (chunk) {
@@ -299,13 +299,13 @@ int TitleScreen(void)
             case 0x4D564966:
                 due += delay;
                 n++;
-                frame = sub_1B002(dec);
+                frame = CmvDecodeFrame(dec);
                 if (((int (__cdecl *)(void))GetTicks)() - t0 < due) {
                     SetDrawBitmap(bmp);
-                    sub_9121C((int)mask);
-                    sub_9087C(frame, 0, 0);
+                    DrawArtOpaqueAtOwnPos((int)mask);
+                    DrawArtOr(frame, 0, 0);
                     SetScreenTarget();
-                    sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
+                    DrawArtKeyFF(*(int *)(bmp + 0x2C), 0x21, 0x56);
                 }
                 if (first == 1 && ends == 0) {
                     if (musicon && nhlintrosaid) {
@@ -317,16 +317,16 @@ int TitleScreen(void)
                 }
                 break;
             case 0x4D564968:
-                sub_1AD16(dec);
-                sub_1B092(dec);
-                if (!bmp) bmp = CreateBitmap(sub_1B09F(dec), sub_1B0AD(dec), 0);
+                CmvReadHeader(dec);
+                CmvFrameCount(dec);
+                if (!bmp) bmp = CreateBitmap(CmvWidth(dec), CmvHeight(dec), 0);
                 SetDrawBitmap(bmp);
-                sub_9121C((int)mask);
+                DrawArtOpaqueAtOwnPos((int)mask);
                 SetScreenTarget();
-                sub_91284(*(int *)(bmp + 0x2C), 0x21, 0x56);
-                memcpy(pal + sub_1B0C9(dec) * 3, (void *)sub_1B0E5(dec), sub_1B0D7(dec) * 3);
+                DrawArtKeyFF(*(int *)(bmp + 0x2C), 0x21, 0x56);
+                memcpy(pal + CmvPaletteFirst(dec) * 3, (void *)CmvPalette(dec), CmvPaletteCount(dec) * 3);
                 VgaSetPalette(0, 0x100, (unsigned char *)pal);
-                delay = 100 / sub_1B0BB(dec);
+                delay = 100 / CmvFrameRate(dec);
                 break;
             case 0x4D564965:
                 ends++;
@@ -335,8 +335,8 @@ int TitleScreen(void)
                 key = -1;
                 break;
             }
-            sub_1B92E(stream, chunk);
-            sub_1B2A7();
+            CdStreamReleaseChunk(stream, chunk);
+            CdStreamService();
             if (id == 0x4D564966 && (i = ((int (__cdecl *)(void))GetTicks)() - t0) < due) {
                 left = due - i;
                 SetTickDeadline(left);
@@ -345,13 +345,13 @@ int TitleScreen(void)
                 }
             }
         } else {
-            sub_1B2A7();
+            CdStreamService();
         }
         if (!key && n > 0x23) key = AnyInputPressed();
     } while (!key && ends < 2);
     if (bmp) FreeBitmap(bmp);
-    sub_1ACF1(dec);
-    sub_1B18B(stream);
+    CmvDestroy(dec);
+    CdStreamClose(stream);
     if (musicon && songdata) SetDigiChannelVolume(musichandle, 3, 0x64);
     FadePalStep(1, (unsigned char *)pal, 0x10);
     if (musicon && songdata) {
@@ -405,7 +405,7 @@ void RunIntro(void)
     bank = LoadBank(path, 0);
     memcpy(tgt, (char *)FindShape(bank, (char *)str_Pl2) + 0x10, 0x300);
     memcpy(pal, (char *)FindShape(bank, (char *)str_Pl1) + 0x10, 0x300);
-    sub_9121C(FindShape(bank, (char *)str_Bkgd3));
+    DrawArtOpaqueAtOwnPos(FindShape(bank, (char *)str_Bkgd3));
     FreeMemBlock(bank);
     MakePath(path, fileoncd[0x128] == 1 ? (char *)cddriveptr : 0, (char *)str_Pioneer2, 0);
     bank2 = LoadBank(path, 0);
@@ -468,7 +468,7 @@ void RunIntro(void)
     if (musicon && song3) PlayDigiBlockLoop(song3, musichandle, 2, 0x7F);
     for (i = 1; i < 5; i++) DrawShape(shapes[i]);
     VgaSetPalette(0, 0x100, (unsigned char *)pal);
-    sub_9121C(shapes[0]);
+    DrawArtOpaqueAtOwnPos(shapes[0]);
     FreeMemBlock(bank2);
     changed = 1;
     while (changed) {
@@ -531,7 +531,7 @@ void RunIntro(void)
         MakePath(path, fileoncd[0x67] == 1 ? (char *)cddriveptr : 0, (char *)str_Eaopen, 0);
         bank = LoadBank(path, 0);
         memcpy(pal, (char *)FindShape(bank, (char *)str_Pal4) + 0x10, 0x300);
-        sub_912C8(FindShape(bank, (char *)str_Scrn2));
+        DrawArtKeyFFAtOwnPos(FindShape(bank, (char *)str_Scrn2));
         FreeMemBlock(bank);
         if (musicon && !songdata) {
             MakePath(path, fileoncd[0x1DC] == 1 ? (char *)cddriveptr : 0, (char *)str_Easports, (char *)str_Iff2);

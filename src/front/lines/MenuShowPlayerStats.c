@@ -45,7 +45,7 @@ int MenuShowPlayerStats(unsigned char *nums, int ignored, unsigned char side, in
     DrawLineEditorScreen(side, art, zero, buttons, extra);
     DrawLineJerseys(nums, art, side);
     SetScreenTarget();
-    sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
+    DrawArtOpaqueAtOwnPos(((int *)fullscrbmp)[0x2C / 4]);
     if (*(volatile int *)sel >= 0) {
         if (rosterstat[side * 0x2F4 + *sel * 27] == 2)
             TextSetColors(0x7E, 0xC1);

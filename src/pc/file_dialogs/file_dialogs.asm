@@ -20,7 +20,7 @@ extern str_Gtpo, str_LAAtMTL, str_League, str_LeagueCalled, str_LP, str_Lp, str_
 extern str_Nhl, str_NHL, str_Nhl2, str_Noar, str_None, str_Open, str_Open2, str_OpenBut
 extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGameSav, str_Pointer5, str_Sav
 extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
-extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, sub_91284, DrawArt
+extern LoadBank, sub_8E8A0, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt
 extern GrabBlock, PrintString, TextPrintAt, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
 extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
@@ -886,7 +886,7 @@ DrawFileDlg:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         push esi
         call FreeMemBlock

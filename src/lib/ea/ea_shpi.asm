@@ -5,7 +5,7 @@ section s_A2000 progbits alloc exec nowrite align=1
 extern _os_handle_0, _os_handle_1, str_SHPI2, cliprect_x0, cliprect_x1, cliprect_y0, cliprect_y1, DrawDestBuffer
 extern dword_F6138, strncpy_, strrchr_, AllocMemBlockEx, ResizeMemBlock, FindCachedFile, sub_9762C, unpack
 extern DosFileInfo, sub_B0100, sub_B0148, bcopy, DosOpenFile, DosCloseFile, DosReadFile, DosSeekFile
-extern SetBlitSource, sub_B72E9
+extern SetBlitSource, CopyRowKeyFF
 global DrawShapeQuad, loc_A2057, loc_A206E, loc_A207C, loc_A20F3, loc_A20F9, loc_A21D1, loc_A21DD
 global loc_A220B, loc_A22A7, loc_A22DC, loc_A22E5, loc_A2338, loc_A2358, loc_A237C, loc_A23A6
 global loc_A23C4, loc_A23C6, loc_A2404, loc_A242C, loc_A249C, loc_A253F, loc_A254A, loc_A257E
@@ -350,7 +350,7 @@ loc_A23C6:
         add eax, dword [byte esp+060h]
         add ebx, dword [eax]
         push ebx
-        call sub_B72E9
+        call CopyRowKeyFF
         add esp, byte 0Ch
 loc_A2404:
         add ebp, dword [byte esp+04Ch]
@@ -499,7 +499,7 @@ loc_A259A:
         add eax, dword [byte esp+058h]
         add edx, dword [eax]
         push edx
-        call sub_B72E9
+        call CopyRowKeyFF
         add esp, byte 0Ch
 loc_A25D8:
         add ebp, dword [byte esp+04Ch]

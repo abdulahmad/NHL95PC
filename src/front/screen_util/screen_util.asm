@@ -14,8 +14,8 @@ extern statsplayoffs, StatsSelLeague, StatsSelLeaguePlayoffs, StatsSelPlayoffMod
 extern str_IntermissionDesk, str_LeagueCalendar, str_LgPlayoffsTitle, str_LgSeasonTitle, str_LineCodes0, str_LineCodes1, str_LineCodes2, str_LineNames
 extern str_PlayOffsSfx, str_PlayoffTree, str_POTitle, str_PPV, str_RinkSide, str_scrbrd1, str_SeasonPlayOffsSfx, str_SeasonSfx
 extern str_SportsCentral, str_VisLineTags, str_Visp, strcpy_, strncpy_, MarkZoneRect, sub_8E8A0, ProjectPointList
-extern FindShape, sub_B4CD8, SetColorRemap, sub_B4E50, sub_B500C, sub_B52B4, sub_B5584, sub_B56B8
-extern sub_B5974, sub_B5AC8, awayremap_eC0, homeremap_eC0, vgapage
+extern FindShape, VgaBlitKeyedHot, SetColorRemap, VgaBlitRemap, VgaBlitKeyedFlipV, VgaBlitRemapFlipV, VgaBlitKeyedFlipH, VgaBlitKeyedFlipHV
+extern VgaBlitRemapFlipH, VgaBlitRemapFlipHV, awayremap_eC0, homeremap_eC0, vgapage
 global LoadScoreboardGfx, DrawSprite_jt, DrawSprite, DrawSprite_b0, DrawSprite_b1, DrawSprite_b2, DrawSprite_b3, DrawSprite_b4
 global DrawSprite_b5, DrawSprite_b6, DrawSprite_b7, NullBlit, NullFunc_1D024, AddDirtyRect, SetupStatsSourceMenu_jt, SetupStatsSourceMenu
 global SetupStatsSourceMenu_lg, SetupStatsSourceMenu_po, SetupStatsSourceMenu_exh, SetupStatsSourceMenu_all, BuildSavedGameLabels, StrLenToDot, SetScreenTitle_jt, SetScreenTitle
@@ -309,7 +309,7 @@ DrawSprite_b0:
         push ebp
         push edi
         push esi
-        call sub_B4CD8
+        call VgaBlitKeyedHot
 .1:
         add esp, byte 0Ch
 .x:
@@ -322,43 +322,43 @@ DrawSprite_b1:
         push ebp
         push edi
         push esi
-        call sub_B500C
+        call VgaBlitKeyedFlipV
         jmp short DrawSprite_b0.1
 DrawSprite_b2:
         push ebp
         push edi
         push esi
-        call sub_B4E50
+        call VgaBlitRemap
         jmp short DrawSprite_b0.1
 DrawSprite_b3:
         push ebp
         push edi
         push esi
-        call sub_B52B4
+        call VgaBlitRemapFlipV
         jmp short DrawSprite_b0.1
 DrawSprite_b4:
         push ebp
         push edi
         push esi
-        call sub_B5584
+        call VgaBlitKeyedFlipH
         jmp short DrawSprite_b0.1
 DrawSprite_b5:
         push ebp
         push edi
         push esi
-        call sub_B56B8
+        call VgaBlitKeyedFlipHV
         jmp short DrawSprite_b0.1
 DrawSprite_b6:
         push ebp
         push edi
         push esi
-        call sub_B5974
+        call VgaBlitRemapFlipH
         jmp short DrawSprite_b0.1
 DrawSprite_b7:
         push ebp
         push edi
         push esi
-        call sub_B5AC8
+        call VgaBlitRemapFlipHV
         jmp short DrawSprite_b0.1
 ;-----------------------------------------------------------------------------
 ; NullBlit                                     1D019  95 PC, medium confidence

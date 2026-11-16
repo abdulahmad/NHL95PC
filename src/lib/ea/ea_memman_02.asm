@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_8D2F0 progbits alloc exec nowrite align=1
 extern str_GetmemblockNOMEMORYBLOCKS, memblocklist, FreeSpaceList, dword_EDAAC, MemLockHandle, dword_EDAB4, FatalError, findmemblock
-extern memlist1, reservemem, sub_8E3F8, sub_8E44C, MemUnlock, bcopy, MemLock
+extern memlist1, reservemem, StrCompareN, FileNameOnly, MemUnlock, bcopy, MemLock
 global PushMemDescriptorLocked, UnlinkMemBlockLocked, loc_8D340, FreeMemBlocksAfter, FreeBlocksAfter, loc_8D379, loc_8D38E, MergeFreeSpaceLocked
 global MergeFreeSpace, loc_8D40C, loc_8D427, loc_8D438, loc_8D45C, loc_8D45E, MarkBlockPurgeable, MarkDescPurgeable
 global SetMemBlockPurgeLevel, SetMemBlockPurge, FindNamedBlock, loc_8D521, loc_8D53A, loc_8D542, FindMemBlockNamed, FindNamedBlockNext
@@ -225,7 +225,7 @@ FindNamedBlock:
         add edi, eax
         mov edx, dword [byte esp+010h]
         push edx
-        call sub_8E44C
+        call FileNameOnly
         add esp, byte 4
         mov ebp, eax
         mov esi, dword [edi]
@@ -236,7 +236,7 @@ loc_8D521:
         lea eax, [byte esi+04h]
         push eax
         push ebp
-        call sub_8E3F8
+        call StrCompareN
         add esp, byte 0Ch
         test eax, eax
         jne short loc_8D53A
@@ -276,7 +276,7 @@ FindNamedBlockNext:
         add edi, eax
         mov edx, dword [byte esp+010h]
         push edx
-        call sub_8E44C
+        call FileNameOnly
         add esp, byte 4
         mov ebp, eax
         mov esi, dword [edi]
@@ -287,7 +287,7 @@ loc_8D591:
         lea eax, [byte esi+04h]
         push eax
         push ebp
-        call sub_8E3F8
+        call StrCompareN
         add esp, byte 0Ch
         test eax, eax
         jne short loc_8D5B0

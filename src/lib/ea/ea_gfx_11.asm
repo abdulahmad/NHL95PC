@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_92F50 progbits alloc exec nowrite align=1
-extern sub_90EC0, sub_91044
+extern FillRectClipped, XorRectClipped
 global XorRectOutline, loc_92F6C, loc_92F89, sub_93000, loc_9301C, loc_93039
 XorRectOutline:
         push esi
@@ -41,7 +41,7 @@ loc_92F89:
         push ecx
         push edi
         push esi
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         mov eax, dword [byte esp+028h]
         push eax
@@ -51,7 +51,7 @@ loc_92F89:
         inc edi
         push edi
         push ebp
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         mov ebx, dword [byte esp+028h]
         push ebx
@@ -60,7 +60,7 @@ loc_92F89:
         push byte 1
         push edi
         push esi
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         mov edi, dword [byte esp+028h]
         push edi
@@ -70,7 +70,7 @@ loc_92F89:
         mov eax, dword [byte esp+030h]
         push eax
         push esi
-        call sub_91044
+        call XorRectClipped
         add esp, byte 14h
         add esp, byte 8
         pop ebp
@@ -115,7 +115,7 @@ loc_93039:
         push ecx
         push edi
         push esi
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         mov eax, dword [byte esp+028h]
         push eax
@@ -125,7 +125,7 @@ loc_93039:
         inc edi
         push edi
         push ebp
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         mov ebx, dword [byte esp+028h]
         push ebx
@@ -134,7 +134,7 @@ loc_93039:
         push byte 1
         push edi
         push esi
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         mov edi, dword [byte esp+028h]
         push edi
@@ -144,7 +144,7 @@ loc_93039:
         mov eax, dword [byte esp+030h]
         push eax
         push esi
-        call sub_90EC0
+        call FillRectClipped
         add esp, byte 14h
         add esp, byte 8
         pop ebp

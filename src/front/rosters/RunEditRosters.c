@@ -93,7 +93,7 @@ void RunEditRosters(void)
    (DrawRosterPanel) and, in ratings mode (rostereditmode == 2), the ratings box: a dialog frame with bevelled edges,
    "Ratings " + the first roster team's name centred, the nine rating names (teamratingnames) with their values from the
    team record (+2DCh, picked by teamratingidx), and the two buttons (btn_EditRosters). Then the bitmap is shown
-   (sub_9121C). No arguments, no result. */
+   (DrawArtOpaqueAtOwnPos). No arguments, no result. */
 void DrawEditRosters(void)
 {
     char buf[0x54];
@@ -142,7 +142,7 @@ void DrawEditRosters(void)
         DrawButtons((Button *)btn_EditRosters, 2);
     }
     SetScreenTarget();
-    sub_9121C(((int *)fullscrbmp)[0x2C / 4]);
+    DrawArtOpaqueAtOwnPos(((int *)fullscrbmp)[0x2C / 4]);
 }
 
 typedef struct MenuItem20 { int f[5]; int handler; int g[2]; } MenuItem20;  /* 20h-byte menu item, handler at +14h */

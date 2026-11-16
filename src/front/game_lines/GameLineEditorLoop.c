@@ -163,7 +163,7 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
     FadePalStep(0, pal, 0x10);
     FreeMemBlock((int)pal);
     GrabBlock(ptr, oldmx < 0x1C ? 0 : oldmx - 0x1C, oldmy < 0x20 ? 0 : oldmy - 0x20);
-    sub_91FE0(pointerspr, oldmx - 3, oldmy);
+    DrawArtKeyColour(pointerspr, oldmx - 3, oldmy);
     SetViewRect(0, 0, 0x280, 0x1E0);
     MouseSetPos(oldmx, oldmy);
     MouseRead(&i, &i, &i);
@@ -184,9 +184,9 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
                     && GSTAT(pick) != 2) {
                     MakeJerseyShape(jerseyremap, gmrosterjersey[pick * 22], c1, c2);
                     SetColorRemap(jerseyremap);
-                    sub_91FE0(art, mx - 0x1C, my - 0x20);
+                    DrawArtKeyColour(art, mx - 0x1C, my - 0x20);
                 }
-                sub_91FE0(pointerspr, mx - 3, my);
+                DrawArtKeyColour(pointerspr, mx - 3, my);
                 oldmx = mx;
                 oldmy = my;
             }
@@ -414,9 +414,9 @@ int GameLineEditorLoop(unsigned char *lines, int art, unsigned char team, int ze
             && GSTAT(pick) != 2) {
             MakeJerseyShape(jerseyremap, gmrosterjersey[pick * 22], c1, c2);
             SetColorRemap(jerseyremap);
-            sub_91FE0(art, mx - 0x1C, my - 0x20);
+            DrawArtKeyColour(art, mx - 0x1C, my - 0x20);
         }
-        sub_91FE0(pointerspr, mx - 3, my);
+        DrawArtKeyColour(pointerspr, mx - 3, my);
         oldmx = mx;
         oldmy = my;
     }

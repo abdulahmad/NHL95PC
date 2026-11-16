@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_91FE0 progbits alloc exec nowrite align=1
-extern KeyedDraw, RowCopyFunc, PutBlock, sub_931D0, bcopy, sub_B6BE5
-global sub_91FE0, loc_92001, sub_92024
-sub_91FE0:
+extern KeyedDraw, RowCopyFunc, PutBlock, RemapRowKeyed, bcopy, BlitArtKeyColour
+global DrawArtKeyColour, loc_92001, DrawArtKeyColourAtOwnPos
+DrawArtKeyColour:
         mov edx, dword [byte esp+04h]
         mov ebx, dword [byte esp+08h]
         mov eax, dword [byte esp+0Ch]
@@ -13,11 +13,11 @@ sub_91FE0:
         push eax
         push ebx
         push edx
-        call sub_B6BE5
+        call BlitArtKeyColour
         add esp, byte 0Ch
         ret
 loc_92001:
-        mov dword [RowCopyFunc], sub_931D0
+        mov dword [RowCopyFunc], RemapRowKeyed
         push eax
         push ebx
         push edx
@@ -26,7 +26,7 @@ loc_92001:
         mov dword [RowCopyFunc], bcopy
         ret
         db 08Dh,040h,00h
-sub_92024:
+DrawArtKeyColourAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -35,7 +35,7 @@ sub_92024:
         sar eax, 10h
         push eax
         push edx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -50,6 +50,6 @@ sub_92024:
         sub ebx, eax
         push ebx
         push edx
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         ret

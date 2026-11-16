@@ -11,6 +11,6 @@ void DrawSoundCardDlg(void)
     SetScreenTarget();
     MakePath(path, fileoncd[0x191] == 1 ? (char *)cddriveptr : 0, (char *)str_Sound4, 0);
     bank = LoadBank(path, 0);
-    sub_91284(FindShape(bank, (char *)str_Dbx2), 0xA, 0x13);
+    DrawArtKeyFF(FindShape(bank, (char *)str_Dbx2), 0xA, 0x13);
     FreeMemBlock(bank);
 }

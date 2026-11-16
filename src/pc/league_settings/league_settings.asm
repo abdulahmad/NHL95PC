@@ -10,7 +10,7 @@ extern na05spr, pg01spr, pg03spr, pg05spr, pg07spr, pl05spr, pl10spr, pl20spr
 extern pointerspr, postate, PrintString, ptrupdatefn, PutBlock, SaveModeState, seriesgameno, setbits
 extern SetColorRemap, settingsfile, SndQuery, songdata, sounddev, str_BKGD, str_Dbox2, str_DigitizedSpeech
 extern str_Music, str_Pointer15, str_Setting3, str_Setting5, str_Sound, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
-extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, sub_91284, sub_91FE0, sub_96440, SetScreenTarget, TextSetColors
+extern DisableMidiMusic, PlayDigiBlockLoop, SetDigiChannelVolume, DrawArtKeyFF, DrawArtKeyColour, DrawShapeClippedKeyed, SetScreenTarget, TextSetColors
 extern VgaSetPalette, WriteCurModeState, WriteModeState
 global LeagueSettingsDlg, LeagueSettingsDlg_ret4, LeagueSettingsDlg_ret, LeagueSettingsDlg_ret0, MenuPlayoffSettings, MenuPlayoffSettings_edit, SettingsDlgClose, EditPlayoffSettings
 global MenuLeagueSettingsEdit, MenuShowLeagueSettings, MenuShowLeagueSettings2, DrawLeagueSetDlgSel, SetLeagueSetImage, DrawLeagueSetDlg, LeagueOptsToBits_jt, LeagueOptsToBits
@@ -485,7 +485,7 @@ DrawLeagueSetDlgSel:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_91284
+        call DrawArtKeyFF
         add esp, byte 0Ch
         push esi
         call FreeMemBlock
@@ -675,7 +675,7 @@ DrawLeagueSetDlg:
         mov eax, dword [na01spr]
         push eax
 .11:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .12:
         test esi, esi
@@ -967,7 +967,7 @@ DrawLeagueSetChecks:
         mov ebp, dword [chkoffspr]
         push ebp
 .4:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov edx, dword [esp]
         inc edx
@@ -1015,7 +1015,7 @@ DrawLeagueSetChecks:
         mov ecx, dword [pl05spr]
         push ecx
 .8:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
 .9:
         mov eax, dword [setbits]
@@ -1072,7 +1072,7 @@ DrawLeagueSetChecks:
         mov eax, dword [pg07spr]
         push eax
 .14:
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         jmp near LeagueSettingsDlg_ret4
 %endif ; C
@@ -1455,7 +1455,7 @@ LeagueSetEditLoop:
         push byte 3Fh
         mov eax, dword [acptspr]
         push eax
-        call sub_91FE0
+        call DrawArtKeyColour
         add esp, byte 0Ch
         mov bl, byte [setbits]
         test bl, 1
@@ -1628,7 +1628,7 @@ LeagueSetEditLoop:
         push dword 89h
         mov edi, dword [fdlg_cancel]
         push edi
-        call sub_91FE0
+        call DrawArtKeyColour
 .32:
         add esp, byte 0Ch
 .33:
@@ -1654,7 +1654,7 @@ LeagueSetEditLoop:
         sub eax, byte 4
         push eax
         push ebp
-        call sub_96440
+        call DrawShapeClippedKeyed
         add esp, byte 0Ch
         mov ecx, dword [byte esp+08h]
         push ecx

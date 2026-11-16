@@ -33,7 +33,7 @@ extern ShowGoalieBanner, ShowLoadingScreen, shownumbers, songdata, SpeechStopQue
 extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_CheckRefCard2, str_ConfigureLeftJoystick, str_ConfigureRightJoystick, str_errd3
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
-extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, sub_1B982, sub_1BAF3, InitZoneManager
+extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, FreeGameMemory, EnsureFreeMemory, InitZoneManager
 extern FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
 extern subwindowdefadr, LoadBank, sub_8E8A0, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
 extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, RemoveKeyboardHandler, KeyDown
@@ -1479,7 +1479,7 @@ SetScreenSize:
 ; IntermissionPC                                  10F6D  95 PC, low confidence
 ; Called from the period-end path after Intermission when gsp > 0: fades out
 ; (FadePalette), restores 640x480, stops crowd/music/digital sound and runs
-; sub_1BAF3(222E0h) when SortPending is set, then IntermissionDesk and counts
+; EnsureFreeMemory(222E0h) when SortPending is set, then IntermissionDesk and counts
 ; curperiod
 ;-----------------------------------------------------------------------------
 ; C: src/front/main/IntermissionPC.c
@@ -1518,7 +1518,7 @@ IntermissionPC:
 .2:
         call StopDigiSample
         mov eax, 222E0h
-        call sub_1BAF3
+        call EnsureFreeMemory
 .3:
         mov edx, dword [s1font]
         push edx
@@ -2577,7 +2577,7 @@ Gameloop:
         call PostGameDesk
         mov dword [gameresult], 1
 .30:
-        call sub_1B982
+        call FreeGameMemory
         add esp, byte 20h
         jmp near HandleHotKey_ret
 ;-----------------------------------------------------------------------------
@@ -2634,7 +2634,7 @@ PlayGame:
         test eax, eax
         jge short .3
         mov dword [gameresult], 2
-        call sub_1B982
+        call FreeGameMemory
         call SetScreenTarget
         jmp near .15
 .3:
@@ -2670,7 +2670,7 @@ PlayGame:
         call SportsDesk
         cmp dword [gameresult], byte 2
         jne short .6
-        call sub_1B982
+        call FreeGameMemory
         jmp near .16
 .6:
         mov edx, 0C8h

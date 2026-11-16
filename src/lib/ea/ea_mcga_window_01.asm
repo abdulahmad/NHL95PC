@@ -4,8 +4,8 @@ bits 32
 section s_9A7A0 progbits alloc exec nowrite align=1
 extern _os_handle, str_MCGAWINDOW, str_WindowdefOUTOFMEMORY, str_WindowdefBADBLOCK, str_WindowdefadrOUTOFROW, FatalError, AllocMemHandleLocked, FillRowTable
 extern ZeroMem
-global sub_9A7A0, loc_9A7DB, loc_9A7EF, loc_9A868
-sub_9A7A0:
+global CreateMcgaWindow, loc_9A7DB, loc_9A7EF, loc_9A868
+CreateMcgaWindow:
         push esi
         push edi
         push ebp

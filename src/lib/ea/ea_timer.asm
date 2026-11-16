@@ -3,30 +3,30 @@ bits 32
 %include "hockey.inc"
 section s_8E3DC progbits alloc exec nowrite align=1
 extern __GETDS, __STOSD, _dos_getvect_, _dos_setvect_, str_AddtimerLISTFULL, FatalError, oldint8off, oldint8sel
-extern slowtickcount, strncmp_, strncpy_, sub_91FA4, DrawShapeStretched, AddExitHandler, bcopy, tickcount
+extern slowtickcount, strncmp_, strncpy_, FixedMulRound, DrawShapeStretched, AddExitHandler, bcopy, tickcount
 extern timercallbacks
-global sub_8E3DC, sub_8E3E4, sub_8E3F8, sub_8E40C, sub_8E424, loc_8E42F, loc_8E440, loc_8E443
-global loc_8E449, sub_8E44C, TimerISR, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8, addtimer
+global ReturnPointerArg, StrCopyN, StrCompareN, MemCopyArgs, FileNamePart, loc_8E42F, loc_8E440, loc_8E443
+global loc_8E449, FileNameOnly, TimerISR, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8, addtimer
 global loc_8E4CB, loc_8E4D6, loc_8E4E9, sub_8E4F3, RemoveTimerCallback, loc_8E507, loc_8E511, loc_8E523
 global CountTimerCallbacks, loc_8E52C, loc_8E536, MaskTimerKbdIrq, RestoreTimer, loc_8E56A, loc_8E5A5, loc_8E5A8
-global InstallTimer, UnmaskTimerKbdIrq, sub_8E624, sub_8E6A8, sub_8E6CC, sub_8E714, sub_8E738, sub_8E780
-sub_8E3DC:
+global InstallTimer, UnmaskTimerKbdIrq, DrawShapeScaled, DrawShapeScaledAtOwnPos, DrawShapeScaledHotspot, DrawShapeZoomedAtOwnPos, DrawShapeZoomedHotspot, DrawShapeZoomed
+ReturnPointerArg:
         mov eax, dword [byte esp+04h]
         ret
         db 08Dh,040h,00h
-sub_8E3E4:
+StrCopyN:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         jmp near strncpy_
         db 08Dh,040h,00h
-sub_8E3F8:
+StrCompareN:
         mov eax, dword [byte esp+04h]
         mov edx, dword [byte esp+08h]
         mov ebx, dword [byte esp+0Ch]
         jmp near strncmp_
         db 08Dh,040h,00h
-sub_8E40C:
+MemCopyArgs:
         mov edx, dword [byte esp+0Ch]
         push edx
         mov ebx, dword [byte esp+08h]
@@ -36,7 +36,7 @@ sub_8E40C:
         call bcopy
         add esp, byte 0Ch
         ret
-sub_8E424:
+FileNamePart:
         mov eax, dword [byte esp+04h]
         mov edx, eax
         cmp byte [eax], 0
@@ -58,10 +58,10 @@ loc_8E443:
 loc_8E449:
         mov eax, edx
         ret
-sub_8E44C:
+FileNameOnly:
         mov edx, dword [byte esp+04h]
         push edx
-        call sub_8E424
+        call FileNamePart
         add esp, byte 4
         ret
         db 08Bh,0C0h
@@ -241,7 +241,7 @@ UnmaskTimerKbdIrq:
         pop edx
         ret
         db 08Bh,0C0h
-sub_8E624:
+DrawShapeScaled:
         push esi
         push edi
         push ebp
@@ -253,7 +253,7 @@ sub_8E624:
         push eax
         mov edx, dword [byte esp+034h]
         push edx
-        call sub_91FA4
+        call FixedMulRound
         mov esi, eax
         add esp, byte 8
         mov eax, dword [byte ebp+04h]
@@ -261,7 +261,7 @@ sub_8E624:
         push eax
         mov ebx, dword [byte esp+034h]
         push ebx
-        call sub_91FA4
+        call FixedMulRound
         mov edx, eax
         add esp, byte 8
         mov dword [esp], edi
@@ -289,7 +289,7 @@ sub_8E624:
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8E6A8:
+DrawShapeScaledAtOwnPos:
         mov edx, dword [byte esp+08h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -300,11 +300,11 @@ sub_8E6A8:
         push edx
         mov edx, dword [byte esp+010h]
         push edx
-        call sub_8E624
+        call DrawShapeScaled
         add esp, byte 10h
         ret
         db 08Dh,040h,00h
-sub_8E6CC:
+DrawShapeScaledHotspot:
         push esi
         push edi
         mov edi, dword [byte esp+0Ch]
@@ -313,7 +313,7 @@ sub_8E6CC:
         sar eax, 10h
         push eax
         push edi
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [byte esp+018h]
         sub edx, eax
@@ -322,20 +322,20 @@ sub_8E6CC:
         sar eax, 10h
         push eax
         push edi
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [byte esp+018h]
         sub edx, eax
         push edx
         push esi
         push edi
-        call sub_8E624
+        call DrawShapeScaled
         add esp, byte 10h
         pop edi
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8E714:
+DrawShapeZoomedAtOwnPos:
         mov edx, dword [byte esp+08h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -346,11 +346,11 @@ sub_8E714:
         push edx
         mov edx, dword [byte esp+010h]
         push edx
-        call sub_8E624
+        call DrawShapeScaled
         add esp, byte 10h
         ret
         db 08Dh,040h,00h
-sub_8E738:
+DrawShapeZoomedHotspot:
         push esi
         push edi
         mov edi, dword [byte esp+0Ch]
@@ -359,7 +359,7 @@ sub_8E738:
         sar eax, 10h
         push eax
         push edi
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [byte esp+018h]
         sub edx, eax
@@ -368,20 +368,20 @@ sub_8E738:
         sar eax, 10h
         push eax
         push edi
-        call sub_91FA4
+        call FixedMulRound
         add esp, byte 8
         mov edx, dword [byte esp+018h]
         sub edx, eax
         push edx
         push esi
         push edi
-        call sub_8E624
+        call DrawShapeScaled
         add esp, byte 10h
         pop edi
         pop esi
         ret
         db 08Dh,040h,00h
-sub_8E780:
+DrawShapeZoomed:
         push esi
         mov edx, dword [byte esp+014h]
         push edx
@@ -391,7 +391,7 @@ sub_8E780:
         push ecx
         mov esi, dword [byte esp+014h]
         push esi
-        call sub_8E624
+        call DrawShapeScaled
         add esp, byte 10h
         pop esi
         ret

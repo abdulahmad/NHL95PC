@@ -5,10 +5,10 @@ section s_91370 progbits alloc exec nowrite align=1
 extern byte_D42C0, byte_D42C1, byte_D42C2, byte_D42C3, byte_D42C4, cliprect_y0, cliprect_y1, ScreenWidth
 extern dword_D30A8, KeyedDraw, DrawVideoBase, ScreenRowTable, dword_D42B0, dword_D42B4, dword_D42BC, dword_D42C8
 extern dword_D42CC, dword_D42D0, dword_D42D4, dword_D42D8, dword_D42DC, dword_D42E0, RowCopyFunc, fontcolor
-extern loc_91260, off_D42A4, sub_8E9D4, PutBlock, bcopy, SetClipWindow, sub_B5D80, sub_B5E00
-extern sub_B69E4, BlitShapeFast
-global DrawArt, loc_91391, DrawShape, sub_913D0, GrabBlock, loc_9142B, loc_9148A, loc_914E6
-global loc_914FD, loc_91520, loc_91531, DrawShapeAtOwnPos, sub_91554, sub_91580, loc_915E7, loc_91616
+extern loc_91260, off_D42A4, TextSetCursor, PutBlock, bcopy, SetClipWindow, PutPixel, VesaSetBankArg
+extern BlitArt, BlitShapeFast
+global DrawArt, loc_91391, DrawShape, DrawArtHotspot, GrabBlock, loc_9142B, loc_9148A, loc_914E6
+global loc_914FD, loc_91520, loc_91531, DrawShapeAtOwnPos, GrabBlockHotspot, PrintStringAtCursor, loc_915E7, loc_91616
 global loc_9161C, loc_91637, loc_9163D, loc_91655, loc_91660, loc_91679, loc_9167B, loc_9169F
 global loc_916A1, loc_91722, loc_9174E, loc_91765, loc_91787, loc_91790, loc_917A4, loc_917B8
 global loc_917CD, loc_917E2, loc_917F7, loc_9180C, loc_91821, loc_91836, loc_9184B, loc_91860
@@ -24,7 +24,7 @@ DrawArt:
         push eax
         push ebx
         push edx
-        call sub_B69E4
+        call BlitArt
         add esp, byte 0Ch
         ret
 loc_91391:
@@ -49,7 +49,7 @@ DrawShape:
         call DrawArt
         add esp, byte 0Ch
         ret
-sub_913D0:
+DrawArtHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
         sar eax, 10h
@@ -103,7 +103,7 @@ loc_9142B:
         shr eax, 10h
         mov dword [byte esp+014h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and esi, 0FFFFh
         mov dword [byte esp+08h], ebp
@@ -131,7 +131,7 @@ loc_9148A:
         inc eax
         mov dword [byte esp+014h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         push ebp
         push edi
@@ -160,7 +160,7 @@ loc_914FD:
         inc ebp
         mov dword [byte esp+014h], ebp
         push ebp
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_91520:
         mov edx, dword [byte esp+08h]
@@ -186,7 +186,7 @@ DrawShapeAtOwnPos:
         call GrabBlock
         add esp, byte 0Ch
         ret
-sub_91554:
+GrabBlockHotspot:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+08h]
         sar eax, 10h
@@ -203,7 +203,7 @@ sub_91554:
         add esp, byte 0Ch
         ret
         db 00h,00h,00h,00h
-sub_91580:
+PrintStringAtCursor:
         push esi
         push edi
         push ebp
@@ -380,7 +380,7 @@ loc_917A4:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_917B8:
         inc esi
@@ -390,7 +390,7 @@ loc_917B8:
         push edx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_917CD:
         inc esi
@@ -400,7 +400,7 @@ loc_917CD:
         push ebx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_917E2:
         inc esi
@@ -410,7 +410,7 @@ loc_917E2:
         push ecx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_917F7:
         inc esi
@@ -420,7 +420,7 @@ loc_917F7:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_9180C:
         inc esi
@@ -430,7 +430,7 @@ loc_9180C:
         push edx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_91821:
         inc esi
@@ -440,7 +440,7 @@ loc_91821:
         push ebx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_91836:
         inc esi
@@ -450,7 +450,7 @@ loc_91836:
         push ecx
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_9184B:
         inc esi
@@ -496,7 +496,7 @@ loc_918A9:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_918BF:
         inc esi
@@ -509,7 +509,7 @@ loc_918BF:
         push eax
         push ebp
         push esi
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_918DB:
         inc esi
@@ -539,7 +539,7 @@ loc_918FB:
         push ebp
         mov eax, dword [byte esp+02Ch]
         push eax
-        call sub_B5D80
+        call PutPixel
         add esp, byte 0Ch
 loc_9191A:
         inc dword [byte esp+024h]
@@ -578,10 +578,10 @@ PrintString:
         push edx
         mov ebx, dword [byte esp+0Ch]
         push ebx
-        call sub_8E9D4
+        call TextSetCursor
         add esp, byte 8
         mov ecx, dword [byte esp+04h]
         push ecx
-        call sub_91580
+        call PrintStringAtCursor
         add esp, byte 4
         ret

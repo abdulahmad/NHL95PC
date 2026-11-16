@@ -8,7 +8,7 @@ global fclose_, loc_91D14, loc_91D20, loc_91D2B, __shutdown_stream_, __hex_, loc
 global loc_91D76, __doclose_, loc_91DDC, loc_91DEF, loc_91E07, loc_91E15, loc_91E2A, loc_91E43
 global strncpy_, loc_91E53, loc_91E5E, loc_91E62, loc_91E6D, fputs_, loc_91E88, loc_91EA7
 global loc_91EAB, loc_91EC2, loc_91EE3, loc_91EEB, strcmp_, loc_91F08, loc_91F74, loc_91F79
-global loc_91F9A, sub_91FA4, memcmp_, loc_91FD5
+global loc_91F9A, FixedMulRound, memcmp_, loc_91FD5
 fclose_:
         push ebx
         push edx
@@ -318,7 +318,7 @@ loc_91F9A:
         pop ebx
         ret
         db 00h,00h,00h
-sub_91FA4:
+FixedMulRound:
         mov eax, dword [byte esp+04h]
         imul dword [byte esp+08h]
         add eax, 7FFFh

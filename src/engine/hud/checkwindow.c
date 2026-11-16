@@ -3,21 +3,21 @@
 #define UpdateTextOverlay UpdateTextOverlay_decl
 #define DrawCallBanner DrawCallBanner_decl
 #define ShapeBankCount sub_90354_decl
-#define sub_90EC0 sub_90EC0_decl
-#define sub_B500C sub_B500C_decl
+#define FillRectClipped sub_90EC0_decl
+#define VgaBlitKeyedFlipV sub_B500C_decl
 #define MarkZoneRect sub_6AB7C_decl
 #include "nhl95.h"
 #undef LoadTeamPPV
 #undef UpdateTextOverlay
 #undef DrawCallBanner
 #undef ShapeBankCount
-#undef sub_90EC0
-#undef sub_B500C
+#undef FillRectClipped
+#undef VgaBlitKeyedFlipV
 #undef MarkZoneRect
 
 int __cdecl ShapeBankCount(int bank);
-void __cdecl sub_90EC0(int x, int y, int w, int h, int c);  /* graphics library: save a rectangle */
-void __cdecl sub_B500C(int art, int x, int y);              /* graphics library: draw art */
+void __cdecl FillRectClipped(int x, int y, int w, int h, int c);  /* graphics library: save a rectangle */
+void __cdecl VgaBlitKeyedFlipV(int art, int x, int y);              /* graphics library: draw art */
 void MarkZoneRect(int n, int x0, int y0, int x1, int y1);      /* mark a dirty rectangle */
 
 #define ABSW(v) ((v) < 0 ? -(v) : (v))
@@ -192,7 +192,7 @@ void LoadTeamPPV(short seq)
 /* DrawTextOverlay (665AD, PC only; ends in checkwindow_popebp): draw the overlay box in the top left of the view
    (moved right during the shootout, gsp 4). ovltimer slides it: under 10h it grows from the corner (the clip
    window shrinks to the box, k = timer, 42h / 2Ah * k / 16) and from 258h it shrinks again. The banner is cut
-   (bannermsg -1). The box is saved and dithered (sub_90EC0, DitherRect 9) while it slides or without an overlay
+   (bannermsg -1). The box is saved and dithered (FillRectClipped, DitherRect 9) while it slides or without an overlay
    script; once 3Eh wide it gets a black frame. With a script (ovlseq / ovlstep), the step art (ovlstepart) is
    drawn, for sequence 0Ah after step 10h over ovlstepart_e30 and for sequence 8 steps 12h-14h below ovlstepart_e21; at
    sequence 0 step 2 the crowd meter: up to three bars (30h, 27h, 60h) from crowdlevel over 2EEh, 3B6h and 47Eh.
@@ -248,7 +248,7 @@ void DrawTextOverlay(void)
     y += (short)((short)cliprect_y0 - scrolly);
     y2 += (short)((short)cliprect_y0 - scrolly);
     if (d < 0 || ovlseq == -1 || ovlstep == -1) {
-        sub_90EC0(x, y, x2 - x, y2 - y, 0x10);
+        FillRectClipped(x, y, x2 - x, y2 - y, 0x10);
         DitherRect(x, y, x2 - x, y2 - y, 9);
     }
     if (d == 0 || w >= 0x3E) {
@@ -261,13 +261,13 @@ void DrawTextOverlay(void)
         SetClipWindow(x0s, x1s, y0s, y1s);
     } else if (ovlseq != -1 && ovlstep != -1) {
         if (ovlseq == 0xA && ovlstep > 0x10) {
-            sub_B500C(ovlstepart_e30, x, y);
-            sub_B500C(ovlstepart[ovlstep], x + 0x11, y + 0x1F);
+            VgaBlitKeyedFlipV(ovlstepart_e30, x, y);
+            VgaBlitKeyedFlipV(ovlstepart[ovlstep], x + 0x11, y + 0x1F);
         } else if (ovlseq == 8 && ovlstep >= 0x12 && ovlstep <= 0x14) {
-            sub_B500C(ovlstepart_e21, x, y);
-            sub_B500C(ovlstepart[ovlstep], x, y + 0x3C);
+            VgaBlitKeyedFlipV(ovlstepart_e21, x, y);
+            VgaBlitKeyedFlipV(ovlstepart[ovlstep], x, y + 0x3C);
         } else {
-            sub_B500C(ovlstepart[ovlstep], x, y);
+            VgaBlitKeyedFlipV(ovlstepart[ovlstep], x, y);
         }
         if (ovlseq == 0 && ovlstep == 2) {
             y += 0x23;

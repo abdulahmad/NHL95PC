@@ -27,7 +27,7 @@ int DeskExitGame(void)
             songdata = 0;
         }
         ShowLoadingScreen();
-        sub_1B982();
+        FreeGameMemory();
         ShowCredits();
         SetPalette(0, 0x100, savepal);
         FadePalStep(1, savepal, 0x10);

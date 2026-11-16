@@ -212,7 +212,7 @@ void puckunflip(Player *p);  /* 4D907 */
 void CopyRoster1Rec(void);  /* 6DE4C */
 void GetLineEnergies(short team, int *out);  /* 14BEF */
 void DrawLineGroupBars(int *drawn, int *inds, int line, int *energy, int x);  /* 157BD */
-void __cdecl sub_B4CF2(int shape);  /* video library: draw one shape */
+void __cdecl VgaBlitKeyed(int shape);  /* video library: draw one shape */
 short TeamLineEnergy(short team, short line);  /* 5A2EE */
 void DrawButtons(Button *b, int n);  /* 30AE2 */
 void DrawButton(Button *b);  /* 30B16 */
@@ -338,7 +338,7 @@ void __cdecl sub_B4C84(void);  /* video library: wait for retrace */
 void __cdecl VgaSetPalette(int first, int count, unsigned char *rgb);  /* video library: set palette entries */
 int ShowDBError(int *sel, int *state, int msg, int arg);  /* 6ED39 */
 void __cdecl SetScreenTarget(void);  /* video library */
-void __cdecl sub_9121C(int buf);  /* graphics library */
+void __cdecl DrawArtOpaqueAtOwnPos(int buf);  /* graphics library */
 int ErrorScreenWait(int msg, int arg, char *title, int type);  /* 6EAB5 */
 int CheckTeamLines(int team, int *line, int *sel, int *first, int flags, int x, int y);  /* 6ED8F */
 int CheckDatabases(int x, int y);  /* 6EF84 */
@@ -411,7 +411,7 @@ int a2offsides(Player *p);  /* 4DCDD */
 void AddPenalty(Player *p, short pen);
 void DrawSoundCardDlg(void);  /* 8261C */
 int __cdecl LoadBank(char *path, int flags);  /* graphics library: load bank */
-void __cdecl sub_91284(int art, int x, int y);  /* graphics library: draw art */
+void __cdecl DrawArtKeyFF(int art, int x, int y);  /* graphics library: draw art */
 void InitMenuRemap(int mode);  /* 1FAA7 */
 int LoadShapeByTag(char *path, char *tag);  /* 1FDFE */
 void MakeStatsTitle(char *dst, char *suffix);  /* 1FF86 */
@@ -456,7 +456,7 @@ void FadePalette(int dir, unsigned char *pal, int steps);
 void SetScreenSize(int w, int h);
 void MusicChanReset(void);
 void ReleaseAllVoices(void);  /* sound library: stop */
-void sub_1BAF3(int ticks);
+void EnsureFreeMemory(int ticks);
 void __cdecl TextSetFont(int font);  /* text library: set font */
 void __cdecl TextSaveState(void *state);  /* text library: save the text state (40h bytes) */
 void __cdecl TextRestoreState(void *state);  /* text library: restore the text state */
@@ -619,7 +619,7 @@ void ReadGSumTail(void);
 void ReadGSumHeader(void);
 void WriteGSumHeader(void);
 void InputInstall(void);
-void sub_1B982(void);
+void FreeGameMemory(void);
 int CoachCutScene(void);
 int WaitClickTimeout(int secs);
 void DrawExhSetChecks(void);
@@ -820,7 +820,7 @@ int CalRightJoystick(void);  /* 6B37A */
 void updateplayers(void);  /* engine_core */
 void checkwindow(void);  /* engine_display */
 void updatereplay(void);  /* engine_display */
-void __cdecl sub_96A78(int a);  /* 96A78: EA sound library */
+void __cdecl MviGetFrame(int a);  /* 96A78: EA sound library */
 void GadgetSoundStub(void);  /* 7E03F */
 void *__cdecl sub_8E908(char *name, int bank);  /* sound library loader 2, stack args */
 void SndLoadFile2(int unused, char *name);  /* 594B2 */
@@ -847,7 +847,7 @@ void WriteGSumHeader(void);  /* 61C86 */
 void DitherRect(int x, int y, int w, int h, int c);  /* 65CA8 */
 void GrowToButtons(int *b, int n, int *w, int *h);  /* 30FB4 */
 unsigned char FindRosterSlot(unsigned char pl, unsigned char side);  /* 739B6 */
-void __cdecl sub_B5D80(int x, int y, int c);  /* B5D80: plot a pixel */
+void __cdecl PutPixel(int x, int y, int c);  /* B5D80: plot a pixel */
 void FormatHilightDesc(char *out, unsigned char *h);  /* 7FCA2 */
 int ListHitTest(int mx, int my, int left, int top, int w, int n);  /* 3023E */
 void forcepldata(Team *t);  /* 5E0DD */
@@ -953,7 +953,7 @@ void DrawSettingsHeading(int x, int y, int n, int mode, int col);  /* 8050F */
 void DrawExhSetDlg(void);  /* 7C1AC */
 void DrawModeSetDlg(void);  /* 7B4EC */
 void DrawPhotoWithPal(unsigned char *src, int art, int x, int y);  /* 21C04 */
-void __cdecl sub_91FE0(int art, int x, int y);  /* graphics library: draw art */
+void __cdecl DrawArtKeyColour(int art, int x, int y);  /* graphics library: draw art */
 int MenuSoundSettings(int a, int b);  /* 82579 */
 int MenuCentralRegistry(void);  /* 6BE95 */
 void SetModeMenuLabels(unsigned mode);  /* 805C4 */

@@ -6,12 +6,12 @@ extern _os_handle_3, str_FrameRate3dFrames, str_Width3dHeight3d, str_Colours3d1s
 extern cliprect_y0, cliprect_y1, DebugPrintf, ScreenWidth, KeyedDraw, DrawVideoBase, ScreenRowTable, FreeMemBlock
 extern AllocMemHandleLocked, AllocMemBlock, AllocMemBlockUnlocked, PushMemDescriptorLocked, MemDescPtr, sub_8E8F0, FreeBitmap, SaveDrawState
 extern RestoreDrawState, bcopy, openhandle, DosCloseFile, DosReadFile, DosSeekFile, SetScreenTarget, SetClipWindow
-extern CreateBitmap, sub_B5E00, BlitShapeClipped
-global sub_96440, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
-global loc_965A4, loc_965CB, loc_965D4, sub_965DC, sub_96690, sub_966E4, loc_967AE, loc_967C3
-global sub_96844, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
-global loc_969C4, loc_969D4, loc_96A0D, sub_96A10, loc_96A29, sub_96A38
-sub_96440:
+extern CreateBitmap, VesaSetBankArg, BlitShapeClipped
+global DrawShapeClippedKeyed, loc_9646B, loc_964AB, loc_964BA, loc_964D2, loc_964EA, loc_96526, loc_9658D
+global loc_965A4, loc_965CB, loc_965D4, DrawShapeClippedKeyedAtOwnPos, MviPrintInfo, MviLoadPalette, loc_967AE, loc_967C3
+global MviOpen, loc_9687D, loc_968A8, loc_968CD, loc_968D4, loc_96915, loc_96988, loc_9699E
+global loc_969C4, loc_969D4, loc_96A0D, MviRewind, loc_96A29, MviGetPalette
+DrawShapeClippedKeyed:
         push esi
         push edi
         push ebp
@@ -81,7 +81,7 @@ loc_964EA:
         shr eax, 10h
         mov dword [byte esp+018h], eax
         push eax
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         and edi, 0FFFFh
         mov dword [byte esp+0Ch], ebp
@@ -111,7 +111,7 @@ loc_96526:
         inc ecx
         mov dword [byte esp+018h], ecx
         push ecx
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
         push ebp
         push esi
@@ -141,7 +141,7 @@ loc_965A4:
         inc ecx
         mov dword [byte esp+018h], ecx
         push ecx
-        call sub_B5E00
+        call VesaSetBankArg
         add esp, byte 4
 loc_965CB:
         dec dword [byte esp+0Ch]
@@ -153,7 +153,7 @@ loc_965D4:
         pop esi
         ret
         db 090h
-sub_965DC:
+DrawShapeClippedKeyedAtOwnPos:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+0Ch]
         sar eax, 10h
@@ -162,7 +162,7 @@ sub_965DC:
         sar eax, 10h
         push eax
         push edx
-        call sub_96440
+        call DrawShapeClippedKeyed
         add esp, byte 0Ch
         ret
         mov edx, dword [byte esp+04h]
@@ -177,7 +177,7 @@ sub_965DC:
         sub ebx, eax
         push ebx
         push edx
-        call sub_96440
+        call DrawShapeClippedKeyed
         add esp, byte 0Ch
         ret
         push esi
@@ -211,7 +211,7 @@ sub_965DC:
         sub eax, ebx
         push eax
         push esi
-        call sub_96440
+        call DrawShapeClippedKeyed
         add esp, byte 0Ch
         mov eax, esp
         push eax
@@ -223,7 +223,7 @@ sub_965DC:
         pop esi
         ret
         db 00h
-sub_96690:
+MviPrintInfo:
         push ebx
         push ecx
         push edx
@@ -262,7 +262,7 @@ sub_96690:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_966E4:
+MviLoadPalette:
         push ebx
         push ecx
         push esi
@@ -406,7 +406,7 @@ loc_967C3:
         pop ebx
         ret
         db 08Dh,040h,00h
-sub_96844:
+MviOpen:
         push esi
         push edi
         push ebp
@@ -450,7 +450,7 @@ loc_968A8:
         add esp, byte 4
         mov edx, eax
         mov eax, edi
-        call sub_966E4
+        call MviLoadPalette
         mov dword [byte edi+030h], esi
         mov dword [byte edi+024h], 0
 loc_968CD:
@@ -487,7 +487,7 @@ loc_96915:
         add esp, byte 0Ch
         mov edx, esp
         mov eax, esi
-        call sub_966E4
+        call MviLoadPalette
         mov eax, dword [dword esp+0318h]
         mov dword [byte esi+024h], eax
         mov eax, dword [dword esp+0314h]
@@ -572,7 +572,7 @@ loc_96A0D:
         pop ebp
         pop esi
         ret
-sub_96A10:
+MviRewind:
         mov eax, dword [byte esp+04h]
         mov dword [byte eax+04h], 1
         mov edx, dword [byte eax+024h]
@@ -589,7 +589,7 @@ loc_96A29:
         add esp, byte 8
         ret
         db 090h
-sub_96A38:
+MviGetPalette:
         mov edx, dword [byte esp+04h]
         mov eax, dword [byte edx+014h]
         mov ebx, dword [byte esp+08h]

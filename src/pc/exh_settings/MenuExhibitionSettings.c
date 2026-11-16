@@ -1,14 +1,14 @@
 /* Settings dialogs: exhibition settings (one source file: DrawExhSetChecks and ExhSetEditLoop end in MenuExhibitionSettings' exit). */
 #define ExhSetEditLoop ExhSetEditLoop_decl
-#define sub_96440 sub_96440_decl
+#define DrawShapeClippedKeyed sub_96440_decl
 #include "nhl95.h"
 #undef ExhSetEditLoop
-#undef sub_96440
+#undef DrawShapeClippedKeyed
 
 typedef struct Hdr17 { char c[17]; } Hdr17;
 
 short ExhSetEditLoop(void);  /* 7C317 */
-void __cdecl sub_96440(int buf, int x, int y);  /* graphics library: save a screen block, clipped */
+void __cdecl DrawShapeClippedKeyed(int buf, int x, int y);  /* graphics library: save a screen block, clipped */
 
 /* MenuExhibitionSettings: menu "exhibition settings": load the settings shapes; save the screen under the
  214 x 297 dialog at 10 13h into a BKGD bitmap (pointer sprite header), draw the dialog (DrawExhSetDlg), load the
@@ -86,7 +86,7 @@ void DrawExhSetChecks(void)
    with the period length: boxes 18-20 pick one of setbits bits 9-11, which OK (box 21) turns into pertime 2, 1
    or 0; Cancel is box 22. Speech follows its box with a 22h sound device, there is no crowd noise, and switching
    the music off fades the song out faster (28h). After a click the screen under the pointer is saved clipped
-   (sub_96440). Result: 0, a short. */
+   (DrawShapeClippedKeyed). Result: 0, a short. */
 short ExhSetEditLoop(void)
 {
     int ox;
@@ -194,7 +194,7 @@ short ExhSetEditLoop(void)
                     return 0;
                 }
             }
-            sub_96440(bm, x - 4, y);
+            DrawShapeClippedKeyed(bm, x - 4, y);
             DrawArt(pointerspr, x - 4, y);
             ox = x;
             oy = y;

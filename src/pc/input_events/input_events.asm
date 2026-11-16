@@ -13,7 +13,7 @@ extern PrintShadowText, ptrstep, ptrupdatefn, RemoveTimerCallback, RunEditRoster
 extern SetTextColors, speechbank, str_dot, str_Joycal, str_Left, str_LEFTJOYSTICK, str_Pal24, str_Puck
 extern str_PuckBack, str_RIGHTJOYSTICK, str_Rite, str_Scrn3, str_space, strcat_, AllocMemBlock, PushMemDescriptorLocked
 extern LoadBank, sub_8E8A0, TextSetColors, TextSaveState, TextRestoreState, TextSetFont, FillRect, DrawArtOpaque
-extern sub_9121C, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, RemoveKeyboardHandler
+extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPrintAt, GetFileSize, RemoveKeyboardHandler
 extern KeyDown, InitMouse, FindShape, sub_B30F4, JoyButtonMap, ReadJoyRaw, sub_B384E, sub_B387E
 extern ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, sub_B4C61, FillRectColor, TeamRecPtr, teamsdb
 extern teamsdb_size, unk_C27F5, DefaultFont
@@ -88,7 +88,7 @@ JoystickCalScreen:
         call FindShape
         add esp, byte 8
         push eax
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         cmp dword [dword esp+0364h], byte 0
         je short .3

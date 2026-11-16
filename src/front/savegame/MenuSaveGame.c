@@ -148,7 +148,7 @@ int SaveGameNameDlg(char *path)
     x = ox;
     y = oy;
     GrabBlock(bm, ox, oy);
-    sub_91284(pointerspr, ox, oy);
+    DrawArtKeyFF(pointerspr, ox, oy);
     MakePath(name, fileoncd[0x163] == 1 ? (char *)cddriveptr : 0, (char *)str_Savegame, 0);
     bank = LoadBank(name, 0);
     cur = spr = FindShape(bank, (char *)str_Prmt);
@@ -179,7 +179,7 @@ int SaveGameNameDlg(char *path)
             tx = 0x140 - ((short *)spr)[2] / 2;
             ty = 0xF0 - ((short *)spr)[3] / 2;
             GrabBlock(dlgbm, tx, ty);
-            sub_91284(spr, tx, ty);
+            DrawArtKeyFF(spr, tx, ty);
             tx += ((short *)spr)[4];
             ty += ((short *)spr)[5];
             for (i = 0; path[i] != '.'; i++);
@@ -189,7 +189,7 @@ int SaveGameNameDlg(char *path)
             ClearInputQueue();
             MouseSetPos(0x181, 0xFE);
             GrabBlock(bm, 0x181, 0xFE);
-            sub_91284(pointerspr, 0x181, 0xFE);
+            DrawArtKeyFF(pointerspr, 0x181, 0xFE);
             ox = x = 0x181;
             oy = y = 0xFE;
             ClearInputQueue();

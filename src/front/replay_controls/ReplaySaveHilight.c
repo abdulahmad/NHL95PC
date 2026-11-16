@@ -2,11 +2,11 @@
 /* DRAFT: same size (1,653 bytes), every statement in place; register picks of the pushed globals' temporaries
    differ (the zero for r outside the rows takes ebx where the EXE has eax). See docs/UNSURE.md. */
 #define ReplaySaveHilight ReplaySaveHilight_decl
-#define sub_B500C sub_B500C_decl
+#define VgaBlitKeyedFlipV sub_B500C_decl
 #include "nhl95.h"
 #undef ReplaySaveHilight
-#undef sub_B500C
-void __cdecl sub_B500C(int art, int x, int y);  /* graphics library: draw art */
+#undef VgaBlitKeyedFlipV
+void __cdecl VgaBlitKeyedFlipV(int art, int x, int y);  /* graphics library: draw art */
 void ReplaySaveHilight(int unused, int x, int y);  /* the caller passes 0, gadgetptrx, gadgetptry */
 
 typedef struct Hdr17 { char c[17]; } Hdr17;
@@ -57,7 +57,7 @@ void ReplaySaveHilight(int unused, int x, int y)
     }
     SelectScreenBM();
     SetClipWindow(0xC2, 0xF0, 0, 0x20);
-    sub_B500C(gadgetshape, 0, 0);
+    VgaBlitKeyedFlipV(gadgetshape, 0, 0);
     DrawGadgetButton(7);
     SetScreenTarget();
     SetClipWindow(0, 0x140, 0, 0xC8);

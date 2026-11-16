@@ -138,7 +138,7 @@ int ShowRosterStats(int c0, int c1, int c2, int c3)
         PrintFmt2(0x240, y, (char *)str_fmtTenths, gs[10] / 10, gs[10] % 10);
     }
     SetScreenTarget();
-    sub_9121C(*(int *)(fullscrbmp + 0x2C));
+    DrawArtOpaqueAtOwnPos(*(int *)(fullscrbmp + 0x2C));
     TextRestoreState(f.state);
     return 0;
 }

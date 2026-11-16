@@ -4,7 +4,7 @@
 /* DrawPhotoWithPal: take the current palette (the saved stats palette statspal when statspalvalid,
  else read it from the card with start statspalvalid = 0), put the photo's 180 colour bytes at entry 44h and its
  165 bytes at C4h (src), set photoremap, write the palette back the same way and draw photo art at x, y
- (sub_91FE0). */
+ (DrawArtKeyColour). */
 void DrawPhotoWithPal(unsigned char *src, int art, int x, int y)
 {
     unsigned char pal[0x300];
@@ -18,5 +18,5 @@ void DrawPhotoWithPal(unsigned char *src, int art, int x, int y)
     SetColorRemap(photoremap);
     if (statspalvalid) memcpy((void *)statspal, pal, 0x300);
     else VgaSetPalette(0, 0x100, pal);
-    sub_91FE0(art, x, y);
+    DrawArtKeyColour(art, x, y);
 }

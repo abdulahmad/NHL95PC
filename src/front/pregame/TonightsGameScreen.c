@@ -2,19 +2,19 @@
 #define TonightsGameScreen TonightsGameScreen_decl
 #define LoadDigiFile sub_8F98F_decl
 #define PlayDigiBlockLoop sub_8FB8E_decl
-#define sub_913D0 sub_913D0_decl
+#define DrawArtHotspot sub_913D0_decl
 #include "nhl95.h"
 #undef TonightsGameScreen
 #undef LoadDigiFile
 #undef PlayDigiBlockLoop
-#undef sub_913D0
+#undef DrawArtHotspot
 
 typedef struct { char c[17]; } ArtHdr17;
 
 int TonightsGameScreen(int home, int away);
 int LoadDigiFile(char *path);
 void PlayDigiBlockLoop(int song, int handle, int a, int b);
-void __cdecl sub_913D0(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
+void __cdecl DrawArtHotspot(int art, int x, int y);  /* graphics library: draw art (another mode than DrawArt) */
 
 /* TonightsGameScreen (2ABDF, PC only): tonight's game. Copy the two teams' crests (CTLOGO) into LOGOHOME and
    LOGOAWAY blocks, load the CTBKGD background and palette, the CTTITLE1 gadget art and the INDUS030 font, read
@@ -127,7 +127,7 @@ int TonightsGameScreen(int home, int away)
         }
         DrawGadgetByType(8, 0, (int)pal, gad, 0, (int)&out);
         SetClipWindow(0, 0x280, 0, 0x1E0);
-        sub_913D0(logos[side], 0x3D, 0x50);
+        DrawArtHotspot(logos[side], 0x3D, 0x50);
         SetTextColors(0x40, 0);
         SetClipWindow(0, 0x280, 0, 0x154);
         y = byte_D42C3 + 0xA6;
@@ -154,7 +154,7 @@ int TonightsGameScreen(int home, int away)
             DrawBitmap(bkgd);
             SetClipWindow(0, 0x80, 0x8C, 0x1E0);
             DrawGadgetByType(0x10, 0, (int)pal, gad, 0, (int)&out);
-            sub_913D0(logos[side], 0x3D, 0x50);
+            DrawArtHotspot(logos[side], 0x3D, 0x50);
             SetClipWindow(0, 0x280, 0, 0x1E0);
             y = byte_D42C3 + 0xA6;
             for (n = 0; n < 3 && !err; n++) {
@@ -180,7 +180,7 @@ int TonightsGameScreen(int home, int away)
             DrawBitmap(bkgd);
             SetClipWindow(0, 0x80, 0x8C, 0x1E0);
             DrawGadgetByType(4, 0, (int)pal, gad, 0, (int)&out);
-            sub_913D0(logos[side], 0x3D, 0x50);
+            DrawArtHotspot(logos[side], 0x3D, 0x50);
             SetClipWindow(0, 0x280, 0, 0x1E0);
             y = byte_D42C3 + 0x7E;
             for (n = 0; n < 8 && !err; n++) {

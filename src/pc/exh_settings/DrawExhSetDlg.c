@@ -12,7 +12,7 @@ void DrawExhSetDlg(void)
     SetScreenTarget();
     MakePath(path, fileoncd[0x176] == 1 ? (char *)cddriveptr : 0, (char *)str_Setting6, 0);
     bank = LoadBank(path, 0);
-    sub_91284(FindShape(bank, (char *)str_Dbox4), 0xA, 0x13);
+    DrawArtKeyFF(FindShape(bank, (char *)str_Dbox4), 0xA, 0x13);
     FreeMemBlock(bank);
     if (sounddev == 0x10) {
         PrintString((char *)str_Music3, 0x60, 0xAA);

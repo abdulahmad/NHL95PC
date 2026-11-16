@@ -19,7 +19,7 @@ extern rosterteamrec, savepal, SetClipWindow, SetDrawBitmap, SetPalette, SetText
 extern songdata, sprintf_, str_AreYouSureYou, str_C4, str_Current3, str_DATABASE, str_ea, str_extDB
 extern str_fmt2d, str_FreeAgents, str_Menubuff, str_Pal, str_PleaseEnterANew, str_Pointer11, str_Prez2, str_Ratings
 extern str_S5, str_space, str_Temp7, str_TheDatabaseHasNot, str_TheJerseyNumber2d, str_Uar, str_Uarm, strcat_
-extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, SetDigiChannelVolume, sub_9121C, SetScreenTarget
+extern strcmp_, strcpy_, strlen_, strupr_, PushMemDescriptorLocked, SetDigiChannelVolume, DrawArtOpaqueAtOwnPos, SetScreenTarget
 extern FillRectColor, teamdivflags, teamratingidx, teamratingnames, TextRestoreState, TextSaveState, TextSetFont, TrackButtons
 extern TrackScrollBars, unk_EAFB8, VisTeam, XorBar
 global RunEditRosters, RunEditRosters_ret6, RunEditRosters_ret5, DrawRosterTitle, DrawRosterList, DrawDatabaseName, DrawRosterPanel, DrawEditRosters
@@ -825,7 +825,7 @@ DrawEditRosters:
         mov eax, dword [fullscrbmp]
         mov ecx, dword [byte eax+02Ch]
         push ecx
-        call sub_9121C
+        call DrawArtOpaqueAtOwnPos
         add esp, byte 4
         add esp, byte 54h
         jmp near RunEditRosters_ret5

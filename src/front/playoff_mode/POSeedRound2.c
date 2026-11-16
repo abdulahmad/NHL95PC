@@ -121,7 +121,7 @@ int CreatePlayoffs(void)
         DrawShape(FindShape(p, (char *)str_Bkgd));
         FreeMemBlock(p);
     } else {
-        sub_9121C(FindShape(embscupbank, (char *)str_Bkgd));
+        DrawArtOpaqueAtOwnPos(FindShape(embscupbank, (char *)str_Bkgd));
     }
     MakePath(s.path, fileoncd[0x8E] == 1 ? (char *)cddriveptr : 0, (char *)str_Embpal, 0);
     bank = LoadBank(s.path, 0);
@@ -195,10 +195,10 @@ int CreatePlayoffs(void)
                 if (!embscupbank) {
                     MakePath(s.path, fileoncd[0x8D] == 1 ? (char *)cddriveptr : 0, (char *)str_Embscup, 0);
                     bank2 = LoadBank(s.path, 0);
-                    sub_9121C(FindShape(bank2, (char *)str_Bkgd));
+                    DrawArtOpaqueAtOwnPos(FindShape(bank2, (char *)str_Bkgd));
                     FreeMemBlock(bank2);
                 } else {
-                    sub_9121C(FindShape(embscupbank, (char *)str_Bkgd));
+                    DrawArtOpaqueAtOwnPos(FindShape(embscupbank, (char *)str_Bkgd));
                 }
                 FadePalStep(0, (unsigned char *)FindShape(bank, (char *)str_BangPal) + 0x10, 0x10);
                 FreeMemBlock(bank);

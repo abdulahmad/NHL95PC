@@ -16,7 +16,7 @@ extern str_dbgHVpos, str_dbgI, str_dbgIdx, str_dbgL, str_dbgLbD, str_dbgLip, str
 extern str_dbgPenShot, str_dbgPosVel, str_dbgPuckc, str_dbgRef, str_dbgS, str_dbgSpa, str_dbgSpace, str_dbgVz
 extern str_debError, str_dumpAway, str_dumpGlHdrA, str_dumpGlHdrH, str_dumpGlLine, str_dumpHex, str_dumpHome, str_dumpPlHdrA
 extern str_dumpPlHdrH, str_dumpPlLineA, str_dumpPlLineH, str_dumpPool, str_dumpRule, str_dumpSortcords, str_dumpSortLine, str_dumpTeamHdrA
-extern str_dumpTeamHdrH, str_dumpTmstructs, str_ErrDumpStats, str_fmode_at, str_newline, str_pen, str_statslog, sub_93E38
+extern str_dumpTeamHdrH, str_dumpTmstructs, str_ErrDumpStats, str_fmode_at, str_newline, str_pen, str_statslog, MemViewerStart
 extern threat, VisTeam, WaitKey, SortPending, xc1, yc1
 global DebugMonitor, DebugMonitor_pop, DumpStatsLog
 ;-----------------------------------------------------------------------------
@@ -25,7 +25,7 @@ global DebugMonitor, DebugMonitor_pop, DumpStatsLog
 ; per frame through DebugPrintf (clin=, ps<>, HVpos<>, ref<>, pb[],
 ; puckc/gmclock) and one line per SortCords object (17 entries, skipping
 ; 0Ch/0Dh/0Fh); flags 'debError' on a bad SPA/SCnum; then reads a key: '0'
-; bail, 'm' sub_93E38, 'd' DumpStatsLog("stats.log"), '\' toggles debugstep
+; bail, 'm' MemViewerStart, 'd' DumpStatsLog("stats.log"), '\' toggles debugstep
 ;-----------------------------------------------------------------------------
 ; C: src/pc/debug_dump/DebugMonitor.c
 %ifdef CBUILD
@@ -510,7 +510,7 @@ DebugMonitor:
 .21:
         cmp ax, 6Dh
         jne short .22
-        call sub_93E38
+        call MemViewerStart
         jmp short .done
 .22:
         cmp ax, 64h
