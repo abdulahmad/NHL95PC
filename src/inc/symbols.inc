@@ -1005,7 +1005,7 @@
 ;  96267  write_                                   lib/watcom/watcom_clib_21.asm                1
 ;  96440  DrawShapeClippedKeyed                    lib/ea/ea_mvi.asm                            2
 ;  96A10  MviRewind                                lib/ea/ea_mvi.asm                            1
-;  96A78  MviGetFrame                              lib/sound/eacsndf_core.asm                   1
+;  96A78  MviGetFrameRate                          lib/sound/eacsndf_core.asm                   1
 ;  97079  SndOpenDriver                            lib/sound/eacsndf_core.asm                   1
 ;  97166  SndDriverHandle                          lib/sound/eacsndf_core.asm                   1
 ;  971BE  SndHandleClose                           lib/sound/eacsndf_core.asm                   1
@@ -5131,7 +5131,7 @@
 ;  DC265  UnusedStateMode                          data/front/desk_stats.asm                    1
 ;  DC266  UnusedStateSpare                         data/front/desk_stats.asm                    1
 ;  DC267  GameRecordDay                            data/front/desk_stats.asm                    4
-;  DC268  UnusedStateByte                          data/front/desk_stats.asm                    4
+;  DC268  GameRecordMonth                          data/front/desk_stats.asm                    4
 ;  DC26C  linesprites                              data/front/desk_stats.asm                    4
 ;  DC28C  hudhundstep                              data/front/desk_stats.asm                    6
 ;  DC290  penaltydigits                            data/front/desk_stats.asm                    3

@@ -4307,7 +4307,7 @@ AngleOctantTable,D6074,Octant per delta slope for AngleFromDelta
 GusDmaPageTable,D86C8,ISA DMA page port and channel bits for each DMA channel
 GusDramSized,D89E0,Set once the card memory size has been measured
 RemapTable,D89E4,Colour remap table
-UnusedStateByte,DC268,Saved and restored with the game state; otherwise unused
+GameRecordMonth,DC268,first byte of the current game record (schedule byte 0 is the month); InitGameSummary stores it and the save and highlight records keep it
 GusDmaControl,F79C8,DMA control register value for the download
 HugeValLo,C4CA0,Low half of HUGE_VAL
 HugeValHi,C4CA4,High half of HUGE_VAL
@@ -4852,7 +4852,7 @@ gmrosterdot,ED0F8,Byte 4 of each game roster record: set to a full stop after th
 gmrosterspace,ED0F9,Byte 5 of each game roster record: set to a space before the name
 gmrostername,ED0FA,Player name (16 bytes) of each game roster record
 ControlsDlgFlags,ED364,Bit flags the controls dialog builds from its options
-GadgetMovie,ED6D0,Movie handle whose frame GadgetSoundStub fetches
+GadgetMovie,ED6D0,Movie handle whose frame rate GadgetMovieFrameRate reads
 ReplaySpeedAccum,ED6E8,Replay speed accumulator; the replay steps a frame each time it reaches five
 ReplayHoverPrev,ED6EC,Player last highlighted under the replay pointer (-1 for none)
 ReplayCamFree,ED70C,Set when the replay camera follows the pointer instead of a player

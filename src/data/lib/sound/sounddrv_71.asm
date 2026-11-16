@@ -8,7 +8,8 @@ global GusDmaReady, GusTimerCtrl, GusVoiceAllocCtrl, InitRtnsEntry, FiniRtnsEntr
 GusVoiceRateTable:                              ; used by GusCalcVoiceAddrs
         db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh
         db 0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,0BCh,018h
-GusDmaReady:                                    ; used by GusInitDma
+GusDmaReady:                                    ; DMA set-up flag, set by GusInitDma; it sits in slot 12 of
+                                                ; GusVoiceRateTable, which is only read from 14 voices up
         db 00h,00h,00h,00h,044h,0ACh,0C8h,0A0h,0BBh,096h,0DDh,08Dh,0FCh,085h,0EEh,07Eh
         db 096h,078h,0D8h,072h,09Fh,06Dh,0DBh,068h,07Dh,064h,078h,060h,0C2h,05Ch,052h,059h
         db 022h,056h,029h,053h,064h,050h,0CCh,04Dh,05Dh,04Bh

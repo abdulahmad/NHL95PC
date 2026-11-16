@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_DB7EC nobits alloc noexec write align=1
 global awroster, awrosterjersey, hmgoalieidx, hmscratch, UnusedStateFlag, UnusedStateMode, UnusedStateSpare
-global GameRecordDay, UnusedStateByte, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr
+global GameRecordDay, GameRecordMonth, hmteamrec_skaters, hmteamrec_goalies, s1font, schedgameidx, pointerspr
 global linesprites, hudhundstep, penaltydigits, PenaltyBlankDigit, hmpanelspr, awpanelspr, scoredigits, scrbrdshapes
 global clockdigits, clockcolon, cupseries, titlesample, statsteamorder, statsmenuresult, sfpal2, sfpal1
 global StatsLastSel, statsnumgoalies, statsskaterorder, statsgoalieorder, RosterFromStandings, leaguestatsmode, statsgoalieplr, statsnumskaters
@@ -96,7 +96,7 @@ GameRecordDay:                                  ; Second byte of the current gam
                                                 ; days against it; used by InitGameSummary, LoadGameState,
                                                 ; LoadTeamRoster ...
         resb 1
-UnusedStateByte:                                ; Saved and restored with the game state; otherwise unused;
+GameRecordMonth:                                ; Saved and restored with the game state; otherwise unused;
                                                 ; used by InitGameSummary, LoadGameState, LoadTeamRoster ...
         resb 4
 linesprites:                                    ; line indicator shapes (DrawPanelLine); used by DrawHudPanel,

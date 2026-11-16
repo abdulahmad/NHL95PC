@@ -110,8 +110,8 @@ rocktunes:                                      ; 3 handles: device rock tune, t
         resb 4
 rockrandcues:                                   ; 3 random cue handles; used by FreeRockMusic, LoadRockMusic
         resb 836
-GadgetMovie:                                    ; Movie handle whose frame GadgetSoundStub fetches; used by
-                                                ; GadgetSoundStub
+GadgetMovie:                                    ; Movie handle; GadgetMovieFrameRate reads its rate; used
+                                                ; by GadgetMovieFrameRate
         resb 4
 hilightslot:                                    ; ReplaySaveHilight: the highlight slot row picked, 0-3; used
                                                 ; by ReplaySaveHilight

@@ -1035,8 +1035,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0007DC8B,sub_7DC8B,LoadRockMusic,PC-new,,,,medium,loads 6 team cues + 3 random of 18 pool + device rock tune (MT/SB/ADROCKU) + team tune + ROCKDITI via sub_8F13B,gadgets_replay,manual-trace
 0007DEC8,sub_7DEC8,FreeRockMusic,PC-new,,,,medium,"frees rockteamcues[6], rockrandcues[3], rocktunes[3] via sub_8F1FE",gadgets_replay,manual-trace
 0007DF4E,sub_7DF4E,DrawGadgetByType,PC-new,,,,low,"(type, ?, ?, gadget): switch on type 4/8/10h/20h drawing the gadget's shapes (+28h/+24h/+2Ch via sub_913B4) and its label field; used by game_setup and settings dialogs",gadgets_replay,manual-trace
-0007E032,sub_7E032,GadgetStub0,PC-new,,,,high,"__CHK; return 0; unreferenced [reviewed: whole body is the stub/flag-set described, no other behaviour]",gadgets_replay,manual-trace
-0007E03F,sub_7E03F,GadgetSoundStub,PC-new,,,,low,no caller (dead code after GadgetStub0): calls the EA sound library getter sub_96A78(dword_ED6D0) and drops the result,gadgets_replay,manual-trace
+0007E032,sub_7E032,GadgetNullCallback,PC-new,,,,low,gadget callback that does nothing and returns 0; not referenced,gadgets_replay,manual-trace
+0007E03F,sub_7E03F,GadgetMovieFrameRate,PC-new,,,,low,returns the frame rate of the gadget movie (MviGetFrameRate of GadgetMovie); not referenced,gadgets_replay,manual-trace
 0007E067,sub_7E067,DrawGadgetButton,PC-new,,,,medium,"draws frame around gadget button idx (28-byte rect table gadgetrects, y-0A8h)",gadgets_replay,manual-trace
 0007E0FA,sub_7E0FA,InstantReplay,PC-new,,,,medium,"replay gadget screen: gadget6/gadget5 .PPV panel, camera save, ReplayFirstFrame/ReplayStep; from main/frontend/highlights",gadgets_replay,manual-trace
 0007E8E5,sub_7E8E5,GadgetHitTest,PC-new,,,,medium,hit-test 10 gadget button rects,gadgets_replay,manual-trace
@@ -1560,7 +1560,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00096A38,sub_96A38,MviGetPalette,PC-new,,,,low,"returns a movie's palette pointer, first colour and colour count",ea_mvi,manual-trace
 00096A58,const ios::failure::cause(void),const ios::failure::cause(void),library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_22,flirt
 00096A60,sub_96A60,MviGetWidth,PC-new,,,,low,returns a movie's width; the code after it returns the height and the frame count,eacsndf_core,manual-trace
-00096A78,sub_96A78,MviGetFrame,PC-new,,,,low,returns a movie's current picture,eacsndf_core,manual-trace
+00096A78,sub_96A78,MviGetFrameRate,PC-new,,,,medium,returns a movie's frame rate (field 08h which MviPrintInfo prints as the frame rate),eacsndf_core,manual-trace
 00096A80,sub_96A80,MviAtEnd,PC-new,,,,medium,returns 1 when a movie is past its last frame,eacsndf_core,manual-trace
 00096A94,sub_96A94,MviSeekFrame,PC-new,,,,low,"moves a movie to a frame, rewinding when it has to",eacsndf_core,manual-trace
 00096AC4,sub_96AC4,MviDecodeKeyFrame,PC-new,,,,low,decodes a movie key frame,eacsndf_core,manual-trace

@@ -15,7 +15,7 @@ void InitGameSummary(int a, int b)
     int t;
     int i;
 
-    UnusedStateByte = a;
+    GameRecordMonth = a;
     GameRecordDay = b;
     curperiod = -1;
     gsumheader_b1 = a;

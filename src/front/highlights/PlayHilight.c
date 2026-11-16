@@ -12,7 +12,7 @@ void PlayHilight(void)
     unsigned char pal[0x300];
     int i;
 
-    UnusedStateByte = hilightrec[0];
+    GameRecordMonth = hilightrec[0];
     GameRecordDay = hilightrec[1];
     HomeTeam = hilightrec[2];
     VisTeam = hilightrec[0x1F];

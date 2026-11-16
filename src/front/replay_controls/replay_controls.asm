@@ -17,10 +17,10 @@ extern rockteamcues, rocktunes, rpl_x, rpl_x_e16, rpl_y, SaveHilight, savepal, s
 extern scrolly, SelectRinkBM, SelectScreenBM, SetClipWindow, SetDialogColors, SetPalette, SetRinkScroll, SetScreenSize
 extern SetTickDeadline, SetViewRect, sounddev, spritedrawcount, str_ADROCKU, str_BothTeams, str_Gad1, str_Gadget5
 extern str_Gadget6, str_MTROCKU, str_NeitherTeams, str_Pointer19, str_PPV, str_ROCKDITI, str_SBROCKU, FlushZones
-extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, OpenArtArchiveErr, MviGetFrame, SetScreenTarget, VgaBlitKeyed, FillRectColor
+extern SetZoneScreen, SetZoneOrigin, BeginZoneFrame, OpenArtArchiveErr, MviGetFrameRate, SetScreenTarget, VgaBlitKeyed, FillRectColor
 extern VgaBlitKeyedFlipV, teamrockcuetbl, teamrocktune, teamtunefiles, teamtunepathsel, TextRestoreState, TextSaveState, TextSetFont
 extern TicksSinceLastCall, viewscrollx, viewscrolly, WaitTickDeadline
-global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetStub0, GadgetSoundStub, bothneitherstrs, DrawGadgetButton
+global LoadRockMusic, LoadRockMusic_ret, FreeRockMusic, DrawGadgetByType, GadgetNullCallback, GadgetMovieFrameRate, bothneitherstrs, DrawGadgetButton
 global DrawGadgetButton_ret, InstantReplay, GadgetHitTest, PickNearestPlayer, ReplayControlLoop, ReplaySaveHilight_jt, ReplaySaveHilight, ReplaySaveHilight_n0
 global ReplaySaveHilight_n2, ReplaySaveHilight_n1, ReplaySaveHilight_n3
 ;-----------------------------------------------------------------------------
@@ -394,28 +394,28 @@ DrawGadgetByType:
         ret 8
 %endif ; C
 ;-----------------------------------------------------------------------------
-; GadgetStub0                                                     7E032  95 PC
+; GadgetNullCallback                                                     7E032  95 PC
 ; __CHK; return 0; unreferenced
 ;-----------------------------------------------------------------------------
-; C: src/front/replay_controls/GadgetStub0.c
+; C: src/front/replay_controls/GadgetNullCallback.c
 %ifdef CBUILD
-%include "c/front/replay_controls/GadgetStub0.inc"
+%include "c/front/replay_controls/GadgetNullCallback.inc"
 %else
-GadgetStub0:
+GadgetNullCallback:
         push dword 4
         call __CHK
         xor eax, eax
         ret
 %endif ; C
 ;-----------------------------------------------------------------------------
-; GadgetSoundStub                                7E03F  95 PC, low confidence
-; MviGetFrame(GadgetMovie) (EA sound library, one stack argument).
+; GadgetMovieFrameRate                                7E03F  95 PC, low confidence
+; MviGetFrameRate(GadgetMovie) (EA sound library, one stack argument).
 ;-----------------------------------------------------------------------------
-; C: src/front/replay_controls/GadgetSoundStub.c
+; C: src/front/replay_controls/GadgetMovieFrameRate.c
 %ifdef CBUILD
-%include "c/front/replay_controls/GadgetSoundStub.inc"
+%include "c/front/replay_controls/GadgetMovieFrameRate.inc"
 %else
-GadgetSoundStub:
+GadgetMovieFrameRate:
         push dword 14h
         call __CHK
         push ebx
@@ -423,7 +423,7 @@ GadgetSoundStub:
         push edx
         mov edx, dword [GadgetMovie]
         push edx
-        call MviGetFrame
+        call MviGetFrameRate
         add esp, byte 4
         pop edx
         pop ecx

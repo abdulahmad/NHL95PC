@@ -4,7 +4,7 @@ bits 32
 section s_96A60 progbits alloc exec nowrite align=1
 extern __GETDS, _os_handle_3, SndHandleType, sndhandlecount, SndTimerHandle, SndDriverTable, MemDescPtr, MviRewind
 extern bcopy, DosReadFile, SndHandleTable
-global MviGetWidth, MviGetFrame, MviAtEnd, MviSeekFrame, MviDecodeKeyFrame, MviDecodeDeltaFrame, MviNextFrame, SndOpenDriver
+global MviGetWidth, MviGetFrameRate, MviAtEnd, MviSeekFrame, MviDecodeKeyFrame, MviDecodeDeltaFrame, MviNextFrame, SndOpenDriver
 global SndDriverHandle, SndHandleDetect, SndHandleOpen, SndHandleInit, SndHandleClose, SndHandleService, SndDriverCall, SndHandleSetTrack
 global SndHandleMidi, SndHandlePlayDigi, NullDriverOpen, NullDriverInit, NullDriverReturn, NullDriverQuery, NullDriverSetTrack, NullDriverMidi
 global NullDriverPlayDigi
@@ -25,10 +25,10 @@ MviGetWidth:
         ret
         db 090h
 ;-----------------------------------------------------------------------------
-; MviGetFrame                                     96A78  95 PC, low confidence
+; MviGetFrameRate                                     96A78  95 PC, low confidence
 ; Returns a movie's current picture
 ;-----------------------------------------------------------------------------
-MviGetFrame:
+MviGetFrameRate:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+08h]
         ret

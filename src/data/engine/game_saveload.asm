@@ -419,7 +419,7 @@ nethit:                                         ; set when a player hits the goa
 ; Shot-block slide speeds, eight facings. blockspd is X and blockspd_y is Y, the next short.
 ; The short index is the facing doubled. An axis facing is Â±4242 and 0; a diagonal is Â±3000 on both.
 blockspd:                                       ; X column of the shot-block slide speeds. Eight facings,
-                                                ; short index = facing*2: 0, ±0BB8h (3000), ±1092h (4242).
+                                                ; short index = facing*2: 0, +-0BB8h (3000), +-1092h (4242).
                                                 ; Same interleaved layout as dirtab, and nosplit, so the Y
                                                 ; column keeps its own label; used by BlockShotDive
         db 092h,010h

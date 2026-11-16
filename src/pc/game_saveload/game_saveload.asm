@@ -5,7 +5,7 @@ bits 32
 section s_5FB03 progbits alloc exec nowrite align=1
 extern __CHK, __STOSB, __STOSD, awlinetab, awroster, awteamrec, awtmglstats, awtmlines
 extern awtmplstats, awtmptrF2, awtmroster, awtmsort, awtmstruct, bannermsg, bannertimer, BuildEventLines
-extern rinkobjanim, UnusedStateFlag, UnusedStateMode, UnusedStateSpare, GameRecordDay, UnusedStateByte, milestonesaid, curevent
+extern rinkobjanim, UnusedStateFlag, UnusedStateMode, UnusedStateSpare, GameRecordDay, GameRecordMonth, milestonesaid, curevent
 extern goalevent, c1playernum, c2playernum, camx, camy, clockticks, collflag, cont1team
 extern cont2team, crowdlevel, crowdsmooth, ctl1dev, ctl1side, ctl1team, ctl2dev, ctl2team
 extern curperiod, CwdExciteLvl, deferpending, DeskRedrawAll, DeskRedrawFlag, goalienotebits, hmplstats, hmtmplattr
@@ -487,7 +487,7 @@ SaveGameState:
         mov dx, word [gamemode]
         mov word [eax], dx
         add eax, byte 2
-        mov dl, byte [UnusedStateByte]
+        mov dl, byte [GameRecordMonth]
         mov byte [eax], dl
         mov dl, byte [GameRecordDay]
         mov byte [byte eax+01h], dl
@@ -1279,7 +1279,7 @@ LoadGameState:
         mov dword [gamemode], eax
         add ebx, byte 2
         mov al, byte [ebx]
-        mov byte [UnusedStateByte], al
+        mov byte [GameRecordMonth], al
         mov al, byte [byte ebx+01h]
         mov byte [GameRecordDay], al
         add ebx, byte 2

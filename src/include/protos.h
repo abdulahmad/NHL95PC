@@ -175,7 +175,7 @@ void stub_8C202(void);  /* 8C202 */
 void stub_8C20D(void);  /* 8C20D */
 void __cdecl stub_8C218(int page, int x, int y, int w, int h, int zero);  /* 8C218: empty; the line editor pushes a clip blit */
 int DlgReturnZero(void);  /* 2FED2 */
-int GadgetStub0(void);  /* 7E032 */
+int GadgetNullCallback(void);  /* 7E032 */
 int LeagueCheckStub(void);  /* 41337 */
 int POReturnZero(void);  /* 89B5C */
 int DeskBackToGame(void);  /* 1A5A1 */
@@ -820,8 +820,8 @@ int CalRightJoystick(void);  /* 6B37A */
 void updateplayers(void);  /* engine_core */
 void checkwindow(void);  /* engine_display */
 void updatereplay(void);  /* engine_display */
-void __cdecl MviGetFrame(int a);  /* 96A78: EA sound library */
-void GadgetSoundStub(void);  /* 7E03F */
+void __cdecl MviGetFrameRate(int a);  /* 96A78: EA sound library */
+void GadgetMovieFrameRate(void);  /* 7E03F */
 void *__cdecl LoadFileAllocQuiet(char *name, int bank);  /* sound library loader 2, stack args */
 void SndLoadFile2(int unused, char *name);  /* 594B2 */
 void ReadGSummaryRec(int fh, void *rec, int n);  /* 147FF */

@@ -686,7 +686,7 @@ InstantReplay,7E0FA,2027,front/replay_controls,src/front/replay_controls/DrawGad
 DrawGadgetByType,7DF4E,228,front/replay_controls,src/front/replay_controls/DrawGadgetByType.c,matched,,
 FormatHilightDesc,7FCA2,86,front/highlights,src/front/highlights/FormatHilightDesc.c,matched,,
 GadgetHitTest,7E8E5,89,front/replay_controls,src/front/replay_controls/GadgetHitTest.c,matched,,
-GadgetStub0,7E032,13,front/replay_controls,src/front/replay_controls/GadgetStub0.c,matched,,
+GadgetNullCallback,7E032,13,front/replay_controls,src/front/replay_controls/GadgetNullCallback.c,matched,,
 LoadRockMusic,7DC8B,573,front/replay_controls,src/front/replay_controls/LoadRockMusic.c,matched,"draft: 577 vs 573. The cue loops, the random retry, and the tune banks match. The zero cue is xor ebp instead of xor esi, so ebp is pushed and the cookie is 3Ch. team*3 reloads the stack slot instead of copying it through edx, and the accepted cue id stays in eax instead of edx.",
 FreeRockMusic,7DEC8,134,front/replay_controls,src/front/replay_controls/LoadRockMusic.c,matched,draft: 133 vs 134. The three free loops match. The exit jumps to LoadRockMusic's pop ebp; the original pops ebp and then jumps to LoadRockMusic_ret. Do not retry until the LoadRockMusic draft stops pushing ebp.,
 NudgeRinkScroll,7FC12,31,front/highlights,src/front/highlights/NudgeRinkScroll.c,matched,,
@@ -697,7 +697,7 @@ SaveHilight,7FA10,514,front/highlights,src/front/highlights/SaveHilight.c,matche
 SelectHilight,7FCF8,893,front/highlights,src/front/highlights/SelectHilight.c,nonmatching,,register 4/4
 TeamFromHiName,7FC5C,70,front/highlights,src/front/highlights/TeamFromHiName.c,matched,,
 ViewHilights,80075,167,front/highlights,src/front/highlights/ViewHilights.c,matched,,
-GadgetSoundStub,7E03F,32,front/replay_controls,src/front/replay_controls/GadgetSoundStub.c,matched,,
+GadgetMovieFrameRate,7E03F,32,front/replay_controls,src/front/replay_controls/GadgetMovieFrameRate.c,matched,,
 BlitTileMap,33C08,459,front/rink_tiles,src/front/rink_tiles/BlitTileMap.c,nonmatching,"draft: 423 vs 459. Height is stored at esp+14h and width at esp+18h; the original stores height at esp+18h and width at esp+14h. The tile index is masked in edx; the original masks it in eax, then adds the tile base. Do not retry: declaring height before width.",slot 4/5
 LoadCrestsPalette,33F02,251,front/rink_tiles,src/front/rink_tiles/LoadCrestsPalette.c,matched,,
 LoadRink,3377C,1164,front/rink_tiles,src/front/rink_tiles/LoadRink.c,matched,,

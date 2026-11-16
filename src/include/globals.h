@@ -4667,7 +4667,7 @@ extern unsigned char UnusedStateFlag; /* DC264 */
 extern unsigned char UnusedStateMode; /* DC265 */
 extern unsigned char UnusedStateSpare; /* DC266 */
 extern unsigned char GameRecordDay; /* DC267 */
-extern unsigned char UnusedStateByte; /* DC268 */
+extern unsigned char GameRecordMonth; /* DC268 */
 extern int linesprites[]; /* DC26C */
 extern int hudhundstep; /* DC28C */
 extern int penaltydigits[]; /* DC290 */

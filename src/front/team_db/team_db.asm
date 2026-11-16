@@ -4,7 +4,7 @@ bits 32
 section s_1BBCC progbits alloc exec nowrite align=1
 extern __CHK, awgoalcnt, awgoalieidx, awlinetab, awroster, awscratch, awshotcnt, awteamrec
 extern awtmap, awtmgoalie, gsumheader_b1, gsumheader_b2, gsumheader_b3, gsumheader_b4, RosterStatusByInjury, hmrosterpos
-extern GameRecordDay, UnusedStateByte, cont2team, curleague, curperiod, hmplstats, hmteamrec_skaters, hmteamrec_goalies
+extern GameRecordDay, GameRecordMonth, cont2team, curleague, curperiod, hmplstats, hmteamrec_skaters, hmteamrec_goalies
 extern plcareergoals, plcareerpts, plseasongoals, plseasonpts, hmtmpdst_gl_m2, FatalError, FileClose, FileCreate
 extern FileOpenRead, FileReadAt, FileWriteAt, fputchar, gameopts, gsummarypath, hmgoalcnt, hmgoalieidx
 extern hmlinetab, hmroster, hmrosterjersey, hmscratch, hmshotcnt, hmteamrec, hmtmap, hmtmgoalie
@@ -316,7 +316,7 @@ InitGameSummary:
         push esi
         push edi
         sub esp, byte 4
-        mov byte [UnusedStateByte], al
+        mov byte [GameRecordMonth], al
         mov byte [GameRecordDay], dl
         mov dword [curperiod], 0FFFFFFFFh
         mov byte [gsumheader_b1], al
@@ -836,7 +836,7 @@ LoadTeamRoster:
         add eax, edx
         shl eax, 2
         add esi, eax
-        mov al, byte [UnusedStateByte]
+        mov al, byte [GameRecordMonth]
         mov dh, byte [dword esp+0A2h]
         cmp al, dh
         jae short .4
@@ -1015,7 +1015,7 @@ LoadTeamRoster:
         shl eax, 3
         sub eax, ebx
         add esi, eax
-        mov al, byte [UnusedStateByte]
+        mov al, byte [GameRecordMonth]
         mov cl, byte [byte esp+03Eh]
         cmp al, cl
         jae short .17

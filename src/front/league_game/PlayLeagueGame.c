@@ -251,7 +251,7 @@ void PlayLeagueGame(int *fh)
                     else
                         gameopts.fullot = 0;
                     if (*fh < 0) {
-                        UnusedStateByte = lgschedrec;
+                        GameRecordMonth = lgschedrec;
                         GameRecordDay = lgschedrec_b1;
                         HomeTeam = lgschedrec_b2;
                         VisTeam = lgschedrec_b3;
@@ -260,7 +260,7 @@ void PlayLeagueGame(int *fh)
                     err = 0;
                     if (*fh < 0) {
                         if (!CheckGameDiskSpace()) {
-                            InitGameSummary(UnusedStateByte, GameRecordDay);
+                            InitGameSummary(GameRecordMonth, GameRecordDay);
                             err = PreGameScreen(HomeTeam, VisTeam);
                         } else
                             err = 4;

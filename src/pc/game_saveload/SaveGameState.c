@@ -153,7 +153,7 @@ int SaveGameState(int fh)
     *p++ = *(short *)(&milestonesaid);
     *p++ = *(short *)(&milestonesaid_b2);
     *p++ = *(short *)(&gamemode);
-    ((char *)p)[0] = *(char *)(&UnusedStateByte);
+    ((char *)p)[0] = *(char *)(&GameRecordMonth);
     ((char *)p)[1] = *(char *)(&GameRecordDay);
     p++;
     ((char *)p)[0] = *(char *)(&UnusedStateFlag);
@@ -394,7 +394,7 @@ int LoadGameState(int fh)
     milestonesaid[0] = *p++;
     milestonesaid_b2 = *p++;
     gamemode = *p++;
-    *(char *)&UnusedStateByte = ((char *)p)[0];
+    *(char *)&GameRecordMonth = ((char *)p)[0];
     *(char *)&GameRecordDay = ((char *)p)[1];
     p++;
     *(char *)&UnusedStateFlag = ((char *)p)[0];

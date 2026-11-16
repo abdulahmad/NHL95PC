@@ -1,0 +1,4 @@
+UnusedStateByte GameRecordMonth {source_game=PC-new,confidence=medium} first byte of the current game record (schedule byte 0 is the month); InitGameSummary stores it and the save and highlight records keep it
+MviGetFrame MviGetFrameRate {source_game=PC-new,confidence=medium} returns a movie's frame rate (field 08h which MviPrintInfo prints as the frame rate)
+GadgetSoundStub GadgetMovieFrameRate {source_game=PC-new,confidence=low} returns the frame rate of the gadget movie (MviGetFrameRate of GadgetMovie); not referenced
+GadgetStub0 GadgetNullCallback {source_game=PC-new,confidence=low} gadget callback that does nothing and returns 0; not referenced
