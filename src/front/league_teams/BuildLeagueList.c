@@ -32,10 +32,10 @@ int BuildLeagueList(char ***list, char **names, int flags)
     strcpy(pat, (char *)str_star);
     strcat(pat, (char *)str_extLP);
     n = 0;
-    if (!unknown_libname_1(pat, 0x10, &ft)) {
+    if (!_dos_findfirst_(pat, 0x10, &ft)) {
         n = 1;
         do {
-            done = unknown_libname_2(&ft);
+            done = _dos_findnext_(&ft);
             if (done == 0) n++;
         } while (!done);
     }
@@ -48,8 +48,8 @@ int BuildLeagueList(char ***list, char **names, int flags)
         memset(*names, 0, i);
         cnt = n;
         for (i = 0; i < cnt; i++) {
-            if (i == 0) unknown_libname_1(pat, 0x10, &ft);
-            else unknown_libname_2(&ft);
+            if (i == 0) _dos_findfirst_(pat, 0x10, &ft);
+            else _dos_findnext_(&ft);
             r = GetLeagueId(ft.name, &id);
             if ((r < 0 && flags & 2) || (r >= 0 && flags & 1)) {
                 len = _fstrcspn(ft.name, (char *)&str_dot);

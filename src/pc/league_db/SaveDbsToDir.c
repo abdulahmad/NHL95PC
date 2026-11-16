@@ -46,22 +46,22 @@ void SaveDbsToDir(char *dir, char *ext)
     cl = s.df.sectors_per_cluster;  /* in two steps: one product swaps cl (esi) and need (edi) */
     cl *= s.df.bytes_per_sector;
     MakePath(s.path, dir, (char *)leaguedbnames[5], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[0] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[0] = 0;
     else s.old[0] = (s.ft.size + 0x3FF) >> 10;
     MakePath(s.path, dir, (char *)leaguedbnames[1], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[1] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[1] = 0;
     else s.old[1] = (s.ft.size + 0x3FF) >> 10;
     MakePath(s.path, dir, (char *)leaguedbnames[3], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[2] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[2] = 0;
     else s.old[2] = (s.ft.size + 0x3FF) >> 10;
     MakePath(s.path, dir, (char *)leaguedbnames[0], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[3] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[3] = 0;
     else s.old[3] = (s.ft.size + 0x3FF) >> 10;
     MakePath(s.path, dir, (char *)leaguedbnames[4], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[4] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[4] = 0;
     else s.old[4] = (s.ft.size + 0x3FF) >> 10;
     MakePath(s.path, dir, (char *)leaguedbnames[2], s.ext);
-    if (unknown_libname_1(s.path, 0, &s.ft)) s.old[5] = 0;
+    if (_dos_findfirst_(s.path, 0, &s.ft)) s.old[5] = 0;
     else s.old[5] = (s.ft.size + 0x3FF) >> 10;
     s.new[0] = (seasondb_size + 0x3FF) / 1024;
     s.new[1] = (careerdb_size + 0x3FF) / 1024;

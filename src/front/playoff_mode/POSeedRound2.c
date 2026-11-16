@@ -158,7 +158,7 @@ int CreatePlayoffs(void)
         *(int *)((char *)postate + 0x71) = 1;
         LoadModeState(postate);
         strcat(s.name.c, (char *)str_PO);
-        if (!unknown_libname_1(s.name.c, 0x10, s.ft)) {
+        if (!_dos_findfirst_(s.name.c, 0x10, s.ft)) {
             if ((r = !MessageBox(-1, -1, (char *)msg_POExists, 2, (int)btn_LeagueExists, 2, (int)&s.x, (int)&s.y,
                     -1)) == 0) {
                 DeleteDir(s.name.c);

@@ -22,13 +22,13 @@ void DeleteDir(char *dir)
     strcat(path, (char *)str_star);
     strcat(path, (char *)&str_dot);
     strcat(path, (char *)str_star);
-    if (!unknown_libname_1(path, 0, &ft)) {
+    if (!_dos_findfirst_(path, 0, &ft)) {
         strcpy(path, dir);
         strcat(path, (char *)str_backslash2);
         strcat(path, ft.name);
         j_unlink(path);
         do {
-            r = unknown_libname_2(&ft);
+            r = _dos_findnext_(&ft);
             if (!r) {
                 strcpy(path, dir);
                 strcat(path, (char *)str_backslash2);

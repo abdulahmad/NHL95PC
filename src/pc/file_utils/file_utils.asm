@@ -10,7 +10,7 @@ extern hudawayline, hudclockhund, hudclockmin, hudclocksec, hudhomeline, hudhund
 extern j_unlink_, lcboxon, leaguedbnames, linesprites, lseek_, MessageBox, MouseSetPos, msg_NeedKbytes
 extern msg_GameDiskSpace, rmdir_, scoredigits, SelectRinkBM, SelectScreenBM, sprintf_, str_backslash2, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_star, strcat_, strcpy_, VgaBlitKeyed
-extern VgaBlitKeyedAtOwnPos, TeamLineEnergy, TickPanelClock, TickPanelPenalties, unknown_libname_1, unknown_libname_2
+extern VgaBlitKeyedAtOwnPos, TeamLineEnergy, TickPanelClock, TickPanelPenalties, _dos_findfirst_, _dos_findnext_
 global MakePath, DeleteFiles, DeleteDir, FileOpenRead, FileOpenRead_x, FileOpenWrite, FileOpenRW, FileCreate
 global FileClose, FileReadAt, FileReadAt_x, FileReadAt_x2, FileWriteAt, ReadKeyRec, ReadKeyRec_x, WriteKeyRec
 global CopyFile, ReadSeasonRec, ReadSchedGame, ReadTeamRec, ReadTeamRec_x, ReadGSummaryRec, DiskSpaceShort, CheckGameDiskSpace
@@ -91,7 +91,7 @@ DeleteFiles:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         mov ebx, eax
         test eax, eax
         jne short .3
@@ -108,7 +108,7 @@ DeleteFiles:
         call j_unlink_
 .1:
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         mov ebx, eax
         test eax, eax
         jne short .2
@@ -167,7 +167,7 @@ DeleteDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .3
         mov edx, ecx
@@ -183,7 +183,7 @@ DeleteDir:
         call j_unlink_
 .1:
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         mov ebx, eax
         test eax, eax
         jne short .2
@@ -721,7 +721,7 @@ CheckGameDiskSpace:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .2
         cmp esi, 2000h
@@ -813,7 +813,7 @@ GetLeagueDBSizes:
         lea ebx, [byte esp+08h]
         xor edx, edx
         lea eax, [byte esp+034h]
-        call unknown_libname_1
+        call _dos_findfirst_
         mov eax, dword [byte esp+022h]
         add eax, 3FFh
         shr eax, 0Ah

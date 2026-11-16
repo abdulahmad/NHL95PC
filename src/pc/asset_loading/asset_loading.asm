@@ -11,7 +11,7 @@ extern FileOpenRead, forceteams, fox, foy, frameaccum, FreeMemBlock, gameopts, g
 extern gsp, hilightfont, hmtmap, HomeTeam, hudhundaccum, inputframes, introskipped, joyq_flush
 extern joysampling, joysampling_save, kaufmfont, lastplayer, lcblink, lcblinktime, lcboxon, lcline
 extern lcreqchoice, lcrequest, lcsel, lctimer, MakePath, memcpy_, MouseSetPos, musichandle
-extern musicon, musicslot, nullsub_2, numshapes, numshpbank, ovlseq, ovlstep, ovltimer
+extern musicon, musicslot, AssetLoadNoOp, numshapes, numshpbank, ovlseq, ovlstep, ovltimer
 extern pad1dev, pad2dev, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn, penshotlive
 extern penshotmode, penshotplayer, penshotstart, photobankf, photobanks, photoptrs, photoptrsf, PickAwardWinners
 extern PickAwardWinners_x, PlayDigiSample, puckx, pucky, randomd0, RefPen, refsignal, RefStep
@@ -369,7 +369,7 @@ LoadGameGfx_common:
         call TextSetColors
         add esp, byte 8
         call LoadPlayerPhotos
-        call nullsub_2
+        call AssetLoadNoOp
         mov word [fadeinpending], 1
         mov ecx, 1
         mov dword [dword_C66D4], ecx

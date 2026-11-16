@@ -1113,7 +1113,7 @@ extern void loc_8E2F8(); /* 8E2F8 */
 extern void loc_8E376(); /* 8E376 */
 extern void loc_8E385(); /* 8E385 */
 extern void loc_8E38C(); /* 8E38C */
-extern void nullsub_2(); /* 8E3C0 */
+extern void AssetLoadNoOp(); /* 8E3C0 */
 extern void ReturnPointerArg(); /* 8E3DC */
 extern void StrCopyN(); /* 8E3E4 */
 extern void StrCompareN(); /* 8E3F8 */
@@ -1825,7 +1825,7 @@ extern void loc_92D33(); /* 92D33 */
 extern void loc_92D40(); /* 92D40 */
 extern void loc_92D4C(); /* 92D4C */
 extern void loc_92D75(); /* 92D75 */
-extern void unknown_libname_4(); /* 92D7C */
+extern void atoi_(); /* 92D7C */
 extern void loc_92D7F(); /* 92D7F */
 extern void loc_92D95(); /* 92D95 */
 extern void loc_92DA1(); /* 92DA1 */
@@ -5396,7 +5396,7 @@ extern void loc_ADEC0(); /* ADEC0 */
 extern void loc_ADEDE(); /* ADEDE */
 extern void loc_ADEE0(); /* ADEE0 */
 extern void loc_ADEE5(); /* ADEE5 */
-extern void nullsub_4(); /* ADEE8 */
+extern void GusStreamNoOp(); /* ADEE8 */
 extern void GusFillStreamBuffer(); /* ADEE9 */
 extern void loc_ADF15(); /* ADF15 */
 extern void loc_ADF2A(); /* ADF2A */
@@ -5979,13 +5979,13 @@ extern void loc_B25B1(); /* B25B1 */
 extern void loc_B25C3(); /* B25C3 */
 extern void loc_B25DF(); /* B25DF */
 extern void loc_B25E2(); /* B25E2 */
-extern void unknown_libname_5(); /* B25EE */
+extern void ModfCore(); /* B25EE */
 extern void loc_B2619(); /* B2619 */
 extern void loc_B2627(); /* B2627 */
 extern void loc_B264C(); /* B264C */
 extern void loc_B264E(); /* B264E */
 extern void loc_B2672(); /* B2672 */
-extern void unknown_libname_6(); /* B267E */
+extern void DecimalToInt64(); /* B267E */
 extern void loc_B268C(); /* B268C */
 extern void loc_B26B0(); /* B26B0 */
 extern void NormalizeDouble(); /* B26C9 */

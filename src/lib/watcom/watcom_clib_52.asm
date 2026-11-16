@@ -9,8 +9,8 @@ global _Scale_, loc_B2306, _Scale10V_, loc_B234C, loc_B2369, loc_B236D, loc_B239
 global loc_B23B2, loc_B23C0, loc_B23D2, loc_B23E1, loc_B23EE, loc_B23F5, __cvt_, loc_B2444
 global loc_B246E, loc_B2487, loc_B249F, loc_B24BF, loc_B24CB, loc_B24DD, loc_B2507, loc_B2531
 global loc_B2533, loc_B253F, loc_B2549, loc_B2567, loc_B259B, loc_B25A7, loc_B25B1, loc_B25C3
-global loc_B25DF, loc_B25E2, unknown_libname_5, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672
-global unknown_libname_6, loc_B268C, loc_B26B0, NormalizeDouble, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
+global loc_B25DF, loc_B25E2, ModfCore, loc_B2619, loc_B2627, loc_B264C, loc_B264E, loc_B2672
+global DecimalToInt64, loc_B268C, loc_B26B0, NormalizeDouble, loc_B26D9, loc_B26ED, loc_B26F5, loc_B2711
 global loc_B2719
 __Nan_Inf_:
         push ebx
@@ -424,7 +424,7 @@ loc_B25E2:
         pop ebx
         pop ebp
         ret 1Ch
-unknown_libname_5:
+ModfCore:	;IDA: unknown_libname_5
         push ebp
         push esi
         push edi
@@ -493,7 +493,7 @@ loc_B2672:
         pop esi
         pop ebp
         ret
-unknown_libname_6:
+DecimalToInt64:	;IDA: unknown_libname_6
         push ebp
         push esi
         push edi

@@ -11,7 +11,7 @@ extern MessageBox, mkdir_, MouseRead, msg_CreateError, msg_CreatingLeague, msg_D
 extern msg_WhichSchedule, NormalizeDate, playoffbuf, poconf2teams, RandomizeSchedule, ReadSchedGame, ReadTeamNames, ReadTeamRec
 extern RestoreDialogBg, savedname, seasondb, seasondb_size, SeriesLength, SeriesWinner, SetDialogColors, SimulateGame
 extern sprintf_, str_EnterLeagueName, str_extDB, str_extLP, str_gameset, str_KbytesFree, str_KbytesFreeLine, str_Sch
-extern str_sche, str_SelHumanTeams, strcat_, strcpy_, teamdivflags, TextInputDialog, treeteamnames, unknown_libname_1
+extern str_sche, str_SelHumanTeams, strcat_, strcpy_, teamdivflags, TextInputDialog, treeteamnames, _dos_findfirst_
 extern UpdateSeasonSchedule, UpdateSeasonSchedule_pop3, WriteFile, WriteLeagueInfo, WriteModeState, WriteTeamRec
 global BuildPlayoffs, GetPlayoffSeeds, SortStandings, SwapInt, SetSeriesTeams, SeedPlayoffRound1, SimPlayoffRound1, SimPlayoffRound1_ok
 global SimPlayoffRound1_pop3, SeedPlayoffRound2, SimPlayoffRound2, SeedPlayoffRound3, SimPlayoffRound3, SeedPlayoffFinal, SimPlayoffFinal, FinishPlayoffs_jt
@@ -3136,7 +3136,7 @@ CreateNewLeague:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+04Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .3
         push byte 0FFFFFFFFh

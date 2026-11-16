@@ -12,7 +12,7 @@ extern str_Err1, str_extDB, str_GameSav5, str_Gsummary3, str_GsummaryDb4, str_Nh
 extern str_Sav3, str_Savegame, strcat_, AllocMemBlock, LoadBank, OpenArtArchiveErr, TextSetColors, TextSaveState
 extern TextRestoreState, TextSetFont, PutBlock, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock, TextPrintAt
 extern GetFileSize, MouseRead, FindShape, SetScreenTarget, str_H2, str_h3, str_H4, str_h5
-extern str_h6, str_h7, str_H1, str_A32, unknown_libname_1, ViewHilights, WaitTickDeadline, WriteModeState
+extern str_h6, str_h7, str_H1, str_A32, _dos_findfirst_, ViewHilights, WaitTickDeadline, WriteModeState
 global MenuSaveGame, SaveGameStub, SaveGameNameDlg, savenamedefault, MenuPlayNextGame, MenuReturnToSportsCentral, ViewPlayoffHilights
 ;-----------------------------------------------------------------------------
 ; MenuSaveGame                                 85924  95 PC, medium confidence
@@ -50,7 +50,7 @@ MenuSaveGame:
         lea ebx, [byte esp+040h]
         xor edx, edx
         lea eax, [byte esp+06Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         mov eax, dword [byte esp+05Ah]
         mov dword [dword esp+08Ch], eax
         xor ebx, ebx
@@ -513,7 +513,7 @@ SaveGameNameDlg:
         je short .4
         lea ebx, [byte esp+044h]
         xor edx, edx
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .21
 .4:

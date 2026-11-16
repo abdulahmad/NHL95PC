@@ -20,8 +20,8 @@ extern randomd0, ReloadGameGfx, rmdir_, scoredigits, seed, SelectRinkBM, SelectS
 extern SetScreenSize, SetupControllers, SetupDemoGame, ShowLoadingScreen, sprintf_, str_backslash2, str_Crests4, str_dot
 extern str_ErrDiskFree4, str_ErrDiskFree5, str_GsummaryDb, str_NeedKbytesFmt, str_PPV, str_Scrbrd2, str_Srb3, str_Stanley
 extern str_star, strcat_, strcpy_, AllocMemBlock, OpenArtArchiveErr, FillRect, FindShape, ReadJoyRaw
-extern VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, VgaBlitRemap, teamabbrevs, teamdivflags, TeamLineEnergy, unknown_libname_1
-extern unknown_libname_2, VisTeam, lcsel_aw
+extern VgaBlitKeyed, VgaBlitKeyedAtOwnPos, SetColorRemap, VgaBlitRemap, teamabbrevs, teamdivflags, TeamLineEnergy, _dos_findfirst_
+extern _dos_findnext_, VisTeam, lcsel_aw
 global DrawPanelScore, DrawPanelLine, DrawPanelLine_x, GetLineEnergies, PanelAddPenalty, PanelRemovePenalty, UpdateHudPanel, UpdateHudPanel_x
 global DrawPanelClock, DrawHudPanel, TickPanelClock, DrawPanelClockDigits, TickPanelPenalties, DrawEnergyBar, DrawLineGroupBars, DrawPanelPenalties
 global LoadCupFinalSeries, IsCupClinched, CupSeriesWinner

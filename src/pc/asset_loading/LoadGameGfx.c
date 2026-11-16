@@ -27,7 +27,7 @@ void LoadGameGfx(void)
     LoadTransparentRinkEndOverlay();
     TextSetColors(4, 0xFF);
     LoadPlayerPhotos();
-    nullsub_2();
+    AssetLoadNoOp();
     fadeinpending = 1;
     dword_C66D0 = dword_C66D4 = 1;
 }
@@ -53,7 +53,7 @@ void ReloadGameGfx(void)
     LoadTransparentRinkEndOverlay();
     TextSetColors(4, 0xFF);
     LoadPlayerPhotos();
-    nullsub_2();
+    AssetLoadNoOp();
     fadeinpending = 1;
     dword_C66D0 = dword_C66D4 = 1;
 }

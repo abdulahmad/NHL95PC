@@ -17,8 +17,8 @@ extern str_bangpal, str_dot, str_easndesk, str_extBIN, str_extDB, str_extID, str
 extern str_extxx, str_floppydrv, str_FromLeague, str_HOMEPALS, str_LLSN, str_LLST, str_PINFO, str_PLAYER
 extern str_saved, str_SelNewHuman, str_SelRemoveHuman, str_SelTradeTeams, str_Show, str_star, str_Statistics, strcat_
 extern strcpy_, strcspn_, stricmp_, strncpy_, AllocMemBlock, LoadBank, OpenArtArchiveErr, MouseRead
-extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, unknown_libname_1
-extern unknown_libname_2, word_DDD48, word_DDD4A, WriteLeagueTeamEntry
+extern FindShape, ClearScreen, VgaSetPalette, CreateBitmap, teamcitynames, TradeScreen, treeteamnames, _dos_findfirst_
+extern _dos_findnext_, word_DDD48, word_DDD4A, WriteLeagueTeamEntry
 global AddHumanTeam, AddHumanTeam_msgbox, AddHumanTeam_exit, RemoveHumanTeam, CheckMasterPassword, FmtFromLeague, BuildLeagueList, LeagueCheckStub
 global GetLeagueId, WriteLeagueInfo, MsgCopyingDatabases, CopyHumanTeamDBs, SaveLeagueGameRef
 ;-----------------------------------------------------------------------------
@@ -775,13 +775,13 @@ BuildLeagueList:
         lea ebx, [byte esp+04h]
         mov edx, 10h
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .3
         mov ebp, 1
 .1:
         lea eax, [byte esp+04h]
-        call unknown_libname_2
+        call _dos_findnext_
         mov edx, eax
         test eax, eax
         jne short .2
@@ -826,11 +826,11 @@ BuildLeagueList:
         lea ebx, [byte esp+04h]
         mov edx, 10h
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         jmp short .6
 .5:
         lea eax, [byte esp+04h]
-        call unknown_libname_2
+        call _dos_findnext_
 .6:
         lea edx, [byte esp+040h]
         lea eax, [byte esp+022h]

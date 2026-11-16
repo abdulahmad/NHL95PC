@@ -18,7 +18,7 @@ extern hudclockhund, hudclockmin, hudclocksec, hudhundaccum, hudhundstep, inputf
 extern joyq_flush, joysampling, joysampling_save, kaufmfont, lastplayer, lcblink, lcblinktime, lcboxon
 extern lcline, lcreqchoice, lcrequest, lcsel, lctimer, leaguedbnames, LoadCupFinalSeries, LoadGameGfx
 extern LoadGameState, LoadRink, LoadRockMusic, LoadTeamPalette, MakeGSummaryPath, MakePath, memcpy_, MouseSetPos
-extern mousex, mousey, MusicChanReset, musichandle, musicon, musicslot, NormalizeDressFlags, nullsub_2
+extern mousex, mousey, MusicChanReset, musichandle, musicon, musicslot, NormalizeDressFlags, AssetLoadNoOp
 extern numshapes, numshpbank, awardstatsptrs, awardstatsptrs_e01, awardstatsptrs_e02, awardstatsptrs_e03, awardstatsptrs_e04, awardstatsptrs_e05
 extern awardstatsptrs_e06, awardstatsptrs_e08, awardstatsptrs_e09, awardscopenames, ovlartnames, ovlseq, ovlstep, ovltimer
 extern pad1dev, pad2dev, PaPreloadClips, passdir, passplayer, passspeed, Penaltytimer, Pencntdwn

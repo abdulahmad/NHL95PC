@@ -45,7 +45,7 @@ void ScanDbFiles(void)
     dblistorig[1] = dblistcur[1] = dblisttemp[1] = 0;
     dblistorig[2] = dblistcur[2] = dblisttemp[2] = 0;
     dblistorig[3] = dblistcur[3] = dblisttemp[3] = 0;
-    if (!unknown_libname_1((char *)str_Db3, 0, &ft)) {
+    if (!_dos_findfirst_((char *)str_Db3, 0, &ft)) {
         dblistcur[4] = (int)savefname;
         *(Name8 *)savefname = *(Name8 *)str_CURRENT;
         ++dblistcur[0];
@@ -53,7 +53,7 @@ void ScanDbFiles(void)
         savefname[n] = 0;
         n++;
     }
-    if (!unknown_libname_1((char *)str_Org, 0, &ft)) {
+    if (!_dos_findfirst_((char *)str_Org, 0, &ft)) {
         dblistorig[4] = (int)(savefname + n);
         *(Name9 *)(savefname + n) = *(Name9 *)str_ORIGINAL;
         ++dblistorig[0];
@@ -61,7 +61,7 @@ void ScanDbFiles(void)
         savefname[n] = 0;
         n++;
     }
-    if (unknown_libname_1((char *)str_Dbx, 0x10, &ft)) return;
+    if (_dos_findfirst_((char *)str_Dbx, 0x10, &ft)) return;
     do {
         dblisttempnames[dblisttemp[0]] = (int)(savefname + n);
         dblisttemp[0]++;
@@ -71,7 +71,7 @@ void ScanDbFiles(void)
         }
         savefname[n] = 0;
         n++;
-    } while (dblisttemp[0] < 0x10 && !unknown_libname_2(&ft));
+    } while (dblisttemp[0] < 0x10 && !_dos_findnext_(&ft));
     qsort(dblisttempnames, dblisttemp[0], 4, (int (*)(const void *, const void *))CmpFileNames);
     dblisttemp[3] = dblisttemp[0] < 6 ? dblisttemp[0] - 1 : 5;
 }
@@ -441,7 +441,7 @@ int DeleteSelectedDb(int *list)
     i = list[1];
     strcpy(path, (char *)list[i + 4]);
     strcat(path, (char *)str_DBX2);
-    if (unknown_libname_1(path, 0x10, &ft)) return 0;
+    if (_dos_findfirst_(path, 0x10, &ft)) return 0;
     if (ft.attrib & 0x10) DeleteDir(ft.name);
     if (--list[0]) {
         for (i = list[1]; i < list[0]; i++) list[i + 4] = list[i + 5];

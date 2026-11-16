@@ -13,7 +13,7 @@ extern dword_D823C, dword_D8240, dword_D824C, dword_D8250, dword_D8254, dword_D8
 extern dword_D8480, dword_D8484, dword_D8488, dword_D848C, dword_D8490, dword_D8494, dword_D8498, dword_D84A8
 extern dword_D84AC, dword_D84B0, dword_D84B4, dword_D84B8, dword_D84C0, dword_D84C4, dword_D84CC, dword_D84D0
 extern dword_D8510, dword_D8550, dword_D8590, dword_D85D0, dword_D8610, dword_F612C, getenv_, inp_
-extern nullsub_4, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
+extern GusStreamNoOp, off_D846C, outp_, strtoul_, GusSetChannelVolume, GusSetChannelBend, GusSetChannelModulation, GusSetSustain
 extern GusSetChannelPan, GusChannelNotesOff, GusMixAdd8, GusClearMixBuffer, GusDownload, GusClaimVoiceCallbacks, GusAllocVoice, GusPoke
 extern word_D7414, word_D7B64, word_D7DBC, word_D8014, word_D826C, word_D84BC, word_D84BE, word_D84C2
 extern word_D84C6, GusVoiceSelectPort, GusRegSelectPort, GusDataLowPort, GusDataHighPort, GusDramPort
@@ -695,7 +695,7 @@ loc_AE885:
 loc_AE88F:
         mov ebx, dword [dword_D8494]
         mov ecx, dword [dword_D8484]
-        call nullsub_4
+        call GusStreamNoOp
         mov eax, dword [dword_D8494]
         mov dword [dword_D84A8], eax
         mov dword [dword_D84AC], eax

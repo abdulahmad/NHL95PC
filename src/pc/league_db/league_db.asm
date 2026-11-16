@@ -27,7 +27,7 @@ extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, TextPr
 extern InstallKeyboardHandler, KeyDown, InitMouse, FindShape, CalibrateJoystick, JoyButtonMap, ReadJoyRaw, JoyDefaultCalib1
 extern JoyDefaultCalib2, ClearScreen, KbdGetKey, VgaSetPalette, SetScreenTarget, WaitRetraceStart, CreateBitmap, FillRectColor
 extern teamsdb, teamsdb_size, TextInputDialog, unk_C27F5, editrostersmenubar, btn_RosterList, fascrollbar, DefaultFont
-extern unknown_libname_1
+extern _dos_findfirst_
 global MenuCentralRegistry, unk13_6BF3D, BuildFreeAgentList, BuildFreeAgentList_ret, BuildTeamRosterList, LoadLeagueDbsMem, MenuSaveDbs, MenuSaveDbsAs
 global SaveDbsToDir, WriteLeagueDbsMem, FreeLeagueDbsMem, CarTeamRecPtr, TeamRecPtr, KeyDbPtr, SeasonDbPtr, SeasonDbPtr_common
 global SeasonDbPtr2, CareerDbPtr, CareerDbPtr_common, CareerDbPtr2, AttDbPtr
@@ -573,7 +573,7 @@ MenuSaveDbsAs:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+03Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         sete al
         and eax, 0FFh
@@ -664,7 +664,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .2
         xor edx, edx
@@ -684,7 +684,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .4
         xor ebx, ebx
@@ -704,7 +704,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .6
         xor ecx, ecx
@@ -724,7 +724,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .8
         xor edi, edi
@@ -744,7 +744,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .10
         xor eax, eax
@@ -763,7 +763,7 @@ SaveDbsToDir:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .12
         xor edx, edx

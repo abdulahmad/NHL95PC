@@ -22,7 +22,7 @@ extern str_Playoffs, str_PlayOffSeriesCalled, str_Po, str_PO2, str_Po2, str_PoGa
 extern str_ScheduleDb2, str_Up, strcat_, strcmp_, strcpy_, stricmp_, strncpy_, AllocMemBlock
 extern LoadBank, OpenArtArchiveErr, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt
 extern GrabBlock, PrintString, TextPrintAt, MouseRead, FindShape, FindFirstFile, SetScreenTarget, FillRectColor
-extern teamabbrevs, unknown_libname_1, unknown_libname_2, unlink_, ViewPlayoffHilights
+extern teamabbrevs, _dos_findfirst_, _dos_findnext_, unlink_, ViewPlayoffHilights
 global savefileexts, LoadFileDlgShapes, LoadFileDlgShapes_x, MenuOpenSaved, DrawFileDlgTabs, CmpFileNames, ScanSavedGames, PrintTextCopy
 global DrawFileDlg_jt, DrawFileDlg, DrawFileDlg_n6, DrawFileDlg_n5, DrawFileDlg_n4, DrawFileDlg_n3, DrawFileDlg_n2, DrawFileDlg_n1
 global DrawFileDlg_x, FileDlgHitTest, DrawFileDlgList_jt, DrawFileDlgList, DrawFileDlgList_n6, DrawFileDlgList_n5, DrawFileDlgList_n4, DrawFileDlgList_n3
@@ -626,7 +626,7 @@ ScanSavedGames:
         mov ebx, esp
         mov edx, 10h
         mov eax, str_Lp
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .7
 .1:
@@ -656,7 +656,7 @@ ScanSavedGames:
         cmp ebx, byte 20h
         jge short .4
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         test eax, eax
         je short ScanSavedGames.1
 .4:
@@ -683,7 +683,7 @@ ScanSavedGames:
         mov ebx, esp
         mov edx, 10h
         mov eax, str_Po
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .14
 .8:
@@ -713,7 +713,7 @@ ScanSavedGames:
         cmp ebx, byte 20h
         jge short .11
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         test eax, eax
         je short ScanSavedGames.8
 .11:
@@ -739,7 +739,7 @@ ScanSavedGames:
         mov dword [lgfiles], edx
         mov ebx, esp
         mov eax, str_Nhl2
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .21
 .15:
@@ -769,7 +769,7 @@ ScanSavedGames:
         cmp ebx, byte 20h
         jge short .18
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         test eax, eax
         je short ScanSavedGames.15
 .18:
@@ -2015,7 +2015,7 @@ DeleteSavedGame:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .5
         xor edx, edx

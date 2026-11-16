@@ -39,7 +39,7 @@ extern TextRestoreState, TextSetFont, SndQuery, SetDigiChannelVolume, SetPalette
 extern DrawArtOpaqueAtOwnPos, DrawArt, DrawShape, GrabBlock, PrintString, DrawArtKeyColour, DrawArtMasked, MouseRead
 extern SetViewRect, FindShape, ClearScreen, SetTextMode, VgaSetPalette, SetScreenTarget, SetClipWindow, WaitRetraceEnd
 extern SetColorRemap, FillRectColor, PlotPixel, TeamRosterScreen, str_dot2, str_dot3, gameplstatsmenubar, rosterstatsmenubar
-extern unk_DBD1C, unknown_libname_1, vgapage, VisTeam, WaitKey, write_
+extern unk_DBD1C, _dos_findfirst_, vgapage, VisTeam, WaitKey, write_
 global GameLineEditor, GameRosterCmp, GameLineEditorLoop, LineEdHitTest, LoadGameRoster, DrawGameLineJerseys_jt, DrawGameLineJerseys, DrawGameLineJerseys_st1
 global DrawGameLineJerseys_st2, DrawGameLineJerseys_st0, DrawGameLineJerseys_join, DrawLineEditorScreen, StubRet4a, LoadJerseyColours, DrawDlgFrame, StubRet4b
 global CheckGameRosterComplete, PruneGameLines, MenuUseTheseLines, MenuLineEdCancel, MenuUseOriginalLines, MenuUseOriginalLines_redraw, MenuUseOriginalLines_ret0, MenuUseOriginalLines_ret
@@ -2188,7 +2188,7 @@ LoadGameRoster:
         lea ebx, [byte esp+034h]
         xor edx, edx
         lea eax, [byte esp+060h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .2
         push str_ErrA1

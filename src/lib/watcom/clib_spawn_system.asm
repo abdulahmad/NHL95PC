@@ -5,7 +5,7 @@ section s_A1CA2 progbits alloc exec nowrite align=1
 extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_, __Slash_C_, _makepath_
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
 extern str_COMMAND, _osmajor, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
-extern ErrnoPtr, CMainHook, unk_C4AB4, unknown_libname_1
+extern ErrnoPtr, CMainHook, unk_C4AB4, _dos_findfirst_
 global SpawnPathExists, SpawnCommand, spawnve_, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
 global loc_A1D9D, loc_A1DF6, loc_A1DF8, loc_A1E1F, loc_A1E22, loc_A1E42, loc_A1E92, loc_A1EB2
 global loc_A1ED4, loc_A1EFD, loc_A1F60, loc_A1FA4, loc_A1FA9, loc_A1FC0, loc_A1FC3, loc_A1FE7
@@ -15,7 +15,7 @@ SpawnPathExists:
         enter 2Ch, 0
         mov edx, 7
         lea ebx, [byte ebp-02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         sete al
         movzx eax, al

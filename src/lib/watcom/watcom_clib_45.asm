@@ -2,6 +2,6 @@
 bits 32
 %include "hockey.inc"
 section s_ADEE8 progbits alloc exec nowrite align=1
-global nullsub_4
-nullsub_4:
+global GusStreamNoOp
+GusStreamNoOp:
         ret

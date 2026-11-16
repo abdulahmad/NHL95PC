@@ -17,7 +17,7 @@ extern str_None2, str_Open3, str_Open4, str_Org, str_ORG, str_ORIGINAL, str_Orig
 extern str_Pointer12, str_Temporary, str_Up2, strcat_, strcpy_, strlen_, AllocMemBlock, LoadBank
 extern OpenArtArchiveErr, TextSetColors, PutBlock, FillRect, DrawArtOpaque, DrawArtKeyFF, DrawArt, GrabBlock
 extern PrintString, TextPrintAt, GetFileSize, KeyDown, MouseRead, FindShape, SetScreenTarget, FillRectColor
-extern teamsdb, teamsdb_size, unknown_libname_1, unknown_libname_2, unknown_libname_4
+extern teamsdb, teamsdb_size, _dos_findfirst_, _dos_findnext_, atoi_
 global InputDialog, unk13_722FE, LoadDbDialogShapes, DbDialog_epilogue, DbDialog_ret, ScanDbFiles, DrawDbDialogButtons, DrawDbDialog_jt
 global DrawDbDialog, DrawDbDialog_n6, DrawDbDialog_n5, DrawDbDialog_n4, DrawDbDialog_n3, DrawDbDialog_n2, DrawDbDialog_n1, DbDialogHitTest
 global DrawDbList_jt, DrawDbList, DrawDbList_n6, DrawDbList_n5, DrawDbList_n4, DrawDbList_n3, DrawDbList_n2, DrawDbList_n1
@@ -248,7 +248,7 @@ InputDialog:
         test byte [dword eax+byte_C4B6C], 20h
         je short .11
         mov eax, ebp
-        call unknown_libname_4
+        call atoi_
         mov dword [byte esp+06Ch], eax
         inc esi
 .9:
@@ -529,7 +529,7 @@ ScanDbFiles:
         mov dword [dblistorig+0Ch], ecx
         mov ebx, esp
         mov eax, str_Db3
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .1
         mov dword [dblistcur+10h], savefname
@@ -545,7 +545,7 @@ ScanDbFiles:
         mov ebx, esp
         xor edx, edx
         mov eax, str_Org
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .2
         mov eax, savefname
@@ -565,7 +565,7 @@ ScanDbFiles:
         mov ebx, esp
         mov edx, 10h
         mov eax, str_Dbx
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .9
 .3:
@@ -593,7 +593,7 @@ ScanDbFiles:
         cmp dword [dblisttemp], byte 10h
         jge short .6
         mov eax, esp
-        call unknown_libname_2
+        call _dos_findnext_
         test eax, eax
         je short ScanDbFiles.3
 .6:
@@ -2047,7 +2047,7 @@ DeleteSelectedDb:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne near .10
         test byte [byte esp+015h], 10h

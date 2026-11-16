@@ -1,0 +1,7 @@
+nullsub_4 GusStreamNoOp {source_game=PC-new,confidence=low} Empty routine called during the GUS stream refill
+unknown_libname_4 atoi_ {source_game=96PC,confidence=medium} Converts a decimal string to an int
+nullsub_2 AssetLoadNoOp {source_game=PC-new,confidence=low} Empty routine called after the player photos load
+unknown_libname_1 _dos_findfirst_ {source_game=PC-new,confidence=medium} DOS find-first through a private DTA
+unknown_libname_2 _dos_findnext_ {source_game=PC-new,confidence=medium} DOS find-next through a private DTA
+unknown_libname_5 ModfCore {source_game=96PC,confidence=medium} Splits a double into its whole and fraction parts
+unknown_libname_6 DecimalToInt64 {source_game=96PC,confidence=medium} Reads decimal digits into a 64-bit integer for strtod

@@ -65,7 +65,7 @@ void CreateNewLeague(void)
         MouseRead(&s.r, &s.x, &s.y);
         strcat(s.name, (char *)str_extLP);
         strcpy((char *)&curleague, s.name);
-        if (!unknown_libname_1(s.name, 0x10, s.ft)) {
+        if (!_dos_findfirst_(s.name, 0x10, s.ft)) {
             s.ans = MessageBox(-1, -1, (char *)msg_LeagueExists, 2, (int)btn_LeagueExists, 2, (int)&s.x, (int)&s.y, -1);
             if (s.ans == 1)
                 DeleteDir(s.name);

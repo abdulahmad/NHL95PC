@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_92D21 progbits alloc exec nowrite align=1
 extern __set_errno_dos_, byte_C4B6C
-global stricmp_, loc_92D22, loc_92D33, loc_92D40, loc_92D4C, unlink_, loc_92D75, unknown_libname_4
+global stricmp_, loc_92D22, loc_92D33, loc_92D40, loc_92D4C, unlink_, loc_92D75, atoi_
 global loc_92D7F, loc_92D95, loc_92DA1, loc_92DA2, loc_92DA4, loc_92DC6, loc_92DCD
 stricmp_:
         push ebx
@@ -56,7 +56,7 @@ loc_92D75:
         pop edx
         ret
         db 00h,00h,00h
-unknown_libname_4:
+atoi_:	;IDA: unknown_libname_4
         push ebx
         push ecx
         push edx

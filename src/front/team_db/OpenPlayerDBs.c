@@ -13,19 +13,19 @@ void OpenPlayerDBs(int mode, int *key, int *att, int *season, int *career, char 
     } s;
 
     sprintf(s.path, fmt, (char *)str_key);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_fe9);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_fe9);
     if (FileOpenRead(s.path, key)) FatalError((char *)str_feA);
     sprintf(s.path, fmt, (char *)str_att);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_feB);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_feB);
     if (FileOpenRead(s.path, att)) FatalError((char *)str_feC);
     sprintf(s.path, fmt, (char *)str_season);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_feJ);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_feJ);
     if (FileOpenRead(s.path, season)) FatalError((char *)str_feK);
     if (mode & 6) {
         *out = 0;
     } else {
         sprintf(s.path, fmt, (char *)str_career);
-        if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_feL);
+        if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_feL);
         if (FileOpenRead(s.path, career)) FatalError((char *)str_feM);
         *out = 0x28;
     }

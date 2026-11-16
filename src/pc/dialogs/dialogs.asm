@@ -10,7 +10,7 @@ extern listscroll, MouseSetPos, pointerspr, PollKey, PrintMenuText, PrintShadowT
 extern SetTickDeadline, str_DBOX, str_Dot, str_extDB, str_ORG, str_Pointer6, str_Space, strlen_
 extern AllocMemBlock, TextSetColors, PutBlock, TextWidthN, FillRect, FillRectClipped, XorRectClipped, DrawArt
 extern GrabBlock, TextPrintAt, KeyDown, MouseRead, SetSlowDeadline, SlowDeadlinePassed, SetScreenTarget, FillRectColor
-extern TickDeadlinePassed, unknown_libname_4
+extern TickDeadlinePassed, atoi_
 global AskDatabaseChoice, DrawBevelRect, DlgReturnZero, TextInputDialog, DlgNullCallback, SetListItemColors, ListHitTest, DrawListItem
 global DrawListItem_x, DrawListItems, ListDialog, MeasureTextLine, SetDialogColors, TrackButtons, TrackButtons_x, DrawButtons
 global DrawButton, DrawButton_x, InitScrollBar, DrawScrollBar, TrackScrollBars, SaveDialogBg, RestoreDialogBg, GrowToButton
@@ -342,7 +342,7 @@ TextInputDialog:
         jne short .10
 .8:
         mov eax, esi
-        call unknown_libname_4
+        call atoi_
         mov ebp, eax
         inc edx
 .9:

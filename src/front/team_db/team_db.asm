@@ -15,7 +15,7 @@ extern str_fe7, str_fe8, str_fe9, str_feA, str_feB, str_feB1, str_feB5, str_feB8
 extern str_feC, str_feD, str_feE, str_feF, str_feG, str_feH, str_feI, str_feJ
 extern str_feK, str_feL, str_feM, str_feN, str_feO, str_feP, str_feQ, str_GoalieItemTmpl
 extern str_GsummaryDb2, str_key, str_season, str_teams, strcat_, strcpy_, strncpy_, gsumheader
-extern gsumtail, hmgoaliemenu, awgoaliemenu, hmglattr, hmplattr, hmglstats, unknown_libname_1, VisTeam
+extern gsumtail, hmgoaliemenu, awgoaliemenu, hmglattr, hmplattr, hmglstats, _dos_findfirst_, VisTeam
 extern gsumcount, hmpanelpen_time, hmpanelpen_w4, hmpanelpen_w6, awpanelpen_time, awpanelpen_w4, awpanelpen_w6, hmplstats_w2
 extern hmplstats_w4, hmplstats_w6, hmplstats_w8, hmplstats_w10, hmplstats_w12, hmplstats_w14, hmglstats_w2, hmglstats_w4
 global LoadGameTeams, InitGameSummary, ReadPlayerRecs, OpenPlayerDBs, OpenPlayerDBs_x, LoadTeamRoster, MakeGSummaryPath, SetupGoalieMenu
@@ -52,7 +52,7 @@ LoadGameTeams:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .1
         push str_fe1
@@ -119,7 +119,7 @@ LoadGameTeams:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .6
         push str_fe1
@@ -622,7 +622,7 @@ OpenPlayerDBs:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .1
         push str_fe9
@@ -648,7 +648,7 @@ OpenPlayerDBs:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .3
         push str_feB
@@ -674,7 +674,7 @@ OpenPlayerDBs:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .5
         push str_feJ
@@ -706,7 +706,7 @@ OpenPlayerDBs:
         lea ebx, [byte esp+04h]
         xor edx, edx
         lea eax, [byte esp+030h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .8
         push str_feL

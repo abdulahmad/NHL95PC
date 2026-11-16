@@ -54,7 +54,7 @@ int SaveHilight(int team)
     strcat(name, (char *)str_backslash4);
     strcat(name, (char *)hmteamrec + team * 0x2E8);
     strcat(name, (char *)str_HI);
-    if (unknown_libname_1(name, 0, &ft)) {
+    if (_dos_findfirst_(name, 0, &ft)) {
         if (FileCreate(name, &fh)) FatalError((char *)str_F12);
     } else if (FileOpenWrite(name, &fh)) {
         FatalError((char *)str_CantOpenFile, name);

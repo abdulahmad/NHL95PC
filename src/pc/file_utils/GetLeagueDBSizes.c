@@ -20,7 +20,7 @@ int GetLeagueDBSizes(char *drive, int *kb, char *ext)
 
     for (i = 0; i < 7; i++) {
         MakePath(path, drive, (char *)leaguedbnames[i], ext);
-        unknown_libname_1(path, 0, &ft);
+        _dos_findfirst_(path, 0, &ft);
         kb[i] = (ft.size + 0x3FF) >> 10;
     }
     return 0;

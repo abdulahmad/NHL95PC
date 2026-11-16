@@ -27,14 +27,14 @@ void LoadGameTeams(int mode)
     int i;
 
     sprintf(s.path, (char *)&leaguedbfmt, (char *)str_teams);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_fe1);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_fe1);
     if (FileOpenRead(s.path, &s.fh)) FatalError((char *)str_fe2);
     if (lseek(s.fh, 0, 0)) FatalError((char *)str_fe3);
     if (lseek(s.fh, HomeTeam * 0x2E8, 0) < 0) FatalError((char *)str_fe4);
     if (FileReadAt(s.fh, hmteamrec, -1, 0x2E8)) FatalError((char *)str_fe5);
     FileClose(&s.fh);
     sprintf(s.path, (char *)&leaguedbfmt2, (char *)str_teams);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_fe1);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_fe1);
     if (FileOpenRead(s.path, &s.fh)) FatalError((char *)str_fe2);
     if (lseek(s.fh, 0, 0)) FatalError((char *)str_fe3);
     if (lseek(s.fh, VisTeam * 0x2E8, 0) < 0) FatalError((char *)str_fe7);

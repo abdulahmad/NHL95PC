@@ -67,7 +67,7 @@ int ImportMasterLeague(void)
         err = ReadLeagueInfo((char *)&str_floppydrv, leagueteams, (char *)masterpw, (short *)&leaguemaster,
             &humancount, &leagueflags, &leaguesaved, (char *)&savedname);
     strcpy(s.name, (char *)&curleague);
-    if (!unknown_libname_1(s.name, 0x10, s.find)) goto exists;
+    if (!_dos_findfirst_(s.name, 0x10, s.find)) goto exists;
     pw = AskMasterPassword(leaguemaster, (char *)leagueteams, (char *)masterpw);
     if (pw) goto fail;
     MessageBox(-1, -1, (char *)importmastermsg, 1, 0, 0, (int)&s.y, (int)&s.x, 0);
@@ -176,7 +176,7 @@ int ImportPlayerTeam(void)
     }
     if (err) goto done;
     strcpy(s.name, (char *)&curleague);
-    again = s.nodir = unknown_libname_1(s.name, 0x10, &s.ft);
+    again = s.nodir = _dos_findfirst_(s.name, 0x10, &s.ft);
     s.name[_fstrcspn(s.name, (char *)&str_dot)] = 0;
     if (!again) {
         do {

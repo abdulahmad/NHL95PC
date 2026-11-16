@@ -24,7 +24,7 @@ int CheckGameDiskSpace(void)
     csize = df.sectors * df.bytes;
     need = (csize + 0x1FFF) / csize;
     MakePath(path, (char *)&curleague, (char *)str_GsummaryDb, 0);
-    if (!unknown_libname_1(path, 0, &ft)) {
+    if (!_dos_findfirst_(path, 0, &ft)) {
         if (csize >= 0x2000) return 0;
         need -= (ft.size + csize - 1) / csize;
     }

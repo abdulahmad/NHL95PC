@@ -28,7 +28,7 @@ void LoadGameRoster(int team)
     do { n = s.i * 11; gmrosterslot[n * 2] = s.i; }
     while (++s.i < 0x1C);
     sprintf(s.path, (char *)&leaguedbfmt, (char *)str_Key);
-    if (unknown_libname_1(s.path, 0, s.find)) FatalError((char *)str_ErrA1);
+    if (_dos_findfirst_(s.path, 0, s.find)) FatalError((char *)str_ErrA1);
     if ((fh = open(s.path, 0x200)) < 0) FatalError((char *)str_ErrA2);
     s.i = 0;
     do {

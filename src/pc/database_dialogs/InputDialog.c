@@ -1,17 +1,17 @@
 /* Database dialogs: the message box with an input field. */
 #define DrawDlgFrame DrawDlgFrame_decl
 #define EditTextField EditTextField_decl
-#define unknown_libname_4 unknown_libname_4_decl
+#define atoi_ unknown_libname_4_decl
 #define InputDialog InputDialog_decl
 #include "nhl95.h"
 #undef DrawDlgFrame
 #undef EditTextField
-#undef unknown_libname_4
+#undef atoi_
 #undef InputDialog
 
 void DrawDlgFrame(int x, int y, int x2, int y2, int edge);
 int EditTextField(char *buf, int maxlen, int w, int x, int y, int (*cb)(void), int a, int b);
-int unknown_libname_4(char *s);  /* Watcom CRT atoi */
+int atoi_(char *s);  /* Watcom CRT atoi */
 
 typedef struct { char b[0x11]; } SprHdr;
 
@@ -95,7 +95,7 @@ int InputDialog(int *lines, int n, char *buf, int len, int fw, int numeric, int 
                 if (!required || *buf) {
                     for (i = 0; i < len; i++) {
                         if (!(byte_C4B6C[(unsigned char)(buf[i] + 1)] & 0x20)) break;
-                        r = unknown_libname_4(buf);
+                        r = atoi_(buf);
                     }
                 }
             } else if (!required) break;

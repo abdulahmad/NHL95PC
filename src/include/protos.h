@@ -387,7 +387,7 @@ int __cdecl FindShape(int bank, char *name);  /* graphics library: find art */
 void PrintLineEdStatus(int x, int y, char *s);  /* 76771 */
 void __cdecl FillRect(int x, int y, int w, int h, int col);  /* graphics library: fill rect */
 int GetLeagueDBSizes(char *drive, int *kb, char *ext);  /* 149BF */
-unsigned unknown_libname_1(const char *path, unsigned attr, void *ft);  /* Watcom CRT _dos_findfirst */
+unsigned _dos_findfirst_(const char *path, unsigned attr, void *ft);  /* Watcom CRT _dos_findfirst */
 void DeskReloadGame(void);  /* 1A534 */
 void LoadRink(int team);
 void LoadPlayerPhotos(void);
@@ -554,7 +554,7 @@ void assstanley(Player *p);  /* 4A832 */
 void PeriodOver(void);  /* 5DEA6 */
 void PeriodOver_sp(void);
 int DeleteFiles(char *dir, char *name, char *ext);  /* 14368 */
-unsigned unknown_libname_2(void *ft);  /* Watcom CRT _dos_findnext */
+unsigned _dos_findnext_(void *ft);  /* Watcom CRT _dos_findnext */
 void DeleteDir(char *dir);  /* 14442 */
 int rmdir(const char *path);  /* Watcom CRT rmdir_ */
 void AdjustFacingDirection(Player *p, int want);  /* 4B4E9 */

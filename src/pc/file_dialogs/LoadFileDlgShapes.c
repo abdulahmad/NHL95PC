@@ -104,7 +104,7 @@ void ScanSavedGames(void)
 
     n = 0;
     exhfiles[0] = n;
-    if (!unknown_libname_1((char *)str_Lp, 0x10, &ft)) {
+    if (!_dos_findfirst_((char *)str_Lp, 0x10, &ft)) {
         do {
             exhfilenames[exhfiles[0]] = (int)(savefname + n);
             j = 0;
@@ -118,14 +118,14 @@ void ScanSavedGames(void)
             n++;
             exhfiles[0]++;
             if (exhfiles[0] >= 0x20) break;
-        } while (!unknown_libname_2(&ft));
+        } while (!_dos_findnext_(&ft));
         qsort(exhfilenames, exhfiles[0], 4, CmpFileNames);
         exhfiles[2] = 0;
         exhfiles[1] = 0;
         exhfiles[3] = exhfiles[0] < 6 ? exhfiles[0] - 1 : 5;
     }
     pofiles[0] = 0;
-    if (!unknown_libname_1((char *)str_Po, 0x10, &ft)) {
+    if (!_dos_findfirst_((char *)str_Po, 0x10, &ft)) {
         do {
             pofilenames[pofiles[0]] = (int)(savefname + n);
             j = 0;
@@ -139,14 +139,14 @@ void ScanSavedGames(void)
             n++;
             pofiles[0]++;
             if (pofiles[0] >= 0x20) break;
-        } while (!unknown_libname_2(&ft));
+        } while (!_dos_findnext_(&ft));
         qsort(pofilenames, pofiles[0], 4, CmpFileNames);
         pofiles[2] = 0;
         pofiles[1] = 0;
         pofiles[3] = pofiles[0] < 6 ? pofiles[0] - 1 : 5;
     }
     lgfiles[0] = 0;
-    if (!unknown_libname_1((char *)str_Nhl2, 0, &ft)) {
+    if (!_dos_findfirst_((char *)str_Nhl2, 0, &ft)) {
         do {
             lgfilenames[lgfiles[0]] = (int)(savefname + n);
             j = 0;
@@ -160,7 +160,7 @@ void ScanSavedGames(void)
             n++;
             lgfiles[0]++;
             if (lgfiles[0] >= 0x20) break;
-        } while (!unknown_libname_2(&ft));
+        } while (!_dos_findnext_(&ft));
         qsort(lgfilenames, lgfiles[0], 4, CmpFileNames);
         lgfiles[2] = 0;
         lgfiles[1] = 0;
@@ -601,7 +601,7 @@ int DeleteSavedGame(FileList *list)
         n = (char *)s.ext[fdlgtab];
         strcat(s.path, n);
     }
-    if (unknown_libname_1(s.path, 0x10, s.find)) {
+    if (_dos_findfirst_(s.path, 0x10, s.find)) {
         s.result = 0;
         goto done;
     }

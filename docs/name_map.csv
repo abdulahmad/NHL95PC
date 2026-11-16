@@ -1264,7 +1264,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DF54,sub_8DF54,SetupMemoryPoolReserve,PC-new,,,,low,Sets up the memory pool with a reserve size,ea_memman_init,manual-trace
 0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
-0008E3C0,nullsub_2,nullsub_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_05,flirt
+0008E3C0,nullsub_2,AssetLoadNoOp,PC-new,watcom_clib,,,low,Empty routine called after the player photos load,watcom_clib_05,manual-trace
 0008E3C4,_os_handle,_os_handle,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
 0008E3CC,_os_handle_0,_os_handle_0,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
 0008E3D4,_os_handle_1,_os_handle_1,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_05,flirt
@@ -1393,8 +1393,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090B20,memcpy_,memcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 37 bytes),watcom_clib_10,flirt
 00090B50,sub_90B50,FindShapeList,PC-new,,,,medium,Looks up a list of shape ids in a bank,ea_gfx_03,manual-trace
 00090B80,sub_90B80,ProjectPointList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.837),ea_gfx_03,match96
-00090BB0,unknown_libname_1,unknown_libname_1,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_11,flirt
-00090BCD,unknown_libname_2,unknown_libname_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 28 bytes),watcom_clib_11,flirt
+00090BB0,unknown_libname_1,_dos_findfirst_,PC-new,watcom_clib,,,medium,DOS find-first through a private DTA,watcom_clib_11,manual-trace
+00090BCD,unknown_libname_2,_dos_findnext_,PC-new,watcom_clib,,,medium,DOS find-next through a private DTA,watcom_clib_11,manual-trace
 00090BE9,sub_90BE9,_dos_findclose_,PC-new,,,,medium,Ends a DOS file search; always succeeds,watcom_clib_11,manual-trace
 00090BEC,sub_90BEC,CopyDtaOut,PC-new,watcom_clib,,,medium,same routine as the matched 96 PC routine (exact 1.0),watcom_clib_11,match96
 00090C0F,sub_90C0F,CopyDtaIn,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_04,match96
@@ -1464,7 +1464,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00092CF0,sub_92CF0,TextPutCharAt,PC-new,,,,low,prints one character at a position,ea_gfx_09,manual-trace
 00092D21,stricmp_,stricmp_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 57 bytes),watcom_clib_17,flirt
 00092D5A,unlink_,unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_17,flirt
-00092D7C,unknown_libname_4,unknown_libname_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_17,flirt
+00092D7C,unknown_libname_4,atoi_,96PC,watcom_clib,,,medium,Converts a decimal string to an int,watcom_clib_17,manual-trace
 00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
 00092DF0,sub_92DF0,GetFileSizeQuiet,PC-new,,,,medium,Returns a file's size without the error message,ea_gfx_10,manual-trace
 00092E00,sub_92E00,GetFileSizeFlag,PC-new,,,,medium,"Opens a file to read its size, with the caller's error flag",ea_gfx_10,manual-trace
@@ -2186,7 +2186,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000AD758,sub_AD758,GusDramLargestFree,PC-new,,,,medium,returns the largest free block of GUS memory,snd_gus_sdk_01,manual-trace
 000AD7CC,sub_AD7CC,GusMixAdd8,PC-new,,,,low,adds 8-bit samples through a volume table into the mix buffer,snd_gus_sdk_01,manual-trace
 000ADC96,sub_ADC96,GusClearMixBuffer,PC-new,,,,medium,clears the mix buffer,snd_gus_sdk_01,manual-trace
-000ADEE8,nullsub_4,nullsub_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_45,flirt
+000ADEE8,nullsub_4,GusStreamNoOp,PC-new,watcom_clib,,,low,Empty routine called during the GUS stream refill,watcom_clib_45,manual-trace
 000ADEE9,sub_ADEE9,GusFillStreamBuffer,PC-new,,,,low,mixes the software stream channels into one half of the GUS stream buffer,snd_gus_sdk_02,manual-trace
 000AE903,sub_AE903,GusStreamVoiceIrq,PC-new,,,,low,voice interrupt callback for the stream voices: loops them back to the buffer start,snd_gus_sdk_02,manual-trace
 000AE9EB,sub_AE9EB,GusServiceStream,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),snd_gus_sdk_02,match96+97
@@ -2297,8 +2297,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000B22E0,_Scale_,_Scale_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 65 bytes),watcom_clib_52,flirt
 000B2321,_Scale10V_,_Scale10V_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 231 bytes),watcom_clib_52,flirt
 000B2408,__cvt_,__cvt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 486 bytes),watcom_clib_52,flirt
-000B25EE,unknown_libname_5,unknown_libname_5,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 144 bytes),watcom_clib_52,flirt
-000B267E,unknown_libname_6,unknown_libname_6,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 75 bytes),watcom_clib_52,flirt
+000B25EE,unknown_libname_5,ModfCore,96PC,watcom_clib,,,medium,Splits a double into its whole and fraction parts,watcom_clib_52,manual-trace
+000B267E,unknown_libname_6,DecimalToInt64,96PC,watcom_clib,,,medium,Reads decimal digits into a 64-bit integer for strtod,watcom_clib_52,manual-trace
 000B26C9,sub_B26C9,NormalizeDouble,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_52,match96+97
 000B2720,sub_B2720,GusConvertAddr16,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.926),snd_gus_sdk_09,match96+97
 000B273C,sub_B273C,GusRegsToAddr,PC-new,,,,low,Turns a pair of voice address registers back into a card address,snd_gus_sdk_09,manual-trace

@@ -1,6 +1,6 @@
 /* Misc dialogs: the text input box and the message box that ends in its pops. */
 #define EditTextField EditTextField_decl
-#define unknown_libname_4 unknown_libname_4_decl
+#define atoi_ unknown_libname_4_decl
 #define MessageBox MessageBox_decl
 #define RunMessageBox RunMessageBox_decl
 #define GrowToButtons GrowToButtons_decl
@@ -11,10 +11,10 @@
 #undef GrowToButtons
 #undef DrawButtons
 #undef EditTextField
-#undef unknown_libname_4
+#undef atoi_
 
 int EditTextField(char *buf, int maxlen, int w, int x, int y, int (*cb)(void), int a, int b);
-int unknown_libname_4(char *s);  /* Watcom CRT atoi */
+int atoi_(char *s);  /* Watcom CRT atoi */
 
 typedef struct DlgBtn {
     int x1, y1, x2, y2;
@@ -77,7 +77,7 @@ int TextInputDialog(char *prompt, char *buf, int maxlen, int minw, int numeric, 
             r = 0;
             for (i = 0; i < maxlen; i++) {
                 if (!(byte_C4B6C[(unsigned char)(buf[i] + 1)] & 0x20) && buf[0] != ' ' && buf[0] && buf[0] != '-') break;
-                r = unknown_libname_4(buf);
+                r = atoi_(buf);
             }
         } while (r < lo || r > hi);
     } else {

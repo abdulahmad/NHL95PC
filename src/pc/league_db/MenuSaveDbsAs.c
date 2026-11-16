@@ -32,7 +32,7 @@ void MenuSaveDbsAs(int unused, int x, int y)
     if (s.dir[0] == 0 || key == 0x1B) return;
     strcpy(s.name, s.dir);
     strcat(s.dir, (char *)str_DBX);
-    key = (unsigned char)(unknown_libname_1(s.dir, 0x10, &s.ft) == 0);  /* key reused: the directory exists */
+    key = (unsigned char)(_dos_findfirst_(s.dir, 0x10, &s.ft) == 0);  /* key reused: the directory exists */
     if (key) {
         if (MessageBox(-1, -1, (char *)dbexistsmsg, 2, (int)btn_LeagueExists, 2, x, y, -1) == 1) DeleteDir(s.dir);
         else exists = 1;

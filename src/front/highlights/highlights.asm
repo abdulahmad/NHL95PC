@@ -14,8 +14,8 @@ extern SetDialogColors, SetPalette, SetScreenSize, sflags, ShowLoadingScreen, Sn
 extern str_backslash4, str_CantOpenFile, str_dot4, str_F12, str_F3, str_F4, str_HI, str_HI2
 extern str_HilightDescFmt, str_HilightsReel, str_HLT, str_HLTL, str_HLTS, str_K1, str_SaveTo, str_SelectAHilight
 extern str_SelectATeam, str_star, strcat_, strcpy_, strcspn_, stricmp_, FreePhotoBanks, PushMemDescriptorLocked
-extern SetDigiChannelVolume, DrawFrameClipped, FillRectColor, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, unknown_libname_1
-extern unknown_libname_2, VisTeam
+extern SetDigiChannelVolume, DrawFrameClipped, FillRectColor, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, _dos_findfirst_
+extern _dos_findnext_, VisTeam
 global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
 global PlayHilight
 ;-----------------------------------------------------------------------------
@@ -383,7 +383,7 @@ SaveHilight:
         mov ebx, esp
         xor edx, edx
         lea eax, [byte esp+02Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je short .4
         lea edx, [byte esp+054h]
@@ -600,7 +600,7 @@ SelectHilight:
         lea ebx, [dword esp+0180h]
         xor edx, edx
         lea eax, [dword esp+0E0h]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .3
         lea eax, [dword esp+019Eh]
@@ -611,7 +611,7 @@ SelectHilight:
         mov esi, 1
 .1:
         lea eax, [dword esp+0180h]
-        call unknown_libname_2
+        call _dos_findnext_
         mov edi, eax
         test eax, eax
         jne short .2

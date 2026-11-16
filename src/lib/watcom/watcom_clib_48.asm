@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_B028E progbits alloc exec nowrite align=1
 extern __CHP, __cvt_, __Nan_Inf_, __set_ERANGE_, _Scale10V_, dword_C4CA0, dword_C4CA4, floor_
-extern memset_, unknown_libname_6
+extern memset_, DecimalToInt64
 global DoEFormat_, loc_B02A7, loc_B02AB, loc_B02CE, loc_B02DE, loc_B02EE, loc_B02F9, loc_B0329
 global loc_B032C, loc_B0333, DoFFormat_, loc_B034A, loc_B035B, loc_B035F, loc_B0368, loc_B0370
 global loc_B037C, loc_B0380, loc_B038D, AdjField_, loc_B03B8, loc_B03D5, loc_B03DF, loc_B03EF
@@ -605,7 +605,7 @@ loc_B073F:
         mov byte [byte edx+ebp-034h], ah
         lea eax, [byte ebp-034h]
         lea edx, [byte ebp-020h]
-        call unknown_libname_6
+        call DecimalToInt64
         cmp ebx, 134h
         jle short loc_B0781
         call __set_ERANGE_

@@ -42,12 +42,12 @@ int SelectHilight(char *name, int *idx, unsigned char *dir, int multi, unsigned 
     s.fh = -1;
     n = 0;
     MakePath(s.path, (char *)dir, (char *)str_star, (char *)str_HI2);
-    if (!unknown_libname_1(s.path, 0, s.ft)) {
+    if (!_dos_findfirst_(s.path, 0, s.ft)) {
         s.teams[0] = TeamFromHiName(s.ft + 0x1E);
         s.names[0] = (char *)teamcitynames[s.teams[0]];
         n = 1;
         do {
-            err = unknown_libname_2(s.ft);
+            err = _dos_findnext_(s.ft);
             if (!err) {
                 s.teams[n] = TeamFromHiName(s.ft + 0x1E);
                 n++;

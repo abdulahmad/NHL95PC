@@ -15,7 +15,7 @@ extern newfloppybtns, newfloppymsg, notexportedmsg, notforlgmsg, oldcopymsg, pla
 extern savedname, SetDialogColors, SetupStatsSourceMenu, sprintf_, str_02d3, str_dot, str_extDB, str_extID
 extern str_extxx, str_floppydrv, str_Game2, str_GAME3, str_GAME4, str_ID, str_L1, str_L22
 extern str_PINFO, str_PLAYER, str_Sav2, str_SAV3, str_SelectATeamTo2, str_SET, str_SET2, str_wildcard
-extern strcmp_, strcpy_, stricmp_, FindFirstFile, treeteamnames, unknown_libname_1, updateerrmsg, UpdateTeamDbs
+extern strcmp_, strcpy_, stricmp_, FindFirstFile, treeteamnames, _dos_findfirst_, updateerrmsg, UpdateTeamDbs
 extern whichdrivemsg, WriteLeagueTeamEntry
 global ExportTeamToFloppy, CopyLeagueFiles, ImportMasterLeague, ImportMasterLeague_ret, ImportPlayerTeam, ImportDbs, ExportDbs, SelectFloppyDrive
 global FindLeagueFloppy, WaitLeagueFloppy, ReadLeagueInfo, ReadTeamNames
@@ -648,7 +648,7 @@ ImportMasterLeague:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+04Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         je near .11
         mov eax, dword [leaguemaster]
@@ -1024,7 +1024,7 @@ ImportPlayerTeam:
         mov ebx, esp
         mov edx, 10h
         lea eax, [byte esp+06Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         mov edi, eax
         mov dword [dword esp+0ACh], eax
         mov ecx, ds

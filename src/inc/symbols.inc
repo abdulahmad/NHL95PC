@@ -839,7 +839,7 @@
 ;  8DCC0  GrabLargestBlock                         lib/ea/ea_memman_03.asm                      1
 ;  8DF54  SetupMemoryPoolReserve                   lib/ea/ea_memman_init.asm                    1
 ;  8E080  initgraphics                             lib/ea/ea_vesa_init.asm                      1
-;  8E3C0  nullsub_2                                lib/watcom/watcom_clib_05.asm                2
+;  8E3C0  AssetLoadNoOp                            lib/watcom/watcom_clib_05.asm                2
 ;  8E3C4  _os_handle                               lib/watcom/watcom_clib_05.asm                3
 ;  8E3CC  _os_handle_0                             lib/watcom/watcom_clib_05.asm                2
 ;  8E3D4  _os_handle_1                             lib/watcom/watcom_clib_05.asm                2
@@ -918,8 +918,8 @@
 ;  90AEA  sprintf_                                 lib/watcom/watcom_clib_10.asm                45
 ;  90B20  memcpy_                                  lib/watcom/watcom_clib_10.asm                22
 ;  90B80  ProjectPointList                         lib/ea/ea_gfx_03.asm                         3
-;  90BB0  unknown_libname_1                        lib/watcom/watcom_clib_11.asm                15
-;  90BCD  unknown_libname_2                        lib/watcom/watcom_clib_11.asm                7
+;  90BB0  _dos_findfirst_                          lib/watcom/watcom_clib_11.asm                15
+;  90BCD  _dos_findnext_                           lib/watcom/watcom_clib_11.asm                7
 ;  90C0F  CopyDtaIn                                lib/ea/ea_gfx_04.asm                         1
 ;  90C32  rmdir_                                   lib/watcom/watcom_clib_12.asm                4
 ;  90C52  _dos_close_                              lib/watcom/watcom_clib_12.asm                4
@@ -969,7 +969,7 @@
 ;  92CD0  TextPrintAt                              lib/ea/ea_gfx_09.asm                         9
 ;  92D21  stricmp_                                 lib/watcom/watcom_clib_17.asm                9
 ;  92D5A  unlink_                                  lib/watcom/watcom_clib_17.asm                3
-;  92D7C  unknown_libname_4                        lib/watcom/watcom_clib_17.asm                2
+;  92D7C  atoi_                                    lib/watcom/watcom_clib_17.asm                2
 ;  92DE0  GetFileSize                              lib/ea/ea_gfx_10.asm                         9
 ;  92EE4  LoadFileToBlockShared                    lib/ea/ea_gfx_10.asm                         1
 ;  92EF9  _fstrcspn_                               lib/watcom/watcom_clib_18.asm                5
@@ -1289,7 +1289,7 @@
 ;  AD6F4  GusDramFreeTotal                         lib/sound/snd_gus_sdk_01.asm                 1
 ;  AD7CC  GusMixAdd8                               lib/sound/snd_gus_sdk_01.asm                 1
 ;  ADC96  GusClearMixBuffer                        lib/sound/snd_gus_sdk_01.asm                 1
-;  ADEE8  nullsub_4                                lib/watcom/watcom_clib_45.asm                1
+;  ADEE8  GusStreamNoOp                            lib/watcom/watcom_clib_45.asm                1
 ;  AE9EB  GusServiceStream                         lib/sound/snd_gus_sdk_02.asm                 1
 ;  AEA23  GusStartStream                           lib/sound/snd_gus_sdk_02.asm                 1
 ;  AEDBC  GusStopStream                            lib/sound/snd_gus_sdk_02.asm                 1
@@ -1363,7 +1363,7 @@
 ;  B22A4  floor_                                   lib/watcom/watcom_clib_52.asm                1
 ;  B2321  _Scale10V_                               lib/watcom/watcom_clib_52.asm                1
 ;  B2408  __cvt_                                   lib/watcom/watcom_clib_52.asm                1
-;  B267E  unknown_libname_6                        lib/watcom/watcom_clib_52.asm                1
+;  B267E  DecimalToInt64                           lib/watcom/watcom_clib_52.asm                1
 ;  B2720  GusConvertAddr16                         lib/sound/snd_gus_sdk_09.asm                 1
 ;  B27A0  modf_                                    lib/watcom/watcom_clib_53.asm                1
 ;  B27BA  __CmpBigInt                              lib/watcom/watcom_clib_53.asm                1

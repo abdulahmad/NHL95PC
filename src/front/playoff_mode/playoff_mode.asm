@@ -19,7 +19,7 @@ extern str_4dKbytesOfFree, str_BangPal, str_Bkgd, str_Db, str_dot, str_E1, str_E
 extern str_E32, str_Embpal, str_Embscup, str_extDB, str_F1, str_F2, str_fmtSlashDb, str_GameSet
 extern str_Palette, str_PleaseEnterNewPlay, str_PO, str_Schedule, str_ScheduleDb, str_Temp2, str_Tied, strcat_
 extern strcpy_, OpenArtArchiveErr, OpenArtArchive, DrawArtOpaqueAtOwnPos, SetScreenTarget, teamabbrevs, teamconf, teamdivflags
-extern TextInputDialog, TextSetColors, unknown_libname_1, VgaSetPalette, ViewPlayoffHilights, VisTeam, WaitTickDeadline, WriteFile
+extern TextInputDialog, TextSetColors, _dos_findfirst_, VgaSetPalette, ViewPlayoffHilights, VisTeam, WaitTickDeadline, WriteFile
 extern WriteModeState
 global CreatePlayoffs, POSeedTeams, POPickConfTeams, POCreateSchedule, POCreateSchedule_x, POSetSeriesTeams, POInitSchedule, SeriesWinner
 global POSeriesScore, POSeedRound2, POSeedRound2_x30, POSeedRound2_x, POSeedConfFinals, POSeedConfFinals_pair, POSeedConfFinals_x, POSeedFinal
@@ -268,7 +268,7 @@ CreatePlayoffs:
         lea ebx, [byte esp+040h]
         mov edx, 10h
         lea eax, [dword esp+08Ch]
-        call unknown_libname_1
+        call _dos_findfirst_
         test eax, eax
         jne short .15
         push byte 0FFFFFFFFh

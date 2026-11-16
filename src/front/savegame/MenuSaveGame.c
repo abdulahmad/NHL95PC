@@ -40,7 +40,7 @@ int MenuSaveGame(void)
     TextSaveState(s.st);
     TextSetFont(mainfont);
     MakePath(s.path, (char *)&curleague, (char *)str_GsummaryDb4, 0);
-    unknown_libname_1(s.path, 0, s.ft);
+    _dos_findfirst_(s.path, 0, s.ft);
     s.need[0] = *(int *)(s.ft + 0x1A);
     s.need[2] = 0;
     if (gamemode == 0) {
@@ -166,7 +166,7 @@ int SaveGameNameDlg(char *path)
     EditTextField(path, 8, 0x64, tx, ty, 0, 0, 1);
     strcat(path, (char *)str_Nhl3);
     DrawArtOpaque(bm, ox, oy);
-    while (*path == '.' || unknown_libname_1(path, 0, ft) == 0) {
+    while (*path == '.' || _dos_findfirst_(path, 0, ft) == 0) {
         if (*path != '.') {
             tx = 0x140 - ((short *)cur)[2] / 2;
             ty = 0xF0 - ((short *)cur)[3] / 2;
