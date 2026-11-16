@@ -34,7 +34,7 @@ extern StartThreeStars, StopDigiSample, str_backslash, str_CheckRefCard, str_Che
 extern str_errd4, str_ErrDiskFree2, str_ErrDiskFree3, str_extDB, str_GameSav2, str_GameSet2, str_Kaufm020, str_NoConvMemory
 extern str_NoDiskSpaceC, str_NoDiskSpaceCur, str_NoMemory, str_Pntr, str_Pointer3, str_PPV, str_S1, str_Scor2b
 extern str_Scor3b, str_Temp3, str_VFN, strcat_, strcpy_, FreeGameMemory, EnsureFreeMemory, InitZoneManager
-extern FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked, sub_8DF54, initgraphics
+extern FlushZones, SetZoneScreen, SetZoneOrigin, BeginZoneFrame, AllocMemBlock, PushMemDescriptorLocked, SetupMemoryPoolReserve, initgraphics
 extern subwindowdefadr, LoadBank, OpenArtArchiveErr, TextSetFont, ReleaseAllVoices, EnableMidiSfx, DisableMidiSfx, EnableMidiMusic
 extern DisableMidiMusic, SndQuery, SetDigiChannelVolume, SetPalette, ShapeBankCount, ShapeBankEntry, InstallKeyboardHandler, KeyDown
 extern SetViewRect, InitMouse, InstallBreakHandler, FindShape, CalibrateJoystick, JoyResetCentres, ReadJoyRaw, ClearScreen
@@ -217,7 +217,7 @@ main_:
         shl esi, 4
         push dword 19000h
         push dword 0C8h
-        call sub_8DF54
+        call SetupMemoryPoolReserve
         add esp, byte 8
         lea ecx, [byte esp+058h]
         lea ebx, [byte esp+05Ch]

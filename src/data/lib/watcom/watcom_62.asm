@@ -2,9 +2,9 @@
 bits 32
 %include "hockey.inc"
 section s_D4D0F progbits alloc noexec write align=1
-extern dword_F24C8, nullsub_7, str_EACSNDFLIBJul28
+extern dword_F24C8, DefaultFpeHandler, str_EACSNDFLIBJul28
 global _osmajor, _osminor, byte_D4D59, SavedTextMode, SavedTextPage, SavedTextRows, VesaBankShift, byte_D4F5C
-global byte_D4F5D, byte_D4F5E, dword_D4D11, dword_D4F21, PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi
+global byte_D4F5D, byte_D4F5E, FpeHandler, dword_D4F21, PrintfSavedEbx, PrintfSavedEcx, PrintfSavedEdx, PrintfSavedEsi
 global PrintfSavedEdi, PrintfSavedReturn, dword_D4F4C, dword_D4F50, dword_D4F58, sndhandlecount, dword_D4F8A, dword_D4F8E
 global dword_D4F92, unk_D4D18, unk_D4D32, unk_D4D4C, unk_D4D9A, unk_D4F20, SavedTextColumns, word_D4F68
 global word_D4F88
@@ -12,8 +12,8 @@ _osmajor:
         db 00h
 _osminor:
         db 00h
-dword_D4D11:
-        dd nullsub_7
+FpeHandler:
+        dd DefaultFpeHandler
         db 00h,00h,00h
 unk_D4D18:
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,01h,00h,00h,00h

@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_98A81 progbits alloc exec nowrite align=1
-extern _environ, sub_A1CF4
+extern _environ, spawnve_
 global spawnl_, strncmp_, loc_98AA0, loc_98AA4, loc_98AA8, loc_98ABE
 spawnl_:
         push ebx
@@ -12,7 +12,7 @@ spawnl_:
         mov edx, dword [byte esp+014h]
         lea ebx, [byte esp+018h]
         mov ecx, dword [_environ]
-        call sub_A1CF4
+        call spawnve_
         pop edx
         pop ecx
         pop ebx

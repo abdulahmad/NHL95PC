@@ -3,22 +3,22 @@ bits 32
 %include "hockey.inc"
 section s_92DE0 progbits alloc exec nowrite align=1
 extern FreeMemBlock, FindCachedFileData, MemPtrSize, bcopy, DosOpenFile, DosCloseFile, DosReadFile
-global GetFileSize, sub_92DF0, sub_92E00, ReadFileCachedInto, loc_92E7B, loc_92EC1, LoadFileInto, LoadFileToBlockShared
+global GetFileSize, GetFileSizeQuiet, GetFileSizeFlag, ReadFileCachedInto, loc_92E7B, loc_92EC1, LoadFileInto, LoadFileToBlockShared
 GetFileSize:
         push byte 1
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_92E00
+        call GetFileSizeFlag
         add esp, byte 8
         ret
-sub_92DF0:
+GetFileSizeQuiet:
         push byte 0
         mov edx, dword [byte esp+08h]
         push edx
-        call sub_92E00
+        call GetFileSizeFlag
         add esp, byte 8
         ret
-sub_92E00:
+GetFileSizeFlag:
         sub esp, byte 0Ch
         mov edx, dword [byte esp+014h]
         push edx

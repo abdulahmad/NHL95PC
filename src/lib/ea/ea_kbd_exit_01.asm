@@ -4,7 +4,7 @@ bits 32
 section s_981AD progbits alloc exec nowrite align=1
 extern str_EXITTODOSY, str_PAUSEPRESSANYKEY, bailout_vec, BackBufferWidth, joycalactive, joycalposthook, joycalprehook, mousepollfn
 extern off_D306C, off_D3070, off_D3074, SetDrawBitmap, TextSetColors, TextSaveState, TextRestoreState, TextSetFont
-extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, sub_93000, ReturnFalse, FindNearestColor
+extern WriteConsoleMessage, FillRect, DrawArtOpaque, FreeBitmap, GrabBlock, DrawFrameClipped, ReturnFalse, FindNearestColor
 extern PrintStringCentered, ResetClipRect, KbdGetKey, SaveDrawState, RestoreDrawState, DebugLineCount, SetScreenTarget, CreateBitmap
 extern SetBitmapClip, DefaultFont
 global EnableInterrupts, SaveBoxBackground, RestoreBoxBackground, ShowPromptBox, loc_983B1, loc_983BB, loc_983DB, loc_983F1
@@ -146,7 +146,7 @@ ShowPromptBox:
         push eax
         lea eax, [byte esi+04h]
         push eax
-        call sub_93000
+        call DrawFrameClipped
         add esp, byte 14h
         push byte 0
         push dword 0FCFCFCh

@@ -4,9 +4,9 @@ bits 32
 section s_8DCF8 progbits alloc exec nowrite align=1
 extern _nmalloc_, str_InitmemmanINSUFFICIENTROW, dword_D2F5C, dword_D2F60, dword_D2F7C, dword_D2F80, dword_EDAA8, MemLockHandle
 extern dword_EDAB4, FatalError, int386_, InitMemList, AddHighMemList, MemLargestFree, InitMemDescriptors, GrabLargestBlock
-extern sub_986B0, MemUnlock, DetectCPU, unk_EDF04, MemLock
+extern MemLockHandleInit, MemUnlock, DetectCPU, unk_EDF04, MemLock
 global initmemman, loc_8DD2F, loc_8DD58, loc_8DD71, loc_8DDF4, loc_8DEAD, loc_8DED0, loc_8DF06
-global sub_8DF28, sub_8DF3C, sub_8DF54
+global InitMemoryPoolDefault, SetupMemoryPool, SetupMemoryPoolReserve
 initmemman:
         push esi
         push edi
@@ -14,7 +14,7 @@ initmemman:
         sub esp, byte 40h
         mov esi, dword [byte esp+054h]
         mov edi, dword [byte esp+058h]
-        call sub_986B0
+        call MemLockHandleInit
         mov dword [MemLockHandle], eax
         push eax
         call MemLock
@@ -172,7 +172,7 @@ loc_8DF06:
         pop esi
         ret
         db 08Bh,0C0h
-sub_8DF28:
+InitMemoryPoolDefault:
         push byte 0
         push byte 0
         mov edx, dword [byte esp+0Ch]
@@ -181,7 +181,7 @@ sub_8DF28:
         add esp, byte 0Ch
         ret
         db 08Bh,0C0h
-sub_8DF3C:
+SetupMemoryPool:
         push byte 0
         mov edx, dword [byte esp+0Ch]
         push edx
@@ -191,7 +191,7 @@ sub_8DF3C:
         add esp, byte 0Ch
         ret
         db 08Dh,040h,00h
-sub_8DF54:
+SetupMemoryPoolReserve:
         mov edx, dword [byte esp+08h]
         push edx
         push byte 0

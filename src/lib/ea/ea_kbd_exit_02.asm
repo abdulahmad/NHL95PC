@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_986CC progbits alloc exec nowrite align=1
-global sub_986CC, loc_986D8, MemUnlock
-sub_986CC:
+global TestAndSetFlag, loc_986D8, MemUnlock
+TestAndSetFlag:
         mov eax, dword [byte esp+04h]
         cmp dword [eax], byte 0
         je short loc_986D8

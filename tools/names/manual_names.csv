@@ -1101,6 +1101,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C223,sub_8C223,stub_8C223,PC-new,,,,medium,"empty function, no callers",asm_helpers,manual-trace
 0008C290,sub_8C290,vgacopy_bg,PC-new,,,,medium,"unreferenced 16-bit-frame VGA routine: write mode 1 latched copy of rows from the circular background buffer in VRAM (86A0h + bgscrolly8*8 rows, wrap C8A0h->4200h) to the screen at (x,y) [bp+6..0Eh]",asm_helpers,manual-trace
 0008C944,sub_8C944,SaveSS,PC-new,,,,medium,stores SS in saved_ss (DOS/4GW selector for later real-mode calls),asm_helpers,manual-trace
+0008C97D,sub_8C97D,__STKOVF,PC-new,,,,medium,Stops with the stack overflow run-time error,watcom_clib_01,manual-trace
 0008C990,sub_8C990,InitMemList,PC-new,,,,low,"sets up one memory list type: alignment, base and size",ea_memman_01,manual-trace
 0008CA6C,sub_8CA6C,AddMemListRegion,PC-new,,,,low,adds a region of memory to one memory list type,ea_memman_01,manual-trace
 0008CAF4,sub_8CAF4,AddHighMemList,PC-new,,,,low,adds the HIGHMEM region to one memory list type,ea_memman_01,manual-trace
@@ -1156,6 +1157,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DBDC,sub_8DBDC,MemDescSize,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_memman_02,match96+97
 0008DCC0,sub_8DCC0,GrabLargestBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.945),ea_memman_03,match96+97
 0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
+0008DF28,sub_8DF28,InitMemoryPoolDefault,96PC,,,,low,Sets up the memory pool with the default sizes,ea_memman_init,manual-trace
+0008DF3C,sub_8DF3C,SetupMemoryPool,96PC,,,,low,Sets up the memory pool with a low-memory size,ea_memman_init,manual-trace
+0008DF54,sub_8DF54,SetupMemoryPoolReserve,PC-new,,,,low,Sets up the memory pool with a reserve size,ea_memman_init,manual-trace
 0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
 0008E3DC,sub_8E3DC,ReturnPointerArg,PC-new,,,,low,returns its argument (unused),ea_timer,manual-trace
@@ -1266,9 +1270,12 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009087C,sub_9087C,DrawArtOr,PC-new,,,,medium,ORs art onto the screen,ea_gfx_01,manual-trace
 0009099C,sub_9099C,DrawArtOrAtOwnPos,PC-new,,,,low,DrawArtOr at the shape's own position,ea_gfx_01,manual-trace
 00090A40,sub_90A40,TextWidthN,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.83),ea_gfx_02,match96
+00090B50,sub_90B50,FindShapeList,PC-new,,,,medium,Looks up a list of shape ids in a bank,ea_gfx_03,manual-trace
 00090B80,sub_90B80,ProjectPointList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.837),ea_gfx_03,match96
+00090BE9,sub_90BE9,_dos_findclose_,PC-new,,,,medium,Ends a DOS file search; always succeeds,watcom_clib_11,manual-trace
 00090BEC,sub_90BEC,CopyDtaOut,PC-new,watcom_clib,,,medium,same routine as the matched 96 PC routine (exact 1.0),watcom_clib_11,match96
 00090C0F,sub_90C0F,CopyDtaIn,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_04,match96
+00090C94,sub_90C94,_dos_creatnew_,PC-new,,,,medium,DOS create-new-file call (function 5Bh),watcom_clib_12,manual-trace
 00090D20,sub_90D20,FillRect,PC-new,,,,medium,"graphics library: fill a rectangle (x, y, w, h, colour)",ea_gfx_05,manual-trace
 00090EC0,sub_90EC0,FillRectClipped,PC-new,,,,medium,fills a rectangle clipped to the clip window,ea_gfx_05,manual-trace
 00090F2C,sub_90F2C,XorRowBytes,PC-new,,,,low,XORs a run of bytes with a colour,ea_gfx_05,manual-trace
@@ -1299,15 +1306,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00092CD0,sub_92CD0,TextPrintAt,PC-new,,,,medium,"same library routine as the 96 PC TextPrintAt (similarity 0.957, dp)",ea_gfx_09,match96
 00092CF0,sub_92CF0,TextPutCharAt,PC-new,,,,low,prints one character at a position,ea_gfx_09,manual-trace
 00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
+00092DF0,sub_92DF0,GetFileSizeQuiet,PC-new,,,,medium,Returns a file's size without the error message,ea_gfx_10,manual-trace
+00092E00,sub_92E00,GetFileSizeFlag,PC-new,,,,medium,"Opens a file to read its size, with the caller's error flag",ea_gfx_10,manual-trace
 00092E40,sub_92E40,ReadFileCachedInto,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.881),ea_gfx_10,match96+97
 00092ECC,sub_92ECC,LoadFileInto,PC-new,,,,high,"same library routine as the 96 PC LoadFileInto (similarity 1.0, dp)",ea_gfx_10,match96
 00092EE4,sub_92EE4,LoadFileToBlockShared,PC-new,,,,medium,"same library routine as the 96 PC LoadFileToBlockShared (similarity 0.941, dp)",ea_gfx_10,match96
 00092F50,sub_92F50,XorRectOutline,PC-new,,,,medium,"same library routine as the 96 PC XorRectOutline (similarity 0.915, dp)",ea_gfx_11,match96
+00093000,sub_93000,DrawFrameClipped,PC-new,,,,medium,Draws a rectangle outline with four clipped fills,ea_gfx_11,manual-trace
 00093170,sub_93170,PrintBoxedText,PC-new,,,,medium,"same library routine as the 96 PC PrintBoxedText (similarity 0.923, dp)",ea_gfx_12,match96
 000931D0,sub_931D0,RemapRowKeyed,PC-new,,,,low,"copies bytes through the text remap table, skipping colour FFh",ea_gfx_12,manual-trace
 000931FC,sub_931FC,DrawArtMasked,PC-new,,,,medium,"graphics library: draw art at x, y masked (line editor slots)",ea_gfx_12,manual-trace
 00093240,sub_93240,DrawArtMaskedAtOwnPos,PC-new,,,,low,DrawArtMasked at the shape's own position,ea_gfx_12,manual-trace
 000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
+000932EC,sub_932EC,WriteFileQuiet,PC-new,,,,low,Saves a file without the error message,ea_gfx_13,manual-trace
 00093308,sub_93308,SaveDataFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.75),ea_fileblock,match96+97
 0009333C,sub_9333C,SaveFileBlockErr,PC-new,,,,low,Saves a memory block to a file with the error message,ea_fileblock,manual-trace
 00093354,sub_93354,SaveFileBlockQuiet,PC-new,,,,low,Saves a memory block to a file without the error message,ea_fileblock,manual-trace
@@ -1421,8 +1432,13 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009864C,sub_9864C,DosGetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_kbd_exit_01,match96+97
 00098664,sub_98664,DosSetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.952),ea_kbd_exit_01,match96+97
 0009867E,sub_9867E,ConsoleMessageThunk,PC-new,,,,low,Jumps to WriteConsoleMessage; unused,ea_kbd_exit_01,manual-trace
+000986A0,nullsub_7,DefaultFpeHandler,PC-new,watcom_clib,,,medium,Default floating point exception handler; does nothing,watcom_clib_25,manual-trace
+000986B0,sub_986B0,MemLockHandleInit,PC-new,,,,low,Clears the memory-manager lock handle and returns its address,watcom_clib_25,manual-trace
 000986C0,unknown_libname_22,MemLock,PC-new,watcom_clib,,,medium,sets a lock word to 1 (MemUnlock clears it),watcom_clib_25,manual-trace
+000986CC,sub_986CC,TestAndSetFlag,PC-new,,,,medium,"Sets a flag and returns 1, or returns 0 if it was already set",ea_kbd_exit_02,manual-trace
 000986E4,sub_986E4,MemUnlock,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_kbd_exit_02,match96
+00098785,sub_98785,__set_EDOM_,PC-new,,,,medium,Sets errno to EDOM,watcom_clib_26,manual-trace
+000987B9,sub_987B9,CallFpeHandler,PC-new,,,,medium,Calls the floating point exception handler,watcom_clib_26,manual-trace
 00098A40,sub_98A40,DosFileInfo,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_kbd_exit_03,match96+97
 00098B30,sub_98B30,DrawShapeStretched,PC-new,,,,low,"draws a shape stretched to fill a box, as two warped halves",ea_shapes,manual-trace
 00098BEC,sub_98BEC,DrawShapeStretchedAt,PC-new,,,,low,"draws a shape stretched to fill a box at a position, as two warped halves",ea_shapes,manual-trace
@@ -1443,6 +1459,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00099925,sub_99925,SeqReadEvent,PC-new,,,,low,"reads one event of a track: variable-length delta time, status and EA meta events",ea_shapes,manual-trace
 00099A0B,sub_99A0B,PeekDword,PC-new,,,,medium,returns the dword at an address,ea_shapes,manual-trace
 00099A0E,sub_99A0E,PeekWord,PC-new,,,,medium,returns the word at an address,ea_shapes,manual-trace
+0009A729,sub_9A729,_dosret0_,96PC,,,,medium,Returns 0 or the DOS error code,watcom_clib_30,manual-trace
 0009A7A0,sub_9A7A0,CreateMcgaWindow,PC-new,,,,medium,allocates and sets up an MCGA window bitmap of a given size,ea_mcga_window_01,manual-trace
 0009AFAD,sub_9AFAD,McgaNoWindow,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),ea_mcga_window_02,match96+97
 0009B22C,sub_9B22C,GetPsp,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_clib_32,match96+97
@@ -1467,6 +1484,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009C8E8,sub_9C8E8,DrawArtAnyFormat,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.722),ea_unpackf_blit,match96
 0009CA6C,sub_9CA6C,DrawArtAnyFormatAt,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.909),ea_unpackf_blit,match96
 0009CA90,sub_9CA90,DrawArtAnyFormatOwnPos,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.877),ea_unpackf_blit,match96
+0009D090,sub_9D090,SnapScreenToShape,PC-new,,,,low,Copies the screen into a new shape for the screenshot file,ea_snap_01,manual-trace
+0009D2E0,sub_9D2E0,SelectBitmap,PC-new,,,,low,Points a bitmap at its pixel data and makes it the draw target,ea_snap_01,manual-trace
 0009D352,sub_9D352,InitFpuFlags,PC-new,,,,medium,"start-up routine that sets up the floating point emulator and its two flags (__8087, __real87); replaced in the port",ea_snap_02,manual-trace
 0009D41D,sub_9D41D,MakeFpuGate,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_02,match96+97
 0009D43A,sub_9D43A,HookCoprocessorVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),ea_snap_02,match96+97
@@ -1580,6 +1599,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A185C,sub_A185C,ResetClipWindow,PC-new,,,,medium,"same library routine as the 96 PC ResetClipWindow (similarity 0.947, dp)",snd_gus,match96
 000A18D6,sub_A18D6,IntrLoadSegRegs,PC-new,watcom_clib,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_clib_39,match96+97
 000A1948,sub_A1948,IntrLoadRegs,PC-new,,,,high,"same library routine as the 96 PC IntrLoadRegs (similarity 1.0, dp)",dos4gw_intr,match96
+000A1CA2,sub_A1CA2,SpawnPathExists,PC-new,,,,low,Returns 1 when a file matching the path is found,clib_spawn_system,manual-trace
+000A1CC1,sub_A1CC1,SpawnCommand,PC-new,,,,low,Builds the command line and environment and spawns the program,clib_spawn_system,manual-trace
+000A1CF4,sub_A1CF4,spawnve_,PC-new,,,,low,"Spawns a program with an argument vector and environment, trying .COM .EXE .BAT",clib_spawn_system,manual-trace
 000A2000,sub_A2000,DrawShapeQuad,PC-new,,,,low,draws a shape warped into a four-point outline,ea_shpi,manual-trace
 000A2610,sub_A2610,SplitFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_shpi,match96
 000A26B0,sub_A26B0,ReadFileRange,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_shpi,match96+97
@@ -1593,7 +1615,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2AB8,sub_A2AB8,ConvertShapeBankInPlace,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_shpi,match96
 000A2ACF,sub_A2ACF,__CommonInit_,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),watcom_clib_40,match96
 000A2ADC,sub_A2ADC,NoFloatSupport,PC-new,watcom_clib,,,high,"same library routine as the 96 PC NoFloatSupport (similarity 1.0, dp)",watcom_clib_40,match96
+000A2B85,sub_A2B85,_heapenable_,PC-new,,,,medium,Sets whether the near heap may grow and returns the old setting,watcom_clib_40,manual-trace
 000A2DAB,sub_A2DAB,fcloseall_,PC-new,,,,high,same library code as the 96 PC fcloseall_ at the same offset from the shared routines,watcom_clib_41,match96
+000A2E80,sub_A2E80,flushall_,PC-new,,,,medium,Flushes every open stream,watcom_clib_41,manual-trace
 000A2F40,sub_A2F40,DrawArtShadow,PC-new,,,,medium,Draws art keyed with colour 0FEh darkening the screen under it,ea_unpack_helpers,manual-trace
 000A2F84,sub_A2F84,DrawArtShadowOwnPos,PC-new,,,,medium,Draws shadow art at the position stored in its header,ea_unpack_helpers,manual-trace
 000A2FD0,sub_A2FD0,FlipArtHorizontal,96PC,,,,medium,Mirrors art left to right and fixes its hotspot,ea_unpack_helpers,manual-trace
@@ -1736,6 +1760,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A502D,sub_A502D,DivideMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A51D8,sub_A51D8,EmuMul,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
 000A5202,sub_A5202,MultiplyMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A52FE,sub_A52FE,StoreM32IntTrunc,PC-new,,,,low,Converts a long double to a 32-bit integer by truncation; the floor entry follows unlabelled,watcom_emu387,manual-trace
 000A5353,sub_A5353,StoreM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A5358,sub_A5358,Emu387LdToInt,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A53C2,sub_A53C2,LoadM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
@@ -1759,6 +1784,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A610A,sub_A610A,EmuTan,PC-new,,,,high,same library code as the 96 PC EmuTan at the same offset from the shared routines,watcom_emu387,match96
 000A6140,sub_A6140,EmuAtan,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6314,sub_A6314,EmuExp2,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A63E0,sub_A63E0,PolyEvalExt,PC-new,,,,low,Evaluates an emulator polynomial for a long double argument,watcom_emu387,manual-trace
 000A6400,sub_A6400,PolyEval,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6452,sub_A6452,PolyEvalOdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A65BD,nullsub_3,EmuNoOp,96PC,watcom_clib,,,medium,Empty routine,watcom_emu387,manual-trace

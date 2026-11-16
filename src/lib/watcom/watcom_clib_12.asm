@@ -4,7 +4,7 @@ bits 32
 section s_90C32 progbits alloc exec nowrite align=1
 extern __doserror_, __set_errno_dos_
 global rmdir_, loc_90C4D, _dos_close_, _dos_commit_, _dos_open_, loc_90C7A, _dos_creat_, loc_90C8D
-global sub_90C94, loc_90CA1, lseek_, loc_90CE0, loc_90CE3, _dos_read_, loc_90CEF, loc_90D08
+global _dos_creatnew_, loc_90CA1, lseek_, loc_90CE0, loc_90CE3, _dos_read_, loc_90CEF, loc_90D08
 global _dos_write_
 rmdir_:
         push edx
@@ -62,7 +62,7 @@ loc_90C8D:
         call __doserror_
         pop ecx
         ret
-sub_90C94:
+_dos_creatnew_:
         push ecx
         mov ecx, edx
         mov edx, eax

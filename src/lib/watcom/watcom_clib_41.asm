@@ -6,7 +6,7 @@ extern __fatal_runtime_error_, __flush_, __IOMode_, __set_errno_, __set_errno_do
 extern byte_D4D59, UngetChar, dword_EDF00, dword_F24C8, loc_9B09F, lseek_, unk_D4D18, unk_D4D9A
 global tell_, __InitFiles_, loc_A2D4B, loc_A2D7A, loc_A2D8E, __full_io_exit_, fcloseall_, docloseall_
 global loc_A2DD2, loc_A2DEF, loc_A2DF5, loc_A2DF7, __qwrite_, loc_A2E3F, loc_A2E46, loc_A2E66
-global loc_A2E74, loc_A2E76, sub_A2E80, __flushall_, loc_A2E94, loc_A2EA8, loc_A2EAA, getche_
+global loc_A2E74, loc_A2E76, flushall_, __flushall_, loc_A2E94, loc_A2EA8, loc_A2EAA, getche_
 global loc_A2ECF, __qread_, loc_A2EEE, __FDFS, loc_A2F2F, loc_A2F38
 tell_:
         push ebx
@@ -167,7 +167,7 @@ loc_A2E76:
         pop ecx
         ret
         db 00h,00h
-sub_A2E80:
+flushall_:
         mov eax, 0FFFFFFFFh
 __flushall_:
         push ebx

@@ -7,7 +7,7 @@ extern slowtickcount, strncmp_, strncpy_, FixedMulRound, DrawShapeStretched, Add
 extern timercallbacks
 global ReturnPointerArg, StrCopyN, StrCompareN, MemCopyArgs, FileNamePart, loc_8E42F, loc_8E440, loc_8E443
 global loc_8E449, FileNameOnly, TimerISR, loc_8E473, loc_8E484, loc_8E4B0, loc_8E4B8, addtimer
-global loc_8E4CB, loc_8E4D6, loc_8E4E9, sub_8E4F3, RemoveTimerCallback, loc_8E507, loc_8E511, loc_8E523
+global loc_8E4CB, loc_8E4D6, loc_8E4E9, RemoveTimerCallback, loc_8E507, loc_8E511, loc_8E523
 global CountTimerCallbacks, loc_8E52C, loc_8E536, MaskTimerKbdIrq, RestoreTimer, loc_8E56A, loc_8E5A5, loc_8E5A8
 global InstallTimer, UnmaskTimerKbdIrq, DrawShapeScaled, DrawShapeScaledAtOwnPos, DrawShapeScaledHotspot, DrawShapeZoomedAtOwnPos, DrawShapeZoomedHotspot, DrawShapeZoomed
 ReturnPointerArg:
@@ -125,7 +125,6 @@ loc_8E4D6:
 loc_8E4E9:
         push str_AddtimerLISTFULL
         call FatalError
-sub_8E4F3:
         add esp, byte 4
         ret
         db 090h

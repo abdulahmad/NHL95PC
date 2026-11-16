@@ -6,7 +6,7 @@ global byte_EDE7D, dword_EDCFC, dword_EDD00, dword_EDD04, dword_EDE34, dword_EDE
 global MemViewCount, dword_EDE68, MemViewTitle, MemViewRow, MemViewList, dword_EDE78, dword_EDE7C, MemViewMode
 global dword_EDE84
 global dword_EDEE0, dword_EDEE4, dword_EDEE8, dword_EDEEC, dword_EDEF0, dword_EDEF4
-global dword_EDEF8, dword_EDEFC, dword_EDF00, SndHandleTable
+global dword_EDEF8, MemLockHandleStore, dword_EDF00, SndHandleTable
 dword_EDCFC:
         resb 4
 dword_EDD00:
@@ -65,7 +65,7 @@ dword_EDEF4:
         resb 4
 dword_EDEF8:
         resb 4
-dword_EDEFC:
+MemLockHandleStore:
         resb 4
 dword_EDF00:
         resb 4

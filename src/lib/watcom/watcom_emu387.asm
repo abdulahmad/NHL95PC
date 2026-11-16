@@ -2,7 +2,7 @@
 bits 32
 %include "hockey.inc"
 section s_A3274 progbits alloc exec nowrite align=1
-extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, dword_D4D11, unk_D657C, Hook387Save
+extern __GETDS, _dos_setvect_, str_RATIONALDOS4G, Hook387Flag, Hook387Saved, FpeHandler, unk_D657C, Hook387Save
 global unk_A3274, unk_A3278, unk_A327C, unk_A327E, unk_A3280, unk_A3282, unk_A32CE, unk_A32D0
 global unk_A32D4, unk_A32D6, unk_A331E, unk_A3322, unk_A332C, unk_A338C, jpt_A33EC, jpt_A34EC
 global __int7_pl3, __int7_X32VM, __int7, EmuTrapExit, loc_A369A, loc_A3706, loc_A370C, loc_A3732
@@ -39,7 +39,7 @@ global loc_A5086, loc_A5089, loc_A50BA, loc_A50C4, loc_A50C9, loc_A50D3, loc_A50
 global loc_A5119, loc_A513A, loc_A5142, loc_A5154, loc_A5169, loc_A5189, loc_A51A0, loc_A51B2
 global loc_A51BD, loc_A51C3, loc_A51CE, EmuMul, MultiplyMantissas, loc_A5210, loc_A5213, loc_A522A
 global loc_A525A, loc_A526B, loc_A52A2, loc_A52B5, loc_A52CE, loc_A52D9, loc_A52DC, loc_A52E7
-global loc_A52F1, sub_A52FE, loc_A5317, loc_A5324, loc_A5331, loc_A534E, loc_A5350, StoreM32Int
+global loc_A52F1, StoreM32IntTrunc, loc_A5317, loc_A5324, loc_A5331, loc_A534E, loc_A5350, StoreM32Int
 global Emu387LdToInt, loc_A535B, loc_A5394, loc_A53A1, loc_A53B2, loc_A53B5, loc_A53BD, LoadM32Int
 global loc_A53D2, Emu387IntToLd, loc_A53DB, loc_A53F6, loc_A53FA, LoadM64Real, loc_A542A, loc_A5438
 global loc_A544B, loc_A5453, loc_A545F, loc_A546C, loc_A5478, StoreM32Real, loc_A54A9, loc_A54B7
@@ -60,7 +60,7 @@ global loc_A6085, loc_A60A8, loc_A60B4, loc_A60BC, loc_A60DD, loc_A60E2, EmuSin,
 global EmuTan, EmuTan_E, EmuAtan, loc_A6162, loc_A6183, loc_A6192, loc_A61A3, loc_A61A9
 global loc_A61AF, loc_A61BB, loc_A61BF, loc_A61CA, loc_A61CC, loc_A62BB, loc_A62EE, loc_A62F3
 global EmuExp2, loc_A6333, loc_A6346, loc_A634F, loc_A635A, loc_A6377, loc_A638D, loc_A63A3
-global loc_A63B5, loc_A63C0, loc_A63C9, loc_A63D2, loc_A63DA, sub_A63E0, PolyEval, loc_A6417
+global loc_A63B5, loc_A63C0, loc_A63C9, loc_A63D2, loc_A63DA, PolyEvalExt, PolyEval, loc_A6417
 global PolyEvalOdd, __hook387, loc_A6500, loc_A650C, loc_A6558, loc_A655A, __unhook387, loc_A6593
 global loc_A65B7, EmuNoOp, __init_80x87, loc_A65D8
 unk_A3274:
@@ -552,7 +552,7 @@ RaiseFpuError:
         cld
         rep movsd
         movzx eax, ah
-        call dword [dword_D4D11]
+        call dword [FpeHandler]
         mov cx, ds
         mov es, cx
         mov cx, ss
@@ -2617,7 +2617,7 @@ loc_A52F1:
         mov edx, 80000000h
         LD sub, eax, eax
         jmp short loc_A52E7
-sub_A52FE:
+StoreM32IntTrunc:
         push ebx
         mov bl, 0A0h
         jmp short loc_A535B
@@ -4212,7 +4212,7 @@ loc_A63DA:
         pop esi
         pop edi
         ret
-sub_A63E0:
+PolyEvalExt:
         push esi
         push ecx
         push eax

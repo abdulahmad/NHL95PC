@@ -4,10 +4,10 @@ bits 32
 section s_9D090 progbits alloc exec nowrite align=1
 extern _os_handle, str_SHAPE2, str_Snap, str_Pal31, str_Snap2, dword_D2F84, ScreenWidth, dword_D30A8
 extern DrawRowBytes, dword_D5184, off_D517C, off_D518C, SetDrawBitmap, strncpy_, AllocMemHandle, PushMemDescriptorLocked
-extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, sub_932EC, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
-global sub_9D090, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
-global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, sub_9D2E0, loc_9D303
-sub_9D090:
+extern MemDescPtr, SetPalette, DrawShapeAtOwnPos, WriteFileQuiet, FindShape, SaveDrawState, RestoreDrawState, SetScreenTarget
+global SnapScreenToShape, loc_9D0B0, loc_9D0D7, loc_9D232, loc_9D24A, loc_9D251, loc_9D267, loc_9D269
+global loc_9D280, loc_9D298, loc_9D299, loc_9D2C8, SelectBitmap, loc_9D303
+SnapScreenToShape:
         push esi
         push edi
         push ebp
@@ -170,7 +170,7 @@ loc_9D299:
         push edi
         lea eax, [byte esp+068h]
         push eax
-        call sub_932EC
+        call WriteFileQuiet
         add esp, byte 0Ch
         mov esi, eax
         mov ebp, dword [dword esp+0B4h]
@@ -189,7 +189,7 @@ loc_9D2C8:
         pop esi
         ret
         db 00h
-sub_9D2E0:
+SelectBitmap:
         push esi
         mov esi, dword [byte esp+08h]
         mov esi, dword [esi]

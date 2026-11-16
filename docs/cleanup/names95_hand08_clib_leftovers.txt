@@ -1,0 +1,34 @@
+sub_A2B85 _heapenable_ {source_game=PC-new,confidence=medium} Sets whether the near heap may grow and returns the old setting
+dword_D5670 __heap_enabled {source_game=PC-new,confidence=medium} Non-zero while the near heap may grow
+sub_A63E0 PolyEvalExt {source_game=PC-new,confidence=low} Evaluates an emulator polynomial for a long double argument
+sub_A52FE StoreM32IntTrunc {source_game=PC-new,confidence=low} Converts a long double to a 32-bit integer by truncation; the floor entry follows unlabelled
+sub_A2E80 flushall_ {source_game=PC-new,confidence=medium} Flushes every open stream
+sub_8C97D __STKOVF {source_game=PC-new,confidence=medium} Stops with the stack overflow run-time error
+sub_90C94 _dos_creatnew_ {source_game=PC-new,confidence=medium} DOS create-new-file call (function 5Bh)
+sub_986B0 MemLockHandleInit {source_game=PC-new,confidence=low} Clears the memory-manager lock handle and returns its address
+dword_EDEFC MemLockHandleStore {source_game=PC-new,confidence=low} Lock handle storage for the memory manager
+sub_972F5 _os_handle_3+05h {no_record}
+sub_98785 __set_EDOM_ {source_game=PC-new,confidence=medium} Sets errno to EDOM
+sub_987B9 CallFpeHandler {source_game=PC-new,confidence=medium} Calls the floating point exception handler
+dword_D4D11 FpeHandler {source_game=PC-new,confidence=medium} Floating point exception handler
+nullsub_7 DefaultFpeHandler {source_game=PC-new,confidence=medium} Default floating point exception handler; does nothing
+sub_A1CA2 SpawnPathExists {source_game=PC-new,confidence=low} Returns 1 when a file matching the path is found
+sub_A1CC1 SpawnCommand {source_game=PC-new,confidence=low} Builds the command line and environment and spawns the program
+sub_A1CF4 spawnve_ {source_game=PC-new,confidence=low} Spawns a program with an argument vector and environment, trying .COM .EXE .BAT
+sub_90BE9 _dos_findclose_ {source_game=PC-new,confidence=medium} Ends a DOS file search; always succeeds
+sub_8DBEC type_info__raw_name+08h {no_record}
+sub_8DC55 exit_+016h {no_record}
+sub_99C77 __CMain+045h {no_record}
+sub_9A729 _dosret0_ {source_game=96PC,confidence=medium} Returns 0 or the DOS error code
+sub_8E4F3 addtimer+033h {no_record}
+sub_92DF0 GetFileSizeQuiet {source_game=PC-new,confidence=medium} Returns a file's size without the error message
+sub_92E00 GetFileSizeFlag {source_game=PC-new,confidence=medium} Opens a file to read its size, with the caller's error flag
+sub_9D090 SnapScreenToShape {source_game=PC-new,confidence=low} Copies the screen into a new shape for the screenshot file
+sub_9D2E0 SelectBitmap {source_game=PC-new,confidence=low} Points a bitmap at its pixel data and makes it the draw target
+sub_90B50 FindShapeList {source_game=PC-new,confidence=medium} Looks up a list of shape ids in a bank
+sub_93000 DrawFrameClipped {source_game=PC-new,confidence=medium} Draws a rectangle outline with four clipped fills
+sub_986CC TestAndSetFlag {source_game=PC-new,confidence=medium} Sets a flag and returns 1, or returns 0 if it was already set
+sub_932EC WriteFileQuiet {source_game=PC-new,confidence=low} Saves a file without the error message
+sub_8DF28 InitMemoryPoolDefault {source_game=96PC,confidence=low} Sets up the memory pool with the default sizes
+sub_8DF3C SetupMemoryPool {source_game=96PC,confidence=low} Sets up the memory pool with a low-memory size
+sub_8DF54 SetupMemoryPoolReserve {source_game=PC-new,confidence=low} Sets up the memory pool with a reserve size

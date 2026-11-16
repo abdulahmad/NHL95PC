@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_92F50 progbits alloc exec nowrite align=1
 extern FillRectClipped, XorRectClipped
-global XorRectOutline, loc_92F6C, loc_92F89, sub_93000, loc_9301C, loc_93039
+global XorRectOutline, loc_92F6C, loc_92F89, DrawFrameClipped, loc_9301C, loc_93039
 XorRectOutline:
         push esi
         push edi
@@ -78,7 +78,7 @@ loc_92F89:
         pop esi
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_93000:
+DrawFrameClipped:
         push esi
         push edi
         push ebp

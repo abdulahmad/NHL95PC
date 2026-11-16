@@ -421,7 +421,7 @@ typedef struct { char *s[2]; } StrPair;
 
 /* HilightSaveToDlg (7F724, PC only; highlights segment 058, the same source file: it ends in
    DrawGadgetButton_ret): draw the "Save To" box of the highlight saver: save the text state (TextSaveState), the
-   highlight font, the box (FillRect, two sub_93000 frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
+   highlight font, the box (FillRect, two DrawFrameClipped frames), four choice buttons (bevelled 8Ah x 0Eh boxes, 11h
    apart from 4Eh, 50h), then "Save To", "Hilights Reel" and the choices (home and away team names from the team
    records, then "Both Teams" / "Neither Team" from bothneitherstrs) centred in the buttons, first in colour 10h
    one pixel down and right as the shadow, then in 59h. No arguments, no result.
@@ -440,8 +440,8 @@ void HilightSaveToDlg(void)
     TextSaveState(state);
     TextSetFont(hilightfont);
     FillRect(0, 0x4B, 0x140, 0x4C, 0x14);
-    sub_93000(1, 0x4C, 0x13E, 0x95, 9);
-    sub_93000(2, 0x4D, 0x13D, 0x96, 0x10);
+    DrawFrameClipped(1, 0x4C, 0x13E, 0x95, 9);
+    DrawFrameClipped(2, 0x4D, 0x13D, 0x96, 0x10);
     x = 0x4E;
     y = 0x50;
     for (count.i = 0; count.i < 4; count.i++, y += 0x11) {

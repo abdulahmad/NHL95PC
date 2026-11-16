@@ -14,7 +14,7 @@ extern SetDialogColors, SetPalette, SetScreenSize, sflags, ShowLoadingScreen, Sn
 extern str_backslash4, str_CantOpenFile, str_dot4, str_F12, str_F3, str_F4, str_HI, str_HI2
 extern str_HilightDescFmt, str_HilightsReel, str_HLT, str_HLTL, str_HLTS, str_K1, str_SaveTo, str_SelectAHilight
 extern str_SelectATeam, str_star, strcat_, strcpy_, strcspn_, stricmp_, FreePhotoBanks, PushMemDescriptorLocked
-extern SetDigiChannelVolume, sub_93000, FillRectColor, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, unknown_libname_1
+extern SetDigiChannelVolume, DrawFrameClipped, FillRectColor, teamabbrevs, teamcitynames, TextSaveState, TextSetFont, unknown_libname_1
 extern unknown_libname_2, VisTeam
 global HilightSaveToDlg, SaveHilight, NudgeRinkScroll, CmpInt, TeamFromHiName, FormatHilightDesc, SelectHilight, ViewHilights
 global PlayHilight
@@ -61,14 +61,14 @@ HilightSaveToDlg:
         push dword 13Eh
         push byte 4Ch
         push byte 1
-        call sub_93000
+        call DrawFrameClipped
         add esp, byte 14h
         push byte 10h
         push dword 96h
         push dword 13Dh
         push byte 4Dh
         push byte 2
-        call sub_93000
+        call DrawFrameClipped
         add esp, byte 14h
         mov edi, 4Eh
         mov esi, 50h

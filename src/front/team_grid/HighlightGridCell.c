@@ -3,7 +3,7 @@
 
 /* HighlightGridCell: for the cell of the 4 x 7 team grid tab holding team (x 62 20 + 85 per
  column, y 86 + 92 per row): on, draw two nested frames in colour 80h (XorRectOutline: the 74 x 61 box and one a pixel
- bigger round it); off, erase them (sub_93000 with 0). */
+ bigger round it); off, erase them (DrawFrameClipped with 0). */
 void HighlightGridCell(int team, unsigned char *tab, int on)
 {
     int c;
@@ -33,8 +33,8 @@ void HighlightGridCell(int team, unsigned char *tab, int on)
                     XorRectOutline(x, y, x2, y2, 0x80);
                     XorRectOutline(x0, y0, x3, y3, 0x80);
                 } else {
-                    sub_93000(x, y, x2, y2, 0);
-                    sub_93000(x0, y0, x3, y3, 0);
+                    DrawFrameClipped(x, y, x2, y2, 0);
+                    DrawFrameClipped(x0, y0, x3, y3, 0);
                 }
             }
         }

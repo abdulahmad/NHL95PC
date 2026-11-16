@@ -19,9 +19,9 @@ extern dword_EDAB4, MemViewTop, MemViewCount, dword_EDE68, MemViewTitle, MemView
 extern dword_EDE7C, MemViewMode, dword_EDE84, fclose_, fopen_, fprintf_, fputs_, j___fprtf_
 extern memlist0, memlist1, SetTickDeadline, sprintf_, strncpy_, PushMemDescriptorLocked, MarkDescPurgeable, TextSetColors
 extern TextSaveState, TextRestoreState, TextSetFont, SetPalette, ShapeBankCount, ShapeBankEntry, ShapeBankEntryId, PutBlock
-extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, sub_93000, PrintBoxedText, DebugSetLine, DebugShowLines
+extern DrawBitmap, FillRect, TextPrintAt, XorRectOutline, DrawFrameClipped, PrintBoxedText, DebugSetLine, DebugShowLines
 extern DebugClearScreen, DebugSetRow, DebugSetAttr, ShowMessageBox, ToUpperChar, ReturnFalse, FindNearestColor, TextPrintCentered
-extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, sub_9D090, sub_9D2E0, FindShape, ClearScreen, KbdGetKey, KbdFlush
+extern DrawArtAnyFormatAt, DrawArtAnyFormatOwnPos, SnapScreenToShape, SelectBitmap, FindShape, ClearScreen, KbdGetKey, KbdFlush
 extern SaveDrawState, RestoreDrawState, FindFirstFile, PollHotkeys, VgaSetPalette, SetScreenTarget, SetClipWindow, FillRectColor
 extern str_Wt2, unk_C40A0, str_Fs, str_Jan2, str_Feb3, str_Mar2, str_Apr2, str_May3
 extern str_Jun2, str_Jul2, str_Aug2, str_Sep2, str_Oct2, str_Nov2, str_Dec2, unk_C41F0
@@ -1479,7 +1479,7 @@ MemViewerBlockInfo:
         push dword 111h
         push byte 37h
         push byte 2Eh
-        call sub_93000
+        call DrawFrameClipped
         add esp, byte 14h
         mov ebx, dword [MemViewRed]
         push ebx
@@ -1487,7 +1487,7 @@ MemViewerBlockInfo:
         push dword 110h
         push byte 38h
         push byte 2Fh
-        call sub_93000
+        call DrawFrameClipped
         add esp, byte 14h
         mov ecx, dword [MemViewBlack]
         push ecx
@@ -3420,7 +3420,7 @@ SaveScreenshot:
         call ReturnFalse
         mov eax, esp
         push eax
-        call sub_9D090
+        call SnapScreenToShape
         add esp, byte 4
         mov dword [dword_EDAB4], ebp
         add esp, byte 40h
@@ -3439,7 +3439,7 @@ MemViewerShowArt:
         call DebugGetKey
         mov edx, dword [MemViewMode]
         push edx
-        call sub_9D2E0
+        call SelectBitmap
         add esp, byte 4
         mov esi, dword [byte eax+02Ch]
         call SetScreenTarget

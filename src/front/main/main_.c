@@ -1,5 +1,5 @@
 /* Main / startup: the program entry. */
-#define sub_8DF54 sub_8DF54_decl
+#define SetupMemoryPoolReserve sub_8DF54_decl
 #define InstallTimer InstallTimer_decl
 #define InstallBreakHandler sub_B3036_decl
 #define subwindowdefadr sub_8E7A0_decl
@@ -10,7 +10,7 @@
 #define JoyResetCentres sub_B33DB_decl
 #define MainDeskLoop MainDeskLoop_decl
 #include "nhl95.h"
-#undef sub_8DF54
+#undef SetupMemoryPoolReserve
 #undef InstallTimer
 #undef InstallBreakHandler
 #undef subwindowdefadr
@@ -35,7 +35,7 @@ void exit(int status);                         /* Watcom CRT exit_ */
 int int386(int no, DwordRegs *in, DwordRegs *out);  /* Watcom CRT int386_ */
 void _dos_gettime(DosTime *t);                 /* Watcom CRT _dos_gettime_ */
 void srand(unsigned seed);                     /* Watcom CRT srand_ */
-void __cdecl sub_8DF54(int a, int b);          /* memory library: set up */
+void __cdecl SetupMemoryPoolReserve(int a, int b);          /* memory library: set up */
 void InstallTimer(void);
 void __cdecl InstallBreakHandler(int (*fn)(void));       /* DOS critical error handler */
 int __cdecl subwindowdefadr(void *buf, int a, int w, int h, int flags);
@@ -101,7 +101,7 @@ void main_(void)
     r = int386(0x31, &s.in, &s.out);   /* the result held in r, then the paragraph count (r in eax, as in the EXE) */
     r = (unsigned short)s.out.ebx;
     dosmem = r << 4;
-    sub_8DF54(0xC8, 0x19000);
+    SetupMemoryPoolReserve(0xC8, 0x19000);
     GetMemStats(&s.mem[3], &s.mem[2], &s.mem[1], &s.mem[0]);
     if (s.mem[3] < 0x1E5D70) {
         printf((char *)str_NoMemory);

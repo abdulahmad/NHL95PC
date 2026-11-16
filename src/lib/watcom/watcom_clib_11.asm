@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_90BB0 progbits alloc exec nowrite align=1
 extern __doserror_, _Extender, CopyDtaIn
-global unknown_libname_1, unknown_libname_2, sub_90BE9, CopyDtaOut, loc_90C0E
+global unknown_libname_1, unknown_libname_2, _dos_findclose_, CopyDtaOut, loc_90C0E
 unknown_libname_1:
         push ecx
         push eax
@@ -32,7 +32,7 @@ unknown_libname_2:
         call CopyDtaOut
         pop edx
         ret
-sub_90BE9:
+_dos_findclose_:
         xor eax, eax
         ret
 CopyDtaOut:

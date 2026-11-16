@@ -3,7 +3,7 @@ bits 32
 %include "hockey.inc"
 section s_9AA66 progbits alloc exec nowrite align=1
 extern __brk_, __unlink_, _nfree_, _Extender, _ExtenderSubtype, Is8087, HeapList, _curbrk
-extern dword_D5670, dword_D5674, RationalAllocLimit, RationalAllocFlags
+extern __heap_enabled, dword_D5674, RationalAllocLimit, RationalAllocFlags
 global __FreeDPMIBlocks_, loc_9AA71, loc_9AAAF, loc_9AABF, __ReAllocDPMIBlock_, loc_9AADD, loc_9AB45, loc_9AB97
 global loc_9AB9B, loc_9AB9E, loc_9ABA6, loc_9ABA8, __LinkUpNewMHeap_, loc_9ABBB, loc_9ABC4, loc_9ABC8
 global loc_9ABD7, loc_9ABDD, loc_9ABE4, __LastFree_, loc_9AC5E, loc_9AC6B, RationalAlloc_, loc_9ACA1
@@ -327,7 +327,7 @@ __CreateNewNHeap_:
         push esi
         push edi
         push eax
-        cmp dword [dword_D5670], byte 0
+        cmp dword [__heap_enabled], byte 0
         jne short loc_9AD56
 loc_9AD52:
         xor eax, eax
@@ -407,7 +407,7 @@ loc_9AE13:
         call __CreateNewNHeap_
         jmp near loc_9AF2D
 loc_9AE20:
-        cmp dword [dword_D5670], byte 0
+        cmp dword [__heap_enabled], byte 0
         jne short loc_9AE30
 loc_9AE29:
         xor eax, eax

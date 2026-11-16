@@ -4287,3 +4287,6 @@ ColourRemap,D42E4,256-entry colour remap table
 SlowDeadline,D4530,Slow-tick deadline
 PointerCount,D3038,Pointer show count
 FatalErrorHook,D2F74,Routine FatalError returns into instead of the boxed message
+__heap_enabled,D5670,Non-zero while the near heap may grow
+MemLockHandleStore,EDEFC,Lock handle storage for the memory manager
+FpeHandler,D4D11,Floating point exception handler

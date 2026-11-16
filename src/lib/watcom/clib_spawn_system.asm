@@ -6,10 +6,10 @@ extern __ccmdline_, __cenvarg_, __CHK, __dospawn, __set_doserrno_, __set_errno_,
 extern _nfree_, _nmalloc_, _splitpath2_, str_Bat, str_Com, str_Exe, str_COMSPEC, str_CMD
 extern str_COMMAND, _osmajor, getenv_, off_D6600, off_D6604, spawnl_, stricmp_, strlen_
 extern ErrnoPtr, CMainHook, unk_C4AB4, unknown_libname_1
-global sub_A1CA2, sub_A1CC1, sub_A1CF4, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
+global SpawnPathExists, SpawnCommand, spawnve_, loc_A1D26, loc_A1D30, loc_A1D87, loc_A1D89, loc_A1D9A
 global loc_A1D9D, loc_A1DF6, loc_A1DF8, loc_A1E1F, loc_A1E22, loc_A1E42, loc_A1E92, loc_A1EB2
 global loc_A1ED4, loc_A1EFD, loc_A1F60, loc_A1FA4, loc_A1FA9, loc_A1FC0, loc_A1FC3, loc_A1FE7
-sub_A1CA2:
+SpawnPathExists:
         push ebx
         push edx
         enter 2Ch, 0
@@ -23,7 +23,7 @@ sub_A1CA2:
         pop edx
         pop ebx
         ret
-sub_A1CC1:
+SpawnCommand:
         push esi
         push edi
         enter 4, 0
@@ -46,7 +46,7 @@ sub_A1CC1:
         pop edi
         pop esi
         ret 4
-sub_A1CF4:
+spawnve_:
         push dword 0E4h
         call __CHK
         push esi
@@ -182,7 +182,7 @@ loc_A1E42:
         jne short loc_A1E92
         mov eax, dword [byte ebp+07Ah]
         mov dword [byte ebp+076h], 0FFFFFFFFh
-        call sub_A1CA2
+        call SpawnPathExists
         test eax, eax
         jne near loc_A1F60
         jmp near loc_A1FC3
@@ -194,7 +194,7 @@ loc_A1E92:
         push dword [byte ebp+06Eh]
         mov eax, dword [byte ebp-032h]
         mov ecx, dword [byte ebp+05Eh]
-        call sub_A1CC1
+        call SpawnCommand
         jmp near loc_A1FC0
 loc_A1EB2:
         mov eax, dword [byte ebp+07Ah]
@@ -221,7 +221,7 @@ loc_A1ED4:
         push dword [byte ebp+06Eh]
         mov eax, dword [byte ebp-032h]
         mov ecx, dword [byte ebp+05Eh]
-        call sub_A1CC1
+        call SpawnCommand
         mov dword [byte ebp+076h], eax
 loc_A1EFD:
         call ErrnoPtr
@@ -240,7 +240,7 @@ loc_A1EFD:
         movsb
         mov eax, dword [byte ebp-032h]
         mov ecx, dword [byte ebp+05Eh]
-        call sub_A1CC1
+        call SpawnCommand
         mov dword [byte ebp+076h], eax
         call ErrnoPtr
         cmp dword [eax], byte 1
@@ -252,7 +252,7 @@ loc_A1EFD:
         mov eax, dword [byte ebp+07Ah]
         movsd
         movsb
-        call sub_A1CA2
+        call SpawnPathExists
         test eax, eax
         je short loc_A1FC3
 loc_A1F60:

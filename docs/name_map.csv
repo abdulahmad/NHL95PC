@@ -1194,6 +1194,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008C94C,__CHK,__CHK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_01,flirt
 0008C95C,__GRO,__GRO,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 3 bytes),watcom_clib_01,flirt
 0008C95F,__STK,__STK,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 45 bytes),watcom_clib_01,flirt
+0008C97D,sub_8C97D,__STKOVF,PC-new,,,,medium,Stops with the stack overflow run-time error,watcom_clib_01,manual-trace
 0008C990,sub_8C990,InitMemList,PC-new,,,,low,"sets up one memory list type: alignment, base and size",ea_memman_01,manual-trace
 0008CA6C,sub_8CA6C,AddMemListRegion,PC-new,,,,low,adds a region of memory to one memory list type,ea_memman_01,manual-trace
 0008CAF4,sub_8CAF4,AddHighMemList,PC-new,,,,low,adds the HIGHMEM region to one memory list type,ea_memman_01,manual-trace
@@ -1258,6 +1259,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0008DC9C,int386_,int386_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),dos4gw_dpmi_glue_01,flirt
 0008DCC0,sub_8DCC0,GrabLargestBlock,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.945),ea_memman_03,match96+97
 0008DCF8,sub_8DCF8,initmemman,PC-new,,,,high,"prints its own name: ""initmemman - INSUFFICIENT ROW TABLE SPACE""",ea_memman_init,manual-trace
+0008DF28,sub_8DF28,InitMemoryPoolDefault,96PC,,,,low,Sets up the memory pool with the default sizes,ea_memman_init,manual-trace
+0008DF3C,sub_8DF3C,SetupMemoryPool,96PC,,,,low,Sets up the memory pool with a low-memory size,ea_memman_init,manual-trace
+0008DF54,sub_8DF54,SetupMemoryPoolReserve,PC-new,,,,low,Sets up the memory pool with a reserve size,ea_memman_init,manual-trace
 0008DF70,sub_8DF70,ProbeVesa,PC-new,,,,high,EA library: the VESA probe (ran the external EAVESA program and read its tables),ea_vesa_init,manual-trace
 0008E080,sub_8E080,initgraphics,PC-new,,,,high,"prints its own name: ""initgraphics - EAVESA.COM REQUIRED IN PATH"", ""initgraphics - INVALID SCREEN SIZE""",ea_vesa_init,manual-trace
 0008E3C0,nullsub_2,nullsub_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_05,flirt
@@ -1387,9 +1391,11 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090AD7,mem_putc_,mem_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_10,flirt
 00090AEA,sprintf_,sprintf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_10,flirt
 00090B20,memcpy_,memcpy_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 37 bytes),watcom_clib_10,flirt
+00090B50,sub_90B50,FindShapeList,PC-new,,,,medium,Looks up a list of shape ids in a bank,ea_gfx_03,manual-trace
 00090B80,sub_90B80,ProjectPointList,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.837),ea_gfx_03,match96
 00090BB0,unknown_libname_1,unknown_libname_1,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_11,flirt
 00090BCD,unknown_libname_2,unknown_libname_2,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 28 bytes),watcom_clib_11,flirt
+00090BE9,sub_90BE9,_dos_findclose_,PC-new,,,,medium,Ends a DOS file search; always succeeds,watcom_clib_11,manual-trace
 00090BEC,sub_90BEC,CopyDtaOut,PC-new,watcom_clib,,,medium,same routine as the matched 96 PC routine (exact 1.0),watcom_clib_11,match96
 00090C0F,sub_90C0F,CopyDtaIn,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_gfx_04,match96
 00090C32,rmdir_,rmdir_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_12,flirt
@@ -1397,6 +1403,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00090C61,_dos_commit_,_dos_commit_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_12,flirt
 00090C71,_dos_open_,_dos_open_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 15 bytes),watcom_clib_12,flirt
 00090C80,_dos_creat_,_dos_creat_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 20 bytes),watcom_clib_12,flirt
+00090C94,sub_90C94,_dos_creatnew_,PC-new,,,,medium,DOS create-new-file call (function 5Bh),watcom_clib_12,manual-trace
 00090CA8,lseek_,lseek_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 65 bytes),watcom_clib_12,flirt
 00090CEA,_dos_read_,_dos_read_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 42 bytes),watcom_clib_12,flirt
 00090D14,_dos_write_,_dos_write_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 7 bytes),watcom_clib_12,flirt
@@ -1459,11 +1466,14 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00092D5A,unlink_,unlink_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_17,flirt
 00092D7C,unknown_libname_4,unknown_libname_4,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 87 bytes),watcom_clib_17,flirt
 00092DE0,sub_92DE0,GetFileSize,PC-new,,,,medium,file library: size of the file at path (the roster editor remembers each database's size),ea_gfx_10,manual-trace
+00092DF0,sub_92DF0,GetFileSizeQuiet,PC-new,,,,medium,Returns a file's size without the error message,ea_gfx_10,manual-trace
+00092E00,sub_92E00,GetFileSizeFlag,PC-new,,,,medium,"Opens a file to read its size, with the caller's error flag",ea_gfx_10,manual-trace
 00092E40,sub_92E40,ReadFileCachedInto,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.881),ea_gfx_10,match96+97
 00092ECC,sub_92ECC,LoadFileInto,PC-new,,,,high,"same library routine as the 96 PC LoadFileInto (similarity 1.0, dp)",ea_gfx_10,match96
 00092EE4,sub_92EE4,LoadFileToBlockShared,PC-new,,,,medium,"same library routine as the 96 PC LoadFileToBlockShared (similarity 0.941, dp)",ea_gfx_10,match96
 00092EF9,_fstrcspn_,_fstrcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 73 bytes),watcom_clib_18,flirt
 00092F50,sub_92F50,XorRectOutline,PC-new,,,,medium,"same library routine as the 96 PC XorRectOutline (similarity 0.915, dp)",ea_gfx_11,match96
+00093000,sub_93000,DrawFrameClipped,PC-new,,,,medium,Draws a rectangle outline with four clipped fills,ea_gfx_11,manual-trace
 000930A7,mkdir_,mkdir_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_19,flirt
 000930C6,cget_file_,cget_file_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 78 bytes),watcom_clib_19,flirt
 00093114,uncget_file_,uncget_file_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 8 bytes),watcom_clib_19,flirt
@@ -1475,6 +1485,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00093240,sub_93240,DrawArtMaskedAtOwnPos,PC-new,,,,low,DrawArtMasked at the shape's own position,ea_gfx_12,manual-trace
 00093284,strcspn_,strcspn_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 68 bytes),watcom_clib_20,flirt
 000932D0,sub_932D0,WriteFile,PC-new,,,,medium,"file library: write a buffer to a file (path, buf, size)",ea_gfx_13,manual-trace
+000932EC,sub_932EC,WriteFileQuiet,PC-new,,,,low,Saves a file without the error message,ea_gfx_13,manual-trace
 00093308,sub_93308,SaveDataFile,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 0.75),ea_fileblock,match96+97
 0009333C,sub_9333C,SaveFileBlockErr,PC-new,,,,low,Saves a memory block to a file with the error message,ea_fileblock,manual-trace
 00093354,sub_93354,SaveFileBlockQuiet,PC-new,,,,low,Saves a memory block to a file without the error message,ea_fileblock,manual-trace
@@ -1604,15 +1615,19 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 00098664,sub_98664,DosSetVector,PC-new,,,,medium,same routine as the matched 96+97 PC routine (similar 0.952),ea_kbd_exit_01,match96+97
 0009867E,sub_9867E,ConsoleMessageThunk,PC-new,,,,low,Jumps to WriteConsoleMessage; unused,ea_kbd_exit_01,manual-trace
 00098683,__fatal_runtime_error_,__fatal_runtime_error_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_25,flirt
-000986A0,nullsub_7,nullsub_7,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1 bytes),watcom_clib_25,flirt
+000986A0,nullsub_7,DefaultFpeHandler,PC-new,watcom_clib,,,medium,Default floating point exception handler; does nothing,watcom_clib_25,manual-trace
+000986B0,sub_986B0,MemLockHandleInit,PC-new,,,,low,Clears the memory-manager lock handle and returns its address,watcom_clib_25,manual-trace
 000986C0,unknown_libname_22,MemLock,PC-new,watcom_clib,,,medium,sets a lock word to 1 (MemUnlock clears it),watcom_clib_25,manual-trace
+000986CC,sub_986CC,TestAndSetFlag,PC-new,,,,medium,"Sets a flag and returns 1, or returns 0 if it was already set",ea_kbd_exit_02,manual-trace
 000986E4,sub_986E4,MemUnlock,PC-new,,,,medium,same routine as the matched 96 PC routine (exact 1.0),ea_kbd_exit_02,match96
 000986EF,file_putc_,file_putc_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 17 bytes),watcom_clib_26,flirt
 00098700,__fprtf_,__fprtf_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 133 bytes),watcom_clib_26,flirt
+00098785,sub_98785,__set_EDOM_,PC-new,,,,medium,Sets errno to EDOM,watcom_clib_26,manual-trace
 0009878A,__set_errno_,__set_errno_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 12 bytes),watcom_clib_26,flirt
 00098796,__set_ERANGE_,__set_ERANGE_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 7 bytes),watcom_clib_26,flirt
 0009879D,__set_EINVAL_,__set_EINVAL_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 16 bytes),watcom_clib_26,flirt
 000987AD,__set_doserrno_,__set_doserrno_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 12 bytes),watcom_clib_26,flirt
+000987B9,sub_987B9,CallFpeHandler,PC-new,,,,medium,Calls the floating point exception handler,watcom_clib_26,manual-trace
 000987C0,segread_,segread_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 40 bytes),dos4gw_dpmi_glue_02,flirt
 000987E8,int386x_,int386x_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 25 bytes),dos4gw_dpmi_glue_02,flirt
 00098801,_nexpand_,_nexpand_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 56 bytes),watcom_clib_27,flirt
@@ -1662,6 +1677,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009A2B5,formstring_,formstring_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 1097 bytes),watcom_clib_30,flirt
 0009A6FE,zupstr_,zupstr_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 24 bytes),watcom_clib_30,flirt
 0009A716,__doserror_,__doserror_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 19 bytes),watcom_clib_30,flirt
+0009A729,sub_9A729,_dosret0_,96PC,,,,medium,Returns 0 or the DOS error code,watcom_clib_30,manual-trace
 0009A730,_dosretax_,_dosretax_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 5 bytes),watcom_clib_30,flirt
 0009A735,__set_errno_dos_,__set_errno_dos_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 102 bytes),watcom_clib_30,flirt
 0009A7A0,sub_9A7A0,CreateMcgaWindow,PC-new,,,,medium,allocates and sets up an MCGA window bitmap of a given size,ea_mcga_window_01,manual-trace
@@ -1722,6 +1738,8 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 0009C8E8,sub_9C8E8,DrawArtAnyFormat,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 0.722),ea_unpackf_blit,match96
 0009CA6C,sub_9CA6C,DrawArtAnyFormatAt,PC-new,,,,medium,same routine as the matched 96 PC routine (neighbour 0.909),ea_unpackf_blit,match96
 0009CA90,sub_9CA90,DrawArtAnyFormatOwnPos,PC-new,,,,medium,same routine as the matched 96 PC routine (similar 0.877),ea_unpackf_blit,match96
+0009D090,sub_9D090,SnapScreenToShape,PC-new,,,,low,Copies the screen into a new shape for the screenshot file,ea_snap_01,manual-trace
+0009D2E0,sub_9D2E0,SelectBitmap,PC-new,,,,low,Points a bitmap at its pixel data and makes it the draw target,ea_snap_01,manual-trace
 0009D307,__setEFGfmt_,__setEFGfmt_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_35,flirt
 0009D322,__sys_init_387_emulator,__sys_init_387_emulator,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 48 bytes),watcom_clib_35,flirt
 0009D352,sub_9D352,InitFpuFlags,PC-new,,,,medium,"start-up routine that sets up the floating point emulator and its two flags (__8087, __real87); replaced in the port",ea_snap_02,manual-trace
@@ -1847,6 +1865,9 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A18FB,_DoINTR_,_DoINTR_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 77 bytes),dos4gw_dpmi_glue_07,flirt
 000A1948,sub_A1948,IntrLoadRegs,PC-new,,,,high,"same library routine as the 96 PC IntrLoadRegs (similarity 1.0, dp)",dos4gw_intr,match96
 000A1C7C,__Slash_C_,__Slash_C_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 38 bytes),dos4gw_intr,flirt
+000A1CA2,sub_A1CA2,SpawnPathExists,PC-new,,,,low,Returns 1 when a file matching the path is found,clib_spawn_system,manual-trace
+000A1CC1,sub_A1CC1,SpawnCommand,PC-new,,,,low,Builds the command line and environment and spawns the program,clib_spawn_system,manual-trace
+000A1CF4,sub_A1CF4,spawnve_,PC-new,,,,low,"Spawns a program with an argument vector and environment, trying .COM .EXE .BAT",clib_spawn_system,manual-trace
 000A2000,sub_A2000,DrawShapeQuad,PC-new,,,,low,draws a shape warped into a four-point outline,ea_shpi,manual-trace
 000A2610,sub_A2610,SplitFileExt,PC-new,,,,medium,same routine as the matched 96 PC routine (sem 1.0),ea_shpi,match96
 000A26B0,sub_A26B0,ReadFileRange,PC-new,,,,medium,same routine as the matched 96+97 PC routine (sem 1.0),ea_shpi,match96+97
@@ -1864,6 +1885,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2B13,ultoa_,ultoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 73 bytes),watcom_clib_40,flirt
 000A2B5C,ltoa_,ltoa_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 27 bytes),watcom_clib_40,flirt
 000A2B77,toupper_,toupper_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 14 bytes),watcom_clib_40,flirt
+000A2B85,sub_A2B85,_heapenable_,PC-new,,,,medium,Sets whether the near heap may grow and returns the old setting,watcom_clib_40,manual-trace
 000A2B95,sbrk_,sbrk_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 185 bytes),dos4gw_dpmi_glue_08,flirt
 000A2C54,__brk_,__brk_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 194 bytes),dos4gw_dpmi_glue_08,flirt
 000A2D16,tell_,tell_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 17 bytes),watcom_clib_41,flirt
@@ -1872,6 +1894,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A2DAB,sub_A2DAB,fcloseall_,PC-new,,,,high,same library code as the 96 PC fcloseall_ at the same offset from the shared routines,watcom_clib_41,match96
 000A2DB0,docloseall_,docloseall_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 82 bytes),watcom_clib_41,flirt
 000A2E02,__qwrite_,__qwrite_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 124 bytes),watcom_clib_41,flirt
+000A2E80,sub_A2E80,flushall_,PC-new,,,,medium,Flushes every open stream,watcom_clib_41,manual-trace
 000A2E85,__flushall_,__flushall_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 47 bytes),watcom_clib_41,flirt
 000A2EB4,getche_,getche_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 29 bytes),watcom_clib_41,flirt
 000A2ED1,__qread_,__qread_,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 31 bytes),watcom_clib_41,flirt
@@ -2020,6 +2043,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A502D,sub_A502D,DivideMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A51D8,sub_A51D8,EmuMul,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
 000A5202,sub_A5202,MultiplyMantissas,PC-new,,,,medium,same routine as the matched 96+97 PC routine (callsite 0.9),watcom_emu387,match96+97
+000A52FE,sub_A52FE,StoreM32IntTrunc,PC-new,,,,low,Converts a long double to a 32-bit integer by truncation; the floor entry follows unlabelled,watcom_emu387,manual-trace
 000A5353,sub_A5353,StoreM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A5358,sub_A5358,Emu387LdToInt,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A53C2,sub_A53C2,LoadM32Int,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
@@ -2043,6 +2067,7 @@ pc_address,ida_name,proposed_name,source_game,source_file,94_source_file,other_g
 000A610A,sub_A610A,EmuTan,PC-new,,,,high,same library code as the 96 PC EmuTan at the same offset from the shared routines,watcom_emu387,match96
 000A6140,sub_A6140,EmuAtan,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6314,sub_A6314,EmuExp2,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
+000A63E0,sub_A63E0,PolyEvalExt,PC-new,,,,low,Evaluates an emulator polynomial for a long double argument,watcom_emu387,manual-trace
 000A6400,sub_A6400,PolyEval,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A6452,sub_A6452,PolyEvalOdd,PC-new,,,,medium,same routine as the matched 96+97 PC routine (exact 1.0),watcom_emu387,match96+97
 000A649A,__hook387,__hook387,library,watcom_clib,,,high,IDA FLIRT Watcom library signature (collapsed body 202 bytes),watcom_emu387,flirt

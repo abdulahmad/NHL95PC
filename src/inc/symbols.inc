@@ -802,7 +802,7 @@
 ;  8C8E8  vtoa                                     engine/asm_helpers/asm_helpers.asm           20
 ;  8C944  SaveSS                                   engine/asm_helpers/asm_helpers.asm           1
 ;  8C94C  __CHK                                    lib/watcom/watcom_clib_01.asm                100
-;  8C97D  sub_8C97D                                lib/watcom/watcom_clib_01.asm                1
+;  8C97D  __STKOVF                                 lib/watcom/watcom_clib_01.asm                1
 ;  8C990  InitMemList                              lib/ea/ea_memman_01.asm                      1
 ;  8CAF4  AddHighMemList                           lib/ea/ea_memman_01.asm                      1
 ;  8CC70  AllocMemHandleLocked                     lib/ea/ea_memman_01.asm                      3
@@ -837,7 +837,7 @@
 ;  8DC6E  _dos_getdiskfree_                        lib/watcom/watcom_clib_03.asm                7
 ;  8DC9C  int386_                                  lib/dos4gw/dos4gw_dpmi_glue_01.asm           2
 ;  8DCC0  GrabLargestBlock                         lib/ea/ea_memman_03.asm                      1
-;  8DF54  sub_8DF54                                lib/ea/ea_memman_init.asm                    1
+;  8DF54  SetupMemoryPoolReserve                   lib/ea/ea_memman_init.asm                    1
 ;  8E080  initgraphics                             lib/ea/ea_vesa_init.asm                      1
 ;  8E3C0  nullsub_2                                lib/watcom/watcom_clib_05.asm                2
 ;  8E3C4  _os_handle                               lib/watcom/watcom_clib_05.asm                3
@@ -974,7 +974,7 @@
 ;  92EE4  LoadFileToBlockShared                    lib/ea/ea_gfx_10.asm                         1
 ;  92EF9  _fstrcspn_                               lib/watcom/watcom_clib_18.asm                5
 ;  92F50  XorRectOutline                           lib/ea/ea_gfx_11.asm                         3
-;  93000  sub_93000                                lib/ea/ea_gfx_11.asm                         4
+;  93000  DrawFrameClipped                         lib/ea/ea_gfx_11.asm                         4
 ;  930A7  mkdir_                                   lib/watcom/watcom_clib_19.asm                4
 ;  93143  fscanf_                                  lib/watcom/watcom_clib_19.asm                2
 ;  93170  PrintBoxedText                           lib/ea/ea_gfx_12.asm                         3
@@ -982,7 +982,7 @@
 ;  931FC  DrawArtMasked                            lib/ea/ea_gfx_12.asm                         5
 ;  93284  strcspn_                                 lib/watcom/watcom_clib_20.asm                3
 ;  932D0  WriteFile                                lib/ea/ea_gfx_13.asm                         4
-;  932EC  sub_932EC                                lib/ea/ea_gfx_13.asm                         1
+;  932EC  WriteFileQuiet                           lib/ea/ea_gfx_13.asm                         1
 ;  93308  SaveDataFile                             lib/ea/ea_fileblock.asm                      1
 ;  933F0  imul32                                   lib/ea/ea_fileblock.asm                      4
 ;  93470  IntSqrt                                  lib/ea/ea_fileblock.asm                      1
@@ -1032,8 +1032,8 @@
 ;  9864C  DosGetVector                             lib/ea/ea_kbd_exit_01.asm                    2
 ;  98664  DosSetVector                             lib/ea/ea_kbd_exit_01.asm                    2
 ;  98683  __fatal_runtime_error_                   lib/watcom/watcom_clib_25.asm                3
-;  986A0  nullsub_7                                lib/watcom/watcom_clib_25.asm                1
-;  986B0  sub_986B0                                lib/watcom/watcom_clib_25.asm                1
+;  986A0  DefaultFpeHandler                        lib/watcom/watcom_clib_25.asm                1
+;  986B0  MemLockHandleInit                        lib/watcom/watcom_clib_25.asm                1
 ;  986C0  MemLock                                  lib/watcom/watcom_clib_25.asm                3
 ;  986E4  MemUnlock                                lib/ea/ea_kbd_exit_02.asm                    3
 ;  98700  __fprtf_                                 lib/watcom/watcom_clib_26.asm                3
@@ -1117,8 +1117,8 @@
 ;  9C890  TextPrintCentered                        lib/ea/ea_unpackf_blit.asm                   1
 ;  9CA6C  DrawArtAnyFormatAt                       lib/ea/ea_unpackf_blit.asm                   1
 ;  9CA90  DrawArtAnyFormatOwnPos                   lib/ea/ea_unpackf_blit.asm                   1
-;  9D090  sub_9D090                                lib/ea/ea_snap_01.asm                        1
-;  9D2E0  sub_9D2E0                                lib/ea/ea_snap_01.asm                        1
+;  9D090  SnapScreenToShape                        lib/ea/ea_snap_01.asm                        1
+;  9D2E0  SelectBitmap                             lib/ea/ea_snap_01.asm                        1
 ;  9D307  __setEFGfmt_                             lib/watcom/watcom_clib_35.asm                1
 ;  9D322  __sys_init_387_emulator                  lib/watcom/watcom_clib_35.asm                1
 ;  9D352  InitFpuFlags                             lib/ea/ea_snap_02.asm                        1
@@ -1183,7 +1183,7 @@
 ;  A1948  IntrLoadRegs                             lib/dos4gw/dos4gw_intr.asm                   1
 ;  A197C  unk_A197C                                lib/dos4gw/dos4gw_intr.asm                   1
 ;  A1C7C  __Slash_C_                               lib/dos4gw/dos4gw_intr.asm                   1
-;  A1CF4  sub_A1CF4                                lib/watcom/clib_spawn_system.asm             1
+;  A1CF4  spawnve_                                 lib/watcom/clib_spawn_system.asm             1
 ;  A2000  DrawShapeQuad                            lib/ea/ea_shpi.asm                           1
 ;  A2610  SplitFileExt                             lib/ea/ea_shpi.asm                           1
 ;  A27C4  LoadPackedCore                           lib/ea/ea_shpi.asm                           1
@@ -4831,7 +4831,7 @@
 ;  D4D0D  _Envptr_w4                               data/lib/sound/eacsndf_61.asm                2
 ;  D4D0F  _osmajor                                 data/lib/watcom/watcom_62.asm                3
 ;  D4D10  _osminor                                 data/lib/watcom/watcom_62.asm                1
-;  D4D11  dword_D4D11                              data/lib/watcom/watcom_62.asm                2
+;  D4D11  FpeHandler                               data/lib/watcom/watcom_62.asm                2
 ;  D4D18  unk_D4D18                                data/lib/watcom/watcom_62.asm                2
 ;  D4D32  unk_D4D32                                data/lib/watcom/watcom_62.asm                1
 ;  D4D4C  unk_D4D4C                                data/lib/watcom/watcom_62.asm                1
@@ -4924,7 +4924,7 @@
 ;  D5566  dword_D5566                              data/lib/ea/ealib_65.asm                     1
 ;  D5668  off_D5668                                data/lib/ea/ealib_65.asm                     2
 ;  D566C  off_D566C                                data/lib/ea/ealib_65.asm                     2
-;  D5670  dword_D5670                              data/lib/ea/ealib_65.asm                     2
+;  D5670  __heap_enabled                           data/lib/ea/ealib_65.asm                     2
 ;  D5674  dword_D5674                              data/lib/ea/ealib_65.asm                     3
 ;  D5678  dword_D5678                              data/lib/ea/ealib_65.asm                     1
 ;  D567C  off_D567C                                data/lib/ea/ealib_65.asm                     1
@@ -6207,7 +6207,7 @@
 ;  EDEF0  dword_EDEF0                              data/lib/sound/eacsndf_93.asm                1
 ;  EDEF4  dword_EDEF4                              data/lib/sound/eacsndf_93.asm                1
 ;  EDEF8  dword_EDEF8                              data/lib/sound/eacsndf_93.asm                1
-;  EDEFC  dword_EDEFC                              data/lib/sound/eacsndf_93.asm                1
+;  EDEFC  MemLockHandleStore                       data/lib/sound/eacsndf_93.asm                1
 ;  EDF00  dword_EDF00                              data/lib/sound/eacsndf_93.asm                3
 ;  EDF04  unk_EDF04                                data/lib/ea/ealib_94.asm                     1
 ;  F1704  byte_F1704                               data/lib/ea/ealib_96.asm                     1

@@ -9,7 +9,7 @@ global copypart_, loc_99A21, loc_99A41, _splitpath_, loc_99A6C, loc_99A71, loc_9
 global loc_99A7E, loc_99A8D, loc_99A96, loc_99A9A, loc_99AB2, pickup_, loc_99AEA, loc_99AF1
 global loc_99AF3, _makepath_, loc_99B15, loc_99B21, loc_99B40, loc_99B4B, loc_99B4D, loc_99B57
 global loc_99B76, loc_99B8D, loc_99B96, loc_99BA8, loc_99BA9, loc_99BB4, _Full_at_exit_rtn_, loc_99BDA
-global loc_99BF0, atexit_, loc_99C29, __CMain, loc_99C53, loc_99C55, sub_99C77, __InitRtns
+global loc_99BF0, atexit_, loc_99C29, __CMain, loc_99C53, loc_99C55, __InitRtns
 global loc_99C89, loc_99C99, loc_99CAC, loc_99CB1, loc_99CC2, loc_99CC7, __FiniRtns, loc_99CD5
 global loc_99CE5, loc_99CF8, loc_99CFD, loc_99D12, loc_99D17, __prtf_, loc_99D46, loc_99D82
 global loc_99D8B, loc_99D99, loc_99D9F, loc_99DC1, loc_99DCC, loc_99DEA, loc_99DF8, loc_99E01
@@ -30,7 +30,7 @@ global loc_9A4E6, loc_9A4F9, loc_9A4FB, loc_9A524, loc_9A52F, loc_9A545, loc_9A5
 global loc_9A56E, loc_9A58D, loc_9A5A2, loc_9A5A9, loc_9A5E8, loc_9A5F1, loc_9A60C, loc_9A639
 global loc_9A663, loc_9A67D, loc_9A68B, loc_9A694, loc_9A698, loc_9A6A4, loc_9A6A9, loc_9A6BC
 global loc_9A6C8, loc_9A6D1, zupstr_, loc_9A701, loc_9A714, __doserror_, loc_9A726, loc_9A728
-global sub_9A729, _dosretax_, __set_errno_dos_, loc_9A75E, loc_9A767, loc_9A76E, loc_9A775, loc_9A784
+global _dosret0_, _dosretax_, __set_errno_dos_, loc_9A75E, loc_9A767, loc_9A76E, loc_9A775, loc_9A784
 global loc_9A78E
 copypart_:
         push esi
@@ -329,7 +329,6 @@ loc_99C55:
         mov edx, dword [dword_F58DC]
         mov eax, dword [dword_F58D8]
         call main_
-sub_99C77:
         call exit_
         db 089h,0ECh,05Dh,05Ah,0C3h,00h
 __InitRtns:
@@ -1544,7 +1543,7 @@ loc_9A726:
         sub eax, eax
 loc_9A728:
         ret
-sub_9A729:
+_dosret0_:
         test edx, edx
         jne short _dosretax_
         xor eax, eax

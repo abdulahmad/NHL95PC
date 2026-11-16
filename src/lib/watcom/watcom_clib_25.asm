@@ -2,8 +2,8 @@
 bits 32
 %include "hockey.inc"
 section s_98683 progbits alloc exec nowrite align=1
-extern __EnterWVIDEO_, dword_EDEFC, WriteConsoleMessage
-global __fatal_runtime_error_, loc_9869D, nullsub_7, sub_986B0, MemLock
+extern __EnterWVIDEO_, MemLockHandleStore, WriteConsoleMessage
+global __fatal_runtime_error_, loc_9869D, DefaultFpeHandler, MemLockHandleInit, MemLock
 __fatal_runtime_error_:
         push ebx
         push ecx
@@ -20,13 +20,13 @@ loc_9869D:
         pop ecx
         pop ebx
         ret
-nullsub_7:
+DefaultFpeHandler:
         ret
         db 00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h,00h
-sub_986B0:
+MemLockHandleInit:
         xor edx, edx
-        mov dword [dword_EDEFC], edx
-        mov eax, dword_EDEFC
+        mov dword [MemLockHandleStore], edx
+        mov eax, MemLockHandleStore
         ret
         db 08Bh,0C0h
 MemLock:	;IDA: unknown_libname_22

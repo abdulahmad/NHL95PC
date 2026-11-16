@@ -3890,7 +3890,7 @@ extern int _Envptr; /* D4D09 */
 extern short _Envptr_w4; /* D4D0D */
 extern unsigned char _osmajor; /* D4D0F */
 extern unsigned char _osminor; /* D4D10 */
-extern int dword_D4D11; /* D4D11 */
+extern int FpeHandler; /* D4D11 */
 extern unsigned char unk_D4D18[]; /* D4D18 */
 extern unsigned char unk_D4D32[]; /* D4D32 */
 extern unsigned char unk_D4D4C[]; /* D4D4C */
@@ -3984,7 +3984,7 @@ extern int dword_D5562; /* D5562 */
 extern int dword_D5566[]; /* D5566 */
 extern int off_D5668; /* D5668 */
 extern int off_D566C; /* D566C */
-extern int dword_D5670; /* D5670 */
+extern int __heap_enabled; /* D5670 */
 extern int dword_D5674; /* D5674 */
 extern int dword_D5678; /* D5678 */
 extern int off_D567C[]; /* D567C */
@@ -5309,7 +5309,7 @@ extern int dword_EDEEC; /* EDEEC */
 extern int dword_EDEF0; /* EDEF0 */
 extern int dword_EDEF4; /* EDEF4 */
 extern int dword_EDEF8; /* EDEF8 */
-extern int dword_EDEFC; /* EDEFC */
+extern int MemLockHandleStore; /* EDEFC */
 extern int dword_EDF00; /* EDF00 */
 extern unsigned char unk_EDF04[]; /* EDF04 */
 extern unsigned char unk_F0000[]; /* F0000 */

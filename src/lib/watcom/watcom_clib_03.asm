@@ -3,13 +3,12 @@ bits 32
 %include "hockey.inc"
 section s_8DBE4 progbits alloc exec nowrite align=1
 extern __fprtf_, __set_EINVAL_, loc_90265, ExitHook, Int23Hook, off_D2F70, unk_D4D32
-global type_info__raw_name, sub_8DBEC, _dos_getdrive_, _dos_setdrive_, printf_, __null_int23_exit_, exit_, sub_8DC55
+global type_info__raw_name, _dos_getdrive_, _dos_setdrive_, printf_, __null_int23_exit_, exit_
 global _exit_, _dos_getdiskfree_, loc_8DC92, loc_8DC97
 type_info__raw_name:
         mov eax, dword [byte esp+04h]
         add eax, byte 4
         ret
-sub_8DBEC:
         mov eax, dword [byte esp+04h]
         mov eax, dword [byte eax+018h]
         ret
@@ -61,7 +60,6 @@ exit_:
         call dword [Int23Hook]
         mov eax, edx
         call _exit_
-sub_8DC55:
         pop edx
         ret
 _exit_:
